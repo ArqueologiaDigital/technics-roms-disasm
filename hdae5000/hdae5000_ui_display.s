@@ -5554,10 +5554,14 @@ HDAE5000_Lyrics_CheckTrackChunk:	; 0x28E5AE (59 bytes)
 	ld xhl, 0:i3			; return 0 (success)
 	ret
 
-HDAE5000_SwapBytes32:	; 0x28E5E9 (37 bytes)
-	; XHL = XWA with its four bytes reversed (big-endian <-> little-endian).
-	; Reads the TLhd/TLtr lengths (HDAE5000_Lyrics_CheckHeaderChunk and
-	; _CheckTrackChunk) and two more values in this file.
+; ---------------------------------------------------------------------------
+; Reverse the four bytes of XWA (big-endian <-> little-endian).  Reads the
+; TLhd/TLtr chunk lengths of a lyric file (HDAE5000_Lyrics_CheckHeaderChunk,
+; _CheckTrackChunk) and two more values in this file.
+; In:  XWA
+; Out: XHL = XWA byte-reversed.  Clobbers XWA, DE.
+; ---------------------------------------------------------------------------
+HDAE5000_SwapBytes32:
 	ld xhl, xwa
 	and xhl, 0x000000FF
 	ld de, 0:i3			; loop counter = 0
@@ -5574,10 +5578,12 @@ HDAE5000_SwapBytes32:	; 0x28E5E9 (37 bytes)
 	jr lt, .LSwapBytes32__loop
 	ret
 
-HDAE5000_SwapBytes16:	; 0x28E60E (13 bytes)
-	; HL = WA with its two bytes swapped (13 bytes; the "2397 bytes" of the
-	; label comment ran on over HDAE5000_FDFileSelectProc, which follows).
-
+; ---------------------------------------------------------------------------
+; Swap the two bytes of WA.
+; In:  WA
+; Out: HL = WA byte-swapped.  Clobbers WA.
+; ---------------------------------------------------------------------------
+HDAE5000_SwapBytes16:
 	ld hl, wa
 	ld h, 0:opc			; keep low byte only
 	srl wa, 8			; WA = high byte
@@ -22160,8 +22166,10 @@ HDAE5000_Name26_IsBlank_Return:
 	pop xix
 	ret
 
+; ---------------------------------------------------------------------------
+; Fill the 12-byte field at 0x200864 with "0" (unreachable).
+; ---------------------------------------------------------------------------
 HDAE5000_Field12_FillZeros:
-	; fill the 12-byte field 0x200864 with "0" (unreachable)
 	push xix
 	push xbc
 	lda xix, (0x200864:24)
@@ -22177,8 +22185,10 @@ HDAE5000_Field12_FillZeros_Loop:
 	pop xix
 	ret
 
+; ---------------------------------------------------------------------------
+; Fill the 12-byte field at 0x200864 with spaces (unreachable).
+; ---------------------------------------------------------------------------
 HDAE5000_Field12_FillSpaces:
-	; fill the 12-byte field 0x200864 with spaces (unreachable)
 	push xix
 	push xbc
 	lda xix, (0x200864:24)
@@ -22209,8 +22219,12 @@ HDAE5000_DeadLib_Fill40Spaces_Loop:
 	pop xix
 	ret
 
+; ---------------------------------------------------------------------------
+; XWA in decimal, right-aligned in the field ending at 0x20086E and
+; zero-filled; digits from HDAE5000_DecimalDigits (unreachable).
+; In:  XWA = value
+; ---------------------------------------------------------------------------
 HDAE5000_FormatDecimal12_ZeroFill:
-	; XWA in decimal, right-aligned in the field ending at 0x20086E, zero-filled; digits from HDAE5000_DecimalDigits (unreachable)
 	push xix
 	push xiy
 	push xde
@@ -24824,81 +24838,95 @@ HDAE5000_Int_To_Decimal_String:	; 0x29A3D2 (80 bytes)
 	inc 4, xsp			; deallocate scratch space
 	ret
 
-HDAE5000_UInt_To_Decimal_String:	; 0x29A422 (63 bytes)
-	; Convert unsigned 32-bit integer to decimal string
-	; Stack: [+0x0C] = output buffer ptr (with write-ahead), [+0x10] = unsigned value
-	dec 4, xsp			; allocate local scratch space
+; ---------------------------------------------------------------------------
+; Unsigned decimal digits of a long, LEAST significant first (value % 10 by
+; HDAE5000_UMod32, / 10 by HDAE5000_UDivMod32), then a NUL.  One digit for 0.
+; In:  (xsp+4) = buffer, (xsp+8) = value.  XIZ preserved.
+; ---------------------------------------------------------------------------
+HDAE5000_UInt_To_Decimal_String:
+	dec 4, xsp
 	push xiz
-	ld xiz, (xsp + 16)		; load unsigned value
+	ld xiz, (xsp + 16)
 .LUInt_To_Dec__loop:
-	ld xwa, (xsp + 12)		; get buffer state
-	lda xbc, (xwa+:1)			; lda XBC, (XWA+) — advance write ptr
-	ld (xsp + 4), xbc		; save digit write position
-	ld (xsp + 12), xwa		; save advanced buffer ptr
-	ld xwa, xiz			; value to divide
-	lda_dd8l xbc, (0x0A); divisor = 10
-	call HDAE5000_UMod32	; XHL = remainder
-	add xhl, 0x00000030		; remainder + '0' → ASCII digit
-	ld xwa, (xsp + 4)		; get digit write position
-	ld (xwa), l			; store digit character
-	ld xwa, xiz			; reload value
-	lda_dd8l xbc, (0x0A); divisor = 10
-	call HDAE5000_UDivMod32	; XHL = quotient
-	ld xiz, xhl			; update remaining value
-	or xiz, xiz			; check if zero
-	jr nz, .LUInt_To_Dec__loop	; continue if non-zero
-	ld xwa, (xsp + 12)		; get end-of-string position
-	ld (xwa), 0x00		; null-terminate
+	ld xwa, (xsp + 12)
+	lda xbc, (xwa+:1)
+	ld (xsp + 4), xbc
+	ld (xsp + 12), xwa
+	ld xwa, xiz
+	lda_dd8l xbc, (0x0A)
+	call HDAE5000_UMod32
+	add xhl, 0x00000030
+	ld xwa, (xsp + 4)
+	ld (xwa), l
+	ld xwa, xiz
+	lda_dd8l xbc, (0x0A)
+	call HDAE5000_UDivMod32
+	ld xiz, xhl
+	or xiz, xiz
+	jr nz, .LUInt_To_Dec__loop
+	ld xwa, (xsp + 12)
+	ld (xwa), 0x00
 	pop xiz
-	inc 4, xsp			; deallocate scratch space
+	inc 4, xsp
 	ret
 
-HDAE5000_Int_To_Hex_String:	; 0x29A461 (51 bytes)
-	; Convert integer to hex string using nibble extraction
-	; Stack: [+0x04] = output buffer ptr, [+0x08] = value, [+0x0C] = format char
-	; If format char == 'x' (0x78), use lowercase hex digits; else uppercase
-	ld xwa, HDAE5000_HexDigits_Upper	; uppercase hex digit table (default)
-	cpw (xsp + 12), 0x0078	; format == 'x'?
+; ---------------------------------------------------------------------------
+; Hex digits of a long, least significant first, then a NUL; lower case
+; (HDAE5000_HexDigits_Lower) when the format character is 'x', else upper
+; case.
+; In:  (xsp+4) = buffer, (xsp+8) = value, (xsp+12) = format character (word)
+; Out: clobbers XWA, XBC, XDE, XHL, XIX.
+; ---------------------------------------------------------------------------
+HDAE5000_Int_To_Hex_String:
+	ld xwa, HDAE5000_HexDigits_Upper
+	cpw (xsp + 12), 0x0078
 	jr nz, .LInt_To_Hex__start
-	ld xwa, HDAE5000_HexDigits_Lower	; lowercase hex digit table (format == 'x')
+	ld xwa, HDAE5000_HexDigits_Lower
 .LInt_To_Hex__start:
-	ld xix, xwa			; XIX = digit table pointer
-	ld xhl, (xsp + 4)		; buffer pointer
-	ld xde, (xsp + 8)		; value to convert
+	ld xix, xwa
+	ld xhl, (xsp + 4)
+	ld xde, (xsp + 8)
 .LInt_To_Hex__loop:
-	lda xbc, (xhl+:1)			; lda XBC, (XHL+) — post-increment buffer ptr
+	lda xbc, (xhl+:1)
 	ld xwa, xde
-	and xwa, 0x0000000F		; mask low nibble
-	add xwa, xix			; index into digit table
-	ld a, (xwa)			; get hex digit char
-	ld (xbc), a			; store to buffer
-	srl xde, 4			; shift to next nibble
+	and xwa, 0x0000000F
+	add xwa, xix
+	ld a, (xwa)
+	ld (xbc), a
+	srl xde, 4
 	jr nz, .LInt_To_Hex__loop
-	ld (xhl), 0x00		; null-terminate
+	ld (xhl), 0x00
 	ret
 
-HDAE5000_Int_To_Octal_String:	; 0x29A494 (34 bytes)
-	; Convert integer to octal string using 3-bit extraction
-	; Stack: [+0x04] = output buffer ptr, [+0x08] = value
-	ld xde, (xsp + 8)		; value to convert
-	ld xhl, (xsp + 4)		; buffer pointer
+; ---------------------------------------------------------------------------
+; Octal digits of a long, least significant first, then a NUL.
+; In:  (xsp+4) = buffer, (xsp+8) = value
+; Out: clobbers XWA, XBC, XDE, XHL.
+; ---------------------------------------------------------------------------
+HDAE5000_Int_To_Octal_String:
+	ld xde, (xsp + 8)
+	ld xhl, (xsp + 4)
 .LInt_To_Octal__loop:
-	lda xbc, (xhl+:1)			; lda XBC, (XHL+) — post-increment buffer ptr
+	lda xbc, (xhl+:1)
 	ld xwa, xde
-	and xwa, 0x00000007		; mask low 3 bits
-	add xwa, 0x00000030		; convert to ASCII '0'-'7'
-	ld (xbc), a			; store digit
-	srl xde, 3			; shift to next octal digit
+	and xwa, 0x00000007
+	add xwa, 0x00000030
+	ld (xbc), a
+	srl xde, 3
 	jr nz, .LInt_To_Octal__loop
-	ld (xhl), 0x00		; null-terminate
+	ld (xhl), 0x00
 	ret
 
-HDAE5000_FormatFloat:	; 0x29A4B6 (173 bytes)
-	; sprintf-like formatter entry point (handles %e, %E, %f, %F, %g, %G)
-	; Allocates 26-byte stack frame, dispatches to HDAE5000_FormatFloat_Fixed
-	; (%f/%F) or HDAE5000_FormatFloat_Exp (%e/%E) based on format specifier
-	; character in C register; %g/%G picks one by comparing the decimal
-	; exponent HDAE5000_FltDec_Convert returns with -4 and with the precision.
+; ---------------------------------------------------------------------------
+; printf's floating-point conversions (%e %E %f %F %g %G) for
+; HDAE5000_DoPrintf: HDAE5000_FltDec_Convert turns the value into decimal
+; digits and an exponent, then HDAE5000_FormatFloat_Fixed (%f / %F) or
+; HDAE5000_FormatFloat_Exp (%e / %E) emits them; %g / %G picks one by
+; comparing that exponent with -4 and with the precision.  The characters go
+; out through DoPrintf's putc callback; HDAE5000_RAM_PrintfFloatCount counts
+; them.
+; ---------------------------------------------------------------------------
+HDAE5000_FormatFloat:
 	lda xsp, (xsp - 26)		; allocate 26-byte stack frame
 	push xiz			; save XIZ
 	ldw (xsp + 4), 0x0000		; clear local variable
@@ -24982,15 +25010,14 @@ HDAE5000_FormatFloat:	; 0x29A4B6 (173 bytes)
 	lda xsp, (xsp + 0x1A)		; deallocate 26-byte stack frame
 	ret
 
-HDAE5000_FormatFloat_Fixed:	; 0x29A563 (805 bytes)
-	; Core string format engine - processes format specifiers
-	; Fixed-point (%f / %F, and %g in fixed range) conversion of the decimal
-	; digits HDAE5000_FltDec_Convert produced: pads/rounds to the precision
-	; and emits every character through the putc callback (the same
-	; `call (xwa)` convention as HDAE5000_DoPrintf).  Called only by
-	; HDAE5000_FormatFloat.
-; LSFC: 0x29A563 (805 bytes)
-
+; ---------------------------------------------------------------------------
+; Fixed-point conversion (%f / %F, and %g in fixed range) of the digits
+; HDAE5000_FltDec_Convert produced: pads (HDAE5000_RAM_PrintfPadChar) and
+; rounds to the precision, emitting every character through the putc
+; callback (the `call (xwa)` convention of HDAE5000_DoPrintf) and counting it
+; in HDAE5000_RAM_PrintfFloatCount.  Only caller: HDAE5000_FormatFloat.
+; ---------------------------------------------------------------------------
+HDAE5000_FormatFloat_Fixed:
 	dec	4, xsp
 	pushw iz                                ; push IZ
 	ldw (xsp + 0x04), 15
@@ -25343,15 +25370,14 @@ HDAE5000_FormatFloat_Fixed_Next11:
 	ret
 
 
-HDAE5000_FormatFloat_Exp:	; 0x29A888 (848 bytes)
-	; Output handler for string formatter
-	; Exponential (%e / %E, and %g out of fixed range) conversion: emits
-	; d.ddd, then the exponent letter (toupper(spec)=='G' -> spec-2, i.e.
-	; 'e'/'E') and the exponent through HDAE5000_Int_To_Decimal_String.
-	; Case tests use HDAE5000_CType_Table bit 1 (lower case).  Called only by
-	; HDAE5000_FormatFloat.
-; LSFO: 0x29A888 (848 bytes)
-
+; ---------------------------------------------------------------------------
+; Exponential conversion (%e / %E, and %g out of fixed range): emits d.ddd,
+; then the exponent letter (for %g / %G the spec letter - 2, i.e. 'e' / 'E')
+; and the exponent through HDAE5000_Int_To_Decimal_String.  Case tests use
+; HDAE5000_CType_Table bit 1 (lower case).  Counts its characters in
+; HDAE5000_RAM_PrintfFloatCount.  Only caller: HDAE5000_FormatFloat.
+; ---------------------------------------------------------------------------
+HDAE5000_FormatFloat_Exp:
 	dec	2, xsp
 	push xiz
 	ldw (xsp + 0x04), 15
@@ -25830,41 +25856,39 @@ HDAE5000_IToA:
 	lda xsp, (xsp + 0x12)		; deallocate 18-byte frame
 	ret
 
-HDAE5000_LDiv:	; 0x29ACC5 (263 bytes)
-	; ldiv(ldiv_t *result, long num, long den): result->quot = num / den
-	; (HDAE5000_SDiv32), result->rem = num % den (HDAE5000_SMod32), built in a
-	; local and copied out with 4 x LDIRW.  den == 0 skips both calls.
-	; Three routines share these 263 bytes: this one (67 B), HDAE5000_LToA
-	; and HDAE5000_ULToA.
-	;
-	; --- Sub 1: Cell copy buffer (0x29ACC5-0x29AD07, 67 bytes) ---
-	; Calls divide/modulo utilities, copies 8 bytes via LDIRW.
-	lda xsp, (xsp - 16)		; allocate 16-byte frame
-	push xiz			; save XIZ
-	ld xwa, (xsp + 0x20)		; XWA = param (format ptr?)
-	or xwa, xwa			; zero check
-	jr z, .Lccb_copy		; skip if null
-	lda xwa, (xsp + 0x0C)		; XWA = &local[12]
-	ld (xsp + 8), xwa		; save ptr A
-	ld (xsp + 4), xwa		; save ptr B
-	ld xiz, (xsp + 0x1C)		; XIZ = source data ptr
-	ld xwa, xiz			; XWA = source ptr
-	ld xbc, (xsp + 0x20)		; XBC = format param
-	call HDAE5000_SDiv32			; call 0x29B8BB: XHL = num / den (signed)
-	ld xwa, (xsp + 4)		; reload ptr B
-	ld (xwa), xhl			; store result to local
-	ld xwa, xiz			; XWA = source ptr
-	ld xbc, (xsp + 0x20)		; XBC = format param
-	call HDAE5000_SMod32			; call 0x29B8B7: XHL = num % den (signed)
-	ld xwa, (xsp + 8)		; reload ptr A
-	ld (xwa + 4), xhl		; store result to local+4
+; ---------------------------------------------------------------------------
+; ldiv(): result->quot = num / den (HDAE5000_SDiv32), result->rem = num % den
+; (HDAE5000_SMod32), built in a local and copied out with 4 x LDIRW.
+; den == 0 skips both calls and copies the uninitialised local.
+; In:  (xsp+4) = ldiv_t *result, (xsp+8) = num, (xsp+12) = den.  XIZ preserved.
+; ---------------------------------------------------------------------------
+HDAE5000_LDiv:
+	lda xsp, (xsp - 16)
+	push xiz
+	ld xwa, (xsp + 0x20)
+	or xwa, xwa
+	jr z, .Lccb_copy
+	lda xwa, (xsp + 0x0C)
+	ld (xsp + 8), xwa
+	ld (xsp + 4), xwa
+	ld xiz, (xsp + 0x1C)
+	ld xwa, xiz
+	ld xbc, (xsp + 0x20)
+	call HDAE5000_SDiv32
+	ld xwa, (xsp + 4)
+	ld (xwa), xhl
+	ld xwa, xiz
+	ld xbc, (xsp + 0x20)
+	call HDAE5000_SMod32
+	ld xwa, (xsp + 8)
+	ld (xwa + 4), xhl
 .Lccb_copy:
-	ld xix, (xsp + 0x18)		; XIX = destination ptr
-	lda xiy, (xsp + 0x0C)		; XIY = &local[12] (source)
-	ld bc, 4:i3			; BC = 4 (copy 4 words = 8 bytes)
-	ldirw				; block copy 16-bit × 4
-	pop xiz				; restore XIZ
-	lda xsp, (xsp + 0x10)		; deallocate 16-byte frame
+	ld xix, (xsp + 0x18)
+	lda xiy, (xsp + 0x0C)
+	ld bc, 4:i3
+	ldirw
+	pop xiz
+	lda xsp, (xsp + 0x10)
 	ret
 	;
 	; --- Sub 2: Signed number format handler (0x29AD08-0x29AD43, 60 bytes) ---
@@ -25965,132 +25989,135 @@ HDAE5000_ULToA:			; 0x29AD44
 	lda xsp, (xsp + 0x2E)		; deallocate 46-byte frame
 	ret
 
-HDAE5000_MemCCpy:	; 0x29ADCC (64 bytes)
-	; memccpy(dest, src, c, n): p = HDAE5000_MemChr(src, c, n); copies
-	; (p ? p - src + 1 : n) bytes with HDAE5000_MemCopy.  NOTE the return
-	; value is p itself -- the position of c in SRC, or 0 -- not the ISO
-	; pointer into dest; HDAE5000_StrCpy only tests it against 0.
-	; String copy with length limit
-	; Stack: [+0x0C] dest, [+0x10] source, [+0x14] limit (IZ), [+0x14] flags
-	; Uses String_Length to find end, then MemCopy to copy data
-	; Returns: XHL = end pointer (or 0 if not found)
-	dec 4, xsp			; allocate 4 bytes
+; ---------------------------------------------------------------------------
+; memccpy(dest, src, c, n): p = HDAE5000_MemChr(src, c, n); copies
+; (p ? p - src + 1 : n) bytes with HDAE5000_MemCopy.  NOTE the return value is
+; p itself -- the position of c in SRC, or 0 -- not the ISO pointer into
+; dest; HDAE5000_StrCpy only tests it against 0.
+; In:  (xsp+4) = dest, (xsp+8) = src, (xsp+12) = c (word), (xsp+14) = n (word)
+; Out: XHL = p.  IZ preserved.
+; ---------------------------------------------------------------------------
+HDAE5000_MemCCpy:
+	dec 4, xsp
 	pushw iz
-	ld iz, (xsp + 0x14)		; IZ = limit/count
-	pushw iz			; arg: count
-	pushm (xsp + 0x14)		; arg: search char/flags
-	ld xwa, (xsp + 0x12)		; source pointer
-	push xwa			; arg: string ptr
+	ld iz, (xsp + 0x14)
+	pushw iz
+	pushm (xsp + 0x14)
+	ld xwa, (xsp + 0x12)
+	push xwa
 	call HDAE5000_MemChr
-	inc 8, xsp			; clean up 8 bytes
-	ld (xsp + 2), xhl		; save result
-	ld xwa, (xsp + 2)		; reload result
-	or xwa, xwa			; test if found
+	inc 8, xsp
+	ld (xsp + 2), xhl
+	ld xwa, (xsp + 2)
+	or xwa, xwa
 	jr nz, .Lscn_found
-	pushw iz			; not found: use full limit
+	pushw iz
 	jr t, .Lscn_copy
 .Lscn_found:
-	ld xwa, (xsp + 2)		; found position
-	sub xwa, (xsp + 0x0E)		; subtract source base = length
-	inc 1, xwa			; include found byte
-	pushw wa			; push 16-bit length
+	ld xwa, (xsp + 2)
+	sub xwa, (xsp + 0x0E)
+	inc 1, xwa
+	pushw wa
 .Lscn_copy:
-	ld xwa, (xsp + 0x10)		; dest pointer
+	ld xwa, (xsp + 0x10)
 	push xwa
-	ld xwa, (xsp + 0x10)		; source pointer
+	ld xwa, (xsp + 0x10)
 	push xwa
 	call HDAE5000_MemCopy
-	lda xsp, (xsp + 0x0A)		; clean up 10 bytes
-	ld xhl, (xsp + 2)		; return saved end pointer
+	lda xsp, (xsp + 0x0A)
+	ld xhl, (xsp + 2)
 	popw iz
-	inc 4, xsp			; deallocate 4 bytes
+	inc 4, xsp
 	ret
 
-HDAE5000_MemChr:	; 0x29AE0C (24 bytes)
-	; memchr(s, c, n)
-	; Find character in string using block search (cpir)
-	; Stack: [+0x04] string ptr, [+0x08] search char (WA), [+0x0A] max count (BC)
-	; Returns: XHL = pointer TO the found char (cpir leaves XHL one past it;
-	;          the `dec 1, xhl` backs up), or 0 if not found
-	ld xhl, 0:i3			; default: not found
-	ld bc, (xsp + 0x0A)		; BC = max count
+; ---------------------------------------------------------------------------
+; memchr(s, c, n) with CPIR.
+; In:  (xsp+4) = s, (xsp+8) = c (low byte of the word), (xsp+10) = n (word)
+; Out: XHL = pointer to the first c, or 0 (also for n = 0).  Clobbers BC, WA.
+; ---------------------------------------------------------------------------
+HDAE5000_MemChr:
+	ld xhl, 0:i3
+	ld bc, (xsp + 0x0A)
 	cp bc, 0:i3
-	ret z				; count=0: return 0
-	ld xhl, (xsp + 4)		; XHL = string pointer
-	ld wa, (xsp + 8)		; WA (low byte = search char)
-	cpir83				; search for A in (XHL), decrement BC
-	dec 1, xhl			; back up to found position
-	ret z				; found: return pointer
-	ld xhl, 0:i3			; not found: return 0
+	ret z
+	ld xhl, (xsp + 4)
+	ld wa, (xsp + 8)
+	cpir83
+	dec 1, xhl
+	ret z
+	ld xhl, 0:i3
 	ret
 
-HDAE5000_MemCmp:	; 0x29AE24 (123 bytes)
-	; memcmp(p1, p2, n).  (Was named File_Read: it reads no file.)
-	; Memory comparison (memcmp-like): compares BC bytes at XIX vs XIY
-	; Stack: [+0x04] ptr1, [+0x08] ptr2, [+0x0C] length
-	; Returns: HL = 0 if equal, HL = signed byte difference if not
-	; Optimized: aligns to 4-byte boundary, then compares 32-bit words
-	ld bc, (xsp + 12)		; BC = length
-	ld hl, 0:i3			; result = 0 (equal)
-	cp bc, 0:i3			; length == 0?
-	ret z				; return if zero length
-	ld xix, (xsp + 4)		; XIX = ptr1
-	ld xiy, (xsp + 8)		; XIY = ptr2
-	cp xix, xiy			; same pointer?
-	ret z				; return if same
-	ld de, ix			; DE = low 16 bits of ptr1
-	neg de				; negate
-	and de, 0x0003			; DE = bytes to 4-byte alignment
-	jr z, .Lfr_aligned		; skip if already aligned
+; ---------------------------------------------------------------------------
+; memcmp(p1, p2, n): byte compares up to a 4-byte boundary of p1, then long
+; compares, then the 0-3 remaining bytes.
+; In:  (xsp+4) = p1, (xsp+8) = p2, (xsp+12) = n (word)
+; Out: HL = 0 when equal (or n = 0, or p1 = p2), else the difference of the
+;      first differing bytes (unsigned bytes, signed result).
+;      Clobbers XIX, XIY, XWA, BC, DE.
+; ---------------------------------------------------------------------------
+HDAE5000_MemCmp:
+	ld bc, (xsp + 12)
+	ld hl, 0:i3
+	cp bc, 0:i3
+	ret z
+	ld xix, (xsp + 4)
+	ld xiy, (xsp + 8)
+	cp xix, xiy
+	ret z
+	ld de, ix
+	neg de
+	and de, 0x0003
+	jr z, .Lfr_aligned
 .Lfr_byte_loop1:
-	ld l, (xix+)			; L = *(XIX++)
-	extz hl				; zero-extend L to HL
-	ld a, (xiy+)			; A = *(XIY++)
-	extz wa				; zero-extend A to WA
-	sub hl, wa			; compare
-	ret nz				; return if different
-	sub bc, 0x0001			; decrement length
-	ret z				; return if done
-	djnz16 de, .Lfr_byte_loop1	; loop for alignment bytes
+	ld l, (xix+)
+	extz hl
+	ld a, (xiy+)
+	extz wa
+	sub hl, wa
+	ret nz
+	sub bc, 0x0001
+	ret z
+	djnz16 de, .Lfr_byte_loop1
 .Lfr_aligned:
-	ld de, bc			; save remaining length
-	srl bc, 2			; BC = number of 32-bit words
-	jr z, .Lfr_remainder		; skip if no full words
+	ld de, bc
+	srl bc, 2
+	jr z, .Lfr_remainder
 .Lfr_word_loop:
-	ld xhl, (xix+)		; XHL = *(XIX++) (32-bit)
-	ld xwa, (xiy+)		; XWA = *(XIY++) (32-bit)
-	cp xhl, xwa			; compare 32-bit words
-	jr z, .Lfr_word_next		; skip if equal
+	ld xhl, (xix+)
+	ld xwa, (xiy+)
+	cp xhl, xwa
+	jr z, .Lfr_word_next
 	; Words differ — find which byte differs
-	cp hl, wa			; compare low 16 bits
-	jr nz, .Lfr_check_byte		; if low halves differ
-	ld hl, qhl		; ld hl, qhl (high word from prev bank)
-	ld wa, qwa		; ld wa, qwa (high word from prev bank)
+	cp hl, wa
+	jr nz, .Lfr_check_byte
+	ld hl, qhl
+	ld wa, qwa
 .Lfr_check_byte:
-	cp l, a				; compare low bytes
-	jr nz, .Lfr_found_diff		; if different
-	ld l, h				; move high byte to L
-	ld a, w				; move high byte to A
+	cp l, a
+	jr nz, .Lfr_found_diff
+	ld l, h
+	ld a, w
 .Lfr_found_diff:
-	extz hl				; zero-extend L to HL
-	extz wa				; zero-extend A to WA
-	sub hl, wa			; HL = difference
-	ret				; return
+	extz hl
+	extz wa
+	sub hl, wa
+	ret
 .Lfr_word_next:
-	djnz16 bc, .Lfr_word_loop	; loop for remaining words
-	ld hl, 0:i3			; clear result (equal so far)
+	djnz16 bc, .Lfr_word_loop
+	ld hl, 0:i3
 .Lfr_remainder:
-	and de, 0x0003			; DE = remaining bytes
-	ret z				; return if none
+	and de, 0x0003
+	ret z
 .Lfr_byte_loop2:
-	ld l, (xix+)			; L = *(XIX++)
-	extz hl				; zero-extend L to HL
-	ld a, (xiy+)			; A = *(XIY++)
-	extz wa				; zero-extend A to WA
-	sub hl, wa			; compare
-	ret nz				; return if different
-	djnz16 de, .Lfr_byte_loop2	; loop for remaining
-	ret				; return (HL = 0, equal)
+	ld l, (xix+)
+	extz hl
+	ld a, (xiy+)
+	extz wa
+	sub hl, wa
+	ret nz
+	djnz16 de, .Lfr_byte_loop2
+	ret
 
 ; ----------------------------------------------------------------------------
 ; Memory Utility Routines (0x29AE9F - 0x29AF2C)

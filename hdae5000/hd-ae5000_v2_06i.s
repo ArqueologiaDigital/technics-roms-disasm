@@ -182,6 +182,8 @@
 	.equ HDAE5000_RAM_PportSectorOffset, 0x2390f8	; word: byte offset into PportSectorBuffer while SendRegionToPc sends it; 512 = read the next sector
 	.equ HDAE5000_RAM_PportRegions, 0x239108	; (address, size) long pairs: SendTwoRegions sends pairs 0 and 1; InitRegionDescriptors stores part sizes in the slots
 	.equ HDAE5000_RAM_PportBytesLeft, 0x239164	; bytes SendRegionToPc still has to send
+	.equ HDAE5000_RAM_Errno, 0x230eca	; word: set to 34 (ERANGE) by HDAE5000_Float_Pack / _Double_Pack on overflow
+	.equ HDAE5000_RAM_MathErrorHook, 0x23a1a8	; routine pointer HDAE5000_Float_Pack / _Double_Pack call after setting Errno, when it is non-zero
 
 ; ----------------------------------------------------------------------------
 ; The main CPU's function tables, as the HD-AE5000 reaches them: workspace

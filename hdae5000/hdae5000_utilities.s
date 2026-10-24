@@ -1,19 +1,21 @@
-HDAE5000_StrPrefixCmp:	; 29AF2Dh
-	; returns HDAE5000_MemCmp(s, t, HDAE5000_StrLen(s)): 0 when t BEGINS WITH
-	; s (a string compare that ignores whatever follows in t).  Callers use
-	; it as a string-equality test (CHS code entry, slot names).
-	; Validate display buffer and read file data
-	; Input: (XSP+8) = XIZ context, (XSP+0x12) = XWA file params
+; ---------------------------------------------------------------------------
+; HDAE5000_MemCmp(s, t, HDAE5000_StrLen(s)): 0 when t BEGINS WITH s (whatever
+; follows in t is ignored).  Callers use it as a string-equality test (CHS
+; code entry, slot names).
+; In:  (xsp+4) = s, (xsp+8) = t
+; Out: HL = 0 on a match.  XIZ preserved.
+; ---------------------------------------------------------------------------
+HDAE5000_StrPrefixCmp:
 	push xiz
-	ld xiz, (xsp + 8)		; load context pointer
-	push xiz			; arg for Display_Buffer_Validate
+	ld xiz, (xsp + 8)
+	push xiz
 	call HDAE5000_StrLen
-	pushw hl			; save validation result
-	ld xwa, (xsp + 0x12)		; load file params
-	push xwa			; arg 2
-	push xiz			; arg 1
+	pushw hl
+	ld xwa, (xsp + 0x12)
+	push xwa
+	push xiz
 	call HDAE5000_MemCmp
-	lda xsp, (xsp + 0x0E)		; clean up 14 bytes
+	lda xsp, (xsp + 0x0E)
 	pop xiz
 	ret
 
@@ -100,11 +102,13 @@ HDAE5000_StrNCat:
 	ld (xix), 0x00		; null-terminate
 	ret
 
-HDAE5000_StrNCmp:	; 0x29AFBE
-	; strncmp(a, b, n): stops at n or at a NUL in a.
-	; Compare two memory blocks byte-by-byte
-	; Stack: [+0x04] block A (XIX), [+0x08] block B (XDE), [+0x0C] count (BC)
-	; Returns: HL = 0 if match, else sign-extended difference of first mismatch
+; ---------------------------------------------------------------------------
+; strncmp(a, b, n): stops at n or at a NUL in a.
+; In:  (xsp+4) = a, (xsp+8) = b, (xsp+12) = n (word)
+; Out: HL = 0 on a match, else the sign-extended difference of the first
+;      differing bytes.  Clobbers XIX, XDE, BC, A.
+; ---------------------------------------------------------------------------
+HDAE5000_StrNCmp:
 	ld bc, (xsp + 0x0C)		; BC = count
 	ld xde, (xsp + 8)		; XDE = block B
 	ld xix, (xsp + 4)		; XIX = block A
@@ -166,8 +170,12 @@ HDAE5000_StrNCpy_Next2:
 	jr	nz, HDAE5000_StrNCpy_Loop2
 	ret
 
+; ---------------------------------------------------------------------------
+; strrev(s): swaps s[i] and s[strlen(s)-1-i] in place.
+; In:  (xsp+4) = s
+; Out: XHL = s.  XIZ preserved.
+; ---------------------------------------------------------------------------
 HDAE5000_StrRev:
-	; strrev(s): swaps s[i] and s[strlen(s)-1-i] in place; returns XHL = s.
 	push xiz
 	ld xiz, (xsp + 0x08)
 	push xiz
@@ -196,9 +204,13 @@ HDAE5000_StrRev_Done:
 	pop xiz
 	ret
 
+; ---------------------------------------------------------------------------
+; strupr(s): subtracts 0x20 from every byte whose HDAE5000_CType_Table entry
+; has bit 1 (lower case) set.
+; In:  (xsp+4) = s
+; Out: XHL = s.  Clobbers XIX, XDE, XBC, WA.
+; ---------------------------------------------------------------------------
 HDAE5000_StrUpr:
-	; strupr(s): subtracts 0x20 from every byte whose HDAE5000_CType_Table
-	; entry has bit 1 (lower case) set; returns XHL = s.
 	ld xix, (xsp + 0x04)
 	ld	xhl, xix
 	jr	t, HDAE5000_StrUpr_Next
@@ -535,8 +547,11 @@ HDAE5000_FltDec_Convert_Next5:
 	lda	xsp, (xsp+16)
 	ret
 
+; ---------------------------------------------------------------------------
+; Shift a limb array (one byte per u16 limb) right by N bits.  Compiled C,
+; arguments on the stack.
+; ---------------------------------------------------------------------------
 HDAE5000_FltDec_ShiftRightBits:
-	; shift a limb array right by N bits (limbs hold 8 bits each)
 	dec 8, xsp                              ; dec 0,XSP
 	pushw iz                                ; push IZ
 	ld	iz, 0:i3
@@ -604,8 +619,11 @@ HDAE5000_FltDec_ShiftRightBits_Join4:
 	inc 8, xsp                              ; inc 0,XSP
 	ret
 
+; ---------------------------------------------------------------------------
+; Shift a limb array left by N bits, carrying each limb's high byte up.
+; Compiled C, arguments on the stack.
+; ---------------------------------------------------------------------------
 HDAE5000_FltDec_ShiftLeftBits:
-	; shift a limb array left by N bits, carrying each limb's high byte up
 	ld xiy, (xsp + 0x04)
 	and16_imm_ri xiy, 0xff, 0x00		; and (XIY),0x00ff
 	ld	ix, 1:i3
@@ -640,9 +658,12 @@ HDAE5000_FltDec_ShiftLeftBits_Next:
 	jr	lt, HDAE5000_FltDec_ShiftLeftBits_Loop
 	ret
 
+; ---------------------------------------------------------------------------
+; Zero HDAE5000_RAM_FltDecFraction, then repeatedly x10
+; (HDAE5000_FltDec_FracMulBy10) and add the integer part as the next decimal
+; digit (HDAE5000_FltDec_AddDigit).  IZ preserved.
+; ---------------------------------------------------------------------------
 HDAE5000_FltDec_FractionDigits:
-	; zero the 0x2394EA work area, then repeatedly x10 (FracMulBy10) and
-	; add the integer part as the next decimal digit (AddDigit)
 	pushw iz                                ; push IZ
 	lda xde, (HDAE5000_RAM_FltDecFraction:24)
 	ld	xwa, xde
@@ -701,9 +722,13 @@ HDAE5000_FltDec_FractionDigits_Epilogue:
 	popw iz                                 ; pop IZ
 	ret
 
+; ---------------------------------------------------------------------------
+; Add a value at a position of HDAE5000_RAM_FltDecDigits with decimal carry
+; (subtract 10, increment the digit to the left); positions >= 32 are
+; ignored.
+; In:  (xsp+4) = value (word), (xsp+6) = position (word)
+; ---------------------------------------------------------------------------
 HDAE5000_FltDec_AddDigit:
-	; add a value at a position of the 0x23948A decimal digit buffer, with
-	; decimal carry (subtract 10, increment the digit to the left)
 	ld	de, (xsp+6)
 	cp	de, 0x0020
 	jr	ge, HDAE5000_FltDec_AddDigit_Join
@@ -734,8 +759,11 @@ HDAE5000_FltDec_AddDigit_Next2:
 	jr	gt, HDAE5000_FltDec_AddDigit_Loop2
 	ret
 
+; ---------------------------------------------------------------------------
+; Divide a limb array by 10 in place (DIV per limb, remainder carried down).
+; In:  (xsp+4) = the array
+; ---------------------------------------------------------------------------
 HDAE5000_FltDec_DivBy10:
-	; divide a limb array by 10 in place (DIV per limb, remainder carried down)
 	ld xwa, (xsp + 0x04)
 	ld	xbc, xwa
 	lda	xde, (xwa+18)
@@ -754,8 +782,11 @@ HDAE5000_FltDec_DivBy10_Loop:
 	jr	c, HDAE5000_FltDec_DivBy10_Loop
 	ret
 
+; ---------------------------------------------------------------------------
+; Multiply a 16-limb array by 10 in place with carry propagation.
+; Compiled C, arguments on the stack; IZ preserved.
+; ---------------------------------------------------------------------------
 HDAE5000_FltDec_MulBy10:
-	; multiply a 16-limb array by 10 in place with carry propagation
 	pushw iz                                ; push IZ
 	ld	ix, 0:i3
 	ld	xbc, 0:i3
@@ -805,8 +836,11 @@ HDAE5000_FltDec_MulBy10_Join:
 	popw iz                                 ; pop IZ
 	ret
 
+; ---------------------------------------------------------------------------
+; Multiply HDAE5000_RAM_FltDecFraction (10 limbs) by 10 and normalise the
+; carries.
+; ---------------------------------------------------------------------------
 HDAE5000_FltDec_FracMulBy10:
-	; multiply the 0x2394EA work area (10 limbs) by 10 and normalise carries
 	lda xhl, (HDAE5000_RAM_FltDecFraction:24)
 	ld	xbc, xhl
 	lda	xde, (xhl+20)
@@ -838,8 +872,11 @@ HDAE5000_FltDec_FracMulBy10_Next2:
 	jr	gt, HDAE5000_FltDec_FracMulBy10_Loop2
 	ret
 
+; ---------------------------------------------------------------------------
+; Shift a limb array left until its top limb has bit 7 set.
+; Out: HL = the shift count.  IZ preserved.
+; ---------------------------------------------------------------------------
 HDAE5000_FltDec_NormalizeLeft:
-	; shift left until the top limb has bit 7 set; returns HL = shift count
 	dec	2, xsp
 	pushw iz                                ; push IZ
 	ld	iz, 0:i3
@@ -899,8 +936,11 @@ HDAE5000_FltDec_NormalizeLeft_Epilogue:
 	inc 2, xsp
 	ret
 
+; ---------------------------------------------------------------------------
+; If the top limb exceeds 8 bits, shift right until it fits.
+; Out: HL = the shift count.  IZ preserved.
+; ---------------------------------------------------------------------------
 HDAE5000_FltDec_NormalizeRight:
-	; if the top limb exceeds 8 bits, shift right until it fits; HL = count
 	pushw iz                                ; push IZ
 	ld xde, (xsp + 0x06)
 	ld	iz, 0:i3
@@ -949,9 +989,12 @@ HDAE5000_FltDec_NormalizeRight_Epilogue:
 	popw iz                                 ; pop IZ
 	ret
 
+; ---------------------------------------------------------------------------
+; Decimal exponent from the binary one: e * 301 / 1000 (log10 2 ~ 0.301), the
+; remainder deciding the rounding (HDAE5000_SMod32 / _SDiv32 by 1000).
+; In:  (xsp+4) = binary exponent (word).  XIZ preserved.
+; ---------------------------------------------------------------------------
 HDAE5000_FltDec_DecimalExponent:
-	; decimal exponent from the binary one: e * 301 / 1000 (log10 2 ~ 0.301),
-	; with the remainder deciding the rounding (HDAE5000_SMod32/_SDiv32 by 1000)
 	dec 8, xsp                              ; dec 0,XSP
 	push xiz
 	ld	wa, (xsp+16)
@@ -1028,11 +1071,14 @@ HDAE5000_Multiply:
 	ret
 
 	nop
+
+; ---------------------------------------------------------------------------
+; Unpack the IEEE single at (XBC) into the internal form at (XWA): +0 s16
+; unbiased exponent, +2 u8 class flag (1 = zero), +3 u8 sign (bit 7), +4 u32
+; mantissa with the hidden bit restored (bit 23).
+; Out: L = class flag.  Clobbers XHL, XIX, DE.
+; ---------------------------------------------------------------------------
 HDAE5000_Float_Unpack:
-	; unpack the IEEE single at (XBC) into the internal form at (XWA):
-	;   +0 s16 unbiased exponent, +2 u8 class flag (1 = zero), +3 u8 sign
-	;   (bit 7), +4 u32 mantissa with the hidden bit restored (bit 23).
-	; Returns L = class flag.
 	ld	xhl, 0:i3
 	ld xix, (xbc)
 	ld	de, qix
@@ -1059,12 +1105,14 @@ HDAE5000_Float_Unpack_Skip:
 	ldib_erp 0xee, 1		; ld QL,1
 	jr	t, HDAE5000_Float_Unpack_Done
 	nop
+
+; ---------------------------------------------------------------------------
+; Pack the internal form at (XBC) into an IEEE single at (XWA).  Exponent
+; overflow stores +/-0x7F7FFFFF (FLT_MAX), class flag 8 stores 0; both set
+; HDAE5000_RAM_Errno = 34 (ERANGE) and call HDAE5000_RAM_MathErrorHook when it
+; is non-zero.  Zero (class 1) and exponent underflow store 0 silently.
+; ---------------------------------------------------------------------------
 HDAE5000_Float_Pack:
-	; pack the internal form at (XBC) into an IEEE single at (XWA).  Exponent
-	; overflow stores +/-0x7F7FFFFF (FLT_MAX); class flag 8 stores 0; both
-	; set errno (RAM 0x230ECA) = 34 (ERANGE) and call the hook pointer at
-	; RAM 0x23A1A8 when it is non-zero.  Zero (class 1) and exponent
-	; underflow store 0 silently.
 	ld xhl, (xbc)
 	cpib_erp 0xee, 0		; cp QL,0
 	jr	nz, HDAE5000_Float_Pack_Skip
@@ -1100,16 +1148,18 @@ HDAE5000_Float_Pack_Skip3:
 	orb_erp b, 0xef		; or B,QH
 	ld	qde, bc
 HDAE5000_Float_Pack_Join:
-	ldw	(0x230ECA:24), 34
+	ldw	(HDAE5000_RAM_Errno:24), 34
 	ld (xwa), xde
-	ld	xbc, (0x23a1a8)
+	ld	xbc, (HDAE5000_RAM_MathErrorHook)
 	or xbc, xbc
 	call_cc_ri xbc, 14		; call NZ,XBC
 	ret
 
+; ---------------------------------------------------------------------------
+; *(double *)XWA = *(double *)XBC -- an 8-byte copy.  HDAE5000_DoPrintf uses
+; it to fetch a double va_arg for %e/%f/%g (ap += 8 first).  Clobbers XIX, XIY.
+; ---------------------------------------------------------------------------
 HDAE5000_Copy8:
-	; *(double *)XWA = *(double *)XBC -- 8-byte copy.  HDAE5000_DoPrintf uses
-	; it to fetch a double va_arg for %e/%f/%g (ap += 8 first).
 	ld xix, (xbc)
 	ld xiy, (xbc + 0x04)
 	ld (xwa), xix
@@ -1117,9 +1167,12 @@ HDAE5000_Copy8:
 	ret
 
 	nop
+
+; ---------------------------------------------------------------------------
+; 10-byte copy (XBC) -> (XWA): HDAE5000_DoPrintf's long double va_arg fetch,
+; taken when its flag bit 7 is set (ap += 10 first).  Clobbers XIX, XIY, HL.
+; ---------------------------------------------------------------------------
 HDAE5000_Copy10:
-	; 10-byte copy (XBC) -> (XWA): HDAE5000_DoPrintf's long double va_arg
-	; fetch, taken when its flag bit 7 is set (ap += 10 first).
 	ld xix, (xbc)
 	ld xiy, (xbc + 0x04)
 	ld	hl, (xbc+8)
@@ -1146,8 +1199,11 @@ HDAE5000_LongToFloat:
 	pop xiz
 	ret
 
+; ---------------------------------------------------------------------------
+; *(float *)XWA = (float)*(unsigned long *)XBC (HDAE5000_ULong_To_Unpacked,
+; then HDAE5000_Float_Pack).  XIZ preserved.
+; ---------------------------------------------------------------------------
 HDAE5000_ULongToFloat:
-	; *(float *)XWA = (float)*(unsigned long *)XBC.
 	push xiz
 	lda	xsp, (xsp-8)
 	ld	xiz, xwa
@@ -1174,9 +1230,12 @@ HDAE5000_FloatDiv_Special:
 	ld	(xwa+2), 0x08
 	ret
 
+; ---------------------------------------------------------------------------
+; *(float *)XWA = *(float *)XBC / *(float *)XDE: unpack both
+; (HDAE5000_Float_Unpack), HDAE5000_Unpacked_Div, HDAE5000_Float_Pack.
+; XIZ preserved.
+; ---------------------------------------------------------------------------
 HDAE5000_FloatDiv:
-	; *(float *)XWA = *(float *)XBC / *(float *)XDE: unpack both
-	; (HDAE5000_Float_Unpack), HDAE5000_Unpacked_Div, HDAE5000_Float_Pack.
 	push xiz
 	lda	xsp, (xsp-20)
 	ld	xiz, xde
@@ -1242,34 +1301,37 @@ HDAE5000_SDivMod32_Common_Join3:
 	inc 1, xhl
 	ret
 
+; ---------------------------------------------------------------------------
+; XHL = XWA % XBC, signed (D = 0 into HDAE5000_SDivMod32_Common).
+; ---------------------------------------------------------------------------
 HDAE5000_SMod32:
-	; XHL = XWA % XBC, signed (D = 0 into HDAE5000_SDivMod32_Common)
 	ld	d, 0x00:opc
 	jr	t, HDAE5000_SDivMod32_Common
+
+; ---------------------------------------------------------------------------
+; XHL = XWA / XBC, signed (D = 1 into HDAE5000_SDivMod32_Common).
+; ---------------------------------------------------------------------------
 HDAE5000_SDiv32:
-	; XHL = XWA / XBC, signed (D = 1 into HDAE5000_SDivMod32_Common)
 	ld	d, 0x01:opc
 	jr	t, HDAE5000_SDivMod32_Common
 
 
-HDAE5000_UMod32:	; 0x29B8BF (6 bytes)
-	; XHL = XWA % XBC, unsigned: calls HDAE5000_UDivMod32 and returns its
-	; remainder.  (Was named Divide_Unsigned: XDE is the REMAINDER, and the
-	; decimal converters' own comments already read it as one.)
+; ---------------------------------------------------------------------------
+; XHL = XWA % XBC, unsigned: HDAE5000_UDivMod32's remainder (XDE) moved to XHL.
+; ---------------------------------------------------------------------------
+HDAE5000_UMod32:
 	calr HDAE5000_UDivMod32
 	ld xhl, xde		; XHL = remainder (XDE)
 	ret
 
-HDAE5000_UDivMod32:	; 0x29B8C5
-	; UNSIGNED 32/32 divide: XHL = XWA / XBC, XDE = XWA % XBC.
-	; Unsigned throughout: `jr c`/`jr ule` compares, a 32/16 DIV fast path
-	; when QBC = 0, else a shift-and-subtract loop.  XBC = 0 returns
-	; XHL = 0xFFFFFFFF.  (Was named Divide_Signed; the signed forms are
-	; HDAE5000_SDiv32 / HDAE5000_SMod32, which call this core.)
-; LDIV: 0x29B8C5 (1819 bytes)
-	; ^ region size: the double-precision pack, (U)long->unpacked and
-	;   float->double routines below share it; this routine is 125 bytes.
-
+; ---------------------------------------------------------------------------
+; UNSIGNED 32 / 32 divide: `jr c` / `jr ule` compares, a 32/16 DIV fast path
+; when QBC = 0, else a shift-and-subtract loop.  The signed forms
+; HDAE5000_SDiv32 / HDAE5000_SMod32 call this core.
+; In:  XWA = dividend, XBC = divisor
+; Out: XHL = quotient, XDE = remainder; XBC = 0 returns XHL = 0xFFFFFFFF.
+; ---------------------------------------------------------------------------
+HDAE5000_UDivMod32:
 	cp	xbc, 0x00000001
 	jr	z, HDAE5000_UDivMod32_Done
 	jr	c, HDAE5000_UDivMod32_Done2
@@ -1344,12 +1406,14 @@ HDAE5000_UDivMod32_Done3:
 	ld	xde, xwa
 	ret
 
+; ---------------------------------------------------------------------------
+; Pack the 12-byte internal form at (XBC) (exponent/class/sign word, +4 low and
+; +8 high mantissa longs) into an IEEE double at (XWA), bias 0x3FF.  Exponent
+; overflow and class 8 store DBL_MAX (0x7FEFFFFF FFFFFFFF) with the sign, set
+; HDAE5000_RAM_Errno = 34 (ERANGE) and call HDAE5000_RAM_MathErrorHook; class 1
+; (zero) and underflow store 0.
+; ---------------------------------------------------------------------------
 HDAE5000_Double_Pack:
-	; pack the 12-byte internal form at (XBC) (exponent/class/sign word,
-	; +4 low and +8 high mantissa longs) into an IEEE double at (XWA),
-	; bias 0x3FF; exponent overflow and class 8 store DBL_MAX
-	; (0x7FEFFFFF FFFFFFFF) with the sign, set errno = 34 (ERANGE) and call
-	; the RAM 0x23A1A8 hook; class 1 (zero) and underflow store 0.
 	ld xhl, (xbc)
 	cpib_erp 0xee, 0		; cp QL,0
 	jr	nz, HDAE5000_Double_Pack_Next
@@ -1378,7 +1442,7 @@ HDAE5000_Double_Pack_Next:
 	bit_erpb 0xee, 0x00		; bit 0x00,QL
 	jr	nz, HDAE5000_Double_Pack_Skip
 HDAE5000_Double_Pack_Join:
-	ldw	(0x230ECA:24), 34
+	ldw	(HDAE5000_RAM_Errno:24), 34
 	ld	xde, 0:i3
 	dec	1, xde
 	ld (xwa), xde
@@ -1389,15 +1453,18 @@ HDAE5000_Double_Pack_Join:
 	ld (xwa + 0x04), xde
 	jr	t, HDAE5000_Double_Pack_Done
 HDAE5000_Double_Pack_Done:
-	ld	xbc, (0x23a1a8)
+	ld	xbc, (HDAE5000_RAM_MathErrorHook)
 	or xbc, xbc
 	call_cc_ri xbc, 14		; call NZ,XBC
 	ret
 
 	nop
+
+; ---------------------------------------------------------------------------
+; Signed long XBC -> internal form at (XWA): records the sign, negates, then
+; HDAE5000_ULong_To_Unpacked.
+; ---------------------------------------------------------------------------
 HDAE5000_Long_To_Unpacked:
-	; signed long XBC -> internal form at (XWA): records the sign, negates,
-	; then HDAE5000_ULong_To_Unpacked.
 	ld	e, 0x00:opc
 	ldcf	0x0f, qbc
 	stcf8ri 7, e		; stcf 0x07,E
@@ -1410,10 +1477,12 @@ HDAE5000_Long_To_Unpacked_Join:
 	ld	(xiy+3), e
 	ret
 
+; ---------------------------------------------------------------------------
+; Unsigned long XBC -> internal form at (XWA): BS1B finds the top bit, the
+; value is shifted to a 24-bit mantissa (rounded) and the exponent stored;
+; XBC = 0 sets class flag 1 (zero).
+; ---------------------------------------------------------------------------
 HDAE5000_ULong_To_Unpacked:
-	; unsigned long XBC -> internal form at (XWA): BS1B finds the top bit,
-	; the value is shifted to a 24-bit mantissa (rounded) and the exponent
-	; stored; XBC = 0 sets class flag 1 (zero).
 	ld	xiy, xwa
 	or xbc, xbc
 	jr	z, HDAE5000_ULong_To_Unpacked_Skip3
@@ -1461,9 +1530,13 @@ HDAE5000_ULong_To_Unpacked_Skip3:
 	ret
 
 	nop
+
+; ---------------------------------------------------------------------------
+; *(double *)XWA = (double)*(float *)XBC: HDAE5000_Float_Unpack, widen the
+; mantissa by three right shifts into a high/low pair, HDAE5000_Double_Pack.
+; XIZ preserved.
+; ---------------------------------------------------------------------------
 HDAE5000_FloatToDouble:
-	; *(double *)XWA = (double)*(float *)XBC: Float_Unpack, widen the
-	; mantissa by three right shifts into a high/low pair, Double_Pack.
 	push xiz
 	lda	xsp, (xsp-12)
 	ld	xiz, xwa
@@ -1493,10 +1566,13 @@ HDAE5000_FloatToDouble_Join:
 	ret
 
 	nop
+
+; ---------------------------------------------------------------------------
+; (XWA) /= (XBC) on the internal form: exponents subtracted, signs XORed,
+; mantissas divided four quotient bits per pass; special classes go to
+; HDAE5000_FloatDiv_Special.
+; ---------------------------------------------------------------------------
 HDAE5000_Unpacked_Div:
-	; (XWA) /= (XBC) on the internal form: exponents subtracted, signs
-	; XORed, mantissas divided four quotient bits per pass; special
-	; classes go to HDAE5000_FloatDiv_Special.
 	ld	e, (xwa+2)
 	or	e, (xwa+2)
 	jp	nz, (HDAE5000_FloatDiv_Special:24)

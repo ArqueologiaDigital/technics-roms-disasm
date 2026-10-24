@@ -266,6 +266,10 @@ RAM = {
                                " InitRegionDescriptors stores part sizes in the slots"),
     0x22ABC4: ("PcLinkStatusText", "the text of the PC-link page's PP_STATUS object; the status string goes"
                                    " in at +7, at most 25 characters (HDAE5000_PcLink_ShowStatus, service 26)"),
+    # eleventh run: the C library's error state
+    0x230ECA: ("Errno", "word: set to 34 (ERANGE) by HDAE5000_Float_Pack / _Double_Pack on overflow"),
+    0x23A1A8: ("MathErrorHook", "routine pointer HDAE5000_Float_Pack / _Double_Pack call after setting"
+                                " Errno, when it is non-zero"),
     # sixth run: list texts the UI objects display (EVT_HDAE_SET_STR_ADR points them here)
     0x22B274: ("PartListText", "nine 14-byte tab-ended part names + NUL (0x7F bytes), HDAE5000_PartList_Build"),
     0x22A0D0: ("DirListText", "24 rows x 21 bytes + NUL: \"NNN:\" and the 16-byte directory name at +4"
