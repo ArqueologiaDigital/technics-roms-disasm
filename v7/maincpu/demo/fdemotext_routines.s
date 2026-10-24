@@ -1216,7 +1216,7 @@ FDemoText_RefreshFullDisplay:
 ; call SwbtWr_ReinitOutputBank (v7 addr)
 	call	SwbtWr_ReinitOutputBank
 ; call SwbtWr_CallProcessAll (v7 addr)
-	call SwbtWr_CallProcessAll
+	call	SwbtWr_CallProcessAll
 ; call SwbtWr_ReinitOutputBank (v7 addr)
 	call	SwbtWr_ReinitOutputBank
 

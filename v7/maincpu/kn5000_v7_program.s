@@ -1671,10 +1671,10 @@ Boot_ReadFDCStatus:
 
 ; VoiceSynth command handler case 0
 VoiceSynth_CmdCase0:
-	cp (XAPR_PRESENT_FLAG:24), 0
-	ret z
-	ld xhl, 2621460
-	call (xhl)
+	cp	(XAPR_PRESENT_FLAG:24), 0
+	ret	z
+	ld	xhl, 0x280014
+	call	(xhl)
 	ret
 ; VoiceSynth command handler case 1
 VoiceSynth_CmdCase1:
@@ -2182,7 +2182,7 @@ Voice_InitBankTables_Loop:
 Voice_InitBankTables_SlotLoop:
 ; (was .incbin "includes/romslices/v7_fix_voice_initbanktables_slotloop.bin")
 	ld	xiy, Voice_SlotTemplate
-	ldw	bc, 128
+	ldw	bc, 0x80
 	ldirw
 	dec	1, a
 	jr	nz, Voice_InitBankTables_SlotLoop

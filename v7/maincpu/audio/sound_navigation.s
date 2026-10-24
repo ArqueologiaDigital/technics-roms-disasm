@@ -8,36 +8,36 @@
 ; =============================================================================
 
 MainGetSoundName:
-	lda xsp, (xsp-20)
-	push xiz
-	ld (xsp+20), xde
-	ld xwa, (xsp+20)
-	cp xbc, EVT_ADD_SOUND_SW_NO
-	jrl z, MainGetSoundName_OnAddSoundSwNo
-	cp xbc, EVT_SET_SOUND_SW_NO
-	jrl z, Sound_SetSelection
-	cp xbc, EVT_GET_SOUND_SW_NO
-	jrl z, SoundLookup_ByCategory
-	cp xbc, EVT_GET_SOUND_NAME
-	jrl nz, Sound_Navigate_Return
-	pushw 6
-	call Malloc
-	ld (xsp+8), xhl
-	pushw 18
-	call Malloc
-	inc 4, xsp
-	ld (xsp+10), xhl
-	ld xwa, (xsp+20)
-	ld xbc, (xsp+6)
-	ld (xbc), wa
-	ld xde, (xsp+10)
-	ld (xbc+2), xde
-	cpw (xbc), 15
-	jr ule, GetSoundName_BuildString
-	cpw (xbc), 21
-	jr c, GetSoundName_DefaultString
-	cpw (xbc), 22
-	jr ugt, GetSoundName_DefaultString
+	lda	xsp, (xsp-20)
+	push	xiz
+	ld	(xsp+20), xde
+	ld	xwa, (xsp+20)
+	cp	xbc, EVT_ADD_SOUND_SW_NO
+	jrl	z, MainGetSoundName_OnAddSoundSwNo
+	cp	xbc, EVT_SET_SOUND_SW_NO
+	jrl	z, Sound_SetSelection
+	cp	xbc, EVT_GET_SOUND_SW_NO
+	jrl	z, SoundLookup_ByCategory
+	cp	xbc, EVT_GET_SOUND_NAME
+	jrl	nz, Sound_Navigate_Return
+	pushw	0x6
+	call	Malloc
+	ld	(xsp+8), xhl
+	pushw	0x12
+	call	Malloc
+	inc	4, xsp
+	ld	(xsp+10), xhl
+	ld	xwa, (xsp+20)
+	ld	xbc, (xsp+6)
+	ld	(xbc), wa
+	ld	xde, (xsp+10)
+	ld	(xbc+2), xde
+	cpw	(xbc), 0xf
+	jr	ule, GetSoundName_BuildString
+	cpw	(xbc), 0x15
+	jr	c, GetSoundName_DefaultString
+	cpw	(xbc), 0x16
+	jr	ugt, GetSoundName_DefaultString
 GetSoundName_BuildString:
 	ld	bc, 0:i3
 	call	SndParam_LookupViaEncode

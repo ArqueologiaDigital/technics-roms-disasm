@@ -3063,7 +3063,7 @@ MidiPgmChg_Mode0_SetupA:
 	or	a, w
 	ldb_d8	w, (6747)
 	and	w, 128
-	rlc w, 2
+	rlc	w, 2
 	or	a, w
 	push	xhl
 	call	SoundGen_UpdateAndRefresh
@@ -3785,7 +3785,7 @@ MidiPgmChg_Mode0_SetupB:
 	or	a, w
 	ldb_d8	w, (6747)
 	and	w, 128
-	rlc w, 2
+	rlc	w, 2
 	or	a, w
 	push	xhl
 	call	SoundGen_UpdateAndRefresh

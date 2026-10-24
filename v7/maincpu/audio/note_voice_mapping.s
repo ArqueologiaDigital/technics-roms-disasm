@@ -671,7 +671,7 @@ AccNoteOn_SpecialDirectAdd:
 	ld	xwa, 0xcb82
 	ld	xbc, (xsp + 2)
 	ldw	de, 0x15
-	call NoteMap_AddEntry
+	call	NoteMap_AddEntry
 	jr	AccNoteOn_FinalizeAndAutoPlay
 AccNoteOn_CheckLayer3Only:
 	ld	xwa, (xsp + 2)

@@ -1424,7 +1424,7 @@ FDC_CmdSeek:
 	cp a, (0x8a68:16)
 	ret Z
 ; (was .incbin "includes/romslices/v7_transplant_FDC_CmdRecalibrate_tail.bin")
-	ld (35432), (35226:16)
+	ld	(0x8a68), (0x899a:16)
 	ld	wa, 2:i3
 	calr	SOME_DELAY
 	calr	FDC_TIMING_DELAY

@@ -944,14 +944,14 @@ BitMapOut_CopyExtTable_Check:
 ; wa = slot: copy it over the live panel, then put back from the backup (RAM 0x3C8E4) tag 0x48 payload bytes
 ; 0, 1 (style number) and 7, the low 3 bits of byte 4, and tag 0x72 payload bytes 8-10 -- the current style
 ; survives the recall.
-	ld	a, (64705:16)
+	ld	a, (0xfcc1:16)
 	extz	wa
 	cp	bc, wa
 	jr	c, BitMapOut_CopyExtTable_Loop
 	ld	bc, 0:i3
 	jr	PanelMemory_RecallRecords_Join
 PanelMemory_RecallRecords_Loop:
-	lda	xwa, (64758:16)
+	lda	xwa, (0xfcf6:16)
 	ld	de, bc
 	extz	xde
 	add	xde, xwa
@@ -964,7 +964,7 @@ PanelMemory_RecallRecords_Loop:
 	ld	(xde), a
 	inc	1, bc
 PanelMemory_RecallRecords_Join:
-	ld	a, (64757:16)
+	ld	a, (0xfcf5:16)
 	extz	wa
 	cp	bc, wa
 	jr	c, PanelMemory_RecallRecords_Loop
@@ -991,7 +991,7 @@ PanelMemory_RecallRecords_Join:
 	add	xde, xwa
 	ld	a, (xde)
 	ld	(xbc), a
-	lda	xbc, (64780:16)
+	lda	xbc, (0xfd0c:16)
 	lda	xde, (xbc+3)
 	ld	xhl, xde
 	sub	xhl, (xsp+4)
@@ -1013,7 +1013,7 @@ PanelMemory_RecallRecords_Join:
 	add	xde, xwa
 	ld	a, (xde)
 	ld	(xbc), a
-	lda	xbc, (64812:16)
+	lda	xbc, (0xfd2c:16)
 	ld	xde, xbc
 	sub	xde, (xsp+4)
 	ld	xhl, xix
@@ -1025,67 +1025,67 @@ PanelMemory_RecallRecords_Join:
 	lda	xsp, (xsp+16)
 	ret
 PanelMemory_RecallKeepStyle:
-	extz wa
-	calr PanelMemory_CopySlotToLivePanel
-	push xde
-	push xhl
-	push xix
-	push xiz
-	call SeqTimer_UpdateTempoReg
-	pop xiz
-	pop xix
-	pop xhl
-	pop xde
-	lda xbc, (63904:16)
-	lda xix, (64602:16)
-	ld xwa, xix
-	sub xwa, xbc
-	lda xde, (248036:24)
-	add xwa, xde
-	ld a, (xwa)
-	ld (xix), a
-	lda xhl, (xix+1)
-	ld xwa, xhl
-	sub xwa, xbc
-	add xwa, xde
-	ld a, (xwa)
-	ld (xhl), a
-	lda xhl, (xix+7)
-	ld xwa, xhl
-	sub xwa, xbc
-	add xwa, xde
-	ld a, (xwa)
-	ld (xhl), a
-	inc 4, xix
-	ld l, (xix)
-	and l, 248
-	ld (xix), l
-	ld xwa, xix
-	sub xwa, xbc
-	add xwa, xde
-	ld a, (xwa)
-	and a, 7
-	or l, a
-	ld (xix), l
-	lda xix, (64780:16)
-	lda xhl, (xix+8)
-	ld xwa, xhl
-	sub xwa, xbc
-	add xwa, xde
-	ld a, (xwa)
-	ld (xhl), a
-	lda xhl, (xix+9)
-	ld xwa, xhl
-	sub xwa, xbc
-	add xwa, xde
-	ld a, (xwa)
-	ld (xhl), a
-	lda xhl, (xix+10)
-	ld xwa, xhl
-	sub xwa, xbc
-	add xwa, xde
-	ld a, (xwa)
-	ld (xhl), a
+	extz	wa
+	calr	PanelMemory_CopySlotToLivePanel
+	push	xde
+	push	xhl
+	push	xix
+	push	xiz
+	call	SeqTimer_UpdateTempoReg
+	pop	xiz
+	pop	xix
+	pop	xhl
+	pop	xde
+	lda	xbc, (0xf9a0:16)
+	lda	xix, (0xfc5a:16)
+	ld	xwa, xix
+	sub	xwa, xbc
+	lda	xde, (0x03c8e4:24)
+	add	xwa, xde
+	ld	a, (xwa)
+	ld	(xix), a
+	lda	xhl, (xix+1)
+	ld	xwa, xhl
+	sub	xwa, xbc
+	add	xwa, xde
+	ld	a, (xwa)
+	ld	(xhl), a
+	lda	xhl, (xix+7)
+	ld	xwa, xhl
+	sub	xwa, xbc
+	add	xwa, xde
+	ld	a, (xwa)
+	ld	(xhl), a
+	inc	4, xix
+	ld	l, (xix)
+	and	l, 0xf8
+	ld	(xix), l
+	ld	xwa, xix
+	sub	xwa, xbc
+	add	xwa, xde
+	ld	a, (xwa)
+	and	a, 0x7
+	or	l, a
+	ld	(xix), l
+	lda	xix, (0xfd0c:16)
+	lda	xhl, (xix+8)
+	ld	xwa, xhl
+	sub	xwa, xbc
+	add	xwa, xde
+	ld	a, (xwa)
+	ld	(xhl), a
+	lda	xhl, (xix+9)
+	ld	xwa, xhl
+	sub	xwa, xbc
+	add	xwa, xde
+	ld	a, (xwa)
+	ld	(xhl), a
+	lda	xhl, (xix+10)
+	ld	xwa, xhl
+	sub	xwa, xbc
+	add	xwa, xde
+	ld	a, (xwa)
+	ld	(xhl), a
 	ret
 ; === end v7 block ===
 ; wa = slot: Mem_Copy PanelMemory_SlotAddresses[wa] (960 bytes) over the live panel at RAM 0xF9A0.

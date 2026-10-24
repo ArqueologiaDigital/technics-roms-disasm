@@ -1083,7 +1083,7 @@ UpdSeSel_DetailedUpdate_Epilogue6:
 	lda	xsp, (xsp+12)
 	ret
 UpdSeSel_DetailedUpdate_Helper:
-	push qiz
+	push	qiz
 	ldib_erp	250, 0
 UpdSeSel_DetailedUpdate_Helper_Loop:
 	ldib_erp	251, 1
@@ -1104,7 +1104,7 @@ UpdSeSel_DetailedUpdate_Helper_Loop2:
 	pop qiz
 	ret
 UpdSeSel_DetailedUpdate_Helper2:
-	push qiz
+	push	qiz
 	ldib_erp	250, 0
 UpdSeSel_DetailedUpdate_Helper2_Loop:
 	ldib_erp	251, 0
@@ -1241,7 +1241,7 @@ UpdSeSel_DetailedUpdate_Epilogue8:
 	ret
 UpdSeSel_DetailedUpdate_Helper3:
 	dec	2, xsp
-	push qiz
+	push	qiz
 	lda	xwa, (xsp+2)
 	call	SeMenu_ValidatePartNumber
 	ldib_erp	251, 0
@@ -1261,7 +1261,7 @@ UpdSeSel_DetailedUpdate_Helper3_Loop:
 	ret
 UpdSeSel_DetailedUpdate_Helper4:
 	dec	2, xsp
-	push qiz
+	push	qiz
 	lda	xwa, (xsp+2)
 	call	SeMenu_ValidatePartNumber
 	pushw 45
@@ -1604,7 +1604,7 @@ UpdSeSel_DetailedUpdate_Epilogue11:
 	ret
 UpdSeSel_DetailedUpdate_Helper7:
 	dec	2, xsp
-	push qiz
+	push	qiz
 	lda	xwa, (xsp+2)
 	call	SeMenu_ValidatePartNumber
 	ldib_erp	251, 0
@@ -1636,7 +1636,7 @@ UpdSeSel_DetailedUpdate_Helper7_Loop:
 	ret
 UpdSeSel_DetailedUpdate_Helper8:
 	dec	2, xsp
-	push qiz
+	push	qiz
 	lda	xwa, (xsp+2)
 	call	SeMenu_ValidatePartNumber
 	ldib_erp 251, 0
@@ -2487,7 +2487,7 @@ SeMenu_CopyWriteUpdate_End:
 ;   the page elements and fills the name buffer with the selected entry's name. Basis: callers + body.
 SeWrtMem_DrawPage:
 	lda	xsp, (xsp-24)
-	push qiz
+	push	qiz
 	lda	xwa, (xsp+2)
 	call	SeMenu_HandleMenuChange_Data
 	cp	(xsp+2), 1
@@ -3167,7 +3167,7 @@ SeMenuTitleFunc_DispatchSwitch_Epilogue6:
 	lda xsp, (xsp + 0x0c)
 	ret
 	dec	6, xsp
-	push qiz
+	push	qiz
 	ld	(xsp+6), a
 	lda	xwa, (xsp+2)
 	call	SeMenu_LoadObjEntries
@@ -3309,7 +3309,7 @@ SeMenu_CopyWriteUpdate_Epilogue9:
 	lda	xsp, (xsp+10)
 	ret
 	lda	xsp, (xsp-18)
-	push qiz
+	push	qiz
 	ld	(xsp+18), a
 	lda	xwa, (xsp+14)
 	call	SeMenu_LoadObjEntries
@@ -3368,7 +3368,7 @@ SeMenu_CopyWriteUpdate_Epilogue47:
 	lda	xsp, (xsp+18)
 	ret
 	lda	xsp, (xsp-18)
-	push qiz
+	push	qiz
 	ld	(xsp+18), a
 	lda	xwa, (xsp+14)
 	call	SeMenu_LoadObjEntries
@@ -3419,7 +3419,7 @@ SeMenu_CopyWriteUpdate_Epilogue48:
 	lda	xsp, (xsp+18)
 	ret
 	lda	xsp, (xsp-18)
-	push qiz
+	push	qiz
 	ld	(xsp+18), a
 	lda	xwa, (xsp+14)
 	call	SeMenu_LoadObjEntries
@@ -3470,7 +3470,7 @@ SeMenu_CopyWriteUpdate_Epilogue49:
 	lda	xsp, (xsp+18)
 	ret
 	lda	xsp, (xsp-10)
-	push qiz
+	push	qiz
 	ld	(xsp+10), a
 	lda	xwa, (xsp+4)
 	call	SeMenu_LoadObjEntries
@@ -3957,7 +3957,7 @@ SeTonHyb1TitleFunc_DispatchSwitch_Epilogue17:
 	ret
 SeTonTon1_OnColumn1:
 	dec	4, xsp
-	push qiz
+	push	qiz
 	ld	(xsp+4), a
 	lda	xbc, (xsp+2)
 	ld	wa, 0:i3
@@ -4080,7 +4080,7 @@ SeTonTon1_OnColumn3_Epilogue20:
 	ret
 SeTonTon1_OnColumn6:
 	lda	xsp, (xsp-16)
-	push qiz
+	push	qiz
 	ld	(xsp+16), a
 	lda	xbc, (xsp+14)
 	ld	wa, 0:i3
@@ -4126,7 +4126,7 @@ SeTonTon1_OnColumn6_Skip58:
 	ret
 SeTonTon1_OnColumn7:
 	lda	xsp, (xsp-16)
-	push qiz
+	push	qiz
 	ld	(xsp+16), a
 	lda	xbc, (xsp+14)
 	ld	wa, 0:i3
@@ -4150,7 +4150,7 @@ SeTonTon1_OnColumn7:
 	extz	bc
 	ld	e, (xsp+14)
 	extz	de
-	pushw 4
+	pushw	4
 	lda	xwa, (xsp+4)
 	push	xwa
 	ldw	wa, 34
@@ -4162,7 +4162,7 @@ SeTonTon1_OnColumn7:
 	ret
 SeTonTon1_OnColumn8:
 	lda	xsp, (xsp-16)
-	push qiz
+	push	qiz
 	ld	(xsp+16), a
 	lda	xbc, (xsp+14)
 	ld	wa, 0:i3
@@ -4251,7 +4251,7 @@ SeTonTon1_OnSwitch15:
 	ret
 SeTonTon2_OnColumn2:
 	dec	8, xsp
-	push qiz
+	push	qiz
 	ld	(xsp+8), a
 	lda	xwa, (xsp+6)
 	call	SeMenu_ValidatePartNumber
@@ -4351,7 +4351,7 @@ SeTonTon2_OnColumn2_Epilogue54:
 	ret
 SeTonTon2_OnColumn4:
 	lda	xsp, (xsp-16)
-	push qiz
+	push	qiz
 	ld	(xsp+16), a
 	lda	xwa, (xsp+14)
 	call	SeMenu_ValidatePartNumber
@@ -4386,7 +4386,7 @@ SeTonTon2_OnColumn4:
 	ret
 SeTonTon2_OnColumn6:
 	lda	xsp, (xsp-10)
-	push qiz
+	push	qiz
 	ld	(xsp+10), a
 	lda	xwa, (xsp+8)
 	call	SeMenu_ValidatePartNumber
@@ -4607,8 +4607,8 @@ SeTonRan1_OnColumn4:
 	pushw 127
 	ldw	bc, 30
 	call	SeMenu_RegisterElement_Extended
-	pushw 1
-	pushw 36
+	pushw	1
+	pushw	36
 	call	SeTitle_DrawField
 	inc	4, xsp
 	ld	c, (xsp+2)
@@ -4695,8 +4695,8 @@ SeTonRan1_OnColumn6:
 	pushw 127
 	ldw	bc, 33
 	call	SeMenu_RegisterElement_Extended
-	pushw 4
-	pushw 36
+	pushw	4
+	pushw	36
 	call	SeTitle_DrawField
 	inc	4, xsp
 	ld	c, (xsp+2)
@@ -5153,7 +5153,7 @@ SeTonHyb1_OnColumn3_Epilogue23:
 	ret
 SeTonHyb1_OnColumn6:
 	lda	xsp, (xsp-22)
-	push qiz
+	push	qiz
 	ld	(xsp+22), a
 	lda	xbc, (xsp+8)
 	ld	wa, 0:i3
@@ -5412,8 +5412,8 @@ SeTonHyb1_OnColumn6_Loop6:
 	cpib_erp 251, 3
 	jr	ule, SeTonHyb1_OnColumn6_Loop6
 SeTonHyb1_OnColumn6_Join31:
-	pushw 1
-	pushw 38
+	pushw	1
+	pushw	38
 	call	SeTitle_DrawField
 	inc	4, xsp
 	ld	wa, 6:i3
@@ -7540,17 +7540,17 @@ SeMenu_PopupDialog_Close_Data:
 	ld	xhl, (xbc+wa)
 	call	(xhl)
 SeMenu_ValueEditor_Init:
-	cp (35996:16), 32
+	cp	(0x8c9c:16), 32
 
-	jrl nz, SeMenu_ValueEditor_Data3
+	jrl	nz, SeMenu_ValueEditor_Data3
 
 	cp (0x020c38:24), 0x10
 
-	jrl nz, SeMenu_ValueEditor_Data3
+	jrl	nz, SeMenu_ValueEditor_Data3
 
-	calr SeMenu_NameEditor_Init
+	calr	SeMenu_NameEditor_Init
 
-	jrl SeMenu_ListSelector_ScrollDown
+	jrl	SeMenu_ListSelector_ScrollDown
 
 
 
@@ -8994,7 +8994,7 @@ SeMenu_DrawPartLabels_Join:
 	dec 1,A
 	.byte 0xc8, 0xff
 	jr	c, SeMenu_DrawPartLabels_Skip
-	push c
+	push	c
 	xor	b, b
 	sla	bc, 2
 	ld	xiz, SeMenu_DrawPartLabels_Records3
@@ -9005,7 +9005,7 @@ SeMenu_DrawPartLabels_Join:
 	pop c
 	jr	SeMenu_DrawPartLabels_Join2
 SeMenu_DrawPartLabels_Skip:
-	push c
+	push	c
 	xor	b, b
 	sla	bc, 2
 	ld	xiz, SeMenu_DrawPartLabels_Records2
@@ -9038,7 +9038,7 @@ SeMenu_DrawPartRadioButtons_Join:
 	dec 1,A
 	.byte 0xc8, 0xff
 	jr	c, SeMenu_DrawPartRadioButtons_Skip2
-	push c
+	push	c
 	xor	b, b
 	sla	bc, 2
 	ld	xiz, SeMenu_DrawPartRadioButtons_Records2
@@ -9049,7 +9049,7 @@ SeMenu_DrawPartRadioButtons_Join:
 	pop c
 	jr	SeMenu_DrawPartRadioButtons_Join2
 SeMenu_DrawPartRadioButtons_Skip2:
-	push c
+	push	c
 	xor	b, b
 	sla	bc, 2
 	ld	xiz, SeMenu_DrawPartRadioButtons_Records
@@ -9075,7 +9075,7 @@ SeMenu_DrawTwoPartRadioButtons:
 	dec 1,A
 	.byte 0xc8, 0xff
 	jr	c, SeMenu_DrawTwoPartRadioButtons_Skip
-	push c
+	push	c
 	xor	b, b
 	sla	bc, 2
 	ld	xiz, SeMenu_DrawTwoPartRadioButtons_Records2
@@ -9086,7 +9086,7 @@ SeMenu_DrawTwoPartRadioButtons:
 	pop c
 	jr	SeMenu_DrawTwoPartRadioButtons_Join4
 SeMenu_DrawTwoPartRadioButtons_Skip:
-	push c
+	push	c
 	xor	b, b
 	sla	bc, 2
 	ld	xiz, SeMenu_DrawTwoPartRadioButtons_Records
@@ -9161,8 +9161,8 @@ SeMenu_PresetBrowser_Select:
 ;  SeTitle_StaticScreenTable, indexed by title id - 0x20): draws the page's fixed captions and frames. Basis: the
 ;  table index and RegTitle (scripts/renaming/name_se_title_methods.py).
 SePitLfo1_DrawStaticScreen:
-	call SeMenu_PresetBrowser_Navigate
-	call SeMenu_PresetBrowser_Select
+	call	SeMenu_PresetBrowser_Navigate
+	call	SeMenu_PresetBrowser_Select
 ; SeLfo1_DrawStaticScreen: Static screen shared by the three LFO1 titles: frame, SOLO button, LFO part switches and
 ;   the selected-part line, and the bound fields. Basis: callers + body.
 SeLfo1_DrawStaticScreen:
@@ -9187,7 +9187,7 @@ SeLfo1_DrawPartLabels:
 	dec	1, a
 	.byte 0xc8, 0xff
 	jr	c, SeLfo1_DrawPartLabels_Skip
-	push c
+	push	c
 	xor	b, b
 	sla	bc, 2
 	ld	xiz, SeScreenData_0x3869
@@ -9198,7 +9198,7 @@ SeLfo1_DrawPartLabels:
 	pop c
 	jr	SeMenu_PresetBrowser_Data_Code_Join
 SeLfo1_DrawPartLabels_Skip:
-	push c
+	push	c
 	xor	b, b
 	sla	bc, 2
 	ld	xiz, SeScreenData_0x3821
@@ -9251,7 +9251,7 @@ SeMenu_DrawLfoPartSwitches_Loop:
 	pop c
 	pop w
 	ld	(COLORBLIT_MODE:24), 0
-	push c
+	push	c
 	push	xiy
 	ld	xiz, SeMenu_DrawLfoPartSwitches_Records7
 	ld	xiy, (xiz+de)
@@ -9290,7 +9290,7 @@ SeMenu_DrawLfoPartSwitches_Loop:
 	pop	xiy
 	pop c
 	ld	(COLORBLIT_MODE:24), 2
-	push c
+	push	c
 	push	xiy
 	ld	xiz, SeScreenData_0x3881
 	ld	xiy, (xiz+de)
@@ -9624,13 +9624,13 @@ SeFilH241_DrawStaticScreen_Skip:
 ;  table index and RegTitle (scripts/renaming/name_se_title_methods.py).
 SeFilBpf1_DrawStaticScreen:
 	; data, not code: SeFilBpf1_DrawStaticScreen is reached only as data (1 data), and its instruction decode held normal (scripts/converters/data_as_code_to_bytes.py).
-	call SeFil_DrawPageHeader
-	ld xiy, SeFilBpf1_Records
-	ld xix, SeFilBcf1_Records
-	call SeGfx_DrawStaticList
-	cp (1710:16), 1
-	jr z, SeFilBpf1_DrawStaticScreen_Skip
-	call SeFilLpq1_DrawStaticScreen_End
+	call	SeFil_DrawPageHeader
+	ld	xiy, SeFilBpf1_Records
+	ld	xix, SeFilBcf1_Records
+	call	SeGfx_DrawStaticList
+	cp	(0x6ae:16), 1
+	jr	z, SeFilBpf1_DrawStaticScreen_Skip
+	call	SeFilLpq1_DrawStaticScreen_End
 SeFilBpf1_DrawStaticScreen_Skip:
 	call	SeMenu_DrawSoloButton
 	call	SeMenu_DrawPartSelector
@@ -9646,13 +9646,13 @@ SeFilBpf1_DrawStaticScreen_Skip:
 ;  table index and RegTitle (scripts/renaming/name_se_title_methods.py).
 SeFilBcf1_DrawStaticScreen:
 	; data, not code: SeFilBcf1_DrawStaticScreen is reached only as data (1 data), and its instruction decode held normal (scripts/converters/data_as_code_to_bytes.py).
-	call SeFil_DrawPageHeader
-	ld xiy, SeFilBcf1_Records
-	ld xix, SeEnv1_DrawEnvelopeLayout_Records3
-	call SeGfx_DrawStaticList
-	cp (1710:16), 1
-	jr z, SeFilBcf1_DrawStaticScreen_Skip
-	call SeFilLpq1_DrawStaticScreen_End
+	call	SeFil_DrawPageHeader
+	ld	xiy, SeFilBcf1_Records
+	ld	xix, SeEnv1_DrawEnvelopeLayout_Records3
+	call	SeGfx_DrawStaticList
+	cp	(0x6ae:16), 1
+	jr	z, SeFilBcf1_DrawStaticScreen_Skip
+	call	SeFilLpq1_DrawStaticScreen_End
 SeFilBcf1_DrawStaticScreen_Skip:
 	call	SeMenu_DrawSoloButton
 	call	SeMenu_DrawPartSelector
@@ -10695,15 +10695,15 @@ SePitFilEnv2_DrawField:
 ;  table index and RegTitle (scripts/renaming/name_se_title_methods.py).
 SeCtr2_DrawStaticScreen:
 	; data, not code: SeCtr2_DrawStaticScreen is reached only as data (1 data), and its instruction decode held normal (scripts/converters/data_as_code_to_bytes.py).
-	call SeMenu_EqEdit_SetupHelper1
-	cp (1710:16), 1
-	jr z, SeCtr2_DrawStaticScreen_Skip
-	ld (COLORBLIT_MODE:24), 0
-	ld xiy, SeCtr2_PageFrame
-	ld xix, SeCtr2_DrawStaticScreen_Records
-	call SeGfx_DrawStaticList
-	call SeFilLpq1_DrawStaticScreen_End
-	jr SeCtr2_DrawStaticScreen_Join2
+	call	SeMenu_EqEdit_SetupHelper1
+	cp	(0x6ae:16), 1
+	jr	z, SeCtr2_DrawStaticScreen_Skip
+	ld	(COLORBLIT_MODE:24), 0
+	ld	xiy, SeCtr2_PageFrame
+	ld	xix, SeCtr2_DrawStaticScreen_Records
+	call	SeGfx_DrawStaticList
+	call	SeFilLpq1_DrawStaticScreen_End
+	jr	SeCtr2_DrawStaticScreen_Join2
 SeCtr2_DrawStaticScreen_Skip:
 	ld	(COLORBLIT_MODE:24), 0
 	ld	xiy, SeCtr2_PageFrame
@@ -16592,7 +16592,7 @@ PsCstmCpNameBoxProc_OnDraw:
 	ld	xwa, NAKA_MAINFUNC_MainCstmNameFunc
 	ld	xbc, EVT_CSTM_F_NM_GET
 	ld	xde, 0:i3
-	jr PsCstmCpNameBox_MainFuncCall
+	jr	PsCstmCpNameBox_MainFuncCall
 PsCstmCpNameBox_FuncCall2C:
 	ld xwa, NAKA_MAINFUNC_MainCstmNameFunc
 	ld xbc, EVT_CSTM_T_NM_GET
@@ -17933,7 +17933,7 @@ VwVariBox_Init:
 
 	ld xde, 0:i3
 
-	jrl VwVariBox_DispatchAndReturn
+	jrl	VwVariBox_DispatchAndReturn
 
 
 
@@ -20121,12 +20121,12 @@ StylCnvStorOkFunc_DataBlock_Join2:
 	ldw (xsp+6), 65535
 	jr	StylCnvStorOkFunc_DataBlock_Join3
 PaintArrow_DrawFilled_Skip:
-	ldw (xsp+8), 1
+	ldw	(xsp+8), 1
 	jr	PaintArrow_DrawFilled_Join
 StylCnvStorOkFunc_DataBlock_Skip2:
 	ldw (xsp+8), 0
 PaintArrow_DrawFilled_Join:
-	ldw (xsp+10), 1
+	ldw	(xsp+10), 1
 	lda	xhl, (xsp+24)
 	ld	bc, (xwa+2)
 	ld	(xhl), bc
@@ -20316,12 +20316,12 @@ StylCnvStorOkFunc_DataBlock_Join5:
 	ld	(xsp+18), wa
 	jr	StylCnvStorOkFunc_DataBlock_Join7
 PaintArrow_DrawOutline_Skip:
-	ldw (xsp+6), 1
+	ldw	(xsp+6), 1
 	jr	StylCnvStorOkFunc_DataBlock_Join6
 StylCnvStorOkFunc_DataBlock_Skip4:
 	ldw (xsp+6), 0
 StylCnvStorOkFunc_DataBlock_Join6:
-	ldw (xsp+8), 1
+	ldw	(xsp+8), 1
 	lda	xhl, (xsp+26)
 	ld	bc, (xwa+2)
 	ld	(xhl), bc
@@ -20418,7 +20418,7 @@ StylCnvStorOkFunc_DataBlock_Join7:
 	lda	xwa, (xsp+26)
 	lda	xbc, (xsp+22)
 	lda	xde, (xsp+18)
-	cpw (xsp+6), 0
+	cpw	(xsp+6), 0
 	jr	z, StylCnvStorOkFunc_DataBlock_Skip9
 	ld	wa, (xwa+4)
 	sub wa, qiz
@@ -20495,7 +20495,7 @@ StylCnvStorBnk_ProcDataBlock_OnPaint:
 	lda	xix, (xbc+30)
 	ld	de, (xbc+28)
 	ld	bc, (xiz+22)
-	cpw (xiz+24), 0
+	cpw	(xiz+24), 0
 	jr	z, StylCnvStorBnk_ProcDataBlock_Skip2
 	pushm	(xix)
 	pushm	(xhl)

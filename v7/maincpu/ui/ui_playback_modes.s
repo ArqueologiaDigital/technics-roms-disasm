@@ -1220,24 +1220,24 @@ SqTrAsTtlFunc:
 ; Sequencer track dispatch table 2 - SqTrAsTtlFunc handler
 ; 6 dispatch cases (XDE 0-5)
 SQTR_DISPATCH_TABLE_2:
-	ld xwa, 9109508
-	ld xbc, EVT_SET_SELECTED_CEL
-	ld xde, 4294901762
-	call ApPostEvent
-	push xde
-	push xhl
-	push xix
-	push xiz
-	call SetWall_JumpStubData
-	pop xiz
-	pop xix
-	pop xhl
-	pop xde
-	set 0, (36544:16)
-	ldw wa, 96
-	call CtrlPanel_SetIndicatorBit
-	ld (135298:24), (10355)
-	jr CDlikeSwTtl_ReturnZero2
+	ld	xwa, 0x8b0004
+	ld	xbc, EVT_SET_SELECTED_CEL
+	ld	xde, 0xffff0002
+	call	ApPostEvent
+	push	xde
+	push	xhl
+	push	xix
+	push	xiz
+	call	SetWall_JumpStubData
+	pop	xiz
+	pop	xix
+	pop	xhl
+	pop	xde
+	set	0, (0x8ec0:16)
+	ldw	wa, 0x60
+	call	CtrlPanel_SetIndicatorBit
+	ld	(0x21082:24), (0x2873)
+	jr	CDlikeSwTtl_ReturnZero2
 SQTR_DISPATCH_TABLE_2_CASE1:
 	push xde
 	push xhl

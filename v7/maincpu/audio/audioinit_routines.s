@@ -281,7 +281,7 @@ AudioInit_LoadAndConfigure:
 	ld	wa, (0xc4f8:16)
 	bit	4, wa
 	ret	z
-	ld (49507:16), 255
+	ld	(0xc163:16), 255
 	ret
 AudioInit_MixFallbackConfig:
 	extz	wa
@@ -365,7 +365,7 @@ AudioInit_VoiceParamDone:
 AudioInit_DrumRoutingCheck:
 	ld	de, 0:i3
 	bit	2, (0xc162:16)
-	jr nz, AudioInit_ProcessVoiceAssign
+	jr	nz, AudioInit_ProcessVoiceAssign
 AudioInit_CheckOutputFlags:
 	ld	wa, (0xc4fc:16)
 	and	wa, 0x60
@@ -1379,7 +1379,7 @@ AudioInit_ConfigurePanning:
 	ld	wa, (0xc4fa:16)
 	bit	2, wa
 	ret	nz
-	cp (49507:16), 255
+	cp	(0xc163:16), 255
 	jr	nz, AudioInit_Pan_CheckMode0
 	bit	0, (0xc162:16)
 	jr	nz, AudioInit_Pan_SetStereoLeft

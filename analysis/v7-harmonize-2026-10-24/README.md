@@ -113,6 +113,15 @@ rows were read and renamed to v10's name with `--rename-named --only ...`: three
 | 5    | the romslice regions the disassembler cannot fully decode, one by one                                            | `python3 scripts/converters/v7_byte_region_to_insns.py FILE LABEL [--auto-indexed] [--fix ...] --apply`                                    |
 | 6    | `.byte` runs in front of a misread instruction tail, or holding a register-indexed `(xrr+rr)` form               | `python3 scripts/converters/reframe_byte_runs_by_decode.py --image v7 --linemap LM.json FILES --apply`                                     |
 | 7    | names: the structural labels steps 4-6 inserted take v10's names where the parents agree                         | `harmonize_by_caller_alignment.py --to v7 ... --apply` (as above)                                                                          |
+| 8    | the lines steps 3-6 wrote, respelled like v10 (tab after the mnemonic, v10's hex/decimal, `call cc, (X:24)`)     | `python3 scripts/tools/respell_v7_new_lines_like_v10.py --apply`                                                                           |
+
+Step 8 rewrites only the lines `git blame` gives to the re-framing commit (d89e64558), and only their
+spelling.  Where the enclosing label's v10 block has the same instruction (number-masked text, aligned
+with difflib) each number takes v10's notation; elsewhere RAM operands of 256 and up, and/or/xor masks of
+10 and up and 32-bit register loads of 256 and up are written in hex.  Of the 880 instruction lines it
+examined (572 with a v10 counterpart, 308 by the fallback rules) it changed 486, 4 of them `call_24`, and
+brought the v7 count of `mnemonic<space>operand` lines back to where it stood before the lane: 157,378 at 79e035417, 157,771 at 5ecd0dbdf, 157,378 after
+(`respell_v7_new_lines_like_v10.py --space-count REV`).  `make gate` stays IDENTICAL.
 
 Step 5 regions: `CmpStep_DataBlock` (32 bytes; it is v10's `CmpStepTitle_OnPaint`, renamed by
 `scripts/renaming/rename_v7_cmpstep_onpaint.sed`), `Not_sure_maybe_SOFT_VERSION_related` (361),
@@ -172,8 +181,8 @@ The "before" `--count` figures were measured on this branch after the renames an
 
 `python3 scripts/analysis/doc_quality_census.py --compare` against `doc-quality-2026-10-24-03` reports one
 rise for v7: (b) "(number) operand elsewhere" 28,877 -> 29,059 (+182).  These are the RAM operands
-(`(13690:16)`, `ld (14079:16), 16`) of the instructions this lane spelled from bytes: as `.byte` they
-were not counted at all.  v7 names few RAM variables (`shared/ram_variables.s`); naming them is the RAM
+(`and (0x357a:16), 254`, `ld (0x36ff:16), 16`; decimal until step 8) of the instructions this lane
+spelled from bytes: as `.byte` they were not counted at all.  v7 names few RAM variables (`shared/ram_variables.s`); naming them is the RAM
 lane's work (WP17 (a)).  Everything else the census compares fell or held: (a) -186 routines without a
 header, (c) -131 `.Lc_` locals, (d) -124 runs.  The read-only dispatch census
 (`census.py --compare docs/coverage/dispatch-census-2026-10-24-02.json`, maps built in a scratch
