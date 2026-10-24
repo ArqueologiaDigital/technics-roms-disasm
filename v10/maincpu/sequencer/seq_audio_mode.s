@@ -11,6 +11,8 @@
 	ld (0x327f:16), a
 	ret
 
+; With bit 3 of 0x3284 pending and the tick 0x327f at 0x30 or below or 0x5d or above:
+; AudioMode_SetStereoFlags, then clears the bit.
 AudioMode_CheckAndUpdateStereo:
 	bit 3, (0x3284:16)
 	jr z, AudioMode_CheckDone
@@ -27,6 +29,7 @@ AudioMode_ApplyStereoUpdate:
 AudioMode_CheckDone:
 	ret
 
+; Copies the low 3 bits of 0x32f9 into the low 3 bits of 0x3310.
 AudioMode_MergeOutputBits:
 	ld a, (0x3310:16)
 	and a, 0xf8
@@ -36,12 +39,14 @@ AudioMode_MergeOutputBits:
 	ld (0x3310:16), a
 	ret
 
+; 0x3335 = (0x28b2) & 3.
 AudioMode_CopyChannelMode:
 	ld a, (0x28b2:16)
 	and a, 0x3
 	ld (0x3335:16), a
 	ret
 
+; 0x3362 = (0x34f1) & 0x3d.
 AudioMode_CopyAccentFlags:
 	ld a, (0x34f1:16)
 	and a, 0x3d
@@ -76,6 +81,7 @@ AccPedal_LoadFlagFromStyleMem_Done:
 	popw wa
 	ret
 
+; Sets bit 0 of 0x3363.  Preserves WA, XIY.
 AccPedal_SetFlag13155:
 	pushw wa
 	push xiy
@@ -185,6 +191,9 @@ AccVoice_StoreBankAssign:
 	ld (0x3282:16), a
 	ret
 
+; Unless part bits 0..5 are set in 0x3314 or 0x3315: when 0x32f5 differs from 0x32f6 or the low 3
+; bits of 0x32f7 and 0x32f8 differ, AccChannel_SetDirtyIfActive, _CheckActivitySetDirty,
+; _CheckPartIndexDirty and bit 0 of 0x330c set.  Always 0x32e7 = (0x32f5), 0x32e8 = (0x32f7) & 0x7f.
 AccChannel_CompareAndMarkDirty:
 	ld a, (0x3314:16)
 	or a, (0x3315:16)
@@ -262,6 +271,8 @@ AccChannel_SetDirtyIfActive:
 AccChannel_SetDirtyDone:
 	ret
 
+; Sets bits 0..5 of 0x3326 when 0x3312, 0x3313, 0x3316, 0x3317 or 0x3318 has a part bit 0..5 set and
+; 0x32f5 is 0x80 or more.
 AccChannel_CheckActivitySetDirty:
 	ld a, (0x3312:16)
 	or a, (0x3313:16)
@@ -277,6 +288,7 @@ AccChannel_CheckActivitySetDirty:
 AccChannel_ActivityCheckDone:
 	ret
 
+; Sets bits 0..5 of 0x3326 when byte 0x433 is 1.
 AccChannel_CheckPartIndexDirty:
 	ld a, (1075:16)
 	cp a, 1:i3
@@ -346,6 +358,9 @@ AccVoice_Pedal2_SetAndCheck:
 AccVoice_Pedal2_Done:
 	ret
 
+; For bit 0 and bit 1 of 0x32fb newly set (clear in 0x32fc): 0x330a = 0x330b = 0, the other bit
+; of 0x3309 cleared and this one set, bits 0..5 of 0x3327 cleared (and of 0x3326 unless bit 0 of
+; 0x330c), then AccVoice_CheckBitsAndSetFlags and AccVoice_CheckChannelSetActive.
 AccVoice_ProcessLeftPedalChanges:
 	bit 0, (0x32fb:16)
 	jr z, AccVoice_LeftPedal0_Done
@@ -410,6 +425,8 @@ AccVoice_CheckBitsAndSetFlags:
 AccVoice_BitsCheckDone:
 	ret
 
+; For bit 6 and bit 7: when set in 0x3281 but not in 0x3470 and (0x3280) + 1 equals byte 0x433,
+; sets bits 0..5 of 0x3329.
 AccPitch_CheckTransposeFlags:
 	bit 6, (0x3470:16)
 	jr nz, AccPitch_UpdateCheck
@@ -435,6 +452,9 @@ AccPitch_UpdateCheck:
 AccPitch_FinalReturn:
 	ret
 
+; For bit 0 and bit 1 of 0x32fd newly set (clear in 0x32fe): 0x330a = 0x3309 = 0, bits 0..5 of
+; 0x3327 and 0x3326 cleared, the other bit of 0x330b cleared and this one set, then
+; AccChannel_SetDirtyIfActive.
 AccChord_ProcessKeyChanges:
 	bit 0, (0x32fd:16)
 	jr z, AccChord_KeyChange0_Done
@@ -621,6 +641,9 @@ AccChord_CheckZeroChord:
 AccChord_CompareDone:
 	ret
 
+; Sets bit 0 of 0x330d when 0x3305 differs from 0x3306, 0x3314 / 0x3315 have no part bit 0..5,
+; 0x32e5 is below 0x80, 0x3312 / 0x3313 have no part bit either (checked only with bit 0 of 0x3301)
+; and (0x3305) & 3 differs from 0x3338.  Always 0x333a = (0x3305) & 3.
 AccentVoice_DetectAndMarkChange:
 	ld a, (0x3305:16)
 	cp a, (0x3306:16)
@@ -710,6 +733,8 @@ AccVoice_BankBaseTable:
 	.long 0x00379800
 	.long 0x00390000
 
+; Out: WA = word 0 and IY = word 1 of RhythmROM_BankProgramLocators[H & 7][A] (HL = its byte
+; offset, (H & 7) * 512 + A * 4).
 AccVoice_ComputeChannelIndex:
 	and h, 0x7
 	sla h, 1
@@ -869,6 +894,8 @@ AccTuning_LoadAndApplyMaster:
 	nop
 	ret
 
+; Copies 7 bytes from XIY + XHL + 0x24f to 0x324d, sets 0x324f = 0x40 and runs AccTuning_LoadCoarse.
+; Preserves XIY.
 AccTuning_LoadCoarseFromStyle:
 	push xiy
 	add xhl, 0x24f
@@ -886,6 +913,8 @@ AccTuning_LoadCoarseFromStyle:
 	nop
 	ret
 
+; Copies 7 bytes from XIY + XHL + 0x256 to 0x3254, sets 0x3256 = 0x0c and runs AccTuning_LoadFine.
+; Preserves XIY.
 AccTuning_LoadFineFromStyle:
 	push xiy
 	add xhl, 0x256
@@ -903,6 +932,8 @@ AccTuning_LoadFineFromStyle:
 	nop
 	ret
 
+; Copies 7 bytes from XIY + XHL + 0x25d to 0x325b, sets 0x325d = 0x74 and runs
+; AccTuning_LoadOctave.  Preserves XIY.
 AccTuning_LoadOctaveFromStyle:
 	push xiy
 	add xhl, 0x25d
@@ -920,6 +951,8 @@ AccTuning_LoadOctaveFromStyle:
 	nop
 	ret
 
+; Copies 7 bytes from XIY + XHL + 0x264 to 0x3262, sets 0x3264 = 0x40 and runs
+; AccTuning_LoadTranspose.  Preserves XIY.
 AccTuning_LoadTransposeFromStyle:
 	push xiy
 	add xhl, 0x264
@@ -1494,22 +1527,27 @@ AccTuning_ResetFiveParts:
 	calr AccTuning_ResetFiveParts_Rec3
 	calr AccTuning_ResetFiveParts_Rec4
 	ret
+; 0x3246 = 6, 0x3247 = 0.
 AccTuning_ResetFiveParts_Rec0:
 	ld (0x3246:16), 6
 	ld (0x3247:16), 0
 	ret
+; 0x324d = 0x324e = 0.
 AccTuning_ResetFiveParts_Rec1:
 	ld (0x324d:16), 0
 	ld (0x324e:16), 0
 	ret
+; 0x3254 = 0x3255 = 0.
 AccTuning_ResetFiveParts_Rec2:
 	ld (0x3254:16), 0
 	ld (0x3255:16), 0
 	ret
+; 0x325b = 0x325c = 0.
 AccTuning_ResetFiveParts_Rec3:
 	ld (0x325b:16), 0
 	ld (0x325c:16), 0
 	ret
+; 0x3262 = 0x3263 = 0.
 AccTuning_ResetFiveParts_Rec4:
 	ld (0x3262:16), 0
 	ld (0x3263:16), 0
@@ -1541,6 +1579,8 @@ Rhythm_DispatchNoteFromFC5A:
 	ld (0x332b:16), a
 	ret
 
+; Out: C = 1 when the long in RHYTHM_ROM_BASE is 0xffffffff, else 0.  Each such call counts 0x3454
+; up; when it wraps to 0, 0xe3dc = 0xee and 0xe3de = 64.
 RhythmROM_CheckValid:
 	ld c, 0x0:opc
 	ld xwa, 0xffffffff
@@ -1591,6 +1631,7 @@ Heap_AllocAndFreeTwoBlocks:
 	add xsp, 4
 	ret
 
+; Clears bits 0-1 of 0x332c when the long at 0x3214 equals the long at 0x3246.
 AccentData_ComparePart1:
 	ld xix, 0x3214
 	ld xiy, 0x3246
@@ -1607,6 +1648,8 @@ AccentData_ComparePart1:
 AccentData_Part1_Done:
 	ret
 
+; Clears bit 2 of 0x332c when the long at 0x3219 equals the long at 0x324d.  The extra byte test
+; compares byte +1 of the part-1 records (0x3215 / 0x3247), as in all four ComparePart routines.
 AccentData_ComparePart2:
 	ld xix, 0x3214
 	ld xiy, 0x3246
@@ -1623,6 +1666,8 @@ AccentData_ComparePart2:
 AccentData_Part2_Done:
 	ret
 
+; Clears bit 3 of 0x332c when the long at 0x321e equals the long at 0x3254 (and bytes 0x3215 /
+; 0x3247 match).
 AccentData_ComparePart3:
 	ld xix, 0x3214
 	ld xiy, 0x3246
@@ -1639,6 +1684,8 @@ AccentData_ComparePart3:
 AccentData_Part3_Done:
 	ret
 
+; Clears bit 4 of 0x332c when the long at 0x3223 equals the long at 0x325b (and bytes 0x3215 /
+; 0x3247 match).
 AccentData_ComparePart4:
 	ld xix, 0x3214
 	ld xiy, 0x3246

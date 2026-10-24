@@ -91,6 +91,9 @@ Rhythm_NoteOnAfterSetup_A:
 	call Rhythm_SendByte
 	ret
 
+; Rhythm channel refresh for D4..D6: sets up the three channels, sends their all-notes-off, 0x90
+; 0x7f 0x04 / 0x05 / 0x06, their 0x90 0x7f 0x7n messages, the channel dispatches and volumes, and
+; finally 0x90 0x7f 0x7d on the rhythm byte stream.
 Rhythm_NoteOnAfterSetup_B:
 	calr Rhythm_SetupChannel_D4
 	calr Rhythm_SetupChannel_D5
@@ -118,6 +121,7 @@ Rhythm_NoteOnAfterSetup_B:
 	call Rhythm_SendByte
 	ret
 
+; Rhythm_NoteOnAfterSetup_B for channel D7 alone (0x90 0x7f 0x07).
 Rhythm_NoteOnAfterSetup_C:
 	calr Rhythm_SetupChannel_D7
 	calr Rhythm_AllNotesOff_D7
@@ -133,6 +137,7 @@ Rhythm_NoteOnAfterSetup_C:
 	call Rhythm_SendByte
 	ret
 
+; Rhythm_SetupChannel_D7, _D4, _D5 and _D6.
 Rhythm_SetupAllChannels:
 	calr Rhythm_SetupChannel_D7
 	calr Rhythm_SetupChannel_D4
@@ -802,6 +807,7 @@ Rhythm_VelComp_SelectTable_Data:
 	.byte 5, 12, 13, 1, 1, 6, 4, 5, 11, 16, 0, 0, 0, 0, 0, 0
 	.byte 0	; entry 48: past the 0..0x2F index clamp, never read
 
+; Rhythm_DispatchCh_D7, _D4, _D5 and _D6.
 Rhythm_FourChannelDispatch:
 	calr Rhythm_DispatchCh_D7
 	calr Rhythm_DispatchCh_D4
@@ -933,6 +939,10 @@ Rhythm_SendByte:
 	pop xhl
 	ret
 
+; For the note record XIX: Rhythm_MatchedPhrase when 0x32e5 is 0xf0 or more, none of the bytes
+; 0x3312..0x3318 shares a bit with 0x33d4, and the tuning offsets looked up for 0x32df and 0x32d8
+; (AccTuning_CallWithSaveRestore on 0x3423, result in 0x3422) are equal; otherwise
+; Rhythm_MismatchedPhrase.
 Rhythm_ValidateAndSend:
 	cp (0x32e5:16), 240
 	jr c, Rhythm_Validate_Mismatch
@@ -965,6 +975,10 @@ Rhythm_Validate_Mismatch:
 Rhythm_Validate_Done:
 	ret
 
+; Takes A = byte +6 of the record XIX (status 0x90) or byte +8 (other status); unless
+; Rhythm_CheckVelocityThreshold sets bit 4 of 0x32f4, applies Rhythm_CrossVoiceCorrect (bit 3 of
+; 0x32f4 set) and Rhythm_NoteRangeCheck; then Rhythm_VelocityCompute, stored at XIX + 2.
+; Preserves WA.
 Rhythm_MatchedPhrase:
 	pushw wa
 	ld a, (xix)
@@ -1052,6 +1066,7 @@ Rhythm_Send_Ch90_7F_7E:
 	call Rhythm_Send3ByteMsg
 	ret
 
+; Sends 0x90 0x7f 0x04 on the rhythm byte stream (Rhythm_Send3ByteMsg).
 Rhythm_Send_Ch90_7F_04:
 	ld a, 0x90:opc
 	ld w, 0x7f:opc
@@ -1059,6 +1074,7 @@ Rhythm_Send_Ch90_7F_04:
 	call Rhythm_Send3ByteMsg
 	ret
 
+; Sends 0x90 0x7f 0x05 on the rhythm byte stream (Rhythm_Send3ByteMsg).
 Rhythm_Send_Ch90_7F_05:
 	ld a, 0x90:opc
 	ld w, 0x7f:opc
@@ -1066,6 +1082,7 @@ Rhythm_Send_Ch90_7F_05:
 	call Rhythm_Send3ByteMsg
 	ret
 
+; Sends 0x90 0x7f 0x06 on the rhythm byte stream (Rhythm_Send3ByteMsg).
 Rhythm_Send_Ch90_7F_06:
 	ld a, 0x90:opc
 	ld w, 0x7f:opc
@@ -1073,6 +1090,7 @@ Rhythm_Send_Ch90_7F_06:
 	call Rhythm_Send3ByteMsg
 	ret
 
+; Sends 0x90 0x7f 0x07 on the rhythm byte stream (Rhythm_Send3ByteMsg).
 Rhythm_Send_Ch90_7F_07:
 	ld a, 0x90:opc
 	ld w, 0x7f:opc
@@ -1080,6 +1098,7 @@ Rhythm_Send_Ch90_7F_07:
 	call Rhythm_Send3ByteMsg
 	ret
 
+; Rhythm_AllNotesOff_D7, _D4, _D5 and _D6.
 Rhythm_AllNotesOff_Dispatch:
 	calr Rhythm_AllNotesOff_D7
 	calr Rhythm_AllNotesOff_D4
@@ -1136,6 +1155,7 @@ Rhythm_AllNotesOff_D6:
 Rhythm_AllNotesOff_D6_Done:
 	ret
 
+; Rhythm_SendVolume_D7, _D4, _D5 and _D6.
 Rhythm_SendVolume_Dispatch:
 	calr Rhythm_SendVolume_D7
 	calr Rhythm_SendVolume_D4
@@ -1191,6 +1211,7 @@ Rhythm_SendVolume_D6:
 Rhythm_SendVolume_D6_Done:
 	ret
 
+; Rhythm_NoteOffMax_D7, _D4, _D5 and _D6.
 Rhythm_NoteOffMax_Dispatch:
 	calr Rhythm_NoteOffMax_D7
 	calr Rhythm_NoteOffMax_D4
@@ -1246,6 +1267,8 @@ Rhythm_NoteOffMax_D6:
 Rhythm_NoteOffMax_D6_Done:
 	ret
 
+; 0x3356 = the old byte 0x32e4 and 0x3425 = (0x3280); then 0x32e3 / 0x32e4 = tick (0x327f) + 24 and
+; beat (0x3280), the tick wrapping at 96 into the next beat and the beat at (0x458) to 0.
 Rhythm_AdvanceTick:
 	ld wa, (0x32e3:16)
 	ld (0x3356:16), w
@@ -1618,6 +1641,9 @@ Rhythm_TranspMod_ApplyBoth:
 Rhythm_TranspMod_Return:
 	ret
 
+; Clears bit 0 of 0x33e5.  L = Rhythm_PitchShiftTable_Default[(0x32d8)] (index 0 when 0x30 or
+; more); L = 0 leaves A.  Otherwise the modifier H = (0x33e6) for L = 1, else (0x33e7): bit 5 ->
+; A = 0 and bit 0 of 0x33e5 set; otherwise A + (H & 15), or A - (H & 15) with bit 4.
 Rhythm_TranspMod_ModCheck:
 	and (0x33e5:16), 254
 	ld l, (0x32d8:16)
@@ -1656,6 +1682,8 @@ Rhythm_TranspMod_SubOffset:
 Rhythm_TranspMod_Done:
 	ret
 
+; In: A = note.  W = note + byte [pitch class of A (Note_PitchClassTable)] of the 16-byte row
+; Rhythm_InstrMapTable_D4[(0x32d8)] (row 0 when 0x30 or more) of Rhythm_VelLookA_TableLookup_Table.
 Rhythm_TranspMod_BaseApply:
 	ld w, a
 	ld xiy, Note_PitchClassTable
@@ -1677,6 +1705,9 @@ Rhythm_TranspMod_BaseLookup:
 	add w, a
 	ret
 
+; Adds the offset (0x32d9) - 1 to the note W (an offset of 7 or more is taken as offset - 12),
+; correcting by an octave when bit 7 of the sum is set, then lowers it by octaves to 0x7f or below.
+; Out: A = W.
 Rhythm_TranspMod_OctaveWrap:
 	ld a, (0x32d9:16)
 	dec 1, a
