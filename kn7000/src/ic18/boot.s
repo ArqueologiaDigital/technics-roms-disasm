@@ -17322,6 +17322,10 @@ loc_50008629:
     retf    [d2,a2], 8
 
 # ---- BootMain ----------------------------------------------------------------
+# tick, flash to read mode; strap bit 14 clear: the SD update at once. Then the panel and the
+# key combination held at power-on: 4 UPDATE SYSTEM MENU, 5 DEVICE INFO, 7 UPDATE DISK CHECK
+# (with an update floppy in), and on 4 the SD update screen if the card holds update files;
+# finally interrupts and caches off and on to the firmware (FirmwareReset)
 BootMain:
     movm    [d2], (sp)
     add     -8, sp

@@ -50,6 +50,8 @@ tools/dump_table_dir.py   Annotates the table directory.
 disasm/         Reference disassembly listings (see below).
 src/sp7001/     The SP7001 firmware (program 942 / table 83), GENERATED: see "SP7001".
 src/b80/table.s Table build 80: table 83's image with one byte changed, no plug-in.
+src/ic18/boot.s IC18's first 64 KB, the boot ROM and update system, GENERATED, fully
+                disassembled: see "IC18". kn7000_ic18.sym holds its names.
 src/cnv/        The seven Style Convert Disk converters (.CNV), GENERATED, fully
                 disassembled: see "Style Convert Disk converters".
 cnv_manual.sym  Their names: one line per routine shared across converters.
@@ -70,6 +72,8 @@ make verify-picture    # IC19 from src/picture.s + its 100 JPEGs: assert the ins
 make verify-sp7001     # SP7001 firmware (942 / 83) + BASEEXT.XAP: assert 100% byte-match
 make verify-sp7001-floppy  # table 83 vs the SP7001 update's two table disks (+ SMCKTB*.INF)
 make verify-table80    # table build 80 from src/b80/table.s (+ table 83): assert 100% byte-match
+make verify-ic18       # the IC18 boot ROM from src/ic18/boot.s: assert 100% byte-match
+make ic18-src          # regenerate src/ic18/boot.s (needs unidasm and baserom/kn7000_program.rom)
 make symbols-sp7001    # port the 941/84 symbols to 942/83 (+ the plug-in's own names)
 make program-src-sp7001 table-src-sp7001   # regenerate src/sp7001/*.s (needs unidasm)
 make verify-cnv        # the 7 Style Convert Disk converters from src/cnv/: assert 100% byte-match
@@ -259,6 +263,20 @@ take the firmware's names.
 
 The file layout, the mailbox requests seen from the converter side, the error codes and the
 per-file numbers are in [`notes/style-converter.md`](notes/style-converter.md).
+
+## IC18, the boot ROM
+
+The CPU starts at `0x40000000`, where IC18, the 4 MB rhythm ROM C3CBND000046, answers. Its first 64 KB are
+the instrument's boot ROM: reset, the bus and cache set-up, and the **update system** the firmware cannot
+provide for itself (it cannot rewrite its own flash). Held keys at power-on open the UPDATE SYSTEM MENU,
+DEVICE INFO or UPDATE DISK CHECK; update floppies (`KN7KP1`..`KN7KA2`, an LZSS image after a kind and a
+sum sector) or update files on the SD card (`KN7KPRG.DAT`..) are written into the program, table, IC21,
+CS0 or picture flash; then it jumps to the firmware at `0x48400000`. [`src/ic18/boot.s`](src/ic18/boot.s)
+is all of it, made by [`tools/gen_ic18_s.py`](tools/gen_ic18_s.py): recursive descent through its jump
+tables, then every gap decoded; every routine named from the code (`kn7000_ic18.sym`) or from the
+firmware where the code is the same, every table typed, nothing `.incbin`'d. The reference is cut from the
+chip image in the private romset (SHA-1 checked, not committed). Details, including the rest of IC18 (the
+rhythm data): [`notes/ic18-boot-rom.md`](notes/ic18-boot-rom.md). `make verify-ic18`.
 
 ## IC19, the picture ROM
 

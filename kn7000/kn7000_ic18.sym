@@ -23,6 +23,7 @@
 
 ; ---- ROM: reset and NMI -------------------------------------------------------
 0x40000594  Reset                   ; bus and SDRAM set-up (MEMCTR, eight refresh cycles), caches on, the program image to work RAM, .bss cleared, .data copied, the interrupt thunks built, the stack set; then BootMain
+0x500086C6  BootMain                ; tick, flash to read mode; strap bit 14 clear: the SD update at once. Then the panel and the key combination held at power-on: 4 UPDATE SYSTEM MENU, 5 DEVICE INFO, 7 UPDATE DISK CHECK (with an update floppy in), and on 4 the SD update screen if the card holds update files; finally interrupts and caches off and on to the firmware (FirmwareReset)
 0x40000ADF  ResetTail               ; a `ret` after Reset's last jmp: the compiler's epilogue, never reached
 0x40000AE2  NmiHandler              ; sets P04 bit 3, then sets bit 4 of 0x20000040 over and over: never returns (TODO: 0x20000040 is not identified)
 
