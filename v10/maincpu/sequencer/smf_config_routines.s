@@ -394,6 +394,8 @@ SMF_AssignRemaining_Next:
 SMF_AssignReturn:
 	ret
 
+; Clears the 512 bytes at 0x11f9 (the SMF writer's pending-event slots and the area after them).
+; Preserves WA, BC, XIX.
 SMF_ClearWorkArea:
 	pushw wa
 	pushw bc
@@ -410,6 +412,8 @@ SMF_ClearWork_Loop:
 	popw wa
 	ret
 
+; Converts a tempo HL (beats per minute) into the 32-bit value (600000 / HL) * 100, about
+; 60,000,000 / HL microseconds per quarter note, stored in 0xf6c (low word) / 0xf6e (high word).
 SMF_CalcTempoRate:
 	ldw de, 0x9
 	ldw wa, 0x27c0
@@ -933,6 +937,8 @@ SMF_ProcessCh_Finalize:
 	ldw (BOOTSERIAL_FLAGS:16), 0
 	ret
 
+; Writes a control-change event on the channel in the low nibble of 0x1075 (status 0xb0 | channel)
+; with SMF_WriteByteLoop (data bytes in W / L from the caller).
 SMF_SendChannelConfig:
 	ld a, (4213:16)
 	and a, 0xf
@@ -940,6 +946,7 @@ SMF_SendChannelConfig:
 	call SMF_WriteByteLoop
 	ret
 
+; Calls SMF_FileWrite.
 SMF_FlushToFile:
 	call SMF_FileWrite
 	ret
@@ -1500,6 +1507,8 @@ SMF_LookupSongBank:
 	ld	(xhl+iy), a
 	ret
 
+; Moves the playback position two bytes forward (SMF_AdvancePosition) and returns the byte there
+; (SMF_GetNextEvent).
 SMF_AdvanceMultipleEvents:
 	ld bc, 2:i3
 

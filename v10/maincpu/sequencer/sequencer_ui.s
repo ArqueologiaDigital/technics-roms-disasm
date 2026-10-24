@@ -3722,6 +3722,7 @@ SqAftSet_LookupExit:
 	pop xiz
 	ret
 
+; Stores word A of SqAftSet_LookupTableEntry_Table in 0x21086.
 SqAftSet_LookupTableEntry:
 	extz wa
 	add wa, wa

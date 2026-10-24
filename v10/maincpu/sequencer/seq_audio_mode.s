@@ -171,6 +171,7 @@ AccPedal_ReadBankAndReturn:
 	calr AccVoice_ReadBankAssign
 	ret
 
+; Sets 0x3282 = AccStyle_ApplyExt_SkipClamp_Table[(0x433)] when bit 0 of 0x3283 is set, else 0.
 AccVoice_ReadBankAssign:
 	xor wa, wa
 	ld xhl, AccStyle_ApplyExt_SkipClamp_Table
@@ -599,6 +600,8 @@ AccChord_CheckPitchLeftPedal1:
 AccChord_NullRet:
 	ret
 
+; Sets bit 5 of 0x32f3 when the chord bytes 0x32d8 / 0x32da differ from 0x32dc / 0x32de; clears it
+; again when 0x32dc is 0.
 AccChord_CompareAndSetDirty:
 	ld a, (0x32d8:16)
 	cp a, (0x32dc:16)
@@ -755,6 +758,8 @@ AccVoice_StorePatchAndLookup:
 	ld (0x327b:16), wa
 	ret
 
+; Reads two style values: W = byte +986 of the style at XIY and A = the beats-per-measure
+; (AccTone_LookupByProgram_Table) of its time-signature code at +976.
 AccStyle_ReadVoiceParam:
 	ld	w, (xiy+986)
 	ld	a, (xiy+976)
@@ -847,6 +852,8 @@ AccTuning_CopyAllPartsFromStyle:
 	pop xiy
 	ret
 
+; Copies one 7-byte tuning record from XIY + XHL + 0x248 to 0x3246 and applies it
+; (AccTuning_LoadMaster).  Preserves XIY.
 AccTuning_LoadAndApplyMaster:
 	push xiy
 	add xhl, 0x248
@@ -930,6 +937,8 @@ AccTuning_LoadTransposeFromStyle:
 	nop
 	ret
 
+; Copies the part records (RhythmPart_CopyData), processes the accent data of parts 1..5 and,
+; unless bit 0 of 0x3283 is set, sends all channel parameters (AccVoice_LoadAllChannelParams).
 Rhythm_ProcessAllPartsAndLoad:
 	calr RhythmPart_CopyData
 	calr RhythmPart1_ProcessAccentData
@@ -944,6 +953,7 @@ Rhythm_ProcessAllPartsAndLoad:
 Rhythm_ProcessAllDone:
 	ret
 
+; Saves the 25 bytes of part records at 0x3214 into 0x322d (LDIR (XIX+),(XIY+)).
 RhythmPart_CopyData:
 	ldw bc, 0x19
 	ld xiy, 0x3214
@@ -1402,12 +1412,16 @@ Rhythm_SendChanPressure:
 	ld (0x3332:16), a
 	ret
 
+; Resets the six accompaniment ring buffers, reads the voice registers back
+; (AccompVoice_BulkReadRegisters) and runs AccStyle_InitVRAM_Wrap.
 AccBuf_ResetAndReload:
 	call AccBuf_ResetAllPositions
 	call AccompVoice_BulkReadRegisters
 	call AccStyle_InitVRAM_Wrap
 	ret
 
+; Sends the five 5-byte part records at 0x3214, 0x3219, 0x321e, 0x3223, 0x3228 on the rhythm byte
+; stream, each preceded by a program-change status: 0xc8, 0xc7, 0xc4, 0xc5, 0xc6.
 AccVoice_LoadAllChannelParams:
 	ld xix, 0x3214
 	ld a, 0x98:opc

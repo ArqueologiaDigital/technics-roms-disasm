@@ -1532,6 +1532,9 @@ SeqStep_AdvanceHelper2Done:
 	ld (9806:16), l
 	ret
 
+; Steps the step-editor position (block 0x273c, offset 0x273e) one byte back into 0x2726 / 0x2720:
+; below offset 5 into the previous block (offset 0xff); returns without change at the first
+; block.  Sets 0x2662 = 1.
 SeqStep_DecrementPos:
 	ld wa, (0x273e:16)
 	cp wa, 5:i3
@@ -1985,6 +1988,9 @@ SeqStep_BoundaryFinal:
 	popw_erp 0xfa
 	ret
 
+; With bit 0 of 0x2879 set, advances the secondary read position one byte (PartCtrl_AdvanceReadPos);
+; otherwise skips to the next status byte (SeqStep_SkipToMeasure, WA zero-extended).
+;   Out: HL = 0, or 0xffff on error.
 SeqStep_SkipIfLeftFlag:
 	bit 0, (0x2879:16)
 	jr z, SeqStep_SkipIfLeftDone
@@ -2069,6 +2075,8 @@ SeqStep_SkipToMeasureLoop:
 	ld hl, 0:i3
 	ret
 
+; Advances the secondary read position three bytes (PartCtrl_AdvanceReadPos) and checks that the
+; byte there is 0.  Out: HL = 0 when it is, 0xffff otherwise or on error.
 SeqStep_SkipThreeEvents:
 	call PartCtrl_AdvanceReadPos
 	cp (SEQ_ERROR_CODE:16), 0
@@ -2685,12 +2693,15 @@ SeqStep_PlaybackReturn:
 	popw_erp 0xfa
 	ret
 
+; Empty routine: returns at once.
 SeqStep_PlaybackNop:
 	ret
 
 SeqStep_TimerNop:
 	ret
 
+; Compacts the used song-data blocks to the front (as SeqStep_FindAndCompact, without rebuilding
+; the chains): swaps the last used block with the first free one until they meet.
 SeqStep_FindLastUsedPart:
 	dec 4, xsp
 	ldw wa, 0x4d8
@@ -2717,6 +2728,8 @@ SeqStep_FindLastReturn:
 	inc 4, xsp
 	ret
 
+; Rebuilds the block chains (SeqStep_RebuildPartChain) with WA = the first free song-data block
+; (SeqStep_SearchForward from 1).
 SeqStep_FindAndCompactEntry:
 	ld wa, 1:i3
 	calr SeqStep_SearchForward
@@ -2804,6 +2817,9 @@ SeqStep_SearchForwardDone:
 	popw iz
 	ret
 
+; Moves the used block *XWA into the free block *XBC (SeqStep_CopyPartData,
+; SeqStep_UpdateRefsAfterSwap, SeqStep_UpdateForwardLinks), then moves both cursors on: *XWA to the
+; previous used block (SeqStep_SearchBackward), *XBC to the next free one (SeqStep_SearchForward).
 SeqStep_SwapTwoParts:
 	dec 4, xsp
 	push xiz

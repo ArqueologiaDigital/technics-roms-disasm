@@ -73,6 +73,9 @@ Rhythm_SaveNoteState:
 	ld (0x32db:16), a
 	ret
 
+; Rhythm channel refresh, variant A: sets up all channels, sends all-notes-off, 0x90 0x7f 0x7e,
+; the per-channel 0x90 0x7f 0x7n messages, the four channel dispatches and volumes, and finally
+; 0x90 0x7f 0x7d on the rhythm byte stream.
 Rhythm_NoteOnAfterSetup_A:
 	calr Rhythm_SetupAllChannels
 	calr Rhythm_AllNotesOff_Dispatch
@@ -137,6 +140,8 @@ Rhythm_SetupAllChannels:
 	calr Rhythm_SetupChannel_D6
 	ret
 
+; Prepares rhythm channel D7 (ring buffer 0x2c94, part bit 4): 0x32cb / 0x32cc from 0x32c3 /
+; 0x32c7, bit 3 of 0x32f4 set and bit 2 cleared, then RhythmEvt_ProcessNote.
 Rhythm_SetupChannel_D7:
 	ld xhl, 0x2c94
 	ld a, (0x32c3:16)
@@ -149,6 +154,8 @@ Rhythm_SetupChannel_D7:
 	calr RhythmEvt_ProcessNote
 	ret
 
+; Prepares rhythm channel D4 (ring buffer 0x2d94, part bit 8): 0x32cb / 0x32cc from 0x32c4 /
+; 0x32c8, bit 2 of 0x32f4 set and bit 3 cleared, then RhythmEvt_ProcessNote.
 Rhythm_SetupChannel_D4:
 	ld xhl, 0x2d94
 	ld a, (0x32c4:16)
@@ -161,6 +168,8 @@ Rhythm_SetupChannel_D4:
 	calr RhythmEvt_ProcessNote
 	ret
 
+; Prepares rhythm channel D5 (ring buffer 0x2e94, part bit 16): 0x32cb / 0x32cc from 0x32c5 /
+; 0x32c9, bits 2..3 of 0x32f4 cleared, then RhythmEvt_ProcessNote.
 Rhythm_SetupChannel_D5:
 	ld xhl, 0x2e94
 	ld a, (0x32c5:16)
@@ -172,6 +181,8 @@ Rhythm_SetupChannel_D5:
 	calr RhythmEvt_ProcessNote
 	ret
 
+; Prepares rhythm channel D6 (ring buffer 0x2f94, part bit 32): 0x32cb / 0x32cc from 0x32c6 /
+; 0x32ca, bits 2..3 of 0x32f4 cleared, then RhythmEvt_ProcessNote.
 Rhythm_SetupChannel_D6:
 	ld xhl, 0x2f94
 	ld a, (0x32c6:16)
@@ -798,6 +809,9 @@ Rhythm_FourChannelDispatch:
 	calr Rhythm_DispatchCh_D6
 	ret
 
+; Sends the eight 9-byte note records at 0x30f4..0x313b of rhythm channel D7 (status W = 0x97,
+; part bit 4) with Rhythm_SingleNoteHandler, after loading 0x32cb / 0x32cc from 0x32c3 / 0x32c7
+; and setting bit 3 / clearing bit 2 of 0x32f4.
 Rhythm_DispatchCh_D7:
 	ld a, (0x32c3:16)
 	ld (0x32cb:16), a
@@ -816,6 +830,8 @@ Rhythm_DispatchCh_D7_Loop:
 	jr c, Rhythm_DispatchCh_D7_Loop
 	ret
 
+; As Rhythm_DispatchCh_D7 for channel D4: records 0x313c..0x3183, status 0x94, part bit 8, 0x32c4
+; / 0x32c8, bit 2 set and bit 3 cleared in 0x32f4.
 Rhythm_DispatchCh_D4:
 	ld a, (0x32c4:16)
 	ld (0x32cb:16), a
@@ -834,6 +850,8 @@ Rhythm_DispatchCh_D4_Loop:
 	jr c, Rhythm_DispatchCh_D4_Loop
 	ret
 
+; As Rhythm_DispatchCh_D7 for channel D5: records 0x3184..0x31cb, status 0x95, part bit 16, 0x32c5
+; / 0x32c9, bits 2..3 of 0x32f4 cleared.
 Rhythm_DispatchCh_D5:
 	ld a, (0x32c5:16)
 	ld (0x32cb:16), a
@@ -851,6 +869,8 @@ Rhythm_DispatchCh_D5_Loop:
 	jr c, Rhythm_DispatchCh_D5_Loop
 	ret
 
+; As Rhythm_DispatchCh_D7 for channel D6: records 0x31cc..0x3213, status 0x96, part bit 32, 0x32c6
+; / 0x32ca, bits 2..3 of 0x32f4 cleared.
 Rhythm_DispatchCh_D6:
 	ld a, (0x32c6:16)
 	ld (0x32cb:16), a
@@ -1024,6 +1044,7 @@ Rhythm_MismatchOther_Output:
 Rhythm_MismatchOther_Return:
 	ret
 
+; Sends the three-byte rhythm message 0x90 0x7f 0x7e.
 Rhythm_Send_Ch90_7F_7E:
 	ld a, 0x90:opc
 	ld w, 0x7f:opc
@@ -1066,6 +1087,8 @@ Rhythm_AllNotesOff_Dispatch:
 	calr Rhythm_AllNotesOff_D6
 	ret
 
+; When 0x332f is non-zero, sends 0xd7 0x03 0x00 on the rhythm byte stream (controller type 3 of
+; channel D7 set to 0).
 Rhythm_AllNotesOff_D7:
 	cp (0x332f:16), 0
 	jr z, Rhythm_AllNotesOff_D7_Skip
@@ -1077,6 +1100,7 @@ Rhythm_AllNotesOff_D7:
 Rhythm_AllNotesOff_D7_Skip:
 	ret
 
+; When 0x3330 is non-zero, sends 0xd4 0x03 0x00 on the rhythm byte stream.
 Rhythm_AllNotesOff_D4:
 	cp (0x3330:16), 0
 	jr z, Rhythm_AllNotesOff_D4_Skip
@@ -1088,6 +1112,7 @@ Rhythm_AllNotesOff_D4:
 Rhythm_AllNotesOff_D4_Skip:
 	ret
 
+; When 0x3331 is non-zero, sends 0xd5 0x03 0x00 on the rhythm byte stream.
 Rhythm_AllNotesOff_D5:
 	cp (0x3331:16), 0
 	jr z, Rhythm_AllNotesOff_D5_Skip
@@ -1099,6 +1124,7 @@ Rhythm_AllNotesOff_D5:
 Rhythm_AllNotesOff_D5_Skip:
 	ret
 
+; When 0x3332 is non-zero, sends 0xd6 0x03 0x00 on the rhythm byte stream.
 Rhythm_AllNotesOff_D6:
 	cp (0x3332:16), 0
 	jr z, Rhythm_AllNotesOff_D6_Done
@@ -1117,6 +1143,7 @@ Rhythm_SendVolume_Dispatch:
 	calr Rhythm_SendVolume_D6
 	ret
 
+; When 0x332f is non-zero, sends 0xd7 0x03 (0x332f) on the rhythm byte stream.
 Rhythm_SendVolume_D7:
 	cp (0x332f:16), 0
 	jr z, Rhythm_SendVolume_D7_Skip
@@ -1128,6 +1155,7 @@ Rhythm_SendVolume_D7:
 Rhythm_SendVolume_D7_Skip:
 	ret
 
+; When 0x3330 is non-zero, sends 0xd4 0x03 (0x3330) on the rhythm byte stream.
 Rhythm_SendVolume_D4:
 	cp (0x3330:16), 0
 	jr z, Rhythm_SendVolume_D4_Skip
@@ -1139,6 +1167,7 @@ Rhythm_SendVolume_D4:
 Rhythm_SendVolume_D4_Skip:
 	ret
 
+; When 0x3331 is non-zero, sends 0xd5 0x03 (0x3331) on the rhythm byte stream.
 Rhythm_SendVolume_D5:
 	cp (0x3331:16), 0
 	jr z, Rhythm_SendVolume_D5_Skip
@@ -1150,6 +1179,7 @@ Rhythm_SendVolume_D5:
 Rhythm_SendVolume_D5_Skip:
 	ret
 
+; When 0x3332 is non-zero, sends 0xd6 0x03 (0x3332) on the rhythm byte stream.
 Rhythm_SendVolume_D6:
 	cp (0x3332:16), 0
 	jr z, Rhythm_SendVolume_D6_Done
@@ -1168,6 +1198,7 @@ Rhythm_NoteOffMax_Dispatch:
 	calr Rhythm_NoteOffMax_D6
 	ret
 
+; When 0x332f is non-zero, sends 0x90 0x7f 0x77 on the rhythm byte stream.
 Rhythm_NoteOffMax_D7:
 	cp (0x332f:16), 0
 	jr z, Rhythm_NoteOffMax_D7_Skip
@@ -1179,6 +1210,7 @@ Rhythm_NoteOffMax_D7:
 Rhythm_NoteOffMax_D7_Skip:
 	ret
 
+; When 0x3330 is non-zero, sends 0x90 0x7f 0x74 on the rhythm byte stream.
 Rhythm_NoteOffMax_D4:
 	cp (0x3330:16), 0
 	jr z, Rhythm_NoteOffMax_D4_Skip
@@ -1190,6 +1222,7 @@ Rhythm_NoteOffMax_D4:
 Rhythm_NoteOffMax_D4_Skip:
 	ret
 
+; When 0x3331 is non-zero, sends 0x90 0x7f 0x75 on the rhythm byte stream.
 Rhythm_NoteOffMax_D5:
 	cp (0x3331:16), 0
 	jr z, Rhythm_NoteOffMax_D5_Skip
@@ -1201,6 +1234,7 @@ Rhythm_NoteOffMax_D5:
 Rhythm_NoteOffMax_D5_Skip:
 	ret
 
+; When 0x3332 is non-zero, sends 0x90 0x7f 0x76 on the rhythm byte stream.
 Rhythm_NoteOffMax_D6:
 	cp (0x3332:16), 0
 	jr z, Rhythm_NoteOffMax_D6_Done

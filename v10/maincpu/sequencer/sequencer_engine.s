@@ -243,6 +243,10 @@ SeqPlay_CheckAndActivateParts_Return:
 	inc 4, xsp
 	ret
 
+; Starts the parts selected for playback: sets bit 6 of 0x28c5, 0x28aa = 0x28c6 = (0x28a8) &
+; SEQ_ACTIVE_PARTS, removes those parts from the active mask 0xf19e, sends voice-off and controller
+; events for each of them (Part_SendVoiceOffAndCCEvents) and runs SeqPlay_ProcessPartVoices with the
+; XWA it was given.
 SeqPlay_ActivatePartsAndSendOff:
 	dec 4, xsp
 	pushw_erp 0xfa
@@ -4024,6 +4028,9 @@ SeqRepeat_Return:
 	inc 6, xsp
 	ret
 
+; Unlinks part A's note (NoteMap_RemoveAndRelink) and writes its 5-byte buffer event (9-byte
+; records at 0x1dba, entry A) to the sequencer buffer, flushing the pending voice/CC batch first
+; (0x1d86 = 1) and the note batch when fewer than 16 bytes are free; sets the note flag 0x1d84.
 SeqNote_FlushPartEventToBuffer:
 	dec 2, xsp
 	ld (xsp), a
@@ -5102,6 +5109,9 @@ AccPedalDirect_Return:
 	inc 4, xsp
 	ret
 
+; Applies a two-byte value from bytes +2 / +3 of the record at XBC: E = byte 2 with bit 7 = bit 0
+; of byte 3, and byte 3 >> 1, stored at 0xfc62 / 0xfc63 and posted as switch events 0x48 / 8 and
+; 0x48 / 9 (AddswbWr), then SeqTimer_UpdateTempoReg.  Out: L = 0.
 AccPedalConfig_ApplyTempo:
 	pushw_erp 0xfa
 	ld e, (xbc + 2)
@@ -5133,6 +5143,10 @@ AccPedalTempo_ClearBit7:
 	popw_erp 0xfa
 	ret
 
+; Note-on handling for the bass / chord parts while the accompaniment is stopped (bit 2 of 0x41e
+; clear): with bit 4 of 0x28ac set it only sets bit 1 of 0x28a7; otherwise, for the parts in
+; 0x231c / 0x231e it stores the note's byte (0x5f when 0) in 0x42f, for other parts the next beat
+; tick (SEQ_BEAT_TICK + 1, wrapping at 0x5f), and flags the update in 0x431.
 SeqNote_UpdatePlayPosition_A:
 	dec 6, xsp
 	ld (xsp), c
@@ -5194,6 +5208,9 @@ SeqNote_UpdatePlayPosition_A_Skip:
 	ei	0
 	ret
 
+; Counterpart of SeqNote_UpdatePlayPosition_A while the accompaniment runs (bit 2 of 0x41e set,
+; bit 1 of 0x28b2 and bit 4 of 0x28ac clear): for the parts in 0x2324 / 0x2322 0x430 = next beat
+; tick, otherwise byte +1 of the note; then sets bit 3 of 0x431.
 SeqNote_UpdatePlayPosition_B:
 	dec 6, xsp
 	ld (xsp), c
@@ -6897,6 +6914,9 @@ SeqPlay_ChordEpilogue14:
 	lda xsp, (xsp + 14)
 	ret
 
+; Clears part A's bit in SEQ_ACTIVE_PARTS and 0x2314; when the panel bits 4..5 of 0xfc5f are clear
+; and A is the part in 0x231c, active in 0xf19e, with bit 2 of 0x41e set, restarts play
+; (AccWrap_PlayModeStartPlay).
 SeqCh_ClearActivePartBit:
 	ld c, a
 	ld a, c
@@ -8620,6 +8640,10 @@ PartVoiceStatus_PartLoopNext:
 	inc 8, xsp
 	ret
 
+; Moves every part of the playback mask 0x28a8 into the active mask (Chan_SetActiveBit), clears
+; 0x28a8 and 0x28aa, sends the all-parts note-off (SeqBuf_WriteNoteOffEntry with 0x32) and
+; NoteMap_SendAllNotesOff, refreshes the tone bank and voices (AudioInit_RefreshToneBank,
+; VoiceAlloc_ProcessAll) and the display (BitMapOut_PrepareAndDisplay).
 SeqPlay_ActivateAllChannels:
 	pushw_erp 0xfa
 	ldib_erp 0xfb, 1
@@ -10913,6 +10937,9 @@ MidiEvtSize_Return1:
 	ld l, 0x1:opc
 	jr SeqPart_NullRet
 
+; Out: L = 1 when the repeat range is active: not on titles 0x87 / 0x88; in mode 0x0b (bit 1 of
+; 0x28b1 set) or any mode but 0x13 (bit 0 of 0x28b1 set), with the word 0x232c not above 0x232a.
+; L = 0 otherwise.
 SeqPlay_CheckRepeatActive:
 	ld l, 0x0:opc
 	ld a, (CURRENT_TITLE:16)
@@ -13762,6 +13789,9 @@ Part_WriteWordAndByte:
 	inc 2, xsp
 	ret
 
+; Computes in 0x26ba how many 0xfb-byte blocks the bytes counted in 0x25da need beyond the space
+; left in the part's current block (0xff minus the entry (0x2634) of the 0x78 word array), 0 when
+; they fit; a drum part (type 0x10) adds 10 bytes first.  The result is also stored in 0x26ca.
 SeqPart_CalcPlaybackOffset:
 	pushw iz
 	ld a, (9780:16)
@@ -15147,6 +15177,9 @@ SeqTick_SubtractAndLoop:
 	sub xiz, 0xfb
 	jr SeqTick_ReadNextEntry
 
+; Writes the six bytes at XWA to the secondary write position (SeqPart_WriteByte_Secondary,
+; PartCtrl_AdvanceReadPos after each); any error stops it, and SEQ_ERROR_CODE is translated
+; (SeqPlay_WriteErrorToVoiceTable) at the end.
 SeqPart_ApplyControlChanges:
 	dec 4, xsp
 	pushw_erp 0xfa
@@ -15565,6 +15598,7 @@ SeqVoiceBit_ClearBit:
 SeqVoiceBit_CheckSubsystem:
 	jp Audio_CheckSubsystemReady
 
+; Copies 16 bytes from the buffer at XBC to offset 0x100 of song slot A (0 = 0xf280).
 Part_CopyBlock16:
 	cp a, 0:i3
 	jr nz, PartCopy16_ComputeAddr
@@ -15946,6 +15980,8 @@ PartSubBlkRd_ReadAndReturn:
 	ld l, (xwa - 1)
 	ret
 
+; Writes one byte of a song slot's second 16-entry table (offset 0x30; 0xf1b0 for slot 0).
+;   In:  A = song slot, BC = entry (1-based), E = value.  Tail-jumps to Audio_CheckSubsystemReady.
 Part_WriteSubBlock48:
 	cp a, 0:i3
 	jr nz, PartSubBlk48_ComputeAddr
@@ -16577,6 +16613,10 @@ PartCopyVoice_Return:
 	lda xsp, (xsp + 12)
 	ret
 
+; Initialises song memory: all 0x4d8 song-data blocks are chained into the free list (block n:
+; not in use, backward link n-1, forward link n+1, byte 5 = 0x82 end marker; block 1 has no
+; predecessor and block 0x4d8 ends the list), the free-list head (Part_WriteWordBlock_OffsetAF) is 1
+; and the free count (Part_SetAllVoicePos) 0x4d8.
 PartCtrl_InitChainLinkedList:
 	pushw iz
 	ld wa, 1:i3
@@ -16801,6 +16841,9 @@ PartCtrl_WriteByteToBuf_Epilogue2:
 	pop	xiz
 	ret
 
+; Writes the two bytes at XDE into song-data block WA at offset BC and BC + 1, continuing at offset
+; 5 of the next block when BC is 0xff.
+;   Out: HL = 0, or 0xffff when the second byte would fall past the end of the chain.
 PartCtrl_WriteBytePair:
 	push xiz
 	ld xiz, xde
@@ -16871,6 +16914,8 @@ PartCtrl_DeallocAndWrite_WriteByte:
 	inc 4, xsp
 	ret
 
+; Empties the chains that start at song-data blocks 1 and 2: frees what follows each
+; (Part_StealAndReallocVoices), cuts its forward link and writes the end marker 0x82 at offset 5.
 Part_DeallocVoices1And2:
 	ld wa, 1:i3
 	calr PartCtrl_ReadWord
@@ -17094,6 +17139,10 @@ SeqMode_ReturnState:
 	pop xiz
 	ret
 
+; Returns song-data block WA to the free list: it becomes the head (its forward link is the old head
+; 0xf22f, the old head's backward link points to it, Part_WriteWordBlock_OffsetAF), is marked not
+; in use with no predecessor and an end marker 0x82 at offset 5, and the free count goes up
+; (Part_IncrementVoicePos).
 PartCtrl_AppendToFreeList:
 	pushw iz
 	ld iz, wa
@@ -17316,6 +17365,8 @@ SeqPlay_StopReturn_Epilogue:
 	inc	4, xsp
 	ret
 
+; Skips events from the playback position until (0x230c) bar markers (0x81) have been passed, using
+; MIDI_GetEventSize / SeqPos_AdvanceWithWrap for the other events.  Nothing is done when 0x230c is 0.
 SeqData_SkipToCurrentBar:
 	pushw_erp 0xfa
 	ldib_erp 0xfb, 0
@@ -19363,6 +19414,10 @@ Chan_DeactivateAfterAccomp:
 	inc 2, xsp
 	ret
 
+; Activates part A for playback.  When no part was active yet, the start measure 0x2668 becomes 1,
+; or the saved measure 0x251c when bit 0 of 0x28b1 is set and the current start is later; the
+; editor scroll is reset, bit 3 of 0x28a7 reflects a start other than 1, and the play-mode
+; dispatcher runs.  Then the part's sub-block assignment is updated and its active bit set.
 SeqVoice_ActivateWithBarSync:
 	dec 2, xsp
 	ld (xsp), a
@@ -19538,6 +19593,8 @@ SeqDeact_DetectTypeReturn:
 	inc 2, xsp
 	ret
 
+; In mode 11 or on title 135: when part A is the one of type 0x0e (Part_FindVoiceByByte) and 0x28be
+; holds a part (not 0xff), writes type 0x0d for part (0x28be) + 1 in the type table of song slot 0.
 SeqVoice_UpdateSubBlockAssign:
 	dec 2, xsp
 	ld (xsp), a
@@ -19675,6 +19732,12 @@ SeqPlay_SaveStateAndCleanup:
 SeqSave_JumpCheckSubsys:
 	jp Audio_CheckSubsystemReady
 
+; Starts sequencer playback from a received start request when everything is ready: re-inits the
+; tempo ring buffer instead when 0x2524 is set, re-activates when bit 0 of 0x28c5 is set; otherwise
+; needs no transport bits 0 / 2, a non-empty tempo ring buffer, no active parts, playback parts in
+; 0x28a8, none started (0x28aa), bit 1 of 0x28b2 clear.  Then reassigns voices (stopping on
+; failure), sets bit 1 of 0x28b3, clears the beat counters, starts play and, with bit 2 of 0xfd50
+; set, SeqTimer_SetPlaybackFlags.
 SeqPlay_CheckAndStartPlayback:
 	cp (9508:16), 0
 	jp nz, (TempoRingBuf_Init:24)
@@ -19748,6 +19811,8 @@ SeqRestore_SetIndicator:
 SeqPlay_JumpCopyVoiceData:
 	jrl Part_CopyVoiceDataToAllChannels
 
+; Sets the start measure 0x2668 = 0x8002 (count-in) and resets the editor scroll
+; (NoteEditSy_SendModeScrollReset).
 SeqPlay_SetBarAndResetScroll:
 	ldw (9832:16), 0x8002
 	jp NoteEditSy_SendModeScrollReset
@@ -19969,6 +20034,8 @@ SeqPlay_CountInEnd_Join:
 	ld	(8956:16), a
 	ret
 
+; Runs the play-mode dispatcher; when bit 2 of 0x420 is set it then spins up to 0xffff times on the
+; bit value it read (the loop never re-reads 0x420).
 AccWrap_DispatchAndWaitSync:
 	call AccWrap_PlayModeDispatch
 	ldw bc, 0xffff
@@ -20034,6 +20101,7 @@ Seq_ComputePercent_Compute:
 	ld l, 0x63:opc
 	ret
 
+; Sets (C non-zero) or clears (C = 0) the bits of A in 0xfdad.
 SeqStatus_SetOrClearBit:
 	lda xde, (0xfdad:16)
 	cp c, 0:i3
@@ -20078,6 +20146,7 @@ Part_IsVoiceActive_Return:
 	inc 2, xsp
 	ret
 
+; Clears bit 0 of 0xfdad and posts switch event 0x91 / 3 with value 0 (AddswbWr, last argument 1).
 SeqStatus_ResetAndSendCmd:
 	res 0, (0xfdad:16)
 	pushw 0x1
@@ -20095,6 +20164,8 @@ SeqPlay_WriteErrorToVoiceTable:
 	ld	(SEQ_ERROR_CODE:16), (xbc+wa)
 	ret
 
+; Sends the 4-byte command at SeqData_SendVoiceTableBlock_LocalInit (copied to the stack) to the
+; sub CPU: sendCOMM with WA = 0, BC = 4.
 SeqData_SendVoiceTableBlock:
 	dec 6, xsp
 	ld xiy, SeqData_SendVoiceTableBlock_LocalInit
@@ -20250,6 +20321,8 @@ SeqData_SaveParsedState:
 	lda xsp, (xsp + 16)
 	ret
 
+; Out: HL = the forward link (+3) of block WA in the song data at (0x283e) (records of 256 bytes);
+; a link of 0xffff records error 0x32.  Preserves IZ.
 SeqData_ResolveNextBlock:
 	pushw iz
 	sll wa, 8
@@ -21993,6 +22066,8 @@ SeqState_DispatchEntry:
 	inc 4, xsp
 	ret
 
+; For parts 0..15: posts the part state (SeqVoice_DispatchEventToHandler) and recomputes its status
+; flags (SeqVoice_ComputeStatusFlags).
 SeqVoice_DispatchAllEvents:
 	pushw_erp 0xfa
 	ldib_erp 0xfb, 0
@@ -24036,6 +24111,7 @@ SeqAccomp_ReassignEpilogue:
 	lda xsp, (xsp + 18)
 	ret
 
+; Sets parameter 0x87000e (EVT_SET_PARAM) to 1 when A is non-zero, 0 otherwise.
 AppEvent_SendModeToggle:
 	cp a, 0:i3
 	scc16 nz, de
@@ -24044,12 +24120,14 @@ AppEvent_SendModeToggle:
 	ld xbc, EVT_SET_PARAM
 	jp ApDeliveryEvent
 
+; Sets parameter 0x810003 to XWA (EVT_SET_PARAM through ApDeliveryEvent).
 AppEvent_SendVoiceUpdate:
 	ld xde, xwa
 	ld xwa, 0x810003
 	ld xbc, EVT_SET_PARAM
 	jp ApDeliveryEvent
 
+; Sets parameter 0x850004 to XWA (EVT_SET_PARAM through ApDeliveryEvent).
 AppEvent_SendPlayStatus:
 	ld xde, xwa
 	ld xwa, 0x850004
@@ -24063,6 +24141,7 @@ NoteEditSy_ScrollReset:
 	ld xbc, EVT_SET_PARAM
 	jp ApDeliveryEvent
 
+; Sets parameter 0x860007 to XWA (EVT_SET_PARAM through ApDeliveryEvent).
 AppEvent_SendAccompStatus:
 	ld xde, xwa
 	ld xwa, 0x860007
@@ -24613,6 +24692,9 @@ NoteEditSy_WidgetCmdEdit:
 NoteEditSy_JumpFA9E07_2:
 	jp ApDeliveryEvent
 
+; Copies the editor's alternate cursor (0x276a / 0x276c / 0x276e / 0x2770) into the display block
+; 0x27fe..0x2804, adds the visible row range (BmDrEdit_SetupScrollRegion) at 0x2822 / 0x2824, and
+; sends EVT_GRAPH_DRAW 9 to the note-editor widget at 0x2972.
 NoteEditSy_UpdateNoteDisplay:
 	dec 4, xsp
 	ldmm16 0x27fe, 0x276a
@@ -26066,6 +26148,7 @@ SeqIndicator_HideBoth:
 	ld bc, 0:i3
 	jp SetVisible
 
+; Shows (A non-zero) or hides the widgets 0xd60003..0xd60006 (SetVisible).  Preserves IZ.
 VoiceParam_SetD6Group:
 	pushw iz
 	cp a, 0:i3
@@ -27721,6 +27804,8 @@ SeqScan_CompareAndAppend:
 	inc 4, xsp
 	ret
 
+; Clears entry C of song slot A: word array 0xffff, byte array 5, voice flag cleared, voice word
+; 0xffff; for slot 0 also clears part C's active bit.
 Part_ClearVoiceSlot:
 	dec 4, xsp
 	ld (xsp), c
@@ -27816,6 +27901,7 @@ VoiceAlloc_SetBitReturn:
 	or (xhl), e
 	ret
 
+; Tests bit (WA - 1) of the bitmap at 0x29f8.  Out: L = the masked byte (non-zero when set).
 VoiceAlloc_TestBitInMap:
 	dec 1, wa
 	ld hl, wa
@@ -27834,6 +27920,8 @@ VoiceAlloc_TestBitCalcAddr:
 	and l, e
 	ret
 
+; Runs SeqStep_PostEventAndUpdate, SeqScan_CheckBarBitAndProcess and Portamento_ScanInitAndLoop,
+; then continues in SeqTick_InitAndScanParts.
 VoiceAlloc_TestBitRead:
 	calr SeqStep_PostEventAndUpdate
 	calr SeqScan_CheckBarBitAndProcess
@@ -27892,6 +27980,8 @@ VoiceChan_PostStatusEvent:
 	ldw	(xbc+wa), (0x258e:16)
 	ret
 
+; Stores the event's first data byte (0x2587) as byte (0x25e0) of the table at 0x2576 and the word
+; 0x258e as word (0x25e0) of the table at 0x2556.
 SeqScan_StoreResultB:
 	ld a, (9696:16)
 	extz wa
@@ -28269,6 +28359,9 @@ SeqScan_WriteBestPositionA:
 	set 0, (0x28a6:16)
 	ret
 
+; Keeps the latest candidate: when the position 0x258e is after the best 0x2590 (or equal, with a
+; data byte 0x2587 not below the best byte 0x2592), stores it as the new best and clears bit 0 of
+; 0x28a6.
 SeqScan_UpdateBestPositionB:
 	ld bc, (9614:16)
 	ld wa, (9616:16)
@@ -29081,6 +29174,8 @@ SeqEvt_ApplyTrackBAndReturn:
 SeqEvt_SelectionReturn:
 	ret
 
+; Reports the word 0x25b4 as two sound parameters (SoundParam_NotifyChange, DE = 3): its high
+; byte as 0x28001 and its low byte as 0x28000.
 Portamento_NotifyParams:
 	pushw_erp 0xfa
 	ld bc, (9652:16)
@@ -30263,6 +30358,8 @@ SeqPart_EventLoopContinue:
 	ldmm8 3378, 0x2873
 	jrl SeqStep_ParseRhythm
 
+; Clears part A of song slot 0: voice flag and word (0xffff), word array 0xffff, byte array 5, and
+; its saved position in the table at 0x23e0 (block 0xffff, offset 5).
 SeqPart_ClearSingle:
 	dec 2, xsp
 	ld (xsp), a
@@ -30302,6 +30399,9 @@ SeqPart_ClearSingle:
 SeqPart_ClearSingleReturn:
 	ret
 
+; Steps the left comparison cursor (block 0x27d4, offset 0x27d6) to its next byte, storing it in
+; 0x27dc; when the current byte is an end (0x82) or bar (0x81) marker sets bit 0 of 0x27d2 instead.
+;   Out: L = the byte that was current.
 SeqPart_CompareLeft:
 	pushw_erp 0xfa
 	res 0, (0x27d2:16)
@@ -30332,6 +30432,8 @@ SeqPart_CompareLeftDone:
 	popw_erp 0xfa
 	ret
 
+; Same as SeqPart_CompareLeft for the right cursor (0x27d8 / 0x27da, byte to 0x27de, flag bit 1 of
+; 0x27d2).
 SeqPart_CompareRight:
 	pushw_erp 0xfa
 	res 1, (0x27d2:16)
@@ -30425,6 +30527,9 @@ SeqPart_DualSwapReturn:
 	inc 4, xsp
 	ret
 
+; Copies one event from the right comparison cursor to the primary write position: byte A first,
+; then (unless the cursor already ended, bit 1 of 0x27d2) the following bytes up to the next status
+; byte, advancing both cursors; finishes in SeqPart_CompareRight.
 SeqPart_ValidateRight:
 	ld l, a
 	extz hl
@@ -30453,6 +30558,8 @@ SeqPart_ValidateRightCore:
 	ld wa, hl
 	jr SeqPart_ValidateRightLoop
 
+; Same as SeqPart_ValidateRight for the left cursor (0x27d4 / 0x27d6, bit 0 of 0x27d2), finishing
+; in SeqPart_CompareLeft.
 SeqPart_ValidateLeft:
 	ld l, a
 	extz hl
@@ -30498,6 +30605,8 @@ SeqPart_InitValidOk:
 	ld hl, 0:i3
 	ret
 
+; Rejects rhythm parts: when part A's type (0xf1a0) is 0x0d, 0x0f or 0x10, sets error 9, maps it
+; (Part_ApplyVoiceTableA), resets song slot 0 and returns L = 0xff; otherwise returns at once.
 SeqPart_CheckVoiceType:
 	dec 1, a
 	extz wa
@@ -31593,6 +31702,7 @@ SeqPart_ByteBlockA95A_Code_Helper:
 	res	2, (10397:16)
 	ret
 
+; Alias entry: jumps to SeqPart_MultiPartWalker.
 SeqPart_DualCopySetup:
 	jrl SeqPart_MultiPartWalker
 SeqPart_DualCopySetup_Loop:
@@ -32850,6 +32960,8 @@ SeqPart_PosEqualStore:
 	ldmm16 0x27ec, 0x27e8
 	ret
 
+; When bit 7 of 0x287b and an error are both set, restores 0x2877 from 0x2652 and clears the part
+; again (SeqPart_InitClear).
 SeqPart_UndoAllocOnError:
 	bit 7, (0x287b:16)
 	ret z
@@ -33400,6 +33512,10 @@ SeqPart_SpliceReturn:
 	inc 4, xsp
 	ret
 
+; Restores part (0x2652)'s write position after an edit: when its voice flag is set, takes block /
+; offset from the tables at 0xcef / 0xd0f into 0x28af / 0x2666 (saved in 0x265c / 0x265e), writes
+; the end marker 0x82 there, records them for the part (Part_WriteWordAndByte with 0x287d =
+; part) and frees the chain after that block (Part_CheckAndReallocVoices).
 SeqPart_RestoreState:
 	ld c, (9810:16)
 	extz bc

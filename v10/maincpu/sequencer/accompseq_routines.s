@@ -323,6 +323,8 @@ AccompSeq_ResolveVRAMFallback:
 AccompSeq_ResolveVRAMDone:
 	ret
 
+; Out: XIY = 0x1e8b00 + (page & 0xfff) * 256 + (WA & 0xff), the page taken from QWA (upper word of
+; XWA): an address in the MIDI sequence buffer pool.  Preserves XHL.
 AccompSeq_BuildVRAMAddr:
 	push xhl
 	ld xhl, xwa
@@ -337,6 +339,8 @@ AccompSeq_BuildVRAMAddr:
 	pop xhl
 	ret
 
+; Out: WA = the link word at +3 of page (0x7e42) of the MIDI sequence buffer pool (the next page of
+; the accompaniment sequence).
 AccompSeq_ReadBeatHeader:
 	ld wa, (0x7e42:16)
 	and xwa, 0xfff
@@ -396,6 +400,10 @@ AccompSeq_CheckRestart:
 AccompSeq_DispatchReturn:
 	ret
 
+; Ticks from the current accompaniment-sequence position (beat 0x7e1c, tick 0x7e1e) to an event
+; at tick A of beat (0x7e46).
+;   Out: A = the difference within the same beat (0 if already passed), tick + 96 - current tick
+;   for the next beat, 0x60 for a later beat, 0 for an earlier beat.
 AccompSeq_CalcDeltaTime:
 	ld e, a
 	ld wa, (0x7e46:16)
@@ -1173,6 +1181,9 @@ AccompSeq_PostNoteProcess:
 AccompSeq_PostNote_Return:
 	ret
 
+; Starts an accompaniment-sequence voice: AccompSeq_ResetMidiState, stores the voice (L, H) in
+; 0x7e25 / 0x7e26, looks up its style data (AccompSeq_LookupStyleData) and runs
+; AccompSeq_LoadParams, AccompSeq_InitMidiEvents and AccompSeq_InitPlayState.
 AccompSeq_InitPartFull:
 	calr AccompSeq_ResetMidiState
 	ld (0x7e25:16), l
@@ -1387,6 +1398,9 @@ AccompSeq_InitMidi_Ch2Chorus:
 AccompSeq_InitMidi_Return:
 	ret
 
+; Resets the accompaniment-sequence counters (0x468, 0x46a, 0x472, 0x7e3c, 0x7e3e), sets bit 0 of
+; 0x41f unless bit 2 is set, copies bits 0..1 of 0x7e27 into 0x7e24 (bit 7 cleared), and returns A
+; = 1, 2 or 4 for the first of bits 0, 1 set in SWBTWR_PAYLOAD_2 (4 when neither).
 AccompSeq_InitPlayState:
 	and (0x7e24:16), 127
 	xor wa, wa
@@ -1427,6 +1441,8 @@ AccompSeq_InitPlay_Store:
 AccompSeq_InitPlay_Return:
 	ret
 
+; Restarts an accompaniment-sequence voice: clears bits 0..1 of 0x7e24, silences it
+; (AccompSeq_SendAllOff) and then does what AccompSeq_InitPartFull does for the voice in HL.
 AccompSeq_ReinitPart:
 	pushw hl
 	ld a, (0x7e24:16)

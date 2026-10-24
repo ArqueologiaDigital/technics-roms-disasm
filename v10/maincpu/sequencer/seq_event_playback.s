@@ -8,9 +8,11 @@
 ; =============================================================================
 
 
+; Alias entry: jumps to SeqEvt_InitAndProcess.
 SeqEvt_EntryPoint1:
 	jp SeqEvt_InitAndProcess
 
+; Alias entry: jumps to SeqEvt_InitVoiceScan.
 SeqEvt_EntryPoint2:
 	jp SeqEvt_InitVoiceScan
 
@@ -1859,6 +1861,9 @@ AccPlay_HoldLoopAdvance:
 	jr nz, AccPlay_IncrementHoldLoop
 	ret
 
+; Moves a 4-byte record from the tempo ring buffer into the MIDI sequence buffer, turning a 0xd3
+; status into 0xd5, and stores its first 3 bytes (MidiSeqBuf_ScanAllEntries,
+; MidiSeqBuf_ProcessEntries).
 MidiSeq_ProcessSustainEvent:
 	ld bc, 4:i3
 	calr MidiSeqBuf_ScanAllEntries
@@ -2445,6 +2450,9 @@ Util_ExtractAndShiftBits:
 	pop xhl
 	ret
 
+; Finds the first free page (bit 7 of byte 0 clear) among pages 0..0x38 of the MIDI sequence buffer
+; pool.  Out: WA = the page, or 0xffff after restarting the accompaniment playback
+; (AccPlay_InitAndStartLoop) when none is free.
 Voice_FindFreeSlot:
 	xor xix, xix
 	ld bc, 0:i3
@@ -2591,6 +2599,8 @@ MidiSeqBuf_WriteByte:
 	pop xix
 	ret
 
+; Restarts the accompaniment playback: clears 0x7f0b, re-initialises the tempo ring buffer, sets
+; bit 2 of 0x7f15, sends SysEx command 8 (MIDI_SendSysExCmd) and runs AccPlay_MainUpdateLoop.
 AccPlay_InitAndStartLoop:
 	ld (0x7f0b:16), 0
 	call TempoRingBuf_ReInitAndRet
