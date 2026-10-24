@@ -135,14 +135,13 @@ HDAE5000_StrNCmp:	; 0x29AFBE
 	exts hl				; sign-extend L to HL
 	ret
 
-HDAE5000_StrNCpy:	; 0x29AFF0
-	; strncpy(dest, src, n): copies until n or src's NUL, then zero-fills
-	; the rest of the n bytes (HDAE5000_StrNCpy_Loop2 loop).  XHL = dest.  (Was named
-	; MemCopy_Reverse; nothing here runs backwards.)
-; LMCR: 0x29AFF0 (1853 bytes)
-	; ^ the 1853 bytes are the whole run of library routines from here to
-	;   HDAE5000_Multiply, NOT this routine (43 bytes); see the labels below.
-
+; ---------------------------------------------------------------------------
+; strncpy(dest, src, n): copies up to n bytes, stopping at src's NUL, then
+; zero-fills the rest of the n bytes (no terminator when src is n or longer).
+; In:  (xsp+4) = dest, (xsp+8) = src, (xsp+12) = n (word)
+; Out: XHL = dest.  Clobbers XIX, XDE, BC, A.
+; ---------------------------------------------------------------------------
+HDAE5000_StrNCpy:
 	ld	bc, (xsp+12)
 	ld xde, (xsp + 0x08)
 	ld xix, (xsp + 0x04)

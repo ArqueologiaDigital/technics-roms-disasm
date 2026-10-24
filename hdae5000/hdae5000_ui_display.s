@@ -14273,12 +14273,14 @@ HDAE5000_Song_CheckFreeSpace:	; 0x293C96 (347 bytes)
 	lda xsp, (xsp + 12)
 	ret
 
-HDAE5000_RoundUpToSector:	; 0x293DF1 (61 bytes)
-	; Get cell rendering parameters from data source
-	; Input: XWA = source pointer (0 = use default address 0x200)
-	; Output: XHL = parameter block pointer
-	; ^ corrected: XWA is a BYTE COUNT: XHL = XWA rounded up to a multiple of
-	;   512 (HDAE5000_LDiv by 0x200), and 0x200 for 0.  Used for part sizes.
+; ---------------------------------------------------------------------------
+; Round a byte count up to whole 512-byte sectors with HDAE5000_LDiv:
+; quotient * 512 + 512 when there is a remainder, the count itself when it
+; is already a multiple, and 512 for a count of 0.  Used for part sizes.
+; In:  XWA = byte count
+; Out: XHL = rounded count.  XIZ preserved.
+; ---------------------------------------------------------------------------
+HDAE5000_RoundUpToSector:
 	dec 8, xsp			; allocate 8 bytes
 	push xiz
 	ld xiz, xwa			; XIZ = source pointer
@@ -16559,10 +16561,10 @@ HDAE5000_PPORT_Execute:	; 0x2952F8 (234 bytes)
 HDAE5000_PPORT_InitPort:
 	; Write I/O registers and clear flag
 	ld a, 0x89:opc
-	ld (0x160006:24), a; (0x160006) = 0x89
+	ld (HDAE5000_IO_PpiControl:24), a; (0x160006) = 0x89
 	nop
 	ld a, 0x28:opc
-	ld (0x160002:24), a; (0x160002) = 0x28
+	ld (HDAE5000_IO_PpiPortB:24), a; (0x160002) = 0x28
 	nop
 	ld (HDAE5000_RAM_PportError:24), 0x00; (0x2390D4) = 0
 	ret
@@ -16571,19 +16573,19 @@ HDAE5000_PPORT_CommandLoop:
 	; Read/execute with polling loop
 	ei 0x07				; IFF=7: masks every maskable level -- this IS the real DI (06 07)
 	ld a, 0x89:opc
-	ld (0x160006:24), a; (0x160006) = 0x89
+	ld (HDAE5000_IO_PpiControl:24), a; (0x160006) = 0x89
 	nop
 HDAE5000_PPORT_CommandLoop_Poll:
 	ld wa, 0:i3			; WA = 0
 	call HDAE5000_PPORT_CallService	; 0x2950F8
-	ld a, (0x160004:24); read (0x160004)
+	ld a, (HDAE5000_IO_PpiPortC:24); read (0x160004)
 	nop
 	and a, 0x04			; test bit 2
 	nop
 	cp a, 4:i3			; bit 2 set?
 	jr nz, HDAE5000_PPORT_CommandLoop_Poll		; keep polling if not
 	ld a, 0x18:opc
-	ld (0x160002:24), a; (0x160002) = 0x18
+	ld (HDAE5000_IO_PpiPortB:24), a; (0x160002) = 0x18
 	nop
 	ld (HDAE5000_RAM_PportError:24), 0x00; (0x2390D4) = 0
 	call HDAE5000_PPORT_RecvPacket
@@ -18602,9 +18604,16 @@ HDAE5000_PPORT_RecvPacket:				; 0x296814
 	ret
 	nop
 
-HDAE5000_PPORT_SendPacket:	; 0x29688A (530 bytes)
-	; Sum 256 bytes from buffer, send checksum, then send buffer bytes;
-	; retry on success, return on error. Uses PPORT I/O read/write sub-routines.
+; ---------------------------------------------------------------------------
+; Send the 256-byte PC-link packet: each byte through HDAE5000_PPORT_SendByte
+; while summing it into HDAE5000_RAM_PportChecksum, then the 4 checksum
+; bytes, then HDAE5000_PPORT_EndBlock; the whole packet is sent again while
+; EndBlock returns W != 0.  Returns at once when a byte sets
+; HDAE5000_RAM_PportError.
+; RAM: HDAE5000_RAM_PportPacket, HDAE5000_RAM_PportChecksum,
+;      HDAE5000_RAM_PportError
+; ---------------------------------------------------------------------------
+HDAE5000_PPORT_SendPacket:
 	xor xwa, xwa
 	ld (HDAE5000_RAM_PportChecksum:24), xwa; st (0x2390FC), XWA — clear 32-bit checksum
 	nop
@@ -18654,7 +18663,7 @@ HDAE5000_PPORT_SendPacket:	; 0x29688A (530 bytes)
 HDAE5000_PPORT_RecvByte:			; 0x296900 — Read one byte from parallel port → W
 	; Handshake: wait for BUSY=1 (bit2=1), then DATA_READY (bit0=1),
 	; read data, acknowledge, wait for completion
-	ld a, (0x160004:24); ld A, (0x160004) — read status
+	ld a, (HDAE5000_IO_PpiPortC:24); ld A, (0x160004) — read status
 	nop
 	ld l, a
 	and l, 0x04				; test bit 2
@@ -18668,7 +18677,7 @@ HDAE5000_PPORT_RecvByte:			; 0x296900 — Read one byte from parallel port → W
 	jp nz, (HDAE5000_PPORT_RecvByte:24)			; jp NZ, 0x296900 — retry
 	nop
 .Lpsb_read_phase2:			; 0x296920
-	ld a, (0x160004:24); ld A, (0x160004)
+	ld a, (HDAE5000_IO_PpiPortC:24); ld A, (0x160004)
 	nop
 	ld l, a
 	and l, 0x04
@@ -18682,16 +18691,16 @@ HDAE5000_PPORT_RecvByte:			; 0x296900 — Read one byte from parallel port → W
 	jp nz, (.Lpsb_read_phase2:24)			; jp NZ, 0x296920 — retry
 	nop
 	ld a, 0x99:opc				; command byte — request read
-	ld (0x160006:24), a; st (0x160006), A — send command
+	ld (HDAE5000_IO_PpiControl:24), a; st (0x160006), A — send command
 	nop
-	ld a, (0x160002:24); ld A, (0x160002) — control register
+	ld a, (HDAE5000_IO_PpiPortB:24); ld A, (0x160002) — control register
 	nop
 	and a, 0xF7				; clear bit 3
 	nop
-	ld (0x160002:24), a; st (0x160002), A
+	ld (HDAE5000_IO_PpiPortB:24), a; st (0x160002), A
 	nop
 .Lpsb_read_phase3:			; 0x296958
-	ld a, (0x160004:24); ld A, (0x160004) — status
+	ld a, (HDAE5000_IO_PpiPortC:24); ld A, (0x160004) — status
 	nop
 	ld l, a
 	and l, 0x04
@@ -18704,16 +18713,16 @@ HDAE5000_PPORT_RecvByte:			; 0x296900 — Read one byte from parallel port → W
 	cp a, 2:i3				; wait for bit1=1
 	jp nz, (.Lpsb_read_phase3:24)			; jp NZ, 0x296958 — retry
 	nop
-	ld w, (0x160000:24); ld W, (0x160000) — read data byte
+	ld w, (HDAE5000_IO_PpiPortA:24); ld W, (0x160000) — read data byte
 	nop
 	ld a, 0x89:opc				; acknowledge byte
-	ld (0x160006:24), a; st (0x160006), A
+	ld (HDAE5000_IO_PpiControl:24), a; st (0x160006), A
 	nop
-	ld a, (0x160002:24); ld A, (0x160002)
+	ld a, (HDAE5000_IO_PpiPortB:24); ld A, (0x160002)
 	nop
 	or a, 0x08				; set bit 3
 	nop
-	ld (0x160002:24), a; st (0x160002), A
+	ld (HDAE5000_IO_PpiPortB:24), a; st (0x160002), A
 	nop
 	ret
 	nop
@@ -18721,10 +18730,19 @@ HDAE5000_PPORT_RecvByte:			; 0x296900 — Read one byte from parallel port → W
 	ld (HDAE5000_RAM_PportError:24), 0x01; st (0x2390D4), 1 — set error flag
 	ret
 	nop
+
+; ---------------------------------------------------------------------------
+; Send byte W to the PC over the 8255: wait for port C bit 0 = 0, write W to
+; port A, pulse port B bit 3 low, wait for port C bit 1 = 0, raise port B bit 3
+; again, wait for port C bit 1 = 1.  Port C bit 2 must stay 1 throughout:
+; when it drops, HDAE5000_RAM_PportError is set to 1 and the byte is
+; abandoned.
+; In:  W = byte
+; Out: clobbers A, L.
+; I/O: HDAE5000_IO_PpiPortA, _PpiPortB, _PpiPortC
+; ---------------------------------------------------------------------------
 HDAE5000_PPORT_SendByte:			; 0x2969A0 — Write byte W to parallel port
-	; Handshake: wait for BUSY=1 (bit2=1), then READY (bit0=0),
-	; write data, signal, wait for ack
-	ld a, (0x160004:24); ld A, (0x160004) — status
+	ld a, (HDAE5000_IO_PpiPortC:24); ld A, (0x160004) — status
 	nop
 	ld l, a
 	and l, 0x04
@@ -18737,16 +18755,16 @@ HDAE5000_PPORT_SendByte:			; 0x2969A0 — Write byte W to parallel port
 	cp a, 0:i3				; wait for bit0=0
 	jp nz, (HDAE5000_PPORT_SendByte:24)			; jp NZ, 0x2969A0 — retry
 	nop
-	ld (0x160000:24), w; st (0x160000), W — write data
+	ld (HDAE5000_IO_PpiPortA:24), w; st (0x160000), W — write data
 	nop
-	ld a, (0x160002:24); ld A, (0x160002)
+	ld a, (HDAE5000_IO_PpiPortB:24); ld A, (0x160002)
 	nop
 	and a, 0xF7				; clear bit 3
 	nop
-	ld (0x160002:24), a; st (0x160002), A
+	ld (HDAE5000_IO_PpiPortB:24), a; st (0x160002), A
 	nop
 .Lpsb_write_phase2:			; 0x2969D6
-	ld a, (0x160004:24); ld A, (0x160004)
+	ld a, (HDAE5000_IO_PpiPortC:24); ld A, (0x160004)
 	nop
 	ld l, a
 	and l, 0x04
@@ -18759,14 +18777,14 @@ HDAE5000_PPORT_SendByte:			; 0x2969A0 — Write byte W to parallel port
 	cp a, 0:i3				; wait for bit1=0
 	jp nz, (.Lpsb_write_phase2:24)			; jp NZ, 0x2969D6 — retry
 	nop
-	ld a, (0x160002:24); ld A, (0x160002)
+	ld a, (HDAE5000_IO_PpiPortB:24); ld A, (0x160002)
 	nop
 	or a, 0x08				; set bit 3
 	nop
-	ld (0x160002:24), a; st (0x160002), A
+	ld (HDAE5000_IO_PpiPortB:24), a; st (0x160002), A
 	nop
 .Lpsb_write_phase3:			; 0x296A06
-	ld a, (0x160004:24); ld A, (0x160004)
+	ld a, (HDAE5000_IO_PpiPortC:24); ld A, (0x160004)
 	nop
 	ld l, a
 	and l, 0x04
@@ -18787,14 +18805,14 @@ HDAE5000_PPORT_SendByte:			; 0x2969A0 — Write byte W to parallel port
 	nop
 HDAE5000_PPORT_EndBlock:				; 0x296A30 — Finalize parallel port transfer
 	; Deassert, wait for completion, read final status bit
-	ld a, (0x160002:24); ld A, (0x160002)
+	ld a, (HDAE5000_IO_PpiPortB:24); ld A, (0x160002)
 	nop
 	and a, 0xF7				; clear bit 3
 	nop
-	ld (0x160002:24), a; st (0x160002), A
+	ld (HDAE5000_IO_PpiPortB:24), a; st (0x160002), A
 	nop
 .Lpsb_fin_wait1:			; 0x296A40
-	ld a, (0x160004:24); ld A, (0x160004)
+	ld a, (HDAE5000_IO_PpiPortC:24); ld A, (0x160004)
 	nop
 	ld l, a
 	and l, 0x04
@@ -18806,18 +18824,18 @@ HDAE5000_PPORT_EndBlock:				; 0x296A30 — Finalize parallel port transfer
 	nop
 	cp a, 0:i3				; wait for bit1=0
 	jr nz, .Lpsb_fin_wait1			; retry
-	ld w, (0x160004:24); ld W, (0x160004) — final status
+	ld w, (HDAE5000_IO_PpiPortC:24); ld W, (0x160004) — final status
 	nop
 	and w, 0x01				; extract bit 0 → result
 	nop
-	ld a, (0x160002:24); ld A, (0x160002)
+	ld a, (HDAE5000_IO_PpiPortB:24); ld A, (0x160002)
 	nop
 	or a, 0x08				; set bit 3
 	nop
-	ld (0x160002:24), a; st (0x160002), A
+	ld (HDAE5000_IO_PpiPortB:24), a; st (0x160002), A
 	nop
 .Lpsb_fin_wait2:			; 0x296A76
-	ld a, (0x160004:24); ld A, (0x160004)
+	ld a, (HDAE5000_IO_PpiPortC:24); ld A, (0x160004)
 	nop
 	ld l, a
 	and l, 0x04
@@ -18836,8 +18854,12 @@ HDAE5000_PPORT_EndBlock:				; 0x296A30 — Finalize parallel port transfer
 	ret
 	nop
 
-HDAE5000_PPORT_ClearPacket:	; 0x296A9C (26 bytes)
-	; Clear 256 bytes of memory at (XIX + 0..255) using register-indexed store
+; ---------------------------------------------------------------------------
+; Zero the 256-byte PC-link packet.
+; Out: XIX = HDAE5000_RAM_PportPacket, BC = 0x0100.
+; RAM: HDAE5000_RAM_PportPacket
+; ---------------------------------------------------------------------------
+HDAE5000_PPORT_ClearPacket:
 	lda xix, (HDAE5000_RAM_PportPacket:24); lda XIX, (0x239168)
 	nop
 	ld bc, 0:i3		; BC = 0 (loop counter)
@@ -18979,7 +19001,7 @@ HDAE5000_PPORT_RecvBlock:		; 0x296B7E — Receive XDE bytes into XIY with checks
 	inc 1, xiy
 	jp .Lrb_recv_loop
 .Lrb_status_check:			; 0x296BC0 — Check PPORT status port
-	ld a, (0x160004:24); ld A, (0x160004) — status port
+	ld a, (HDAE5000_IO_PpiPortC:24); ld A, (0x160004) — status port
 	nop
 	ld l, a
 	and l, 0x04
@@ -19791,7 +19813,7 @@ HDAE5000_ATA_WaitReady:
 HDAE5000_ATA_WaitReady_Poll:
 	cp	xix, 0x003fffff
 	jp	z, (.LATA_WaitReady_Poll_Skip1:24)
-	ld	a, (0x13001E:24)
+	ld	a, (HDAE5000_IO_AtaStatusCommand:24)
 	and	a, 0xc0
 	cp	a, 0x40
 	jp	z, (.LATA_WaitReady_Poll_Skip2:24)
@@ -19859,13 +19881,13 @@ HDAE5000_ATA_Standby:
 	call HDAE5000_ATA_WaitReady
 	cp	(HDAE5000_RAM_AtaError:24), 0
 	jp	nz, (.LATA_Standby_Skip1:24)
-	ld	(0x130012:24), 255
-	ld	(0x130014:24), 0
-	ld	(0x130016:24), 255
-	ld	(0x130018:24), 255
-	ld	(0x13001A:24), 255
-	ld	(0x13001C:24), 160
-	ld	(0x13001E:24), 148
+	ld	(HDAE5000_IO_AtaFeatures:24), 255
+	ld	(HDAE5000_IO_AtaSectorCount:24), 0
+	ld	(HDAE5000_IO_AtaSectorNumber:24), 255
+	ld	(HDAE5000_IO_AtaCylinderLow:24), 255
+	ld	(HDAE5000_IO_AtaCylinderHigh:24), 255
+	ld	(HDAE5000_IO_AtaDriveHead:24), 160
+	ld	(HDAE5000_IO_AtaStatusCommand:24), 148
 .LATA_Standby_Skip1:
 	pop xiz
 	pop xiy
@@ -20038,20 +20060,20 @@ HDAE5000_ATA_WriteSector:
 	ld	(0x200208), xix
 	ld	(HDAE5000_RAM_AtaError:24), 0
 HDAE5000_ATA_WriteSector_WaitReady:
-	ld	a, (0x13001E:24)
+	ld	a, (HDAE5000_IO_AtaStatusCommand:24)
 	and	a, 0xc0
 	cp	a, 0x40
 	jp	z, (.LATA_WriteSector_WaitReady_Skip1:24)
 	jp HDAE5000_ATA_WriteSector_WaitReady                             ; jp 0x2976ab
 .LATA_WriteSector_WaitReady_Skip1:
-	ld	(0x130014:24), 1
+	ld	(HDAE5000_IO_AtaSectorCount:24), 1
 	ld	xwa, (0x200204)
 	dec	1, xwa
 	ld	xbc, (0x200200)
 	calr	HDAE5000_HD_UDiv32
 	ld	e, a
 	or	a, 0xa0
-	ld	(0x13001C:24), a
+	ld	(HDAE5000_IO_AtaDriveHead:24), a
 	xor	xwa, xwa
 	ld	a, e
 	ld	xbc, (0x200200)
@@ -20064,8 +20086,8 @@ HDAE5000_ATA_WriteSector_WaitReady:
 	xor	xbc, xbc
 	ld	bc, (0x200220:24)
 	calr	HDAE5000_HD_UDiv32
-	ld	(0x130018:24), a
-	ld	(0x13001A:24), w
+	ld	(HDAE5000_IO_AtaCylinderLow:24), a
+	ld	(HDAE5000_IO_AtaCylinderHigh:24), w
 	xor	xbc, xbc
 	ld	bc, (0x200220:24)
 	calr	HDAE5000_HD_Mul32
@@ -20073,10 +20095,10 @@ HDAE5000_ATA_WriteSector_WaitReady:
 	add	xbc, xwa
 	ld	xwa, (0x200204)
 	sub	xwa, xbc
-	ld	(0x130016:24), a
-	ld	(0x13001E:24), 48
+	ld	(HDAE5000_IO_AtaSectorNumber:24), a
+	ld	(HDAE5000_IO_AtaStatusCommand:24), 48
 HDAE5000_ATA_WriteSector_WaitDrq:
-	ld	a, (0x13001E:24)
+	ld	a, (HDAE5000_IO_AtaStatusCommand:24)
 	and	a, 0xc8
 	cp	a, 0x48
 	jp	z, (.LATA_WriteSector_WaitDrq_Skip1:24)
@@ -20088,19 +20110,19 @@ HDAE5000_ATA_WriteSector_DataLoop:
 	cp	bc, 0x0200
 	jp	nc, (HDAE5000_ATA_WriteSector_WaitDone:24)
 	ld	wa, (xix)
-	ld	(0x130010), wa
+	ld	(HDAE5000_IO_AtaData), wa
 	inc 2, xix
 	inc 2, xiy
 	inc	2, bc
 	jp HDAE5000_ATA_WriteSector_DataLoop                             ; jp 0x29774c
 HDAE5000_ATA_WriteSector_WaitDone:
-	ld	a, (0x13001E:24)
+	ld	a, (HDAE5000_IO_AtaStatusCommand:24)
 	and	a, 0xc0
 	cp	a, 0x40
 	jp	z, (.LATA_WriteSector_WaitDone_Skip1:24)
 	jp HDAE5000_ATA_WriteSector_WaitDone                             ; jp 0x297766
 .LATA_WriteSector_WaitDone_Skip1:
-	ld	a, (0x13001E:24)
+	ld	a, (HDAE5000_IO_AtaStatusCommand:24)
 	and	a, 0x01
 	ld	(HDAE5000_RAM_AtaError:24), a
 	ret
@@ -20114,20 +20136,20 @@ HDAE5000_ATA_ReadSector:
 	ld	(0x200214), xde
 	ld	(HDAE5000_RAM_AtaError:24), 0
 HDAE5000_ATA_ReadSector_WaitReady:
-	ld	a, (0x13001E:24)
+	ld	a, (HDAE5000_IO_AtaStatusCommand:24)
 	and	a, 0xc0
 	cp	a, 0x40
 	jp	z, (.LATA_ReadSector_WaitReady_Skip1:24)
 	jp HDAE5000_ATA_ReadSector_WaitReady                             ; jp 0x29779d
 .LATA_ReadSector_WaitReady_Skip1:
-	ld	(0x130014:24), 1
+	ld	(HDAE5000_IO_AtaSectorCount:24), 1
 	ld	xwa, (0x20020c)
 	dec	1, xwa
 	ld	xbc, (0x200200)
 	calr	HDAE5000_HD_UDiv32
 	ld	e, a
 	or	a, 0xa0
-	ld	(0x13001C:24), a
+	ld	(HDAE5000_IO_AtaDriveHead:24), a
 	xor	xwa, xwa
 	ld	a, e
 	ld	xbc, (0x200200)
@@ -20140,8 +20162,8 @@ HDAE5000_ATA_ReadSector_WaitReady:
 	xor	xbc, xbc
 	ld	bc, (0x200220:24)
 	calr	HDAE5000_HD_UDiv32
-	ld	(0x130018:24), a
-	ld	(0x13001A:24), w
+	ld	(HDAE5000_IO_AtaCylinderLow:24), a
+	ld	(HDAE5000_IO_AtaCylinderHigh:24), w
 	xor	xbc, xbc
 	ld	bc, (0x200220:24)
 	calr	HDAE5000_HD_Mul32
@@ -20149,10 +20171,10 @@ HDAE5000_ATA_ReadSector_WaitReady:
 	add	xbc, xwa
 	ld	xwa, (0x20020c)
 	sub	xwa, xbc
-	ld	(0x130016:24), a
-	ld	(0x13001E:24), 32
+	ld	(HDAE5000_IO_AtaSectorNumber:24), a
+	ld	(HDAE5000_IO_AtaStatusCommand:24), 32
 HDAE5000_ATA_ReadSector_WaitDrq:
-	ld	a, (0x13001E:24)
+	ld	a, (HDAE5000_IO_AtaStatusCommand:24)
 	and	a, 0xc8
 	cp	a, 0x48
 	jp	z, (.LATA_ReadSector_WaitDrq_Skip1:24)
@@ -20164,7 +20186,7 @@ HDAE5000_ATA_ReadSector_WaitDrq:
 HDAE5000_ATA_ReadSector_DataLoop:
 	cp	bc, 0x0200
 	jp	nc, (HDAE5000_ATA_ReadSector_WaitDone:24)
-	ld	wa, (0x130010:24)
+	ld	wa, (HDAE5000_IO_AtaData:24)
 	cp	bc, de
 	jp	nc, (.LATA_ReadSector_DataLoop_Skip1:24)
 	ld (xix), wa
@@ -20173,13 +20195,13 @@ HDAE5000_ATA_ReadSector_DataLoop:
 	inc	2, bc
 	jp HDAE5000_ATA_ReadSector_DataLoop                             ; jp 0x297843
 HDAE5000_ATA_ReadSector_WaitDone:
-	ld	a, (0x13001E:24)
+	ld	a, (HDAE5000_IO_AtaStatusCommand:24)
 	and	a, 0xc0
 	cp	a, 0x40
 	jp	z, (.LATA_ReadSector_WaitDone_Skip1:24)
 	jp HDAE5000_ATA_ReadSector_WaitDone                             ; jp 0x297862
 .LATA_ReadSector_WaitDone_Skip1:
-	ld	a, (0x13001E:24)
+	ld	a, (HDAE5000_IO_AtaStatusCommand:24)
 	and	a, 0x01
 	ld	(HDAE5000_RAM_AtaError:24), a
 	ret
@@ -20196,21 +20218,21 @@ HDAE5000_ATA_IdentifyDevice:
 	push xiy
 	push xiz
 HDAE5000_ATA_Identify_WaitReady:
-	ld	a, (0x13001E:24)
+	ld	a, (HDAE5000_IO_AtaStatusCommand:24)
 	and	a, 0xc0
 	cp	a, 0x40
 	jp	z, (.LATA_Identify_WaitReady_Skip1:24)
 	jp HDAE5000_ATA_Identify_WaitReady                             ; jp 0x29788b
 .LATA_Identify_WaitReady_Skip1:
-	ld	(0x130012:24), 255
-	ld	(0x130014:24), 255
-	ld	(0x130016:24), 255
-	ld	(0x130018:24), 255
-	ld	(0x13001A:24), 255
-	ld	(0x13001C:24), 160
-	ld	(0x13001E:24), 236
+	ld	(HDAE5000_IO_AtaFeatures:24), 255
+	ld	(HDAE5000_IO_AtaSectorCount:24), 255
+	ld	(HDAE5000_IO_AtaSectorNumber:24), 255
+	ld	(HDAE5000_IO_AtaCylinderLow:24), 255
+	ld	(HDAE5000_IO_AtaCylinderHigh:24), 255
+	ld	(HDAE5000_IO_AtaDriveHead:24), 160
+	ld	(HDAE5000_IO_AtaStatusCommand:24), 236
 HDAE5000_ATA_Identify_WaitDrq:
-	ld	a, (0x13001E:24)
+	ld	a, (HDAE5000_IO_AtaStatusCommand:24)
 	and	a, 0xc8
 	cp	a, 0x48
 	jp	z, (.LATA_Identify_WaitDrq_Skip1:24)
@@ -20221,19 +20243,19 @@ HDAE5000_ATA_Identify_WaitDrq:
 HDAE5000_ATA_Identify_DataLoop:
 	cp	bc, 0x0200
 	jp	nc, (HDAE5000_ATA_Identify_WaitDone:24)
-	ld	wa, (0x130010:24)
+	ld	wa, (HDAE5000_IO_AtaData:24)
 	ld (xix), wa
 	inc 2, xix
 	inc	2, bc
 	jp HDAE5000_ATA_Identify_DataLoop                             ; jp 0x2978e4
 HDAE5000_ATA_Identify_WaitDone:
-	ld	a, (0x13001E:24)
+	ld	a, (HDAE5000_IO_AtaStatusCommand:24)
 	and	a, 0xc0
 	cp	a, 0x40
 	jp	z, (.LATA_Identify_WaitDone_Skip1:24)
 	jp HDAE5000_ATA_Identify_WaitDone                             ; jp 0x2978fc
 .LATA_Identify_WaitDone_Skip1:
-	ld	a, (0x13001E:24)
+	ld	a, (HDAE5000_IO_AtaStatusCommand:24)
 	and	a, 0x01
 	ld	(HDAE5000_RAM_AtaError:24), a
 	pop xiz
@@ -20274,12 +20296,12 @@ HDAE5000_HD_Mul32:
 	pop xhl
 	ret
 
-HDAE5000_HD_UDiv32:	; 0x29794A (392 bytes)
-	; Contains: 32-bit division, memory region init, HD config init (start)
-
-	; --- 32-bit unsigned division ---
-	; Input: XWA = dividend, XBC = divisor
-	; Output: XWA = quotient, XBC = remainder
+; ---------------------------------------------------------------------------
+; 32-bit unsigned division, one quotient bit per iteration (32 shifts).
+; In:  XWA = dividend, XBC = divisor
+; Out: XWA = quotient, XBC = remainder.  XIX, XIY, XIZ preserved.
+; ---------------------------------------------------------------------------
+HDAE5000_HD_UDiv32:
 	push xix
 	push xiy
 	push xiz

@@ -85,6 +85,20 @@
 	.equ HDAE5000_RAM_FltDecMantissa, 0x2394aa	; the binary mantissa as byte-wide u16 limbs (HDAE5000_FltDec_Convert)
 	.equ HDAE5000_RAM_FltDecFraction, 0x2394ea	; 10-limb fraction work area (HDAE5000_FltDec_FractionDigits / _FracMulBy10)
 	.equ HDAE5000_RAM_PportLinkStackTop, 0x23fffc	; top of the PC-link context's stack; HDAE5000_PPORT_StartLink plants HDAE5000_PPORT_LinkEntry there as its first return address
+	.equ HDAE5000_IO_AtaData, 0x130010	; ATA data register (16-bit sector data, HDAE5000_ATA_ReadSector / _WriteSector / _Identify)
+	.equ HDAE5000_IO_AtaFeatures, 0x130012	; ATA features / error register; 0xFF before STANDBY IMMEDIATE and IDENTIFY DEVICE
+	.equ HDAE5000_IO_AtaSectorCount, 0x130014	; ATA sector count; 1 for every read and write
+	.equ HDAE5000_IO_AtaSectorNumber, 0x130016	; ATA sector number (CHS) of HDAE5000_ATA_ReadSector / _WriteSector
+	.equ HDAE5000_IO_AtaCylinderLow, 0x130018	; ATA cylinder, low byte
+	.equ HDAE5000_IO_AtaCylinderHigh, 0x13001a	; ATA cylinder, high byte
+	.equ HDAE5000_IO_AtaDriveHead, 0x13001c	; ATA drive/head; 0xA0 = master + head 0
+	.equ HDAE5000_IO_AtaStatusCommand, 0x13001e	; ATA status (read) / command (write)
+	.equ HDAE5000_IO_PpiPortA, 0x160000	; 8255 port A: the PC-link data byte (HDAE5000_PPORT_SendByte writes, _RecvByte reads; HDAE5000_PPI_LoopbackByte reads it back)
+	.equ HDAE5000_IO_PpiPortB, 0x160002	; 8255 port B: PC-link strobe in bit 3 (HDAE5000_PPORT_SendByte)
+	.equ HDAE5000_IO_PpiPortC, 0x160004	; 8255 port C: PC-link handshake inputs, bit 0 ready, bit 1 ack, bit 2 link present (HDAE5000_PPORT_SendByte)
+	.equ HDAE5000_IO_PpiControl, 0x160006	; 8255 control word: 0x90 = mode 0, port A input (HDAE5000_PPI_Init); 0x89 = port A output, port C low nibble input (HDAE5000_PPORT_InitPort / _CommandLoop)
+	.equ HDAE5000_RAM_DirListText, 0x22a0d0	; 24 rows x 21 bytes + NUL: "NNN:" and the 16-byte directory name at +4 (HDAE5000_DirList_BuildPage)
+	.equ HDAE5000_RAM_PartListText, 0x22b274	; nine 14-byte tab-ended part names + NUL (0x7F bytes), HDAE5000_PartList_Build
 
 ; ----------------------------------------------------------------------------
 ; The main CPU's function tables, as the HD-AE5000 reaches them: workspace
@@ -4075,9 +4089,10 @@ HDAE5000_HardTestPage:
 
 ; --- PPI/IDE Low-Level I/O ---
 HDAE5000_PPI_Init:	; 0x282B98 (13 bytes)
-	; Initialize 8255 PPI: control=0x90 (mode set), port A=0xFF (all bits high)
-	ld (0x160006:24), 0x90; ld (0x160006), 0x90 - PPI control: mode 0, all output
-	ld (0x160000:24), 0xff; ld (0x160000), 0xFF - Port A: set all bits
+	; 8255 control word 0x90: mode 0, port A input, ports B and C output;
+	; then 0xFF to port A.
+	ld (HDAE5000_IO_PpiControl:24), 0x90
+	ld (HDAE5000_IO_PpiPortA:24), 0xff
 	ret
 
 HDAE5000_PPI_LoopbackByte:	; 0x282BA5 (130 bytes)
@@ -4091,38 +4106,38 @@ HDAE5000_PPI_LoopbackByte:	; 0x282BA5 (130 bytes)
 	and a, 0x0f			; mask low nibble
 	set 4, a			; set bit 4 (data strobe)
 	sll a, 3			; shift left 3
-	ld (0x160002:24), a; ld (0x160002), A — PPI port B
+	ld (HDAE5000_IO_PpiPortB:24), a; ld (0x160002), A — PPI port B
 	ld c, a				; save port B value
 	srl c, 6			; shift right 6 for port C
-	ld (0x160004:24), c; ld (0x160004), C — PPI port C
+	ld (HDAE5000_IO_PpiPortC:24), c; ld (0x160004), C — PPI port C
 	res 7, a			; clear bit 7 (handshake low)
 	srl a, 6			; shift right 6
-	ld (0x160004:24), a; ld (0x160004), A — PPI port C
+	ld (HDAE5000_IO_PpiPortC:24), a; ld (0x160004), A — PPI port C
 	ld xwa, 0x000003E8		; timeout counter (1000)
 .Lppi_wait_high:
-	bit 4, (1441792:24); bit 4, (0x160000) — check ACK
+	bit 4, (HDAE5000_IO_PpiPortA:24); bit 4, (0x160000) — check ACK
 	jr z, .Lppi_wait_high		; wait until bit 4 set
-	ld a, (0x160000:24); ld A, (0x160000) — read port A
+	ld a, (HDAE5000_IO_PpiPortA:24); ld A, (0x160000) — read port A
 	and a, 0x0f			; mask low nibble
 	ld e, a				; save low nibble in E
 	; --- High nibble phase ---
 	ld a, l				; restore original byte
 	srl a, 1			; shift right 1
 	res 7, a			; clear bit 7
-	ld (0x160002:24), a; ld (0x160002), A — PPI port B
+	ld (HDAE5000_IO_PpiPortB:24), a; ld (0x160002), A — PPI port B
 	ld c, a				; save port B value
 	srl c, 6			; shift right 6 for port C
-	ld (0x160004:24), c; ld (0x160004), C — PPI port C
+	ld (HDAE5000_IO_PpiPortC:24), c; ld (0x160004), C — PPI port C
 	set 7, a			; set bit 7 (handshake high)
 	srl a, 6			; shift right 6
-	ld (0x160004:24), a; ld (0x160004), A — PPI port C
+	ld (HDAE5000_IO_PpiPortC:24), a; ld (0x160004), A — PPI port C
 	ld xwa, 0x000003E8		; timeout counter (1000)
 .Lppi_wait_low:
-	bit 4, (1441792:24); bit 4, (0x160000) — check ACK
+	bit 4, (HDAE5000_IO_PpiPortA:24); bit 4, (0x160000) — check ACK
 	jr nz, .Lppi_wait_low		; wait until bit 4 clear
 	; --- Reassemble and verify ---
 	ld c, e				; C = low nibble
-	ld a, (0x160000:24); ld A, (0x160000) — read port A
+	ld a, (HDAE5000_IO_PpiPortA:24); ld A, (0x160000) — read port A
 	and a, 0x0f			; mask low nibble (high nibble of result)
 	sll a, 4			; shift left 4 to high position
 	or a, c				; combine with low nibble

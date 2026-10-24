@@ -9,7 +9,8 @@ operation, `(0x23a092:24)` for the selected directory.  This tool gives a
 curated set of those addresses a name -- only variables whose role the code
 shows, each with the evidence in its `.equ` comment -- and rewrites every
 operand that is exactly that address (`(N)`, `(N:24)`, `N` immediates, hex or
-decimal).  The values are unchanged, so the encodings are too.
+decimal).  The values are unchanged, so the encodings are too.  For the arrays
+and records listed in EXTENT, an operand inside one becomes NAME+offset.
 
 The `.equ` block is written right after the `.include "shared/event_codes.s"`
 line of hd-ae5000_v2_06i.s, before any code, so every use is a backward
@@ -144,6 +145,40 @@ RAM = {
     0x23948A: ("FltDecDigits", "32-byte decimal digit string of HDAE5000_FltDec_Convert / _AddDigit"),
     0x2394AA: ("FltDecMantissa", "the binary mantissa as byte-wide u16 limbs (HDAE5000_FltDec_Convert)"),
     0x2394EA: ("FltDecFraction", "10-limb fraction work area (HDAE5000_FltDec_FractionDigits / _FracMulBy10)"),
+    # sixth run: list texts the UI objects display (EVT_HDAE_SET_STR_ADR points them here)
+    0x22B274: ("PartListText", "nine 14-byte tab-ended part names + NUL (0x7F bytes), HDAE5000_PartList_Build"),
+    0x22A0D0: ("DirListText", "24 rows x 21 bytes + NUL: \"NNN:\" and the 16-byte directory name at +4"
+                              " (HDAE5000_DirList_BuildPage)"),
+}
+# arrays and records whose interior the code addresses directly: an operand inside one is written
+# NAME+offset (decimal), e.g. the fourth 14-byte field of PartListText is HDAE5000_RAM_PartListText+42
+EXTENT = {
+    0x22B274: 0x7F,
+    0x22A0D0: 0x1F9,
+}
+# I/O registers (full names; same rewriting): the 8255 of the PC link and the drive's ATA task file.  The
+# ATA registers are the standard eight at 0x130010 + 2 * index: the code writes the ATA command opcodes
+# 0x94 STANDBY IMMEDIATE, 0xEC IDENTIFY DEVICE, 0x20 READ SECTORS and 0x30 WRITE SECTORS to index 7 and
+# polls BSY / DRDY / DRQ (0x80 / 0x40 / 0x08) there, and moves sector data through index 0 as words.
+IO = {
+    0x160000: ("HDAE5000_IO_PpiPortA", "8255 port A: the PC-link data byte (HDAE5000_PPORT_SendByte writes,"
+                                       " _RecvByte reads; HDAE5000_PPI_LoopbackByte reads it back)"),
+    0x160002: ("HDAE5000_IO_PpiPortB", "8255 port B: PC-link strobe in bit 3 (HDAE5000_PPORT_SendByte)"),
+    0x160004: ("HDAE5000_IO_PpiPortC", "8255 port C: PC-link handshake inputs, bit 0 ready, bit 1 ack, bit 2"
+                                       " link present (HDAE5000_PPORT_SendByte)"),
+    0x160006: ("HDAE5000_IO_PpiControl", "8255 control word: 0x90 = mode 0, port A input (HDAE5000_PPI_Init);"
+                                         " 0x89 = port A output, port C low nibble input"
+                                         " (HDAE5000_PPORT_InitPort / _CommandLoop)"),
+    0x130010: ("HDAE5000_IO_AtaData", "ATA data register (16-bit sector data, HDAE5000_ATA_ReadSector /"
+                                      " _WriteSector / _Identify)"),
+    0x130012: ("HDAE5000_IO_AtaFeatures", "ATA features / error register; 0xFF before STANDBY IMMEDIATE and"
+                                          " IDENTIFY DEVICE"),
+    0x130014: ("HDAE5000_IO_AtaSectorCount", "ATA sector count; 1 for every read and write"),
+    0x130016: ("HDAE5000_IO_AtaSectorNumber", "ATA sector number (CHS) of HDAE5000_ATA_ReadSector / _WriteSector"),
+    0x130018: ("HDAE5000_IO_AtaCylinderLow", "ATA cylinder, low byte"),
+    0x13001A: ("HDAE5000_IO_AtaCylinderHigh", "ATA cylinder, high byte"),
+    0x13001C: ("HDAE5000_IO_AtaDriveHead", "ATA drive/head; 0xA0 = master + head 0"),
+    0x13001E: ("HDAE5000_IO_AtaStatusCommand", "ATA status (read) / command (write)"),
 }
 FILE_MAIN = "hd-ae5000_v2_06i.s"
 NUM = re.compile(r"(?<![\w.$+\-])(0x[0-9a-fA-F]+|\d{6,})(?![\w.$])")
@@ -152,6 +187,8 @@ NUM = re.compile(r"(?<![\w.$+\-])(0x[0-9a-fA-F]+|\d{6,})(?![\w.$])")
 def main(apply):
     src = {rel: open(os.path.join(hlm.HDAE, rel), encoding="latin-1").read().split("\n") for rel in hlm.FILES}
     sym = {a: "HDAE5000_RAM_" + n for a, (n, ev) in RAM.items()}
+    sym.update({a: n for a, (n, ev) in IO.items()})
+    evidence = {a: ev for a, (n, ev) in list(RAM.items()) + list(IO.items())}
     counts = collections.Counter()
     for rel in ("hd-ae5000_v2_06i.s", "hdae5000_hd_driver.s", "hdae5000_filesystem.s",
                 "hdae5000_ui_display.s", "hdae5000_utilities.s"):
@@ -172,6 +209,10 @@ def main(apply):
                 if v in sym:
                     counts[sym[v]] += 1
                     return sym[v]
+                for base, size in EXTENT.items():
+                    if base < v < base + size:
+                        counts["%s+N" % sym[base]] += 1
+                        return "%s+%d" % (sym[base], v - base)
                 return m.group(0)
             new = NUM.sub(sub, code)
             if new != code:
@@ -182,12 +223,13 @@ def main(apply):
     if not apply:
         return
     L = src[FILE_MAIN]
-    have = [i for i, ln in enumerate(L) if ln.startswith("\t.equ HDAE5000_RAM_")]
+    have = [i for i, ln in enumerate(L) if ln.startswith(("\t.equ HDAE5000_RAM_", "\t.equ HDAE5000_IO_"))]
     if have:
         # a block from an earlier run exists: add only the missing names, in
         # address order, after its last line (re-running is idempotent)
         present = {re.match(r"\t\.equ (\w+),", L[i]).group(1) for i in have}
-        new = ["\t.equ %s, 0x%06x\t; %s" % (sym[a], a, RAM[a][1]) for a in sorted(RAM) if sym[a] not in present]
+        new = ["\t.equ %s, 0x%06x\t; %s" % (sym[a], a, evidence[a]) for a in sorted(evidence)
+               if sym[a] not in present]
         L[have[-1] + 1:have[-1] + 1] = new
         print("added %d .equ lines to the existing block" % len(new))
         for rel, L2 in src.items():

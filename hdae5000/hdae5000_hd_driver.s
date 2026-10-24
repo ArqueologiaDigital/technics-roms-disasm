@@ -669,8 +669,8 @@ HDAE5000_HDAETitleFunc:
 	ld bc, 2:i3				; d9 aa
 	calr HDAE5000_FlsScreen_Refresh		; 1e xx xx
 
-	ld (0x22a2c8:24), 0x00; f2 c8 a2 22 00 00
-	lda xwa, (0x22a0d0:24); f2 d0 a0 22 30
+	ld (HDAE5000_RAM_DirListText+504:24), 0x00; f2 c8 a2 22 00 00
+	lda xwa, (HDAE5000_RAM_DirListText:24); f2 d0 a0 22 30
 	ld xde, xwa				; e8 8a
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 a2 a1 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20 — ld xwa, (xwa+0x0e0a)
@@ -791,14 +791,18 @@ HDAE5000_HDAETitleFunc:
 	ld xhl, 0:i3				; eb a8
 	ret					; 0e
 
-HDAE5000_DirList_BuildPage:	; 0x28370E (702 bytes)
-	; Build one page of the directory list: 24 rows of 21 bytes at 0x22A0D0
-	; from the row template 0x2E23BC, each "NNN:" (0x23A08E page base + row +
-	; 1) and the 16-byte directory name (HDAE5000_DirName_Address); then event
-	; 0x01EA000A (buffer) and 0x01C0000F to list object XWA.  (Was "format 24
-	; cylinder/head entries".)
-
-	; --- Prologue ---
+; ---------------------------------------------------------------------------
+; Build one page of the directory list in HDAE5000_RAM_DirListText: 24 rows of
+; 21 bytes, each the row template HDAE5000_Str_Chr2020203A2020 with the
+; directory number (HDAE5000_RAM_DirPageBase + row + 1, "%3d") at +0 and the
+; 16-byte directory name (HDAE5000_DirName_Address) at +4.  Then
+; RootFn_ApPostEvent posts EVT_HDAE_SET_STR_ADR (XDE = the text) and
+; EVT_PARA_DRAW to the list object.
+; In:  XWA = list object
+; RAM: HDAE5000_RAM_DirListText, HDAE5000_RAM_DirPageBase,
+;      HDAE5000_RAM_MainWorkspacePtr
+; ---------------------------------------------------------------------------
+HDAE5000_DirList_BuildPage:
 	lda	xsp, (xsp-26)
 	pushw iz                                ; push iz (compact 1-byte)
 	ld (xsp + 0x18), xwa		; save context ptr
@@ -806,7 +810,7 @@ HDAE5000_DirList_BuildPage:	; 0x28370E (702 bytes)
 	; --- Format 0x01F9 entries into buffer ---
 	pushw 0x01f9
 	pushw 0x0000
-	lda xwa, (0x22a0d0:24)
+	lda xwa, (HDAE5000_RAM_DirListText:24)
 	push xwa
 	call HDAE5000_MemFill
 	inc 8, xsp			; (NOP — callee cleaned stack)
@@ -823,7 +827,7 @@ HDAE5000_DirList_BuildPage:	; 0x28370E (702 bytes)
 	push xwa
 	ldw wa, 0x0015
 	muls xwa, iz			; XWA = IZ * 21
-	lda xbc, (0x22a0d0:24)
+	lda xbc, (HDAE5000_RAM_DirListText:24)
 	exts xwa
 	add xwa, xbc			; XWA = buffer + IZ*21
 	push xwa
@@ -844,7 +848,7 @@ HDAE5000_DirList_BuildPage:	; 0x28370E (702 bytes)
 	push xwa
 	ldw wa, 0x0015
 	muls xwa, iz
-	lda xbc, (0x22a0d0:24)
+	lda xbc, (HDAE5000_RAM_DirListText:24)
 	exts xwa
 	add xwa, xbc
 	push xwa
@@ -860,7 +864,7 @@ HDAE5000_DirList_BuildPage:	; 0x28370E (702 bytes)
 	push xhl
 	ldw wa, 0x0015
 	muls xwa, iz
-	lda xbc, (0x22a0d4:24)
+	lda xbc, (HDAE5000_RAM_DirListText+4:24)
 	exts xwa
 	add xwa, xbc
 	push xwa
@@ -873,7 +877,7 @@ HDAE5000_DirList_BuildPage:	; 0x28370E (702 bytes)
 
 .Lfp_loop_done:
 	; --- Epilogue: vtable calls ---
-	lda xwa, (0x22a0d0:24)
+	lda xwa, (HDAE5000_RAM_DirListText:24)
 	ld xbc, xwa
 	ld xwa, (xsp + 0x18)		; restore context ptr
 	ld xde, xbc
@@ -1081,34 +1085,34 @@ HDAE5000_SEL_DIR_Screen:	; 0x2837F2
 	pop xiz
 	ret
 
-HDAE5000_PartList_Build:	; 0x2839CC (412 bytes)
-	; Build the part list of a song for list object XWA: the nine part names
-	; of the table at 0x2E23D8 ("CURRENT PANEL", "PANEL MEMORY", "SEQUENCER",
-	; "COMPOSER", "SOUND MEMORY", "MSP", "RHYTHM CUSTOM", "USER MIDI",
-	; "LYRICS": parts LSW..TLX in order) go to 0x22B274, and each part whose
-	; bit is clear in the stacked mask is blanked (0x2E24D8); all blank when BC
-	; (directory) or DE (song) is 0xFFFF.  Then events 0x01EA000A / 0x01C0000F.
-	; (Was "seek to cylinder/head position on HD".)
-	; Args: XWA = context ptr, BC = cylinder, DE = head, (XSP+0x0a) = flags
-	; Calls format function (0x29ae9f) with different params based on IZ flags
-
-	; --- Prologue ---
+; ---------------------------------------------------------------------------
+; Fill the part list of a song's list object: HDAE5000_RAM_PartListText gets
+; the nine 14-byte names of HDAE5000_PartNames_Text ("CURRENT PANEL" ...
+; "LYRICS", parts LSW..TLX), each part whose bit is clear in the mask is
+; overwritten with HDAE5000_PartName_Blank, and the whole text is blank when
+; BC or DE is 0xFFFF or the mask is 0xFFFF.  Then RootFn_ApPostEvent posts
+; EVT_HDAE_SET_STR_ADR (XDE = the text) and EVT_PARA_DRAW to the object.
+; In:  XWA = list object, BC = directory, DE = song (only tested for 0xFFFF),
+;      (xsp+4) = part mask word (bit k = part k present); retd pops it
+; RAM: HDAE5000_RAM_PartListText, HDAE5000_RAM_MainWorkspacePtr
+; ---------------------------------------------------------------------------
+HDAE5000_PartList_Build:
 	dec 4, xsp			; allocate 4 bytes
 	pushw iz                                ; push iz (compact 1-byte form)
-	ld (xsp + 0x02), xwa		; save context ptr
-	ld iz, (xsp + 0x0a)		; IZ = flags
+	ld (xsp + 0x02), xwa		; save the list object
+	ld iz, (xsp + 0x0a)		; IZ = part mask
 
-	; --- Check BC == 0xFFFF (invalid cylinder) ---
+	; --- no directory or no song (0xFFFF): blank list ---
 	cp bc, 0xffff
 	jr z, .Lhsk_bc_invalid
-	cp de, 0xffff			; check DE == 0xFFFF (invalid head)
+	cp de, 0xffff
 	jr nz, .Lhsk_check_bits
 
 .Lhsk_bc_invalid:
 	pushw 0x007f
 	lda xwa, (HDAE5000_PartNames_BlankText:24)
 	push xwa
-	lda xwa, (0x22b274:24)
+	lda xwa, (HDAE5000_RAM_PartListText:24)
 	push xwa
 	call HDAE5000_MemCopy
 	lda xsp, (xsp + 0x0a)
@@ -1118,7 +1122,7 @@ HDAE5000_PartList_Build:	; 0x2839CC (412 bytes)
 	pushw 0x007f
 	lda xwa, (HDAE5000_PartNames_Text:24)
 	push xwa
-	lda xwa, (0x22b274:24)
+	lda xwa, (HDAE5000_RAM_PartListText:24)
 	push xwa
 	call HDAE5000_MemCopy
 	lda xsp, (xsp + 0x0a)
@@ -1132,7 +1136,7 @@ HDAE5000_PartList_Build:	; 0x2839CC (412 bytes)
 	pushw 0x000e
 	lda xwa, (HDAE5000_PartName_Blank:24)
 	push xwa
-	lda xwa, (0x22b274:24)
+	lda xwa, (HDAE5000_RAM_PartListText:24)
 	push xwa
 	call HDAE5000_MemCopy
 	lda xsp, (xsp + 0x0a)
@@ -1143,7 +1147,7 @@ HDAE5000_PartList_Build:	; 0x2839CC (412 bytes)
 	pushw 0x000e
 	lda xwa, (HDAE5000_PartName_Blank:24)
 	push xwa
-	lda xwa, (0x22b282:24)
+	lda xwa, (HDAE5000_RAM_PartListText+14:24)
 	push xwa
 	call HDAE5000_MemCopy
 	lda xsp, (xsp + 0x0a)
@@ -1154,7 +1158,7 @@ HDAE5000_PartList_Build:	; 0x2839CC (412 bytes)
 	pushw 0x000e
 	lda xwa, (HDAE5000_PartName_Blank:24)
 	push xwa
-	lda xwa, (0x22b290:24)
+	lda xwa, (HDAE5000_RAM_PartListText+28:24)
 	push xwa
 	call HDAE5000_MemCopy
 	lda xsp, (xsp + 0x0a)
@@ -1165,7 +1169,7 @@ HDAE5000_PartList_Build:	; 0x2839CC (412 bytes)
 	pushw 0x000e
 	lda xwa, (HDAE5000_PartName_Blank:24)
 	push xwa
-	lda xwa, (0x22b29e:24)
+	lda xwa, (HDAE5000_RAM_PartListText+42:24)
 	push xwa
 	call HDAE5000_MemCopy
 	lda xsp, (xsp + 0x0a)
@@ -1176,7 +1180,7 @@ HDAE5000_PartList_Build:	; 0x2839CC (412 bytes)
 	pushw 0x000e
 	lda xwa, (HDAE5000_PartName_Blank:24)
 	push xwa
-	lda xwa, (0x22b2ac:24)
+	lda xwa, (HDAE5000_RAM_PartListText+56:24)
 	push xwa
 	call HDAE5000_MemCopy
 	lda xsp, (xsp + 0x0a)
@@ -1187,7 +1191,7 @@ HDAE5000_PartList_Build:	; 0x2839CC (412 bytes)
 	pushw 0x000e
 	lda xwa, (HDAE5000_PartName_Blank:24)
 	push xwa
-	lda xwa, (0x22b2ba:24)
+	lda xwa, (HDAE5000_RAM_PartListText+70:24)
 	push xwa
 	call HDAE5000_MemCopy
 	lda xsp, (xsp + 0x0a)
@@ -1198,7 +1202,7 @@ HDAE5000_PartList_Build:	; 0x2839CC (412 bytes)
 	pushw 0x000e
 	lda xwa, (HDAE5000_PartName_Blank:24)
 	push xwa
-	lda xwa, (0x22b2c8:24)
+	lda xwa, (HDAE5000_RAM_PartListText+84:24)
 	push xwa
 	call HDAE5000_MemCopy
 	lda xsp, (xsp + 0x0a)
@@ -1209,7 +1213,7 @@ HDAE5000_PartList_Build:	; 0x2839CC (412 bytes)
 	pushw 0x000e
 	lda xwa, (HDAE5000_PartName_Blank:24)
 	push xwa
-	lda xwa, (0x22b2d6:24)
+	lda xwa, (HDAE5000_RAM_PartListText+98:24)
 	push xwa
 	call HDAE5000_MemCopy
 	lda xsp, (xsp + 0x0a)
@@ -1220,7 +1224,7 @@ HDAE5000_PartList_Build:	; 0x2839CC (412 bytes)
 	pushw 0x000e
 	lda xwa, (HDAE5000_PartName_Blank:24)
 	push xwa
-	lda xwa, (0x22b2e4:24)
+	lda xwa, (HDAE5000_RAM_PartListText+112:24)
 	push xwa
 	call HDAE5000_MemCopy
 	lda xsp, (xsp + 0x0a)
@@ -1230,14 +1234,14 @@ HDAE5000_PartList_Build:	; 0x2839CC (412 bytes)
 	pushw 0x007f
 	lda xwa, (HDAE5000_PartNames_BlankText:24)
 	push xwa
-	lda xwa, (0x22b274:24)
+	lda xwa, (HDAE5000_RAM_PartListText:24)
 	push xwa
 	call HDAE5000_MemCopy
 	lda xsp, (xsp + 0x0a)
 
 .Lhsk_epilogue_vtable:
-	; Load vtable and call two methods
-	lda xwa, (0x22b274:24)
+	; point the list object at the text, then have it redraw
+	lda xwa, (HDAE5000_RAM_PartListText:24)
 	ld xbc, xwa
 	ld xwa, (xsp + 0x02)		; restore context ptr
 	ld xde, xbc
@@ -3372,14 +3376,17 @@ HDAE5000_SeparateBassPartCheck:
 	pop xiz
 	ret
 
-HDAE5000_TypeSel_Init:	; 0x2852E4 (92 bytes)
-	; Copy 12-byte record from (XDE) to (XWA) via ldirw, then set flag bytes
-	; (The record is a part selection: +0 u16 mask, +2..+10 one flag per
-	; part LSW..TLX (0 "---", 1 "NO ", 2 "YES" -- the pointer table at
-	; 0x2E2922); the flags of the parts in BC get the stacked value.  Records:
-	; the save options 0x22AA4C, the delete options 0x22ABE6.)
-	; Input: XWA = dest, XDE = src, BC = flags (HL), E from stack = flag value
-	; Returns with retd (deallocates 2 bytes from stack)
+; ---------------------------------------------------------------------------
+; Initialise a 12-byte part-selection record from a template: copy the 12
+; bytes (6 words, LDIRW), store BC as its mask word, and set the flag byte
+; (+2+k) of every part k whose bit is set in BC to the stacked value.  Flags:
+; 0 "---", 1 "NO ", 2 "YES"; parts LSW..TLX.  Records: HDAE5000_RAM_SaveOptions
+; and HDAE5000_RAM_DeleteOptions.
+; In:  XWA = record, XDE = template, BC = part mask, (xsp+4) = flag value
+;      (low byte of the stacked word; retd pops it)
+; Out: clobbers XIX, XIY, HL, E.
+; ---------------------------------------------------------------------------
+HDAE5000_TypeSel_Init:
 	ld xix, xde			; save source
 	ld hl, bc			; HL = flags
 	ld e, (xsp + 4)			; E = flag byte from stack
@@ -3426,10 +3433,14 @@ HDAE5000_TypeSel_Init:	; 0x2852E4 (92 bytes)
 .LHD_Data_Copy__done:
 	retd 0x0002
 
-HDAE5000_TypeSel_BuildMask:	; 0x285340 (220 bytes)
-	; Mask word (XWA+0) = bit k for every part k whose flag byte (XWA+2+k)
-	; is 2 ("YES"), in a part-selection record (see HDAE5000_TypeSel_Init).
-	; (Was "partition status array": the bytes are per-part flags.)
+; ---------------------------------------------------------------------------
+; Recompute the mask word of a part-selection record (see
+; HDAE5000_TypeSel_Init): bit k set for every part k whose flag byte (+2+k)
+; is 2 ("YES").
+; In:  XWA = record (HDAE5000_RAM_SaveOptions or _DeleteOptions)
+; Out: (XWA+0) = mask.  No register changes.
+; ---------------------------------------------------------------------------
+HDAE5000_TypeSel_BuildMask:
 	ldw (xwa + 0), 0x0000		; clear output flags
 	cp (xwa + 2), 0x02
 	jr nz, .Lhbi_skip0
