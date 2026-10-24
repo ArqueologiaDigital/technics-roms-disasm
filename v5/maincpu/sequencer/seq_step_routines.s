@@ -2680,11 +2680,11 @@ SeqStep_PlaybackNop:
 
 SeqStep_TimerNop:
 
-SeqStep_FindLastUsedPart:
+; port: v7's label SeqStep_FindLastUsedPart is not in v6 -- no v6 bytes correspond to what it named
 
-SeqStep_FindLastLoop:
+; port: v7's label SeqStep_FindLastLoop is not in v6 -- no v6 bytes correspond to what it named
 
-SeqStep_FindLastReturn:
+; port: v7's label SeqStep_FindLastReturn is not in v6 -- no v6 bytes correspond to what it named
 	ret
 
 SeqStep_FindAndCompactEntry:

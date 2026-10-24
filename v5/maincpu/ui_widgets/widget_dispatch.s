@@ -137,6 +137,12 @@ SndParam_LinkTargetPtrs:
 ; SndParam_ReadRegWithLUT (0xFCD648): `lda xhl,(<this>); ld_rr8l xbc,xhl,c;
 ; ld c,(xbc)` -- reads the byte at the selected RAM address.
 SndParam_RegRamPtrs:
+	.long	0x00008e24
+	.long	0x00008e26
+	.long	0x00008e28
+	.long	0x00008e2a
+	.long	0x00008e34
+	.long	0x0000c12c
 ; 2 x u32 pointers (0xEDC89C, 0xEDC430) into the value tables.  Two readers use
 ; two bases: SndParam_CompareShifted (0xFCD6C2) / SndParam_RegisterMultiField_Data
 ; (0xFCDD9B) index from +0 (`lda xbc,(<this>); ld xbc, (xbc+a)`, then compare
@@ -144,10 +150,6 @@ SndParam_RegRamPtrs:
 ; SndParam_RegisterBitfield_Data_Part_3_Skip2 index from +4.  audio/sndparam_routines.s
 ; loads this address as Naka_SubDispatch_B_Table (alias kept); index ranges not
 ; traced, so whether either base reads past +8 into SndParam_Registry is open.
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x24, 0x8e, 0x00, 0x00, 0x26, 0x8e, 0x00, 0x00
-	.byte	0x28, 0x8e, 0x00, 0x00, 0x2a, 0x8e, 0x00, 0x00
-	.byte	0x34, 0x8e, 0x00, 0x00, 0x2c, 0xc1, 0x00, 0x00
 SndParam_ValueTablePtrPair:
 	.set Naka_SubDispatch_B_Table, SndParam_ValueTablePtrPair
 	.long WidgetParam_MidiCC_Chorus
@@ -169,13 +171,6 @@ SndParam_Registry:
 	.set Naka_MainDispatch_Table, SndParam_Registry + 368
 	.long WidgetParam_TestMode_Entry
 	.long WidgetParam_SineWave_Entry
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xac, 0xb9, 0xed, 0x00, 0xbe, 0xb9, 0xed, 0x00
-	.byte	0xd0, 0xb9, 0xed, 0x00, 0xe2, 0xb9, 0xed, 0x00
-	.byte	0xf4, 0xb9, 0xed, 0x00, 0x06, 0xba, 0xed, 0x00
-	.byte	0x18, 0xba, 0xed, 0x00, 0x2a, 0xba, 0xed, 0x00
-	.byte	0x3c, 0xba, 0xed, 0x00, 0x4e, 0xba, 0xed, 0x00
-	.byte	0x60, 0xba, 0xed, 0x00, 0x72, 0xba, 0xed, 0x00
 	.long SndParam_Transpose
 	.long SndParam_Tempo
 	.long SndParam_Tempo_Bit8
@@ -196,39 +191,14 @@ SndParam_Registry:
 	.long SndParam_MidiOut_Transpose
 	.long SndParam_MidiRealtime_Clock
 	.long SndParam_MidiCommon_ProgramChangeMode
-	.long	SndParamRun_EDBC9E_Data
-	.long	SndParamRun_EDBC9E_Data2
+	.long SndParam_MidiCommon_PrgChangeToPmem
+	.long SndParam_MidiCommon_NoteOnly
 	.long SndParam_MusicStyleArranger_OnOff
 	.long SndParam_MusicStyleArranger_Mode
-	.long	SndParamRun_EDBC9E_Data3
+	.long SndParam_MidiCommon_DrumsType
 	.long SndParam_MidiCommon_SongSelect
 	.long SndParam_MidiRealtime_Commands
 	.long SndParam_MidiCommon_RealtimeSysex
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x98, 0xbc, 0xed, 0x00, 0xaa, 0xbc, 0xed, 0x00
-	.byte	0x32, 0xc2, 0xed, 0x00, 0x44, 0xc2, 0xed, 0x00
-	.byte	0x56, 0xc2, 0xed, 0x00, 0x68, 0xc2, 0xed, 0x00
-	.byte	0x7a, 0xc2, 0xed, 0x00, 0x8c, 0xc2, 0xed, 0x00
-	.byte	0x9e, 0xc2, 0xed, 0x00, 0xb0, 0xc2, 0xed, 0x00
-	.byte	0xc2, 0xc2, 0xed, 0x00, 0xd4, 0xc2, 0xed, 0x00
-	.byte	0xe6, 0xc2, 0xed, 0x00, 0xf8, 0xc2, 0xed, 0x00
-	.byte	0x0a, 0xc3, 0xed, 0x00, 0x28, 0xc3, 0xed, 0x00
-	.byte	0x3a, 0xc3, 0xed, 0x00, 0x4c, 0xc3, 0xed, 0x00
-	.byte	0x5e, 0xc3, 0xed, 0x00, 0x70, 0xc3, 0xed, 0x00
-	.byte	0x82, 0xc3, 0xed, 0x00, 0x94, 0xc3, 0xed, 0x00
-	.byte	0xc0, 0xc3, 0xed, 0x00, 0xea, 0xc3, 0xed, 0x00
-	.byte	0xfc, 0xc3, 0xed, 0x00, 0x28, 0xc4, 0xed, 0x00
-	.byte	0x3a, 0xc4, 0xed, 0x00, 0x20, 0xc5, 0xed, 0x00
-	.byte	0x32, 0xc5, 0xed, 0x00, 0x44, 0xc5, 0xed, 0x00
-	.byte	0x56, 0xc5, 0xed, 0x00, 0x68, 0xc5, 0xed, 0x00
-	.byte	0x7a, 0xc5, 0xed, 0x00, 0x8c, 0xc5, 0xed, 0x00
-	.byte	0x9e, 0xc5, 0xed, 0x00, 0xb0, 0xc5, 0xed, 0x00
-	.byte	0xc2, 0xc5, 0xed, 0x00, 0xd4, 0xc5, 0xed, 0x00
-	.byte	0xe6, 0xc5, 0xed, 0x00, 0xf8, 0xc5, 0xed, 0x00
-	.byte	0x0a, 0xc6, 0xed, 0x00, 0x1c, 0xc6, 0xed, 0x00
-	.byte	0x2e, 0xc6, 0xed, 0x00, 0x40, 0xc6, 0xed, 0x00
-	.byte	0x52, 0xc6, 0xed, 0x00, 0x64, 0xc6, 0xed, 0x00
-	.byte	0xe6, 0xc6, 0xed, 0x00
 	.long SndParam_MidiCtlMsg_ProgramChange
 	.long SndParam_MidiCtlMsg_AfterTouch
 	.long SndParam_MidiCtlMsg_PitchBend
@@ -243,6 +213,51 @@ SndParam_Registry:
 	.long SndParam_MidiCtlMsg_BendRange
 	.long SndParam_MidiCtlMsg_ResetAllControllers
 	.long SndParam_MidiCommon_FadeInOut
+	.long MidiChParam_Entry_040
+	.long SndParam_TotalExpression
+	.long SndParam_ReverbOnOff
+	.long SndParam_RotarySpeedSwitch
+	.long SndParam_AcousticIllusionOnOff
+	.long SndParam_Fade_Level
+	.long SndParam_EqualizerOnOff
+	.long MidiChParam_Entry_047
+	.long MidiChParam_Entry_048
+	.long SndParam_FadeIn_OnOff
+	.long SndParam_FadeOut_OnOff
+	.long SndParam_R1R2Octave
+	.long SndParam_Conductor
+	.long SndParam_Mic_ReverbOnOff
+	.long SndParam_Mic_Volume
+	.long SndParam_Mic_Mute
+	.long SndParam_SplitPoint_Preset
+	.long SndParam_SplitPoint_Note
+	.long SndParam_TechniChord_OnOff
+	.long SndParam_Orchestrator
+	.long SndParam_TechniChord_Type
+	.long SndParam_ScaleTune_OnOff
+	.long SndParam_ScaleTune_Type
+	.long SndParam_ScaleTune_Key
+	.long SndParam_ScaleTune_UserNote0
+	.long SndParam_ScaleTune_UserNote1
+	.long SndParam_ScaleTune_UserNote2
+	.long SndParam_ScaleTune_UserNote3
+	.long SndParam_ScaleTune_UserNote4
+	.long SndParam_ScaleTune_UserNote5
+	.long SndParam_ScaleTune_UserNote6
+	.long SndParam_ScaleTune_UserNote7
+	.long SndParam_ScaleTune_UserNote8
+	.long SndParam_ScaleTune_UserNote9
+	.long SndParam_ScaleTune_UserNote10
+	.long SndParam_ScaleTune_UserNote11
+	.long SndParam_DspEffect_Algorithm
+	.long MidiChParam_Entry_077
+	.long SndParam_DigitalReverb_Algorithm
+	.long SndParam_Equalizer_Algorithm
+	.long SndParam_AcousticIllusion_Algorithm
+	.long SndParam_MicReverb_Algorithm
+	.long SndParam_MidiIn_VelocityMode
+	.long SndParam_MidiIn_VelocityOffset
+	.long SndParam_MidiIn_VelocityFixed
 	.long SndParam_FootCtrl_ExpressionPedal
 	.long VoiceCtrlR1_Entry_045
 	.long VoiceCtrlR1_Entry_046
@@ -304,7 +319,7 @@ SndParam_Registry:
 	.long SndParam_Vocalist_KeySend
 	.long SndParam_Vocalist_ProgChangeOption
 	.long SndParam_Vocalist_ProgChangeOptionSend
-	.long	SndParamRun_EDC7FA_Data
+	.long SndParam_Vocalist_ControlVolume
 	.long SndParam_Vocalist_ControlVolumeSend
 	.long SndParam_Vocalist_VocoderKeySplit
 	.long SndParam_Vocalist_VocoderKeySplitNote
@@ -332,7 +347,7 @@ SndParam_Registry:
 	.long SndParam_Part00_ChannelPressure
 	.long SndParam_Part00_AllSoundOff
 	.long MidiChParam_Entry_103
-	.long	SndParamRun_EDC980_Data
+	.long SndParam_Part00_PercDecay
 	.long SndParam_Part00_PercLevel
 	.long SndParam_Part00_DrawRelease
 	.long SndParam_Part00_DrawAttack
@@ -344,13 +359,12 @@ SndParam_Registry:
 	.long SndParam_Part00_Drawbar2
 	.long SndParam_Part00_Drawbar1_3_5
 	.long SndParam_Part00_Drawbar1_1_3
+	.long SndParam_Part00_Drawbar1
 	.long SndParam_Part00_Perc4
 	.long SndParam_Part00_Perc2_2_3
 	.long SndParam_Part01_Sound
 	.long SndParam_Part01_Modulation
 	.long SndParam_Part01_Volume
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x2e, 0xca, 0xed, 0x00
 	.long SndParam_Part01_Mute
 	.long SndParam_Part01_Pan
 	.long SndParam_Part01_Expression
@@ -359,13 +373,12 @@ SndParam_Registry:
 	.long SndParam_Part01_ReverbSend
 	.long SndParam_Part01_DspEffect
 	.long SndParam_Part01_DigitalEffect
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x2a, 0xcb, 0xed, 0x00
 	.long SndParam_Part01_BendRange
 	.long SndParam_Part01_Tuning
 	.long SndParam_Part01_KeyShift
 	.long SndParam_Part01_PitchBend
 	.long SndParam_Part01_ChannelPressure
+	.long SndParam_Part01_AllSoundOff
 	.long VoiceParamEx_Entry_024
 	.long SndParam_Part01_PercDecay
 	.long SndParam_Part01_PercLevel
@@ -379,13 +392,12 @@ SndParam_Registry:
 	.long SndParam_Part01_Drawbar2
 	.long SndParam_Part01_Drawbar1_3_5
 	.long SndParam_Part01_Drawbar1_1_3
+	.long SndParam_Part01_Drawbar1
 	.long SndParam_Part01_Perc4
 	.long SndParam_Part01_Perc2_2_3
 	.long SndParam_Part02_Sound
 	.long SndParam_Part02_Modulation
 	.long SndParam_Part02_Volume
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x80, 0xcc, 0xed, 0x00
 	.long SndParam_Part02_Mute
 	.long SndParam_Part02_Pan
 	.long SndParam_Part02_Expression
@@ -394,13 +406,12 @@ SndParam_Registry:
 	.long SndParam_Part02_ReverbSend
 	.long SndParam_Part02_DspEffect
 	.long SndParam_Part02_DigitalEffect
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x7c, 0xcd, 0xed, 0x00
 	.long SndParam_Part02_BendRange
 	.long SndParam_Part02_Tuning
 	.long SndParam_Part02_KeyShift
 	.long SndParam_Part02_PitchBend
 	.long SndParam_Part02_ChannelPressure
+	.long SndParam_Part02_AllSoundOff
 	.long VoiceParamEx_Entry_057
 	.long SndParam_Part02_PercDecay
 	.long SndParam_Part02_PercLevel
@@ -414,13 +425,12 @@ SndParam_Registry:
 	.long SndParam_Part02_Drawbar2
 	.long SndParam_Part02_Drawbar1_3_5
 	.long SndParam_Part02_Drawbar1_1_3
+	.long SndParam_Part02_Drawbar1
 	.long SndParam_Part02_Perc4
 	.long SndParam_Part02_Perc2_2_3
 	.long SndParam_Part03_Sound
 	.long SndParam_Part03_Modulation
 	.long SndParam_Part03_Volume
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xd2, 0xce, 0xed, 0x00
 	.long SndParam_Part03_Mute
 	.long SndParam_Part03_Pan
 	.long SndParam_Part03_Expression
@@ -791,15 +801,14 @@ SndParam_Registry:
 	.long SndParam_Part18_KeyShift
 	.long SndParam_Part18_PitchBend
 	.long SndParam_Part18_ChannelPressure
+	.long SndParam_Part18_AllSoundOff
 	.long SndParam_Metronome_Volume
 	.long SndParam_Metronome_Mute
 	.long SndParam_Part00_LocalControl
 	.long SndParam_Part00_MidiChannel
 	.long SndParam_Part00_MidiTransmitOn
 	.long SndParam_Part00_MidiReceiveOn
-	.long	SndParamRun_EDE9FC_Data
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xd2, 0xe9, 0xed, 0x00
+	.long SndParam_Part00_MidiOctave
 	.long SndParam_Part00_SustainLength
 	.long SndParam_Part00_SustainPedal
 	.long SndParam_Part00_KeyScaling
@@ -1101,6 +1110,7 @@ SndParam_Registry:
 	.long SndParam_Part19_MidiReceiveOn
 	.long SndParam_Part19_MidiOctave
 	.long SndParam_Part19_SustainLength
+	.long SndParam_Part19_SustainPedal
 	.long SndParam_Part19_KeyScaling
 	.long SndParam_Part19_GlidePedal
 	.long SndParam_Part19_PartExp
@@ -1113,72 +1123,80 @@ SndParam_Registry:
 	.long SndParam_Apc_Memory
 	.long SndParam_LeftHold
 	.long SndParam_Apc_OnBass
-	.long	NakaInst_Param_Idx07_88
-	.long	NakaInst_Param_Idx08_88
-	.long	SndParam_Msp_Mute
-	.long	SndParam_MidiCommon_ApcControl
-	.long	SndParam_MidiCommon_IntroFillInEnding
-SndParam_Registry_Data:
-	.long	SndParam_ReturnNotFound
-	.long	SndParam_ReadRegField
-	.long	SndParam_ReadRegWithLUT
-	.long	SndParam_CompareRegField
-	.long	SndParam_ReadRegWord
-	.long	SndParam_ReadRegBitfield
-	.long	SndParam_ReadRegAddress
-SndParam_Registry_Data2:
-	.long	SndParam_ResetDefaultTable
-	.long	SndParam_RegisterEntry_Data
-	.long	SndParam_RegisterEntryAlt_Data
-	.long	SndParam_UpdateEntry_Data
-	.long	SndParam_RegisterMultiField_Data
-	.long	SndParam_SetRegWord
+	.long NakaInst_Param_Bitmap80
+	.long SndParam_Style_FillIn
+	.long NakaInst_Param_Idx01
+	.long SndParam_Style_Ending
+	.long SndParam_Style_SynchroBreak
+	.long NakaInst_Param_Field84
+	.long NakaInst_Param_Term00
+	.long SndParam_Msp_Volume
+	.long SndParam_Msp_Reverb
+	.long NakaInst_Param_Idx03_88
+	.long NakaInst_Param_Idx04_88
+	.long NakaInst_Param_Idx05_88
+	.long NakaInst_Param_Idx06_88
+	.long NakaInst_Param_Idx07_88
+	.long NakaInst_Param_Idx08_88
+	.long SndParam_Msp_Mute
+	.long SndParam_MidiCommon_ApcControl
+	.long SndParam_MidiCommon_IntroFillInEnding
 ; 7 x u32 routine pointers, one per record type; SndParam_RO_Dispatch (0xFCD112):
 ; `lda xbc,(<this>); lda xbc, (xbc+wa); ld xhl,(xbc); call (xhl)`.
 ; Extent: up to the next table's base (each base is loaded by its own reader).
 SndParam_ReadHandlers:
-	.long	SndParam_RegisterLinked_Data
-	.long	SndParam_RegisterLinked2_Data
-	.long	SndParam_RegisterSimple_Data
-SndParam_ReadHandlers_Data:
-	.long	SndParam_DeregisterEntry_Data
-	.long	SndParam_RegisterChained_Data
-	.long	SndParam_RegisterChained2_Data
-	.long	SndParam_RegisterComplex_Data
+	.long SndParam_ReturnNotFound
+	.long SndParam_ReadRegField
+	.long SndParam_ReadRegWithLUT
+	.long SndParam_CompareRegField
+	.long SndParam_ReadRegWord
+	.long SndParam_ReadRegBitfield
+	.long SndParam_ReadRegAddress
 ; 9 x u32 routine pointers, one per record type; SndParam_DispatchCallback (0xFCCEE3):
 ; `lda xde,(<this>); lda xhl, (xde+bc); ld xhl,(xhl); call (xhl)`.
 ; Extent: up to the next table's base (each base is loaded by its own reader).
 SndParam_RegisterHandlers:
-	.long	SndParam_NotifyQuick_Data
-	.long	SndParam_RegisterDual_Data
-	.long	SndParam_RegisterOffset_Data
-	.long	SndParam_RegisterWide_Data
-SndParam_RegisterHandlers_Data:
-	.long	SndParam_EncodeFieldDirect_Data
-	.long	SndParam_EncodeFieldSub_Data
-	.long	SndParam_ClampReverbTime
-	.long	SndParam_DecodeField_Data
-	.long	SndParam_DecodeFieldAlt_Data
+	.long SndParam_ResetDefaultTable
+	.long SndParam_RegisterEntry_Data
+	.long SndParam_RegisterEntryAlt_Data
+	.long SndParam_UpdateEntry_Data
+	.long SndParam_RegisterMultiField_Data
+	.long SndParam_SetRegWord
+	.long SndParam_RegisterLinked_Data
+	.long SndParam_RegisterLinked2_Data
+	.long SndParam_RegisterSimple_Data
 ; 8 x u32 routine pointers, one per record type; SndParam_Lkp2_Dispatch (0xFCD011):
 ; `lda xbc,(<this>); lda xhl, (xbc+wa); ld xhl,(xhl); call (xhl)`.
 ; Extent: up to the next table's base (each base is loaded by its own reader).
 SndParam_Register2Handlers:
-	.long	SndParam_ClampDelayTime
-SndParam_Register2Handlers_Data:
-	.long	SndParam_ReturnInvalid
-	.long	SndParam_WriteFieldDirect_Data
-	.long	SndParam_WriteFieldSub_Data
-	.long	SndParam_PackAndWrite
-	.long	SndParam_WriteViaHash_Data
-	.long	SndParam_BatchUpdate_Data
+	.long SndParam_DeregisterEntry_Data
+	.long SndParam_RegisterChained_Data
+	.long SndParam_RegisterChained2_Data
+	.long SndParam_RegisterComplex_Data
+	.long SndParam_NotifyQuick_Data
+	.long SndParam_RegisterDual_Data
+	.long SndParam_RegisterOffset_Data
+	.long SndParam_RegisterWide_Data
 ; 6 x u32 routine pointers, one per record type; SndParam_RW_ProcessResult (0xFCD288):
 ; `lda xbc,(<this>); lda xde, (xbc+wa); ld xix,(xde); call (xix)` (also SndParam_ResolveWidget_Skip2).
 ; Extent: up to the next table's base (each base is loaded by its own reader).
 SndParam_EncodeHandlers:
+	.long SndParam_EncodeFieldDirect_Data
+	.long SndParam_EncodeFieldSub_Data
+	.long SndParam_ClampReverbTime
+	.long SndParam_DecodeField_Data
+	.long SndParam_DecodeFieldAlt_Data
+	.long SndParam_ClampDelayTime
 ; 6 x u32 routine pointers, one per record type; SndParam_DispatchTypeDE5 (0xFCCF42):
 ; `lda xde,(<this>); lda xde, (xde+bc); ld xhl,(xde); call (xhl)`.
 ; Extent: up to the next table's base (each base is loaded by its own reader).
 SndParam_WriteHandlers:
+	.long SndParam_ReturnInvalid
+	.long SndParam_WriteFieldDirect_Data
+	.long SndParam_WriteFieldSub_Data
+	.long SndParam_PackAndWrite
+	.long SndParam_WriteViaHash_Data
+	.long SndParam_BatchUpdate_Data
 ; 256 x u32 RAM block addresses, 0 = no block, indexed by a descriptor's +4 byte:
 ; SndParam_ReadRegField (0xFCD60A) does `ld c,(xwa+4); sla bc,2; lda xde,(<this>);
 ; ld_rrl xde,xde,bc; or xde,xde; ret z` (20 sites in all, e.g.
@@ -4342,47 +4360,45 @@ ToneKit_VoiceDispatch_Table:
 ; -----------------------------------------------------------------------------
 DspFxSettingsPtrTable:
 	.long ToneKit_DefaultParams	; 0 NO OPERATION
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0xbc, 0x59, 0xee, 0x00
-	.long	ToneKit_ParamBlock_064	; 1 CHORUS
-	.long	ToneKit_ParamBlock_065	; 2 MODULATED CHORUS
-	.long	ToneKit_ParamBlock_066	; 3 ENHANCER
-	.long	ToneKit_ParamBlock_067	; 4 FLANGER
-	.long	ToneKit_ParamBlock_076	; 5 PHASER
-	.long	ToneKit_DefaultParams	; 6 ENSEMBLE
-	.long	ToneKit_ParamBlock_075	; 7 ----------
-	.long	ToneKit_ParamBlock_079	; 8 GATED REVERB
-	.long	ToneKit_ParamBlock_080	; 9 SINGLE DELAY
-	.long	ToneKit_DefaultParams	; 10 MULTI TAP DELAY
+	.long ToneKit_ParamBlock_063	; 1 CHORUS
+	.long ToneKit_ParamBlock_064	; 2 MODULATED CHORUS
+	.long ToneKit_ParamBlock_065	; 3 ENHANCER
+	.long ToneKit_ParamBlock_066	; 4 FLANGER
+	.long ToneKit_ParamBlock_067	; 5 PHASER
+	.long ToneKit_ParamBlock_076	; 6 ENSEMBLE
+	.long ToneKit_DefaultParams	; 7 ----------
+	.long ToneKit_ParamBlock_075	; 8 GATED REVERB
+	.long ToneKit_ParamBlock_079	; 9 SINGLE DELAY
+	.long ToneKit_ParamBlock_080	; 10 MULTI TAP DELAY
 	.long ToneKit_DefaultParams	; 11 MODULATION DELAY
 	.long ToneKit_DefaultParams	; 12 ----------
 	.long ToneKit_DefaultParams	; 13 ----------
-	.long	ToneKit_ParamBlock_068	; 14 ----------
-	.long	ToneKit_ParamBlock_087	; 15 ROCK ROTARY
-	.long	ToneKit_ParamBlock_088	; 16 ROOM REVERB 1
-	.long	ToneKit_ParamBlock_089	; 17 ROOM REVERB 2
-	.long	ToneKit_ParamBlock_090	; 18 PLATE REVERB 1
-	.long	ToneKit_ParamBlock_091	; 19 PLATE REVERB 2
-	.long	ToneKit_ParamBlock_092	; 20 CONCERT REVERB 1
-	.long	ToneKit_ParamBlock_093	; 21 CONCERT REVERB 2
-	.long	ToneKit_ParamBlock_094	; 22 DARK REVERB 1
-	.long	ToneKit_ParamBlock_095	; 23 DARK REVERB 2
-	.long	ToneKit_ParamBlock_096	; 24 BRIGHT REVERB 1
-	.long	ToneKit_ParamBlock_097	; 25 BRIGHT REVERB 2
-	.long	ToneKit_ParamBlock_098	; 26 WAVE REVERB 1
-	.long	ToneKit_DefaultParams	; 27 WAVE REVERB 2
+	.long ToneKit_DefaultParams	; 14 ----------
+	.long ToneKit_ParamBlock_068	; 15 ROCK ROTARY
+	.long ToneKit_ParamBlock_087	; 16 ROOM REVERB 1
+	.long ToneKit_ParamBlock_088	; 17 ROOM REVERB 2
+	.long ToneKit_ParamBlock_089	; 18 PLATE REVERB 1
+	.long ToneKit_ParamBlock_090	; 19 PLATE REVERB 2
+	.long ToneKit_ParamBlock_091	; 20 CONCERT REVERB 1
+	.long ToneKit_ParamBlock_092	; 21 CONCERT REVERB 2
+	.long ToneKit_ParamBlock_093	; 22 DARK REVERB 1
+	.long ToneKit_ParamBlock_094	; 23 DARK REVERB 2
+	.long ToneKit_ParamBlock_095	; 24 BRIGHT REVERB 1
+	.long ToneKit_ParamBlock_096	; 25 BRIGHT REVERB 2
+	.long ToneKit_ParamBlock_097	; 26 WAVE REVERB 1
+	.long ToneKit_ParamBlock_098	; 27 WAVE REVERB 2
 	.long ToneKit_DefaultParams	; 28 ----------
 	.long ToneKit_DefaultParams	; 29 ----------
 	.long ToneKit_DefaultParams	; 30 ----------
-	.long	NakaInst_PFTK	; 31 ----------
-	.long	ToneKit_ParamBlock_059	; 32 DISTORTION
-	.long	ToneKit_ParamBlock_060	; 33 OVERDRIVE
-	.long	ToneKit_ParamBlock_061	; 34 FUZZ
-	.long	ToneKit_ParamBlock_077	; 35 EXCITER
-	.long	ToneKit_ParamBlock_074	; 36 COMPRESSOR
-	.long	ToneKit_DefaultParams	; 37 SLOW ATTACKER
-	.long	ToneKit_ParamBlock_062	; 38 NOISE FLANGER
-	.long	ToneKit_DefaultParams	; 39 PARAMETRIC EQ
+	.long ToneKit_DefaultParams	; 31 ----------
+	.long NakaInst_PFTK	; 32 DISTORTION
+	.long ToneKit_ParamBlock_059	; 33 OVERDRIVE
+	.long ToneKit_ParamBlock_060	; 34 FUZZ
+	.long ToneKit_ParamBlock_061	; 35 EXCITER
+	.long ToneKit_ParamBlock_077	; 36 COMPRESSOR
+	.long ToneKit_ParamBlock_074	; 37 SLOW ATTACKER
+	.long ToneKit_DefaultParams	; 38 NOISE FLANGER
+	.long ToneKit_ParamBlock_062	; 39 PARAMETRIC EQ
 	.long ToneKit_DefaultParams	; 40 ----------
 	.long ToneKit_DefaultParams	; 41 ----------
 	.long ToneKit_DefaultParams	; 42 ----------
@@ -4390,39 +4406,39 @@ DspFxSettingsPtrTable:
 	.long ToneKit_DefaultParams	; 44 CEL
 	.long ToneKit_DefaultParams	; 45 CELM
 	.long ToneKit_DefaultParams	; 46 ----------
-	.long	ToneKit_ParamBlock_069	; 47 ----------
-	.long	ToneKit_DefaultParams	; 48 AUTO PAN
-	.long	ToneKit_ParamBlock_070	; 49 PITCH SHIFTER
-	.long	ToneKit_DefaultParams	; 50 VIBRATO
-	.long	ToneKit_ParamBlock_071	; 51 PEDAL WAH
-	.long	ToneKit_ParamBlock_072	; 52 AUTO WAH
-	.long	ToneKit_ParamBlock_073	; 53 ROTARY SPEAKER
-	.long	ToneKit_DefaultParams	; 54 RING MODULATOR
-	.long	ToneKit_ParamBlock_078	; 55 HARS EFFECT
-	.long	ToneKit_ParamBlock_108	; 56 MIX UP
-	.long	ToneKit_ParamBlock_109	; 57 STANDARD
-	.long	ToneKit_ParamBlock_110	; 58 PERCUSSIVE
-	.long	ToneKit_ParamBlock_111	; 59 SYMPHONIC
-	.long	ToneKit_DefaultParams	; 60 DEEP SPACE
+	.long ToneKit_DefaultParams	; 47 ----------
+	.long ToneKit_ParamBlock_069	; 48 AUTO PAN
+	.long ToneKit_DefaultParams	; 49 PITCH SHIFTER
+	.long ToneKit_ParamBlock_070	; 50 VIBRATO
+	.long ToneKit_DefaultParams	; 51 PEDAL WAH
+	.long ToneKit_ParamBlock_071	; 52 AUTO WAH
+	.long ToneKit_ParamBlock_072	; 53 ROTARY SPEAKER
+	.long ToneKit_ParamBlock_073	; 54 RING MODULATOR
+	.long ToneKit_DefaultParams	; 55 HARS EFFECT
+	.long ToneKit_ParamBlock_078	; 56 MIX UP
+	.long ToneKit_ParamBlock_108	; 57 STANDARD
+	.long ToneKit_ParamBlock_109	; 58 PERCUSSIVE
+	.long ToneKit_ParamBlock_110	; 59 SYMPHONIC
+	.long ToneKit_ParamBlock_111	; 60 DEEP SPACE
 	.long ToneKit_DefaultParams	; 61 ----------
 	.long ToneKit_DefaultParams	; 62 ----------
-	.long	ToneKit_ParamBlock_081	; 63 STRING
-	.long	ToneKit_ParamBlock_082	; 64 S.DELAY+CHORUS
-	.long	ToneKit_ParamBlock_083	; 65 S.DELAY+S.DELAY
-	.long	ToneKit_ParamBlock_084	; 66 S.DELAY+FLANGER
-	.long	ToneKit_ParamBlock_085	; 67 S.DELAY+VIBRATO
-	.long	ToneKit_DefaultParams	; 68 S.DELAY+PHASER
-	.long	ToneKit_ParamBlock_086	; 69 PEDAL WAH+DELAY
-	.long	ToneKit_ParamBlock_099	; 70 AUTO WAH+S.DELAY
-	.long	ToneKit_ParamBlock_100	; 71 PEQ+CHORUS
-	.long	ToneKit_ParamBlock_101	; 72 PEQ+S.DELAY
-	.long	ToneKit_ParamBlock_102	; 73 PEQ+FLANGER
-	.long	ToneKit_ParamBlock_103	; 74 PEQ+VIBRATO
-	.long	ToneKit_DefaultParams	; 75 PEQ+COMPRESSOR
+	.long ToneKit_DefaultParams	; 63 STRING
+	.long ToneKit_ParamBlock_081	; 64 S.DELAY+CHORUS
+	.long ToneKit_ParamBlock_082	; 65 S.DELAY+S.DELAY
+	.long ToneKit_ParamBlock_083	; 66 S.DELAY+FLANGER
+	.long ToneKit_ParamBlock_084	; 67 S.DELAY+VIBRATO
+	.long ToneKit_ParamBlock_085	; 68 S.DELAY+PHASER
+	.long ToneKit_DefaultParams	; 69 PEDAL WAH+DELAY
+	.long ToneKit_ParamBlock_086	; 70 AUTO WAH+S.DELAY
+	.long ToneKit_ParamBlock_099	; 71 PEQ+CHORUS
+	.long ToneKit_ParamBlock_100	; 72 PEQ+S.DELAY
+	.long ToneKit_ParamBlock_101	; 73 PEQ+FLANGER
+	.long ToneKit_ParamBlock_102	; 74 PEQ+VIBRATO
+	.long ToneKit_ParamBlock_103	; 75 PEQ+COMPRESSOR
 	.long ToneKit_DefaultParams	; 76 ----------
 	.long ToneKit_DefaultParams	; 77 ----------
-	.long	ToneKit_ParamBlock_116	; 78 ----------
-	.long	ToneKit_DefaultParams	; 79 GEQ
+	.long ToneKit_DefaultParams	; 78 ----------
+	.long ToneKit_ParamBlock_116	; 79 GEQ
 	.long ToneKit_DefaultParams	; 80 DS_D
 	.long ToneKit_DefaultParams	; 81 OVER_D
 	.long ToneKit_DefaultParams	; 82 ----------
@@ -4430,18 +4446,19 @@ DspFxSettingsPtrTable:
 	.long ToneKit_DefaultParams	; 84 ----------
 	.long ToneKit_DefaultParams	; 85 ----------
 	.long ToneKit_DefaultParams	; 86 ----------
-	.long	ToneKit_ParamBlock_112	; 87 ----------
-	.long	ToneKit_ParamBlock_113	; 88 ROOM
-	.long	ToneKit_ParamBlock_114	; 89 KARAOKE
-	.long	ToneKit_ParamBlock_115	; 90 BATH ROOM
-	.long	ToneKit_DefaultParams	; 91 STAGE
+	.long ToneKit_DefaultParams	; 87 ----------
+	.long ToneKit_ParamBlock_112	; 88 ROOM
+	.long ToneKit_ParamBlock_113	; 89 KARAOKE
+	.long ToneKit_ParamBlock_114	; 90 BATH ROOM
+	.long ToneKit_ParamBlock_115	; 91 STAGE
 	.long ToneKit_DefaultParams	; 92 ----------
 	.long ToneKit_DefaultParams	; 93 ----------
 	.long ToneKit_DefaultParams	; 94 ----------
-	.long	ToneKit_ParamBlock_104	; 95 ----------
-	.long	ToneKit_ParamBlock_105	; 96 PEQ+COMPR+DIST
-	.long	ToneKit_ParamBlock_106	; 97 PEQ+COMPR+OVERDR
-	.long	ToneKit_ParamBlock_107	; 98 PEQ+DIST+DELAY
+	.long ToneKit_DefaultParams	; 95 ----------
+	.long ToneKit_ParamBlock_104	; 96 PEQ+COMPR+DIST
+	.long ToneKit_ParamBlock_105	; 97 PEQ+COMPR+OVERDR
+	.long ToneKit_ParamBlock_106	; 98 PEQ+DIST+DELAY
+	.long ToneKit_ParamBlock_107	; 99 PEQ+OVERDR+DELAY
 
 ; -----------------------------------------------------------------------------
 ; Seven small arrays read by audio/dsp_config_sysex.s through positional
@@ -5512,33 +5529,30 @@ DspFxRecListPtrTable:
 	.long 0				; 77 ----------
 	.long 0				; 78 ----------
 	.long DspFxRecs_79_Geq	; 79 GEQ
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x88, 0x6a, 0xee, 0x00, 0xaa, 0x6a, 0xee, 0x00
-	.byte	0xcc, 0x6a, 0xee, 0x00, 0xee, 0x6a, 0xee, 0x00
 	.long 0				; 80 DS_D
 	.long 0				; 81 OVER_D
 	.long 0				; 82 ----------
 	.long 0				; 83 ----------
-	.long	DspFxRecs_96_PeqComprDist	; 88 ROOM
-	.long	DspFxRecs_97_PeqComprOverdr	; 89 KARAOKE
-	.long	DspFxRecs_98_PeqDistDelay	; 90 BATH ROOM
-	.long	DspFxRecs_99_PeqOverdrDelay	; 91 STAGE
+	.long 0				; 84 ----------
+	.long 0				; 85 ----------
+	.long 0				; 86 ----------
+	.long 0				; 87 ----------
+	.long DspFxRecs_88_Room	; 88 ROOM
+	.long DspFxRecs_89_Karaoke	; 89 KARAOKE
+	.long DspFxRecs_90_BathRoom	; 90 BATH ROOM
+	.long DspFxRecs_91_Stage	; 91 STAGE
+	.long 0				; 92 ----------
+	.long 0				; 93 ----------
+	.long 0				; 94 ----------
+	.long 0				; 95 ----------
 ; Naka_DisplayMode_Table is kept only because shared/positional_labels.s
 ; defines SwbtBank1_ListenerTable (= the SwbtWr bank-1 table that
 ; follows) relative to it; it is entry 96 of this table, not a table.
 Naka_DisplayMode_Table:
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x73, 0x79, 0xee, 0x00, 0x77, 0x79, 0xee, 0x00
-	.byte	0x7b, 0x79, 0xee, 0x00, 0x7f, 0x79, 0xee, 0x00
-	.byte	0x83, 0x79, 0xee, 0x00, 0x87, 0x79, 0xee, 0x00
-	.long	SwbtB1_Code06_Listeners	; 96 PEQ+COMPR+DIST
-	.long	SwbtB1_Code07_Listeners	; 97 PEQ+COMPR+OVERDR
-	.long	SwbtB1_Code08_Listeners	; 98 PEQ+DIST+DELAY
-	.long	SwbtB1_Code09_Listeners	; 99 PEQ+OVERDR+DELAY
+	.long DspFxRecs_96_PeqComprDist	; 96 PEQ+COMPR+DIST
+	.long DspFxRecs_97_PeqComprOverdr	; 97 PEQ+COMPR+OVERDR
+	.long DspFxRecs_98_PeqDistDelay	; 98 PEQ+DIST+DELAY
+	.long DspFxRecs_99_PeqOverdrDelay	; 99 PEQ+OVERDR+DELAY
 ; =============================================================================
 ; SwbtWr EVENT-LISTENER BANKS  (0xEE7786-0xEE8C7D, 3 banks)
 ; =============================================================================
@@ -5575,140 +5589,162 @@ Naka_DisplayMode_Table:
 
 ; ---- bank 1: 192 x u32, entry = event code 0x00..0xBF -> listener list;
 ;      installed by SwbtWr_InitBank1, read by SwbtWr_DispatchLoop (queue 0xBD3C)
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x9b, 0x79, 0xee, 0x00, 0x9f, 0x79, 0xee, 0x00
-	.byte	0xa3, 0x79, 0xee, 0x00, 0xa7, 0x79, 0xee, 0x00
-	.byte	0xab, 0x79, 0xee, 0x00, 0xaf, 0x79, 0xee, 0x00
-	.byte	0xb3, 0x79, 0xee, 0x00, 0xb7, 0x79, 0xee, 0x00
-	.byte	0xbb, 0x79, 0xee, 0x00, 0xbf, 0x79, 0xee, 0x00
-	.byte	0xc3, 0x79, 0xee, 0x00, 0xc7, 0x79, 0xee, 0x00
-	.byte	0xcb, 0x79, 0xee, 0x00, 0xcf, 0x79, 0xee, 0x00
-	.byte	0xd3, 0x79, 0xee, 0x00, 0xd7, 0x79, 0xee, 0x00
-	.byte	0xdb, 0x79, 0xee, 0x00, 0xdf, 0x79, 0xee, 0x00
-	.byte	0xe3, 0x79, 0xee, 0x00, 0xe7, 0x79, 0xee, 0x00
-	.byte	0xeb, 0x79, 0xee, 0x00, 0xef, 0x79, 0xee, 0x00
-	.byte	0xf3, 0x79, 0xee, 0x00, 0xf7, 0x79, 0xee, 0x00
-	.byte	0xfb, 0x79, 0xee, 0x00, 0xff, 0x79, 0xee, 0x00
-	.byte	0x03, 0x7a, 0xee, 0x00, 0x07, 0x7a, 0xee, 0x00
-	.byte	0x0b, 0x7a, 0xee, 0x00, 0x0f, 0x7a, 0xee, 0x00
-	.byte	0x13, 0x7a, 0xee, 0x00, 0x17, 0x7a, 0xee, 0x00
-	.byte	0x1b, 0x7a, 0xee, 0x00, 0x1f, 0x7a, 0xee, 0x00
-	.byte	0x23, 0x7a, 0xee, 0x00, 0x27, 0x7a, 0xee, 0x00
-	.byte	0x2b, 0x7a, 0xee, 0x00, 0x2f, 0x7a, 0xee, 0x00
-	.byte	0x33, 0x7a, 0xee, 0x00, 0x37, 0x7a, 0xee, 0x00
-	.byte	0x3b, 0x7a, 0xee, 0x00, 0x3f, 0x7a, 0xee, 0x00
-	.byte	0x43, 0x7a, 0xee, 0x00, 0x47, 0x7a, 0xee, 0x00
-	.byte	0x4b, 0x7a, 0xee, 0x00, 0x4f, 0x7a, 0xee, 0x00
-	.byte	0x53, 0x7a, 0xee, 0x00, 0x57, 0x7a, 0xee, 0x00
-	.byte	0x5b, 0x7a, 0xee, 0x00, 0x5f, 0x7a, 0xee, 0x00
-	.byte	0x63, 0x7a, 0xee, 0x00, 0x67, 0x7a, 0xee, 0x00
-	.byte	0x6b, 0x7a, 0xee, 0x00, 0x6f, 0x7a, 0xee, 0x00
-	.byte	0x73, 0x7a, 0xee, 0x00, 0x77, 0x7a, 0xee, 0x00
-	.byte	0x7b, 0x7a, 0xee, 0x00, 0x7f, 0x7a, 0xee, 0x00
-	.byte	0x83, 0x7a, 0xee, 0x00
 SwbtBank1_ListenerTable:
-	.long	SwbtB1_Code45_Listeners	; 0x00
-	.long	SwbtB1_Code46_Listeners	; 0x01
-	.long	SwbtB1_Code47_Listeners	; 0x02
-	.long	SwbtB1_Code48_Listeners	; 0x03
-	.long	SwbtB1_CodeA9_Listeners	; 0x04
-	.long	0xee7b8b	; 0x05
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x8b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
-	.byte	0x8b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
+	.long SwbtB1_Code00_Listeners	; 0x00
+	.long SwbtB1_Code01_Listeners	; 0x01
+	.long SwbtB1_Code02_Listeners	; 0x02
+	.long SwbtB1_Code03_Listeners	; 0x03
+	.long SwbtB1_Code04_Listeners	; 0x04
+	.long SwbtB1_Code05_Listeners	; 0x05
+	.long SwbtB1_Code06_Listeners	; 0x06
+	.long SwbtB1_Code07_Listeners	; 0x07
+	.long SwbtB1_Code08_Listeners	; 0x08
+	.long SwbtB1_Code09_Listeners	; 0x09
+	.long SwbtB1_Code0A_Listeners	; 0x0A
+	.long SwbtB1_Code0B_Listeners	; 0x0B
+	.long SwbtB1_Code0C_Listeners	; 0x0C
+	.long SwbtB1_Code0D_Listeners	; 0x0D
+	.long SwbtB1_Code0E_Listeners	; 0x0E
+	.long SwbtB1_Code0F_Listeners	; 0x0F
+	.long SwbtB1_Code10_Listeners	; 0x10
+	.long SwbtB1_Code11_Listeners	; 0x11
+	.long SwbtB1_Code12_Listeners	; 0x12
+	.long SwbtB1_Code13_Listeners	; 0x13
+	.long SwbtB1_Code14_Listeners	; 0x14
+	.long SwbtB1_Code15_Listeners	; 0x15
+	.long SwbtB1_Code16_Listeners	; 0x16
+	.long SwbtB1_Code17_Listeners	; 0x17
+	.long SwbtB1_Code18_Listeners	; 0x18
+	.long SwbtB1_Code19_Listeners	; 0x19
+	.long SwbtB1_Code1A_Listeners	; 0x1A
+	.long SwbtB1_Code1B_Listeners	; 0x1B
+	.long SwbtB1_Code1C_Listeners	; 0x1C
+	.long SwbtB1_Code1D_Listeners	; 0x1D
+	.long SwbtB1_Code1E_Listeners	; 0x1E
+	.long SwbtB1_Code1F_Listeners	; 0x1F
+	.long SwbtB1_Code20_Listeners	; 0x20
+	.long SwbtB1_Code21_Listeners	; 0x21
+	.long SwbtB1_Code22_Listeners	; 0x22
+	.long SwbtB1_Code23_Listeners	; 0x23
+	.long SwbtB1_Code24_Listeners	; 0x24
+	.long SwbtB1_Code25_Listeners	; 0x25
+	.long SwbtB1_Code26_Listeners	; 0x26
+	.long SwbtB1_Code27_Listeners	; 0x27
+	.long SwbtB1_Code28_Listeners	; 0x28
+	.long SwbtB1_Code29_Listeners	; 0x29
+	.long SwbtB1_Code2A_Listeners	; 0x2A
+	.long SwbtB1_Code2B_Listeners	; 0x2B
+	.long SwbtB1_Code2C_Listeners	; 0x2C
+	.long SwbtB1_Code2D_Listeners	; 0x2D
+	.long SwbtB1_Code2E_Listeners	; 0x2E
+	.long SwbtB1_Code2F_Listeners	; 0x2F
+	.long SwbtB1_Code30_Listeners	; 0x30
+	.long SwbtB1_Code31_Listeners	; 0x31
+	.long SwbtB1_Code32_Listeners	; 0x32
+	.long SwbtB1_Code33_Listeners	; 0x33
+	.long SwbtB1_Code34_Listeners	; 0x34
+	.long SwbtB1_Code35_Listeners	; 0x35
+	.long SwbtB1_Code36_Listeners	; 0x36
+	.long SwbtB1_Code37_Listeners	; 0x37
+	.long SwbtB1_Code38_Listeners	; 0x38
+	.long SwbtB1_Code39_Listeners	; 0x39
+	.long SwbtB1_Code3A_Listeners	; 0x3A
+	.long SwbtB1_Code3B_Listeners	; 0x3B
+	.long SwbtB1_Code3C_Listeners	; 0x3C
+	.long SwbtB1_Code3D_Listeners	; 0x3D
+	.long SwbtB1_Code3E_Listeners	; 0x3E
+	.long SwbtB1_Code3F_Listeners	; 0x3F
+	.long SwbtB1_Code40_Listeners	; 0x40
+	.long SwbtB1_Code41_Listeners	; 0x41
+	.long SwbtB1_Code42_Listeners	; 0x42
+	.long SwbtB1_Code43_Listeners	; 0x43
+	.long SwbtB1_Code44_Listeners	; 0x44
+	.long SwbtB1_Code45_Listeners	; 0x45
+	.long SwbtB1_Code46_Listeners	; 0x46
+	.long SwbtB1_Code47_Listeners	; 0x47
+	.long SwbtB1_Code48_Listeners	; 0x48
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0x9b, 0x7a, 0xee, 0x00
+	.long	UIState_DefaultConfig_A	; 0x50
+	.long	UIState_DefaultConfig_A	; 0x51
+	.long	UIState_DefaultConfig_A	; 0x52
+	.long	UIState_DefaultConfig_A	; 0x53
+	.long	UIState_DefaultConfig_A	; 0x54
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0x8b, 0x7b, 0xee, 0x00, 0x9f, 0x7a, 0xee, 0x00
+	.byte	0xa3, 0x7a, 0xee, 0x00, 0xa7, 0x7a, 0xee, 0x00
+	.byte	0xab, 0x7a, 0xee, 0x00, 0xaf, 0x7a, 0xee, 0x00
+	.long	UIState_DefaultConfig_A	; 0x60
+	.long	UIState_DefaultConfig_A	; 0x61
+	.long	UIState_DefaultConfig_A	; 0x62
+	.long	UIState_DefaultConfig_A	; 0x63
+	.long	UIState_DefaultConfig_A	; 0x64
+	.long	UIState_DefaultConfig_A	; 0x65
+	.long	UIState_DefaultConfig_A	; 0x66
+	.long	UIState_DefaultConfig_A	; 0x68
+	.long	UIState_DefaultConfig_A	; 0x69
+	.long	UIState_DefaultConfig_A	; 0x6A
+	.long	UIState_DefaultConfig_A	; 0x6B
+	.long	SwbtB1_Code60_Listeners	; 0xB1
+	.long	SwbtB1_Code61_Listeners	; 0xB2
+	.long	SwbtB1_Code62_Listeners	; 0xB3
+	.long	SwbtB1_Code63_Listeners	; 0xB4
+	.long	SwbtB1_Code64_Listeners	; 0xB5
+	.long	SwbtB1_Code65_Listeners	; 0xB6
+	.long	SwbtB1_Code66_Listeners	; 0xB7
+; TODO(port): v6 bytes with no v7 line -- disassemble
 	.byte	0x8b, 0x7b, 0xee, 0x00
-	.long	SwbtB1_CodeAA_Listeners	; 0x06
-	.long	SwbtB1_CodeAC_Listeners	; 0x07
-	.long	SwbtB1_CodeAD_Listeners	; 0x08
-	.long	SwbtB1_CodeAE_Listeners	; 0x09
-	.long	SwbtB1_CodeB0_Listeners	; 0x0A
-	.long	0xee7b8b	; 0x0B
+	.long	SwbtB1_Code68_Listeners	; 0xB8
+	.long	SwbtB1_Code69_Listeners	; 0xB9
+	.long	SwbtB1_Code6A_Listeners	; 0xBA
+	.long	SwbtB1_Code6B_Listeners	; 0xBB
+	.long	SwbtB1_Code6C_Listeners	; 0xBC
+	.long	SwbtB1_Code6D_Listeners	; 0xBD
+	.long	SwbtB1_Code6E_Listeners	; 0xBE
 ; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0x8b, 0x7b, 0xee, 0x00, 0xeb, 0x7a, 0xee, 0x00
+	.byte	0xef, 0x7a, 0xee, 0x00, 0xf3, 0x7a, 0xee, 0x00
 	.byte	0x8b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
 	.byte	0x8b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
-	.byte	0x8b, 0x7b, 0xee, 0x00
+	.byte	0x8b, 0x7b, 0xee, 0x00, 0xf7, 0x7a, 0xee, 0x00
+	.byte	0xfb, 0x7a, 0xee, 0x00, 0xff, 0x7a, 0xee, 0x00
+	.byte	0x8b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
+	.byte	0x8b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
+	.byte	0x8b, 0x7b, 0xee, 0x00, 0x03, 0x7b, 0xee, 0x00
+	.byte	0x07, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
+	.byte	0x8b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
+	.byte	0x8b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
+	.byte	0x8b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
+	.byte	0x8b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
+	.byte	0x8b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
+	.byte	0x8b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
+	.byte	0x8b, 0x7b, 0xee, 0x00, 0x0b, 0x7b, 0xee, 0x00
+	.byte	0x0f, 0x7b, 0xee, 0x00, 0x17, 0x7b, 0xee, 0x00
+	.byte	0x1b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
+	.byte	0x8b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
+	.byte	0x8b, 0x7b, 0xee, 0x00, 0x1f, 0x7b, 0xee, 0x00
+	.byte	0x2f, 0x7b, 0xee, 0x00, 0x33, 0x7b, 0xee, 0x00
+	.byte	0x8b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
+	.byte	0x8b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
+	.byte	0x8b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
+	.byte	0x8b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
+	.byte	0x8b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
+	.byte	0x8b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
+	.byte	0x8b, 0x7b, 0xee, 0x00, 0x37, 0x7b, 0xee, 0x00
+	.byte	0x3f, 0x7b, 0xee, 0x00, 0x43, 0x7b, 0xee, 0x00
+	.byte	0x8b, 0x7b, 0xee, 0x00, 0x47, 0x7b, 0xee, 0x00
+	.byte	0x4b, 0x7b, 0xee, 0x00, 0x4f, 0x7b, 0xee, 0x00
+	.byte	0x8b, 0x7b, 0xee, 0x00, 0x53, 0x7b, 0xee, 0x00
 ; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x8b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
-	.byte	0x8b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
-	.byte	0x8b, 0x7b, 0xee, 0x00, 0xb3, 0x7a, 0xee, 0x00
-	.long	SwbtB1_CodeB2_Listeners	; 0x0C
-	.long	SwbtB1_CodeB3_Listeners	; 0x0D
-	.long	SwbtB1_CodeB4_Listeners	; 0x0E
-	.long	SwbtB1_CodeB5_Listeners	; 0x0F
-	.long	SwbtB1_CodeB6_Listeners	; 0x10
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xcb, 0x7a, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
-	.long	SwbtB1_CodeB8_Listeners	; 0x12
-	.long	SwbtB1_CodeB9_Listeners	; 0x13
-	.long	SwbtB1_CodeBA_Listeners	; 0x14
-	.long	SwbtB1_CodeBB_Listeners	; 0x15
-	.long	SwbtB1_CodeBC_Listeners	; 0x16
-	.long	SwbtB1_CodeBD_Listeners	; 0x17
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xe7, 0x7a, 0xee, 0x00
-	.long	0xee7b8b	; 0x18
-	.long	SwbtBank1_PostCallbacks	; 0x19
-	.long	SwbtBank1_PostCallbacks_Data	; 0x1A
-	.long	0xee7af3	; 0x1B
-	.long	0xee7b8b	; 0x1C
-	.long	0xee7b8b	; 0x1D
-	.long	0xee7b8b	; 0x1E
-	.long	0xee7b8b	; 0x1F
-	.long	0xee7b8b	; 0x20
-	.long	SwbtBank1_PostCallbacks_Data2	; 0x21
-	.long	0xee7afb	; 0x22
-	.long	0xee7aff	; 0x23
-	.long	0xee7b8b	; 0x24
-	.long	0xee7b8b	; 0x25
-	.long	0xee7b8b	; 0x26
-	.long	0xee7b8b	; 0x27
-	.long	0xee7b8b	; 0x28
-	.long	0xee7b03	; 0x29
-	.long	0xee7b07	; 0x2A
-	.long	0xee7b8b	; 0x2B
-	.long	0xee7b8b	; 0x2C
-	.long	0xee7b8b	; 0x2D
-	.long	0xee7b8b	; 0x2E
-	.long	0xee7b8b	; 0x2F
-	.long	0xee7b8b	; 0x30
-	.long	0xee7b8b	; 0x31
-	.long	0xee7b8b	; 0x32
-	.long	0xee7b8b	; 0x33
-	.long	0xee7b8b	; 0x34
-	.long	0xee7b8b	; 0x35
-	.long	0xee7b8b	; 0x36
-	.long	0xee7b8b	; 0x37
-	.long	0xee7b8b	; 0x38
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0x7b, 0xee, 0x00, 0x0f, 0x7b, 0xee, 0x00
-	.byte	0x17, 0x7b, 0xee, 0x00, 0x1b, 0x7b, 0xee, 0x00
-	.byte	0x8b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
-	.byte	0x8b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
-	.byte	0x1f, 0x7b, 0xee, 0x00, 0x2f, 0x7b, 0xee, 0x00
-	.byte	0x33, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
-	.byte	0x8b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
-	.byte	0x8b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
-	.byte	0x8b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
-	.byte	0x8b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
-	.byte	0x8b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
-	.byte	0x8b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
-	.byte	0x37, 0x7b, 0xee, 0x00, 0x3f, 0x7b, 0xee, 0x00
-	.byte	0x43, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
-	.byte	0x47, 0x7b, 0xee, 0x00, 0x4b, 0x7b, 0xee, 0x00
-	.byte	0x4f, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
-	.byte	0x53, 0x7b, 0xee, 0x00, 0x57, 0x7b, 0xee, 0x00
-	.byte	0x5b, 0x7b, 0xee, 0x00, 0x5f, 0x7b, 0xee, 0x00
-	.byte	0x63, 0x7b, 0xee, 0x00, 0x67, 0x7b, 0xee, 0x00
-	.long	0xee7b6b	; 0x39
-	.long	0xee7b6f	; 0x3A
-	.long	0xee7b73	; 0x3B
-	.long	0xee7b77	; 0x3C
-	.long	0xee7b7b	; 0x3D
-	.long	0xee7b7f	; 0x3E
-	.long	0xee7b83	; 0x3F
-	.long	0xee7b87	; 0x40
-	.long	0xee7b8b	; 0x41
-	.long	0xee7b8b	; 0x42
+	.byte	0x57, 0x7b, 0xee, 0x00, 0x5b, 0x7b, 0xee, 0x00
+	.byte	0x5f, 0x7b, 0xee, 0x00, 0x63, 0x7b, 0xee, 0x00
+	.byte	0x67, 0x7b, 0xee, 0x00, 0x6b, 0x7b, 0xee, 0x00
+	.byte	0x6f, 0x7b, 0xee, 0x00, 0x73, 0x7b, 0xee, 0x00
+	.byte	0x77, 0x7b, 0xee, 0x00, 0x7b, 0x7b, 0xee, 0x00
+	.byte	0x7f, 0x7b, 0xee, 0x00, 0x83, 0x7b, 0xee, 0x00
+	.byte	0x87, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
+; TODO(port): v5 bytes with no v6 line -- disassemble
+	.byte	0x8b, 0x7b, 0xee, 0x00
 	.byte 0xff				; separator (read by nothing)
 SwbtB1_Code00_Listeners:	.long 0xffffffff
 SwbtB1_Code01_Listeners:	.long 0xffffffff
@@ -5784,47 +5820,54 @@ SwbtB1_Code46_Listeners:	.long 0xffffffff
 SwbtB1_Code47_Listeners:	.long 0xffffffff
 ; code 0x48: callbacks SwbtWr_DispatchLoop calls for it
 SwbtB1_Code48_Listeners:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x44, 0x5f, 0xfb, 0x00
-SwbtB1_Code49_Listeners:
-SwbtB1_Code50_Listeners:
-SwbtB1_Code51_Listeners:
-SwbtB1_Code52_Listeners:
-SwbtB1_Code53_Listeners:
-SwbtB1_Code54_Listeners:
-SwbtB1_Code60_Listeners:
-SwbtB1_Code61_Listeners:
-SwbtB1_Code62_Listeners:
-SwbtB1_Code63_Listeners:
-SwbtB1_Code64_Listeners:
-SwbtB1_Code65_Listeners:
-SwbtB1_Code66_Listeners:
-SwbtB1_Code68_Listeners:
-SwbtB1_Code69_Listeners:
-SwbtB1_Code6A_Listeners:
-SwbtB1_Code6B_Listeners:
-SwbtB1_Code6C_Listeners:
-SwbtB1_Code6D_Listeners:
-SwbtB1_Code6E_Listeners:
-SwbtB1_Code70_Listeners:
-SwbtB1_Code71_Listeners:
-SwbtB1_Code72_Listeners:
-SwbtB1_Code78_Listeners:
-SwbtB1_Code79_Listeners:
-SwbtB1_Code7A_Listeners:
-SwbtB1_Code80_Listeners:
-SwbtB1_Code81_Listeners:
-SwbtB1_Code90_Listeners:
+	.long EffectMode_ByteData_Block3
+	.long 0xffffffff
+SwbtB1_Code49_Listeners:	.long 0xffffffff
+SwbtB1_Code50_Listeners:	.long 0xffffffff
+SwbtB1_Code51_Listeners:	.long 0xffffffff
+SwbtB1_Code52_Listeners:	.long 0xffffffff
+SwbtB1_Code53_Listeners:	.long 0xffffffff
+SwbtB1_Code54_Listeners:	.long 0xffffffff
+SwbtB1_Code60_Listeners:	.long 0xffffffff
+SwbtB1_Code61_Listeners:	.long 0xffffffff
+SwbtB1_Code62_Listeners:	.long 0xffffffff
+SwbtB1_Code63_Listeners:	.long 0xffffffff
+SwbtB1_Code64_Listeners:	.long 0xffffffff
+SwbtB1_Code65_Listeners:	.long 0xffffffff
+SwbtB1_Code66_Listeners:	.long 0xffffffff
+SwbtB1_Code68_Listeners:	.long 0xffffffff
+SwbtB1_Code69_Listeners:	.long 0xffffffff
+SwbtB1_Code6A_Listeners:	.long 0xffffffff
+SwbtB1_Code6B_Listeners:	.long 0xffffffff
+SwbtB1_Code6C_Listeners:	.long 0xffffffff
+SwbtB1_Code6D_Listeners:	.long 0xffffffff
+SwbtB1_Code6E_Listeners:	.long 0xffffffff
+SwbtB1_Code70_Listeners:	.long 0xffffffff
+SwbtB1_Code71_Listeners:	.long 0xffffffff
+SwbtB1_Code72_Listeners:	.long 0xffffffff
+SwbtB1_Code78_Listeners:	.long 0xffffffff
+SwbtB1_Code79_Listeners:	.long 0xffffffff
+SwbtB1_Code7A_Listeners:	.long 0xffffffff
+SwbtB1_Code80_Listeners:	.long 0xffffffff
+SwbtB1_Code81_Listeners:	.long 0xffffffff
+SwbtB1_Code90_Listeners:	.long 0xffffffff
 ; code 0x91: callbacks SwbtWr_DispatchLoop calls for it
 SwbtB1_Code91_Listeners:
-SwbtB1_Code92_Listeners:
-SwbtB1_Code93_Listeners:
+	.long MidiCtrl_ModeSwitchHandler
+	.long 0xffffffff
+SwbtB1_Code92_Listeners:	.long 0xffffffff
+SwbtB1_Code93_Listeners:	.long 0xffffffff
 ; code 0x98: callbacks SwbtWr_DispatchLoop calls for it
 SwbtB1_Code98_Listeners:
-SwbtB1_Code99_Listeners:
-SwbtB1_Code9A_Listeners:
+	.long BitMapOut_ByteData_PresetCopy
+	.long EffectMode_ByteData_Block4
+	.long FDemoText_ByteData_VoiceProbeB
+	.long 0xffffffff
+SwbtB1_Code99_Listeners:	.long 0xffffffff
+SwbtB1_Code9A_Listeners:	.long 0xffffffff
 ; code 0xA8: callbacks SwbtWr_DispatchLoop calls for it
 SwbtB1_CodeA8_Listeners:
+	.long EffectMode_ByteData_Block2
 	.long 0xffffffff
 SwbtB1_CodeA9_Listeners:	.long 0xffffffff
 SwbtB1_CodeAA_Listeners:	.long 0xffffffff
@@ -5852,167 +5895,212 @@ SwbtBank1_PostCallbacks:	.long 0xffffffff	; bank 1 post list: SwbtWr_PostCallbac
 ;      installed by SwbtWr_InitBank2, read by SwbtWr_DispatchLoop (queue 0xBD3C)
 ; (name kept: SwbtWr_InitBank2 in audio/dsp_config_sysex.s loads it;
 ;  it is SwbtWr bank 2, not the table its name suggests)
-SwbtBank1_PostCallbacks_Data:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-SwbtBank1_PostCallbacks_Data2:
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0x44, 0x7a, 0xfd, 0x00, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0x5d, 0x3b, 0xfb, 0x00, 0xf0, 0x5f, 0xfb, 0x00
-	.byte	0x50, 0x3f, 0xf8, 0x00, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0x7a, 0x5e, 0xfb, 0x00, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff
 Naka_RenderMode_A_Table:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-; TODO(port): v6 bytes with no v7 line -- disassemble
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x94, 0x7e, 0xee, 0x00, 0xc0, 0x7e, 0xee, 0x00
-	.byte	0xe8, 0x7e, 0xee, 0x00, 0x0c, 0x7f, 0xee, 0x00
-	.byte	0x2c, 0x7f, 0xee, 0x00, 0x4c, 0x7f, 0xee, 0x00
-	.byte	0x6c, 0x7f, 0xee, 0x00, 0x8c, 0x7f, 0xee, 0x00
-	.byte	0xac, 0x7f, 0xee, 0x00, 0xcc, 0x7f, 0xee, 0x00
-	.byte	0xec, 0x7f, 0xee, 0x00, 0x0c, 0x80, 0xee, 0x00
-	.byte	0x2c, 0x80, 0xee, 0x00, 0x4c, 0x80, 0xee, 0x00
-	.byte	0x6c, 0x80, 0xee, 0x00, 0x8c, 0x80, 0xee, 0x00
-	.byte	0xac, 0x80, 0xee, 0x00, 0xc8, 0x80, 0xee, 0x00
-	.byte	0xe4, 0x80, 0xee, 0x00, 0x00, 0x81, 0xee, 0x00
-	.byte	0x1c, 0x81, 0xee, 0x00, 0x38, 0x81, 0xee, 0x00
-	.byte	0x54, 0x81, 0xee, 0x00, 0x70, 0x81, 0xee, 0x00
-	.byte	0x8c, 0x81, 0xee, 0x00, 0xa8, 0x81, 0xee, 0x00
-	.byte	0xc4, 0x81, 0xee, 0x00, 0xe0, 0x81, 0xee, 0x00
-	.byte	0xfc, 0x81, 0xee, 0x00, 0x18, 0x82, 0xee, 0x00
-	.byte	0x34, 0x82, 0xee, 0x00, 0x50, 0x82, 0xee, 0x00
-	.byte	0x6c, 0x82, 0xee, 0x00, 0x70, 0x82, 0xee, 0x00
-	.byte	0x74, 0x82, 0xee, 0x00, 0x78, 0x82, 0xee, 0x00
-	.byte	0x7c, 0x82, 0xee, 0x00, 0x80, 0x82, 0xee, 0x00
-	.long	SwbtB2_Code26_Listeners	; 0x17
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x88, 0x82, 0xee, 0x00, 0x8c, 0x82, 0xee, 0x00
-	.byte	0x90, 0x82, 0xee, 0x00, 0x94, 0x82, 0xee, 0x00
-	.byte	0x98, 0x82, 0xee, 0x00, 0x9c, 0x82, 0xee, 0x00
-	.byte	0xa0, 0x82, 0xee, 0x00, 0xa4, 0x82, 0xee, 0x00
-	.byte	0xa8, 0x82, 0xee, 0x00, 0xac, 0x82, 0xee, 0x00
-	.byte	0xb0, 0x82, 0xee, 0x00, 0xb4, 0x82, 0xee, 0x00
-	.byte	0xb8, 0x82, 0xee, 0x00
-	.long	SwbtB2_Code34_Listeners	; 0x19
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xc0, 0x82, 0xee, 0x00, 0xc4, 0x82, 0xee, 0x00
-	.byte	0xc8, 0x82, 0xee, 0x00, 0xcc, 0x82, 0xee, 0x00
-	.byte	0xd0, 0x82, 0xee, 0x00, 0xd4, 0x82, 0xee, 0x00
-	.byte	0xd8, 0x82, 0xee, 0x00, 0xdc, 0x82, 0xee, 0x00
-	.byte	0xe0, 0x82, 0xee, 0x00, 0xe4, 0x82, 0xee, 0x00
-	.byte	0xe8, 0x82, 0xee, 0x00, 0xec, 0x82, 0xee, 0x00
-	.long	SwbtB2_Code41_Listeners	; 0x1B
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xf8, 0x82, 0xee, 0x00, 0xfc, 0x82, 0xee, 0x00
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x08, 0x83, 0xee, 0x00
-	.byte	0x14, 0x83, 0xee, 0x00, 0x20, 0x83, 0xee, 0x00
-	.long	SwbtB2_Code47_Listeners	; 0x1D
-; TODO(port): v6 bytes with no v7 line -- disassemble
-; TODO(port): v6 bytes with no v7 line -- disassemble
-; TODO(port): v6 bytes with no v7 line -- disassemble
-; TODO(port): v6 bytes with no v7 line -- disassemble
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x34, 0x83, 0xee, 0x00, 0x54, 0x83, 0xee, 0x00
-	.byte	0x9c, 0x85, 0xee, 0x00, 0x9c, 0x85, 0xee, 0x00
-	.byte	0x9c, 0x85, 0xee, 0x00, 0x9c, 0x85, 0xee, 0x00
-	.byte	0x9c, 0x85, 0xee, 0x00, 0x9c, 0x85, 0xee, 0x00
-	.byte	0x58, 0x83, 0xee, 0x00, 0x5c, 0x83, 0xee, 0x00
-	.byte	0x60, 0x83, 0xee, 0x00, 0x64, 0x83, 0xee, 0x00
-	.byte	0x68, 0x83, 0xee, 0x00, 0x9c, 0x85, 0xee, 0x00
-	.byte	0x9c, 0x85, 0xee, 0x00, 0x9c, 0x85, 0xee, 0x00
-	.byte	0x9c, 0x85, 0xee, 0x00, 0x9c, 0x85, 0xee, 0x00
-	.byte	0x9c, 0x85, 0xee, 0x00, 0x9c, 0x85, 0xee, 0x00
-	.byte	0x9c, 0x85, 0xee, 0x00, 0x9c, 0x85, 0xee, 0x00
-	.byte	0x9c, 0x85, 0xee, 0x00, 0x9c, 0x85, 0xee, 0x00
-	.byte	0x6c, 0x83, 0xee, 0x00, 0x7c, 0x83, 0xee, 0x00
-	.byte	0x8c, 0x83, 0xee, 0x00, 0x98, 0x83, 0xee, 0x00
-	.byte	0xa8, 0x83, 0xee, 0x00, 0xb4, 0x83, 0xee, 0x00
-	.byte	0xc0, 0x83, 0xee, 0x00, 0x9c, 0x85, 0xee, 0x00
-	.long	SwbtB2_Code68_Listeners	; 0x33
-; TODO(port): v6 bytes with no v7 line -- disassemble
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0xd8, 0x83, 0xee, 0x00, 0xe4, 0x83, 0xee, 0x00
-	.long	SwbtB2_Code6B_Listeners	; 0x3C
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xfc, 0x83, 0xee, 0x00
-; TODO(port): v6 bytes with no v7 line -- disassemble
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x00, 0x84, 0xee, 0x00, 0x04, 0x84, 0xee, 0x00
-	.byte	0x9c, 0x85, 0xee, 0x00, 0x08, 0x84, 0xee, 0x00
-	.byte	0x20, 0x84, 0xee, 0x00, 0x2c, 0x84, 0xee, 0x00
-	.byte	0x9c, 0x85, 0xee, 0x00, 0x9c, 0x85, 0xee, 0x00
-	.byte	0x9c, 0x85, 0xee, 0x00, 0x9c, 0x85, 0xee, 0x00
-	.byte	0x9c, 0x85, 0xee, 0x00
-	.byte	0x38, 0x84, 0xee, 0x00, 0x3c, 0x84, 0xee, 0x00
-	.byte	0x40, 0x84, 0xee, 0x00, 0x9c, 0x85, 0xee, 0x00
-	.byte	0x9c, 0x85, 0xee, 0x00, 0x9c, 0x85, 0xee, 0x00
-	.byte	0x9c, 0x85, 0xee, 0x00, 0x9c, 0x85, 0xee, 0x00
-	.byte	0x44, 0x84, 0xee, 0x00, 0x58, 0x84, 0xee, 0x00
-; TODO(port): v6 bytes with no v7 line -- disassemble
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x9c, 0x85, 0xee, 0x00, 0x9c, 0x85, 0xee, 0x00
-	.byte	0x9c, 0x85, 0xee, 0x00, 0x9c, 0x85, 0xee, 0x00
-	.byte	0x9c, 0x85, 0xee, 0x00, 0x9c, 0x85, 0xee, 0x00
-	.byte	0x9c, 0x85, 0xee, 0x00, 0x9c, 0x85, 0xee, 0x00
-	.byte	0x9c, 0x85, 0xee, 0x00, 0x9c, 0x85, 0xee, 0x00
-	.byte	0x9c, 0x85, 0xee, 0x00, 0x9c, 0x85, 0xee, 0x00
-	.byte	0x9c, 0x85, 0xee, 0x00, 0x9c, 0x85, 0xee, 0x00
-	.byte	0x5c, 0x84, 0xee, 0x00, 0x78, 0x84, 0xee, 0x00
-	.byte	0x94, 0x84, 0xee, 0x00, 0xa0, 0x84, 0xee, 0x00
-	.byte	0x9c, 0x85, 0xee, 0x00, 0x9c, 0x85, 0xee, 0x00
-	.byte	0x9c, 0x85, 0xee, 0x00, 0x9c, 0x85, 0xee, 0x00
-	.byte	0xb4, 0x84, 0xee, 0x00, 0xdc, 0x84, 0xee, 0x00
-	.byte	0xe8, 0x84, 0xee, 0x00, 0x9c, 0x85, 0xee, 0x00
-	.byte	0x9c, 0x85, 0xee, 0x00, 0x9c, 0x85, 0xee, 0x00
-	.byte	0x9c, 0x85, 0xee, 0x00, 0x9c, 0x85, 0xee, 0x00
-	.byte	0x9c, 0x85, 0xee, 0x00, 0x9c, 0x85, 0xee, 0x00
-	.byte	0x9c, 0x85, 0xee, 0x00, 0x9c, 0x85, 0xee, 0x00
-	.byte	0x9c, 0x85, 0xee, 0x00, 0x9c, 0x85, 0xee, 0x00
-	.byte	0x9c, 0x85, 0xee, 0x00, 0x9c, 0x85, 0xee, 0x00
-	.byte	0xf4, 0x84, 0xee, 0x00, 0x2c, 0x85, 0xee, 0x00
-	.byte	0x30, 0x85, 0xee, 0x00, 0x9c, 0x85, 0xee, 0x00
-	.byte	0x34, 0x85, 0xee, 0x00, 0x38, 0x85, 0xee, 0x00
-	.byte	0x3c, 0x85, 0xee, 0x00, 0x9c, 0x85, 0xee, 0x00
-	.byte	0x44, 0x85, 0xee, 0x00
-	.long	SwbtB2_CodeB1_Listeners	; 0x78
-; TODO(port): v6 bytes with no v7 line -- disassemble
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x54, 0x85, 0xee, 0x00, 0x5c, 0x85, 0xee, 0x00
-	.byte	0x64, 0x85, 0xee, 0x00
-	.long	SwbtB2_CodeB5_Listeners	; 0x81
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x74, 0x85, 0xee, 0x00, 0x7c, 0x85, 0xee, 0x00
-	.byte	0x84, 0x85, 0xee, 0x00
-; TODO(port): v6 bytes with no v7 line -- disassemble
+	.long SwbtB2_Code00_Listeners	; 0x00
+	.long SwbtB2_Code01_Listeners	; 0x01
+	.long SwbtB2_Code02_Listeners	; 0x02
+	.long SwbtB2_Code03_Listeners	; 0x03
+	.long SwbtB2_Code04_Listeners	; 0x04
+	.long SwbtB2_Code05_Listeners	; 0x05
+	.long SwbtB2_Code06_Listeners	; 0x06
+	.long SwbtB2_Code07_Listeners	; 0x07
+	.long SwbtB2_Code08_Listeners	; 0x08
+	.long SwbtB2_Code09_Listeners	; 0x09
+	.long SwbtB2_Code0A_Listeners	; 0x0A
+	.long SwbtB2_Code0B_Listeners	; 0x0B
+	.long SwbtB2_Code0C_Listeners	; 0x0C
+	.long SwbtB2_Code0D_Listeners	; 0x0D
+	.long SwbtB2_Code0E_Listeners	; 0x0E
+	.long SwbtB2_Code0F_Listeners	; 0x0F
+	.long SwbtB2_Code10_Listeners	; 0x10
+	.long SwbtB2_Code11_Listeners	; 0x11
+	.long SwbtB2_Code12_Listeners	; 0x12
+	.long SwbtB2_Code13_Listeners	; 0x13
+	.long SwbtB2_Code14_Listeners	; 0x14
+	.long SwbtB2_Code15_Listeners	; 0x15
+	.long SwbtB2_Code16_Listeners	; 0x16
+	.long SwbtB2_Code17_Listeners	; 0x17
+	.long SwbtB2_Code18_Listeners	; 0x18
+	.long SwbtB2_Code19_Listeners	; 0x19
+	.long SwbtB2_Code1A_Listeners	; 0x1A
+	.long SwbtB2_Code1B_Listeners	; 0x1B
+	.long SwbtB2_Code1C_Listeners	; 0x1C
+	.long SwbtB2_Code1D_Listeners	; 0x1D
+	.long SwbtB2_Code1E_Listeners	; 0x1E
+	.long SwbtB2_Code1F_Listeners	; 0x1F
+	.long SwbtB2_Code20_Listeners	; 0x20
+	.long SwbtB2_Code21_Listeners	; 0x21
+	.long SwbtB2_Code22_Listeners	; 0x22
+	.long SwbtB2_Code23_Listeners	; 0x23
+	.long SwbtB2_Code24_Listeners	; 0x24
+	.long SwbtB2_Code25_Listeners	; 0x25
+	.long SwbtB2_Code26_Listeners	; 0x26
+	.long SwbtB2_Code27_Listeners	; 0x27
+	.long SwbtB2_Code28_Listeners	; 0x28
+	.long SwbtB2_Code29_Listeners	; 0x29
+	.long SwbtB2_Code2A_Listeners	; 0x2A
+	.long SwbtB2_Code2B_Listeners	; 0x2B
+	.long SwbtB2_Code2C_Listeners	; 0x2C
+	.long SwbtB2_Code2D_Listeners	; 0x2D
+	.long SwbtB2_Code2E_Listeners	; 0x2E
+	.long SwbtB2_Code2F_Listeners	; 0x2F
+	.long SwbtB2_Code30_Listeners	; 0x30
+	.long SwbtB2_Code31_Listeners	; 0x31
+	.long SwbtB2_Code32_Listeners	; 0x32
+	.long SwbtB2_Code33_Listeners	; 0x33
+	.long SwbtB2_Code34_Listeners	; 0x34
+	.long SwbtB2_Code35_Listeners	; 0x35
+	.long SwbtB2_Code36_Listeners	; 0x36
+	.long SwbtB2_Code37_Listeners	; 0x37
+	.long SwbtB2_Code38_Listeners	; 0x38
+	.long SwbtB2_Code39_Listeners	; 0x39
+	.long SwbtB2_Code3A_Listeners	; 0x3A
+	.long SwbtB2_Code3B_Listeners	; 0x3B
+	.long SwbtB2_Code3C_Listeners	; 0x3C
+	.long SwbtB2_Code3D_Listeners	; 0x3D
+	.long SwbtB2_Code3E_Listeners	; 0x3E
+	.long SwbtB2_Code3F_Listeners	; 0x3F
+	.long SwbtB2_Code40_Listeners	; 0x40
+	.long SwbtB2_Code41_Listeners	; 0x41
+	.long SwbtB2_Code42_Listeners	; 0x42
+	.long SwbtB2_Code43_Listeners	; 0x43
+	.long SwbtB2_Code44_Listeners	; 0x44
+	.long SwbtB2_Code45_Listeners	; 0x45
+	.long SwbtB2_Code46_Listeners	; 0x46
+	.long SwbtB2_Code47_Listeners	; 0x47
+	.long SwbtB2_Code48_Listeners	; 0x48
+	.long SwbtB2_Code49_Listeners	; 0x49
+	.long UIState_DefaultConfig_B	; 0x4A
+	.long UIState_DefaultConfig_B	; 0x4B
+	.long UIState_DefaultConfig_B	; 0x4C
+	.long UIState_DefaultConfig_B	; 0x4D
+	.long UIState_DefaultConfig_B	; 0x4E
+	.long UIState_DefaultConfig_B	; 0x4F
+	.long SwbtB2_Code50_Listeners	; 0x50
+	.long SwbtB2_Code51_Listeners	; 0x51
+	.long SwbtB2_Code52_Listeners	; 0x52
+	.long SwbtB2_Code53_Listeners	; 0x53
+	.long SwbtB2_Code54_Listeners	; 0x54
+	.long UIState_DefaultConfig_B	; 0x55
+	.long UIState_DefaultConfig_B	; 0x56
+	.long UIState_DefaultConfig_B	; 0x57
+	.long UIState_DefaultConfig_B	; 0x58
+	.long UIState_DefaultConfig_B	; 0x59
+	.long UIState_DefaultConfig_B	; 0x5A
+	.long UIState_DefaultConfig_B	; 0x5B
+	.long UIState_DefaultConfig_B	; 0x5C
+	.long UIState_DefaultConfig_B	; 0x5D
+	.long UIState_DefaultConfig_B	; 0x5E
+	.long UIState_DefaultConfig_B	; 0x5F
+	.long SwbtB2_Code60_Listeners	; 0x60
+	.long SwbtB2_Code61_Listeners	; 0x61
+	.long SwbtB2_Code62_Listeners	; 0x62
+	.long SwbtB2_Code63_Listeners	; 0x63
+	.long SwbtB2_Code64_Listeners	; 0x64
+	.long SwbtB2_Code65_Listeners	; 0x65
+	.long SwbtB2_Code66_Listeners	; 0x66
+	.long UIState_DefaultConfig_B	; 0x67
+	.long SwbtB2_Code68_Listeners	; 0x68
+	.long SwbtB2_Code69_Listeners	; 0x69
+	.long SwbtB2_Code6A_Listeners	; 0x6A
+	.long SwbtB2_Code6B_Listeners	; 0x6B
+	.long SwbtB2_Code6C_Listeners	; 0x6C
+	.long SwbtB2_Code6D_Listeners	; 0x6D
+	.long SwbtB2_Code6E_Listeners	; 0x6E
+	.long UIState_DefaultConfig_B	; 0x6F
+	.long SwbtB2_Code70_Listeners	; 0x70
+	.long SwbtB2_Code71_Listeners	; 0x71
+	.long SwbtB2_Code72_Listeners	; 0x72
+	.long UIState_DefaultConfig_B	; 0x73
+	.long UIState_DefaultConfig_B	; 0x74
+	.long UIState_DefaultConfig_B	; 0x75
+	.long UIState_DefaultConfig_B	; 0x76
+	.long UIState_DefaultConfig_B	; 0x77
+	.long SwbtB2_Code78_Listeners	; 0x78
+	.long SwbtB2_Code79_Listeners	; 0x79
+	.long SwbtB2_Code7A_Listeners	; 0x7A
+	.long UIState_DefaultConfig_B	; 0x7B
+	.long UIState_DefaultConfig_B	; 0x7C
+	.long UIState_DefaultConfig_B	; 0x7D
+	.long UIState_DefaultConfig_B	; 0x7E
+	.long UIState_DefaultConfig_B	; 0x7F
+	.long SwbtB2_Code80_Listeners	; 0x80
+	.long SwbtB2_Code81_Listeners	; 0x81
+	.long UIState_DefaultConfig_B	; 0x82
+	.long UIState_DefaultConfig_B	; 0x83
+	.long UIState_DefaultConfig_B	; 0x84
+	.long UIState_DefaultConfig_B	; 0x85
+	.long UIState_DefaultConfig_B	; 0x86
+	.long UIState_DefaultConfig_B	; 0x87
+	.long UIState_DefaultConfig_B	; 0x88
+	.long UIState_DefaultConfig_B	; 0x89
+	.long UIState_DefaultConfig_B	; 0x8A
+	.long UIState_DefaultConfig_B	; 0x8B
+	.long UIState_DefaultConfig_B	; 0x8C
+	.long UIState_DefaultConfig_B	; 0x8D
+	.long UIState_DefaultConfig_B	; 0x8E
+	.long UIState_DefaultConfig_B	; 0x8F
+	.long SwbtB2_Code90_Listeners	; 0x90
+	.long SwbtB2_Code91_Listeners	; 0x91
+	.long SwbtB2_Code92_Listeners	; 0x92
+	.long SwbtB2_Code93_Listeners	; 0x93
+	.long UIState_DefaultConfig_B	; 0x94
+	.long UIState_DefaultConfig_B	; 0x95
+	.long UIState_DefaultConfig_B	; 0x96
+	.long UIState_DefaultConfig_B	; 0x97
+	.long SwbtB2_Code98_Listeners	; 0x98
+	.long SwbtB2_Code99_Listeners	; 0x99
+	.long SwbtB2_Code9A_Listeners	; 0x9A
+	.long UIState_DefaultConfig_B	; 0x9B
+	.long UIState_DefaultConfig_B	; 0x9C
+	.long UIState_DefaultConfig_B	; 0x9D
+	.long UIState_DefaultConfig_B	; 0x9E
+	.long UIState_DefaultConfig_B	; 0x9F
+	.long UIState_DefaultConfig_B	; 0xA0
+	.long UIState_DefaultConfig_B	; 0xA1
+	.long UIState_DefaultConfig_B	; 0xA2
+	.long UIState_DefaultConfig_B	; 0xA3
+	.long UIState_DefaultConfig_B	; 0xA4
+	.long UIState_DefaultConfig_B	; 0xA5
+	.long UIState_DefaultConfig_B	; 0xA6
+	.long UIState_DefaultConfig_B	; 0xA7
+	.long SwbtB2_CodeA8_Listeners	; 0xA8
+	.long SwbtB2_CodeA9_Listeners	; 0xA9
+	.long SwbtB2_CodeAA_Listeners	; 0xAA
+	.long UIState_DefaultConfig_B	; 0xAB
+	.long SwbtB2_CodeAC_Listeners	; 0xAC
+	.long SwbtB2_CodeAD_Listeners	; 0xAD
+	.long SwbtB2_CodeAE_Listeners	; 0xAE
+	.long UIState_DefaultConfig_B	; 0xAF
+	.long SwbtB2_CodeB0_Listeners	; 0xB0
+	.long SwbtB2_CodeB1_Listeners	; 0xB1
+	.long SwbtB2_CodeB2_Listeners	; 0xB2
+	.long SwbtB2_CodeB3_Listeners	; 0xB3
+	.long SwbtB2_CodeB4_Listeners	; 0xB4
+	.long SwbtB2_CodeB5_Listeners	; 0xB5
+	.long SwbtB2_CodeB6_Listeners	; 0xB6
+	.long SwbtB2_CodeB7_Listeners	; 0xB7
+	.long SwbtB2_CodeB8_Listeners	; 0xB8
+	.long SwbtB2_CodeB9_Listeners	; 0xB9
+	.long SwbtB2_CodeBA_Listeners	; 0xBA
+	.long SwbtB2_CodeBB_Listeners	; 0xBB
+	.long SwbtB2_CodeBC_Listeners	; 0xBC
+	.long SwbtB2_CodeBD_Listeners	; 0xBD
+	.long UIState_DefaultConfig_B	; 0xBE
+	.long UIState_DefaultConfig_B	; 0xBF
+	.byte 0xff				; separator (read by nothing)
 ; code 0x00: callbacks SwbtWr_DispatchLoop calls for it
-; TODO(port): v6 bytes with no v7 line -- disassemble
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x88, 0x85, 0xee, 0x00, 0x8c, 0x85, 0xee, 0x00
-	.byte	0x90, 0x85, 0xee, 0x00, 0x94, 0x85, 0xee, 0x00
-	.byte	0x98, 0x85, 0xee, 0x00, 0x9c, 0x85, 0xee, 0x00
-	.byte	0x9c, 0x85, 0xee, 0x00, 0xff, 0xf1, 0x9a, 0xfe
-	.byte	0x00, 0xff, 0x6e, 0xfc, 0x00, 0xd0, 0xd3, 0xfd
-	.byte	0x00, 0x49, 0xf8, 0xfc, 0x00, 0x49, 0x89, 0xfc
-	.byte	0x00, 0xaf, 0xeb, 0xf0, 0x00, 0xa8, 0x38, 0xfb
-	.byte	0x00, 0x88, 0x7e, 0xf9, 0x00, 0x0a, 0x3f, 0xf8
-	.byte	0x00, 0x16, 0x72, 0xfb, 0x00
 SwbtB2_Code00_Listeners:
+	.long UIState_ProcessKeyEvent
+	.long UIState_UpdateControlBits
+	.long UIState_ProcessMidiEvent
+	.long UIState_ProcessDisplayUpdate
+	.long UIState_RenderBitmapData
+	.long SeMenu_NameEditor_End
+	.long BitMapOut_ByteData_RenderB
+	.long UIState_KeyScan_Dispatch
+	.long FDemoText_ByteData_VoiceProbeA
+	.long BitmapFinpic_ByteData
 	.long 0xffffffff
 ; code 0x01: callbacks SwbtWr_DispatchLoop calls for it
 SwbtB2_Code01_Listeners:
@@ -6609,52 +6697,46 @@ SwbtBank2_PostCallbacks:
 ; (name kept: SwbtWr_InitBank3 in audio/dsp_config_sysex.s loads it;
 ;  it is SwbtWr bank 3, not the table its name suggests)
 Naka_EventHandler_Table:
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0xbd, 0x88, 0xee, 0x00, 0xc5, 0x88, 0xee, 0x00
-	.byte	0xcd, 0x88, 0xee, 0x00
-	.long	SwbtB3_Code03_Listeners	; 0x00
-	.long	SwbtB3_Code04_Listeners	; 0x01
-	.long	SwbtB3_Code05_Listeners	; 0x02
-	.long	SwbtB3_Code06_Listeners	; 0x03
-	.long	SwbtB3_Code07_Listeners	; 0x04
-	.long	SwbtB3_Code08_Listeners	; 0x05
-	.long	SwbtB3_Code09_Listeners	; 0x06
-	.long	SwbtB3_Code0A_Listeners	; 0x07
-	.long	SwbtB3_Code0B_Listeners	; 0x08
-	.long	SwbtB3_Code0C_Listeners	; 0x09
-	.long	SwbtB3_Code0D_Listeners	; 0x0A
-	.long	SwbtB3_Code0E_Listeners	; 0x0B
-	.long	SwbtB3_Code0F_Listeners	; 0x0C
-	.long	SwbtB3_Code10_Listeners	; 0x0D
-	.long	SwbtB3_Code11_Listeners	; 0x0E
-	.long	SwbtB3_Code12_Listeners	; 0x0F
-	.long	SwbtB3_Code13_Listeners	; 0x10
-	.long	SwbtB3_Code14_Listeners	; 0x11
-	.long	SwbtB3_Code15_Listeners	; 0x12
-	.long	SwbtB3_Code16_Listeners	; 0x13
-	.long	SwbtB3_Code17_Listeners	; 0x14
-	.long	SwbtB3_Code18_Listeners	; 0x15
-	.long	SwbtB3_Code19_Listeners	; 0x16
-	.long	SwbtB3_Code1A_Listeners	; 0x17
-	.long	SwbtB3_Code1B_Listeners	; 0x18
-	.long	SwbtB3_Code1C_Listeners	; 0x19
-	.long	SwbtB3_Code1D_Listeners	; 0x1A
-	.long	SwbtB3_Code1E_Listeners	; 0x1B
-	.long	SwbtB3_Code1F_Listeners	; 0x1C
-	.long	SwbtB3_Code1F_Listeners_Data	; 0x1D
-	.long	0xee89c1	; 0x1E
-	.long	SwbtB3_Code1F_Listeners_Data2	; 0x1F
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0xc9, 0x89, 0xee, 0x00, 0xcd, 0x89, 0xee, 0x00
-	.byte	0xd1, 0x89, 0xee, 0x00
-	.long	0xee89d5	; 0x20
-	.long	0xee89d9	; 0x21
-	.long	0xee89dd	; 0x22
-	.long	0xee89e1	; 0x23
-	.long	0xee89e5	; 0x24
-	.long	0xee89e9	; 0x25
-	.long	0xee89ed	; 0x26
+	.long SwbtB3_Code00_Listeners	; 0x00
+	.long SwbtB3_Code01_Listeners	; 0x01
+	.long SwbtB3_Code02_Listeners	; 0x02
+	.long SwbtB3_Code03_Listeners	; 0x03
+	.long SwbtB3_Code04_Listeners	; 0x04
+	.long SwbtB3_Code05_Listeners	; 0x05
+	.long SwbtB3_Code06_Listeners	; 0x06
+	.long SwbtB3_Code07_Listeners	; 0x07
+	.long SwbtB3_Code08_Listeners	; 0x08
+	.long SwbtB3_Code09_Listeners	; 0x09
+	.long SwbtB3_Code0A_Listeners	; 0x0A
+	.long SwbtB3_Code0B_Listeners	; 0x0B
+	.long SwbtB3_Code0C_Listeners	; 0x0C
+	.long SwbtB3_Code0D_Listeners	; 0x0D
+	.long SwbtB3_Code0E_Listeners	; 0x0E
+	.long SwbtB3_Code0F_Listeners	; 0x0F
+	.long SwbtB3_Code10_Listeners	; 0x10
+	.long SwbtB3_Code11_Listeners	; 0x11
+	.long SwbtB3_Code12_Listeners	; 0x12
+	.long SwbtB3_Code13_Listeners	; 0x13
+	.long SwbtB3_Code14_Listeners	; 0x14
+	.long SwbtB3_Code15_Listeners	; 0x15
+	.long SwbtB3_Code16_Listeners	; 0x16
+	.long SwbtB3_Code17_Listeners	; 0x17
+	.long SwbtB3_Code18_Listeners	; 0x18
+	.long SwbtB3_Code19_Listeners	; 0x19
+	.long SwbtB3_Code1A_Listeners	; 0x1A
+	.long SwbtB3_Code1B_Listeners	; 0x1B
+	.long SwbtB3_Code1C_Listeners	; 0x1C
+	.long SwbtB3_Code1D_Listeners	; 0x1D
+	.long SwbtB3_Code1E_Listeners	; 0x1E
 ; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0xb5, 0x89, 0xee, 0x00, 0xbd, 0x89, 0xee, 0x00
+; TODO(port): v5 bytes with no v6 line -- disassemble
+	.byte	0xc1, 0x89, 0xee, 0x00, 0xc5, 0x89, 0xee, 0x00
+	.byte	0xc9, 0x89, 0xee, 0x00, 0xcd, 0x89, 0xee, 0x00
+	.byte	0xd1, 0x89, 0xee, 0x00, 0xd5, 0x89, 0xee, 0x00
+	.byte	0xd9, 0x89, 0xee, 0x00, 0xdd, 0x89, 0xee, 0x00
+	.byte	0xe1, 0x89, 0xee, 0x00, 0xe5, 0x89, 0xee, 0x00
+	.byte	0xe9, 0x89, 0xee, 0x00, 0xed, 0x89, 0xee, 0x00
 	.byte	0xf1, 0x89, 0xee, 0x00, 0xf5, 0x89, 0xee, 0x00
 	.byte	0xf9, 0x89, 0xee, 0x00, 0xfd, 0x89, 0xee, 0x00
 	.byte	0x01, 0x8a, 0xee, 0x00, 0x05, 0x8a, 0xee, 0x00
@@ -6669,92 +6751,118 @@ Naka_EventHandler_Table:
 	.byte	0x49, 0x8a, 0xee, 0x00, 0x4d, 0x8a, 0xee, 0x00
 	.byte	0x51, 0x8a, 0xee, 0x00, 0x55, 0x8a, 0xee, 0x00
 	.byte	0x59, 0x8a, 0xee, 0x00, 0x5d, 0x8a, 0xee, 0x00
-	.byte	0x65, 0x8a, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
-; TODO(port): v5 bytes with no v6 line -- disassemble
+	.long	SwbtB3_Code49_Listeners	; 0x20
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
+	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
+	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
+	.long	SwbtB3_Code50_Listeners	; 0x21
+	.long	SwbtB3_Code51_Listeners	; 0x22
+	.long	SwbtB3_Code52_Listeners	; 0x23
+	.long	SwbtB3_Code53_Listeners	; 0x24
+	.long	SwbtB3_Code54_Listeners	; 0x25
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
+	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
+	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
 	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
 	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
 	.byte	0x61, 0x8b, 0xee, 0x00
-	.byte	0x69, 0x8a, 0xee, 0x00, 0x6d, 0x8a, 0xee, 0x00
-	.byte	0x71, 0x8a, 0xee, 0x00, 0x75, 0x8a, 0xee, 0x00
-	.byte	0x79, 0x8a, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
+	.long	SwbtB3_Code60_Listeners	; 0x26
+	.long	SwbtB3_Code61_Listeners	; 0x27
+	.long	SwbtB3_Code62_Listeners	; 0x28
+	.long	SwbtB3_Code63_Listeners	; 0x29
+	.long	SwbtB3_Code64_Listeners	; 0x2A
+	.long	SwbtB3_Code65_Listeners	; 0x2B
+	.long	SwbtB3_Code66_Listeners	; 0x2C
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0x61, 0x8b, 0xee, 0x00
+	.long	SwbtB3_Code68_Listeners	; 0x2D
+	.long	SwbtB3_Code69_Listeners	; 0x2E
+	.long	SwbtB3_Code6A_Listeners	; 0x2F
+	.long	SwbtB3_Code6B_Listeners	; 0x30
+	.long	SwbtB3_Code6C_Listeners	; 0x31
+	.long	SwbtB3_Code6D_Listeners	; 0x32
+	.long	SwbtB3_Code6E_Listeners	; 0x33
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0x61, 0x8b, 0xee, 0x00
+	.long	SwbtB3_Code70_Listeners	; 0x34
+	.long	SwbtB3_Code71_Listeners	; 0x35
+	.long	SwbtB3_Code72_Listeners	; 0x36
+; TODO(port): v6 bytes with no v7 line -- disassemble
 	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
-	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
-	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
-	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
-	.byte	0x7d, 0x8a, 0xee, 0x00, 0x81, 0x8a, 0xee, 0x00
-	.byte	0x85, 0x8a, 0xee, 0x00, 0x89, 0x8a, 0xee, 0x00
-	.byte	0x8d, 0x8a, 0xee, 0x00, 0x91, 0x8a, 0xee, 0x00
-	.byte	0x95, 0x8a, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
-	.byte	0x99, 0x8a, 0xee, 0x00, 0x9d, 0x8a, 0xee, 0x00
-	.byte	0xa1, 0x8a, 0xee, 0x00, 0xa5, 0x8a, 0xee, 0x00
-	.byte	0xa9, 0x8a, 0xee, 0x00, 0xad, 0x8a, 0xee, 0x00
-	.byte	0xb1, 0x8a, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
-	.byte	0xb5, 0x8a, 0xee, 0x00, 0xb9, 0x8a, 0xee, 0x00
-	.byte	0xbd, 0x8a, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
-	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
-	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
-	.byte	0xc1, 0x8a, 0xee, 0x00, 0xc5, 0x8a, 0xee, 0x00
-	.byte	0xc9, 0x8a, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
-	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
-	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
-	.byte	0xcd, 0x8a, 0xee, 0x00, 0xd1, 0x8a, 0xee, 0x00
-	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
-	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
-	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
-	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
-	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
-	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
-	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
-	.byte	0xd5, 0x8a, 0xee, 0x00, 0xd9, 0x8a, 0xee, 0x00
-	.byte	0xdd, 0x8a, 0xee, 0x00, 0xe1, 0x8a, 0xee, 0x00
 	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
 	.byte	0x61, 0x8b, 0xee, 0x00
-	.long	UIState_DefaultConfig_C	; 0x27
-	.long	SwbtB3_Code40_Listeners	; 0x28
-	.long	SwbtB3_Code41_Listeners	; 0x29
-	.long	SwbtB3_Code42_Listeners	; 0x2A
-	.long	UIState_DefaultConfig_C	; 0x2B
-	.long	UIState_DefaultConfig_C	; 0x2C
-	.long	UIState_DefaultConfig_C	; 0x2D
-	.long	UIState_DefaultConfig_C	; 0x2E
-	.long	UIState_DefaultConfig_C	; 0x2F
-	.long	UIState_DefaultConfig_C	; 0x30
-	.long	UIState_DefaultConfig_C	; 0x31
-	.long	UIState_DefaultConfig_C	; 0x32
-	.long	UIState_DefaultConfig_C	; 0x33
-	.long	UIState_DefaultConfig_C	; 0x34
-	.long	UIState_DefaultConfig_C	; 0x35
-	.long	UIState_DefaultConfig_C	; 0x36
-	.long	UIState_DefaultConfig_C	; 0x37
-	.long	SwbtB3_Code42_Listeners_Data	; 0x38
-	.long	SwbtB3_Code44_Listeners	; 0x39
-	.long	SwbtB3_Code49_Listeners	; 0x3A
-	.long	UIState_DefaultConfig_C	; 0x3B
+	.long	SwbtB3_Code78_Listeners	; 0x37
+	.long	SwbtB3_Code79_Listeners	; 0x38
+	.long	SwbtB3_Code7A_Listeners	; 0x39
 ; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x1d, 0x8b, 0xee, 0x00, 0x21, 0x8b, 0xee, 0x00
-	.byte	0x25, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
-	.byte	0x29, 0x8b, 0xee, 0x00, 0x2d, 0x8b, 0xee, 0x00
-	.byte	0x31, 0x8b, 0xee, 0x00, 0x35, 0x8b, 0xee, 0x00
-	.byte	0x39, 0x8b, 0xee, 0x00, 0x3d, 0x8b, 0xee, 0x00
-	.long	SwbtB3_CodeB6_Listeners	; 0x3C
-	.long	SwbtB3_CodeB7_Listeners	; 0x3D
-	.long	SwbtB3_CodeB8_Listeners	; 0x3E
-	.long	SwbtB3_CodeB9_Listeners	; 0x3F
-	.long	SwbtB3_CodeBA_Listeners	; 0x40
-	.long	SwbtB3_CodeBB_Listeners	; 0x41
-	.long	SwbtB3_CodeBC_Listeners	; 0x42
-	.long	SwbtB3_CodeBD_Listeners	; 0x43
-	.long	UIState_DefaultConfig_C	; 0x44
+	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
+	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
+	.byte	0x61, 0x8b, 0xee, 0x00
+	.long	SwbtB3_Code80_Listeners	; 0x3A
+	.long	SwbtB3_Code81_Listeners	; 0x3B
 ; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
+	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
+	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
+	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
+	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
+	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
+	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
+	.long	SwbtB3_Code90_Listeners	; 0x3C
+	.long	SwbtB3_Code91_Listeners	; 0x3D
+	.long	SwbtB3_Code92_Listeners	; 0x3E
+	.long	SwbtB3_Code93_Listeners	; 0x3F
+	.long UIState_DefaultConfig_C	; 0x4A
+	.long UIState_DefaultConfig_C	; 0x4B
+	.long UIState_DefaultConfig_C	; 0x4C
+	.long UIState_DefaultConfig_C	; 0x4D
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0xe5, 0x8a, 0xee, 0x00, 0xe9, 0x8a, 0xee, 0x00
+	.byte	0xed, 0x8a, 0xee, 0x00
+	.long UIState_DefaultConfig_C	; 0x83
+	.long UIState_DefaultConfig_C	; 0x84
+	.long UIState_DefaultConfig_C	; 0x85
+	.long UIState_DefaultConfig_C	; 0x86
+	.long UIState_DefaultConfig_C	; 0x87
+	.long UIState_DefaultConfig_C	; 0x88
+	.long UIState_DefaultConfig_C	; 0x89
+	.long UIState_DefaultConfig_C	; 0x8A
+	.long UIState_DefaultConfig_C	; 0x8B
+	.long UIState_DefaultConfig_C	; 0x8C
+	.long UIState_DefaultConfig_C	; 0x8D
+	.long UIState_DefaultConfig_C	; 0x8E
+	.long UIState_DefaultConfig_C	; 0x8F
+	.long	SwbtB3_CodeA8_Listeners	; 0x90
+	.long	SwbtB3_CodeA9_Listeners	; 0x91
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0x15, 0x8b, 0xee, 0x00
+	.long UIState_DefaultConfig_C	; 0xAB
+	.long SwbtB3_CodeAC_Listeners	; 0xAC
+	.long SwbtB3_CodeAD_Listeners	; 0xAD
+	.long SwbtB3_CodeAE_Listeners	; 0xAE
+	.long UIState_DefaultConfig_C	; 0xAF
+	.long SwbtB3_CodeB0_Listeners	; 0xB0
+	.long SwbtB3_CodeB1_Listeners	; 0xB1
+	.long SwbtB3_CodeB2_Listeners	; 0xB2
+	.long SwbtB3_CodeB3_Listeners	; 0xB3
+	.long SwbtB3_CodeB4_Listeners	; 0xB4
+	.long SwbtB3_CodeB5_Listeners	; 0xB5
+	.long SwbtB3_CodeB6_Listeners	; 0xB6
+	.long SwbtB3_CodeB7_Listeners	; 0xB7
+	.long SwbtB3_CodeB8_Listeners	; 0xB8
+	.long SwbtB3_CodeB9_Listeners	; 0xB9
+	.long SwbtB3_CodeBA_Listeners	; 0xBA
+	.long SwbtB3_CodeBB_Listeners	; 0xBB
+	.long SwbtB3_CodeBC_Listeners	; 0xBC
+	.long SwbtB3_CodeBD_Listeners	; 0xBD
+	.long UIState_DefaultConfig_C	; 0xBE
+	.long UIState_DefaultConfig_C	; 0xBF
+	.byte 0xff				; separator (read by nothing)
 ; code 0x00: callbacks SwbtWr_DispatchLoop calls for it
-; TODO(port): v6 bytes with no v7 line -- disassemble
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x61, 0x8b, 0xee, 0x00, 0xff
 SwbtB3_Code00_Listeners:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x07, 0x38, 0xfb, 0x00
+	.long BitMapOut_ByteData_RenderA
 	.long 0xffffffff
 ; code 0x01: callbacks SwbtWr_DispatchLoop calls for it
 SwbtB3_Code01_Listeners:
@@ -6878,31 +6986,7 @@ SwbtB3_Code1E_Listeners:
 	.long 0xffffffff
 ; code 0x1F: callbacks SwbtWr_DispatchLoop calls for it
 SwbtB3_Code1F_Listeners:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x07, 0x38, 0xfb, 0x00, 0xff, 0xff, 0xff, 0xff
-SwbtB3_Code1F_Listeners_Data:
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-SwbtB3_Code1F_Listeners_Data2:
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0xde, 0x39, 0xfb, 0x00
+	.long BitMapOut_ByteData_RenderA
 	.long 0xffffffff
 SwbtB3_Code20_Listeners:	.long 0xffffffff
 SwbtB3_Code21_Listeners:	.long 0xffffffff
@@ -6939,69 +7023,66 @@ SwbtB3_Code3F_Listeners:	.long 0xffffffff
 SwbtB3_Code40_Listeners:	.long 0xffffffff
 SwbtB3_Code41_Listeners:	.long 0xffffffff
 SwbtB3_Code42_Listeners:	.long 0xffffffff
-; TODO(port): v6 bytes with no v7 line -- disassemble
-SwbtB3_Code42_Listeners_Data:
-	.byte	0x4d, 0xb3, 0xf5, 0x00, 0x42, 0x56, 0xfb, 0x00
-	.byte	0xf2, 0x78, 0xf9, 0x00
 SwbtB3_Code43_Listeners:	.long 0xffffffff
-SwbtB3_Code44_Listeners:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x74, 0x62, 0xf8, 0x00
-SwbtB3_Code45_Listeners:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xfb, 0xde, 0xf6, 0x00
-SwbtB3_Code46_Listeners:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xf2, 0x78, 0xf9, 0x00
-SwbtB3_Code47_Listeners:
+SwbtB3_Code44_Listeners:	.long 0xffffffff
+SwbtB3_Code45_Listeners:	.long 0xffffffff
+SwbtB3_Code46_Listeners:	.long 0xffffffff
+SwbtB3_Code47_Listeners:	.long 0xffffffff
 ; code 0x48: callbacks SwbtWr_DispatchLoop calls for it
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x51, 0xdf, 0xef, 0x00
 SwbtB3_Code48_Listeners:
+	.long SwbtB3_Code48_Listener
 	.long 0xffffffff
-SwbtB3_Code49_Listeners:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xf2, 0x78, 0xf9, 0x00
-SwbtB3_Code50_Listeners:
-SwbtB3_Code51_Listeners:
-SwbtB3_Code52_Listeners:
-SwbtB3_Code53_Listeners:
-SwbtB3_Code54_Listeners:
-SwbtB3_Code60_Listeners:
-SwbtB3_Code61_Listeners:
-SwbtB3_Code62_Listeners:
-SwbtB3_Code63_Listeners:
-SwbtB3_Code64_Listeners:
-SwbtB3_Code65_Listeners:
-SwbtB3_Code66_Listeners:
-SwbtB3_Code68_Listeners:
-SwbtB3_Code69_Listeners:
-SwbtB3_Code6A_Listeners:
-SwbtB3_Code6B_Listeners:
-SwbtB3_Code6C_Listeners:
-SwbtB3_Code6D_Listeners:
-SwbtB3_Code6E_Listeners:
-SwbtB3_Code70_Listeners:
-SwbtB3_Code71_Listeners:
-SwbtB3_Code72_Listeners:
-SwbtB3_Code78_Listeners:
-SwbtB3_Code79_Listeners:
-SwbtB3_Code7A_Listeners:
-SwbtB3_Code80_Listeners:
-SwbtB3_Code81_Listeners:
-SwbtB3_Code90_Listeners:
-SwbtB3_Code91_Listeners:
-SwbtB3_Code92_Listeners:
-SwbtB3_Code93_Listeners:
-SwbtB3_Code98_Listeners:
-SwbtB3_Code99_Listeners:
-SwbtB3_Code9A_Listeners:
+SwbtB3_Code49_Listeners:	.long 0xffffffff
+SwbtB3_Code50_Listeners:	.long 0xffffffff
+SwbtB3_Code51_Listeners:	.long 0xffffffff
+SwbtB3_Code52_Listeners:	.long 0xffffffff
+SwbtB3_Code53_Listeners:	.long 0xffffffff
+SwbtB3_Code54_Listeners:	.long 0xffffffff
+SwbtB3_Code60_Listeners:	.long 0xffffffff
+SwbtB3_Code61_Listeners:	.long 0xffffffff
+SwbtB3_Code62_Listeners:	.long 0xffffffff
+SwbtB3_Code63_Listeners:	.long 0xffffffff
+SwbtB3_Code64_Listeners:	.long 0xffffffff
+SwbtB3_Code65_Listeners:	.long 0xffffffff
+SwbtB3_Code66_Listeners:	.long 0xffffffff
+SwbtB3_Code68_Listeners:	.long 0xffffffff
+SwbtB3_Code69_Listeners:	.long 0xffffffff
+SwbtB3_Code6A_Listeners:	.long 0xffffffff
+SwbtB3_Code6B_Listeners:	.long 0xffffffff
+SwbtB3_Code6C_Listeners:	.long 0xffffffff
+SwbtB3_Code6D_Listeners:	.long 0xffffffff
+SwbtB3_Code6E_Listeners:	.long 0xffffffff
+SwbtB3_Code70_Listeners:	.long 0xffffffff
+SwbtB3_Code71_Listeners:	.long 0xffffffff
+SwbtB3_Code72_Listeners:	.long 0xffffffff
+SwbtB3_Code78_Listeners:	.long 0xffffffff
+SwbtB3_Code79_Listeners:	.long 0xffffffff
+SwbtB3_Code7A_Listeners:	.long 0xffffffff
+SwbtB3_Code80_Listeners:	.long 0xffffffff
+SwbtB3_Code81_Listeners:	.long 0xffffffff
+SwbtB3_Code90_Listeners:	.long 0xffffffff
+SwbtB3_Code91_Listeners:	.long 0xffffffff
+SwbtB3_Code92_Listeners:	.long 0xffffffff
+SwbtB3_Code93_Listeners:	.long 0xffffffff
+SwbtB3_Code98_Listeners:	.long 0xffffffff
+SwbtB3_Code99_Listeners:	.long 0xffffffff
+SwbtB3_Code9A_Listeners:	.long 0xffffffff
 ; code 0xA8: callbacks SwbtWr_DispatchLoop calls for it
 SwbtB3_CodeA8_Listeners:
+	.long SwbtB3_CodeA8_Listener0
+	.long BitMapOut_UpdateWidget_Done
+	.long SwbtB3_OnPanelEvent
+	.long 0xffffffff
 ; code 0xA9: callbacks SwbtWr_DispatchLoop calls for it
 SwbtB3_CodeA9_Listeners:
+	.long SwbtB3_CodeA9_Listener0
+	.long SwbtB3_CodeA9_Listener1
+	.long SwbtB3_OnPanelEvent
+	.long SwbtB3_CodeA9_Listener3
+	.long 0xffffffff
 ; code 0xAA: callbacks SwbtWr_DispatchLoop calls for it
 SwbtB3_CodeAA_Listeners:
+	.long SwbtB3_OnPanelEvent
 	.long 0xffffffff
 SwbtB3_CodeAC_Listeners:	.long 0xffffffff
 SwbtB3_CodeAD_Listeners:	.long 0xffffffff

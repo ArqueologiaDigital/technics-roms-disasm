@@ -247,19 +247,19 @@ SoundBank_NextEntry2:
 	pop xhl
 	ret
 
-SoundBank_InitPlaybackFlags:
+; port: v6's label SoundBank_InitPlaybackFlags is not in v5 -- no v5 bytes correspond to what it named
 
-SoundBank_InitFlags_Loop:
+; port: v6's label SoundBank_InitFlags_Loop is not in v5 -- no v5 bytes correspond to what it named
 
-SoundBank_InitFlags_Type1:
+; port: v6's label SoundBank_InitFlags_Type1 is not in v5 -- no v5 bytes correspond to what it named
 
-SoundBank_InitFlags_Type2:
+; port: v6's label SoundBank_InitFlags_Type2 is not in v5 -- no v5 bytes correspond to what it named
 
-SoundBank_InitFlags_Type4:
+; port: v6's label SoundBank_InitFlags_Type4 is not in v5 -- no v5 bytes correspond to what it named
 
-SoundBank_StoreChParam:
+; port: v6's label SoundBank_StoreChParam is not in v5 -- no v5 bytes correspond to what it named
 
-SoundBank_NextEntry3:
+; port: v6's label SoundBank_NextEntry3 is not in v5 -- no v5 bytes correspond to what it named
 
 ; Default name text: 10 spaces then 6 underscores.  Read by
 ; SoundBank_CopyChData (0xF23158) with ldir: when record
@@ -418,11 +418,11 @@ SMF_ReadMThd_Matched_Loop:
 	call FloppyIO_ReadNextByte
 	ld (3936:16), a
 	cpw (3936:16), 0
-	jrl nz, FloppyIO_WaitReadComplete
+	jrl	nz, SMF_AfterFloppyWait
 	ldw (6699:16), 48
 	jrl SeqPlay_FloppyReady
 
-FloppyIO_WaitReadComplete:
+; port: v7's label FloppyIO_WaitReadComplete is not in v6 -- no v6 bytes correspond to what it named
 
 SMF_AfterFloppyWait:
 	ld a, (4600:16)

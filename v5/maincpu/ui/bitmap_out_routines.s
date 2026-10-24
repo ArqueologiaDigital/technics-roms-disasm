@@ -913,8 +913,9 @@ BitMapOut_CopyPresetTable_Check:
 	ld bc, 0:i3
 	jr BitMapOut_CopyExtTable_Check
 
-BitMapOut_CopyExtTable_Loop:
+; port: v6's label BitMapOut_CopyExtTable_Loop is not in v5 -- no v5 bytes correspond to what it named
 
+BitMapOut_CopyPresetTable_Check_Loop:
 	ld de, bc
 
 	extz xde
@@ -949,7 +950,7 @@ BitMapOut_CopyExtTable_Check:
 	ld	de, bc
 	extz	xde
 	cp	xde, xwa
-	jr	le, BitMapOut_CopyExtTable_Loop
+	jr	le, BitMapOut_CopyPresetTable_Check_Loop
 	ld	xhl, (xsp+8)
 	lda	xbc, (xhl+3)
 	ld	xde, xbc

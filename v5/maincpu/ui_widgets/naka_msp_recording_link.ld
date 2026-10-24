@@ -11,8 +11,8 @@ SECTIONS {
 
 NakaInst_Param_EndFF = 0x00EE0027;
 Naka_PresentationRootState = 0x00EEFFFD;
-SeqByteBlock_EffectsSeqData = 0x00F5008B;
-SeqByteBlock_EffectsSeqDotExt = 0x00F500B5;
+SeqByteBlock_EffectsSeqData = 0x00F5008B; /* v6's address: nothing in v5 places it */ /* v7's address: nothing in v6 places it */
+SeqByteBlock_EffectsSeqDotExt = 0x00F500B5; /* v6's address: nothing in v5 places it */ /* v7's address: nothing in v6 places it */
 NakaWidget_CmpMeas = 0x00E190EA;
 NakaWidget_CmpMem = 0x00E18CBC;
 NakaWidget_CmpQtz = 0x00E190C6;

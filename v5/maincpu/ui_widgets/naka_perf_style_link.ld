@@ -9,7 +9,7 @@ SECTIONS {
     /DISCARD/ : { *(.comment) *(.note*) *(.eh_frame*) }
 }
 
-ExtData_ChordTypeTable_Top = 0x00ECFE56;
+ExtData_ChordTypeTable_Top = 0x00ECFEF4;
 NakaData_EffectsStringPtrs = 0x00E2FFEE;
 NakaInst_NEXT = 0x00EDFFAF;
 NakaInst_Param_EndFF = 0x00EE0027;

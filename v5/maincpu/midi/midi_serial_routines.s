@@ -667,7 +667,7 @@ MIDI_CHANNEL_MESSAGE_DISPATCHER:
 	and	a, 0x70
 	srl	a, 2
 	xor	w, w
-	ld	xix, MIDI_CHANNEL_MESSAGE_DISPATCHER_Data
+	ld	xix, MIDI_CHANNEL_HANDLERS
 	ld	xix, (xix+wa)
 	jp	(xix)
 ; MIDI_CHANNEL_HANDLER_JUMP_TABLE -- one 0xFF pad byte, then 8 handler pointers
@@ -681,17 +681,16 @@ MIDI_CHANNEL_MESSAGE_DISPATCHER:
 ; MIDI_QUEUE_EVENT_TO_SEQUENCER; Ax (polyphonic key pressure) ->
 ; ChanDisp_NoStatusReturn, a bare `ret`, i.e. ignored; Fx ->
 ; MIDI_SYSTEM_EXCLUSIVE_HANDLER.  Previously spelled as `.byte` rows.
-MIDI_CHANNEL_MESSAGE_DISPATCHER_Data:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x9f, 0xeb, 0xfc, 0x00, 0x9f, 0xeb, 0xfc, 0x00
-	.byte	0x78, 0xeb
-MIDI_CHANNEL_HANDLER_JUMP_TABLE:
-	.byte	0xfc
+; port: v7's label MIDI_CHANNEL_HANDLER_JUMP_TABLE is not in v6 -- no v6 bytes correspond to what it named
 MIDI_CHANNEL_HANDLERS:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x9f, 0xeb, 0xfc, 0x00, 0x79, 0xeb, 0xfc
-	.byte	0x00, 0x79, 0xeb, 0xfc, 0x00, 0x9f, 0xeb, 0xfc
-	.byte	0x00, 0xf7, 0xeb, 0xfc, 0x00
+	.long	ChanDisp_AwaitSecondDataByte
+	.long	ChanDisp_AwaitSecondDataByte
+	.long	ChanDisp_NoStatusReturn
+	.long	ChanDisp_AwaitSecondDataByte
+	.long	MIDI_QUEUE_EVENT_TO_SEQUENCER
+	.long	MIDI_QUEUE_EVENT_TO_SEQUENCER
+	.long	ChanDisp_AwaitSecondDataByte
+	.long	MIDI_SYSTEM_EXCLUSIVE_HANDLER
 ChanDisp_NoStatusReturn:
 	ret
 MIDI_QUEUE_EVENT_TO_SEQUENCER:

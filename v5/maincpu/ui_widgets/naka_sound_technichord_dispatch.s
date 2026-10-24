@@ -74,7 +74,7 @@ NakaMenuItem_PartSetting:
 	.short 0x3, 0x1a0
 	.long 0x2
 
-MenuStr_PartSetting:	aligned_string "PART SETTING"
+MenuStr_PartSetting:
 
 ; header: type=1D
 ;MenuItem     STRUCT
@@ -103,6 +103,9 @@ MenuStr_PartSetting:	aligned_string "PART SETTING"
 ;MenuItem     ENDSTRUCT
 
 
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0x50, 0x41, 0x52, 0x54, 0x20, 0x53, 0x45, 0x54
+	.byte	0x54, 0x49, 0x4e, 0x47, 0x00, 0xff
 NakaMenuItem_Mixer:
 	.byte 0x1d, 0x00
 	.byte 0x60, 0x01, 0x06, 0x00

@@ -9201,7 +9201,7 @@ ApplyChannelEntry_AdjustIdx2:
 	ldto_berp	A, 0xfb
 	cp	a, 0:i3
 	jr	lt, ApplyChannelEntry_AdjustIdx2
-ApplyChannelEntry_CheckIdx:
+; port: v7's label ApplyChannelEntry_CheckIdx is not in v6 -- no v6 bytes correspond to what it named
 	jr	SndParam_StoreChannelResult
 ApplyChannelEntry_CheckEnd:
 	cp	(xsp + 10), 0xff
@@ -9532,7 +9532,7 @@ TransposeRange_OctaveUp:
 	ldto_berp	A, 0xfb
 	cp	a, 0:i3
 	jr	lt, TransposeRange_OctaveUp
-TransposeRange_Clamp:
+; port: v7's label TransposeRange_Clamp is not in v6 -- no v6 bytes correspond to what it named
 	jr	Synth_WriteChannelParam
 TransposeRange_LookupParam:
 	cp	(xsp + 6), 0xff
@@ -9701,7 +9701,7 @@ CheckNegative_AdjustIdx:
 	ldto_berp	A, 0xfb
 	cp	a, 0:i3
 	jr	lt, CheckNegative_AdjustIdx
-Synth_StoreTransposedNote:
+; port: v7's label Synth_StoreTransposedNote is not in v6 -- no v6 bytes correspond to what it named
 	jr	Synth_SetChannelTone_Continue
 Synth_SkipTranspose:
 	cp	(xsp + 6), 0xff
@@ -9860,32 +9860,32 @@ SetTransposeAndAlloc_LoadReg:
 	add	xde, xwa
 	ld	(xde + 2), h
 	cp	l, 0:i3
-	jr	z, SetTransposeAndAlloc_Compare
+	jr	z, SetTransposeAndAlloc_LoadReg3
 	add	h, l
 	ld	c, h
 	cp	c, 0x7f
-	jr	ule, SetTransposeAndAlloc_Compare
+	jr	ule, SetTransposeAndAlloc_LoadReg3
 	cp	l, 0:i3
 	jr	le, SetTransposeAndAlloc_LoadReg2
 	ld	c, h
 	cp	c, 0x7f
-	jr	ule, SetTransposeAndAlloc_Compare
+	jr	ule, SetTransposeAndAlloc_LoadReg3
 SetTransposeAndAlloc_Compute:
 	sub	h, 0xc
 	ld	c, h
 	cp	c, 0x7f
 	jr	ugt, SetTransposeAndAlloc_Compute
-	jr	SetTransposeAndAlloc_Compare
+	jr	SetTransposeAndAlloc_LoadReg3
 SetTransposeAndAlloc_LoadReg2:
 	ld	c, h
 	cp	c, 0:i3
-	jr	ge, SetTransposeAndAlloc_Compare
+	jr	ge, SetTransposeAndAlloc_LoadReg3
 SetTransposeAndAlloc_Compute2:
 	add	h, 0xc
 	ld	c, h
 	cp	c, 0:i3
 	jr	lt, SetTransposeAndAlloc_Compute2
-SetTransposeAndAlloc_Compare:
+; port: v7's label SetTransposeAndAlloc_Compare is not in v6 -- no v6 bytes correspond to what it named
 SetTransposeAndAlloc_LoadReg3:
 	ld	bc, ix
 	extz	xbc

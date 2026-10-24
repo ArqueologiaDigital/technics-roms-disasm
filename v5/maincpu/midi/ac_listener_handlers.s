@@ -562,7 +562,7 @@ VoiceParam_ListHandler:
 	extz xde
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_DOWN
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 	jrl FadeGrid_SetDialEnable
 AcFadeSetGridBoxProc_OnIndexswUp:	; cases 29360151, 29360153
@@ -623,7 +623,7 @@ FadeGrid_CheckFadeOut:
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 12)
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 	jrl FadeGrid_SetDialEnable
 AcFadeSetGridBoxProc_OnIndexswDown:	; cases 29360152, 29360154
@@ -682,7 +682,7 @@ FadeGrid_CheckFadeOutAlt:
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 12)
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 
 FadeGrid_SetDialEnable:
@@ -1045,7 +1045,7 @@ AcInOutGrid_Init:
 	extz	xde
 	ld	xwa, (xsp+16)
 	ld	xbc, EVT_INDEXSW_DOWN
-	call	SetDialUp_Entry
+	call	SetDialDown
 	ld	wa, 1:i3
 	jrl	AcInOutGrid_SetScrollBounds
 AcInOutGridBoxProc_OnIndexswUp:	; cases 29360151, 29360153
@@ -1123,7 +1123,7 @@ AcInOutGrid_ScrollUp_CheckAlt:
 	ld	xwa, (xsp+16)
 	ld	xbc, EVT_INDEXSW_DOWN
 	ld	xde, (xsp+8)
-	call	SetDialUp_Entry
+	call	SetDialDown
 	ld	wa, 1:i3
 	jrl	AcInOutGrid_SetScrollBounds	; -> 0xF755FB
 AcInOutGridBoxProc_OnIndexswDown:	; cases 29360152, 29360154
@@ -1199,7 +1199,7 @@ AcInOutGrid_ScrollDown_CheckAlt:
 	ld xwa, (xsp + 16)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 8)
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 
 AcInOutGrid_SetScrollBounds:
@@ -2334,7 +2334,7 @@ TtMdExc:
 	cp	xbc, EVT_PAINT
 	jr	z, TtMdExc_ReturnZero
 	cp	xbc, EVT_HIDE
-	jr	z, TtMdExc_HandleClose
+	jr	z, TtMdExc_ReturnZero
 	cp	xbc, EVT_SHOW
 	jr	nz, TtMdExc_ReturnZero
 	or	xde, xde
@@ -2343,7 +2343,7 @@ TtMdExc:
 	call	GetViewInstance
 	ld	xwa, (xhl+38)
 	ldw	(xwa), 0
-TtMdExc_HandleClose:
+; port: v7's label TtMdExc_HandleClose is not in v6 -- no v6 bytes correspond to what it named
 TtMdExc_ReturnZero:
 	ld xhl, 0:i3
 	ret

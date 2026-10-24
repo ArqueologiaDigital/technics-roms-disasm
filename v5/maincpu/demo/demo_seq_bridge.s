@@ -125,7 +125,7 @@ MiddleFuncCall_OnDirectPlayMute:
 MiddleFuncCall_OnTrackMidiCall:
 	call	SeqFile_ParseHeader
 ; SqTrSelTtl case B
-MiddleFuncCall_OnLyricsCharaReq:
+; port: v6's label MiddleFuncCall_OnLyricsCharaReq is not in v5 -- no v5 bytes correspond to what it named
 ; SqTrSelTtl case C
 SqTrSel_CaseC:
 	ld xhl, 0:i3

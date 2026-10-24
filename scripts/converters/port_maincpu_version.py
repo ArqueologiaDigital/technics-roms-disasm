@@ -55,9 +55,11 @@ HOW
   5. A symbol defined by `.equ`/`.set` to a number (a RAM variable), or to
      `Label +/- K`, whose uses require one new value gets it at its definition.  Uses
      that disagree get the number written at the use instead.  Two exceptions:
-     a `Label + K` name whose record is in the target unchanged where it now resolves
-     stays on that record (a use pointing elsewhere is written with the name of the
-     record it points to), and a numeric constant whose new value another constant of
+     a `Label + K` alias that no target line uses and that now resolves onto another
+     label, its bytes not there, is dropped like a label;
+     a `Label + K` name whose record is in the target unchanged where it now resolves,
+     or whose uses point where another label stands, is not re-aimed (a use pointing
+     elsewhere is written with the name of what it points to), and a numeric constant whose new value another constant of
      its family keeps -- confirmed by that constant's own uses -- is not re-valued (its
      uses are written with that constant).  An unconfirmed shared value is re-valued and
      its comment says so (Port.const_at gives the two readings).
@@ -973,8 +975,15 @@ class Port:
         for lab, p in self.place.items():
             at[p].append(lab)
         for p, labs in at.items():
-            if len(labs) > 1 and any(lab not in self.names_dropped for lab in labs):
+            if len(labs) < 2:
+                continue
+            if any(lab not in self.names_dropped for lab in labs):
                 self.tentative.update(lab for lab in labs if lab in self.names_dropped)
+                continue
+            # all of them name dropped bytes: the ones whose own bytes stand here keep it
+            own = [lab for lab in labs if self.bytes_at(lab, p)]
+            if own:
+                self.tentative.update(lab for lab in labs if lab not in own)
 
     def settle_tentative(self):
         """Labels gap() placed by no evidence name source bytes the target dropped or
@@ -1020,6 +1029,14 @@ class Port:
         for cached in ("_byaddr", "_exprat"):
             if hasattr(self, cached):
                 delattr(self, cached)
+
+    def bytes_at(self, lab, p):
+        """does the target hold, at offset p, the source bytes at the label (at least 4)?"""
+        v = self.sv.get(lab)
+        if v is None or not (BASE <= v < BASE + len(self.rom)):
+            return False
+        n = self.record_len(v)
+        return n >= 4 and self.rom[v - BASE:v - BASE + n] == self.tgt[p:p + n]
 
     def _content_end(self, tc, end):
         """target offset where the code before a `.org` stops: the start of the 0xff
@@ -1224,10 +1241,11 @@ class Port:
                 if best != self.sv.get(sym):
                     self.newequ[sym] = best
             elif best != self.tval(sym):
-                if self.unchanged_record(sym):
-                    # the record the name stood on is in the target unchanged: the name stays
-                    # on it, and a use that points elsewhere is written with the name of the
-                    # record it points to (subst, label_at)
+                if self.unchanged_record(sym) or self.label_at(best):
+                    # the record the name stood on is in the target unchanged, or its uses
+                    # now point where another label stands: the name stays, and a use that
+                    # points elsewhere is written with the name of what it points to
+                    # (subst: expr_at, label_at)
                     self.kept_on_record.append(sym)
                     continue
                 self.newexpr[sym] = best
@@ -1531,6 +1549,33 @@ class Port:
         self.rawbytes = 0
         dropped_rows = []
         relocated = set(self.relocated)          # emitted where their uses point (newlab)
+        # a `.set NAME, Label +/- K` alias that no line of the target uses, whose source bytes
+        # are not where it resolves, and which resolves onto another label names nothing of
+        # its own in the target: dropped like a label
+        used = collections.Counter()
+        for i, t in self.text.items():
+            if t:
+                p = t.split(None, 1)
+                for tk in tokens(p[1]) if len(p) == 2 else ():
+                    if tk[2] == "sym":
+                        used[tk[3]] += 1
+        for kind, i, t in self.events:
+            if kind == "zero":
+                b = self.parsed[i][1]
+                p = b.split(None, 1)
+                for tk in tokens(p[1]) if len(p) == 2 else ():
+                    if tk[2] == "sym":
+                        used[tk[3]] += 1
+        for mm in IDENT.finditer(macro_prelude(self.args.src)):
+            used[mm.group(1)] += 1
+        stale_alias = set()
+        for sym, (i, base, sign, k) in self.equ_expr.items():
+            # its own `.set` line names it once
+            v = self.tval(sym)
+            if used[sym] <= 1 and v is not None and BASE <= self.sv.get(sym, 0) < BASE + len(self.rom) \
+                    and not self.unchanged_record(sym) and self.label_at(v) not in (None, base):
+                stale_alias.add(sym)
+        self.stale_alias = stale_alias
 
         def out(rel, line):
             files.setdefault(rel, []).append(line)
@@ -1609,6 +1654,12 @@ class Port:
                                  "missing in %s, or the use names that entry -- unchecked"
                                  % (dst, self.collisions[m.group(1)], dst))
                 m = EQU_EXPR.match(body)
+                if m and m.group(1) in stale_alias:
+                    out(rel, "; port: %s's alias %s (%s) is not in %s -- %s's bytes there are not "
+                        "what it named, and no %s line uses it" % (src, m.group(1), body.split(",", 1)[1].strip(),
+                                                                   dst, dst, dst))
+                    dropped_rows.append("%s\t0x%06x\t%s" % (m.group(1), self.sv.get(m.group(1), 0), rel))
+                    continue
                 base = self.tval(m.group(2)) if m and m.group(1) in self.newexpr else None
                 if m and m.group(1) in self.newexpr and base is None:
                     print("  cannot re-aim %s: %s has no target address" % (m.group(1), m.group(2)))
@@ -1843,7 +1894,8 @@ def main():
     if P.needed_tentative:
         print("needed:", " ".join(P.needed_tentative))
     P.votes()
-    print("record names kept on an unchanged record against their uses:", len(P.kept_on_record))
+    print("`Label + K` names not re-aimed (record unchanged, or the uses point at another label):",
+          len(P.kept_on_record))
     print("constants not re-valued, their uses written with the constant of that value:",
           " ".join("%s->%s" % kv for kv in sorted(P.equ_redirect.items())))
     print("re-valued constants sharing the new value with another of their family:",
@@ -1867,8 +1919,9 @@ def main():
         P.emit()
         print("wrote %s/maincpu: %d raw target bytes in TODO(port) rows; %d link-script addresses moved"
               % (args.dst, P.rawbytes, P.relinked))
-        print("labels dropped: %d (listed in %s/maincpu/port_dropped_labels.txt); link-script addresses "
-              "nothing places: %d" % (len(P.dropped_rows), args.dst, P.relink_unplaced))
+        print("labels dropped: %d, of them unused `Label + K` aliases %d (listed in %s/maincpu/"
+              "port_dropped_labels.txt); link-script addresses nothing places: %d"
+              % (len(P.dropped_rows), len(P.stale_alias), args.dst, P.relink_unplaced))
 
 
 if __name__ == "__main__":

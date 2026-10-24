@@ -81,7 +81,7 @@ SeMenuTitleFunc_Nop:
 SeEasyTitleFunc:
 	lda xsp, (xsp - 16)
 	ld xhl, xbc
-	ld	xiy, 0xe0dac6
+	ld xiy, SeEasyTitleFunc_Methods
 	ld xix, xsp
 	ldw bc, 0x8
 	ldirw
@@ -105,7 +105,7 @@ SeEasyTitleFunc_Nop:
 SeTonTon1TitleFunc:
 	lda xsp, (xsp - 16)
 	ld xhl, xbc
-	ld	xiy, 0xe0dad6
+	ld xiy, SeTonTon1TitleFunc_Methods
 	ld xix, xsp
 	ldw bc, 0x8
 	ldirw
@@ -129,7 +129,7 @@ SeTonTon1TitleFunc_Nop:
 SeTonTon2TitleFunc:
 	lda xsp, (xsp - 16)
 	ld xhl, xbc
-	ld	xiy, 0xe0dae6
+	ld xiy, SeTonTon2TitleFunc_Methods
 	ld xix, xsp
 	ldw bc, 0x8
 	ldirw
@@ -153,7 +153,7 @@ SeTonTon2TitleFunc_Nop:
 SeTonRan1TitleFunc:
 	lda xsp, (xsp - 16)
 	ld xhl, xbc
-	ld	xiy, 0xe0daf6
+	ld xiy, SeTonRan1TitleFunc_Methods
 	ld xix, xsp
 	ldw bc, 0x8
 	ldirw
@@ -177,7 +177,7 @@ SeTonRan1TitleFunc_Nop:
 SeTonRan2TitleFunc:
 	lda xsp, (xsp - 16)
 	ld xhl, xbc
-	ld	xiy, SeMenuTitleFunc_Methods_Data
+	ld xiy, SeTonRan2TitleFunc_Methods
 	ld xix, xsp
 	ldw bc, 0x8
 	ldirw
@@ -201,7 +201,7 @@ SeTonRan2TitleFunc_Nop:
 SeTonHyb1TitleFunc:
 	lda xsp, (xsp - 16)
 	ld xhl, xbc
-	ld	xiy, SeEasyTitleFunc_Methods
+	ld xiy, SeTonHyb1TitleFunc_Methods
 	ld xix, xsp
 	ldw bc, 0x8
 	ldirw
@@ -225,7 +225,7 @@ SeTonHyb1TitleFunc_Nop:
 SePitPit1TitleFunc:
 	lda xsp, (xsp - 16)
 	ld xhl, xbc
-	ld	xiy, SeTonTon1TitleFunc_Methods
+	ld xiy, SePitPit1TitleFunc_Methods
 	ld xix, xsp
 	ldw bc, 0x8
 	ldirw
@@ -249,7 +249,7 @@ SePitPit1TitleFunc_Nop:
 SePitEnv1TitleFunc:
 	lda xsp, (xsp - 16)
 	ld xhl, xbc
-	ld	xiy, SeTonTon2TitleFunc_Methods
+	ld xiy, SePitEnv1TitleFunc_Methods
 	ld xix, xsp
 	ldw bc, 0x8
 	ldirw
@@ -273,7 +273,7 @@ SePitEnv1TitleFunc_Nop:
 SePitEnv2TitleFunc:
 	lda xsp, (xsp - 16)
 	ld xhl, xbc
-	ld	xiy, SeTonRan1TitleFunc_Methods
+	ld xiy, SePitEnv2TitleFunc_Methods
 	ld xix, xsp
 	ldw bc, 0x8
 	ldirw
@@ -297,7 +297,7 @@ SePitEnv2TitleFunc_Nop:
 SePitLfo1TitleFunc:
 	lda xsp, (xsp - 16)
 	ld xhl, xbc
-	ld	xiy, SeTonRan2TitleFunc_Methods
+	ld xiy, SePitLfo1TitleFunc_Methods
 	ld xix, xsp
 	ldw bc, 0x8
 	ldirw
@@ -321,7 +321,7 @@ SePitLfo1TitleFunc_Nop:
 SeAmpAmp1TitleFunc:
 	lda xsp, (xsp - 16)
 	ld xhl, xbc
-	ld	xiy, SeTonHyb1TitleFunc_Methods
+	ld xiy, SeAmpAmp1TitleFunc_Methods
 	ld xix, xsp
 	ldw bc, 0x8
 	ldirw
@@ -345,7 +345,7 @@ SeAmpAmp1TitleFunc_Nop:
 SeAmpAmp2TitleFunc:
 	lda xsp, (xsp - 16)
 	ld xhl, xbc
-	ld	xiy, SePitPit1TitleFunc_Methods
+	ld xiy, SeAmpAmp2TitleFunc_Methods
 	ld xix, xsp
 	ldw bc, 0x8
 	ldirw
@@ -369,7 +369,7 @@ SeAmpAmp2TitleFunc_Nop:
 SeAmpEnv1TitleFunc:
 	lda xsp, (xsp - 16)
 	ld xhl, xbc
-	ld	xiy, SePitEnv1TitleFunc_Methods
+	ld xiy, SeAmpEnv1TitleFunc_Methods
 	ld xix, xsp
 	ldw bc, 0x8
 	ldirw
@@ -393,7 +393,7 @@ SeAmpEnv1TitleFunc_Nop:
 SeAmpEnv2TitleFunc:
 	lda xsp, (xsp - 16)
 	ld xhl, xbc
-	ld	xiy, SePitEnv2TitleFunc_Methods
+	ld xiy, SeAmpEnv2TitleFunc_Methods
 	ld xix, xsp
 	ldw bc, 0x8
 	ldirw
@@ -417,7 +417,7 @@ SeAmpEnv2TitleFunc_Nop:
 SeAmpLfo1TitleFunc:
 	lda xsp, (xsp - 16)
 	ld xhl, xbc
-	ld	xiy, SePitLfo1TitleFunc_Methods
+	ld xiy, SeAmpLfo1TitleFunc_Methods
 	ld xix, xsp
 	ldw bc, 0x8
 	ldirw
@@ -441,7 +441,7 @@ SeAmpLfo1TitleFunc_Nop:
 SeFilLpq1TitleFunc:
 	lda xsp, (xsp - 16)
 	ld xhl, xbc
-	ld	xiy, SeAmpAmp1TitleFunc_Methods
+	ld xiy, SeFilLpq1TitleFunc_Methods
 	ld xix, xsp
 	ldw bc, 0x8
 	ldirw
@@ -465,7 +465,7 @@ SeFilLpq1TitleFunc_Nop:
 SeFilHpq1TitleFunc:
 	lda xsp, (xsp - 16)
 	ld xhl, xbc
-	ld	xiy, SeAmpAmp2TitleFunc_Methods
+	ld xiy, SeFilHpq1TitleFunc_Methods
 	ld xix, xsp
 	ldw bc, 0x8
 	ldirw
@@ -489,7 +489,7 @@ SeFilHpq1TitleFunc_Nop:
 SeFilL241TitleFunc:
 	lda xsp, (xsp - 16)
 	ld xhl, xbc
-	ld	xiy, SeAmpEnv1TitleFunc_Methods
+	ld xiy, SeFilL241TitleFunc_Methods
 	ld xix, xsp
 	ldw bc, 0x8
 	ldirw
@@ -513,7 +513,7 @@ SeFilL241TitleFunc_Nop:
 SeFilH241TitleFunc:
 	lda xsp, (xsp - 16)
 	ld xhl, xbc
-	ld	xiy, SeAmpEnv2TitleFunc_Methods
+	ld xiy, SeFilH241TitleFunc_Methods
 	ld xix, xsp
 	ldw bc, 0x8
 	ldirw
@@ -537,7 +537,7 @@ SeFilH241TitleFunc_Nop:
 SeFilBpf1TitleFunc:
 	lda xsp, (xsp - 16)
 	ld xhl, xbc
-	ld	xiy, SeAmpLfo1TitleFunc_Methods
+	ld xiy, SeFilBpf1TitleFunc_Methods
 	ld xix, xsp
 	ldw bc, 0x8
 	ldirw
@@ -561,7 +561,7 @@ SeFilBpf1TitleFunc_Nop:
 SeFilBcf1TitleFunc:
 	lda xsp, (xsp - 16)
 	ld xhl, xbc
-	ld	xiy, SeFilLpq1TitleFunc_Methods
+	ld xiy, SeFilBcf1TitleFunc_Methods
 	ld xix, xsp
 	ldw bc, 0x8
 	ldirw
@@ -585,7 +585,7 @@ SeFilBcf1TitleFunc_Nop:
 SeFilFil2TitleFunc:
 	lda xsp, (xsp - 16)
 	ld xhl, xbc
-	ld	xiy, SeFilHpq1TitleFunc_Methods
+	ld xiy, SeFilFil2TitleFunc_Methods
 	ld xix, xsp
 	ldw bc, 0x8
 	ldirw
@@ -609,7 +609,7 @@ SeFilFil2TitleFunc_Nop:
 SeFilEnv1TitleFunc:
 	lda xsp, (xsp - 16)
 	ld xhl, xbc
-	ld	xiy, SeFilL241TitleFunc_Methods
+	ld xiy, SeFilEnv1TitleFunc_Methods
 	ld xix, xsp
 	ldw bc, 0x8
 	ldirw
@@ -633,7 +633,7 @@ SeFilEnv1TitleFunc_Nop:
 SeFilEnv2TitleFunc:
 	lda xsp, (xsp - 16)
 	ld xhl, xbc
-	ld	xiy, SeFilH241TitleFunc_Methods
+	ld xiy, SeFilEnv2TitleFunc_Methods
 	ld xix, xsp
 	ldw bc, 0x8
 	ldirw
@@ -657,7 +657,7 @@ SeFilEnv2TitleFunc_Nop:
 SeFilLfo1TitleFunc:
 	lda xsp, (xsp - 16)
 	ld xhl, xbc
-	ld	xiy, SeFilBpf1TitleFunc_Methods
+	ld xiy, SeFilLfo1TitleFunc_Methods
 	ld xix, xsp
 	ldw bc, 0x8
 	ldirw
@@ -681,7 +681,7 @@ SeFilLfo1TitleFunc_Nop:
 SeDigEffTitleFunc:
 	lda xsp, (xsp - 16)
 	ld xhl, xbc
-	ld	xiy, SeFilBcf1TitleFunc_Methods
+	ld xiy, SeDigEffTitleFunc_Methods
 	ld xix, xsp
 	ldw bc, 0x8
 	ldirw
@@ -705,7 +705,7 @@ SeDigEffTitleFunc_Nop:
 SeCtr2TitleFunc:
 	lda xsp, (xsp - 16)
 	ld xhl, xbc
-	ld	xiy, SeFilFil2TitleFunc_Methods
+	ld xiy, SeCtr2TitleFunc_Methods
 	ld xix, xsp
 	ldw bc, 0x8
 	ldirw
@@ -729,7 +729,7 @@ SeCtr2TitleFunc_Nop:
 SeCtr3TitleFunc:
 	lda xsp, (xsp - 16)
 	ld xhl, xbc
-	ld	xiy, SeFilEnv1TitleFunc_Methods
+	ld xiy, SeCtr3TitleFunc_Methods
 	ld xix, xsp
 	ldw bc, 0x8
 	ldirw
@@ -753,7 +753,7 @@ SeCtr3TitleFunc_Nop:
 SeCopyTitleFunc:
 	lda xsp, (xsp - 16)
 	ld xhl, xbc
-	ld	xiy, SeFilEnv2TitleFunc_Methods
+	ld xiy, SeCopyTitleFunc_Methods
 	ld xix, xsp
 	ldw bc, 0x8
 	ldirw
@@ -777,7 +777,7 @@ SeCopyTitleFunc_Nop:
 SeWrtMemTitleFunc:
 	lda xsp, (xsp - 16)
 	ld xhl, xbc
-	ld	xiy, SeFilLfo1TitleFunc_Methods
+	ld xiy, SeWrtMemTitleFunc_Methods
 	ld xix, xsp
 	ldw bc, 0x8
 	ldirw
@@ -801,7 +801,7 @@ SeWrtMemTitleFunc_Nop:
 SeWrtSndTitleFunc:
 	lda xsp, (xsp - 16)
 	ld xhl, xbc
-	ld	xiy, SeDigEffTitleFunc_Methods
+	ld xiy, SeWrtSndTitleFunc_Methods
 	ld xix, xsp
 	ldw bc, 0x8
 	ldirw

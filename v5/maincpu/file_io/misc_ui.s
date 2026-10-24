@@ -572,7 +572,7 @@ PsFileNameBox_Init_HideFirst:
 	ld xde, 0:i3
 
 PsFileNameBox_Init_Configure:
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 	call SetDialEnable
 
@@ -665,7 +665,7 @@ PsFileNameBox_Scroll_HideDown:
 	ld xde, 0:i3
 
 PsFileNameBox_Scroll_Apply:
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 	call SetDialEnable
 	jrl PsFileNameBox_ReturnZero

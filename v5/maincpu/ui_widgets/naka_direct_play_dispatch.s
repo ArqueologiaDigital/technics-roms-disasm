@@ -265,26 +265,30 @@ MtName_PtrTable:
 	.long MtName_TrAsPageInc
 	.long MtName_TrAsPageDec
 	.long MtName_AmdCall
-	.long MtName_DirectPlayMute
-	.long	MtName_GetCurSongName
-	.long	MtName_GetDiskFileName
-	.long	MtName_GetSmfFileName
-	.long	MtName_GetSmfSongName
-	.long	MtName_GetDocFileName
-	.long	MtName_GetDocSongName
-	.long	MtName_GetDocFileNo
-	.long	MtName_GetPDSongName
-	.long	MtName_GetPDFileNo
-	.long	MtName_GetMeasString
-	.long	MtName_GetToggleSw
-	.long	MtName_LyricsCharaReq
-	.long	MtName_GetLyricsSongName
-	.long	MtName_GetComporserName
+	.long	MtName_DirectPlayMute
+	.long MtName_GetCurSongName
+	.long MtName_GetDiskFileName
+	.long MtName_GetSmfFileName
+	.long MtName_GetSmfSongName
+	.long MtName_GetDocFileName
+	.long MtName_GetDocSongName
+	.long MtName_GetDocFileNo
+	.long MtName_GetPDSongName
+	.long MtName_GetPDFileNo
+	.long MtName_GetMeasString
+	.long MtName_GetToggleSw
+	.long MtName_LyricsCharaReq
+	.long MtName_GetLyricsSongName
+	.long MtName_GetComporserName
 	.byte 0x00			; padding
 	.byte 0x00			; padding
 	.byte 0x00			; padding
 	.byte 0x00			; padding
-MtName_GetComporserName:	aligned_string "MT_GetComporserName"
+MtName_GetComporserName:
+; TODO(port): v5 bytes with no v6 line -- disassemble
+	.byte	0x4d, 0x54, 0x5f, 0x47, 0x65, 0x74, 0x43, 0x6f
+	.byte	0x6d, 0x70, 0x6f, 0x72, 0x73, 0x65, 0x72, 0x4e
+	.byte	0x61, 0x6d, 0x65, 0x00
 MtName_GetLyricsSongName:	aligned_string "MT_GetLyricsSongName"
 MtName_LyricsCharaReq:		aligned_string "MT_LyricsCharaReq"
 MtName_GetToggleSw:		aligned_string "MT_GetToggleSw"
@@ -298,7 +302,7 @@ MtName_GetSmfSongName:		aligned_string "MT_GetSmfSongName"
 MtName_GetSmfFileName:		aligned_string "MT_GetSmfFileName"
 MtName_GetDiskFileName:		aligned_string "MT_GetDiskFileName"
 MtName_GetCurSongName:		aligned_string "MT_GetCurSongName"
-MtName_TrackMidiCall:
+; port: v6's label MtName_TrackMidiCall is not in v5 -- no v5 bytes correspond to what it named
 MtName_DirectPlayMute:
 ; TODO(port): v5 bytes with no v6 line -- disassemble
 	.byte	0x4d, 0x54, 0x5f, 0x44, 0x69, 0x72, 0x65, 0x63

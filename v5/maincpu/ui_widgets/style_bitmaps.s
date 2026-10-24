@@ -3733,6 +3733,5 @@ MainChordPre_ChordTypeNames:
 ; [nakarest] word in WelcomeScript_Steps_B (at 0xe9edcc), which is read by AcWelcomScreenProc
 ; [nakarest] (ui/drawbar_panel_ui.s: `ld xwa, WelcomeScript_Steps_B`); 2 data words in
 ; [nakarest] Naka_KeyScaling_NavTrail (at 0xe8303c, 0xe846c6).
-; TODO(port): v6 bytes with no v7 line -- disassemble
 ; External label offsets within the binary blob above.
 .include "extensions/extension_data.s"

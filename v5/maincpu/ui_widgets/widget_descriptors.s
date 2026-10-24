@@ -3624,7 +3624,7 @@ SeqNote_ProcessCurrent_DrumCheck_Table:	.incbin "includes/generated/naka_widget_
 ; Typed in naka_widget_descriptors.c as uint16_t
 ; SeqPlay_AssignChordVoices_LocalInit[4].
 ; -----------------------------------------------------------------------------
-SeqPlay_AssignChordVoices_LocalInit:
+; port: v7's label SeqPlay_AssignChordVoices_LocalInit is not in v6 -- no v6 bytes correspond to what it named
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] SeqPlay_AssignChordVoices_LocalInit_Tail
 ; SeqPlay_AssignChordVoices_LocalInit_Tail -- 16 bytes after
@@ -5580,8 +5580,11 @@ VoiceSlot_Dispatch_CaseTable:
 	.short	Voice_ClearSlotAndRet - Voice_ClearSlotAndRet
 ; TODO(port): v6 bytes with no v7 line -- disassemble
 	.byte	0x05, 0x00, 0x05, 0x00, 0x0f, 0x00, 0x05, 0x00
-	.byte	0x0a, 0x00, 0x0a, 0x00, 0x00, 0x00, 0x12, 0x00
-	.byte	0x06, 0x00, 0x0c, 0x00, 0x06, 0x00
+	.byte	0x0a, 0x00, 0x0a, 0x00
+VoiceSlot_Dispatch_CaseTable_Data:
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0x00, 0x00, 0x12, 0x00, 0x06, 0x00, 0x0c, 0x00
+	.byte	0x06, 0x00
 	.short	Voice_ClearSlotAndRet - Voice_ClearSlotAndRet
 	.short	Voice_ClearSlotAndRet - Voice_ClearSlotAndRet
 ; -----------------------------------------------------------------------------
@@ -6559,42 +6562,44 @@ MidiMenu_ApFunctionNameTable:
 	.long NakaInst_CtlMsgGridCheck
 	.long NakaInst_TtMdPart
 	.long NakaInst_MidiPartGridCheck
-	.long	NakaInst_TtMdExc
-	.long	NakaInst_ExcSendFunc
-	.long	NakaInst_ExcDotFunc
-	.long	NakaInst_ExcPmemFunc
-	.long	NakaInst_ExcSmemFunc
-	.long	NakaInst_ExcCompFunc
-	.long	NakaInst_ExcSeqFunc
-	.long	NakaInst_ExcMspFunc
-	.long	NakaInst_TtMdPreset
-	.long	NakaInst_MdPresetOKFunc
-	.long	NakaInst_MdPresetWithoutFunc
-	.long	NakaInst_MdPresetWithFunc
-	.long	NakaInst_BitmapBmphk
-	.long	NakaInst_TtMdGm
-	.long	NakaInst_GMOKFunc
-	.long	NakaInst_StsAttentionCheck
-	.long	NakaInst_StsGMOnCheck
-	.long	NakaInst_StsGMOffCheck
-	.long	NakaInst_StsAreYouSureCheck
-	.long	NakaInst_GMYesFunc
-	.long	NakaInst_GMNoFunc
-	.long	NakaInst_HarmOnOffFunc
-	.long	NakaInst_TtVocalistWorkstation
-	.long	NakaInst_VocalistGridCheck
-	.long	NakaInst_VocalistPage1OKFunc
-	.long	NakaInst_VocalistPage2OKFunc
-	.long	NakaInst_TtFadeInOut
-	.long	NakaInst_FadeSetGridCheck
-	.long	NakaInst_TtMdInOut
-	.long	NakaInst_InOutGridCheck
-	.long	NakaInst_StsSplitCheck
-	.long	NakaInst_SplitPointFunc
-	.long	NakaInst_RevSelFunc
-	.long	NakaInst_EqSelFunc
-	.long	NakaInst_EqOnOffFunc
-	.long	NakaInst_RevEqSelFunc
+	.long NakaInst_TtMdExc
+	.long NakaInst_ExcSendFunc
+	.long NakaInst_ExcDotFunc
+	.long NakaInst_ExcPmemFunc
+	.long NakaInst_ExcSmemFunc
+	.long NakaInst_ExcCompFunc
+	.long NakaInst_ExcSeqFunc
+	.long NakaInst_ExcMspFunc
+	.long NakaInst_TtMdPreset
+	.long NakaInst_MdPresetOKFunc
+	.long NakaInst_MdPresetWithoutFunc
+	.long NakaInst_MdPresetWithFunc
+	.long NakaInst_BitmapBmphk
+	.long NakaInst_TtMdGm
+	.long NakaInst_GMOKFunc
+	.long NakaInst_StsAttentionCheck
+	.long NakaInst_StsGMOnCheck
+	.long NakaInst_StsGMOffCheck
+	.long NakaInst_StsAreYouSureCheck
+	.long NakaInst_GMYesFunc
+	.long NakaInst_GMNoFunc
+	.long NakaInst_HarmOnOffFunc
+	.long NakaInst_TtVocalistWorkstation
+	.long NakaInst_VocalistGridCheck
+	.long NakaInst_VocalistPage1OKFunc
+	.long NakaInst_VocalistPage2OKFunc
+	.long NakaInst_TtFadeInOut
+	.long NakaInst_FadeSetGridCheck
+	.long NakaInst_TtMdInOut
+	.long NakaInst_InOutGridCheck
+	.long NakaInst_StsSplitCheck
+	.long NakaInst_SplitPointFunc
+	.long NakaInst_RevSelFunc
+	.long NakaInst_EqSelFunc
+	.long NakaInst_EqOnOffFunc
+	.long NakaInst_RevEqSelFunc
+	.long NakaInst_RevEqOnOffFunc
+	.long NakaInst_EmptyFuncName
 ; [naka_s_headers:short] NakaInst_EmptyFuncName
 ; Name string of MIDI-menu procedure 60 (""): entry 60 of
 ; MidiMenu_ApFunctionNameTable, which InitializeEast (v10/v9 0xf72bac,
@@ -6610,8 +6615,6 @@ MidiMenu_ApFunctionNameTable:
 ;
 ; Typed in naka_widget_descriptors.c as char NakaInst_EmptyFuncName[2].
 ; -----------------------------------------------------------------------------
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0xe8, 0x53, 0xe5, 0x00, 0xe6, 0x53, 0xe5, 0x00
 NakaInst_EmptyFuncName:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x24598, 0x2
 ; [naka_s_headers:short] NakaInst_RevEqOnOffFunc
 ; Name string of MIDI-menu procedure 59 ("RevEqOnOffFunc"): entry 59 of

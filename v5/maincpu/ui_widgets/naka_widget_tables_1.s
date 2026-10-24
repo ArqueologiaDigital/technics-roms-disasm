@@ -1733,17 +1733,18 @@ Kubo_ApFuncTable_128:
 	.long BitmapDredt0k
 	.long MimeOnOffFunc
 	.long AttAreYouSureCheck
-	.long	0xf2ec70
-	.long	AttAttentionCheck
-	.long	StsSeqMenu1Check
-	.long	StsSeqMenu2Check
-	.long	StsEasyRec1Check
-	.long	StsEasyRec2Check
-	.long	StsPnlWrtCheck
-	.long	StsTrkClr1Check
-	.long	StsTrkClr2Check
-	.long	StsNtDrEditCheck
-	.long	AttTrkClrCheck
+; TODO(port): v5 bytes with no v6 line -- disassemble
+	.byte	0x70, 0xec, 0xf2, 0x00
+	.long AttAttentionCheck
+	.long StsSeqMenu1Check
+	.long StsSeqMenu2Check
+	.long StsEasyRec1Check
+	.long StsEasyRec2Check
+	.long StsPnlWrtCheck
+	.long StsTrkClr1Check
+	.long StsTrkClr2Check
+	.long StsNtDrEditCheck
+	.long AttTrkClrCheck
 	.long AcIndexWideToggleFunc
 	.long HelpTtlFunc
 	.long HelpLangChkFunc

@@ -7371,7 +7371,7 @@ EQPreset_SearchLoop:
 	ld	wa, iz
 	extz	xwa
 	sll	xwa, 2
-	ld	xbc, Naka_ToshiParam_Table_Data
+	ld	xbc, EQPreset_Table
 	add	xbc, xwa
 	ld	xwa, (xbc)
 	push	xwa
@@ -7399,7 +7399,7 @@ CombinedPreset_SearchLoop:
 	ld	wa, iz
 	extz	xwa
 	sll	xwa, 2
-	ld	xbc, EQPreset_Table_Data
+	ld	xbc, CombinedPreset_Table
 	add	xbc, xwa
 	ld	xwa, (xbc)
 	push	xwa
@@ -7413,7 +7413,7 @@ CombinedPreset_SearchLoop:
 	ld	wa, iz
 	extz	xwa
 	sll	xwa, 2
-	ld	xbc, EQPreset_Table_Data
+	ld	xbc, CombinedPreset_Table
 	add	xbc, xwa
 	ld	xwa, (xbc)
 	lda	xwa, (xwa + 24)
@@ -7510,7 +7510,7 @@ EQPreset_Load:
 	pushw	iz
 	extz	wa
 	sla	wa, 2
-	lda	xbc, (Naka_ToshiParam_Table_Data:24)
+	lda	xbc, (EQPreset_Table:24)
 	ld	xwa, (xbc+wa)
 	pushw	0x18
 	push	xwa
@@ -7551,7 +7551,7 @@ CombinedPreset_Load:
 	pushw	iz
 	extz	wa
 	sla	wa, 2
-	lda	xbc, (EQPreset_Table_Data:24)
+	lda	xbc, (CombinedPreset_Table:24)
 	ld	xwa, (xbc+wa)
 	ld	(xsp + 2), xwa
 	pushw	0x18
@@ -11788,7 +11788,7 @@ SndParam_DispatchCallback:
 	jr	nc, SndParam_NotFound
 	extz	bc
 	sla	bc, 2
-	lda	xde, (SndParam_Registry_Data2:24)
+	lda	xde, (SndParam_RegisterHandlers:24)
 	lda	xhl, (xde+bc)
 	ld	bc, (xsp+0xc)
 	ld	de, (xsp+0xa)
@@ -11822,7 +11822,7 @@ SndParam_DispatchTypeDE5:
 	jr	nc, SndParam_Epilogue
 	extz	bc
 	sla	bc, 2
-	lda	xde, (SndParam_Register2Handlers_Data:24)
+	lda	xde, (SndParam_WriteHandlers:24)
 	lda	xde, (xde+bc)
 	ld	bc, (xsp+0xc)
 	ld	xhl, (xde)
@@ -11907,7 +11907,7 @@ SndParam_Lkp2_Dispatch:
 	jr	nc, SndParam_Lkp2_NotFound
 	extz	wa
 	sla	wa, 2
-	lda	xbc, (SndParam_ReadHandlers_Data:24)
+	lda	xbc, (SndParam_Register2Handlers:24)
 	lda	xhl, (xbc+wa)
 	ld	xwa, (xsp+0x6)
 	ld	bc, (xsp+0xc)

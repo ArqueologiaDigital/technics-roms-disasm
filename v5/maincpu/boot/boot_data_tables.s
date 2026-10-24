@@ -43,7 +43,7 @@ LED_pattern_test_data:
 ;   MidiOut    (0x01f785) -> midi_serial_routines  (not in this table)
 SeqRingBuf_WriteDispatch_Table:
 	.long SeqDMA_MultiWrite_NoteEvent	; 0: -> NoteEvent buffer (block writes)
-	.long	0xef3104	; 1: -> SoundEdit buffer
+	.long	SeqDMA_MultiWrite_SoundEdit_Data	; 1: -> SoundEdit buffer
 	.long SeqDMA_WriteMidi_NoteOn		; 2: -> NoteEvent buffer (MIDI 0x90 Note On)
 	.long	SeqDMA_MultiWrite_DspSysEx	; 3: -> VoiceMap buffer
 	.long	SeqDMA_MultiWrite_SoundEdit	; 4: -> DspSysEx buffer
@@ -51,7 +51,9 @@ SeqRingBuf_WriteDispatch_Table:
 	.long SeqDMA_Nop			; 6: unused
 	.long SeqDMA_Nop			; 7: unused
 
-SLIDE_STRING:			aligned_string "SLIDE"
+SLIDE_STRING:
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0x53, 0x4c, 0x49, 0x44, 0x45, 0x00
 FILETYPE_SIG_PROGRAM_1:		aligned_string "Technics KN5000 Program  DATA FILE 1/2"
 FILETYPE_SIG_PROGRAM_2:		aligned_string "Technics KN5000 Program  DATA FILE 2/2"
 FILETYPE_SIG_PROGRAM_PCK:	aligned_string "Technics KN5000 Program  DATA FILE PCK"

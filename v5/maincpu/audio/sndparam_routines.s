@@ -149,7 +149,7 @@ SndParam_ResolveWidget_Skip2:
 	ld	e, (xwa+15)
 	extz	de
 	sla	de, 2
-	lda	xhl, (SndParam_RegisterHandlers_Data:24)
+	lda	xhl, (SndParam_EncodeHandlers:24)
 	exts	xde
 	add	xde, xhl
 	ld	xix, (xde)

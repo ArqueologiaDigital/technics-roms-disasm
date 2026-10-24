@@ -310,9 +310,9 @@ GmOnSureLang_ReturnZero:
 GmOffSureLangCheck:
 	cp xbc, EVT_GET_LANGUAGE_PTR
 
-GmOffSureLang_ReturnZero:
+; port: v6's label GmOffSureLang_ReturnZero is not in v5 -- no v5 bytes correspond to what it named
 
-TrAsSureLangCheck:
+; port: v6's label TrAsSureLangCheck is not in v5 -- no v5 bytes correspond to what it named
 	jr	nz, TrAsSureLang_ReturnZero	; -> 0xF2A9D5
 	ld	a, (10327:16)
 	extz	wa
@@ -2364,7 +2364,7 @@ IvNamingExit_ScreenData:
 	ld	xwa, (xsp+178)
 	ld	xbc, EVT_INDEXSW_UP
 	ld	xde, 0:i3
-	call	SetDialUp_Entry
+	call	SetDialDown
 	ld	wa, 1:i3
 	call	SetDialEnable
 	jrl	IvNamingExit_ScreenData_Join3
@@ -2658,7 +2658,7 @@ TrAsGrid_InitDispatch:
 	extz xde
 	ld xwa, (xsp + 16)
 	ld xbc, EVT_INDEXSW_DOWN
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 	jrl TrAsGrid_CallUpdateSorted
 AcTrAsGridBoxProc_OnIndexswUp:	; cases 29360151, 29360153
@@ -2712,7 +2712,7 @@ TrAsGrid_ApplyScrollOffset:
 	res 0, c
 	ld (3296:16), c
 	ld xwa, (xsp + 16)
-	ld	xbc, 0x1c0000b
+	ld	xbc, EVT_PAINT
 	ld	xde, 0:i3
 	call	SendEvent
 	ld	xwa, (xsp+16)
@@ -2783,7 +2783,7 @@ TrAsGrid_HandleOtherEvent:
 	ld xwa, (xsp + 16)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 8)
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 	jrl TrAsGrid_CallUpdateSorted
 AcTrAsGridBoxProc_OnIndexswDown:	; cases 29360152, 29360154
@@ -2837,7 +2837,7 @@ TrAsGrid_ApplyScrollOffset2:
 	set 0, c
 	ld (3296:16), c
 	ld xwa, (xsp + 16)
-	ld	xbc, 0x1c0000b
+	ld	xbc, EVT_PAINT
 	ld	xde, 0:i3
 	call	SendEvent
 	ld	xwa, (xsp+16)
@@ -2908,7 +2908,7 @@ TrAsGrid_HandleOtherEvent2:
 	ld xwa, (xsp + 16)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 8)
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 
 TrAsGrid_CallUpdateSorted:
@@ -2955,7 +2955,7 @@ TrAsGrid_HandleSelectEvent:
 	ld (0x021082:24), l
 	set 0, (3296:16)
 	ld xwa, (xsp + 16)
-	ld	xbc, 0x1c0000b
+	ld	xbc, EVT_PAINT
 	ld	xde, 0:i3
 	call	SendEvent
 	ld	xwa, (xsp+16)
@@ -2978,7 +2978,7 @@ TrAsGrid_DeselectCell:
 	ld (0x021082:24), l
 	res 0, (3296:16)
 	ld xwa, (xsp + 16)
-	ld	xbc, 0x1c0000b
+	ld	xbc, EVT_PAINT
 	ld	xde, 0:i3
 	call	SendEvent
 	ld	xwa, (xsp+16)
@@ -3184,15 +3184,14 @@ TrAsGridCheck_Cases_Skip3:
 	dec	2, e
 	extz	de
 	ld	wa, de
-	jr	TrAsGridCheck_Cases_Skip5
+	jr	TrAsGridCheck_Cases_Join2
 TrAsGridCheck_Cases_Skip4:
 	inc	6, e
 	extz	de
 	ld	wa, de
-TrAsGridCheck_Cases_Skip5:
+TrAsGridCheck_Cases_Join2:
 	calr	TrAsGrid_LookupTable
 	or (62096:16), hl
-TrAsGridCheck_Cases_Join2:
 	call	GetFocusObject
 	ld	xwa, xhl
 	ld	xbc, EVT_REQUEST_GRID_DRAW
@@ -3283,16 +3282,15 @@ TrAsGridCheck_OnIndexswDown_Skip7:
 	dec	2, e
 	extz	de
 	ld	wa, de
-	jr	TrAsGridCheck_OnIndexswDown_Skip
+	jr	TrAsGridCheck_OnIndexswDown_Join4
 TrAsGridCheck_OnIndexswDown_Skip8:
 	inc	6, e
 	extz	de
 	ld	wa, de
-TrAsGridCheck_OnIndexswDown_Skip:
+TrAsGridCheck_OnIndexswDown_Join4:
 	calr	TrAsGrid_LookupTable
 	cpl	hl
 	and (62096:16), hl
-TrAsGridCheck_OnIndexswDown_Join4:
 	call	GetFocusObject
 	ld	xwa, xhl
 	ld	xbc, EVT_REQUEST_GRID_DRAW
@@ -5952,9 +5950,9 @@ AttSongClrCheck_ReturnZero:
 	ld xhl, 0:i3
 	ret
 
-StsAtPunchCheck:
+; port: v6's label StsAtPunchCheck is not in v5 -- no v5 bytes correspond to what it named
 
-StsAtPunchCheck_ReturnZero:
+; port: v6's label StsAtPunchCheck_ReturnZero is not in v5 -- no v5 bytes correspond to what it named
 
 MsgToTtlProc:
 	cp xbc, EVT_SHOW
@@ -6034,7 +6032,7 @@ NoteEditBox_HandleFocusGained:
 	ld xwa, (xsp + 94)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, 0:i3
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 	call SetDialEnable
 	jrl NoteEdit_ReturnZero
@@ -6916,7 +6914,7 @@ NoteEditBox_GridDispatch:
 	ld	xwa, (xsp+94)
 	ld	xbc, EVT_INDEXSW_DOWN
 	ld	xde, (xsp+90)
-	call	SetDialUp_Entry
+	call	SetDialDown
 
 NoteEdit_ReturnZero:
 	ld xhl, 0:i3
@@ -7622,7 +7620,7 @@ EntGrid_PostMainEvent:
 	extz xde
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_DOWN
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 	call SetDialEnable
 	ld (0x02109e:24), 0x00
@@ -7683,7 +7681,7 @@ EntGrid_CheckOverflow1:
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 12)
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 	jrl EntGrid_SetDialEnable
 AcEntertainerGridBoxProc_OnIndexswDown:	; cases 29360152, 29360154
@@ -7742,7 +7740,7 @@ EntGrid_CheckOverflow2:
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 12)
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 
 EntGrid_SetDialEnable:
@@ -8611,7 +8609,7 @@ SqplyVal_InitScrollAndRefresh:
 	ld xwa, (xsp + 68)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, 1:i3
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 	call SetDialEnable
 	jr SqplyVal_DispatchUpdate
@@ -8835,7 +8833,7 @@ SqplyVal_ParamCases_Join2:
 	ld	xwa, (xsp+68)
 	ld	xbc, EVT_INDEXSW_DOWN
 	ld	xde, 1:i3
-	call	SetDialUp_Entry
+	call	SetDialDown
 	ld	wa, 1:i3
 	jrl	SqplyVal_CallSortedUpdate
 
@@ -8897,7 +8895,7 @@ SqplyVal_UpScroll_Mode2:
 	ld xwa, (xsp + 68)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, 2:i3
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 	jrl SqplyVal_CallSortedUpdate
 
@@ -8959,7 +8957,7 @@ SqplyVal_DownScroll_Mode2:
 	ld xwa, (xsp + 68)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, 2:i3
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 
 SqplyVal_CallSortedUpdate:
@@ -9137,7 +9135,7 @@ SqedtVal_HandleInitEvent:
 	ld xwa, (xsp + 74)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, 1:i3
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 	jrl SqedtVal_DoSortedUpdate
 
@@ -9323,7 +9321,7 @@ SqedtVal_ParamCases_Join2:
 	ld	xwa, (xsp+74)
 	ld	xbc, EVT_INDEXSW_DOWN
 	ld	xde, 1:i3
-	call	SetDialUp_Entry
+	call	SetDialDown
 	ld	wa, 1:i3
 	jrl	SqedtVal_DoSortedUpdate
 
@@ -10423,7 +10421,7 @@ SqedtVal3_HandleInitEvent:
 	ld xwa, (xsp + 66)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, 1:i3
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 	call SetDialEnable
 	jrl SqedtVal_ReturnZero2
@@ -10807,7 +10805,7 @@ SqedtVal2_SendCommonEvents:
 	ld xwa, (xsp + 74)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, 2:i3
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 	call SetDialEnable
 	ld (0x03e2e0:24), 0x00
@@ -11957,7 +11955,7 @@ SqedtVal2_DownCase4_PostEvent:
 	ld xde, (xsp + 66)
 
 AccIll_CallSetDialDown:
-	call	SetDialUp_Entry
+	call SetDialDown
 
 AccIll_ReturnZero2:
 	ld xhl, 0:i3
@@ -12002,7 +12000,7 @@ AccIllProc:
 	ld xwa, (xsp + 66)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, 1:i3
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 	jrl AccIll_CallSortedUpdate
 
@@ -12202,7 +12200,7 @@ AccIll_UpScroll_Refresh:
 	ld xwa, (xsp + 66)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, 1:i3
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 	jr AccIll_CallSortedUpdate
 
@@ -12242,7 +12240,7 @@ AccIll_DownScroll_Refresh:
 	ld xwa, (xsp + 66)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, 1:i3
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 
 AccIll_CallSortedUpdate:
@@ -12324,7 +12322,7 @@ EffectBoxProc:
 	ld XWA, (xsp + 0x0156)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, 2:i3
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 	jrl EffectBox_SetDialDownAndEnable
 
@@ -12880,7 +12878,7 @@ EffectBox_DrawStringAndSetDial:
 	ld XWA, (xsp + 0x0156)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, 2:i3
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 
 EffectBox_SetDialDownAndEnable:
@@ -13420,7 +13418,7 @@ Equalizer_DrawStringDone:
 	ld xwa, (xsp + 92)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 88)
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 	call SetDialEnable
 	ld xwa, (xsp + 92)
@@ -13448,7 +13446,7 @@ Equalizer_HandleEvent1:
 	ld xwa, (xsp + 92)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 88)
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 	call SetDialEnable
 	ld xwa, (xsp + 92)

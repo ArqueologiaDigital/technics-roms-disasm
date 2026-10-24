@@ -597,7 +597,7 @@
 .equ EVT_AMD_CALL, 0x1e7000a	; Firmware method MT_AmdCall: track-assign: apply the AMD setting (the expansion of AMD is not established)
 .equ EVT_DIRECT_PLAY_MUTE, 0x1e7000b	; Firmware method MT_DirectPlayMute: apply the direct-play / SMF track mute settings
 .equ EVT_TRACK_MIDI_CALL, 0x1e7000c	; Firmware method MT_TrackMidiCall: track-assign: apply the track MIDI setting
-.equ EVT_GET_CUR_SONG_NAME, 0x1e7000c	; Firmware method MT_GetCurSongName: copy the current song name (16 chars) for display	; v6: 0x1e7000d
+.equ EVT_GET_CUR_SONG_NAME, 0x1e7000c	; Firmware method MT_GetCurSongName: copy the current song name (16 chars) for display	; v6: 0x1e7000d; v5's uses hold the value EVT_TRACK_MIDI_CALL has here: an entry before it may be missing in v5, or the use names that entry -- unchecked
 .equ EVT_GET_DISK_FILE_NAME, 0x1e7000d	; Firmware method MT_GetDiskFileName: get the disk file name for display	; v6: 0x1e7000e
 .equ EVT_GET_SMF_FILE_NAME, 0x1e7000e	; Firmware method MT_GetSmfFileName: get the SMF file name	; v6: 0x1e7000f
 .equ EVT_GET_SMF_SONG_NAME, 0x1e7000f	; Firmware method MT_GetSmfSongName: get the SMF song name	; v6: 0x1e70010
@@ -2083,7 +2083,7 @@
 .equ NAKA_VIEW_PleaseWait, 0xee0016	; view "PleaseWait": Viewable slot 0xEE entry 22
 .equ NAKA_VIEW_Welcom, 0xef0000	; view "Welcom": Viewable slot 0xEF entry 0
 .equ NAKA_VIEW_AllInitial, 0xef0004	; view "AllInitial": Viewable slot 0xEF entry 4
-.equ NAKA_VIEW_MPVersion, 0xef0004	; view "MPVersion": Viewable slot 0xEF entry 7	; v7: 0xef0007
+.equ NAKA_VIEW_MPVersion, 0xef0004	; view "MPVersion": Viewable slot 0xEF entry 7	; v7: 0xef0007; v6's uses hold the value NAKA_VIEW_AllInitial has here: an entry before it may be missing in v6, or the use names that entry -- unchecked
 .equ NAKA_VIEW_MPver, 0xef000a	; view "MPver": Viewable slot 0xEF entry 10
 .equ NAKA_VIEW_Softver, 0xf00000	; view "Softver": Viewable slot 0xF0 entry 0
 .equ NAKA_VIEW_MainProgram, 0xf00001	; view "MainProgram": Viewable slot 0xF0 entry 1

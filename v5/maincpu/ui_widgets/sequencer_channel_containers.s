@@ -283,100 +283,119 @@ Part_CaptionStrPtrs:
 MidiPart_ConfigNameTable:
 	.long PsMixer_BootDefaultRows
 	.long PsMixer_DefaultGridPartRows
-; TODO(port): v6 bytes with no v7 line -- disassemble
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x60, 0xf2, 0xe9, 0x00
-	.byte	0x58, 0xf2, 0xe9, 0x00, 0x50, 0xf2, 0xe9, 0x00
-	.byte	0x48, 0xf2, 0xe9, 0x00, 0x40, 0xf2, 0xe9, 0x00
-	.byte	0x38, 0xf2, 0xe9, 0x00, 0x30, 0xf2, 0xe9, 0x00
-	.byte	0x28, 0xf2, 0xe9, 0x00, 0x20, 0xf2, 0xe9, 0x00
-	.byte	0x18, 0xf2, 0xe9, 0x00, 0x10, 0xf2, 0xe9, 0x00
-	.byte	0x08, 0xf2, 0xe9, 0x00, 0x00, 0xf2, 0xe9, 0x00
-	.byte	0xf8, 0xf1, 0xe9, 0x00, 0xf0, 0xf1, 0xe9, 0x00
-	.byte	0xe8, 0xf1, 0xe9, 0x00, 0xe0, 0xf1, 0xe9, 0x00
-	.byte	0xd8, 0xf1, 0xe9, 0x00, 0xd0, 0xf1, 0xe9, 0x00
-	.byte	0xc8, 0xf1, 0xe9, 0x00, 0xc0, 0xf1, 0xe9, 0x00
-	.byte	0xb8, 0xf1, 0xe9, 0x00, 0xb0, 0xf1, 0xe9, 0x00
-	.byte	0xa8, 0xf1, 0xe9, 0x00, 0xa0, 0xf1, 0xe9, 0x00
-	.byte	0x98, 0xf1, 0xe9, 0x00, 0x90, 0xf1, 0xe9, 0x00
-	.byte	0x88, 0xf1, 0xe9, 0x00, 0x80, 0xf1, 0xe9, 0x00
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x78, 0xf1, 0xe9, 0x00
-	.byte	0x16, 0xf3, 0xe9, 0x00, 0x10, 0xf3, 0xe9, 0x00
-	.byte	0x0a, 0xf3, 0xe9, 0x00, 0x04, 0xf3, 0xe9, 0x00
-	.byte	0xfe, 0xf2, 0xe9, 0x00, 0xf8, 0xf2, 0xe9, 0x00
-	.byte	0xf2, 0xf2, 0xe9, 0x00, 0xec, 0xf2, 0xe9, 0x00
-	.byte	0xe6, 0xf2, 0xe9, 0x00, 0xe0, 0xf2, 0xe9, 0x00
-	.byte	0xda, 0xf2, 0xe9, 0x00, 0xd4, 0xf2, 0xe9, 0x00
-	.byte	0xce, 0xf2, 0xe9, 0x00, 0xc8, 0xf2, 0xe9, 0x00
-	.byte	0xc2, 0xf2, 0xe9, 0x00, 0xbc, 0xf2, 0xe9, 0x00
-	.byte	0xb6, 0xf2, 0xe9, 0x00, 0xb0, 0xf2, 0xe9, 0x00
-	.byte	0xaa, 0xf2, 0xe9, 0x00, 0xa4, 0xf2, 0xe9, 0x00
-	.byte	0x9e, 0xf2, 0xe9, 0x00, 0x98, 0xf2, 0xe9, 0x00
-	.byte	0x92, 0xf2, 0xe9, 0x00, 0x8c, 0xf2, 0xe9, 0x00
-	.byte	0x86, 0xf2, 0xe9, 0x00, 0x80, 0xf2, 0xe9, 0x00
-	.byte	0x7a, 0xf2, 0xe9, 0x00, 0x74, 0xf2, 0xe9, 0x00
-	.byte	0x6e, 0xf2, 0xe9, 0x00, 0x68, 0xf2, 0xe9, 0x00
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0xd4, 0xf3, 0xe9, 0x00
-	.byte	0xcc, 0xf3, 0xe9, 0x00, 0xc4, 0xf3, 0xe9, 0x00
-	.byte	0xbc, 0xf3, 0xe9, 0x00, 0xb4, 0xf3, 0xe9, 0x00
-	.byte	0xac, 0xf3, 0xe9, 0x00, 0xa4, 0xf3, 0xe9, 0x00
-	.byte	0x9c, 0xf3, 0xe9, 0x00, 0x94, 0xf3, 0xe9, 0x00
-	.byte	0x8c, 0xf3, 0xe9, 0x00, 0x84, 0xf3, 0xe9, 0x00
-	.byte	0x7c, 0xf3, 0xe9, 0x00
-	.long	TrackName6_Tr13
-	.long	TrackName6_Tr14
-	.long	TrackName6_Tr15
-	.long	TrackName6_Tr16
-	.long	AccompName6_Drums
-	.long	AccompName6_Acomp3
-	.long	AccompName6_Acomp2
-	.long	AccompName6_Acomp1
-	.long	AccompName6_Bass
-	.long	AccompName6_Msp
-	.long	AccompName6_RBass
-	.long	AccompName6_Chord
-	.long	TrackName4_Tr1
-	.long	TrackName4_Tr2
-	.long	TrackName4_Tr3
-	.long	TrackName4_Tr4
-	.long	TrackName4_Tr5
-	.long	TrackName4_Tr6
-	.long	TrackName4_Tr7
-	.long	TrackName4_Tr8
-	.long	TrackName4_Tr9
-	.long	TrackName4_Tr10
-	.long	TrackName4_Tr11
-	.long	TrackName4_Tr12
-	.long	TrackName4_Tr13
-	.long	TrackName4_Tr14
-	.long	TrackName4_Tr15
-	.long	TrackName4_Tr16
-	.long	TrackName6_Unassigned_08
-	.long	TrackName6_Unassigned_07
-	.long	TrackName6_Unassigned_06
-	.long	TrackName6_Unassigned_05
+	.long PartName6_Right1
+	.long PartName6_Right2
+	.long PartName6_Left
+	.long PartName6_Part4
+	.long PartName6_Part5
+	.long PartName6_Part6
+	.long PartName6_Part7
+	.long PartName6_Part8
+	.long PartName6_Part9
+	.long PartName6_Part10
+	.long PartName6_Part11
+	.long PartName6_Part12
+	.long PartName6_Part13
+	.long PartName6_Part14
+	.long PartName6_Part15
+	.long PartName6_Part16
+	.long PartName6_Chord
+	.long PartName6_RBass
+	.long PartName6_Acomp1
+	.long PartName6_Acomp2
+	.long PartName6_Acomp3
+	.long PartName6_Bass
+	.long PartName6_Drums
+	.long PartName6_Msp
+	.long PartName6_Metro
+	.long PartName6_Mic
+	.long PartName6_Apc
+	.long PartName6_Ctrl
+	.long PartName6_Rhythm
+	.long PartName6_Blank
+	.long PartName4_Right1
+	.long PartName4_Right2
+	.long PartName4_Left
+	.long PartName4_Part4
+	.long PartName4_Part5
+	.long PartName4_Part6
+	.long PartName4_Part7
+	.long PartName4_Part8
+	.long PartName4_Part9
+	.long PartName4_Part10
+	.long PartName4_Part11
+	.long PartName4_Part12
+	.long PartName4_Part13
+	.long PartName4_Part14
+	.long PartName4_Part15
+	.long PartName4_Part16
+	.long PartName4_Chord
+	.long PartName4_RBass
+	.long PartName4_Acomp1
+	.long PartName4_Acomp2
+	.long PartName4_Acomp3
+	.long PartName4_Bass
+	.long PartName4_Drums
+	.long PartName4_Msp
+	.long PartName4_Metro
+	.long PartName4_Mic
+	.long PartName4_Apc
+	.long PartName4_Ctrl
+	.long PartName4_Rhythm
+	.long PartName6_TableEnd
+	.long TrackName6_Tr1
+	.long TrackName6_Tr2
+	.long TrackName6_Tr3
+	.long TrackName6_Tr4
+	.long TrackName6_Tr5
+	.long TrackName6_Tr6
+	.long TrackName6_Tr7
+	.long TrackName6_Tr8
+	.long TrackName6_Tr9
+	.long TrackName6_Tr10
+	.long TrackName6_Tr11
+	.long TrackName6_Tr12
+	.long TrackName6_Tr13
+	.long TrackName6_Tr14
+	.long TrackName6_Tr15
+	.long TrackName6_Tr16
+	.long AccompName6_Drums
+	.long AccompName6_Acomp3
+	.long AccompName6_Acomp2
+	.long AccompName6_Acomp1
+	.long AccompName6_Bass
+	.long AccompName6_Msp
+	.long AccompName6_RBass
+	.long AccompName6_Chord
+	.long TrackName4_Tr1
+	.long TrackName4_Tr2
+	.long TrackName4_Tr3
+	.long TrackName4_Tr4
+	.long TrackName4_Tr5
+	.long TrackName4_Tr6
+	.long TrackName4_Tr7
+	.long TrackName4_Tr8
+	.long TrackName4_Tr9
+	.long TrackName4_Tr10
+	.long TrackName4_Tr11
+	.long TrackName4_Tr12
+	.long TrackName4_Tr13
+	.long TrackName4_Tr14
+	.long TrackName4_Tr15
+	.long TrackName4_Tr16
+	.long TrackName6_Unassigned_08
+	.long TrackName6_Unassigned_07
+	.long TrackName6_Unassigned_06
 ; [nakarest] naka_sequencer_channels+0xf00  +0xf00..+0xf48 (0xeeef78, 72 B)
 ; [nakarest] purpose not established: layout of 72 B at 0xeeef78 not derived; readers below
 ; [nakarest] Readers: work-RAM image: Boot_InitWorkRAM copies these bytes to RAM
 ; [nakarest] 0x3ebd4..0x3ec1c (its ld xde/xhl/xbc + ldir blocks), where they are read by
 ; [nakarest] TrackMixer_Init (ui/drawbar_panel_ui.s: `ld xwa, 0x3ebe8`),
 ; [nakarest] TrackMixer_UpdateHandler (ui/drawbar_panel_ui.s: `ld xhl, 0x3ebe8`).
+	.incbin "includes/generated/naka_sequencer_channels.bin", 0xF00, 0x48
 ; TrackMixer_GridRowMapEnd -- 6 x uint16_t (0x00FF): the end of the word map that starts 0x34 bytes
 ; earlier (RAM 0x3EBE8); TrackMixer_Init installs it as the PsMixer grid array and
 ; PsMixer_ReadWordArrayEntry reads word [page*8 + column] as an IvSdpart_PartNumberByRow row.
-; TODO(port): v6 bytes with no v7 line -- disassemble
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0xee, 0xf3, 0xe9, 0x00, 0xe8, 0xf3, 0xe9, 0x00
-	.byte	0xe2, 0xf3, 0xe9, 0x00, 0xdc, 0xf3, 0xe9, 0x00
-	.byte	0x1d, 0x00, 0x1d, 0x00, 0x1d, 0x00, 0x1d, 0x00
-	.byte	0x1d, 0x00, 0x1d, 0x00, 0x1d, 0x00, 0x1d, 0x00
-	.byte	0x1d, 0x00, 0x1d, 0x00, 0x1d, 0x00, 0x1d, 0x00
-	.byte	0x1d, 0x00, 0x1d, 0x00, 0x1d, 0x00, 0x1d, 0x00
-	.byte	0x16, 0x00, 0x14, 0x00, 0x13, 0x00, 0x12, 0x00
-	.byte	0x15, 0x00, 0x17, 0x00, 0x11, 0x00, 0x10, 0x00
-	.byte	0xff, 0x00, 0xff, 0x00
 TrackMixer_GridRowMapEnd:	.incbin "includes/generated/naka_sequencer_channels.bin", 0xF48, 0xC
 ; DrawbarBitmap_SliderBitmapPtrs -- 1 x struct (9 x uint32_t (+ 1 unreferenced word)): slider bitmap base for each of
 ; the 9 drawbars; DrawbarBitmapHelper indexes it by drawbar (`sla de, 2`), adds 2*Drawbar_LevelBitmapOffsets
@@ -511,7 +530,7 @@ Naka_DrawbarReg_Table:
 	.long SeqChanContainer_ChordTypeRef_A
 	.long SeqChanContainer_ChordTypeRef_A
 	.long SeqChanContainer_ChordTypeRef_A
-	.long	NoteNameStr_Table_1_Data3
+	.long NoteNameStr_Table_1
 ; [nakarest] naka_sequencer_channels+0x1600  +0x1600..+0x1a78 (0xeef678, 1144 B)
 ; [nakarest] purpose not established: layout of 1144 B at 0xeef678 not derived; readers below
 ; [nakarest] Readers: 1 data word in Boot_InitWorkRAM_ROMCopy2_Start (at 0xef0bae), which is

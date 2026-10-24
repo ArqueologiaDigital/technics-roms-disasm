@@ -677,7 +677,7 @@ AudioInit_ChannelLoop_Body_Skip2:
 	add	xwa, xix
 	ld	a, (xwa)
 	ldfr_berp	A, 0xe2
-AudioInit_VoiceNotAssigned:
+; port: v6's label AudioInit_VoiceNotAssigned is not in v5 -- no v5 bytes correspond to what it named
 AudioInit_CheckVoiceChanged:
 	ld	a, d
 	extz	wa
@@ -1387,8 +1387,8 @@ AudioInit_Pan_CheckMode1b:
 	jr	nz, AudioInit_Pan_DefaultCenter
 AudioInit_Pan_SetStereoRight:
 	ld	(0xc1f4:16), 1
-AudioInit_Pan_CheckTypeED:
-AudioInit_Pan_TypeED_Left:
+; port: v6's label AudioInit_Pan_CheckTypeED is not in v5 -- no v5 bytes correspond to what it named
+; port: v6's label AudioInit_Pan_TypeED_Left is not in v5 -- no v5 bytes correspond to what it named
 	jr	AudioInit_Pan_CheckReverbChannel
 AudioInit_Pan_DefaultCenter:
 	ld	(0xc1f4:16), 255
@@ -1412,12 +1412,12 @@ AudioInit_Pan_Reverb_CheckMode1:
 	jr	nz, AudioInit_Pan_Reverb_Right
 AudioInit_Pan_Reverb_CheckMode1b:
 	cp	(0xc13f:16), 1
-	jr	nz, AudioInit_Pan_Reverb_CheckTypeED
+	jr	nz, AudioInit_Pan_Reverb_Center
 AudioInit_Pan_Reverb_Right:
 	ld	(0xc1fc:16), 1
 	jr	AudioInit_Pan_Done
-AudioInit_Pan_Reverb_CheckTypeED:
-AudioInit_Pan_Reverb_TypeED_Left:
+; port: v6's label AudioInit_Pan_Reverb_CheckTypeED is not in v5 -- no v5 bytes correspond to what it named
+; port: v6's label AudioInit_Pan_Reverb_TypeED_Left is not in v5 -- no v5 bytes correspond to what it named
 AudioInit_Pan_Reverb_Center:
 	ld	(0xc1fc:16), 255
 	jr	AudioInit_Pan_Done

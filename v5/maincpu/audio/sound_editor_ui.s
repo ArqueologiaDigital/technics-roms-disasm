@@ -7856,15 +7856,13 @@ SeGfx_StaticOp03_BlitAtCell:
 	ld	(1748:16), hl
 	ld xwa, 0x000006ca
 	call SeGfx_StaticOp03_Bitmap
-SeGfx_StaticOp05_FromBuf:
+; port: v6's label SeGfx_StaticOp05_FromBuf is not in v5 -- no v5 bytes correspond to what it named
 	; --- Wrapper function 7: same as 4/5 pattern ---
-SeGfx_StaticOp06_Text:
+; port: v6's label SeGfx_StaticOp06_Text is not in v5 -- no v5 bytes correspond to what it named
 	; --- Wrapper function 8: push xwa, ld xwa=xiy, call, pop, ret ---
-SeGfx_StaticOp07_Text:
 	; --- Wrapper function 9 ---
-SeGfx_StaticOp09_FromBuf:
 	; --- Wrapper function 10: set flag, push, ld xwa=imm, call, pop, ret ---
-SeGfx_StaticOp0E:
+; port: v6's label SeGfx_StaticOp0E is not in v5 -- no v5 bytes correspond to what it named
 	; --- Wrapper function 11 ---
 	pop xwa
 	ret
@@ -7881,13 +7879,13 @@ SeGfx_StaticOp15_FromBuf:
 	call	SeGfx_StaticOp06_CellTextFont0
 	pop	xwa
 	ret
-SeGfx_StaticOp15_FromBuf_Entry3:
+SeGfx_StaticOp07_Text:
 	push	xwa
 	ld	xwa, xiy
 	call	SeGfx_StaticOp07_CellTextFont1
 	pop	xwa
 	ret
-SeGfx_StaticOp15_FromBuf_Entry:
+SeGfx_StaticOp09_FromBuf:
 	ld	(0x3efa4:24), 0
 	push	xwa
 	ld	xwa, 0x6ca
@@ -7899,7 +7897,7 @@ SeGfx_StaticOp15_FromBuf_Entry:
 	call	ColorBlit_ComputeRectAndBlit
 	pop	xwa
 	ret
-SeGfx_StaticOp15_FromBuf_Entry2:
+SeGfx_StaticOp09_FromBuf_Entry:
 	ld	(0x3efa4:24), 0
 	push	xwa
 	ld	xwa, 0x6ca
@@ -8054,7 +8052,7 @@ SeMenu_DisplayPartValue_Data_Code_Skip4:
 	ld	(1746:16), wa
 SeMenu_DisplayPartValue_Data_Code_Join2:
 	ld	(COLORBLIT_MODE:24), 0
-	call	SeGfx_StaticOp15_FromBuf_Entry
+	call	SeGfx_StaticOp09_FromBuf
 	pop	xiy
 	pop	xix	; was .ascii "\\[ZYX^"
 	pop	xhl
@@ -8112,7 +8110,7 @@ SeMenu_DrawDottedLine:
 	ld	wa, (xiz+14)
 	ld	(1746:16), wa
 	ld	(COLORBLIT_MODE:24), 0
-	call	SeGfx_StaticOp15_FromBuf_Entry2
+	call	SeGfx_StaticOp09_FromBuf_Entry
 	pop	xiy
 	pop	xix
 	pop	xhl
@@ -8455,7 +8453,7 @@ SeMenu_ShowConfirmDialog_Data_Code_Loop:
 	ld (0x06ce:16), iy
 	ld (0x06d2:16), iy
 	addw (0x06d2:16), 0x000c
-	call	SeGfx_StaticOp15_FromBuf_Entry
+	call SeGfx_StaticOp09_FromBuf
 	ld ix, (0x06c6:16)
 	ld iy, (0x06c8:16)
 	add IX,0x00c4
@@ -8465,7 +8463,7 @@ SeMenu_ShowConfirmDialog_Data_Code_Loop:
 	subw (0x06ce:16), 0x0005
 	ld (0x06d2:16), iy
 	subw (0x06d2:16), 0x0001
-	call	SeGfx_StaticOp15_FromBuf_Entry
+	call SeGfx_StaticOp09_FromBuf
 	ld ix, (0x06c6:16)
 	ld iy, (0x06c8:16)
 	ld (0x06cc:16), ix
@@ -8474,7 +8472,7 @@ SeMenu_ShowConfirmDialog_Data_Code_Loop:
 	ld (0x06ce:16), iy
 	ld (0x06d2:16), iy
 	addw (0x06d2:16), 0x000c
-	call	SeGfx_StaticOp15_FromBuf_Entry
+	call SeGfx_StaticOp09_FromBuf
 	ld ix, (0x06c6:16)
 	ld iy, (0x06c8:16)
 	ld (0x06cc:16), ix
@@ -8485,7 +8483,7 @@ SeMenu_ShowConfirmDialog_Data_Code_Loop:
 	addw (0x06ce:16), 0x0001
 	ld (0x06d2:16), iy
 	addw (0x06d2:16), 0x0007
-	call	SeGfx_StaticOp15_FromBuf_Entry
+	call SeGfx_StaticOp09_FromBuf
 	ld ix, (0x06c6:16)
 	ld iy, (0x06c8:16)
 	sub IX,0x0004
@@ -8506,7 +8504,7 @@ SeMenu_ShowConfirmDialog_Data_Code_Loop:
 	addw (0x06ce:16), 0x000d
 	ld (0x06d2:16), iy
 	addw (0x06d2:16), 0x000e
-	call	SeGfx_StaticOp15_FromBuf_Entry
+	call SeGfx_StaticOp09_FromBuf
 	ret
 SeMenu_DrawKeyboardOctave:
 	ld (0x06cc:16), ix
@@ -8528,7 +8526,7 @@ SeMenu_DrawKeyboardOctave:
 	addw (0x06d2:16), 0x000c
 	pushw ix
 	pushw iy
-	call	SeGfx_StaticOp15_FromBuf_Entry
+	call SeGfx_StaticOp09_FromBuf
 	popw iy
 	popw ix
 	ld C, 0x05:opc
@@ -8550,7 +8548,7 @@ SeMenu_ShowConfirmDialog_Data_Code_Loop2:
 	push	xiz
 	pushw	ix
 	pushw	iy
-	call	SeGfx_StaticOp15_FromBuf_Entry
+	call	SeGfx_StaticOp09_FromBuf
 	popw	iy
 	popw	ix
 	pop	xiz
@@ -9175,19 +9173,18 @@ SeLfo1_DrawPartLabels_Loop:
 	sla	a, 1
 	dec	1, a
 	.byte 0xc8, 0xff
-	jr	c, SeLfo1_DrawPartLabels_Skip2
+	jr	c, SeLfo1_DrawPartLabels_Skip
 	.byte 0xcb, 0x04
 	xor	b, b
 	sla	bc, 2
 	ld	xiz, SeScreenData_0x3869
-SeLfo1_DrawPartLabels_Skip:
 	ld	xiy, (xiz+bc)
 	add	bc, 4
 	ld	xix, (xiz+bc)
 	call	SeGfx_DrawStaticList
 	pop	c
 	jr	SeMenu_PresetBrowser_Data_Code_Join
-SeLfo1_DrawPartLabels_Skip2:
+SeLfo1_DrawPartLabels_Skip:
 	push	c
 	xor	b, b
 	sla	bc, 2
@@ -10230,7 +10227,7 @@ SeMenu_DrawWriteDestName_Skip7:
 	ld	(xiy-3), c
 	ld	(xiy-2), ix
 	sub	xiy, 4
-	call	SeGfx_StaticOp15_FromBuf_Entry3
+	call	SeGfx_StaticOp07_Text
 	ret
 ; SeWrtSnd_DrawStaticScreen: Static-screen routine of sound-editor title 0x3F TT_SEWRTSND (entry 31 of
 ;  SeTitle_StaticScreenTable, indexed by title id - 0x20): draws the page's fixed captions and frames. Basis: the
@@ -12927,12 +12924,13 @@ SeScreenData_0x0CBA:
 ; list-boundary table: entry i and i+1 bound list i (6 entries, LE32)
 ; evidence: SeTonHyb1_DrawStaticScreen
 SeMenu_DrawPartRadioButtons_Records2:
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x37, 0x17, 0xf1, 0x00, 0x37, 0x17, 0xf1, 0x00
+	.long	SeScreenData_0x0C72
+	.long	SeScreenData_0x0C72
 	.long	SeScreenData_0x0C8A
 	.long	SeScreenData_0x0CA2
 	.long	SeScreenData_0x0CBA
-	.long	SeMenu_DrawPartRadioButtons_Records2
+; TODO(port): v5 bytes with no v6 line -- disassemble
+	.byte	0x97, 0x17, 0xf1, 0x00
 SeMenu_DrawPartRadioButtons_Records2_Data:
 ; TODO(port): v5 bytes with no v6 line -- disassemble
 	.byte	0x03, 0x0c, 0x3d, 0x0b, 0xf1, 0x00, 0x9a, 0x12
@@ -12959,18 +12957,20 @@ SeScreenData_0x0CFF:
 ; list-boundary table: entry i and i+1 bound list i (4 entries, LE32)
 ; evidence: SeTonHyb1_DrawStaticScreen
 SeMenu_DrawTwoPartRadioButtons_Records:
+	.long	SeScreenData_0x0CEA
+	.long	SeScreenData_0x0CEA
+	.long	SeScreenData_0x0CFF
 ; static record list (2 records), read by GraphicsRender_ProcessEntries; end SeScreenData_0x0D39
 ; evidence: bounds at SeMenu_DrawTwoPartRadioButtons_Records2
 ; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0xe9, 0x17, 0xf1, 0x00, 0xe9, 0x17, 0xf1, 0x00
-	.byte	0xfe, 0x17, 0xf1, 0x00, 0x13, 0x18, 0xf1, 0x00
-SeScreenData_0x0D24:
+	.byte	0x13, 0x18, 0xf1, 0x00
+; port: v6's label SeScreenData_0x0D24 is not in v5 -- no v5 bytes correspond to what it named
 ; static record list (2 records), read by GraphicsRender_ProcessEntries; end SeMenu_DrawTwoPartRadioButtons_Records2
 ; evidence: bounds at SeMenu_DrawTwoPartRadioButtons_Records2
-SeScreenData_0x0D39:
+; port: v6's label SeScreenData_0x0D39 is not in v5 -- no v5 bytes correspond to what it named
 ; list-boundary table: entry i and i+1 bound list i (4 entries, LE32)
 ; evidence: SeTonHyb1_DrawStaticScreen
-SeMenu_DrawTwoPartRadioButtons_Records2:
+; port: v6's label SeMenu_DrawTwoPartRadioButtons_Records2 is not in v5 -- no v5 bytes correspond to what it named
 ; static record list (17 records), read by GraphicsRender_ProcessEntries; end SeScreenData_0x0E0E
 ; evidence: SeMenu_PresetBrowser_Navigate
 SeMenu_PresetBrowser_Navigate_Records:
@@ -17331,7 +17331,7 @@ EasyCmp_DialGrid:
 	extz xde
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_DOWN
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 	jrl EasyCmp_SetDialEnable
 AcEasyCmpGridBoxProc_OnIndexswUp:	; cases 29360151, 29360153
@@ -17386,7 +17386,7 @@ EasyCmp_SendEvt091:
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 12)
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 	jrl EasyCmp_SetDialEnable
 AcEasyCmpGridBoxProc_OnIndexswDown:	; cases 29360152, 29360154
@@ -17441,7 +17441,7 @@ EasyCmp_IncSendEvt091:
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 12)
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 
 EasyCmp_SetDialEnable:
@@ -19192,7 +19192,7 @@ AcSndArgGrid_Init:
 	extz	xde
 	ld	xwa, (xsp+22)
 	ld	xbc, EVT_INDEXSW_DOWN
-	call	SetDialUp_Entry
+	call	SetDialDown
 	ld	wa, 1:i3
 	jrl	AcSndArgGrid_ScrollCommit
 AcSndArgGridBoxProc_OnIndexswUp:	; cases 29360151, 29360153
@@ -19260,7 +19260,7 @@ AcSndArgGrid_ScrollUp_NoCanScroll:
 	ld	xwa, (xsp+22)
 	ld	xbc, EVT_INDEXSW_DOWN
 	ld	xde, (xsp+18)
-	call	SetDialUp_Entry
+	call	SetDialDown
 	ld	wa, 1:i3
 	jrl	AcSndArgGrid_ScrollCommit
 AcSndArgGridBoxProc_OnIndexswDown:	; cases 29360152, 29360154
@@ -19328,7 +19328,7 @@ AcSndArgGrid_ScrollDown_NoCanScroll:
 	ld xwa, (xsp + 22)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 18)
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 
 AcSndArgGrid_ScrollCommit:

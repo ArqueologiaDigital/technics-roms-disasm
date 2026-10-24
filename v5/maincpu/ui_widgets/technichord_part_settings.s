@@ -563,10 +563,10 @@ NakaWidget_Welcom_3_VwUserBitmapSp:	.incbin "includes/generated/naka_technichord
 NakaWidget_AllInitial:			.incbin "includes/generated/naka_technichord_part.bin", 0x3568, 0x22
 NakaWidget_Welcom_5_Label:		.incbin "includes/generated/naka_technichord_part.bin", 0x358A, 0x36
 NakaWidget_Welcom_6_IvIntWelcome:	.incbin "includes/generated/naka_technichord_part.bin", 0x35C0, 0x18
-NakaWidget_MPVersion:
-NakaWidget_Welcom_8_IvMPver:
-NakaWidget_Welcom_9_IvIntWelcome:
-NakaWidget_MPver:
+; port: v7's label NakaWidget_MPVersion is not in v6 -- no v6 bytes correspond to what it named
+; port: v7's label NakaWidget_Welcom_8_IvMPver is not in v6 -- no v6 bytes correspond to what it named
+; port: v7's label NakaWidget_Welcom_9_IvIntWelcome is not in v6 -- no v6 bytes correspond to what it named
+; port: v7's label NakaWidget_MPver is not in v6 -- no v6 bytes correspond to what it named
 ; [nakarest] naka_technichord_part+0x364c  +0x364c..+0x37a2 (0xe8531a, 342 B)
 ; [nakarest] widget records, elements 0-5 of Viewable slot 0xf0 (table 0xe859d8, 6 entries,
 ; [nakarest] InitializeMurai) ("Softver"): TtlScreen (42 B), PsEditBox (50 B) x4, IvSoftver (22
@@ -697,61 +697,76 @@ Murai_ResNameTable_302:	.incbin "includes/generated/naka_technichord_part.bin", 
 ; [nakarest] the table itself: ResName slot 0x303 (table 0xe85a8e, 84 entries, InitializeMurai),
 ; [nakarest] 84 entry pointers x 4 bytes.
 Murai_ResNameTable_303:
-	.long	0xe85c04
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x02, 0x5c, 0xe8, 0x00, 0x00, 0x5c, 0xe8, 0x00
-	.byte	0xfe, 0x5b, 0xe8, 0x00, 0xfc, 0x5b, 0xe8, 0x00
-	.byte	0xfa, 0x5b, 0xe8, 0x00
-	.long	0xe85bf8
-	.long	0xe85bf6
-	.long	0xe85bf4
-	.long	0xe85bf2
-	.long	0xe85be6
+	.incbin "includes/generated/naka_technichord_part.bin", 0x3DC0, 0x40
+	.long NakaWidget_Sdpart_16_AcStrRadioBox_Name
+	.long NakaWidget_Sdpart_17_AcStrRadioBox_Name
+	.long NakaWidget_Sdpart_18_AcStrRadioBox_Name
+	.long NakaWidget_Sdpart_19_AcStrRadioBox_Name
+	.long NakaWidget_Sdpart_20_VwEditSwBox_Name
+	.long NakaWidget_Sdpart_21_VwEditSwBox_Name
+	.long NakaWidget_Sdpart_22_VwEditSwBox_Name
+	.long NakaWidget_Sdpart_23_VwEditSwBox_Name
+	.long NakaWidget_Sdpart_24_VwEditSwBox_Name
+	.long NakaWidget_Sdpart_25_VwEditSwBox_Name
+	.long NakaWidget_Sdpart_26_VwEditSwBox_Name
+	.long NakaWidget_Sdpart_27_VwEditSwBox_Name
+	.long NakaWidget_Sdpart_28_IvSdpart_Name
+	.long NakaWidget_SdpartMain_Name
+	.long NakaWidget_Sdpart_30_AcLswPartEditBox_Name
+	.long NakaWidget_Sdpart_31_AcLswPartEditBox_Name
+	.long NakaWidget_Sdpart_32_AcLswPartEditBox_Name
+	.long NakaWidget_Sdpart_33_AcLswPartEditBox_Name
+	.long NakaWidget_Sdpart_34_AcLswPartEditBox_Name
+	.long NakaWidget_Sdpart_35_VwBox_Name
+	.long NakaWidget_Sdpart_36_AcLswPartEditBox_Name
+	.long NakaWidget_Sdpart_37_AcLswPartEditBox_Name
+	.long NakaWidget_Sdpart_38_AcLswPartEditBox_Name
+	.long NakaWidget_Sdpart_39_AcLswPartEditBox_Name
+	.long NakaWidget_Sdpart_40_AcLswPartEditBox_Name
+	.long NakaWidget_Sdpart_41_AcLswPartEditBox_Name
+	.long NakaWidget_Sdpart_42_AcVolPartEditBox_Name
+	.long NakaWidget_SdpartVol_Name
+	.long NakaWidget_Sdpart_44_AcIndexEditSw_Name
+	.long NakaWidget_Sdpart_45_VwBox_Name
+	.long NakaWidget_Sdpart_46_AcVolPartEditBox_Name
+	.long NakaWidget_SdpartPan_Name
+	.long NakaWidget_Sdpart_48_VwBox_Name
+	.long NakaWidget_Sdpart_49_AcLswPartEditBox_Name
+	.long NakaWidget_Sdpart_50_Label_Name
+	.long NakaWidget_Sdpart_51_AcLswPartPan_Name
+	.long NakaWidget_Sdpart_52_AcIndexEditSw_Name
+	.long NakaWidget_Sdpart_53_VwBox_Name
+	.long NakaWidget_SdpartEff_Name
+	.long NakaWidget_Sdpart_55_AcLswPartEditBox_Name
+	.long NakaWidget_Sdpart_56_AcLswPartEditBox_Name
+	.long NakaWidget_Sdpart_57_AcLswPartEditBox_Name
+	.long NakaWidget_Sdpart_58_AcIndexEditSw_Name
+	.long NakaWidget_Sdpart_59_VwBox_Name
+	.long NakaWidget_SdpartSus_Name
+	.long NakaWidget_Sdpart_61_AcIndexEditSw_Name
+	.long NakaWidget_Sdpart_62_AcLswPartEditBox_Name
+	.long NakaWidget_Sdpart_63_AcLswPartEditBox_Name
+	.long NakaWidget_Sdpart_64_VwBox_Name
+	.long NakaWidget_SdpartKey_Name
+	.long NakaWidget_Sdpart_66_AcLswPartEditBox_Name
+	.long NakaWidget_Sdpart_67_AcIndexEditSw_Name
+	.long NakaWidget_Sdpart_68_VwBox_Name
+	.long NakaWidget_SdpartTun_Name
+	.long NakaWidget_Sdpart_70_AcLswPartEditBox_Name
+	.long NakaWidget_Sdpart_71_AcIndexEditSw_Name
+	.long NakaWidget_Sdpart_72_VwBox_Name
+	.long NakaWidget_SdpartBnd_Name
+	.long NakaWidget_Sdpart_74_AcLswPartEditBox_Name
+	.long NakaWidget_Sdpart_75_AcIndexEditSw_Name
+	.long NakaWidget_Sdpart_76_VwBox_Name
+	.long NakaWidget_SdpartOth_Name
+	.long NakaWidget_Sdpart_78_AcLswPartEditBox_Name
+	.long NakaWidget_Sdpart_79_AcLswPartEditBox_Name
 ; [nakarest] naka_technichord_part+0x3f00  +0x3f00..+0x3f16 (0xe85bce, 22 B)
 ; [nakarest] 6 B at 0xe85bde: the end marker of ResName slot 0x303 (table 0xe85a8e, 84 entries, InitializeMurai) -- entry 84, a pointer to the empty string right after it ("", 00 ff), as every ResName table ends.
 ; [nakarest] Continues the table itself: ResName slot 0x303 (table 0xe85a8e, 84 entries,
 ; [nakarest] InitializeMurai), 84 entry pointers x 4 bytes (starts 0xe85a8e, 16 of its 336 bytes
 ; [nakarest] are here or later).
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xda, 0x5b, 0xe8, 0x00, 0xd8, 0x5b, 0xe8, 0x00
-	.byte	0xd6, 0x5b, 0xe8, 0x00, 0xd4, 0x5b, 0xe8, 0x00
-	.byte	0xd2, 0x5b, 0xe8, 0x00, 0xd0, 0x5b, 0xe8, 0x00
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0xce, 0x5b, 0xe8, 0x00, 0xcc, 0x5b, 0xe8, 0x00
-	.byte	0xca, 0x5b, 0xe8, 0x00, 0xc8, 0x5b, 0xe8, 0x00
-	.byte	0xc6, 0x5b, 0xe8, 0x00
-	.byte	0xc4, 0x5b, 0xe8, 0x00, 0xc2, 0x5b, 0xe8, 0x00
-	.byte	0xc0, 0x5b, 0xe8, 0x00, 0xbe, 0x5b, 0xe8, 0x00
-	.byte	0xbc, 0x5b, 0xe8, 0x00, 0xba, 0x5b, 0xe8, 0x00
-	.byte	0xb8, 0x5b, 0xe8, 0x00, 0xac, 0x5b, 0xe8, 0x00
-	.byte	0xaa, 0x5b, 0xe8, 0x00, 0xa8, 0x5b, 0xe8, 0x00
-	.byte	0xa6, 0x5b, 0xe8, 0x00, 0xa4, 0x5b, 0xe8, 0x00
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0xa2, 0x5b, 0xe8, 0x00
-	.byte	0xa0, 0x5b, 0xe8, 0x00, 0x9e, 0x5b, 0xe8, 0x00
-	.byte	0x9c, 0x5b, 0xe8, 0x00, 0x9a, 0x5b, 0xe8, 0x00
-	.byte	0x98, 0x5b, 0xe8, 0x00, 0x96, 0x5b, 0xe8, 0x00
-	.byte	0x94, 0x5b, 0xe8, 0x00, 0x92, 0x5b, 0xe8, 0x00
-	.byte	0x88, 0x5b, 0xe8, 0x00, 0x86, 0x5b, 0xe8, 0x00
-	.byte	0x84, 0x5b, 0xe8, 0x00, 0x82, 0x5b, 0xe8, 0x00
-	.byte	0x78, 0x5b, 0xe8, 0x00, 0x76, 0x5b, 0xe8, 0x00
-	.byte	0x74, 0x5b, 0xe8, 0x00, 0x72, 0x5b, 0xe8, 0x00
-	.byte	0x70, 0x5b, 0xe8, 0x00, 0x6e, 0x5b, 0xe8, 0x00
-	.byte	0x6c, 0x5b, 0xe8, 0x00, 0x62, 0x5b, 0xe8, 0x00
-	.byte	0x60, 0x5b, 0xe8, 0x00, 0x5e, 0x5b, 0xe8, 0x00
-	.byte	0x5c, 0x5b, 0xe8, 0x00, 0x5a, 0x5b, 0xe8, 0x00
-	.byte	0x58, 0x5b, 0xe8, 0x00, 0x4e, 0x5b, 0xe8, 0x00
-	.byte	0x4c, 0x5b, 0xe8, 0x00, 0x4a, 0x5b, 0xe8, 0x00
-	.byte	0x48, 0x5b, 0xe8, 0x00, 0x46, 0x5b, 0xe8, 0x00
-	.byte	0x3c, 0x5b, 0xe8, 0x00, 0x3a, 0x5b, 0xe8, 0x00
-	.byte	0x38, 0x5b, 0xe8, 0x00, 0x36, 0x5b, 0xe8, 0x00
-	.byte	0x2c, 0x5b, 0xe8, 0x00, 0x2a, 0x5b, 0xe8, 0x00
-	.byte	0x28, 0x5b, 0xe8, 0x00
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x26, 0x5b, 0xe8, 0x00, 0x1c, 0x5b, 0xe8, 0x00
-	.byte	0x1a, 0x5b, 0xe8, 0x00, 0x18, 0x5b, 0xe8, 0x00
-	.byte	0x16, 0x5b, 0xe8, 0x00, 0x0c, 0x5b, 0xe8, 0x00
-	.byte	0x0a, 0x5b, 0xe8, 0x00, 0x08, 0x5b, 0xe8, 0x00
 	.incbin "includes/generated/naka_technichord_part.bin", 0x3F00, 0x16
 ; [nakarest] naka_technichord_part+0x3f16  +0x3f16..+0x4022 (0xe85be4, 268 B)
 ; [nakarest] name strings, entries 0-83 of ResName slot 0x303 (table 0xe85a8e, 84 entries,

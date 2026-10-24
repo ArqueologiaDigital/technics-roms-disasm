@@ -3633,13 +3633,13 @@ Murai_ApFuncTable_121:
 	.long TtSdscltyp
 	.long LswLocalControl
 	.long LswMidiChannel
-	.long	0xf7ad51
+	.long BitmapAccger16
 	.long	BitmapDrawsw
 	.long LswPercDecay
 	.long LswPercLevel
 	.long LswDrawAttack
 	.long LswDrawRelease
-	.long	0xf7ad7e
+	.long	BitmapAccger16_Data
 	.long LswSound
 	.long ApPreControl
 	.long BitmapTechnics
@@ -3773,11 +3773,7 @@ ClassProps_PsLabelBox:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x
 ; Typed in naka_widget_tables_2.c as uint32_t ClassProps_IvSdtecd[1] and
 ; char ClassProps_IvSdtecd_Names[].
 ; -----------------------------------------------------------------------------
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x80, 0x0b, 0xe8, 0x00, 0x00, 0xff, 0x86, 0x0b
-	.byte	0xe8, 0x00, 0x00, 0xff, 0x8c, 0x0b, 0xe8, 0x00
-	.byte	0x00, 0xff, 0x92, 0x0b, 0xe8, 0x00, 0x00, 0xff
-ClassProps_IvSdtecd:
+; port: v7's label ClassProps_IvSdtecd is not in v6 -- no v6 bytes correspond to what it named
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] ClassProps_IvSdtecd1
 ; ClassProps_IvSdtecd1 -- property names of class IvSdtecd1 (descriptor
@@ -3788,6 +3784,10 @@ ClassProps_IvSdtecd:
 ; Typed in naka_widget_tables_2.c as uint32_t ClassProps_IvSdtecd1[1]
 ; and char ClassProps_IvSdtecd1_Names[].
 ; -----------------------------------------------------------------------------
+; TODO(port): v5 bytes with no v6 line -- disassemble
+	.byte	0x80, 0x0b, 0xe8, 0x00, 0x00, 0xff, 0x86, 0x0b
+	.byte	0xe8, 0x00, 0x00, 0xff, 0x8c, 0x0b, 0xe8, 0x00
+	.byte	0x00, 0xff, 0x92, 0x0b, 0xe8, 0x00, 0x00, 0xff
 ClassProps_IvSdtecd1:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x267F6, 0x6
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] ClassProps_IvSdscltyp2
@@ -3834,7 +3834,7 @@ ClassProps_PsMixerControl:	.incbin "includes/generated/naka_widget_tables_2.bin"
 ; Typed in naka_widget_tables_2.c as uint32_t ClassProps_AcPartMixer[1]
 ; and char ClassProps_AcPartMixer_Names[].
 ; -----------------------------------------------------------------------------
-ClassProps_AcPartMixer:
+; port: v6's label ClassProps_AcPartMixer is not in v5 -- no v5 bytes correspond to what it named
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] ClassProps_AcTrackMixer
 ; ClassProps_AcTrackMixer -- property names of class AcTrackMixer
@@ -3845,7 +3845,7 @@ ClassProps_AcPartMixer:
 ; Typed in naka_widget_tables_2.c as uint32_t ClassProps_AcTrackMixer[1]
 ; and char ClassProps_AcTrackMixer_Names[].
 ; -----------------------------------------------------------------------------
-ClassProps_AcTrackMixer:
+; port: v6's label ClassProps_AcTrackMixer is not in v5 -- no v5 bytes correspond to what it named
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] ClassProps_IvSoftver
 ; ClassProps_IvSoftver -- property names of class IvSoftver (descriptor
@@ -3856,7 +3856,7 @@ ClassProps_AcTrackMixer:
 ; Typed in naka_widget_tables_2.c as uint32_t ClassProps_IvSoftver[1]
 ; and char ClassProps_IvSoftver_Names[].
 ; -----------------------------------------------------------------------------
-ClassProps_IvSoftver:
+; port: v6's label ClassProps_IvSoftver is not in v5 -- no v5 bytes correspond to what it named
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] ClassProps_IvPageOverWrite
 ; ClassProps_IvPageOverWrite -- property names of class IvPageOverWrite
@@ -3880,7 +3880,7 @@ ClassProps_IvPageOverWrite:	.incbin "includes/generated/naka_widget_tables_2.bin
 ; Typed in naka_widget_tables_2.c as uint32_t ClassProps_IvDrawbar[1]
 ; and char ClassProps_IvDrawbar_Names[].
 ; -----------------------------------------------------------------------------
-ClassProps_IvDrawbar:
+; port: v7's label ClassProps_IvDrawbar is not in v6 -- no v6 bytes correspond to what it named
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] ClassProps_IvDrawbar1
 ; ClassProps_IvDrawbar1 -- property names of class IvDrawbar1
@@ -3962,7 +3962,7 @@ TextInput_Prop_NullTerm:	.incbin "includes/generated/naka_widget_tables_2.bin", 
 ; ClassProps_AcPresentationControl[1] and char
 ; ClassProps_AcPresentationControl_Names[].
 ; -----------------------------------------------------------------------------
-ClassProps_AcPresentationControl:
+; port: v7's label ClassProps_AcPresentationControl is not in v6 -- no v6 bytes correspond to what it named
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] ClassProps_IvDemofeature1
 ; ClassProps_IvDemofeature1 -- property names of class IvDemofeature1
@@ -4035,7 +4035,7 @@ ClassProps_AcPresentationBox:	.incbin "includes/generated/naka_widget_tables_2.b
 ; ClassProps_VwUserBitmapSp[1] and char
 ; ClassProps_VwUserBitmapSp_Names[].
 ; -----------------------------------------------------------------------------
-ClassProps_VwUserBitmapSp:
+; port: v7's label ClassProps_VwUserBitmapSp is not in v6 -- no v6 bytes correspond to what it named
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] ClassProps_AcFdemoScreen
 ; ClassProps_AcFdemoScreen -- property names of class AcFdemoScreen
@@ -4103,7 +4103,7 @@ ClassProps_AcDrawbarName:	.incbin "includes/generated/naka_widget_tables_2.bin",
 ; Typed in naka_widget_tables_2.c as uint32_t ClassProps_IvMPver[1] and
 ; char ClassProps_IvMPver_Names[].
 ; -----------------------------------------------------------------------------
-ClassProps_IvMPver:
+; port: v7's label ClassProps_IvMPver is not in v6 -- no v6 bytes correspond to what it named
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] Murai_ClassTable_161
 ; Murai_ClassTable_161 -- class table: InitializeMurai (v10/v9 0xf7ad77,

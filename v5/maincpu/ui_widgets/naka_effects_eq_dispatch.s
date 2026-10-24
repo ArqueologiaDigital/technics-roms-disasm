@@ -10,7 +10,9 @@
 ; (32-bit pointers at 0xE2718C..0xE271D4).  The first two bytes end "^^j", which
 ; starts at 0xE27556 in the previous file.
 	.byte 0x6a, 0x00
-	aligned_string "SqedtVal2"
+; TODO(port): v5 bytes with no v6 line -- disassemble
+	.byte	0x53, 0x71, 0x65, 0x64, 0x74, 0x56, 0x61, 0x6c
+	.byte	0x32, 0x00
 NakaInst_SqedtVal:
 	aligned_string "^^jC"
 	aligned_string "SqedtVal"

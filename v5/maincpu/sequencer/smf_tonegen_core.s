@@ -157,7 +157,7 @@ FloppyIO_ReadNextByte_DivDone:
 FloppyIO_ReadNextByte_StorePtr:
 	ld (4376:16), xix
 
-FloppyIO_ReadNextByte_UpdateRemaining:
+; port: v7's label FloppyIO_ReadNextByte_UpdateRemaining is not in v6 -- no v6 bytes correspond to what it named
 	pop xix
 	ret
 
@@ -1123,38 +1123,37 @@ SMF_MTrk_SignatureMatch_Loop:
 
 	pop	xix
 	popw	bc
-SMF_MTrk_FileSizeReadFailed:
+; port: v7's label SMF_MTrk_FileSizeReadFailed is not in v6 -- no v6 bytes correspond to what it named
 
-SMF_MTrk_FileSizeReady:
+; port: v7's label SMF_MTrk_FileSizeReady is not in v6 -- no v6 bytes correspond to what it named
 
-SMF_ProcessVoiceData:
 
-SMF_VoiceData_CheckFailed:
+; port: v7's label SMF_VoiceData_CheckFailed is not in v6 -- no v6 bytes correspond to what it named
 
-SMF_VoiceData_ReadTrackBuffer:
+; port: v7's label SMF_VoiceData_ReadTrackBuffer is not in v6 -- no v6 bytes correspond to what it named
 
-SMF_VoiceData_ReadTrackFailed:
+; port: v7's label SMF_VoiceData_ReadTrackFailed is not in v6 -- no v6 bytes correspond to what it named
 
-SMF_VoiceData_DispatchAndParse:
+; port: v7's label SMF_VoiceData_DispatchAndParse is not in v6 -- no v6 bytes correspond to what it named
 	push xwa
 	push xbc
 	ld xbc, 0:i3
 	ld xwa, (FILEIO_BLOCK_BYTES:16)
 	cp xwa, xbc
-	jr	lt, SMF_MTrk_FileSizeReadFailed_Skip3
+	jr	lt, SMF_MTrk_SignatureMatch_Skip
 	pop xbc
 	pop xwa
-	jp	SMF_MTrk_FileSizeReadFailed_Entry
-SMF_MTrk_FileSizeReadFailed_Skip3:
+	jp	SMF_MTrk_SignatureMatch_Entry
+SMF_MTrk_SignatureMatch_Skip:
 	pop	xbc
 	pop	xwa
 	ld	(0xef6:16), 255
 	jrl	SMF_NullRet
-SMF_MTrk_FileSizeReadFailed_Entry:
+SMF_MTrk_SignatureMatch_Entry:
 	ld	(xix+), a
 	djnz16	bc, SMF_MTrk_SignatureMatch_Loop
 	ld	(0x108c:16), 0
-SMF_MTrk_FileSizeReadFailed_Loop:
+SMF_ProcessVoiceData:
 	cp	(0x10e3:16), 0
 	jrl	nz, SMF_EventFailureExit
 	push	xwa
@@ -1162,32 +1161,32 @@ SMF_MTrk_FileSizeReadFailed_Loop:
 	ld	xbc, 0:i3
 	ld	xwa, (0x1a2d:16)
 	cp	xwa, xbc
-	jr	lt, SMF_MTrk_FileSizeReadFailed_Skip
+	jr	lt, SMF_ProcessVoiceData_Skip
 	pop	xbc
 	pop	xwa
-	jp	SMF_MTrk_FileSizeReadFailed_Entry2
-SMF_MTrk_FileSizeReadFailed_Skip:
+	jp	SMF_ProcessVoiceData_Entry
+SMF_ProcessVoiceData_Skip:
 	pop	xbc
 	pop	xwa
 	ld	(0xef6:16), 255
 	jrl	SMF_NullRet
-SMF_MTrk_FileSizeReadFailed_Entry2:
+SMF_ProcessVoiceData_Entry:
 	call	FloppyIO_ReadToTrackBuffer
 	push	xwa
 	push	xbc
 	ld	xbc, 0:i3
 	ld	xwa, (0x1a2d:16)
 	cp	xwa, xbc
-	jr	lt, SMF_MTrk_FileSizeReadFailed_Skip2
+	jr	lt, SMF_ProcessVoiceData_Skip2
 	pop	xbc
 	pop	xwa
-	jp	SMF_MTrk_FileSizeReadFailed_Entry3
-SMF_MTrk_FileSizeReadFailed_Skip2:
+	jp	SMF_ProcessVoiceData_Entry2
+SMF_ProcessVoiceData_Skip2:
 	pop	xbc
 	pop	xwa
 	ld	(0xef6:16), 255
 	jrl	SMF_NullRet
-SMF_MTrk_FileSizeReadFailed_Entry3:
+SMF_ProcessVoiceData_Entry2:
 	call	SeqTrack_DispatchPartEvt
 	ld	iy, (0x108d:16)
 	call	SoundGen_ClampVoiceIndexMin1
@@ -1234,14 +1233,14 @@ SMF_VoiceData_CheckEndOfTrack:
 	cp (4009:16), 255
 	jrl z, SMF_VoiceData_HandleEndOfTrack
 	cp (4323:16), 0
-	jrl	z, SMF_MTrk_FileSizeReadFailed_Loop
+	jrl z, SMF_ProcessVoiceData
 	ld (3830:16), 255
 	jr SMF_EventFailureExit
 
 SMF_VoiceData_HandleEndOfTrack:
 	call SeqTrack_ReleaseVoiceAtEndOfTrack
 
-SMF_VoiceData_DrainRemaining:
+; port: v7's label SMF_VoiceData_DrainRemaining is not in v6 -- no v6 bytes correspond to what it named
 
 SMF_VoiceData_DrainDone:
 	jrl SMF_NullRet
@@ -1271,7 +1270,7 @@ SMF_VoiceData_SysExFailed:
 	jrl SMF_NullRet
 
 SMF_VoiceData_SysExContinue:
-	jrl	SMF_MTrk_FileSizeReadFailed_Loop
+	jrl SMF_ProcessVoiceData
 
 SMF_VoiceData_CheckMidiStatus:
 	bit 7, a
@@ -1287,7 +1286,7 @@ SMF_VoiceData_CheckMidiStatus:
 	jr lt, SMF_VoiceData_MidiStatusFailed
 	pop xbc
 	pop xwa
-	jp	SMF_MTrk_FileSizeReadFailed_Loop
+	jp SMF_ProcessVoiceData
 
 SMF_VoiceData_MidiStatusFailed:
 	pop xbc
@@ -1309,7 +1308,7 @@ SMF_VoiceData_ReadMidiRunning:
 	jr lt, SMF_VoiceData_RunningMidiFailed
 	pop xbc
 	pop xwa
-	jp	SMF_MTrk_FileSizeReadFailed_Loop
+	jp SMF_ProcessVoiceData
 
 SMF_VoiceData_RunningMidiFailed:
 	pop xbc
@@ -1716,7 +1715,7 @@ Sequencer_Advance_DivDone:
 Sequencer_Advance_StorePtr:
 	ld (4376:16), xix
 
-Sequencer_Advance_UpdateRemaining:
+; port: v7's label Sequencer_Advance_UpdateRemaining is not in v6 -- no v6 bytes correspond to what it named
 	ld (4323:16), 0
 	ret
 
