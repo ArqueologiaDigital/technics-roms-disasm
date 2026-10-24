@@ -2754,7 +2754,7 @@ FileData_RawDataBlock:
 	push	xiz
 	call	PreLswLoad
 	calr	DataBuf_Data_FormatDispatch
-	lda	xwa, (0xf980:16)
+	lda	xwa, (LIVE_PANEL_BLOCK:16)
 	ld	(xsp+6), xwa
 	pushw	1664
 	call	Malloc
@@ -5212,7 +5212,7 @@ FileData_ImportNNLivePanel:
 	push	xiz
 	call	PreLswLoad
 	calr	DataBuf_Data_FormatDispatch
-	lda	xwa, (0xf980:16)
+	lda	xwa, (LIVE_PANEL_BLOCK:16)
 	ld	(xsp+6), xwa
 	pushw 1088
 	call	Malloc
@@ -7148,7 +7148,7 @@ SndParam_UpdateChan_CopyMemory:
 	ld (xsp), xwa
 	ld xwa, 0x2e0
 	add (xsp), xwa
-	lda xbc, (0xf980:16)
+	lda xbc, (LIVE_PANEL_BLOCK:16)
 	lda xwa, (PANEL_REC_98+12:16)
 	sub xwa, xbc
 	pushw wa
@@ -9377,7 +9377,7 @@ MidiPkt_SetXferTotal_All:
 	dec	4, xsp
 	push	xiz
 	ld	xiz, xwa
-	lda	xwa, (0xf980:16)
+	lda	xwa, (LIVE_PANEL_BLOCK:16)
 	ld	(xiz), xwa
 	calr	MidiPkt_GetUsedSize_SeqEvents
 	ld	(xsp+4), xhl
@@ -9410,7 +9410,7 @@ MidiPkt_SetXferTotal_All_Skip4:
 	inc	4, xsp
 	ret
 MidiPkt_SetXferTotal_Panel:
-	lda	xde, (0xf980:16)
+	lda	xde, (LIVE_PANEL_BLOCK:16)
 	ld	(xwa), xde
 	lda	xbc, (0xffbe:16)
 	sub	xbc, xde
@@ -9429,7 +9429,7 @@ MidiPkt_SetXferTotal_Panel:
 ;   0xBC40 (MidiPkt_SetXferTotal_Panel) and the block descriptor 0xBC50 (this) and starts step 1; the send side
 ;   MidiPkt_ArpConfigChain_Data_Helper2 uses it for 0xBC30.
 MidiPkt_SetXferBlock_LivePanel:
-	lda	xde, (0xf980:16)
+	lda	xde, (LIVE_PANEL_BLOCK:16)
 	ld	(xwa), xde
 	lda	xbc, (0xffbe:16)
 	sub	xbc, xde

@@ -1195,7 +1195,7 @@ AccPlay_InitializeStart:
 	ld	xbc, 0:i3
 	ld	xde, 0:i3
 	call	CtrlPanel_IndicatorDispatch
-	ld	(36530:16), 4
+	ld	(DEMO_PLAY_STATE:16), 4
 	ret
 AccPlay_MainUpdateLoop:
 	call AccWrap_PlayModeDispatch
@@ -1266,7 +1266,7 @@ AccPlay_SetIndicatorAndRet:
 
 
 AccPlay_DispatchSeqStart:
-	bit 2, (0x0420:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr nz, AccPlay_DispatchSeqRet
 	call Seq_DispatcherEntry
 	or (0x334c:16), 0x01
@@ -1400,7 +1400,7 @@ AccPlay_PostLoopCleanup:
 AccPlay_StopIfRunning:
 	bit	0, (32377:16)
 	jr	z, AccPlay_StopRet
-	bit	2, (1056:16)
+	bit	2, (ACC_TRANSPORT_STATE:16)
 	jr	nz, AccPlay_StopRet
 	call	Seq_DispatcherEntry
 	and	(13132:16), 254
@@ -2584,7 +2584,7 @@ AccPlay_ToggleRet:
 	ret
 
 AccPlay_StopAndReset:
-	bit 2, (1056:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr nz, AccPlay_StopResetRet
 	ld wa, 0:i3
 	ld (1047:16), a
@@ -2595,7 +2595,7 @@ AccPlay_StopAndReset:
 	ld (1077:16), a
 	ld (1130:16), a
 	ld (1128:16), wa
-	ld (1056:16), 1
+	ld (ACC_TRANSPORT_STATE:16), 1
 	ld (1054:16), 1
 	ld (1055:16), 1
 

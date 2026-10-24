@@ -19,7 +19,7 @@ MidiSerial_ProcessInput:
 	ldw (0x90de:16), 0
 
 MidiSerial_PumpLoop:
-	ld xix, 0x1f37b
+	ld xix, SEQMAIN_RING
 	ld wa, (xix - 10)
 	cp wa, (xix - 6)
 	jr z, MidiSerial_PumpDone
@@ -66,7 +66,7 @@ MidiSerial_StatusHandlers:
 	.long MidiRx_SystemMsgDispatch
 
 MidiSerial_WaitForData:
-	ld xiz, 0x1f37b
+	ld xiz, SEQMAIN_RING
 	ld xiy, MIDIRX_STATUS
 	ld (xiy + 3), 0x0
 
@@ -3265,7 +3265,7 @@ FileData_RawDataBlock:
 	push	xiz
 	call	PreLswLoad
 	calr	DataBuf_Data_FormatDispatch
-	lda	xwa, (0xf980:16)
+	lda	xwa, (LIVE_PANEL_BLOCK:16)
 	ld	(xsp+6), xwa
 	pushw	1664
 	call	Malloc
@@ -5768,7 +5768,7 @@ FileData_ImportNNLivePanel:
 	push	xiz
 	call	PreLswLoad
 	calr	DataBuf_Data_FormatDispatch
-	lda	xwa, (0xf980:16)
+	lda	xwa, (LIVE_PANEL_BLOCK:16)
 	ld	(xsp+6), xwa
 	pushw 1088
 	call	Malloc
@@ -7795,7 +7795,7 @@ SndParam_UpdateChan_CopyMemory:
 	ld (xsp), xwa
 	ld xwa, 0x2e0
 	add (xsp), xwa
-	lda xbc, (0xf980:16)
+	lda xbc, (LIVE_PANEL_BLOCK:16)
 	lda xwa, (PANEL_REC_98+12:16)
 	sub xwa, xbc
 	pushw wa
@@ -10199,7 +10199,7 @@ MidiPkt_SetXferTotal_All:
 	dec	4, xsp
 	push	xiz
 	ld	xiz, xwa
-	lda	xwa, (0xf980:16)
+	lda	xwa, (LIVE_PANEL_BLOCK:16)
 	ld	(xiz), xwa
 	calr	MidiPkt_GetUsedSize_SeqEvents
 	ld	(xsp+4), xhl
@@ -10237,7 +10237,7 @@ MidiPkt_SetXferTotal_All_Skip4:
 ;   the total descriptor 0xBCDC with it before the block descriptor 0xBCEC (MidiPkt_SetXferBlock_LivePanel);
 ;   SysEx_SendPanelMemoryData uses it for the send-side total 0xBCBC.
 MidiPkt_SetXferTotal_Panel:
-	lda	xde, (0xf980:16)
+	lda	xde, (LIVE_PANEL_BLOCK:16)
 	ld	(xwa), xde
 	lda	xbc, (0xffbe:16)
 	sub	xbc, xde
@@ -10256,7 +10256,7 @@ MidiPkt_SetXferTotal_Panel:
 ;   0xBCDC (MidiPkt_SetXferTotal_Panel) and the block descriptor 0xBCEC (this) and starts step 1; the send side
 ;   MidiPkt_ArpConfigChain_Data_Helper2 uses it for 0xBCCC.
 MidiPkt_SetXferBlock_LivePanel:
-	lda	xde, (0xf980:16)
+	lda	xde, (LIVE_PANEL_BLOCK:16)
 	ld	(xwa), xde
 	lda	xbc, (0xffbe:16)
 	sub	xbc, xde

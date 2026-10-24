@@ -165,7 +165,7 @@ MainPreControl:
 	jp	t, (xix+bc)
 ; MainPreControl dispatch (11-entry, table 0xea007a)
 MainPreControl_Dispatch:
-	ldw	(0x0251d8:24), 0
+	ldw	(PRESENTATION_LOADED:24), 0
 
 MainPreControl_ReturnNull:
 	ld xhl, 0:i3
@@ -206,12 +206,12 @@ MainPreControl_OnStartPresentation:
 	call Demo_SelectEntry_ProcessSongList			; additional handler
 	jr MainPreControl_ReturnNull
 MainPreControl_OnExitPresentation:
-	cpw	(0x251d8:24), 0
+	cpw	(PRESENTATION_LOADED:24), 0
 	jr z, MainPreControl_Dispatch			; if zero, clear state
 	call Part_InitFromPreset			; process display state
 	jr MainPreControl_Dispatch
 MainPreControl_OnExistPresentation:
-	ld	hl, (0x251d8:24)
+	ld	hl, (PRESENTATION_LOADED:24)
 	exts xhl
 	ret
 
@@ -338,7 +338,7 @@ Seq_PostMelodyEventAlt:
 	jrl Seq_DispatchMainFunc
 
 Seq_ReadStartFlag:
-	ld hl, (0x0251d8:24)
+	ld hl, (PRESENTATION_LOADED:24)
 	exts xhl
 	jr ApPreControl_Exit
 
@@ -580,12 +580,12 @@ FDemo_IndicatorSetup:
 	ld	bc, 0:i3
 	ld	de, 0:i3
 	call	CtrlPanel_IndicatorDispatch
-	ld	(36530:16), 4
+	ld	(DEMO_PLAY_STATE:16), 4
 	ret
 DemoMode_Initialize:
 	calr	Demo_PreSetup
 	ld	(0x2966:16), 0
-	ld	(3379:16), 0
+	ld	(DEMO_DEBOUNCE:16), 0
 	ld	(DEMO_TIMER_COUNTDOWN:16), 0
 	res	7, (0x28ae:16)
 	call	MidiChannel_ResetAndConfigure
@@ -620,7 +620,7 @@ FDemo_PostBannerCheck:
 Demo_SelectionEntryHandler:
 	calr Demo_PreSetup
 	ld (0x2966:16), 0x00
-	ld (0x0d33:16), 0x00
+	ld (DEMO_DEBOUNCE:16), 0x00
 	ld (DEMO_TIMER_COUNTDOWN:16), 0x00
 	calr Audio_WaitForReady
 	call SeqStep_PlaybackStateMachine
@@ -640,10 +640,10 @@ SwbtB3_CodeA9_Listener0:
 	ld	a, (SWBTWR_PAYLOAD_2:16)
 	and	a, 19
 	jr	z, Demo_SelectEntry_NoNewButton
-	ld	(3379:16), 16
+	ld	(DEMO_DEBOUNCE:16), 16
 	ret
 Demo_SelectEntry_NoNewButton:
-	ld (3379:16), 0
+	ld (DEMO_DEBOUNCE:16), 0
 	ret
 
 Demo_SelectEntry_PreSaveCheck:
@@ -705,7 +705,7 @@ Demo_SelectEntry_ByteTable_Join2:
 	calr	Demo_PreSetupAndScan
 	calr	Demo_WaitForDisplayBit
 	ldw	(154500:24), 1
-	ld	(36530:16), 4
+	ld	(DEMO_PLAY_STATE:16), 4
 	cp	(ACTIVE_TITLE:16), 228
 	call	nz, (SeqInit_FinalEvent:24)
 	ld	a, (DEMO_ACTIVE_ENTRY:16)
@@ -749,7 +749,7 @@ Demo_SelectEntry_ToCountdown:
 	jrl Demo_ResetCountdownTimer
 
 Demo_SelectEntry_StartAutoPlay:
-	ld	(0x8eb2:16), 4
+	ld	(DEMO_PLAY_STATE:16), 4
 	cp	(ACTIVE_TITLE:16), 228
 	call	nz, (SeqInit_FinalEvent:24)
 	ld	a, (DEMO_ACTIVE_ENTRY:16)
@@ -789,11 +789,11 @@ Demo_SelectEntry_CheckCPanel:
 
 	ret
 Demo_SelectEntry_Debounce:
-	ld	a, (3379:16)
+	ld	a, (DEMO_DEBOUNCE:16)
 	cp	a, 0:i3
 	ret	z
 	dec	1, a
-	ld	(3379:16), a
+	ld	(DEMO_DEBOUNCE:16), a
 	cp	a, 0:i3
 	ret	nz
 	set	3, (DEMO_CONTROL_FLAGS:16)
@@ -811,7 +811,7 @@ Demo_SelectEntry_AfterSongLoad:
 	ld	a, (DEMO_ACTIVE_ENTRY:16)
 	extz	wa
 	call	Seq_DispatchEventType6
-	ld	(36530:16), 4
+	ld	(DEMO_PLAY_STATE:16), 4
 	bit	3, (DEMO_CONTROL_FLAGS:16)
 	ret	z
 	cp	(ACTIVE_TITLE:16), 228
@@ -900,7 +900,7 @@ Demo_SelectEntry_PlaySong:
 	pop XHL
 	pop XDE
 	call SeqTimer_UpdateTempoReg
-	ld (0x8eb2:16), 0x06
+	ld (DEMO_PLAY_STATE:16), 0x06
 	ld a, (DEMO_ACTIVE_ENTRY:16)
 	extz WA
 	call Seq_DispatchEventType5
@@ -917,7 +917,7 @@ Demo_SelectEntry_StartPlayback:
 	ret
 Audio_WaitForReady:
 	ld xbc, 0xf000
-	ld a, (1056:16)
+	ld a, (ACC_TRANSPORT_STATE:16)
 
 Audio_WaitForReady_PollLoop:
 	bit 2, a
@@ -1122,13 +1122,13 @@ Demo_LookupPartTableEntry:
 	ret
 Demo_WaitForDisplayBit:
 	ld xwa, NakaData_RomEnd
-	bit 2, (1056:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	ret z
 
 Demo_WaitForDisplayBit_Loop:
 	sub xwa, 0x1
 	ret z
-	bit 2, (1056:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr nz, Demo_WaitForDisplayBit_Loop
 	ret
 
@@ -1770,7 +1770,7 @@ LoadRegion0_OpenSuccess:
 	cp	hl, 0:i3
 	jr	z, LoadRegion0_AltPath			; mode not available, alt path
 	call	PreLswLoad				; primary display setup
-	lda	xwa, (63872:16)
+	lda	xwa, (LIVE_PANEL_BLOCK:16)
 	lda	xbc, (65472:16)
 	ld	xde, xwa				; XDE = base (0xf980)
 	sub	xbc, xde				; XBC = size (0xffc0-0xf980)
@@ -2438,7 +2438,7 @@ FileIO_SaveRegion0_VRAM:
 	push xiz
 	ld (xsp + 22), xwa			; save arg
 	lda	xbc, (0xffc0:16)
-	lda	xwa, (0xf980:16)
+	lda	xwa, (LIVE_PANEL_BLOCK:16)
 	ld (xsp + 4), xbc			; save end address
 	sub (xsp + 4), xwa			; size = end - start
 	lda xbc, (0x1e7800:24)
@@ -8482,7 +8482,7 @@ SeqPhase_OperationStateCheck:
 	jrl z, SeqPhase_PopIzRet
 	res 0x07,A
 	ld (0x042c:16), a
-	bit 2, (0x0420:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jrl nz, SeqPhase_PopIzRet
 	bit 2, (0x041f:16)
 	jrl nz, SeqPhase_PopIzRet
@@ -8812,7 +8812,7 @@ FileIO_ErrorCodeByteBlock_Skip5:
 	ld	a, (213234:24)
 	cp	(CURRENT_MODE:16), 1
 	jr	nz, FileIO_ErrorCodeByteBlock_Skip7
-	bit	2, (0x420:16)
+	bit	2, (ACC_TRANSPORT_STATE:16)
 	ret	nz
 	bit	2, (0x41f:16)
 	ret	nz

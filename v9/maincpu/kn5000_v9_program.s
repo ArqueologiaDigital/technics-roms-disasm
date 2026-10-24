@@ -1426,7 +1426,7 @@ Boot_DisplayScreen:
 	ld wa, 3:i3
 	call ScreenGroup_Dispatch
 	ld (NMI_GUARD:16), 128
-	ldw (0x00ffd4:24), 0x0000
+	ldw (NMI_CHECKSUM_REGION1:24), 0x0000
 	ld a, (1026:16); Load boot combo code
 	extz wa
 	calr	Boot_HandleComboDisplay	; Handle combo 2 (LEDs) or combo 3 (version screen)
@@ -1704,12 +1704,12 @@ GetResouceInfo:
 	jp	t, (xix+wa)
 ; Resource info handlers - 10 handlers for different resource types
 RESOURCE_INFO_HANDLERS:
-	lda xwa, (63872:16)
+	lda xwa, (LIVE_PANEL_BLOCK:16)
 	ld (xbc), xwa
 	lda xwa, (65470:16)
 	ld xde, xwa
 	inc 2, xde
-	lda xwa, (63872:16)
+	lda xwa, (LIVE_PANEL_BLOCK:16)
 	sub xde, xwa
 	ld (xbc + 4), xde
 	ret

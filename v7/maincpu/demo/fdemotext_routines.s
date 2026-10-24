@@ -2970,7 +2970,7 @@ Seq_InitializeAndStart:
 	dec	4, xsp
 	push	xiz
 	ld	(xsp+4), xwa
-	ldw	(152024:24), 1
+	ldw	(PRESENTATION_LOADED:24), 1
 	ld	wa, 0:i3
 	calr	Seq_InitVoiceStructures
 	ld	xwa, (xsp+4)

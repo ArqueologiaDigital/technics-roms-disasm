@@ -2544,7 +2544,7 @@ MidiDispatch_UpdateLEDs:
 	jrl	CtrlPanel_UpdateLEDState
 Audio_InitChannelTimers:
 	ld	(0x8eb0:16), 5
-	ld	(0x8eb2:16), 5
+	ld	(DEMO_PLAY_STATE:16), 5
 	ld	(0x8eb4:16), 5
 	ld	(0x8eb6:16), 5
 	ld	(0x8eb8:16), 5
@@ -3456,7 +3456,7 @@ CtrlPanel_GuardedNibbleSet_8F4E:
 	cp	(0x7e6f:16), 0
 	jr	z, CtrlPanel_BitOp_Cleanup
 CtrlPanelGuard_PassedCheck:
-	ld	a, (0x8eb2:16)
+	ld	a, (DEMO_PLAY_STATE:16)
 	extz	wa
 	call	CtrlPanel_LookupIndicatorEntry
 	and	l, (0x8eae:16)
@@ -3688,12 +3688,12 @@ MidiChannel_CleanupRet:
 MidiChOut_DetectChanges:
 	bit	2, (1054:16)
 	ret	nz
-	ld	a, (1056:16)
+	ld	a, (ACC_TRANSPORT_STATE:16)
 	xor	a, (0x33df:16)
 	bit	2, a
 	ret	z
 	orw	(0x8ea2:16), 4
-	ldmm8	0x33df, 1056
+	ldmm8	0x33df, ACC_TRANSPORT_STATE
 	ret
 MidiChannel_ScanPending:
 	push	xiz

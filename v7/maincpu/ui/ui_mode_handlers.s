@@ -749,7 +749,7 @@ EffectMode_CopyHoldPedalBits:
 
 	ret z
 
-	bit 2, (1056:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 
 	ret z
 

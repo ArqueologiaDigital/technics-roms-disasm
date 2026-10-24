@@ -496,7 +496,7 @@ SeqRestart_CheckAndDispatch:
 	ldw bc, 0xf000
 
 SeqRestart_WaitBit2Loop:
-	bit 2, (1056:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr z, SeqRestart_DispatchAndNotify
 	nop
 	nop
@@ -943,7 +943,7 @@ CDlike_ResetPlaybackState:
 
 CDlikeReset_SetTimerFlags:
 	ld (SEQ_TRANSPORT_STATE:16), 1
-	ld (1056:16), 1
+	ld (ACC_TRANSPORT_STATE:16), 1
 	ei 0
 	ret
 

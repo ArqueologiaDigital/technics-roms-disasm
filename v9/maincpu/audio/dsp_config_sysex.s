@@ -908,7 +908,7 @@ SwbtWr_InitBank1:
 	ld xiy, SwbtBank1_PostCallbacks
 	ld (0xc085:16), xiy
 	ld xiy, SWBTWR_EVENT_QUEUE
-	ld (0xc089:16), xiy
+	ld (SWBTWR_BUFFER_PTR:16), xiy
 	calr SwbtWr_DispatchLoop_Init
 	ret
 
@@ -918,7 +918,7 @@ SwbtWr_InitBank2:
 	ld xiy, SwbtBank2_PostCallbacks
 	ld (0xc085:16), xiy
 	ld xiy, SWBTWR_EVENT_QUEUE
-	ld (0xc089:16), xiy
+	ld (SWBTWR_BUFFER_PTR:16), xiy
 	calr SwbtWr_DispatchLoop_Init
 	ret
 
@@ -928,16 +928,16 @@ SwbtWr_InitBank3:
 	ld xiy, SwbtBank3_PostCallbacks
 	ld (0xc085:16), xiy
 	ld xiy, 0xc039
-	ld (0xc089:16), xiy
+	ld (SWBTWR_BUFFER_PTR:16), xiy
 	calr SwbtWr_DispatchLoop_Init
 	ret
 
 SwbtWr_DispatchLoop_Init:
-	ldw (0xc07b:16), 0
+	ldw (SWBTWR_DISPATCH_INDEX:16), 0
 
 SwbtWr_DispatchLoop:
-	ld xiy, (0xc089:16)
-	add iy, (0xc07b:16)
+	ld xiy, (SWBTWR_BUFFER_PTR:16)
+	add iy, (SWBTWR_DISPATCH_INDEX:16)
 	cp (xiy), 0xff
 	jr z, SwbtWr_DispatchLoop_PostCallbacks
 	ld xix, (0xc081:16)
@@ -988,7 +988,7 @@ SwbtWr_DispatchLoop_ExecuteCallback:
 	jr SwbtWr_DispatchLoop_ScanCallbacks
 
 SwbtWr_DispatchLoop_NextEvent:
-	addw (0xc07b:16), 4
+	addw (SWBTWR_DISPATCH_INDEX:16), 4
 	jrl SwbtWr_DispatchLoop
 
 SwbtWr_DispatchLoop_PostCallbacks:
@@ -1198,7 +1198,7 @@ VoiceParam_RestoreReverbChorus_Loop:
 
 BitMapOut_ComputeRegionDelta:
 	lda xwa, (PANEL_REC_98+12:16)
-	lda xbc, (0xf980:16)
+	lda xbc, (LIVE_PANEL_BLOCK:16)
 	sub xwa, xbc
 	pushw wa
 	push xbc
@@ -1249,7 +1249,7 @@ BitMapOut_RenderDisplay:
 	lda xsp, (xsp + 20)
 	calr VoiceParam_SaveReverbChorus
 	lda xix, (SEQ_SONG_RECORD+736:16)
-	lda xbc, (0xf980:16)
+	lda xbc, (LIVE_PANEL_BLOCK:16)
 	ld xhl, xbc
 	lda xwa, (0xfd5e:16)
 	sub xwa, xbc
@@ -1292,7 +1292,7 @@ BitMapOut_SkipRestore:
 BitMapOut_MergeOutputFields:
 	lda xix, (PANEL_REC_98:16)
 	lda xbc, (xix + 1)
-	lda xhl, (0xf980:16)
+	lda xhl, (LIVE_PANEL_BLOCK:16)
 	ld xwa, xbc
 	sub xwa, xhl
 	lda xde, (SEQ_SONG_RECORD+736:16)

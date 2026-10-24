@@ -8938,8 +8938,8 @@ SeqBuf_FlushAndReinit_VoiceCCEvents:
 
 SeqTimer_SetPlaybackFlags:
 	ei 6
-	set 1, (1056:16)
-	set 2, (1056:16)
+	set 1, (ACC_TRANSPORT_STATE:16)
+	set 2, (ACC_TRANSPORT_STATE:16)
 	ld a, (1054:16)
 	bit 0, a
 	jr z, SeqTimerFlags_CheckSysFlag
@@ -11047,8 +11047,8 @@ Seq_HandleModeTransition:
 	res 3, (SEQ_RTMCFG:16)
 
 SeqModeTransit_ClearFlags:
-	res 4, (1056:16)
-	res 1, (1056:16)
+	res 4, (ACC_TRANSPORT_STATE:16)
+	res 1, (ACC_TRANSPORT_STATE:16)
 	ld a, (1054:16)
 	res 4, a
 	res 1, a
@@ -19188,7 +19188,7 @@ SeqPlay_FindSetBitAndDeact:
 
 SeqPlay_FindAfterReset:
 	call Audio_CheckSubsystemReady
-	ld a, (1056:16)
+	ld a, (ACC_TRANSPORT_STATE:16)
 	and a, 0x5
 	call z, (AccWrap_PlayModeDispatch:24)
 	calr Part_DetectSingleVoiceType
@@ -19653,7 +19653,7 @@ SeqPlay_CountInEnd_Join:
 AccWrap_DispatchAndWaitSync:
 	call AccWrap_PlayModeDispatch
 	ldw bc, 0xffff
-	ld a, (1056:16)
+	ld a, (ACC_TRANSPORT_STATE:16)
 	bit 2, a
 	ret z
 
@@ -20051,7 +20051,7 @@ SeqTimer_CheckPlaybackCountdown:
 
 SeqTimer_FlagsLoop:
 	ld (SEQ_TRANSPORT_STATE:16), 1
-	ld (1056:16), 1
+	ld (ACC_TRANSPORT_STATE:16), 1
 	ei 0
 
 SeqTimer_FlagsReturn:

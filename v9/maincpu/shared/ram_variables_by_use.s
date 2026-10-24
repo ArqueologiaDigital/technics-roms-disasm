@@ -6,13 +6,18 @@
 	.equ BOOT_CONFIG_FLAGS,			0x0406	; bit 7 = boot finished normally (Boot_SetConfigFlag7 sets it in Boot_DisplayScreen, Boot_ClearConfigFlag7 clears it at the start of Boot_InitPeripherals)
 	.equ ACC_CLOCK,				0x0415	; accompaniment clock within the beat, 0..95 (INTTR4_CheckSeqEnable counts it, ClkTick_Src2FineBeatCheck by 4 per MIDI clock)
 	.equ ACC_BEAT,				0x0416	; beat within the measure; INTTR4_SeqAutoStart compares it with ACC_BEATS_PER_BAR - 1, the BeatLed_*Masks show it on the START/STOP BEAT LEDs
+	.equ ACC_TRANSPORT_STATE,		0x0420	; transport of the style clock, coded like SEQ_TRANSPORT_STATE: 1 start pending, 6 running (bit 2 gates the clock counters in INTTR4_HANDLER; Audio_WaitForReady polls it), 12 stop requested, 16 stopped (ssf-presentation.md "Key DRAM State Variables")
 	.equ ACC_BEATS_PER_BAR,			0x0433	; beats per measure of the style; 3 or 6 select the three-beat LED pattern (BeatLed_ThreeBeatMasks)
 	.equ MIDI_RX_CONTEXT,			0x0438	; [28 bytes] XWA, XBC, XDE, XHL, XIX, XIY, XIZ saved by MIDI_RX_CONTEXT_SAVE and put back by MIDI_RX_CONTEXT_RESTORE
 	.equ TASK_CURRENT,			0x0487	; word: the TCB of the running task, 0 while the scheduler runs (TaskSched_FoundReadyTask sets it, TaskSched_Dispatch saves XSP at its +4)
+	.equ INTERCPU_XFER_PTR,			0x05da	; the source address of the inter-CPU transfer in progress (InterCPU_Send_WaitAck, E1Bulk_WaitAck; inter-cpu-protocol.md)
+	.equ INTERCPU_XFER_COUNT,		0x05de	; word: its byte count
+	.equ INTERCPU_XFER_STATE,		0x05e0	; 0 = idle, 1 while a packet or E2 header is sent, 2 for an E1 bulk transfer's first phase (INTTC2_HANDLER clears it)
 	.equ SEMENU_PART_MASK,			0x065e	; the sound editor's enabled parts, one bit per part (SeMenu_SetPartEnabled)
 	.equ SEMENU_PART_MODE,			0x06ae	; the sound editor's part layout: 1 = 2 parts, else 4 (SeMenu_DrawPartSelector, SeMenu_DrawPartRadioButtons)
 	.equ STYLE_WORK_IMAGE_PTR,		0x0c72	; the style work image (0x69800, set by Flash_InitExtMemAddrs); the legacy-image converters build there
 	.equ TRACK_ASSIGN_CURSOR,		0x0cdf	; the track (0..15) the TRACK ASSIGN page's cursor is on; 8 = the second page (SqTrAs_Cursor*)
+	.equ DEMO_DEBOUNCE,			0x0d33	; debounce counter of the demo selection buttons (Demo_SelectEntry_Debounce)
 	.equ SQSTEP_CLOCK,			0x0d57	; clock within the beat at the song-data cursor, 0..95 (SqStep_AdvanceClockByStep, SqStep_SeekForwardByDistance store it)
 	.equ SQSTEP_WRAP_COUNT,			0x0d58	; word: clock-wrap markers (0x81) passed since the start of the cursor track (SqStep_WriteClockWrapMarker increments it)
 	.equ SQSTEP_UNITS,			0x0d5a	; word: whole 96-clock units from the start of the cursor track to the cursor; the seeks count it
@@ -118,6 +123,7 @@
 	.equ DISPLAY_CHORD_ROOT,		0x8d40	; the chord MainChordPre shows: its root (copied from CHORD_ROOT by Chord_ApplyCurrentChord)
 	.equ DISPLAY_CHORD_TYPE,		0x8d42	; the chord MainChordPre shows: its type
 	.equ DISPLAY_CHORD_BASS,		0x8d44	; the chord MainChordPre shows: its bass root, 0 unless it is an on-bass chord
+	.equ DEMO_PLAY_STATE,			0x8f4e	; 4 = idle (the Demo_SelectEntry_* paths), 6 = a song started by Demo_SelectEntry_PlaySong
 	.equ PROGRAM_CHANGE_PART,		0x90f7	; the part a program change or sound selection is for: 0..31, 16-20 from the accompaniment chains (AccPatch_UpdateChain_*), 72 = the rhythm part
 	.equ EXTDATA_TLV_OFFSET,		0x912f	; byte offset in the panel record (tag MIDI_MSG_STATUS) the ExtData_* handlers change
 	.equ EXTDATA_VALUE,			0x9130	; the received value; with EXTDATA_MASK a two-byte value for ExtData_SetTempoIfChanged
@@ -129,6 +135,8 @@
 	.equ MIDIRX_PART_EVENT,			0x9644	; [4 bytes] the part-parameter event a MIDI receive handler builds: +0 target, +1 part, +2 value, +3 mask; MidiCC_QueuePartParam queues it on the SwbtWr queue
 	.equ MIDIRX_PART,			0x966a	; the part a received channel message is being applied to: MidiRx_ChannelMsgDispatch walks the parts the channel maps to and calls the handler for each
 	.equ MIDIRX_PARTS_LEFT,			0x966b	; parts of that list still to do (MidiRx_ChannelMsgDispatch counts it down)
+	.equ SWBTWR_DISPATCH_INDEX,		0xc07b	; word: read offset in the SwbtWr dispatch buffer (SwbtWr_DispatchLoop)
+	.equ SWBTWR_BUFFER_PTR,			0xc089	; the SwbtWr dispatch buffer (SwbtWr_InitBank1-3 point it at their bank)
 	.equ HARMONY_REF_NOTE,			0xceaa	; harmony reference note: the lowest note of the list Harmony_FindReferenceNote scans, if in 25..102, else 0xFF
 	.equ HARMONY_REF_BYTE,			0xceab	; the other byte of that note's list entry
 	.equ HARMONY_PREV_REF_NOTE,		0xceac	; the previous HARMONY_REF_NOTE
@@ -153,11 +161,24 @@
 	.equ SEQ_PUNCH_OUT_MEASURE,		0xf23a	; word: the punch-out measure (SeqPlay_IncPunchOutMeasure keeps the punch-in below it)
 	.equ SEQ_COUNT_IN,			0xf23f	; count-in measures before the punch-in (play-screen parameter 10)
 	.equ SEQ_TRACK_TABLE,			0xf250	; [48 bytes] 16 three-byte track entries of the current song; bit 7 of the first byte = the track holds data (SqStep_CheckCursorTrackUsed); part of SEQ_SONG_RECORD
+	.equ LIVE_PANEL_BLOCK,			0xf980	; the live panel block, 0x280 bytes (it holds PANEL_RECORDS): MidiPkt_SetXferBlock_LivePanel transfers it, FileData_ImportNNLivePanel loads into it, the power-fail NMI checksums it
+	.equ NMI_CHECKSUM_REGION2,		0xffd2	; word: checksum of LIVE_PANEL_BLOCK, stored and checked the same way
+	.equ NMI_CHECKSUM_REGION1,		0xffd4	; word: checksum of RAM 0xF180 (0x800 words) NMI_StorePayloadChecksums stores at power-fail; SubCPU_Payload_Verify checks it at boot
 	.equ SEQ_CURRENT_SONG,			0xffe3	; the selected song, 0..9: its record is SEQ_SONG_SLOTS + n * 0x800 (Display_CopyToneTableToRAM, SetSongSlotValue); set when a song is loaded (SMF_FinalizeAndStartPlayback)
 	.equ FILE_ERROR,			0x1e53c	; word: the file system's last error: FileOpen_CheckPermission stores 2, SeqStep_MemAllocFail 3, FileOpen_SlotExhausted 4, FileOpen_ErrorNoFile 7; FDC status codes are mapped into it (FDC_SetSectorLength)
+	.equ SEQMAIN_READ_POS,			0x1f373	; word: read index of the main sequencer ring buffer SEQMAIN_RING (Seq_CheckSongEnd compares it with SEQMAIN_WRITE_POS)
+	.equ SEQMAIN_WRITE_POS,			0x1f377	; word: write index of SEQMAIN_RING
+	.equ SEQMAIN_RING,			0x1f37b	; the main sequencer ring buffer of MIDI events (SeqMain_WriteByte / SeqMain_ReadData; sequencer.md "Ring Buffer Pipeline")
+	.equ SEQBUF_MIDIOUT,			0x1f785	; the MIDI-out ring buffer (SeqBuf_MidiOut_*)
+	.equ SEQBUF_DSPSYSEX,			0x1fca3	; the DSP SysEx ring buffer (SeqBuf_DspSysEx_*)
+	.equ PRESENTATION_LOADED,		0x251d8	; word: 1 while a presentation started from disk is loaded (Seq_InitializeAndStart sets it, MainPreControl clears it; MT_ExistPresentation returns it)
 	.equ NAMING_CHAR,			0x274de	; word: the character at the naming window's cursor, as an index into the character page (0x1A underscore, 0x25 space); the dial steps it
+	.equ OBJECT_REGISTRY,			0x27ed2	; the object table RegisterObjectTable fills: 14-byte entries {class, proc, count, table}, entry n at +14n (ClassProc, FunctionProc, TitleProc ... look objects up here)
+	.equ EVENT_QUEUE,			0x2bc34	; the event queue PostEvent / ApPostEvent fill: 1,024 entries of 12 bytes {target, event, param} (GetEvent, DeleteEvent scan it)
 	.equ DRAW_ENABLED,			0x3044e	; word: 0 = nothing is drawn (ColorBlit, DrawBitmap and the other drawing primitives return); DrawWall sets 1
 	.equ WALLPAPER_BITMAP,			0x30452	; the wallpaper bitmap, 320 bytes per row (ChangeWall_Impl stores it); colour 0xF5 draws by copying the pixel from it
+	.equ DRAW_QUEUE,			0x30466	; the 8 KB circular queue of draw commands (DrawQueue_Alloc, DrawRing_Init): each entry a DrawXxx_Impl address and its parameters
+	.equ DRAW_QUEUE_WRITE_PTR,		0x3246a	; where DrawQueue_Alloc puts the next command
 	.equ PANEL_RECALL_BACKUP,		0x3c8e4	; [960 bytes] backup of the live panel records PANEL_RECORDS..+959, which a panel-memory recall restores the current style and MSP fields from
 	.equ SDPART_ROW,			0x3e99e	; word: the selected row of the part list (IvSdpart_*, AcLswPartEdit*, PsMixer_*): row * 2 indexes the row's part
 	.equ GFX_BG_COLOR,			0x3efa2	; word: background colour (Display_SetBackgroundColor stores it)

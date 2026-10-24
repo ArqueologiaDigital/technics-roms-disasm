@@ -304,7 +304,7 @@ ClkTick_BeatSubdivCheck:
 	calr MIDI_QUEUE_TRACK_EVENT
 
 ClkTick_PerClockCounters:
-	ld a, (1056:16)
+	ld a, (ACC_TRANSPORT_STATE:16)
 	pushw wa
 	and a, 0x5
 	popw wa
@@ -313,7 +313,7 @@ ClkTick_PerClockCounters:
 	jrl nz, Transport_StopHandler
 	bit 0, a
 	jr z, ClkTick_Src2ClickIncrement
-	ld (1056:16), 6
+	ld (ACC_TRANSPORT_STATE:16), 6
 	bit 0, (1054:16)
 	jr z, ClkTick_Src1FineUpdate
 	ld (1054:16), 6
@@ -429,7 +429,7 @@ Transport_StopHandler:
 	jr z, Transport_Return
 	cp d, 0xfc
 	jr nz, Transport_Return
-	ld (1056:16), 16
+	ld (ACC_TRANSPORT_STATE:16), 16
 	bit 2, (1054:16)
 	jr z, Transport_StopSrc3Snapshot
 	bit 2, (SEQ_TRANSPORT_STATE:16)
@@ -498,7 +498,7 @@ MIDI_RESET_PLAYBACK_STATE:
 	xor wa, wa
 	ld (1047:16), a
 	ld (1048:16), wa
-	ld (1056:16), 1
+	ld (ACC_TRANSPORT_STATE:16), 1
 	bit 1, (SEQ_RTMCFG:16)
 	jr z, ResetPlay_Src3Check
 	ld (ACC_CLOCK:16), a
@@ -526,9 +526,9 @@ ResetPlay_Return:
 MIDI_APPLY_STARTUP_TIMING:
 	cp (1108:16), 0
 	jr z, StartTiming_ClearAndReturn
-	bit 0, (1056:16)
+	bit 0, (ACC_TRANSPORT_STATE:16)
 	jr z, StartTiming_ClearAndReturn
-	ld (1056:16), 6
+	ld (ACC_TRANSPORT_STATE:16), 6
 	ld a, (1108:16)
 	dec 1, a
 	sll a, 2
@@ -555,7 +555,7 @@ StartTiming_ClearAndReturn:
 	ret
 
 Continue_SetRunning:
-	ld (1056:16), 6
+	ld (ACC_TRANSPORT_STATE:16), 6
 	bit 0, (SEQ_RTMCFG:16)
 	jr z, Continue_Return
 	ld (SEQ_TRANSPORT_STATE:16), 6
@@ -578,7 +578,7 @@ Continue_Return:
 AltClk_DisabledClockPath:
 	ld (1066:16), 0
 	pushw wa
-	ld a, (1056:16)
+	ld a, (ACC_TRANSPORT_STATE:16)
 	and a, 0x5
 	popw wa
 	jr z, AltClk_NoSrcFlagPath
@@ -586,7 +586,7 @@ AltClk_DisabledClockPath:
 	jr z, AltClk_Return
 	cp d, 0xfc
 	jr nz, AltClk_Return
-	ld (1056:16), 12
+	ld (ACC_TRANSPORT_STATE:16), 12
 	bit 2, (1054:16)
 	jr z, AltClk_StopSrc3Snapshot
 	bit 2, (SEQ_TRANSPORT_STATE:16)
@@ -746,7 +746,7 @@ ChanDisp_NoStatusReturn:
 	ret
 
 MIDI_QUEUE_EVENT_TO_SEQUENCER:
-	ld xix, 0x1f37b
+	ld xix, SEQMAIN_RING
 	cpw (xix - 2), 0x3
 	jr c, QueueToSeq_OverflowFlag
 	ld a, d
@@ -774,7 +774,7 @@ ChanDisp_SecondDataByte:
 	ld d, 0xf2:opc
 
 ChanDisp_ThreeByteRoute:
-	ld xix, 0x1f37b
+	ld xix, SEQMAIN_RING
 	cpw (xix - 2), 0x40
 	jr ugt, ChanDisp_EnqueueThreeBytes
 	pushw de
