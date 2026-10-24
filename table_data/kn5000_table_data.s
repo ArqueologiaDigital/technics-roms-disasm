@@ -219,8 +219,11 @@ Feature_Demo_XML:
 	.byte 0x00
 
 ; Feature-demo slide images: standard Windows 3.x BMP files (8bpp indexed,
-; 256-color palette, 320 px wide), stored verbatim; the sizes and addresses
-; are echoed by the FeatureDemo_FileEntry records below.
+; 256-color palette, 320 px wide), stored whole, headers included; the sizes
+; and addresses are echoed by the FeatureDemo_FileEntry records below.
+; Each .BMP is built from images/FTBMPnn.png (palette indices + the BMP's own
+; palette in its original order) and images/ftbmp_headers.json (every header
+; field) by scripts/build/ftbmp_images.py; `make verify-ftbmp` checks the round trip.
 ; What the firmware checks (DrawBitmapFile_Impl, 0xFAC6F3): "BM" against the
 ; string at 0xEAADF2, biSize == 40, biPlanes == 1, biBitCount <= 8,
 ; biClrUsed <= 256 and bfOffBits - 54 <= 1024; it then copies the palette
