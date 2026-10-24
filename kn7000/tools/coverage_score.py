@@ -118,12 +118,15 @@ def measure():
                 "MN10300 encodings are 1..7 bytes, so this score is wrong." % (bpi, prog_src, insn))
 
     # Converted functions, counted in the source itself: every function block
-    # starts with a `# NAME  (CPU 0x..)` / `# NAME  (lib CPU 0x..)` header; it is
-    # converted when the first line after its comments is not .incbin_range.
+    # starts with a `# NAME  (CPU 0x..)` / `# NAME  (lib CPU 0x..)` header (which may
+    # go on after a `;`: `(CPU 0x..; its register-save prologue starts at 0x..)`); it
+    # is converted when the first line after its comments is not .incbin_range. A
+    # library block that is only the prologue of the next one shares its header
+    # with it (`(lib CPU 0x..; its `call` entry X at 0x..)`): one function, one block.
     nfuncs = nblocks = 0
     pending = False
     for l in lines:
-        if re.match(r"# \S+  \((lib )?CPU 0x[0-9a-fA-F]+\)", l):
+        if re.match(r"# \S+  \((lib )?CPU 0x[0-9a-fA-F]+[);]", l):
             nblocks += 1
             pending = True
             continue
@@ -163,10 +166,16 @@ def main():
     args = ap.parse_args()
 
     m = measure()
+    # The commit column is the HEAD the tree was measured on; a `+` after it says
+    # the measured src/ or tools/ had changes not yet committed (a row is usually
+    # appended in the commit that makes the change, so it is measured on its parent).
     try:
         commit = subprocess.check_output(
             ["git", "-C", REPO, "rev-parse", "--short", "HEAD"], text=True
         ).strip()
+        if subprocess.check_output(["git", "-C", REPO, "status", "--porcelain", "--", "src", "tools"],
+                                   text=True).strip():
+            commit += "+"
     except Exception:
         commit = "?"
 
