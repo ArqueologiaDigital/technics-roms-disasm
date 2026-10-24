@@ -10,9 +10,9 @@
 # caches, copies the program image to work RAM at 0x50000010 and the .data
 # image to 0x50010000, clears .bss, builds the two interrupt thunks at
 # 0x50000000 and jumps to BootMain in RAM.
-#   18975 instructions in 408 routines (79 with no caller, 277 instructions of an older link),
+#   18975 instructions in 401 routines (72 with no caller, 277 instructions of an older link),
 #   33 byte-identical to named firmware routines;
-#   data: 267 strings, 219 pointer words
+#   data: 202 strings, 166 pointer words
 
 # addresses outside this image: RAM past it, the older link's, the hardware
 .equ IVAR0, 0x20000000                         # low 16 bits of the level-0 interrupt entry
@@ -92,37 +92,41 @@
 .equ OldLink_500023CD, 0x500023CD              # an address of the older link
 .equ OldLink_5000C0BA, 0x5000C0BA              # an address of the older link
 .equ OldLink_5000C5F1, 0x5000C5F1              # an address of the older link
-.equ __bss_start, 0x50010194                   # .bss follows .data in RAM: = __data_end
-.equ bss_50010198, 0x50010198
-.equ bss_5001019C, 0x5001019C
-.equ bss_500101A0, 0x500101A0
-.equ bss_500101A4, 0x500101A4
-.equ bss_500101A8, 0x500101A8
-.equ bss_500101AC, 0x500101AC
-.equ bss_500101B0, 0x500101B0
-.equ bss_500101B4, 0x500101B4
-.equ bss_500101B8, 0x500101B8
-.equ bss_500101BC, 0x500101BC
-.equ bss_500101BD, 0x500101BD
-.equ bss_500101BE, 0x500101BE
-.equ bss_500101BF, 0x500101BF
-.equ bss_500101C0, 0x500101C0
-.equ bss_500101C1, 0x500101C1
-.equ bss_500101C2, 0x500101C2
-.equ bss_500101C3, 0x500101C3
+.equ __bss_start, 0x50010194                   # .bss follows .data in RAM: = __data_end; its first object is the struct lconv localeconv fills (decimal_point first)
+.equ LconvThousandsSep, 0x50010198
+.equ LconvGrouping, 0x5001019C
+.equ LconvIntCurrSymbol, 0x500101A0
+.equ LconvCurrencySymbol, 0x500101A4
+.equ LconvMonDecimalPoint, 0x500101A8
+.equ LconvMonThousandsSep, 0x500101AC
+.equ LconvMonGrouping, 0x500101B0
+.equ LconvPositiveSign, 0x500101B4
+.equ LconvNegativeSign, 0x500101B8
+.equ LconvIntFracDigits, 0x500101BC
+.equ LconvFracDigits, 0x500101BD
+.equ LconvPCsPrecedes, 0x500101BE
+.equ LconvPSepBySpace, 0x500101BF
+.equ LconvNCsPrecedes, 0x500101C0
+.equ LconvNSepBySpace, 0x500101C1
+.equ LconvPSignPosn, 0x500101C2
+.equ LconvNSignPosn, 0x500101C3
+.equ PanelEventFifoBuf, 0x500101C4
+.equ PanelEventFifoBufEnd, 0x50010243
 .equ PanelEventFifo, 0x50010244                # FIFO descriptor (PanelFifoPushByte and friends)
+.equ PanelTxFifoBuf, 0x50010258
+.equ PanelTxFifoBufEnd, 0x500102D7
 .equ PanelTxFifo, 0x500102D8                   # FIFO descriptor
 .equ PanelLinkState, 0x500102EC                # the PanelXferStateTable index: 1-6 transmit, 8-9 receive
 .equ PanelReplyCountdown, 0x500102ED           # reply bytes still expected
-.equ PanelLinkFlags, 0x500102EE                # bit 0 ATN pass, bit 1 receiving, bit 2 reply expected, bits 6-7 the pump's phase
+.equ PanelLinkFlags, 0x500102EE                # 0x01 and 0x02 a transfer under way (PanelTxKick sets 0x02; PanelWaitLinkIdle waits for both clear), 0x04 a reply expected, 0xC0 the pump's phase
 .equ PanelLinkConst7D, 0x500102EF              # PanelLinkInit sets it to 0x7D; TODO: nothing in this ROM reads it
-.equ PanelLinkStatus, 0x500102F0               # bit 0 rings reset, bit 7 an error
+.equ PanelLinkStatus, 0x500102F0               # 0x01 the rings were reset, 0x04 back to ATN-armed idle (PanelLinkRxRearm), 0x80 an error or a time-out
 .equ PanelPingResult, 0x500102F1               # PanelTransaction: bit 0 left panel, bit 3 right panel answered
-.equ bss_500102F2, 0x500102F2
-.equ bss_500102F3, 0x500102F3
-.equ bss_500102F4, 0x500102F4
+.equ PanelFrameByte0, 0x500102F2               # PanelFrameDecode's bytes of the report being assembled (TODO: their roles)
+.equ PanelFrameByte1, 0x500102F3
+.equ PanelFrameByte2, 0x500102F4
 .equ PanelIdleRetries, 0x500102F5              # PanelWaitLinkIdle's countdown
-.equ bss_500102F6, 0x500102F6
+.equ PanelAtnCountdown, 0x500102F6             # set by PanelAtnIsr, counted down by PanelTxPump (TODO: its unit)
 .equ PanelTickMark, 0x500102F8                 # the tick count a PanelTickWait* started at
 .equ PanelRxRingTail, 0x500102FC
 .equ PanelRxRingHead, 0x500102FE
@@ -131,33 +135,38 @@
 .equ PanelTxRingWrite, 0x5001035E
 .equ PanelTxRing, 0x50010360
 .equ PanelTxRingArg, 0x50010361                # the second byte of the first slot: PanelSendPairPolled's argument
-.equ bss_5001039C, 0x5001039C
-.equ bss_5001039E, 0x5001039E
-.equ bss_500103A0, 0x500103A0
-.equ bss_500103A6, 0x500103A6
-.equ bss_500103CC, 0x500103CC
-.equ bss_500103CE, 0x500103CE
-.equ PanelErrorCode, 0x500103DD                # PanelErrorRecovery's countdown and error nibble
+.equ PanelSwShadow00, 0x5001039C               # the switch-report bytes as PanelFrameDecode stores them, by offset from 0x5001039C
+.equ PanelSwShadow02, 0x5001039E
+.equ PanelSwShadow03, 0x5001039F
+.equ PanelSwShadow04, 0x500103A0
+.equ PanelSwShadow05, 0x500103A1
+.equ PanelSwShadow06, 0x500103A2
+.equ PanelSwShadow0A, 0x500103A6
+.equ PanelSwShadow30, 0x500103CC
+.equ PanelSwShadow32, 0x500103CE
+.equ PanelSwShadow34, 0x500103D0
+.equ PanelRecoveryCounters, 0x500103DD         # PanelErrorRecovery's two countdowns: high nibble, steps to a full link reset; low nibble, steps to an LED re-send
 .equ PanelAtnPass, 0x500103DE                  # PanelAtnIsr: 0 for the first edge of a pulse
 .equ PanelModeFlag, 0x500103DF                 # PanelModeFlagSet / Get
 .equ FdcMotorCountdown, 0x500103E0
 .equ FdcSavedDor, 0x500103E2
-.equ bss_50010464, 0x50010464
-.equ bss_50010466, 0x50010466
-.equ StackTop, 0x50012468                      # Reset sets SP 12 bytes below it
-.equ bss_50012568, 0x50012568
-.equ bss_5001256C, 0x5001256C
-.equ bss_50012570, 0x50012570
+.equ DiskAttachBuffer, 0x500103E4              # DiskMsgAttach's buffer
+.equ SdProbeReply0, 0x50010464                 # the two extra reply bytes of the status probes
+.equ SdProbeReply1, 0x50010466
+.equ FlashPageBuffer, 0x50012468               # FlashPageWrite's 128 words; Reset puts the stack top 12 bytes below it
+.equ FlashPageIndex, 0x50012568                # FlashPageWrite's word count
+.equ UpdWordBuffer, 0x5001256C
+.equ StatusLatchShadow, 0x50012570
 .equ errno, 0x50012574
 .equ CurrentLconv, 0x5001257C                  # vsprintf_core keeps localeconv's result here
-.equ bss_50012580, 0x50012580
+.equ PanelRxErrorFlag, 0x50012580              # PanelRxIsr: a serial error was seen
 .equ FdcProbeMarker, 0x50012584                # -1 while the media is being identified
-.equ bss_50012586, 0x50012586
+.equ FdcFormatCyl, 0x50012586
 .equ FdcBusy, 0x50012587                       # 0xA5 during a request, 0x5A after
 .equ FdcByteCount, 0x50012588                  # the transfer's bytes
 .equ FdcSectorSize, 0x5001258C                 # 0x200, or 0x400 for media type 2
 .equ FdcInitBusy, 0x50012590
-.equ bss_50012594, 0x50012594
+.equ FdcInitCleared, 0x50012594                # FdcInit sets it to 0 for every media type; nothing reads it
 .equ FdcError, 0x50012598
 .equ FdcPrevError, 0x50012599
 .equ FdcOpcode, 0x5001259A
@@ -179,11 +188,11 @@
 .equ FdcHut, 0x500125AA
 .equ FdcHlt, 0x500125AB
 .equ FdcNonDma, 0x500125AC
-.equ bss_500125AD, 0x500125AD
-.equ bss_500125AE, 0x500125AE
-.equ bss_500125AF, 0x500125AF
-.equ bss_500125B0, 0x500125B0
-.equ bss_500125B1, 0x500125B1
+.equ FdcSpareParam0, 0x500125AD                # FdcMediaParams clears these five; nothing reads them
+.equ FdcSpareParam1, 0x500125AE
+.equ FdcSpareParam2, 0x500125AF
+.equ FdcSpareParam3, 0x500125B0
+.equ FdcSpareParam4, 0x500125B1
 .equ FdcRequestBlock, 0x500125B4               # the request being served: command
 .equ FdcReqDrive, 0x500125B8
 .equ FdcReqHead, 0x500125BC
@@ -211,80 +220,80 @@
 .equ FdcDsr, 0x5001265D
 .equ FdcIcrReadback, 0x5001265E                # the ISRs read their GxICR back into it
 .equ FdcTestRequest, 0x50012660                # FdcSeekTestLoop's and FdcIndexDetectInit's request block
-.equ bss_50012664, 0x50012664
-.equ bss_50012668, 0x50012668
-.equ bss_5001266C, 0x5001266C
-.equ bss_50012670, 0x50012670
-.equ bss_50012674, 0x50012674
-.equ bss_50012678, 0x50012678
+.equ FdcTestReqDrive, 0x50012664
+.equ FdcTestReqHead, 0x50012668
+.equ FdcTestReqCylinder, 0x5001266C
+.equ FdcTestReqSector, 0x50012670
+.equ FdcTestReqCount, 0x50012674
+.equ FdcTestReqBuffer, 0x50012678
 .equ FdcTestBuffer, 0x5001267C
-.equ bss_5001287C, 0x5001287C
-.equ bss_5001287E, 0x5001287E
-.equ bss_50012880, 0x50012880
-.equ bss_50012884, 0x50012884
-.equ bss_50012886, 0x50012886
-.equ bss_50012894, 0x50012894
-.equ bss_5001289C, 0x5001289C
-.equ bss_500128A0, 0x500128A0
-.equ bss_500128A4, 0x500128A4
-.equ bss_500128A8, 0x500128A8
-.equ bss_500128E8, 0x500128E8
-.equ bss_500128F8, 0x500128F8
-.equ bss_50012904, 0x50012904
-.equ bss_50012908, 0x50012908
-.equ bss_5001290A, 0x5001290A
-.equ bss_5001290C, 0x5001290C
-.equ bss_5001290E, 0x5001290E
-.equ bss_50012910, 0x50012910
-.equ bss_50012912, 0x50012912
-.equ bss_50012914, 0x50012914
-.equ bss_50012918, 0x50012918
-.equ bss_5001291C, 0x5001291C
-.equ bss_5001411C, 0x5001411C
-.equ bss_5001811C, 0x5001811C
-.equ bss_5001811E, 0x5001811E
-.equ bss_50018120, 0x50018120
-.equ bss_50018124, 0x50018124
-.equ bss_50018128, 0x50018128
-.equ bss_5001812C, 0x5001812C
-.equ bss_50018130, 0x50018130
-.equ bss_50018330, 0x50018330
+.equ SdProbeFlag, 0x5001287C
+.equ SdMediaState, 0x5001287E                  # 0..3, 3 = ready
+.equ SdDrvPhase, 0x50012880
+.equ SdCardInitFlag, 0x50012884                # the card-info record (+8 in the firmware's block)
+.equ SdLastError, 0x50012886
+.equ SdTotalBytes, 0x50012894
+.equ SdSectorCount, 0x5001289C
+.equ SdByteMultiplier, 0x500128A0
+.equ SdCsdRecord, 0x500128A4                   # {valid, length, data}
+.equ SdCsdRecordData, 0x500128A8
+.equ DiskReplyShadow, 0x500128E8               # DiskCmdReplyCopy's 16-byte copy of the reply
+.equ FatVolumeName, 0x500128F8
+.equ FatPartitionStart, 0x50012904
+.equ FatBytesPerSector, 0x50012908
+.equ FatSectorsPerCluster, 0x5001290A
+.equ FatNumFats, 0x5001290C
+.equ FatRootEntries, 0x5001290E
+.equ FatSectorsPerFat, 0x50012910
+.equ FatEntryCount, 0x50012912                 # the 12-bit entries the FAT holds
+.equ FatTotalSectors, 0x50012914               # from the 32-bit field of the boot sector
+.equ FatDataStart, 0x50012918                  # the first data sector
+.equ FatTable, 0x5001291C
+.equ FatRootDir, 0x5001411C
+.equ FatFile, 0x5001811C                       # the open file: {cluster, offset in sector, buffer, sector in cluster, size, position}
+.equ FatFileOffset, 0x5001811E
+.equ FatFileBuffer, 0x50018120
+.equ FatFileSectorInCluster, 0x50018124
+.equ FatFileSize, 0x50018128
+.equ FatFilePos, 0x5001812C
+.equ FatSectorBuffer, 0x50018130
+.equ FatTestRing, 0x50018330                   # FatReadTestFile's ten sectors
 .equ TickCount, 0x50019730                     # counted up by TickIsr
-.equ bss_50019734, 0x50019734
-.equ bss_50019735, 0x50019735
-.equ bss_50019738, 0x50019738
-.equ bss_5001973C, 0x5001973C
-.equ bss_50019740, 0x50019740
-.equ bss_50019744, 0x50019744
-.equ bss_50019748, 0x50019748
+.equ TickJobs, 0x50019734                      # request bits TickIsr sets on its cycle (TODO: their consumers)
+.equ TickJobs2, 0x50019735
+.equ PanelIrqSlot0, 0x50019738                 # the four slots PanelDisableIrqGroups passes on (TODO: nothing in the image sets them)
+.equ PanelIrqSlot1, 0x5001973C
+.equ PanelIrqSlot2, 0x50019740
+.equ PanelIrqSlot3, 0x50019744
+.equ PanelLedMirror, 0x50019748                # the LED bytes last sent; PanelLedMirrorResetA clears them
 .equ IrqSlots, 0x5001974C                      # IrqRegister's copies of the 20-byte descriptors, one per slot
-.equ bss_5001975A, 0x5001975A
-.equ bss_500199CC, 0x500199CC
-.equ bss_500199D0, 0x500199D0
-.equ bss_5002B9D0, 0x5002B9D0
-.equ bss_5002B9D4, 0x5002B9D4
-.equ bss_5002B9D8, 0x5002B9D8
-.equ bss_5002B9DC, 0x5002B9DC
-.equ bss_5002B9E4, 0x5002B9E4
-.equ bss_5002B9E8, 0x5002B9E8
-.equ bss_5002B9EC, 0x5002B9EC
-.equ bss_5002B9EE, 0x5002B9EE
-.equ bss_5002B9F0, 0x5002B9F0
-.equ bss_5002B9F4, 0x5002B9F4
-.equ bss_5002BA14, 0x5002BA14
-.equ bss_5002BA18, 0x5002BA18
-.equ bss_5002BA1C, 0x5002BA1C
-.equ bss_5002BA20, 0x5002BA20
-.equ bss_5002BA24, 0x5002BA24
-.equ bss_5002BA28, 0x5002BA28
-.equ bss_5002BA2C, 0x5002BA2C
-.equ bss_5002BA30, 0x5002BA30
-.equ bss_5002BA34, 0x5002BA34
-.equ bss_5002BA40, 0x5002BA40
-.equ bss_5002BCFE, 0x5002BCFE
-.equ bss_5002BD4C, 0x5002BD4C
-.equ bss_5002BD9A, 0x5002BD9A
-.equ bss_5002BD9C, 0x5002BD9C
+.equ PanelLedMirrorEnd, 0x5001975A
+.equ UpdTargetBase, 0x500199CC
+.equ UpdTrackBuffer, 0x500199D0                # four tracks (0x9000 bytes) of the stream
+.equ UpdStreamSize, 0x5002B9D0
+.equ UpdStreamPos, 0x5002B9D4
+.equ UpdWriteAddr, 0x5002B9D8
+.equ UpdTrackPtr, 0x5002B9DC                   # the next byte in UpdTrackBuffer
+.equ UpdNextLba, 0x5002B9E4
+.equ UpdByteCount, 0x5002B9E8                  # bytes gathered for the word (UpdFlashPutByte) or summed in the block (UpdSumByte)
+.equ UpdBlockSum, 0x5002B9EC
+.equ UpdBlockIndex, 0x5002B9EE
+.equ UpdTotalSum, 0x5002B9F0
+.equ UpdateSums, 0x5002B9F4                    # the 16-bit block sums from LBA 0x22
+.equ UpdateSumCount, 0x5002BA14
+.equ FloppyRequest, 0x5002BA18                 # FloppyRead's FdcRequest block
+.equ FloppyReqDrive, 0x5002BA1C
+.equ FloppyReqHead, 0x5002BA20
+.equ FloppyReqCylinder, 0x5002BA24
+.equ FloppyReqSector, 0x5002BA28
+.equ FloppyReqCount, 0x5002BA2C
+.equ FloppyReqBuffer, 0x5002BA30
+.equ SdUpdateWork, 0x5002BA34                  # SdFlashUpdate's work buffer
+.equ ScreenText, 0x5002BA40                    # 10 lines of 78 characters
+.equ ScreenTextLastLine, 0x5002BCFE            # the tenth line of ScreenText, blanked on a scroll
+.equ ScreenLineFlags, 0x5002BD4C
+.equ ScreenCursorCol, 0x5002BD9A
+.equ ScreenCursorRow, 0x5002BD9C
 .equ OldLink_50180000, 0x50180000              # an address of the older link
 .equ OldLink_50180024, 0x50180024              # an address of the older link
 .equ OldLink_50180824, 0x50180824              # an address of the older link
@@ -328,9 +337,10 @@ NmiVector:
 # image's. Between them is the older link's .data image (0x24 bytes that its
 # reset code copies to 0x50180000).
 
-# ---- Old_func_40000011 -------------------------------------------------------
+# ---- OldNmiTail --------------------------------------------------------------
+# the end of the older link's NMI handler: port defaults (P44, P04, P64), then on to its handler
 # older link: not reachable from this ROM's code
-Old_func_40000011:
+OldNmiTail:
     mov     2, d0
     movbu   d0, (P44)
     mov     2, d0
@@ -339,14 +349,16 @@ Old_func_40000011:
     movbu   d0, (P64)
     jmp     OldLink_500023CD
     .space  17, 0xFF
-old_data_40000040:
+OldDataImage:                    # the older link's .data image (0x24 bytes)
     .byte   0x00, 0x00, 0xFF, 0xFF, 0x00, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF
     .byte   0xFF, 0xFF, 0xFF, 0xFF, 0x80, 0x40, 0x20, 0x10, 0x08, 0x04, 0x02, 0x01, 0x00, 0xFF, 0xFF, 0xFF
     .byte   0x00, 0x00, 0x00, 0x00
 
-# ---- Old_func_40000064 -------------------------------------------------------
+# ---- OldReset ----------------------------------------------------------------
+# the older link's reset code: the same bus and SDRAM set-up, its image copied by the descriptor
+# at 0x4000BBB4, .bss at 0x50180024
 # older link: not reachable from this ROM's code
-Old_func_40000064:
+OldReset:
     mov     0xfe, d0
     movbu   d0, (P24)
     mov     2, d0
@@ -483,7 +495,7 @@ old_loc_4000023A:
     mov     0x24, d1
     cmp     0, d1
     ble     old_loc_40000262
-    mov     old_data_40000040, a0
+    mov     OldDataImage, a0
     mov     OldLink_50180000, a1
 old_loc_4000025A:
     mov     (a0), d0
@@ -552,16 +564,18 @@ old_loc_40000287:
     bclr    0x20, (P04)
     jmp     OldLink_5000C5F1
 
-# ---- Old_func_4000034A -------------------------------------------------------
+# ---- OldResetAltTail ---------------------------------------------------------
+# strobes, then the older link's other start address
 # older link: not reachable from what survives of it
-Old_func_4000034A:
+OldResetAltTail:
     bset    0x20, (P04)
     bclr    0x20, (P04)
     jmp     OldLink_5000C0BA
 
-# ---- Old_func_4000035D -------------------------------------------------------
+# ---- OldICacheInvalidate -----------------------------------------------------
+# as ICacheInvalidate
 # older link: not reachable from what survives of it
-Old_func_4000035D:
+OldICacheInvalidate:
     mov     CHCTR, a0
     movhu   (a0), d0
     and     0xfffe, d0
@@ -582,9 +596,10 @@ Old_func_4000035D:
     movhu   d1, (a0)
     ret     0, 0
 
-# ---- Old_func_40000384 -------------------------------------------------------
+# ---- OldDCacheInvalidate -----------------------------------------------------
+# as DCacheInvalidate
 # older link: not reachable from what survives of it
-Old_func_40000384:
+OldDCacheInvalidate:
     mov     CHCTR, a0
     movhu   (a0), d0
     and     0xfffd, d0
@@ -605,9 +620,10 @@ Old_func_40000384:
     movhu   d1, (a0)
     ret     0, 0
 
-# ---- Old_func_400003AA -------------------------------------------------------
+# ---- OldICacheDisable --------------------------------------------------------
+# as ICacheDisable
 # older link: not reachable from what survives of it
-Old_func_400003AA:
+OldICacheDisable:
     mov     CHCTR, a0
     movhu   (a0), d0
     btst    0x01, d0
@@ -625,9 +641,10 @@ Old_func_400003AA:
 old_loc_400003C8:
     ret     0, 0
 
-# ---- Old_func_400003CB -------------------------------------------------------
+# ---- OldDCacheFlushDisable ---------------------------------------------------
+# as DCacheFlushDisable; cut off where the new .data image begins
 # older link: not reachable from what survives of it
-Old_func_400003CB:
+OldDCacheFlushDisable:
     mov     CHCTR, a0
     movhu   (a0), d0
     btst    0x02, d0
@@ -667,72 +684,78 @@ FdcIndexInitDone:
     .byte   0x00, 0xFC, 0xDC
 FdcMediaState:                   # FdcMediaChangePoll: 0xFF unknown, 0 empty, 1 a disk
     .byte   0xFF, 0x10, 0x40, 0x28
-data_50010010:
+DiskReplyPending:                # DiskCmdReplyCopy: 1 while a reply is awaited
     .word   0x0000
-data_50010012:
+DiskReplyResult:
     .word   0x0000
-data_50010014:
+DiskCmdBusy:                     # DiskCmdTransact's guard: 0xFB when a command is already running
     .byte   0x00, 0x00, 0xFF, 0xFF
-data_50010018:
+DiskAttachReply:                 # the reply word of DiskMsgAttach
     .byte   0x00, 0x00, 0x19, 0x00
-data_5001001C:
+DiskCheckReply:                  # the reply word of DiskMsgCheck
     .byte   0x00, 0x00, 0x01, 0x00
-str_50010020:
-    .asciz  "@"
-    .byte   0x00, 0x00
-    .long   data_50010018
-    .byte   0x04, 0x00, 0x00, 0x00, 0xE4, 0x03, 0x01, 0x50, 0x00, 0x00, 0x00, 0x00
-str_50010034:
-    .asciz  "C"
-    .byte   0x00, 0x00
-    .long   data_5001001C
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-str_50010048:
-    .asciz  "F"
-    .space  18
-data_5001005C:
+DiskMsgAttach:                   # a canned drive-control message: drive '@', reply, length 4, buffer
+    .long   0x40, DiskAttachReply, 0x4, DiskAttachBuffer, 0x0
+DiskMsgCheck:                    # drive 'C'
+    .long   0x43, DiskCheckReply, 0x0, 0x0, 0x0
+DiskMsgPowerDown:                # drive 'F'
+    .long   0x46, 0x0, 0x0, 0x0, 0x0
+SdClockMode:                     # SdSpiClockSet's stored mode
     .long   0x00000002
-data_50010060:
+SdClockGap:                      # the shift-register gap: 0x19 slow, 4 fast
     .long   0x00000014
-data_50010064:
+TickPhase:                       # TickIsr's six-step cycle
     .byte   0x00
-data_50010065:
+TickPhase2:                      # and its eight-step one
     .byte   0x00, 0x00, 0x50
-data_50010068:
+SdPowerShadow:                   # the last byte written to the power controller (0x98060000)
     .byte   0x00, 0x91, 0x00, 0x50
-data_5001006C:
+Flash32ChipId:                   # both chips' device codes, or -1
     .long   0xFFFFFFFF
 FdcIndexSeen:
     .byte   0x00, 0x91, 0x00, 0x50
 FdcIndexTick:
-    .byte   0x00, 0x00, 0x00, 0x00, 0x02, 0x00, 0x01, 0x00, 0x41, 0x00, 0x00, 0x00, 0x00, 0xFF
-data_50010082:
-    .byte   0x02, 0x00, 0x01, 0x00
-str_50010086:
-    .asciz  "B"
-    .byte   0x00, 0x00, 0x00
-data_5001008B:
+    .long   0x00000000
+SdFrameSlowCmd1:                 # the frames of the SD commands, slow clock (mode 2) ...
+    .word   2, 1                    # clock mode, response type
+    .byte   0x41, 0x00, 0x00, 0x00, 0x00, 0xFF    # command 0x40|1, argument, CRC
+SdFrameSlowCmd2:
+    .word   2, 1                    # clock mode, response type
+SdFrameSlowCmd2Bytes:
+    .byte   0x42, 0x00, 0x00, 0x00, 0x00    # command 0x40|2, argument, CRC
+SdFrameSlowCmd2Crc:
     .byte   0x95
-data_5001008C:
-    .byte   0x02, 0x00, 0x02, 0x00, 0x40, 0x00, 0x00, 0x0F, 0x00, 0xFF, 0x02, 0x00, 0x02, 0x00, 0x45, 0x00
-    .byte   0x00, 0x00, 0x00, 0xFF, 0x02, 0x00, 0x02, 0x00, 0x43, 0x00, 0x00, 0x01, 0x00, 0xFF, 0x02, 0x00
-    .byte   0x02, 0x00, 0x46, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x02, 0x00, 0x02, 0x00, 0x47, 0x00, 0x00, 0x00
-    .byte   0x00, 0xFF
-data_500100BE:
-    .byte   0x03, 0x00, 0x01, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00, 0x95
-data_500100C8:
-    .byte   0x03, 0x00, 0x01, 0x00, 0x41, 0x00, 0x00, 0x00, 0x00, 0xFF
-data_500100D2:
-    .byte   0x03, 0x00, 0x01, 0x00
-str_500100D6:
-    .asciz  "Q"
-    .byte   0x00, 0x00, 0x00, 0xFF
-data_500100DC:
-    .byte   0x03, 0x00, 0x03, 0x00
-str_500100E0:
-    .asciz  "X"
-    .byte   0x00, 0x00, 0x00, 0xFF, 0x00, 0x32, 0x00, 0x00, 0x00, 0x00
-data_500100EC:
+SdFrameR2Cmd0:                   # response type 2 frames: TODO, commands 0x40, 0x45, 0x43, 0x46, 0x47 with arguments
+    .word   2, 2                    # clock mode, response type
+    .byte   0x40, 0x00, 0x00, 0x0F, 0x00, 0xFF    # command 0x40|0, argument, CRC
+SdFrameR2Cmd5:
+    .word   2, 2                    # clock mode, response type
+    .byte   0x45, 0x00, 0x00, 0x00, 0x00, 0xFF    # command 0x40|5, argument, CRC
+SdFrameR2Cmd3:
+    .word   2, 2                    # clock mode, response type
+    .byte   0x43, 0x00, 0x00, 0x01, 0x00, 0xFF    # command 0x40|3, argument, CRC
+SdFrameR2Cmd6:
+    .word   2, 2                    # clock mode, response type
+    .byte   0x46, 0x00, 0x00, 0x00, 0x00, 0xFF    # command 0x40|6, argument, CRC
+SdFrameR2Cmd7:
+    .word   2, 2                    # clock mode, response type
+    .byte   0x47, 0x00, 0x00, 0x00, 0x00, 0xFF    # command 0x40|7, argument, CRC
+SdFrameCmd0:                     # ... and the working clock (mode 3): GO_IDLE_STATE with its CRC 0x95
+    .word   3, 1                    # clock mode, response type
+    .byte   0x40, 0x00, 0x00, 0x00, 0x00, 0x95    # command 0x40|0, argument, CRC
+SdFrameCmd1:                     # SEND_OP_COND
+    .word   3, 1                    # clock mode, response type
+    .byte   0x41, 0x00, 0x00, 0x00, 0x00, 0xFF    # command 0x40|1, argument, CRC
+SdFrameCmd17:                    # READ_SINGLE_BLOCK
+    .word   3, 1                    # clock mode, response type
+SdFrameCmd17Bytes:
+    .byte   0x51, 0x00, 0x00, 0x00, 0x00, 0xFF    # command 0x40|17, argument, CRC
+SdFrameCmd24:                    # WRITE_BLOCK
+    .word   3, 3                    # clock mode, response type
+SdFrameCmd24Bytes:
+    .byte   0x58, 0x00, 0x00, 0x00, 0x00, 0xFF    # command 0x40|24, argument, CRC
+    .byte   0x00, 0x32, 0x00, 0x00, 0x00, 0x00
+SdDetectOverride:                # the latched card presence (SdSlotDischarge), -1 for none
     .byte   0x0A, 0x20, 0xFC, 0xCC
 IrqHandlerTable:                 # one handler per interrupt group, all IrqDefaultHandler in the image
     .long   IrqDefaultHandler, IrqDefaultHandler, IrqDefaultHandler, IrqDefaultHandler
@@ -743,14 +766,14 @@ IrqHandlerTable:                 # one handler per interrupt group, all IrqDefau
     .long   IrqDefaultHandler, IrqDefaultHandler, IrqDefaultHandler, IrqDefaultHandler
     .long   IrqDefaultHandler, IrqDefaultHandler, IrqDefaultHandler, IrqDefaultHandler
     .long   IrqDefaultHandler, IrqDefaultHandler, IrqDefaultHandler, IrqDefaultHandler
-data_50010170:
+FlashChipId:                     # the 16-bit chip's device code, 0xFFFF until identified
     .word   0xFFFF, 0x8004
-data_50010174:
+UpdateFileNames:                 # KN7KPRG.DAT, KN7KTBL.DAT, KN7KCSTM.DAT, KN7KRHY.DAT, KN7KAROM.DAT, ""
     .long   Str_Kn7kprgDAT, Str_Kn7ktblDAT, Str_Kn7kcstmDAT, Str_Kn7krhyDAT
-    .long   Str_Kn7karomDAT, rodata_5000D121
-data_5001018C:
+    .long   Str_Kn7karomDAT, Str_EndOfList
+UpdateFileKinds:                 # the device kind of each UpdateFileNames entry: 0 program, 2 table, 4 IC21, 8 rhythm, 0x0B, then 0x32
     .byte   0x00, 0x02, 0x04, 0x08, 0x0B, 0x32
-data_50010192:
+SdUpdateWaitFlag:                # SdUpdateStart clears it; SdFlashUpdate pauses between files when it is set (TODO: who sets it)
     .word   0x0001
 __data_end:
 .mnbase 0x40000000
@@ -990,7 +1013,7 @@ loc_40000885:
     mov     0x10, d1
     lsr     d1, d0
     movhu   d0, (a0)
-    mov     StackTop, a0
+    mov     FlashPageBuffer, a0
     mov     a0, sp
     add     -0xc, sp
     bset    0x20, (P04)
@@ -1140,7 +1163,7 @@ loc_5000004B:
 loc_50000055:
     mov     a2, (0x24, sp)
     movbu   (a2), d0
-    mov     (rodata_5000D53C), a0
+    mov     (CtypePtr), a0
     extb    d0
     inc     a0
     movbu   (d0, a0), d0
@@ -1257,7 +1280,7 @@ loc_50000101:
     nop
     blt     loc_5000016C
     movbu   (a2), d0
-    mov     (rodata_5000D53C), a0
+    mov     (CtypePtr), a0
     extb    d0
     inc     a0
     movbu   (d0, a0), d0
@@ -1346,7 +1369,7 @@ loc_50000189:
 tolower:
     movm    [d2], (sp)
 tolower_entry:
-    mov     (rodata_5000D53C), a0
+    mov     (CtypePtr), a0
     mov     d0, d2
     inc     a0
     movbu   (d2, a0), d1
@@ -1497,7 +1520,7 @@ loc_5000028D:
 loc_50000295:
     add     -0x45, d0
     asl2    d0
-    mov     rodata_5000C538, a0
+    mov     PfConversionCases, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_500002A2:
@@ -1851,7 +1874,7 @@ loc_500004F2:
     mov     0x30, d0
     movbu   d0, (0x1c, sp)
     movbu   (a0), d0
-    mov     (rodata_5000D53C), a0
+    mov     (CtypePtr), a0
     extb    d0
     inc     a0
     movbu   (d0, a0), d0
@@ -1866,7 +1889,7 @@ loc_500004F2:
     beq     loc_5000056F
 loc_50000514:
     mov     d2, a0
-    mov     str_5000C530, a1
+    mov     Str_0x, a1
     mov     2, d0
     call    strncmp_entry, [a2], 4
     nop
@@ -1874,7 +1897,7 @@ loc_50000514:
     nop
     beq     loc_5000053E
     mov     d2, a0
-    mov     str_5000C533, a1
+    mov     Str_0X, a1
     mov     2, d0
     call    strncmp_entry, [a2], 4
     nop
@@ -2040,7 +2063,7 @@ PfParseSpec_entry:
     nop
     clr     d0
     mov     d0, (a1)
-    mov     rodata_5000C608, a3
+    mov     PfFlagChars, a3
 loc_50000632:
     movbu   (a2), d1
     extb    d1
@@ -2066,7 +2089,7 @@ loc_50000632:
     nop
     beq     loc_500006B1
     add     8, a0
-    cmp     str_5000C688, a0
+    cmp     Str_C_2, a0
     nop
     bcs     loc_50000663
     mov     a3, a0
@@ -2219,7 +2242,7 @@ loc_5000070A:
     bra     loc_50000758
 loc_50000730:
     movbu   (a0), d2
-    mov     (rodata_5000D53C), d0
+    mov     (CtypePtr), d0
     extb    d2
     inc     d0
     mov     d0, a1
@@ -2331,55 +2354,55 @@ loc_500007C8:
 # fills the struct lconv in .bss from the current locale's numeric and monetary tables; returns
 # it in a0
 localeconv:
-    mov     (rodata_5000D588), d0
+    mov     (NumericLocaleIndex), d0
     mov     0x28, d1
     asl     4, d0
     mov     d0, a1
-    add     rodata_5000D568, a1
+    add     LocaleNumericC, a1
     mov     (4, a1), a0
-    mov     (rodata_5000D584), d0
+    mov     (MonetaryLocaleIndex), d0
     mov     a0, (__bss_start)
     mov     (8, a1), a0
     nop
     nop
     mul     d1, d0
-    mov     a0, (bss_50010198)
+    mov     a0, (LconvThousandsSep)
     mov     (0xc, a1), a0
     mov     d0, a1
-    mov     a0, (bss_5001019C)
+    mov     a0, (LconvGrouping)
     nop
-    add     rodata_5000D540, a1
+    add     LocaleMonetaryC, a1
     mov     (4, a1), a0
-    mov     a0, (bss_500101A0)
+    mov     a0, (LconvIntCurrSymbol)
     mov     (8, a1), a0
-    mov     a0, (bss_500101A4)
+    mov     a0, (LconvCurrencySymbol)
     mov     (0xc, a1), a0
-    mov     a0, (bss_500101A8)
+    mov     a0, (LconvMonDecimalPoint)
     mov     (0x10, a1), a0
-    mov     a0, (bss_500101AC)
+    mov     a0, (LconvMonThousandsSep)
     mov     (0x14, a1), a0
-    mov     a0, (bss_500101B0)
+    mov     a0, (LconvMonGrouping)
     mov     (0x18, a1), a0
-    mov     a0, (bss_500101B4)
+    mov     a0, (LconvPositiveSign)
     mov     (0x1c, a1), a0
-    mov     a0, (bss_500101B8)
+    mov     a0, (LconvNegativeSign)
     movbu   (0x20, a1), d0
     mov     __bss_start, a0
-    movbu   d0, (bss_500101BC)
+    movbu   d0, (LconvIntFracDigits)
     movbu   (0x21, a1), d0
-    movbu   d0, (bss_500101BD)
+    movbu   d0, (LconvFracDigits)
     movbu   (0x22, a1), d0
-    movbu   d0, (bss_500101BE)
+    movbu   d0, (LconvPCsPrecedes)
     movbu   (0x23, a1), d0
-    movbu   d0, (bss_500101BF)
+    movbu   d0, (LconvPSepBySpace)
     movbu   (0x24, a1), d0
-    movbu   d0, (bss_500101C0)
+    movbu   d0, (LconvNCsPrecedes)
     movbu   (0x25, a1), d0
-    movbu   d0, (bss_500101C1)
+    movbu   d0, (LconvNSepBySpace)
     movbu   (0x26, a1), d0
-    movbu   d0, (bss_500101C2)
+    movbu   d0, (LconvPSignPosn)
     movbu   (0x27, a1), d0
-    movbu   d0, (bss_500101C3)
+    movbu   d0, (LconvNSignPosn)
     rets
 
 # ---- PfFormatInteger ---------------------------------------------------------
@@ -3063,7 +3086,7 @@ loc_50000CAD:
     add     d0, d3
     mov     d3, (0x2c, sp)
     mov     (0x88, sp), a0
-    mov     (rodata_5000D53C), a1
+    mov     (CtypePtr), a1
     movbu   (a0), d2
     inc     a1
     extb    d2
@@ -3276,7 +3299,7 @@ loc_50000E2B:
     add     d0, d1
     mov     d1, a0
     movbu   (a0), d3
-    mov     (rodata_5000D53C), a0
+    mov     (CtypePtr), a0
     extb    d3
     inc     a0
     movbu   (d3, a0), d0
@@ -3406,7 +3429,7 @@ loc_50000EFF:
     bra     loc_50000F37
 loc_50000F02:
     mov     (0x8c, sp), a0
-    mov     (rodata_5000D53C), a1
+    mov     (CtypePtr), a1
     mov     -1, d2
     add     d3, d2
     add     d2, a0
@@ -4068,7 +4091,7 @@ PfDoubleToDecimal_entry:
     mov     sp, a2
     add     0x68, a2
     mov     a2, (4, sp)
-    mov     rodata_5000C6C0, a1
+    mov     PfDecimalInit, a1
     mov     sp, a0
     add     0x44, a0
     mov     -5, d1
@@ -4080,12 +4103,12 @@ PfDoubleToDecimal_entry:
     inc     d1
     nop
     lne
-    mov     rodata_5000D5A8, a2
+    mov     F64One, a2
     mov     (a2), d0
     mov     (4, a2), d1
     mov     d0, (0x1c, sp)
     mov     d1, (0x20, sp)
-    mov     rodata_5000D5B0, a0
+    mov     F64PowersOfTen, a0
     mov     (a0), d0
     mov     (4, a0), d1
     mov     d0, (0x24, sp)
@@ -4311,7 +4334,7 @@ loc_50001491:
     bcc     loc_50001491
     jmp     loc_50001630
 loc_500014D5:
-    mov     rodata_5000D5A0, a0
+    mov     F64Log10Of2, a0
     mov     (a0), d2
     mov     (4, a0), d3
     mov     d2, (0x2c, sp)
@@ -4335,7 +4358,7 @@ loc_500014D5:
     mov     d1, (0xc, sp)
     call    LibF64CmpZero_entry, [d2,d3], 0x10
     bgt     loc_5000153F
-    mov     rodata_5000D5A0, a0
+    mov     F64Log10Of2, a0
     mov     (a0), d0
     mov     (4, a0), d1
     mov     d0, (8, sp)
@@ -4353,7 +4376,7 @@ loc_500014D5:
     call    LibF64ToI32_entry, [d3,a3], 0x10
     bra     loc_5000156C
 loc_5000153F:
-    mov     rodata_5000D5A0, a0
+    mov     F64Log10Of2, a0
     mov     (a0), d0
     mov     (4, a0), d1
     mov     d0, (8, sp)
@@ -4516,7 +4539,7 @@ loc_5000163F:
     nop
     bcs     loc_5000163F
 loc_50001697:
-    mov     rodata_5000D598, a0
+    mov     F64Five, a0
     mov     (a0), d0
     mov     (4, a0), d1
     mov     d0, (0x1c, sp)
@@ -4531,7 +4554,7 @@ loc_50001697:
     mov     d1, (0x14, sp)
     call    LibF64Cmp_entry, [d2,d3], 0x10
     bgt     loc_500016ED
-    mov     rodata_5000D598, a0
+    mov     F64Five, a0
     mov     (a0), d0
     mov     (4, a0), d1
     mov     d0, (0x1c, sp)
@@ -4740,7 +4763,7 @@ loc_5000183A:
 # no caller: unreferenced code
 LibF64Zero:
     add     -8, sp
-    mov     rodata_5000C6D4, a0
+    mov     F64ZeroConst, a0
     mov     sp, a1
     mov     (a0), d1
     mov     (4, a0), d0
@@ -6300,7 +6323,7 @@ loc_50002306:
 loc_50002310:
     mov     a2, (0x34, sp)
     movbu   (a2), d0
-    mov     (rodata_5000D53C), a0
+    mov     (CtypePtr), a0
     extb    d0
     inc     a0
     movbu   (d0, a0), d0
@@ -6464,7 +6487,7 @@ loc_5000242F:
     jmp     loc_500024E8
 loc_5000243A:
     movbu   (a2), d1
-    mov     (rodata_5000D53C), d0
+    mov     (CtypePtr), d0
     extb    d1
     inc     d0
     mov     d0, a0
@@ -6747,16 +6770,16 @@ loc_500025C2:
 # no caller: unreferenced code
 PanelDisableIrqGroups:
     add     -0x10, sp
-    mov     (bss_50019738), a0
+    mov     (PanelIrqSlot0), a0
     clr     d0
     call    KernelStubSlot, 0, 0
-    mov     (bss_5001973C), a0
+    mov     (PanelIrqSlot1), a0
     mov     1, d0
     call    KernelStubSlot, 0, 0
-    mov     (bss_50019740), a0
+    mov     (PanelIrqSlot2), a0
     mov     2, d0
     call    KernelStubSlot, 0, 0
-    mov     (bss_50019744), a0
+    mov     (PanelIrqSlot3), a0
     mov     3, d0
     call    KernelStubSlot, 0, 0
     ret     0, 0x10
@@ -6840,8 +6863,8 @@ PanelDriverOp2:
     retf    0, 0
 
 # ---- PanelService ------------------------------------------------------------
-# during a status poll (flags bits 6-7) resets the FIFOs and the RX ring; else decodes what came
-# in (PanelRxDecodeQuiet)
+# with the pump in a status-poll phase (PanelLinkFlags 0xC0): the event FIFO re-initialised and
+# the RX ring emptied; else PanelRxDecodeQuiet
 # `call` enters at PanelService_entry, past the prologue
 PanelService:
     add     -8, sp
@@ -6894,14 +6917,14 @@ PanelTransactionWrap:
 PanelHookNop:
     retf    0, 0
 
-# ---- PanelSignOnAndDetect ----------------------------------------------------
-# PanelSignOnRequest, then PanelTypeDetect: returns the panel type
-# `call` enters at PanelSignOnAndDetect_entry, past the prologue
-PanelSignOnAndDetect:
+# ---- PanelSignOnAndKeyCombo --------------------------------------------------
+# PanelSignOnRequest, then BootKeyComboDetect: the key combination held at power-on
+# `call` enters at PanelSignOnAndKeyCombo_entry, past the prologue
+PanelSignOnAndKeyCombo:
     add     -8, sp
-PanelSignOnAndDetect_entry:
+PanelSignOnAndKeyCombo_entry:
     call    PanelSignOnRequest_entry, 0, 0x10
-    call    PanelTypeDetect_entry, 0, 8
+    call    BootKeyComboDetect_entry, 0, 8
     extbu   d0
     ret     0, 8
 
@@ -7360,15 +7383,15 @@ loc_50002BEB:
     bls     loc_50002BEB
     retf    0, 0
 
-# ---- PanelTypeMatchPairs -----------------------------------------------------
-# the panel type from three tables of {byte pointer, expected value} pairs: 3, 2 or 1 for the
-# first table that matches, else 0
-# `call` enters at PanelTypeMatchPairs_entry, past the prologue
-PanelTypeMatchPairs:
+# ---- BootKeyComboMatch -------------------------------------------------------
+# which of seven key combinations is held: seven tables of {RX shadow byte, the value it must
+# hold}, tried in turn; the first that matches gives 3, 2, 1, 4, 5, 6 or 7, none 0
+# `call` enters at BootKeyComboMatch_entry, past the prologue
+BootKeyComboMatch:
     movm    [a2], (sp)
-PanelTypeMatchPairs_entry:
+BootKeyComboMatch_entry:
     mov     0, a2
-    mov     rodata_5000C6DC, a1
+    mov     BootKeyCombo3, a1
     setlb
     mov     (a1), a0
     cmp     0, a0
@@ -7386,7 +7409,7 @@ loc_50002C10:
     lcs
 loc_50002C1E:
     mov     0, a2
-    mov     rodata_5000C6EC, a1
+    mov     BootKeyCombo2, a1
     setlb
     mov     (a1), a0
     cmp     0, a0
@@ -7404,7 +7427,7 @@ loc_50002C32:
     lcs
 loc_50002C40:
     mov     0, a2
-    mov     rodata_5000C70C, a1
+    mov     BootKeyCombo1, a1
     setlb
     mov     (a1), a0
     cmp     0, a0
@@ -7422,7 +7445,7 @@ loc_50002C54:
     lcs
 loc_50002C62:
     mov     0, a2
-    mov     rodata_5000C71C, a1
+    mov     BootKeyCombo4, a1
     setlb
     mov     (a1), a0
     cmp     0, a0
@@ -7440,7 +7463,7 @@ loc_50002C76:
     lcs
 loc_50002C84:
     mov     0, a2
-    mov     rodata_5000C744, a1
+    mov     BootKeyCombo5, a1
     setlb
     mov     (a1), a0
     cmp     0, a0
@@ -7458,7 +7481,7 @@ loc_50002C97:
     lcs
 loc_50002CA5:
     mov     0, a2
-    mov     rodata_5000C764, a1
+    mov     BootKeyCombo6, a1
     setlb
     mov     (a1), a0
     cmp     0, a0
@@ -7476,7 +7499,7 @@ loc_50002CB8:
     lcs
 loc_50002CC6:
     mov     0, a2
-    mov     rodata_5000C774, a1
+    mov     BootKeyCombo7, a1
     setlb
     mov     (a1), a0
     cmp     0, a0
@@ -7497,47 +7520,48 @@ loc_50002CE7:
 loc_50002CE8:
     retf    [a2], 4
 
-# ---- PanelTypeProbeShadow ----------------------------------------------------
-# mode B: the panel type 1..7 from the sign-on bytes left in the RX shadows
-# the same code as the firmware's routine of this name (941 0x484AC138), linked elsewhere
-PanelTypeProbeShadow:
-    movbu   (bss_500103A0), d0
+# ---- BootKeyComboProbeShadow -------------------------------------------------
+# mode B: the same 1..7 from fixed RX shadow bytes (the firmware calls its copy
+# PanelTypeProbeShadow)
+# the same code as the firmware's PanelTypeProbeShadow (941 0x484AC138), linked elsewhere
+BootKeyComboProbeShadow:
+    movbu   (PanelSwShadow04), d0
     cmp     0xf, d0
     bne     loc_50002CFA
     mov     3, d0
     retf    0, 0
 loc_50002CFA:
-    movbu   (bss_5001039E), d0
+    movbu   (PanelSwShadow02), d0
     cmp     7, d0
     bne     loc_50002D08
     mov     2, d0
     bra     loc_50002D4F
 loc_50002D08:
-    movbu   (bss_500103CE), d0
+    movbu   (PanelSwShadow32), d0
     cmp     0x1c, d0
     bne     loc_50002D16
     mov     1, d0
     bra     loc_50002D4F
 loc_50002D16:
-    movbu   (bss_500103A6), d0
+    movbu   (PanelSwShadow0A), d0
     cmp     0xf, d0
     bne     loc_50002D24
     mov     4, d0
     bra     loc_50002D4F
 loc_50002D24:
-    movbu   (bss_500103A6), d0
+    movbu   (PanelSwShadow0A), d0
     cmp     7, d0
     bne     loc_50002D32
     mov     5, d0
     bra     loc_50002D4F
 loc_50002D32:
-    movbu   (bss_500103CC), d0
+    movbu   (PanelSwShadow30), d0
     cmp     0x3c, d0
     bne     loc_50002D40
     mov     6, d0
     bra     loc_50002D4F
 loc_50002D40:
-    movbu   (bss_500103A6), d0
+    movbu   (PanelSwShadow0A), d0
     cmp     0xe, d0
     bne     loc_50002D4E
     mov     7, d0
@@ -7547,20 +7571,21 @@ loc_50002D4E:
 loc_50002D4F:
     retf    0, 0
 
-# ---- PanelTypeDetect ---------------------------------------------------------
-# mode B: PanelTypeProbeShadow; mode A: PanelTypeMatchPairs
-# `call` enters at PanelTypeDetect_entry, past the prologue
-PanelTypeDetect:
+# ---- BootKeyComboDetect ------------------------------------------------------
+# mode B: BootKeyComboProbeShadow; mode A: BootKeyComboMatch. The firmware has the same code as
+# PanelTypeDetect; here BootMain opens the update menus on 4, 5 and 7
+# `call` enters at BootKeyComboDetect_entry, past the prologue
+BootKeyComboDetect:
     add     -8, sp
-PanelTypeDetect_entry:
+BootKeyComboDetect_entry:
     call    PanelModeFlagGet, 0, 0
     extbu   d0
     cmp     0, d0
     bne     loc_50002D66
-    call    PanelTypeMatchPairs_entry, [a2], 4
+    call    BootKeyComboMatch_entry, [a2], 4
     bra     loc_50002D6B
 loc_50002D66:
-    call    PanelTypeProbeShadow, 0, 0
+    call    BootKeyComboProbeShadow, 0, 0
 loc_50002D6B:
     ret     0, 8
 
@@ -7823,7 +7848,7 @@ PanelAtnIsr:
     jmp     loc_50003190
 loc_500030D1:
     clr     d0
-    movbu   d0, (bss_500102F6)
+    movbu   d0, (PanelAtnCountdown)
     movbu   (PanelReplyCountdown), d0
     cmp     0, d0
     bne     loc_5000314D
@@ -7910,7 +7935,7 @@ PanelRxIsr:
     btst    0x07, d0
     beq     loc_500031EB
     mov     1, d0
-    movbu   d0, (bss_50012580)
+    movbu   d0, (PanelRxErrorFlag)
 loc_500031EB:
     movbu   (PanelLinkState), d0
     asl2    d0
@@ -8540,10 +8565,10 @@ loc_500039A4:
     movbu   d0, (SC0TXB)
     bra     loc_50003A1A
 loc_500039FC:
-    movbu   (bss_500102F6), d0
+    movbu   (PanelAtnCountdown), d0
     inc     d0
-    movbu   d0, (bss_500102F6)
-    movbu   (bss_500102F6), d0
+    movbu   d0, (PanelAtnCountdown)
+    movbu   (PanelAtnCountdown), d0
     cmp     0x14, d0
     blt     loc_50003A1A
     bset    0x80, (PanelLinkStatus)
@@ -8554,12 +8579,12 @@ loc_50003A1A:
 # ---- PanelLedMirrorResetA ----------------------------------------------------
 # the same code as the firmware's routine of this name (941 0x484ACFE4), linked elsewhere
 PanelLedMirrorResetA:
-    mov     bss_50019748, a0
+    mov     PanelLedMirror, a0
     setlb
     clr     d0
     movbu   d0, (a0)
     inc     a0
-    cmp     bss_5001975A, a0
+    cmp     PanelLedMirrorEnd, a0
     lls
     retf    0, 0
 
@@ -8581,19 +8606,19 @@ loc_50003A47:
     retf    0, 0
 
 # ---- PanelErrorRecovery ------------------------------------------------------
-# on an error code counts down, then resets the link, the rings and the FIFOs and sends the init
-# commands again
+# when PanelRecoveryCounters' high nibble counts down to 0: FIFOs, rings and link reset, the
+# init commands again; when the low one does: PanelLedMirrorResetA
 # `call` enters at PanelErrorRecovery_entry, past the prologue
 PanelErrorRecovery:
     movm    [d2,d3], (sp)
     add     -8, sp
 PanelErrorRecovery_entry:
-    btst    0xf0, (PanelErrorCode)
+    btst    0xf0, (PanelRecoveryCounters)
     bne     loc_50003A5B
     jmp     loc_50003AE9
 loc_50003A5B:
-    movbu   (PanelErrorCode), d0
-    movbu   (PanelErrorCode), d2
+    movbu   (PanelRecoveryCounters), d0
+    movbu   (PanelRecoveryCounters), d2
     lsr     4, d0
     and     0x0f, d0
     mov     1, d3
@@ -8604,7 +8629,7 @@ loc_50003A5B:
     mov     d0, d1
     and     0xffffff0f, d2
     or      d2, d1
-    movbu   d1, (PanelErrorCode)
+    movbu   d1, (PanelRecoveryCounters)
     mov     d1, d0
     extbu   d0
     btst    0xf0, d0
@@ -8622,16 +8647,16 @@ loc_50003A5B:
     call    unl_cpu, 0, 0
     call    PanelSendWake_entry, 0, 0x10
     call    PanelSendInitCmds_entry, 0, 0x10
-    movbu   (PanelErrorCode), d0
+    movbu   (PanelRecoveryCounters), d0
     and     0xfffffff0, d0
     or      0x0a, d0
-    movbu   d0, (PanelErrorCode)
+    movbu   d0, (PanelRecoveryCounters)
     bra     loc_50003B24
 loc_50003AE9:
-    btst    0x0f, (PanelErrorCode)
+    btst    0x0f, (PanelRecoveryCounters)
     beq     loc_50003B24
-    movbu   (PanelErrorCode), d0
-    movbu   (PanelErrorCode), d2
+    movbu   (PanelRecoveryCounters), d0
+    movbu   (PanelRecoveryCounters), d2
     and     0x0f, d0
     mov     1, d1
     sub     d1, d0
@@ -8640,7 +8665,7 @@ loc_50003AE9:
     and     0x0f, d1
     and     0xfffffff0, d2
     or      d2, d1
-    movbu   d1, (PanelErrorCode)
+    movbu   d1, (PanelRecoveryCounters)
     mov     d1, d0
     extbu   d0
     btst    0x0f, d0
@@ -8714,10 +8739,10 @@ loc_50003B97:
     exth    d0
     cmp     0, d0
     beq     loc_50003BC3
-    movbu   (PanelErrorCode), d0
+    movbu   (PanelRecoveryCounters), d0
     and     0xffffff0f, d0
     or      0x10, d0
-    movbu   d0, (PanelErrorCode)
+    movbu   d0, (PanelRecoveryCounters)
     ret     [d2,d3,a2,a3], 0x24
 loc_50003BC3:
     and     0x38, d2
@@ -8765,7 +8790,7 @@ loc_50003C22:
     extbu   d2
     mov     d2, d0
     call    PanelEventFifoPush_entry, 0, 0x10
-    movbu   d2, (bss_500102F2)
+    movbu   d2, (PanelFrameByte0)
     movhu   (PanelRxRingTail), d0
     mov     d2, a2
     movbu   (d0, a3), d3
@@ -8782,12 +8807,12 @@ loc_50003C57:
     extbu   d2
     mov     d2, d0
     call    PanelEventFifoPush_entry, 0, 0x10
-    movbu   d3, (bss_500102F3)
-    mov     bss_5001039C, a0
+    movbu   d3, (PanelFrameByte1)
+    mov     PanelSwShadow00, a0
     mov     a2, d0
     and     0xc0, d0
     beq     loc_50003C78
-    mov     bss_500103CC, a0
+    mov     PanelSwShadow30, a0
 loc_50003C78:
     mov     a2, d0
     and     0x0f, d0
@@ -8798,7 +8823,7 @@ loc_50003C78:
     mov     d2, d0
     extbu   d0
     call    PanelEventFifoPush_entry, 0, 0x10
-    movbu   d2, (bss_500102F4)
+    movbu   d2, (PanelFrameByte2)
     jmp     loc_50003B56
 loc_50003C95:
     movhu   (PanelRxRingTail), d0
@@ -8815,7 +8840,7 @@ loc_50003CBB:
     movhu   (PanelRxRingTail), d1
     movhu   (PanelRxRingTail), d0
     inc     d1
-    movbu   d3, (bss_500102F2)
+    movbu   d3, (PanelFrameByte0)
     movbu   (d0, a3), d0
     movhu   d1, (PanelRxRingTail)
     movhu   (PanelRxRingTail), d1
@@ -8824,7 +8849,7 @@ loc_50003CBB:
     clr     d1
     movhu   d1, (PanelRxRingTail)
 loc_50003CE7:
-    movbu   d0, (bss_500102F3)
+    movbu   d0, (PanelFrameByte1)
     extbu   d3
     extbu   d0
     mov     d3, d1
@@ -8836,7 +8861,7 @@ loc_50003CE7:
     bne     loc_50003D03
     ret     [d2,d3,a2,a3], 0x24
 loc_50003D03:
-    movbu   d0, (bss_500102F4)
+    movbu   d0, (PanelFrameByte2)
     mov     d3, d0
     call    PanelEventFifoPush_entry, 0, 0x10
     extbu   d2
@@ -8931,10 +8956,10 @@ loc_50003E0D:
     extbu   d3
     btst    0x10, d3
     bne     loc_50003E38
-    mov     bss_5001039C, a0
+    mov     PanelSwShadow00, a0
     btst    0xc0, d3
     beq     loc_50003E24
-    mov     bss_500103CC, a0
+    mov     PanelSwShadow30, a0
 loc_50003E24:
     movbu   (0x10, sp), d0
     mov     0xf, d1
@@ -9693,7 +9718,7 @@ loc_5000440C:
     clr     d0
     movbu   d0, (FdcDensity)
     clr     d0
-    mov     d0, (bss_50012594)
+    mov     d0, (FdcInitCleared)
     clr     d0
     movbu   d0, (0x11, sp)
     mov     2, d0
@@ -9703,7 +9728,7 @@ loc_50004429:
     clr     d0
     movbu   d0, (FdcDensity)
     clr     d0
-    mov     d0, (bss_50012594)
+    mov     d0, (FdcInitCleared)
     mov     0xc0, d0
     movbu   d0, (0x11, sp)
     mov     2, d0
@@ -9713,7 +9738,7 @@ loc_50004448:
     mov     2, d0
     movbu   d0, (FdcDensity)
     clr     d0
-    mov     d0, (bss_50012594)
+    mov     d0, (FdcInitCleared)
     mov     0x40, d0
     movbu   d0, (0x11, sp)
     clr     d0
@@ -9723,7 +9748,7 @@ loc_50004465:
     mov     3, d0
     movbu   d0, (FdcDensity)
     clr     d0
-    mov     d0, (bss_50012594)
+    mov     d0, (FdcInitCleared)
     mov     0x40, d0
     movbu   d0, (0x11, sp)
     clr     d0
@@ -9733,7 +9758,7 @@ loc_50004482:
     mov     4, d0
     movbu   d0, (FdcDensity)
     clr     d0
-    mov     d0, (bss_50012594)
+    mov     d0, (FdcInitCleared)
     clr     d0
     movbu   d0, (0x11, sp)
     mov     2, d0
@@ -9743,7 +9768,7 @@ loc_5000449F:
     mov     5, d0
     movbu   d0, (FdcDensity)
     clr     d0
-    mov     d0, (bss_50012594)
+    mov     d0, (FdcInitCleared)
     clr     d0
     movbu   d0, (0x11, sp)
     mov     2, d0
@@ -9753,7 +9778,7 @@ loc_500044BC:
     clr     d0
     movbu   d0, (FdcDensity)
     clr     d0
-    mov     d0, (bss_50012594)
+    mov     d0, (FdcInitCleared)
     clr     d0
     movbu   d0, (0x11, sp)
     mov     2, d0
@@ -10121,11 +10146,11 @@ loc_5000483D:
     mov     1, d0
     movbu   d0, (FdcHlt)
     clr     d0
-    movbu   d0, (bss_500125AE)
-    movbu   d0, (bss_500125AD)
-    movbu   d0, (bss_500125AF)
-    movbu   d0, (bss_500125B0)
-    movbu   d0, (bss_500125B1)
+    movbu   d0, (FdcSpareParam1)
+    movbu   d0, (FdcSpareParam0)
+    movbu   d0, (FdcSpareParam2)
+    movbu   d0, (FdcSpareParam3)
+    movbu   d0, (FdcSpareParam4)
     movbu   d0, (FdcNonDma)
     ret     0, 0xc
 
@@ -11904,7 +11929,7 @@ loc_5000590F:
     bra     loc_5000599F
 loc_50005934:
     movbu   (FdcSeekCyl), d0
-    movbu   d0, (bss_50012586)
+    movbu   d0, (FdcFormatCyl)
     call    FdcFormatTrack_entry, 0, 0xc
     movbu   (FdcError), d0
     extb    d0
@@ -11928,7 +11953,7 @@ loc_5000597A:
     movbu   (FdcCylinder), d0
     movbu   d0, (FdcSeekCyl)
     movbu   (FdcSeekCyl), d0
-    movbu   d0, (bss_50012586)
+    movbu   d0, (FdcFormatCyl)
 loc_5000599F:
     movbu   (FdcSeekCyl), d0
     mov     d0, a0
@@ -12507,27 +12532,27 @@ loc_50005F3E:
     jmp     loc_50005FCD
 loc_50005F4B:
     mov     1, d0
-    call    func_5000C216_entry, [d2], 0x10
+    call    PanelDiskLed_entry, [d2], 0x10
     call    FdcMotorOnWait_entry, 0, 0xc
     call    FdcReadSectors_entry, 0, 0x10
     clr     d0
-    call    func_5000C216_entry, [d2], 0x10
+    call    PanelDiskLed_entry, [d2], 0x10
     bra     loc_50005FCD
 loc_50005F64:
     mov     1, d0
-    call    func_5000C216_entry, [d2], 0x10
+    call    PanelDiskLed_entry, [d2], 0x10
     call    FdcMotorOnWait_entry, 0, 0xc
     call    FdcWriteSectors_entry, 0, 0x10
     clr     d0
-    call    func_5000C216_entry, [d2], 0x10
+    call    PanelDiskLed_entry, [d2], 0x10
     bra     loc_50005FCD
 loc_50005F7D:
     mov     1, d0
-    call    func_5000C216_entry, [d2], 0x10
+    call    PanelDiskLed_entry, [d2], 0x10
     call    FdcMotorOnWait_entry, 0, 0xc
     call    FdcFormatDisk_entry, 0, 8
     clr     d0
-    call    func_5000C216_entry, [d2], 0x10
+    call    PanelDiskLed_entry, [d2], 0x10
     bra     loc_50005FCD
 loc_50005F96:
     call    FdcMotorOnWait_entry, 0, 0xc
@@ -12797,81 +12822,81 @@ loc_50006211:
     movbu   d0, (0xc, sp)
     clr     d0
     mov     d0, (FdcTestRequest)
-    mov     d0, (bss_50012664)
-    mov     d0, (bss_50012668)
+    mov     d0, (FdcTestReqDrive)
+    mov     d0, (FdcTestReqHead)
     movbu   (0xc, sp), d0
     cmp     0, d0
     beq     loc_50006236
     bra     loc_50006241
 loc_50006236:
     mov     0xe0, d0
-    mov     d0, (bss_5001266C)
+    mov     d0, (FdcTestReqCylinder)
     bra     loc_5000624A
 loc_50006241:
     mov     0xd3, d0
-    mov     d0, (bss_5001266C)
+    mov     d0, (FdcTestReqCylinder)
 loc_5000624A:
     clr     d0
-    mov     d0, (bss_50012670)
-    mov     d0, (bss_50012674)
+    mov     d0, (FdcTestReqSector)
+    mov     d0, (FdcTestReqCount)
     clr     d0
-    mov     d0, (bss_50012678)
+    mov     d0, (FdcTestReqBuffer)
     mov     FdcTestRequest, a0
     call    FdcRequest_entry, 0, 0xc
 loc_50006269:
     mov     3, d0
     mov     d0, (FdcTestRequest)
     clr     d0
-    mov     d0, (bss_50012664)
-    mov     d0, (bss_50012668)
-    mov     d0, (bss_5001266C)
+    mov     d0, (FdcTestReqDrive)
+    mov     d0, (FdcTestReqHead)
+    mov     d0, (FdcTestReqCylinder)
     mov     1, d0
-    mov     d0, (bss_50012670)
-    mov     d0, (bss_50012674)
+    mov     d0, (FdcTestReqSector)
+    mov     d0, (FdcTestReqCount)
     mov     FdcTestBuffer, d0
-    mov     d0, (bss_50012678)
+    mov     d0, (FdcTestReqBuffer)
     mov     FdcTestRequest, a0
     call    FdcRequest_entry, 0, 0xc
     mov     3, d0
     mov     d0, (FdcTestRequest)
     clr     d0
-    mov     d0, (bss_50012664)
-    mov     d0, (bss_50012668)
+    mov     d0, (FdcTestReqDrive)
+    mov     d0, (FdcTestReqHead)
     mov     0x4e, d0
-    mov     d0, (bss_5001266C)
+    mov     d0, (FdcTestReqCylinder)
     mov     1, d0
-    mov     d0, (bss_50012670)
-    mov     d0, (bss_50012674)
+    mov     d0, (FdcTestReqSector)
+    mov     d0, (FdcTestReqCount)
     mov     FdcTestBuffer, d0
-    mov     d0, (bss_50012678)
+    mov     d0, (FdcTestReqBuffer)
     mov     FdcTestRequest, a0
     call    FdcRequest_entry, 0, 0xc
     mov     3, d0
     mov     d0, (FdcTestRequest)
     clr     d0
-    mov     d0, (bss_50012664)
-    mov     d0, (bss_50012668)
+    mov     d0, (FdcTestReqDrive)
+    mov     d0, (FdcTestReqHead)
     mov     0xa, d0
-    mov     d0, (bss_5001266C)
+    mov     d0, (FdcTestReqCylinder)
     mov     1, d0
-    mov     d0, (bss_50012670)
-    mov     d0, (bss_50012674)
+    mov     d0, (FdcTestReqSector)
+    mov     d0, (FdcTestReqCount)
     mov     FdcTestBuffer, d0
-    mov     d0, (bss_50012678)
+    mov     d0, (FdcTestReqBuffer)
     mov     FdcTestRequest, a0
     call    FdcRequest_entry, 0, 0xc
     mov     3, d0
     mov     d0, (FdcTestRequest)
     clr     d0
-    mov     d0, (bss_50012664)
-    mov     d0, (bss_50012668)
+    mov     d0, (FdcTestReqDrive)
+    mov     d0, (FdcTestReqHead)
     mov     0x28, d0
-    mov     d0, (bss_5001266C)
+    mov     d0, (FdcTestReqCylinder)
     mov     1, d0
-    mov     d0, (bss_50012670)
-    mov     d0, (bss_50012674)
+    mov     d0, (FdcTestReqSector)
+    mov     d0, (FdcTestReqCount)
     mov     FdcTestBuffer, d0
-    mov     d0, (bss_50012678)
+    mov     d0, (FdcTestReqBuffer)
     mov     FdcTestRequest, a0
     call    FdcRequest_entry, 0, 0xc
     mov     0xbb8, d0
@@ -12910,15 +12935,15 @@ FdcIndexDetectInit_entry:
     call    IrqRegister_entry, [d2,a2], 8
     clr     d0
     mov     d0, (FdcTestRequest)
-    mov     d0, (bss_50012664)
-    mov     d0, (bss_50012668)
+    mov     d0, (FdcTestReqDrive)
+    mov     d0, (FdcTestReqHead)
     mov     0xd3, d0
-    mov     d0, (bss_5001266C)
+    mov     d0, (FdcTestReqCylinder)
     clr     d0
-    mov     d0, (bss_50012670)
-    mov     d0, (bss_50012674)
+    mov     d0, (FdcTestReqSector)
+    mov     d0, (FdcTestReqCount)
     clr     d0
-    mov     d0, (bss_50012678)
+    mov     d0, (FdcTestReqBuffer)
     mov     FdcTestRequest, a0
     call    FdcRequest_entry, 0, 0xc
     mov     0xd, d0
@@ -13134,10 +13159,10 @@ DiskInit:
     add     -0xc, sp
 DiskInit_entry:
     call    SdHwInit_entry, 0, 8
-    mov     bss_5001287C, a0
+    mov     SdProbeFlag, a0
     call    SdDrvRecordsReset_entry, [d2], 0x10
     mov     1, d0
-    movhu   d0, (bss_50012880)
+    movhu   d0, (SdDrvPhase)
     call    SdPowerLineClear_entry, 0, 8
     call    SdPowerRailClear_entry, 0, 0xc
     call    SdSlotDischarge_entry, [d2], 0x10
@@ -13167,16 +13192,16 @@ DiskHookNop3:
 DiskCmdReplyCopy:
     movm    [d2], (sp)
     mov     d0, d2
-    movhu   (data_50010010), d0
+    movhu   (DiskReplyPending), d0
     mov     -1, d1
     exth    d0
     cmp     1, d0
     bne     loc_50006675
     movhu   (a0), d0
-    movhu   (bss_500128E8), d1
+    movhu   (DiskReplyShadow), d1
     cmp     d0, d1
     bne     loc_50006658
-    mov     bss_500128E8, a1
+    mov     DiskReplyShadow, a1
     mov     -4, d1
     setlb
     mov     (a0), d0
@@ -13185,12 +13210,12 @@ DiskCmdReplyCopy:
     inc4    a1
     inc     d1
     lne
-    movhu   d2, (data_50010012)
+    movhu   d2, (DiskReplyResult)
     clr     d0
-    movhu   d0, (data_50010010)
+    movhu   d0, (DiskReplyPending)
     bra     loc_50006674
 loc_50006658:
-    mov     bss_500128E8, a1
+    mov     DiskReplyShadow, a1
     mov     -4, d1
     setlb
     mov     (a0), d0
@@ -13199,9 +13224,9 @@ loc_50006658:
     inc4    a1
     inc     d1
     lne
-    movhu   d2, (data_50010012)
+    movhu   d2, (DiskReplyResult)
     clr     d0
-    movhu   d0, (data_50010010)
+    movhu   d0, (DiskReplyPending)
 loc_50006674:
     clr     d1
 loc_50006675:
@@ -13235,19 +13260,19 @@ loc_5000669C:
     cmp     0, d0
     bne     loc_500066A9
     clr     d0
-    movbu   d0, (data_50010014)
+    movbu   d0, (DiskCmdBusy)
 loc_500066A9:
-    movbu   (data_50010014), d0
+    movbu   (DiskCmdBusy), d0
     cmp     0, d0
     beq     loc_500066B8
     mov     0xfb, d0
     bra     loc_500066CC
 loc_500066B8:
     mov     1, d0
-    movbu   d0, (data_50010014)
+    movbu   d0, (DiskCmdBusy)
     call    SdWorkerCmdHandler_entry, [d2,d3,a2,a3], 0x44
     clr     d1
-    movbu   d1, (data_50010014)
+    movbu   d1, (DiskCmdBusy)
 loc_500066CC:
     ret     0, 0xc
 
@@ -13346,14 +13371,14 @@ loc_5000676C:
 loc_5000676F:
     mov     1, d0
     call    SdMediaStateSet_entry, [d2], 4
-    mov     str_50010086, a0
+    mov     SdFrameSlowCmd2Bytes, a0
     mov     5, d0
     call    SdCmdCrc7_entry, [d2,d3], 8
     extbu   d0
     add     d0, d0
     inc     d0
-    movbu   d0, (data_5001008B)
-    mov     data_50010082, a0
+    movbu   d0, (SdFrameSlowCmd2Crc)
+    mov     SdFrameSlowCmd2, a0
     call    SdCommandSend_entry, [d2,d3,a2], 0x20
     mov     0x64, d0
     call    LibTickSleep, 0, 0
@@ -13361,7 +13386,7 @@ loc_5000676F:
     call    SdPowerRailSet_entry, 0, 0xc
     mov     1, d0
     call    LibTickSleep, 0, 0
-    mov     bss_50012884, a0
+    mov     SdCardInitFlag, a0
     call    SdCardInitFull_entry, [d2,d3,a2], 0x18
     exth    d0
     cmp     0, d0
@@ -13385,11 +13410,11 @@ loc_500067D9:
     cmp     0, d0
     blt     loc_500067FE
     mov     1, d0
-    movhu   d0, (bss_5001287C)
+    movhu   d0, (SdProbeFlag)
     bra     loc_50006805
 loc_500067FE:
     clr     d0
-    movhu   d0, (bss_5001287C)
+    movhu   d0, (SdProbeFlag)
 loc_50006805:
     mov     1, d0
     call    SdMediaStateSet_entry, [d2], 4
@@ -13397,7 +13422,7 @@ loc_50006805:
     call    SdPowerRailSet_entry, 0, 0xc
     mov     1, d0
     call    LibTickSleep, 0, 0
-    mov     bss_50012884, a0
+    mov     SdCardInitFlag, a0
     call    SdCardInitFull_entry, [d2,d3,a2], 0x18
     exth    d0
     cmp     0, d0
@@ -13412,11 +13437,11 @@ loc_50006837:
     movhu   d0, (0x20, sp)
     jmp     loc_50006A3A
 loc_50006847:
-    mov     bss_50012884, a0
+    mov     SdCardInitFlag, a0
     call    SdCardInitFull_entry, [d2,d3,a2], 0x18
     jmp     loc_50006A3A
 loc_50006855:
-    movhu   (bss_50012884), d0
+    movhu   (SdCardInitFlag), d0
     cmp     0, d0
     bne     loc_50006867
     mov     0x30, d0
@@ -13425,7 +13450,7 @@ loc_50006855:
 loc_50006867:
     mov     (0x28, sp), d2
     mov     (0x2c, sp), d0
-    mov     (bss_5001289C), d1
+    mov     (SdSectorCount), d1
     add     d0, d2
     cmp     d1, d2
     bcs     loc_5000687E
@@ -13448,13 +13473,13 @@ loc_5000688A:
     clr     d3
 loc_50006894:
     mov     (0x14, sp), d2
-    movhu   (bss_500128A0), d0
+    movhu   (SdByteMultiplier), d0
     mov     4, d1
     nop
     nop
     mulu    d0, d2
     setlb
-    mov     str_500100D6, a0
+    mov     SdFrameCmd17Bytes, a0
     mov     0xff, d0
     and     d2, d0
     movbu   d0, (d1, a0)
@@ -13463,7 +13488,7 @@ loc_50006894:
     exth    d1
     cmp     0, d1
     lgt
-    mov     data_500100D2, a0
+    mov     SdFrameCmd17, a0
     mov     0x200, d0
     mov     a3, a1
     call    SdReadBlockCmd_entry, [d2,d3,a2,a3], 0x28
@@ -13501,7 +13526,7 @@ loc_500068FD:
     movhu   d0, (0x20, sp)
     jmp     loc_50006A3A
 loc_50006905:
-    movhu   (bss_50012884), d0
+    movhu   (SdCardInitFlag), d0
     cmp     0, d0
     bne     loc_50006917
     mov     0x30, d0
@@ -13518,7 +13543,7 @@ loc_50006917:
 loc_50006929:
     mov     (0x28, sp), d2
     mov     (0x2c, sp), d0
-    mov     (bss_5001289C), d1
+    mov     (SdSectorCount), d1
     add     d0, d2
     cmp     d1, d2
     bcs     loc_50006940
@@ -13541,13 +13566,13 @@ loc_5000694C:
     clr     d3
 loc_50006956:
     mov     (0x14, sp), d0
-    movhu   (bss_500128A0), d1
+    movhu   (SdByteMultiplier), d1
     mov     4, d2
     nop
     nop
     mulu    d0, d1
     setlb
-    mov     str_500100E0, a0
+    mov     SdFrameCmd24Bytes, a0
     mov     0xff, d0
     and     d1, d0
     movbu   d0, (d2, a0)
@@ -13556,7 +13581,7 @@ loc_50006956:
     exth    d2
     cmp     0, d2
     lgt
-    mov     data_500100DC, a0
+    mov     SdFrameCmd24, a0
     mov     0x200, d0
     mov     a3, a1
     call    SdWriteBlockCmd_entry, [d2,d3,a2,a3], 0x28
@@ -13594,18 +13619,18 @@ loc_500069BF:
     movhu   d0, (0x20, sp)
     bra     loc_50006A3A
 loc_500069C6:
-    movhu   (bss_50012886), d0
+    movhu   (SdLastError), d0
     movhu   d0, (0x20, sp)
     bra     loc_50006A3A
 loc_500069D1:
-    movhu   (bss_50012884), d0
+    movhu   (SdCardInitFlag), d0
     cmp     0, d0
     bne     loc_50006A3A
     mov     0x30, d0
     movhu   d0, (0x20, sp)
     bra     loc_50006A3A
 loc_500069E2:
-    movhu   (bss_50012884), d0
+    movhu   (SdCardInitFlag), d0
     cmp     0, d0
     bne     loc_500069F3
     mov     0x30, d0
@@ -13613,21 +13638,21 @@ loc_500069E2:
     bra     loc_50006A3A
 loc_500069F3:
     mov     (0x30, sp), a0
-    mov     (bss_50012894), d0
+    mov     (SdTotalBytes), d0
     and     0xff, d0
     movbu   d0, (a0)
     mov     (0x30, sp), a0
-    mov     (bss_50012894), d0
+    mov     (SdTotalBytes), d0
     lsr     8, d0
     and     0xff, d0
     movbu   d0, (1, a0)
     mov     (0x30, sp), a0
-    mov     (bss_50012894), d0
+    mov     (SdTotalBytes), d0
     lsr     16, d0
     and     0xff, d0
     movbu   d0, (2, a0)
     mov     (0x30, sp), a0
-    mov     (bss_50012894), d0
+    mov     (SdTotalBytes), d0
     lsr     24, d0
     and     0xff, d0
     movbu   d0, (3, a0)
@@ -13640,7 +13665,7 @@ loc_50006A3A:
     cmp     0, d0
     beq     loc_50006A4A
     movhu   (0x20, sp), d0
-    movhu   d0, (bss_50012886)
+    movhu   d0, (SdLastError)
 loc_50006A4A:
     call    PanelSubTypeGet, 0, 0
     extbu   d0
@@ -13679,7 +13704,7 @@ DiskDriveCtrlHandler_entry:
     mov     0x00008003, d0
     ret     [d2,d3,a2,a3], 0x44
 loc_50006A8B:
-    movhu   (bss_5001287C), d0
+    movhu   (SdProbeFlag), d0
     cmp     0, d0
     bne     loc_50006AA5
     movbu   (0x14, sp), d0
@@ -13755,14 +13780,14 @@ loc_50006B20:
 loc_50006B35:
     mov     1, d0
     call    SdMediaStateSet_entry, [d2], 4
-    mov     str_50010086, a0
+    mov     SdFrameSlowCmd2Bytes, a0
     mov     5, d0
     call    SdCmdCrc7_entry, [d2,d3], 8
     extbu   d0
     add     d0, d0
     inc     d0
-    movbu   d0, (data_5001008B)
-    mov     data_50010082, a0
+    movbu   d0, (SdFrameSlowCmd2Crc)
+    mov     SdFrameSlowCmd2, a0
     call    SdCommandSend_entry, [d2,d3,a2], 0x20
     mov     0x64, d0
     call    LibTickSleep, 0, 0
@@ -13776,9 +13801,9 @@ loc_50006B69:
     cmp     0, d0
     blt     loc_50006BB0
     mov     1, d0
-    movhu   d0, (bss_5001287C)
-    mov     bss_500128A4, a0
-    mov     data_5001008C, a1
+    movhu   d0, (SdProbeFlag)
+    mov     SdCsdRecord, a0
+    mov     SdFrameR2Cmd0, a1
     call    SdCardRegRead_entry, [d2,d3,a2,a3], 0x24
     mov     d0, d2
     exthu   d0
@@ -13793,7 +13818,7 @@ loc_50006BA7:
     bra     loc_50006BCA
 loc_50006BB0:
     clr     d0
-    movhu   d0, (bss_5001287C)
+    movhu   d0, (SdProbeFlag)
     mov     1, d0
     call    SdMediaStateSet_entry, [d2], 4
     mov     0x00008004, d0
@@ -13803,7 +13828,7 @@ loc_50006BC7:
 loc_50006BCA:
     mov     (0x20, sp), a0
     movhu   (0x1c, sp), d0
-    mov     bss_500128A8, a1
+    mov     SdCsdRecordData, a1
     call    memcpy_entry, [a2,a3], 8
     jmp     loc_50006C5A
 loc_50006BDD:
@@ -13827,12 +13852,12 @@ loc_50006BF4:
     exthu   d3
     btst    0x1200, d3
     beq     loc_50006C15
-    mov     bss_500128A4, a0
+    mov     SdCsdRecord, a0
     call    SdCardRegInvalidate_entry, 0, 0x14
     bra     loc_50006C22
 loc_50006C15:
     mov     (0x20, sp), a1
-    mov     bss_500128A4, a0
+    mov     SdCsdRecord, a0
     call    SdCardRegSetValid_entry, 0, 0x14
 loc_50006C22:
     btst    0x0400, d3
@@ -13873,7 +13898,7 @@ loc_50006C6A:
 # ---- SdMediaStateGet ---------------------------------------------------------
 # 0..3, 3 = ready
 SdMediaStateGet:
-    movhu   (bss_5001287E), d0
+    movhu   (SdMediaState), d0
     retf    0, 0
 
 # ---- SdMediaStateSet ---------------------------------------------------------
@@ -13895,7 +13920,7 @@ SdMediaStateSet_entry:
     cmp     0, d1
     bne     loc_50006C95
 loc_50006C8E:
-    movhu   d2, (bss_5001287E)
+    movhu   d2, (SdMediaState)
     clr     d0
 loc_50006C95:
     retf    [d2], 4
@@ -13917,7 +13942,7 @@ SdDrvPhaseSet_entry:
     cmp     1, d1
     bne     loc_50006CB2
 loc_50006CAB:
-    movhu   d2, (bss_50012880)
+    movhu   d2, (SdDrvPhase)
     clr     d0
 loc_50006CB2:
     retf    [d2], 4
@@ -13925,7 +13950,7 @@ loc_50006CB2:
 # ---- SdDrvPhaseGet -----------------------------------------------------------
 # no caller: unreferenced code
 SdDrvPhaseGet:
-    movhu   (bss_50012880), d0
+    movhu   (SdDrvPhase), d0
     retf    0, 0
 
 # ---- SdDrvRecordsReset -------------------------------------------------------
@@ -13947,7 +13972,7 @@ SdDrvRecordsReset_entry:
 # ---- SdProbeFlagGet ----------------------------------------------------------
 # no caller: unreferenced code
 SdProbeFlagGet:
-    movhu   (bss_5001287C), d0
+    movhu   (SdProbeFlag), d0
     retf    0, 0
 
 # ---- SdCardReadyCheck --------------------------------------------------------
@@ -13959,7 +13984,7 @@ SdCardReadyCheck:
     extbu   d0
     cmp     0, d0
     beq     loc_50006D01
-    movhu   (bss_50012884), d0
+    movhu   (SdCardInitFlag), d0
     cmp     0, d0
     beq     loc_50006CFE
     mov     1, d0
@@ -14081,7 +14106,7 @@ SdCardRegInvalidate_entry:
     movhu   d0, (a0)
     movhu   d0, (2, a0)
     inc4    a0
-    mov     str_5000C7E8, a1
+    mov     Str_Blank8, a1
     mov     8, d0
     call    memcpy_entry, [a2,a3], 8
     clr     d0
@@ -14121,7 +14146,7 @@ SdCardInitFull_entry:
     clr     d2
     mov     0x100, d3
 loc_50006E00:
-    mov     data_500100BE, a0
+    mov     SdFrameCmd0, a0
     call    SdCommandSend_entry, [d2,d3,a2], 0x20
     exth    d0
     cmp     d3, d0
@@ -14140,13 +14165,13 @@ loc_50006E1F:
     mov     a2, a0
     call    SdCardInfoReset, 0, 0
     mov     Str_SpiStartError1, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     mov     -1, d0
     ret     [d2,d3,a2], 0x18
 loc_50006E38:
     clr     d2
 loc_50006E39:
-    mov     data_500100C8, a0
+    mov     SdFrameCmd1, a0
     call    SdCommandSend_entry, [d2,d3,a2], 0x20
     exth    d0
     cmp     0, d0
@@ -14160,7 +14185,7 @@ loc_50006E55:
     mov     a2, a0
     call    SdCardInfoReset, 0, 0
     mov     Str_SpiStartError2, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     mov     -2, d0
     bra     loc_50006EA8
 loc_50006E6A:
@@ -14174,7 +14199,7 @@ loc_50006E6F:
     mov     a2, a0
     call    SdCardInfoReset, 0, 0
     mov     Str_SpiStartError3, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     mov     -2, d0
     bra     loc_50006EA8
 loc_50006E87:
@@ -14186,7 +14211,7 @@ loc_50006E87:
     mov     a2, a0
     call    SdCardInfoReset, 0, 0
     mov     Str_SpiStartError4, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     mov     -3, d0
     bra     loc_50006EA8
 loc_50006EA7:
@@ -14215,17 +14240,13 @@ SdCardInfoReset:
 
 # ---- SdCardInfoReset_UnusedRet -----------------------------------------------
 # a second epilogue left after SdCardInfoReset; unreachable
-# no caller: unreferenced code
+# `call` enters at SdCardIdentify, past the prologue
 SdCardInfoReset_UnusedRet:
     movm    [d2,d3,a2,a3], (sp)
-
-# ---- SdCardIdentify ----------------------------------------------------------
-# CMD9: the CSD, the block length and capacity from its fields; prints "spiGetInfo : %d =
-# sendReadCOM(CSD);" on failure
 SdCardIdentify:
     add     -0x13c, sp
     mov     a0, d3
-    mov     rodata_5000C844, a1
+    mov     SdFrameCmd10, a1
     mov     sp, a0
     add     0x18, a0
     mov     -5, d1
@@ -14236,7 +14257,7 @@ SdCardIdentify:
     add     2, a0
     inc     d1
     lne
-    mov     rodata_5000C850, a1
+    mov     SdFrameCmd9, a1
     mov     sp, a0
     add     0x24, a0
     mov     -5, d1
@@ -14247,7 +14268,7 @@ SdCardIdentify:
     add     2, a0
     inc     d1
     lne
-    mov     rodata_5000C85C, a1
+    mov     SdFrameCmd16, a1
     mov     sp, a0
     add     0x30, a0
     mov     -5, d1
@@ -14280,7 +14301,7 @@ SdCardIdentify:
     mov     d0, (0x10, sp)
     call    sprintf_entry, [a2], 0x20
     mov     a2, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     mov     -1, d0
     jmp     loc_50007059
 loc_50006F57:
@@ -14420,12 +14441,13 @@ loc_50007059:
     add     0x13c, sp
     ret     [d2,d3,a2,a3], 0x10
 
-# ---- SpiSendByteThenStrobeCs -------------------------------------------------
-# sends d0 & 0x7F, then pulses the SD select line (TODO: which device latches it)
-# `call` enters at SpiSendByteThenStrobeCs_entry, past the prologue
-SpiSendByteThenStrobeCs:
+# ---- StatusLatchWrite --------------------------------------------------------
+# sends d0 & 0x7F on the SPI shift register, then pulses the SD select line, which latches it
+# (TODO: which device: the update's status lamps, by StatusLedOff)
+# `call` enters at StatusLatchWrite_entry, past the prologue
+StatusLatchWrite:
     add     -0x10, sp
-SpiSendByteThenStrobeCs_entry:
+StatusLatchWrite_entry:
     extbu   d0
     and     0x7f, d0
     extbu   d0
@@ -14482,9 +14504,9 @@ loc_500070B6:
 SdMediaChangeService:
     movm    [d2,a2], (sp)
     add     -0x10, sp
-    mov     str_50010020, a0
+    mov     DiskMsgAttach, a0
     call    DiskDriveCtrlHandler_entry, [d2,d3,a2,a3], 0x44
-    mov     str_50010034, a2
+    mov     DiskMsgCheck, a2
     mov     2, d0
     call    SdMediaStateSet_entry, [d2], 4
     mov     a2, a0
@@ -14513,7 +14535,7 @@ loc_50007101:
 # no caller: unreferenced code
 SdPowerDownNotify:
     add     -0xc, sp
-    mov     str_50010048, a0
+    mov     DiskMsgPowerDown, a0
     call    DiskDriveCtrlHandler_entry, [d2,d3,a2,a3], 0x44
     ret     0, 0xc
 
@@ -14528,7 +14550,7 @@ DriveLetterClass:
     bgt     loc_50007137
     add     -0x41, d0
     asl2    d0
-    mov     rodata_5000C8CC, a0
+    mov     DriveLetterClassCases, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_50007133:
@@ -14547,11 +14569,12 @@ StubMinusOne:
     mov     -1, d0
     retf    0, 0
 
-# ---- func_50007141 -----------------------------------------------------------
-# `call` enters at func_50007141_entry, past the prologue
-func_50007141:
+# ---- SdReadSector ------------------------------------------------------------
+# sector d0 into a0 through DiskCmdTransact (message: command 3, count 1); -1 on failure
+# `call` enters at SdReadSector_entry, past the prologue
+SdReadSector:
     add     -0x1c, sp
-func_50007141_entry:
+SdReadSector_entry:
     mov     3, d1
     movhu   d1, (0xc, sp)
     mov     d0, (0x10, sp)
@@ -14571,15 +14594,16 @@ loc_50007162:
 loc_50007163:
     ret     0, 0x1c
 
-# ---- func_50007166 -----------------------------------------------------------
-# `call` enters at func_50007166_entry, past the prologue
-func_50007166:
+# ---- FatClusterToSector ------------------------------------------------------
+# (cluster - 2) * sectors per cluster + the first data sector
+# `call` enters at FatClusterToSector_entry, past the prologue
+FatClusterToSector:
     movm    [d2], (sp)
-func_50007166_entry:
-    movhu   (bss_5001290A), d1
+FatClusterToSector_entry:
+    movhu   (FatSectorsPerCluster), d1
     exthu   d0
     mov     d1, a0
-    mov     (bss_50012918), d1
+    mov     (FatDataStart), d1
     mov     2, d2
     sub     d2, d0
     mov     a0, d2
@@ -14589,29 +14613,30 @@ func_50007166_entry:
     add     d1, d0
     ret     [d2], 4
 
-# ---- func_50007185 -----------------------------------------------------------
+# ---- FatReadCluster ----------------------------------------------------------
+# every sector of cluster d0 into a0; nothing calls it
 # no caller: unreferenced code
-func_50007185:
+FatReadCluster:
     movm    [d2,d3,a2], (sp)
     add     -0x10, sp
     exthu   d0
     mov     a0, a2
-    call    func_50007166_entry, [d2], 4
-    movhu   (bss_5001290A), d1
+    call    FatClusterToSector_entry, [d2], 4
+    movhu   (FatSectorsPerCluster), d1
     mov     d0, d3
     clr     d2
     cmp     d2, d1
     ble     loc_500071BA
 loc_5000719C:
-    movhu   (bss_50012908), d1
+    movhu   (FatBytesPerSector), d1
     mov     d3, d0
     nop
     nop
     mul     d2, d1
     mov     a2, a0
     add     d1, a0
-    call    func_50007141_entry, 0, 0x1c
-    movhu   (bss_5001290A), d0
+    call    SdReadSector_entry, 0, 0x1c
+    movhu   (FatSectorsPerCluster), d0
     inc     d3
     inc     d2
     cmp     d0, d2
@@ -14619,19 +14644,19 @@ loc_5000719C:
 loc_500071BA:
     ret     [d2,d3,a2], 0x1c
 
-# ---- func_500071BD -----------------------------------------------------------
-# no caller: unreferenced code
-func_500071BD:
+# ---- FatMount ----------------------------------------------------------------
+# partition 1's start from the MBR, then its boot sector: 512-byte sectors, two FATs, "FAT12 ",
+# the sizes; on a failure the volume name is "12345678"
+# `call` enters at FatMount_entry, past the prologue
+FatMount:
     movm    [d2,d3,a2,a3], (sp)
-
-# ---- func_500071BF -----------------------------------------------------------
-func_500071BF:
+FatMount_entry:
     add     -0x214, sp
     mov     sp, a3
     add     0x14, a3
     mov     a3, a0
     clr     d0
-    call    func_50007141_entry, 0, 0x1c
+    call    SdReadSector_entry, 0, 0x1c
     movbu   (0x1da, sp), d3
     movbu   (0x1db, sp), d1
     movbu   (0x1dc, sp), d0
@@ -14643,11 +14668,11 @@ func_500071BF:
     asl     24, d2
     mov     d3, d0
     or      d2, d0
-    mov     d0, (bss_50012904)
+    mov     d0, (FatPartitionStart)
     mov     a3, a0
-    call    func_50007141_entry, 0, 0x1c
-    mov     bss_500128F8, a2
-    mov     str_5000C904, a1
+    call    SdReadSector_entry, 0, 0x1c
+    mov     FatVolumeName, a2
+    mov     Str_Blank8_2, a1
     mov     a2, a0
     call    strcpy_entry, [a2], 4
     mov     a3, a1
@@ -14659,7 +14684,7 @@ func_500071BF:
     mov     0x200, d2
     asl     8, d0
     or      d0, d1
-    movhu   d1, (bss_50012908)
+    movhu   d1, (FatBytesPerSector)
     mov     d1, d0
     exthu   d0
     cmp     d2, d0
@@ -14667,7 +14692,7 @@ func_500071BF:
     jmp     loc_500072CD
 loc_50007230:
     movbu   (0x24, sp), d0
-    movbu   d0, (bss_5001290C)
+    movbu   d0, (FatNumFats)
     extbu   d0
     cmp     2, d0
     beq     loc_50007241
@@ -14677,7 +14702,7 @@ loc_50007241:
     movbu   (0x26, sp), d0
     asl     8, d0
     or      d0, d1
-    movhu   d1, (bss_5001290E)
+    movhu   d1, (FatRootEntries)
     mov     d1, d0
     exthu   d0
     cmp     d2, d0
@@ -14686,7 +14711,7 @@ loc_50007241:
     movbu   (0x2b, sp), d0
     asl     8, d0
     or      d0, d1
-    movhu   d1, (bss_50012910)
+    movhu   d1, (FatSectorsPerFat)
     exthu   d1
     cmp     0x1800, d1
     bgt     loc_500072CD
@@ -14703,24 +14728,24 @@ loc_50007241:
     asl     24, d2
     asl     16, d1
     or      d1, d2
-    movhu   (bss_50012910), d1
+    movhu   (FatSectorsPerFat), d1
     asl     8, d0
     or      d0, d2
     movbu   (0x21, sp), d0
-    movhu   d0, (bss_5001290A)
-    movhu   (bss_50012908), d0
+    movhu   d0, (FatSectorsPerCluster)
+    movhu   (FatBytesPerSector), d0
     nop
     nop
     mulu    d0, d1
     mov     d2, d0
     or      d3, d0
-    mov     d0, (bss_50012914)
+    mov     d0, (FatTotalSectors)
     add     d1, d1
     mov     3, d0
     clr     d2
     mov     d2, mdr
     divu    d0, d1
-    movhu   d1, (bss_50012912)
+    movhu   d1, (FatEntryCount)
     clr     d0
     bra     loc_500072DF
 loc_500072CD:
@@ -14739,24 +14764,25 @@ loc_500072DF:
     add     0x214, sp
     ret     [d2,d3,a2,a3], 0x10
 
-# ---- func_500072E6 -----------------------------------------------------------
-# `call` enters at func_500072E6_entry, past the prologue
-func_500072E6:
+# ---- FatLoadFat --------------------------------------------------------------
+# the first FAT into FatTable
+# `call` enters at FatLoadFat_entry, past the prologue
+FatLoadFat:
     movm    [d2,d3,a2], (sp)
     add     -0x10, sp
-func_500072E6_entry:
-    mov     (bss_50012904), d2
-    movhu   (bss_50012910), d0
+FatLoadFat_entry:
+    mov     (FatPartitionStart), d2
+    movhu   (FatSectorsPerFat), d0
     inc     d2
     cmp     0, d0
-    mov     bss_5001291C, d3
+    mov     FatTable, d3
     bls     loc_5000731E
     mov     d3, a2
 loc_50007304:
     mov     d2, d0
     mov     a2, a0
-    call    func_50007141_entry, 0, 0x1c
-    movhu   (bss_50012910), d0
+    call    SdReadSector_entry, 0, 0x1c
+    movhu   (FatSectorsPerFat), d0
     inc     d2
     add     0x200, a2
     asl     9, d0
@@ -14766,29 +14792,30 @@ loc_50007304:
 loc_5000731E:
     ret     [d2,d3,a2], 0x1c
 
-# ---- func_50007321 -----------------------------------------------------------
-# `call` enters at func_50007321_entry, past the prologue
-func_50007321:
+# ---- FatLoadRootDir ----------------------------------------------------------
+# the root directory into FatRootDir; the first data sector after it
+# `call` enters at FatLoadRootDir_entry, past the prologue
+FatLoadRootDir:
     movm    [d2,d3,a2], (sp)
     add     -0x10, sp
-func_50007321_entry:
-    movbu   (bss_5001290C), d0
-    movhu   (bss_50012910), d1
-    mov     (bss_50012904), d2
+FatLoadRootDir_entry:
+    movbu   (FatNumFats), d0
+    movhu   (FatSectorsPerFat), d1
+    mov     (FatPartitionStart), d2
     nop
     nop
     mul     d1, d0
     add     d0, d2
-    movhu   (bss_5001290E), d0
-    mov     bss_5001411C, d3
+    movhu   (FatRootEntries), d0
+    mov     FatRootDir, d3
     cmp     0, d0
     bls     loc_50007369
     mov     d3, a2
 loc_5000734F:
     mov     d2, d0
     mov     a2, a0
-    call    func_50007141_entry, 0, 0x1c
-    movhu   (bss_5001290E), d0
+    call    SdReadSector_entry, 0, 0x1c
+    movhu   (FatRootEntries), d0
     inc     d2
     add     0x200, a2
     asl     5, d0
@@ -14797,20 +14824,22 @@ loc_5000734F:
     bcs     loc_5000734F
 loc_50007369:
     inc     d2
-    mov     d2, (bss_50012918)
+    mov     d2, (FatDataStart)
     ret     [d2,d3,a2], 0x1c
 
-# ---- func_50007373 -----------------------------------------------------------
-# `call` enters at func_50007373_entry, past the prologue
-func_50007373:
+# ---- FatFindRootEntry --------------------------------------------------------
+# the root entry of an 8.3 name ("NAME.EXT"); the entry count when it is not there, 0xFFFF
+# without a dot
+# `call` enters at FatFindRootEntry_entry, past the prologue
+FatFindRootEntry:
     movm    [d2,a2,a3], (sp)
     add     -0x24, sp
-func_50007373_entry:
+FatFindRootEntry_entry:
     mov     a0, a2
     mov     sp, a3
     add     0x14, a3
     mov     a3, a0
-    mov     str_5000C91C, a1
+    mov     Str_Blank12, a1
     call    strcpy_entry, [a2], 4
     mov     a2, a0
     mov     0x2e, d0
@@ -14852,11 +14881,11 @@ loc_500073B2:
     cmp     a1, a0
     lcs
 loc_500073CB:
-    movhu   (bss_5001290E), d0
+    movhu   (FatRootEntries), d0
     clr     d2
     cmp     d2, d0
     ble     loc_500073F7
-    mov     bss_5001411C, a2
+    mov     FatRootDir, a2
 loc_500073DB:
     mov     a2, a0
     mov     a3, a1
@@ -14867,18 +14896,19 @@ loc_500073DB:
     mov     d2, d0
     bra     loc_500073FD
 loc_500073EB:
-    movhu   (bss_5001290E), d0
+    movhu   (FatRootEntries), d0
     inc     d2
     add     0x20, a2
     cmp     d0, d2
     blt     loc_500073DB
 loc_500073F7:
-    movhu   (bss_5001290E), d0
+    movhu   (FatRootEntries), d0
 loc_500073FD:
     ret     [d2,a2,a3], 0x30
 
-# ---- func_50007400 -----------------------------------------------------------
-func_50007400:
+# ---- FatClusterValid ---------------------------------------------------------
+# 2..0xFF6
+FatClusterValid:
     exthu   d0
     cmp     2, d0
     blt     loc_5000740B
@@ -14892,16 +14922,17 @@ loc_5000740E:
 loc_50007410:
     retf    0, 0
 
-# ---- func_50007413 -----------------------------------------------------------
-# `call` enters at func_50007413_entry, past the prologue
-func_50007413:
+# ---- FatNextCluster ----------------------------------------------------------
+# the 12-bit FAT entry of cluster d0
+# `call` enters at FatNextCluster_entry, past the prologue
+FatNextCluster:
     movm    [d2], (sp)
     add     -0x10, sp
-func_50007413_entry:
+FatNextCluster_entry:
     mov     d0, d2
     exthu   d2
     mov     d2, d0
-    call    func_50007400, 0, 0
+    call    FatClusterValid, 0, 0
     exth    d0
     cmp     0, d0
     bne     loc_50007429
@@ -14914,7 +14945,7 @@ loc_50007429:
     add     d2, d0
     btst    0x01, d2
     beq     loc_5000744F
-    mov     bss_5001291C, a0
+    mov     FatTable, a0
     mov     d0, d1
     exthu   d1
     inc     d1
@@ -14927,7 +14958,7 @@ loc_50007429:
     mov     d2, d0
     bra     loc_50007466
 loc_5000744F:
-    mov     bss_5001291C, a0
+    mov     FatTable, a0
     mov     d0, d1
     exthu   d1
     movbu   (d1, a0), d2
@@ -14942,11 +14973,13 @@ loc_5000744F:
 loc_50007466:
     ret     [d2], 0x14
 
-# ---- func_50007469 -----------------------------------------------------------
-# `call` enters at func_50007469_entry, past the prologue
-func_50007469:
+# ---- SdFatOpenVolume ---------------------------------------------------------
+# mounts the card (SD command 0), FatMount, FatLoadFat, FatLoadRootDir; -1 no card, -2 no FAT12
+# volume
+# `call` enters at SdFatOpenVolume_entry, past the prologue
+SdFatOpenVolume:
     add     -0x1c, sp
-func_50007469_entry:
+SdFatOpenVolume_entry:
     clr     d0
     movhu   d0, (0xc, sp)
     mov     d0, (0x10, sp)
@@ -14958,15 +14991,15 @@ func_50007469_entry:
     exthu   d0
     cmp     0, d0
     bne     loc_5000749E
-    call    func_500071BF, [d2,d3,a2,a3], 0x10
+    call    FatMount_entry, [d2,d3,a2,a3], 0x10
     exth    d0
     cmp     0, d0
     bge     loc_50007491
     mov     -2, d0
     bra     loc_500074A0
 loc_50007491:
-    call    func_500072E6_entry, [d2,d3,a2], 0x1c
-    call    func_50007321_entry, [d2,d3,a2], 0x1c
+    call    FatLoadFat_entry, [d2,d3,a2], 0x1c
+    call    FatLoadRootDir_entry, [d2,d3,a2], 0x1c
     clr     d0
     bra     loc_500074A0
 loc_5000749E:
@@ -14974,21 +15007,22 @@ loc_5000749E:
 loc_500074A0:
     ret     0, 0x1c
 
-# ---- func_500074A3 -----------------------------------------------------------
-# `call` enters at func_500074A3_entry, past the prologue
-func_500074A3:
+# ---- FatOpen -----------------------------------------------------------------
+# opens a root-directory file into FatFile and reads its first sector; a0 = FatFile or 0
+# `call` enters at FatOpen_entry, past the prologue
+FatOpen:
     movm    [d2,d3,a2], (sp)
     add     -0x10, sp
-func_500074A3_entry:
-    call    func_50007373_entry, [d2,a2,a3], 0x30
+FatOpen_entry:
+    call    FatFindRootEntry_entry, [d2,a2,a3], 0x30
     mov     d0, d3
-    movhu   (bss_5001290E), d2
+    movhu   (FatRootEntries), d2
     mov     d3, d1
     exthu   d1
     cmp     d2, d1
     blt     loc_500074D3
-    mov     rodata_5000DF94, a1
-    mov     bss_5001811C, a0
+    mov     FatFileInitImage, a1
+    mov     FatFile, a0
     mov     -5, d1
     setlb
     mov     (a1), d0
@@ -15001,18 +15035,18 @@ func_500074A3_entry:
     ret     [d2,d3,a2], 0x1c
 loc_500074D3:
     exthu   d3
-    mov     bss_5001411C, a2
+    mov     FatRootDir, a2
     mov     d3, d0
     asl     5, d0
     mov     d0, a0
     add     a2, a0
     movhu   (0x1a, a0), d0
-    call    func_50007400, 0, 0
+    call    FatClusterValid, 0, 0
     exth    d0
     cmp     0, d0
     bne     loc_50007508
-    mov     rodata_5000DF94, a1
-    mov     bss_5001811C, a0
+    mov     FatFileInitImage, a1
+    mov     FatFile, a0
     mov     -5, d1
     setlb
     mov     (a1), d0
@@ -15037,33 +15071,34 @@ loc_50007508:
     asl     5, d3
     asl     16, d0
     add     d2, d0
-    mov     d0, (bss_50018128)
+    mov     d0, (FatFileSize)
     add     d3, a2
     movhu   (0x1a, a2), d0
-    movhu   d0, (bss_5001811C)
+    movhu   d0, (FatFile)
     clr     d0
-    movhu   d0, (bss_5001811E)
-    mov     bss_50018130, d0
-    mov     d0, (bss_50018120)
+    movhu   d0, (FatFileOffset)
+    mov     FatSectorBuffer, d0
+    mov     d0, (FatFileBuffer)
     clr     d0
-    movbu   d0, (bss_50018124)
-    mov     d0, (bss_5001812C)
-    movhu   (bss_5001811C), d0
-    call    func_50007166_entry, [d2], 4
-    movbu   (bss_50018124), d1
-    mov     (bss_50018120), a0
+    movbu   d0, (FatFileSectorInCluster)
+    mov     d0, (FatFilePos)
+    movhu   (FatFile), d0
+    call    FatClusterToSector_entry, [d2], 4
+    movbu   (FatFileSectorInCluster), d1
+    mov     (FatFileBuffer), a0
     add     d1, d0
-    call    func_50007141_entry, 0, 0x1c
-    mov     bss_5001811C, a0
+    call    SdReadSector_entry, 0, 0x1c
+    mov     FatFile, a0
 loc_50007579:
     ret     [d2,d3,a2], 0x1c
 
-# ---- func_5000757C -----------------------------------------------------------
-# `call` enters at func_5000757C_entry, past the prologue
-func_5000757C:
+# ---- FatRead -----------------------------------------------------------------
+# up to d0 bytes of the file a1 into a0; the count read
+# `call` enters at FatRead_entry, past the prologue
+FatRead:
     movm    [d2,d3,a2,a3], (sp)
     add     -0xc, sp
-func_5000757C_entry:
+FatRead_entry:
     mov     a0, a2
     mov     a1, (0x2c, sp)
     mov     d0, a3
@@ -15073,7 +15108,7 @@ func_5000757C_entry:
     bls     loc_500075A2
 loc_5000758C:
     mov     (0x2c, sp), a0
-    call    func_500075A6_entry, [d2,d3,a2,a3], 0x20
+    call    FatGetc_entry, [d2,d3,a2,a3], 0x20
     mov     d0, d1
     exth    d1
     cmp     0, d1
@@ -15088,12 +15123,13 @@ loc_500075A2:
     mov     d3, d0
     ret     [d2,d3,a2,a3], 0x1c
 
-# ---- func_500075A6 -----------------------------------------------------------
-# `call` enters at func_500075A6_entry, past the prologue
-func_500075A6:
+# ---- FatGetc -----------------------------------------------------------------
+# the next byte of the file a0, following the cluster chain; -1 at the end
+# `call` enters at FatGetc_entry, past the prologue
+FatGetc:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x10, sp
-func_500075A6_entry:
+FatGetc_entry:
     mov     a0, a3
     mov     (0xc, a3), d0
     mov     0x10, d3
@@ -15114,14 +15150,14 @@ loc_500075BE:
     mov     8, a2
     add     a3, a2
     movbu   (a2), d1
-    movhu   (bss_5001290A), d0
+    movhu   (FatSectorsPerCluster), d0
     add     -1, d0
     cmp     d0, d1
     blt     loc_500075F2
     clr     d0
     movbu   d0, (a2)
     movhu   (a3), d0
-    call    func_50007413_entry, [d2], 0x14
+    call    FatNextCluster_entry, [d2], 0x14
     movhu   d0, (a3)
     exthu   d0
     cmp     0, d0
@@ -15137,11 +15173,11 @@ loc_500075F7:
     cmp     0xfff, d0
     beq     loc_50007618
     movhu   (a3), d0
-    call    func_50007166_entry, [d2], 4
+    call    FatClusterToSector_entry, [d2], 4
     movbu   (a2), d1
     mov     (4, a3), a0
     add     d1, d0
-    call    func_50007141_entry, 0, 0x1c
+    call    SdReadSector_entry, 0, 0x1c
     clr     d0
     mov     d2, a0
     movhu   d0, (a0)
@@ -15165,9 +15201,10 @@ loc_5000761C:
 loc_50007630:
     ret     [d2,d3,a2,a3], 0x20
 
-# ---- func_50007633 -----------------------------------------------------------
+# ---- FatEof ------------------------------------------------------------------
+# 1 when the position has reached the size; nothing calls it
 # no caller: unreferenced code
-func_50007633:
+FatEof:
     mov     (0x10, a0), d1
     mov     (0xc, a0), d0
     cmp     d0, d1
@@ -15179,9 +15216,10 @@ loc_50007640:
 loc_50007641:
     retf    0, 0
 
-# ---- func_50007644 -----------------------------------------------------------
-func_50007644:
-    mov     rodata_5000DF94, a1
+# ---- FatClose ----------------------------------------------------------------
+# the file control block back to FatFileInitImage
+FatClose:
+    mov     FatFileInitImage, a1
     mov     -5, d1
     setlb
     mov     (a1), d0
@@ -15193,12 +15231,14 @@ func_50007644:
     clr     d0
     retf    0, 0
 
-# ---- func_50007657 -----------------------------------------------------------
+# ---- FatReadTestFile ---------------------------------------------------------
+# opens MORITANI.DAT and reads it through to the end, 512 bytes at a time into a ten-sector
+# ring; nothing calls it
 # no caller: unreferenced code
-func_50007657:
+FatReadTestFile:
     movm    [d2,a2], (sp)
     add     -0x24, sp
-    call    func_50007469_entry, 0, 0x1c
+    call    SdFatOpenVolume_entry, 0, 0x1c
     exth    d0
     cmp     0, d0
     bge     loc_5000766A
@@ -15211,7 +15251,7 @@ loc_5000766A:
     mov     Str_MoritaniDAT, a1
     call    strcpy_entry, [a2], 4
     mov     a2, a0
-    call    func_500074A3_entry, [d2,d3,a2], 0x1c
+    call    FatOpen_entry, [d2,d3,a2], 0x1c
     mov     a0, a2
     cmp     0, a2
     bne     loc_50007688
@@ -15222,11 +15262,11 @@ loc_50007688:
 loc_50007689:
     mov     d2, d1
     asl     9, d1
-    add     bss_50018330, d1
+    add     FatTestRing, d1
     mov     0x200, d0
     mov     a2, a1
     mov     d1, a0
-    call    func_5000757C_entry, [d2,d3,a2,a3], 0x1c
+    call    FatRead_entry, [d2,d3,a2,a3], 0x1c
     cmp     0x200, d0
     blt     loc_500076AC
     cmp     9, d2
@@ -15237,7 +15277,7 @@ loc_500076A9:
     bra     loc_50007689
 loc_500076AC:
     mov     a2, a0
-    call    func_50007633, 0, 0
+    call    FatEof, 0, 0
     cmp     0, d0
     beq     loc_500076BA
     mov     1, d0
@@ -15302,14 +15342,14 @@ SdSpiClockSet_entry:
     bra     loc_5000777C
 loc_50007736:
     extbu   d0
-    mov     d0, (data_5001005C)
+    mov     d0, (SdClockMode)
     mov     3, d1
     mov     0x19, d0
-    mov     d0, (data_50010060)
+    mov     d0, (SdClockGap)
     bra     loc_50007780
 loc_50007749:
     extbu   d0
-    mov     d0, (data_5001005C)
+    mov     d0, (SdClockMode)
     call    PanelSubTypeGet, 0, 0
     extbu   d0
     cmp     5, d0
@@ -15321,12 +15361,12 @@ loc_50007749:
 loc_50007764:
     mov     3, d1
     mov     0x19, d0
-    mov     d0, (data_50010060)
+    mov     d0, (SdClockGap)
     bra     loc_50007780
 loc_50007770:
     mov     1, d1
     mov     4, d0
-    mov     d0, (data_50010060)
+    mov     d0, (SdClockGap)
     bra     loc_50007780
 loc_5000777C:
     mov     -1, d0
@@ -15499,7 +15539,7 @@ loc_500078C3:
     mov     (TickCount), d0
     mov     d0, (0xc, sp)
     clr     d0
-    movbu   d0, (data_500100EC)
+    movbu   d0, (SdDetectOverride)
 loc_500078D9:
     mov     (0xc, sp), d1
     mov     (TickCount), d0
@@ -15507,7 +15547,7 @@ loc_500078D9:
     cmp     0x7d0, d0
     bls     loc_500078F4
     mov     0xfa, d0
-    movbu   d0, (data_500100EC)
+    movbu   d0, (SdDetectOverride)
     bra     loc_5000793F
 loc_500078F4:
     call    SdSlotSenseGet_entry, 0, 8
@@ -15526,7 +15566,7 @@ loc_5000790A:
     cmp     1, d0
     bne     loc_50007917
     clr     d2
-    movbu   d2, (data_500100EC)
+    movbu   d2, (SdDetectOverride)
 loc_50007917:
     mov     (0xc, sp), d1
     mov     (TickCount), d0
@@ -15534,7 +15574,7 @@ loc_50007917:
     cmp     0x64, d0
     bls     loc_5000792C
     clr     d2
-    movbu   d2, (data_500100EC)
+    movbu   d2, (SdDetectOverride)
 loc_5000792C:
     mov     d2, d0
     extbu   d0
@@ -15568,7 +15608,7 @@ SdSlotDischarge_entry:
     bset    0x02, (0x9cc00009)
 loc_50007968:
     mov     0xa, d0
-    movbu   d0, (data_500100EC)
+    movbu   d0, (SdDetectOverride)
     mov     2, d0
     call    SdSpiClockSet_entry, [d2], 0x10
     clr     d2
@@ -15634,7 +15674,7 @@ SdSpiSendByte_entry:
     or      0x0800, psw
     nop
     nop
-    mov     (data_50010060), d1
+    mov     (SdClockGap), d1
     extbu   d0
     mov     d1, (0, sp)
     movhu   d0, (0x9805000c)
@@ -15690,7 +15730,7 @@ loc_50007A2F:
     or      0x0800, psw
     nop
     nop
-    mov     (data_50010060), d1
+    mov     (SdClockGap), d1
     mov     (0xc, sp), d0
     mov     d1, (0x10, sp)
     movbu   (d0, a2), d1
@@ -15740,7 +15780,7 @@ SdSpiRecvByte_entry:
     or      0x0800, psw
     nop
     nop
-    mov     (data_50010060), d0
+    mov     (SdClockGap), d0
     mov     -1, d1
     mov     d0, (0, sp)
     mov     (0, sp), d0
@@ -15798,7 +15838,7 @@ loc_50007B0A:
     or      0x0800, psw
     nop
     nop
-    mov     (data_50010060), d1
+    mov     (SdClockGap), d1
     mov     0xff, d0
     mov     d1, (0x10, sp)
     movhu   d0, (0x9805000c)
@@ -16499,7 +16539,7 @@ SdCsdBitfield:
 SdCsdBitfield_entry:
     mov     a0, (0x40, sp)
     mov     d0, d3
-    mov     rodata_5000C93C, a1
+    mov     SdLsbMasks, a1
     mov     sp, a0
     add     0x18, a0
     mov     -8, d2
@@ -16510,7 +16550,7 @@ SdCsdBitfield_entry:
     inc     a0
     inc     d2
     lne
-    mov     rodata_5000C944, a1
+    mov     SdMsbMasks, a1
     mov     sp, a0
     add     0x20, a0
     mov     -8, d2
@@ -16810,7 +16850,7 @@ SdCmdCrc7_entry:
     cmp     d0, d3
     ble     loc_500082C2
     setlb
-    mov     rodata_5000DFA8, a1
+    mov     SdCrc7Table, a1
     exthu   d0
     movbu   (d0, a0), d0
     extbu   d1
@@ -16838,7 +16878,7 @@ SdStatusProbeCmdA:
     mov     a0, a3
     clr     d0
     movhu   d0, (0x10, sp)
-    mov     rodata_5000C94C, a1
+    mov     SdFrameProbeA, a1
     mov     sp, a0
     add     0x14, a0
     mov     -5, d1
@@ -16886,9 +16926,9 @@ loc_50008328:
     cmp     0, d0
     bne     loc_50008350
     call    SdSpiRecvByte_entry, 0, 8
-    movhu   d0, (bss_50010464)
+    movhu   d0, (SdProbeReply0)
     call    SdSpiRecvByte_entry, 0, 8
-    movhu   d0, (bss_50010466)
+    movhu   d0, (SdProbeReply1)
 loc_50008350:
     movhu   (a3), d1
     cmp     2, d1
@@ -16922,7 +16962,7 @@ SdStatusProbeCmdB:
 SdStatusProbeCmdB_entry:
     clr     d0
     movhu   d0, (0x10, sp)
-    mov     rodata_5000C958, a1
+    mov     SdFrameProbeB, a1
     mov     sp, a0
     add     0x14, a0
     mov     -5, d1
@@ -16968,9 +17008,9 @@ SdStatusProbeCmdB_entry:
     cmp     0, d0
     bne     loc_50008403
     call    SdSpiRecvByte_entry, 0, 8
-    movhu   d0, (bss_50010464)
+    movhu   d0, (SdProbeReply0)
     call    SdSpiRecvByte_entry, 0, 8
-    movhu   d0, (bss_50010466)
+    movhu   d0, (SdProbeReply1)
 loc_50008403:
     mov     0xc8, d0
     call    SdSpinDelay_entry, 0, 4
@@ -16986,8 +17026,8 @@ loc_5000841C:
     ret     [d2,a2], 0x28
 
 # ---- IrqDispatch -------------------------------------------------------------
-# the maskable interrupt (IrqThunk): saves the scratch registers, calls
-# IrqHandlerTable[INTC_GROUP_VECTOR], rti
+# the maskable interrupt (IrqThunk): saves the movm group 0x08 (unidasm's other3), calls
+# IrqHandlerTable[INTC_GROUP_VECTOR], restores it, rti
 IrqDispatch:
     movm    [other3], (sp)
     movhu   (INTC_GROUP_VECTOR), d0
@@ -16997,9 +17037,10 @@ IrqDispatch:
     movm    (sp), [other3]
     rti
 
-# ---- func_50008435 -----------------------------------------------------------
+# ---- ICacheInvalidate --------------------------------------------------------
+# instruction cache off, wait, invalidate, on again; nothing calls it
 # no caller: unreferenced code
-func_50008435:
+ICacheInvalidate:
     mov     CHCTR, a0
     movhu   (a0), d0
     and     0xfffe, d0
@@ -17020,8 +17061,9 @@ func_50008435:
     movhu   d1, (a0)
     ret     0, 0
 
-# ---- func_5000845C -----------------------------------------------------------
-func_5000845C:
+# ---- DCacheInvalidate --------------------------------------------------------
+# data cache off, wait, invalidate, on again
+DCacheInvalidate:
     mov     CHCTR, a0
     movhu   (a0), d0
     and     0xfffd, d0
@@ -17042,8 +17084,8 @@ func_5000845C:
     movhu   d1, (a0)
     ret     0, 0
 
-# ---- func_50008482 -----------------------------------------------------------
-func_50008482:
+# ---- ICacheDisable -----------------------------------------------------------
+ICacheDisable:
     mov     CHCTR, a0
     movhu   (a0), d0
     btst    0x01, d0
@@ -17061,8 +17103,9 @@ func_50008482:
 loc_500084A0:
     ret     0, 0
 
-# ---- func_500084A3 -----------------------------------------------------------
-func_500084A3:
+# ---- DCacheFlushDisable ------------------------------------------------------
+# written back way by way unless write-through, invalidated, left off
+DCacheFlushDisable:
     mov     CHCTR, a0
     movhu   (a0), d0
     btst    0x02, d0
@@ -17119,16 +17162,18 @@ loc_500084F4:
     mov     d1, (a0)
     ret     0, 0
 
-# ---- func_50008515 -----------------------------------------------------------
+# ---- TickIsr -----------------------------------------------------------------
+# interrupt group 6 (timer 4): TickCount += 1; a six-step cycle sets the request bits of
+# TickJobs
 # nothing calls it directly: its address is taken (a handler or a method)
-func_50008515:
-    movbu   (data_50010064), d1
+TickIsr:
+    movbu   (TickPhase), d1
     mov     (TickCount), d0
     inc     d0
     mov     d0, (TickCount)
     mov     d1, d0
     inc     d0
-    movbu   d0, (data_50010064)
+    movbu   d0, (TickPhase)
     cmp     0, d1
     beq     loc_5000854B
     cmp     1, d1
@@ -17143,30 +17188,30 @@ func_50008515:
     beq     loc_50008589
     jmp     loc_500085F0
 loc_5000854B:
-    bset    0x08, (bss_50019734)
-    bset    0x80, (bss_50019735)
+    bset    0x08, (TickJobs)
+    bset    0x80, (TickJobs2)
     jmp     loc_500085F0
 loc_5000855C:
-    bset    0x04, (bss_50019734)
+    bset    0x04, (TickJobs)
     jmp     loc_500085F0
 loc_50008566:
-    bset    0x02, (bss_50019734)
+    bset    0x02, (TickJobs)
     jmp     loc_500085F0
 loc_50008570:
-    bset    0x08, (bss_50019734)
-    bset    0x40, (bss_50019735)
+    bset    0x08, (TickJobs)
+    bset    0x40, (TickJobs2)
     bra     loc_500085F0
 loc_50008580:
-    bset    0x04, (bss_50019734)
+    bset    0x04, (TickJobs)
     bra     loc_500085F0
 loc_50008589:
-    movbu   (data_50010065), d1
-    bset    0x02, (bss_50019734)
+    movbu   (TickPhase2), d1
+    bset    0x02, (TickJobs)
     mov     d1, d0
     inc     d0
-    movbu   d0, (data_50010065)
+    movbu   d0, (TickPhase2)
     clr     d0
-    movbu   d0, (data_50010064)
+    movbu   d0, (TickPhase)
     cmp     0, d1
     beq     loc_500085F0
     cmp     1, d1
@@ -17185,18 +17230,18 @@ loc_50008589:
     beq     loc_500085E2
     bra     loc_500085F0
 loc_500085C7:
-    bset    0x80, (bss_50019734)
+    bset    0x80, (TickJobs)
     bra     loc_500085F0
 loc_500085D0:
-    bset    0x40, (bss_50019734)
+    bset    0x40, (TickJobs)
     bra     loc_500085F0
 loc_500085D9:
-    bset    0x20, (bss_50019734)
+    bset    0x20, (TickJobs)
     bra     loc_500085F0
 loc_500085E2:
-    bset    0x10, (bss_50019734)
+    bset    0x10, (TickJobs)
     clr     d0
-    movbu   d0, (data_50010065)
+    movbu   d0, (TickPhase2)
 loc_500085F0:
     and     0xf7ff, psw
     nop
@@ -17211,9 +17256,10 @@ loc_500085F0:
     movhu   (G6ICR), d0
     rets
 
-# ---- func_50008617 -----------------------------------------------------------
+# ---- LcdControllerInitOld ----------------------------------------------------
+# another set-up of the LCD controller at 0x9CC00000, with its palette tables; nothing calls it
 # no caller: unreferenced code
-func_50008617:
+LcdControllerInitOld:
     movm    [d2,a2], (sp)
     mov     0x9cc00000, a2
     mov     0x80, d0
@@ -17245,9 +17291,9 @@ loc_50008629:
     movbu   d0, (0x9cc0000c)
     movbu   d0, (0x9cc0000e)
     movbu   d0, (0x9cc00014)
-    mov     rodata_5000C964, a1
+    mov     LcdOldPaletteA, a1
     clr     d2
-    mov     rodata_5000C984, a0
+    mov     LcdOldPaletteB, a0
     setlb
     movbu   (a1), d1
     mov     0x20, d0
@@ -17260,7 +17306,7 @@ loc_50008629:
     inc     a0
     add     2, d2
     inc     a1
-    cmp     rodata_5000C984, a1
+    cmp     LcdOldPaletteB, a1
     lcs
     mov     0x9ce00000, a0
     clr     d0
@@ -17285,7 +17331,7 @@ BootMain:
     bset    0x20, (P04)
     bset    0x20, (P04)
     bset    0x20, (P04)
-    call    func_50008BEE_entry, 0, 0x24
+    call    TickStart_entry, 0, 0x24
     bclr    0x20, (P04)
     bset    0x20, (P04)
     bclr    0x20, (P04)
@@ -17294,7 +17340,7 @@ BootMain:
     bset    0x20, (P04)
     bset    0x20, (P04)
     bset    0x20, (P04)
-    call    func_50008C4C_entry, [d2], 0x10
+    call    FlashAllToReadMode_entry, [d2], 0x10
     bclr    0x20, (P04)
     bset    0x20, (P04)
     bclr    0x20, (P04)
@@ -17310,12 +17356,12 @@ BootMain:
     beq     loc_5000878B
     bra     loc_5000879F
 loc_5000878B:
-    call    func_50008C6A_entry, 0, 8
-    call    func_50008C92_entry, 0, 0xc
-    call    func_5000BDFA_entry, 0, 8
-    call    func_5000B4CA_entry, [d2,d3,a2,a3], 0xcc
+    call    PanelStart_entry, 0, 8
+    call    ScreenInit_entry, 0, 0xc
+    call    DiskStart_entry, 0, 8
+    call    SdFlashUpdate_entry, [d2,d3,a2,a3], 0xcc
 loc_5000879F:
-    call    func_50008C6A_entry, 0, 8
+    call    PanelStart_entry, 0, 8
     bclr    0x20, (P04)
     bset    0x20, (P04)
     bclr    0x20, (P04)
@@ -17328,7 +17374,7 @@ loc_5000879F:
     bset    0x20, (P04)
     bset    0x20, (P04)
     bset    0x20, (P04)
-    call    PanelSignOnAndDetect_entry, 0, 8
+    call    PanelSignOnAndKeyCombo_entry, 0, 8
     mov     d0, d2
     bclr    0x20, (P04)
     bset    0x20, (P04)
@@ -17357,7 +17403,7 @@ loc_5000886D:
     beq     loc_50008874
     jmp     loc_50008B34
 loc_50008874:
-    call    func_50008C82_entry, 0, 8
+    call    FdcStart_entry, 0, 8
     bclr    0x20, (P04)
     bset    0x20, (P04)
     bclr    0x20, (P04)
@@ -17388,7 +17434,7 @@ loc_500088F6:
     bset    0x20, (P04)
     bset    0x20, (P04)
     bset    0x20, (P04)
-    call    func_5000A7A2_entry, 0, 0x28
+    call    FloppyInit144_entry, 0, 0x28
     bclr    0x20, (P04)
     bset    0x20, (P04)
     bclr    0x20, (P04)
@@ -17399,7 +17445,7 @@ loc_500088F6:
     bset    0x20, (P04)
     bset    0x20, (P04)
     bset    0x20, (P04)
-    call    func_5000A85A, [d2,a2], 8
+    call    UpdateDiskIdentify_entry, [d2,a2], 8
     bclr    0x20, (P04)
     bset    0x20, (P04)
     bclr    0x20, (P04)
@@ -17417,7 +17463,7 @@ loc_500088F6:
     ble     loc_500089DA
     jmp     loc_50008B13
 loc_500089DA:
-    call    func_50008C92_entry, 0, 0xc
+    call    ScreenInit_entry, 0, 0xc
     bclr    0x20, (P04)
     bset    0x20, (P04)
     bclr    0x20, (P04)
@@ -17470,27 +17516,27 @@ loc_50008A74:
     bset    0x20, (P04)
     bset    0x20, (P04)
     bset    0x20, (P04)
-    call    func_50008D43_entry, 0, 0x18
+    call    UpdateSystemMenu_entry, 0, 0x18
     bra     loc_50008B13
 loc_50008B07:
-    call    func_50008DB9_entry, 0, 0x18
+    call    DeviceInfoScreen_entry, 0, 0x18
     bra     loc_50008B13
 loc_50008B0E:
-    call    func_50008DF1_entry, [d2,a2], 0x60
+    call    DiskCheckScreen_entry, [d2,a2], 0x60
 loc_50008B13:
     cmp     4, d2
     beq     loc_50008B19
     bra     loc_50008B34
 loc_50008B19:
-    call    func_50008C92_entry, 0, 0xc
-    call    func_5000BDFA_entry, 0, 8
-    call    func_5000BDA0_entry, [d2,d3,a2], 0x18
+    call    ScreenInit_entry, 0, 0xc
+    call    DiskStart_entry, 0, 8
+    call    SdUpdateFilePresent_entry, [d2,d3,a2], 0x18
     exthu   d0
     cmp     0, d0
     bne     loc_50008B2F
     bra     loc_50008B34
 loc_50008B2F:
-    call    func_50008FDA_entry, 0, 0x18
+    call    SdUpdateScreen_entry, 0, 0x18
 loc_50008B34:
     bclr    0x20, (P04)
     bset    0x20, (P04)
@@ -17517,27 +17563,29 @@ loc_50008B34:
     and     0xf7ff, psw
     nop
     nop
-    call    func_5000917E, 0, 0
-    call    func_50008482, 0, 0
-    call    func_500084A3, 0, 0
+    call    IrqGroupsDisableAll, 0, 0
+    call    ICacheDisable, 0, 0
+    call    DCacheFlushDisable, 0, 0
     mov     FirmwareReset, a0
     jmp     (a0)
 
-# ---- func_50008BEB -----------------------------------------------------------
+# ---- BootMain_UnusedRet ------------------------------------------------------
+# an epilogue left after BootMain; unreachable
 # no caller: unreferenced code
-func_50008BEB:
+BootMain_UnusedRet:
     ret     [d2], 0xc
 
-# ---- func_50008BEE -----------------------------------------------------------
-# `call` enters at func_50008BEE_entry, past the prologue
-func_50008BEE:
+# ---- TickStart ---------------------------------------------------------------
+# TickIsr on interrupt group 6, timer 4 reloading 0xFA0, interrupts on
+# `call` enters at TickStart_entry, past the prologue
+TickStart:
     add     -0x24, sp
-func_50008BEE_entry:
+TickStart_entry:
     clr     d0
     mov     d0, (TickCount)
     mov     1, d0
     movhu   d0, (0x10, sp)
-    mov     func_50008515, d0
+    mov     TickIsr, d0
     mov     d0, (0x14, sp)
     mov     6, d0
     movhu   d0, (0x18, sp)
@@ -17561,19 +17609,20 @@ func_50008BEE_entry:
     or      0x0f00, psw
     ret     0, 0x24
 
-# ---- func_50008C4C -----------------------------------------------------------
-# `call` enters at func_50008C4C_entry, past the prologue
-func_50008C4C:
+# ---- FlashAllToReadMode ------------------------------------------------------
+# every flash device back to read mode (Flash32Reset 0, FlashResetToRead 4..10)
+# `call` enters at FlashAllToReadMode_entry, past the prologue
+FlashAllToReadMode:
     movm    [d2], (sp)
     add     -0xc, sp
-func_50008C4C_entry:
+FlashAllToReadMode_entry:
     clr     d0
-    call    func_50009EB5_entry, 0, 0x10
+    call    Flash32Reset_entry, 0, 0x10
     mov     4, d0
     mov     d0, d2
 loc_50008C5A:
     extbu   d0
-    call    func_500098A5_entry, [a2], 0x14
+    call    FlashResetToRead_entry, [a2], 0x14
     inc     d2
     mov     d2, d0
     exthu   d2
@@ -17581,32 +17630,36 @@ loc_50008C5A:
     ble     loc_50008C5A
     ret     [d2], 0x10
 
-# ---- func_50008C6A -----------------------------------------------------------
-# `call` enters at func_50008C6A_entry, past the prologue
-func_50008C6A:
+# ---- PanelStart --------------------------------------------------------------
+# the D-cache written back and off, PanelDriverOps[0] (PanelInit), the D-cache invalidated and
+# on
+# `call` enters at PanelStart_entry, past the prologue
+PanelStart:
     add     -8, sp
-func_50008C6A_entry:
-    call    func_500084A3, 0, 0
+PanelStart_entry:
+    call    DCacheFlushDisable, 0, 0
     mov     (PanelDriverOps), a0
     calls   (a0)
-    call    func_5000845C, 0, 0
+    call    DCacheInvalidate, 0, 0
     ret     0, 8
 
-# ---- func_50008C82 -----------------------------------------------------------
-# `call` enters at func_50008C82_entry, past the prologue
-func_50008C82:
+# ---- FdcStart ----------------------------------------------------------------
+# FdcHookNop4, FdcHwInit
+# `call` enters at FdcStart_entry, past the prologue
+FdcStart:
     add     -8, sp
-func_50008C82_entry:
+FdcStart_entry:
     call    FdcHookNop4, 0, 0
     call    FdcHwInit_entry, 0, 0x58
     ret     0, 8
 
-# ---- func_50008C92 -----------------------------------------------------------
-# `call` enters at func_50008C92_entry, past the prologue
-func_50008C92:
+# ---- ScreenInit --------------------------------------------------------------
+# LcdControllerInit, then panel commands 0x1C/0x32 and 8..0xD with 4, and PanelPump
+# `call` enters at ScreenInit_entry, past the prologue
+ScreenInit:
     add     -0xc, sp
-func_50008C92_entry:
-    call    func_50009301_entry, [a2], 4
+ScreenInit_entry:
+    call    LcdControllerInit_entry, [a2], 4
     mov     0x1c, d0
     call    PanelTxFifoPush_entry, 0, 0x10
     mov     0x32, d0
@@ -17638,9 +17691,10 @@ func_50008C92_entry:
     call    PanelPump_entry, 0, 8
     ret     0, 0xc
 
-# ---- func_50008D04 -----------------------------------------------------------
+# ---- SpinDelay ---------------------------------------------------------------
+# d0 rounds of ten nops; nothing calls it
 # no caller: unreferenced code
-func_50008D04:
+SpinDelay:
     mov     0xffffffff, a1
     add     d0, a1
     cmp     0, d0
@@ -17663,9 +17717,10 @@ loc_50008D10:
 loc_50008D21:
     rets
 
-# ---- func_50008D23 -----------------------------------------------------------
+# ---- SpinDelay10000 ----------------------------------------------------------
+# d0 rounds of SpinDelay(10000); nothing calls it
 # no caller: unreferenced code
-func_50008D23:
+SpinDelay10000:
     movm    [a2], (sp)
     add     -0xc, sp
     mov     d0, a2
@@ -17675,7 +17730,7 @@ func_50008D23:
     beq     loc_50008D40
 loc_50008D31:
     mov     0x2710, d0
-    call    func_50008D04, 0, 0
+    call    SpinDelay, 0, 0
     mov     a2, a0
     add     -1, a2
     cmp     0, a0
@@ -17683,27 +17738,28 @@ loc_50008D31:
 loc_50008D40:
     ret     [a2], 0x10
 
-# ---- func_50008D43 -----------------------------------------------------------
-# `call` enters at func_50008D43_entry, past the prologue
-func_50008D43:
+# ---- UpdateSystemMenu --------------------------------------------------------
+# UPDATE / DISKCHK / EXIT: FlashUpdateScreen or DiskCheckScreen
+# `call` enters at UpdateSystemMenu_entry, past the prologue
+UpdateSystemMenu:
     add     -0x18, sp
-func_50008D43_entry:
-    call    func_5000BE0D_entry, [d2], 0x10
+UpdateSystemMenu_entry:
+    call    ScreenClear_entry, [d2], 0x10
     mov     Str_UpdateSystemMenu, a0
-    call    func_5000BE58_entry, [a2], 0x1c
+    call    ScreenTitle_entry, [a2], 0x1c
     mov     Str_PleaseSelect, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     mov     Str_Update, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     mov     Str_DiskCheckDiskchk, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     mov     Str_ExecuteDiskCheckBeforeUpdateToPrevent, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     mov     Str_Update_2, a0
-    mov     rodata_5000CA45, a1
+    mov     Str_None_10, a1
     mov     Str_Diskchk, d0
     mov     Str_Exit, d1
-    call    func_5000BE9E_entry, [d2,d3,a2,a3], 0x80
+    call    MenuSoftKeyChoice_entry, [d2,d3,a2,a3], 0x80
     exthu   d0
     cmp     0, d0
     beq     loc_50008DAA
@@ -17711,45 +17767,47 @@ func_50008D43_entry:
     beq     loc_50008DB1
     bra     loc_50008DB6
 loc_50008DAA:
-    call    func_50008E7D_entry, [d2,d3,a2], 0x64
+    call    FlashUpdateScreen_entry, [d2,d3,a2], 0x64
     bra     loc_50008DB6
 loc_50008DB1:
-    call    func_50008DF1_entry, [d2,a2], 0x60
+    call    DiskCheckScreen_entry, [d2,a2], 0x60
 loc_50008DB6:
     ret     0, 0x18
 
-# ---- func_50008DB9 -----------------------------------------------------------
-# `call` enters at func_50008DB9_entry, past the prologue
-func_50008DB9:
+# ---- DeviceInfoScreen --------------------------------------------------------
+# DEVICE INFO: DeviceInfoProbe
+# `call` enters at DeviceInfoScreen_entry, past the prologue
+DeviceInfoScreen:
     add     -0x18, sp
-func_50008DB9_entry:
-    call    func_5000BE0D_entry, [d2], 0x10
+DeviceInfoScreen_entry:
+    call    ScreenClear_entry, [d2], 0x10
     mov     Str_DeviceInfo, a0
-    call    func_5000BE58_entry, [a2], 0x1c
-    call    func_5000B450_entry, 0, 0xc
-    mov     rodata_5000CA64, a0
-    mov     rodata_5000CA65, a1
-    mov     rodata_5000CA66, d0
-    mov     str_5000CA67, d1
-    call    func_5000BE9E_entry, [d2,d3,a2,a3], 0x80
+    call    ScreenTitle_entry, [a2], 0x1c
+    call    DeviceInfoProbe_entry, 0, 0xc
+    mov     Str_None_11, a0
+    mov     Str_None_12, a1
+    mov     Str_None_13, d0
+    mov     Str_OK, d1
+    call    MenuSoftKeyChoice_entry, [d2,d3,a2,a3], 0x80
     ret     0, 0x18
 
-# ---- func_50008DF1 -----------------------------------------------------------
-# `call` enters at func_50008DF1_entry, past the prologue
-func_50008DF1:
+# ---- DiskCheckScreen ---------------------------------------------------------
+# UPDATE DISK CHECK: the floppy's kind, then DiskCheckRun
+# `call` enters at DiskCheckScreen_entry, past the prologue
+DiskCheckScreen:
     movm    [d2,a2], (sp)
     add     -0x58, sp
-func_50008DF1_entry:
-    call    func_5000BE0D_entry, [d2], 0x10
+DiskCheckScreen_entry:
+    call    ScreenClear_entry, [d2], 0x10
     mov     Str_UpdateDiskCheck, a0
-    call    func_5000BE58_entry, [a2], 0x1c
+    call    ScreenTitle_entry, [a2], 0x1c
     mov     Str_AreYouSure, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     mov     Str_Check, a0
-    mov     rodata_5000CA9D, a1
-    mov     rodata_5000CA9E, d0
+    mov     Str_None_14, a1
+    mov     Str_None_15, d0
     mov     Str_Exit_2, d1
-    call    func_5000BE9E_entry, [d2,d3,a2,a3], 0x80
+    call    MenuSoftKeyChoice_entry, [d2,d3,a2,a3], 0x80
     exthu   d0
     cmp     0, d0
     bne     loc_50008E7A
@@ -17757,8 +17815,8 @@ func_50008DF1_entry:
     extbu   d0
     cmp     0, d0
     beq     loc_50008E6D
-    call    func_5000A7A2_entry, 0, 0x28
-    call    func_5000A85A, [d2,a2], 8
+    call    FloppyInit144_entry, 0, 0x28
+    call    UpdateDiskIdentify_entry, [d2,a2], 8
     mov     d0, d2
     mov     sp, a2
     add     0x18, a2
@@ -17769,36 +17827,38 @@ func_50008DF1_entry:
     mov     d2, (0x10, sp)
     call    sprintf_entry, [a2], 0x20
     mov     a2, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     mov     d2, d0
-    call    func_5000B47A_entry, [d2], 0x10
+    call    DiskCheckRun_entry, [d2], 0x10
     bra     loc_50008E7A
 loc_50008E6D:
     mov     Str_ErrorDiskNotFoundTryAgain, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
 loc_50008E78:
     bra     loc_50008E78
 loc_50008E7A:
     ret     [d2,a2], 0x60
 
-# ---- func_50008E7D -----------------------------------------------------------
-# `call` enters at func_50008E7D_entry, past the prologue
-func_50008E7D:
+# ---- FlashUpdateScreen -------------------------------------------------------
+# FLASH MEMORY UPDATE: the program's version now (flash byte 0x4840000F) and on the disk, then
+# FlashUpdateRun
+# `call` enters at FlashUpdateScreen_entry, past the prologue
+FlashUpdateScreen:
     movm    [d2,d3,a2], (sp)
     add     -0x58, sp
-func_50008E7D_entry:
-    call    func_5000BE0D_entry, [d2], 0x10
+FlashUpdateScreen_entry:
+    call    ScreenClear_entry, [d2], 0x10
     mov     Str_FlashMemoryUpdate, a0
-    call    func_5000BE58_entry, [a2], 0x1c
+    call    ScreenTitle_entry, [a2], 0x1c
     mov     Str_AreYouSure_2, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     mov     Str_ExecuteDiskCheckBeforeUpdateToPrevent_2, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
-    mov     rodata_5000CB60, a0
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
+    mov     Str_None_16, a0
     mov     Str_Update_3, a1
-    mov     rodata_5000CB6A, d0
+    mov     Str_None_17, d0
     mov     Str_Exit_3, d1
-    call    func_5000BE9E_entry, [d2,d3,a2,a3], 0x80
+    call    MenuSoftKeyChoice_entry, [d2,d3,a2,a3], 0x80
     exthu   d0
     cmp     1, d0
     beq     loc_50008ECD
@@ -17810,22 +17870,22 @@ loc_50008ECD:
     bne     loc_50008EDA
     jmp     loc_50008FCA
 loc_50008EDA:
-    call    func_5000A7A2_entry, 0, 0x28
-    call    func_5000A85A, [d2,a2], 8
+    call    FloppyInit144_entry, 0, 0x28
+    call    UpdateDiskIdentify_entry, [d2,a2], 8
     extbu   d0
     cmp     0, d0
     beq     loc_50008EEC
     jmp     loc_50008F6D
 loc_50008EEC:
-    mov     str_5000CB74, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
-    call    func_5000B282, [d2,d3,a2,a3], 0x10
+    mov     Str_Newline, a0
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
+    call    UpdDiskVersion_entry, [d2,d3,a2,a3], 0x10
     mov     d0, d3
-    mov     str_5000CB78, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    mov     Str_Newline_2, a0
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     movbu   (0x4840000f), d2
     mov     Str_ProgramVersionInfo, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     mov     sp, a2
     add     0x18, a2
     mov     a2, (8, sp)
@@ -17839,7 +17899,7 @@ loc_50008EEC:
     mov     d2, (0x14, sp)
     call    sprintf_entry, [a2], 0x20
     mov     a2, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     mov     a2, (8, sp)
     mov     Str_NEWDiskVer1X1X, d0
     mov     d0, (0xc, sp)
@@ -17851,22 +17911,22 @@ loc_50008EEC:
     mov     d3, (0x14, sp)
     call    sprintf_entry, [a2], 0x20
     mov     a2, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     mov     Str_DonTUpdateIfTheDiskVersionIsOlderThan, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
 loc_50008F6D:
     mov     Str_UpdateReally, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
-    mov     rodata_5000CC3C, a0
-    mov     rodata_5000CC3D, a1
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
+    mov     Str_None_18, a0
+    mov     Str_None_19, a1
     mov     Str_Update_4, d0
     mov     Str_Exit_4, d1
-    call    func_5000BE9E_entry, [d2,d3,a2,a3], 0x80
+    call    MenuSoftKeyChoice_entry, [d2,d3,a2,a3], 0x80
     exthu   d0
     cmp     2, d0
     bne     loc_50008FD7
-    call    func_5000A7A2_entry, 0, 0x28
-    call    func_5000A85A, [d2,a2], 8
+    call    FloppyInit144_entry, 0, 0x28
+    call    UpdateDiskIdentify_entry, [d2,a2], 8
     mov     d0, d2
     mov     sp, a2
     add     0x18, a2
@@ -17877,69 +17937,71 @@ loc_50008F6D:
     mov     d2, (0x10, sp)
     call    sprintf_entry, [a2], 0x20
     mov     a2, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     mov     d2, d0
-    call    func_5000B490_entry, [d2], 0x10
+    call    FlashUpdateRun_entry, [d2], 0x10
     bra     loc_50008FD7
 loc_50008FCA:
     mov     Str_ErrorDiskNotFoundTryAgain_2, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
 loc_50008FD5:
     bra     loc_50008FD5
 loc_50008FD7:
     ret     [d2,d3,a2], 0x64
 
-# ---- func_50008FDA -----------------------------------------------------------
-# `call` enters at func_50008FDA_entry, past the prologue
-func_50008FDA:
+# ---- SdUpdateScreen ----------------------------------------------------------
+# FLASH MEMORY UPDATE --- SD: two confirmations, then SdUpdateStart
+# `call` enters at SdUpdateScreen_entry, past the prologue
+SdUpdateScreen:
     add     -0x18, sp
-func_50008FDA_entry:
-    call    func_5000BE0D_entry, [d2], 0x10
+SdUpdateScreen_entry:
+    call    ScreenClear_entry, [d2], 0x10
     mov     Str_FlashMemoryUpdateSD, a0
-    call    func_5000BE58_entry, [a2], 0x1c
+    call    ScreenTitle_entry, [a2], 0x1c
     mov     Str_PleaseSelect_2, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     mov     Str_UpdateSD, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     mov     Str_Update_5, a0
-    mov     rodata_5000CCE1, a1
-    mov     rodata_5000CCE2, d0
+    mov     Str_None_20, a1
+    mov     Str_None_21, d0
     mov     Str_Exit_5, d1
-    call    func_5000BE9E_entry, [d2,d3,a2,a3], 0x80
+    call    MenuSoftKeyChoice_entry, [d2,d3,a2,a3], 0x80
     exthu   d0
     cmp     0, d0
     beq     loc_50009028
     ret     0, 0x18
 loc_50009028:
     mov     Str_AreYouSure_3, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
-    mov     rodata_5000CCFC, a0
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
+    mov     Str_None_22, a0
     mov     Str_Update_6, a1
-    mov     rodata_5000CD06, d0
+    mov     Str_None_23, d0
     mov     Str_Exit_6, d1
-    call    func_5000BE9E_entry, [d2,d3,a2,a3], 0x80
+    call    MenuSoftKeyChoice_entry, [d2,d3,a2,a3], 0x80
     exthu   d0
     cmp     1, d0
     bne     loc_50009092
     mov     Str_UpdateReally_2, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
-    mov     rodata_5000CD24, a0
-    mov     rodata_5000CD25, a1
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
+    mov     Str_None_24, a0
+    mov     Str_None_25, a1
     mov     Str_Update_7, d0
     mov     Str_Exit_7, d1
-    call    func_5000BE9E_entry, [d2,d3,a2,a3], 0x80
+    call    MenuSoftKeyChoice_entry, [d2,d3,a2,a3], 0x80
     exthu   d0
     cmp     2, d0
     bne     loc_50009092
     mov     Str_SdProgram, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
-    call    func_5000BDE8_entry, 0, 8
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
+    call    SdUpdateStart_entry, 0, 8
 loc_50009092:
     ret     0, 0x18
 
-# ---- func_50009095 -----------------------------------------------------------
+# ---- LcdControllerInitAlt ----------------------------------------------------
+# a third set-up of the LCD controller registers; nothing calls it
 # no caller: unreferenced code
-func_50009095:
+LcdControllerInitAlt:
     clr     d0
     movbu   d0, (0x9cc0001b)
     mov     8, d0
@@ -17996,8 +18058,9 @@ func_50009095:
     movbu   d0, (0x9cc0001a)
     retf    0, 0
 
-# ---- func_5000917E -----------------------------------------------------------
-func_5000917E:
+# ---- IrqGroupsDisableAll -----------------------------------------------------
+# the enable bit of every GxICR off, before the jump to the firmware
+IrqGroupsDisableAll:
     movhu   (G2ICR), d0
     mov     0x0000feff, d1
     and     d1, d0
@@ -18082,11 +18145,13 @@ func_5000917E:
     movhu   d0, (G30ICR)
     retf    0, 0
 
-# ---- func_50009301 -----------------------------------------------------------
-# `call` enters at func_50009301_entry, past the prologue
-func_50009301:
+# ---- LcdControllerInit -------------------------------------------------------
+# the LCD controller's registers (0x9CC00000..), the frame buffer (0x9CE00000) cleared, the
+# display on
+# `call` enters at LcdControllerInit_entry, past the prologue
+LcdControllerInit:
     movm    [a2], (sp)
-func_50009301_entry:
+LcdControllerInit_entry:
     mov     0x9ce00000, a0
     clr     d0
     movbu   d0, (0x9cc00001)
@@ -18257,9 +18322,10 @@ func_50009301_entry:
     movbu   d0, (a1)
     retf    [a2], 4
 
-# ---- func_500095F9 -----------------------------------------------------------
+# ---- HexDumpLines ------------------------------------------------------------
+# ten lines of "%08X :" and sixteen "%02X " bytes from a0; nothing calls it
 # no caller: unreferenced code
-func_500095F9:
+HexDumpLines:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x114, sp
     mov     a0, a2
@@ -18268,27 +18334,27 @@ func_500095F9:
     add     0x14, a3
 loc_50009604:
     mov     a3, (8, sp)
-    mov     Str_08X, d0
+    mov     Str_Fmt08X, d0
     mov     d0, (0xc, sp)
     mov     a2, (0x10, sp)
     call    sprintf_entry, [a2], 0x20
     mov     a3, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     clr     d2
 loc_5000961E:
     mov     a3, (8, sp)
-    mov     Str_02X, d0
+    mov     Str_Fmt02X, d0
     mov     d0, (0xc, sp)
     movbu   (a2), d0
     inc     a2
     mov     d0, (0x10, sp)
     call    sprintf_entry, [a2], 0x20
     mov     a3, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     cmp     7, d2
     bne     loc_50009649
-    mov     str_5000CD58, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    mov     Str_Dash, a0
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
 loc_50009649:
     inc     d2
     exthu   d2
@@ -18479,11 +18545,11 @@ PanelSubTypeGet:
 # ---- SdPowerCtrlSetRaw -------------------------------------------------------
 # the same code as the firmware's routine of this name (941 0x4854D168), linked elsewhere
 SdPowerCtrlSetRaw:
-    movbu   (data_50010068), d1
+    movbu   (SdPowerShadow), d1
     extbu   d0
     or      d0, d1
-    movbu   d1, (data_50010068)
-    movbu   (data_50010068), d0
+    movbu   d1, (SdPowerShadow)
+    movbu   (SdPowerShadow), d0
     clr     d1
     movbu   d0, (0x98060000)
     setlb
@@ -18498,12 +18564,12 @@ SdPowerCtrlSetRaw:
 # ---- SdPowerCtrlClearRaw -----------------------------------------------------
 # the same code as the firmware's routine of this name (941 0x4854D18F), linked elsewhere
 SdPowerCtrlClearRaw:
-    movbu   (data_50010068), d1
+    movbu   (SdPowerShadow), d1
     extbu   d0
     not     d0
     and     d0, d1
-    movbu   d1, (data_50010068)
-    movbu   (data_50010068), d0
+    movbu   d1, (SdPowerShadow)
+    movbu   (SdPowerShadow), d0
     clr     d1
     movbu   d0, (0x98060000)
     setlb
@@ -18515,11 +18581,12 @@ SdPowerCtrlClearRaw:
     llt
     retf    0, 0
 
-# ---- func_500097B0 -----------------------------------------------------------
-# `call` enters at func_500097B0_entry, past the prologue
-func_500097B0:
+# ---- FlashBusyWait6000 -------------------------------------------------------
+# counted busy loop (0x1770)
+# `call` enters at FlashBusyWait6000_entry, past the prologue
+FlashBusyWait6000:
     add     -8, sp
-func_500097B0_entry:
+FlashBusyWait6000_entry:
     mov     0x1770, d0
     mov     d0, (0, sp)
     mov     (0, sp), d0
@@ -18537,11 +18604,12 @@ func_500097B0_entry:
     bset    0x20, (P04)
     retf    0, 8
 
-# ---- func_500097DD -----------------------------------------------------------
-# `call` enters at func_500097DD_entry, past the prologue
-func_500097DD:
+# ---- FlashBusyWait33 ---------------------------------------------------------
+# counted busy loop (0x21)
+# `call` enters at FlashBusyWait33_entry, past the prologue
+FlashBusyWait33:
     add     -8, sp
-func_500097DD_entry:
+FlashBusyWait33_entry:
     mov     0x21, d0
     mov     d0, (0, sp)
     mov     (0, sp), d0
@@ -18559,8 +18627,11 @@ func_500097DD_entry:
     bset    0x20, (P04)
     retf    0, 8
 
-# ---- func_50009808 -----------------------------------------------------------
-func_50009808:
+# ---- FlashDeviceBase ---------------------------------------------------------
+# the uncached base of device d0: 0/1 program 0x88400000 (+2 MB), 2/3 table 0x88000000 (+2 MB),
+# 4 IC21 0x96800000, 5 0x96000000, 6 0x97000000, 7 0x81000000, 8/9 0x80000000 (+2 MB), 10-12
+# IC19 0x97800000
+FlashDeviceBase:
     extbu   d0
     cmp     0, d0
     bge     loc_50009810
@@ -18571,7 +18642,7 @@ loc_50009810:
     jmp     loc_5000989C
 loc_50009817:
     asl2    d0
-    mov     rodata_5000CD70, a0
+    mov     FlashDeviceBaseCases, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_50009822:
@@ -18621,24 +18692,25 @@ loc_5000989C:
 loc_500098A2:
     retf    0, 0
 
-# ---- func_500098A5 -----------------------------------------------------------
-# `call` enters at func_500098A5_entry, past the prologue
-func_500098A5:
+# ---- FlashResetToRead --------------------------------------------------------
+# the read/reset command (0xF0) by the identified chip's command layout
+# `call` enters at FlashResetToRead_entry, past the prologue
+FlashResetToRead:
     movm    [a2], (sp)
     add     -0x10, sp
-func_500098A5_entry:
+FlashResetToRead_entry:
     extbu   d0
-    call    func_50009808, 0, 0
+    call    FlashDeviceBase, 0, 0
     mov     a0, a2
     and     0xf7ff, psw
     nop
     nop
-    movhu   (data_50010170), d1
+    movhu   (FlashChipId), d1
     cmp     0x78, d1
     blt     loc_50009917
     cmp     0x22c4, d1
     bgt     loc_50009917
-    mov     rodata_5000CDA4, a1
+    mov     FlashResetById, a1
     add     -0x77, d1
     mov     a1, a0
     mov     0xf, d0
@@ -18652,7 +18724,7 @@ func_500098A5_entry:
     cmp     0, d0
     beq     loc_50009917
     add     8, a0
-    cmp     rodata_5000CE24, a0
+    cmp     FlashFujitsuIds, a0
     bcs     loc_500098ED
     mov     a1, a0
 loc_500098ED:
@@ -18695,22 +18767,24 @@ loc_5000993C:
     nop
     ret     [a2], 0x14
 
-# ---- func_50009945 -----------------------------------------------------------
-# `call` enters at func_50009945_entry, past the prologue
-func_50009945:
+# ---- FlashIdentify -----------------------------------------------------------
+# autoselect (0x90): maker and device, printed "M:%2X D:%2X"; known Fujitsu (4), Atmel (0x1F)
+# and Macronix (0xC2) parts set FlashChipId; 0 if known else 0xFFFF
+# `call` enters at FlashIdentify_entry, past the prologue
+FlashIdentify:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x44, sp
-func_50009945_entry:
+FlashIdentify_entry:
     mov     0xffff, a3
     extbu   d0
     mov     d0, (0x14, sp)
-    call    func_50009808, 0, 0
+    call    FlashDeviceBase, 0, 0
     mov     a0, a2
     and     0xf7ff, psw
     nop
     nop
     mov     (0x14, sp), d0
-    call    func_500098A5_entry, [a2], 0x14
+    call    FlashResetToRead_entry, [a2], 0x14
     mov     a2, a1
     add     0xaaaa, a1
     mov     0xaa, d0
@@ -18729,20 +18803,20 @@ func_50009945_entry:
     add     0x1c, a2
     mov     a2, (8, sp)
     exthu   d3
-    mov     Str_M2X, d0
+    mov     Str_FmtM2X, d0
     mov     d0, (0xc, sp)
     mov     d3, (0x10, sp)
     call    sprintf_entry, [a2], 0x20
     mov     a2, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     mov     a2, (8, sp)
-    mov     Str_D2X, d0
+    mov     Str_FmtD2X, d0
     mov     d0, (0xc, sp)
     movhu   (0x18, sp), d2
     mov     d2, (0x10, sp)
     call    sprintf_entry, [a2], 0x20
     mov     a2, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     cmp     4, d3
     beq     loc_500099D4
     cmp     0x1f, d3
@@ -18759,7 +18833,7 @@ loc_500099DD:
     ble     loc_500099E6
     jmp     loc_50009A5E
 loc_500099E6:
-    mov     rodata_5000CE24, a1
+    mov     FlashFujitsuIds, a1
     add     -0x2226, d2
     mov     0xf, d0
     and     d2, d0
@@ -18773,7 +18847,7 @@ loc_500099E6:
     cmp     0, d0
     beq     loc_50009A5E
     add     8, a0
-    cmp     str_5000CEA4, a0
+    cmp     Str_Percent, a0
     bcs     loc_50009A0F
     mov     a1, a0
 loc_50009A0F:
@@ -18786,7 +18860,7 @@ loc_50009A12:
 loc_50009A17:
     movhu   (0x18, sp), d0
     mov     0, a3
-    movhu   d0, (data_50010170)
+    movhu   d0, (FlashChipId)
 loc_50009A22:
     bra     loc_50009A5E
 loc_50009A24:
@@ -18797,7 +18871,7 @@ loc_50009A24:
 loc_50009A30:
     movhu   (0x18, sp), d0
     mov     0, a3
-    movhu   d0, (data_50010170)
+    movhu   d0, (FlashChipId)
     bra     loc_50009A5E
 loc_50009A3D:
     cmp     0xf9, d2
@@ -18809,19 +18883,21 @@ loc_50009A3D:
 loc_50009A53:
     movhu   (0x18, sp), d0
     mov     0, a3
-    movhu   d0, (data_50010170)
+    movhu   d0, (FlashChipId)
 loc_50009A5E:
     mov     (0x14, sp), d0
-    call    func_500098A5_entry, [a2], 0x14
+    call    FlashResetToRead_entry, [a2], 0x14
     mov     a3, d0
     ret     [d2,d3,a2,a3], 0x54
 
-# ---- func_50009A6A -----------------------------------------------------------
-# `call` enters at func_50009A6A_entry, past the prologue
-func_50009A6A:
+# ---- FlashPageWrite ----------------------------------------------------------
+# Atmel page mode: collects 128 words in FlashPageBuffer, then programs the page (0xA0) and
+# polls
+# `call` enters at FlashPageWrite_entry, past the prologue
+FlashPageWrite:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x14, sp
-func_50009A6A_entry:
+FlashPageWrite_entry:
     mov     d1, d2
     mov     d0, d3
     mov     a0, d0
@@ -18830,19 +18906,19 @@ func_50009A6A_entry:
     mov     d1, (0xc, sp)
     and     0xff, d0
     lsr     1, d0
-    movbu   d0, (bss_50012568)
-    movbu   (bss_50012568), d0
-    mov     StackTop, a0
+    movbu   d0, (FlashPageIndex)
+    movbu   (FlashPageIndex), d0
+    mov     FlashPageBuffer, a0
     add     d0, d0
     movhu   d2, (d0, a0)
-    movbu   (bss_50012568), d0
+    movbu   (FlashPageIndex), d0
     cmp     0x7f, d0
     beq     loc_50009AA4
     ret     [d2,d3,a2,a3], 0x24
 loc_50009AA4:
     extbu   d3
     mov     d3, d0
-    call    func_50009808, 0, 0
+    call    FlashDeviceBase, 0, 0
     mov     a0, a3
     and     0xf7ff, psw
     nop
@@ -18851,28 +18927,28 @@ loc_50009AA4:
     add     0xaaaa, a2
     mov     0xaa, d0
     movhu   d0, (a2)
-    call    func_500097DD_entry, 0, 8
+    call    FlashBusyWait33_entry, 0, 8
     mov     0x55, d0
     movhu   d0, (0x00015554, a3)
-    call    func_500097DD_entry, 0, 8
+    call    FlashBusyWait33_entry, 0, 8
     mov     0xa0, d0
     movhu   d0, (a2)
-    call    func_500097DD_entry, 0, 8
+    call    FlashBusyWait33_entry, 0, 8
     mov     0x80, d3
     clr     d2
 loc_50009ADE:
-    mov     StackTop, a0
+    mov     FlashPageBuffer, a0
     movhu   (d2, a0), d0
     mov     (0xc, sp), a0
     movhu   d0, (d2, a0)
-    call    func_500097DD_entry, 0, 8
+    call    FlashBusyWait33_entry, 0, 8
     add     2, d2
     cmp     0x100, d2
     blt     loc_50009ADE
     or      0x0800, psw
     nop
     nop
-    call    func_500097B0_entry, 0, 8
+    call    FlashBusyWait6000_entry, 0, 8
     movhu   (a3), d0
     movhu   d0, (0x10, sp)
     exthu   d0
@@ -18889,21 +18965,22 @@ loc_50009ADE:
 loc_50009B1A:
     ret     [d2,d3,a2,a3], 0x24
 
-# ---- func_50009B1D -----------------------------------------------------------
-# `call` enters at func_50009B1D_entry, past the prologue
-func_50009B1D:
+# ---- FlashProgramWord --------------------------------------------------------
+# one word (0xA0), then polls until it reads back; Atmel parts through FlashPageWrite
+# `call` enters at FlashProgramWord_entry, past the prologue
+FlashProgramWord:
     movm    [d2,a2], (sp)
     add     -0x14, sp
-func_50009B1D_entry:
+FlashProgramWord_entry:
     mov     a0, a2
     mov     d1, d2
-    movhu   (data_50010170), d1
+    movhu   (FlashChipId), d1
     cmp     0xf9, d1
     bne     loc_50009B3A
     extbu   d0
     exthu   d2
     mov     d2, d1
-    call    func_50009A6A_entry, [d2,d3,a2,a3], 0x24
+    call    FlashPageWrite_entry, [d2,d3,a2,a3], 0x24
     bra     loc_50009B7F
 loc_50009B3A:
     mov     d2, d1
@@ -18911,7 +18988,7 @@ loc_50009B3A:
     cmp     0xffff, d1
     beq     loc_50009B7F
     extbu   d0
-    call    func_50009808, 0, 0
+    call    FlashDeviceBase, 0, 0
     and     0xf7ff, psw
     nop
     nop
@@ -18939,12 +19016,13 @@ loc_50009B3A:
 loc_50009B7F:
     ret     [d2,a2], 0x1c
 
-# ---- func_50009B82 -----------------------------------------------------------
-# `call` enters at func_50009B82_entry, past the prologue
-func_50009B82:
+# ---- FlashEraseChip ----------------------------------------------------------
+# chip erase (0x80, 0x10); kinds 8 and 0xB erase both halves
+# `call` enters at FlashEraseChip_entry, past the prologue
+FlashEraseChip:
     movm    [d2,d3,a2,a3], (sp)
     add     -0xc, sp
-func_50009B82_entry:
+FlashEraseChip_entry:
     mov     d0, d2
     extbu   d2
     cmp     8, d2
@@ -18952,7 +19030,7 @@ func_50009B82_entry:
     cmp     0xb, d2
     beq     loc_50009C02
     mov     d2, d0
-    call    func_50009808, 0, 0
+    call    FlashDeviceBase, 0, 0
     mov     a0, d1
     and     0xf7ff, psw
     nop
@@ -18977,7 +19055,7 @@ func_50009B82_entry:
     ret     [d2,d3,a2,a3], 0x1c
 loc_50009BCB:
     mov     d2, d0
-    call    func_50009808, 0, 0
+    call    FlashDeviceBase, 0, 0
     and     0xf7ff, psw
     nop
     nop
@@ -19000,7 +19078,7 @@ loc_50009BCB:
     bra     loc_50009C73
 loc_50009C02:
     mov     d2, d0
-    call    func_50009808, 0, 0
+    call    FlashDeviceBase, 0, 0
     and     0xf7ff, psw
     nop
     nop
@@ -19020,7 +19098,7 @@ loc_50009C02:
     inc     d2
     mov     d2, d0
     extbu   d0
-    call    func_50009808, 0, 0
+    call    FlashDeviceBase, 0, 0
     mov     a0, d0
     mov     0xaaaa, a1
     add     d0, a1
@@ -19042,14 +19120,15 @@ loc_50009C02:
 loc_50009C73:
     ret     [d2,d3,a2,a3], 0x1c
 
-# ---- func_50009C76 -----------------------------------------------------------
-# `call` enters at func_50009C76_entry, past the prologue
-func_50009C76:
+# ---- FlashEraseSectors -------------------------------------------------------
+# sector erase (0x30) of the eight sectors at 0x8000, 0x40000..0x1C0000
+# `call` enters at FlashEraseSectors_entry, past the prologue
+FlashEraseSectors:
     movm    [d2,a2], (sp)
     add     -0xc, sp
-func_50009C76_entry:
+FlashEraseSectors_entry:
     extbu   d0
-    call    func_50009808, 0, 0
+    call    FlashDeviceBase, 0, 0
     and     0xf7ff, psw
     nop
     nop
@@ -19079,18 +19158,19 @@ func_50009C76_entry:
     nop
     ret     [d2,a2], 0x14
 
-# ---- func_50009CDE -----------------------------------------------------------
-# `call` enters at func_50009CDE_entry, past the prologue
-func_50009CDE:
+# ---- FlashWaitEraseDone ------------------------------------------------------
+# until FlashEraseComplete, printing a mark every 50 ticks
+# `call` enters at FlashWaitEraseDone_entry, past the prologue
+FlashWaitEraseDone:
     movm    [d2], (sp)
     add     -0xc, sp
-func_50009CDE_entry:
+FlashWaitEraseDone_entry:
     mov     d0, d2
     clr     d0
     mov     d0, (TickCount)
     extbu   d2
     mov     d2, d0
-    call    func_50009E06_entry, 0, 0xc
+    call    FlashEraseComplete_entry, 0, 0xc
     exthu   d0
     cmp     0xffff, d0
     bne     loc_50009D26
@@ -19098,28 +19178,29 @@ loc_50009CFB:
     mov     (TickCount), d0
     cmp     0x32, d0
     bls     loc_50009D17
-    mov     str_5000CD6C, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    mov     Str_Hash, a0
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     clr     d0
     mov     d0, (TickCount)
 loc_50009D17:
     mov     d2, d0
-    call    func_50009E06_entry, 0, 0xc
+    call    FlashEraseComplete_entry, 0, 0xc
     exthu   d0
     cmp     0xffff, d0
     beq     loc_50009CFB
 loc_50009D26:
     ret     [d2], 0x10
 
-# ---- func_50009D29 -----------------------------------------------------------
+# ---- FlashEraseBootSectors ---------------------------------------------------
+# the small sectors one by one, then the large ones; nothing calls it
 # no caller: unreferenced code
-func_50009D29:
+FlashEraseBootSectors:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x10, sp
     mov     d0, d3
     extbu   d3
     mov     d3, d0
-    call    func_50009808, 0, 0
+    call    FlashDeviceBase, 0, 0
     mov     a0, a2
     and     0xf7ff, psw
     nop
@@ -19144,25 +19225,25 @@ func_50009D29:
     mov     0x30, d2
     movhu   d2, (a2)
     mov     d3, d0
-    call    func_50009CDE_entry, [d2], 0x10
+    call    FlashWaitEraseDone_entry, [d2], 0x10
     movhu   d2, (0x4000, a2)
     mov     d3, d0
-    call    func_50009CDE_entry, [d2], 0x10
+    call    FlashWaitEraseDone_entry, [d2], 0x10
     movhu   d2, (0x6000, a2)
     mov     d3, d0
-    call    func_50009CDE_entry, [d2], 0x10
+    call    FlashWaitEraseDone_entry, [d2], 0x10
     movhu   d2, (0x00008000, a2)
     mov     d3, d0
-    call    func_50009CDE_entry, [d2], 0x10
+    call    FlashWaitEraseDone_entry, [d2], 0x10
     movhu   d2, (0x00040000, a2)
     mov     d3, d0
-    call    func_50009CDE_entry, [d2], 0x10
+    call    FlashWaitEraseDone_entry, [d2], 0x10
     movhu   d2, (0x00080000, a2)
     mov     d3, d0
-    call    func_50009CDE_entry, [d2], 0x10
+    call    FlashWaitEraseDone_entry, [d2], 0x10
     movhu   d2, (0x000c0000, a2)
     mov     d3, d0
-    call    func_50009CDE_entry, [d2], 0x10
+    call    FlashWaitEraseDone_entry, [d2], 0x10
     mov     0xaa, d0
     movhu   d0, (a3)
     mov     0x55, d0
@@ -19177,34 +19258,35 @@ func_50009D29:
     movhu   d0, (a0)
     movhu   d2, (0x00100000, a2)
     mov     d3, d0
-    call    func_50009CDE_entry, [d2], 0x10
+    call    FlashWaitEraseDone_entry, [d2], 0x10
     movhu   d2, (0x00140000, a2)
     mov     d3, d0
-    call    func_50009CDE_entry, [d2], 0x10
+    call    FlashWaitEraseDone_entry, [d2], 0x10
     movhu   d2, (0x00180000, a2)
     mov     d3, d0
-    call    func_50009CDE_entry, [d2], 0x10
+    call    FlashWaitEraseDone_entry, [d2], 0x10
     movhu   d2, (0x001c0000, a2)
     mov     d3, d0
-    call    func_50009CDE_entry, [d2], 0x10
+    call    FlashWaitEraseDone_entry, [d2], 0x10
     or      0x0800, psw
     nop
     nop
     ret     [d2,d3,a2,a3], 0x20
 
-# ---- func_50009E06 -----------------------------------------------------------
-# `call` enters at func_50009E06_entry, past the prologue
-func_50009E06:
+# ---- FlashEraseComplete ------------------------------------------------------
+# device 9: always; Atmel: status 0x80; else the first word reads 0xFFFF twice
+# `call` enters at FlashEraseComplete_entry, past the prologue
+FlashEraseComplete:
     add     -0xc, sp
-func_50009E06_entry:
+FlashEraseComplete_entry:
     extbu   d0
     cmp     9, d0
     bne     loc_50009E11
     clr     d0
     bra     loc_50009E56
 loc_50009E11:
-    call    func_50009808, 0, 0
-    movhu   (data_50010170), d0
+    call    FlashDeviceBase, 0, 0
+    movhu   (FlashChipId), d0
     cmp     0xf9, d0
     bne     loc_50009E39
     movhu   (a0), d0
@@ -19231,63 +19313,66 @@ loc_50009E50:
 loc_50009E56:
     ret     0, 0xc
 
-# ---- func_50009E59 -----------------------------------------------------------
+# ---- FlashEraseChipWait ------------------------------------------------------
+# nothing calls it
 # no caller: unreferenced code
-func_50009E59:
+FlashEraseChipWait:
     movm    [d2], (sp)
     add     -0xc, sp
     mov     d0, d2
     extbu   d2
     mov     d2, d0
-    call    func_50009B82_entry, [d2,d3,a2,a3], 0x1c
+    call    FlashEraseChip_entry, [d2,d3,a2,a3], 0x1c
     mov     d2, d0
-    call    func_50009E06_entry, 0, 0xc
+    call    FlashEraseComplete_entry, 0, 0xc
     exthu   d0
     cmp     0xffff, d0
     bne     loc_50009E84
 loc_50009E75:
     mov     d2, d0
-    call    func_50009E06_entry, 0, 0xc
+    call    FlashEraseComplete_entry, 0, 0xc
     exthu   d0
     cmp     0xffff, d0
     beq     loc_50009E75
 loc_50009E84:
     ret     [d2], 0x10
 
-# ---- func_50009E87 -----------------------------------------------------------
+# ---- FlashEraseSectorsWait ---------------------------------------------------
+# nothing calls it
 # no caller: unreferenced code
-func_50009E87:
+FlashEraseSectorsWait:
     movm    [d2], (sp)
     add     -0xc, sp
     mov     d0, d2
     extbu   d2
     mov     d2, d0
-    call    func_50009C76_entry, [d2,a2], 0x14
+    call    FlashEraseSectors_entry, [d2,a2], 0x14
     mov     d2, d0
-    call    func_50009E06_entry, 0, 0xc
+    call    FlashEraseComplete_entry, 0, 0xc
     exthu   d0
     cmp     0xffff, d0
     bne     loc_50009EB2
 loc_50009EA3:
     mov     d2, d0
-    call    func_50009E06_entry, 0, 0xc
+    call    FlashEraseComplete_entry, 0, 0xc
     exthu   d0
     cmp     0xffff, d0
     beq     loc_50009EA3
 loc_50009EB2:
     ret     [d2], 0x10
 
-# ---- func_50009EB5 -----------------------------------------------------------
-# `call` enters at func_50009EB5_entry, past the prologue
-func_50009EB5:
+# ---- Flash32Reset ------------------------------------------------------------
+# read/reset for the program/table pair
+# `call` enters at Flash32Reset_entry, past the prologue
+Flash32Reset:
     add     -0x10, sp
-func_50009EB5_entry:
+Flash32Reset_entry:
     extbu   d0
-    call    func_50009808, 0, 0
+    call    FlashDeviceBase, 0, 0
     and     0xf7ff, psw
     nop
     nop
-    mov     (data_5001006C), d0
+    mov     (Flash32ChipId), d0
     cmp     0x22f622f6, d0
     beq     loc_50009EFA
     cmp     0x22f922f9, d0
@@ -19321,17 +19406,19 @@ loc_50009F29:
     nop
     ret     0, 0x10
 
-# ---- func_50009F32 -----------------------------------------------------------
-# `call` enters at func_50009F32_entry, past the prologue
-func_50009F32:
+# ---- Flash32Identify ---------------------------------------------------------
+# autoselect on the pair: Fujitsu 0x22F6/0x22F9/0x225F/0x2250 or Macronix 0xA100/0xA200 set
+# Flash32ChipId; 0 if known
+# `call` enters at Flash32Identify_entry, past the prologue
+Flash32Identify:
     movm    [d2,d3,a2], (sp)
     add     -0xc, sp
-func_50009F32_entry:
+Flash32Identify_entry:
     mov     -1, d3
     mov     d3, d2
     extbu   d0
     mov     d0, a2
-    call    func_50009808, 0, 0
+    call    FlashDeviceBase, 0, 0
     and     0xf7ff, psw
     nop
     nop
@@ -19348,7 +19435,7 @@ func_50009F32_entry:
     or      0x0800, psw
     nop
     nop
-    mov     d3, (data_5001006C)
+    mov     d3, (Flash32ChipId)
     cmp     0x40004, d1
     bne     loc_50009FA6
     cmp     0x22f622f6, d0
@@ -19360,7 +19447,7 @@ func_50009F32_entry:
     cmp     0x22502250, d0
     bne     loc_50009FC5
 loc_50009F9D:
-    mov     d0, (data_5001006C)
+    mov     d0, (Flash32ChipId)
     clr     d2
     bra     loc_50009FC5
 loc_50009FA6:
@@ -19371,26 +19458,27 @@ loc_50009FA6:
     cmp     0xa200a200, d0
     bne     loc_50009FC5
 loc_50009FBE:
-    mov     d0, (data_5001006C)
+    mov     d0, (Flash32ChipId)
     clr     d2
 loc_50009FC5:
     mov     a2, d0
-    call    func_50009EB5_entry, 0, 0x10
+    call    Flash32Reset_entry, 0, 0x10
     mov     d2, d0
     ret     [d2,d3,a2], 0x18
 
-# ---- func_50009FD0 -----------------------------------------------------------
-# `call` enters at func_50009FD0_entry, past the prologue
-func_50009FD0:
+# ---- Flash32ProgramWord ------------------------------------------------------
+# one 32-bit word (0x00A000A0), polled until it reads back
+# `call` enters at Flash32ProgramWord_entry, past the prologue
+Flash32ProgramWord:
     movm    [d2,a2], (sp)
     add     -0xc, sp
-func_50009FD0_entry:
+Flash32ProgramWord_entry:
     mov     a0, a2
     mov     d1, d2
     cmp     -1, d2
     beq     loc_5000A015
     extbu   d0
-    call    func_50009808, 0, 0
+    call    FlashDeviceBase, 0, 0
     and     0xf7ff, psw
     nop
     nop
@@ -19419,14 +19507,15 @@ loc_5000A00F:
 loc_5000A015:
     ret     [d2,a2], 0x14
 
-# ---- func_5000A018 -----------------------------------------------------------
-# `call` enters at func_5000A018_entry, past the prologue
-func_5000A018:
+# ---- Flash32EraseChip --------------------------------------------------------
+# chip erase on the pair
+# `call` enters at Flash32EraseChip_entry, past the prologue
+Flash32EraseChip:
     movm    [d2], (sp)
     add     -0xc, sp
-func_5000A018_entry:
+Flash32EraseChip_entry:
     extbu   d0
-    call    func_50009808, 0, 0
+    call    FlashDeviceBase, 0, 0
     and     0xf7ff, psw
     nop
     nop
@@ -19448,13 +19537,14 @@ func_5000A018_entry:
     nop
     ret     [d2], 0x10
 
-# ---- func_5000A059 -----------------------------------------------------------
-# `call` enters at func_5000A059_entry, past the prologue
-func_5000A059:
+# ---- Flash32IsErased ---------------------------------------------------------
+# the first word reads 0xFFFFFFFF twice
+# `call` enters at Flash32IsErased_entry, past the prologue
+Flash32IsErased:
     add     -0xc, sp
-func_5000A059_entry:
+Flash32IsErased_entry:
     extbu   d0
-    call    func_50009808, 0, 0
+    call    FlashDeviceBase, 0, 0
     mov     (a0), d0
     cmp     -1, d0
     bne     loc_5000A06F
@@ -19468,39 +19558,41 @@ loc_5000A06F:
 loc_5000A075:
     ret     0, 0xc
 
-# ---- func_5000A078 -----------------------------------------------------------
+# ---- Flash32EraseChipWait ----------------------------------------------------
+# nothing calls it
 # no caller: unreferenced code
-func_5000A078:
+Flash32EraseChipWait:
     movm    [d2], (sp)
     add     -0xc, sp
     mov     d0, d2
     extbu   d2
     mov     d2, d0
-    call    func_5000A018_entry, [d2], 0x10
+    call    Flash32EraseChip_entry, [d2], 0x10
     mov     d2, d0
-    call    func_5000A059_entry, 0, 0xc
+    call    Flash32IsErased_entry, 0, 0xc
     exthu   d0
     cmp     -1, d0
     bne     loc_5000A09B
 loc_5000A090:
     mov     d2, d0
-    call    func_5000A059_entry, 0, 0xc
+    call    Flash32IsErased_entry, 0, 0xc
     exthu   d0
     cmp     -1, d0
     beq     loc_5000A090
 loc_5000A09B:
     ret     [d2], 0x10
 
-# ---- func_5000A09E -----------------------------------------------------------
-# `call` enters at func_5000A09E_entry, past the prologue
-func_5000A09E:
+# ---- Flash32WordErased -------------------------------------------------------
+# word d1 of the table pair reads 0xFFFFFFFF twice
+# `call` enters at Flash32WordErased_entry, past the prologue
+Flash32WordErased:
     movm    [d2], (sp)
     add     -0xc, sp
-func_5000A09E_entry:
+Flash32WordErased_entry:
     mov     d1, d2
     asl2    d2
     mov     2, d0
-    call    func_50009808, 0, 0
+    call    FlashDeviceBase, 0, 0
     add     d2, a0
     mov     (a0), d0
     cmp     -1, d0
@@ -19515,38 +19607,40 @@ loc_5000A0BB:
 loc_5000A0C1:
     ret     [d2], 0x10
 
-# ---- func_5000A0C4 -----------------------------------------------------------
-# `call` enters at func_5000A0C4_entry, past the prologue
-func_5000A0C4:
+# ---- Flash32WaitErasedAt -----------------------------------------------------
+# until Flash32WordErased, then a progress mark
+# `call` enters at Flash32WaitErasedAt_entry, past the prologue
+Flash32WaitErasedAt:
     movm    [d2,d3], (sp)
     add     -0x10, sp
-func_5000A0C4_entry:
+Flash32WaitErasedAt_entry:
     mov     d1, d3
     mov     d0, d2
     extbu   d2
     mov     d2, d0
-    call    func_5000A09E_entry, [d2], 0x10
+    call    Flash32WordErased_entry, [d2], 0x10
     exthu   d0
     cmp     0xffff, d0
     bne     loc_5000A0EB
 loc_5000A0DB:
     mov     d2, d0
     mov     d3, d1
-    call    func_5000A09E_entry, [d2], 0x10
+    call    Flash32WordErased_entry, [d2], 0x10
     exthu   d0
     cmp     0xffff, d0
     beq     loc_5000A0DB
 loc_5000A0EB:
-    mov     str_5000CEA4, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    mov     Str_Percent, a0
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     ret     [d2,d3], 0x18
 
-# ---- func_5000A0F9 -----------------------------------------------------------
-# `call` enters at func_5000A0F9_entry, past the prologue
-func_5000A0F9:
+# ---- Flash32EraseRegion ------------------------------------------------------
+# region d0 (0..3) erased sector by sector, by the sector map of the identified chips
+# `call` enters at Flash32EraseRegion_entry, past the prologue
+Flash32EraseRegion:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x1c, sp
-func_5000A0F9_entry:
+Flash32EraseRegion_entry:
     extbu   d0
     mov     d0, (0x18, sp)
     cmp     3, d0
@@ -19554,9 +19648,9 @@ func_5000A0F9_entry:
     ret     [d2,d3,a2,a3], 0x2c
 loc_5000A108:
     mov     2, d0
-    call    func_50009F32_entry, [d2,d3,a2], 0x18
+    call    Flash32Identify_entry, [d2,d3,a2], 0x18
     mov     2, d0
-    call    func_50009808, 0, 0
+    call    FlashDeviceBase, 0, 0
     mov     a0, (0x14, sp)
     and     0xf7ff, psw
     nop
@@ -19576,7 +19670,7 @@ loc_5000A12F:
 loc_5000A136:
     jmp     loc_5000A799
 loc_5000A139:
-    mov     (data_5001006C), d0
+    mov     (Flash32ChipId), d0
     cmp     0x22f622f6, d0
     beq     loc_5000A181
     cmp     0x22f922f9, d0
@@ -19623,7 +19717,7 @@ loc_5000A192:
     mov     d1, (d0, a0)
     mov     (0x18, sp), d0
     mov     d2, d1
-    call    func_5000A0C4_entry, [d2,d3], 0x18
+    call    Flash32WaitErasedAt_entry, [d2,d3], 0x18
     add     0x8000, d2
     cmp     0xf8000, d2
     bls     loc_5000A192
@@ -19651,7 +19745,7 @@ loc_5000A1DF:
     mov     d1, (d0, a0)
     mov     (0x18, sp), d0
     mov     d2, d1
-    call    func_5000A0C4_entry, [d2,d3], 0x18
+    call    Flash32WaitErasedAt_entry, [d2,d3], 0x18
     add     0x1000, d2
     cmp     0x7000, d2
     bls     loc_5000A1DF
@@ -19665,7 +19759,7 @@ loc_5000A21B:
     mov     d1, (d0, a0)
     mov     (0x18, sp), d0
     mov     d2, d1
-    call    func_5000A0C4_entry, [d2,d3], 0x18
+    call    Flash32WaitErasedAt_entry, [d2,d3], 0x18
     add     d3, d2
     cmp     0xf8000, d2
     bls     loc_5000A21B
@@ -19693,7 +19787,7 @@ loc_5000A24C:
     mov     d1, (d0, a0)
     mov     (0x18, sp), d0
     mov     d2, d1
-    call    func_5000A0C4_entry, [d2,d3], 0x18
+    call    Flash32WaitErasedAt_entry, [d2,d3], 0x18
     add     0x8000, d2
     cmp     0xf8000, d2
     bls     loc_5000A24C
@@ -19720,7 +19814,7 @@ loc_5000A288:
     clr     d1
     mov     d0, (a0)
     mov     (0x18, sp), d0
-    call    func_5000A0C4_entry, [d2,d3], 0x18
+    call    Flash32WaitErasedAt_entry, [d2,d3], 0x18
     mov     0x00aa00aa, d0
     mov     d0, (a2)
     mov     (0x10, sp), a0
@@ -19736,7 +19830,7 @@ loc_5000A288:
     mov     0x2000, d1
     mov     d0, (0x00008000, a0)
     mov     (0x18, sp), d0
-    call    func_5000A0C4_entry, [d2,d3], 0x18
+    call    Flash32WaitErasedAt_entry, [d2,d3], 0x18
     mov     0x00aa00aa, d0
     mov     d0, (a2)
     mov     (0x10, sp), a0
@@ -19752,7 +19846,7 @@ loc_5000A288:
     mov     0x3000, d1
     mov     d0, (0x0000c000, a0)
     mov     (0x18, sp), d0
-    call    func_5000A0C4_entry, [d2,d3], 0x18
+    call    Flash32WaitErasedAt_entry, [d2,d3], 0x18
     mov     0x00aa00aa, d0
     mov     d0, (a2)
     mov     (0x10, sp), a0
@@ -19768,7 +19862,7 @@ loc_5000A288:
     mov     0x4000, d1
     mov     d0, (0x00010000, a0)
     mov     (0x18, sp), d0
-    call    func_5000A0C4_entry, [d2,d3], 0x18
+    call    Flash32WaitErasedAt_entry, [d2,d3], 0x18
     mov     0x00008000, d3
     mov     d3, d2
 loc_5000A36F:
@@ -19789,7 +19883,7 @@ loc_5000A36F:
     mov     d1, (d0, a0)
     mov     (0x18, sp), d0
     mov     d2, d1
-    call    func_5000A0C4_entry, [d2,d3], 0x18
+    call    Flash32WaitErasedAt_entry, [d2,d3], 0x18
     add     d3, d2
     cmp     0xf8000, d2
     bls     loc_5000A36F
@@ -19817,7 +19911,7 @@ loc_5000A3BD:
     mov     d1, (d0, a0)
     mov     (0x18, sp), d0
     mov     d2, d1
-    call    func_5000A0C4_entry, [d2,d3], 0x18
+    call    Flash32WaitErasedAt_entry, [d2,d3], 0x18
     add     0x1000, d2
     cmp     0x7000, d2
     bls     loc_5000A3BD
@@ -19842,7 +19936,7 @@ loc_5000A404:
     mov     d1, (d0, a0)
     mov     (0x18, sp), d0
     mov     d2, d1
-    call    func_5000A0C4_entry, [d2,d3], 0x18
+    call    Flash32WaitErasedAt_entry, [d2,d3], 0x18
     add     0x8000, d2
     cmp     0xf8000, d2
     bls     loc_5000A404
@@ -19870,13 +19964,13 @@ loc_5000A451:
     mov     d1, (d0, a0)
     mov     (0x18, sp), d0
     mov     d2, d1
-    call    func_5000A0C4_entry, [d2,d3], 0x18
+    call    Flash32WaitErasedAt_entry, [d2,d3], 0x18
     add     0x8000, d2
     cmp     0xf8000, d2
     bls     loc_5000A451
     jmp     loc_5000A799
 loc_5000A48D:
-    mov     (data_5001006C), d0
+    mov     (Flash32ChipId), d0
     cmp     0x22f622f6, d0
     beq     loc_5000A4D5
     cmp     0x22f922f9, d0
@@ -19923,7 +20017,7 @@ loc_5000A4EB:
     mov     d1, (d0, a0)
     mov     (0x18, sp), d0
     mov     d2, d1
-    call    func_5000A0C4_entry, [d2,d3], 0x18
+    call    Flash32WaitErasedAt_entry, [d2,d3], 0x18
     add     0x8000, d2
     cmp     0x1f8000, d2
     bls     loc_5000A4EB
@@ -19948,7 +20042,7 @@ loc_5000A536:
     mov     d1, (d0, a0)
     mov     (0x18, sp), d0
     mov     d2, d1
-    call    func_5000A0C4_entry, [d2,d3], 0x18
+    call    Flash32WaitErasedAt_entry, [d2,d3], 0x18
     add     0x1000, d2
     cmp     0x1ff000, d2
     bls     loc_5000A536
@@ -19976,7 +20070,7 @@ loc_5000A586:
     mov     d1, (d0, a0)
     mov     (0x18, sp), d0
     mov     d2, d1
-    call    func_5000A0C4_entry, [d2,d3], 0x18
+    call    Flash32WaitErasedAt_entry, [d2,d3], 0x18
     add     0x8000, d2
     cmp     0x1f8000, d2
     bls     loc_5000A586
@@ -20004,7 +20098,7 @@ loc_5000A5D8:
     mov     d1, (d0, a0)
     mov     (0x18, sp), d0
     mov     d2, d1
-    call    func_5000A0C4_entry, [d2,d3], 0x18
+    call    Flash32WaitErasedAt_entry, [d2,d3], 0x18
     add     0x8000, d2
     cmp     0x1f8000, d2
     bls     loc_5000A5D8
@@ -20029,7 +20123,7 @@ loc_5000A623:
     mov     d1, (d0, a0)
     mov     (0x18, sp), d0
     mov     d2, d1
-    call    func_5000A0C4_entry, [d2,d3], 0x18
+    call    Flash32WaitErasedAt_entry, [d2,d3], 0x18
     add     0x1000, d2
     cmp     0x1fe000, d2
     bls     loc_5000A623
@@ -20057,7 +20151,7 @@ loc_5000A673:
     mov     d1, (d0, a0)
     mov     (0x18, sp), d0
     mov     d2, d1
-    call    func_5000A0C4_entry, [d2,d3], 0x18
+    call    Flash32WaitErasedAt_entry, [d2,d3], 0x18
     add     0x8000, d2
     cmp     0x1f8000, d2
     bls     loc_5000A673
@@ -20085,7 +20179,7 @@ loc_5000A6C5:
     mov     d1, (d0, a0)
     mov     (0x18, sp), d0
     mov     d2, d1
-    call    func_5000A0C4_entry, [d2,d3], 0x18
+    call    Flash32WaitErasedAt_entry, [d2,d3], 0x18
     add     0x8000, d2
     cmp     0x1f8000, d2
     bls     loc_5000A6C5
@@ -20113,7 +20207,7 @@ loc_5000A717:
     mov     d1, (d0, a0)
     mov     (0x18, sp), d0
     mov     d2, d1
-    call    func_5000A0C4_entry, [d2,d3], 0x18
+    call    Flash32WaitErasedAt_entry, [d2,d3], 0x18
     add     0x8000, d2
     cmp     0x1f0000, d2
     bls     loc_5000A717
@@ -20138,7 +20232,7 @@ loc_5000A762:
     mov     d1, (d0, a0)
     mov     (0x18, sp), d0
     mov     d2, d1
-    call    func_5000A0C4_entry, [d2,d3], 0x18
+    call    Flash32WaitErasedAt_entry, [d2,d3], 0x18
     add     0x1000, d2
     cmp     0x1ff000, d2
     bls     loc_5000A762
@@ -20148,11 +20242,12 @@ loc_5000A799:
     nop
     ret     [d2,d3,a2,a3], 0x2c
 
-# ---- func_5000A7A2 -----------------------------------------------------------
-# `call` enters at func_5000A7A2_entry, past the prologue
-func_5000A7A2:
+# ---- FloppyInit144 -----------------------------------------------------------
+# FdcRequest 0 for 1.44 MB media (0xD3)
+# `call` enters at FloppyInit144_entry, past the prologue
+FloppyInit144:
     add     -0x28, sp
-func_5000A7A2_entry:
+FloppyInit144_entry:
     clr     d0
     mov     d0, (0xc, sp)
     mov     d0, (0x10, sp)
@@ -20169,18 +20264,19 @@ func_5000A7A2_entry:
     call    FdcRequest_entry, 0, 0xc
     ret     0, 0x28
 
-# ---- func_5000A7C5 -----------------------------------------------------------
-# `call` enters at func_5000A7C5_entry, past the prologue
-func_5000A7C5:
+# ---- FloppyLbaToRequest ------------------------------------------------------
+# buffer, LBA, count into FloppyRequest: cylinder LBA/36, head (LBA/18)%2, sector LBA%18+1
+# `call` enters at FloppyLbaToRequest_entry, past the prologue
+FloppyLbaToRequest:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x10, sp
-func_5000A7C5_entry:
+FloppyLbaToRequest_entry:
     mov     a0, (0x30, sp)
     movhu   d1, (0x2c, sp)
     mov     d0, a3
     clr     d0
     mov     d0, mdr
-    mov     d0, (bss_5002BA1C)
+    mov     d0, (FloppyReqDrive)
     mov     a3, d0
     mov     0x12, d1
     divu    d1, d0
@@ -20193,8 +20289,8 @@ func_5000A7C5_entry:
     div     d2, d3
     mov     mdr, d3
     call    LibDiv32, 0, 0
-    mov     d0, (bss_5002BA24)
-    mov     d3, (bss_5002BA20)
+    mov     d0, (FloppyReqCylinder)
+    mov     d3, (FloppyReqHead)
     mov     a3, d1
     clr     d0
     mov     d0, mdr
@@ -20202,20 +20298,21 @@ func_5000A7C5_entry:
     divu    d0, d1
     mov     mdr, d0
     inc     d0
-    mov     d0, (bss_5002BA28)
+    mov     d0, (FloppyReqSector)
     movhu   (0x2c, sp), d0
     exth    d0
-    mov     d0, (bss_5002BA2C)
+    mov     d0, (FloppyReqCount)
     mov     (0x30, sp), d0
-    mov     d0, (bss_5002BA30)
+    mov     d0, (FloppyReqBuffer)
     ret     [d2,d3,a2,a3], 0x20
 
-# ---- func_5000A826 -----------------------------------------------------------
-# `call` enters at func_5000A826_entry, past the prologue
-func_5000A826:
+# ---- FloppyRead --------------------------------------------------------------
+# d1 sectors from LBA d0 into a0, re-initialising and retrying until it reads
+# `call` enters at FloppyRead_entry, past the prologue
+FloppyRead:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x14, sp
-func_5000A826_entry:
+FloppyRead_entry:
     mov     a0, a3
     mov     d0, d3
     mov     d1, d2
@@ -20224,25 +20321,24 @@ loc_5000A82F:
     mov     d3, d0
     mov     d2, d1
     mov     a3, a0
-    call    func_5000A7C5_entry, [d2,d3,a2,a3], 0x20
+    call    FloppyLbaToRequest_entry, [d2,d3,a2,a3], 0x20
     mov     3, d0
-    mov     d0, (bss_5002BA18)
-    mov     bss_5002BA18, a0
+    mov     d0, (FloppyRequest)
+    mov     FloppyRequest, a0
     call    FdcRequest_entry, 0, 0xc
     cmp     0, d0
     beq     loc_5000A855
-    call    func_5000A7A2_entry, 0, 0x28
+    call    FloppyInit144_entry, 0, 0x28
     bra     loc_5000A82F
 loc_5000A855:
     ret     [d2,d3,a2,a3], 0x24
 
-# ---- func_5000A858 -----------------------------------------------------------
-# no caller: unreferenced code
-func_5000A858:
+# ---- UpdateDiskIdentify ------------------------------------------------------
+# the update kind at LBA 0x21: 0 KN7KP1 .. 12 KN7KA2, 0xFF none
+# `call` enters at UpdateDiskIdentify_entry, past the prologue
+UpdateDiskIdentify:
     movm    [d2,a2], (sp)
-
-# ---- func_5000A85A -----------------------------------------------------------
-func_5000A85A:
+UpdateDiskIdentify_entry:
     add     -0x214, sp
     mov     0xff, d2
     mov     sp, a2
@@ -20250,7 +20346,7 @@ func_5000A85A:
     mov     0x21, d0
     mov     1, d1
     mov     a2, a0
-    call    func_5000A826_entry, [d2,d3,a2,a3], 0x24
+    call    FloppyRead_entry, [d2,d3,a2,a3], 0x24
     mov     a2, a0
     mov     Str_Kn7kp1, a1
     mov     6, d0
@@ -20372,13 +20468,13 @@ loc_5000A9AA:
     add     0x214, sp
     ret     [d2,a2], 8
 
-# ---- func_5000A9B3 -----------------------------------------------------------
-# no caller: unreferenced code
-func_5000A9B3:
+# ---- UpdateDiskLoadSums ------------------------------------------------------
+# LBA 0x22's '@'-separated hex: the block count, then the 16-bit sums into UpdateSums (not for
+# second disks: kinds 1, 3, 9, 12)
+# `call` enters at UpdateDiskLoadSums_entry, past the prologue
+UpdateDiskLoadSums:
     movm    [a2,a3], (sp)
-
-# ---- func_5000A9B5 -----------------------------------------------------------
-func_5000A9B5:
+UpdateDiskLoadSums_entry:
     add     -0x214, sp
     extbu   d0
     cmp     1, d0
@@ -20402,7 +20498,7 @@ loc_5000A9D6:
     mov     a2, a0
     mov     0x22, d0
     mov     1, d1
-    call    func_5000A826_entry, [d2,d3,a2,a3], 0x24
+    call    FloppyRead_entry, [d2,d3,a2,a3], 0x24
     mov     a2, a0
     movbu   (a0), d0
     inc     a2
@@ -20424,15 +20520,15 @@ loc_5000A9FB:
     mov     0, a1
     mov     0x10, d0
     call    strtoul_entry, [a2], 0x20
-    mov     d0, (bss_5002BA14)
-    mov     bss_5002B9F4, a0
+    mov     d0, (UpdateSumCount)
+    mov     UpdateSums, a0
     setlb
     clr     d0
     movhu   d0, (a0)
     add     2, a0
-    cmp     bss_5002BA14, a0
+    cmp     UpdateSumCount, a0
     lcs
-    mov     bss_5002B9F4, a3
+    mov     UpdateSums, a3
 loc_5000AA26:
     mov     a2, a0
     movbu   (a0), d0
@@ -20457,18 +20553,19 @@ loc_5000AA3E:
     call    strtoul_entry, [a2], 0x20
     movhu   d0, (a3)
     add     2, a3
-    cmp     bss_5002BA14, a3
+    cmp     UpdateSumCount, a3
     bcs     loc_5000AA26
 loc_5000AA56:
     add     0x214, sp
     ret     [a2,a3], 8
 
-# ---- func_5000AA5D -----------------------------------------------------------
-# `call` enters at func_5000AA5D_entry, past the prologue
-func_5000AA5D:
+# ---- WaitForDisk -------------------------------------------------------------
+# until the disk is taken out, put in again and is of kind d0
+# `call` enters at WaitForDisk_entry, past the prologue
+WaitForDisk:
     movm    [d2], (sp)
     add     -8, sp
-func_5000AA5D_entry:
+WaitForDisk_entry:
     mov     d0, d2
     extbu   d2
 loc_5000AA64:
@@ -20502,18 +20599,19 @@ loc_5000AA96:
     inc     d0
     cmp     0x200000, d0
     lcs
-    call    func_5000A85A, [d2,a2], 8
+    call    UpdateDiskIdentify_entry, [d2,a2], 8
     extbu   d0
     cmp     d2, d0
     bne     loc_5000AA64
     ret     [d2], 0xc
 
-# ---- func_5000AAAC -----------------------------------------------------------
-# `call` enters at func_5000AAAC_entry, past the prologue
-func_5000AAAC:
+# ---- FlashEraseForKind -------------------------------------------------------
+# kinds 0..3 Flash32EraseRegion, else FlashEraseChip and a wait with progress marks
+# `call` enters at FlashEraseForKind_entry, past the prologue
+FlashEraseForKind:
     movm    [d2], (sp)
     add     -0xc, sp
-func_5000AAAC_entry:
+FlashEraseForKind_entry:
     mov     d0, d2
     clr     d0
     mov     d0, (TickCount)
@@ -20531,17 +20629,17 @@ func_5000AAAC_entry:
     bra     loc_5000AB21
 loc_5000AACF:
     mov     d2, d0
-    call    func_5000A0F9_entry, [d2,d3,a2,a3], 0x2c
+    call    Flash32EraseRegion_entry, [d2,d3,a2,a3], 0x2c
     bra     loc_5000AB21
 loc_5000AAD7:
     mov     d2, d0
-    call    func_5000A0F9_entry, [d2,d3,a2,a3], 0x2c
+    call    Flash32EraseRegion_entry, [d2,d3,a2,a3], 0x2c
     bra     loc_5000AB21
 loc_5000AADF:
     mov     d2, d0
-    call    func_50009B82_entry, [d2,d3,a2,a3], 0x1c
+    call    FlashEraseChip_entry, [d2,d3,a2,a3], 0x1c
     mov     d2, d0
-    call    func_50009E06_entry, 0, 0xc
+    call    FlashEraseComplete_entry, 0, 0xc
     exthu   d0
     cmp     0xffff, d0
     bne     loc_5000AB21
@@ -20549,25 +20647,27 @@ loc_5000AAF4:
     mov     (TickCount), d0
     cmp     0x1f4, d0
     bls     loc_5000AB12
-    mov     str_5000CEA8, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    mov     Str_Star, a0
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     clr     d0
     mov     d0, (TickCount)
 loc_5000AB12:
     mov     d2, d0
-    call    func_50009E06_entry, 0, 0xc
+    call    FlashEraseComplete_entry, 0, 0xc
     exthu   d0
     cmp     0xffff, d0
     beq     loc_5000AAF4
 loc_5000AB21:
     ret     [d2], 0x10
 
-# ---- func_5000AB24 -----------------------------------------------------------
-# `call` enters at func_5000AB24_entry, past the prologue
-func_5000AB24:
+# ---- FloppyFlashUpdate -------------------------------------------------------
+# "Now erasing", erase, "Now writing", UpdWriteDisk; a two-disk image asks for disk 2/2;
+# "Completed! Turn on Again."
+# `call` enters at FloppyFlashUpdate_entry, past the prologue
+FloppyFlashUpdate:
     movm    [d2], (sp)
     add     -0x10, sp
-func_5000AB24_entry:
+FloppyFlashUpdate_entry:
     mov     d0, d2
     extbu   d2
     cmp     0xc, d2
@@ -20584,19 +20684,19 @@ loc_5000AB32:
     bne     loc_5000AB4F
 loc_5000AB42:
     mov     Str_ErrorNotDisk12TryAgain, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
 loc_5000AB4D:
     bra     loc_5000AB4D
 loc_5000AB4F:
     mov     Str_NowErasingPleaseWait, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     mov     d2, d0
-    call    func_5000AAAC_entry, [d2], 0x10
+    call    FlashEraseForKind_entry, [d2], 0x10
     mov     Str_NowWritingPleaseWait, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     mov     d2, d0
     mov     0xb4, d1
-    call    func_5000B082, [d2,d3,a2,a3], 0x10
+    call    UpdWriteDisk_entry, [d2,d3,a2,a3], 0x10
     cmp     0x200000, d0
     bne     loc_5000AB88
     cmp     2, d2
@@ -20612,35 +20712,36 @@ loc_5000AB88:
     bne     loc_5000ABBC
 loc_5000AB94:
     mov     Str_ChangeDisk22, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     inc     d2
     mov     d2, d0
     extbu   d0
-    call    func_5000AA5D_entry, [d2], 0xc
+    call    WaitForDisk_entry, [d2], 0xc
     mov     Str_NowWritingPleaseWait_2, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     extbu   d2
     mov     0xc8, d1
     mov     d2, d0
-    call    func_5000B082, [d2,d3,a2,a3], 0x10
+    call    UpdWriteDisk_entry, [d2,d3,a2,a3], 0x10
 loc_5000ABBC:
     mov     Str_CompletedTurnOnAgain, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     bra     loc_5000ABD6
 loc_5000ABC9:
     mov     Str_ErrorIllegalDiskTryAgain, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
 loc_5000ABD4:
     bra     loc_5000ABD4
 loc_5000ABD6:
     ret     [d2], 0x14
 
-# ---- func_5000ABD9 -----------------------------------------------------------
-# `call` enters at func_5000ABD9_entry, past the prologue
-func_5000ABD9:
+# ---- FloppyDiskCheck ---------------------------------------------------------
+# UpdVerifyDisk over one or two disks against the sums: "NG disk" or "OK! Turn on again."
+# `call` enters at FloppyDiskCheck_entry, past the prologue
+FloppyDiskCheck:
     movm    [d2], (sp)
     add     -0x10, sp
-func_5000ABD9_entry:
+FloppyDiskCheck_entry:
     mov     d0, d2
     extbu   d2
     cmp     0xc, d2
@@ -20648,12 +20749,12 @@ func_5000ABD9_entry:
     jmp     loc_5000AC71
 loc_5000ABE7:
     clr     d0
-    mov     d0, (bss_5002B9F0)
+    mov     d0, (UpdTotalSum)
     mov     Str_NowCheckingPleaseWait, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     mov     d2, d0
     mov     0xb4, d1
-    call    func_5000AEC1, [d2,d3,a2,a3], 0x10
+    call    UpdVerifyDisk_entry, [d2,d3,a2,a3], 0x10
     cmp     0x200000, d0
     bne     loc_5000AC16
     cmp     2, d2
@@ -20669,63 +20770,66 @@ loc_5000AC16:
     bne     loc_5000AC4A
 loc_5000AC22:
     mov     Str_ChangeDisk22_2, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     inc     d2
     mov     d2, d0
     extbu   d0
-    call    func_5000AA5D_entry, [d2], 0xc
+    call    WaitForDisk_entry, [d2], 0xc
     mov     Str_NowCheckingPleaseWait_2, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     extbu   d2
     mov     0xc8, d1
     mov     d2, d0
-    call    func_5000AEC1, [d2,d3,a2,a3], 0x10
+    call    UpdVerifyDisk_entry, [d2,d3,a2,a3], 0x10
 loc_5000AC4A:
-    mov     (bss_5002B9F0), d1
-    mov     (bss_5002BA14), d0
+    mov     (UpdTotalSum), d1
+    mov     (UpdateSumCount), d0
     cmp     d0, d1
     beq     loc_5000AC64
     mov     Str_ErrorNGDiskTryAgain, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
 loc_5000AC64:
     mov     Str_OKTurnOnAgain, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     bra     loc_5000AC7C
 loc_5000AC71:
     mov     Str_ErrorIllegalDiskTryAgain_2, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
 loc_5000AC7C:
     bra     loc_5000AC7C
 
-# ---- func_5000AC7E -----------------------------------------------------------
+# ---- FloppyDiskCheck_UnusedRet -----------------------------------------------
+# an epilogue left after FloppyDiskCheck, which never returns; unreachable
 # no caller: unreferenced code
-func_5000AC7E:
+FloppyDiskCheck_UnusedRet:
     ret     [d2], 0x14
 
-# ---- func_5000AC81 -----------------------------------------------------------
-# `call` enters at func_5000AC81_entry, past the prologue
-func_5000AC81:
+# ---- UpdStreamGetByte --------------------------------------------------------
+# the next byte of the LZSS stream, reading the next four tracks when the buffer runs out;
+# 0xFFFF past the end
+# `call` enters at UpdStreamGetByte_entry, past the prologue
+UpdStreamGetByte:
     movm    [d2,d3,a2], (sp)
     add     -0x14, sp
-func_5000AC81_entry:
-    mov     (bss_5002B9D4), d1
-    mov     (bss_5002B9D0), d0
+UpdStreamGetByte_entry:
+    mov     (UpdStreamPos), d1
+    mov     (UpdStreamSize), d0
     cmp     d0, d1
     bcs     loc_5000AC9D
     mov     0x0000ffff, d0
     bra     loc_5000AD02
 loc_5000AC9D:
-    mov     bss_500199D0, a2
-    mov     (bss_5002B9DC), a1
+    mov     UpdTrackBuffer, a2
+    mov     (UpdTrackPtr), a1
     mov     a2, a0
     add     0x9000, a0
     cmp     a0, a1
     bne     loc_5000ACF1
-    mov     str_5000D044, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    mov     Str_O, a0
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     clr     d2
 loc_5000ACBF:
-    movhu   (bss_5002B9E4), d3
+    movhu   (UpdNextLba), d3
     mov     a2, a0
     mov     d3, d0
     mov     0x2400, d1
@@ -20734,137 +20838,141 @@ loc_5000ACBF:
     mul     d2, d1
     add     d1, a0
     mov     0x12, d1
-    call    func_5000A826_entry, [d2,d3,a2,a3], 0x24
-    movhu   (bss_5002B9E4), d0
+    call    FloppyRead_entry, [d2,d3,a2,a3], 0x24
+    movhu   (UpdNextLba), d0
     inc     d2
     add     0x12, d0
-    movhu   d0, (bss_5002B9E4)
+    movhu   d0, (UpdNextLba)
     exthu   d2
     cmp     4, d2
     blt     loc_5000ACBF
-    mov     a2, (bss_5002B9DC)
+    mov     a2, (UpdTrackPtr)
 loc_5000ACF1:
-    mov     (bss_5002B9DC), a0
+    mov     (UpdTrackPtr), a0
     mov     a0, d0
     inc     d0
-    mov     d0, (bss_5002B9DC)
+    mov     d0, (UpdTrackPtr)
     movbu   (a0), d0
 loc_5000AD02:
     ret     [d2,d3,a2], 0x20
 
-# ---- func_5000AD05 -----------------------------------------------------------
-# `call` enters at func_5000AD05_entry, past the prologue
-func_5000AD05:
+# ---- UpdFlashPutByte ---------------------------------------------------------
+# gathers bytes into a word (4 for kinds 0..3, else 2) and programs it at UpdWriteAddr
+# `call` enters at UpdFlashPutByte_entry, past the prologue
+UpdFlashPutByte:
     movm    [d2], (sp)
     add     -0x14, sp
-func_5000AD05_entry:
+UpdFlashPutByte_entry:
     movbu   d0, (0x20, sp)
-    mov     (bss_5002B9E8), d2
-    mov     bss_5001256C, d0
+    mov     (UpdByteCount), d2
+    mov     UpdWordBuffer, d0
     add     d2, d0
     mov     d0, a0
     movbu   d1, (a0)
     movbu   (0x20, sp), d2
     cmp     3, d2
     bgt     loc_5000AD60
-    mov     (bss_5002B9E8), d1
+    mov     (UpdByteCount), d1
     mov     d1, d0
     inc     d0
-    mov     d0, (bss_5002B9E8)
+    mov     d0, (UpdByteCount)
     cmp     3, d1
     bne     loc_5000AD99
     mov     d2, d0
-    mov     (bss_5002B9D8), a0
-    mov     (bss_5001256C), d1
-    call    func_50009FD0_entry, [d2,a2], 0x14
-    mov     (bss_5002B9D8), d0
+    mov     (UpdWriteAddr), a0
+    mov     (UpdWordBuffer), d1
+    call    Flash32ProgramWord_entry, [d2,a2], 0x14
+    mov     (UpdWriteAddr), d0
     add     4, d0
-    mov     d0, (bss_5002B9D8)
+    mov     d0, (UpdWriteAddr)
     clr     d0
-    mov     d0, (bss_5002B9E8)
+    mov     d0, (UpdByteCount)
     bra     loc_5000AD99
 loc_5000AD60:
-    mov     (bss_5002B9E8), d1
+    mov     (UpdByteCount), d1
     mov     d1, d0
     inc     d0
-    mov     d0, (bss_5002B9E8)
+    mov     d0, (UpdByteCount)
     cmp     1, d1
     bne     loc_5000AD99
     mov     d2, d0
-    movhu   (bss_5001256C), d1
-    mov     (bss_5002B9D8), a0
-    call    func_50009B1D_entry, [d2,a2], 0x1c
-    mov     (bss_5002B9D8), d0
+    movhu   (UpdWordBuffer), d1
+    mov     (UpdWriteAddr), a0
+    call    FlashProgramWord_entry, [d2,a2], 0x1c
+    mov     (UpdWriteAddr), d0
     add     2, d0
-    mov     d0, (bss_5002B9D8)
+    mov     d0, (UpdWriteAddr)
     clr     d0
-    mov     d0, (bss_5002B9E8)
+    mov     d0, (UpdByteCount)
 loc_5000AD99:
-    mov     (bss_5002B9D4), d0
+    mov     (UpdStreamPos), d0
     inc     d0
-    mov     d0, (bss_5002B9D4)
+    mov     d0, (UpdStreamPos)
     ret     [d2], 0x18
 
-# ---- func_5000ADA9 -----------------------------------------------------------
-# `call` enters at func_5000ADA9_entry, past the prologue
-func_5000ADA9:
+# ---- UpdSumByte --------------------------------------------------------------
+# adds a byte to the block sum; every 0x40000 bytes compares it with UpdateSums ("NG Disk",
+# halt)
+# `call` enters at UpdSumByte_entry, past the prologue
+UpdSumByte:
     movm    [d2], (sp)
     add     -0xc, sp
-func_5000ADA9_entry:
-    mov     (bss_5002B9F0), d1
+UpdSumByte_entry:
+    mov     (UpdTotalSum), d1
     mov     d0, d2
     extbu   d2
     extbu   d0
     add     d1, d0
-    movhu   (bss_5002B9EC), d1
-    mov     d0, (bss_5002B9F0)
+    movhu   (UpdBlockSum), d1
+    mov     d0, (UpdTotalSum)
     add     d2, d1
-    movhu   d1, (bss_5002B9EC)
-    mov     (bss_5002B9E8), d1
+    movhu   d1, (UpdBlockSum)
+    mov     (UpdByteCount), d1
     mov     d1, d0
     inc     d0
-    mov     d0, (bss_5002B9E8)
+    mov     d0, (UpdByteCount)
     cmp     0x3ffff, d1
     bne     loc_5000AE2C
-    movhu   (bss_5002B9EE), d1
-    movhu   (bss_5002B9EE), d0
+    movhu   (UpdBlockIndex), d1
+    movhu   (UpdBlockIndex), d0
     exthu   d1
     inc     d0
-    movhu   d0, (bss_5002B9EE)
+    movhu   d0, (UpdBlockIndex)
     add     d1, d1
-    mov     bss_5002B9F4, a0
+    mov     UpdateSums, a0
     movhu   (d1, a0), d1
-    movhu   (bss_5002B9EC), d0
+    movhu   (UpdBlockSum), d0
     cmp     d0, d1
     beq     loc_5000AE1F
     mov     Str_NGDisk, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     mov     Str_Completed, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
 loc_5000AE1D:
     bra     loc_5000AE1D
 loc_5000AE1F:
     clr     d0
-    movhu   d0, (bss_5002B9EC)
-    mov     d0, (bss_5002B9E8)
+    movhu   d0, (UpdBlockSum)
+    mov     d0, (UpdByteCount)
 loc_5000AE2C:
-    mov     (bss_5002B9D4), d0
+    mov     (UpdStreamPos), d0
     inc     d0
-    mov     d0, (bss_5002B9D4)
+    mov     d0, (UpdStreamPos)
     ret     [d2], 0x10
 
-# ---- func_5000AE3C -----------------------------------------------------------
-# `call` enters at func_5000AE3C_entry, past the prologue
-func_5000AE3C:
+# ---- UpdFlashFlush -----------------------------------------------------------
+# the last partial word, padded with 0xFF
+# `call` enters at UpdFlashFlush_entry, past the prologue
+UpdFlashFlush:
     movm    [d2,d3], (sp)
     add     -0x14, sp
-func_5000AE3C_entry:
+UpdFlashFlush_entry:
     mov     d0, d2
-    mov     bss_5001256C, a1
+    mov     UpdWordBuffer, a1
     extbu   d2
     cmp     3, d2
     bgt     loc_5000AE9A
-    mov     (bss_5002B9E8), d1
+    mov     (UpdByteCount), d1
     cmp     0, d1
     bne     loc_5000AE5A
     ret     [d2,d3], 0x1c
@@ -20894,32 +21002,31 @@ loc_5000AE7F:
     add     3, a1
     mov     0xff, d0
     movbu   d0, (a1)
-    mov     (bss_5002B9D8), a0
-    mov     (bss_5001256C), d1
+    mov     (UpdWriteAddr), a0
+    mov     (UpdWordBuffer), d1
     mov     d2, d0
-    call    func_50009FD0_entry, [d2,a2], 0x14
+    call    Flash32ProgramWord_entry, [d2,a2], 0x14
     bra     loc_5000AEBC
 loc_5000AE9A:
-    mov     (bss_5002B9E8), d0
+    mov     (UpdByteCount), d0
     cmp     0, d0
     beq     loc_5000AEBC
     inc     a1
     mov     0xff, d0
     movbu   d0, (a1)
-    movhu   (bss_5001256C), d1
-    mov     (bss_5002B9D8), a0
+    movhu   (UpdWordBuffer), d1
+    mov     (UpdWriteAddr), a0
     mov     d2, d0
-    call    func_50009B1D_entry, [d2,a2], 0x1c
+    call    FlashProgramWord_entry, [d2,a2], 0x1c
 loc_5000AEBC:
     ret     [d2,d3], 0x1c
 
-# ---- func_5000AEBF -----------------------------------------------------------
-# no caller: unreferenced code
-func_5000AEBF:
+# ---- UpdVerifyDisk -----------------------------------------------------------
+# decompresses the disk's stream through UpdSumByte only; returns the size
+# `call` enters at UpdVerifyDisk_entry, past the prologue
+UpdVerifyDisk:
     movm    [d2,d3,a2,a3], (sp)
-
-# ---- func_5000AEC1 -----------------------------------------------------------
-func_5000AEC1:
+UpdVerifyDisk_entry:
     add     -0x1020, sp
     clr     d1
     setlb
@@ -20933,9 +21040,9 @@ func_5000AEC1:
     mov     0xfee, a3
     clr     d1
     movhu   d2, (0x1c, sp)
-    mov     d1, (bss_5002B9E8)
-    mov     d1, (bss_5002B9D4)
-    movhu   d1, (bss_5002B9EC)
+    mov     d1, (UpdByteCount)
+    mov     d1, (UpdStreamPos)
+    movhu   d1, (UpdBlockSum)
     extbu   d0
     cmp     1, d0
     beq     loc_5000AF04
@@ -20946,18 +21053,18 @@ func_5000AEC1:
     cmp     0xc, d0
     beq     loc_5000AF04
     clr     d0
-    movhu   d0, (bss_5002B9EE)
+    movhu   d0, (UpdBlockIndex)
 loc_5000AF04:
-    mov     bss_500199D0, a2
-    mov     a2, (bss_5002B9DC)
-    mov     str_5000D060, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    mov     UpdTrackBuffer, a2
+    mov     a2, (UpdTrackPtr)
+    mov     Str_O_2, a0
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     mov     0x3e8, d0
-    mov     d0, (bss_5002B9D0)
+    mov     d0, (UpdStreamSize)
     mov     0x24, d0
-    movhu   d0, (bss_5002B9E4)
+    movhu   d0, (UpdNextLba)
 loc_5000AF2C:
-    movhu   (bss_5002B9E4), d3
+    movhu   (UpdNextLba), d3
     mov     a2, a0
     mov     d3, d0
     mov     0x2400, d1
@@ -20966,26 +21073,26 @@ loc_5000AF2C:
     mul     d2, d1
     add     d1, a0
     mov     0x12, d1
-    call    func_5000A826_entry, [d2,d3,a2,a3], 0x24
-    movhu   (bss_5002B9E4), d0
+    call    FloppyRead_entry, [d2,d3,a2,a3], 0x24
+    movhu   (UpdNextLba), d0
     inc     d2
     add     0x12, d0
-    movhu   d0, (bss_5002B9E4)
+    movhu   d0, (UpdNextLba)
     exthu   d2
     cmp     4, d2
     blt     loc_5000AF2C
     clr     d2
 loc_5000AF59:
-    call    func_5000AC81_entry, [d2,d3,a2], 0x20
+    call    UpdStreamGetByte_entry, [d2,d3,a2], 0x20
     inc     d2
     exthu   d2
     cmp     8, d2
     blt     loc_5000AF59
-    call    func_5000AC81_entry, [d2,d3,a2], 0x20
+    call    UpdStreamGetByte_entry, [d2,d3,a2], 0x20
     mov     d0, d3
-    call    func_5000AC81_entry, [d2,d3,a2], 0x20
+    call    UpdStreamGetByte_entry, [d2,d3,a2], 0x20
     mov     d0, d2
-    call    func_5000AC81_entry, [d2,d3,a2], 0x20
+    call    UpdStreamGetByte_entry, [d2,d3,a2], 0x20
     exthu   d3
     mov     d3, d1
     asl     16, d1
@@ -20996,8 +21103,8 @@ loc_5000AF59:
     mov     d0, d2
     exthu   d2
     add     d2, d3
-    mov     d3, (bss_5002B9D0)
-    mov     (bss_5002B9D4), d0
+    mov     d3, (UpdStreamSize)
+    mov     (UpdStreamPos), d0
     cmp     d3, d0
     bcs     loc_5000AF95
     jmp     loc_5000B073
@@ -21013,7 +21120,7 @@ loc_5000AF9C:
     movhu   (0x1c, sp), d0
     btst    0x0100, d0
     bne     loc_5000AFC8
-    call    func_5000AC81_entry, [d2,d3,a2], 0x20
+    call    UpdStreamGetByte_entry, [d2,d3,a2], 0x20
     mov     d0, d1
     exthu   d1
     cmp     0xffff, d1
@@ -21027,7 +21134,7 @@ loc_5000AFC8:
     movhu   (0x1c, sp), d0
     btst    0x01, d0
     beq     loc_5000AFFD
-    call    func_5000AC81_entry, [d2,d3,a2], 0x20
+    call    UpdStreamGetByte_entry, [d2,d3,a2], 0x20
     mov     d0, d2
     mov     d2, d1
     exthu   d1
@@ -21036,7 +21143,7 @@ loc_5000AFC8:
     jmp     loc_5000B073
 loc_5000AFE3:
     extbu   d0
-    call    func_5000ADA9_entry, [d2], 0x10
+    call    UpdSumByte_entry, [d2], 0x10
     mov     (0x18, sp), a0
     mov     a3, d0
     exthu   d0
@@ -21049,12 +21156,12 @@ loc_5000AFE3:
     mov     d0, a3
     bra     loc_5000B061
 loc_5000AFFD:
-    call    func_5000AC81_entry, [d2,d3,a2], 0x20
+    call    UpdStreamGetByte_entry, [d2,d3,a2], 0x20
     mov     d0, d2
     exthu   d0
     cmp     0xffff, d0
     beq     loc_5000B073
-    call    func_5000AC81_entry, [d2,d3,a2], 0x20
+    call    UpdStreamGetByte_entry, [d2,d3,a2], 0x20
     mov     d0, d1
     exthu   d1
     cmp     0xffff, d1
@@ -21083,7 +21190,7 @@ loc_5000B037:
     inc     d3
     mov     d2, d0
     extbu   d0
-    call    func_5000ADA9_entry, [d2], 0x10
+    call    UpdSumByte_entry, [d2], 0x10
     mov     (0x18, sp), a0
     mov     a3, d0
     exthu   d0
@@ -21098,23 +21205,23 @@ loc_5000B037:
     cmp     a2, d3
     ble     loc_5000B037
 loc_5000B061:
-    mov     (bss_5002B9D4), d1
-    mov     (bss_5002B9D0), d0
+    mov     (UpdStreamPos), d1
+    mov     (UpdStreamSize), d0
     cmp     d0, d1
     bcc     loc_5000B073
     jmp     loc_5000AF9C
 loc_5000B073:
-    mov     (bss_5002B9D0), d0
+    mov     (UpdStreamSize), d0
     add     0x1020, sp
     ret     [d2,d3,a2,a3], 0x10
 
-# ---- func_5000B080 -----------------------------------------------------------
-# no caller: unreferenced code
-func_5000B080:
+# ---- UpdWriteDisk ------------------------------------------------------------
+# decompresses the disk's stream into the flash (UpdFlashPutByte), "> Write Address = ...";
+# returns the size
+# `call` enters at UpdWriteDisk_entry, past the prologue
+UpdWriteDisk:
     movm    [d2,d3,a2,a3], (sp)
-
-# ---- func_5000B082 -----------------------------------------------------------
-func_5000B082:
+UpdWriteDisk_entry:
     add     -0x1078, sp
     clr     d1
     setlb
@@ -21128,10 +21235,10 @@ func_5000B082:
     mov     0xfee, a3
     clr     d1
     movhu   d2, (0x20, sp)
-    mov     d1, (bss_5002B9E8)
-    mov     d1, (bss_5002B9D4)
-    mov     bss_500199D0, d3
-    mov     d3, (bss_5002B9DC)
+    mov     d1, (UpdByteCount)
+    mov     d1, (UpdStreamPos)
+    mov     UpdTrackBuffer, d3
+    mov     d3, (UpdTrackPtr)
     extbu   d0
     mov     d0, (0x1c, sp)
     cmp     1, d0
@@ -21142,26 +21249,26 @@ func_5000B082:
     beq     loc_5000B0D7
     cmp     0xc, d0
     beq     loc_5000B0D7
-    call    func_50009808, 0, 0
-    mov     a0, (bss_5002B9D8)
-    mov     a0, (bss_500199CC)
+    call    FlashDeviceBase, 0, 0
+    mov     a0, (UpdWriteAddr)
+    mov     a0, (UpdTargetBase)
 loc_5000B0D7:
     mov     sp, a2
     add     0x1028, a2
     mov     a2, (8, sp)
     mov     Str_WriteAddress0x88lX, d0
     mov     d0, (0xc, sp)
-    mov     (bss_5002B9D8), a1
+    mov     (UpdWriteAddr), a1
     mov     a1, (0x10, sp)
     call    sprintf_entry, [a2], 0x20
     mov     a2, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     mov     0x3e8, d0
-    mov     d0, (bss_5002B9D0)
+    mov     d0, (UpdStreamSize)
     mov     0x24, d0
-    movhu   d0, (bss_5002B9E4)
+    movhu   d0, (UpdNextLba)
 loc_5000B10C:
-    movhu   (bss_5002B9E4), d0
+    movhu   (UpdNextLba), d0
     mov     0x12, d1
     mov     d0, (0x24, sp)
     mov     0x2400, d0
@@ -21171,26 +21278,26 @@ loc_5000B10C:
     mov     d0, a0
     mov     (0x24, sp), d0
     add     d3, a0
-    call    func_5000A826_entry, [d2,d3,a2,a3], 0x24
-    movhu   (bss_5002B9E4), d0
+    call    FloppyRead_entry, [d2,d3,a2,a3], 0x24
+    movhu   (UpdNextLba), d0
     inc     d2
     add     0x12, d0
-    movhu   d0, (bss_5002B9E4)
+    movhu   d0, (UpdNextLba)
     exthu   d2
     cmp     4, d2
     blt     loc_5000B10C
     clr     d2
 loc_5000B13D:
-    call    func_5000AC81_entry, [d2,d3,a2], 0x20
+    call    UpdStreamGetByte_entry, [d2,d3,a2], 0x20
     inc     d2
     exthu   d2
     cmp     8, d2
     blt     loc_5000B13D
-    call    func_5000AC81_entry, [d2,d3,a2], 0x20
+    call    UpdStreamGetByte_entry, [d2,d3,a2], 0x20
     mov     d0, d3
-    call    func_5000AC81_entry, [d2,d3,a2], 0x20
+    call    UpdStreamGetByte_entry, [d2,d3,a2], 0x20
     mov     d0, d2
-    call    func_5000AC81_entry, [d2,d3,a2], 0x20
+    call    UpdStreamGetByte_entry, [d2,d3,a2], 0x20
     exthu   d3
     asl     16, d3
     exthu   d2
@@ -21199,8 +21306,8 @@ loc_5000B13D:
     mov     d0, d3
     exthu   d3
     add     d2, d3
-    mov     d3, (bss_5002B9D0)
-    mov     (bss_5002B9D4), d0
+    mov     d3, (UpdStreamSize)
+    mov     (UpdStreamPos), d0
     cmp     d3, d0
     bcs     loc_5000B177
     jmp     loc_5000B25A
@@ -21216,7 +21323,7 @@ loc_5000B17E:
     movhu   (0x20, sp), d0
     btst    0x0100, d0
     bne     loc_5000B1AA
-    call    func_5000AC81_entry, [d2,d3,a2], 0x20
+    call    UpdStreamGetByte_entry, [d2,d3,a2], 0x20
     mov     d0, d1
     exthu   d1
     cmp     0xffff, d1
@@ -21230,7 +21337,7 @@ loc_5000B1AA:
     movhu   (0x20, sp), d0
     btst    0x01, d0
     beq     loc_5000B1E2
-    call    func_5000AC81_entry, [d2,d3,a2], 0x20
+    call    UpdStreamGetByte_entry, [d2,d3,a2], 0x20
     mov     d0, d2
     mov     d2, d1
     exthu   d1
@@ -21241,7 +21348,7 @@ loc_5000B1C5:
     mov     d2, d1
     mov     (0x1c, sp), d0
     extbu   d1
-    call    func_5000AD05_entry, [d2], 0x18
+    call    UpdFlashPutByte_entry, [d2], 0x18
     mov     (0x18, sp), a0
     mov     a3, d0
     exthu   d0
@@ -21254,12 +21361,12 @@ loc_5000B1C5:
     mov     d0, a3
     bra     loc_5000B248
 loc_5000B1E2:
-    call    func_5000AC81_entry, [d2,d3,a2], 0x20
+    call    UpdStreamGetByte_entry, [d2,d3,a2], 0x20
     mov     d0, d2
     exthu   d0
     cmp     0xffff, d0
     beq     loc_5000B25A
-    call    func_5000AC81_entry, [d2,d3,a2], 0x20
+    call    UpdStreamGetByte_entry, [d2,d3,a2], 0x20
     mov     d0, d1
     exthu   d1
     cmp     0xffff, d1
@@ -21288,7 +21395,7 @@ loc_5000B21C:
     mov     (0x1c, sp), d0
     mov     d2, d1
     extbu   d1
-    call    func_5000AD05_entry, [d2], 0x18
+    call    UpdFlashPutByte_entry, [d2], 0x18
     mov     (0x18, sp), a0
     mov     a3, d0
     exthu   d0
@@ -21304,33 +21411,32 @@ loc_5000B21C:
     cmp     a2, d3
     ble     loc_5000B21C
 loc_5000B248:
-    mov     (bss_5002B9D4), d1
-    mov     (bss_5002B9D0), d0
+    mov     (UpdStreamPos), d1
+    mov     (UpdStreamSize), d0
     cmp     d0, d1
     bcc     loc_5000B25A
     jmp     loc_5000B17E
 loc_5000B25A:
     mov     (0x1c, sp), d0
-    call    func_5000AE3C_entry, [d2,d3], 0x1c
+    call    UpdFlashFlush_entry, [d2,d3], 0x1c
     mov     (0x1c, sp), d0
     cmp     3, d0
     bgt     loc_5000B26E
-    call    func_50009EB5_entry, 0, 0x10
+    call    Flash32Reset_entry, 0, 0x10
     bra     loc_5000B273
 loc_5000B26E:
-    call    func_500098A5_entry, [a2], 0x14
+    call    FlashResetToRead_entry, [a2], 0x14
 loc_5000B273:
-    mov     (bss_5002B9D0), d0
+    mov     (UpdStreamSize), d0
     add     0x1078, sp
     ret     [d2,d3,a2,a3], 0x10
 
-# ---- func_5000B280 -----------------------------------------------------------
-# no caller: unreferenced code
-func_5000B280:
+# ---- UpdDiskVersion ----------------------------------------------------------
+# decompresses the first 16 bytes of the program disk; returns byte 15, the version
+# `call` enters at UpdDiskVersion_entry, past the prologue
+UpdDiskVersion:
     movm    [d2,d3,a2,a3], (sp)
-
-# ---- func_5000B282 -----------------------------------------------------------
-func_5000B282:
+UpdDiskVersion_entry:
     add     -0x1038, sp
     clr     d0
     setlb
@@ -21344,22 +21450,22 @@ func_5000B282:
     mov     0xfee, a2
     clr     d0
     movhu   d1, (0x1c, sp)
-    mov     d1, (bss_5002B9E8)
-    mov     d0, (bss_5002B9D4)
-    mov     bss_500199D0, a3
-    mov     a3, (bss_5002B9DC)
-    call    func_50009808, 0, 0
-    mov     a0, (bss_5002B9D8)
-    mov     a0, (bss_500199CC)
-    mov     str_5000D080, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    mov     d1, (UpdByteCount)
+    mov     d0, (UpdStreamPos)
+    mov     UpdTrackBuffer, a3
+    mov     a3, (UpdTrackPtr)
+    call    FlashDeviceBase, 0, 0
+    mov     a0, (UpdWriteAddr)
+    mov     a0, (UpdTargetBase)
+    mov     Str_O_3, a0
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     mov     0x3e8, d0
-    mov     d0, (bss_5002B9D0)
+    mov     d0, (UpdStreamSize)
     mov     0x24, d0
-    movhu   d0, (bss_5002B9E4)
+    movhu   d0, (UpdNextLba)
     clr     d2
 loc_5000B2E1:
-    movhu   (bss_5002B9E4), d3
+    movhu   (UpdNextLba), d3
     mov     a3, a0
     mov     d3, d0
     mov     0x2400, d1
@@ -21368,30 +21474,30 @@ loc_5000B2E1:
     mul     d2, d1
     add     d1, a0
     mov     0x12, d1
-    call    func_5000A826_entry, [d2,d3,a2,a3], 0x24
-    movhu   (bss_5002B9E4), d0
+    call    FloppyRead_entry, [d2,d3,a2,a3], 0x24
+    movhu   (UpdNextLba), d0
     inc     d2
     add     0x12, d0
-    movhu   d0, (bss_5002B9E4)
+    movhu   d0, (UpdNextLba)
     exthu   d2
-    mov     str_5000D084, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    mov     Str_O_4, a0
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     cmp     4, d2
     blt     loc_5000B2E1
     clr     d2
 loc_5000B319:
-    call    func_5000AC81_entry, [d2,d3,a2], 0x20
-    mov     str_5000D088, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    UpdStreamGetByte_entry, [d2,d3,a2], 0x20
+    mov     Str_O_5, a0
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     inc     d2
     exthu   d2
     cmp     8, d2
     blt     loc_5000B319
-    call    func_5000AC81_entry, [d2,d3,a2], 0x20
+    call    UpdStreamGetByte_entry, [d2,d3,a2], 0x20
     mov     d0, d3
-    call    func_5000AC81_entry, [d2,d3,a2], 0x20
+    call    UpdStreamGetByte_entry, [d2,d3,a2], 0x20
     mov     d0, d2
-    call    func_5000AC81_entry, [d2,d3,a2], 0x20
+    call    UpdStreamGetByte_entry, [d2,d3,a2], 0x20
     exthu   d3
     asl     16, d3
     exthu   d2
@@ -21400,7 +21506,7 @@ loc_5000B319:
     mov     d0, d3
     exthu   d3
     add     d3, d2
-    mov     d2, (bss_5002B9D0)
+    mov     d2, (UpdStreamSize)
     clr     d3
     mov     sp, a0
     mov     a0, d0
@@ -21416,7 +21522,7 @@ loc_5000B362:
     movhu   (0x1c, sp), d0
     btst    0x0100, d0
     bne     loc_5000B38E
-    call    func_5000AC81_entry, [d2,d3,a2], 0x20
+    call    UpdStreamGetByte_entry, [d2,d3,a2], 0x20
     mov     d0, d1
     exthu   d1
     cmp     0xffff, d1
@@ -21430,7 +21536,7 @@ loc_5000B38E:
     movhu   (0x1c, sp), d0
     btst    0x01, d0
     beq     loc_5000B3C1
-    call    func_5000AC81_entry, [d2,d3,a2], 0x20
+    call    UpdStreamGetByte_entry, [d2,d3,a2], 0x20
     mov     d0, d1
     exthu   d1
     cmp     0xffff, d1
@@ -21452,12 +21558,12 @@ loc_5000B3A8:
     mov     d0, a2
     bra     loc_5000B433
 loc_5000B3C1:
-    call    func_5000AC81_entry, [d2,d3,a2], 0x20
+    call    UpdStreamGetByte_entry, [d2,d3,a2], 0x20
     mov     d0, d2
     exthu   d0
     cmp     0xffff, d0
     beq     loc_5000B43A
-    call    func_5000AC81_entry, [d2,d3,a2], 0x20
+    call    UpdStreamGetByte_entry, [d2,d3,a2], 0x20
     mov     d0, d1
     exthu   d1
     cmp     0xffff, d1
@@ -21514,101 +21620,109 @@ loc_5000B433:
     bcc     loc_5000B43A
     jmp     loc_5000B362
 loc_5000B43A:
-    mov     str_5000D08C, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    mov     Str_Newline_3, a0
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     movbu   (0x1037, sp), d0
     add     0x1038, sp
     ret     [d2,d3,a2,a3], 0x10
 
-# ---- func_5000B450 -----------------------------------------------------------
-# `call` enters at func_5000B450_entry, past the prologue
-func_5000B450:
+# ---- DeviceInfoProbe ---------------------------------------------------------
+# "FLASH ROM" if the program flash identifies, else "MASK ROM"; never returns
+# `call` enters at DeviceInfoProbe_entry, past the prologue
+DeviceInfoProbe:
     add     -0xc, sp
-func_5000B450_entry:
+DeviceInfoProbe_entry:
     clr     d0
-    call    func_50009F32_entry, [d2,d3,a2], 0x18
+    call    Flash32Identify_entry, [d2,d3,a2], 0x18
     cmp     0, d0
     bne     loc_5000B46A
     mov     Str_FlashROM, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
 loc_5000B468:
     bra     loc_5000B468
 loc_5000B46A:
     mov     Str_MaskROM, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
 loc_5000B475:
     bra     loc_5000B475
 
-# ---- func_5000B477 -----------------------------------------------------------
+# ---- DeviceInfoProbe_UnusedRet -----------------------------------------------
+# unreachable
 # no caller: unreferenced code
-func_5000B477:
+DeviceInfoProbe_UnusedRet:
     ret     0, 0xc
 
-# ---- func_5000B47A -----------------------------------------------------------
-# `call` enters at func_5000B47A_entry, past the prologue
-func_5000B47A:
+# ---- DiskCheckRun ------------------------------------------------------------
+# UpdateDiskLoadSums, FloppyDiskCheck
+# `call` enters at DiskCheckRun_entry, past the prologue
+DiskCheckRun:
     movm    [d2], (sp)
     add     -0xc, sp
-func_5000B47A_entry:
+DiskCheckRun_entry:
     mov     d0, d2
     extbu   d2
     mov     d2, d0
-    call    func_5000A9B5, [a2,a3], 8
+    call    UpdateDiskLoadSums_entry, [a2,a3], 8
     mov     d2, d0
-    call    func_5000ABD9_entry, [d2], 0x14
+    call    FloppyDiskCheck_entry, [d2], 0x14
     ret     [d2], 0x10
 
-# ---- func_5000B490 -----------------------------------------------------------
-# `call` enters at func_5000B490_entry, past the prologue
-func_5000B490:
+# ---- FlashUpdateRun ----------------------------------------------------------
+# identifies the target flash for the disk's kind, then FloppyFlashUpdate; hangs if it is not a
+# known flash
+# `call` enters at FlashUpdateRun_entry, past the prologue
+FlashUpdateRun:
     movm    [d2], (sp)
     add     -0xc, sp
-func_5000B490_entry:
+FlashUpdateRun_entry:
     mov     d0, d2
     extbu   d2
     cmp     3, d2
     bgt     loc_5000B4A3
     mov     d2, d0
-    call    func_50009F32_entry, [d2,d3,a2], 0x18
+    call    Flash32Identify_entry, [d2,d3,a2], 0x18
     bra     loc_5000B4A9
 loc_5000B4A3:
     mov     d2, d0
-    call    func_50009945_entry, [d2,d3,a2,a3], 0x54
+    call    FlashIdentify_entry, [d2,d3,a2,a3], 0x54
 loc_5000B4A9:
     exthu   d0
     cmp     0xffff, d0
     beq     loc_5000B4BA
     mov     d2, d0
-    call    func_5000AB24_entry, [d2], 0x14
+    call    FloppyFlashUpdate_entry, [d2], 0x14
 loc_5000B4B8:
     bra     loc_5000B4B8
 loc_5000B4BA:
     mov     Str_ErrorDeviceIsNotFlashMemoryTryAgain, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
 loc_5000B4C5:
     bra     loc_5000B4C5
 
-# ---- func_5000B4C7 -----------------------------------------------------------
+# ---- FlashUpdateRun_UnusedRet ------------------------------------------------
+# unreachable
 # no caller: unreferenced code
-func_5000B4C7:
+FlashUpdateRun_UnusedRet:
     ret     [d2], 0x10
 
-# ---- func_5000B4CA -----------------------------------------------------------
-# `call` enters at func_5000B4CA_entry, past the prologue
-func_5000B4CA:
+# ---- SdFlashUpdate -----------------------------------------------------------
+# for each update file on the card (UpdateFileNames): the target flash identified, erased,
+# written, verified; then "Update Infomation" and the per-file result
+# `call` enters at SdFlashUpdate_entry, past the prologue
+SdFlashUpdate:
     movm    [d2,d3,a2,a3], (sp)
     add     -0xbc, sp
-func_5000B4CA_entry:
+SdFlashUpdate_entry:
     clr     d3
     clr     d0
-    movbu   d0, (bss_50012570)
-    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
+    movbu   d0, (StatusLatchShadow)
+    call    StatusLatchWrite_entry, 0, 0x10
     mov     0x12c, d0
     call    LibTickSleep, 0, 0
     mov     0x3f, d0
-    movbu   d0, (bss_50012570)
-    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
-    call    func_50007469_entry, 0, 0x1c
+    movbu   d0, (StatusLatchShadow)
+    call    StatusLatchWrite_entry, 0, 0x10
+    call    SdFatOpenVolume_entry, 0, 0x1c
     mov     d0, d2
     mov     d2, d1
     exth    d1
@@ -21625,7 +21739,7 @@ loc_5000B500:
     mov     d2, (0x10, sp)
     call    sprintf_entry, [a2], 0x20
     mov     a2, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     cmp     -1, d2
     beq     loc_5000B527
     cmp     -2, d2
@@ -21633,54 +21747,54 @@ loc_5000B500:
     bra     loc_5000B541
 loc_5000B527:
     mov     Str_SDCardIsNotFounded, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     bra     loc_5000B54C
 loc_5000B534:
     mov     Str_SDCardFormatError, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     bra     loc_5000B54C
 loc_5000B541:
     mov     Str_SDBiosError, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
 loc_5000B54C:
-    bclr    0x04, (bss_50012570)
-    movbu   (bss_50012570), d0
-    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
-    bclr    0x08, (bss_50012570)
-    movbu   (bss_50012570), d0
-    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
-    bclr    0x10, (bss_50012570)
-    movbu   (bss_50012570), d0
-    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
-    bclr    0x20, (bss_50012570)
-    movbu   (bss_50012570), d0
-    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
+    bclr    0x04, (StatusLatchShadow)
+    movbu   (StatusLatchShadow), d0
+    call    StatusLatchWrite_entry, 0, 0x10
+    bclr    0x08, (StatusLatchShadow)
+    movbu   (StatusLatchShadow), d0
+    call    StatusLatchWrite_entry, 0, 0x10
+    bclr    0x10, (StatusLatchShadow)
+    movbu   (StatusLatchShadow), d0
+    call    StatusLatchWrite_entry, 0, 0x10
+    bclr    0x20, (StatusLatchShadow)
+    movbu   (StatusLatchShadow), d0
+    call    StatusLatchWrite_entry, 0, 0x10
     mov     0x50, d0
     call    LibTickSleep, 0, 0
-    bset    0x04, (bss_50012570)
-    movbu   (bss_50012570), d0
-    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
-    bset    0x08, (bss_50012570)
-    movbu   (bss_50012570), d0
-    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
-    bset    0x10, (bss_50012570)
-    movbu   (bss_50012570), d0
-    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
-    bset    0x20, (bss_50012570)
-    movbu   (bss_50012570), d0
-    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
+    bset    0x04, (StatusLatchShadow)
+    movbu   (StatusLatchShadow), d0
+    call    StatusLatchWrite_entry, 0, 0x10
+    bset    0x08, (StatusLatchShadow)
+    movbu   (StatusLatchShadow), d0
+    call    StatusLatchWrite_entry, 0, 0x10
+    bset    0x10, (StatusLatchShadow)
+    movbu   (StatusLatchShadow), d0
+    call    StatusLatchWrite_entry, 0, 0x10
+    bset    0x20, (StatusLatchShadow)
+    movbu   (StatusLatchShadow), d0
+    call    StatusLatchWrite_entry, 0, 0x10
     mov     0x50, d0
     call    LibTickSleep, 0, 0
     jmp     loc_5000B54C
 loc_5000B5ED:
     mov     0xc0, d0
     movbu   d0, (0x9cc00004)
-    call    func_5000BE0D_entry, [d2], 0x10
+    call    ScreenClear_entry, [d2], 0x10
     mov     Str_FlashMemoryUpdateSD_2, a0
-    call    func_5000BE58_entry, [a2], 0x1c
+    call    ScreenTitle_entry, [a2], 0x1c
     clr     d0
     mov     d0, (0x3c, sp)
-    mov     (data_50010174), a0
+    mov     (UpdateFileNames), a0
     movbu   (a0), d0
     cmp     d3, d0
     bne     loc_5000B617
@@ -21696,9 +21810,9 @@ loc_5000B617:
 loc_5000B626:
     mov     d3, d0
     asl2    d0
-    mov     data_50010174, a0
+    mov     UpdateFileNames, a0
     mov     (d0, a0), a0
-    call    func_500074A3_entry, [d2,d3,a2], 0x1c
+    call    FatOpen_entry, [d2,d3,a2], 0x1c
     mov     a0, (0x50, sp)
     cmp     0, a0
     bne     loc_5000B64C
@@ -21707,21 +21821,21 @@ loc_5000B626:
     add     d0, d0
     inc     d3
     clr     d1
-    mov     bss_5002BA34, a0
+    mov     SdUpdateWork, a0
     movhu   d1, (d0, a0)
     jmp     loc_5000BBA7
 loc_5000B64C:
     mov     Str_UpdateFile, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     mov     (0x3c, sp), d0
-    mov     data_50010174, a0
+    mov     UpdateFileNames, a0
     asl2    d0
     mov     (d0, a0), a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
-    mov     str_5000D1A4, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
+    mov     Str_Quote, a0
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     mov     (0x3c, sp), d0
-    mov     data_5001018C, a0
+    mov     UpdateFileKinds, a0
     movbu   (d0, a0), d0
     extbu   d0
     mov     d0, (0x34, sp)
@@ -21731,23 +21845,23 @@ loc_5000B64C:
     beq     loc_5000B68A
     jmp     loc_5000B81C
 loc_5000B68A:
-    call    func_50009808, 0, 0
+    call    FlashDeviceBase, 0, 0
     mov     a0, (0x38, sp)
     mov     (0x34, sp), d0
-    call    func_50009F32_entry, [d2,d3,a2], 0x18
+    call    Flash32Identify_entry, [d2,d3,a2], 0x18
     cmp     0, d0
     beq     loc_5000B6C3
     mov     Str_ErrorFlashMemoryIsNotFounded, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     mov     (0x50, sp), a0
-    call    func_50007644, 0, 0
+    call    FatClose, 0, 0
     mov     (0x3c, sp), a0
     exthu   d3
     add     a0, a0
     mov     a0, d1
     inc     d3
     mov     2, d0
-    mov     bss_5002BA34, a1
+    mov     SdUpdateWork, a1
     movhu   d0, (d1, a1)
     jmp     loc_5000BBA7
 loc_5000B6C3:
@@ -21756,33 +21870,33 @@ loc_5000B6C3:
     mov     d2, a0
     add     d2, d0
     mov     d0, a1
-    call    func_5000BD0A, 0, 0
+    call    FlashFindNonBlank, 0, 0
     cmp     0, d0
     beq     loc_5000B713
     mov     Str_NowErasingPleaseWait_2, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
-    bclr    0x01, (bss_50012570)
-    movbu   (bss_50012570), d0
-    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
+    bclr    0x01, (StatusLatchShadow)
+    movbu   (StatusLatchShadow), d0
+    call    StatusLatchWrite_entry, 0, 0x10
     mov     d3, d0
     exthu   d0
-    call    func_5000BD39_entry, 0, 0xc
+    call    StatusLedOff_entry, 0, 0xc
     mov     (0x34, sp), d0
-    call    func_5000AAAC_entry, [d2], 0x10
+    call    FlashEraseForKind_entry, [d2], 0x10
     mov     0x3f, d0
-    movbu   d0, (bss_50012570)
-    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
+    movbu   d0, (StatusLatchShadow)
+    call    StatusLatchWrite_entry, 0, 0x10
     bra     loc_5000B71E
 loc_5000B713:
     mov     Str_BlankFlashMemory, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
 loc_5000B71E:
     exthu   d3
     mov     d3, (0x54, sp)
     mov     d3, d0
-    call    func_5000BD39_entry, 0, 0xc
+    call    StatusLedOff_entry, 0, 0xc
     mov     Str_NowWritingPleaseWait_3, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     mov     (0x5c, sp), d0
     mov     0, a2
     mov     d0, (0x40, sp)
@@ -21792,12 +21906,12 @@ loc_5000B71E:
     mov     d2, (0x10, sp)
     call    sprintf_entry, [a2], 0x20
     mov     (0x40, sp), a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     mov     (0x58, sp), a3
     mov     (0x50, sp), a1
     mov     a3, a0
     mov     4, d0
-    call    func_5000757C_entry, [d2,d3,a2,a3], 0x1c
+    call    FatRead_entry, [d2,d3,a2,a3], 0x1c
     cmp     0, d0
     bne     loc_5000B765
     jmp     loc_5000B7FD
@@ -21832,63 +21946,63 @@ loc_5000B776:
     add     d3, d2
     mov     d2, d1
     mov     (0x34, sp), d0
-    call    func_50009FD0_entry, [d2,a2], 0x14
+    call    Flash32ProgramWord_entry, [d2,a2], 0x14
     mov     (0x38, sp), d0
     inc     a2
     add     4, d0
     mov     d0, (0x38, sp)
     cmp     0x4000, a2
     bcc     loc_5000B7C7
-    bclr    0x01, (bss_50012570)
-    movbu   (bss_50012570), d0
-    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
+    bclr    0x01, (StatusLatchShadow)
+    movbu   (StatusLatchShadow), d0
+    call    StatusLatchWrite_entry, 0, 0x10
     bra     loc_5000B7D9
 loc_5000B7C7:
-    bset    0x01, (bss_50012570)
-    movbu   (bss_50012570), d0
-    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
+    bset    0x01, (StatusLatchShadow)
+    movbu   (StatusLatchShadow), d0
+    call    StatusLatchWrite_entry, 0, 0x10
 loc_5000B7D9:
     cmp     0x8000, a2
     bls     loc_5000B7EC
-    mov     str_5000D240, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    mov     Str_O_6, a0
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     mov     0, a2
 loc_5000B7EC:
     mov     a3, a0
     mov     4, d0
     mov     (0x50, sp), a1
-    call    func_5000757C_entry, [d2,d3,a2,a3], 0x1c
+    call    FatRead_entry, [d2,d3,a2,a3], 0x1c
     cmp     0, d0
     beq     loc_5000B7FD
     jmp     loc_5000B776
 loc_5000B7FD:
     mov     0x3f, d0
-    movbu   d0, (bss_50012570)
-    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
+    movbu   d0, (StatusLatchShadow)
+    call    StatusLatchWrite_entry, 0, 0x10
     mov     (0x3c, sp), d0
-    mov     data_5001018C, a0
+    mov     UpdateFileKinds, a0
     movbu   (d0, a0), d0
-    call    func_50009EB5_entry, 0, 0x10
+    call    Flash32Reset_entry, 0, 0x10
     jmp     loc_5000B9C4
 loc_5000B81C:
-    call    func_50009808, 0, 0
+    call    FlashDeviceBase, 0, 0
     mov     a0, a2
     mov     (0x34, sp), d0
-    call    func_50009945_entry, [d2,d3,a2,a3], 0x54
+    call    FlashIdentify_entry, [d2,d3,a2,a3], 0x54
     exthu   d0
     cmp     0, d0
     beq     loc_5000B855
     mov     Str_ErrorFlashMemoryIsNotFounded_2, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     mov     (0x50, sp), a0
-    call    func_50007644, 0, 0
+    call    FatClose, 0, 0
     mov     (0x3c, sp), a0
     exthu   d3
     add     a0, a0
     mov     a0, d1
     inc     d3
     mov     2, d0
-    mov     bss_5002BA34, a1
+    mov     SdUpdateWork, a1
     movhu   d0, (d1, a1)
     jmp     loc_5000BBA7
 loc_5000B855:
@@ -21896,33 +22010,33 @@ loc_5000B855:
     mov     0x00400000, d0
     add     a2, d0
     mov     d0, a1
-    call    func_5000BD0A, 0, 0
+    call    FlashFindNonBlank, 0, 0
     cmp     0, d0
     beq     loc_5000B8A3
     mov     Str_NowErasingPleaseWait_3, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
-    bclr    0x01, (bss_50012570)
-    movbu   (bss_50012570), d0
-    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
+    bclr    0x01, (StatusLatchShadow)
+    movbu   (StatusLatchShadow), d0
+    call    StatusLatchWrite_entry, 0, 0x10
     mov     d3, d0
     exthu   d0
-    call    func_5000BD39_entry, 0, 0xc
+    call    StatusLedOff_entry, 0, 0xc
     mov     (0x34, sp), d0
-    call    func_5000AAAC_entry, [d2], 0x10
+    call    FlashEraseForKind_entry, [d2], 0x10
     mov     0x3f, d0
-    movbu   d0, (bss_50012570)
-    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
+    movbu   d0, (StatusLatchShadow)
+    call    StatusLatchWrite_entry, 0, 0x10
     bra     loc_5000B8AE
 loc_5000B8A3:
     mov     Str_BlankFlashMemory_2, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
 loc_5000B8AE:
     exthu   d3
     mov     d3, (0x54, sp)
     mov     d3, d0
-    call    func_5000BD39_entry, 0, 0xc
+    call    StatusLedOff_entry, 0, 0xc
     mov     Str_NowWritingPleaseWait_4, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     mov     (0x5c, sp), d0
     clr     d3
     mov     d0, (0x40, sp)
@@ -21932,13 +22046,13 @@ loc_5000B8AE:
     mov     a2, (0x10, sp)
     call    sprintf_entry, [a2], 0x20
     mov     (0x40, sp), a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     mov     (0x58, sp), a3
     mov     d3, d2
     mov     a3, a0
     mov     (0x50, sp), a1
     mov     2, d0
-    call    func_5000757C_entry, [d2,d3,a2,a3], 0x1c
+    call    FatRead_entry, [d2,d3,a2,a3], 0x1c
     cmp     d2, d0
     bne     loc_5000B8F4
     jmp     loc_5000B998
@@ -21953,7 +22067,7 @@ loc_5000B8F9:
     inc     d0
     extbu   d0
     mov     d0, (0x34, sp)
-    call    func_50009808, 0, 0
+    call    FlashDeviceBase, 0, 0
     mov     (0x40, sp), d0
     mov     a0, a2
     mov     d0, (8, sp)
@@ -21962,7 +22076,7 @@ loc_5000B8F9:
     mov     a0, (0x10, sp)
     call    sprintf_entry, [a2], 0x20
     mov     (0x40, sp), a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
 loc_5000B929:
     mov     (0x44, sp), a0
     movbu   (a3), d0
@@ -21974,86 +22088,86 @@ loc_5000B929:
     add     d0, d1
     exthu   d1
     mov     (0x34, sp), d0
-    call    func_50009B1D_entry, [d2,a2], 0x1c
+    call    FlashProgramWord_entry, [d2,a2], 0x1c
     add     2, a2
     inc     d3
     cmp     0x4000, d3
     bcc     loc_5000B95F
-    bclr    0x01, (bss_50012570)
-    movbu   (bss_50012570), d0
-    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
+    bclr    0x01, (StatusLatchShadow)
+    movbu   (StatusLatchShadow), d0
+    call    StatusLatchWrite_entry, 0, 0x10
     bra     loc_5000B971
 loc_5000B95F:
-    bset    0x01, (bss_50012570)
-    movbu   (bss_50012570), d0
-    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
+    bset    0x01, (StatusLatchShadow)
+    movbu   (StatusLatchShadow), d0
+    call    StatusLatchWrite_entry, 0, 0x10
 loc_5000B971:
     cmp     0x8000, d3
     bls     loc_5000B985
-    mov     str_5000D2FC, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    mov     Str_O_7, a0
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     clr     d3
 loc_5000B985:
     add     2, d2
     mov     a3, a0
     mov     2, d0
     mov     (0x50, sp), a1
-    call    func_5000757C_entry, [d2,d3,a2,a3], 0x1c
+    call    FatRead_entry, [d2,d3,a2,a3], 0x1c
     cmp     0, d0
     beq     loc_5000B998
     jmp     loc_5000B8F9
 loc_5000B998:
     mov     0x3f, d0
-    movbu   d0, (bss_50012570)
-    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
+    movbu   d0, (StatusLatchShadow)
+    call    StatusLatchWrite_entry, 0, 0x10
     mov     (0x3c, sp), d0
     mov     (0x34, sp), d1
-    mov     data_5001018C, a0
+    mov     UpdateFileKinds, a0
     movbu   (d0, a0), d0
     cmp     d0, d1
     beq     loc_5000B9BD
     mov     (0x3c, sp), d0
     movbu   (d0, a0), d0
-    call    func_500098A5_entry, [a2], 0x14
+    call    FlashResetToRead_entry, [a2], 0x14
 loc_5000B9BD:
     mov     (0x34, sp), d0
-    call    func_500098A5_entry, [a2], 0x14
+    call    FlashResetToRead_entry, [a2], 0x14
 loc_5000B9C4:
     mov     (0x50, sp), a0
-    call    func_50007644, 0, 0
-    movhu   (data_50010192), d0
+    call    FatClose, 0, 0
+    movhu   (SdUpdateWaitFlag), d0
     cmp     0, d0
     bne     loc_5000B9D8
     jmp     loc_5000BB7F
 loc_5000B9D8:
     mov     (0x54, sp), d0
-    call    func_5000BD39_entry, 0, 0xc
+    call    StatusLedOff_entry, 0, 0xc
     mov     0xa, d0
     call    LibTickSleep, 0, 0
     mov     (0x3c, sp), d0
-    mov     data_50010174, a0
+    mov     UpdateFileNames, a0
     asl2    d0
     mov     (d0, a0), a0
-    call    func_500074A3_entry, [d2,d3,a2], 0x1c
+    call    FatOpen_entry, [d2,d3,a2], 0x1c
     mov     a0, a2
     cmp     0, a2
     bne     loc_5000BA0B
     mov     (0x3c, sp), d0
     mov     3, d1
     add     d0, d0
-    mov     bss_5002BA34, a0
+    mov     SdUpdateWork, a0
     movhu   d1, (d0, a0)
     jmp     loc_5000BAFD
 loc_5000BA0B:
     mov     (0x3c, sp), d0
-    mov     data_5001018C, a0
+    mov     UpdateFileKinds, a0
     movbu   (d0, a0), d0
     clr     d2
     extbu   d0
-    call    func_50009808, 0, 0
+    call    FlashDeviceBase, 0, 0
     mov     a0, (0x38, sp)
     mov     Str_NowVerifyingPleaseWait, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     mov     (0x40, sp), d0
     mov     d0, (8, sp)
     mov     Str_VerifyAddress0x88lX, d0
@@ -22062,11 +22176,11 @@ loc_5000BA0B:
     mov     a0, (0x10, sp)
     call    sprintf_entry, [a2], 0x20
     mov     (0x40, sp), a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     mov     a3, a0
     mov     a2, a1
     mov     4, d0
-    call    func_5000757C_entry, [d2,d3,a2,a3], 0x1c
+    call    FatRead_entry, [d2,d3,a2,a3], 0x1c
     mov     d0, d1
     exth    d1
     cmp     d2, d1
@@ -22084,7 +22198,7 @@ loc_5000BA58:
     mov     (0x3c, sp), d0
     mov     3, d1
     add     d0, d0
-    mov     bss_5002BA34, a0
+    mov     SdUpdateWork, a0
     movhu   d1, (d0, a0)
     jmp     loc_5000BAFD
 loc_5000BA74:
@@ -22107,7 +22221,7 @@ loc_5000BA80:
     mov     3, d0
     add     a0, a0
     mov     a0, d1
-    mov     bss_5002BA34, a1
+    mov     SdUpdateWork, a1
     movhu   d0, (d1, a1)
     bra     loc_5000BAFD
 loc_5000BA9D:
@@ -22124,25 +22238,25 @@ loc_5000BAA4:
     mov     d0, (0x38, sp)
     cmp     0x6000, d2
     bcc     loc_5000BAC5
-    bclr    0x01, (bss_50012570)
-    movbu   (bss_50012570), d0
-    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
+    bclr    0x01, (StatusLatchShadow)
+    movbu   (StatusLatchShadow), d0
+    call    StatusLatchWrite_entry, 0, 0x10
     bra     loc_5000BAD7
 loc_5000BAC5:
-    bset    0x01, (bss_50012570)
-    movbu   (bss_50012570), d0
-    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
+    bset    0x01, (StatusLatchShadow)
+    movbu   (StatusLatchShadow), d0
+    call    StatusLatchWrite_entry, 0, 0x10
 loc_5000BAD7:
     cmp     0x8000, d2
     bls     loc_5000BAEB
-    mov     str_5000D340, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    mov     Str_At, a0
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     clr     d2
 loc_5000BAEB:
     mov     a3, a0
     mov     4, d0
     mov     a2, a1
-    call    func_5000757C_entry, [d2,d3,a2,a3], 0x1c
+    call    FatRead_entry, [d2,d3,a2,a3], 0x1c
     mov     d0, d1
     exth    d1
     cmp     0, d1
@@ -22150,22 +22264,22 @@ loc_5000BAEB:
     jmp     loc_5000BA58
 loc_5000BAFD:
     mov     (0x3c, sp), d0
-    mov     bss_5002BA34, a0
+    mov     SdUpdateWork, a0
     add     d0, d0
     movhu   (d0, a0), d0
     cmp     3, d0
     beq     loc_5000BB26
     mov     Str_Completed_2, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     mov     (0x3c, sp), d0
     mov     1, d1
     add     d0, d0
-    mov     bss_5002BA34, a0
+    mov     SdUpdateWork, a0
     movhu   d1, (d0, a0)
     bra     loc_5000BB77
 loc_5000BB26:
     mov     Str_Error, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     mov     (0x40, sp), d0
     mov     d0, (8, sp)
     mov     Str_0x8XSD02X02X02X02XMEM02X02X02X02X, d0
@@ -22191,23 +22305,23 @@ loc_5000BB26:
     mov     d0, (0x30, sp)
     call    sprintf_entry, [a2], 0x20
     mov     (0x40, sp), a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
 loc_5000BB77:
     mov     a2, a0
-    call    func_50007644, 0, 0
+    call    FatClose, 0, 0
     bra     loc_5000BB97
 loc_5000BB7F:
     mov     Str_Completed_3, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     mov     (0x3c, sp), d0
     mov     1, d1
     add     d0, d0
-    mov     bss_5002BA34, a0
+    mov     SdUpdateWork, a0
     movhu   d1, (d0, a0)
 loc_5000BB97:
     mov     0x3f, d0
-    movbu   d0, (bss_50012570)
-    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
+    movbu   d0, (StatusLatchShadow)
+    call    StatusLatchWrite_entry, 0, 0x10
     mov     (0x54, sp), d3
     inc     d3
 loc_5000BBA7:
@@ -22215,7 +22329,7 @@ loc_5000BBA7:
     mov     d3, (0x3c, sp)
     mov     d3, d0
     asl2    d0
-    mov     data_50010174, a0
+    mov     UpdateFileNames, a0
     mov     (d0, a0), a0
     movbu   (a0), d0
     cmp     0, d0
@@ -22223,8 +22337,8 @@ loc_5000BBA7:
     jmp     loc_5000B626
 loc_5000BBBD:
     mov     Str_UpdateInfomation, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
-    mov     (data_50010174), a0
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
+    mov     (UpdateFileNames), a0
     clr     d3
     movbu   (a0), d1
     clr     d2
@@ -22236,7 +22350,7 @@ loc_5000BBD9:
     mov     d0, a0
     add     a0, a0
     mov     a0, d1
-    mov     bss_5002BA34, a1
+    mov     SdUpdateWork, a1
     movhu   (d1, a1), d1
     cmp     1, d1
     beq     loc_5000BBF5
@@ -22247,30 +22361,30 @@ loc_5000BBD9:
     bra     loc_5000BC4A
 loc_5000BBF5:
     asl2    d0
-    mov     data_50010174, a0
+    mov     UpdateFileNames, a0
     mov     (d0, a0), a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     mov     Str_Completed_4, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     bra     loc_5000BC4A
 loc_5000BC10:
     asl2    d0
-    mov     data_50010174, a0
+    mov     UpdateFileNames, a0
     mov     (d0, a0), a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     mov     Str_NotFlashMemory, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     mov     -1, d2
     bra     loc_5000BC4A
 loc_5000BC2D:
     asl2    d0
-    mov     data_50010174, a0
+    mov     UpdateFileNames, a0
     mov     (d0, a0), d0
     mov     -1, d2
     mov     d0, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     mov     Str_VerifyError, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
 loc_5000BC4A:
     exthu   d3
     inc     d3
@@ -22278,7 +22392,7 @@ loc_5000BC4A:
     exthu   d0
     mov     d0, d1
     asl2    d1
-    mov     data_50010174, a0
+    mov     UpdateFileNames, a0
     mov     (d1, a0), a0
     movbu   (a0), d1
     cmp     0, d1
@@ -22289,23 +22403,23 @@ loc_5000BC61:
     cmp     0, d2
     bne     loc_5000BC9D
     mov     Str_AllUpdateHasFinished, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     mov     Str_TurnOnAgain, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     mov     0x3f, d0
-    movbu   d0, (bss_50012570)
-    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
-    bclr    0x02, (bss_50012570)
-    movbu   (bss_50012570), d0
-    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
+    movbu   d0, (StatusLatchShadow)
+    call    StatusLatchWrite_entry, 0, 0x10
+    bclr    0x02, (StatusLatchShadow)
+    movbu   (StatusLatchShadow), d0
+    call    StatusLatchWrite_entry, 0, 0x10
 loc_5000BC9B:
     bra     loc_5000BC9B
 loc_5000BC9D:
     mov     Str_UpdateHasNotFinished, a0
-    call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
-    mov     bss_5002BA34, a2
+    call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
+    mov     SdUpdateWork, a2
 loc_5000BCAE:
-    mov     (data_50010174), a0
+    mov     (UpdateFileNames), a0
     clr     d3
     movbu   (a0), d1
     clr     d2
@@ -22325,7 +22439,7 @@ loc_5000BCBB:
     beq     loc_5000BCD6
     mov     d3, d0
     exthu   d0
-    call    func_5000BD39_entry, 0, 0xc
+    call    StatusLedOff_entry, 0, 0xc
 loc_5000BCD6:
     exthu   d3
     inc     d3
@@ -22333,7 +22447,7 @@ loc_5000BCD6:
     exthu   d2
     mov     d2, d0
     asl2    d0
-    mov     data_50010174, a0
+    mov     UpdateFileNames, a0
     mov     (d0, a0), a0
     movbu   (a0), d0
     cmp     0, d0
@@ -22342,19 +22456,21 @@ loc_5000BCEA:
     mov     0x50, d0
     call    LibTickSleep, 0, 0
     mov     0x3f, d0
-    movbu   d0, (bss_50012570)
-    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
+    movbu   d0, (StatusLatchShadow)
+    call    StatusLatchWrite_entry, 0, 0x10
     mov     0x50, d0
     call    LibTickSleep, 0, 0
     bra     loc_5000BCAE
 
-# ---- func_5000BD07 -----------------------------------------------------------
+# ---- SdFlashUpdate_UnusedRet -------------------------------------------------
+# unreachable
 # no caller: unreferenced code
-func_5000BD07:
+SdFlashUpdate_UnusedRet:
     ret     [d2,d3,a2,a3], 0xcc
 
-# ---- func_5000BD0A -----------------------------------------------------------
-func_5000BD0A:
+# ---- FlashFindNonBlank -------------------------------------------------------
+# the first 0x40-byte step from a0 up to a1 whose word is not 0xFFFFFFFF, else 0
+FlashFindNonBlank:
     mov     (a0), d1
     cmp     -1, d1
     bne     loc_5000BD1C
@@ -22386,11 +22502,12 @@ loc_5000BD2F:
 loc_5000BD36:
     retf    0, 0
 
-# ---- func_5000BD39 -----------------------------------------------------------
-# `call` enters at func_5000BD39_entry, past the prologue
-func_5000BD39:
+# ---- StatusLedOff ------------------------------------------------------------
+# clears bit 2+d0 of StatusLatchShadow and sends it (StatusLatchWrite)
+# `call` enters at StatusLedOff_entry, past the prologue
+StatusLedOff:
     add     -0xc, sp
-func_5000BD39_entry:
+StatusLedOff_entry:
     exthu   d0
     cmp     0, d0
     beq     loc_5000BD4F
@@ -22402,52 +22519,53 @@ func_5000BD39_entry:
     beq     loc_5000BD8B
     bra     loc_5000BD9D
 loc_5000BD4F:
-    bclr    0x04, (bss_50012570)
-    movbu   (bss_50012570), d0
-    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
+    bclr    0x04, (StatusLatchShadow)
+    movbu   (StatusLatchShadow), d0
+    call    StatusLatchWrite_entry, 0, 0x10
     bra     loc_5000BD9D
 loc_5000BD63:
-    bclr    0x08, (bss_50012570)
-    movbu   (bss_50012570), d0
-    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
+    bclr    0x08, (StatusLatchShadow)
+    movbu   (StatusLatchShadow), d0
+    call    StatusLatchWrite_entry, 0, 0x10
     bra     loc_5000BD9D
 loc_5000BD77:
-    bclr    0x10, (bss_50012570)
-    movbu   (bss_50012570), d0
-    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
+    bclr    0x10, (StatusLatchShadow)
+    movbu   (StatusLatchShadow), d0
+    call    StatusLatchWrite_entry, 0, 0x10
     bra     loc_5000BD9D
 loc_5000BD8B:
-    bclr    0x20, (bss_50012570)
-    movbu   (bss_50012570), d0
-    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
+    bclr    0x20, (StatusLatchShadow)
+    movbu   (StatusLatchShadow), d0
+    call    StatusLatchWrite_entry, 0, 0x10
 loc_5000BD9D:
     ret     0, 0xc
 
-# ---- func_5000BDA0 -----------------------------------------------------------
-# `call` enters at func_5000BDA0_entry, past the prologue
-func_5000BDA0:
+# ---- SdUpdateFilePresent -----------------------------------------------------
+# 1 if the card holds any of UpdateFileNames
+# `call` enters at SdUpdateFilePresent_entry, past the prologue
+SdUpdateFilePresent:
     movm    [d2,d3,a2], (sp)
     add     -0xc, sp
-func_5000BDA0_entry:
+SdUpdateFilePresent_entry:
     clr     d3
-    call    func_50007469_entry, 0, 0x1c
+    call    SdFatOpenVolume_entry, 0, 0x1c
     exth    d0
     cmp     d3, d0
     blt     loc_5000BDE4
-    mov     (data_50010174), a0
+    mov     (UpdateFileNames), a0
     clr     d2
     movbu   (a0), d1
     clr     d0
     cmp     d0, d1
-    mov     data_50010174, a2
+    mov     UpdateFileNames, a2
     beq     loc_5000BDE4
 loc_5000BDC2:
     asl2    d0
     mov     (d0, a2), a0
-    call    func_500074A3_entry, [d2,d3,a2], 0x1c
+    call    FatOpen_entry, [d2,d3,a2], 0x1c
     cmp     0, a0
     beq     loc_5000BDD7
-    call    func_50007644, 0, 0
+    call    FatClose, 0, 0
     mov     1, d3
     bra     loc_5000BDE4
 loc_5000BDD7:
@@ -22465,35 +22583,37 @@ loc_5000BDE4:
     mov     d3, d0
     ret     [d2,d3,a2], 0x18
 
-# ---- func_5000BDE8 -----------------------------------------------------------
-# `call` enters at func_5000BDE8_entry, past the prologue
-func_5000BDE8:
+# ---- SdUpdateStart -----------------------------------------------------------
+# `call` enters at SdUpdateStart_entry, past the prologue
+SdUpdateStart:
     add     -8, sp
-func_5000BDE8_entry:
+SdUpdateStart_entry:
     clr     d0
-    movhu   d0, (data_50010192)
-    call    func_5000B4CA_entry, [d2,d3,a2,a3], 0xcc
+    movhu   d0, (SdUpdateWaitFlag)
+    call    SdFlashUpdate_entry, [d2,d3,a2,a3], 0xcc
     ret     0, 8
 
-# ---- func_5000BDFA -----------------------------------------------------------
-# `call` enters at func_5000BDFA_entry, past the prologue
-func_5000BDFA:
+# ---- DiskStart ---------------------------------------------------------------
+# 0x9CC00005 := 0x0E, DiskInit
+# `call` enters at DiskStart_entry, past the prologue
+DiskStart:
     add     -8, sp
-func_5000BDFA_entry:
+DiskStart_entry:
     mov     0xe, d0
     movbu   d0, (0x9cc00005)
     call    DiskInit_entry, 0, 0xc
     ret     0, 8
 
-# ---- func_5000BE0D -----------------------------------------------------------
-# `call` enters at func_5000BE0D_entry, past the prologue
-func_5000BE0D:
+# ---- ScreenClear -------------------------------------------------------------
+# the 10 x 78 text buffer to spaces, the cursor home, the frame buffer cleared
+# `call` enters at ScreenClear_entry, past the prologue
+ScreenClear:
     movm    [d2], (sp)
     add     -0xc, sp
-func_5000BE0D_entry:
+ScreenClear_entry:
     clr     d0
-    movhu   d0, (bss_5002BD9A)
-    movhu   d0, (bss_5002BD9C)
+    movhu   d0, (ScreenCursorCol)
+    movhu   d0, (ScreenCursorRow)
     clr     d1
 loc_5000BE20:
     clr     d0
@@ -22502,7 +22622,7 @@ loc_5000BE20:
     nop
     mul     d1, d2
     mov     d2, a0
-    add     bss_5002BA40, a0
+    add     ScreenText, a0
     setlb
     mov     0x20, d2
     movbu   d2, (d0, a0)
@@ -22516,7 +22636,7 @@ loc_5000BE20:
     blt     loc_5000BE20
     clr     d0
     setlb
-    mov     bss_5002BD4C, a0
+    mov     ScreenLineFlags, a0
     clr     d1
     movbu   d1, (d0, a0)
     inc     d0
@@ -22524,46 +22644,49 @@ loc_5000BE20:
     cmp     0x4e, d0
     llt
     clr     d0
-    call    func_5000C23F_entry, [a2], 4
+    call    LcdFill_entry, [a2], 4
     ret     [d2], 0x10
 
-# ---- func_5000BE58 -----------------------------------------------------------
-# `call` enters at func_5000BE58_entry, past the prologue
-func_5000BE58:
+# ---- ScreenTitle -------------------------------------------------------------
+# "UPDATE SYSTEM", a rule, the title, two lines across
+# `call` enters at ScreenTitle_entry, past the prologue
+ScreenTitle:
     movm    [a2], (sp)
     add     -0x18, sp
-func_5000BE58_entry:
+ScreenTitle_entry:
     mov     a0, a2
     clr     d0
     mov     d0, (0x14, sp)
     mov     d0, d1
     mov     Str_UpdateSystem, a0
-    call    func_5000C3FD_entry, [d2,d3,a2,a3], 0x28
+    call    LcdDrawString_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x14, sp)
     mov     1, d1
-    mov     str_5000D488, a0
-    call    func_5000C3FD_entry, [d2,d3,a2,a3], 0x28
+    mov     Str_Blank40, a0
+    call    LcdDrawString_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     mov     d0, (0x14, sp)
     mov     1, d0
     mov     d0, d1
     mov     a2, a0
-    call    func_5000C3FD_entry, [d2,d3,a2,a3], 0x28
+    call    LcdDrawString_entry, [d2,d3,a2,a3], 0x28
     mov     0x24, d0
     mov     3, d1
-    call    func_5000C27D_entry, [d2,d3], 8
+    call    LcdHLine_entry, [d2,d3], 8
     mov     0x25, d0
     mov     3, d1
-    call    func_5000C27D_entry, [d2,d3], 8
+    call    LcdHLine_entry, [d2,d3], 8
     ret     [a2], 0x1c
 
-# ---- func_5000BE9E -----------------------------------------------------------
-# `call` enters at func_5000BE9E_entry, past the prologue
-func_5000BE9E:
+# ---- MenuSoftKeyChoice -------------------------------------------------------
+# up to four captions "[%s]" across the bottom; waits for a panel key under one: 0..3 (4 when
+# there are none)
+# `call` enters at MenuSoftKeyChoice_entry, past the prologue
+MenuSoftKeyChoice:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x70, sp
-func_5000BE9E_entry:
+MenuSoftKeyChoice_entry:
     mov     d1, (0x94, sp)
     mov     d0, d3
     movbu   (a0), d0
@@ -22574,7 +22697,7 @@ func_5000BE9E_entry:
     mov     sp, a2
     add     0x30, a2
     mov     a2, (8, sp)
-    mov     str_5000D4B4, d0
+    mov     Str_Fmt8s, d0
     mov     d0, (0xc, sp)
     mov     a0, (0x10, sp)
     call    sprintf_entry, [a2], 0x20
@@ -22585,7 +22708,7 @@ loc_5000BED0:
     mov     sp, a2
     add     0x30, a2
     mov     a2, a0
-    mov     str_5000D4BC, a1
+    mov     Str_Blank10, a1
     call    strcpy_entry, [a2], 4
     clr     d0
     movbu   d0, (0x2a, sp)
@@ -22596,7 +22719,7 @@ loc_5000BEE5:
     mov     0xa, d0
     add     a2, d0
     mov     d0, (8, sp)
-    mov     str_5000D4C8, d0
+    mov     Str_Fmt8s_2, d0
     mov     d0, (0xc, sp)
     mov     a3, (0x10, sp)
     call    sprintf_entry, [a2], 0x20
@@ -22605,7 +22728,7 @@ loc_5000BEE5:
     bra     loc_5000BF1B
 loc_5000BF09:
     mov     a2, a0
-    mov     str_5000D4D0, a1
+    mov     Str_Blank10_2, a1
     call    strcat_entry, [a2], 4
     clr     d0
     movbu   d0, (0x29, sp)
@@ -22617,7 +22740,7 @@ loc_5000BF1B:
     mov     0x14, d0
     add     a2, d0
     mov     d0, (8, sp)
-    mov     str_5000D4DC, d0
+    mov     Str_Fmt8s_3, d0
     mov     d0, (0xc, sp)
     mov     d3, (0x10, sp)
     call    sprintf_entry, [a2], 0x20
@@ -22626,7 +22749,7 @@ loc_5000BF1B:
     bra     loc_5000BF53
 loc_5000BF41:
     mov     a2, a0
-    mov     str_5000D4E4, a1
+    mov     Str_Blank10_3, a1
     call    strcat_entry, [a2], 4
     clr     d0
     movbu   d0, (0x28, sp)
@@ -22638,7 +22761,7 @@ loc_5000BF53:
     mov     0x1e, d0
     add     a2, d0
     mov     d0, (8, sp)
-    mov     str_5000D4F0, d0
+    mov     Str_Fmt8s_4, d0
     mov     d0, (0xc, sp)
     mov     a0, (0x10, sp)
     call    sprintf_entry, [a2], 0x20
@@ -22646,7 +22769,7 @@ loc_5000BF53:
     bra     loc_5000BF85
 loc_5000BF76:
     mov     a2, a0
-    mov     str_5000D4F8, a1
+    mov     Str_Blank10_4, a1
     call    strcat_entry, [a2], 4
     clr     d3
 loc_5000BF85:
@@ -22654,13 +22777,13 @@ loc_5000BF85:
     clr     d0
     mov     d0, (0x14, sp)
     mov     0xe, d1
-    call    func_5000C3FD_entry, [d2,d3,a2,a3], 0x28
+    call    LcdDrawString_entry, [d2,d3,a2,a3], 0x28
     mov     0xdc, d0
     mov     3, d1
-    call    func_5000C27D_entry, [d2,d3], 8
+    call    LcdHLine_entry, [d2,d3], 8
     mov     0xdd, d0
     mov     3, d1
-    call    func_5000C27D_entry, [d2,d3], 8
+    call    LcdHLine_entry, [d2,d3], 8
     movbu   (0x2a, sp), d1
     movbu   (0x29, sp), d0
     add     d1, d0
@@ -22692,7 +22815,7 @@ loc_5000BFD7:
     mov     (0x20, sp), a0
     mov     (0x24, sp), a1
     mov     a2, d0
-    call    func_5000C1C9_entry, [d2,a2,a3], 0x14
+    call    PanelWaitEvent_entry, [d2,a2,a3], 0x14
     movbu   (0x2c, sp), d0
     cmp     0xc5, d0
     beq     loc_5000BFF9
@@ -22747,8 +22870,8 @@ loc_5000C046:
     clr     d0
     mov     d0, (0x14, sp)
     mov     0xe, d1
-    mov     str_5000D504, a0
-    call    func_5000C3FD_entry, [d2,d3,a2,a3], 0x28
+    mov     Str_Blank40_2, a0
+    call    LcdDrawString_entry, [d2,d3,a2,a3], 0x28
     bra     loc_5000C064
 loc_5000C062:
     mov     4, d2
@@ -22756,26 +22879,27 @@ loc_5000C064:
     mov     d2, d0
     ret     [d2,d3,a2,a3], 0x80
 
-# ---- func_5000C068 -----------------------------------------------------------
-# `call` enters at func_5000C068_entry, past the prologue
-func_5000C068:
+# ---- ScreenPrint -------------------------------------------------------------
+# text into the buffer at the cursor (\n, \r, wrap, scroll), then the changed lines drawn
+# `call` enters at ScreenPrint_entry, past the prologue
+ScreenPrint:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x6c, sp
-func_5000C068_entry:
+ScreenPrint_entry:
     movbu   (a0), d0
-    movhu   (bss_5002BD9C), d3
+    movhu   (ScreenCursorRow), d3
     cmp     0, d0
     bne     loc_5000C07C
     jmp     loc_5000C152
 loc_5000C07C:
-    mov     bss_5002BA40, a3
+    mov     ScreenText, a3
 loc_5000C082:
     movbu   (a0), d0
     cmp     0x20, d0
     blt     loc_5000C0B1
     movbu   (a0), d1
-    movhu   (bss_5002BD9A), d2
-    movhu   (bss_5002BD9C), d0
+    movhu   (ScreenCursorCol), d2
+    movhu   (ScreenCursorRow), d0
     exth    d2
     exth    d0
     mov     d3, (0x18, sp)
@@ -22788,7 +22912,7 @@ loc_5000C082:
     mov     d0, a1
     movbu   d1, (d2, a1)
     inc     d2
-    movhu   d2, (bss_5002BD9A)
+    movhu   d2, (ScreenCursorCol)
     bra     loc_5000C0DB
 loc_5000C0B1:
     movbu   (a0), d0
@@ -22798,35 +22922,35 @@ loc_5000C0B1:
     beq     loc_5000C0D4
     bra     loc_5000C0DB
 loc_5000C0BD:
-    movhu   (bss_5002BD9C), d0
+    movhu   (ScreenCursorRow), d0
     exth    d0
     inc     d0
-    movhu   d0, (bss_5002BD9C)
+    movhu   d0, (ScreenCursorRow)
     clr     d0
-    movhu   d0, (bss_5002BD9A)
+    movhu   d0, (ScreenCursorCol)
     bra     loc_5000C0DB
 loc_5000C0D4:
     clr     d0
-    movhu   d0, (bss_5002BD9A)
+    movhu   d0, (ScreenCursorCol)
 loc_5000C0DB:
-    movhu   (bss_5002BD9A), d0
+    movhu   (ScreenCursorCol), d0
     inc     a0
     exth    d0
     cmp     0x4e, d0
     blt     loc_5000C0FC
-    movhu   (bss_5002BD9C), d0
+    movhu   (ScreenCursorRow), d0
     exth    d0
     inc     d0
-    movhu   d0, (bss_5002BD9C)
+    movhu   d0, (ScreenCursorRow)
     clr     d0
-    movhu   d0, (bss_5002BD9A)
+    movhu   d0, (ScreenCursorCol)
 loc_5000C0FC:
-    movhu   (bss_5002BD9C), d0
+    movhu   (ScreenCursorRow), d0
     exth    d0
     cmp     0xa, d0
     blt     loc_5000C149
     add     -1, d0
-    movhu   d0, (bss_5002BD9C)
+    movhu   d0, (ScreenCursorRow)
     clr     d2
 loc_5000C110:
     clr     d3
@@ -22857,7 +22981,7 @@ loc_5000C110:
     clr     d0
     setlb
     mov     0x20, d1
-    mov     bss_5002BCFE, a1
+    mov     ScreenTextLastLine, a1
     movbu   d1, (d0, a1)
     inc     d0
     exth    d0
@@ -22870,7 +22994,7 @@ loc_5000C149:
     beq     loc_5000C152
     jmp     loc_5000C082
 loc_5000C152:
-    movhu   (bss_5002BD9C), d1
+    movhu   (ScreenCursorRow), d1
     exth    d3
     exth    d1
     cmp     d1, d3
@@ -22887,7 +23011,7 @@ loc_5000C165:
     nop
     mul     d2, d1
     mov     d1, a1
-    add     bss_5002BA40, a1
+    add     ScreenText, a1
     mov     0x4e, d0
     call    strncpy_entry, [a2,a3], 8
     clr     d0
@@ -22897,7 +23021,7 @@ loc_5000C165:
     add     d2, d1
     exth    d1
     mov     a2, a0
-    call    func_5000C3FD_entry, [d2,d3,a2,a3], 0x28
+    call    LcdDrawString_entry, [d2,d3,a2,a3], 0x28
     inc     d2
     exth    d2
     cmp     0xa, d2
@@ -22914,26 +23038,27 @@ loc_5000C194:
     nop
     mul     d0, d1
     mov     d1, a1
-    add     bss_5002BA40, a1
+    add     ScreenText, a1
     call    strncpy_entry, [a2,a3], 8
     clr     d0
     mov     d0, (0x14, sp)
-    movhu   (bss_5002BD9C), d1
+    movhu   (ScreenCursorRow), d1
     mov     a2, a0
     exth    d1
     add     3, d1
     exth    d1
     mov     1, d0
-    call    func_5000C3FD_entry, [d2,d3,a2,a3], 0x28
+    call    LcdDrawString_entry, [d2,d3,a2,a3], 0x28
 loc_5000C1C6:
     ret     [d2,d3,a2,a3], 0x7c
 
-# ---- func_5000C1C9 -----------------------------------------------------------
-# `call` enters at func_5000C1C9_entry, past the prologue
-func_5000C1C9:
+# ---- PanelWaitEvent ----------------------------------------------------------
+# pumps the link until a three-byte switch event {group, bits, changed} comes in
+# `call` enters at PanelWaitEvent_entry, past the prologue
+PanelWaitEvent:
     movm    [d2,a2,a3], (sp)
     add     -8, sp
-func_5000C1C9_entry:
+PanelWaitEvent_entry:
     mov     d0, d2
     mov     a1, a2
     mov     a0, a3
@@ -22965,12 +23090,13 @@ loc_5000C20E:
     beq     loc_5000C1D1
     ret     [d2,a2,a3], 0x14
 
-# ---- func_5000C216 -----------------------------------------------------------
-# `call` enters at func_5000C216_entry, past the prologue
-func_5000C216:
+# ---- PanelDiskLed ------------------------------------------------------------
+# panel command 9 with 8 (on) or 0
+# `call` enters at PanelDiskLed_entry, past the prologue
+PanelDiskLed:
     movm    [d2], (sp)
     add     -0xc, sp
-func_5000C216_entry:
+PanelDiskLed_entry:
     mov     8, d2
     exthu   d0
     cmp     0, d0
@@ -22985,11 +23111,12 @@ loc_5000C223:
     call    PanelPump_entry, 0, 8
     ret     [d2], 0x10
 
-# ---- func_5000C23F -----------------------------------------------------------
-# `call` enters at func_5000C23F_entry, past the prologue
-func_5000C23F:
+# ---- LcdFill -----------------------------------------------------------------
+# the whole frame buffer with pattern 0, 0x5555, 0xAAAA or 0xFFFF
+# `call` enters at LcdFill_entry, past the prologue
+LcdFill:
     movm    [a2], (sp)
-func_5000C23F_entry:
+LcdFill_entry:
     exthu   d0
     clr     d1
     cmp     d1, d0
@@ -23017,11 +23144,12 @@ loc_5000C262:
     lcs
     retf    [a2], 4
 
-# ---- func_5000C27D -----------------------------------------------------------
-# `call` enters at func_5000C27D_entry, past the prologue
-func_5000C27D:
+# ---- LcdHLine ----------------------------------------------------------------
+# pixel row d0 with pattern d1
+# `call` enters at LcdHLine_entry, past the prologue
+LcdHLine:
     movm    [d2,d3], (sp)
-func_5000C27D_entry:
+LcdHLine_entry:
     exthu   d1
     clr     d3
     cmp     d3, d1
@@ -23054,12 +23182,13 @@ loc_5000C2A0:
     lcs
     ret     [d2,d3], 8
 
-# ---- func_5000C2BE -----------------------------------------------------------
-# `call` enters at func_5000C2BE_entry, past the prologue
-func_5000C2BE:
+# ---- LcdDrawChar -------------------------------------------------------------
+# one glyph of a FontTable font at text column/row
+# `call` enters at LcdDrawChar_entry, past the prologue
+LcdDrawChar:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x38, sp
-func_5000C2BE_entry:
+LcdDrawChar_entry:
     movhu   d1, (0x54, sp)
     mov     0xc, d1
     mov     d0, a3
@@ -23067,7 +23196,7 @@ func_5000C2BE_entry:
     nop
     nop
     mulu    d1, d0
-    add     rodata_5000E104, d0
+    add     FontTable, d0
     mov     d0, (0x10, sp)
     mov     d0, a2
     add     2, a2
@@ -23230,12 +23359,12 @@ loc_5000C3EE:
     blt     loc_5000C38D
     ret     [d2,d3,a2,a3], 0x48
 
-# ---- func_5000C3FD -----------------------------------------------------------
-# `call` enters at func_5000C3FD_entry, past the prologue
-func_5000C3FD:
+# ---- LcdDrawString -----------------------------------------------------------
+# `call` enters at LcdDrawString_entry, past the prologue
+LcdDrawString:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x18, sp
-func_5000C3FD_entry:
+LcdDrawString_entry:
     mov     a0, a2
     mov     d1, d2
     movbu   (a2), d1
@@ -23252,7 +23381,7 @@ loc_5000C410:
     mov     d3, (0x14, sp)
     mov     d2, d0
     mov     a3, d1
-    call    func_5000C2BE_entry, [d2,d3,a2,a3], 0x48
+    call    LcdDrawChar_entry, [d2,d3,a2,a3], 0x48
     inc     a2
     movbu   (a2), d1
     inc     d2
@@ -23263,33 +23392,33 @@ loc_5000C429:
     ret     [d2,d3,a2,a3], 0x28
 
 # ============================== the program image: constant and initialised data ============
-rodata_5000C42C:
-    .byte   0x00, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x30, 0x30, 0x30, 0x30, 0x30, 0x10
-    .byte   0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10
-    .byte   0x10, 0xA0, 0xC0, 0xC0, 0xC0, 0xC0, 0xC0, 0xC0, 0xC0, 0xC0, 0xC0, 0xC0, 0xC0, 0xC0, 0xC0, 0xC0
-    .byte   0xC0, 0x8C, 0x8C, 0x8C, 0x8C, 0x8C, 0x8C, 0x8C, 0x8C, 0x8C, 0x8C, 0xC0, 0xC0, 0xC0, 0xC0, 0xC0
-    .byte   0xC0, 0xC0, 0x89, 0x89, 0x89, 0x89, 0x89, 0x89, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81
-    .byte   0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0xC0, 0xC0, 0xC0, 0xC0
-    .byte   0xC0, 0xC0, 0x8A, 0x8A, 0x8A, 0x8A, 0x8A, 0x8A, 0x82, 0x82, 0x82, 0x82, 0x82, 0x82, 0x82, 0x82
-    .byte   0x82, 0x82, 0x82, 0x82, 0x82, 0x82, 0x82, 0x82, 0x82, 0x82, 0x82, 0x82, 0xC0, 0xC0, 0xC0, 0xC0
-    .byte   0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-    .byte   0x00
-str_5000C52D:
+CtypeTable:                      # newlib's _ctype_ by its values: 0x01 upper, 0x02 lower, 0x04 digit, 0x08 hex digit, 0x10 control, 0x20 white space, 0x40 punctuation, 0x80 printable
+    .byte   0x00                    # EOF (index -1); then one byte per character 0x00..0xFF
+    .byte   0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x30, 0x30, 0x30, 0x30, 0x30, 0x10, 0x10    # 0x00..
+    .byte   0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10    # 0x10..
+    .byte   0xA0, 0xC0, 0xC0, 0xC0, 0xC0, 0xC0, 0xC0, 0xC0, 0xC0, 0xC0, 0xC0, 0xC0, 0xC0, 0xC0, 0xC0, 0xC0    # 0x20..
+    .byte   0x8C, 0x8C, 0x8C, 0x8C, 0x8C, 0x8C, 0x8C, 0x8C, 0x8C, 0x8C, 0xC0, 0xC0, 0xC0, 0xC0, 0xC0, 0xC0    # 0x30..
+    .byte   0xC0, 0x89, 0x89, 0x89, 0x89, 0x89, 0x89, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81    # 0x40..
+    .byte   0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0xC0, 0xC0, 0xC0, 0xC0, 0xC0    # 0x50..
+    .byte   0xC0, 0x8A, 0x8A, 0x8A, 0x8A, 0x8A, 0x8A, 0x82, 0x82, 0x82, 0x82, 0x82, 0x82, 0x82, 0x82, 0x82    # 0x60..
+    .byte   0x82, 0x82, 0x82, 0x82, 0x82, 0x82, 0x82, 0x82, 0x82, 0x82, 0x82, 0xC0, 0xC0, 0xC0, 0xC0, 0x10    # 0x70..
+    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00    # 0x80..
+    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00    # 0x90..
+    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00    # 0xA0..
+    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00    # 0xB0..
+    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00    # 0xC0..
+    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00    # 0xD0..
+    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00    # 0xE0..
+    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00    # 0xF0..
+Str_C:
     .asciz  "C"
-    .byte   0x70
-str_5000C530:
+    .byte   0x70                  # alignment fill
+Str_0x:
     .asciz  "0x"
-str_5000C533:
+Str_0X:
     .asciz  "0X"
-    .byte   0x61, 0x73
-rodata_5000C538:
+    .byte   0x61, 0x73            # alignment fill
+PfConversionCases:               # vsprintf_core's switch on the conversion letter 'E'..'x'
     .long   loc_500003BB, loc_50000426, loc_500003D5, loc_50000426
     .long   loc_50000426, loc_50000426, loc_50000426, loc_50000426
     .long   loc_50000426, loc_50000426, loc_50000426, loc_50000426
@@ -23303,109 +23432,108 @@ rodata_5000C538:
     .long   loc_50000426, loc_500003EB, loc_50000343, loc_50000383
     .long   loc_50000426, loc_50000426, loc_500002BC, loc_50000426
     .long   loc_5000031D, loc_50000426, loc_50000426, loc_50000363
-rodata_5000C608:
-    .byte   0x00, 0x00, 0x00, 0x00
-    .long   loc_500006B1
-    .byte   0x31, 0x00, 0x00, 0x00
-    .long   loc_50000675
-    .byte   0x21, 0x00, 0x00, 0x00
-    .long   loc_500006A5
-    .byte   0x01, 0x00, 0x00, 0x00
-    .long   loc_500006AD
-    .byte   0x24, 0x00, 0x00, 0x00
-    .long   loc_5000067D
-    .byte   0x00, 0x00, 0x00, 0x00
-    .long   loc_500006B1
-    .byte   0x00, 0x00, 0x00, 0x00
-    .long   loc_500006B1
-    .byte   0x00, 0x00, 0x00, 0x00
-    .long   loc_500006B1
-    .byte   0x00, 0x00, 0x00, 0x00
-    .long   loc_500006B1
-    .byte   0x69, 0x00, 0x00, 0x00
-    .long   loc_5000068D
-    .byte   0x00, 0x00, 0x00, 0x00
-    .long   loc_500006B1
-    .byte   0x00, 0x00, 0x00, 0x00
-    .long   loc_500006B1
-    .byte   0x2C, 0x00, 0x00, 0x00
-    .long   loc_50000685
-    .byte   0x6D, 0x00, 0x00, 0x00
-    .long   loc_50000695
-    .byte   0x2E, 0x00, 0x00, 0x00
-    .long   loc_5000066D
-    .byte   0x4D, 0x00, 0x00, 0x00
-    .long   loc_5000069D
-str_5000C688:
+PfFlagChars:                     # PfParseSpec's hashed switch: {flag character + 1, handler}
+    .long   0x00, loc_500006B1
+    .long   0x31, loc_50000675    # '0'
+    .long   0x21, loc_500006A5    # ' '
+    .long   0x01, loc_500006AD    # '\x00'
+    .long   0x24, loc_5000067D    # '#'
+    .long   0x00, loc_500006B1
+    .long   0x00, loc_500006B1
+    .long   0x00, loc_500006B1
+    .long   0x00, loc_500006B1
+    .long   0x69, loc_5000068D    # 'h'
+    .long   0x00, loc_500006B1
+    .long   0x00, loc_500006B1
+    .long   0x2C, loc_50000685    # '+'
+    .long   0x6D, loc_50000695    # 'l'
+    .long   0x2E, loc_5000066D    # '-'
+    .long   0x4D, loc_5000069D    # 'L'
+Str_C_2:
     .asciz  "C"
-rodata_5000C68A:
-    .byte   0x00
-rodata_5000C68B:
-    .byte   0x00
-rodata_5000C68C:
-    .byte   0x00
-rodata_5000C68D:
-    .byte   0x00
-rodata_5000C68E:
-    .byte   0x00
-rodata_5000C68F:
-    .byte   0x00
-rodata_5000C690:
-    .byte   0x00, 0x99, 0x99, 0x99
-str_5000C694:
+Str_None:
+    .asciz  ""
+Str_None_2:
+    .asciz  ""
+Str_None_3:
+    .asciz  ""
+Str_None_4:
+    .asciz  ""
+Str_None_5:
+    .asciz  ""
+Str_None_6:
+    .asciz  ""
+Str_None_7:
+    .asciz  ""
+    .byte   0x99, 0x99, 0x99      # alignment fill
+Str_C_3:
     .asciz  "C"
-str_5000C696:
+Str_Dot:
     .asciz  "."
-rodata_5000C698:
-    .byte   0x00
-rodata_5000C699:
-    .byte   0x00, 0x00, 0x00
+Str_None_8:
+    .asciz  ""
+Str_None_9:
+    .asciz  ""
+    .byte   0x00, 0x00            # alignment fill
 Str_Infinity:
     .asciz  "Infinity"
-    .byte   0x44, 0xD3, 0x3F
+    .byte   0x44, 0xD3, 0x3F      # alignment fill
 Str_Infinity_2:
     .asciz  "Infinity"
-    .byte   0x00, 0x00, 0x00
+    .byte   0x00, 0x00, 0x00      # alignment fill
 Str_Infinity_3:
     .asciz  "Infinity"
-    .byte   0x00, 0x59, 0x40
-rodata_5000C6C0:
+    .byte   0x00, 0x59, 0x40      # alignment fill
+PfDecimalInit:                   # PfDoubleToDecimal's initial five words (1, 0, 0, 0, 0)
     .long   0x00000001, 0x00000000, 0x00000000, 0x00000000
     .long   0x00000000
-rodata_5000C6D4:
+F64ZeroConst:                    # LibF64Zero's 0.0
     .long   0x00000000, 0x00000000
-rodata_5000C6DC:
-    .long   0x500103D0, 0x00000010, 0x00000000, 0x00000000
-rodata_5000C6EC:
-    .long   0x500103A0, 0x00000010, 0x5001039F, 0x00000010
-    .long   0x5001039E, 0x00000010, 0x00000000, 0x00000000
-rodata_5000C70C:
-    .long   0x500103D0, 0x00000010, 0x00000000, 0x00000000
-rodata_5000C71C:
-    .long   0x5001039C, 0x00000002, 0x500103A2, 0x00000040
-    .long   0x500103A1, 0x00000040, 0x500103A0, 0x00000040
-    .long   0x00000000, 0x00000000
-rodata_5000C744:
-    .long   0x5001039C, 0x00000002, 0x500103A2, 0x00000040
-    .long   0x500103A1, 0x00000040, 0x00000000, 0x00000000
-rodata_5000C764:
-    .long   0x500103D0, 0x00000010, 0x00000000, 0x00000000
-rodata_5000C774:
-    .long   0x500103A2, 0x00000040, 0x500103A1, 0x00000040
-    .long   0x500103A0, 0x00000040, 0x00000000, 0x00000000
+BootKeyCombo3:                   # BootKeyComboMatch's tables, by the number each gives
+    .long   PanelSwShadow34, 0x10
+    .long   0, 0x00                  # end of the table
+BootKeyCombo2:
+    .long   PanelSwShadow04, 0x10
+    .long   PanelSwShadow03, 0x10
+    .long   PanelSwShadow02, 0x10
+    .long   0, 0x00                  # end of the table
+BootKeyCombo1:
+    .long   PanelSwShadow34, 0x10
+    .long   0, 0x00                  # end of the table
+BootKeyCombo4:                   # BootMain: UPDATE SYSTEM MENU
+    .long   PanelSwShadow00, 0x02
+    .long   PanelSwShadow06, 0x40
+    .long   PanelSwShadow05, 0x40
+    .long   PanelSwShadow04, 0x40
+    .long   0, 0x00                  # end of the table
+BootKeyCombo5:                   # BootMain: DEVICE INFO
+    .long   PanelSwShadow00, 0x02
+    .long   PanelSwShadow06, 0x40
+    .long   PanelSwShadow05, 0x40
+    .long   0, 0x00                  # end of the table
+BootKeyCombo6:
+    .long   PanelSwShadow34, 0x10
+    .long   0, 0x00                  # end of the table
+BootKeyCombo7:                   # BootMain: UPDATE DISK CHECK
+    .long   PanelSwShadow06, 0x40
+    .long   PanelSwShadow05, 0x40
+    .long   PanelSwShadow04, 0x40
+    .long   0, 0x00                  # end of the table
 PanelXferStateTable:             # the link's state handlers, indexed by PanelLinkState (0..10)
     .long   PanelXferIdleState, PanelTxState1, PanelTxState2, PanelTxState3
     .long   PanelTxState4, PanelTxState5, PanelTxState6, PanelXferIdleState
     .long   PanelRxState8, PanelRxState9, PanelXferIdleState
 PanelEventFifoInitImage:         # {base, end, read, write, free} of the event FIFO
-    .long   0x500101C4, 0x50010243, 0x500101C4, 0x500101C4
-    .long   0x0000007F
+    .long   PanelEventFifoBuf, PanelEventFifoBufEnd   # base, end
+    .long   PanelEventFifoBuf, PanelEventFifoBuf   # read, write
+    .long   0x7F                     # free bytes
 PanelTxFifoInitImage:            # the same for the TX FIFO
-    .long   0x50010258, 0x500102D7, 0x50010258, 0x50010258
-    .long   0x0000007F
-str_5000C7E8:
+    .long   PanelTxFifoBuf, PanelTxFifoBufEnd   # base, end
+    .long   PanelTxFifoBuf, PanelTxFifoBuf   # read, write
+    .long   0x7F                     # free bytes
+Str_Blank8:
     .asciz  "        "
-    .byte   0x19, 0x1A, 0x37
+    .byte   0x19, 0x1A, 0x37      # alignment fill
 Str_SpiStartError1:
     .asciz  "spiStart : Error 1\n"
 Str_SpiStartError2:
@@ -23414,126 +23542,136 @@ Str_SpiStartError3:
     .asciz  "spiStart : Error 3\n"
 Str_SpiStartError4:
     .asciz  "spiStart : Error 4\n"
-rodata_5000C844:
-    .word   0x0003, 0x0001, 0x004A, 0x0000, 0xFF00, 0x4ABA
-rodata_5000C850:
-    .word   0x0003, 0x0001, 0x0049, 0x0000, 0xFF00, 0x8814
-rodata_5000C85C:
-    .word   0x0003, 0x0001, 0x0050, 0x0200, 0xFF00, 0x4B5A
+SdFrameCmd10:                    # SEND_CID
+    .word   3, 1                    # clock mode, response type
+    .byte   0x4A, 0x00, 0x00, 0x00, 0x00, 0xFF    # command 0x40|10, argument, CRC
+    .byte   0xBA, 0x4A                  # alignment fill
+SdFrameCmd9:                     # SEND_CSD
+    .word   3, 1                    # clock mode, response type
+    .byte   0x49, 0x00, 0x00, 0x00, 0x00, 0xFF    # command 0x40|9, argument, CRC
+    .byte   0x14, 0x88                  # alignment fill
+SdFrameCmd16:                    # SET_BLOCKLEN 0x200
+    .word   3, 1                    # clock mode, response type
+    .byte   0x50, 0x00, 0x00, 0x02, 0x00, 0xFF    # command 0x40|16, argument, CRC
+    .byte   0x5A, 0x4B                  # alignment fill
 Str_SpiGetInfoDSendReadCOMCSD:
     .asciz  "spiGetInfo : %d = sendReadCOM(CSD);\n"
-    .byte   0xE9, 0x63, 0x4C
+    .byte   0xE9, 0x63, 0x4C      # alignment fill
 DiskDriveCtrlCases:              # DiskDriveCtrlHandler's switch, drive letters '@'..'N'
     .long   loc_50006B20, loc_50006BF4, loc_50006C57, loc_50006BDD
     .long   loc_50006C49, loc_50006C2F, loc_50006BDD, loc_50006BDD
     .long   loc_50006C2F, loc_50006C2F, loc_50006BDD, loc_50006BDD
     .long   loc_50006BDD, loc_50006C2F, loc_50006C2F
-rodata_5000C8CC:
+DriveLetterClassCases:           # DriveLetterClass's switch, 'A'..'N'
     .long   loc_50007133, loc_50007137, loc_50007135, loc_50007135
     .long   loc_50007135, loc_50007135, loc_50007135, loc_50007135
     .long   loc_50007135, loc_50007133, loc_50007133, loc_50007135
     .long   loc_50007135, loc_50007135
-str_5000C904:
+Str_Blank8_2:
     .asciz  "        "
-    .byte   0x1B, 0xB6, 0x4F
+    .byte   0x1B, 0xB6, 0x4F      # alignment fill
 Str_Fat12:
     .asciz  "FAT12   "
-    .byte   0xBF, 0x85, 0xE2
-str_5000C91C:
+    .byte   0xBF, 0x85, 0xE2      # alignment fill
+Str_Blank12:
     .asciz  "            "
-    .byte   0xFB, 0xF0, 0x51
+    .byte   0xFB, 0xF0, 0x51      # alignment fill
 Str_MoritaniDAT:
     .asciz  "MORITANI.DAT"
-    .byte   0x44, 0x04, 0xF8
-rodata_5000C93C:
+    .byte   0x44, 0x04, 0xF8      # alignment fill
+SdLsbMasks:                      # SdCsdBitfield's low-bit masks
     .byte   0x01, 0x03, 0x07, 0x0F, 0x1F, 0x3F, 0x7F, 0xFF
-rodata_5000C944:
+SdMsbMasks:                      # SdCsdBitfield's high-bit masks
     .byte   0x80, 0xC0, 0xE0, 0xF0, 0xF8, 0xFC, 0xFE, 0xFF
-rodata_5000C94C:
-    .word   0x0001, 0x007C, 0x0000, 0x0000, 0x00FF, 0x5194
-rodata_5000C958:
-    .word   0x0001, 0x007C, 0x0000, 0x0000, 0x00FF, 0xCB58
-rodata_5000C964:
+SdFrameProbeA:                   # SdStatusProbeCmdA's frame
+    .word   1, 124                    # clock mode, response type
+    .byte   0x00, 0x00, 0x00, 0x00, 0xFF, 0x00    # command 0x40|0, argument, CRC
+    .byte   0x94, 0x51                  # alignment fill
+SdFrameProbeB:                   # SdStatusProbeCmdB's frame
+    .word   1, 124                    # clock mode, response type
+    .byte   0x00, 0x00, 0x00, 0x00, 0xFF, 0x00    # command 0x40|0, argument, CRC
+    .byte   0x58, 0xCB                  # alignment fill
+LcdOldPaletteA:                  # LcdControllerInitOld's two palette tables
     .byte   0xFF, 0xFF, 0x00, 0x00, 0xFF, 0xFF, 0x00, 0x00, 0xFF, 0xFF, 0x00, 0x00, 0xFF, 0xFF, 0x00, 0x00
     .byte   0xFF, 0xFF, 0x00, 0x00, 0xFF, 0xFF, 0x00, 0x00, 0xFF, 0xFF, 0x00, 0x00, 0xFF, 0xFF, 0x00, 0x00
-rodata_5000C984:
+LcdOldPaletteB:
     .byte   0x7B, 0x7B, 0xDE, 0xDE, 0xB7, 0xB7, 0xED, 0xED, 0x7B, 0x7B, 0xDE, 0xDE, 0xB7, 0xB7, 0xED, 0xED
     .byte   0x7B, 0x7B, 0xDE, 0xDE, 0xB7, 0xB7, 0xED, 0xED, 0x7B, 0x7B, 0xDE, 0xDE, 0xB7, 0xB7, 0xED, 0xED
 Str_UpdateSystemMenu:
     .asciz  "UPDATE SYSTEM MENU"
-    .byte   0x54
+    .byte   0x54                  # alignment fill
 Str_PleaseSelect:
     .asciz  "Please select.\n"
 Str_Update:
     .asciz  "  UPDATE\n"
-    .byte   0xF9, 0x6E
+    .byte   0xF9, 0x6E            # alignment fill
 Str_DiskCheckDiskchk:
     .asciz  "  DISK CHECK(DISKCHK)\n\n"
 Str_ExecuteDiskCheckBeforeUpdateToPrevent:
     .asciz  "## Execute \"DISK CHECK\" before      ##\n## \"UPDATE\" to prevent fatal damage.##\n"
-    .byte   0xEF
+    .byte   0xEF                  # alignment fill
 Str_Update_2:
     .asciz  "*UPDATE*"
-rodata_5000CA45:
-    .byte   0x00
+Str_None_10:
+    .asciz  ""
 Str_Diskchk:
     .asciz  "DISKCHK "
 Str_Exit:
     .asciz  "  EXIT  "
 Str_DeviceInfo:
     .asciz  "DEVICE INFO"
-rodata_5000CA64:
-    .byte   0x00
-rodata_5000CA65:
-    .byte   0x00
-rodata_5000CA66:
-    .byte   0x00
-str_5000CA67:
+Str_None_11:
+    .asciz  ""
+Str_None_12:
+    .asciz  ""
+Str_None_13:
+    .asciz  ""
+Str_OK:
     .asciz  "   OK   "
 Str_UpdateDiskCheck:
     .asciz  "UPDATE DISK CHECK"
-    .byte   0xF8, 0xA5
+    .byte   0xF8, 0xA5            # alignment fill
 Str_AreYouSure:
     .asciz  "Are you sure?\n"
-    .byte   0x69
+    .byte   0x69                  # alignment fill
 Str_Check:
     .asciz  " CHECK  "
-rodata_5000CA9D:
-    .byte   0x00
-rodata_5000CA9E:
-    .byte   0x00
+Str_None_14:
+    .asciz  ""
+Str_None_15:
+    .asciz  ""
 Str_Exit_2:
     .asciz  "  EXIT  "
 Str_DiskCheck0x22X:
     .asciz  "> DiskCheck(0x%2.2X);\n"
-    .byte   0x5A
+    .byte   0x5A                  # alignment fill
 Str_ErrorDiskNotFoundTryAgain:
     .asciz  "\n---- Error!\n  Disk not Found. Try again."
-    .byte   0xE3, 0x22
+    .byte   0xE3, 0x22            # alignment fill
 Str_FlashMemoryUpdate:
     .asciz  "FLASH MEMORY UPDATE"
 Str_AreYouSure_2:
     .asciz  "Are You Sure?\n\n"
 Str_ExecuteDiskCheckBeforeUpdateToPrevent_2:
     .asciz  "## Execute \"DISK CHECK\" before      ##\n## \"UPDATE\" to prevent fatal damage.##\n"
-    .byte   0x5F
-rodata_5000CB60:
-    .byte   0x00
+    .byte   0x5F                  # alignment fill
+Str_None_16:
+    .asciz  ""
 Str_Update_3:
     .asciz  "*UPDATE*"
-rodata_5000CB6A:
-    .byte   0x00
+Str_None_17:
+    .asciz  ""
 Str_Exit_3:
     .asciz  "  EXIT  "
-str_5000CB74:
+Str_Newline:
     .asciz  "\n"
-    .byte   0xB3, 0x5F
-str_5000CB78:
+    .byte   0xB3, 0x5F            # alignment fill
+Str_Newline_2:
     .asciz  "\n"
-    .byte   0x09, 0x6B
+    .byte   0x09, 0x6B            # alignment fill
 Str_ProgramVersionInfo:
     .asciz  "\n<PROGRAM VERSION INFO>\n"
-    .byte   0x4E, 0x87, 0x60
+    .byte   0x4E, 0x87, 0x60      # alignment fill
 Str_NOWCurrentVer1X1X:
     .asciz  "  NOW(CURRENT) = Ver%1X.%1X\n"
     .ascii  "s\\a"
@@ -23544,168 +23682,136 @@ Str_DonTUpdateIfTheDiskVersionIsOlderThan:
     .asciz  "\n## Don't update if the DISK version ##\n## is older than current.           ##\n"
 Str_UpdateReally:
     .asciz  "\nUpdate really?\n"
-    .byte   0x0C, 0x36, 0xE0
-rodata_5000CC3C:
-    .byte   0x00
-rodata_5000CC3D:
-    .byte   0x00
+    .byte   0x0C, 0x36, 0xE0      # alignment fill
+Str_None_18:
+    .asciz  ""
+Str_None_19:
+    .asciz  ""
 Str_Update_4:
     .asciz  "*UPDATE*"
 Str_Exit_4:
     .asciz  "  EXIT  "
 Str_FlashProgram0x22X:
     .asciz  "> FlashProgram(0x%2.2X);\n"
-    .byte   0x8F, 0xF8
+    .byte   0x8F, 0xF8            # alignment fill
 Str_ErrorDiskNotFoundTryAgain_2:
     .asciz  "\n---- Error!\n  Disk not Found. Try again."
-    .byte   0x2C, 0x67
+    .byte   0x2C, 0x67            # alignment fill
 Str_FlashMemoryUpdateSD:
     .asciz  "FLASH MEMORY UPDATE --- SD"
-    .byte   0x57
+    .byte   0x57                  # alignment fill
 Str_PleaseSelect_2:
     .asciz  "Please select.\n"
 Str_UpdateSD:
     .asciz  "  UPDATE --- SD\n"
-    .byte   0x67, 0xD5, 0x68
+    .byte   0x67, 0xD5, 0x68      # alignment fill
 Str_Update_5:
     .asciz  "*UPDATE*"
-rodata_5000CCE1:
-    .byte   0x00
-rodata_5000CCE2:
-    .byte   0x00
+Str_None_20:
+    .asciz  ""
+Str_None_21:
+    .asciz  ""
 Str_Exit_5:
     .asciz  "  EXIT  "
 Str_AreYouSure_3:
     .asciz  "\nAre You Sure?\n"
-rodata_5000CCFC:
-    .byte   0x00
+Str_None_22:
+    .asciz  ""
 Str_Update_6:
     .asciz  "*UPDATE*"
-rodata_5000CD06:
-    .byte   0x00
+Str_None_23:
+    .asciz  ""
 Str_Exit_6:
     .asciz  "  EXIT  "
 Str_UpdateReally_2:
     .asciz  "\nUpdate really?\n"
-    .byte   0x8D, 0x85, 0x38
-rodata_5000CD24:
-    .byte   0x00
-rodata_5000CD25:
-    .byte   0x00
+    .byte   0x8D, 0x85, 0x38      # alignment fill
+Str_None_24:
+    .asciz  ""
+Str_None_25:
+    .asciz  ""
 Str_Update_7:
     .asciz  "*UPDATE*"
 Str_Exit_7:
     .asciz  "  EXIT  "
 Str_SdProgram:
     .asciz  "> SdProgram();\n"
-Str_08X:
+Str_Fmt08X:
     .asciz  "\n%08X :"
-Str_02X:
+Str_Fmt02X:
     .asciz  " %02X"
-    .byte   0x27, 0x6C
-str_5000CD58:
+    .byte   0x27, 0x6C            # alignment fill
+Str_Dash:
     .asciz  " -"
-    .byte   0xC3
-Str_M2X:
+    .byte   0xC3                  # alignment fill
+Str_FmtM2X:
     .asciz  "\nM:%2X "
-Str_D2X:
+Str_FmtD2X:
     .asciz  "D:%2X "
-    .byte   0x40
-str_5000CD6C:
+    .byte   0x40                  # alignment fill
+Str_Hash:
     .asciz  "#"
-    .byte   0xC7, 0x6C
-rodata_5000CD70:
+    .byte   0xC7, 0x6C            # alignment fill
+FlashDeviceBaseCases:            # FlashDeviceBase's switch
     .long   loc_50009822, loc_5000982B, loc_5000983C, loc_50009844
     .long   loc_50009854, loc_5000985C, loc_50009864, loc_5000986C
     .long   loc_50009874, loc_5000987C, loc_5000988C, loc_50009894
     .long   loc_50009894
-rodata_5000CDA4:
-    .byte   0xB0, 0x21, 0x00, 0x00
-    .long   loc_50009917
-    .byte   0x01, 0x00, 0x00, 0x00
-    .long   loc_50009935
-    .byte   0x82, 0x00, 0x00, 0x00
-    .long   loc_500098F5
-    .byte   0xD2, 0x21, 0x00, 0x00
-    .long   loc_50009917
-    .byte   0x02, 0x00, 0x00, 0x00
-    .long   loc_50009935
-    .byte   0x00, 0x00, 0x00, 0x00
-    .long   loc_50009917
-    .byte   0x00, 0x00, 0x00, 0x00
-    .long   loc_50009917
-    .byte   0x00, 0x00, 0x00, 0x00
-    .long   loc_50009917
-    .byte   0xE8, 0x21, 0x00, 0x00
-    .long   loc_50009917
-    .byte   0xD9, 0x21, 0x00, 0x00
-    .long   loc_50009917
-    .byte   0x00, 0x00, 0x00, 0x00
-    .long   loc_50009917
-    .byte   0x00, 0x00, 0x00, 0x00
-    .long   loc_50009917
-    .byte   0x00, 0x00, 0x00, 0x00
-    .long   loc_50009917
-    .byte   0x4D, 0x22, 0x00, 0x00
-    .long   loc_50009917
-    .byte   0xCE, 0x21, 0x00, 0x00
-    .long   loc_50009917
-    .byte   0x00, 0x00, 0x00, 0x00
-    .long   loc_50009917
-rodata_5000CE24:
-    .byte   0xD0, 0x00, 0x00, 0x00
-    .long   loc_50009A17
-    .byte   0x01, 0x00, 0x00, 0x00
-    .long   loc_50009A17
-    .byte   0x00, 0x00, 0x00, 0x00
-    .long   loc_50009A22
-    .byte   0x23, 0x00, 0x00, 0x00
-    .long   loc_50009A17
-    .byte   0xB4, 0x00, 0x00, 0x00
-    .long   loc_50009A17
-    .byte   0x35, 0x00, 0x00, 0x00
-    .long   loc_50009A17
-    .byte   0x93, 0x00, 0x00, 0x00
-    .long   loc_50009A17
-    .byte   0x94, 0x00, 0x00, 0x00
-    .long   loc_50009A17
-    .byte   0xD3, 0x00, 0x00, 0x00
-    .long   loc_50009A17
-    .byte   0x39, 0x00, 0x00, 0x00
-    .long   loc_50009A17
-    .byte   0x2A, 0x00, 0x00, 0x00
-    .long   loc_50009A17
-    .byte   0x00, 0x00, 0x00, 0x00
-    .long   loc_50009A22
-    .byte   0x00, 0x00, 0x00, 0x00
-    .long   loc_50009A22
-    .byte   0x00, 0x00, 0x00, 0x00
-    .long   loc_50009A22
-    .byte   0x9E, 0x00, 0x00, 0x00
-    .long   loc_50009A17
-    .byte   0x1F, 0x00, 0x00, 0x00
-    .long   loc_50009A17
-str_5000CEA4:
+FlashResetById:                  # FlashResetToRead's hashed switch on the device code
+    .long   0x21B0, loc_50009917    # device code 0x2227
+    .long   0x01, loc_50009935    # device code 0x0078
+    .long   0x82, loc_500098F5    # device code 0x00F9
+    .long   0x21D2, loc_50009917    # device code 0x2249
+    .long   0x02, loc_50009935    # device code 0x0079
+    .long   0x00, loc_50009917
+    .long   0x00, loc_50009917
+    .long   0x00, loc_50009917
+    .long   0x21E8, loc_50009917    # device code 0x225F
+    .long   0x21D9, loc_50009917    # device code 0x2250
+    .long   0x00, loc_50009917
+    .long   0x00, loc_50009917
+    .long   0x00, loc_50009917
+    .long   0x224D, loc_50009917    # device code 0x22C4
+    .long   0x21CE, loc_50009917    # device code 0x2245
+    .long   0x00, loc_50009917
+FlashFujitsuIds:                 # FlashIdentify's hashed switch on the Fujitsu device codes 0x2227..0x22F9
+    .long   0xD0, loc_50009A17    # device code 0x22F6
+    .long   0x01, loc_50009A17    # device code 0x2227
+    .long   0x00, loc_50009A22
+    .long   0x23, loc_50009A17    # device code 0x2249
+    .long   0xB4, loc_50009A17    # device code 0x22DA
+    .long   0x35, loc_50009A17    # device code 0x225B
+    .long   0x93, loc_50009A17    # device code 0x22B9
+    .long   0x94, loc_50009A17    # device code 0x22BA
+    .long   0xD3, loc_50009A17    # device code 0x22F9
+    .long   0x39, loc_50009A17    # device code 0x225F
+    .long   0x2A, loc_50009A17    # device code 0x2250
+    .long   0x00, loc_50009A22
+    .long   0x00, loc_50009A22
+    .long   0x00, loc_50009A22
+    .long   0x9E, loc_50009A17    # device code 0x22C4
+    .long   0x1F, loc_50009A17    # device code 0x2245
+Str_Percent:
     .asciz  "%"
-    .byte   0xE1, 0x74
-str_5000CEA8:
+    .byte   0xE1, 0x74            # alignment fill
+Str_Star:
     .asciz  "*"
-    .byte   0x73, 0x7F
+    .byte   0x73, 0x7F            # alignment fill
 Str_ErrorNotDisk12TryAgain:
     .asciz  "\n---- Error!\n  Not disk(1/2).Try again.\n"
     .ascii  "B v"
 Str_NowErasingPleaseWait:
     .asciz  "\nNow erasing.Please wait!\n"
-    .byte   0xA2
+    .byte   0xA2                  # alignment fill
 Str_NowWritingPleaseWait:
     .asciz  "\nNow writing.Please wait!\n"
-    .byte   0x77
+    .byte   0x77                  # alignment fill
 Str_ChangeDisk22:
     .asciz  "\nChange disk(2/2)....\n"
-    .byte   0x78
+    .byte   0x78                  # alignment fill
 Str_NowWritingPleaseWait_2:
     .asciz  "\nNow writing.Please wait!\n"
-    .byte   0xCC
+    .byte   0xCC                  # alignment fill
 Str_CompletedTurnOnAgain:
     .asciz  "\nCompleted!\n Turn on Again.\n"
     .ascii  "zw\n"
@@ -23715,49 +23821,49 @@ Str_NowCheckingPleaseWait:
     .asciz  "\nNow checking.Please wait!\n"
 Str_ChangeDisk22_2:
     .asciz  "\nChange disk(2/2)....\n"
-    .byte   0x7C
+    .byte   0x7C                  # alignment fill
 Str_NowCheckingPleaseWait_2:
     .asciz  "\nNow checking.Please wait!\n"
 Str_ErrorNGDiskTryAgain:
     .asciz  "\n---- Error!\n  NG disk.Try again.\n"
-    .byte   0x7D
+    .byte   0x7D                  # alignment fill
 Str_OKTurnOnAgain:
     .asciz  "\n---- OK!\n  Turn on again.\n"
 Str_ErrorIllegalDiskTryAgain_2:
     .asciz  "\n---- Error!\n  Illegal disk.Try again.\n"
-str_5000D044:
+Str_O:
     .asciz  "o"
-    .byte   0xAC, 0x7F
+    .byte   0xAC, 0x7F            # alignment fill
 Str_NGDisk:
     .asciz  "\nNG Disk\n"
-    .byte   0x00, 0x50
+    .byte   0x00, 0x50            # alignment fill
 Str_Completed:
     .asciz  "\nCompleted\n"
-str_5000D060:
+Str_O_2:
     .asciz  "o"
-    .byte   0x00, 0x00
+    .byte   0x00, 0x00            # alignment fill
 Str_WriteAddress0x88lX:
     .asciz  "> Write Address = 0x%8.8lX\n"
-str_5000D080:
+Str_O_3:
     .asciz  "o"
-    .byte   0x00, 0x00
-str_5000D084:
+    .byte   0x00, 0x00            # alignment fill
+Str_O_4:
     .asciz  "o"
-    .byte   0x00, 0x00
-str_5000D088:
+    .byte   0x00, 0x00            # alignment fill
+Str_O_5:
     .asciz  "o"
-    .byte   0x00, 0x50
-str_5000D08C:
+    .byte   0x00, 0x50            # alignment fill
+Str_Newline_3:
     .asciz  "\n"
-    .byte   0x00, 0x50
+    .byte   0x00, 0x50            # alignment fill
 Str_FlashROM:
     .asciz  " FLASH ROM\n"
 Str_MaskROM:
     .asciz  " MASK ROM\n"
-    .byte   0xA5
+    .byte   0xA5                  # alignment fill
 Str_ErrorDeviceIsNotFlashMemoryTryAgain:
     .asciz  "\n---- Error!\n Device is not flash memory. Try Again.\n"
-    .byte   0x5A, 0x5A
+    .byte   0x5A, 0x5A            # alignment fill
 Str_Kn7kprgDAT:
     .asciz  "KN7KPRG .DAT"
 Str_Kn7ktblDAT:
@@ -23768,98 +23874,99 @@ Str_Kn7krhyDAT:
     .asciz  "KN7KRHY .DAT"
 Str_Kn7karomDAT:
     .asciz  "KN7KAROM.DAT"
-rodata_5000D121:
-    .byte   0x00, 0xA5, 0xA5
+Str_EndOfList:                   # the empty name that ends UpdateFileNames
+    .asciz  ""
+    .byte   0xA5, 0xA5            # alignment fill
 Str_ErrorD:
     .asciz  "ERROR:%d\n"
-    .byte   0x01, 0x01
+    .byte   0x01, 0x01            # alignment fill
 Str_SDCardIsNotFounded:
     .asciz  " SD card is not founded.\n"
-    .byte   0x05, 0x05
+    .byte   0x05, 0x05            # alignment fill
 Str_SDCardFormatError:
     .asciz  " SD card format error.\n"
 Str_SDBiosError:
     .asciz  " SD BIOS error.\n"
-    .byte   0x02, 0x02, 0x02
+    .byte   0x02, 0x02, 0x02      # alignment fill
 Str_FlashMemoryUpdateSD_2:
     .asciz  "FLASH MEMORY UPDATE --- SD"
-    .byte   0x06
+    .byte   0x06                  # alignment fill
 Str_UpdateFile:
     .asciz  "\nUpdate file '"
-    .byte   0xA5
-str_5000D1A4:
+    .byte   0xA5                  # alignment fill
+Str_Quote:
     .asciz  "'"
-    .byte   0xA5, 0xA5
+    .byte   0xA5, 0xA5            # alignment fill
 Str_ErrorFlashMemoryIsNotFounded:
     .asciz  "\n----Error!\n Flash Memory is not founded.\n"
-    .byte   0x06
+    .byte   0x06                  # alignment fill
 Str_NowErasingPleaseWait_2:
     .asciz  "\nNow erasing.Please wait!\n"
-    .byte   0x01
+    .byte   0x01                  # alignment fill
 Str_BlankFlashMemory:
     .asciz  "\nBlank Flash Memory.\n"
-    .byte   0x04, 0x04
+    .byte   0x04, 0x04            # alignment fill
 Str_NowWritingPleaseWait_3:
     .asciz  "\nNow writing.Please wait!\n"
-    .byte   0xA5
+    .byte   0xA5                  # alignment fill
 Str_WriteAddress0x88lX_2:
     .asciz  "> Write Address = 0x%8.8lX\n"
-str_5000D240:
+Str_O_6:
     .asciz  "o"
-    .byte   0x04, 0x04
+    .byte   0x04, 0x04            # alignment fill
 Str_ErrorFlashMemoryIsNotFounded_2:
     .asciz  "\n----Error!\n Flash Memory is not founded.\n"
-    .byte   0x01
+    .byte   0x01                  # alignment fill
 Str_NowErasingPleaseWait_3:
     .asciz  "\nNow erasing.Please wait!\n"
-    .byte   0x05
+    .byte   0x05                  # alignment fill
 Str_BlankFlashMemory_2:
     .asciz  "\nBlank Flash Memory.\n"
-    .byte   0x80, 0xA5
+    .byte   0x80, 0xA5            # alignment fill
 Str_NowWritingPleaseWait_4:
     .asciz  "\nNow writing.Please wait!\n"
-    .byte   0x03
+    .byte   0x03                  # alignment fill
 Str_WriteAddress0x88lX_3:
     .asciz  "> Write Address = 0x%8.8lX\n"
 Str_WriteAddress0x88lX_4:
     .asciz  "\n> Write Address = 0x%8.8lX\n"
-    .byte   0x03, 0x03, 0x03
-str_5000D2FC:
+    .byte   0x03, 0x03, 0x03      # alignment fill
+Str_O_7:
     .asciz  "o"
-    .byte   0x03, 0x03
+    .byte   0x03, 0x03            # alignment fill
 Str_NowVerifyingPleaseWait:
     .asciz  "\nNow verifying.Please wait!\n"
     .ascii  "ZZZ"
 Str_VerifyAddress0x88lX:
     .asciz  "> Verify Address = 0x%8.8lX\n"
-    .byte   0x03, 0x03, 0x03
-str_5000D340:
+    .byte   0x03, 0x03, 0x03      # alignment fill
+Str_At:
     .asciz  "@"
-    .byte   0x04, 0x04
+    .byte   0x04, 0x04            # alignment fill
 Str_Completed_2:
     .asciz  "\nCompleted!\n"
-    .byte   0x06, 0x06, 0x06
+    .byte   0x06, 0x06, 0x06      # alignment fill
 Str_Error:
     .asciz  "\nError!\n"
     .ascii  "ZZZ"
 Str_0x8XSD02X02X02X02XMEM02X02X02X02X:
     .asciz  "0x%8X : (SD)  %02X %02X %02X %02X\n           : (MEM) %02X %02X %02X %02X\n"
-    .byte   0x01, 0x01
+    .byte   0x01, 0x01            # alignment fill
 Str_Completed_3:
     .asciz  "\nCompleted!\n"
-    .byte   0x03, 0x03, 0x03
+    .byte   0x03, 0x03, 0x03      # alignment fill
 Str_UpdateInfomation:
     .asciz  "\n\nUpdate Infomation\n"
-    .byte   0x06, 0x06, 0x06
+    .byte   0x06, 0x06, 0x06      # alignment fill
 Str_Completed_4:
     .asciz  " : Completed.\n"
-    .byte   0xA5
+    .byte   0xA5                  # alignment fill
 Str_NotFlashMemory:
     .asciz  " : Not Flash Memory.\n"
-    .byte   0x03, 0x03
+    .byte   0x03, 0x03            # alignment fill
 Str_VerifyError:
     .asciz  " : Verify Error.\n"
-    .byte   0x05, 0x05
+    .byte   0x05, 0x05            # alignment fill
 Str_AllUpdateHasFinished:
     .asciz  "\n All update has finished.\n"
 Str_TurnOnAgain:
@@ -23868,221 +23975,371 @@ Str_UpdateHasNotFinished:
     .asciz  "\n Update has not finished.\n"
 Str_UpdateSystem:
     .asciz  " ---- UPDATE SYSTEM -----------------<- "
-    .byte   0x04, 0x04, 0x04
-str_5000D488:
+    .byte   0x04, 0x04, 0x04      # alignment fill
+Str_Blank40:
     .asciz  "                                        "
-    .byte   0xFA, 0x01, 0x00
-str_5000D4B4:
+    .byte   0xFA, 0x01, 0x00      # alignment fill
+Str_Fmt8s:
     .asciz  "[%8s]"
-    .byte   0x00, 0x00
-str_5000D4BC:
+    .byte   0x00, 0x00            # alignment fill
+Str_Blank10:
     .asciz  "          "
-    .byte   0x00
-str_5000D4C8:
+    .byte   0x00                  # alignment fill
+Str_Fmt8s_2:
     .asciz  "[%8s]"
-    .byte   0x37, 0x4B
-str_5000D4D0:
+    .byte   0x37, 0x4B            # alignment fill
+Str_Blank10_2:
     .asciz  "          "
-    .byte   0x4E
-str_5000D4DC:
+    .byte   0x4E                  # alignment fill
+Str_Fmt8s_3:
     .asciz  "[%8s]"
-    .byte   0x4E, 0x37
-str_5000D4E4:
+    .byte   0x4E, 0x37            # alignment fill
+Str_Blank10_3:
     .asciz  "          "
-    .byte   0x4B
-str_5000D4F0:
+    .byte   0x4B                  # alignment fill
+Str_Fmt8s_4:
     .asciz  "[%8s]"
-    .byte   0x4B, 0x4E
-str_5000D4F8:
+    .byte   0x4B, 0x4E            # alignment fill
+Str_Blank10_4:
     .asciz  "          "
-    .byte   0x00
-str_5000D504:
+    .byte   0x00                  # alignment fill
+Str_Blank40_2:
     .asciz  "                                        "
-    .byte   0x00, 0x01, 0x00
-    .long   str_5000C52D
+    .byte   0x00, 0x01, 0x00      # alignment fill
+    .long   Str_C
     .byte   0x01, 0x00, 0x00, 0x00
-    .long   rodata_5000C42C
-rodata_5000D53C:
-    .long   rodata_5000C42C
-rodata_5000D540:
-    .long   str_5000C688, rodata_5000C68A, rodata_5000C68B, rodata_5000C68C
-    .long   rodata_5000C68D, rodata_5000C68E, rodata_5000C68F, rodata_5000C690
+    .long   CtypeTable
+CtypePtr:                        # the ctype table every is*/to* reads through (+1 for EOF)
+    .long   CtypeTable
+LocaleMonetaryC:                 # the "C" locale's monetary strings and fields
+    .long   Str_C_2, Str_None, Str_None_2, Str_None_3
+    .long   Str_None_4, Str_None_5, Str_None_6, Str_None_7
     .byte   0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F
-rodata_5000D568:
-    .long   str_5000C694, str_5000C696, rodata_5000C698, rodata_5000C699
+LocaleNumericC:                  # the "C" locale's name, decimal point, thousands separator, grouping
+    .long   Str_C_3, Str_Dot, Str_None_8, Str_None_9
     .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-rodata_5000D584:
-    .long   0x00000000
-rodata_5000D588:
-    .long   0x00000000, 0x00000000, 0x9999999A, 0x3FB99999
-rodata_5000D598:
-    .long   0x00000000, 0x40140000
-rodata_5000D5A0:
-    .long   0x509F79FF, 0x3FD34413
-rodata_5000D5A8:
-    .long   0x00000000, 0x3FF00000
-rodata_5000D5B0:
-    .long   0x00000000, 0x40240000, 0x00000000, 0x40590000
-    .long   0x00000000, 0x408F4000, 0x00000000, 0x40C38800
-    .long   0x00000000, 0x40F86A00, 0x00000000, 0x412E8480
-    .long   0x00000000, 0x416312D0, 0x00000000, 0x4197D784
-    .long   0x00000000, 0x41CDCD65, 0x20000000, 0x4202A05F
-    .long   0xE8000000
-    .asciz  "vH7B"
-    .byte   0x00, 0x00, 0xA2, 0x94, 0x1A, 0x6D, 0x42, 0x00, 0x00, 0x40, 0xE5, 0x9C, 0x30, 0xA2, 0x42, 0x00
-    .byte   0x00, 0x90, 0x1E, 0xC4, 0xBC, 0xD6, 0x42, 0x00, 0x00, 0x34, 0x26, 0xF5, 0x6B, 0x0C, 0x43, 0x00
-    .byte   0x80, 0xE0, 0x37, 0x79, 0xC3, 0x41, 0x43, 0x00, 0xA0, 0xD8, 0x85
-    .asciz  "W4vC"
-    .byte   0xC8, 0x4E, 0x67, 0x6D, 0xC1, 0xAB, 0x43, 0x00, 0x3D, 0x91, 0x60, 0xE4, 0x58, 0xE1, 0x43, 0x40
-    .byte   0x8C, 0xB5, 0x78, 0x1D, 0xAF, 0x15, 0x44, 0x50, 0xEF, 0xE2, 0xD6, 0xE4, 0x1A, 0x4B, 0x44, 0x96
-    .byte   0xD5, 0x4D, 0x06, 0xCF, 0xF0, 0x80, 0x44, 0xFA, 0x4A, 0xE1, 0xC7, 0x02, 0x2D, 0xB5, 0x44, 0xB4
-    .byte   0x9D, 0xD9, 0x79, 0x43, 0x78, 0xEA, 0x44, 0x90, 0x02, 0x28, 0x2C, 0x2A, 0x8B, 0x20, 0x45, 0x34
-    .byte   0x03, 0x32, 0xB7, 0xF4, 0xAD, 0x54, 0x45, 0x00, 0x84, 0xFE, 0xE4, 0x71, 0xD9, 0x89, 0x45, 0x80
-    .byte   0x12, 0x1F, 0x2F, 0xE7, 0x27, 0xC0, 0x45, 0x20, 0xD7, 0xE6, 0xFA, 0xE0, 0x31, 0xF4, 0x45, 0xE8
-    .byte   0x8C, 0xA0, 0x39, 0x59, 0x3E, 0x29, 0x46, 0x24, 0xB0, 0x08, 0x88, 0xEF, 0x8D, 0x5F, 0x46, 0x1A
-    .byte   0x6E, 0x05, 0xB5, 0xB5, 0xB8, 0x93, 0x46, 0x9C, 0xC9, 0x46, 0x22, 0xE3, 0xA6, 0xC8, 0x46, 0x06
-    .byte   0x7C, 0xD8, 0xEA, 0x9B, 0xD0, 0xFE, 0x46, 0x86, 0x4D, 0xC7, 0x72, 0x61, 0x42, 0x33, 0x47, 0xE6
-    .byte   0x20, 0x79, 0xCF, 0xF9, 0x12, 0x68, 0x47, 0x1E, 0x69, 0x57, 0x43, 0xB8, 0x17, 0x9E, 0x47, 0xB0
-    .byte   0xA1, 0x16, 0x2A, 0xD3, 0xCE, 0xD2, 0x47, 0x1C, 0x4A, 0x9C, 0xF4, 0x87, 0x82, 0x07, 0x48, 0xA4
-    .byte   0x5C, 0xC3, 0xF1, 0x29, 0x63, 0x3D, 0x48, 0xEA, 0x19, 0x1A, 0x37, 0xFA, 0x5D, 0x72, 0x48, 0x60
-    .byte   0xA0, 0xE0, 0xC4, 0x78, 0xF5, 0xA6, 0x48, 0x78, 0xC8, 0x18, 0xF6, 0xD6, 0xB2, 0xDC, 0x48, 0x4E
-    .byte   0x7D, 0xCF, 0x59, 0xC6, 0xEF, 0x11, 0x49, 0xA2, 0x5C, 0x43, 0xF0, 0xB7, 0x6B, 0x46, 0x49, 0xCA
-    .byte   0x33, 0x54, 0xEC, 0xA5, 0x06, 0x7C, 0x49, 0x5E, 0xA0, 0xB4, 0xB3, 0x27, 0x84, 0xB1, 0x49, 0x76
-    .byte   0xC8, 0xA1, 0xA0, 0x31, 0xE5, 0xE5, 0x49, 0x92, 0x3A, 0xCA, 0x08, 0x7E, 0x5E, 0x1B, 0x4A, 0x98
-    .byte   0x64, 0x7E, 0xC5, 0x0E, 0x1B, 0x51, 0x4A, 0xC0, 0xFD, 0xDD, 0x76, 0xD2, 0x61, 0x85, 0x4A, 0x30
-    .byte   0x7D, 0x95, 0x14, 0x47, 0xBA, 0xBA, 0x4A, 0x42, 0x6E, 0xDD, 0x6C, 0x6C, 0xB4, 0xF0, 0x4A, 0xCC
-    .byte   0xC9, 0x14, 0x88, 0x87, 0xE1, 0x24, 0x4B, 0x40, 0xFC, 0x19, 0x6A, 0xE9, 0x19, 0x5A, 0x4B, 0xA8
-    .byte   0x3D, 0x50, 0xE2, 0x31, 0x50, 0x90, 0x4B, 0x16, 0x4D, 0xE4, 0x5A, 0x3E, 0x64, 0xC4, 0x4B, 0x5A
-    .byte   0x60, 0x9D, 0xF1, 0x4D, 0x7D, 0xF9, 0x4B, 0x6C, 0xB8, 0x04, 0x6E, 0xA1, 0xDC, 0x2F, 0x4C, 0x44
-    .byte   0xF3, 0xC2, 0xE4, 0xE4, 0xE9, 0x63, 0x4C, 0x14, 0xB0, 0xF3, 0x1D, 0x5E, 0xE4, 0x98, 0x4C, 0x1E
-    .byte   0x9C, 0x70, 0xA5, 0x75, 0x1D, 0xCF, 0x4C, 0x90, 0x61, 0x66, 0x87, 0x69, 0x72, 0x03, 0x4D, 0xF4
-    .byte   0xF9, 0x3F, 0xE9, 0x03, 0x4F, 0x38, 0x4D, 0x76, 0xF8, 0x8F, 0xE3, 0xC4, 0x62, 0x6E, 0x4D, 0x4A
-    .byte   0xFB, 0x39, 0x0E, 0xBB, 0xFD, 0xA2, 0x4D, 0x18, 0x7A, 0xC8, 0xD1, 0x29, 0xBD, 0xD7, 0x4D, 0xA2
-    .byte   0x98, 0x3A, 0x46, 0x74, 0xAC, 0x0D, 0x4E, 0x66, 0x9F, 0xE4, 0xAB, 0xC8, 0x8B, 0x42, 0x4E, 0x3C
-    .byte   0xC7, 0xDD, 0xD6, 0xBA, 0x2E, 0x77, 0x4E, 0x0E, 0x39, 0x95, 0x8C, 0x69, 0xFA, 0xAC, 0x4E, 0xAA
-    .byte   0x43, 0xDD, 0xF7, 0x81, 0x1C, 0xE2, 0x4E, 0x90, 0x94, 0xD4, 0x75, 0xA2, 0xA3, 0x16, 0x4F, 0xB4
-    .byte   0xB9, 0x49, 0x13, 0x8B, 0x4C, 0x4C, 0x4F, 0x10, 0x14, 0x0E, 0xEC, 0xD6, 0xAF, 0x81, 0x4F, 0x14
-    .byte   0x99, 0x11, 0xA7, 0xCC, 0x1B, 0xB6, 0x4F, 0x5E, 0xFF, 0xD5, 0xD0, 0xBF, 0xA2, 0xEB, 0x4F, 0x98
-    .byte   0xBF, 0x85, 0xE2, 0xB7, 0x45, 0x21, 0x50, 0x82, 0x2F, 0x27, 0xDB, 0x25, 0x97, 0x55, 0x50, 0x62
-    .byte   0xFB, 0xF0, 0x51, 0xEF, 0xFC, 0x8A, 0x50, 0x1E, 0x9D, 0x36, 0x93, 0x15, 0xDE, 0xC0, 0x50, 0x66
-    .byte   0x44, 0x04, 0xF8, 0x9A, 0x15, 0xF5, 0x50, 0x7E, 0x55, 0x05, 0xB6, 0x01, 0x5B, 0x2A, 0x51, 0x6C
-    .byte   0x55, 0xC3, 0x11, 0xE1, 0x78, 0x60, 0x51, 0xCA, 0x2A, 0x34, 0x56, 0x19, 0x97, 0x94, 0x51, 0x78
-    .byte   0x35, 0xC1, 0xAB, 0xDF, 0xBC, 0xC9, 0x51, 0x6C, 0xC1, 0x58, 0xCB, 0x0B, 0x16, 0x00, 0x52, 0xCA
-    .byte   0xF1, 0x2E, 0xBE, 0x8E, 0x1B, 0x34, 0x52, 0x38, 0xAE, 0xBA, 0x6D, 0x72, 0x22, 0x69, 0x52, 0xCA
-    .byte   0x59, 0x29, 0x09, 0x0F, 0x6B, 0x9F, 0x52, 0x1C, 0xD8, 0xB9, 0x65, 0xE9, 0xA2, 0xD3, 0x52, 0x26
-    .byte   0x4E, 0x28, 0xBF, 0xA3, 0x8B, 0x08, 0x53, 0xAC, 0x61, 0xF2, 0xAE, 0x8C, 0xAE, 0x3E, 0x53, 0x0E
-    .byte   0x7D, 0x57, 0xED, 0x17, 0x2D, 0x73, 0x53, 0x52, 0x5C, 0xAD, 0xE8, 0x5D, 0xF8, 0xA7, 0x53, 0x66
-    .byte   0xB3, 0xD8, 0x62, 0x75, 0xF6, 0xDD, 0x53, 0x1C, 0x70, 0xC7, 0x5D, 0x09, 0xBA, 0x12, 0x54, 0x24
-    .byte   0x4C, 0x39, 0xB5, 0x8B, 0x68, 0x47, 0x54, 0x32, 0x9F, 0x87, 0xA2, 0xAE, 0x42, 0x7D, 0x54, 0x7C
-    .byte   0xC3, 0x94, 0x25, 0xAD, 0x49, 0xB2, 0x54, 0x5C, 0xF4, 0xF9, 0x6E, 0x18, 0xDC, 0xE6, 0x54, 0x76
-    .byte   0x71, 0xB8, 0x8A, 0x1E, 0x93, 0x1C, 0x55, 0xEA, 0x46, 0xB3, 0x16, 0xF3, 0xDB, 0x51, 0x55, 0xA0
-    .byte   0x18, 0x60, 0xDC, 0xEF, 0x52, 0x86, 0x55, 0xCE, 0x1E, 0x78, 0xD3, 0xAB, 0xE7, 0xBB, 0x55, 0x42
-    .byte   0x13, 0x2B, 0x64, 0xCB, 0x70, 0xF1, 0x55, 0x12, 0xD8, 0x35, 0x3D, 0xFE, 0xCC, 0x25, 0x56, 0x10
-    .byte   0x4E, 0x83, 0xCC, 0x3D, 0x40, 0x5B, 0x56, 0xCE, 0x10, 0xD2, 0x9F, 0x26, 0x08, 0x91, 0x56, 0xFC
-    .byte   0x94, 0xC6, 0x47, 0x30, 0x4A, 0xC5, 0x56, 0x3C, 0x3A, 0xB8, 0x59, 0xBC, 0x9C, 0xFA, 0x56, 0x6A
-    .byte   0x24, 0x13, 0xB8, 0xF5, 0xA1, 0x30, 0x57, 0x82, 0xED, 0x17, 0x26, 0x73, 0xCA, 0x64, 0x57, 0xE2
-    .byte   0xE8, 0x9D, 0xEF, 0x0F, 0xFD, 0x99, 0x57, 0x8E, 0xB1, 0xC2, 0xF5, 0x29, 0x3E, 0xD0, 0x57, 0xF2
-    .byte   0x5D, 0x33, 0x73, 0xB4, 0x4D, 0x04, 0x58, 0x6E, 0x35, 0x00, 0x90, 0x21, 0x61, 0x39, 0x58, 0xC4
-    .byte   0x42, 0x00, 0xF4, 0x69, 0xB9, 0x6F, 0x58, 0xBE, 0x29, 0x80, 0x38, 0xE2, 0xD3, 0xA3, 0x58, 0x2E
-    .byte   0x34, 0xA0, 0xC6, 0xDA, 0xC8, 0xD8, 0x58, 0x34, 0x41, 0x48, 0x78, 0x11, 0xFB, 0x0E, 0x59, 0xC0
-    .byte   0x28, 0x2D, 0xEB, 0xEA, 0x5C, 0x43, 0x59, 0xF0, 0x72, 0xF8, 0xA5, 0x25, 0x34, 0x78, 0x59, 0xAC
-    .byte   0x8F, 0x76, 0x0F, 0x2F, 0x41, 0xAE, 0x59, 0xCC, 0x19, 0xAA, 0x69, 0xBD, 0xE8, 0xE2, 0x59, 0x42
-    .byte   0xA0, 0x14, 0xC4, 0xEC, 0xA2, 0x17, 0x5A, 0x52, 0xC8, 0x19, 0xF5, 0xA7, 0x8B, 0x4D, 0x5A, 0x30
-    .byte   0x1D, 0x30, 0xF9, 0x48, 0x77, 0x82, 0x5A, 0x82, 0x24, 0x7C, 0x37, 0x1B, 0x15, 0xB7, 0x5A, 0x9C
-    .byte   0x2D, 0x5B, 0x05, 0x62, 0xDA, 0xEC, 0x5A, 0x86, 0xFC, 0x58, 0x43, 0x7D, 0x08, 0x22, 0x5B, 0xA6
-    .byte   0x3B, 0x2F, 0x94, 0x9C, 0x8A, 0x56, 0x5B, 0x8E, 0x0A, 0x3B, 0xB9, 0x43, 0x2D, 0x8C, 0x5B, 0x9A
-    .byte   0xE6, 0xC4, 0x53, 0x4A, 0x9C, 0xC1, 0x5B, 0x3C, 0x20, 0xB6, 0xE8, 0x5C, 0x03, 0xF6, 0x5B, 0x4C
-    .byte   0xA8, 0xE3, 0x22, 0x34, 0x84, 0x2B, 0x5C, 0x32, 0x49, 0xCE, 0x95, 0xA0, 0x32, 0x61, 0x5C, 0x7E
-    .byte   0xDB, 0x41, 0xBB, 0x48, 0x7F, 0x95, 0x5C, 0x5E, 0x52, 0x12, 0xEA, 0x1A, 0xDF, 0xCA, 0x5C, 0x78
-    .byte   0x73, 0x4B, 0xD2, 0x70, 0xCB, 0x00, 0x5D, 0x5A, 0x50, 0xDE, 0x06, 0x4D, 0xFE, 0x34, 0x5D, 0x6C
-    .byte   0xE4, 0x95, 0x48, 0xE0, 0x3D, 0x6A, 0x5D, 0xC6, 0xAE, 0x5D, 0x2D, 0xAC, 0x66, 0xA0, 0x5D, 0x74
-    .byte   0x1A, 0xB5, 0x38, 0x57, 0x80, 0xD4, 0x5D, 0x16, 0x61, 0xE2, 0x06, 0x6D, 0xA0, 0x09, 0x5E, 0xAE
-    .byte   0x7C, 0x4D, 0x24, 0x44, 0x04, 0x40, 0x5E, 0xDA, 0xDB, 0x60, 0x2D, 0x55, 0x05, 0x74, 0x5E, 0xCE
-    .byte   0x12, 0xB9, 0x78, 0xAA, 0x06, 0xA9, 0x5E, 0x82, 0x57, 0xE7, 0x16, 0x55, 0x48, 0xDF, 0x5E, 0xB2
-    .byte   0x96, 0x50, 0x2E, 0x35, 0x8D, 0x13, 0x5F, 0x5E, 0xBC, 0xE4, 0x79, 0x82, 0x70, 0x48, 0x5F, 0x70
-    .byte   0xEB, 0x5D, 0x18, 0xA3, 0x8C, 0x7E, 0x5F, 0x2A, 0xB3, 0x3A, 0xEF, 0xE5, 0x17, 0xB3, 0x5F, 0xF0
-    .byte   0x5F, 0x09, 0x6B, 0xDF, 0xDD, 0xE7, 0x5F, 0xEC, 0xB7, 0xCB, 0x45, 0x57, 0xD5, 0x1D, 0x60, 0xF4
-    .byte   0x52, 0x9F, 0x8B, 0x56, 0xA5, 0x52, 0x60, 0xB0, 0x27, 0x87, 0x2E, 0xAC, 0x4E, 0x87, 0x60, 0x9C
-    .byte   0xF1, 0x28, 0x3A, 0x57, 0x22, 0xBD, 0x60, 0x06, 0x97, 0x59, 0x84, 0x76, 0x35, 0xF2, 0x60, 0xC6
-    .byte   0xFC, 0x6F, 0x25, 0xD4, 0xC2, 0x26, 0x61, 0xF6, 0xFB, 0xCB, 0x2E, 0x89
-    .ascii  "s\\ax}?"
-    .byte   0xBD, 0x35, 0xC8, 0x91, 0x61, 0xDA, 0x5C, 0x8F, 0x2C, 0x43, 0x3A, 0xC6, 0x61, 0x0E, 0x34, 0xB3
-    .byte   0xF7, 0xD3, 0xC8, 0xFB, 0x61, 0x8A, 0x00, 0xD0, 0x7A, 0x84, 0x5D, 0x31, 0x62, 0xA8, 0x00, 0x84
-    .byte   0x99, 0xE5, 0xB4, 0x65, 0x62, 0xD6, 0x00, 0xE5, 0xFF, 0x1E, 0x22, 0x9B, 0x62, 0x84, 0x20, 0xEF
-    .byte   0x5F, 0x53, 0xF5, 0xD0, 0x62, 0xA4, 0xE8, 0xEA, 0x37, 0xA8, 0x32, 0x05, 0x63, 0xD2, 0xA2, 0xE5
-    .byte   0x45, 0x52, 0x7F, 0x3A, 0x63, 0xC0, 0x85, 0xAF, 0x6B, 0x93, 0x8F, 0x70, 0x63, 0x30, 0x67, 0x9B
-    .byte   0x46, 0x78, 0xB3, 0xA4, 0x63, 0xFC, 0x40, 0x42, 0x58, 0x56, 0xE0, 0xD9, 0x63, 0xA2, 0x68, 0x29
-    .byte   0xF7, 0x35, 0x2C, 0x10, 0x64, 0xCA, 0xC2, 0xF3
-    .ascii  "tC7Ddz"
-    .byte   0xB3, 0x30, 0x52, 0x14, 0x45, 0x79, 0x64, 0x54, 0xE0, 0xBC, 0x66, 0x59, 0x96, 0xAF, 0x64, 0x34
-    .byte   0x0C, 0x36, 0xE0, 0xF7, 0xBD, 0xE3, 0x64, 0x46, 0x8F, 0x43, 0xD8, 0x75, 0xAD, 0x18, 0x65, 0x16
-    .byte   0x73, 0x54, 0x4E, 0xD3, 0xD8, 0x4E, 0x65, 0xEC, 0xC7, 0xF4, 0x10, 0x84, 0x47, 0x83, 0x65, 0xEA
-    .byte   0xF9, 0x31, 0x15, 0x65, 0x19, 0xB8, 0x65, 0x60, 0x78, 0x7E, 0x5A, 0xBE, 0x1F, 0xEE, 0x65, 0x3C
-    .byte   0x0B, 0x8F, 0xF8, 0xD6, 0xD3, 0x22, 0x66, 0x0C, 0xCE, 0xB2, 0xB6, 0xCC, 0x88, 0x57, 0x66, 0x92
-    .byte   0x81, 0x5F, 0xE4, 0xFF, 0x6A, 0x8D, 0x66, 0xF8, 0xB0, 0xBB, 0xEE, 0xDF, 0x62, 0xC2, 0x66, 0x3A
-    .byte   0x9D, 0x6A, 0xEA, 0x97, 0xFB, 0xF6, 0x66, 0x84, 0x44, 0x05, 0xE5, 0x7D, 0xBA, 0x2C, 0x67, 0xD6
-    .byte   0x4A, 0x23, 0xAF, 0x8E, 0xF4, 0x61, 0x67, 0x88, 0x1D, 0xEC, 0x5A, 0xB2, 0x71, 0x96, 0x67, 0xEE
-    .byte   0x24, 0xA7, 0xF1, 0x1E, 0x0E, 0xCC, 0x67, 0x16, 0x77, 0x08, 0x57, 0xD3, 0x88, 0x01, 0x68, 0xDA
-    .byte   0x94, 0xCA, 0x2C, 0x08, 0xEB, 0x35, 0x68, 0x0C, 0x3A, 0xFD, 0x37, 0xCA, 0x65, 0x6B, 0x68, 0x48
-    .byte   0x44, 0xFE, 0x62, 0x9E, 0x1F, 0xA1, 0x68, 0x5E, 0xD5, 0xBD, 0xFB, 0x85, 0x67, 0xD5, 0x68, 0xB0
-    .byte   0x4A, 0xAD, 0x7A, 0x67, 0xC1, 0x0A, 0x69, 0xB2, 0x4E, 0xAC, 0xAC, 0xE0, 0xB8, 0x40, 0x69, 0x5E
-    .byte   0x62, 0xD7, 0xD7, 0x18, 0xE7, 0x74, 0x69, 0xF0, 0x3A, 0xCD, 0x0D, 0xDF, 0x20, 0xAA, 0x69, 0xDA
-    .byte   0x44, 0xA0, 0x68, 0x8B, 0x54, 0xE0, 0x69, 0x0C, 0x56, 0xC8, 0x42, 0xAE, 0x69, 0x14, 0x6A, 0x92
-    .byte   0x6B, 0x7A, 0xD3, 0x19, 0x84, 0x49, 0x6A, 0x76, 0x06, 0x59, 0x48, 0x20, 0xE5, 0x7F, 0x6A, 0x0A
-    .byte   0xA4, 0x37, 0x2D, 0x34, 0xEF, 0xB3, 0x6A, 0x08, 0x8D, 0x85, 0x38, 0x01, 0xEB, 0xE8, 0x6A, 0x4C
-    .byte   0xF0, 0xA6, 0x86, 0xC1, 0x25, 0x1F, 0x6B, 0x32, 0x56, 0x28, 0xF4, 0x98, 0x77, 0x53, 0x6B, 0xBE
-    .byte   0x6B, 0x32, 0x31, 0x7F, 0x55, 0x88, 0x6B, 0xAE, 0x06, 0x7F, 0xFD, 0xDE, 0x6A, 0xBE, 0x6B, 0x2E
-    .byte   0x64, 0x6F, 0x5E, 0xCB, 0x02, 0xF3, 0x6B, 0x34, 0x3D, 0x0B, 0x36, 0x7E, 0xC3, 0x27, 0x6C, 0x86
-    .byte   0x0C, 0x8E, 0xC3, 0x5D, 0xB4, 0x5D, 0x6C, 0xD0, 0xC7, 0x38, 0x9A, 0xBA, 0x90, 0x92, 0x6C, 0xC4
-    .byte   0xF9, 0xC6, 0x40, 0xE9, 0x34, 0xC7, 0x6C, 0x3A, 0xB8, 0xF8, 0x90, 0x23, 0x02, 0xFD, 0x6C, 0x26
-    .byte   0x73, 0x9B, 0x3A, 0x56, 0x21, 0x32, 0x6D, 0xEE, 0x4F, 0x42, 0xC9, 0xAB, 0xA9, 0x66, 0x6D, 0xEA
-    .byte   0xE3, 0x92, 0xBB, 0x16, 0x54, 0x9C, 0x6D, 0x72, 0xCE, 0x3B, 0x35, 0x8E, 0xB4, 0xD1, 0x6D, 0x0E
-    .byte   0xC2, 0x8A, 0xC2, 0xB1, 0x21, 0x06, 0x6E, 0x92, 0x72, 0x2D, 0x33, 0x1E, 0xAA, 0x3B, 0x6E, 0x98
-    .byte   0x67, 0xFC, 0xDF, 0x52, 0x4A, 0x71, 0x6E, 0x82, 0x81, 0xFB, 0x97, 0xE7, 0x9C, 0xA5, 0x6E, 0xE2
-    .byte   0x61, 0xFA, 0x7D, 0x21, 0x04, 0xDB, 0x6E, 0x2E, 0x7D, 0xBC, 0xEE, 0x94, 0xE2, 0x10, 0x6F, 0x7A
-    .byte   0x9C, 0x6B, 0x2A, 0x3A, 0x1B, 0x45, 0x6F, 0x94, 0x83, 0x06, 0xB5, 0x08, 0x62, 0x7A, 0x6F, 0x3C
-    .byte   0x12, 0x24, 0x71, 0x45, 0x7D, 0xB0, 0x6F, 0xCE, 0x16, 0x6D, 0xCD, 0x96, 0x9C, 0xE4, 0x6F, 0x82
-    .byte   0x5C, 0xC8, 0x80, 0xBC, 0xC3, 0x19, 0x70, 0xD2, 0x39, 0x7D, 0xD0, 0x55, 0x1A, 0x50, 0x70, 0x46
-    .byte   0x88, 0x9C, 0x44, 0xEB, 0x20, 0x84, 0x70, 0x56, 0xAA, 0xC3, 0x15, 0x26, 0x29, 0xB9, 0x70, 0xE8
-    .byte   0x94, 0x34, 0x9B, 0x6F, 0x73, 0xEF, 0x70, 0x10, 0xDD, 0x00, 0xC1, 0x25, 0xA8, 0x23, 0x71, 0x54
-    .byte   0x14, 0x41, 0x31, 0x2F, 0x92, 0x58, 0x71, 0x6E, 0x59, 0x91, 0xFD, 0xBA, 0xB6, 0x8E, 0x71, 0xE6
-    .byte   0xD7, 0x7A, 0xDE, 0x34, 0x32, 0xC3, 0x71, 0xDE, 0x8D, 0x19, 0x16, 0xC2, 0xFE, 0xF7, 0x71, 0x56
-    .byte   0xF1, 0x9F, 0x9B, 0x72, 0xFE, 0x2D, 0x72, 0xD6, 0xF6, 0x43, 0xA1, 0x07, 0xBF, 0x62, 0x72, 0x88
-    .byte   0xF4, 0x94, 0x89, 0xC9, 0x6E, 0x97, 0x72, 0xAE, 0x31, 0xFA, 0xEB, 0x7B, 0x4A, 0xCD, 0x72, 0x0E
-    .byte   0x5F, 0x7C, 0x73, 0x8D, 0x4E, 0x02, 0x73, 0xCC, 0x76, 0x5B, 0xD0, 0x30, 0xE2, 0x36, 0x73, 0x80
-    .byte   0x54, 0x72, 0x04, 0xBD, 0x9A, 0x6C, 0x73, 0xD0, 0x74, 0xC7, 0x22, 0xB6, 0xE0, 0xA1, 0x73, 0x04
-    .byte   0x52, 0x79, 0xAB, 0xE3, 0x58, 0xD6, 0x73, 0x84, 0xA6, 0x57, 0x96, 0x1C, 0xEF, 0x0B, 0x74, 0x16
-    .byte   0xC8, 0xF6, 0xDD, 0x71, 0x75, 0x41, 0x74, 0x18, 0x7A, 0x74, 0x55, 0xCE, 0xD2, 0x75, 0x74, 0xA2
-    .byte   0x98, 0xD1, 0xEA, 0x81, 0x47, 0xAB, 0x74, 0x66, 0xFF, 0xC2, 0x32, 0xB1, 0x0C, 0xE1, 0x74, 0x3E
-    .byte   0xBF, 0x73, 0x7F, 0xDD, 0x4F, 0x15, 0x75, 0x0E, 0xAF, 0x50, 0xDF, 0xD4, 0xA3, 0x4A, 0x75, 0x6A
-    .byte   0x6D, 0x92, 0x0B, 0x65, 0xA6, 0x80, 0x75, 0xC0, 0x08, 0x77, 0x4E, 0xFE, 0xCF, 0xB4, 0x75, 0xF0
-    .byte   0xCA, 0x14, 0xE2, 0xFD, 0x03, 0xEA, 0x75, 0xDA, 0xFE, 0x4C, 0xAD, 0x7E, 0x42, 0x20, 0x76, 0x8E
-    .byte   0x3E, 0xA0, 0x58, 0x1E, 0x53, 0x54, 0x76, 0x32, 0x4E, 0xC8, 0xEE, 0xE5, 0x67, 0x89, 0x76, 0xBE
-    .byte   0x61, 0x7A, 0x6A, 0xDF, 0xC1, 0xBF, 0x76, 0x14, 0x7D, 0x8C, 0xA2, 0x2B, 0xD9, 0xF3, 0x76, 0x58
-    .byte   0x9C, 0x2F, 0x8B, 0x76, 0xCF, 0x28, 0x77, 0x70, 0x83, 0xFB, 0x2D, 0x54, 0x03, 0x5F, 0x77, 0x2A
-    .byte   0x32, 0xBD, 0x9C, 0x14, 0x62, 0x93, 0x77, 0xB2, 0x7E, 0xEC, 0xC3, 0x99, 0x3A, 0xC8, 0x77, 0x5E
-    .byte   0x9E, 0xE7, 0x34, 0x40, 0x49, 0xFE, 0x77, 0xF8, 0xC2, 0x10, 0x21, 0xC8, 0xED, 0x32, 0x78, 0xBA
-    .byte   0xF3, 0x54, 0x29, 0x3A, 0xA9, 0x67, 0x78, 0xA4, 0x30, 0xAA, 0xB3, 0x88, 0x93, 0x9D
-    .ascii  "xj^Jp5|"
-    .byte   0xD2, 0x78, 0x00, 0xF6, 0x5C, 0xCC, 0x42, 0x1B, 0x07, 0x79, 0x80, 0x33, 0x74, 0x7F, 0x13, 0xE2
-    .byte   0x3C, 0x79, 0x30, 0xA0, 0xA8
-    .ascii  "/L\rry<"
-    .byte   0xC8, 0x92, 0x3B, 0x9F, 0x90, 0xA6, 0x79, 0x4C, 0x7A, 0x77, 0x0A, 0xC7, 0x34, 0xDC, 0x79, 0x72
-    .byte   0xAC, 0x8A, 0x66, 0xFC, 0xA0, 0x11, 0x7A, 0x8E, 0x57, 0x2D, 0x80, 0x3B, 0x09, 0x46, 0x7A, 0x72
-    .byte   0xAD, 0x38, 0x60, 0x8A, 0x8B, 0x7B, 0x7A, 0x64, 0x6C, 0x23, 0x7C, 0x36, 0x37, 0xB1, 0x7A, 0x82
-    .byte   0x47, 0x2C, 0x1B, 0x04, 0x85, 0xE5, 0x7A, 0x62, 0x59, 0xF7, 0x21, 0x45, 0xE6, 0x1A, 0x7B, 0xDE
-    .byte   0x97, 0x3A, 0x35, 0xEB, 0xCF, 0x50, 0x7B, 0xD0, 0x3D, 0x89, 0x02, 0xE6, 0x03, 0x85, 0x7B, 0x44
-    .byte   0x8D, 0x2B, 0x83, 0xDF, 0x44, 0xBA, 0x7B, 0x4E, 0x38, 0xFB, 0xB1, 0x0B, 0x6B, 0xF0, 0x7B, 0x62
-    .byte   0x06, 0x7A, 0x9E, 0xCE, 0x85, 0x24, 0x7C, 0xFA, 0x87, 0x18, 0x46, 0x42, 0xA7, 0x59, 0x7C, 0xF8
-    .byte   0x54, 0xCF, 0x6B, 0x89, 0x08, 0x90, 0x7C, 0x38, 0x2A, 0xC3, 0xC6, 0xAB, 0x0A, 0xC4, 0x7C, 0xCA
-    .byte   0xF4, 0x73, 0xB8, 0x56, 0x0D, 0xF9, 0x7C, 0xF8, 0xF1, 0x90, 0x66, 0xAC, 0x50, 0x2F, 0x7D, 0x3E
-    .byte   0x97, 0x1A, 0xC0, 0x6B, 0x92, 0x63, 0x7D, 0x08, 0x3D, 0x21, 0xB0, 0x06, 0x77, 0x98, 0x7D, 0x4C
-    .byte   0x8C, 0x29, 0x5C, 0xC8, 0x94, 0xCE, 0x7D, 0xB2, 0xF7, 0x99, 0x39, 0xFD, 0x1C, 0x03, 0x7E, 0x9E
-    .byte   0x75, 0x00, 0x88, 0x3C, 0xE4, 0x37, 0x7E, 0x06, 0x93, 0x00, 0xAA, 0x4B, 0xDD, 0x6D, 0x7E, 0xE0
-    .byte   0x5B, 0x40, 0x4A, 0x4F, 0xAA, 0xA2, 0x7E, 0xD8, 0x72, 0xD0, 0x1C, 0xE3, 0x54, 0xD7, 0x7E, 0x90
-    .byte   0x8F, 0x04, 0xE4, 0x1B, 0x2A, 0x0D, 0x7F, 0xBE, 0xD9, 0x82, 0x6E, 0x51, 0x3A, 0x42, 0x7F, 0x28
-    .byte   0x90, 0x23, 0xCA, 0xE5, 0xC8, 0x76, 0x7F, 0x36, 0x74, 0xAC, 0x3C, 0x1F, 0x7B, 0xAC, 0x7F, 0xA2
-    .byte   0xC8, 0xEB, 0x85, 0xF3, 0xCC, 0xE1, 0x7F
+MonetaryLocaleIndex:
+    .asciz  ""
+    .byte   0x00, 0x00, 0x00      # alignment fill
+NumericLocaleIndex:
+    .long   0x00000000, 0x00000000
+F64Tenth:                        # 0.1
+    .long   0x9999999A, 0x3FB99999    # 0.1
+F64Five:                         # 5.0
+    .long   0x00000000, 0x40140000    # 5.0
+F64Log10Of2:                     # log10(2)
+    .long   0x509F79FF, 0x3FD34413    # 0.3010299956639812
+F64One:                          # 1.0 = 1e0, the first power of ten
+    .long   0x00000000, 0x3FF00000    # 1.0
+F64PowersOfTen:                  # 1e1 .. 1e308
+    .long   0x00000000, 0x40240000    # 10.0
+    .long   0x00000000, 0x40590000    # 100.0
+    .long   0x00000000, 0x408F4000    # 1000.0
+    .long   0x00000000, 0x40C38800    # 10000.0
+    .long   0x00000000, 0x40F86A00    # 100000.0
+    .long   0x00000000, 0x412E8480    # 1000000.0
+    .long   0x00000000, 0x416312D0    # 10000000.0
+    .long   0x00000000, 0x4197D784    # 100000000.0
+    .long   0x00000000, 0x41CDCD65    # 1000000000.0
+    .long   0x20000000, 0x4202A05F    # 10000000000.0
+    .long   0xE8000000, 0x42374876    # 100000000000.0
+    .long   0xA2000000, 0x426D1A94    # 1000000000000.0
+    .long   0xE5400000, 0x42A2309C    # 10000000000000.0
+    .long   0x1E900000, 0x42D6BCC4    # 100000000000000.0
+    .long   0x26340000, 0x430C6BF5    # 1000000000000000.0
+    .long   0x37E08000, 0x4341C379    # 1e+16
+    .long   0x85D8A000, 0x43763457    # 1e+17
+    .long   0x674EC800, 0x43ABC16D    # 1e+18
+    .long   0x60913D00, 0x43E158E4    # 1e+19
+    .long   0x78B58C40, 0x4415AF1D    # 1e+20
+    .long   0xD6E2EF50, 0x444B1AE4    # 1e+21
+    .long   0x064DD596, 0x4480F0CF    # 1.0000000000000008e+22
+    .long   0xC7E14AFA, 0x44B52D02    # 1.0000000000000006e+23
+    .long   0x79D99DB4, 0x44EA7843    # 1e+24
+    .long   0x2C280290, 0x45208B2A    # 9.999999999999999e+24
+    .long   0xB7320334, 0x4554ADF4    # 9.999999999999999e+25
+    .long   0xE4FE8400, 0x4589D971    # 9.999999999999997e+26
+    .long   0x2F1F1280, 0x45C027E7    # 9.999999999999997e+27
+    .long   0xFAE6D720, 0x45F431E0    # 9.999999999999997e+28
+    .long   0x39A08CE8, 0x46293E59    # 9.999999999999997e+29
+    .long   0x8808B024, 0x465F8DEF    # 1e+31
+    .long   0xB5056E1A, 0x4693B8B5    # 1.0000000000000006e+32
+    .long   0x2246C99C, 0x46C8A6E3    # 1e+33
+    .long   0xEAD87C06, 0x46FED09B    # 1.0000000000000003e+34
+    .long   0x72C74D86, 0x47334261    # 1.0000000000000007e+35
+    .long   0xCF7920E6, 0x476812F9    # 1.0000000000000005e+36
+    .long   0x4357691E, 0x479E17B8    # 1.0000000000000003e+37
+    .long   0x2A16A1B0, 0x47D2CED3    # 9.999999999999998e+37
+    .long   0xF49C4A1C, 0x48078287    # 9.999999999999998e+38
+    .long   0xF1C35CA4, 0x483D6329    # 9.999999999999999e+39
+    .long   0x371A19EA, 0x48725DFA    # 1.0000000000000006e+41
+    .long   0xC4E0A060, 0x48A6F578    # 9.999999999999999e+41
+    .long   0xF618C878, 0x48DCB2D6    # 9.999999999999999e+42
+    .long   0x59CF7D4E, 0x4911EFC6    # 1.0000000000000005e+44
+    .long   0xF0435CA2, 0x49466BB7    # 1.0000000000000006e+45
+    .long   0xEC5433CA, 0x497C06A5    # 1.0000000000000005e+46
+    .long   0xB3B4A05E, 0x49B18427    # 1.0000000000000004e+47
+    .long   0xA0A1C876, 0x49E5E531    # 1.0000000000000005e+48
+    .long   0x08CA3A92, 0x4A1B5E7E    # 1.0000000000000003e+49
+    .long   0xC57E6498, 0x4A511B0E    # 9.999999999999997e+49
+    .long   0x76DDFDC0, 0x4A8561D2    # 1e+51
+    .long   0x14957D30, 0x4ABABA47    # 1e+52
+    .long   0x6CDD6E42, 0x4AF0B46C    # 1.0000000000000008e+53
+    .long   0x8814C9CC, 0x4B24E187    # 9.999999999999997e+53
+    .long   0x6A19FC40, 0x4B5A19E9    # 9.999999999999999e+54
+    .long   0xE2503DA8, 0x4B905031    # 9.999999999999999e+55
+    .long   0x5AE44D16, 0x4BC4643E    # 1.0000000000000006e+57
+    .long   0xF19D605A, 0x4BF97D4D    # 1.0000000000000004e+58
+    .long   0x6E04B86C, 0x4C2FDCA1    # 9.999999999999999e+58
+    .long   0xE4C2F344, 0x4C63E9E4    # 1e+60
+    .long   0x1DF3B014, 0x4C98E45E    # 9.999999999999998e+60
+    .long   0xA5709C1E, 0x4CCF1D75    # 1.0000000000000004e+62
+    .long   0x87666190, 0x4D037269    # 9.999999999999999e+62
+    .long   0xE93FF9F4, 0x4D384F03    # 9.999999999999999e+63
+    .long   0xE38FF876, 0x4D6E62C4    # 1.0000000000000005e+65
+    .long   0x0E39FB4A, 0x4DA2FDBB    # 1.0000000000000005e+66
+    .long   0xD1C87A18, 0x4DD7BD29    # 9.999999999999998e+66
+    .long   0x463A98A2, 0x4E0DAC74    # 1.0000000000000003e+68
+    .long   0xABE49F66, 0x4E428BC8    # 1.0000000000000005e+69
+    .long   0xD6DDC73C, 0x4E772EBA    # 9.999999999999999e+69
+    .long   0x8C95390E, 0x4EACFA69    # 1.0000000000000003e+71
+    .long   0xF7DD43AA, 0x4EE21C81    # 1.0000000000000005e+72
+    .long   0x75D49490, 0x4F16A3A2    # 9.999999999999998e+72
+    .long   0x1349B9B4, 0x4F4C4C8B    # 9.999999999999998e+73
+    .long   0xEC0E1410, 0x4F81AFD6    # 9.999999999999997e+74
+    .long   0xA7119914, 0x4FB61BCC    # 9.999999999999997e+75
+    .long   0xD0D5FF5E, 0x4FEBA2BF    # 1.0000000000000004e+77
+    .long   0xE285BF98, 0x502145B7    # 9.999999999999998e+77
+    .long   0xDB272F82, 0x50559725    # 1.0000000000000005e+79
+    .long   0x51F0FB62, 0x508AFCEF    # 1.0000000000000004e+80
+    .long   0x93369D1E, 0x50C0DE15    # 1.0000000000000006e+81
+    .long   0xF8044466, 0x50F5159A    # 1.0000000000000006e+82
+    .long   0xB605557E, 0x512A5B01    # 1.0000000000000004e+83
+    .long   0x11C3556C, 0x516078E1    # 9.999999999999998e+83
+    .long   0x56342ACA, 0x51949719    # 1.0000000000000004e+85
+    .long   0xABC13578, 0x51C9BCDF    # 9.999999999999997e+85
+    .long   0xCB58C16C, 0x5200160B    # 1e+87
+    .long   0xBE2EF1CA, 0x52341B8E    # 1.0000000000000005e+88
+    .long   0x6DBAAE38, 0x52692272    # 9.999999999999999e+88
+    .long   0x092959CA, 0x529F6B0F    # 1.0000000000000003e+90
+    .long   0x65B9D81C, 0x52D3A2E9    # 9.999999999999999e+90
+    .long   0xBF284E26, 0x53088BA3    # 1.0000000000000003e+92
+    .long   0xAEF261AC, 0x533EAE8C    # 9.999999999999999e+92
+    .long   0xED577D0E, 0x53732D17    # 1.0000000000000004e+94
+    .long   0xE8AD5C52, 0x53A7F85D    # 1.0000000000000005e+95
+    .long   0x62D8B366, 0x53DDF675    # 1.0000000000000004e+96
+    .long   0x5DC7701C, 0x5412BA09    # 9.999999999999997e+96
+    .long   0xB5394C24, 0x5447688B    # 9.999999999999998e+97
+    .long   0xA2879F32, 0x547D42AE    # 1.0000000000000005e+99
+    .long   0x2594C37C, 0x54B249AD    # 9.999999999999998e+99
+    .long   0x6EF9F45C, 0x54E6DC18    # 1e+101
+    .long   0x8AB87176, 0x551C931E    # 1.0000000000000004e+102
+    .long   0x16B346EA, 0x5551DBF3    # 1.0000000000000004e+103
+    .long   0xDC6018A0, 0x558652EF    # 9.999999999999997e+103
+    .long   0xD3781ECE, 0x55BBE7AB    # 1.0000000000000004e+105
+    .long   0x642B1342, 0x55F170CB    # 1.0000000000000007e+106
+    .long   0x3D35D812, 0x5625CCFE    # 1.0000000000000006e+107
+    .long   0xCC834E10, 0x565B403D    # 9.999999999999998e+107
+    .long   0x9FD210CE, 0x56910826    # 1.0000000000000006e+109
+    .long   0x47C694FC, 0x56C54A30    # 9.999999999999997e+109
+    .long   0x59B83A3C, 0x56FA9CBC    # 9.999999999999998e+110
+    .long   0xB813246A, 0x5730A1F5    # 1.0000000000000008e+112
+    .long   0x2617ED82, 0x5764CA73    # 1.0000000000000004e+113
+    .long   0xEF9DE8E2, 0x5799FD0F    # 1.0000000000000003e+114
+    .long   0xF5C2B18E, 0x57D03E29    # 1.0000000000000005e+115
+    .long   0x73335DF2, 0x58044DB4    # 1.0000000000000005e+116
+    .long   0x9000356E, 0x58396121    # 1.0000000000000005e+117
+    .long   0xF40042C4, 0x586FB969    # 9.999999999999999e+117
+    .long   0x388029BE, 0x58A3D3E2    # 1.0000000000000005e+119
+    .long   0xC6A0342E, 0x58D8C8DA    # 1.0000000000000006e+120
+    .long   0x78484134, 0x590EFB11    # 9.999999999999999e+120
+    .long   0xEB2D28C0, 0x59435CEA    # 9.999999999999998e+121
+    .long   0xA5F872F0, 0x59783425    # 9.999999999999998e+122
+    .long   0x0F768FAC, 0x59AE412F    # 9.999999999999998e+123
+    .long   0x69AA19CC, 0x59E2E8BD    # 1e+125
+    .long   0xC414A042, 0x5A17A2EC    # 1.0000000000000004e+126
+    .long   0xF519C852, 0x5A4D8BA7    # 1.0000000000000003e+127
+    .long   0xF9301D30, 0x5A827748    # 9.999999999999997e+127
+    .long   0x377C2482, 0x5AB7151B    # 1.0000000000000006e+129
+    .long   0x055B2D9C, 0x5AECDA62    # 9.999999999999998e+129
+    .long   0x4358FC86, 0x5B22087D    # 1.0000000000000007e+131
+    .long   0x942F3BA6, 0x5B568A9C    # 1.0000000000000005e+132
+    .long   0xB93B0A8E, 0x5B8C2D43    # 1.0000000000000003e+133
+    .long   0x53C4E69A, 0x5BC19C4A    # 1.0000000000000005e+134
+    .long   0xE8B6203C, 0x5BF6035C    # 9.999999999999998e+134
+    .long   0x22E3A84C, 0x5C2B8434    # 9.999999999999999e+135
+    .long   0x95CE4932, 0x5C6132A0    # 1.0000000000000004e+137
+    .long   0xBB41DB7E, 0x5C957F48    # 1.0000000000000004e+138
+    .long   0xEA12525E, 0x5CCADF1A    # 1.0000000000000004e+139
+    .long   0xD24B7378, 0x5D00CB70    # 9.999999999999998e+139
+    .long   0x06DE505A, 0x5D34FE4D    # 1.0000000000000005e+141
+    .long   0x4895E46C, 0x5D6A3DE0    # 9.999999999999999e+141
+    .long   0x2D5DAEC6, 0x5DA066AC    # 1.0000000000000005e+143
+    .long   0x38B51A74, 0x5DD48057    # 9.999999999999999e+143
+    .long   0x06E26116, 0x5E09A06D    # 1.0000000000000005e+145
+    .long   0x244D7CAE, 0x5E400444    # 1.0000000000000006e+146
+    .long   0x2D60DBDA, 0x5E740555    # 1.0000000000000007e+147
+    .long   0x78B912CE, 0x5EA906AA    # 1.0000000000000003e+148
+    .long   0x16E75782, 0x5EDF4855    # 1.0000000000000004e+149
+    .long   0x2E5096B2, 0x5F138D35    # 1.0000000000000005e+150
+    .long   0x79E4BC5E, 0x5F487082    # 1.0000000000000005e+151
+    .long   0x185DEB70, 0x5F7E8CA3    # 9.999999999999998e+151
+    .long   0xEF3AB32A, 0x5FB317E5    # 1.0000000000000006e+153
+    .long   0x6B095FF0, 0x5FE7DDDF    # 9.999999999999999e+153
+    .long   0x45CBB7EC, 0x601DD557    # 9.999999999999999e+154
+    .long   0x8B9F52F4, 0x6052A556    # 1e+156
+    .long   0x2E8727B0, 0x60874EAC    # 9.999999999999998e+156
+    .long   0x3A28F19C, 0x60BD2257    # 9.999999999999998e+157
+    .long   0x84599706, 0x60F23576    # 1.0000000000000007e+159
+    .long   0x256FFCC6, 0x6126C2D4    # 1.0000000000000005e+160
+    .long   0x2ECBFBF6, 0x615C7389    # 1.0000000000000003e+161
+    .long   0xBD3F7D78, 0x6191C835    # 1e+162
+    .long   0x2C8F5CDA, 0x61C63A43    # 1.0000000000000006e+163
+    .long   0xF7B3340E, 0x61FBC8D3    # 1.0000000000000003e+164
+    .long   0x7AD0008A, 0x62315D84    # 1.0000000000000005e+165
+    .long   0x998400A8, 0x6265B4E5    # 9.999999999999998e+165
+    .long   0xFFE500D6, 0x629B221E    # 1.0000000000000003e+167
+    .long   0x5FEF2084, 0x62D0F553    # 1e+168
+    .long   0x37EAE8A4, 0x630532A8    # 9.999999999999998e+168
+    .long   0x45E5A2D2, 0x633A7F52    # 1.0000000000000004e+170
+    .long   0x6BAF85C0, 0x63708F93    # 9.999999999999997e+170
+    .long   0x469B6730, 0x63A4B378    # 9.999999999999997e+171
+    .long   0x584240FC, 0x63D9E056    # 9.999999999999997e+172
+    .long   0xF72968A2, 0x64102C35    # 1.0000000000000007e+174
+    .long   0x74F3C2CA, 0x64443743    # 1.0000000000000006e+175
+    .long   0x5230B37A, 0x64794514    # 1.0000000000000003e+176
+    .long   0x66BCE054, 0x64AF9659    # 9.999999999999998e+176
+    .long   0xE0360C34, 0x64E3BDF7    # 9.999999999999997e+177
+    .long   0xD8438F46, 0x6518AD75    # 1.0000000000000004e+179
+    .long   0x4E547316, 0x654ED8D3    # 1.0000000000000002e+180
+    .long   0x10F4C7EC, 0x65834784    # 1e+181
+    .long   0x1531F9EA, 0x65B81965    # 1.0000000000000004e+182
+    .long   0x5A7E7860, 0x65EE1FBE    # 9.999999999999998e+182
+    .long   0xF88F0B3C, 0x6622D3D6    # 9.999999999999998e+183
+    .long   0xB6B2CE0C, 0x665788CC    # 1e+185
+    .long   0xE45F8192, 0x668D6AFF    # 1.0000000000000003e+186
+    .long   0xEEBBB0F8, 0x66C262DF    # 9.999999999999997e+186
+    .long   0xEA6A9D3A, 0x66F6FB97    # 1.0000000000000003e+188
+    .long   0xE5054484, 0x672CBA7D    # 9.999999999999998e+188
+    .long   0xAF234AD6, 0x6761F48E    # 1.0000000000000005e+190
+    .long   0x5AEC1D88, 0x679671B2    # 9.999999999999999e+190
+    .long   0xF1A724EE, 0x67CC0E1E    # 1.0000000000000004e+192
+    .long   0x57087716, 0x680188D3    # 1.0000000000000007e+193
+    .long   0x2CCA94DA, 0x6835EB08    # 1.0000000000000004e+194
+    .long   0x37FD3A0C, 0x686B65CA    # 9.999999999999998e+194
+    .long   0x62FE4448, 0x68A11F9E    # 1e+196
+    .long   0xFBBDD55E, 0x68D56785    # 1.0000000000000006e+197
+    .long   0x7AAD4AB0, 0x690AC167    # 9.999999999999999e+197
+    .long   0xACAC4EB2, 0x6940B8E0    # 1.0000000000000007e+199
+    .long   0xD7D7625E, 0x6974E718    # 1.0000000000000006e+200
+    .long   0x0DCD3AF0, 0x69AA20DF    # 9.999999999999999e+200
+    .long   0x68A044DA, 0x69E0548B    # 1.0000000000000008e+202
+    .long   0x42C8560C, 0x6A1469AE    # 1e+203
+    .long   0xD37A6B92, 0x6A498419    # 1.0000000000000004e+204
+    .long   0x48590676, 0x6A7FE520    # 1.0000000000000004e+205
+    .long   0x2D37A40A, 0x6AB3EF34    # 1.0000000000000004e+206
+    .long   0x38858D08, 0x6AE8EB01    # 9.999999999999998e+206
+    .long   0x86A6F04C, 0x6B1F25C1    # 1e+208
+    .long   0xF4285632, 0x6B537798    # 1.0000000000000004e+209
+    .long   0x31326BBE, 0x6B88557F    # 1.0000000000000004e+210
+    .long   0xFD7F06AE, 0x6BBE6ADE    # 1.0000000000000004e+211
+    .long   0x5E6F642E, 0x6BF302CB    # 1.0000000000000007e+212
+    .long   0x360B3D34, 0x6C27C37E    # 9.999999999999998e+212
+    .long   0xC38E0C86, 0x6C5DB45D    # 1.0000000000000004e+214
+    .long   0x9A38C7D0, 0x6C9290BA    # 9.999999999999997e+214
+    .long   0x40C6F9C4, 0x6CC734E9    # 9.999999999999997e+215
+    .long   0x90F8B83A, 0x6CFD0223    # 1.0000000000000003e+217
+    .long   0x3A9B7326, 0x6D322156    # 1.0000000000000007e+218
+    .long   0xC9424FEE, 0x6D66A9AB    # 1.0000000000000004e+219
+    .long   0xBB92E3EA, 0x6D9C5416    # 1.0000000000000005e+220
+    .long   0x353BCE72, 0x6DD1B48E    # 1.0000000000000004e+221
+    .long   0xC28AC20E, 0x6E0621B1    # 1.0000000000000004e+222
+    .long   0x332D7292, 0x6E3BAA1E    # 1.0000000000000004e+223
+    .long   0xDFFC6798, 0x6E714A52    # 9.999999999999998e+223
+    .long   0x97FB8182, 0x6EA59CE7    # 1.0000000000000004e+225
+    .long   0x7DFA61E2, 0x6EDB0421    # 1.0000000000000004e+226
+    .long   0xEEBC7D2E, 0x6F10E294    # 1.0000000000000005e+227
+    .long   0x2A6B9C7A, 0x6F451B3A    # 1.0000000000000006e+228
+    .long   0xB5068394, 0x6F7A6208    # 1e+229
+    .long   0x7124123C, 0x6FB07D45    # 9.999999999999999e+229
+    .long   0xCD6D16CE, 0x6FE49C96    # 1.0000000000000004e+231
+    .long   0x80C85C82, 0x7019C3BC    # 1.0000000000000005e+232
+    .long   0xD07D39D2, 0x70501A55    # 1.0000000000000006e+233
+    .long   0x449C8846, 0x708420EB    # 1.0000000000000005e+234
+    .long   0x15C3AA56, 0x70B92926    # 1.0000000000000003e+235
+    .long   0x9B3494E8, 0x70EF736F    # 9.999999999999999e+235
+    .long   0xC100DD10, 0x7123A825    # 9.999999999999998e+236
+    .long   0x31411454, 0x7158922F    # 9.999999999999998e+237
+    .long   0xFD91596E, 0x718EB6BA    # 1.0000000000000003e+239
+    .long   0xDE7AD7E6, 0x71C33234    # 1.0000000000000006e+240
+    .long   0x16198DDE, 0x71F7FEC2    # 1.0000000000000003e+241
+    .long   0x9B9FF156, 0x722DFE72    # 1.0000000000000004e+242
+    .long   0xA143F6D6, 0x7262BF07    # 1.0000000000000005e+243
+    .long   0x8994F488, 0x72976EC9    # 9.999999999999999e+243
+    .long   0xEBFA31AE, 0x72CD4A7B    # 1.0000000000000004e+245
+    .long   0x737C5F0E, 0x73024E8D    # 1.0000000000000007e+246
+    .long   0xD05B76CC, 0x7336E230    # 9.999999999999998e+246
+    .long   0x04725480, 0x736C9ABD    # 9.999999999999999e+247
+    .long   0x22C774D0, 0x73A1E0B6    # 1e+249
+    .long   0xAB795204, 0x73D658E3    # 1e+250
+    .long   0x9657A684, 0x740BEF1C    # 9.999999999999998e+250
+    .long   0xDDF6C816, 0x74417571    # 1.0000000000000005e+252
+    .long   0x55747A18, 0x7475D2CE    # 1e+253
+    .long   0xEAD198A2, 0x74AB4781    # 1.0000000000000005e+254
+    .long   0x32C2FF66, 0x74E10CB1    # 1.0000000000000006e+255
+    .long   0x7F73BF3E, 0x75154FDD    # 1.0000000000000004e+256
+    .long   0xDF50AF0E, 0x754AA3D4    # 1.0000000000000004e+257
+    .long   0x0B926D6A, 0x7580A665    # 1.0000000000000007e+258
+    .long   0x4E7708C0, 0x75B4CFFE    # 1e+259
+    .long   0xE214CAF0, 0x75EA03FD    # 9.999999999999999e+259
+    .long   0xAD4CFEDA, 0x7620427E    # 1.0000000000000008e+261
+    .long   0x58A03E8E, 0x7654531E    # 1.0000000000000004e+262
+    .long   0xEEC84E32, 0x768967E5    # 1.0000000000000004e+263
+    .long   0x6A7A61BE, 0x76BFC1DF    # 1.0000000000000004e+264
+    .long   0xA28C7D14, 0x76F3D92B    # 9.999999999999999e+264
+    .long   0x8B2F9C58, 0x7728CF76    # 9.999999999999997e+265
+    .long   0x2DFB8370, 0x775F0354    # 1e+267
+    .long   0x9CBD322A, 0x77936214    # 1.0000000000000007e+268
+    .long   0xC3EC7EB2, 0x77C83A99    # 1.0000000000000003e+269
+    .long   0x34E79E5E, 0x77FE4940    # 1.0000000000000003e+270
+    .long   0x2110C2F8, 0x7832EDC8    # 9.999999999999998e+270
+    .long   0x2954F3BA, 0x7867A93A    # 1.0000000000000004e+272
+    .long   0xB3AA30A4, 0x789D9388    # 9.999999999999998e+272
+    .long   0x704A5E6A, 0x78D27C35    # 1.0000000000000005e+274
+    .long   0xCC5CF600, 0x79071B42    # 9.999999999999998e+274
+    .long   0x7F743380, 0x793CE213    # 9.999999999999998e+275
+    .long   0x2FA8A030, 0x79720D4C    # 9.999999999999998e+276
+    .long   0x3B92C83C, 0x79A6909F    # 9.999999999999998e+277
+    .long   0x0A777A4C, 0x79DC34C7    # 9.999999999999999e+278
+    .long   0x668AAC72, 0x7A11A0FC    # 1.0000000000000004e+280
+    .long   0x802D578E, 0x7A46093B    # 1.0000000000000004e+281
+    .long   0x6038AD72, 0x7A7B8B8A    # 1.0000000000000004e+282
+    .long   0x7C236C64, 0x7AB13736    # 9.999999999999997e+282
+    .long   0x1B2C4782, 0x7AE58504    # 1.0000000000000006e+284
+    .long   0x21F75962, 0x7B1AE645    # 1.0000000000000005e+285
+    .long   0x353A97DE, 0x7B50CFEB    # 1.0000000000000007e+286
+    .long   0x02893DD0, 0x7B8503E6    # 9.999999999999997e+286
+    .long   0x832B8D44, 0x7BBA44DF    # 9.999999999999997e+287
+    .long   0xB1FB384E, 0x7BF06B0B    # 1.0000000000000005e+289
+    .long   0x9E7A0662, 0x7C2485CE    # 1.0000000000000006e+290
+    .long   0x461887FA, 0x7C59A742    # 1.0000000000000005e+291
+    .long   0x6BCF54F8, 0x7C900889    # 9.999999999999996e+291
+    .long   0xC6C32A38, 0x7CC40AAB    # 1e+293
+    .long   0xB873F4CA, 0x7CF90D56    # 1.0000000000000005e+294
+    .long   0x6690F1F8, 0x7D2F50AC    # 1e+295
+    .long   0xC01A973E, 0x7D63926B    # 1.0000000000000005e+296
+    .long   0xB0213D08, 0x7D987706    # 9.999999999999997e+296
+    .long   0x5C298C4C, 0x7DCE94C8    # 1e+298
+    .long   0x3999F7B2, 0x7E031CFD    # 1.0000000000000004e+299
+    .long   0x8800759E, 0x7E37E43C    # 1.0000000000000003e+300
+    .long   0xAA009306, 0x7E6DDD4B    # 1.0000000000000004e+301
+    .long   0x4A405BE0, 0x7EA2AA4F    # 9.999999999999997e+301
+    .long   0x1CD072D8, 0x7ED754E3    # 9.999999999999997e+302
+    .long   0xE4048F90, 0x7F0D2A1B    # 1e+304
+    .long   0x6E82D9BE, 0x7F423A51    # 1.0000000000000007e+305
+    .long   0xCA239028, 0x7F76C8E5    # 9.999999999999999e+305
+    .long   0x3CAC7436, 0x7FAC7B1F    # 1.0000000000000004e+307
+    .long   0x85EBC8A2, 0x7FE1CCF3    # 1.0000000000000004e+308
 PanelDriverOps:                  # {init, three empty methods}; BootMain's PanelStart calls the first
     .long   PanelInit, PanelDriverOp1, PanelDriverOp2, PanelDriverOp3
     .long   DiskInit, DiskHookNop1, DiskHookNop2, DiskHookNop3
@@ -24090,9 +24347,9 @@ Str_12345678:
     .asciz  "12345678"
     .byte   0x00, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x20, 0x00, 0x02, 0x00, 0x00, 0x00, 0x0C, 0x00, 0xF6
     .byte   0x0F, 0xD9, 0xFA, 0x60, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-rodata_5000DF94:
+FatFileInitImage:                # a closed file control block
     .space  20
-rodata_5000DFA8:
+SdCrc7Table:                     # CRC7 (polynomial 0x09) of each byte, shifted left one
     .byte   0x00, 0x12
     .ascii  "$6HZl~"
     .byte   0x90, 0x82, 0xB4, 0xA6, 0xD8, 0xCA, 0xFC, 0xEE, 0x32, 0x20, 0x16, 0x04, 0x7A, 0x68, 0x5E, 0x4C
@@ -24145,323 +24402,237 @@ Str_Kn7ka1:
     .asciz  "KN7KA1"
 Str_Kn7ka2:
     .asciz  "KN7KA2"
-    .byte   0x63
-rodata_5000E104:
-    .byte   0x08, 0x00, 0x10, 0x00, 0x04, 0x00, 0x01, 0x00
-    .long   rodata_5000E11C
-    .byte   0x08, 0x00, 0x10, 0x00, 0x04, 0x00, 0x01, 0x00
-    .long   rodata_5000E11C
-rodata_5000E11C:
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-    .byte   0x00, 0x00, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x00, 0x18, 0x18, 0x00, 0x00, 0x00, 0x00
-    .byte   0x00, 0x00, 0x6C, 0x6C, 0x24, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-    .byte   0x00, 0x00, 0x36, 0x36, 0x7F, 0x7F, 0x36, 0x36, 0x7F, 0x7F, 0x36, 0x36, 0x00, 0x00, 0x00, 0x00
-    .byte   0x00, 0x08, 0x3E, 0x7F, 0x6B, 0x68, 0x7E, 0x3F, 0x0B, 0x6B, 0x7F, 0x3E, 0x08, 0x00, 0x00, 0x00
-    .byte   0x00, 0x00, 0x00, 0x71, 0x53, 0x76, 0x0C, 0x18, 0x37, 0x65, 0x47, 0x00, 0x00, 0x00, 0x00, 0x00
-    .byte   0x00, 0x00, 0x1C, 0x36, 0x36, 0x3C, 0x18
-    .asciz  "=ofo;"
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x30, 0x30, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x0C, 0x18, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x18, 0x0C, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x18, 0x0C, 0x06, 0x06, 0x06, 0x06, 0x06, 0x06, 0x0C, 0x18, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x2A, 0x1C, 0x08, 0x1C, 0x2A, 0x08, 0x00, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x18, 0x18, 0x7E, 0x7E, 0x18, 0x18, 0x00, 0x00, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x30, 0x30, 0x10
-    .byte   0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7F, 0x7F, 0x00, 0x00, 0x00, 0x00, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x30, 0x30, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x03, 0x06, 0x0C, 0x18, 0x30, 0x60, 0x40, 0x00, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x3E, 0x7F
-    .ascii  "cccccc"
-    .byte   0x7F, 0x3E, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x18, 0x38, 0x38, 0x18, 0x18, 0x18, 0x18, 0x18
-    .byte   0x3C, 0x3C, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3E, 0x7F, 0x63, 0x03, 0x07, 0x0E, 0x1C, 0x38
-    .byte   0x7F, 0x7F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3E, 0x7F, 0x63, 0x03, 0x0E, 0x0E, 0x03, 0x63
-    .byte   0x7F, 0x3E, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x0E, 0x1E, 0x1E, 0x36, 0x36, 0x7F, 0x7F
-    .byte   0x06, 0x06, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7F, 0x7F, 0x60, 0x60, 0x7E, 0x7F, 0x03, 0x63
-    .byte   0x7F, 0x3E, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3E, 0x7F, 0x63, 0x60, 0x7E, 0x7F, 0x63, 0x63
-    .byte   0x7F, 0x3E, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7F, 0x7F, 0x03, 0x07, 0x0E, 0x0C, 0x1C, 0x18
-    .byte   0x18, 0x18, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3E, 0x7F
-    .ascii  "cc>>cc"
-    .byte   0x7F, 0x3E, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3E, 0x7F, 0x63, 0x63, 0x7F, 0x3F, 0x03, 0x63
-    .byte   0x7F, 0x3E, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x18, 0x18, 0x00, 0x00, 0x18, 0x18
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x18, 0x18, 0x00, 0x00, 0x18, 0x18
-    .byte   0x08, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x0E, 0x1C, 0x38, 0x70, 0x70, 0x38, 0x1C
-    .byte   0x0E, 0x06, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7F, 0x7F, 0x00, 0x00, 0x7F, 0x7F
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x60, 0x70, 0x38, 0x1C, 0x0E, 0x0E, 0x1C, 0x38
-    .byte   0x70, 0x60, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3E, 0x7F, 0x63, 0x03, 0x0F, 0x1E, 0x18, 0x00
-    .byte   0x18, 0x18, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-    .asciz  ">c]eeee^`>"
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x1C, 0x3E, 0x77, 0x63, 0x63, 0x7F, 0x7F, 0x63, 0x63, 0x63, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x7E, 0x7F
-    .ascii  "cc~~cc"
-    .byte   0x7F, 0x7E, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3E, 0x7F, 0x63, 0x60, 0x60, 0x60, 0x60, 0x63
-    .byte   0x7F, 0x3E, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-    .asciz  "|~gccccg~|"
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x7F, 0x7F, 0x60, 0x60, 0x7E, 0x7E, 0x60, 0x60, 0x7F, 0x7F, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x7F, 0x7F
-    .asciz  "``~~````"
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x3E, 0x7F
-    .ascii  "c`oocc"
-    .byte   0x7F, 0x3F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x63, 0x63, 0x63, 0x63, 0x7F, 0x7F
-    .asciz  "cccc"
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x1E, 0x1E, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x1E, 0x1E, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x0F, 0x0F, 0x06, 0x06, 0x06, 0x06
-    .asciz  "ff~<"
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00
-    .asciz  "cgn|xx|ngc"
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x60, 0x60, 0x60, 0x60, 0x60, 0x60, 0x60, 0x60, 0x7F, 0x7F, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x41, 0x63, 0x77, 0x7F, 0x7F
-    .asciz  "kcccc"
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x43, 0x63, 0x73, 0x7B, 0x7F, 0x7F
-    .asciz  "ogca"
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x3E, 0x7F
-    .ascii  "cccccc"
-    .byte   0x7F, 0x3E, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7E, 0x7F, 0x63, 0x63, 0x7F
-    .asciz  "~````"
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x3E, 0x7F
-    .asciz  "ccccog~;"
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x7E, 0x7F, 0x63, 0x63, 0x7F
-    .asciz  "~|ngc"
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x3E, 0x7F, 0x63, 0x60, 0x7E, 0x3F, 0x03, 0x63, 0x7F, 0x3E, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x7E, 0x7E, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00
-    .ascii  "cccccccc"
-    .byte   0x7F, 0x3E, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-    .ascii  "ccccccw>"
-    .byte   0x1C, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x63, 0x63, 0x63, 0x6B, 0x6B, 0x7F, 0x7F, 0x77
-    .byte   0x77, 0x22, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x63, 0x63, 0x77, 0x3E, 0x1C, 0x1C
-    .asciz  ">wcc"
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00
-    .ascii  "ffff~<"
-    .byte   0x18, 0x18, 0x18, 0x18, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7F, 0x7F, 0x03, 0x07, 0x0E, 0x1C
-    .byte   0x38, 0x70, 0x7F, 0x7F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-    .asciz  "<00000000<"
-    .byte   0x00, 0x00, 0x00
-    .long   ResetVector
-    .byte   0x60, 0x30, 0x18, 0x0C, 0x06, 0x03, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1E, 0x06
-    .byte   0x06, 0x06, 0x06, 0x06, 0x06, 0x06, 0x06, 0x1E, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10, 0x38
-    .byte   0x6C, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7F, 0x7F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x60, 0x60
-    .byte   0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-    .byte   0x3E, 0x3F, 0x03, 0x3F, 0x7F, 0x63, 0x7F, 0x3F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x60, 0x60
-    .byte   0x60, 0x7E, 0x7F, 0x63, 0x63, 0x63, 0x7F, 0x7E, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-    .byte   0x3E, 0x7F, 0x63, 0x60, 0x60, 0x63, 0x7F, 0x3E, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03, 0x03
-    .byte   0x03, 0x3F, 0x7F, 0x63, 0x63, 0x63, 0x7F, 0x3F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-    .byte   0x3E, 0x7F, 0x63, 0x7F, 0x7F, 0x60, 0x7E, 0x3E, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0E, 0x1E
-    .byte   0x18, 0x7E, 0x7E, 0x18, 0x18, 0x18, 0x18, 0x18, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-    .byte   0x3F, 0x7F, 0x63, 0x63, 0x63, 0x63, 0x7F, 0x3F, 0x03, 0x3F, 0x3E, 0x00, 0x00, 0x00, 0x60, 0x60
-    .byte   0x60, 0x7E, 0x7F
-    .asciz  "ccccc"
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x0C, 0x0C, 0x00, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x06, 0x00, 0x0E, 0x0E, 0x06, 0x06, 0x06, 0x06, 0x06, 0x66
-    .byte   0x7E, 0x3C, 0x00, 0x00, 0x00
-    .asciz  "``cgn||ngc"
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x0E, 0x06, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7E, 0x7F
-    .asciz  "kkkkkk"
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7E, 0x7F
-    .asciz  "cccccc"
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3E, 0x7F, 0x63, 0x63, 0x63, 0x63, 0x7F, 0x3E, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7E, 0x7F, 0x63, 0x63, 0x63, 0x63, 0x7F
-    .asciz  "~```"
-    .byte   0x00, 0x00, 0x00, 0x00, 0x3F, 0x7F, 0x63, 0x63, 0x63, 0x63, 0x7F, 0x3F, 0x03, 0x03, 0x03, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x6E, 0x7F
-    .asciz  "s`````"
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3F, 0x7F, 0x60, 0x7E, 0x3F, 0x03, 0x7F, 0x7E, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x18, 0x18, 0x7E, 0x7E, 0x18, 0x18, 0x18, 0x18, 0x1C, 0x0C, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-    .ascii  "cccccc"
-    .byte   0x7F, 0x3F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-    .ascii  "ccccw>"
-    .byte   0x1C, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x63, 0x63, 0x6B, 0x6B, 0x7F, 0x77
-    .byte   0x77, 0x22, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x63, 0x77, 0x3E, 0x1C, 0x1C, 0x3E
-    .byte   0x77, 0x63, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-    .ascii  "ccccccw>"
-    .byte   0x1C, 0x38, 0x70, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7F, 0x7F, 0x06, 0x0C, 0x18, 0x30, 0x7F, 0x7F
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x10, 0x10, 0x10, 0x10, 0x20, 0x10, 0x10, 0x10, 0x10
-    .byte   0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10, 0x08, 0x08, 0x08, 0x08, 0x04, 0x08, 0x08, 0x08, 0x08
-    .byte   0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3B, 0x6E, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x7F
-    .ascii  "AAAAAAAAAA"
-    .byte   0x7F, 0x00, 0x00, 0x00, 0x00, 0x7F
-    .ascii  "AAAAAAAAAA"
-    .byte   0x7F, 0x00, 0x00, 0x00, 0x00, 0x7F
-    .ascii  "AAAAAAAAAA"
-    .byte   0x7F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x30
-    .byte   0x30, 0x10, 0x20, 0x00, 0x00, 0x00, 0x0E, 0x1E, 0x18, 0x18, 0x7E, 0x7E, 0x18
-    .asciz  "0000p``"
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x36, 0x36, 0x12, 0x24, 0x00, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x33, 0x33, 0x00, 0x00, 0x00, 0x00
-    .byte   0x00, 0x00, 0x18, 0x18, 0x7E, 0x7E, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x00, 0x00, 0x00, 0x00
-    .byte   0x00, 0x00, 0x18, 0x18, 0x7E, 0x7E, 0x18, 0x18, 0x7E, 0x7E, 0x18, 0x18, 0x00, 0x00, 0x00, 0x00
-    .byte   0x00, 0x00, 0x18, 0x24, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-    .byte   0x00, 0x00, 0x20, 0x50, 0x52, 0x24, 0x08, 0x10, 0x2A, 0x55, 0x15, 0x0A, 0x00, 0x00, 0x00, 0x00
-    .byte   0x36, 0x1C, 0x3E, 0x7F, 0x63, 0x60, 0x7E, 0x3F, 0x03, 0x63, 0x7F, 0x3E, 0x00, 0x00, 0x00, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x10, 0x10, 0x20, 0x10, 0x10, 0x08, 0x00, 0x00, 0x00
-    .byte   0x00, 0x00
-    .asciz  "7olloollo7"
-    .byte   0x00, 0x00, 0x00, 0x7F
-    .ascii  "AAAAAAAAAA"
-    .byte   0x7F, 0x00, 0x00, 0x00, 0x00, 0x7F
-    .ascii  "AAAAAAAAAA"
-    .byte   0x7F, 0x00, 0x00, 0x00, 0x00, 0x7F
-    .ascii  "AAAAAAAAAA"
-    .byte   0x7F, 0x00, 0x00, 0x00, 0x00, 0x7F
-    .ascii  "AAAAAAAAAA"
-    .byte   0x7F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10, 0x20, 0x30, 0x30, 0x00, 0x00, 0x00, 0x00, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x30, 0x30, 0x10, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x12, 0x24, 0x36, 0x36, 0x00, 0x00, 0x00, 0x00, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x36, 0x36, 0x12, 0x24, 0x00, 0x00, 0x00, 0x00, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x18, 0x3C, 0x3C, 0x18, 0x00, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7F
-    .byte   0x7F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7F
-    .byte   0x7F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x34, 0x5C, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF1, 0x5B, 0x55, 0x51, 0x00, 0x00, 0x00, 0x00, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x36, 0x1C, 0x00, 0x3F, 0x7F, 0x60, 0x7E, 0x3F, 0x03, 0x7F
-    .byte   0x7E, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10, 0x08, 0x08, 0x04, 0x08
-    .byte   0x08, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-    .asciz  "6mmollo6"
-    .byte   0x00, 0x00, 0x00, 0x7F
-    .ascii  "AAAAAAAAAA"
-    .byte   0x7F, 0x00, 0x00, 0x00, 0x00, 0x7F
-    .ascii  "AAAAAAAAAA"
-    .byte   0x7F, 0x00, 0x00, 0x00, 0x00, 0x66, 0x66, 0x00, 0x66, 0x66, 0x66, 0x7E, 0x3C, 0x18, 0x18, 0x18
-    .byte   0x18, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0C, 0x0C, 0x00, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C
-    .byte   0x0C, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x03, 0x02, 0x3E, 0x7F, 0x67, 0x68, 0x68, 0x73, 0x7F
-    .asciz  "> `@"
-    .byte   0x00, 0x00, 0x1C, 0x3C, 0x30, 0x30, 0x7C, 0x7C, 0x30, 0x33, 0x7F, 0x7E, 0x00, 0x00, 0x00, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x14, 0x3E, 0x63, 0x22, 0x63, 0x3E, 0x14, 0x00, 0x00, 0x00, 0x00
-    .byte   0x00, 0x00, 0x66, 0x66, 0x24, 0x3C, 0x18, 0x7E, 0x18, 0x7E, 0x18, 0x18, 0x18, 0x00, 0x00, 0x00
-    .byte   0x00, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x00, 0x00, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x00
-    .byte   0x00, 0x00, 0x1C, 0x24, 0x20, 0x10, 0x28, 0x44, 0x42, 0x22, 0x14, 0x08, 0x04, 0x24, 0x38, 0x00
-    .byte   0x00, 0x00, 0x6C, 0x6C, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-    .byte   0x00, 0x00
-    .asciz  ">c]UQQU]c>"
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x70, 0x10, 0x70, 0x50, 0x70, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x12, 0x24, 0x24, 0x48, 0x24, 0x24, 0x12
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7E, 0x7E, 0x06, 0x06, 0x06, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3C, 0x3C, 0x00, 0x00, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00
-    .asciz  ">c]UU]YUc>"
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x7F, 0x7F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00
-    .asciz  "0HH0"
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x18, 0x18, 0x7E, 0x7E
-    .byte   0x18, 0x18, 0x00, 0x7E, 0x7E, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x30, 0x48, 0x08, 0x10, 0x20
-    .byte   0x78, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x30, 0x48, 0x10, 0x08, 0x48
-    .byte   0x30, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x18, 0x30, 0x00, 0x00, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-    .ascii  "ffffffn~"
-    .byte   0x7F
-    .asciz  "w```"
-    .byte   0x00, 0x00, 0x7F, 0xFF, 0xF6
-    .asciz  "v666666666"
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x18, 0x18, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1C, 0x08, 0x30, 0x00, 0x00
-    .byte   0x00
-    .asciz  " `   p"
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-    .asciz  "0HHHH0"
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x48, 0x24
-    .byte   0x24, 0x12, 0x24, 0x24, 0x48, 0x00, 0x00, 0x00, 0x00, 0x00, 0x20, 0x60, 0x22, 0x24, 0x29, 0x13
-    .byte   0x25, 0x45, 0x07, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x20, 0x60, 0x22, 0x24, 0x28, 0x12
-    .byte   0x25, 0x41, 0x02, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x60, 0x10, 0x32, 0x14, 0x69, 0x13
-    .byte   0x25, 0x45, 0x07, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0C, 0x0C, 0x00, 0x0C
-    .byte   0x0C, 0x3C, 0x78, 0x60, 0x63, 0x7F, 0x3E, 0x00, 0x18, 0x0C, 0x1C, 0x3E, 0x77, 0x63, 0x63, 0x7F
-    .byte   0x7F, 0x63, 0x63, 0x63, 0x00, 0x00, 0x00, 0x00, 0x0C, 0x18, 0x1C, 0x3E, 0x77, 0x63, 0x63, 0x7F
-    .byte   0x7F, 0x63, 0x63, 0x63, 0x00, 0x00, 0x00, 0x00, 0x1C, 0x22, 0x1C, 0x3E, 0x77, 0x63, 0x63, 0x7F
-    .byte   0x7F, 0x63, 0x63, 0x63, 0x00, 0x00, 0x00, 0x00, 0x3B, 0x6E, 0x1C, 0x3E, 0x77, 0x63, 0x63, 0x7F
-    .byte   0x7F, 0x63, 0x63, 0x63, 0x00, 0x00, 0x00, 0x00, 0x36, 0x36, 0x1C, 0x3E, 0x77, 0x63, 0x63, 0x7F
-    .byte   0x7F, 0x63, 0x63, 0x63, 0x00, 0x00, 0x00, 0x00, 0x1C, 0x14, 0x1C, 0x3E, 0x77, 0x63, 0x63, 0x7F
-    .byte   0x7F, 0x63, 0x63, 0x63, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x37, 0x7F, 0x6C, 0x6C, 0x7F, 0x7F
-    .asciz  "llog"
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x3E, 0x7F, 0x63, 0x60, 0x60, 0x60, 0x60, 0x63, 0x7F, 0x3E, 0x0C
-    .byte   0x06, 0x1E, 0x00, 0x18, 0x0C, 0x7F, 0x7F, 0x60, 0x60, 0x7E, 0x7E, 0x60, 0x60, 0x7F, 0x7F, 0x00
-    .byte   0x00, 0x00, 0x00, 0x0C, 0x18, 0x7F, 0x7F, 0x60, 0x60, 0x7E, 0x7E, 0x60, 0x60, 0x7F, 0x7F, 0x00
-    .byte   0x00, 0x00, 0x00, 0x1C, 0x22, 0x7F, 0x7F, 0x60, 0x60, 0x7E, 0x7E, 0x60, 0x60, 0x7F, 0x7F, 0x00
-    .byte   0x00, 0x00, 0x00, 0x36, 0x36, 0x7F, 0x7F, 0x60, 0x60, 0x7E, 0x7E, 0x60, 0x60, 0x7F, 0x7F, 0x00
-    .byte   0x00, 0x00, 0x00, 0x18, 0x0C, 0x1E, 0x1E, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x1E, 0x1E, 0x00
-    .byte   0x00, 0x00, 0x00, 0x06, 0x0C, 0x1E, 0x1E, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x1E, 0x1E, 0x00
-    .byte   0x00, 0x00, 0x00, 0x0C, 0x12, 0x1E, 0x1E, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x1E, 0x1E, 0x00
-    .byte   0x00, 0x00, 0x00, 0x33, 0x33, 0x1E, 0x1E, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x1E, 0x1E, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x7C, 0x7E, 0x67, 0x63, 0xFB, 0xFB
-    .asciz  "cg~|"
-    .byte   0x00, 0x00, 0x00
-    .ascii  ";nCcs{"
-    .byte   0x7F, 0x7F
-    .asciz  "ogca"
-    .byte   0x00, 0x00, 0x00, 0x18, 0x0C, 0x3E, 0x7F
-    .ascii  "cccccc"
-    .byte   0x7F, 0x3E, 0x00, 0x00, 0x00, 0x00, 0x0C, 0x18, 0x3E, 0x7F
-    .ascii  "cccccc"
-    .byte   0x7F, 0x3E, 0x00, 0x00, 0x00, 0x00, 0x1C, 0x22, 0x3E, 0x7F
-    .ascii  "cccccc"
-    .byte   0x7F, 0x3E, 0x00, 0x00, 0x00, 0x00, 0x3B, 0x6E, 0x3E, 0x7F
-    .ascii  "cccccc"
-    .byte   0x7F, 0x3E, 0x00, 0x00, 0x00, 0x00, 0x36, 0x36, 0x3E, 0x7F
-    .ascii  "cccccc"
-    .byte   0x7F, 0x3E, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x41, 0x22, 0x14, 0x08, 0x14, 0x22
-    .byte   0x41, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x03, 0x3E, 0x7F
-    .ascii  "gokk{s"
-    .byte   0x7F
-    .asciz  "> `@"
-    .byte   0x18, 0x0C
-    .ascii  "cccccccc"
-    .byte   0x7F, 0x3E, 0x00, 0x00, 0x00, 0x00, 0x0C, 0x18
-    .ascii  "cccccccc"
-    .byte   0x7F, 0x3E, 0x00, 0x00, 0x00, 0x00, 0x1C
-    .ascii  "\"cccccccc"
-    .byte   0x7F, 0x3E, 0x00, 0x00, 0x00, 0x00
-    .ascii  "66cccccccc"
-    .byte   0x7F, 0x3E, 0x00, 0x00, 0x00, 0x00, 0x0C, 0x18
-    .ascii  "ffff~<"
-    .byte   0x18, 0x18, 0x18, 0x18, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x60, 0x7E, 0x7F, 0x63, 0x63, 0x7F
-    .asciz  "~```"
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x7E, 0x7F
-    .asciz  "cnocccon"
-    .byte   0x00, 0x00, 0x00, 0x00, 0x18, 0x0C, 0x00, 0x3E, 0x3F, 0x03, 0x3F, 0x7F, 0x63, 0x7F, 0x3F, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x0C, 0x18, 0x00, 0x3E, 0x3F, 0x03, 0x3F, 0x7F, 0x63, 0x7F, 0x3F, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x1C, 0x22, 0x00, 0x3E, 0x3F, 0x03, 0x3F, 0x7F, 0x63, 0x7F, 0x3F, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x3B, 0x6E, 0x00, 0x3E, 0x3F, 0x03, 0x3F, 0x7F, 0x63, 0x7F, 0x3F, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x36, 0x36, 0x00, 0x3E, 0x3F, 0x03, 0x3F, 0x7F, 0x63, 0x7F, 0x3F, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x1C, 0x14, 0x1C, 0x3E, 0x3F, 0x03, 0x3F, 0x7F, 0x63, 0x7F, 0x3F, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-    .asciz  ">M\r?llo6"
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3E, 0x7F, 0x63, 0x60, 0x60, 0x63, 0x7F, 0x3E, 0x0C
-    .byte   0x06, 0x1E, 0x00, 0x00, 0x18, 0x0C, 0x00, 0x3E, 0x7F, 0x63, 0x7F, 0x7F, 0x60, 0x7E, 0x3E, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x0C, 0x18, 0x00, 0x3E, 0x7F, 0x63, 0x7F, 0x7F, 0x60, 0x7E, 0x3E, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x1C, 0x22, 0x00, 0x3E, 0x7F, 0x63, 0x7F, 0x7F, 0x60, 0x7E, 0x3E, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x36, 0x36, 0x00, 0x3E, 0x7F, 0x63, 0x7F, 0x7F, 0x60, 0x7E, 0x3E, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x18, 0x0C, 0x00, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x0C, 0x00, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x0C, 0x12, 0x00, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x33, 0x33, 0x00, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x00
-    .byte   0x00, 0x00, 0x00, 0x73, 0x73, 0x1E, 0x7F, 0x73, 0x3F, 0x7F, 0x63, 0x63, 0x63, 0x7F, 0x3F, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x3B, 0x6E, 0x00, 0x7E, 0x7F
-    .asciz  "cccccc"
-    .byte   0x00, 0x00, 0x00, 0x00, 0x18, 0x0C, 0x00, 0x3E, 0x7F, 0x63, 0x63, 0x63, 0x63, 0x7F, 0x3E, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x0C, 0x18, 0x00, 0x3E, 0x7F, 0x63, 0x63, 0x63, 0x63, 0x7F, 0x3E, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x1C, 0x22, 0x00, 0x3E, 0x7F, 0x63, 0x63, 0x63, 0x63, 0x7F, 0x3E, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x3B, 0x6E, 0x00, 0x3E, 0x7F, 0x63, 0x63, 0x63, 0x63, 0x7F, 0x3E, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x36, 0x36, 0x00, 0x3E, 0x7F, 0x63, 0x63, 0x63, 0x63, 0x7F, 0x3E, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x18, 0x18, 0x00, 0x7E, 0x7E, 0x00, 0x18, 0x18, 0x00, 0x00
-    .byte   0x00, 0x00, 0x00, 0x00, 0x01, 0x03, 0x02, 0x3E, 0x7F, 0x67, 0x6B, 0x6B, 0x73, 0x7F
-    .asciz  "> `@"
-    .byte   0x00, 0x18, 0x0C, 0x00
-    .ascii  "cccccc"
-    .byte   0x7F, 0x3F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0C, 0x18, 0x00
-    .ascii  "cccccc"
-    .byte   0x7F, 0x3F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1C, 0x22, 0x00
-    .ascii  "cccccc"
-    .byte   0x7F, 0x3F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x36, 0x36, 0x00
-    .ascii  "cccccc"
-    .byte   0x7F, 0x3F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0C, 0x18, 0x00
-    .ascii  "ccccccw>"
-    .byte   0x1C, 0x38, 0x70, 0x00, 0x00, 0x00, 0x60, 0x60, 0x7E, 0x7F, 0x63, 0x63, 0x63, 0x63, 0x7F
-    .asciz  "~```"
-    .byte   0x00, 0x36, 0x36, 0x00
-    .ascii  "ccccccw>"
-    .byte   0x1C, 0x38, 0x70, 0x00
+    .byte   0x63                  # alignment fill
+FontTable:                       # two 8x16 fonts: {width, height, .., glyph bitmaps}
+    .word   8, 16, 4, 1               # width, height, TODO: two more fields
+    .long   FontGlyphs8x16
+    .word   8, 16, 4, 1               # width, height, TODO: two more fields
+    .long   FontGlyphs8x16
+FontGlyphs8x16:                  # 16 bytes per character from 0x20
+    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00    # ' '
+    .byte   0x00, 0x00, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x00, 0x18, 0x18, 0x00, 0x00, 0x00, 0x00    # '!'
+    .byte   0x00, 0x00, 0x6C, 0x6C, 0x24, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00    # '"'
+    .byte   0x00, 0x00, 0x36, 0x36, 0x7F, 0x7F, 0x36, 0x36, 0x7F, 0x7F, 0x36, 0x36, 0x00, 0x00, 0x00, 0x00    # '#'
+    .byte   0x00, 0x08, 0x3E, 0x7F, 0x6B, 0x68, 0x7E, 0x3F, 0x0B, 0x6B, 0x7F, 0x3E, 0x08, 0x00, 0x00, 0x00    # '$'
+    .byte   0x00, 0x00, 0x00, 0x71, 0x53, 0x76, 0x0C, 0x18, 0x37, 0x65, 0x47, 0x00, 0x00, 0x00, 0x00, 0x00    # '%'
+    .byte   0x00, 0x00, 0x1C, 0x36, 0x36, 0x3C, 0x18, 0x3D, 0x6F, 0x66, 0x6F, 0x3B, 0x00, 0x00, 0x00, 0x00    # '&'
+    .byte   0x00, 0x00, 0x30, 0x30, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00    # "'"
+    .byte   0x00, 0x00, 0x0C, 0x18, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x18, 0x0C, 0x00, 0x00, 0x00, 0x00    # '('
+    .byte   0x00, 0x00, 0x18, 0x0C, 0x06, 0x06, 0x06, 0x06, 0x06, 0x06, 0x0C, 0x18, 0x00, 0x00, 0x00, 0x00    # ')'
+    .byte   0x00, 0x00, 0x00, 0x00, 0x08, 0x2A, 0x1C, 0x08, 0x1C, 0x2A, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00    # '*'
+    .byte   0x00, 0x00, 0x00, 0x00, 0x18, 0x18, 0x7E, 0x7E, 0x18, 0x18, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00    # '+'
+    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x30, 0x30, 0x10, 0x20, 0x00, 0x00    # ','
+    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7F, 0x7F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00    # '-'
+    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x30, 0x30, 0x00, 0x00, 0x00, 0x00    # '.'
+    .byte   0x00, 0x00, 0x00, 0x01, 0x03, 0x06, 0x0C, 0x18, 0x30, 0x60, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00    # '/'
+    .byte   0x00, 0x00, 0x3E, 0x7F, 0x63, 0x63, 0x63, 0x63, 0x63, 0x63, 0x7F, 0x3E, 0x00, 0x00, 0x00, 0x00    # '0'
+    .byte   0x00, 0x00, 0x18, 0x38, 0x38, 0x18, 0x18, 0x18, 0x18, 0x18, 0x3C, 0x3C, 0x00, 0x00, 0x00, 0x00    # '1'
+    .byte   0x00, 0x00, 0x3E, 0x7F, 0x63, 0x03, 0x07, 0x0E, 0x1C, 0x38, 0x7F, 0x7F, 0x00, 0x00, 0x00, 0x00    # '2'
+    .byte   0x00, 0x00, 0x3E, 0x7F, 0x63, 0x03, 0x0E, 0x0E, 0x03, 0x63, 0x7F, 0x3E, 0x00, 0x00, 0x00, 0x00    # '3'
+    .byte   0x00, 0x00, 0x06, 0x0E, 0x1E, 0x1E, 0x36, 0x36, 0x7F, 0x7F, 0x06, 0x06, 0x00, 0x00, 0x00, 0x00    # '4'
+    .byte   0x00, 0x00, 0x7F, 0x7F, 0x60, 0x60, 0x7E, 0x7F, 0x03, 0x63, 0x7F, 0x3E, 0x00, 0x00, 0x00, 0x00    # '5'
+    .byte   0x00, 0x00, 0x3E, 0x7F, 0x63, 0x60, 0x7E, 0x7F, 0x63, 0x63, 0x7F, 0x3E, 0x00, 0x00, 0x00, 0x00    # '6'
+    .byte   0x00, 0x00, 0x7F, 0x7F, 0x03, 0x07, 0x0E, 0x0C, 0x1C, 0x18, 0x18, 0x18, 0x00, 0x00, 0x00, 0x00    # '7'
+    .byte   0x00, 0x00, 0x3E, 0x7F, 0x63, 0x63, 0x3E, 0x3E, 0x63, 0x63, 0x7F, 0x3E, 0x00, 0x00, 0x00, 0x00    # '8'
+    .byte   0x00, 0x00, 0x3E, 0x7F, 0x63, 0x63, 0x7F, 0x3F, 0x03, 0x63, 0x7F, 0x3E, 0x00, 0x00, 0x00, 0x00    # '9'
+    .byte   0x00, 0x00, 0x00, 0x00, 0x18, 0x18, 0x00, 0x00, 0x18, 0x18, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00    # ':'
+    .byte   0x00, 0x00, 0x00, 0x00, 0x18, 0x18, 0x00, 0x00, 0x18, 0x18, 0x08, 0x10, 0x00, 0x00, 0x00, 0x00    # ';'
+    .byte   0x00, 0x00, 0x06, 0x0E, 0x1C, 0x38, 0x70, 0x70, 0x38, 0x1C, 0x0E, 0x06, 0x00, 0x00, 0x00, 0x00    # '<'
+    .byte   0x00, 0x00, 0x00, 0x00, 0x7F, 0x7F, 0x00, 0x00, 0x7F, 0x7F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00    # '='
+    .byte   0x00, 0x00, 0x60, 0x70, 0x38, 0x1C, 0x0E, 0x0E, 0x1C, 0x38, 0x70, 0x60, 0x00, 0x00, 0x00, 0x00    # '>'
+    .byte   0x00, 0x00, 0x3E, 0x7F, 0x63, 0x03, 0x0F, 0x1E, 0x18, 0x00, 0x18, 0x18, 0x00, 0x00, 0x00, 0x00    # '?'
+    .byte   0x00, 0x00, 0x3E, 0x63, 0x5D, 0x65, 0x65, 0x65, 0x65, 0x5E, 0x60, 0x3E, 0x00, 0x00, 0x00, 0x00    # '@'
+    .byte   0x00, 0x00, 0x1C, 0x3E, 0x77, 0x63, 0x63, 0x7F, 0x7F, 0x63, 0x63, 0x63, 0x00, 0x00, 0x00, 0x00    # 'A'
+    .byte   0x00, 0x00, 0x7E, 0x7F, 0x63, 0x63, 0x7E, 0x7E, 0x63, 0x63, 0x7F, 0x7E, 0x00, 0x00, 0x00, 0x00    # 'B'
+    .byte   0x00, 0x00, 0x3E, 0x7F, 0x63, 0x60, 0x60, 0x60, 0x60, 0x63, 0x7F, 0x3E, 0x00, 0x00, 0x00, 0x00    # 'C'
+    .byte   0x00, 0x00, 0x7C, 0x7E, 0x67, 0x63, 0x63, 0x63, 0x63, 0x67, 0x7E, 0x7C, 0x00, 0x00, 0x00, 0x00    # 'D'
+    .byte   0x00, 0x00, 0x7F, 0x7F, 0x60, 0x60, 0x7E, 0x7E, 0x60, 0x60, 0x7F, 0x7F, 0x00, 0x00, 0x00, 0x00    # 'E'
+    .byte   0x00, 0x00, 0x7F, 0x7F, 0x60, 0x60, 0x7E, 0x7E, 0x60, 0x60, 0x60, 0x60, 0x00, 0x00, 0x00, 0x00    # 'F'
+    .byte   0x00, 0x00, 0x3E, 0x7F, 0x63, 0x60, 0x6F, 0x6F, 0x63, 0x63, 0x7F, 0x3F, 0x00, 0x00, 0x00, 0x00    # 'G'
+    .byte   0x00, 0x00, 0x63, 0x63, 0x63, 0x63, 0x7F, 0x7F, 0x63, 0x63, 0x63, 0x63, 0x00, 0x00, 0x00, 0x00    # 'H'
+    .byte   0x00, 0x00, 0x1E, 0x1E, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x1E, 0x1E, 0x00, 0x00, 0x00, 0x00    # 'I'
+    .byte   0x00, 0x00, 0x0F, 0x0F, 0x06, 0x06, 0x06, 0x06, 0x66, 0x66, 0x7E, 0x3C, 0x00, 0x00, 0x00, 0x00    # 'J'
+    .byte   0x00, 0x00, 0x63, 0x67, 0x6E, 0x7C, 0x78, 0x78, 0x7C, 0x6E, 0x67, 0x63, 0x00, 0x00, 0x00, 0x00    # 'K'
+    .byte   0x00, 0x00, 0x60, 0x60, 0x60, 0x60, 0x60, 0x60, 0x60, 0x60, 0x7F, 0x7F, 0x00, 0x00, 0x00, 0x00    # 'L'
+    .byte   0x00, 0x00, 0x41, 0x63, 0x77, 0x7F, 0x7F, 0x6B, 0x63, 0x63, 0x63, 0x63, 0x00, 0x00, 0x00, 0x00    # 'M'
+    .byte   0x00, 0x00, 0x43, 0x63, 0x73, 0x7B, 0x7F, 0x7F, 0x6F, 0x67, 0x63, 0x61, 0x00, 0x00, 0x00, 0x00    # 'N'
+    .byte   0x00, 0x00, 0x3E, 0x7F, 0x63, 0x63, 0x63, 0x63, 0x63, 0x63, 0x7F, 0x3E, 0x00, 0x00, 0x00, 0x00    # 'O'
+    .byte   0x00, 0x00, 0x7E, 0x7F, 0x63, 0x63, 0x7F, 0x7E, 0x60, 0x60, 0x60, 0x60, 0x00, 0x00, 0x00, 0x00    # 'P'
+    .byte   0x00, 0x00, 0x3E, 0x7F, 0x63, 0x63, 0x63, 0x63, 0x6F, 0x67, 0x7E, 0x3B, 0x00, 0x00, 0x00, 0x00    # 'Q'
+    .byte   0x00, 0x00, 0x7E, 0x7F, 0x63, 0x63, 0x7F, 0x7E, 0x7C, 0x6E, 0x67, 0x63, 0x00, 0x00, 0x00, 0x00    # 'R'
+    .byte   0x00, 0x00, 0x3E, 0x7F, 0x63, 0x60, 0x7E, 0x3F, 0x03, 0x63, 0x7F, 0x3E, 0x00, 0x00, 0x00, 0x00    # 'S'
+    .byte   0x00, 0x00, 0x7E, 0x7E, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x00, 0x00, 0x00, 0x00    # 'T'
+    .byte   0x00, 0x00, 0x63, 0x63, 0x63, 0x63, 0x63, 0x63, 0x63, 0x63, 0x7F, 0x3E, 0x00, 0x00, 0x00, 0x00    # 'U'
+    .byte   0x00, 0x00, 0x63, 0x63, 0x63, 0x63, 0x63, 0x63, 0x77, 0x3E, 0x1C, 0x08, 0x00, 0x00, 0x00, 0x00    # 'V'
+    .byte   0x00, 0x00, 0x63, 0x63, 0x63, 0x6B, 0x6B, 0x7F, 0x7F, 0x77, 0x77, 0x22, 0x00, 0x00, 0x00, 0x00    # 'W'
+    .byte   0x00, 0x00, 0x63, 0x63, 0x77, 0x3E, 0x1C, 0x1C, 0x3E, 0x77, 0x63, 0x63, 0x00, 0x00, 0x00, 0x00    # 'X'
+    .byte   0x00, 0x00, 0x66, 0x66, 0x66, 0x66, 0x7E, 0x3C, 0x18, 0x18, 0x18, 0x18, 0x00, 0x00, 0x00, 0x00    # 'Y'
+    .byte   0x00, 0x00, 0x7F, 0x7F, 0x03, 0x07, 0x0E, 0x1C, 0x38, 0x70, 0x7F, 0x7F, 0x00, 0x00, 0x00, 0x00    # 'Z'
+    .byte   0x00, 0x00, 0x3C, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x3C, 0x00, 0x00, 0x00, 0x00    # '['
+    .byte   0x00, 0x00, 0x00, 0x40, 0x60, 0x30, 0x18, 0x0C, 0x06, 0x03, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00    # '\\'
+    .byte   0x00, 0x00, 0x1E, 0x06, 0x06, 0x06, 0x06, 0x06, 0x06, 0x06, 0x06, 0x1E, 0x00, 0x00, 0x00, 0x00    # ']'
+    .byte   0x00, 0x00, 0x10, 0x38, 0x6C, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00    # '^'
+    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7F, 0x7F, 0x00, 0x00, 0x00, 0x00    # '_'
+    .byte   0x00, 0x00, 0x60, 0x60, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00    # '`'
+    .byte   0x00, 0x00, 0x00, 0x00, 0x3E, 0x3F, 0x03, 0x3F, 0x7F, 0x63, 0x7F, 0x3F, 0x00, 0x00, 0x00, 0x00    # 'a'
+    .byte   0x00, 0x00, 0x60, 0x60, 0x60, 0x7E, 0x7F, 0x63, 0x63, 0x63, 0x7F, 0x7E, 0x00, 0x00, 0x00, 0x00    # 'b'
+    .byte   0x00, 0x00, 0x00, 0x00, 0x3E, 0x7F, 0x63, 0x60, 0x60, 0x63, 0x7F, 0x3E, 0x00, 0x00, 0x00, 0x00    # 'c'
+    .byte   0x00, 0x00, 0x03, 0x03, 0x03, 0x3F, 0x7F, 0x63, 0x63, 0x63, 0x7F, 0x3F, 0x00, 0x00, 0x00, 0x00    # 'd'
+    .byte   0x00, 0x00, 0x00, 0x00, 0x3E, 0x7F, 0x63, 0x7F, 0x7F, 0x60, 0x7E, 0x3E, 0x00, 0x00, 0x00, 0x00    # 'e'
+    .byte   0x00, 0x00, 0x0E, 0x1E, 0x18, 0x7E, 0x7E, 0x18, 0x18, 0x18, 0x18, 0x18, 0x00, 0x00, 0x00, 0x00    # 'f'
+    .byte   0x00, 0x00, 0x00, 0x00, 0x3F, 0x7F, 0x63, 0x63, 0x63, 0x63, 0x7F, 0x3F, 0x03, 0x3F, 0x3E, 0x00    # 'g'
+    .byte   0x00, 0x00, 0x60, 0x60, 0x60, 0x7E, 0x7F, 0x63, 0x63, 0x63, 0x63, 0x63, 0x00, 0x00, 0x00, 0x00    # 'h'
+    .byte   0x00, 0x00, 0x0C, 0x0C, 0x00, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x00, 0x00, 0x00, 0x00    # 'i'
+    .byte   0x00, 0x00, 0x06, 0x06, 0x00, 0x0E, 0x0E, 0x06, 0x06, 0x06, 0x06, 0x06, 0x66, 0x7E, 0x3C, 0x00    # 'j'
+    .byte   0x00, 0x00, 0x60, 0x60, 0x63, 0x67, 0x6E, 0x7C, 0x7C, 0x6E, 0x67, 0x63, 0x00, 0x00, 0x00, 0x00    # 'k'
+    .byte   0x00, 0x00, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x0E, 0x06, 0x00, 0x00, 0x00, 0x00    # 'l'
+    .byte   0x00, 0x00, 0x00, 0x00, 0x7E, 0x7F, 0x6B, 0x6B, 0x6B, 0x6B, 0x6B, 0x6B, 0x00, 0x00, 0x00, 0x00    # 'm'
+    .byte   0x00, 0x00, 0x00, 0x00, 0x7E, 0x7F, 0x63, 0x63, 0x63, 0x63, 0x63, 0x63, 0x00, 0x00, 0x00, 0x00    # 'n'
+    .byte   0x00, 0x00, 0x00, 0x00, 0x3E, 0x7F, 0x63, 0x63, 0x63, 0x63, 0x7F, 0x3E, 0x00, 0x00, 0x00, 0x00    # 'o'
+    .byte   0x00, 0x00, 0x00, 0x00, 0x7E, 0x7F, 0x63, 0x63, 0x63, 0x63, 0x7F, 0x7E, 0x60, 0x60, 0x60, 0x00    # 'p'
+    .byte   0x00, 0x00, 0x00, 0x00, 0x3F, 0x7F, 0x63, 0x63, 0x63, 0x63, 0x7F, 0x3F, 0x03, 0x03, 0x03, 0x00    # 'q'
+    .byte   0x00, 0x00, 0x00, 0x00, 0x6E, 0x7F, 0x73, 0x60, 0x60, 0x60, 0x60, 0x60, 0x00, 0x00, 0x00, 0x00    # 'r'
+    .byte   0x00, 0x00, 0x00, 0x00, 0x3F, 0x7F, 0x60, 0x7E, 0x3F, 0x03, 0x7F, 0x7E, 0x00, 0x00, 0x00, 0x00    # 's'
+    .byte   0x00, 0x00, 0x18, 0x18, 0x7E, 0x7E, 0x18, 0x18, 0x18, 0x18, 0x1C, 0x0C, 0x00, 0x00, 0x00, 0x00    # 't'
+    .byte   0x00, 0x00, 0x00, 0x00, 0x63, 0x63, 0x63, 0x63, 0x63, 0x63, 0x7F, 0x3F, 0x00, 0x00, 0x00, 0x00    # 'u'
+    .byte   0x00, 0x00, 0x00, 0x00, 0x63, 0x63, 0x63, 0x63, 0x77, 0x3E, 0x1C, 0x08, 0x00, 0x00, 0x00, 0x00    # 'v'
+    .byte   0x00, 0x00, 0x00, 0x00, 0x63, 0x63, 0x6B, 0x6B, 0x7F, 0x77, 0x77, 0x22, 0x00, 0x00, 0x00, 0x00    # 'w'
+    .byte   0x00, 0x00, 0x00, 0x00, 0x63, 0x77, 0x3E, 0x1C, 0x1C, 0x3E, 0x77, 0x63, 0x00, 0x00, 0x00, 0x00    # 'x'
+    .byte   0x00, 0x00, 0x00, 0x00, 0x63, 0x63, 0x63, 0x63, 0x63, 0x63, 0x77, 0x3E, 0x1C, 0x38, 0x70, 0x00    # 'y'
+    .byte   0x00, 0x00, 0x00, 0x00, 0x7F, 0x7F, 0x06, 0x0C, 0x18, 0x30, 0x7F, 0x7F, 0x00, 0x00, 0x00, 0x00    # 'z'
+    .byte   0x00, 0x00, 0x08, 0x10, 0x10, 0x10, 0x10, 0x20, 0x10, 0x10, 0x10, 0x10, 0x08, 0x00, 0x00, 0x00    # '{'
+    .byte   0x00, 0x00, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x00, 0x00, 0x00, 0x00    # '|'
+    .byte   0x00, 0x00, 0x10, 0x08, 0x08, 0x08, 0x08, 0x04, 0x08, 0x08, 0x08, 0x08, 0x10, 0x00, 0x00, 0x00    # '}'
+    .byte   0x00, 0x00, 0x3B, 0x6E, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00    # '~'
+    .byte   0x7F, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x7F, 0x00, 0x00, 0x00, 0x00    # 0x7F
+    .byte   0x7F, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x7F, 0x00, 0x00, 0x00, 0x00    # 0x80
+    .byte   0x7F, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x7F, 0x00, 0x00, 0x00, 0x00    # 0x81
+    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x30, 0x30, 0x10, 0x20, 0x00, 0x00    # 0x82
+    .byte   0x00, 0x0E, 0x1E, 0x18, 0x18, 0x7E, 0x7E, 0x18, 0x30, 0x30, 0x30, 0x30, 0x70, 0x60, 0x60, 0x00    # 0x83
+    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x36, 0x36, 0x12, 0x24, 0x00, 0x00    # 0x84
+    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x33, 0x33, 0x00, 0x00, 0x00, 0x00    # 0x85
+    .byte   0x00, 0x00, 0x18, 0x18, 0x7E, 0x7E, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x00, 0x00, 0x00, 0x00    # 0x86
+    .byte   0x00, 0x00, 0x18, 0x18, 0x7E, 0x7E, 0x18, 0x18, 0x7E, 0x7E, 0x18, 0x18, 0x00, 0x00, 0x00, 0x00    # 0x87
+    .byte   0x00, 0x00, 0x18, 0x24, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00    # 0x88
+    .byte   0x00, 0x00, 0x20, 0x50, 0x52, 0x24, 0x08, 0x10, 0x2A, 0x55, 0x15, 0x0A, 0x00, 0x00, 0x00, 0x00    # 0x89
+    .byte   0x36, 0x1C, 0x3E, 0x7F, 0x63, 0x60, 0x7E, 0x3F, 0x03, 0x63, 0x7F, 0x3E, 0x00, 0x00, 0x00, 0x00    # 0x8A
+    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x10, 0x10, 0x20, 0x10, 0x10, 0x08, 0x00, 0x00, 0x00    # 0x8B
+    .byte   0x00, 0x00, 0x37, 0x6F, 0x6C, 0x6C, 0x6F, 0x6F, 0x6C, 0x6C, 0x6F, 0x37, 0x00, 0x00, 0x00, 0x00    # 0x8C
+    .byte   0x7F, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x7F, 0x00, 0x00, 0x00, 0x00    # 0x8D
+    .byte   0x7F, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x7F, 0x00, 0x00, 0x00, 0x00    # 0x8E
+    .byte   0x7F, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x7F, 0x00, 0x00, 0x00, 0x00    # 0x8F
+    .byte   0x7F, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x7F, 0x00, 0x00, 0x00, 0x00    # 0x90
+    .byte   0x00, 0x00, 0x10, 0x20, 0x30, 0x30, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00    # 0x91
+    .byte   0x00, 0x00, 0x30, 0x30, 0x10, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00    # 0x92
+    .byte   0x00, 0x00, 0x12, 0x24, 0x36, 0x36, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00    # 0x93
+    .byte   0x00, 0x00, 0x36, 0x36, 0x12, 0x24, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00    # 0x94
+    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x18, 0x3C, 0x3C, 0x18, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00    # 0x95
+    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7F, 0x7F, 0x00, 0x00, 0x00, 0x00    # 0x96
+    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7F, 0x7F, 0x00, 0x00, 0x00, 0x00    # 0x97
+    .byte   0x00, 0x00, 0x34, 0x5C, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00    # 0x98
+    .byte   0x00, 0x00, 0xF1, 0x5B, 0x55, 0x51, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00    # 0x99
+    .byte   0x00, 0x36, 0x1C, 0x00, 0x3F, 0x7F, 0x60, 0x7E, 0x3F, 0x03, 0x7F, 0x7E, 0x00, 0x00, 0x00, 0x00    # 0x9A
+    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10, 0x08, 0x08, 0x04, 0x08, 0x08, 0x10, 0x00, 0x00, 0x00    # 0x9B
+    .byte   0x00, 0x00, 0x00, 0x00, 0x36, 0x6D, 0x6D, 0x6F, 0x6C, 0x6C, 0x6F, 0x36, 0x00, 0x00, 0x00, 0x00    # 0x9C
+    .byte   0x7F, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x7F, 0x00, 0x00, 0x00, 0x00    # 0x9D
+    .byte   0x7F, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x7F, 0x00, 0x00, 0x00, 0x00    # 0x9E
+    .byte   0x66, 0x66, 0x00, 0x66, 0x66, 0x66, 0x7E, 0x3C, 0x18, 0x18, 0x18, 0x18, 0x00, 0x00, 0x00, 0x00    # 0x9F
+    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00    # 0xA0
+    .byte   0x00, 0x00, 0x0C, 0x0C, 0x00, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x00, 0x00, 0x00, 0x00    # 0xA1
+    .byte   0x00, 0x01, 0x03, 0x02, 0x3E, 0x7F, 0x67, 0x68, 0x68, 0x73, 0x7F, 0x3E, 0x20, 0x60, 0x40, 0x00    # 0xA2
+    .byte   0x00, 0x00, 0x1C, 0x3C, 0x30, 0x30, 0x7C, 0x7C, 0x30, 0x33, 0x7F, 0x7E, 0x00, 0x00, 0x00, 0x00    # 0xA3
+    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x14, 0x3E, 0x63, 0x22, 0x63, 0x3E, 0x14, 0x00, 0x00, 0x00, 0x00    # 0xA4
+    .byte   0x00, 0x00, 0x66, 0x66, 0x24, 0x3C, 0x18, 0x7E, 0x18, 0x7E, 0x18, 0x18, 0x18, 0x00, 0x00, 0x00    # 0xA5
+    .byte   0x00, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x00, 0x00, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x00    # 0xA6
+    .byte   0x00, 0x00, 0x1C, 0x24, 0x20, 0x10, 0x28, 0x44, 0x42, 0x22, 0x14, 0x08, 0x04, 0x24, 0x38, 0x00    # 0xA7
+    .byte   0x00, 0x00, 0x6C, 0x6C, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00    # 0xA8
+    .byte   0x00, 0x00, 0x3E, 0x63, 0x5D, 0x55, 0x51, 0x51, 0x55, 0x5D, 0x63, 0x3E, 0x00, 0x00, 0x00, 0x00    # 0xA9
+    .byte   0x00, 0x00, 0x70, 0x10, 0x70, 0x50, 0x70, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00    # 0xAA
+    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x12, 0x24, 0x24, 0x48, 0x24, 0x24, 0x12, 0x00, 0x00, 0x00    # 0xAB
+    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7E, 0x7E, 0x06, 0x06, 0x06, 0x00, 0x00, 0x00, 0x00    # 0xAC
+    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3C, 0x3C, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00    # 0xAD
+    .byte   0x00, 0x00, 0x3E, 0x63, 0x5D, 0x55, 0x55, 0x5D, 0x59, 0x55, 0x63, 0x3E, 0x00, 0x00, 0x00, 0x00    # 0xAE
+    .byte   0x00, 0x00, 0x7F, 0x7F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00    # 0xAF
+    .byte   0x00, 0x30, 0x48, 0x48, 0x30, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00    # 0xB0
+    .byte   0x00, 0x00, 0x18, 0x18, 0x7E, 0x7E, 0x18, 0x18, 0x00, 0x7E, 0x7E, 0x00, 0x00, 0x00, 0x00, 0x00    # 0xB1
+    .byte   0x00, 0x30, 0x48, 0x08, 0x10, 0x20, 0x78, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00    # 0xB2
+    .byte   0x00, 0x30, 0x48, 0x10, 0x08, 0x48, 0x30, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00    # 0xB3
+    .byte   0x00, 0x18, 0x30, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00    # 0xB4
+    .byte   0x00, 0x00, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x6E, 0x7E, 0x7F, 0x77, 0x60, 0x60, 0x60, 0x00    # 0xB5
+    .byte   0x00, 0x00, 0x7F, 0xFF, 0xF6, 0x76, 0x36, 0x36, 0x36, 0x36, 0x36, 0x36, 0x36, 0x36, 0x36, 0x00    # 0xB6
+    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x18, 0x18, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00    # 0xB7
+    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1C, 0x08, 0x30, 0x00, 0x00    # 0xB8
+    .byte   0x00, 0x20, 0x60, 0x20, 0x20, 0x20, 0x70, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00    # 0xB9
+    .byte   0x00, 0x30, 0x48, 0x48, 0x48, 0x48, 0x30, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00    # 0xBA
+    .byte   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x48, 0x24, 0x24, 0x12, 0x24, 0x24, 0x48, 0x00, 0x00, 0x00    # 0xBB
+    .byte   0x00, 0x00, 0x20, 0x60, 0x22, 0x24, 0x29, 0x13, 0x25, 0x45, 0x07, 0x01, 0x00, 0x00, 0x00, 0x00    # 0xBC
+    .byte   0x00, 0x00, 0x20, 0x60, 0x22, 0x24, 0x28, 0x12, 0x25, 0x41, 0x02, 0x07, 0x00, 0x00, 0x00, 0x00    # 0xBD
+    .byte   0x00, 0x00, 0x60, 0x10, 0x32, 0x14, 0x69, 0x13, 0x25, 0x45, 0x07, 0x01, 0x00, 0x00, 0x00, 0x00    # 0xBE
+    .byte   0x00, 0x00, 0x00, 0x00, 0x0C, 0x0C, 0x00, 0x0C, 0x0C, 0x3C, 0x78, 0x60, 0x63, 0x7F, 0x3E, 0x00    # 0xBF
+    .byte   0x18, 0x0C, 0x1C, 0x3E, 0x77, 0x63, 0x63, 0x7F, 0x7F, 0x63, 0x63, 0x63, 0x00, 0x00, 0x00, 0x00    # 0xC0
+    .byte   0x0C, 0x18, 0x1C, 0x3E, 0x77, 0x63, 0x63, 0x7F, 0x7F, 0x63, 0x63, 0x63, 0x00, 0x00, 0x00, 0x00    # 0xC1
+    .byte   0x1C, 0x22, 0x1C, 0x3E, 0x77, 0x63, 0x63, 0x7F, 0x7F, 0x63, 0x63, 0x63, 0x00, 0x00, 0x00, 0x00    # 0xC2
+    .byte   0x3B, 0x6E, 0x1C, 0x3E, 0x77, 0x63, 0x63, 0x7F, 0x7F, 0x63, 0x63, 0x63, 0x00, 0x00, 0x00, 0x00    # 0xC3
+    .byte   0x36, 0x36, 0x1C, 0x3E, 0x77, 0x63, 0x63, 0x7F, 0x7F, 0x63, 0x63, 0x63, 0x00, 0x00, 0x00, 0x00    # 0xC4
+    .byte   0x1C, 0x14, 0x1C, 0x3E, 0x77, 0x63, 0x63, 0x7F, 0x7F, 0x63, 0x63, 0x63, 0x00, 0x00, 0x00, 0x00    # 0xC5
+    .byte   0x00, 0x00, 0x37, 0x7F, 0x6C, 0x6C, 0x7F, 0x7F, 0x6C, 0x6C, 0x6F, 0x67, 0x00, 0x00, 0x00, 0x00    # 0xC6
+    .byte   0x00, 0x00, 0x3E, 0x7F, 0x63, 0x60, 0x60, 0x60, 0x60, 0x63, 0x7F, 0x3E, 0x0C, 0x06, 0x1E, 0x00    # 0xC7
+    .byte   0x18, 0x0C, 0x7F, 0x7F, 0x60, 0x60, 0x7E, 0x7E, 0x60, 0x60, 0x7F, 0x7F, 0x00, 0x00, 0x00, 0x00    # 0xC8
+    .byte   0x0C, 0x18, 0x7F, 0x7F, 0x60, 0x60, 0x7E, 0x7E, 0x60, 0x60, 0x7F, 0x7F, 0x00, 0x00, 0x00, 0x00    # 0xC9
+    .byte   0x1C, 0x22, 0x7F, 0x7F, 0x60, 0x60, 0x7E, 0x7E, 0x60, 0x60, 0x7F, 0x7F, 0x00, 0x00, 0x00, 0x00    # 0xCA
+    .byte   0x36, 0x36, 0x7F, 0x7F, 0x60, 0x60, 0x7E, 0x7E, 0x60, 0x60, 0x7F, 0x7F, 0x00, 0x00, 0x00, 0x00    # 0xCB
+    .byte   0x18, 0x0C, 0x1E, 0x1E, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x1E, 0x1E, 0x00, 0x00, 0x00, 0x00    # 0xCC
+    .byte   0x06, 0x0C, 0x1E, 0x1E, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x1E, 0x1E, 0x00, 0x00, 0x00, 0x00    # 0xCD
+    .byte   0x0C, 0x12, 0x1E, 0x1E, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x1E, 0x1E, 0x00, 0x00, 0x00, 0x00    # 0xCE
+    .byte   0x33, 0x33, 0x1E, 0x1E, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x1E, 0x1E, 0x00, 0x00, 0x00, 0x00    # 0xCF
+    .byte   0x00, 0x00, 0x7C, 0x7E, 0x67, 0x63, 0xFB, 0xFB, 0x63, 0x67, 0x7E, 0x7C, 0x00, 0x00, 0x00, 0x00    # 0xD0
+    .byte   0x3B, 0x6E, 0x43, 0x63, 0x73, 0x7B, 0x7F, 0x7F, 0x6F, 0x67, 0x63, 0x61, 0x00, 0x00, 0x00, 0x00    # 0xD1
+    .byte   0x18, 0x0C, 0x3E, 0x7F, 0x63, 0x63, 0x63, 0x63, 0x63, 0x63, 0x7F, 0x3E, 0x00, 0x00, 0x00, 0x00    # 0xD2
+    .byte   0x0C, 0x18, 0x3E, 0x7F, 0x63, 0x63, 0x63, 0x63, 0x63, 0x63, 0x7F, 0x3E, 0x00, 0x00, 0x00, 0x00    # 0xD3
+    .byte   0x1C, 0x22, 0x3E, 0x7F, 0x63, 0x63, 0x63, 0x63, 0x63, 0x63, 0x7F, 0x3E, 0x00, 0x00, 0x00, 0x00    # 0xD4
+    .byte   0x3B, 0x6E, 0x3E, 0x7F, 0x63, 0x63, 0x63, 0x63, 0x63, 0x63, 0x7F, 0x3E, 0x00, 0x00, 0x00, 0x00    # 0xD5
+    .byte   0x36, 0x36, 0x3E, 0x7F, 0x63, 0x63, 0x63, 0x63, 0x63, 0x63, 0x7F, 0x3E, 0x00, 0x00, 0x00, 0x00    # 0xD6
+    .byte   0x00, 0x00, 0x00, 0x00, 0x41, 0x22, 0x14, 0x08, 0x14, 0x22, 0x41, 0x00, 0x00, 0x00, 0x00, 0x00    # 0xD7
+    .byte   0x01, 0x03, 0x3E, 0x7F, 0x67, 0x6F, 0x6B, 0x6B, 0x7B, 0x73, 0x7F, 0x3E, 0x20, 0x60, 0x40, 0x00    # 0xD8
+    .byte   0x18, 0x0C, 0x63, 0x63, 0x63, 0x63, 0x63, 0x63, 0x63, 0x63, 0x7F, 0x3E, 0x00, 0x00, 0x00, 0x00    # 0xD9
+    .byte   0x0C, 0x18, 0x63, 0x63, 0x63, 0x63, 0x63, 0x63, 0x63, 0x63, 0x7F, 0x3E, 0x00, 0x00, 0x00, 0x00    # 0xDA
+    .byte   0x1C, 0x22, 0x63, 0x63, 0x63, 0x63, 0x63, 0x63, 0x63, 0x63, 0x7F, 0x3E, 0x00, 0x00, 0x00, 0x00    # 0xDB
+    .byte   0x36, 0x36, 0x63, 0x63, 0x63, 0x63, 0x63, 0x63, 0x63, 0x63, 0x7F, 0x3E, 0x00, 0x00, 0x00, 0x00    # 0xDC
+    .byte   0x0C, 0x18, 0x66, 0x66, 0x66, 0x66, 0x7E, 0x3C, 0x18, 0x18, 0x18, 0x18, 0x00, 0x00, 0x00, 0x00    # 0xDD
+    .byte   0x00, 0x00, 0x60, 0x7E, 0x7F, 0x63, 0x63, 0x7F, 0x7E, 0x60, 0x60, 0x60, 0x00, 0x00, 0x00, 0x00    # 0xDE
+    .byte   0x00, 0x00, 0x7E, 0x7F, 0x63, 0x6E, 0x6F, 0x63, 0x63, 0x63, 0x6F, 0x6E, 0x00, 0x00, 0x00, 0x00    # 0xDF
+    .byte   0x00, 0x18, 0x0C, 0x00, 0x3E, 0x3F, 0x03, 0x3F, 0x7F, 0x63, 0x7F, 0x3F, 0x00, 0x00, 0x00, 0x00    # 0xE0
+    .byte   0x00, 0x0C, 0x18, 0x00, 0x3E, 0x3F, 0x03, 0x3F, 0x7F, 0x63, 0x7F, 0x3F, 0x00, 0x00, 0x00, 0x00    # 0xE1
+    .byte   0x00, 0x1C, 0x22, 0x00, 0x3E, 0x3F, 0x03, 0x3F, 0x7F, 0x63, 0x7F, 0x3F, 0x00, 0x00, 0x00, 0x00    # 0xE2
+    .byte   0x00, 0x3B, 0x6E, 0x00, 0x3E, 0x3F, 0x03, 0x3F, 0x7F, 0x63, 0x7F, 0x3F, 0x00, 0x00, 0x00, 0x00    # 0xE3
+    .byte   0x00, 0x36, 0x36, 0x00, 0x3E, 0x3F, 0x03, 0x3F, 0x7F, 0x63, 0x7F, 0x3F, 0x00, 0x00, 0x00, 0x00    # 0xE4
+    .byte   0x00, 0x1C, 0x14, 0x1C, 0x3E, 0x3F, 0x03, 0x3F, 0x7F, 0x63, 0x7F, 0x3F, 0x00, 0x00, 0x00, 0x00    # 0xE5
+    .byte   0x00, 0x00, 0x00, 0x00, 0x3E, 0x4D, 0x0D, 0x3F, 0x6C, 0x6C, 0x6F, 0x36, 0x00, 0x00, 0x00, 0x00    # 0xE6
+    .byte   0x00, 0x00, 0x00, 0x00, 0x3E, 0x7F, 0x63, 0x60, 0x60, 0x63, 0x7F, 0x3E, 0x0C, 0x06, 0x1E, 0x00    # 0xE7
+    .byte   0x00, 0x18, 0x0C, 0x00, 0x3E, 0x7F, 0x63, 0x7F, 0x7F, 0x60, 0x7E, 0x3E, 0x00, 0x00, 0x00, 0x00    # 0xE8
+    .byte   0x00, 0x0C, 0x18, 0x00, 0x3E, 0x7F, 0x63, 0x7F, 0x7F, 0x60, 0x7E, 0x3E, 0x00, 0x00, 0x00, 0x00    # 0xE9
+    .byte   0x00, 0x1C, 0x22, 0x00, 0x3E, 0x7F, 0x63, 0x7F, 0x7F, 0x60, 0x7E, 0x3E, 0x00, 0x00, 0x00, 0x00    # 0xEA
+    .byte   0x00, 0x36, 0x36, 0x00, 0x3E, 0x7F, 0x63, 0x7F, 0x7F, 0x60, 0x7E, 0x3E, 0x00, 0x00, 0x00, 0x00    # 0xEB
+    .byte   0x00, 0x00, 0x18, 0x0C, 0x00, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x00, 0x00, 0x00, 0x00    # 0xEC
+    .byte   0x00, 0x00, 0x06, 0x0C, 0x00, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x00, 0x00, 0x00, 0x00    # 0xED
+    .byte   0x00, 0x00, 0x0C, 0x12, 0x00, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x00, 0x00, 0x00, 0x00    # 0xEE
+    .byte   0x00, 0x00, 0x33, 0x33, 0x00, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x00, 0x00, 0x00, 0x00    # 0xEF
+    .byte   0x73, 0x73, 0x1E, 0x7F, 0x73, 0x3F, 0x7F, 0x63, 0x63, 0x63, 0x7F, 0x3F, 0x00, 0x00, 0x00, 0x00    # 0xF0
+    .byte   0x00, 0x3B, 0x6E, 0x00, 0x7E, 0x7F, 0x63, 0x63, 0x63, 0x63, 0x63, 0x63, 0x00, 0x00, 0x00, 0x00    # 0xF1
+    .byte   0x00, 0x18, 0x0C, 0x00, 0x3E, 0x7F, 0x63, 0x63, 0x63, 0x63, 0x7F, 0x3E, 0x00, 0x00, 0x00, 0x00    # 0xF2
+    .byte   0x00, 0x0C, 0x18, 0x00, 0x3E, 0x7F, 0x63, 0x63, 0x63, 0x63, 0x7F, 0x3E, 0x00, 0x00, 0x00, 0x00    # 0xF3
+    .byte   0x00, 0x1C, 0x22, 0x00, 0x3E, 0x7F, 0x63, 0x63, 0x63, 0x63, 0x7F, 0x3E, 0x00, 0x00, 0x00, 0x00    # 0xF4
+    .byte   0x00, 0x3B, 0x6E, 0x00, 0x3E, 0x7F, 0x63, 0x63, 0x63, 0x63, 0x7F, 0x3E, 0x00, 0x00, 0x00, 0x00    # 0xF5
+    .byte   0x00, 0x36, 0x36, 0x00, 0x3E, 0x7F, 0x63, 0x63, 0x63, 0x63, 0x7F, 0x3E, 0x00, 0x00, 0x00, 0x00    # 0xF6
+    .byte   0x00, 0x00, 0x00, 0x18, 0x18, 0x00, 0x7E, 0x7E, 0x00, 0x18, 0x18, 0x00, 0x00, 0x00, 0x00, 0x00    # 0xF7
+    .byte   0x00, 0x01, 0x03, 0x02, 0x3E, 0x7F, 0x67, 0x6B, 0x6B, 0x73, 0x7F, 0x3E, 0x20, 0x60, 0x40, 0x00    # 0xF8
+    .byte   0x00, 0x18, 0x0C, 0x00, 0x63, 0x63, 0x63, 0x63, 0x63, 0x63, 0x7F, 0x3F, 0x00, 0x00, 0x00, 0x00    # 0xF9
+    .byte   0x00, 0x0C, 0x18, 0x00, 0x63, 0x63, 0x63, 0x63, 0x63, 0x63, 0x7F, 0x3F, 0x00, 0x00, 0x00, 0x00    # 0xFA
+    .byte   0x00, 0x1C, 0x22, 0x00, 0x63, 0x63, 0x63, 0x63, 0x63, 0x63, 0x7F, 0x3F, 0x00, 0x00, 0x00, 0x00    # 0xFB
+    .byte   0x00, 0x36, 0x36, 0x00, 0x63, 0x63, 0x63, 0x63, 0x63, 0x63, 0x7F, 0x3F, 0x00, 0x00, 0x00, 0x00    # 0xFC
+    .byte   0x00, 0x0C, 0x18, 0x00, 0x63, 0x63, 0x63, 0x63, 0x63, 0x63, 0x77, 0x3E, 0x1C, 0x38, 0x70, 0x00    # 0xFD
+    .byte   0x00, 0x00, 0x60, 0x60, 0x7E, 0x7F, 0x63, 0x63, 0x63, 0x63, 0x7F, 0x7E, 0x60, 0x60, 0x60, 0x00    # 0xFE
+    .byte   0x00, 0x36, 0x36, 0x00, 0x63, 0x63, 0x63, 0x63, 0x63, 0x63, 0x77, 0x3E, 0x1C, 0x38, 0x70, 0x00    # 0xFF
 __image_end:
 .mnbase 0x40000000
 

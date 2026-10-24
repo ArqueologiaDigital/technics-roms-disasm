@@ -408,8 +408,9 @@ class Program:
                     break
                 seen.append(m)
                 pc += len(b)
-            if seen and pc in call_t:
-                self.entry_of[p] = pc
+                if pc in call_t:     # a frame too big for `call` keeps its `add` after the entry
+                    self.entry_of[p] = pc
+                    break
         self.dead = [p for p in self.dead if p not in self.entry_of]
 
 
@@ -533,12 +534,23 @@ def esc(bs):
                    if printable(c) else f"\\x{c:02X}" for c in bs)
 
 
+PUNCT = {".": "Dot", "*": "Star", "#": "Hash", "-": "Dash", ">": "Gt", "<": "Lt", "@": "At",
+          "'": "Quote", '"': "DQuote", ":": "Colon", "[": "LBracket", "]": "RBracket", "\n": "Newline",
+          "=": "Eq", "!": "Bang", "?": "Query", "/": "Slash", "+": "Plus", "%": "Percent"}
+
+
 def text_name(text):
-    """Str_<CamelCase words of the text>, or None if it has too little text."""
+    """Str_<CamelCase words of the text> (Str_Fmt... for a printf format;
+    Str_Blank<n> for spaces, Str_None for ""; punctuation spelled out)."""
+    if text == "":
+        return "Str_None"
+    if text.strip(" ") == "":
+        return f"Str_Blank{len(text)}"
     words = re.findall(r"[A-Za-z0-9]+", text)
-    if sum(map(len, words)) < 3:
-        return None
-    out = ""
+    if not words:
+        p = "".join(PUNCT.get(c, "") for c in text if c != " ")[:40]
+        return "Str_" + p if p else None
+    out = "Fmt" if "%" in text and sum(map(len, words)) < 6 else ""
     for w in words:
         w = w[0].upper() + (w[1:].lower() if w.isupper() and len(w) > 3 else w[1:])
         if out and len(out) + len(w) > 40:
@@ -656,10 +668,14 @@ class Data:
         for site, (kind, *arg) in INDIRECT.items():
             if kind in ("switch", "ptrs", "hash", "var"):
                 labels.add(arg[0])
-        self.special = {}            # file offset -> (kind, length)
-        for o0, o1, kind in SPECIAL_DATA:
-            self.special[o0] = (kind, o1 - o0)
-            labels.add(im.cpu(o0))
+        self.special = {}            # file offset -> (kind, length, argument)
+        for cpu, n, kind, arg in SPECIAL_DATA:
+            o0 = im.file(cpu)
+            self.special[o0] = (kind, n, arg)
+            labels.add(cpu)
+            if kind == "longs":      # their pointers into the image get labels too
+                labels |= {v for v in struct.unpack_from(f"<{n // 4}I", d, o0)
+                           if im.file(v) is not None and self.in_area(im.file(v))}
         base = set(labels)
         for _ in range(4):           # until the pointer targets stop changing the strings
             strings, pointers = self.scan(labels)
@@ -702,17 +718,56 @@ class Data:
             e += 1
         n = e - o
         if not n:
-            return 0, True
+            # a labelled lone NUL in the constant data is an empty string ("")
+            return (1, True) if (labelled and (o + 1 == lim or (lim - o <= 4 and lim % 4 == 0)) and d[o] == 0
+                                 and o >= self.p.rodata0) else (0, True)
         if e < lim and d[e] == 0:
-            return (n + 1, True) if n >= 4 or (labelled and n >= 1) else (0, True)
+            return (n + 1, True) if n >= 4 or (labelled and n >= 1 and o >= self.p.rodata0) else (0, True)
         letters = sum(chr(c).isalpha() for c in d[o:e])
         if (n >= 6 and 2 * letters >= n) or (e == lim and (labelled or n >= 3)):
             return n, False
         return 0, True
 
 
-# Data whose type the generic pass cannot see (file offsets): emitted by emit_special()
-SPECIAL_DATA = []
+# Data whose type the generic pass cannot see: (run address, length, kind, argument),
+# emitted by Emitter.emit_special()
+SPECIAL_DATA = [
+    (0x5000C42C, 257, "ctype", None),            # newlib's _ctype_: [EOF] then 0x00..0xFF
+    (0x5000C608, 0x80, "hash", -1),              # PfFlagChars: key = character + 1
+    (0x5000CDA4, 0x80, "hash", 0x77),            # FlashResetById: key = device code - 0x77
+    (0x5000CE24, 0x80, "hash", 0x2226),          # FlashFujitsuIds: key = device code - 0x2226
+    (0x5000C6DC, 16, "pairs", None),             # BootKeyComboMatch's seven tables
+    (0x5000C6EC, 32, "pairs", None),
+    (0x5000C70C, 16, "pairs", None),
+    (0x5000C71C, 40, "pairs", None),
+    (0x5000C744, 32, "pairs", None),
+    (0x5000C764, 16, "pairs", None),
+    (0x5000C774, 32, "pairs", None),
+    (0x5000C7C0, 20, "fifo", None),              # the two FIFO descriptors' images
+    (0x5000C7D4, 20, "fifo", None),
+    (0x5000C844, 12, "sdframe", None),           # SPI command frames
+    (0x5000C850, 12, "sdframe", None),
+    (0x5000C85C, 12, "sdframe", None),
+    (0x5000C94C, 12, "sdframe", None),
+    (0x5000C958, 12, "sdframe", None),
+    (0x50010020, 0x14, "longs", None),          # the canned disk messages: drive letter, reply buffer, length, ..
+    (0x50010034, 0x14, "longs", None),
+    (0x50010048, 0x14, "longs", None),
+    (0x50010078, 10, "sdframe", None),
+    (0x50010082, 10, "sdframe", None),
+    (0x5001008C, 10, "sdframe", None),
+    (0x50010096, 10, "sdframe", None),
+    (0x500100A0, 10, "sdframe", None),
+    (0x500100AA, 10, "sdframe", None),
+    (0x500100B4, 10, "sdframe", None),
+    (0x500100BE, 10, "sdframe", None),
+    (0x500100C8, 10, "sdframe", None),
+    (0x500100D2, 10, "sdframe", None),
+    (0x500100DC, 10, "sdframe", None),
+    (0x5000D590, 8 * 312, "f64", None),          # 0.1, 5, log10(2), then 1e0..1e308
+    (0x5000E104, 24, "fontdesc", None),          # FontTable
+    (0x5000E11C, 0xE00, "font", 0x20),           # the 8x16 glyphs, characters 0x20..0xFF
+]
 
 # Operand constants of the reset code that are not addresses: (pc, value) -> name
 OPERAND_NAMES = {
@@ -1141,15 +1196,17 @@ class Emitter:
                 cur_w = min(ws) if len(ws) == 1 else 1
             nxt = next((x for x in offs if x > o), r1)
             if not stale and o in dat.special:
-                kind, n = dat.special[o]
-                L += self.emit_special(kind, o, n)
+                kind, n, arg = dat.special[o]
+                L += self.emit_special(kind, o, n, arg)
                 o += n
+                o = self.align_fill(L, o, r1, labels)
                 continue
             if not stale and o in dat.strings:
                 n, nul = dat.strings[o]
                 L.append(f"    {'.asciz' if nul else '.ascii'}  \"{esc(d[o:o + n - nul])}\"")
                 o += n
                 cur_w = 1
+                o = self.align_fill(L, o, r1, labels)
                 continue
             if not stale and o in dat.pointers:
                 row = []
@@ -1160,8 +1217,8 @@ class Emitter:
                 continue
             stops = [nxt]
             if not stale:
-                stops += [x for x in dat.strings if x > o][:1] + [x for x in dat.pointers if x > o][:1]
-                stops += [x for x in dat.special if x > o][:1]
+                stops += [x for x in dat.strings if x > o] + [x for x in dat.pointers if x > o]
+                stops += [x for x in dat.special if x > o]
             stop = min(min(stops), r1)
             run = d[o:stop]
             if len(run) >= 16 and len(set(run)) == 1 and run[0] in (0, 0xFF):
@@ -1181,7 +1238,100 @@ class Emitter:
             o = stop
         return L
 
-    def emit_special(self, kind, o, n):
+    def align_fill(self, L, o, r1, labels):
+        """After a string or a table: the 1-3 bytes up to a 4-byte boundary where
+        the next labelled object, string or pointer starts are the linker's
+        alignment fill (they hold whatever its buffer held)."""
+        im, dat = self.im, self.dat
+        a = (o + 3) & ~3
+        if a == o or a > r1:
+            return o
+        nxt = im.cpu(a)
+        if not (nxt in labels or a in dat.strings or a in dat.pointers or a in dat.special or a == r1):
+            return o
+        if any(im.cpu(x) in labels or x in dat.strings or x in dat.pointers for x in range(o, a)):
+            return o
+        L.append(f"    .byte   {', '.join(f'0x{b:02X}' for b in im.d[o:a])}"
+                 f"{' ' * max(1, 24 - 6 * (a - o))}# alignment fill")
+        return a
+
+    def sym_or_hex(self, v):
+        """a label or .equ name for an address the data holds, else hex."""
+        if self.im.file(v) is not None and v in self.names:
+            return self.names[v]
+        return self.ext_name(v, False) or f"0x{v:08X}"
+
+    def emit_special(self, kind, o, n, arg):
+        d, im = self.im.d, self.im
+        L = []
+        if kind == "ctype":
+            L.append("    .byte   0x00                    # EOF (index -1); then one byte per character 0x00..0xFF")
+            for k in range(1, n, 16):
+                L.append("    .byte   " + ", ".join(f"0x{b:02X}" for b in d[o + k:o + min(n, k + 16)])
+                         + f"    # 0x{k - 1:02X}..")
+            return L
+        if kind == "hash":
+            for k in range(o, o + n, 8):
+                key, tgt = struct.unpack_from("<II", d, k)
+                what = ("" if key == 0 else
+                        (f"    # {chr(key - 1)!r}" if arg == -1 else f"    # device code 0x{key + arg:04X}"))
+                L.append(f"    .long   0x{key:02X}, {self.names[tgt]}{what}")
+            return L
+        if kind == "pairs":
+            for k in range(o, o + n, 8):
+                ptr, val = struct.unpack_from("<II", d, k)
+                L.append(f"    .long   {self.sym_or_hex(ptr) if ptr else '0'}, 0x{val:02X}"
+                         + ("" if ptr else "                  # end of the table"))
+            return L
+        if kind == "longs":
+            vals = struct.unpack_from(f"<{n // 4}I", d, o)
+            L.append("    .long   " + ", ".join(
+                self.sym_or_hex(v) if (0x50000000 <= v < BSS_END) else f"0x{v:X}" for v in vals))
+            return L
+        if kind == "fifo":
+            w = struct.unpack_from("<5I", d, o)
+            L.append(f"    .long   {self.sym_or_hex(w[0])}, {self.sym_or_hex(w[1])}   # base, end")
+            L.append(f"    .long   {self.sym_or_hex(w[2])}, {self.sym_or_hex(w[3])}   # read, write")
+            L.append(f"    .long   0x{w[4]:X}                     # free bytes")
+            return L
+        if kind == "sdframe":
+            clk, resp = struct.unpack_from("<HH", d, o)
+            cmd = d[o + 4:o + 10]
+            L.append(f"    .word   {clk}, {resp}                    # clock mode, response type")
+            # the code fills in the argument at run time, so a field may carry a label
+            cuts = [k for k in range(o + 4, o + 10) if k != o and im.cpu(k) in self.dat.labels]
+            parts = [o + 4] + [k for k in cuts if k > o + 4] + [o + 10]
+            for i in range(len(parts) - 1):
+                if parts[i] in cuts:
+                    L.append(f"{self.names[im.cpu(parts[i])]}:")
+                L.append("    .byte   " + ", ".join(f"0x{b:02X}" for b in d[parts[i]:parts[i + 1]])
+                         + (f"    # command 0x40|{cmd[0] & 0x3F}, argument, CRC" if i == 0 else ""))
+            if n > 10:
+                L.append("    .byte   " + ", ".join(f"0x{b:02X}" for b in d[o + 10:o + n])
+                         + "                  # alignment fill")
+            return L
+        if kind == "f64":
+            for k in range(o, o + n, 8):
+                if k != o and im.cpu(k) in self.dat.labels:
+                    nm = self.names[im.cpu(k)]
+                    L.append(f"{nm}:" + (f"{' ' * max(1, 32 - len(nm))}# {self.notes[im.cpu(k)]}"
+                                         if im.cpu(k) in self.notes else ""))
+                lo, hi = struct.unpack_from("<II", d, k)
+                val = struct.unpack_from("<d", d, k)[0]
+                L.append(f"    .long   0x{lo:08X}, 0x{hi:08X}    # {val!r}")
+            return L
+        if kind == "fontdesc":
+            for k in range(o, o + n, 12):
+                w, h, a, b, ptr = struct.unpack_from("<HHHHI", d, k)
+                L.append(f"    .word   {w}, {h}, {a}, {b}               # width, height, TODO: two more fields")
+                L.append(f"    .long   {self.sym_or_hex(ptr)}")
+            return L
+        if kind == "font":
+            for k in range(0, n, 16):
+                c = arg + k // 16
+                shown = repr(chr(c)) if 0x20 <= c < 0x7F else f"0x{c:02X}"
+                L.append("    .byte   " + ", ".join(f"0x{b:02X}" for b in d[o + k:o + k + 16]) + f"    # {shown}")
+            return L
         sys.exit(f"gen_ic18_s: no emitter for {kind}")
 
     def body_lines(self):
