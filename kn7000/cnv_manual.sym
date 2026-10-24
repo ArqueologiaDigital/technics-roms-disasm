@@ -1,0 +1,11 @@
+; Names for the Style Convert Disk converters (src/cnv/*.s), read by
+; tools/gen_cnv_s.py (`make cnv-src`).
+;
+;   STEM 0xADDRESS NAME [; note]
+;
+; STEM is the converter (GEM_WS2 GEM_WX2 KORG ROLAND SOLTON TECHNICS
+; TECHNICS_KN6000). A name given to a routine start applies to every converter
+; whose routine has the same code (the "same code" lines in the sources), so a
+; shared routine is named once, for any one of them; give one converter's copy a
+; line of its own to override that. Other addresses (data, labels inside a
+; routine) are named for that converter only.

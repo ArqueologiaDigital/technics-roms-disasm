@@ -387,6 +387,73 @@ verify-sp7001: $(SP7001_TARGETS)
 	[ $$ok -eq 1 ] || { echo; echo "SP7001 byte-match FAILED"; exit 1; }
 	@echo; echo "SP7001 images reproduced byte-for-byte."
 
+# ---- Style Convert Disk converters (.CNV) ----------------------------------
+# The loadable MN10300 programs behind DISK MENU > STYLE CONVERT
+# (notes/style-converter.md), from the two Style Convert Disks of MAME's floppy
+# softlists: scd7000 (hash/kn7000_flop.xml) and scd6000 (hash/kn6000_flop.xml).
+# Five of the six files are identical on both disks; TECHNICS.CNV is relinked, so
+# there are seven sources in src/cnv/, fully disassembled (no .incbin) by
+# tools/gen_cnv_s.py. The images are checked against the softlists' SHA-1, which
+# are those of the 2026-10-18 rebuild in the instruments' own disk layout (the
+# older images in ../../technics_romsets/kn*_flop/ hold the same files).
+SOFTLIST_DIR ?= ../../technics_romsets/floppy-rebuild-2026-10-18/roms
+SCD7000_SHA1 := ae04748349bc8a8c728c285a714ec94477796c88
+SCD6000_SHA1 := c2c284e38b59bcbc3ac6d6aead515881bbc1d12e
+CNV         := gem_ws2 gem_wx2 korg roland solton technics technics_kn6000
+CNV_REFS    := $(CNV:%=baserom/cnv/%.cnv)
+CNV_TARGETS := $(CNV:%=build/cnv/%.cnv)
+
+.PHONY: build-cnv verify-cnv cnv-src
+baserom/scd7000.img baserom/scd6000.img: baserom/%.img:
+	@mkdir -p baserom
+	unzip -p "$(SOFTLIST_DIR)/$(if $(findstring 7000,$*),kn7000_flop,kn6000_flop)/$*.zip" $*.img > $@.tmp
+	echo "$(if $(findstring 7000,$*),$(SCD7000_SHA1),$(SCD6000_SHA1))  $@.tmp" | sha1sum --quiet -c
+	mv $@.tmp $@
+
+baserom/cnv/technics_kn6000.cnv: baserom/scd6000.img tools/fat12_extract.py
+	@mkdir -p baserom/cnv
+	$(PYTHON) tools/fat12_extract.py $< TECHNICS.CNV $@
+baserom/cnv/%.cnv: baserom/scd7000.img tools/fat12_extract.py
+	@mkdir -p baserom/cnv
+	$(PYTHON) tools/fat12_extract.py $< $$(echo $* | tr a-z A-Z).CNV $@
+
+build/cnv/%.cnv: src/cnv/%.s tools/kn7asm.py tools/mn10300_asm.py
+	@mkdir -p build/cnv
+	$(ASM) $< -I . -o $@
+
+build-cnv: $(CNV_TARGETS)
+
+verify-cnv: $(CNV_TARGETS) $(CNV_REFS)
+	@ok=1; \
+	for n in $(CNV); do \
+	  if cmp -s "build/cnv/$$n.cnv" "baserom/cnv/$$n.cnv"; then \
+	    echo "OK    src/cnv/$$n.s rebuilds $$n.cnv byte-for-byte"; \
+	  else \
+	    echo "FAIL  build/cnv/$$n.cnv differs from the disk's:"; \
+	    cmp "build/cnv/$$n.cnv" "baserom/cnv/$$n.cnv" || true; ok=0; \
+	  fi; \
+	done; \
+	[ $$ok -eq 1 ] || { echo; echo "Style converter byte-match FAILED"; exit 1; }
+	@echo; echo "All 7 Style Convert Disk converters reproduced byte-for-byte."
+
+# Regenerate src/cnv/*.s (needs unidasm and PROGRAM 941, whose named routines name
+# the converters' copies of them). The committed files are the result.
+CNV_SRC_SPEC = GEM_WS2=baserom/cnv/gem_ws2.cnv:"$(CNV_SCD7) GEM_WS2.CNV" \
+	GEM_WX2=baserom/cnv/gem_wx2.cnv:"$(CNV_SCD7) GEM_WX2.CNV" \
+	KORG=baserom/cnv/korg.cnv:"$(CNV_SCD7) KORG.CNV" \
+	ROLAND=baserom/cnv/roland.cnv:"$(CNV_SCD7) ROLAND.CNV" \
+	SOLTON=baserom/cnv/solton.cnv:"$(CNV_SCD7) SOLTON.CNV" \
+	TECHNICS=baserom/cnv/technics.cnv:"$(CNV_SCD7) TECHNICS.CNV" \
+	TECHNICS_KN6000=baserom/cnv/technics_kn6000.cnv:"$(CNV_SCD6) TECHNICS.CNV"
+CNV_SCD7 := MAME softlist kn7000_flop, scd7000 (Style Convert Disk, Technics 1999), scd7000.img:
+CNV_SCD6 := MAME softlist kn6000_flop, scd6000 (Style Convert Disk, Technics 1999), scd6000.img:
+cnv-src: tools/gen_cnv_s.py tools/gen_xap_s.py cnv_manual.sym $(CNV_REFS) \
+		baserom/kn7000_program.rom kn7000.sym kn7000_manual.sym kn7000_exports_from_942.sym
+	UNIDASM=$(UNIDASM) $(PYTHON) tools/gen_cnv_s.py $(CNV_SRC_SPEC) --outdir src/cnv \
+	    --names cnv_manual.sym \
+	    --fw-rom baserom/kn7000_program.rom --fw-r1-end 0x186000 --fw-lib-file 0x3B8FD1 \
+	    --fw-sym kn7000.sym kn7000_manual.sym kn7000_exports_from_942.sym
+
 clean:
 	rm -rf build
 

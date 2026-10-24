@@ -5,6 +5,8 @@
 /baserom/*.inf
 /baserom/*.sld
 /baserom/*.bin
+/baserom/*.img
+/baserom/cnv/
 /build/
 __pycache__/
 *.pyc
