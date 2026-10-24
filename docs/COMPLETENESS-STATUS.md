@@ -53,6 +53,12 @@ verbatim, and the SLIDE4K/SLIDE8K compressed streams, whose codec has a committe
 encoder and rebuilds byte-exactly. That is the work queue, and it is the number
 to report instead of any percentage.
 
+**Update 2026-10-24:** the six BMPs are no longer stored verbatim. Each is rebuilt from a
+committed palette-indexed `table_data/images/FTBMPnn.png` plus `table_data/images/ftbmp_headers.json`
+by `scripts/build/ftbmp_images.py` (`make verify-ftbmp`: "ROUND TRIP EXACT", checked against the
+committed `.BMP` and the ROM). `kn5000_source_coverage.py` now counts table data's 318,468 B of
+FTBMP as round-trip, so its verbatim debt there is 0 B (was 318,468 B, 84.8% source; now 100.0%).
+
 **HD-AE5000 is closed.** Its 313,076 B of graphics -- four 320x240 8bpp screens, five 256-entry
 palettes and the 27x27 icon -- now build FROM committed palette-indexed PNGs and palette text files,
 via `scripts/build/hdae5000_images.py`. The PNGs store palette INDICES, not colours, because these
@@ -147,7 +153,7 @@ byte in that target. Its honest L0 coverage is **0.0%**.
 ## L4: assets
 
 Only **three** asset classes can put their human-readable form back into the build -- FTBMP (the ROM
-stores real BMPs), UI strings (assembler source) and screen layouts (C compiled to `.bin`). Help
+stores real BMPs; since 2026-10-24 built from PNG + header JSON by `ftbmp_images.py`), UI strings (assembler source) and screen layouts (C compiled to `.bin`). Help
 databases round-trip too, verified live this session.
 
 **No reverse converter exists for any pixel or glyph asset.** Every font and image artefact is a

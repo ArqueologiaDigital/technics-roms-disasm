@@ -23,7 +23,10 @@ table_data/ only, and reporting BYTES not directive counts):
                        compressed.bin (themselves round-trip-codec build products) instead of
                        the old icons_to_strings.bin blob -- see that script's header and
                        scripts/analysis/verify_stale_band.py for the original discovery
-    verbatim-bmp       genuine Windows BMP, stored verbatim by the firmware, checked into git
+    round-trip-bmp     genuine Windows BMP the firmware reads whole (header included), rebuilt
+                       from a committed palette-indexed PNG + images/ftbmp_headers.json by
+                       scripts/build/ftbmp_images.py (2026-10-24; this class was
+                       "verbatim-bmp", a committed blob, until then)
     stale-remnant      documented dead/superseded slice preserved byte-exact on purpose
                        (0 B as of 2026-09-02: this class is now empty -- see round-trip-shifted)
     UNCLASSIFIED       anything not matching the above -- this is the number that matters
@@ -37,11 +40,11 @@ classifier paths it has never seen and asserts they come back UNCLASSIFIED, so a
 undocumented blob would be caught, not silently waved through; (2) pins today's known paths to
 their expected class as a regression guard; (3) actually RE-RUNS the underlying round-trip
 verifiers (font_images.py / icon_images.py / ui_bitmaps_images.py / indexed_images.py /
-mono_images.py / style_events.py `verify`, plus `make verify-demo-presets` and
+mono_images.py / ftbmp_images.py / style_events.py `verify`, plus `make verify-demo-presets` and
 `verify-help-databases`) rather than trusting the classifier's path-string guess -- if a PNG or
 .styles file drifts from the ROM, or a codec regresses, THIS goes red; (4) checks the six
-verbatim-BMP files actually have a 'BM' magic and a header-declared size matching the file, so
-"verbatim-bmp" is not just a filename pattern. Anything that would make the 0-B-unclassified
+FTBMP files actually have a 'BM' magic and a header-declared size matching the file, so
+"round-trip-bmp" is not just a filename pattern. Anything that would make the 0-B-unclassified
 finding false makes --selftest exit 1.
 """
 import pathlib
@@ -57,7 +60,7 @@ INCBIN = re.compile(r'\.incbin\s+"([^"]+)"(?:\s*,\s*([0-9a-fA-Fx]+)\s*,\s*([0-9a
 COMMENT = re.compile(r'^\s*;')
 
 RULES = [
-    (('FTBMP',), 'verbatim-bmp'),
+    (('FTBMP',), 'round-trip-bmp'),
     (('images/',), 'round-trip-png'),
     (('includes/generated/',), 'round-trip-png'),
     (('stale_style_records_residue.bin', 'stale_help_db_german_head.bin'), 'round-trip-shifted'),
@@ -104,7 +107,7 @@ def selftest():
 
     # (2) today's known paths must map to their documented class (regression guard).
     known = [
-        ("images/FTBMP01.BMP", "verbatim-bmp"),
+        ("images/FTBMP01.BMP", "round-trip-bmp"),
         ("images/Wallpaper_0.bin", "round-trip-png"),
         ("includes/generated/IconPixels_000.bin", "round-trip-png"),
         ("includes/generated/Composer_FactoryMemoryImage.bin", "round-trip-png"),
@@ -130,6 +133,7 @@ def selftest():
         ("round-trip-png: indexed images (incl. wallpapers)",
          ["scripts/build/indexed_images.py", "verify"]),
         ("round-trip-png: boot-update banners", ["scripts/build/mono_images.py", "verify"]),
+        ("round-trip-bmp: Feature Demo FTBMP01..06", ["scripts/build/ftbmp_images.py", "verify"]),
         ("round-trip-png: Composer/style banks", ["scripts/build/style_events.py", "verify"]),
         ("round-trip-shifted: stale help duplicate",
          ["scripts/generators/gen_stale_help_duplicate.py", "verify"]),
@@ -160,7 +164,7 @@ def selftest():
             failures.append(f"{name}: FAILED (exit {r.returncode})\n"
                              f"{r.stdout[-800:]}\n{r.stderr[-500:]}")
 
-    # (4) "verbatim-bmp" must actually BE a Windows BMP (magic + header-declared size matches
+    # (4) "round-trip-bmp" must actually BE a Windows BMP (magic + header-declared size matches
     #     the file), not just a file whose path contains "FTBMP".
     for name in ["FTBMP01.BMP", "FTBMP02.BMP", "FTBMP03.BMP", "FTBMP04.BMP",
                  "FTBMP05.BMP", "FTBMP06.BMP"]:

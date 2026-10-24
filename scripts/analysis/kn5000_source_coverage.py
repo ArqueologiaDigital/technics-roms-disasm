@@ -188,8 +188,9 @@ def classify_incbin(root, s_file, rel_path):
     # v10/v9/v7 maincpu/images/*.bin and table_data/images/Wallpaper_*.bin, even
     # though those .bin files also happen to be tracked in git as a build cache
     # (see the module docstring). A sibling-less file in the same "images/" dir
-    # (table_data/images/FTBMP0*.BMP: no matching .png exists) has no generator
-    # and stays verbatim.
+    # has no generator and stays verbatim. table_data/images/FTBMP0*.BMP were
+    # that case until 2026-10-24; they now have sibling FTBMP0*.png sources and
+    # ftbmp_images.py (Makefile FTBMP_BMPS, `make verify-ftbmp`) rebuilds them.
     d, base = os.path.split(logical)
     if os.path.basename(d) == "images":
         stem = os.path.splitext(base)[0]

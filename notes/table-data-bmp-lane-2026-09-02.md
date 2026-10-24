@@ -1,6 +1,20 @@
 # Lane BMP -- table_data's six FTBMP files are already in their best form
 (2026-09-02)
 
+> **Superseded 2026-10-24 (lane tabledata-ftbmp).** The round trip this note
+> argued against now exists: `scripts/build/ftbmp_images.py` rebuilds each
+> `FTBMPnn.BMP` from `table_data/images/FTBMPnn.png` (palette indices; the PNG's
+> PLTE is the BMP's 256 entries in their original order) and
+> `table_data/images/ftbmp_headers.json` (every header field), and `verify`
+> compares the result with both the committed `.BMP` and the ROM span. The point
+> below about viewability still holds -- a BMP was already viewable. What changed
+> is the owner's choice of source form: the six files now follow the same
+> PNG-is-the-source rule as the other table_data images, the header values
+> become reviewable data that `build` checks against the PNG's size, and
+> `kn5000_source_coverage.py` stops counting 318,468 B of table data as verbatim
+> debt. The `.BMP` files stay committed as a build cache, so the genuine artefact
+> is still in the tree and the byte gate still proves it unchanged.
+
 LLVM: tlcs900_backend@dbb72df07371 (dbb72df073711ef98be1e41f003e04a7022bf120)
 
 ## Question this answers

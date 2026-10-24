@@ -3,6 +3,13 @@
 uncompressed Windows BMPs and that they are already both viewable and byte-exact,
 with no transformation between "committed source" and "ROM bytes".
 
+SUPERSEDED IN PART 2026-10-24: the round trip argued against below now exists.
+scripts/build/ftbmp_images.py builds each FTBMPnn.BMP from a committed FTBMPnn.png
+plus table_data/images/ftbmp_headers.json, and the .BMP stays committed as a build
+cache (see notes/table-data-bmp-lane-2026-09-02.md). This audit still holds and is
+still useful: it checks the header fields the firmware relies on in whatever .BMP the
+build produced, independently of the generator.
+
 QUESTION ANSWERED (lane BMP, 2026-09-02, notes/lanes/BRIEF-2026-09-01.md): the
 inventory (notes/DEBT-INVENTORY-2026-09-02.md) frames table_data's six FTBMP files
 as needing "a round-trip generator, not disassembly", on the pattern of
@@ -142,8 +149,8 @@ def main():
 
     print("\nOK: all six are genuine uncompressed 8bpp BITMAPINFOHEADER BMPs, header-consistent, "
           "and (where the ROM was available) byte-identical to their recorded ROM span. "
-          "They are already viewable in any generic image tool with zero bespoke script -- "
-          "there is no headerless-blob step for a PNG round trip to replace.")
+          "Their build source is FTBMPnn.png + ftbmp_headers.json "
+          "(scripts/build/ftbmp_images.py verify checks that round trip).")
 
 
 if __name__ == "__main__":
