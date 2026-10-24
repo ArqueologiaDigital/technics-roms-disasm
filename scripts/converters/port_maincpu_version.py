@@ -514,7 +514,29 @@ class Port:
         self.macros = set(re.findall(r'^\s*\.macro\s+([A-Za-z_.$][\w.$]*)', macro_prelude(args.src)
                                      + open(os.path.join(ROOT, args.src, "maincpu", "shared", "macros.s"),
                                             encoding="latin-1").read(), re.M))
-        self.macros_lc = {x.lower() for x in self.macros}
+        # the macros whose body branches relatively: only those are kept untested on equal bytes
+        self.macros_lc = set()
+        calls = {}
+        cur = None
+        for ln in (macro_prelude(args.src) + "\n" + open(os.path.join(
+                ROOT, args.src, "maincpu", "shared", "macros.s"), encoding="latin-1").read()).split("\n"):
+            c = code_part(ln).strip()
+            m = re.match(r'^\.macro\s+([A-Za-z_.$][\w.$]*)', c)
+            if m:
+                cur = m.group(1).lower()
+            elif c.startswith(".endm"):
+                cur = None
+            elif cur and c.split(None, 1) and c.split(None, 1)[0].lower() in REL:
+                self.macros_lc.add(cur)
+            elif cur and c.split(None, 1):
+                calls.setdefault(cur, set()).add(c.split(None, 1)[0].lower())
+        grew = True
+        while grew:                     # a macro that invokes one that branches, branches
+            grew = False
+            for mac, inner in calls.items():
+                if mac not in self.macros_lc and inner & self.macros_lc:
+                    self.macros_lc.add(mac)
+                    grew = True
         self.macro_rel = set()          # symbols a macro body branches to relatively
         self.newequ = {}
         self.newexpr = {}
@@ -1178,7 +1200,7 @@ class Port:
                     continue                 # written below if the build includes it
                 if r.endswith(".bin") and r not in used:
                     continue
-                if r in ("transplant_manifest.txt",):
+                if r in ("transplant_manifest.txt", "README.md"):
                     continue                 # describes the source tree's own history
                 dr = r.replace(root_s, "kn5000_%s_program.s" % dst)
                 shutil.copy2(os.path.join(sdir, r), os.path.join(ddir, dr))

@@ -50,6 +50,7 @@ PAIRS = {
     "maincpu_v7":  "kn5000_v7_program.llvm.elf",
     # v6 is its own link (ported from v7, scripts/converters/port_maincpu_version.py)
     "maincpu_v6":  "kn5000_v6_program.llvm.elf",
+    "maincpu_v5":  "kn5000_v5_program.llvm.elf",   # ported from v6
     "maincpu_v9":  "kn5000_v9_program.llvm.elf",
     # v8 is the v9 sources assembled with FW_VERSION_BYTE=0x08 -- one data byte
     # apart, same link -- so this file has v9's rows.  It exists so that a v8
@@ -119,6 +120,7 @@ def write_ref(tag, syms):
             fh.write("#   For v9  use maincpu_v9_symbols_reference.txt\n")
             fh.write("#   For v8  use maincpu_v8_symbols_reference.txt\n")
             fh.write("#   For v6  use maincpu_v6_symbols_reference.txt\n")
+            fh.write("#   For v5  use maincpu_v5_symbols_reference.txt\n")
             fh.write("# =====================================================\n#\n")
         fh.write(f"#   symbols .................. {len(syms):,}\n")
         fh.write(f"#   semantic names ........... {sem:,} ({100.0*sem/max(len(syms),1):.1f}%)\n")

@@ -121,6 +121,7 @@ ROMS = {
     "v9/maincpu": ("maincpu v9", 2097152),
     "v7/maincpu": ("maincpu v7", 2097152),
     "v6/maincpu": ("maincpu v6", 2097152),
+    "v5/maincpu": ("maincpu v5", 2097152),
     "v142/subcpu": ("subcpu payload v142", 196608),
     "subcpu/boot": ("subcpu boot (IC30)", 131072),
     "table_data": ("table data", 2097152),

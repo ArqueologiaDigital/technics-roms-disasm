@@ -1,0 +1,941 @@
+; =============================================================================
+; computer_interface_pcg.asm - Computer Interface PCG Output
+; =============================================================================
+; This file contains PCG (Program Change) Output routines for the
+; Computer Interface subsystem:
+;   TtMdPcgOut            - PCG Output title handler
+;   AcPcgOutGridBoxProc   - PCG Output grid box action processor
+;   PcgOutGridCheck       - PCG Output grid validation
+;   PcgOutSendFunc        - PCG Output send function handler
+;   MainPcgOutSend        - Main PCG Output send dispatcher
+;
+; =============================================================================
+
+TtMdPcgOut:
+	cp xbc, EVT_REPAINT
+	jr z, TtMdPcgOut_Exit
+	cp xbc, EVT_PAINT
+	jr z, TtMdPcgOut_Exit
+	cp xbc, EVT_HIDE
+	jr z, TtMdPcgOut_Exit
+	cp xbc, EVT_SHOW
+	jr nz, TtMdPcgOut_Exit
+	or xde, xde
+	jr nz, TtMdPcgOut_Exit
+	ld xwa, 0x590001
+	call GetViewInstance
+	ld xwa, (xhl + 42)
+	ldw (xwa), 0x0
+	ld xwa, (xhl + 46)
+	ldw (xwa), 0x1
+
+TtMdPcgOut_Exit:
+	ld xhl, 0:i3
+	ret
+
+AcPcgOutGridBoxProc:
+	lda xsp, (xsp - 16)
+	push xiz
+	ld (xsp + 12), xde
+	ld (xsp + 16), xbc
+	ld xiz, xwa
+	ld xbc, (xsp + 16)
+	cp xbc, EVT_REQUEST_GRID_DRAW
+	jrl z, PcgOutGrid_DispatchDelegate
+	ld xwa, (xsp + 16)
+	cp xwa, EVT_GET_FIXED_ROW_STR
+	jrl z, PcgOutGrid_CopyStrBank1
+	cp xwa, EVT_GET_FIXED_COL_STR
+	jrl z, PcgOutGrid_CopyStrBank0
+	cp xwa, EVT_SHOW
+	jr z, PcgOutGridBoxEventDispatch
+	sub xbc, EVT_INDEXSW_UP
+	cp xbc, 0x0
+	jrl lt, PcgOutGrid_DefaultHandler
+	cp xbc, 0x6
+	jrl gt, PcgOutGrid_DefaultHandler
+	add xbc, xbc
+	add xbc, AcPcgOutGridBoxProc_CaseTable
+	ld bc, (xbc)
+	lda xix, (PcgOutGridBoxEventDispatch:24)
+	jp	t, (xix+bc)
+
+PcgOutGridBoxEventDispatch:
+	ld xwa, xiz
+	ld xbc, (xsp + 16)
+	ld xde, (xsp + 12)
+	call InheritedProc
+	ld xwa, xiz
+	call GetViewInstance
+	ld (xsp + 8), xhl
+	ld xwa, xiz
+	ld xbc, EVT_GET_SELECTED_CEL
+	ld xde, 0:i3
+	call SendEvent
+	ld (xsp + 4), xhl
+	ld xwa, (xsp + 8)
+	ld bc, (xwa + 26)
+	ld xwa, (xsp + 4)
+	srl xwa, 16
+	ldiw_erp 0xe2, 0
+	add wa, bc
+	ld de, wa
+	extz xde
+	ld xwa, xiz
+	ld xbc, EVT_INDEXSW_UP
+	call SetDialUp
+	ld xwa, (xsp + 8)
+	ld bc, (xwa + 26)
+	ld xwa, (xsp + 4)
+	srl xwa, 16
+	ldiw_erp 0xe2, 0
+	add wa, bc
+	ld de, wa
+	extz xde
+	ld xwa, xiz
+	ld xbc, EVT_INDEXSW_DOWN
+	call	SetDialUp_Entry
+	ld wa, 1:i3
+	jrl PcgOutGridDialConfirm
+AcPcgOutGridBoxProc_OnIndexswUp:	; cases 29360151, 29360153
+	ld xwa, xiz
+	ld xbc, (xsp + 16)
+	ld xde, (xsp + 12)
+	call InheritedProc
+	ld xwa, xiz
+	ld xbc, EVT_CHECK_INDEX
+	ld xde, (xsp + 12)
+	call SendEvent
+	or xhl, xhl
+	jr z, PcgOutGrid_CheckAltPrev
+	ld xwa, xiz
+	ld xbc, EVT_GET_SELECTED_CEL
+	ld xde, 0:i3
+	call SendEvent
+	dec 1, hl
+	extz xhl
+	add xhl, 0xffff0000
+	ld xwa, xiz
+	ld xbc, EVT_SELE_DRAW
+	ld xde, xhl
+	call SendEvent
+	ld xwa, xiz
+	ld xbc, (xsp + 16)
+	ld xde, (xsp + 12)
+	call SetAutoInc
+	jrl PcgOutGrid_ReturnZero
+
+PcgOutGrid_CheckAltPrev:
+	ld xwa, xiz
+	ld xbc, EVT_CHECK_GRID_INDEX
+	ld xde, (xsp + 12)
+	call SendEvent
+	or xhl, xhl
+	jrl z, PcgOutGrid_ReturnZero
+	ld xwa, xiz
+	call GetViewInstance
+	ld xwa, (xhl + 70)
+	ld xbc, (xsp + 16)
+	ld xde, (xsp + 12)
+	call ApFuncCall
+	ld xwa, xiz
+	ld xbc, (xsp + 16)
+	ld xde, (xsp + 12)
+	call SetAutoInc
+	ld xwa, xiz
+	ld xbc, EVT_INDEXSW_UP
+	ld xde, (xsp + 12)
+	call SetDialUp
+	ld xwa, xiz
+	ld xbc, EVT_INDEXSW_DOWN
+	ld xde, (xsp + 12)
+	call	SetDialUp_Entry
+	ld wa, 1:i3
+	jrl PcgOutGridDialConfirm
+AcPcgOutGridBoxProc_OnIndexswDown:	; cases 29360152, 29360154
+	ld xwa, xiz
+	ld xbc, (xsp + 16)
+	ld xde, (xsp + 12)
+	call InheritedProc
+	ld xwa, xiz
+	ld xbc, EVT_CHECK_INDEX
+	ld xde, (xsp + 12)
+	call SendEvent
+	or xhl, xhl
+	jr z, PcgOutGrid_CheckAltNext
+	ld xwa, xiz
+	ld xbc, EVT_GET_SELECTED_CEL
+	ld xde, 0:i3
+	call SendEvent
+	cp hl, 3:i3
+	jrl ge, PcgOutGrid_ReturnZero
+	inc 1, hl
+	extz xhl
+	add xhl, 0xffff0000
+	ld xwa, xiz
+	ld xbc, EVT_SELE_DRAW
+	ld xde, xhl
+	call SendEvent
+	ld xwa, xiz
+	ld xbc, (xsp + 16)
+	ld xde, (xsp + 12)
+	call SetAutoInc
+	jrl PcgOutGrid_ReturnZero
+
+PcgOutGrid_CheckAltNext:
+	ld xwa, xiz
+	ld xbc, EVT_CHECK_GRID_INDEX
+	ld xde, (xsp + 12)
+	call SendEvent
+	or xhl, xhl
+	jrl z, PcgOutGrid_ReturnZero
+	ld xwa, xiz
+	call GetViewInstance
+	ld xwa, (xhl + 70)
+	ld xbc, (xsp + 16)
+	ld xde, (xsp + 12)
+	call ApFuncCall
+	ld xwa, xiz
+	ld xbc, (xsp + 16)
+	ld xde, (xsp + 12)
+	call SetAutoInc
+	ld xwa, xiz
+	ld xbc, EVT_INDEXSW_UP
+	ld xde, (xsp + 12)
+	call SetDialUp
+	ld xwa, xiz
+	ld xbc, EVT_INDEXSW_DOWN
+	ld xde, (xsp + 12)
+	call	SetDialUp_Entry
+	ld wa, 1:i3
+
+PcgOutGridDialConfirm:
+	call SetDialEnable
+	jr PcgOutGrid_ReturnZero
+
+PcgOutGrid_CopyStrBank0:
+	ld xwa, xiz
+	ld xiz, 0x3e
+	jr PcgOutGrid_CopyStrCommon
+
+PcgOutGrid_CopyStrBank1:
+	ld xwa, xiz
+	ld xiz, 0x42
+
+PcgOutGrid_CopyStrCommon:
+	call	GetViewInstance
+	add	xhl, xiz
+	ld	xwa, (xhl)
+	push	xwa
+	ld	xwa, (xsp+16)
+	push	xwa
+	call	Strcpy
+	inc	8, xsp
+	jr	PcgOutGrid_ReturnZero
+AcPcgOutGridBoxProc_OnLswData:	; cases 29360156, 29360157
+	ld	xwa, xiz
+	call	GetViewInstance
+	ld	xwa, (xhl+70)
+	ld	xbc, (xsp+16)
+	ld	xde, (xsp+12)
+	jr	PcgOutGrid_CallDelegate
+PcgOutGrid_DispatchDelegate:
+	ld xwa, xiz
+	call GetViewInstance
+	ld xwa, (xhl + 70)
+	ld xbc, (xsp + 16)
+	ld xde, (xsp + 12)
+
+PcgOutGrid_CallDelegate:
+	call ApFuncCall
+
+PcgOutGrid_ReturnZero:
+	ld xhl, 0:i3
+	jr PcgOutGrid_Epilogue
+
+PcgOutGrid_DefaultHandler:
+	ld xwa, xiz
+	ld xbc, (xsp + 16)
+	ld xde, (xsp + 12)
+	call InheritedProc
+
+PcgOutGrid_Epilogue:
+	pop xiz
+	lda xsp, (xsp + 16)
+	ret
+
+PcgOutGridCheck:
+	lda xsp, (xsp - 44)
+	push xiz
+	ld xiz, xde
+	ld (xsp + 44), xbc
+	ld xiy, PcgOutGridCheck_LocalInit
+	lda xix, (xsp + 12)
+	ld bc, 5:i3
+	ldirw
+	ld xiy, ComSetGridCheck_LocalInit
+	lda xix, (xsp + 4)
+	ld bc, 4:i3
+	ldirw
+	ld xix, (xsp + 44)
+	lda xiy, (xsp + 12)
+	lda xhl, (xsp + 4)
+	lda xbc, (xhl + 2)
+	lda xde, (xhl + 4)
+	ld xwa, (xsp + 44)
+	cp xwa, EVT_REQUEST_GRID_DRAW
+	jrl z, PcgOutCheckGridDataStructure
+	ld xwa, xix
+	sub xwa, EVT_INDEXSW_UP
+	cp xwa, 0x0
+	jrl lt, PcgOutGridCheckComplete
+	cp xwa, 0x6
+	jrl gt, PcgOutGridCheckComplete
+	add xwa, xwa
+	add xwa, PcgOutGridCheck_CaseTable
+	ld wa, (xwa)
+	lda xix, (PcgOutGridCheckJumpTable:24)
+	jp	t, (xix+wa)
+
+PcgOutGridCheckJumpTable:
+	call	GetFocusObject
+	ld	xwa, xhl
+	ld	xbc, EVT_GET_SELECTED_CEL
+	ld	xde, 0:i3
+	call	SendEvent
+	ld	xiz, xhl
+	lda	xwa, (xsp+4)
+	ld	xbc, xiz
+	srl	xbc, 16
+	ld	qbc, 0
+	ld	(xwa), bc
+	ld	bc, iz
+	ld	(xwa+2), bc
+	cpw	(xwa), 1
+	jrl	nz, PcgOutGridCheckComplete
+	ld	xde, (xsp+44)
+	cp	bc, 3:i3
+	jrl	z, PcgOutGridCheckJumpTable_Skip5
+	cp	bc, 2:i3
+	jr	z, PcgOutGridCheckJumpTable_Skip7
+	cp	bc, 1:i3
+	jr	z, PcgOutGridCheckJumpTable_Skip2
+	cp	bc, 0:i3
+	jrl	nz, PcgOutGridCheckComplete
+	ld	xiy, UserMemory_FormatStrings
+	lda	xix, (xsp+22)
+	ldw	bc, 11
+	ldirw
+	lda	xwa, (xsp+22)
+	lda	xbc, (0x2476a:24)
+	ld	(xwa), xbc
+	ld	xbc, 15
+	ld	(xwa+6), xbc
+	cp	xde, EVT_INDEXSW_UP_AIC
+	jr	nz, PcgOutGridCheckJumpTable_Skip
+	ld	xbc, 4:i3
+	ld	(xwa+14), xbc
+PcgOutGridCheckJumpTable_Skip:
+	jrl	PcgOutGridCheckJumpTable_Join4
+PcgOutGridCheckJumpTable_Skip2:
+	ld	xiy, UserMemory_FormatStrings
+	lda	xix, (xsp+22)
+	ldw	bc, 11
+	ldirw
+	lda	xwa, (xsp+22)
+	lda	xbc, (0x2476c:24)
+	ld	(xwa), xbc
+	ld	xbc, 127
+	ld	(xwa+6), xbc
+	cp	xde, EVT_INDEXSW_UP_AIC
+	jr	nz, PcgOutGridCheckJumpTable_Skip3
+	ld	xbc, 4:i3
+	ld	(xwa+14), xbc
+PcgOutGridCheckJumpTable_Skip3:
+	jrl	PcgOutGridCheckJumpTable_Join4
+PcgOutGridCheckJumpTable_Skip7:
+	cp	(0x24770:24), 255
+	jrl	z, PcgOutGridCheckComplete
+	ld	xiy, UserMemory_FormatStrings
+	lda	xix, (xsp+22)
+	ldw	bc, 11
+	ldirw
+	lda	xwa, (xsp+22)
+	lda	xbc, (0x2476e:24)
+	ld	(xwa), xbc
+	ld	xbc, 127
+	ld	(xwa+6), xbc
+	cp	xde, EVT_INDEXSW_UP_AIC
+	jr	nz, PcgOutGridCheckJumpTable_Skip4
+	ld	xbc, 4:i3
+	ld	(xwa+14), xbc
+PcgOutGridCheckJumpTable_Skip4:
+	jrl	PcgOutGridCheckJumpTable_Join4
+PcgOutGridCheckJumpTable_Skip5:
+	ld	xiy, UserMemory_FormatStrings
+	lda	xix, (xsp+22)
+	ldw	bc, 11
+	ldirw
+	lda	xwa, (xsp+22)
+	lda	xbc, (0x24770:24)
+	ld	(xwa), xbc
+	ld	xbc, 127
+	ld	(xwa+6), xbc
+	ld	xbc, 0xffffffff
+	ld	(xwa+10), xbc
+	cp	xde, EVT_INDEXSW_UP_AIC
+	jr	nz, PcgOutGridCheckJumpTable_Skip6
+	ld	xbc, 4:i3
+	ld	(xwa+14), xbc
+PcgOutGridCheckJumpTable_Skip6:
+	jrl	PcgOutGridCheckJumpTable_Join4
+PcgOutGridCheck_OnIndexswDown:	; cases 29360152, 29360154
+	call	GetFocusObject
+	ld	xwa, xhl
+	ld	xbc, EVT_GET_SELECTED_CEL
+	ld	xde, 0:i3
+	call	SendEvent
+	ld	xiz, xhl
+	lda	xwa, (xsp+4)
+	ld	xbc, xiz
+	srl	xbc, 16
+	ld	qbc, 0
+	ld	(xwa), bc
+	ld	bc, iz
+	ld	(xwa+2), bc
+	cpw	(xwa), 1
+	jrl	nz, PcgOutGridCheckComplete
+	ld	xde, (xsp+44)
+	cp	bc, 3:i3
+	jrl	z, PcgOutGridCheckJumpTable_Skip11
+	cp	bc, 2:i3
+	jrl	z, PcgOutGridCheck_OnIndexswDown_Skip
+	cp	bc, 1:i3
+	jr	z, PcgOutGridCheck_OnIndexswDown_Skip8
+	cp	bc, 0:i3
+	jrl	nz, PcgOutGridCheckComplete
+	ld	xiy, UserMemory_FormatStrings
+	lda	xix, (xsp+22)
+	ldw	bc, 11
+	ldirw
+	lda	xwa, (xsp+22)
+	lda	xbc, (0x2476a:24)
+	ld	(xwa), xbc
+	ld	xbc, 15
+	ld	(xwa+6), xbc
+	lda	xhl, (xwa+14)
+	cp	xde, EVT_INDEXSW_DOWN_AIC
+	jr	nz, PcgOutGridCheck_OnIndexswDown_Skip7
+	ld	xbc, 0xfffffffc
+	ld	(xhl), xbc
+	jr	PcgOutGridCheck_OnIndexswDown_Join
+PcgOutGridCheck_OnIndexswDown_Skip7:
+	ld	xbc, 0xffffffff
+	ld	(xhl), xbc
+PcgOutGridCheck_OnIndexswDown_Join:
+	jrl	PcgOutGridCheckJumpTable_Join4
+PcgOutGridCheck_OnIndexswDown_Skip8:
+	ld	xiy, UserMemory_FormatStrings
+	lda	xix, (xsp+22)
+	ldw	bc, 11
+	ldirw
+	lda	xwa, (xsp+22)
+	lda	xbc, (0x2476c:24)
+	ld	(xwa), xbc
+	ld	xbc, 127
+	ld	(xwa+6), xbc
+	lda	xhl, (xwa+14)
+	cp	xde, EVT_INDEXSW_DOWN_AIC
+	jr	nz, PcgOutGridCheck_OnIndexswDown_Skip9
+	ld	xbc, 0xfffffffc
+	ld	(xhl), xbc
+	jr	PcgOutGridCheck_OnIndexswDown_Join2
+PcgOutGridCheck_OnIndexswDown_Skip9:
+	ld	xbc, 0xffffffff
+	ld	(xhl), xbc
+PcgOutGridCheck_OnIndexswDown_Join2:
+	jrl	PcgOutGridCheckJumpTable_Join4
+PcgOutGridCheck_OnIndexswDown_Skip:
+	cp	(0x24770:24), 255
+	jrl	z, PcgOutGridCheckComplete
+	ld	xiy, UserMemory_FormatStrings
+	lda	xix, (xsp+22)
+	ldw	bc, 11
+	ldirw
+	lda	xwa, (xsp+22)
+	lda	xbc, (0x2476e:24)
+	ld	(xwa), xbc
+	ld	xbc, 127
+	ld	(xwa+6), xbc
+	lda	xhl, (xwa+14)
+	cp	xde, EVT_INDEXSW_DOWN_AIC
+	jr	nz, PcgOutGridCheckJumpTable_Skip10
+	ld	xbc, 0xfffffffc
+	ld	(xhl), xbc
+	jr	PcgOutGridCheckJumpTable_Join3
+PcgOutGridCheckJumpTable_Skip10:
+	ld	xbc, 0xffffffff
+	ld	(xhl), xbc
+PcgOutGridCheckJumpTable_Join3:
+	jr	PcgOutGridCheckJumpTable_Join4
+PcgOutGridCheckJumpTable_Skip11:
+	ld	xiy, UserMemory_FormatStrings
+	lda	xix, (xsp+22)
+	ldw	bc, 11
+	ldirw
+	lda	xwa, (xsp+22)
+	lda	xbc, (0x24770:24)
+	ld	(xwa), xbc
+	ld	xbc, 127
+	ld	(xwa+6), xbc
+	ld	xbc, 0xffffffff
+	ld	(xwa+10), xbc
+	lda	xhl, (xwa+14)
+	cp	xde, EVT_INDEXSW_DOWN_AIC
+	jr	nz, PcgOutGridCheckJumpTable_Skip12
+	ld	xbc, 0xfffffffc
+	ld	(xhl), xbc
+	jr	PcgOutGridCheckJumpTable_Join4
+PcgOutGridCheckJumpTable_Skip12:
+	ld	xbc, 0xffffffff
+	ld	(xhl), xbc
+PcgOutGridCheckJumpTable_Join4:
+	call	MainRamAdd
+	jrl	PcgOutGridCheckComplete
+PcgOutGridCheck_OnRamData:
+	ldw	(xhl), 1
+	ld	xhl, xiy
+	ld	(xde), xiy
+	lda	xde, (0x2476a:24)
+	lda	xwa, (xiz+14)
+	cp	xde, (xiz)
+	jr	nz, PcgOutGridCheckJumpTable_Entry_Code_Skip
+	ldw	(xbc), 0
+	ld	xwa, (xwa)
+	inc	1, xwa
+	push	xwa
+	pushw	PcgOutGridCheck_LocalInit_Strings@hi16
+	pushw	PcgOutGridCheck_LocalInit_Strings@lo16
+	push	xhl
+	call	Sprintf_Locked
+	lda	xsp, (xsp+12)
+	call	GetFocusObject
+	ld	xwa, xhl
+	lda	xde, (xsp+4)
+	ld	xbc, EVT_GRID_DRAW
+	jrl	PcgOutCheck_SetFinalProp
+PcgOutGridCheckJumpTable_Entry_Code_Skip:
+	lda	xde, (0x2476c:24)
+	cp	xde, (xiz)
+	jr	nz, PcgOutGridCheckJumpTable_Entry_Code_Skip2
+	ldw	(xbc), 1
+	ld	xwa, (xwa)
+	inc	1, xwa
+	push	xwa
+	pushw	PcgOutGridCheckJumpTable_Entry2_Str_Fmt3d@hi16
+	pushw	PcgOutGridCheckJumpTable_Entry2_Str_Fmt3d@lo16
+	push	xhl
+	call	Sprintf_Locked
+	lda	xsp, (xsp+12)
+	call	GetFocusObject
+	ld	xwa, xhl
+	lda	xde, (xsp+4)
+	ld	xbc, EVT_GRID_DRAW
+	jrl	PcgOutCheck_SetFinalProp
+PcgOutGridCheckJumpTable_Entry_Code_Skip2:
+	lda	xde, (0x2476e:24)
+	cp	xde, (xiz)
+	jrl	nz, PcgOutGridCheckJumpTable_Entry_Code_Skip4
+	ldw	(xbc), 2
+	cp	(0x24770:24), 255
+	jr	nz, PcgOutGridCheckJumpTable_Entry_Code_Skip3
+	pushw	PcgOutGridCheckJumpTable_Entry2_Str_Dash_Dash_Dash@hi16
+	pushw	PcgOutGridCheckJumpTable_Entry2_Str_Dash_Dash_Dash@lo16
+	push	xhl
+	call	Strcpy
+	inc	8, xsp
+	call	GetFocusObject
+	ld	xwa, xhl
+	lda	xde, (xsp+4)
+	ld	xbc, EVT_GRID_DRAW
+	call	SendEvent
+	ldw	(xsp+6), 4
+	pushw	PcgOutGridCheckJumpTable_Entry2_Str_OFF@hi16
+	pushw	PcgOutGridCheckJumpTable_Entry2_Str_OFF@lo16
+	lda	xwa, (xsp+16)
+	push	xwa
+	call	Strcpy
+	inc	8, xsp
+	call	GetFocusObject
+	ld	xwa, xhl
+	lda	xde, (xsp+4)
+	ld	xbc, EVT_GRID_DRAW
+	jrl	PcgOutCheck_SetFinalProp
+PcgOutGridCheckJumpTable_Entry_Code_Skip3:
+	ld	xwa, (xwa)
+	push	xwa
+	pushw	PcgOutGridCheckJumpTable_Entry2_Str_Fmt3d_2@hi16
+	pushw	PcgOutGridCheckJumpTable_Entry2_Str_Fmt3d_2@lo16
+	push	xhl
+	call	Sprintf_Locked
+	lda	xsp, (xsp+12)
+	call	GetFocusObject
+	ld	xwa, xhl
+	lda	xde, (xsp+4)
+	ld	xbc, EVT_GRID_DRAW
+	call	SendEvent
+	ldw	(xsp+6), 4
+	ld	c, (0x24770:24)
+	exts	bc
+	ld	xwa, (xiz+14)
+	sll	wa, 7
+	add	wa, bc
+	pushw	wa
+	pushw	PcgOutGridCheckJumpTable_Entry2_Str_Fmt5d@hi16
+	pushw	PcgOutGridCheckJumpTable_Entry2_Str_Fmt5d@lo16
+	lda	xwa, (xsp+18)
+	push	xwa
+	call	Sprintf_Locked
+	lda	xsp, (xsp+10)
+	call	GetFocusObject
+	ld	xwa, xhl
+	lda	xde, (xsp+4)
+	ld	xbc, EVT_GRID_DRAW
+	jrl	PcgOutCheck_SetFinalProp
+PcgOutGridCheckJumpTable_Entry_Code_Skip4:
+	lda	xde, (0x24770:24)
+	cp	xde, (xiz)
+	jrl	nz, PcgOutGridCheckComplete
+	ldw	(xbc), 2
+	ld	xwa, (xwa)
+	cp	xwa, 0xffffffff
+	jr	nz, PcgOutGridCheckJumpTable_Entry_Code_Skip5
+	pushw	PcgOutGridCheckJumpTable_Entry2_Str_Dash_Dash_Dash_2@hi16
+	pushw	PcgOutGridCheckJumpTable_Entry2_Str_Dash_Dash_Dash_2@lo16
+	push	xhl
+	call	Strcpy
+	inc	8, xsp
+	call	GetFocusObject
+	ld	xwa, xhl
+	lda	xde, (xsp+4)
+	ld	xbc, EVT_GRID_DRAW
+	call	SendEvent
+	ldw	(xsp+6), 3
+	pushw	PcgOutGridCheckJumpTable_Entry2_Str_OFF_2@hi16
+	pushw	PcgOutGridCheckJumpTable_Entry2_Str_OFF_2@lo16
+	lda	xwa, (xsp+16)
+	push	xwa
+	call	Strcpy
+	inc	8, xsp
+	call	GetFocusObject
+	ld	xwa, xhl
+	lda	xde, (xsp+4)
+	ld	xbc, EVT_GRID_DRAW
+	call	SendEvent
+	ldw	(xsp+6), 4
+	pushw	PcgOutGridCheckJumpTable_Entry2_Str_OFF_3@hi16
+	pushw	PcgOutGridCheckJumpTable_Entry2_Str_OFF_3@lo16
+	lda	xwa, (xsp+16)
+	push	xwa
+	call	Strcpy
+	inc	8, xsp
+	call	GetFocusObject
+	ld	xwa, xhl
+	lda	xde, (xsp+4)
+	ld	xbc, EVT_GRID_DRAW
+	jrl	PcgOutCheck_SetFinalProp
+PcgOutGridCheckJumpTable_Entry_Code_Skip5:
+	ld	a, (0x2476e:24)
+	exts	wa
+	pushw	wa
+	pushw	PcgOutGridCheckJumpTable_Entry2_Str_Fmt3d_3@hi16
+	pushw	PcgOutGridCheckJumpTable_Entry2_Str_Fmt3d_3@lo16
+	push	xhl
+	call	Sprintf_Locked
+	lda	xsp, (xsp+10)
+	call	GetFocusObject
+	ld	xwa, xhl
+	lda	xde, (xsp+4)
+	ld	xbc, EVT_GRID_DRAW
+	call	SendEvent
+	ldw	(xsp+6), 3
+	ld	xwa, (xiz+14)
+	push	xwa
+	pushw	PcgOutGridCheckJumpTable_Entry2_Str_Fmt3d_4@hi16
+	pushw	PcgOutGridCheckJumpTable_Entry2_Str_Fmt3d_4@lo16
+	lda	xwa, (xsp+20)
+	push	xwa
+	call	Sprintf_Locked
+	lda	xsp, (xsp+12)
+	call	GetFocusObject
+	ld	xwa, xhl
+	lda	xde, (xsp+4)
+	ld	xbc, EVT_GRID_DRAW
+	call	SendEvent
+	ldw	(xsp+6), 4
+	ld	xbc, (xiz+14)
+	ld	a, (0x2476e:24)
+	exts	wa
+	sll	wa, 7
+	add	wa, bc
+	pushw	wa
+	pushw	PcgOutGridCheckJumpTable_Entry2_Str_Fmt5d_2@hi16
+	pushw	PcgOutGridCheckJumpTable_Entry2_Str_Fmt5d_2@lo16
+	lda	xwa, (xsp+18)
+	push	xwa
+	call	Sprintf_Locked
+	lda	xsp, (xsp+10)
+	call	GetFocusObject
+	ld	xwa, xhl
+	lda	xde, (xsp+4)
+	ld	xbc, EVT_GRID_DRAW
+	jrl	PcgOutCheck_SetFinalProp
+PcgOutCheckGridDataStructure:
+	ld XWA,XIZ
+	srl XWA, 16
+	ld QWA,0
+	ld (XHL),WA
+	ld XWA,XBC
+	ld IX,IZ
+	ld (XBC),IX
+	ld XBC,XIY
+	ld (XDE),XIY
+	cpw (XHL), 0x0001
+	jrl nz, PcgOutGridCheckComplete
+	ld DE,(XWA)
+	cp de, 3:i3
+	jrl z, PcgOutCheck_SendPreset3
+	cp de, 2:i3
+	jr z, PcgOutCheck_SendPreset2
+	cp de, 1:i3
+	jr z, PcgOutCheck_SendPreset1
+	cp de, 0:i3
+	jrl nz, PcgOutGridCheckComplete
+	ld a, (0x02476a:24)
+	inc 1,A
+	extz WA
+	pushw wa
+	pushw PcgOutCheckGridDataStructure_Str_Fmt3d@hi16
+	pushw PcgOutCheckGridDataStructure_Str_Fmt3d@lo16
+	push XBC
+	call Sprintf_Locked
+	lda xsp, (xsp + 0x0a)
+	call GetFocusObject
+	ld XWA,XHL
+	lda xde, (xsp + 0x04)
+	ld XBC,EVT_GRID_DRAW
+	jrl t, PcgOutCheck_SetFinalProp
+PcgOutCheck_SendPreset1:
+	ld	a, (149356:24)
+	inc	1, a
+	extz	wa
+	pushw	wa
+	pushw	PcgOutCheck_SendPreset1_Str_Fmt3d@hi16
+	pushw	PcgOutCheck_SendPreset1_Str_Fmt3d@lo16
+	push	xbc
+	call	Sprintf_Locked
+	lda	xsp, (xsp+10)
+	call	GetFocusObject
+	ld	xwa, xhl
+	lda	xde, (xsp+4)
+	ld	xbc, EVT_GRID_DRAW
+	jrl	PcgOutCheck_SetFinalProp
+PcgOutCheck_SendPreset2:
+	cp	(0x24770:24), 255
+	jr	nz, PcgOutCheck_SendPreset2Named
+	pushw	PcgOutCheck_SendPreset2_Str_Dash_Dash_Dash@hi16
+	pushw	PcgOutCheck_SendPreset2_Str_Dash_Dash_Dash@lo16
+	push	xbc
+	call	Strcpy
+	inc	8, xsp
+	call	GetFocusObject
+	ld	xwa, xhl
+	lda	xde, (xsp+4)
+	ld	xbc, EVT_GRID_DRAW
+	call	SendEvent
+	ldw	(xsp+6), 4
+	pushw	PcgOutCheck_SendPreset2_Str_OFF@hi16
+	pushw	PcgOutCheck_SendPreset2_Str_OFF@lo16
+	lda	xwa, (xsp+16)
+	push	xwa
+	call	Strcpy
+	inc	8, xsp
+	call	GetFocusObject
+	ld	xwa, xhl
+	lda	xde, (xsp+4)
+	ld	xbc, EVT_GRID_DRAW
+	jrl	PcgOutCheck_SetFinalProp
+PcgOutCheck_SendPreset2Named:
+	ld	a, (149358:24)
+	exts	wa
+	pushw	wa
+	pushw	PcgOutCheck_SendPreset2Named_Str_Fmt3d@hi16
+	pushw	PcgOutCheck_SendPreset2Named_Str_Fmt3d@lo16
+	push	xbc
+	call	Sprintf_Locked
+	lda	xsp, (xsp+10)
+	call	GetFocusObject
+	ld	xwa, xhl
+	lda	xde, (xsp+4)
+	ld	xbc, EVT_GRID_DRAW
+	call	SendEvent
+	ldw	(xsp+6), 4
+	ld	c, (149360:24)
+	exts	bc
+	ld	a, (149358:24)
+	exts	wa
+	sll	wa, 7
+	add	wa, bc
+	pushw	wa
+	pushw	PcgOutCheck_SendPreset2Named_Str_Fmt5d@hi16
+	pushw	PcgOutCheck_SendPreset2Named_Str_Fmt5d@lo16
+	lda	xwa, (xsp+18)
+	push	xwa
+	call	Sprintf_Locked
+	lda	xsp, (xsp+10)
+	call	GetFocusObject
+	ld	xwa, xhl
+	lda	xde, (xsp+4)
+	ld	xbc, EVT_GRID_DRAW
+	jrl	PcgOutCheck_SetFinalProp	; -> 0xF7797B
+PcgOutCheck_SendPreset3:
+	ldw	(xwa), 2
+	cp	(0x24770:24), 255
+	jr	nz, PcgOutCheck_SendPreset3Named
+	pushw	PcgOutCheck_SendPreset3_Str_Dash_Dash_Dash@hi16
+	pushw	PcgOutCheck_SendPreset3_Str_Dash_Dash_Dash@lo16
+	push	xbc
+	call	Strcpy
+	inc	8, xsp
+	call	GetFocusObject
+	ld	xwa, xhl
+	lda	xde, (xsp+4)
+	ld	xbc, EVT_GRID_DRAW
+	call	SendEvent
+	ldw	(xsp+6), 3
+	pushw	PcgOutCheck_SendPreset3_Str_OFF@hi16
+	pushw	PcgOutCheck_SendPreset3_Str_OFF@lo16
+	lda	xwa, (xsp+16)
+	push	xwa
+	call	Strcpy
+	inc	8, xsp
+	call	GetFocusObject
+	ld	xwa, xhl
+	lda	xde, (xsp+4)
+	ld	xbc, EVT_GRID_DRAW
+	call	SendEvent
+	ldw	(xsp+6), 4
+	pushw	PcgOutCheck_SendPreset3_Str_OFF_2@hi16
+	pushw	PcgOutCheck_SendPreset3_Str_OFF_2@lo16
+	lda	xwa, (xsp+16)
+	push	xwa
+	call	Strcpy
+	inc	8, xsp
+	call	GetFocusObject
+	ld	xwa, xhl
+	lda	xde, (xsp+4)
+	ld	xbc, EVT_GRID_DRAW
+	jrl	PcgOutCheck_SetFinalProp
+PcgOutCheck_SendPreset3Named:
+	ld	a, (149358:24)
+	exts	wa
+	pushw	wa
+	pushw	PcgOutCheck_SendPreset3Named_Str_Fmt3d@hi16
+	pushw	PcgOutCheck_SendPreset3Named_Str_Fmt3d@lo16
+	push	xbc
+	call	Sprintf_Locked
+	lda	xsp, (xsp+10)
+	call	GetFocusObject
+	ld	xwa, xhl
+	lda	xde, (xsp+4)
+	ld	xbc, EVT_GRID_DRAW
+	call	SendEvent
+	ldw	(xsp+6), 3
+	ld	a, (149360:24)
+	exts	wa
+	pushw	wa
+	pushw	PcgOutCheck_SendPreset3Named_Str_Fmt3d_2@hi16
+	pushw	PcgOutCheck_SendPreset3Named_Str_Fmt3d_2@lo16
+	lda	xwa, (xsp+18)
+	push	xwa
+	call	Sprintf_Locked
+	lda	xsp, (xsp+10)
+	call	GetFocusObject
+	ld	xwa, xhl
+	lda	xde, (xsp+4)
+	ld	xbc, EVT_GRID_DRAW
+	call	SendEvent
+	ldw	(xsp+6), 4
+	ld	c, (149360:24)
+	exts	bc
+	ld	a, (149358:24)
+	exts	wa
+	sll	wa, 7
+	add	wa, bc
+	pushw	wa
+	pushw	PcgOutCheck_SendPreset3Named_Str_Fmt5d@hi16
+	pushw	PcgOutCheck_SendPreset3Named_Str_Fmt5d@lo16
+	lda	xwa, (xsp+18)
+	push	xwa
+	call	Sprintf_Locked
+	lda	xsp, (xsp+10)
+	call	GetFocusObject
+	ld	xwa, xhl
+	lda	xde, (xsp+4)
+	ld	xbc, EVT_GRID_DRAW
+PcgOutCheck_SetFinalProp:
+	call SendEvent
+
+PcgOutGridCheckComplete:
+	ld xhl, 0:i3
+	pop xiz
+	lda xsp, (xsp + 44)
+	ret
+
+PcgOutSendFunc:
+	cp xbc, EVT_SW_ON
+	jr nz, PcgOutSendFunc_Exit
+	lda xde, (0x024752:24)
+	ld a, (0x02476a:24)
+	ld (xde), a
+	ld a, (0x02476c:24)
+	ld (xde + 1), a
+	lda xbc, (xde + 2)
+	ld l, (0x024770:24)
+	cp l, 0xff
+	jr nz, PcgOutSend_StoreBankIndex
+	ldw (xbc), 0xffff
+	jr PcgOutSend_TransmitMidi
+
+PcgOutSend_StoreBankIndex:
+	exts hl
+	ld a, (0x02476e:24)
+	exts wa
+	sla wa, 7
+	add wa, hl
+	ld (xbc), wa
+
+PcgOutSend_TransmitMidi:
+	ld xwa, NAKA_MAINFUNC_MainPcgOutSend
+	ld xbc, EVT_PCG_SEND
+	call MainFuncCall
+
+PcgOutSendFunc_Exit:
+	ld xhl, 0:i3
+	ret
+
+MainPcgOutSend:
+	cp	xbc, EVT_PCG_SEND
+	jr	nz, MainPcgOutSend_Exit
+	ld	a, (xde)
+	extz	wa
+	ld	c, (xde+1)
+	extz	bc
+	ld	de, (xde+2)
+	call	MidiSysEx_BuildAndSend
+MainPcgOutSend_Exit:
+	ld xhl, 0:i3
+	ret
+
+; End of Computer Interface PCG routines
+

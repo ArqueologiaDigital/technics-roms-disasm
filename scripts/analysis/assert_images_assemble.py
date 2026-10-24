@@ -49,7 +49,7 @@ MC = os.environ.get("LLVM_MC") or os.path.join(
     "llvm-project", "build", "bin", "llvm-mc")
 
 # (include dir, root source[, extra llvm-mc arguments]) -- exactly the ten
-# `llvm-mc -filetype=obj` invocations in the Makefile (eleven with v6).  v8 is the v9 root with
+# `llvm-mc -filetype=obj` invocations in the Makefile (twelve with v6 and v5).  v8 is the v9 root with
 # the version byte preset, so it is assembled here with the same --defsym.
 IMAGES = [
     ("v10/maincpu",  "v10/maincpu/kn5000_v10_program.s"),
@@ -57,6 +57,7 @@ IMAGES = [
     ("v9/maincpu",   "v9/maincpu/kn5000_v9_program.s", ("--defsym", "FW_VERSION_BYTE=0x08")),
     ("v7/maincpu",   "v7/maincpu/kn5000_v7_program.s"),
     ("v6/maincpu",   "v6/maincpu/kn5000_v6_program.s"),
+    ("v5/maincpu",   "v5/maincpu/kn5000_v5_program.s"),
     ("v142/subcpu",  "v142/subcpu/kn5000_subprogram_v142.s"),
     ("v141/subcpu",  "v141/subcpu/kn5000_subprogram_v141.s"),
     ("subcpu/boot",  "subcpu/boot/kn5000_subcpu_boot.s"),
