@@ -45,7 +45,9 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SRC = os.path.join(ROOT, "prom_b", "wsa1_prom_b.s")
+sys.path.insert(0, os.path.join(ROOT, "notes"))
+from asm_source import image_path  # noqa: E402  (the image, not the master)
+SRC = image_path(ROOT, "prom_b/wsa1_prom_b.s")
 THRESHOLD = 64  # bytes; below this a run is too small to hide meaningful debt
 
 BYTE_RE = re.compile(r'\s*\.byte\s+(.*)')

@@ -36,8 +36,10 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-B = open(os.path.join(ROOT, "prom_b", "wsa1_prom_b.s"), "rb").read().decode("latin-1")
-A = open(os.path.join(ROOT, "prom_a", "wsa1_prom_a.s"), "rb").read().decode("latin-1")
+sys.path.insert(0, os.path.join(ROOT, "notes"))
+from asm_source import image_path  # noqa: E402  (the image, not the master)
+B = open(image_path(ROOT, "prom_b/wsa1_prom_b.s"), "rb").read().decode("latin-1")
+A = open(image_path(ROOT, "prom_a/wsa1_prom_a.s"), "rb").read().decode("latin-1")
 CONTROL = {**{k: "SoftKeyCol%d" % (k + 1) for k in range(8)}, **{8 + k: "LcdKeyRow%d" % (k + 1) for k in range(5)},
            0x0F: "ExitKey", 0x10: "PageKey"}
 # table base -> (screen, view-B id, thunk triple base)

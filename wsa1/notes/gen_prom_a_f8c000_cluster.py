@@ -79,6 +79,8 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "notes"))
+from asm_source import image_path  # noqa: E402  (the image, not the master)
+sys.path.insert(0, os.path.join(ROOT, "notes"))
 sys.path.insert(0, os.path.join(ROOT, "prom_a"))
 import prom_a_linear_decode_check as C  # noqa: E402
 import roundtrip as RT                   # noqa: E402
@@ -171,7 +173,7 @@ def cmd_check():
     checks.append(("all 5 CmdList readers' `calr` resolve to the SAME address, 0xF8C16D",
                     calr_targets == {PARSER}))
     checks.append((f"0x{PARSER:06X} is `.LF8C16D: cp (XIY),0xff` in already-converted code",
-                    "cp (XIY),0xff" in open(os.path.join(ROOT, "prom_a", "wsa1_prom_a.s")).read()))
+                    "cp (XIY),0xff" in open(image_path(ROOT, "prom_a/wsa1_prom_a.s")).read()))
 
     # dispatch table
     lo, hi, name = DISPATCH
@@ -197,7 +199,7 @@ def cmd_check():
 
     # sub_F97503
     checks.append(("0xF97503-0xF97533 self-consistent", C.run(*F97503, quiet=True)))
-    src = open(os.path.join(ROOT, "prom_a", "wsa1_prom_a.s")).read()
+    src = open(image_path(ROOT, "prom_a/wsa1_prom_a.s")).read()
     checks.append(("0xF98628 already has `lda_24 xix, (0xf97503)`",
                     "lda_24 xix, (0xf97503)" in src))
     checks.append(("the same routine executes `jp (xix)` (computed jump through it)",

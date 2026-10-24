@@ -72,7 +72,9 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "notes"))
-SRC = os.path.join(ROOT, "prom_b", "wsa1_prom_b.s")
+from asm_source import image_path  # noqa: E402  (the image, not the master)
+sys.path.insert(0, os.path.join(ROOT, "notes"))
+SRC = image_path(ROOT, "prom_b/wsa1_prom_b.s")
 ROM = os.path.join(ROOT, "original_ROMs", "wsa1_prom_b.ic13")
 BASE = 0xF00000
 HTBL_A, HTBL_B = 0x31D21, 0x31DB1

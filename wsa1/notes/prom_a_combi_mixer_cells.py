@@ -32,8 +32,10 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(ROOT, "notes"))
+from asm_source import image_path  # noqa: E402  (the image, not the master)
 sys.path.insert(0, os.path.join(ROOT, "notes", "sysex-probes"))
-A = open(os.path.join(ROOT, "prom_a", "wsa1_prom_a.s"), "rb").read().decode("latin-1").split("\n")
+A = open(image_path(ROOT, "prom_a/wsa1_prom_a.s"), "rb").read().decode("latin-1").split("\n")
 LO, HI = 0xFBE5EE, 0xFBECC3
 H = "(notes/prom_a_combi_mixer_cells.py)"
 

@@ -27,12 +27,14 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
+sys.path.insert(0, os.path.join(ROOT, "notes"))
+from asm_source import image_path  # noqa: E402  (the image, not the master)
 sys.path.insert(0, HERE)
 import kernel_structural_match as K  # noqa: E402
 
 MINLEN = int(sys.argv[sys.argv.index("--minlen") + 1]) if "--minlen" in sys.argv else 8
 BR = re.compile(r'^((?:jr|jrl|djnz)\b.*?)0x[0-9a-f]+\s*$')   # local branches only: a call / jp target must be EQUAL
-FILES = {"wsa1:a": os.path.join(ROOT, "prom_a", "wsa1_prom_a.s"), "wsa1:b": os.path.join(ROOT, "prom_b", "wsa1_prom_b.s")}
+FILES = {"wsa1:a": image_path(ROOT, "prom_a/wsa1_prom_a.s"), "wsa1:b": image_path(ROOT, "prom_b/wsa1_prom_b.s")}
 SKIP = (0xF00C4D, 0xF01800)
 OLD = (0xF6F000, 0xF70000)
 LOCAL = re.compile(r'_(Skip|Join|Loop|Return|Epilogue|Resume|Nop)\d*$')

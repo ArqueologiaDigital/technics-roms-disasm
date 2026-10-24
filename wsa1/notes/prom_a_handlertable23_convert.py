@@ -28,8 +28,10 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PA = os.path.join(ROOT, "prom_a", "wsa1_prom_a.s")
-PB = os.path.join(ROOT, "prom_b", "wsa1_prom_b.s")
+sys.path.insert(0, os.path.join(ROOT, "notes"))
+from asm_source import image_path  # noqa: E402  (the image, not the master)
+PA = image_path(ROOT, "prom_a/wsa1_prom_a.s")
+PB = image_path(ROOT, "prom_b/wsa1_prom_b.s")
 G = re.compile(r'^([A-Za-z_][\w$]*):')
 LOC = re.compile(r'_(Skip|Join|Loop|Return|Epilogue|Resume|Nop)\d*$')
 CONTROL = {**{k: "SoftKeyCol%d" % (k + 1) for k in range(8)}, **{8 + k: "LcdKeyRow%d" % (k + 1) for k in range(5)},

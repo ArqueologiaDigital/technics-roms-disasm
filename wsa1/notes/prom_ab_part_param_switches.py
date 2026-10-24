@@ -51,9 +51,11 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(ROOT, "notes"))
+from asm_source import image_path  # noqa: E402  (the image, not the master)
 sys.path.insert(0, os.path.join(ROOT, "notes", "sysex-probes"))
-A = open(os.path.join(ROOT, "prom_a", "wsa1_prom_a.s"), "rb").read().decode("latin-1").split("\n")
-B = open(os.path.join(ROOT, "prom_b", "wsa1_prom_b.s"), "rb").read().decode("latin-1").split("\n")
+A = open(image_path(ROOT, "prom_a/wsa1_prom_a.s"), "rb").read().decode("latin-1").split("\n")
+B = open(image_path(ROOT, "prom_b/wsa1_prom_b.s"), "rb").read().decode("latin-1").split("\n")
 H = "(notes/prom_ab_part_param_switches.py)"
 TABLES = re.compile(r'^(PtrTable_F1A[BC][0-9A-F]{2}|PartParam(?:Step|Enter)_Ids\w+):')   # the second: after the rename
 REC = r'((?:Record_F1A[A-F]|PartParamField_)\w+)'

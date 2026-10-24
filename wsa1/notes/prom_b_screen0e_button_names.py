@@ -36,10 +36,12 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
+sys.path.insert(0, os.path.join(ROOT, "notes"))
+from asm_source import image_path  # noqa: E402  (the image, not the master)
 sys.path.insert(0, HERE)
 import wave7_panel_names_round11 as R11  # noqa: E402
 
-PROM_B = os.path.join(ROOT, "prom_b", "wsa1_prom_b.s")
+PROM_B = image_path(ROOT, "prom_b/wsa1_prom_b.s")
 SUBTABLES = ["StepRecord_SubScreenButtonTable", "StepRecord_SubScreenButtonTable_Kind3"]
 SPELL = {"Exit": "ExitKey", "NumberPad": "NumberPadKey", "Page": "PageKey"}
 

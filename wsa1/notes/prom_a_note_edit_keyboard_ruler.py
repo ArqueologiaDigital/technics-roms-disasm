@@ -20,7 +20,9 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-A = open(os.path.join(ROOT, "prom_a", "wsa1_prom_a.s"), "rb").read().decode("latin-1").split("\n")
+sys.path.insert(0, os.path.join(ROOT, "notes"))
+from asm_source import image_path  # noqa: E402  (the image, not the master)
+A = open(image_path(ROOT, "prom_a/wsa1_prom_a.s"), "rb").read().decode("latin-1").split("\n")
 IDX = {m.group(1): i for i, l in enumerate(A) for m in [re.match(r'^([A-Za-z_][\w$]*):', l)] if m}
 
 

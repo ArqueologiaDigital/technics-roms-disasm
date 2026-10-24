@@ -70,10 +70,19 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "notes"))
+from asm_source import image_path, write_part  # noqa: E402
+sys.path.insert(0, os.path.join(ROOT, "notes"))
 import prom_a_panel_control_map as PM                 # noqa: E402
 from asm_source import git_show  # noqa: E402  (git paths are repo-relative)
 
-LISTING = os.path.join(ROOT, "prom_a", "wsa1_prom_a.s")
+# ⚠ A WRITE THROUGH THIS NAME IS GUARDED AND WILL REFUSE while the text
+# it is handed is the whole image: write_part() sees the master's
+# .include lines disappear.  That refusal is correct and is not the fix.
+# The fix for a RENAME is asm_source.edit_image(ROOT, <primary>, fn),
+# which applies the transform to every constituent file; for a SPLICE it
+# is asm_source.locate() on the block's anchor.  See notes/asm_source.py.
+LISTING_MASTER = os.path.join(ROOT, "prom_a/wsa1_prom_a.s")   # the WRITE path: write_part() guards it
+LISTING = image_path(ROOT, "prom_a/wsa1_prom_a.s")  # the READ path: the image, not the master
 _A = open(os.path.join(ROOT, "original_ROMs", "wsa1_prom_a.ic12"), "rb").read()
 _B = open(os.path.join(ROOT, "original_ROMs", "wsa1_prom_b.ic13"), "rb").read()
 
@@ -904,7 +913,7 @@ def apply_():
             ";   `sub_XXXXXX` on purpose.",
         ]
         added_legends += 1
-    open(LISTING, "w", encoding="utf-8").write("\n".join(src) + "\n")
+    write_part(LISTING_MASTER, "\n".join(src) + "\n")
     return added_labels, added_headers, added_legends
 
 
@@ -931,7 +940,7 @@ def verify():
     with tempfile.TemporaryDirectory() as d:
         LISTING = os.path.join(d, "wsa1_prom_a.s")
         try:
-            open(LISTING, "w", encoding="utf-8").write(old)
+            write_part(LISTING_MASTER, old)
             apply_()
             got = open(LISTING, encoding="utf-8").read()
         finally:

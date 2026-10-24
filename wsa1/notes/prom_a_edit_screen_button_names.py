@@ -33,10 +33,12 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
+sys.path.insert(0, os.path.join(ROOT, "notes"))
+from asm_source import image_path  # noqa: E402  (the image, not the master)
 sys.path.insert(0, HERE)
 import wave7_panel_names_round11 as R11  # noqa: E402
 
-A = open(os.path.join(ROOT, "prom_a", "wsa1_prom_a.s"), "rb").read().decode("latin-1")
+A = open(image_path(ROOT, "prom_a/wsa1_prom_a.s"), "rb").read().decode("latin-1")
 SPELL = {"Exit": "ExitKey", "NumberPad": "NumberPadKey", "Page": "PageKey"}
 TABLES = [("NoteEdit_ButtonTable", "NoteEdit"), ("DrumEdit_ButtonTable", "DrumEdit"),
           ("EditPartSelect_ButtonTable", "EditPartSelect"),

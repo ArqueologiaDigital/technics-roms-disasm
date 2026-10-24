@@ -33,7 +33,9 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PA = os.path.join(ROOT, "prom_a", "wsa1_prom_a.s")
+sys.path.insert(0, os.path.join(ROOT, "notes"))
+from asm_source import image_path  # noqa: E402  (the image, not the master)
+PA = image_path(ROOT, "prom_a/wsa1_prom_a.s")
 ROMS = {"prom_a": ("wsa1_prom_a.ic12", 0xF80000), "prom_b": ("wsa1_prom_b.ic13", 0xF00000), "prom_c": ("wsa1_prom_c.ic28", 0xF80000)}
 G = re.compile(r'^([A-Za-z_.][\w$.]*):')
 STRUCT = re.compile(r'_(Skip|Join|Loop|Return|Epilogue|Resume|Nop|Arm|Case\d*)\d*$')
@@ -42,7 +44,7 @@ FALLS_NOT = re.compile(r'^(ret|reti|retd\b.*|jp (?:t, )?\(?\w+\)?|jr (?:t, )?\w+
 
 def code_tokens():
     seen = {}
-    paths = [os.path.join(ROOT, "prom_a", "wsa1_prom_a.s"), os.path.join(ROOT, "prom_b", "wsa1_prom_b.s")]
+    paths = [image_path(ROOT, "prom_a/wsa1_prom_a.s"), image_path(ROOT, "prom_b/wsa1_prom_b.s")]
     paths += glob.glob(os.path.join(ROOT, "prom_c", "**", "*.s"), recursive=True)
     paths += glob.glob(os.path.join(ROOT, "**", "*.ld"), recursive=True)
     for p in paths:

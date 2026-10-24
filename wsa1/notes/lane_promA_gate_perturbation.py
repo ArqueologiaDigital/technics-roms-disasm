@@ -25,7 +25,16 @@ import subprocess
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SRC = os.path.join(ROOT, "prom_a", "wsa1_prom_a.s")
+sys.path.insert(0, os.path.join(ROOT, "notes"))
+from asm_source import image_path, write_part  # noqa: E402
+# ⚠ A WRITE THROUGH THIS NAME IS GUARDED AND WILL REFUSE while the text
+# it is handed is the whole image: write_part() sees the master's
+# .include lines disappear.  That refusal is correct and is not the fix.
+# The fix for a RENAME is asm_source.edit_image(ROOT, <primary>, fn),
+# which applies the transform to every constituent file; for a SPLICE it
+# is asm_source.locate() on the block's anchor.  See notes/asm_source.py.
+SRC_MASTER = os.path.join(ROOT, "prom_a/wsa1_prom_a.s")   # the WRITE path: write_part() guards it
+SRC = image_path(ROOT, "prom_a/wsa1_prom_a.s")  # the READ path: the image, not the master
 GATE = os.path.join(ROOT, "scripts", "analysis", "assert_byte_identical.py")
 BASE = 0xF80000
 
@@ -68,7 +77,7 @@ def main():
             lines = original.split("\n")
             i = line_index(lines, addr, needle)
             lines[i] = lines[i].replace(needle, repl, 1)
-            open(SRC, "w", encoding="utf-8").write("\n".join(lines))
+            write_part(SRC_MASTER, "\n".join(lines))
             rc, off, _out = gate()
             good = rc != 0 and off == want
             ok_all &= good
@@ -77,9 +86,9 @@ def main():
                      "RED at file offset 0x%06X" % off if off is not None
                      else ("GREEN -- THE GATE IS BLIND HERE" if rc == 0 else "RED, no offset"),
                      "" if good else "  (expected 0x%06X)" % want))
-            open(SRC, "w", encoding="utf-8").write(original)
+            write_part(SRC_MASTER, original)
     finally:
-        open(SRC, "w", encoding="utf-8").write(original)
+        write_part(SRC_MASTER, original)
     if open(SRC, encoding="utf-8").read() != original:
         sys.exit("!! SOURCE NOT RESTORED -- fix by hand before committing")
     rc, _off, _out = gate()

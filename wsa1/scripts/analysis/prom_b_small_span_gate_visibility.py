@@ -27,7 +27,16 @@ import subprocess
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-SRC = os.path.join(ROOT, "prom_b", "wsa1_prom_b.s")
+sys.path.insert(0, os.path.join(ROOT, "notes"))
+from asm_source import image_path, write_part  # noqa: E402
+# ⚠ A WRITE THROUGH THIS NAME IS GUARDED AND WILL REFUSE while the text
+# it is handed is the whole image: write_part() sees the master's
+# .include lines disappear.  That refusal is correct and is not the fix.
+# The fix for a RENAME is asm_source.edit_image(ROOT, <primary>, fn),
+# which applies the transform to every constituent file; for a SPLICE it
+# is asm_source.locate() on the block's anchor.  See notes/asm_source.py.
+SRC_MASTER = os.path.join(ROOT, "prom_b/wsa1_prom_b.s")   # the WRITE path: write_part() guards it
+SRC = image_path(ROOT, "prom_b/wsa1_prom_b.s")  # the READ path: the image, not the master
 GATE = os.path.join(ROOT, "scripts", "analysis", "assert_byte_identical.py")
 
 # (ROM address of the perturbed byte, the exact source line, the poisoned line)
@@ -52,7 +61,7 @@ def swap(old, new):
     s = open(SRC, encoding="latin-1").read()
     if s.count(old) != 1:
         sys.exit("expected exactly one copy of:\n%r\nfound %d" % (old, s.count(old)))
-    open(SRC, "w", encoding="latin-1").write(s.replace(old, new))
+    write_part(SRC_MASTER, s.replace(old, new))
 
 
 def main():

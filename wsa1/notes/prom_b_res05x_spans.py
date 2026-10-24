@@ -67,8 +67,10 @@ import struct
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(ROOT, "notes"))
+from asm_source import image_path  # noqa: E402  (the image, not the master)
 ROM = os.path.join(ROOT, "original_ROMs/wsa1_prom_b.ic13")
-SRC = os.path.join(ROOT, "prom_b/wsa1_prom_b.s")
+SRC = image_path(ROOT, "prom_b/wsa1_prom_b.s")
 BASE = 0xF00000
 
 # The five spans this lane owns: (cpu address, length) as cut by the

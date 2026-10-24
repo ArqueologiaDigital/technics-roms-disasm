@@ -26,7 +26,9 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PROM_B = os.path.join(ROOT, "prom_b", "wsa1_prom_b.s")
+sys.path.insert(0, os.path.join(ROOT, "notes"))
+from asm_source import image_path  # noqa: E402  (the image, not the master)
+PROM_B = image_path(ROOT, "prom_b/wsa1_prom_b.s")
 TABLES = [("Dispatch_Code80_PaintTable", "Paint", "Dispatch_Code80_Bracketed, the full paint"),
           ("Dispatch_Code80_RepaintFieldTable", "RepaintField", "Dispatch_Code80, the partial repaint")]
 

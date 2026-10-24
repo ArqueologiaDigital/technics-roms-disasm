@@ -18,7 +18,9 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-B = open(os.path.join(ROOT, "prom_b", "wsa1_prom_b.s"), "rb").read().decode("latin-1")
+sys.path.insert(0, os.path.join(ROOT, "notes"))
+from asm_source import image_path  # noqa: E402  (the image, not the master)
+B = open(image_path(ROOT, "prom_b/wsa1_prom_b.s"), "rb").read().decode("latin-1")
 
 
 def names_at():

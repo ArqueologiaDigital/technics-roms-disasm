@@ -27,9 +27,11 @@ import os
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(ROOT, "notes"))
+from asm_source import image_path  # noqa: E402  (the image, not the master)
 RA = open(os.path.join(ROOT, "original_ROMs", "wsa1_prom_a.ic12"), "rb").read()
 RB = open(os.path.join(ROOT, "original_ROMs", "wsa1_prom_b.ic13"), "rb").read()
-SRC = os.path.join(ROOT, "prom_a", "wsa1_prom_a.s")
+SRC = image_path(ROOT, "prom_a/wsa1_prom_a.s")
 VEC, INIT = 0xFF75B6, 0xFF75CD
 HDR_VEC = [
     "; DiskScreens_PhaseVector: module 18's boot phase vector -- ModuleInitDirectory_F82641[18] reaches it through prom_b's",

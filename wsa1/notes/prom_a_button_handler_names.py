@@ -36,10 +36,12 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
+sys.path.insert(0, os.path.join(ROOT, "notes"))
+from asm_source import image_path  # noqa: E402  (the image, not the master)
 sys.path.insert(0, HERE)
 import wave7_panel_names_round11 as R11  # noqa: E402
 
-PROM_A = os.path.join(ROOT, "prom_a", "wsa1_prom_a.s")
+PROM_A = image_path(ROOT, "prom_a/wsa1_prom_a.s")
 A_LO, A_HI = 0xF80000, 0x1000000
 SPELL = {"Exit": "ExitKey", "NumberPad": "NumberPadKey", "Page": "PageKey"}
 

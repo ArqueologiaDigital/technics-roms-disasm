@@ -106,9 +106,18 @@ import subprocess
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(ROOT, "notes"))
+from asm_source import image_path, write_part  # noqa: E402
 sys.path.insert(0, os.path.join(ROOT, "scripts", "analysis"))
 AUTOFORCE = os.path.join(ROOT, "notes", "llvm_roundtrip_autoforce.py")
-SRCB = os.path.join(ROOT, "prom_b", "wsa1_prom_b.s")
+# ⚠ A WRITE THROUGH THIS NAME IS GUARDED AND WILL REFUSE while the text
+# it is handed is the whole image: write_part() sees the master's
+# .include lines disappear.  That refusal is correct and is not the fix.
+# The fix for a RENAME is asm_source.edit_image(ROOT, <primary>, fn),
+# which applies the transform to every constituent file; for a SPLICE it
+# is asm_source.locate() on the block's anchor.  See notes/asm_source.py.
+SRCB_MASTER = os.path.join(ROOT, "prom_b/wsa1_prom_b.s")   # the WRITE path: write_part() guards it
+SRCB = image_path(ROOT, "prom_b/wsa1_prom_b.s")  # the READ path: the image, not the master
 B_BASE = 0xF00000
 ROMS = ("wsa1_prom_a.ic12", "wsa1_prom_b.ic13", "wsa1_prom_c.ic28", "wsa1_prom_d.bin")
 
@@ -832,7 +841,7 @@ def splice_siblings():
             raise SystemExit("%s: expected 7 `.byte` rows, found %d" % (lab, bot - i))
         src[top:bot + 1] = lines
         print("retyped 0x%06X: %d lines replace %d; %s" % (a, len(lines), bot + 1 - top, msg))
-    open(SRCB, "w", encoding="utf-8").write("\n".join(src))
+    write_part(SRCB_MASTER, "\n".join(src))
     return 0
 
 
@@ -870,7 +879,7 @@ def splice():
         src[top:bot + 1] = lines
         print("spliced 0x%06X-0x%06X: %d lines replace %d; %s"
               % (lo, hi - 1, len(lines), bot + 1 - top, msg))
-    open(SRCB, "w", encoding="utf-8").write("\n".join(src))
+    write_part(SRCB_MASTER, "\n".join(src))
     print("prom_b/wsa1_prom_b.s: %d lines -> %d" % (before, len(src)))
     return 0
 

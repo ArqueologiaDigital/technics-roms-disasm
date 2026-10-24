@@ -34,7 +34,9 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-FILES = [os.path.join(ROOT, "prom_a", "wsa1_prom_a.s"), os.path.join(ROOT, "prom_b", "wsa1_prom_b.s")]
+sys.path.insert(0, os.path.join(ROOT, "notes"))
+from asm_source import image_path  # noqa: E402  (the image, not the master)
+FILES = [image_path(ROOT, "prom_a/wsa1_prom_a.s"), image_path(ROOT, "prom_b/wsa1_prom_b.s")]
 EQUATES = [("UI_Screen0E_SubScreen", "UI_StepRecord_SubScreen")]
 SHARED15 = "  Screen 0x15's method has the same body; nothing requests screen 0x15 (prom_ab_step_record_screen_names.py)."
 EXPLICIT = [
