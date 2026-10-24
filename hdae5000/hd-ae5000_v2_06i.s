@@ -4238,38 +4238,38 @@ HDAE5000_PPI_LoopbackByte:
 	and a, 0x0f			; mask low nibble
 	set 4, a			; set bit 4 (data strobe)
 	sll a, 3			; shift left 3
-	ld (HDAE5000_IO_PpiPortB:24), a; ld (0x160002), A — PPI port B
+	ld (HDAE5000_IO_PpiPortB:24), a
 	ld c, a				; save port B value
 	srl c, 6			; shift right 6 for port C
-	ld (HDAE5000_IO_PpiPortC:24), c; ld (0x160004), C — PPI port C
+	ld (HDAE5000_IO_PpiPortC:24), c
 	res 7, a			; clear bit 7 (handshake low)
 	srl a, 6			; shift right 6
-	ld (HDAE5000_IO_PpiPortC:24), a; ld (0x160004), A — PPI port C
+	ld (HDAE5000_IO_PpiPortC:24), a
 	ld xwa, 0x000003E8		; timeout counter (1000)
 .Lppi_wait_high:
-	bit 4, (HDAE5000_IO_PpiPortA:24); bit 4, (0x160000) — check ACK
+	bit 4, (HDAE5000_IO_PpiPortA:24)	; check ACK
 	jr z, .Lppi_wait_high		; wait until bit 4 set
-	ld a, (HDAE5000_IO_PpiPortA:24); ld A, (0x160000) — read port A
+	ld a, (HDAE5000_IO_PpiPortA:24)	; read port A
 	and a, 0x0f			; mask low nibble
 	ld e, a				; save low nibble in E
 	; --- High nibble phase ---
 	ld a, l				; restore original byte
 	srl a, 1			; shift right 1
 	res 7, a			; clear bit 7
-	ld (HDAE5000_IO_PpiPortB:24), a; ld (0x160002), A — PPI port B
+	ld (HDAE5000_IO_PpiPortB:24), a
 	ld c, a				; save port B value
 	srl c, 6			; shift right 6 for port C
-	ld (HDAE5000_IO_PpiPortC:24), c; ld (0x160004), C — PPI port C
+	ld (HDAE5000_IO_PpiPortC:24), c
 	set 7, a			; set bit 7 (handshake high)
 	srl a, 6			; shift right 6
-	ld (HDAE5000_IO_PpiPortC:24), a; ld (0x160004), A — PPI port C
+	ld (HDAE5000_IO_PpiPortC:24), a
 	ld xwa, 0x000003E8		; timeout counter (1000)
 .Lppi_wait_low:
-	bit 4, (HDAE5000_IO_PpiPortA:24); bit 4, (0x160000) — check ACK
+	bit 4, (HDAE5000_IO_PpiPortA:24)	; check ACK
 	jr nz, .Lppi_wait_low		; wait until bit 4 clear
 	; --- Reassemble and verify ---
 	ld c, e				; C = low nibble
-	ld a, (HDAE5000_IO_PpiPortA:24); ld A, (0x160000) — read port A
+	ld a, (HDAE5000_IO_PpiPortA:24)	; read port A
 	and a, 0x0f			; mask low nibble (high nibble of result)
 	sll a, 4			; shift left 4 to high position
 	or a, c				; combine with low nibble

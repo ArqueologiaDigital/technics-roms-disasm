@@ -413,7 +413,7 @@ HDAE5000_TitleInfo_Build:
 	lda xwa, (HDAE5000_RAM_TitleInfoText:24); f2 a6 ad 22 30
 	push xwa				; 38
 	call HDAE5000_MemCopy				; 1d 9f ae 29 — MemCopy
-	ld a, (HDAE5000_RAM_WriteProtect:24); c2 99 9d 22 21 — ld a, (0x229d99)
+	ld a, (HDAE5000_RAM_WriteProtect:24)
 	extz wa					; d8 12
 	sla wa, 2				; d8 ec 02
 	lda xbc, (HDAE5000_TextPtrs_OFF_ON:24); f2 3c 1e 2e 31
@@ -436,7 +436,7 @@ HDAE5000_TitleInfo_Build:
 	lda xwa, (0x22adba:24); f2 ba ad 22 30
 	push xwa				; 38
 	call HDAE5000_MemCopy				; 1d 9f ae 29 — MemCopy
-	ld a, (HDAE5000_RAM_WriteConfirm:24); c2 9a 9d 22 21 — ld a, (0x229d9a)
+	ld a, (HDAE5000_RAM_WriteConfirm:24)
 	extz wa					; d8 12
 	sla wa, 2				; d8 ec 02
 	lda xbc, (HDAE5000_TextPtrs_OFF_ON:24); f2 3c 1e 2e 31
@@ -459,7 +459,7 @@ HDAE5000_TitleInfo_Build:
 	lda xwa, (0x22adec:24); f2 ec ad 22 30
 	push xwa				; 38
 	call HDAE5000_MemCopy				; 1d 9f ae 29 — MemCopy
-	ld a, (HDAE5000_RAM_LoadByNumberMode:24); c2 aa 9d 22 21 — ld a, (0x229daa)
+	ld a, (HDAE5000_RAM_LoadByNumberMode:24)
 	extz wa					; d8 12
 	pushw wa                                ; push wa (compact 16-bit)
 	pushw HDAE5000_Fmt_d@hi16
@@ -479,7 +479,7 @@ HDAE5000_TitleInfo_Build:
 	lda xwa, (0x22ae1e:24); f2 1e ae 22 30
 	push xwa				; 38
 	call HDAE5000_MemCopy				; 1d 9f ae 29 — MemCopy
-	ld a, (HDAE5000_RAM_QuickLoadMode:24); c2 a9 9d 22 21 — ld a, (0x229da9)
+	ld a, (HDAE5000_RAM_QuickLoadMode:24)
 	extz wa					; d8 12
 	pushw wa                                ; push wa (compact 16-bit)
 	pushw HDAE5000_Fmt_d_TitleInfo_Build@hi16
@@ -499,7 +499,7 @@ HDAE5000_TitleInfo_Build:
 	lda xwa, (0x22add1:24); f2 d1 ad 22 30
 	push xwa				; 38
 	call HDAE5000_MemCopy				; 1d 9f ae 29 — MemCopy
-	ld a, (HDAE5000_RAM_JumpAfterLoad:24); c2 ab 9d 22 21 — ld a, (0x229dab)
+	ld a, (HDAE5000_RAM_JumpAfterLoad:24)
 	extz wa					; d8 12
 	pushw wa                                ; push wa (compact 16-bit)
 	pushw HDAE5000_Fmt_d_TitleInfo_Build_2@hi16
@@ -719,7 +719,7 @@ HDAE5000_HDAETitleFunc:
 
 	; === Case 9: check cylinder count, set disk capacity ===
 .Lri_case9:					; 0x283649
-	ld a, (HDAE5000_RAM_QuickLoadMode:24); c2 a9 9d 22 21 — ld a, (0x229da9)
+	ld a, (HDAE5000_RAM_QuickLoadMode:24)
 	cp a, 3:i3				; c9 db
 	jr z, .Lri_case9_cyl3			; 66 xx
 	cp a, 2:i3				; c9 da
@@ -3052,7 +3052,7 @@ HDAE5000_SeparateOutput_SendPartMsg:
 	; --- First workspace call (stack+4 block) ---
 	lda xwa, (xsp + 4)		; XWA = pointer to first param block
 	ld xde, xwa			; XDE = param block ptr
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); ld XWA, (0x23A1A2) — workspace ptr
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld xwa, (xwa + WS_HamaFnTable)             ; ld XWA, (XWA + 0x0E88)
 	ld xhl, (xwa + HamaFn_sendCOMM)             ; ld XHL, (XWA + 0x0114)
 	ld wa, 0:i3			; WA = 0
@@ -3061,7 +3061,7 @@ HDAE5000_SeparateOutput_SendPartMsg:
 	; --- Second workspace call (stack base block) ---
 	lda xwa, (xsp)			; XWA = pointer to second param block
 	ld xde, xwa			; XDE = param block ptr
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); ld XWA, (0x23A1A2) — workspace ptr
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld xwa, (xwa + WS_HamaFnTable)             ; ld XWA, (XWA + 0x0E88)
 	ld xhl, (xwa + HamaFn_sendCOMM)             ; ld XHL, (XWA + 0x0114)
 	ld wa, 0:i3			; WA = 0
@@ -3079,31 +3079,31 @@ HDAE5000_SeparateOutput_SendPartMsg:
 ; SeparateBassPart) sent with HDAE5000_SeparateOutput_SendPartMsg.
 ; ---------------------------------------------------------------------------
 HDAE5000_SeparateOutput_Apply:
-	ld a, (HDAE5000_RAM_SeparateOutputMode:24); ld A, (0x22B2F4)
+	ld a, (HDAE5000_RAM_SeparateOutputMode:24)
 	extz wa
-	ld xbc, (HDAE5000_RAM_MainWorkspacePtr:24); ld XBC, (0x23A1A2)
+	ld xbc, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld xbc, (xbc + WS_HamaFnTable)             ; ld XBC, (XBC + 0x0E88)
 	ld_sril xhl, (xbc + HamaFn_SetSepaOutMode)             ; ld XHL, (XBC + 0x0084)
 	call (xhl)			; callback
-	cp (HDAE5000_RAM_SeparateDrumPartSent:24), 0x00; cp (0x23A0A2), 0
+	cp (HDAE5000_RAM_SeparateDrumPartSent:24), 0x00
 	jr z, .LHD_SC__skip_a2
-	ld a, (HDAE5000_RAM_SeparateDrumPartSent:24); ld A, (0x23A0A2)
+	ld a, (HDAE5000_RAM_SeparateDrumPartSent:24)
 	dec 1, a
 	extz wa
 	ld bc, 0:i3
 	ld de, 0:i3
 	calr HDAE5000_SeparateOutput_SendPartMsg
-	ld (HDAE5000_RAM_SeparateDrumPartSent:24), 0x00; (0x23A0A2) = 0
+	ld (HDAE5000_RAM_SeparateDrumPartSent:24), 0x00
 .LHD_SC__skip_a2:
-	cp (HDAE5000_RAM_SeparateBassPartSent:24), 0x00; cp (0x23A0A4), 0
+	cp (HDAE5000_RAM_SeparateBassPartSent:24), 0x00
 	jr z, .LHD_SC__dispatch
-	ld a, (HDAE5000_RAM_SeparateBassPartSent:24); ld A, (0x23A0A4)
+	ld a, (HDAE5000_RAM_SeparateBassPartSent:24)
 	dec 1, a
 	extz wa
 	ld bc, 0:i3
 	ld de, 0:i3
 	calr HDAE5000_SeparateOutput_SendPartMsg
-	ld (HDAE5000_RAM_SeparateBassPartSent:24), 0x00; (0x23A0A4) = 0
+	ld (HDAE5000_RAM_SeparateBassPartSent:24), 0x00
 .LHD_SC__dispatch:
 	ld a, (HDAE5000_RAM_SeparateOutputMode:24); re-read state byte
 	cp a, 3:i3
@@ -3125,7 +3125,7 @@ HDAE5000_SeparateOutput_Apply:
 	ld de, 0:i3
 	calr HDAE5000_SeparateOutput_SendPartMsg
 	ld a, (HDAE5000_RAM_SeparateDrumPart:24)
-	ld (HDAE5000_RAM_SeparateDrumPartSent:24), a; (0x23A0A2) = A
+	ld (HDAE5000_RAM_SeparateDrumPartSent:24), a
 	ret
 .LHD_SC__state2:			; state=2: process A0A0+A09E
 	cp (HDAE5000_RAM_SeparateDrumPart:24), 0x00
@@ -3529,14 +3529,14 @@ HDAE5000_SaveOptNameCheck:
 	ld xhl, 0:i3
 	jr t, .Lhbi_exit
 .Lhbi_case5:
-	lda xhl, (HDAE5000_RAM_SaveOptions+11:24); 0x22AA57
+	lda xhl, (HDAE5000_RAM_SaveOptions+11:24)
 	jr t, .Lhbi_exit
 .Lhbi_case6:
 	ld xhl, 1:i3
 	jr t, .Lhbi_exit
 .Lhbi_special:
 	; Command 0x01E00082: init buffer then return 0
-	lda xwa, (HDAE5000_RAM_SaveOptions:24); 0x22AA4C
+	lda xwa, (HDAE5000_RAM_SaveOptions:24)
 	calr HDAE5000_TypeSel_BuildMask
 	ld xhl, 0:i3
 	jr t, .Lhbi_exit
@@ -6144,7 +6144,7 @@ HDAE5000_Lbn_TypeDigit:
 	ld	qiz, 0
 
 	; --- Switch on state variable at 0x22AA5C ---
-	ld wa, (HDAE5000_RAM_LbnDigitPos:24); d2 5c aa 22 20 — ld wa, (0x22aa5c)
+	ld wa, (HDAE5000_RAM_LbnDigitPos:24)
 	cp wa, 4:i3				; d8 dc
 	jrl z, .Lsw_case4			; 76 xx xx
 	cp wa, 3:i3				; d8 db
@@ -6159,7 +6159,7 @@ HDAE5000_Lbn_TypeDigit:
 	; === Case 0: initialize cylinder from BC*100, set state=1 ===
 	ld wa, bc				; d9 88
 	mul wa, 0x0064				; d8 08 64 00
-	ld (HDAE5000_RAM_LbnDir:24), wa; f2 5e aa 22 50 — ld (0x22aa5e), wa
+	ld (HDAE5000_RAM_LbnDir:24), wa
 	ldw (HDAE5000_RAM_LbnSong:24), 0x0000; f2 60 aa 22 02 00 00
 	ldw (HDAE5000_RAM_LbnDigitPos:24), 0x0001; f2 5c aa 22 02 01 00
 	pushw 0x0001
