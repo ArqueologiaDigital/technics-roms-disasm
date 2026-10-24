@@ -1946,11 +1946,11 @@ SMF_ConfigSlot_Setup:
 	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld (SEQ_WRITE_BLOCK_PTR:16), xhl
 	pop xhl
-	ld (0x2885:16), iy
+	ld (SEQOP_PRIMARY_OFFSET:16), iy
 	ld wa, (SEQ_DATA_BLOCK:16)
-	ld (0x2887:16), wa
-	ld (0x2889:16), iy
-	ld (0x288b:16), wa
+	ld (SEQOP_PRIMARY_BLOCK:16), wa
+	ld (SEQOP_SECONDARY_OFFSET:16), iy
+	ld (SEQOP_SECONDARY_BLOCK:16), wa
 	ld ix, iy
 	ld hl, (3376:16)
 
@@ -2246,7 +2246,7 @@ SMF_Config_SaveAndRestore:
 	ld xde, 0xc9e
 	ld	bc, (xde+hl)
 	ld (4412:16), bc
-	ld bc, (0x288b:16)
+	ld bc, (SEQOP_SECONDARY_BLOCK:16)
 	ld	(xde+hl), bc
 	srl hl, 1
 	ld xde, 0xcbe
@@ -2312,7 +2312,7 @@ SMF_ConfigSlot_EndOfTrack:
 	ld xhl, (SEQ_WRITE_BLOCK_PTR:16)
 	ld	(xhl+iy), a
 	pop xhl
-	ld wa, (0x2887:16)
+	ld wa, (SEQOP_PRIMARY_BLOCK:16)
 	ld (0x289f:16), wa
 	call SetWall_EventOutput
 	call SetWall_EventAdvanceCheck
@@ -2330,7 +2330,7 @@ SMF_ConfigSlot_Return:
 SMF_AdvanceInPageChain:
 	push	xhl
 	push	xwa
-	ld	wa, (10375:16)
+	ld	wa, (SEQOP_PRIMARY_BLOCK:16)
 	ld	(4415:16), wa
 	ld	(4417:16), iy
 	incw	1, (4417:16)
@@ -2339,7 +2339,7 @@ SMF_AdvanceInPageChain:
 	ld	xhl, (SEQ_WRITE_BLOCK_PTR:16)
 	ld	wa, (xhl+3)
 	ld	(4415:16), wa
-	ld	(10375:16), wa
+	ld	(SEQOP_PRIMARY_BLOCK:16), wa
 	ld	hl, wa
 	calr	SMF_CalcPageAddress
 	ld	xhl, (SEQ_BLOCK_PTR:16)
@@ -2390,11 +2390,11 @@ SMF_AdvanceReadPtr:
 	inc 1, ix
 	cp ix, 0xff
 	jr ule, SMF_AdvanceRead_Return
-	ld hl, (0x288b:16)
+	ld hl, (SEQOP_SECONDARY_BLOCK:16)
 	calr SMF_CalcPageAddress
 	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld wa, (xhl + 3)
-	ld (0x288b:16), wa
+	ld (SEQOP_SECONDARY_BLOCK:16), wa
 	ld hl, wa
 	calr SMF_CalcPageAddress
 	ld xhl, (SEQ_BLOCK_PTR:16)
@@ -2417,7 +2417,7 @@ SMF_AdvanceWritePtr:
 	jr ule, SMF_AdvanceWrite_Return
 	ld xhl, (SEQ_WRITE_BLOCK_PTR:16)
 	ld wa, (xhl + 3)
-	ld (0x2887:16), wa
+	ld (SEQOP_PRIMARY_BLOCK:16), wa
 	ld hl, wa
 	calr SMF_CalcPageAddress
 	ld xhl, (SEQ_BLOCK_PTR:16)
@@ -3374,7 +3374,7 @@ SMF_SetupSongBankRead:
 	ld (SEQ_WRITE_BLOCK_PTR:16), xhl
 	pop xhl
 	ld wa, (SEQ_DATA_BLOCK:16)
-	ld (0x2887:16), wa
+	ld (SEQOP_PRIMARY_BLOCK:16), wa
 
 SMF_SetupRead_Adjust:
 	push xhl
@@ -3392,7 +3392,7 @@ SMF_SetupRead_Finalize:
 	sll hl, 1
 	push xde
 	ld xde, 0xf1f8
-	ld bc, (0x2887:16)
+	ld bc, (SEQOP_PRIMARY_BLOCK:16)
 	ld	(xde+hl), bc
 	srl hl, 1
 	ld xde, 0xf218

@@ -12557,15 +12557,15 @@ SeqAccPlay_Return:
 ; ============================================================================
 PartCtrl_AdvanceReadPos:
 	pushw iz
-	ld wa, (0x2889:16)
+	ld wa, (SEQOP_SECONDARY_OFFSET:16)
 	cp wa, 0xff
 	jr z, PartCtrl_AdvancePos_AtMax
 	inc 1, wa
-	ld (0x2889:16), wa
+	ld (SEQOP_SECONDARY_OFFSET:16), wa
 	jr PartCtrl_AdvancePos_Return
 
 PartCtrl_AdvancePos_AtMax:
-	ld wa, (0x288b:16)
+	ld wa, (SEQOP_SECONDARY_BLOCK:16)
 	calr PartCtrl_ReadWord
 	ld iz, hl
 	ld wa, iz
@@ -12576,8 +12576,8 @@ PartCtrl_AdvancePos_AtMax:
 	jr PartCtrl_AdvancePos_Return
 
 PartCtrl_AdvancePos_SaveNew:
-	ld (0x288b:16), iz
-	ldw (0x2889:16), 5
+	ld (SEQOP_SECONDARY_BLOCK:16), iz
+	ldw (SEQOP_SECONDARY_OFFSET:16), 5
 
 PartCtrl_AdvancePos_Return:
 	popw iz
@@ -12585,15 +12585,15 @@ PartCtrl_AdvancePos_Return:
 
 PartCtrl_NavigateBackward:
 	pushw iz
-	ld wa, (0x2889:16)
+	ld wa, (SEQOP_SECONDARY_OFFSET:16)
 	cp wa, 5:i3
 	jr z, PartCtrl_NavBack_AtMin
 	dec 1, wa
-	ld (0x2889:16), wa
+	ld (SEQOP_SECONDARY_OFFSET:16), wa
 	jr SeqPart_RestoreReturn3
 
 PartCtrl_NavBack_AtMin:
-	ld wa, (0x288b:16)
+	ld wa, (SEQOP_SECONDARY_BLOCK:16)
 	calr PartCtrl_ReadWord_Off1
 	ld iz, hl
 	ld wa, iz
@@ -12616,8 +12616,8 @@ PartCtrl_NavBack_ErrorEnd:
 	jr SeqPart_RestoreReturn3
 
 PartCtrl_NavBack_SaveNew:
-	ld (0x288b:16), iz
-	ldw (0x2889:16), 255
+	ld (SEQOP_SECONDARY_BLOCK:16), iz
+	ldw (SEQOP_SECONDARY_OFFSET:16), 255
 
 SeqPart_RestoreReturn3:
 	popw iz
@@ -12625,21 +12625,21 @@ SeqPart_RestoreReturn3:
 
 PartCtrl_AdvanceToNextEntry:
 	pushw iz
-	ld wa, (0x2885:16)
+	ld wa, (SEQOP_PRIMARY_OFFSET:16)
 	cp wa, 0xff
 	jr z, PartCtrl_AdvanceEntry_AtMax
 	inc 1, wa
-	ld (0x2885:16), wa
+	ld (SEQOP_PRIMARY_OFFSET:16), wa
 	jr PartCtrl_RestoreReturn
 
 PartCtrl_AdvanceEntry_AtMax:
-	ld wa, (0x2887:16)
+	ld wa, (SEQOP_PRIMARY_BLOCK:16)
 	calr PartCtrl_ReadWord
 	ld iz, hl
 	ld wa, iz
 	cp wa, 0xffff
 	jr nz, PartCtrl_AdvanceEntry_TestBit7
-	ld wa, (0x2887:16)
+	ld wa, (SEQOP_PRIMARY_BLOCK:16)
 	calr Part_LinkVoiceToChain
 	ld iz, hl
 	cp iz, 0:i3
@@ -12655,8 +12655,8 @@ PartCtrl_AdvanceEntry_TestBit7:
 	jr PartCtrl_RestoreReturn
 
 PartCtrl_SaveChainPosition:
-	ld (0x2887:16), iz
-	ldw (0x2885:16), 5
+	ld (SEQOP_PRIMARY_BLOCK:16), iz
+	ldw (SEQOP_PRIMARY_OFFSET:16), 5
 
 PartCtrl_RestoreReturn:
 	popw iz
@@ -12664,15 +12664,15 @@ PartCtrl_RestoreReturn:
 
 PartCtrl_NavigateBackwardAlt:
 	pushw iz
-	ld wa, (0x2885:16)
+	ld wa, (SEQOP_PRIMARY_OFFSET:16)
 	cp wa, 5:i3
 	jr z, PartCtrl_NavBackAlt_AtMin
 	dec 1, wa
-	ld (0x2885:16), wa
+	ld (SEQOP_PRIMARY_OFFSET:16), wa
 	jr SeqPart_RestoreReturn2
 
 PartCtrl_NavBackAlt_AtMin:
-	ld wa, (0x2887:16)
+	ld wa, (SEQOP_PRIMARY_BLOCK:16)
 	calr PartCtrl_ReadWord_Off1
 	ld iz, hl
 	ld wa, iz
@@ -12695,8 +12695,8 @@ PartCtrl_NavBackAlt_ErrorEnd:
 	jr SeqPart_RestoreReturn2
 
 PartCtrl_NavBackAlt_SaveNew:
-	ld (0x2887:16), iz
-	ldw (0x2885:16), 255
+	ld (SEQOP_PRIMARY_BLOCK:16), iz
+	ldw (SEQOP_PRIMARY_OFFSET:16), 255
 
 SeqPart_RestoreReturn2:
 	popw iz
@@ -12710,25 +12710,25 @@ SeqPart_RestoreReturn2:
 ; Reads a byte from the secondary (background) sequencer part data stream.
 ; ============================================================================
 SeqPart_ReadByte_Secondary:
-	ld wa, (0x2889:16)
+	ld wa, (SEQOP_SECONDARY_OFFSET:16)
 	ld c, a
 	extz bc
-	ld wa, (0x288b:16)
+	ld wa, (SEQOP_SECONDARY_BLOCK:16)
 	jrl PartCtrl_ReadByte
 
 SeqPart_ReadByte_Primary:
-	ld wa, (0x2885:16)
+	ld wa, (SEQOP_PRIMARY_OFFSET:16)
 	ld c, a
 	extz bc
-	ld wa, (0x2887:16)
+	ld wa, (SEQOP_PRIMARY_BLOCK:16)
 	jrl PartCtrl_ReadByte
 
 SeqPart_WriteByte_Secondary:
 	ld e, a
-	ld bc, (0x2889:16)
+	ld bc, (SEQOP_SECONDARY_OFFSET:16)
 	extz bc
 	extz de
-	ld wa, (0x288b:16)
+	ld wa, (SEQOP_SECONDARY_BLOCK:16)
 	jrl PartCtrl_WriteByteToBuf
 
 ; ============================================================================
@@ -12740,10 +12740,10 @@ SeqPart_WriteByte_Secondary:
 ; ============================================================================
 SeqPart_WriteByte_Primary:
 	ld e, a
-	ld bc, (0x2885:16)
+	ld bc, (SEQOP_PRIMARY_OFFSET:16)
 	extz bc
 	extz de
-	ld wa, (0x2887:16)
+	ld wa, (SEQOP_PRIMARY_BLOCK:16)
 	jrl PartCtrl_WriteByteToBuf
 
 Part_ValidateVoiceChannel:
@@ -13777,8 +13777,8 @@ SeqPart_CalcTickStore:
 SeqPart_CopyDataPrimary:
 	dec 4, xsp
 	push xiz
-	ld iz, (0x288b:16)
-	ld wa, (0x2889:16)
+	ld iz, (SEQOP_SECONDARY_BLOCK:16)
+	ld wa, (SEQOP_SECONDARY_OFFSET:16)
 	ldfr_werp WA, 0xfa
 	ldmw2 (xsp + 6), 0x2887
 	ldmw2 (xsp + 4), 0x2885
@@ -13792,10 +13792,10 @@ SeqPart_CopyDataPrimary:
 
 SeqCopy_ComparePositionLoop:
 	lda xbc, (0x2834:16)
-	ld wa, (0x288b:16)
+	ld wa, (SEQOP_SECONDARY_BLOCK:16)
 	cp wa, (xbc)
 	jr nz, SeqCopy_MismatchAdvance
-	ld wa, (0x2889:16)
+	ld wa, (SEQOP_SECONDARY_OFFSET:16)
 	cp wa, (xbc + 2)
 	jr nz, SeqCopy_MismatchAdvance
 	calr SeqPart_ReadByte_Secondary
@@ -13822,14 +13822,14 @@ SeqCopy_MismatchAdvance:
 
 SeqCopy_StoreEndPosition:
 	lda xbc, (0x2834:16)
-	ld wa, (0x2887:16)
+	ld wa, (SEQOP_PRIMARY_BLOCK:16)
 	ld (xbc), wa
 	ldmw2 (xbc + 2), 0x2885
 
 SeqPart_SaveIndexReturn:
-	ld (0x288b:16), iz
+	ld (SEQOP_SECONDARY_BLOCK:16), iz
 	ldto_werp WA, 0xfa
-	ld (0x2889:16), wa
+	ld (SEQOP_SECONDARY_OFFSET:16), wa
 	mrdw5 0x9f, 0x06, 0x19, 0x87, 0x28
 	mrdw5 0x9f, 0x04, 0x19, 0x85, 0x28
 	pop xiz
@@ -13839,8 +13839,8 @@ SeqPart_SaveIndexReturn:
 SeqPart_CopyDataSecondary:
 	dec 4, xsp
 	push xiz
-	ld iz, (0x288b:16)
-	ld wa, (0x2889:16)
+	ld iz, (SEQOP_SECONDARY_BLOCK:16)
+	ld wa, (SEQOP_SECONDARY_OFFSET:16)
 	ldfr_werp WA, 0xfa
 	ldmw2 (xsp + 6), 0x2887
 	ldmw2 (xsp + 4), 0x2885
@@ -13854,10 +13854,10 @@ SeqPart_CopyDataSecondary:
 
 SeqCopy2_ComparePositionLoop:
 	lda xbc, (0x2834:16)
-	ld wa, (0x288b:16)
+	ld wa, (SEQOP_SECONDARY_BLOCK:16)
 	cp wa, (xbc)
 	jr nz, SeqCopy2_MismatchBackward
-	ld wa, (0x2889:16)
+	ld wa, (SEQOP_SECONDARY_OFFSET:16)
 	cp wa, (xbc + 2)
 	jr nz, SeqCopy2_MismatchBackward
 	calr SeqPart_ReadByte_Secondary
@@ -13865,7 +13865,7 @@ SeqCopy2_ComparePositionLoop:
 	ld wa, hl
 	calr SeqPart_WriteByte_Primary
 	lda xbc, (0x2834:16)
-	ld wa, (0x2887:16)
+	ld wa, (SEQOP_PRIMARY_BLOCK:16)
 	ld (xbc), wa
 	ldmw2 (xbc + 2), 0x2885
 	jr SeqCopy2_SaveIndexReturn
@@ -13883,9 +13883,9 @@ SeqCopy2_MismatchBackward:
 	jr z, SeqCopy2_ComparePositionLoop
 
 SeqCopy2_SaveIndexReturn:
-	ld (0x288b:16), iz
+	ld (SEQOP_SECONDARY_BLOCK:16), iz
 	ldto_werp WA, 0xfa
-	ld (0x2889:16), wa
+	ld (SEQOP_SECONDARY_OFFSET:16), wa
 	mrdw5 0x9f, 0x06, 0x19, 0x87, 0x28
 	mrdw5 0x9f, 0x04, 0x19, 0x85, 0x28
 	pop xiz
@@ -15055,8 +15055,8 @@ SeqBufInit_MainSetup:
 	calr SeqPart_CopyDataSecondary
 	cp (SEQ_ERROR_CODE:16), 0
 	jrl nz, SeqPart_AbortAndUpdateState
-	ldmm16 0x288b, 9944
-	ldmm16 0x2889, 9942
+	ldmm16 SEQOP_SECONDARY_BLOCK, 9944
+	ldmm16 SEQOP_SECONDARY_OFFSET, 9942
 	ld xwa, 0x2732
 	jrl PartCtrl_ApplyChanges
 
@@ -15089,8 +15089,8 @@ SeqBufInit_SecondaryPath:
 	calr SeqPart_CopyDataSecondary
 	cp (SEQ_ERROR_CODE:16), 0
 	jrl nz, SeqPart_AbortAndUpdateState
-	ldmm16 0x288b, 9940
-	ldmm16 0x2889, 9938
+	ldmm16 SEQOP_SECONDARY_BLOCK, 9940
+	ldmm16 SEQOP_SECONDARY_OFFSET, 9938
 	ld xwa, 0x272c
 	jrl PartCtrl_ApplyChanges
 
@@ -15153,14 +15153,14 @@ SeqBufInit_CopyAndProcess:
 	cp wa, (9952:16)
 	jr ule, SeqBufInit_SetAltPointers
 	lda xwa, (0x272c:16)
-	ldmm16 0x288b, 9940
-	ldmm16 0x2889, 9938
+	ldmm16 SEQOP_SECONDARY_BLOCK, 9940
+	ldmm16 SEQOP_SECONDARY_OFFSET, 9938
 	jr SeqBufInit_ApplyCtrlChanges
 
 SeqBufInit_SetAltPointers:
 	lda xwa, (0x2732:16)
-	ldmm16 0x288b, 9944
-	ldmm16 0x2889, 9942
+	ldmm16 SEQOP_SECONDARY_BLOCK, 9944
+	ldmm16 SEQOP_SECONDARY_OFFSET, 9942
 
 SeqBufInit_ApplyCtrlChanges:
 	calr SeqPart_ApplyControlChanges
@@ -15204,14 +15204,14 @@ SeqBufInit_CopyAndCheckAlt:
 	cp wa, (9952:16)
 	jr ule, SeqBufInit_SetAltReverse
 	lda xwa, (0x2732:16)
-	ldmm16 0x288b, 9944
-	ldmm16 0x2889, 9942
+	ldmm16 SEQOP_SECONDARY_BLOCK, 9944
+	ldmm16 SEQOP_SECONDARY_OFFSET, 9942
 	jr PartCtrl_ApplyChanges
 
 SeqBufInit_SetAltReverse:
 	lda xwa, (0x272c:16)
-	ldmm16 0x288b, 9940
-	ldmm16 0x2889, 9938
+	ldmm16 SEQOP_SECONDARY_BLOCK, 9940
+	ldmm16 SEQOP_SECONDARY_OFFSET, 9938
 
 PartCtrl_ApplyChanges:
 	calr SeqPart_ApplyControlChanges
@@ -29811,9 +29811,9 @@ SeqPart_EventLoop:
 	cp (SEQ_ERROR_CODE:16), 0
 	ret nz
 	ld wa, (SEQ_DATA_OFFSET:16)
-	ld (0x2885:16), wa
+	ld (SEQOP_PRIMARY_OFFSET:16), wa
 	ld wa, (SEQ_DATA_BLOCK:16)
-	ld (0x2887:16), wa
+	ld (SEQOP_PRIMARY_BLOCK:16), wa
 	ldmm16 0x2889, SEQ_DATA_OFFSET
 	ldmm16 0x288b, SEQ_DATA_BLOCK
 
@@ -30020,10 +30020,10 @@ SeqPart_DualSwap:
 	ld a, (9860:16)
 	extz wa
 	ld (0x287d:16), wa
-	ld wa, (0x2885:16)
+	ld wa, (SEQOP_PRIMARY_OFFSET:16)
 	ld c, a
 	extz bc
-	ld wa, (0x2887:16)
+	ld wa, (SEQOP_PRIMARY_BLOCK:16)
 	call Part_WriteWordAndByte
 	jr SeqPart_DualSwapReturn
 
@@ -30269,8 +30269,8 @@ SeqPart_AllocDone:
 	ld wa, 0:i3
 	ld de, iz
 	call Part_WriteVoiceWord
-	ld (0x2887:16), iz
-	ldw (0x2885:16), 5
+	ld (SEQOP_PRIMARY_BLOCK:16), iz
+	ldw (SEQOP_PRIMARY_OFFSET:16), 5
 	ld wa, iz
 	ld bc, 0:i3
 	call PartCtrl_WriteWord_Off1
@@ -30500,11 +30500,11 @@ SeqPart_ByteBlockA207_Code_Skip13:
 	ldmm16	10377, SEQ_DATA_OFFSET
 	ldmm16	10379, SEQ_DATA_BLOCK
 	lda	xwa, (0x282c:16)
-	ldw	(xwa), (10379)
-	ldw	(xwa+2), (10377)
+	ldw	(xwa), (SEQOP_SECONDARY_BLOCK)
+	ldw	(xwa+2), (SEQOP_SECONDARY_OFFSET)
 	lda	xwa, (0x2830:16)
-	ldw	(xwa), (10375)
-	ldw	(xwa+2), (10373)
+	ldw	(xwa), (SEQOP_PRIMARY_BLOCK)
+	ldw	(xwa+2), (SEQOP_PRIMARY_OFFSET)
 	lda	xwa, (0x2834:16)
 	ldw	(xwa), (9820)
 	ldw	(xwa+2), (9822)
@@ -30677,9 +30677,9 @@ SeqPart_FullLoad:
 	cp (SEQ_ERROR_CODE:16), 0
 	jrl nz, SeqPart_FullLoadErrorExit
 	ld wa, (SEQ_DATA_OFFSET:16)
-	ld (0x2885:16), wa
+	ld (SEQOP_PRIMARY_OFFSET:16), wa
 	ld wa, (SEQ_DATA_BLOCK:16)
-	ld (0x2887:16), wa
+	ld (SEQOP_PRIMARY_BLOCK:16), wa
 	ldmm16 0x2889, SEQ_DATA_OFFSET
 	ldmm16 0x288b, SEQ_DATA_BLOCK
 	ld a, (SEQ_OP_ERASE_CHOICE:16)
@@ -31430,8 +31430,8 @@ SeqPart_ByteBlockAD92_Join2:
 	ldw	(xwa), (9900)
 	ldw	(xwa+2), (9902)
 	lda	xwa, (0x2834:16)
-	ldw	(xwa), (10375)
-	ldw	(xwa+2), (10373)
+	ldw	(xwa), (SEQOP_PRIMARY_BLOCK)
+	ldw	(xwa+2), (SEQOP_PRIMARY_OFFSET)
 	call	SeqPart_CopyDataSecondary
 	cp	(SEQ_ERROR_CODE:16), 0
 	ret	nz
@@ -31449,8 +31449,8 @@ SeqPart_ByteBlockAD92_Join2:
 	ldw	(xwa), (9904)
 	ldw	(xwa+2), (9906)
 	lda	xwa, (0x2830:16)
-	ldw	(xwa), (10375)
-	ldw	(xwa+2), (10373)
+	ldw	(xwa), (SEQOP_PRIMARY_BLOCK)
+	ldw	(xwa+2), (SEQOP_PRIMARY_OFFSET)
 	lda	xwa, (0x2834:16)
 	ldw	(xwa), (9896)
 	ldw	(xwa+2), (9898)
@@ -31506,9 +31506,9 @@ SeqPart_MultiPartWalker:
 	cp (SEQ_ERROR_CODE:16), 0
 	jrl nz, SeqPart_WalkerExit
 	ld wa, (SEQ_DATA_BLOCK:16)
-	ld (0x2887:16), wa
+	ld (SEQOP_PRIMARY_BLOCK:16), wa
 	ld wa, (SEQ_DATA_OFFSET:16)
-	ld (0x2885:16), wa
+	ld (SEQOP_PRIMARY_OFFSET:16), wa
 	ldmm16 0x288b, SEQ_DATA_BLOCK
 	ldmm16 0x2889, SEQ_DATA_OFFSET
 	ld iz, 0:i3
@@ -32947,8 +32947,8 @@ SeqPart_StepCountPopReturn:
 SeqPart_ReplayForward:
 	push xiz
 	ld (SEQ_ERROR_CODE:16), 0
-	ldmm16 0x288b, 9820
-	ldmm16 0x2889, 9822
+	ldmm16 SEQOP_SECONDARY_BLOCK, 9820
+	ldmm16 SEQOP_SECONDARY_OFFSET, 9822
 	ld xwa, (9690:16)
 	dec 1, xwa
 	ld (9690:16), xwa
@@ -32957,8 +32957,8 @@ SeqPart_ReplayForward:
 	jr z, SeqPart_ReplayEnd
 
 SeqPart_ReplayLoop:
-	ld wa, (0x288b:16)
-	ld bc, (0x2889:16)
+	ld wa, (SEQOP_SECONDARY_BLOCK:16)
+	ld bc, (SEQOP_SECONDARY_OFFSET:16)
 	ldw de, 0x81
 	call PartCtrl_WriteByte_ZeroExtended
 	inc 1, xiz
@@ -32971,8 +32971,8 @@ SeqPart_ReplayLoop:
 	jr nz, SeqPart_ReplayLoop
 
 SeqPart_ReplayEnd:
-	ld wa, (0x288b:16)
-	ld bc, (0x2889:16)
+	ld wa, (SEQOP_SECONDARY_BLOCK:16)
+	ld bc, (SEQOP_SECONDARY_OFFSET:16)
 	ldw de, 0x82
 	call PartCtrl_WriteByte_ZeroExtended
 
@@ -33010,8 +33010,8 @@ SeqPart_Splice:
 	ld a, (9810:16)
 	extz wa
 	ld (0x287d:16), wa
-	ldmm16 9822, 0x2889
-	ld wa, (0x288b:16)
+	ldmm16 9822, SEQOP_SECONDARY_OFFSET
+	ld wa, (SEQOP_SECONDARY_BLOCK:16)
 	ld (9820:16), wa
 	ld bc, (9822:16)
 	extz bc
@@ -33892,10 +33892,10 @@ SeqPart_BufferSwap:
 	ld a, (9780:16)
 	extz wa
 	ld (0x287d:16), wa
-	ld wa, (0x2885:16)
+	ld wa, (SEQOP_PRIMARY_OFFSET:16)
 	ld c, a
 	extz bc
-	ld wa, (0x2887:16)
+	ld wa, (SEQOP_PRIMARY_BLOCK:16)
 	call Part_WriteWordAndByte
 	ldto_werp WA, 0xfa
 	ld (0x287d:16), wa
@@ -34214,9 +34214,9 @@ SeqPart_VoiceCheckSetup:
 	cp (SEQ_ERROR_CODE:16), 0
 	jrl nz, SeqPart_VoiceCheckModeA
 	ld wa, (SEQ_DATA_BLOCK:16)
-	ld (0x2887:16), wa
+	ld (SEQOP_PRIMARY_BLOCK:16), wa
 	ld wa, (SEQ_DATA_OFFSET:16)
-	ld (0x2885:16), wa
+	ld (SEQOP_PRIMARY_OFFSET:16), wa
 	ldmm16 0x2889, SEQ_DATA_OFFSET
 	ldmm16 0x288b, SEQ_DATA_BLOCK
 	ld iz, 0:i3

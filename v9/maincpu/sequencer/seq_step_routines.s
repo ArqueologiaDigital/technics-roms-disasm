@@ -217,22 +217,22 @@ SeqStep_EventPosManage_Loop:
 
 SeqStep_EventPosCheck:
 	ld xwa, (0x2722:16)
-	ld (0x288b:16), wa
+	ld (SEQOP_SECONDARY_BLOCK:16), wa
 	ld a, (0x271c:16)
 	and a, 0xff
 	extz wa
-	ld (0x2889:16), wa
+	ld (SEQOP_SECONDARY_OFFSET:16), wa
 	lda xwa, (0x2830:16)
 	mriw4 0x90, 0x19, 0x87, 0x28
 	mrdw5 0x98, 0x02, 0x19, 0x85, 0x28
 
 SeqStep_EventPosUpdate:
-	ld wa, (0x288b:16)
+	ld wa, (SEQOP_SECONDARY_BLOCK:16)
 	cp wa, (0x2726:16)
 	jr nz, SeqStep_EventPosAdvance
 	ld a, (0x2720:16)
 	extz wa
-	cp wa, (0x2889:16)
+	cp wa, (SEQOP_SECONDARY_OFFSET:16)
 	jr nz, SeqStep_EventPosAdvance
 	call SeqPart_ReadByte_Secondary
 	extz hl
@@ -1728,8 +1728,8 @@ SeqStep_PrepareDone:
 SeqStep_DeleteShiftEvents:
 	dec 8, xsp
 	push xiz
-	ldmm16 0x288b, 9802
-	ldmm16 0x2889, 9800
+	ldmm16 SEQOP_SECONDARY_BLOCK, 9802
+	ldmm16 SEQOP_SECONDARY_OFFSET, 9800
 	call SeqPart_ReadByte_Secondary
 	ld wa, 0:i3
 	ldiw_erp 0xfa, 1
@@ -1759,25 +1759,25 @@ SeqStep_DeleteShiftAdvance:
 	jr z, SeqStep_DeleteShiftLoop
 	dec1w_erp 0xfa
 	call PartCtrl_NavigateBackward
-	ldmm16 0x2887, 0x288b
-	ldmm16 0x2885, 0x2889
-	ldmm16 0x288b, 9802
-	ldmm16 0x2889, 9800
+	ldmm16 SEQOP_PRIMARY_BLOCK, SEQOP_SECONDARY_BLOCK
+	ldmm16 SEQOP_PRIMARY_OFFSET, SEQOP_SECONDARY_OFFSET
+	ldmm16 SEQOP_SECONDARY_BLOCK, 9802
+	ldmm16 SEQOP_SECONDARY_OFFSET, 9800
 	call PartCtrl_NavigateBackward
 
 SeqStep_DeleteShiftDone:
 	call SeqPart_ReadByte_Secondary
-	ld wa, (0x288b:16)
+	ld wa, (SEQOP_SECONDARY_BLOCK:16)
 	cp wa, (9798:16)
 	jr nz, SeqStep_DeleteShiftReturn
-	ld wa, (0x2889:16)
+	ld wa, (SEQOP_SECONDARY_OFFSET:16)
 	cp wa, (9796:16)
 	jr nz, SeqStep_DeleteShiftReturn
 	extz hl
 	ld wa, hl
 	call SeqPart_WriteByte_Primary
-	ldmm16 0x2887, 9798
-	ldmm16 0x2885, 9796
+	ldmm16 SEQOP_PRIMARY_BLOCK, 9798
+	ldmm16 SEQOP_PRIMARY_OFFSET, 9796
 	ld iz, 0:i3
 	cpiw_erp 0xfa, 0
 	jr ule, SeqStep_DeleteShiftCleanup
@@ -2096,15 +2096,15 @@ SeqStep_ProcessC0:
 	jr SeqStep_ProcessC0Done
 
 SeqStep_ProcessC0SavePos:
-	ld wa, (0x288b:16)
+	ld wa, (SEQOP_SECONDARY_BLOCK:16)
 	ldfr_werp WA, 0xfa
-	ld iz, (0x2889:16)
+	ld iz, (SEQOP_SECONDARY_OFFSET:16)
 	calr SeqStep_SkipThreeEvents
 	cp hl, 0:i3
 	jr nz, SeqStep_ProcessC0Done
 	ldto_werp WA, 0xfa
-	ld (0x288b:16), wa
-	ld (0x2889:16), iz
+	ld (SEQOP_SECONDARY_BLOCK:16), wa
+	ld (SEQOP_SECONDARY_OFFSET:16), iz
 	ld (xsp + 4), 0x0
 	jr SeqStep_ProcessC0ReadParam
 
@@ -2155,13 +2155,13 @@ SeqStep_ProcessB0:
 	and a, 0x2
 	sll a, 6
 	ld (3310:16), a
-	ld wa, (0x288b:16)
+	ld wa, (SEQOP_SECONDARY_BLOCK:16)
 	ldfr_werp WA, 0xfa
-	ld iz, (0x2889:16)
+	ld iz, (SEQOP_SECONDARY_OFFSET:16)
 	calr SeqStep_ParseRhythm
 	ldto_werp WA, 0xfa
-	ld (0x288b:16), wa
-	ld (0x2889:16), iz
+	ld (SEQOP_SECONDARY_BLOCK:16), wa
+	ld (SEQOP_SECONDARY_OFFSET:16), iz
 	cp (SEQ_ERROR_CODE:16), 0
 	jr nz, SeqStep_ProcessB0Error
 	ld a, (0x289d:16)
@@ -2359,12 +2359,12 @@ SeqStep_ParseRhythmComplete:
 SeqStep_CommitEvent:
 	extz wa
 	call SeqPart_WriteByte_Primary
-	ld wa, (0x2885:16)
+	ld wa, (SEQOP_PRIMARY_OFFSET:16)
 	ld c, a
 	extz bc
-	ld wa, (0x2887:16)
+	ld wa, (SEQOP_PRIMARY_BLOCK:16)
 	call Part_WriteWordAndByte
-	ld wa, (0x2887:16)
+	ld wa, (SEQOP_PRIMARY_BLOCK:16)
 	jp Part_CheckAndReallocVoices
 
 SeqStep_ProcessC0Ext:
@@ -2382,15 +2382,15 @@ SeqStep_ProcessC0Ext:
 SeqStep_ProcessC0ExtCheck:
 	bit 1, (4393:16)
 	jr nz, SeqStep_ProcessC0ExtProcess
-	ld wa, (0x288b:16)
+	ld wa, (SEQOP_SECONDARY_BLOCK:16)
 	ldfr_werp WA, 0xfa
-	ld iz, (0x2889:16)
+	ld iz, (SEQOP_SECONDARY_OFFSET:16)
 	calr SeqStep_SkipThreeEvents
 	cp hl, 0:i3
 	jr nz, SeqStep_ProcessC0ExtFinal
 	ldto_werp WA, 0xfa
-	ld (0x288b:16), wa
-	ld (0x2889:16), iz
+	ld (SEQOP_SECONDARY_BLOCK:16), wa
+	ld (SEQOP_SECONDARY_OFFSET:16), iz
 
 SeqStep_ProcessC0ExtProcess:
 	ld (xsp + 4), 0x0
@@ -2445,13 +2445,13 @@ SeqStep_ProcessB0Ext:
 	ld (3310:16), a
 	bit 1, (4393:16)
 	jr nz, SeqStep_ProcessB0ExtSkip
-	ld wa, (0x288b:16)
+	ld wa, (SEQOP_SECONDARY_BLOCK:16)
 	ldfr_werp WA, 0xfa
-	ld iz, (0x2889:16)
+	ld iz, (SEQOP_SECONDARY_OFFSET:16)
 	calr SeqPart_EventLoopContinue
 	ldto_werp WA, 0xfa
-	ld (0x288b:16), wa
-	ld (0x2889:16), iz
+	ld (SEQOP_SECONDARY_BLOCK:16), wa
+	ld (SEQOP_SECONDARY_OFFSET:16), iz
 	cp (SEQ_ERROR_CODE:16), 0
 	jr nz, SeqStep_ProcessB0ExtExit
 	ld a, (0x289d:16)

@@ -786,11 +786,11 @@ SetWall_ParseStream_Init:
 	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld (SEQ_WRITE_BLOCK_PTR:16), xhl
 	pop xhl
-	ld (0x2885:16), iy
+	ld (SEQOP_PRIMARY_OFFSET:16), iy
 	ld wa, (SEQ_DATA_BLOCK:16)
-	ld (0x2887:16), wa
-	ld (0x2889:16), iy
-	ld (0x288b:16), wa
+	ld (SEQOP_PRIMARY_BLOCK:16), wa
+	ld (SEQOP_SECONDARY_OFFSET:16), iy
+	ld (SEQOP_SECONDARY_BLOCK:16), wa
 	ld ix, iy
 	ld hl, (3376:16)
 
@@ -1031,7 +1031,7 @@ SetWall_ParseStream_End:
 	ld xhl, (SEQ_WRITE_BLOCK_PTR:16)
 	ld	(xhl+ix), a
 	pop xhl
-	ld wa, (0x2887:16)
+	ld wa, (SEQOP_PRIMARY_BLOCK:16)
 	ld (0x289f:16), wa
 	call SetWall_EventOutput
 	call SetWall_EventAdvanceCheck
@@ -1055,11 +1055,11 @@ SetWall_AdvanceStreamPos:
 	inc 1, iy
 	cp iy, 0xff
 	jr ule, SetWall_AdvanceStream_Return
-	ld hl, (0x288b:16)
+	ld hl, (SEQOP_SECONDARY_BLOCK:16)
 	call SetWall_StreamIndexResolve
 	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld wa, (xhl + 3)
-	ld (0x288b:16), wa
+	ld (SEQOP_SECONDARY_BLOCK:16), wa
 	ld hl, wa
 	call SetWall_StreamIndexResolve
 	ld xhl, (SEQ_BLOCK_PTR:16)
@@ -1082,7 +1082,7 @@ SetWall_AdvanceWritePos:
 	jr ule, SetWall_AdvanceWrite_Return
 	ld xhl, (SEQ_WRITE_BLOCK_PTR:16)
 	ld wa, (xhl + 3)
-	ld (0x2887:16), wa
+	ld (SEQOP_PRIMARY_BLOCK:16), wa
 	ld hl, wa
 	call SetWall_StreamIndexResolve
 	ld xhl, (SEQ_BLOCK_PTR:16)

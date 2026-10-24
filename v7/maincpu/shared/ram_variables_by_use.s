@@ -104,6 +104,10 @@
 	.equ SEQ_SONG,				0x2878	; the song (0..9) the song-memory routines (SeqVoice_InitEntry ...) address; SeqVoice_InitEntryForCurrentBank and SeqStep_TrackChange set it to SEQ_CURRENT_SONG or another song for one call and restore it
 	.equ SEQ_EDIT_FLAGS,			0x287b	; flags of the song-data edit and scan routines: bit 2 = take the measure lengths from the RHYTHM track (Seq_FindRhythmTrack sets it), bit 5 = a scan met the end marker (SeqTrack_ScanSetEndFlag, SetWall_ForwardSkip); bits 0, 3, 4, 6 and 7 are working flags of the SeqPart_* copy / exchange / load operations
 	.equ SEQ_WRITE_BLOCK_PTR,		0x2881	; the block SMF_Config* write output bytes into, at (this + IY); set from SEQ_BLOCK_PTR when a new block is started (IY = 5, past the block header)
+	.equ SEQOP_PRIMARY_OFFSET,		0x2885	; word: offset of the primary song-data cursor of the SeqPart_* / SMF_Config* walks (SeqPart_ReadByte_Primary, SeqPart_WriteByte_Primary); 5 = first byte of a block, 255 = its last
+	.equ SEQOP_PRIMARY_BLOCK,		0x2887	; word: block of the primary cursor (SMF_AdvanceInPageChain follows the +3 link when the offset passes 255)
+	.equ SEQOP_SECONDARY_OFFSET,		0x2889	; word: offset of the secondary song-data cursor (SeqPart_WriteByte_Secondary, PartCtrl_AdvanceReadPos)
+	.equ SEQOP_SECONDARY_BLOCK,		0x288b	; word: block of the secondary cursor (SMF_AdvanceReadPtr, SeqCopy_ComparePositionLoop)
 	.equ SEQ_RTMCFG,			0x28a7	; rtmcfg, the firmware's own name (GetAdr_rtmcfg returns its address): sequencer / accompaniment playback flags; bit 2 = ignore incoming MIDI Start / Continue (Transport_EnableMidiStartContinue clears it)
 	.equ SEQ_REC_TRACKS,			0x28a8	; word: one bit per track armed for recording (SqRealRecTitleFunc sets them through SeqVoice_SetOrClearBitMask); Audio_CheckInitStatus reports them as audio group B
 	.equ SEQ_RECORDING_TRACKS,		0x28aa	; word: the tracks being recorded now: SEQ_REC_TRACKS & SEQ_ACTIVE_PARTS when recording starts (SeqPlay_ActivatePartsAndSendOff), 0 when it stops; while it is non-zero INTTR4 writes a beat marker into TempoRingBuf every beat
