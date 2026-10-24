@@ -115,20 +115,21 @@ misreported downstream.
 
 ## Status
 
-**Converted: 1,922,183 of 2,097,152 bytes (91.7%)** -- of which 1,501,152 substantive (71.6%) and 421,031 verified filler.
+**Converted: 2,097,152 of 2,097,152 bytes (100.0%)** -- of which 1,636,462 substantive (78.0%) and 460,690 verified filler.
 
-| source | image | substantive | filler | still `.incbin` | `.incbin` spans |
-|---|---|---:|---:|---:|---:|
-| `prom_a/` | `wsa1_prom_a.ic12` | 419,726 | 48,437 | 56,125 | 10 |
-| `prom_b/` | `wsa1_prom_b.ic13` | 355,833 | 49,611 | 118,844 | 122 |
-| `prom_c/` | `wsa1_prom_c.ic28` | 395,072 | 129,216 | 0 | 0 |
-| `prom_d/` | `wsa1_prom_d.bin` | 330,521 | 193,767 | 0 | 0 |
+| source    | image              | substantive |  filler | still `.incbin` | `.incbin` spans |
+|-----------|--------------------|------------:|--------:|----------------:|----------------:|
+| `prom_a/` | `wsa1_prom_a.ic12` |     457,875 |  66,413 |               0 |               0 |
+| `prom_b/` | `wsa1_prom_b.ic13` |     452,994 |  71,294 |               0 |               0 |
+| `prom_c/` | `wsa1_prom_c.ic28` |     395,072 | 129,216 |               0 |               0 |
+| `prom_d/` | `wsa1_prom_d.bin`  |     330,521 | 193,767 |               0 |               0 |
 
 ⚠ **Quote the substantive column, not the total.** Wave 3 converted 123,151 bytes of prom_c of
 which 118,298 were a verified run of 0x0E pad emitted as `.fill` -- that moved the headline from
 4.3% to 27.7% while adding under 5 KB of decoded content. The pad is real and checked rather than
 sampled, so it belongs in the source, but a number that treats it as equal to decoded code
-flatters. Regenerate with `python3 scripts/analysis/source_coverage.py`; never retype it.
+flatters. Regenerate with `python3 scripts/analysis/source_coverage.py --markdown` (run inside
+`wsa1/`); never retype it.
 
 The gate is green at every commit; see the top of this file. Conversion is incremental and
 reachability-driven, not linear, so a low percentage on an image does not mean nothing is

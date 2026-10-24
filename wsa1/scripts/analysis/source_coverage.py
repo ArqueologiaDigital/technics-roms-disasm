@@ -61,10 +61,15 @@ def measure(key):
     text = open(src).read()
     for extra in OWN_INCLUDE.findall(text):
         text += "\n" + open(resolve(extra, key)).read()
-    inc = sum(int(m.group(2), 16) for m in
-              re.finditer(r'\.incbin\s+"[^"]+",\s*(0x[0-9A-Fa-f]+),\s*(0x[0-9A-Fa-f]+)', text))
+    sliced = list(re.finditer(r'\.incbin\s+"[^"]+",\s*(0x[0-9A-Fa-f]+),\s*(0x[0-9A-Fa-f]+)', text))
+    inc = sum(int(m.group(2), 16) for m in sliced)
     whole = re.findall(r'\.incbin\s+"[^"]+"\s*$', text, re.M)
     inc += SIZE * len(whole)
+    # ⚠ Spans are the directives counted above, not `text.count(".incbin")`: on
+    # 2026-10-24 that string count read 61 / 320 / 31 for prom_a/b/c with ZERO
+    # .incbin bytes left -- every hit was a comment ("still `.incbin`", tool
+    # notes) and the README table quoted them as spans.
+    spans = len(sliced) + len(whole)
     # .fill count, size, value  -- padding emitted wholesale, not decoded content
     fill = 0
     for m in re.finditer(r'\.fill\s+([0-9]+|0x[0-9A-Fa-f]+)\s*,\s*([0-9]+)', text):
@@ -73,7 +78,18 @@ def measure(key):
     for m in re.finditer(r'\.fill\s+([0-9]+|0x[0-9A-Fa-f]+)\s*$', text, re.M):
         fill += int(m.group(1), 0)
     conv = SIZE - inc
-    return conv, inc, text.count(".incbin"), fill
+    return conv, inc, spans, fill
+
+
+def aligned_table(head, rows, right):
+    """A space-padded Markdown table (the owner reads the raw .md)."""
+    w = [max(len(r[i]) for r in [head] + rows) for i in range(len(head))]
+    cell = lambda c, i: c.rjust(w[i]) if right[i] else c.ljust(w[i])
+    out = ["| " + " | ".join(cell(c, i) for i, c in enumerate(r)) + " |" for r in [head]]
+    out.append("|" + "|".join(("-" * (w[i] + 1) + ":") if right[i] else "-" * (w[i] + 2)
+                              for i in range(len(head))) + "|")
+    out += ["| " + " | ".join(cell(c, i) for i, c in enumerate(r)) + " |" for r in rows]
+    return "\n".join(out)
 
 
 def main():
@@ -86,10 +102,10 @@ def main():
         print(f"**Converted: {total:,} of {SIZE*4:,} bytes ({100.0*total/(SIZE*4):.1f}%)** "
               f"-- of which {total_sub:,} substantive ({100.0*total_sub/(SIZE*4):.1f}%) "
               f"and {total_fill:,} verified filler.\n")
-        print("| source | image | substantive | filler | still `.incbin` | `.incbin` spans |")
-        print("|---|---|---:|---:|---:|---:|")
-        for k, fn, conv, inc, n, fill in rows:
-            print(f"| `prom_{k}/` | `{fn}` | {conv - fill:,} | {fill:,} | {inc:,} | {n} |")
+        head = ["source", "image", "substantive", "filler", "still `.incbin`", "`.incbin` spans"]
+        body = [[f"`prom_{k}/`", f"`{fn}`", f"{conv - fill:,}", f"{fill:,}", f"{inc:,}", f"{n}"]
+                for k, fn, conv, inc, n, fill in rows]
+        print(aligned_table(head, body, [False, False, True, True, True, True]))
     else:
         for k, fn, conv, inc, n, fill in rows:
             print(f"  prom_{k}  {conv - fill:8,} substantive  {fill:8,} filler  "

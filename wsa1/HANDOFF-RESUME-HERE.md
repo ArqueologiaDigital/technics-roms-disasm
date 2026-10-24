@@ -22,6 +22,12 @@ six probes with it.
 
 ## ★★ THE COVERAGE GOAL IS MET: every reachable code path with start evidence is converted
 
+⚠ The figures in this section were measured on 2026-08-31, before prom_a and prom_b reached zero
+`.incbin` (see "Where it stands").  On 2026-10-24 `notes/reachability.py` could not be re-run: it,
+and about 37 other probes under `wsa1/notes/`, hard-code `~/compartilhado/kn7000_mame_build/unidasm`,
+which no longer exists.  Its decode cache is keyed on that binary's SHA-1, so pointing it at
+another unidasm build is a decision, not a path fix.
+
     python3 notes/reachability.py --targets
     TOTAL reachable-and-unconverted: STRONG 17 bytes, ANY 1,702, in 17 spans.
 
@@ -110,10 +116,12 @@ proportional to coverage gained and cannot reach an already-converted line.
   immediate artefacts. Each
   would need a byte-level audit before conversion; round 1 framed 701 of them as instructions and
   the gate passed.
-* **~105,000 bytes of `.incbin` that nothing reaches** — data. Converting it adds territory and
-  zero coverage.
-* **The documentation half**: 43.5% of the tree is understood at the lower bound, 5,052 routines
-  are still `sub_XXXXXX`. See the wave-7 sections below.
+* ~~**~105,000 bytes of `.incbin` that nothing reaches**~~ — gone: every image has zero `.incbin`
+  now (`python3 scripts/analysis/source_coverage.py`).
+* **The documentation half**: `python3 notes/wave7_documentation_metrics.py`.  On 2026-10-24 it
+  read LOWER 86.4% / UPPER 97.8% understood over the whole tree, with 579 labels still
+  `sub_XXXXXX` (prom_a 125, prom_b 272, prom_c 171, kernel 11).  It had been 43.5% and 5,052.
+  See the wave-7 sections below.
 
 ## The one rule that matters
 
@@ -224,30 +232,33 @@ pre-existing failures of the probe's own claims.
 
 ## Where it stands
 
-Regenerate, never retype — `python3 scripts/analysis/source_coverage.py`:
+Regenerate, never retype — `python3 scripts/analysis/source_coverage.py` (2026-10-24):
 
-    prom_a   374,691 substantive    43,012 filler   106,585 incbin   (71.5%)
-    prom_b   320,217 substantive    44,612 filler   159,459 incbin   (61.1%)
-    prom_c   395,072 substantive   129,216 filler         0 incbin   (75.4%)
-    prom_d   330,521 substantive   193,767 filler         0 incbin   (63.0%)
-    TOTAL  1,420,501 substantive + 410,607 filler          67.7% substantive
+    prom_a   457,875 substantive    66,413 filler         0 incbin  ( 87.3% / 100.0% incl. filler)
+    prom_b   452,994 substantive    71,294 filler         0 incbin  ( 86.4% / 100.0% incl. filler)
+    prom_c   395,072 substantive   129,216 filler         0 incbin  ( 75.4% / 100.0% incl. filler)
+    prom_d   330,521 substantive   193,767 filler         0 incbin  ( 63.0% / 100.0% incl. filler)
+    TOTAL   1,636,462 substantive + 460,690 filler = 2,097,152 of 2,097,152
+            78.0% substantive, 100.0% incl. filler
 
 **Quote the substantive column.** A `.fill` of verified pad counts as converted while telling you
 nothing; wave 3's prom_c gain was 96% pad.
 
-Documentation: **2,657 routine headers with evidence lines, 17,438 labels, 80 findings docs,
-191 committed analysis scripts.**
+Documentation — `python3 notes/wave7_documentation_metrics.py` (2026-10-24): 12,814 routine
+headers, 9,115 of them with evidence lines (the wave-6 figure was 2,657).
 
-★ **Track `sub_XXXXXX` too — it is currently ~4,998 and it went UP during wave 6.** Newly converted
-code brings in unnamed routines faster than naming retires them. Coverage measures territory;
+★ **Track `sub_XXXXXX` too — the `sub_XXXX` column of that script.** It went UP during wave 6
+(to ~4,998); on 2026-10-24 it reads 579.  Newly converted code brings in unnamed routines faster
+than naming retires them. Coverage measures territory;
 this number measures meaning, which is the half of the goal that is furthest from done.
 
 ## What is left
 
-`prom_c` and `prom_d` have **zero `.incbin`** — territorially complete. All remaining conversion is
-`prom_a` (106,585 B) and `prom_b` (159,459 B).
+All four images have **zero `.incbin`** — territorially complete (`source_coverage.py`, above).
+What is left is meaning (names, headers, evidence), not territory.
 
-Next targets, as the wave-6 lanes left them:
+Next targets, as the wave-6 lanes left them (the prom_a and prom_b spans below are no longer
+`.incbin`; what each became, code or data, is in its source):
 
 * **prom_a** — `0xFE8000-0xFEB330` (13,104 B) and `0xFEF746-0xFF3800` (16,570 B), the code halves of
   the sequencer/UI module. Deferred because ~15 string constants sit **inside the instruction
