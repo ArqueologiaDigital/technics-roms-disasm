@@ -36940,7 +36940,7 @@ StylCnvModlTtlFunc:
 	lda xsp, (xsp - 36)
 	push xiz
 	ld xhl, xde
-	ld de, (0x3d04:16)
+	ld de, (STYLCNV_LIST_POS:16)
 	ld iz, de
 	ld wa, (0x3a82:16)
 	cp xbc, EVT_SW_IN
@@ -37018,7 +37018,7 @@ StylCnvModl_PadStoreChar:
 	jr c, StylCnvModl_PadOuterLoop
 
 StylCnvModl_InitListDisplay:
-	ldw (0x3d04:16), 0
+	ldw (STYLCNV_LIST_POS:16), 0
 	ld xwa, 0x110002
 	ld xbc, EVT_SET_SELECTED_LINE
 	ld xde, 0:i3
@@ -37157,10 +37157,10 @@ StylCnvModl_OK_PageUp:
 	sub de, 0x14
 
 StylCnvModl_OK_StoreSelection:
-	ld (0x3d04:16), de
+	ld (STYLCNV_LIST_POS:16), de
 
 StylCnvModl_OK_LoadSelection:
-	ld bc, (0x3d04:16)
+	ld bc, (STYLCNV_LIST_POS:16)
 
 StylCnvModl_OK_UpdateDisplay:
 	cp iz, bc
@@ -37172,7 +37172,7 @@ StylCnvModl_OK_UpdateDisplay:
 	ld xwa, 0x110002
 	ld xbc, EVT_SET_SELECTED_LINE
 	call ApPostEvent
-	ld de, (0x3d04:16)
+	ld de, (STYLCNV_LIST_POS:16)
 	ld bc, de
 	extz xbc
 	div bc, 0x14
@@ -37189,7 +37189,7 @@ StylCnvModl_OK_UpdateDisplay:
 	ld xwa, 0x110002
 	ld xbc, EVT_PARA_DRAW
 	call ApPostEvent
-	ld de, (0x3d04:16)
+	ld de, (STYLCNV_LIST_POS:16)
 	mul de, 0x25
 	lda xwa, (0x55e4:16)
 	extz xde
@@ -37202,11 +37202,11 @@ StylCnvModl_OK_UpdateDisplay:
 StylCnvModl_OK_ScrollUp:
 	ld wa, 1:i3
 	call UI_PostEvent_0x6E
-	ld wa, (0x3d04:16)
+	ld wa, (STYLCNV_LIST_POS:16)
 	cp wa, 0:i3
 	jrl z, StylCnvModl_OK_LoadSelection
 	dec 1, wa
-	ld (0x3d04:16), wa
+	ld (STYLCNV_LIST_POS:16), wa
 	ld bc, wa
 	jrl StylCnvModl_OK_UpdateDisplay
 
@@ -37215,11 +37215,11 @@ StylCnvModl_OK_ScrollDown:
 	call UI_PostEvent_0x6E
 	ld bc, (0x3a82:16)
 	dec 1, bc
-	ld wa, (0x3d04:16)
+	ld wa, (STYLCNV_LIST_POS:16)
 	cp wa, bc
 	jrl nc, StylCnvModl_OK_LoadSelection
 	inc 1, wa
-	ld (0x3d04:16), wa
+	ld (STYLCNV_LIST_POS:16), wa
 	ld bc, wa
 	jrl StylCnvModl_OK_UpdateDisplay
 
@@ -37247,7 +37247,7 @@ StylCnvModl_OK_PageDown_Clamp:
 	ldto_werp WA, 0xee
 	cp wa, 0:i3
 	jrl z, StylCnvModl_OK_LoadSelection
-	ld (0x3d04:16), bc
+	ld (STYLCNV_LIST_POS:16), bc
 	jrl StylCnvModl_OK_UpdateDisplay
 
 StylCnvModl_OK_SelectItem:
@@ -37272,7 +37272,7 @@ StylCnvModl_OK_Select_FillLoop:
 	inc 1, xwa
 	cp xwa, 0x30000
 	jr c, StylCnvModl_OK_Select_FillLoop
-	ld bc, (0x3d04:16)
+	ld bc, (STYLCNV_LIST_POS:16)
 	mul bc, 0x25
 	lda xwa, (0x5605:16)
 	extz xbc
@@ -37290,7 +37290,7 @@ StylCnvModl_OK_Select_ShowError:
 	jrl StylCnvModl_Return
 
 StylCnvModl_OK_Select_LoadOK:
-	ld bc, (0x3d04:16)
+	ld bc, (STYLCNV_LIST_POS:16)
 	mul bc, 0x25
 	lda xwa, (0x5605:16)
 	extz xbc
@@ -37307,11 +37307,11 @@ StylCnvModl_OK_Select_AlignSize:
 	ld (0x3d5c:16), xbc
 	call FileIO_CloseHandle
 	ld (0x0ffbfe:24), 0x00
-	ld wa, (0x3d04:16)
+	ld wa, (STYLCNV_LIST_POS:16)
 	ld (0x48ac:16), wa
 	ld iz, 0:i3
 	lda xhl, (0xe3ca:16)
-	ld wa, (0x3d04:16)
+	ld wa, (STYLCNV_LIST_POS:16)
 	mul wa, 0x25
 	lda xbc, (0x55e4:16)
 
@@ -37337,7 +37337,7 @@ StylCnvModl_OK_Select_StoreResult:
 	ld (0x0ffc00:24), 0xff
 	ld (0x0ffc01:24), 0x00
 	pushw 0x4
-	ld wa, (0x3d04:16)
+	ld wa, (STYLCNV_LIST_POS:16)
 	mul wa, 0x25
 	extz xwa
 	add xwa, xbc
@@ -37347,7 +37347,7 @@ StylCnvModl_OK_Select_StoreResult:
 	push xwa
 	call Mem_Copy
 	lda xsp, (xsp + 10)
-	ld bc, (0x3d04:16)
+	ld bc, (STYLCNV_LIST_POS:16)
 	mul bc, 0x25
 	lda xwa, (0x5605:16)
 	extz xbc
@@ -37374,7 +37374,7 @@ StylCnvModl_End:
 
 StylCnvCnvtTtlFunc:
 	push xiz
-	ld hl, (0x3d04:16)
+	ld hl, (STYLCNV_LIST_POS:16)
 	ld iz, hl
 	ld ix, (0x3a82:16)
 	cp xbc, EVT_SW_IN
@@ -37444,7 +37444,7 @@ StylCnvCnvt_PadStoreChar:
 	jr c, StylCnvCnvt_PadOuterLoop
 
 StylCnvCnvt_InitListDisplay:
-	ldw (0x3d04:16), 0
+	ldw (STYLCNV_LIST_POS:16), 0
 	ld xwa, 0x120002
 	ld xbc, EVT_SET_SELECTED_LINE
 	ld xde, 0:i3
@@ -37500,10 +37500,10 @@ StylCnvCnvt_OK_PageUp:
 	sub hl, 0x14
 
 StylCnvCnvt_OK_StoreSelection:
-	ld (0x3d04:16), hl
+	ld (STYLCNV_LIST_POS:16), hl
 
 StylCnvCnvt_OK_LoadSelection:
-	ld bc, (0x3d04:16)
+	ld bc, (STYLCNV_LIST_POS:16)
 
 StylCnvCnvt_OK_UpdateDisplay:
 	cp iz, bc
@@ -37515,7 +37515,7 @@ StylCnvCnvt_OK_UpdateDisplay:
 	ld xwa, 0x120002
 	ld xbc, EVT_SET_SELECTED_LINE
 	call ApPostEvent
-	ld de, (0x3d04:16)
+	ld de, (STYLCNV_LIST_POS:16)
 	ld bc, de
 	extz xbc
 	div bc, 0x14
@@ -37532,7 +37532,7 @@ StylCnvCnvt_OK_UpdateDisplay:
 	ld xwa, 0x120002
 	ld xbc, EVT_PARA_DRAW
 	call ApPostEvent
-	ld de, (0x3d04:16)
+	ld de, (STYLCNV_LIST_POS:16)
 	mul de, 0x25
 	lda xwa, (0x55e4:16)
 	extz xde
@@ -37545,11 +37545,11 @@ StylCnvCnvt_OK_UpdateDisplay:
 StylCnvCnvt_OK_ScrollUp:
 	ld wa, 1:i3
 	call UI_PostEvent_0x6E
-	ld wa, (0x3d04:16)
+	ld wa, (STYLCNV_LIST_POS:16)
 	cp wa, 0:i3
 	jrl z, StylCnvCnvt_OK_LoadSelection
 	dec 1, wa
-	ld (0x3d04:16), wa
+	ld (STYLCNV_LIST_POS:16), wa
 	ld bc, wa
 	jrl StylCnvCnvt_OK_UpdateDisplay
 
@@ -37558,11 +37558,11 @@ StylCnvCnvt_OK_ScrollDown:
 	call UI_PostEvent_0x6E
 	ld bc, (0x3a82:16)
 	dec 1, bc
-	ld wa, (0x3d04:16)
+	ld wa, (STYLCNV_LIST_POS:16)
 	cp wa, bc
 	jrl nc, StylCnvCnvt_OK_LoadSelection
 	inc 1, wa
-	ld (0x3d04:16), wa
+	ld (STYLCNV_LIST_POS:16), wa
 	ld bc, wa
 	jrl StylCnvCnvt_OK_UpdateDisplay
 
@@ -37590,7 +37590,7 @@ StylCnvCnvt_OK_PageDown_Clamp:
 	ldto_werp WA, 0xea
 	cp wa, 0:i3
 	jrl z, StylCnvCnvt_OK_LoadSelection
-	ld (0x3d04:16), bc
+	ld (STYLCNV_LIST_POS:16), bc
 	jrl StylCnvCnvt_OK_UpdateDisplay
 
 StylCnvCnvt_OK_SelectItem:
@@ -37610,7 +37610,7 @@ StylCnvCnvt_OK_Select_WriteStyle:
 	ld xwa, (0x3d5c:16)
 	ld (0x3d60:16), xwa
 	call FileIO_CheckMediaIsWritable
-	ld bc, (0x3d04:16)
+	ld bc, (STYLCNV_LIST_POS:16)
 	mul bc, 0x25
 	lda xwa, (0x55e5:16)
 	extz xbc
@@ -37640,7 +37640,7 @@ StylCnvCnvt_End:
 StylCnvSelTtlFunc:
 	push xiz
 	ld xhl, xbc
-	ld ix, (0x3d04:16)
+	ld ix, (STYLCNV_LIST_POS:16)
 	ld iz, ix
 	ld bc, (0x3a82:16)
 	cp xhl, EVT_SW_IN
@@ -37658,7 +37658,7 @@ StylCnvSelTtlFunc:
 	cp xde, 0x2
 	jrl nz, StylCnvSel_Return
 	calr DialUI_PostInitEvents
-	ldw (0x3d04:16), 0
+	ldw (STYLCNV_LIST_POS:16), 0
 	ld xwa, 0x150002
 	ld xbc, EVT_SET_SELECTED_LINE
 	ld xde, 0:i3
@@ -37713,10 +37713,10 @@ StylCnvSel_OK_PageUp:
 	sub ix, 0x14
 
 StylCnvSel_OK_StoreSelection:
-	ld (0x3d04:16), ix
+	ld (STYLCNV_LIST_POS:16), ix
 
 StylCnvSel_OK_LoadSelection:
-	ld bc, (0x3d04:16)
+	ld bc, (STYLCNV_LIST_POS:16)
 
 StylCnvSel_OK_UpdateDisplay:
 	cp iz, bc
@@ -37728,7 +37728,7 @@ StylCnvSel_OK_UpdateDisplay:
 	ld xwa, 0x150002
 	ld xbc, EVT_SET_SELECTED_LINE
 	call ApPostEvent
-	ld de, (0x3d04:16)
+	ld de, (STYLCNV_LIST_POS:16)
 	ld bc, de
 	extz xbc
 	div bc, 0x14
@@ -37745,7 +37745,7 @@ StylCnvSel_OK_UpdateDisplay:
 	ld xwa, 0x150002
 	ld xbc, EVT_PARA_DRAW
 	call ApPostEvent
-	ld wa, (0x3d04:16)
+	ld wa, (STYLCNV_LIST_POS:16)
 	mul wa, 0x25
 	lda xbc, (0x55e4:16)
 	ld de, wa
@@ -37759,11 +37759,11 @@ StylCnvSel_OK_UpdateDisplay:
 StylCnvSel_OK_ScrollUp:
 	ld wa, 1:i3
 	call UI_PostEvent_0x6E
-	ld wa, (0x3d04:16)
+	ld wa, (STYLCNV_LIST_POS:16)
 	cp wa, 0:i3
 	jrl z, StylCnvSel_OK_LoadSelection
 	dec 1, wa
-	ld (0x3d04:16), wa
+	ld (STYLCNV_LIST_POS:16), wa
 	ld bc, wa
 	jrl StylCnvSel_OK_UpdateDisplay
 
@@ -37772,11 +37772,11 @@ StylCnvSel_OK_ScrollDown:
 	call UI_PostEvent_0x6E
 	ld bc, (0x3a82:16)
 	dec 1, bc
-	ld wa, (0x3d04:16)
+	ld wa, (STYLCNV_LIST_POS:16)
 	cp wa, bc
 	jrl nc, StylCnvSel_OK_LoadSelection
 	inc 1, wa
-	ld (0x3d04:16), wa
+	ld (STYLCNV_LIST_POS:16), wa
 	ld bc, wa
 	jrl StylCnvSel_OK_UpdateDisplay
 
@@ -37805,13 +37805,13 @@ StylCnvSel_OK_PageDown_Clamp:
 	ldto_werp WA, 0xea
 	cp wa, 0:i3
 	jrl z, StylCnvSel_OK_LoadSelection
-	ld (0x3d04:16), bc
+	ld (STYLCNV_LIST_POS:16), bc
 	jrl StylCnvSel_OK_UpdateDisplay
 
 StylCnvSel_OK_SelectItem:
 	calr SoundMem_ClearRegion
 	ld (0x0ffc00:24), 0xff
-	ld wa, (0x3d04:16)
+	ld wa, (STYLCNV_LIST_POS:16)
 	inc 1, a
 	ld (0x0ffc01:24), a
 	calr TableData_JumpToEntry
@@ -38074,7 +38074,7 @@ StylCnv_ParseEntry_NextField:
 
 StylCnv_ParseEntry_Done:
 	ldw (xsp + 4), 0x0
-	ld ix, (0x3d04:16)
+	ld ix, (STYLCNV_LIST_POS:16)
 	mul ix, 0x25
 	lda xhl, (0x55e4:16)
 
@@ -38215,7 +38215,7 @@ StylCnv_Type4_Advance:
 StylCnv_Type4_BuildOutput:
 	calr StyleConv_ClearWorkBuffer
 	ldw (xsp + 4), 0x0
-	ld ix, (0x3d04:16)
+	ld ix, (STYLCNV_LIST_POS:16)
 	mul ix, 0x25
 	lda xhl, (0x55e4:16)
 
@@ -38724,7 +38724,7 @@ StylCnv_Type6_FileOpenError:
 	jrl StylCnv_AbortWithError
 
 StylCnv_Type6_Case1_CopyName:
-	ld bc, (0x3d04:16)
+	ld bc, (STYLCNV_LIST_POS:16)
 	mul bc, 0x25
 	lda xwa, (0x55e5:16)
 	extz xbc

@@ -427,7 +427,7 @@ SMF_CalcTempoRate:
 
 SMF_OutputCommandSeq:
 	ld xiy, 0x106e
-	ld xix, (4376:16)
+	ld xix, (SMF_FILE_PTR:16)
 
 SMF_OutputCmd_ReadByte:
 	ld A, (xiy+)
@@ -453,7 +453,7 @@ SMF_OutputCmd_ErrorCheck1:
 	jp SMF_OutputCmd_Return
 
 SMF_OutputCmd_SendFF:
-	ld xix, (4376:16)
+	ld xix, (SMF_FILE_PTR:16)
 	bit 7, a
 	jr nz, SMF_OutputCmd_ReadByte
 	ld a, 0xff:opc
@@ -475,7 +475,7 @@ SMF_OutputCmd_ErrorCheck2:
 	jp SMF_OutputCmd_Return
 
 SMF_OutputCmd_Send51:
-	ld xix, (4376:16)
+	ld xix, (SMF_FILE_PTR:16)
 	ld a, 0x51:opc
 	ld (xix+), a
 	call SMF_WriteByte
@@ -495,7 +495,7 @@ SMF_OutputCmd_ErrorCheck3:
 	jp SMF_OutputCmd_Return
 
 SMF_OutputCmd_Send03:
-	ld xix, (4376:16)
+	ld xix, (SMF_FILE_PTR:16)
 	ld a, 0x3:opc
 	ld (xix+), a
 	call SMF_WriteByte
@@ -515,7 +515,7 @@ SMF_OutputCmd_ErrorCheck4:
 	jp SMF_OutputCmd_Return
 
 SMF_OutputCmd_SendTempoH:
-	ld xix, (4376:16)
+	ld xix, (SMF_FILE_PTR:16)
 	ld a, (3950:16)
 	ld (xix+), a
 	call SMF_WriteByte
@@ -535,7 +535,7 @@ SMF_OutputCmd_ErrorCheck5:
 	jp SMF_OutputCmd_Return
 
 SMF_OutputCmd_SendTempoM:
-	ld xix, (4376:16)
+	ld xix, (SMF_FILE_PTR:16)
 	ld a, (3949:16)
 	ld (xix+), a
 	call SMF_WriteByte
@@ -555,7 +555,7 @@ SMF_OutputCmd_ErrorCheck6:
 	jp SMF_OutputCmd_Return
 
 SMF_OutputCmd_SendTempoL:
-	ld xix, (4376:16)
+	ld xix, (SMF_FILE_PTR:16)
 	ld a, (3948:16)
 	ld (xix+), a
 	call SMF_WriteByte
@@ -575,7 +575,7 @@ SMF_OutputCmd_ErrorCheck7:
 	jp SMF_OutputCmd_Return
 
 SMF_OutputCmd_Finalize:
-	ld xix, (4376:16)
+	ld xix, (SMF_FILE_PTR:16)
 
 SMF_OutputCmd_Return:
 	ret
@@ -590,7 +590,7 @@ SMF_WriteByte:
 	pop xwa
 	cp xix, 0x17f9
 	jr ugt, SMF_WriteByte_SectorCheck
-	ld (4376:16), xix
+	ld (SMF_FILE_PTR:16), xix
 	jr SMF_WriteByte_Done
 
 SMF_WriteByte_SectorCheck:
@@ -660,7 +660,7 @@ SMF_WriteByte_AlignError:
 SMF_WriteByte_AllocSector:
 	incw 1, (4347:16)
 	ld xwa, 0x13fa
-	ld (4376:16), xwa
+	ld (SMF_FILE_PTR:16), xwa
 	ld xix, xwa
 	ld a, c
 
@@ -671,7 +671,7 @@ SMF_WriteByte_Done:
 
 SMF_WriteByteLoop:
 	push xiy
-	ld xix, (4376:16)
+	ld xix, (SMF_FILE_PTR:16)
 	ld xiy, 0x106e
 	pushw wa
 
@@ -702,7 +702,7 @@ SMF_WriteLoop_Error:
 	jp SMF_WriteLoop_Done
 
 SMF_WriteLoop_Continue:
-	ld xix, (4376:16)
+	ld xix, (SMF_FILE_PTR:16)
 	bit 7, a
 	jr nz, SMF_WriteLoop_ReadByte
 	popw wa
@@ -729,7 +729,7 @@ SMF_WriteLoop_SendFF:
 	jp SMF_WriteLoop_Done
 
 SMF_WriteLoop_AfterFF:
-	ld xix, (4376:16)
+	ld xix, (SMF_FILE_PTR:16)
 	ld a, w
 	ld (xix+), a
 	pushw hl
@@ -751,7 +751,7 @@ SMF_WriteLoop_Send51:
 	jp SMF_WriteLoop_Done
 
 SMF_WriteLoop_After51:
-	ld xix, (4376:16)
+	ld xix, (SMF_FILE_PTR:16)
 	and h, 0xf0
 	cp h, 0xc0
 	jr z, SMF_WriteLoop_Done
@@ -777,7 +777,7 @@ SMF_WriteLoop_FinalError:
 
 SMF_WriteLoop_Done:
 	pop xiy
-	ld xix, (4376:16)
+	ld xix, (SMF_FILE_PTR:16)
 	ret
 
 SMF_ChannelHelperReturn:
@@ -1672,7 +1672,7 @@ SMF_CalcFilePosition:
 	ld (4004:16), wa
 	ld wa, (4347:16)
 	mul wa, 0x400
-	ld xhl, (4376:16)
+	ld xhl, (SMF_FILE_PTR:16)
 	sub xhl, 0x13fa
 	add xwa, xhl
 	sub xwa, 0x16

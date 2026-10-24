@@ -420,7 +420,7 @@ SMF_InitSequencerState:
 	jrl lt, SeqPlay_ResetAndStop
 	ldw (6699:16), 1
 	ld xwa, 0x13fa
-	ld (4376:16), xwa
+	ld (SMF_FILE_PTR:16), xwa
 	push xwa
 	ld xwa, 0:i3
 	ld (6883:16), xwa
@@ -444,7 +444,7 @@ SMF_ReadMThd_ByteLoop:
 	jrl nz, SMF_ReadMThd_Mismatch
 	ld xwa, 0x13fa
 	add xwa, 0x80
-	ld (4376:16), xwa
+	ld (SMF_FILE_PTR:16), xwa
 	jrl SMF_ReadMThd_Start
 
 SMF_ReadMThd_Mismatch:

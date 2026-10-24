@@ -24,6 +24,7 @@
 	.equ SEMENU_PART_MODE,			0x06ae	; the sound editor's part layout: 1 = 2 parts, else 4 (SeMenu_DrawPartSelector, SeMenu_DrawPartRadioButtons)
 	.equ SEMENU_GFX_X,			0x06c6	; word: x origin of the sound editor's graphic (mini keyboard, envelope curve: SeMenu_DrawKeyboardGraphic)
 	.equ SEMENU_GFX_Y,			0x06c8	; word: its y origin
+	.equ SEGFX_RECORD,			0x06ca	; [10 bytes] the record the sound editor's SeGfx_StaticOpNN_FromBuf drawers read: +2 x1, +4 y1, +6 x2, +8 y2 (SeGfx_DrawLine fills it from its four pushed words; SeMenu_DrawKeyboardGraphic and others likewise)
 	.equ FLASH_SLOT_ASSIGN_LIST,		0x07a0	; the slot assignment list Flash_AssignSlotsToBlocks builds: {block, 0x500 | slot} records, bit 7 set for small slots (Flash_CopyBlocksToSlots, Flash_WriteSlotOwnerMap consume it)
 	.equ STYLE_WORK_IMAGE_PTR,		0x0c72	; the style work image (0x69800, set by Flash_InitExtMemAddrs); the legacy-image converters build there
 	.equ FLASH_SECTOR_IMAGE_PTR,		0x0c96	; RAM image of the custom-data flash's section-7 sector (0x69800, Flash_InitExtMemAddrs); Flash_CopyBlocksToSlots / Flash_WriteBackSlot* build it before the sector is rewritten
@@ -61,6 +62,7 @@
 	.equ SEQ_BLOCK_PTR,			0x10fd	; the 256-byte block being read or written: SMF_CalcPageAddress and its twins store SEQ_BLOCK_POOL + (n - 1) * 0x100 here; nested walks save and restore it
 	.equ GOTO_MEASURE_TARGET,		0x1105	; word: the measure the go-to-measure loop steps SQSTEP_MEASURE towards
 	.equ SEQ_BLOCK_POOL_COPY,		0x110a	; a copy of SEQ_BLOCK_POOL (DispatchHandler_* store it through `ld xhl, ...`), the base SeqNode_ResolveSlotPtr and SetWall_ResolveStreamPtr add to
+	.equ SMF_FILE_PTR,			0x1118	; the byte pointer into the SMF file data being read or written: FloppyIO_ReadNextByte reads through it, SMF_WriteByte writes through it
 	.equ PART_PARAM_SELECT,			0x111c	; the part parameter shown: 0 PAN, 1 KEY SHIFT, 2 TUNING, 3 BEND SENS (PartParam_LoadSelectedValue)
 	.equ PART_PARAM_VALUE,			0x111d	; its value, shown under that label by DisplayStr_ShowPartParamLine
 	.equ PLAYBACK_COUNTDOWN,		0x1144	; ticks before an armed playback starts: 10 when armed (PlayMode_LoadStartCountdown), CDlikeSwitch_PlaybackTimer counts it down
@@ -144,6 +146,7 @@
 	.equ CSTMCP_FROM_SLOT,			0x391a	; custom-style copy: the FROM rhythm slot (MEMORY 0..2, CUSTOM 10..29; CstmCpTtl_RecMode2_On*)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x39b6
 	.equ CSTMCP_TO_SLOT,			0x391b	; custom-style copy: the TO rhythm slot	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x39b7
 	.equ CSTMCP_WINDOW,			0x39e2	; the custom-style copy title's open window: 0 none, 1 memory full, 2 function select	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x3a7e
+	.equ STYLCNV_LIST_POS,			0x3c68	; word: scroll position (first line shown) of the style-convert title lists (StylCnvSel / StylCnvModl / StylCnvCnvt *_OK_Scroll*)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x3d04
 	.equ ACCSEQ_BLOCK,			0x7da6	; word: the accompaniment sequencer's current data block; its 256 bytes are at 0x1E8B00 + 256 * (this & 0xFFF) (AccompSeq_GetBlockBase)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x7e42
 	.equ ACCSEQ_BEAT_COUNTER,		0x7daa	; word: beats the accompaniment sequencer has read (each 0x81 marker counts one)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x7e46
 	.equ DISK_MEDIA_TYPE,			0x8464	; word: disk type code from GetDiskSizeInfo: 2 / 4 2DD, 3 2HD, 5 PD, 6-7 DOC, 0xFFFF none (DiskInfo_MediaTypeNames)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8500
@@ -262,6 +265,7 @@
 	.equ SEQBUF_DSPSYSEX,			0x1fca3	; the DSP SysEx ring buffer (SeqBuf_DspSysEx_*)
 	.equ LYRIC_LINES,			0x20cbe	; the lyric box's line buffers (LyricsBox_ClearBuffers blanks them, LyricsBox_DrawCurrentLine draws from them)
 	.equ PRESENTATION_LOADED,		0x251d8	; word: 1 while a presentation started from disk is loaded (Seq_InitializeAndStart sets it, MainPreControl clears it; MT_ExistPresentation returns it)
+	.equ FILE_LIST_LAST,			0x271f0	; word: index of the last entry of the file list (59 for a full list, 9 for the wallpapers; GetFileCount_StoreAndClamp)
 	.equ NAMING_LENGTH,			0x274d6	; word: length of the name being edited (32 from AcNaming_InitScrollState)
 	.equ NAMING_CURSOR,			0x274d8	; word: cursor position in the name being edited (kept below NAMING_LENGTH)
 	.equ NAMING_PAGE,			0x274da	; word: the character page shown: 0 A-Z _ 0-9 SPC, 1 a-z _ 0-9 SPC, 2 symbols

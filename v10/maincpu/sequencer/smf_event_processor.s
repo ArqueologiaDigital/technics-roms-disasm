@@ -955,19 +955,19 @@ SMF_SetupActiveChannel:
 	ld (xix+), WA
 	ld wa, (4004:16)
 	ld (xix+), WA
-	ld (4376:16), xix
-	ld xix, (4376:16)
+	ld (SMF_FILE_PTR:16), xix
+	ld xix, (SMF_FILE_PTR:16)
 	ld xiy, SMF_HeaderConstants
 	ld bc, 4:i3
 	ldir85
 	ld xiy, 0xf280
 	ldw bc, 0x10
 	ldir85
-	ld (4376:16), xix
+	ld (SMF_FILE_PTR:16), xix
 	ldw (4206:16), 0
 	ld (4208:16), 0
 	ld xiy, 0x106e
-	ld xix, (4376:16)
+	ld xix, (SMF_FILE_PTR:16)
 
 SMF_WaitForReady:
 	ld A, (xiy+)
@@ -983,7 +983,7 @@ SMF_WaitForReady:
 	ld (xix+), WA
 	ld a, 0x8:opc
 	ld (xix+), a
-	ld (4376:16), xix
+	ld (SMF_FILE_PTR:16), xix
 	ld l, (PANEL_STYLE+8:16)
 	xor h, h
 	pushw bc
@@ -1016,7 +1016,7 @@ SMF_Setup_WriteLoop:
 	ld xiy, SMF_GmSystemOffEvent
 
 SMF_Setup_SelectTablePtr:
-	ld xix, (4376:16)
+	ld xix, (SMF_FILE_PTR:16)
 	ldw bc, 0x8
 
 SMF_WriteChannelDataLoop:
@@ -1029,7 +1029,7 @@ SMF_WriteChannelDataLoop:
 	pop xix
 	pop xiy
 	popw bc
-	ld xix, (4376:16)
+	ld xix, (SMF_FILE_PTR:16)
 	push xwa
 	push xbc
 	ld xbc, 0:i3
@@ -1047,7 +1047,7 @@ SMF_WriteChannel_FileUnderflow:
 
 SMF_WriteChannel_Continue:
 	djnz16 bc, SMF_WriteChannelDataLoop
-	ld (4376:16), xix
+	ld (SMF_FILE_PTR:16), xix
 	cp (6709:16), 0
 	jrl z, SMF_FinishChannelAndGetNextEvent
 	call BitMapOut_ComputeRegionDelta

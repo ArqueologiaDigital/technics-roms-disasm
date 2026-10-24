@@ -16,7 +16,10 @@ JOB IT DOES
        with v10's value (the convention of shared/ram_variables.s);
     5. for a name whose reason starts with `[N bytes]` -- a record or array the code shows to be N bytes
        long -- spells every numeric memory operand inside it that has no name of its own as NAME+offset
-       (decimal), in each tree where the name exists, from that tree's own value of it.
+       (decimal), in each tree where the name exists, from that tree's own value of it.  A record that
+       step 4 left out of v9 / v7 (no instruction uses its first byte) gets its address there from the
+       uses of its fields instead: v10's NAME+k against the other tree's number n, in the same
+       instruction of the same routine, votes for n - k, and all votes must agree.
   The ROM bytes cannot change by construction (a number becomes a name of the same value); `make gate`
   checks it anyway.
 
@@ -25,6 +28,7 @@ USAGE
   python3 scripts/tools/add_kn5000_ram_names.py NAMES.txt [--dry-run]
 """
 import argparse
+import collections
 import glob
 import os
 import re
@@ -198,6 +202,65 @@ def spell_structs(t):
     return count
 
 
+MEMTOK = re.compile(r'\(([A-Za-z_]\w*\+\d+|[A-Za-z_]\w*|0x[0-9a-fA-F]+|\d+)(?::8|:16|:24)?\)')
+
+
+def derive_records(t):
+    """the v10 records ([N bytes]) missing from tree t, placed by the uses of their fields; returns the
+    (name, value, reason) rows added to t's file"""
+    v10rows = [(m.group(1), int(m.group(2), 0), (m.group(3) or "").rstrip())
+               for m in map(EQU_FULL.match, read(path("v10"))) if m]
+    have = {m.group(1) for m in map(EQU_FULL.match, read(path(t))) if m}
+    records = {n: (v, int(SIZE.match(c).group(1), 0), c) for n, v, c in v10rows
+               if c and SIZE.match(c) and n not in have}
+    if not records:
+        return []
+    sys.path.insert(0, os.path.join(REPO, "scripts", "tools"))
+    import name_kn5000_ram as N
+    names10 = N.ram_names("v10")
+    alt = re.compile(r'\b(%s)\b' % "|".join(map(re.escape, sorted(names10, key=len, reverse=True))))
+
+    def shape(code):
+        """the instruction with every number, RAM name and NAME+k blanked (registers are lower case)"""
+        code = re.sub(r'\b[A-Z_][A-Z0-9_]*\+\d+\b', '#', code)
+        code = alt.sub('#', code).lower()
+        return re.sub(r'\s+', ' ', re.sub(r'(0x[0-9a-f]+|\b\d+\b)', '#', code))
+
+    def value(tok):
+        if '+' in tok:
+            n, k = tok.split('+')
+            return (n, int(k)) if n in records else None
+        return None
+
+    votes = collections.defaultdict(collections.Counter)
+    B10, BT = N.bodies("v10"), N.bodies(t)
+    for lab, (f, body) in B10.items():
+        if lab not in BT or len(BT[lab][1]) != len(body):
+            continue
+        other = BT[lab][1]
+        if any(shape(x[1]) != shape(y[1]) for x, y in zip(body, other)):
+            continue
+        for (_, c10), (_, ct) in zip(body, other):
+            t10, tt = MEMTOK.findall(c10), MEMTOK.findall(ct)
+            if len(t10) != len(tt):
+                continue
+            for x, y in zip(t10, tt):
+                nk = value(x)
+                if nk and re.match(r'^(0x[0-9a-fA-F]+|\d+)$', y):
+                    votes[nk[0]][int(y, 0) - nk[1]] += 1
+    out = []
+    for n, (v, size, why) in records.items():
+        if len(votes[n]) == 1:
+            base = next(iter(votes[n]))
+            note = "" if base == v else "\t; %s address, derived from the uses of its fields (add_kn5000_ram_names.py); v10 has 0x%x" % (t, v)
+            out.append((n, base, why + note))
+    if out:
+        rows = [(m.group(1), int(m.group(2), 0), (m.group(3) or "").rstrip()) for m in map(EQU_FULL.match, read(path(t))) if m]
+        head = [l for l in read(path(t)) if l.startswith(";")]
+        write(path(t), head + aligned(sorted(rows + out, key=lambda r: r[1])) + [""])
+    return out
+
+
 def used_names(t, names):
     pat = re.compile(r'\b(%s)\b' % "|".join(map(re.escape, names))) if names else None
     used = set()
@@ -278,6 +341,9 @@ def main():
             write(path(t), L)
         print("%s: %d of the %d names added are used, %d left out: %s" % (
             t, len(added[t]) - len(drop), len(added[t]), len(drop), " ".join(drop)))
+    for t in ("v9", "v7"):
+        for n, v, why in derive_records(t):
+            print("%s: record %s at 0x%x, derived from the uses of its fields" % (t, n, v))
     for t in TREES:
         realign(t)
         n = spell_structs(t)

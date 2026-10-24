@@ -5351,7 +5351,7 @@ InitRecordTable_ExtLoop:
 	ldw (0x0271ea:24), 0x0000
 	ldw (0x0271ec:24), 0x0000
 	ldw (0x0271ee:24), 0x0000
-	ldw (0x0271f0:24), 0x0000
+	ldw (FILE_LIST_LAST:24), 0x0000
 	ldw (0x0272c8:24), 0x0000
 	ldw (0x0272ca:24), 0x0000
 	ret
@@ -5996,7 +5996,7 @@ ValidateFileRange_InRange:
 	ld bc, (0x0271ee:24)
 	cp wa, bc
 	jr lt, ValidateFileRange_FirstPage
-	cp wa, (0x271f0:24)
+	cp wa, (FILE_LIST_LAST:24)
 	jr le, ValidateFileRange_SecondPage
 
 ValidateFileRange_FirstPage:
@@ -6056,7 +6056,7 @@ BuildSecondPage_CopyRecordLoop:
 	ld wa, (0x0271ee:24)
 	cp wa, 0:i3
 	jr gt, BuildSecondPage_IterStart
-	cpw (0x271f0:24), 0
+	cpw (FILE_LIST_LAST:24), 0
 	jr lt, BuildSecondPage_IterStart
 	neg wa
 	muls wa, 0x52
@@ -6078,7 +6078,7 @@ BuildSecondPage_IterBody:
 	ld wa, (0x0271ee:24)
 	cp iz, wa
 	jr lt, BuildSecondPage_IterNext
-	cp iz, (0x271f0:24)
+	cp iz, (FILE_LIST_LAST:24)
 	jr gt, BuildSecondPage_IterNext
 	ld bc, iz
 	sub bc, wa
@@ -6134,7 +6134,7 @@ NavToFileIdx_InSecondPage:
 	ld wa, bc
 
 NavToFileIdx_ClampEnd:
-	ld (0x0271f0:24), wa
+	ld (FILE_LIST_LAST:24), wa
 	calr BuildSecondPageRecords
 
 NavToFileIdx_StoreIndex:
@@ -6209,7 +6209,7 @@ ValidateAndSearch_Return:
 
 GetFileCountEncoded:
 	ldw (0x0271ee:24), 0x0000
-	ldw (0x0271f0:24), 0x003b
+	ldw (FILE_LIST_LAST:24), 0x003b
 	calr BuildSecondPageRecords
 	ld wa, 0:i3
 	cp hl, 0:i3
@@ -6219,9 +6219,9 @@ GetFileCountEncoded:
 
 GetFileCount_StoreAndClamp:
 	ld (0x0271ec:24), wa
-	cp (0x271f0:24), wa
+	cp (FILE_LIST_LAST:24), wa
 	ret le
-	ld (0x0271f0:24), wa
+	ld (FILE_LIST_LAST:24), wa
 	ret
 
 ReadVariableLengthInt:
@@ -7107,7 +7107,7 @@ ValidateRange_CheckPage:
 	ld bc, (0x0271ee:24)
 	cp wa, bc
 	jr lt, ValidateRange_NeedPageChange
-	cp wa, (0x271f0:24)
+	cp wa, (FILE_LIST_LAST:24)
 	jr le, ValidateRange_CheckEmpty
 
 ValidateRange_NeedPageChange:
@@ -7167,7 +7167,7 @@ BuildRecords_CopyLoop:
 	ld wa, (0x0271ee:24)
 	cp wa, 0:i3
 	jr gt, BuildRecords_SearchDone
-	cpw (0x271f0:24), 0
+	cpw (FILE_LIST_LAST:24), 0
 	jr lt, BuildRecords_SearchDone
 	neg wa
 	muls wa, 0x52
@@ -7189,7 +7189,7 @@ BuildRecords_UpdateLoop:
 	ld wa, (0x0271ee:24)
 	cp iz, wa
 	jr lt, BuildRecords_UpdateNext
-	cp iz, (0x271f0:24)
+	cp iz, (FILE_LIST_LAST:24)
 	jr gt, BuildRecords_UpdateNext
 	ld bc, iz
 	sub bc, wa
@@ -7245,7 +7245,7 @@ SetIndex_InvalidWrap:
 	ld wa, bc
 
 SetIndex_UpdatePageEnd:
-	ld (0x0271f0:24), wa
+	ld (FILE_LIST_LAST:24), wa
 	calr BuildPageRecords
 
 SetIndex_StoreIndex:
@@ -7284,7 +7284,7 @@ GetRecordPtrAlt_Return:
 
 BuildPageRecordsAlt:
 	ldw (0x0271ee:24), 0x0000
-	ldw (0x0271f0:24), 0x003b
+	ldw (FILE_LIST_LAST:24), 0x003b
 	calr BuildPageRecords
 	ld wa, 0:i3
 	cp hl, 0:i3
@@ -7294,9 +7294,9 @@ BuildPageRecordsAlt:
 
 BuildRecordsAlt_StoreCount:
 	ld (0x0271ec:24), wa
-	cp (0x271f0:24), wa
+	cp (FILE_LIST_LAST:24), wa
 	ret le
-	ld (0x0271f0:24), wa
+	ld (FILE_LIST_LAST:24), wa
 	ret
 
 TrimAndFormatFilename:
@@ -7451,7 +7451,7 @@ ValidateRangeAlt_CheckPage:
 	ld bc, (0x0271ee:24)
 	cp wa, bc
 	jr lt, ValidateRangeAlt_NeedPageChange
-	cp wa, (0x271f0:24)
+	cp wa, (FILE_LIST_LAST:24)
 	jr le, ValidateRangeAlt_CheckEmpty
 
 ValidateRangeAlt_NeedPageChange:
@@ -7528,7 +7528,7 @@ InitDirScan_CopyLoop:
 	call FileIO_ReadByte
 	ldfr_werp HL, 0xfa
 	ld iz, (0x0271ee:24)
-	cp iz, (0x271f0:24)
+	cp iz, (FILE_LIST_LAST:24)
 	jr gt, FileIO_DirScanDone
 
 DirScan_ProcessEntry:
@@ -7556,7 +7556,7 @@ DirScan_ProcessEntry:
 	add xwa, xbc
 	calr FileIO_BuildFileExtName
 	inc 1, iz
-	cp iz, (0x271f0:24)
+	cp iz, (FILE_LIST_LAST:24)
 	jr le, DirScan_ProcessEntry
 
 FileIO_DirScanDone:
@@ -7593,7 +7593,7 @@ DirScan_AltReadLoop:
 	cp wa, de
 	jr lt, DirScan_AltNextEntry
 	ldto_werp WA, 0xfa
-	cp wa, (0x271f0:24)
+	cp wa, (FILE_LIST_LAST:24)
 	jr gt, DirScan_AltNextEntry
 	ldto_werp WA, 0xfa
 	sub wa, de
@@ -7643,7 +7643,7 @@ SelectFile_CheckPageBound:
 	ld wa, bc
 
 SelectFile_ClampEnd:
-	ld (0x0271f0:24), wa
+	ld (FILE_LIST_LAST:24), wa
 	calr FileIO_InitDirScan
 
 SelectFile_StoreIndex:
@@ -7682,7 +7682,7 @@ GetFileEntry_Return:
 
 FileIO_InitFileNavigation:
 	ldw (0x0271ee:24), 0x0000
-	ldw (0x0271f0:24), 0x003b
+	ldw (FILE_LIST_LAST:24), 0x003b
 	calr FileIO_InitDirScan
 	ld wa, 0:i3
 	cp hl, 0:i3
@@ -7692,9 +7692,9 @@ FileIO_InitFileNavigation:
 
 InitFileNav_ClampEnd:
 	ld (0x0271ec:24), wa
-	cp (0x271f0:24), wa
+	cp (FILE_LIST_LAST:24), wa
 	ret le
-	ld (0x0271f0:24), wa
+	ld (FILE_LIST_LAST:24), wa
 	ret
 
 FileIO_RefreshFileNames:
@@ -7708,7 +7708,7 @@ FileIO_RefreshFileNames:
 	ld iz, wa
 	cp hl, 0:i3
 	jr ge, RefreshNames_CheckEnd
-	cp wa, (0x271f0:24)
+	cp wa, (FILE_LIST_LAST:24)
 	jrl gt, FileIO_ScanComplete_Return
 
 RefreshNames_FallbackLoop:
@@ -7720,12 +7720,12 @@ RefreshNames_FallbackLoop:
 	lda xwa, (xbc + 14)
 	calr FileIO_CopyString
 	inc 1, iz
-	cp iz, (0x271f0:24)
+	cp iz, (FILE_LIST_LAST:24)
 	jr le, RefreshNames_FallbackLoop
 	jrl FileIO_ScanComplete_Return
 
 RefreshNames_CheckEnd:
-	cp wa, (0x271f0:24)
+	cp wa, (FILE_LIST_LAST:24)
 	jrl gt, FileIO_ScanDone
 
 RefreshNames_ReadLoop:
@@ -7768,7 +7768,7 @@ RefreshNames_ReadLoop:
 
 RefreshNames_NextEntry:
 	inc 1, iz
-	cp iz, (0x271f0:24)
+	cp iz, (FILE_LIST_LAST:24)
 	jrl le, RefreshNames_ReadLoop
 	jrl FileIO_ScanDone
 
@@ -7780,7 +7780,7 @@ RefreshNames_AltMediaPath:
 	cp hl, 0:i3
 	jr ge, RefreshNames_AltOpenSuccess
 	ld iz, wa
-	cp wa, (0x271f0:24)
+	cp wa, (FILE_LIST_LAST:24)
 	jrl gt, FileIO_ScanComplete_Return
 
 RefreshNames_AltFallbackLoop:
@@ -7792,14 +7792,14 @@ RefreshNames_AltFallbackLoop:
 	lda xwa, (xbc + 14)
 	calr FileIO_CopyString
 	inc 1, iz
-	cp iz, (0x271f0:24)
+	cp iz, (FILE_LIST_LAST:24)
 	jr le, RefreshNames_AltFallbackLoop
 	jrl FileIO_ScanComplete_Return
 
 RefreshNames_AltOpenSuccess:
 	ldi_erpw 0xfa, 0x40, 0x00
 	ld iz, wa
-	cp wa, (0x271f0:24)
+	cp wa, (FILE_LIST_LAST:24)
 	jr gt, FileIO_ScanDone
 
 RefreshNames_AltReadLoop:
@@ -7838,7 +7838,7 @@ RefreshNames_AltReadLoop:
 RefreshNames_AltNextEntry:
 	add_erpw 0xfa, 0x50, 0x00
 	inc 1, iz
-	cp iz, (0x271f0:24)
+	cp iz, (FILE_LIST_LAST:24)
 	jr le, RefreshNames_AltReadLoop
 
 FileIO_ScanDone:
@@ -8296,7 +8296,7 @@ ValidateMode_InRange:
 	ld bc, (0x0271ee:24)
 	cp wa, bc
 	jr lt, ValidateMode_OutOfPage
-	cp wa, (0x271f0:24)
+	cp wa, (FILE_LIST_LAST:24)
 	jr le, ValidateMode_InPage
 
 ValidateMode_OutOfPage:
@@ -8356,7 +8356,7 @@ ScanDir_CopyEntryLoop:
 	ld wa, (0x0271ee:24)
 	cp wa, 0:i3
 	jr gt, ScanDir_FirstEntryDone
-	cpw (0x271f0:24), 0
+	cpw (FILE_LIST_LAST:24), 0
 	jr lt, ScanDir_FirstEntryDone
 	neg wa
 	muls wa, 0xe
@@ -8378,7 +8378,7 @@ ScanDir_NextEntryCheck:
 	ld wa, (0x0271ee:24)
 	cp iz, wa
 	jr lt, ScanDir_IterateNext
-	cp iz, (0x271f0:24)
+	cp iz, (FILE_LIST_LAST:24)
 	jr gt, ScanDir_IterateNext
 	ld bc, iz
 	sub bc, wa
@@ -8434,7 +8434,7 @@ SelectWP_CheckPageBound:
 	ld wa, bc
 
 SelectWP_ClampEnd:
-	ld (0x0271f0:24), wa
+	ld (FILE_LIST_LAST:24), wa
 	calr FileIO_ScanDirEntries
 
 SelectWP_StoreIndex:
@@ -8474,7 +8474,7 @@ GetWPEntry_Return:
 
 FileIO_InitWallpaperNav:
 	ldw (0x0271ee:24), 0x0000
-	ldw (0x0271f0:24), 0x0009
+	ldw (FILE_LIST_LAST:24), 0x0009
 	calr FileIO_ScanDirEntries
 	ld wa, 0:i3
 	cp hl, 0:i3
@@ -8484,9 +8484,9 @@ FileIO_InitWallpaperNav:
 
 InitWPNav_ClampEnd:
 	ld (0x0272ca:24), wa
-	cp (0x271f0:24), wa
+	cp (FILE_LIST_LAST:24), wa
 	ret le
-	ld (0x0271f0:24), wa
+	ld (FILE_LIST_LAST:24), wa
 	ret
 
 ResetProgressIndication:

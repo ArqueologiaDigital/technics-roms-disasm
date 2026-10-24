@@ -126,7 +126,7 @@ SeqTrack_ClearPlaybackBuf2_Loop:
 ; ============================================================================
 FloppyIO_ReadNextByte:
 	push xix
-	ld xix, (4376:16)
+	ld xix, (SMF_FILE_PTR:16)
 	ld A, (xix+)
 	cp xix, 0x17f9
 	jrl ule, FloppyIO_ReadNextByte_StorePtr
@@ -155,7 +155,7 @@ FloppyIO_ReadNextByte_DivDone:
 	ld xix, 0x13fa
 
 FloppyIO_ReadNextByte_StorePtr:
-	ld (4376:16), xix
+	ld (SMF_FILE_PTR:16), xix
 	push xwa
 	push xbc
 	ld xbc, 0:i3
@@ -1701,7 +1701,7 @@ Sequencer_Validate_Done:
 	ret
 
 Sequencer_AdvanceBlockPosition:
-	ld xix, (4376:16)
+	ld xix, (SMF_FILE_PTR:16)
 	add xix, (4211:16)
 	cp xix, 0x17f9
 	jrl ule, Sequencer_Advance_StorePtr
@@ -1728,7 +1728,7 @@ Sequencer_Advance_DivDone:
 	sub xix, 0x400
 
 Sequencer_Advance_StorePtr:
-	ld (4376:16), xix
+	ld (SMF_FILE_PTR:16), xix
 	push xwa
 	push xbc
 	ld xbc, 0:i3

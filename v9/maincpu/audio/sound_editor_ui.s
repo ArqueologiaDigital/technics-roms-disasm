@@ -7856,9 +7856,9 @@ SeGfx_StaticOp03_BlitAtCell:
 	; --- Wrapper function 6: set flag + store 4 regs, call ---
 	ld	(COLORBLIT_MODE:24), 0
 	push xwa
-	ld	(1740:16), xiy
-	ld	(1744:16), ix
-	ld	(1746:16), bc
+	ld	(SEGFX_RECORD+2:16), xiy
+	ld	(SEGFX_RECORD+6:16), ix
+	ld	(SEGFX_RECORD+8:16), bc
 	ld	(1748:16), hl
 	ld xwa, 0x000006ca
 	call SeGfx_StaticOp03_Bitmap
@@ -8021,42 +8021,42 @@ SeMenu_DisplayPartValue_Data:
 	ld	wa, (xiz+8)
 	cp	wa, 50
 	jr	nz, SeMenu_DisplayPartValue_Data_Code_Skip
-	ld	(1740:16), wa
+	ld	(SEGFX_RECORD+2:16), wa
 	inc	1, wa
-	ld	(1744:16), wa
+	ld	(SEGFX_RECORD+6:16), wa
 	jr	SeMenu_DisplayPartValue_Data_Code_Join
 SeMenu_DisplayPartValue_Data_Code_Skip:
 	cp	wa, 50
 	jr	nz, SeMenu_DisplayPartValue_Data_Code_Skip2
-	ld	(1744:16), wa
+	ld	(SEGFX_RECORD+6:16), wa
 	dec	1, wa
-	ld	(1740:16), wa
+	ld	(SEGFX_RECORD+2:16), wa
 	jr	SeMenu_DisplayPartValue_Data_Code_Join
 SeMenu_DisplayPartValue_Data_Code_Skip2:
 	dec	1, wa
-	ld	(1740:16), wa
+	ld	(SEGFX_RECORD+2:16), wa
 	inc	2, wa
-	ld	(1744:16), wa
+	ld	(SEGFX_RECORD+6:16), wa
 SeMenu_DisplayPartValue_Data_Code_Join:
 	ld	wa, (xiz+10)
 	cp	wa, 58
 	jr	nz, SeMenu_DisplayPartValue_Data_Code_Skip3
-	ld	(1742:16), wa
+	ld	(SEGFX_RECORD+4:16), wa
 	inc	1, wa
-	ld	(1746:16), wa
+	ld	(SEGFX_RECORD+8:16), wa
 	jr	SeMenu_DisplayPartValue_Data_Code_Join2
 SeMenu_DisplayPartValue_Data_Code_Skip3:
 	cp	wa, 146
 	jr	nz, SeMenu_DisplayPartValue_Data_Code_Skip4
-	ld	(1746:16), wa
+	ld	(SEGFX_RECORD+8:16), wa
 	dec	1, wa
-	ld	(1742:16), wa
+	ld	(SEGFX_RECORD+4:16), wa
 	jr	SeMenu_DisplayPartValue_Data_Code_Join2
 SeMenu_DisplayPartValue_Data_Code_Skip4:
 	dec	1, wa
-	ld	(1742:16), wa
+	ld	(SEGFX_RECORD+4:16), wa
 	inc	2, wa
-	ld	(1746:16), wa
+	ld	(SEGFX_RECORD+8:16), wa
 SeMenu_DisplayPartValue_Data_Code_Join2:
 	ld	(COLORBLIT_MODE:24), 0
 	call	SeGfx_StaticOp09_FromBuf
@@ -8082,13 +8082,13 @@ SeGfx_DrawLine:
 	push	xix
 	push	xiy
 	ld	wa, (xiz+8)
-	ld	(1740:16), wa
+	ld	(SEGFX_RECORD+2:16), wa
 	ld	wa, (xiz+10)
-	ld	(1742:16), wa
+	ld	(SEGFX_RECORD+4:16), wa
 	ld	wa, (xiz+12)
-	ld	(1744:16), wa
+	ld	(SEGFX_RECORD+6:16), wa
 	ld	wa, (xiz+14)
-	ld	(1746:16), wa
+	ld	(SEGFX_RECORD+8:16), wa
 	ld	(COLORBLIT_MODE:24), 0
 	call	SeGfx_StaticOp00_FromBuf
 	pop	xiy
@@ -8113,13 +8113,13 @@ SeMenu_DrawDottedLine:
 	push	xix
 	push	xiy
 	ld	wa, (xiz+8)
-	ld	(0x6cc:16), wa
+	ld	(SEGFX_RECORD+2:16), wa
 	ld	wa, (xiz+10)
-	ld	(1742:16), wa
+	ld	(SEGFX_RECORD+4:16), wa
 	ld	wa, (xiz+12)
-	ld	(1744:16), wa
+	ld	(SEGFX_RECORD+6:16), wa
 	ld	wa, (xiz+14)
-	ld	(1746:16), wa
+	ld	(SEGFX_RECORD+8:16), wa
 	ld	(COLORBLIT_MODE:24), 0
 	call	SeGfx_StaticOp15_FromBuf
 	pop	xiy
@@ -8420,13 +8420,13 @@ SeMenu_ClearRect:
 	push	xix
 	push	xiy
 	ld	wa, (xiz+8)
-	ld	(1740:16), wa
+	ld	(SEGFX_RECORD+2:16), wa
 	ld	wa, (xiz+10)
-	ld	(1742:16), wa
+	ld	(SEGFX_RECORD+4:16), wa
 	ld	wa, (xiz+12)
-	ld	(1744:16), wa
+	ld	(SEGFX_RECORD+6:16), wa
 	ld	wa, (xiz+14)
-	ld	(1746:16), wa
+	ld	(SEGFX_RECORD+8:16), wa
 	ld	(COLORBLIT_MODE:24), 0
 	call	SeGfx_StaticOp1B_FromBuf
 	pop	xiy
@@ -8459,64 +8459,64 @@ SeMenu_ShowConfirmDialog_Data_Code_Loop:
 	jr	nz, SeMenu_ShowConfirmDialog_Data_Code_Loop
 	ld	ix, (SEMENU_GFX_X:16)
 	ld	iy, (SEMENU_GFX_Y:16)
-	ld	(1740:16), ix
-	addw	(0x6cc:16), 196
-	ld	(1744:16), ix
-	addw	(0x6d0:16), 200
-	ld	(1742:16), iy
-	ld	(1746:16), iy
-	addw	(0x6d2:16), 12
+	ld	(SEGFX_RECORD+2:16), ix
+	addw	(SEGFX_RECORD+2:16), 196
+	ld	(SEGFX_RECORD+6:16), ix
+	addw	(SEGFX_RECORD+6:16), 200
+	ld	(SEGFX_RECORD+4:16), iy
+	ld	(SEGFX_RECORD+8:16), iy
+	addw	(SEGFX_RECORD+8:16), 12
 	call	SeGfx_StaticOp09_FromBuf
 	ld	ix, (SEMENU_GFX_X:16)
 	ld	iy, (SEMENU_GFX_Y:16)
 	add	ix, 196
-	ld	(1740:16), ix
-	ld	(1744:16), ix
-	ld	(1742:16), iy
-	subw	(0x6ce:16), 5
-	ld	(1746:16), iy
-	subw	(0x6d2:16), 1
+	ld	(SEGFX_RECORD+2:16), ix
+	ld	(SEGFX_RECORD+6:16), ix
+	ld	(SEGFX_RECORD+4:16), iy
+	subw	(SEGFX_RECORD+4:16), 5
+	ld	(SEGFX_RECORD+8:16), iy
+	subw	(SEGFX_RECORD+8:16), 1
 	call	SeGfx_StaticOp09_FromBuf
 	ld	ix, (SEMENU_GFX_X:16)
 	ld	iy, (SEMENU_GFX_Y:16)
-	ld	(1740:16), ix
-	subw	(0x6cc:16), 8
-	ld	(0x6d0:16), ix
-	ld	(1742:16), iy
-	ld	(1746:16), iy
-	addw	(0x6d2:16), 12
+	ld	(SEGFX_RECORD+2:16), ix
+	subw	(SEGFX_RECORD+2:16), 8
+	ld	(SEGFX_RECORD+6:16), ix
+	ld	(SEGFX_RECORD+4:16), iy
+	ld	(SEGFX_RECORD+8:16), iy
+	addw	(SEGFX_RECORD+8:16), 12
 	call	SeGfx_StaticOp09_FromBuf
 	ld	ix, (SEMENU_GFX_X:16)
 	ld	iy, (SEMENU_GFX_Y:16)
-	ld	(1740:16), ix
-	subw	(0x6cc:16), 5
-	ld	(1744:16), ix
-	subw	(0x6d0:16), 3
-	ld	(1742:16), iy
-	addw	(0x6ce:16), 1
-	ld	(1746:16), iy
-	addw	(0x6d2:16), 7
+	ld	(SEGFX_RECORD+2:16), ix
+	subw	(SEGFX_RECORD+2:16), 5
+	ld	(SEGFX_RECORD+6:16), ix
+	subw	(SEGFX_RECORD+6:16), 3
+	ld	(SEGFX_RECORD+4:16), iy
+	addw	(SEGFX_RECORD+4:16), 1
+	ld	(SEGFX_RECORD+8:16), iy
+	addw	(SEGFX_RECORD+8:16), 7
 	call	SeGfx_StaticOp09_FromBuf
 	ld	ix, (SEMENU_GFX_X:16)
 	ld	iy, (SEMENU_GFX_Y:16)
 	sub	ix, 4
-	ld	(1740:16), ix
-	ld	(1744:16), ix
-	ld	(1742:16), iy
-	addw	(0x6ce:16), 1
-	ld	(1746:16), iy
-	addw	(0x6d2:16), 11
+	ld	(SEGFX_RECORD+2:16), ix
+	ld	(SEGFX_RECORD+6:16), ix
+	ld	(SEGFX_RECORD+4:16), iy
+	addw	(SEGFX_RECORD+4:16), 1
+	ld	(SEGFX_RECORD+8:16), iy
+	addw	(SEGFX_RECORD+8:16), 11
 	call	SeGfx_StaticOp02_FromBuf
 	ld	ix, (SEMENU_GFX_X:16)
 	ld	iy, (SEMENU_GFX_Y:16)
-	ld	(1740:16), ix
-	addw	(0x6cc:16), 28
-	ld	(1744:16), ix
-	addw	(0x6d0:16), 171
-	ld	(1742:16), iy
-	addw	(0x6ce:16), 13
-	ld	(1746:16), iy
-	addw	(0x6d2:16), 14
+	ld	(SEGFX_RECORD+2:16), ix
+	addw	(SEGFX_RECORD+2:16), 28
+	ld	(SEGFX_RECORD+6:16), ix
+	addw	(SEGFX_RECORD+6:16), 171
+	ld	(SEGFX_RECORD+4:16), iy
+	addw	(SEGFX_RECORD+4:16), 13
+	ld	(SEGFX_RECORD+8:16), iy
+	addw	(SEGFX_RECORD+8:16), 14
 	call	SeGfx_StaticOp09_FromBuf
 	ret
 ; SeMenu_DrawKeyboardOctave: Draws one 28-px octave of the sound editor's mini keyboard at (IX, IY): the outline (an
@@ -8525,23 +8525,23 @@ SeMenu_ShowConfirmDialog_Data_Code_Loop:
 ;   SeMenu_DrawKeyboardGraphic calls it seven times, adding 28 to IX each time, and its header already calls these the
 ;   octave cells.
 SeMenu_DrawKeyboardOctave:
-	ld	(1740:16), ix
-	ld	(1744:16), ix
-	ld	(1742:16), iy
-	subw	(0x6ce:16), 5
-	ld	(1746:16), iy
-	subw	(0x6d2:16), 1
+	ld	(SEGFX_RECORD+2:16), ix
+	ld	(SEGFX_RECORD+6:16), ix
+	ld	(SEGFX_RECORD+4:16), iy
+	subw	(SEGFX_RECORD+4:16), 5
+	ld	(SEGFX_RECORD+8:16), iy
+	subw	(SEGFX_RECORD+8:16), 1
 	pushw	ix
 	pushw	iy
 	call	SeGfx_StaticOp02_FromBuf
 	popw	iy
 	popw	ix
-	ld	(1740:16), ix
-	ld	(1742:16), iy
-	ld	(1744:16), ix
-	addw	(0x6d0:16), 28
-	ld	(1746:16), iy
-	addw	(0x6d2:16), 12
+	ld	(SEGFX_RECORD+2:16), ix
+	ld	(SEGFX_RECORD+4:16), iy
+	ld	(SEGFX_RECORD+6:16), ix
+	addw	(SEGFX_RECORD+6:16), 28
+	ld	(SEGFX_RECORD+8:16), iy
+	addw	(SEGFX_RECORD+8:16), 12
 	pushw	ix
 	pushw	iy
 	call	SeGfx_StaticOp09_FromBuf
@@ -8553,14 +8553,14 @@ SeMenu_ShowConfirmDialog_Data_Code_Loop2:
 	ld	hl, (xiz)
 	ld	de, (xiz+2)
 	add	xiz, 4
-	ld	(1740:16), ix
-	add	(0x6cc:16), hl
-	ld	(1744:16), ix
-	add	(0x6d0:16), de
-	ld	(0x6ce:16), iy
-	addw	(0x6ce:16), 1
-	ld	(1746:16), iy
-	addw	(0x6d2:16), 7
+	ld	(SEGFX_RECORD+2:16), ix
+	add	(SEGFX_RECORD+2:16), hl
+	ld	(SEGFX_RECORD+6:16), ix
+	add	(SEGFX_RECORD+6:16), de
+	ld	(SEGFX_RECORD+4:16), iy
+	addw	(SEGFX_RECORD+4:16), 1
+	ld	(SEGFX_RECORD+8:16), iy
+	addw	(SEGFX_RECORD+8:16), 7
 	push	c
 	push	xiz
 	pushw	ix
@@ -8575,12 +8575,12 @@ SeMenu_ShowConfirmDialog_Data_Code_Loop2:
 	ld	c, 6:opc
 SeMenu_DrawKeyboardOctave_Loop:
 	add	ix, 4
-	ld	(1740:16), ix
-	ld	(1744:16), ix
-	ld	(1742:16), iy
-	addw	(0x6ce:16), 1
-	ld	(1746:16), iy
-	addw	(0x6d2:16), 11
+	ld	(SEGFX_RECORD+2:16), ix
+	ld	(SEGFX_RECORD+6:16), ix
+	ld	(SEGFX_RECORD+4:16), iy
+	addw	(SEGFX_RECORD+4:16), 1
+	ld	(SEGFX_RECORD+8:16), iy
+	addw	(SEGFX_RECORD+8:16), 11
 	push	c
 	pushw	ix
 	pushw	iy
@@ -8679,25 +8679,25 @@ SeMenu_DrawEnvCurvePicture:
 	jr	nz, SeMenu_ShowConfirmDialog_Data_Code_Skip5
 	ld	ix, (SEMENU_GFX_X:16)
 	ld	iy, (SEMENU_GFX_Y:16)
-	ld	(1740:16), ix
-	addw	(0x6cc:16), 1
-	ld	(1744:16), ix
-	addw	(0x6d0:16), 37
-	ld	(1742:16), iy
-	addw	(0x6ce:16), 1
-	ld	(1746:16), iy
-	addw	(0x6d2:16), 37
+	ld	(SEGFX_RECORD+2:16), ix
+	addw	(SEGFX_RECORD+2:16), 1
+	ld	(SEGFX_RECORD+6:16), ix
+	addw	(SEGFX_RECORD+6:16), 37
+	ld	(SEGFX_RECORD+4:16), iy
+	addw	(SEGFX_RECORD+4:16), 1
+	ld	(SEGFX_RECORD+8:16), iy
+	addw	(SEGFX_RECORD+8:16), 37
 	call	SeGfx_StaticOp1B_FromBuf
 	ld	ix, (SEMENU_GFX_X:16)
 	ld	iy, (SEMENU_GFX_Y:16)
-	ld	(1740:16), ix
-	addw	(0x6cc:16), 1
-	ld	(1744:16), ix
-	addw	(0x6d0:16), 38
-	ld	(1742:16), iy
-	addw	(0x6ce:16), 38
-	ld	(1746:16), iy
-	addw	(0x6d2:16), 1
+	ld	(SEGFX_RECORD+2:16), ix
+	addw	(SEGFX_RECORD+2:16), 1
+	ld	(SEGFX_RECORD+6:16), ix
+	addw	(SEGFX_RECORD+6:16), 38
+	ld	(SEGFX_RECORD+4:16), iy
+	addw	(SEGFX_RECORD+4:16), 38
+	ld	(SEGFX_RECORD+8:16), iy
+	addw	(SEGFX_RECORD+8:16), 1
 	call	SeGfx_StaticOp00_FromBuf
 	jr	SeMenu_ShowConfirmDialog_Data_Code_Return
 SeMenu_ShowConfirmDialog_Data_Code_Skip5:
@@ -10435,17 +10435,17 @@ SeMenu_NameEditor_HighlightChar:
 	ld	l, w
 	sla	hl, 1
 	ld	ix, (xiz+hl)
-	ld (1740:16), ix
+	ld (SEGFX_RECORD+2:16), ix
 	add	ix, 8
-	ld	(1744:16), ix
+	ld	(SEGFX_RECORD+6:16), ix
 	ld	xiz, SeMenu_NameEditor_HighlightChar_Records2
 	xor	hl, hl
 	ld	l, a
 	sla	hl, 1
 	ld	ix, (xiz+hl)
-	ld (1742:16), ix
+	ld (SEGFX_RECORD+4:16), ix
 	add	ix, 14
-	ld	(1746:16), ix
+	ld	(SEGFX_RECORD+8:16), ix
 	call	SeGfx_StaticOp05_FromBuf
 	ret
 ; SeTonTon2_DrawStaticScreen: Static-screen routine of sound-editor title 0x23 TT_SETONTON2 (entry 3 of
