@@ -1,6 +1,7 @@
 [![semantic disasm](docs/badges/semantic-score.svg)](#how-semantic-is-it)
 [![KN5000 semantic](docs/badges/semantic-score-kn5000.svg)](#how-semantic-is-it)
 [![SX-WSA1R semantic](docs/badges/semantic-score-wsa1.svg)](#how-semantic-is-it)
+[![SX-KN7000 semantic](docs/badges/semantic-score-kn7000.svg)](#how-semantic-is-it)
 [![bytes understood](docs/badges/semantic-bytes.svg)](#how-semantic-is-it)
 [![semantic names](docs/badges/semantic-names.svg)](#how-semantic-is-it)
 [![jump tables resolved](docs/badges/semantic-entry.svg)](#how-semantic-is-it)
@@ -24,12 +25,15 @@ Felipe Sanches
 ## How semantic is it?
 
 Every image already rebuilds byte-identical to its dump, so byte-match says nothing about progress. The
-badges above measure understanding instead, over every ROM of the two TLCS-900 models, the KN5000 and
-the SX-WSA1R (the KN7000 is not scored yet; `kn7000/tools/coverage_score.py` is its measure). They are produced by
+badges above measure understanding instead, over every rated image of all three models. They are produced by
 `make semantic-score`, i.e. `scripts/analysis/semantic_score.py`, whose docstring defines each part:
 
 - **bytes understood**: bytes whose purpose the source states with evidence: code, documented data and
-  verified filler (`scripts/analysis/data_range_census.py`).
+  verified filler (`scripts/analysis/data_range_census.py`). That strict measure exists for the KN5000 and
+  the SX-WSA1R only. The pooled badge also adds the SX-KN7000's bytes, which use a weaker measure: the share
+  of bytes emitted as source rather than passthrough, an upper bound (see below). The KN7000 is about 42% of
+  the pooled bytes, so the badge mixes two definitions. The per-model figures in
+  `docs/badges/semantic-score.json` keep them apart.
 - **semantic names**: linked symbols whose name says what the thing is. Names that only restate an
   address (`sub_F4A2B0`) or a position (`Foo_Helper7`, `Foo_Case5`) do not count. Local branch labels
   (`Foo_Skip2`, prom_c's `Foo__F9A123`) are not rated, so each routine counts once.
@@ -37,6 +41,11 @@ the SX-WSA1R (the KN7000 is not scored yet; `kn7000/tools/coverage_score.py` is 
   symbolically (the committed dispatch census, `docs/coverage/`).
 - **C fields named**: C struct members with a meaningful name rather than an index (`str_3`,
   `field_0a38`).
+
+The SX-KN7000 has no ELF, no dispatch census and no C. Its score is the mean of two parts, both read from the
+sources: **bytes** is the share emitted as source rather than `.incbin_range` passthrough
+(`kn7000/tools/coverage_score.py`'s source coverage), and **names** is named routines among the recovered
+functions and converter routines. Its images are program 941, table 84 and the seven Style Convert converters.
 
 The score is the mean of these components, per model and overall. Every number behind it, with its
 commit, is in `docs/badges/semantic-score.json`; the trend is in `docs/badges/semantic-score-history.csv`.

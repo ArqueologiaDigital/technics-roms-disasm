@@ -521,3 +521,18 @@ what resisted: `notes/lanes/llvmalumem-2026-09-02.md`.
 | `issue_triage_measurements.py` | Do the open issues whose goal is a property of the tree (no `LABEL_` left, no numeric jump targets, images / demo MIDI / fonts extracted, jump tables documented, no live `tmp94c241.inc`) meet it today? Each closing comment quotes a line of its output. |
 
     python3 scripts/analysis/issue_triage_measurements.py
+
+## Added 2026-10-24 (measurement first, audit work package WP02)
+
+| script                  | question it answers                                                                                                                                                                                                                                                                                                                                                                                              |
+|-------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `doc_quality_census.py` | Per image of all three models (KN5000 v10 v9 v7 v142 subboot tabledata customdata hdae5000, WSA1 prom_a-d, kn7000 program/table/cnv), how many routines lack a header comment, how many addresses are spelled as numbers, how many labels are named only by an address, how many `.byte` runs sit between instructions, and how many routines still have placeholder names? Did a change make any of them worse? |
+
+    python3 scripts/analysis/doc_quality_census.py                 # the table
+    python3 scripts/analysis/doc_quality_census.py --files v10     # per-file breakdown of one image
+    python3 scripts/analysis/doc_quality_census.py --routines v10  # every routine counted by (a), with its reason
+    make doc-quality                                               # compare with the newest committed snapshot, then
+                                                                   # write docs/coverage/doc-quality-<date>-NN.{txt,json}
+
+It reads sources only and takes about 15 seconds. Its rules are in its docstring, and the ledger policy is in
+CLAUDE.md, "Code-Coverage Evidence Ledger", point 7.
