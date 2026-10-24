@@ -3433,12 +3433,12 @@ VocalistGrid_CheckDispData:
 	ld	xwa, 0x2d00
 	call	SndParam_LookupReadOnly
 	cp	hl, 16
-	jr	z, VocalistGridCheck_Skip9
+	jr	z, VocalistGrid_CheckDispData_Skip9
 	cp	hl, 17
 	jr	nz, VocalistGrid_CheckDispData_Skip10
 	ld	xwa, VocalistGrid_DispatchData_Str_10
 	jr	VocalistGrid_CheckDispData_Join7
-VocalistGridCheck_Skip9:
+VocalistGrid_CheckDispData_Skip9:
 	ld	xwa, VocalistGrid_DispatchData_Str_11
 VocalistGrid_CheckDispData_Join7:
 	push	xwa

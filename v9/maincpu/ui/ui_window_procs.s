@@ -4196,7 +4196,7 @@ DrawDottedLine_Impl_Skip12:
 	ld	(xsp+30), xwa
 	ld	xwa, (xsp+8)
 	cp	xwa, (xsp+4)
-	jrl	le, ClampColorToRange_Skip15
+	jrl	le, DrawDottedLine_Impl_Skip15
 	ld	xwa, (xsp+4)
 	sla	xwa, 16
 	ld	xbc, (xsp+8)
@@ -4254,7 +4254,7 @@ DrawDottedLine_Impl_Join5:
 	cp	xbc, (xsp+8)
 	jr	le, DrawDottedLine_Impl_Loop3
 	jrl	DrawDottedLine_Impl_Join7
-ClampColorToRange_Skip15:
+DrawDottedLine_Impl_Skip15:
 	ld	xwa, (xsp+8)
 	sla	xwa, 16
 	ld	xbc, (xsp+4)

@@ -588,7 +588,7 @@ SndParam_ResolveWidget_Skip2:
 	ld	c, (xwa+6)
 	ld	(xde), c
 	cp	(xhl), 177
-	jr	z, SndParam_ResolveWidget_Skip3
+	jr	z, SndParam_ResolveWidget_Skip4
 	ld	xbc, (xsp+10)
 	ld	bc, (xbc)
 	ld	e, (xwa+15)
@@ -602,7 +602,7 @@ SndParam_ResolveWidget_Skip2:
 	ld	xwa, (xsp+14)
 	ld	(xwa+2), l
 	jr	SndParam_ResolveWidget_Join3
-SndParam_ResolveWidget_Skip3:
+SndParam_ResolveWidget_Skip4:
 	ld	xhl, (xsp+10)
 	ld	bc, (xhl)
 	and	bc, 127
