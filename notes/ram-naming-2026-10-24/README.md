@@ -46,10 +46,12 @@ v9's RAM layout is v10's. v7's is not: the accompaniment, chord, UI and MIDI blo
 other blocks have not moved. `name_kn5000_ram.py` never assumes a shift. It pairs every v10 routine with the
 routine of the same label in the other tree, and only routines with the same number of instructions and
 the same shape count. Each numeric operand in the other tree at the place where v10 uses a name is then a
-vote, and a name is applied only when all of its votes agree. 161 of the 288 names in v7's
+vote, and a name is applied only when all of its votes agree. 163 of the 350 names in v7's
 `ram_variables_by_use.s` came out at an address other than v10's; their comment says so. A record whose
 first byte no instruction uses is placed from its fields instead: v10's `NAME+k` against the other tree's
-number `n` votes for `n - k` (`add_kn5000_ram_names.py`, `derive_records`). The panel records are not
+number `n` votes for `n - k` (`add_kn5000_ram_names.py`, `derive_records`). A new name that lies inside a
+record the tree already has is placed at the same offset in that record (`place_record_fields`), and an
+earlier `RECORD+k` whose address has since got a name of its own is respelled with it. The panel records are not
 derived: `SndParam_BlockRamPtrs` and the default image are byte-identical in the three trees, so their
 addresses are the same. The gate cannot prove a vote right, because a number replaced by a name of the same
 value assembles to the same bytes either way. What makes a vote trustworthy is that it is unanimous and
@@ -67,12 +69,12 @@ memory operands outside the image: RAM, I/O, other ROMs), before the lane and af
 
 | tree | before | after  | removed |
 |------|--------|--------|---------|
-| v10  | 29,079 | 19,417 | 9,662   |
-| v9   | 29,049 | 19,387 | 9,662   |
-| v7   | 28,877 | 19,294 | 9,583   |
+| v10  | 29,079 | 18,419 | 10,660  |
+| v9   | 29,049 | 18,389 | 10,660  |
+| v7   | 28,877 | 18,291 | 10,586  |
 
-Names: 288 in `ram_variables_by_use.s` (19 of them records) and 75 in `ram_panel_records.s` (the 74 record
-payloads and `PANEL_RECORDS`), so 363 distinct addresses. All 288 are defined in v9 and v7 as well. Count
+Names: 350 in `ram_variables_by_use.s` (19 of them records) and 75 in `ram_panel_records.s` (the 74 record
+payloads and `PANEL_RECORDS`), so 425 distinct addresses. All 350 are defined in v9 and v7 as well. Count
 them with `grep -c '^\s*\.equ'` on each file. `make gate` reported every image IDENTICAL after every batch.
 
 ## Corrections made on the way
@@ -94,8 +96,10 @@ them with `grep -c '^\s*\.equ'` on each file. `make gate` reported every image I
 1. The flag bytes and masks with the most numeric uses are still numbers. Each one needs a per-bit analysis
    before it can be named:
    - 0xC1FE / 0xC594 / 0xC596 / 0xC598 / 0xC59C, the audio-configuration state;
-   - 0x287B, 0x28B2, 0x28B3 and 0x28C5, the sequencer play state;
-   - 0x28A8 / 0x28AA / 0x28C6 / SEQ_SONG_RECORD+30 (0xF19E) / 0xFFEC, the track masks of play and record;
+   - 0x28B2 and 0x28B3, the sequencer play state (`SEQ_EDIT_FLAGS` and `SEQ_PLAY_FLAGS` describe only the bits
+     whose meaning the code shows);
+   - what a set bit of `SEQ_TRACK_MASK` means to the player: the name and comment record only what the code
+     does to it;
    - 0x32F4, 0x332C, 0x3283, 0x34CD, 0x35B0 and 0x3312-0x3318, accompaniment state;
    - 0xE3E2, the sound editor and Composer flags.
 
