@@ -1006,6 +1006,8 @@ BmDrEdit_SetFeedbackTimer:
 	ld (0x295d:16), 1
 	ret
 
+; Saves the drum/bass editor cursor: 0x275e -> 0x2762 (count), byte 0x2760 -> 0x2764
+; (ticks), 0x28af -> 0x2766 (data block), 0x2666 -> 0x2768 (offset).
 BmDrEdit_SaveEditState:
 	ldmm16 0x2762, 0x275e
 	ldmm8 0x2764, 0x2760
@@ -1049,6 +1051,9 @@ BmDrEdit_ScanToEnd_CheckEndMark:
 	jr z, BmDrEdit_ScanToEnd_Loop
 	ret
 
+; Restores the drum/bass editor's saved cursor: 0x276a -> 0x275e (count), byte 0x276c ->
+; 0x2760 (ticks), 0x276e -> 0x28af (data block) and byte 0x2770 -> 0x2666 (offset).
+; BmDrEdit_SaveEditState keeps a second copy at 0x2762..0x2768.
 BmDrEdit_LoadAlternateState:
 	ldmm16 0x275e, 0x276a
 	ldmm8 0x2760, 0x276c
@@ -1307,6 +1312,9 @@ BmDrEdit_WalkTrack_CheckNoteOn:
 	jr nz, BmDrEdit_WalkTrack_ProcessEvent
 	jrl BmDrEdit_ReadEventAtPosition
 
+; Converts two (count, ticks) positions into tick counts at 96 ticks per count.
+;   In:  XWA -> word that receives (0x275e) * 96 + byte (0x2760);
+;        XBC -> word that receives (0x276a) * 96 + byte (0x276c).
 BmDrEdit_SetupCoordinates:
 	ld xde, xwa
 	ldmw2 (xde), 0x275e
@@ -2170,6 +2178,12 @@ BmDrEdit_ValidateSteps_InsertLoop:
 BmDrEdit_ValidateSteps_RestoreState:
 	jrl BmDrEdit_RestoreEditState
 
+; Points the editor at the start of the part being edited and re-inserts its step entries.
+;   The part is (0x2965) + 1; its first data block comes from the voice table of song slot 0
+;   (Part_ReadVoiceWord), returning at once when it is 0xffff.  Sets 0x28af / 0x2666 = block / 5
+;   (error 0xb7 if an error was pending), counts the measures (BmDrEdit_CountMeasuresAndValidate),
+;   then repeats EditChannel_LoadVoiceParams + BmDrEdit_InsertStepEntry (0x2782) + 2 times,
+;   counting down in 0x2772.  Any error goes to BmDrEdit_RefreshDisplayState.
 BmDrEdit_SeekToPartVoice:
 	ld c, (0x2965:16)
 	inc 1, c

@@ -2889,6 +2889,13 @@ SMF_CC_Volume_Handler:
 	.include "sequencer/sequencer_ui.s"
 	.include "sequencer/sequencer_engine.s"
 
+; C library open: FileOpen(name, mode), both stack arguments (C strings).
+;   The mode letters r w a + b ~ d set the open flags (default: text); the name is upper-cased
+;   up to a ':' and its device prefix looked up in the device table at 0x3e3bc (0x3e3de entries
+;   of 0x22 bytes, name pointer at +22).  A free entry of the 16-slot handle table at 0x210b4
+;   gets a newly allocated 0x4b-byte handle that is filled from the device entry.
+;   Out: XHL = handle, or 0 with the error in 0x1e53c (7 = no such device, 2 = mode not allowed
+;   by the device, 4 = no free handle).  Stores FileClose's address in 0x210f6.
 FileOpen:
 	lda xsp, (xsp - 16)
 	push xiz
@@ -3442,6 +3449,12 @@ SeqStep_ByteBlockF002_Skip4:
 	ldw	hl, 0xffff
 	ret
 
+; C library close.  Stack argument: the file handle (the record FileOpen returned).
+;   SeqStep_FileCloseInner calls the handle's close method (pointer at handle+14, entry +20),
+;   clears its entry in the 16-slot table at 0x210b4 and frees the record; errors land in
+;   0x1e53c (0x11 = not an open handle, 0x26 = free failed).  Then tail-jumps to
+;   SeqStep_ParseHeaderContinue, which calls SeqStep_ParseVariableHeader with the constant
+;   arguments 7, 0, 0, 0, 0, 0, 0L.  FileOpen stores this routine's address at 0x210f6.
 FileClose:
 	ld xwa, (xsp + 4)
 	push xwa
@@ -9676,6 +9689,12 @@ FileIO_ParsePath_Return:
 	lda xsp, (xsp + 18)
 	ret
 
+; Directory search, first match (C runtime style, named in the HAMA function table).
+;   In:  XWA = path with a wildcard pattern, XBC = result record (as _findnext fills it).
+;   With the device type at 0x3e3e4 = 5 the request goes to FindFirst_SndTable.  Otherwise it
+;   allocates the 8-byte search record, splits the path (FileIO_ParsePathComponents), opens the
+;   directory with mode "d" (FileOpen), keeps a copy of the pattern and runs _findnext.
+;   Out: XHL = search record for _findnext / _findclose, or 0xffffffff on failure.
 _findfirst:
 	lda xsp, (xsp - 20)
 	push xiz
@@ -9802,6 +9821,11 @@ FdcFile_Epilogue20:
 	lda xsp, (xsp + 20)
 	ret
 
+; Directory search, release (C runtime style, named in the HAMA function table).
+;   In:  XWA = search record from _findfirst.  With the device type at 0x3e3e4 = 5 the record is
+;   handed to FileIO_ValidateHandle; otherwise its directory file is closed (FileClose) and the
+;   pattern and the record are freed.
+;   Out: HL = 0, or 0xffff for a null record.
 _findclose:
 	push xiz
 	ld xiz, xwa
@@ -9837,6 +9861,15 @@ FindClose_Return:
 	pop xiz
 	ret
 
+; Directory search, next match (C runtime style, the name is in the HAMA function table).
+;   In:  XWA = search record (+0 = open directory file, +4 = wildcard pattern),
+;        XBC = result record.
+;   With the device type at 0x3e3e4 = 5 the request goes to FileIO_ReadNextDirEntry.  Otherwise
+;   32-byte FAT directory entries are read (FileRead) until one is neither deleted (0xe5) nor a
+;   volume label (attribute bit 3) and matches the pattern (FileIO_MatchWildcard); a 0 first
+;   byte ends the directory.  The result gets: +0 attribute, +2 size (entry offset 28), +6 the
+;   8-character name, '.', the 3-character extension and a NUL.
+;   Out: HL = 0 found, 0xffff no more entries.
 _findnext:
 	lda xsp, (xsp - 64)
 	push xiz
@@ -10259,6 +10292,13 @@ SndTable_ByteBlock_ReadOps_Code_Loop:
 	jr	nz, SndTable_ByteBlock_ReadOps_Code_Loop
 	ret
 
+; Returns the next byte of a data stream received through task-message mailbox 3.
+;   State: 0x2358a = stream state (1 = open), 0x23582 = current message block (word 0 = byte
+;   count, word 2 = a pending value, data from +4), 0x23580 = bytes left, 0x23586 = read
+;   pointer.  An empty buffer is refilled with TaskMsg_Receive(3); when a full 0x400-byte block
+;   has been consumed it is handed back with TaskMsg_Send(2).
+;   Out: HL = byte (0..0xff); the block's pending word when one is set; 0xffff at end of data or
+;        when the stream is not open.  State becomes 2 after the first read.
 TaskBuf_ReadNextByte:
 	pushw iz
 	cp (0x02358a:24), 0x01
@@ -10751,6 +10791,8 @@ SeqDispatch_TrampolineBlock_Join:
 	calr	AccBuf_ResetAndReload
 	ret
 
+; Entry to the sequencer tick dispatcher: jumps to Seq_DispatcherTick.  Called from the
+; accompaniment, demo and playback code as well as from Seq_TickWrapper.
 Seq_DispatcherEntry:
 	jp Seq_DispatcherTick
 
@@ -10949,6 +10991,8 @@ Rhythm_InitDataBlock:
 ; address and address+1 in the whole dump (2026-09-25, lane seqeng).
 	.zero 128
 
+; Posts an event through SwbtWr_QueuePostEvent with the caller's registers unchanged; the
+; accompaniment and rhythm code uses this entry for part-change notifications.
 Rhythm_QueuePartChangeEvent:
 	call SwbtWr_QueuePostEvent
 	ret

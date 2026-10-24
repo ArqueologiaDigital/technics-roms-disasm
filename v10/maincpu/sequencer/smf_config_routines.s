@@ -580,6 +580,11 @@ SMF_OutputCmd_Finalize:
 SMF_OutputCmd_Return:
 	ret
 
+; Accounts for one byte the caller has just stored through XIX into the SMF output buffer.
+;   While XIX is at most 0x17f9 it only saves XIX in 0x1118.  At the end of the buffer the
+;   buffer is written out (SMF_FlushToFile, or a new sector is started when 0x10fb is non-zero,
+;   counting in 0x10e7).  FILEIO_BLOCK_BYTES is set to 2 first; a negative value afterwards
+;   means the write failed.
 SMF_WriteByte:
 	push xhl
 	pushw bc
@@ -669,6 +674,13 @@ SMF_WriteByte_Done:
 	pop xhl
 	ret
 
+; Writes one channel event, with its delta time, to the Standard MIDI File being saved.
+;   In:  A = status byte, W = first data byte, L = second data byte; the delta time is the
+;        variable-length quantity already built at 0x106e (copied while bit 7 is set).
+;   Out: XIX = output pointer (0x1118).  The second data byte is skipped for program change
+;        (0xc0) and channel pressure (0xd0), whose messages have one data byte.
+;   Each byte goes through SMF_WriteByte, which flushes the buffer to the file when it fills;
+;   a negative FILEIO_BLOCK_BYTES (a write error) abandons the rest of the event.
 SMF_WriteByteLoop:
 	push xiy
 	ld xix, (4376:16)
@@ -783,6 +795,8 @@ SMF_WriteLoop_Done:
 SMF_ChannelHelperReturn:
 	ret
 
+; Reads the byte at the playback position: block 0x28af (ToneGen_ComputeBlockPtr), offset
+; 0x2666.  Out: A = byte, XHL = block address, IY = offset.
 SMF_GetNextEvent:
 	ld hl, (0x28af:16)
 	call ToneGen_ComputeBlockPtr
@@ -810,6 +824,12 @@ SMF_AdvancePos_Store:
 	ld (9830:16), wa
 	ret
 
+; Computes the delta time since the last event written to the Standard MIDI File and
+; encodes it (SMF_EncodeTimeDelta).
+;   In:  C = time of this event (added to the word BOOTSERIAL_STATE).
+;   The delta (never negative) against the previous time in 0xf66 goes to 0x1085; once, when
+;   0x1a36 is non-zero and bit 0 of 0x10f8 is clear, 384 is added and 0x10f8 set.  Then
+;   0xf66 = C and 0xf70 = the previous 0xf66.  Preserves WA, XHL, DE.
 SMF_CalcTimeDelta:
 	pushw wa
 	push xhl
@@ -844,6 +864,11 @@ SMF_TimeDelta_Store:
 	call SMF_EncodeTimeDelta
 	ret
 
+; Ages the 32 pending-event slots of the SMF writer by the current delta (0x1085).
+;   Each 5-byte slot at 0x11f9 with bit 7 of byte 0 set has its remaining time (word +3)
+;   reduced; slots that fall due are listed as (slot, time) in the 3-byte entries of the
+;   output queue at 0xfae (cleared first), which is sorted when not empty (SMF_SortOutputQueue).
+;   Ends by clearing the words BOOTSERIAL_STATE and BOOTSERIAL_FLAGS; FILEIO_BLOCK_BYTES is set to 2.
 SMF_ProcessChannels:
 	push xwa
 	xor xwa, xwa
@@ -1878,6 +1903,10 @@ SMF_Parse_Complete:
 	ld (4419:16), 0
 	ret
 
+; Maps a controller / parameter code in A through SMF_ChannelTranslationTable (see the
+; table's comment for the special cases when 0x112a = 3).
+;   Out: A = mapped code (bit 7 is a flag for the callers), unchanged for a 0xff entry.
+;   Preserves XIX.
 SMF_TranslateChannel:
 	push xix
 	ld xix, SMF_ChannelTranslationTable

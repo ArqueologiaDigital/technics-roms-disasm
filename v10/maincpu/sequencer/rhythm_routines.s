@@ -361,6 +361,10 @@ Rhythm_CheckVelocityThreshold:
 Rhythm_VelThreshReturn:
 	ret
 
+; Steps a circular-buffer index by three bytes (one 3-byte record).
+;   In:  IY = index, BC = last valid index, XHL = buffer header (+0 = restart index).
+;   Each single step that passes BC wraps to the restart index, so a record may straddle the
+;   end of the buffer.
 Rhythm_AdvancePosition:
 	inc 1, iy
 	cp iy, bc
@@ -872,6 +876,8 @@ Rhythm_SingleNote_ClampVelocity:
 Rhythm_SingleNote_Return:
 	ret
 
+; Pushes the byte in WA into the rhythm ring buffer (RhythmBuf_WriteByte, a compiled-C routine
+; that takes its argument on the stack), preserving every register, XIZ included.
 Rhythm_SendByte:
 	push xhl
 	push xbc

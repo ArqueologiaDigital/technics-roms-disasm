@@ -405,6 +405,8 @@ SeqEvt_HandleBufferWrap:
 SeqEvt_CalcTempoRet:
 	ret
 
+; Pushes the byte in WA into the sequencer event buffer (SeqEvtBuf_WriteByte, a compiled-C
+; routine that takes its argument on the stack), preserving every register.
 SeqEvtBuf_WriteBytePreserve:
 	push xhl
 	push xbc
@@ -428,6 +430,9 @@ SeqEvtBuf_WriteBytePreserve:
 SeqEvtBuf_SizeConstant:
 	ret
 
+; Steps a circular-buffer index.
+;   In:  IX = index, XHL = buffer header (+0 = first index, +2 = last index).
+;   Out: IX + 1, or the first index when that passes the last (signed compare).
 SeqEvtBuf_AdvanceReadPos:
 	inc 1, ix
 	cp ix, (xhl + 2)
@@ -2372,6 +2377,8 @@ AccompSeq_QueueAllMutes:
 	calr AccompSeq_QueueMuteEvent
 	ret
 
+; Posts one mute event: SwbtWr_QueuePostEvent with D = 0x0d and W = 0xcf (the caller sets the
+; other registers).  AccompSeq_QueueAllMutes calls it once per part.
 AccompSeq_QueueMuteEvent:
 	ld d, 0xd:opc
 	ld w, 0xcf:opc

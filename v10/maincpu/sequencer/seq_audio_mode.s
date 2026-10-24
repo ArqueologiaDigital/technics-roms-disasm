@@ -647,6 +647,10 @@ AccentVoice_UpdateParamIndex:
 	ld (0x333a:16), a
 	ret
 
+; Returns the address of one style pattern record.
+;   In:  A = record index (0..0x1d, larger ones read as 0); the bank is the byte at 0x32e6.
+;   Out: XIY = RhythmTiming_OffsetTable[A] + AccVoice_BankBaseTable[(0x32e6)] + 0x60.
+;   Preserves XWA, XIX.
 AccVoice_ResolveParamAddr:
 	push xwa
 	push xix
@@ -1088,6 +1092,7 @@ RhythmPart2_WriteDone:
 	call AccVoiceReg_WritePart2
 	ret
 
+; Fills a 5-byte record at XHL: E, D, then the bytes at 0x342f, 0x3430 and 0x3431.
 AccVoiceReg_StoreParamRecord:
 	ld (xhl), e
 	ld (xhl + 1), d
@@ -1342,6 +1347,9 @@ Rhythm_SendNoteOnMax:
 	calr Rhythm_Send3ByteMsg
 	ret
 
+; Sends a three-byte message on the rhythm byte stream (Rhythm_SendByte), byte by byte.
+;   In:  A = first (status) byte, W = second, E = third.
+;   Writes the three bytes to 0x33e2..0x33e4 first and sends them from there.
 Rhythm_Send3ByteMsg:
 	ld (0x33e2:16), a
 	ld (0x33e3:16), w

@@ -1592,6 +1592,10 @@ SeqTrack_ChannelMapIdentity:
 SeqTrack_ChannelMapSwap10And16:
 	.byte 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x0f, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x09
 
+; Computes the address of one 256-byte song-data block.
+;   In:  HL = block number (1-based).
+;   Out: 0x10fd = (0x1d5a) + (HL-1)*256, the base pointer in 0x1d5a plus the block offset;
+;        XHL = 0.  Preserves XIY.
 ToneGen_ComputeBlockPtr:
 	push xiy
 	ld xiy, (7514:16)
@@ -1907,6 +1911,11 @@ SoundGen_SetVoiceBitAndWriteRegs:
 SoundGen_NullRet:
 	ret
 
+; Loads the playback position of one sequencer track into the current-position variables.
+;   In:  IY = track index.
+;   Out: 0x28af = word IY of the table at 0xc9e (block number), 0x2666 = byte IY of the
+;        table at 0xcbe (offset in the block, zero-extended).  Preserves IY and XDE.
+;   ToneGen_WriteChannelRegs is the inverse (stores the position back).
 SoundGen_CaptureVoiceParams:
 	push xde
 	sla xiy, 1
@@ -2067,6 +2076,7 @@ MidiEvent_ProgramChangeB:
 MidiNoteOff_NullRetB:
 	ret
 
+; Clamps the track index: XIY is zero-extended and anything above 1 becomes 1.
 SoundGen_ClampVoiceIndexMin1:
 	extz xiy
 	cp xiy, 0x1
@@ -2474,6 +2484,10 @@ ToneGen_SetChannelFlag:
 	ld (0x00ffec:24), de
 	ret
 
+; Saves the current playback position back into one sequencer track's slot.
+;   In:  IY = track index.  Stores 0x28af (block number) as word IY of the table at 0xc9e and
+;        the low byte of 0x2666 (offset) as byte IY of the table at 0xcbe.
+;   Inverse of SoundGen_CaptureVoiceParams.  Preserves XIX and IY.
 ToneGen_WriteChannelRegs:
 	push xix
 	ld wa, (0x28af:16)
@@ -2577,6 +2591,9 @@ FloppyIO_ReadVarLen_StoreByte:
 FloppyIO_ReadVarLen_Done:
 	ret
 
+; Scales a value by 96 / (word at 0xf60): from a resolution of (0xf60) per unit to 96.
+;   In:  WA = value.  Out: WA = WA * 96 / (0xf60), remainder in the upper word of XWA; nothing
+;   is done when the word at 0xf60 is 96.  DE is passed through bank register 0xe2.
 SoundGen_ScalePitchByTempo:
 	ld hl, (3936:16)
 	cp hl, 0x60
@@ -4383,6 +4400,8 @@ ToneGen_AdvRefresh_ClearError:
 ToneGen_AdvRefresh_Return:
 	ret
 
+; Sets the bit for the current MIDI channel (low nibble of 0xfab) in the 16-bit channel mask
+; at 0xffec.  Preserves BC; clobbers IY, DE and A.
 ToneGen_SetSustainBit:
 	pushw bc
 	ld iy, (4011:16)

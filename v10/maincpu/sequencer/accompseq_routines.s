@@ -817,6 +817,9 @@ AccompSeq_ExtVelFlags_Dispatch:
 	pop xde
 	ret
 
+; Steps a circular-buffer index.
+;   In:  IY = index, BC = last valid index, XHL = buffer header.
+;   Out: IY + 1, or the restart index (the word at XHL+0) when that passes BC.
 AccompSeq_AdvanceBufferPtr:
 	inc 1, iy
 	cp iy, bc
@@ -1058,6 +1061,8 @@ AccompSeq_JumpTable:
 SwbtB3_CodeA9_Listener1:
 	jp	AccompSeq_GuardedNoteOff
 
+; Stops the accompaniment sequence: AccompSeq_CleanupSequence with XIZ preserved.  Called on
+; play halt, mode switches, demo start and sequencer stop.
 AccompSeq_StopSequence:
 	push xiz
 	call AccompSeq_CleanupSequence
@@ -1489,6 +1494,9 @@ AccompSeq_Output_Return:
 	popw hl
 	ret
 
+; Writes a three-byte MIDI message to the sequencer event buffer, byte by byte
+; (SeqEvtBuf_WriteByte, a compiled-C routine taking its argument on the stack).
+;   In:  A = status, W = first data byte, E = second data byte.  Preserves WA and XIY.
 AccompSeq_WriteMidiToBuffer:
 	pushw wa
 	push xiy
