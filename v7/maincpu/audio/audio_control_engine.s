@@ -3052,19 +3052,19 @@ ExtData_VoiceParam_DispatchBytecode:
 	lda	xix, (ExtData_VoiceParam_DispatchBytecode_ModeMsp:24)
 	jp	t, (xix+wa)
 ; ExtData_VoiceParam_DispatchBytecode_ModeMsp: MD_MSP (CURRENT_MODE 15; also the switch base): sets bit 7 of LED row 2
-;   (0x8F1A). Basis: switch value (CURRENT_MODE - 2) + body.
+;   (0x8E7E). Basis: switch value (CURRENT_MODE - 2) + body.
 ExtData_VoiceParam_DispatchBytecode_ModeMsp:
 	setm	7, (xbc)
 	jr	SndParamF9A541_ResBit7_Code_Epilogue
-; ExtData_VoiceParam_DispatchBytecode_ModeCmp: MD_CMP: sets bit 1 of LED row 0 (0x8F18)
+; ExtData_VoiceParam_DispatchBytecode_ModeCmp: MD_CMP: sets bit 1 of LED row 0 (0x8E7C)
 ExtData_VoiceParam_DispatchBytecode_ModeCmp:
 	ld	a, 1:opc
 	jr	SndParamF9A541_ResBit7_Code_Join
-; ExtData_VoiceParam_DispatchBytecode_ModeSndArg: MD_SND_ARG: sets bit 2 of LED row 0 (0x8F18)
+; ExtData_VoiceParam_DispatchBytecode_ModeSndArg: MD_SND_ARG: sets bit 2 of LED row 0 (0x8E7C)
 ExtData_VoiceParam_DispatchBytecode_ModeSndArg:
 	ld	a, 2:opc
 	jr	SndParamF9A541_ResBit7_Code_Join
-; ExtData_VoiceParam_DispatchBytecode_ModeSeq: MD_SEQ / MD_SEQ_EDIT / MD_SEQ_STEP: sets bit 7 of LED row 6 (0x8F1E)
+; ExtData_VoiceParam_DispatchBytecode_ModeSeq: MD_SEQ / MD_SEQ_EDIT / MD_SEQ_STEP: sets bit 7 of LED row 6 (0x8E82)
 ExtData_VoiceParam_DispatchBytecode_ModeSeq:	; cases 8, 12, 13
 	setm	7, (xde)
 	jr	SndParamF9A541_ResBit7_Code_Epilogue
@@ -3077,27 +3077,27 @@ ExtData_VoiceParam_DispatchBytecode_ModeSeqReal:
 	jr	nz, SndParamF9A541_ResBit7_Code_Epilogue
 	setm	6, (xwa)
 	jr	SndParamF9A541_ResBit7_Code_Epilogue
-; ExtData_VoiceParam_DispatchBytecode_ModeSeqErec: MD_SEQ_EREC: sets bit 6 of LED row 6 (0x8F1E)
+; ExtData_VoiceParam_DispatchBytecode_ModeSeqErec: MD_SEQ_EREC: sets bit 6 of LED row 6 (0x8E82)
 ExtData_VoiceParam_DispatchBytecode_ModeSeqErec:
 	setm	6, (xde)
 	jr	SndParamF9A541_ResBit7_Code_Epilogue
-; ExtData_VoiceParam_DispatchBytecode_ModeSound: MD_SOUND / MD_SOUNDEDIT: sets bit 0 of LED row 11 (0x8F23)
+; ExtData_VoiceParam_DispatchBytecode_ModeSound: MD_SOUND / MD_SOUNDEDIT: sets bit 0 of LED row 11 (0x8E87)
 ExtData_VoiceParam_DispatchBytecode_ModeSound:	; cases 2, 3
 	setm	0, (xiy)
 	jr	SndParamF9A541_ResBit7_Code_Epilogue
-; ExtData_VoiceParam_DispatchBytecode_ModeMidi: MD_MIDI: sets bit 2 of LED row 11 (0x8F23)
+; ExtData_VoiceParam_DispatchBytecode_ModeMidi: MD_MIDI: sets bit 2 of LED row 11 (0x8E87)
 ExtData_VoiceParam_DispatchBytecode_ModeMidi:
 	setm	2, (xiy)
 	jr	SndParamF9A541_ResBit7_Code_Epilogue
-; ExtData_VoiceParam_DispatchBytecode_ModeControl: MD_CONTROL: sets bit 1 of LED row 11 (0x8F23)
+; ExtData_VoiceParam_DispatchBytecode_ModeControl: MD_CONTROL: sets bit 1 of LED row 11 (0x8E87)
 ExtData_VoiceParam_DispatchBytecode_ModeControl:
 	setm	1, (xiy)
 	jr	SndParamF9A541_ResBit7_Code_Epilogue
-; ExtData_VoiceParam_DispatchBytecode_ModeDisk: MD_DISK: sets bit 3 of LED row 11 (0x8F23)
+; ExtData_VoiceParam_DispatchBytecode_ModeDisk: MD_DISK: sets bit 3 of LED row 11 (0x8E87)
 ExtData_VoiceParam_DispatchBytecode_ModeDisk:
 	setm	3, (xiy)
 	jr	SndParamF9A541_ResBit7_Code_Epilogue
-; ExtData_VoiceParam_DispatchBytecode_ModeEntertainer: MD_ENTERTAINER: sets bit 3 of LED row 10 (0x8F22)
+; ExtData_VoiceParam_DispatchBytecode_ModeEntertainer: MD_ENTERTAINER: sets bit 3 of LED row 10 (0x8E86)
 ExtData_VoiceParam_DispatchBytecode_ModeEntertainer:
 	setm	3, (xhl)
 	jr	SndParamF9A541_ResBit7_Code_Epilogue
@@ -5073,7 +5073,7 @@ ExtData_ToneParam_AltBody:
 	lda	xix, (ExtData_ToneParam_AltBody_OnStyleProgram:24)
 	jp	t, (xix+wa)
 ; ExtData_ToneParam_AltBody_OnStyleProgram: Offset 0 of style/tempo record 0x48 (the style selection; also the switch
-;   base): resolves (0x9130, 0x9131) with AccStyle_LookupTempoAndVelocity, writes the result to +0/+1 and posts both.
+;   base): resolves (0x9094, 0x9095) with AccStyle_LookupTempoAndVelocity, writes the result to +0/+1 and posts both.
 ;   Basis: switch value + body.
 ExtData_ToneParam_AltBody_OnStyleProgram:
 	jr	ExtData_ToneParam_AltBody_Join
@@ -8041,7 +8041,7 @@ VoiceMode_ParamHandler_4_Helper:
 ;   slot index of sound category A (the per-category tables at descriptor +0x3C/+0x40/+0x44/+0x48/+0x4C, chosen by
 ;   part and mode), all other registers kept. The part comes from PART_SELECT (GetCurrentPartSelect), not from the B
 ;   the caller loads. Basis: callers + body -- the only caller MidiStream_ExtDispatch_Mode0 takes the received program
-;   E (<= 17, the category count - 1) as a category and drops the change when the part's bank byte 0x9412[part] (the
+;   E (<= 17, the category count - 1) as a category and drops the change when the part's bank byte 0x9376[part] (the
 ;   slot) is above this value.
 MidiStream_GetCategoryLastSlot:
 	push	xbc
@@ -10104,7 +10104,7 @@ SeqTrackAssign_PartTagTable:	.byte	0x00, 0x02, 0x01, 0x07
 ; MidiVoiceNote_PartAssignsD1D2: 15 TRACK ASSIGN values (0xF1A0[track]) that MidiVoiceNote_Dispatch accepts for
 ;   sequencer events 0xD1 and 0xD2 (low status bits 1 and 2): 0, 2, 1, 8, 9, 10, 11, 3, 4, 5, 6, 7, 17, 18, 19 -- the
 ;   sound parts, without DRUMS 12, CHORD 13, APC 14, CONTROL 15 and RHYTHM 16; a track with another value cancels the
-;   event (0x91B5 = 0xFF). Same bytes as MidiVoiceNote_LookupMode0_Data (event 0xD0); MidiVoiceNote_LookupMode3_Data
+;   event (0x9119 = 0xFF). Same bytes as MidiVoiceNote_LookupMode0_Data (event 0xD0); MidiVoiceNote_LookupMode3_Data
 ;   (0xD3) adds 12 and 15. Basis: readers + bytes.
 MidiVoiceNote_PartAssignsD1D2:
 	.byte	0x00, 0x02, 0x01, 0x08, 0x09, 0x0a, 0x0b, 0x03
@@ -10454,7 +10454,7 @@ SeqTrackAssign_PlaybackMapTable:
 	.byte	0x72, 0x03, 0xff, 0x06, 0x72, 0x07, 0x7f, 0x06
 	.fill	8, 1, 0xff
 	.fill	8, 1, 0xff
-; MidiStream_PartEventMapTable: 16 pointers by (0x379B) & 15 (0xFFFFFFFF = none; set for 1, 2, 4, 8): panel-event maps
+; MidiStream_PartEventMapTable: 16 pointers by (0x36FF) & 15 (0xFFFFFFFF = none; set for 1, 2, 4, 8): panel-event maps
 ;   of part records 0x10-0x13 (ACP1-3, BASS) in the same 4-byte format, used by MidiStream_ProcessEventBuffer. Basis:
 ;   readers + bytes.
 MidiStream_PartEventMapTable:

@@ -3800,7 +3800,7 @@ DSPCfg_ApplyParamStructFull_ParametricEq:
 	ld	(xwa), e
 	jrl	DSPCfg_Epilogue
 ; DSPCfg_ApplyParamStructFull_Chorus: Effect 1 (CHORUS): rewrites the record's parameter bytes in place (the path
-;   DataBuf_LoadAndDispatchFormat2 takes when (0xb7ea) = 2); the other cases do the same for their effect.
+;   DataBuf_LoadAndDispatchFormat2 takes when (0xb74e) = 2); the other cases do the same for their effect.
 DSPCfg_ApplyParamStructFull_Chorus:
 	ld	c, (xwa)
 	ld	(xsp + 6), c
@@ -4567,7 +4567,6 @@ ScreenGroup_Dispatch:
 ScreenGroup_SetupWidgetPtr:
 	ldiw_erp	0xfa, 0
 	jr	ScreenGroup_WidgetLoop
-; Voice initialization dispatch
 VoiceInit_Dispatch:
 	push	xiz
 	ld	de, iz

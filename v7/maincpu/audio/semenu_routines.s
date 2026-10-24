@@ -6305,13 +6305,13 @@ SeMenu_GetDisplayState:
 	ret
 ; SeMenu_SetLastSwitch: Stores A, the switch number just decoded, in RAM 0x065A. Basis: callers + body --
 ;   SeMenuTitleFunc_DispatchSwitch stores each decoded switch here right before calling its handler from
-;   GUI_DisplayStructData_0x13FF; while 0xE3E2 bit 3 is set it reads 0x065A back
+;   GUI_DisplayStructData_0x13FF; while 0xE31C bit 3 is set it reads 0x065A back
 ;   (SeMenu_GetLastSwitch) and ignores any other switch.
 SeMenu_SetLastSwitch:
 	ld	(1626:16), a
 	ret
 ; SeMenu_GetLastSwitch: Copies RAM 0x065A, the last switch SeMenuTitleFunc_DispatchSwitch dispatched, to (XWA). Basis:
-;   callers + body -- SeMenuTitleFunc_DispatchSwitch reads it when SeMenu_GetPartConfigBit3 (0xE3E2 bit 3) is set and
+;   callers + body -- SeMenuTitleFunc_DispatchSwitch reads it when SeMenu_GetPartConfigBit3 (0xE31C bit 3) is set and
 ;   then dispatches only a switch equal to it; the setter beside it (SeMenu_SetLastSwitch) stores
 ;   every dispatched switch.
 SeMenu_GetLastSwitch:

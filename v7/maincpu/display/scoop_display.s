@@ -6230,7 +6230,7 @@ SqStep_ParkParamEvent_Return3:
 VoiceCtrl_ParamSetupBytecode_Tbl:
 	.byte	0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f
 	.byte	0x00, 0x00
-	; Byte data, 20 B.  Read by VoiceCtrl_ParamSetupBytecode (0xEF97B6): `ld xix, VoiceCtrl_ParamSetupBytecode_Tbl2`
+	; Byte data, 20 B.  Read by VoiceCtrl_ParamSetupBytecode: `ld xix, VoiceCtrl_ParamSetupBytecode_Tbl2`
 	; index bounded to 0..22 (`cp a, 22` / `jrl ugt` skips larger values)
 VoiceCtrl_ParamSetupBytecode_Tbl2:	.byte	0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
 	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff
@@ -9246,7 +9246,7 @@ SystemInit_StepHandler_0_Return:
 SystemInit_StepHandler_0_Tbl:
 	.byte	0x00, 0x04, 0x60, 0x04, 0x00, 0x03, 0x60, 0x03, 0x00, 0x02, 0x60, 0x02, 0x30, 0x01, 0x90, 0x01
 	.byte	0x00, 0x01, 0x60, 0x01, 0x30, 0x00, 0x30, 0x01
-	; Byte data, 6 B.  Read by SysEx_BytecodeDispatcher (0xEFAAB1): `ld xix, SysInit_BytecodeBlock`
+	; Byte data, 6 B.  Read by SysEx_BytecodeDispatcher: `ld xix, SysInit_BytecodeBlock`
 	; reader SysEx_BytecodeDispatcher: `ld xix, SysInit_BytecodeBlock` then `ld w, (xix+hl)`
 SysInit_BytecodeBlock:
 	.byte	0x50, 0x40, 0x30, 0x20, 0x10, 0x00
@@ -11443,7 +11443,7 @@ VoiceSlot_StatusRet_Return:
 ; VoiceSlot_SkipByteAndRead: Reads two bytes at the song-data cursor with VoiceSlot_FinalRetZ (read the cursor byte,
 ;   advance one) and returns the second in A (W = the advance status), so it skips one byte. Basis: callers + body --
 ;   VoiceSlot_StatusRet calls it right after consuming a stored event's status byte, skipping the clock byte +1 to
-;   fetch data byte +2 (the 0xDn value that goes to 0x3721, the 0xBn tag compared with 72, the 0xCn part), and twice
+;   fetch data byte +2 (the 0xDn value that goes to 0x3685, the 0xBn tag compared with 72, the 0xCn part), and twice
 ;   in a row to reach byte +4.
 VoiceSlot_SkipByteAndRead:
 	call	VoiceSlot_FinalRetZ
@@ -12142,13 +12142,13 @@ VoiceState_DataBlock2_Entry3_Code_Return:
 VoiceState_DataBlock2_Tbl:
 	.byte	0x01, 0x00, 0x02, 0x00, 0x04, 0x00, 0x08, 0x00, 0x10, 0x00, 0x20, 0x00, 0x40, 0x00, 0x80, 0x00
 	.byte	0x00, 0x01, 0x00, 0x02, 0x00, 0x04, 0x00, 0x08, 0x00, 0x10, 0x00, 0x20, 0x00, 0x40, 0x00, 0x80
-; SqStep_BuildAdjacentRowBitmap: Builds the event bitmap of the grid row above (XIX = 0x372E) or below (XIX = 0x3736):
+; SqStep_BuildAdjacentRowBitmap: Builds the event bitmap of the grid row above (XIX = 0x3692) or below (XIX = 0x369A):
 ;   reads events from the block read position into 0x0EB5 (VoiceBank_ProcessCommand), sets bit (clock 0x0EB6 / 12) of
 ;   the current beat byte for each displayable event (VoiceSlot_StatusCheck W = 0), moves to the next byte on a 0x81
 ;   beat marker and stops after (0x0EC1) beats or on 0x84; on the 0x82 end marker in the lower row it records the end
 ;   position (0x0F5B, 0x0F5A = 3). Basis: callers + body -- SqStep_SetupPrevGridRow and SqStep_SetupNextGridRow call
-;   it last with XIX = 0x372E / 0x3736 and 0x0EC1 = the row's beat count; SqStep_BuildCurrentRowBitmap does the same
-;   for the current row at 0x3732.
+;   it last with XIX = 0x3692 / 0x369A and 0x0EC1 = the row's beat count; SqStep_BuildCurrentRowBitmap does the same
+;   for the current row at 0x3696.
 SqStep_BuildAdjacentRowBitmap:
 	xor	bc, bc
 VoiceState_DataBlock2_Loop9:
@@ -12576,7 +12576,7 @@ SubCPU_ToneDispatch:
 	.long 0x0000fa1e, 0x0000fa38, 0x0000fa52, 0x0000fa04
 	.long 0x0000fb3c, 0xffffffff, 0xffffffff, 0xffffffff
 	.long 0xffffffff, 0x0000faee, 0x0000fb08, 0x0000fb22
-	; Byte data, 4 B.  Read by SubCPU_ToneParamDisplay (0xEFD992): `ld xiy, SubCPU_ToneParamDisplay_Tbl`
+	; Byte data, 4 B.  Read by SubCPU_ToneParamDisplay: `ld xiy, SubCPU_ToneParamDisplay_Tbl`
 	; reader SubCPU_ToneParamDisplay: `ld xiy, SubCPU_ToneParamDisplay_Tbl` then `ld a, (xiy+hl)`
 SubCPU_ToneParamDisplay_Tbl:
 	.byte	0x08, 0x09, 0x0a, 0x0b
@@ -14847,7 +14847,7 @@ Display_BytecodeBlock_F_Tbl2:
 	.ascii	"="
 	.byte	0x09
 	.ascii	"       "
-	; Byte data, 19 B.  Read by Display_BytecodeBlock_F (0xEFF11A): `ld xiy, Display_BytecodeBlock_F_Tbl4`
+	; Byte data, 19 B.  Read by Display_BytecodeBlock_F: `ld xiy, Display_BytecodeBlock_F_Tbl4`
 	; copies 26 byte(s) per use (`ld bc, 26` + ldir) into the LCD text buffer
 Display_BytecodeBlock_F_Tbl4:	.ascii	" TEMPO   "
 	.byte	0x93

@@ -1887,7 +1887,6 @@ PmemOutL_ColumnParamDisplay:
 
 ; PmemOutLGridCheck return
 
-; PmemOutLGridCheck return
 PmemOutL_GridCheck_Return:
 	call SendEvent
 
@@ -3945,7 +3944,6 @@ AcMidiPartGridBoxProc_OnLswData:
 	ld	xbc, (xsp+28)
 	ld	xde, (xsp+24)
 	jr	MidiSetup_GridBoxCase3
-; MidiSetup grid box case 2
 MidiSetup_GridBoxCase2:
 	ld xwa, (xsp + 32)
 	call GetViewInstance
@@ -18181,7 +18179,6 @@ DemoMenu_BuildItemWorkspace:
 	add XWA,XDE
 	ld (XWA),IZ
 	jr t, DemoMenu_BuildItemWorkspace_Post
-; DemoMenu workspace function
 DemoMenu_WorkspaceFunc:
 	ld wa, (xsp + 6)
 	sub wa, 0x9

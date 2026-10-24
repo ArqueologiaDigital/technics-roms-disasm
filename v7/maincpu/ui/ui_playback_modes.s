@@ -1672,7 +1672,6 @@ DkMdlyPly_HandleResult:
 	call	AddswbWr
 	call	AudioMode_ResetVoiceState
 	jr	DkMdlyPly_Finalize	; -> 0xF2112B
-; DkMdlyPly extended check
 DkMdlyPly_ExtendedCheck:
 	inc1w_erp 0xfa
 	cp_erpw 0xfa, 0x20, 0x00

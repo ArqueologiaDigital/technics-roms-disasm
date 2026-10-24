@@ -5496,7 +5496,7 @@ SingleLoadSrc_SoundMemPageSize:	.incbin "includes/generated/naka_technichord_str
 ;   SingleLoadSrc_SoundMemListProc refuses an item step (+1) that would reach it. Basis: readers + bytes -- the
 ;   readers compare the stepped cursor with it.
 SingleLoadSrc_SoundMemEntryCount:		.incbin "includes/generated/naka_technichord_strings.bin", 0x1AA46, 0x2
-; SingleLoadSrc_ListProcByMode -- 5 x code pointer: the source-list routine of each single-load mode (RAM 0x89F8: 0 PANEL MEMORY,
+; SingleLoadSrc_ListProcByMode -- 5 x code pointer: the source-list routine of each single-load mode (RAM 0x895C: 0 PANEL MEMORY,
 ; 1 SEQUENCER, 2 COMPOSER, 3 SOUND MEMORY, 4 none). SingleLoadSrcFunc calls entry [mode] with XWA = its file-name box,
 ; XBC = event, XDE = parameter on EVT_PAINT and scrolling. The targets are unlabelled routine entries in the SLSrcBankList_FuncBody code;
 ; CmpSingleLoadSrc_ListProcByMode holds the same five.
@@ -5557,11 +5557,11 @@ SLDstSoundMem_RowsPerColumn:	.incbin "includes/generated/naka_technichord_string
 SLDstBankList_FuncBody_Data_7:		.incbin "includes/generated/naka_technichord_strings.bin", 0x1AAC6, 0x2
 ; SingleLoadDst_AreaListProcs -- 5 x uint32_t: destination-list event routine for storage area 0-4
 ; (PANEL MEMORY, SEQUENCER, COMPOSER, SOUND MEMORY, blank). SingleLoadDstFunc (file_io/single_load.s) calls
-; entry [area byte 0x89f8] with the file-name box (0x81f0) and the event (EVT_PAINT, EVT_INDEXSW_UP/DOWN, ...);
+; entry [area byte 0x895c] with the file-name box (0x8154) and the event (EVT_PAINT, EVT_INDEXSW_UP/DOWN, ...);
 ; the routines are the unlabelled bodies after `ret` in file_io/single_load.s (the last is SingleLoadDst_BlankListProc).
 SingleLoadDst_AreaListProcs:		.incbin "includes/generated/naka_technichord_strings.bin", 0x1AAC8, 0x14	; 15 x 32-bit pointer
 ; CmpSingleLoadSrc_ListProcByMode -- 5 x code pointer: the same five source-list routines as SingleLoadSrc_ListProcByMode,
-; per single-load mode (RAM 0x89F8), for the composer single-load screen: CmpSingleLoadSrcFunc calls entry [mode] with XWA = its
+; per single-load mode (RAM 0x895C), for the composer single-load screen: CmpSingleLoadSrcFunc calls entry [mode] with XWA = its
 ; file-name box, XBC = event, XDE = parameter on EVT_PAINT and scrolling.
 CmpSingleLoadSrc_ListProcByMode:		.incbin "includes/generated/naka_technichord_strings.bin", 0x1AADC, 0x14	; 10 x 32-bit pointer
 ; [nakarest] naka_technichord_strings+0x1aaf0  +0x1aaf0..+0x1ab00 (0xea0a3e, 16 B)

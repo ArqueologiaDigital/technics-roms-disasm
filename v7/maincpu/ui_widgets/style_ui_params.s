@@ -277,7 +277,7 @@ SqStep_RhythmCursor:		.incbin "includes/generated/style_ui_screendata_main.bin",
 SqStep_ChordCellCursor:	.incbin "includes/generated/style_ui_screendata_main.bin", 0x9BB, 0x4B
 ; SqStep_StepCursor: Bound record op 03: the step-cursor highlight of the step-record screen -- 33 rectangles, entry 0
 ;   empty and entry n = (8n, 111) - (8n + 8, 121), picked by RAM byte 0x118F, which Display_RedrawSelection loads from
-;   the step-cursor position 0x370F (1..32, 0 = off) in display modes 1-2 (note and CONTROL tracks). Basis: readers +
+;   the step-cursor position 0x3673 (1..32, 0 = off) in display modes 1-2 (note and CONTROL tracks). Basis: readers +
 ;   bytes.
 SqStep_StepCursor:	.incbin "includes/generated/style_ui_screendata_main.bin", 0xA06, 0x113
 ; SqStep_RowCountBoxRecords: 3 Scoop bound records op 04, one per row of the step-record screen: RAM 0x119B / 0x119C /
@@ -294,7 +294,7 @@ SqStep_RowCountBoxTables:	.incbin "includes/generated/style_ui_screendata_main.b
 ; SqStep_NibbleMarkPatterns: 16 x 4 characters: a 4-bit value drawn as 4 marks, bit i -> '*' when set, glyph 0x91 when
 ;   clear (entry 0 = 4 x 0x91 ... entry 15 = "****"). Scoop_SidePanel_DrawOneSlot copies entry [nibble] into a static
 ;   op-06 text record at RAM 0x11D4 and draws it; Display_RedrawSidePanel runs it for both nibbles of each byte of the
-;   rows' bit maps at RAM 0x372E. Basis: readers + bytes.
+;   rows' bit maps at RAM 0x3692. Basis: readers + bytes.
 SqStep_NibbleMarkPatterns:	.incbin "includes/generated/style_ui_screendata_main.bin", 0xB94, 0x40
 ; SqStep_CellFlagFields: 24 bound op-02 records, 3 rows x 8 cells: a 1-character flag mark (SqStep_CellFlagGlyphs
 ;   entry (byte & 0x60) >> 5: blank, '*' or glyph 0x91) under each cell at x = 8 + 32k, y = 66 / 111 / 156, from RAM

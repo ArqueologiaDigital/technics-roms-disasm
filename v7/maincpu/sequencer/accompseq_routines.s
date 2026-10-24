@@ -1649,7 +1649,6 @@ AccompSeq_MidiFilterCodeBlock_Step_Join:
 	ld	(0x7ddc:16), 0
 	or	(0xe31a:16), 16
 	jr	AccompSeq_MidiFilterCodeBlock_Step2_Store_Return
-	; No reference found.  Was `.byte 0xc1 / jrl 16254 / nop`: `cp (0x7ddc:16), 0`.
 AccompSeq_MidiFilterCodeBlock_Step2:
 	; No reference found.
 	cp	(0x7ddc:16), 0

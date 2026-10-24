@@ -2652,7 +2652,7 @@ ENCODER_LUT_EXPRESSION:
 	.byte 0x70, 0x71, 0x72, 0x73, 0x74, 0x75, 0x76, 0x77, 0x78, 0x79, 0x7a, 0x7b, 0x7c, 0x7d, 0x7e, 0x7f
 	; MIDI_ProcessChangedChannels, group 1: flags 0x8F3A & ~0x8F3C
 ; PanelLed_PendingGroup1Handlers: Panel-LED update handlers of request group 1: {u16 bit, u32 handler} list (0xFFFF
-;   end) run once for the bits pending in 0x8F3A and not held in 0x8F3C, after which 0x8F3A is cleared; each handler
+;   end) run once for the bits pending in 0x8E9E and not held in 0x8EA0, after which 0x8E9E is cleared; each handler
 ;   sets or clears LED bits in the LED row image. Basis: readers + bytes.
 PanelLed_PendingGroup1Handlers:
 	.short 0x0001
@@ -2675,7 +2675,7 @@ PanelLed_PendingGroup1Handlers:
 	.long 0xffffffff
 	; MIDI_ProcessChangedChannels, group 2: 0x8F3E & ~0x8F40
 ; PanelLed_PendingGroup2Handlers: Panel-LED update handlers of request group 2: {u16 bit, u32 handler} list (0xFFFF
-;   end) run once for the bits pending in 0x8F3E and not held in 0x8F40, after which 0x8F3E is cleared; each handler
+;   end) run once for the bits pending in 0x8EA2 and not held in 0x8EA4, after which 0x8EA2 is cleared; each handler
 ;   sets or clears LED bits in the LED row image. Basis: readers + bytes.
 PanelLed_PendingGroup2Handlers:
 	.short 0x0001
@@ -2702,7 +2702,7 @@ PanelLed_PendingGroup2Handlers:
 	.long 0xffffffff
 	; MIDI_ProcessChangedChannels, group 3: 0x8F42 & ~0x8F44
 ; PanelLed_PendingGroup3Handlers: Panel-LED update handlers of request group 3: {u16 bit, u32 handler} list (0xFFFF
-;   end) run once for the bits pending in 0x8F42 and not held in 0x8F44, after which 0x8F42 is cleared; each handler
+;   end) run once for the bits pending in 0x8EA6 and not held in 0x8EA8, after which 0x8EA6 is cleared; each handler
 ;   sets or clears LED bits in the LED row image. Basis: readers + bytes.
 PanelLed_PendingGroup3Handlers:
 	.short 0x0001
@@ -2733,7 +2733,7 @@ PanelLed_PendingGroup3Handlers:
 	.long 0xffffffff
 	; MIDI_ProcessChangedChannels, group 4: 0x8F46 & ~0x8F48
 ; PanelLed_PendingGroup4Handlers: Panel-LED update handlers of request group 4: {u16 bit, u32 handler} list (0xFFFF
-;   end) run once for the bits pending in 0x8F46 and not held in 0x8F48, after which 0x8F46 is cleared; each handler
+;   end) run once for the bits pending in 0x8EAA and not held in 0x8EAC, after which 0x8EAA is cleared; each handler
 ;   sets or clears LED bits in the LED row image. Basis: readers + bytes.
 PanelLed_PendingGroup4Handlers:
 	.short 0x0001
@@ -2743,14 +2743,14 @@ PanelLed_PendingGroup4Handlers:
 	.short 0xffff	; end of list
 	.long 0xffffffff
 	; MidiChannel_DispatchChanged, group 1: 0x8F3C
-; PanelLed_HeldGroup1Handlers: Panel-LED handlers of request group 1 run on every pass for the bits held in 0x8F3C
+; PanelLed_HeldGroup1Handlers: Panel-LED handlers of request group 1 run on every pass for the bits held in 0x8EA0
 ;   (set by CtrlPanel_IndicatorDispatch, not cleared here); {u16 bit, u32 handler} list ending 0xFFFF (empty). Basis:
 ;   readers + bytes.
 PanelLed_HeldGroup1Handlers:
 	.short 0xffff	; end of list
 	.long 0xffffffff
 	; MidiChannel_DispatchChanged, group 2: 0x8F40
-; PanelLed_HeldGroup2Handlers: Panel-LED handlers of request group 2 run on every pass for the bits held in 0x8F40
+; PanelLed_HeldGroup2Handlers: Panel-LED handlers of request group 2 run on every pass for the bits held in 0x8EA4
 ;   (set by CtrlPanel_IndicatorDispatch, not cleared here); {u16 bit, u32 handler} list ending 0xFFFF. Basis: readers
 ;   + bytes.
 PanelLed_HeldGroup2Handlers:
@@ -2763,7 +2763,7 @@ PanelLed_HeldGroup2Handlers:
 	.short 0xffff	; end of list
 	.long 0xffffffff
 	; MidiChannel_DispatchChanged, group 3: 0x8F44
-; PanelLed_HeldGroup3Handlers: Panel-LED handlers of request group 3 run on every pass for the bits held in 0x8F44
+; PanelLed_HeldGroup3Handlers: Panel-LED handlers of request group 3 run on every pass for the bits held in 0x8EA8
 ;   (set by CtrlPanel_IndicatorDispatch, not cleared here); {u16 bit, u32 handler} list ending 0xFFFF. Basis: readers
 ;   + bytes.
 PanelLed_HeldGroup3Handlers:
@@ -2776,7 +2776,7 @@ PanelLed_HeldGroup3Handlers:
 	.short 0xffff	; end of list
 	.long 0xffffffff
 	; MidiChannel_DispatchChanged, group 4: 0x8F48
-; PanelLed_HeldGroup4Handlers: Panel-LED handlers of request group 4 run on every pass for the bits held in 0x8F48
+; PanelLed_HeldGroup4Handlers: Panel-LED handlers of request group 4 run on every pass for the bits held in 0x8EAC
 ;   (set by CtrlPanel_IndicatorDispatch, not cleared here); {u16 bit, u32 handler} list ending 0xFFFF (empty). Basis:
 ;   readers + bytes.
 PanelLed_HeldGroup4Handlers:
@@ -3424,7 +3424,7 @@ ExtData_ToneParam_MultiChannel_Data:
 	.byte 1, 1, 2, 3
 	; +0x8D6: 4 bytes, indexed by (RAM 0xFD02) & 3 in ExtData_Voice_MixedHandler.
 ; SplitPoint_LedMaskByPreset: SPLIT POINT LED masks by split preset (0xFD02) & 3: 0 -> none, 1 -> 1, 2 -> 2, 3 -> 4,
-;   stored to 0x8F58, whose bits 0-2 SndParam_MaskShiftMerge_8F58 puts into bits 4-6 of LED row 4 (0x8F1C). Basis:
+;   stored to 0x8EBC, whose bits 0-2 SndParam_MaskShiftMerge_8F58 puts into bits 4-6 of LED row 4 (0x8E80). Basis:
 ;   readers + bytes.
 SplitPoint_LedMaskByPreset:
 	.byte 0, 1, 2, 4
@@ -3585,7 +3585,7 @@ Display_CopyAndRenderBitmaps_Str_HK:	.byte	0x48, 0x4b
 ;          the whole {key, record pointer} table at RAM 0x34100 by
 ;          SndParam_InitHashFillLoop.
 ; SndParam_ClearRecordTemplate: 12 zero bytes copied (6 words, ldirw) over a 12-byte sound-parameter work record at
-;   0x96D4, 0x96E0, 0x96EC, ... 0x978C by 16 SndParam_* routines. Basis: readers + bytes.
+;   0x9638, 0x9644, 0x9650, ... 0x96F0 by 16 SndParam_* routines. Basis: readers + bytes.
 SndParam_ClearRecordTemplate:
 	.byte 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 SndParam_RW_Fail_Data:

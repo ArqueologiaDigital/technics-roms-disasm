@@ -5213,7 +5213,6 @@ MainSysControl:
 	ld	wa, (xix+wa)
 	lda	xix, (MainSysCtrl_DispatchTable:24)
 	jp	t, (xix+wa)
-; MainSysControl dispatch table
 MainSysCtrl_DispatchTable:
 	ld	wa, 2:i3
 	call	ScreenGroup_Dispatch

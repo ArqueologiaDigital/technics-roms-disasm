@@ -9,7 +9,8 @@ QUESTION ANSWERED / JOB IT DOES
     The default run decides, per label, whether v10's comments may be copied, and `--apply`
     copies them.
 
-    The comment is copied only when it is provably about the same code:
+    The comment is copied only when the code it sits on is proved the same (over the label's
+    span -- see the SPAN CAVEAT below) and its text holds for the target:
       * BODY.  The source from the label to the next column-0 label that does not extend the
         label's name (`Foo` runs through `Foo_Skip3`, `Foo_Return`, ...) must be textually equal
         in both trees after dropping comments, writing every number in decimal, lower-casing
@@ -22,8 +23,13 @@ QUESTION ANSWERED / JOB IT DOES
         (the same `same_code` rule as scripts/renaming/harmonize_version_labels.py).  Equal
         text over an `.incbin` does not prove equal data; this does.
       * HEADER TEXT.  The header must not quote a maincpu ROM address (0xE00000-0xFFFFFF, which
-        moves between builds), must not mention a firmware version (v7/v9/v10), and every
-        symbol it names that the source tree defines must be defined in the target too.
+        moves between builds) that translate_addr cannot place, must not mention a firmware
+        version (v7/v9/v10), and every symbol it names that the source tree defines must be
+        defined in the target too.  An inline address note after a symbol (`Foo (0xEF97B6)`)
+        is dropped.  For v7, whose RAM moved, every RAM number goes through RamMap.decide
+        (rewritten to v7's value when v7's code is shown to use it, else kept only as a
+        constant or a number the compared body spells, else refused: `quotes-ram-address`).
+        A header that only restates its label (restates_label) is not copied.
       * NO DUPLICATES.  A target label that already has a header keeps it.  When the target's
         header is a subsequence of v10's (v10 extended it), it is replaced by v10's -- an
         insertion-only change.  A longer header line that already occurs elsewhere in the
@@ -57,6 +63,12 @@ QUESTION ANSWERED / JOB IT DOES
     edit history).  scripts/tools/carry_trailing_comments.py does not cover this:
     it re-attaches comments within one tree after a re-frame, by address, not across versions.
 
+    SPAN CAVEAT.  Tree.span stops at the first label that does not extend the name, so a
+    routine whose `_Loop`/`_Join` labels are spelled otherwise is compared on its entry
+    fragment only.  RAM numbers are checked against the whole tree's code, so they are safe;
+    other statements about the code past the span are not proved.  `--extent-report BASE`
+    lists the headers whose routine's real extent (extent()) differs between the trees.
+
     Comments assemble to nothing, so `make gate` must stay green, and `--verify HEAD` must
     pass: every code line unchanged, every old comment kept in order.  (It does the job of
     scripts/analysis/assert_comments_preserved.py with an exact subsequence test; that script's
@@ -71,6 +83,11 @@ RUN
     make -j3 gate
     python3 scripts/tools/propagate_v10_headers.py --verify HEAD   # code unchanged, comments
                                                                    # only added
+    python3 scripts/tools/propagate_v10_headers.py --check-ram BASE      # v10 RAM numbers left in
+                                                                         # v7 comments since BASE
+    python3 scripts/tools/propagate_v10_headers.py --audit BASE [--apply]  # re-run the current
+                     # rules over the comments written since BASE (then --apply rewrites the list)
+    python3 scripts/tools/propagate_v10_headers.py --extent-report BASE [--report FILE]
 """
 import argparse
 import bisect
@@ -164,6 +181,7 @@ class Tree:
                     self.labels[n] = (rel, i)
         self.addr = None
         self.symbols = None
+        self.ram = None     # RamMap for a target whose RAM moved (v7), set by main()
         # E/F-range numbers the code spells as literals: constants (object handles, view
         # ids), never ROM addresses -- the sources spell those symbolically
         self.literals = set()
@@ -467,10 +485,14 @@ def translate_linerefs(text, dst):
     return out, (bad[0] if bad else "")
 
 
-def adapt(text, src, dst, translate=True, exact=True):
-    """-> (text for the target, reason it cannot be copied or '', detail).  Quoted v10 ROM
+def adapt(text, src, dst, translate=True, exact=True, body_nums=(), keep=()):
+    """-> (text for the target, reason it cannot be copied or '', detail).  An inline address
+    note after a symbol (`Foo (0xEF97B6)`) is dropped, not translated.  Quoted v10 ROM
     addresses are rewritten to the target's when their correspondence is proved (and the
-    number is not one the code spells as a literal, i.e. a constant); anything
+    number is not one the code spells as a literal, i.e. a constant).  For a target whose RAM
+    moved (dst.ram, v7), every RAM number goes through ram_check: rewritten by the measured
+    map when the target's code spells the moved value, kept when the compared body
+    (body_nums) spells it or it is a constant the target spells, refused otherwise; anything
     else version-specific (a source line number that translate_linerefs cannot place, a
     version name, a symbol the target lacks) is refused.  With translate=False (the in-body comments) a quoted ROM address is refused
     too: those are mostly inline address notes, which CLAUDE.md forbids, and a constant in the
@@ -494,9 +516,13 @@ def adapt(text, src, dst, translate=True, exact=True):
         digits = "%06X" % y if tok[-6:].upper() == tok[-6:] else "%06x" % y
         return tok[:-6] + digits
 
-    out = ROM_ADDR.sub(sub_addr, text)
+    out = ROM_ADDR.sub(sub_addr, drop_address_notes(text, src.symbols))
     if notes:
         return text, "quotes-rom-address", notes[0]
+    if getattr(dst, "ram", None) is not None:
+        out, bad, _ = ram_check(out, dst.ram, body_nums, keep)
+        if bad:
+            return text, "quotes-ram-address", bad[0]
     out, bad = translate_linerefs(out, dst)
     if bad:
         return text, "quotes-source-line", bad
@@ -507,6 +533,182 @@ def adapt(text, src, dst, translate=True, exact=True):
     if absent:
         return text, "names-absent-symbol", " ".join(absent[:6])
     return out, "", ""
+
+
+# ---- v7 RAM relocation guard -------------------------------------------------------------
+# v7 keeps two RAM regions at other addresses (v7-ram-shift-2026-10-24.txt).  A RAM number in
+# a v10 comment is therefore checked against the target's code before the comment travels.
+RAMNUM = re.compile(r'\b0[xX][0-9A-Fa-f]{4,5}\b|\b\d[0-9A-Fa-f]{3,4}[hH]\b|'
+                    r'(?<![\w.,$])\d{4,5}\b(?![\w])')
+ABBREV = re.compile(r'(?:/[0-9A-Fa-f]{1,3}\b)+')          # 0xFD34/35/4A: low digits only
+NUM_IN_CODE = re.compile(r'\b0[xX][0-9A-Fa-f]+\b|\b\d+\b')
+
+
+def ram_value(tok):
+    if tok[:2] in ("0x", "0X"):
+        return int(tok[2:], 16)
+    if tok[-1] in "hH":
+        return int(tok[:-1], 16)
+    return int(tok)
+
+
+def ram_spell(tok, v):
+    """v written in the notation (and digit case / width) of tok."""
+    if tok[:2] in ("0x", "0X"):
+        digits = tok[2:]
+        f = "%0*X" if digits.upper() == digits else "%0*x"
+        return tok[:2] + f % (len(digits), v)
+    if tok[-1] in "hH":
+        digits = tok[:-1]
+        f = "%0*X" if digits.upper() == digits else "%0*x"
+        return f % (len(digits), v) + tok[-1]
+    return str(v)
+
+
+def code_numbers(tree):
+    """-> (every number the tree's code lines spell, the subset spelled as a memory operand,
+    right after `(`), outside strings and comments, `.equ` values included: what 'the code
+    uses' means below."""
+    out, mem = set(), set()
+    for lines in tree.files.values():
+        for line in lines:
+            code = split_comment(line)[0]
+            if not code.strip():
+                continue
+            for n, part in enumerate(code.split('"')):
+                if n % 2 == 0:
+                    for m in NUM_IN_CODE.finditer(part):
+                        v = int(m.group(0), 0)
+                        out.add(v)
+                        if part[:m.start()].rstrip().endswith("("):
+                            mem.add(v)
+    return out, mem
+
+
+class RamMap:
+    """The v10 -> target RAM relocation, measured by scripts/analysis/v7_ram_shift_map.py
+    (paired memory operands; runs of at least 2 observations per address, as committed in
+    v7-ram-shift-2026-10-24.txt)."""
+
+    def __init__(self, src, dst):
+        sys.path.insert(0, os.path.join(REPO, "scripts", "analysis"))
+        import v7_ram_shift_map as M
+        self.obs = M.observations(src, dst)
+        self.runs = M.runs(self.obs, 2)
+        self.src_code, self.src_mem = code_numbers(src)
+        self.dst_code, self.dst_mem = code_numbers(dst)
+
+    def run_of(self, n):
+        for r in self.runs:
+            if r["lo"] <= n <= r["hi"]:
+                return r
+        return None
+
+    def moved(self, n):
+        """Delta of the measured run holding n (0 when unmoved), or None between runs."""
+        r = self.run_of(n)
+        if r:
+            return r["delta"]
+        if n < self.runs[0]["lo"] or n > self.runs[-1]["hi"]:
+            return 0
+        return None
+
+    def decide(self, n, body_nums):
+        """-> ("keep", n) | ("rewrite", target value) | ("refuse", why) for v10 number n quoted
+        in a comment that travels to the target.  In a moved range, n is rewritten only when
+        v10's code spells n and the target's code spells n + delta (and not n, or n is shown
+        moved by paired code); kept when the compared body spells it, or when it is a constant
+        (the target spells n, never as a memory operand, and never spells n + delta); refused
+        otherwise -- an address may be loaded as an immediate (`ld xix, 0x3692`), so a number
+        both trees spell is no constant when the target also spells n + delta."""
+        if n < 0x100 or n >= RAM_TOP or n in body_nums:
+            return "keep", n                     # not RAM, or spelled by the compared body
+        c = self.obs.get(n)
+        d = c.most_common(1)[0][0] if c else self.moved(n)
+        if d == 0:
+            return "keep", n
+        if d is None:                            # between measured runs
+            if n in self.src_code and n in self.dst_code:
+                return "keep", n
+            return "refuse", "unmeasured RAM range, not spelled by both trees' code"
+        src, dst, moved = n in self.src_code, n in self.dst_code, n + d in self.dst_code
+        if src and moved and not dst:
+            return "rewrite", n + d
+        if dst and not moved and n not in self.dst_mem:
+            return "keep", n                     # a constant the target code spells too
+        if src and moved and c and c.most_common(1)[0][0] == d:
+            return "rewrite", n + d              # paired code shows the target's address
+        if not src:
+            return "refuse", "v10's code never spells it (moved %+d?)" % d
+        return "refuse", "in a range moved %+d; not shown which value the target uses" % d
+
+
+def ram_check(text, ram, body_nums, keep=(), only=None):
+    """Rewrite the RAM numbers of `text` for the target -> (text, refusals, rewrites).
+    keep: values already written for the target (RAM tier, hand ports).  only: when given,
+    just these token spellings are candidates (the audit: tokens verbatim from v10's text)."""
+    bad, done = [], []
+
+    def sub(m):
+        tok = m.group(0)
+        if only is not None and tok not in only:
+            return tok
+        n = ram_value(tok)
+        if n in keep:
+            return tok
+        what, v = ram.decide(n, body_nums)
+        if what == "keep":
+            return tok
+        if what == "refuse" or ABBREV.match(text, m.end()):
+            bad.append("%s (%s)" % (tok, v if what == "refuse" else "abbreviated suffixes"))
+            return tok
+        done.append("%s->%s" % (tok, ram_spell(tok, v)))
+        return ram_spell(tok, v)
+
+    out = RAMNUM.sub(sub, text)
+    return out, bad, done
+
+
+# `Symbol (0xEF97B6)`: an inline address note (CLAUDE.md forbids them); the symbol says it all
+ADDR_NOTE = re.compile(r'\b([A-Za-z_]\w*)\s*\(\s*(?:at\s+)?(?:0[xX](?:00)?[eEfF][0-9A-Fa-f]{5}'
+                       r'|[eEfF][0-9A-Fa-f]{5}h?)\s*\)')
+
+
+def drop_address_notes(text, symbols):
+    return ADDR_NOTE.sub(lambda m: m.group(1) if m.group(1) in symbols else m.group(0), text)
+
+
+STOPWORDS = {"a", "an", "the", "of", "for", "to", "and", "in", "on", "at", "by"}
+ABBREVS = {"evt": "event", "cmd": "command", "msg": "message", "ptr": "pointer",
+           "btn": "button", "num": "number", "ctrl": "control", "tbl": "table",
+           "val": "value", "buf": "buffer", "addr": "address", "idx": "index",
+           "cnt": "count", "calc": "calculate", "chk": "check", "disp": "display",
+           "len": "length", "pos": "position", "sel": "select", "param": "parameter",
+           "init": "initialize", "proc": "procedure", "seq": "sequencer", "app": "application",
+           "acc": "accompaniment", "str": "string", "snd": "sound", "util": "utility"}
+
+
+def restates_label(lines, name):
+    """True when the header's words are all words of the label (camel case / underscores,
+    common abbreviations and prefixes allowed): it says nothing the label does not."""
+    text = " ".join(l.strip().lstrip(";").strip() for l in lines)
+    text = re.sub(r'^' + re.escape(name) + r'\s*:', "", text).strip()
+    words = [w.lower() for w in re.findall(r'[A-Z]+(?![a-z])|[A-Z]?[a-z]+|\d+', text)]
+    toks = [t.lower() for t in re.findall(r'[A-Z]+(?![a-z])|[A-Z]?[a-z]+|\d+', name)]
+    if not words or not toks:
+        return False
+
+    def match(w):
+        for t in toks:
+            full = ABBREVS.get(t, t)
+            if w in (t, full, t + "s", full + "s"):
+                return True
+            if len(t) >= 3 and len(w) >= 3 and (w.startswith(t) or t.startswith(w)
+                                                or full.startswith(w) or w.startswith(full)):
+                return True
+        return False
+
+    return all(w in STOPWORDS or match(w) for w in words)
 
 
 def is_subsequence(small, big):
@@ -528,6 +730,11 @@ def count(src, dst):
     return c
 
 
+def body_numbers(body):
+    """The numbers a body's normalized code spells (norm_code wrote them in decimal)."""
+    return {int(t) for _, s, _, _ in body for t in re.findall(r'\d+', s)}
+
+
 def remapped_header(name, hdr, sb, db, send, dend, src, dst):
     """The RAM-remap tier: a body whose only differences are RAM operands (ram_pairs, checked
     against the bytes) gets v10's header with those RAM numbers rewritten -> (lines, detail)
@@ -542,8 +749,9 @@ def remapped_header(name, hdr, sb, db, send, dend, src, dst):
     text, bad = remap_ram("\n".join(hdr), pairs, nums)
     if bad:
         return None
-    text, why, _ = adapt(text, src, dst)
-    if why:
+    text, why, _ = adapt(text, src, dst, body_nums=body_numbers(db),
+                         keep=set(pairs.values()))
+    if why or restates_label(text.split("\n"), name):
         return None
     detail = ", ".join("0x%x->0x%x" % kv for kv in sorted(pairs.items()))
     return text.split("\n"), detail[:160]
@@ -630,8 +838,10 @@ def plan(src, dst):
             exact = False
         # ---- the header
         if hdr and dhdr != hdr:
-            text, why, what = adapt("\n".join(hdr), src, dst, True, exact)
+            text, why, what = adapt("\n".join(hdr), src, dst, True, exact, body_numbers(db))
             new_hdr = text.split("\n")
+            if not why and not dhdr and restates_label(new_hdr, name):
+                why, what = "restates-label", new_hdr[0].strip()[:100]
             if not why and new_hdr == dhdr:
                 st["header-already"] += 1           # already ported, addresses translated
                 why = "done"
@@ -666,7 +876,7 @@ def plan(src, dst):
             continue
         for k, (sj, _, scom, scode) in enumerate(sb):
             dj, _, dcom, dcode = db[k]
-            com, why, _ = (adapt(scom, src, dst, False, exact)
+            com, why, _ = (adapt(scom, src, dst, False, exact, body_numbers(db))
                            if scom and not dcom and not WAS.match(scom) else ("", "x", ""))
             if not why and (dj, 1) not in edits[r2]:
                 gap = scode[len(scode.rstrip()):] or "\t"
@@ -678,11 +888,292 @@ def plan(src, dst):
             if (k in sbefore and k not in dbefore and k > 0 and not LABEL.match(dlines[dj])
                     and (dj, 0) not in edits[r2]):
                 text, why, _ = adapt("\n".join(src.files[rel][x] for x in sbefore[k]), src, dst,
-                                     False, exact)
+                                     False, exact, body_numbers(db))
                 if not why:
                     edits[r2][(dj, 0)] = text.split("\n")
                     st["interior-carried"] += 1
     return edits, review, st
+
+
+# ---- audit of comments already written (since BASE) ---------------------------------------
+def added_comments(base, tree):
+    """{rel: (set of added comment-only line indices, {code line index: line at BASE})} for
+    the comments written into `tree` since BASE (a code line whose comment was appended maps
+    to its old text).  Code lines pair up in order (--verify's invariant); between two code
+    lines, the BASE comment lines are matched greedily, in order, and the rest are new."""
+    files = subprocess.run(["git", "diff", "--name-only", base, "--", tree.ver + "/maincpu"],
+                           cwd=REPO, capture_output=True, text=True, check=True).stdout.split()
+    res = {}
+    for rel in files:
+        if not rel.endswith(".s") or rel not in tree.files:
+            continue
+        old = subprocess.run(["git", "show", "%s:%s" % (base, rel)], cwd=REPO,
+                             capture_output=True, check=True).stdout.decode("latin-1").split("\n")
+        new = tree.files[rel]
+
+        def segments(lines):
+            """[(comment-only lines before code line n, (index, code line n))] + tail."""
+            segs, com = [], []
+            for k, l in enumerate(lines):
+                if is_comment_line(l):
+                    com.append((k, l))
+                elif split_comment(l)[0].strip():
+                    segs.append((com, (k, l)))
+                    com = []
+            segs.append((com, None))
+            return segs
+
+        so, sn = segments(old), segments(new)
+        if len(so) != len(sn):
+            raise SystemExit("%s: code lines changed since %s" % (rel, base))
+        added, appended = set(), {}
+        for (oc, ol), (nc, nl) in zip(so, sn):
+            it = iter([l for _, l in oc])
+            want = next(it, None)
+            for k, l in nc:
+                if l == want:
+                    want = next(it, None)
+                else:
+                    added.add(k)
+            if want is not None:
+                raise SystemExit("%s: a comment line was lost since %s" % (rel, base))
+            if ol and nl and ol[1] != nl[1]:
+                if split_comment(ol[1])[0].rstrip() != split_comment(nl[1])[0].rstrip():
+                    raise SystemExit("%s:%d: a code line changed since %s" % (rel, nl[0] + 1, base))
+                appended[nl[0]] = ol[1]
+        res[rel] = (added, appended)
+    return res
+
+
+def hand_ported(review, ver):
+    """Labels whose header in `ver` is a hand port (review list, `handport` column): the
+    person who ported it judged its numbers, and the note says why each one holds."""
+    out = set()
+    if os.path.exists(review):
+        with open(review, newline="", encoding="utf-8") as f:
+            for r in csv.DictReader(f, delimiter="\t"):
+                if r["target"] == ver and r.get("handport", "").startswith("hand-ported"):
+                    out.add(r["label"])
+    return out
+
+
+def audit(base, src, dst, fix, check_only=False, review=None):
+    """Re-examine every comment written into dst since BASE under the current rules:
+    RAM numbers (v7), inline address notes, label-restating headers.  -> (edits, rows, stats,
+    report lines).  check_only: only flag RAM tokens by the review criterion (verbatim in
+    v10's header, v10 code spells it, the target's code never does, and spells it moved by
+    -156 or -198)."""
+    added = added_comments(base, dst)
+    edits = collections.defaultdict(dict)
+    rows, st, report = [], collections.Counter(), []
+    syms = (src.symbols or set()) | (dst.symbols or set())
+    flagged_headers = set()
+    by_hand = hand_ported(review, dst.ver) if review else set()
+    for rel in sorted(added):
+        new_comments, appended = added[rel]
+        lines = dst.files[rel]
+        labels = [(k, LABEL.match(l).group(1)) for k, l in enumerate(lines) if LABEL.match(l)]
+        keys = [k for k, _ in labels]
+        in_header = set()
+
+        def enclosing(k):
+            j = bisect.bisect_right(keys, k) - 1
+            return labels[j][1] if j >= 0 else None
+
+        def nums_of(name):
+            if not name or name not in dst.labels or dst.labels[name][0] != rel:
+                return set()
+            return body_numbers(dst.body(name)[0])
+
+        for k, name in labels:
+            h0 = dst.header(rel, k)
+            block = list(range(h0, k))
+            new = [j for j in block if j in new_comments]
+            if not new:
+                continue
+            in_header.update(block)
+            st["headers-touched"] += 1
+            v10 = ""
+            if name in src.labels and name not in src.dups:
+                r1, i1 = src.labels[name]
+                v10 = "\n".join(src.files[r1][src.header(r1, i1):i1])
+            only = {m.group(0) for m in RAMNUM.finditer(v10)}
+            if check_only:
+                for j in new:
+                    for m in RAMNUM.finditer(lines[j]):
+                        n = ram_value(m.group(0))
+                        if (m.group(0) in only and n in dst.ram.src_code
+                                and n not in dst.ram.dst_code
+                                and (n - 156 in dst.ram.dst_code or n - 198 in dst.ram.dst_code)):
+                            st["flagged-tokens"] += 1
+                            flagged_headers.add(name)
+                            report.append("FLAG %s %s:%d %s" % (name, rel, j + 1, m.group(0)))
+                continue
+            body = nums_of(name)
+            out, bad, done = {}, [], []
+            for j in new:
+                t = drop_address_notes(lines[j], syms)
+                if t != lines[j]:
+                    st["address-notes-dropped"] += 1
+                if dst.ram is not None and name not in by_hand:
+                    t, b, d = ram_check(t, dst.ram, body, only=only)
+                    bad += b
+                    done += d
+                out[j] = t
+            whole = len(new) == len(block)
+            row = [dst.ver, name, "", "", "", "%s:%d" % (rel, k + 1), "", "", ""]
+            if bad:
+                why, what = "quotes-ram-address", bad[0]
+            elif whole and restates_label([out[j] for j in block], name):
+                why, what = "restates-label", out[block[0]].strip()[:100]
+            else:
+                why = ""
+            if why:
+                for j in new:
+                    edits[rel][(j, 1)] = []
+                st["header-removed-" + why] += 1
+                row[2], row[3] = why, what
+                rows.append(row)
+                report.append("REMOVE %-20s %s %s:%d  %s" % (why, name, rel, k + 1, what))
+                continue
+            for j in new:
+                if out[j] != lines[j]:
+                    edits[rel][(j, 1)] = [out[j]]
+            if done:
+                st["header-ram-rewritten"] += 1
+                report.append("REWRITE %s %s:%d  %s" % (name, rel, k + 1, ", ".join(done)))
+        if check_only:
+            continue
+        # in-body comment runs and appended trailing comments: copied verbatim from v10
+        runs, cur = [], []
+        for j in sorted(new_comments - in_header):
+            if cur and j == cur[-1] + 1:
+                cur.append(j)
+            else:
+                cur = [j]
+                runs.append(cur)
+        for run in runs:
+            name = enclosing(run[0])
+            out, bad = {}, []
+            for j in run:
+                t = drop_address_notes(lines[j], syms)
+                if dst.ram is not None:
+                    t, b, _ = ram_check(t, dst.ram, nums_of(name))
+                    bad += b
+                out[j] = t
+            if bad:
+                for j in run:
+                    edits[rel][(j, 1)] = []
+                st["interior-removed"] += 1
+                report.append("REMOVE interior %s %s:%d  %s" % (name, rel, run[0] + 1, bad[0]))
+            else:
+                for j in run:
+                    if out[j] != lines[j]:
+                        edits[rel][(j, 1)] = [out[j]]
+        for j, old in sorted(appended.items()):
+            name = enclosing(j)
+            code, com = split_comment(lines[j])
+            t = drop_address_notes(com, syms)
+            bad = []
+            if dst.ram is not None:
+                t, bad, _ = ram_check(t, dst.ram, nums_of(name))
+            if bad:
+                edits[rel][(j, 1)] = [old]
+                st["trailing-removed"] += 1
+                report.append("REMOVE trailing %s %s:%d  %s" % (name, rel, j + 1, bad[0]))
+            elif t != com:
+                edits[rel][(j, 1)] = [code + t]
+    if check_only:
+        st["flagged-headers"] = len(flagged_headers)
+    return edits, rows, st, report
+
+
+def references(tree):
+    """{symbol: [(rel, line index)]} of every code-line mention (a label's own definition
+    excluded)."""
+    out = collections.defaultdict(list)
+    for rel, lines in tree.files.items():
+        for k, line in enumerate(lines):
+            c = split_comment(line)[0]
+            m = LABEL.match(c)
+            if m:
+                c = c[m.end():]
+            for n, part in enumerate(c.split('"')):
+                if n % 2 == 0:
+                    for t in re.findall(r'[A-Za-z_][\w.$]*', part):
+                        out[t].append((rel, k))
+    return out
+
+
+def extent(tree, refs, name):
+    """(rel, label line, end line) of the routine's real extent: Tree.span's rule, but also
+    running through labels that only the extent itself references (a `_Loop` / `_Skip` /
+    `_Join` of another spelling).  Tree.span stops at the first label not prefixed with the
+    name, so its proof may cover only the entry fragment."""
+    rel, i = tree.labels[name]
+    lines = tree.files[rel]
+    k = i + 1
+    while k < len(lines):
+        m = LABEL.match(lines[k])
+        if m:
+            n = m.group(1)
+            if not (n.startswith(name + "_") or
+                    (refs[n] and all(r == rel and i <= x < k for r, x in refs[n]))):
+                break
+        k += 1
+    return rel, i, k
+
+
+def extent_body(tree, rel, a, b):
+    out = []
+    for line in tree.files[rel][a:b]:
+        if is_comment_line(line):
+            continue
+        c = split_comment(line)[0]
+        m = CODE_LABEL.match(c)
+        if m:
+            c = c[m.end():]
+        n = norm_code(c)
+        if n:
+            out.append((0, n, "", ""))
+    return out
+
+
+def extent_report(base, src, dst):
+    """Headers written into dst since BASE whose proof covered only the entry fragment:
+    the routine's real extent (extent()) runs past Tree.span's end, and the code over the real
+    extent differs -- by RAM operands only (ram_pairs), or by more."""
+    added = added_comments(base, dst)
+    rs, rd = references(src), references(dst)
+    st, lines_out = collections.Counter(), []
+    for rel in sorted(added):
+        new = added[rel][0]
+        for k, line in enumerate(dst.files[rel]):
+            m = LABEL.match(line)
+            if not m:
+                continue
+            h0 = dst.header(rel, k)
+            name = m.group(1)
+            if not any(j in new for j in range(h0, k)) or name not in src.labels \
+                    or name in src.dups or name in dst.dups:
+                continue
+            st["headers"] += 1
+            _, _, dk = extent(dst, rd, name)
+            sr, si, sk = extent(src, rs, name)
+            if dk <= dst.span(name)[2] and sk <= src.span(name)[2]:
+                continue
+            st["extent-longer"] += 1
+            a, b = extent_body(src, sr, si, sk), extent_body(dst, rel, k, dk)
+            if [x[1] for x in a] == [x[1] for x in b]:
+                continue
+            if ram_pairs(a, b, src, dst) is not None:
+                st["extent-differs-ram-only"] += 1
+                kind = "ram-only"
+            else:
+                st["extent-differs"] += 1
+                kind = "differs"
+            lines_out.append("%s\t%s\t%s\t%s:%d" % (dst.ver, kind, name, rel, k + 1))
+    return st, lines_out
 
 
 def apply_edits(tree, edits):
@@ -757,6 +1248,18 @@ def main():
                     help="refuse every quoted ROM address (with a dry run: calibrates the "
                          "translation against headers already ported by hand)")
     ap.add_argument("--verify", metavar="BASE", help="check the edit since BASE is insertions only")
+    ap.add_argument("--audit", metavar="BASE",
+                    help="re-examine the comments written since BASE under the current rules "
+                         "(v7 RAM numbers, inline address notes, label-restating headers); "
+                         "with --apply, fix them")
+    ap.add_argument("--check-ram", metavar="BASE",
+                    help="flag v7 RAM numbers copied verbatim from v10 into headers written "
+                         "since BASE although v7 keeps that variable 156 / 198 bytes lower")
+    ap.add_argument("--extent-report", metavar="BASE",
+                    help="list headers written since BASE whose proof covered only the entry "
+                         "fragment of a routine whose real extent differs")
+    ap.add_argument("--report", help="--audit / --check-ram / --extent-report: also write the "
+                                     "findings here")
     ap.add_argument("--review", default=os.path.join(
         REPO, "analysis", "header-propagation",
         "review-%s.tsv" % datetime.date.today().isoformat()))
@@ -768,6 +1271,42 @@ def main():
     if a.no_translate and a.apply:
         ap.error("--no-translate is for dry runs")
     src = Tree("v10")
+    if a.extent_report:
+        src.load_elf()
+        out = ["# target\tkind\tlabel\twhere (propagate_v10_headers.py --extent-report %s)"
+               % a.extent_report]
+        for v in a.to:
+            dst = Tree(v)
+            dst.load_elf()
+            st, rows = extent_report(a.extent_report, src, dst)
+            head = "%s: %s" % (v, ", ".join("%s %d" % kv for kv in sorted(st.items())))
+            print(head)
+            out += ["# " + head] + rows
+        if a.report:
+            with open(a.report, "w", encoding="latin-1") as f:
+                f.write("\n".join(out) + "\n")
+        return
+    if a.audit or a.check_ram:
+        src.load_elf()
+        out = []
+        for v in a.to:
+            dst = Tree(v)
+            dst.load_elf()
+            if v == "v7":
+                dst.ram = RamMap(src, dst)
+            elif a.check_ram:
+                continue
+            edits, rows, st, report = audit(a.audit or a.check_ram, src, dst, a.apply,
+                                            check_only=bool(a.check_ram), review=a.review)
+            head = "%s: %s" % (v, ", ".join("%s %d" % kv for kv in sorted(st.items())))
+            print(head)
+            out += [head] + report
+            if a.apply and a.audit:     # the review list is then rewritten by a plain --apply
+                apply_edits(dst, edits)
+        if a.report:
+            with open(a.report, "w", encoding="latin-1") as f:
+                f.write("\n".join(out) + "\n")
+        return
     if a.count:
         for v in a.to:
             c = count(src, Tree(v))
@@ -780,6 +1319,8 @@ def main():
     for v in a.to:
         dst = Tree(v)
         dst.load_elf()
+        if v == "v7":
+            dst.ram = RamMap(src, dst)
         edits, rows, st = plan(src, dst)
         allrows += rows
         print("%s: %s" % (v, ", ".join("%s %d" % kv for kv in sorted(st.items()))))

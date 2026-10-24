@@ -5485,9 +5485,9 @@ AccTone_LookupByProgram_Table_2:	.incbin "includes/generated/naka_widget_descrip
 ; AccTuning_ReadAndApplyOffset_Table[116].
 ; -----------------------------------------------------------------------------
 AccTuning_ReadAndApplyOffset_Table:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x19168, 0x30
-; AccPart_BitToIndexTable: 34 x u8: the one-hot accompaniment-part bit (RAM 0x33D4: 1, 2, 4, 8, 16, 32) -> part index
-;   0..5 (other entries 0, the last 0xFF). Basis: readers + bytes -- both readers index it with the byte at RAM 0x33D4
-;   and use the result to index a per-part word table; AccStyle_SetupPartAddresses sets 0x33D4 to 1, 2, 4, 8, 16, 32
+; AccPart_BitToIndexTable: 34 x u8: the one-hot accompaniment-part bit (RAM 0x3338: 1, 2, 4, 8, 16, 32) -> part index
+;   0..5 (other entries 0, the last 0xFF). Basis: readers + bytes -- both readers index it with the byte at RAM 0x3338
+;   and use the result to index a per-part word table; AccStyle_SetupPartAddresses sets 0x3338 to 1, 2, 4, 8, 16, 32
 ;   for the six parts.
 AccPart_BitToIndexTable:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x19198, 0x22
 AccTone_InlineBytecodeData_Data_2:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x191BA, 0x22

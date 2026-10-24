@@ -90,7 +90,7 @@
 ; Registers widget tables, view handlers, and two diagnostic titles:
 ;   "TT_HDDEXT" (0xe1fd18) - FDD/HD extension test, widget table 0x7f
 ;   "TT_EXTAPR" (0xe1fd22) - Extension APR test, widget table 0xfc
-; Both titles use TestTitleFunc (0xf1e370) as their lifecycle callback.
+; Both titles use TestTitleFunc as their lifecycle callback.
 ; Title handler (TestTitleFunc) pointer is stored at 0xe1fd2c in fd_test_data.s.
 InitializeHama:
 	lda	xsp, (xsp-14)

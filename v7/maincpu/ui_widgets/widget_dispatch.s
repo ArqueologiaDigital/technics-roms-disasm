@@ -7461,9 +7461,9 @@ NoteOn_ChannelByVoice:
 NoteThreshold_PairTable:
 	.byte	0x00
 ; NoteThreshold_PairTable_SecondMaskCol: Base of the second column of NoteThreshold_PairTable (13 x {u8, u8} for notes
-;   0x54..0x60): the one-bit mask each of those notes contributes to the second status byte (RAM 0xCD2F, changes sent
+;   0x54..0x60): the one-bit mask each of those notes contributes to the second status byte (RAM 0xCC93, changes sent
 ;   with AddswbWr(0xA8, 0x0C)). Basis: readers + bytes -- NoteMap_MarkEntriesAboveThreshold reads [2*(note - 0x54)]
-;   here and at +0 for the first byte (RAM 0xCD2E, AddswbWr 0x0B).
+;   here and at +0 for the first byte (RAM 0xCC92, AddswbWr 0x0B).
 NoteThreshold_PairTable_SecondMaskCol:	.byte	0x20
 	.byte 0x00, 0x04
 	.byte 0x00, 0x00
@@ -8183,22 +8183,22 @@ Harmony_Offsets4_B:
 ; SoundFX_Handler_10 (0xFE8B91) +2/+3, SoundFX_Handler_11 (0xFE8BB4) +4/+5.
 Harmony_FixedIntervals:
 	.byte	-12
-; Harmony_OctaveUpDown_Down: s8 12 of Harmony_FixedIntervals, subtracted from the reference note RAM 0xCEAA:
-;   SoundFX_Handler_9 (entry 10 of Harmony_HandlerTable, selected by RAM byte 0xE9BE) writes note - 12 (an octave
+; Harmony_OctaveUpDown_Down: s8 12 of Harmony_FixedIntervals, subtracted from the reference note RAM 0xCE0E:
+;   SoundFX_Handler_9 (entry 10 of Harmony_HandlerTable, selected by RAM byte 0xE8F8) writes note - 12 (an octave
 ;   below) as one of its two harmony notes; its pair is {+12, -12}: an octave above and below. Basis: readers + bytes
-;   -- the only reader is SoundFX_Handler_9's `ld e, (<this>); ld c, (0xceaa); sub c, e`.
+;   -- the only reader is SoundFX_Handler_9's `ld e, (<this>); ld c, (0xce0e); sub c, e`.
 Harmony_OctaveUpDown_Down:	.byte	12
-; Harmony_FourthOctaveDown_Fourth: s8 5 of Harmony_FixedIntervals, subtracted from the reference note RAM 0xCEAA:
-;   SoundFX_Handler_10 (entry 11 of Harmony_HandlerTable, selected by RAM byte 0xE9BE) writes note - 5 (a fourth
+; Harmony_FourthOctaveDown_Fourth: s8 5 of Harmony_FixedIntervals, subtracted from the reference note RAM 0xCE0E:
+;   SoundFX_Handler_10 (entry 11 of Harmony_HandlerTable, selected by RAM byte 0xE8F8) writes note - 5 (a fourth
 ;   below) as one of its two harmony notes; its pair is {-5, -12}: a fourth and an octave below. Basis: readers +
-;   bytes -- the only reader is SoundFX_Handler_10's `ld e, (<this>); ld c, (0xceaa); sub c, e`.
+;   bytes -- the only reader is SoundFX_Handler_10's `ld e, (<this>); ld c, (0xce0e); sub c, e`.
 Harmony_FourthOctaveDown_Fourth:	.byte	5
 SoundFX_Handler_10_Data_2:	.byte	12
 SoundFX_Handler_11_Data:	.byte	-10
-; Harmony_SeventhFourthUp_Fourth: s8 -5 of Harmony_FixedIntervals, subtracted from the reference note RAM 0xCEAA:
-;   SoundFX_Handler_11 (entry 12 of Harmony_HandlerTable, selected by RAM byte 0xE9BE) writes note + 5 (a fourth
+; Harmony_SeventhFourthUp_Fourth: s8 -5 of Harmony_FixedIntervals, subtracted from the reference note RAM 0xCE0E:
+;   SoundFX_Handler_11 (entry 12 of Harmony_HandlerTable, selected by RAM byte 0xE8F8) writes note + 5 (a fourth
 ;   above) as one of its two harmony notes; its pair is {+10, +5}: a minor seventh and a fourth above. Basis: readers
-;   + bytes -- the only reader is SoundFX_Handler_11's `ld e, (<this>); ld c, (0xceaa); sub c, e`.
+;   + bytes -- the only reader is SoundFX_Handler_11's `ld e, (<this>); ld c, (0xce0e); sub c, e`.
 Harmony_SeventhFourthUp_Fourth:	.byte	-5
 ; 16 x u32 routine pointers, indexed by RAM byte 0xE9BE: UIParam_CallbackDispatch
 ; (0xFE8C1B) does `ld c,(0xe9be); sla bc,2; lda xde,(<this>); add xbc,xde;

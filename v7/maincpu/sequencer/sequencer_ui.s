@@ -7792,7 +7792,6 @@ AcEntertainerGridBoxProc_OnLswData:	; cases 29360156, 29360157
 	ld	xbc, (xsp+16)
 	ld	xde, (xsp+12)
 	jr	CallApFuncPath
-; Entertainer grid cell select
 EntGrid_CellSelect:
 	ld xwa, xiz
 	call GetViewInstance
@@ -8067,7 +8066,6 @@ EntertainerGridCheck_OnLswData_Skip5:
 	lda	xde, (xsp+40)
 	ld	xbc, EVT_GRID_DRAW
 	jrl	SndParam_SendEventReturnZero
-; EntertainerGridCheck handler
 EntGridCheck_Handler:
 	ld XWA,(XSP+0x3a)
 	srl XWA, 16
@@ -8267,7 +8265,6 @@ EntGridCheck_Handle4E13:
 
 ; EntertainerGridCheck return
 
-; EntertainerGridCheck return
 EntertainerGridCheck_OnRetEffFix:
 	ldw (xbc), 0x1
 
@@ -14888,7 +14885,6 @@ SqedtFunc_CheckMode_SendAudio:
 	call	Sprintf_Locked
 	lda	xsp, (xsp+10)
 	jr	StringCopyEpilog
-; SqedtFunc mode A
 SqedtFunc_ModeA:
 	ld xwa, (xsp + 8)
 	ld (xsp + 4), xwa

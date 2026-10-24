@@ -1614,7 +1614,7 @@ CmpSetGridCheck_CaseTable:
 	.short	GridCheck_ReturnZero - GridCheck_Handler0
 	.short	GridCheck_ReturnZero - GridCheck_Handler0
 ; S2cMemNoBox_SectionNameStrPtrs: 30 x u32 string pointers, the style-section names "A-vari1" .. "C-vari4", "A-INT1"
-;   .. "C-END2": AcS2cMemNoBoxProc (style-to-Composer convert screen) Sprintf's entry [(0x398F)] on EVT_PAINT /
+;   .. "C-END2": AcS2cMemNoBoxProc (style-to-Composer convert screen) Sprintf's entry [(0x38F3)] on EVT_PAINT /
 ;   EVT_REPAINT and draws it. Entry 0 is the label; PtrTbl_StyleSectShortNames (entry 1) has no reader. Basis: readers
 ;   + bytes.
 S2cMemNoBox_SectionNameStrPtrs:	.byte	0x7c, 0xd5, 0xe1, 0x00
@@ -1880,7 +1880,7 @@ S2cGridCheck_CaseTable:
 	.short	S2c_GridCheck_EventEnc - S2c_GridCheck_DataBlock
 ; PsCmpCpFPtnBox_PatternNameStrPtrs: 27 x u32 string pointers, the accompaniment-pattern names (" Vari1 ", Vari2-4,
 ;   Intro1/2, Ending1/2, V1-V4 FillIn1/2, Vari1-4, Intro1/2, FillIn1/2, Ending1/2, All): PsCmpCpFPtnBoxProc (Composer
-;   copy, source pattern box) Sprintf's entry [(0x34EF)] on EVT_PAINT / EVT_REPAINT. Entry 0 is the label;
+;   copy, source pattern box) Sprintf's entry [(0x3453)] on EVT_PAINT / EVT_REPAINT. Entry 0 is the label;
 ;   PtrTbl_StylePatternLongNames (entry 1) has no reader. Basis: readers + bytes.
 PsCmpCpFPtnBox_PatternNameStrPtrs:	.byte	0xa8, 0xd9, 0xe1, 0x00
 PtrTbl_StylePatternLongNames:
@@ -2011,7 +2011,7 @@ PsCstmCpSwBox_ReadParam2_Str_CUSTOM:
 	.byte 0x00			; padding
 	.byte 0xff			; padding
 ; AcMemNoBox_SectionNameStrPtrs: 33 x u32 string pointers, the style-section names "A-vari1" .. "C-END2" plus "A-ALL",
-;   "B-ALL", "C-ALL": AcMemNoBoxProc Sprintf's entry [(0x34D6)] on EVT_PAINT / EVT_REPAINT. Entry 0 is the label;
+;   "B-ALL", "C-ALL": AcMemNoBoxProc Sprintf's entry [(0x343A)] on EVT_PAINT / EVT_REPAINT. Entry 0 is the label;
 ;   PtrTbl_StyleSectShortNames2 (entry 1) has no reader. Basis: readers + bytes.
 AcMemNoBox_SectionNameStrPtrs:
 	.byte 0x00			; padding
@@ -2084,8 +2084,8 @@ StrStyleSect2_A_Vari3:	aligned_string "A-vari3"
 StrStyleSect2_A_Vari2:	aligned_string "A-vari2"
 StrStyleSect2_A_Vari1:	aligned_string "A-vari1"
 ; AcCmpRecBox_TrackStateStrPtrs: 3 x u32 string pointers {" ", "REC ", "MUTE"}: AcCmpRecBoxProc shows entry 1 (in
-;   colour 0xF2) when the box's part bit (+36) is set in the Composer record-part byte 0x379B, else entry 2 when its
-;   bit (+37) is set in 0x34F1, else entry 0. Basis: readers + bytes.
+;   colour 0xF2) when the box's part bit (+36) is set in the Composer record-part byte 0x36FF, else entry 2 when its
+;   bit (+37) is set in 0x3455, else entry 0. Basis: readers + bytes.
 AcCmpRecBox_TrackStateStrPtrs:
 	.long StrTrackBlank
 	.long StrTrackRec
@@ -2252,7 +2252,7 @@ EasyCmpGridCheck_CaseTable:
 	.short	EasyCmp_GridCheck_EventCase4 - EasyCmp_GridCheck_DataBlock
 ; MspNameBnkFunc_BankNamesInit: Initializer of MspNameBnkFunc's local array: 4 x u32 string pointers {"User1",
 ;   "User2", "COMPILE1", "COMPILE2"}, the MSP naming screen's bank-value captions. MspNameBnkFunc copies the 16 bytes
-;   into its frame and Strcpy's entry [value] for the caption; EVT_GET_MAX answers 3, the value lives at RAM 0x7F3E.
+;   into its frame and Strcpy's entry [value] for the caption; EVT_GET_MAX answers 3, the value lives at RAM 0x7EA2.
 ;   Basis: readers + bytes.
 MspNameBnkFunc_BankNamesInit:	.byte	0x52, 0xdf, 0xe1, 0x00
 	.long StrBankShort_User2
@@ -2363,7 +2363,7 @@ MspRGrpSetGridCheck_CaseTable:
 	.short	AudioEvt_GetFocusRetZero_Return - MspRGrpSetGridCheck_DataBlock
 	.short	AudioEvt_GetFocusRetZero_Return - MspRGrpSetGridCheck_DataBlock
 ; PsRgpSetBnkBox_CompileBankStrPtrs: 2 x u32 string pointers {"COMPILE BANK:1", "COMPILE BANK:2"}: PsRgpSetBnkBoxProc
-;   Sprintf's entry [(0x7F3D)] on EVT_PAINT / EVT_REPAINT and draws it. Basis: readers + bytes.
+;   Sprintf's entry [(0x7EA1)] on EVT_PAINT / EVT_REPAINT and draws it. Basis: readers + bytes.
 PsRgpSetBnkBox_CompileBankStrPtrs:
 	.long StrCompileBank1
 	.long StrCompileBank2
@@ -2376,7 +2376,7 @@ AcSndArgGrid_BnkDispatch_Str_Fmtd:		.byte 0x25, 0x64
 	.byte 0xff			; padding
 ; MspPlayModeFunc_ModeNamesInit: Initializer of MspPlayModeFunc's local array: 2 x u32 string pointers {"INSTANT
 ;   START", "SYNC TO RHYTHM"}, the MSP play-mode captions. MspPlayModeFunc copies the 8 bytes into its frame and
-;   Strcpy's entry [value]; EVT_GET_MAX answers 1, the value lives at RAM 0x7F3F, and a change is sent as
+;   Strcpy's entry [value]; EVT_GET_MAX answers 1, the value lives at RAM 0x7EA3, and a change is sent as
 ;   EVT_MSP_PLY_MD_SET. Basis: readers + bytes.
 MspPlayModeFunc_ModeNamesInit:
 	.long StrInstantStart
@@ -2396,7 +2396,7 @@ MspPlayModeFunc_CaseTable:
 	.short	MspPlayModeFunc_DataBlock - MspPlayModeFunc_DataBlock
 ; AcSndArgGridBox_RowPartBitsInit: Initializer of AcSndArgGridBoxProc's local array: 5 x u8 {0x01, 0x02, 0x04, 0x08,
 ;   0x10} (+ 0xFF pad), the Sound Arranger part-select bit for grid rows 2..6. On INDEX UP / DOWN the proc stores
-;   entry [row - 2] in the selector 0x338E (1 = DRUM part 0x14, 2 = BASS 0x13, 4 / 8 / 16 = ACCOMP1-3 0x10-0x12) and
+;   entry [row - 2] in the selector 0x32F2 (1 = DRUM part 0x14, 2 = BASS 0x13, 4 / 8 / 16 = ACCOMP1-3 0x10-0x12) and
 ;   sends EVT_SET_PT_SEL. Basis: readers + bytes.
 AcSndArgGridBox_RowPartBitsInit:
 	.byte	0x01, 0x02, 0x04, 0x08, 0x10, 0xff

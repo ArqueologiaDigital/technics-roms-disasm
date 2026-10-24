@@ -4523,7 +4523,6 @@ VocalistPage2OKFunc_Join2:
 	ld	(32420:16), 1
 	call	MidiSysEx_SendAllParams
 	ld	(32420:16), 0
-; Vocalist page handler
 VocalistPage_Handler:
 	ld xhl, 0:i3
 	inc 4, xsp

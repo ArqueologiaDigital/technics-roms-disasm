@@ -308,7 +308,7 @@ FDC_CMD_DISPATCH_SUB:
 	ld hl, 0:i3
 	ret
 ; FDC command dispatcher
-; Reads command from (8A40h), dispatches to 12 handlers (0-0xb)
+; Reads command from (89A4h), dispatches to 12 handlers (0-0xb)
 ; Uses offset table at 0xea98b2
 FDC_COMMAND_DISPATCHER:
 	ld	(35214:16), 0
@@ -1301,7 +1301,7 @@ FDC_SetStatus_Return:
 	ld	l, (FDC_ERROR_CODE:16)
 	ret
 ; --- FDC_ClearStatus_InitTimer: Clear FDC status and start timeout ---
-; Clears FDC status byte (35364) to 0, initializes result buffer (35424)
+; Clears FDC status byte (35208) to 0, initializes result buffer (35268)
 ; to 0xff, saves prevbank state, starts timer-based timeout loop.
 ; Polls with cps bc, 0 for completion signal.
 ; Uses prevbank (D7 FA) for timer state management.
@@ -1686,10 +1686,10 @@ FDC_CMD_EXEC_Helper7:
 ; Reads format type from state variable 35436.
 ; Dispatch by type: 0=default, 2=MFM, 3/4/5 = other formats.
 ; Sets per-format parameters:
-;   35374: sectors per track (2 or 3)
-;   35379: bytes per sector code (80/108/116 = 128/256/512 bytes)
-;   35382: head number, 35371: track number, 35380: gap length (0xe5)
-;   35372: side number, 35369: drive number
+;   35218: sectors per track (2 or 3)
+;   35223: bytes per sector code (80/108/116 = 128/256/512 bytes)
+;   35226: head number, 35215: track number, 35224: gap length (0xe5)
+;   35216: side number, 35213: drive number
 ; Then enters sector counting/validation loop.
 ; Uses (R+d16) addressing for all state variables. 184 bytes.
 FDC_MODE_CONFIG:

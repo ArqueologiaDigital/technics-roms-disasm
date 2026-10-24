@@ -22,7 +22,6 @@ ParaLoadOpt_AudioFlagCheck:
 	ld	xbc, EVT_SHOW
 	ld	xde, 0:i3
 	call	ApPostEvent
-; ParaLoadOpt case A
 ParaLoadOpt_CaseA:
 	ld a, (0x02475c:24)
 	cp a, (xsp + 2)
@@ -175,7 +174,6 @@ ParaLoadOpt_AudioFlagCheck_B:
 	ld	xbc, EVT_SHOW
 	ld	xde, 0:i3
 	call	ApPostEvent
-; ParaLoadOpt case D
 ParaLoadOpt_CaseD:
 	ld	a, (48244:16)
 	bit	7, a
@@ -188,7 +186,6 @@ ParaLoadOpt_CaseD:
 	ld	xbc, EVT_REFRESH_PARA_DRAW
 	ld	xde, 0:i3
 	call	ApPostEvent
-; ParaLoadOpt case E
 ParaLoadOpt_CaseE:
 	ld	a, (48248:16)
 	bit	7, a
@@ -201,7 +198,6 @@ ParaLoadOpt_CaseE:
 	ld	xbc, EVT_REFRESH_PARA_DRAW
 	ld	xde, 0:i3
 	call	ApPostEvent
-; ParaLoadOpt case F
 ParaLoadOpt_CaseF:
 	ld	a, (48240:16)
 	bit	7, a
@@ -879,7 +875,6 @@ ParaLoadOptGridCheck_OnRamData_Skip7:
 	lda	xde, (xsp+20)
 	ld	xbc, EVT_GRID_DRAW
 	jrl	ParaLoadOptSendEvtReturn
-; Voice UI misc handler
 VoiceUI_MiscHandler:
 	ld xde, xhl
 	srl xde, 16

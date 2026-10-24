@@ -21070,7 +21070,6 @@ AppEvent_InlineHandler:
 	ld bc, (xbc)
 	lda xix, (AppEvent_SubDispatch:24)
 	jp	t, (xix+bc)
-; Application event sub-dispatch
 AppEvent_SubDispatch:
 	ld	a, (CURRENT_TITLE:16)
 	extz	wa
@@ -21668,7 +21667,6 @@ AppEvent_InlineHandler_Case31:
 	ld	xde, 34
 AppEvent_InlineHandler_Join13:
 	call	ApDeliveryEvent
-; Sequencer state dispatch entry
 SeqState_DispatchEntry:
 	pop xiz
 	inc 4, xsp
@@ -22901,7 +22899,6 @@ ApPlaySyori:
 	ld	bc, (xix+bc)
 	lda	xix, (SeqAccomp_EventDispatch:24)
 	jp	t, (xix+bc)
-; Sequencer accompaniment event dispatch
 SeqAccomp_EventDispatch:
 	ld	xbc, EVT_PARA_DRAW
 	ld	xde, 0:i3
@@ -23452,7 +23449,6 @@ SeqAccomp_SubChain_DecSoloEnable:
 ApPlaySyori_Skip15:
 	call	SeqPlay_AllocBuffersAndInit
 	jrl	AppEvent_ReturnZero
-; SeqAccomp start helper
 SeqAccomp_StartHelper:
 	cp	(CURRENT_TITLE:16), 133
 	jrl	nz, SeqAccomp_HandleOtherState
@@ -23800,7 +23796,6 @@ NoteEditSy_SendModeScrollReset:
 	ld	bc, (xix+bc)
 	lda	xix, (NoteEditSy_ModeDispatch:24)
 	jp	t, (xix+bc)
-; Note editor mode dispatch
 NoteEditSy_ModeDispatch:
 	ld xwa, 0x810005
 	ld xbc, EVT_PARA_DRAW

@@ -2818,7 +2818,7 @@ MainTitleControl:
 ; MainTitleCtrl_ChangeTitle - Screen transition state handler
 ;
 ; Manages state transitions for the sequencer/demo screen mode changes.
-; Saves current display state bytes (SFR 36150-36153) and clears animation
+; Saves current display state bytes (SFR 35994-35997) and clears animation
 ; state variables at 0x0274a2, 0x02749e, 0x02749a. Calls CtrlPanel_SetIndicatorBit
 ; to initiate the actual screen transition, then AudioMode_ResetVoiceState for cleanup.
 ;

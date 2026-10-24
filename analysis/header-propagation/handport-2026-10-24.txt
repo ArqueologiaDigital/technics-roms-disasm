@@ -16,8 +16,7 @@
 # note: names AccPatch_ChannelToRecordPtr, which v7 does not define (v7 spells the table as a transplant .incbin)
 
 @@ v7 AppEvent_SubDispatch
-# note: body differs only in the name of one local jump target (Join8 / Join13); one-line description, verbatim
-; Application event sub-dispatch
+# note: body differs only in the name of one local jump target (Join8 / Join13), but the one-line header ("Application event sub-dispatch") only restates the label (withdrawn on review, propagate_v10_headers.py --audit)
 
 @@ v7 AudioVoice_Callback
 # note: body differs only in the name of the loaded handler (AudioVoiceHandler_NoneSentinel / AudioInit_MixFallbackDefault_Code); one-line description, verbatim
@@ -142,8 +141,7 @@
 ; =============================================================================
 
 @@ v7 CmpEsyTtl_E_Var2
-# note: body differs only in a RAM operand (-156) and a local label's name; one-line description, verbatim
-; CmpEsyTtl E variant 2
+# note: body differs only in a RAM operand (-156) and a local label's name, but the one-line header ("CmpEsyTtl E variant 2") only restates the label (withdrawn on review, propagate_v10_headers.py --audit)
 
 @@ v7 CmpNcp_LatchPanelRhythmAsSource
 # note: only RAM differs: 0x34ED / 0x34EE -> 0x3451 / 0x3452 per the body, 0x34D6 -> 0x343A per the v7 RAM map (v7-ram-shift-2026-10-24.txt); 0xFC5A / 0xFC5B unmoved
@@ -821,3 +819,91 @@
 @@ v7 DrawLineWithMode_Impl
 # note: the v10 header is a note about kn5000_v10_program.s itself
 
+
+# ---- 2026-10-24 review round: headers the RAM audit (propagate_v10_headers.py --audit) withdrew, re-ported by hand
+
+@@ v7 ExtData_VoiceParam_DispatchBytecode_ModeMsp
+# note: per the body: the parent ExtData_VoiceParam_DispatchBytecode loads XBC / XDE / XHL / XIY = ENCODER_STATE_BASE + 2 / 6 / 10 / 11 in both trees, and v7 defines ENCODER_STATE_BASE = 0x8e7c (v10 0x8f18), so LED row 2 is 0x8E7E in v7 (the row offset is not a measured RAM-map address; it follows from the base); withdrawn by the RAM audit and re-ported
+; ExtData_VoiceParam_DispatchBytecode_ModeMsp: MD_MSP (CURRENT_MODE 15; also the switch base): sets bit 7 of LED row 2
+;   (0x8E7E). Basis: switch value (CURRENT_MODE - 2) + body.
+
+@@ v7 ExtData_VoiceParam_DispatchBytecode_ModeSound
+# note: per the body: the parent ExtData_VoiceParam_DispatchBytecode loads XBC / XDE / XHL / XIY = ENCODER_STATE_BASE + 2 / 6 / 10 / 11 in both trees, and v7 defines ENCODER_STATE_BASE = 0x8e7c (v10 0x8f18), so LED row 11 is 0x8E87 in v7 (the row offset is not a measured RAM-map address; it follows from the base); withdrawn by the RAM audit and re-ported
+; ExtData_VoiceParam_DispatchBytecode_ModeSound: MD_SOUND / MD_SOUNDEDIT: sets bit 0 of LED row 11 (0x8E87)
+
+@@ v7 ExtData_VoiceParam_DispatchBytecode_ModeMidi
+# note: per the body: the parent ExtData_VoiceParam_DispatchBytecode loads XBC / XDE / XHL / XIY = ENCODER_STATE_BASE + 2 / 6 / 10 / 11 in both trees, and v7 defines ENCODER_STATE_BASE = 0x8e7c (v10 0x8f18), so LED row 11 is 0x8E87 in v7 (the row offset is not a measured RAM-map address; it follows from the base); withdrawn by the RAM audit and re-ported
+; ExtData_VoiceParam_DispatchBytecode_ModeMidi: MD_MIDI: sets bit 2 of LED row 11 (0x8E87)
+
+@@ v7 ExtData_VoiceParam_DispatchBytecode_ModeControl
+# note: per the body: the parent ExtData_VoiceParam_DispatchBytecode loads XBC / XDE / XHL / XIY = ENCODER_STATE_BASE + 2 / 6 / 10 / 11 in both trees, and v7 defines ENCODER_STATE_BASE = 0x8e7c (v10 0x8f18), so LED row 11 is 0x8E87 in v7 (the row offset is not a measured RAM-map address; it follows from the base); withdrawn by the RAM audit and re-ported
+; ExtData_VoiceParam_DispatchBytecode_ModeControl: MD_CONTROL: sets bit 1 of LED row 11 (0x8E87)
+
+@@ v7 ExtData_VoiceParam_DispatchBytecode_ModeDisk
+# note: per the body: the parent ExtData_VoiceParam_DispatchBytecode loads XBC / XDE / XHL / XIY = ENCODER_STATE_BASE + 2 / 6 / 10 / 11 in both trees, and v7 defines ENCODER_STATE_BASE = 0x8e7c (v10 0x8f18), so LED row 11 is 0x8E87 in v7 (the row offset is not a measured RAM-map address; it follows from the base); withdrawn by the RAM audit and re-ported
+; ExtData_VoiceParam_DispatchBytecode_ModeDisk: MD_DISK: sets bit 3 of LED row 11 (0x8E87)
+
+@@ v7 ExtData_VoiceParam_DispatchBytecode_ModeEntertainer
+# note: per the body: the parent ExtData_VoiceParam_DispatchBytecode loads XBC / XDE / XHL / XIY = ENCODER_STATE_BASE + 2 / 6 / 10 / 11 in both trees, and v7 defines ENCODER_STATE_BASE = 0x8e7c (v10 0x8f18), so LED row 10 is 0x8E86 in v7 (the row offset is not a measured RAM-map address; it follows from the base); withdrawn by the RAM audit and re-ported
+; ExtData_VoiceParam_DispatchBytecode_ModeEntertainer: MD_ENTERTAINER: sets bit 3 of LED row 10 (0x8E86)
+
+@@ v7 SndParam_ApplySystemParam_ScaleTuneUserNote1
+# note: same code (passed the body + byte proof); 0x4284 is a parameter id (SndParam_ApplySystemParam's id range 0x4280-0x428E, kept as in that hand port), not RAM; 0xFD1F lies in the unmoved 0xF180-0x3F2F8 run and the v7 body spells it (`ld a, (0xfd1f:16)`); verbatim
+; SndParam_ApplySystemParam_ScaleTuneUserNote1: Id 0x4284 (record 0x92 +3, RAM 0xFD1F): user scale-tune offset of the
+;   note 1 semitone above the key; sent only when the type is 128 (user).
+
+@@ v7 SndParam_ApplySystemParam_ScaleTuneUserNote5
+# note: same code (passed the body + byte proof); 0x4288 is a parameter id (SndParam_ApplySystemParam's id range 0x4280-0x428E, kept as in that hand port), not RAM; 0xFD23 lies in the unmoved 0xF180-0x3F2F8 run and the v7 body spells it (`ld a, (0xfd23:16)`); verbatim
+; SndParam_ApplySystemParam_ScaleTuneUserNote5: Id 0x4288 (record 0x92 +7, RAM 0xFD23): user scale-tune offset of the
+;   note 5 semitones above the key; sent only when the type is 128 (user).
+
+@@ v7 SndParam_ApplySystemParam_ScaleTuneUserNote7
+# note: same code (passed the body + byte proof); 0x428A is a parameter id (SndParam_ApplySystemParam's id range 0x4280-0x428E, kept as in that hand port), not RAM; 0xFD25 lies in the unmoved 0xF180-0x3F2F8 run and the v7 body spells it (`ld a, (0xfd25:16)`); verbatim
+; SndParam_ApplySystemParam_ScaleTuneUserNote7: Id 0x428A (record 0x92 +9, RAM 0xFD25): user scale-tune offset of the
+;   note 7 semitones above the key; sent only when the type is 128 (user).
+
+@@ v7 DSPCfg_RecordFieldToParamId
+# note: same code (passed the body + byte proof); 0x4900-0x4E00 are DSP parameter-id bases (the DSP-slot ids 0x49xx-0x4Exx of SndParam_ApplySystemParam), not RAM; verbatim
+; DSPCfg_RecordFieldToParamId: Maps a SwbtWr change event on a DSP-block panel record -- A = object code 0x61..0x66
+;   ('a'..'f'), C = byte offset (SWBTWR_PAYLOAD_1), E = changed-bit mask (SWBTWR_PAYLOAD_3) -- to a DSP parameter id
+;   stored through the stacked pointer: the block base 0x4900/0x4A00/0x4B00/0x4C00/0x4D00/0x4E00, or for C = 1..16
+;   base + 0x10 + the parameter index that DSPCfg_FindParamAtRecordOffset finds at field C-1 of the effect type's
+;   DspFxRecListPtrTable list. HL = 0, or 0xFFFF for a bad code / no parameter there; retd 4. Basis: callers + body --
+;   EffEdit_DSPConfigBlock (in the SwbtWr lists of codes 0x61, 0x63-0x66) passes the event and then treats id base+0
+;   as an effect-type change (EVT_RET_EFF_FIX) and base+0x10+n as parameter n (EVT_RET_EFF_PARA).
+
+@@ v7 SqStep_BuildAdjacentRowBitmap
+# note: same code; the row bit maps move -156 in v7: v7's SqStep_BuildCurrentRowBitmap loads XIX = 0x3692 and pushes 0x3696 where v10 has 0x372E / 0x3732 (14130), so 0x372E/0x3736/0x3732 -> 0x3692/0x369A/0x3696; 0x0EB5/0x0EB6/0x0EC1/0x0F5A/0x0F5B lie in the unmoved 0x0109-0x29F6 run
+; SqStep_BuildAdjacentRowBitmap: Builds the event bitmap of the grid row above (XIX = 0x3692) or below (XIX = 0x369A):
+;   reads events from the block read position into 0x0EB5 (VoiceBank_ProcessCommand), sets bit (clock 0x0EB6 / 12) of
+;   the current beat byte for each displayable event (VoiceSlot_StatusCheck W = 0), moves to the next byte on a 0x81
+;   beat marker and stops after (0x0EC1) beats or on 0x84; on the 0x82 end marker in the lower row it records the end
+;   position (0x0F5B, 0x0F5A = 3). Basis: callers + body -- SqStep_SetupPrevGridRow and SqStep_SetupNextGridRow call
+;   it last with XIX = 0x3692 / 0x369A and 0x0EC1 = the row's beat count; SqStep_BuildCurrentRowBitmap does the same
+;   for the current row at 0x3696.
+
+@@ v7 SqStep_NibbleMarkPatterns
+# note: same bytes; Display_RedrawSidePanel loads XIY = 0x3692 in v7 where v10 has 0x372E; 0x11D4 is unmoved (v7 spells `ld xwa, 0x11d4` as v10 does)
+; SqStep_NibbleMarkPatterns: 16 x 4 characters: a 4-bit value drawn as 4 marks, bit i -> '*' when set, glyph 0x91 when
+;   clear (entry 0 = 4 x 0x91 ... entry 15 = "****"). Scoop_SidePanel_DrawOneSlot copies entry [nibble] into a static
+;   op-06 text record at RAM 0x11D4 and draws it; Display_RedrawSidePanel runs it for both nibbles of each byte of the
+;   rows' bit maps at RAM 0x3692. Basis: readers + bytes.
+
+@@ v7 MidiPkt_SetXferBlock_CurrentSong
+# note: same code; descriptors per the v7 RAM map and v7's code (`lda xwa, (0xbc40:16)` / `lda xiy, (0xbc50:16)` where v10 has 0xBCDC / 0xBCEC); 0xF180/0xF980 and 0xB0000 are unmoved; the clause 'the send side uses it at 11236' (a stale v10 line number) is dropped
+; MidiPkt_SetXferBlock_CurrentSong: Fills the transfer descriptor at XWA for the current song record: {start 0xF180,
+;   end 0xF980, length 0x800}, block 1 of the sequencer transfer (block 2 = the ten song slots, block 3 = the event
+;   memory at 0xB0000). Basis: callers + body -- MidiPkt_ArpExtHandler_K (command 18, state 0) points the total
+;   descriptor 0xBC40 (MidiPkt_SetXferTotal_SeqData) and the block descriptor 0xBC50 (this) and starts step 11.
+
+@@ v7 MidiPkt_SetXferBlock_SongSlots
+# note: same code; 0xBCEC -> 0xBC50 as for MidiPkt_SetXferBlock_CurrentSong; the clause 'the send side uses it at 11253' (a stale v10 line number) is dropped
+; MidiPkt_SetXferBlock_SongSlots: Fills the transfer descriptor at XWA for the ten song slots: {start SEQ_SONG_SLOTS
+;   (0xAB000), end 0xB0000, length 0x5000}, block 2 of the sequencer transfer. Basis: callers + body --
+;   MidiPkt_ArpExtHandler_L (command 19, state 12) points the block descriptor 0xBC50 with it and continues step 12.
+
+@@ v7 AccompSeq_MidiFilterCodeBlock_Step2
+# note: the comment is v10's own edit history (it quotes the bytes v10 once spelled there, with a v10 jrl displacement), not a description of the code
+
+@@ v7 Str_20469e32473220
+# note: the [nakarest] lines give offsets into v10's NAKA blob (naka_effects_seq+0x8b86..+0x8e22) and v10 ROM addresses; v7's blob layout was not measured

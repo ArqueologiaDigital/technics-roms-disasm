@@ -717,7 +717,6 @@ AcFadeSetGridBoxProc_OnLswData:	; cases 29360156, 29360157
 	ld	xbc, (xsp+16)
 	ld	xde, (xsp+12)
 	jr	FadeGrid_ApFuncCallAndReturn
-; Voice UI grid case 2
 VoiceUI_GridCase2:
 	ld xwa, xiz
 	call GetViewInstance
@@ -896,7 +895,6 @@ FadeSetGridCheck_Skip3:
 	lda	xde, (xsp+4)
 	ld	xbc, EVT_GRID_DRAW
 	jrl	SndParam_SendEventAndReturn
-; AcInOutGrid handler
 AcInOutGrid_Handler:
 	lda xde, (xsp + 4)
 	ld xwa, (xsp + 28)

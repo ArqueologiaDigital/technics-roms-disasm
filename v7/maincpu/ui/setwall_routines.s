@@ -139,7 +139,7 @@ MiddleFuncCall_DispatchData_Code_Helper3:
 	call	SqTrAs_UpdateOkSwVisibility
 	ret
 ; 20 x u8 mask per SetWall slot number 0..0x13 (0xFF, or 0 for slots 13-16):
-; SetWall_CompareAndSwap (0xF1EFCD) and SetWall_InlineCodeBlock2_Skip read it with
+; SetWall_CompareAndSwap and SetWall_InlineCodeBlock2_Skip read it with
 ; `ld xde,<this>; ld c, (xde+iy)`, iy = a slot number from the RAM slot table
 ; at 0xF1A0 -- two such masks are then ANDed (`and a,c`) to test a pair of slots.
 SetWall_SlotMaskTable:

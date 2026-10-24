@@ -13118,7 +13118,7 @@ SeqEvtBuf_NoteDispatch_Expression:
 	call	SndParam_NotifyAndReturn
 	jrl	SeqEvtBuf_NonNoteDispatchLoop
 ; SeqEvtBuf_NoteDispatch_DelaySend: Value 6 is ignored (SeqEvtBuf_NoteDispatch_Ignore); value 7 is the CC 94 send, which
-;   SndPart_SetParam keeps per part at 0xD050.
+;   SndPart_SetParam keeps per part at 0xCFB4.
 SeqEvtBuf_NoteDispatch_DelaySend:
 	ld	wa, (xsp+4)
 	ld	de, iz
@@ -20952,7 +20952,7 @@ MidiSysMsg_Handler_OnF2EndOfTrack:
 	ldw	hl, 0xfffd
 	jrl	Dispatch_Epilogue
 ; MidiSysMsg_Handler_OnF3ShortDeltaTime: Song-stream status 0xF3: one-byte (7-bit) delta-time added to the event time
-;   0xE9E7.
+;   0xE921.
 MidiSysMsg_Handler_OnF3ShortDeltaTime:
 	ld	iz, 0:i3
 	cp	iz, 1:i3
@@ -20978,7 +20978,7 @@ MidiSysMsg_Handler_Skip4:
 	add	(0xe921:16), xhl
 	jrl	Dispatch_InitVal2
 ; MidiSysMsg_Handler_OnF4LongDeltaTime: Song-stream status 0xF4: two-byte (14-bit) delta-time added to the event time
-;   0xE9E7.
+;   0xE921.
 MidiSysMsg_Handler_OnF4LongDeltaTime:
 	ld	iz, 0:i3
 	cp	iz, 2:i3
@@ -21019,7 +21019,7 @@ MidiSysMsg_Handler_Skip7:
 	cp	iz, 2:i3
 	jr	lt, MidiSysMsg_Handler_Loop4
 	jrl	Dispatch_InitVal2
-; MidiSysMsg_Handler_OnFBTempo: Song-stream status 0xFB: tempo (14-bit value * (0xE9EB) / 1000, clamped to 40..300),
+; MidiSysMsg_Handler_OnFBTempo: Song-stream status 0xFB: tempo (14-bit value * (0xE925) / 1000, clamped to 40..300),
 ;   then SeqTimer_UpdateTempoReg.
 MidiSysMsg_Handler_OnFBTempo:
 	ld	iz, 0:i3
@@ -21111,7 +21111,7 @@ Dispatch_Epilogue:
 ;   status, XBC = its data bytes; 0xF3 -> the 7-bit byte, 0xF4 -> the 14-bit value LSB + 128 * MSB of two 7-bit bytes;
 ;   returns it in XHL (0 for any other status). Basis: callers + body -- MidiSysMsg_Handler_OnF3ShortDeltaTime /
 ;   _OnF4LongDeltaTime read one / two bytes into their frame, call it with WA = 243 / 244 and add XHL to the event
-;   time 0xE9E7.
+;   time 0xE921.
 MidiSysMsg_DecodeDeltaTime:
 	cp	a, 244
 	jr	z, MidiSysMsg_DecodeDeltaTime_Skip
@@ -23334,7 +23334,7 @@ Param_SignExtendRetu_Block:
 	ld	(0xe0b2:16), xwa
 	ret
 ; SoundData_InitPhase0: Init-phase-0 handler of subsystem table 11 (phases 1-3 are bare returns): jumps to the code
-;   that sets the sound-table base 0xE14E to (SoundData_CategoryDescPtr). Basis: callers (SoundData_InitFuncTable entry
+;   that sets the sound-table base 0xE0B2 to (SoundData_CategoryDescPtr). Basis: callers (SoundData_InitFuncTable entry
 ;   0) + body.
 SoundData_InitPhase0:
 	jr	Param_SignExtendRetu_Block

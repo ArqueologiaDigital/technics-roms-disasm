@@ -3495,7 +3495,7 @@ CPanel_InitButtonState_SaveRegs:
 ; CPanel_ProbePanelMcus: Far-callable entry (`calr CPanel_PanelDetection; ret`, like CPanel_Poll) used by the self-
 ;   test: probes the left (0x20) and right (0xE0) panel MCUs and returns A = CPANEL_PANEL_DETECT_FLAGS (bit 0 left
 ;   answered, bit 3 right answered). Basis: callers + body -- SelfTest_SramAndRom_CheckROM and
-;   EffectMode_ByteData_DiagEvents store A at 0x8D7C and test `and a, 9`.
+;   EffectMode_ByteData_DiagEvents store A at 0x8CE0 and test `and a, 9`.
 CPanel_ProbePanelMcus:
 	calr CPanel_PanelDetection
 	ret

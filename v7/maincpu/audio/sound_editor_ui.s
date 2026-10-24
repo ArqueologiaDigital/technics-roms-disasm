@@ -17600,13 +17600,11 @@ EasyCmp_GridCheck_EventEnc_Join:
 	jr	nz, EasyCmp_GridCheck_EventCase2
 	ld	xwa, EasyCmp_GridCheck_EventEnc_Str_OFF
 	push	xwa
-; EasyCmpGridCheck event case 1
 EasyCmp_GridCheck_EventCase1:
 	push	xde
 	call	Sprintf_Locked
 	inc	8, xsp
 	jr	EasyCmp_GridCheck_EventCase3
-; EasyCmpGridCheck event case 2
 EasyCmp_GridCheck_EventCase2:
 	extz	wa
 	pushw	wa
@@ -17615,7 +17613,6 @@ EasyCmp_GridCheck_EventCase2:
 	push	xde
 	call	Sprintf_Locked
 	lda	xsp, (xsp+10)
-; EasyCmpGridCheck event case 3
 EasyCmp_GridCheck_EventCase3:
 	call GetFocusObject
 	ld xwa, xhl
@@ -19037,7 +19034,6 @@ AcSndArgGrid_BnkDispatch:
 	ld	xwa, xiz
 	ld	xbc, EVT_PARA_DRAW
 	call	SendEvent
-; AcSndArgGridBnk case 1
 AcSndArgGrid_BnkCase1:
 	ld xhl, 0:i3
 

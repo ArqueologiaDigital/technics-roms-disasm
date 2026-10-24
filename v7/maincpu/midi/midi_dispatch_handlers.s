@@ -2342,7 +2342,7 @@ MidiTx_PartTargets_ProgramBank:
 	.long 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff
 ; MidiTx_PartTargets_CC7_Volume: MIDI transmit part-target table for CC7 (volume): 32 x u32 indexed by part. Entries
 ;   are the address of byte +13 of a 26-byte part record (0xF9B6 + 26*k): its low nibble is ORed into the status byte
-;   as the channel and bit 6 suppresses the send unless bit 7 of 0x90E5 is set; 0xFFFFFFFF = part not sent. Basis:
+;   as the channel and bit 6 suppresses the send unless bit 7 of 0x9049 is set; 0xFFFFFFFF = part not sent. Basis:
 ;   readers + bytes (gate bit 2 of 0xFD58).
 MidiTx_PartTargets_CC7_Volume:
 	.long 0x0000f9c3, 0x0000f9dd, 0x0000f9f7, 0x0000fa11
@@ -2355,7 +2355,7 @@ MidiTx_PartTargets_CC7_Volume:
 	.long 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff
 ; MidiTx_PartTargets_CC93_Chorus: MIDI transmit part-target table for CC93 (chorus send): 32 x u32 indexed by part.
 ;   Entries are the address of byte +13 of a 26-byte part record (0xF9B6 + 26*k): its low nibble is ORed into the
-;   status byte as the channel and bit 6 suppresses the send unless bit 7 of 0x90E5 is set; 0xFFFFFFFF = part not
+;   status byte as the channel and bit 6 suppresses the send unless bit 7 of 0x9049 is set; 0xFFFFFFFF = part not
 ;   sent. Basis: readers + bytes (gate bit 5 of 0xFD58).
 MidiTx_PartTargets_CC93_Chorus:
 	.long 0x0000f9c3, 0x0000f9dd, 0x0000f9f7, 0x0000fa11
@@ -2377,7 +2377,7 @@ PanelEvt_Handler_4_DualValueCheck_Data:
 	.long 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff
 ; MidiTx_PartTargets_CC91_Reverb: MIDI transmit part-target table for CC91 (reverb send): 32 x u32 indexed by part.
 ;   Entries are the address of byte +13 of a 26-byte part record (0xF9B6 + 26*k): its low nibble is ORed into the
-;   status byte as the channel and bit 6 suppresses the send unless bit 7 of 0x90E5 is set; 0xFFFFFFFF = part not
+;   status byte as the channel and bit 6 suppresses the send unless bit 7 of 0x9049 is set; 0xFFFFFFFF = part not
 ;   sent. Basis: readers + bytes (gate bit 5 of 0xFD58).
 MidiTx_PartTargets_CC91_Reverb:
 	.long 0x0000f9c3, 0x0000f9dd, 0x0000f9f7, 0x0000fa11
@@ -2392,7 +2392,7 @@ MidiTx_PartTargets_CC91_Reverb:
 	.byte 0xff
 ; MidiTx_PartTargets_CC10_Pan: MIDI transmit part-target table for CC10 (pan): 32 x u32 indexed by part. Entries are
 ;   the address of byte +13 of a 26-byte part record (0xF9B6 + 26*k): its low nibble is ORed into the status byte as
-;   the channel and bit 6 suppresses the send unless bit 7 of 0x90E5 is set; 0xFFFFFFFF = part not sent. Basis:
+;   the channel and bit 6 suppresses the send unless bit 7 of 0x9049 is set; 0xFFFFFFFF = part not sent. Basis:
 ;   readers + bytes (gate bit 4 of 0xFD58).
 MidiTx_PartTargets_CC10_Pan:
 	.long 0x0000f9c3, 0x0000f9dd, 0x0000f9f7, 0x0000fa11
@@ -2405,7 +2405,7 @@ MidiTx_PartTargets_CC10_Pan:
 	.long 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff
 ; MidiTx_PartTargets_RpnCoarseTune: MIDI transmit part-target table for RPN 0,2 (coarse tuning): 32 x u32 indexed by
 ;   part. Entries are the address of byte +13 of a 26-byte part record (0xF9B6 + 26*k): its low nibble is ORed into
-;   the status byte as the channel and bit 6 suppresses the send unless bit 7 of 0x90E5 is set; 0xFFFFFFFF = part not
+;   the status byte as the channel and bit 6 suppresses the send unless bit 7 of 0x9049 is set; 0xFFFFFFFF = part not
 ;   sent. Basis: readers + bytes (gate bit 1 of 0xFD57).
 MidiTx_PartTargets_RpnCoarseTune:
 	.long 0x0000f9c3, 0x0000f9dd, 0x0000f9f7, 0x0000fa11
@@ -2418,7 +2418,7 @@ MidiTx_PartTargets_RpnCoarseTune:
 	.long 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff
 ; MidiTx_PartTargets_RpnFineTune: MIDI transmit part-target table for RPN 0,1 (fine tuning): 32 x u32 indexed by part.
 ;   Entries are the address of byte +13 of a 26-byte part record (0xF9B6 + 26*k): its low nibble is ORed into the
-;   status byte as the channel and bit 6 suppresses the send unless bit 7 of 0x90E5 is set; 0xFFFFFFFF = part not
+;   status byte as the channel and bit 6 suppresses the send unless bit 7 of 0x9049 is set; 0xFFFFFFFF = part not
 ;   sent. Basis: readers + bytes (gate bit 1 of 0xFD57).
 MidiTx_PartTargets_RpnFineTune:
 	.long 0x0000f9c3, 0x0000f9dd, 0x0000f9f7, 0x0000fa11
@@ -2431,7 +2431,7 @@ MidiTx_PartTargets_RpnFineTune:
 	.long 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff
 ; MidiTx_PartTargets_RpnBendRange: MIDI transmit part-target table for RPN 0,0 (pitch-bend sensitivity): 32 x u32
 ;   indexed by part. Entries are the address of byte +13 of a 26-byte part record (0xF9B6 + 26*k): its low nibble is
-;   ORed into the status byte as the channel and bit 6 suppresses the send unless bit 7 of 0x90E5 is set; 0xFFFFFFFF =
+;   ORed into the status byte as the channel and bit 6 suppresses the send unless bit 7 of 0x9049 is set; 0xFFFFFFFF =
 ;   part not sent. Basis: readers + bytes (gate bit 0 of 0xFD57).
 MidiTx_PartTargets_RpnBendRange:
 	.long 0x0000f9c3, 0x0000f9dd, 0x0000f9f7, 0x0000fa11
@@ -2444,7 +2444,7 @@ MidiTx_PartTargets_RpnBendRange:
 	.long 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff
 ; MidiTx_PartTargets_CC121_ResetAll: MIDI transmit part-target table for CC121 (reset all controllers): 32 x u32
 ;   indexed by part. Entries are the address of byte +13 of a 26-byte part record (0xF9B6 + 26*k): its low nibble is
-;   ORed into the status byte as the channel and bit 6 suppresses the send unless bit 7 of 0x90E5 is set; 0xFFFFFFFF =
+;   ORed into the status byte as the channel and bit 6 suppresses the send unless bit 7 of 0x9049 is set; 0xFFFFFFFF =
 ;   part not sent. Basis: readers + bytes (gate bit 0 of 0xFD59).
 MidiTx_PartTargets_CC121_ResetAll:
 	.long 0x0000f9c3, 0x0000f9dd, 0x0000f9f7, 0x0000fa11
@@ -2457,7 +2457,7 @@ MidiTx_PartTargets_CC121_ResetAll:
 	.long 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff
 ; MidiTx_PartTargets_CC120_AllSoundOff: MIDI transmit part-target table for CC120 (all sound off): 32 x u32 indexed by
 ;   part. Entries are the address of byte +13 of a 26-byte part record (0xF9B6 + 26*k): its low nibble is ORed into
-;   the status byte as the channel and bit 6 suppresses the send unless bit 7 of 0x90E5 is set; 0xFFFFFFFF = part not
+;   the status byte as the channel and bit 6 suppresses the send unless bit 7 of 0x9049 is set; 0xFFFFFFFF = part not
 ;   sent. Basis: readers + bytes (no gate bit).
 MidiTx_PartTargets_CC120_AllSoundOff:
 	.long 0x0000f9c3, 0x0000f9dd, 0x0000f9f7, 0x0000fa11
@@ -2470,7 +2470,7 @@ MidiTx_PartTargets_CC120_AllSoundOff:
 	.long 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff
 ; MidiTx_PartTargets_PitchBend: MIDI transmit part-target table for pitch bend (Ex): 32 x u32 indexed by part. Entries
 ;   are the address of byte +13 of a 26-byte part record (0xF9B6 + 26*k): its low nibble is ORed into the status byte
-;   as the channel and bit 6 suppresses the send unless bit 7 of 0x90E5 is set; 0xFFFFFFFF = part not sent. Basis:
+;   as the channel and bit 6 suppresses the send unless bit 7 of 0x9049 is set; 0xFFFFFFFF = part not sent. Basis:
 ;   readers + bytes (gate bit 6 of 0xFD57).
 MidiTx_PartTargets_PitchBend:
 	.long 0x0000f9c3, 0x0000f9dd, 0x0000f9f7, 0x0000fa11
@@ -2483,7 +2483,7 @@ MidiTx_PartTargets_PitchBend:
 	.long 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff
 ; MidiTx_PartTargets_CC1_Modulation: MIDI transmit part-target table for CC1 (modulation): 32 x u32 indexed by part.
 ;   Entries are the address of byte +13 of a 26-byte part record (0xF9B6 + 26*k): its low nibble is ORed into the
-;   status byte as the channel and bit 6 suppresses the send unless bit 7 of 0x90E5 is set; 0xFFFFFFFF = part not
+;   status byte as the channel and bit 6 suppresses the send unless bit 7 of 0x9049 is set; 0xFFFFFFFF = part not
 ;   sent. Basis: readers + bytes (gate bit 1 of 0xFD58).
 MidiTx_PartTargets_CC1_Modulation:
 	.long 0x0000f9c3, 0x0000f9dd, 0x0000f9f7, 0x0000fa11
@@ -2496,7 +2496,7 @@ MidiTx_PartTargets_CC1_Modulation:
 	.long 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff
 ; MidiTx_PartTargets_CC11_Expression: MIDI transmit part-target table for CC11 (expression): 32 x u32 indexed by part.
 ;   Entries are the address of byte +13 of a 26-byte part record (0xF9B6 + 26*k): its low nibble is ORed into the
-;   status byte as the channel and bit 6 suppresses the send unless bit 7 of 0x90E5 is set; 0xFFFFFFFF = part not
+;   status byte as the channel and bit 6 suppresses the send unless bit 7 of 0x9049 is set; 0xFFFFFFFF = part not
 ;   sent. Basis: readers + bytes (gate bit 3 of 0xFD58).
 MidiTx_PartTargets_CC11_Expression:
 	.long 0x0000f9c3, 0x0000f9dd, 0x0000f9f7, 0x0000fa11
@@ -2509,7 +2509,7 @@ MidiTx_PartTargets_CC11_Expression:
 	.long 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff
 ; MidiTx_PartTargets_ChannelPressure: MIDI transmit part-target table for channel pressure (Dx): 32 x u32 indexed by
 ;   part. Entries are the address of byte +13 of a 26-byte part record (0xF9B6 + 26*k): its low nibble is ORed into
-;   the status byte as the channel and bit 6 suppresses the send unless bit 7 of 0x90E5 is set; 0xFFFFFFFF = part not
+;   the status byte as the channel and bit 6 suppresses the send unless bit 7 of 0x9049 is set; 0xFFFFFFFF = part not
 ;   sent. Basis: readers + bytes (gate bit 5 of 0xFD57).
 MidiTx_PartTargets_ChannelPressure:
 	.long 0x0000f9c3, 0x0000f9dd, 0x0000f9f7, 0x0000fa11
@@ -2522,7 +2522,7 @@ MidiTx_PartTargets_ChannelPressure:
 	.long 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff
 ; MidiTx_PartTargets_CC64_Sustain: MIDI transmit part-target table for CC64 (sustain / damper): 32 x u32 indexed by
 ;   part. Entries are the address of byte +13 of a 26-byte part record (0xF9B6 + 26*k): its low nibble is ORed into
-;   the status byte as the channel and bit 6 suppresses the send unless bit 7 of 0x90E5 is set; 0xFFFFFFFF = part not
+;   the status byte as the channel and bit 6 suppresses the send unless bit 7 of 0x9049 is set; 0xFFFFFFFF = part not
 ;   sent. Basis: readers + bytes (gate bit 0 of 0xFD58).
 MidiTx_PartTargets_CC64_Sustain:
 	.long 0x0000f9c3, 0x0000f9dd, 0x0000f9f7, 0x0000fa11
@@ -2536,7 +2536,7 @@ MidiTx_PartTargets_CC64_Sustain:
 ; MidiTx_PartTargets_Func09: MIDI transmit part-target table for CC function 9, which has no controller number
 ;   (MidiCC_FunctionToCCNumber[9] = 0xFF, so nothing is ever sent): 32 x u32 indexed by part. Entries are the address
 ;   of byte +13 of a 26-byte part record (0xF9B6 + 26*k): its low nibble is ORed into the status byte as the channel
-;   and bit 6 suppresses the send unless bit 7 of 0x90E5 is set; 0xFFFFFFFF = part not sent. Basis: readers + bytes
+;   and bit 6 suppresses the send unless bit 7 of 0x9049 is set; 0xFFFFFFFF = part not sent. Basis: readers + bytes
 ;   (gate bit 1 of 0xFD59).
 MidiTx_PartTargets_Func09:
 	.long 0x0000f9c3, 0x0000f9dd, 0x0000f9f7, 0x0000fa11
@@ -2550,7 +2550,7 @@ MidiTx_PartTargets_Func09:
 ; MidiTx_PartTargets_Func08: MIDI transmit part-target table for CC function 8, which has no controller number
 ;   (MidiCC_FunctionToCCNumber[8] = 0xFF, so nothing is ever sent): 32 x u32 indexed by part. Entries are the address
 ;   of byte +13 of a 26-byte part record (0xF9B6 + 26*k): its low nibble is ORed into the status byte as the channel
-;   and bit 6 suppresses the send unless bit 7 of 0x90E5 is set; 0xFFFFFFFF = part not sent. Basis: readers + bytes
+;   and bit 6 suppresses the send unless bit 7 of 0x9049 is set; 0xFFFFFFFF = part not sent. Basis: readers + bytes
 ;   (gate bit 2 of 0xFD59).
 MidiTx_PartTargets_Func08:
 	.long 0x0000f9c3, 0x0000f9dd, 0x0000f9f7, 0x0000fa11
@@ -2564,7 +2564,7 @@ MidiTx_PartTargets_Func08:
 ; MidiTx_PartTargets_Func12: MIDI transmit part-target table for CC function 12, which has no controller number
 ;   (MidiCC_FunctionToCCNumber[12] = 0xFF, so nothing is ever sent): 32 x u32 indexed by part. Entries are the address
 ;   of byte +13 of a 26-byte part record (0xF9B6 + 26*k): its low nibble is ORed into the status byte as the channel
-;   and bit 6 suppresses the send unless bit 7 of 0x90E5 is set; 0xFFFFFFFF = part not sent. Basis: readers + bytes
+;   and bit 6 suppresses the send unless bit 7 of 0x9049 is set; 0xFFFFFFFF = part not sent. Basis: readers + bytes
 ;   (gate bit 3 of 0xFD59).
 MidiTx_PartTargets_Func12:
 	.long 0x0000f9c3, 0x0000f9dd, 0x0000f9f7, 0x0000fa11
@@ -2578,7 +2578,7 @@ MidiTx_PartTargets_Func12:
 ; MidiTx_PartTargets_Func13: MIDI transmit part-target table for CC function 13, which has no controller number
 ;   (MidiCC_FunctionToCCNumber[13] = 0xFF, so nothing is ever sent): 32 x u32 indexed by part. Entries are the address
 ;   of byte +13 of a 26-byte part record (0xF9B6 + 26*k): its low nibble is ORed into the status byte as the channel
-;   and bit 6 suppresses the send unless bit 7 of 0x90E5 is set; 0xFFFFFFFF = part not sent. Basis: readers + bytes
+;   and bit 6 suppresses the send unless bit 7 of 0x9049 is set; 0xFFFFFFFF = part not sent. Basis: readers + bytes
 ;   (gate bit 3 of 0xFD59).
 MidiTx_PartTargets_Func13:
 	.long 0x0000f9c3, 0x0000f9dd, 0x0000f9f7, 0x0000fa11
@@ -2592,7 +2592,7 @@ MidiTx_PartTargets_Func13:
 ; MidiTx_PartTargets_Func14: MIDI transmit part-target table for CC function 14, which has no controller number
 ;   (MidiCC_FunctionToCCNumber[14] = 0xFF, so nothing is ever sent): 32 x u32 indexed by part. Entries are the address
 ;   of byte +13 of a 26-byte part record (0xF9B6 + 26*k): its low nibble is ORed into the status byte as the channel
-;   and bit 6 suppresses the send unless bit 7 of 0x90E5 is set; 0xFFFFFFFF = part not sent. Basis: readers + bytes
+;   and bit 6 suppresses the send unless bit 7 of 0x9049 is set; 0xFFFFFFFF = part not sent. Basis: readers + bytes
 ;   (gate bit 4 of 0xFD59).
 MidiTx_PartTargets_Func14:
 	.long 0x0000f9c3, 0x0000f9dd, 0x0000f9f7, 0x0000fa11
@@ -2606,7 +2606,7 @@ MidiTx_PartTargets_Func14:
 ; MidiTx_PartTargets_Func15: MIDI transmit part-target table for CC function 15, which has no controller number
 ;   (MidiCC_FunctionToCCNumber[15] = 0xFF, so nothing is ever sent): 32 x u32 indexed by part. Entries are the address
 ;   of byte +13 of a 26-byte part record (0xF9B6 + 26*k): its low nibble is ORed into the status byte as the channel
-;   and bit 6 suppresses the send unless bit 7 of 0x90E5 is set; 0xFFFFFFFF = part not sent. Basis: readers + bytes
+;   and bit 6 suppresses the send unless bit 7 of 0x9049 is set; 0xFFFFFFFF = part not sent. Basis: readers + bytes
 ;   (gate bit 4 of 0xFD59).
 MidiTx_PartTargets_Func15:
 	.long 0x0000f9c3, 0x0000f9dd, 0x0000f9f7, 0x0000fa11
@@ -9426,8 +9426,8 @@ MidiPkt_SetXferTotal_Panel:
 ;   0xFFC0, length 0x640}, which holds the live panel's block 0 (0xF9A0) and block 1 (0xFD60). It is block 1 of the
 ;   panel transfer; block 2 is the 80 panel memories at 0x1ED350 (MidiPkt_SetXferBlock_PanelMemories). Basis: callers + body
 ;   -- MidiPkt_ArpExtHandler_A (command 11, state 0) writes all panel TLV headers, then points the total descriptor
-;   0xBCDC (MidiPkt_SetXferTotal_Panel) and the block descriptor 0xBCEC (this) and starts step 1; the send side
-;   MidiPkt_ArpConfigChain_Data_Helper2 uses it for 0xBCCC.
+;   0xBC40 (MidiPkt_SetXferTotal_Panel) and the block descriptor 0xBC50 (this) and starts step 1; the send side
+;   MidiPkt_ArpConfigChain_Data_Helper2 uses it for 0xBC30.
 MidiPkt_SetXferBlock_LivePanel:
 	lda	xde, (0xf980:16)
 	ld	(xwa), xde
@@ -9570,8 +9570,7 @@ MidiPkt_SetXferTotal_SeqData_Epilogue4:
 ; MidiPkt_SetXferBlock_CurrentSong: Fills the transfer descriptor at XWA for the current song record: {start 0xF180,
 ;   end 0xF980, length 0x800}, block 1 of the sequencer transfer (block 2 = the ten song slots, block 3 = the event
 ;   memory at 0xB0000). Basis: callers + body -- MidiPkt_ArpExtHandler_K (command 18, state 0) points the total
-;   descriptor 0xBCDC (MidiPkt_SetXferTotal_SeqData) and the block descriptor 0xBCEC (this) and starts step 11; the
-;   send side uses it at 11236.
+;   descriptor 0xBC40 (MidiPkt_SetXferTotal_SeqData) and the block descriptor 0xBC50 (this) and starts step 11.
 MidiPkt_SetXferBlock_CurrentSong:
 	lda	xbc, (0xf180:16)
 	ld	(xwa), xbc
@@ -9582,8 +9581,7 @@ MidiPkt_SetXferBlock_CurrentSong:
 	ret
 ; MidiPkt_SetXferBlock_SongSlots: Fills the transfer descriptor at XWA for the ten song slots: {start SEQ_SONG_SLOTS
 ;   (0xAB000), end 0xB0000, length 0x5000}, block 2 of the sequencer transfer. Basis: callers + body --
-;   MidiPkt_ArpExtHandler_L (command 19, state 12) points the block descriptor 0xBCEC with it and continues step 12;
-;   the send side uses it at 11253.
+;   MidiPkt_ArpExtHandler_L (command 19, state 12) points the block descriptor 0xBC50 with it and continues step 12.
 MidiPkt_SetXferBlock_SongSlots:
 	lda	xbc, (SEQ_SONG_SLOTS:24)
 	ld	(xwa), xbc
@@ -9690,7 +9688,7 @@ MidiPkt_SetXferBlock_AccompBlockPool_Epilogue7:
 ; MidiPkt_GetUsedSize_StyleImage: Re-packs the style image's pattern blocks (AccPatch_ClearModeFlag +
 ;   AccPatch_InitSlotChain_WithAddr, which walks the slot chain at RHYTHM_PATTERN_BUF_A swapping blocks into order and
 ;   stores the used size, rounded up to 1 KB, /16 at +46 = 0x9482E) and returns XHL = (0x9482E) * 16, the used size in
-;   bytes; XDE/XHL/XIX/XIZ preserved. Basis: callers + body -- with bit 6 of 0xBD18 set
+;   bytes; XDE/XHL/XIX/XIZ preserved. Basis: callers + body -- with bit 6 of 0xBC7C set
 ;   MidiPkt_SetXferBlock_StyleImagePool and the style-image total (MidiPkt_SetXferTotal_StyleImage) take their transfer
 ;   length from it.
 MidiPkt_GetUsedSize_StyleImage:
@@ -9710,7 +9708,7 @@ MidiPkt_GetUsedSize_StyleImage:
 ; MidiPkt_GetUsedSize_SeqEvents: Compacts the sequencer event memory (SeqStep_ByteBlockEA5F: SeqData_CopyBlockToBuffer
 ;   + SeqStep_FindAndCompact for the current song, which stores the used block count * 16 in 0xF1CE) and returns XHL =
 ;   (0xF1CE) * 16, the used event-memory size in bytes; XDE/XHL/XIX/XIZ preserved. Basis: callers + body -- with bit 6
-;   of 0xBD18 set MidiPkt_SetXferTotal_SeqData (length 0x5800 + this) and the event-memory block
+;   of 0xBC7C set MidiPkt_SetXferTotal_SeqData (length 0x5800 + this) and the event-memory block
 ;   MidiPkt_SetXferBlock_SeqEvents take their transfer length from it.
 MidiPkt_GetUsedSize_SeqEvents:
 	push	xde
@@ -9729,7 +9727,7 @@ MidiPkt_GetUsedSize_SeqEvents:
 ; MidiPkt_GetUsedSize_AccompBlocks: Recomputes the used size of the accompaniment block area at 0x1E8800
 ;   (Voice_RefreshBankData -> Voice_ComputeAllocSize: highest in-use block, rounded up to 1 KB, /16 into 0x1E881C) and
 ;   returns XHL = (0x1E881C) * 16, the used size in bytes; XDE/XHL/XIX/XIZ preserved. Basis: callers + body -- with
-;   bit 6 of 0xBD18 set MidiPkt_SetXferBlock_AccompBlockPool and the area total (MidiPkt_SetXferTotal_AccompBlocks) take
+;   bit 6 of 0xBC7C set MidiPkt_SetXferBlock_AccompBlockPool and the area total (MidiPkt_SetXferTotal_AccompBlocks) take
 ;   their transfer length from it.
 MidiPkt_GetUsedSize_AccompBlocks:
 	push	xde
@@ -9792,7 +9790,7 @@ MidiPkt_PreparePanelReceive:
 	ret
 ; MidiStream_Delay25Ticks: Busy-waits until SYSTEM_TIMESTAMP has advanced 25 ticks from entry (DE = the start value).
 ;   Basis: callers + body -- the only caller MidiStream_PrevBankCheck, the post-send step of the MIDI data transfer,
-;   runs it when bit 7 of 0xBD18 (wait for the receiver's reply) is clear, after SeqBuf_WaitForEmpty has drained the
+;   runs it when bit 7 of 0xBC7C (wait for the receiver's reply) is clear, after SeqBuf_WaitForEmpty has drained the
 ;   MIDI output buffer: a fixed pause between messages instead of the handshake.
 MidiStream_Delay25Ticks:
 	ld	de, (SYSTEM_TIMESTAMP:16)
@@ -11404,7 +11402,7 @@ MidiSysEx_ProcessBlock_Helper5:
 ;   the command packet {4, 0xF0, 0x50, 0x92, 0} through MIDI_SendCmdPacket / sendCOMM -- the packet that ends a sound-
 ;   RAM transfer (the abort path sends it too). What the receiver does with it is not identified; the callee's name
 ;   does not describe it. Basis: callers + body -- MidiSysEx_FinishSoundRamXfer calls it when the sound-RAM group (bit
-;   6 of 0xBD1A) was received; the group's abort handler SeqChan_UnhandledCmd_Join2 sends the same packet after
+;   6 of 0xBC7E) was received; the group's abort handler SeqChan_UnhandledCmd_Join2 sends the same packet after
 ;   SendPartDataBlock_DoGetError.
 MidiSysEx_SendSoundRamEndCmd:
 	push	xde

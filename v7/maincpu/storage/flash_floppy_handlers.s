@@ -2350,7 +2350,7 @@ Flash_ExtendedOpsBlock_Skip2:
 ;   0x6D4: the large block (entry 0) gets the first of the 4 large slots whose owner byte is 0 or A, each following
 ;   block the next such small slot (of 40); records are {block, 0x500 | slot} with bit 7 set for small slots. Basis:
 ;   callers + body -- Flash_InitBytecodeBlock runs it first on its write path (no shortfall), with A = its owner
-;   argument (CstmCp's 0x39B7); Flash_WriteSlotOwnerMap and Flash_CopyBlocksToSlots consume the list.
+;   argument (CstmCp's 0x391B); Flash_WriteSlotOwnerMap and Flash_CopyBlocksToSlots consume the list.
 Flash_AssignSlotsToBlocks:
 	dec 2,XSP
 	pushw iz

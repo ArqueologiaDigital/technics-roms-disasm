@@ -2580,12 +2580,6 @@ EntertainerGridCheck_GridDrawRecInit:	.incbin "includes/generated/naka_effects_s
 ; [nakarest] SqedtFunc_OnGetQtzWinString_Join6 (sequencer/sequencer_ui.s: `lda xde,
 ; [nakarest] (NoteEdit_MidiNoteNameTable:24)`).
 NoteEdit_MidiNoteNameTable:	.incbin "includes/generated/naka_effects_seq.bin", 0x89A2, 0x1E4
-; [nakarest] naka_effects_seq+0x8b86  +0x8b86..+0x8e22 (0xe30b2a, 668 B)
-; [nakarest] Text (668 B at 0xe30b2a), first string
-; [nakarest] "20~46~9e~32~47~32~20~41~a0~32~41~32~20~42~a0~32~"; no registered NAKA table points
-; [nakarest] into it; reached through source references InitializeKubo_Skip
-; [nakarest] (sequencer/sequencer_ui.s: `.long Str_42a03242322043`), SqedtFunc_LmString_OnTitleSqadvdly
-; [nakarest] (sequencer/sequencer_ui.s: `.long Str_20469e32473220`).
 Str_20469e32473220:			.incbin "includes/generated/naka_effects_seq.bin", 0x8B86, 0x27
 Str_42a03242322043:			.incbin "includes/generated/naka_effects_seq.bin", 0x8BAD, 0x275
 ; Equalizer_FreqDispPos -- 28 x uint16_t: display position of an EQ band's frequency value, 48 + 7*value for values 0-26
