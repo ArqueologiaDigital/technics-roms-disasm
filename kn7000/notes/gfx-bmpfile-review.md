@@ -15,6 +15,11 @@ the caller lists and the simulated behaviour: notes/gfx-bmpfile-probes/. Rendere
 from the workflow's reports by
 `research-scratch/sessions/2026-10-18_tmp/review_notes_bmpfile.py`.
 
+Names as of 2026-10-24: this log keeps the names it was written with. `LibMemCopy`
+(a row at the flash copy 0x487BC00A of library 0x4C003039) is now `memcpy_entry`
+at 0x4C003039, the register-save entry of `memcpy` (0x4C003037); the flash-copy row
+was dropped. Evidence: notes/function-naming-2026-10-24/renames.tsv.
+
 ## parse
 
 Functions: BfFile2Struct, BfStruct2File, GetBitmapInfo, BmpUnpackRow.
@@ -29,7 +34,7 @@ Corrections (11):
   bytes are fewer (0x484165F9..0x484165FD), so Malloc returns 0 (0x484166B9). For sizes
   -4..-10, 8 + d2 wraps to 4 or 0: Malloc then carves 4 bytes and writes an 8-byte header
   with size 0xFFFFFFFC/F8, or, for 0, returns the byte count at (0x500006E4) as a pointer
-  (0x484165E9..0x484165EB). memcpy_entry computes end = dest + len and copies while dest <
+  (0x484165E9..0x484165EB). LibMemCopy computes end = dest + len and copies while dest <
   end, unsigned (0x487BC00A..0x487BC01B). With dest = 0 and a negative len, end is about 4
   GB, so it copies on from address 0. A negative count can arrive: DrawBitmapFile_Impl sign-
   extends biWidth, divides with divu and truncates the stride to s16
@@ -139,7 +144,7 @@ Names:
 Left open:
 
 - The negative-count behaviour in BmpUnpackRow comes from my reading of the Malloc_entry,
-  0x484165E6 and memcpy_entry instructions. I modelled it arithmetically in
+  0x484165E6 and LibMemCopy instructions. I modelled it arithmetically in
   /home/fsanches/compartilhado/tmp/kn7000-bmpann/parse-review/negcount_model.py, assuming
   the pool has under 16 MB left; I did not run it on the ROM. The doc text gives no numbers.
 - The same negative-stride problem hits the blitters before BmpUnpackRow:

@@ -211,7 +211,7 @@ mostly one variable, `XapFrameworkObj` 0x502B4044, read 970 times -- `notes/sp70
 `XapEntry` saves `a0`/`a1`, initialises, and returns the plug-in object `0x502B1E50`, the
 compile id from `0x502B2090` and **plug-in id 3**. It calls the firmware only through pointer
 tables (no direct `call` reaches a firmware entry at any base); internal calls are PC-relative.
-It links its own copy of the compiler runtime: 10 routines are byte-identical to named firmware
+It links its own copy of the compiler runtime: 11 routines are byte-identical to named firmware
 routines and take their names (`strncmp`, `memcpy`, `memset`, `strcpy`, `LibDiv32`, `LibF64Unpack`,
 ...; `src/sp7001/baseext.s`'s header gives the count). Four of them are copies of the body from the
 firmware routine's register-save `call` entry on (`strncmp_entry` and the like), linked without the

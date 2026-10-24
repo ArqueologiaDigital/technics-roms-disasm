@@ -2,7 +2,7 @@
 # `call` entry of a library routine the SP7001 (build 942) export table already names
 # (tools/gen_program_s.py printed each one as "<export>  (...; its `call` entry LibX at ...)").
 # Such an entry is <export>_entry everywhere else in the tree (memset_entry, memcpy_entry,
-# strcpy_entry), so these follow.  The four alias rows at flash addresses 0x487Bxxxx
+# strcpy_entry), so these follow.  The five alias rows at flash addresses 0x487Bxxxx
 # (LibPrintf, LibMemSet, LibMemCopy, LibStrCopy, LibResourceLookup) are folded into
 # the lib-address rows by scripts/renaming/fold_kn7000_lib_alias_rows.py first.
 #

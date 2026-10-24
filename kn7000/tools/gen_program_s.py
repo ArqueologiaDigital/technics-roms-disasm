@@ -467,7 +467,7 @@ LIB_CONVERT = {
     # a library function's range when something that is not its code
     # follows it before the next named function (the bytes after its end
     # come out as an unnamed function): (CPU start, CPU end-exclusive)
-    "sprintf_entry":         (0x4C001A48, 0x4C001A65),
+    "sprintf_entry":      (0x4C001A48, 0x4C001A65),
     "LibF64Modf":         (0x4C000FA7, 0x4C00104C),
     "LibF64ToI16":        (0x4C001624, 0x4C00163D),
     "LibU16ToF64":        (0x4C0016AC, 0x4C0016B0),
@@ -478,7 +478,7 @@ LIB_CONVERT = {
     "TgLevelResolve":     (0x4C02FBDE, 0x4C02FCBA),
     "TgKeyOffFilterRelease": (0x4C03248B, 0x4C032747),
     "TgNoteOnTableTone":  (0x4C03600D, 0x4C036187),
-    "dly_tsk_entry":       (0x4C03DD74, 0x4C03DD98),
+    "dly_tsk_entry":      (0x4C03DD74, 0x4C03DD98),
     "TgDrumAmpReleaseCalc": (0x4C00AD43, 0x4C00AE3B),
     "TgVoiceListCollectGlobal": (0x4C010124, 0x4C01013D),
     "TgElemKeyOffRelease": (0x4C013F0A, 0x4C014040),

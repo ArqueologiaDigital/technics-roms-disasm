@@ -14,6 +14,12 @@ are the natural next questions; none of them is stated as fact in the
 annotations. Rendered from the workflow's reports by
 `research-scratch/sessions/2026-10-17_75c61257/review_notes.py`.
 
+Names as of 2026-10-24: this log keeps the names it was written with. `LibMemCopy`
+(a row at the flash copy 0x487BC00A of library 0x4C003039) is now `memcpy_entry`
+at 0x4C003039, the register-save entry of `memcpy` (0x4C003037); the flash-copy row
+was dropped. `LibStrncmp` (0x4C00203C) is now `strncmp_entry`. Evidence:
+notes/function-naming-2026-10-24/renames.tsv.
+
 ## bitmapfast_icons
 
 Functions: DrawBitmapFast, DrawBitmapFast_QueuedExec, DrawBitmapFast_Impl, DrawIcons, DrawIcons_QueuedExec, DrawIcons_Impl.
@@ -30,9 +36,9 @@ Corrections (4; the reviewer counted 124 claims it checked and found right):
   - now: point: a fixed 24 x 24 pixels of 4-bpp data, whatever size the descriptor gives
     (see DrawIcons_Impl). Index 0 draws nothing. ... record {+0 DrawIcons_QueuedExec, +4 s16
     x, +6 s16 y, +8 u32 index} instead.
-- **0x48423CEC (DrawBitmapFast_Impl doc)** -- Removed the backticks, which the exemplar's plain style does not use. The call prints as a raw 0x4c003039, so the header now names the region-1 symbol memcpy_entry (0x487BC00A = lib 0x4C003039) to help the reader find it. Checked that its body copies d0 bytes from a1 to a0 and ends with retf [a2,a3], 8. The paragraph was reflowed to keep its lines under 80 columns.
+- **0x48423CEC (DrawBitmapFast_Impl doc)** -- Removed the backticks, which the exemplar's plain style does not use. The call prints as a raw 0x4c003039, so the header now names the region-1 symbol LibMemCopy (0x487BC00A = lib 0x4C003039) to help the reader find it. Checked that its body copies d0 bytes from a1 to a0 and ends with retf [a2,a3], 8. The paragraph was reflowed to keep its lines under 80 columns.
   - was: with one memcpy of `width` bytes (library 0x4C003039), so there is no 0xF7 ...
-  - now: with one memcpy of width bytes (lib 0x4C003039, i.e. memcpy_entry), so there is no
+  - now: with one memcpy of width bytes (lib 0x4C003039, i.e. LibMemCopy), so there is no
     0xF7 ... (paragraph reflowed)
 - **0x48423E92** -- The inner setlb loop writes through a0, not a2. Without a comment the reader has to work out that a0 is the per-row copy of the destination pointer.
   - was: (no comment)
@@ -153,7 +159,7 @@ Left open:
   suggest 0x00RRGGBB, but that was not proven.
 - Whether the extra pixel at x + width (the SPFast4 bug) is visible in practice depends on
   the rect widths that func_48496B28_entry's callers pass. Not checked.
-- With s16 widths, a negative width makes memcpy_entry copy nothing in SPFast: dest+len wraps
+- With s16 widths, a negative width makes LibMemCopy copy nothing in SPFast: dest+len wraps
   below dest and 'bcc' skips the loop. The source stride (w+1)/2*2 is then negative. This
   edge case is not documented; probably no caller does it.
 - Two old doc errors are outside this file and were not edited: kn5000-docs/kn7000-display-
@@ -174,11 +180,11 @@ Corrections (8; the reviewer counted 96 claims it checked and found right):
     reloads. SetPaletteRGB keeps the word as given (what GetPaletteRGB returns) but dims
     indices 0x20..0xDF to 77/100 per component in its RGB565 copy at 0x50122AAC. Ends by
     marking ...
-- **0x4842480C (doc, DrawBitmapSPFast256_Impl)** -- The same missing 77/100 dimming. The off-screen return at 0x48424823 comes before the palette loop, so no palette load or dirty rect happens, and the doc now says so as the SPFast16 one does. The listing prints the raw 'call 0x4c003039', while memcpy_entry is named only at the alias 0x487BC00A, so the doc names the address it calls.
-  - was: A top-left corner off the screen draws nothing. ... with memcpy_entry: ...
+- **0x4842480C (doc, DrawBitmapSPFast256_Impl)** -- The same missing 77/100 dimming. The off-screen return at 0x48424823 comes before the palette loop, so no palette load or dirty rect happens, and the doc now says so as the SPFast16 one does. The listing prints the raw 'call 0x4c003039', while LibMemCopy is named only at the alias 0x487BC00A, so the doc names the address it calls.
+  - was: A top-left corner off the screen draws nothing. ... with LibMemCopy: ...
   - now: ... draws nothing (no palette load, no dirty rect). ... (SetPaletteRGB dims indices
     0x20..0xDF to 77/100 per component in its RGB565 copy at 0x50122AAC.) ... with
-    memcpy_entry (memcpy, called at its library address 0x4C003039): ...
+    LibMemCopy (memcpy, called at its library address 0x4C003039): ...
 - **0x484245BC (doc, DrawBitmapSPFast16)** -- VwUserBitmapProc (0x484186C8..0x484186D1) tests only for 1 and 8 and sends everything else to SPFast16. Nothing tests for 4, so 'bit depth 4' was asserted without evidence and is redundant.
   - was: Callers: VwUserBitmapProc (bit depth 4, or any depth other than 1 and 8; ...
   - now: Callers: VwUserBitmapProc (any bit depth but 1 and 8; ...
@@ -195,8 +201,8 @@ Corrections (8; the reviewer counted 96 claims it checked and found right):
   - was: ... passed on in the same stack slot
   - now: palette: the Impl's 5th argument
 - **0x48424894 (eol)** -- Clarity only: says the call copies one row (a0 = dest a2, a1 = src a3, d0 = (0x1c,sp) = width).
-  - was: memcpy_entry(dest, src, width)
-  - now: memcpy_entry(dest, src, width): copy one row
+  - was: LibMemCopy(dest, src, width)
+  - now: LibMemCopy(dest, src, width): copy one row
 
 Left open:
 
@@ -246,9 +252,9 @@ Corrections (7; the reviewer counted 170 claims it checked and found right):
 
 Left open:
 
-- GetBitmapInfo's 'BM' test uses strncmp_entry, which according to its sym comment stops at a
+- GetBitmapInfo's 'BM' test uses LibStrncmp, which according to its sym comment stops at a
   NUL in s1. A file whose first byte is 0, or that starts 'B',0, may therefore pass the
-  signature check. I did not check the exact order of compare and NUL-test in strncmp_entry,
+  signature check. I did not check the exact order of compare and NUL-test in LibStrncmp,
   and this belongs in GetBitmapInfo's own annotation, so I left it out of this file.
 - GetBitmapInfo compares exth(bfOffBits-54) against 0x400 as unsigned. A bfOffBits below 54
   therefore clamps to a 1 KB copy, which reads the pixel data as palette. This is an edge
