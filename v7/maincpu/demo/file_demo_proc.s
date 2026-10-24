@@ -3299,6 +3299,13 @@ SingleLoad_LoadPanelMemBank_Epilogue2:
 	pop	xiz
 	lda	xsp, (xsp+36)
 	ret
+; SingleLoad_LoadSong: Single-loads the song of the selected .SQT file into song slot WA: checks the file signature
+;   and header (FileIO_ReadHeaderAt4, else 0xFF96), checks the free song memory (SeqLoad_ProcessDataBlock vs
+;   UpdateFileEntry, else 0xFF97), reads the 2048-byte song header into SEQ_SONG_SLOTS + 2048 * WA and the event data
+;   to 0xB0000 + the offset SingleLoad_PrepareSongSlot returns, finishes with
+;   SingleLoad_FinishSongLoad and SetSongSlotValue(WA, 0); returns HL = result (0xFF98 no file, 0xFF9A wrong
+;   signature). Basis: callers + body -- SingleLoadDst_SequencerListProc runs it for parameter 10 with WA = the
+;   destination song number 0x8968.
 SingleLoad_LoadSong:
 	lda	xsp, (xsp-30)
 	push	xiz

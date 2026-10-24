@@ -594,6 +594,8 @@ UpdSeSel_DetailedUpdate_End:
 	lda xsp, (xsp + 32)
 	ret
 
+; SeEasy_DrawPage: EASY EDIT page draw (TT_SEEASY): reads the page object data, stores the page parameters, draws the
+;   static screen (SeTitle_DrawStaticScreen 0x21) and registers the elements. Basis: callers + body.
 SeEasy_DrawPage:
 	lda xsp, (xsp - 0x26)
 	push QIZ
@@ -2019,6 +2021,8 @@ SeMenu_AltUpdate_End:
 	lda xsp, (xsp + 38)
 	ret
 
+; SeTonTon2_DrawPage: TONE SELECT page 2 draw (TT_SETONTON2): reads the page object data and registers its display
+;   elements (SeMenu_RegisterElement_Type1 for the four parts). Basis: callers + body.
 SeTonTon2_DrawPage:
 	lda xsp, (xsp - 0x0a)
 	push QIZ
@@ -2479,6 +2483,8 @@ SeMenu_CopyWriteUpdate_End:
 	inc 2, xsp
 	ret
 
+; SeWrtMem_DrawPage: WRITE TO MEMORY page draw (TT_SEWRTMEM): handles the pending write notification, then registers
+;   the page elements and fills the name buffer with the selected entry's name. Basis: callers + body.
 SeWrtMem_DrawPage:
 	lda	xsp, (xsp-24)
 	push qiz
@@ -8063,6 +8069,10 @@ SeMenu_DisplayPartValue_Data_Code_Join2:
 	pop	xwa
 	pop	xiz
 	ret
+; SeGfx_DrawLine: Draws a solid line from (x1,y1) to (x2,y2), the four words the caller pushed (x1 pushed last), by
+;   filling the op-00 record buffer at 0x06CA and calling SeGfx_StaticOp00_FromBuf; preserves every register, caller
+;   pops the 8 bytes. Basis: callers + body -- the graph drawers (SeMenu_DrawKeyScaleGraph, SeMenu_DrawFilterGraph,
+;   SeMenu_DrawBandPassCurve) push four coordinates and call it for axes and curve segments.
 SeGfx_DrawLine:
 	push xiz
 	ld	xiz, xsp
@@ -9153,6 +9163,8 @@ SeMenu_PresetBrowser_Select:
 SePitLfo1_DrawStaticScreen:
 	call SeMenu_PresetBrowser_Navigate
 	call SeMenu_PresetBrowser_Select
+; SeLfo1_DrawStaticScreen: Static screen shared by the three LFO1 titles: frame, SOLO button, LFO part switches and
+;   the selected-part line, and the bound fields. Basis: callers + body.
 SeLfo1_DrawStaticScreen:
 	ld XIY,SeLfo1_Records
 	ld XIX,SeLfo1_DrawStaticScreen_Records2
@@ -9473,6 +9485,7 @@ SeAmpEnv2_DrawStaticScreen:
 ;  SeTitle_StaticScreenTable, indexed by title id - 0x20): draws the page's fixed captions and frames. Basis: the
 ;  table index and RegTitle (scripts/renaming/name_se_title_methods.py).
 SeFilLpq1_DrawStaticScreen:
+	; --- Main: init, 2x XIY/XIX setup, language branch, 3 calls (80 bytes) ---
 	call	SeFil_DrawPageHeader
 	ld	xiy, SeMenu_Utility_CompareBlock_Data_2
 	ld	xix, SeFilHpq1_Records
@@ -9654,6 +9667,9 @@ SeFilEnv1_DrawStaticScreen:
 	ld	xiy, SeFilEnv1_Records
 	ld	xix, SeScreenData_0x1C7A
 	call	SeGfx_DrawStaticList
+; SeEnv1_DrawEnvelopeLayout: Shared ENVELOPE page-1 layout of the PITCH ENV1 and FILTER ENV1 screens: 'PAGE1/2',
+;   'ENVELOPE', 'KEYOFF', the ATK / PEAK / DECAY1 ... captions, SOLO button, part selector and the bound values.
+;   Basis: callers + body.
 SeEnv1_DrawEnvelopeLayout:
 	ld	xiy, SeEnv1_DrawEnvelopeLayout_Records4
 	ld	xix, SeFilEnv1_Records
@@ -9994,6 +10010,12 @@ SePitAmpFilLfo1_DrawField_Join2:
 	call	SeGfx_DrawIndexedBoundRecord
 SePitAmpFilLfo1_DrawField_Return:
 	ret
+; SeMenu_DrawLfoSelectedPartLine: LFO pages: draws the op-1B box (221,68)-(237,203) and then the connector from the
+;   selected part's row -- page param 0, rows y 68/100/130/162 for parts 1..4 (0 as 1) -- right to x = 237 and down to
+;   y = 203 (SeMenu_DrawLfoSelectedPartLine_Records2[param 0]). Basis: callers + body -- the LFO page body SeLfo1_DrawStaticScreen
+;   and the field-0 redraw of SePitAmpFilLfo1_DrawField call it; page param 0 is the selected part (SeMenu_SelectPartAndRedraw
+;   stores it in edit-buffer byte 0), and the part rows are at y 62-75, 93-106, 124-137, 156-169
+;   (SeMenu_DrawLfoPartSwitches_Records2..0x2996).
 SeMenu_DrawLfoSelectedPartLine:
 	ld (COLORBLIT_MODE:24), 0x00
 	ld XIY,SeMenu_DrawLfoSelectedPartLine_Records
@@ -10369,6 +10391,10 @@ SeWrtSnd_DrawField_Join11:
 	call	SeMenu_NameEditor_HighlightChar
 SeWrtSnd_DrawField_Return4:
 	ret
+; SeMenu_NameEditor_HighlightChar: Highlights the selected cell of the SOUND NAMING character grid: v = edit byte
+;   0x661, column v % 16 (x from SeMenu_NameEditor_HighlightChar_Records: 32..272), row v / 16 (y from SeMenu_NameEditor_HighlightChar_Records2: 103..178), a
+;   9x15 op-05 highlight fill (SeGfx_StaticOp05_FromBuf). Basis: callers + body -- SeWrtSnd_DrawStaticScreen/14 draw the
+;   naming page (name field of 16/13/2 chars, cursor box) and call it last.
 SeMenu_NameEditor_HighlightChar:
 	xor	wa, wa
 	ldb_d8	a, (0x661)
@@ -15569,6 +15595,7 @@ SeCtr2_DrawField_SetupPath_Records:
 	sd_quad	0x05, 77, 74, 298, 89
 	sd_quad	0x05, 77, 110, 298, 125
 	sd_quad	0x05, 77, 141, 298, 156
+	; head of the next record, split off at se_setup_sel_rects's proven end
 ; box table: {x1, y1, x2, y2} u16 per entry, indexed by a bound op 03/04/08
 ; record's value (pointer field +7; value at most 8 by the record's mask; the table holds 7 cells; values >= 7 would read past it)
 ; evidence: bound op03 record at SeCtr2_CursorBox
@@ -17611,6 +17638,8 @@ EasyCmp_GridCheck_EventEnc:
 	ld	xwa, (xbc+wa)
 	push XWA
 	jr t, EasyCmp_GridCheck_EventCase1
+; EasyCmpGridCheck_DrawVariationCell: Grid column 2 (variation): prints the row's byte at 0x3716 with %3d, or OFF when
+;   it is 0.
 EasyCmpGridCheck_DrawVariationCell:
 	lda	xbc, (14102:16)
 	extz	xwa

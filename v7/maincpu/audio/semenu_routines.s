@@ -416,6 +416,12 @@ SeMenu_SendPartToneIndex_Join:
 	popw	iz
 	lda	xsp, (xsp+20)
 	ret
+; SeMenu_SendToneIndex: Sends a 16-bit TONE index to the tone generator: builds the 6-byte sound-editor command {0x88,
+;   PART_SELECT, id, DE >> 8, DE & 0xFF, (C - 1) * 16 + (A - 1)} -- id 10, or 22 when SeMenu_LoadObjEntries returns
+;   non-zero -- and sends it with SeMenu_FlushDisplayObj (sendCOMM). A is the part number (SeMenu_ValidatePartNumber),
+;   C page param 0 (the slot SeMenu_GetToneIndex reads). Basis: callers + body -- SeTonHyb1_OnColumn2 and
+;   SeTonHyb1_OnColumn3 call it right after stepping the tone index, then redraw the field
+;   (SeMenu_InitDisplayField_Alt) and rebind the dial.
 SeMenu_SendToneIndex:
 	lda	xsp, (xsp-22)
 	pushw	iz
@@ -1225,6 +1231,11 @@ SeMenu_BitShiftMask_End_Loop3:
 	cp	de, bc
 	jr	c, SeMenu_BitShiftMask_End_Loop3
 	ret
+; SeMenu_StepParamField: Steps the bit field of edit record XWA (+0 old byte, +6 mask, +7 shift, +8 max, +9 min, +10
+;   signed step) by the step, clamped to [min,max], and writes the merged byte to +3; L = 1 if the field changed, 0 if
+;   not or if the record is unusable (mask 0, shift > 7, step 0). min < 0 takes the signed-compare copy. Basis:
+;   callers + body -- the OnColumn handlers fill +6..+10 (SeMenu_SwitchToValueStep writes +10) and test L;
+;   SeMenu_StepParamFieldAndSend wraps it and sends the byte at +3.
 SeMenu_StepParamField:
 	cp (xwa+6), 0
 	jr	z, SeMenu_StepParamField_Skip
@@ -1244,6 +1255,12 @@ SeMenu_StepParamField_Skip3:
 	calr	SeMenu_StepParamFieldSigned
 SeMenu_StepParamField_Return:
 	ret
+; SeMenu_StepParamFieldUnsigned: SeMenu_StepParamField for an edit record whose min (+9) is >= 0: extracts the field
+;   ((+0 >> shift +7) & mask +6), adds the signed step (+10) clamped to [min, max] with unsigned compares, merges it
+;   back into the original byte and writes it to +3; L = 1 if the value moved, 0 if it was already at the limit.
+;   Basis: callers + body -- SeMenu_StepParamField calls it when (+9) >= 0 and the signed-compare copy
+;   SeMenu_StepParamFieldSigned otherwise; its header describes the step and says 'min < 0 takes
+;   the signed-compare copy'.
 SeMenu_StepParamFieldUnsigned:
 	lda	xsp, (xsp-16)
 	push	xiz
@@ -1324,6 +1341,10 @@ SeMenu_StepParamFieldUnsigned_Skip3:
 SeMenu_StepParamFieldUnsigned_Join2:
 	ld	(xiz), a
 	jr	SeMenu_StepParamFieldUnsigned_Join
+; SeMenu_StepParamFieldSigned: SeMenu_StepParamField for an edit record whose min (+9) is negative: the same field
+;   step as SeMenu_StepParamFieldUnsigned (extract, add the signed step +10, clamp to [min, max],
+;   merge, write to +3; L = 1 if it moved), but the lower-bound test is a signed compare. Basis: callers + body --
+;   SeMenu_StepParamField calls it when (+9) < 0; its header says 'min < 0 takes the signed-compare copy'.
 SeMenu_StepParamFieldSigned:
 	lda	xsp, (xsp-16)
 	push	xiz
@@ -1407,6 +1428,9 @@ SeMenu_StepParamFieldSigned_Skip6:
 SeMenu_StepParamFieldSigned_Join4:
 	ld	(xiz), a
 	jr	SeMenu_StepParamFieldSigned_Join3
+; SeMenu_ToggleSolo: Toggles the sound-editor SOLO flag (RAM 0x65C), re-sends the per-part level (code 0x17, only the
+;   edited part non-zero while SOLO is on) and redraws the SOLO button. Basis: callers + body -- every page's
+;   OnSideRow1 handler calls it on press (A != 0).
 SeMenu_ToggleSolo:
 	dec	2, xsp
 	lda	xwa, (xsp)
@@ -1620,6 +1644,10 @@ SeMenu_TransferPartValues_EndData_Skip28:
 SeMenu_TransferPartValues_EndData_Skip29:
 	ld	(xwa), c
 	ret
+; SeCtr2_SetSelection: Stores A as the SeCtr2 page's remembered selection (RAM 0x695; the side rows store 1, 2, 5 or
+;   6), which the page draw reads back (clamped to 1..6, default 1) into page param 0 and highlights. Basis: callers +
+;   body -- SeCtr2_OnSideRow2 (choices 2/1) and SeCtr2_OnSideRow3 (6/5) store their choice here and send event 59;
+;   only UpdSeSel_DetailedUpdate_SetDisplayState_Helper reads 0x695.
 SeCtr2_SetSelection:
 	ld	(1685:16), a
 	ret
@@ -1878,6 +1906,11 @@ SeMenu_CyclePartLfoState_Join6:
 SeMenu_CyclePartLfoState_Epilogue4:
 	lda	xsp, (xsp+14)
 	ret
+; SeCtr2_StepPartField: For part A (1..4) of the AFTER TOUCH controller page (SeCtr2): steps the part's 2-bit field
+;   (bits 2A-2..2A-1) of page param 12 -- C = 0: 0 -> 1 -> 3 (stays at 3); C != 0: 3 -> 1 -> 0 (stays at 0) -- then
+;   redraws the column (SeMenu_RegisterElement_Extended), stores param 12 and posts it (SeTitle_DrawField 59).
+;   Parts outside 1..4 do nothing. Basis: callers + body -- SeCtr2_OnPartColumn (columns 5-8 '1ST 2ND 3RD 4TH') is its
+;   only caller and its header already describes the step.
 SeCtr2_StepPartField:
 	lda	xsp, (xsp-12)
 	push	qiz
@@ -2374,6 +2407,11 @@ SeMenu_SetNameBufferChar:
 	lda	xde, (0x20bf3:24)
 	ld	(xde+wa), c
 	ret
+; SeMenu_GetNameBufferChar: Copies character A (0..15) of the 16-byte name buffer at 0x20BF3 to (XBC); A > 15 does
+;   nothing. Basis: callers + body -- only the WRITE SOUND name-entry handlers call it: the side-row-1 handler reads
+;   all 16 characters to send them, the cursor-left/right handlers read the character at the new cursor (page param 0)
+;   into param 1. Its twin SeMenu_SetNameBufferChar writes the buffer, and
+;   SeWrtMem_DrawPage fills it with an entry's name (SeMenu_SetupPartDisplay mode 1).
 SeMenu_GetNameBufferChar:
 	cp	a, 15
 	ret	ugt
@@ -3668,6 +3706,10 @@ SeMenu_ApplyPartEdit_AltStore_Join22:
 	calr	SeMenu_BindDialToColumn
 	inc	6, xsp
 	ret
+; SeCtr2_OnPartColumn: SeCtr2 page column 5..8 handler for part A (1..4): steps the part's 2-bit field in page param
+;   12 through 0, 1, 3 (up for a first-bank switch, down otherwise) via SeCtr2_StepPartField, then posts dial
+;   events with SeMenu_BindDialToColumn(A+4). Basis: callers + body -- only SeCtr2_OnColumn5..8 call it, passing
+;   part 1..4 in WA and the bank byte in C.
 SeCtr2_OnPartColumn:
 	dec	2, xsp
 	ld	(xsp), a
@@ -3987,6 +4029,12 @@ SeMenu_DrawAmpEnvGraph_Join10:
 	pop	xiz
 	lda	xsp, (xsp+22)
 	ret
+; SeMenu_DrawClippedEnvSegment: Draws one envelope-graph segment from (WA, BC) to (DE, y2 = the word pushed before the
+;   call, removed by retd 2) through SeMenu_DrawEnvGraphLine (a line clamped to y 59..146). A segment starting
+;   left of x = 213 is cut at x = 213, one starting at or right of 213 is cut at x = 258; HL returns the interpolated
+;   y at the cut, or 0 if the segment fits. Basis: callers + body -- SeMenu_DrawAmpEnvGraph (and the second envelope
+;   graph in SeMenu_DrawPitFilEnvGraph) draw their key-on segments from x = 51 with it, stop at the first non-zero
+;   HL, and draw the release part from x = 214.
 SeMenu_DrawClippedEnvSegment:
 	pushw	iz
 	ld	iz, 0:i3
@@ -4039,6 +4087,13 @@ SeMenu_DrawClippedEnvSegment_Skip16:
 	ld	hl, iz
 	popw	iz
 	retd	0x0002
+; SeMenu_DrawPitFilEnvGraph: Clears the box (51,59)-(256,144) and draws the envelope graph of the pitch / filter
+;   envelope page 1 from the current part's params: five levels (params 2, 4, 6, 8, 10; clamped to -50..+50 and,
+;   except on TT_SEFILENV1, scaled by param 1 in SeMenu_ApplyPartEdit_Helper8) joined by four times (params 3, 5, 7,
+;   9, clamped 0..100) through SeMenu_DrawClippedEnvSegment, release from x 214. Basis: callers + body -- the
+;   TT_SEPITENV1 (0x28) and TT_SEFILENV1 (0x37) page draws call it after SeTitle_DrawStaticScreen, and the
+;   TT_SEFILENV1 column handlers after each SeMenu_StepParamFieldAndSend(0x37, ...); sibling of
+;   SeMenu_DrawAmpEnvGraph.
 SeMenu_DrawPitFilEnvGraph:
 	lda	xsp, (xsp-32)
 	push	xiz
@@ -4506,6 +4561,11 @@ SeMenu_ApplyPartEdit_Helper8:
 	pop XIZ
 	inc 4,XSP
 	ret
+; SeMenu_DrawEnvGraphLine: Draws one envelope-graph line from (WA, BC) to (DE, y2 = the word pushed before the call,
+;   removed by retd 2) with SeGfx_DrawLine. Only when ACTIVE_TITLE is 0x37 (TT_SEFILENV1) are both y first lowered by
+;   sound-editor part param 1 * 43 / 50 and clipped to y 59..146 (a vertical line is clamped, a sloped one cut at the
+;   band edge with interpolated x, one wholly outside not drawn); on every other title the line is drawn as given.
+;   Basis: callers + body -- SeMenu_DrawClippedEnvSegment draws every envelope segment through it.
 SeMenu_DrawEnvGraphLine:
 	lda	xsp, (xsp-10)
 	pushw	iz
@@ -4876,6 +4936,10 @@ SeMenu_DrawKeyScaleGraph_Join4:
 	pop	xiz
 	lda	xsp, (xsp+28)
 	ret
+; SeMenu_StoreAbsoluteValue: Stores the absolute value of the signed byte A at (XBC). Basis: callers + body --
+;   SeMenu_DrawKeyScaleGraph passes the signed key-scale depth (part param 10) and uses its sign separately, and the
+;   other graph routines pass signed differences of adjacent edit bytes (e.g. `ld a, (xbc+1) / sub a, (xbc)`) to get a
+;   length.
 SeMenu_StoreAbsoluteValue:
 	cp a, 0:i3
 	jr ge, SeMenu_StoreAbsoluteValue_Skip
@@ -4883,6 +4947,10 @@ SeMenu_StoreAbsoluteValue:
 SeMenu_StoreAbsoluteValue_Skip:
 	ld (XBC),A
 	ret
+; SeMenu_DrawPartRangeGraph: Redraws part C's range graph on the TONE RANGE pages: clears the part's row, maps edit
+;   bytes E..E+3 to x (A = 0: note on the keyboard picture; A != 0: value*192/127) and draws the three edges of the
+;   range shape. Skips disabled parts. Basis: callers + body -- SeTonRan1 (A=0) and SeTonRan2 (A=1) column handlers
+;   and the page redraw loop.
 SeMenu_DrawPartRangeGraph:
 	lda	xsp, (xsp-28)
 	ld	(xsp+22), e
@@ -5031,6 +5099,9 @@ SeMenu_ApplyPartEdit_Join18:
 SeMenu_ApplyPartEdit_Epilogue7:
 	lda	xsp, (xsp+28)
 	ret
+; SeMenu_SelectPartAndRedraw: Selects part C (1..4, the "1ST".."4TH" side buttons) for editing: no-op if already
+;   selected or (E = 1) the part is disabled; else records it in (0x65D) and edit-buffer byte 0, redraws via screen
+;   code WA and re-sends the part levels. Basis: callers + body -- OnSideRow2..5 pass C = 1..4.
 SeMenu_SelectPartAndRedraw:
 	dec	8, xsp
 	ld	(xsp+2), e
@@ -5068,6 +5139,10 @@ SeMenu_ApplyPartEdit_Entry5_Code_Skip:
 SeMenu_ApplyPartEdit_Entry5_Code_Epilogue:
 	inc	8, xsp
 	ret
+; SeMenu_DrawFilterGraph: Clears and draws the filter response graph of the current part: corner x = 86 + part param 2
+;   (cutoff), peak height from part param 3 (resonance, 0..5); A = 0 low-pass / 1 high-pass shape, C = 0 (Lpq/Hpq
+;   pages) or 1 (L24/H24 pages, doubled slope, lower box). Basis: callers + body -- the four filter pages call it with
+;   (A,C) = (0,0) Lpq1, (1,0) Hpq1, (0,1) L241, (1,1) H241 after editing cutoff/resonance.
 SeMenu_DrawFilterGraph:
 	lda xsp, (xsp - 0x10)
 	push XIZ
@@ -5238,6 +5313,11 @@ SeMenu_ApplyPartEdit_Entry5_Code_Join6:
 	pop	xiz
 	lda	xsp, (xsp+16)
 	ret
+; SeMenu_DrawFilterEqGraph: Clears and redraws the EQUALIZER graph of the -12 dB low/high-pass filter pages: the lower
+;   box (66,117)-(233,172), peak at x = 86 + part param 4 (FREQ, 0..127), height from param 5 bits 0-6 (GAIN, 0..13)
+;   and shape from param 5 bit 7 (RANGE). Basis: callers + body -- SeFilLpq1 switches 5/6/7 (labels RANGE/FREQ/GAIN,
+;   columns 5-7) call it after storing params 5/4/5, and the Lpq1/Hpq1 page redraws call it after
+;   SeMenu_DrawFilterGraph (the -24 dB pages, which have no equalizer box, do not).
 SeMenu_DrawFilterEqGraph:
 	lda	xsp, (xsp-12)
 	push	xiz
@@ -5498,6 +5578,10 @@ SeMenu_ApplyPartEdit_Entry5_Code_Join10:
 	lda	xde, (1698:16)
 	ld	(xde+wa), bc
 	ret
+; SeMenu_GetToneIndex: Copies the 16-bit TONE index of tone slot A (1..4) -- word A-1 of the four-word table at RAM
+;   0x6A2 -- to (XBC). Basis: callers + body -- the TONE column (column 3) handlers of the TONE SELECT pages fetch it,
+;   bound it by the tone count word 0x6AA (SeMenu_GetWordEntryCount) and step it; SeMenu_ApplyFilter
+;   writes the same table.
 SeMenu_GetToneIndex:
 	dec	1, a
 	extz	wa
@@ -5508,11 +5592,18 @@ SeMenu_GetToneIndex:
 	ret
 	ld	(1706:16), wa
 	ret
+; SeMenu_GetWordEntryCount: Copies the sound editor's 16-bit entry count (RAM 0x6AA, bytes +0..+1 of the record
+;   SeMenu_ProcessEffect loads) to (XWA); the word counterpart of SeMenu_GetEntryCount (byte 0x6AC). Basis: callers +
+;   body -- the column-3 handlers of SeTonTon1/SeTonHyb1 use it as the exclusive upper bound of the per-part 16-bit
+;   index they step.
 SeMenu_GetWordEntryCount:
 	ldw	(xwa), (0x6aa)
 	ret
 	ld	(1708:16), a
 	ret
+; SeMenu_GetEntryCount: Copies the sound editor's entry-count byte (RAM 0x6AC) to (XWA). Basis: callers + body --
+;   SeTonTon1/SeTonHyb1 column 2 use it as the upper bound of the selection index they step; SeMenu_ProcessEffect sets
+;   0x6AC from byte +2 (the count) of the record it loads.
 SeMenu_GetEntryCount:
 	ld	(xwa), (0x6ac)
 	ret

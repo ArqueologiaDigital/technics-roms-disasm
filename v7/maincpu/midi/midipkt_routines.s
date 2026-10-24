@@ -788,6 +788,9 @@ MidiPkt_SendBankSelect_Send:
 	call	SeqOut_FlushTimedBuffer
 	call	ArpQueue_SwapBuffers
 	ret
+; SysEx_OnGmSystemOn: Handler of message id 36, the Universal SysEx F0 7E 7F 09 01 (General MIDI System On): outside
+;   the guarded titles sets bit 2 of the byte at 0xFDAD, writes it with AssswbWr (0x91, 3) and re-sends both output
+;   banks. Basis: table + body.
 SysEx_OnGmSystemOn:
 	ld	a, (CURRENT_TITLE:16)
 	cp	a, 108

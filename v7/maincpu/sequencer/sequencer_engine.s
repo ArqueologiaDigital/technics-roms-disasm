@@ -21173,6 +21173,9 @@ AppEvent_InlineHandler_Case2:
 	ld	wa, (xix+wa)
 	lda	xix, (AppEvent_InlineHandler_DecLastMeasure_OnTitleSqnotecng:24)
 	jp	t, (xix+wa)
+; AppEvent_InlineHandler_DecLastMeasure_OnTitleSqnotecng: TT_SQNOTECNG (title 0x9F) case of EVT_DEC_VAL on sequencer-
+;   edit parameter 2: the last-measure word 9746 goes down by one (min 1); the from measure 9744 follows if it is now
+;   larger. Basis: callers + body.
 AppEvent_InlineHandler_DecLastMeasure_OnTitleSqnotecng:
 	lda	xiz, (9744:16)
 	lda	xwa, (9746:16)
@@ -21401,6 +21404,9 @@ AppEvent_InlineHandler_Case15:	; cases 15, 16, 17, 18, 19, 20
 	ld	wa, (xwa)
 	lda	xix, (AppEvent_InlineHandler_DecMcpTrackA:24)
 	jp	t, (xix+wa)
+; AppEvent_InlineHandler_DecMcpTrackA: Case 15 (TT_SQMCP track A, RAM 0xF1E9) of EVT_DEC_VAL's measure-copy inner
+;   switch: down by one to at least 1; stepping down from 17 (all) to 16 sets track B 0xF1EE to 16 too; then the six
+;   MCP fields are redrawn. Basis: callers + body.
 AppEvent_InlineHandler_DecMcpTrackA:
 	ld	a, (61929:16)
 	cp	a, 1:i3
@@ -21494,6 +21500,9 @@ AppEvent_InlineHandler_Case21:	; cases 21, 22, 23, 24, 25, 26
 	ld	wa, (xwa)
 	lda	xix, (AppEvent_InlineHandler_DecMinsTrackA:24)
 	jp	t, (xix+wa)
+; AppEvent_InlineHandler_DecMinsTrackA: Case 21 (TT_SQMINS track A, RAM 0xF1E1) of EVT_DEC_VAL's measure-insert inner
+;   switch: down by one to at least 1; stepping down from 17 (all) to 16 sets track B 0xF1E6 to 16 too; then the six
+;   MINS fields are redrawn. Basis: callers + body.
 AppEvent_InlineHandler_DecMinsTrackA:
 	ld	a, (61921:16)
 	cp	a, 1:i3
@@ -25865,6 +25874,12 @@ SeqLoad_ProcessDataBlock_Skip2:
 	pop qiz
 	inc	6, xsp
 	ret
+; SingleLoad_PrepareSongSlot: Before single-loading a song into slot A: saves word 0xFFEC to 0xF19E, makes A the
+;   current song (stores the old current song back to its slot, copies slot A to 0xF180, 0xFFE3 := A), re-initialises
+;   it (SeqVoice_InitEntryForCurrentBank), stores it back and compacts the event memory (SeqStep_FindAndCompact,
+;   0xF1CE := used size / 16); returns XHL = the byte offset of the first free event block. Basis: callers + body --
+;   SingleLoad_LoadSong reads the file's event data to 0xB0000 + the returned offset, and
+;   SingleLoad_FinishSongLoad restores 0xFFEC from 0xF19E when the load is finished.
 SingleLoad_PrepareSongSlot:
 	dec	2, xsp
 	pushw	iz
@@ -25890,6 +25905,12 @@ SingleLoad_PrepareSongSlot:
 	popw	iz
 	inc	2, xsp
 	ret
+; SingleLoad_FinishSongLoad: After a song file's header and events were read into slot A: on a read error (BC < 0) re-
+;   initialises the song again; otherwise makes it current, relocates the loaded block numbers by the free-block base
+;   ((0xF22F) - 1: the 16 part-chain head/tail words and every block's link words), recomputes positions, stores it
+;   back into its slot, re-inits pans and voice data, restarts the accompaniment and restores word 0xFFEC from 0xF19E.
+;   Basis: callers + body -- SingleLoad_LoadSong calls it with BC = the read result after
+;   SingleLoad_PrepareSongSlot prepared the slot.
 SingleLoad_FinishSongLoad:
 	dec	8, xsp
 	push	xiz

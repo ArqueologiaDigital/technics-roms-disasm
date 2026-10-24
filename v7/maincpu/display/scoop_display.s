@@ -4359,6 +4359,12 @@ VoiceState_DataBlock2_Helper_Skip3:
 	ldb_d8	a, (0x0e46)
 	stb_d8	(0x0eee), a
 	ret
+; SqStep_DeleteEventAtCursor: Removes the event at the song-data cursor: measures it by stepping over it
+;   (VoiceSlot_DispatchRet; the step leaves its byte count in 0x0DCC) with the cursor saved and restored in snapshot
+;   slot 0, then deletes that many bytes there (VoiceSlot_RetZ(W): copies the rest of the track down by W,
+;   Scoop_EventHandler_SpecialMode -> SeqData_ChainCopyBytes). Basis: callers + body -- PeriphReg_StoreAndUpdate calls
+;   it when the event at the cursor has the status being entered (0x0D8F == 0x0DD1) and then writes the new record
+;   from 0x0D8F (SystemInit_StepHandler_0_Helper2), i.e. replace; ten other step-edit sites call it before re-writing.
 SqStep_DeleteEventAtCursor:
 	xor A,A
 	call VoiceSlot_SaveState
@@ -4406,6 +4412,10 @@ UIDisp_StepMeasureForward:
 	ld (0x0d55:16), 0xff
 UIDisp_StepMeasureForward_Return:
 	ret
+; Display_UpdateRegions0To4: Updates display regions 0-4 in the order status bar (0), title bar (1), side panel (4),
+;   main content (3), selection highlight (2) -- each Display_UpdateRegionN redraws now or marks itself dirty. Basis:
+;   callers + body -- PortConfig_Handler_1 (entries 1 and 2 of PortConfig_Select_Table, the note-track display modes)
+;   calls it at the end of its set-up; the body is the five calls.
 Display_UpdateRegions0To4:
 	call Display_UpdateRegion0
 	call Display_UpdateRegion1
@@ -4413,6 +4423,12 @@ Display_UpdateRegions0To4:
 	call Display_UpdateRegion3
 	call Display_UpdateRegion2
 	ret
+; VoiceSlot_SkipWrapMarkers: Moves the song-data cursor over C 0x81 beat (wrap) markers, one event at a time: backward
+;   (VoiceSlot_StepCursorBack) when 0x0DCF is non-zero, forward (VoiceSlot_DispatchRet) when it is 0; stops early
+;   with W = 0 on an end marker (0x82/0x84) and returns W = 255 when a step fails at the track boundary, else W = 0
+;   after C markers. Basis: callers + body -- VoiceSlot_TableSetup calls it with 0x0DCF = 1 and C from
+;   SqStep_GetBeatInGridRow to back up to the start of the displayed grid row, then with 0x0DCF = 0 and C = the row's
+;   beat count (0x0DE7) to find the row's end.
 VoiceSlot_SkipWrapMarkers:
 	cp c, 0:i3
 	jrl z, VoiceSlot_SkipWrapMarkers_Skip30
@@ -4757,6 +4773,13 @@ TempoRingBuf_OnNoteEvent_Skip20:
 	res	2, (0x0d54:16)
 TempoRingBuf_OnNoteEvent_Return14:
 	ret
+; TempoRingBuf_ReadNoteIntoHeldList: Reads a note event from TempoRingBuf (status -> 0x0DE6, one byte skipped, note ->
+;   0x3391, velocity -> 0x3392, one more byte). A key-on (velocity != 0) clears 0x0DD3 bit 0 and, while fewer than 8
+;   keys are held (0x0DD4), stores the note at 0x0DD6[count] and the velocity in the bank-register list (XIY bank 56,
+;   +8), increments the count and raises the maximum 0x0DD5. A key-off decrements the count and, when it reaches 0,
+;   sets 0x0D54 bit 1 (all keys released) and 0x0DD3 bit 0. Basis: callers + body -- TempoRingBuf_OnNoteEvent calls it
+;   on a note track and, when 0x0D54 bit 1 comes back set, writes one record per collected note (0x0DD5 of them) from
+;   0x0DD6; its header describes this step.
 TempoRingBuf_ReadNoteIntoHeldList:
 	call	TempoRingBuf_ReadByte
 	ld	wa, hl
@@ -4810,6 +4833,14 @@ TempoRingBuf_ReadNoteIntoHeldList_Join3:
 	or	(0x0dd3:16), 1
 TempoRingBuf_ReadNoteIntoHeldList_Return4:
 	ret
+; SqStep_SeekForwardByStep: Moves the step-record position forward by one step through existing track data: the target
+;   is the current clock plus the step length (SqStep_ComputeStepTargetClock: target clock 0x0DCE, whole units
+;   0x0DCD); it calls the forward cursor step Timer_ParamLoadAndCompare until the unit counter 0x0D5A reaches 0x0D5A +
+;   0x0DCD (stopping on GLOBAL_ERROR_CODE 15), then until the clock 0x0D57 reaches the target clock, and stores it in
+;   0x0D57 (on a 96 wrap it backs the unit counter up one and refreshes the position). Basis: callers + body --
+;   ToneParam_ModeGuardEntry and TempoRingBuf_OnNoteEvent run it on the branch where they do not use
+;   SqStep_AdvanceClockByStep + SqStep_WriteClockWrapMarkers, after SqStep_ComputeStepAndGateTime;
+;   Timer_ParamLoadAndCompare_Helper's own loop sets 0x0D57 = 0 and increments 0x0D5A at clock 96.
 SqStep_SeekForwardByStep:
 	call	SqStep_ComputeStepTargetClock
 ; SqStep_SeekForwardByDistance: Second entry of SqStep_SeekForwardByStep that skips its step-length computation: steps
@@ -4867,10 +4898,19 @@ DisplayMode_Handler_3_Skip8:
 	call	PerfMode_DecNoteNumber
 PerfMode_EventTable_0_Target1_Return:
 	ret
+; PerfMode_IncNoteNumber: Raises by 1 the note number (byte +2) of the note-on event at the song-data cursor: sets the
+;   step (0x0DF2) = +1 and runs PerfMode_StepNoteNumber, which on a note track adds it (a result above
+;   127 keeps the old note), stores it to 0x367C and shows note name and velocity. Basis: callers + body --
+;   PerfMode_EventTable_0_Target1 (entry 1 of the PerfMode_EventTable_0 switch) calls it when W bit 7 is clear and its
+;   twin PerfMode_DecNoteNumber when set; entry 2 is the same pair for the velocity (PerfMode_IncNoteVelocity).
 PerfMode_IncNoteNumber:
 	ld	(3570:16), 1
 	call	PerfMode_StepNoteNumber
 	ret
+; PerfMode_DecNoteNumber: Lowers by 1 the note number (byte +2) of the note-on event at the song-data cursor: sets the
+;   step (0x0DF2) = -1 (0xFF) and runs PerfMode_StepNoteNumber (a result below 0 keeps the old note),
+;   which stores the note to 0x367C and shows note name and velocity. Basis: callers + body --
+;   PerfMode_EventTable_0_Target1 calls it when W bit 7 is set; twin of PerfMode_IncNoteNumber.
 PerfMode_DecNoteNumber:
 	ld	(3570:16), 255
 	call	PerfMode_StepNoteNumber
@@ -5106,6 +5146,13 @@ PerfMode_EventTable_0_Target2_Skip3:
 	call	PerfMode_DecNoteVelocity
 PerfMode_EventTable_0_Target2_Return:
 	ret
+; PerfMode_IncNoteVelocity: Raises by 1 the velocity (byte +3) of the note-on event at the song-data cursor: sets step
+;   (3570) = +1 and field (3571) = 3, and only on a note track ((0x0D65) = 1) when the cursor's event is 0x9n on the
+;   current channel (3415) it lets PerfMode_StepCursorEventByte add the step (a result above 127 keeps the
+;   old value) and store it at 0x367B, then shows note name and velocity (Disp_ShowNoteNameAndVelocity) and redraws
+;   region 3. Basis: callers + body -- PerfMode_EventTable_0_Target2 (entry 2 of the PerfMode_EventTable_0 switch
+;   table) calls it when W bit 7 is clear and its twin PerfMode_DecNoteVelocity (step -1) when set; 0x367B
+;   is the value Disp_ShowNoteNameAndVelocity prints after 'V'.
 PerfMode_IncNoteVelocity:
 	ld	(0x0df2:16), 1
 	ld	(0x0df3:16), 3
@@ -5128,6 +5175,12 @@ PerfMode_IncNoteVelocity:
 	call	Display_UpdateRegion3
 PerfMode_IncNoteVelocity_Return10:
 	ret
+; PerfMode_DecNoteVelocity: Lowers by 1 the velocity (byte +3) of the note-on event at the song-data cursor: step
+;   (0x0DF2) = -1, field (0x0DF3) = 3, and only on a note track ((0x0D65) = 1) when the cursor's event is 0x9n at the
+;   current position it lets PerfMode_StepCursorEventByte subtract (a result below 0 keeps the old value) and store it
+;   at 0x367B, then shows note name and velocity and redraws region 3. Basis: callers + body --
+;   PerfMode_EventTable_0_Target2 calls it when W bit 7 is set and PerfMode_IncNoteVelocity (the same body with step
+;   +1) when clear.
 PerfMode_DecNoteVelocity:
 	ld	(0x0df2:16), 255
 	ld	(0x0df3:16), 3
@@ -5150,6 +5203,12 @@ PerfMode_DecNoteVelocity:
 	call	Display_UpdateRegion3
 PerfMode_DecNoteVelocity_Return11:
 	ret
+; PerfMode_StepCursorEventByte: Adds the step (0x0DF2, +1 or -1) to byte (0x0DF3) of the event at the song-data
+;   cursor, keeping 0..127 (a result with bit 7 set keeps the old value), writes it back (VoiceSlot_WriteCurrentParam)
+;   and copies it to the display variable that the pointer (0x110E) names; does nothing when
+;   VoiceSlot_ReadParamsWithSaveRestore_Helper3 gives W = 0. Basis: callers + body -- PerfMode_IncNoteVelocity /
+;   PerfMode_DecNoteVelocity call it with byte 3 and 0x367B (the velocity), PerfMode_ParamHandler_3_Helper / _Helper2
+;   with byte 2 and 0x3685 on 0xDn events.
 PerfMode_StepCursorEventByte:
 	call	VoiceSlot_ReadParamsWithSaveRestore_Helper3
 	cp	w, 0:i3
@@ -5390,6 +5449,11 @@ VoiceSlot_TableSetup_Skip3:
 .Lc_ef910a:
 VoiceSlot_TableSetup_Return:
 	ret
+; SqStep_GetBeatInGridRow: Returns BC = the current beat's position within its grid row plus 1: the step grid shows a
+;   measure in rows of at most 4 beats, so for a measure longer than 4 beats ((0x0D5D) > 4) beats 4 and up start a
+;   second row and lose 4; B = 0, C = beat (0x0D5C) [- 4] + 1. Basis: callers + body -- VoiceSlot_TableSetup passes it
+;   as the number of 0x81 markers VoiceSlot_SkipWrapMarkers walks back to reach the row start; the same 4-beat split
+;   sets the row beat count and the 1..32 step index.
 SqStep_GetBeatInGridRow:
 	ld c, (0x0d5c:16)
 	ld a, (0x0d5d:16)
@@ -6234,6 +6298,8 @@ VoiceCtrl_ParamSetupBytecode_Tbl:
 	; index bounded to 0..22 (`cp a, 22` / `jrl ugt` skips larger values)
 VoiceCtrl_ParamSetupBytecode_Tbl2:	.byte	0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
 	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff
+	; Byte data, 20 B.  Read by VoiceCtrl_ParamSetupBytecode: `ld xde, VoiceCtrl_ParamSetupBytecode_Tbl3`
+	; reader VoiceCtrl_ParamSetupBytecode: `ld xde, VoiceCtrl_ParamSetupBytecode_Tbl3` then `ld l, (xde+hl)`
 VoiceCtrl_ParamSetupBytecode_Tbl3:	.byte	0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0xff, 0xff, 0xff
 	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
 ; SqStep_ShowRhythmVariationEvent: If the event record at 0x0D8F is the rhythm part's (tag 0x48) offset-7 parameter,
@@ -6273,6 +6339,13 @@ SqStep_ShowRhythmVariationEvent_Epilogue2:
 	pop	xhl
 	pop	xwa
 	ret
+; SqStep_ProcessRhythmSectionEvent: Follows up a rhythm section-switch event: when the record at 0x0D8F is tag 0x48
+;   offset 5 or 6, keeps the value (byte +4, status bit 0 as bit 7) in 0x0DF1; if any of bits 4-7 is set (ENDING1,
+;   ENDING2, FILL IN1, FILL IN2 in VoiceCtrl_ParamSetupBytecode_Tbl4) it records a copy with value 0 half a beat (48
+;   clocks) later (SqStep_RecordSectionClearHalfBeatLater); then SqStep_ShowRhythmSectionEvent shows
+;   the section of the lowest set bit (Tbl4[bit], +8 for offset 6 -> 0x368C) with DisplayStr_ShowStyleSectionName.
+;   Basis: callers + body -- VoiceCtrl_ParamSetupBytecode calls it after recording a 0xBn event; such events are
+;   recorded only on CONTROL/RHYTHM tracks.
 SqStep_ProcessRhythmSectionEvent:
 	ld	xiy, 3471
 	ld	xix, 3525
@@ -6345,6 +6418,13 @@ SqStep_ShowRhythmSectionEvent_Skip23:
 SqStep_ShowRhythmSectionEvent_Epilogue3:
 	popw	wa
 	ret
+; SqStep_RecordSectionClearHalfBeatLater: Writes a copy of the section-switch event in 0x0D8F with value 0, 48 clocks
+;   (half a beat) after the current position: saves the cursor (slot 1) and position (0x0D5A, 0x367E, 0x0D5C, 0x0D57),
+;   seeks forward with SqStep_SeekForwardByDistance to clock + 48 (0x0DCD = carry unit, 0x0DCE = clock mod 96), sets the
+;   record's status to 0xB0 (| 2 when 0x0DC9 bit 1), clock byte = clock + 1, value byte +4 = 0, writes it
+;   (SystemInit_StepHandler_0_Helper2, W = 6) and restores position and cursor. Basis: callers + body --
+;   SqStep_ProcessRhythmSectionEvent calls it when the value has any of bits 4-7 (FILL IN / ENDING) set; its header
+;   describes this.
 SqStep_RecordSectionClearHalfBeatLater:
 	ld	a, 1:opc
 	call	VoiceSlot_SaveState
@@ -6391,6 +6471,13 @@ SqStep_RecordSectionClearHalfBeatLater_Skip25:
 	ld	a, 1:opc
 	call	VoiceSlot_RestoreState
 	ret
+; TempoRingBuf_OnProgramChangeEvent: Program-change event (0xCn) from TempoRingBuf: unless the display mode (0x0D65)
+;   is 0, consumes the 6-byte event into 0x0D8F (byte +2, with status bit 2 as bit 7, is the part -> (0x905B); byte
+;   +4, with status bit 0 as bit 7, -> 0x3686; byte +5 -> 0x0EF5), shows it (part <= 15: pop-up 1; part 72: the RHYTHM
+;   line), applies it with PartCtrl_WriteProgramChange, passes the 6-byte record to SystemInit_StepHandler_0_Helper2
+;   unless VoiceCtrl_ParamSetupBytecode_Tbl3_Helper returns 1, then MIDI_SendSysExFromW with W = 98. Basis: callers +
+;   body -- TempoRingBuf_DispatchEvents sends every event whose status high nibble is 0xC0 here; 0xC0 is the stored
+;   program-change event (technics-docs sequencer.md, event table).
 TempoRingBuf_OnProgramChangeEvent:
 	cp	(3429:16), 0
 	jrl	nz, TempoRingBuf_OnProgramChangeEvent_Skip26
@@ -6584,6 +6671,13 @@ TempoRingBuf_OnStyleStartEvent:
 	ld	(13964:16), 1
 	call	TempoRingBuf_OnStyleSectionEvent
 	ret
+; TempoRingBuf_OnStyleSectionEvent: Shared body of the style START/STOP event handlers (A = status 0x85 / 0x86): on a
+;   track of type 15 or 16 (0xF1A0[track], SqStep_CheckRhythmOrControlTrack) it shows the section name
+;   through SerialPort_ModeSelect_Table[(0x0D65) & 3], passes the 2-byte record {status, clock 0x0D57} at 0x0D8F to
+;   SystemInit_StepHandler_0_Helper2, consumes the next byte, calls MIDI_SendSysExFromW with W = 98 and sets 0x0D5E =
+;   16; on other tracks it only consumes one byte. Basis: callers + body -- TempoRingBuf_OnStyleStartEvent (0x85,
+;   section 1) and TempoRingBuf_OnStyleStopEvent (0x86, section 2) set 0x368C and call it. Their headers call record
+;   byte +1 'channel'; it is the clock 0x0D57, as in the tempo, modulation and pitch-bend records.
 TempoRingBuf_OnStyleSectionEvent:
 	call	SqStep_CheckRhythmOrControlTrack
 	cp	c, 0:i3
@@ -6610,6 +6704,10 @@ TempoRingBuf_OnStyleSectionEvent_Skip16:
 	ld	(3422:16), 16
 TempoRingBuf_OnStyleSectionEvent_Return2:
 	ret
+; SqStep_CheckRhythmOrControlTrack: Returns C = 0 when the cursor track (0x0EEE) is assigned RHYTHM (TRACK ASSIGN
+;   value 16 in 0xF1A0) or CONTROL (15), else C = 255; XHL kept. Basis: callers + body --
+;   TempoRingBuf_OnStyleSectionEvent records and shows style START/STOP only when it gives C = 0; values 15/16 are
+;   CONTROL/RHYTHM in the track-assign name tables.
 SqStep_CheckRhythmOrControlTrack:
 	push	xhl
 	ld	l, (3822:16)
@@ -6629,6 +6727,12 @@ SqStep_CheckRhythmOrControlTrack_Skip17:
 SqStep_CheckRhythmOrControlTrack_Epilogue:
 	pop	xhl
 	ret
+; DisplayStr_ShowStyleSectionName: Shows the style-section name DisplayStr_StyleSectionNames[(0x368C)] in the form of
+;   the current display mode, through SerialPort_ModeSelect_Table[(0x0D65) & 3]: mode 0 copies it to 0x0ED4
+;   (DisplayStr_CopyStyleSectionName), modes 1-2 set pop-up 5 and draw the RHYTHM label plus the name
+;   (DisplayStr_BytecodeBlock_C), mode 3 sets pop-up 15 (DisplayStr_StyleSectionInit); XHL kept. Basis: callers + body
+;   -- TempoRingBuf_OnStyleSectionEvent, the section path of SqStep_ProcessRhythmSectionEvent and
+;   SysEx_BytecodeDispatcher_Helper2 each set 0x368C and then call it.
 DisplayStr_ShowStyleSectionName:
 	push	xhl
 	ld	a, (3429:16)
@@ -6702,6 +6806,12 @@ TempoRingBuf_OnModulationEvent_Join4:
 	ld	(3540:16), 0
 TempoRingBuf_OnModulationEvent_Return5:
 	ret
+; TempoRingBuf_OnPitchBendEvent: Pitch-bend event (status 0xD2) from TempoRingBuf: except in display mode 3 (then it
+;   only consumes one byte), consumes the event into 0x0D8F, value bytes +2 -> 0x3685 and +3 -> 0x1112, record length
+;   (0x0DD2) = 4, control-name index (0x3684) = 1 ("P.BEND=") and shows the CONTROL line with the bend value
+;   (Display_BytecodeBlock_F_Tbl2_Helper2 reads 0x3685 and 0x1112). Basis: callers + body --
+;   TempoRingBuf_DispatchEvents sends status 0xD2 here; VoiceSlot_StatusRet maps a stored 0xD2 event to the same index
+;   1.
 TempoRingBuf_OnPitchBendEvent:
 	cp	(3429:16), 3
 	jrl	nz, TempoRingBuf_OnPitchBendEvent_Skip2
@@ -6741,6 +6851,12 @@ TempoRingBuf_OnPitchBendEvent_Join5:
 	ld	(3540:16), 0
 TempoRingBuf_OnPitchBendEvent_Return6:
 	ret
+; SqStep_WriteClockWrapMarkers: Adds the whole 96-clock units of the step (0x0DCD) to the unit counter 0x0D5A and, if
+;   there are any, writes that many one-byte 0x81 events through SqStep_WriteClockWrapMarker (which also
+;   increments 0x0D58 and passes {0x81} to SystemInit_StepHandler_0_Helper2), then refreshes the measure/beat position
+;   with AccPedal_CheckBitAndUpdate. Basis: callers + body -- ToneParam_ModeGuardEntry and TempoRingBuf_OnNoteEvent
+;   call it right after SqStep_AdvanceClockByStep, which leaves in 0x0DCD the number of times the clock 0x0D57 passed
+;   96; the meaning of 0x81 is taken from that pairing only.
 SqStep_WriteClockWrapMarkers:
 	ld	c, (3533:16)
 	xor	b, b
@@ -6832,6 +6948,11 @@ SqStep_ComputeStepAndGateTime_Join6:
 ScoopParam_ValueTable:
 	.byte	0x00, 0x00, 0x08, 0x00, 0x0c, 0x00, 0x10, 0x00, 0x18, 0x00, 0x20, 0x00, 0x30, 0x00, 0x40, 0x00
 	.byte	0x60, 0x00, 0xc0, 0x00, 0x80, 0x01, 0x00, 0x03, 0x80, 0x04, 0x00, 0x06
+; SqStep_AdvanceClockByStep: Advances the step-record clock by the step length: 0x0D57 := (0x0D57 + step clocks
+;   0x3393) mod 96, and 0x0DCD := step units 0x3394 plus 1 when the sum passed 96 (SqStep_AddStepToClock).
+;   Basis: callers + body -- ToneParam_ModeGuardEntry and TempoRingBuf_OnNoteEvent call it after
+;   SqStep_ComputeStepAndGateTime and before SqStep_WriteClockWrapMarkers, which consumes 0x0DCD; the twin
+;   SqStep_ComputeStepTargetClock stores the same sum into the target clock 0x0DCE instead.
 SqStep_AdvanceClockByStep:
 	call	SqStep_AddStepToClock
 	stb_d8	(0x0d57), w
@@ -6884,6 +7005,14 @@ SerialPort_ModeHandler_0_Epilogue:
 	pop	xhl
 	pop	xwa
 	ret
+; SqStep_FlushPendingParamEvents: Writes out the parked panel-parameter changes: for each of the 29 slots at 0x0D6F
+;   that is not 0xFF it clears the slot and passes a 6-byte record {0xB0 (| 4 for tag bit 7), clock (0x0D57), tag,
+;   offset, value, 0x7F} to SystemInit_StepHandler_0_Helper2 -- slots 0-15 are part tags 0x00-0x0F offset 3, slot 27
+;   is tag 0x48 offset 8, slot 28 tag 0x98 offset 1, slots 16-26 take tag/offset from
+;   SerialPort_ModeHandler_0_Data/_Data2. Then clears 0x0D53 bit 0. Basis: callers + body --
+;   VoiceCtrl_ParamSetupBytecode (the 0xBn handler of TempoRingBuf_DispatchEvents) parks values in 0x0D6F[slot] and
+;   sets 0x0D53 bit 0 instead of writing them; TempoRingBuf_OnNoteEvent, the step-record cursor move
+;   (Timer_ParamLoadAndCompare_Helper) and SqStep_RestoreOnLeave call this first.
 SqStep_FlushPendingParamEvents:
 	push	xwa
 	push	xhl
@@ -7343,6 +7472,11 @@ PortConfig_SetupBytecode:
 	pop	xix
 PortConfig_SetupBytecode_Return:
 	ret
+; SqStep_SetupScreenForDisplayMode: Sets up the step-record screen for the current display mode: calls
+;   PortConfig_Select_Table[(0x0D65) & 3] -- PortConfig_Handler_0 for mode 0 (CHORD/APC tracks), PortConfig_Handler_1
+;   for modes 1-2 (note and CONTROL tracks), PortConfig_Handler_3 for mode 3 (RHYTHM track). Basis: callers + body --
+;   SqStep_InitOnEnter calls it when the TT_SQSTEP title is entered and on a redraw with 0x0D53 bit 3;
+;   MemConfig_Handler_0 calls it when 0x0D54 bit 3 asks.
 SqStep_SetupScreenForDisplayMode:
 	ld	a, (3429:16)
 	and	wa, 3
@@ -7504,6 +7638,11 @@ PortConfig_Handler_0_Helper_Skip:
 	pop	xde
 PortConfig_Handler_0_Return:
 	ret
+; SqStep_SetDisplayModeFromTrack: Makes the selected track (0x0D60, 1..16) the cursor track (0x0EEE) and sets the
+;   display mode (0x0D65) from that track's assignment in the TRACK ASSIGN table 0xF1A0 through
+;   PortConfig_DataTable_A: assignments 0-12 and 17-23 -> 1, 13-14 -> 0, 15 -> 2, 16 -> 3. Basis: callers + body --
+;   SqStep_InitOnEnter calls it twice, and its header already says it 'derives the display mode (0x0D65) from the
+;   track type'; Part_LookupParam is what stores the selected track and its 0xF1A0 value.
 SqStep_SetDisplayModeFromTrack:
 	ld	a, (3424:16)
 	ld	(3822:16), a
@@ -7555,17 +7694,30 @@ PortConfig_DataTable_A_Sub_Return:
 PortConfig_DataTable_B:
 	.byte	0x00, 0x02, 0x01, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x04, 0x05, 0x06, 0x03, 0x0f, 0xff, 0xff, 0xff
 	.byte	0xff, 0x0c, 0x0d, 0x0e
+; SeqNode_SetPoolBaseToEventMemory: Sets the block-pool base pointer 0x110A, through which SeqNode_ResolveSlotPtr
+;   turns block n into address base + (n - 1) * 256 (0x10FD), to the sequencer event-memory base held at 0x1D5A
+;   (0xB0000, stored at init together with the block count 1240 = 0x4D800 / 256 in 0x286D). Basis: callers + body --
+;   SqStep_SetupCursorTrack calls it first; every writer of 0x110A copies 0x1D5A the same way
+;   (DispatchHandler_StoreNodePtr, SetWall_BankInit, MemConfig_Handler_1_Helper5).
 SeqNode_SetPoolBaseToEventMemory:
 	ld	xhl, 4362
 	ld	xwa, (7514:16)
 	ld	(xhl), xwa
 	ret
+; TempoRingBuf_DiscardAll: Empties the TempoRingBuf ring: reads (and so consumes) bytes with TempoRingBuf_ReadByte
+;   until it returns 0xFFFF (ring empty). Basis: callers + body -- Timer_ModeHandler_3 calls it instead of
+;   TempoRingBuf_DispatchEvents when (0x0DEF) = 18, and SqStep_InitOnEnter calls it before SeqBuf_Init when the step
+;   page is set up.
 TempoRingBuf_DiscardAll:
 	call	TempoRingBuf_ReadByte
 	ld	wa, hl
 	cp	wa, 0xffff
 	jrl	nz, TempoRingBuf_DiscardAll
 	ret
+; SqStep_SetPopupIdForDisplayMode: Sets the TT_SQSTEP pop-up id (0x0DEF) for the cursor track's display mode (0x0D65):
+;   PortConfig_Handler_0_Tbl {0, 0, 0, 12}, so 12 for display mode 3 (a RHYTHM track) and 0 otherwise. Basis: callers
+;   + body -- SqStep_SetupCursorTrack calls it after SqStep_SetDisplayModeFromTrack; Display_ModePopupDispatch picks
+;   the pop-up id from the same display mode through Display_ModePopupIds {0, 5, 5, 15}.
 SqStep_SetPopupIdForDisplayMode:
 	ld	xhl, PortConfig_Handler_0_Tbl
 	ld	a, (3429:16)
@@ -7593,6 +7745,11 @@ ClockConfig_Handler_1:
 ClockConfig_Handler_0:
 	and	(0xe31c:16), 253
 	ret
+; SqStep_TrackSetupNullRet: Empty routine (a single `ret`): the step-record set-up calls it right after
+;   PortConfig_Handler_0_Return, which is also a bare `ret`; what it once did is not recoverable (the unreferenced
+;   ClockConfig_Select_Table beside it is not read). Basis: callers + body -- SqStep_SetupCursorTrack and
+;   SqStep_InitOnEnter's redraw-within-the-title path call it; this tree's X_NullRet convention (PlayMode_NullRet,
+;   DpMdlySmfLyrTtl_NullRet).
 SqStep_TrackSetupNullRet:
 	ret
 	; Byte data, 4 B.  No reader found: no label, positional or absolute .set
@@ -7778,6 +7935,11 @@ SqStep_RestoreOnLeave_Skip5:
 	call	SysEx_BytecodeDispatcher_Tbl2_Sub4
 SqStep_RestoreOnLeave_Return2:
 	ret
+; SqStep_RestoreTrackType: When 0x28BE is not 0xFF (a track's type was switched on entry), sets the type of the
+;   current track (0xF1A0[(0x0EEE) - 1]) back to 0x0E. Note it writes the current track, not the one remembered in
+;   0x28BE; what types 0x0D / 0x0E mean is not established. Basis: callers + body -- SqStep_RestoreOnLeave calls it on
+;   leaving the title; on entry SqStep_InitOnEnter calls PortConfig_SetupBytecode, which, for a current track of type
+;   0x0E, records it in 0x28BE and changes its type to 0x0D.
 SqStep_RestoreTrackType:
 	cp	(0x28be:16), 255
 	jrl	z, SqStep_RestoreTrackType_Return3
@@ -8432,6 +8594,9 @@ MemConfig_Handler_3:
 MemConfig_Handler_3_Next:
 	ld	w, 0:opc
 	ret
+; MemConfig_SnapshotSongPosition: Saves the song position -- measure (0x367E), word (0x0D58), clock (0x0D57) and beat
+;   (0x0D5C) -- into 0x0EE8/0x0EEA/0x0EEC/0x0EED; preserves WA. Basis: callers + body -- MemConfig_Handler_3
+;   snapshots, moves the position, then MemConfig_Handler_3_Helper3 compares against the snapshot.
 MemConfig_SnapshotSongPosition:
 	pushw	wa
 	ld	wa, (13950:16)
@@ -9322,6 +9487,11 @@ SysEx_BytecodeDispatcher_Helper3_Skip3:
 	jp	SysInit_BytecodeBlock_Join
 SysEx_BytecodeDispatcher_Helper3_Return2:
 	ret
+; SqStep_WriteWrapMarkerAtCursor: Writes one 0x81 unit marker into the track at the song-data cursor without counting
+;   it (falls to SqStep_WriteWrapMarker: record {0x81}, W = 1, SystemInit_StepHandler_0_Helper2), with the
+;   cursor saved and restored in snapshot slot 0; when the event at the cursor is 0x84 it first sets 0x0D54 bit 7.
+;   Basis: callers + body -- the forward cursor step Timer_ParamLoadAndCompare (named so in SqStep_SeekForwardByStep's
+;   header) calls it before stepping; SqStep_WriteClockWrapMarker is the counting variant of the same write.
 SqStep_WriteWrapMarkerAtCursor:
 	xor A,A
 	call VoiceSlot_SaveState
@@ -9344,6 +9514,9 @@ SystemInit_StepHandler_0_Skip7:
 	ret
 SqStep_WriteClockWrapMarker:
 	incw	1, (0x0d58:16)
+; SqStep_WriteWrapMarker: Writes one 0x81 clock-wrap marker record ({0x81} at 0x0E48, W = 1) at the song-data cursor
+;   through SystemInit_StepHandler_0_Helper2, all registers preserved; the uncounted core of
+;   SqStep_WriteClockWrapMarker, which falls into it after word 0x0D58 += 1. Basis: callers + body.
 SqStep_WriteWrapMarker:
 	push XWA
 	push XHL
@@ -11793,6 +11966,11 @@ VoiceState_DataBlock2_Code_Loop:
 	jrl	nz, VoiceState_DataBlock2_Code_Loop
 VoiceState_DataBlock2_Code_Return:
 	ret
+; TempoRingBuf_PeekStatusByte: Returns the next TempoRingBuf byte in WA without consuming it (TempoRingBuf_SaveReadPos
+;   copies the read index 0x1E74B to the look-ahead index 0x1E749, TempoRingBuf_ReadAlternate reads there; 0xFFFF when
+;   empty), preserving XIX -- the WA-returning twin of TempoRingBuf_PeekByte. Basis: callers + body --
+;   TempoRingBuf_DispatchEvents peeks each event's status byte with it before choosing the handler that then consumes
+;   the event, and VoiceState_DataBlock2_Code_Loop uses it to stop skipping at the next byte with bit 7 set.
 TempoRingBuf_PeekStatusByte:
 	push	xix
 	call	TempoRingBuf_SaveReadPos
@@ -13347,6 +13525,14 @@ PerfMode_ParamHandler_11_Skip51:
 	call	SubCPU_ToneParamRet_Helper16
 	call	SqStep_UpdateChordCellCursor
 	ret
+; SqStep_UpdateChordCellCursor: Computes the step-record screen's chord-cell cursor (0x0EEF, 0..7: two cells per beat
+;   over four beats): unless byte 0x0D6A is set, refreshes the measure/beat position
+;   (SqStep_GetRhythmTrackForMeasures, AccPedal_CheckBitAndUpdate), then cell = 2 * beat (0x0D5C, minus 4 from beat 4
+;   on when the measure has more than 4 beats, 0x0D5D) + 1 when the clock 0x0D57 is past the beat start. Basis:
+;   callers + body -- Display_RedrawSelection copies 0x0EEF to 0x1191, the RAM byte that picks the rectangle of
+;   SqStep_ChordCellCursor (8 cells, x = 8 + 32k); the callers (MemConfig_Handler_3_Helper3,
+;   MemConfig_Handler_5_Helper11, MemConfig_Handler_5_Helper12) run it after moving the position and then redraw
+;   display region 2.
 SqStep_UpdateChordCellCursor:
 	cp	(0x0d6a:16), 0
 	jrl	nz, PerfMode_ParamHandler_11_Return7
@@ -13856,6 +14042,12 @@ OscScope_RenderBlock_Helper:
 	ld	(xix+), wa
 	djnz16	bc, -6
 	ret
+; SqStep_ClearRow2CellRecords: Clears the cell records of row 2 of the step-record grid: the 8 x 4 bytes at RAM 0x0E75
+;   (16 words = 0). Basis: callers + body -- Display_RedrawButtonLabels draws row 2's chord cells
+;   (SqStep_Row2ChordCells) from 0x0E75 and Scoop_ButtonLabels_CopySlotData copies byte 0 of each of its records;
+;   SubCPU_ToneParamRet_Helper13 clears rows 1-3 (OscScope_RenderBlock_Helper 0x0E55, this,
+;   SqStep_ClearRow3CellRecords 0x0E95) before MemConfig_Handler_5_Helper12 refills them, and the row-index test at
+;   13676 (0x0EC6 = 0) clears it with row 3.
 SqStep_ClearRow2CellRecords:
 	ld	xix, 3701
 	ldw	bc, 16
@@ -13863,6 +14055,11 @@ SqStep_ClearRow2CellRecords:
 	ld	(xix+), wa
 	djnz16	bc, -6
 	ret
+; SqStep_ClearRow3CellRecords: Clears the cell records of row 3 of the step-record grid: the 8 x 4 bytes at RAM 0x0E95
+;   (16 words = 0). Basis: callers + body -- Display_RedrawButtonLabels draws row 3's chord cells
+;   (SqStep_Row3ChordCells) from 0x0E95; SubCPU_ToneParamRet_Helper13 clears rows 1-3 with it before
+;   MemConfig_Handler_5_Helper12 refills them, and the row-index test at 13676 clears it when the current row (0x0EC6)
+;   is 0 or 1.
 SqStep_ClearRow3CellRecords:
 	ld	xix, 3733
 	ldw	bc, 16
@@ -14238,6 +14435,10 @@ DisplayStr_ComputeTableAddr:
 
 DisplayStr_BytecodeBlock_B:
 	call	Display_UpdateRegion0
+; DisplayStr_WriteStoredControlLine: TT_SQSTEP pop-up line for a control event stored at the song cursor: blanks the
+;   text line 0x0ECA, writes "CONTROL " at 0x0ECF, the control name/value (DisplayStr_WriteControlNameValue,
+;   kind 0x3684) and marks regions 5 and 3. Second entry of DisplayStr_BytecodeBlock_B (which first marks the status
+;   bar). Basis: callers + body.
 DisplayStr_WriteStoredControlLine:
 	call	DisplayStr_BlankLineBuffer
 	ld	xix, 0x0eca
@@ -14255,8 +14456,17 @@ DisplayStr_WriteStoredControlLine:
 	call	DisplayStr_WriteControlNameValue
 	call	Display_UpdateRegion3
 	ret
+; DisplayStr_RedrawStatusAndControlLine: Marks the status-bar region 0 for redraw (it shows pop-up mode 0x0DEF, which
+;   the callers have just set to 2), then falls into DisplayStr_WriteIncomingControlLine: blanks the text line, writes
+;   "CONTROL" at 0x0ECF, appends the control name and value (DisplayStr_WriteControlNameValue) and marks regions
+;   5 and 3. Basis: callers + body -- TempoRingBuf_OnModulationEvent and TempoRingBuf_OnPitchBendEvent call it after
+;   (0x0DEF) := 2 when the status bar was not already in mode 2, and call DisplayStr_WriteIncomingControlLine directly
+;   when it was.
 DisplayStr_RedrawStatusAndControlLine:
 	call	Display_UpdateRegion0
+; DisplayStr_WriteIncomingControlLine: TT_SQSTEP pop-up line for a control event being recorded: blanks the text line,
+;   writes "CONTROL" at 0x0ECF, the control name/value (kind 0x3684) and marks regions 5 and 3; second entry of
+;   DisplayStr_RedrawStatusAndControlLine, called directly when the pop-up is already 2. Basis: callers + body.
 DisplayStr_WriteIncomingControlLine:
 	call	DisplayStr_BlankLineBuffer
 	ld	xiy, Str_Control
@@ -14590,6 +14800,9 @@ DisplayStr_CopyStyleSectionName:
 DisplayStr_StyleSectionNames:
 	.ascii	"        START   STOP    FILL IN1FILL IN2INTRO1  COUNT INENDING1 END     REPEAT  CLEAR   ENDING2 INTRO2  "
 	.byte	0x0e
+; Display_UpdateRegion2_Wrap: Call-through to Display_UpdateRegion2 (the selection-highlight region, dirty bit 4):
+;   `call Display_UpdateRegion2 / ret`. Basis: callers + body -- five unrelated screen paths call it after changing
+;   the selection state; the name follows the tree's X_Wrap convention for one-call forwarders (AccDemo_Init_Wrap).
 Display_UpdateRegion2_Wrap:
 	call	Display_UpdateRegion2
 	ret
@@ -14705,6 +14918,12 @@ Display_BytecodeBlock_F_Tbl:
 Display_BytecodeBlock_F_Data:
 	.ascii	"RT1 RT2 LFT P 4 P 5 P 6 P 7 P 8 P 9 P10 P11 P12 P13 P14 P15 KBP DUALMSP ----"
 	.byte	0x01, 0x02, 0x03, 0x04
+; DisplayStr_ShowPartSoundLine: Builds the SOUND pop-up line: marks the status bar (region 0), blanks the text line,
+;   writes "SOUND" at 0x0ECE, then DisplayStr_WritePartAndSoundName adds the part name for part (0x11BB) ("RT1",
+;   "RT2", "LFT", "P 4".. "KBP", "DUAL", "MSP") at 0x0ED4 and the 16-character sound name for program/bank
+;   (0x11BD)/(0x11BC) at 0x0ED8 (ON/OFF for part 23); marks regions 5 and 3. Basis: callers + body --
+;   TempoRingBuf_OnProgramChangeEvent and VoiceSlot_StatusRet both set pop-up 1 ((0x0DEF) := 1) and call it after a
+;   program change on a part.
 DisplayStr_ShowPartSoundLine:
 	call	Display_UpdateRegion0
 	call	DisplayStr_BlankLineBuffer
@@ -14769,7 +14988,11 @@ Display_BytecodeBlock_F_Return2:
 	; indexed with stride 8 (`sla hl, 3`)
 Str_PBendModExpEq:
 	.ascii	"        P.BEND= MOD.  = EXP.  = P.MEM = AFT.  =                         "
+	; Lcd text, 3 B.  Read by Display_BytecodeBlock_F: `ld xiy, Str_On2`
+	; reader Display_BytecodeBlock_F: `ld xiy, Str_On2`
 Str_On2:	.ascii	" ON"
+	; Lcd text, 3 B.  Read by Display_BytecodeBlock_F: `ld xiy, Str_Off2`
+	; reader Display_BytecodeBlock_F: `ld xiy, Str_Off2`
 Str_Off2:	.ascii	"OFF"
 Display_BytecodeBlock_F_Tbl2_Helper2:
 	xor	xwa, xwa
@@ -14864,6 +15087,10 @@ DisplayStr_BlankLineBuffer:
 	ld	(xix+), wa
 	djnz16	bc, -6
 	ret
+; Display_UpdateRegion0_Wrap: Call-through to Display_UpdateRegion0, the status-bar region that shows the pop-up id
+;   (0x0DEF): `call Display_UpdateRegion0 / ret`. Basis: callers + body -- UIState_EventTable_Target11 saves (0x0DEF)
+;   in 0x0DF0, sets it to 18 and calls it to redraw the status bar; the name follows the X_Wrap convention of
+;   Display_UpdateRegion2_Wrap. (DisplayMode_Handler_3_Helper13 is a second copy of the same two instructions.)
 Display_UpdateRegion0_Wrap:
 	call	Display_UpdateRegion0
 	ret
@@ -14907,6 +15134,10 @@ DisplayStr_ShowBeatCount_Skip12:
 	ld	(xix), 28
 DisplayStr_ShowBeatCount_Return:
 	ret
+; DisplayStr_ShowMeasureNumber_B: Byte-for-byte second copy of DisplayStr_ShowMeasureNumber: writes the measure number
+;   (word 0x367E) as three digits, or "---" when >= 1000, at the start of the LCD text line 0x0ECA. Basis: callers +
+;   body -- the screen-init and song-position refresh paths call it after blanking line 0x0ECA; the body is identical
+;   to the named routine.
 DisplayStr_ShowMeasureNumber_B:
 	ld	wa, (13950:16)
 	cp	wa, 1000
@@ -19625,7 +19856,7 @@ Scoop_EventLoop_36Entry_Join4:
 	lda	xwa, (xsp+4)
 	ld	xde, xwa
 	push	xix
-	pushw	255
+	pushw	255	; colour pair for DrawString, not a pointer
 	pushw	245
 	ld	xwa, xhl
 	call	DrawString

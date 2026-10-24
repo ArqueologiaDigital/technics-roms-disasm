@@ -98,6 +98,11 @@ PanelTlv_ApplyResetMasks_Loop:
 PanelTlv_WriteAllHeaders:
 	calr	PanelTlv_WriteLivePanelHeaders
 	jrl	PanelTlv_WritePanelMemoryHeaders
+; PanelTlv_ValidateSongPanel: Validates the block-0 panel records stored at 0xF480, inside the current-song record
+;   0xF180-0xF980: XWA = 0xF480, tail-jump to PanelTlv_ValidateBlock0. Basis: callers + body --
+;   MidiSysEx_FinishSeqXfer calls it first after a sequencer transfer, and its header calls this validating 'the
+;   block-0 panel records at 0xF480, inside the received current-song record'; PanelTlv_ValidateLivePanel (0xF9A0) and
+;   PanelTlv_ValidatePanelMemory (0x1ED400 + 960*n) do the same for the live panel and the panel memories.
 PanelTlv_ValidateSongPanel:
 	lda	xwa, (0xf480:16)
 	jrl	PanelTlv_ValidateBlock0

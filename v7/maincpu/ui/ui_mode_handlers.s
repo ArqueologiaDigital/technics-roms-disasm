@@ -8890,7 +8890,7 @@ PmExpFilter_EventDispatch:
 	; v10 does not spell this byte either
 	; v10 does not spell this byte either
 	; v10 does not spell this byte either
-	lda	xwa, (xsp+256)
+	lda	xwa, (xsp+256)	; lda xwa, xsp+0x0100
 	ld	xbc, xde
 	srl	xbc, 16
 	ld	qbc, 0
@@ -8935,7 +8935,7 @@ PmExpFilterGridCheck_OnIndexswDown:
 	; v10 does not spell this byte either
 	; v10 does not spell this byte either
 	; v10 does not spell this byte either
-	lda	xbc, (xsp+256)
+	lda	xbc, (xsp+256)	; lda xbc, xsp+0x0100
 	ld	xwa, xde
 	srl	xwa, 16
 	ld	qwa, 0

@@ -24329,6 +24329,8 @@ CommParam_SetComplete_Return:
 	pop	xiz
 	inc	6, xsp
 	ret
+; COMM_ResetSentValues: Init-phase-0 handler of subsystem table 1: sets 0xE2BA = 1 and 0xFF into the last-sent caches
+;   0xE2B5-0xE2C0 of the set-if-changed COMM senders, so each next value is sent. Basis: callers + body.
 COMM_ResetSentValues:
 	ld	(0xe2ba:16), 1
 	ld	(0xe2bb:16), 255
@@ -24342,6 +24344,8 @@ COMM_ResetSentValues:
 	ld	(0xe2b8:16), 255
 	ld	(0xe2c0:16), 255
 	ret
+; COMM_ResetSentValues_Phase1: Init-phase-1 entry of subsystem table 1: jumps to COMM_ResetSentValues. Basis: callers
+;   + body.
 COMM_ResetSentValues_Phase1:
 	jr	COMM_ResetSentValues
 CommParam_SetComplete_Return2:
@@ -24452,6 +24456,8 @@ SendPartDataBlock_Block3:
 	ld	de, 1:i3
 	call	SendCOMM_VariableLengthPacket
 	ret
+; COMM_SendMicVolume: Set-if-changed sender of the MIC volume: stores A in 0xE2B8 and sends it as COMM packet type 7
+;   (sub-CPU DSP_Set_MicLevel). Basis: callers + body + receiver.
 COMM_SendMicVolume:
 	cp	(0xe2b8:16), a
 	ret	z

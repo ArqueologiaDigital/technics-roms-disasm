@@ -3240,6 +3240,8 @@ GetClientBox2_RightOnOffTab32:
 	lda xde, (xsp + 4)
 	ldw wa, 0x24
 	jr CtrlFrame_SubRightMargin
+; GetClientBox2_RightOnOffTab48: style 0xa8 (right piece Frame_OnOffTabRight_34x48): right edge - piece width, then
+;   inset 2
 GetClientBox2_RightOnOffTab48:
 	lda xbc, (xsp + 6)
 	lda xde, (xsp + 4)

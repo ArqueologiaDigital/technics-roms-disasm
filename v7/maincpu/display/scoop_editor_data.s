@@ -1989,6 +1989,10 @@ SeFilLpq1_OnColumn1:
 	ld	wa, 0:i3
 	ld	bc, 0:i3
 	jp	SeMenu_DrawFilterGraph
+; SeMenu_EditFilterCutoff: Steps the current part's filter cutoff (part param 2, range 0..127) by the column switch in
+;   A and applies it via SeMenu_StepParamFieldAndSend (popup id E), then posts the column's dial events
+;   (SeMenu_BindDialToColumn(C)). Basis: callers + body -- filter-page column handlers (Lpq1/Hpq1 col 1,
+;   L241/H241 col 3) call it, then redraw with SeMenu_DrawFilterGraph, which places the corner at x = 86 + param 2.
 SeMenu_EditFilterCutoff:
 	lda xsp, (xsp - 0x16)
 	ld (XSP+0x10),E
@@ -2050,6 +2054,11 @@ SeFilLpq1_OnColumn2:
 	ld	wa, 0:i3
 	ld	bc, 0:i3
 	jp	SeMenu_DrawFilterGraph
+; SeMenu_EditFilterResonance: Steps the current part's filter resonance (part param 3, range 0..5) by the column
+;   switch in A and applies it via SeMenu_StepParamFieldAndSend (popup id E), then posts the column's dial events
+;   (SeMenu_BindDialToColumn(C)). Basis: callers + body -- filter-page column handlers (Lpq1/Hpq1 col 2,
+;   L241/H241 col 4, Bpf1 col 3) call it, then redraw with SeMenu_DrawFilterGraph, which plots param 3 as the peak
+;   height.
 SeMenu_EditFilterResonance:
 	lda xsp, (xsp - 0x16)
 	ld (XSP+0x10),E

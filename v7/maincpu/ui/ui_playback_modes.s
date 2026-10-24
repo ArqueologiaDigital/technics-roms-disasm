@@ -770,6 +770,10 @@ PlayModeStop_InitFlagBlock_Helper2:
 	or	(10412:16), 4
 	ld	(4420:16), 10
 	ret
+; DpMdlySmf_DisarmStartCountdown: When the TT_DPMDLYSMF title (0x73) is left with CURRENT_TITLE = 108 (0x6C
+;   TT_DKDPSMF), clears the start-countdown armed flag 0x0D34 that PlayModeStop_InitFlagBlock_Helper set, so the next
+;   activation arms it again; PlayMode_SendCommand6C starts the transport only while the flag is 1. Basis: callers +
+;   body -- DpMdlySmfTtlFunc_OnTitleOld calls it.
 DpMdlySmf_DisarmStartCountdown:
 	cp	(CURRENT_TITLE:16), 108
 	jr	nz, PartFormat_StartPlayback_Return3
@@ -823,8 +827,16 @@ PlayModeStop_ClearFlagBlock:
 	ret
 	ret
 	ret
+; DpMdlySmfLyrTtl_NullRet: Empty routine (`ret`): DpMdlySmfLyrTtl_Dispatch calls it instead of the screen re-
+;   initialisation and DpMdlySmfTtl_Dispatch_Helper when PREVIOUS_TITLE is not 108 (TT_DKDPSMF). Basis: callers + body
+;   -- its only caller is the register-saving call on DpMdlySmfLyrTtl_Dispatch's not-108 branch; the body is a single
+;   `ret` (this file's X_NullRet convention: PlayMode_NullRet, PartFormat_NullRet).
 DpMdlySmfLyrTtl_NullRet:
 	ret
+; DpMdlySmfLyr_DisarmStartCountdown: When the TT_DPMDLYSMFLYR title (0x76) is left with CURRENT_TITLE = 108 (0x6C
+;   TT_DKDPSMF), clears the start-countdown armed flag 0x0D34 so the next activation arms the countdown again. Basis:
+;   callers + body -- DpMdlySmfLyrTtlFunc_OnTitleOld calls it; same body as DpMdlySmf_DisarmStartCountdown, the SMF
+;   title's twin, whose arming side is PlayModeStop_InitFlagBlock_Helper.
 DpMdlySmfLyr_DisarmStartCountdown:
 	cp (CURRENT_TITLE:16), 0x6c
 	jr nz, PlayMode_SendCommand6C_Return

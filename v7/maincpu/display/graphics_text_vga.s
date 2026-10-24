@@ -2258,6 +2258,11 @@ FontGlyph_ByteData:
 	ld	a, (xde+wa)
 	ld	(xbc), a
 	ret
+; Text_GlyphToCharCode: Reverse of FontGlyph_ByteData: finds the character code whose Text_CharGlyphMap entry equals
+;   the byte at (XWA) and stores it at (XBC); 0 and 0x20 are copied unchanged and a byte not in the map becomes 0x20.
+;   Basis: callers + body -- SeMenu_DrawWriteDestName and SeWrtMem_DrawPage run it in place over each of the
+;   16 bytes of a sound name before using the name as text; Text_CharGlyphMap's comment says 'the routine after it
+;   searches it for the reverse'.
 Text_GlyphToCharCode:
 	ld	e, (xwa)
 	cp	e, 32

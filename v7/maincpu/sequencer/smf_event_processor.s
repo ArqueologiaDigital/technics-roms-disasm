@@ -7050,6 +7050,11 @@ SeqByteBlock_PathNormalize_Epilogue8:
 	pop	xiz
 	lda	xsp, (xsp+12)
 	ret
+; Fat_ReadFile: Reads up to count bytes from file handle into buffer (stack args handle, buffer, count, line_mode)
+;   from its position (+22), clamped to the size (+71); at end of file sets the EOF flag (+6 |= 0x8000) and returns 0;
+;   text mode (+3 bit 2) drops CRs, line_mode stops after the terminator byte (+2). Returns HL = bytes read. Basis:
+;   callers + body -- it is the body of drive A's file-op slots 1 and 2 (SeqChan_SetupAndCallHelper with line_mode 0,
+;   SeqChan_InitChannelState with 1) in FileIO_DriveAFileOps.
 Fat_ReadFile:
 	dec	4, xsp
 	pushw	iz
@@ -7298,6 +7303,11 @@ SeqChan_InitChannelState:
 	calr	Fat_ReadFile
 	lda	xsp, (xsp+12)
 	ret
+; Fat_WriteFile: Writes up to count bytes from buffer to file handle (stack args handle, buffer, count, line_mode) at
+;   its position (+22) through the sector buffer, marking the handle dirty (+3 bit 7) and the entry's archive bit (+64
+;   bit 5); text mode (+3 bit 2) expands LF to CR LF, line_mode stops after the terminator byte (+2); extends the size
+;   (+71). Returns HL = bytes written. Basis: callers + body -- it is the body of drive A's file-op slots 3 and 4
+;   (SeqChan_ProcessEventArg0/1, line_mode 0/1) in FileIO_DriveAFileOps.
 Fat_WriteFile:
 	dec	6, xsp
 	pushw	iz

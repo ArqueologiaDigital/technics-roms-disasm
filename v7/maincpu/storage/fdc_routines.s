@@ -1073,6 +1073,10 @@ FDC_CMD_SEND_Skip11:
 FDC_CMD_SEND_Epilogue:
 	inc	2, xsp
 	ret
+; FDC_ValidateOpcode: Checks the opcode in 0x898C: L = 0 for the aux opcodes 0x4F/0x33/0x34/0x47/0x35 and for opcodes
+;   whose low 5 bits are 0x02-0x0F, 0x11, 0x19, 0x1D or 0x1E (0x10 excluded); L = 1 otherwise. Basis: callers + body +
+;   twin -- FDC_CMD_SEND stores the opcode, calls it and returns at once when L != 0; bootloader twin
+;   FDC_ValidateOpcode.
 FDC_ValidateOpcode:
 	ld	a, (0x898c:16)
 	cp	a, 79
@@ -1116,6 +1120,9 @@ FDC_HardwareSetup_Join:
 	and	a, 3
 	extz	wa
 	jrl	FDC_SendParameterByte
+; FDC_SendParams_Specify: Sends the two SPECIFY parameter bytes: SRT<<4 | HUT (0x899B, 0x899C & 0x0F) and HLT<<1 | ND
+;   (0x899D, 0x899E & 1), each through FDC_SendParameterByte. Basis: callers + body + twin -- FDC_CMD_SEND calls it
+;   for opcode 3 (SPECIFY) right after the command byte; bootloader twin FDC_SendParams_Specify.
 FDC_SendParams_Specify:
 	ld	a, (0x899b:16)
 	sll	a, 4
@@ -1137,6 +1144,10 @@ FDC_SendParams_Specify:
 	or	a, c
 	extz	wa
 	jrl	FDC_SendParameterByte
+; FDC_SendParams_Format: Sends the FORMAT TRACK parameters N (0x8992 & 7), SC (0x8996), GPL (0x8997) and filler D
+;   (0x8998) through FDC_SendParameterByte. Basis: callers + body + twin -- FDC_CMD_SEND calls it for opcode 0x4D
+;   (FORMAT TRACK) after the unit/head byte; FDC_MODE_CONFIG fills 0x8992/0x8997/0x8998 (N, gap 80/108/116, fill
+;   0xE5); bootloader twin FDC_SendParams_Format.
 FDC_SendParams_Format:
 	ld	a, (0x8992:16)
 	and	a, 7
@@ -1151,6 +1162,9 @@ FDC_SendParams_Format:
 	ld	a, (0x8998:16)
 	extz	wa
 	jrl	FDC_SendParameterByte
+; FDC_SendParam_SeekTrack: Sends the SEEK target track NCN (FDC_TARGET_TRACK, 0x899A) through FDC_SendParameterByte.
+;   Basis: callers + body + twin -- FDC_CMD_SEND calls it for opcode 0x0F (SEEK) after the unit/head byte, as issued
+;   by FDC_CmdSeek; bootloader twin FDC_SendParam_SeekTrack.
 FDC_SendParam_SeekTrack:
 	ld	a, (FDC_TARGET_TRACK:16)
 	extz	wa
@@ -1673,6 +1687,10 @@ FDC_SECTOR_XFER_Join5:
 FDC_SECTOR_XFER_Epilogue2:
 	popw	iz
 	ret
+; FDC_SubmitWriteDataCmd: Issues MT|MF WRITE DATA (0xC5): stores the opcode in 0x898C, arms DMA channel 3 for
+;   memory->I/O (FDC_Setup_DMA_Mode), clears the result buffer, sends the command with FDC_CMD_SEND and, if no error,
+;   waits for the result (FDC_POST_OP). Basis: callers + body + twin -- FDC_SECTOR_XFER (write sectors, FDC command 4)
+;   calls it per burst; instruction twin of the bootloader's FDC_SubmitWriteDataCmd.
 FDC_SubmitWriteDataCmd:
 	ld	(0x898c:16), 197
 	calr	FDC_Setup_DMA_Mode
@@ -1999,6 +2017,13 @@ FDC_OUTPUT_CTRL_Skip2:
 FDC_OUTPUT_CTRL_Join:
 	ld	(35278:16), 0
 	ret	
+; --- FDC_INTERRUPT_HANDLER: FDC interrupt service routine ---
+; Enables interrupts via prevbank (D7 FA 04 = ei 4).
+; Checks FDC status register, reads result data.
+; Tests status bits to determine result type:
+;   bit 7 -> status 0x32 (overrun), bit 5 -> status 0x31 (no data),
+;   bit 6 -> status 0x2f (bad cylinder).
+; Disables interrupts (D7 FA 05 = di 4) before return.
 FDC_INTERRUPT_HANDLER:
 ; [v10] --- FDC_INTERRUPT_HANDLER: FDC interrupt service routine ---
 ; [v10] Enables interrupts via prevbank (D7 FA 04 = ei 4).
