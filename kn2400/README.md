@@ -83,7 +83,7 @@ to RAM has not been found: crt0 copies only `.data`, `0x6e78` bytes from `0x485d
   data. `../kn7000/notes/sibling-symbol-probes/whole_image_pairings.py` produces these figures;
   its README has the command and the output.
 - `kn2400_manual.sym` holds names recovered by hand: `_reset`, `_vector_0a`, `crt0_start`.
-- `kn2400_ported.sym` (`make ported-names`, generated) holds 675 names carried over from the
+- `kn2400_ported.sym` (`make ported-names`, generated) holds 678 names carried over from the
   KN7000 (program 941). `../kn7000/tools/port_names_by_code.py` carries a name when one of
   this image's unnamed entries is the same code as a routine the KN7000's symbol files name:
   the same instructions from the entry to the first return, with every number of 0x10000 or
@@ -95,7 +95,7 @@ to RAM has not been found: crt0 copies only `.data`, `0x6e78` bytes from `0x485d
   `--fuzzy` then compares whole routine bodies on what is left
   (`../kn7000/tools/fn_similarity.py`: every instruction control flow reaches, small
   immediates allowed to differ, callees and referenced strings compared by name, the two
-  routines each other's best match). It carried 80 of the 675; their rows say "whole body"
+  routines each other's best match). It carried 80 of the 678; their rows say "whole body"
   and give the match class and the two similarity ratios.
 - `src/labels.inc` is generated with the source. It holds every other label the source defines,
   so that `kn7asm` resolves each reference in one pass and checks each label against its
@@ -129,7 +129,7 @@ prints the table.
 
 | measure                      | value                                                            |
 |------------------------------|------------------------------------------------------------------|
-| entries                      | 15,797 (2,955 named, 841 derived `<name>_entry`, 12,001 `func_`) |
+| entries                      | 15,797 (2,958 named, 844 derived `<name>_entry`, 11,995 `func_`) |
 | bytes emitted as code        | 1,759,156: 98.91% of the code-range bytes                        |
 | instructions                 | 657,562, plus 87 `.byte` escapes                                 |
 | local branch labels          | 54,871                                                           |
@@ -141,7 +141,7 @@ non-`movm` code pointers.
 
 ## Open work
 
-- Names: 12,001 entries are still `func_<ADDR>`. `make ported-names` carries unique,
+- Names: 11,995 entries are still `func_<ADDR>`. `make ported-names` carries unique,
   non-trivial matches with a KN7000 routine, exact or, with `--fuzzy`, near-exact; most of
   what is left has no KN7000 name either (`../kn7000/notes/function-naming-2026-10-24/`).
 - Reflection tables whose procedures are in the RAM-linked range: `gen_symbols.py` assumes one

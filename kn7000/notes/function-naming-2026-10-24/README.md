@@ -82,6 +82,16 @@ name. Results:
 
 The siblings' `ported-names` targets now pass `--fuzzy` to `tools/port_names_by_code.py`.
 After its first-return signature match, the tool runs the same whole-routine rules on what is
-left. Per sibling, the before/after counts are in the commit that regenerated their
-`*_ported.sym`. Each file's header gives its own counts, and each row says which pass carried
-it ("whole body" rows carry the class and the ratios).
+left. The exact pass also picks up the names the KN7000 gained. Each `*_ported.sym` header
+gives its own counts, and each row says which pass carried it: "whole body" rows give the
+class and the two ratios. The `func_` counts come from each tree's
+`notes/conversion-stats.txt`, which `make program-src` writes:
+
+| tree   | ported names | of them whole body | `func_` entries left |
+|--------|--------------|--------------------|----------------------|
+| kn2400 | 485 -> 678   | 80                 | 12,359 -> 11,995     |
+| kn6000 | 546 -> 714   | 75                 | 10,789 -> 10,503     |
+| kn6500 | 552 -> 721   | 75                 | 10,816 -> 10,528     |
+| hdsx3  | 29 -> 52     | 0                  | 842 -> 799           |
+
+A second `make -C kn6000 ported-names` run reproduced its file byte for byte.

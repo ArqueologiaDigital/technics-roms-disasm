@@ -3,17 +3,17 @@
 ; how a name qualifies. Columns: B address, name, ; the A address it was carried
 ; from and the number of instructions that matched (entry to first return).
 ;
-; 595 names carried (3720 candidates in A, 14827 routine starts in A, 7643 unnamed entries in B)
+; 598 names carried (3725 candidates in A, 14827 routine starts in A, 7643 unnamed entries in B)
 ; not carried: 565 A signatures with fewer than 8 unmasked instructions; 4 with a twin among A's routine starts;
 ; 4 whose name is taken in B
 ; --fuzzy, whole bodies (tools/fn_similarity.py): 80 more names carried (44 exact, 26 skeleton, 10 fuzzy); not carried:
-;       9 an aligned callee or string disagrees
+;      10 an aligned callee or string disagrees
 ;     130 below the class thresholds or ambiguous
 ;      11 best match in B is named or already carried
 ;    2045 name already in B
 ;       0 name used twice in A
 ;     198 no candidate in B
-;     255 not the best match back in A
+;     256 not the best match back in A
 ;     397 too little unmasked content
 0x485E5115  FdcOpcodeInvalid	; = 0x48400F1D, 54 insns
 0x485EC0F8  IndexSwEventHandler	; = 0x48414735, whole body 159 insns, fuzzy (ratios 0.994/0.994, 13 callees or strings agree)
@@ -65,6 +65,7 @@
 0x4860B4B2  VoiceArchiveScanBoot	; = 0x48449EF4, 342 insns
 0x4860B992  VoiceBankSourceFlagGet	; = 0x4844A3D4, 13 insns
 0x4860BB47  UserVoiceRecPtr	; = 0x4844ABF7, 9 insns
+0x4860C22C  SoundRamSignatureWrite	; = 0x4844B29C, 16 insns
 0x48614DB8  SetSeqPlyPart	; = 0x48453BAC, 77 insns
 0x48614E6E  GetSeqPlyPartBit	; = 0x48453C62, 20 insns
 0x48614E95  SetSeqPlyPartBit	; = 0x48453C89, 40 insns
@@ -164,6 +165,7 @@
 0x4863D166  SndRecByteFieldGetB	; = 0x48411E75, 34 insns
 0x4863D25D  SndRecByteFieldGetC	; = 0x48411FA9, 33 insns
 0x4863D2A5  SndRecScanApply	; = 0x48411FF1, 29 insns
+0x48644F64  SmfHeaderNormalize	; = 0x48482C54, 62 insns
 0x4864640F  CustomStyleIndexFromParam	; = 0x4848453B, 25 insns
 0x4864644C  CustomStyleBlockFetch	; = 0x48484578, 20 insns
 0x4864647A  CustomStyleBlockFetchCur	; = 0x484845A6, 24 insns
@@ -178,6 +180,7 @@
 0x486605AA  LowestSetBitIndex	; = 0x484A0C97, 16 insns
 0x486AC3B9  AcSndArgGridBoxProc	; = 0x48506D53, 47 insns
 0x486D124F  CheckSavePMBankNUM	; = 0x4852FBDF, 10 insns
+0x486D1B23  MidFileNamesPageFill	; = 0x485304CB, 89 insns
 0x486D3662  fmmopen	; = 0x48532390, 22 insns
 0x486D36B6  fmmremove	; = 0x485323E4, 20 insns
 0x486D378D  fmmseek	; = 0x485324BB, 25 insns

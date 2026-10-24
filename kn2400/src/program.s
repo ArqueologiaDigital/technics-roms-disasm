@@ -73951,10 +73951,10 @@ func_4860C1FE:
 	call	func_4860C173_entry, [d2,d3,a2,a3], 0x24
 	ret	[d2,d3], 0x1c
 
-func_4860C22C:
+SoundRamSignatureWrite:
 	movm	[d2], (sp)
 
-func_4860C22C_entry:
+SoundRamSignatureWrite_entry:
 	clr	d0
 	clr	d2
 	setlb
@@ -73976,7 +73976,7 @@ func_4860C24C:
 	add	-0x14, sp
 
 func_4860C24C_entry:
-	call	func_4860C22C_entry, [d2], 4
+	call	SoundRamSignatureWrite_entry, [d2], 4
 	clr	d2
 	clr	d3
 func_4860C24C_entry_L7:
@@ -178790,7 +178790,7 @@ func_48643F53_entry_Le1:
 func_48643F53_entry_L102:
 	call	func_486D368E_entry, 0, 0x14
 	mov	a2, a0
-	call	func_48644F64_entry, [d2,d3,a2], 0x14
+	call	SmfHeaderNormalize_entry, [d2,d3,a2], 0x14
 	mov	-1, d1
 	exth	d0
 	cmp	d1, d0
@@ -180445,11 +180445,11 @@ func_48644F3D_entry_L1e:
 	mov	d1, d0
 	ret	[d2], 0x10
 
-func_48644F64:
+SmfHeaderNormalize:
 	movm	[d2,d3,a2], (sp)
 	add	-8, sp
 
-func_48644F64_entry:
+SmfHeaderNormalize_entry:
 	mov	a0, a2
 	clr	d3
 	mov	0x48446bb8, a1
@@ -180469,14 +180469,14 @@ func_48644F64_entry:
 	movbu	(d0, a0), d1
 	extb	d2
 	cmp	d1, d2
-	bne	func_48644F64_entry_L24
+	bne	SmfHeaderNormalize_entry_L24
 	inc	d0
 	exth	d0
 	cmp	4, d0
 	llt
-func_48644F64_entry_L24:
+SmfHeaderNormalize_entry_L24:
 	cmp	4, d0
-	beq	func_48644F64_entry_L46
+	beq	SmfHeaderNormalize_entry_L46
 	clr	d1
 	mov	0x80, a1
 	add	a2, a1
@@ -180485,19 +180485,19 @@ func_48644F64_entry_L24:
 	movbu	(d1, a0), d0
 	extb	d2
 	cmp	d0, d2
-	bne	func_48644F64_entry_L3b
+	bne	SmfHeaderNormalize_entry_L3b
 	inc	d1
 	exth	d1
 	cmp	4, d1
 	llt
-func_48644F64_entry_L3b:
+SmfHeaderNormalize_entry_L3b:
 	cmp	4, d1
-	beq	func_48644F64_entry_L43
+	beq	SmfHeaderNormalize_entry_L43
 	mov	-1, d0
-	bra	func_48644F64_entry_L60
-func_48644F64_entry_L43:
+	bra	SmfHeaderNormalize_entry_L60
+SmfHeaderNormalize_entry_L43:
 	mov	0x80, d3
-func_48644F64_entry_L46:
+SmfHeaderNormalize_entry_L46:
 	clr	d1
 	exth	d3
 	mov	0x50051074, a1
@@ -180513,7 +180513,7 @@ func_48644F64_entry_L46:
 	cmp	0x16, d1
 	llt
 	clr	d0
-func_48644F64_entry_L60:
+SmfHeaderNormalize_entry_L60:
 	retf	[d2,d3,a2], 0x14
 
 func_48644FCC:
@@ -402462,13 +402462,13 @@ func_486D1B02_entry_L15:
 func_486D1B02_entry_L1b:
 	ret	0, 0xc
 
-func_486D1B23:
+MidFileNamesPageFill:
 	movm	[d2,d3,a2,a3], (sp)
 
-func_486D1B23_entry:
+MidFileNamesPageFill_entry:
 	add	-0x11c, sp
 	clr	d2
-func_486D1B23_entry_L5:
+MidFileNamesPageFill_entry_L5:
 	mov	0x484c6d1e, a1
 	mov	0x4f, d1
 	nop
@@ -402487,7 +402487,7 @@ func_486D1B23_entry_L5:
 	inc	d2
 	exth	d2
 	cmp	0x3c, d2
-	blt	func_486D1B23_entry_L5
+	blt	MidFileNamesPageFill_entry_L5
 	clr	d2
 	call	func_48633B56_entry, 0, 0xc
 	mov	sp, a2
@@ -402497,19 +402497,19 @@ func_486D1B23_entry_L5:
 	call	_findfirst_entry, [d2,a2,a3], 0x28
 	mov	d0, d3
 	cmp	d2, d0
-	bge	func_486D1B23_entry_L4a
-	jmp	func_486D1B23_entry_Lca
-func_486D1B23_entry_L4a:
+	bge	MidFileNamesPageFill_entry_L4a
+	jmp	MidFileNamesPageFill_entry_Lca
+MidFileNamesPageFill_entry_L4a:
 	movhu	(0x500561c2), d0
 	mov	8, a3
 	add	a2, a3
 	exth	d0
 	cmp	d2, d0
-	bgt	func_486D1B23_entry_L79
+	bgt	MidFileNamesPageFill_entry_L79
 	movhu	(0x500561c4), d1
 	exth	d1
 	cmp	d2, d1
-	blt	func_486D1B23_entry_L79
+	blt	MidFileNamesPageFill_entry_L79
 	not	d0
 	inc	d0
 	mov	0x4f, d1
@@ -402520,23 +402520,23 @@ func_486D1B23_entry_L4a:
 	add	0x50054f39, a0
 	mov	a3, a1
 	call	func_486D0DF2, 0, 0
-func_486D1B23_entry_L79:
+MidFileNamesPageFill_entry_L79:
 	mov	1, d2
 	mov	d3, d0
 	mov	a2, a0
 	call	_findnext_entry, [d2,d3,a2,a3], 0x48
 	cmp	0, d0
-	bne	func_486D1B23_entry_Lc2
-func_486D1B23_entry_L88:
+	bne	MidFileNamesPageFill_entry_Lc2
+MidFileNamesPageFill_entry_L88:
 	movhu	(0x500561c2), d1
 	exth	d2
 	exth	d1
 	cmp	d1, d2
-	blt	func_486D1B23_entry_Lb4
+	blt	MidFileNamesPageFill_entry_Lb4
 	movhu	(0x500561c4), d0
 	exth	d0
 	cmp	d0, d2
-	bgt	func_486D1B23_entry_Lb4
+	bgt	MidFileNamesPageFill_entry_Lb4
 	mov	d2, d0
 	sub	d1, d0
 	mov	0x4f, d1
@@ -402547,17 +402547,17 @@ func_486D1B23_entry_L88:
 	add	0x50054f39, a0
 	mov	a3, a1
 	call	func_486D0DF2, 0, 0
-func_486D1B23_entry_Lb4:
+MidFileNamesPageFill_entry_Lb4:
 	inc	d2
 	mov	d3, d0
 	mov	a2, a0
 	call	_findnext_entry, [d2,d3,a2,a3], 0x48
 	cmp	0, d0
-	beq	func_486D1B23_entry_L88
-func_486D1B23_entry_Lc2:
+	beq	MidFileNamesPageFill_entry_L88
+MidFileNamesPageFill_entry_Lc2:
 	mov	d3, d0
 	call	_findclose_entry, [a2], 0x10
-func_486D1B23_entry_Lca:
+MidFileNamesPageFill_entry_Lca:
 	mov	d2, d0
 	add	0x11c, sp
 	ret	[d2,d3,a2,a3], 0x10
@@ -402601,7 +402601,7 @@ func_486D1BF7_entry_L16:
 	mov	d2, d1
 func_486D1BF7_entry_L42:
 	movhu	d1, (0x500561c4)
-	call	func_486D1B23_entry, [d2,d3,a2,a3], 0x10
+	call	MidFileNamesPageFill_entry, [d2,d3,a2,a3], 0x10
 func_486D1BF7_entry_L4d:
 	movhu	d3, (0x500561be)
 	mov	d3, d0
@@ -402693,7 +402693,7 @@ func_486D1CEE_entry:
 	movhu	d0, (0x500561c2)
 	mov	0x3b, d0
 	movhu	d0, (0x500561c4)
-	call	func_486D1B23_entry, [d2,d3,a2,a3], 0x10
+	call	MidFileNamesPageFill_entry, [d2,d3,a2,a3], 0x10
 	mov	d0, d2
 	exth	d2
 	mov	-1, d1

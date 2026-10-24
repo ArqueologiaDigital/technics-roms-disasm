@@ -3,16 +3,16 @@
 ; how a name qualifies. Columns: B address, name, ; the A address it was carried
 ; from and the number of instructions that matched (entry to first return).
 ;
-; 637 names carried (3720 candidates in A, 14827 routine starts in A, 6821 unnamed entries in B)
+; 639 names carried (3725 candidates in A, 14827 routine starts in A, 6821 unnamed entries in B)
 ; not carried: 565 A signatures with fewer than 8 unmasked instructions; 4 with a twin among A's routine starts;
 ; 0 whose name is taken in B
 ; --fuzzy, whole bodies (tools/fn_similarity.py): 75 more names carried (48 exact, 18 skeleton, 9 fuzzy); not carried:
 ;       6 an aligned callee or string disagrees
-;     169 below the class thresholds or ambiguous
+;     171 below the class thresholds or ambiguous
 ;      12 best match in B is named or already carried
 ;    1139 name already in B
 ;       0 name used twice in A
-;     712 no candidate in B
+;     713 no candidate in B
 ;     516 not the best match back in A
 ;     454 too little unmasked content
 0x4C000080  LibF64Pow	; = 0x4C000000, 262 insns
@@ -222,6 +222,8 @@
 0x4C07AA7E  HmpBufferAlloc	; = 0x4849709A, 12 insns
 0x4C07C4C7  VoiceRecDefaultPtr	; = 0x484497E0, 17 insns
 0x4C07D71D  UserVoiceRecPtr	; = 0x4844ABF7, 9 insns
+0x4C07D9E4  SoundRamHeaderModelGet	; = 0x4844AF2C, 19 insns
+0x4C07DD35  SoundRamSignatureWrite	; = 0x4844B29C, 16 insns
 0x4C07F95C  SndCmdStreamGetByte	; = 0x4C003A15, whole body 20 insns, skeleton (ratios 1.000/0.950, 0 callees or strings agree)
 0x4C07F984  SndCmdStreamSkipToStatus	; = 0x4C003A3D, 15 insns
 0x4C08086F  TgModCurveSquareScale	; = 0x4C02C236, 18 insns

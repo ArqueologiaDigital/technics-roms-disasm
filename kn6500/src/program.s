@@ -221726,10 +221726,10 @@ func_4C07D6BC_entry_L1ea:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x24
 
-func_4C07D8C0:
+SoundRamHeaderModelGet:
 	movm	[d2,d3], (sp)
 
-func_4C07D8C0_entry:
+SoundRamHeaderModelGet_entry:
 	clr	d0
 	clr	d3
 	setlb
@@ -221738,18 +221738,18 @@ func_4C07D8C0_entry:
 	movbu	(d0, a0), d2
 	movbu	(d0, a1), d1
 	cmp	d1, d2
-	bne	func_4C07D8C0_entry_L17
+	bne	SoundRamHeaderModelGet_entry_L17
 	inc	d3
 	mov	d3, d0
 	exthu	d3
 	cmp	0x10, d3
 	llt
-func_4C07D8C0_entry_L17:
+SoundRamHeaderModelGet_entry_L17:
 	cmp	0x10, d3
-	bne	func_4C07D8C0_entry_L20
+	bne	SoundRamHeaderModelGet_entry_L20
 	mov	1, d0
 	retf	[d2,d3], 8
-func_4C07D8C0_entry_L20:
+SoundRamHeaderModelGet_entry_L20:
 	clr	d0
 	clr	d3
 	setlb
@@ -221758,18 +221758,18 @@ func_4C07D8C0_entry_L20:
 	movbu	(d0, a0), d2
 	movbu	(d0, a1), d1
 	cmp	d1, d2
-	bne	func_4C07D8C0_entry_L37
+	bne	SoundRamHeaderModelGet_entry_L37
 	inc	d3
 	mov	d3, d0
 	exthu	d3
 	cmp	0x10, d3
 	llt
-func_4C07D8C0_entry_L37:
+SoundRamHeaderModelGet_entry_L37:
 	cmp	0x10, d3
-	bne	func_4C07D8C0_entry_L40
+	bne	SoundRamHeaderModelGet_entry_L40
 	mov	5, d0
 	retf	[d2,d3], 8
-func_4C07D8C0_entry_L40:
+SoundRamHeaderModelGet_entry_L40:
 	clr	d0
 	clr	d3
 	setlb
@@ -221778,18 +221778,18 @@ func_4C07D8C0_entry_L40:
 	movbu	(d0, a0), d2
 	movbu	(d0, a1), d1
 	cmp	d1, d2
-	bne	func_4C07D8C0_entry_L57
+	bne	SoundRamHeaderModelGet_entry_L57
 	inc	d3
 	mov	d3, d0
 	exthu	d3
 	cmp	0x10, d3
 	llt
-func_4C07D8C0_entry_L57:
+SoundRamHeaderModelGet_entry_L57:
 	cmp	0x10, d3
-	bne	func_4C07D8C0_entry_L5f
+	bne	SoundRamHeaderModelGet_entry_L5f
 	mov	2, d0
-	bra	func_4C07D8C0_entry_La2
-func_4C07D8C0_entry_L5f:
+	bra	SoundRamHeaderModelGet_entry_La2
+SoundRamHeaderModelGet_entry_L5f:
 	clr	d0
 	clr	d2
 	setlb
@@ -221798,18 +221798,18 @@ func_4C07D8C0_entry_L5f:
 	movbu	(d0, a0), d1
 	movbu	(d0, a1), d0
 	cmp	d0, d1
-	bne	func_4C07D8C0_entry_L76
+	bne	SoundRamHeaderModelGet_entry_L76
 	inc	d2
 	mov	d2, d0
 	exthu	d2
 	cmp	0x10, d2
 	llt
-func_4C07D8C0_entry_L76:
+SoundRamHeaderModelGet_entry_L76:
 	cmp	0x10, d2
-	bne	func_4C07D8C0_entry_L7e
+	bne	SoundRamHeaderModelGet_entry_L7e
 	mov	3, d0
-	bra	func_4C07D8C0_entry_La2
-func_4C07D8C0_entry_L7e:
+	bra	SoundRamHeaderModelGet_entry_La2
+SoundRamHeaderModelGet_entry_L7e:
 	clr	d2
 	clr	d1
 	setlb
@@ -221820,21 +221820,21 @@ func_4C07D8C0_entry_L7e:
 	movbu	(d0, a0), d3
 	movbu	(d2, a1), d0
 	cmp	d0, d3
-	bne	func_4C07D8C0_entry_L99
+	bne	SoundRamHeaderModelGet_entry_L99
 	mov	d1, d2
 	inc	d2
 	mov	d2, d1
 	exthu	d1
 	cmp	6, d1
 	llt
-func_4C07D8C0_entry_L99:
+SoundRamHeaderModelGet_entry_L99:
 	cmp	6, d1
-	bne	func_4C07D8C0_entry_La1
+	bne	SoundRamHeaderModelGet_entry_La1
 	mov	4, d0
-	bra	func_4C07D8C0_entry_La2
-func_4C07D8C0_entry_La1:
+	bra	SoundRamHeaderModelGet_entry_La2
+SoundRamHeaderModelGet_entry_La1:
 	clr	d0
-func_4C07D8C0_entry_La2:
+SoundRamHeaderModelGet_entry_La2:
 	retf	[d2,d3], 8
 
 func_4C07D967:
@@ -222176,10 +222176,10 @@ func_4C07DBE3:
 	call	func_4C07DB58_entry, [d2,d3,a2,a3], 0x24
 	ret	[d2,d3], 0x1c
 
-func_4C07DC11:
+SoundRamSignatureWrite:
 	movm	[d2], (sp)
 
-func_4C07DC11_entry:
+SoundRamSignatureWrite_entry:
 	clr	d0
 	clr	d2
 	setlb
@@ -222201,7 +222201,7 @@ func_4C07DC31:
 	add	-0x14, sp
 
 func_4C07DC31_entry:
-	call	func_4C07DC11_entry, [d2], 4
+	call	SoundRamSignatureWrite_entry, [d2], 4
 	clr	d2
 	clr	d3
 func_4C07DC31_entry_L7:
@@ -222269,7 +222269,7 @@ func_4C07DCBA:
 func_4C07DCBA_entry:
 	mov	d0, d2
 	mov	0x8402f8e4, a0
-	call	func_4C07D8C0_entry, [d2,d3], 8
+	call	SoundRamHeaderModelGet_entry, [d2,d3], 8
 	extbu	d0
 	cmp	1, d0
 	beq	func_4C07DCBA_entry_L23
@@ -222346,7 +222346,7 @@ func_4C07DD5E:
 func_4C07DD5E_entry:
 	mov	0x8402f8e4, a2
 	mov	a2, a0
-	call	func_4C07D8C0_entry, [d2,d3], 8
+	call	SoundRamHeaderModelGet_entry, [d2,d3], 8
 	extbu	d0
 	cmp	1, d0
 	beq	func_4C07DD5E_entry_L1f
@@ -222453,7 +222453,7 @@ PreTmTransLoad:
 	add	-0xc, sp
 
 PreTmTransLoad_entry:
-	call	func_4C07D8C0_entry, [d2,d3], 8
+	call	SoundRamHeaderModelGet_entry, [d2,d3], 8
 	extbu	d0
 	cmp	1, d0
 	beq	PreTmTransLoad_entry_L1c
@@ -222584,7 +222584,7 @@ func_4C07DEE2_entry_L3c:
 func_4C07DF2D:
 	add	-0xc, sp
 	mov	0x8402f8e4, a0
-	call	func_4C07D8C0_entry, [d2,d3], 8
+	call	SoundRamHeaderModelGet_entry, [d2,d3], 8
 	clr	d1
 	extbu	d0
 	cmp	1, d0
@@ -222597,7 +222597,7 @@ func_4C07DF2D_L16:
 func_4C07DF47:
 	add	-0xc, sp
 	mov	0x8402f8e4, a0
-	call	func_4C07D8C0_entry, [d2,d3], 8
+	call	SoundRamHeaderModelGet_entry, [d2,d3], 8
 	extbu	d0
 	cmp	1, d0
 	beq	func_4C07DF47_L23
@@ -222651,7 +222651,7 @@ func_4C07DFAC:
 	add	-0xc, sp
 	mov	d0, d2
 	mov	a0, d3
-	call	func_4C07D8C0_entry, [d2,d3], 8
+	call	SoundRamHeaderModelGet_entry, [d2,d3], 8
 	extbu	d0
 	cmp	1, d0
 	beq	func_4C07DFAC_L24
@@ -617605,7 +617605,7 @@ func_4C169D09_entry_L76:
 func_4C169D09_entry_L95:
 	call	func_4C14F449_entry, 0, 0xc
 	mov	a2, a0
-	call	func_4C16AD7A_entry, [d2,d3,a2], 0x14
+	call	SmfHeaderNormalize_entry, [d2,d3,a2], 0x14
 	mov	-1, d1
 	exth	d0
 	cmp	d1, d0
@@ -619335,11 +619335,11 @@ func_4C16AD53_entry_L1e:
 	mov	d1, d0
 	ret	[d2], 0x10
 
-func_4C16AD7A:
+SmfHeaderNormalize:
 	movm	[d2,d3,a2], (sp)
 	add	-8, sp
 
-func_4C16AD7A_entry:
+SmfHeaderNormalize_entry:
 	mov	a0, a2
 	clr	d3
 	mov	0x4c277e50, a1
@@ -619359,14 +619359,14 @@ func_4C16AD7A_entry:
 	movbu	(d0, a0), d1
 	extb	d2
 	cmp	d1, d2
-	bne	func_4C16AD7A_entry_L24
+	bne	SmfHeaderNormalize_entry_L24
 	inc	d0
 	exth	d0
 	cmp	4, d0
 	llt
-func_4C16AD7A_entry_L24:
+SmfHeaderNormalize_entry_L24:
 	cmp	4, d0
-	beq	func_4C16AD7A_entry_L46
+	beq	SmfHeaderNormalize_entry_L46
 	clr	d1
 	mov	0x80, a1
 	add	a2, a1
@@ -619375,19 +619375,19 @@ func_4C16AD7A_entry_L24:
 	movbu	(d1, a0), d0
 	extb	d2
 	cmp	d0, d2
-	bne	func_4C16AD7A_entry_L3b
+	bne	SmfHeaderNormalize_entry_L3b
 	inc	d1
 	exth	d1
 	cmp	4, d1
 	llt
-func_4C16AD7A_entry_L3b:
+SmfHeaderNormalize_entry_L3b:
 	cmp	4, d1
-	beq	func_4C16AD7A_entry_L43
+	beq	SmfHeaderNormalize_entry_L43
 	mov	-1, d0
-	bra	func_4C16AD7A_entry_L60
-func_4C16AD7A_entry_L43:
+	bra	SmfHeaderNormalize_entry_L60
+SmfHeaderNormalize_entry_L43:
 	mov	0x80, d3
-func_4C16AD7A_entry_L46:
+SmfHeaderNormalize_entry_L46:
 	clr	d1
 	exth	d3
 	mov	0x500d3f90, a1
@@ -619403,7 +619403,7 @@ func_4C16AD7A_entry_L46:
 	cmp	0x16, d1
 	llt
 	clr	d0
-func_4C16AD7A_entry_L60:
+SmfHeaderNormalize_entry_L60:
 	retf	[d2,d3,a2], 0x14
 
 func_4C16ADE2:

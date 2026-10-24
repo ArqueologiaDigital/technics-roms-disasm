@@ -3,14 +3,14 @@
 ; how a name qualifies. Columns: B address, name, ; the A address it was carried
 ; from and the number of instructions that matched (entry to first return).
 ;
-; 52 names carried (3720 candidates in A, 14827 routine starts in A, 538 unnamed entries in B)
+; 52 names carried (3725 candidates in A, 14827 routine starts in A, 538 unnamed entries in B)
 ; not carried: 565 A signatures with fewer than 8 unmasked instructions; 0 with a twin among A's routine starts;
 ; 0 whose name is taken in B
 ; --fuzzy, whole bodies (tools/fn_similarity.py): 0 more names carried (0 exact, 0 skeleton, 0 fuzzy); not carried:
 ;       1 below the class thresholds or ambiguous
 ;       1 name already in B
 ;       0 name used twice in A
-;    3002 no candidate in B
+;    3007 no candidate in B
 ;     664 too little unmasked content
 0x97807DCA  LibF64ToI16	; = 0x4C001624, 9 insns
 0x97807DE3  LibF64UnpackedToI32	; = 0x4C000263, 32 insns

@@ -64,7 +64,7 @@ are where the reached code stops: past them, no traced path enters and no named 
   a null pointer). `../kn7000/notes/sibling-symbol-probes/whole_image_pairings.py` produces
   these figures; its README has the command and the output.
 - `kn6500_manual.sym` holds names recovered by hand: `_reset`, `_vector_08`, `crt0_start`.
-- `kn6500_ported.sym` (`make ported-names`, generated) holds 718 names carried over from the
+- `kn6500_ported.sym` (`make ported-names`, generated) holds 721 names carried over from the
   KN7000 (program 941). `../kn7000/tools/port_names_by_code.py` carries a name when one of
   this image's unnamed entries is the same code as a routine the KN7000's symbol files name:
   the same instructions from the entry to the first return, with every number of 0x10000 or
@@ -76,7 +76,7 @@ are where the reached code stops: past them, no traced path enters and no named 
   `--fuzzy` then compares whole routine bodies on what is left
   (`../kn7000/tools/fn_similarity.py`: every instruction control flow reaches, small
   immediates allowed to differ, callees and referenced strings compared by name, the two
-  routines each other's best match). It carried 75 of the 718; their rows say "whole body"
+  routines each other's best match). It carried 75 of the 721; their rows say "whole body"
   and give the match class and the two similarity ratios.
 - `src/labels.inc` is generated with the source. It holds every other label the source defines:
   `func_<ADDR>` for an entry no table names, `<name>_entry` for a register-save `call` entry,
@@ -99,7 +99,7 @@ prints the table.
 
 | measure                      | value                                                            |
 |------------------------------|------------------------------------------------------------------|
-| entries                      | 13,323 (2,116 named, 673 derived `<name>_entry`, 10,534 `func_`) |
+| entries                      | 13,323 (2,119 named, 676 derived `<name>_entry`, 10,528 `func_`) |
 | bytes emitted as code        | 1,530,172: 98.96% of the code-range bytes                        |
 | instructions                 | 574,334, plus 86 `.byte` escapes                                 |
 | local branch labels          | 43,667                                                           |
@@ -107,7 +107,7 @@ prints the table.
 
 ## Open work
 
-- Names: 10,534 entries are still `func_<ADDR>`. `make ported-names` carries unique,
+- Names: 10,528 entries are still `func_<ADDR>`. `make ported-names` carries unique,
   non-trivial matches from the KN7000, exact or, with `--fuzzy`, near-exact. Names from the
   KN2400's and the other KN6xxx's reflection tables have not been carried between the
   siblings yet (the KN7000 takes this tree's: `../kn7000/tools/port_sibling_names.py`).
