@@ -27,6 +27,7 @@ QUESTION THIS ANSWERS / JOB IT DOES
 USAGE
   make all
   python3 scripts/tools/name_kn5000_ram.py --tree v10|v9|v7 [--apply]
+  python3 scripts/tools/name_kn5000_ram.py --tree v10|v9|v7 --check-xhl   # named xhl loads the PTR rule would not make
 """
 import argparse
 import collections
@@ -177,7 +178,23 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--tree", required=True, choices=["v10", "v9", "v7"])
     ap.add_argument("--apply", action="store_true")
+    ap.add_argument("--check-xhl", action="store_true",
+                    help="list the tree's `ld xhl, NAME` loads of a RAM name that xhl_is_pointer() rejects")
     a = ap.parse_args()
+    if a.check_xhl:
+        names, kept, rejected = ram_names(a.tree), 0, 0
+        for f in sorted(glob.glob(os.path.join(REPO, a.tree, "maincpu", "**", "*.s"), recursive=True)):
+            L = open(f, "rb").read().decode("latin-1").split("\n")
+            for i, l in enumerate(L):
+                m = re.match(r'^\s*ld\s+xhl\s*,\s*([A-Za-z_]\w*)\s*(;|$)', l)
+                if m and m.group(1) in names:
+                    if xhl_is_pointer(L, i):
+                        kept += 1
+                    else:
+                        rejected += 1
+                        print("  not a pointer load: %s:%d: %s" % (os.path.relpath(f, REPO), i + 1, l.strip()))
+        print("%s: %d named `ld xhl, NAME` pointer loads pass xhl_is_pointer, %d do not" % (a.tree, kept, rejected))
+        return 1 if rejected else 0
     ref = ram_names("v10")
     NAMED.update(ref)
     byaddr10 = {v: n for n, v in ref.items()}

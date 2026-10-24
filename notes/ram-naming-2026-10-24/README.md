@@ -28,7 +28,8 @@ of its own is spelled `NAME+offset`, with the offset in decimal (`(PANEL_STYLE+8
 | `scripts/tools/add_kn5000_ram_names.py`            | (new) adds `0xADDR NAME ; why` lines to the three `ram_variables_by_use.s`, runs `name_kn5000_ram.py --apply` per tree, leaves out of v9 / v7 a name the code there does not use, places records by their fields, and spells `NAME+offset`  |
 | `scripts/tools/name_kn5000_ram.py`                 | (existing; now compiles its name pattern once and also reads the two new files) rewrites the numeric operands; for v9 / v7 derives each name's address from the same instruction in the same routine                                        |
 | `scripts/tools/name_kn5000_panel_records.py`       | (new) names the panel records from `SndParam_BlockRamPtrs` and the default image `SndParamRam_DefaultImage`, after checking that both are identical in v7 / v9 / v10                                                                        |
-| `scripts/renaming/rename_wp17_ram.sed`             | (new) the one rename this lane made to its own names (below)                                                                                                                                                                                |
+| `scripts/renaming/rename_wp17_ram.sed`             | (new) the first rename this lane made to its own names (below)                                                                                                                                                                              |
+| `scripts/renaming/rename_wp17_boot_stage.sed`      | (new) the second one: `NMI_GUARD` -> `BOOT_STAGE` (below)                                                                                                                                                                                   |
 | `scripts/renaming/apply_word_renames.py`           | (new) runs a `.sed` file's whole-word rules over `.s` files byte-safely (the sandbox here refuses `sed -f`)                                                                                                                                 |
 | `scripts/analysis/kn5000_shared_ram_crosscheck.py` | (new) does the HD-AE5000 source spell a main-CPU RAM address as a number?  It does not: 0 operands, so there is no shared name to reuse (the sub-CPU has an address space of its own)                                                       |
 
@@ -90,6 +91,17 @@ them with `grep -c '^\s*\.equ'` on each file. `make gate` reported every image I
   `name_kn5000_panel_records.py` shows that they are: the TLV walk continues through tags 0x17, 0x18, 0x98,
   0x91, 0x93, 0xC0-0xD7, 0x49 and 0x9A, and every one of those payloads is the address
   `SndParam_BlockRamPtrs` holds for its tag. The header comment was left for the lane that owns that file.
+- The review of this lane (2026-10-24) found that `LswLocal_SubParam`'s `ld xhl, 0x400` had been spelled
+  with 0x0400's name. It is not a pointer: `LswLocalControl` returns XHL as the LSW data number for
+  `EVT_GET_LSW_DATA_NO`. It is a number again, and `name_kn5000_ram.py` names an `ld xhl, N` only when one
+  of the next 10 instructions uses XHL as a pointer (`xhl_is_pointer`). `--check-xhl` lists the named XHL
+  loads that this check would not make: none in any of the three trees.
+- 0x0400 was `NMI_GUARD`, after its only reader, `NMI_StorePayloadChecksums`, which saves the checksums
+  only when it holds 0x80. Its writers store 2, 3 and 6 during boot before 0x80, and 0 in the NMI handler,
+  so it is now `BOOT_STAGE` (`rename_wp17_boot_stage.sed`).
+- The comments in `ram_variables_by_use.s` / `ram_panel_records.s` now write hex in lowercase
+  (`add_kn5000_ram_names.py` normalises a reason when it writes or realigns a file: `--realign`), and the
+  ones that quoted a named address as a number name it instead.
 
 ## Follow-ups
 
@@ -116,3 +128,7 @@ them with `grep -c '^\s*\.equ'` on each file. `make gate` reported every image I
 5. The sequencer edit titles' parameters (0x25FA-0x2662, `EVT_GET_RAM_ADDRESS` per title in
    `SqedtFunc_StateChainB_On*`) form one table per title, and could be named record by record from those
    switch tables.
+6. `NMI_StorePayloadChecksums`'s routine header (`boot/system_handlers.s`) still describes RAM 0x0400 as
+   "the NMI guard" by number. A header lane could name `BOOT_STAGE` there.
+7. The panel records named after their tag (`PANEL_REC_90`, `PANEL_REC_60` and the like) are placeholders.
+   Their comments already identify fields, so they could get semantic names in a later batch.

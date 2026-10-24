@@ -1,4 +1,4 @@
-; ram_panel_records.s -- the live panel records, RAM 0xF9A0-0xFFBE: TLV records {tag, length, payload},
+; ram_panel_records.s -- the live panel records, RAM 0xf9a0-0xffbe: TLV records {tag, length, payload},
 ; the ones a .LSW file saves (technics-docs panel-parameter-keys.md).  Each name is a record's payload,
 ; as SndParam_BlockRamPtrs (ui_widgets/widget_dispatch.s) holds it per tag; tags and lengths are the
 ; default image's (SndParamRam_DefaultImage).  The table is the same in v7, v9 and v10, so are these

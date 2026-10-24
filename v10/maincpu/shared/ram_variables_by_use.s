@@ -2,7 +2,7 @@
 ; line per variable, sorted by address.  Each comment says what the uses show: who writes it, with what,
 ; and how it is read (scripts/analysis/kn5000_ram_evidence.py prints that evidence for an address).
 ; Added by scripts/tools/add_kn5000_ram_names.py, which also rewrites the numeric operands.
-	.equ NMI_GUARD,				0x0400	; 0x80 arms the power-fail NMI: NMI_StorePayloadChecksums stores the checksums only when it is set (Boot_DisplayScreen arms it)
+	.equ BOOT_STAGE,			0x0400	; boot progress: Boot_PostSelfTest stores 2 before TaskSched_Init and 3 after it, Boot_DisplayScreen 6 after the first screen group and 0x80 after the last; NMI_ClearGuardAndHalt stores 0.  Only NMI_StorePayloadChecksums reads it: it stores the power-fail checksums only at 0x80 (boot complete, power-fail save armed)
 	.equ BOOT_CONFIG_FLAGS,			0x0406	; bit 7 = boot finished normally (Boot_SetConfigFlag7 sets it in Boot_DisplayScreen, Boot_ClearConfigFlag7 clears it at the start of Boot_InitPeripherals)
 	.equ ACC_CLOCK,				0x0415	; accompaniment clock within the beat, 0..95 (INTTR4_CheckSeqEnable counts it, ClkTick_Src2FineBeatCheck by 4 per MIDI clock)
 	.equ ACC_BEAT,				0x0416	; beat within the measure; INTTR4_SeqAutoStart compares it with ACC_BEATS_PER_BAR - 1, the BeatLed_*Masks show it on the START/STOP BEAT LEDs
@@ -44,7 +44,7 @@
 	.equ SQSTEP_HELD_COUNT,			0x0dd4	; keys held while step-recording, up to 8 (TempoRingBuf_ReadNoteIntoHeldList)
 	.equ SQSTEP_COLLECTED_NOTES,		0x0dd5	; notes collected for the chord being step-recorded; TempoRingBuf_OnNoteEvent writes one record per note
 	.equ STATUS_POPUP_ID,			0x0def	; the pop-up the status bar's region 0 shows: 1 accompaniment parameter, 2 incoming control line, 4 program change, 10 part parameter, 12 RHYTHM track (ParamPopup_*, Display_ModePopupDispatch, SqStep_SetPopupIdForDisplayMode)
-	.equ PERF_STEP_AMOUNT,			0x0df2	; +1 or 0xFF (-1): what PerfMode_StepCursorEventByte adds
+	.equ PERF_STEP_AMOUNT,			0x0df2	; +1 or 0xff (-1): what PerfMode_StepCursorEventByte adds
 	.equ PERF_STEP_FIELD,			0x0df3	; which byte of the event at the cursor it steps (2, 3 velocity, 4)
 	.equ SQSTEP_ROW1_MEASURE,		0x0e4c	; word: measure number of the step grid's row above the cursor row (SqStep_SetupPrevGridRow; capped at 1000)
 	.equ SQSTEP_ROW2_MEASURE,		0x0e4e	; word: measure number of the cursor row
@@ -54,7 +54,7 @@
 	.equ SQSTEP_ROW3_BEATS,			0x0e54	; beats shown in row 3
 	.equ SEQ_CURSOR_TRACK,			0x0eee	; the cursor track, 1..16, of the step-record and scoop screens (SqStep_SetDisplayModeFromTrack copies SEQ_SELECTED_TRACK into it)
 	.equ SEQ_EVT_STATUS,			0x0fab	; status byte of the MIDI event the song player is executing (MidiEvent_*, MidiNoteOn_*); only the low nibble, the channel, is used
-	.equ SEQ_EVT_DATA1,			0x0fac	; its first data byte (clamped to 0x7F with SEQ_EVT_DATA2 by MidiEvent_ClampVelocityA_High)
+	.equ SEQ_EVT_DATA1,			0x0fac	; its first data byte (clamped to 0x7f with SEQ_EVT_DATA2 by MidiEvent_ClampVelocityA_High)
 	.equ SEQ_EVT_DATA2,			0x0fad	; its second data byte
 	.equ SEQ_EVENT_ABORT,			0x10e3	; 0 = carry on; 255 = the block chain ran out (ToneGen_AdvancePosition with no free block) or SeqTrack_ValidateAndAssignVoices found no dispatch slot.  The event handlers skip their register write when it is set and clear it after each event
 	.equ POPUP_PART,			0x10f1	; part shown by the parameter pop-up, an index into StringData_PartNames (ParamPopup_Part*)
@@ -66,7 +66,7 @@
 	.equ PART_PARAM_SELECT,			0x111c	; the part parameter shown: 0 PAN, 1 KEY SHIFT, 2 TUNING, 3 BEND SENS (PartParam_LoadSelectedValue)
 	.equ PART_PARAM_VALUE,			0x111d	; its value, shown under that label by DisplayStr_ShowPartParamLine
 	.equ PLAYBACK_COUNTDOWN,		0x1144	; ticks before an armed playback starts: 10 when armed (PlayMode_LoadStartCountdown), CDlikeSwitch_PlaybackTimer counts it down
-	.equ SEQ_BLOCK_POOL,			0x1d5a	; base of the sequencer's pool of 256-byte data blocks: SeqInit_SetBaseAddress sets 0xB0000; block n (1-based) is at this + (n - 1) * 0x100
+	.equ SEQ_BLOCK_POOL,			0x1d5a	; base of the sequencer's pool of 256-byte data blocks: SeqInit_SetBaseAddress sets 0xb0000; block n (1-based) is at this + (n - 1) * 0x100
 	.equ SEQ_OP_MEASURES,			0x25de	; word: measures the edit operation covers, last - first + 1 (the EXECUTE handlers MainExeCall_OnTitleSq* store it; SeqPart_* and the Seq_Validate* checks read it)
 	.equ SEQ_PART_LOOP,			0x25e0	; the part (0..15) the sequencer's per-part loops are on (SeqAcc_ProcessTempo_*, Portamento_Scan*, SeqScan_*)
 	.equ SQEDT_TRKCLR_MASK,			0x25e8	; word: TT_SQTRKCLR's track mask; EXECUTE clears every track whose bit is set and zeroes it
@@ -120,7 +120,7 @@
 	.equ BMDREDIT_CHANNEL,			0x2965	; the MIDI channel (track) the beat / drum editor works on; SEQ_TRACK_ASSIGN[this] picks its part type (BmDrEdit_TestPartTableEntry)
 	.equ SEQ_SCREEN_OBJECT,			0x2972	; the object EVT_PAINT gave the sequencer screen handlers (ApEditSyori, NoteEditSyori, ApPlaySyori, EffEditMain store its parameter); EVT_PARA_DRAW redraw requests are sent to it
 	.equ DSP_EFFECT_NUMBER,			0x2976	; word: the DSP effect being edited (DspItem0_DisplayEffectName indexes DspEffectName_PtrTable by it)
-	.equ ACC_STYLE_BANK,			0x3285	; the style's 64 KB rhythm-ROM bank, its record's byte +0x3D1 (AccStyle_SetupPartAddresses); pattern reads are 0x400000 + bank * 0x10000 + offset
+	.equ ACC_STYLE_BANK,			0x3285	; the style's 64 KB rhythm-ROM bank, its record's byte +0x3d1 (AccStyle_SetupPartAddresses); pattern reads are 0x400000 + bank * 0x10000 + offset
 	.equ ACC_LANE_READ_POS,			0x3287	; [12 bytes] per-lane read position, a word per lane (lanes in ACC_PART_BIT order): the signed 16-bit offset into the style's bank, starting at the lane pointer - 0x8000 + 6 (AccStyle_SetupPartAddresses); AccBuf_Advance steps it
 	.equ ACC_LANE_BLOCK,			0x3297	; [12 bytes] per-lane current pattern block (patch entry, 256-byte block) number, a word per lane; AccBuf_Advance replaces it with the block's link word at a 0x87 cell link (AccPatch_LoadTablePointers returns these words)
 	.equ ACC_LANE_SECTION,			0x32a3	; [6 bytes] per-lane section byte (sections are 5 apart; AccStyle_SelectSection writes all six)
@@ -130,11 +130,11 @@
 	.equ ACC_STYLE_GROUP,			0x32e6	; its group, 0..6 (the directory has 8 groups x 128 styles)
 	.equ ACC_BAD_EVENT_COUNT,		0x32ed	; unknown pattern bytes the lane reader skipped; at 32 AccVoice_AdvanceAndCheckEnd stops the accompaniment
 	.equ ACC_SCAN_BAD_EVENT_COUNT,		0x32ee	; the same count for AccSeq_FourChannelScan's pattern scanner (AccSeq_Scanner_Unknown)
-	.equ ACC_PENDING_STYLE,			0x32f5	; style number sampled from PANEL_STYLE, applied by AccStyle_ApplyChanges; 0xFF forces a reload (the bad-event watchdogs store it)
+	.equ ACC_PENDING_STYLE,			0x32f5	; style number sampled from PANEL_STYLE, applied by AccStyle_ApplyChanges; 0xff forces a reload (the bad-event watchdogs store it)
 	.equ ACC_PENDING_GROUP,			0x32f7	; group sampled from PANEL_STYLE+1 (low 3 bits used)
 	.equ ACC_SECTION_REQUEST,		0x3305	; the 2-bit section request, (PANEL_STYLE+7 & 0x30) >> 4 (SeqCtl_StorePedalFlags)
 	.equ SNDARG_PART_SELECT,		0x338e	; the Sound Arranger part being edited, one-hot: 1 DRUM, 2 BASS, 4 / 8 / 16 ACCOMP1-3 (AcSndArgGridBoxProc sets it; cleared entering and leaving MD_SND_ARG); AccStyle_Process copies changed sounds while it is set
-	.equ SNDARG_LAST_SOUNDS,		0x3395	; [10 bytes] the sound (part record bytes +0, +1 & 0x7F) of DRUM, BASS, ACCOMP1-3 the Sound Arranger last saw (AccVoiceState_Snapshot); SndArg_Store*Sound compare with it
+	.equ SNDARG_LAST_SOUNDS,		0x3395	; [10 bytes] the sound (part record bytes +0, +1 & 0x7f) of DRUM, BASS, ACCOMP1-3 the Sound Arranger last saw (AccVoiceState_Snapshot); SndArg_Store*Sound compare with it
 	.equ ACC_PART_BIT,			0x33d4	; the accompaniment part being set up or played, one-hot: 1, 2, 4, 8, 16, 32 (AccVoice_SetupKbd1, _SetupKbd2, _SetupAcc1 .. _SetupAcc4); AccStyle_ReadParamOffset picks that part's field of a style record by it
 	.equ ACC_CUR_SECTION,			0x33d5	; the lane being processed: its ACC_LANE_SECTION (AccVoice_SavePartState1 and its twins copy the lane in, *_RestoreState back)
 	.equ ACC_CUR_BLOCK,			0x33d6	; word: the lane being processed: its ACC_LANE_BLOCK
@@ -182,9 +182,9 @@
 	.equ CSTMCP_TO_SLOT,			0x39b7	; custom-style copy: the TO rhythm slot
 	.equ CSTMCP_WINDOW,			0x3a7e	; the custom-style copy title's open window: 0 none, 1 memory full, 2 function select
 	.equ STYLCNV_LIST_POS,			0x3d04	; word: scroll position (first line shown) of the style-convert title lists (StylCnvSel / StylCnvModl / StylCnvCnvt *_OK_Scroll*)
-	.equ ACCSEQ_BLOCK,			0x7e42	; word: the accompaniment sequencer's current data block; its 256 bytes are at 0x1E8B00 + 256 * (this & 0xFFF) (AccompSeq_GetBlockBase)
+	.equ ACCSEQ_BLOCK,			0x7e42	; word: the accompaniment sequencer's current data block; its 256 bytes are at 0x1e8b00 + 256 * (this & 0xfff) (AccompSeq_GetBlockBase)
 	.equ ACCSEQ_BEAT_COUNTER,		0x7e46	; word: beats the accompaniment sequencer has read (each 0x81 marker counts one)
-	.equ DISK_MEDIA_TYPE,			0x8500	; word: disk type code from GetDiskSizeInfo: 2 / 4 2DD, 3 2HD, 5 PD, 6-7 DOC, 0xFFFF none (DiskInfo_MediaTypeNames)
+	.equ DISK_MEDIA_TYPE,			0x8500	; word: disk type code from GetDiskSizeInfo: 2 / 4 2DD, 3 2HD, 5 PD, 6-7 DOC, 0xffff none (DiskInfo_MediaTypeNames)
 	.equ SINGLE_LOAD_SRC_ROWS,		0x894e	; [84 bytes] the four 21-byte text rows of the single-load source list (cells 0..3)
 	.equ SINGLE_LOAD_DST_ROWS,		0x89a2	; [84 bytes] the four 21-byte text rows of the destination list
 	.equ SINGLE_LOAD_AREA,			0x89f8	; the memory area of the single-load screens: 0 PANEL MEMORY, 1 SEQUENCER, 2 COMPOSER, 3 SOUND MEMORY, 4 none (SingleLoadSrc_ListProcByMode is indexed by it)
@@ -197,12 +197,12 @@
 	.equ SLOAD_DST_CMP_POS,			0x8a06	; single-load destination cursor in COMPOSER
 	.equ SLOAD_DST_SOUND_POS,		0x8a08	; single-load destination cursor in SOUND MEMORY
 	.equ PASSWORD_STATE,			0x8a0c	; [2 bytes] the password check: +0 protected-operation mode 0-3 (SelectMode_*), +1 flags (FmmPassword_StateInit's initial {0, 0})
-	.equ FDC_PROBE_FLAG,			0x8a10	; word: 0xFFFF while a caller probes the disk format (a one-sector read of track 0, head 0 gets a single try: FDC_DETECT_CHECK, FDC_DRIVE_DETECT)
-	.equ FDC_BUSY_LATCH,			0x8a16	; 0xA5 while a request runs, 0x5A when it ends; a request that finds 0xA5 fails with 0xFB (FDC_CommandEntry)
+	.equ FDC_PROBE_FLAG,			0x8a10	; word: 0xffff while a caller probes the disk format (a one-sector read of track 0, head 0 gets a single try: FDC_DETECT_CHECK, FDC_DRIVE_DETECT)
+	.equ FDC_BUSY_LATCH,			0x8a16	; 0xa5 while a request runs, 0x5a when it ends; a request that finds 0xa5 fails with 0xfb (FDC_CommandEntry)
 	.equ FDC_SECTOR_SIZE,			0x8a1e	; word: sector size, 0x200 or 0x400
-	.equ FDC_INIT_FLAG,			0x8a20	; 0xFF once the controller is initialised (FDC_CONFIG_VERIFY)
-	.equ FDC_CMD_OPCODE,			0x8a28	; the uPD765 command byte being issued (0xD1 / 0xD9 / 0xDD are the scan commands FDC_SendParams_ReadWrite sends STP for)
-	.equ FDC_HEAD,				0x8a29	; head 0 or 1 for the command's unit/head byte (FDC_CheckHead copies the request's head; other values fail with 0xFE)
+	.equ FDC_INIT_FLAG,			0x8a20	; 0xff once the controller is initialised (FDC_CONFIG_VERIFY)
+	.equ FDC_CMD_OPCODE,			0x8a28	; the uPD765 command byte being issued (0xd1 / 0xd9 / 0xdd are the scan commands FDC_SendParams_ReadWrite sends STP for)
+	.equ FDC_HEAD,				0x8a29	; head 0 or 1 for the command's unit/head byte (FDC_CheckHead copies the request's head; other values fail with 0xfe)
 	.equ FDC_DRIVE,				0x8a2a	; drive 0 or 1 for the command's unit/head byte (FDC_CheckDriveCount copies the request's drive)
 	.equ FDC_PARAM_C,			0x8a2b	; uPD765 parameter C, the cylinder (FDC_SendParams_ReadWrite)
 	.equ FDC_PARAM_H,			0x8a2c	; parameter H, the head (bit 0 sent)
@@ -210,10 +210,10 @@
 	.equ FDC_PARAM_N,			0x8a2e	; parameter N, the sector size code (bits 0-2 sent; also FORMAT TRACK's N)
 	.equ FDC_PARAM_EOT,			0x8a2f	; parameter EOT, the last sector of the track
 	.equ FDC_PARAM_GPL,			0x8a30	; parameter GPL, the gap length
-	.equ FDC_PARAM_DTL,			0x8a31	; parameter DTL, the data length (0xFF from FDC_InitStateVars)
+	.equ FDC_PARAM_DTL,			0x8a31	; parameter DTL, the data length (0xff from FDC_InitStateVars)
 	.equ FDC_FORMAT_SC,			0x8a32	; FORMAT TRACK's SC, sectors per track (FDC_SendParams_Format)
 	.equ FDC_FORMAT_GPL,			0x8a33	; FORMAT TRACK's gap length (80 / 108 / 116, FDC_MODE_CONFIG)
-	.equ FDC_FORMAT_FILL,			0x8a34	; FORMAT TRACK's filler byte (0xE5)
+	.equ FDC_FORMAT_FILL,			0x8a34	; FORMAT TRACK's filler byte (0xe5)
 	.equ FDC_PARAM_STP,			0x8a35	; the scan commands' STP (bits 0-1 sent instead of DTL)
 	.equ FDC_SPECIFY_SRT,			0x8a37	; SPECIFY's step rate time (the high nibble of its first byte)
 	.equ FDC_SPECIFY_HUT,			0x8a38	; SPECIFY's head unload time (the low nibble, 15 from FDC_InitStateVars)
@@ -223,15 +223,15 @@
 	.equ FDC_REQ_HEAD,			0x8a44	; word: request +0x04, the head (command 9 reads it as the new disk-changed flag)
 	.equ FDC_REQ_TRACK,			0x8a46	; word: request +0x06, the track (command 0: the media-type code)
 	.equ FDC_REQ_SECTOR,			0x8a48	; word: request +0x08, the starting sector (1-based)
-	.equ FDC_REQ_COUNT,			0x8a4a	; word: request +0x0A, the sector count
-	.equ FDC_REQ_BUFFER,			0x8a4c	; request +0x0C, the buffer address (the DMA memory address, advanced after each burst; a format points it at FDC_FORMAT_IDS)
+	.equ FDC_REQ_COUNT,			0x8a4a	; word: request +0x0a, the sector count
+	.equ FDC_REQ_BUFFER,			0x8a4c	; request +0x0c, the buffer address (the DMA memory address, advanced after each burst; a format points it at FDC_FORMAT_IDS)
 	.equ FDC_REQUEST_COPY,			0x8a50	; [16 bytes] the second copy of the caller's request FDC_CommandEntry_CopyParams makes
 	.equ FDC_RESULT,			0x8a60	; [7 bytes] the result-phase bytes FDC_ResultPhase_Read collects (ST0 first)
 	.equ FDC_RETRY_COUNT,			0x8a68	; retries left: 8 for a read or write, 1 for a probe read; at 0 the command fails with error 16 (read) or 32 (write)
-	.equ FDC_DISK_CHANGED,			0x8a6a	; disk-changed flag: command 9 sets 0xFF or 0; cleared at initialisation
+	.equ FDC_DISK_CHANGED,			0x8a6a	; disk-changed flag: command 9 sets 0xff or 0; cleared at initialisation
 	.equ FDC_DRIVE_MODE,			0x8a6c	; drive mode 0-5 (FDC_CONFIG_VERIFY's media cases)
 	.equ FDC_FORMAT_IDS,			0x8a70	; the sector ID bytes a FORMAT TRACK sends by DMA (FDC_MODE_CONFIG_Helper2 builds them)
-	.equ FDC_CURRENT_CYLINDER,		0x8b04	; the cylinder last sought to, 0xFF = unknown (FDC_CmdSeek compares it)
+	.equ FDC_CURRENT_CYLINDER,		0x8b04	; the cylinder last sought to, 0xff = unknown (FDC_CmdSeek compares it)
 	.equ FDC_SECTOR_LIMIT,			0x8b0c	; word: one more than the sectors per track (10, 9 or 19 by media type); bounds the sector number in the read and write loops
 	.equ FDC_PROBE_REQUEST,			0x8b24	; [16 bytes] the request FDC_Reset_BuildParams builds for the disk-format probe: {command, drive, head, track, sector, count, buffer}
 	.equ DISPLAY_CHORD_ROOT,		0x8d40	; the chord MainChordPre shows: its root (copied from CHORD_ROOT by Chord_ApplyCurrentChord)
@@ -246,13 +246,13 @@
 	.equ LED_REQUEST_HOLD_3,		0x8f44	; word: group-3 bits held back
 	.equ DEMO_PLAY_STATE,			0x8f4e	; 4 = idle (the Demo_SelectEntry_* paths), 6 = a song started by Demo_SelectEntry_PlaySong
 	.equ SWBTWR_WRITE_INDEX,		0x90de	; word: write index of the parameter-event output buffer that MIDI_WriteCommandToBuffer, AssswbWr and the SwbtWr_* appenders fill (Audio_InitAllDefaults zeroes it)
-	.equ PART_RECORD_PTRS,			0x90f2	; address of the part-record pointer table: entry p = part p's RAM record, 0xFFFFFFFF = none (Audio_InitAllDefaults stores it; MIDI_WriteVoiceParam* index it)
+	.equ PART_RECORD_PTRS,			0x90f2	; address of the part-record pointer table: entry p = part p's RAM record, 0xffffffff = none (Audio_InitAllDefaults stores it; MIDI_WriteVoiceParam* index it)
 	.equ PROGRAM_CHANGE_PART,		0x90f7	; the part a program change or sound selection is for: 0..31, 16-20 from the accompaniment chains (AccPatch_UpdateChain_*), 72 = the rhythm part
 	.equ EXTDATA_TLV_OFFSET,		0x912f	; byte offset in the panel record (tag MIDI_MSG_STATUS) the ExtData_* handlers change
 	.equ EXTDATA_VALUE,			0x9130	; the received value; with EXTDATA_MASK a two-byte value for ExtData_SetTempoIfChanged
 	.equ EXTDATA_MASK,			0x9131	; the bits of the record byte EXTDATA_VALUE may change (ExtData_SetTlvField)
 	.equ EXTDATA_NEW_VALUE,			0x9132	; the record byte after the change, also sent as MIDI_MSG_DATA2
-	.equ EXT_RECORD_OFFSET,			0x9133	; word: read offset in the buffer of received 4-byte records at 0xC039 (SndParam_FetchSequencerParams; a type byte 0xFF ends the scan)
+	.equ EXT_RECORD_OFFSET,			0x9133	; word: read offset into PANEL_EVENT_QUEUE, the buffer of received 4-byte records (SndParam_FetchSequencerParams; a type byte 0xff ends the scan)
 	.equ MIDI_CUR_PART,			0x91c8	; the part the MIDI controller and pending-parameter handlers work on (Pending*_ScanEntry, MidiCtrl_Mode*_Handler, the Part_ReinitAllActive loop)
 	.equ MIDIRX_STATUS,			0x9634	; status byte of the MIDI message being received (MidiSerial_PumpLoop; MidiRx_ChannelMsgDispatch maps its channel to parts)
 	.equ MIDIRX_DATA1,			0x9635	; its first data byte (the controller number of a CC, the program of a program change)
@@ -261,11 +261,11 @@
 	.equ MIDIRX_PART,			0x966a	; the part a received channel message is being applied to: MidiRx_ChannelMsgDispatch walks the parts the channel maps to and calls the handler for each
 	.equ MIDIRX_PARTS_LEFT,			0x966b	; parts of that list still to do (MidiRx_ChannelMsgDispatch counts it down)
 	.equ MIDIPKT_RX_GROUPS,			0xbd1a	; bulk-receive groups completed, bits 7 panel, 6 sound RAM, 5 / 4 / 2 the others: MidiSysEx_Finish*Xfer act on their bit and clear it
-	.equ PANEL_EVENT_QUEUE,			0xc039	; the PanelEvent_Post queue of 4-byte records {type, ...}; 0xFF ends it (Encoder_MarkInvalid empties it; SwbtWr walks it, EXT_RECORD_OFFSET indexes it)
+	.equ PANEL_EVENT_QUEUE,			0xc039	; the PanelEvent_Post queue of 4-byte records {type, ...}; 0xff ends it (Encoder_MarkInvalid empties it; SwbtWr walks it, EXT_RECORD_OFFSET indexes it)
 	.equ SWBTWR_DISPATCH_INDEX,		0xc07b	; word: read offset in the SwbtWr dispatch buffer (SwbtWr_DispatchLoop)
 	.equ SWBTWR_BUFFER_PTR,			0xc089	; the SwbtWr dispatch buffer (SwbtWr_InitBank1-3 point it at their bank)
 	.equ HARMONY_NOTE_LIST,			0xce22	; the note list Harmony_FindReferenceNote scans: word count, then 2-byte entries from +4 (VoiceMap_AllocateSlot, NoteMap_FindBestMatch)
-	.equ HARMONY_REF_NOTE,			0xceaa	; harmony reference note: the lowest note of the list Harmony_FindReferenceNote scans, if in 25..102, else 0xFF
+	.equ HARMONY_REF_NOTE,			0xceaa	; harmony reference note: the lowest note of the list Harmony_FindReferenceNote scans, if in 25..102, else 0xff
 	.equ HARMONY_REF_BYTE,			0xceab	; the other byte of that note's list entry
 	.equ HARMONY_PREV_REF_NOTE,		0xceac	; the previous HARMONY_REF_NOTE
 	.equ HARMONY_PREV_REF_BYTE,		0xcead	; the previous HARMONY_REF_BYTE
@@ -280,7 +280,7 @@
 	.equ CHORD_NOTE_COUNT,			0xcee5	; notes in the chord note list that follows it
 	.equ CHORD_NOTES,			0xcee6	; the chord's notes, in list order (CHORD_NOTE_COUNT of them)
 	.equ CHORD_HELD_KEY_COUNT,		0xceff	; word: chord keys held
-	.equ CHORD_CHANGED,			0xcf01	; word: Chord_ApplyCurrentChord sets the high byte to 0xFF; Voice_UpdatePlayModeState reports and clears it
+	.equ CHORD_CHANGED,			0xcf01	; word: Chord_ApplyCurrentChord sets the high byte to 0xff; Voice_UpdatePlayModeState reports and clears it
 	.equ CHORD_PREV_KEY_COUNT,		0xcf17	; word: chord keys held before the change being recognized (Chord_RecognizeNowOrDelay)
 	.equ SOUND_TABLE_BASE,			0xe14e	; the sound-table base every sound-data lookup goes through (SoundData_CategoryDescPtr is stored here; 14 loads)
 	.equ SEQ_SONG_RECORD,			0xf180	; [0x800 bytes] the current song's record: VoicePreset_LoadAndInitPan copies song SEQ_CURRENT_SONG's slot (SEQ_SONG_SLOTS + n * 0x800) in, SeqData_CopyBlockToBuffer copies it back
@@ -293,7 +293,7 @@
 	.equ SQEDT_MDEL_FROM,			0xf1d7	; TT_SQMDEL: first measure (word)
 	.equ SQEDT_MERS_TRACK,			0xf1db	; TT_SQMERS (measure erase): track
 	.equ SQEDT_MERS_FROM,			0xf1dc	; TT_SQMERS: first measure (word)
-	.equ SQEDT_MERS_CHOICE,			0xf1e0	; TT_SQMERS: what to erase (EXECUTE copies it to 9808)
+	.equ SQEDT_MERS_CHOICE,			0xf1e0	; TT_SQMERS: what to erase (EXECUTE copies it to SEQ_OP_ERASE_CHOICE)
 	.equ SQEDT_MINS_TRACK_A,		0xf1e1	; TT_SQMINS (measure insert): track A
 	.equ SQEDT_MINS_FROM,			0xf1e2	; TT_SQMINS: first measure of A (word)
 	.equ SQEDT_MINS_TRACK_B,		0xf1e6	; TT_SQMINS: track B
@@ -304,11 +304,11 @@
 	.equ SQEDT_MCP_AT,			0xf1ef	; TT_SQMCP: destination measure (word)
 	.equ SQEDT_QTZ_TRACK,			0xf1f1	; TT_SQQTZ (quantize): track (0x11 = all)
 	.equ SQEDT_QTZ_FROM,			0xf1f2	; TT_SQQTZ: first measure (word)
-	.equ SQEDT_QTZ_VALUE,			0xf1f6	; TT_SQQTZ: the quantize value (EXECUTE doubles it into 9726)
+	.equ SQEDT_QTZ_VALUE,			0xf1f6	; TT_SQQTZ: the quantize value (EXECUTE doubles it into SEQ_OP_QUANTIZE)
 	.equ SQEDT_VELOCNG_TRACK,		0xf228	; TT_SQVELOCNG (velocity change): track
 	.equ SQEDT_VELOCNG_FROM,		0xf229	; TT_SQVELOCNG: first measure (word)
-	.equ SQEDT_VELOCNG_AMOUNT,		0xf22e	; TT_SQVELOCNG: the velocity amount (EXECUTE copies it to 9812)
-	.equ SEQ_FREE_LIST_HEAD,		0xf22f	; word: first block of the free-block list, 0xFFFF = none; DispatchHandler_ResolveSlot takes it, moves the head to its +3 link, marks the block used (bit 7) and counts SEQ_FREE_BLOCKS down; a field of SEQ_SONG_RECORD
+	.equ SQEDT_VELOCNG_AMOUNT,		0xf22e	; TT_SQVELOCNG: the velocity amount (EXECUTE copies it to SEQ_OP_VELOCITY)
+	.equ SEQ_FREE_LIST_HEAD,		0xf22f	; word: first block of the free-block list, 0xffff = none; DispatchHandler_ResolveSlot takes it, moves the head to its +3 link, marks the block used (bit 7) and counts SEQ_FREE_BLOCKS down; a field of SEQ_SONG_RECORD
 	.equ SEQ_FREE_BLOCKS,			0xf231	; word: blocks still free; DispatchResolve_MarkCurrent takes one (sets bit 7 of its first byte, decrements); 0 makes ToneGen_AdvancePosition fail with SEQ_EVENT_ABORT = 255
 	.equ SEQ_PUNCH_IN_MEASURE,		0xf238	; word: the punch-in ("P" in) measure of the play screen (MT_GetPInMeasString)
 	.equ SEQ_PUNCH_OUT_MEASURE,		0xf23a	; word: the punch-out measure (SeqPlay_IncPunchOutMeasure keeps the punch-in below it)
@@ -316,7 +316,7 @@
 	.equ SEQ_TRACK_TABLE,			0xf250	; [48 bytes] 16 three-byte track entries of the current song; bit 7 of the first byte = the track holds data (SqStep_CheckCursorTrackUsed); part of SEQ_SONG_RECORD
 	.equ LIVE_PANEL_BLOCK,			0xf980	; the live panel block, 0x280 bytes (it holds PANEL_RECORDS): MidiPkt_SetXferBlock_LivePanel transfers it, FileData_ImportNNLivePanel loads into it, the power-fail NMI checksums it
 	.equ NMI_CHECKSUM_REGION2,		0xffd2	; word: checksum of LIVE_PANEL_BLOCK, stored and checked the same way
-	.equ NMI_CHECKSUM_REGION1,		0xffd4	; word: checksum of RAM 0xF180 (0x800 words) NMI_StorePayloadChecksums stores at power-fail; SubCPU_Payload_Verify checks it at boot
+	.equ NMI_CHECKSUM_REGION1,		0xffd4	; word: checksum of the 0x800 words from SEQ_SONG_RECORD on, which NMI_StorePayloadChecksums stores at power-fail; SubCPU_Payload_Verify checks it at boot
 	.equ SEQ_CURRENT_SONG,			0xffe3	; the selected song, 0..9: its record is SEQ_SONG_SLOTS + n * 0x800 (Display_CopyToneTableToRAM, SetSongSlotValue); set when a song is loaded (SMF_FinalizeAndStartPlayback)
 	.equ SEQ_TRACK_MASK_COPY,		0xffec	; word: the copy of SEQ_TRACK_MASK kept outside the song record: SqSngSel_CalcSongUsageOnEnter and AccompMode_ApplyAndNotify copy it in, SingleLoad_PrepareSongSlot / _FinishSongLoad save and restore it around a load
 	.equ FILE_ERROR,			0x1e53c	; word: the file system's last error: FileOpen_CheckPermission stores 2, SeqStep_MemAllocFail 3, FileOpen_SlotExhausted 4, FileOpen_ErrorNoFile 7; FDC status codes are mapped into it (FDC_SetSectorLength)
@@ -331,14 +331,14 @@
 	.equ NAMING_LENGTH,			0x274d6	; word: length of the name being edited (32 from AcNaming_InitScrollState)
 	.equ NAMING_CURSOR,			0x274d8	; word: cursor position in the name being edited (kept below NAMING_LENGTH)
 	.equ NAMING_PAGE,			0x274da	; word: the character page shown: 0 A-Z _ 0-9 SPC, 1 a-z _ 0-9 SPC, 2 symbols
-	.equ NAMING_CHAR,			0x274de	; word: the character at the naming window's cursor, as an index into the character page (0x1A underscore, 0x25 space); the dial steps it
+	.equ NAMING_CHAR,			0x274de	; word: the character at the naming window's cursor, as an index into the character page (0x1a underscore, 0x25 space); the dial steps it
 	.equ NAMING_MODE,			0x274e2	; word: the naming mode EVT_GET_NAMING_MODE reported (it bounds the character pages)
 	.equ NAMING_CHARSET,			0x274e4	; the naming mode's character set (AcNaming_QueryCharSet stores it); its first byte fills and erases the name
 	.equ OBJECT_REGISTRY,			0x27ed2	; the object table RegisterObjectTable fills: 14-byte entries {class, proc, count, table}, entry n at +14n (ClassProc, FunctionProc, TitleProc ... look objects up here)
 	.equ TITLE_FLAGS,			0x2bc30	; word: the current title's flags: 0x1 hold, 0x4 do not draw, 0x8 vari, 0x10 keep, 0x20 easy set (MT_SetHold, MT_SetNotDrawFlag, MT_SetTitleFlag; CheckNotDrawFlag)
 	.equ EVENT_QUEUE,			0x2bc34	; the event queue PostEvent / ApPostEvent fill: 1,024 entries of 12 bytes {target, event, param} (GetEvent, DeleteEvent scan it)
 	.equ DRAW_ENABLED,			0x3044e	; word: 0 = nothing is drawn (ColorBlit, DrawBitmap and the other drawing primitives return); DrawWall sets 1
-	.equ WALLPAPER_BITMAP,			0x30452	; the wallpaper bitmap, 320 bytes per row (ChangeWall_Impl stores it); colour 0xF5 draws by copying the pixel from it
+	.equ WALLPAPER_BITMAP,			0x30452	; the wallpaper bitmap, 320 bytes per row (ChangeWall_Impl stores it); colour 0xf5 draws by copying the pixel from it
 	.equ DRAW_QUEUE,			0x30466	; the 8 KB circular queue of draw commands (DrawQueue_Alloc, DrawRing_Init): each entry a DrawXxx_Impl address and its parameters
 	.equ DRAW_QUEUE_WRITE_PTR,		0x3246a	; where DrawQueue_Alloc puts the next command
 	.equ MUSIC_STYLIST_GENRE,		0x340c4	; word: the genre selected on the Music Stylist pages (MstStyle_*)

@@ -27,6 +27,7 @@ JOB IT DOES
 USAGE
   make all
   python3 scripts/tools/add_kn5000_ram_names.py NAMES.txt [--dry-run]
+  python3 scripts/tools/add_kn5000_ram_names.py --realign      # realign the three files, hex in lowercase
 """
 import argparse
 import collections
@@ -94,15 +95,25 @@ def named_addresses(t):
 EQU_FULL = re.compile(r'^\s*\.equ\s+([A-Za-z_]\w*)\s*,\s*(0x[0-9a-fA-F]+|\d+)\s*(?:;\s?(.*))?$')
 
 
+HEX = re.compile(r'\b0x[0-9a-fA-F]+\b')
+
+
+def lower_hex(c):
+    """a comment with every 0x literal in lowercase (cross-version policy 2); a reason is copied from
+    the input list verbatim, so it is normalised here (`NAKA_TYPE_0x5D`-style names are untouched: no
+    word boundary before their 0x)"""
+    return HEX.sub(lambda m: m.group(0).lower(), c)
+
+
 def aligned(rows):
     """`.equ` lines for (name, value, comment) rows, values tab-aligned to one column (the next tab stop
-    after the longest `\t.equ NAME,`), comments one tab after the value"""
+    after the longest `\t.equ NAME,`), comments one tab after the value, hex in lowercase"""
     target = max(8 + 5 + len(n) + 1 for n, _, _ in rows) // 8 * 8 + 8
     out = []
     for n, v, c in rows:
         cur = 8 + 5 + len(n) + 1          # the column after `\t.equ NAME,`
         tabs = 1 + (target - (cur // 8 + 1) * 8) // 8
-        out.append("\t.equ %s,%s0x%04x%s" % (n, "\t" * tabs, v, ("\t; " + c) if c else ""))
+        out.append("\t.equ %s,%s0x%04x%s" % (n, "\t" * tabs, v, ("\t; " + lower_hex(c)) if c else ""))
     return out
 
 
@@ -128,7 +139,7 @@ def merge(t, new, header):
 def realign(t):
     """realign a tree's file after name_kn5000_ram.py corrected values in it"""
     L = read(path(t))
-    head = [l for l in L if l.startswith(";")]
+    head = [lower_hex(l) for l in L if l.startswith(";")]
     rows = [(m.group(1), int(m.group(2), 0), (m.group(3) or "").rstrip()) for m in map(EQU_FULL.match, L) if m]
     write(path(t), head + aligned(sorted(rows, key=lambda r: r[1])) + [""])
 
@@ -328,9 +339,17 @@ def used_names(t, names):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("names")
+    ap.add_argument("names", nargs="?")
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--realign", action="store_true",
+                    help="only realign the three ram_variables_by_use.s files (and lowercase their hex)")
     a = ap.parse_args()
+    if a.realign:
+        for t in TREES:
+            realign(t)
+        return 0
+    if not a.names:
+        ap.error("NAMES.txt is required unless --realign is given")
     new, bad = [], []
     syms = symbols("v10")
     named = named_addresses("v10")

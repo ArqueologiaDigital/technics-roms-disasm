@@ -28,7 +28,7 @@ NMI_SetPowerOffCode_A5A5:
 	ldw (0x00ffcc:24), 0xa5a5
 
 NMI_ClearGuardAndHalt:
-	ld (NMI_GUARD:16), 0
+	ld (BOOT_STAGE:16), 0
 	res 7, (354:16)
 	set	2, (PF:8)
 NMI_HaltLoop:
@@ -51,7 +51,7 @@ NMI_HaltLoop:
 ;        the payload on the next boot and show the splash screen (not "ALL INITIAL SETTING!").
 ; ===========================================================================
 NMI_StorePayloadChecksums:
-	cp (NMI_GUARD:16), 128
+	cp (BOOT_STAGE:16), 128
 	ret nz
 	call Demo_SelectEntry_PreSaveCheck
 	call SeqPlay_JumpCopyVoiceData

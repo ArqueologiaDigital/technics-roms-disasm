@@ -1316,9 +1316,9 @@ We_seem_to_be_running_boot_ROM_code:
 Boot_PostSelfTest:
 	ld xwa, 0:i3
 	ld (SYSTEM_TIMESTAMP:16), xwa
-	ld (NMI_GUARD:16), 2
+	ld (BOOT_STAGE:16), 2
 	call TaskSched_Init
-	ld (NMI_GUARD:16), 3
+	ld (BOOT_STAGE:16), 3
 Boot_InitPeripherals:
 	calr Boot_ClearConfigFlag7
 	lda	xbc, (INTET01:8)
@@ -1421,10 +1421,10 @@ Boot_PayloadError:
 
 Boot_DisplayScreen:
 	call	ScreenGroup_Dispatch	; Display appropriate screen group
-	ld	(NMI_GUARD:16), 6
+	ld	(BOOT_STAGE:16), 6
 	ld	wa, 3:i3
 	call	ScreenGroup_Dispatch
-	ld	(NMI_GUARD:16), 128
+	ld	(BOOT_STAGE:16), 128
 	ldw	(NMI_CHECKSUM_REGION1:24), 0
 	ld	a, (1026:16)	; Load boot combo code
 	extz	wa
