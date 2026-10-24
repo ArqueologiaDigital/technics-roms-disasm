@@ -1048,7 +1048,7 @@ HDAE5000_Float_Unpack:
 	set	0x07, de
 	ld	qix, de
 	sub	hl, 0x007f
-HDAE5000_Float_Unpack_Loop:
+HDAE5000_Float_Unpack_Done:
 	ld (xwa), xhl
 	ld (xwa + 0x04), xix
 	ldto_berp l, 0xee		; ld L,QL
@@ -1057,7 +1057,7 @@ HDAE5000_Float_Unpack_Loop:
 HDAE5000_Float_Unpack_Skip:
 	ld	xix, 0:i3
 	ldib_erp 0xee, 1		; ld QL,1
-	jr	t, HDAE5000_Float_Unpack_Loop
+	jr	t, HDAE5000_Float_Unpack_Done
 	nop
 HDAE5000_Float_Pack:
 	; pack the internal form at (XBC) into an IEEE single at (XWA).  Exponent
@@ -1358,25 +1358,25 @@ HDAE5000_Double_Pack:
 	cp	hl, 0x03ff
 	jr	gt, HDAE5000_Double_Pack_Join
 	cp	hl, 0xfc02
-	jr	lt, HDAE5000_Double_Pack_Loop2
+	jr	lt, HDAE5000_Double_Pack_Skip
 	add	hl, 0x03ff
 	res	0x04, qix
 	sll	hl, 0x04
 	orb_erp h, 0xef		; or H,QH
 	or	hl, qix
 	ld	qix, hl
-HDAE5000_Double_Pack_Loop:
+HDAE5000_Double_Pack_Done2:
 	ld (xwa), xiy
 	ld (xwa + 0x04), xix
 	ret
 
-HDAE5000_Double_Pack_Loop2:
+HDAE5000_Double_Pack_Skip:
 	ld	xix, 0:i3
 	ld	xiy, xix
-	jr	t, HDAE5000_Double_Pack_Loop
+	jr	t, HDAE5000_Double_Pack_Done2
 HDAE5000_Double_Pack_Next:
 	bit_erpb 0xee, 0x00		; bit 0x00,QL
-	jr	nz, HDAE5000_Double_Pack_Loop2
+	jr	nz, HDAE5000_Double_Pack_Skip
 HDAE5000_Double_Pack_Join:
 	ldw	(0x230ECA:24), 34
 	ld	xde, 0:i3
@@ -1560,7 +1560,7 @@ HDAE5000_Unpacked_Div_Join5:
 	rrc	xhl
 HDAE5000_Unpacked_Div_Join6:
 	srl	xhl, 0x08
-HDAE5000_Unpacked_Div_Loop2:
+HDAE5000_Unpacked_Div_Done:
 	ld (xwa + 0x04), xhl
 	pop xiz
 	ret
@@ -1568,7 +1568,7 @@ HDAE5000_Unpacked_Div_Loop2:
 HDAE5000_Unpacked_Div_Skip2:
 	ld	xhl, xwa
 	pop xwa
-	jr	t, HDAE5000_Unpacked_Div_Loop2
+	jr	t, HDAE5000_Unpacked_Div_Done
 
 ; ----------------------------------------------------------------------------
 ; Registered-object name pool  (0x29bafc - 0x29bfdf)

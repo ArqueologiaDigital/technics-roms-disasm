@@ -1959,7 +1959,7 @@ HDAE5000_SelectListProc_Skip10:
 	jrl	nz, HDAE5000_SelectListProc_Skip11
 HDAE5000_SelectListProc_Join9:
 	ldw	wa, 0xffff
-HDAE5000_SelectListProc_Loop4:
+HDAE5000_SelectListProc_Join13:
 	ld	bc, wa
 	exts xbc
 	ld xwa, (xsp + 0x68)
@@ -2007,7 +2007,7 @@ HDAE5000_SelectListProc_Join11:
 	jrl	t, HDAE5000_SelectListProc_Epilogue
 HDAE5000_SelectListProc_Skip11:
 	ld	wa, 1:i3
-	jrl	t, HDAE5000_SelectListProc_Loop4
+	jrl	t, HDAE5000_SelectListProc_Join13
 HDAE5000_SelectListProc_Skip12:
 	ld	xwa, xiz
 	inc 1, xwa
@@ -2015,7 +2015,7 @@ HDAE5000_SelectListProc_Skip12:
 	jr	nz, HDAE5000_SelectListProc_Skip13
 	ld xwa, (xsp + 0x04)
 	ld	wa, (xwa+44)
-	jrl	t, HDAE5000_SelectListProc_Loop4
+	jrl	t, HDAE5000_SelectListProc_Join13
 HDAE5000_SelectListProc_Skip13:
 	ld	xwa, xiz
 	inc 2, xwa
@@ -2024,7 +2024,7 @@ HDAE5000_SelectListProc_Skip13:
 	ld xwa, (xsp + 0x04)
 	ld	wa, (xwa+44)
 	neg	wa
-	jrl	t, HDAE5000_SelectListProc_Loop4
+	jrl	t, HDAE5000_SelectListProc_Join13
 HDAE5000_SelectListProc_Skip14:
 	ld	xwa, xiz
 	inc	3, xwa

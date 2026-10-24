@@ -17,7 +17,9 @@ QUESTION IT ANSWERS
     alias     the label sits at the same address as the label just above it (no instruction between):
               its branches are redirected to that label and the definition is dropped (one name per address,
               cross-version policy 5);
-    Loop      a back-edge target: at least one branch to it lies below it;
+    Loop      a back-edge target: at least one branch to it lies below it -- unless straight-line code
+              from it reaches a ret within six instructions (a shared tail; named as below; corrected after
+              the first run by fix_hdae5000_tail_loops.py);
     Return    the first instruction at the label is ret / retd / reti;
     Epilogue  the label starts with stack releases (pop / popw / lda xsp,(xsp+N) / inc N,xsp) that reach a ret;
     Done      straight-line code (no branch, call or store to memory) reaches a ret within six instructions:
@@ -125,6 +127,52 @@ def parse():
     return src, stmts, defs, refs, taken
 
 
+def reaches(lines, start, goals, defs_in_file):
+    """True when a goal line is reachable from line `start` by falling through and by branching FORWARD
+    to labels inside [start, max(goals)] -- the test for whether a backward branch closes a loop through
+    the label at `start` (a shared tail reached only from code after an unconditional exit is no loop)."""
+    hi = max(goals)
+    seen, todo = set(), [start]
+    while todo:
+        k = todo.pop()
+        while start <= k <= hi and k not in seen:
+            seen.add(k)
+            if k in goals:
+                return True
+            d = DEF.match(lines[k])
+            c = strip_comment(lines[k][d.end():] if d else lines[k]).strip()
+            if c and opcode(c) in ("jr", "jrl", "jp", "djnz"):
+                t = re.findall(r'[.A-Za-z_][\w.]*', c)
+                if t and t[-1] in defs_in_file and start <= defs_in_file[t[-1]] <= hi:
+                    todo.append(defs_in_file[t[-1]])
+            if c and TRANSFER.match(c):
+                break
+            k += 1
+    return False
+
+
+def tail_shape(insns):
+    """Return / Epilogue / Done when straight-line code (stores allowed; no branch or call) reaches an
+    unconditional ret within six instructions, else None (fix_hdae5000_tail_loops.py uses it too)."""
+    if not insns:
+        return None
+    if RET.match(insns[0]):
+        return "Return"
+    if RELEASE.match(insns[0]):
+        for t in insns[:6]:
+            if RET.match(t):
+                return "Epilogue"
+            if not RELEASE.match(t):
+                break
+    for t in insns[:6]:
+        if RET.match(t):
+            return "Done"
+        op = opcode(t)
+        if op in BRANCH or op.startswith("ret") or op in ("djnz", "swi", "halt"):
+            return None
+    return None
+
+
 def classify(n, p, i, stmts, refs, defs):
     S = stmts[p]
     k = next(j for j, s in enumerate(S) if s[0] == i and s[1] == "label" and s[2] == n)
@@ -141,7 +189,8 @@ def classify(n, p, i, stmts, refs, defs):
             if m:
                 return "Lang" + m.group(1), None
     if any(q == p and j > i for q, j, _ in rs):
-        return "Loop", None
+        # a backward branch to a block that runs straight into a ret is a shared tail, not a loop
+        return tail_shape(insns) or "Loop", None
     if prev and prev[1] == "insn" and TRANSFER.match(prev[2]) and rs:
         evts = set()
         for q, j, _ in rs:
