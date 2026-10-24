@@ -3708,12 +3708,17 @@ AccCh3_DrainOther:
 AccCh3_DrainDone:
 	ret
 
+; Runs the accompaniment event loop for part 32 (AccCh4): AccCh4_SaveState,
+; AccVoice_ProcessEventLoop, AccCh4_RestoreState.
 AccCh4_ProcessEntry:
 	calr AccCh4_SaveState
 	call AccVoice_ProcessEventLoop
 	calr AccCh4_RestoreState
 	ret
 
+; Loads part 32 into the working cursor: selector 0x33d4 = 0x20, page / offset 0x32a1 / 0x3291,
+; bytes 0x32ba, 0x32b0, 0x32a8, 0x33f0 into 0x33da, 0x33db, 0x33d5, 0x33ea; clears bits 0..1 of
+; 0x32f4 and the counter 0x32ed.
 AccCh4_SaveState:
 	and (0x32f4:16), 252
 	ld (0x32ed:16), 0
@@ -3733,6 +3738,7 @@ AccCh4_SaveState:
 	ld (0x33ea:16), a
 	ret
 
+; Stores the working cursor back into part 32's state (the reverse of AccCh4_SaveState).
 AccCh4_RestoreState:
 	ld wa, (0x33d6:16)
 	ld (0x32a1:16), wa
@@ -3748,6 +3754,9 @@ AccCh4_RestoreState:
 	ld (0x33f0:16), a
 	ret
 
+; When part 32 may take an event (AccCh4_CheckEligible), loads its channel bytes 0x32c6 / 0x32ca
+; into 0x32cb / 0x32cc, clears bits 2..3 of 0x32f4, and appends the parsed note to ring buffer 0x2f94
+; (AccBuf_WriteExtendedEvent).
 AccCh4_NoteOnEntry:
 	calr AccCh4_CheckEligible
 	bit 0, (0x33e1:16)
@@ -3802,6 +3811,8 @@ AccCh4_SetReady:
 AccCh4_CheckReturn:
 	ret
 
+; When part 32 may take an event (AccCh4_CheckEligible), appends the parsed controller record to
+; ring buffer 0x2f94 (AccBuf_Write3ByteEvent).
 AccCh4_DTypeEntry:
 	calr AccCh4_CheckEligible
 	bit 0, (0x33e1:16)
@@ -3814,6 +3825,7 @@ AccCh4_DTypeEntry:
 AccCh4_DTypeReturn:
 	ret
 
+; Out: A = 1 when bit 2 of 0x34cf and bit 2 of the record-part byte 0x379b are both set, else 0.
 AccCh4_CheckOverlap:
 	ld a, 0x0:opc
 	bit 2, (0x34cf:16)
@@ -3825,6 +3837,9 @@ AccCh4_CheckOverlap:
 AccCh4_OverlapReturn:
 	ret
 
+; Per-tick processing of part 32: as AccCh1_ProcessNotes with slots 0x31cc.., ring buffer 0x2f94,
+; AccCh4_InitProgChange, record 0x3228 saved to 0x3241, RhythmPart5_ProcessAccentData and bit 5 of
+; 0x332c.
 AccCh4_ProcessNotes:
 	call AccKbd1_TimingCheck
 	bit 0, (0x32f4:16)
@@ -3844,6 +3859,7 @@ AccCh4_ProcessNotes:
 AccCh4_ProcessReturn:
 	ret
 
+; Runs AccSlot_CheckAndUpdate on the eight 9-byte note slots of part 32 at 0x31cc..0x3213.
 AccCh4_ScanSlots:
 	ld xhl, 0x31cc
 
@@ -3854,6 +3870,7 @@ AccCh4_ScanSlots_Loop:
 	jr c, AccCh4_ScanSlots_Loop
 	ret
 
+; Re-times every note record (0x90 and 0x91) still waiting in ring buffer 0x2f94.
 AccCh4_DrainRingBuf:
 	ld xhl, 0x2f94
 	ld iy, (xhl + 6)
@@ -3885,21 +3902,25 @@ AccCh4_DrainOther:
 AccCh4_DrainDone:
 	ret
 
+; Queues the controller defaults in ring buffer 0x2c94 (AccBuf_WriteD0Defaults).
 AccCh1_InitProgChange:
 	ld xhl, 0x2c94
 	calr AccBuf_WriteD0Defaults
 	ret
 
+; Queues the controller defaults in ring buffer 0x2d94 (AccBuf_WriteD0Defaults).
 AccCh2_InitProgChange:
 	ld xhl, 0x2d94
 	calr AccBuf_WriteD0Defaults
 	ret
 
+; Queues the controller defaults in ring buffer 0x2e94 (AccBuf_WriteD0Defaults).
 AccCh3_InitProgChange:
 	ld xhl, 0x2e94
 	calr AccBuf_WriteD0Defaults
 	ret
 
+; Queues the controller defaults in ring buffer 0x2f94 (AccBuf_WriteD0Defaults).
 AccCh4_InitProgChange:
 	ld xhl, 0x2f94
 	calr AccBuf_WriteD0Defaults
@@ -3996,6 +4017,9 @@ AccPart_Deactivate_ClearMasks:
 AccPart_DeactivateReturn:
 	ret
 
+; At a bar end, for a working part marked in 0x33e0: when its bit is set in 0x3314 / 0x3315 it is
+; marked active in 0x332a / 0x3328; otherwise its bit is cleared in 0x3312, 0x3313, 0x3316..0x3318,
+; 0x335d and 0x3329 and 0x33ea is cleared.  Either way the cursor is reset to page 0xfe, offset 6.
 AccPart_Reactivate:
 	ld a, (0x33d4:16)
 	and a, (0x33e0:16)
@@ -4105,6 +4129,8 @@ AccVelocity_CurveTable:
 	.byte 0x0d, 0x1a, 0x33, 0x4d, 0x66, 0x80, 0x9a, 0xb3
 	.byte 0xcc, 0xe6, 0xff
 
+; Resets the rhythm channel of the working part: parts 4 / 8 / 16 / 32 to AccVoice_InitCh1_D7 /
+; _InitCh2_D4 / _InitCh3_D5 / _InitCh4_D6; nothing for parts 1 and 2.
 AccVoice_InitPerChannel:
 	cp (0x33d4:16), 4
 	jr nz, AccVoice_InitCh2
@@ -4131,6 +4157,9 @@ AccVoice_InitCh4:
 AccVoice_InitReturn:
 	ret
 
+; Resets rhythm channel D7: neutralises the controllers pending in ring buffer 0x2c94
+; (AccBuf_DrainAndReset) and sends the defaults 0xd7 02 40, 0xd7 01 00, 0xd7 03 00, 0xd7 05 7f,
+; clearing 0x332f.  Preserves HL, XIY.
 AccVoice_InitCh1_D7:
 	pushw hl
 	push xiy
@@ -4175,6 +4204,8 @@ AccBuf_WriteD0WithVoice:
 	ld (xhl + 4), iy
 	ret
 
+; Resets rhythm channel D4 (ring buffer 0x2d94, 0xd4 02 40 / 01 00 / 03 00 / 05 7f, clears 0x3330).
+; Preserves HL, XIY.
 AccVoice_InitCh2_D4:
 	pushw hl
 	push xiy
@@ -4201,6 +4232,8 @@ AccVoice_InitCh2_D4:
 	popw hl
 	ret
 
+; Resets rhythm channel D5 (ring buffer 0x2e94, 0xd5 02 40 / 01 00 / 03 00 / 05 7f, clears 0x3331).
+; Preserves HL, XIY.
 AccVoice_InitCh3_D5:
 	pushw hl
 	push xiy
@@ -4227,6 +4260,8 @@ AccVoice_InitCh3_D5:
 	popw hl
 	ret
 
+; Resets rhythm channel D6 (ring buffer 0x2f94, 0xd6 02 40 / 01 00 / 03 00 / 05 7f, clears 0x3332).
+; Preserves HL, XIY.
 AccVoice_InitCh4_D6:
 	pushw hl
 	push xiy
@@ -4253,6 +4288,9 @@ AccVoice_InitCh4_D6:
 	popw hl
 	ret
 
+; Calls AccInit_FullReInit when a pedal / variation change needs it: bit 0 of 0x330c or bits 0..1
+; of 0x330b set with no bit 0..5 in 0x3326, or bits 0, 2, 3 of 0x330a or bits 0..1 of 0x3309 set
+; with no bit 0..5 in 0x3327.
 AccPedal_CheckCombined:
 	bit 0, (0x330c:16)
 	jr nz, AccPedal_CheckFlags
@@ -4362,6 +4400,10 @@ AccPedal_CheckCombined_Skip4:
 	or	(0x332c:16), 128
 	ret
 
+; Compares the accompaniment bar 0x32b5 (and the beat / tick 0x3280 / 0x327f) with the clock
+; (bar 0x32b4, position 0x32e3 / 0x32e4) and stores the tick delta in 0x32ea / 0x32ec: 1 when the
+; part is ahead (later bar, or same bar and later position), otherwise the difference computed at
+; AccTempo_ComputeSubDelta.  Bar 255 -> 0 counts as the next bar.
 AccTempo_BarCompare:
 	ld w, (0x32b5:16)
 	cp w, (0x32b4:16)
@@ -4812,6 +4854,9 @@ AccVoice_SetupAll_Dispatch:
 	calr AccVoice_SetupAcc4
 	ret
 
+; Sets up part 1's stream for the style: clears bits 4..7 of 0x32ab; styles below 0x80 take the
+; parameter address of pattern index (0x32a3) (AccPart_LookupBoundVoiceParam, AccPart_GetParamAddr)
+; into 0x3287; others take the stream start (AccPart_GetFreeVoiceAddr) into 0x3297 with offset 6.
 AccVoice_SetupKbd1:
 	and (0x32ab:16), 15
 	cp (0x32e5:16), 128
@@ -4832,6 +4877,7 @@ AccVoice_SetupKbd1_Free:
 AccVoice_SetupKbd1_Return:
 	ret
 
+; As AccVoice_SetupKbd1 for part 2: 0x32ac, index 0x32a4, offset 0x3289, page 0x3299.
 AccVoice_SetupKbd2:
 	and (0x32ac:16), 15
 	cp (0x32e5:16), 128
@@ -4852,6 +4898,7 @@ AccVoice_SetupKbd2_Free:
 AccVoice_SetupKbd2_Return:
 	ret
 
+; As AccVoice_SetupKbd1 for part 4: 0x32ad, index 0x32a5, offset 0x328b, page 0x329b.
 AccVoice_SetupAcc1:
 	and (0x32ad:16), 15
 	cp (0x32e5:16), 128
@@ -4872,6 +4919,7 @@ AccVoice_SetupAcc1_Free:
 AccVoice_SetupAcc1_Return:
 	ret
 
+; As AccVoice_SetupKbd1 for part 8: 0x32ae, index 0x32a6, offset 0x328d, page 0x329d.
 AccVoice_SetupAcc2:
 	and (0x32ae:16), 15
 	cp (0x32e5:16), 128
@@ -4892,6 +4940,7 @@ AccVoice_SetupAcc2_Free:
 AccVoice_SetupAcc2_Return:
 	ret
 
+; As AccVoice_SetupKbd1 for part 16: 0x32af, index 0x32a7, offset 0x328f, page 0x329f.
 AccVoice_SetupAcc3:
 	and (0x32af:16), 15
 	cp (0x32e5:16), 128
@@ -4912,6 +4961,7 @@ AccVoice_SetupAcc3_Free:
 AccVoice_SetupAcc3_Return:
 	ret
 
+; As AccVoice_SetupKbd1 for part 32: 0x32b0, index 0x32a8, offset 0x3291, page 0x32a1.
 AccVoice_SetupAcc4:
 	and (0x32b0:16), 15
 	cp (0x32e5:16), 128
@@ -5734,7 +5784,7 @@ AccState_CollectAcc4_Active:
 	call AccWrap_PlayModeStartPlay
 
 AccState_Apply:
-	call AccInit_CallF435A9
+	call AccInit_SendNoteOffAndFlush
 	ld a, (0xcedf:16)
 	ld (0x8d42:16), a
 	ld a, (0xcee0:16)
@@ -6041,6 +6091,7 @@ AccFlags_Handler9_Join:
 	calr	AccBuf_ResetByteData
 	ret
 
+; Resets the headers of the four ring buffers 0x2c94..0x2f94 (AccBuf_ResetOnePosition).
 AccBuf_ResetAll4Positions:
 	ld xhl, 0x2c94
 	calr AccBuf_ResetOnePosition
@@ -6066,6 +6117,8 @@ AccBuf_ResetOnePosition:
 	ei 0
 	ret
 
+; Clears byte 0 (the active flag) of the eight 9-byte note slots of each of the four parts at
+; 0x30f4, 0x313c, 0x3184 and 0x31cc.
 AccBuf_ResetByteData:
 	ld	a, 0:opc
 	ld	xhl, 0x30f4
@@ -6098,6 +6151,9 @@ AccBuf_ResetByteData_Loop4:
 	jr	c, AccBuf_ResetByteData_Loop4
 	ret
 
+; When any part has a pending record change (bits 0..5 of 0x332c), saves the part records
+; (RhythmPart_CopyData), processes the accent data of parts 1..5 (0x32ec = 1 before part 2) and
+; clears those bits.
 AccNote_FlushAll:
 	ld a, (0x332c:16)
 	and a, 0x3f
@@ -6115,6 +6171,9 @@ AccNote_FlushAll:
 AccNote_FlushReturn:
 	ret
 
+; Stores in 0x32ec / 0x32ea the distance from the current event position (0x327d, bar 0x32b5 -
+; 1) to the end of the previous bar (AccVoice_LookupTableAddress with A = 0x5f, W = (0x458) - 1;
+; AccTempo_PositionCompare).
 AccTempo_CalcPosition:
 	ld a, 0x5f:opc
 	ld w, (1112:16)
@@ -6223,10 +6282,13 @@ AccInit_ResetSong_Store:
 	ld (0x32e2:16), 0
 	ret
 
-AccInit_CallF435A9:
+; Calls SeqVoice_SendNoteOffAndFlush.
+AccInit_SendNoteOffAndFlush:
 	call SeqVoice_SendNoteOffAndFlush
 	ret
 
+; For style numbers below 0x80, sets bit 0 of 0x3393 when bit 0 of the tuning state 0x3391
+; differs from the saved copy 0x3392.
 AccTuning_CheckChange:
 	cp (0x32e5:16), 128
 	jr nc, AccTuning_ChangeReturn
@@ -6293,6 +6355,8 @@ AccTuning_LoadReturn:
 	pop xwa
 	ret
 
+; Loads part 1's tuning pair from the style-tuning entry at 0x1e7810 + AccHelper_ComputeVoiceOffset
+; when its byte +1 has bit 7 set: 0x3246 = byte +0, 0x3247 = byte +1 & 0x7f.
 AccTuning_LoadMaster:
 	call AccHelper_ComputeVoiceOffset
 	add xhl, 0x1e7810
@@ -6307,6 +6371,8 @@ AccTuning_LoadMaster:
 AccTuning_LoadMasterReturn:
 	ret
 
+; Loads part 4's tuning from the style-tuning entry (as AccTuning_LoadMaster): 0x324d = byte +2,
+; 0x324e = byte +3 & 0x7f, 0x3250 = bit 7 of byte +3.
 AccTuning_LoadCoarse:
 	call AccHelper_ComputeVoiceOffset
 	add xhl, 0x1e7810
@@ -6325,6 +6391,8 @@ AccTuning_LoadCoarse:
 AccTuning_LoadCoarseReturn:
 	ret
 
+; Loads part 8's tuning from the style-tuning entry: 0x3254 = byte +4, 0x3255 = byte +5 & 0x7f,
+; 0x3257 = bit 7 of byte +5.
 AccTuning_LoadFine:
 	call AccHelper_ComputeVoiceOffset
 	add xhl, 0x1e7810
@@ -6343,6 +6411,8 @@ AccTuning_LoadFine:
 AccTuning_LoadFineReturn:
 	ret
 
+; Loads part 16's tuning from the style-tuning entry: 0x325b = byte +6, 0x325c = byte +7 & 0x7f,
+; 0x325e = bit 7 of byte +7.
 AccTuning_LoadOctave:
 	call AccHelper_ComputeVoiceOffset
 	add xhl, 0x1e7810
@@ -6361,6 +6431,8 @@ AccTuning_LoadOctave:
 AccTuning_LoadOctaveReturn:
 	ret
 
+; Loads part 32's tuning from the style-tuning entry: 0x3262 = byte +8, 0x3263 = byte +9 & 0x7f,
+; 0x3265 = bit 7 of byte +9.
 AccTuning_LoadTranspose:
 	call AccHelper_ComputeVoiceOffset
 	add xhl, 0x1e7810
@@ -6454,6 +6526,10 @@ AccTuning_ApplyReturn:
 	and (0x3393:16), 254
 	ret
 
+; Applies a change of the tuning switch: for styles below 0x80, when bit 0 of 0x3391 differs from
+; 0x3392, writes it into bit 7 of byte +1 of the style-tuning entry (0x1e7810 + offset) and sets bit
+; 0 of 0x333b; a pending change flag (bit 0 of 0x3393) also sets 0x333b and is cleared.  For styles
+; 0x80 and up the switch is turned off (AccTuning_LEDOff).
 AccTuning_Toggle:
 	cp (0x32e5:16), 128
 	jr nc, AccTuning_Toggle_NoStyle
@@ -6489,6 +6565,7 @@ AccTuning_Toggle_NoStyle:
 AccTuning_Toggle_Return:
 	ret
 
+; Copies the tuning state 0x3391 to 0x3392.
 AccTuning_SaveState:
 	ld a, (0x3391:16)
 	ld (0x3392:16), a
@@ -6524,6 +6601,7 @@ AccTuning_Init_Epilogue:
 	pop xwa
 	ret
 
+; For style numbers 0x80 and up, clears bit 0 of 0x3391 and turns the tuning LED off.
 AccTuning_DisableIfNoStyle:
 	cp (0x32e5:16), 128
 	jr c, AccTuning_DisableReturn
@@ -6574,6 +6652,7 @@ AccWrap_PlayModeByteData:
 	jp	AccReplay_FullRestart
 	jp	AccAutoPlay_ActionDispatch
 
+; Alias entry: jumps to AccAutoPlay_DeferredAction (called from MainLoop).
 AccWrap_DeferredAction:
 	jp AccAutoPlay_DeferredAction
 
@@ -6606,6 +6685,7 @@ AccWrap_PlayModeStopData:
 AccWrap_PlayModeStartAccPlay:
 	jp AccPlayMode_StartAccPlayFull
 
+; Alias entry: jumps to AccPlayMode_StopToSync2.
 AccWrap_PlayModeStopSync:
 	jp AccPlayMode_StopToSync2
 
@@ -6654,11 +6734,13 @@ AccWrap_PositionSaveData:
 	pop	xiz
 	ret
 
+; Alias entry: jumps to AccFlags_SyncTo64607 (called from MainLoop).
 AccWrap_FlagSync:
 	jp AccFlags_SyncTo64607
 AccWrap_PlayModeStopData2:
 	jp	AccTempo_WriteMarker_Padding_Return
 
+; Calls AccAutoPlay_ZoneTrack with XIZ preserved.
 AccWrap_AutoPlayZoneTrack:
 	push xiz
 	call AccAutoPlay_ZoneTrack
@@ -6894,6 +6976,9 @@ AccPedal_StyleCheck_Ineligible:
 AccPedal_StyleCheckReturn:
 	ret
 
+; For pedal event type 5 (0x348a) whose bit 1 is set in both 0x347e and 0x347f: toggles bit 1 of
+; the panel byte 0xfc5f and, unless 0x90f8 is 0xff and with bit 3 of 0xfd56 set, sends the switch
+; packet 0x48 / 5 / (bit) / 2 built at 0x38e8 (MidiPkt_DispatchViaTable_4DCE).
 AccPedal_ExprToggle:
 	cp (0x348a:16), 5
 	jr nz, AccPedal_ExprReturn
@@ -6925,6 +7010,9 @@ AccPedal_ExprPadding:
 	nop
 	nop
 
+; Rebuilds the pedal flag pairs 0x3480..0x3487 from the pedal event (AccPedal_ProcessAllBits) and
+; sends them (AccPedal_StateSync); in composer mode 14, or with bit 0 of 0x28a6 set, does nothing.
+; With bit 3 of 0xd53 set the "on" halves and the high nibble of 0xfc5f are cleared.
 AccPedal_DistributeParams:
 	cp (CURRENT_MODE:16), 14
 	jr z, AccPedal_Distribute_JumpMain
@@ -7023,6 +7111,8 @@ AccPedal_SendEvents_OnExpr:
 AccPedal_SendEventsReturn:
 	ret
 
+; Handles each pedal function of the event: sustain, expression, portamento, hold, sostenuto, soft
+; and damper (AccPedal_Bit2_Sustain .. AccPedal_Bit3_Damper).
 AccPedal_ProcessAllBits:
 	calr AccPedal_Bit2_Sustain
 	calr AccPedal_Bit2_Expression
@@ -7037,6 +7127,9 @@ AccPedal_ProcessBitsPadding:
 	nop
 	nop
 
+; For pedal event type 5: on a press of bit 2 (set in 0x347e and 0x347f) sets bit 2 of 0x1108 and
+; turns sustain on (or sostenuto when 0x90f8 is 127 and the accompaniment runs); on a release turns
+; the same function off.
 AccPedal_Bit2_Sustain:
 	cp (0x348a:16), 5
 	jr nz, AccPedal_Bit2_Return
@@ -7081,6 +7174,8 @@ AccPedal_Bit2_OffSostenuto:
 AccPedal_Bit2_Return:
 	ret
 
+; For pedal event type 6: on a press of bit 2 sets bit 10 of 0x1108 and turns expression on (or
+; soft when 0x90f8 is 127 and the accompaniment runs); on a release turns the same function off.
 AccPedal_Bit2_Expression:
 	cp (0x348a:16), 6
 	jr nz, AccPedal_Expr_Return
@@ -7127,6 +7222,8 @@ AccPedal_Expr_OffSoft:
 AccPedal_Expr_Return:
 	ret
 
+; For pedal event type 5: on a press of bit 7 sets bit 7 of 0x1108 and turns portamento on while
+; the accompaniment runs (bit 2 of 0x41e), damper otherwise; the release does the matching off.
 AccPedal_Bit7_Portamento:
 	cp (0x348a:16), 5
 	jr nz, AccPedal_Bit7_Return
@@ -7159,6 +7256,8 @@ AccPedal_Bit7_OffDamper:
 AccPedal_Bit7_Return:
 	ret
 
+; For pedal event type 5: on a press of bit 6 sets bit 6 of 0x1108 and, while the accompaniment
+; runs, turns hold on; the release turns hold off (only while running).
 AccPedal_Bit6_Hold:
 	cp (0x348a:16), 5
 	jr nz, AccPedal_Bit6_Return
@@ -7185,6 +7284,8 @@ AccPedal_Bit6_HoldOff:
 AccPedal_Bit6_Return:
 	ret
 
+; For pedal event type 5, while the accompaniment runs: bit 4 pressed turns sostenuto on, released
+; turns it off.
 AccPedal_Bit4_Sostenuto:
 	cp (0x348a:16), 5
 	jr nz, AccPedal_Bit4_Return
@@ -7208,6 +7309,8 @@ AccPedal_Bit4_Off:
 AccPedal_Bit4_Return:
 	ret
 
+; For pedal event type 5, while the accompaniment runs: bit 5 pressed turns soft on, released turns
+; it off.
 AccPedal_Bit5_Soft:
 	cp (0x348a:16), 5
 	jr nz, AccPedal_Bit5_Return
@@ -7231,6 +7334,7 @@ AccPedal_Bit5_Off:
 AccPedal_Bit5_Return:
 	ret
 
+; For pedal event type 5: bit 3 pressed turns damper on, released turns it off.
 AccPedal_Bit3_Damper:
 	cp (0x348a:16), 5
 	jr nz, AccPedal_Bit3_Return
@@ -7250,6 +7354,8 @@ AccPedal_Bit3_Off:
 AccPedal_Bit3_Return:
 	ret
 
+; Sends the pedal state: AccPedal_SendEvents when 0x90f8 is 127 or 0xff, then (unless it is 0xff)
+; the four controller groups AccPedal_SendCtrl1..4.
 AccPedal_StateSync:
 	cp (0x90f8:16), 127
 	jr z, AccPedal_Sync_SendEvents
@@ -7270,6 +7376,10 @@ AccPedal_Sync_DispatchAll:
 AccPedal_Sync_Return:
 	ret
 
+; Sends the pedal functions newly released in pair 1 (bits set in 0x3483 but not in 0x3482): with
+; bit 3 of 0xfd56 set as switch packet 0x48 / 5 at 0x38e8 (MidiPkt_DispatchViaTable_4DCE); unless
+; bit 4 of 0xfd50 is set, also through the port path with 0x90e5 = (0x90e4) & 0x8f (bit 7 cleared
+; when 0x90f8 is 127).
 AccPedal_SendCtrl1:
 	ld a, (0x3482:16)
 	xor a, 0xff
@@ -7313,6 +7423,7 @@ AccPedal_SendCtrl1_UpdateMask:
 AccPedal_SendCtrl1_Return:
 	ret
 
+; As AccPedal_SendCtrl1 for pair 2 (0x3486 / 0x3487, switch type 6).
 AccPedal_SendCtrl2:
 	ld a, (0x3486:16)
 	xor a, 0xff
@@ -7356,6 +7467,7 @@ AccPedal_SendCtrl2_UpdateMask:
 AccPedal_SendCtrl2_Return:
 	ret
 
+; As AccPedal_SendCtrl1 for the functions active in both 0x3482 and 0x3483 (switch type 5).
 AccPedal_SendCtrl3:
 	ld a, (0x3482:16)
 	and a, (0x3483:16)
@@ -7397,6 +7509,7 @@ AccPedal_SendCtrl3_UpdateMask:
 AccPedal_SendCtrl3_Return:
 	ret
 
+; As AccPedal_SendCtrl1 for the functions active in both 0x3486 and 0x3487 (switch type 6).
 AccPedal_SendCtrl4:
 	ld a, (0x3486:16)
 	and a, (0x3487:16)
@@ -7891,6 +8004,8 @@ AccPedal_HoldOff_Padding:
 	nop
 	nop
 
+; When the hold bit (bit 6 of 0x3470) is set, clears it and moves bit 6 from "on" to "off" in the
+; two flag pairs 0x3480 / 0x3481 and 0x3482 / 0x3483.
 AccPedal_HoldOff:
 	bit 6, (0x3470:16)
 	jr z, AccPedal_HoldOff_Return
@@ -8053,6 +8168,8 @@ AccPedal_PortamentoOff_Padding:
 	nop
 	nop
 
+; When the portamento bit (bit 7 of 0x3470) is set, clears it and moves bit 7 from "on" to "off"
+; in the two flag pairs 0x3480 / 0x3481 and 0x3482 / 0x3483.
 AccPedal_PortamentoOff:
 	bit 7, (0x3470:16)
 	jr z, AccPedal_PortamentoOff_Return
@@ -8204,6 +8321,9 @@ AccAutoPlay_SplitDetect_Store:
 AccAutoPlay_SplitDetect_Return:
 	ret
 
+; On a note while no replay runs (0x7f0b = 0), pedal actions are allowed (AccPedal_StyleCheck) and
+; bit 2 of 0x28a7 is clear: applies the zone (AccAutoPlay_ZoneTrack_Apply) and shifts the note
+; history (0x349a = old 0x349c, 0x349c = WA).
 AccAutoPlay_ZoneTrack:
 	cp (0x7f0b:16), 0
 	jr nz, AccAutoPlay_ZoneTrack_Update
@@ -8222,6 +8342,9 @@ AccAutoPlay_ZoneTrack:
 AccAutoPlay_ZoneTrack_Update:
 	ret
 
+; Counts in 0x38e8 the keys of the record at 0xceff (count at +0, keys every 2 bytes from +5) that
+; lie at or above the split value chosen by mode word +2 (0 -> 0x80, 1 -> 0, else 0xf0, adjusted by
+; AccAutoPlay_ZoneTrack_SetFlag).
 AccAutoPlay_ZoneTrack_Apply:
 	ld xix, 0xceff
 	ld wa, (xix + 2)
@@ -8263,6 +8386,8 @@ AccAutoPlay_ZoneTrack_Default:
 	ld wa, (0x38e8:16)
 	ret
 
+; Returns the split value in L: AccAutoPlay_ModeAvail when bit 7 of W is set or bit 0 of 0xfd53
+; is clear, else 0x7f.  C = 0.
 AccAutoPlay_ZoneTrack_SetFlag:
 	ld c, 0x0:opc
 	bit 7, w
@@ -8285,6 +8410,10 @@ AccAutoPlay_ZoneTrack_Return2:
 AccAutoPlay_ZoneTrack_Return:
 	ret
 
+; Per-note auto-play update: AccAutoPlay_TriggerCheck; with bit 6 of 0x346e set, parts active and
+; no sequencer parts, re-evaluates the configuration (AccAutoPlay_SetConfig) and disables auto-play
+; when bit 7 of 0x346d stays clear; then runs AccAutoPlay_ActionDispatch and, when it requested a
+; restart (bit 0 of 0x3474), sets bit 2 of 0x346e and AccReplay_FullRestart.
 AccAutoPlay_StateMachine:
 	calr AccAutoPlay_TriggerCheck
 	bit 6, (0x346e:16)
@@ -8532,6 +8661,9 @@ AccAutoPlay_Configure_Return2:
 	nop
 
 
+; While auto-play is on (bit 1 of 0xfc5f): with a pending re-check (bit 2 of 0x346e) re-evaluates
+; the configuration and disables it when not allowed, clearing the pending bit; otherwise disables
+; it as soon as any part or sequencer part is active.
 AccAutoPlay_PeriodicCheck:
 	bit 1, (0xfc5f:16)
 	jr nz, AccAutoPlay_Periodic_Evaluate
@@ -8577,6 +8709,10 @@ AccAutoPlay_Disable_Return:
 	nop
 	nop
 
+; Auto-play sub-mode for the start case: with bit 7 of 0x346d set and the accompaniment stopped,
+; sets bit 0 (both bits 0..1 of 0x3283 set) or bit 2 of 0x346d; while running with bits 2 and 3 of
+; 0x420 set, clears bit 3 of 0x420 and 0x41e and sets bit 3 of 0x346d.  Bit 4 of 0x346d is cleared
+; whenever it changes.
 AccAutoPlay_SubModeA:
 	bit 7, (0x346d:16)
 	jr z, AccAutoPlay_SubModeA_Return
@@ -8613,6 +8749,8 @@ AccAutoPlay_SubModeA_Padding:
 	nop
 	nop
 
+; As AccAutoPlay_SubModeA with bit 1 instead of bit 0 of 0x346d in the stopped case, and bit 3 of
+; SEQ_TRANSPORT_STATE also cleared in the running case.
 AccAutoPlay_SubModeB:
 	bit 7, (0x346d:16)
 	jr z, AccAutoPlay_SubModeB_Return
@@ -8695,6 +8833,8 @@ AccAutoPlay_SeqHandoff_Padding:
 	nop
 	nop
 
+; Sets the auto-play mode bits of 0x346e from bits 0..1 of 0x28a7: 2 -> 0xa0, 1 -> 0x60, 3 -> 0xe0
+; (0 leaves them).
 AccAutoPlay_ModeDecode:
 	ld a, (0x28a7:16)
 	and a, 0x3

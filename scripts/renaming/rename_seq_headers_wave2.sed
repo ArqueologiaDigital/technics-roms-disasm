@@ -8,3 +8,7 @@
 # normal / push sr / max / ld (P4:8),32:io / .byte 0x40 by
 # scripts/tools/respell_drumparam_channel_bit_table.py), i.e. the one-hot part bit stored in 0x37c9.
 s/\bPatIdx_Lookup_Return\b/DrumParam_ChannelBitTable/g
+#
+# AccInit_CallF435A9 -> AccInit_SendNoteOffAndFlush: an address-based placeholder; the routine is
+# `call SeqVoice_SendNoteOffAndFlush / ret` and nothing else (its only caller is AccState_CollectAll).
+s/\bAccInit_CallF435A9\b/AccInit_SendNoteOffAndFlush/g

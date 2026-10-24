@@ -5144,7 +5144,7 @@ AccState_CollectAcc4_Active:
 	call AccWrap_PlayModeStartPlay
 
 AccState_Apply:
-	call	AccInit_CallF435A9
+	call	AccInit_SendNoteOffAndFlush
 	ld	a, (0xce43:16)
 	ld	(0x8ca6:16), a
 	ld	a, (0xce44:16)
@@ -5601,7 +5601,7 @@ AccInit_ResetSongCounter:
 AccInit_ResetSong_Store:
 	ld	(12870:16), 0
 	ret
-AccInit_CallF435A9:
+AccInit_SendNoteOffAndFlush:
 	call SeqVoice_SendNoteOffAndFlush
 	ret
 

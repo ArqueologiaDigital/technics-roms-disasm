@@ -32311,7 +32311,7 @@ AccInit_ReInit_ClearHighBits 00F59754
 AccInit_ReInit_SetDirty 00F5977E
 AccInit_ResetSongCounter 00F59784
 AccInit_ResetSong_Store 00F5978F
-AccInit_CallF435A9 00F59795
+AccInit_SendNoteOffAndFlush 00F59795
 AccTuning_CheckChange 00F5979A
 AccTuning_ChangeReturn 00F597B3
 AccTuning_LoadFromROM 00F597B4
