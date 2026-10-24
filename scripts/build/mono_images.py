@@ -25,6 +25,11 @@ being overwritten from its PNG on every build while v9's sat untouched -- two re
 Fixed by exporting v9's own PNGs (verified byte-identical to v10's after re-encoding) and
 looping this script over both directories.
 
+v7 was the same case until 2026-10-24 (wave 2, lane v7-harmonize): its eight banners are
+byte-identical to v10's (`cmp` on all eight pairs) and were counted as 4,928 B of verbatim
+debt by kn5000_source_coverage.py.  Its PNGs were exported from v7's own .bin files and the
+loop now covers all three revisions.
+
     python3 scripts/build/mono_images.py export   # bin -> png (run once, both revisions)
     python3 scripts/build/mono_images.py build    # png -> bin (build step, both revisions)
     python3 scripts/build/mono_images.py verify   # assert the round trip is exact, both
@@ -35,7 +40,8 @@ import sys
 from PIL import Image
 
 REPO = pathlib.Path(__file__).resolve().parent.parent.parent
-DIRS = [REPO / 'v9' / 'maincpu' / 'images', REPO / 'v10' / 'maincpu' / 'images']
+DIRS = [REPO / 'v7' / 'maincpu' / 'images', REPO / 'v9' / 'maincpu' / 'images',
+        REPO / 'v10' / 'maincpu' / 'images']
 W, H = 224, 22
 STRIDE = W // 8            # 28 bytes per row
 NAMES = ['Bitmap_1bit_Change_FD_2_of_2', 'Bitmap_1bit_Completed',
