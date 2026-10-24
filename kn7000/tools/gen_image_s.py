@@ -264,6 +264,15 @@ def main():
     ap.add_argument("--title", action="append", default=[], help="header line (repeatable)")
     ap.add_argument("--unidasm", default=os.environ.get("UNIDASM", "../../tools/unidasm"))
     ap.add_argument("--stats", help="also write the conversion figures to this file")
+    ap.add_argument("--long-table", action="append", default=[], metavar="LO:HI",
+                    help="data range of u32 words to emit as .long rows, by name where a word "
+                         "is the address of an emitted label; its words that point into a code "
+                         "range are entries (repeatable)")
+    ap.add_argument("--text", action="append", default=[], metavar="LO:HI",
+                    help="data range to emit as .byte rows with the text beside them")
+    ap.add_argument("--reflection-tables", action="store_true",
+                    help="emit the code-pointer half of every MILK reflection table "
+                         "gen_symbols.py finds as .long rows of names")
     a = ap.parse_args()
 
     base = a.base
@@ -304,6 +313,14 @@ def main():
             entries.add(t)
         else:
             n_ptr_rejected += 1
+
+    # the words of an explicit pointer table that land in code are entries
+    for r in a.long_table:
+        lo, hi = (int(x, 0) for x in r.split(":"))
+        for o in range(lo, hi, 4):
+            t = img.off(struct.unpack_from("<I", d, o)[0])
+            if t is not None and t not in entries and img.ends_cleanly(t):
+                entries.add(t)
 
     decoded, result = {}, {}
     n_adjacent, n_jumped, n_prologue, rejected_adj = 0, 0, 0, set()
@@ -456,15 +473,52 @@ def main():
     n_insn = n_byte = conv_bytes = pad_bytes = 0
     defined = set()
 
+    # typed data ranges: (lo, hi, kind)
+    typed = [tuple(int(x, 0) for x in r.split(":")) + ("long",) for r in a.long_table]
+    typed += [tuple(int(x, 0) for x in r.split(":")) + ("text",) for r in a.text]
+    n_reflect = 0
+    if a.reflection_tables:
+        import gen_symbols as GS
+        GS.PROGRAM_BASE = base
+        GS._is_code = lambda v: img.off(v) is not None
+        for co, _no, n in GS.find_tables(d, GS._ident_offsets(d)):
+            if not img.in_code(co):
+                typed.append((co, co + 4 * n, "long"))
+                n_reflect += 1
+    typed.sort()
+    label_at = {cpu_of(o): nm for o, nm in labels.items()}
+
+    def emit_typed(lo, hi, kind):
+        if kind == "long":
+            for o in range(lo, hi, 4):
+                w = struct.unpack_from("<I", d, o)[0]
+                body.append(f"\t.long\t{label_at.get(w, f'0x{w:08x}')}")
+        else:
+            for o in range(lo, hi, 16):
+                chunk = d[o:min(hi, o + 16)]
+                txt = "".join(chr(c) if 32 <= c < 127 else "." for c in chunk)
+                body.append("\t.byte\t" + ", ".join(f"0x{c:02x}" for c in chunk) + f'\t# "{txt}"')
+
     def fill(to):
         """.incbin_range from cur to `to`, switching .mnbase where a code range
-        linked elsewhere starts or ends (labels after it need the right base)."""
+        linked elsewhere starts or ends (labels after it need the right base),
+        and emitting the typed data ranges."""
         nonlocal cur, mnbase
         while cur < to:
             r = img.rng(cur)
+            t = next((t for t in typed if t[0] <= cur < t[1]), None)
+            if r is None and t is not None:
+                if base != mnbase:
+                    body.append(f".mnbase 0x{base:08x}")
+                    mnbase = base
+                stop = min(to, t[1])
+                emit_typed(cur, stop, t[2])
+                cur = stop
+                continue
             stop = to
             if r is None:
-                nxt = [lo for lo, _h, _d in code if cur < lo < to]
+                nxt = [lo for lo, _h, _d in code if cur < lo < to] + \
+                      [lo for lo, _h, _k in typed if cur < lo < to]
                 stop = min(nxt) if nxt else to
             else:
                 stop = min(to, r[1])
@@ -554,7 +608,8 @@ def main():
              f"({len(rejected_adj)} rejected, with jmp targets)",
              f"entries found as a jmp target                   {n_jumped}",
              f"prologues found in front of a call target       {n_prologue}",
-             f"entries whose code runs into undecodable bytes   {short}"]
+             f"entries whose code runs into undecodable bytes   {short}",
+             f"MILK reflection code tables typed as .long rows  {n_reflect}"]
     print(f"wrote {a.out}")
     print("\n".join(stats))
     if a.stats:
