@@ -36,8 +36,21 @@ ROMS = {
 }
 
 
+def read_source(path):
+    """The program source with every `.include`d .s file inlined (src/program.s
+    includes its code-region parts from src/program/)."""
+    out = []
+    for line in open(path).read().split("\n"):
+        m = re.match(r'\s*\.include\s+"([^"]+\.s)"', line)
+        if m:
+            out.append(read_source(os.path.join(REPO, m.group(1))))
+        else:
+            out.append(line)
+    return "\n".join(out)
+
+
 def measure():
-    src = open(PROG_S).read()
+    src = read_source(PROG_S)
     lines = src.split("\n")
 
     # Bytes handed back to the assembler verbatim, per source ROM.
@@ -87,8 +100,12 @@ def measure():
         for l in lines
         if re.match(r"^\s+[a-z]{2,7}(\.[bwl])?\s", l) and not l.strip().startswith((".", "#"))
     )
-    # Escape hatches: bytes we could NOT encode. Should stay near zero.
-    escapes = sum(1 for l in lines if re.match(r"^\s+\.(byte|word|long|short)\b", l))
+    # Escape hatches: instructions the encoder could NOT reproduce, kept as
+    # .byte (tools/gen_program_s.py marks them `# not encodable:`). Should stay at
+    # zero. Typed data lines (.byte/.word/.long: the palette, data islands, the
+    # boot header's marker byte) are counted apart; they are not escapes.
+    escapes = sum(1 for l in lines if re.match(r"^\s+\.byte\b.*#\s*not encodable:", l))
+    data_lines = sum(1 for l in lines if re.match(r"^\s+\.(byte|word|long|short)\b", l)) - escapes
 
     # Sanity: MN10300 instructions encode in 1..7 bytes, so source bytes per
     # instruction line must land in that band. Outside it, one of the two numbers is
@@ -100,14 +117,22 @@ def measure():
                 "coverage_score: %.2f source bytes per instruction line (%d B / %d lines). "
                 "MN10300 encodings are 1..7 bytes, so this score is wrong." % (bpi, prog_src, insn))
 
-    # Converted-function count: gen_program_s.py's CONVERT (a set of names) +
-    # LIB_CONVERT (name -> (start, end) for the 0x4C library window).
-    gen = open(os.path.join(REPO, "tools", "gen_program_s.py")).read()
-    m = re.search(r"^CONVERT\s*=\s*\{(.*?)^\}", gen, re.S | re.M)
-    conv = set(re.findall(r'"([A-Za-z_][A-Za-z0-9_]*)"', m.group(1))) if m else set()
-    m2 = re.search(r"^LIB_CONVERT\s*=\s*\{(.*?)^\}", gen, re.S | re.M)
-    libconv = set(re.findall(r'"([A-Za-z_][A-Za-z0-9_]*)"\s*:', m2.group(1))) if m2 else set()
-    nfuncs = len(conv) + len(libconv)
+    # Converted functions, counted in the source itself: every function block
+    # starts with a `# NAME  (CPU 0x..)` / `# NAME  (lib CPU 0x..)` header (which may
+    # go on after a `;`: `(CPU 0x..; its register-save prologue starts at 0x..)`); it
+    # is converted when the first line after its comments is not .incbin_range. A
+    # library block that is only the prologue of the next one shares its header
+    # with it (`(lib CPU 0x..; its `call` entry X at 0x..)`): one function, one block.
+    nfuncs = nblocks = 0
+    pending = False
+    for l in lines:
+        if re.match(r"# \S+  \((lib )?CPU 0x[0-9a-fA-F]+[);]", l):
+            nblocks += 1
+            pending = True
+            continue
+        if pending and l.strip() and not l.lstrip().startswith("#"):
+            nfuncs += 0 if l.lstrip().startswith(".incbin_range") else 1
+            pending = False
 
     # Denominator: distinct symbol entries (skip comments/blanks). kn7000.sym is
     # the firmware's own reflection-table names; kn7000_manual.sym is hand-RE'd
@@ -129,6 +154,8 @@ def measure():
         insn=insn,
         escapes=escapes,
         nfuncs=nfuncs,
+        nblocks=nblocks,
+        data_lines=data_lines,
         named=named,
     )
 
@@ -139,10 +166,16 @@ def main():
     args = ap.parse_args()
 
     m = measure()
+    # The commit column is the HEAD the tree was measured on; a `+` after it says
+    # the measured src/ or tools/ had changes not yet committed (a row is usually
+    # appended in the commit that makes the change, so it is measured on its parent).
     try:
         commit = subprocess.check_output(
             ["git", "-C", REPO, "rev-parse", "--short", "HEAD"], text=True
         ).strip()
+        if subprocess.check_output(["git", "-C", REPO, "status", "--porcelain", "--", "src", "tools"],
+                                   text=True).strip():
+            commit += "+"
     except Exception:
         commit = "?"
 
@@ -154,8 +187,10 @@ def main():
     print(f"    REAL assembly source     : {m['prog_src']:,}")
     print(f"  >> SOURCE COVERAGE         : {m['pct']:.2f}%")
     print(f"  instruction lines          : {m['insn']:,}")
-    print(f"  .byte escape hatches       : {m['escapes']}  (want ~0)")
-    print(f"  converted functions        : {m['nfuncs']:,} of {m['named']:,} named")
+    print(f"  instruction escapes (.byte): {m['escapes']}  (want 0)")
+    print(f"  typed data lines           : {m['data_lines']:,}")
+    print(f"  converted functions        : {m['nfuncs']:,} of {m['nblocks']:,} function blocks"
+          f" ({m['named']:,} symbol-file entries)")
     print(f"  commit                     : {commit}")
 
     if args.append:

@@ -5,6 +5,9 @@
 ; function entry. Merged into the annotated disassembly by `make disasm`.
 ; Cross-references: see kn7000_mame/notes/*.md.
 ;
+; ---- the reset path ---------------------------------------------------------
+0x4840FF7E  ResetEntry             ; target of the boot header's reset jmp (image offset 0): sets the port/bus registers 0x360080xx/0x320000xx, sp := 0x50021CF8, then clears work RAM from 0x50007F44 (hand-written: it stores imm32 constants a compiler would shorten)
+;
 ; ---- Control-panel serial protocol (SIO ch0 @ 0x34000800) ------------------
 ; The main CPU <-> panel sub-CPU handshake. Full protocol in
 ; kn7000_mame/notes/panel-serial-protocol.md. These sit in the large unnamed
@@ -266,6 +269,8 @@
 ; then EXECUTES it via the 0x4C000000 alias. So these are code-at-runtime / data-at-rest
 ; here. Mapping: library address X  ==  program ROM 0x487B8FD1 + (X - 0x4C000000).
 0x487B8FD1  LibRomImageBase        ; = lib 0x4C000000: base of the self-loaded library/kernel ROM image
+0x487F6EE6  LibLoadSentinel        ; InitializeBlock27 descriptor's last-record payload `retf 0, 0` (de 00 00): copied to 0x4C03FFF0, the end of the library window
+0x487F6EE9  LibLoadDescriptor      ; InitializeBlock27's copy descriptor at the end of the image: 12-byte records {u16 flags, u16 len, u32 src, u32 dest}, flags bit15 = last; one record copies LibRomImageBase.. to 0x4C000000 (kn7000_mame notes/kn2400-boot.md)
 0x487BC022  LibStrCopy             ; = lib 0x4C003051: byte copy until NUL (strcpy), hardware-loop (setlb)
 0x4C003051  strcpy_entry           ; the runtime address callers `call` (after strcpy's movm at 0x4C00304F, named by the 942 export table): strcpy(a0 = dst, a1 = src) -> a0 = dst
 0x487F6D71  LibIrqQuickDispatch    ; = lib 0x4C03DDA0: AM33 maskable-IRQ quick handler -- F6/udf context save, increments IRQ counter 0x50380D0C, reads IAGR 0x34000100 (used by high-priority device levels)
@@ -787,30 +792,52 @@
 ;      +0x18 reg8, +0x1C reg9; then +0x24 level, +0x40 zone word, +0x48
 ;      pitch18, +0x54 class-0x3000 word, +0x5C send word, +0x78/+0x7A/+0x7C/
 ;      +0x80 dirty masks. -----------------------------------------------------
-0x4C0309A5  TgExclGroupChoke        ; (d0 part, d1 new slot) exclusive-group choke: desc(librec+0x38)+0x0E bit7 = in an excl group (id &0x7F -> damp-rate table 0x48586EA4); collect same-part voices via 0x4C01010A, and for each whose desc group matches: release halves of reg0/reg1 (+0x02/+0x06) := damp rate<<8 (levels cleared) then TgVoiceEgBurstWrite -- the hi-hat-style cutoff
-0x4C030A84  TgTotalLevelCalc        ; (d0, d1) -> 0x4C00F9B4(d0, d1, 0x40) & 0xFFFF: level/velocity resolve used by the note-on programmers (>= 0x100 result suppresses the effect-send fields)
-0x4C030A9D  TgElemNoteOnStd         ; (d0 slot, a0 shadow rec) per-element note-on programmer, standard class (librec+2 bit1): fills the shadow cache -- +0x40 zone word (desc+2 &0xFFF), pitch16 via 0x4C02FB7E then +0x48 pitch18 := ((pitch16+0x1800)<<2)&0x3FFFF (THE pipeline formula), +0x24 level (0x4C02FBE3 &0x7F), effect sends +0x5C/+0x2C from desc2+0x18/+0x19 via curve tables 0x486D1F54/0x486D2154 (skipped when TgTotalLevelCalc >= 0x100), + class-0x04/0x0C global writes
-0x4C030E73  TgVoiceKillHandler      ; slot-service class-0x08 handler (d0 slot): clears the lib record's active bit (+8 bit7); when desc+0x0D bit5 is set continues into the 0x50009944 block via 0x4C02FE59 (else plain return)
-0x4C030FB9  TgPitchInitCalc         ; the tg-pitch-pipeline notes' INIT pitch computation (note16 -> pitch16 with zone center/exp, coarse/fine, multisample corr); populates librec +0x0C notePitch16 race-free before the first TG write
-0x4C031127  TgPitchRuntimeCalc      ; the notes' RUNTIME pitch recompute: init formula + modulation (part offset, mod matrix, LFO, portamento); called from every per-class voice-refresh handler
-0x4C031949  TgKeyOffAmpRelease      ; key-off AMPLITUDE release compute (d0 key-off offset, a0 librec, a1 out [rate|lvl]x2): rate index = clamp(desc2+0x2E base + part-FX rec (0x500B5340+n*0x54C)+0x48 RELEASE offset + d0 + key scale (desc2+0x31..0x33 breakpoints vs librec+0xC note), 0..100) -> curve ROM 0x486D2649; out pairs become shadow reg0/reg1 (burst 0x9180/0x9100 on the piano damp) -- STATIC ANSWER to the envelope-sweep RESULT-2 open: screen RLS enters HERE, not the TG regs
-0x4C031C50  TgPitchEgAttackCalc    ; running-voice PITCH-EG attack program (a0 librec, a1 desc2): rate desc2+0x0B via curve 0x486D2649, key scale desc2+0x15..0x17 (desc2+0x0B..0x12 = the pitch EG, regs 4..6 per the a1 live decode); called by every class refresh handler
-0x4C031D9B  TgPitchEgDecayCalc     ; running-voice PITCH-EG decay program: rates desc2+0x0D/+0x0F via curve 0x486D2649, key scale desc2+0x17
-0x4C031F07  TgKeyOffPitchRelease   ; key-off PITCH-EG release compute (a0 librec, a1 out): desc2+0x11 release rate + desc2+0x12 scale via curves 0x486D2649/0x486D2713; out pairs become shadow reg4/reg5 (the piano burst's 0xAE00/0xAE00 = pitch pairs to instant-zero)
-0x4C0321BF  TgFilterEgAttackCalc   ; running-voice FILTER-EG attack program: desc2+0x40 rate (>=2 via curve 0x486D2649), desc2+0x4A key scale (desc2+0x3E..0x4C = the filter EG, regs 8..0xA per the a1 live decode)
-0x4C03231F  TgFilterEgDecayCalc    ; running-voice FILTER-EG decay program: desc2+0x42/+0x44 rates via curve 0x486D2649, desc2+0x4C
-0x4C032490  TgKeyOffFilterRelease  ; key-off FILTER-EG release compute (a0 librec, a1 out): desc2+0x46 rate via 0x486D2649, signed level clamp(desc2+0x47 + desc2+0x3E, -50..50) via 0x486D2713 (desc2+0x3E = the folded CUTOFF ADJUST); out pairs become shadow reg8/reg9 (piano burst 0x22B0: sweep the filter shut to signed level 0xB0)
-0x4C0376A5  TgVoiceGateOff          ; (d0 slot, a0 shadow rec) KEY-UP commit: class-0x3000 reg := rec+0x54 & ~0x4000, then reg3 := the rec+0x0A gate-off value -- the envelope notes' universal r3=0x8000 key-release write
-0x4C0376E3  TgVoiceEgBurstWrite     ; (d0 slot, a0 shadow rec) write the cached RELEASE halves (hi16) of regs 0,1,4,5,8,9 (rec +0x02/+0x06/+0x0E/+0x12/+0x1A/+0x1E) via TgVoiceRegWrite_entry -- THE managed key-off 6-write release burst seen on the wire (regs 0x10/0x11/0x14/0x15/0x18/0x19 = the odd element's bank at +0x10), also the choke flush
-0x4C037398  TgVoiceGateOn           ; (d0 slot, a0 shadow rec) NOTE-ON commit: reg3 := 0x87FF (the envelope notes' gate-on), class-0x3000 reg := (rec+0x54 & 0x18000)|0x4000, then streams the cached note-on halves (lo16): reg0 := rec+0, reg1 := rec+4, reg2 := rec+8, reg4 := rec+0xC, ...
+0x4C03099F  TgExclGroupChoke        ; (d0 part, d1 new slot) exclusive-group choke: desc(librec+0x38)+0x0E bit7 = in an excl group (id &0x7F -> damp-rate table 0x48586EA4); collect same-part voices via 0x4C01010A, and for each whose desc group matches: release halves of reg0/reg1 (+0x02/+0x06) := damp rate<<8 (levels cleared) then TgVoiceEgBurstWrite -- the hi-hat-style cutoff
+0x4C0309A5  TgExclGroupChoke_entry
+0x4C030A7F  TgTotalLevelCalc        ; (d0, d1) -> 0x4C00F9B4(d0, d1, 0x40) & 0xFFFF: level/velocity resolve used by the note-on programmers (>= 0x100 result suppresses the effect-send fields)
+0x4C030A84  TgTotalLevelCalc_entry
+0x4C030A98  TgElemNoteOnStd         ; (d0 slot, a0 shadow rec) per-element note-on programmer, standard class (librec+2 bit1): fills the shadow cache -- +0x40 zone word (desc+2 &0xFFF), pitch16 via 0x4C02FB7E then +0x48 pitch18 := ((pitch16+0x1800)<<2)&0x3FFFF (THE pipeline formula), +0x24 level (0x4C02FBE3 &0x7F), effect sends +0x5C/+0x2C from desc2+0x18/+0x19 via curve tables 0x486D1F54/0x486D2154 (skipped when TgTotalLevelCalc >= 0x100), + class-0x04/0x0C global writes
+0x4C030A9D  TgElemNoteOnStd_entry
+0x4C030E6E  TgVoiceKillHandler      ; slot-service class-0x08 handler (d0 slot): clears the lib record's active bit (+8 bit7); when desc+0x0D bit5 is set continues into the 0x50009944 block via 0x4C02FE59 (else plain return)
+0x4C030E73  TgVoiceKillHandler_entry
+0x4C030FB4  TgPitchInitCalc         ; the tg-pitch-pipeline notes' INIT pitch computation (note16 -> pitch16 with zone center/exp, coarse/fine, multisample corr); populates librec +0x0C notePitch16 race-free before the first TG write
+0x4C030FB9  TgPitchInitCalc_entry
+0x4C031122  TgPitchRuntimeCalc      ; the notes' RUNTIME pitch recompute: init formula + modulation (part offset, mod matrix, LFO, portamento); called from every per-class voice-refresh handler
+0x4C031127  TgPitchRuntimeCalc_entry
+0x4C031944  TgKeyOffAmpRelease      ; key-off AMPLITUDE release compute (d0 key-off offset, a0 librec, a1 out [rate|lvl]x2): rate index = clamp(desc2+0x2E base + part-FX rec (0x500B5340+n*0x54C)+0x48 RELEASE offset + d0 + key scale (desc2+0x31..0x33 breakpoints vs librec+0xC note), 0..100) -> curve ROM 0x486D2649; out pairs become shadow reg0/reg1 (burst 0x9180/0x9100 on the piano damp) -- STATIC ANSWER to the envelope-sweep RESULT-2 open: screen RLS enters HERE, not the TG regs
+0x4C031949  TgKeyOffAmpRelease_entry
+0x4C031C4B  TgPitchEgAttackCalc    ; running-voice PITCH-EG attack program (a0 librec, a1 desc2): rate desc2+0x0B via curve 0x486D2649, key scale desc2+0x15..0x17 (desc2+0x0B..0x12 = the pitch EG, regs 4..6 per the a1 live decode); called by every class refresh handler
+0x4C031C50  TgPitchEgAttackCalc_entry
+0x4C031D96  TgPitchEgDecayCalc     ; running-voice PITCH-EG decay program: rates desc2+0x0D/+0x0F via curve 0x486D2649, key scale desc2+0x17
+0x4C031D9B  TgPitchEgDecayCalc_entry
+0x4C031F02  TgKeyOffPitchRelease   ; key-off PITCH-EG release compute (a0 librec, a1 out): desc2+0x11 release rate + desc2+0x12 scale via curves 0x486D2649/0x486D2713; out pairs become shadow reg4/reg5 (the piano burst's 0xAE00/0xAE00 = pitch pairs to instant-zero)
+0x4C031F07  TgKeyOffPitchRelease_entry
+0x4C0321BA  TgFilterEgAttackCalc   ; running-voice FILTER-EG attack program: desc2+0x40 rate (>=2 via curve 0x486D2649), desc2+0x4A key scale (desc2+0x3E..0x4C = the filter EG, regs 8..0xA per the a1 live decode)
+0x4C0321BF  TgFilterEgAttackCalc_entry
+0x4C03231A  TgFilterEgDecayCalc    ; running-voice FILTER-EG decay program: desc2+0x42/+0x44 rates via curve 0x486D2649, desc2+0x4C
+0x4C03231F  TgFilterEgDecayCalc_entry
+0x4C03248B  TgKeyOffFilterRelease  ; key-off FILTER-EG release compute (a0 librec, a1 out): desc2+0x46 rate via 0x486D2649, signed level clamp(desc2+0x47 + desc2+0x3E, -50..50) via 0x486D2713 (desc2+0x3E = the folded CUTOFF ADJUST); out pairs become shadow reg8/reg9 (piano burst 0x22B0: sweep the filter shut to signed level 0xB0)
+0x4C032490  TgKeyOffFilterRelease_entry
+0x4C0376A0  TgVoiceGateOff          ; (d0 slot, a0 shadow rec) KEY-UP commit: class-0x3000 reg := rec+0x54 & ~0x4000, then reg3 := the rec+0x0A gate-off value -- the envelope notes' universal r3=0x8000 key-release write
+0x4C0376A5  TgVoiceGateOff_entry
+0x4C0376DE  TgVoiceEgBurstWrite     ; (d0 slot, a0 shadow rec) write the cached RELEASE halves (hi16) of regs 0,1,4,5,8,9 (rec +0x02/+0x06/+0x0E/+0x12/+0x1A/+0x1E) via TgVoiceRegWrite_entry -- THE managed key-off 6-write release burst seen on the wire (regs 0x10/0x11/0x14/0x15/0x18/0x19 = the odd element's bank at +0x10), also the choke flush
+0x4C0376E3  TgVoiceEgBurstWrite_entry
+0x4C037393  TgVoiceGateOn           ; (d0 slot, a0 shadow rec) NOTE-ON commit: reg3 := 0x87FF (the envelope notes' gate-on), class-0x3000 reg := (rec+0x54 & 0x18000)|0x4000, then streams the cached note-on halves (lo16): reg0 := rec+0, reg1 := rec+4, reg2 := rec+8, reg4 := rec+0xC, ...
+0x4C037398  TgVoiceGateOn_entry
 0x4C036F9A  TgVoiceRegWrite_entry
 0x4C037694  TgVoiceGateOnWrap       ; plain-call wrapper: exthu d0 then TgVoiceGateOn via a register-save call
-0x4C037C92  TgVoiceDirtyAll         ; (d0 slot) set bit7 in the shadow rec dirty masks +0x78/+0x7A/+0x7C/+0x80 (mark every reg bank for flush)
-0x4C037CCE  TgVoiceDirtyRelease     ; (d0 slot) clear bit7 in the same masks (drop the pending-flush marks on release/steal)
-0x4C036012  TgNoteOnTableTone       ; (d0 part, d1 note, a0 out rec) class-0x40 note-on builder: out+0 := (part<<8)|note|0x80; per-note 3-byte table (0x4C038503(part) result +0x27+note*3) selects up to two synthesized layers, staged in the pair 0x500C9D58/0x500C9E0C (built by 0x4C035EAA, flag bytes from ROM 0x4858711C/1D, send bits from 0x4C02BED0), then each staged 0xB4-byte record is copied into the lib voice-record array 0x500AF940+slot*0xB4 (slot bytes at out+0x0A/+0x0B)
-0x4C036573  TgKeyOffSample          ; (d0 part, d1 note) key-off retrigger: only for tone class (desc+0x10)&0xCF == 0x80 kits whose zone halfword flags 1|2|4 request a key-off sample; allocates via 0x4C036312 (slot byte at rec+0x0B), then TgVoiceRecordReset_entry + program chain 0x4C00BC83/0x4C037C92/TgVoiceGateOn/TgVoiceGateOff/0x4C03B2FC
-0x4C036837  TgNoteOn                ; (d0 part, d1 note, stack vel...) THE per-part note-on dispatcher, routed by tone class (part tone block 0x500CE404+part*0x130 -> desc+0x10 & 0xC0): 0x00/0xC0 melodic -- repeat-note detector (0x500AD5A8+part*0x10C: +0x20 last-tick vs 0x50151BFC, <0x19 ticks -> +0x24 count, damp sel 0x10/0x20 -> +0x25), allocate via 0x4C034FF5 (4 slot bytes rec+0x0A, steal list rec+0x20), per slot TgVoiceRecordReset_entry + class dispatch (librec+2 bit1 -> TgElemNoteOnStd, bit2 -> 0x4C033CB3, else 0x4C013547) + TgVoiceDirtyAll + TgVoiceGateOn, stolen slots released via TgVoiceRecordPtr/TgVoiceGateOff/TgVoiceDirtyRelease; class 0x80 -> drum-kit sub-paths (0x80..0x83 by &0xCF, builders 0x4C034FF5/0x4C03595F/0x4C035D21); class 0x40 -> TgNoteOnTableTone + per-layer TgExclGroupChoke/TgElemNoteOnStd
-0x4C036EA4  TgPartKeyEvent          ; (d0 flags, d1 part, stack note/vel) the part-level key router (parts >= 0x22 rejected): vel&0x7F nonzero -> note-on via 0x4C0147A4 + TgNoteOn; vel == 0 -> key-off: state query 0x4C02E0F9 (0xFF/0xFE -> release the note's voices: list 0x4C010047, per slot 0x4C03B0CD + TgVoiceSlotService_entry(slot,0); 0 -> mark-only via 0x4C02E2C7 = the sustain/hold path), then TgKeyOffSample
+0x4C037C90  TgVoiceDirtyAll         ; (d0 slot) set bit7 in the shadow rec dirty masks +0x78/+0x7A/+0x7C/+0x80 (mark every reg bank for flush)
+0x4C037C92  TgVoiceDirtyAll_entry
+0x4C037CCC  TgVoiceDirtyRelease     ; (d0 slot) clear bit7 in the same masks (drop the pending-flush marks on release/steal)
+0x4C037CCE  TgVoiceDirtyRelease_entry
+0x4C03600D  TgNoteOnTableTone       ; (d0 part, d1 note, a0 out rec) class-0x40 note-on builder: out+0 := (part<<8)|note|0x80; per-note 3-byte table (0x4C038503(part) result +0x27+note*3) selects up to two synthesized layers, staged in the pair 0x500C9D58/0x500C9E0C (built by 0x4C035EAA, flag bytes from ROM 0x4858711C/1D, send bits from 0x4C02BED0), then each staged 0xB4-byte record is copied into the lib voice-record array 0x500AF940+slot*0xB4 (slot bytes at out+0x0A/+0x0B)
+0x4C036012  TgNoteOnTableTone_entry
+0x4C03656E  TgKeyOffSample          ; (d0 part, d1 note) key-off retrigger: only for tone class (desc+0x10)&0xCF == 0x80 kits whose zone halfword flags 1|2|4 request a key-off sample; allocates via 0x4C036312 (slot byte at rec+0x0B), then TgVoiceRecordReset_entry + program chain 0x4C00BC83/0x4C037C92/TgVoiceGateOn/TgVoiceGateOff/0x4C03B2FC
+0x4C036573  TgKeyOffSample_entry
+0x4C036832  TgNoteOn                ; (d0 part, d1 note, stack vel...) THE per-part note-on dispatcher, routed by tone class (part tone block 0x500CE404+part*0x130 -> desc+0x10 & 0xC0): 0x00/0xC0 melodic -- repeat-note detector (0x500AD5A8+part*0x10C: +0x20 last-tick vs 0x50151BFC, <0x19 ticks -> +0x24 count, damp sel 0x10/0x20 -> +0x25), allocate via 0x4C034FF5 (4 slot bytes rec+0x0A, steal list rec+0x20), per slot TgVoiceRecordReset_entry + class dispatch (librec+2 bit1 -> TgElemNoteOnStd, bit2 -> 0x4C033CB3, else 0x4C013547) + TgVoiceDirtyAll + TgVoiceGateOn, stolen slots released via TgVoiceRecordPtr/TgVoiceGateOff/TgVoiceDirtyRelease; class 0x80 -> drum-kit sub-paths (0x80..0x83 by &0xCF, builders 0x4C034FF5/0x4C03595F/0x4C035D21); class 0x40 -> TgNoteOnTableTone + per-layer TgExclGroupChoke/TgElemNoteOnStd
+0x4C036837  TgNoteOn_entry
+0x4C036E9E  TgPartKeyEvent          ; (d0 flags, d1 part, stack note/vel) the part-level key router (parts >= 0x22 rejected): vel&0x7F nonzero -> note-on via 0x4C0147A4 + TgNoteOn; vel == 0 -> key-off: state query 0x4C02E0F9 (0xFF/0xFE -> release the note's voices: list 0x4C010047, per slot 0x4C03B0CD + TgVoiceSlotService_entry(slot,0); 0 -> mark-only via 0x4C02E2C7 = the sustain/hold path), then TgKeyOffSample
+0x4C036EA4  TgPartKeyEvent_entry
 0x4C014A56  LibParamSet             ; library ROM: parameter set (d0 = (index<<24)|id24, d1 = aux); the write-side partner of LibParamGet 0x4C0149FA
 ;
 ; ---- TG voice allocator + steal engine (library image). Static RE of the
@@ -848,6 +875,15 @@
 0x4C00ECEA  TgPartElemMaskGet       ; (d0 part) -> state byte (0x500C58AE+part*9) & 0x3C: the per-element enable bits TgMelodicVoiceAlloc's caller gate reads
 0x4C00ECFF  TgPartElemEnabled       ; (d0 part, d1 elem) -> state byte & ROM mask 0x48586F24[elem] (bits 2..5 = elems 0..3); 0 kills the element's request byte in TgMelodicVoiceAlloc
 0x4C00ED01  TgPartElemEnabled_entry
+0x4C00EDE4  TgSoundEditFlag4DBit7Refresh ; SOUND EDIT flag refresher: copies one bit (or byte) of the part-setting record into the SOUND EDIT record (kn7000_mame notes/sound-edit-parameters.md section 3)
+0x4C00EE41  TgSoundEditFlag4DLowRefresh ; SOUND EDIT flag refresher: copies one bit (or byte) of the part-setting record into the SOUND EDIT record (kn7000_mame notes/sound-edit-parameters.md section 3)
+0x4C00EE9A  TgSoundEditFlag4EBit7Refresh ; SOUND EDIT flag refresher: copies one bit (or byte) of the part-setting record into the SOUND EDIT record (kn7000_mame notes/sound-edit-parameters.md section 3)
+0x4C00EEF7  TgSoundEditFlag4ELowRefresh ; SOUND EDIT flag refresher: copies one bit (or byte) of the part-setting record into the SOUND EDIT record (kn7000_mame notes/sound-edit-parameters.md section 3)
+0x4C00EF4B  TgSoundEditFlag4FBit7Refresh ; SOUND EDIT flag refresher: copies one bit (or byte) of the part-setting record into the SOUND EDIT record (kn7000_mame notes/sound-edit-parameters.md section 3)
+0x4C00EFA8  TgSoundEditFlag51Bit7Refresh ; SOUND EDIT flag refresher: copies one bit (or byte) of the part-setting record into the SOUND EDIT record (kn7000_mame notes/sound-edit-parameters.md section 3)
+0x4C00F04E  TgSoundEditFlag51LowRefresh ; SOUND EDIT flag refresher: copies one bit (or byte) of the part-setting record into the SOUND EDIT record (kn7000_mame notes/sound-edit-parameters.md section 3)
+0x4C00F0A2  TgSoundEditByte52Refresh ; SOUND EDIT flag refresher: copies one bit (or byte) of the part-setting record into the SOUND EDIT record (kn7000_mame notes/sound-edit-parameters.md section 3)
+0x4C00F0E6  TgSoundEditByte53Refresh ; SOUND EDIT flag refresher: copies one bit (or byte) of the part-setting record into the SOUND EDIT record (kn7000_mame notes/sound-edit-parameters.md section 3)
 0x4C02BE45  TgVoiceRoutePtrCalc     ; (a0 staging rec) rec+0x34 := per-note routing-entry ptr: kit tables via maincpu 0x48449DAA/0x48449DF8(rec+0x18) indexed by note (rec+0x0A hi7); when the note byte's bit7 is set also sets bit15 of rec+2 and re-reads via 0x48449E46 -- *(rec+0x34) halfword bits 10/11 = the note's allowed TG sides (read by TgVoiceSideSelect)
 0x4C02BE4A  TgVoiceRoutePtrCalc_entry
 0x4C02BECB  TgVoiceSideSelect       ; (a0 staging rec) -> TG side word for the request: rec+0x18 kit class 1/2 -> 0x400 (TG A), 3/4 -> 0x800 (TG B); class 0 -> mode 0x484D7751(): 1/2/3 -> *(rec+0x34) & 0x0C00 (the note's routing entry), 5 -> table 0x48586514, 4 -> 0; TgElemRequestFlags folds 0x400/0x800 into request bits 0x08/0x10 (= TgVoiceNodePick's side policy)
@@ -1295,7 +1331,7 @@
 0x4C02D0A7  TgVoiceModLfoStep       ; (d0 part, a0 tone entry, a1 slot state) step one mod-slot oscillator: flags bit4 = delay counter (re-arms as running), bit3 = running (phase wrap -> new value via 0x4C0399DD / triangle), scaled by tone +0xE+dest*2 / 0x800, +-0x1FFF out
 0x4C02D0AC  TgVoiceModLfoStep_entry
 0x4C02D2B0  TgPartModSlotSweep      ; the per-part MOD-SLOT service sweep (all 0x22 parts): TgPartGlideTick (partrec bits6+7), 0x4C039A09, then per collected voice step the 4 mod units (tone +0x52+u*4 bit7 = per-voice at librec+0x82+u*8) via TgVoiceModLfoStep -> TgVoiceModDepthWrite; tail = global +0x52 release-countdown sweep (graceful for partrec bit-0x2000 parts)
-0x4C02D2B6  TgPartModSlotSweep_entry
+0x4C02D2B2  TgPartModSlotSweep_entry ; the `call` entry (callers pass [d2,d3,a2,a3], 0x10): the frame needs 0x104 more bytes than call's 8-bit size can open, so the `add -0x104, sp` after the movm is part of the body, not of the prologue
 0x4C02D52A  TgVoicePeriodicService  ; the periodic voice tick: glide + 0x4C039A09 for all parts, 0x4C009A16/0x4C009839, then the global sweep running the +0x52 countdowns and +0x54 level ramps (TgVoiceReleaseCountdownTick / TgVoiceLevelRampTick; immediate key-off for non-bit-0x2000 parts)
 0x4C02D530  TgVoicePeriodicService_entry
 0x4C02D75F  TgPartGlideStateReset   ; (d0 part) reset the portamento state 0x500AD5A8+part*0x10C: +0x26 := 0xFF, clear +0x28..+0x35 and +0x40/+0x42, +0x44 := -1; rets leaf
@@ -2620,7 +2656,7 @@
 0x48486061  JpegDecodeCrop          ; (a0 = JPEG, a1 = destination, d0 = x offset, d1 = y offset) decodes through JpegEngine 0x4840E721 (input limit 0x7FFFF) into a 640x240, 3-byte-per-pixel, bottom-up buffer: each pixel lands at its position plus the offsets, pixels outside 640x240 are dropped -> d0 = JpegEngine's result. Only caller: PictureImport's JPEG crop (0x485814C2). No movm; callers enter at JpegDecodeCrop_entry past add -0x4c,sp
 0x48486064  JpegDecodeCrop_entry
 0x4848886E  CaptureLcdCheck         ; the firmware's own name (string 0x485D5AC0; ApFunction table 0x48742674, registered by InitializeBlock01 at 0x484874FC): (d1 = message) 0x50005 -> CaptureLcd, returns 0; 0x50000 -> returns d0 + a stack argument; anything else -> 0
-0x48496F51  HpFlashCheck            ; init (called from func_4854AC2B; runs at boot): when the custom flash answers and its record 0x96811000 differs from the ROM template 0x485F9584 (strcmp of the 'JK ' string, then the u32 at +4), calls HpFlashWriteDefaults; then always HpRecordLoad
+0x48496F51  HpFlashCheck            ; init (called from func_4854AC28_entry; runs at boot): when the custom flash answers and its record 0x96811000 differs from the ROM template 0x485F9584 (strcmp of the 'JK ' string, then the u32 at +4), calls HpFlashWriteDefaults; then always HpRecordLoad
 0x48496F54  HpFlashCheck_entry
 0x48496F93  HpFlashWriteDefaults    ; copies the ROM template 0x485F9584 (0x18C bytes) to 0x5006B5F8, then HpRecordProgram and HpBmpResetDefault
 0x48496F96  HpFlashWriteDefaults_entry
@@ -2634,13 +2670,13 @@
 0x4849709F  HmpBufferAlloc_entry
 0x484970C1  HmpInstall              ; (d0 = fmm error after the .HMP read) if d0 >= 0: copies the first 0x18C bytes of the buffer *(0x5006B798), the 'JK' record, to 0x5006B5F8, programs it with HpRecordProgram, calls TtNormal(0x330001, 0x600B5) (which re-reads the record word at 0x5006B600), and programs buffer+0x18C (0x42B6 bytes, the BMP) to custom flash 0x9681118C with no chip check. Always frees the buffer
 0x484970C4  HmpInstall_entry
-0x48497122  HmpBlobGet              ; (a0, a1 = out pointers) stores 0x96811000 to (a0) and 0x4442 to (a1): the custom-flash homepage blob (record + BMP) that the .HMP save func_4852D59E (from SaveHmp_HD) writes to the file
+0x48497122  HmpBlobGet              ; (a0, a1 = out pointers) stores 0x96811000 to (a0) and 0x4442 to (a1): the custom-flash homepage blob (record + BMP) that the .HMP save func_4852D599_entry (from SaveHmp_HD) writes to the file
 0x48497135  LoadHpBmp_entry
-0x4852C10C  SeqActFileLoad          ; (a0 = song file base name, d0 = song-load result) builds '<a0>.ACT' (func_4852F887, extension 0xD) and calls SswSongActLoad with d0, or with -0x68 when that file does not exist (func_485325E4) -> d0 = its result, -0x68 turned into 0. Called after a sequencer song load: 0x4852C20F, 0x4852C29A, 0x4852C2F4, 0x4852E443
+0x4852C10C  SeqActFileLoad          ; (a0 = song file base name, d0 = song-load result) builds '<a0>.ACT' (func_4852F882_entry, extension 0xD) and calls SswSongActLoad with d0, or with -0x68 when that file does not exist (func_485325DF_entry) -> d0 = its result, -0x68 turned into 0. Called after a sequencer song load: 0x4852C20F, 0x4852C29A, 0x4852C2F4, 0x4852E443
 0x4852C111  SeqActFileLoad_entry
-0x4852CC3A  HmpFileLoad             ; (a0 = base name) .HMP load (file type 9; LoadHmp_HD, load-handler table 0x486642FC): builds "<name>.HMP", fmmopen "rb" (failure: returns the fmm error), 'JK ' signature check func_4852B74B(9) (failure: -0x66), HmpBufferAlloc, fmmread 0x4442 bytes (count ignored, no size check), HmpInstall(fmm error), fmmclose; returns the fmm error
+0x4852CC3A  HmpFileLoad             ; (a0 = base name) .HMP load (file type 9; LoadHmp_HD, load-handler table 0x486642FC): builds "<name>.HMP", fmmopen "rb" (failure: returns the fmm error), 'JK ' signature check func_4852B746_entry(9) (failure: -0x66), HmpBufferAlloc, fmmread 0x4442 bytes (count ignored, no size check), HmpInstall(fmm error), fmmclose; returns the fmm error
 0x4852CC3F  HmpFileLoad_entry
-0x4852EC49  LoadHpBmpFile           ; homepage picture load, called by FmmWallpaperLoadFunc: opens the current file-list entry (func_48531F10 / func_48532236) with fmmopen "rb", runs LoadHpBmp (reads up to 0x42B6 bytes into the zlib-arena buffer 0x503BB810, accepts a BMP of at most 160x100 at <= 8 bpp, programs it to custom flash 0x9681118C) and closes it. Returns LoadHpBmp's result, the fmm error if the open fails, or -0x68 if func_48531F10 fails
+0x4852EC49  LoadHpBmpFile           ; homepage picture load, called by FmmWallpaperLoadFunc: opens the current file-list entry (func_48531F0D_entry / func_48532231_entry) with fmmopen "rb", runs LoadHpBmp (reads up to 0x42B6 bytes into the zlib-arena buffer 0x503BB810, accepts a BMP of at most 160x100 at <= 8 bpp, programs it to custom flash 0x9681118C) and closes it. Returns LoadHpBmp's result, the fmm error if the open fails, or -0x68 if func_48531F0D_entry fails
 0x4852EC4E  LoadHpBmpFile_entry
 0x48532368  fmmerror                ; -> d0 = the fmm layer's sticky error (u16; callers sign-extend, < 0 = error): a backend records an error only when none is recorded; table 0x486646A8 {0x4853263A floppy 0x50071258, 0x48565805 SD 0x50092584, 0x485840EA third 0x5017316C}. Name inferred
 0x4853236B  fmmerror_entry
@@ -2662,11 +2698,11 @@
 0x48534191  ZArenaAllocArray_entry
 0x4853419D  ZArenaFree              ; frees a zlib-arena block (checks the 0xA5 magic) and merges it with free neighbours
 0x4853419F  ZArenaFree_entry
-0x4854E143  FeatureDemoSqtLoad      ; (a0 = .SQT name) fmmopen 'rb', loads its song data (length from func_4852F487, read by func_4852F4CD) to 0x502C0000 (0x5008294C; length 0x50082950) and records the demo pool after it: base 0x50082954 = 0x502C0000 + round4(len), size 0x50082958 = 0xC0000 - round4(len), ending at 0x50380000 -> d0 = 0, -0xC8 on an empty or short read, or fmmopen's error. The pool itself is created by FeatureDemoActLoad
+0x4854E143  FeatureDemoSqtLoad      ; (a0 = .SQT name) fmmopen 'rb', loads its song data (length from func_4852F482_entry, read by func_4852F4C8_entry) to 0x502C0000 (0x5008294C; length 0x50082950) and records the demo pool after it: base 0x50082954 = 0x502C0000 + round4(len), size 0x50082958 = 0xC0000 - round4(len), ending at 0x50380000 -> d0 = 0, -0xC8 on an empty or short read, or fmmopen's error. The pool itself is created by FeatureDemoActLoad
 0x4854E148  FeatureDemoSqtLoad_entry
 0x4854E1CA  FeatureDemoActLoad      ; (a0 = .ACT name) SswPoolInit + SswPoolSelect on the demo pool FeatureDemoSqtLoad recorded (0x50082954 base, 0x50082958 size), then SswActOpen(a0) -> its result
 0x4854E1CF  FeatureDemoActLoad_entry
-0x4854E20C  FeaturePreLoad          ; (a0 -> .SQT name, a1 -> .ACT name, d0 -> 16-char buffer) reads 'FEATURE .PRE': first line (up to 8 characters kept) + '.SQT' / '.ACT'; next non-empty line (up to 16 characters) into d0's buffer, else a copy of the .SQT name (shown by func_4854E2E0: a title, inferred); all three left empty if the file does not open -> d0 = 0 always
+0x4854E20C  FeaturePreLoad          ; (a0 -> .SQT name, a1 -> .ACT name, d0 -> 16-char buffer) reads 'FEATURE .PRE': first line (up to 8 characters kept) + '.SQT' / '.ACT'; next non-empty line (up to 16 characters) into d0's buffer, else a copy of the .SQT name (shown by func_4854E2DB_entry: a title, inferred); all three left empty if the file does not open -> d0 = 0 always
 0x4854E211  FeaturePreLoad_entry
 0x4857EE8D  SswSongActLoad          ; (a0 = .ACT name, d0 = status) always re-creates (SswPoolMainInit) and selects the main picture pool, wiping it; then SswActOpen(a0) only when d0 >= 0, else returns d0. Only caller: SeqActFileLoad, which passes -0x68 when the .ACT does not exist
 0x4857EE92  SswSongActLoad_entry
@@ -2689,7 +2725,7 @@
 0x485807ED  SswActScriptLoad_entry
 0x48580886  SswSlideshowSectionCut  ; measures, then copies, the text between '<SLIDESHOW>' and '</SLIDESHOW>' of the script at pool+0x20 into a new pool block kept at pool+0x24 -> d0 = 0 or < 0
 0x4858088B  SswSlideshowSectionCut_entry
-0x485808E8  SswSlideshowRun         ; (d0 = interpreter mode: 1 load, 2 show) runs func_4857F300(mode) over the <SLIDESHOW> text at pool+0x24 until its NUL (one tag per call, inferred); returns 0
+0x485808E8  SswSlideshowRun         ; (d0 = interpreter mode: 1 load, 2 show) runs func_4857F2FE_entry(mode) over the <SLIDESHOW> text at pool+0x24 until its NUL (one tag per call, inferred); returns 0
 0x485808ED  SswSlideshowRun_entry
 0x4858090E  SswActionSectionCut     ; the same for '<ACTION>' .. '</ACTION>', block kept at pool+0x28
 0x48580913  SswActionSectionCut_entry

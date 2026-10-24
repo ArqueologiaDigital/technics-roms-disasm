@@ -2326,7 +2326,7 @@
 0x48585955  DemoJpgDataL7
 0x48585970  DemoJpgDataL8
 ;
-; 61 manually reverse-engineered symbols (RE, not from reflection tables):
+; 60 manually reverse-engineered symbols (RE, not from reflection tables):
 0x48736F08  GenreStyleTable	; 16 x 0x18 genre records {name[16],flag,styleCount@+0x11,listPtr@+0x14}
 0x48737088  GenreCount	; u16 = 16 rhythm genres
 0x48735F08  StyleNumToBankSlotLUT	; 2048 x u16: style number -> bank/slot
@@ -2363,7 +2363,6 @@
 0x4847F96F  FlashReadAutoselect	; read chip manufacturer/device ID
 0x4847F6B6  FlashReset	; reset to read-array mode
 0x4847F9E6  FlashProgram128Words	; 128-word chunk programmer
-0x4847E7AF  FlashAddrToSector
 0x485CFED4  FlashChipIdTable	; MBM29LV160B / MX29LV160B / AT49BV16X4 descriptors
 0x485CFC7C  FlashSectorMap	; bottom-boot sector geometry, total 0x200000
 0x4852CFD3  DiskLoadDispatch	; walks disk-file handler table

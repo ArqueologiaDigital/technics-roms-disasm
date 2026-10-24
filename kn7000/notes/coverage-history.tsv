@@ -10,3 +10,19 @@ date	commit	src_bytes	prog_bytes	pct	insn_lines	escapes	funcs
 2026-08-14	3644616	151372	4157185	3.64	59008	71	942
 2026-10-17	ebf860e	159086	4157185	3.83	62437	71	990
 2026-10-18	9d7afdd	161369	4157185	3.88	63423	71	999
+# 2026-10-24: from the next row, `escapes` counts only instructions kept as .byte because the encoder
+# cannot reproduce them (gen_program_s marks them `# not encodable:`); before, it counted every
+# .byte/.word/.long line, the palette included. `funcs` counts the converted function blocks in
+# the source (named + unnamed, region 1 + library), no longer the names in CONVERT/LIB_CONVERT.
+# The commit column is the HEAD the row was measured on. A row is normally appended in the commit
+# that makes the change, so it is measured on that commit's PARENT plus the uncommitted change;
+# from 2026-10-24 coverage_score.py marks that with a `+` (src/ or tools/ not clean). The 44.58% row
+# below was written as plain d87382628 and is corrected to d87382628+: it is the tree of 47737623a.
+# The d87382628 tree itself (library converted, region 1 not yet) is the row before it, measured
+# afterwards with the same script on a checkout of d87382628.
+2026-10-24	d87382628	338637	4157185	8.15	131832	0	1094
+2026-10-24	d87382628+	1853232	4157185	44.58	670646	0	3666
+# 2026-10-24 prologue labelling (b91ed45b1): same bytes and instructions; 8 library blocks that are only
+# the register-save prologue of the next block (sprintf before LibSprintf) now share its header, so
+# the next row counts 8 function blocks fewer (3,658).
+2026-10-24	b91ed45b1+	1853232	4157185	44.58	670646	0	3658
