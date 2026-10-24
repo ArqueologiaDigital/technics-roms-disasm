@@ -14388,10 +14388,10 @@ Voice_CheckAndResetSlotState:
 Voice_CheckAndResetSlotState_Skip:
 	or	(0xce42:24), 128
 	ld	(0xce48:24), 0x00
-	ld	e, (0xfc5f:16)
+	ld	e, (PANEL_STYLE+5:16)
 	and	e, 0x30
 	jr	nz, Voice_NullRet2
-	ld	e, (0xfc60:16)
+	ld	e, (PANEL_STYLE+6:16)
 	and	e, 0x30
 	jr	nz, Voice_NullRet2
 	ld	de, (0xc4fc:16)
@@ -17418,7 +17418,7 @@ SndParam_ApplySystemParam_ScaleTuneType:
 	cp	iz, 12
 	jrl	ge, SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
 SndParam_ApplySystemParam_ScaleTuneType_Loop:
-	ld	a, (0xfd1d:16)
+	ld	a, (PANEL_SCALE_TUNE+1:16)
 	and	a, 15
 	ld	c, a
 	extz	bc
@@ -17463,7 +17463,7 @@ SndParam_ApplySystemParam_ScaleTuneKey:
 	cp	iz, 12
 	jrl	ge, SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
 SndParam_ApplySystemParam_ScaleTuneKey_Loop2:
-	ld	a, (0xfd1d:16)
+	ld	a, (PANEL_SCALE_TUNE+1:16)
 	and	a, 15
 	ld	c, a
 	extz	bc
@@ -17493,7 +17493,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote0:
 	call	SndParam_LookupReadOnly
 	cp	hl, 128
 	jrl	nz, SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
-	ld	a, (0xfd1d:16)
+	ld	a, (PANEL_SCALE_TUNE+1:16)
 	and	a, 15
 	ld	c, a
 	extz	bc
@@ -17505,7 +17505,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote0_Skip18:
 	ld	wa, bc
 	add	wa, 164
 	ld	bc, wa
-	ld	a, (0xfd1e:16)
+	ld	a, (PANEL_SCALE_TUNE+2:16)
 	extz	wa
 	ld	de, wa
 	ldw	wa, 80
@@ -17518,7 +17518,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote1:
 	call	SndParam_LookupReadOnly
 	cp	hl, 128
 	jrl	nz, SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
-	ld	a, (0xfd1d:16)
+	ld	a, (PANEL_SCALE_TUNE+1:16)
 	and	a, 15
 	inc	1, a
 	ld	c, a
@@ -17531,7 +17531,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote1_Skip19:
 	ld	wa, bc
 	add	wa, 164
 	ld	bc, wa
-	ld	a, (0xfd1f:16)
+	ld	a, (PANEL_SCALE_TUNE+3:16)
 	extz	wa
 	ld	de, wa
 	ldw	wa, 80
@@ -17544,7 +17544,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote2:
 	call	SndParam_LookupReadOnly
 	cp	hl, 128
 	jrl	nz, SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
-	ld	a, (0xfd1d:16)
+	ld	a, (PANEL_SCALE_TUNE+1:16)
 	and	a, 15
 	inc	2, a
 	ld	c, a
@@ -17557,7 +17557,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote2_Skip20:
 	ld	wa, bc
 	add	wa, 164
 	ld	bc, wa
-	ld	a, (0xfd20:16)
+	ld	a, (PANEL_SCALE_TUNE+4:16)
 	extz	wa
 	ld	de, wa
 	ldw	wa, 80
@@ -17570,7 +17570,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote3:
 	call	SndParam_LookupReadOnly
 	cp	hl, 128
 	jrl	nz, SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
-	ld	a, (0xfd1d:16)
+	ld	a, (PANEL_SCALE_TUNE+1:16)
 	and	a, 15
 	inc	3, a
 	ld	c, a
@@ -17583,7 +17583,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote3_Skip21:
 	ld	wa, bc
 	add	wa, 164
 	ld	bc, wa
-	ld	a, (0xfd21:16)
+	ld	a, (PANEL_SCALE_TUNE+5:16)
 	extz	wa
 	ld	de, wa
 	ldw	wa, 80
@@ -17596,7 +17596,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote4:
 	call	SndParam_LookupReadOnly
 	cp	hl, 128
 	jrl	nz, SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
-	ld	a, (0xfd1d:16)
+	ld	a, (PANEL_SCALE_TUNE+1:16)
 	and	a, 15
 	inc	4, a
 	ld	c, a
@@ -17609,7 +17609,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote4_Skip22:
 	ld	wa, bc
 	add	wa, 164
 	ld	bc, wa
-	ld	a, (0xfd22:16)
+	ld	a, (PANEL_SCALE_TUNE+6:16)
 	extz	wa
 	ld	de, wa
 	ldw	wa, 80
@@ -17622,7 +17622,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote5:
 	call	SndParam_LookupReadOnly
 	cp	hl, 128
 	jrl	nz, SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
-	ld	a, (0xfd1d:16)
+	ld	a, (PANEL_SCALE_TUNE+1:16)
 	and	a, 15
 	inc	5, a
 	ld	c, a
@@ -17635,7 +17635,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote5_Skip23:
 	ld	wa, bc
 	add	wa, 164
 	ld	bc, wa
-	ld	a, (0xfd23:16)
+	ld	a, (PANEL_SCALE_TUNE+7:16)
 	extz	wa
 	ld	de, wa
 	ldw	wa, 80
@@ -17648,7 +17648,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote6:
 	call	SndParam_LookupReadOnly
 	cp	hl, 128
 	jrl	nz, SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
-	ld	a, (0xfd1d:16)
+	ld	a, (PANEL_SCALE_TUNE+1:16)
 	and	a, 15
 	inc	6, a
 	ld	c, a
@@ -17661,7 +17661,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote6_Skip24:
 	ld	wa, bc
 	add	wa, 164
 	ld	bc, wa
-	ld	a, (0xfd24:16)
+	ld	a, (PANEL_SCALE_TUNE+8:16)
 	extz	wa
 	ld	de, wa
 	ldw	wa, 80
@@ -17674,7 +17674,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote7:
 	call	SndParam_LookupReadOnly
 	cp	hl, 128
 	jrl	nz, SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
-	ld	a, (0xfd1d:16)
+	ld	a, (PANEL_SCALE_TUNE+1:16)
 	and	a, 15
 	inc	7, a
 	ld	c, a
@@ -17687,7 +17687,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote7_Skip25:
 	ld	wa, bc
 	add	wa, 164
 	ld	bc, wa
-	ld	a, (0xfd25:16)
+	ld	a, (PANEL_SCALE_TUNE+9:16)
 	extz	wa
 	ld	de, wa
 	ldw	wa, 80
@@ -17700,7 +17700,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote8:
 	call	SndParam_LookupReadOnly
 	cp	hl, 128
 	jrl	nz, SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
-	ld	a, (0xfd1d:16)
+	ld	a, (PANEL_SCALE_TUNE+1:16)
 	and	a, 15
 	inc	8, a
 	ld	c, a
@@ -17713,7 +17713,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote8_Skip26:
 	ld	wa, bc
 	add	wa, 164
 	ld	bc, wa
-	ld	a, (0xfd26:16)
+	ld	a, (PANEL_SCALE_TUNE+10:16)
 	extz	wa
 	ld	de, wa
 	ldw	wa, 80
@@ -17726,7 +17726,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote9:
 	call	SndParam_LookupReadOnly
 	cp	hl, 128
 	jrl	nz, SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
-	ld	a, (0xfd1d:16)
+	ld	a, (PANEL_SCALE_TUNE+1:16)
 	and	a, 15
 	add	a, 9
 	ld	c, a
@@ -17739,7 +17739,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote9_Skip27:
 	ld	wa, bc
 	add	wa, 164
 	ld	bc, wa
-	ld	a, (0xfd27:16)
+	ld	a, (PANEL_SCALE_TUNE+11:16)
 	extz	wa
 	ld	de, wa
 	ldw	wa, 80
@@ -17752,7 +17752,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote10:
 	call	SndParam_LookupReadOnly
 	cp	hl, 128
 	jrl	nz, SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
-	ld	a, (0xfd1d:16)
+	ld	a, (PANEL_SCALE_TUNE+1:16)
 	and	a, 15
 	add	a, 10
 	ld	c, a
@@ -17765,7 +17765,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote10_Skip28:
 	ld	wa, bc
 	add	wa, 164
 	ld	bc, wa
-	ld	a, (0xfd28:16)
+	ld	a, (PANEL_SCALE_TUNE+12:16)
 	extz	wa
 	ld	de, wa
 	ldw	wa, 80
@@ -17778,7 +17778,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote11:
 	call	SndParam_LookupReadOnly
 	cp	hl, 128
 	jr	nz, SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
-	ld	a, (0xfd1d:16)
+	ld	a, (PANEL_SCALE_TUNE+1:16)
 	and	a, 15
 	add	a, 11
 	ld	c, a
@@ -17791,7 +17791,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote11_Skip29:
 	ld	wa, bc
 	add	wa, 164
 	ld	bc, wa
-	ld	a, (0xfd29:16)
+	ld	a, (PANEL_SCALE_TUNE+13:16)
 	extz	wa
 	ld	de, wa
 	ldw	wa, 80
@@ -18195,7 +18195,7 @@ SeqVoice_CheckAndRet_Data_Case22:
 	lda	xhl, (SemitoneBias_TableN:24)
 	jr	SeqVoice_CheckAndRet_Data_Case22_Return
 SeqVoice_CheckAndRet_Data_Case22_Skip8:
-	lda	xhl, (0xfd1e:16)
+	lda	xhl, (PANEL_SCALE_TUNE+2:16)
 	jr	SeqVoice_CheckAndRet_Data_Case22_Return
 SeqVoice_CheckAndRet_Data_Case22_Skip9:
 	lda	xhl, (SemitoneBias_TableA:24)
@@ -20656,13 +20656,13 @@ Epilogue_Prologue:
 	ldw	wa, 0x63
 	ldw	bc, 0x14
 	call	SysEx_ApplyAndReloadPreset
-	ld	(0xfc94:16), 80
+	ld	(PANEL_DIGITAL_REVERB+6:16), 80
 	ld	iz, 0:i3
 	cp	iz, 0x8
 	jr	ge, Epilogue_InitVal
 Epilogue_LoadReg:
 	ld	bc, iz
-	lda	xwa, (0xfc8e:16)
+	lda	xwa, (PANEL_DIGITAL_REVERB:16)
 	ld	a, (xwa+iz)
 	extz	wa
 	pushw	0xff
@@ -20866,13 +20866,13 @@ Epilogue_Prologue2:
 	ldw	wa, 0x63
 	ldw	bc, 0x14
 	call	SysEx_ApplyAndReloadPreset
-	ld	(0xfc94:16), 80
+	ld	(PANEL_DIGITAL_REVERB+6:16), 80
 	ld	iz, 0:i3
 	cp	iz, 0x8
 	jr	ge, Epilogue_InitVal2
 Epilogue_LoadReg2:
 	ld	bc, iz
-	lda	xwa, (0xfc8e:16)
+	lda	xwa, (PANEL_DIGITAL_REVERB:16)
 	ld	a, (xwa+iz)
 	extz	wa
 	pushw	0xff
@@ -21192,10 +21192,10 @@ MidiSysMsg_SetScaledTempo_Skip4:
 	ld	xiz, xwa
 	cp	xiz, 0x100
 	jr	nc, MidiSysMsg_SetScaledTempo_Skip
-	res	0, (0xfc63:16)
+	res	0, (PANEL_STYLE+9:16)
 	jr	MidiSysMsg_SetScaledTempo_Join
 MidiSysMsg_SetScaledTempo_Skip:
-	set	0, (0xfc63:16)
+	set	0, (PANEL_STYLE+9:16)
 MidiSysMsg_SetScaledTempo_Join:
 	ld	wa, iz
 	ld	bc, wa
@@ -21796,7 +21796,7 @@ SoundParam_InitDefaultBanks:
 	push	xiz
 	call	SwbtWr_ReinitBothBanks
 	pop	xiz
-	set	2, (0xfdad:16)
+	set	2, (PANEL_REC_91+3:16)
 	ld	xwa, 0xc0
 	ld	bc, 0:i3
 	ld	de, 1:i3
@@ -21835,7 +21835,7 @@ SoundParam_InitDefau_Block:
 	push	xiz
 	call	SwbtWr_ReinitBothBanks
 	pop	xiz
-	res	2, (0xfdad:16)
+	res	2, (PANEL_REC_91+3:16)
 	ld	xwa, 0xc0
 	ld	bc, 1:i3
 	ld	de, 1:i3
@@ -21874,7 +21874,7 @@ SoundParam_InitDefau_Block2:
 	push	xiz
 	call	SwbtWr_ReinitBothBanks
 	pop	xiz
-	res	0, (0xfdad:16)
+	res	0, (PANEL_REC_91+3:16)
 	ld	xwa, 0xc1
 	ld	bc, 1:i3
 	ld	de, 1:i3

@@ -54,7 +54,7 @@ AudioVoice_Callback:
 AudioVoice_SkipToDispatch:
 	jp	AudioInit_DispatchChanges
 AudioMode_SetStereoFlags:
-	bit	0, (0xfc69:16)
+	bit	0, (PANEL_REC_90+3:16)
 	ret	z
 ; (v7 label ScreenGroup_WidgetLoop stood here; dropped, see the file header)
 	orw	(0xc4fa:16), 128
@@ -62,7 +62,7 @@ AudioMode_SetStereoFlags:
 	calr	AudioInit_ProcessModeChange
 	ret
 AudioMode_ResetVoiceState:
-	bit	1, (0xfc67:16)
+	bit	1, (PANEL_REC_90+1:16)
 	jr	z, AudioVoiceReset_Handler
 	ld	wa, (0xc4f8:16)
 	bit	4, wa
@@ -107,15 +107,15 @@ AudioMode_ConfigureExternal:
 	jr	AudioMode_ConfigExternal_Apply
 AudioMode_ConfigExternal_Off:
 	andw	(0xc4f8:16), 0xffef
-	bit	0, (64614:16)
+	bit	0, (PANEL_REC_90:16)
 	jr	z, AudioMode_ConfigExternal_CheckBit1
 	set	0, (0xc162:16)
 AudioMode_ConfigExternal_CheckBit1:
-	bit	1, (0xfc66:16)
+	bit	1, (PANEL_REC_90:16)
 	jr	z, AudioMode_ConfigExternal_CheckStereo
 	set	1, (0xc162:16)
 AudioMode_ConfigExternal_CheckStereo:
-	bit	1, (0xfc67:16)
+	bit	1, (PANEL_REC_90+1:16)
 	jr	z, AudioMode_ConfigExternal_NoStereo
 	orw	(0xc4fa:16), 32
 	jr	AudioMode_ConfigExternal_MergeFlags
@@ -126,7 +126,7 @@ AudioMode_ConfigExternal_NoStereo:
 	call	z, (AudioInit_RefreshToneBank:24)
 AudioMode_ConfigExternal_MergeFlags:
 	res	2, (0xc162:16)
-	ld	a, (0xfc67:16)
+	ld	a, (PANEL_REC_90+1:16)
 	and	a, 0x2
 	ld	c, a
 	add	a, c

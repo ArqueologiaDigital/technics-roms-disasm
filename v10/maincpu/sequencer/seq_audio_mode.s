@@ -144,7 +144,7 @@ AccPedal_ApplyChangeMask:
 	jr z, AccPedal_CheckAuxBit2
 	ld w, a
 	xor w, 0xff
-	and (0xfc5f:16), w
+	and (PANEL_STYLE+5:16), w
 	ld e, 0x48:opc
 	ld d, 0x5:opc
 	ld w, 0x0:opc
@@ -154,7 +154,7 @@ AccPedal_ApplyChangeMask:
 AccPedal_CheckAuxBit2:
 	bit 2, (0x32ff:16)
 	jr z, AccPedal_ClearAllPedalFlags
-	and (0xfc60:16), 251
+	and (PANEL_STYLE+6:16), 251
 	ld e, 0x48:opc
 	ld d, 0x5:opc
 	ld w, 0x0:opc
@@ -553,7 +553,7 @@ RhythmPart_ProcessBit1:
 	jr z, AccChord_CheckExtraDirtyBit3
 	ld w, 0x0:opc
 	xor a, 0xff
-	and (0xfc5f:16), a
+	and (PANEL_STYLE+5:16), a
 	ld a, 0x0:opc
 	ld e, 0x48:opc
 	ld d, 0x5:opc
@@ -567,7 +567,7 @@ AccChord_CheckExtraDirtyBit3:
 	and (0x330a:16), 247
 	and (0x3327:16), 192
 	and (0x32ff:16), 251
-	and (0xfc5f:16), 251
+	and (PANEL_STYLE+5:16), 251
 	ld a, 0x0:opc
 	ld w, 0x0:opc
 	ld e, 0x48:opc
@@ -1484,8 +1484,8 @@ Rhythm_StoreDispatchHelperResult:
 ; Rhythm_DispatchNote with A = RAM 0xFC5A and D = RAM 0xFC5B; the A it
 ; returns is stored into RAM 0x332B.
 Rhythm_DispatchNoteFromFC5A:
-	ld a, (0xfc5a:16)
-	ld d, (0xfc5b:16)
+	ld a, (PANEL_STYLE:16)
+	ld d, (PANEL_STYLE+1:16)
 	call Rhythm_DispatchNote
 	ld (0x332b:16), a
 	ret

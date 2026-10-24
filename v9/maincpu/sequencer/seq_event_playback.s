@@ -1485,13 +1485,13 @@ AccPlay_SetupSoundParams:
 	ld a, 0x17:opc
 	ld w, 0xff:opc
 	call SwbtWr_QueuePostEvent
-	ld a, (0xfd62:16)
-	ld w, (0xfd63:16)
+	ld a, (PANEL_PART_MSP:16)
+	ld w, (PANEL_PART_MSP+1:16)
 	cp wa, 0x1ff
 	jr nz, AccPlay_SetupJumpTarget
 	ld wa, 0:i3
-	ld (0xfd62:16), a
-	ld (0xfd63:16), w
+	ld (PANEL_PART_MSP:16), a
+	ld (PANEL_PART_MSP+1:16), w
 	ld e, 0x17:opc
 	ld d, 0x1:opc
 	ld a, 0x0:opc
@@ -1512,8 +1512,8 @@ AccPlay_SetupSoundParams:
 AccPlay_SetupJumpTarget:
 	jp AccPlay_SyncParamsRet
 AccPlay_SyncVoiceParams:
-	ld	xiy, 0xf9b6
-	ld	xix, 0xfd62
+	ld	xiy, PANEL_PART_RT1
+	ld	xix, PANEL_PART_MSP
 	ld	c, 30:opc
 AccPlay_SyncVoiceParams_Loop:
 	ld	a, (xiy)
@@ -1557,11 +1557,11 @@ AccPlay_AllocateVoiceSlot:
 	ld (0x7f10:16), wa
 	ld wa, 6:i3
 	ld (0x7f12:16), wa
-	ld a, (0xfd62:16)
-	ld w, (0xfd63:16)
+	ld a, (PANEL_PART_MSP:16)
+	ld w, (PANEL_PART_MSP+1:16)
 	ld (xiy + 9), wa
 	xor a, a
-	ld w, (0xfd66:16)
+	ld w, (PANEL_PART_MSP+4:16)
 	bit 6, w
 	jr z, AccPlay_CheckReverbFlag
 	or a, 0x1
@@ -1569,14 +1569,14 @@ AccPlay_AllocateVoiceSlot:
 AccPlay_CheckReverbFlag:
 	ld (xiy + 13), a
 	xor a, a
-	ld w, (0xfd66:16)
+	ld w, (PANEL_PART_MSP+4:16)
 	bit 3, w
 	jr z, AccPlay_CheckChorusFlag
 	or a, 0x1
 
 AccPlay_CheckChorusFlag:
 	ld (xiy + 14), a
-	ld a, (0xfd6a:16)
+	ld a, (PANEL_PART_MSP+8:16)
 	and a, 0x7f
 	ld (xiy + 12), a
 	ret
@@ -1586,11 +1586,11 @@ AccPlay_UpdateBankParams:
 	push xhl
 	push xwa
 	calr Voice_GetBankEntryPointer
-	ld a, (0xfd62:16)
-	ld w, (0xfd63:16)
+	ld a, (PANEL_PART_MSP:16)
+	ld w, (PANEL_PART_MSP+1:16)
 	ld (xiy + 9), wa
 	xor a, a
-	ld w, (0xfd66:16)
+	ld w, (PANEL_PART_MSP+4:16)
 	bit 6, w
 	jr z, AccPlay_UpdateReverbParam
 	or a, 0x1
@@ -1598,14 +1598,14 @@ AccPlay_UpdateBankParams:
 AccPlay_UpdateReverbParam:
 	ld (xiy + 13), a
 	xor a, a
-	ld w, (0xfd66:16)
+	ld w, (PANEL_PART_MSP+4:16)
 	bit 3, w
 	jr z, AccPlay_UpdateChorusParam
 	or a, 0x1
 
 AccPlay_UpdateChorusParam:
 	ld (xiy + 14), a
-	ld a, (0xfd6a:16)
+	ld a, (PANEL_PART_MSP+8:16)
 	and a, 0x7f
 	ld (xiy + 12), a
 	pop xwa
@@ -1897,7 +1897,7 @@ MidiSeq_HandleProgChange:
 	and a, 0xf0
 	ld (xhl), a
 	xor w, w
-	ld a, (0xfd66:16)
+	ld a, (PANEL_PART_MSP+4:16)
 	bit 6, a
 	jr z, MidiSeq_ProgChangeSetReverb
 	or w, 0x1
@@ -2056,11 +2056,11 @@ AccPlay_InitVoiceBankState:
 	calr AccPlay_RestoreVoiceBank
 
 AccPlay_SaveCurrentState:
-	ld a, (0xfd62:16)
-	ld w, (0xfd63:16)
+	ld a, (PANEL_PART_MSP:16)
+	ld w, (PANEL_PART_MSP+1:16)
 	and w, 0x7f
 	ld (0x7f18:16), wa
-	ld a, (0xfd66:16)
+	ld a, (PANEL_PART_MSP+4:16)
 	and a, 0x48
 	xor w, w
 	ld (0x7f1a:16), wa
@@ -2068,8 +2068,8 @@ AccPlay_SaveCurrentState:
 
 AccPlay_CompareAndSendProg:
 	ld hl, (0x7f18:16)
-	ld a, (0xfd62:16)
-	ld w, (0xfd63:16)
+	ld a, (PANEL_PART_MSP:16)
+	ld w, (PANEL_PART_MSP+1:16)
 	and w, 0x7f
 	cp wa, hl
 	jr z, AccPlay_CompareReverbState
@@ -2088,7 +2088,7 @@ AccPlay_SendProgChange:
 
 AccPlay_CompareReverbState:
 	ld hl, (0x7f1a:16)
-	ld a, (0xfd66:16)
+	ld a, (PANEL_PART_MSP+4:16)
 	and a, 0x40
 	xor w, w
 	and l, 0x40
@@ -2107,7 +2107,7 @@ AccPlay_SetReverbValue:
 AccPlay_CompareChorusState:
 	jr AccPlay_ParamMonitorRet
 	ld hl, (0x7f1a:16)
-	ld a, (0xfd66:16)
+	ld a, (PANEL_PART_MSP+4:16)
 	and a, 0x8
 	xor w, w
 	and l, 0x8
@@ -2142,8 +2142,8 @@ AccPlay_RestoreVoiceBank:
 AccPlay_SendBankProgram:
 	call AccompSeq_SendMidiEvent
 	ld wa, (xiy + 9)
-	ld (0xfd62:16), a
-	ld (0xfd63:16), w
+	ld (PANEL_PART_MSP:16), a
+	ld (PANEL_PART_MSP+1:16), w
 	ld e, 0x17:opc
 	ld d, 0x1:opc
 	ld a, w
@@ -2160,7 +2160,7 @@ AccPlay_SendBankProgram:
 	ld a, 0xd1:opc
 	call AccompSeq_SendMidiEvent
 	ld a, (xiy + 12)
-	ld (0xfd6a:16), a
+	ld (PANEL_PART_MSP+8:16), a
 	ld e, 0x17:opc
 	ld d, 0x8:opc
 	ld w, 0x7f:opc
@@ -2176,14 +2176,14 @@ AccPlay_RestoreReverbVal:
 	ld a, 0xd1:opc
 	call AccompSeq_SendMidiEvent
 	ld a, (xiy + 13)
-	ld w, (0xfd66:16)
+	ld w, (PANEL_PART_MSP+4:16)
 	and w, 0xbf
 	bit 0, a
 	jr z, AccPlay_WriteReverbFlag
 	or w, 0x40
 
 AccPlay_WriteReverbFlag:
-	ld (0xfd66:16), w
+	ld (PANEL_PART_MSP+4:16), w
 	ld e, 0x17:opc
 	ld d, 0x4:opc
 	ld a, w
@@ -2200,14 +2200,14 @@ AccPlay_RestoreChorusVal:
 	ld a, 0xd1:opc
 	call AccompSeq_SendMidiEvent
 	ld a, (xiy + 14)
-	ld w, (0xfd66:16)
+	ld w, (PANEL_PART_MSP+4:16)
 	and w, 0xf7
 	bit 0, a
 	jr z, AccPlay_WriteChorusFlag
 	or w, 0x8
 
 AccPlay_WriteChorusFlag:
-	ld (0xfd66:16), w
+	ld (PANEL_PART_MSP+4:16), w
 	ld e, 0x17:opc
 	ld d, 0x4:opc
 	ld a, w
@@ -2230,71 +2230,71 @@ AccPlay_ClearSlotDone:
 	ret
 
 AccPlay_SaveMuteStates:
-	ld a, (0xf9c3:16)
-	ld w, (0xf9dd:16)
+	ld a, (PANEL_PART_RT1+13:16)
+	ld w, (PANEL_PART_RT2+13:16)
 	ld (0x7f1c:16), wa
-	ld a, (0xf9f7:16)
-	ld w, (0xfa11:16)
+	ld a, (PANEL_PART_LEFT+13:16)
+	ld w, (PANEL_PART_PT4+13:16)
 	ld (0x7f1e:16), wa
-	ld a, (0xfa2b:16)
-	ld w, (0xfa45:16)
+	ld a, (PANEL_PART_PT5+13:16)
+	ld w, (PANEL_PART_PT6+13:16)
 	ld (0x7f20:16), wa
-	ld a, (0xfa5f:16)
-	ld w, (0xfa79:16)
+	ld a, (PANEL_PART_PT7+13:16)
+	ld w, (PANEL_PART_PT8+13:16)
 	ld (0x7f22:16), wa
-	ld a, (0xfa93:16)
-	ld w, (0xfaad:16)
+	ld a, (PANEL_PART_PT9+13:16)
+	ld w, (PANEL_PART_PT10+13:16)
 	ld (0x7f24:16), wa
-	ld a, (0xfac7:16)
-	ld w, (0xfae1:16)
+	ld a, (PANEL_PART_PT11+13:16)
+	ld w, (PANEL_PART_PT12+13:16)
 	ld (0x7f26:16), wa
-	ld a, (0xfafb:16)
-	ld w, (0xfb15:16)
+	ld a, (PANEL_PART_PT13+13:16)
+	ld w, (PANEL_PART_PT14+13:16)
 	ld (0x7f28:16), wa
-	ld a, (0xfb2f:16)
-	ld w, (0xfb49:16)
+	ld a, (PANEL_PART_PT15+13:16)
+	ld w, (PANEL_PART_PT16+13:16)
 	ld (0x7f2a:16), wa
-	ld a, (0xfb63:16)
-	ld w, (0xfb7d:16)
+	ld a, (PANEL_PART_ACP1+13:16)
+	ld w, (PANEL_PART_ACP2+13:16)
 	ld (0x7f2c:16), wa
-	ld a, (0xfb97:16)
-	ld w, (0xfbb1:16)
+	ld a, (PANEL_PART_ACP3+13:16)
+	ld w, (PANEL_PART_BASS+13:16)
 	ld (0x7f2e:16), wa
-	ld a, (0xfbcb:16)
-	ld w, (0xfbe5:16)
+	ld a, (PANEL_PART_DRUM+13:16)
+	ld w, (PANEL_PART_CHRD+13:16)
 	ld (0x7f30:16), wa
-	ld a, (0xfbff:16)
-	ld w, (0xfc19:16)
+	ld a, (PANEL_PART_RTBS+13:16)
+	ld w, (PANEL_PART_CTRL+13:16)
 	ld (0x7f32:16), wa
 	ld a, 0xc0:opc
-	or (0xf9c3:16), a
-	or (0xf9dd:16), a
-	or (0xf9f7:16), a
-	or (0xfa11:16), a
-	or (0xfa2b:16), a
-	or (0xfa45:16), a
-	or (0xfa5f:16), a
-	or (0xfa79:16), a
-	or (0xfa93:16), a
-	or (0xfaad:16), a
-	or (0xfac7:16), a
-	or (0xfae1:16), a
-	or (0xfafb:16), a
-	or (0xfb15:16), a
-	or (0xfb2f:16), a
-	or (0xfb49:16), a
-	or (0xfb63:16), a
-	or (0xfb7d:16), a
-	or (0xfb97:16), a
-	or (0xfbb1:16), a
-	or (0xfbcb:16), a
-	or (0xfbe5:16), a
-	or (0xfbff:16), a
-	or (0xfc19:16), a
-	ld a, (0xfd6f:16)
+	or (PANEL_PART_RT1+13:16), a
+	or (PANEL_PART_RT2+13:16), a
+	or (PANEL_PART_LEFT+13:16), a
+	or (PANEL_PART_PT4+13:16), a
+	or (PANEL_PART_PT5+13:16), a
+	or (PANEL_PART_PT6+13:16), a
+	or (PANEL_PART_PT7+13:16), a
+	or (PANEL_PART_PT8+13:16), a
+	or (PANEL_PART_PT9+13:16), a
+	or (PANEL_PART_PT10+13:16), a
+	or (PANEL_PART_PT11+13:16), a
+	or (PANEL_PART_PT12+13:16), a
+	or (PANEL_PART_PT13+13:16), a
+	or (PANEL_PART_PT14+13:16), a
+	or (PANEL_PART_PT15+13:16), a
+	or (PANEL_PART_PT16+13:16), a
+	or (PANEL_PART_ACP1+13:16), a
+	or (PANEL_PART_ACP2+13:16), a
+	or (PANEL_PART_ACP3+13:16), a
+	or (PANEL_PART_BASS+13:16), a
+	or (PANEL_PART_DRUM+13:16), a
+	or (PANEL_PART_CHRD+13:16), a
+	or (PANEL_PART_RTBS+13:16), a
+	or (PANEL_PART_CTRL+13:16), a
+	ld a, (PANEL_PART_MSP+13:16)
 	and a, 0x3f
 	and a, 0xf0
-	ld (0xfd6f:16), a
+	ld (PANEL_PART_MSP+13:16), a
 	ld e, 0x17:opc
 	ld d, 0xd:opc
 	ld w, 0xcf:opc
@@ -2304,76 +2304,76 @@ AccPlay_SaveMuteStates:
 
 AccompSeq_QueueAllMutes:
 	ld e, 0x0:opc
-	ld a, (0xf9c3:16)
+	ld a, (PANEL_PART_RT1+13:16)
 	calr AccompSeq_QueueMuteEvent
 	ld e, 0x1:opc
-	ld a, (0xf9dd:16)
+	ld a, (PANEL_PART_RT2+13:16)
 	calr AccompSeq_QueueMuteEvent
 	ld e, 0x2:opc
-	ld a, (0xf9f7:16)
+	ld a, (PANEL_PART_LEFT+13:16)
 	calr AccompSeq_QueueMuteEvent
 	ld e, 0x3:opc
-	ld a, (0xfa11:16)
+	ld a, (PANEL_PART_PT4+13:16)
 	calr AccompSeq_QueueMuteEvent
 	ld e, 0x4:opc
-	ld a, (0xfa2b:16)
+	ld a, (PANEL_PART_PT5+13:16)
 	calr AccompSeq_QueueMuteEvent
 	ld e, 0x5:opc
-	ld a, (0xfa45:16)
+	ld a, (PANEL_PART_PT6+13:16)
 	calr AccompSeq_QueueMuteEvent
 	ld e, 0x6:opc
-	ld a, (0xfa5f:16)
+	ld a, (PANEL_PART_PT7+13:16)
 	calr AccompSeq_QueueMuteEvent
 	ld e, 0x7:opc
-	ld a, (0xfa79:16)
+	ld a, (PANEL_PART_PT8+13:16)
 	calr AccompSeq_QueueMuteEvent
 	ld e, 0x8:opc
-	ld a, (0xfa93:16)
+	ld a, (PANEL_PART_PT9+13:16)
 	calr AccompSeq_QueueMuteEvent
 	ld e, 0x9:opc
-	ld a, (0xfaad:16)
+	ld a, (PANEL_PART_PT10+13:16)
 	calr AccompSeq_QueueMuteEvent
 	ld e, 0xa:opc
-	ld a, (0xfac7:16)
+	ld a, (PANEL_PART_PT11+13:16)
 	calr AccompSeq_QueueMuteEvent
 	ld e, 0xb:opc
-	ld a, (0xfae1:16)
+	ld a, (PANEL_PART_PT12+13:16)
 	calr AccompSeq_QueueMuteEvent
 	ld e, 0xc:opc
-	ld a, (0xfafb:16)
+	ld a, (PANEL_PART_PT13+13:16)
 	calr AccompSeq_QueueMuteEvent
 	ld e, 0xd:opc
-	ld a, (0xfb15:16)
+	ld a, (PANEL_PART_PT14+13:16)
 	calr AccompSeq_QueueMuteEvent
 	ld e, 0xe:opc
-	ld a, (0xfb2f:16)
+	ld a, (PANEL_PART_PT15+13:16)
 	calr AccompSeq_QueueMuteEvent
 	ld e, 0xf:opc
-	ld a, (0xfb49:16)
+	ld a, (PANEL_PART_PT16+13:16)
 	calr AccompSeq_QueueMuteEvent
 	ld e, 0x10:opc
-	ld a, (0xfb63:16)
+	ld a, (PANEL_PART_ACP1+13:16)
 	calr AccompSeq_QueueMuteEvent
 	ld e, 0x11:opc
-	ld a, (0xfb7d:16)
+	ld a, (PANEL_PART_ACP2+13:16)
 	calr AccompSeq_QueueMuteEvent
 	ld e, 0x12:opc
-	ld a, (0xfb97:16)
+	ld a, (PANEL_PART_ACP3+13:16)
 	calr AccompSeq_QueueMuteEvent
 	ld e, 0x13:opc
-	ld a, (0xfbb1:16)
+	ld a, (PANEL_PART_BASS+13:16)
 	calr AccompSeq_QueueMuteEvent
 	ld e, 0x14:opc
-	ld a, (0xfbcb:16)
+	ld a, (PANEL_PART_DRUM+13:16)
 	calr AccompSeq_QueueMuteEvent
 	ld e, 0x15:opc
-	ld a, (0xfbe5:16)
+	ld a, (PANEL_PART_CHRD+13:16)
 	calr AccompSeq_QueueMuteEvent
 	ld e, 0x16:opc
-	ld a, (0xfbff:16)
+	ld a, (PANEL_PART_RTBS+13:16)
 	calr AccompSeq_QueueMuteEvent
 	ld e, 0x19:opc
-	ld a, (0xfc19:16)
+	ld a, (PANEL_PART_CTRL+13:16)
 	calr AccompSeq_QueueMuteEvent
 	ret
 
@@ -2385,44 +2385,44 @@ AccompSeq_QueueMuteEvent:
 
 AccPlay_RestoreMuteStates:
 	ld wa, (0x7f1c:16)
-	ld (0xf9c3:16), a
-	ld (0xf9dd:16), w
+	ld (PANEL_PART_RT1+13:16), a
+	ld (PANEL_PART_RT2+13:16), w
 	ld wa, (0x7f1e:16)
-	ld (0xf9f7:16), a
-	ld (0xfa11:16), w
+	ld (PANEL_PART_LEFT+13:16), a
+	ld (PANEL_PART_PT4+13:16), w
 	ld wa, (0x7f20:16)
-	ld (0xfa2b:16), a
-	ld (0xfa45:16), w
+	ld (PANEL_PART_PT5+13:16), a
+	ld (PANEL_PART_PT6+13:16), w
 	ld wa, (0x7f22:16)
-	ld (0xfa5f:16), a
-	ld (0xfa79:16), w
+	ld (PANEL_PART_PT7+13:16), a
+	ld (PANEL_PART_PT8+13:16), w
 	ld wa, (0x7f24:16)
-	ld (0xfa93:16), a
-	ld (0xfaad:16), w
+	ld (PANEL_PART_PT9+13:16), a
+	ld (PANEL_PART_PT10+13:16), w
 	ld wa, (0x7f26:16)
-	ld (0xfac7:16), a
-	ld (0xfae1:16), w
+	ld (PANEL_PART_PT11+13:16), a
+	ld (PANEL_PART_PT12+13:16), w
 	ld wa, (0x7f28:16)
-	ld (0xfafb:16), a
-	ld (0xfb15:16), w
+	ld (PANEL_PART_PT13+13:16), a
+	ld (PANEL_PART_PT14+13:16), w
 	ld wa, (0x7f2a:16)
-	ld (0xfb2f:16), a
-	ld (0xfb49:16), w
+	ld (PANEL_PART_PT15+13:16), a
+	ld (PANEL_PART_PT16+13:16), w
 	ld wa, (0x7f2c:16)
-	ld (0xfb63:16), a
-	ld (0xfb7d:16), w
+	ld (PANEL_PART_ACP1+13:16), a
+	ld (PANEL_PART_ACP2+13:16), w
 	ld wa, (0x7f2e:16)
-	ld (0xfb97:16), a
-	ld (0xfbb1:16), w
+	ld (PANEL_PART_ACP3+13:16), a
+	ld (PANEL_PART_BASS+13:16), w
 	ld wa, (0x7f30:16)
-	ld (0xfbcb:16), a
-	ld (0xfbe5:16), w
+	ld (PANEL_PART_DRUM+13:16), a
+	ld (PANEL_PART_CHRD+13:16), w
 	ld wa, (0x7f32:16)
-	ld (0xfbff:16), a
-	ld (0xfc19:16), w
-	ld a, (0xfd6f:16)
+	ld (PANEL_PART_RTBS+13:16), a
+	ld (PANEL_PART_CTRL+13:16), w
+	ld a, (PANEL_PART_MSP+13:16)
 	or a, 0xc0
-	ld (0xfd6f:16), a
+	ld (PANEL_PART_MSP+13:16), a
 	ld e, 0x17:opc
 	ld d, 0xd:opc
 	ld w, 0x4f:opc

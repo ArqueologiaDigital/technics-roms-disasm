@@ -754,17 +754,17 @@ SeWrtMem_SelectMemorySlotSound_Join:
 	ld	c, (xwa+4)
 	cp	(xsp), 1
 	jr	nz, SeWrtMem_SelectMemorySlotSound_Skip2
-	lda	xwa, (63952:16)
+	lda	xwa, (PANEL_PART_RT2:16)
 	ld	(xwa), e
 	jr	SeWrtMem_SelectMemorySlotSound_Join2
 SeWrtMem_SelectMemorySlotSound_Skip2:
 	cp	(xsp), 2
 	jr	nz, SeWrtMem_SelectMemorySlotSound_Skip3
-	lda	xwa, (63978:16)
+	lda	xwa, (PANEL_PART_LEFT:16)
 	ld	(xwa), e
 	jr	SeWrtMem_SelectMemorySlotSound_Join2
 SeWrtMem_SelectMemorySlotSound_Skip3:
-	lda	xwa, (63926:16)
+	lda	xwa, (PANEL_PART_RT1:16)
 	ld	(xwa), e
 SeWrtMem_SelectMemorySlotSound_Join2:
 	ld	(xwa+1), c
@@ -793,18 +793,18 @@ SeMenu_InitTrackInfo:
 	ld C,(XWA+0x04)
 	cp (XSP),0x01
 	jr nz, SeMenu_InitTrackInfo_Part1
-	lda xwa, (0xf9d0:16)
+	lda xwa, (PANEL_PART_RT2:16)
 	ld (XWA),E
 	jr t, SeMenu_InitTrackInfo_Store
 SeMenu_InitTrackInfo_Part1:
 	cp (xsp), 0x2
 	jr nz, SeMenu_InitTrackInfo_Part2
-	lda xwa, (0xf9ea:16)
+	lda xwa, (PANEL_PART_LEFT:16)
 	ld (xwa), e
 	jr SeMenu_InitTrackInfo_Store
 
 SeMenu_InitTrackInfo_Part2:
-	lda xwa, (0xf9b6:16)
+	lda xwa, (PANEL_PART_RT1:16)
 	ld (xwa), e
 
 SeMenu_InitTrackInfo_Store:
@@ -2297,17 +2297,17 @@ SeWrtMem_ChooseInitialSlot:
 	calr	SeMenu_LoadMasterPtr
 	cp	(xsp+6), 1
 	jr	nz, SeMenu_SetupPartDisplay_End_Skip
-	lda_d16	xwa, (0xf9d0)
+	lda_d16	xwa, (PANEL_PART_RT2)
 	ld	e, (xwa)
 	jr	SeMenu_SetupPartDisplay_End_Join
 SeMenu_SetupPartDisplay_End_Skip:
 	cp	(xsp+6), 2
 	jr	nz, SeMenu_SetupPartDisplay_End_Skip2
-	lda_d16	xwa, (0xf9ea)
+	lda_d16	xwa, (PANEL_PART_LEFT)
 	ld	e, (xwa)
 	jr	SeMenu_SetupPartDisplay_End_Join
 SeMenu_SetupPartDisplay_End_Skip2:
-	lda_d16	xwa, (0xf9b6)
+	lda_d16	xwa, (PANEL_PART_RT1)
 	ld	e, (xwa)
 SeMenu_SetupPartDisplay_End_Join:
 	ld	c, (xwa+1)
@@ -6101,9 +6101,9 @@ SeMenu_SetPartRecordBits:
 	calr	SeMenu_LoadMasterPtr
 	ld	a, (xsp+6)
 	extz	wa
-	lda	xix, (0xf9b6:16)
-	lda	xhl, (0xf9d0:16)
-	lda	xde, (0xf9ea:16)
+	lda	xix, (PANEL_PART_RT1:16)
+	lda	xhl, (PANEL_PART_RT2:16)
+	lda	xde, (PANEL_PART_LEFT:16)
 	ld	bc, wa
 	extz	xbc
 	add	xbc, xde
@@ -6474,7 +6474,7 @@ SeMenu_StoreEffectCoeff_Data_Loop3:
 	ret
 
 SeMenu_RefreshPartDisplay:
-	lda xwa, (0xf9b6:16)
+	lda xwa, (PANEL_PART_RT1:16)
 	ld c, (xwa)
 	ld a, (xwa + 1)
 	extz wa
@@ -6483,7 +6483,7 @@ SeMenu_RefreshPartDisplay:
 	pushw bc
 	pushw 0x0
 	call SeMenu_DisplayPartValue
-	lda xwa, (0xf9d0:16)
+	lda xwa, (PANEL_PART_RT2:16)
 	ld c, (xwa)
 	ld a, (xwa + 1)
 	extz wa
@@ -6492,7 +6492,7 @@ SeMenu_RefreshPartDisplay:
 	pushw bc
 	pushw 0x1
 	call SeMenu_DisplayPartValue
-	lda xwa, (0xf9ea:16)
+	lda xwa, (PANEL_PART_LEFT:16)
 	ld c, (xwa)
 	ld a, (xwa + 1)
 	extz wa

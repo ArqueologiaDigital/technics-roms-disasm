@@ -1140,7 +1140,7 @@ PmemOutLGridCheck:
 	ld (xsp + 24), xwa
 	lda xwa, (0xf9a0:16)
 	ld (xsp + 20), xwa
-	lda xwa, (0xfd2c:16)
+	lda xwa, (PANEL_REC_71:16)
 	sub xwa, (xsp + 20)
 	ld xiz, xwa
 	lda xiy, (xbc + 2)
@@ -1205,7 +1205,7 @@ PmemOutLGridCheck_OnIndexswUp_Skip:
 	lda	xix, (xsp+60)
 	ldw	bc, 11
 	ldirw
-	lda	xde, (0xfd2c:16)
+	lda	xde, (PANEL_REC_71:16)
 	sub	xde, 63904
 	ld	xwa, 0:i3
 	ld	a, (0x024772:24)
@@ -1276,7 +1276,7 @@ PmemOutLGridCheck_OnIndexswDown_Skip:
 	lda	xix, (xsp+60)
 	ldw	bc, 11
 	ldirw
-	lda	xde, (0xfd2c:16)
+	lda	xde, (PANEL_REC_71:16)
 	sub	xde, 63904
 	ld	xwa, 0:i3
 	ld	a, (0x024772:24)
@@ -1363,7 +1363,7 @@ PmemOutLGridCheck_OnRamData:
 	lda	xde, (xsp+36)
 	ld	xbc, EVT_GRID_DRAW
 	call	SendEvent
-	lda	xde, (0xfd2c:16)
+	lda	xde, (PANEL_REC_71:16)
 	sub	xde, 63904
 	ld	xwa, 0:i3
 	ld	a, (0x024772:24)
@@ -1393,7 +1393,7 @@ PmemOutLGridCheck_OnRamData_Join3:
 	ld	xbc, EVT_GRID_DRAW
 	call	SendEvent
 	ldw	(xsp+38), 0
-	lda	xwa, (0xf9c4:16)
+	lda	xwa, (PANEL_PART_RT1+14:16)
 	sub	xwa, 63904
 	ld	(xsp+32), xwa
 	ld	xwa, 0:i3
@@ -1435,7 +1435,7 @@ PmemOutLGridCheck_OnRamData_Join4:
 	ld	xbc, EVT_GRID_DRAW
 	call	SendEvent
 	ldw	(xsp+38), 1
-	lda	xwa, (0xf9c5:16)
+	lda	xwa, (PANEL_PART_RT1+15:16)
 	sub	xwa, 63904
 	ld	(xsp+32), xwa
 	ld	xwa, 0:i3
@@ -1466,7 +1466,7 @@ PmemOutLGridCheck_OnRamData_Join4:
 	ld	xbc, EVT_GRID_DRAW
 	call	SendEvent
 	ldw	(xsp+38), 2
-	lda	xwa, (0xf9c7:16)
+	lda	xwa, (PANEL_PART_RT1+17:16)
 	sub	xwa, 63904
 	ld	(xsp+32), xwa
 	ld	xwa, 0:i3
@@ -1569,7 +1569,7 @@ PmemOutLGridCheck_OnRamData_Skip10:
 	ld	xbc, EVT_GRID_DRAW
 	call	SendEvent
 	ldw	(xsp+38), 0
-	lda	xwa, (0xf9c4:16)
+	lda	xwa, (PANEL_PART_RT1+14:16)
 	sub	xwa, 63904
 	ld	(xsp+32), xwa
 	ld	xwa, 0:i3
@@ -1610,7 +1610,7 @@ PmemOutLGridCheck_OnRamData_Join7:
 	ld	xbc, EVT_GRID_DRAW
 	call	SendEvent
 	ldw	(xsp+38), 1
-	lda	xwa, (0xf9c5:16)
+	lda	xwa, (PANEL_PART_RT1+15:16)
 	sub	xwa, 63904
 	ld	(xsp+32), xwa
 	ld	xwa, 0:i3
@@ -1641,7 +1641,7 @@ PmemOutLGridCheck_OnRamData_Join7:
 	ld	xbc, EVT_GRID_DRAW
 	call	SendEvent
 	ldw	(xsp+38), 2
-	lda	xwa, (0xf9c7:16)
+	lda	xwa, (PANEL_PART_RT1+17:16)
 	sub	xwa, 63904
 	ld	(xsp+32), xwa
 	ld	xwa, 0:i3
@@ -1683,7 +1683,7 @@ PmemOutLGridCheck_OnRamData_Join8:
 	ld	xbc, EVT_GRID_DRAW
 	jrl	PmemOutL_GridCheck_Return
 PmemOutLGridCheck_OnRamData_Skip13:
-	lda	xwa, (0xf9b6:16)
+	lda	xwa, (PANEL_PART_RT1:16)
 	ld	(xsp+32), xwa
 	lda	xwa, (xwa+14)
 	sub	xwa, (xsp+20)
@@ -1911,7 +1911,7 @@ PmemOutRGridCheck:
 	ldirw
 	ld xhl, xde
 	lda xbc, (xsp + 32)
-	lda xwa, (0xf9b6:16)
+	lda xwa, (PANEL_PART_RT1:16)
 	ld (xsp + 20), xwa
 	lda xwa, (0x1ed400:24)
 	ld (xsp + 16), xwa
@@ -1972,7 +1972,7 @@ PmemOutRGridCheck_OnIndexswUp:
 	lda	xix, (xsp+56)
 	ldw	bc, 11
 	ldirw
-	lda	xwa, (63940:16)
+	lda	xwa, (PANEL_PART_RT1+14:16)
 	sub	xwa, 63904
 	ld	(xsp+28), xwa
 	ld	xwa, 0:i3
@@ -2008,7 +2008,7 @@ PmemOutRGridCheck_OnIndexswUp_Skip6:
 	lda	xix, (xsp+56)
 	ldw	bc, 11
 	ldirw
-	lda	xwa, (63941:16)
+	lda	xwa, (PANEL_PART_RT1+15:16)
 	sub	xwa, 63904
 	ld	(xsp+28), xwa
 	ld	xwa, 0:i3
@@ -2036,7 +2036,7 @@ PmemOutRGridCheck_OnIndexswUp_Skip7:
 	lda	xix, (xsp+56)
 	ldw	bc, 11
 	ldirw
-	lda	xwa, (63943:16)
+	lda	xwa, (PANEL_PART_RT1+17:16)
 	sub	xwa, 63904
 	ld	(xsp+28), xwa
 	ld	xwa, 0:i3
@@ -2093,7 +2093,7 @@ PmemOutRGridCheck_OnIndexswDown:
 	lda	xix, (xsp+56)
 	ldw	bc, 11
 	ldirw
-	lda	xwa, (63940:16)
+	lda	xwa, (PANEL_PART_RT1+14:16)
 	sub	xwa, 63904
 	ld	(xsp+28), xwa
 	ld	xwa, 0:i3
@@ -2134,7 +2134,7 @@ PmemOutRGridCheck_OnIndexswDown_Skip9:
 	lda	xix, (xsp+56)
 	ldw	bc, 11
 	ldirw
-	lda	xwa, (63941:16)
+	lda	xwa, (PANEL_PART_RT1+15:16)
 	sub	xwa, 63904
 	ld	(xsp+28), xwa
 	ld	xwa, 0:i3
@@ -2164,7 +2164,7 @@ PmemOutRGridCheck_OnIndexswDown_Skip10:
 	lda	xix, (xsp+56)
 	ldw	bc, 11
 	ldirw
-	lda	xwa, (63943:16)
+	lda	xwa, (PANEL_PART_RT1+17:16)
 	sub	xwa, 63904
 	ld	(xsp+28), xwa
 	ld	xwa, 0:i3
@@ -2261,7 +2261,7 @@ PmemOutRGridCheck_OnRamData_Join3:
 	ld	xbc, EVT_GRID_DRAW
 	call	SendEvent
 	ldw	(xsp+34), 1
-	lda	xwa, (63941:16)
+	lda	xwa, (PANEL_PART_RT1+15:16)
 	sub	xwa, 63904
 	ld	(xsp+28), xwa
 	ld	xwa, 0:i3
@@ -2293,7 +2293,7 @@ PmemOutRGridCheck_OnRamData_Join3:
 	ld	xbc, EVT_GRID_DRAW
 	call	SendEvent
 	ldw	(xsp+34), 2
-	lda	xwa, (63943:16)
+	lda	xwa, (PANEL_PART_RT1+17:16)
 	sub	xwa, 63904
 	ld	(xsp+28), xwa
 	ld	xwa, 0:i3
@@ -2384,7 +2384,7 @@ PmemOutRGridCheck_OnRamData_Join5:
 	ld	xbc, EVT_GRID_DRAW
 	call	SendEvent
 	ldw	(xsp+34), 1
-	lda	xwa, (63941:16)
+	lda	xwa, (PANEL_PART_RT1+15:16)
 	sub	xwa, 63904
 	ld	(xsp+28), xwa
 	ld	xwa, 0:i3
@@ -2416,7 +2416,7 @@ PmemOutRGridCheck_OnRamData_Join5:
 	ld	xbc, EVT_GRID_DRAW
 	call	SendEvent
 	ldw	(xsp+34), 2
-	lda	xwa, (63943:16)
+	lda	xwa, (PANEL_PART_RT1+17:16)
 	sub	xwa, 63904
 	ld	(xsp+28), xwa
 	ld	xwa, 0:i3

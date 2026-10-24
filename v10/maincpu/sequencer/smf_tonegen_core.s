@@ -241,14 +241,14 @@ FloppyIO_ConfigureSwitchboard:
 	cp (4600:16), 0
 	jrl z, FloppyIO_ConfigSwb_Mode0
 	ld c, 0x0:opc
-	and (0xfdad:16), 251
+	and (PANEL_REC_91+3:16), 251
 	ld (0xf23d:16), 0
 	jrl FloppyIO_ConfigSwb_QueueEvent
 
 FloppyIO_ConfigSwb_Mode0:
 	or a, 0x4
 	ld c, 0xff:opc
-	or (0xfdad:16), 4
+	or (PANEL_REC_91+3:16), 4
 	ld (0xf23d:16), 255
 
 FloppyIO_ConfigSwb_QueueEvent:

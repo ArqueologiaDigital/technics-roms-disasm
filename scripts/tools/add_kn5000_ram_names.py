@@ -175,6 +175,9 @@ def main():
         if n in syms:
             bad.append("%s is already a symbol of the tree" % n)
             continue
+        if 0xF9A0 <= v < 0xFFBE:
+            bad.append("0x%x is inside the panel records (name_kn5000_panel_records.py spells it RECORD+N)" % v)
+            continue
         if not (0x400 <= v < 0x100000):
             bad.append("0x%x is outside the RAM range name_kn5000_ram.py handles" % v)
             continue

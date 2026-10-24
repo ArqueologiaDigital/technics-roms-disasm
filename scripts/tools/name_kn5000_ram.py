@@ -39,7 +39,8 @@ import sys
 REPO = subprocess.run(["git", "rev-parse", "--show-toplevel"], capture_output=True,
                       text=True).stdout.strip() or "."
 CONST = ["midi_encoder_constants.s", "cpanel_constants.s", "gui_constants.s", "kn5000_%s_program.s",
-         "shared/ram_variables.s", "shared/ram_variables_by_use.s"]
+         "shared/ram_variables.s", "shared/ram_variables_by_use.s",
+         "shared/ram_panel_records.s"]
 EQU = re.compile(r'^(\s*\.equ\s+)([A-Za-z_]\w*)(\s*,\s*)(0x[0-9a-fA-F]+)(.*)$')
 MEM = re.compile(r'\((0x[0-9a-fA-F]+|\d+)(:8|:16|:24)?\)')
 TOK = re.compile(r'\(([A-Za-z_]\w*|0x[0-9a-fA-F]+|\d+)(?::8|:16|:24)?\)')

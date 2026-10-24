@@ -4698,11 +4698,11 @@ TempoRingBuf_OnNoteEvent_Loop2:
 	cp	(xix+iz), 0x0c
 	pop	xix
 	jrl	nz, DisplayMode_Handler_3_Join2
-	bit	2, (0xfdad:16)
+	bit	2, (PANEL_REC_91+3:16)
 	jrl	z, DisplayMode_Handler_3_Skip10
 	jp	DisplayMode_Handler_3_Join2
 DisplayMode_Handler_3_Skip10:
-	ld	w, (64316:16)
+	ld	w, (PANEL_PART_PT16:16)
 	call	ScoopDisp_BytecodeBlock1_0x32
 DisplayMode_Handler_3_Join2:
 	ld	(13948:16), a
@@ -4912,7 +4912,7 @@ DisplayMode_Handler_3_Skip18:
 	cp	(xde+iz), 0x0c
 	pop	xde
 	jrl	nz, DisplayMode_Handler_3_Skip19
-	bit	2, (0xfdad:16)
+	bit	2, (PANEL_REC_91+3:16)
 	jrl	z, DisplayMode_Handler_3_Skip19
 	cp	a, 0:i3
 	jrl	nz, DisplayMode_Handler_3_Skip19
@@ -4939,11 +4939,11 @@ DisplayMode_Handler_3_Helper8:
 	cp	(xix+iz), 0x0c
 	pop	xix
 	jrl	nz, DisplayMode_Handler_3_Return5
-	bit	2, (0xfdad:16)
+	bit	2, (PANEL_REC_91+3:16)
 	jrl	z, DisplayMode_Handler_3_Skip20
 	jp	DisplayMode_Handler_3_Return5
 DisplayMode_Handler_3_Skip20:
-	ld	w, (64316:16)
+	ld	w, (PANEL_PART_PT16:16)
 	call	ScoopDisp_BytecodeBlock1_0x32
 DisplayMode_Handler_3_Return5:
 	ret
@@ -4957,11 +4957,11 @@ PerfMode_MapEventNoteToDisplay:
 	cp	(xix+iz), 0x0c
 	pop	xix
 	jrl	nz, DisplayMode_Handler_3_Return6
-	bit	2, (0xfdad:16)
+	bit	2, (PANEL_REC_91+3:16)
 	jrl	z, DisplayMode_Handler_3_Skip21
 	jp	DisplayMode_Handler_3_Return6
 DisplayMode_Handler_3_Skip21:
-	ld	w, (64316:16)
+	ld	w, (PANEL_PART_PT16:16)
 	call	PerfMode_LookupValueMapColumn5
 DisplayMode_Handler_3_Return6:
 	ret
@@ -6998,15 +6998,15 @@ Display_CallMenuInit_Helper:
 	call	AccWrap_PositionClear
 	ld	(GLOBAL_ERROR_CODE:16), 0
 	call	VoiceCtrl_CheckAndReset
-	ldb_d8	a, (0xfc5d)
+	ldb_d8	a, (PANEL_STYLE+3)
 	stb_d8	(0x1128), a
 	call	SqStep_SetDisplayModeFromTrack
 	cp	(0x0d65:16), 0
 	jrl	nz, PerfMode_Handler_EvtB_Helper2
-	and	(0xfc5d:16), 247
+	and	(PANEL_STYLE+3:16), 247
 	ld	e, 72:opc
 	ld	d, 3:opc
-	ldb_d8	a, (0xfc5d)
+	ldb_d8	a, (PANEL_STYLE+3)
 	ld	w, 8:opc
 	call	SwbtWr_QueuePostEvent
 PerfMode_Handler_EvtB_Helper2:
@@ -7609,32 +7609,32 @@ PerfMode_Handler_EvtB_Helper2_Helper8:
 	push	xix
 	ldir85
 	pop	xix
-	ldb_d8	a, (0xfc5a)
+	ldb_d8	a, (PANEL_STYLE)
 	ld	w, a
 	and	a, 127
 	ld	(xix+4), a
 	and	w, 128
 	rlc	w
 	or	(xix), w
-	ldb_d8	a, (0xfc5b)
+	ldb_d8	a, (PANEL_STYLE+1)
 	and	a, 127
 	or	(xix+5), a
 	ld	xiy, xix
 	ld	w, 6:opc
 	call	DisplayMode_Handler_3_Helper16
-	bit	7, (0xfc5a:16)
+	bit	7, (PANEL_STYLE:16)
 	jrl	z, ClockConfig_Handler_0_Skip
-	ldb_d8	a, (0xfc5a)
+	ldb_d8	a, (PANEL_STYLE)
 	cp	a, 240
 	jrl	nc, ClockConfig_Handler_0_Skip
 	and	a, 127
 	extz	wa
 	div	a, 4
 	sla	w, 4
-	ldb_d8	a, (0xfc61)
+	ldb_d8	a, (PANEL_STYLE+7)
 	and	a, 207
 	or	a, w
-	stb_d8	(0xfc61), a
+	stb_d8	(PANEL_STYLE+7), a
 	ld	e, 72:opc
 	ld	d, 7:opc
 	ld	w, 48:opc
@@ -7646,7 +7646,7 @@ ClockConfig_Handler_0_Skip:
 	push	xix
 	ldir85
 	pop	xix
-	ldb_d8	a, (0xfc61)
+	ldb_d8	a, (PANEL_STYLE+7)
 	and	a, 127
 	ld	(xix+4), a
 	ld	xiy, xix
@@ -7738,7 +7738,7 @@ ClockConfig_Handler_0_Skip4:
 	ld	(0x11f4:16), 0
 	call	BitMapOut_RenderDisplay
 	ldb_d8	a, (0x1128)
-	stb_d8	(0xfc5d), a
+	stb_d8	(PANEL_STYLE+3), a
 	ld	e, 72:opc
 	ld	d, 3:opc
 	ld	w, 8:opc
@@ -9056,8 +9056,8 @@ MemConfig_Handler_4_Join3:
 MemConfig_Handler_4_Return3:
 	ret
 Timer_ModeHandler_0_Helper2:
-	ld (0xfc5f:16), 0x00
-	ld (0xfc60:16), 0x00
+	ld (PANEL_STYLE+5:16), 0x00
+	ld (PANEL_STYLE+6:16), 0x00
 	push XWA
 	push XHL
 	push XBC
@@ -9086,14 +9086,14 @@ Timer_ModeHandler_0_Helper2:
 PerfMode_Handler_EvtB_Helper2_Helper9:
 	cp	(0x0d65:16), 0
 	jrl	nz, MemConfig_Handler_4_Return4
-	ldb_d8	a, (0xfc5d)
+	ldb_d8	a, (PANEL_STYLE+3)
 	and	a, 7
 	cp	a, 1:i3
 	jrl	nz, Timer_ModeHandler_0_Helper2_Skip
 	jp	MemConfig_Handler_4_Return4
 Timer_ModeHandler_0_Helper2_Skip:
-	and	(0xfc5d:16), 248
-	or	(0xfc5d:16), 2
+	and	(PANEL_STYLE+3:16), 248
+	or	(PANEL_STYLE+3:16), 2
 	ld	a, 72:opc
 	ld	w, 3:opc
 	ld	e, 2:opc
@@ -10749,11 +10749,11 @@ VoiceSlot_StatusRet_Skip4:
 	cp	(xix+iz), 0x0c
 	pop	xix
 	jrl	nz, VoiceSlot_StatusRet_Join
-	bit	2, (0xfdad:16)
+	bit	2, (PANEL_REC_91+3:16)
 	jrl	z, VoiceSlot_StatusRet_Skip5
 	jp	VoiceSlot_StatusRet_Join
 VoiceSlot_StatusRet_Skip5:
-	ldb_d8	w, (0xfb3c)
+	ldb_d8	w, (PANEL_PART_PT16)
 	call	ScoopDisp_BytecodeBlock1_0x32
 VoiceSlot_StatusRet_Join:
 	stb_d8	(0x367c), a
@@ -11816,7 +11816,7 @@ TempoRingBuf_IsEmpty_Return3:
 SystemInit_StepHandler_0_Helper:
 	call	Rhythm_TransposeTrampBlock
 	pushw	de
-	ld	a, (64602:16)
+	ld	a, (PANEL_STYLE:16)
 	ld	d, (64612:16)
 	and	d, 15
 	call	Rhythm_DispatchNote_Tramp
@@ -14410,9 +14410,9 @@ DisplayStr_ShowTempoLine:
 	call	DisplayStr_BlankLineBuffer
 	ld	xix, 3786
 	ld	xiy, Str_TempoEq
-	cp	(0xfc5a:16), 7
+	cp	(PANEL_STYLE:16), 7
 	jrl	nz, DisplayStr_BytecodeBlock_C_Skip
-	cp	(0xfc5b:16), 2
+	cp	(PANEL_STYLE+1:16), 2
 	jrl	nz, DisplayStr_BytecodeBlock_C_Skip
 	ld	xiy, DisplayStr_BytecodeBlock_C_Tbl
 DisplayStr_BytecodeBlock_C_Skip:
@@ -14439,9 +14439,9 @@ VoiceSlot_StatusRet_Helper3:
 	call	Display_UpdateRegion0
 	call	DisplayStr_BlankLineBuffer
 	ld	xiy, DisplayStr_TempoString
-	cp	(0xfc5a:16), 7
+	cp	(PANEL_STYLE:16), 7
 	jrl	nz, VoiceSlot_StatusRet_Helper3_Skip
-	cp	(0xfc5b:16), 2
+	cp	(PANEL_STYLE+1:16), 2
 	jrl	nz, VoiceSlot_StatusRet_Helper3_Skip
 	ld	xiy, DisplayStr_BytecodeBlock_C_Tbl2
 VoiceSlot_StatusRet_Helper3_Skip:
@@ -14806,9 +14806,9 @@ Display_BytecodeBlock_F_Sub_Helper2:
 ;   TempoRingBuf_OnTempoEvent stores the tempo in 0x0EF2.
 DisplayStr_WriteTempoValue:
 	ld	wa, (3826:16)
-	cp	(64602:16), 7
+	cp	(PANEL_STYLE:16), 7
 	jrl	nz, DisplayStr_WriteTempoValue_Skip9
-	cp	(64603:16), 2
+	cp	(PANEL_STYLE+1:16), 2
 	jrl	nz, DisplayStr_WriteTempoValue_Skip9
 	pushw	hl
 	sla	wa, 1
@@ -14828,9 +14828,9 @@ DisplayStr_WriteTempoValue_Skip9:
 VoiceSlot_StatusRet_Helper4:
 	ld	xiy, Display_BytecodeBlock_F_Tbl2
 	ld	xix, 3791
-	cp	(64602:16), 7
+	cp	(PANEL_STYLE:16), 7
 	jrl	nz, Display_BytecodeBlock_F_Skip7
-	cp	(64603:16), 2
+	cp	(PANEL_STYLE+1:16), 2
 	jrl	nz, Display_BytecodeBlock_F_Skip7
 	ld	xiy, Display_BytecodeBlock_F_Tbl4
 Display_BytecodeBlock_F_Skip7:

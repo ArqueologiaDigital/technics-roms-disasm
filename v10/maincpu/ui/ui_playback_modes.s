@@ -150,7 +150,7 @@ SeqTimer_PostTempoUpdate:
 	ld w, 0xff:opc
 	call SwbtWr_QueuePostEvent
 	popw wa
-	ld (0xfc62:16), wa
+	ld (PANEL_STYLE+8:16), wa
 	call SeqTimer_UpdateTempoReg
 	ret
 
@@ -488,7 +488,7 @@ SeqRestart_CheckAndDispatch:
 	bit 2, (0x28ac:16)
 	jr z, SeqRestart_Return
 	ld iz, wa
-	ld a, (0xfc5f:16)
+	ld a, (PANEL_STYLE+5:16)
 	and a, 0x30
 	ld wa, iz
 	jr nz, SeqRestart_Return
@@ -949,7 +949,7 @@ CDlikeReset_SetTimerFlags:
 
 CDlike_InitModeAndLoadBank:
 	or (0xb7e2:16), 64
-	ld a, (0xfdad:16)
+	ld a, (PANEL_REC_91+3:16)
 	ld (3394:16), a
 	ld (3380:16), 0
 	ld (4420:16), 0
@@ -1066,16 +1066,16 @@ SongBank_LoadToWorkArea:
 SongBank_CheckAccompanimentMode:
 	cp (0xf23d:16), 255
 	jr z, SongBank_EnableAccompaniment
-	bit 2, (0xfdad:16)
+	bit 2, (PANEL_REC_91+3:16)
 	jr z, SongBank_CheckBassMode
-	and (0xfdad:16), 251
+	and (PANEL_REC_91+3:16), 251
 	xor a, a
 	jr SongBank_SendAccompEvent
 
 SongBank_EnableAccompaniment:
-	bit 2, (0xfdad:16)
+	bit 2, (PANEL_REC_91+3:16)
 	jr nz, SongBank_CheckBassMode
-	or (0xfdad:16), 4
+	or (PANEL_REC_91+3:16), 4
 	ld a, 0x4:opc
 
 SongBank_SendAccompEvent:
@@ -1089,12 +1089,12 @@ SongBank_SendAccompEvent:
 SongBank_CheckBassMode:
 	cp (0xf24b:16), 255
 	jr z, SongBank_EnableBassMode
-	and (0xfdad:16), 254
+	and (PANEL_REC_91+3:16), 254
 	xor a, a
 	jr SongBank_SendBassEvent
 
 SongBank_EnableBassMode:
-	or (0xfdad:16), 1
+	or (PANEL_REC_91+3:16), 1
 	ld a, 0x1:opc
 
 SongBank_SendBassEvent:

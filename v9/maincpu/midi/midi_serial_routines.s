@@ -85,14 +85,14 @@ INTTX0_HANDLER:
 	bit 3, a
 	jr z, IntTx0_DequeueAndSend
 	res 3, (1065:16)
-	bit 4, (0xfd50:16)
+	bit 4, (PANEL_MIDI:16)
 	jr nz, IntTx0_SendHoldByte
 	ld (208:16), 252
 	jr IntTx0_CheckQueueEmpty
 
 IntTx0_FlagBit0Branch:
 	res 0, (1065:16)
-	bit 4, (0xfd50:16)
+	bit 4, (PANEL_MIDI:16)
 	jr nz, IntTx0_SendHoldByte
 	ld (208:16), 248
 	jr IntTx0_CheckQueueEmpty
@@ -106,14 +106,14 @@ IntTx0_SendHoldByte:
 
 IntTx0_FlagBit1Branch:
 	res 1, (1065:16)
-	bit 4, (0xfd50:16)
+	bit 4, (PANEL_MIDI:16)
 	jr nz, IntTx0_SendHoldByte
 	ld (208:16), 250
 	jr IntTx0_CheckQueueEmpty
 
 IntTx0_FlagBit2Branch:
 	res 2, (1065:16)
-	bit 4, (0xfd50:16)
+	bit 4, (PANEL_MIDI:16)
 	jr nz, IntTx0_SendHoldByte
 	ld (208:16), 251
 	jr IntTx0_CheckQueueEmpty
@@ -237,7 +237,7 @@ SysMsg_Return:
 	ret
 
 SysMsg_NotActiveSense:
-	bit 4, (0xfd50:16)
+	bit 4, (PANEL_MIDI:16)
 	jr nz, SysMsg_Return
 	cp a, 0xfd
 	jr nc, SysMsg_Return
@@ -257,7 +257,7 @@ SysMsg_CheckStop:
 
 SysMsg_ClockTransportDispatch:
 	ld d, a
-	bit 2, (0xfd50:16)
+	bit 2, (PANEL_MIDI:16)
 	jrl z, AltClk_DisabledClockPath
 	cp d, 0xf8
 	jr nz, ClkTick_PerClockCounters
@@ -425,7 +425,7 @@ ClkTick_Src3OverflowQueue:
 	calr MIDI_QUEUE_TRACK_EVENT
 
 Transport_StopHandler:
-	bit 2, (0xfd52:16)
+	bit 2, (PANEL_MIDI+2:16)
 	jr z, Transport_Return
 	cp d, 0xfc
 	jr nz, Transport_Return
@@ -458,7 +458,7 @@ Transport_Return:
 	ret
 
 Transport_NoClockSourcePath:
-	bit 2, (0xfd52:16)
+	bit 2, (PANEL_MIDI+2:16)
 	jr z, Transport_StopSrc3Snapshot
 	bit 2, (SEQ_RTMCFG:16)
 	jr nz, Transport_NoClockReturn
@@ -582,7 +582,7 @@ AltClk_DisabledClockPath:
 	and a, 0x5
 	popw wa
 	jr z, AltClk_NoSrcFlagPath
-	bit 2, (0xfd52:16)
+	bit 2, (PANEL_MIDI+2:16)
 	jr z, AltClk_Return
 	cp d, 0xfc
 	jr nz, AltClk_Return
@@ -615,7 +615,7 @@ AltClk_Return:
 	ret
 
 AltClk_NoSrcFlagPath:
-	bit 2, (0xfd52:16)
+	bit 2, (PANEL_MIDI+2:16)
 	jr z, AltClk_NoMatchReturn
 	bit 2, (SEQ_RTMCFG:16)
 	jr nz, AltClk_NoMatchReturn

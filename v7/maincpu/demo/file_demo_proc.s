@@ -560,9 +560,9 @@ DemoMode_Main_Operation:
 	lda xsp, (xsp + 0x0a)
 	call Audio_ConfigureDSP
 	calr Voice_LoadVoiceTable
-	set 4, (0xfd50:16)
-	res 2, (0xfd50:16)
-	res 2, (0xfd52:16)
+	set 4, (PANEL_MIDI:16)
+	res 2, (PANEL_MIDI:16)
+	res 2, (PANEL_MIDI+2:16)
 	calr Demo_PreSetup
 	res 0, (0x045b:16)
 	call AccompSeq_StopSequence
@@ -942,7 +942,7 @@ Demo_ResetCountdownTimer:
 	ret
 
 Timer7_DisableInterrupt:
-	lda	xbc, (64920:16)
+	lda	xbc, (PANEL_REC_98+2:16)
 	ld	e, (xbc)
 	res	7, e
 	ld	(xbc), e

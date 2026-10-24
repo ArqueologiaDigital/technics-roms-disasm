@@ -1103,7 +1103,7 @@ AccompSeq_LargeCodeBlock2_Skip2:
 	ld	hl, wa
 	ld	xix, AccompSeq_LowestBitIndex
 	ld	h, (xix+hl)
-	ld l, (64786:16)
+	ld l, (PANEL_MSP+6:16)
 	cp l, 17
 	jr	z, AccompSeq_LargeCodeBlock2_Return
 	cp	l, 18
@@ -1428,7 +1428,7 @@ AccompSeq_HandleSpecialMode:
 	calr	AccompSeq_SendAllOff
 	popw	hl
 AccompSeq_HandleSpecialMode_Skip:
-	ld	a, (0xfd12:16)
+	ld	a, (PANEL_MSP+6:16)
 	cp	a, 13
 	jr	z, AccompSeq_HandleSpecialMode_Skip2
 	cp	a, 14
@@ -1684,7 +1684,7 @@ AccompSeq_MidiFilterCodeBlock_Step:
 	jp	AccompSeq_MidiFilterCodeBlock_Step2_Store_Return
 AccompSeq_MidiFilterCodeBlock_Step_Skip:
 	ld	e, 12:opc
-	ld	a, (0xfd12:16)
+	ld	a, (PANEL_MSP+6:16)
 	bit	7, w
 	jr	z, AccompSeq_MidiFilterCodeBlock_Step_Skip3
 	inc	1, a
@@ -1699,7 +1699,7 @@ AccompSeq_MidiFilterCodeBlock_Step_Skip3:
 	jr	nz, AccompSeq_MidiFilterCodeBlock_Step_Join
 	ld	a, 0:opc
 AccompSeq_MidiFilterCodeBlock_Step_Join:
-	ld	(0xfd12:16), a
+	ld	(PANEL_MSP+6:16), a
 	ld	(0x7e78:16), 0
 	or	(0xe3e0:16), 16
 	jr	AccompSeq_MidiFilterCodeBlock_Step2_Store_Return
@@ -1723,7 +1723,7 @@ AccompSeq_MidiFilterCodeBlock_Step2_Compare:
 	jr	ule, AccompSeq_MidiFilterCodeBlock_Step2_Store
 	ld	a, e
 AccompSeq_MidiFilterCodeBlock_Step2_Store:
-	ld	(0xfd12:16), a
+	ld	(PANEL_MSP+6:16), a
 	ld	(0x7e78:16), 0
 	or	(0xe3de:16), 16
 AccompSeq_MidiFilterCodeBlock_Step2_Store_Return:

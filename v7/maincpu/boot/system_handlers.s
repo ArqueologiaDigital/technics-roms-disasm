@@ -19,7 +19,7 @@ INTT2_HANDLER:
 NMI_HANDLER:
 	ldw (0x00ffca:24), 0x0000
 	calr NMI_StorePayloadChecksums
-	bit 2, (0xfdad:16)
+	bit 2, (PANEL_REC_91+3:16)
 	jr z, NMI_SetPowerOffCode_A5A5
 	ldw (0x00ffcc:24), 0x5a5a
 	jr NMI_ClearGuardAndHalt
@@ -425,7 +425,7 @@ INTT1_StoreCounters:
 
 INTT1_CheckScanFlag:
 	ld (1066:16), a
-	bit 2, (0xfd50:16)
+	bit 2, (PANEL_MIDI:16)
 	jrl nz, INTT1_UpdateAlternateTimers
 	inc 1, (1050:16)
 	bit 0, (1056:16)
@@ -443,9 +443,9 @@ INTT1_CheckTickCount:
 INTT1_CheckMidiSync:
 	cp (CURRENT_MODE:16), 0x13
 	jr z, UIState_DispatchBranch
-	bit 2, (0xfd52:16)
+	bit 2, (PANEL_MIDI+2:16)
 	jr z, UIState_DispatchBranch
-	bit 2, (0xfd50:16)
+	bit 2, (PANEL_MIDI:16)
 	jr nz, UIState_DispatchBranch
 	push SR
 	ei 0x06
@@ -505,7 +505,7 @@ INTT1_CheckMetroTimer:
 UIStateMachine_DispatchEntry:
 	lda xhl, (1055:16)
 	ld a, (xhl)
-	bit 2, (0xfd50:16)
+	bit 2, (PANEL_MIDI:16)
 	jr nz, UIStateMachine_CheckPending
 	bit 0, a
 	jr z, UIStateMachine_CheckPending
@@ -638,7 +638,7 @@ INTTR4_HANDLER:
 	ld (xhl), 0x0
 
 INTTR4_TickWrapped:
-	bit 2, (0xfd50:16)
+	bit 2, (PANEL_MIDI:16)
 	jr z, INTTR4_CheckSyncEnable
 	jp INTTR4_SubTick_Mode
 
@@ -751,9 +751,9 @@ INTTR4_SeqAutoStart:
 	ld	(SEQ_TRANSPORT_STATE:16), a
 	cp	(CURRENT_MODE:16), 19
 	jr	z, INTTR4_SeqAutoStart_Skip
-	bit	2, (0xfd52:16)
+	bit	2, (PANEL_MIDI+2:16)
 	jr	z, INTTR4_SeqAutoStart_Skip
-	bit	2, (0xfd50:16)
+	bit	2, (PANEL_MIDI:16)
 	jr	nz, INTTR4_SeqAutoStart_Skip
 	push	sr
 	ei	6
@@ -784,9 +784,9 @@ INTTR4_MetroBeat_OnBeat:
 	ld	(1056:16), 16
 	cp	(CURRENT_MODE:16), 19
 	jr	z, INTTR4_SeqBeat_Check
-	bit	2, (0xfd52:16)
+	bit	2, (PANEL_MIDI+2:16)
 	jr	z, INTTR4_SeqBeat_Check
-	bit	2, (0xfd50:16)
+	bit	2, (PANEL_MIDI:16)
 	jr	nz, INTTR4_SeqBeat_Check
 	push	sr
 	ei	6

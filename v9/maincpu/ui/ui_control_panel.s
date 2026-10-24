@@ -2037,7 +2037,7 @@ CtrlPanel_HandleKey10:
 	ret
 
 PartSelect_UpdateDisplayState:
-	ld a, (0xfc66:16)
+	ld a, (PANEL_REC_90:16)
 	and a, 0x1
 	cp a, 0:i3
 	scc8 z, e

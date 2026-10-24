@@ -947,7 +947,7 @@ SMF_DispatchEvent:
 
 SMF_Dispatch_CheckDrumMode:
 	ld (4324:16), 0
-	bit 2, (0xfdad:16)
+	bit 2, (PANEL_REC_91+3:16)
 	jrl z, SMF_Dispatch_NoDrumMode
 	ld (4324:16), 255
 	push xix

@@ -4685,11 +4685,11 @@ TempoRingBuf_OnNoteEvent_Loop2:
 	cp	(xix+iz), 0x0c
 	pop	xix
 	jrl	nz, TempoRingBuf_OnNoteEvent_Skip19
-	bit	2, (0xfdad:16)
+	bit	2, (PANEL_REC_91+3:16)
 	jrl	z, TempoRingBuf_OnNoteEvent_Skip18
 	jp	TempoRingBuf_OnNoteEvent_Skip19
 TempoRingBuf_OnNoteEvent_Skip18:
-	ld	w, (0xfb3c:16)
+	ld	w, (PANEL_PART_PT16:16)
 	call	DisplayMode_Handler_3_Helper2
 TempoRingBuf_OnNoteEvent_Skip19:
 	ld	(0x3718:16), a
@@ -4930,7 +4930,7 @@ PerfMode_StepNoteNumber_Skip27:
 	cp	(xde+iz), 0x0c
 	pop	xde
 	jrl	nz, PerfMode_StepNoteNumber_Skip28
-	bit	2, (0xfdad:16)
+	bit	2, (PANEL_REC_91+3:16)
 	jrl	z, PerfMode_StepNoteNumber_Skip28
 	cp	a, 0:i3
 	jrl	nz, PerfMode_StepNoteNumber_Skip28
@@ -4963,11 +4963,11 @@ PerfMode_MapEventNoteToDisplay:
 	cp	(xix+iz), 0x0c
 	pop	xix
 	jrl	nz, PerfMode_MapEventNoteToDisplay_Return6
-	bit	2, (0xfdad:16)
+	bit	2, (PANEL_REC_91+3:16)
 	jrl	z, PerfMode_MapEventNoteToDisplay_Skip29
 	jp	PerfMode_MapEventNoteToDisplay_Return6
 PerfMode_MapEventNoteToDisplay_Skip29:
-	ld	w, (0xfb3c:16)
+	ld	w, (PANEL_PART_PT16:16)
 	call	DisplayMode_Handler_3_Helper2
 PerfMode_MapEventNoteToDisplay_Return6:
 	ret
@@ -4986,11 +4986,11 @@ PerfMode_MapDisplayNoteToEvent:
 	cp	(xix+iz), 0x0c
 	pop	xix
 	jrl	nz, PerfMode_MapDisplayNoteToEvent_Return7
-	bit	2, (0xfdad:16)
+	bit	2, (PANEL_REC_91+3:16)
 	jrl	z, PerfMode_MapDisplayNoteToEvent_Skip30
 	jp	PerfMode_MapDisplayNoteToEvent_Return7
 PerfMode_MapDisplayNoteToEvent_Skip30:
-	ld	w, (0xfb3c:16)
+	ld	w, (PANEL_PART_PT16:16)
 	call	PerfMode_LookupValueMapColumn5
 PerfMode_MapDisplayNoteToEvent_Return7:
 	ret
@@ -7167,15 +7167,15 @@ SqStep_InitOnEnter:
 	call	AccWrap_PositionClear
 	ld	(GLOBAL_ERROR_CODE:16), 0
 	call	VoiceCtrl_CheckAndReset
-	ld	a, (64605:16)
+	ld	a, (PANEL_STYLE+3:16)
 	ld	(4392:16), a
 	call	SqStep_SetDisplayModeFromTrack
 	cp	(3429:16), 0
 	jrl	nz, SqStep_SetupCursorTrack
-	and	(0xfc5d:16), 247
+	and	(PANEL_STYLE+3:16), 247
 	ld	e, 72:opc
 	ld	d, 3:opc
-	ld	a, (64605:16)
+	ld	a, (PANEL_STYLE+3:16)
 	ld	w, 8:opc
 	call	SwbtWr_QueuePostEvent
 ; SqStep_SetupCursorTrack: Second half of SqStep_InitOnEnter: (re)builds the step-record state for the cursor track:
@@ -7814,32 +7814,32 @@ ScoopParam_ValueTable_Sub_Helper:
 	push	xix
 	ldir85
 	pop	xix
-	ld	a, (0xfc5a:16)
+	ld	a, (PANEL_STYLE:16)
 	ld	w, a
 	and	a, 127
 	ld	(xix+4), a
 	and	w, 128
 	rlc	w
 	or	(xix), w
-	ld	a, (0xfc5b:16)
+	ld	a, (PANEL_STYLE+1:16)
 	and	a, 127
 	or	(xix+5), a
 	ld	xiy, xix
 	ld	w, 6:opc
 	call	SystemInit_StepHandler_0_Helper2
-	bit	7, (0xfc5a:16)
+	bit	7, (PANEL_STYLE:16)
 	jrl	z, ScoopParam_ValueTable_Sub_Helper_Skip
-	ld	a, (0xfc5a:16)
+	ld	a, (PANEL_STYLE:16)
 	cp	a, 240
 	jrl	nc, ScoopParam_ValueTable_Sub_Helper_Skip
 	and	a, 127
 	extz	wa
 	div	a, 4
 	sla	w, 4
-	ld	a, (0xfc61:16)
+	ld	a, (PANEL_STYLE+7:16)
 	and	a, 207
 	or	a, w
-	ld	(0xfc61:16), a
+	ld	(PANEL_STYLE+7:16), a
 	ld	e, 72:opc
 	ld	d, 7:opc
 	ld	w, 48:opc
@@ -7851,7 +7851,7 @@ ScoopParam_ValueTable_Sub_Helper_Skip:
 	push	xix
 	ldir85
 	pop	xix
-	ld	a, (0xfc61:16)
+	ld	a, (PANEL_STYLE+7:16)
 	and	a, 127
 	ld	(xix+4), a
 	ld	xiy, xix
@@ -7956,7 +7956,7 @@ SqStep_RestoreOnLeave_Skip4:
 	ld	(4596:16), 0
 	call	BitMapOut_RenderDisplay
 	ld	a, (4392:16)
-	ld	(0xfc5d:16), a
+	ld	(PANEL_STYLE+3:16), a
 	ld	e, 72:opc
 	ld	d, 3:opc
 	ld	w, 8:opc
@@ -9285,8 +9285,8 @@ MemConfig_Handler_4_Skip8:
 MemConfig_Handler_4_Return3:
 	ret
 MemConfig_Handler_4_Helper:
-	ld	(0xfc5f:16), 0
-	ld	(0xfc60:16), 0
+	ld	(PANEL_STYLE+5:16), 0
+	ld	(PANEL_STYLE+6:16), 0
 	push	xwa
 	push	xhl
 	push	xbc
@@ -9315,14 +9315,14 @@ MemConfig_Handler_4_Helper:
 MemConfig_Handler_4_Helper2:
 	cp	(0x0d65:16), 0
 	jrl	nz, MemConfig_Handler_4_Helper2_Return
-	ld	a, (0xfc5d:16)
+	ld	a, (PANEL_STYLE+3:16)
 	and	a, 7
 	cp	a, 1:i3
 	jrl	nz, MemConfig_Handler_4_Helper2_Skip
 	jp	MemConfig_Handler_4_Helper2_Return
 MemConfig_Handler_4_Helper2_Skip:
-	and	(0xfc5d:16), 248
-	or	(0xfc5d:16), 2
+	and	(PANEL_STYLE+3:16), 248
+	or	(PANEL_STYLE+3:16), 2
 	ld	a, 72:opc
 	ld	w, 3:opc
 	ld	e, 2:opc
@@ -11013,11 +11013,11 @@ VoiceSlot_StatusRet_Skip4:
 	cp	(xix+iz), 0x0c
 	pop	xix
 	jrl	nz, VoiceSlot_StatusRet_Skip6
-	bit	2, (0xfdad:16)
+	bit	2, (PANEL_REC_91+3:16)
 	jrl	z, VoiceSlot_StatusRet_Skip5
 	jp	VoiceSlot_StatusRet_Skip6
 VoiceSlot_StatusRet_Skip5:
-	ld	w, (0xfb3c:16)
+	ld	w, (PANEL_PART_PT16:16)
 	call	DisplayMode_Handler_3_Helper2
 VoiceSlot_StatusRet_Skip6:
 	ld	(0x3718:16), a
@@ -12094,7 +12094,7 @@ TempoRingBuf_IsEmpty_Return3:
 VoiceCtrl_ParamSetupBytecode_Tbl4_Helper:
 	call	Rhythm_TransposeTrampBlock
 	pushw	de
-	ld	a, (0xfc5a:16)
+	ld	a, (PANEL_STYLE:16)
 	ld	d, (0xfc64:16)
 	and	d, 15
 	call	Rhythm_DispatchNote_Tramp
@@ -14709,9 +14709,9 @@ DisplayStr_ShowTempoLine:
 	call	DisplayStr_BlankLineBuffer
 	ld	xix, 3786
 	ld	xiy, Str_TempoEq
-	cp	(0xfc5a:16), 7
+	cp	(PANEL_STYLE:16), 7
 	jrl	nz, DisplayStr_ShowTempoLine_Skip
-	cp	(0xfc5b:16), 2
+	cp	(PANEL_STYLE+1:16), 2
 	jrl	nz, DisplayStr_ShowTempoLine_Skip
 	ld	xiy, DisplayStr_BytecodeBlock_C_Tbl
 DisplayStr_ShowTempoLine_Skip:
@@ -14738,9 +14738,9 @@ VoiceSlot_StatusRet_Helper2:
 	call	Display_UpdateRegion0
 	call	DisplayStr_BlankLineBuffer
 	ld	xiy, DisplayStr_TempoString
-	cp	(0xfc5a:16), 7
+	cp	(PANEL_STYLE:16), 7
 	jrl	nz, DisplayStr_BytecodeBlock_C_Skip2
-	cp	(0xfc5b:16), 2
+	cp	(PANEL_STYLE+1:16), 2
 	jrl	nz, DisplayStr_BytecodeBlock_C_Skip2
 	ld	xiy, DisplayStr_BytecodeBlock_C_Tbl2
 DisplayStr_BytecodeBlock_C_Skip2:
@@ -15141,9 +15141,9 @@ Display_BytecodeBlock_F_Tbl2_Helper2:
 ;   TempoRingBuf_OnTempoEvent stores the tempo in 0x0EF2.
 DisplayStr_WriteTempoValue:
 	ld	wa, (3826:16)
-	cp	(0xfc5a:16), 7
+	cp	(PANEL_STYLE:16), 7
 	jrl	nz, DisplayStr_WriteTempoValue_Skip9
-	cp	(0xfc5b:16), 2
+	cp	(PANEL_STYLE+1:16), 2
 	jrl	nz, DisplayStr_WriteTempoValue_Skip9
 	pushw	hl
 	sla	wa, 1
@@ -15163,9 +15163,9 @@ DisplayStr_WriteTempoValue_Skip9:
 VoiceSlot_StatusRet_Helper3:
 	ld	xiy, Display_BytecodeBlock_F_Tbl3
 	ld	xix, 3791
-	cp	(0xfc5a:16), 7
+	cp	(PANEL_STYLE:16), 7
 	jrl	nz, Display_BytecodeBlock_F_Skip10
-	cp	(0xfc5b:16), 2
+	cp	(PANEL_STYLE+1:16), 2
 	jrl	nz, Display_BytecodeBlock_F_Skip10
 	ld	xiy, Display_BytecodeBlock_F_Tbl4
 Display_BytecodeBlock_F_Skip10:
