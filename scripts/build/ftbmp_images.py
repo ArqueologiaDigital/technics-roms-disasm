@@ -34,18 +34,22 @@ forward, for the Makefile's FTBMP_BMPS rule). `build` refuses any header that is
 not self-consistent with the PNG (sizes, offsets), so an edited PNG of a different
 height cannot silently produce a malformed BMP.
 
-    python3 scripts/build/ftbmp_images.py export   # BMP -> png + json (run once)
+    python3 scripts/build/ftbmp_images.py export --force
+                                                   # BMP -> png + json (run once; without
+                                                   # --force it refuses to overwrite)
     python3 scripts/build/ftbmp_images.py build    # png + json -> BMP (build step)
     python3 scripts/build/ftbmp_images.py verify   # assert the round trip is exact
 
 `verify` rebuilds each BMP in memory and compares it with (1) the committed .BMP and
-(2) the bytes at its .incbin address in original_ROMs/kn5000_table_data.rom, using the
-offsets recorded in scripts/analysis/verbatim_bmp_header_audit.py.  Pass criterion:
+(2) the bytes at its .incbin address in original_ROMs/kn5000_table_data.rom. That
+address is not written down here: the .incbin's label is found in
+table_data/kn5000_table_data.s and its address in symbols/table_data_symbols_reference.txt.  Pass criterion:
 "ROUND TRIP EXACT" and exit 0.
 """
 import json
 import os
 import pathlib
+import re
 import struct
 import sys
 
@@ -55,19 +59,33 @@ REPO = pathlib.Path(__file__).resolve().parent.parent.parent
 IMAGES = REPO / 'table_data' / 'images'
 HEADERS = IMAGES / 'ftbmp_headers.json'
 ROM = REPO / 'original_ROMs' / 'kn5000_table_data.rom'
+SOURCE = REPO / 'table_data' / 'kn5000_table_data.s'
+SYMBOLS = REPO / 'symbols' / 'table_data_symbols_reference.txt'
 
 NAMES = [f'FTBMP0{i}' for i in range(1, 7)]
 
-# Offset of each .incbin inside the table_data ROM image (CPU address - 0x800000).
-# Same values as scripts/analysis/verbatim_bmp_header_audit.py's KNOWN table.
-ROM_OFFSET = {
-    'FTBMP01': 0x80418,
-    'FTBMP02': 0x9344e,
-    'FTBMP03': 0x9db04,
-    'FTBMP04': 0xa753a,
-    'FTBMP05': 0xb0f70,
-    'FTBMP06': 0xbafe6,
-}
+TABLE_DATA_BASE = 0x800000
+
+
+def rom_offsets():
+    """FTBMPnn -> offset of its .incbin inside the table_data ROM image.
+
+    Nothing is copied here: the label that carries each .incbin is read from the
+    assembly source, and that label's address from the symbol reference file, which
+    is regenerated from the linked ELF (scripts/analysis/l2_symbol_reference.py).
+    """
+    src = SOURCE.read_bytes()          # .s files hold raw high bytes: never read_text
+    label_of = {m.group(2).decode(): m.group(1).decode() for m in re.finditer(
+        rb'^(\w+):\s*\.incbin\s+"images/(FTBMP0\d)\.BMP"', src, re.M)}
+    assert sorted(label_of) == NAMES, f"{SOURCE}: expected one .incbin per {NAMES}, found {sorted(label_of)}"
+    addr = {}
+    for line in SYMBOLS.read_bytes().decode('ascii').splitlines():
+        parts = line.split()
+        if len(parts) == 2 and not line.startswith('#'):
+            addr[parts[0]] = int(parts[1], 16)
+    missing = [lab for lab in label_of.values() if lab not in addr]
+    assert not missing, f"{SYMBOLS}: no address for {missing}"
+    return {name: addr[lab] - TABLE_DATA_BASE for name, lab in label_of.items()}
 
 FILE_HDR = struct.Struct('<2sIHHI')          # BITMAPFILEHEADER, 14 B
 INFO_HDR = struct.Struct('<IiiHHIIiiII')      # BITMAPINFOHEADER, 40 B
@@ -129,7 +147,15 @@ def build_bmp(hdr, png_path):
     return fh + ih + pal + b''.join(reversed(rows))
 
 
-def export():
+def export(force=False):
+    """BMP -> png + json.  The PNGs and the JSON are the committed SOURCES once
+    exported, so this refuses to overwrite them unless --force is given: a stray
+    `export` after a PNG was edited would otherwise undo the edit from the cache."""
+    existing = [p for p in [HEADERS, *(IMAGES / f'{n}.png' for n in NAMES)] if p.exists()]
+    if existing and not force:
+        sys.exit("ftbmp_images export: refusing to overwrite the committed sources "
+                 + ", ".join(str(p.relative_to(REPO)) for p in existing)
+                 + "\n  (they are the build inputs; pass --force to regenerate them from the .BMP files)")
     headers = {}
     for name in NAMES:
         hdr, rgb, px = parse_bmp((IMAGES / f'{name}.BMP').read_bytes())
@@ -165,6 +191,7 @@ def build():
 
 def verify():
     rom = ROM.read_bytes() if ROM.exists() else None
+    offsets = rom_offsets()
     bad = 0
     for name, got in rebuilt().items():
         committed = (IMAGES / f'{name}.BMP').read_bytes()
@@ -172,9 +199,9 @@ def verify():
         if rom is None:
             ok_rom, rom_note = True, 'ROM absent, not compared'
         else:
-            off = ROM_OFFSET[name]
+            off = offsets[name]
             ok_rom = rom[off:off + len(got)] == got
-            rom_note = f"ROM 0x{0x800000 + off:06x}"
+            rom_note = f"ROM 0x{TABLE_DATA_BASE + off:06x}"
         if ok_file and ok_rom:
             print(f"  ok  {name}.BMP  {len(got):>7,} B  == committed, == {rom_note}")
         else:
@@ -186,4 +213,9 @@ def verify():
 
 
 if __name__ == '__main__':
-    {'export': export, 'build': build, 'verify': verify}[sys.argv[1] if len(sys.argv) > 1 else 'verify']()
+    args = sys.argv[1:]
+    cmd = args[0] if args else 'verify'
+    if cmd == 'export':
+        export(force='--force' in args[1:])
+    else:
+        {'build': build, 'verify': verify}[cmd]()
