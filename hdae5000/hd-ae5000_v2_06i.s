@@ -71,6 +71,20 @@
 	.equ HDAE5000_RAM_FdLyricHasMid, 0x230e4a	; 40 flags: <name>.MID opens (HDAE5000_FdLyricList_Scan)
 	.equ HDAE5000_RAM_FdLyricCount, 0x230e72	; entries in FdLyricNames, at most 40 (HDAE5000_FdLyricList_AddTlx)
 	.equ HDAE5000_RAM_FdVolumeLabel, 0x230e7a	; the floppy's volume label (HamaFn_GetVolumeLabel) + " ->" (HDAE5000_FdLyricList_Scan)
+	.equ HDAE5000_RAM_PportLinkActive, 0x239000	; 1 while the PC-link context exists (HDAE5000_PPORT_StartLink sets it; _ReturnToLink / _Reset clear it); HDAE5000_PPORT_ServicePending tests it
+	.equ HDAE5000_RAM_PportLinkSp, 0x239002	; the PC-link context's saved XSP (HDAE5000_PPORT_YieldToMain stores, HDAE5000_PPORT_SwitchToLink loads)
+	.equ HDAE5000_RAM_PportMainSp, 0x239006	; the main context's saved XSP (HDAE5000_PPORT_SwitchToLink stores, HDAE5000_PPORT_YieldToMain loads)
+	.equ HDAE5000_RAM_PportService, 0x23900a	; word: service number posted by HDAE5000_PPORT_CallService (its WA); the service's HL result after HDAE5000_PPORT_ServiceDispatch; 0xFFFF once the link has ended
+	.equ HDAE5000_RAM_PportServiceArgBc, 0x23900c	; XBC argument of the posted service (HDAE5000_PPORT_CallService)
+	.equ HDAE5000_RAM_PportServiceArgDe, 0x239010	; XDE argument of the posted service (HDAE5000_PPORT_CallService)
+	.equ HDAE5000_RAM_PportServiceRequested, 0x239014	; 1 while a posted service waits: HDAE5000_PPORT_CallService sets it before yielding and clears it on return; a yield with it clear means the link program ended
+	.equ HDAE5000_RAM_SPrintfCursor, 0x239482	; output pointer of HDAE5000_SPrintf / _VSPrintf; HDAE5000_SPrintf_PutChar stores a byte there, advances it and keeps the string terminated
+	.equ HDAE5000_RAM_PrintfPadChar, 0x239486	; word: the padding character of the conversion in progress, 32 (' ') or 48 ('0' after a 0 flag) (HDAE5000_DoPrintf; HDAE5000_FormatFloat pads with it)
+	.equ HDAE5000_RAM_PrintfFloatCount, 0x239488	; word: characters HDAE5000_FormatFloat has emitted; cleared at its start, added to HDAE5000_DoPrintf's count after it
+	.equ HDAE5000_RAM_FltDecDigits, 0x23948a	; 32-byte decimal digit string of HDAE5000_FltDec_Convert / _AddDigit
+	.equ HDAE5000_RAM_FltDecMantissa, 0x2394aa	; the binary mantissa as byte-wide u16 limbs (HDAE5000_FltDec_Convert)
+	.equ HDAE5000_RAM_FltDecFraction, 0x2394ea	; 10-limb fraction work area (HDAE5000_FltDec_FractionDigits / _FracMulBy10)
+	.equ HDAE5000_RAM_PportLinkStackTop, 0x23fffc	; top of the PC-link context's stack; HDAE5000_PPORT_StartLink plants HDAE5000_PPORT_LinkEntry there as its first return address
 
 ; ----------------------------------------------------------------------------
 ; The main CPU's function tables, as the HD-AE5000 reaches them: workspace

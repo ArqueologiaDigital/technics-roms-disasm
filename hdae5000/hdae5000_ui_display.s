@@ -16084,13 +16084,13 @@ HDAE5000_PPORT_ServicePending:	; 0x29501C
 	; posted (HDAE5000_PPORT_ServiceDispatch) and resume it
 	; (HDAE5000_PPORT_ReturnToLink).
 	; PPORT state machine entry - check active, load params, dispatch
-	cp (0x239000:24), 0x01; check if PPORT active (0x239000)
+	cp (HDAE5000_RAM_PportLinkActive:24), 0x01; check if PPORT active (0x239000)
 	jr nz, .Lpph_done
-	ld wa, (0x23900a:24); WA = cmd param (0x23900A)
+	ld wa, (HDAE5000_RAM_PportService:24); WA = cmd param (0x23900A)
 	nop
-	ld xbc, (0x23900c:24); XBC = data ptr (0x23900C)
+	ld xbc, (HDAE5000_RAM_PportServiceArgBc:24); XBC = data ptr (0x23900C)
 	nop
-	ld xde, (0x239010:24); XDE = size (0x239010)
+	ld xde, (HDAE5000_RAM_PportServiceArgDe:24); XDE = size (0x239010)
 	nop
 	call HDAE5000_PPORT_ServiceDispatch
 	call HDAE5000_PPORT_ReturnToLink
@@ -16111,9 +16111,9 @@ HDAE5000_PPORT_SwitchToLink:	; 0x295046
 	; and the `ret` resumes the link wherever it last yielded.
 	; Switch to PPORT stack context for status check
 	ei 0x06				; disable interrupts (level 6)
-	ld (0x239006:24), xsp; save current SP (0x239006)
+	ld (HDAE5000_RAM_PportMainSp:24), xsp; save current SP (0x239006)
 	nop
-	ld xsp, (0x239002:24); load PPORT SP (0x239002)
+	ld xsp, (HDAE5000_RAM_PportLinkSp:24); load PPORT SP (0x239002)
 	nop
 	ei 0x00				; re-enable interrupts
 	ret
@@ -16123,9 +16123,9 @@ HDAE5000_PPORT_YieldToMain:	; 0x295058 (116 bytes, 3 entry points)
 	; link -> main: the mirror image of HDAE5000_PPORT_SwitchToLink.
 	; Entry 1: Stack context switch (save/restore SP for PPORT workspace)
 	ei 0x06				; disable interrupts
-	ld (0x239002:24), xsp; save current SP to (0x239002)
+	ld (HDAE5000_RAM_PportLinkSp:24), xsp; save current SP to (0x239002)
 	nop
-	ld xsp, (0x239006:24); load the MAIN context's SP from (0x239006)
+	ld xsp, (HDAE5000_RAM_PportMainSp:24); load the MAIN context's SP from (0x239006)
 	nop
 	ei 0x00				; re-enable interrupts
 	ret
@@ -16138,26 +16138,26 @@ HDAE5000_PPORT_StartLink:	; 0x29506A
 	nop
 	push xwa
 	nop
-	cp (0x239000:24), 0x01; cp (0x239000), 1 — already initialized?
+	cp (HDAE5000_RAM_PportLinkActive:24), 0x01; cp (0x239000), 1 — already initialized?
 	jr z, .Lpi_exit		; if already init, just return
-	ld (0x239014:24), 0x00; clear abort flag (0x239014)
-	ld (0x239000:24), 0x01; set state = initialized (0x239000)
-	ld xhl, 0x0023FFFC	; stack top for PPORT workspace
+	ld (HDAE5000_RAM_PportServiceRequested:24), 0x00; clear abort flag (0x239014)
+	ld (HDAE5000_RAM_PportLinkActive:24), 0x01; set state = initialized (0x239000)
+	ld xhl, HDAE5000_RAM_PportLinkStackTop	; stack top for PPORT workspace
 	nop
-	ld (0x239002:24), xhl; store as PPORT SP (0x239002)
+	ld (HDAE5000_RAM_PportLinkSp:24), xhl; store as PPORT SP (0x239002)
 	nop
 	ld xwa, HDAE5000_PPORT_LinkEntry	; PPORT entry callback address
 	nop
 	ld (xhl), xwa		; store callback at stack top
 	ld a, 0x00:opc		; param = 0
 	call HDAE5000_PPORT_SwitchToLink	; switch to PPORT stack and call
-	cp (0x239014:24), 0x00; check abort flag (0x239014)
+	cp (HDAE5000_RAM_PportServiceRequested:24), 0x00; check abort flag (0x239014)
 	jr nz, .Lpi_exit	; if aborted, exit
 	ldw hl, 0xFFFF		; HL = -1 (error/timeout)
 	nop
-	ld (0x23900a:24), hl; store result (0x23900A)
+	ld (HDAE5000_RAM_PportService:24), hl; store result (0x23900A)
 	nop
-	ld (0x239000:24), 0x00; clear state = uninitialized
+	ld (HDAE5000_RAM_PportLinkActive:24), 0x00; clear state = uninitialized
 .Lpi_exit:
 	pop xwa
 	nop
@@ -16169,9 +16169,9 @@ HDAE5000_PPORT_Reset:		; 0x2950BA
 	; Entry 3: Reset PPORT state
 	ldw hl, 0xFFFF		; HL = -1
 	nop
-	ld (0x23900a:24), hl; store result (0x23900A)
+	ld (HDAE5000_RAM_PportService:24), hl; store result (0x23900A)
 	nop
-	ld (0x239000:24), 0x00; clear state = uninitialized
+	ld (HDAE5000_RAM_PportLinkActive:24), 0x00; clear state = uninitialized
 	ret
 	nop
 
@@ -16183,13 +16183,13 @@ HDAE5000_PPORT_ReturnToLink:	; 0x2950CC
 	push xhl
 	nop
 	call HDAE5000_PPORT_SwitchToLink	; switch stacks
-	cp (0x239014:24), 0x00; check command flag (0x239014)
+	cp (HDAE5000_RAM_PportServiceRequested:24), 0x00; check command flag (0x239014)
 	jr nz, .Lppd_done
 	ldw hl, 0xFFFF			; no command: mark result = -1
 	nop
-	ld (0x23900a:24), hl; store result (0x23900A)
+	ld (HDAE5000_RAM_PportService:24), hl; store result (0x23900A)
 	nop
-	ld (0x239000:24), 0x00; clear PPORT active flag (0x239000)
+	ld (HDAE5000_RAM_PportLinkActive:24), 0x00; clear PPORT active flag (0x239000)
 .Lppd_done:
 	pop xhl
 	nop
@@ -16199,7 +16199,7 @@ HDAE5000_PPORT_ReturnToLink:	; 0x2950CC
 HDAE5000_PPORT_GetResult:
 	; no caller in this ROM (searched: symbolic references and the literal
 	; 0x2950EE).
-	ld hl, (0x23900a:24); HL = command result (0x23900A)
+	ld hl, (HDAE5000_RAM_PportService:24); HL = command result (0x23900A)
 	nop
 	exts xhl			; sign-extend to 32-bit
 	ret
@@ -16215,15 +16215,15 @@ HDAE5000_PPORT_CallService:	; 0x2950F8
 	; PP_STATUS text of HDAE5000_PPORT_Svc26_ShowStatus, ...).
 	; Display string on screen via PPORT protocol
 	; Input: WA = position, XBC = string ptr, XDE = format params
-	ld (0x23900a:24), wa; store position (0x23900A)
+	ld (HDAE5000_RAM_PportService:24), wa; store position (0x23900A)
 	nop
-	ld (0x23900c:24), xbc; store string ptr (0x23900C)
+	ld (HDAE5000_RAM_PportServiceArgBc:24), xbc; store string ptr (0x23900C)
 	nop
-	ld (0x239010:24), xde; store format (0x239010)
+	ld (HDAE5000_RAM_PportServiceArgDe:24), xde; store format (0x239010)
 	nop
-	ld (0x239014:24), 0x01; set command flag (0x239014)
+	ld (HDAE5000_RAM_PportServiceRequested:24), 0x01; set command flag (0x239014)
 	call HDAE5000_PPORT_YieldToMain	; initialize PPORT transfer
-	ld (0x239014:24), 0x00; clear command flag
+	ld (HDAE5000_RAM_PportServiceRequested:24), 0x00; clear command flag
 	ret
 	nop
 
@@ -23523,7 +23523,7 @@ HDAE5000_DoPrintf_Skip:
 	ldw (xsp + 0x08), 0
 	ldw (xsp + 0x0a), 0
 	ldw (xsp + 0x06), 0
-	ldw	(0x239486:24), 32
+	ldw	(HDAE5000_RAM_PrintfPadChar:24), 32
 HDAE5000_DoPrintf_Loop2:
 	ld xwa, (xsp + 0x52)
 	ld c, (xwa+)
@@ -23575,7 +23575,7 @@ HDAE5000_DoPrintf_Skip5:
 	setm	1, (xsp+6)
 	jr	t, HDAE5000_DoPrintf_Loop2
 HDAE5000_DoPrintf_Skip6:
-	ldw	(0x239486:24), 48
+	ldw	(HDAE5000_RAM_PrintfPadChar:24), 48
 	jrl	t, HDAE5000_DoPrintf_Loop2
 HDAE5000_DoPrintf_Loop3:
 	ld	bc, iz
@@ -23696,7 +23696,7 @@ HDAE5000_DoPrintf_Case_Char:
 	jr	t, HDAE5000_DoPrintf_Case_Char_Join
 HDAE5000_DoPrintf_Case_Char_Loop:
 	incw	1, (xsp+4)
-	pushw	(0x239486:24)
+	pushw	(HDAE5000_RAM_PrintfPadChar:24)
 	ld xwa, (xsp + 0x5c)
 	call	(xwa)
 	inc 2, xsp
@@ -23771,7 +23771,7 @@ HDAE5000_DoPrintf_Case_String_Join3:
 	jr	z, HDAE5000_DoPrintf_Case_String_Next
 	jr	t, HDAE5000_DoPrintf_Case_String_Next2
 HDAE5000_DoPrintf_Case_String_Loop:
-	pushw	(0x239486:24)
+	pushw	(HDAE5000_RAM_PrintfPadChar:24)
 	ld xwa, (xsp + 0x5c)
 	call	(xwa)
 	inc 2, xsp
@@ -23893,7 +23893,7 @@ HDAE5000_DoPrintf_Case_Int_Join6:
 	ld	wa, (xsp+6)
 	bit	0x01, wa
 	jr	nz, HDAE5000_DoPrintf_Case_Int_Join7
-	cpw	(0x239486:24), 32
+	cpw	(HDAE5000_RAM_PrintfPadChar:24), 32
 	jr	z, HDAE5000_DoPrintf_Case_Int_Next
 	bit	0x04, wa
 	jr	nz, HDAE5000_DoPrintf_Case_Int_Next
@@ -23934,7 +23934,7 @@ HDAE5000_DoPrintf_Case_Int_Join9:
 	ld	wa, (xsp+6)
 	bit	0x01, wa
 	jr	nz, HDAE5000_DoPrintf_Case_Int_Next3
-	cpw	(0x239486:24), 48
+	cpw	(HDAE5000_RAM_PrintfPadChar:24), 48
 	jr	z, HDAE5000_DoPrintf_Case_Int_Next2
 	jr	t, HDAE5000_DoPrintf_Case_Int_Next3
 HDAE5000_DoPrintf_Case_Int_Loop2:
@@ -24052,7 +24052,7 @@ HDAE5000_DoPrintf_Case_Unsigned_Join5:
 	jr	z, HDAE5000_DoPrintf_Case_Unsigned_Next
 	jr	t, HDAE5000_DoPrintf_Case_Unsigned_Next2
 HDAE5000_DoPrintf_Case_Unsigned_Loop:
-	pushw	(0x239486:24)
+	pushw	(HDAE5000_RAM_PrintfPadChar:24)
 	ld xwa, (xsp + 0x5c)
 	call	(xwa)
 	inc 2, xsp
@@ -24176,7 +24176,7 @@ HDAE5000_DoPrintf_Case_Hex_Join6:
 	ld	wa, (xsp+6)
 	bit	0x01, wa
 	jr	nz, HDAE5000_DoPrintf_Case_Hex_Join7
-	cpw	(0x239486:24), 32
+	cpw	(HDAE5000_RAM_PrintfPadChar:24), 32
 	jr	z, HDAE5000_DoPrintf_Case_Hex_Next
 	jr	t, HDAE5000_DoPrintf_Case_Hex_Join7
 HDAE5000_DoPrintf_Case_Hex_Loop:
@@ -24205,7 +24205,7 @@ HDAE5000_DoPrintf_Case_Hex_Join8:
 	ld	wa, (xsp+6)
 	bit	0x01, wa
 	jr	nz, HDAE5000_DoPrintf_Case_Hex_Next3
-	cpw	(0x239486:24), 48
+	cpw	(HDAE5000_RAM_PrintfPadChar:24), 48
 	jr	z, HDAE5000_DoPrintf_Case_Hex_Next2
 	jr	t, HDAE5000_DoPrintf_Case_Hex_Next3
 HDAE5000_DoPrintf_Case_Hex_Loop2:
@@ -24328,7 +24328,7 @@ HDAE5000_DoPrintf_Case_Octal_Join5:
 	ld	wa, (xsp+6)
 	bit	0x01, wa
 	jr	nz, HDAE5000_DoPrintf_Case_Octal_Join6
-	cpw	(0x239486:24), 32
+	cpw	(HDAE5000_RAM_PrintfPadChar:24), 32
 	jr	z, HDAE5000_DoPrintf_Case_Octal_Next
 	jr	t, HDAE5000_DoPrintf_Case_Octal_Join6
 HDAE5000_DoPrintf_Case_Octal_Loop:
@@ -24354,7 +24354,7 @@ HDAE5000_DoPrintf_Case_Octal_Join7:
 	ld	wa, (xsp+6)
 	bit	0x01, wa
 	jr	nz, HDAE5000_DoPrintf_Case_Octal_Next3
-	cpw	(0x239486:24), 48
+	cpw	(HDAE5000_RAM_PrintfPadChar:24), 48
 	jr	z, HDAE5000_DoPrintf_Case_Octal_Next2
 	jr	t, HDAE5000_DoPrintf_Case_Octal_Next3
 HDAE5000_DoPrintf_Case_Octal_Loop2:
@@ -24457,7 +24457,7 @@ HDAE5000_DoPrintf_Case_Float_Join:
 	pushw wa                                ; push WA
 	calr	HDAE5000_FormatFloat
 	lda	xsp, (xsp+16)
-	ld	wa, (0x239488:24)
+	ld	wa, (HDAE5000_RAM_PrintfFloatCount:24)
 	add	(xsp+4), wa
 HDAE5000_DoPrintf_NextChar:
 	ld xwa, (xsp + 0x52)
@@ -24600,7 +24600,7 @@ HDAE5000_FormatFloat:	; 0x29A4B6 (173 bytes)
 	push xwa			; push value
 	call HDAE5000_FltDec_Convert			; call 0x29B07A (setup utility)
 	lda xsp, (xsp + 0x12)		; deallocate 18 bytes of args
-	ldw (0x239488:24), 0x0000; [0x239488] = 0 (clear format state)
+	ldw (HDAE5000_RAM_PrintfFloatCount:24), 0x0000; [0x239488] = 0 (clear format state)
 	lda xde, (xsp + 8)		; XDE = &local[4]
 	ld xiy, xde			; XIY = format output ptr
 	ld c, (xsp + 0x22)		; C = format specifier char
@@ -24809,7 +24809,7 @@ HDAE5000_FormatFloat_Fixed_Join16:
 	ld	wa, (xsp+16)
 	bit	0x01, wa
 	jr	nz, HDAE5000_FormatFloat_Fixed_Join17
-	cpw	(0x239486:24), 32
+	cpw	(HDAE5000_RAM_PrintfPadChar:24), 32
 	jr	z, HDAE5000_FormatFloat_Fixed_Next3
 	jr	t, HDAE5000_FormatFloat_Fixed_Join17
 HDAE5000_FormatFloat_Fixed_Loop3:
@@ -24817,7 +24817,7 @@ HDAE5000_FormatFloat_Fixed_Loop3:
 	ld xwa, (xsp + 0x0e)
 	call	(xwa)
 	inc 2, xsp
-	incw	1, (0x239488:24)
+	incw	1, (HDAE5000_RAM_PrintfFloatCount:24)
 HDAE5000_FormatFloat_Fixed_Next3:
 	ld	wa, (xsp+18)
 	decm	1, (xsp+18)
@@ -24843,12 +24843,12 @@ HDAE5000_FormatFloat_Fixed_Join18:
 	ld xwa, (xsp + 0x0e)
 	call	(xwa)
 	inc 2, xsp
-	incw	1, (0x239488:24)
+	incw	1, (HDAE5000_RAM_PrintfFloatCount:24)
 HDAE5000_FormatFloat_Fixed_Join19:
 	ld	wa, (xsp+16)
 	bit	0x01, wa
 	jr	nz, HDAE5000_FormatFloat_Fixed_Join20
-	cpw	(0x239486:24), 48
+	cpw	(HDAE5000_RAM_PrintfPadChar:24), 48
 	jr	z, HDAE5000_FormatFloat_Fixed_Next4
 	jr	t, HDAE5000_FormatFloat_Fixed_Join20
 HDAE5000_FormatFloat_Fixed_Loop4:
@@ -24856,7 +24856,7 @@ HDAE5000_FormatFloat_Fixed_Loop4:
 	ld xwa, (xsp + 0x0e)
 	call	(xwa)
 	inc 2, xsp
-	incw	1, (0x239488:24)
+	incw	1, (HDAE5000_RAM_PrintfFloatCount:24)
 HDAE5000_FormatFloat_Fixed_Next4:
 	ld	wa, (xsp+18)
 	decm	1, (xsp+18)
@@ -24883,7 +24883,7 @@ HDAE5000_FormatFloat_Fixed_Skip7:
 	call	(xwa)
 	inc 2, xsp
 HDAE5000_FormatFloat_Fixed_Join21:
-	incw	1, (0x239488:24)
+	incw	1, (HDAE5000_RAM_PrintfFloatCount:24)
 HDAE5000_FormatFloat_Fixed_Join22:
 	ld	iz, 0:i3
 	jr	t, HDAE5000_FormatFloat_Fixed_Next5
@@ -24895,7 +24895,7 @@ HDAE5000_FormatFloat_Fixed_Loop5:
 	ld xwa, (xsp + 0x0e)
 	call	(xwa)
 	inc 2, xsp
-	incw	1, (0x239488:24)
+	incw	1, (HDAE5000_RAM_PrintfFloatCount:24)
 	inc	1, iz
 HDAE5000_FormatFloat_Fixed_Next5:
 	ld	wa, (xsp+4)
@@ -24912,7 +24912,7 @@ HDAE5000_FormatFloat_Fixed_Loop6:
 	ld xwa, (xsp + 0x0e)
 	call	(xwa)
 	inc 2, xsp
-	incw	1, (0x239488:24)
+	incw	1, (HDAE5000_RAM_PrintfFloatCount:24)
 HDAE5000_FormatFloat_Fixed_Next6:
 	ld	wa, (xsp+2)
 	decm	1, (xsp+2)
@@ -24928,7 +24928,7 @@ HDAE5000_FormatFloat_Fixed_Join23:
 	ld xwa, (xsp + 0x0e)
 	call	(xwa)
 	inc 2, xsp
-	incw	1, (0x239488:24)
+	incw	1, (HDAE5000_RAM_PrintfFloatCount:24)
 	jr	t, HDAE5000_FormatFloat_Fixed_Next7
 HDAE5000_FormatFloat_Fixed_Loop7:
 	ld	wa, (xsp+26)
@@ -24950,7 +24950,7 @@ HDAE5000_FormatFloat_Fixed_Skip8:
 	call	(xwa)
 	inc 2, xsp
 HDAE5000_FormatFloat_Fixed_Join24:
-	incw	1, (0x239488:24)
+	incw	1, (HDAE5000_RAM_PrintfFloatCount:24)
 	incw	1, (xsp+26)
 HDAE5000_FormatFloat_Fixed_Next7:
 	cpw	(xsp+26), 0x0000
@@ -24973,7 +24973,7 @@ HDAE5000_FormatFloat_Fixed_Loop8:
 	ld xwa, (xsp + 0x0e)
 	call	(xwa)
 	inc 2, xsp
-	incw	1, (0x239488:24)
+	incw	1, (HDAE5000_RAM_PrintfFloatCount:24)
 	inc	1, iz
 HDAE5000_FormatFloat_Fixed_Next8:
 	ld	wa, (xsp+4)
@@ -24990,7 +24990,7 @@ HDAE5000_FormatFloat_Fixed_Loop9:
 	ld xwa, (xsp + 0x0e)
 	call	(xwa)
 	inc 2, xsp
-	incw	1, (0x239488:24)
+	incw	1, (HDAE5000_RAM_PrintfFloatCount:24)
 HDAE5000_FormatFloat_Fixed_Next9:
 	ld	wa, (xsp+20)
 	decm	1, (xsp+20)
@@ -25005,7 +25005,7 @@ HDAE5000_FormatFloat_Fixed_Loop10:
 	ld xwa, (xsp + 0x0e)
 	call	(xwa)
 	inc 2, xsp
-	incw	1, (0x239488:24)
+	incw	1, (HDAE5000_RAM_PrintfFloatCount:24)
 HDAE5000_FormatFloat_Fixed_Next10:
 	ld	wa, (xsp+18)
 	decm	1, (xsp+18)
@@ -25148,7 +25148,7 @@ HDAE5000_FormatFloat_Exp_Join12:
 	ld	wa, (xsp+16)
 	bit	0x01, wa
 	jr	nz, HDAE5000_FormatFloat_Exp_Join13
-	cpw	(0x239486:24), 32
+	cpw	(HDAE5000_RAM_PrintfPadChar:24), 32
 	jr	z, HDAE5000_FormatFloat_Exp_Next3
 	jr	t, HDAE5000_FormatFloat_Exp_Join13
 HDAE5000_FormatFloat_Exp_Loop3:
@@ -25156,7 +25156,7 @@ HDAE5000_FormatFloat_Exp_Loop3:
 	ld xwa, (xsp + 0x0e)
 	call	(xwa)
 	inc 2, xsp
-	incw	1, (0x239488:24)
+	incw	1, (HDAE5000_RAM_PrintfFloatCount:24)
 HDAE5000_FormatFloat_Exp_Next3:
 	decm	1, (xsp+18)
 	cpw	(xsp+18), 0x0000
@@ -25181,12 +25181,12 @@ HDAE5000_FormatFloat_Exp_Join14:
 	ld xwa, (xsp + 0x0e)
 	call	(xwa)
 	inc 2, xsp
-	incw	1, (0x239488:24)
+	incw	1, (HDAE5000_RAM_PrintfFloatCount:24)
 HDAE5000_FormatFloat_Exp_Join15:
 	ld	wa, (xsp+16)
 	bit	0x01, wa
 	jr	nz, HDAE5000_FormatFloat_Exp_Join16
-	cpw	(0x239486:24), 48
+	cpw	(HDAE5000_RAM_PrintfPadChar:24), 48
 	jr	z, HDAE5000_FormatFloat_Exp_Next4
 	jr	t, HDAE5000_FormatFloat_Exp_Join16
 HDAE5000_FormatFloat_Exp_Loop4:
@@ -25194,7 +25194,7 @@ HDAE5000_FormatFloat_Exp_Loop4:
 	ld xwa, (xsp + 0x0e)
 	call	(xwa)
 	inc 2, xsp
-	incw	1, (0x239488:24)
+	incw	1, (HDAE5000_RAM_PrintfFloatCount:24)
 HDAE5000_FormatFloat_Exp_Next4:
 	decm	1, (xsp+18)
 	cpw	(xsp+18), 0x0000
@@ -25210,7 +25210,7 @@ HDAE5000_FormatFloat_Exp_Join16:
 	ld xwa, (xsp + 0x16)
 	ld	(xwa), 0x30
 	ld	qiz, 0
-	incw	1, (0x239488:24)
+	incw	1, (HDAE5000_RAM_PrintfFloatCount:24)
 	cpw	(xsp+26), 0x0000
 	jr	ge, HDAE5000_FormatFloat_Exp_Skip5
 	incw	1, (xsp+26)
@@ -25226,7 +25226,7 @@ HDAE5000_FormatFloat_Exp_Skip6:
 	ld xwa, (xsp + 0x0e)
 	call	(xwa)
 	inc 2, xsp
-	incw	1, (0x239488:24)
+	incw	1, (HDAE5000_RAM_PrintfFloatCount:24)
 	ld	qiz, 1
 HDAE5000_FormatFloat_Exp_Join17:
 	cpw	(xsp+20), 0x0000
@@ -25239,7 +25239,7 @@ HDAE5000_FormatFloat_Exp_Join18:
 	ld xwa, (xsp + 0x0e)
 	call	(xwa)
 	inc 2, xsp
-	incw	1, (0x239488:24)
+	incw	1, (HDAE5000_RAM_PrintfFloatCount:24)
 HDAE5000_FormatFloat_Exp_Join19:
 	ld	c, (xsp+10)
 	extz bc
@@ -25273,7 +25273,7 @@ HDAE5000_FormatFloat_Exp_Loop5:
 	ld xwa, (xsp + 0x0e)
 	call	(xwa)
 	inc 2, xsp
-	incw	1, (0x239488:24)
+	incw	1, (HDAE5000_RAM_PrintfFloatCount:24)
 	inc	1, qiz
 HDAE5000_FormatFloat_Exp_Next5:
 	ld	bc, (xsp+4)
@@ -25291,7 +25291,7 @@ HDAE5000_FormatFloat_Exp_Loop6:
 	ld xwa, (xsp + 0x0e)
 	call	(xwa)
 	inc 2, xsp
-	incw	1, (0x239488:24)
+	incw	1, (HDAE5000_RAM_PrintfFloatCount:24)
 HDAE5000_FormatFloat_Exp_Next6:
 	ld	wa, (xsp+20)
 	decm	1, (xsp+20)
@@ -25333,7 +25333,7 @@ HDAE5000_FormatFloat_Exp_Join23:
 	ld xwa, (xsp + 0x0e)
 	call	(xwa)
 	inc 2, xsp
-	incw	1, (0x239488:24)
+	incw	1, (HDAE5000_RAM_PrintfFloatCount:24)
 	cpw	(xsp+26), 0x0000
 	jr	ge, HDAE5000_FormatFloat_Exp_Skip10
 	pushw 0x002d
@@ -25344,7 +25344,7 @@ HDAE5000_FormatFloat_Exp_Join24:
 	ld xwa, (xsp + 0x0e)
 	call	(xwa)
 	inc 2, xsp
-	incw	1, (0x239488:24)
+	incw	1, (HDAE5000_RAM_PrintfFloatCount:24)
 	ld	qiz, iz
 	jr	t, HDAE5000_FormatFloat_Exp_Next7
 HDAE5000_FormatFloat_Exp_Loop7:
@@ -25352,7 +25352,7 @@ HDAE5000_FormatFloat_Exp_Loop7:
 	ld xwa, (xsp + 0x0e)
 	call	(xwa)
 	inc 2, xsp
-	incw	1, (0x239488:24)
+	incw	1, (HDAE5000_RAM_PrintfFloatCount:24)
 HDAE5000_FormatFloat_Exp_Next7:
 	ld	wa, qiz
 	inc	1, qiz
@@ -25368,7 +25368,7 @@ HDAE5000_FormatFloat_Exp_Loop8:
 	ld xwa, (xsp + 0x0e)
 	call	(xwa)
 	inc 2, xsp
-	incw	1, (0x239488:24)
+	incw	1, (HDAE5000_RAM_PrintfFloatCount:24)
 HDAE5000_FormatFloat_Exp_Next8:
 	cp	iz, 0:i3
 	jr	nz, HDAE5000_FormatFloat_Exp_Loop8
@@ -25381,7 +25381,7 @@ HDAE5000_FormatFloat_Exp_Loop9:
 	ld xwa, (xsp + 0x0e)
 	call	(xwa)
 	inc 2, xsp
-	incw	1, (0x239488:24)
+	incw	1, (HDAE5000_RAM_PrintfFloatCount:24)
 HDAE5000_FormatFloat_Exp_Next9:
 	decm	1, (xsp+18)
 	cpw	(xsp+18), 0x0000
@@ -25405,7 +25405,7 @@ HDAE5000_SPrintf:	; 0x29ABD8 (237 bytes)
 	; Stack: [+0x08] = buffer ptr, [+0x10] = params, [+0x14] = format data
 	dec 4, xsp			; allocate 4 bytes
 	ld xwa, (xsp + 8)		; XWA = buffer ptr
-	ld (0x239482:24), xwa; [0x239482] = buffer ptr
+	ld (HDAE5000_RAM_SPrintfCursor:24), xwa; [0x239482] = buffer ptr
 	ld (xwa), 0x00		; null-terminate buffer
 	lda xwa, (xsp + 0x10)		; XWA = &param area
 	ld (xsp), xwa			; save to local
@@ -25426,7 +25426,7 @@ HDAE5000_SPrintf:	; 0x29ABD8 (237 bytes)
 	; the literal 0x29AC00 in every hdae5000 source).
 HDAE5000_VSPrintf:
 	ld xwa, (xsp + 4)		; XWA = buffer ptr
-	ld (0x239482:24), xwa; [0x239482] = buffer ptr
+	ld (HDAE5000_RAM_SPrintfCursor:24), xwa; [0x239482] = buffer ptr
 	ld (xwa), 0x00		; null-terminate buffer
 	pushw HDAE5000_SPrintf_PutChar@hi16			; push callback addr high word
 	pushw HDAE5000_SPrintf_PutChar@lo16			; push callback addr low
@@ -25441,12 +25441,12 @@ HDAE5000_VSPrintf:
 	; --- Sub 3: Byte-write callback (called by HDAE5000_DoPrintf) ---
 	; Appends one byte to buffer at [0x239482], advances pointer, null-terminates.
 HDAE5000_SPrintf_PutChar:				; 0x29AC21
-	ld xbc, (0x239482:24); XBC = [0x239482] (current buffer ptr)
+	ld xbc, (HDAE5000_RAM_SPrintfCursor:24); XBC = [0x239482] (current buffer ptr)
 	ld xwa, 1:i3			; XWA = 1
-	add (0x239482:24), xwa                ; [0x239482]++ (advance ptr)
+	add (HDAE5000_RAM_SPrintfCursor:24), xwa                ; [0x239482]++ (advance ptr)
 	ld wa, (xsp + 4)		; WA = character to write
 	ld (xbc), a			; store character at buffer
-	ld xwa, (0x239482:24); XWA = new buffer ptr
+	ld xwa, (HDAE5000_RAM_SPrintfCursor:24); XWA = new buffer ptr
 	ld (xwa), 0x00		; null-terminate
 	ret
 	;

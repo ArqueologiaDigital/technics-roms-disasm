@@ -252,8 +252,8 @@ HDAE5000_FltDec_Convert:
 HDAE5000_FltDec_Convert_Loop:
 	ld	bc, qiz
 	add	bc, bc
-	lda xde, (0x2394ea:24)
-	lda xwa, (0x2394aa:24)
+	lda xde, (HDAE5000_RAM_FltDecFraction:24)
+	lda xwa, (HDAE5000_RAM_FltDecMantissa:24)
 	ldw	(xwa+bc), 0x0000	; ld (XWA+BC),0x0000
 	ldw	(xde+bc), 0x0000	; ld (XDE+BC),0x0000
 	inc	1, qiz
@@ -377,7 +377,7 @@ HDAE5000_FltDec_Convert_Loop5:
 	ld	hl, qiz
 	add	hl, hl
 	dec	2, hl
-	lda xde, (0x2394aa:24)
+	lda xde, (HDAE5000_RAM_FltDecMantissa:24)
 	extz wa
 	ld	(xde+hl), wa
 	inc	1, qiz
@@ -432,7 +432,7 @@ HDAE5000_FltDec_Convert_Loop7:
 HDAE5000_FltDec_Convert_Next2:
 	ld	de, (xsp+4)
 	neg	de
-	lda xbc, (0x2394aa:24)
+	lda xbc, (HDAE5000_RAM_FltDecMantissa:24)
 	ld	wa, qiz
 	cp	wa, de
 	jr	lt, HDAE5000_FltDec_Convert_Loop7
@@ -449,7 +449,7 @@ HDAE5000_FltDec_Convert_Loop8:
 	push	qiz
 	ld	bc, qiz
 	add	bc, bc
-	lda xwa, (0x2394aa:24)
+	lda xwa, (HDAE5000_RAM_FltDecMantissa:24)
 	pushw	(xwa+bc)
 	calr	HDAE5000_FltDec_FractionDigits
 	inc 4, xsp
@@ -457,7 +457,7 @@ HDAE5000_FltDec_Convert_Loop8:
 	cpw	qiz, 0x0009
 	jr	lt, HDAE5000_FltDec_Convert_Loop8
 	ld	de, 0:i3
-	lda xbc, (0x2394aa:24)
+	lda xbc, (HDAE5000_RAM_FltDecMantissa:24)
 	ld xhl, (xsp + 0x1c)
 	ld	wa, (xbc)
 	cp	wa, 0x0009
@@ -481,7 +481,7 @@ HDAE5000_FltDec_Convert_Join14:
 HDAE5000_FltDec_Convert_Loop9:
 	ld	bc, de
 	inc	1, de
-	lda xwa, (0x23948a:24)
+	lda xwa, (HDAE5000_RAM_FltDecDigits:24)
 	ld	a, (xwa+qiz)
 	ld	(xhl+bc), a
 	inc	1, qiz
@@ -641,7 +641,7 @@ HDAE5000_FltDec_FractionDigits:
 	; zero the 0x2394EA work area, then repeatedly x10 (FracMulBy10) and
 	; add the integer part as the next decimal digit (AddDigit)
 	pushw iz                                ; push IZ
-	lda xde, (0x2394ea:24)
+	lda xde, (HDAE5000_RAM_FltDecFraction:24)
 	ld	xwa, xde
 	lda	xbc, (xde+18)
 HDAE5000_FltDec_FractionDigits_Loop:
@@ -652,7 +652,7 @@ HDAE5000_FltDec_FractionDigits_Loop:
 	ld (xde + 0x10), wa
 	ld	iz, 0:i3
 HDAE5000_FltDec_FractionDigits_Loop2:
-	lda xwa, (0x2394ea:24)
+	lda xwa, (HDAE5000_RAM_FltDecFraction:24)
 	cpw	(xwa), 0x0000
 	jr	nz, HDAE5000_FltDec_FractionDigits_Next
 	cpw	(xwa+2), 0x0000
@@ -679,7 +679,7 @@ HDAE5000_FltDec_FractionDigits_Next:
 	ldw	wa, 0x0008
 	sub	wa, (xsp+8)
 	add	wa, wa
-	lda xbc, (0x2394ea:24)
+	lda xbc, (HDAE5000_RAM_FltDecFraction:24)
 	ld	wa, (xbc+wa)
 	cp	wa, 0:i3
 	jr	z, HDAE5000_FltDec_FractionDigits_Loop3
@@ -690,7 +690,7 @@ HDAE5000_FltDec_FractionDigits_Next:
 	ldw	bc, 0x0008
 	sub	bc, (xsp+8)
 	add	bc, bc
-	lda xwa, (0x2394ea:24)
+	lda xwa, (HDAE5000_RAM_FltDecFraction:24)
 	ldw	(xwa+bc), 0x0000	; ld (XWA+BC),0x0000
 	cp	iz, 0x0020
 	jrl	le, HDAE5000_FltDec_FractionDigits_Loop2
@@ -704,7 +704,7 @@ HDAE5000_FltDec_AddDigit:
 	ld	de, (xsp+6)
 	cp	de, 0x0020
 	jr	ge, HDAE5000_FltDec_AddDigit_Join
-	lda xbc, (0x23948a:24)
+	lda xbc, (HDAE5000_RAM_FltDecDigits:24)
 	ld	wa, (xsp+4)
 	add	(xbc+de), a
 HDAE5000_FltDec_AddDigit_Join:
@@ -714,7 +714,7 @@ HDAE5000_FltDec_AddDigit_Loop:
 HDAE5000_FltDec_AddDigit_Next:
 	cp	de, 0x0020
 	jr	ge, HDAE5000_FltDec_AddDigit_Loop
-	lda xwa, (0x23948a:24)
+	lda xwa, (HDAE5000_RAM_FltDecDigits:24)
 	jr	t, HDAE5000_FltDec_AddDigit_Next2
 HDAE5000_FltDec_AddDigit_Loop2:
 	ld	bc, de
@@ -804,7 +804,7 @@ HDAE5000_FltDec_MulBy10_Join:
 
 HDAE5000_FltDec_FracMulBy10:
 	; multiply the 0x2394EA work area (10 limbs) by 10 and normalise carries
-	lda xhl, (0x2394ea:24)
+	lda xhl, (HDAE5000_RAM_FltDecFraction:24)
 	ld	xbc, xhl
 	lda	xde, (xhl+20)
 HDAE5000_FltDec_FracMulBy10_Loop:

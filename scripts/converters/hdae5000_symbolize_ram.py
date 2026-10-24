@@ -117,6 +117,33 @@ RAM = {
                                 " (HDAE5000_FdLyricList_Scan)"),
     0x23A19E: ("LyricBoxObj", "the open lyric box's object id, 0xFFFFFFFF when closed"
                               " (HDAE5000_LyricBoxProc); redraw events go to it"),
+    # fifth run (2026-10-24): the PC-link coroutine's mailbox (layout block above
+    # HDAE5000_PPORT_ServicePending) and the printf engine's state
+    0x239000: ("PportLinkActive", "1 while the PC-link context exists (HDAE5000_PPORT_StartLink sets it;"
+                                  " _ReturnToLink / _Reset clear it); HDAE5000_PPORT_ServicePending tests it"),
+    0x239002: ("PportLinkSp", "the PC-link context's saved XSP (HDAE5000_PPORT_YieldToMain stores,"
+                              " HDAE5000_PPORT_SwitchToLink loads)"),
+    0x239006: ("PportMainSp", "the main context's saved XSP (HDAE5000_PPORT_SwitchToLink stores,"
+                              " HDAE5000_PPORT_YieldToMain loads)"),
+    0x23900A: ("PportService", "word: service number posted by HDAE5000_PPORT_CallService (its WA); the"
+                               " service's HL result after HDAE5000_PPORT_ServiceDispatch; 0xFFFF once the"
+                               " link has ended"),
+    0x23900C: ("PportServiceArgBc", "XBC argument of the posted service (HDAE5000_PPORT_CallService)"),
+    0x239010: ("PportServiceArgDe", "XDE argument of the posted service (HDAE5000_PPORT_CallService)"),
+    0x239014: ("PportServiceRequested", "1 while a posted service waits: HDAE5000_PPORT_CallService sets it"
+                                        " before yielding and clears it on return; a yield with it clear"
+                                        " means the link program ended"),
+    0x23FFFC: ("PportLinkStackTop", "top of the PC-link context's stack; HDAE5000_PPORT_StartLink plants"
+                                    " HDAE5000_PPORT_LinkEntry there as its first return address"),
+    0x239482: ("SPrintfCursor", "output pointer of HDAE5000_SPrintf / _VSPrintf; HDAE5000_SPrintf_PutChar"
+                                " stores a byte there, advances it and keeps the string terminated"),
+    0x239486: ("PrintfPadChar", "word: the padding character of the conversion in progress, 32 (' ') or"
+                                " 48 ('0' after a 0 flag) (HDAE5000_DoPrintf; HDAE5000_FormatFloat pads with it)"),
+    0x239488: ("PrintfFloatCount", "word: characters HDAE5000_FormatFloat has emitted; cleared at its start,"
+                                   " added to HDAE5000_DoPrintf's count after it"),
+    0x23948A: ("FltDecDigits", "32-byte decimal digit string of HDAE5000_FltDec_Convert / _AddDigit"),
+    0x2394AA: ("FltDecMantissa", "the binary mantissa as byte-wide u16 limbs (HDAE5000_FltDec_Convert)"),
+    0x2394EA: ("FltDecFraction", "10-limb fraction work area (HDAE5000_FltDec_FractionDigits / _FracMulBy10)"),
 }
 FILE_MAIN = "hd-ae5000_v2_06i.s"
 NUM = re.compile(r"(?<![\w.$+\-])(0x[0-9a-fA-F]+|\d{6,})(?![\w.$])")
