@@ -72,7 +72,8 @@ from its own (never published) repository, `kn7000_disassembly`, which is now de
 `kn7000/notes/migration-commit-map.txt` maps the old commit hashes to the new ones.
 
     make kn7000        the KN7000's program + table (941/84) and IC19 picture images
-    make gate-kn7000   their byte-identity gates, plus the SP7001 set (942/83)
+    make gate-kn7000   their byte-identity gates, plus the SP7001 set (942/83), the seven
+                       Style Convert Disk converters, table build 80 and the IC18 boot ROM
 
 `make everything` and `make gate-all` include it. The KN7000 runs on a Panasonic MN10300, not the
 TLCS-900, so `kn7000/` has its own assembler (`kn7000/tools/kn7asm.py`) and its own
