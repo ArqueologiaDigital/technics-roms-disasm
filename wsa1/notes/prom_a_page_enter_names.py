@@ -38,9 +38,11 @@ def plan():
         if not m:
             continue
         body = "\n".join(L[i + 1:i + 12])
-        b = re.search(r'm_cp_mi8 MB16, %s, (0x[0-9a-f]+)\s*;[^\n]*\n\s*jr (nc|ugt),' % PAGE, body)
+        # native since the 2026-10-24 respelling; the macro forms (m_cp_mi8 / m_mul MB16, ...) before it
+        b = re.search(r'(?:m_cp_mi8 MB16, %s,|cp\s+\(%s:16\),)\s*(0x[0-9a-f]+)\s*;[^\n]*\n\s*jr (nc|ugt),'
+                      % (PAGE, PAGE), body)
         t = re.search(r'add XBC,(\w+)', body)
-        if not b or not t or not re.search(r'm_mul MB16, %s, 3' % PAGE, body):
+        if not b or not t or not re.search(r'(?:m_mul MB16, %s, 3|mul\s+bc,\s*\(%s:16\))' % (PAGE, PAGE), body):
             refused.append((rd, "not the page-dispatch shape"))
             continue
         n = int(b.group(1), 16) + (1 if b.group(2) == "ugt" else 0)
