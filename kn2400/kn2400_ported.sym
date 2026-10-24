@@ -3,7 +3,7 @@
 ; how a name qualifies. Columns: B address, name, ; the A address it was carried
 ; from and the number of instructions that matched (entry to first return).
 ;
-; 598 names carried (3725 candidates in A, 14827 routine starts in A, 7643 unnamed entries in B)
+; 599 names carried (3725 candidates in A, 14827 routine starts in A, 7643 unnamed entries in B)
 ; not carried: 565 A signatures with fewer than 8 unmasked instructions; 4 with a twin among A's routine starts;
 ; 4 whose name is taken in B
 ; --fuzzy, whole bodies (tools/fn_similarity.py): 80 more names carried (44 exact, 26 skeleton, 10 fuzzy); not carried:
@@ -13,7 +13,7 @@
 ;    2045 name already in B
 ;       0 name used twice in A
 ;     198 no candidate in B
-;     256 not the best match back in A
+;     255 not the best match back in A
 ;     397 too little unmasked content
 0x485E5115  FdcOpcodeInvalid	; = 0x48400F1D, 54 insns
 0x485EC0F8  IndexSwEventHandler	; = 0x48414735, whole body 159 insns, fuzzy (ratios 0.994/0.994, 13 callees or strings agree)
@@ -366,6 +366,7 @@
 0x501252A9  TgVoiceModLfoStep	; = 0x4C02D0A7, 18 insns
 0x50125950  TgPartGlideStateReset	; = 0x4C02D75F, 21 insns
 0x50125986  TgPartGlidePlan	; = 0x4C02D795, whole body 336 insns, exact (ratios 1.000/1.000, 23 callees or strings agree)
+0x50127D92  TgPartModRouteMaskSet	; = 0x4C00566E, 92 insns
 0x50127F98  TgModDepthScaleClamp	; = 0x4C005874, 36 insns
 0x50127FD7  TgPartModVoiceApply	; = 0x4C0058B3, 24 insns
 0x50128144  TgPartModVoiceApplyB	; = 0x4C005A28, 26 insns

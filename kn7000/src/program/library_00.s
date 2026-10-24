@@ -11073,7 +11073,7 @@ loc_4C00566B:
 
 # ---- the WRITE side of the controller mod matrix: the panel/MIDI
 #      config setter + its value-scaling leaves (2026-07-20)
-# func_4C00566E  (lib CPU 0x4c00566e; its `call` entry TgPartModRouteMaskSet at 0x4c005673)
+# TgPartModRouteMaskSet  (lib CPU 0x4c00566e)
 #   THE ROUTE/SIGN MASK WRITER of the mod matrix: (d0 part, d1 src,
 #   stack mask/setbits/clrbits) walks the 12 destinations, and for
 #   each one whose bit is set in the per-dest ROM tables 0x485865EC
@@ -11081,10 +11081,10 @@ loc_4C00566B:
 #   the PART RECORD 0x500B5340+part*0x54C at +0x53A+dest*4 (ROUTE)
 #   and +0x53C+dest*4 (SIGN) -- pinning down which of the +0x53A
 #   bank bytes is which, a detail the read-side decode left open
-func_4C00566E:
+TgPartModRouteMaskSet:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x14, sp
-TgPartModRouteMaskSet:
+TgPartModRouteMaskSet_entry:
     extbu   d0
     movbu   d1, (0x30, sp)
     movbu   (0x34, sp), d1
@@ -12760,7 +12760,7 @@ loc_4C006353:
     mov     d0, (0x18, sp)
     mov     d2, d0
     movbu   (0xec, sp), d1
-    call    TgPartModRouteMaskSet, [d2,d3,a2,a3], 0x24
+    call    TgPartModRouteMaskSet_entry, [d2,d3,a2,a3], 0x24
     mov     a2, a0
     mov     d2, d0
     call    TgVoiceListCollectPartAll_entry, 0, 0xc
@@ -12794,7 +12794,7 @@ loc_4C006353:
     mov     d0, (0x18, sp)
     mov     d2, d0
     movbu   (0xec, sp), d1
-    call    TgPartModRouteMaskSet, [d2,d3,a2,a3], 0x24
+    call    TgPartModRouteMaskSet_entry, [d2,d3,a2,a3], 0x24
     mov     a2, a0
     mov     d2, d0
     call    TgVoiceListCollectPartAll_entry, 0, 0xc
@@ -12828,7 +12828,7 @@ loc_4C006353:
     mov     d0, (0x18, sp)
     mov     d2, d0
     movbu   (0xec, sp), d1
-    call    TgPartModRouteMaskSet, [d2,d3,a2,a3], 0x24
+    call    TgPartModRouteMaskSet_entry, [d2,d3,a2,a3], 0x24
     mov     a2, a0
     mov     d2, d0
     call    TgVoiceListCollectPartAll_entry, 0, 0xc
@@ -12862,7 +12862,7 @@ loc_4C006353:
     mov     d0, (0x18, sp)
     mov     d2, d0
     movbu   (0xec, sp), d1
-    call    TgPartModRouteMaskSet, [d2,d3,a2,a3], 0x24
+    call    TgPartModRouteMaskSet_entry, [d2,d3,a2,a3], 0x24
     mov     a2, a0
     mov     d2, d0
     call    TgVoiceListCollectPartAll_entry, 0, 0xc
@@ -12896,7 +12896,7 @@ loc_4C006353:
     mov     d0, (0x18, sp)
     mov     d2, d0
     movbu   (0xec, sp), d1
-    call    TgPartModRouteMaskSet, [d2,d3,a2,a3], 0x24
+    call    TgPartModRouteMaskSet_entry, [d2,d3,a2,a3], 0x24
     mov     a2, a0
     mov     d2, d0
     call    TgVoiceListCollectPartAll_entry, 0, 0xc
@@ -12927,7 +12927,7 @@ loc_4C006353:
     mov     d0, (0x18, sp)
     movbu   (0xe4, sp), d0
     movbu   (0xec, sp), d1
-    call    TgPartModRouteMaskSet, [d2,d3,a2,a3], 0x24
+    call    TgPartModRouteMaskSet_entry, [d2,d3,a2,a3], 0x24
     ret     [d2,d3,a2,a3], 0xdc
     add     -0x10, d0
     asr     1, d0

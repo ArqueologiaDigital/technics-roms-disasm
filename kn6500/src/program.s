@@ -233653,11 +233653,11 @@ func_4C083CBB_entry_L3f:
 func_4C083CBB_entry_L4a:
 	ret	[d2], 0x14
 
-func_4C083D0D:
+TgPartModRouteMaskSet:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x14, sp
 
-func_4C083D0D_entry:
+TgPartModRouteMaskSet_entry:
 	extbu	d0
 	movbu	d1, (0x30, sp)
 	movbu	(0x34, sp), d1
@@ -233685,7 +233685,7 @@ func_4C083D0D_entry:
 	mov	0x4c1c9e4c, a0
 	movbu	(d3, a0), d1
 	and	d0, d1
-	beq	func_4C083D0D_entry_L89
+	beq	TgPartModRouteMaskSet_entry_L89
 	movbu	(0x30, sp), d0
 	mov	d3, d2
 	mov	d0, a0
@@ -233703,7 +233703,7 @@ func_4C083D0D_entry:
 	mov	0x4c1c9e50, a1
 	movbu	(d3, a1), d1
 	and	d0, d1
-	beq	func_4C083D0D_entry_L77
+	beq	TgPartModRouteMaskSet_entry_L77
 	add	a2, d2
 	mov	0x53a, d0
 	add	d2, d0
@@ -233712,8 +233712,8 @@ func_4C083D0D_entry:
 	mov	(0xc, sp), d0
 	or	d0, d1
 	movbu	d1, (a0)
-	bra	func_4C083D0D_entry_Lb1
-func_4C083D0D_entry_L77:
+	bra	TgPartModRouteMaskSet_entry_Lb1
+TgPartModRouteMaskSet_entry_L77:
 	add	a2, d2
 	add	0x53a, d2
 	add	d2, a0
@@ -233721,8 +233721,8 @@ func_4C083D0D_entry_L77:
 	mov	(0, sp), d0
 	and	d0, d1
 	movbu	d1, (a0)
-	bra	func_4C083D0D_entry_Lb1
-func_4C083D0D_entry_L89:
+	bra	TgPartModRouteMaskSet_entry_Lb1
+TgPartModRouteMaskSet_entry_L89:
 	movbu	(0x30, sp), d0
 	asl2	d3
 	mov	d0, a0
@@ -233743,7 +233743,7 @@ func_4C083D0D_entry_L89:
 	mov	(0, sp), d0
 	and	d0, d1
 	movbu	d1, (a0)
-func_4C083D0D_entry_Lb1:
+TgPartModRouteMaskSet_entry_Lb1:
 	mov	a3, d3
 	inc	d3
 	extbu	d3
@@ -235252,7 +235252,7 @@ func_4C084967_entry_L1a:
 	mov	d0, (0x18, sp)
 	mov	d2, d0
 	movbu	(0xa4, sp), d1
-	call	func_4C083D0D_entry, [d2,d3,a2,a3], 0x24
+	call	TgPartModRouteMaskSet_entry, [d2,d3,a2,a3], 0x24
 	mov	a2, a0
 	mov	d2, d0
 	call	TgVoiceListCollectPartAll_entry, 0, 0xc
@@ -235286,7 +235286,7 @@ func_4C084967_entry_L1a:
 	mov	d0, (0x18, sp)
 	mov	d2, d0
 	movbu	(0xa4, sp), d1
-	call	func_4C083D0D_entry, [d2,d3,a2,a3], 0x24
+	call	TgPartModRouteMaskSet_entry, [d2,d3,a2,a3], 0x24
 	mov	a2, a0
 	mov	d2, d0
 	call	TgVoiceListCollectPartAll_entry, 0, 0xc
@@ -235320,7 +235320,7 @@ func_4C084967_entry_L1a:
 	mov	d0, (0x18, sp)
 	mov	d2, d0
 	movbu	(0xa4, sp), d1
-	call	func_4C083D0D_entry, [d2,d3,a2,a3], 0x24
+	call	TgPartModRouteMaskSet_entry, [d2,d3,a2,a3], 0x24
 	mov	a2, a0
 	mov	d2, d0
 	call	TgVoiceListCollectPartAll_entry, 0, 0xc
@@ -235354,7 +235354,7 @@ func_4C084967_entry_L1a:
 	mov	d0, (0x18, sp)
 	mov	d2, d0
 	movbu	(0xa4, sp), d1
-	call	func_4C083D0D_entry, [d2,d3,a2,a3], 0x24
+	call	TgPartModRouteMaskSet_entry, [d2,d3,a2,a3], 0x24
 	mov	a2, a0
 	mov	d2, d0
 	call	TgVoiceListCollectPartAll_entry, 0, 0xc
@@ -235388,7 +235388,7 @@ func_4C084967_entry_L1a:
 	mov	d0, (0x18, sp)
 	mov	d2, d0
 	movbu	(0xa4, sp), d1
-	call	func_4C083D0D_entry, [d2,d3,a2,a3], 0x24
+	call	TgPartModRouteMaskSet_entry, [d2,d3,a2,a3], 0x24
 	mov	a2, a0
 	mov	d2, d0
 	call	TgVoiceListCollectPartAll_entry, 0, 0xc
@@ -235419,7 +235419,7 @@ func_4C084967_entry_L1a:
 	mov	d0, (0x18, sp)
 	movbu	(0x9c, sp), d0
 	movbu	(0xa4, sp), d1
-	call	func_4C083D0D_entry, [d2,d3,a2,a3], 0x24
+	call	TgPartModRouteMaskSet_entry, [d2,d3,a2,a3], 0x24
 	ret	[d2,d3,a2,a3], 0x94
 	add	-0x10, d0
 	asr	1, d0

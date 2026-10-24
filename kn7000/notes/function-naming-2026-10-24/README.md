@@ -19,10 +19,10 @@ duplicates or wrong. The work went in three steps:
 
 ## What moved
 
-`func_<ADDR>` routine labels in `kn7000/src/program/*.s`: **6,620 -> 6,497**. The figures
+`func_<ADDR>` routine labels in `kn7000/src/program/*.s`: **6,620 -> 6,496**. The figures
 come from `count_names.py --rev 79e035417`, the commit this work started from. `python3
 scripts/analysis/doc_quality_census.py` row (e) for `program` (placeholder routine names)
-went from 6,624 to 6,501. The 123 are:
+went from 6,624 to 6,500. The 124 are:
 
 | evidence                                                                        | names | where                               |
 |---------------------------------------------------------------------------------|-------|-------------------------------------|
@@ -32,7 +32,13 @@ went from 6,624 to 6,501. The 123 are:
 | an error text that names the routine, and its helper                            | 2     | `string-evidence.tsv`               |
 | the signature, file-name or pattern text a routine compares, writes or searches | 5     | `string-evidence.tsv`               |
 | library names moved from the flash copy to the library address                  | 2     | `renames.tsv`                       |
-| `kn7000_manual.sym` names the committed source was older than                   | 4     | (regenerated, no new name)          |
+| a name moved from a routine's register-save entry to its start                  | 1     | `renames.tsv`                       |
+| `kn7000_manual.sym` names the committed source was older than                   | 4     | below (regenerated, no new name)    |
+
+The four older names were added to `kn7000_manual.sym` by 39dc53359 (the table-ROM segment
+loaders), but the committed `src/program/` had not been regenerated since:
+`MemPadAreaLoadFactory` (0x48432175), `TechnicsPadsResourceParse` (0x48433F4A),
+`TechnicsPadsResourceInit` (0x484342B4) and `SramRecordsLoadFactory` (0x4843FB65).
 
 The pass also fixed 13 duplicate or misplaced names; `renames.tsv` lists them:
 
@@ -89,9 +95,9 @@ class and the two ratios. The `func_` counts come from each tree's
 
 | tree   | ported names | of them whole body | `func_` entries left |
 |--------|--------------|--------------------|----------------------|
-| kn2400 | 485 -> 678   | 80                 | 12,359 -> 11,995     |
-| kn6000 | 546 -> 714   | 75                 | 10,789 -> 10,503     |
-| kn6500 | 552 -> 721   | 75                 | 10,816 -> 10,528     |
+| kn2400 | 485 -> 679   | 80                 | 12,359 -> 11,993     |
+| kn6000 | 546 -> 715   | 76                 | 10,789 -> 10,501     |
+| kn6500 | 552 -> 722   | 76                 | 10,816 -> 10,526     |
 | hdsx3  | 29 -> 52     | 0                  | 842 -> 799           |
 
 A second `make -C kn6000 ported-names` run reproduced its file byte for byte.

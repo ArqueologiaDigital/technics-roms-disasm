@@ -19661,11 +19661,11 @@
 .equ func_4C083DF1_entry_L32, 0x4c083e28
 .equ func_4C083DF1_entry_L3f, 0x4c083e35
 .equ func_4C083DF1_entry_L4a, 0x4c083e40
-.equ func_4C083E43, 0x4c083e43
-.equ func_4C083E43_entry, 0x4c083e48
-.equ func_4C083E43_entry_L77, 0x4c083ebf
-.equ func_4C083E43_entry_L89, 0x4c083ed1
-.equ func_4C083E43_entry_Lb1, 0x4c083ef9
+.equ TgPartModRouteMaskSet, 0x4c083e43
+.equ TgPartModRouteMaskSet_entry, 0x4c083e48
+.equ TgPartModRouteMaskSet_entry_L77, 0x4c083ebf
+.equ TgPartModRouteMaskSet_entry_L89, 0x4c083ed1
+.equ TgPartModRouteMaskSet_entry_Lb1, 0x4c083ef9
 .equ func_4C083F05, 0x4c083f05
 .equ func_4C083F05_entry, 0x4c083f08
 .equ func_4C083F05_entry_L18, 0x4c083f20

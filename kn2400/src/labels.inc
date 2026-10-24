@@ -49737,11 +49737,11 @@
 .equ func_50127D4D_entry_L24, 0x50127d74
 .equ func_50127D4D_entry_L31, 0x50127d81
 .equ func_50127D4D_entry_L3f, 0x50127d8f
-.equ func_50127D92, 0x50127d92
-.equ func_50127D92_entry, 0x50127d97
-.equ func_50127D92_entry_L77, 0x50127e0e
-.equ func_50127D92_entry_L89, 0x50127e20
-.equ func_50127D92_entry_Lb1, 0x50127e48
+.equ TgPartModRouteMaskSet, 0x50127d92
+.equ TgPartModRouteMaskSet_entry, 0x50127d97
+.equ TgPartModRouteMaskSet_entry_L77, 0x50127e0e
+.equ TgPartModRouteMaskSet_entry_L89, 0x50127e20
+.equ TgPartModRouteMaskSet_entry_Lb1, 0x50127e48
 .equ func_50127E54, 0x50127e54
 .equ func_50127E54_entry, 0x50127e57
 .equ func_50127E54_entry_L18, 0x50127e6f

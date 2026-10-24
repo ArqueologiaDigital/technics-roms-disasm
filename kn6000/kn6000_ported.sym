@@ -6,14 +6,14 @@
 ; 639 names carried (3725 candidates in A, 14827 routine starts in A, 6821 unnamed entries in B)
 ; not carried: 565 A signatures with fewer than 8 unmasked instructions; 4 with a twin among A's routine starts;
 ; 0 whose name is taken in B
-; --fuzzy, whole bodies (tools/fn_similarity.py): 75 more names carried (48 exact, 18 skeleton, 9 fuzzy); not carried:
+; --fuzzy, whole bodies (tools/fn_similarity.py): 76 more names carried (48 exact, 19 skeleton, 9 fuzzy); not carried:
 ;       6 an aligned callee or string disagrees
 ;     171 below the class thresholds or ambiguous
 ;      12 best match in B is named or already carried
 ;    1139 name already in B
 ;       0 name used twice in A
 ;     713 no candidate in B
-;     516 not the best match back in A
+;     515 not the best match back in A
 ;     454 too little unmasked content
 0x4C000080  LibF64Pow	; = 0x4C000000, 262 insns
 0x4C0004A9  DCacheFlushDisable	; = 0x484101C9, 53 insns
@@ -229,6 +229,7 @@
 0x4C08086F  TgModCurveSquareScale	; = 0x4C02C236, 18 insns
 0x4C080F42  TgPartModValueForElem	; = 0x4C02CA50, 18 insns
 0x4C081D4D  TgPartGlideStateReset	; = 0x4C02D75F, 21 insns
+0x4C083E43  TgPartModRouteMaskSet	; = 0x4C00566E, whole body 92 insns, skeleton (ratios 1.000/0.935, 0 callees or strings agree)
 0x4C0844C4  TgPartModVoicesRefreshA	; = 0x4C005CD6, whole body 102 insns, skeleton (ratios 1.000/0.843, 1 callees or strings agree)
 0x4C084688  TgModDepthScaleRom	; = 0x4C005EBB, 30 insns
 0x4C084717  TgPartModDepthDefaultSet	; = 0x4C005F6B, 18 insns
