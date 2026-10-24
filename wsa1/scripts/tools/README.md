@@ -46,3 +46,14 @@ refusal (the write would otherwise land in the cache file). `notes/migrate_listi
 the same job for the probes under `wsa1/`.
 
     python3 wsa1/scripts/tools/migrate_lane_readers.py [--apply]
+
+## `label_cross_image_targets.py`
+**"Which prom_b addresses does prom_a still spell as numbers for want of a label, and which of them
+can be named on evidence?"** Labels a display-list record by the text it draws (the `--dl-names`
+rule of `notes/gen_prom_b_f067a6_module.py`), or by a hand-written name whose evidence goes into the
+header; refuses addresses only a stale or dead table copy points at. Then the prom_a symboliser
+writes the names.
+
+    python3 scripts/tools/label_cross_image_targets.py [--apply]
+    python3 ../notes/proma-2026-09-25/symbolize_prom_a_addresses.py --apply
+    make gate-wsa1
