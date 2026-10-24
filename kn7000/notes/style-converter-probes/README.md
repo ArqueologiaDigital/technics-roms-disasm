@@ -64,9 +64,14 @@ LOAD, SAVE, SD SONG MEDLEY, SD-AUDIO PLAY and SD-SOUND PLAY: no STYLE CONVERT.
 
 ## The disassembly (2026-10-24)
 
-| script         | question it answers                                                                     | command                                                            |
-|----------------|-----------------------------------------------------------------------------------------|--------------------------------------------------------------------|
-| `cnv_table.py` | per converter: size, instructions, routines, strings; are there `.incbin` / code bytes? | `python3 -I cnv_table.py ../../src/cnv/*.s` (after `make cnv-src`) |
+| script             | question it answers                                                                              | command                                                            |
+|--------------------|--------------------------------------------------------------------------------------------------|--------------------------------------------------------------------|
+| `cnv_table.py`     | per converter: size, instructions, routines, strings; are there `.incbin` / code bytes?          | `python3 -I cnv_table.py ../../src/cnv/*.s` (after `make cnv-src`) |
+| `kn7asm_passes.py` | how many kn7asm passes does a source take, with the forward-label drift estimate and without it? | `python3 -I kn7asm_passes.py ../../src/cnv/korg.s`                 |
 
-Its output, 2026-10-24, is the table in `../style-converter.md`, "The disassembly". The two
+`cnv_table.py`'s output, 2026-10-24, is the table in `../style-converter.md`, "The disassembly". The two
 `.incbin` / `.byte in code` columns must read 0: that is what makes the sources complete.
+
+`kn7asm_passes.py` on 2026-10-24 (source of aec05aa17): `korg.s: drift estimate 3 passes,
+previous-address estimate 58 passes (output 0x1a970 bytes)`. When the drift estimate went in
+(27284fcb8) the same source, then without its names, took 57 passes the old way.
