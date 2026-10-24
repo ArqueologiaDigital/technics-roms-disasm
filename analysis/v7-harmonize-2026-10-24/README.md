@@ -187,3 +187,15 @@ lane's work (WP17 (a)).  Everything else the census compares fell or held: (a) -
 header, (c) -131 `.Lc_` locals, (d) -124 runs.  The read-only dispatch census
 (`census.py --compare docs/coverage/dispatch-census-2026-10-24-02.json`, maps built in a scratch
 `DISPATCH_CENSUS_DIR`) reports nothing rose.
+
+## Follow-ups for other lanes
+
+- v10 headers: `FDC_INTERRUPT_HANDLER`'s header (`v10/maincpu/storage/fdc_routines.s`, carried to v9/v7)
+  says "Enables interrupts via prevbank (D7 FA 04 = ei 4)" and "Disables interrupts (D7 FA 05 = di 4)",
+  but the routine starts `push qiz / cp (FDC_ERROR_CODE:16), 0` and contains no `ei` or `di`.  The
+  wording should be fixed in v10 and re-propagated.
+- v10 names: the 142 `v10-name-misparented` rows of `caller-alignment-v7-final.tsv` and
+  `MasterSetup_HandleDialStop/Turn` (above) are renames that belong in v10.
+- The respelling of step 8 is a post-process; the converters (`v7_byte_region_to_insns.py`,
+  `reframe_byte_runs_by_decode.py`) still emit llvm-objdump's spelling and should emit the tree's form
+  directly before they are used again.
