@@ -8,8 +8,8 @@
 #   * every asset segment under the label and header comment tools/table_segments.py
 #     gives it: a JPEG segment as .incbin of its file in src/table/ (written there
 #     with --jpg-dir; a file already there must hold the same bytes, so two builds
-#     share one copy), a 4-byte marker as .byte, the GUI resource header as .long
-#     <table> rows, the rest as .incbin_range; with --compare each segment is marked
+#     share one copy), a 4-byte text marker as .ascii/.asciz, the GUI resource
+#     header as .long <table> rows, the rest as .incbin_range; with --compare each segment is marked
 #     "unchanged" or "CHANGED" against the same segment of another build;
 #   * with --plugin: the SP7001 XAPR plug-in appended after the directory image,
 #     as real MN10300 assembly for its code (unidasm mnemonics re-encoded by the
@@ -413,8 +413,9 @@ def directory_image(d, dirents, ROMQ, jpg_dir, other, compare_label):
                 B.append("    .align\t4")
         elif kind == "marker":
             assert len(seg) == 4, f"segment {i} ({label}) is not a 4-byte marker"
-            shown = seg.rstrip(b"\0").decode("latin1").replace("\n", "\\n")
-            B.append(f'    .byte\t{", ".join(f"0x{b:02x}" for b in seg)}   # "{shown}"')
+            text, op = (seg[:-1], ".asciz") if seg.endswith(b"\0") else (seg, ".ascii")
+            assert b"\0" not in text, f"segment {i} ({label}): a NUL inside the marker text"
+            B.append(f"    {op}\t" + asm_string(text).replace("\\x0a", "\\n"))
         elif kind == "gui":
             B += gui_resource_tables(d, s, e, ROMQ)
         elif kind == "help":

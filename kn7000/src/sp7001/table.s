@@ -1799,7 +1799,7 @@ ResFont11Glyphs:
 # dir[1], 0x14b0 bytes; unchanged vs build 84.
 # 'ZZZJ', 0x00, 'K', 0x00, 0xdc (the 8-byte signature the reader compares with the
 # program's copy), then 220 records of 0x18 bytes from +0x10, which fill the segment.
-# Read through TableRomSeg01PtrSize by the unnamed routine at 0x4843fb65: it copies
+# Read through TableRomSeg01PtrSize by SramRecordsLoadFactory: it copies
 # records lo..hi over the battery-SRAM table at 0x84030ff8 (same stride), or a
 # program-ROM default record when the signature does not match.
 # TODO: what the 220 records configure.
@@ -1814,7 +1814,7 @@ FactoryMemStyleContainer:
     .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x035d08, 0x040674
 
 # dir[3], 0x1d18 bytes; unchanged vs build 84.
-# The factory PERFORMANCE PAD user memory ('TPAD'): the routine at 0x48432175 clears the
+# The factory PERFORMANCE PAD user memory ('TPAD'): MemPadAreaLoadFactory clears the
 # 0xa000 bytes at 0x501f91a0 and, when this segment (TableRomSeg03PtrSize) starts
 # with 'TPAD', copies it in; otherwise it builds an empty container
 # (notes/work-ram-map.md, 0x501f91a0).
@@ -1823,8 +1823,8 @@ FactoryMemPadContainer:
 
 # dir[4], 0x142f0 bytes; unchanged vs build 84.
 # The built-in "Technics Pads" bank resource (16-byte space-padded name first).
-# The routine at 0x484342b4 stores its address (TableRomSeg04Ptr) in 0x50007760 and,
-# when 0x48433f4f rejects it, uses the program ROM's own "Technics Pads" copy
+# TechnicsPadsResourceInit stores its address (TableRomSeg04Ptr) in 0x50007760 and,
+# when TechnicsPadsResourceParse rejects it, uses the program ROM's own "Technics Pads" copy
 # instead. Same header shape as TechnicsRhythmsTable (segment 83).
 TechnicsPadsResource:
     .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x04238c, 0x05667c
@@ -1893,12 +1893,12 @@ InternalVoiceArchive:
 # digits into the u16 at 0x50007dc8, which AcTableVerBoxProc shows as TABLE on the
 # SOFT VERSION screen.
 TableVersion:
-    .byte	0x38, 0x33, 0x0a, 0x00   # "83\n"
+    .asciz	"83\n"
 
 # dir[8], 0x4 bytes; unchanged vs build 84.
 # 'ZZZ' and a line feed. No program code reads this slot.
 SeparatorZZZ:
-    .byte	0x5a, 0x5a, 0x5a, 0x0a   # "ZZZ\n"
+    .ascii	"ZZZ\n"
 
 # dir[9], 0x97a0 bytes; unchanged vs build 84.
 # Feature Demo picture A1, returned by DemoJpgDataA1: 'Welcome to SX-KN7000' over a glass hall.
@@ -2147,25 +2147,25 @@ DemoJpgK4:
 # Not a picture: the 4-byte '27' + line feed that DemoJpgDataL1 returns in
 # place of a JPEG. TODO: whether the demo ever asks for it.
 DemoJpgL1Placeholder:
-    .byte	0x32, 0x37, 0x0a, 0x00   # "27\n"
+    .asciz	"27\n"
 
 # dir[52], 0x4 bytes; unchanged vs build 84.
 # Not a picture: the 4-byte '27' + line feed that DemoJpgDataL2 returns in
 # place of a JPEG. TODO: whether the demo ever asks for it.
 DemoJpgL2Placeholder:
-    .byte	0x32, 0x37, 0x0a, 0x00   # "27\n"
+    .asciz	"27\n"
 
 # dir[53], 0x4 bytes; unchanged vs build 84.
 # Not a picture: the 4-byte '27' + line feed that DemoJpgDataL3 returns in
 # place of a JPEG. TODO: whether the demo ever asks for it.
 DemoJpgL3Placeholder:
-    .byte	0x32, 0x37, 0x0a, 0x00   # "27\n"
+    .asciz	"27\n"
 
 # dir[54], 0x4 bytes; unchanged vs build 84.
 # Not a picture: the 4-byte '27' + line feed that DemoJpgDataL4 returns in
 # place of a JPEG. TODO: whether the demo ever asks for it.
 DemoJpgL4Placeholder:
-    .byte	0x32, 0x37, 0x0a, 0x00   # "27\n"
+    .asciz	"27\n"
 
 # dir[55], 0x14228 bytes; unchanged vs build 84.
 # AcRhyImageProc's pictures: u32 offsets from the segment start, indexed by the u16
@@ -2776,13 +2776,13 @@ DemoJpgL6:
 # Not a picture: the 4-byte '27' + line feed that DemoJpgDataL7 returns in
 # place of a JPEG. TODO: whether the demo ever asks for it.
 DemoJpgL7Placeholder:
-    .byte	0x32, 0x37, 0x0a, 0x00   # "27\n"
+    .asciz	"27\n"
 
 # dir[66], 0x4 bytes; unchanged vs build 84.
 # Not a picture: the 4-byte '27' + line feed that DemoJpgDataL8 returns in
 # place of a JPEG. TODO: whether the demo ever asks for it.
 DemoJpgL8Placeholder:
-    .byte	0x32, 0x37, 0x0a, 0x00   # "27\n"
+    .asciz	"27\n"
 
 # dir[67], 0x358e0 bytes; unchanged vs build 84.
 # The HELP function's texts in four languages, English first ('After pressing the
@@ -9221,24 +9221,24 @@ HelpIndexSpanish:
 # A build number, ASCII digits and a line feed. No program code reads this slot;
 # notes/sp7001-build-diff.md compares it across builds.
 UnreadBuildMarker68:
-    .byte	0x38, 0x30, 0x0a, 0x00   # "80\n"
+    .asciz	"80\n"
 
 # dir[69], 0x4 bytes; CHANGED vs build 84 (was 0x4 bytes).
 # A build number, ASCII digits and a line feed. No program code reads this slot;
 # notes/sp7001-build-diff.md compares it across builds.
 UnreadBuildMarker69:
-    .byte	0x38, 0x30, 0x0a, 0x00   # "80\n"
+    .asciz	"80\n"
 
 # dir[70], 0x4 bytes; CHANGED vs build 84 (was 0x4 bytes).
 # A build number, ASCII digits and a line feed. No program code reads this slot;
 # notes/sp7001-build-diff.md compares it across builds.
 UnreadBuildMarker70:
-    .byte	0x38, 0x30, 0x0a, 0x00   # "80\n"
+    .asciz	"80\n"
 
 # dir[71], 0x4 bytes; unchanged vs build 84.
 # '27' and a line feed, like the demo placeholders. No program code reads this slot.
 UnreadMarker71:
-    .byte	0x32, 0x37, 0x0a, 0x00   # "27\n"
+    .asciz	"27\n"
 
 # dir[72], 0x11acc bytes; unchanged vs build 84.
 # AcOrganTabProc's drawbar tab pictures: u32 offsets from the segment start; each
@@ -9509,10 +9509,10 @@ DemoJpgD14:
     .align	4
 
 # dir[83], 0x4 bytes; CHANGED vs build 84 (was 0x1248 bytes).
-# 'DMY' and a NUL in place of the "Technics Rhythms" copy of build 84
+# 'DMY' and a line feed in place of the "Technics Rhythms" copy of build 84
 # (notes/sp7001-build-diff.md).
 TechnicsRhythmsStub:
-    .byte	0x44, 0x4d, 0x59, 0x0a   # "DMY\n"
+    .ascii	"DMY\n"
 
 TableRomImageEnd:
 

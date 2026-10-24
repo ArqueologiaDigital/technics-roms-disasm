@@ -142,7 +142,7 @@ def _segments():
     s[1] = ("SramRecordDefaultsZZZJ", "raw", None, [
         "'ZZZJ', 0x00, 'K', 0x00, 0xDC (the 8-byte signature the reader compares with the",
         "program's copy), then 220 records of 0x18 bytes from +0x10, which fill the segment.",
-        "Read through TableRomSeg01PtrSize by the unnamed routine at 0x4843FB65: it copies",
+        "Read through TableRomSeg01PtrSize by SramRecordsLoadFactory: it copies",
         "records lo..hi over the battery-SRAM table at 0x84030FF8 (same stride), or a",
         "program-ROM default record when the signature does not match.",
         "TODO: what the 220 records configure."])
@@ -151,14 +151,14 @@ def _segments():
         "whole (through TableRomSeg02PtrSize) to MEM_STYLE_AREA 0x50180000 when it starts",
         "with 'TCMP'. Format: notes/tcmp-container-synthesis.md."])
     s[3] = ("FactoryMemPadContainer", "raw", None, [
-        "The factory PERFORMANCE PAD user memory ('TPAD'): the routine at 0x48432175 clears the",
+        "The factory PERFORMANCE PAD user memory ('TPAD'): MemPadAreaLoadFactory clears the",
         "0xA000 bytes at 0x501F91A0 and, when this segment (TableRomSeg03PtrSize) starts",
         "with 'TPAD', copies it in; otherwise it builds an empty container",
         "(notes/work-ram-map.md, 0x501F91A0)."])
     s[4] = ("TechnicsPadsResource", "raw", None, [
         "The built-in \"Technics Pads\" bank resource (16-byte space-padded name first).",
-        "The routine at 0x484342B4 stores its address (TableRomSeg04Ptr) in 0x50007760 and,",
-        "when 0x48433F4F rejects it, uses the program ROM's own \"Technics Pads\" copy",
+        "TechnicsPadsResourceInit stores its address (TableRomSeg04Ptr) in 0x50007760 and,",
+        "when TechnicsPadsResourceParse rejects it, uses the program ROM's own \"Technics Pads\" copy",
         "instead. Same header shape as TechnicsRhythmsTable (segment 83)."])
     s[5] = ("OpeningAnimationFrames", "offtab", None, [
         "The boot opening screen's animation: OpeningFrameDraw draws frame n from u32",
@@ -228,7 +228,7 @@ SEGMENTS = _segments()
 BUILD_OVERRIDES = {
     "83": {
         83: ("TechnicsRhythmsStub", "marker", None, [
-            "'DMY' and a NUL in place of the \"Technics Rhythms\" copy of build 84",
+            "'DMY' and a line feed in place of the \"Technics Rhythms\" copy of build 84",
             "(notes/sp7001-build-diff.md)."]),
     },
 }

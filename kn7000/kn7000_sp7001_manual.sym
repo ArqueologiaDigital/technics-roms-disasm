@@ -312,9 +312,18 @@
 
 ; ---- Table ROM (0x48000000) — directory-based resource archive (notes/table-rom-structure.md) ----
 0x48000000  TableRomDirectory      ; directory of LE u32 chunk offsets (rel to 0x48000000); first chunk @0x48000200
-0x48040674  FactoryMemPadContainer ; table ROM segment 3 (0x1d18): the factory 'TPAD' PERFORMANCE PAD user memory; copied to 0x501F91A0 (0xA000 area) by the routine at 0x48432175 when it starts with 'TPAD' (src/table.s)
+0x48040674  FactoryMemPadContainer ; table ROM segment 3 (0x1d18): the factory 'TPAD' PERFORMANCE PAD user memory; copied to 0x501F91A0 (0xA000 area) by MemPadAreaLoadFactory when it starts with 'TPAD' (src/table.s)
 0x4804238C  TechnicsPadsResource   ; "Technics Pads" resource (0x142f0): accompaniment pad patterns
 ; UNPORTED (table bytes not present in new build): 0x483E828C  TechnicsRhythmsTable   ; "Technics Rhythms" resource in the table ROM (style/rhythm index)
+; Loaders of table-ROM segments 1, 3 and 4 (src/table.s segment headers).
+0x4843FB54  SramRecordsLoadFactory ; (d0 = first, d1 = last record) both < 0xDC and first <= last, else -1: if table-ROM segment 1 (TableRomSeg01PtrSize) starts with the 8-byte 'ZZZJ',0,'K',0,0xDC signature of 0x485B7370, copy records first..last (0x18 bytes each, from segment+0x10) over the battery-SRAM table at 0x84030FF8; otherwise fall back to a program-ROM default record
+0x4843FB59  SramRecordsLoadFactory_entry
+0x48432164  MemPadAreaLoadFactory ; clear the 0xA000-byte PERFORMANCE PAD user memory at 0x501F91A0 (LibMemSet), then copy table-ROM segment 3 (TableRomSeg03PtrSize -> FactoryMemPadContainer) in when it starts with 'TPAD' (0x48729858), otherwise build an empty container; the pad validators re-run it on any failure
+0x48432169  MemPadAreaLoadFactory_entry
+0x48433F39  TechnicsPadsResourceParse ; (a0 = resource) zero the 0x18 bytes at 0x50034C24, then -1 for NULL, -3 when its 16-byte name is not "Technics Pads   " (0x485B6B68); otherwise record it in 0x50034C28 and read its header's big-endian u24 offsets (LoadU24BE at +0x18, +0x1B, +0x1E): a u16 (LoadU16BE) at the first section's +2 goes to 0x50034C24, the other two sections' addresses to 0x50034C2C and 0x50034C30 (a 0 offset leaves the field 0); 0x50034C38 = TableRomNullPtr(); return 1
+0x48433F3E  TechnicsPadsResourceParse_entry
+0x484342A3  TechnicsPadsResourceInit ; store table-ROM segment 4 (TableRomSeg04Ptr -> TechnicsPadsResource) in 0x50007760 and parse it; when TechnicsPadsResourceParse fails use the program ROM's own copy at 0x4872FE4C instead; then clear the byte 0x50122DE0 and the word 0x50034C34
+0x484342A6  TechnicsPadsResourceInit_entry
 
 ; ---- Techni-Chord harmony engine (docs: kn5000-docs /kn7000-technichord/) ----
 ; Pure-software auto-harmony on the main CPU: copy the detected chord, pick a
