@@ -2377,67 +2377,67 @@ FDTest_ProbeDiskFormat:
 	bit	6, (PD:8)	; Port D bit 6: "FD.I/O signal"
 	ret nz
 	ld a, 0x0:opc
-	ldw (0x8b24:16), 0
-	ldw (0x8b26:16), 0
-	ldw (0x8b28:16), 0
+	ldw (FDC_PROBE_REQUEST:16), 0
+	ldw (FDC_PROBE_REQUEST+2:16), 0
+	ldw (FDC_PROBE_REQUEST+4:16), 0
 	cp a, 0:i3
 	jr nz, FDC_Reset_SetDD_SectorCount
-	ldw (0x8b2a:16), 224
+	ldw (FDC_PROBE_REQUEST+6:16), 224
 	jr FDC_Reset_BuildParams
 
 FDC_Reset_SetDD_SectorCount:
-	ldw (0x8b2a:16), 211
+	ldw (FDC_PROBE_REQUEST+6:16), 211
 
 FDC_Reset_BuildParams:
-	ldw (0x8b2c:16), 0
-	ldw (0x8b2e:16), 0
+	ldw (FDC_PROBE_REQUEST+8:16), 0
+	ldw (FDC_PROBE_REQUEST+10:16), 0
 	ld xwa, 0:i3
-	ld (0x8b30:16), xwa
-	lda xwa, (0x8b24:16)
+	ld (FDC_PROBE_REQUEST+12:16), xwa
+	lda xwa, (FDC_PROBE_REQUEST:16)
 	push xwa
 	calr FDC_CommandEntry
-	ldw (0x8b24:16), 3
-	ldw (0x8b26:16), 0
-	ldw (0x8b28:16), 0
-	ldw (0x8b2a:16), 0
-	ldw (0x8b2c:16), 1
-	ldw (0x8b2e:16), 1
+	ldw (FDC_PROBE_REQUEST:16), 3
+	ldw (FDC_PROBE_REQUEST+2:16), 0
+	ldw (FDC_PROBE_REQUEST+4:16), 0
+	ldw (FDC_PROBE_REQUEST+6:16), 0
+	ldw (FDC_PROBE_REQUEST+8:16), 1
+	ldw (FDC_PROBE_REQUEST+10:16), 1
 	lda xwa, (0x8b34:16)
-	ld (0x8b30:16), xwa
-	lda xwa, (0x8b24:16)
+	ld (FDC_PROBE_REQUEST+12:16), xwa
+	lda xwa, (FDC_PROBE_REQUEST:16)
 	push xwa
 	calr FDC_CommandEntry
-	ldw (0x8b24:16), 3
-	ldw (0x8b26:16), 0
-	ldw (0x8b28:16), 0
-	ldw (0x8b2a:16), 78
-	ldw (0x8b2c:16), 1
-	ldw (0x8b2e:16), 1
+	ldw (FDC_PROBE_REQUEST:16), 3
+	ldw (FDC_PROBE_REQUEST+2:16), 0
+	ldw (FDC_PROBE_REQUEST+4:16), 0
+	ldw (FDC_PROBE_REQUEST+6:16), 78
+	ldw (FDC_PROBE_REQUEST+8:16), 1
+	ldw (FDC_PROBE_REQUEST+10:16), 1
 	lda xwa, (0x8b34:16)
-	ld (0x8b30:16), xwa
-	lda xwa, (0x8b24:16)
+	ld (FDC_PROBE_REQUEST+12:16), xwa
+	lda xwa, (FDC_PROBE_REQUEST:16)
 	push xwa
 	calr FDC_CommandEntry
-	ldw (0x8b24:16), 3
-	ldw (0x8b26:16), 0
-	ldw (0x8b28:16), 0
-	ldw (0x8b2a:16), 10
-	ldw (0x8b2c:16), 1
-	ldw (0x8b2e:16), 1
+	ldw (FDC_PROBE_REQUEST:16), 3
+	ldw (FDC_PROBE_REQUEST+2:16), 0
+	ldw (FDC_PROBE_REQUEST+4:16), 0
+	ldw (FDC_PROBE_REQUEST+6:16), 10
+	ldw (FDC_PROBE_REQUEST+8:16), 1
+	ldw (FDC_PROBE_REQUEST+10:16), 1
 	lda xwa, (0x8b34:16)
-	ld (0x8b30:16), xwa
-	lda xwa, (0x8b24:16)
+	ld (FDC_PROBE_REQUEST+12:16), xwa
+	lda xwa, (FDC_PROBE_REQUEST:16)
 	push xwa
 	calr FDC_CommandEntry
-	ldw (0x8b24:16), 3
-	ldw (0x8b26:16), 0
-	ldw (0x8b28:16), 0
-	ldw (0x8b2a:16), 40
-	ldw (0x8b2c:16), 1
-	ldw (0x8b2e:16), 1
+	ldw (FDC_PROBE_REQUEST:16), 3
+	ldw (FDC_PROBE_REQUEST+2:16), 0
+	ldw (FDC_PROBE_REQUEST+4:16), 0
+	ldw (FDC_PROBE_REQUEST+6:16), 40
+	ldw (FDC_PROBE_REQUEST+8:16), 1
+	ldw (FDC_PROBE_REQUEST+10:16), 1
 	lda xwa, (0x8b34:16)
-	ld (0x8b30:16), xwa
-	lda xwa, (0x8b24:16)
+	ld (FDC_PROBE_REQUEST+12:16), xwa
+	lda xwa, (FDC_PROBE_REQUEST:16)
 	push xwa
 	calr FDC_CommandEntry
 	lda xsp, (xsp + 20)

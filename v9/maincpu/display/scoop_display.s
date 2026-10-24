@@ -2983,7 +2983,7 @@ DisplayMode_Dispatch_Mode1_Helper:
 	bitm	0, (xiy)
 	jrl	z, Timer_ModeHandler_0_Return3
 	ld	xiy, 0x3732
-	ld	c, (0x370f:16)
+	ld	c, (SQSTEP_CURSOR_STEP:16)
 	dec	1, c
 	cp	c, 15
 	jrl	ule, Timer_ModeHandler_0_Skip2
@@ -4458,7 +4458,7 @@ PeriphReg_StoreAndUpdate:
 	jrl nz, PeriphReg_LoadWordAndCall
 	call SqStep_DeleteEventAtCursor
 PeriphReg_LoadWordAndCall:
-	ld	w, (3538:16)
+	ld	w, (SQSTEP_RECORD_LENGTH:16)
 	ld xiy, 0x00000d8f
 	call SystemInit_StepHandler_0_Helper2
 	call Display_ModeHandler
@@ -4468,7 +4468,7 @@ PeriphReg_Ret:
 Display_ModeHandler:
 	or	(3539:16), 1
 	xor	a, a
-	ld	(3538:16), a
+	ld	(SQSTEP_RECORD_LENGTH:16), a
 	ld	(3413:16), 255
 	call VoiceSlot_ReadParamsWithSaveRestore_Helper3
 	cp w, 0:i3
@@ -6649,7 +6649,7 @@ TempoRingBuf_OnTempoEvent:
 	and	w, 1
 	ld	(3826:16), wa
 	or	(0x0d53:16), 16
-	ld	(3538:16), 4
+	ld	(SQSTEP_RECORD_LENGTH:16), 4
 	ld	xhl, STATUS_POPUP_ID
 	cp	(SQSTEP_DISPLAY_MODE:16), 3
 	jrl	nz, TempoRingBuf_OnTempoEvent_Skip27
@@ -6811,7 +6811,7 @@ TempoRingBuf_OnModulationEvent_Skip:
 	ld	(CONTROL_LINE_VALUE:16), a
 	call	TempoRingBuf_ReadByte
 	ld	wa, hl
-	ld	(3538:16), 3
+	ld	(SQSTEP_RECORD_LENGTH:16), 3
 	ld	(CONTROL_LINE_KIND:16), 2
 	cp	(STATUS_POPUP_ID:16), 2
 	jrl	nz, TempoRingBuf_OnModulationEvent_Skip4
@@ -6856,7 +6856,7 @@ TempoRingBuf_OnPitchBendEvent_Skip2:
 	ld	(4370:16), a
 	call	TempoRingBuf_ReadByte
 	ld	wa, hl
-	ld	(3538:16), 4
+	ld	(SQSTEP_RECORD_LENGTH:16), 4
 	ld	(CONTROL_LINE_KIND:16), 1
 	cp	(STATUS_POPUP_ID:16), 2
 	jrl	nz, TempoRingBuf_OnPitchBendEvent_Skip5
@@ -7910,7 +7910,7 @@ SqStep_ResetPositionState:
 ;   SqStepTtlFunc_Methods[1] (Display_CallConditionalCompare, the EVT_HIDE method) -> Display_ConditionalCompare ->
 ;   Display_CallMenuConfig.
 SqStep_RestoreOnLeave:
-	ld	(0x370f:16), 0
+	ld	(SQSTEP_CURSOR_STEP:16), 0
 	call	Display_UpdateRegion2_Wrap
 	ld	(3413:16), 255
 	and	(0x0f57:16), 254
@@ -7962,7 +7962,7 @@ SqStep_RestoreOnLeave_Skip4:
 	xor	wa, wa
 	ld	(3407:16), wa
 	ld	(3409:16), wa
-	ld	(0x370f:16), a
+	ld	(SQSTEP_CURSOR_STEP:16), a
 	ld	(3431:16), a
 	ld	(4360:16), wa
 	ld	(4345:16), a
@@ -9839,11 +9839,11 @@ SystemInit_StepHandler_0_Skip19:
 	call	VoiceSlot_RestoreState
 	call	VoiceSlot_FinalRetZ
 	ld	xiy, 3471
-	ld	(3538:16), 0
+	ld	(SQSTEP_RECORD_LENGTH:16), 0
 	ld	(xiy), a
 SysEx_BytecodeDispatcher_Tbl2_Join6:
 	inc	1, xiy
-	inc	1, (3538:16)
+	inc	1, (SQSTEP_RECORD_LENGTH:16)
 	push	xiy
 	call	VoiceSlot_FinalRetZ
 	pop	xiy
@@ -9862,7 +9862,7 @@ SystemInit_StepHandler_0_Skip20:
 	popw	bc
 	djnz16	bc, -9
 	ld	xiy, 3471
-	ld	w, (3538:16)
+	ld	w, (SQSTEP_RECORD_LENGTH:16)
 	call	SystemInit_StepHandler_0_Helper2
 	ld	a, 1:opc
 	call	VoiceSlot_RestoreState
@@ -12361,7 +12361,7 @@ SoundEvt_LongPacketHandler_DispatchTbl_Target1_Helper2_Skip7:
 	jrl	ule, VoiceState_DataBlock2_Code_Skip15
 	sub	h, 32
 VoiceState_DataBlock2_Code_Skip15:
-	ld	(0x370f:16), h
+	ld	(SQSTEP_CURSOR_STEP:16), h
 	call	Display_UpdateRegion2_Wrap
 	ret
 VoiceState_DataBlock2_Helper2:
@@ -12924,14 +12924,14 @@ SubCPU_ToneFormatDone:
 	jrl	z, SubCPU_ToneFormatDone_Skip
 	jp	SubCPU_ToneClearRegion_Return
 SubCPU_ToneFormatDone_Skip:
-	ld	w, (3538:16)
+	ld	w, (SQSTEP_RECORD_LENGTH:16)
 	ld	w, 6:opc
 	ld	xiy, 4382
 	call	SystemInit_StepHandler_0_Helper2
 SubCPU_ToneClearRegion:
 	or	(0x0dd3:16), 1
 	xor	a, a
-	ld	(3538:16), a
+	ld	(SQSTEP_RECORD_LENGTH:16), a
 	ld	(3413:16), 255
 	call	VoiceSlot_ReadParamsWithSaveRestore_Helper3
 	cp	w, 0:i3
@@ -17393,9 +17393,9 @@ Scoop_Selection_DrawMode1:
 	ld xiy, SqStep_CursorRowEndBar
 	ld xix, SqStep_RhythmCursor
 	call UIRender_TwoTableGeneral
-	cp (0x370f:16), 0
+	cp (SQSTEP_CURSOR_STEP:16), 0
 	jr z, Scoop_Selection_End
-	ld a, (0x370f:16)
+	ld a, (SQSTEP_CURSOR_STEP:16)
 	ld (4495:16), a
 	ld xiy, SqStep_StepCursor
 	call UIRender_TwoTableEvtCheck

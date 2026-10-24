@@ -16110,7 +16110,7 @@ PsCmpCpFGrpBoxProc_OnApRhyGrpNm:
 	inc	8, xsp
 	lda	xwa, (xiz+22)
 	lda	xbc, (xiz+32)
-	cp	(0x390b:16), 0
+	cp	(CMPNCP_FROM_ITEM:16), 0
 	jr	nz, PsCmpCpFGrpBox_SetColorFF
 	cp	(0x39e4:16), 0
 	jr	nz, PsCmpCpFGrpBox_SetColorFF
@@ -16139,7 +16139,7 @@ PsCmpCpFGrpBox_SendNotify:
 	ld	bc, (xde)
 	add	bc, 39
 	ld	(xwa+6), bc
-	cp	(14603:16), 0
+	cp	(CMPNCP_FROM_ITEM:16), 0
 	jr	nz, PsCmpCpFGrpBox_PushF5
 	pushw 242
 	ld	bc, 1:i3
@@ -16219,7 +16219,7 @@ PsCmpCpFVariBoxProc_OnApRhyVariNm:
 	inc	8, xsp
 	lda	xwa, (xiz+22)
 	lda	xbc, (xiz+32)
-	cp	(0x390b:16), 1
+	cp	(CMPNCP_FROM_ITEM:16), 1
 	jr	nz, PsCmpCpFVariBox_SetColorFF
 	cp	(0x39e4:16), 0
 	jr	nz, PsCmpCpFVariBox_SetColorFF
@@ -16251,7 +16251,7 @@ PsCmpCpFVariBox_SendNotify:
 	ld	bc, (xde)
 	add	bc, 39
 	ld	(xwa+6), bc
-	cp	(14603:16), 1
+	cp	(CMPNCP_FROM_ITEM:16), 1
 	jr	nz, PsCmpCpFVariBox_PushF5
 	pushw 242
 	ld	bc, 1:i3
@@ -16317,7 +16317,7 @@ PsCmpCpFPtnBoxProc_OnPaintOrRepaint:
 	inc	8, xsp
 	lda	xwa, (xiz+22)
 	lda	xbc, (xiz+32)
-	cp	(14603:16), 2
+	cp	(CMPNCP_FROM_ITEM:16), 2
 	jr	nz, PsCmpCpFPtnBox_SetColorFF
 	cp	(14820:16), 0
 	jr	nz, PsCmpCpFPtnBox_SetColorFF
@@ -16346,7 +16346,7 @@ PsCmpCpFPtnBox_SendNotify:
 	ld	bc, (xde)
 	add	bc, 38
 	ld	(xwa+6), bc
-	cp	(14603:16), 2
+	cp	(CMPNCP_FROM_ITEM:16), 2
 	jr	nz, PsCmpCpFPtnBox_PushF5
 	pushw 242
 	ld	bc, 1:i3
@@ -16687,7 +16687,7 @@ AcMemNoBoxProc_OnPaintOrRepaint:
 	inc	8, xsp
 	lda	xwa, (xiz+22)
 	lda	xbc, (xiz+32)
-	cp	(14604:16), 1
+	cp	(CMPNCP_TO_ITEM:16), 1
 	jr	nz, AcMemNoBox_SetColorFF
 	cp	(14820:16), 1
 	jr	nz, AcMemNoBox_SetColorFF
@@ -16719,7 +16719,7 @@ AcMemNoBox_SendNotify:
 	ld	bc, (xde)
 	add	bc, 46
 	ld	(xwa+6), bc
-	cp	(14604:16), 1
+	cp	(CMPNCP_TO_ITEM:16), 1
 	jr	nz, AcMemNoBox_PushF5
 	pushw 242
 	ld	bc, 1:i3
@@ -16805,7 +16805,7 @@ AcCmpRecBoxProc_OnPaintOrRepaint:
 AcCmpRecBox_CheckParam2:
 	ld	xwa, (xsp+4)
 	ld	e, (xwa+37)
-	ld	a, (13397:16)
+	ld	a, (CMP_SOLO:16)
 	and	a, e
 	cp	a, e
 	jr	nz, AcCmpRecBox_AdjustTable
@@ -17199,7 +17199,7 @@ PsNameMemBoxProc_OnPaintOrRepaint:
 	inc	8, xsp
 	lda	xwa, (xiz+22)
 	lda	xbc, (xiz+32)
-	cp	(14604:16), 0
+	cp	(CMPNCP_TO_ITEM:16), 0
 	jr	nz, PsNameMemBox_SetColorFF
 	cp	(14820:16), 1
 	jr	nz, PsNameMemBox_SetColorFF
@@ -17231,7 +17231,7 @@ PsNameMemBox_SendNotify:
 	ld	bc, (xde)
 	add	bc, 38
 	ld	(xwa+6), bc
-	cp	(14604:16), 0
+	cp	(CMPNCP_TO_ITEM:16), 0
 	jr	nz, EasyCmp_TtlDispatch
 	pushw 242
 	ld	bc, 1:i3

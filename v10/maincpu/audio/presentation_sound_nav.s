@@ -1915,7 +1915,7 @@ AcNaming_CheckDefaultWidget:
 
 AcNaming_InitScrollState:
 	ldw (NAMING_CURSOR:24), 0x0000
-	ldw (0x0274da:24), 0x0000
+	ldw (NAMING_PAGE:24), 0x0000
 	ld xwa, (0x0274d2:24)
 	ld xbc, EVT_GET_STRING_LENGTH
 	ld xde, 0:i3
@@ -1930,14 +1930,14 @@ AcNaming_QueryCharSet:
 	ld xbc, EVT_GET_NAMING_MODE
 	ld xde, 0:i3
 	call ApFuncCall
-	ld (0x0274e2:24), hl
+	ld (NAMING_MODE:24), hl
 	ld wa, hl
 	extz xwa
 	sll xwa, 2
 	ld xbc, AcNaming_FillCharByMode
 	add xbc, xwa
 	ld xwa, (xbc)
-	ld (0x0274e4:24), xwa
+	ld (NAMING_CHARSET:24), xwa
 	cp hl, 0:i3
 	jr z, AcNaming_ShowNavButtons
 	ld xwa, 0x17

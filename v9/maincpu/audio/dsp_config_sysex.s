@@ -850,7 +850,7 @@ AddswbWr_BufferFull:
 	retd 0x2
 
 SwbtWr:
-	lda xix, (0xc039:16)
+	lda xix, (PANEL_EVENT_QUEUE:16)
 	ld xiy, xix
 	lda xhl, (xix + 60)
 	cp (xix), 0xff
@@ -927,7 +927,7 @@ SwbtWr_InitBank3:
 	ld (0xc081:16), xiy
 	ld xiy, SwbtBank3_PostCallbacks
 	ld (0xc085:16), xiy
-	ld xiy, 0xc039
+	ld xiy, PANEL_EVENT_QUEUE
 	ld (SWBTWR_BUFFER_PTR:16), xiy
 	calr SwbtWr_DispatchLoop_Init
 	ret
@@ -1034,7 +1034,7 @@ SwbtWr_QueuePostEvent_Done:
 	ret
 
 SwbtWr_TrailingBytecode:
-	ld	xhl, 0xc039
+	ld	xhl, PANEL_EVENT_QUEUE
 SwbtWr_TrailingBytecode_Join:
 	cp	(xhl), 255
 	jr	z, SwbtWr_TrailingBytecode_Skip

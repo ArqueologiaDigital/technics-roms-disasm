@@ -9,7 +9,7 @@
 ; =============================================================================
 
 	lda xde, (0x0274b0:24)
-	ld xhl, (0x0274e4:24)
+	ld xhl, (NAMING_CHARSET:24)
 	ld xbc, 0:i3
 
 WndScroll_CopyLoop:
@@ -77,7 +77,7 @@ WndScroll_HandleSelectionChange:
 	jrl z, UIDialog_ReturnZeroJmp
 	ld XWA,(XSP+0x32)
 	calr GetClientBox
-	ld wa, (0x0274da:24)
+	ld wa, (NAMING_PAGE:24)
 	extz XWA
 	sll XWA, 0x02
 	ld XBC,AcNaming_PageCharLists
@@ -226,7 +226,7 @@ WndScroll_DrawCurrentItem:
 
 WndScroll_RepaintAll:
 	ld wa, (0x0274dc:24)
-	cp wa, (0x0274da:24)
+	cp wa, (NAMING_PAGE:24)
 	jrl z, UIDialog_ReturnZeroJmp
 	ldw (0x0274e0:24), 0xffff
 	ld xwa, (xsp + 50)
@@ -234,7 +234,7 @@ WndScroll_RepaintAll:
 	lda xwa, (xsp + 34)
 	ldw bc, 0xf5
 	call DrawBox
-	ld wa, (0x0274da:24)
+	ld wa, (NAMING_PAGE:24)
 	extz xwa
 	sll xwa, 2
 	ld xbc, AcNaming_PageCharLists
@@ -278,9 +278,9 @@ WndScroll_DrawSingleItem:
 	inc 1, iz
 
 WndScroll_ItemCountCheck:
-	ld bc, (0x0274e2:24)
+	ld bc, (NAMING_MODE:24)
 	mul bc, 0x3
-	ld wa, (0x0274da:24)
+	ld wa, (NAMING_PAGE:24)
 	add bc, wa
 	extz xbc
 	add xbc, xbc
@@ -297,7 +297,7 @@ WndEvt_DispatchByEventCode:
 	ld xde, (xsp + 42)
 	calr WindowProc
 	ld xwa, (xsp + 42)
-	ld xbc, (0x0274e4:24)
+	ld xbc, (NAMING_CHARSET:24)
 	dec 1, xwa
 	cp xwa, 0x0
 	jrl c, UIDialog_ReturnZeroJmp
@@ -367,7 +367,7 @@ WndEvt_DispatchByEventCode_PrevChar:
 	ld	bc, (NAMING_CHAR:24)
 	cp	bc, 0:i3
 	jrl	z, UIDialog_ReturnZeroJmp
-	ld	wa, (160986:24)
+	ld	wa, (NAMING_PAGE:24)
 	extz	xwa
 	sll	xwa, 2
 	ld	xde, AcNaming_PageCharLists
@@ -423,7 +423,7 @@ WndEvt_EventCodeDispatch_OnIndexswUp:
 	jrl	c, UIDialog_ReturnZeroJmp
 	sub	bc, 13
 	ld	(NAMING_CHAR:24), bc
-	ld	wa, (160986:24)
+	ld	wa, (NAMING_PAGE:24)
 	extz	xwa
 	sll	xwa, 2
 	add	xde, xwa
@@ -458,7 +458,7 @@ WndEvt_EventCodeDispatch_OnIndexswUp:
 	ld	xde, (xsp+42)
 	jrl	WndEvt_EventCodeDispatch_Join3
 WndEvt_EventCodeDispatch_OnIndexswDownAny:
-	ld	wa, (160986:24)
+	ld	wa, (NAMING_PAGE:24)
 	extz	xwa
 	sll	xwa, 2
 	add	xde, xwa
@@ -474,9 +474,9 @@ WndEvt_EventCodeDispatch_OnIndexswDownAny:
 	ld	xwa, (xwa)
 	ld	xbc, (xsp+8)
 	call	ConvertStrings
-	ld	wa, (0x0274e2:24)
+	ld	wa, (NAMING_MODE:24)
 	mul	wa, 3
-	add	wa, (0x0274da:24)
+	add	wa, (NAMING_PAGE:24)
 	extz	xwa
 	add	xwa, xwa
 	lda	xde, (WndScroll_NamingPageLastIndex:24)
@@ -498,9 +498,9 @@ WndEvt_EventCodeDispatch_Skip3:
 	dec	1, wa
 	ld	(NAMING_CHAR:24), wa
 WndEvt_EventCodeDispatch_Skip4:
-	ld	bc, (0x0274e2:24)
+	ld	bc, (NAMING_MODE:24)
 	mul	bc, 3
-	ld	wa, (0x0274da:24)
+	ld	wa, (NAMING_PAGE:24)
 	add	bc, wa
 	extz	xbc
 	add	xbc, xbc
@@ -515,7 +515,7 @@ WndEvt_EventCodeDispatch_Skip4:
 	ld	bc, wa
 	add	bc, 13
 	ld	(NAMING_CHAR:24), bc
-	ld	wa, (0x0274da:24)
+	ld	wa, (NAMING_PAGE:24)
 	extz	xwa
 	sll	xwa, 2
 	; v10 does not spell this byte either
@@ -551,7 +551,7 @@ WndEvt_EventCodeDispatch_Skip4:
 	extz	xbc
 	ld	xde, xwa
 	add	xde, xbc
-	ld	xwa, (160996:24)
+	ld	xwa, (NAMING_CHARSET:24)
 	ld	a, (xwa)
 	ld	(xde), a
 	jr	WndEvt_EventCodeDispatch_Join
@@ -577,7 +577,7 @@ WndEvt_EventCodeDispatch_Join:
 ; WndEvt_DispatchByEventCode_NextChar: button 5 (dial up): next character of the page (0x274DE + 1) written at the
 ;   cursor
 WndEvt_DispatchByEventCode_NextChar:
-	ld	bc, (160986:24)
+	ld	bc, (NAMING_PAGE:24)
 	ld	wa, bc
 	extz	xwa
 	sll	xwa, 2
@@ -585,7 +585,7 @@ WndEvt_DispatchByEventCode_NextChar:
 	add	xde, xwa
 	ld	xwa, (xde)
 	ld	(xsp+4), xwa
-	ld	wa, (160994:24)
+	ld	wa, (NAMING_MODE:24)
 	mul	wa, 3
 	add	wa, bc
 	extz	xwa
@@ -623,7 +623,7 @@ WndEvt_DispatchByEventCode_NextChar:
 	jr	nz, WndEvt_DispatchByEventCode_NextChar_Skip6
 	ld	xbc, 160944
 	add	xbc, xwa
-	ld	xwa, (160996:24)
+	ld	xwa, (NAMING_CHARSET:24)
 	ld	a, (xwa)
 	ld	(xbc), a
 	jr	WndEvt_DispatchByEventCode_NextChar_Join2
@@ -680,7 +680,7 @@ WndEvt_DispatchByEventCode_InsertBlank_Skip7:
 	lda	xde, (160944:24)
 	ld	xbc, xde
 	add	xbc, xwa
-	ld	xwa, (160996:24)
+	ld	xwa, (NAMING_CHARSET:24)
 	ld	a, (xwa)
 	ld	(xbc), a
 	ld	xwa, 22
@@ -724,7 +724,7 @@ WndEvt_DispatchByEventCode_DeleteChar_Skip8:
 	lda	xde, (160944:24)
 	ld	xbc, xde
 	add	xbc, xwa
-	ld	xwa, (160996:24)
+	ld	xwa, (NAMING_CHARSET:24)
 	ld	a, (xwa)
 	ld	(xbc), a
 	ld	xwa, 22
@@ -769,7 +769,7 @@ WndEvt_DispatchByEventCode_CenterName_Skip9:
 	cp	de, 0:i3
 	jr	ule, WndEvt_DispatchByEventCode_CenterName_Skip10
 	lda	xbc, (0x0274b0:24)
-	ld	xwa, (0x0274e4:24)
+	ld	xwa, (NAMING_CHARSET:24)
 	ld	a, (xwa)
 WndEvt_DispatchByEventCode_CenterName_Loop3:
 	ld	hl, de
@@ -834,7 +834,7 @@ WndEvt_DispatchByEventCode_CenterName_Skip10:
 	cpw	(xsp+6), 0
 	jr	ule, WndEvt_DispatchByEventCode_CenterName_Skip
 	lda	xde, (0x0274b0:24)
-	ld	xhl, (0x0274e4:24)
+	ld	xhl, (NAMING_CHARSET:24)
 	ld	xbc, 0:i3
 WndEvt_DispatchByEventCode_CenterName_Loop2:
 	ld	xwa, xbc
@@ -867,7 +867,7 @@ WndEvt_DispatchByEventCode_CenterName_Skip:
 	cp	iz, wa
 	jr	nc, WndEvt_DispatchByEventCode_CenterName_Skip2
 	lda	xde, (160944:24)
-	ld	xhl, (160996:24)
+	ld	xhl, (NAMING_CHARSET:24)
 	ld	bc, iz
 	extz	xbc
 WndEvt_DispatchByEventCode_CenterName_Loop4:
@@ -949,8 +949,8 @@ WndScroll_StoreCallerPtr:
 
 WndScroll_HandleIndexChange:
 	ld wa, de
-	ld (0x0274da:24), de
-	cpw (0x0274e2:24), 0
+	ld (NAMING_PAGE:24), de
+	cpw (NAMING_MODE:24), 0
 	jr nz, WndScroll_SendSelectionEvents
 	ld de, wa
 	extz xde
@@ -959,12 +959,12 @@ WndScroll_HandleIndexChange:
 	call SendEvent
 
 WndScroll_SendSelectionEvents:
-	ld de, (0x0274da:24)
+	ld de, (NAMING_PAGE:24)
 	extz xde
 	ld xwa, (xsp + 50)
 	ld xbc, EVT_PARA_DRAW
 	call SendEvent
-	ld wa, (0x0274da:24)
+	ld wa, (NAMING_PAGE:24)
 	extz xwa
 	sll xwa, 2
 	ld xbc, WndScroll_CharSetCaptions
@@ -998,23 +998,23 @@ WndScroll_HandleCharInput:
 	ld	c, (xhl+bc)
 	bit 0, c
 	jr z, WndScroll_CharIsUppercase
-	ldw (0x0274da:24), 0x0000
+	ldw (NAMING_PAGE:24), 0x0000
 	ld c, 0x41:opc
 	jr WndScroll_ComputeCharOffset
 
 WndScroll_CharIsUppercase:
 	bit 1, c
 	jr z, WndScroll_CharIsLowercase
-	ldw (0x0274da:24), 0x0001
+	ldw (NAMING_PAGE:24), 0x0001
 	ld c, 0x61:opc
 	jr WndScroll_ComputeCharOffset
 
 WndScroll_CharIsLowercase:
 	bit 2, c
 	jr z, WndScroll_CharIsSpace
-	cpw (0x0274da:24), 2
+	cpw (NAMING_PAGE:24), 2
 	jr nz, WndScroll_SetCategoryZero
-	ldw (0x0274da:24), 0x0000
+	ldw (NAMING_PAGE:24), 0x0000
 
 WndScroll_SetCategoryZero:
 	ld c, 0x15:opc
@@ -1032,11 +1032,11 @@ WndScroll_ComputeCharOffset:
 WndScroll_CharIsSpace:
 	cp a, 0x20
 	jr nz, WndScroll_CharIsUnderscore
-	cpw (0x0274e2:24), 0
+	cpw (NAMING_MODE:24), 0
 	jrl nz, WndScroll_SendPageEvents
-	cpw (0x0274da:24), 2
+	cpw (NAMING_PAGE:24), 2
 	jr nz, WndScroll_SetSpaceOffset
-	ldw (0x0274da:24), 0x0000
+	ldw (NAMING_PAGE:24), 0x0000
 
 WndScroll_SetSpaceOffset:
 	ldw (NAMING_CHAR:24), 0x0025
@@ -1045,9 +1045,9 @@ WndScroll_SetSpaceOffset:
 WndScroll_CharIsUnderscore:
 	cp a, 0x5f
 	jr nz, WndScroll_SearchCharTable
-	cpw (0x0274da:24), 2
+	cpw (NAMING_PAGE:24), 2
 	jr nz, WndScroll_SetUnderscoreOffset
-	ldw (0x0274da:24), 0x0000
+	ldw (NAMING_PAGE:24), 0x0000
 
 WndScroll_SetUnderscoreOffset:
 	ldw (NAMING_CHAR:24), 0x001a
@@ -1074,14 +1074,14 @@ WndScroll_CompareCharLoop:
 	ld a, (xbc)
 	cp a, (xsp + 12)
 	jr nz, WndScroll_CharMismatch
-	ldw (0x0274da:24), 0x0002
+	ldw (NAMING_PAGE:24), 0x0002
 	ld (NAMING_CHAR:24), iz
 
 WndScroll_CharMismatch:
 	inc 1, iz
 
 WndScroll_CheckTableEnd:
-	ld wa, (0x0274e2:24)
+	ld wa, (NAMING_MODE:24)
 	mul wa, 0x3
 	inc 2, wa
 	extz xwa
@@ -1092,7 +1092,7 @@ WndScroll_CheckTableEnd:
 	jr ule, WndScroll_CompareCharLoop
 
 WndScroll_SendPageEvents:
-	ld de, (0x0274da:24)
+	ld de, (NAMING_PAGE:24)
 	extz xde
 	ld xwa, (xsp + 50)
 	ld xbc, EVT_SET_PAGE
@@ -1132,9 +1132,9 @@ WndScroll_HandleDialPage:
 	ld xwa, (xsp + 50)
 	ld xbc, EVT_SET_PAGE
 	call SendEvent
-	ld wa, (0x0274e2:24)
+	ld wa, (NAMING_MODE:24)
 	mul wa, 0x3
-	add wa, (0x0274da:24)
+	add wa, (NAMING_PAGE:24)
 	ld bc, wa
 	extz xbc
 	add xbc, xbc
@@ -1146,7 +1146,7 @@ WndScroll_HandleDialPage:
 	ld (NAMING_CHAR:24), wa
 
 WndScroll_ClampPageCount:
-	ld wa, (0x0274da:24)
+	ld wa, (NAMING_PAGE:24)
 	extz xwa
 	sll xwa, 2
 	ld xbc, AcNaming_PageCharLists
@@ -1166,7 +1166,7 @@ WndScroll_ClampPageCount:
 	jr nz, WndScroll_CheckSPMarker
 	cp (xwa + 1), 0x50
 	jr nz, WndScroll_CheckSPMarker
-	ld xwa, (0x0274e4:24)
+	ld xwa, (NAMING_CHARSET:24)
 	ld xde, 0:i3
 	ld e, (xwa)
 	ld xwa, (xsp + 50)

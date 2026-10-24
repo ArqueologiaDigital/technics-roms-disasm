@@ -8498,7 +8498,7 @@ ResetProgressIndication:
 	ldw (0x850a:16), 0xffff
 	call FileIO_InitRecordTable
 	ld xiy, FmmPassword_StateInit
-	ld xix, 0x8a0c
+	ld xix, PASSWORD_STATE
 	ldiw
 	ret
 

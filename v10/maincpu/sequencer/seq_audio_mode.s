@@ -43,7 +43,7 @@ AudioMode_CopyChannelMode:
 	ret
 
 AudioMode_CopyAccentFlags:
-	ld a, (0x34f1:16)
+	ld a, (CMP_SOLO:16)
 	and a, 0x3d
 	ld (0x3362:16), a
 	ret

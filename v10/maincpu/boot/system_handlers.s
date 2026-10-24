@@ -1271,7 +1271,7 @@ SeqTick_Return:
 MainLoop_ReinitSwbtWr:
 	call SwbtWr_InitBank3
 	call Audio_MainPeriodicUpdate
-	ld (0xc039:16), 255
+	ld (PANEL_EVENT_QUEUE:16), 255
 	calr SwbtWr_ReinitBothBanks
 	ret
 
@@ -5454,7 +5454,7 @@ SubCPU_Init_DMA_Channels:
 	ld a, 0x0:opc
 	ldc_cr8 a, 0x42
 	ld (INTERCPU_XFER_STATE:16), 0
-	ld (1506:16), 0
+	ld (INTERCPU_RX_STATE:16), 0
 	ret
 
 ; sendCOMM - Send chunked data to SubCPU via inter-CPU communication channel
@@ -5932,10 +5932,10 @@ INT0_ReadLatch:
 				; MSTAT1 is lowered at 0xEF35C4, with neither gate
 				; re-checked and no DI in between -- see the
 				; RE-ENTRANCY HAZARD note above INT0_HANDLER.
-	ld (1508:16), a	; 0x05E4 = the header byte, kept for INTTC0_HANDLER
+	ld (INTERCPU_RX_HEADER:16), a	; 0x05E4 = the header byte, kept for INTTC0_HANDLER
 	cp a, 0xe1
 	jr nz, INT0_CheckE2Command
-	ld (1506:16), 2
+	ld (INTERCPU_RX_STATE:16), 2
 	lda xwa, (1550:16)
 	ld (1494:16), xwa
 	ldc_cr32 xwa, 0x20
@@ -5951,7 +5951,7 @@ INT0_ReadLatch:
 INT0_CheckE2Command:
 	cp a, 0xe2
 	jr nz, INT0_HandleDataCommand
-	ld (1506:16), 3
+	ld (INTERCPU_RX_STATE:16), 3
 	lda xwa, (1556:16)
 	ld (1494:16), xwa
 	ldc_cr32 xwa, 0x20
@@ -5965,11 +5965,11 @@ INT0_CheckE2Command:
 	jr INT0_AckAndReturn
 
 INT0_HandleDataCommand:
-	ld (1506:16), 1
+	ld (INTERCPU_RX_STATE:16), 1
 	lda xwa, (1512:16)
 	ld (1494:16), xwa
 	ldc_cr32 xwa, 0x20
-	ld a, (1508:16)
+	ld a, (INTERCPU_RX_HEADER:16)
 	and a, 0x1f
 	inc 1, a
 	extz wa
@@ -6023,7 +6023,7 @@ INTTC0_HANDLER:
 	and a, 0xf8
 	set 0, a
 	ld (xbc), a
-	ld a, (1506:16)
+	ld a, (INTERCPU_RX_STATE:16)
 	cp a, 4:i3
 	jr z, INTTC0_E1_Phase2_Complete
 	cp a, 3:i3
@@ -6032,7 +6032,7 @@ INTTC0_HANDLER:
 	jr z, E1DMA_TransferSetup
 	cp a, 1:i3
 	jr nz, E1DMA_ISR_Epilogue
-	ld c, (1508:16)
+	ld c, (INTERCPU_RX_HEADER:16)
 	ld a, c
 	and a, 0x1f
 	inc 1, a
@@ -6045,7 +6045,7 @@ INTTC0_HANDLER:
 	ld xbc, 0x5e8
 	ld xhl, (xde)
 	call (xhl)
-	ld (1506:16), 0
+	ld (INTERCPU_RX_STATE:16), 0
 	jr INTTC0_SetTransferDone
 
 ; E1DMA ISR - DMA transfer setup (after SeqRingBuf dispatch)
@@ -6060,18 +6060,18 @@ E1DMA_TransferSetup:
 	and a, 0xf8
 	or a, 0x6
 	ld (xbc), a
-	ld (1506:16), 4
+	ld (INTERCPU_RX_STATE:16), 4
 	jr E1DMA_ISR_Epilogue
 
 INTTC0_E2_Complete:
 	ld (1510:16), 255
-	ld (1506:16), 0
+	ld (INTERCPU_RX_STATE:16), 0
 	set	1, (PZ:8)	; MSTAT1 - set to signal E2 command complete
 	set 7, (1566:16)
 	jr E1DMA_ISR_Epilogue
 
 INTTC0_E1_Phase2_Complete:
-	ld (1506:16), 0
+	ld (INTERCPU_RX_STATE:16), 0
 	res 7, (1568:16)
 
 INTTC0_SetTransferDone:
@@ -6120,7 +6120,7 @@ E1DMA_ISR_BytecodeBlock_Join2:
 	ret	ule
 	ldw	(0xe360:16), 0
 	ld	(256:16), 0
-	ld	(1506:16), 0
+	ld	(INTERCPU_RX_STATE:16), 0
 	set	1, (PZ:8)
 	inc	1, (0xe35e:16)
 	ret
@@ -6137,7 +6137,7 @@ INTTC0_HANDLER_Skip4:
 	cp	bc, 250
 	jr	le, E1DMA_ISR_BytecodeBlock_Loop
 	ld	(256:16), 0
-	ld	(1506:16), 0
+	ld	(INTERCPU_RX_STATE:16), 0
 	set	1, (PZ:8)
 	res	7, (0x620:16)
 	inc	1, (0xe364:16)

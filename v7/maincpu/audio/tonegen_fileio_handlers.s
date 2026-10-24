@@ -1247,7 +1247,7 @@ DSPCfg_Param_Default:
 	ld	hl, 0:i3
 	ret
 Encoder_MarkInvalid:
-	ld	(0xbf9d:16), 255
+	ld	(PANEL_EVENT_QUEUE:16), 255
 	ret
 Encoder_Stub1:
 	ret
@@ -1278,7 +1278,7 @@ PanelButton_ProcessChanges_Loop:
 	ld	a, (0x8df2:16)
 	extz	wa
 	sll	wa, 2
-	lda	xbc, (0xbf9d:16)
+	lda	xbc, (PANEL_EVENT_QUEUE:16)
 	extz	xwa
 	add	xwa, xbc
 	ld	(xwa), 0xff

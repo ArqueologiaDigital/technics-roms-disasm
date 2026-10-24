@@ -93,7 +93,7 @@ SeqName_HandlePlayAction:
 	call	CheckSongSlotHasData
 	cp	l, 0:i3
 	jr	z, SeqName_CheckDiskAvail
-	lda	xwa, (0x8970:16)
+	lda	xwa, (PASSWORD_STATE:16)
 	bitm	7, (xwa + 1)
 	jr	nz, SeqName_CheckDiskAvail
 	ld	(xwa), 0x1

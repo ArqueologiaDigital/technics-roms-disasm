@@ -833,7 +833,7 @@ SaveFilter_OpSave:
 	cp hl, 0:i3
 	jr z, SaveFilter_Save_NoPwd
 	ld xde, 0:i3
-	ld e, (0x8a0c:16)
+	ld e, (PASSWORD_STATE:16)
 	ld xwa, 0xffffffff
 	ld xbc, EVT_WAKEUP_PASSWORD
 	jr SaveFilter_DispatchWidget

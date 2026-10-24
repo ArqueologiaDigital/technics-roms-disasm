@@ -56,7 +56,7 @@ PanelEvent_Post:
 	ld	c, e
 	extz	bc
 	sll	bc, 2
-	lda	xde, (0xbf9d:16)
+	lda	xde, (PANEL_EVENT_QUEUE:16)
 	ld	ix, bc
 	extz	xix
 	add	xix, xde
@@ -1927,7 +1927,7 @@ PanelButton_HelpMode_Epilogue:
 	pop	xiz
 	ret
 VoiceEntry_FindMasterVolume:
-	lda	xde, (0xbf9d:16)
+	lda	xde, (PANEL_EVENT_QUEUE:16)
 	ld	xbc, 0:i3
 	ld	wa, 0:i3
 	jr	VoiceEntry_CheckTerminator
@@ -2476,35 +2476,35 @@ MidiParam_DeltaDone:
 	ret
 Audio_UpdateLEDsAndChannels:
 	calr	Audio_InitChannelTimers
-	orw	(0x8ea6:16), 2
+	orw	(LED_REQUEST_3:16), 2
 	ret
 MIDI_ProcessChangedChannels:
 	cp	(CURRENT_TITLE:16), 251
 	ret	z
 	calr	Audio_CheckAndFlagChanges
-	ld	wa, (0x8ea0:16)
+	ld	wa, (LED_REQUEST_HOLD_1:16)
 	cpl	wa
-	and	wa, (0x8e9e:16)
+	and	wa, (LED_REQUEST_1:16)
 	jr	z, MidiChanged_ProcessGroup2
 	ld	xbc, PanelLed_PendingGroup1Handlers
 	calr	DispatchBitmaskHandlers
-	ldw	(0x8e9e:16), 0
+	ldw	(LED_REQUEST_1:16), 0
 MidiChanged_ProcessGroup2:
-	ld	wa, (0x8ea4:16)
+	ld	wa, (LED_REQUEST_HOLD_2:16)
 	cpl	wa
-	and	wa, (0x8ea2:16)
+	and	wa, (LED_REQUEST_2:16)
 	jr	z, MidiChanged_ProcessGroup3
 	ld	xbc, PanelLed_PendingGroup2Handlers
 	calr	DispatchBitmaskHandlers
-	ldw	(0x8ea2:16), 0
+	ldw	(LED_REQUEST_2:16), 0
 MidiChanged_ProcessGroup3:
-	ld	wa, (0x8ea8:16)
+	ld	wa, (LED_REQUEST_HOLD_3:16)
 	cpl	wa
-	and	wa, (0x8ea6:16)
+	and	wa, (LED_REQUEST_3:16)
 	jr	z, MidiChanged_ProcessGroup4
 	ld	xbc, PanelLed_PendingGroup3Handlers
 	calr	DispatchBitmaskHandlers
-	ldw	(0x8ea6:16), 0
+	ldw	(LED_REQUEST_3:16), 0
 MidiChanged_ProcessGroup4:
 	ld	wa, (0x8eac:16)
 	cpl	wa
@@ -2517,19 +2517,19 @@ MidiChanged_ProcessGroup4:
 MidiChannel_DispatchChanged:
 	cp	(CURRENT_TITLE:16), 251
 	ret	z
-	ld	wa, (0x8ea0:16)
+	ld	wa, (LED_REQUEST_HOLD_1:16)
 	cp	wa, 0:i3
 	jr	z, MidiDispatch_CheckGroup2
 	ld	xbc, PanelLed_HeldGroup1Handlers
 	calr	DispatchBitmaskHandlers
 MidiDispatch_CheckGroup2:
-	ld	wa, (0x8ea4:16)
+	ld	wa, (LED_REQUEST_HOLD_2:16)
 	cp	wa, 0:i3
 	jr	z, MidiDispatch_CheckGroup3
 	ld	xbc, PanelLed_HeldGroup2Handlers
 	calr	DispatchBitmaskHandlers
 MidiDispatch_CheckGroup3:
-	ld	wa, (0x8ea8:16)
+	ld	wa, (LED_REQUEST_HOLD_3:16)
 	cp	wa, 0:i3
 	jr	z, MidiDispatch_CheckGroup4
 	ld	xbc, PanelLed_HeldGroup3Handlers
@@ -2557,7 +2557,7 @@ Audio_CheckAndFlagChanges:
 	call	GetDialEnableState
 	cp	l, (0x8ec2:16)
 	jr	z, AudioChange_CheckSelectionState
-	orw	(0x8ea6:16), 64
+	orw	(LED_REQUEST_3:16), 64
 	ld	(0x8ec2:16), l
 AudioChange_CheckSelectionState:
 	call	CtrlPanel_GetSelectionState
@@ -2565,13 +2565,13 @@ AudioChange_CheckSelectionState:
 	ret	z
 	cp	l, 2:i3
 	jr	nz, AudioChange_UpdatePreviousSelect
-	orw	(0x8ea8:16), 4
+	orw	(LED_REQUEST_HOLD_3:16), 4
 AudioChange_UpdatePreviousSelect:
 	cp	(0x8ec4:16), 2
 	jr	nz, AudioChange_SetChannelFlag
-	andw	(0x8ea8:16), 0xfffb
+	andw	(LED_REQUEST_HOLD_3:16), 0xfffb
 AudioChange_SetChannelFlag:
-	orw	(0x8ea6:16), 4
+	orw	(LED_REQUEST_3:16), 4
 	ld	(0x8ec4:16), l
 	ret
 DispatchBitmaskHandlers:
@@ -3564,13 +3564,13 @@ CtrlPanel_SetIndicatorBit:
 	jr	z, CtrlPanel_SetIndicator_Group2
 	cpib_erp	0xfb, 0
 	jr	nz, CtrlPanel_PopRetFA
-	or	(0x8e9e:16), hl
+	or	(LED_REQUEST_1:16), hl
 	jr	CtrlPanel_PopRetFA
 CtrlPanel_SetIndicator_Group2:
-	or	(0x8ea2:16), hl
+	or	(LED_REQUEST_2:16), hl
 	jr	CtrlPanel_PopRetFA
 CtrlPanel_SetIndicator_Group3:
-	or	(0x8ea6:16), hl
+	or	(LED_REQUEST_3:16), hl
 	jr	CtrlPanel_PopRetFA
 CtrlPanel_SetIndicator_Group4:
 	or	(0x8eaa:16), hl
@@ -3593,13 +3593,13 @@ CtrlPanel_IndicatorDispatch:
 	jr	z, CtrlPanel_DispIndicator_Group2
 	cpib_erp	0xfb, 0
 	jr	nz, CtrlPanel_PopRetFA2
-	or	(0x8ea0:16), hl
+	or	(LED_REQUEST_HOLD_1:16), hl
 	jr	CtrlPanel_PopRetFA2
 CtrlPanel_DispIndicator_Group2:
-	or	(0x8ea4:16), hl
+	or	(LED_REQUEST_HOLD_2:16), hl
 	jr	CtrlPanel_PopRetFA2
 CtrlPanel_DispIndicator_Group3:
-	or	(0x8ea8:16), hl
+	or	(LED_REQUEST_HOLD_3:16), hl
 	jr	CtrlPanel_PopRetFA2
 CtrlPanel_DispIndicator_Group4:
 	or	(0x8eac:16), hl
@@ -3622,16 +3622,16 @@ CtrlPanel_SetIndicatorLED:
 	jr	z, CtrlPanel_SetLED_Group2
 	cpib_erp	0xfb, 0
 	jr	nz, MidiChOutState_Return
-	and	(0x8ea0:16), wa
-	or	(0x8e9e:16), hl
+	and	(LED_REQUEST_HOLD_1:16), wa
+	or	(LED_REQUEST_1:16), hl
 	jr	MidiChOutState_Return
 CtrlPanel_SetLED_Group2:
-	and	(0x8ea4:16), wa
-	or	(0x8ea2:16), hl
+	and	(LED_REQUEST_HOLD_2:16), wa
+	or	(LED_REQUEST_2:16), hl
 	jr	MidiChOutState_Return
 CtrlPanel_SetLED_Group3:
-	and	(0x8ea8:16), wa
-	or	(0x8ea6:16), hl
+	and	(LED_REQUEST_HOLD_3:16), wa
+	or	(LED_REQUEST_3:16), hl
 MidiChOutState_Return:
 	popw_erp	0xfa
 	ret
@@ -3692,13 +3692,13 @@ MidiChOut_DetectChanges:
 	xor	a, (0x33df:16)
 	bit	2, a
 	ret	z
-	orw	(0x8ea2:16), 4
+	orw	(LED_REQUEST_2:16), 4
 	ldmm8	0x33df, ACC_TRANSPORT_STATE
 	ret
 MidiChannel_ScanPending:
 	push	xiz
 	lda	xiz, (ENCODER_STATE_BASE:16)
-	ld	wa, (0x8ea4:16)
+	ld	wa, (LED_REQUEST_HOLD_2:16)
 	bit	2, wa
 	jr	nz, MidiScan_PopIzRet
 	ld	a, (0x8eae:16)
@@ -3750,13 +3750,13 @@ UIState_UpdateControlBits:
 	jr	z, UIState_UpdateControlBits_Skip
 	cp	a, 0:i3
 	ret	nz
-	orw	(0x8e9e:16), 0x69
+	orw	(LED_REQUEST_1:16), 0x69
 	ret
 UIState_UpdateControlBits_Skip:
-	orw	(0x8e9e:16), 0x28
+	orw	(LED_REQUEST_1:16), 0x28
 	ret
 UIState_UpdateControlBits_Skip2:
-	orw	(0x8e9e:16), 0x40
+	orw	(LED_REQUEST_1:16), 0x40
 	ret
 UIState_SwitchOnDisplayMode:
 	; --- Switch on A = (0xc07d): or bits into (0x8f3a)/(0x8f42) (53 bytes) ---
@@ -3771,16 +3771,16 @@ UIState_SwitchOnDisplayMode:
 	jr	z, UIState_Mode0or1
 	cp	a, 0x10
 	ret	nz
-	orw	(0x8e9e:16), 107
+	orw	(LED_REQUEST_1:16), 107
 	ret
 UIState_Mode0or1:
-	orw	(0x8e9e:16), 111
+	orw	(LED_REQUEST_1:16), 111
 	ret
 UIState_Mode3:
-	orw	(0x8ea6:16), 512
+	orw	(LED_REQUEST_3:16), 512
 	ret
 UIState_Mode4:
-	orw	(0x8ea6:16), 0x8000
+	orw	(LED_REQUEST_3:16), 0x8000
 	ret
 ; (pre-port v7 note about the bytes at 0xFC7396:)
 ; framing ported from v10's source for the same label (same span length, statement for statement); 29 of 48 slots byte-identical
@@ -3797,10 +3797,10 @@ UIState_ProcessExtendedMode:
 	lda	xix, (UIState_ProcessExtendedMode_Cases:24)
 	jp	t, (xix+wa)
 UIState_ProcessExtendedMode_Cases:	; the switch's base: case k is at +UIState_ProcessExtendedMode_CaseTable[k]
-	orw	(36514:16), 515
+	orw	(LED_REQUEST_2:16), 515
 	ret
 UIState_ProcessExtendedMode_Case5:	; cases 5, 6
-	orw	(36514:16), 252
+	orw	(LED_REQUEST_2:16), 252
 	ret
 UIState_ProcessExtendedMode_Case3:
 	ld	xwa, 0x028080
@@ -3809,13 +3809,13 @@ UIState_ProcessExtendedMode_Case3:
 	jr	z, UIState_ProcessExtendedMode_Skip
 	ld	(0xffc8:24), l
 UIState_ProcessExtendedMode_Skip:
-	orw	(36514:16), 256
+	orw	(LED_REQUEST_2:16), 256
 	ret
 UIState_ProcessExtendedMode_Case4:
-	orw	(36518:16), 16
+	orw	(LED_REQUEST_3:16), 16
 	ret
 UIState_ProcessExtendedMode_Case7:
-	orw	(36514:16), 512
+	orw	(LED_REQUEST_2:16), 512
 UIState_ProcessExtendedMode_Case1:	; cases 1, 2
 	ret
 UIStateEvt_NullHandler:
@@ -3832,16 +3832,16 @@ UIState_SwitchForMidiFlags:
 	cp	a, 6:i3
 	ret	nz
 UIState_MidiMode6:
-	orw	(0x8ea6:16), 1024
+	orw	(LED_REQUEST_3:16), 1024
 	ret
 UIState_MidiMode3F:
-	orw	(0x8ea6:16), 2048
+	orw	(LED_REQUEST_3:16), 2048
 	ret
 UIState_MidiMode4:
-	orw	(0x8ea6:16), 2
+	orw	(LED_REQUEST_3:16), 2
 	ret
 UIState_MidiMode14:
-	orw	(0x8ea6:16), 4096
+	orw	(LED_REQUEST_3:16), 4096
 	ret
 UIState_NullReturn:
 	ret
@@ -3853,19 +3853,19 @@ UIState_ProcessAltMode:
 	jr	z, UIState_ProcessAltMode_Skip
 	cp	a, 1:i3
 	ret	nz
-	orw	(0x8ea6:16), 0x3
+	orw	(LED_REQUEST_3:16), 0x3
 	ret
 UIState_ProcessAltMode_Skip:
-	orw	(0x8ea6:16), 0x8
+	orw	(LED_REQUEST_3:16), 0x8
 	ret
 UIState_ProcessAltMode_Skip2:
-	orw	(0x8ea6:16), 0x6000
+	orw	(LED_REQUEST_3:16), 0x6000
 	ret
 UIState_ProcessSimpleMode:
 	ld	a, (SWBTWR_PAYLOAD_1:16)
 	cp	a, 1:i3
 	ret	nz
-	orw	(0x8e9e:16), 0x90
+	orw	(LED_REQUEST_1:16), 0x90
 	ret
 CtrlPanel_LookupIndicatorEntry:
 	extz	wa
@@ -3886,7 +3886,7 @@ FindBit_ShiftLoop:
 	jr	z, FindBit_ShiftLoop
 	ret
 Audio_InitAllDefaults:
-	ld	(0xbf9d:16), 255
+	ld	(PANEL_EVENT_QUEUE:16), 255
 	ld	(SWBTWR_EVENT_QUEUE:16), 255
 	ldw	(0x9042:16), 0
 	ldw	(0x9044:16), 0
@@ -4719,7 +4719,7 @@ Audio_InitSingleChannelParams:
 	inc	2, xsp
 	ret
 Audio_MainPeriodicUpdate:
-	cp	(0xbf9d:16), 255
+	cp	(PANEL_EVENT_QUEUE:16), 255
 	ret	z
 	res	0, (0x90c9:16)
 	lda	xwa, (PanelTlv_PayloadByTag:24)
@@ -4767,7 +4767,7 @@ FileIO_OperationDispatch:
 	pop	xde
 	ldw	(0x9044:16), 0
 FileIO_ProcessRemainingOps:
-	lda	xbc, (0xbf9d:16)
+	lda	xbc, (PANEL_EVENT_QUEUE:16)
 	ld	wa, (EXT_RECORD_OFFSET:16)
 	extz	xwa
 	add	xwa, xbc
@@ -6431,7 +6431,7 @@ SndParam_FetchSequencerParams:
 	ld	bc, wa
 	inc	1, wa
 	ld	(EXT_RECORD_OFFSET:16), wa
-	lda	xwa, (0xbf9d:16)
+	lda	xwa, (PANEL_EVENT_QUEUE:16)
 	extz	xbc
 	add	xbc, xwa
 	mrib4	0x81, 0x19, 0x8b, 0x90
@@ -6443,7 +6443,7 @@ SndParam_FetchSequencerParams:
 	ld	de, wa
 	inc	1, wa
 	ld	(EXT_RECORD_OFFSET:16), wa
-	lda	xbc, (0xbf9d:16)
+	lda	xbc, (PANEL_EVENT_QUEUE:16)
 	extz	xde
 	add	xde, xbc
 	ld	a, (xde)
@@ -10767,7 +10767,7 @@ MidiStream_ProcessRxBuffer:
 	jr	nz, MidiStream_ProcessDone
 	ldw	(EXT_RECORD_OFFSET:16), 0
 MidiStream_DispatchLoop:
-	ld	xix, 0xbf9d
+	ld	xix, PANEL_EVENT_QUEUE
 	ld	hl, (EXT_RECORD_OFFSET:16)
 	ld	a, (xix+hl)
 	cp	a, 0xff

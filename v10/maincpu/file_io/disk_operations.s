@@ -844,7 +844,7 @@ FmmSaveTtl_SlotLoop:
 	call FileIO_BuildRecordPath_Return
 	call FileIO_SetModeFlag_Reading
 	ld xiy, FmmPassword_StateInit
-	ld xix, 0x8a0c
+	ld xix, PASSWORD_STATE
 	ldiw
 
 FmmSaveTtl_CommitSave:

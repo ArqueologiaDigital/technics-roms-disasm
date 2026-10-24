@@ -10201,7 +10201,7 @@ TitleProc:
 	ld xwa, (xwa)
 	ld (xsp + 4), xwa
 	ld xde, xiz
-	ld wa, (0x02bc30:24)
+	ld wa, (TITLE_FLAGS:24)
 	and wa, 0x11
 	ld (xsp + 28), wa
 	cp xiz, EVT_ACTIVATE_STATE
@@ -10904,7 +10904,7 @@ EnumList_Confirm_Init:
 	jrl TitleProc_ClearAndReturn
 
 EnumList_Confirm_Forward:
-	ld wa, (0x02bc30:24)
+	ld wa, (TITLE_FLAGS:24)
 	and wa, 0x1
 	cp wa, 0:i3
 	scc16 nz, hl
@@ -10966,7 +10966,7 @@ EnumList_ReturnZero:
 	jrl TitleProc_ClearAndReturn
 
 EnumList_Return:
-	ld wa, (0x02bc30:24)
+	ld wa, (TITLE_FLAGS:24)
 	bit 0x00,WA
 	jr z, .Lc_fa5240
 	ld WA,(XSP+0x16)
@@ -11013,9 +11013,9 @@ EnumList_OK:
 	ld XDE,0xffffffff
 	call KillApTimer
 TitleProc_ToggleFlag:
-	ld de, (0x02bc30:24)
+	ld de, (TITLE_FLAGS:24)
 	xor de, 0x1
-	ld (0x02bc30:24), de
+	ld (TITLE_FLAGS:24), de
 	extz xde
 	ld xwa, NAKA_MAINFUNC_MainTitleControl
 	ld xbc, EVT_SET_TITLE_FLAG
@@ -11174,7 +11174,7 @@ EnumList_HitTest_NoMatch:
 	ld XBC,EVT_NEW_TITLE
 	ld xde, 0:i3
 	call SendEvent
-	ld wa, (0x02bc30:24)
+	ld wa, (TITLE_FLAGS:24)
 	bit 0x05,WA
 	jr z, TitleProc_ReturnZero
 	ld WA,(XSP+0x16)
@@ -11219,7 +11219,7 @@ GetTitleOld:
 SetInterruptTime:
 	pushw iz
 	ld iz, wa
-	ld wa, (0x02bc30:24)
+	ld wa, (TITLE_FLAGS:24)
 	bit 1, wa
 	jr z, EnumList_Reset
 	cp iz, 2:i3
@@ -11239,7 +11239,7 @@ EnumList_Reset:
 	ret
 
 CheckNotDrawFlag:
-	ld wa, (0x02bc30:24)
+	ld wa, (TITLE_FLAGS:24)
 	and wa, 0x4
 	cp wa, 0:i3
 	scc16 z, hl
@@ -11266,8 +11266,8 @@ EnumList_Reset_Send:
 	jr TitleProc_ClearResourceDirtyFlag
 
 TitleProc_SetResourceDirtyFlag:
-	or (0x02bc30:24), wa
-	ld de, (0x02bc30:24)
+	or (TITLE_FLAGS:24), wa
+	ld de, (TITLE_FLAGS:24)
 	extz xde
 	ld xwa, NAKA_MAINFUNC_MainTitleControl
 	ld xbc, EVT_SET_TITLE_FLAG
@@ -11275,8 +11275,8 @@ TitleProc_SetResourceDirtyFlag:
 
 TitleProc_ClearResourceDirtyFlag:
 	cpl wa
-	and (0x02bc30:24), wa
-	ld de, (0x02bc30:24)
+	and (TITLE_FLAGS:24), wa
+	ld de, (TITLE_FLAGS:24)
 	extz xde
 	ld xwa, NAKA_MAINFUNC_MainTitleControl
 	ld xbc, EVT_SET_TITLE_FLAG

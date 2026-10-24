@@ -16,7 +16,7 @@ FmmPasswordFunc:
 	ld wa, iz
 	cp xbc, EVT_CHECK_PASSWORD3
 	jrl z, Password_HandleLoadEvent
-	lda xde, (0x8a0c:16)
+	lda xde, (PASSWORD_STATE:16)
 	cp xbc, EVT_CHECK_PASSWORD2
 	jrl z, Password_HandleSaveEvent
 	cp xbc, EVT_CHECK_PASSWORD
@@ -41,7 +41,7 @@ Password_ClearAndSetSlot:
 	call ClearAllSongSlots
 	ld wa, iz
 	call SetCurrentSlotIndex
-	lda xwa, (0x8a0d:16)
+	lda xwa, (PASSWORD_STATE+1:16)
 	setm 7, (xwa)
 	setm 6, (xwa)
 	jrl Password_Return
@@ -56,7 +56,7 @@ Password_HandleDeleteEvent:
 	call CheckIsCurrentSlot
 	cp l, 0:i3
 	jr z, Password_Delete_CheckLoadOnly
-	lda xwa, (0x8a0d:16)
+	lda xwa, (PASSWORD_STATE+1:16)
 	setm 7, (xwa)
 	setm 6, (xwa)
 	ld xwa, (xsp + 4)
@@ -65,26 +65,26 @@ Password_HandleDeleteEvent:
 	jr Password_ForwardToFileName
 
 Password_Delete_CheckLoadOnly:
-	cp (0x8a0c:16), 1
+	cp (PASSWORD_STATE:16), 1
 	jr nz, Password_Delete_CheckSaveOnly
 	ld wa, iz
 	call CheckSlotIsSelected
 	cp l, 0:i3
 	jr z, Password_Delete_CheckSaveOnly
-	set 7, (0x8a0d:16)
+	set 7, (PASSWORD_STATE+1:16)
 	ld xwa, (xsp + 4)
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, 4:i3
 	jr Password_ForwardToFileName
 
 Password_Delete_CheckSaveOnly:
-	cp (0x8a0c:16), 2
+	cp (PASSWORD_STATE:16), 2
 	jr nz, Password_ShowErrorStatus
 	ld wa, iz
 	call CheckIsCurrentSlot
 	cp l, 0:i3
 	jr z, Password_ShowErrorStatus
-	set 6, (0x8a0d:16)
+	set 6, (PASSWORD_STATE+1:16)
 	ld xwa, (xsp + 4)
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, 4:i3
@@ -108,7 +108,7 @@ Password_HandleSaveEvent:
 	call CheckIsCurrentSlot
 	cp l, 0:i3
 	jr z, Password_Save_CheckLoadOnly
-	lda xwa, (0x8a0d:16)
+	lda xwa, (PASSWORD_STATE+1:16)
 	setm 7, (xwa)
 	setm 6, (xwa)
 	ld xwa, (xsp + 4)
@@ -117,26 +117,26 @@ Password_HandleSaveEvent:
 	jr Password_ForwardToSaveFilter
 
 Password_Save_CheckLoadOnly:
-	cp (0x8a0c:16), 1
+	cp (PASSWORD_STATE:16), 1
 	jr nz, Password_Save_CheckSaveOnly
 	ld wa, iz
 	call CheckSlotIsSelected
 	cp l, 0:i3
 	jr z, Password_Save_CheckSaveOnly
-	set 7, (0x8a0d:16)
+	set 7, (PASSWORD_STATE+1:16)
 	ld xwa, (xsp + 4)
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, 0xa
 	jr Password_ForwardToSaveFilter
 
 Password_Save_CheckSaveOnly:
-	cp (0x8a0c:16), 2
+	cp (PASSWORD_STATE:16), 2
 	jr nz, Password_SaveErrorStatus
 	ld wa, iz
 	call CheckIsCurrentSlot
 	cp l, 0:i3
 	jr z, Password_SaveErrorStatus
-	set 6, (0x8a0d:16)
+	set 6, (PASSWORD_STATE+1:16)
 	ld xwa, (xsp + 4)
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, 0xa
@@ -154,7 +154,7 @@ Password_HandleLoadEvent:
 	call CheckSlotIsSelected
 	cp l, 0:i3
 	jr z, Password_LoadErrorStatus
-	set 7, (0x8a0d:16)
+	set 7, (PASSWORD_STATE+1:16)
 	ld xwa, (xsp + 4)
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, 4:i3
@@ -185,7 +185,7 @@ SelectPasswordMode:
 	call CheckAnySlotHasData
 	cp l, 0:i3
 	jr z, SelectMode_CheckSaveAvail
-	bit 7, (0x8a0d:16)
+	bit 7, (PASSWORD_STATE+1:16)
 	jr nz, SelectMode_CheckSaveAvail
 	ldib_erp 0xfa, 1
 
@@ -197,7 +197,7 @@ SelectMode_CheckSaveAvail:
 	call CheckSlotIndexValid
 	cp l, 0:i3
 	jr z, SelectMode_DetermineMode
-	bit 6, (0x8a0d:16)
+	bit 6, (PASSWORD_STATE+1:16)
 	jr nz, SelectMode_DetermineMode
 	ldib_erp 0xfb, 1
 
@@ -215,11 +215,11 @@ SelectMode_DetermineMode:
 	ld a, 0x3:opc
 
 SelectMode_SetBothMode:
-	ld (0x8a0c:16), a
+	ld (PASSWORD_STATE:16), a
 	jr SelectMode_Return
 
 SelectMode_SingleMode:
-	lda xbc, (0x8a0c:16)
+	lda xbc, (PASSWORD_STATE:16)
 	cpib_erp 0xfa, 0
 	jr z, SelectMode_CheckSaveOnlyMode
 	ld (xbc), 0x1
@@ -235,7 +235,7 @@ SelectMode_StoreMode:
 	ld (xbc), a
 
 SelectMode_Return:
-	ld l, (0x8a0c:16)
+	ld l, (PASSWORD_STATE:16)
 	extz hl
 	pop xiz
 	ret
@@ -437,7 +437,7 @@ FileName_OpLoad:
 	cp hl, 0:i3
 	jr z, FileName_OpLoad_NoPwd
 	ld xde, 0:i3
-	ld e, (0x8a0c:16)
+	ld e, (PASSWORD_STATE:16)
 	ld xwa, 0xffffffff
 	ld xbc, EVT_WAKEUP_PASSWORD
 	jrl FileName_OpDispatch

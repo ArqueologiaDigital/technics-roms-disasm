@@ -22123,7 +22123,7 @@ EffEdit_ParamChangeD6:
 
 EffEdit_ParamChangeA:
 	ld (0xe38c:16), 1
-	ld wa, (0x2976:16)
+	ld wa, (DSP_EFFECT_NUMBER:16)
 	extz wa
 	lda xde, (EffEdit_ParamChangeA_Table_2:24)
 	ld	e, (xde+wa)
@@ -22173,7 +22173,7 @@ EffEdit_DeliveryLoopBody:
 
 EffEdit_ParamChangeB:
 	ld (0xe38c:16), 1
-	ld wa, (0x2976:16)
+	ld wa, (DSP_EFFECT_NUMBER:16)
 	extz wa
 	lda xde, (EffEdit_ParamChangeB_Table_2:24)
 	ld	e, (xde+wa)
@@ -22547,7 +22547,7 @@ EffEdit_ValidateLoop:
 	ld xwa, 0x4b00
 	call DSPCfg_ReadParam_Map0
 	and hl, 0x7f
-	ld (0x2976:16), hl
+	ld (DSP_EFFECT_NUMBER:16), hl
 	ld xwa, 0x4b04
 	call DSPCfg_ReadParam_Map0
 	ld (0x29aa:16), hl
@@ -22606,7 +22606,7 @@ EffEdit_ReadParamB:
 	ld xwa, 0x4900
 	call DSPCfg_ReadParam_Map0
 	and hl, 0x7f
-	ld (0x2976:16), hl
+	ld (DSP_EFFECT_NUMBER:16), hl
 	ld xwa, 0x4904
 	call DSPCfg_ReadParam_Map0
 	ld (0x29aa:16), hl
@@ -22677,7 +22677,7 @@ EffEdit_ReadParamE:
 	ld xwa, 0x4d00
 	call DSPCfg_ReadParam_Map0
 	and hl, 0x7f
-	ld (0x2976:16), hl
+	ld (DSP_EFFECT_NUMBER:16), hl
 	ld xwa, 0x4d10
 	call DSPCfg_ReadParam_Map0
 	ld (0x2978:16), hl
@@ -22687,7 +22687,7 @@ EffEdit_ReadParamD6:
 	ld xwa, 0x4e00
 	call DSPCfg_ReadParam_Map0
 	and hl, 0x7f
-	ld (0x2976:16), hl
+	ld (DSP_EFFECT_NUMBER:16), hl
 	ldib_erp 0xfb, 0
 
 EffEdit_ReadParamD6_Loop:

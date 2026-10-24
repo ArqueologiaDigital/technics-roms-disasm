@@ -252,7 +252,7 @@ LyricsBox_MatchedTitle:
 	call SendEvent
 
 LyricsBox_ClearBuffers:
-	lda xbc, (0x020cbe:24)
+	lda xbc, (LYRIC_LINES:24)
 	ld xwa, xbc
 	lda xbc, (xbc+320)
 
@@ -305,7 +305,7 @@ LyricsBox_DrawLineLoop:
 	ld bc, (xsp + 8)
 	extz xbc
 	sll xbc, 6
-	ld xhl, 0x20cbe
+	ld xhl, LYRIC_LINES
 	add xhl, xbc
 	cp (xsp + 8), de
 	jr nc, LyricsBox_CheckCurrentLine
@@ -371,7 +371,7 @@ LyricsBox_CheckCurrentLine:
 	extz xwa
 	sll xwa, 6
 	add xwa, xbc
-	ld xbc, 0x20cbe
+	ld xbc, LYRIC_LINES
 	add xbc, xwa
 	push xbc
 	pushw 0x2
@@ -461,7 +461,7 @@ LyricsBox_DrawCurrentLine:
 	ld bc, (xwa + 2)
 	sla bc, 6
 	add bc, (xwa)
-	lda xwa, (0x020cbe:24)
+	lda xwa, (LYRIC_LINES:24)
 	lda	xwa, (xwa+bc)
 	push xwa
 	pushw 0x2
@@ -529,7 +529,7 @@ LyricsBox_DrawSelLine:
 	ld bc, (xwa + 2)
 	sla bc, 6
 	add bc, (xwa)
-	lda xwa, (0x020cbe:24)
+	lda xwa, (LYRIC_LINES:24)
 	lda	xwa, (xwa+bc)
 	push xwa
 	pushw 0x2
@@ -631,7 +631,7 @@ SongEdit_CheckBounds:
 	ld a, (xsp)
 	extz wa
 	add wa, (xix)
-	lda xbc, (0x020cbe:24)
+	lda xbc, (LYRIC_LINES:24)
 	lda xde, (xix + 2)
 	cp wa, 0x22
 	jr ge, SongEdit_OverflowCheck
@@ -703,7 +703,7 @@ SongEdit_OverflowCheck:
 	ld bc, (xbc)
 	sla bc, 6
 	add bc, (xde)
-	lda xwa, (0x020cbe:24)
+	lda xwa, (LYRIC_LINES:24)
 	lda	xwa, (xwa+bc)
 	push xwa
 	call Strncpy
@@ -781,7 +781,7 @@ LyricsTrack_HandleSingleChar:
 	ret ge
 	sla wa, 6
 	add wa, (xde)
-	lda xhl, (0x020cbe:24)
+	lda xhl, (LYRIC_LINES:24)
 	ld	(xhl+wa), 0x0d
 	ld wa, (xde)
 	inc 1, wa
@@ -831,7 +831,7 @@ LyricsTrack_ResetBufferLoop:
 	sla bc, 6
 	ld de, bc
 	add de, 0x40
-	lda xwa, (0x020cbe:24)
+	lda xwa, (LYRIC_LINES:24)
 	exts xde
 	add xde, xwa
 	push xde
@@ -897,7 +897,7 @@ LyricsFile_CheckFirstByte:
 	ld e, (0x020f4e:24)
 	cp e, 0:i3
 	jrl z, LyricsBox_PopIzRet
-	lda xhl, (0x020cbe:24)
+	lda xhl, (LYRIC_LINES:24)
 	cp e, 0xd
 	jr nz, LyricsFile_CheckLinefeed
 	lda xbc, (0x020e42:24)
@@ -934,7 +934,7 @@ LyricsFile_InsertNormalChar:
 	ld bc, (xwa + 2)
 	sla bc, 6
 	add bc, (xwa)
-	lda xwa, (0x020cbe:24)
+	lda xwa, (LYRIC_LINES:24)
 	lda	xwa, (xwa+bc)
 	push xwa
 	call Strncpy
@@ -952,7 +952,7 @@ LyricsFile_InsertNormalChar:
 	ld bc, (xwa + 2)
 	sla bc, 6
 	add bc, (xwa)
-	lda xwa, (0x020cbe:24)
+	lda xwa, (LYRIC_LINES:24)
 	cp	(xwa+bc), 0x0d
 	jr nz, LyricsBox_PopIzRet
 
@@ -1067,7 +1067,7 @@ LyricsBoxFunc_HandleSingleChar:
 	jrl ge, SongName_ReturnZeroJmp
 	sla wa, 6
 	add wa, (xde)
-	lda xhl, (0x020cbe:24)
+	lda xhl, (LYRIC_LINES:24)
 	ld	(xhl+wa), 0x0d
 	ld wa, (xde)
 	inc 1, wa
@@ -7877,7 +7877,7 @@ EntGridCheck_CopyStringResult:
 
 EntGridCheck_Handle4E00:
 	pushw 0x9
-	ld wa, (0x2976:16)
+	ld wa, (DSP_EFFECT_NUMBER:16)
 	extz xwa
 	sll xwa, 2
 	ld xbc, (xsp + 18)
@@ -8002,7 +8002,7 @@ EntertainerGridCheck_OnRetEffFix:
 	ld xde, (xsp + 28)
 	ld (xwa), xde
 	pushw 0x9
-	ld wa, (0x2976:16)
+	ld wa, (DSP_EFFECT_NUMBER:16)
 	extz xwa
 	sll xwa, 2
 	ld xbc, (xsp + 18)
@@ -15356,7 +15356,7 @@ DspItem0CngFunc:
 ; -----------------------------------------------------------------------------
 DspItem0_DisplayEffectName:
 	ld (xsp), xde
-	ld wa, (0x2976:16)
+	ld wa, (DSP_EFFECT_NUMBER:16)
 	extz xwa
 	sll xwa, 2
 	ld xbc, DspEffectName_PtrTable
@@ -15516,7 +15516,7 @@ DspItem0_TypeChangeHandler:
 
 ; DspItem0 type change dispatch
 DspItem0_TypeDispatch:
-	lda xhl, (0x2976:16)
+	lda xhl, (DSP_EFFECT_NUMBER:16)
 	jrl DspItem0_Epilogue
 ; DspItem0_TypeChangeHandler_EffDlt0Addr: EVT_GET_RAM_ADDRESS for effect parameter row 0 (EffDlt0): address of word
 ;   0x2978[top item 0x021098 + 0].
