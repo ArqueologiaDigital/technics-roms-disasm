@@ -123,6 +123,10 @@ GROUPS = {
 }
 
 
+# HelpTexts (segment 67): the four index tables, in header order.
+HELP_LANGS = [("English", "En"), ("German", "De"), ("French", "Fr"), ("Spanish", "Es")]
+HELP_TOPICS = 100
+
 def _segments():
     s = {}
     s[0] = ("GuiResourceTables", "gui", None, [
@@ -190,11 +194,14 @@ def _segments():
         "The built-in styles' secondary sub-table: TableRomStyleSubTablePtr returns it and",
         "StyleBuiltinNameTableInit caches it in 0x50034B90 (kn7000_manual.sym, style-name",
         "module). TODO: its record format."])
-    s[67] = ("HelpTexts", "raw", None, [
+    s[67] = ("HelpTexts", "help", None, [
         "The HELP function's texts in four languages, English first ('After pressing the",
         "HELP button, ...'). InitializeBlock15 takes the u32 at +4 * (u16 at 0x500D3584)",
         "as the offset of a language's index of 12-byte entries; the four indexes sit at",
-        "the end of the segment."])
+        "the end of the segment. An index has one entry per topic: u16 topic number, u16",
+        "page count, then the offsets of the topic's page list (u32 text offsets, mostly",
+        "ended by a 0) and of its title. Texts are NUL-terminated Latin-1 with the",
+        "firmware's '~hh' escapes ('~0d' = new line), padded with 0xFF to 4 bytes."])
     for slot in (68, 69, 70):
         s[slot] = (f"UnreadBuildMarker{slot}", "marker", None, [
             "A build number, ASCII digits and a line feed. No program code reads this slot;",

@@ -203,6 +203,107 @@ def offset_group(d, s, e, label, ROMQ, jpg_dir, group):
     return B
 
 
+def asm_string(bs):
+    """A .ascii operand for `bs`: printable ASCII as is, the rest as \\xHH."""
+    out = ""
+    for b in bs:
+        c = chr(b)
+        out += ("\\" + c) if c in '"\\' else c if 0x20 <= b < 0x7F else f"\\x{b:02x}"
+    return f'"{out}"'
+
+
+def string_lines(bs, width=96):
+    """The string `bs` (without its NUL) as .ascii lines and a final .asciz: a line
+    ends after each '~0d' (the help texts' new line) or near `width` at a space."""
+    parts, cur = [], b""
+    i = 0
+    while i < len(bs):
+        cur += bs[i:i + 1]
+        i += 1
+        if cur.endswith(b"~0d") or (len(cur) >= width and cur.endswith(b" ")):
+            parts.append(cur)
+            cur = b""
+    if cur or not parts:
+        parts.append(cur)
+    return ([f"    .ascii\t{asm_string(p)}" for p in parts[:-1]] +
+            [f"    .asciz\t{asm_string(parts[-1])}"])
+
+
+def gap_lines(seg, a, b):
+    """Bytes nothing points at: 0xFF up to a 4-byte boundary, or a .byte row."""
+    gap = seg[a:b]
+    if gap == b"\xff" * len(gap) and len(gap) < 4 and b % 4 == 0:
+        return ["    .align\t4, 0xff"]
+    return [f"    .byte\t{', '.join(f'0x{x:02x}' for x in gap)}"]
+
+
+def help_texts(d, s, e, label):
+    """Segment 67: four language offsets and a 0, then texts and page lists, then the
+    four 100-entry topic indexes; every offset is from the segment start."""
+    seg = d[s:e]
+    langs = [u32(seg, 4 * k) for k in range(len(TS.HELP_LANGS))]
+    assert u32(seg, 16) == 0
+    nul = lambda o: seg.index(0, o) + 1          # noqa: E731
+    pages_n = {}
+    for L in langs:
+        for k in range(TS.HELP_TOPICS):
+            topic, n, pt, ti = struct.unpack_from("<HHII", seg, L + 12 * k)
+            assert topic == k
+            pages_n[pt] = max(pages_n.get(pt, 0), n)
+    items = {}                                     # offset -> (end, kind, label, data)
+
+    def add(off, end, kind, lab, data=None):
+        if off not in items:
+            items[off] = (end, kind, lab, data)
+        assert items[off][:2] == (end, kind), f"HelpTexts: two readings of 0x{off:x}"
+        return items[off][2]
+
+    rows, list_label = {}, {}
+    for (lang, ab), L in zip(TS.HELP_LANGS, langs):
+        add(L, L + 12 * TS.HELP_TOPICS, "index", f"HelpIndex{lang}", ab)
+    for (lang, ab), L in zip(TS.HELP_LANGS, langs):
+        for k in range(TS.HELP_TOPICS):
+            topic, n, pt, ti = struct.unpack_from("<HHII", seg, L + 12 * k)
+            tl = add(ti, nul(ti), "str", f"HelpTitle{ab}{k:02d}")
+            m = pages_n[pt]
+            term = u32(seg, pt + 4 * m) == 0      # most lists end with a 0 word
+            pl = list_label.setdefault(pt, f"HelpPages{ab}{k:02d}")
+            for j in range(m + term):              # lists may share words: one item each
+                add(pt + 4 * j, pt + 4 * j + 4, "word", None)
+            for j in range(m):
+                so = u32(seg, pt + 4 * j)
+                if so:
+                    add(so, nul(so), "str", f"HelpText{ab}{k:02d}_{j}")
+            rows.setdefault(L, []).append((k, n, pl, tl))
+    B = [f"    .long\t{', '.join(f'HelpIndex{lang} - {label}' for lang, _ab in TS.HELP_LANGS)}",
+         "    .long\t0"]
+    cur = 20
+    for off in sorted(items):
+        end, kind, lab, data = items[off]
+        assert off >= cur, f"HelpTexts: 0x{off:x} overlaps the item before it"
+        if off > cur:
+            B += gap_lines(seg, cur, off)
+        if kind == "word":
+            if off in list_label:
+                B.append(f"{list_label[off]}:")
+            so = u32(seg, off)
+            B.append(f"    .long\t{items[so][2]} - {label}" if so else "    .long\t0")
+            cur = end
+            continue
+        B.append(f"{lab}:")
+        if kind == "str":
+            B += string_lines(seg[off:end - 1])
+        else:
+            for k, n, pl, tl in rows[off]:
+                B.append(f"    .word\t{k}, {n}")
+                B.append(f"    .long\t{pl} - {label}, {tl} - {label}")
+        cur = end
+    if cur < len(seg):
+        B += gap_lines(seg, cur, len(seg))
+    return B
+
+
+
 def directory_image(d, dirents, ROMQ, jpg_dir, other, compare_label):
     """-> (body lines, segments changed vs `other`) for the directory and its segments."""
     nseg = len(dirents) - 1
@@ -253,6 +354,8 @@ def directory_image(d, dirents, ROMQ, jpg_dir, other, compare_label):
             B.append(f'    .byte\t{", ".join(f"0x{b:02x}" for b in seg)}   # "{shown}"')
         elif kind == "gui":
             B += gui_resource_tables(d, s, e, ROMQ)
+        elif kind == "help":
+            B += help_texts(d, s, e, label)
         elif kind == "offtab":
             B += offset_group(d, s, e, label, ROMQ, jpg_dir, TS.GROUPS[i])
         else:

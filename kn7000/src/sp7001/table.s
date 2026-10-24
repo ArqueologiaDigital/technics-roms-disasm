@@ -1270,9 +1270,6434 @@ DemoJpgL8Placeholder:
 # The HELP function's texts in four languages, English first ('After pressing the
 # HELP button, ...'). InitializeBlock15 takes the u32 at +4 * (u16 at 0x500d3584)
 # as the offset of a language's index of 12-byte entries; the four indexes sit at
-# the end of the segment.
+# the end of the segment. An index has one entry per topic: u16 topic number, u16
+# page count, then the offsets of the topic's page list (u32 text offsets, mostly
+# ended by a 0) and of its title. Texts are NUL-terminated Latin-1 with the
+# firmware's '~hh' escapes ('~0d' = new line), padded with 0xff to 4 bytes.
 HelpTexts:
-    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x381c28, 0x3b7508
+    .long	HelpIndexEnglish - HelpTexts, HelpIndexGerman - HelpTexts, HelpIndexFrench - HelpTexts, HelpIndexSpanish - HelpTexts
+    .long	0
+HelpTextEn00_0:
+    .ascii	"After pressing the HELP button, press any button on the panel and the screen will give you information "
+    .ascii	"about the button's use.~0d"
+    .ascii	"Press the HELP button again, or the EXIT button to turn off the HELP function.~0d"
+    .asciz	"Use the buttons at the bottom of this screen to change the Help language and press OK.~0d"
+HelpPagesEn00:
+    .long	HelpTextEn00_0 - HelpTexts
+    .long	0
+HelpTextEn01_0:
+    .ascii	"The KN has 10 Demo songs each with a slide show in the screen. ~0d"
+    .ascii	"Select a demo song with the buttons to the left and right of the screen. The performance will start "
+    .ascii	"automatically.~0d"
+    .ascii	"You can start a medley of all of the songs by pressing and holding the DEMO button on the panel "
+    .ascii	"for a few seconds. Press the STOP button to end the demonstration performance.~0d"
+    .ascii	"The slide show which each song accompanies gives a specific overview of the each features of the "
+    .asciz	"KN. Enjoy the shows!~0d"
+    .align	4, 0xff
+HelpPagesEn01:
+    .long	HelpTextEn01_0 - HelpTexts
+    .long	0
+HelpPagesEn02:
+    .long	0
+HelpPagesEn03:
+    .long	0
+HelpTextEn04_0:
+    .ascii	"The Auto Setting function selects the most appropriate Performance Pads Bank for the One Touch Play, "
+    .asciz	"Music Style Arranger or Music Stylist setting that you are using.~0d"
+    .align	4, 0xff
+HelpPagesEn04:
+    .long	HelpTextEn04_0 - HelpTexts
+    .long	0
+HelpTextEn05_0:
+    .ascii	"There are 20 Banks of Performance Pads phrases and effects. Changing the Bank selects different "
+    .ascii	"phrases to be played by all six pads. To change the Pads bank just press the Bank button and make "
+    .ascii	"your selection in the screen.~0d"
+    .ascii	" ~0d"
+    .asciz	"There are three special types of Pads Bank: User, Compile and Control. ~0d"
+HelpTextEn05_1:
+    .ascii	"The Compile banks allow you to combine your favorite phrases from different Banks into one Bank. "
+    .ascii	"Press the Performance Pads Menu in Program Menus for more information.~0d"
+    .ascii	"The User Banks allow you to record your own Pad phrases. Press the Performance Pads Menu in Program "
+    .ascii	"Menus for more information.~0d"
+    .ascii	"The Control Preset Bank has some useful preset control functions such as Tremolo Slow/Fast and Glide. "
+    .asciz	"For full details see the owners manual.~0d"
+    .align	4, 0xff
+HelpPagesEn05:
+    .long	HelpTextEn05_0 - HelpTexts
+    .long	HelpTextEn05_1 - HelpTexts
+    .long	0
+HelpTextEn06_0:
+    .ascii	"If a Performance Pad phrase is playing and you want to stop the playback, press the Stop button. "
+    .ascii	"Some phrases such as arpeggios play in a continuous loop, until you press the Stop button.~0d"
+    .ascii	" ~0d"
+    .ascii	"Pads 5 and 6 are special Solo pads which play a melody and chord sequence. You can use Chord Step "
+    .ascii	"Record or Seq to Pad Copy to create your solo phrases, first recording them into the sequencer and "
+    .asciz	"then copying them into the user solo pads.~0d"
+    .align	4, 0xff
+HelpPagesEn06:
+    .long	HelpTextEn06_0 - HelpTexts
+    .long	0
+HelpTextEn07_0:
+    .ascii	"Performance Pads play a variety of musical phrases and effects which you can add to your performance. "
+    .ascii	"There are six pads which each play a different phrase. Just press one of the pads and the music "
+    .ascii	"or effect will start.~0d"
+    .ascii	"Some phrases loop continuously until you press the Stop button.~0d"
+    .ascii	" ~0d"
+    .ascii	"Pads 5 and 6 play a Solo, including a chord sequence which will play around the accompaniment pattern "
+    .asciz	"that you are using.~0d"
+HelpTextEn07_1:
+    .ascii	"Pad 5 plays a solo in a Major key and Pad 6 in a Minor key.~0d"
+    .ascii	"To introduce a solo into your performance, just press one of the solo pads while the accompaniment "
+    .ascii	"is playing. Play the root chord of the key you are playing before you press the pad (for example "
+    .ascii	"if you are playing in the key of F, play an F chord before pressing the solo pad)~0d"
+    .ascii	" ~0d"
+    .asciz	" ~0d"
+HelpTextEn07_2:
+    .ascii	"You can also mute the solo by pressing the two Pads balance buttons together under the screen, and "
+    .ascii	"play your own solo along with the chord sequence.~0d"
+    .ascii	"For more information, press the Bank, Stop and Auto Setting buttons, and the Performance Pads Menu "
+    .asciz	"in Program Menus.~0d"
+    .align	4, 0xff
+HelpPagesEn07:
+    .long	HelpTextEn07_0 - HelpTexts
+    .long	HelpTextEn07_1 - HelpTexts
+    .long	HelpTextEn07_2 - HelpTexts
+    .long	0
+HelpTextEn08_0:
+    .ascii	"The MUSIC STYLE ARRANGER helps you make professional registration changes, providing four preset "
+    .ascii	"registrations for each Rhythm. Turn on MSA and a complete registration will be set automatically "
+    .ascii	"for the selected Rhythm Variation.~0d"
+    .ascii	" ~0d"
+    .ascii	"Change between the four Rhythm Variations and the registration will change, matching the change "
+    .asciz	"of mood of the Rhythm Variation. ~0d"
+HelpTextEn08_1:
+    .ascii	"The registrations get progressively brighter and more complex from MSA 1 to MSA 4.~0d"
+    .ascii	" ~0d"
+    .ascii	"The Fill-In buttons will change the MSA settings automatically.~0d"
+    .asciz	"Fill In 1 makes the MSA Variation change to the left and Fill In 2 to the right. ~0d"
+HelpTextEn08_2:
+    .ascii	"To customize MSA, press and hold the MSA button until the display changes to the MSA mode-select "
+    .ascii	"screen. There are three modes:~0d"
+    .ascii	"Rhythm: Only the Rhythm Variation changes.~0d"
+    .ascii	"Sound & Rhythm: Both the sounds and rhythm change.~0d"
+    .asciz	"Panel Memory: The Music Style Arranger changes between the first four Panel Memories in Bank A.~0d"
+    .align	4, 0xff
+HelpPagesEn08:
+    .long	HelpTextEn08_0 - HelpTexts
+    .long	HelpTextEn08_1 - HelpTexts
+    .long	HelpTextEn08_2 - HelpTexts
+    .long	0
+HelpTextEn09_0:
+    .ascii	"These buttons are used for two functions:~0d"
+    .ascii	" ~0d"
+    .ascii	"(1) To select the rhythm variation ~0d"
+    .ascii	"(2) To operate the  Music Style Arranger (depending on whether MSA is turned on or off).~0d"
+    .ascii	"Each of the KN's 220 Rhythms has four Variations, so you can use these buttons while you are playing "
+    .asciz	"to vary the accompaniment pattern within the same style of music.~0d"
+HelpTextEn09_1:
+    .ascii	"When you are using the Music Style Arranger the Variation buttons vary the accompaniment and the "
+    .asciz	"registration. Press the Music Style Arranger button now for more information.~0d"
+    .align	4, 0xff
+HelpPagesEn09:
+    .long	HelpTextEn09_0 - HelpTexts
+    .long	HelpTextEn09_1 - HelpTexts
+    .long	0
+HelpTextEn10_0:
+    .ascii	"One Touch Play helps you to make a great sound straight away, by setting up the KN with a suitable "
+    .ascii	"registration and tempo for each of the 220 Rhythms and 20 Custom Rhythms. A complete registration "
+    .ascii	"is set for you just by pressing one button. In the case of Custom Rhythms, the style setting for "
+    .ascii	"variation #2 is used.~0d"
+    .asciz	" ~0d"
+HelpTextEn10_1:
+    .ascii	"To use One Touch Play, select the Rhythm that you want to use and just press and hold the One Touch "
+    .ascii	"Play button for a few seconds. You will see the name of the One Touch Play registration appear in "
+    .asciz	"the screen momentarily. Then just play!~0d"
+HelpPagesEn10:
+    .long	HelpTextEn10_0 - HelpTexts
+    .long	HelpTextEn10_1 - HelpTexts
+    .long	0
+HelpTextEn11_0:
+    .ascii	"The KN's keyboard can be split at any point allowing you to set a different sound left and right "
+    .ascii	"of the Split Point. Keyboard Split is also active when Auto Play Chord is used in Basic and Fingered "
+    .ascii	"modes. ~0d"
+    .ascii	"Press the Split Point button repeatedly to change between three preset Split Points (G2, C3 & G3). "
+    .asciz	"~0d"
+HelpTextEn11_1:
+    .ascii	"To set split point, just press and hold the Split Point button for a few seconds until the screen "
+    .ascii	"changes to the Split Point setting screen. Then press the key where you want the Split Point to "
+    .asciz	"be located.~0d"
+HelpPagesEn11:
+    .long	HelpTextEn11_0 - HelpTexts
+    .long	HelpTextEn11_1 - HelpTexts
+    .long	0
+HelpTextEn12_0:
+    .ascii	"Fade In/Out adds a professional touch to your performance by adding a subtle Fade In to your song, "
+    .ascii	"or ending the song with a gentle Fade Out, especially useful if you are using Auto Play Chord.~0d"
+    .ascii	" ~0d"
+    .ascii	"Press Fade In just before you play, and the overall sound of the KN will fade in. When you finish "
+    .ascii	"your song just leave the accompaniment pattern playing and press Fade Out. The backing music will "
+    .asciz	"fade like in a professional production.~0d"
+HelpTextEn12_1:
+    .ascii	"If you press Fade Out by mistake during your performance just press the same button again to reset, "
+    .ascii	"or press Fade In and the volume will fade back up to normal. ~0d"
+    .ascii	" ~0d"
+    .ascii	"You can set the length of the Fade In and Fade Out in measures, and also for the Rhythm and Sequencer "
+    .ascii	"to stop automatically after a Fade Out. Settings are made in the Control Menu or just press and "
+    .asciz	"hold the Fade In or Out button for a few seconds.~0d"
+    .align	4, 0xff
+HelpPagesEn12:
+    .long	HelpTextEn12_0 - HelpTexts
+    .long	HelpTextEn12_1 - HelpTexts
+    .long	0
+HelpTextEn13_0:
+    .ascii	"Tap Tempo allows you to set the Rhythm Tempo for your performance by just tapping a button. Tap "
+    .ascii	"the Tap Tempo button and the interval between each tap is used to set the tempo. You must tap the "
+    .asciz	"button at least twice!~0d"
+HelpPagesEn13:
+    .long	HelpTextEn13_0 - HelpTexts
+    .long	0
+HelpTextEn14_0:
+    .ascii	"Synchro & Break has two functions which vary depending on how you are using the KN. ~0d"
+    .ascii	" ~0d"
+    .ascii	"If you are playing without Auto Play Chord Synchro & Break will start the Rhythm automatically when "
+    .asciz	"you play a key below the Key Split point.~0d"
+HelpTextEn14_1:
+    .ascii	"If you are using Auto Play Chord, the function varies depending on whether Auto Play Chord Memory "
+    .ascii	"is turned on:~0d"
+    .ascii	" ~0d"
+    .ascii	"If you are using Auto Play Chord with Memory, Synchro & Break will start the rhythm and accompaniment "
+    .ascii	"automatically when you play a key to the left of the Key Split point. The rhythm and accompaniment "
+    .ascii	"will continue until you press Synchro & Break again, the Start/Stop button or one of the Ending "
+    .asciz	"buttons.~0d"
+HelpTextEn14_2:
+    .ascii	"If you are using Auto Play Chord without Memory, Synchro & Break will start the rhythm and accompaniment "
+    .ascii	"only while you hold down some keys to the left of the Key Split point. When you release the keys "
+    .asciz	"the rhythm and accompaniment will stop, until you press the keys again.~0d"
+HelpPagesEn14:
+    .long	HelpTextEn14_0 - HelpTexts
+    .long	HelpTextEn14_1 - HelpTexts
+    .long	HelpTextEn14_2 - HelpTexts
+    .long	0
+HelpTextEn15_0:
+    .ascii	"When a band plays there are often drum fills and musical variations at strategic points in the performance. "
+    .ascii	"The KN helps you achieve this effect by providing two Fill-Ins for each Rhythm Variation. When either "
+    .ascii	"Fill-In 1 or 2 is pressed while the Rhythm is running a fill-in pattern is played for one measure, "
+    .ascii	"after which the normal rhythm continues. ~0d"
+    .ascii	"If a Fill In button is pressed on the last beat of the measure the Fill In will play for the whole "
+    .asciz	"of the next measure.~0d"
+HelpTextEn15_1:
+    .ascii	"If it is pressed on any other beat it will play for the remainder of the current measure.~0d"
+    .ascii	"If you press the Fill-In 2 button before you start the rhythm there will be a simple count in before "
+    .ascii	"the rhythm starts. Fill-In 1 also has another function when using the Sequencer. If you stop the "
+    .asciz	"Sequencer playing and want to reset it to the beginning of the song just press the Fill-In 1 button.~0d"
+    .align	4, 0xff
+HelpPagesEn15:
+    .long	HelpTextEn15_0 - HelpTexts
+    .long	HelpTextEn15_1 - HelpTexts
+    .long	0
+HelpTextEn16_0:
+    .ascii	"The Intro & Ending buttons provide professional introductions and endings to your performance with "
+    .ascii	"a choice of two Intros and two Endings for each Rhythm.~0d"
+    .ascii	" ~0d"
+    .ascii	"Set the keyboard up with a Registration (or use One Touch Play to do it for you) and press either "
+    .ascii	"of the Intro & Ending buttons before you play. Then just play a left hand chord and you will hear "
+    .asciz	"a musical introduction.~0d"
+HelpTextEn16_1:
+    .ascii	"When you finish your performance press one of the Intro & Ending buttons again and the KN will play "
+    .ascii	"an Ending in the style of the accompaniment pattern. When the Ending has finished the Rhythm will "
+    .asciz	"stop automatically.~0d"
+    .align	4, 0xff
+HelpPagesEn16:
+    .long	HelpTextEn16_0 - HelpTexts
+    .long	HelpTextEn16_1 - HelpTexts
+    .long	0
+HelpTextEn17_0:
+    .ascii	"The Start/Stop button is used for many purposes, but its primary function is to start and stop the "
+    .ascii	"automatic rhythm. ~0d"
+    .ascii	" ~0d"
+    .ascii	"If you are using the Sequencer, the Start/Stop button starts and stops the playback of a song. It "
+    .asciz	"also starts recording in the Performance Pads, and in the Sequencer when the metronome is used.~0d"
+    .align	4, 0xff
+HelpPagesEn17:
+    .long	HelpTextEn17_0 - HelpTexts
+    .long	0
+HelpTextEn18_0:
+    .ascii	"The Tempo/Program dial is used mainly to change the tempo of the rhythm. Rotate to the left to slow "
+    .ascii	"the tempo, and to the right to increase it. ~0d"
+    .ascii	" ~0d"
+    .ascii	"If the LED next to the dial is lit when you are using any of the setting modes (for example SOUND "
+    .ascii	"EDIT or COMPOSER), the Tempo/Program dial can be used to change the value or function currently "
+    .asciz	"selected in the screen.~0d"
+HelpPagesEn18:
+    .long	HelpTextEn18_0 - HelpTexts
+    .long	0
+HelpTextEn19_0:
+    .ascii	"The Music Stylist is your guide to hundreds of musical styles in the KN. Music Stylist sets the "
+    .ascii	"KN up for you, helping you to make a great sound straight away.~0d"
+    .ascii	" ~0d"
+    .ascii	"There are four ways of finding the style of music you want to play. by Musical Category, by Organ "
+    .asciz	"style, by Musical Era or by selecting from an alphabetical list.~0d"
+HelpTextEn19_1:
+    .ascii	"Musical Category lets you find different styles by musical genre, with each category showing you "
+    .ascii	"descriptive sub categories.~0d"
+    .ascii	" ~0d"
+    .ascii	"Each sub category has four different styles, each also with a descriptive name. ~0d"
+    .asciz	"Musical Era lets you find different styles by musical period, for example 1970s etc.~0d"
+HelpTextEn19_2:
+    .ascii	"The Organ Stylist features the KN\x92s huge range of organ sounds and patterns with suitable Organ "
+    .ascii	"Registrations. The Organ Stylist uses preset sounds as well as Digital Drawbars and Organ Tabs to "
+    .ascii	"create classic Organ registrations.~0d"
+    .ascii	" ~0d"
+    .ascii	"The Alphabetical List displays all of the individual styles in the Music Stylist in one alphabetical "
+    .asciz	"list. When you become familiar with your favorite styles you can find them easily using this feature.~0d"
+HelpTextEn19_3:
+    .ascii	"You can also select Custom Styles in which you can store Composer patterns with registrations, User "
+    .asciz	"Performance Pad phrases, and edited sounds & effects.~0d"
+    .align	4, 0xff
+HelpPagesEn19:
+    .long	HelpTextEn19_0 - HelpTexts
+    .long	HelpTextEn19_1 - HelpTexts
+    .long	HelpTextEn19_2 - HelpTexts
+    .long	HelpTextEn19_3 - HelpTexts
+    .long	0
+HelpTextEn20_0:
+    .ascii	"The KN has the facility to personalize the appearance of the LCD display for quick access to sounds, "
+    .ascii	"rhythms, styles, and the features you use most. ~0d"
+    .ascii	" ~0d"
+    .ascii	"There are 4 setting banks on the Favorites page, and 9 items can be set for each bank. To use your "
+    .ascii	"Favorite settings, select the bank using the button under the LCD, and press one of the buttons "
+    .asciz	"to the left or right of the screen to select the setting you want to use. ~0d"
+HelpTextEn20_1:
+    .ascii	"To set your own favorite items, follow this procedure:~0d"
+    .ascii	"(1). Press \x93Favorites Setting\x94 in this page~0d"
+    .ascii	"(2). Select the Bank you want to store in.~0d"
+    .ascii	"(3). Select a Category and an item~0d"
+    .ascii	"(4). With Set held down press one of the buttons to the left or right of the screen in which you "
+    .ascii	"want to store your selection. ~0d"
+    .ascii	"(5). Repeat (3) and (4) for another setting if you want to.~0d"
+    .asciz	"(6). Press OK to memorize your new Bank.~0d"
+HelpTextEn20_2:
+    .ascii	"The KN has some special items which you can set in the Favorites pages like Mute Keys, Panic, Vocal "
+    .ascii	"Workstation menu, etc. These are useful for entertainers.~0d"
+    .ascii	" ~0d"
+    .asciz	"Favorites settings can be loaded from and saved to Floppy Disk.~0d"
+    .align	4, 0xff
+HelpPagesEn20:
+    .long	HelpTextEn20_0 - HelpTexts
+    .long	HelpTextEn20_1 - HelpTexts
+    .long	HelpTextEn20_2 - HelpTexts
+    .long	0
+HelpTextEn21_0:
+    .ascii	"You can change the pitch of the KN to any key using the Transpose buttons. ~0d"
+    .ascii	" ~0d"
+    .ascii	"Press the right button to raise the key in semi-tone steps from C to +C (+1 octave) and the left "
+    .asciz	"button to lower the key in semi-tone steps from C to  -C (-1 octave). ~0d"
+HelpTextEn21_1:
+    .ascii	"If you transpose while holding a note, the new key takes effect from the next note played.~0d"
+    .ascii	" ~0d"
+    .ascii	"Transpose is always related to the key of C, so if you are playing in the key of F and you want "
+    .ascii	"it to sound as the key of F# , just Transpose up by one semitone (the display will read Db). ~0d"
+    .ascii	" ~0d"
+    .asciz	"Press both buttons at the same time to reset Transpose to normal.~0d"
+    .align	4, 0xff
+HelpPagesEn21:
+    .long	HelpTextEn21_0 - HelpTexts
+    .long	HelpTextEn21_1 - HelpTexts
+    .long	0
+HelpTextEn22_0:
+    .ascii	"The R1/R2 Octave buttons shift the octave just of the Right 1 and Right 2 Conductor parts by a range "
+    .ascii	"of +/- 2 octaves.~0d"
+    .asciz	"To reset the octave just press both buttons together.~0d"
+    .align	4, 0xff
+HelpPagesEn22:
+    .long	HelpTextEn22_0 - HelpTexts
+    .long	0
+HelpTextEn23_0:
+    .ascii	"Use the Part Select buttons to select which part (RIGHT 1, RIGHT 2 or LEFT) is altered by the Sound "
+    .ascii	"Select and Effects buttons on the panel. When a part is selected, the panel indicators also light "
+    .ascii	"to show the current settings. This feature is useful if you want to alter the sounds in Right 2 "
+    .asciz	"while you are playing using Right 1, or if you want to alter the Left sound.~0d"
+    .align	4, 0xff
+HelpPagesEn23:
+    .long	HelpTextEn23_0 - HelpTexts
+    .long	0
+HelpTextEn24_0:
+    .ascii	"The CONDUCTOR is a special feature of Technics Keyboards, which makes it easy to set up sounds across "
+    .ascii	"the keyboard. ~0d"
+    .ascii	"You could have two sounds over the entire keyboard in which case you would use Right 1 and Right "
+    .ascii	"2 together. Or you could use a different sound to the right and left of the Keyboard Split, in which "
+    .asciz	"case you could use Right 1 and Left together.~0d"
+    .align	4, 0xff
+HelpPagesEn24:
+    .long	HelpTextEn24_0 - HelpTexts
+    .long	0
+HelpTextEn25_0:
+    .ascii	"Solo mode can be set in any part. Solo mode is monophonic, which means that only one note can sound "
+    .ascii	"at a time.~0d"
+    .ascii	" ~0d"
+    .ascii	"If you are using just one part (for example Right 1) with Solo mode selected, the sound is produced "
+    .asciz	"for the last key played.~0d"
+HelpTextEn25_1:
+    .ascii	"When a Solo part and another part are mixed (for example Right 1 solo and Right 2 normal), the Solo "
+    .ascii	"sound is produced for the highest key played. This means that if you play chords the solo sound "
+    .ascii	"will play the top note of the chord.~0d"
+    .ascii	" ~0d"
+    .ascii	"For some sounds solo mode will turn on automatically. In the Sound menu or Effect menu Sound Load "
+    .asciz	"Option section you can set whether Solo mode on/off is automatically set for each sound or not.~0d"
+    .align	4, 0xff
+HelpPagesEn25:
+    .long	HelpTextEn25_0 - HelpTexts
+    .long	HelpTextEn25_1 - HelpTexts
+    .long	0
+HelpTextEn26_0:
+    .ascii	"Techni-Chord adds harmonizer notes to your single note melodies turning them into full chords. The "
+    .ascii	"Techni-Chord harmonizer notes are based on the chords you play with your left hand. ~0d"
+    .ascii	" ~0d"
+    .ascii	"You can select from 14 different types of harmonizer: ~0d"
+    .ascii	" ~0d"
+    .ascii	"Close, Open 1, Open 2, Duet 1, and Duet 2, Country, Theatre, Hymn, Block, Big Band Brass, Big Band "
+    .asciz	"Reeds, Octave, Hard Rock and Fanfare.~0d"
+HelpTextEn26_1:
+    .ascii	"To change the Techni-Chord type just press and hold the Techni-Chord button for a few seconds until "
+    .ascii	"the Techni-Chord Setting screen appears.~0d"
+    .ascii	"Techni-Chord Orchestrator allows you to assign the Techni-Chord harmonizer notes to another part "
+    .ascii	"of the KN so that the harmonizer notes can have a different sound from the melody note, or so that "
+    .asciz	"you can reduce their volume.~0d"
+    .align	4, 0xff
+HelpPagesEn26:
+    .long	HelpTextEn26_0 - HelpTexts
+    .long	HelpTextEn26_1 - HelpTexts
+    .long	0
+HelpTextEn27_0:
+    .ascii	"The KN has a high quality Chorus effect and dedicated Chorus button.~0d"
+    .ascii	"Chorus adds natural fullness and richness to the overall sound of the KN, achieved by adding a sound "
+    .ascii	"of a slightly different pitch to the original sound.~0d"
+    .ascii	" ~0d"
+    .ascii	"To change the Chorus settings just press and hold the Chorus button for a few seconds and the Chorus "
+    .asciz	"setting page will appear in the screen.~0d"
+HelpTextEn27_1:
+    .ascii	"Each sound has a Chorus depth parameter and when you select the sound, a suitable Chorus depth is "
+    .ascii	"set to each part as part chorus depth automatically. In the Sound menu or Effect menu, Sound Load "
+    .asciz	"Filter section, it is possible to eliminate this auto setting.~0d"
+    .align	4, 0xff
+HelpPagesEn27:
+    .long	HelpTextEn27_0 - HelpTexts
+    .long	HelpTextEn27_1 - HelpTexts
+    .long	0
+HelpTextEn28_0:
+    .ascii	"MULTI EFFECT works like a studio effects processor providing effects such as Phaser, Delay and Distortion. "
+    .ascii	"If Multi Effect is assigned to more than one part at the same time, all those parts will have the "
+    .ascii	"same DSP effect. ~0d"
+    .ascii	"Multi Effect also works as a MIC EFFECT for the microphone input.~0d"
+    .ascii	"To change Multi Effect settings just press and hold the Multi button in the Global Effect section "
+    .asciz	"for a few seconds and the Multi Effect page will appear in the screen.~0d"
+    .align	4, 0xff
+HelpPagesEn28:
+    .long	HelpTextEn28_0 - HelpTexts
+    .long	0
+HelpTextEn29_0:
+    .ascii	"Reverb adds natural sounding room acoustics to the overall sound of the KN, offering different environments "
+    .ascii	"such as Room or Concert Hall. ~0d"
+    .ascii	" ~0d"
+    .ascii	"To change the Reverb settings just press and hold the Reverb button for a few seconds and the Reverb "
+    .asciz	"setting page will appear in the screen.~0d"
+    .align	4, 0xff
+HelpPagesEn29:
+    .long	HelpTextEn29_0 - HelpTexts
+    .long	0
+HelpTextEn30_0:
+    .ascii	"MIC Reverb adds a natural sounding reverberation to your voice, offering different settings such "
+    .ascii	"as Room, Stage or Karaoke.~0d"
+    .ascii	" ~0d"
+    .ascii	"MIC Effect enhances your voice by adding effects such as Voice Changer. Harmony Effect adds harmony "
+    .ascii	"notes to your voice based on the notes you play on the keyboard, SMF software with a harmonizer "
+    .asciz	"track, the chords of Auto Play Chord and Techni-Chord harmonies. ~0d"
+HelpTextEn30_1:
+    .ascii	"MIC Reverb is a dedicated unit, but MIC Effect and Multi Effect use the same DSP unit, so it is "
+    .ascii	"not possible to use Multi Effect for Sound and MIC Effect for Voice at the same time.~0d"
+    .ascii	" ~0d"
+    .asciz	"You can turn on MIC Reverb and MIC Effect individually in this setting page.~0d"
+HelpTextEn30_2:
+    .ascii	"A special PC program called \x93Audio Recorder\x94 on the included CD-ROM records the output of the KN "
+    .asciz	"(including MIC and Line In) as digital audio via USB.~0d"
+    .align	4, 0xff
+HelpPagesEn30:
+    .long	HelpTextEn30_0 - HelpTexts
+    .long	HelpTextEn30_1 - HelpTexts
+    .long	HelpTextEn30_2 - HelpTexts
+    .long	0
+HelpTextEn31_0:
+    .ascii	"The Panel Memory Set button is used primarily to store registrations in the Panel Memory. ~0d"
+    .ascii	"Follow this procedure:~0d"
+    .ascii	"(1). Set up the registration ~0d"
+    .ascii	"(2). Use the Next Bank button to select which bank of Panel Memories you want.~0d"
+    .ascii	"(3). With the Set button held down press the Panel Memory in which you want to store the registration "
+    .asciz	"~0d"
+HelpTextEn31_1:
+    .ascii	"The registration is now stored in your chosen Panel Memory. ~0d"
+    .ascii	" ~0d"
+    .ascii	"To change the Panel Memory Mode just press and hold the Panel Memory Set button for a few seconds "
+    .asciz	"until the Panel Memory Mode screen appears. Select Normal or Expand in the screen.~0d"
+HelpTextEn31_2:
+    .ascii	"Pages 2 of this function contains settings for the Expand Mode Filter. You can decide in detail "
+    .ascii	"which type of settings you want to be recalled by Panel Memory.~0d"
+    .ascii	" ~0d"
+    .asciz	"The Panel Memory Set button is also used to store registration in the Custom Panel.~0d"
+    .align	4, 0xff
+HelpPagesEn31:
+    .long	HelpTextEn31_0 - HelpTexts
+    .long	HelpTextEn31_1 - HelpTexts
+    .long	HelpTextEn31_2 - HelpTexts
+    .long	0
+HelpTextEn32_0:
+    .ascii	"Panel Memory stores your registrations for easy recall. There are 13 Banks of 8 Panel Memories, "
+    .ascii	"allowing you to store 104 registrations at one time. Each Bank and each individual Panel Memory "
+    .ascii	"can be named so that you can easily find the registration you want.~0d"
+    .ascii	" ~0d"
+    .ascii	"Panel Memory has two modes, Normal and Expand. Normal Mode recalls the basic registration including "
+    .asciz	"the sounds, effects and balances.~0d"
+HelpTextEn32_1:
+    .ascii	"Expand Mode can recall almost the entire settings of the KN, and has a filter function to allow "
+    .ascii	"you to eliminate certain aspects of a registration from Panel Memory.~0d"
+    .ascii	" ~0d"
+    .ascii	"Press the Panel Memory Set button now for more information about setting up Panel Memory and selecting "
+    .asciz	"Normal or Expand Modes.~0d"
+    .align	4, 0xff
+HelpPagesEn32:
+    .long	HelpTextEn32_0 - HelpTexts
+    .long	HelpTextEn32_1 - HelpTexts
+    .long	0
+HelpTextEn33_0:
+    .ascii	"The Next Bank button changes to the next Panel Memory Bank with one button push. The registration "
+    .ascii	"will not change until you press one of the Panel Memory buttons, so you can check through the Banks "
+    .asciz	"to find the next registration that you want.~0d"
+    .align	4, 0xff
+HelpPagesEn33:
+    .long	HelpTextEn33_0 - HelpTexts
+    .long	0
+HelpTextEn34_0:
+    .ascii	"The Bank View button displays the names of the three Panel Memory Banks (A/ B/ C) on its first page, "
+    .ascii	"and the other ten Panel Memory Banks on its second page.~0d"
+    .ascii	"You can select a different Bank using the buttons either side of the screen.~0d"
+    .ascii	"Page 3 of Bank View shows you the names of all of the Panel Memories in the current Bank. You can "
+    .asciz	"also name the Banks and individual Panel Memories from this screen.~0d"
+HelpPagesEn34:
+    .long	HelpTextEn34_0 - HelpTexts
+    .long	0
+HelpTextEn35_0:
+    .ascii	"The Custom Panel is a special Panel Memory in which you can store your favorite Panel Memory settings.~0d"
+    .ascii	"You can use the Custom Panel as your default panel setting instead of using Current Panel initialize, "
+    .ascii	"or as your basic setting after using One Touch Play, Music Stylist, or Panel Memory.~0d"
+    .ascii	"Once you have stored a setting in the Custom Panel, it will stay there until you replace it. Even "
+    .asciz	"initializing the KN will not delete the Custom Panel.~0d"
+HelpTextEn35_1:
+    .ascii	"To store your panel setting, follow this procedure:~0d"
+    .ascii	"(1). Set up the registration ~0d"
+    .ascii	"(2). Press and hold the Set button and then press the Custom Panel button. ~0d"
+    .ascii	" ~0d"
+    .asciz	"You can select whether to load all panel settings or to load panel memory parameters.~0d"
+    .align	4, 0xff
+HelpPagesEn35:
+    .long	HelpTextEn35_0 - HelpTexts
+    .long	HelpTextEn35_1 - HelpTexts
+    .long	0
+HelpTextEn36_0:
+    .ascii	"The Sequencer Play button activates the Sequencer Play screen, showing all 16 Sequencer Tracks and "
+    .ascii	"their status. If you load a song from Floppy Disk, the Sequencer Play button will turn on automatically. "
+    .ascii	"Just press the Start/Stop button and the song you have loaded will play back..~0d"
+    .ascii	" ~0d"
+    .ascii	"You can also select which of the 10 internal Songs you want to play, and set a Medley of the 10 "
+    .asciz	"internal Songs. ~0d"
+HelpTextEn36_1:
+    .ascii	"The Mixer can be accessed from the Sequencer Play page. When accessed from the Sequencer the Mixer "
+    .ascii	"works for each track, rather than specific Parts, so you don't need to know what Part is assigned "
+    .ascii	"to a Track to adjust its settings. ~0d"
+    .ascii	"If you press the Exit button the Sequencer Play button will stay on, allowing you to use some other "
+    .ascii	"features while the Sequence is playing (such as Sound selection). To turn Sequencer Play off, press "
+    .asciz	"the Sequencer Play button again.~0d"
+HelpTextEn36_2:
+    .ascii	"You can include digital pictures in your songs which change automatically with the music just like "
+    .ascii	"the built in demo songs. To find out more about this \x93Slide Show\x94 function, select the Sequencer "
+    .asciz	"Menu in Program Menus now. ~0d"
+    .align	4, 0xff
+HelpPagesEn36:
+    .long	HelpTextEn36_0 - HelpTexts
+    .long	HelpTextEn36_1 - HelpTexts
+    .long	HelpTextEn36_2 - HelpTexts
+    .long	0
+HelpTextEn37_0:
+    .ascii	"EASY RECORD is the simplest way of recording your performance on the KN. If you want to record your "
+    .ascii	"entire performance including melody and chords, (with Auto Play Chord) just set up the KN for your "
+    .ascii	"song, press Easy Record and press OK in the LCD screen. ~0d"
+    .ascii	" ~0d"
+    .ascii	"This feature allows you to bypass the set-up procedures of the full-scale sequencer and begin recording "
+    .asciz	"quickly and easily.~0d"
+HelpTextEn37_1:
+    .ascii	"You can select in the Easy Record screen which of the 10 internal songs you are using to record "
+    .ascii	"your performance.~0d"
+    .ascii	" ~0d"
+    .asciz	"You can also name a song before or after recording.~0d"
+HelpPagesEn37:
+    .long	HelpTextEn37_0 - HelpTexts
+    .long	HelpTextEn37_1 - HelpTexts
+    .long	0
+HelpTextEn39_0:
+    .ascii	"The Sound menu offers many features which allow you to adjust how each part of the KN sounds both "
+    .ascii	"in detailed pages for each part and using a studio like Mixer. You can set items such as volume, "
+    .ascii	"panning and effects levels for each part.~0d"
+    .ascii	" ~0d"
+    .ascii	"Each sound on the KN has a dedicated Sound DSP setting, Chorus depth, Solo on/off setting, and Portamento "
+    .asciz	"setting, etc., so just select the Sound and a suitable setting will be added to the sound. ~0d"
+HelpTextEn39_1:
+    .ascii	"Monitor Setting and Separate Out Setting are very useful features for stage or recording use. ~0d"
+    .ascii	" ~0d"
+    .ascii	"Monitor Setting allows you to turn off the internal speakers of the KN as desired. The speakers "
+    .asciz	"are automatically set to \x93on\x94 when the power is turned on, as a fail-safe.~0d"
+HelpTextEn39_2:
+    .ascii	"Separate Out setting lets you route a particular part or parts through the 2 SUB OUT terminals (for "
+    .ascii	"example bass or drums). ~0d"
+    .ascii	"You can set the Output Mode (2 mono or one stereo pair), which part(s) is affected, off/on for Main "
+    .ascii	"OUT and off/on for the Expression pedal for those parts.~0d"
+    .ascii	" ~0d"
+    .asciz	"Sound Load Option allows you to eliminate certain settings from Sound.~0d"
+HelpTextEn39_3:
+    .ascii	"APC Reverb Setting allows you to set easily the reverb level for Auto Play Chord patterns. This "
+    .ascii	"is normally set automatically for each Rhythm, but using this feature you can select either the "
+    .ascii	"preset setting or your own send level individually for each part.~0d"
+    .ascii	"Master Tuning and Key Scaling are adjusted in the Sound menu. ~0d"
+    .asciz	"To find out more about Techni-Chord, Press the Techni-Chord on the panel now.~0d"
+    .align	4, 0xff
+HelpPagesEn39:
+    .long	HelpTextEn39_0 - HelpTexts
+    .long	HelpTextEn39_1 - HelpTexts
+    .long	HelpTextEn39_2 - HelpTexts
+    .long	HelpTextEn39_3 - HelpTexts
+    .long	0
+HelpTextEn40_0:
+    .ascii	"The KN has 10 DSP Effects including 5 Sound DSPs, Reverb, Chorus, Multi / MIC Effect, MIC Reverb, "
+    .ascii	"and Total Equalizer.~0d"
+    .ascii	" ~0d"
+    .ascii	"The KN has huge number of effect presets. It's easy to select the effect you need and if you want, "
+    .asciz	"modify the effect in detail in the effect setting page, and store it as one of the user effects.~0d"
+HelpTextEn40_1:
+    .ascii	"The Equalizer is a detailed tone control which alters the overall sound of the KN, allowing you "
+    .ascii	"to adjust it to your own taste. ~0d"
+    .ascii	" ~0d"
+    .ascii	"Each sound on the KN has a dedicated Sound DSP setting, Chorus depth, and Solo on/off setting etc., "
+    .ascii	"so just select the Sound and a suitable setting will be added automatically. ~0d"
+    .asciz	"Sound Load Filter allow you to eliminate certain settings from Sound.~0d"
+HelpTextEn40_2:
+    .ascii	"You can change the allocation of Sound DSP, and the 2 Sound DSPs for APC parts so they can be used "
+    .ascii	"in the sequencer.~0d"
+    .ascii	" ~0d"
+    .ascii	"Settings for other features include Sound DSP, Reverb, Chorus, Multi, MIC effect and Mic Reverb. "
+    .asciz	"Press the panel buttons for those features now for more information about them.~0d"
+    .align	4, 0xff
+HelpPagesEn40:
+    .long	HelpTextEn40_0 - HelpTexts
+    .long	HelpTextEn40_1 - HelpTexts
+    .long	HelpTextEn40_2 - HelpTexts
+    .long	0
+HelpTextEn41_0:
+    .ascii	"The main feature of the Control menu is Initial Setting, which returns the basic settings of the "
+    .ascii	"KN to the Initial factory settings. You can select whether to initialize the entire performance "
+    .ascii	"area (i.e.: all programmable features), or specific sections. User MIDI Settings, Help language, "
+    .ascii	"and Rhythm Custom etc. are not affected by Initial Setting. ~0d"
+    .asciz	" ~0d"
+HelpTextEn41_1:
+    .ascii	"The Control menu contains features relating to the general control of the KN, such as Touch Sensitivity, "
+    .ascii	"and Foot Controller functions. ~0d"
+    .ascii	" ~0d"
+    .asciz	"The Control menu also contains settings for Fade In/Out, Music Style Arranger and Panel Memory.~0d"
+HelpPagesEn41:
+    .long	HelpTextEn41_0 - HelpTexts
+    .long	HelpTextEn41_1 - HelpTexts
+    .long	0
+HelpTextEn42_0:
+    .ascii	"MIDI stands for Musical Instrument Digital Interface and is a system which allows you to connect "
+    .ascii	"different musical instruments together for a variety of purposes, for example combining the sounds "
+    .ascii	"of two instruments or connecting to a Computer.~0d"
+    .ascii	"MIDI has many uses, so there are many parameters that can be altered! The MIDI menu contains all "
+    .ascii	"of the features to set up the KN for your specific needs. The easiest way to set up MIDI on the "
+    .asciz	"KN is to use MIDI Presets which are included in this menu.~0d"
+HelpTextEn42_1:
+    .ascii	"MIDI Presets are available for many typical musical applications. ~0d"
+    .ascii	"Just select the one that fits your requirements and press OK, and the settings will be made for "
+    .ascii	"you. You can also store your own User MIDI Settings, which will stay in the KN permanently (unless "
+    .ascii	"you replace them). ~0d"
+    .ascii	"The KN is a General MIDI Level 2 instrument, which means that it is compatible with software made "
+    .asciz	"to the General MIDI Level 1 and Level 2 formats, for example Standard MIDI File software.~0d"
+HelpTextEn42_2:
+    .ascii	"The KN also has a USB Port allowing you direct connection to a USB Port on a Computer. When connecting "
+    .asciz	"to a PC, install the USB driver on the included CD-ROM to the PC first.~0d"
+HelpPagesEn42:
+    .long	HelpTextEn42_0 - HelpTexts
+    .long	HelpTextEn42_1 - HelpTexts
+    .long	HelpTextEn42_2 - HelpTexts
+    .long	0
+HelpTextEn43_0:
+    .ascii	"The Customize menu allows you to configure your KN to your own requirements. ~0d"
+    .ascii	"The KN's Customize concept consists of following two features.~0d"
+    .ascii	"(1). Store your favorite settings so they stay in the KN even after it is switched off. You can "
+    .ascii	"even include a picture in the screen!~0d"
+    .ascii	"(2). Set short cuts to the sound, rhythm, styles and features you use most for quick access.~0d"
+    .asciz	" ~0d"
+HelpTextEn43_1:
+    .ascii	"You can customize the Home Page, Wallpaper, Language for help and messages, Disk Preferences, MIDI "
+    .ascii	"Setting Load Options and Video Out Mode Setting. All of these settings will stay in the KN even "
+    .ascii	"if you don't switch it on for a long time.~0d"
+    .ascii	" ~0d"
+    .ascii	"Video Out Mode Setting allows you to set the output mode (PAL / NTSC) for the VIDEO OUT terminal "
+    .asciz	"when displaying the KN\x92s screen, SLIDE SHOWS or Lyrics on an external video monitor or TV.~0d"
+HelpTextEn43_2:
+    .ascii	"Data Protection allows you to decide in detail which type of settings you want to be kept unaltered "
+    .ascii	"when you use Music Stylist, MSA, One Touch Play, and Disk load. ~0d"
+    .ascii	" ~0d"
+    .asciz	"Home Page Setting can be saved to or loaded from Floppy Disk.~0d"
+HelpPagesEn43:
+    .long	HelpTextEn43_0 - HelpTexts
+    .long	HelpTextEn43_1 - HelpTexts
+    .long	HelpTextEn43_2 - HelpTexts
+    .long	0
+HelpTextEn44_0:
+    .ascii	"Sound Edit features complex editing parameters identical to those of a professional synthesizer "
+    .ascii	"allowing you to edit any of the preset sounds and store them in one of the Sound Group Memories.~0d"
+    .ascii	" ~0d"
+    .asciz	"Easy Edit offers a simple range of parameters on one page.~0d"
+    .align	4, 0xff
+HelpPagesEn44:
+    .long	HelpTextEn44_0 - HelpTexts
+    .long	0
+HelpTextEn45_0:
+    .ascii	"The Sequencer Menu gives you access to advanced features similar to those of a Computer Sequencer "
+    .ascii	"program. The main page of the Sequencer Menu has three options, Record & Edit, Copy & Paste and "
+    .ascii	"Range Edit.~0d"
+    .ascii	"The main page also includes a useful feature call Panel Write. If you want to change the sounds "
+    .ascii	"and settings used at the beginning of a song, just make the changes and press Panel Write. The new "
+    .asciz	"settings will then be stored at the beginning of the song. ~0d"
+HelpTextEn45_1:
+    .ascii	"SD Audio Synchro allows you to start a sequencer song with an SD Audio song.~0d"
+    .ascii	" ~0d"
+    .ascii	"The Record & Edit menu has features which are used for creating a song, such as Realtime, Step and "
+    .ascii	"Punch Record, and very useful features to modify a song, such as Note Edit, Drum Edit and Quantize. "
+    .ascii	"~0d"
+    .asciz	"There are also features for setting up the Sequencer such as Track Assign and After Touch Setting.~0d"
+HelpTextEn45_2:
+    .ascii	"You can create a multi-media slide show of pictures synchronized with a sequencer song. Set the "
+    .ascii	"cue points (PIC) in the song\x92s control track at the measure where images from the KN\x92s internal "
+    .ascii	"library, or your own pictures (for example from an SD camera) are to appear.~0d"
+    .ascii	"The Copy & Paste menu has features which allow you to copy and repeat parts of the song to build "
+    .asciz	"the complete Sequence more quickly. You can also insert, delete and Erase measures. ~0d"
+HelpTextEn45_3:
+    .ascii	"This menu also includes a feature called APC to SMF convert. Use this feature to convert a song "
+    .ascii	"recorded using APC into a full multi track sequence, with the notes of each APC part recorded on "
+    .ascii	"a separate track.~0d"
+    .ascii	" ~0d"
+    .ascii	"The Range Edit menu has features which are used to alter the detail of a song over a short range, "
+    .asciz	"such as Quantize, Transpose, Note Change, Velocity Change and Advance/Delay.~0d"
+HelpPagesEn45:
+    .long	HelpTextEn45_0 - HelpTexts
+    .long	HelpTextEn45_1 - HelpTexts
+    .long	HelpTextEn45_2 - HelpTexts
+    .long	HelpTextEn45_3 - HelpTexts
+    .long	0
+HelpTextEn46_0:
+    .ascii	"The Composer allows you to create your own accompaniment patterns or to load new accompaniment patterns "
+    .ascii	"from Floppy Disk software. The Composer Menu contains all of the features to enable you to create "
+    .asciz	"your own Composer patterns, or copy and edit preset patterns. ~0d"
+HelpTextEn46_1:
+    .ascii	"The Composer menu also includes Easy Composer which enables you to create Composer Patterns by combining "
+    .ascii	"preset phrases, and the facility to copy your new Composer patterns into the Custom Rhythm Group "
+    .ascii	"as STYLE data.~0d"
+    .ascii	" ~0d"
+    .ascii	"This feature allows you to store new patterns, registrations & User Pads with original sounds & "
+    .ascii	"effects which you have created or loaded from Floppy Disk, permanently in the Music Stylist custom "
+    .asciz	"section.~0d"
+HelpTextEn46_2:
+    .ascii	"If you press and hold the Composer Menu button while a Floppy Disk is inserted the Disk Load screen "
+    .asciz	"is activated automatically to enable you to load Composer patterns from Floppy Disk.~0d"
+    .align	4, 0xff
+HelpPagesEn46:
+    .long	HelpTextEn46_0 - HelpTexts
+    .long	HelpTextEn46_1 - HelpTexts
+    .long	HelpTextEn46_2 - HelpTexts
+    .long	0
+HelpTextEn47_0:
+    .ascii	"The Performance Pads Menu contains phrase recording for Each of 3 user banks (A/B/C), in which you "
+    .ascii	"can record your original phrases using realtime or step record.~0d"
+    .ascii	" ~0d"
+    .ascii	"You can also set how each pad in the User Banks works in the recording sub menu \x93Play Setting\x94~0d"
+    .ascii	"START: Select whether the start of the Phrase is synchronized to the start of the measure when the "
+    .asciz	"rhythm is running.~0d"
+HelpTextEn47_1:
+    .ascii	"LOOP: Enables you to create a phrase which loops continuously when you play it.~0d"
+    .ascii	" ~0d"
+    .ascii	"You can also name the User Banks and their individual Pads in the recording sub menu.~0d"
+    .ascii	" ~0d"
+    .asciz	"The Compile Banks allow you to group together your favorite phrases from different Banks.~0d"
+HelpTextEn47_2:
+    .ascii	"Phrase Copy provides the facility to copy a phrase from one pad to another.~0d"
+    .ascii	" ~0d"
+    .asciz	"Seq to Pad Copy allows you to copy a phrase and a chord sequence from a Sequencer song.~0d"
+    .align	4, 0xff
+HelpPagesEn47:
+    .long	HelpTextEn47_0 - HelpTexts
+    .long	HelpTextEn47_1 - HelpTexts
+    .long	HelpTextEn47_2 - HelpTexts
+    .long	0
+HelpTextEn48_0:
+    .ascii	"The Disk menu is used when you need to load from and save to Floppy Disk. Just insert a Floppy Disk "
+    .ascii	"and the KN will automatically select the Disk menu. ~0d"
+    .ascii	"The KN can load many types of software including Technics Music Disk Collection and various song "
+    .ascii	"software such as Standard MIDI File, Disk Orchestra or PianoDisc. Standard MIDI Files can be loaded "
+    .ascii	"into the Sequencer or played direct from disk. Disk Orchestra PianoDisc are only played direct from "
+    .asciz	"disk. ~0d"
+HelpTextEn48_1:
+    .ascii	"Songs can be played as a medley and if a Standard MIDI File includes lyrics the KN will display "
+    .ascii	"them on the screen as the song plays.~0d"
+    .ascii	"The KN can also load and save Custom Styles.~0d"
+    .ascii	" ~0d"
+    .ascii	"You can download and upload the internal performance data of the KN to your PC via USB, using a "
+    .ascii	"special PC program called \x93Song Manager\x94 on the included CD-ROM. In this way you can use the hard "
+    .asciz	"disk on your PC as a data storage medium for the KN. ~0d"
+HelpTextEn48_2:
+    .ascii	"You can also send contents such as songs or composer patterns downloaded from the internet directly "
+    .ascii	"to the KN via USB using the Song Manager program.~0d"
+    .ascii	" ~0d"
+    .ascii	"The KN can load style software from several other manufacturers using a Style Convert program. See "
+    .asciz	"the owners manual for more details of this.~0d"
+    .align	4, 0xff
+HelpPagesEn48:
+    .long	HelpTextEn48_0 - HelpTexts
+    .long	HelpTextEn48_1 - HelpTexts
+    .long	HelpTextEn48_2 - HelpTexts
+    .long	0
+HelpTextEn49_0:
+    .ascii	"Use the Rhythm Group buttons to select from the KN's 220 preset rhythm patterns, and 20 Custom Rhythms. "
+    .ascii	"The patterns are grouped in 15 categories, each of which has a Rhythm Group button.~0d"
+    .ascii	" ~0d"
+    .ascii	"Ten or more rhythm patterns are available in each Rhythm Group. After selecting a Rhythm Group press "
+    .asciz	"one of the buttons to the left or right of the screen to select a rhythm pattern.~0d"
+HelpTextEn49_1:
+    .ascii	"The screen can display ten rhythms on one page. ~0d"
+    .ascii	"If there are more than ten rhythms in any group the indication PAGE 1 / 3 will appear in the top "
+    .ascii	"right of the screen. Use the Page Up/Down buttons to select the next page.~0d"
+    .ascii	"The Custom Rhythm Group is a special group in which you can store your favorite Composer patterns "
+    .asciz	"with Style (registration) data.~0d"
+HelpTextEn49_2:
+    .ascii	"These could be preset patterns and styles that you have modified, patterns and styles that you have "
+    .ascii	"created from scratch or data from Floppy Disk Software such as Technics Music Disk Collection. Once "
+    .ascii	"you have stored the styles in the Custom Stylist they will stay there until you replace them with "
+    .asciz	"another Style. Even initializing the KN will not delete Custom Styles.~0d"
+    .align	4, 0xff
+HelpPagesEn49:
+    .long	HelpTextEn49_0 - HelpTexts
+    .long	HelpTextEn49_1 - HelpTexts
+    .long	HelpTextEn49_2 - HelpTexts
+    .long	0
+HelpTextEn50_0:
+    .ascii	"The Composer allows you to create your own accompaniment patterns or to load new accompaniment patterns "
+    .ascii	"from Floppy Disk software. ~0d"
+    .ascii	" ~0d"
+    .ascii	"The Composer Memory button is used to select which Composer pattern you are going to play. Select "
+    .asciz	"from three Composer banks (A, B and C) on the left of the screen. ~0d"
+HelpTextEn50_1:
+    .ascii	"If you press and hold the Memory button while a Floppy Disk is inserted the Disk Load screen is "
+    .asciz	"activated automatically to enable you to load Composer patterns from Floppy Disk.~0d"
+    .align	4, 0xff
+HelpPagesEn50:
+    .long	HelpTextEn50_0 - HelpTexts
+    .long	HelpTextEn50_1 - HelpTexts
+    .long	0
+HelpTextEn51_0:
+    .ascii	"The Sound Arranger allows you to change the sounds used in an accompaniment pattern.~0d"
+    .ascii	"Follow this procedure to create you own variation of an accompaniment pattern:~0d"
+    .ascii	" ~0d"
+    .ascii	"(1) Select a rhythm. ~0d"
+    .ascii	"(2) Press the Sound Arranger SET button.~0d"
+    .asciz	"(3) Select an APC part in the LCD screen.~0d"
+HelpTextEn51_1:
+    .ascii	"(4) Change the sound using the Sound Select buttons. (with Digital Effect if desired)~0d"
+    .ascii	"(5) Repeat this for other parts if you want to.~0d"
+    .ascii	"(6) Press the SET button to complete the procedure.~0d"
+    .ascii	" ~0d"
+    .asciz	"Turn Sound Arranger off to return to the factory settings.~0d"
+    .align	4, 0xff
+HelpPagesEn51:
+    .long	HelpTextEn51_0 - HelpTexts
+    .long	HelpTextEn51_1 - HelpTexts
+    .long	0
+HelpTextEn52_0:
+    .ascii	"The Sound Arranger allows you to change the sounds used in an accompaniment pattern.~0d"
+    .ascii	"There are some preset settings already in the Sound Arranger so just press the Sound Arranger On "
+    .ascii	"button and you will hear the accompaniment pattern change.~0d"
+    .ascii	" ~0d"
+    .ascii	"You can set you own sound changes using the Sound Arranger SET button. Press it now to find out "
+    .asciz	"how.~0d"
+    .align	4, 0xff
+HelpPagesEn52:
+    .long	HelpTextEn52_0 - HelpTexts
+    .long	0
+HelpPagesEn53:
+    .long	0
+HelpTextEn54_0:
+    .ascii	"Pressing the Auto Play Chord Mode button will display the following options:~0d"
+    .ascii	" ~0d"
+    .ascii	"BASIC: allows you to play using one finger or fingered chords. One finger works automatically when "
+    .asciz	"you play one note, if you play your own chords basic harmonies are recognized.~0d"
+HelpTextEn54_1:
+    .ascii	"FINGERED: Recognizes the full chord that you play to the left of the keyboard split.~0d"
+    .ascii	" ~0d"
+    .ascii	"PIANIST: Works without a keyboard split so that you can play with one sound across the entire keyboard.~0d"
+    .asciz	" ~0d"
+HelpTextEn54_2:
+    .ascii	"MEMORY: Holds the chord you are playing after you release the keys. The accompaniment will continue "
+    .ascii	"on the same harmonizer until you play the next chord.~0d"
+    .ascii	" ~0d"
+    .ascii	"ON BASS: When you use Fingered or Pianist mode, On Bass plays the bass line around the lowest note "
+    .asciz	"of the chord that you are playing rather than the root note of the chord.~0d"
+    .align	4, 0xff
+HelpPagesEn54:
+    .long	HelpTextEn54_0 - HelpTexts
+    .long	HelpTextEn54_1 - HelpTexts
+    .long	HelpTextEn54_2 - HelpTexts
+    .long	0
+HelpTextEn55_0:
+    .ascii	"The Count Intro Mode allows you to select how the Count Intro sounds:~0d"
+    .ascii	"Click: Drum Stick~0d"
+    .asciz	"Voice:  Voice count in~0d"
+    .align	4, 0xff
+HelpPagesEn55:
+    .long	HelpTextEn55_0 - HelpTexts
+    .long	0
+HelpTextEn56_0:
+    .asciz	"Left Hold will hold the sound in the Left Conductor part when you are using Auto Play Chord.~0d"
+HelpPagesEn56:
+    .long	HelpTextEn56_0 - HelpTexts
+    .long	0
+HelpTextEn57_0:
+    .ascii	"The Chord Finder is a great learning feature, teaching you how to play chords which are recognized "
+    .ascii	"by the KN's APC system.~0d"
+    .ascii	"Select a Root and Chord type, and the notes of the chord are displayed in a keyboard in the screen.~0d"
+    .ascii	"You can also select different inversions of chords if they are recognized by the KN's system.~0d"
+    .asciz	"There is also a play button which will play the sound of the chord you have selected.~0d"
+HelpPagesEn57:
+    .long	HelpTextEn57_0 - HelpTexts
+    .long	0
+HelpTextEn58_0:
+    .ascii	"AUTO PLAY CHORD provides a professionally arranged accompaniment matched to each of  the KN's 220 "
+    .asciz	"Rhythm patterns. The accompaniment pattern follows the chords that you play.~0d"
+    .align	4, 0xff
+HelpPagesEn58:
+    .long	HelpTextEn58_0 - HelpTexts
+    .long	0
+HelpTextEn59_0:
+    .ascii	"The Other Parts / Tracks button has two functions. In the Home Page or in the Mixer it is used to "
+    .ascii	"access the balance controls for other Parts of the KN, such as parts 1 to 16. ~0d"
+    .ascii	"When you are using the Sequencer the Mixer works for each track, rather than specific Parts, so "
+    .ascii	"you don't need to know what Part is assigned to a Track to adjust its settings. The Mixer can display "
+    .asciz	"the settings of 16 Tracks at once, so the Other Parts / Tracks button is used to select APC parts.~0d"
+    .align	4, 0xff
+HelpPagesEn59:
+    .long	HelpTextEn59_0 - HelpTexts
+    .long	0
+HelpTextEn60_0:
+    .ascii	"Display Hold keeps the current page in the screen until you turn off Display Hold, or press the "
+    .ascii	"EXIT button. Display Hold is useful because some pages and messages are only displayed for a short "
+    .ascii	"time, for example, Rhythm or Sound Groups or error messages. ~0d"
+    .ascii	" ~0d"
+    .ascii	"In the Customize menu, Display Time Out section you can set for certain types of page to activate "
+    .asciz	"Display Hold automatically.~0d"
+HelpPagesEn60:
+    .long	HelpTextEn60_0 - HelpTexts
+    .long	0
+HelpTextEn61_0:
+    .ascii	"Use the Sound Group buttons to select from over 1000 preset sounds on the KN, and to select from "
+    .ascii	"the 40 Sound Memories. The Sounds are grouped into 16 categories, each of which has a Sound Group "
+    .ascii	"button.~0d"
+    .ascii	" ~0d"
+    .ascii	"The KN's huge number of sounds are arranged using the new Technics sound system called \x93NX SOUND\x94~0d"
+    .ascii	"\x93NX SOUND\x94 based on General MIDI Level 2 is the new standard to give the KN and future Technics "
+    .asciz	"products the widest Compatibility.~0d"
+HelpTextEn61_1:
+    .ascii	"When you press one of the Sound Group buttons, sounds in that group appear in the screen. Press "
+    .ascii	"one of the buttons to the left or right of the screen to select the sound you want to use.~0d"
+    .ascii	"The screen displays ten sounds on one page. Use the Page Up/Down buttons to select the next page. "
+    .ascii	"~0d"
+    .ascii	" ~0d"
+    .asciz	"The Sound Group includes one Memory Group in which you can store 40 edited sounds.~0d"
+    .align	4, 0xff
+HelpPagesEn61:
+    .long	HelpTextEn61_0 - HelpTexts
+    .long	HelpTextEn61_1 - HelpTexts
+    .long	0
+HelpTextEn62_0:
+    .ascii	"Digital Drawbar provides the sounds of a classic tonewheel organ displaying nine drawbars and two "
+    .ascii	"percussive tones in the screen. Use the balance buttons to adjust the drawbars. ~0d"
+    .ascii	"You can also set the speed of the rotary speaker effect to fast or slow.~0d"
+    .ascii	"Drawbar setting allows you select between Jazz Drawbars or Rock Drawbars and to edit some parameters "
+    .asciz	"such as percussion Attack and Decay time and Volume.~0d"
+    .align	4, 0xff
+HelpPagesEn62:
+    .long	HelpTextEn62_0 - HelpTexts
+    .long	0
+HelpTextEn63_0:
+    .ascii	"The Sound Explorer is a special feature that allows you to select from a huge range of sounds (including "
+    .ascii	"GM Level 2, NX sound, etc.) far beyond the scope of the normal Sound Groups, which contain just "
+    .ascii	"the most commonly used sounds.~0d"
+    .ascii	" ~0d"
+    .ascii	"There are two ways of finding the group you want to use, by Category or by selecting from an alphabetical "
+    .asciz	"list.~0d"
+HelpTextEn63_1:
+    .ascii	"Follow this procedure to select a sound in the Sound Explorer:~0d"
+    .ascii	"(1). Press the Sound Explorer button~0d"
+    .ascii	"(2). Choose the selection method in the bottom of the screen, by Category or Alphabetically.~0d"
+    .ascii	"(3). Select a Sound Group at the bottom of the screen.~0d"
+    .ascii	"(4). Press one of the buttons to the left or right of the screen to select the sound you want to "
+    .asciz	"use.~0d"
+HelpTextEn63_2:
+    .ascii	"(5). The screen displays 10 sounds on one page. Use the Page Up/Down buttons to select other pages.~0d"
+    .ascii	"The Alphabetical method displays all of the individual sounds in one alphabetical list. As you learn "
+    .ascii	"the names of your favorite sounds you will be able to find them easily using this feature.~0d"
+    .ascii	" ~0d"
+    .asciz	"MIDI Bank select MSB, LSB and Program change numbers for each sound are also displayed for reference.~0d"
+    .align	4, 0xff
+HelpPagesEn63:
+    .long	HelpTextEn63_0 - HelpTexts
+    .long	HelpTextEn63_1 - HelpTexts
+    .long	HelpTextEn63_2 - HelpTexts
+    .long	0
+HelpTextEn64_0:
+    .ascii	"Sustain makes the sound die away gradually after you release the key. The Initial setting of Footswitch "
+    .asciz	"1 is Sustain, so that you can use a Footswitch like the sustaining pedal on a piano.~0d"
+HelpPagesEn64:
+    .long	HelpTextEn64_0 - HelpTexts
+    .long	0
+HelpTextEn65_0:
+    .ascii	"Digital Effect enhances the sounds of the KN by adding effects such as Chorus, Celeste and Organ "
+    .ascii	"Tremolo. Each sound on the KN has a dedicated Digital Effect, so just press the Digital Effect button "
+    .ascii	"and a suitable effect will be added to the sound. ~0d"
+    .ascii	" ~0d"
+    .ascii	"In a case where Digital Effect is critical to the sound the Digital Effect button will turn on automatically "
+    .asciz	"when you select the sound, for example Organ Tremolo with a Jazz Organ sound.~0d"
+    .align	4, 0xff
+HelpPagesEn65:
+    .long	HelpTextEn65_0 - HelpTexts
+    .long	0
+HelpTextEn66_0:
+    .ascii	"Sound DSP works like a studio effects processor providing insertion type effects such as Distortion, "
+    .ascii	"Exciter, and Delay.~0d"
+    .ascii	" ~0d"
+    .ascii	"Each sound has sound DSP parameters and when you select the sound for a part which can use sound "
+    .ascii	"DSP, suitable Sound DSP parameters are set to the part automatically.~0d"
+    .ascii	"In the Sound menu or Effect menu Sound Load Option section, it is possible to eliminate this auto "
+    .asciz	"setting.~0d"
+HelpTextEn66_1:
+    .ascii	"In the Effect menu Allocation section, you can change the allocation of Sound DSP, and the 2 Sound "
+    .ascii	"DSPs for APC parts to be used for selected sequencer parts.~0d"
+    .ascii	"Right1, Right2, and Left part (manually played parts) can always use for their own Sound DSP.~0d"
+    .ascii	"To change Sound DSP settings just press and hold the Sound DSP button for a few seconds and the "
+    .asciz	"Sound DSP page will appear in the screen.~0d"
+HelpPagesEn66:
+    .long	HelpTextEn66_0 - HelpTexts
+    .long	HelpTextEn66_1 - HelpTexts
+    .long	0
+HelpTextEn67_0:
+    .ascii	"Each type of Sound DSP has a variation changes the character of current Sound DSP.~0d"
+    .ascii	" ~0d"
+    .ascii	"For example, you can set the speed of the rotary speaker effect to fast or slow using this Vari "
+    .asciz	"button.~0d"
+HelpPagesEn67:
+    .long	HelpTextEn67_0 - HelpTexts
+    .long	0
+HelpTextEn68_0:
+    .ascii	"Use the SD menu when you need to load from or save to an SD card. ~0d"
+    .ascii	" ~0d"
+    .ascii	"The KN can load and save the following 2 types of software.~0d"
+    .ascii	"(1) Technics format files:~0d"
+    .ascii	"The SD card can store a huge number of files, so for convenience you can file them in up to 99 Folders. "
+    .asciz	"You can sort files by Folder, Alphabetically or by Number.~0d"
+HelpTextEn68_1:
+    .ascii	"(2) Standard MIDI File (SMF):~0d"
+    .ascii	"The KN uses the SD Sound format, the new Standard Midi File for SD. The KN sorts SD Sound songs "
+    .ascii	"in Play Lists just like SD Audio. When loading a song, select a Play List and then select the desired "
+    .asciz	"song. When saving, save the song and then make or edit a Play List.~0d"
+HelpTextEn68_2:
+    .ascii	"The KN plays SD Sound (SMF) and SD Audio directly from the SD card and sorts them in Play Lists. "
+    .ascii	"You can see all the songs at once in the Default Play List and group your favourite songs together "
+    .ascii	"in your own Play Lists. For example if you are playing at a party, you could group all the songs "
+    .asciz	"for a certain set in one Play List. ~0d"
+HelpTextEn68_3:
+    .ascii	"The Favorite Songs display allows you to create an album of your favorite Technics format songs "
+    .ascii	"which you can set in a specific order, making it easy to load favorite songs for immediate play "
+    .ascii	"back.~0d"
+    .ascii	" ~0d"
+    .ascii	"A special PC program called \x93Song Manager\x94 on the included CD-ROM can backup and restore all of "
+    .ascii	"the Technics Files and SMFs on the SD card to your PC via USB. You can use the hard disk on your "
+    .asciz	"PC as the data backup medium for the KN. ~0d"
+HelpTextEn68_4:
+    .ascii	"It is also possible to compile several sets of backup data on your PC for future larger memory capacity "
+    .ascii	"SD cards.~0d"
+    .ascii	" ~0d"
+    .asciz	"Feature extension Plug-Ins by third-party companies can also be installed on SD card.~0d"
+    .align	4, 0xff
+HelpPagesEn68:
+    .long	HelpTextEn68_0 - HelpTexts
+    .long	HelpTextEn68_1 - HelpTexts
+    .long	HelpTextEn68_2 - HelpTexts
+    .long	HelpTextEn68_3 - HelpTexts
+    .long	HelpTextEn68_4 - HelpTexts
+    .long	0
+HelpTextEn69_0:
+    .ascii	"Use this EW Expansion button to select from the preset sounds of the EW series NX Sound Expansion "
+    .ascii	"Boards (sold separately). You can install up to 4 EW Sound Expansion Boards providing a huge number "
+    .ascii	"of additional sounds to expand your musical world. The EW Expansion button has no function when "
+    .ascii	"there are no EW Sound Expansion Boards installed.~0d"
+    .ascii	" ~0d"
+    .asciz	"Follow this procedure to select an EW sound:~0d"
+HelpTextEn69_1:
+    .ascii	"(1). Press the EW Expansion button.~0d"
+    .ascii	"(2). Select the number of EW Expansion board in the screen (when you have more than one EW Board "
+    .ascii	"installed)~0d"
+    .ascii	"(3). Select a Sound Group in the screen.~0d"
+    .ascii	"(4). The screen displays ten sounds on one page. Use the Page Up/Down buttons to select the next "
+    .ascii	"page.~0d"
+    .ascii	"(5). Press one of the buttons to the left or right of the screen to select the sound you want to "
+    .asciz	"use.~0d"
+    .align	4, 0xff
+HelpPagesEn69:
+    .long	HelpTextEn69_0 - HelpTexts
+    .long	HelpTextEn69_1 - HelpTexts
+    .long	0
+HelpTextEn70_0:
+    .ascii	"TAB ORGAN recreates the sound of 3 different classic tab organs. 10 tabs are displayed in the screen. "
+    .ascii	"Use the balance buttons under the screen to turn each tab on and off. ~0d"
+    .ascii	" ~0d"
+    .ascii	"For the USA and European Tab types you can add percussion, set the speed of the Tremolo effect to "
+    .ascii	"fast or slow and turn on Vibrato for the Reed and String Tabs. For the Theatre Pipes Tabs you can "
+    .asciz	"turn the Tremulant on and off for three different sections of the organ.~0d"
+HelpTextEn70_1:
+    .ascii	"TAB ORGAN TYPE setting allows you select from 3 types of Organ: USA Tabs, European Tabs and Theatre "
+    .ascii	"Pipes.~0d"
+    .ascii	"Tremulant is a distinctive effect peculiar to pipe organs, in which the airflow to the pipes is "
+    .ascii	"\x93interrupted\x94 by large bellows, creating a distinctive combination of tremolo and vibrato.~0d"
+    .ascii	"Use the buttons to the right of the display to turn on and off the effect separately for Tibia, "
+    .asciz	"Vox and Main (Trumpet, English Horn, and String Celeste).~0d"
+    .align	4, 0xff
+HelpPagesEn70:
+    .long	HelpTextEn70_0 - HelpTexts
+    .long	HelpTextEn70_1 - HelpTexts
+    .long	0
+HelpTextEn71_0:
+    .ascii	"Press this button to adjust the contrast of the LCD display.~0d"
+    .ascii	"When you press the button the current value is displayed and you can use the Contrast Up/Down buttons "
+    .ascii	"or Tempo/Program wheel to change the setting until the screen is easy to read.~0d"
+    .ascii	" ~0d"
+    .asciz	"LCD CONTRAST setting will stay in the KN permanently, or until you change it.~0d"
+    .align	4, 0xff
+HelpPagesEn71:
+    .long	HelpTextEn71_0 - HelpTexts
+    .long	0
+HelpTextEn72_0:
+    .ascii	"You can control the play back of the songs on SD card using these dedicated buttons. The KN plays "
+    .ascii	"both SD Audio and SD Sound (SMF).~0d"
+    .ascii	"Follow this procedure to play a song:~0d"
+    .ascii	" ~0d"
+    .ascii	"(1) Open the lid of the SD slot.~0d"
+    .ascii	"(2) Insert the SD card with the stored songs into the SD slot.~0d"
+    .ascii	"(3) Close the lid.~0d"
+    .asciz	"(4) Press the play back button.~0d"
+HelpTextEn72_1:
+    .ascii	"The method of operation is same as a standard CD or SD Player.~0d"
+    .asciz	"It is possible to play back a song and change the volume even if the lid of the KN is closed.~0d"
+HelpPagesEn72:
+    .long	HelpTextEn72_0 - HelpTexts
+    .long	HelpTextEn72_1 - HelpTexts
+    .long	0
+HelpTitleEn00:
+    .asciz	"HELP FUNCTION"
+HelpTitleEn01:
+    .asciz	"DEMO"
+HelpTitleEn02:
+    .asciz	"SOUND CONTROLLER RESET"
+HelpTitleEn03:
+    .asciz	"SOUND CONTROLLER MODE"
+HelpTitleEn04:
+    .asciz	"PERFORMANCE PADS AUTO SETTING"
+HelpTitleEn05:
+    .asciz	"PERFORMANCE PADS BANK"
+HelpTitleEn06:
+    .asciz	"PERFORMANCE PADS STOP"
+HelpTitleEn07:
+    .asciz	"PERFORMANCE PADS"
+HelpTitleEn08:
+    .asciz	"MUSIC STYLE ARRANGER"
+HelpTitleEn09:
+    .asciz	"VARIATION & MSA"
+HelpTitleEn10:
+    .asciz	"ONE TOUCH PLAY"
+HelpTitleEn11:
+    .asciz	"SPLIT POINT"
+HelpTitleEn12:
+    .asciz	"FADE IN/OUT"
+HelpTitleEn13:
+    .asciz	"TAP TEMPO"
+HelpTitleEn14:
+    .asciz	"SYNCHRO & BREAK"
+HelpTitleEn15:
+    .asciz	"FILL IN 1/2"
+HelpTitleEn16:
+    .asciz	"INTRO & ENDING 1/2"
+HelpTitleEn17:
+    .asciz	"START/STOP"
+HelpTitleEn18:
+    .asciz	"TEMPO/PROGRAM"
+HelpTitleEn19:
+    .asciz	"MUSIC STYLIST"
+HelpTitleEn20:
+    .asciz	"FAVORITES"
+HelpTitleEn21:
+    .asciz	"TRANSPOSE -/+"
+HelpTitleEn22:
+    .asciz	"R1/R2 OCTAVE -/+"
+HelpTitleEn23:
+    .asciz	"PART SELECT"
+HelpTitleEn24:
+    .asciz	"CONDUCTOR"
+HelpTitleEn25:
+    .asciz	"SOLO"
+HelpTitleEn26:
+    .asciz	"TECHNI-CHORD"
+HelpTitleEn27:
+    .asciz	"CHORUS"
+HelpTitleEn28:
+    .asciz	"MULTI EFFECT"
+HelpTitleEn29:
+    .asciz	"REVERB"
+HelpTitleEn30:
+    .asciz	"MIC REVERB & EFFECT"
+HelpTitleEn31:
+    .asciz	"PANEL MEMORY SET"
+HelpTitleEn32:
+    .asciz	"PANEL MEMORY"
+HelpTitleEn33:
+    .asciz	"PANEL MEMORY NEXT BANK"
+HelpTitleEn34:
+    .asciz	"PANEL MEMORY BANK VIEW"
+HelpTitleEn35:
+    .asciz	"CUSTOM PANEL"
+HelpTitleEn36:
+    .asciz	"SEQUENCER PLAY"
+HelpTitleEn37:
+    .asciz	"SEQUENCER EASY REC"
+HelpTitleEn38:
+    .asciz	"HELP FUNCTION"
+HelpTitleEn39:
+    .asciz	"SOUND"
+HelpTitleEn40:
+    .asciz	"REVERB & EFFECT"
+HelpTitleEn41:
+    .asciz	"CONTROL"
+HelpTitleEn42:
+    .asciz	"MIDI"
+HelpTitleEn43:
+    .asciz	"CUSTOMIZE"
+HelpTitleEn44:
+    .asciz	"SOUND EDIT"
+HelpTitleEn45:
+    .asciz	"SEQUENCER"
+HelpTitleEn46:
+    .asciz	"COMPOSER"
+HelpTitleEn47:
+    .asciz	"PERFORMANCE PADS"
+HelpTitleEn48:
+    .asciz	"DISK"
+HelpTitleEn49:
+    .asciz	"RHYTHM GROUP"
+HelpTitleEn50:
+    .asciz	"COMPOSER MEMORY"
+HelpTitleEn51:
+    .asciz	"SOUND ARRANGER SET"
+HelpTitleEn52:
+    .asciz	"SOUND ARRANGER OFF/ON"
+HelpTitleEn53:
+    .asciz	"APC/CHORD FINDER"
+HelpTitleEn54:
+    .asciz	"AUTO PLAY CHORD MODE"
+HelpTitleEn55:
+    .asciz	"COUNT INTRO"
+HelpTitleEn56:
+    .asciz	"LEFT HOLD"
+HelpTitleEn57:
+    .asciz	"CHORD FINDER"
+HelpTitleEn58:
+    .asciz	"AUTO PLAY CHORD OFF/ON"
+HelpTitleEn59:
+    .asciz	"OTHER PARTS/TR"
+HelpTitleEn60:
+    .asciz	"DISPLAY HOLD"
+HelpTitleEn61:
+    .asciz	"SOUND GROUP"
+HelpTitleEn62:
+    .asciz	"DIGITAL DRAWBAR"
+HelpTitleEn63:
+    .asciz	"SOUND EXPLORER"
+HelpTitleEn64:
+    .asciz	"SUSTAIN"
+HelpTitleEn65:
+    .asciz	"DIGITAL EFFECT"
+HelpTitleEn66:
+    .asciz	"SOUND DSP"
+HelpTitleEn67:
+    .asciz	"SOUND DSP VARIATION"
+HelpTitleEn68:
+    .asciz	"SD"
+HelpTitleEn69:
+    .asciz	"EW EXPANSION"
+HelpTitleEn70:
+    .asciz	"TAB ORGAN"
+HelpTitleEn71:
+    .asciz	"LCD CONTRAST"
+HelpTitleEn72:
+    .asciz	"SD CONTROL"
+HelpTitleEn73:
+    .asciz	"HELP FUNCTION"
+HelpTitleEn74:
+    .asciz	"HELP FUNCTION"
+HelpTitleEn75:
+    .asciz	"HELP FUNCTION"
+HelpTitleEn76:
+    .asciz	"HELP FUNCTION"
+HelpTitleEn77:
+    .asciz	"HELP FUNCTION"
+HelpTitleEn78:
+    .asciz	"HELP FUNCTION"
+HelpTitleEn79:
+    .asciz	"HELP FUNCTION"
+HelpTitleEn80:
+    .asciz	"HELP FUNCTION"
+HelpTitleEn81:
+    .asciz	"HELP FUNCTION"
+HelpTitleEn82:
+    .asciz	"HELP FUNCTION"
+HelpTitleEn83:
+    .asciz	"HELP FUNCTION"
+HelpTitleEn84:
+    .asciz	"HELP FUNCTION"
+HelpTitleEn85:
+    .asciz	"HELP FUNCTION"
+HelpTitleEn86:
+    .asciz	"HELP FUNCTION"
+HelpTitleEn87:
+    .asciz	"HELP FUNCTION"
+HelpTitleEn88:
+    .asciz	"HELP FUNCTION"
+HelpTitleEn89:
+    .asciz	"HELP FUNCTION"
+HelpTitleEn90:
+    .asciz	"HELP FUNCTION"
+HelpTitleEn91:
+    .asciz	"HELP FUNCTION"
+HelpTitleEn92:
+    .asciz	"HELP FUNCTION"
+HelpTitleEn93:
+    .asciz	"HELP FUNCTION"
+HelpTitleEn94:
+    .asciz	"HELP FUNCTION"
+HelpTitleEn95:
+    .asciz	"HELP FUNCTION"
+HelpTitleEn96:
+    .asciz	"HELP FUNCTION"
+HelpTitleEn97:
+    .asciz	"HELP FUNCTION"
+HelpTitleEn98:
+    .asciz	"HELP FUNCTION"
+HelpTitleEn99:
+    .asciz	"HELP FUNCTION"
+    .align	4, 0xff
+HelpTextDe00_0:
+    .ascii	"Dr\xfccken Sie eine beliebige Taste am KN und das Display gibt Ihnen Informationen \xfcber die Funktion "
+    .ascii	"der gew\xe4hlten Taste.~0d"
+    .ascii	"Mit den Tasten HELP oder EXIT schalten Sie die HELP Funktion wieder aus.~0d"
+    .ascii	"Verwenden Sie die Tasten unter dem Display, um die gew\xfcnschte Sprache auszuw\xe4hlen und best\xe4tigen "
+    .asciz	"Sie mit OK.~0d"
+HelpPagesDe00:
+    .long	HelpTextDe00_0 - HelpTexts
+    .long	0
+HelpTextDe01_0:
+    .ascii	"Das KN besitzt 10 Demosongs, jeweils mit einer Bilddemonstration im Display. W\xe4hlen Sie einen Demosong "
+    .ascii	"mit den Tasten rings um das Display aus. Die Darbietung startet automatisch. Um alle Demosongs als "
+    .ascii	"Medley abzuspielen, halten Sie die DEMO-Taste f\xfcr ein paar Sekunden gedr\xfcckt. Mit der STOP-Taste "
+    .ascii	"beenden Sie die Darbietung. Die Bildershow, die jeden Song begleitet, bietet Ihnen einen optimalen "
+    .ascii	"~0d"
+    .ascii	"\xdcberblick \xfcber die einzelnen Funktionen des KN. ~0d"
+    .asciz	"Viel Spa\xdf !~0d"
+    .align	4, 0xff
+HelpPagesDe01:
+    .long	HelpTextDe01_0 - HelpTexts
+    .long	0
+HelpTextDe02_0:
+    .ascii	"Um die eingestellten Werte des Sound Controllers auf ihre urspr\xfcnglichen Werte zur\xfcckzustellen, "
+    .ascii	"dr\xfccken Sie die Reset-Taste. Der Sound Controller bleibt nach dem Loslassen an der aktuellen Position "
+    .asciz	"stehen und kehrt nicht automatisch in die Mittelposition zur\xfcck.~0d"
+    .align	4, 0xff
+HelpPagesDe02:
+    .long	HelpTextDe02_0 - HelpTexts
+    .long	0
+HelpTextDe03_0:
+    .ascii	"Der Sound Controller wird verwendet, um den Klang w\xe4hrend der Darbietung mit zwei Komponenten zu "
+    .ascii	"modifizieren.~0d"
+    .ascii	" ~0d"
+    .ascii	"Ihnen stehen einige Preset-Parameter f\xfcr die beiden Komponenten (X-horizontale Achse und Y- vertikale "
+    .asciz	"Achse) zur Verf\xfcgung, die Sie in der Sound-Controller-Mode-Seite ausw\xe4hlen k\xf6nnen.~0d"
+HelpTextDe03_1:
+    .ascii	"Diese Parameter, die X und Y zugeteilt werden, sind MIDI-Control-Change-Informationen (Sound Controller, "
+    .ascii	"Volume und Panorama).~0d"
+    .ascii	" ~0d"
+    .ascii	"Der Ein-/Aus-Status des Sound Controllers f\xfcr jede Klanggruppe kann im Sound-Men\xfc in der Part-Setting-Seite "
+    .asciz	"eingestellt werden.~0d"
+    .align	4, 0xff
+HelpPagesDe03:
+    .long	HelpTextDe03_0 - HelpTexts
+    .long	HelpTextDe03_1 - HelpTexts
+    .long	0
+HelpTextDe04_0:
+    .ascii	"Die AUTO-SETTING-Funktion w\xe4hlt die am besten passenden Performance Pads f\xfcr die aktuelle One Touch "
+    .asciz	"Play, Music Style Arranger oder Music Stylist Registrierung.~0d"
+HelpPagesDe04:
+    .long	HelpTextDe04_0 - HelpTexts
+    .long	0
+HelpTextDe05_0:
+    .ascii	"Es gibt 20 B\xe4nke mit PERFORMANCE PADS Phrasen und Effekten. Durch das Wechseln der Bank erhalten "
+    .ascii	"Sie unterschiedliche Phrasen f\xfcr alle sechs Pads. Dr\xfccken Sie hierf\xfcr einfach die Bank-Taste und "
+    .ascii	"treffen Ihre Auswahl im Display.~0d"
+    .asciz	"Drei B\xe4nke beinhalten spezielle Pad-Typen: User, Compile und Control.~0d"
+HelpTextDe05_1:
+    .ascii	"In der COMPILE-Bank k\xf6nnen Sie sich Ihre Lieblings-Pads zusammenstellen. Dr\xfccken Sie das Performance "
+    .ascii	"Pads Men\xfc im Program Men\xfc f\xfcr weitere Informationen.~0d"
+    .ascii	"In der USER-Bank k\xf6nnen Sie Ihre eigenen Phrasen aufnehmen. Dr\xfccken Sie die Stop/Record-Taste f\xfcr "
+    .ascii	"mehr Informationen.~0d"
+    .ascii	"Die CONTROL-PRESET-Bank beinhaltet einige wichtige Steuer-Funktionen wie Tremolo Slow/Fast und Glide. "
+    .asciz	"Ausf\xfchrliche Informationen erhalten Sie in der Bedienungsanleitung.~0d"
+    .align	4, 0xff
+HelpPagesDe05:
+    .long	HelpTextDe05_0 - HelpTexts
+    .long	HelpTextDe05_1 - HelpTexts
+    .long	0
+HelpTextDe06_0:
+    .ascii	"Wenn Sie die Wiedergabe einer Phrase stoppen m\xf6chten, dr\xfccken Sie die Stop-Taste. Einige Phrasen "
+    .ascii	"wie Arpeggios spielen in Endlosschleifen, bis Sie die Stop-Taste dr\xfccken.~0d"
+    .ascii	" ~0d"
+    .ascii	"Sie k\xf6nnen mittels Chord Step Record oder Seq to Phrase copy Ihre eigenen Solophrasen erstellen, "
+    .asciz	"indem Sie eine Phrase erst im Sequenzer aufnehmen und dann in eines der User Solo Pads kopieren.~0d"
+    .align	4, 0xff
+HelpPagesDe06:
+    .long	HelpTextDe06_0 - HelpTexts
+    .long	0
+HelpTextDe07_0:
+    .ascii	"Die PERFORMANCE PADS beinhalten eine Reihe an musikalischen Phrasen und Effekten, die Sie zu Ihrer "
+    .ascii	"Darbietung erg\xe4nzen k\xf6nnen. Jedes der sechs Pads beinhaltet eine eigene Phrase. Dr\xfccken Sie einfach "
+    .ascii	"auf ein Pad und schon startet ein Effekt oder eine musikalische Phrase.~0d"
+    .ascii	" ~0d"
+    .asciz	"Einige Phrasen werden als Endlosschleife wiedergegeben, bis Sie die STOP-Taste dr\xfccken.~0d"
+HelpTextDe07_1:
+    .ascii	"Die Pads 5 und 6 spielen ein Solo inklusive einer Akkordsequenz, die sich an der automatischen Begleitung "
+    .ascii	"orientiert, die zur Zeit gew\xe4hlt ist. Pad 5 spielt ein Solo in Dur und Pad 6 in Moll.~0d"
+    .ascii	"Um in Ihre Darbietung ein Solo einzuwerfen, dr\xfccken Sie eine der beiden Solo-Pads w\xe4hrend die automatische "
+    .ascii	"Begleitung spielt. Spielen Sie den Grundakkord, den Sie spielten, bevor Sie das Pad gedr\xfcckt haben. "
+    .asciz	"Wenn Sie also z.B. in F spielen, greifen Sie nun einen F-Akkord, bevor Sie ein Solo-Pad dr\xfccken.~0d"
+HelpTextDe07_2:
+    .ascii	"Sie k\xf6nnen das Solo-Pad stummschalten, indem Sie beide Pads-Balance-Tasten unter dem Display gleichzeitig "
+    .ascii	"dr\xfccken. Nun k\xf6nnen Sie Ihr eigenes Solo spielen.~0d"
+    .ascii	" ~0d"
+    .ascii	"F\xfcr weitere Informationen dr\xfccken Sie die BANK, STOP und AUTO-SETTING-Tasten sowie das Performance "
+    .asciz	"Pads Men\xfc im Program-Men\xfc.~0d"
+HelpPagesDe07:
+    .long	HelpTextDe07_0 - HelpTexts
+    .long	HelpTextDe07_1 - HelpTexts
+    .long	HelpTextDe07_2 - HelpTexts
+    .long	0
+HelpTextDe08_0:
+    .ascii	"Der MUSIC STYLE ARRANGER verhilft Ihnen zu professionellen Registrierwechseln. Es stehen Ihnen vier "
+    .ascii	"Preset-Registrierungen f\xfcr jeden Rhythmus zur Verf\xfcgung. Schalten Sie MSA ein und eine komplette "
+    .ascii	"Registrierung wird f\xfcr den aktuellen Rhythmus eingestellt.~0d"
+    .ascii	" ~0d"
+    .ascii	"Wechseln Sie zwischen den vier Rhythmus-Variationen und die Registrierung ver\xe4ndert sich f\xfcr jede "
+    .asciz	"Variation. Mit den Fill-In-Tasten wechseln Sie die Variationen automatisch.~0d"
+HelpTextDe08_1:
+    .ascii	"Fill In 1 schaltet die Variationen nach links und Fill In 2 nach rechts.~0d"
+    .ascii	"Um MSA einzustellen, dr\xfccken Sie die MSA Taste etwas l\xe4nger, bis das Einstelldisplay erscheint. "
+    .ascii	"Es gibt drei Modi:.~0d"
+    .ascii	"(Rhythm): Es \xe4ndert sich nur die Rhythmus-Variation.~0d"
+    .ascii	"(Sound & Rhythm): Es \xe4ndern sich Klangauswahl und Rhythmus.~0d"
+    .asciz	"(Panel Memory): Es wird zwischen den ersten vier Panel Memories in Bank A gewechselt.~0d"
+    .align	4, 0xff
+HelpPagesDe08:
+    .long	HelpTextDe08_0 - HelpTexts
+    .long	HelpTextDe08_1 - HelpTexts
+    .long	0
+HelpTextDe09_0:
+    .ascii	"Diese Tasten besitzen zwei Funktionen:~0d"
+    .ascii	"(1) Auswahl der Rhythmus-Variation ~0d"
+    .ascii	"(2) Bedienung des Music Style Arrangers (abh\xe4ngig, ob MSA eingeschaltet ist).~0d"
+    .ascii	" ~0d"
+    .ascii	"Jeder der 220 Rhythmen des KN hat vier Variationen, die Sie mit diesen Tasten w\xe4hrend des Spiels "
+    .asciz	"ausw\xe4hlen k\xf6nnen.~0d"
+HelpTextDe09_1:
+    .ascii	"Beim Music Style Arranger variieren die Variationstasten die Begleitung und die Registrierung. .~0d"
+    .ascii	" ~0d"
+    .asciz	"Dr\xfccken Sie die Music-Style-Arranger-Taste f\xfcr mehr Informationen.~0d"
+    .align	4, 0xff
+HelpPagesDe09:
+    .long	HelpTextDe09_0 - HelpTexts
+    .long	HelpTextDe09_1 - HelpTexts
+    .long	0
+HelpTextDe10_0:
+    .ascii	"One Touch Play stellt das KN mit passenden Registrierungen und Tempo f\xfcr jeden der 220 Rhythmen "
+    .ascii	"und 20 Custom Rhythmen ein. Eine komplette Registrierung ist also auf einen Tastendruck m\xf6glich. "
+    .ascii	"Wenn Sie diese Funktion f\xfcr Custom-Rhythmen verwenden, bezieht sie sich auf die Registrierung der "
+    .asciz	"Variation 2.~0d"
+HelpTextDe10_1:
+    .ascii	"Um One Touch Play zu verwenden, w\xe4hlen Sie den gew\xfcnschten Rhythmus aus und dr\xfccken die One Touch "
+    .ascii	"Play Taste f\xfcr einige Sekunden.~0d"
+    .ascii	" ~0d"
+    .asciz	"Kurzfristig erscheint der Name der Registrierung im Display.~0d"
+    .align	4, 0xff
+HelpPagesDe10:
+    .long	HelpTextDe10_0 - HelpTexts
+    .long	HelpTextDe10_1 - HelpTexts
+    .long	0
+HelpTextDe11_0:
+    .ascii	"Die KN Tastatur kann an jeder beliebigen Stelle gesplittet werden und erlaubt es Ihnen somit, verschiedene "
+    .ascii	"Kl\xe4nge f\xfcr die linke und rechte Tastaturh\xe4lfte einzustellen. Der Splitpunkt ist auch aktiv, wenn "
+    .ascii	"Basic oder Fingered aktiviert ist.~0d"
+    .ascii	"Dr\xfccken Sie die Split-Point-Taste mehrmals, um zwischen den drei festen Split-Punkten umzuschalten "
+    .asciz	"(G2, C3 & G3). ~0d"
+HelpTextDe11_1:
+    .ascii	"Um Ihren eigenen Split-Punkt einzustellen, halten Sie die Split-Punkt-Taste f\xfcr ein paar Sekunden "
+    .ascii	"gedr\xfcckt, bis das Einstelldisplay erscheint.~0d"
+    .ascii	" ~0d"
+    .asciz	"Dr\xfccken Sie dann die Taste, an der der Split-Punkt liegen soll.~0d"
+    .align	4, 0xff
+HelpPagesDe11:
+    .long	HelpTextDe11_0 - HelpTexts
+    .long	HelpTextDe11_1 - HelpTexts
+    .long	0
+HelpTextDe12_0:
+    .ascii	"Fade In/Out f\xfcgt Ihrer Darbietung einen professionellen Eindruck hinzu, indem die Darbietung langsam "
+    .ascii	"eingeblendet und zum Ende ausgeblendet wird. Besonders effektvoll bei Verwendung von Auto Play Chord.~0d"
+    .ascii	"Dr\xfccken Sie Fade In, bevor Sie anfangen zu spielen und der gesamte Klang des KN wird langsam eingeblendet. "
+    .ascii	"Wenn Sie die Darbietung beenden m\xf6chten, dr\xfccken Sie Fade Out und die Begleitung wird langsam ausgeblendet, "
+    .asciz	"wie in einer professionellen Produktion.~0d"
+HelpTextDe12_1:
+    .ascii	"Wenn Sie Fade Out versehentlich w\xe4hrend der Darbietung gedr\xfcckt haben, dr\xfccken Sie die Taste nochmals, "
+    .ascii	"um zur urspr\xfcnglichen Lautst\xe4rke zur\xfcckzukehren oder dr\xfccken Sie Fade in und die Lautst\xe4rke wird "
+    .asciz	"langsam wieder hochgefahren.~0d"
+HelpTextDe12_2:
+    .ascii	"Sie k\xf6nnen die L\xe4nge von Fade In und Fade Out bestimmen. Ebenso k\xf6nnen Sie w\xe4hlen, ob Rhythmus und "
+    .ascii	"Sequenzer nach einem Fade Out automatisch stoppen sollen. Diese Einstellungen nehmen Sie im Control-Men\xfc "
+    .asciz	"vor oder indem Sie eine der beiden Tasten etwas l\xe4nger gedr\xfcckt halten.~0d"
+    .align	4, 0xff
+HelpPagesDe12:
+    .long	HelpTextDe12_0 - HelpTexts
+    .long	HelpTextDe12_1 - HelpTexts
+    .long	HelpTextDe12_2 - HelpTexts
+    .long	0
+HelpTextDe13_0:
+    .ascii	"Mit Tap Tempo k\xf6nnen Sie die Geschwindigkeit eines Rhythmus durch Antippen dieser Taste nach Taktgef\xfchl "
+    .ascii	"einstellen. Tippen Sie diese Taste in der gew\xfcnschten Geschwindigkeit an. Sie muss mindestens zweimal "
+    .asciz	"angetippt werden.~0d"
+    .align	4, 0xff
+HelpPagesDe13:
+    .long	HelpTextDe13_0 - HelpTexts
+    .long	0
+HelpTextDe14_0:
+    .ascii	"Hiermit k\xf6nnen Sie den Rhythmus von der Tastatur aus starten.~0d"
+    .ascii	"Wenn Sie eine Taste links des Splitpunktes anschlagen, startet der Rhythmus.~0d"
+    .ascii	"Ist Auto Play Chord eingeschaltet, spielt auch die Begleitautomatik.~0d"
+    .ascii	"Sofern Memory eingeschaltet ist, wird der Akkord bis zum n\xe4chsten Anschlag gehalten.~0d"
+    .ascii	"Bei ausgeschaltetem Memory spielen Rhythmus und Begleitung nur solange, wie links eine Taste gedr\xfcckt "
+    .asciz	"ist.~0d"
+    .align	4, 0xff
+HelpPagesDe14:
+    .long	HelpTextDe14_0 - HelpTexts
+    .long	0
+HelpTextDe15_0:
+    .ascii	"Wenn Fill In 1 oder 2 gedr\xfcckt wird, w\xe4hrend der Rhythmus spielt, wird eine Fill-In-Figur f\xfcr einen "
+    .ascii	"Takt wiedergegeben, wonach der Rhythmus fortgesetzt wird. Das KN besitzt zwei Fill Ins f\xfcr jede "
+    .ascii	"Rhythmus-Variation.~0d"
+    .ascii	"Wenn eine Fill-In-Taste im letzten Schlag eines Taktes gedr\xfcckt wird, wird der Fill In f\xfcr den kompletten "
+    .ascii	"n\xe4chsten Takt wiedergegeben. Wenn Sie in einem anderen Schlag gedr\xfcckt wird, wird der Fill In f\xfcr "
+    .asciz	"den Rest dieses Taktes gespielt.~0d"
+HelpTextDe15_1:
+    .ascii	"Wenn Sie die Fill-In-2-Taste dr\xfccken, bevor Sie den Rhythmus starten, erfolgt ein einfacher Vorz\xe4hltakt, "
+    .ascii	"bevor der Rhythmus startet. Fill In 1 hat ebenso eine zweite Funktion bei Verwendung des Sequenzers. "
+    .ascii	"Wenn Sie die Sequenzer-Wiedergabe stoppen und zum Anfang des Songs zur\xfcckkehren m\xf6chten, dr\xfccken "
+    .asciz	"Sie die Fill-In-1-Taste.~0d"
+    .align	4, 0xff
+HelpPagesDe15:
+    .long	HelpTextDe15_0 - HelpTexts
+    .long	HelpTextDe15_1 - HelpTexts
+    .long	0
+HelpTextDe16_0:
+    .ascii	"Die Intro & Ending-Tasten liefern professionelle Einleitungs- und End-Figuren f\xfcr Ihre Darbietung.~0d"
+    .ascii	" ~0d"
+    .ascii	"Nehmen Sie eine gew\xfcnschte Registrierung vor (oder verwenden Sie One Touch Play) und dr\xfccken eine "
+    .ascii	"der Intro & Ending Tasten vor dem Spiel. Spielen Sie einen Akkord auf der linken Tastaturh\xe4lfte "
+    .asciz	"und es erklingt eine musikalische Einleitung.~0d"
+HelpTextDe16_1:
+    .ascii	"Wenn Sie Ihre Darbietung beenden m\xf6chten, dr\xfccken Sie wieder eine der Intro & Ending Tasten und "
+    .asciz	"das KN spielt eine Ending-Figur der Begleitung. Anschlie\xdfend stoppt der Rhythmus automatisch.~0d"
+    .align	4, 0xff
+HelpPagesDe16:
+    .long	HelpTextDe16_0 - HelpTexts
+    .long	HelpTextDe16_1 - HelpTexts
+    .long	0
+HelpTextDe17_0:
+    .ascii	"Die Start/Stop-Taste wird f\xfcr viele Zwecke verwendet, seine Hauptfunktion ist jedoch das Starten "
+    .ascii	"und Stoppen des Rhythmus.~0d"
+    .ascii	"Bei Verwendung des Sequenzers startet und stoppt die Start/Stop-Taste die Wiedergabe eines Songs. "
+    .asciz	"Sie startet ebenfalls die Aufnahme eines Performance Pads oder die des Sequencers.~0d"
+    .align	4, 0xff
+HelpPagesDe17:
+    .long	HelpTextDe17_0 - HelpTexts
+    .long	0
+HelpTextDe18_0:
+    .ascii	"Das Tempo/Program Rad regelt das Rhythmustempo. Nach links gedreht wird der Rhythmus langsamer, "
+    .ascii	"nach rechts schneller.~0d"
+    .ascii	"Wenn das L\xe4mpchen oberhalb des Rades aufleuchtet, ist eine Einstellfunktion aktiviert (z.B. SOUND "
+    .ascii	"EDIT). Hier kann das Rad zum Einstellen von Werten oder zum Anw\xe4hlen von Positionen im Display verwendet "
+    .asciz	"werden.~0d"
+    .align	4, 0xff
+HelpPagesDe18:
+    .long	HelpTextDe18_0 - HelpTexts
+    .long	0
+HelpTextDe19_0:
+    .ascii	"Der Music Stylist ist Ihr Begleiter durch hunderte musikalischer Styles des KN. Er registriert das "
+    .ascii	"KN f\xfcr Sie und verhilft Ihnen somit zu einem professionellen Sound. ~0d"
+    .ascii	" ~0d"
+    .ascii	"Es gibt vier M\xf6glichkeiten, den gew\xfcnschten Musikstil zu suchen: nach Musikkategorie (Musical Category), "
+    .ascii	"nach Orgelstil (Organ Style), nach Musikzeitalter (Musical Era) oder durch Auswahl aus einer alphabetischen "
+    .asciz	"Liste.~0d"
+HelpTextDe19_1:
+    .ascii	"Musical Category sortiert die verschiedenen Styles in Gruppen. Jede Gruppe beinhaltet Untergruppen, "
+    .ascii	"die jeweils vier verschiedene Styles mit eigenem Namen beinhalten.~0d"
+    .ascii	"Musical Era sortiert die Registrierungen nach musikalischen Zeitepochen wie z.B. 1970s etc. ~0d"
+    .ascii	" ~0d"
+    .ascii	"Der Organ Stylist verf\xfcgt \xfcber das riesige Sortiment des KN an Orgelkl\xe4ngen und Mustern mit geeigneten "
+    .asciz	"Orgelregistraturen.~0d"
+HelpTextDe19_2:
+    .ascii	"Der Organ Stylist verwendet vorgegebene Kl\xe4nge sowie Digital Drawbars und Organ Tabs, um klassische "
+    .ascii	"Orgelregistraturen zu erzeugen.~0d"
+    .ascii	" ~0d"
+    .ascii	"Die Alphabetical Style List zeigt alle Gesamtregistrierungen des MUSIC STYLIST alphabetisch sortiert. "
+    .ascii	"Wenn Sie sich mit den Namen der Registrierungen etwas vertraut gemacht haben, k\xf6nnen Sie hiermit "
+    .asciz	"sehr schnell die gew\xfcnschte Einstellung finden.~0d"
+HelpTextDe19_3:
+    .ascii	"Sie k\xf6nnen ebenso Custom Styles ausw\xe4hlen, in denen Sie Composer-Rhythmen mit Registrierung, User "
+    .asciz	"Perfomance Pads und editierte Sounds und Effekte speichern k\xf6nnen.~0d"
+    .align	4, 0xff
+HelpPagesDe19:
+    .long	HelpTextDe19_0 - HelpTexts
+    .long	HelpTextDe19_1 - HelpTexts
+    .long	HelpTextDe19_2 - HelpTexts
+    .long	HelpTextDe19_3 - HelpTexts
+    .long	0
+HelpTextDe20_0:
+    .ascii	"Das KN bietet die M\xf6glichkeit, dass Sie Ihr pers\xf6nliches Display einrichten k\xf6nnen, um einen schnellen "
+    .ascii	"Zugriff auf die f\xfcr Sie wichtigsten Optionen (Sound, Rhythmen, Funktionen) zu haben.~0d"
+    .ascii	" ~0d"
+    .ascii	"Insgesamt k\xf6nnen Sie 4 Einstellungsb\xe4nke mit jeweils 9 Funktionstasten aufrufen. Um Ihre bevorzugten "
+    .asciz	"Einstellungen zu verwenden, w\xe4hlen Sie eine der 4 Positionen mit Hilfe der Taste unter dem Display.~0d"
+HelpTextDe20_1:
+    .ascii	"Dann w\xe4hlen Sie eine der Tasten links und rechts am Display, um eine Einstellung auszuw\xe4hlen, die "
+    .ascii	"Sie verwenden m\xf6chten.~0d"
+    .ascii	"Um Ihre favorisierten Einstellungen zu fixieren, gehen Sie wie folgt vor:.~0d"
+    .ascii	"(1). Dr\xfccken Sie \x82Favorite Setting' auf dieser Seite.~0d"
+    .ascii	"(2). W\xe4hlen Sie eine Bank, in der Sie speichern m\xf6chten.~0d"
+    .asciz	"(3). W\xe4hlen Sie eine Kategorie und eine Position aus.~0d"
+HelpTextDe20_2:
+    .ascii	"(4). Dr\xfccken und halten Sie Set und dr\xfccken gleichzeitig eine Taste links oder rechts am Display, "
+    .ascii	"um die Speicherposition Ihrer Auswahl zu bestimmen.~0d"
+    .ascii	"(5). Wiederholen Sie (3) und (4) f\xfcr andere Funktionen, die Sie speichern m\xf6chten.~0d"
+    .asciz	"(6). Best\xe4tigen Sie mit OK, um diese neue Bank zu speichern.~0d"
+HelpTextDe20_3:
+    .ascii	"Das KN bietet einige besondere Funktionen, die Sie z.B. in die Favorite-Seite speichern k\xf6nnen wie "
+    .ascii	"z.B. Mute Keys, Panic, Vocalist-Workstation-Men\xfc etc. Diese Einstellungen werden insbesondere von "
+    .ascii	"Entertainern gern genutzt.~0d"
+    .ascii	" ~0d"
+    .ascii	"Die Einstellungen des Favorite Displays k\xf6nnen auch auf Diskette gespeichert und von ihr geladen "
+    .asciz	"werden.~0d"
+    .align	4, 0xff
+HelpPagesDe20:
+    .long	HelpTextDe20_0 - HelpTexts
+    .long	HelpTextDe20_1 - HelpTexts
+    .long	HelpTextDe20_2 - HelpTexts
+    .long	HelpTextDe20_3 - HelpTexts
+    .long	0
+HelpTextDe21_0:
+    .ascii	"Transpose ver\xe4ndert die Tonh\xf6he des KN. ~0d"
+    .ascii	"Dr\xfccken Sie die rechte Taste, um die Tonart in Halbtonschritten von C bis +C (+1 Oktave) zu erh\xf6hen "
+    .ascii	"und die linke Taste, um sie in Halbtonschritten von C bis -C (-1 Oktave) zu senken. ~0d"
+    .ascii	"Die Transponierung gilt nur f\xfcr neu angeschlagene Noten. ~0d"
+    .ascii	"Transpose bezieht sich immer auf C-Dur. Wenn Sie z.B. in F spielen, aber gern m\xf6chten, dass es in "
+    .asciz	"F# erklingt, transponieren Sie um einen Halbton nach oben. (Das Display zeigt dann Db).~0d"
+HelpTextDe21_1:
+    .asciz	"Dr\xfccken Sie beide Tasten zur selben Zeit, um Transpose auf C zu stellen.~0d"
+    .align	4, 0xff
+HelpPagesDe21:
+    .long	HelpTextDe21_0 - HelpTexts
+    .long	HelpTextDe21_1 - HelpTexts
+    .long	0
+HelpTextDe22_0:
+    .ascii	"Die R1/R2 Octave Tasten ver\xe4ndern die Oktavlage von den Right 1 und Right 2 Klanggruppen um +/- "
+    .asciz	"2 Oktaven. Um zur Grundeinstellung zur\xfcck zu kehren, dr\xfccken Sie beide Tasten gleichzeitig.~0d"
+    .align	4, 0xff
+HelpPagesDe22:
+    .long	HelpTextDe22_0 - HelpTexts
+    .long	0
+HelpTextDe23_0:
+    .ascii	"Verwenden Sie diese Tasten um zu bestimmen, welcher Klanggruppe (RIGHT 1, RIGHT 2 oder LEFT) ein "
+    .ascii	"Klang oder Effekt zugeteilt werden soll. Wenn eine Klanggruppe ausgew\xe4hlt ist, werden die Einstellungen "
+    .ascii	"durch diverse L\xe4mpchen am Bedienfeld angezeigt. Diese Funktion ist hilfreich, wenn Sie z.B. w\xe4hrend "
+    .asciz	"des Spiels mit Right 1 einen anderen Klang f\xfcr Right 2 oder Left zuordnen m\xf6chten.~0d"
+    .align	4, 0xff
+HelpPagesDe23:
+    .long	HelpTextDe23_0 - HelpTexts
+    .long	0
+HelpTextDe24_0:
+    .ascii	"Der CONDUCTOR ist eine spezielle Funktion bei Technics Keyboards, die es Ihnen erleichert, Kl\xe4nge "
+    .ascii	"schnell zu aktivieren. Sie k\xf6nnen zwei Kl\xe4nge gleichzeitig spielen, indem Sie Right 1 und Right "
+    .ascii	"2 miteinander kombinieren. Oder Sie k\xf6nnen f\xfcr die rechte und linke Tastaturh\xe4lfte verschiedene "
+    .asciz	"Kl\xe4nge w\xe4hlen. In diesem Fall aktivieren Sie Right 1 und Left.~0d"
+HelpPagesDe24:
+    .long	HelpTextDe24_0 - HelpTexts
+    .long	0
+HelpTextDe25_0:
+    .ascii	"Der Solo-Mode kann jeder Klanggruppe zugeteilt werden. Es handelt sich hier um einen monophonen "
+    .ascii	"Modus, in dem nur eine Note gleichzeitig gespielt werden kann.~0d"
+    .ascii	" ~0d"
+    .ascii	"Wenn Sie nur mit einer Klanggruppe spielen (z.B. Right 1) und den Solo-Mode ausw\xe4hlen, wird der "
+    .asciz	"Klang immer f\xfcr die zuletzt gespielte Note erzeugt.~0d"
+HelpTextDe25_1:
+    .ascii	"Wenn Sie den Solo-Part mit einer anderen Klanggruppe mischen (z.B. Right 1 solo und Right 2 normal), "
+    .ascii	"wird immer die h\xf6chste gespielte Note erzeugt. Bei Akkorden bedeutet das, der Solo-Sound erzeugt "
+    .ascii	"nur die h\xf6chste Note des Akkordes.~0d"
+    .ascii	"Bei einigen Sounds wird der Solo-Modus automatisch aufgerufen.  Im Sound- oder Effekt-Men\xfc k\xf6nnen "
+    .ascii	"Sie mit Sound-Load-Option bestimmen, ob der Solo-Modus automatisch ein-/ausgeschaltet werden soll "
+    .asciz	"oder nicht.~0d"
+    .align	4, 0xff
+HelpPagesDe25:
+    .long	HelpTextDe25_0 - HelpTexts
+    .long	HelpTextDe25_1 - HelpTexts
+    .long	0
+HelpTextDe26_0:
+    .ascii	"Techni Chord f\xfcgt den Melodienoten Harmonienoten hinzu und verwandelt sie so in volle Akkorde. Techni "
+    .ascii	"Chord orientiert sich an den Akkorden, die Sie auf der linken Seite spielen.~0d"
+    .ascii	" ~0d"
+    .ascii	"W\xe4hlen Sie zwischen 14 verschiedenen Harmonisierungstypen.~0d"
+    .ascii	" ~0d"
+    .ascii	"Um den Techni-Chord-Typ zu wechseln, dr\xfccken Sie die Techni-Chord-Taste etwas l\xe4nger, bis das Auswahldisplay "
+    .asciz	"erscheint.~0d"
+HelpTextDe26_1:
+    .ascii	"Der Techni Chord Orchestrator erm\xf6glicht es - zus\xe4tzlich zur Melodiestimme - f\xfcr die Harmonienoten "
+    .ascii	"eine andere Klanggruppe auszuw\xe4hlen. Dieser Klang kann eine andere Lautst\xe4rke oder auch eine andere "
+    .asciz	"Panorama-Einstellung besitzen.~0d"
+    .align	4, 0xff
+HelpPagesDe26:
+    .long	HelpTextDe26_0 - HelpTexts
+    .long	HelpTextDe26_1 - HelpTexts
+    .long	0
+HelpTextDe27_0:
+    .ascii	"Das KN verf\xfcgt \xfcber einen hochwertigen Chorus-Effekt, der \xfcber die zugeh\xf6rige Chorus-Taste aufgerufen "
+    .ascii	"wird.~0d"
+    .ascii	"Chorus f\xfcgt dem Klangbild eine leichte Schwebung und somit mehr R\xe4umlichkeit hinzu.~0d"
+    .ascii	" ~0d"
+    .ascii	"Um die Chorus-Einstellungen zu ver\xe4ndern, dr\xfccken und halten Sie die Chorus-Taste f\xfcr ein paar Sekunden "
+    .asciz	"gedr\xfcckt, dann erscheint das Einstelldisplay.~0d"
+HelpTextDe27_1:
+    .ascii	"Jeder Sound besitzt einen Chorus-Depth-Wert. Wenn Sie einen Sound anw\xe4hlen, wird der passende Chorus-Wert "
+    .ascii	"automatisch hinzugef\xfcgt.~0d"
+    .asciz	"Im Sound- oder Effekt-Men\xfc k\xf6nnen Sie mittels Sound Load Option die automatische Zuweisung ausschalten.~0d"
+    .align	4, 0xff
+HelpPagesDe27:
+    .long	HelpTextDe27_0 - HelpTexts
+    .long	HelpTextDe27_1 - HelpTexts
+    .long	0
+HelpTextDe28_0:
+    .ascii	"Der MULTI EFFECT arbeitet wie ein Studio Effekt Prozessor und liefert Effekte wie Phaser, Delay "
+    .ascii	"und Distortion. Wenn der Multi Effect f\xfcr mehrere Klanggruppen gew\xe4hlt wird, gilt f\xfcr alle Klanggruppen "
+    .ascii	"derselbe Effekt. Der Multi Effect arbeitet auch als MIC EFFECT f\xfcr den Mikrophon-Eingang.~0d"
+    .ascii	"Um die Multi-Effekteinstellung zu \xe4ndern, dr\xfccken und halten Sie die Multi-Taste in der Global Effect "
+    .asciz	"Sektion f\xfcr ein paar Sekunden und das Multi-Effect-Einstelldisplay erscheint.~0d"
+    .align	4, 0xff
+HelpPagesDe28:
+    .long	HelpTextDe28_0 - HelpTexts
+    .long	0
+HelpTextDe29_0:
+    .ascii	"Reverb erzeugt eine nat\xfcrliche Klangumgebung f\xfcr den Gesamtklang des KN. Es stehen verschiedene "
+    .ascii	"Halltypen zur Verf\xfcgung, wie z.B. Room oder Concert Hall. ~0d"
+    .ascii	"Um die Reverb-Einstellungen zu \xe4ndern, dr\xfccken Sie die Reverb-Taste etwas l\xe4nger und es erscheint "
+    .asciz	"das Einstelldisplay.~0d"
+    .align	4, 0xff
+HelpPagesDe29:
+    .long	HelpTextDe29_0 - HelpTexts
+    .long	0
+HelpTextDe30_0:
+    .ascii	"MIC Reverb f\xfcgt Ihrer Stimme einen nat\xfcrlichen Halleffekt hinzu. Sie k\xf6nnen unter verschiedenen "
+    .ascii	"Typen wie Stage (B\xfchne), Bath Room (Badezimmer) oder Karaoke w\xe4hlen. .~0d"
+    .ascii	"MIC Effect optimiert Ihre Stimme durch das Hinzuf\xfcgen von Effekten wie Voice Changer. Der Harmonizer-Effekt "
+    .asciz	"harmonisiert Ihre Stimme mit dem gespielten Akkord.~0d"
+HelpTextDe30_1:
+    .ascii	"Dies geschieht entweder durch MIDI-Files mit Harmoniespur oder indem Sie auf der Tastatur Akkorde "
+    .ascii	"spielen. ~0d"
+    .ascii	"MIC Reverb ist eine untergeordnete Einheit. MIC Effect und Multi Effect verwenden denselben DSP "
+    .ascii	"Prozessor, daher ist es nicht m\xf6glich, den Multi Effect und MIC Effect f\xfcr Ihre Stimme gleichzeitig "
+    .ascii	"zu verwenden.~0d"
+    .asciz	"Sie k\xf6nnen MIC Reverb und MIC Effect individuell in dieser Seite einschalten.~0d"
+HelpTextDe30_2:
+    .ascii	"Ein spezielles PC-Programm namens \x94Audio Recorder\x93 auf der mitgelieferten CD-ROM zeichnet die Ausgabe "
+    .asciz	"des KN (einschlie\xdflich MIC und Line In) als digitale Audiosignale \xfcber USB auf.~0d"
+HelpPagesDe30:
+    .long	HelpTextDe30_0 - HelpTexts
+    .long	HelpTextDe30_1 - HelpTexts
+    .long	HelpTextDe30_2 - HelpTexts
+    .long	0
+HelpTextDe31_0:
+    .ascii	"Die Panel-Memory-Set-Taste wird haupts\xe4chlich zum Speichern von Registrierungen im Panel Memory "
+    .ascii	"verwendet.~0d"
+    .ascii	" ~0d"
+    .ascii	"Gehen Sie wie folgt vor:~0d"
+    .ascii	"(1). Registrieren Sie das Keyboard.~0d"
+    .asciz	"(2). Verwenden Sie die Next-Bank-Taste, um die gew\xfcnschte Panel-Memory-Bank auszuw\xe4hlen.~0d"
+HelpTextDe31_1:
+    .ascii	"(3). Dr\xfccken Sie die Set-Taste, halten Sie diese gedr\xfcckt und bet\xe4tigen nun die gew\xfcnschte Panel-Memory-Taste.~0d"
+    .ascii	" ~0d"
+    .ascii	"Nun ist die Registrierung im gew\xfcnschten Panel-Memory-Platz gespeichert.~0d"
+    .ascii	"Um den Panel Memory Mode zu wechseln, halten Sie die Set-Taste etwas l\xe4nger gedr\xfcckt, bis das Einstelldisplay "
+    .asciz	"erscheint. W\xe4hlen Sie zwischen Normal und Expand.~0d"
+HelpTextDe31_2:
+    .ascii	"Die Seiten (Page) 2 dieser Funktion beinhalten Einstellungen f\xfcr den Expand-Mode-Filter. Sie k\xf6nnen "
+    .ascii	"entscheiden, welche Einstellungen gespeichert werden sollen.~0d"
+    .ascii	" ~0d"
+    .asciz	"Die Panel-Memory-Set-Taste wird ebenso verwendet, um Registrierungen in den Custom Panel zu speichern.~0d"
+    .align	4, 0xff
+HelpPagesDe31:
+    .long	HelpTextDe31_0 - HelpTexts
+    .long	HelpTextDe31_1 - HelpTexts
+    .long	HelpTextDe31_2 - HelpTexts
+    .long	0
+HelpTextDe32_0:
+    .ascii	"Panel Memory speichert Ihre Registrierungen f\xfcr einen schnellen und einfachen Abruf. Es gibt 13 "
+    .ascii	"B\xe4nke mit je 8 Speichern, also insgesamt 104 Registrierungen. Jeder Bank und jedem Panel Memory "
+    .ascii	"kann ein Name vergeben werden, so dass Sie sie einfach wiederfinden.~0d"
+    .ascii	"Es gibt zwei Modi: Normal und Expand. Der Normal Mode speichert die wesentlichen Registrierungen, "
+    .asciz	"wie Kl\xe4nge, Effekte und Lautst\xe4rken.~0d"
+HelpTextDe32_1:
+    .ascii	"Der Expand Mode speichert fast alle Einstellungen des Keyboards und besitzt einen Filter, in dem "
+    .ascii	"Sie festlegen k\xf6nnen, welche Bereiche gespeichert werden sollen.~0d"
+    .ascii	" ~0d"
+    .ascii	"Dr\xfccken Sie die Panel-Memory-Set-Taste f\xfcr mehr Informationen \xfcber das Speichern von Panel Memory "
+    .asciz	"und das Ausw\xe4hlen von Normal und Expand Mode.~0d"
+HelpPagesDe32:
+    .long	HelpTextDe32_0 - HelpTexts
+    .long	HelpTextDe32_1 - HelpTexts
+    .long	0
+HelpTextDe33_0:
+    .ascii	"Die Next-Bank-Taste wechselt zur n\xe4chsten Panel-Memory-Bank mit einem Tastendruck. Die Registrierung "
+    .ascii	"\xe4ndert sich nicht, bis Sie eine neue Panel-Memory-Taste gedr\xfcckt haben, somit k\xf6nnen Sie zun\xe4chst "
+    .asciz	"in Ruhe eine Bank ausw\xe4hlen, um die richtige Registrierung zu finden.~0d"
+HelpPagesDe33:
+    .long	HelpTextDe33_0 - HelpTexts
+    .long	0
+HelpTextDe34_0:
+    .ascii	"Die Bank-View-Taste zeigt die Namen der drei Panel-Memory-B\xe4nke (A/ B/ C) auf ihrer ersten Seite, "
+    .ascii	"die anderen 10 B\xe4nke auf der zweiten Seite an.~0d"
+    .ascii	"Sie k\xf6nnen die verschiedenen B\xe4nke mit den Tasten seitlich des Displays ausw\xe4hlen.~0d"
+    .ascii	"Page 3 von Bank View zeigt Ihnen die Namen aller Panel Memories in der aktuellen Bank. Sie k\xf6nnen "
+    .asciz	"die Namen auch in diesem Display ver\xe4ndern.~0d"
+    .align	4, 0xff
+HelpPagesDe34:
+    .long	HelpTextDe34_0 - HelpTexts
+    .long	0
+HelpTextDe35_0:
+    .ascii	"Custom Panel ist ein spezieller Panel-Memory-Platz, in den Sie Ihre am h\xe4ufigsten verwendete Registrierung "
+    .ascii	"permanent speichern k\xf6nnen.~0d"
+    .ascii	"Sie k\xf6nnen den Custom Panel als Ihre Standardregistrierung verwenden, anstatt hierf\xfcr Current Panel "
+    .ascii	"zu initialisieren oder als Ihre Basiseinstellung, nachdem Sie One Touch Play, Music Stylist, oder "
+    .asciz	"Panel Memory verwendet haben.~0d"
+HelpTextDe35_1:
+    .ascii	"Wenn Sie einmal eine Registrierung in das Custom Panel gespeichert haben, bleibt diese erhalten, "
+    .ascii	"bis Sie diese wieder \xfcberschreiben. Selbst eine Initialisierung des KN l\xf6scht den Inhalt von Custom "
+    .ascii	"Panel nicht.~0d"
+    .ascii	"Um Ihre Einstellungen zu speichern, gehen Sie wie folgt vor:~0d"
+    .ascii	"(1). Nehmen Sie die Registrierung vor. .~0d"
+    .asciz	"(2). Dr\xfccken und halten Sie die SET-Taste und dr\xfccken dann gleichzeitig die Custom-Panel-Taste.~0d"
+HelpTextDe35_2:
+    .asciz	"Sie k\xf6nnen bestimmen, ob Sie alle Bedienfeldeinstellungen oder nur die Panel Memories laden m\xf6chten.~0d"
+    .align	4, 0xff
+HelpPagesDe35:
+    .long	HelpTextDe35_0 - HelpTexts
+    .long	HelpTextDe35_1 - HelpTexts
+    .long	HelpTextDe35_2 - HelpTexts
+    .long	0
+HelpTextDe36_0:
+    .ascii	"Die Sequencer-Play-Taste aktiviert das Sequencer-Play-Display, welches alle 16 Spuren und ihren "
+    .ascii	"Status anzeigt. Wenn Sie einen Song von Diskette laden, wird die Sequencer-Play-Taste automatisch "
+    .ascii	"aktiviert. Dr\xfccken Sie einfach die Start/Stop-Taste und der geladene Song wird wiedergegeben.~0d"
+    .ascii	"Sie k\xf6nnen ebenso ausw\xe4hlen, welcher der 10 Songs abgespielt werden soll oder ob diese als Medley "
+    .asciz	"wiedergegeben werden sollen.~0d"
+HelpTextDe36_1:
+    .ascii	"Der Mixer kann aus dem Sequencer Play Display aufgerufen werden.~0d"
+    .ascii	" ~0d"
+    .ascii	"In diesem Fall arbeitet der Mixer spurbezogen. Somit m\xfcssen Sie nicht unbedingt wissen, welche Klanggruppe "
+    .asciz	"einer Spur zugeordnet ist, um dessen Einstellungen zu \xe4ndern.~0d"
+HelpTextDe36_2:
+    .ascii	"Wenn Sie die Exit-Taste dr\xfccken, bleibt die Sequencer-Play-Taste an. Sie k\xf6nnen also bei laufender "
+    .ascii	"Sequenz andere Funktionen bet\xe4tigen (wie z.B. Sound-Auswahl). Um Sequencer Play auszuschalten, dr\xfccken "
+    .ascii	"Sie diese Taste noch einmal.~0d"
+    .ascii	"Sie k\xf6nnen digitale Bilder in Ihre Songs einf\xfcgen, die sich automatisch mit der Musik \xe4ndern, wie "
+    .ascii	"die eingebauten Demosongs. Um mehr \xfcber diese \x94Slide Show\x93-Funktion zu erfahren, w\xe4hlen Sie jetzt "
+    .asciz	"das Sequencermen\xfc in den Programmmen\xfcs.~0d"
+    .align	4, 0xff
+HelpPagesDe36:
+    .long	HelpTextDe36_0 - HelpTexts
+    .long	HelpTextDe36_1 - HelpTexts
+    .long	HelpTextDe36_2 - HelpTexts
+    .long	0
+HelpTextDe37_0:
+    .ascii	"EASY RECORD ist die einfachste Methode, eine Darbietung im KN aufzunehmen. Wenn Sie also eine Darbietung "
+    .ascii	"mit Melodie und Begleitung (Auto Play Chord) aufnehmen m\xf6chten, nehmen Sie die gew\xfcnschten Einstellungen "
+    .ascii	"im KN vor, dr\xfccken Easy Record und best\xe4tigen mit OK.~0d"
+    .ascii	"Diese Funktion erm\xf6glicht es, komplexe Sequenzer-Einstellungen zu umgehen und einfach und schnell "
+    .asciz	"mit der Aufnahme zu beginnen.~0d"
+HelpTextDe37_1:
+    .ascii	"Im Easy Record Display k\xf6nnen Sie au\xdferdem w\xe4hlen, in welchen der 10 internen Songspeicher Sie aufnehmen "
+    .ascii	"m\xf6chten.~0d"
+    .asciz	"Hier k\xf6nnen Sie dem Song auch einen Namen geben.~0d"
+    .align	4, 0xff
+HelpPagesDe37:
+    .long	HelpTextDe37_0 - HelpTexts
+    .long	HelpTextDe37_1 - HelpTexts
+    .long	0
+HelpTextDe39_0:
+    .ascii	"Das Sound-Men\xfc beinhaltet Funktionen zur Klangbeeinflussung des KN. Sie k\xf6nnen z.B. Lautst\xe4rke, "
+    .ascii	"Panorama und Effekte f\xfcr jede Klanggruppe einstellen. .~0d"
+    .ascii	"Jeder Klang besitzt eine zugeh\xf6rige DSP- und Chorus-Intensit\xe4t, Solo- an/aus- Einstellungen sowie "
+    .ascii	"Portamento etc. W\xe4hlen Sie also einfach einen Klang aus und die passende Einstellung wird automatisch "
+    .asciz	"erg\xe4nzt.~0d"
+HelpTextDe39_1:
+    .ascii	"Monitor Setting und Separate Out Setting sind n\xfctzliche Funktionen f\xfcr B\xfchnen- oder Aufnahmeeinsatz.~0d"
+    .ascii	"Mit Monitor Setting k\xf6nnen Sie die Lautsprecher des KN auf Wunsch ausschalten. Die Lautsprecher "
+    .asciz	"werden bei jedem Einschalten der Stromversorgung zur Sicherheit immer eingeschaltet.~0d"
+HelpTextDe39_2:
+    .ascii	"Sie k\xf6nnen die gew\xfcnschten Klanggruppen \xfcber die 2 SUB OUT-Anschl\xfcsse ausgeben und Output Mode, "
+    .ascii	"Part Assign, Aus/Ein f\xfcr Main OUT, oder Aus/Ein f\xfcr den Expression-Effekt in auf der Einstellseite "
+    .ascii	"f\xfcr Separate Out w\xe4hlen.~0d"
+    .ascii	" ~0d"
+    .asciz	"Der Sound-Load-Option erm\xf6glicht, einzelne Komponenten dieser Einstellung auszuschalten.~0d"
+HelpTextDe39_3:
+    .ascii	"Die Option APC Reverb Setting erm\xf6glicht es Ihnen, den Hallpegel, der je nach den Rhythmen standardm\xe4\xdfig "
+    .ascii	"auf die APC-Klanggruppen angewandt wird, aufzuheben und individuell f\xfcr jede APC-Klanggruppe einzustellen.~0d"
+    .ascii	" ~0d"
+    .asciz	"Die Stimmung und Skalierung des Instrumentes kann ebenfalls im Sound-Men\xfc eingestellt werden.~0d"
+HelpTextDe39_4:
+    .asciz	"F\xfcr mehr Information \xfcber Techni-Chord, dr\xfccken Sie jetzt die Techni-Chord-Taste.~0d"
+    .align	4, 0xff
+HelpPagesDe39:
+    .long	HelpTextDe39_0 - HelpTexts
+    .long	HelpTextDe39_1 - HelpTexts
+    .long	HelpTextDe39_2 - HelpTexts
+    .long	HelpTextDe39_3 - HelpTexts
+    .long	HelpTextDe39_4 - HelpTexts
+    .long	0
+HelpTextDe40_0:
+    .ascii	"Das KN besitzt 10 DSP-Effekte inklusive 5 Sound DSPs, Reverb, Chorus, Multi / MIC Effect, MIC Reverb "
+    .ascii	"und Total Equalizer.~0d"
+    .ascii	" ~0d"
+    .ascii	"Weiterhin besitzt das Keyboard eine gro\xdfe Anzahl an Effekt-Voreinstellungen. Es ist einfach, einen "
+    .ascii	"gew\xfcnschten Effekt zu w\xe4hlen und auf Wunsch diesen in Details in der Effect-Setting-Seite zu bearbeiten "
+    .asciz	"und dann als User-Effekt zu speichern.~0d"
+HelpTextDe40_1:
+    .ascii	"Der Equalizer ist eine detaillierte Klangsteuerung, die den gesamten Klang des Keyboards beeinflusst. "
+    .ascii	"Somit k\xf6nnen Sie den Klangeindruck nach Ihrem Geschmack gestalten.~0d"
+    .ascii	"Jeder Klang des KN besitzt eine zugeordnete Sound-DSP-Einstellung, Chorus Intensit\xe4t und Solo-an/aus "
+    .ascii	"etc. W\xe4hlen Sie einfach einen Klang aus und die passende Einstellung erfolgt automatisch. Mit dem "
+    .asciz	"Sound-Load-Option k\xf6nnen Sie die einzelnen Komponenten dieser Einstellung ausschalten.~0d"
+HelpTextDe40_2:
+    .ascii	"Sie k\xf6nnen die Zuweisung des Sound DSP und der zwei Sound DSPs f\xfcr APC \xe4ndern, so dass diese f\xfcr "
+    .ascii	"den Sequenzer eingesetzt werden k\xf6nnen.~0d"
+    .ascii	"Einstellungen f\xfcr andere Funktionen beinhalten Sound DSP, Reverb, Chorus, Multi, MIC Effect und "
+    .asciz	"Mic Reverb. Dr\xfccken Sie die entsprechenden Funktionstasten, um mehr Informationen zu erhalten.~0d"
+    .align	4, 0xff
+HelpPagesDe40:
+    .long	HelpTextDe40_0 - HelpTexts
+    .long	HelpTextDe40_1 - HelpTexts
+    .long	HelpTextDe40_2 - HelpTexts
+    .long	0
+HelpTextDe41_0:
+    .ascii	"Eine wichtige Funktion im Control-Men\xfc ist Initial Setting, welche die Grundeinstellungen des KN "
+    .ascii	"auf die Werksbelegung zur\xfccksetzt. W\xe4hlen Sie, ob Sie nur die Performance-Bereiche (programmierbare "
+    .ascii	"Bereiche) oder spezielle Sektionen l\xf6schen m\xf6chten. Rhythm Custom, User MIDI Settings, Help-Sprache "
+    .asciz	"etc.  werden hiervon nicht ber\xfchrt.~0d"
+HelpTextDe41_1:
+    .ascii	"Au\xdferdem besitzt das Control-Men\xfc Funktionen zur generellen Steuerung des KN, wie Anschlagdynamik "
+    .ascii	"und Fu\xdfschalter-Funktionen sowie Einstellm\xf6glichkeiten f\xfcr Fade In/Out, Music Style Arranger und "
+    .asciz	"Panel Memory.~0d"
+HelpPagesDe41:
+    .long	HelpTextDe41_0 - HelpTexts
+    .long	HelpTextDe41_1 - HelpTexts
+    .long	0
+HelpTextDe42_0:
+    .ascii	"MIDI steht f\xfcr Musical Instruments Digital Interface. Es ist eine digitale Schnittstelle, die es "
+    .ascii	"erlaubt, verschiedene Instrumente \xfcber MIDI miteinander zu verbinden, um Daten auszutauschen. Auch "
+    .ascii	"die Verbindung an einen Computer mit MIDI-Interface ist m\xf6glich.~0d"
+    .ascii	"Es gibt viele MIDI-Anwendungen und somit auch viele Parameter. Das MIDI-Men\xfc enth\xe4lt umfangreiche "
+    .asciz	"Funktionen, die das KN f\xfcr den MIDI-Verbund ben\xf6tigt.~0d"
+HelpTextDe42_1:
+    .ascii	"Der einfachste Weg, um MIDI einzustellen, ist die Verwendung der MIDI Presets, die ebenfalls im "
+    .ascii	"Men\xfc stehen. ~0d"
+    .ascii	"Die MIDI Presets liefern die wichtigsten Einstellungen f\xfcr die h\xe4ufigsten Anwendungen. W\xe4hlen Sie "
+    .ascii	"eine Position aus, die Ihrer Anwendung entspricht und dr\xfccken OK, schon ist die Einstellung vorgenommen. "
+    .ascii	"Sie k\xf6nnen auch eigene User MIDI Settings speichern, die permanent im Speicher des KN bleiben, bis "
+    .asciz	"sie ersetzt werden.~0d"
+HelpTextDe42_2:
+    .ascii	"Das KN ist ein General MIDI Level 2 Instrument und kann somit Software laden, die im General MIDI "
+    .ascii	"Level 1 und Level 2 Format (z.B. Standard-MIDI-File-Software) erstellt wurde.~0d"
+    .ascii	" ~0d"
+    .ascii	"Das KN besitzt einen USB Port, der eine direkte Verbindung zum USB Port eines Computers erm\xf6glicht.~0d"
+    .ascii	"F\xfcr den Anschluss an einen PC muss zuerst der USB-Treiber auf der mitgelieferten CD-ROM im PC installiert "
+    .asciz	"werden.~0d"
+HelpPagesDe42:
+    .long	HelpTextDe42_0 - HelpTexts
+    .long	HelpTextDe42_1 - HelpTexts
+    .long	HelpTextDe42_2 - HelpTexts
+    .long	0
+HelpTextDe43_0:
+    .ascii	"Das Customize-Men\xfc erlaubt es Ihnen, Ihr KN ganz nach Ihren Anspr\xfcchen zu konfigurieren.~0d"
+    .ascii	"Das KN-Customize-Konzept beruht auf folgenden zwei Punkten:~0d"
+    .ascii	"(1).  Speichern Sie Ihre bevorzugten Einstellungen, so dass diese permanent im KN gespeichert bleiben, "
+    .asciz	"auch wenn Sie das Instrument ausschalten. Sie k\xf6nnen sogar ein Bild im Display speichern.~0d"
+HelpTextDe43_1:
+    .ascii	"(2).  Erstellen Sie eigene Displays, in denen Ihre Lieblings-Kl\xe4nge, -Rhythmen und -Funktionen enthalten "
+    .ascii	"sind, so dass diese schnell aufgerufen werden k\xf6nnen.~0d"
+    .ascii	"Sie k\xf6nnen das Hauptdisplay, den Hintergrund, die Help-Sprache, die Sprache aller Meldungen, Disketten-Pr\xe4ferenzen "
+    .ascii	"und MIDI-Ladeoptionen auf diese Weise festlegen.~0d"
+    .asciz	"All diese Einstellungen bleiben immer erhalten, selbst wenn Sie das Keyboard l\xe4nger nicht einschalten.~0d"
+HelpTextDe43_2:
+    .ascii	"Die Option Video Out Mode Setting erm\xf6glicht die Einstellung des Ausgangsmodus (PAL/NTSC) f\xfcr den "
+    .ascii	"VIDEO OUT-Anschluss, wenn Sie den Bildschirm des KN, SLIDE SHOWS oder Texte auf einem externen Videomonitor "
+    .ascii	"oder Fernsehger\xe4t anzeigen.~0d"
+    .ascii	" ~0d"
+    .ascii	"Data Protection erlaubt es Ihnen, im Detail zu entscheiden, welchen Typ an Einstellungen Sie gern "
+    .ascii	"unver\xe4ndert behalten m\xf6chten, wenn Sie Music Stylist, MSA, One Touch Play aufrufen oder von Diskette "
+    .asciz	"laden.~0d"
+HelpTextDe43_3:
+    .asciz	"Die Einstellungen f\xfcr die Hauptseite und die Favorite-Seite k\xf6nnen auf Diskette gespeichert werden.~0d"
+    .align	4, 0xff
+HelpPagesDe43:
+    .long	HelpTextDe43_0 - HelpTexts
+    .long	HelpTextDe43_1 - HelpTexts
+    .long	HelpTextDe43_2 - HelpTexts
+    .long	HelpTextDe43_3 - HelpTexts
+    .long	0
+HelpTextDe44_0:
+    .ascii	"Sound Edit bietet Ihnen komplexe Bearbeitungsparameter, \xe4hnlich professionellen Synthesizern, um "
+    .ascii	"die Preset-Kl\xe4nge zu ver\xe4ndern und im Sound Group Memory zu speichern.~0d"
+    .ascii	" ~0d"
+    .asciz	"Easy Edit bietet die wichtigsten Parameter auf einer Seite.~0d"
+    .align	4, 0xff
+HelpPagesDe44:
+    .long	HelpTextDe44_0 - HelpTexts
+    .long	0
+HelpTextDe45_0:
+    .ascii	"Das Sequencer-Men\xfc bietet Ihnen Zugriff auf fortgeschrittene Funktionen, \xe4hnlich denen von Computer-Sequencer-Programmen. "
+    .ascii	"Die Hauptseite des Sequenzer-Men\xfcs hat drei Optionen, Record & Edit, Copy & Paste und Range Edit.~0d"
+    .ascii	" ~0d"
+    .ascii	"Die Hauptseite enth\xe4lt zudem eine sehr hilfreiche Funktion: Panel Write. Wenn Sie Kl\xe4nge und Einstellungen "
+    .asciz	"am Anfang des Songs \xe4ndern m\xf6chten, nehmen Sie diese vor und dr\xfccken dann einfach Panel Write.~0d"
+HelpTextDe45_1:
+    .ascii	"Die neue Einstellung wird dann am Anfang des Songs gespeichert.~0d"
+    .ascii	"SD Audio Synchro erm\xf6glicht es Ihnen, einen Sequencer-Song mit einem SD Audio-Song zu starten.~0d"
+    .ascii	" ~0d"
+    .ascii	"Das Record & Edit-Men\xfc beinhaltet Funktionen, die zum Aufnehmen eines Songs ben\xf6tigt werden, wie "
+    .ascii	"Realtime, Step und Punch Record sowie sehr n\xfctzliche Funktionen zum Bearbeiten eines Songs wie Note "
+    .asciz	"Edit, Drum Edit und Quantisierung. ~0d"
+HelpTextDe45_2:
+    .ascii	"Ebenso finden Sie hier Funktionen zur Einstellung des Sequenzers, wie Track Assign und After Touch "
+    .ascii	"Setting.~0d"
+    .ascii	" ~0d"
+    .ascii	"Sie k\xf6nnen eine mit einem Sequencer-Song synchronisierte Multimedia-Diashow von Bildern erzeugen. "
+    .ascii	"Setzen Sie die Markierungspunkte (PIC) in der Steuerspur des Songs an den Takten, an denen Bilder "
+    .ascii	"vom internen Archiv des KN oder Ihre eigenen Bilder (beispielsweise von einer SD-Kamera) erscheinen "
+    .asciz	"sollen.~0d"
+HelpTextDe45_3:
+    .ascii	"Das Copy & Paste-Men\xfc beinhaltet Funktionen, die es Ihnen erlauben, bestimmte Stellen des Songs "
+    .ascii	"zu kopieren und zu wiederholen und somit den Song schneller fertigzustellen.~0d"
+    .ascii	" ~0d"
+    .asciz	"Sie k\xf6nnen ebenso Takte einf\xfcgen und l\xf6schen. ~0d"
+HelpTextDe45_4:
+    .ascii	"In diesem Men\xfc befindet sich ebenfalls eine Funktion mit der Bezeichnung APC to Standard-MIDI-File "
+    .ascii	"Convert. Verwenden Sie diese Funktion, um einen Song, bei dem Sie APC verwendet haben, in eine Mehrspuraufnahme "
+    .ascii	"umzuwandeln, bei der jede APC-Spur in eine separate Sequenzerspur umgewandelt wird.~0d"
+    .ascii	"Das Range-Edit-Men\xfc besitzt Funktionen, mit denen Sie Details eines Songs zu ver\xe4ndern, wie z.B. "
+    .asciz	"Quantize, Transpose, Note Change, Velocity Change und Advance/Delay.~0d"
+    .align	4, 0xff
+HelpPagesDe45:
+    .long	HelpTextDe45_0 - HelpTexts
+    .long	HelpTextDe45_1 - HelpTexts
+    .long	HelpTextDe45_2 - HelpTexts
+    .long	HelpTextDe45_3 - HelpTexts
+    .long	HelpTextDe45_4 - HelpTexts
+    .long	0
+HelpTextDe46_0:
+    .ascii	"Der Composer erm\xf6glicht das Erstellen eigener Begleitpattern oder das Laden von Begleitpattern von "
+    .ascii	"Diskette. Das Composer-Men\xfc beinhaltet alle Funktionen, die es erm\xf6glichen, eigene Composer Pattern "
+    .ascii	"zu erstellen oder Werksrhythmen zu kopieren und zu bearbeiten. ~0d"
+    .ascii	"Das Composer-Men\xfc beinhaltet auch den EASY COMPOSER, mit dem neue Composer Pattern durch Kombination "
+    .asciz	"von vorgegebenen Phrasen erstellt werden k\xf6nnen.~0d"
+HelpTextDe46_1:
+    .ascii	"In diesem Men\xfc k\xf6nnen ebenso Pattern in die Custom-Rhythm-Gruppe als STYLE-Daten kopiert werden.~0d"
+    .ascii	"Diese Funktion erm\xf6glicht es Ihnen, neue Rhythmen, Registrierungen und User Pads mit den original "
+    .ascii	"Sounds und Effekten, die Sie erstellt oder eingeladen haben, permanent in die Music Stylist Custom "
+    .asciz	"Sektion zu speichern.~0d"
+    .align	4, 0xff
+HelpPagesDe46:
+    .long	HelpTextDe46_0 - HelpTexts
+    .long	HelpTextDe46_1 - HelpTexts
+    .long	0
+HelpTextDe47_0:
+    .ascii	"\xdcber das Performance-Pads-Men\xfc k\xf6nnen Sie eigene Phrasen f\xfcr alle 3 User B\xe4nke (A/B/C) aufnehmen "
+    .ascii	"- wahlweise in Echtzeit oder Schritt f\xfcr Schritt.~0d"
+    .ascii	"Sie k\xf6nnen in dem Aufnahme-Untermen\xfc \x82Play Setting' die Funktionsweise jedes Pads in der User-Bank "
+    .ascii	"einstellen.~0d"
+    .ascii	"START: W\xe4hlen Sie, ob der Start einer Phrase zum Anfang des Taktes synchronisiert werden soll, sofern "
+    .asciz	"ein Rhythmus l\xe4uft.~0d"
+HelpTextDe47_1:
+    .ascii	"LOOP: Erm\xf6glicht, dass die Phrase immer wiederholt wiedergegeben wird, bis Sie auf Stop dr\xfccken.~0d"
+    .ascii	"Nat\xfcrlich k\xf6nnen Sie im Aufnahme-Untermen\xfc die einzelnen Pads der User-B\xe4nke auch mit eigenen Namen "
+    .ascii	"versehen.~0d"
+    .ascii	"In den Compile-B\xe4nken k\xf6nnen Sie Ihre Lieblingsphrasen der einzelnen B\xe4nke so zusammenstellen, wie "
+    .ascii	"Sie es gerne m\xf6chten.~0d"
+    .asciz	"Phrase Copy erm\xf6glicht es, eine Phrase von einem Pad auf ein anderes zu kopieren.~0d"
+HelpTextDe47_2:
+    .asciz	"Seq. to Pad Copy erlaubt es, eine Phrase und einen Akkordablauf aus dem Sequenzer zu kopieren.~0d"
+HelpPagesDe47:
+    .long	HelpTextDe47_0 - HelpTexts
+    .long	HelpTextDe47_1 - HelpTexts
+    .long	HelpTextDe47_2 - HelpTexts
+    .long	0
+HelpTextDe48_0:
+    .ascii	"Das Disk-Men\xfc dient zum Laden von und Speichern auf Diskette. Sobald Sie eine Diskette einlegen, "
+    .ascii	"wechselt das KN in dieses Men\xfc.~0d"
+    .ascii	"Das KN kann - neben spezieller Technics-Software - viele weitere Softwarearten laden, z.B. Standard "
+    .ascii	"MIDI Files, Disk Orchestra oder Piano Disc. Standard MIDI Files k\xf6nnen in den Sequenzer geladen "
+    .asciz	"oder direkt abgespielt werden. Disk Orchestra Piano Disc wird nur direkt von der Diskette abgespielt.~0d"
+HelpTextDe48_1:
+    .ascii	"Sie k\xf6nnen Songs als Medley abspielen. Wenn ein Standard MIDI File Texte enth\xe4lt, k\xf6nnen diese w\xe4hrend "
+    .ascii	"der Wiedergabe auf dem Display angezeigt werden.~0d"
+    .ascii	"Das KN kann auch Custom Styles laden und speichern.~0d"
+    .ascii	"Mit Hilfe eines speziellen PC-Programms namens \x94Song Manager\x93, das in der mitgelieferten CD-ROM "
+    .ascii	"enthalten ist, k\xf6nnen Sie die internen Darbietungsdaten des KN \xfcber USB auf Ihrem PC sichern und "
+    .asciz	"wiederherstellen. ~0d"
+HelpTextDe48_2:
+    .ascii	"Auf diese Weise k\xf6nnen Sie die Festplatte Ihres PC als Datenspeichermedium f\xfcr das KN verwenden. "
+    .ascii	"Mit \x94Song Manager\x93 k\xf6nnen Sie auch vom Internet heruntergeladene Inhalte, wie z.B. Songs oder Composer-Schemata, "
+    .ascii	"\xfcber USB direkt zum KN senden. ~0d"
+    .ascii	"Das KN kann viele Style-Software anderer Hersteller laden, indem das Style-Convert-Programm verwendet "
+    .asciz	"wird. Mehr Informationen finden Sie in der Bedienungsanleitung.~0d"
+HelpPagesDe48:
+    .long	HelpTextDe48_0 - HelpTexts
+    .long	HelpTextDe48_1 - HelpTexts
+    .long	HelpTextDe48_2 - HelpTexts
+    .long	0
+HelpTextDe49_0:
+    .ascii	"Verwenden Sie die Rhythm-Group-Tasten, um aus den 220 Preset- und 20 Custom-Rhythmen des KN zu w\xe4hlen. "
+    .ascii	"Die Rhythmen sind in 15 Kategorien mit jeweils eigenen Tasten sortiert. ~0d"
+    .ascii	"In jeder Gruppe befinden sich mindestens 10 Pattern. Nach dem Aktivieren einer Gruppe, w\xe4hlen Sie "
+    .ascii	"das Pattern mit den Tasten links und rechts vom Display. ~0d"
+    .asciz	"Sollte eine Gruppe mehr als 10 Pattern enthalten, wird rechts oben z.B. PAGE 1/3 angezeigt.~0d"
+HelpTextDe49_1:
+    .ascii	"Verwenden Sie dann die Page- auf/ab- Tasten, um die n\xe4chste Seite anzuw\xe4hlen.~0d"
+    .ascii	"Die Custom-Rhythm-Gruppe ist eine spezielle Gruppe, in der Sie Ihre bevorzugten Composer-Rhythmen "
+    .ascii	"mit Registrierungsdaten speichern k\xf6nnen. Dies k\xf6nnen Preset-Rhythmen sein, bei denen Sie lediglich "
+    .ascii	"die Registrierung ver\xe4nderten oder komplett selbst erstellte Rhythmen oder Daten, die Sie von Diskette "
+    .asciz	"eingeladen haben.~0d"
+HelpTextDe49_2:
+    .ascii	"Nachdem ein Pattern einmal in den Custom Stylist gespeichert wurde, bleibt es hier erhalten, bis "
+    .ascii	"ein anderes Pattern an seine Stelle kopiert wird. Selbst das Initialisieren des KN l\xf6scht den Custom "
+    .asciz	"Style nicht.~0d"
+    .align	4, 0xff
+HelpPagesDe49:
+    .long	HelpTextDe49_0 - HelpTexts
+    .long	HelpTextDe49_1 - HelpTexts
+    .long	HelpTextDe49_2 - HelpTexts
+    .long	0
+HelpTextDe50_0:
+    .ascii	"Der Composer erm\xf6glicht das Erstellen Ihrer eigenen Begleitpattern oder das Laden von Begleitpattern "
+    .ascii	"von Diskette. ~0d"
+    .ascii	"Mit der Composer-Memory-Taste rufen Sie die Composer auf. W\xe4hlen Sie eine der 3 Speicherb\xe4nke A, "
+    .asciz	"B oder C auf der linken Seite des Displays.~0d"
+HelpTextDe50_1:
+    .ascii	"Wenn Sie die Memory-Taste dr\xfccken und halten, w\xe4hrend sich eine Diskette im Laufwerk befindet, wird "
+    .ascii	"die Disk-Load-Anzeige automatisch aufgerufen und erm\xf6glicht das Laden von Composer-Rhythmen von "
+    .asciz	"der Diskette.~0d"
+    .align	4, 0xff
+HelpPagesDe50:
+    .long	HelpTextDe50_0 - HelpTexts
+    .long	HelpTextDe50_1 - HelpTexts
+    .long	0
+HelpTextDe51_0:
+    .ascii	"Mit dem Sound Arranger k\xf6nnen Sie sehr einfach die Kl\xe4nge in der Begleitautomatik ver\xe4ndern.~0d"
+    .ascii	"(1) W\xe4hlen Sie einen Rhythmus.~0d"
+    .ascii	"(2) Dr\xfccken Sie Sound Arranger SET.~0d"
+    .ascii	"(3) W\xe4hlen Sie im Display eine Spur.~0d"
+    .ascii	"(4) W\xe4hlen Sie einen Klang im Sound-Select-Bereich.~0d"
+    .ascii	"(5) Wiederholen Sie diese Schritte ggf. f\xfcr andere Spuren.~0d"
+    .asciz	"(6) Best\xe4tigen Sie mit der SET-Taste.~0d"
+HelpTextDe51_1:
+    .asciz	"Um zu den Werksregistrierungen zur\xfcckzukehren, schalten Sie den Sound Arranger aus.~0d"
+HelpPagesDe51:
+    .long	HelpTextDe51_0 - HelpTexts
+    .long	HelpTextDe51_1 - HelpTexts
+    .long	0
+HelpTextDe52_0:
+    .ascii	"Der Sound Arranger erm\xf6glicht es Ihnen, die Kl\xe4nge eines Werks-Begleitmusters zu \xe4ndern. Wenn Sie "
+    .ascii	"die Sound-Arranger-ON-Taste dr\xfccken, h\xf6ren Sie einen Vorschlag, den Sie aber nach Belieben \xe4ndern "
+    .ascii	"k\xf6nnen.~0d"
+    .ascii	" ~0d"
+    .asciz	"\xc4nderungen k\xf6nnen Sie vornehmen, wenn Sie die Sound-Arranger-SET-Taste dr\xfccken.~0d"
+    .align	4, 0xff
+HelpPagesDe52:
+    .long	HelpTextDe52_0 - HelpTexts
+    .long	0
+HelpPagesDe53:
+    .long	0
+HelpTextDe54_0:
+    .ascii	"Bei Bet\xe4tigung der Auto-Play-Chord-Taste stehen folgende Optionen zur Auswahl:~0d"
+    .ascii	" ~0d"
+    .ascii	"BASIC: Hier k\xf6nnen Sie mit einem Finger oder komplett die Akkorde bestimmen. One Finger arbeitet "
+    .ascii	"automatisch, wenn Sie nur eine Taste anschlagen. Diese wird dann als Grundnote f\xfcr einen Akkord "
+    .ascii	"verwendet.~0d"
+    .asciz	"FINGERED: Erkennt volle Akkorde, die Sie links des Splitpunktes spielen.~0d"
+HelpTextDe54_1:
+    .ascii	"PIANIST: Arbeitet ohne Split-Punkt. Sie k\xf6nnen also mit dem Melodiesound \xfcber die gesamte Tastatur "
+    .ascii	"spielen.~0d"
+    .ascii	" ~0d"
+    .ascii	"MEMORY: H\xe4lt den Akkord, auch wenn Sie die Tasten loslassen. Die Begleitung spielt denselben Akkord "
+    .ascii	"weiter, bis Sie den n\xe4chsten Akkord greifen. .~0d"
+    .asciz	"ON BASS: Im Fingered oder Pianist Mode wird die tiefste Akkordnote als Bass-Linie gespielt.~0d"
+    .align	4, 0xff
+HelpPagesDe54:
+    .long	HelpTextDe54_0 - HelpTexts
+    .long	HelpTextDe54_1 - HelpTexts
+    .long	0
+HelpTextDe55_0:
+    .ascii	"Im Count-Intro-Modus k\xf6nnen Sie w\xe4hlen, wie der Einz\xe4hltakt klingen soll:~0d"
+    .ascii	"Simple: Instrumental (Rim Shot)~0d"
+    .asciz	"Voice: Eine Stimme z\xe4hlt ein~0d"
+    .align	4, 0xff
+HelpPagesDe55:
+    .long	HelpTextDe55_0 - HelpTexts
+    .long	0
+HelpTextDe56_0:
+    .asciz	"Left Hold h\xe4lt den f\xfcr Left ausgew\xe4hlten Klang, wenn Auto Play Chord und Memory eingeschaltet ist.~0d"
+    .align	4, 0xff
+HelpPagesDe56:
+    .long	HelpTextDe56_0 - HelpTexts
+    .long	0
+HelpTextDe57_0:
+    .ascii	"Der CHORD FINDER ist eine gro\xdfartige Lernfunktion, die Ihnen zeigt, wie die vom KN-System zu erkennenden "
+    .ascii	"Akkorde gegriffen werden.~0d"
+    .ascii	"W\xe4hlen Sie die Grundnote und den Akkordtyp und schon werden die entsprechenden Tasten im Display "
+    .ascii	"angezeigt. Sie k\xf6nnen auch die verschiedenen Umkehrungen w\xe4hlen, sofern diese vom KN zugelassen "
+    .ascii	"sind.~0d"
+    .asciz	"Durch Bet\xe4tigung der PLAY-Taste wird der gew\xe4hlte Akkord auch akustisch wiedergegeben.~0d"
+HelpPagesDe57:
+    .long	HelpTextDe57_0 - HelpTexts
+    .long	0
+HelpTextDe58_0:
+    .ascii	"AUTO PLAY CHORD liefert Ihnen professionell arrangierte Begleitungen zu den 220 Rhythmen des KN. "
+    .asciz	"Diese Begleitung folgt den Akkorden, die Sie spielen.~0d"
+    .align	4, 0xff
+HelpPagesDe58:
+    .long	HelpTextDe58_0 - HelpTexts
+    .long	0
+HelpTextDe59_0:
+    .ascii	"Die Other-Parts / Tracks-Taste hat zwei Funktionen. Im Hauptdisplay oder im Mixer dient sie dazu, "
+    .ascii	"andere Klanggruppen wie Part 1 bis 16 zwecks Lautst\xe4rkeeinstellung zu erreichen.~0d"
+    .ascii	"Bei Verwendung des Sequenzers arbeitet der Mixer spurbezogen. Sie m\xfcssen also nicht unbedingt wissen, "
+    .ascii	"welche Klanggruppe einer Spur zugeordnet ist, um dessen Werte zu ver\xe4ndern. Der Mixer kann die Werte "
+    .ascii	"von 16 Spuren gleichzeitig anzeigen. Somit wird die Other-Parts / Tracks-Taste zur Anwahl der APC- "
+    .asciz	"Spuren verwendet.~0d"
+HelpPagesDe59:
+    .long	HelpTextDe59_0 - HelpTexts
+    .long	0
+HelpTextDe60_0:
+    .ascii	"Display Hold h\xe4lt die aktuelle Anzeige im Display fest, bis Sie Display Hold ausschalten oder die "
+    .ascii	"EXIT-Taste dr\xfccken. Da einige Anzeigen, z.B. Rhythm oder Sound Groups nach kurzer Zeit wieder verschwinden, "
+    .ascii	"kann Display Hold sehr n\xfctzlich sein.~0d"
+    .ascii	" ~0d"
+    .ascii	"Im Customize-Men\xfc in der Display-Time-Out-Sektion k\xf6nnen Sie f\xfcr die verschiedenen Displaytypen "
+    .asciz	"die Display-Hold-Funktion automatisch aktivieren.~0d"
+    .align	4, 0xff
+HelpPagesDe60:
+    .long	HelpTextDe60_0 - HelpTexts
+    .long	0
+HelpTextDe61_0:
+    .ascii	"Verwenden Sie die Sound-Group-Tasten, um aus \xfcber 1000 Werkskl\xe4ngen oder aus den 40 Sound Memories "
+    .ascii	"des KN zu w\xe4hlen. ~0d"
+    .ascii	"Die Sounds sind in 16 Kategorien mit jeweils eigener Sound-Group-Taste gruppiert. ~0d"
+    .ascii	" ~0d"
+    .ascii	"Die gro\xdfe Anzahl an Kl\xe4ngen des KN wurden unter Verwendung des neuen Technics Sound Systems \x82NX "
+    .asciz	"SOUND' erstellt. ~0d"
+HelpTextDe61_1:
+    .ascii	"\x82NX SOUND' basiert auf dem General MIDI Level 2 und ist ein neuer Standard, um dem KN und allen "
+    .ascii	"zuk\xfcnftigen Produkten eine h\xf6chstm\xf6gliche Kompatibilit\xe4t zu verleihen.~0d"
+    .ascii	" ~0d"
+    .ascii	"Wenn Sie eine der Sound-Group-Tasten dr\xfccken, erscheinen die Sounds dieser Gruppe im Display. W\xe4hlen "
+    .asciz	"Sie dann mit den Tasten links und rechts vom Display den gew\xfcnschten Klang aus.~0d"
+HelpTextDe61_2:
+    .ascii	"Das Display zeigt 10 Sounds gleichzeitig an. Um an die weiteren Kl\xe4nge dieser Gruppe zu gelangen, "
+    .ascii	"verwenden Sie die Page-Tasten am Display.~0d"
+    .ascii	"Die Sound-Gruppe beinhaltet eine Memory-Gruppe, in der Sie 40 selbst bearbeitete Kl\xe4nge speichern "
+    .asciz	"k\xf6nnen.~0d"
+    .align	4, 0xff
+HelpPagesDe61:
+    .long	HelpTextDe61_0 - HelpTexts
+    .long	HelpTextDe61_1 - HelpTexts
+    .long	HelpTextDe61_2 - HelpTexts
+    .long	0
+HelpTextDe62_0:
+    .ascii	"Digital Drawbar erzeugt Kl\xe4nge einer klassischen Tonrad-Orgel und zeigt neun Zugriegel sowie zwei "
+    .ascii	"perkussive Kl\xe4nge im Display an. Verwenden Sie die Balance-Tasten unter dem Display, um die Zugriegel "
+    .ascii	"zu ver\xe4ndern. ~0d"
+    .asciz	"Sie k\xf6nnen auch die Geschwindigkeit des rotierenden Lautsprechers auf schnell oder langsam einstellen.~0d"
+HelpTextDe62_1:
+    .ascii	"Weiterhin k\xf6nnen Sie zwischen Jazz- und Rock-Drawbars w\xe4hlen und einige Klangparameter ver\xe4ndern, "
+    .asciz	"wie z.B. bei Percussion Attack und Decay Dauer und Lautst\xe4rke.~0d"
+    .align	4, 0xff
+HelpPagesDe62:
+    .long	HelpTextDe62_0 - HelpTexts
+    .long	HelpTextDe62_1 - HelpTexts
+    .long	0
+HelpTextDe63_0:
+    .ascii	"Das KN besitzt eine gro\xdfe Anzahl an Sounds.  Diese rufen Sie \xfcber die Sound-Group-Tasten auf. Im "
+    .ascii	"Sound Explorer k\xf6nnen Sie einen gew\xfcnschten Sound noch schneller finden. Hier sind alle Sounds mit "
+    .ascii	"der zugeh\xf6rigen Nummer aufgelistet.~0d"
+    .asciz	"W\xe4hlen Sie aus einer gro\xdfen Anzahl von Sounds (inklusiv GM Level 2, NX Sound etc.) in der Sound-Explorer-Seite.~0d"
+HelpTextDe63_1:
+    .ascii	"Es gibt 2 M\xf6glichkeiten, die gew\xfcnschte Gruppe zu suchen: nach Kategorie (Category) oder durch Auswahl "
+    .ascii	"aus einer alphabetischen Liste.~0d"
+    .ascii	"Gehen Sie wie folgt vor, um einen Sound auszuw\xe4hlen:~0d"
+    .ascii	"(1). Dr\xfccken Sie die Sound-Explorer-Taste.~0d"
+    .ascii	"(2). W\xe4hlen Sie die Suchmethode, Category oder Alphabet, auf dem Bildschirm aus.~0d"
+    .asciz	"(3). W\xe4hlen Sie eine Sound-Gruppe im Display aus.~0d"
+HelpTextDe63_2:
+    .ascii	"(4). Das Display zeigt zehn Sounds gleichzeitig an. Dr\xfccken Sie die Page-Taste, um an die weiteren "
+    .ascii	"Sounds zu gelangen.~0d"
+    .ascii	"(5). Dr\xfccken Sie eine der Tasten links oder rechts am Display, um einen Sound auszuw\xe4hlen.~0d"
+    .ascii	" ~0d"
+    .ascii	"Die Option Alphabet zeigt alle individuellen Sounds in einer alphabetischen Liste an. Wenn Sie Ihre "
+    .asciz	"bevorzugten Sounds kennen, k\xf6nnen Sie sie mit dieser Funktion leicht finden.~0d"
+HelpTextDe63_3:
+    .ascii	"MIDI Bank Select MSB, LSB, und Program Change Nummern werden f\xfcr jeden NX Sound zu Ihrer Orientierung "
+    .asciz	"angezeigt.~0d"
+HelpPagesDe63:
+    .long	HelpTextDe63_0 - HelpTexts
+    .long	HelpTextDe63_1 - HelpTexts
+    .long	HelpTextDe63_2 - HelpTexts
+    .long	HelpTextDe63_3 - HelpTexts
+    .long	0
+HelpTextDe64_0:
+    .ascii	"Sustain verleiht dem Klang einen Ausklangeffekt. Fu\xdfschalter 1 ist werkseitig auf Sustain eingestellt, "
+    .asciz	"somit k\xf6nnen Sie den Fu\xdfschalter zur Sustainsteuerung verwenden, wie bei einem Klavier.~0d"
+    .align	4, 0xff
+HelpPagesDe64:
+    .long	HelpTextDe64_0 - HelpTexts
+    .long	0
+HelpTextDe65_0:
+    .ascii	"Digital Effect verleiht dem Klang mehr Volumen durch das Hinzuf\xfcgen von Effekten wie Chorus, Celeste "
+    .ascii	"oder Organ Tremolo. Jeder Klang des KN hat einen zugeordneten Digital Effect, dr\xfccken Sie also einfach "
+    .ascii	"die Digital-Effect-Taste und ein passender Effekt wird hinzugeschaltet.~0d"
+    .ascii	"Wenn der Digital Effect zum Klang vorgesehen ist, wird er bei Anwahl des Klanges automatisch aktiviert, "
+    .asciz	"z.B. Organ Tremolo mit einem Jazz-Orgel-Klang.~0d"
+HelpPagesDe65:
+    .long	HelpTextDe65_0 - HelpTexts
+    .long	0
+HelpTextDe66_0:
+    .ascii	"Sound DSP arbeitet wie ein Studio Effekt-Prozessor, indem er Effekttypen, wie Distortion, Exciter "
+    .ascii	"und Delay hinzuf\xfcgt.~0d"
+    .ascii	"Jeder Klang besitzt Sound-DSP-Werte, welche automatisch eingestellt werden, wenn Sie einen Klang "
+    .ascii	"aufrufen und ihn einer Klanggruppe zuordnen, die diesen Effekt verwalten kann.~0d"
+    .ascii	"Im Sound- oder Effekt-Men\xfc k\xf6nnen Sie im Sound-Load-Option bestimmen, ob Sie diese automatische "
+    .asciz	"Zuordnung w\xfcnschen oder nicht.~0d"
+HelpTextDe66_1:
+    .ascii	"Im Zuordnungsbereich des Effekt-Men\xfcs, k\xf6nnen Sie die Zuordnung des Sound DSP und der 2 Sound DSP "
+    .ascii	"f\xfcr APC ver\xe4ndern, um diese f\xfcr ausgew\xe4hlte Sequenzer-Spuren zu verwenden.~0d"
+    .ascii	"Right 1, Right 2 und Left verwenden immer ihre eigenen Sound DSPs.~0d"
+    .ascii	"Um die Einstellung f\xfcr Sound DSP zu ver\xe4ndern, dr\xfccken Sie einfach die Sound DSP-Taste f\xfcr ein paar "
+    .asciz	"Sekunden und schon erscheint das Einstelldisplay.~0d"
+    .align	4, 0xff
+HelpPagesDe66:
+    .long	HelpTextDe66_0 - HelpTexts
+    .long	HelpTextDe66_1 - HelpTexts
+    .long	0
+HelpTextDe67_0:
+    .ascii	"Jeder Typ des Sound DSP besitzt eine Variation, die den Charakter des aktuellen Sound DSP ver\xe4ndert.~0d"
+    .ascii	" ~0d"
+    .ascii	"Sie k\xf6nnen z.B. die Geschwindigkeit des rotierenden Lautsprechers einstellen, indem Sie die Vari-Taste "
+    .asciz	"dr\xfccken.~0d"
+    .align	4, 0xff
+HelpPagesDe67:
+    .long	HelpTextDe67_0 - HelpTexts
+    .long	0
+HelpTextDe68_0:
+    .ascii	"Verwenden Sie das SD-Men\xfc, wenn Sie Daten von einer SD-Karte laden oder auf einer SD-Karte speichern "
+    .ascii	"m\xfcssen.~0d"
+    .ascii	"Das KN kann die folgenden 2 Datentypen laden und speichern.~0d"
+    .ascii	"(1) Dateien im Technics-Format: Die SD-Karte kann eine gro\xdfe Anzahl von Dateien speichern, die zweckm\xe4\xdfigerweise "
+    .ascii	"in bis zu 99 Ordnern abgelegt werden k\xf6nnen. Sie k\xf6nnen Dateien nach Ordner (Folder), alphabetisch "
+    .asciz	"(Alphabetically) oder nach Nummer (Number) sortieren.~0d"
+HelpTextDe68_1:
+    .ascii	"(2) Standard MIDI File (SMF): Das KN verwendet das SD Sound-Format, die neue Standard Midi File "
+    .ascii	"f\xfcr SD. SD Sound-Songs werden vom KN in Play-Listen sortiert, wie SD-Audio. Um einen Song zu laden, "
+    .ascii	"w\xe4hlen Sie erst eine Play-Liste und dann den gew\xfcnschten Song aus. Zum Speichern sichern Sie zuerst "
+    .asciz	"den Song, und dann erzeugen oder bearbeiten Sie eine Play-Liste.~0d"
+HelpTextDe68_2:
+    .ascii	"Das KN gibt SD Sound (SMF) und SD Audio direkt von der SD-Karte wieder und sortiert sie in Play-Listen. "
+    .ascii	"In der Default Play List k\xf6nnen Sie alle Songs auf einen Blick sehen, und Ihre Lieblingssongs k\xf6nnen "
+    .ascii	"Sie in Ihren eigenen Play-Listen gruppieren. Wenn Sie beispielsweise auf einer Party spielen, k\xf6nnten "
+    .asciz	"Sie alle Songs f\xfcr einen bestimmten Satz in einer Play-Liste gruppieren.~0d"
+HelpTextDe68_3:
+    .ascii	"Die Option Favorite Songs erm\xf6glicht es Ihnen, ein Album Ihrer Lieblingssongs im Technics-Format "
+    .ascii	"zu erstellen, die Sie in einer bestimmten Reihenfolge anordnen k\xf6nnen, so dass Sie bevorzugte Songs "
+    .ascii	"f\xfcr sofortige Wiedergabe bequem laden k\xf6nnen.~0d"
+    .ascii	"Mit Hilfe eines speziellen PC-Programms namens \x94Song Manager\x93 auf der mitgelieferten CD-ROM k\xf6nnen "
+    .ascii	"Sie alle Technics-Dateien und SMFs auf der SD-Karte \xfcber USB auf Ihrem PC sichern und wiederherstellen. "
+    .asciz	"~0d"
+HelpTextDe68_4:
+    .ascii	"Sie k\xf6nnen die Festplatte Ihres PC als Sicherungsmedium f\xfcr das KN verwenden.~0d"
+    .ascii	" ~0d"
+    .ascii	"Sie k\xf6nnen auch mehrere Sicherungsdatens\xe4tze auf Ihrem PC f\xfcr zuk\xfcnftige SD-Karten mit gr\xf6\xdferer "
+    .ascii	"Speicherkapazit\xe4t kompilieren.~0d"
+    .ascii	"Zuk\xfcnftige Erweiterungs-Plug-Ins von Fremdanbietern k\xf6nnen ebenfalls auf einer SD-Karte installiert "
+    .asciz	"werden.~0d"
+    .align	4, 0xff
+HelpPagesDe68:
+    .long	HelpTextDe68_0 - HelpTexts
+    .long	HelpTextDe68_1 - HelpTexts
+    .long	HelpTextDe68_2 - HelpTexts
+    .long	HelpTextDe68_3 - HelpTexts
+    .long	HelpTextDe68_4 - HelpTexts
+    .long	0
+HelpTextDe69_0:
+    .ascii	"Benutzen Sie diese EW Expansion-Taste, um einen Sound von den vorprogrammierten Sounds der NX Sound "
+    .ascii	"Expansion Boards der EW-Serie (getrennt erh\xe4ltlich) auszuw\xe4hlen.~0d"
+    .ascii	"Sie k\xf6nnen bis zu 4 EW Sound Expansion Boards installieren, so dass Ihnen eine gro\xdfe Anzahl zus\xe4tzlicher "
+    .ascii	"Sounds zur Erweiterung Ihrer Musikwelt zur Verf\xfcgung steht. Wenn keine EW Sound Expansion Boards "
+    .asciz	"installiert sind, ist die EW Expansion-Taste unwirksam.~0d"
+HelpTextDe69_1:
+    .ascii	"Um einen EW-Sound auszuw\xe4hlen, gehen Sie wie folgt vor:~0d"
+    .ascii	"(1). Dr\xfccken Sie die EW Expansion-Taste.~0d"
+    .ascii	"(2). W\xe4hlen Sie die Nummer des EW Expansion Boards auf dem Bildschirm aus (wenn mehr als ein EW "
+    .ascii	"Board installiert ist).~0d"
+    .ascii	"(3). W\xe4hlen Sie eine Sound Group auf dem Bildschirm aus.~0d"
+    .ascii	"(4). Der Bildschirm zeigt zehn Sounds auf einer Seite an. Verwenden Sie die Seitenwahltasten zur "
+    .asciz	"Wahl der n\xe4chsten Seite.~0d"
+HelpTextDe69_2:
+    .asciz	"(5). Dr\xfccken Sie eine der Tasten links oder rechts vom Bildschirm, um den gew\xfcnschten Sound auszuw\xe4hlen.~0d"
+    .align	4, 0xff
+HelpPagesDe69:
+    .long	HelpTextDe69_0 - HelpTexts
+    .long	HelpTextDe69_1 - HelpTexts
+    .long	HelpTextDe69_2 - HelpTexts
+    .long	0
+HelpTextDe70_0:
+    .ascii	"TAB ORGAN erzeugt den Klang von 3 verschiedenen klassischen Tab-Orgeln. 10 Tabs werden auf dem Bildschirm "
+    .ascii	"angezeigt. Benutzen Sie die Balancetasten unterhalb des Bildschirms, um jeden einzelnen Tab ein- "
+    .ascii	"und auszuschalten. ~0d"
+    .ascii	"F\xfcr die USA- und European Tab-Typen k\xf6nnen Sie Schlagzeug hinzuf\xfcgen, die Geschwindigkeit des Tremolo-Effekts "
+    .asciz	"auf schnell oder langsam einstellen und Vibrato f\xfcr die Reed- und String-Tabs einschalten. ~0d"
+HelpTextDe70_1:
+    .ascii	"F\xfcr die Theatre Pipes-Tabs k\xf6nnen Sie den Tremulant f\xfcr drei verschiedene Sektionen der Orgel ein- "
+    .ascii	"und ausschalten.~0d"
+    .ascii	" ~0d"
+    .ascii	"Die Option TAB ORGAN TYPE erm\xf6glicht die Wahl von 3 Orgeltypen: USA Tabs, European Tabs und Theatre "
+    .asciz	"Pipes.~0d"
+HelpTextDe70_2:
+    .ascii	"Der Tremulant ist ein charakteristischer Effekt von Pfeifenorgeln, bei dem der Luftstrom zu den "
+    .ascii	"Pfeifen durch gro\xdfe Balgen \x94unterbrochen\x93 wird, wodurch eine charakteristische Kombination aus Tremolo "
+    .ascii	"und Vibrato erzeugt wird.~0d"
+    .ascii	"Benutzen Sie diese Tasten rechts vom Display, um den Effekt f\xfcr Tibia, Vox und Main (Trumpet, English "
+    .asciz	"Horn und String Celeste) getrennt ein- und auszuschalten.~0d"
+HelpPagesDe70:
+    .long	HelpTextDe70_0 - HelpTexts
+    .long	HelpTextDe70_1 - HelpTexts
+    .long	HelpTextDe70_2 - HelpTexts
+    .long	0
+HelpTextDe71_0:
+    .ascii	"Mit dieser Taste stellen Sie den Kontrast des Displays ein.  Nachdem Sie die Taste gedr\xfcckt haben, "
+    .ascii	"wird der aktuelle Wert angezeigt. Mit der LCD Contrast -Taste oder mit dem Tempo/Programm-Rad k\xf6nnen "
+    .ascii	"Sie den Wert ver\xe4ndern, bis das Display gut lesbar ist.~0d"
+    .ascii	" ~0d"
+    .asciz	"Diese Einstellung bleibt permanent erhalten, bis Sie diese wieder \xe4ndern.~0d"
+    .align	4, 0xff
+HelpPagesDe71:
+    .long	HelpTextDe71_0 - HelpTexts
+    .long	0
+HelpTextDe72_0:
+    .ascii	"Mit Hilfe dieser dedizierten Tasten k\xf6nnen Sie die Wiedergabe der Songs auf der SD-Karte steuern. "
+    .ascii	"Das KN gibt sowohl SD Audio als auch SD Sound (SMF) wieder. Um einen Song wiederzugeben, gehen Sie "
+    .ascii	"wie folgt vor:~0d"
+    .ascii	" ~0d"
+    .ascii	"(1) \xd6ffnen Sie den Deckel des SD-Schlitzes.~0d"
+    .asciz	"(2) F\xfchren Sie die SD-Karte mit den gespeicherten Songs in den SD-Schlitz ein.~0d"
+HelpTextDe72_1:
+    .ascii	"(3) Schlie\xdfen Sie den Deckel.~0d"
+    .ascii	"(4) Dr\xfccken Sie die Wiedergabetaste.~0d"
+    .ascii	"Die Bedienungsmethode ist die gleiche wie bei einem normalen CD- oder SD-Spieler.~0d"
+    .ascii	"Es ist m\xf6glich, selbst bei geschlossener Abdeckhaube des KN einen Song wiederzugeben und die Lautst\xe4rke "
+    .asciz	"zu ver\xe4ndern.~0d"
+    .align	4, 0xff
+HelpPagesDe72:
+    .long	HelpTextDe72_0 - HelpTexts
+    .long	HelpTextDe72_1 - HelpTexts
+    .long	0
+HelpTitleDe00:
+    .asciz	"HELP FUNCTION"
+HelpTitleDe01:
+    .asciz	"DEMO"
+HelpTitleDe02:
+    .asciz	"SOUND CONTROLLER RESET"
+HelpTitleDe03:
+    .asciz	"SOUND CONTROLLER MODE"
+HelpTitleDe04:
+    .asciz	"PERFORMANCE PADS AUTO SETTING"
+HelpTitleDe05:
+    .asciz	"PERFORMANCE PADS BANK"
+HelpTitleDe06:
+    .asciz	"PERFORMANCE PADS STOP"
+HelpTitleDe07:
+    .asciz	"PERFORMANCE PADS"
+HelpTitleDe08:
+    .asciz	"MUSIC STYLE ARRANGER"
+HelpTitleDe09:
+    .asciz	"VARIATION & MSA"
+HelpTitleDe10:
+    .asciz	"ONE TOUCH PLAY"
+HelpTitleDe11:
+    .asciz	"SPLIT POINT"
+HelpTitleDe12:
+    .asciz	"FADE IN/OUT"
+HelpTitleDe13:
+    .asciz	"TAP TEMPO"
+HelpTitleDe14:
+    .asciz	"SYNCHRO & BREAK"
+HelpTitleDe15:
+    .asciz	"FILL IN 1/2"
+HelpTitleDe16:
+    .asciz	"INTRO & ENDING 1/2"
+HelpTitleDe17:
+    .asciz	"START/STOP"
+HelpTitleDe18:
+    .asciz	"TEMPO/PROGRAM"
+HelpTitleDe19:
+    .asciz	"MUSIC STYLIST"
+HelpTitleDe20:
+    .asciz	"FAVORITES"
+HelpTitleDe21:
+    .asciz	"TRANSPOSE -/+"
+HelpTitleDe22:
+    .asciz	"R1/R2 OCTAVE -/+"
+HelpTitleDe23:
+    .asciz	"PART SELECT"
+HelpTitleDe24:
+    .asciz	"CONDUCTOR"
+HelpTitleDe25:
+    .asciz	"SOLO"
+HelpTitleDe26:
+    .asciz	"TECHNI-CHORD"
+HelpTitleDe27:
+    .asciz	"CHORUS"
+HelpTitleDe28:
+    .asciz	"MULTI EFFECT"
+HelpTitleDe29:
+    .asciz	"REVERB"
+HelpTitleDe30:
+    .asciz	"MIC REVERB & EFFECT"
+HelpTitleDe31:
+    .asciz	"PANEL MEMORY SET"
+HelpTitleDe32:
+    .asciz	"PANEL MEMORY"
+HelpTitleDe33:
+    .asciz	"PANEL MEMORY NEXT BANK"
+HelpTitleDe34:
+    .asciz	"PANEL MEMORY BANK VIEW"
+HelpTitleDe35:
+    .asciz	"CUSTOM PANEL"
+HelpTitleDe36:
+    .asciz	"SEQUENCER PLAY"
+HelpTitleDe37:
+    .asciz	"SEQUENCER EASY REC"
+HelpTitleDe38:
+    .asciz	"HELP FUNCTION"
+HelpTitleDe39:
+    .asciz	"SOUND"
+HelpTitleDe40:
+    .asciz	"REVERB & EFFECT"
+HelpTitleDe41:
+    .asciz	"CONTROL"
+HelpTitleDe42:
+    .asciz	"MIDI"
+HelpTitleDe43:
+    .asciz	"CUSTOMIZE"
+HelpTitleDe44:
+    .asciz	"SOUND EDIT"
+HelpTitleDe45:
+    .asciz	"SEQUENCER"
+HelpTitleDe46:
+    .asciz	"COMPOSER"
+HelpTitleDe47:
+    .asciz	"PERFORMANCE PADS"
+HelpTitleDe48:
+    .asciz	"DISK"
+HelpTitleDe49:
+    .asciz	"RHYTHM GROUP"
+HelpTitleDe50:
+    .asciz	"COMPOSER MEMORY"
+HelpTitleDe51:
+    .asciz	"SOUND ARRANGER SET"
+HelpTitleDe52:
+    .asciz	"SOUND ARRANGER OFF/ON"
+HelpTitleDe53:
+    .asciz	"APC/CHORD FINDER"
+HelpTitleDe54:
+    .asciz	"AUTO PLAY CHORD MODE"
+HelpTitleDe55:
+    .asciz	"COUNT INTRO"
+HelpTitleDe56:
+    .asciz	"LEFT HOLD"
+HelpTitleDe57:
+    .asciz	"CHORD FINDER"
+HelpTitleDe58:
+    .asciz	"AUTO PLAY CHORD OFF/ON"
+HelpTitleDe59:
+    .asciz	"OTHER PARTS/TR"
+HelpTitleDe60:
+    .asciz	"DISPLAY HOLD"
+HelpTitleDe61:
+    .asciz	"SOUND GROUP"
+HelpTitleDe62:
+    .asciz	"DIGITAL DRAWBAR"
+HelpTitleDe63:
+    .asciz	"SOUND EXPLORER"
+HelpTitleDe64:
+    .asciz	"SUSTAIN"
+HelpTitleDe65:
+    .asciz	"DIGITAL EFFECT"
+HelpTitleDe66:
+    .asciz	"SOUND DSP"
+HelpTitleDe67:
+    .asciz	"SOUND DSP VARIATION"
+HelpTitleDe68:
+    .asciz	"SD"
+HelpTitleDe69:
+    .asciz	"EW EXPANSION"
+HelpTitleDe70:
+    .asciz	"TAB ORGAN"
+HelpTitleDe71:
+    .asciz	"LCD CONTRAST"
+HelpTitleDe72:
+    .asciz	"SD CONTROL"
+HelpTitleDe73:
+    .asciz	"HELP FUNCTION"
+HelpTitleDe74:
+    .asciz	"HELP FUNCTION"
+HelpTitleDe75:
+    .asciz	"HELP FUNCTION"
+HelpTitleDe76:
+    .asciz	"HELP FUNCTION"
+HelpTitleDe77:
+    .asciz	"HELP FUNCTION"
+HelpTitleDe78:
+    .asciz	"HELP FUNCTION"
+HelpTitleDe79:
+    .asciz	"HELP FUNCTION"
+HelpTitleDe80:
+    .asciz	"HELP FUNCTION"
+HelpTitleDe81:
+    .asciz	"HELP FUNCTION"
+HelpTitleDe82:
+    .asciz	"HELP FUNCTION"
+HelpTitleDe83:
+    .asciz	"HELP FUNCTION"
+HelpTitleDe84:
+    .asciz	"HELP FUNCTION"
+HelpTitleDe85:
+    .asciz	"HELP FUNCTION"
+HelpTitleDe86:
+    .asciz	"HELP FUNCTION"
+HelpTitleDe87:
+    .asciz	"HELP FUNCTION"
+HelpTitleDe88:
+    .asciz	"HELP FUNCTION"
+HelpTitleDe89:
+    .asciz	"HELP FUNCTION"
+HelpTitleDe90:
+    .asciz	"HELP FUNCTION"
+HelpTitleDe91:
+    .asciz	"HELP FUNCTION"
+HelpTitleDe92:
+    .asciz	"HELP FUNCTION"
+HelpTitleDe93:
+    .asciz	"HELP FUNCTION"
+HelpTitleDe94:
+    .asciz	"HELP FUNCTION"
+HelpTitleDe95:
+    .asciz	"HELP FUNCTION"
+HelpTitleDe96:
+    .asciz	"HELP FUNCTION"
+HelpTitleDe97:
+    .asciz	"HELP FUNCTION"
+HelpTitleDe98:
+    .asciz	"HELP FUNCTION"
+HelpTitleDe99:
+    .asciz	"HELP FUNCTION"
+    .align	4, 0xff
+HelpTextFr00_0:
+    .ascii	"Apr\xe8s avoir mis en fonction le bouton HELP, si vous pressez n'importe quel bouton du panneau de "
+    .ascii	"contr\xf4le, l'affichage vous informe sur la fonction assign\xe9e \xe0 celui -ci. Pour d\xe9sactiver cette aide "
+    .ascii	"en ligne, il vous suffit de presser \xe0 nouveau le bouton HELP ou EXIT.~0d"
+    .ascii	"A l'aide des boutons situ\xe9s en bas de l'affichage, vous pouvez s\xe9lectionner l'une des langues disponibles. "
+    .asciz	"Pour valider votre choix pressez OK.~0d"
+    .align	4, 0xff
+HelpPagesFr00:
+    .long	HelpTextFr00_0 - HelpTexts
+    .long	0
+HelpTextFr01_0:
+    .ascii	"Le KN dispose de 10 d\xe9monstrations agr\xe9ment\xe9es d'un diaporama. A l'aide des boutons situ\xe9s sous "
+    .ascii	"l'\xe9cran, s\xe9lectionnez une d\xe9monstration . La d\xe9monstration d\xe9bute imm\xe9diatement.~0d"
+    .ascii	"Vous pouvez obtenir une reproduction encha\xeen\xe9e de toutes les s\xe9quences en maintenant press\xe9 le bouton "
+    .asciz	"DEMO pendant quelques secondes. Pressez le bouton STOP pour interrompre la reproduction de ces d\xe9monstrations.~0d"
+HelpTextFr01_1:
+    .ascii	"La pr\xe9sentation  des caract\xe9ristiques consiste en une explication visuelle et musicale qui vous "
+    .ascii	"donne une vue d'ensemble sur les principales caract\xe9ristiques du KN. S\xe9lectionnez simplement \xab Feature "
+    .asciz	"Presentation \xbb sur l'affichage et appr\xe9ciez le show !~0d"
+    .align	4, 0xff
+HelpPagesFr01:
+    .long	HelpTextFr01_0 - HelpTexts
+    .long	HelpTextFr01_1 - HelpTexts
+    .long	0
+HelpTextFr02_0:
+    .ascii	"Pour ramener les param\xe8tres du \xab Sound Controller \xbb \xe0 son r\xe9glage par d\xe9faut, il suffit de presser "
+    .ascii	"le bouton \xab reset \xbb. Le \xab Sound Controller \xbb ne revient pas physiquement sur sa position centrale "
+    .asciz	"lorsque vous le rel\xe2chez.~0d"
+    .align	4, 0xff
+HelpPagesFr02:
+    .long	HelpTextFr02_0 - HelpTexts
+    .long	0
+HelpTextFr03_0:
+    .ascii	"Le \xab Sound Controller \xbb permet de modifier la reproduction de toute sonorit\xe9 suivant deux param\xe8tres "
+    .ascii	"pr\xe9d\xe9termin\xe9s.~0d"
+    .ascii	"Vous disposez de param\xe8tres pr\xe9s\xe9lectionn\xe9s comportant deux composants ( X : composant assign\xe9 \xe0 "
+    .ascii	"l'axe horizontal et Y : composant assign\xe9 \xe0 l'axe vertical ) qui peuvent \xeatre s\xe9lectionn\xe9s sur la "
+    .ascii	"page \xab Sound Controller Mode \xbb.~0d"
+    .ascii	"Les param\xe8tres assign\xe9s aux axes X et Y sont des contr\xf4leurs MIDI (contr\xf4leurs de sonorit\xe9, Volume "
+    .asciz	"et Panoramique).~0d"
+HelpTextFr03_1:
+    .ascii	"L'activation du \xab Sound Controller \xbb pour chaque partie peut \xeatre s\xe9lectionn\xe9 sur la page \xab Part "
+    .asciz	"Setting \xbb du menu \xab Sound \xbb.~0d"
+    .align	4, 0xff
+HelpPagesFr03:
+    .long	HelpTextFr03_0 - HelpTexts
+    .long	HelpTextFr03_1 - HelpTexts
+    .long	0
+HelpTextFr04_0:
+    .ascii	"La fonction \xab Auto Setting \xbb s\xe9lectionne la banque \xab Performance Pads \xbb la plus appropri\xe9e pour "
+    .asciz	"les r\xe9glages \xab One Touch Play \xbb, \xab Music Style Arranger \xbb ou \xab Music Stylist \xbb que vous utilisez.~0d"
+    .align	4, 0xff
+HelpPagesFr04:
+    .long	HelpTextFr04_0 - HelpTexts
+    .long	0
+HelpTextFr05_0:
+    .ascii	"Vous disposez de 20 \xab Banks \xbb de phrases et d'effets. Le changement de banque s\xe9lectionne automatiquement "
+    .ascii	"les diff\xe9rentes phrases ou effets reproduits par les six  \xab Pads \xbb. Pour changer de banque, pressez "
+    .ascii	"simplement le bouton \xab Bank \xbb et effectuez votre s\xe9lection sur l'affichage.~0d"
+    .asciz	"Trois banques sp\xe9ciales \xab Bank \xbb sont disponibles : User, Compile et Control.~0d"
+HelpTextFr05_1:
+    .ascii	"La banque \xab Compile \xbb vous permet de combiner vos phrases favorites des diff\xe9rentes banques dans "
+    .ascii	"une seule banque. Pressez le bouton du menu \xab Performance Pads \xbb pour obtenir plus d' informations.~0d"
+    .ascii	"La banque \xab User Banks \xbb vous permet d'enregistrer vos propres phrases. Pressez le bouton du menu "
+    .asciz	"\xab Performance Pads \xbb pour obtenir plus d'informations.~0d"
+HelpTextFr05_2:
+    .ascii	"La banque \xab Control Bank \xbb dispose de fonctions de contr\xf4le tr\xe8s utiles  comme \xab Tremolo Slow/Fast "
+    .asciz	"\xbb et \xab Glide \xbb. Pour plus de d\xe9tails, reportez-vous au mode d'emploi.~0d"
+HelpPagesFr05:
+    .long	HelpTextFr05_0 - HelpTexts
+    .long	HelpTextFr05_1 - HelpTexts
+    .long	HelpTextFr05_2 - HelpTexts
+    .long	0
+HelpTextFr06_0:
+    .ascii	"Si vous d\xe9sirez stopper la reproduction d'une phrase \xab Performance Pad \xbb, pressez le bouton \xab Stop "
+    .ascii	"\xbb. Certaines phrases comme des arp\xe8ges en boucle sont reproduites en continu jusqu'\xe0 ce que le bouton "
+    .ascii	"\xab Stop \xbb soit press\xe9.~0d"
+    .ascii	"Les \xab Pads \xbb 5 et 6 sont des \xab Pads \xbb r\xe9serv\xe9s au Solo et reproduisent \xe0 la fois une m\xe9lodie et "
+    .asciz	"une s\xe9quence d'accords.~0d"
+HelpTextFr06_1:
+    .ascii	"Vous pouvez utilisez l'une des fonctions \xab Chord Step Record\xbb ou \xab Seq to Pad Copy\xbb pour cr\xe9er votre "
+    .ascii	"solo. Vous devez tout d'abord enregistrer votre phrase dans le s\xe9quenceur, avant de pouvoir effectuer "
+    .asciz	"la copie dans les \xab User Solo Pads \xbb.~0d"
+HelpPagesFr06:
+    .long	HelpTextFr06_0 - HelpTexts
+    .long	HelpTextFr06_1 - HelpTexts
+    .long	0
+HelpTextFr07_0:
+    .ascii	"La fonction \xab Performance Pads \xbb permet la reproduction d'une grande vari\xe9t\xe9 de phrases musicales "
+    .ascii	"et d'effets que vous pouvez additionner \xe0 votre interpr\xe9tation. Chacun des six boutons \xab Pads \xbb "
+    .ascii	"correspond \xe0 une phrase diff\xe9rente. En pressant simplement l'un des \xab Pads \xbb, la phrase ou l'effet "
+    .ascii	"est reproduit.~0d"
+    .ascii	"Certaines phrases comme des arp\xe8ges sont reproduites en boucle jusqu'\xe0 ce que le bouton \xab Stop \xbb "
+    .asciz	"soit press\xe9.~0d"
+HelpTextFr07_1:
+    .ascii	"Les \xab Pads \xbb 5 et 6 reproduisent un solo, comportant une s\xe9quence d'accord correspondante au style "
+    .ascii	"d'accompagnement utilis\xe9. Le \xab Pad \xbb 5 reproduit un solo en Majeur et le \xab Pad \xbb 6 en mineur.~0d"
+    .ascii	"Pour introduire un solo dans votre interpr\xe9tation, pressez simplement l'un des \xab Pads \xbb solo pendant "
+    .asciz	"la reproduction de l'accompagnement.~0d"
+HelpTextFr07_2:
+    .ascii	"Jouez la fondamentale de la tonalit\xe9 d\xe9sir\xe9e avant de presser le \xab Pad \xbb (par exemple si vous jouez "
+    .ascii	"en Fa Majeur F, jouez un accord de Fa avant de presser le \xab Pad \xbb de solo)~0d"
+    .ascii	"Vous pouvez aussi annuler le solo en pressant les deux boutons \xab Pads balance \xbb sous l'affichage, "
+    .ascii	"et interpr\xe9ter votre propre solo pendant la reproduction de la suite d'accords. Pour plus d'informations, "
+    .ascii	"pressez les boutons \xab Bank \xbb, \xab Stop \xbb, \xab Auto Setting \xbb, et \xab Performance Pads Menu \xbb dans les "
+    .asciz	"menus \xab Program \xbb.~0d"
+    .align	4, 0xff
+HelpPagesFr07:
+    .long	HelpTextFr07_0 - HelpTexts
+    .long	HelpTextFr07_1 - HelpTexts
+    .long	HelpTextFr07_2 - HelpTexts
+    .long	0
+HelpTextFr08_0:
+    .ascii	"Le \xab MUSIC STYLE ARRANGER \xbb vous aide \xe0 effectuer des changements d'orchestration professionnels. "
+    .ascii	"Il vous fournit quatre orchestrations pr\xe9s\xe9lectionn\xe9es pour chaque style. Activez le \xab MSA \xbb et "
+    .ascii	"une orchestration compl\xe8te, correspondant au style d\xe9termin\xe9, sera automatiquement s\xe9lectionn\xe9e. "
+    .ascii	"~0d"
+    .ascii	"Le passage de l'une \xe0 l'autre des quatre \xab Rhythm Variations \xbb modifie l'orchestration, en correspondance "
+    .asciz	"avec le type de variation.~0d"
+HelpTextFr08_1:
+    .ascii	"En passant des variations MSA 1 \xe0 MSA 4, les orchestrations deviennent plus brillantes et plus \xe9toff\xe9es. "
+    .ascii	"Les boutons \xab Fill-In \xbb permettent de passer  d'une variation MSA \xe0 une autre automatiquement. Le "
+    .ascii	"Fill In 1 permet de revenir \xe0 la pr\xe9c\xe9dente et Fill In 2 de passer \xe0 la suivante.~0d"
+    .ascii	"Pour personnaliser le \xab MSA \xbb, pressez et maintenez le bouton  \xab MSA \xbb jusqu'\xe0 l'obtention de l'affichage "
+    .asciz	"de r\xe9glage de mode. Vous disposez de trois modes :~0d"
+HelpTextFr08_2:
+    .ascii	"Rhythm: changement de la variation uniquement. ~0d"
+    .ascii	"Sound & Rhythm: changements \xe0 la fois des sonorit\xe9s et de la variation.~0d"
+    .ascii	"Panel Memory: Le \xab Music Style Arranger \xbb appelle automatiquement les quatre premiers \xab Panel Memories "
+    .asciz	"\xbb de la \xab Bank A \xbb.~0d"
+    .align	4, 0xff
+HelpPagesFr08:
+    .long	HelpTextFr08_0 - HelpTexts
+    .long	HelpTextFr08_1 - HelpTexts
+    .long	HelpTextFr08_2 - HelpTexts
+    .long	0
+HelpTextFr09_0:
+    .ascii	"Ces boutons servent \xe0 deux fonctions :~0d"
+    .ascii	"(1)Pour s\xe9lectionner la variation du style~0d"
+    .ascii	"(2)Pour l'utilisation du \xab Music Style Arranger \xbb (suivant l'activation ou non du MSA).~0d"
+    .ascii	"Chacun des 220 rythmes du KN dispose de quatre variations. Ainsi, vous pouvez utiliser ces boutons "
+    .ascii	"tout en jouant pour faire varier l'accompagnement automatique tout en restant dans le m\xeame style "
+    .asciz	"musical.~0d"
+HelpTextFr09_1:
+    .ascii	"Lorsque vous utilisez le \xab Music Style Arranger \xbb les boutons de variation  modifient l'accompagnement "
+    .asciz	"et l'orchestration. A pr\xe9sent, pressez le bouton \xab Music Style Arranger \xbb pour obtenir plus d'informations.~0d"
+    .align	4, 0xff
+HelpPagesFr09:
+    .long	HelpTextFr09_0 - HelpTexts
+    .long	HelpTextFr09_1 - HelpTexts
+    .long	0
+HelpTextFr10_0:
+    .ascii	"La fonction \xab One Touch Play \xbb programme le KN pour vous. Vous disposez ainsi d'une programmation "
+    .ascii	"professionnelle instantan\xe9ment.~0d"
+    .ascii	"Le \xab One Touch Play \xbb programme le KN avec une registration et un tempo adapt\xe9s \xe0 chacun des 220 "
+    .ascii	"rythmes pr\xe9s\xe9lectionn\xe9s et des 20 rythmes \xab Custom \xbb. Cette programmation compl\xe8te s'effectue en "
+    .asciz	"pressant un simple bouton.~0d"
+HelpTextFr10_1:
+    .ascii	"Pour utiliser le \xab One Touch Play \xbb, s\xe9lectionnez le rythme que vous d\xe9sirez puis pressez et maintenez "
+    .ascii	"le bouton \xab One Touch Play quelques secondes. Le nom de la registration \xab One Touch Play \xbb appara\xeet "
+    .asciz	"bri\xe8vement sur l'\xe9cran. A vous de jouer!~0d"
+    .align	4, 0xff
+HelpPagesFr10:
+    .long	HelpTextFr10_0 - HelpTexts
+    .long	HelpTextFr10_1 - HelpTexts
+    .long	0
+HelpTextFr11_0:
+    .ascii	"Le clavier du KN peut \xeatre partag\xe9 en deux parties gauche et droite assign\xe9es \xe0 des sonorit\xe9s diff\xe9rentes, "
+    .ascii	"en n'importe quel point. Le partage \xab Split \xbb du clavier est \xe9galement actif lorsque l' \xab Auto Play "
+    .ascii	"Chord \xbb est utilis\xe9 dans les modes \xab Basic \xbb et \xab Fingered \xbb. ~0d"
+    .ascii	"Pressez le bouton \"Split Point\" plusieurs fois pour passer de l'un \xe0 l'autre des trois points de "
+    .asciz	"partage pr\xe9s\xe9lectionn\xe9s (G2, C3 & G3).~0d"
+HelpTextFr11_1:
+    .ascii	"Pour d\xe9finir votre propre point de partage \xab Split \xbb, pressez et maintenez simplement le bouton "
+    .ascii	"\xab Split Point \xbb quelques secondes jusqu'\xe0 ce que l'\xe9cran indique l'affichage de r\xe9glage du point "
+    .ascii	"de partage.~0d"
+    .asciz	"Puis, pressez la touche sur laquelle vous d\xe9sirez d\xe9finir votre point de partage.~0d"
+    .align	4, 0xff
+HelpPagesFr11:
+    .long	HelpTextFr11_0 - HelpTexts
+    .long	HelpTextFr11_1 - HelpTexts
+    .long	0
+HelpTextFr12_0:
+    .ascii	"L'effet \xab Fade In/Out \xbb ajoute une touche professionnelle \xe0 vos interpr\xe9tations en les commen\xe7ant "
+    .ascii	"par une progression graduelle du volume, ou en les terminant par une diminution graduelle. Ceci "
+    .ascii	"est particuli\xe8rement pratique lors de l'utilisation de l' \xab Auto Play Chord \xbb. Pressez \xab Fade In "
+    .ascii	"\xbb avant de jouer, et le volume g\xe9n\xe9ral du KN montera progressivement. Lorsque vous avez termin\xe9 "
+    .ascii	"votre~0d"
+    .asciz	"interpr\xe9tation, laissez l'accompagnement automatique continuer et pressez \xab Fade Out \xbb.~0d"
+HelpTextFr12_1:
+    .ascii	"Le volume de l'accompagnement diminuera progressivement comme une interpr\xe9tation professionnelle.~0d"
+    .ascii	"Si vous pressez  \xab Fade Out \xbb par erreur au cours d'une interpr\xe9tation, il suffit de presser le "
+    .ascii	"m\xeame bouton pour annuler cet effet, ou de presser \xab Fade In \xbb et le volume remontera jusqu'\xe0 un "
+    .asciz	"niveau normal.~0d"
+HelpTextFr12_2:
+    .ascii	"Vous pouvez r\xe9gler la dur\xe9e en nombre de mesures de l'effet \xab Fade In \xbb et \xab Fade Out \xbb, et \xe9galement "
+    .ascii	"l'arr\xeat automatique du rythme et du s\xe9quenceur apr\xe8s le \xab Fade Out \xbb. Ces r\xe9glages sont effectu\xe9s "
+    .ascii	"par le menu \xab Control \xbb ou en maintenant quelques secondes l'un des boutons \xab Fade In \xbb ou \xab Fade "
+    .asciz	"Out \xbb.~0d"
+HelpPagesFr12:
+    .long	HelpTextFr12_0 - HelpTexts
+    .long	HelpTextFr12_1 - HelpTexts
+    .long	HelpTextFr12_2 - HelpTexts
+    .long	0
+HelpTextFr13_0:
+    .ascii	"Le \xab Tap Tempo \xbb permet de r\xe9gler la vitesse du tempo de votre interpr\xe9tation en le tapant  simplement "
+    .ascii	"sur le bouton correspondant. L'intervalle entre chaque frappe sur le bouton sert \xe0 d\xe9finir la vitesse "
+    .asciz	"du tempo. Vous devez donc taper sur ce bouton au moins deux fois !~0d"
+    .align	4, 0xff
+HelpPagesFr13:
+    .long	HelpTextFr13_0 - HelpTexts
+    .long	0
+HelpTextFr14_0:
+    .ascii	"Le bouton \xab Synchro & Break\xbb poss\xe8de deux fonctions suivant l'utilisation du KN.~0d"
+    .ascii	"Si vous jouez sans utiliser l' \xab Auto Play Chord \xbb, la fonction  \xab Synchro & Break \xbb fera d\xe9buter "
+    .ascii	"la reproduction du rythme automatiquement d\xe8s que vous jouerez un accord \xe0 gauche du point de partage "
+    .ascii	"\xab Split \xbb.~0d"
+    .ascii	"Si vous utilisez l' \xab Auto Play Chord \xbb, sa fonction est diff\xe9rente suivant l'activation ou non "
+    .asciz	"de  l' \xab Auto Play Chord Memory \xbb :~0d"
+HelpTextFr14_1:
+    .ascii	"Si vous utilisez l' \xab Auto Play Chord \xbb avec \xab Memory \xbb, la fonction \xab Synchro & Break \xbb d\xe9clenchera "
+    .ascii	"automatiquement la reproduction du rythme et de l'accompagnement lorsque vous jouerez un accord "
+    .ascii	"\xe0 gauche du point de partage \xab  Split \xbb. La reproduction continuera jusqu'\xe0 ce que vous pressiez "
+    .asciz	"\xe0 nouveau \xab Synchro & Break \xbb, le bouton \xab Start/Stop \xbb ou l'un des boutons \xab Ending \xbb.~0d"
+HelpTextFr14_2:
+    .ascii	"Si vous utilisez l' \xab Auto Play Chord \xbb sans \xab Memory \xbb, la fonction \xab Synchro & Break \xbb d\xe9clenchera "
+    .ascii	"la reproduction du rythme et de l'accompagnement lorsque vous jouerez et maintiendrez un accord "
+    .ascii	"\xe0 gauche du point de partage \xab Split \xbb. Lorsque vous rel\xe2chez les touches, le rythme et l'accompagnement "
+    .asciz	"s'arr\xeatent, jusqu'\xe0 ce que les touches soient \xe0 nouveau enfonc\xe9es.~0d"
+HelpPagesFr14:
+    .long	HelpTextFr14_0 - HelpTexts
+    .long	HelpTextFr14_1 - HelpTexts
+    .long	HelpTextFr14_2 - HelpTexts
+    .long	0
+HelpTextFr15_0:
+    .ascii	"Souvent, au cours d'un concert le batteur ou l'un des instrumentistes du groupe (ou de l'orchestre) "
+    .ascii	"effectue un solo. Le KN vous aide \xe0 obtenir le m\xeame effet en fournissant 2 variations ou \xab Fill-Ins "
+    .ascii	"\xbb pour chaque variation du style. Lorsque l'un des deux \xab Fill-Ins \xbb 1 or 2 est press\xe9 au cours "
+    .asciz	"de la reproduction d'un style, un \xab fill-in \xbb est reproduit pendant une mesure, puis le style reprend.~0d"
+HelpTextFr15_1:
+    .ascii	"Si l'un des boutons \xab Fill In \xbb est press\xe9 sur le dernier temps d'une mesure, le \xab Fill In \xbb sera "
+    .ascii	"reproduit pendant toute la dur\xe9e de la mesure suivante. S'il est press\xe9 sur un autre temps de la "
+    .ascii	"mesure, il sera reproduit pendant la dur\xe9e restante de celle-ci.~0d"
+    .ascii	"Si vous pressez le bouton \xab Fill-In 2 \xbb avant le d\xe9but de la reproduction du style, un d\xe9compte "
+    .ascii	"de mesure sera reproduit. Lors de l'utilisation du \xab Sequencer \xbb, le bouton \xab Fill-In 1 \xbb poss\xe8de "
+    .asciz	"\xe9galement une autre fonction.~0d"
+HelpTextFr15_2:
+    .ascii	"Si vous arr\xeatez le s\xe9quenceur et d\xe9sirez revenir au d\xe9but de la s\xe9quence, il vous suffit de presser "
+    .asciz	"le bouton \xab Fill-In 1 \xbb.~0d"
+    .align	4, 0xff
+HelpPagesFr15:
+    .long	HelpTextFr15_0 - HelpTexts
+    .long	HelpTextFr15_1 - HelpTexts
+    .long	HelpTextFr15_2 - HelpTexts
+    .long	0
+HelpTextFr16_0:
+    .ascii	"Les boutons \xab Intro & Ending \xbb agr\xe9mentent vos interpr\xe9tations d'introductions et de finals professionnels. "
+    .ascii	"Chaque style dispose de deux introductions et de deux finals.~0d"
+    .ascii	"Effectuez la programmation de votre clavier (ou laissez le \xab One Touch Play \xbb le faire pour vous) "
+    .ascii	"et pressez l'un des boutons \xab Intro & Ending \xbb avant de jouer. Puis jouez simplement un accord avec "
+    .asciz	"votre main gauche et \xe9coutez l'introduction musicale.~0d"
+HelpTextFr16_1:
+    .ascii	"Lorsque votre interpr\xe9tation est termin\xe9e, pressez l'un des boutons \xab Intro & Ending \xbb \xe0 nouveau "
+    .ascii	"et le KN reproduit un final correspondant au style choisi. Lorsque le final est termin\xe9, le rythme "
+    .asciz	"s'arr\xeate automatiquement.~0d"
+HelpPagesFr16:
+    .long	HelpTextFr16_0 - HelpTexts
+    .long	HelpTextFr16_1 - HelpTexts
+    .long	0
+HelpTextFr17_0:
+    .ascii	"Le bouton \xab Start/Stop \xbb sert \xe0 diverses fonctions, mais son utilisation premi\xe8re est le d\xe9clenchement "
+    .ascii	"et l'arr\xeat du rythme automatique.~0d"
+    .ascii	" ~0d"
+    .ascii	"Si vous utilisez la fonction \xab Sequencer \xbb, le bouton \xab Start/Stop \xbb permet de d\xe9clencher et d'arr\xeater "
+    .ascii	"la reproduction de la s\xe9quence. Il d\xe9clenche \xe9galement l'enregistrement pour la fonction \xab Performance "
+    .asciz	"Pads \xbb, et pour le \xab Sequencer \xbb lorsque le m\xe9tronome est activ\xe9.~0d"
+    .align	4, 0xff
+HelpPagesFr17:
+    .long	HelpTextFr17_0 - HelpTexts
+    .long	0
+HelpTextFr18_0:
+    .ascii	"La molette \xab Tempo/Program \xbb sert principalement \xe0 modifier la vitesse du tempo de reproduction "
+    .ascii	"du rythme. Une rotation vers la gauche ralentit le tempo, une rotation vers la droite l'augmente.~0d"
+    .ascii	" ~0d"
+    .ascii	"Lorsque vous utilisez l'un des modes de r\xe9glage (par exemple SOUND EDIT ou COMPOSER), si l'indicateur "
+    .ascii	"situ\xe9 en haut \xe0 droite est allum\xe9, \xab Tempo/Program \xbb peut \xeatre utilis\xe9e pour modifier la valeur "
+    .asciz	"ou la fonction s\xe9lectionn\xe9e sur l'\xe9cran.~0d"
+    .align	4, 0xff
+HelpPagesFr18:
+    .long	HelpTextFr18_0 - HelpTexts
+    .long	0
+HelpTextFr19_0:
+    .ascii	"La fonction \xab Music Stylist \xbb et votre guide parmi les centaines de styles musicaux propos\xe9s par "
+    .ascii	"le KN.  Elle programme le KN pour vous. Vous disposez ainsi d'une programmation professionnelle "
+    .ascii	"instantan\xe9ment.~0d"
+    .ascii	"Il y a quatre mani\xe8res de trouver le style de musique que vous voulez jouer: par cat\xe9gorie musicale, "
+    .asciz	"par style d'orgue, par \xe9poque musicale ou en s\xe9lectionnant sur une liste alphab\xe9tique.~0d"
+HelpTextFr19_1:
+    .ascii	"\xabMusical Category\xbb regroupe les diff\xe9rents genres musicaux par cat\xe9gories. Chaque cat\xe9gorie vous "
+    .ascii	"pr\xe9sente des sous - cat\xe9gories. Chaque sous - cat\xe9gorie dispose de quatre styles diff\xe9rents, chacun "
+    .ascii	"porte un nom \xe9vocateur de son contenu. ~0d"
+    .asciz	"\xab Musical Era \xbb regroupe les styles par \xe9poque - exemple : 1970s, etc..~0d"
+HelpTextFr19_2:
+    .ascii	"L'option Style d'orgue met \xe0 votre disposition l'\xe9ventail immense de motifs et de sonorit\xe9s d'orgues "
+    .ascii	"du KN avec les registres d'orgue appropri\xe9s. ~0d"
+    .ascii	" ~0d"
+    .ascii	"Le Style d'orgue utilise des sonorit\xe9s pr\xe9-s\xe9lectionn\xe9s ainsi que des drawbars num\xe9riques et des "
+    .asciz	"tabs d'orgue pour cr\xe9er des registres d'orgue classique.~0d"
+HelpTextFr19_3:
+    .ascii	"La liste \xab Style Alphabetical \xbb est un classement par ordre alphab\xe9tique des styles. D\xe8s que vous "
+    .ascii	"aurez m\xe9moris\xe9 les noms de vos styles pr\xe9f\xe9r\xe9s ce classement vous sera tr\xe8s utile.~0d"
+    .ascii	"Vous pouvez \xe9galement s\xe9lectionner des styles \xab Custom \xbb dans lesquels vous avez enregistr\xe9 des "
+    .ascii	"\xab Composer \xbb avec des registrations, des phrases \xab Performance Pads \xbb et des sonorit\xe9s avec effets "
+    .asciz	"\xe9dit\xe9es.~0d"
+HelpPagesFr19:
+    .long	HelpTextFr19_0 - HelpTexts
+    .long	HelpTextFr19_1 - HelpTexts
+    .long	HelpTextFr19_2 - HelpTexts
+    .long	HelpTextFr19_3 - HelpTexts
+    .long	0
+HelpTextFr20_0:
+    .ascii	"Le KN dispose de la possibilit\xe9 de personnaliser l'affichage de l'\xe9cran afin d'acc\xe9der instantan\xe9ment "
+    .ascii	"aux sonorit\xe9s, aux rythmes, aux styles et aux fonctions que vous utilisez le plus souvent.~0d"
+    .ascii	"4 banques de r\xe9glages sont accessibles sur la page \xab Favorites \xbb. 9 s\xe9lections peuvent \xeatre effectu\xe9es "
+    .asciz	"pour chaque banque.~0d"
+HelpTextFr20_1:
+    .ascii	"Pour utiliser vos r\xe9glages favoris, s\xe9lectionnez la banque \xe0 l'aide du bouton situ\xe9 sous l'\xe9cran "
+    .ascii	"LCD, et pressez l'un des boutons situ\xe9s \xe0 droite ou \xe0 gauche de l'\xe9cran pour s\xe9lectionner le r\xe9glage "
+    .ascii	"que vous d\xe9sirez utiliser.~0d"
+    .ascii	"Pour effectuer votre s\xe9lection, suivez la proc\xe9dure suivante :~0d"
+    .ascii	"(1)Pressez \xab Favorite Setting \xbb sur cette page~0d"
+    .ascii	"(2)S\xe9lectionnez la \xab Bank \xbb d'enregistrement~0d"
+    .asciz	"(3)S\xe9lectionnez une cat\xe9gorie et un \xe9l\xe9ment~0d"
+HelpTextFr20_2:
+    .ascii	"(4)Tout en maintenant le bouton \xab Set \xbb, pressez l'un des boutons situ\xe9s \xe0 gauche ou \xe0 droite de "
+    .ascii	"l'\xe9cran correspondant \xe0 l'emplacement choisi.~0d"
+    .ascii	"(5)R\xe9p\xe9tez les \xe9tapes (3) et (4) pour effectuer un autre r\xe9glage, si vous le d\xe9sirez.~0d"
+    .asciz	"(6)Pressez le bouton OK pour enregistrer votre nouvelle banque.~0d"
+HelpTextFr20_3:
+    .ascii	"Le KN poss\xe8de des fonctions particuli\xe8res que vous pouvez s\xe9lectionner dans les pages \xab Favorites "
+    .ascii	"\xbb telles que : \xab Mute Keys \xbb, \xab Panic \xbb, le menu \xab Vocal Workstation \xbb, etc. Elles sont tr\xe8s utiles "
+    .ascii	"pour les animations.~0d"
+    .asciz	"Les r\xe9glages \xab Favorites \xbb peuvent \xeatre charg\xe9s et sauvegard\xe9s sur une disquette.~0d"
+    .align	4, 0xff
+HelpPagesFr20:
+    .long	HelpTextFr20_0 - HelpTexts
+    .long	HelpTextFr20_1 - HelpTexts
+    .long	HelpTextFr20_2 - HelpTexts
+    .long	HelpTextFr20_3 - HelpTexts
+    .long	0
+HelpTextFr21_0:
+    .ascii	"A l'aide des boutons \xab Transpose \xbb vous pouvez  transposer le KN dans n'importe quelle tonalit\xe9. "
+    .ascii	"~0d"
+    .ascii	"Pressez le bouton de droite pour augmenter par intervalle d'un demi-ton la hauteur de la tonalit\xe9 "
+    .ascii	"de Do \xe0 + DO (+1 octave) et le bouton de gauche pour l' abaisser de Do  \xe0 - DO (- 1 octave).~0d"
+    .asciz	"Si vous transposez en jouant, la transposition s'effectuera \xe0 partir de la note suivante.~0d"
+HelpTextFr21_1:
+    .ascii	"La transposition est toujours relative \xe0 Do Majeur. Ainsi, si vous jouez en Fa et que vous d\xe9sirez "
+    .ascii	"passer en Fa#, il vous suffit de transposer d'un demi-ton au dessus (l'affichage indiquera R\xe9 b\xe9mol-Db).~0d"
+    .asciz	"Pressez simultan\xe9ment les deux boutons pour annuler la transposition.~0d"
+    .align	4, 0xff
+HelpPagesFr21:
+    .long	HelpTextFr21_0 - HelpTexts
+    .long	HelpTextFr21_1 - HelpTexts
+    .long	0
+HelpTextFr22_0:
+    .ascii	"Les boutons \" R1/R2 Octave \" permettent de transposer de +/- 2 octaves uniquement les parties \" "
+    .ascii	"Right 1 \" et \" Right 2 \" du \" Conductor \". Pour annuler cette tranposition, il suffit de presser "
+    .asciz	"simultan\xe9ment les deux boutons.~0d"
+HelpPagesFr22:
+    .long	HelpTextFr22_0 - HelpTexts
+    .long	0
+HelpTextFr23_0:
+    .ascii	"Utilisez ces boutons pour s\xe9lectionner si les parties (RIGHT 1, RIGHT 2 ou LEFT) sont concern\xe9es "
+    .ascii	"par les boutons \xab Sound Select \xbb et \xab Effects \xbb du panneau. Lorsqu'une partie est s\xe9lectionn\xe9e, "
+    .ascii	"les voyants du panneau s'allument pour indiquer les r\xe9glages en cours. ~0d"
+    .ascii	"Cette caract\xe9ristique est pratique si vous d\xe9sirez changer la sonorit\xe9 de la partie \xab Right 2 \xbb "
+    .asciz	"tout en jouant la partie \xab Right 1 \xbb, ou changer celle de la partie \xab Left \xbb.~0d"
+HelpPagesFr23:
+    .long	HelpTextFr23_0 - HelpTexts
+    .long	0
+HelpTextFr24_0:
+    .ascii	"Le \xab CONDUCTOR \xbb est une fonction propre aux claviers Technics, qui permet facilement d'assigner "
+    .ascii	"les sonorit\xe9s au clavier. Vous pouvez disposer de deux sonorit\xe9s sur la totalit\xe9 du clavier si vous "
+    .ascii	"d\xe9sirez utiliser \xab Right 1 \xbb et \xab Right 2 \xbb simultan\xe9ment. ~0d"
+    .ascii	"Ou vous pouvez disposer de sonorit\xe9s diff\xe9rentes sur la droite et la gauche du clavier partag\xe9 (Split). "
+    .asciz	"Dans ce cas, vous pouvez jouer les parties \xab Right 1 et \xab Left \xbb simultan\xe9ment.~0d"
+    .align	4, 0xff
+HelpPagesFr24:
+    .long	HelpTextFr24_0 - HelpTexts
+    .long	0
+HelpTextFr25_0:
+    .ascii	"Le mode \xab Solo \xbb peut \xeatre activ\xe9 pour n'importe quelle partie. Le mode \xab Solo \xbb est par d\xe9finition "
+    .ascii	"monophonique. Cela signifie qu'une seule peut \xeatre reproduite \xe0 la fois.~0d"
+    .ascii	"Si vous utilisez une seule partie (par exemple Right 1) avec le mode \xab Solo \xbb activ\xe9, la sonorit\xe9 "
+    .asciz	"est reproduite par la note la plus haute.~0d"
+HelpTextFr25_1:
+    .ascii	"Lorsqu'une partie \xab Solo \xbb et une autre partie sont \xab mix\xe9es \xbb ( par exemple Right 1 \xab Solo \xbb et "
+    .ascii	"Right 2 \xab Normal \xbb), la sonorit\xe9 \xab Solo \xbb est reproduite par la note la plus haute jou\xe9e. Cela signifie "
+    .ascii	"que si vous jouez un accord, seule la note la plus haute sera reproduite avec la sonorit\xe9 \xab Solo "
+    .ascii	"\xbb.~0d"
+    .asciz	"Pour certaines sonorit\xe9s, le mode \xab Solo \xbb est activ\xe9 automatiquement.~0d"
+HelpTextFr25_2:
+    .ascii	"Dans les menus \xab Sound \xbb ou dans la section \xab Sound Load Option \xbb du menu  \xab Effect \xbb, vous pouvez "
+    .asciz	"d\xe9terminer l'activation automatique ou non du mode \xab Solo \xbb pour chaque sonorit\xe9.~0d"
+    .align	4, 0xff
+HelpPagesFr25:
+    .long	HelpTextFr25_0 - HelpTexts
+    .long	HelpTextFr25_1 - HelpTexts
+    .long	HelpTextFr25_2 - HelpTexts
+    .long	0
+HelpTextFr26_0:
+    .ascii	"Le \xab Techni-Chord \xbb ajoute des harmoniques aux notes de votre m\xe9lodie cr\xe9ant ainsi des encha\xeenement "
+    .ascii	"d'accords. Les harmoniques engendr\xe9es par le \xab Techni-Chord \xbb sont d\xe9finies par les accords jou\xe9s "
+    .ascii	"\xe0 la main gauche. Vous pouvez s\xe9lectionner l'un des 14 diff\xe9rents types d'harmonisation suivants "
+    .ascii	": ~0d"
+    .ascii	"Close, Open 1, Open 2, Duet 1, Duet 2, Country, Theatre, Hymn, Block, Big Band Brass, Big Band Reeds, "
+    .asciz	"Octave, Hard Rock et Fanfare.~0d"
+HelpTextFr26_1:
+    .ascii	"Pour changer de type de \xab Techni-Chord \xbb, pressez et maintenez simplement le bouton \xab Techni-Chord "
+    .ascii	"\xbb quelques secondes, jusqu'\xe0 ce que l'affichage de r\xe9glage apparaisse.~0d"
+    .ascii	"Le \xab Techni-Chord Orchestrator \xbb permet d'assigner le \xab Techni-Chord \xbb \xe0 une autre partie du KN. "
+    .ascii	"Ainsi, les harmoniques peuvent \xeatre reproduites avec une sonorit\xe9 diff\xe9rente de celle assign\xe9e \xe0 "
+    .asciz	"la m\xe9lodie et vous pouvez contr\xf4ler leur volume.~0d"
+    .align	4, 0xff
+HelpPagesFr26:
+    .long	HelpTextFr26_0 - HelpTexts
+    .long	HelpTextFr26_1 - HelpTexts
+    .long	0
+HelpTextFr27_0:
+    .ascii	"Le KN dispose d'un effet \xab Chorus \xbb de grande qualit\xe9 et d'un bouton d'activation d\xe9di\xe9. Ce Chorus "
+    .ascii	"ajoute de l'ampleur et de la richesse \xe0 la reproduction sonore du KN. Il additionne un l\xe9ger d\xe9phasage "
+    .ascii	"de l'accord sur la sonorit\xe9 \xe0 laquelle il est appliqu\xe9.~0d"
+    .ascii	"Pour modifier les r\xe9glages du \xab Chorus \xbb, il suffit de maintenir son bouton quelques secondes. La "
+    .asciz	"page de r\xe9glage appara\xeet alors sur l'\xe9cran.~0d"
+HelpTextFr27_1:
+    .ascii	"Chaque sonorit\xe9 dispose d'un r\xe9glage pr\xe9s\xe9lectionn\xe9 de la profondeur du \xab Chorus \xbb. Lorsque vous "
+    .ascii	"s\xe9lectionnez une sonorit\xe9, le r\xe9glage le mieux adapt\xe9 est automatiquement activ\xe9 pour chaque partie "
+    .ascii	"de celle - ci. Vous pouvez neutraliser ce r\xe9glage automatique par les menus \xab Sound \xbb et \xab Effect "
+    .asciz	"\xbb ou le \xab Sound Load Option \xbb.~0d"
+    .align	4, 0xff
+HelpPagesFr27:
+    .long	HelpTextFr27_0 - HelpTexts
+    .long	HelpTextFr27_1 - HelpTexts
+    .long	0
+HelpTextFr28_0:
+    .ascii	"Le \xab Multi Effect \xbb fonctionne comme un processeur d'effet professionnel et fournit des effets tels "
+    .ascii	"que \xab Phaser \xbb, \xab Delay \xbb et \xab Distortion \xbb. Si le \xab Multi Effect \xbb est assign\xe9 simultan\xe9ment \xe0 "
+    .ascii	"plus d'une partie, le m\xeame effet sera assign\xe9 \xe0 toutes ces parties. ~0d"
+    .ascii	"Le \xab Multi Effect \xbb fonctionne \xe9galement comme un \xab MIC EFFECT \xbb sur l'entr\xe9e du microphone. Pour "
+    .ascii	"modifier les r\xe9glages du \xabMulti Effect\xbb, il suffit de maintenir enfonc\xe9 son bouton quelques secondes "
+    .asciz	"et l'affichage de r\xe9glage appara\xeet sur l'\xe9cran.~0d"
+    .align	4, 0xff
+HelpPagesFr28:
+    .long	HelpTextFr28_0 - HelpTexts
+    .long	0
+HelpTextFr29_0:
+    .ascii	"La r\xe9verb\xe9ration num\xe9rique \xab Digital Reverb \xbb apporte une r\xe9sonance naturelle \xe0 la reproduction "
+    .ascii	"sonore du KN. Elle propose diff\xe9rentes ambiances acoustiques telles que \xab Room \xbb ou \xab Concert Hall "
+    .ascii	"\xbb.~0d"
+    .ascii	"Pour changer de r\xe9glage de \xab Digital Reverb \xbb il suffit de maintenir enfonc\xe9 le bouton \xab Digital "
+    .asciz	"Reverb \xbb quelques secondes et l'affichage de r\xe9glage de \xab Digital Reverb \xbb appara\xeet sur l'\xe9cran.~0d"
+    .align	4, 0xff
+HelpPagesFr29:
+    .long	HelpTextFr29_0 - HelpTexts
+    .long	0
+HelpTextFr30_0:
+    .ascii	"L'effet \"MIC Reverb\" ajoute un effet de r\xe9verb\xe9ration tr\xe8s naturel \xe0 votre voix. Il dispose de diff\xe9rents "
+    .ascii	"types de r\xe9glage, tels que : Stage, Bath Room ou Karaoke. Le \"MIC Effect\" permet de transformer "
+    .ascii	"votre voix avec l'adjonction d'effets tels que : Voice Changer. \"Harmony\" cet effet additionne des "
+    .ascii	"harmoniques \xe0 votre voix. Vous pouvez utiliser des s\xe9quences SMF comportant une piste d\xe9di\xe9e \xe0 ces~0d"
+    .asciz	"harmoniques. ~0d"
+HelpTextFr30_1:
+    .ascii	"Les accords de l' \"Auto Play Chord\" et du \"Techni - Chord\" peuvent \xe9galement piloter ces harmoniques.~0d"
+    .ascii	"L'effet \"MIC Reverb\" est r\xe9serv\xe9 \xe0 l'entr\xe9e micro. Le \"MIC Effect\" et le \"Multi Effect\" utilisent "
+    .ascii	"le m\xeame DSP. Vous ne pouvez donc utiliser ces effets, l'un pour la voix et l'autre pour les sonorit\xe9s, "
+    .ascii	"simultan\xe9ment.~0d"
+    .asciz	"Vous pouvez activer les effets \"MIC Reverb\" et \"MIC Effect\" individuellement sur cet affichage.~0d"
+HelpTextFr30_2:
+    .ascii	"Un programme de PC sp\xe9cial appel\xe9 \"Audio Recorder\" sur le CD-ROM fourni permet d'enregistrer la "
+    .asciz	"sortie du KN (y compris les entr\xe9es MIC et Ligne) en syst\xe8me audio num\xe9rique via USB.~0d"
+    .align	4, 0xff
+HelpPagesFr30:
+    .long	HelpTextFr30_0 - HelpTexts
+    .long	HelpTextFr30_1 - HelpTexts
+    .long	HelpTextFr30_2 - HelpTexts
+    .long	0
+HelpTextFr31_0:
+    .ascii	"Le bouton \xab Panel Memory Set \xbb sert principalement \xe0 l'enregistrement des r\xe9glages dans le \xab Panel "
+    .ascii	"Memory \xbb. ~0d"
+    .ascii	"Suivez la proc\xe9dure suivante:~0d"
+    .ascii	"(1). Effectuez vos r\xe9glages~0d"
+    .asciz	"(2). Utilisez le bouton \xab Next Bank \xbb pour s\xe9lectionner une banque du \xab Panel Memory \xbb.~0d"
+HelpTextFr31_1:
+    .ascii	"(3). Tout en maintenant le bouton \xab Set \xbb, pressez le \xab Panel Memory \xbb dans lequel vous souhaitez "
+    .ascii	"enregistrer le r\xe9glage de l'instrument~0d"
+    .ascii	"Le r\xe9glage est \xe0 pr\xe9sent enregistr\xe9 dans le \xab Panel Memory \xbb choisi.~0d"
+    .ascii	"Pour changer de mode de \xab Panel Memory \xbb, pressez et maintenez simplement le bouton \xab Panel Memory "
+    .asciz	"Set \xbb quelques secondes jusqu'\xe0 ce que l'affichage \xab Panel Memory Mode \xbb apparaisse.~0d"
+HelpTextFr31_2:
+    .ascii	"S\xe9lectionnez \xab Normal \xbb ou \xab Expand \xbb sur l'affichage. ~0d"
+    .ascii	"Les page 2 de cette fonction contiennent les r\xe9glages du filtre \xab Expand Mode Filter \xbb. Vous pouvez "
+    .ascii	"d\xe9terminer de mani\xe8re pr\xe9cise quels types de r\xe9glages doivent \xeatre rappel\xe9s par le \xab Panel Memory "
+    .ascii	"\xbb. ~0d"
+    .ascii	"Le bouton \"Set\" du \"Panel Memory\" sert \xe9galement \xe0 l'enregistrement des registration dans le \"Custom "
+    .asciz	"Panel\".~0d"
+HelpPagesFr31:
+    .long	HelpTextFr31_0 - HelpTexts
+    .long	HelpTextFr31_1 - HelpTexts
+    .long	HelpTextFr31_2 - HelpTexts
+    .long	0
+HelpTextFr32_0:
+    .ascii	"La fonction \xab Panel Memory \xbb enregistre vos programmations et les rappelle instantan\xe9ment. Vous "
+    .ascii	"disposez de 13 banques de 8 \xab Panel Memories \xbb, soit un total de 104 programmes disponibles. Pour "
+    .ascii	"plus de facilit\xe9, chaque banque et chaque \xab Panel Memory \xbb peuvent \xeatre nomm\xe9s.~0d"
+    .asciz	"La fonction \xab Panel Memory \xbb poss\xe8de 2 modes, \xab Normal \xbb et \xab Expand \xbb.~0d"
+HelpTextFr32_1:
+    .ascii	"Le mode \xab Normal \xbb rappelle les r\xe9glages de base : sonorit\xe9s, effets et balances. Le mode \xab Expand "
+    .ascii	"\xbb peut rappeler pratiquement tous les r\xe9glages du clavier, et dispose d'un filtre vous permettant "
+    .ascii	"de neutraliser certains r\xe9glages du \xab Panel Memory \xbb.~0d"
+    .ascii	"A pr\xe9sent, pressez le bouton \xab Panel Memory Set \xbb pour obtenir plus d'informations sur le r\xe9glage "
+    .asciz	"du \xab Panel Memory \xbb et la s\xe9lection des modes \xab Normal \xbb ou \xab Expand \xbb.~0d"
+    .align	4, 0xff
+HelpPagesFr32:
+    .long	HelpTextFr32_0 - HelpTexts
+    .long	HelpTextFr32_1 - HelpTexts
+    .long	0
+HelpTextFr33_0:
+    .ascii	"Le bouton \xab Next Bank \xbb permet de passer \xe0 la banque suivante de \xab Panel Memory \xbb en pressant un "
+    .ascii	"seul bouton. Le r\xe9glage de l'instrument ne changera pas jusqu'\xe0 ce que l'un des boutons \xab Panel "
+    .ascii	"Memory \xbb soit press\xe9. Ainsi, vous pouvez effectuer une recherche parmi les diff\xe9rentes banques pour "
+    .asciz	"trouver le \xab Panel Memory \xbb d\xe9sir\xe9.~0d"
+HelpPagesFr33:
+    .long	HelpTextFr33_0 - HelpTexts
+    .long	0
+HelpTextFr34_0:
+    .ascii	"Le bouton \xab Bank View \xbb permet l'affichage des noms des 3 banques \xab Panel Memory \xbb (A,B,C) sur la "
+    .ascii	"premi\xe8re page. Sur la seconde, dix autres banques \xab Panel Memory \xbb sont accessibles ; \"~0d"
+    .ascii	"Vous pouvez s\xe9lectionner une autre banque \xe0 l'aide des boutons sur l'affichage.~0d"
+    .ascii	"La page 3  \xab Bank View \xbb indique les noms de tous les \xab Panel Memories \xbb de la banque s\xe9lectionn\xe9e. "
+    .asciz	"A partir de cet affichage, vous pouvez aussi nommer les banques et les \xab Panel Memories \xbb.~0d"
+HelpPagesFr34:
+    .long	HelpTextFr34_0 - HelpTexts
+    .long	0
+HelpTextFr35_0:
+    .ascii	"Un \xab Custom Panel \xbb est un programme utilisateur dans lequel vous pouvez m\xe9moriser vos r\xe9glages "
+    .ascii	"favoris du panneau de contr\xf4le.~0d"
+    .ascii	"Vous pouvez l'utiliser comme r\xe9glage par d\xe9faut \xe0 la place du r\xe9glage d'usine, ou comme r\xe9glage "
+    .ascii	"de base apr\xe8s une programmation par  les fonctions \xab One Touch Play \xbb, \xab Music Stylist \xbb ou \xab Panel "
+    .ascii	"Memory \xbb.~0d"
+    .asciz	"Une fois enregistr\xe9, ce r\xe9glage reste m\xe9moris\xe9 jusqu'\xe0 ce qu'il soit remplac\xe9.~0d"
+HelpTextFr35_1:
+    .ascii	"M\xeame une r\xe9 - initialisation de l'instrument ne peut l'affecter.~0d"
+    .ascii	"Voici comment enregistrer un r\xe9glage du panneau :~0d"
+    .ascii	"(1) Effectuez votre registration~0d"
+    .ascii	"(2) Pressez et maintenez le bouton set tout en pressant le bouton \xab Custom Panel \xbb~0d"
+    .asciz	"Vous pouvez s\xe9lectionner le chargement de tous les r\xe9glages du panneau ou le chargement des param\xe8tres.~0d"
+    .align	4, 0xff
+HelpPagesFr35:
+    .long	HelpTextFr35_0 - HelpTexts
+    .long	HelpTextFr35_1 - HelpTexts
+    .long	0
+HelpTextFr36_0:
+    .ascii	"Le bouton \xab Sequencer Play \xbb active l'affichage \xab Sequencer Play \xbb. Celui-ci pr\xe9sente les 16 pistes "
+    .ascii	"du s\xe9quenceur et le statut de chacune d'entre-elles. Si vous chargez une s\xe9quence \xe0 partir d'une "
+    .ascii	"disquette, le bouton  Sequencer Play est activ\xe9 automatiquement. Pressez simplement le bouton \xab "
+    .asciz	"Start/Stop \xbbet la s\xe9quence est aussit\xf4t reproduite.~0d"
+HelpTextFr36_1:
+    .ascii	"Vous pouvez aussi s\xe9lectionner l'une des 10 s\xe9quences internes dont vous d\xe9sirez la reproduction "
+    .ascii	", et \xe9galement obtenir la reproduction encha\xeen\xe9e \xab Medley \xbb de toutes les s\xe9quences.~0d"
+    .ascii	"Le \xab Mixer \xbb est accessible \xe0 partir de la page \xab Sequencer Play \xbb. Lorsque l'on y acc\xe8de \xe0 partir "
+    .ascii	"du \xab Sequencer \xbb, le \xab Mixer \xbb fonctionne pour chaque piste, plut\xf4t que pour des parties sp\xe9cifiques.~0d"
+    .ascii	"Ainsi, vous n'avez pas besoin de conna\xeetre quelle partie est assign\xe9e \xe0 quelle piste pour effectuer "
+    .asciz	"ces r\xe9glages.~0d"
+HelpTextFr36_2:
+    .ascii	"Si vous pressez le bouton \xab Exit \xbb, le bouton \xab Sequencer Play \xbb reste en fonction. Vous pouvez "
+    .ascii	"ainsi utiliser d'autres fonctions pendant la reproduction de la s\xe9quence (ex : s\xe9lectionner d'autres "
+    .asciz	"sonorit\xe9s). Pour d\xe9sactiver \xab Sequencer Play \xbb pressez \xe0 nouveau le bouton correspondant.~0d"
+HelpTextFr36_3:
+    .ascii	"Vous pouvez inclure des images num\xe9riques dans vos morceaux, ces images changent automatiquement "
+    .ascii	"avec la musique, de la m\xeame fa\xe7on que dans les morceaux de d\xe9monstration. Pour plus de d\xe9tails concernant "
+    .asciz	"cette fonction \"Slide Show\", s\xe9lectionnez maintenant le menu Sequencer dans les menus Programmes.~0d"
+    .align	4, 0xff
+HelpPagesFr36:
+    .long	HelpTextFr36_0 - HelpTexts
+    .long	HelpTextFr36_1 - HelpTexts
+    .long	HelpTextFr36_2 - HelpTexts
+    .long	HelpTextFr36_3 - HelpTexts
+    .long	0
+HelpTextFr37_0:
+    .ascii	"L' \xab EASY RECORD \xbb est une fonction permettant l'enregistrement simple et direct de votre interpr\xe9tation "
+    .ascii	"par le KN. Si vous d\xe9sirez enregistrer votre interpr\xe9tation enti\xe8rement , en incluant la m\xe9lodie "
+    .ascii	"et les accords (avec l' \xab Auto Play Chord \xbb), effectuez les r\xe9glages du KN, pressez \xab Easy Record "
+    .asciz	"\xbb puis OK sur l'affichage.~0d"
+HelpTextFr37_1:
+    .ascii	"Cette fonction permet de passer outre tous les r\xe9glages complets du s\xe9quenceur et d'effectuer rapidement "
+    .ascii	"et facilement un enregistrement.~0d"
+    .ascii	"Vous pouvez s\xe9lectionner sur l'affichage \xab Easy Record \xbb, l'une des 10 m\xe9moires de s\xe9quences internes "
+    .ascii	"pour effectuer votre enregistrement.~0d"
+    .asciz	"Vous pouvez \xe9galement donner un nom \xe0 votre s\xe9quence avant ou apr\xe8s son enregistrement.~0d"
+    .align	4, 0xff
+HelpPagesFr37:
+    .long	HelpTextFr37_0 - HelpTexts
+    .long	HelpTextFr37_1 - HelpTexts
+    .long	0
+HelpTextFr39_0:
+    .ascii	"Plusieurs fonctions disponibles dans le menu d'\xe9dition des sonorit\xe9s vous permettent d'\xe9diter les "
+    .ascii	"sonorit\xe9s du KN d'une mani\xe8re tr\xe8s d\xe9taill\xe9e et de disposer d'une v\xe9ritable console de mixage. Vous "
+    .ascii	"pouvez r\xe9gler certains param\xe8tres tels que le volume, le panoramique et les niveaux d'effets pour "
+    .asciz	"chaque partie.~0d"
+HelpTextFr39_1:
+    .ascii	"Chaque sonorit\xe9 du KN dispose d'un r\xe9glage d'effet DSP pr\xe9s\xe9lectionn\xe9 : amplitude du Chorus, r\xe9glage "
+    .ascii	"on /off du mode \"Solo\", r\xe9glage du \"Portamento\", etc. Il vous suffit de s\xe9lectionner une sonorit\xe9 "
+    .asciz	"et l'effet le mieux adapt\xe9 est automatiquement activ\xe9.~0d"
+HelpTextFr39_2:
+    .ascii	"R\xe9glage du moniteur et R\xe9glage de sortie s\xe9par\xe9e sont des fonctions utiles pour l'utilisation sur "
+    .ascii	"sc\xe8ne ou pour l'enregistrement. Le R\xe9glage du moniteur vous permet de couper les haut-parleurs du "
+    .ascii	"KN si vous le d\xe9sirez. Par mesure de s\xe9curit\xe9, les haut-parleurs sont mis en circuit lorsque vous "
+    .asciz	"mettez l'appareil sous tension.~0d"
+HelpTextFr39_3:
+    .ascii	"Vous pouvez sortir la (les) partie(s) d\xe9sir\xe9e(s) par les bornes 2 SUB OUT, et s\xe9lectionner le mode "
+    .ascii	"de sortie, l'assignation de partie, la mise en/hors circuit de la sortie principale OUT, ou la mise "
+    .ascii	"en/hors circuit de l'effet d'expression dans la page de r\xe9glage de sortie s\xe9par\xe9e.~0d"
+    .ascii	" ~0d"
+    .asciz	"Le \"Sound Load Option\" vous permet d'\xe9liminer certains r\xe9glages.~0d"
+HelpTextFr39_4:
+    .ascii	"Le r\xe9glage R\xe9verb\xe9ration APC vous permet d'annuler le niveau de r\xe9verb\xe9ration appliqu\xe9 aux parties "
+    .ascii	"APC selon les rythmes par d\xe9faut, et de r\xe9gler le niveau de r\xe9verb\xe9ration pour chaque partie APC.~0d"
+    .ascii	" ~0d"
+    .asciz	"L'accord g\xe9n\xe9ral et le temp\xe9rament sont accessibles par le menu \"Sound\".~0d"
+HelpTextFr39_5:
+    .ascii	"Pour plus d'information sur la fonction \"Techni-Chord\", pressez le bouton correspondant sur le panneau "
+    .asciz	"de contr\xf4le.~0d"
+    .align	4, 0xff
+HelpPagesFr39:
+    .long	HelpTextFr39_0 - HelpTexts
+    .long	HelpTextFr39_1 - HelpTexts
+    .long	HelpTextFr39_2 - HelpTexts
+    .long	HelpTextFr39_3 - HelpTexts
+    .long	HelpTextFr39_4 - HelpTexts
+    .long	HelpTextFr39_5 - HelpTexts
+    .long	0
+HelpTextFr40_0:
+    .ascii	"Le KN dispose de 10 effets DSP : 5 DSP pour les sonorit\xe9s, \xab Reverb \xbb, \xab Chorus \xbb, \xab Multi / MIC "
+    .ascii	"Effect \xbb, \xab MIC REVERB \xbb et \xab Total Equalizer \xbb.~0d"
+    .ascii	"Le KN dispose d'un grand nombre d'effets pr\xe9s\xe9lectionn\xe9s. Il est facile de trouver l'effet dont "
+    .ascii	"vous avez besoin, et si vous le d\xe9sirez, de l'\xe9diter. Vous pourrez alors enregistrer votre effets "
+    .asciz	"personnalis\xe9 dans l'une des m\xe9moires r\xe9serv\xe9es \xe0 cette fonction.~0d"
+HelpTextFr40_1:
+    .ascii	"L' \xab Equalizer \xbb - \xe9galiseur, est un outil de contr\xf4le sur la reproduction sonore globale du KN. "
+    .ascii	"Il vous permet de l'adapter \xe0 vos besoins. ~0d"
+    .ascii	"Chaque sonorit\xe9 du KN dispose d'un r\xe9glage personnalis\xe9 du \xab Sound DSP \xbb, de l'amplitude du \xab Chorus "
+    .ascii	"\xbb, de l'activation du \xab Solo \xbb, etc..~0d"
+    .ascii	"Il vous suffit de s\xe9lectionner une sonorit\xe9 et le r\xe9glage le mieux adapt\xe9 est s\xe9lectionn\xe9 automatiquement. "
+    .asciz	"~0d"
+HelpTextFr40_2:
+    .ascii	"La fonction \xab Sound Load Option \xbb vous permet d'annuler certains r\xe9glages pr\xe9s\xe9lectionn\xe9s.~0d"
+    .ascii	" ~0d"
+    .ascii	"Vous pouvez modifier l'assignation du \xab Sound DSP \xbb affect\xe9 aux sonorit\xe9s, et aux parties de l'APC "
+    .asciz	"pour utiliser avec d'autres parties du s\xe9quenceur.~0d"
+HelpTextFr40_3:
+    .ascii	"R\xe9glages pour les autres fonctions telles que \xab Sound DSP \xbb, \xab Reverb \xbb , \xab Chorus \xbb, \xab Multi \xbb, "
+    .ascii	"\xab MIC Effect \xbb et \xab MIC Reverb \xbb.~0d"
+    .ascii	"Pour obtenir une information sur sur ces fonctions, pressez \xe0 pr\xe9sent le bouton du panneau de contr\xf4le "
+    .asciz	"correspondant.~0d"
+    .align	4, 0xff
+HelpPagesFr40:
+    .long	HelpTextFr40_0 - HelpTexts
+    .long	HelpTextFr40_1 - HelpTexts
+    .long	HelpTextFr40_2 - HelpTexts
+    .long	HelpTextFr40_3 - HelpTexts
+    .long	0
+HelpTextFr41_0:
+    .ascii	"La principale fonction du menu \"Control\" est l'initialisation qui ram\xe9ne tous les r\xe9glages de l'instrument "
+    .ascii	"\xe0 leurs pr\xe9s\xe9lections d'usine. Vous pouvez d\xe9terminer si l'initialisation doit \xeatre totale ( par "
+    .ascii	"exemple : toutes les fonctions programmables) ou sp\xe9cifique \xe0 certaines fonctions. Les r\xe9glages "
+    .ascii	"utilisateur MIDI, la s\xe9lection de langue, les \"Rhythm Customs\" ,etc. ne sont pas concern\xe9s par cette~0d"
+    .asciz	"initialisation.~0d"
+HelpTextFr41_1:
+    .ascii	"Le menu \"Control\" contient des fonctions relatives au contr\xf4le g\xe9n\xe9ral du KN, telle que la r\xe9ponse "
+    .ascii	"du clavier et les assignations de l'interrupteur au pied.~0d"
+    .ascii	"Vous pouvez \xe9galement d\xe9terminer la dur\xe9e de l'affichage des message sur l'\xe9cran, et s\xe9lectionner "
+    .ascii	"pour certains d'entre eux l'activation du maintient \"Display hold\". Ceci est particuli\xe8rement pratique "
+    .asciz	"pour conserver l'affichage des groupes de sonorit\xe9s et de rythmes.~0d"
+HelpTextFr41_2:
+    .ascii	"Le menu \"Control\" comporte aussi les r\xe9glages d'autres fonctions, telles que : Fade In/Out, Music "
+    .asciz	"Style Arranger et Panel Memory.~0d"
+    .align	4, 0xff
+HelpPagesFr41:
+    .long	HelpTextFr41_0 - HelpTexts
+    .long	HelpTextFr41_1 - HelpTexts
+    .long	HelpTextFr41_2 - HelpTexts
+    .long	0
+HelpTextFr42_0:
+    .ascii	"MIDI signifie \"Musical Instrument Digital Interface\". Ce standard permet de connecter diff\xe9rents "
+    .ascii	"types d'instruments de musique entre eux pour diverses utilisations. Par exemple, vous pouvez utiliser "
+    .ascii	"simultan\xe9ment les sonorit\xe9s de 2 instruments ou connecter un ordinateur \xe0 votre clavier. ~0d"
+    .asciz	"Le MIDI peut \xeatre utilis\xe9 de diff\xe9rentes mani\xe8res et beaucoup de param\xe8tres peuvent \xeatre modifi\xe9s!~0d"
+HelpTextFr42_1:
+    .ascii	"Le menu MIDI comporte tous les fonctions vous permettant de configurer le KN suivant votre utilisation "
+    .ascii	"personnelle.~0d"
+    .ascii	"La mani\xe8re la plus facile d'effectuer ces r\xe9glages est de s\xe9lectionner l'une des pr\xe9s\xe9lections MIDI "
+    .ascii	"qui comprennent d\xe9j\xe0 de nombreuses configurations.~0d"
+    .ascii	"Il vous suffit de valider celle correspondant \xe0 votre utilisation, de presser OK, et tous les r\xe9glages "
+    .asciz	"sont automatiquement effectu\xe9s.~0d"
+HelpTextFr42_2:
+    .ascii	"Vous pouvez \xe9galement enregistrer vos propres r\xe9glages dans les m\xe9moires \"User MIDI\". Ils resteront "
+    .ascii	"m\xe9moris\xe9s de mani\xe8re permanente (jusqu'\xe0 ce qu'ils soient remplac\xe9s).~0d"
+    .ascii	"Le KN est compatible avec les standards \"General MIDI\" niveau 1 et 2. Cela signifie qu'il est compatibles "
+    .asciz	"avec les softwares enregistr\xe9s sous ces formats, tels les s\xe9quences \"Standard MIDI File\".~0d"
+HelpTextFr42_3:
+    .ascii	"Le KN dispose d'une interface pour ordinateur. Elle lui permet d'\xeatre directement connect\xe9 au port "
+    .ascii	"USB de celui - ci.~0d"
+    .ascii	"Lorsque vous effectuez la connection \xe0 un PC, installez tout d'abord le pilote USB inclus dans le "
+    .asciz	"CD-ROM fourni sur le PC.~0d"
+HelpPagesFr42:
+    .long	HelpTextFr42_0 - HelpTexts
+    .long	HelpTextFr42_1 - HelpTexts
+    .long	HelpTextFr42_2 - HelpTexts
+    .long	HelpTextFr42_3 - HelpTexts
+    .long	0
+HelpTextFr43_0:
+    .ascii	"Le menu \xab Customize \xbb vous permet de personnaliser votre KN suivant votre propre utilisation.~0d"
+    .ascii	"La personnalisation du KN vous permet comporte deux types de fonction :~0d"
+    .ascii	"(1) L'enregistrement de vos r\xe9glages pr\xe9f\xe9r\xe9s pour qu'ils restent en place m\xeame apr\xe8s la coupure "
+    .ascii	"de l'alimentation de votre KN. Vous pouvez inclure dans cet enregistrement une image pour agr\xe9menter "
+    .asciz	"votre \xe9cran !~0d"
+HelpTextFr43_1:
+    .ascii	"(2) Cr\xe9er des raccourcis pour acc\xe9der plus rapidement \xe0 la sonorit\xe9, au rythme, aux styles et aux "
+    .ascii	"fonctions que vous utilisez le plus souvent.~0d"
+    .ascii	"Vous pouvez personnaliser la page d'accueil, le fond d'\xe9cran, la langue utilis\xe9e pour l'aide et "
+    .ascii	"les messages d'alerte, le mode de fonctionnement du lecteur et les options de r\xe9glage de chargement "
+    .ascii	"MIDI. Tous ces r\xe9glages restent en m\xe9moire dans votre KN, m\xeame si vous ne le mettez pas sous tension "
+    .asciz	"un long moment.~0d"
+HelpTextFr43_2:
+    .ascii	"Le r\xe9glage du mode de sortie vid\xe9o vous permet de r\xe9gler le mode de sortie (PAL / NTSC) pour la "
+    .ascii	"borne VIDEO OUT lorsque l'\xe9cran du KN appara\xeet, SLIDE SHOWS ou Paroles sur un moniteur vid\xe9o externe "
+    .asciz	"ou un t\xe9l\xe9viseur.~0d"
+HelpTextFr43_3:
+    .ascii	"La protection des donn\xe9es vous permet de d\xe9terminer quels types r\xe9glages vous d\xe9sirez conserver "
+    .ascii	"non modifi\xe9s lorsque vous utilisez les fonctions \xab Music Stylist \xbb, \xab MSA \xbb, \xab One Touch Play \xbb "
+    .ascii	"et \xab Disk Load \xbb.~0d"
+    .ascii	"Les r\xe9glages de la page d'accueil et de la fonction \xab Favorites \xbb peuvent \xeatre sauvegard\xe9s ou charg\xe9s "
+    .asciz	"\xe0 partir d'une disquette.~0d"
+    .align	4, 0xff
+HelpPagesFr43:
+    .long	HelpTextFr43_0 - HelpTexts
+    .long	HelpTextFr43_1 - HelpTexts
+    .long	HelpTextFr43_2 - HelpTexts
+    .long	HelpTextFr43_3 - HelpTexts
+    .long	0
+HelpTextFr44_0:
+    .ascii	"La fonction \xab Sound Edit \xbb propose un ensemble complet de param\xe8tres d'\xe9ditions sonores similaires "
+    .ascii	"\xe0 celles d'un synth\xe9tiseur professionnel  permettant ainsi l'\xe9dition des sonorit\xe9s pr\xe9s\xe9lectionn\xe9es "
+    .ascii	"et leur enregistrement dans les m\xe9moires \xab Sound Group Memories \xbb. ~0d"
+    .ascii	" ~0d"
+    .ascii	"La fonction \xab Easy Edit \xbb propose une \xe9dition simplifi\xe9e des principaux param\xe8tres sur une seule "
+    .asciz	"page.~0d"
+    .align	4, 0xff
+HelpPagesFr44:
+    .long	HelpTextFr44_0 - HelpTexts
+    .long	0
+HelpTextFr45_0:
+    .ascii	"Le menu \" Sequencer\" vous donne acc\xe8s \xe0 des fonctions identiques \xe0 celles d'un logiciel d'enregistrement "
+    .ascii	"pour ordinateur.  La page principale du menu du s\xe9quenceur comporte trois options : Record & Edit, "
+    .ascii	"Copy & Paste et Range Edit. ~0d"
+    .asciz	"Cette page principale comporte \xe9galement une fonction fort utile appel\xe9e \x93Panel Write\x94. ~0d"
+HelpTextFr45_1:
+    .ascii	"Si vous d\xe9sirez changer les s\xe9lections de sonorit\xe9s et les r\xe9glages enregistr\xe8s au d\xe9but d'une s\xe9quence, "
+    .ascii	"il vous suffit d'effectuer vos modifications et de de presser \"Panel Write\".~0d"
+    .ascii	" ~0d"
+    .ascii	"Vos nouveaux r\xe9glages sont alors enregistr\xe9s au d\xe9but de la s\xe9quence.~0d"
+    .asciz	"La synchronisation SD Audio vous permet de d\xe9marrer un morceau de s\xe9quencer avec un morceau SD Audio.~0d"
+HelpTextFr45_2:
+    .ascii	"Le menu \"Record & Edit\" comporte des fonctions destin\xe9es \xe0 l'enregistrement telles que \"Realtime\", "
+    .ascii	"\"Step\" et \"Punch Record\". D'autres fonctions sont tr\xe8s pratiques pour modifier un enregistrement "
+    .ascii	": Note Edit, Drum Edit and Quantize.~0d"
+    .ascii	" ~0d"
+    .ascii	"Des fonctions telles que \"Track Assign\" et \"After Touch Setting\" permettent d'effetuer les r\xe9glages "
+    .asciz	"du s\xe9quenceur.~0d"
+HelpTextFr45_3:
+    .ascii	"Vous pouvez cr\xe9er un diaporama multi-m\xe9dia synchronis\xe9 avec un morceau de s\xe9quencer. Etablissez "
+    .ascii	"les points de rep\xe9rage (PIC) dans la piste de contr\xf4le du morceau dans la mesure o\xf9 vous voulez "
+    .ascii	"faire appara\xeetre les images de la phototh\xe8que interne du KN ou vos propres images (par exemple des "
+    .asciz	"images prises avec un appareil photo SD).~0d"
+HelpTextFr45_4:
+    .ascii	"Le menu \"Copy & Paste\" comporte des fonctions qui vous permettent de copier et de r\xe9p\xe9ter des parties "
+    .ascii	"d'une s\xe9quence (ex : couplet, refrain) pour effectuer plus rapidement un enregistrement. ~0d"
+    .ascii	" ~0d"
+    .ascii	"Vous pouvez \xe9galement ins\xe9rer, supprimer ou effacer des mesures. Ce menu comporte aussi une nouvelle "
+    .asciz	"fonction de conversion appel\xe9e \"APC to SMF\".~0d"
+HelpTextFr45_5:
+    .ascii	"Elle permet de convertir les donn\xe9es de l' \"APC\" en notes enregistr\xe9es en multipiste sur des pistes "
+    .ascii	"distinctes correspondant aux parties de l' \"APC\".~0d"
+    .ascii	"Le menu \"Range Edit\" comporte des fonctions pour \xe9diter de mani\xe8re d\xe9taill\xe9e de petites section "
+    .asciz	"d'une s\xe9quence : Quantize, Transpose, Note Change, Velocity Change and Advance/Delay.~0d"
+    .align	4, 0xff
+HelpPagesFr45:
+    .long	HelpTextFr45_0 - HelpTexts
+    .long	HelpTextFr45_1 - HelpTexts
+    .long	HelpTextFr45_2 - HelpTexts
+    .long	HelpTextFr45_3 - HelpTexts
+    .long	HelpTextFr45_4 - HelpTexts
+    .long	HelpTextFr45_5 - HelpTexts
+    .long	0
+HelpTextFr46_0:
+    .ascii	"Le \xab Composer \xbb permet de cr\xe9er des styles d'accompagnement ou d'en charger de nouveaux \xe0 partir "
+    .ascii	"d'une disquette. Le menu \xab Composer\xbb dispose de toutes les fonctions vous permettant de cr\xe9er vos "
+    .asciz	"propres styles \xab Composer \xbb, ou de copier et d'\xe9diter les styles pr\xe9s\xe9lectionn\xe9s.~0d"
+HelpTextFr46_1:
+    .ascii	"Le menu \xab Composer \xbb comprend \xe9galement une fonction \xab Easy Composer \xbb qui permet de cr\xe9er de nouveaux "
+    .ascii	"styles \xab Composer \xbb en associant des motifs pr\xe9s\xe9lectionn\xe9s, et la fonction de copie de vos propres "
+    .asciz	"styles \xab Composer \xbb dans le \xab Custom Rhythm Group \xbb en tant que donn\xe9es de \xab STYLE \xbb.~0d"
+HelpTextFr46_2:
+    .ascii	"Cette fonction est particuli\xe8rement utile si vous d\xe9sirez enregistrer de nouveaux styles- avec rythme, "
+    .ascii	"registration et programmation des \xab User Pads \xbb, des sonorit\xe9s et des effets que vous avez cr\xe9\xe9s "
+    .ascii	"ou charg\xe9s \xe0 partir d'un disquette - de mani\xe8re permanente dans la section \xab Custom \xbb du \xab Music "
+    .asciz	"Stylist \xbb.~0d"
+    .align	4, 0xff
+HelpPagesFr46:
+    .long	HelpTextFr46_0 - HelpTexts
+    .long	HelpTextFr46_1 - HelpTexts
+    .long	HelpTextFr46_2 - HelpTexts
+    .long	0
+HelpTextFr47_0:
+    .ascii	"Le menu \"Performance Pads\" comporte l'enregistrement de phrase pour chacune des 3 banques / utilisateur "
+    .ascii	"(A/B/C), dans lesquelles vous pouvez enregistrer vos propres phrases en temps r\xe9el ou en pas \xe0 pas.~0d"
+    .ascii	"Vous pouvez \xe9galement d\xe9terminer le fonctionnement de chaque \xab Pad \xbb des banques utilisateur \xab User "
+    .asciz	"Bank \xbb dans le menu secondaire \xab Play Setting \xbb.~0d"
+HelpTextFr47_1:
+    .ascii	"START: La reproduction de la phrase est synchronis\xe9e au rythme.~0d"
+    .ascii	"LOOP: La reproduction de la phrase s'effectue en boucle.~0d"
+    .ascii	"Le sous menu  \xab Performance Pads \xbb dispose \xe9galement d'une fonction permettant de nommer les banques "
+    .ascii	"\xab User Banks \xbb et chaque \xab Pad \xbb.~0d"
+    .ascii	"Les banques \xab Compiles \xbb vous permettent de regrouper vos phrases favorites \xe0 partir de plusieurs "
+    .asciz	"banques.~0d"
+HelpTextFr47_2:
+    .ascii	"La fonction \xab Phrase Copy \xbb vous permet de copier une phrase d'un \xab Pad \xbb\xe0 l'autre~0d"
+    .ascii	"La fonction \xab Seq to Pad \xbb permet d'extraire des phrases ou des encha\xeenements d'accords \xe0 partir "
+    .asciz	"d'une s\xe9quence.~0d"
+    .align	4, 0xff
+HelpPagesFr47:
+    .long	HelpTextFr47_0 - HelpTexts
+    .long	HelpTextFr47_1 - HelpTexts
+    .long	HelpTextFr47_2 - HelpTexts
+    .long	0
+HelpTextFr48_0:
+    .ascii	"Le menu \xab Disk \xbb comporte tout ce dont vous avez besoin pour effectuer des chargements ou des sauvegardes "
+    .ascii	"sur disquette. En ins\xe9rant simplement une disquette dans le lecteur, le KN s\xe9lectionne automatiquement "
+    .ascii	"le menu \xab Disk \xbb.~0d"
+    .ascii	"Le  KN peut utiliser une grande vari\xe9t\xe9 de software issus de la \xab Technics Music Disk Collection "
+    .ascii	"\xbb et de diverses origines telles que les \xab Standard MIDI File \xbb, \xab\xe0Disk Orchestra \xbb ou \xab PianoDisc "
+    .asciz	"\xbb.~0d"
+HelpTextFr48_1:
+    .ascii	"Les \xab Standard MIDI Files \xbb peuvent \xeatre charg\xe9s dans la m\xe9moire du s\xe9quenceur ou reproduits en "
+    .ascii	"lecture directe sur la disquette. Les \xab Disk Orchestra \xbb \xab Piano Disk \xbb sont reproduits en lecture "
+    .ascii	"directe sur la disquette.~0d"
+    .ascii	"Vous pouvez obtenir une reproduction encha\xeen\xe9e des s\xe9quences et si une s\xe9quence \xab Standard MIDI "
+    .ascii	"File \xbb comporte des paroles ou \xab lyrics \xbb, celles-ci d\xe9fileront sur l'\xe9cran du  KN pendant la reproduction "
+    .asciz	"de la s\xe9quence.~0d"
+HelpTextFr48_2:
+    .ascii	"Le KN peut \xe9galement charger et sauvegarder des styles \xab Custom \xbb.~0d"
+    .ascii	" ~0d"
+    .ascii	"Vous pouvez sauvegarder et restaurer les donn\xe9es d'interpr\xe9tation interne du KN sur votre ordinateur "
+    .ascii	"via USB, en utilisant un programme de PC sp\xe9cial appel\xe9 \"Song Manager\" inclus dans le CD-ROM fourni. "
+    .ascii	"Vous pouvez ainsi utiliser le disque dur de votre ordinateur comme support de stockage des donn\xe9es "
+    .asciz	"pour le KN.~0d"
+HelpTextFr48_3:
+    .ascii	"Vous pouvez aussi envoyer des donn\xe9es telles que des morceaux ou des motifs de compositeur t\xe9l\xe9charg\xe9s "
+    .ascii	"directement de l'Internet au KN via USB en utilisant le programme Gestionnaire de morceaux. ~0d"
+    .ascii	" ~0d"
+    .ascii	"Le KN peut utiliser le software de \xab styles \xbb de plusieurs autres constructeurs gr\xe2ce \xe0 son programme "
+    .asciz	"de conversion \xab Style Convert \xbb. Reportez-vous au mode d'emploi pour plus de d\xe9tails \xe0 ce sujet.~0d"
+    .align	4, 0xff
+HelpPagesFr48:
+    .long	HelpTextFr48_0 - HelpTexts
+    .long	HelpTextFr48_1 - HelpTexts
+    .long	HelpTextFr48_2 - HelpTexts
+    .long	HelpTextFr48_3 - HelpTexts
+    .long	0
+HelpTextFr49_0:
+    .ascii	"Pour s\xe9lectionner l'un des 220 rythmes pr\xe9s\xe9lectionn\xe9s du KN, ou l'un des 20 rythmes \xab Custom \xbb, "
+    .ascii	"utilisez les boutons \xab Rhythm Group \xbb. Ils sont regroup\xe9s en 15 cat\xe9gories. Chacune est accessible "
+    .ascii	"en pressant le bouton \xab Rhythm Group \xbb correspondant.~0d"
+    .ascii	"Jusqu'\xe0 10 rythmes ou plus sont disponibles dans chaque \xab Rhythm Group \xbb. Apr\xe8s avoir s\xe9lectionn\xe9 "
+    .asciz	"un \xab Rhythm Group \xbb, pressez l'un des boutons situ\xe9s \xe0 gauche ou \xe0 droite pour choisir un rythme.~0d"
+HelpTextFr49_1:
+    .ascii	"L'\xe9cran peut afficher 10 rythmes sur une seule page. Si plus de dix rythmes sont disponibles, l'indication "
+    .ascii	"PAGE 1 / 3 appara\xeet en haut \xe0 droite de l'\xe9cran. Pour obtenir la page suivante, pressez les boutons "
+    .ascii	"\xab Page Up/Down \xbb.~0d"
+    .ascii	" ~0d"
+    .ascii	"Le groupe \xab Custom Rhythm \xbb est un groupe sp\xe9cial dans lequel vous pouvez enregistrer vos styles "
+    .asciz	"favoris (incluant la registration).~0d"
+HelpTextFr49_2:
+    .ascii	"Ils peuvent \xeatre des rythmes et des styles que vous avez uniquement modifi\xe9s, que vous avez compl\xe8tement "
+    .ascii	"cr\xe9\xe9s ou encore charg\xe9s \xe0 partir d'une disquette \xab Technics Music Disk Collection \xbb. ~0d"
+    .ascii	"Une fois que des styles ont \xe9t\xe9 enregistr\xe9s dans la section \xab Custom stylist \xbb, ils restent m\xe9moris\xe9s "
+    .asciz	"jusqu'\xe0 ce qu'ils soient remplac\xe9s par un autre style. M\xeame une initialisation ne peut les effacer.~0d"
+HelpPagesFr49:
+    .long	HelpTextFr49_0 - HelpTexts
+    .long	HelpTextFr49_1 - HelpTexts
+    .long	HelpTextFr49_2 - HelpTexts
+    .long	0
+HelpTextFr50_0:
+    .ascii	"Le \xab Composer \xbb permet de cr\xe9er des styles d'accompagnement ou d'en charger de nouveaux \xe0 partir "
+    .ascii	"d'une disquette. ~0d"
+    .ascii	"Le bouton \xab Composer Memory \xbb permet de s\xe9lectionner le motif de \xab Composer \xbb que vous d\xe9sirez utiliser. "
+    .asciz	"Sur la gauche de l'\xe9cran, trois banques de \xab Composer \xbb (A, B et C) sont accessibles.~0d"
+HelpTextFr50_1:
+    .ascii	"Si vous maintenez le bouton \xab Memory \xbb alors qu'une disquette est pr\xe9sente dans le lecteur, l'affichage "
+    .ascii	"\xab Disk Load \xbb appara\xeet automatiquement pour vous permettre de charger un \xab Composer \xbb \xe0 partir de "
+    .asciz	"celle - ci.~0d"
+HelpPagesFr50:
+    .long	HelpTextFr50_0 - HelpTexts
+    .long	HelpTextFr50_1 - HelpTexts
+    .long	0
+HelpTextFr51_0:
+    .ascii	"Le \xab Sound Arranger \xbb permet de choisir les instruments utilis\xe9s par l'accompagnement automatique.~0d"
+    .ascii	"Suivez cette proc\xe9dure pour cr\xe9er votre propre variation d'un accompagnement automatique :~0d"
+    .ascii	"(1) S\xe9lectionnez un rythme. ~0d"
+    .ascii	"(2) Pressez le bouton \xab Sound Arranger SET \xbb.~0d"
+    .asciz	"(3) S\xe9lectionnez une partie de l'APC sur l'\xe9cran LCD.~0d"
+HelpTextFr51_1:
+    .ascii	"(4) A l'aide des boutons \xab Sound Select \xbb s\xe9lectionnez une autre sonorit\xe9. (avec un effet num\xe9rique "
+    .ascii	"si vous le d\xe9sirez)~0d"
+    .ascii	"(5) Si vous le d\xe9sirez, r\xe9p\xe9tez ces manipulations pour les autres parties.~0d"
+    .ascii	"(6) Pour terminer cette proc\xe9dure, pressez \xe0 nouveau le bouton SET.~0d"
+    .ascii	" ~0d"
+    .asciz	"Pour r\xe9tablir les r\xe9glages d'usine, d\xe9sactivez le \xab Sound Arranger \xbb.~0d"
+HelpPagesFr51:
+    .long	HelpTextFr51_0 - HelpTexts
+    .long	HelpTextFr51_1 - HelpTexts
+    .long	0
+HelpTextFr52_0:
+    .ascii	"Le \xab Sound Arranger \xbb permet de choisir les instruments utilis\xe9s par l'accompagnement automatique. "
+    .ascii	"Certains changements de pr\xe9s\xe9lections sont disponibles en pressant simplement le bouton \xab Sound "
+    .ascii	"Arranger \xbb.~0d"
+    .ascii	"Vous pouvez effectuer vos propres modifications en pressant le bouton \xab Sound Arranger Set \xbb. Pressez "
+    .asciz	"- le \xe0 pr\xe9sent pour voir comment proc\xe9der.~0d"
+    .align	4, 0xff
+HelpPagesFr52:
+    .long	HelpTextFr52_0 - HelpTexts
+    .long	0
+HelpPagesFr53:
+    .long	0
+HelpTextFr54_0:
+    .ascii	"En pressant le bouton Auto Play Chord, vous obtiendrez l'affichage des options suivantes :~0d"
+    .ascii	"Basic : il vous permet de jouer les accords avec un seul doigt ou plusieurs. Si vous jouez une seule "
+    .ascii	"note, le mode de reconnaissance \xe0 un doigt est activ\xe9, si vous enfoncez plusieurs touches les accords "
+    .ascii	"de base sont reconnus.~0d"
+    .ascii	"FINGERED: Reconnaissance de l'accord jou\xe9 compl\xe8tement sur la partie gauche du clavier partag\xe9 \xab "
+    .asciz	"Split \xbb.~0d"
+HelpTextFr54_1:
+    .ascii	"PIANIST: Reconnaissance sur la totalit\xe9 du clavier de l'accord jou\xe9. Vous pouvez ainsi utiliser "
+    .ascii	"une seule sonorit\xe9 (ex : piano) pour jouer sur votre instrument avec les deux mains.~0d"
+    .ascii	" ~0d"
+    .ascii	"MEMORY: Maintient l'accord jou\xe9 apr\xe8s que vous ayez rel\xe2ch\xe9 les touches. L'accompagnement continuera "
+    .asciz	"dans la m\xeame tonalit\xe9 jusqu'\xe0 ce qu'un autre accord soit jou\xe9.~0d"
+HelpTextFr54_2:
+    .ascii	"ON BASS: Lorsque vous utilisez l'un des modes \xab Fingered \xbb ou \xab Pianist \xbb, la fonction \xab On Bass "
+    .ascii	"\xbb reconna\xeet les renversements d'accord et la partie de basse de l'accompagnement est effectu\xe9e autour "
+    .asciz	"de la premi\xe8re note du renversement jou\xe9.~0d"
+HelpPagesFr54:
+    .long	HelpTextFr54_0 - HelpTexts
+    .long	HelpTextFr54_1 - HelpTexts
+    .long	HelpTextFr54_2 - HelpTexts
+    .long	0
+HelpTextFr55_0:
+    .ascii	"Le d\xe9compte d'introduction vous permet de s\xe9lectionner sa reproduction :~0d"
+    .ascii	"\xab Simple \xbb : coup de baguette~0d"
+    .asciz	"\xab Voice \xbb : d\xe9compte oral~0d"
+HelpPagesFr55:
+    .long	HelpTextFr55_0 - HelpTexts
+    .long	0
+HelpTextFr56_0:
+    .ascii	"La fonction \xab Left Hold \xbb permet le maintien de la sonorit\xe9 assign\xe9e \xe0 la partie \xab Left Conductor "
+    .asciz	"\xbb lors de l'utilisation de l' \xab Auto Play Chord \xbb.~0d"
+HelpPagesFr56:
+    .long	HelpTextFr56_0 - HelpTexts
+    .long	0
+HelpTextFr57_0:
+    .ascii	"Le \xab Chord Finder \xbb est une fonction p\xe9dagogique tr\xe8s int\xe9ressante. Elle vous apprend comment jouer "
+    .ascii	"les accords qui sont reconnus par l'accompagnement automatique du KN.~0d"
+    .ascii	"S\xe9lectionnez une fondamentale et un type d'accord. Les notes constituant l'accord sont indiqu\xe9es "
+    .asciz	"sur un clavier.~0d"
+HelpTextFr57_1:
+    .ascii	"Vous pouvez \xe9galement s\xe9lectionner divers renversements qui sont reconnus par le syst\xe8me du KN. "
+    .ascii	"~0d"
+    .asciz	"Un bouton vous permet d'obtenir la reproduction de l'accord s\xe9lectionn\xe9.~0d"
+    .align	4, 0xff
+HelpPagesFr57:
+    .long	HelpTextFr57_0 - HelpTexts
+    .long	HelpTextFr57_1 - HelpTexts
+    .long	0
+HelpTextFr58_0:
+    .ascii	"AUTO PLAY CHORD fournit un arrangement d'accompagnement professionnel correspondant \xe0 chacun des "
+    .asciz	"220 styles de rythme du KN. Le motif d'accompagnement \xe9volue suivant les accords jou\xe9s.~0d"
+HelpPagesFr58:
+    .long	HelpTextFr58_0 - HelpTexts
+    .long	0
+HelpTextFr59_0:
+    .ascii	"Le bouton \xab Other Parts / Tracks \xbb a deux fonctions. Dans la page d'accueil ou dans le \xab Mixer \xbb "
+    .ascii	"il sert \xe0 acc\xe9der au contr\xf4le de balance des autres parties du KN, comme les parties 1 \xe0 16.~0d"
+    .ascii	"Lorsque vous utilisez le \xab Sequencer \xbb, le \xab Mixer \xbb fonctionne pour chaque piste, plut\xf4t que pour "
+    .ascii	"que des parties sp\xe9cifiques, ainsi vous n'avez pas besoin de savoir quelle partie est assign\xe9e \xe0 "
+    .asciz	"une piste pour effectuer son r\xe9glage.~0d"
+HelpTextFr59_1:
+    .ascii	"Le \xab Mixer \xbb peut indiquer \xe0 la fois les r\xe9glages de 16 pistes. Le bouton \xab Other Parts / Tracks "
+    .asciz	"\xbb sert \xe0 s\xe9lectionner les pistes de l'accompagnement APC.~0d"
+    .align	4, 0xff
+HelpPagesFr59:
+    .long	HelpTextFr59_0 - HelpTexts
+    .long	HelpTextFr59_1 - HelpTexts
+    .long	0
+HelpTextFr60_0:
+    .ascii	"La fonction \xab Display Hold \xbb maintient l'affichage jusqu'\xe0 sa d\xe9sactivation, ou une pression sur "
+    .ascii	"le bouton EXIT. \xab Display Hold \xbb est tr\xe8s utile pour la visualisation de certaines pages ou de messages "
+    .ascii	"dont l'affichage est tr\xe8s court, par exemple, les groupes \xab Rhythm \xbb ou \xab Sound \xab  et les messages "
+    .ascii	"d'erreur.~0d"
+    .ascii	"Dans le menu \xab Customize \xbb, la fonction \xab Display Time Out \xbb permet de d\xe9terminer la dur\xe9e de l'affichage "
+    .asciz	"de certaines pages et l'activation automatique de \xab Display Hold \xbb.~0d"
+    .align	4, 0xff
+HelpPagesFr60:
+    .long	HelpTextFr60_0 - HelpTexts
+    .long	0
+HelpTextFr61_0:
+    .ascii	"Utilisez les boutons \xab Sound Group \xbb pour s\xe9lectionner l'une des 1000 sonorit\xe9s pr\xe9s\xe9lectionn\xe9es "
+    .ascii	"du KN, et pour s\xe9lectionner \xe9galement l'une des 40 m\xe9moires \xab Sound Memories \xbb. Les sonorit\xe9s sont "
+    .ascii	"regroup\xe9es en 16 cat\xe9gories, chacune dispose d'un bouton \xab Sound Group \xbb.~0d"
+    .asciz	"Les nombreuses sonorit\xe9s du KN sont organis\xe9es sous le nouveau standard Technics \xab NX Sound \xbb.~0d"
+HelpTextFr61_1:
+    .ascii	"Le standard \xab NX SOUND \xbb est bas\xe9 sur le mode GM niveau 2 qui permet \xe0 votre KN et \xe0 tous les instruments "
+    .ascii	"futures, de disposer de la plus grande compatibilit\xe9.~0d"
+    .ascii	"Lorsque vous pressez l'un des boutons \xab Sound Group \xbb, les sonorit\xe9s de ce groupe apparaissent sur "
+    .ascii	"l'affichage. Pressez l'un des boutons situ\xe9s \xe0 gauche et \xe0 droite de l'\xe9cran pour s\xe9lectionner la "
+    .asciz	"sonorit\xe9 d\xe9sir\xe9e.~0d"
+HelpTextFr61_2:
+    .ascii	"L'affichage de l'\xe9cran pr\xe9sente 10 sonorit\xe9s par page. Utilisez les boutons \xab Page Up/Down \xbb pour "
+    .ascii	"s\xe9lectionner la page suivante.~0d"
+    .ascii	"Le \xab Sound Group \xbb comprend un \xab Memory Group \xbb dans lesquels vous pouvez enregistrer 40 sonorit\xe9s "
+    .asciz	"\xe9dit\xe9es.~0d"
+HelpPagesFr61:
+    .long	HelpTextFr61_0 - HelpTexts
+    .long	HelpTextFr61_1 - HelpTexts
+    .long	HelpTextFr61_2 - HelpTexts
+    .long	0
+HelpTextFr62_0:
+    .ascii	"La fonction \xab Digital Drawbar \xbb : propose des sonorit\xe9s d\x92orgues \xe0 roues phoniques r\xe9glables gr\xe2ce "
+    .ascii	"aux neuf tirettes harmoniques affich\xe9es sur l'\xe9cran. Utilisez les boutons de balance et de \xab Page "
+    .ascii	"up/down \xbb pour ajuster les tirettes.~0d"
+    .asciz	"Vous pouvez d\xe9terminer la vitesse de rotation virtuelle, lente ou rapide des haut -parleurs.~0d"
+HelpTextFr62_1:
+    .ascii	"Vous avez le choix entre deux types d'orgue \xab Jazz Drawbars \xbb ou \xab Rock Drawbars \xbb et vous pouvez "
+    .ascii	"\xe9diter certains param\xe8tres tels que le temps de l' \xab Attack \xbb et du \xab Decay \xbb de la percussion et "
+    .asciz	"son volume.~0d"
+    .align	4, 0xff
+HelpPagesFr62:
+    .long	HelpTextFr62_0 - HelpTexts
+    .long	HelpTextFr62_1 - HelpTexts
+    .long	0
+HelpTextFr63_0:
+    .ascii	"La fonction \"Sound Explorer\" est une fonction sp\xe9ciale qui vous permet d'effectuer votre choix parmi "
+    .ascii	"les nombreuses sonorit\xe9s du PR ( en incluant les standard GM niveau 2, NX Sound, etc.). Elle regroupe "
+    .ascii	"beaucoup plus de sonorit\xe9s que celles disponibles par les \"Sound Groups\" qui ne contiennent que "
+    .ascii	"les sonorit\xe9s les plus fr\xe9quemment utilis\xe9es.~0d"
+    .ascii	"Il y a deux mani\xe8res de trouver le groupe que vous voulez utiliser: par cat\xe9gorie, ou en s\xe9lectionnant "
+    .asciz	"sur une liste alphab\xe9tique.~0d"
+HelpTextFr63_1:
+    .ascii	"Suivez cette proc\xe9dure pour s\xe9lectionner une sonorit\xe9 avec le \"Sound Explorer\":~0d"
+    .ascii	"(1). Pressez le bouton Sound Explorer ~0d"
+    .ascii	"(2). S\xe9lectionnez la mani\xe8re de trouver, Cat\xe9gorie ou Alphabet, dans l'\xe9cran.~0d"
+    .ascii	"(3). S\xe9lectionnez un groupe de sonorit\xe9s en bas de l'\xe9cran.~0d"
+    .ascii	"(4). Pressez l'un des boutons \xe0 gauche ou \xe0 droite de l'\xe9cran pour s\xe9lectionner la sonorit\xe9 que "
+    .asciz	"vous d\xe9sirez utiliser.~0d"
+HelpTextFr63_2:
+    .ascii	"(5). L'\xe9cran indique 10 sonorit\xe9s par page. Pour obtenir la page suivante, pressez les boutons \x93 "
+    .ascii	"Page Up/Down.~0d"
+    .ascii	" ~0d"
+    .ascii	"L'option Alphabet fait appara\xeetre toutes les sonorit\xe9s individuelles dans une liste alphab\xe9tique. "
+    .ascii	"Lorsque vous vous serez familiaris\xe9 avec vos sonorit\xe9s favorites, vous pourrez les trouver facilement "
+    .asciz	"en utilisant cette fonction.~0d"
+HelpTextFr63_3:
+    .ascii	"Pour chaque sonorit\xe9, des informations telles que sa banque d'origine \x93MIDI Bank select\x93, \x93MSB \x93,\x93LSB\x93 "
+    .asciz	"et son num\xe9ro de programme \x93Program Change\x93 sont \xe9galement indiqu\xe9es.~0d"
+    .align	4, 0xff
+HelpPagesFr63:
+    .long	HelpTextFr63_0 - HelpTexts
+    .long	HelpTextFr63_1 - HelpTexts
+    .long	HelpTextFr63_2 - HelpTexts
+    .long	HelpTextFr63_3 - HelpTexts
+    .long	0
+HelpTextFr64_0:
+    .ascii	"Le \xab Sustain \xbb permet la disparition progressive du son apr\xe8s que les touches aient \xe9t\xe9 rel\xe2ch\xe9es. "
+    .ascii	"Le r\xe9glage initial de l'interrupteur au pied \xab Footswitch 1 \xbb est sur le \xab sustain \xbb, de cette mani\xe8re "
+    .asciz	"vous pouvez utiliser  cet interrupteur (en option) comme la p\xe9dale Forte d'un piano acoustique.~0d"
+    .align	4, 0xff
+HelpPagesFr64:
+    .long	HelpTextFr64_0 - HelpTexts
+    .long	0
+HelpTextFr65_0:
+    .ascii	"La fonction \xab Digital Effect \xbb transforme les sonorit\xe9s du KN en leur ajoutant des effets tels que "
+    .ascii	"\xab Chorus \xbb, \xab Celeste \xbb et \xab Organ Tremolo \xbb.. Chaque sonorit\xe9 du KN dispose d'un effet num\xe9rique "
+    .asciz	"pr\xe9s\xe9lectionn\xe9; pour l'obtenir, pressez simplement le bouton \xab Digital Effect \xbb. ~0d"
+HelpTextFr65_1:
+    .ascii	"Dans le cas o\xf9 l'effet \xab Digital Effect \xbb est indispensable pour la sonorit\xe9, le bouton \xab Digital "
+    .ascii	"Effect \xbb est automatiquement activ\xe9 lorsque vous s\xe9lectionnez la sonorit\xe9, par exemple \xab Organ Tremolo "
+    .asciz	"\xbb avec la sonorit\xe9 \xab Jazz Organ \xbb.~0d"
+    .align	4, 0xff
+HelpPagesFr65:
+    .long	HelpTextFr65_0 - HelpTexts
+    .long	HelpTextFr65_1 - HelpTexts
+    .long	0
+HelpTextFr66_0:
+    .ascii	"Le multi - effet num\xe9rique DSP fonctionne comme un v\xe9ritable effet de studio d'enregistrement. Il "
+    .ascii	"permet l'insertion d'effets tels que : \xab Distorsion \xbb, \xab Exciter \xbb et \xab Delay \xbb.~0d"
+    .ascii	"Chaque sonorit\xe9 dispose d'un r\xe9glage des param\xe8tres du DSP. Lorsque vous s\xe9lectionnez une sonorit\xe9 "
+    .asciz	"pour une partie pouvant utiliser le DSP, les param\xe8tres les mieux adapt\xe9s sont automatiquement s\xe9lectionn\xe9s.~0d"
+HelpTextFr66_1:
+    .ascii	"Vous pouvez neutraliser ce r\xe9glage automatique par les menus \xab Sound \xbb et \xab Effect \xbb ou le \xab Sound "
+    .ascii	"Load Option \xbb. Dans la section \xab Allocation \xbb du menu \xab Effect \xbb, vous pouvez changer l'assignation "
+    .ascii	"du \xab Sound DSP \xbb. et des 2 \xab Sound DSP \xbb des parties de l'accompagnement, pour les utiliser avec "
+    .asciz	"les autres parties du s\xe9quenceur.~0d"
+HelpTextFr66_2:
+    .ascii	"Les parties \xab Right 1 \xbb, \xab Right 2 \xbb et \xab Left \xbb (jou\xe9es manuellement ) peuvent toujours utiliser "
+    .ascii	"leur propre \xab Sound DSP \xbb.~0d"
+    .ascii	"Pour modifier les r\xe9glages du \xab Sound DSP\xbb, il suffit de maintenir son bouton quelques secondes. "
+    .asciz	"La page de r\xe9glage appara\xeet alors sur l'\xe9cran.~0d"
+    .align	4, 0xff
+HelpPagesFr66:
+    .long	HelpTextFr66_0 - HelpTexts
+    .long	HelpTextFr66_1 - HelpTexts
+    .long	HelpTextFr66_2 - HelpTexts
+    .long	0
+HelpTextFr67_0:
+    .ascii	"Chaque type de \xab Sound DSP \xbb dispose d'une variation qui propose un autre r\xe9glage de l'effet s\xe9lectionn\xe9.~0d"
+    .ascii	"Par exemple, avec le bouton \xab Vari \xbbvous pouvez alterner la vitesse de rotation lente ou rapide "
+    .asciz	"des hauts - parleurs de l'effet r\xe9serv\xe9 aux sonorit\xe9s d'orgue.~0d"
+    .align	4, 0xff
+HelpPagesFr67:
+    .long	HelpTextFr67_0 - HelpTexts
+    .long	0
+HelpTextFr68_0:
+    .ascii	"Utilisez le menu SD lorsque vous voulez effectuer un chargement ou une sauvegarde sur une carte "
+    .ascii	"SD. ~0d"
+    .ascii	"Le KN peut charger et sauvegarder les deux types de logiciels suivants.~0d"
+    .ascii	"(1) Fichiers en format Technics: La carte SD peut m\xe9moriser un tr\xe8s grand nombre de fichiers, et "
+    .ascii	"ainsi vous pouvez commod\xe9ment les classer dans 99 dossiers au maximum. Vous pouvez trier les fichiers "
+    .asciz	"par dossiers, par ordre alphab\xe9tique ou par num\xe9ro.~0d"
+HelpTextFr68_1:
+    .ascii	"(2) Fichier MIDI Standard (SMF): Le KN utilise le format SD Sound, le nouveau fichier Midi standard "
+    .ascii	"pour SD. Le KN trie les morceaux SD Sound dans les listes de jeu, tout comme SD Audio. Lorsque vous "
+    .ascii	"chargez un morceau, s\xe9lectionnez une liste de jeu puis s\xe9lectionnez le morceau d\xe9sir\xe9. Lorsque vous "
+    .asciz	"effectuez la sauvegarde,  sauvegardez le morceau puis cr\xe9ez ou \xe9ditez une liste de jeu.~0d"
+HelpTextFr68_2:
+    .ascii	"Le KN reproduit le son SD Sound (SMF) et SD Audio directement de la carte SD et les trie dans les "
+    .ascii	"listes de jeu. Vous pouvez visualiser tous les morceaux \xe0 la fois dans la liste de jeu par d\xe9faut "
+    .ascii	"et regrouper vos morceaux favoris dans vos propres listes de jeu. Par exemple, si vous jouez dans "
+    .ascii	"une r\xe9union, vous pouvez regrouper tous les morceaux dans un certain ensemble dans une seule liste "
+    .asciz	"de jeu.~0d"
+HelpTextFr68_3:
+    .ascii	"L'affichage des Morceaux favoris vous permet de cr\xe9er un album de vos morceaux en format Technics "
+    .ascii	"favoris que vous pouvez disposer dans un ordre particulier, et ainsi vous pouvez charger facilement "
+    .ascii	"vos morceaux favoris pour une lecture imm\xe9diate.~0d"
+    .ascii	"Un programme d'ordinateur sp\xe9cial appel\xe9 \"Song Manager\" inclus dans le CD-ROM fourni peut sauvegarder "
+    .ascii	"et restaurer tous les fichiers Technics et les SMF de la carte SD sur votre ordinateur via USB. "
+    .asciz	"~0d"
+HelpTextFr68_4:
+    .ascii	"Vous pouvez utiliser le disque dur de votre ordinateur comme support de sauvegarde des donn\xe9es pour "
+    .ascii	"le KN.~0d"
+    .ascii	" ~0d"
+    .ascii	"Vous pouvez aussi compiler plusieurs ensembles de donn\xe9es de sauvegarde sur votre ordinateur pour "
+    .ascii	"les cartes SD \xe0 plus grande capacit\xe9 pr\xe9vues pour l'avenir.~0d"
+    .ascii	"Vous pouvez aussi installer des plug-in d'extension de fonctions produits par d'autres soci\xe9t\xe9s "
+    .asciz	"sur la carte SD.~0d"
+    .align	4, 0xff
+HelpPagesFr68:
+    .long	HelpTextFr68_0 - HelpTexts
+    .long	HelpTextFr68_1 - HelpTexts
+    .long	HelpTextFr68_2 - HelpTexts
+    .long	HelpTextFr68_3 - HelpTexts
+    .long	HelpTextFr68_4 - HelpTexts
+    .long	0
+HelpTextFr69_0:
+    .ascii	"Utilisez ceette touche d'extension EW pour s\xe9lectionner parmi les sonorit\xe9s pr\xe9r\xe9gl\xe9es des cartes "
+    .ascii	"d'extension de sonorit\xe9s NX de la s\xe9rie EW (vendues s\xe9par\xe9ment).~0d"
+    .ascii	"Vous pouvez installer quatre cartes d'extension de sonorit\xe9s EW au maximum, ce qui met \xe0 votre disposition "
+    .ascii	"un tr\xe8s grand nombre de sonorit\xe9s suppl\xe9mentaires pour agrandir votre univers musical. La touche "
+    .asciz	"d'extension EW est inop\xe9rante lorsqu'aucune carte d'extension de sonorit\xe9s EW n'est install\xe9e.~0d"
+HelpTextFr69_1:
+    .ascii	"Pour s\xe9lectionner une sonorit\xe9 EW, proc\xe9dez comme suit:~0d"
+    .ascii	"(1). Appuyez sur la touche d'extension EW.~0d"
+    .ascii	"(2). S\xe9lectionnez le num\xe9ro de la carte d'extension EW dans l'\xe9cran (lorsque vous n'avez pas plus "
+    .ascii	"d'une seule carte EW install\xe9e).~0d"
+    .ascii	"(3). S\xe9lectionnez un groupe de sonorit\xe9s dans l'\xe9cran.~0d"
+    .ascii	"(4). Dix sonorit\xe9s apparaissent sur une page sur l'\xe9cran. Utilisez les touches de page haut/bas "
+    .asciz	"pour s\xe9lectionner la page suivante.~0d"
+HelpTextFr69_2:
+    .ascii	"(5). Appuyez sur l'une des touches situ\xe9es \xe0 gauche ou \xe0 droite de l'\xe9cran pour s\xe9lectionner la "
+    .asciz	"sonorit\xe9 que vous voulez utiliser.~0d"
+    .align	4, 0xff
+HelpPagesFr69:
+    .long	HelpTextFr69_0 - HelpTexts
+    .long	HelpTextFr69_1 - HelpTexts
+    .long	HelpTextFr69_2 - HelpTexts
+    .long	0
+HelpTextFr70_0:
+    .ascii	"TAB ORGAN recr\xe9e la sonorit\xe9 de trois orgues de tab classiques diff\xe9rentes. Dix tabs apparaissent "
+    .ascii	"sur l'\xe9cran. Utilisez les touches de balance situ\xe9es sous l'\xe9cran pour activer ou d\xe9sactiver chaque "
+    .ascii	"tab. ~0d"
+    .ascii	"Pour les types de tabs europ\xe9ens et USA, vous pouvez ajouter des percussions, r\xe9gler la vitesse "
+    .ascii	"de l'effet de tr\xe9molo sur rapide ou lent, et activer le vibrato pour les tabs Instruments \xe0 anche "
+    .asciz	"et Instruments \xe0 cordes.~0d"
+HelpTextFr70_1:
+    .ascii	"Pour les tabs Orgues de th\xe9\xe2tre, vous pouvez activer et d\xe9sactiver le Tr\xe9mulant pour trois sections "
+    .ascii	"diff\xe9rentes de l'orgue.~0d"
+    .ascii	" ~0d"
+    .ascii	"Le r\xe9glage TAB ORGAN TYPE vous permet de s\xe9lectionner parmi trois types d'orgues: Tabs USA, tabs "
+    .asciz	"europ\xe9ens et orgues de th\xe9\xe2tre.~0d"
+HelpTextFr70_2:
+    .ascii	"Le Tr\xe9mulant est un effet caract\xe9ristique particulier aux grands orgues, pour lequel le d\xe9bit d'air "
+    .ascii	"dans les tuyaux est \x93interrompu\" par de grands soufflets, ce qui cr\xe9e une combinaison caract\xe9ristique "
+    .ascii	"de tr\xe9molo et de vibrato. Utilisez les touches situ\xe9es \xe0 droite et \xe0 gauche de l'\xe9cran pour activer "
+    .ascii	"et d\xe9sactiver s\xe9par\xe9ment l'effet pour Tibia, Voix et Principal (trompette, cor anglais et c\xe9leste "
+    .ascii	"~0d"
+    .asciz	"\xe0  cordes).~0d"
+HelpPagesFr70:
+    .long	HelpTextFr70_0 - HelpTexts
+    .long	HelpTextFr70_1 - HelpTexts
+    .long	HelpTextFr70_2 - HelpTexts
+    .long	0
+HelpTextFr71_0:
+    .ascii	"Pressez ce bouton pour ajuster le contraste de l'affichage LCD. Lorsque vous pressez le bouton le "
+    .ascii	"r\xe9glage en cours est affich\xe9 et vous pouvez utiliser les boutons \xab Contrast Up/Down \xbb ou la molette "
+    .ascii	"tempo/ Program pour ajuster le r\xe9glage pour obtenir une lisibilit\xe9 parfa\xeete.~0d"
+    .ascii	"Le r\xe9glage LCD CONTRAST reste ainsi en m\xe9moire dans le KN jusqu'\xe0 ce qu'il soit \xe0 nouveau modifi\xe9. "
+    .asciz	"~0d"
+HelpPagesFr71:
+    .long	HelpTextFr71_0 - HelpTexts
+    .long	0
+HelpTextFr72_0:
+    .ascii	"Vous pouvez contr\xf4ler la lecture des morceaux d'une carte SD en utilisant ces touches sp\xe9cialis\xe9es. "
+    .ascii	"Le KN peut reproduire le son SD Audio et le SD Sound (SMF). ~0d"
+    .ascii	"Pour effectuer la lecture d'un morceau, proc\xe9dez comme suit:~0d"
+    .ascii	" ~0d"
+    .ascii	"(1) Ouvrez le couvercle de la fente SD.~0d"
+    .asciz	"(2) Ins\xe9rez la carte SD contenant les morceaux m\xe9moris\xe9s dans la fente SD.~0d"
+HelpTextFr72_1:
+    .ascii	"(3) Refermez le couvercle.~0d"
+    .ascii	"(4) Appuyez sur la touche de lecture.~0d"
+    .ascii	"La m\xe9thode d'utilisation est la m\xeame que celle d'un lecteur de CD ou de SD standard.~0d"
+    .ascii	"Il est possible d'effectuer la lecture d'un morceau et de changer le volume, m\xeame si le couvercle "
+    .asciz	"du KN est ferm\xe9.~0d"
+HelpPagesFr72:
+    .long	HelpTextFr72_0 - HelpTexts
+    .long	HelpTextFr72_1 - HelpTexts
+    .long	0
+HelpTitleFr00:
+    .asciz	"HELP FUNCTION"
+HelpTitleFr01:
+    .asciz	"DEMO"
+HelpTitleFr02:
+    .asciz	"SOUND CONTROLLER RESET"
+HelpTitleFr03:
+    .asciz	"SOUND CONTROLLER MODE"
+HelpTitleFr04:
+    .asciz	"PERFORMANCE PADS AUTO SETTING"
+HelpTitleFr05:
+    .asciz	"PERFORMANCE PADS BANK"
+HelpTitleFr06:
+    .asciz	"PERFORMANCE PADS STOP"
+HelpTitleFr07:
+    .asciz	"PERFORMANCE PADS"
+HelpTitleFr08:
+    .asciz	"MUSIC STYLE ARRANGER"
+HelpTitleFr09:
+    .asciz	"VARIATION & MSA"
+HelpTitleFr10:
+    .asciz	"ONE TOUCH PLAY"
+HelpTitleFr11:
+    .asciz	"SPLIT POINT"
+HelpTitleFr12:
+    .asciz	"FADE IN/OUT"
+HelpTitleFr13:
+    .asciz	"TAP TEMPO"
+HelpTitleFr14:
+    .asciz	"SYNCHRO & BREAK"
+HelpTitleFr15:
+    .asciz	"FILL IN 1/2"
+HelpTitleFr16:
+    .asciz	"INTRO & ENDING 1/2"
+HelpTitleFr17:
+    .asciz	"START/STOP"
+HelpTitleFr18:
+    .asciz	"TEMPO/PROGRAM"
+HelpTitleFr19:
+    .asciz	"MUSIC STYLIST"
+HelpTitleFr20:
+    .asciz	"FAVORITES"
+HelpTitleFr21:
+    .asciz	"TRANSPOSE -/+"
+HelpTitleFr22:
+    .asciz	"R1/R2 OCTAVE -/+"
+HelpTitleFr23:
+    .asciz	"PART SELECT"
+HelpTitleFr24:
+    .asciz	"CONDUCTOR"
+HelpTitleFr25:
+    .asciz	"SOLO"
+HelpTitleFr26:
+    .asciz	"TECHNI-CHORD"
+HelpTitleFr27:
+    .asciz	"CHORUS"
+HelpTitleFr28:
+    .asciz	"MULTI EFFECT"
+HelpTitleFr29:
+    .asciz	"REVERB"
+HelpTitleFr30:
+    .asciz	"MIC REVERB & EFFECT"
+HelpTitleFr31:
+    .asciz	"PANEL MEMORY SET"
+HelpTitleFr32:
+    .asciz	"PANEL MEMORY"
+HelpTitleFr33:
+    .asciz	"PANEL MEMORY NEXT BANK"
+HelpTitleFr34:
+    .asciz	"PANEL MEMORY BANK VIEW"
+HelpTitleFr35:
+    .asciz	"CUSTOM PANEL"
+HelpTitleFr36:
+    .asciz	"SEQUENCER PLAY"
+HelpTitleFr37:
+    .asciz	"SEQUENCER EASY REC"
+HelpTitleFr38:
+    .asciz	"HELP FUNCTION"
+HelpTitleFr39:
+    .asciz	"SOUND"
+HelpTitleFr40:
+    .asciz	"REVERB & EFFECT"
+HelpTitleFr41:
+    .asciz	"CONTROL"
+HelpTitleFr42:
+    .asciz	"MIDI"
+HelpTitleFr43:
+    .asciz	"CUSTOMIZE"
+HelpTitleFr44:
+    .asciz	"SOUND EDIT"
+HelpTitleFr45:
+    .asciz	"SEQUENCER"
+HelpTitleFr46:
+    .asciz	"COMPOSER"
+HelpTitleFr47:
+    .asciz	"PERFORMANCE PADS"
+HelpTitleFr48:
+    .asciz	"DISK"
+HelpTitleFr49:
+    .asciz	"RHYTHM GROUP"
+HelpTitleFr50:
+    .asciz	"COMPOSER MEMORY"
+HelpTitleFr51:
+    .asciz	"SOUND ARRANGER SET"
+HelpTitleFr52:
+    .asciz	"SOUND ARRANGER OFF/ON"
+HelpTitleFr53:
+    .asciz	"APC/CHORD FINDER"
+HelpTitleFr54:
+    .asciz	"AUTO PLAY CHORD MODE"
+HelpTitleFr55:
+    .asciz	"COUNT INTRO"
+HelpTitleFr56:
+    .asciz	"LEFT HOLD"
+HelpTitleFr57:
+    .asciz	"CHORD FINDER"
+HelpTitleFr58:
+    .asciz	"AUTO PLAY CHORD OFF/ON"
+HelpTitleFr59:
+    .asciz	"OTHER PARTS/TR"
+HelpTitleFr60:
+    .asciz	"DISPLAY HOLD"
+HelpTitleFr61:
+    .asciz	"SOUND GROUP"
+HelpTitleFr62:
+    .asciz	"DIGITAL DRAWBAR"
+HelpTitleFr63:
+    .asciz	"SOUND EXPLORER"
+HelpTitleFr64:
+    .asciz	"SUSTAIN"
+HelpTitleFr65:
+    .asciz	"DIGITAL EFFECT"
+HelpTitleFr66:
+    .asciz	"SOUND DSP"
+HelpTitleFr67:
+    .asciz	"SOUND DSP VARIATION"
+HelpTitleFr68:
+    .asciz	"SD"
+HelpTitleFr69:
+    .asciz	"EW EXPANSION"
+HelpTitleFr70:
+    .asciz	"TAB ORGAN"
+HelpTitleFr71:
+    .asciz	"LCD CONTRAST"
+HelpTitleFr72:
+    .asciz	"SD CONTROL"
+HelpTitleFr73:
+    .asciz	"HELP FUNCTION"
+HelpTitleFr74:
+    .asciz	"HELP FUNCTION"
+HelpTitleFr75:
+    .asciz	"HELP FUNCTION"
+HelpTitleFr76:
+    .asciz	"HELP FUNCTION"
+HelpTitleFr77:
+    .asciz	"HELP FUNCTION"
+HelpTitleFr78:
+    .asciz	"HELP FUNCTION"
+HelpTitleFr79:
+    .asciz	"HELP FUNCTION"
+HelpTitleFr80:
+    .asciz	"HELP FUNCTION"
+HelpTitleFr81:
+    .asciz	"HELP FUNCTION"
+HelpTitleFr82:
+    .asciz	"HELP FUNCTION"
+HelpTitleFr83:
+    .asciz	"HELP FUNCTION"
+HelpTitleFr84:
+    .asciz	"HELP FUNCTION"
+HelpTitleFr85:
+    .asciz	"HELP FUNCTION"
+HelpTitleFr86:
+    .asciz	"HELP FUNCTION"
+HelpTitleFr87:
+    .asciz	"HELP FUNCTION"
+HelpTitleFr88:
+    .asciz	"HELP FUNCTION"
+HelpTitleFr89:
+    .asciz	"HELP FUNCTION"
+HelpTitleFr90:
+    .asciz	"HELP FUNCTION"
+HelpTitleFr91:
+    .asciz	"HELP FUNCTION"
+HelpTitleFr92:
+    .asciz	"HELP FUNCTION"
+HelpTitleFr93:
+    .asciz	"HELP FUNCTION"
+HelpTitleFr94:
+    .asciz	"HELP FUNCTION"
+HelpTitleFr95:
+    .asciz	"HELP FUNCTION"
+HelpTitleFr96:
+    .asciz	"HELP FUNCTION"
+HelpTitleFr97:
+    .asciz	"HELP FUNCTION"
+HelpTitleFr98:
+    .asciz	"HELP FUNCTION"
+HelpTitleFr99:
+    .asciz	"HELP FUNCTION"
+    .align	4, 0xff
+HelpTextEs00_0:
+    .ascii	"Despu\xe9s de oprimir el bot\xf3n HELP (Ayuda), presione cualquier bot\xf3n del KN y la pantalla le suministrar\xe1 "
+    .ascii	"informaci\xf3n acerca del mismo.~0d"
+    .ascii	"Oprima el bot\xf3n HELP nuevamente o el bot\xf3n EXIT (salir) para finalizar la funci\xf3n de ayuda.~0d"
+    .ascii	"Utilice los botones en la parte inferior de esta pantalla para cambiar el idioma del HELP (Ayuda) "
+    .asciz	"y oprima OK.~0d"
+HelpPagesEs00:
+    .long	HelpTextEs00_0 - HelpTexts
+    .long	0
+HelpTextEs01_0:
+    .ascii	"El procesador KN tiene 10 canciones de demostraci\xf3n con una presentaci\xf3n de im\xe1genes en la pantalla. "
+    .ascii	"Seleccione las canciones de demostraci\xf3n con los botones de la izquierda y la derecha de la pantalla. "
+    .ascii	"La ejecuci\xf3n comenzar\xe1 autom\xe1ticamente. ~0d"
+    .ascii	"Tambi\xe9n puede iniciar un popurr\xed de todas las canciones presionando y manteniendo presionado contra "
+    .ascii	"el panel el bot\xf3n DEMO (demostraci\xf3n) durante unos segundos. Para finalizar la demostraci\xf3n, presione "
+    .asciz	"el bot\xf3n STOP (parar).~0d"
+HelpTextEs01_1:
+    .ascii	"La presentaci\xf3n de im\xe1genes que acompa\xf1a a cada canci\xf3n brinda una rese\xf1a espec\xedfica de cada funci\xf3n "
+    .asciz	"del procesador KN. \xa1Disfrute del espect\xe1culo!~0d"
+HelpPagesEs01:
+    .long	HelpTextEs01_0 - HelpTexts
+    .long	HelpTextEs01_1 - HelpTexts
+    .long	0
+HelpTextEs02_0:
+    .ascii	"Para volver el par\xe1metro asignado al controlador de sonido (Sound Controller) a su valor por defecto, "
+    .ascii	"presione el bot\xf3n Reset. El controlador de sonido no vuelve autom\xe1ticamente a la posici\xf3n neutra "
+    .asciz	"cuando usted retira el dedo.~0d"
+    .align	4, 0xff
+HelpPagesEs02:
+    .long	HelpTextEs02_0 - HelpTexts
+    .long	0
+HelpTextEs03_0:
+    .ascii	"El modo Sound Controller se usa para modificar el sonido durante la ejecuci\xf3n, mediante dos componentes "
+    .ascii	"que lo controlan. Existen ciertos conjuntos de par\xe1metros preprogramados de los dos componentes "
+    .ascii	"(componentes \"X\" o eje horizontal, e \"Y\" o eje vertical), que usted puede seleccionar en la p\xe1gina "
+    .asciz	"de modo Sound Controller.\"~0d"
+HelpTextEs03_1:
+    .ascii	"Los conjuntos de par\xe1metros asignados a X e Y son mensajes de cambio de control MIDI (controladores "
+    .ascii	"de sonido, volumen y balance de canales).~0d"
+    .ascii	"El estado de activaci\xf3n/desactivaci\xf3n del controlador de sonido de cada parte se puede configurar "
+    .asciz	"en la p\xe1gina de configuraci\xf3n de partes del men\xfa Sound.~0d"
+    .align	4, 0xff
+HelpPagesEs03:
+    .long	HelpTextEs03_0 - HelpTexts
+    .long	HelpTextEs03_1 - HelpTexts
+    .long	0
+HelpTextEs04_0:
+    .ascii	"La funci\xf3n de configuraci\xf3n autom\xe1tica (Auto Setting) selecciona el banco de teclas de ejecuci\xf3n "
+    .ascii	"m\xe1s adecuado para la configuraci\xf3n de ejecuci\xf3n con un bot\xf3n (One Touch Play), arreglos de estilos "
+    .asciz	"de m\xfasica (Music Style Arranger) o selector de estilos de m\xfasica (Music Stylist) que est\xe1 utilizando.~0d"
+    .align	4, 0xff
+HelpPagesEs04:
+    .long	HelpTextEs04_0 - HelpTexts
+    .long	0
+HelpTextEs05_0:
+    .ascii	"Hay 20 bancos de teclas de ejecuci\xf3n, con frases y efectos diferentes. Al cambiar el banco se seleccionan "
+    .ascii	"distintas frases que ejecutan las seis teclas. Para cambiar el banco de teclas, basta con presionar "
+    .ascii	"el bot\xf3n de banco (Bank) y seleccionar su opci\xf3n en la pantalla.~0d"
+    .ascii	"Hay tres tipos especiales de bancos de teclas: usuario (User), compiladores (Compile) y control "
+    .asciz	"(Control).~0d"
+HelpTextEs05_1:
+    .ascii	"Los bancos compiladores le permiten combinar, en un solo banco, frases favoritas almacenadas en "
+    .ascii	"distintos bancos. Presione el men\xfa de teclas de ejecuci\xf3n (Performance Pads Menu) en los men\xfas de "
+    .ascii	"programas (Program Menus) para m\xe1s informaci\xf3n.~0d"
+    .ascii	"Si desea m\xe1s informaci\xf3n, presione el bot\xf3n del men\xfa Performance Pads de los men\xfas de programas "
+    .asciz	"(Program Menus).~0d"
+HelpTextEs05_2:
+    .ascii	"El banco de controles predeterminados (Control Preset Bank) tiene algunas funciones predeterminadas "
+    .ascii	"\xfatiles, como tr\xe9molo r\xe1pido/lento (Tremolo Slow/Fast) y efecto de transici\xf3n (Glide). Para detalles "
+    .asciz	"completos, consulte el manual del usuario.~0d"
+    .align	4, 0xff
+HelpPagesEs05:
+    .long	HelpTextEs05_0 - HelpTexts
+    .long	HelpTextEs05_1 - HelpTexts
+    .long	HelpTextEs05_2 - HelpTexts
+    .long	0
+HelpTextEs06_0:
+    .ascii	"Si se est\xe1 ejecutando una frase de una tecla de ejecuci\xf3n y usted desea detener la ejecuci\xf3n, presione "
+    .ascii	"el bot\xf3n de detener (Stop). Algunas frases, como los arpegios, se ejecutan en repetici\xf3n continua "
+    .asciz	"hasta que usted presiona el bot\xf3n de detener.~0d"
+HelpTextEs06_1:
+    .ascii	"Las teclas 5 y 6 son teclas de solo especiales que ejecutan una melod\xeda y una secuencia de acordes.~0d"
+    .ascii	"Usted puede usar las funciones de grabaci\xf3n de acordes paso a paso (Chord Step Record) o de copiar "
+    .ascii	"de secuenciador a tecla (Seq to Pad Copy) para crear sus frases de solo, grab\xe1ndolas primero en "
+    .asciz	"el secuenciador y copi\xe1ndolas luego a las teclas de solo del usuario.~0d"
+HelpPagesEs06:
+    .long	HelpTextEs06_0 - HelpTexts
+    .long	HelpTextEs06_1 - HelpTexts
+    .long	0
+HelpTextEs07_0:
+    .ascii	"Las teclas de ejecuci\xf3n (Performance Pads) ejecutan frases y efectos musicales muy diversos, que "
+    .ascii	"usted puede agregar a su ejecuci\xf3n. Hay seis teclas, y cada una ejecuta una frase diferente. Basta "
+    .ascii	"con presionar una tecla para que comience la m\xfasica o el efecto deseado.~0d"
+    .asciz	"Algunas frases se repiten continuamente hasta que se presiona el bot\xf3n de detener (Stop).~0d"
+HelpTextEs07_1:
+    .ascii	"Las teclas 5 y 6 tocan un solo, con una secuencia de acordes que se ejecuta alrededor del patr\xf3n "
+    .ascii	"de acompa\xf1amiento que usted est\xe1 usando. La tecla 5 ejecuta un solo en una clave mayor y la tecla "
+    .asciz	"6 en una clave menor.~0d"
+HelpTextEs07_2:
+    .ascii	"Para agregar un solo a su ejecuci\xf3n, presione una de las teclas de solo mientras se ejecuta el acompa\xf1amiento. "
+    .ascii	"Ejecute el acorde ra\xedz de la nota que est\xe1 tocando antes de presionar la tecla (por ejemplo, si "
+    .ascii	"usted est\xe1 tocando en clave de Fa, toque un acorde en clave de Fa antes de presionar la tecla de "
+    .asciz	"solo).~0d"
+HelpTextEs07_3:
+    .ascii	"Tambi\xe9n puede silenciar el solo presionando simult\xe1neamente los dos botones de balance de teclas, "
+    .ascii	"debajo de la pantalla, y ejecutar su propio solo junto con la secuencia de acordes elegida.~0d"
+    .ascii	"Para m\xe1s informaci\xf3n, presione los botones banco (Bank), detener (Stop) y configuraci\xf3n autom\xe1tica "
+    .ascii	"(Auto Setting) y el men\xfa de teclas de ejecuci\xf3n (Performance Pads Menu) en los men\xfas de programa "
+    .asciz	"(Program Menus).~0d"
+    .align	4, 0xff
+HelpPagesEs07:
+    .long	HelpTextEs07_0 - HelpTexts
+    .long	HelpTextEs07_1 - HelpTexts
+    .long	HelpTextEs07_2 - HelpTexts
+    .long	HelpTextEs07_3 - HelpTexts
+    .long	0
+HelpTextEs08_0:
+    .ascii	"El arreglador de estilos musicales le ayuda a hacer cambios profesionales en los registros, proveyendo "
+    .ascii	"cuatro registros preconfigurados para cada ritmo. El arreglador configura autom\xe1ticamente un registro "
+    .ascii	"completo seg\xfan la variaci\xf3n de ritmo seleccionada.~0d"
+    .ascii	"Al cambiar entre las cuatro variaciones de ritmo, el registro var\xeda siguiendo el cambio de estilo "
+    .asciz	"musical de la variaci\xf3n de ritmo.~0d"
+HelpTextEs08_1:
+    .ascii	"Los registros se vuelven progresivamente m\xe1s brillantes y complejos desde el arreglador MSA 1 hasta "
+    .ascii	"el MSA 4.~0d"
+    .ascii	"Los botones Fill-In (redoble) cambian autom\xe1ticamente las configuraciones del arreglador. ~0d"
+    .ascii	"El bot\xf3n Fill In 1 hace que la variaci\xf3n del arreglador de estilos musicales cambie hacia la izquierda "
+    .asciz	"y el Fill 2 que cambie hacia la derecha. ~0d"
+HelpTextEs08_2:
+    .ascii	"Para personalizar el arreglador, presione y mantenga oprimido el bot\xf3n MSA hasta que la pantalla "
+    .ascii	"cambie a la de selecci\xf3n de modos.~0d"
+    .ascii	"Hay tres modos:~0d"
+    .ascii	"Rhythm (ritmo): S\xf3lo cambia la variaci\xf3n de ritmo.~0d"
+    .ascii	"Sound & Rhythm (sonido y ritmo): Cambian ambos.~0d"
+    .ascii	"Panel Memory (memoria de panel): El arreglador de estilo musical cambia entre las cuatro memorias "
+    .asciz	"de panel del banco A.~0d"
+HelpPagesEs08:
+    .long	HelpTextEs08_0 - HelpTexts
+    .long	HelpTextEs08_1 - HelpTexts
+    .long	HelpTextEs08_2 - HelpTexts
+    .long	0
+HelpTextEs09_0:
+    .ascii	"Estos botones se usan para dos funciones:~0d"
+    .ascii	"1) Para seleccionar la variaci\xf3n de ritmo~0d"
+    .ascii	"2) Para controlar el arreglador de estilo musical (seg\xfan est\xe9 o no conectado)~0d"
+    .ascii	"Cada uno de los 220 ritmos del KN tiene cuatro variaciones, de manera que usted puede emplear esos "
+    .asciz	"botones mientras toca para variar el tipo de acompa\xf1amiento dentro del mismo estilo de m\xfasica.~0d"
+HelpTextEs09_1:
+    .ascii	"Cuando se emplea el arreglador de estilo musical, los botones de variaci\xf3n cambian el acompa\xf1amiento "
+    .ascii	"y el registro.~0d"
+    .asciz	"Si desea m\xe1s informaci\xf3n, presione ahora el bot\xf3n Music Style Arranger.~0d"
+    .align	4, 0xff
+HelpPagesEs09:
+    .long	HelpTextEs09_0 - HelpTexts
+    .long	HelpTextEs09_1 - HelpTexts
+    .long	0
+HelpTextEs10_0:
+    .ascii	"La funci\xf3n One Touch Play le ayuda a crear f\xe1cilmente un atractivo sonido, configurando el procesador "
+    .ascii	"KN con registros y tempos adecuados para cada uno de los 220 ritmos y 20 ritmos personalizados. "
+    .ascii	"Basta presionar un bot\xf3n para configurar un registro completo. En el caso de los ritmos personalizados, "
+    .asciz	"se usa la configuraci\xf3n de estilo correspondiente a la variaci\xf3n N\xba 2.~0d"
+HelpTextEs10_1:
+    .ascii	"Para usar la funci\xf3n de ejecuci\xf3n con un bot\xf3n (One Touch Play), seleccione el ritmo que desea utilizar "
+    .ascii	"y presione y mantenga presionado el bot\xf3n de ejecuci\xf3n con un bot\xf3n (One Touch Play) durante unos "
+    .ascii	"segundos. El nombre del registro de Ejecuci\xf3n con un bot\xf3n aparece durante unos segundos en la pantalla. "
+    .asciz	"\xa1Y ya est\xe1 listo para tocar!~0d"
+    .align	4, 0xff
+HelpPagesEs10:
+    .long	HelpTextEs10_0 - HelpTexts
+    .long	HelpTextEs10_1 - HelpTexts
+    .long	0
+HelpTextEs11_0:
+    .ascii	"El teclado del KN puede ser dividido en cualquier punto, para configurar sonidos diferentes a la "
+    .ascii	"izquierda y a la derecha del punto de separaci\xf3n.~0d"
+    .ascii	"La divisi\xf3n del teclado tambi\xe9n se activa cuando se emplea el acorde autom\xe1tico en los modos de "
+    .ascii	"un dedo y digitado.~0d"
+    .ascii	"Para cambiar a uno de los tres puntos de separaci\xf3n prefijados (G2 o sol 2, C3 o do 3 y G3 o sol "
+    .asciz	"3), presione el bot\xf3n Split Point repetidamente.~0d"
+HelpTextEs11_1:
+    .ascii	"Para configurar su propio punto de divisi\xf3n, presione y mantenga oprimido durante unos segundos "
+    .ascii	"el bot\xf3n Split Point hasta que la pantalla cambie a la de configurar punto de separaci\xf3n.~0d"
+    .asciz	"Luego presione la tecla donde desea situar el punto de separaci\xf3n.~0d"
+    .align	4, 0xff
+HelpPagesEs11:
+    .long	HelpTextEs11_0 - HelpTexts
+    .long	HelpTextEs11_1 - HelpTexts
+    .long	0
+HelpTextEs12_0:
+    .ascii	"El efecto Fade In/Out da un toque profesional a su composici\xf3n agregando un sutil aumento gradual "
+    .ascii	"del sonido o, al terminar una canci\xf3n, aplicando un suave desvanecimiento.~0d"
+    .ascii	"Esto resulta especialmente \xfatil al utilizar los acordes autom\xe1ticos.~0d"
+    .ascii	"Presione el bot\xf3n Fade In inmediatamente antes de tocar y el sonido general del KN surgir\xe1 en forma "
+    .ascii	"progresiva.~0d"
+    .asciz	"Cuando finalice la canci\xf3n, deje tocando el acompa\xf1amiento y presione Fade Out.~0d"
+HelpTextEs12_1:
+    .ascii	"La m\xfasica se ir\xe1 desvaneciendo como en una producci\xf3n profesional.~0d"
+    .ascii	"Si por error presiona el bot\xf3n Fade Out durante la ejecuci\xf3n, opr\xedmalo nuevamente para reconfigurar "
+    .ascii	"el volumen normal o presione Fade In y el volumen se incrementar\xe1 progresivamente hasta alcanzar "
+    .asciz	"su nivel normal.~0d"
+HelpTextEs12_2:
+    .ascii	"Usted puede establecer la duraci\xf3n de la atenuaci\xf3n inicial o de la atenuaci\xf3n final, en medidas, "
+    .ascii	"y, adem\xe1s, configurar el ritmo (Rhythm) y el secuenciador (Sequencer) para que se detengan autom\xe1ticamente "
+    .ascii	"despu\xe9s de una atenuaci\xf3n final. Las configuraciones se ajustan en el men\xfa de control (Control Menu) "
+    .ascii	"o presionando y manteniendo presionados los botones de atenuaci\xf3n inicial (Fade In) o~0d"
+    .asciz	"atenuaci\xf3n final (Fade Out) durante unos segundos.~0d"
+    .align	4, 0xff
+HelpPagesEs12:
+    .long	HelpTextEs12_0 - HelpTexts
+    .long	HelpTextEs12_1 - HelpTexts
+    .long	HelpTextEs12_2 - HelpTexts
+    .long	0
+HelpTextEs13_0:
+    .ascii	"El tiempo por golpes permite configurar el tiempo del ritmo para su ejecuci\xf3n dando peque\xf1os golpes "
+    .ascii	"en un bot\xf3n.~0d"
+    .ascii	"D\xe9 unos golpes en el bot\xf3n Tap Tempo; el intervalo entre los dos \xfaltimos golpes se emplea para configurar "
+    .ascii	"el tiempo.~0d"
+    .asciz	"\xa1Debe dar por lo menos dos golpes en el bot\xf3n!~0d"
+HelpPagesEs13:
+    .long	HelpTextEs13_0 - HelpTexts
+    .long	0
+HelpTextEs14_0:
+    .ascii	"Este bot\xf3n tiene dos funciones que var\xedan seg\xfan c\xf3mo est\xe9 empleando el KN.~0d"
+    .ascii	"Si usted est\xe1 utilizando la funci\xf3n de acorde autom\xe1tico y presiona el bot\xf3n Synchro & Break, el "
+    .ascii	"ritmo comienza autom\xe1ticamente al tocar una tecla por debajo del punto de separaci\xf3n del teclado.~0d"
+    .ascii	"Si est\xe1 utilizando los acordes autom\xe1ticos, la funci\xf3n var\xeda seg\xfan si la memoria del acorde autom\xe1tico "
+    .asciz	"est\xe1 o no conectada:~0d"
+HelpTextEs14_1:
+    .ascii	"Al utilizar acordes autom\xe1ticos con memoria, si se presiona el bot\xf3n Synchro & Break, el ritmo y "
+    .ascii	"el acompa\xf1amiento comenzar\xe1n autom\xe1ticamente al tocar una tecla a la izquierda del punto de separaci\xf3n "
+    .ascii	"del teclado.~0d"
+    .ascii	"El ritmo y el acompa\xf1amiento continuar\xe1n hasta que usted presione el bot\xf3n Synchro & Break nuevamente, "
+    .asciz	"el bot\xf3n Start/Stop o uno de los botones Ending.~0d"
+HelpTextEs14_2:
+    .ascii	"Al utilizar acordes autom\xe1ticos sin memoria, si se presiona el bot\xf3n Synchro & Break, el ritmo y "
+    .ascii	"el acompa\xf1amiento s\xf3lo se ejecutar\xe1n mientras mantenga apretada alguna tecla a la izquierda del "
+    .ascii	"punto de separaci\xf3n.~0d"
+    .asciz	"Al soltar la tecla, el ritmo y el acompa\xf1amiento se detienen hasta que usted presiona otra.~0d"
+    .align	4, 0xff
+HelpPagesEs14:
+    .long	HelpTextEs14_0 - HelpTexts
+    .long	HelpTextEs14_1 - HelpTexts
+    .long	HelpTextEs14_2 - HelpTexts
+    .long	0
+HelpTextEs15_0:
+    .ascii	"Cuando una banda toca, a menudo hay redobles de bater\xeda y variaciones musicales en puntos estrat\xe9gicos "
+    .ascii	"de la ejecuci\xf3n.~0d"
+    .ascii	"El KN le ayuda a lograr ese efecto provey\xe9ndole dos redobles para cada variaci\xf3n de ritmo.~0d"
+    .ascii	"Cuando se presionan los botones Fill-In 1 o Fill-In 2 mientras el ritmo est\xe1 funcionando, se ejecuta "
+    .asciz	"un redoble durante un comp\xe1s, luego de lo cual contin\xfaa el ritmo normal.~0d"
+HelpTextEs15_1:
+    .ascii	"Si se presiona un bot\xf3n Fill-In en el \xfaltimo tiempo del comp\xe1s, el redoble se ejecuta durante toda "
+    .ascii	"la extensi\xf3n del comp\xe1s siguiente. ~0d"
+    .ascii	"Si se presiona en cualquier otro tiempo, se ejecuta durante el resto de la duraci\xf3n del comp\xe1s actual.~0d"
+    .ascii	"Si usted presiona el bot\xf3n Fill-In 2 antes de que comience el ritmo, s\xf3lo se realiza una cuenta "
+    .ascii	"simple hasta ese comienzo.~0d"
+    .asciz	"El bot\xf3n Fill-In 1 tambi\xe9n tiene otra funci\xf3n cuando se emplea el secuenciador.~0d"
+HelpTextEs15_2:
+    .ascii	"Si la ejecuci\xf3n del secuenciador se detiene y se desea reconfigurar el comienzo de la canci\xf3n, presione "
+    .asciz	"el bot\xf3n Fill-In 1.~0d"
+    .align	4, 0xff
+HelpPagesEs15:
+    .long	HelpTextEs15_0 - HelpTexts
+    .long	HelpTextEs15_1 - HelpTexts
+    .long	HelpTextEs15_2 - HelpTexts
+    .long	0
+HelpTextEs16_0:
+    .ascii	"Los botones Intro y Ending proveen introducciones y finales profesionales a la composici\xf3n, con "
+    .ascii	"una alternativa de dos introducciones y dos finales para cada ritmo.~0d"
+    .ascii	"Prepare el teclado con un registro (o emplee ejecuci\xf3n con un toque solo para seleccionarlo autom\xe1ticamente) "
+    .ascii	"y presione cualquiera de los botones Intro y Ending antes de tocar.~0d"
+    .asciz	"Luego toque un acorde con la mano izquierda y escuchar\xe1 una introducci\xf3n musical.~0d"
+HelpTextEs16_1:
+    .ascii	"Cuando finalice la ejecuci\xf3n, presione nuevamente uno de los botones Intro y Ending para que el "
+    .ascii	"KN toque una melod\xeda de finalizaci\xf3n en el estilo del esquema de acompa\xf1amiento.~0d"
+    .asciz	"Cuando la melod\xeda de finalizaci\xf3n termina, el ritmo se detiene autom\xe1ticamente.~0d"
+    .align	4, 0xff
+HelpPagesEs16:
+    .long	HelpTextEs16_0 - HelpTexts
+    .long	HelpTextEs16_1 - HelpTexts
+    .long	0
+HelpTextEs17_0:
+    .ascii	"El bot\xf3n Start/Stop se emplea con muchas finalidades, pero su funci\xf3n primaria es comenzar y finalizar "
+    .ascii	"el ritmo autom\xe1tico.~0d"
+    .ascii	"Si est\xe1 usando el secuenciador, el bot\xf3n de comenzar/detener (Start/Stop) inicia y detiene la reproducci\xf3n "
+    .ascii	"de una canci\xf3n. Tambi\xe9n inicia la grabaci\xf3n en las teclas de ejecuci\xf3n (Performance Pads) y, cuando "
+    .asciz	"se usa el metr\xf3nomo, en el secuenciador (Sequencer).~0d"
+    .align	4, 0xff
+HelpPagesEs17:
+    .long	HelpTextEs17_0 - HelpTexts
+    .long	0
+HelpTextEs18_0:
+    .ascii	"El dial Tempo/Program se usa principalmente para variar el tiempo de un ritmo.~0d"
+    .ascii	"G\xedrelo hacia la izquierda para bajar el tiempo y hacia la derecha para incrementarlo. Si el indicador "
+    .ascii	"situado a la derecha y arriba del dial est\xe1 iluminado porque se est\xe1 empleando alguno de los modos "
+    .ascii	"preconfigurados (por ejemplo SOUND EDIT o COMPOSER), el dial Tempo/Program puede utilizarse para "
+    .asciz	"cambiar el valor o la funci\xf3n actualmente seleccionados en la pantalla.~0d"
+    .align	4, 0xff
+HelpPagesEs18:
+    .long	HelpTextEs18_0 - HelpTexts
+    .long	0
+HelpTextEs19_0:
+    .ascii	"La funci\xf3n Music Stylist es su gu\xeda entre centenares de estilos musicales del procesador KN. Music "
+    .ascii	"Stylist configura el KN por usted y le ayuda a lograr f\xe1cilmente un atractivo sonido.~0d"
+    .ascii	"Hay cuatro formas de encontrar el estilo de la m\xfasica que desea reproducir por Musical Category, "
+    .ascii	"por estilo de Organ, por Musical Era o seleccionado de la lista alfab\xe9tica.~0d"
+    .asciz	"Musical Category permite hallar diferentes estilos por g\xe9nero musical.~0d"
+HelpTextEs19_1:
+    .ascii	"Cada categor\xeda incluye subcategor\xedas descriptivas y tiene cuatro niveles diferentes, cada uno tambi\xe9n "
+    .ascii	"con un nombre descriptivo. ~0d"
+    .asciz	"Musical Era permite hallar estilos diferentes por per\xedodo musical, por ejemplo 1970s, etc.~0d"
+HelpTextEs19_2:
+    .ascii	"El Organ Stylist tiene la inmensa gama de sonidos de \xf3rgano del KN y patrones con Organ Registrations "
+    .ascii	"adecuados. El Organ Stylist utiliza sonidos prefijados as\xed como Digital Drawbars y Organ Tabs para "
+    .ascii	"crear registros Organ cl\xe1sicos.~0d"
+    .ascii	" ~0d"
+    .ascii	"La lista alfab\xe9tica muestra todos los estilos individuales de Music Stylist en orden alfab\xe9tico. "
+    .asciz	"Cuando usted se familiarice con sus estilos favoritos, podr\xe1 encontrarlos f\xe1cilmente con esta funci\xf3n.~0d"
+HelpTextEs19_3:
+    .ascii	"Usted puede seleccionar tambi\xe9n estilos personalizados (Custom Styles) para almacenar frases de "
+    .ascii	"compositor con registros, frases de teclas de ejecuci\xf3n del usuario, as\xed como sonidos y efectos "
+    .asciz	"editados.~0d"
+    .align	4, 0xff
+HelpPagesEs19:
+    .long	HelpTextEs19_0 - HelpTexts
+    .long	HelpTextEs19_1 - HelpTexts
+    .long	HelpTextEs19_2 - HelpTexts
+    .long	HelpTextEs19_3 - HelpTexts
+    .long	0
+HelpTextEs20_0:
+    .ascii	"El procesador KN tiene la capacidad de personalizar el aspecto de la pantalla LCD para incluir acceso "
+    .ascii	"r\xe1pido a los sonidos, ritmos, estilos y funciones que usted usa m\xe1s a menudo. .~0d"
+    .ascii	"Se dispone de 4 bancos de configuraci\xf3n en la p\xe1gina Favorites, en cada uno de los cuales se pueden "
+    .asciz	"configurar 9 elementos.~0d"
+HelpTextEs20_1:
+    .ascii	"Para usar su configuraci\xf3n de favoritos, seleccione el banco con el bot\xf3n ubicado debajo de la pantalla "
+    .ascii	"LCD y presione uno de los botones de la izquierda o la derecha de la pantalla para seleccionar la "
+    .ascii	"configuraci\xf3n deseada. ~0d"
+    .ascii	"Para configurar sus elementos favoritos, siga este procedimiento:~0d"
+    .asciz	"1) Presione la configuraci\xf3n favorita (Favorite Setting) en la p\xe1gina.~0d"
+HelpTextEs20_2:
+    .ascii	"2) Seleccione el banco (Bank) en el que desea almacenar su selecci\xf3n. ~0d"
+    .ascii	"3) Seleccione una categor\xeda (Category) y un elemento.~0d"
+    .ascii	"4) Mantenga oprimido Set y presione uno de los botones de la derecha o la izquierda de la pantalla "
+    .ascii	"en la que desea almacenar la selecci\xf3n.~0d"
+    .ascii	"5) Si lo desea, repita los pasos 3) y 4) para otra configuraci\xf3n.~0d"
+    .asciz	"6) Presione OK para memorizar su nuevo banco.~0d"
+HelpTextEs20_3:
+    .ascii	"El procesador KN posee algunos elementos especiales que usted puede configurar en las p\xe1ginas de "
+    .ascii	"favoritos, tales como teclas de silenciamiento (Mute), p\xe1nico (Panic), el men\xfa estaci\xf3n de trabajo "
+    .ascii	"vocal (Vocal Workstation), etc. Estos elementos son \xfatiles para los animadores.~0d"
+    .asciz	"Las configuraciones favoritas se pueden cargar y guardar en disquetes.~0d"
+HelpPagesEs20:
+    .long	HelpTextEs20_0 - HelpTexts
+    .long	HelpTextEs20_1 - HelpTexts
+    .long	HelpTextEs20_2 - HelpTexts
+    .long	HelpTextEs20_3 - HelpTexts
+    .long	0
+HelpTextEs21_0:
+    .ascii	"Usted puede cambiar el tono del KN a cualquier nota empleando los botones Transpose (transposici\xf3n).~0d"
+    .ascii	"Presione el bot\xf3n de la derecha para aumentar las notas en pasos de un semitono desde la nota C "
+    .ascii	"(do) hasta +C (do +1 octave).~0d"
+    .ascii	"Utilice el bot\xf3n de la izquierda para bajarlas, tambi\xe9n en pasos de un semitono desde la nota C "
+    .asciz	"(do) hasta -C (do -1 octave).~0d"
+HelpTextEs21_1:
+    .ascii	"Si usted transpone las notas mientras presiona una tecla, el tono nuevo tiene efecto a partir del "
+    .ascii	"momento en que ejecuta la siguiente nota.~0d"
+    .ascii	"La transposici\xf3n siempre se refiere a la nota C (do).~0d"
+    .ascii	"As\xed, si usted est\xe1 tocando en clave de fa y desea que suene en clave de fa sostenido, s\xf3lo tiene "
+    .ascii	"que transponer un semitono hacia arriba (en la pantalla aparece Db, o re bemol).~0d"
+    .asciz	"Para anular la transposici\xf3n presione ambos botones simult\xe1neamente.~0d"
+    .align	4, 0xff
+HelpPagesEs21:
+    .long	HelpTextEs21_0 - HelpTexts
+    .long	HelpTextEs21_1 - HelpTexts
+    .long	0
+HelpTextEs22_0:
+    .ascii	"Lo botones R1/R2 Octave modifican en +/- 2 octavas la octava de las partes derecha 1 y derecha 2 "
+    .ascii	"del director.~0d"
+    .asciz	"Para reconfigurar la octava, presione ambos botones juntos.~0d"
+HelpPagesEs22:
+    .long	HelpTextEs22_0 - HelpTexts
+    .long	0
+HelpTextEs23_0:
+    .ascii	"Emplee estos botones para seleccionar qu\xe9 parte (RIGHT 1 [derecha 1], RIGHT 2 [derecha 2] o LEFT "
+    .ascii	"[izquierda]) ser\xe1 alterada al emplear los botones Sound Select (selecci\xf3n de sonido) y Effects (efectos) "
+    .ascii	"del panel.~0d"
+    .ascii	"Cuando se selecciona una parte, los indicadores del panel tambi\xe9n se iluminan para mostrar las configuraciones "
+    .asciz	"actuales.~0d"
+HelpTextEs23_1:
+    .ascii	"Esta funci\xf3n es \xfatil si usted desea modificar los sonidos en la parte derecha 2 mientras est\xe1 ejecutando "
+    .asciz	"en la parte derecha 1 o si desea cambiar el sonido de la parte izquierda.~0d"
+    .align	4, 0xff
+HelpPagesEs23:
+    .long	HelpTextEs23_0 - HelpTexts
+    .long	HelpTextEs23_1 - HelpTexts
+    .long	0
+HelpTextEs24_0:
+    .ascii	"El director es una funci\xf3n especial de los teclados Technics que facilita la configuraci\xf3n de sonidos "
+    .ascii	"en el teclado.~0d"
+    .ascii	"Por ejemplo, si hay dos sonidos en todo el teclado, puede usar las partes derecha 1 y derecha 2 "
+    .ascii	"juntas o utilizar un sonido diferente a la derecha y a la izquierda de la divisi\xf3n del teclado.~0d"
+    .asciz	"En este \xfaltimo caso, puede usar las partes derecha 1 e izquierda juntas.~0d"
+    .align	4, 0xff
+HelpPagesEs24:
+    .long	HelpTextEs24_0 - HelpTexts
+    .long	0
+HelpTextEs25_0:
+    .ascii	"El modo de solo se puede configurar para cualquier parte. Este modo es monof\xf3nico y solamente puede "
+    .ascii	"generar una nota a la vez.~0d"
+    .ascii	"Si desea usar solamente una parte (por ejemplo, derecha 1) con el modo de solo seleccionado, el "
+    .ascii	"sonido que se produce corresponde a la \xfaltima tecla ejecutada. ~0d"
+    .ascii	"Cuando se mezclan una parte de solo con otra (por ejemplo, derecha 1 solo y derecha 2 normal), el "
+    .asciz	"sonido de solo se produce para la tecla m\xe1s alta ejecutada.~0d"
+HelpTextEs25_1:
+    .ascii	"Esto significa que, si ejecuta acordes, el sonido de solo es el de la nota m\xe1s alta del acorde.~0d"
+    .ascii	"En el caso de algunos sonidos, el modo de solo se activa autom\xe1ticamente. En la secci\xf3n de Sound "
+    .ascii	"Load Option de los men\xfas Sound y Effect, usted puede configurar la activaci\xf3n o desactivaci\xf3n del "
+    .asciz	"modo de solo, para que se inicie autom\xe1ticamente para cada sonido.~0d"
+    .align	4, 0xff
+HelpPagesEs25:
+    .long	HelpTextEs25_0 - HelpTexts
+    .long	HelpTextEs25_1 - HelpTexts
+    .long	0
+HelpTextEs26_0:
+    .ascii	"El acorde t\xe9cnico agrega notas de armon\xeda a las melod\xedas de una sola nota, convirti\xe9ndolas en acordes "
+    .ascii	"completos.~0d"
+    .ascii	"Las notas de armon\xeda del acorde t\xe9cnico se basan en los acordes que usted ejecuta con la mano izquierda.~0d"
+    .asciz	"Puede seleccionar entre 14 tipos de armon\xeda diferentes:~0d"
+HelpTextEs26_1:
+    .ascii	"Close (cerrada), Open 1 (abierta 1), Open 2 (abierta 2), Duet 1 (d\xfao 1) y Duet 2 (d\xfao 2), Country "
+    .ascii	"(country), Theatre (teatro), Hymn (himno), Block (bloque), Big Band Brass (gran banda de bronces), "
+    .ascii	"Big Band Reeds (gran banda de maderas), Octave (octava), Hard Rock (hard rock) y Fanfare (fanfarria).~0d"
+    .ascii	"Para cambiar el tipo de acorde t\xe9cnico, presione y mantenga oprimido el bot\xf3n Techni-Chord durante "
+    .asciz	"algunos segundos hasta que aparezca la pantalla de configuraci\xf3n.~0d"
+HelpTextEs26_2:
+    .ascii	"El Techni-Chord Orchestrator (orquestador de acorde t\xe9cnico) hace posible asignar notas de armon\xeda "
+    .ascii	"del acorde t\xe9cnico a otras partes del KN, para que las notas de armon\xeda tengan un sonido diferente "
+    .asciz	"a la nota de la melod\xeda y pueda modificarse su volumen.~0d"
+    .align	4, 0xff
+HelpPagesEs26:
+    .long	HelpTextEs26_0 - HelpTexts
+    .long	HelpTextEs26_1 - HelpTexts
+    .long	HelpTextEs26_2 - HelpTexts
+    .long	0
+HelpTextEs27_0:
+    .ascii	"El procesador KN posee un efecto de coro de alta calidad, as\xed como un bot\xf3n de coro dedicado.~0d"
+    .ascii	"La funci\xf3n de coro (Chorus) agrega plenitud y riqueza naturales al sonido general del procesador "
+    .ascii	"KN, mediante la adici\xf3n de un sonido de altura ligeramente diferente al sonido original.~0d"
+    .ascii	"Para cambiar la configuraci\xf3n de la funci\xf3n de coro, simplemente mantenga oprimido el bot\xf3n Chorus "
+    .asciz	"durante unos segundos.~0d"
+HelpTextEs27_1:
+    .ascii	"Aparecer\xe1 en la pantalla la p\xe1gina de configuraci\xf3n de la funci\xf3n Chorus.~0d"
+    .ascii	"Cada sonido tiene un par\xe1metro de intensidad de coro y, cuando usted selecciona el sonido, se configura "
+    .ascii	"autom\xe1ticamente una intensidad de coro apropiada para cada parte. En la secci\xf3n de Sound Load Option "
+    .asciz	"de los men\xfas Sound y Effect, es posible eliminar esta configuraci\xf3n autom\xe1tica.~0d"
+    .align	4, 0xff
+HelpPagesEs27:
+    .long	HelpTextEs27_0 - HelpTexts
+    .long	HelpTextEs27_1 - HelpTexts
+    .long	0
+HelpTextEs28_0:
+    .ascii	"La gran cantidad de sonidos del procesador KN se organizan seg\xfan el nuevo sistema de sonido de Technics "
+    .ascii	"denominado \"NX SOUND\".~0d"
+    .ascii	"\"NX SOUND\", basado en el nivel 2 de MIDI General, es la nueva norma que brinda al KN y a los productos "
+    .asciz	"Technics futuros la m\xe1s amplia compatibilidad.~0d"
+    .align	4, 0xff
+HelpPagesEs28:
+    .long	HelpTextEs28_0 - HelpTexts
+    .long	0
+HelpTextEs29_0:
+    .ascii	"La reverberaci\xf3n digital provee una ambientaci\xf3n sonora natural para el sonido global del KN ofreciendo "
+    .ascii	"diferentes medios ac\xfasticos tales como Room (habitaci\xf3n) y Concert Hall (sala de conciertos).~0d"
+    .ascii	"Para cambiar las configuraciones de la reverberaci\xf3n digital, presione y mantenga oprimido por unos "
+    .ascii	"segundos el bot\xf3n Digital Reverb.~0d"
+    .asciz	"Luego, aparecer\xe1 en la pantalla la p\xe1gina de reverberaci\xf3n digital.~0d"
+    .align	4, 0xff
+HelpPagesEs29:
+    .long	HelpTextEs29_0 - HelpTexts
+    .long	0
+HelpTextEs30_0:
+    .ascii	"La reverberaci\xf3n de micr\xf3fono (MIC Reverb) agrega a la voz un efecto natural de reverberaci\xf3n, con "
+    .ascii	"diferentes configuraciones tales como Stage, Bath Room y Karaoke.~0d"
+    .ascii	"El efecto de micr\xf3fono (MIC Effect) realza la voz agregando efectos tales como cambio de voz (Voice "
+    .asciz	"Changer). ~0d"
+HelpTextEs30_1:
+    .ascii	"Armon\xeda (Harmonizer) agrega voces de armon\xeda. ~0d"
+    .ascii	"Uso el software SMF con una pista de armon\xeda, acordes de Auto Play Chord y Techni-Chord como fuente "
+    .ascii	"de notas de armon\xeda.~0d"
+    .ascii	" ~0d"
+    .ascii	"La reverberaci\xf3n de micr\xf3fono es una unidad dedicada, pero el efecto de micr\xf3fono y el multiefecto "
+    .ascii	"usan la misma unidad DSP, de modo que no es posible usar los efectos Multi Effect para sonido y "
+    .asciz	"MIC Effect para voz al mismo tiempo.~0d"
+HelpTextEs30_2:
+    .ascii	"Usted puede activar la reverberaci\xf3n de micr\xf3fono y el efecto de micr\xf3fono individualmente en esta "
+    .ascii	"p\xe1gina de configuraci\xf3n.~0d"
+    .ascii	" ~0d"
+    .ascii	"Un programa de PC especial llamado \"Audio Recorder\" en el CD-ROM incluido graba la salida de KN "
+    .asciz	"(incluyendo MIC y Line In) como audio digital a trav\xe9s de USB.~0d"
+HelpPagesEs30:
+    .long	HelpTextEs30_0 - HelpTexts
+    .long	HelpTextEs30_1 - HelpTexts
+    .long	HelpTextEs30_2 - HelpTexts
+    .long	0
+HelpTextEs31_0:
+    .ascii	"El bot\xf3n Set de la memoria de panel se usa primariamente para almacenar registros en la memoria "
+    .ascii	"de panel.~0d"
+    .ascii	"Siga este procedimiento:~0d"
+    .ascii	"1) Configure el registro~0d"
+    .ascii	"2) Emplee el bot\xf3n Next Bank (pr\xf3ximo banco) para seleccionar un banco de la memoria de paneles~0d"
+    .ascii	"3) Manteniendo el bot\xf3n Set presionado, presione y mantenga oprimida la memoria de panel en la que "
+    .asciz	"desea almacenar el registro~0d"
+HelpTextEs31_1:
+    .ascii	"El registro queda ahora almacenado en la memoria de panel elegida.~0d"
+    .ascii	"Para cambiar el modo de la memoria de panel, presione y mantenga oprimido por unos segundos el bot\xf3n "
+    .ascii	"Panel Memory Set hasta que aparezca la pantalla de modo de memoria de panel. En la pantalla, seleccione "
+    .ascii	"Normal o Expand.~0d"
+    .ascii	"La p\xe1ginas 2 de esta funci\xf3n contienen las configuraciones de Expand Mode Filter (filtro del modo "
+    .asciz	"expandido).~0d"
+HelpTextEs31_2:
+    .ascii	"Usted puede decidir en detalle qu\xe9 tipo de configuraciones desea recuperar mediante la memoria de "
+    .ascii	"panel.~0d"
+    .ascii	"El bot\xf3n Set de la memoria de panel se usa tambi\xe9n para almacenar registros en la memoria de panel "
+    .asciz	"personalizada.~0d"
+HelpPagesEs31:
+    .long	HelpTextEs31_0 - HelpTexts
+    .long	HelpTextEs31_1 - HelpTexts
+    .long	HelpTextEs31_2 - HelpTexts
+    .long	0
+HelpTextEs32_0:
+    .ascii	"La memoria de panel almacena los registros para facilitar su recuperaci\xf3n. Hay 13 bancos con 8 memorias "
+    .ascii	"de panel cada uno para almacenar 104 registros por vez. Cada banco y cada memoria de panel individual "
+    .ascii	"pueden recibir un nombre, para que usted pueda encontrar f\xe1cilmente el registro que desea. La memoria "
+    .ascii	"de panel tiene dos modos: Normal (normal) y Expand (expandido).~0d"
+    .asciz	"El modo normal llama al registro b\xe1sico, que incluye sonidos, efectos y balances.~0d"
+HelpTextEs32_1:
+    .ascii	"El modo expandido puede llamar a casi todas las configuraciones del teclado y tiene una funci\xf3n "
+    .ascii	"de filtrado que elimina de la memoria de panel componentes particulares del registro.~0d"
+    .ascii	"Si desea m\xe1s informaci\xf3n acerca de la configuraci\xf3n inicial de la memoria de panel y de la selecci\xf3n "
+    .asciz	"de los modos normal o expandido, presione el bot\xf3n Panel Memory Set ahora.~0d"
+    .align	4, 0xff
+HelpPagesEs32:
+    .long	HelpTextEs32_0 - HelpTexts
+    .long	HelpTextEs32_1 - HelpTexts
+    .long	0
+HelpTextEs33_0:
+    .ascii	"El bot\xf3n Next Bank cambia al pr\xf3ximo banco de memorias de panel con s\xf3lo pulsar un bot\xf3n.~0d"
+    .ascii	"El registro no cambia hasta que no se presiona uno de los botones de la memoria de panel.~0d"
+    .asciz	"As\xed, usted puede verificar los bancos para encontrar el registro que desea.~0d"
+    .align	4, 0xff
+HelpPagesEs33:
+    .long	HelpTextEs33_0 - HelpTexts
+    .long	0
+HelpTextEs34_0:
+    .ascii	"Usted puede seleccionar un banco diferente mediante los botones situados a ambos lados de la pantalla.~0d"
+    .ascii	"La p\xe1gina 3 de la visi\xf3n de banco exhibe los nombres de todas las memorias de panel del banco actual. "
+    .ascii	"Desde esta pantalla usted tambi\xe9n puede asignar nombres a los bancos y a cada una de las memorias "
+    .ascii	"de panel.~0d"
+    .ascii	"El bot\xf3n Set de la memoria de panel se usa tambi\xe9n para almacenar registros en la memoria de panel "
+    .asciz	"personalizada.~0d"
+    .align	4, 0xff
+HelpPagesEs34:
+    .long	HelpTextEs34_0 - HelpTexts
+    .long	0
+HelpTextEs35_0:
+    .ascii	"El panel Custom Panel es una memoria de panel especial, en la que usted puede almacenar las configuraciones "
+    .ascii	"de memoria de panel favoritas.~0d"
+    .ascii	"Puede usar la memoria de panel personalizada como configuraci\xf3n de panel por defecto, en lugar de "
+    .ascii	"la inicializaci\xf3n con el panel actual, o como configuraci\xf3n b\xe1sica despu\xe9s de usar las funciones "
+    .ascii	"de ejecuci\xf3n con un bot\xf3n (One Touch Play), estilista musical (Music Stylist ) y la memoria de panel "
+    .asciz	"(Panel Memory).~0d"
+HelpTextEs35_1:
+    .ascii	"Una vez que una configuraci\xf3n se almacena en la memoria de panel personalizada, permanece guardada "
+    .ascii	"hasta que usted la reemplaza. La reinicializaci\xf3n del procesador KN no borra las memorias de panel "
+    .ascii	"personalizadas.~0d"
+    .ascii	"Para almacenar su configuraci\xf3n de panel, siga este procedimiento:~0d"
+    .ascii	"1) Configure el registro.~0d"
+    .asciz	"2) Presione y mantenga oprimido el bot\xf3n Set y presione luego el bot\xf3n Custom Panel.~0d"
+HelpTextEs35_2:
+    .ascii	"Usted puede optar entro cargar todas las configuraciones de panel o los par\xe1metros de memoria de "
+    .asciz	"panel.~0d"
+HelpPagesEs35:
+    .long	HelpTextEs35_0 - HelpTexts
+    .long	HelpTextEs35_1 - HelpTexts
+    .long	HelpTextEs35_2 - HelpTexts
+    .long	0
+HelpTextEs36_0:
+    .ascii	"El bot\xf3n Sequencer Play activa la pantalla de ejecuci\xf3n con secuenciador y muestra 16 Sequencer "
+    .ascii	"Tracks (pistas del secuenciador) y su estado.~0d"
+    .ascii	"Si usted carga una canci\xf3n desde un disquete, el bot\xf3n Sequencer Play se conecta autom\xe1ticamente.~0d"
+    .ascii	"Para ejecutar la canci\xf3n cargada, presione el bot\xf3n Start/Stop.~0d"
+    .ascii	"Usted puede seleccionar cu\xe1l de las 10 canciones internas desea ejecutar y configurar con ellas "
+    .asciz	"un popurr\xed.~0d"
+HelpTextEs36_1:
+    .ascii	"Se puede acceder al Mixer (mezclador) desde la p\xe1gina de ejecuci\xf3n del secuenciador. Cuando se accede "
+    .ascii	"desde el secuenciador, el mezclador se aplica a cada pista en lugar de hacerlo a partes espec\xedficas.~0d"
+    .asciz	"De este modo, usted no necesita saber qu\xe9 parte est\xe1 asignada a cada pista para ajustar las configuraciones.~0d"
+HelpTextEs36_2:
+    .ascii	"Si se presiona el bot\xf3n Exit, el secuenciador contin\xfaa activado, permiti\xe9ndole utilizar otras funciones "
+    .ascii	"mientras se ejecuta la secuencia (por ejemplo, seleccionar un sonido).~0d"
+    .ascii	" ~0d"
+    .asciz	"Para anular la ejecuci\xf3n del secuenciador, presione nuevamente el bot\xf3n Sequencer Play.~0d"
+HelpTextEs36_3:
+    .ascii	"Puede incluir imagines digitales en sus canciones que cambian autom\xe1ticamente con la m\xfasica, tales "
+    .ascii	"como las canciones de demostraci\xf3n integradas. Para saber m\xe1s sobre esta funci\xf3n \"Slide Show\", seleccione "
+    .asciz	"ahora el Sequencer Menu en Program Menus.~0d"
+HelpPagesEs36:
+    .long	HelpTextEs36_0 - HelpTexts
+    .long	HelpTextEs36_1 - HelpTexts
+    .long	HelpTextEs36_2 - HelpTexts
+    .long	HelpTextEs36_3 - HelpTexts
+    .long	0
+HelpTextEs37_0:
+    .ascii	"La funci\xf3n de grabaci\xf3n sencilla es el modo m\xe1s simple de grabar una composici\xf3n en el KN.~0d"
+    .ascii	"Si usted desea registrar una pieza completa con melod\xeda y acordes (con ejecuci\xf3n autom\xe1tica de acorde), "
+    .ascii	"configure el KN para la canci\xf3n, presione el bot\xf3n Easy Record y oprima OK en la pantalla.~0d"
+    .ascii	"Esta funci\xf3n permite omitir el procedimiento de preparaci\xf3n del secuenciador y comenzar a grabar "
+    .asciz	"r\xe1pida y f\xe1cilmente.~0d"
+HelpTextEs37_1:
+    .ascii	"En la pantalla de grabaci\xf3n sencilla usted puede seleccionar una de las 10 canciones internas para "
+    .asciz	"grabar su composici\xf3n.~0d"
+HelpPagesEs37:
+    .long	HelpTextEs37_0 - HelpTexts
+    .long	HelpTextEs37_1 - HelpTexts
+    .long	0
+HelpTextEs39_0:
+    .ascii	"El men\xfa de sonido (Sound) ofrece muchas funciones que le permiten regular el sonido de cada parte "
+    .ascii	"del KN, tanto en p\xe1ginas detalladas para cada parte como utilizando un mezclador, similar a los "
+    .ascii	"mezcladores usados en los estudios profesionales.~0d"
+    .ascii	"Cada sonido del procesador KN tiene un par\xe1metro espec\xedfico de sonido DSP, intensidad de coro, activaci\xf3n/desactivaci\xf3n "
+    .ascii	"de solo, portamento, etc. Simplemente seleccione la funci\xf3n Sound y se agregar\xe1 una configuraci\xf3n "
+    .asciz	"adecuada al sonido.~0d"
+HelpTextEs39_1:
+    .ascii	"El Monitor Setting y Separate Out Setting son funciones \xfatiles para la utilizaci\xf3n de etapa o la "
+    .ascii	"utilizaci\xf3n de grabaci\xf3n.~0d"
+    .ascii	"El Monitor Setting permite desactivar los altavoces del KN si lo desea. Los altavoces se activan "
+    .asciz	"cada ve para su seguridad cuando se conecta el interruptor principal.~0d"
+HelpTextEs39_2:
+    .ascii	"Puede dar salida a la parte o partes deseadas a trav\xe9s de los terminales 2 SUB OUT y seleccione "
+    .ascii	"el Output Mode, Part Assign, desactivaci\xf3n/activaci\xf3n del Main OUT, o desactivaci\xf3n/activaci\xf3n del "
+    .ascii	"efecto Expression en la Separate Out Setting Page.~0d"
+    .ascii	" ~0d"
+    .asciz	"El Sound Load Option le permite eliminar ciertas configuraciones.~0d"
+HelpTextEs39_3:
+    .ascii	"El APC Reverb Setting permite cancelar el nivel de Reverb aplicado a las partes APC dependiendo "
+    .ascii	"de los ritmos por omisi\xf3n y ajusta el nivel Reverb para cada parte APC.~0d"
+    .ascii	"Las funciones de afinaci\xf3n maestra (Master Tuning) y escala de notas (Key Scaling) se ajustan en "
+    .ascii	"el men\xfa Sound.~0d"
+    .ascii	"Si desea m\xe1s informaci\xf3n acerca de acorde t\xe9cnico (Techni-Chord), presione ahora el bot\xf3n Techni-Chord "
+    .asciz	"del panel.~0d"
+HelpPagesEs39:
+    .long	HelpTextEs39_0 - HelpTexts
+    .long	HelpTextEs39_1 - HelpTexts
+    .long	HelpTextEs39_2 - HelpTexts
+    .long	HelpTextEs39_3 - HelpTexts
+    .long	0
+HelpTextEs40_0:
+    .ascii	"El procesador KN tiene 10 efectos DSP que incluyen 5 DSP de sonido (Sound DSP), reverberaci\xf3n (Reverb), "
+    .ascii	"coro (Chorus), efecto m\xfaltiple y de micr\xf3fono (Multi/MIC Effect), reverberaci\xf3n de micr\xf3fono (MIC "
+    .ascii	"Reverb) y ecualizador total (Total Equalizer).~0d"
+    .ascii	"El KN cuenta con una gran cantidad de efectos. Es f\xe1cil seleccionar el efecto que usted necesita "
+    .ascii	"y, si lo desea, modificar totalmente el efecto en la p\xe1gina de configuraci\xf3n de efectos, para guardarlo "
+    .asciz	"como efecto de usuario.~0d"
+HelpTextEs40_1:
+    .ascii	"La funci\xf3n de ecualizador (Equalizer) es un control de tono detallado que altera el sonido general "
+    .ascii	"del procesador KN, para ajustarlo a sus preferencias. ~0d"
+    .ascii	"Cada sonido del procesador KN tiene una configuraci\xf3n de DSP de sonido, intensidad de coro y activaci\xf3n/desactivaci\xf3n "
+    .ascii	"de solo dedicada, de modo que usted s\xf3lo debe seleccionar el sonido y autom\xe1ticamente se le agregar\xe1 "
+    .asciz	"la configuraci\xf3n adecuada. ~0d"
+HelpTextEs40_2:
+    .ascii	"El Sound Load Option le permite eliminar ciertas configuraciones de la funci\xf3n Sound.~0d"
+    .ascii	" ~0d"
+    .ascii	"Usted puede cambiar la ubicaci\xf3n del DSP de sonido y los 2 DSP de sonido de las partes de ejecuci\xf3n "
+    .asciz	"APC, a fin de usarlos en el secuenciador. ~0d"
+HelpTextEs40_3:
+    .ascii	"Las configuraciones de otras funciones incluyen sonido de DSP (Sound DSP), reverberaci\xf3n (Reverb), "
+    .ascii	"coro (Chorus), multiefecto (Multi), efecto de micr\xf3fono (MIC effect) y reverberaci\xf3n de micr\xf3fono "
+    .ascii	"(Mic Reverb). Si desea m\xe1s informaci\xf3n, presione los botones del panel correspondientes a estas "
+    .asciz	"funciones.~0d"
+    .align	4, 0xff
+HelpPagesEs40:
+    .long	HelpTextEs40_0 - HelpTexts
+    .long	HelpTextEs40_1 - HelpTexts
+    .long	HelpTextEs40_2 - HelpTexts
+    .long	HelpTextEs40_3 - HelpTexts
+    .long	0
+HelpTextEs41_0:
+    .ascii	"La funci\xf3n principal del men\xfa de control (Control Menu) es la configuraci\xf3n inicial (Initial Settings), "
+    .ascii	"que restablece la configuraci\xf3n inicial de f\xe1brica para las funciones b\xe1sicas del KN. ~0d"
+    .ascii	"Usted puede optar por reinicializar todo el \xe1rea de ejecuci\xf3n (es decir, todas las funciones programables) "
+    .ascii	"o bien s\xf3lo secciones espec\xedficas. ~0d"
+    .ascii	"La configuraci\xf3n inicial no afecta las configuraciones MIDI, idioma de ayuda, contraste, y otras "
+    .asciz	"configuraciones espec\xedficas del usuario.~0d"
+HelpTextEs41_1:
+    .ascii	"El men\xfa de control incluye funciones relacionadas con el control general del KN, tales como sensibilidad "
+    .ascii	"al tacto (Touch Sensitivity) y funciones de pedal de control (Foot Controller).~0d"
+    .ascii	"El men\xfa de control tambi\xe9n permite ajustar funciones tales como atenuaci\xf3n inicial/final (Fade In/Out), "
+    .asciz	"arreglos de estilo de m\xfasica (Music Style Arranger) y memoria del panel (Panel Memory).~0d"
+    .align	4, 0xff
+HelpPagesEs41:
+    .long	HelpTextEs41_0 - HelpTexts
+    .long	HelpTextEs41_1 - HelpTexts
+    .long	0
+HelpTextEs42_0:
+    .ascii	"MIDI es la sigla de Interfaz Digital para Instrumentos Musicales y denomina a un sistema que permite "
+    .ascii	"interconectar varios instrumentos musicales con una variedad de prop\xf3sitos (por ejemplo, combinar "
+    .ascii	"los sonidos de dos instrumentos o comunicarse con una computadora). \xa1La interfaz MIDI tiene muchos "
+    .ascii	"usos y por ello es posible modificar muchos de sus par\xe1metros! El men\xfa MIDI contiene todas las~0d"
+    .asciz	"funciones necesarias para configurar el KN seg\xfan sus necesidades espec\xedficas.~0d"
+HelpTextEs42_1:
+    .ascii	"La manera m\xe1s sencilla de preparar la interfaz MIDI en el KN es utilizar los MIDI Presets (preconfiguraciones "
+    .ascii	"MIDI) incluidos en este men\xfa.~0d"
+    .ascii	"Estas preconfiguraciones est\xe1n disponibles para muchas aplicaciones musicales t\xedpicas.~0d"
+    .ascii	"Seleccione la que m\xe1s se ajuste a sus requerimientos y presione el bot\xf3n OK.~0d"
+    .asciz	"Los valores preconfigurados quedar\xe1n listos para usarlos.~0d"
+HelpTextEs42_2:
+    .ascii	"Usted puede almacenar sus propias preconfiguraciones MIDI de usuario (User MIDI Settings), las cuales "
+    .ascii	"quedan almacenadas en el KN en forma permanente (a menos que las reemplace). ~0d"
+    .ascii	"El KN es un instrumento General MIDI2, lo que significa que es compatible con el software desarrollado "
+    .asciz	"seg\xfan ese formato (por ejemplo, los software para archivos MIDI est\xe1ndar).~0d"
+HelpTextEs42_3:
+    .ascii	"El KN tambi\xe9n cuenta con un puerto USB que permite la conexi\xf3n directa al puerto USB de una computadora. "
+    .asciz	"Cuando se conecta a un PC, instale primero el controlador USB en el CD-ROM incluido en el PC.~0d"
+HelpPagesEs42:
+    .long	HelpTextEs42_0 - HelpTexts
+    .long	HelpTextEs42_1 - HelpTexts
+    .long	HelpTextEs42_2 - HelpTexts
+    .long	HelpTextEs42_3 - HelpTexts
+    .long	0
+HelpTextEs43_0:
+    .ascii	"El men\xfa Customize le permite configurar su procesador KN seg\xfan sus propios requisitos.~0d"
+    .ascii	"El concepto de personalizaci\xf3n del KN consiste en las dos funciones siguientes:~0d"
+    .ascii	"1) Almacenar sus configuraciones favoritas de manera que permanezcan en el KN a\xfan despu\xe9s de apagar "
+    .asciz	"la unidad. \xa1Hasta puede incluir una imagen en la pantalla!~0d"
+HelpTextEs43_1:
+    .ascii	"2) Crear teclas de acceso r\xe1pido relacionadas con el sonido, el ritmo, los estilos y las funciones "
+    .ascii	"que usted m\xe1s usa.~0d"
+    .ascii	"Usted puede personalizar la p\xe1gina de inicio (Home Page), el empapelado (Wallpaper), el idioma de "
+    .ascii	"ayuda y mensajes (Language), las preferencias de disco (Disk Preferences) y las opciones de carga "
+    .ascii	"de configuraciones MIDI. Todas estas configuraciones permanecer\xe1n cargadas, a\xfan si se mantiene apagado "
+    .asciz	"durante largo tiempo.~0d"
+HelpTextEs43_2:
+    .ascii	"El Video Out Mode Setting permite ajustar el modo de salida (PAL / NTSC) para el terminal VIDEO "
+    .ascii	"OUT cuando aparece en la pantalla de KN, SLIDE SHOWS o Lyrics en un monitor de video externo o TV.~0d"
+    .ascii	"La funci\xf3n de protecci\xf3n de datos (Data Protection) permite decidir en detalle qu\xe9 tipo de configuraciones "
+    .ascii	"desea mantener sin cambios cuando usa las funciones de estilista musical (Music Stylist), MSA, ejecuci\xf3n "
+    .asciz	"con un bot\xf3n (One Touch Play) y carga de disco (Disk load).~0d"
+HelpTextEs43_3:
+    .asciz	"Las configuraciones de p\xe1gina de inicio y favoritos se pueden guardar o cargar desde un disquete.~0d"
+    .align	4, 0xff
+HelpPagesEs43:
+    .long	HelpTextEs43_0 - HelpTexts
+    .long	HelpTextEs43_1 - HelpTexts
+    .long	HelpTextEs43_2 - HelpTexts
+    .long	HelpTextEs43_3 - HelpTexts
+    .long	0
+HelpTextEs44_0:
+    .ascii	"La funci\xf3n Sound Edit (edici\xf3n de sonido) incorpora par\xe1metros de edici\xf3n complejos, similares a "
+    .ascii	"los de un sintetizador profesional, que permiten editar cualquiera de los sonidos preconfigurados "
+    .ascii	"y almacenarlos en una de las memorias de grupos de sonido.~0d"
+    .asciz	"La funci\xf3n Easy Edit (edici\xf3n sencilla) proporciona una gama simple de par\xe1metros en una misma p\xe1gina.~0d"
+    .align	4, 0xff
+HelpPagesEs44:
+    .long	HelpTextEs44_0 - HelpTexts
+    .long	0
+HelpTextEs45_0:
+    .ascii	"El men\xfa de secuenciador (Sequencer) brinda acceso a funciones avanzadas, similares a las de los "
+    .ascii	"programas secuenciadores de computadora. La p\xe1gina principal del men\xfa de secuenciador tiene tres "
+    .ascii	"opciones: grabar y editar (Record & Edit), copiar y pegar (Copy & Paste) y editar gama (Range Edit). "
+    .ascii	"~0d"
+    .asciz	"La p\xe1gina principal incluye tambi\xe9n una funci\xf3n muy \xfatil denominada Panel Write (escritura de panel).~0d"
+HelpTextEs45_1:
+    .ascii	"Si desea cambiar los sonidos y las configuraciones usadas al comienzo de una canci\xf3n, simplemente "
+    .ascii	"haga los cambios y pulse Panel Write. Las nuevas configuraciones se almacenar\xe1n al comienzo de la "
+    .ascii	"canci\xf3n.~0d"
+    .ascii	" ~0d"
+    .asciz	"El SD Audio Synchro permite iniciar una canci\xf3n de secuenciador con un sonido SD Audio.~0d"
+HelpTextEs45_2:
+    .ascii	"El men\xfa Record & Edit incluye funciones que se usan para crear una canci\xf3n, tales como tiempo real "
+    .ascii	"(Realtime), paso a paso (Step) y grabaci\xf3n inmediata (Punch Record), as\xed como funciones muy \xfatiles "
+    .ascii	"para modificar una canci\xf3n, tales como editar notas (Note Edit), editar bater\xeda (Drum Edit) y redondear "
+    .ascii	"tiempos (Quantize).~0d"
+    .ascii	" ~0d"
+    .ascii	"Existen tambi\xe9n funciones para preparar el secuenciador, tales como asignar pistas (Track Assign) "
+    .asciz	"y retoque (After Touch). ~0d"
+HelpTextEs45_3:
+    .ascii	"Se puede crear una exhibici\xf3n de diapositivas de multimedios de im\xe1genes sincronizadas con una canci\xf3n "
+    .ascii	"de secuenciador. Ajuste los puntos de localizaci\xf3n (PIC) en la pista de control de canci\xf3n para "
+    .ascii	"el comp\xe1s donde aparezcan las im\xe1genes de la biblioteca interna del KN o sus propias im\xe1genes (por "
+    .ascii	"ejemplo de una c\xe1mara SD).~0d"
+    .ascii	"El men\xfa de cortar y pegar (Copy & Paste) incluye funciones que permiten copiar y repetir partes "
+    .asciz	"de la canci\xf3n para armar m\xe1s r\xe1pidamente la secuencia completa.~0d"
+HelpTextEs45_4:
+    .ascii	"Puede tambi\xe9n insertar, suprimir y borrar compases. Este men\xfa incluye una funci\xf3n de conversi\xf3n "
+    .ascii	"de APC a SMF (APC to SMF convert). Use esta funci\xf3n para convertir una canci\xf3n grabada con el sistema "
+    .ascii	"APC en una secuencia multipistas completa, con las notas de cada parte APC grabada en una pista "
+    .asciz	"separada. ~0d"
+HelpTextEs45_5:
+    .ascii	"El men\xfa de editar gama (Range Edit) incluye funciones para alterar detalles de una canci\xf3n en una "
+    .ascii	"gama reducida, tal como redondear tiempos (Quantize), transponer (Transpose), cambiar nota (Note "
+    .asciz	"Change), cambiar velocidad (Velocity Change) y avance/retardo (Advance/Delay).~0d"
+    .align	4, 0xff
+HelpPagesEs45:
+    .long	HelpTextEs45_0 - HelpTexts
+    .long	HelpTextEs45_1 - HelpTexts
+    .long	HelpTextEs45_2 - HelpTexts
+    .long	HelpTextEs45_3 - HelpTexts
+    .long	HelpTextEs45_4 - HelpTexts
+    .long	HelpTextEs45_5 - HelpTexts
+    .long	0
+HelpTextEs46_0:
+    .ascii	"El men\xfa de compositor (Composer) le permite crear sus propios compases de acompa\xf1amiento o cargar "
+    .ascii	"nuevos compases desde un software en disquete. El men\xfa de compositor contiene todas las funciones "
+    .asciz	"necesarias para crear sus propios compases de compositor o bien copiar y editar compases predeterminados.~0d"
+HelpTextEs46_1:
+    .ascii	"El men\xfa Composer incluye tambi\xe9n la funci\xf3n de compositor sencillo (Easy Composer), que permite "
+    .ascii	"crear frases combinando frases musicales preprogramadas y copiar nuevas frases del compositor al "
+    .ascii	"grupo de ritmo personalizado, tales como datos de estilo. ~0d"
+    .ascii	"Esta funci\xf3n permite almacenar nuevas frases, registros y teclas de usuario (User Pads), con sonidos "
+    .ascii	"y efectos originales creados o cargados permanentemente de un disquete en la secci\xf3n de personalizaci\xf3n "
+    .asciz	"del estilista musical (Music Stylist).~0d"
+    .align	4, 0xff
+HelpPagesEs46:
+    .long	HelpTextEs46_0 - HelpTexts
+    .long	HelpTextEs46_1 - HelpTexts
+    .long	0
+HelpTextEs47_0:
+    .ascii	"El men\xfa Performance Pads contiene las grabaciones de frases correspondientes a cada uno de los 3 "
+    .ascii	"bancos del usuario (A/B/C), en los que usted puede grabar frases originales en modos de tiempo real, "
+    .ascii	"o paso a paso.~0d"
+    .ascii	"Usted puede configurar tambi\xe9n la forma en que funciona cada tecla de los bancos de usuario en el "
+    .asciz	"submen\xfa de grabaci\xf3n de par\xe1metros de ejecuci\xf3n (Play Setting).~0d"
+HelpTextEs47_1:
+    .ascii	"COMIENZO (START): Seleccione esta opci\xf3n si el comienzo de la frase debe estar sincronizado con "
+    .ascii	"el comienzo del comp\xe1s cuando el ritmo se est\xe9 ejecutando.~0d"
+    .ascii	"REPETIR (LOOP): Permite crear una frase que se repite continuamente cuando usted la ejecuta.~0d"
+    .ascii	"Usted puede tambi\xe9n dar nombres a los bancos del usuario y sus teclas individuales en el submen\xfa "
+    .asciz	"de grabaci\xf3n.~0d"
+HelpTextEs47_2:
+    .ascii	"La funci\xf3n de bancos compiladores (Compile Banks) permite agrupar frases favoritas de distintos "
+    .ascii	"bancos.~0d"
+    .ascii	"La funci\xf3n de copiar frase (Phrase Copy) brinda la capacidad de copiar una frase de una tecla a "
+    .ascii	"otra.~0d"
+    .ascii	"La funci\xf3n de copiar de secuenciador a tecla (Seq to Pad Copy) se usa para copiar una frase y una "
+    .asciz	"secuencia de acordes de una canci\xf3n del secuenciador.~0d"
+    .align	4, 0xff
+HelpPagesEs47:
+    .long	HelpTextEs47_0 - HelpTexts
+    .long	HelpTextEs47_1 - HelpTexts
+    .long	HelpTextEs47_2 - HelpTexts
+    .long	0
+HelpTextEs48_0:
+    .ascii	"El men\xfa Disk se emplea cuando es necesario cargar y guardar informaci\xf3n en un disquete. Inserte "
+    .ascii	"un disquete y el KN seleccionar\xe1~0d"
+    .ascii	"autom\xe1ticamente el men\xfa de disco.El KN puede cargar muchos tipos de software, tales como la colecci\xf3n "
+    .ascii	"de discos de m\xfasica de Technics y software de canciones, como archivos MIDI est\xe1ndar y discos de "
+    .ascii	"orquesta o piano. Los archivos MIDI est\xe1ndar pueden ser cargados en el secuenciador o bien ser ejecutados "
+    .asciz	"directamente desde el disco; el disco de orquesta s\xf3lo puede ser ejecutado directamente.~0d"
+HelpTextEs48_1:
+    .ascii	"Usted puede ejecutar las canciones como un popurr\xed; si un archivo MIDI est\xe1ndar incluye letras, "
+    .ascii	"el KN las exhibe en la pantalla personalizada en que se ejecuta la canci\xf3n. El procesador KN puede "
+    .ascii	"tambi\xe9n cargar y guardar estilos personalizados.~0d"
+    .ascii	" ~0d"
+    .ascii	"Se puede hacer una copia de reserva y recuperar los datos de ejecuci\xf3n interna del KN a su PC a "
+    .ascii	"trav\xe9s del USB, utilizando un programa PC especial llamado \"Song Manager\" en el CD-ROM incluido. "
+    .asciz	"~0d"
+HelpTextEs48_2:
+    .ascii	"De esta forma puede utilizar el disco duro de su PC como medio de memorizaci\xf3n de datos para el "
+    .ascii	"KN. ~0d"
+    .ascii	" ~0d"
+    .ascii	"Tambi\xe9n puede enviar contenidos como canciones o patrones de compositor recibidos de Internet directamente "
+    .asciz	"al KN a trav\xe9s del USB con el programa Song Manager. ~0d"
+HelpTextEs48_3:
+    .ascii	"El KN puede cargar software de estilos de varios fabricantes utilizando un programa conversor de "
+    .asciz	"estilos. Para obtener m\xe1s detalles, vea el manual del propietario.~0d"
+    .align	4, 0xff
+HelpPagesEs48:
+    .long	HelpTextEs48_0 - HelpTexts
+    .long	HelpTextEs48_1 - HelpTexts
+    .long	HelpTextEs48_2 - HelpTexts
+    .long	HelpTextEs48_3 - HelpTexts
+    .long	0
+HelpTextEs49_0:
+    .ascii	"Utilice los botones del grupo de ritmo para seleccionar entre los 220 esquemas de ritmo preconfigurados "
+    .ascii	"del KN. Los esquemas se agrupan en 15 categor\xedas, cada una de las cuales tiene un bot\xf3n de grupo.~0d"
+    .ascii	"Despu\xe9s de seleccionar el grupo de ritmo, presione uno de los botones a la izquierda o a la derecha "
+    .asciz	"de la pantalla para elegir un esquema de ritmo.~0d"
+HelpTextEs49_1:
+    .ascii	"La pantalla puede exhibir diez composiciones de ritmo en una p\xe1gina. Si hay m\xe1s de diez ritmos en "
+    .ascii	"un grupo cualquiera, aparece la leyenda PAGE 1 / 3 (p\xe1gina 1 de 3) en la esquina superior derecha "
+    .ascii	"de la pantalla. Emplee los botones de p\xe1gina arriba/abajo para seleccionar la pr\xf3xima hoja.~0d"
+    .ascii	"Custom Rhythm Group es un grupo especial en el que usted puede almacenar sus frases de compositor "
+    .asciz	"favoritas con datos de estilo (registro).~0d"
+HelpTextEs49_2:
+    .ascii	"Estos datos pueden ser frases y estilos preprogramados que usted modific\xf3 o cre\xf3, as\xed como datos "
+    .ascii	"de software de disquete tales como la colecci\xf3n de discos musicales de Technics. ~0d"
+    .ascii	"Una vez que haya almacenado los estilos en el estilista personalizado (Custom Stylist), se mantendr\xe1n "
+    .ascii	"all\xed hasta que los reemplace por otro estilo. ~0d"
+    .asciz	"La inicializaci\xf3n del procesador KN no anula los estilos personalizados.~0d"
+HelpPagesEs49:
+    .long	HelpTextEs49_0 - HelpTexts
+    .long	HelpTextEs49_1 - HelpTexts
+    .long	HelpTextEs49_2 - HelpTexts
+    .long	0
+HelpTextEs50_0:
+    .ascii	"El Composer (compositor) permite crear composiciones de acompa\xf1amiento propias o cargar nuevos acompa\xf1amientos "
+    .ascii	"desde un disquete.~0d"
+    .ascii	"El bot\xf3n Composer Memory se emplea para seleccionar el esquema del compositor que desea emplear.~0d"
+    .ascii	"Elija uno de los tres bancos de compositor (A, B y C) a la izquierda de la pantalla y una de las "
+    .asciz	"cuatro memorias de cada banco, a la derecha de la misma.~0d"
+HelpTextEs50_1:
+    .ascii	"Tambi\xe9n puede emplear los botones Rhythm Variation (variaci\xf3n de ritmos) para cambiar entre las "
+    .ascii	"cuatro memorias de cada banco del compositor.~0d"
+    .ascii	"Si presiona y mantiene presionado el bot\xf3n Composer Memory mientras se inserta un disquete, se activa "
+    .ascii	"autom\xe1ticamente la pantalla Disk Load (carga del disco) para cargar esquemas de compositor desde "
+    .asciz	"un disquete.~0d"
+    .align	4, 0xff
+HelpPagesEs50:
+    .long	HelpTextEs50_0 - HelpTexts
+    .long	HelpTextEs50_1 - HelpTexts
+    .long	0
+HelpTextEs51_0:
+    .ascii	"El arreglador musical permite cambiar los sonidos empleados en un esquema de acompa\xf1amiento. Siga "
+    .ascii	"este procedimiento para crear sus propias variaciones de acompa\xf1amiento:~0d"
+    .ascii	"1) Seleccione un ritmo.~0d"
+    .ascii	"2) Presione el bot\xf3n SET (configurar) del arreglador musical.~0d"
+    .ascii	"3) Seleccione una parte de acorde autom\xe1tico en la pantalla.~0d"
+    .ascii	"4) Cambie el sonido empleando los botones de Sound Select (selecci\xf3n de sonidos), con efecto digital "
+    .asciz	"si lo desea.~0d"
+HelpTextEs51_1:
+    .ascii	"5) Repita la operaci\xf3n para las otras partes.~0d"
+    .asciz	"6) Para completar el procedimiento, presione el bot\xf3n SET.~0d"
+    .align	4, 0xff
+HelpPagesEs51:
+    .long	HelpTextEs51_0 - HelpTexts
+    .long	HelpTextEs51_1 - HelpTexts
+    .long	0
+HelpTextEs52_0:
+    .ascii	"El arreglador musical permite cambiar los sonidos usados en el esquema de acompa\xf1amiento.~0d"
+    .ascii	"El arreglador incluye algunas combinaciones preconfiguradas.~0d"
+    .ascii	"Solamente presione el bot\xf3n para conectarlo y escuche el cambio en el esquema del acompa\xf1amiento~0d"
+    .ascii	"Usted puede preconfigurar sus propios cambios de sonido empleando el bot\xf3n SET (configurar) del "
+    .asciz	"arreglador musical.~0d"
+    .align	4, 0xff
+HelpPagesEs52:
+    .long	HelpTextEs52_0 - HelpTexts
+    .long	0
+HelpPagesEs53:
+    .long	0
+HelpTextEs54_0:
+    .ascii	"El bot\xf3n de acorde autom\xe1tico proporciona un acompa\xf1amiento profesionalmente arreglado, adecuado "
+    .ascii	"a cada uno de los 220 estilos de ritmo del KN.~0d"
+    .ascii	" ~0d"
+    .asciz	"El acompa\xf1amiento sigue los acordes que usted toca.~0d"
+HelpTextEs54_1:
+    .ascii	"Al presionar este bot\xf3n se exhiben las siguientes opciones:~0d"
+    .ascii	"Basic (b\xe1sico): Le permite ejecutar con un solo dedo o con acordes digitados. El modo One Finger "
+    .ascii	"(un dedo) funciona autom\xe1ticamente cuando usted toca una nota; si usted toca sus propios acordes, "
+    .asciz	"se reconocer\xe1n las armon\xedas b\xe1sicas.~0d"
+HelpTextEs54_2:
+    .ascii	"FINGERED (digitado): Reconoce el acorde completo que usted toca a la izquierda de la divisi\xf3n del "
+    .ascii	"teclado.~0d"
+    .ascii	"PIANIST (pianista): Trabaja sin la divisi\xf3n del teclado para poder tocar un sonido a en todo el "
+    .ascii	"teclado.~0d"
+    .ascii	"MEMORY (memoria): Mantiene el acorde que usted est\xe1 tocando a\xfan despu\xe9s de soltar las teclas.~0d"
+    .asciz	"El acompa\xf1amiento sigue con la misma armon\xeda hasta que se ejecuta un nuevo acorde.~0d"
+HelpTextEs54_3:
+    .ascii	"ON BASS (bajos): Cuando usted emplea los modos digitado o pianista, On Bass ejecuta la l\xednea de "
+    .ascii	"bajos alrededor de la nota m\xe1s baja del acorde que usted est\xe1 tocando, en lugar de la nota ra\xedz "
+    .asciz	"del mismo.~0d"
+    .align	4, 0xff
+HelpPagesEs54:
+    .long	HelpTextEs54_0 - HelpTexts
+    .long	HelpTextEs54_1 - HelpTexts
+    .long	HelpTextEs54_2 - HelpTexts
+    .long	HelpTextEs54_3 - HelpTexts
+    .long	0
+HelpTextEs55_0:
+    .ascii	"El modo Count Intro le permite seleccionar el sonido de la cuenta de introducci\xf3n:.~0d"
+    .ascii	"Simple: Palillo de bater\xeda~0d"
+    .asciz	"Voz: Cuenta de voz~0d"
+    .align	4, 0xff
+HelpPagesEs55:
+    .long	HelpTextEs55_0 - HelpTexts
+    .long	0
+HelpTextEs56_0:
+    .ascii	"La funci\xf3n Left Hold (izquierda sostenida) mantiene el sonido en la parte izquierda del director "
+    .asciz	"cuando se utiliza el acorde autom\xe1tico.~0d"
+HelpPagesEs56:
+    .long	HelpTextEs56_0 - HelpTexts
+    .long	0
+HelpTextEs57_0:
+    .ascii	"La b\xfasqueda de acordes (Chord Finder) es una funci\xf3n de aprendizaje muy ventajosa, que le ense\xf1a "
+    .ascii	"c\xf3mo tocar acordes reconocidos por el sistema APC (ejecuci\xf3n autom\xe1tica de acorde) del KN.~0d"
+    .ascii	"Seleccione un tipo de ra\xedz (Root) y de acorde (Chord); las notas aparecen en un teclado en la pantalla. "
+    .asciz	"Usted puede seleccionar distintos acordes, si el sistema del KN los reconoce.~0d"
+HelpTextEs57_1:
+    .ascii	"Tambi\xe9n hay un bot\xf3n de ejecuci\xf3n (Play) que toca el sonido del acorde que usted ha seleccionado.~0d"
+    .ascii	"La b\xfasqueda de acordes (Chord Finder) es una funci\xf3n de aprendizaje muy ventajosa, que le ense\xf1a "
+    .asciz	"c\xf3mo tocar acordes reconocidos por el sistema de APC (ejecuci\xf3n autom\xe1tica de acorde) del KN.~0d"
+HelpTextEs57_2:
+    .ascii	"Seleccione un tipo de ra\xedz (Root) y de acorde (Chord); las notas aparecen en un teclado en la pantalla. "
+    .ascii	"Usted puede seleccionar distintos acordes, si el sistema del KN los reconoce.~0d"
+    .asciz	"Tambi\xe9n hay un bot\xf3n de ejecuci\xf3n (Play) que toca el sonido del acorde que usted ha seleccionado.~0d"
+    .align	4, 0xff
+HelpPagesEs57:
+    .long	HelpTextEs57_0 - HelpTexts
+    .long	HelpTextEs57_1 - HelpTexts
+    .long	HelpTextEs57_2 - HelpTexts
+    .long	0
+HelpTextEs58_0:
+    .ascii	"Ejecuci\xf3n autom\xe1tica de Acorde (Auto Play Chord) ofrece un arreglo profesional de acompa\xf1amiento "
+    .ascii	"que se adapta a cada uno de los 220 estilos de ritmo (Rhythm) del KN. Este acompa\xf1amiento sigue "
+    .asciz	"los acordes que usted ejecuta.~0d"
+    .align	4, 0xff
+HelpPagesEs58:
+    .long	HelpTextEs58_0 - HelpTexts
+    .long	0
+HelpTextEs59_0:
+    .ascii	"Este bot\xf3n tiene dos funciones. En la p\xe1gina original o en el mezclador se emplea para acceder a "
+    .ascii	"los controles de balance para otras partes del KN, tales como las partes 1 a 16. Cuando se usa el "
+    .ascii	"secuenciador, el mezclador se aplica a cada pista en lugar de hacerlo a partes espec\xedficas, por "
+    .ascii	"lo que no es necesario saber qu\xe9 parte est\xe1 asignada a una pista para ajustar sus valores.~0d"
+    .ascii	"El mezclador puede exhibir los valores de 16 pistas a la vez, de modo que el bot\xf3n permite seleccionar "
+    .asciz	"las partes APC.~0d"
+    .align	4, 0xff
+HelpPagesEs59:
+    .long	HelpTextEs59_0 - HelpTexts
+    .long	0
+HelpTextEs60_0:
+    .ascii	"La retenci\xf3n en pantalla mantiene la p\xe1gina actual en la pantalla hasta que se anula esa funci\xf3n "
+    .ascii	"o se presiona el bot\xf3n EXIT.~0d"
+    .ascii	"La retenci\xf3n en pantalla es \xfatil porque algunas p\xe1ginas y mensajes (por ejemplo las p\xe1ginas de ritmo "
+    .ascii	"o de grupos de sonido, o los mensajes de error) s\xf3lo se exhiben durante un per\xedodo muy breve.~0d"
+    .ascii	"En la secci\xf3n Display Time Out (tiempo de borrado de pantalla) del men\xfa Customize, usted puede hacer "
+    .asciz	"que ciertos tipos de p\xe1ginas activen autom\xe1ticamente la funci\xf3n de retenci\xf3n en pantalla.~0d"
+    .align	4, 0xff
+HelpPagesEs60:
+    .long	HelpTextEs60_0 - HelpTexts
+    .long	0
+HelpTextEs61_0:
+    .ascii	"Utilice los botones del grupo de sonido (Sound Group) para elegir entre m\xe1s de 1000 sonidos predeterminados "
+    .ascii	"en el KN, y entre las 40 memorias de sonido (Sound Memories). Los sonidos est\xe1n agrupados en 16 "
+    .ascii	"categor\xedas, cada una con su propio bot\xf3n de grupo de sonido.~0d"
+    .ascii	"La gran cantidad de sonidos del procesador KN se organizan seg\xfan el nuevo sistema de sonido de Technics "
+    .asciz	"denominado \"NX SOUND\".~0d"
+HelpTextEs61_1:
+    .ascii	"\"NX SOUND\", basado en el nivel 2 de MIDI General, es la nueva norma que brinda al KN y a los productos "
+    .ascii	"Technics futuros la m\xe1s amplia compatibilidad.~0d"
+    .ascii	" ~0d"
+    .ascii	"Cuando presiona uno de los botones de grupo de sonido, los sonidos de ese grupo aparecen en la pantalla. "
+    .ascii	"Presione uno de los botones situados a la izquierda o a la derecha de la pantalla para elegir el "
+    .asciz	"sonido que desea utilizar.~0d"
+HelpTextEs61_2:
+    .ascii	"La pantalla muestra diez sonidos en una p\xe1gina. Utilice los botones Page Up y Page Down para seleccionar "
+    .ascii	"la p\xe1gina anterior o siguiente.~0d"
+    .ascii	"El grupo de sonido incluye un grupo de memoria (Memory Group) en el que usted puede almacenar 40 "
+    .asciz	"sonidos editados.~0d"
+    .align	4, 0xff
+HelpPagesEs61:
+    .long	HelpTextEs61_0 - HelpTexts
+    .long	HelpTextEs61_1 - HelpTexts
+    .long	HelpTextEs61_2 - HelpTexts
+    .long	0
+HelpTextEs62_0:
+    .ascii	"El registro digital (Digital Drawbar) permite obtener los sonidos de un \xf3rgano de tonos cl\xe1sico, "
+    .ascii	"con nueve registros y dos tonos de percusi\xf3n en la pantalla. Utilice los botones de balance para "
+    .ascii	"ajustar los registros. Adem\xe1s, usted puede ajustar la velocidad del efecto de altavoz giratorio, "
+    .asciz	"en modo r\xe1pido o lento.~0d"
+HelpTextEs62_1:
+    .ascii	"La configuraci\xf3n de los registros permite elegir entre registros de jazz (Jazz Drawbars) y registros "
+    .ascii	"de rock (Rock Drawbars) y editar algunos par\xe1metros, como tiempo de ataque (Attack) y ca\xedda (Decay) "
+    .asciz	"y volumen de percusi\xf3n.~0d"
+    .align	4, 0xff
+HelpPagesEs62:
+    .long	HelpTextEs62_0 - HelpTexts
+    .long	HelpTextEs62_1 - HelpTexts
+    .long	0
+HelpTextEs63_0:
+    .ascii	"El procesador KN cuenta con una gran cantidad de sonidos. Los m\xe1s importantes para la ejecuci\xf3n "
+    .ascii	"manual se asignan a los grupos de sonidos, con el n\xfamero de sonidos de cada grupo limitado para "
+    .ascii	"facilitar el acceso.~0d"
+    .ascii	"Usted puede seleccionar entre una gran cantidad de sonidos (como GM nivel 2, sonido NX, etc.) en "
+    .ascii	"la p\xe1gina de Sound Explorer.~0d"
+    .ascii	"Hay 2 formas de encontrar el grupo que desea utilizar por Category o seleccionando de una lista "
+    .asciz	"alfab\xe9tica.~0d"
+HelpTextEs63_1:
+    .ascii	"Para seleccionar el sonido, siga este procedimiento:~0d"
+    .ascii	"1) Presione el bot\xf3n Sound Explorer.~0d"
+    .ascii	"2) Seleccione la forma de encontrar Category o Alphabet en la pantalla.~0d"
+    .ascii	"3) Seleccione un grupo de sonido (Sound Group) en la pantalla.~0d"
+    .ascii	"4) La pantalla muestra diez sonidos en cada p\xe1gina. Use los botones de avance/retroceso de p\xe1gina "
+    .asciz	"para seleccionar la p\xe1gina siguiente.~0d"
+HelpTextEs63_2:
+    .ascii	"5) Presione uno de los botones de la izquierda o la derecha de la pantalla para seleccionar el sonido "
+    .ascii	"que desea usar.~0d"
+    .ascii	" ~0d"
+    .ascii	"El Alphabet muestra todos los sonidos individuales en una lista alfab\xe9tica. Cuando se familiarice "
+    .asciz	"con sus sonidos favoritos, podr\xe1 encontrarlos f\xe1cilmente con esta funci\xf3n.~0d"
+HelpTextEs63_3:
+    .ascii	"Se muestran tambi\xe9n como referencia los bits m\xe1s significativos (MSB) y menos significativos (LSB) "
+    .ascii	"de selecci\xf3n de banco MIDI, y los n\xfameros de cambio de programa correspondientes a cada sonido del "
+    .asciz	"mapa de sonidos NX.~0d"
+    .align	4, 0xff
+HelpPagesEs63:
+    .long	HelpTextEs63_0 - HelpTexts
+    .long	HelpTextEs63_1 - HelpTexts
+    .long	HelpTextEs63_2 - HelpTexts
+    .long	HelpTextEs63_3 - HelpTexts
+    .long	0
+HelpTextEs64_0:
+    .ascii	"La funci\xf3n de sostenido extingue el sonido gradualmente despu\xe9s de liberar una tecla.~0d"
+    .ascii	"La configuraci\xf3n inicial del interruptor de pedal 1 incluye esta funci\xf3n.~0d"
+    .asciz	"As\xed, usted puede usar un interruptor de pedal como si fuera el pedal de sostenido de un piano.~0d"
+    .align	4, 0xff
+HelpPagesEs64:
+    .long	HelpTextEs64_0 - HelpTexts
+    .long	0
+HelpTextEs65_0:
+    .ascii	"El efecto digital mejora los sonidos del KN agregando efectos tales como Chorus (coro), Celeste "
+    .ascii	"(celeste) y Organ Tremolo (tr\xe9molo de \xf3rgano).~0d"
+    .ascii	"Cada sonido del KN tiene un efecto digital dedicado, de manera que al presionar el bot\xf3n Digital "
+    .asciz	"Effect se agrega al sonido un efecto apropiado.~0d"
+HelpTextEs65_1:
+    .ascii	"En casos en que el efecto digital sea imprescindible para lograr un sonido determinado, el bot\xf3n "
+    .ascii	"Digital Effect se conecta autom\xe1ticamente al seleccionar el sonido (por ejemplo, al elegir \xf3rgano "
+    .asciz	"de jazz se activa el tr\xe9molo de \xf3rgano).~0d"
+HelpPagesEs65:
+    .long	HelpTextEs65_0 - HelpTexts
+    .long	HelpTextEs65_1 - HelpTexts
+    .long	0
+HelpTextEs66_0:
+    .ascii	"La funci\xf3n Sound DSP funciona como procesador de efectos de estudio, proporcionando efectos de inserci\xf3n, "
+    .ascii	"tales como distorsi\xf3n, excitador y retardo.~0d"
+    .ascii	"Cada sonido tiene par\xe1metros de DSP de sonido y, cuando usted selecciona el sonido para una parte "
+    .ascii	"que puede usar DSP de sonido, se configuran autom\xe1ticamente par\xe1metros apropiados.~0d"
+    .ascii	"En la secci\xf3n de Sound Load Option de los men\xfas Sound y Effect es posible eliminar esta configuraci\xf3n "
+    .asciz	"autom\xe1tica.~0d"
+HelpTextEs66_1:
+    .ascii	"En la secci\xf3n de asignaci\xf3n (Allocation) del men\xfa de efectos, usted puede cambiar la asignaci\xf3n "
+    .ascii	"de Sound DSP y de los 2 DSP de sonido correspondientes a la ejecuci\xf3n APC para las partes seleccionadas "
+    .ascii	"del secuenciador. ~0d"
+    .ascii	"Las partes derecha 1, derecha 2 e izquierda (ejecutadas manualmente) pueden siempre usar su propio "
+    .asciz	"DSP de sonido.~0d"
+HelpTextEs66_2:
+    .ascii	"Para cambiar la configuraci\xf3n de la funci\xf3n de DSP de sonido, simplemente mantenga oprimido el bot\xf3n "
+    .asciz	"Sound DSP durante unos segundos. Aparecer\xe1 en la pantalla la p\xe1gina Sound DSP.~0d"
+    .align	4, 0xff
+HelpPagesEs66:
+    .long	HelpTextEs66_0 - HelpTexts
+    .long	HelpTextEs66_1 - HelpTexts
+    .long	HelpTextEs66_2 - HelpTexts
+    .long	0
+HelpTextEs67_0:
+    .ascii	"Cada tipo de DSP de sonido (Sound DSP) tiene una variaci\xf3n que modifica el car\xe1cter de la configuraci\xf3n "
+    .ascii	"actual.~0d"
+    .ascii	"Por ejemplo, mediante el bot\xf3n Vari, puede ajustarse la velocidad efecto de altavoz giratorio de "
+    .asciz	"r\xe1pida a lenta.~0d"
+    .align	4, 0xff
+HelpPagesEs67:
+    .long	HelpTextEs67_0 - HelpTexts
+    .long	0
+HelpTextEs68_0:
+    .ascii	"Utilice el men\xfa SD cuando necesite cargar o memorizar de una tarjeta SD. ~0d"
+    .ascii	" ~0d"
+    .ascii	"El KN puede cargar y memorizar los siguientes 2 tipos de software.~0d"
+    .ascii	"(1) Archivos de formato Technics: La tarjeta SD puede memorizar un inmenso n\xfamero de archivos y "
+    .ascii	"para su conveniencia puede archivarlos en hasta 99 carpetas. Puede clasificar archivos por carpeta, "
+    .asciz	"alfab\xe9ticamente o por n\xfamero.~0d"
+HelpTextEs68_1:
+    .ascii	"(2) Standard MIDI File (SMF): El KN utiliza el formato SD Sound, el nuevo Standard Midi File para "
+    .ascii	"SD. El KN clasifica las canciones SD Sound en Play Lists de la misma forma que SD Audio. Cuando "
+    .ascii	"se carga una canci\xf3n, seleccione una Play List y seleccione la canci\xf3n deseada. Para la memorizaci\xf3n, "
+    .ascii	"memorice la canci\xf3n y cree o edite una Play List.~0d"
+    .ascii	"El KN reproduce el SD Sound (SMF) y SD Audio directamente de la tarjeta SD y los clasifica en las "
+    .asciz	"Play Lists. ~0d"
+HelpTextEs68_2:
+    .ascii	"Puede ver todas las canciones a la vez en Default Play List y agrupe todas las canciones en sus "
+    .ascii	"propias Play Lists. Por ejemplo, si ejecuta en una fiesta, puede agrupar todas las canciones para "
+    .ascii	"determinada selecci\xf3n en una Play List. ~0d"
+    .ascii	"La indicaci\xf3n Favorite Songs permite crear un \xe1lbum de sus canciones favoritas en el formato Technics "
+    .ascii	"que puede disponer en un orden espec\xedfico para facilitar la carga de las canciones favoritas para "
+    .asciz	"su ejecuci\xf3n inmediata.~0d"
+HelpTextEs68_3:
+    .ascii	"Un programa de PC especial llamado \"Song Manager\" en el CD-ROM incluido puede hacer una copia de "
+    .ascii	"reserva y recuperar todos los Technics Files y SMFs en la tarjetas SD de su PC a trav\xe9s de USB. "
+    .asciz	"Puede utilizar el disco duro de su PC como medio de copia de reserva datos para el KN. ~0d"
+HelpTextEs68_4:
+    .ascii	"Tambi\xe9n es posible compilar varios juegos de datos de reserva en su PC para tarjetas SD de capacidad "
+    .ascii	"de memoria m\xe1s grande, en el futuro ~0d"
+    .ascii	"Tambi\xe9n puede instalar Plug-Ins de extensi\xf3n de funci\xf3n dise\xf1ados por otras empresas, en su tarjeta "
+    .asciz	"SD.~0d"
+    .align	4, 0xff
+HelpPagesEs68:
+    .long	HelpTextEs68_0 - HelpTexts
+    .long	HelpTextEs68_1 - HelpTexts
+    .long	HelpTextEs68_2 - HelpTexts
+    .long	HelpTextEs68_3 - HelpTexts
+    .long	HelpTextEs68_4 - HelpTexts
+    .long	0
+HelpTextEs69_0:
+    .ascii	"Utilice este bot\xf3n de expansi\xf3n EW para seleccionar entre los sonidos prefijados de las NX Sound "
+    .ascii	"Expansion Boards de la serie EW (de venta por separado).~0d"
+    .ascii	"Puede instalar hasta 4 EW Sound Expansion Boards para un inmenso n\xfamero de sonidos adicionales para "
+    .ascii	"expandir su mundo musical. El bot\xf3n EW Expansion no tiene ninguna funci\xf3n cuando no se han instalado "
+    .asciz	"EW Sound Expansion Boards.~0d"
+HelpTextEs69_1:
+    .ascii	"Siga este procedimiento para seleccionar un sonido EW:~0d"
+    .ascii	"(1). Presione el bot\xf3n EW Expansion.~0d"
+    .ascii	"(2). Seleccione el n\xfamero de tarjeta EW Expansion en la pantalla (cuando tiene m\xe1s de un EW Board "
+    .ascii	"instalado)~0d"
+    .ascii	"(3). Seleccione un Sound Group en la pantalla.~0d"
+    .ascii	"(4). La pantalla muestra diez sonidos en una p\xe1gina. Utilice los botones Page Up/Down para seleccionar "
+    .asciz	"la siguiente p\xe1gina.~0d"
+HelpTextEs69_2:
+    .ascii	"(5). Presione uno de los botones a la izquierda o derecha de la pantalla para seleccionar el sonido "
+    .asciz	"que desea utilizar.~0d"
+    .align	4, 0xff
+HelpPagesEs69:
+    .long	HelpTextEs69_0 - HelpTexts
+    .long	HelpTextEs69_1 - HelpTexts
+    .long	HelpTextEs69_2 - HelpTexts
+    .long	0
+HelpTextEs70_0:
+    .ascii	"El TAB ORGAN recrea el sonido de 3 diferentes \xf3rganos de leng\xfceta cl\xe1sicos. Aparecen 10 leng\xfcetas "
+    .ascii	"en la pantalla. Utilice los botones de balance debajo de la pantalla para activar o desactivar cada "
+    .asciz	"leng\xfceta. ~0d"
+HelpTextEs70_1:
+    .ascii	"Para los tipos USA y European Tab puede agregar la percusi\xf3n, ajustar la velocidad del efecto Tremolo "
+    .ascii	"a r\xe1pido o lento y active el Vibrato para las Reed y String Tabs. Para las Theatre Pipes Tabs puede "
+    .asciz	"activar o desactivar el Tremulant para tres diferentes secciones del \xf3rgano.~0d"
+HelpTextEs70_2:
+    .ascii	"El TAB ORGAN TYPE permite seleccionar entre 3 tipos de Organ: USA Tabs, European Tabs y Theatre "
+    .ascii	"Pipes.~0d"
+    .ascii	"El Tremulant es un efecto espec\xedfico especial para \xf3rganos de tubo donde el flujo de aire a los "
+    .ascii	"tubos se \"interrumpe\" con fuelles grandes, creando una combinaci\xf3n espec\xedfica de tr\xe9molo y vibrato. "
+    .ascii	"Utilice los botones a la derecha de la indicaci\xf3n para activar o desactivar el efecto independientemente "
+    .asciz	"para Tibia, Vox y Main (Trumpet, English Horn y String Celeste).~0d"
+HelpPagesEs70:
+    .long	HelpTextEs70_0 - HelpTexts
+    .long	HelpTextEs70_1 - HelpTexts
+    .long	HelpTextEs70_2 - HelpTexts
+    .long	0
+HelpTextEs71_0:
+    .ascii	"Oprima este bot\xf3n para ajustar el contraste de la pantalla LCD.~0d"
+    .ascii	"Cuando oprime el bot\xf3n, se muestra el valor vigente y usted pude utilizar los controles Contrast "
+    .ascii	"Up y Contrast Down del bot\xf3n de contraste de la pantalla LCD o el dial Tempo/Program para cambiar "
+    .ascii	"la configuraci\xf3n hasta que pueda leer la pantalla.~0d"
+    .ascii	" ~0d"
+    .ascii	"La configuraci\xf3n de contraste de la pantalla se mantendr\xe1 en el grabador KN en forma permanente "
+    .asciz	"o hasta que usted la cambie. ~0d"
+    .align	4, 0xff
+HelpPagesEs71:
+    .long	HelpTextEs71_0 - HelpTexts
+    .long	0
+HelpTextEs72_0:
+    .ascii	"Puede controlar la reproducci\xf3n de las canciones en la tarjeta SD utilizando estos botones espec\xedficos. "
+    .ascii	"El KN reproduce ambos SD Audio y SD Sound (SMF). ~0d"
+    .ascii	" ~0d"
+    .ascii	"Siga este procedimiento para reproducir una canci\xf3n:~0d"
+    .ascii	"(1) Abra la tapa de la ranura SD.~0d"
+    .asciz	"(2) Inserte la tarjeta SD con las canciones memorizadas en la ranura SD.~0d"
+HelpTextEs72_1:
+    .ascii	"(3) Cierre la tapa.~0d"
+    .ascii	"(4) Presione el bot\xf3n de reproducci\xf3n.~0d"
+    .ascii	"El m\xe9todo de operaci\xf3n es el mismo que el CD o SD Player est\xe1ndar.~0d"
+    .asciz	"Es posible reproducir una canci\xf3n y cambiar el volumen incluso cuando la tapa del KN est\xe1 cerrada.~0d"
+    .align	4, 0xff
+HelpPagesEs72:
+    .long	HelpTextEs72_0 - HelpTexts
+    .long	HelpTextEs72_1 - HelpTexts
+    .long	0
+HelpTitleEs00:
+    .asciz	"HELP FUNCTION"
+HelpTitleEs01:
+    .asciz	"DEMO"
+HelpTitleEs02:
+    .asciz	"SOUND CONTROLLER RESET"
+HelpTitleEs03:
+    .asciz	"SOUND CONTROLLER MODE"
+HelpTitleEs04:
+    .asciz	"PERFORMANCE PADS AUTO SETTING"
+HelpTitleEs05:
+    .asciz	"PERFORMANCE PADS BANK"
+HelpTitleEs06:
+    .asciz	"PERFORMANCE PADS STOP"
+HelpTitleEs07:
+    .asciz	"PERFORMANCE PADS"
+HelpTitleEs08:
+    .asciz	"MUSIC STYLE ARRANGER"
+HelpTitleEs09:
+    .asciz	"VARIATION & MSA"
+HelpTitleEs10:
+    .asciz	"ONE TOUCH PLAY"
+HelpTitleEs11:
+    .asciz	"SPLIT POINT"
+HelpTitleEs12:
+    .asciz	"FADE IN/OUT"
+HelpTitleEs13:
+    .asciz	"TAP TEMPO"
+HelpTitleEs14:
+    .asciz	"SYNCHRO & BREAK"
+HelpTitleEs15:
+    .asciz	"FILL IN 1/2"
+HelpTitleEs16:
+    .asciz	"INTRO & ENDING 1/2"
+HelpTitleEs17:
+    .asciz	"START/STOP"
+HelpTitleEs18:
+    .asciz	"TEMPO/PROGRAM"
+HelpTitleEs19:
+    .asciz	"MUSIC STYLIST"
+HelpTitleEs20:
+    .asciz	"FAVORITES"
+HelpTitleEs21:
+    .asciz	"TRANSPOSE -/+"
+HelpTitleEs22:
+    .asciz	"R1/R2 OCTAVE -/+"
+HelpTitleEs23:
+    .asciz	"PART SELECT"
+HelpTitleEs24:
+    .asciz	"CONDUCTOR"
+HelpTitleEs25:
+    .asciz	"SOLO"
+HelpTitleEs26:
+    .asciz	"TECHNI-CHORD"
+HelpTitleEs27:
+    .asciz	"CHORUS"
+HelpTitleEs28:
+    .asciz	"MULTI EFFECT"
+HelpTitleEs29:
+    .asciz	"REVERB"
+HelpTitleEs30:
+    .asciz	"MIC REVERB & EFFECT"
+HelpTitleEs31:
+    .asciz	"PANEL MEMORY SET"
+HelpTitleEs32:
+    .asciz	"PANEL MEMORY"
+HelpTitleEs33:
+    .asciz	"PANEL MEMORY NEXT BANK"
+HelpTitleEs34:
+    .asciz	"PANEL MEMORY BANK VIEW"
+HelpTitleEs35:
+    .asciz	"CUSTOM PANEL"
+HelpTitleEs36:
+    .asciz	"SEQUENCER PLAY"
+HelpTitleEs37:
+    .asciz	"SEQUENCER EASY REC"
+HelpTitleEs38:
+    .asciz	"HELP FUNCTION"
+HelpTitleEs39:
+    .asciz	"SOUND"
+HelpTitleEs40:
+    .asciz	"REVERB & EFFECT"
+HelpTitleEs41:
+    .asciz	"CONTROL"
+HelpTitleEs42:
+    .asciz	"MIDI"
+HelpTitleEs43:
+    .asciz	"CUSTOMIZE"
+HelpTitleEs44:
+    .asciz	"SOUND EDIT"
+HelpTitleEs45:
+    .asciz	"SEQUENCER"
+HelpTitleEs46:
+    .asciz	"COMPOSER"
+HelpTitleEs47:
+    .asciz	"PERFORMANCE PADS"
+HelpTitleEs48:
+    .asciz	"DISK"
+HelpTitleEs49:
+    .asciz	"RHYTHM GROUP"
+HelpTitleEs50:
+    .asciz	"COMPOSER MEMORY"
+HelpTitleEs51:
+    .asciz	"SOUND ARRANGER SET"
+HelpTitleEs52:
+    .asciz	"SOUND ARRANGER OFF/ON"
+HelpTitleEs53:
+    .asciz	"APC/CHORD FINDER"
+HelpTitleEs54:
+    .asciz	"AUTO PLAY CHORD MODE"
+HelpTitleEs55:
+    .asciz	"COUNT INTRO"
+HelpTitleEs56:
+    .asciz	"LEFT HOLD"
+HelpTitleEs57:
+    .asciz	"CHORD FINDER"
+HelpTitleEs58:
+    .asciz	"AUTO PLAY CHORD OFF/ON"
+HelpTitleEs59:
+    .asciz	"OTHER PARTS/TR"
+HelpTitleEs60:
+    .asciz	"DISPLAY HOLD"
+HelpTitleEs61:
+    .asciz	"SOUND GROUP"
+HelpTitleEs62:
+    .asciz	"DIGITAL DRAWBAR"
+HelpTitleEs63:
+    .asciz	"SOUND EXPLORER"
+HelpTitleEs64:
+    .asciz	"SUSTAIN"
+HelpTitleEs65:
+    .asciz	"DIGITAL EFFECT"
+HelpTitleEs66:
+    .asciz	"SOUND DSP"
+HelpTitleEs67:
+    .asciz	"SOUND DSP VARIATION"
+HelpTitleEs68:
+    .asciz	"SD"
+HelpTitleEs69:
+    .asciz	"EW EXPANSION"
+HelpTitleEs70:
+    .asciz	"TAB ORGAN"
+HelpTitleEs71:
+    .asciz	"LCD CONTRAST"
+HelpTitleEs72:
+    .asciz	"SD CONTROL"
+HelpTitleEs73:
+    .asciz	"HELP FUNCTION"
+HelpTitleEs74:
+    .asciz	"HELP FUNCTION"
+HelpTitleEs75:
+    .asciz	"HELP FUNCTION"
+HelpTitleEs76:
+    .asciz	"HELP FUNCTION"
+HelpTitleEs77:
+    .asciz	"HELP FUNCTION"
+HelpTitleEs78:
+    .asciz	"HELP FUNCTION"
+HelpTitleEs79:
+    .asciz	"HELP FUNCTION"
+HelpTitleEs80:
+    .asciz	"HELP FUNCTION"
+HelpTitleEs81:
+    .asciz	"HELP FUNCTION"
+HelpTitleEs82:
+    .asciz	"HELP FUNCTION"
+HelpTitleEs83:
+    .asciz	"HELP FUNCTION"
+HelpTitleEs84:
+    .asciz	"HELP FUNCTION"
+HelpTitleEs85:
+    .asciz	"HELP FUNCTION"
+HelpTitleEs86:
+    .asciz	"HELP FUNCTION"
+HelpTitleEs87:
+    .asciz	"HELP FUNCTION"
+HelpTitleEs88:
+    .asciz	"HELP FUNCTION"
+HelpTitleEs89:
+    .asciz	"HELP FUNCTION"
+HelpTitleEs90:
+    .asciz	"HELP FUNCTION"
+HelpTitleEs91:
+    .asciz	"HELP FUNCTION"
+HelpTitleEs92:
+    .asciz	"HELP FUNCTION"
+HelpTitleEs93:
+    .asciz	"HELP FUNCTION"
+HelpTitleEs94:
+    .asciz	"HELP FUNCTION"
+HelpTitleEs95:
+    .asciz	"HELP FUNCTION"
+HelpTitleEs96:
+    .asciz	"HELP FUNCTION"
+HelpTitleEs97:
+    .asciz	"HELP FUNCTION"
+HelpTitleEs98:
+    .asciz	"HELP FUNCTION"
+HelpTitleEs99:
+    .asciz	"HELP FUNCTION"
+    .align	4, 0xff
+HelpIndexEnglish:
+    .word	0, 1
+    .long	HelpPagesEn00 - HelpTexts, HelpTitleEn00 - HelpTexts
+    .word	1, 1
+    .long	HelpPagesEn01 - HelpTexts, HelpTitleEn01 - HelpTexts
+    .word	2, 1
+    .long	HelpPagesEn02 - HelpTexts, HelpTitleEn02 - HelpTexts
+    .word	3, 1
+    .long	HelpPagesEn03 - HelpTexts, HelpTitleEn03 - HelpTexts
+    .word	4, 1
+    .long	HelpPagesEn04 - HelpTexts, HelpTitleEn04 - HelpTexts
+    .word	5, 2
+    .long	HelpPagesEn05 - HelpTexts, HelpTitleEn05 - HelpTexts
+    .word	6, 1
+    .long	HelpPagesEn06 - HelpTexts, HelpTitleEn06 - HelpTexts
+    .word	7, 3
+    .long	HelpPagesEn07 - HelpTexts, HelpTitleEn07 - HelpTexts
+    .word	8, 3
+    .long	HelpPagesEn08 - HelpTexts, HelpTitleEn08 - HelpTexts
+    .word	9, 2
+    .long	HelpPagesEn09 - HelpTexts, HelpTitleEn09 - HelpTexts
+    .word	10, 2
+    .long	HelpPagesEn10 - HelpTexts, HelpTitleEn10 - HelpTexts
+    .word	11, 2
+    .long	HelpPagesEn11 - HelpTexts, HelpTitleEn11 - HelpTexts
+    .word	12, 2
+    .long	HelpPagesEn12 - HelpTexts, HelpTitleEn12 - HelpTexts
+    .word	13, 1
+    .long	HelpPagesEn13 - HelpTexts, HelpTitleEn13 - HelpTexts
+    .word	14, 3
+    .long	HelpPagesEn14 - HelpTexts, HelpTitleEn14 - HelpTexts
+    .word	15, 2
+    .long	HelpPagesEn15 - HelpTexts, HelpTitleEn15 - HelpTexts
+    .word	16, 2
+    .long	HelpPagesEn16 - HelpTexts, HelpTitleEn16 - HelpTexts
+    .word	17, 1
+    .long	HelpPagesEn17 - HelpTexts, HelpTitleEn17 - HelpTexts
+    .word	18, 1
+    .long	HelpPagesEn18 - HelpTexts, HelpTitleEn18 - HelpTexts
+    .word	19, 4
+    .long	HelpPagesEn19 - HelpTexts, HelpTitleEn19 - HelpTexts
+    .word	20, 3
+    .long	HelpPagesEn20 - HelpTexts, HelpTitleEn20 - HelpTexts
+    .word	21, 2
+    .long	HelpPagesEn21 - HelpTexts, HelpTitleEn21 - HelpTexts
+    .word	22, 1
+    .long	HelpPagesEn22 - HelpTexts, HelpTitleEn22 - HelpTexts
+    .word	23, 1
+    .long	HelpPagesEn23 - HelpTexts, HelpTitleEn23 - HelpTexts
+    .word	24, 1
+    .long	HelpPagesEn24 - HelpTexts, HelpTitleEn24 - HelpTexts
+    .word	25, 2
+    .long	HelpPagesEn25 - HelpTexts, HelpTitleEn25 - HelpTexts
+    .word	26, 2
+    .long	HelpPagesEn26 - HelpTexts, HelpTitleEn26 - HelpTexts
+    .word	27, 2
+    .long	HelpPagesEn27 - HelpTexts, HelpTitleEn27 - HelpTexts
+    .word	28, 1
+    .long	HelpPagesEn28 - HelpTexts, HelpTitleEn28 - HelpTexts
+    .word	29, 1
+    .long	HelpPagesEn29 - HelpTexts, HelpTitleEn29 - HelpTexts
+    .word	30, 3
+    .long	HelpPagesEn30 - HelpTexts, HelpTitleEn30 - HelpTexts
+    .word	31, 3
+    .long	HelpPagesEn31 - HelpTexts, HelpTitleEn31 - HelpTexts
+    .word	32, 2
+    .long	HelpPagesEn32 - HelpTexts, HelpTitleEn32 - HelpTexts
+    .word	33, 1
+    .long	HelpPagesEn33 - HelpTexts, HelpTitleEn33 - HelpTexts
+    .word	34, 1
+    .long	HelpPagesEn34 - HelpTexts, HelpTitleEn34 - HelpTexts
+    .word	35, 2
+    .long	HelpPagesEn35 - HelpTexts, HelpTitleEn35 - HelpTexts
+    .word	36, 3
+    .long	HelpPagesEn36 - HelpTexts, HelpTitleEn36 - HelpTexts
+    .word	37, 2
+    .long	HelpPagesEn37 - HelpTexts, HelpTitleEn37 - HelpTexts
+    .word	38, 1
+    .long	HelpPagesEn00 - HelpTexts, HelpTitleEn38 - HelpTexts
+    .word	39, 4
+    .long	HelpPagesEn39 - HelpTexts, HelpTitleEn39 - HelpTexts
+    .word	40, 3
+    .long	HelpPagesEn40 - HelpTexts, HelpTitleEn40 - HelpTexts
+    .word	41, 2
+    .long	HelpPagesEn41 - HelpTexts, HelpTitleEn41 - HelpTexts
+    .word	42, 3
+    .long	HelpPagesEn42 - HelpTexts, HelpTitleEn42 - HelpTexts
+    .word	43, 3
+    .long	HelpPagesEn43 - HelpTexts, HelpTitleEn43 - HelpTexts
+    .word	44, 1
+    .long	HelpPagesEn44 - HelpTexts, HelpTitleEn44 - HelpTexts
+    .word	45, 4
+    .long	HelpPagesEn45 - HelpTexts, HelpTitleEn45 - HelpTexts
+    .word	46, 3
+    .long	HelpPagesEn46 - HelpTexts, HelpTitleEn46 - HelpTexts
+    .word	47, 3
+    .long	HelpPagesEn47 - HelpTexts, HelpTitleEn47 - HelpTexts
+    .word	48, 3
+    .long	HelpPagesEn48 - HelpTexts, HelpTitleEn48 - HelpTexts
+    .word	49, 3
+    .long	HelpPagesEn49 - HelpTexts, HelpTitleEn49 - HelpTexts
+    .word	50, 2
+    .long	HelpPagesEn50 - HelpTexts, HelpTitleEn50 - HelpTexts
+    .word	51, 2
+    .long	HelpPagesEn51 - HelpTexts, HelpTitleEn51 - HelpTexts
+    .word	52, 1
+    .long	HelpPagesEn52 - HelpTexts, HelpTitleEn52 - HelpTexts
+    .word	53, 1
+    .long	HelpPagesEn53 - HelpTexts, HelpTitleEn53 - HelpTexts
+    .word	54, 3
+    .long	HelpPagesEn54 - HelpTexts, HelpTitleEn54 - HelpTexts
+    .word	55, 1
+    .long	HelpPagesEn55 - HelpTexts, HelpTitleEn55 - HelpTexts
+    .word	56, 1
+    .long	HelpPagesEn56 - HelpTexts, HelpTitleEn56 - HelpTexts
+    .word	57, 1
+    .long	HelpPagesEn57 - HelpTexts, HelpTitleEn57 - HelpTexts
+    .word	58, 1
+    .long	HelpPagesEn58 - HelpTexts, HelpTitleEn58 - HelpTexts
+    .word	59, 1
+    .long	HelpPagesEn59 - HelpTexts, HelpTitleEn59 - HelpTexts
+    .word	60, 1
+    .long	HelpPagesEn60 - HelpTexts, HelpTitleEn60 - HelpTexts
+    .word	61, 2
+    .long	HelpPagesEn61 - HelpTexts, HelpTitleEn61 - HelpTexts
+    .word	62, 1
+    .long	HelpPagesEn62 - HelpTexts, HelpTitleEn62 - HelpTexts
+    .word	63, 3
+    .long	HelpPagesEn63 - HelpTexts, HelpTitleEn63 - HelpTexts
+    .word	64, 1
+    .long	HelpPagesEn64 - HelpTexts, HelpTitleEn64 - HelpTexts
+    .word	65, 1
+    .long	HelpPagesEn65 - HelpTexts, HelpTitleEn65 - HelpTexts
+    .word	66, 2
+    .long	HelpPagesEn66 - HelpTexts, HelpTitleEn66 - HelpTexts
+    .word	67, 1
+    .long	HelpPagesEn67 - HelpTexts, HelpTitleEn67 - HelpTexts
+    .word	68, 5
+    .long	HelpPagesEn68 - HelpTexts, HelpTitleEn68 - HelpTexts
+    .word	69, 2
+    .long	HelpPagesEn69 - HelpTexts, HelpTitleEn69 - HelpTexts
+    .word	70, 2
+    .long	HelpPagesEn70 - HelpTexts, HelpTitleEn70 - HelpTexts
+    .word	71, 1
+    .long	HelpPagesEn71 - HelpTexts, HelpTitleEn71 - HelpTexts
+    .word	72, 2
+    .long	HelpPagesEn72 - HelpTexts, HelpTitleEn72 - HelpTexts
+    .word	73, 1
+    .long	HelpPagesEn00 - HelpTexts, HelpTitleEn73 - HelpTexts
+    .word	74, 1
+    .long	HelpPagesEn00 - HelpTexts, HelpTitleEn74 - HelpTexts
+    .word	75, 1
+    .long	HelpPagesEn00 - HelpTexts, HelpTitleEn75 - HelpTexts
+    .word	76, 1
+    .long	HelpPagesEn00 - HelpTexts, HelpTitleEn76 - HelpTexts
+    .word	77, 1
+    .long	HelpPagesEn00 - HelpTexts, HelpTitleEn77 - HelpTexts
+    .word	78, 1
+    .long	HelpPagesEn00 - HelpTexts, HelpTitleEn78 - HelpTexts
+    .word	79, 1
+    .long	HelpPagesEn00 - HelpTexts, HelpTitleEn79 - HelpTexts
+    .word	80, 1
+    .long	HelpPagesEn00 - HelpTexts, HelpTitleEn80 - HelpTexts
+    .word	81, 1
+    .long	HelpPagesEn00 - HelpTexts, HelpTitleEn81 - HelpTexts
+    .word	82, 1
+    .long	HelpPagesEn00 - HelpTexts, HelpTitleEn82 - HelpTexts
+    .word	83, 1
+    .long	HelpPagesEn00 - HelpTexts, HelpTitleEn83 - HelpTexts
+    .word	84, 1
+    .long	HelpPagesEn00 - HelpTexts, HelpTitleEn84 - HelpTexts
+    .word	85, 1
+    .long	HelpPagesEn00 - HelpTexts, HelpTitleEn85 - HelpTexts
+    .word	86, 1
+    .long	HelpPagesEn00 - HelpTexts, HelpTitleEn86 - HelpTexts
+    .word	87, 1
+    .long	HelpPagesEn00 - HelpTexts, HelpTitleEn87 - HelpTexts
+    .word	88, 1
+    .long	HelpPagesEn00 - HelpTexts, HelpTitleEn88 - HelpTexts
+    .word	89, 1
+    .long	HelpPagesEn00 - HelpTexts, HelpTitleEn89 - HelpTexts
+    .word	90, 1
+    .long	HelpPagesEn00 - HelpTexts, HelpTitleEn90 - HelpTexts
+    .word	91, 1
+    .long	HelpPagesEn00 - HelpTexts, HelpTitleEn91 - HelpTexts
+    .word	92, 1
+    .long	HelpPagesEn00 - HelpTexts, HelpTitleEn92 - HelpTexts
+    .word	93, 1
+    .long	HelpPagesEn00 - HelpTexts, HelpTitleEn93 - HelpTexts
+    .word	94, 1
+    .long	HelpPagesEn00 - HelpTexts, HelpTitleEn94 - HelpTexts
+    .word	95, 1
+    .long	HelpPagesEn00 - HelpTexts, HelpTitleEn95 - HelpTexts
+    .word	96, 1
+    .long	HelpPagesEn00 - HelpTexts, HelpTitleEn96 - HelpTexts
+    .word	97, 1
+    .long	HelpPagesEn00 - HelpTexts, HelpTitleEn97 - HelpTexts
+    .word	98, 1
+    .long	HelpPagesEn00 - HelpTexts, HelpTitleEn98 - HelpTexts
+    .word	99, 1
+    .long	HelpPagesEn00 - HelpTexts, HelpTitleEn99 - HelpTexts
+HelpIndexGerman:
+    .word	0, 1
+    .long	HelpPagesDe00 - HelpTexts, HelpTitleDe00 - HelpTexts
+    .word	1, 1
+    .long	HelpPagesDe01 - HelpTexts, HelpTitleDe01 - HelpTexts
+    .word	2, 1
+    .long	HelpPagesDe02 - HelpTexts, HelpTitleDe02 - HelpTexts
+    .word	3, 2
+    .long	HelpPagesDe03 - HelpTexts, HelpTitleDe03 - HelpTexts
+    .word	4, 1
+    .long	HelpPagesDe04 - HelpTexts, HelpTitleDe04 - HelpTexts
+    .word	5, 2
+    .long	HelpPagesDe05 - HelpTexts, HelpTitleDe05 - HelpTexts
+    .word	6, 1
+    .long	HelpPagesDe06 - HelpTexts, HelpTitleDe06 - HelpTexts
+    .word	7, 3
+    .long	HelpPagesDe07 - HelpTexts, HelpTitleDe07 - HelpTexts
+    .word	8, 2
+    .long	HelpPagesDe08 - HelpTexts, HelpTitleDe08 - HelpTexts
+    .word	9, 2
+    .long	HelpPagesDe09 - HelpTexts, HelpTitleDe09 - HelpTexts
+    .word	10, 2
+    .long	HelpPagesDe10 - HelpTexts, HelpTitleDe10 - HelpTexts
+    .word	11, 2
+    .long	HelpPagesDe11 - HelpTexts, HelpTitleDe11 - HelpTexts
+    .word	12, 3
+    .long	HelpPagesDe12 - HelpTexts, HelpTitleDe12 - HelpTexts
+    .word	13, 1
+    .long	HelpPagesDe13 - HelpTexts, HelpTitleDe13 - HelpTexts
+    .word	14, 1
+    .long	HelpPagesDe14 - HelpTexts, HelpTitleDe14 - HelpTexts
+    .word	15, 2
+    .long	HelpPagesDe15 - HelpTexts, HelpTitleDe15 - HelpTexts
+    .word	16, 2
+    .long	HelpPagesDe16 - HelpTexts, HelpTitleDe16 - HelpTexts
+    .word	17, 1
+    .long	HelpPagesDe17 - HelpTexts, HelpTitleDe17 - HelpTexts
+    .word	18, 1
+    .long	HelpPagesDe18 - HelpTexts, HelpTitleDe18 - HelpTexts
+    .word	19, 4
+    .long	HelpPagesDe19 - HelpTexts, HelpTitleDe19 - HelpTexts
+    .word	20, 4
+    .long	HelpPagesDe20 - HelpTexts, HelpTitleDe20 - HelpTexts
+    .word	21, 2
+    .long	HelpPagesDe21 - HelpTexts, HelpTitleDe21 - HelpTexts
+    .word	22, 1
+    .long	HelpPagesDe22 - HelpTexts, HelpTitleDe22 - HelpTexts
+    .word	23, 1
+    .long	HelpPagesDe23 - HelpTexts, HelpTitleDe23 - HelpTexts
+    .word	24, 1
+    .long	HelpPagesDe24 - HelpTexts, HelpTitleDe24 - HelpTexts
+    .word	25, 2
+    .long	HelpPagesDe25 - HelpTexts, HelpTitleDe25 - HelpTexts
+    .word	26, 2
+    .long	HelpPagesDe26 - HelpTexts, HelpTitleDe26 - HelpTexts
+    .word	27, 2
+    .long	HelpPagesDe27 - HelpTexts, HelpTitleDe27 - HelpTexts
+    .word	28, 1
+    .long	HelpPagesDe28 - HelpTexts, HelpTitleDe28 - HelpTexts
+    .word	29, 1
+    .long	HelpPagesDe29 - HelpTexts, HelpTitleDe29 - HelpTexts
+    .word	30, 3
+    .long	HelpPagesDe30 - HelpTexts, HelpTitleDe30 - HelpTexts
+    .word	31, 3
+    .long	HelpPagesDe31 - HelpTexts, HelpTitleDe31 - HelpTexts
+    .word	32, 2
+    .long	HelpPagesDe32 - HelpTexts, HelpTitleDe32 - HelpTexts
+    .word	33, 1
+    .long	HelpPagesDe33 - HelpTexts, HelpTitleDe33 - HelpTexts
+    .word	34, 1
+    .long	HelpPagesDe34 - HelpTexts, HelpTitleDe34 - HelpTexts
+    .word	35, 3
+    .long	HelpPagesDe35 - HelpTexts, HelpTitleDe35 - HelpTexts
+    .word	36, 3
+    .long	HelpPagesDe36 - HelpTexts, HelpTitleDe36 - HelpTexts
+    .word	37, 2
+    .long	HelpPagesDe37 - HelpTexts, HelpTitleDe37 - HelpTexts
+    .word	38, 1
+    .long	HelpPagesDe00 - HelpTexts, HelpTitleDe38 - HelpTexts
+    .word	39, 5
+    .long	HelpPagesDe39 - HelpTexts, HelpTitleDe39 - HelpTexts
+    .word	40, 3
+    .long	HelpPagesDe40 - HelpTexts, HelpTitleDe40 - HelpTexts
+    .word	41, 2
+    .long	HelpPagesDe41 - HelpTexts, HelpTitleDe41 - HelpTexts
+    .word	42, 3
+    .long	HelpPagesDe42 - HelpTexts, HelpTitleDe42 - HelpTexts
+    .word	43, 4
+    .long	HelpPagesDe43 - HelpTexts, HelpTitleDe43 - HelpTexts
+    .word	44, 1
+    .long	HelpPagesDe44 - HelpTexts, HelpTitleDe44 - HelpTexts
+    .word	45, 5
+    .long	HelpPagesDe45 - HelpTexts, HelpTitleDe45 - HelpTexts
+    .word	46, 2
+    .long	HelpPagesDe46 - HelpTexts, HelpTitleDe46 - HelpTexts
+    .word	47, 3
+    .long	HelpPagesDe47 - HelpTexts, HelpTitleDe47 - HelpTexts
+    .word	48, 3
+    .long	HelpPagesDe48 - HelpTexts, HelpTitleDe48 - HelpTexts
+    .word	49, 3
+    .long	HelpPagesDe49 - HelpTexts, HelpTitleDe49 - HelpTexts
+    .word	50, 2
+    .long	HelpPagesDe50 - HelpTexts, HelpTitleDe50 - HelpTexts
+    .word	51, 2
+    .long	HelpPagesDe51 - HelpTexts, HelpTitleDe51 - HelpTexts
+    .word	52, 1
+    .long	HelpPagesDe52 - HelpTexts, HelpTitleDe52 - HelpTexts
+    .word	53, 1
+    .long	HelpPagesDe53 - HelpTexts, HelpTitleDe53 - HelpTexts
+    .word	54, 2
+    .long	HelpPagesDe54 - HelpTexts, HelpTitleDe54 - HelpTexts
+    .word	55, 1
+    .long	HelpPagesDe55 - HelpTexts, HelpTitleDe55 - HelpTexts
+    .word	56, 1
+    .long	HelpPagesDe56 - HelpTexts, HelpTitleDe56 - HelpTexts
+    .word	57, 1
+    .long	HelpPagesDe57 - HelpTexts, HelpTitleDe57 - HelpTexts
+    .word	58, 1
+    .long	HelpPagesDe58 - HelpTexts, HelpTitleDe58 - HelpTexts
+    .word	59, 1
+    .long	HelpPagesDe59 - HelpTexts, HelpTitleDe59 - HelpTexts
+    .word	60, 1
+    .long	HelpPagesDe60 - HelpTexts, HelpTitleDe60 - HelpTexts
+    .word	61, 3
+    .long	HelpPagesDe61 - HelpTexts, HelpTitleDe61 - HelpTexts
+    .word	62, 2
+    .long	HelpPagesDe62 - HelpTexts, HelpTitleDe62 - HelpTexts
+    .word	63, 4
+    .long	HelpPagesDe63 - HelpTexts, HelpTitleDe63 - HelpTexts
+    .word	64, 1
+    .long	HelpPagesDe64 - HelpTexts, HelpTitleDe64 - HelpTexts
+    .word	65, 1
+    .long	HelpPagesDe65 - HelpTexts, HelpTitleDe65 - HelpTexts
+    .word	66, 2
+    .long	HelpPagesDe66 - HelpTexts, HelpTitleDe66 - HelpTexts
+    .word	67, 1
+    .long	HelpPagesDe67 - HelpTexts, HelpTitleDe67 - HelpTexts
+    .word	68, 5
+    .long	HelpPagesDe68 - HelpTexts, HelpTitleDe68 - HelpTexts
+    .word	69, 3
+    .long	HelpPagesDe69 - HelpTexts, HelpTitleDe69 - HelpTexts
+    .word	70, 3
+    .long	HelpPagesDe70 - HelpTexts, HelpTitleDe70 - HelpTexts
+    .word	71, 1
+    .long	HelpPagesDe71 - HelpTexts, HelpTitleDe71 - HelpTexts
+    .word	72, 2
+    .long	HelpPagesDe72 - HelpTexts, HelpTitleDe72 - HelpTexts
+    .word	73, 1
+    .long	HelpPagesDe00 - HelpTexts, HelpTitleDe73 - HelpTexts
+    .word	74, 1
+    .long	HelpPagesDe00 - HelpTexts, HelpTitleDe74 - HelpTexts
+    .word	75, 1
+    .long	HelpPagesDe00 - HelpTexts, HelpTitleDe75 - HelpTexts
+    .word	76, 1
+    .long	HelpPagesDe00 - HelpTexts, HelpTitleDe76 - HelpTexts
+    .word	77, 1
+    .long	HelpPagesDe00 - HelpTexts, HelpTitleDe77 - HelpTexts
+    .word	78, 1
+    .long	HelpPagesDe00 - HelpTexts, HelpTitleDe78 - HelpTexts
+    .word	79, 1
+    .long	HelpPagesDe00 - HelpTexts, HelpTitleDe79 - HelpTexts
+    .word	80, 1
+    .long	HelpPagesDe00 - HelpTexts, HelpTitleDe80 - HelpTexts
+    .word	81, 1
+    .long	HelpPagesDe00 - HelpTexts, HelpTitleDe81 - HelpTexts
+    .word	82, 1
+    .long	HelpPagesDe00 - HelpTexts, HelpTitleDe82 - HelpTexts
+    .word	83, 1
+    .long	HelpPagesDe00 - HelpTexts, HelpTitleDe83 - HelpTexts
+    .word	84, 1
+    .long	HelpPagesDe00 - HelpTexts, HelpTitleDe84 - HelpTexts
+    .word	85, 1
+    .long	HelpPagesDe00 - HelpTexts, HelpTitleDe85 - HelpTexts
+    .word	86, 1
+    .long	HelpPagesDe00 - HelpTexts, HelpTitleDe86 - HelpTexts
+    .word	87, 1
+    .long	HelpPagesDe00 - HelpTexts, HelpTitleDe87 - HelpTexts
+    .word	88, 1
+    .long	HelpPagesDe00 - HelpTexts, HelpTitleDe88 - HelpTexts
+    .word	89, 1
+    .long	HelpPagesDe00 - HelpTexts, HelpTitleDe89 - HelpTexts
+    .word	90, 1
+    .long	HelpPagesDe00 - HelpTexts, HelpTitleDe90 - HelpTexts
+    .word	91, 1
+    .long	HelpPagesDe00 - HelpTexts, HelpTitleDe91 - HelpTexts
+    .word	92, 1
+    .long	HelpPagesDe00 - HelpTexts, HelpTitleDe92 - HelpTexts
+    .word	93, 1
+    .long	HelpPagesDe00 - HelpTexts, HelpTitleDe93 - HelpTexts
+    .word	94, 1
+    .long	HelpPagesDe00 - HelpTexts, HelpTitleDe94 - HelpTexts
+    .word	95, 1
+    .long	HelpPagesDe00 - HelpTexts, HelpTitleDe95 - HelpTexts
+    .word	96, 1
+    .long	HelpPagesDe00 - HelpTexts, HelpTitleDe96 - HelpTexts
+    .word	97, 1
+    .long	HelpPagesDe00 - HelpTexts, HelpTitleDe97 - HelpTexts
+    .word	98, 1
+    .long	HelpPagesDe00 - HelpTexts, HelpTitleDe98 - HelpTexts
+    .word	99, 1
+    .long	HelpPagesDe00 - HelpTexts, HelpTitleDe99 - HelpTexts
+HelpIndexFrench:
+    .word	0, 1
+    .long	HelpPagesFr00 - HelpTexts, HelpTitleFr00 - HelpTexts
+    .word	1, 2
+    .long	HelpPagesFr01 - HelpTexts, HelpTitleFr01 - HelpTexts
+    .word	2, 1
+    .long	HelpPagesFr02 - HelpTexts, HelpTitleFr02 - HelpTexts
+    .word	3, 2
+    .long	HelpPagesFr03 - HelpTexts, HelpTitleFr03 - HelpTexts
+    .word	4, 1
+    .long	HelpPagesFr04 - HelpTexts, HelpTitleFr04 - HelpTexts
+    .word	5, 3
+    .long	HelpPagesFr05 - HelpTexts, HelpTitleFr05 - HelpTexts
+    .word	6, 2
+    .long	HelpPagesFr06 - HelpTexts, HelpTitleFr06 - HelpTexts
+    .word	7, 3
+    .long	HelpPagesFr07 - HelpTexts, HelpTitleFr07 - HelpTexts
+    .word	8, 3
+    .long	HelpPagesFr08 - HelpTexts, HelpTitleFr08 - HelpTexts
+    .word	9, 2
+    .long	HelpPagesFr09 - HelpTexts, HelpTitleFr09 - HelpTexts
+    .word	10, 2
+    .long	HelpPagesFr10 - HelpTexts, HelpTitleFr10 - HelpTexts
+    .word	11, 2
+    .long	HelpPagesFr11 - HelpTexts, HelpTitleFr11 - HelpTexts
+    .word	12, 3
+    .long	HelpPagesFr12 - HelpTexts, HelpTitleFr12 - HelpTexts
+    .word	13, 1
+    .long	HelpPagesFr13 - HelpTexts, HelpTitleFr13 - HelpTexts
+    .word	14, 3
+    .long	HelpPagesFr14 - HelpTexts, HelpTitleFr14 - HelpTexts
+    .word	15, 3
+    .long	HelpPagesFr15 - HelpTexts, HelpTitleFr15 - HelpTexts
+    .word	16, 2
+    .long	HelpPagesFr16 - HelpTexts, HelpTitleFr16 - HelpTexts
+    .word	17, 1
+    .long	HelpPagesFr17 - HelpTexts, HelpTitleFr17 - HelpTexts
+    .word	18, 1
+    .long	HelpPagesFr18 - HelpTexts, HelpTitleFr18 - HelpTexts
+    .word	19, 4
+    .long	HelpPagesFr19 - HelpTexts, HelpTitleFr19 - HelpTexts
+    .word	20, 4
+    .long	HelpPagesFr20 - HelpTexts, HelpTitleFr20 - HelpTexts
+    .word	21, 2
+    .long	HelpPagesFr21 - HelpTexts, HelpTitleFr21 - HelpTexts
+    .word	22, 1
+    .long	HelpPagesFr22 - HelpTexts, HelpTitleFr22 - HelpTexts
+    .word	23, 1
+    .long	HelpPagesFr23 - HelpTexts, HelpTitleFr23 - HelpTexts
+    .word	24, 1
+    .long	HelpPagesFr24 - HelpTexts, HelpTitleFr24 - HelpTexts
+    .word	25, 3
+    .long	HelpPagesFr25 - HelpTexts, HelpTitleFr25 - HelpTexts
+    .word	26, 2
+    .long	HelpPagesFr26 - HelpTexts, HelpTitleFr26 - HelpTexts
+    .word	27, 2
+    .long	HelpPagesFr27 - HelpTexts, HelpTitleFr27 - HelpTexts
+    .word	28, 1
+    .long	HelpPagesFr28 - HelpTexts, HelpTitleFr28 - HelpTexts
+    .word	29, 1
+    .long	HelpPagesFr29 - HelpTexts, HelpTitleFr29 - HelpTexts
+    .word	30, 3
+    .long	HelpPagesFr30 - HelpTexts, HelpTitleFr30 - HelpTexts
+    .word	31, 3
+    .long	HelpPagesFr31 - HelpTexts, HelpTitleFr31 - HelpTexts
+    .word	32, 2
+    .long	HelpPagesFr32 - HelpTexts, HelpTitleFr32 - HelpTexts
+    .word	33, 1
+    .long	HelpPagesFr33 - HelpTexts, HelpTitleFr33 - HelpTexts
+    .word	34, 1
+    .long	HelpPagesFr34 - HelpTexts, HelpTitleFr34 - HelpTexts
+    .word	35, 2
+    .long	HelpPagesFr35 - HelpTexts, HelpTitleFr35 - HelpTexts
+    .word	36, 4
+    .long	HelpPagesFr36 - HelpTexts, HelpTitleFr36 - HelpTexts
+    .word	37, 2
+    .long	HelpPagesFr37 - HelpTexts, HelpTitleFr37 - HelpTexts
+    .word	38, 1
+    .long	HelpPagesFr00 - HelpTexts, HelpTitleFr38 - HelpTexts
+    .word	39, 6
+    .long	HelpPagesFr39 - HelpTexts, HelpTitleFr39 - HelpTexts
+    .word	40, 4
+    .long	HelpPagesFr40 - HelpTexts, HelpTitleFr40 - HelpTexts
+    .word	41, 3
+    .long	HelpPagesFr41 - HelpTexts, HelpTitleFr41 - HelpTexts
+    .word	42, 4
+    .long	HelpPagesFr42 - HelpTexts, HelpTitleFr42 - HelpTexts
+    .word	43, 4
+    .long	HelpPagesFr43 - HelpTexts, HelpTitleFr43 - HelpTexts
+    .word	44, 1
+    .long	HelpPagesFr44 - HelpTexts, HelpTitleFr44 - HelpTexts
+    .word	45, 6
+    .long	HelpPagesFr45 - HelpTexts, HelpTitleFr45 - HelpTexts
+    .word	46, 3
+    .long	HelpPagesFr46 - HelpTexts, HelpTitleFr46 - HelpTexts
+    .word	47, 3
+    .long	HelpPagesFr47 - HelpTexts, HelpTitleFr47 - HelpTexts
+    .word	48, 4
+    .long	HelpPagesFr48 - HelpTexts, HelpTitleFr48 - HelpTexts
+    .word	49, 3
+    .long	HelpPagesFr49 - HelpTexts, HelpTitleFr49 - HelpTexts
+    .word	50, 2
+    .long	HelpPagesFr50 - HelpTexts, HelpTitleFr50 - HelpTexts
+    .word	51, 2
+    .long	HelpPagesFr51 - HelpTexts, HelpTitleFr51 - HelpTexts
+    .word	52, 1
+    .long	HelpPagesFr52 - HelpTexts, HelpTitleFr52 - HelpTexts
+    .word	53, 1
+    .long	HelpPagesFr53 - HelpTexts, HelpTitleFr53 - HelpTexts
+    .word	54, 3
+    .long	HelpPagesFr54 - HelpTexts, HelpTitleFr54 - HelpTexts
+    .word	55, 1
+    .long	HelpPagesFr55 - HelpTexts, HelpTitleFr55 - HelpTexts
+    .word	56, 1
+    .long	HelpPagesFr56 - HelpTexts, HelpTitleFr56 - HelpTexts
+    .word	57, 2
+    .long	HelpPagesFr57 - HelpTexts, HelpTitleFr57 - HelpTexts
+    .word	58, 1
+    .long	HelpPagesFr58 - HelpTexts, HelpTitleFr58 - HelpTexts
+    .word	59, 2
+    .long	HelpPagesFr59 - HelpTexts, HelpTitleFr59 - HelpTexts
+    .word	60, 1
+    .long	HelpPagesFr60 - HelpTexts, HelpTitleFr60 - HelpTexts
+    .word	61, 3
+    .long	HelpPagesFr61 - HelpTexts, HelpTitleFr61 - HelpTexts
+    .word	62, 2
+    .long	HelpPagesFr62 - HelpTexts, HelpTitleFr62 - HelpTexts
+    .word	63, 4
+    .long	HelpPagesFr63 - HelpTexts, HelpTitleFr63 - HelpTexts
+    .word	64, 1
+    .long	HelpPagesFr64 - HelpTexts, HelpTitleFr64 - HelpTexts
+    .word	65, 2
+    .long	HelpPagesFr65 - HelpTexts, HelpTitleFr65 - HelpTexts
+    .word	66, 3
+    .long	HelpPagesFr66 - HelpTexts, HelpTitleFr66 - HelpTexts
+    .word	67, 1
+    .long	HelpPagesFr67 - HelpTexts, HelpTitleFr67 - HelpTexts
+    .word	68, 5
+    .long	HelpPagesFr68 - HelpTexts, HelpTitleFr68 - HelpTexts
+    .word	69, 3
+    .long	HelpPagesFr69 - HelpTexts, HelpTitleFr69 - HelpTexts
+    .word	70, 3
+    .long	HelpPagesFr70 - HelpTexts, HelpTitleFr70 - HelpTexts
+    .word	71, 1
+    .long	HelpPagesFr71 - HelpTexts, HelpTitleFr71 - HelpTexts
+    .word	72, 2
+    .long	HelpPagesFr72 - HelpTexts, HelpTitleFr72 - HelpTexts
+    .word	73, 1
+    .long	HelpPagesFr00 - HelpTexts, HelpTitleFr73 - HelpTexts
+    .word	74, 1
+    .long	HelpPagesFr00 - HelpTexts, HelpTitleFr74 - HelpTexts
+    .word	75, 1
+    .long	HelpPagesFr00 - HelpTexts, HelpTitleFr75 - HelpTexts
+    .word	76, 1
+    .long	HelpPagesFr00 - HelpTexts, HelpTitleFr76 - HelpTexts
+    .word	77, 1
+    .long	HelpPagesFr00 - HelpTexts, HelpTitleFr77 - HelpTexts
+    .word	78, 1
+    .long	HelpPagesFr00 - HelpTexts, HelpTitleFr78 - HelpTexts
+    .word	79, 1
+    .long	HelpPagesFr00 - HelpTexts, HelpTitleFr79 - HelpTexts
+    .word	80, 1
+    .long	HelpPagesFr00 - HelpTexts, HelpTitleFr80 - HelpTexts
+    .word	81, 1
+    .long	HelpPagesFr00 - HelpTexts, HelpTitleFr81 - HelpTexts
+    .word	82, 1
+    .long	HelpPagesFr00 - HelpTexts, HelpTitleFr82 - HelpTexts
+    .word	83, 1
+    .long	HelpPagesFr00 - HelpTexts, HelpTitleFr83 - HelpTexts
+    .word	84, 1
+    .long	HelpPagesFr00 - HelpTexts, HelpTitleFr84 - HelpTexts
+    .word	85, 1
+    .long	HelpPagesFr00 - HelpTexts, HelpTitleFr85 - HelpTexts
+    .word	86, 1
+    .long	HelpPagesFr00 - HelpTexts, HelpTitleFr86 - HelpTexts
+    .word	87, 1
+    .long	HelpPagesFr00 - HelpTexts, HelpTitleFr87 - HelpTexts
+    .word	88, 1
+    .long	HelpPagesFr00 - HelpTexts, HelpTitleFr88 - HelpTexts
+    .word	89, 1
+    .long	HelpPagesFr00 - HelpTexts, HelpTitleFr89 - HelpTexts
+    .word	90, 1
+    .long	HelpPagesFr00 - HelpTexts, HelpTitleFr90 - HelpTexts
+    .word	91, 1
+    .long	HelpPagesFr00 - HelpTexts, HelpTitleFr91 - HelpTexts
+    .word	92, 1
+    .long	HelpPagesFr00 - HelpTexts, HelpTitleFr92 - HelpTexts
+    .word	93, 1
+    .long	HelpPagesFr00 - HelpTexts, HelpTitleFr93 - HelpTexts
+    .word	94, 1
+    .long	HelpPagesFr00 - HelpTexts, HelpTitleFr94 - HelpTexts
+    .word	95, 1
+    .long	HelpPagesFr00 - HelpTexts, HelpTitleFr95 - HelpTexts
+    .word	96, 1
+    .long	HelpPagesFr00 - HelpTexts, HelpTitleFr96 - HelpTexts
+    .word	97, 1
+    .long	HelpPagesFr00 - HelpTexts, HelpTitleFr97 - HelpTexts
+    .word	98, 1
+    .long	HelpPagesFr00 - HelpTexts, HelpTitleFr98 - HelpTexts
+    .word	99, 1
+    .long	HelpPagesFr00 - HelpTexts, HelpTitleFr99 - HelpTexts
+HelpIndexSpanish:
+    .word	0, 1
+    .long	HelpPagesEs00 - HelpTexts, HelpTitleEs00 - HelpTexts
+    .word	1, 2
+    .long	HelpPagesEs01 - HelpTexts, HelpTitleEs01 - HelpTexts
+    .word	2, 1
+    .long	HelpPagesEs02 - HelpTexts, HelpTitleEs02 - HelpTexts
+    .word	3, 2
+    .long	HelpPagesEs03 - HelpTexts, HelpTitleEs03 - HelpTexts
+    .word	4, 1
+    .long	HelpPagesEs04 - HelpTexts, HelpTitleEs04 - HelpTexts
+    .word	5, 3
+    .long	HelpPagesEs05 - HelpTexts, HelpTitleEs05 - HelpTexts
+    .word	6, 2
+    .long	HelpPagesEs06 - HelpTexts, HelpTitleEs06 - HelpTexts
+    .word	7, 4
+    .long	HelpPagesEs07 - HelpTexts, HelpTitleEs07 - HelpTexts
+    .word	8, 3
+    .long	HelpPagesEs08 - HelpTexts, HelpTitleEs08 - HelpTexts
+    .word	9, 2
+    .long	HelpPagesEs09 - HelpTexts, HelpTitleEs09 - HelpTexts
+    .word	10, 2
+    .long	HelpPagesEs10 - HelpTexts, HelpTitleEs10 - HelpTexts
+    .word	11, 2
+    .long	HelpPagesEs11 - HelpTexts, HelpTitleEs11 - HelpTexts
+    .word	12, 3
+    .long	HelpPagesEs12 - HelpTexts, HelpTitleEs12 - HelpTexts
+    .word	13, 1
+    .long	HelpPagesEs13 - HelpTexts, HelpTitleEs13 - HelpTexts
+    .word	14, 3
+    .long	HelpPagesEs14 - HelpTexts, HelpTitleEs14 - HelpTexts
+    .word	15, 3
+    .long	HelpPagesEs15 - HelpTexts, HelpTitleEs15 - HelpTexts
+    .word	16, 2
+    .long	HelpPagesEs16 - HelpTexts, HelpTitleEs16 - HelpTexts
+    .word	17, 1
+    .long	HelpPagesEs17 - HelpTexts, HelpTitleEs17 - HelpTexts
+    .word	18, 1
+    .long	HelpPagesEs18 - HelpTexts, HelpTitleEs18 - HelpTexts
+    .word	19, 4
+    .long	HelpPagesEs19 - HelpTexts, HelpTitleEs19 - HelpTexts
+    .word	20, 4
+    .long	HelpPagesEs20 - HelpTexts, HelpTitleEs20 - HelpTexts
+    .word	21, 2
+    .long	HelpPagesEs21 - HelpTexts, HelpTitleEs21 - HelpTexts
+    .word	22, 1
+    .long	HelpPagesEs22 - HelpTexts, HelpTitleEs22 - HelpTexts
+    .word	23, 2
+    .long	HelpPagesEs23 - HelpTexts, HelpTitleEs23 - HelpTexts
+    .word	24, 1
+    .long	HelpPagesEs24 - HelpTexts, HelpTitleEs24 - HelpTexts
+    .word	25, 2
+    .long	HelpPagesEs25 - HelpTexts, HelpTitleEs25 - HelpTexts
+    .word	26, 3
+    .long	HelpPagesEs26 - HelpTexts, HelpTitleEs26 - HelpTexts
+    .word	27, 2
+    .long	HelpPagesEs27 - HelpTexts, HelpTitleEs27 - HelpTexts
+    .word	28, 1
+    .long	HelpPagesEs28 - HelpTexts, HelpTitleEs28 - HelpTexts
+    .word	29, 1
+    .long	HelpPagesEs29 - HelpTexts, HelpTitleEs29 - HelpTexts
+    .word	30, 3
+    .long	HelpPagesEs30 - HelpTexts, HelpTitleEs30 - HelpTexts
+    .word	31, 3
+    .long	HelpPagesEs31 - HelpTexts, HelpTitleEs31 - HelpTexts
+    .word	32, 2
+    .long	HelpPagesEs32 - HelpTexts, HelpTitleEs32 - HelpTexts
+    .word	33, 1
+    .long	HelpPagesEs33 - HelpTexts, HelpTitleEs33 - HelpTexts
+    .word	34, 1
+    .long	HelpPagesEs34 - HelpTexts, HelpTitleEs34 - HelpTexts
+    .word	35, 3
+    .long	HelpPagesEs35 - HelpTexts, HelpTitleEs35 - HelpTexts
+    .word	36, 4
+    .long	HelpPagesEs36 - HelpTexts, HelpTitleEs36 - HelpTexts
+    .word	37, 2
+    .long	HelpPagesEs37 - HelpTexts, HelpTitleEs37 - HelpTexts
+    .word	38, 1
+    .long	HelpPagesEs00 - HelpTexts, HelpTitleEs38 - HelpTexts
+    .word	39, 4
+    .long	HelpPagesEs39 - HelpTexts, HelpTitleEs39 - HelpTexts
+    .word	40, 4
+    .long	HelpPagesEs40 - HelpTexts, HelpTitleEs40 - HelpTexts
+    .word	41, 2
+    .long	HelpPagesEs41 - HelpTexts, HelpTitleEs41 - HelpTexts
+    .word	42, 4
+    .long	HelpPagesEs42 - HelpTexts, HelpTitleEs42 - HelpTexts
+    .word	43, 4
+    .long	HelpPagesEs43 - HelpTexts, HelpTitleEs43 - HelpTexts
+    .word	44, 1
+    .long	HelpPagesEs44 - HelpTexts, HelpTitleEs44 - HelpTexts
+    .word	45, 6
+    .long	HelpPagesEs45 - HelpTexts, HelpTitleEs45 - HelpTexts
+    .word	46, 2
+    .long	HelpPagesEs46 - HelpTexts, HelpTitleEs46 - HelpTexts
+    .word	47, 3
+    .long	HelpPagesEs47 - HelpTexts, HelpTitleEs47 - HelpTexts
+    .word	48, 4
+    .long	HelpPagesEs48 - HelpTexts, HelpTitleEs48 - HelpTexts
+    .word	49, 3
+    .long	HelpPagesEs49 - HelpTexts, HelpTitleEs49 - HelpTexts
+    .word	50, 2
+    .long	HelpPagesEs50 - HelpTexts, HelpTitleEs50 - HelpTexts
+    .word	51, 2
+    .long	HelpPagesEs51 - HelpTexts, HelpTitleEs51 - HelpTexts
+    .word	52, 1
+    .long	HelpPagesEs52 - HelpTexts, HelpTitleEs52 - HelpTexts
+    .word	53, 1
+    .long	HelpPagesEs53 - HelpTexts, HelpTitleEs53 - HelpTexts
+    .word	54, 4
+    .long	HelpPagesEs54 - HelpTexts, HelpTitleEs54 - HelpTexts
+    .word	55, 1
+    .long	HelpPagesEs55 - HelpTexts, HelpTitleEs55 - HelpTexts
+    .word	56, 1
+    .long	HelpPagesEs56 - HelpTexts, HelpTitleEs56 - HelpTexts
+    .word	57, 3
+    .long	HelpPagesEs57 - HelpTexts, HelpTitleEs57 - HelpTexts
+    .word	58, 1
+    .long	HelpPagesEs58 - HelpTexts, HelpTitleEs58 - HelpTexts
+    .word	59, 1
+    .long	HelpPagesEs59 - HelpTexts, HelpTitleEs59 - HelpTexts
+    .word	60, 1
+    .long	HelpPagesEs60 - HelpTexts, HelpTitleEs60 - HelpTexts
+    .word	61, 3
+    .long	HelpPagesEs61 - HelpTexts, HelpTitleEs61 - HelpTexts
+    .word	62, 2
+    .long	HelpPagesEs62 - HelpTexts, HelpTitleEs62 - HelpTexts
+    .word	63, 4
+    .long	HelpPagesEs63 - HelpTexts, HelpTitleEs63 - HelpTexts
+    .word	64, 1
+    .long	HelpPagesEs64 - HelpTexts, HelpTitleEs64 - HelpTexts
+    .word	65, 2
+    .long	HelpPagesEs65 - HelpTexts, HelpTitleEs65 - HelpTexts
+    .word	66, 3
+    .long	HelpPagesEs66 - HelpTexts, HelpTitleEs66 - HelpTexts
+    .word	67, 1
+    .long	HelpPagesEs67 - HelpTexts, HelpTitleEs67 - HelpTexts
+    .word	68, 5
+    .long	HelpPagesEs68 - HelpTexts, HelpTitleEs68 - HelpTexts
+    .word	69, 3
+    .long	HelpPagesEs69 - HelpTexts, HelpTitleEs69 - HelpTexts
+    .word	70, 3
+    .long	HelpPagesEs70 - HelpTexts, HelpTitleEs70 - HelpTexts
+    .word	71, 1
+    .long	HelpPagesEs71 - HelpTexts, HelpTitleEs71 - HelpTexts
+    .word	72, 2
+    .long	HelpPagesEs72 - HelpTexts, HelpTitleEs72 - HelpTexts
+    .word	73, 1
+    .long	HelpPagesEs00 - HelpTexts, HelpTitleEs73 - HelpTexts
+    .word	74, 1
+    .long	HelpPagesEs00 - HelpTexts, HelpTitleEs74 - HelpTexts
+    .word	75, 1
+    .long	HelpPagesEs00 - HelpTexts, HelpTitleEs75 - HelpTexts
+    .word	76, 1
+    .long	HelpPagesEs00 - HelpTexts, HelpTitleEs76 - HelpTexts
+    .word	77, 1
+    .long	HelpPagesEs00 - HelpTexts, HelpTitleEs77 - HelpTexts
+    .word	78, 1
+    .long	HelpPagesEs00 - HelpTexts, HelpTitleEs78 - HelpTexts
+    .word	79, 1
+    .long	HelpPagesEs00 - HelpTexts, HelpTitleEs79 - HelpTexts
+    .word	80, 1
+    .long	HelpPagesEs00 - HelpTexts, HelpTitleEs80 - HelpTexts
+    .word	81, 1
+    .long	HelpPagesEs00 - HelpTexts, HelpTitleEs81 - HelpTexts
+    .word	82, 1
+    .long	HelpPagesEs00 - HelpTexts, HelpTitleEs82 - HelpTexts
+    .word	83, 1
+    .long	HelpPagesEs00 - HelpTexts, HelpTitleEs83 - HelpTexts
+    .word	84, 1
+    .long	HelpPagesEs00 - HelpTexts, HelpTitleEs84 - HelpTexts
+    .word	85, 1
+    .long	HelpPagesEs00 - HelpTexts, HelpTitleEs85 - HelpTexts
+    .word	86, 1
+    .long	HelpPagesEs00 - HelpTexts, HelpTitleEs86 - HelpTexts
+    .word	87, 1
+    .long	HelpPagesEs00 - HelpTexts, HelpTitleEs87 - HelpTexts
+    .word	88, 1
+    .long	HelpPagesEs00 - HelpTexts, HelpTitleEs88 - HelpTexts
+    .word	89, 1
+    .long	HelpPagesEs00 - HelpTexts, HelpTitleEs89 - HelpTexts
+    .word	90, 1
+    .long	HelpPagesEs00 - HelpTexts, HelpTitleEs90 - HelpTexts
+    .word	91, 1
+    .long	HelpPagesEs00 - HelpTexts, HelpTitleEs91 - HelpTexts
+    .word	92, 1
+    .long	HelpPagesEs00 - HelpTexts, HelpTitleEs92 - HelpTexts
+    .word	93, 1
+    .long	HelpPagesEs00 - HelpTexts, HelpTitleEs93 - HelpTexts
+    .word	94, 1
+    .long	HelpPagesEs00 - HelpTexts, HelpTitleEs94 - HelpTexts
+    .word	95, 1
+    .long	HelpPagesEs00 - HelpTexts, HelpTitleEs95 - HelpTexts
+    .word	96, 1
+    .long	HelpPagesEs00 - HelpTexts, HelpTitleEs96 - HelpTexts
+    .word	97, 1
+    .long	HelpPagesEs00 - HelpTexts, HelpTitleEs97 - HelpTexts
+    .word	98, 1
+    .long	HelpPagesEs00 - HelpTexts, HelpTitleEs98 - HelpTexts
+    .word	99, 1
+    .long	HelpPagesEs00 - HelpTexts, HelpTitleEs99 - HelpTexts
 
 # dir[68], 0x4 bytes; CHANGED vs build 84 (was 0x4 bytes).
 # A build number, ASCII digits and a line feed. No program code reads this slot;
