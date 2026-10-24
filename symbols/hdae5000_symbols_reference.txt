@@ -5,8 +5,8 @@
 # scripts/analysis/l2_symbol_reference.py --regen
 # Do not hand-edit: rename in the sources and regenerate.
 #
-#   symbols .................. 5,265
-#   semantic names ........... 5,265 (100.0%)
+#   symbols .................. 5,298
+#   semantic names ........... 5,298 (100.0%)
 #   positional names ......... 0
 #
 HDAE5000_ROM_HEADER 00280000
@@ -1738,8 +1738,10 @@ HDAE5000_HD_ZeroSector 00298896
 HDAE5000_HD_ZeroSector_Loop 0029889A
 HDAE5000_HD_BuildSettingsSector 002988AF
 HDAE5000_HD_BuildSettingsSector_CopyVersion 002988D9
+HDAE5000_DeadLib_Block64Differs 00298936
 HDAE5000_DeadLib_Block64Differs_Loop 00298942
 HDAE5000_DeadLib_Block64Differs_Return 00298966
+HDAE5000_DeadLib_CopyName26 00298967
 HDAE5000_DeadLib_CopyName26_Loop 00298977
 HDAE5000_HD_ResetVersionKeyWord 00298993
 HDAE5000_NameList5_Contains 0029899E
@@ -1753,13 +1755,17 @@ HDAE5000_Field12_FillZeros 00298A2B
 HDAE5000_Field12_FillZeros_Loop 00298A34
 HDAE5000_Field12_FillSpaces 00298A4C
 HDAE5000_Field12_FillSpaces_Loop 00298A55
+HDAE5000_DeadLib_Fill40Spaces 00298A6D
 HDAE5000_DeadLib_Fill40Spaces_Loop 00298A76
 HDAE5000_FormatDecimal12_ZeroFill 00298A8E
 HDAE5000_FormatDecimal12_Digits 00298A96
+HDAE5000_DeadLib_Delay6x4095 00298AE5
 HDAE5000_DeadLib_Delay6x4095_Outer 00298AE9
 HDAE5000_DeadLib_Delay6x4095_Inner 00298AF6
+HDAE5000_DeadLib_Delay70x4095 00298B10
 HDAE5000_DeadLib_Delay70x4095_Outer 00298B17
 HDAE5000_DeadLib_Delay70x4095_Inner 00298B24
+HDAE5000_DeadLib_Delay37x4095 00298B3E
 HDAE5000_DeadLib_Delay37x4095_Outer 00298B45
 HDAE5000_DeadLib_Delay37x4095_Inner 00298B52
 HDAE5000_HD_GetDiskUsage 00298B6C
@@ -1770,44 +1776,69 @@ HDAE5000_NameBuf_IsNotBlank_Loop 00298C5D
 HDAE5000_HD_ClusterCount 00298C7D
 HDAE5000_HD_BytesToClusters 00298C86
 HDAE5000_HD_CheckVersionKey 00298C9D
+HDAE5000_DeadLib_FindFreeSlot32 00298CF3
 HDAE5000_DeadLib_FindFreeSlot32_Loop 00298CFA
 HDAE5000_DeadLib_FindFreeSlot32_Return 00298D25
+HDAE5000_DeadLib_SelectNextFile 00298D26
 HDAE5000_DeadLib_SelectNextFile_NextDir 00298D44
 HDAE5000_DeadLib_SelectNextFile_Return 00298D8E
+HDAE5000_DeadLib_SelectNextFlsItem 00298D8F
 HDAE5000_DeadLib_SelectNextFlsItem_NextRow 00298DAD
 HDAE5000_DeadLib_SelectNextFlsItem_Return 00298E17
+HDAE5000_DeadLib_ClearRefsToEntry 00298E18
 HDAE5000_DeadLib_ClearRefsToEntry_RowLoop 00298E1F
 HDAE5000_DeadLib_ClearRefsToEntry_ItemLoop 00298E2C
+HDAE5000_DeadLib_DeleteSlotShift 00298E62
 HDAE5000_DeadLib_DeleteSlotShift_Loop 00298E6C
+HDAE5000_DeadLib_FindNextUsedSlot 00298E95
 HDAE5000_DeadLib_FindNextUsedSlot_Loop 00298EAC
 HDAE5000_DeadLib_FindNextUsedSlot_Return 00298ED4
+HDAE5000_DeadLib_FindLastFreeSlot 00298ED5
 HDAE5000_DeadLib_FindLastFreeSlot_Loop 00298EEC
 HDAE5000_DeadLib_FindLastFreeSlot_Return 00298F14
+HDAE5000_DeadLib_InsertSlotShift 00298F15
 HDAE5000_DeadLib_InsertSlotShift_Loop 00298F1F
+HDAE5000_DeadLib_LoadFileName 00298F48
 HDAE5000_DeadLib_LoadFileName_Loop 00298F58
+HDAE5000_DeadLib_StoreFileName 00298F76
 HDAE5000_DeadLib_StoreFileName_Loop 00298F86
+HDAE5000_DeadLib_RememberFileName 00298FA4
 HDAE5000_DeadLib_RememberFileName_Copy 00298FF6
+HDAE5000_DeadLib_RememberEntryName 00299018
 HDAE5000_DeadLib_RememberEntryName_Copy 0029905F
+HDAE5000_DeadLib_RecallRecentFileName 00299081
 HDAE5000_DeadLib_RecallRecentFileName_Copy 002990CA
 HDAE5000_DeadLib_RecallRecentFileName_Exit 002990E8
+HDAE5000_DeadLib_CopyEntryNameOut 002990EC
 HDAE5000_DeadLib_CopyEntryNameOut_Loop 002990FC
 HDAE5000_DirBrowser_GetRowByte 002991AD
 HDAE5000_DirBrowser_IncRowByte 002991D5
+HDAE5000_DirBrowser_DecRowByte 002991FD
 HDAE5000_DirBrowser_ClearRowByte 00299225
+HDAE5000_DeadLib_LoadDirName 0029927B
 HDAE5000_DeadLib_LoadDirName_Loop 002992B5
+HDAE5000_DeadLib_StoreDirName 002992D3
 HDAE5000_DeadLib_StoreDirName_Loop 002992E2
+HDAE5000_DeadLib_RememberDirName 002992FF
 HDAE5000_DeadLib_RememberDirName_Copy 00299351
+HDAE5000_DeadLib_RecallRecentDirName 00299373
 HDAE5000_DeadLib_RecallRecentDirName_Copy 002993BC
 HDAE5000_DeadLib_RecallRecentDirName_Exit 002993DA
+HDAE5000_DeadLib_CopyDirNameOut 002993DE
 HDAE5000_DeadLib_CopyDirNameOut_Loop 00299413
 HDAE5000_DirBrowser_GetCursor 00299487
 HDAE5000_DirBrowser_IncCursor 0029949A
 HDAE5000_DirBrowser_ClearCursor 002994C4
+HDAE5000_DeadLib_LoadFlsName 00299501
 HDAE5000_DeadLib_LoadFlsName_Loop 0029953B
+HDAE5000_DeadLib_StoreFlsName 00299559
 HDAE5000_DeadLib_StoreFlsName_Loop 00299568
+HDAE5000_DeadLib_RememberFlsName 00299585
 HDAE5000_DeadLib_RememberFlsName_Copy 002995D7
+HDAE5000_DeadLib_RecallRecentFlsName 002995F9
 HDAE5000_DeadLib_RecallRecentFlsName_Copy 00299642
 HDAE5000_DeadLib_RecallRecentFlsName_Exit 00299660
+HDAE5000_DeadLib_CopyFlsNameOut 00299664
 HDAE5000_DeadLib_CopyFlsNameOut_Loop 00299699
 HDAE5000_FlsBrowser_RowAddress 002996B7
 HDAE5000_FlsBrowser_GetCursor 0029973F
@@ -1816,7 +1847,9 @@ HDAE5000_FlsBrowser_IncCursor 0029977A
 HDAE5000_FlsBrowser_IncRowByte 002997A4
 HDAE5000_FlsBrowser_ClearCursor 002997F4
 HDAE5000_FlsBrowser_ClearRowByte 0029981C
+HDAE5000_DeadLib_Copy64Out 0029986E
 HDAE5000_DeadLib_Copy64Out_Loop 00299887
+HDAE5000_DeadLib_Copy64Back 0029989F
 HDAE5000_DeadLib_Copy64Back_Loop 002998AB
 HDAE5000_DecimalDigits 002998D9
 HDAE5000_HD_LoadSettings 002998E4

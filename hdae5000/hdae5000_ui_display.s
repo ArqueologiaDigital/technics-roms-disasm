@@ -22334,27 +22334,29 @@ HDAE5000_HD_BuildSettingsSector_CopyVersion:
 	ld (xix), xwa
 	ret
 
+HDAE5000_DeadLib_Block64Differs:
 	ld	xix, (0x229d80)
 	lda xiy, (0x201556:24)
 	ld	bc, 0:i3
 HDAE5000_DeadLib_Block64Differs_Loop:
 	cp	bc, 0x0040
-	jp	z, (.LHD_BuildSettingsSector_CopyVersion_Skip3:24)
+	jp	z, (.LDeadLib_Block64Differs_Done:24)
 	ld	a, (xix)
 	cp	a, (xiy)
-	jp	nz, (.LHD_BuildSettingsSector_CopyVersion_Skip2:24)
+	jp	nz, (.LDeadLib_Block64Differs_Skip:24)
 	inc 1, xix
 	inc 1, xiy
 	inc	1, bc
 	jp HDAE5000_DeadLib_Block64Differs_Loop
-.LHD_BuildSettingsSector_CopyVersion_Skip2:
+.LDeadLib_Block64Differs_Skip:
 	ld	a, 0x01:opc
 	jp HDAE5000_DeadLib_Block64Differs_Return
-.LHD_BuildSettingsSector_CopyVersion_Skip3:
+.LDeadLib_Block64Differs_Done:
 	ld	a, 0x00:opc
 HDAE5000_DeadLib_Block64Differs_Return:
 	ret
 
+HDAE5000_DeadLib_CopyName26:
 	push xix
 	push xiy
 	push xbc
@@ -22364,14 +22366,14 @@ HDAE5000_DeadLib_Block64Differs_Return:
 	lda xiy, (0x201538:24)
 HDAE5000_DeadLib_CopyName26_Loop:
 	cp	bc, 0x001a
-	jp	z, (.LHD_BuildSettingsSector_CopyVersion_Skip4:24)
+	jp	z, (.LDeadLib_CopyName26_Epilogue:24)
 	ld	a, (xiy)
 	ld	(xix), a
 	inc	1, bc
 	inc 1, xix
 	inc 1, xiy
 	jp HDAE5000_DeadLib_CopyName26_Loop
-.LHD_BuildSettingsSector_CopyVersion_Skip4:
+.LDeadLib_CopyName26_Epilogue:
 	pop xwa
 	pop xbc
 	pop xiy
@@ -22403,8 +22405,10 @@ HDAE5000_HD_ResetVersionKeyWord:
 ; 0x229DDF[120]) and for the FLS rows (page 0x229DA0, cursors 0x229E57[5],
 ; per-row byte 0x229E5C[120]), 5-deep rings of recent names (0x201434 x26,
 ; 0x2013B2 x16, 0x2014B6 x16, indexes 0x229DC2..0x229DC7) and the name
-; buffers 0x200C98 / 0x200870.  Routines with no label are left unlabelled;
-; labels inside them carry the prefix HDAE5000_DeadLib_.  Some of it does
+; buffers 0x200C98 / 0x200870.  Routines that had no name of their own are
+; labelled HDAE5000_DeadLib_<what the body does> (FindFreeSlot32, Copy64Out ...;
+; scripts/renaming/fix_hdae5000_dead_owners.py placed the entry labels, and
+; nothing refers to them).  Some of it does
 ; not fit the live layout (it uses 0x229C94, the data-sector count of
 ; HDAE5000_HD_ParseIdentify, as a pointer), so it may predate it.
 ; ----------------------------------------------------------------------------
@@ -22510,17 +22514,18 @@ HDAE5000_Field12_FillSpaces_Loop:
 	pop xix
 	ret
 
+HDAE5000_DeadLib_Fill40Spaces:
 	push xix
 	push xbc
 	lda xix, (0x200870:24)
 	ld	bc, 0:i3
 HDAE5000_DeadLib_Fill40Spaces_Loop:
 	cp	bc, 0x0028
-	jp	z, (.LField12_FillSpaces_Skip2:24)
+	jp	z, (.LDeadLib_Fill40Spaces_Epilogue:24)
 	ld	(xix+bc), 0x20
 	inc	1, bc
 	jp HDAE5000_DeadLib_Fill40Spaces_Loop
-.LField12_FillSpaces_Skip2:
+.LDeadLib_Fill40Spaces_Epilogue:
 	pop xbc
 	pop xix
 	ret
@@ -22570,6 +22575,7 @@ HDAE5000_FormatDecimal12_Digits:
 	push xbc
 	call HDAE5000_Field12_FillSpaces
 	jp HDAE5000_FormatDecimal12_Digits
+HDAE5000_DeadLib_Delay6x4095:
 	push xwa
 	push xbc
 	ld	xwa, 6:i3
@@ -22590,6 +22596,7 @@ HDAE5000_DeadLib_Delay6x4095_Inner:
 	pop xwa
 	ret
 
+HDAE5000_DeadLib_Delay70x4095:
 	push xwa
 	push xbc
 	ld	xwa, 0x00000046
@@ -22610,6 +22617,7 @@ HDAE5000_DeadLib_Delay70x4095_Inner:
 	pop xwa
 	ret
 
+HDAE5000_DeadLib_Delay37x4095:
 	push xwa
 	push xbc
 	ld	xwa, 0x00000025
@@ -22803,31 +22811,33 @@ HDAE5000_HD_CheckVersionKey:
 	ld	(0x229cf0), xix
 	ret
 
+HDAE5000_DeadLib_FindFreeSlot32:
 	lda xix, (0x201556:24)
 	ld	bc, 0:i3
 HDAE5000_DeadLib_FindFreeSlot32_Loop:
 	cp	bc, 0x0020
-	jp	z, (.LHD_CheckVersionKey_Skip3:24)
+	jp	z, (.LDeadLib_FindFreeSlot32_Done:24)
 	ld xiy, (xix + 0x04)
 	cp	xiy, 0x00000000
-	jp	nz, (.LHD_CheckVersionKey_Skip2:24)
+	jp	nz, (.LDeadLib_FindFreeSlot32_Skip:24)
 	ld	xwa, xix
 	jp HDAE5000_DeadLib_FindFreeSlot32_Return
-.LHD_CheckVersionKey_Skip2:
+.LDeadLib_FindFreeSlot32_Skip:
 	add	xix, 0x00000008
 	inc	1, bc
 	jp HDAE5000_DeadLib_FindFreeSlot32_Loop
-.LHD_CheckVersionKey_Skip3:
+.LDeadLib_FindFreeSlot32_Done:
 	ld	xwa, 0:i3
 HDAE5000_DeadLib_FindFreeSlot32_Return:
 	ret
 
+HDAE5000_DeadLib_SelectNextFile:
 	ld	(0x229DC8:24), 0
 	call HDAE5000_DirBrowser_GetRowByte
 	cp	a, 0x0f
-	jp	c, (.LHD_CheckVersionKey_Skip4:24)
+	jp	c, (.LDeadLib_SelectNextFile_Skip:24)
 	jp HDAE5000_DeadLib_SelectNextFile_NextDir
-.LHD_CheckVersionKey_Skip4:
+.LDeadLib_SelectNextFile_Skip:
 	call HDAE5000_DirBrowser_IncRowByte
 	jp HDAE5000_DeadLib_SelectNextFile_Return
 HDAE5000_DeadLib_SelectNextFile_NextDir:
@@ -22854,12 +22864,13 @@ HDAE5000_DeadLib_SelectNextFile_NextDir:
 HDAE5000_DeadLib_SelectNextFile_Return:
 	ret
 
+HDAE5000_DeadLib_SelectNextFlsItem:
 	ld	(0x229DC8:24), 0
 	call HDAE5000_FlsBrowser_GetRowByte
 	cp	a, 0x1f
-	jp	c, (.LDeadLib_SelectNextFile_NextDir_Skip2:24)
+	jp	c, (.LDeadLib_SelectNextFlsItem_Skip:24)
 	jp HDAE5000_DeadLib_SelectNextFlsItem_NextRow
-.LDeadLib_SelectNextFile_NextDir_Skip2:
+.LDeadLib_SelectNextFlsItem_Skip:
 	call HDAE5000_FlsBrowser_IncRowByte
 	jp HDAE5000_DeadLib_SelectNextFlsItem_Return
 HDAE5000_DeadLib_SelectNextFlsItem_NextRow:
@@ -22894,6 +22905,7 @@ HDAE5000_DeadLib_SelectNextFlsItem_NextRow:
 HDAE5000_DeadLib_SelectNextFlsItem_Return:
 	ret
 
+HDAE5000_DeadLib_ClearRefsToEntry:
 	lda xix, (HDAE5000_RAM_FlsRecords+16:24)
 	ld	xiy, 0:i3
 HDAE5000_DeadLib_ClearRefsToEntry_RowLoop:
@@ -22920,24 +22932,26 @@ HDAE5000_DeadLib_ClearRefsToEntry_ItemLoop:
 .LDeadLib_ClearRefsToEntry_ItemLoop_Return1:
 	ret
 
+HDAE5000_DeadLib_DeleteSlotShift:
 	ld	xix, (HDAE5000_RAM_DataSectorCount)
 	lda xiy, (0x20158e:24)
 HDAE5000_DeadLib_DeleteSlotShift_Loop:
 	cp	xix, xiy
-	jp	z, (.LDeadLib_ClearRefsToEntry_ItemLoop_Skip3:24)
+	jp	z, (.LDeadLib_DeleteSlotShift_Skip:24)
 	ld xwa, (xix + 0x08)
 	ld (xix), xwa
 	ld xwa, (xix + 0x0c)
 	ld (xix + 0x04), xwa
 	add	xix, 0x00000008
 	jp HDAE5000_DeadLib_DeleteSlotShift_Loop
-.LDeadLib_ClearRefsToEntry_ItemLoop_Skip3:
+.LDeadLib_DeleteSlotShift_Skip:
 	xor	xwa, xwa
 	lda xix, (0x20158e:24)
 	ld (xix), xwa
 	ld (xix + 0x04), xwa
 	ret
 
+HDAE5000_DeadLib_FindNextUsedSlot:
 	ld	xix, (0x229d84)
 	add	xix, 0x00000002
 	lda xiy, (0x201596:24)
@@ -22948,15 +22962,16 @@ HDAE5000_DeadLib_FindNextUsedSlot_Loop:
 	jp	z, (HDAE5000_DeadLib_FindNextUsedSlot_Return:24)
 	ld xwa, (xix + 0x04)
 	cp	xwa, 0x00000000
-	jp	z, (.LDeadLib_ClearRefsToEntry_ItemLoop_Skip4:24)
+	jp	z, (.LDeadLib_FindNextUsedSlot_Skip:24)
 	ld	(0x229d8c), xix
 	jp HDAE5000_DeadLib_FindNextUsedSlot_Return
-.LDeadLib_ClearRefsToEntry_ItemLoop_Skip4:
+.LDeadLib_FindNextUsedSlot_Skip:
 	add	xix, 0x00000002
 	jp HDAE5000_DeadLib_FindNextUsedSlot_Loop
 HDAE5000_DeadLib_FindNextUsedSlot_Return:
 	ret
 
+HDAE5000_DeadLib_FindLastFreeSlot:
 	lda xix, (0x201596:24)
 	sub	xix, 0x00000002
 	ld	xiy, (0x229d84)
@@ -22967,33 +22982,35 @@ HDAE5000_DeadLib_FindLastFreeSlot_Loop:
 	jp	z, (HDAE5000_DeadLib_FindLastFreeSlot_Return:24)
 	ld xwa, (xix + 0x04)
 	cp	xwa, 0x00000000
-	jp	nz, (.LDeadLib_ClearRefsToEntry_ItemLoop_Skip5:24)
+	jp	nz, (.LDeadLib_FindLastFreeSlot_Skip:24)
 	ld	(0x229d88), xix
 	jp HDAE5000_DeadLib_FindLastFreeSlot_Return
-.LDeadLib_ClearRefsToEntry_ItemLoop_Skip5:
+.LDeadLib_FindLastFreeSlot_Skip:
 	sub	xix, 0x00000002
 	jp HDAE5000_DeadLib_FindLastFreeSlot_Loop
 HDAE5000_DeadLib_FindLastFreeSlot_Return:
 	ret
 
+HDAE5000_DeadLib_InsertSlotShift:
 	ld	xix, (0x229d88)
 	ld	xiy, (0x229d84)
 HDAE5000_DeadLib_InsertSlotShift_Loop:
 	cp	xix, xiy
-	jp	z, (.LDeadLib_ClearRefsToEntry_ItemLoop_Skip6:24)
+	jp	z, (.LDeadLib_InsertSlotShift_Skip:24)
 	ld	xwa, (xix-8)
 	ld (xix), xwa
 	ld	xwa, (xix-4)
 	ld (xix + 0x04), xwa
 	sub	xix, 0x00000002
 	jp HDAE5000_DeadLib_InsertSlotShift_Loop
-.LDeadLib_ClearRefsToEntry_ItemLoop_Skip6:
+.LDeadLib_InsertSlotShift_Skip:
 	xor	xwa, xwa
 	ld	xix, (0x229d84)
 	ld (xix), xwa
 	ld (xix + 0x04), xwa
 	ret
 
+HDAE5000_DeadLib_LoadFileName:
 	push xix
 	push xiy
 	push xbc
@@ -23003,20 +23020,21 @@ HDAE5000_DeadLib_InsertSlotShift_Loop:
 	lda xiy, (0x200c98:24)
 HDAE5000_DeadLib_LoadFileName_Loop:
 	cp	xbc, 0x0000001a
-	jp	z, (.LDeadLib_ClearRefsToEntry_ItemLoop_Skip7:24)
+	jp	z, (.LDeadLib_LoadFileName_Epilogue:24)
 	ld	a, (xix)
 	ld	(xiy), a
 	inc 1, xbc
 	inc 1, xix
 	inc 1, xiy
 	jp HDAE5000_DeadLib_LoadFileName_Loop
-.LDeadLib_ClearRefsToEntry_ItemLoop_Skip7:
+.LDeadLib_LoadFileName_Epilogue:
 	pop xwa
 	pop xbc
 	pop xiy
 	pop xix
 	ret
 
+HDAE5000_DeadLib_StoreFileName:
 	push xix
 	push xiy
 	push xbc
@@ -23026,20 +23044,21 @@ HDAE5000_DeadLib_LoadFileName_Loop:
 	lda xiy, (0x200c98:24)
 HDAE5000_DeadLib_StoreFileName_Loop:
 	cp	xbc, 0x0000001a
-	jp	z, (.LDeadLib_ClearRefsToEntry_ItemLoop_Skip8:24)
+	jp	z, (.LDeadLib_StoreFileName_Epilogue:24)
 	ld	a, (xiy)
 	ld	(xix), a
 	inc 1, xbc
 	inc 1, xix
 	inc 1, xiy
 	jp HDAE5000_DeadLib_StoreFileName_Loop
-.LDeadLib_ClearRefsToEntry_ItemLoop_Skip8:
+.LDeadLib_StoreFileName_Epilogue:
 	pop xwa
 	pop xbc
 	pop xiy
 	pop xix
 	ret
 
+HDAE5000_DeadLib_RememberFileName:
 	push xix
 	push xiy
 	push xbc
@@ -23052,9 +23071,9 @@ HDAE5000_DeadLib_StoreFileName_Loop:
 	cp	a, 1:i3
 	jp	z, (.LDeadLib_RememberFileName_Copy_Skip2:24)
 	cp	(0x229DC3:24), 5
-	jp	c, (.LDeadLib_ClearRefsToEntry_ItemLoop_Skip9:24)
+	jp	c, (.LDeadLib_RememberFileName_Join:24)
 	ld	(0x229DC3:24), 0
-.LDeadLib_ClearRefsToEntry_ItemLoop_Skip9:
+.LDeadLib_RememberFileName_Join:
 	lda xix, (0x201434:24)
 	xor	xwa, xwa
 	ld	a, (0x229DC3:24)
@@ -23080,6 +23099,7 @@ HDAE5000_DeadLib_RememberFileName_Copy:
 	pop xix
 	ret
 
+HDAE5000_DeadLib_RememberEntryName:
 	push xix
 	push xiy
 	push xbc
@@ -23089,9 +23109,9 @@ HDAE5000_DeadLib_RememberFileName_Copy:
 	cp	a, 1:i3
 	jp	z, (.LDeadLib_RememberEntryName_Copy_Skip2:24)
 	cp	(0x229DC3:24), 5
-	jp	c, (.LDeadLib_RememberFileName_Copy_Skip3:24)
+	jp	c, (.LDeadLib_RememberEntryName_Join:24)
 	ld	(0x229DC3:24), 0
-.LDeadLib_RememberFileName_Copy_Skip3:
+.LDeadLib_RememberEntryName_Join:
 	lda xix, (0x201434:24)
 	xor	xwa, xwa
 	ld	a, (0x229DC3:24)
@@ -23117,13 +23137,14 @@ HDAE5000_DeadLib_RememberEntryName_Copy:
 	pop xix
 	ret
 
+HDAE5000_DeadLib_RecallRecentFileName:
 	push xix
 	push xiy
 	push xbc
 	cp	(0x229DC6:24), 5
-	jp	c, (.LDeadLib_RememberEntryName_Copy_Skip3:24)
+	jp	c, (.LDeadLib_RecallRecentFileName_Join:24)
 	ld	(0x229DC6:24), 0
-.LDeadLib_RememberEntryName_Copy_Skip3:
+.LDeadLib_RecallRecentFileName_Join:
 	lda xix, (0x201434:24)
 	xor	xwa, xwa
 	ld	a, (0x229DC6:24)
@@ -23134,10 +23155,10 @@ HDAE5000_DeadLib_RememberEntryName_Copy:
 	call HDAE5000_Name26_IsBlank
 	pop xix
 	cp	a, 1:i3
-	jp	nz, (.LDeadLib_RememberEntryName_Copy_Skip4:24)
+	jp	nz, (.LDeadLib_RecallRecentFileName_Skip:24)
 	ld	(0x229DC6:24), 0
 	jp HDAE5000_DeadLib_RecallRecentFileName_Exit
-.LDeadLib_RememberEntryName_Copy_Skip4:
+.LDeadLib_RecallRecentFileName_Skip:
 	lda xiy, (0x200c98:24)
 	ld	xbc, 0:i3
 HDAE5000_DeadLib_RecallRecentFileName_Copy:
@@ -23157,6 +23178,7 @@ HDAE5000_DeadLib_RecallRecentFileName_Exit:
 	pop xix
 	ret
 
+HDAE5000_DeadLib_CopyEntryNameOut:
 	push xix
 	push xiy
 	push xbc
@@ -23166,14 +23188,14 @@ HDAE5000_DeadLib_RecallRecentFileName_Exit:
 	lda xiy, (0x201618:24)
 HDAE5000_DeadLib_CopyEntryNameOut_Loop:
 	cp	xbc, 0x0000001a
-	jp	z, (.LDeadLib_RecallRecentFileName_Exit_Skip1:24)
+	jp	z, (.LDeadLib_CopyEntryNameOut_Epilogue:24)
 	ld	a, (xix)
 	ld	(xiy), a
 	inc 1, xbc
 	inc 1, xix
 	inc 1, xiy
 	jp HDAE5000_DeadLib_CopyEntryNameOut_Loop
-.LDeadLib_RecallRecentFileName_Exit_Skip1:
+.LDeadLib_CopyEntryNameOut_Epilogue:
 	pop xwa
 	pop xbc
 	pop xiy
@@ -23276,6 +23298,11 @@ HDAE5000_DirBrowser_IncRowByte:
 	pop xix
 	ret
 
+; ---------------------------------------------------------------------------
+; DirBrowserRowBytes[page * 24 + cursor] -= 1 (unreachable): the twin of
+; HDAE5000_DirBrowser_IncRowByte.
+; ---------------------------------------------------------------------------
+HDAE5000_DirBrowser_DecRowByte:
 	push xix
 	push xbc
 	xor	xwa, xwa
@@ -23333,6 +23360,7 @@ HDAE5000_DirBrowser_ClearRowByte:
 	pop xix
 	ret
 
+HDAE5000_DeadLib_LoadDirName:
 	push xix
 	push xiy
 	push xbc
@@ -23354,20 +23382,21 @@ HDAE5000_DirBrowser_ClearRowByte:
 	lda xiy, (0x200c98:24)
 HDAE5000_DeadLib_LoadDirName_Loop:
 	cp	xbc, 0x00000010
-	jp	z, (.LDirBrowser_ClearRowByte_Skip1:24)
+	jp	z, (.LDeadLib_LoadDirName_Epilogue:24)
 	ld	a, (xix)
 	ld	(xiy), a
 	inc 1, xbc
 	inc 1, xix
 	inc 1, xiy
 	jp HDAE5000_DeadLib_LoadDirName_Loop
-.LDirBrowser_ClearRowByte_Skip1:
+.LDeadLib_LoadDirName_Epilogue:
 	pop xwa
 	pop xbc
 	pop xiy
 	pop xix
 	ret
 
+HDAE5000_DeadLib_StoreDirName:
 	push xix
 	push xiy
 	push xbc
@@ -23376,19 +23405,20 @@ HDAE5000_DeadLib_LoadDirName_Loop:
 	ld	xbc, 0:i3
 HDAE5000_DeadLib_StoreDirName_Loop:
 	cp	xbc, 0x00000010
-	jp	z, (.LDirBrowser_ClearRowByte_Skip2:24)
+	jp	z, (.LDeadLib_StoreDirName_Epilogue:24)
 	ld	a, (xix)
 	ld	(xiy), a
 	inc 1, xbc
 	inc 1, xix
 	inc 1, xiy
 	jp HDAE5000_DeadLib_StoreDirName_Loop
-.LDirBrowser_ClearRowByte_Skip2:
+.LDeadLib_StoreDirName_Epilogue:
 	pop xbc
 	pop xiy
 	pop xix
 	ret
 
+HDAE5000_DeadLib_RememberDirName:
 	push xix
 	push xiy
 	push xbc
@@ -23401,9 +23431,9 @@ HDAE5000_DeadLib_StoreDirName_Loop:
 	cp	a, 1:i3
 	jp	z, (.LDeadLib_RememberDirName_Copy_Skip2:24)
 	cp	(0x229DC2:24), 5
-	jp	c, (.LDirBrowser_ClearRowByte_Skip3:24)
+	jp	c, (.LDeadLib_RememberDirName_Join:24)
 	ld	(0x229DC2:24), 0
-.LDirBrowser_ClearRowByte_Skip3:
+.LDeadLib_RememberDirName_Join:
 	lda xix, (0x2013b2:24)
 	xor	xwa, xwa
 	ld	a, (0x229DC2:24)
@@ -23429,13 +23459,14 @@ HDAE5000_DeadLib_RememberDirName_Copy:
 	pop xix
 	ret
 
+HDAE5000_DeadLib_RecallRecentDirName:
 	push xix
 	push xiy
 	push xbc
 	cp	(0x229DC5:24), 5
-	jp	c, (.LDeadLib_RememberDirName_Copy_Skip3:24)
+	jp	c, (.LDeadLib_RecallRecentDirName_Join:24)
 	ld	(0x229DC5:24), 0
-.LDeadLib_RememberDirName_Copy_Skip3:
+.LDeadLib_RecallRecentDirName_Join:
 	lda xix, (0x2013b2:24)
 	xor	xwa, xwa
 	ld	a, (0x229DC5:24)
@@ -23446,10 +23477,10 @@ HDAE5000_DeadLib_RememberDirName_Copy:
 	call HDAE5000_Name26_IsBlank
 	pop xix
 	cp	a, 1:i3
-	jp	nz, (.LDeadLib_RememberDirName_Copy_Skip4:24)
+	jp	nz, (.LDeadLib_RecallRecentDirName_Skip:24)
 	ld	(0x229DC5:24), 0
 	jp HDAE5000_DeadLib_RecallRecentDirName_Exit
-.LDeadLib_RememberDirName_Copy_Skip4:
+.LDeadLib_RecallRecentDirName_Skip:
 	lda xiy, (0x200c98:24)
 	ld	xbc, 0:i3
 HDAE5000_DeadLib_RecallRecentDirName_Copy:
@@ -23469,6 +23500,7 @@ HDAE5000_DeadLib_RecallRecentDirName_Exit:
 	pop xix
 	ret
 
+HDAE5000_DeadLib_CopyDirNameOut:
 	push xix
 	push xiy
 	push xbc
@@ -23489,14 +23521,14 @@ HDAE5000_DeadLib_RecallRecentDirName_Exit:
 	lda xiy, (0x200870:24)
 HDAE5000_DeadLib_CopyDirNameOut_Loop:
 	cp	xbc, 0x00000010
-	jp	z, (.LDeadLib_RecallRecentDirName_Exit_Skip1:24)
+	jp	z, (.LDeadLib_CopyDirNameOut_Epilogue:24)
 	ld	a, (xix)
 	ld	(xiy), a
 	inc 1, xbc
 	inc 1, xix
 	inc 1, xiy
 	jp HDAE5000_DeadLib_CopyDirNameOut_Loop
-.LDeadLib_RecallRecentDirName_Exit_Skip1:
+.LDeadLib_CopyDirNameOut_Epilogue:
 	pop xwa
 	pop xbc
 	pop xiy
@@ -23608,6 +23640,7 @@ HDAE5000_DirBrowser_ClearCursor:
 	pop xix
 	ret
 
+HDAE5000_DeadLib_LoadFlsName:
 	push xix
 	push xiy
 	push xbc
@@ -23629,20 +23662,21 @@ HDAE5000_DirBrowser_ClearCursor:
 	lda xiy, (0x200c98:24)
 HDAE5000_DeadLib_LoadFlsName_Loop:
 	cp	xbc, 0x00000010
-	jp	z, (.LDirBrowser_ClearCursor_Skip1:24)
+	jp	z, (.LDeadLib_LoadFlsName_Epilogue:24)
 	ld	a, (xix)
 	ld	(xiy), a
 	inc 1, xbc
 	inc 1, xix
 	inc 1, xiy
 	jp HDAE5000_DeadLib_LoadFlsName_Loop
-.LDirBrowser_ClearCursor_Skip1:
+.LDeadLib_LoadFlsName_Epilogue:
 	pop xwa
 	pop xbc
 	pop xiy
 	pop xix
 	ret
 
+HDAE5000_DeadLib_StoreFlsName:
 	push xix
 	push xiy
 	push xbc
@@ -23651,19 +23685,20 @@ HDAE5000_DeadLib_LoadFlsName_Loop:
 	ld	xbc, 0:i3
 HDAE5000_DeadLib_StoreFlsName_Loop:
 	cp	xbc, 0x00000010
-	jp	z, (.LDirBrowser_ClearCursor_Skip2:24)
+	jp	z, (.LDeadLib_StoreFlsName_Epilogue:24)
 	ld	a, (xix)
 	ld	(xiy), a
 	inc 1, xbc
 	inc 1, xix
 	inc 1, xiy
 	jp HDAE5000_DeadLib_StoreFlsName_Loop
-.LDirBrowser_ClearCursor_Skip2:
+.LDeadLib_StoreFlsName_Epilogue:
 	pop xbc
 	pop xiy
 	pop xix
 	ret
 
+HDAE5000_DeadLib_RememberFlsName:
 	push xix
 	push xiy
 	push xbc
@@ -23676,9 +23711,9 @@ HDAE5000_DeadLib_StoreFlsName_Loop:
 	cp	a, 1:i3
 	jp	z, (.LDeadLib_RememberFlsName_Copy_Skip2:24)
 	cp	(0x229DC4:24), 5
-	jp	c, (.LDirBrowser_ClearCursor_Skip3:24)
+	jp	c, (.LDeadLib_RememberFlsName_Join:24)
 	ld	(0x229DC4:24), 0
-.LDirBrowser_ClearCursor_Skip3:
+.LDeadLib_RememberFlsName_Join:
 	lda xix, (0x2014b6:24)
 	xor	xwa, xwa
 	ld	a, (0x229DC4:24)
@@ -23704,13 +23739,14 @@ HDAE5000_DeadLib_RememberFlsName_Copy:
 	pop xix
 	ret
 
+HDAE5000_DeadLib_RecallRecentFlsName:
 	push xix
 	push xiy
 	push xbc
 	cp	(0x229DC7:24), 5
-	jp	c, (.LDeadLib_RememberFlsName_Copy_Skip3:24)
+	jp	c, (.LDeadLib_RecallRecentFlsName_Join:24)
 	ld	(0x229DC7:24), 0
-.LDeadLib_RememberFlsName_Copy_Skip3:
+.LDeadLib_RecallRecentFlsName_Join:
 	lda xix, (0x2014b6:24)
 	xor	xwa, xwa
 	ld	a, (0x229DC7:24)
@@ -23721,10 +23757,10 @@ HDAE5000_DeadLib_RememberFlsName_Copy:
 	call HDAE5000_Name26_IsBlank
 	pop xix
 	cp	a, 1:i3
-	jp	nz, (.LDeadLib_RememberFlsName_Copy_Skip4:24)
+	jp	nz, (.LDeadLib_RecallRecentFlsName_Skip:24)
 	ld	(0x229DC7:24), 0
 	jp HDAE5000_DeadLib_RecallRecentFlsName_Exit
-.LDeadLib_RememberFlsName_Copy_Skip4:
+.LDeadLib_RecallRecentFlsName_Skip:
 	lda xiy, (0x200c98:24)
 	ld	xbc, 0:i3
 HDAE5000_DeadLib_RecallRecentFlsName_Copy:
@@ -23744,6 +23780,7 @@ HDAE5000_DeadLib_RecallRecentFlsName_Exit:
 	pop xix
 	ret
 
+HDAE5000_DeadLib_CopyFlsNameOut:
 	push xix
 	push xiy
 	push xbc
@@ -23764,14 +23801,14 @@ HDAE5000_DeadLib_RecallRecentFlsName_Exit:
 	lda xiy, (0x200870:24)
 HDAE5000_DeadLib_CopyFlsNameOut_Loop:
 	cp	xbc, 0x00000010
-	jp	z, (.LDeadLib_RecallRecentFlsName_Exit_Skip1:24)
+	jp	z, (.LDeadLib_CopyFlsNameOut_Epilogue:24)
 	ld	a, (xix)
 	ld	(xiy), a
 	inc 1, xbc
 	inc 1, xix
 	inc 1, xiy
 	jp HDAE5000_DeadLib_CopyFlsNameOut_Loop
-.LDeadLib_RecallRecentFlsName_Exit_Skip1:
+.LDeadLib_CopyFlsNameOut_Epilogue:
 	pop xwa
 	pop xbc
 	pop xiy
@@ -23993,6 +24030,7 @@ HDAE5000_FlsBrowser_ClearRowByte:
 	pop xix
 	ret
 
+HDAE5000_DeadLib_Copy64Out:
 	call HDAE5000_FlsBrowser_RowAddress
 	ld	xbc, 0x00000010
 	add	xwa, xbc
@@ -24002,29 +24040,30 @@ HDAE5000_FlsBrowser_ClearRowByte:
 	ld	bc, 0:i3
 HDAE5000_DeadLib_Copy64Out_Loop:
 	cp	bc, 0x0040
-	jp	z, (.LFlsBrowser_ClearRowByte_Return1:24)
+	jp	z, (.LDeadLib_Copy64Out_Return:24)
 	ld	a, (xix)
 	ld	(xiy), a
 	inc 1, xix
 	inc 1, xiy
 	inc	1, bc
 	jp HDAE5000_DeadLib_Copy64Out_Loop
-.LFlsBrowser_ClearRowByte_Return1:
+.LDeadLib_Copy64Out_Return:
 	ret
 
+HDAE5000_DeadLib_Copy64Back:
 	ld	xix, (0x229d80)
 	lda xiy, (0x201556:24)
 	ld	bc, 0:i3
 HDAE5000_DeadLib_Copy64Back_Loop:
 	cp	bc, 0x0040
-	jp	z, (.LFlsBrowser_ClearRowByte_Return2:24)
+	jp	z, (.LDeadLib_Copy64Back_Return:24)
 	ld	a, (xiy)
 	ld	(xix), a
 	inc 1, xix
 	inc 1, xiy
 	inc	1, bc
 	jp HDAE5000_DeadLib_Copy64Back_Loop
-.LFlsBrowser_ClearRowByte_Return2:
+.LDeadLib_Copy64Back_Return:
 	ret
 
 	ld	xix, (0x229d7c)

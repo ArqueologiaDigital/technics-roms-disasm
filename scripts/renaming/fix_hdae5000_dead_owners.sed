@@ -1,0 +1,35 @@
+# written by scripts/renaming/fix_hdae5000_dead_owners.py --apply (step 2)
+# run with: LC_ALL=C sed -i -f scripts/renaming/fix_hdae5000_dead_owners.sed hdae5000/*.s
+s/\.LHD_BuildSettingsSector_CopyVersion_Skip2\b/.LDeadLib_Block64Differs_Skip/g
+s/\.LHD_BuildSettingsSector_CopyVersion_Skip3\b/.LDeadLib_Block64Differs_Done/g
+s/\.LHD_BuildSettingsSector_CopyVersion_Skip4\b/.LDeadLib_CopyName26_Epilogue/g
+s/\.LDeadLib_ClearRefsToEntry_ItemLoop_Skip3\b/.LDeadLib_DeleteSlotShift_Skip/g
+s/\.LDeadLib_ClearRefsToEntry_ItemLoop_Skip4\b/.LDeadLib_FindNextUsedSlot_Skip/g
+s/\.LDeadLib_ClearRefsToEntry_ItemLoop_Skip5\b/.LDeadLib_FindLastFreeSlot_Skip/g
+s/\.LDeadLib_ClearRefsToEntry_ItemLoop_Skip6\b/.LDeadLib_InsertSlotShift_Skip/g
+s/\.LDeadLib_ClearRefsToEntry_ItemLoop_Skip7\b/.LDeadLib_LoadFileName_Epilogue/g
+s/\.LDeadLib_ClearRefsToEntry_ItemLoop_Skip8\b/.LDeadLib_StoreFileName_Epilogue/g
+s/\.LDeadLib_ClearRefsToEntry_ItemLoop_Skip9\b/.LDeadLib_RememberFileName_Join/g
+s/\.LDeadLib_RecallRecentFileName_Exit_Skip1\b/.LDeadLib_CopyEntryNameOut_Epilogue/g
+s/\.LDeadLib_RecallRecentDirName_Exit_Skip1\b/.LDeadLib_CopyDirNameOut_Epilogue/g
+s/\.LDeadLib_RecallRecentFlsName_Exit_Skip1\b/.LDeadLib_CopyFlsNameOut_Epilogue/g
+s/\.LDeadLib_SelectNextFile_NextDir_Skip2\b/.LDeadLib_SelectNextFlsItem_Skip/g
+s/\.LDeadLib_RememberEntryName_Copy_Skip3\b/.LDeadLib_RecallRecentFileName_Join/g
+s/\.LDeadLib_RememberEntryName_Copy_Skip4\b/.LDeadLib_RecallRecentFileName_Skip/g
+s/\.LDeadLib_RememberFileName_Copy_Skip3\b/.LDeadLib_RememberEntryName_Join/g
+s/\.LDeadLib_RememberDirName_Copy_Skip3\b/.LDeadLib_RecallRecentDirName_Join/g
+s/\.LDeadLib_RememberDirName_Copy_Skip4\b/.LDeadLib_RecallRecentDirName_Skip/g
+s/\.LDeadLib_RememberFlsName_Copy_Skip3\b/.LDeadLib_RecallRecentFlsName_Join/g
+s/\.LDeadLib_RememberFlsName_Copy_Skip4\b/.LDeadLib_RecallRecentFlsName_Skip/g
+s/\.LFlsBrowser_ClearRowByte_Return1\b/.LDeadLib_Copy64Out_Return/g
+s/\.LFlsBrowser_ClearRowByte_Return2\b/.LDeadLib_Copy64Back_Return/g
+s/\.LDirBrowser_ClearRowByte_Skip1\b/.LDeadLib_LoadDirName_Epilogue/g
+s/\.LDirBrowser_ClearRowByte_Skip2\b/.LDeadLib_StoreDirName_Epilogue/g
+s/\.LDirBrowser_ClearRowByte_Skip3\b/.LDeadLib_RememberDirName_Join/g
+s/\.LDirBrowser_ClearCursor_Skip1\b/.LDeadLib_LoadFlsName_Epilogue/g
+s/\.LDirBrowser_ClearCursor_Skip2\b/.LDeadLib_StoreFlsName_Epilogue/g
+s/\.LDirBrowser_ClearCursor_Skip3\b/.LDeadLib_RememberFlsName_Join/g
+s/\.LField12_FillSpaces_Skip2\b/.LDeadLib_Fill40Spaces_Epilogue/g
+s/\.LHD_CheckVersionKey_Skip2\b/.LDeadLib_FindFreeSlot32_Skip/g
+s/\.LHD_CheckVersionKey_Skip3\b/.LDeadLib_FindFreeSlot32_Done/g
+s/\.LHD_CheckVersionKey_Skip4\b/.LDeadLib_SelectNextFile_Skip/g
