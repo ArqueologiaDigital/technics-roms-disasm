@@ -18228,7 +18228,7 @@ Ctrl_Normalise_Dispatch:
 ; gate fails, so this table checks the names rather than describing them.
 ;
 ; Called from: one site -- `ld XIX,0x00F89825` at 0xF89819 followed by the
-;          `mx_ld_rm MXL` at 0xF8981E, inside Ctrl_Normalise_Dispatch.  A census
+;          `ld xhl, (xix+hl)` at 0xF8981E, inside Ctrl_Normalise_Dispatch.  A census
 ;          of the immediate 0x00F89825 over prom_a and prom_b finds no other
 ;          (notes/prom_a_ctrl_checks.py).
 ; Inputs:  a BYTE offset 0x00..0x7C, four per slot.

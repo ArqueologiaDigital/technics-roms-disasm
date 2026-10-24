@@ -86409,7 +86409,7 @@ DL_StepRecordTrackTrackClrMeas:
 ;   its ends -- i.e. StepList(i, cond) = [entry[cond*38+i], entry[cond*38+19+i]).
 ; Evidence: prom_a 0xF81B70-0xF81B9B loads XIY from this table's cond0 base
 ;   (or 0xF3D121 = +38 entries, when (0x2740)==(0x0e63)==2), scaled by an
-;   index in HL*4 through an indexed load (`mx_ld_rm ra_IY,ra_HL,r5`), and
+;   index in HL*4 through an indexed load (`ld xiy, (xiy+hl)`), and
 ;   XIX the same way from +19 entries (or +57) -- see the header of
 ;   notes/gen_prom_b_stepselect_module.py for the exact instructions.
 ;   All 38 (start,end) pairs, both conditions, satisfy the tree's own

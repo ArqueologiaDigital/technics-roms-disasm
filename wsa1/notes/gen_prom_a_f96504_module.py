@@ -2,6 +2,13 @@
 """Emit prom_a 0xF96504-0xF96C65 (1,889 B) -- the largest `.incbin` left in
 prom_a -- as real source: 8 handler routines plus three typed data objects.
 
+    SPELLING NOTE (2026-10-24): when this ran, its emitter (prom_a/roundtrip.py) wrote `mx_*`
+    byte-emitter macros; the routine quoted below is shown in today's spelling.
+    scripts/converters/respell_wsa1_macros.py has since respelled every such call natively.
+    If this is ever re-run, follow it with (from the repository root)
+        python3 scripts/converters/respell_wsa1_macros.py --family all --apply
+    and confirm with `--check`, or the retired spellings come back.
+
 QUESTION IT ANSWERS
     "The 1,889 bytes at 0xF96504 sit between two already-converted routines and
      nothing in the tree frames them.  What are they, and what typing is forced
@@ -15,12 +22,12 @@ QUESTION IT ANSWERS
 
         .LF964B9:  xor BC,BC                        ; BC = byte cursor
         .LF964BB:  ld HL,BC
-                   mx_ld_rm MXL,ra_IX,ra_HL,r6      ; XIZ = *(XIX + BC)
+                   ld xiz, (xix+hl)                 ; XIZ = *(XIX + BC)
                    cp XIZ,0xffffffff / jr z, done   ; 0xFFFFFFFF terminates
                    add XIZ,XIY                      ; XIZ = struct base + offset
                    inc 4,BC / ld HL,BC
                    push XIX
-                   mx_ld_rm MXL,ra_IX,ra_HL,r4      ; XIX = *(XIX + BC)  <- script
+                   ld xix, (xix+hl)                 ; XIX = *(XIX + BC)  <- script
                    inc 4,BC
         .LF964D8:  xor H,H / ld L,(XIX)             ; L = opcode byte
                    cp L,0xff / jr z, .LF96500       ; 0xFF ends the script

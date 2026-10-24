@@ -19,9 +19,9 @@ EVIDENCE (each independent of the record-framing check above)
        0xF81B70-0xF81B9B, does:
            sla   HL, 0x02                  ; HL *= 4
            ld    XIY, 0x00f3d089           ; or 0x00f3d121 if (0x0e63)==2
-           mx_ld_rm MXL, ra_IY, ra_HL, r5  ; XIY = [XIY + HL]  (indexed load)
+           ld    xiy, (xiy+hl)             ; XIY = [XIY + HL]  (indexed load)
            ld    XIX, 0x00f3d0d5           ; or 0x00f3d16d if (0x0e63)==2
-           mx_ld_rm MXL, ra_IX, ra_HL, r4  ; XIX = [XIX + HL]
+           ld    xix, (xix+hl)             ; XIX = [XIX + HL]
            call  0xf417f0                  ; interpreter A, [XIY, XIX)
        Four fixed bases, 152 bytes (38 * 4) apart in pairs: starts at
        0xF3D089/0xF3D121, ends at 0xF3D0D5/0xF3D16D. 0xF3D0D5 - 0xF3D089
@@ -181,7 +181,7 @@ def emit_table(b):
     out.append(";   its ends -- i.e. StepList(i, cond) = [entry[cond*38+i], entry[cond*38+19+i]).\n")
     out.append("; Evidence: prom_a 0xF81B70-0xF81B9B loads XIY from this table's cond0 base\n")
     out.append(";   (or 0xF3D121 = +38 entries, when (0x2740)==(0x0e63)==2), scaled by an\n")
-    out.append(";   index in HL*4 through an indexed load (`mx_ld_rm ra_IY,ra_HL,r5`), and\n")
+    out.append(";   index in HL*4 through an indexed load (`ld xiy, (xiy+hl)`), and\n")
     out.append(";   XIX the same way from +19 entries (or +57) -- see the header of\n")
     out.append(";   notes/gen_prom_b_stepselect_module.py for the exact instructions.\n")
     out.append(";   All 38 (start,end) pairs, both conditions, satisfy the tree's own\n")
