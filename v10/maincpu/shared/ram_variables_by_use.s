@@ -42,8 +42,23 @@
 	.equ SEQ_DATA_BLOCK,			0x28af	; word: block number of the song-data cursor the sequencer reads and writes through (with SEQ_DATA_OFFSET; SeqNode_ResolveSlotPtr turns it into SEQ_BLOCK_PTR)
 	.equ SEQ_CYCLE_FLAGS,			0x28b1	; bit 0 = cycle play on (TT_SQCYCPLY), bit 1 = cycle recording on (TT_SQCYCREC; the record paths SeqMIDI_* test it) -- SeqAccomp_ParamDelivery_IncCycleEnable / SeqAccomp_SubChain_DecCycleEnable
 	.equ SEQ_SCREEN_OBJECT,			0x2972	; the object EVT_PAINT gave the sequencer screen handlers (ApEditSyori, NoteEditSyori, ApPlaySyori, EffEditMain store its parameter); EVT_PARA_DRAW redraw requests are sent to it
+	.equ ACC_STYLE_BANK,			0x3285	; the style's 64 KB rhythm-ROM bank, its record's byte +0x3D1 (AccStyle_SetupPartAddresses); pattern reads are 0x400000 + bank * 0x10000 + offset
+	.equ ACC_LANE_READ_POS,			0x3287	; [12 bytes] per-lane read position, a word per lane (lanes in ACC_PART_BIT order): the signed 16-bit offset into the style's bank, starting at the lane pointer - 0x8000 + 6 (AccStyle_SetupPartAddresses); AccBuf_Advance steps it
+	.equ ACC_LANE_SECTION,			0x32a3	; [6 bytes] per-lane section byte (sections are 5 apart; AccStyle_SelectSection writes all six)
+	.equ ACC_LANE_BEAT_POS,			0x32ab	; [6 bytes] per-lane position: low nibble = beat in the measure, high nibble = measure (AccVoice_BarEnd_* step it)
+	.equ ACC_STYLE_RECORD,			0x32ce	; the current style record in the rhythm ROM (AccStyle_ApplyExtendedStyle stores it)
+	.equ ACC_STYLE_NUMBER,			0x32e5	; the style playing, 0..127 within ACC_STYLE_GROUP (below 0x80 a rhythm-ROM style; committed from ACC_PENDING_STYLE by AccStyle_ApplyChanges)
+	.equ ACC_STYLE_GROUP,			0x32e6	; its group, 0..6 (the directory has 8 groups x 128 styles)
+	.equ ACC_BAD_EVENT_COUNT,		0x32ed	; unknown pattern bytes the lane reader skipped; at 32 AccVoice_AdvanceAndCheckEnd stops the accompaniment
+	.equ ACC_SCAN_BAD_EVENT_COUNT,		0x32ee	; the same count for AccSeq_FourChannelScan's pattern scanner (AccSeq_Scanner_Unknown)
+	.equ ACC_PENDING_STYLE,			0x32f5	; style number sampled from PANEL_STYLE, applied by AccStyle_ApplyChanges; 0xFF forces a reload (the bad-event watchdogs store it)
+	.equ ACC_PENDING_GROUP,			0x32f7	; group sampled from PANEL_STYLE+1 (low 3 bits used)
+	.equ ACC_SECTION_REQUEST,		0x3305	; the 2-bit section request, (PANEL_STYLE+7 & 0x30) >> 4 (SeqCtl_StorePedalFlags)
 	.equ ACC_PART_BIT,			0x33d4	; the accompaniment part being set up or played, one-hot: 1, 2, 4, 8, 16, 32 (AccVoice_SetupKbd1, _SetupKbd2, _SetupAcc1 .. _SetupAcc4); AccStyle_ReadParamOffset picks that part's field of a style record by it
-	.equ ACC_EVENT,				0x342d	; [6 bytes] an event being built for an accompaniment ring buffer: +0 status, +1 the channel that picks the buffer, +2..+5 the data AccBuf_WriteNoteEvent / AccBuf_Write3ByteEvent copy (a velocity of 0 is written as 1); SqStep_ComputeStepAndGateTime keeps the step and gate lengths in +0..+3
+	.equ ACC_CUR_SECTION,			0x33d5	; the lane being processed: its ACC_LANE_SECTION (AccVoice_SavePartState1 and its twins copy the lane in, *_RestoreState back)
+	.equ ACC_CUR_READ_POS,			0x33d8	; word: the lane being processed: its ACC_LANE_READ_POS
+	.equ ACC_CUR_BEAT_POS,			0x33db	; the lane being processed: its ACC_LANE_BEAT_POS
+	.equ ACC_EVENT,				0x342d	; [6 bytes] the pattern event being decoded or built (docs/accompaniment-style-reader.md): +0 status, +1 position in the beat, +2 note, +3 velocity, +4/+5 duration; AccBuf_WriteNoteEvent copies all but +1 into a ring buffer, a zero duration as 1.  SqStep_ComputeStepAndGateTime keeps the step and gate lengths in +0..+3
 	.equ ACC_READ_OFFSET,			0x3449	; word: offset in ACC_READ_BLOCK
 	.equ ACC_READ_BLOCK,			0x346b	; word: block of the pattern read position (AccPlayback_SaveReadPosition saves it with ACC_READ_OFFSET)
 	.equ STYLE_FREE_BLOCKS,			0x34d4	; word: free pattern blocks of the style image (190 when AccDemo_Init starts it; AccPatch_LinkNewPatternBlock takes one)

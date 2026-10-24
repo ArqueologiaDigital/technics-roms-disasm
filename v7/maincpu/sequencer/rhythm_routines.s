@@ -174,7 +174,7 @@ Rhythm_SetupChannel_D6:
 	calr RhythmEvt_ProcessNote
 	ret
 RhythmEvt_ProcessNote:
-	cp (0x3249:16), 0xf0
+	cp (ACC_STYLE_NUMBER:16), 0xf0
 	jr c, RhythmEvt_AlternateProcess
 	ld a, (0x327a:16)
 	or a, (0x327b:16)
@@ -864,7 +864,7 @@ Rhythm_SendByte:
 	ret
 
 Rhythm_ValidateAndSend:
-	cp (0x3249:16), 0xf0
+	cp (ACC_STYLE_NUMBER:16), 0xf0
 	jr c, Rhythm_Validate_Mismatch
 	ld a, (0x327a:16)
 	or a, (0x327b:16)
@@ -1163,9 +1163,9 @@ Rhythm_AdvanceTick_Store:
 	ld	(12871:16), wa
 	ret
 Rhythm_SaveState:
-	ld	a, (12889:16)
+	ld	a, (ACC_PENDING_STYLE:16)
 	ld	(12890:16), a
-	ld	a, (12891:16)
+	ld	a, (ACC_PENDING_GROUP:16)
 	ld	(12892:16), a
 	ld	a, (12893:16)
 	ld	(12894:16), a
@@ -1179,7 +1179,7 @@ Rhythm_SaveState:
 	ld	(12902:16), a
 	ld	a, (12903:16)
 	ld	(12904:16), a
-	ld	a, (12905:16)
+	ld	a, (ACC_SECTION_REQUEST:16)
 	ld	(12906:16), a
 	ld	a, (12907:16)
 	ld	(12908:16), a
@@ -1417,7 +1417,7 @@ Rhythm_VoiceAssign_SaveShadow:
 	ld	(12927:16), a
 	ld	a, (12921:16)
 	ld	(12928:16), a
-	ld	a, (12873:16)
+	ld	a, (ACC_STYLE_NUMBER:16)
 	ld	(13012:16), a
 	ld	a, (12960:16)
 	ld	(12962:16), a

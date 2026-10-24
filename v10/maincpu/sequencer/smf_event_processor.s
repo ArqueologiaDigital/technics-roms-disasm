@@ -10822,11 +10822,11 @@ Seq_DispatcherTickReturn:
 
 SeqTick_ReadControlState:
 	ld a, (PANEL_STYLE:16)
-	ld (0x32f5:16), a
+	ld (ACC_PENDING_STYLE:16), a
 	ld a, (PANEL_STYLE+1:16)
 	and a, 0x7f
 	and a, 0x7
-	ld (0x32f7:16), a
+	ld (ACC_PENDING_GROUP:16), a
 	calr VoiceParam_ClampAndStore
 	nop
 	nop
@@ -10890,7 +10890,7 @@ SeqCtl_StorePedalFlags:
 	ld a, (PANEL_STYLE+7:16)
 	and a, 0x30
 	srl a, 4
-	ld (0x3305:16), a
+	ld (ACC_SECTION_REQUEST:16), a
 	xor a, a
 	bit 2, (PANEL_REC_91+3:16)
 	jr nz, SeqCtl_StoreKeyMask
@@ -10901,13 +10901,13 @@ SeqCtl_StoreKeyMask:
 	ret
 
 VoiceParam_ClampAndStore:
-	ld l, (0x32f5:16)
-	ld h, (0x32f7:16)
+	ld l, (ACC_PENDING_STYLE:16)
+	ld h, (ACC_PENDING_GROUP:16)
 	calr VoiceParam_ClampAndValidate
-	ld (0x32f5:16), l
+	ld (ACC_PENDING_STYLE:16), l
 	and h, 0x7f
 	and h, 0x7
-	ld (0x32f7:16), h
+	ld (ACC_PENDING_GROUP:16), h
 	ret
 
 VoiceParam_ClampAndValidate:
