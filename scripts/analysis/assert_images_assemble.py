@@ -48,13 +48,14 @@ MC = os.environ.get("LLVM_MC") or os.path.join(
     os.environ.get("PROJECTS_ROOT", os.path.expanduser("~/compartilhado")),
     "llvm-project", "build", "bin", "llvm-mc")
 
-# (include dir, root source) -- exactly the eight `llvm-mc -filetype=obj`
+# (include dir, root source) -- exactly the nine `llvm-mc -filetype=obj`
 # invocations in the Makefile.
 IMAGES = [
     ("v10/maincpu",  "v10/maincpu/kn5000_v10_program.s"),
     ("v9/maincpu",   "v9/maincpu/kn5000_v9_program.s"),
     ("v7/maincpu",   "v7/maincpu/kn5000_v7_program.s"),
     ("v142/subcpu",  "v142/subcpu/kn5000_subprogram_v142.s"),
+    ("v141/subcpu",  "v141/subcpu/kn5000_subprogram_v141.s"),
     ("subcpu/boot",  "subcpu/boot/kn5000_subcpu_boot.s"),
     ("hdae5000",     "hdae5000/hd-ae5000_v2_06i.s"),
     ("table_data",   "table_data/kn5000_table_data.s"),

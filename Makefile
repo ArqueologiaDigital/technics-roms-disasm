@@ -116,7 +116,7 @@ gate-all: gate gate-wsa1 gate-kn7000
 	python3 scripts/analysis/assert_toolchain_is_a_prerequisite.py
 
 # LLVM build targets (primary)
-llvm-all: rebuilt_ROMs/kn5000_v10_program.llvm.rom rebuilt_ROMs/kn5000_v9_program.llvm.rom rebuilt_ROMs/kn5000_v7_program.llvm.rom rebuilt_ROMs/kn5000_subprogram_v142.llvm.rom rebuilt_ROMs/kn5000_subprogram_v142_compressed.rom rebuilt_ROMs/kn5000_subcpu_boot.llvm.rom rebuilt_ROMs/hd-ae5000_v2_06i.llvm.rom rebuilt_ROMs/kn5000_table_data.llvm.rom rebuilt_ROMs/kn5000_custom_data.llvm.rom
+llvm-all: rebuilt_ROMs/kn5000_v10_program.llvm.rom rebuilt_ROMs/kn5000_v9_program.llvm.rom rebuilt_ROMs/kn5000_v7_program.llvm.rom rebuilt_ROMs/kn5000_subprogram_v142.llvm.rom rebuilt_ROMs/kn5000_subprogram_v142_compressed.rom rebuilt_ROMs/kn5000_subprogram_v141.llvm.rom rebuilt_ROMs/kn5000_subprogram_v141_compressed.rom rebuilt_ROMs/kn5000_subcpu_boot.llvm.rom rebuilt_ROMs/hd-ae5000_v2_06i.llvm.rom rebuilt_ROMs/kn5000_table_data.llvm.rom rebuilt_ROMs/kn5000_custom_data.llvm.rom
 
 # ============================================================================
 # C-compiled ScreenData paramblocks
@@ -719,6 +719,7 @@ V10_SRC = $(wildcard v10/maincpu/*.s v10/maincpu/*/*.s v10/maincpu/*/*/*.s)
 V9_SRC  = $(wildcard v9/maincpu/*.s v9/maincpu/*/*.s v9/maincpu/*/*/*.s)
 V7_SRC  = $(wildcard v7/maincpu/*.s v7/maincpu/*/*.s v7/maincpu/*/*/*.s)
 V142_SRC = $(wildcard v142/subcpu/*.s v142/subcpu/*/*.s)
+V141_SRC = $(wildcard v141/subcpu/*.s v141/subcpu/*/*.s)
 SUBBOOT_SRC = $(wildcard subcpu/boot/*.s subcpu/boot/*/*.s)
 HDAE_SRC = $(wildcard hdae5000/*.s hdae5000/*/*.s)
 TABLEDATA_SRC = $(wildcard table_data/*.s table_data/*/*.s)
@@ -803,6 +804,35 @@ rebuilt_ROMs/kn5000_subprogram_v142_compressed.rom: rebuilt_ROMs/kn5000_subprogr
 		--reference original_ROMs/kn5000_subprogram_v142_compressed.rom
 	cmp $@ original_ROMs/kn5000_subprogram_v142_compressed.rom
 	@echo "  subprogram v142 update image OK (byte-identical)"
+
+# --- Subcpu payload v1.41 ---
+# Ported from the v1.42 tree (scripts/generators/create_v141_subcpu_source.py records
+# the semantic delta; notes/v141-subcpu-port/README.md says how it was measured).
+# Same layout as v142: image = [0x400..0x4FF] + [0xF000..0x3EEFF].
+rebuilt_ROMs/kn5000_subprogram_v141.llvm.o: $(V141_SRC) $(LLVM_MC)
+	mkdir -p rebuilt_ROMs
+	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I v141/subcpu -o $@ v141/subcpu/kn5000_subprogram_v141.s
+
+rebuilt_ROMs/kn5000_subprogram_v141.llvm.elf: rebuilt_ROMs/kn5000_subprogram_v141.llvm.o v141/subcpu/subcpu.ld
+	$(LLVM_LLD) -T v141/subcpu/subcpu.ld -o $@ $<
+
+rebuilt_ROMs/kn5000_subprogram_v141.llvm.rom: rebuilt_ROMs/kn5000_subprogram_v141.llvm.elf
+	$(LLVM_OBJCOPY) -O binary $< $@.full
+	dd if=$@.full of=$@.part_a bs=1 count=256 2>/dev/null || exit 1
+	dd if=$@.full of=$@.part_b bs=1 skip=60416 2>/dev/null || exit 1
+	sync
+	cat $@.part_a $@.part_b > $@
+	rm -f $@.full $@.part_a $@.part_b
+
+# --- Subcpu payload v1.41 firmware-update image (whole-file SLIDE4K) ---
+# Same guarantee as the v142 rule above: recompressing the source-built v1.41
+# payload with the factory stream's decisions must reproduce
+# original_ROMs/kn5000_subprogram_v141_compressed.rom (93,181 B) byte-for-byte.
+rebuilt_ROMs/kn5000_subprogram_v141_compressed.rom: rebuilt_ROMs/kn5000_subprogram_v141.llvm.rom original_ROMs/kn5000_subprogram_v141_compressed.rom
+	python3 scripts/build/compress_lzss.py $< $@ --strict --with-header \
+		--reference original_ROMs/kn5000_subprogram_v141_compressed.rom
+	cmp $@ original_ROMs/kn5000_subprogram_v141_compressed.rom
+	@echo "  subprogram v141 update image OK (byte-identical)"
 
 # --- Subcpu boot ---
 rebuilt_ROMs/kn5000_subcpu_boot.llvm.o: $(SUBBOOT_SRC) $(LLVM_MC)
@@ -1174,6 +1204,8 @@ clean:
 	rm -rf v7/maincpu/includes/generated/
 	rm -f rebuilt_ROMs/kn5000_subprogram_v142.llvm.*
 	rm -f rebuilt_ROMs/kn5000_subprogram_v142_compressed.rom
+	rm -f rebuilt_ROMs/kn5000_subprogram_v141.llvm.*
+	rm -f rebuilt_ROMs/kn5000_subprogram_v141_compressed.rom
 	rm -f rebuilt_ROMs/kn5000_subcpu_boot.llvm.*
 	rm -f rebuilt_ROMs/hd-ae5000_v2_06i.llvm.*
 	rm -f rebuilt_ROMs/kn5000_table_data.llvm.*

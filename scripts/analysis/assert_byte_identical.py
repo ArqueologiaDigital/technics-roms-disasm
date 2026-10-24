@@ -54,6 +54,8 @@ PAIRS = [
     ("kn5000_v10_program", "kn5000_v10_program.rom", "kn5000_v10_program.llvm.rom"),
     ("kn5000_subprogram_v142", "kn5000_subprogram_v142.rom", "kn5000_subprogram_v142.llvm.rom"),
     ("kn5000_subprogram_v142_compressed", "kn5000_subprogram_v142_compressed.rom", "kn5000_subprogram_v142_compressed.rom"),
+    ("kn5000_subprogram_v141", "kn5000_subprogram_v141.rom", "kn5000_subprogram_v141.llvm.rom"),
+    ("kn5000_subprogram_v141_compressed", "kn5000_subprogram_v141_compressed.rom", "kn5000_subprogram_v141_compressed.rom"),
     ("kn5000_table_data", "kn5000_table_data.rom", "kn5000_table_data.llvm.rom"),
     ("kn5000_subcpu_boot", "kn5000_subcpu_boot.ic30", "kn5000_subcpu_boot.llvm.rom"),
     ("kn5000_custom_data", "kn5000_custom_data.ic19", "kn5000_custom_data.llvm.rom"),

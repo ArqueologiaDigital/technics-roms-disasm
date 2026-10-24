@@ -75,7 +75,7 @@ def _pinned_assembler():
 
 # (label, makefile dir, how many images that Makefile builds)
 TREES = [
-    ("KN5000", ROOT, 8),
+    ("KN5000", ROOT, 9),
     ("SX-WSA1R", ROOT / "wsa1", 4),
 ]
 

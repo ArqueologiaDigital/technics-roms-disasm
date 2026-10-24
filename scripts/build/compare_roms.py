@@ -17,6 +17,8 @@ for entry in [
 	# 007); rebuilt by compressing the built payload with the factory stream's
 	# decisions. Base = Custom Data flash staging address 0x3E0000.
 	("subcpu v142 update image",	"kn5000_subprogram_v142_compressed.rom",	"kn5000_subprogram_v142_compressed.rom",	0x3E0000),
+	("subcpu payload v141",	"kn5000_subprogram_v141.rom",	"kn5000_subprogram_v141.llvm.rom",	0x0400),
+	("subcpu v141 update image",	"kn5000_subprogram_v141_compressed.rom",	"kn5000_subprogram_v141_compressed.rom",	0x3E0000),
 	("subcpu boot",		"kn5000_subcpu_boot.ic30",	"kn5000_subcpu_boot.llvm.rom",		0xFE0000),
 	("hdae5000",		"hd-ae5000_v2_06i.ic4",		"hd-ae5000_v2_06i.llvm.rom",		0x280000),
 	("table data",		"kn5000_table_data.rom",	"kn5000_table_data.llvm.rom",		0x800000),
