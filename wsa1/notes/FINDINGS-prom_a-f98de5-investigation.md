@@ -130,10 +130,10 @@ converted anyway; so is this.
 > computed/relocated addressing this pass could not find, not a literal
 > `ld XIY,0x00f98de5`-shaped load.
 >
-> ### Relationship to the already-documented `ScreenButtonHandlers_StaleCopy` cluster
+> ### Relationship to the already-documented `PtrTables_F95C95` cluster
 >
 > `prom_a/wsa1_prom_a.s` already has a converted, comparable structure at
-> 0xF95C95-0xF95E82 (`ScreenButtonHandlers_StaleCopy`, converted in an earlier pass) with
+> 0xF95C95-0xF95E82 (`PtrTables_F95C95`, converted in an earlier pass) with
 > the SAME symptom: multiple mixed pointer tables, one of whose 59 entries
 > still has "NO reader located" even after dedicated forensic work, and one
 > stray byte that "belongs to neither" table. That cluster's own header

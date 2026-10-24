@@ -147,7 +147,9 @@ tables they are handed have **32 entries**. `ScreenButtonRow_SysexBulkDump` is 9
   is dereferenced as a **byte array** base (`ld XIY,(XIY+HL)` then
   `ld A,(XIY+HL)`), not as a branch target. The index comes from a `div`, so
   there is no compile-time bound; the count is the detector's.
-* **`ScreenButtonHandlers_StaleCopy`** — 493 bytes holding **three** tables and one stray byte:
+* **The span formerly `PtrTables_F95C95`** (now `ScreenButtonHandlers_SineWaveCheckMode` /
+  `ScreenObjF40130_ButtonHandlers` / `ScreenButtonHandlers_StaleCopy`) — 493 bytes holding
+  **three** tables and one stray byte:
   32 entries at `0xF95C95` (bounded by `cp (XIZ+0x08),0x001F` at `0xF95896`),
   32 at `0xF95D15` (named at `0xF95A07`), one `0x00` at `0xF95D95`, then 59 at
   `0xF95D96` with no located reader. Emitted as `.byte`, not `.long`, **and

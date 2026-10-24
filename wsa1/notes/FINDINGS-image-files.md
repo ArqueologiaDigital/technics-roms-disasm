@@ -310,7 +310,7 @@ either — and the control says the instrument can still find a live table.
 
 `prom_b/wsa1_prom_b.s` now carries **119 `DLGlyph_NNN_XXXXXX` cells** over
 `0xF78028-0xF7A19F`, one `.byte` line per 8-pixel column, each naming its PNG.
-The 110 `Bitmap_F78*` labels, `Data_F78029` (609 B) and `DLGlyph_118_F7A158` (1,976 B)
+The 110 `Bitmap_F78*` labels, `Data_F78029` (609 B) and `Data_F799E8` (1,976 B)
 are gone. `make images-check` and `make gate-wsa1` both green; both were shown
 to go red at `0x7A15F` on a one-byte perturbation of a converted cell.
 

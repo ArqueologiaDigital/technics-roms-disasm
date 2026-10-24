@@ -13,6 +13,11 @@ EVIDENCE, in the order it is used -- a name is changed only when one of these ho
      removed label became its i-th added label.  The chain is followed (old -> mid -> new) until it
      reaches a name the current ELFs define; when one name was renamed differently at different
      times, the LATEST rename is followed.  The chain's commits are printed with --why.
+     The pairing is by position only, so for an address-derived old name (`..._XXXXXX`) the chain
+     is accepted only when its final name sits AT that address in an image that defined the old
+     name: a span split into several labels pairs the old name with whichever new label has the
+     same index (`PtrTables_F95C95` -> a label 0x100 bytes on).  SUFFIX_IS_NOT_OWN_ADDRESS lists
+     the hand-checked names whose suffix is some other object's address.
   2. SAME ADDRESS, SAME IMAGE.  For an address-derived name (`sub_FA9F19`, `T_F42E0C`, `Data_F28522`,
      `Table_FDFF96`, ... -- any name ending in _<6 hex digits>), when history (1) has no chain: the
      image(s) that ever DEFINED that name are taken from the same git log (prom_a and prom_c share
@@ -28,13 +33,16 @@ WHAT IS NEVER CHANGED
     column; its first column (and any column headed here/old/was/before) records what the name
     used to be, on purpose;
   * an old name written as history: preceded by `was`, `formerly`, `renamed from`, `old`, `then`,
-    `previously`, or followed by `->` / `→` / `became` / `is now` / `(now` / `now `...`` (on the
+    `previously`, or inside a `refused to name ...` clause, or followed by `->` / `→` / `became` / `is now` / `(now` / `now `...`` (on the
     same line, or the next one when the name ends a line);
   * anything inside a ``` fenced block (recorded tool output must stay what the tool printed);
   * a name that is not a candidate of doc_symbol_check.py (it already resolves, or does not look
     like a symbol).
   The tool never invents a name: no evidence, no change.
-  A Markdown table with a changed row is re-padded whole (space-padded, aligned columns).
+  A Markdown table with a changed row is re-padded whole (space-padded, aligned columns).  Cells are
+  split on '|' outside `code spans` and not escaped as '\\|'; a table whose rows do not all have
+  the separator's column count, or that would not read back as the same cells, is left as it is
+  (reported on stderr).  `--selftest` checks the reader and the re-padder.
 
 RUN (inside wsa1/, after `make all` so the ELFs are current)
     python3 scripts/tools/fix_stale_doc_symbols.py                 # dry run over every tracked note
@@ -62,6 +70,9 @@ LAB = re.compile(r'^([-+])([A-Za-z_.$][A-Za-z0-9_.$]*):')
 ADDR_NAME = re.compile(r'_([0-9A-Fa-f]{6})$')
 STRUCT = re.compile(r'_(Skip|Join|Loop|Sub|Return|Epilogue|Entry|Helper|Done|Ret)\d*$|__')
 HISTORY_WORDS = re.compile(r'(\bwas|\bformerly|\brenamed from|\bold|\bthen|\bpreviously|\bto name|\bnamed|\bnaming)\s*[:(]?\s*$', re.I)
+# A list of names quoted from an older round's refusal ("Round 7 refused to name `sub_FF4ACB` and
+# `sub_FF4D5D`") records what they were called then: every name in that clause is history.
+HISTORY_CLAUSE = re.compile(r'\brefused to name\b[^.:]*$', re.I)
 IMAGE_OF_DIR = {"prom_a": "a", "prom_b": "b", "prom_c": "c", "prom_d": "d"}
 
 
@@ -143,6 +154,12 @@ def current_labels():
     return names, at
 
 
+# Old names whose _XXXXXX suffix is NOT the label's own address, checked by hand: the suffix names the
+# dispatch table the label is an entry of (`Dispatch_FF3900` slots [11] and [12], see
+# notes/FINDINGS-prom_a-ui-screen-blocks.md), so the same-address check above does not apply to them.
+SUFFIX_IS_NOT_OWN_ADDRESS = {"LcdKeyRow4_FF3900", "LcdKeyRow5_FF3900"}
+
+
 def rank(name):
     if ADDR_NAME.search(name):
         return 2
@@ -159,9 +176,20 @@ def resolve(old, names, renames, defined_in, at):
         date, new, commit = sorted(renames[cur])[-1]
         chain.append("%s -> %s (%s %s)" % (cur, new, date, commit[:10]))
         cur = new
-    if cur in names and cur != old:
-        return cur, "history: " + "; ".join(chain)
     m = ADDR_NAME.search(old)
+    if cur in names and cur != old:
+        # ★ AN ADDRESS-DERIVED OLD NAME IS A CLAIM ABOUT AN ADDRESS.  A rename hunk pairs removed and
+        #   added labels by position only, so a span that was SPLIT into several labels (PtrTables_F95C95
+        #   -> three tables, the last of them 0x100 bytes further on) pairs the old name with whichever
+        #   new label happens to sit at the same index.  Accept the chain only when its final name is AT
+        #   the old name's address in an image that defined the old name.
+        if not m or old in SUFFIX_IS_NOT_OWN_ADDRESS:
+            return cur, "history: " + "; ".join(chain)
+        addr = int(m.group(1), 16)
+        if any(cur in at[i].get(addr, ()) for i in defined_in.get(old, ())):
+            return cur, "history (same address 0x%06X): " % addr + "; ".join(chain)
+        return None, "history renames %s to %s, which is not at 0x%06X: %s" % (
+            old, cur, addr, "; ".join(chain))
     if not m:
         return None, "no rename in history"
     addr = int(m.group(1), 16)
@@ -187,7 +215,34 @@ def is_history_context(line, start, end, prev_line, next_line):
     after = line[end:]
     if not after.strip():
         after = " " + next_line
-    return bool(HISTORY_WORDS.search(before)) or AFTER_WORDS.match(after) is not None
+    return (bool(HISTORY_WORDS.search(before)) or bool(HISTORY_CLAUSE.search(line[:start]))
+            or AFTER_WORDS.match(after) is not None)
+
+
+def cell_bars(line):
+    """Offsets of the '|' characters that SEPARATE cells: not an escaped '\\|', and not a '|' inside a
+    `code span` (the notes write `(class << 12) \\| entry` and `7.9375 x |depth|` in cells, and a
+    re-padder that split those would change the table's column count and garble the text)."""
+    bars, i, n = [], 0, len(line)
+    while i < n:
+        ch = line[i]
+        if ch == "\\":
+            i += 2
+            continue
+        if ch == "`":
+            run = len(line[i:]) - len(line[i:].lstrip("`"))
+            close = line.find("`" * run, i + run)
+            while close != -1 and close + run < n and line[close + run] == "`":
+                close = line.find("`" * run, close + run + 1)
+            if close != -1:
+                i = close + run
+                continue
+            i += run
+            continue
+        if ch == "|":
+            bars.append(i)
+        i += 1
+    return bars
 
 
 def table_cells(line):
@@ -195,12 +250,10 @@ def table_cells(line):
     s = line.strip()
     if not (s.startswith("|") and s.endswith("|")):
         return None
-    off = line.index("|")
-    cells, i = [], off
-    for part in line[off + 1:line.rindex("|")].split("|"):
-        cells.append((i + 1, i + 1 + len(part), part))
-        i += 1 + len(part)
-    return cells
+    bars = cell_bars(line)
+    if len(bars) < 2 or bars[0] != line.index("|") or bars[-1] != line.rindex("|"):
+        return None
+    return [(a + 1, b, line[a + 1:b]) for a, b in zip(bars, bars[1:])]
 
 
 def history_columns(lines, n):
@@ -235,9 +288,13 @@ def _width(s):
 
 
 def repad_table(rows):
-    """Pad every column to its widest cell, one space each side; the separator's dashes span it."""
+    """Pad every column to its widest cell, one space each side; the separator's dashes span it.
+    Returns None -- and the caller leaves the table as it is -- when the rows do not all have the
+    separator's column count, or when the padded rows would not read back as the same cells."""
     split = [[c[2].strip() for c in table_cells(r)] for r in rows]
-    ncol = max(len(r) for r in split)
+    ncol = len(split[1])
+    if any(len(r) != ncol for r in split):
+        return None
     split = [r + [""] * (ncol - len(r)) for r in split]
     indent = rows[0][:len(rows[0]) - len(rows[0].lstrip())]
     sep = split[1]
@@ -255,6 +312,9 @@ def repad_table(rows):
         else:
             out.append(indent + "|" + "|".join(" " + c + " " * (widths[i] - _width(c)) + " "
                                                for i, c in enumerate(r)) + "|")
+    back = [[c[2].strip() for c in table_cells(r)] for r in out]
+    if [r for k, r in enumerate(back) if k != 1] != [r for k, r in enumerate(split) if k != 1]:
+        return None
     return out
 
 
@@ -306,11 +366,44 @@ def process(md, names, renames, defined_in, at, apply, why):
             end = start
             while end < len(out) and table_cells(out[end]) is not None:
                 end += 1
-            out[start:end] = repad_table(out[start:end])
+            padded = repad_table(out[start:end])
+            if padded is None:
+                print("%s:%d: table NOT re-padded: its rows do not all have the separator's column count"
+                      % (md, start + 1), file=sys.stderr)
+                continue
+            out[start:end] = padded
         open(md, "w", encoding="utf-8").write("\n".join(out))
     for n, w, new, ev in changes:
         print("%s:%d: `%s` -> `%s`%s" % (md, n, w, new, ("   [" + ev + "]") if why else ""))
     return len(changes), skipped
+
+
+def selftest():
+    """Rows taken from the notes the first version of this tool damaged (5 tables, 764bd7124)."""
+    fails = 0
+    cases = [
+        ("| a | `7.9375 x |depth|` | c |", ["a", "`7.9375 x |depth|`", "c"]),
+        ("| 0x14 | `(class << 12) \\| entry` | x |", ["0x14", "`(class << 12) \\| entry`", "x"]),
+        ("| 1 | (level << 8) \\| rate | y |", ["1", "(level << 8) \\| rate", "y"]),
+        ("| note\\|0x80 | z |", ["note\\|0x80", "z"]),
+        ("| ``a | b`` | `x \\| y` | q |", ["``a | b``", "`x \\| y`", "q"]),
+        ("| unclosed ` tick | r |", ["unclosed ` tick", "r"]),
+    ]
+    for row, want in cases:
+        got = [c[2].strip() for c in table_cells(row)]
+        if got != want:
+            print("FAIL table_cells(%r) = %r, want %r" % (row, got, want))
+            fails += 1
+    table = ["| h1 | h2 |", "|---|---|", "| `a | b` | c |", "| d \\| e | f |"]
+    out = repad_table(table)
+    if out is None or [len(table_cells(r)) for r in out] != [2, 2, 2, 2]:
+        print("FAIL repad_table kept the column count: %r" % (out,))
+        fails += 1
+    if repad_table(["| h1 | h2 |", "|---|---|", "| a | b | c |"]) is not None:
+        print("FAIL repad_table must refuse a row whose column count differs from the separator's")
+        fails += 1
+    print("selftest FAILURES: %d" % fails)
+    return 1 if fails else 0
 
 
 def main():
@@ -318,7 +411,10 @@ def main():
     ap.add_argument("notes", nargs="*", help="Markdown files (default: every tracked .md under wsa1/)")
     ap.add_argument("--apply", action="store_true")
     ap.add_argument("--why", action="store_true", help="print the evidence for every change")
+    ap.add_argument("--selftest", action="store_true", help="check the table reader and re-padder, then exit")
     a = ap.parse_args()
+    if a.selftest:
+        sys.exit(selftest())
     os.chdir(ROOT)
     notes = a.notes or [p for p in git("ls-files", "*.md").split("\n") if p]
     renames, defined_in = history()

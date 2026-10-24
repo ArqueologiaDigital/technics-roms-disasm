@@ -227,7 +227,7 @@ of the eight slots are inert on the rack.
 
 ## 4. ★ A refusal from round 7, resolved
 
-Round 7 refused to name `sub_FF4ACB` and `LcdKeyRow5_DiskL0adFile`:
+Round 7 refused to name `sub_FF4ACB` and `sub_FF4D5D`:
 
 > *"NOT NAMED because it and sub_FF4D5D draw the SAME caption set (FROM S0NG
 > NUMBER, TO S0NG NUMBER, 1-10) and nothing in their own lists tells the two

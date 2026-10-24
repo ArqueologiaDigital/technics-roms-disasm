@@ -338,20 +338,20 @@ the encoding does not.
 
 ## 11. Where gap A stands after this round
 
-| register                                                                    | what it carries                                                                                        | round                               |       |
-|-----------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|-------------------------------------|-------|
-| `0x0000 + n` (read, n = 0..3)                                               | **busy bitmap**, bit `chan & 15` of word `chan >> 4`                                                   | 2                                   |       |
-| `0x0000 + chan` (write)                                                     | `0x8100` on a full update, `0x7E00` on stop                                                            | 2                                   |       |
-| `0x0040 + chan`                                                             | key-zone record word 0                                                                                 | 1                                   |       |
-| `0x0080 + chan`                                                             | OUTPUT LEVEL, log2, 256 counts/octave                                                                  | 1                                   |       |
-| `0x00C0 + chan`                                                             | *(stopped value `0x0000` only)*                                                                        | 2                                   |       |
-| `0x0180 + chan` (read)                                                      | a falling magnitude; below `0x80` (with flag bit 2) the record goes to `ChanRec_ToPoolQueue6_SetFlag1` | 2                                   |       |
-| `0x0400 + chan`                                                             | PITCH, 1/256 semitone                                                                                  | 1                                   |       |
-| `0x0800 + chan`                                                             | **(envelope level << 8) \                                                                              | envelope rate**; quiescent `0xFF80` | **2** |
-| `0x0840 + chan`                                                             | byte pair; quiescent `0xFF00`                                                                          | 1, 2                                |       |
-| `0x0880 + chan`                                                             | byte pair                                                                                              | 2                                   |       |
-| `0x08C0`, `0x0900`, `0x0940`, `0x0980`, `0x09C0`, `0x0A00`, `0x0A40 + chan` | byte pair: curve-derived high byte, ±127 depth low byte                                                | 2                                   |       |
-| `0x0100`, `0x0140`, `0x0440`, `0x0480`, `0x04C0`, `0x0500 + chan`           | **still nothing**                                                                                      | —                                   |       |
+| register                                                                    | what it carries                                                                                        | round |
+|-----------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|-------|
+| `0x0000 + n` (read, n = 0..3)                                               | **busy bitmap**, bit `chan & 15` of word `chan >> 4`                                                   | 2     |
+| `0x0000 + chan` (write)                                                     | `0x8100` on a full update, `0x7E00` on stop                                                            | 2     |
+| `0x0040 + chan`                                                             | key-zone record word 0                                                                                 | 1     |
+| `0x0080 + chan`                                                             | OUTPUT LEVEL, log2, 256 counts/octave                                                                  | 1     |
+| `0x00C0 + chan`                                                             | *(stopped value `0x0000` only)*                                                                        | 2     |
+| `0x0180 + chan` (read)                                                      | a falling magnitude; below `0x80` (with flag bit 2) the record goes to `ChanRec_ToPoolQueue6_SetFlag1` | 2     |
+| `0x0400 + chan`                                                             | PITCH, 1/256 semitone                                                                                  | 1     |
+| `0x0800 + chan`                                                             | **(envelope level << 8) \| envelope rate**; quiescent `0xFF80`                                         | **2** |
+| `0x0840 + chan`                                                             | byte pair; quiescent `0xFF00`                                                                          | 1, 2  |
+| `0x0880 + chan`                                                             | byte pair                                                                                              | 2     |
+| `0x08C0`, `0x0900`, `0x0940`, `0x0980`, `0x09C0`, `0x0A00`, `0x0A40 + chan` | byte pair: curve-derived high byte, ±127 depth low byte                                                | 2     |
+| `0x0100`, `0x0140`, `0x0440`, `0x0480`, `0x04C0`, `0x0500 + chan`           | **still nothing**                                                                                      | —     |
 
 Six of the twenty-two per-channel registers still have no statement of any kind against
 them, and that is the honest next target.
