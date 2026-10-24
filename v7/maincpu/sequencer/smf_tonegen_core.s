@@ -12,8 +12,8 @@ Sequencer_ResetAfterFloppyIO:
 	call FloppyIO_ReturnReady
 	call SeqPlay_RestoreVoiceState_Return
 	xor wa, wa
-	ld (SEQ_SONG_RECORD+30:16), wa
-	ld (0x00ffec:24), wa
+	ld (SEQ_TRACK_MASK:16), wa
+	ld (SEQ_TRACK_MASK_COPY:24), wa
 	ldw (SEQ_SONG_RECORD+28:16), 0
 	cpw (6699:16), 49
 	jrl z, SeqPlay_ReadyStateTransition
@@ -24,8 +24,8 @@ SeqPlay_ResetAndStop:
 	call FloppyIO_ReturnReady
 	call SeqPlay_RestoreVoiceState_Return
 	xor wa, wa
-	ld (SEQ_SONG_RECORD+30:16), wa
-	ld (0x00ffec:24), wa
+	ld (SEQ_TRACK_MASK:16), wa
+	ld (SEQ_TRACK_MASK_COPY:24), wa
 	ldw (SEQ_SONG_RECORD+28:16), 0
 	push xhl
 	ld xhl, (FILEIO_BLOCK_BYTES:16)
@@ -45,8 +45,8 @@ SeqPlay_FinishFloppyLoadAndStart:
 	ldw (0x1a2b:16), 0x0001
 	call SeqPlay_DelayLoop_Outer
 	call BitMapOut_RenderDisplay
-	ld wa, (0x00ffec:24)
-	ld (SEQ_SONG_RECORD+30:16), wa
+	ld wa, (SEQ_TRACK_MASK_COPY:24)
+	ld (SEQ_TRACK_MASK:16), wa
 	and (SEQ_RTMCFG:16), 0xf7
 	call SeqPlay_CheckStartConditions
 	call SeqPlay_InitChannelParams
@@ -272,8 +272,8 @@ SeqPlay_PrepareAndScanChannels:
 	call SeqPlay_CheckStartConditions
 	call SeqPlay_RestoreVoiceState_Return
 	xor wa, wa
-	ld (SEQ_SONG_RECORD+30:16), wa
-	ld (0x00ffec:24), wa
+	ld (SEQ_TRACK_MASK:16), wa
+	ld (SEQ_TRACK_MASK_COPY:24), wa
 	ld (4237:16), wa
 
 SeqPlay_InitTrackLoop:
@@ -826,7 +826,7 @@ SoundGen_ScanActiveVoiceBitmap:
 	xor c, c
 
 SoundGen_ScanBitmap_Loop:
-	ld de, (0x00ffec:24)
+	ld de, (SEQ_TRACK_MASK_COPY:24)
 	ld a, c
 	scf
 	xorcf_a_16 de
@@ -1893,11 +1893,11 @@ SoundGen_ScaleAndWriteTempo:
 
 SoundGen_SetVoiceBitAndWriteRegs:
 	ld bc, iy
-	ld de, (0x00ffec:24)
+	ld de, (SEQ_TRACK_MASK_COPY:24)
 	ld a, c
 	scf
 	stcf_a_16 de
-	ld (0x00ffec:24), de
+	ld (SEQ_TRACK_MASK_COPY:24), de
 	call ToneGen_WriteChannelRegs
 	ld (SEQ_EVENT_ABORT:16), 0
 
@@ -2464,11 +2464,11 @@ ToneGen_SetChannelFlag:
 	ld a, c
 	scf
 	stcfa_dd16 0xfa, 0x19
-	ld de, (0x00ffec:24)
+	ld de, (SEQ_TRACK_MASK_COPY:24)
 	ld a, c
 	scf
 	stcf_a_16 de
-	ld (0x00ffec:24), de
+	ld (SEQ_TRACK_MASK_COPY:24), de
 	ret
 
 ToneGen_WriteChannelRegs:
@@ -2492,7 +2492,7 @@ ToneGen_SyncVoiceBitmapFromSlots:
 ToneGen_SyncBitmap_Loop:
 	ldfr_berp A, 0x3c
 	ldfr_werp DE, 0x3e
-	ld de, (0x00ffec:24)
+	ld de, (SEQ_TRACK_MASK_COPY:24)
 	ld a, c
 	scf
 	xorcf_a_16 de
@@ -4376,11 +4376,11 @@ ToneGen_SetSustainBit:
 	and iy, 0xf
 	ld bc, iy
 	xor b, b
-	ld de, (0x00ffec:24)
+	ld de, (SEQ_TRACK_MASK_COPY:24)
 	ld a, c
 	scf
 	stcf_a_16 de
-	ld (0x00ffec:24), de
+	ld (SEQ_TRACK_MASK_COPY:24), de
 	popw bc
 	ret
 

@@ -445,7 +445,7 @@ Transport_NoClockReturn:
 	ret
 MIDI_START_PLAYBACK_REQUEST:
 SeqEvt_ProcessTimedEvents_Helper:
-	cpw	(SEQ_SONG_RECORD+30:16), 0
+	cpw	(SEQ_TRACK_MASK:16), 0
 	jr	z, StartPlay_Return
 	push	sr
 	ei	6
@@ -463,7 +463,7 @@ StartPlay_Return:
 MIDI_SystemMessage_OnStart:
 	set	5, (0x28ac:16)
 	ld	(1108:16), 0
-	cpw	(SEQ_SONG_RECORD+30:16), 0
+	cpw	(SEQ_TRACK_MASK:16), 0
 	jr	nz, ResetPlay_Return
 MIDI_RESET_PLAYBACK_STATE:
 	xor	wa, wa

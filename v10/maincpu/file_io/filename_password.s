@@ -396,7 +396,7 @@ FileName_OpSave:
 	ld xbc, EVT_SET_NOT_DRAW_FLAG
 	ld xde, 1:i3
 	call ApPostEvent
-	cpw (SEQ_SONG_RECORD+30:16), 0
+	cpw (SEQ_TRACK_MASK:16), 0
 	jr z, FileName_OpSave_ShowCode1
 	ld wa, 2:i3
 	call FileIO_WriteRecordName_Done

@@ -55,7 +55,7 @@ UIStateEvt_VoiceParamHandler_Skip6:
 	call	SeqBuf_Init
 	ld	(1073:16), 0
 	or (10419:16), 16
-	ldw	(SEQ_SONG_RECORD+30:16), 0
+	ldw	(SEQ_TRACK_MASK:16), 0
 	and (10405:16), 254
 	ld	a, 76:opc
 	call	CtrlPanel_SetIndicatorBit
@@ -71,7 +71,7 @@ UIStateEvt_VoiceParamHandler_Skip7:
 	call	SeqBuf_Init
 	ld	(1073:16), 0
 	or (10419:16), 16
-	ldw	(SEQ_SONG_RECORD+30:16), 0
+	ldw	(SEQ_TRACK_MASK:16), 0
 	ld	(4596:16), 0
 	call	SeqPlay_CheckStartConditions
 UIStateEvt_VoiceParamHandler_Return:
@@ -97,7 +97,7 @@ Seq_FindRhythmTrack_Skip3:
 	sub	wa, bc
 	ld	c, a
 	ld	b, a
-	ld	iz, (SEQ_SONG_RECORD+30:16)
+	ld	iz, (SEQ_TRACK_MASK:16)
 	ld	a, c
 	scf
 	xorcf_a_16	iz	; after scf: C = NOT bit A (the track) of the mask
@@ -158,7 +158,7 @@ PlayMode_NullRet:
 	ret
 PlayMode_SetupAndDispatch:
 	; --- Setup: load/store/call/set flag ---
-	ld	wa, (SEQ_SONG_RECORD+30:16)
+	ld	wa, (SEQ_TRACK_MASK:16)
 	ld	(0x2875:16), wa
 	ld	(SEQ_SELECTED_TRACK:16), 0
 	call AccWrap_PlayModeDispatch
@@ -167,7 +167,7 @@ PlayMode_SetupAndDispatch:
 PlayMode_TeardownAndRestore:
 	; --- Teardown: load/store/clear flags ---
 	ld	wa, (0x2875:16)
-	ld	(SEQ_SONG_RECORD+30:16), wa
+	ld	(SEQ_TRACK_MASK:16), wa
 	and	(SEQ_RTMCFG:16), 251
 	or	(0x28b3:16), 16
 	and	(SEQ_RTMCFG:16), 247
@@ -963,9 +963,9 @@ CDlike_InitModeAndLoadBank:
 	cp (CURRENT_TITLE:16), 122
 	jr z, CDlikeSw_NullRet
 	call SqTrAs_InitWall
-	ld wa, (SEQ_SONG_RECORD+30:16)
+	ld wa, (SEQ_TRACK_MASK:16)
 	ld (0x2875:16), wa
-	ldw (SEQ_SONG_RECORD+30:16), 0
+	ldw (SEQ_TRACK_MASK:16), 0
 	ldw (8980:16), 0
 	ld xiy, PANEL_RECORDS
 	ld xix, 0x3cf04
@@ -977,13 +977,13 @@ CDlikeSw_NullRet:
 
 CDlike_LoadSongBankData:
 	ld (6882:16), 0
-	cpw (SEQ_SONG_RECORD+30:16), 0
+	cpw (SEQ_TRACK_MASK:16), 0
 	jr nz, CDlikeBankLoad_CheckSavedState
 	ld (6882:16), 1
 
 CDlikeBankLoad_CheckSavedState:
-	ld wa, (0x00ffec:24)
-	ld (SEQ_SONG_RECORD+30:16), wa
+	ld wa, (SEQ_TRACK_MASK_COPY:24)
+	ld (SEQ_TRACK_MASK:16), wa
 	ld xiy, SEQ_SONG_RECORD
 	ld xix, SEQ_SONG_SLOTS
 	xor xwa, xwa
@@ -994,7 +994,7 @@ CDlikeBankLoad_CheckSavedState:
 	ldir85
 	cp (6882:16), 1
 	jr nz, CDlikeBankLoad_Return
-	ldw (SEQ_SONG_RECORD+30:16), 0
+	ldw (SEQ_TRACK_MASK:16), 0
 
 CDlikeBankLoad_Return:
 	ret
@@ -1023,7 +1023,7 @@ CDlikeExit_CheckPlaybackType:
 	call SwbtWr_ResetAllChannels
 	call SqTrAs_Setup
 	ld wa, (0x2875:16)
-	ld (SEQ_SONG_RECORD+30:16), wa
+	ld (SEQ_TRACK_MASK:16), wa
 
 PlayMode_ResetAndSchedule:
 	ld (PLAYBACK_START_ARMED:16), 0
@@ -1037,7 +1037,7 @@ SongBank_SwitchAndUpdateTempo:
 	ret
 
 SongBank_SaveAndReload:
-	ld wa, (SEQ_SONG_RECORD+175:16)
+	ld wa, (SEQ_FREE_LIST_HEAD:16)
 	ld (0x286f:16), wa
 	ld wa, (SEQ_FREE_BLOCKS:16)
 	ld (0x2871:16), wa
@@ -1055,10 +1055,10 @@ SongBank_LoadToWorkArea:
 	ld xix, SEQ_SONG_RECORD
 	ldw bc, 0x800
 	ldir85
-	ld wa, (SEQ_SONG_RECORD+30:16)
-	ld (0x00ffec:24), wa
+	ld wa, (SEQ_TRACK_MASK:16)
+	ld (SEQ_TRACK_MASK_COPY:24), wa
 	ld wa, (0x286f:16)
-	ld (SEQ_SONG_RECORD+175:16), wa
+	ld (SEQ_FREE_LIST_HEAD:16), wa
 	ld wa, (0x2871:16)
 	ld (SEQ_FREE_BLOCKS:16), wa
 	ret

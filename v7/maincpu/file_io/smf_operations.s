@@ -745,7 +745,7 @@ SmfFN_Save_Finish:
 	ld xbc, EVT_SET_NOT_DRAW_FLAG
 	ld xde, 1:i3
 	call ApPostEvent
-	cpw (SEQ_SONG_RECORD+30:16), 0
+	cpw (SEQ_TRACK_MASK:16), 0
 	jr z, SmfFN_Save_NoAltSlot
 	ldw wa, 0xa
 	jr SmfFN_Save_CallResult

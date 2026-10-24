@@ -616,7 +616,7 @@ ChannelFilter_ApplyWrapper:
 	ret
 
 ChannelFilter_ApplyMask:
-	ld de, (SEQ_SONG_RECORD+30:16)
+	ld de, (SEQ_TRACK_MASK:16)
 	push	sr
 	cpl de
 	pop	sr
@@ -651,7 +651,7 @@ ChannelFilter_NextBit:
 	inc 1, c
 	cp c, 0x10
 	jr c, ChannelFilter_BitScanLoop
-	ld wa, (SEQ_SONG_RECORD+30:16)
+	ld wa, (SEQ_TRACK_MASK:16)
 	ret
 
 Display_LoadAndSetIndicator:
@@ -662,7 +662,7 @@ Display_LoadAndSetIndicator:
 	ret
 
 Display_LoadChannelMask:
-	ld wa, (SEQ_SONG_RECORD+30:16)
+	ld wa, (SEQ_TRACK_MASK:16)
 	calr Display_LoadChannelMask_Ret
 	call Display_CopyToneTableToRAM
 	ret
@@ -7062,23 +7062,23 @@ PerfMode_Handler_EvtB_Helper2:
 	ldto_werp DE, 0x3e	; ld DE,QHL3
 	ldfr_berp	a, 60
 	ldfr_werp DE, 0x3e	; ld QHL3,DE
-	ld	de, (0xffec:24)
+	ld	de, (SEQ_TRACK_MASK_COPY:24)
 	ld	a, c
 	rcf
 	stcf_a_16 de	; stcf A,DE
 	ldto_berp	a, 60
-	ld	(0xffec:24), de
+	ld	(SEQ_TRACK_MASK_COPY:24), de
 	ldto_werp DE, 0x3e	; ld DE,QHL3
 	ldfr_berp	a, 60
 	ldfr_werp DE, 0x3e	; ld QHL3,DE
-	ldw_d16	de, (SEQ_SONG_RECORD+30)
+	ldw_d16	de, (SEQ_TRACK_MASK)
 	ld	a, c
 	rcf
 	stcf_a_16 de	; stcf A,DE
 	ldto_berp	a, 60
-	ld	(SEQ_SONG_RECORD+30:16), de
+	ld	(SEQ_TRACK_MASK:16), de
 	ldto_werp DE, 0x3e	; ld DE,QHL3
-	ldw	(SEQ_SONG_RECORD+30:16), 0
+	ldw	(SEQ_TRACK_MASK:16), 0
 	ldfr_berp	a, 60
 	ldfr_werp DE, 0x3e	; ld QHL3,DE
 	ldw_d16	de, (0x2875)
@@ -7718,7 +7718,7 @@ ClockConfig_Handler_0_Skip2:
 ClockConfig_Handler_0_Skip3:
 	and	(0x1126:16), 254
 	ldw_d16	de, (0x2875)
-	ld	de, (0xffec:24)
+	ld	de, (SEQ_TRACK_MASK_COPY:24)
 	call	SqStep_CheckCursorTrackUsed
 	cp	w, 0:i3
 	jrl	nz, ClockConfig_Handler_0_Skip4
@@ -7732,8 +7732,8 @@ ClockConfig_Handler_0_Skip3:
 	ldto_berp	a, 60
 	ldto_werp DE, 0x3e	; ld DE,QHL3
 ClockConfig_Handler_0_Skip4:
-	ld	(SEQ_SONG_RECORD+30:16), de
-	ld	(0xffec:24), de
+	ld	(SEQ_TRACK_MASK:16), de
+	ld	(SEQ_TRACK_MASK_COPY:24), de
 	or	(0x28a5:16), 1
 	ld	(0x11f4:16), 0
 	call	BitMapOut_RenderDisplay
@@ -10505,8 +10505,8 @@ MemConfig_Handler_1_Helper3:
 	ld	(xhl), xde
 	pop	xde
 	ld	(3302:16), wa
-	ld	bc, (SEQ_SONG_RECORD+175:16)
-	ld	(SEQ_SONG_RECORD+175:16), iy
+	ld	bc, (SEQ_FREE_LIST_HEAD:16)
+	ld	(SEQ_FREE_LIST_HEAD:16), iy
 	xor	wa, wa
 	call	VoiceSlot_UpdateCurrentPointer
 	ld	xhl, (SEQ_BLOCK_PTR:16)
@@ -12109,7 +12109,7 @@ VoiceState_DataBlock2_Skip19:
 	ld	xix, VoiceState_DataBlock2_Tbl
 	ld	bc, (xix+iy)
 	pop	xix
-	and	bc, (65516:24)
+	and	bc, (SEQ_TRACK_MASK_COPY:24)
 	cp	bc, 0:i3
 	jrl	z, TempoRingBuf_IsEmpty_Skip3
 	pushw	wa
@@ -18084,8 +18084,8 @@ Scoop_SpecialMode_ValueEditEnd:
 
 Scoop_SpecialMode_ValueSend:
 	ld (3302:16), wa
-	ld bc, (SEQ_SONG_RECORD+175:16)
-	ld (SEQ_SONG_RECORD+175:16), iy
+	ld bc, (SEQ_FREE_LIST_HEAD:16)
+	ld (SEQ_FREE_LIST_HEAD:16), iy
 	xor wa, wa
 	call DispatchHandler_SubJumpTable
 	ld xhl, (SEQ_BLOCK_PTR:16)

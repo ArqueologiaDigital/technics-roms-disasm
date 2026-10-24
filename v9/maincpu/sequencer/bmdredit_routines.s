@@ -1100,7 +1100,7 @@ BmDrEdit_CheckChannelActive_Loop:
 	slaa bc
 
 BmDrEdit_CheckChannelActive_TestBit:
-	and bc, (0xffec:24)
+	and bc, (SEQ_TRACK_MASK_COPY:24)
 	jr z, BmDrEdit_CheckChannelActive_None
 	ld (0x2776:16), 1
 	ret
@@ -1133,7 +1133,7 @@ BmDrEdit_SelectChannel_Loop:
 	slaa bc
 
 BmDrEdit_SelectChannel_TestBit:
-	and bc, (0xffec:24)
+	and bc, (SEQ_TRACK_MASK_COPY:24)
 	jr z, BmDrEdit_SelectChannel_NotFound
 	bit 0, (0x2776:16)
 	jr z, BmDrEdit_SelectChannel_NotFound
@@ -2008,7 +2008,7 @@ BmDrEdit_CleanupCommon:
 	res 2, (SEQ_RTMCFG:16)
 	ld (0x295c:16), 0
 	ld wa, (3407:16)
-	or (0xffec:24), wa
+	or (SEQ_TRACK_MASK_COPY:24), wa
 	ldw (3407:16), 0
 	ldw (3409:16), 0
 	ldmm16 SEQ_START_MEASURE, 0x2744
@@ -4511,7 +4511,7 @@ BmDrEdit_EnterPlayMode:
 	jr BmDrEdit_EnterPlay_CheckAudio
 
 BmDrEdit_EnterPlay_RestoreSettings:
-	ldmm16 SEQ_SONG_RECORD+30, 0x2963
+	ldmm16 SEQ_TRACK_MASK, 0x2963
 
 BmDrEdit_EnterPlay_CheckAudio:
 	call Audio_CheckSubsystemReady
@@ -4535,7 +4535,7 @@ BmDrEdit_ExitPlayMode:
 	cp a, (PREVIOUS_TITLE:16)
 	ret z
 	ldmm8 SEQ_CYCLE_FLAGS, 0x283c
-	ldw (SEQ_SONG_RECORD+30:16), 0
+	ldw (SEQ_TRACK_MASK:16), 0
 	call Audio_CheckSubsystemReady
 	call AccWrap_PlayModeDispatch
 	ld a, (ACTIVE_TITLE:16)

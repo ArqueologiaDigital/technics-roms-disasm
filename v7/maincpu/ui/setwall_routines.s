@@ -328,7 +328,7 @@ SetWall_SlotSetup:
 
 SetWall_SlotSetup_Active:
 	call CDlikeSwTtl_SendStartEvt
-	ld wa, (0x00ffec:24)
+	ld wa, (SEQ_TRACK_MASK_COPY:24)
 	ld (0x2875:16), wa
 	ld a, (TRACK_ASSIGN_CURSOR:16)
 	inc 1, a
@@ -336,7 +336,7 @@ SetWall_SlotSetup_Active:
 	call Scoop_SpecialMode_ParamCheckBound
 	call SetWall_SlotBitUpdate
 	ld wa, (0x2875:16)
-	ld (0x00ffec:24), wa
+	ld (SEQ_TRACK_MASK_COPY:24), wa
 	xor wa, wa
 	ld a, (TRACK_ASSIGN_CURSOR:16)
 	ld iy, wa
@@ -815,12 +815,12 @@ SetWall_SlotOrderTable:
 SetWall_SlotBitUpdate:
 	ldfr_berp A, 0x3c
 	ldfr_werp DE, 0x3e
-	ld de, (0x00ffec:24)
+	ld de, (SEQ_TRACK_MASK_COPY:24)
 	ld a, (TRACK_ASSIGN_CURSOR:16)
 	rcf
 	stcf_a_16 de
 	ldto_berp A, 0x3c
-	ld (0x00ffec:24), de
+	ld (SEQ_TRACK_MASK_COPY:24), de
 	ldto_werp DE, 0x3e
 	ret
 
@@ -1430,7 +1430,7 @@ SetWall_BankInit:
 	pop xde
 	ld iy, 1:i3
 	call SetWall_ResolveStreamPtr
-	ldw (SEQ_SONG_RECORD+175:16), 1
+	ldw (SEQ_FREE_LIST_HEAD:16), 1
 	ld xiy, (SEQ_BLOCK_PTR:16)
 	xor xhl, xhl
 	ld de, 2:i3
@@ -1539,8 +1539,8 @@ SetWall_FullReset_ClearCtrl:
 	inc 1, bc
 	cp bc, 0xa
 	jrl c, SetWall_FullReset_SlotLoop
-	ldw (SEQ_SONG_RECORD+30:16), 0
-	ldw (0x00ffec:24), 0x0000
+	ldw (SEQ_TRACK_MASK:16), 0
+	ldw (SEQ_TRACK_MASK_COPY:24), 0x0000
 	ld (SEQ_SONG_RECORD+203:16), 0
 	ld xix, 0xcef
 	xor wa, wa
@@ -1558,7 +1558,7 @@ SetWall_FullReset_ClearGlobal2:
 	ld (SEQ_SONG_RECORD+203:16), 0
 	call SetWall_SendPanelCtrl
 	ldw (0x2875:16), 0
-	ldw (0x00ffec:24), 0x0000
+	ldw (SEQ_TRACK_MASK_COPY:24), 0x0000
 	ret
 
 SetWall_SingleSlotResolve:
@@ -1998,8 +1998,8 @@ SetWall_InlineCodeBlock3:
 SqSngSel_CalcSongUsageOnEnter:
 	call	AccWrap_PlayModeDispatch
 	or (SEQ_RTMCFG:16), 4
-	ld	wa, (0xffec:24)
-	ld	(SEQ_SONG_RECORD+30:16), wa
+	ld	wa, (SEQ_TRACK_MASK_COPY:24)
+	ld	(SEQ_TRACK_MASK:16), wa
 	push	xix
 	pushw	bc
 	ld	xix, 4421
@@ -2173,7 +2173,7 @@ SetWall_MiscDataAndCode_Data_Code_Helper:
 	pop	xiy
 	ret
 SetWall_SyncToneGenToDRAM:
-	ld wa, (SEQ_SONG_RECORD+175:16)
+	ld wa, (SEQ_FREE_LIST_HEAD:16)
 	ld (0x286f:16), wa
 	ld wa, (SEQ_FREE_BLOCKS:16)
 	ld (0x2871:16), wa
@@ -2186,11 +2186,11 @@ SetWall_SyncToneGenToDRAM:
 	ldw bc, 0x800
 	ldir85
 	ld wa, (0x286f:16)
-	ld (SEQ_SONG_RECORD+175:16), wa
+	ld (SEQ_FREE_LIST_HEAD:16), wa
 	ld wa, (0x2871:16)
 	ld (SEQ_FREE_BLOCKS:16), wa
-	ld wa, (SEQ_SONG_RECORD+30:16)
-	ld (0x00ffec:24), wa
+	ld wa, (SEQ_TRACK_MASK:16)
+	ld (SEQ_TRACK_MASK_COPY:24), wa
 	and (0x28a5:16), 254
 	cp wa, 0:i3
 	jr z, SetWall_Sync_CheckPanelBit
@@ -2239,8 +2239,8 @@ SetWall_Sync_FinalUpdate:
 
 
 SetWall_LoadBankToToneGen:
-	ld wa, (0x00ffec:24)
-	ld (SEQ_SONG_RECORD+30:16), wa
+	ld wa, (SEQ_TRACK_MASK_COPY:24)
+	ld (SEQ_TRACK_MASK:16), wa
 	ld xix, SEQ_SONG_SLOTS
 	xor xhl, xhl
 	ld l, (SEQ_CURRENT_SONG:24)

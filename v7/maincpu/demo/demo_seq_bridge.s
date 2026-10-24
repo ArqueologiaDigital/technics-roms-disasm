@@ -782,7 +782,7 @@ DispatchHandler_InitAllSlots:
 	pop xde
 	ld iy, 1:i3
 	call SeqNode_ResolveSlotPtr
-	ldw (SEQ_SONG_RECORD+175:16), 1
+	ldw (SEQ_FREE_LIST_HEAD:16), 1
 	ld xiy, (SEQ_BLOCK_PTR:16)
 	xor xhl, xhl
 	ld de, 2:i3
@@ -848,7 +848,7 @@ DispatchHandler_ResolveSlot:
 	ld xde, (SEQ_BLOCK_POOL:16)
 	ld (xhl), xde
 	pop xde
-	ld iy, (SEQ_SONG_RECORD+175:16)
+	ld iy, (SEQ_FREE_LIST_HEAD:16)
 	cp iy, 0xffff
 	jr z, DispatchResolve_ReturnFail
 	ld xde, (SEQ_BLOCK_PTR:16)
@@ -856,7 +856,7 @@ DispatchHandler_ResolveSlot:
 	call SeqNode_ResolveSlotPtr
 	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld wa, (xhl + 3)
-	ld (SEQ_SONG_RECORD+175:16), wa
+	ld (SEQ_FREE_LIST_HEAD:16), wa
 	ld ix, iy
 	cp wa, 0xffff
 	jr z, DispatchResolve_MarkCurrent
@@ -889,8 +889,8 @@ SeqNode_InsertAtPosition:
 	ld (xhl), xde
 	pop xde
 	ld (3302:16), wa
-	ld bc, (SEQ_SONG_RECORD+175:16)
-	ld (SEQ_SONG_RECORD+175:16), iy
+	ld bc, (SEQ_FREE_LIST_HEAD:16)
+	ld (SEQ_FREE_LIST_HEAD:16), iy
 	xor wa, wa
 	call SeqNode_ResolveSlotPtr
 	ld xhl, (SEQ_BLOCK_PTR:16)

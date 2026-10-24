@@ -609,7 +609,7 @@ Audio_CheckInitStatus:
 	ldw	(xsp), 0x0
 	ldw	(0xc4fc:16), 0
 	ld	(0xc502:16), 255
-	ld	hl, (SEQ_SONG_RECORD+30:16)
+	ld	hl, (SEQ_TRACK_MASK:16)
 	or	hl, (3409:16)
 	ld	wa, hl
 	cp	wa, 0:i3

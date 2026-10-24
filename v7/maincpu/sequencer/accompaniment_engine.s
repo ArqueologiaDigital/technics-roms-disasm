@@ -7554,7 +7554,7 @@ AccAutoPlay_StateMachine:
 	calr AccAutoPlay_TriggerCheck
 	bit 6, (0x33d2:16)
 	jr z, .Lc_f5a5da
-	cpw (SEQ_SONG_RECORD+30:16), 0x0000
+	cpw (SEQ_TRACK_MASK:16), 0x0000
 	jr z, .Lc_f5a5da
 	cpw (0x28a8:16), 0x0000
 	jr nz, .Lc_f5a5da
@@ -7693,7 +7693,7 @@ AccAutoPlay_ConfigureIfPending_Return:
 AccAutoPlay_SetConfig:
 	cpw (0x28a8:16), 0x0000
 	jr nz, AccAutoPlay_SetConfig_Apply
-	cpw (SEQ_SONG_RECORD+30:16), 0x0000
+	cpw (SEQ_TRACK_MASK:16), 0x0000
 	jr nz, AccAutoPlay_SetConfig_Apply
 	cp (CMP_RECORD_PART:16), 0x00
 	jr nz, AccAutoPlay_SetConfig_Apply
@@ -7718,7 +7718,7 @@ AccAutoPlay_Configure:
 	jr nz, .Lc_f5a74f
 	cpw (0x28a8:16), 0x0000
 	jr nz, .Lc_f5a759
-	cpw (SEQ_SONG_RECORD+30:16), 0x0000
+	cpw (SEQ_TRACK_MASK:16), 0x0000
 	jr z, .Lc_f5a74f
 	jr t, AccAutoPlay_Configure_Store
 AccAutoPlay_Configure_Mode1:
@@ -7728,7 +7728,7 @@ AccAutoPlay_Configure_Mode1:
 	jr t, AccAutoPlay_Configure_Return
 AccAutoPlay_Configure_Mode2:
 .Lc_f5a759:
-	cpw (SEQ_SONG_RECORD+30:16), 0x0000
+	cpw (SEQ_TRACK_MASK:16), 0x0000
 	jr nz, AccAutoPlay_Configure_Store
 	bit 2, (PLAY_TRANSPORT_STATE:16)
 	jr z, .Lc_f5a76e
@@ -7784,7 +7784,7 @@ AccAutoPlay_Periodic_Padding:
 	and	(0x33d2:16), 251
 	jr	AccAutoPlay_Periodic_Return
 AccAutoPlay_Periodic_Process:
-	cpw (SEQ_SONG_RECORD+30:16), 0
+	cpw (SEQ_TRACK_MASK:16), 0
 	jr nz, AccAutoPlay_Periodic_Toggle
 	cpw (0x28a8:16), 0
 	jr z, AccAutoPlay_Periodic_Return
@@ -7896,7 +7896,7 @@ AccAutoPlay_SeqHandoff:
 	jr z, AccAutoPlay_SeqHandoff_Return
 	and (0x33d1:16), 0xf7
 	or (0x33d1:16), 0x10
-	cpw (SEQ_SONG_RECORD+30:16), 0x0000
+	cpw (SEQ_TRACK_MASK:16), 0x0000
 	jr nz, AccAutoPlay_SeqHandoff_Process
 	bit 2, (PLAY_TRANSPORT_STATE:16)
 	jr z, AccAutoPlay_SeqHandoff_Return
@@ -8072,7 +8072,7 @@ AccPlayMode_OnMask0_Nop:
 AccPlayMode_TransitionRouter:
 	cpw (0x28a8:16), 0
 	jr z, AccPlayMode_Router_Process
-	cpw (SEQ_SONG_RECORD+30:16), 0
+	cpw (SEQ_TRACK_MASK:16), 0
 	jr z, AccPlayMode_Router_Check
 	calr AccPlayMode_Router_Alt
 	jr AccPlayMode_Router_Return
@@ -8082,7 +8082,7 @@ AccPlayMode_Router_Check:
 	jr AccPlayMode_Router_Return
 
 AccPlayMode_Router_Process:
-	cpw (SEQ_SONG_RECORD+30:16), 0
+	cpw (SEQ_TRACK_MASK:16), 0
 	jr z, AccPlayMode_Router_Apply
 	calr AccPlayMode_StartAcc
 	jr AccPlayMode_Router_Return
@@ -10634,10 +10634,10 @@ AccStyle_ModeEnter:
 	ld (0x32f3:16), 0x00
 	ld (0x3303:16), 0x00
 	and (0x3335:16), 0xfe
-	cpw (SEQ_SONG_RECORD+30:16), 0x0000
+	cpw (SEQ_TRACK_MASK:16), 0x0000
 	jr z, .Lc_f5c281
 	call SeqAcc_SetIndicator_PB
-	ldw (SEQ_SONG_RECORD+30:16), 0x0000
+	ldw (SEQ_TRACK_MASK:16), 0x0000
 	call Audio_CheckSubsystemReady
 	or (0x3335:16), 0x01
 AccStyle_ModeEnter_SetFlags:
@@ -23392,7 +23392,7 @@ DrumKitInit_FinalSetup:
 	call	AccPatch_RecountFreeSlots
 	ld	(0x3470:16), 0
 	call	SeqAcc_SetIndicator_PB
-	ldw	(SEQ_SONG_RECORD+30:16), 0
+	ldw	(SEQ_TRACK_MASK:16), 0
 	call	Audio_CheckSubsystemReady
 	and	(0xe31c:16), 158
 	or	(0x3431:16), 64
@@ -23475,7 +23475,7 @@ DrumKitExit_PostRestore:
 	call SeqAcc_RestorePlaybackState
 	cpw (0x28a8:16), 0
 	jr nz, DrumKitExit_ExtraInit
-	cpw (SEQ_SONG_RECORD+30:16), 0
+	cpw (SEQ_TRACK_MASK:16), 0
 	jr nz, DrumKitExit_ExtraInit
 	jr DrumKitExit_CheckAutoPlay
 

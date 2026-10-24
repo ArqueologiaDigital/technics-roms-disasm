@@ -265,6 +265,7 @@
 	.equ CHORD_PREV_KEY_COUNT,		0xce7b	; word: chord keys held before the change being recognized (Chord_RecognizeNowOrDelay)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0xcf17
 	.equ SOUND_TABLE_BASE,			0xe0b2	; the sound-table base every sound-data lookup goes through (SoundData_CategoryDescPtr is stored here; 14 loads)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0xe14e
 	.equ SEQ_SONG_RECORD,			0xf180	; [0x800 bytes] the current song's record: VoicePreset_LoadAndInitPan copies song SEQ_CURRENT_SONG's slot (SEQ_SONG_SLOTS + n * 0x800) in, SeqData_CopyBlockToBuffer copies it back
+	.equ SEQ_TRACK_MASK,			0xf19e	; word: one bit per track (bit t - 1): Chan_SetActiveBit sets or clears a track's bit; recording takes the recorded tracks out while it runs (SeqPlay_ActivatePartsAndSendOff) and puts them back; Seq_FindRhythmTrack and Demo_ScanPartLoop consider only tracks whose bit is set; a field of SEQ_SONG_RECORD
 	.equ SEQ_TRACK_ASSIGN,			0xf1a0	; [16 bytes] TRACK ASSIGN value of each of the 16 tracks (13 CHORD, 14 APC, 15 CONTROL, 16 RHYTHM ...), part of SEQ_SONG_RECORD
 	.equ SQEDT_TRKMRG_TRACK_A,		0xf1d3	; TT_SQTRKMRG: first source track (MrgTrA), a field of SEQ_SONG_RECORD
 	.equ SQEDT_TRKMRG_TRACK_B,		0xf1d4	; TT_SQTRKMRG: second source track (MrgTrB)
@@ -288,6 +289,7 @@
 	.equ SQEDT_VELOCNG_TRACK,		0xf228	; TT_SQVELOCNG (velocity change): track
 	.equ SQEDT_VELOCNG_FROM,		0xf229	; TT_SQVELOCNG: first measure (word)
 	.equ SQEDT_VELOCNG_AMOUNT,		0xf22e	; TT_SQVELOCNG: the velocity amount (EXECUTE copies it to 9812)
+	.equ SEQ_FREE_LIST_HEAD,		0xf22f	; word: first block of the free-block list, 0xFFFF = none; DispatchHandler_ResolveSlot takes it, moves the head to its +3 link, marks the block used (bit 7) and counts SEQ_FREE_BLOCKS down; a field of SEQ_SONG_RECORD
 	.equ SEQ_FREE_BLOCKS,			0xf231	; word: blocks still free; DispatchResolve_MarkCurrent takes one (sets bit 7 of its first byte, decrements); 0 makes ToneGen_AdvancePosition fail with SEQ_EVENT_ABORT = 255
 	.equ SEQ_PUNCH_IN_MEASURE,		0xf238	; word: the punch-in ("P" in) measure of the play screen (MT_GetPInMeasString)
 	.equ SEQ_PUNCH_OUT_MEASURE,		0xf23a	; word: the punch-out measure (SeqPlay_IncPunchOutMeasure keeps the punch-in below it)
@@ -297,6 +299,7 @@
 	.equ NMI_CHECKSUM_REGION2,		0xffd2	; word: checksum of LIVE_PANEL_BLOCK, stored and checked the same way
 	.equ NMI_CHECKSUM_REGION1,		0xffd4	; word: checksum of RAM 0xF180 (0x800 words) NMI_StorePayloadChecksums stores at power-fail; SubCPU_Payload_Verify checks it at boot
 	.equ SEQ_CURRENT_SONG,			0xffe3	; the selected song, 0..9: its record is SEQ_SONG_SLOTS + n * 0x800 (Display_CopyToneTableToRAM, SetSongSlotValue); set when a song is loaded (SMF_FinalizeAndStartPlayback)
+	.equ SEQ_TRACK_MASK_COPY,		0xffec	; word: the copy of SEQ_TRACK_MASK kept outside the song record: SqSngSel_CalcSongUsageOnEnter and AccompMode_ApplyAndNotify copy it in, SingleLoad_PrepareSongSlot / _FinishSongLoad save and restore it around a load
 	.equ FILE_ERROR,			0x1e53c	; word: the file system's last error: FileOpen_CheckPermission stores 2, SeqStep_MemAllocFail 3, FileOpen_SlotExhausted 4, FileOpen_ErrorNoFile 7; FDC status codes are mapped into it (FDC_SetSectorLength)
 	.equ SEQMAIN_READ_POS,			0x1f373	; word: read index of the main sequencer ring buffer SEQMAIN_RING (Seq_CheckSongEnd compares it with SEQMAIN_WRITE_POS)
 	.equ SEQMAIN_WRITE_POS,			0x1f377	; word: write index of SEQMAIN_RING

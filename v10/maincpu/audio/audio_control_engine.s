@@ -9365,7 +9365,7 @@ PartReinit_ProcessNextPart:
 	ld c, (0x91c8:16)
 	ldfr_berp A, 0x3c
 	ldfr_werp DE, 0x3e
-	ld de, (SEQ_SONG_RECORD+30:16)
+	ld de, (SEQ_TRACK_MASK:16)
 	ld a, c
 	scf
 	xorcf_a_16 de

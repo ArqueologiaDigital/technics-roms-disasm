@@ -1056,7 +1056,7 @@ Demo_ScanPartLoop:
 	add bc, bc
 	lda xde, (Demo_PartBitMask:24)
 	ld	bc, (xde+bc)
-	and bc, (SEQ_SONG_RECORD+30:16)
+	and bc, (SEQ_TRACK_MASK:16)
 	jr z, Demo_ScanPartSkipToEnd
 	muls wa, 0x3
 	lda xbc, (SEQ_TRACK_TABLE:16)

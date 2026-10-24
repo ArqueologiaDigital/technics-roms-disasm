@@ -967,7 +967,7 @@ SeqStep_TrackChangeRecoverLoop:
 	slaa bc
 
 SeqStep_TrackChangeRecoverExit:
-	or (0xffec:24), bc
+	or (SEQ_TRACK_MASK_COPY:24), bc
 
 SeqStep_TrackChangeExit:
 	pop xiz
@@ -1225,7 +1225,7 @@ SeqStep_VoiceReassignProcess:
 	dec 1, a
 	cp a, (SEQ_CURRENT_SONG:24)
 	jr nz, SeqStep_VoiceReassignValidate
-	ld de, (0x00ffec:24)
+	ld de, (SEQ_TRACK_MASK_COPY:24)
 	jr SeqStep_VoiceReassignStore
 
 SeqStep_VoiceReassignValidate:
@@ -1241,7 +1241,7 @@ SeqStep_VoiceReassignStore:
 	dec 1, a
 	cp a, (SEQ_CURRENT_SONG:24)
 	jr nz, SeqStep_VoiceReassignUpdate
-	ld (0x00ffec:24), de
+	ld (SEQ_TRACK_MASK_COPY:24), de
 	jr SeqStep_VoiceReassignDone
 
 SeqStep_VoiceReassignUpdate:
@@ -2964,7 +2964,7 @@ SeqStep_RebuildPartChain:
 	cpw (xsp + 2), 0x4d8
 	jr ule, SeqStep_RebuildLoop
 	ldw (SEQ_FREE_BLOCKS:16), 0
-	ldw (SEQ_SONG_RECORD+175:16), 0xffff
+	ldw (SEQ_FREE_LIST_HEAD:16), 0xffff
 	jrl SeqStep_RebuildReturn
 
 SeqStep_RebuildLoop:
@@ -3056,7 +3056,7 @@ SeqStep_ByteBlockEA5F:
 	dec 2, xsp
 	push xiz
 	ld (SEQ_SONG_RECORD+199:16), (SEQ_CURRENT_SONG:24)
-	ldw (SEQ_SONG_RECORD+200:16), (0x00ffec:24)
+	ldw (SEQ_SONG_RECORD+200:16), (SEQ_TRACK_MASK_COPY:24)
 	ld a, (SEQ_CURRENT_SONG:24)
 	extz wa
 	call SeqData_CopyBlockToBuffer
@@ -3064,14 +3064,14 @@ SeqStep_ByteBlockEA5F:
 	ld wa, (SEQ_SONG_RECORD+78:16)
 	ld qiz, wa
 	ld iz, (SEQ_FREE_BLOCKS:16)
-	ldw (xsp+4), (SEQ_SONG_RECORD+175)
+	ldw (xsp+4), (SEQ_FREE_LIST_HEAD)
 	ld a, (SEQ_CURRENT_SONG:24)
 	extz wa
 	call VoicePreset_LoadAndInitPan
 	ld wa, qiz
 	ld (SEQ_SONG_RECORD+78:16), wa
 	ld (SEQ_FREE_BLOCKS:16), iz
-	ldw (SEQ_SONG_RECORD+175), (xsp+4)
+	ldw (SEQ_FREE_LIST_HEAD), (xsp+4)
 	pop xiz
 	inc 2, xsp
 	ret
@@ -3080,7 +3080,7 @@ MidiSysEx_RestoreSongSelection:
 	ld (SEQ_CURRENT_SONG:24), a
 	ld (SEQ_SONG_RECORD+199:16), 0
 	ld wa, (SEQ_SONG_RECORD+200:16)
-	ld (0x00ffec:24), wa
+	ld (SEQ_TRACK_MASK_COPY:24), wa
 	ldw (SEQ_SONG_RECORD+200:16), 0
 	ldw (SEQ_START_MEASURE:16), 1
 	res 3, (SEQ_RTMCFG:16)
@@ -3096,14 +3096,14 @@ SeqStep_ReinitPartTable:
 	ld wa, 1:i3
 	ldw bc, 0xc7
 	call Part_WriteByte
-	ld de, (0x00ffec:24)
+	ld de, (SEQ_TRACK_MASK_COPY:24)
 	ld wa, 1:i3
 	ldw bc, 0xc8
 	call Part_WriteWord
 	calr SeqStep_FindAndCompact
 	ld (xsp + 4), xhl
 	ld iz, (SEQ_SONG_RECORD+78:16)
-	ld wa, (SEQ_SONG_RECORD+175:16)
+	ld wa, (SEQ_FREE_LIST_HEAD:16)
 	ldfr_werp WA, 0xfa
 	ldmw2 (xsp + 8), 0xf231
 	ld a, (SEQ_CURRENT_SONG:24)
@@ -3111,7 +3111,7 @@ SeqStep_ReinitPartTable:
 	call VoicePreset_LoadAndInitPan
 	ld (SEQ_SONG_RECORD+78:16), iz
 	ldto_werp WA, 0xfa
-	ld (SEQ_SONG_RECORD+175:16), wa
+	ld (SEQ_FREE_LIST_HEAD:16), wa
 	mrdw5 0x9f, 0x08, 0x19, 0x31, 0xf2
 	ldto_werp WA, 0xfa
 	call Part_WriteWordBlock_OffsetAF

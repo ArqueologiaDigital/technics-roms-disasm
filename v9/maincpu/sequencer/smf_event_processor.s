@@ -819,8 +819,8 @@ SMF_Seek_WritePosition:
 SMF_RestoreTimerState:
 	bit 0, (0x28a5:16)
 	jr z, SMF_SeekReturn
-	ld wa, (0x00ffec:24)
-	ld (SEQ_SONG_RECORD+30:16), wa
+	ld wa, (SEQ_TRACK_MASK_COPY:24)
+	ld (SEQ_TRACK_MASK:16), wa
 	push xhl
 	call Audio_CheckSubsystemReady
 	pop xhl
@@ -862,12 +862,12 @@ SMF_InitChannelState:
 	ld (4236:16), a
 	ld (4347:16), wa
 	ld (4344:16), a
-	cpw (0xffec:24), 0
+	cpw (SEQ_TRACK_MASK_COPY:24), 0
 	jr z, SMF_SetStatusAndJump
 	xor c, c
 
 SMF_ScanChannelLoop:
-	ld de, (0x00ffec:24)
+	ld de, (SEQ_TRACK_MASK_COPY:24)
 	ld a, c
 	scf
 	xorcf_a_16 de
@@ -899,7 +899,7 @@ SMF_SetStatusAndJump:
 
 SMF_FoundActiveChannel:
 	call Vga_SetupMultiPlaneDisplay
-	ld wa, (0x00ffec:24)
+	ld wa, (SEQ_TRACK_MASK_COPY:24)
 	ld (4325:16), wa
 	ld (4324:16), 255
 	bit 2, (PANEL_REC_91+3:16)
@@ -11037,7 +11037,7 @@ AccKey_ScanLoop:
 	jr AccKey_ScanLoop
 
 AccKey_FoundActiveKey:
-	and wa, (SEQ_SONG_RECORD+30:16)
+	and wa, (SEQ_TRACK_MASK:16)
 	jr z, AccKey_ScanDone
 	or (0x3284:16), 2
 

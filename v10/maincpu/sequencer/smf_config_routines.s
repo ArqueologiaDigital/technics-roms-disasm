@@ -256,7 +256,7 @@ SMF_ScanChannels:
 SMF_ScanChannels_Loop:
 	ldfr_berp A, 0x3c
 	ldfr_werp DE, 0x3e
-	ld de, (0x00ffec:24)
+	ld de, (SEQ_TRACK_MASK_COPY:24)
 	ld a, c
 	scf
 	xorcf_a_16 de
@@ -305,7 +305,7 @@ SMF_CountActiveChannels:
 	xor bc, bc
 
 SMF_CountActive_Loop:
-	ld de, (0x00ffec:24)
+	ld de, (SEQ_TRACK_MASK_COPY:24)
 	ld a, c
 	scf
 	xorcf_a_16 de
@@ -331,7 +331,7 @@ SMF_CountActive_Next:
 	xor bc, bc
 
 SMF_FindFreeChannel:
-	ld de, (0x00ffec:24)
+	ld de, (SEQ_TRACK_MASK_COPY:24)
 	ld a, c
 	scf
 	xorcf_a_16 de
@@ -364,7 +364,7 @@ SMF_FindFree_CheckPart:
 	inc 1, (SEQ_TRACK:16)
 
 SMF_AssignRemainingChannels:
-	ld de, (0x00ffec:24)
+	ld de, (SEQ_TRACK_MASK_COPY:24)
 	ld a, c
 	scf
 	xorcf_a_16 de
@@ -973,7 +973,7 @@ SMF_Dispatch_DrumSearch:
 	ld bc, iy
 	ldfr_berp A, 0x3c
 	ldfr_werp DE, 0x3e
-	ld de, (0x00ffec:24)
+	ld de, (SEQ_TRACK_MASK_COPY:24)
 	ld a, c
 	scf
 	xorcf_a_16 de
@@ -1025,7 +1025,7 @@ SMF_Dispatch_Ch15Search:
 	ld bc, iy
 	ldfr_berp A, 0x3c
 	ldfr_werp DE, 0x3e
-	ld de, (0x00ffec:24)
+	ld de, (SEQ_TRACK_MASK_COPY:24)
 	ld a, c
 	scf
 	xorcf_a_16 de
@@ -1181,7 +1181,7 @@ SMF_ProgChg_Found:
 	ld c, l
 	ldfr_berp A, 0x3c
 	ldfr_werp DE, 0x3e
-	ld de, (0x00ffec:24)
+	ld de, (SEQ_TRACK_MASK_COPY:24)
 	ld a, c
 	scf
 	xorcf_a_16 de
@@ -1252,7 +1252,7 @@ SMF_CtrlChg_Found:
 	ld c, l
 	ldfr_berp A, 0x3c
 	ldfr_werp DE, 0x3e
-	ld de, (0x00ffec:24)
+	ld de, (SEQ_TRACK_MASK_COPY:24)
 	ld a, c
 	scf
 	xorcf_a_16 de
@@ -1507,7 +1507,7 @@ SMF_Resolve_DrumSearch:
 	ld bc, iy
 	ldfr_berp A, 0x3c
 	ldfr_werp DE, 0x3e
-	ld de, (0x00ffec:24)
+	ld de, (SEQ_TRACK_MASK_COPY:24)
 	ld a, c
 	scf
 	xorcf_a_16 de
@@ -1556,7 +1556,7 @@ SMF_Resolve_Ch15Search:
 	ld bc, iy
 	ldfr_berp A, 0x3c
 	ldfr_werp DE, 0x3e
-	ld de, (0x00ffec:24)
+	ld de, (SEQ_TRACK_MASK_COPY:24)
 	ld a, c
 	scf
 	xorcf_a_16 de
@@ -1739,7 +1739,7 @@ SMF_GlobalCh_SearchLoop:
 	ld bc, iy
 	ldfr_berp A, 0x3c
 	ldfr_werp DE, 0x3e
-	ld de, (0x00ffec:24)
+	ld de, (SEQ_TRACK_MASK_COPY:24)
 	ld a, c
 	scf
 	xorcf_a_16 de
@@ -1790,7 +1790,7 @@ SMF_LoadBank_ReadEntries:
 	push xhl
 	ldw de, 0xaf
 	ld	wa, (xhl+de)
-	ld (SEQ_SONG_RECORD+175:16), wa
+	ld (SEQ_FREE_LIST_HEAD:16), wa
 	pop xhl
 	ldw de, 0xb1
 	ld	wa, (xhl+de)
@@ -1809,7 +1809,7 @@ SMF_LoadBank_Return:
 	ret
 
 SMF_SetupReadPointers:
-	ld wa, (SEQ_SONG_RECORD+175:16)
+	ld wa, (SEQ_FREE_LIST_HEAD:16)
 	ld (0x286f:16), wa
 	ld wa, (SEQ_FREE_BLOCKS:16)
 	ld (0x2871:16), wa
@@ -1837,7 +1837,7 @@ SMF_ParseEvents:
 	cp a, 0xf
 	jr ugt, SMF_Parse_Complete
 	ld c, (3301:16)
-	ld wa, (SEQ_SONG_RECORD+30:16)
+	ld wa, (SEQ_TRACK_MASK:16)
 	ld (SEQ_ERROR_CODE:16), 0
 	and (0x287b:16), 191
 	xor xhl, xhl
@@ -3402,8 +3402,8 @@ SMF_SetupRead_Finalize:
 	ret
 
 SMF_SetupRead_Return:
-	ld wa, (0x00ffec:24)
-	ld (SEQ_SONG_RECORD+30:16), wa
+	ld wa, (SEQ_TRACK_MASK_COPY:24)
+	ld (SEQ_TRACK_MASK:16), wa
 	ld xix, SEQ_SONG_SLOTS
 	xor xhl, xhl
 	ld l, (SEQ_CURRENT_SONG:24)
