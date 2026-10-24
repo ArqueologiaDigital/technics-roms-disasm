@@ -65,7 +65,7 @@ AcGridBox_Init:
 	extz xde
 	ld xwa, (xsp + 16)
 	ld xbc, EVT_INDEXSW_UP
-	calr	-17536
+	calr SetDialUp
 	ld xwa, (xsp + 8)
 	ld bc, (xwa + 26)
 	ld xwa, (xsp + 4)
@@ -76,7 +76,7 @@ AcGridBox_Init:
 	extz xde
 	ld xwa, (xsp + 16)
 	ld xbc, EVT_INDEXSW_DOWN
-	calr	SetDialUp
+	calr	SetDialUp_Entry
 	ld wa, 1:i3
 	jrl AcGridBox_EnableDials
 AcGridBoxProc_OnIndexswUp:
@@ -127,11 +127,11 @@ AcGridBox_ScrollUp_Alt:
 	ld xwa, (xsp + 16)
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, (xsp + 12)
-	calr	-17725
+	calr SetDialUp
 	ld xwa, (xsp + 16)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 12)
-	calr	SetDialUp
+	calr	SetDialUp_Entry
 	ld wa, 1:i3
 	jrl AcGridBox_EnableDials
 AcGridBoxProc_OnIndexswDown:
@@ -182,11 +182,11 @@ AcGridBox_ScrollDown_Alt:
 	ld xwa, (xsp + 16)
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, (xsp + 12)
-	calr	-17895
+	calr SetDialUp
 	ld xwa, (xsp + 16)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 12)
-	calr	SetDialUp
+	calr	SetDialUp_Entry
 	ld wa, 1:i3
 
 AcGridBox_EnableDials:
@@ -374,12 +374,12 @@ PsEditBox_SetIndex_CheckDial:
 	exts xde
 	ld XWA, (xsp + 0x021c)
 	ld xbc, EVT_INDEXSW_UP
-	calr	-18338
+	calr SetDialUp
 	ld de, (xiz + 26)
 	exts xde
 	ld XWA, (xsp + 0x021c)
 	ld xbc, EVT_INDEXSW_DOWN
-	calr	SetDialUp
+	calr	SetDialUp_Entry
 	ld wa, 1:i3
 	jr PsEditBox_Init_EnableDials
 
@@ -400,12 +400,12 @@ PsEditBox_Init:
 	exts xde
 	ld XWA, (xsp + 0x021c)
 	ld xbc, EVT_INDEXSW_UP
-	calr	-18420
+	calr SetDialUp
 	ld de, (xiz + 26)
 	exts xde
 	ld XWA, (xsp + 0x021c)
 	ld xbc, EVT_INDEXSW_DOWN
-	calr	SetDialUp
+	calr	SetDialUp_Entry
 	ld wa, 1:i3
 
 PsEditBox_Init_EnableDials:

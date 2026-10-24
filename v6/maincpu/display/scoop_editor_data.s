@@ -1818,7 +1818,7 @@ SeFilL241TitleFunc_DispatchSwitch:
 	ld C,(XSP+0x02)
 	extz BC
 	sla BC, 0x02
-	lda	xde, (SeFilHpq1TitleFunc_SwitchHandlers:24)
+	lda xde, (SeFilL241TitleFunc_SwitchHandlers:24)
 	exts XBC
 	add XBC,XDE
 	ld XHL,(XBC)

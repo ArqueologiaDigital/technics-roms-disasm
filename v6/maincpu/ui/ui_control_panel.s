@@ -1427,7 +1427,7 @@ Slider_AtMax:
 	ld xwa, (xsp + 12)
 	ld xbc, EVT_INDEXSW_DOWN_DIAL
 	ld xde, (xsp + 8)
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, (xsp + 12)
 	ld xbc, EVT_INDEXSW_UP_DIAL
 	ld xde, (xsp + 8)
@@ -1437,13 +1437,13 @@ Slider_Decrement:
 	ld xwa, (xsp + 12)
 	ld xbc, EVT_INDEXSW_UP_DIAL
 	ld xde, (xsp + 8)
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, (xsp + 12)
 	ld xbc, EVT_INDEXSW_DOWN_DIAL
 	ld xde, (xsp + 8)
 
 Slider_DecrDone:
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 
 Slider_ReturnZero:

@@ -376,7 +376,7 @@ SwbtWr_InitBank1:
 	calr	SwbtWr_DispatchLoop_Init
 	ret
 SwbtWr_InitBank2:
-	ld	xiy, 0xee7bab
+	ld	xiy, Naka_RenderMode_A_Table
 	ld	(0xbfc1:16), xiy
 	ld	xiy, SwbtBank2_PostCallbacks
 	ld	(0xbfc5:16), xiy

@@ -1174,6 +1174,7 @@ MainLoop_AfterSwbtWr:
 	call AccDir_PeriodicEntry
 	calr Seq_EventProcessingTick
 	call SeqBuf_NoteEvent_CheckSongEnd
+MainLoop_AfterSwbtWr_Loop:
 	and hl, hl
 	jr z, MainLoop_AfterSeqBuf_NoteEvent
 	call SeMenu_ListSelector_Select
@@ -2535,6 +2536,7 @@ TaskSched_WakeInline_Pending:
 	push xhl
 	push xwa
 	push xbc
+TaskSched_WakeInline_Pending_Loop:
 	push xde
 	push xix
 	push xiy
@@ -2720,6 +2722,7 @@ Audio_Lock_Release:
 	push xbc
 	push xde
 	push xix
+Audio_Lock_Release_Loop:
 	push xiy
 	push xiz
 	ld l, a
@@ -2908,6 +2911,7 @@ AudioLock_GetCount:
 TaskMsg_Send:
 	push	sr
 	ei 6
+TaskMsg_Send_Loop:
 	push xhl
 	push xwa
 	push xbc
@@ -2980,6 +2984,7 @@ TaskMsg_Send_WakeReceiver:
 	ld wa, (xiy + 2)
 	ld (xix + 2), wa
 	ld (xwa), ix
+TaskMsg_Send_WakeReceiver_Loop:
 	ld (xiy + 2), ix
 	jrl TaskSched_Dispatch
 	push xwa
@@ -3142,6 +3147,7 @@ TaskMsg_TryReceive:
 	sll a, 2
 	extz wa
 	add wa, 0x54f
+TaskMsg_TryReceive_Loop:
 	ld iy, wa
 	push	sr
 	ei 6
@@ -3318,6 +3324,7 @@ TaskSched_TCBTemplate:
 	pop	xiy
 	pop	xix
 	popw	wa
+TaskSched_TCBTemplate_Loop:
 	ret
 
 TaskSched_DelayTicks:
@@ -3425,6 +3432,7 @@ SeqBuf_ReadAlternate2:
 	pushw	ix
 	push	xde
 	lda	xde, (0x1e549:24)
+SeqBuf_ReadAlternate2_Loop:
 	call	RingBuf512_ReadAlt_ByteBlock
 	pop	xde
 	popw	ix
@@ -8566,6 +8574,7 @@ LZ_Decompress_ReadSizeField:
 	calr Parport_ReadNextByte
 	inc1w_erp 0xfa
 	cp_erpw 0xfa, 0x08, 0x00
+LZ_Decompress_ReadSizeField_Loop:
 	jr c, LZ_Decompress_ReadSizeField
 	calr Parport_ReadNextByte
 	extz xhl

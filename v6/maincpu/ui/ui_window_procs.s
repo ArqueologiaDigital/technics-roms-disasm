@@ -42,11 +42,11 @@ WndScroll_InitWindowProc:
 	ld xwa, (xsp + 50)
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, 5:i3
-	calr	-4166
+	calr SetDialUp
 	ld xwa, (xsp + 50)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, 3:i3
-	calr	SetDialUp
+	calr	SetDialUp_Entry
 	ld wa, 1:i3
 	calr SetDialEnable
 	jrl UIDialog_ReturnZeroJmp
@@ -3867,12 +3867,12 @@ AcListBoxProc:
 	exts xde
 	ld xwa, (xsp + 12)
 	ld xbc, EVT_INDEXSW_DOWN
-	calr	-14031
+	calr SetDialUp
 	ld de, (xiz + 26)
 	exts xde
 	ld xwa, (xsp + 12)
 	ld xbc, EVT_INDEXSW_UP
-	calr	SetDialUp
+	calr	SetDialUp_Entry
 	ld wa, 1:i3
 	jrl AcListBox_EnableDials
 
@@ -3909,11 +3909,11 @@ AcListBoxProc_OnIndexswUpAny:
 	ld xwa, (xsp + 12)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 8)
-	calr	-14162
+	calr SetDialUp
 	ld xwa, (xsp + 12)
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, (xsp + 8)
-	calr	SetDialUp
+	calr	SetDialUp_Entry
 	ld wa, 1:i3
 	jr AcListBox_EnableDials
 
@@ -3950,11 +3950,11 @@ AcListBoxProc_OnIndexswDownAny:
 	ld xwa, (xsp + 12)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 8)
-	calr	-14288
+	calr SetDialUp
 	ld xwa, (xsp + 12)
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, (xsp + 8)
-	calr	SetDialUp
+	calr	SetDialUp_Entry
 	ld wa, 1:i3
 
 AcListBox_EnableDials:

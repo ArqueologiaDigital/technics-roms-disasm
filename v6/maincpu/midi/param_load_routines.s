@@ -388,7 +388,7 @@ ParaLoadOpt_GridHandler:
 	extz xde
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_UP
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, (xsp + 8)
 	ld bc, (xwa + 26)
 	ld xwa, (xsp + 4)
@@ -399,7 +399,7 @@ ParaLoadOpt_GridHandler:
 	extz xde
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_DOWN
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 	jrl ParaLoadOpt_SetDialAndReturn
 
@@ -485,11 +485,11 @@ ParaLoadOpt_GridDelegateProc:
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, (xsp + 12)
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 12)
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 	jrl ParaLoadOpt_SetDialAndReturn
 AcParaLoadOptGridBoxProc_OnIndexswDown:	; cases 29360152, 29360154
@@ -544,11 +544,11 @@ ParaLoadOpt_GridDelegateProc_B:
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, (xsp + 12)
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 12)
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 
 ParaLoadOpt_SetDialAndReturn:

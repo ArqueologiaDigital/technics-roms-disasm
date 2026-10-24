@@ -1551,20 +1551,22 @@ VramTest_Done:
 	inc 2, xsp
 	ret
 
+SelfTest_FirmwareVersionCheck:
 ; TODO(port): v6 bytes with no v7 line -- disassemble
 	.byte	0xef, 0x68
-SelfTest_FirmwareVersionCheck:
 	push	qiz
 	call	Get_Firmware_Version
 	cp	l, 119
-	jr	nz, 19
+	jr	nz, SelfTest_InterCPU_Send
 	ldw	wa, 251
 	call	UI_PostModeChangeEvent
 	call	SubCPU_PayloadErrorStore
 	ld	(36034:16), 2
 ; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x78, 0x8f, 0x01, 0xbf, 0x02, 0x32
+	.byte	0x78, 0x8f, 0x01
 SelfTest_InterCPU_Send:
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0xbf, 0x02, 0x32
 	ld	xwa, 61442
 	ldw	bc, 8
 ; TODO(port): v6 bytes with no v7 line -- disassemble
@@ -2650,7 +2652,7 @@ AcMstStyleAlp_Boundary_Skip:
 	extz	xde
 	ld	xwa, (xsp+74)
 	ld	xbc, EVT_INDEXSW_DOWN
-	call	0xf9a077
+	call	SetDialUp
 	ld	xwa, (xsp+8)
 	ld	bc, (xwa+26)
 	ld	xwa, xiz
@@ -2661,7 +2663,7 @@ AcMstStyleAlp_Boundary_Skip:
 	extz	xde
 	ld	xwa, (xsp+74)
 	ld	xbc, EVT_INDEXSW_UP
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld	wa, 1:i3
 	call	SetDialEnable
 	ld	de, iz
@@ -3105,11 +3107,11 @@ MasterSetup_FallbackEvent:
 	ld	xwa, (xsp+74)
 	ld	xbc, EVT_INDEXSW_DOWN
 	ld	xde, (xsp+66)
-	call	0xf9a077
+	call	SetDialUp
 	ld	xwa, (xsp+74)
 	ld	xbc, EVT_INDEXSW_UP
 	ld	xde, (xsp+66)
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld	wa, 1:i3
 	jrl	MasterSetup_SetDialEnable
 AcMstStyleAlp_Boundary_OnIndexswDown:	; cases 29360152, 29360154
@@ -3329,11 +3331,11 @@ MstStyleAlp_FallbackDispatch:
 	ld xwa, (xsp + 74)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 66)
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, (xsp + 74)
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, (xsp + 66)
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 
 MasterSetup_SetDialEnable:
@@ -4200,7 +4202,7 @@ MstStyle1_EventDispatch:
 	extz xde
 	ld xwa, (xsp + 66)
 	ld xbc, EVT_INDEXSW_DOWN
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, (xsp + 8)
 	ld bc, (xwa + 26)
 	ld xwa, (xsp + 4)
@@ -4211,7 +4213,7 @@ MstStyle1_EventDispatch:
 	extz xde
 	ld xwa, (xsp + 66)
 	ld xbc, EVT_INDEXSW_UP
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 	call SetDialEnable
 	ld xwa, (xsp + 58)
@@ -4441,11 +4443,11 @@ MstStyle1Sub_FallbackEvent:
 	ld xwa, (xsp + 66)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 58)
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, (xsp + 66)
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, (xsp + 58)
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 	jrl MstStyle1Sub_SetDialEnable
 AcMstStyle1SubGridBoxProc_OnIndexswDown:
@@ -4569,11 +4571,11 @@ MstStyle1Sub_DialUp_FallbackEvent:
 	ld xwa, (xsp + 66)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 58)
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, (xsp + 66)
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, (xsp + 58)
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 
 MstStyle1Sub_SetDialEnable:
@@ -4920,7 +4922,7 @@ MstStyle1Page_EventDispatch:
 	extz xde
 	ld xwa, (xsp + 56)
 	ld xbc, EVT_INDEXSW_DOWN
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, (xsp + 8)
 	ld bc, (xwa + 26)
 	ld xwa, xiz
@@ -4931,7 +4933,7 @@ MstStyle1Page_EventDispatch:
 	extz xde
 	ld xwa, (xsp + 56)
 	ld xbc, EVT_INDEXSW_UP
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 	call SetDialEnable
 	ld xwa, (xsp + 48)
@@ -5642,11 +5644,11 @@ MstStyle2_FallbackEvent:
 	ld xwa, (xsp + 56)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 48)
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, (xsp + 56)
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, (xsp + 48)
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 	jrl MstStyle2_SetDialEnable
 AcMstStyle2GridBoxProc_OnIndexswDown:
@@ -5854,11 +5856,11 @@ MstStyle2_DialScroll_FallbackUp:
 	ld xwa, (xsp + 56)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 48)
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, (xsp + 56)
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, (xsp + 48)
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 
 MstStyle2_SetDialEnable:
@@ -6577,7 +6579,7 @@ MstStyle2_EventDispatch:
 	extz xde
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_UP
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, (xsp + 8)
 	ld bc, (xwa + 26)
 	ld xwa, (xsp + 4)
@@ -6588,7 +6590,7 @@ MstStyle2_EventDispatch:
 	extz xde
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_DOWN
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 	jrl TchSens_SetDialEnable
 AcTchSensGridBoxProc_OnIndexswUp:
@@ -6652,11 +6654,11 @@ TchSens_DialDown_Fallback:
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, (xsp + 12)
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 12)
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 	jrl TchSens_SetDialEnable
 AcTchSensGridBoxProc_OnIndexswDown:
@@ -6720,11 +6722,11 @@ TchSens_DialUp_Fallback:
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, (xsp + 12)
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 12)
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 
 TchSens_SetDialEnable:
@@ -7147,7 +7149,7 @@ TchSens_EventDispatch:
 	extz xde
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_UP
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, (xsp + 8)
 	ld bc, (xwa + 26)
 	ld xwa, (xsp + 4)
@@ -7158,7 +7160,7 @@ TchSens_EventDispatch:
 	extz xde
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_DOWN
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 	jrl FSWAss_SetDialEnable
 AcFSWAssGridBoxProc_OnIndexswUp:
@@ -7209,11 +7211,11 @@ FSWAss_DialDown_Fallback:
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, (xsp + 12)
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 12)
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 	jrl FSWAss_SetDialEnable
 AcFSWAssGridBoxProc_OnIndexswDown:
@@ -7264,11 +7266,11 @@ FSWAss_DialUp_Fallback:
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, (xsp + 12)
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 12)
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 
 FSWAss_SetDialEnable:
@@ -8399,7 +8401,7 @@ PmemPageCtl_EventDispatch:
 	extz xde
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_UP
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, (xsp + 8)
 	ld bc, (xwa + 26)
 	ld xwa, (xsp + 4)
@@ -8410,7 +8412,7 @@ PmemPageCtl_EventDispatch:
 	extz xde
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_DOWN
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 	jrl PmExpFilter_SetDialEnable
 
@@ -8677,11 +8679,11 @@ PmExpFilter_FallbackForward:
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_UP
 	ld XDE, (xsp + 0x0120)
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_DOWN
 	ld XDE, (xsp + 0x0120)
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 	jrl PmExpFilter_SetDialEnable
 AcPmExpFilterGridBoxProc_OnIndexswDown:
@@ -8756,11 +8758,11 @@ PmExpFilter_FallbackForward2:
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_UP
 	ld XDE, (xsp + 0x0120)
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_DOWN
 	ld XDE, (xsp + 0x0120)
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 
 PmExpFilter_SetDialEnable:
@@ -9218,7 +9220,7 @@ PmExpFilter2_EventDispatch:
 	extz xde
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_UP
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, (xsp + 8)
 	ld bc, (xwa + 26)
 	ld xwa, (xsp + 4)
@@ -9229,7 +9231,7 @@ PmExpFilter2_EventDispatch:
 	extz xde
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_DOWN
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 	jrl DispTimeSet_SetDialEnabled
 
@@ -9310,11 +9312,11 @@ DispTimeSet_DialFallback:
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, (xsp + 12)
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 12)
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 	jrl DispTimeSet_SetDialEnabled
 AcDispTimeSetGridBoxProc_OnIndexswDown:
@@ -9365,11 +9367,11 @@ DispTimeSet_DialFallback2:
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, (xsp + 12)
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 12)
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 
 DispTimeSet_SetDialEnabled:

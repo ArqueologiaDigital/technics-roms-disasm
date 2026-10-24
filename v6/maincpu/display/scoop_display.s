@@ -750,6 +750,7 @@ Display_PollAudioDone:
 Display_DeletePollEvent:
 	; --- XBC/XWA setup and call ---
 	ld xbc, EVT_SW_IN
+Display_DeletePollEvent_Loop:
 	ld	xwa, 0:i3
 	call DeleteEvent
 	ret
@@ -3544,6 +3545,7 @@ MemConfig_Handler_5:
 	cp	a, 132
 	jrl	z, MemConfig_Handler_5_Skip14
 	call	VoiceSlot_ReadCurrentParams
+MemConfig_Handler_5_Loop2:
 	ld	w, a
 	and	w, 240
 	ld	(3572:16), w
@@ -6062,6 +6064,7 @@ VoiceCtrl_ParamSetupBytecode_Skip:
 	call	TempoRingBuf_ReadByte
 	ld	wa, hl
 	ld	(xiy+2), a
+VoiceCtrl_ParamSetupBytecode_Skip_Loop:
 	call	TempoRingBuf_ReadByte
 	ld	wa, hl
 	ld	(xiy+3), a
@@ -10503,6 +10506,7 @@ MemConfig_Handler_1_Helper3:
 	push	xde
 	ld	xde, (7510:16)
 	ld	(xhl), xde
+MemConfig_Handler_1_Helper3_Loop:
 	pop	xde
 	ld	(3302:16), wa
 	ld	bc, (61999:16)
@@ -11954,6 +11958,7 @@ VoiceState_DataBlock2_Join2:
 	push	xiy
 	push	xiz
 	and	(0x0f56:16), 254
+VoiceState_DataBlock2_Join2_Loop:
 	ld	a, 4:opc
 	call	VoiceSlot_SaveState
 	call	VoiceSlot_ReadCurrentParams
@@ -12911,6 +12916,7 @@ PerfMode_ParamHandler_11_Skip13:
 	jp	SubCPU_ToneParamRet_Join
 SubCPU_ToneParamRet_Join:
 	ldw_d16	wa, (0x0e4c)
+SubCPU_ToneParamRet_Join_Loop:
 	ld	(0x117c:16), wa
 	ldb_d8	a, (0x0e52)
 	stb_d8	(0x0ec1), a
@@ -13618,6 +13624,7 @@ PerfMode_ParamHandler_11_Loop5:
 	jp	SubCPU_ToneParamRet_Return3
 SwbtB3_CodeA9_Listener3_Skip:
 	cp	(0x0eb8:16), 6
+SwbtB3_CodeA9_Listener3_Skip_Loop:
 	jrl	nz, PerfMode_ParamHandler_11_Skip62
 	add	c, 8
 PerfMode_ParamHandler_11_Skip62:
@@ -14409,6 +14416,7 @@ DisplayStr_BytecodeBlock_C:
 DisplayStr_ShowTempoLine:
 	call	DisplayStr_BlankLineBuffer
 	ld	xix, 3786
+DisplayStr_ShowTempoLine_Loop:
 ; TODO(port): v6 bytes with no v7 line -- disassemble
 	.byte	0x45, 0xa6, 0xed, 0xef, 0x00, 0xc1, 0x5a, 0xfc
 	.byte	0x3f, 0x07, 0x7e, 0x0d, 0x00, 0xc1, 0x5b, 0xfc

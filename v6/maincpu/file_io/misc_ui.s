@@ -556,7 +556,7 @@ PsFileNameBoxProc:
 	ld	xwa, (xsp+170)
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, 0:i3
-	call	0xf9a077
+	call SetDialUp
 	ld	xwa, (xsp+170)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, 0:i3
@@ -566,13 +566,13 @@ PsFileNameBox_Init_HideFirst:
 	ld	xwa, (xsp+170)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, 0:i3
-	call	0xf9a077
+	call SetDialUp
 	ld	xwa, (xsp+170)
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, 0:i3
 
 PsFileNameBox_Init_Configure:
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 	call SetDialEnable
 
@@ -649,7 +649,7 @@ PsFileNameBox_CheckScrollButtons:
 	ld	xwa, (xsp+170)
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, 0:i3
-	call	0xf9a077
+	call SetDialUp
 	ld	xwa, (xsp+170)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, 0:i3
@@ -659,13 +659,13 @@ PsFileNameBox_Scroll_HideDown:
 	ld	xwa, (xsp+170)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, 0:i3
-	call	0xf9a077
+	call SetDialUp
 	ld	xwa, (xsp+170)
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, 0:i3
 
 PsFileNameBox_Scroll_Apply:
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 	call SetDialEnable
 	jrl PsFileNameBox_ReturnZero

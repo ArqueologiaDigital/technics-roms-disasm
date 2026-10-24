@@ -262,6 +262,7 @@ GUI_DisplayStructData_0x7D8:	.incbin "includes/generated/gui_display_struct_data
 ;   +12 <Title>_Nop         a `jp` to a bare `ret`; DirmdEmulator never calls this slot
 ; Every other event goes to DirmdEmu_DefaultCase.  Framed 2026-10-06 (scripts/tools/frame_semenu_title_methods.py).
 ; ---------------------------------------------------------------------------------------------------------------
+SeMenuTitleFunc_Methods:
 ; TODO(port): v6 bytes with no v7 line -- disassemble
 	.byte	0x2a, 0x36, 0xf0, 0x00, 0x2e, 0x36, 0xf0, 0x00
 	.byte	0x32, 0x36, 0xf0, 0x00, 0x3c, 0x36, 0xf0, 0x00
@@ -273,7 +274,7 @@ GUI_DisplayStructData_0x7D8:	.incbin "includes/generated/gui_display_struct_data
 	.byte	0xcb, 0x36, 0xf0, 0x00, 0xd5, 0x36, 0xf0, 0x00
 	.byte	0xf6, 0x36, 0xf0, 0x00, 0xfa, 0x36, 0xf0, 0x00
 	.byte	0xfe, 0x36, 0xf0, 0x00, 0x08, 0x37, 0xf0, 0x00
-SeMenuTitleFunc_Methods:
+SeMenuTitleFunc_Methods_Data:
 	.long	SeTonRan2TitleFunc_OnDraw
 	.long	SeTonRan2TitleFunc_OnHide
 	.long	SeTonRan2TitleFunc_OnSwitchIn
@@ -544,6 +545,7 @@ SeFilLpq1TitleFunc_SwitchHandlers:
 SeFilHpq1TitleFunc_SwitchHandlers:
 ; table of 4-byte code pointers, 72 B = 18 entries to the next address the code names
 ; evidence: SeFilL241TitleFunc_DispatchSwitch+0x1E (0xF04EAE) loads it into XDE, adds BC*4 and calls the entry (`exts xbc / add xbc,xde / ld xhl,(xbc) / call (xhl)`)
+SeFilL241TitleFunc_SwitchHandlers:
 ; TODO(port): v6 bytes with no v7 line -- disassemble
 	.byte	0x21, 0x6a, 0xf0, 0x00, 0x21, 0x6a, 0xf0, 0x00
 	.byte	0x12, 0x55, 0xf0, 0x00, 0x24, 0x55, 0xf0, 0x00
@@ -553,7 +555,6 @@ SeFilHpq1TitleFunc_SwitchHandlers:
 	.byte	0x8a, 0x55, 0xf0, 0x00, 0xbd, 0x55, 0xf0, 0x00
 	.byte	0x09, 0x56, 0xf0, 0x00, 0x21, 0x6a, 0xf0, 0x00
 	.byte	0x21, 0x6a, 0xf0, 0x00, 0x57, 0x56, 0xf0, 0x00
-SeFilL241TitleFunc_SwitchHandlers:
 	.long	SeFilL241_OnSwitch25
 ; TODO(port): v6 bytes with no v7 line -- disassemble
 	.byte	0x00, 0x00, 0x00, 0x00, 0x21, 0x6a, 0xf0, 0x00
@@ -1362,7 +1363,7 @@ User_didnt_request_flash_mem_update:
 	ld	wa, 0:i3
 	call	ScreenGroup_Dispatch	; Display initial boot screen (group 0)
 	ei	0
-	call	0xfb6e22
+	call	SelfTest_FirmwareVersionCheck
 	calr	SubCPU_Payload_GetErrorFlag	; Check if payload transfer failed
 	cp	hl, 0:i3	; HL=0: success, HL!=0: error
 	jr	nz, Boot_PayloadError	; Branch if error occurred
@@ -1456,6 +1457,7 @@ SubCPU_Payload_DelayLoop_Short:
 	jr nz, SubCPU_Payload_TransferPart2
 	ld xiz, 0x50000
 	ld xwa, 0x3e0000
+SubCPU_Payload_DelayLoop_Short_Loop:
 	ld xbc, 0x50000
 	call SLIDE_Parse_Header
 	cp hl, 0xffff
@@ -3519,7 +3521,7 @@ SndParam_RW_ProcessResult:
 	inc	3, a
 	extz	wa
 	sla	wa, 2
-	lda	xbc, (0xee1034:24)
+	lda	xbc, (SndParam_EncodeHandlers:24)
 	lda	xde, (xbc+wa)
 	ld	xwa, xiz
 	ld	bc, (xsp + 4)

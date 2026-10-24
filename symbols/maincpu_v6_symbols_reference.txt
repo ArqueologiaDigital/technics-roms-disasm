@@ -5,8 +5,8 @@
 # scripts/analysis/l2_symbol_reference.py --regen
 # Do not hand-edit: rename in the sources and regenerate.
 #
-#   symbols .................. 53,559
-#   semantic names ........... 53,073 (99.1%)
+#   symbols .................. 53,623
+#   semantic names ........... 53,137 (99.1%)
 #   positional names ......... 486
 #
 LED_patterns_indicating_firmware_version 00E00000
@@ -801,7 +801,8 @@ InitializeScoop_Str_TT_SEWRTMEM 00E0D716
 InitializeScoop_Str_TT_SEWRTSND 00E0D722
 GUI_DisplayStructData_0x750 00E0D72E
 GUI_DisplayStructData_0x7D8 00E0D7B6
-SeMenuTitleFunc_Methods 00E0DB06
+SeMenuTitleFunc_Methods 00E0DAB6
+SeMenuTitleFunc_Methods_Data 00E0DB06
 SeEasyTitleFunc_Methods 00E0DB16
 SeTonTon1TitleFunc_Methods 00E0DB26
 SeTonTon2TitleFunc_Methods 00E0DB36
@@ -840,7 +841,7 @@ SeAmpEnv2TitleFunc_SwitchHandlers 00E0DD8E
 SeAmpLfo1TitleFunc_SwitchHandlers 00E0DDD6
 SeFilLpq1TitleFunc_SwitchHandlers 00E0DE1E
 SeFilHpq1TitleFunc_SwitchHandlers 00E0DEAE
-SeFilL241TitleFunc_SwitchHandlers 00E0DEEE
+SeFilL241TitleFunc_SwitchHandlers 00E0DEAE
 SeFilH241TitleFunc_SwitchHandlers 00E0DF3E
 SeFilBpf1TitleFunc_SwitchHandlers 00E0DF86
 SeFilBcf1TitleFunc_SwitchHandlers 00E0DFCE
@@ -6444,9 +6445,9 @@ East_ViewableTable_0D8 00E5A0E8
 East_ViewableTable_0EC 00E5A10C
 East_ResNameTable_309 00E5A128
 East_ResNameTable_30F 00E5A158
-East_ResNameTable_318 00E5A18C
-East_ResNameTable_319 00E5A1E6
-East_ResNameTable_31A 00E5A24C
+East_ResNameTable_318 00E5A180
+East_ResNameTable_319 00E5A1DA
+East_ResNameTable_31A 00E5A240
 East_ResNameTable_350 00E5A2AE
 East_ResNameTable_351 00E5A356
 NakaData_WidgetTables2 00E5A3A4
@@ -6465,9 +6466,9 @@ East_ResNameTable_358 00E5A90C
 East_ResNames_358 00E5A964
 East_ResNameTable_359 00E5A9B4
 East_ResNames_359 00E5A9D0
-NakaObj_MidiComputerConn_Table 00E5AA02
+NakaObj_MidiComputerConn_Table 00E5A9F6
 East_ResNames_35A 00E5AA12
-NakaObj_MidiPmemOutput_Table 00E5AA42
+NakaObj_MidiPmemOutput_Table 00E5AA36
 East_ResNames_35B 00E5AA7E
 East_ResNameTable_35C 00E5AACC
 East_ResNames_35C 00E5AAF0
@@ -6475,7 +6476,7 @@ East_ResNameTable_3D7 00E5AB18
 East_ResNames_3D7 00E5AB7C
 East_ResNameTable_3D8 00E5AC0C
 East_ResNames_3D8 00E5AC30
-East_ResNameTable_3EC 00E5AC6C
+East_ResNameTable_3EC 00E5AC60
 East_ResNames_3EC 00E5AC7C
 East_ResNames_3EC_Strings 00E5AC96
 InitializeEast_Str_TT_REVEQMENU 00E5AC9E
@@ -6842,7 +6843,7 @@ MidiSetup_EventHandler_Table 00E80526
 MidiPart_LookupFromTable_Table 00E8052E
 MidiPartGridCheck_OctaveUpMap 00E80646
 MidiPartGridCheck_OctaveDownMap 00E80656
-Transpose_ValueDisplay_Table 00E8066A
+Transpose_ValueDisplay_Table 00E80666
 Transpose_ValueDisplay_Table_Strings 00E80686
 Transpose_String_Minus3 00E80692
 Transpose_String_Error 00E80698
@@ -6906,7 +6907,7 @@ ClassProps_AcPleaseWait 00E80CB6
 ClassProps_AcDrawSetting 00E80CBC
 ClassProps_AcDrawbarName 00E80CDA
 ClassProps_IvMPver 00E80CF6
-Murai_ClassTable_161 00E80CFC
+Murai_ClassTable_161 00E80CF6
 Murai_ClassTable_161_Desc31Head 00E80FDE
 NakaData_SoundMenuDrawbar 00E80FE2
 Murai_ClassCount_161 00E812C0
@@ -6916,7 +6917,7 @@ Murai_ResEventCount_1C1 00E81370
 Naka_Event_Table3 00E81372
 InitializeMurai_Data 00E814BE
 InitializeMurai_PtrTable_5 00E814C0
-Murai_FunctionTable_401 00E81558
+Murai_FunctionTable_401 00E81554
 Naka_Event_Table2 00E8155C
 Murai_FunctionNameListEnd 00E815E8
 NakaInst_IvSdpartProc 00E8185A
@@ -7281,7 +7282,7 @@ Murai_ViewableTable_0EA 00E8573C
 Murai_ViewableTable_0EB 00E857F0
 Murai_ViewableTable_0EE 00E85888
 Murai_ViewableTable_0EF 00E858EC
-Murai_ViewableTable_0F0 00E8591C
+Murai_ViewableTable_0F0 00E8590C
 Murai_ResNameTable_302 00E85928
 Murai_ResNameTable_303 00E859C2
 NakaWidget_Sdpart_79_AcLswPartEditBox_Name 00E85B20
@@ -13494,6 +13495,7 @@ SndParam_Vocalist_Key 00EDC710
 SndParam_Vocalist_KeySend 00EDC722
 SndParam_Vocalist_ProgChangeOption 00EDC734
 SndParam_Vocalist_ProgChangeOptionSend 00EDC746
+SndParamRun_EDC7FA_Data 00EDC758
 SndParam_Vocalist_ControlVolumeSend 00EDC76A
 SndParam_Vocalist_VocoderKeySplit 00EDC77C
 SndParam_Vocalist_VocoderKeySplitNote 00EDC78E
@@ -13528,6 +13530,7 @@ SndParam_Part00_ChannelPressure 00EDC938
 SndParam_Part00_AllSoundOff 00EDC94A
 SndParam_Part00_Drawbar1 00EDC94A
 MidiChParam_Entry_103 00EDC95C
+SndParamRun_EDC980_Data 00EDC96E
 SndParam_Part00_PercLevel 00EDC980
 SndParam_Part00_DrawRelease 00EDC992
 SndParam_Part00_DrawAttack 00EDC9A4
@@ -13991,6 +13994,7 @@ SndParam_Part00_LocalControl 00EDE990
 SndParam_Part00_MidiChannel 00EDE9A2
 SndParam_Part00_MidiTransmitOn 00EDE9B4
 SndParam_Part00_MidiReceiveOn 00EDE9C6
+SndParamRun_EDE9FC_Data 00EDE9D8
 SndParam_Part00_SustainLength 00EDE9FC
 SndParam_Part00_SustainPedal 00EDEA0E
 SndParam_Part00_KeyScaling 00EDEA20
@@ -14351,11 +14355,11 @@ SndParam_ValueTablePtrPair 00EE009C
 SndParam_WordValueListPtrs 00EE00A0
 SndParam_Registry 00EE00A4
 Naka_MainDispatch_Table 00EE0214
-SndParam_ReadHandlers 00EE1010
-SndParam_RegisterHandlers 00EE102C
-SndParam_EncodeHandlers 00EE1048
-SndParam_Register2Handlers 00EE1048
-SndParam_WriteHandlers 00EE1060
+SndParam_ReadHandlers 00EE0FD4
+SndParam_RegisterHandlers 00EE0FF0
+SndParam_Register2Handlers 00EE1014
+SndParam_EncodeHandlers 00EE1034
+SndParam_WriteHandlers 00EE104C
 SndParam_BlockRamPtrs 00EE1064
 SndParam_StyleRecordRamPtr 00EE1184
 SndParam_OutOfMemoryMsg 00EE1464
@@ -15253,7 +15257,8 @@ SwbtB1_CodeBC_Listeners 00EE7AF7
 SwbtB1_CodeBD_Listeners 00EE7AFB
 UIState_DefaultConfig_A 00EE7AFF
 SwbtBank1_PostCallbacks 00EE7B03
-Naka_RenderMode_A_Table 00EE7B07
+SwbtBank1_PostCallbacks_Data 00EE7B07
+Naka_RenderMode_A_Table 00EE7BAB
 SwbtB2_Code00_Listeners 00EE7ED4
 SwbtB2_Code01_Listeners 00EE7ED8
 SwbtB2_Code02_Listeners 00EE7F00
@@ -15814,6 +15819,7 @@ Boot_ClearAllInterruptEnables 00EF0527
 Boot_GetButtonComboCode 00EF0527
 SubCPU_Send_Payload 00EF055B
 SubCPU_Payload_DelayLoop_Short 00EF0567
+SubCPU_Payload_DelayLoop_Short_Loop 00EF05E7
 SubCPU_Payload_TransferPart2 00EF05FB
 SubCPU_Payload_DelayLoop_Long 00EF0652
 SubCPU_Payload_Done 00EF065C
@@ -15969,6 +15975,7 @@ MainLoop_AfterSeqBuf_DspSysEx 00EF1195
 MainLoop_AfterAccWrap 00EF11AB
 MainLoop_AfterPedalReset 00EF11B5
 MainLoop_AfterSwbtWr 00EF11C7
+MainLoop_AfterSwbtWr_Loop 00EF11D9
 MainLoop_AfterSeqBuf_NoteEvent 00EF11E1
 MainLoop_AfterDialCheck 00EF11EC
 MainLoop_AfterMidiPoll 00EF1206
@@ -16119,6 +16126,7 @@ TaskSched_WakeBySlotID 00EF1BFB
 TaskSched_WakeBySlotID_Pending 00EF1C3F
 TaskSched_WakeInline_Return 00EF1C82
 TaskSched_WakeInline_Pending 00EF1C87
+TaskSched_WakeInline_Pending_Loop 00EF1C92
 TaskSched_SignalEvent 00EF1CAB
 TaskSched_SignalEvent_Unlink 00EF1CD8
 TaskSched_SignalEvent_NoBlock 00EF1D13
@@ -16126,6 +16134,7 @@ TaskSched_SignalEvent_NoBlock_Unlink 00EF1D40
 TaskSched_WaitForEvent 00EF1D7E
 TaskSched_WaitForEvent_Block 00EF1D9B
 Audio_Lock_Release 00EF1DE6
+Audio_Lock_Release_Loop 00EF1DEE
 AudioLock_Release_NoWaiter_Done 00EF1E16
 AudioLock_Release_WakeWaiter 00EF1E19
 AudioLock_Release_NB_Saturated 00EF1E81
@@ -16137,14 +16146,17 @@ AudioLock_TryAcquire_Fail 00EF1F35
 AudioLock_TryAcquire_Return 00EF1F38
 AudioLock_GetCount 00EF1F3A
 TaskMsg_Send 00EF1F47
+TaskMsg_Send_Loop 00EF1F4A
 TaskMsg_Send_QueueFull 00EF1FB0
 TaskMsg_Send_WakeReceiver 00EF1FB8
+TaskMsg_Send_WakeReceiver_Loop 00EF1FF8
 TaskMsg_Send_NB_Return 00EF2063
 TaskMsg_Send_NB_QueueFull 00EF206B
 TaskMsg_Send_NB_WakeReceiver 00EF2072
 TaskMsg_Receive 00EF20B8
 TaskMsg_Receive_Block 00EF2112
 TaskMsg_TryReceive 00EF2149
+TaskMsg_TryReceive_Loop 00EF2154
 TaskMsg_TryReceive_Empty 00EF219A
 TaskMsg_TryReceive_Return 00EF219C
 TaskTimer_Register 00EF21A0
@@ -16154,6 +16166,7 @@ TaskSched_ChangePriority_Inline 00EF2226
 TaskSched_ChangePriority_Inline_NotReady 00EF2277
 TaskSched_ChangePriority_Inline_Return 00EF227A
 TaskSched_TCBTemplate 00EF2281
+TaskSched_TCBTemplate_Loop 00EF22B0
 TaskSched_DelayTicks 00EF22B1
 TaskSched_DelayTicks_SpinLoop 00EF22B8
 Start_8bit_Timer_3 00EF22BF
@@ -16170,6 +16183,7 @@ SeqBuf_Init 00EF232E
 SeqBuf_SaveReadPos 00EF233C
 SeqBuf_ReadAlternate 00EF2349
 SeqBuf_ReadAlternate2 00EF2357
+SeqBuf_ReadAlternate2_Loop 00EF235E
 SeqBuf_SaveWritePos 00EF2372
 TempoRingBuf_ReadByte 00EF237F
 TempoRingBuf_WriteByte_Ext 00EF238C
@@ -16639,6 +16653,7 @@ LZ_Decompress_Init 00EF4C6C
 LZ_Decompress_ClearRing 00EF4C88
 LZ_Decompress_ReadTracks 00EF4CF7
 LZ_Decompress_ReadSizeField 00EF4D21
+LZ_Decompress_ReadSizeField_Loop 00EF4D2C
 LZ_Decompress_MainLoop 00EF4D5C
 LZ_Decompress_LiteralByte 00EF4D7B
 LZ_Decompress_MatchRef 00EF4DAE
@@ -16769,6 +16784,7 @@ Display_PollAudioAndUpdate 00EF5F23
 Display_PollAudioLoop 00EF5F33
 Display_PollAudioDone 00EF5F45
 Display_DeletePollEvent 00EF5F4A
+Display_DeletePollEvent_Loop 00EF5F4F
 Display_CallSetupRoutine 00EF5F56
 Display_NullHandler 00EF5F5B
 MIDI_SendSysExFromW 00EF5F5C
@@ -17047,6 +17063,7 @@ ToneParam_ModeGuardEntry_Skip2 00EF7C79
 ToneParam_ModeGuardEntry_Join2 00EF7C7D
 ToneParam_ModeGuardEntry_Return 00EF7C85
 MemConfig_Handler_5 00EF7C8C
+MemConfig_Handler_5_Loop2 00EF7CA4
 MemConfig_Handler_5_Code_Loop 00EF7CC7
 MemConfig_Handler_5_Join3 00EF7CCB
 MemConfig_Handler_5_Skip13 00EF7CDD
@@ -17352,6 +17369,7 @@ VoiceCtrl_CheckAndReset_Return 00EF966D
 VoiceCtrl_SendNoteOffSequence 00EF966E
 VoiceCtrl_ParamSetupBytecode 00EF96B7
 VoiceCtrl_ParamSetupBytecode_Skip 00EF96C7
+VoiceCtrl_ParamSetupBytecode_Skip_Loop 00EF96FD
 VoiceCtrl_ParamSetupBytecode_Skip2 00EF974C
 VoiceCtrl_ParamSetupBytecode_Skip3 00EF9768
 VoiceCtrl_ParamSetupBytecode_Skip4 00EF978A
@@ -17853,6 +17871,7 @@ VoiceSlot_FinalRetZ_Skip3 00EFC480
 VoiceSlot_WriteCurrentParam_Skip 00EFC48B
 VoiceSlot_FinalRetZ_Return 00EFC495
 MemConfig_Handler_1_Helper3 00EFC4A2
+MemConfig_Handler_1_Helper3_Loop 00EFC4AE
 VoiceSlot_FinalRetZ_Loop4 00EFC4E3
 VoiceSlot_WriteCurrentParam_Loop 00EFC4F7
 VoiceSlot_FinalRetZ_Join 00EFC509
@@ -18033,6 +18052,7 @@ VoiceState_DataBlock2_Return4 00EFD315
 VoiceState_DataBlock2_Helper8 00EFD316
 VoiceState_DataBlock2_Skip11 00EFD37F
 VoiceState_DataBlock2_Join2 00EFD381
+VoiceState_DataBlock2_Join2_Loop 00EFD3A2
 VoiceState_DataBlock2_Loop6 00EFD3B2
 VoiceState_DataBlock2_Skip12 00EFD3CA
 VoiceState_DataBlock2_Loop7 00EFD3E2
@@ -18147,6 +18167,7 @@ PerfMode_ParamHandler_11_Skip11 00EFDE00
 PerfMode_ParamHandler_11_Skip12 00EFDE52
 PerfMode_ParamHandler_11_Skip13 00EFDE56
 SubCPU_ToneParamRet_Join 00EFDE64
+SubCPU_ToneParamRet_Join_Loop 00EFDE68
 PerfMode_ParamHandler_11_Return2 00EFDEAC
 SqStep_GetRhythmTrackForMeasures 00EFDEAD
 SqStep_GetRhythmTrackForMeasures_Join2 00EFDEB8
@@ -18239,6 +18260,7 @@ SubCPU_ToneParamRet_Helper11 00EFE5B7
 PerfMode_ParamHandler_11_Skip60 00EFE5EF
 PerfMode_ParamHandler_11_Loop5 00EFE5FC
 SwbtB3_CodeA9_Listener3_Skip 00EFE619
+SwbtB3_CodeA9_Listener3_Skip_Loop 00EFE61E
 PerfMode_ParamHandler_11_Skip62 00EFE624
 SubCPU_ToneParamRet_Return3 00EFE63B
 OscScope_HandlerTable 00EFE63C
@@ -18332,6 +18354,7 @@ Str_VarivariOff 00EFED1E
 DisplayStr_ClearAndCopyStyleSectionName 00EFED2A
 DisplayStr_BytecodeBlock_C 00EFED48
 DisplayStr_ShowTempoLine 00EFED6C
+DisplayStr_ShowTempoLine_Loop 00EFED75
 DisplayStr_BytecodeBlock_C_Skip 00EFEDFA
 Str_TempoEq 00EFEE11
 DisplayStr_BytecodeBlock_C_Tbl 00EFEE2A
@@ -20778,6 +20801,7 @@ SeMenu_DrawPartRadioButtons_Join 00F0F719
 SeMenu_DrawPartRadioButtons_Skip2 00F0F74A
 SeMenu_DrawPartRadioButtons_Join2 00F0F76A
 SeMenu_DrawTwoPartRadioButtons 00F0F76E
+SeMenu_DrawTwoPartRadioButtons_Loop 00F0F776
 SeMenu_DrawTwoPartRadioButtons_Skip 00F0F7A7
 SeMenu_DrawTwoPartRadioButtons_Join4 00F0F7C7
 SeMenu_DrawToneSelectTitle 00F0F7CB
@@ -20789,6 +20813,7 @@ SeMenu_PresetBrowser_Select 00F0F858
 SePitLfo1_DrawStaticScreen 00F0F86D
 SeMenu_FilterEdit_DataBlock1_Helper 00F0F875
 SeLfo1_DrawPartLabels 00F0F8A8
+SeLfo1_DrawPartLabels_Loop 00F0F8B0
 SeLfo1_DrawPartLabels_Skip 00F0F8CB
 SeMenu_PresetBrowser_Data_Code_Join 00F0F901
 SeMenu_DrawLfoPartSwitches 00F0F905
@@ -22907,6 +22932,7 @@ Seq_FindRhythmTrack_Join2 00F202D1
 Seq_FindRhythmTrack_Join 00F202E5
 Seq_FindRhythmTrack_Return2 00F202F1
 SeqPlay_RestoreVoiceState_Return 00F202F2
+SeqPlay_RestoreVoiceState_Return_Loop 00F202F6
 SeqTimer_PostTempoUpdate 00F2030A
 PlayMode_NullRet 00F2032E
 PlayMode_SetupAndDispatch 00F2032F
@@ -23211,6 +23237,7 @@ CDlikeSwTtl_PdConfirmBit0 00F21919
 CDlikeSwTtl_PdConfirmDefault 00F21929
 CDlikeSwTtl_PdConfirmJump 00F21934
 CDlikeSwTtl_SongNavDispatch 00F21938
+CDlikeSwTtl_SongNavDispatch_Loop 00F21952
 CDlikeSwTtl_SongNavBit0 00F219AC
 CDlikeSwTtl_SongNavFinishNames 00F21A1B
 CDlikeSwTtl_SongNavNoRedraw 00F21A23
@@ -23325,11 +23352,14 @@ DemoStyle_EncoderHandler 00F22267
 DemoStyle_DirectionHandler 00F2227B
 DemoStyle_PostEventCommon 00F2228D
 DemoStyle_EnterHandler 00F22293
+DemoStyle_EnterHandler_Loop 00F22294
 DemoStyleTtlFunc_Exit 00F2229F
 DemoSoundTtlFunc 00F222A2
+DemoSoundTtlFunc_Loop 00F222B5
 DemoSound_DispatchTable 00F222DB
 DemoSound_DispatchTable_Code 00F222DF
 DemoSound_InputHandler 00F222E9
+DemoSound_InputHandler_Loop 00F222F7
 DemoSound_EncoderHandler 00F2232D
 DemoSound_DirectionHandler 00F22341
 DemoSound_PostEventCommon 00F22353
@@ -23337,8 +23367,10 @@ DemoSound_EnterHandler 00F22359
 DemoSoundTtlFunc_Exit 00F22365
 DemoRhyTtlFunc 00F22368
 DemoRhythm_DispatchTable 00F223A1
+DemoRhythm_DispatchTable_Loop 00F223A4
 DemoRhythm_DispatchTable_Code 00F223A5
 DemoRhythm_InputHandler 00F223AF
+DemoRhythm_InputHandler_Loop 00F223C5
 DemoRhythm_EncoderHandler 00F223F3
 DemoRhythm_DirectionHandler 00F22407
 DemoRhythm_PostEventCommon 00F22419
@@ -23348,6 +23380,7 @@ MiddleFuncCall 00F2242E
 MiddleFuncCall_DispatchData 00F22465
 MiddleFuncCall_DispatchData_Code 00F22467
 MiddleFuncCall_OnSongNameSet 00F22478
+MiddleFuncCall_OnSongNameSet_Loop 00F22483
 MiddleFuncCall_OnTrAsTrackInc 00F22493
 MiddleFuncCall_OnTrAsTrackDec 00F224A1
 MiddleFuncCall_OnTrAsPageInc 00F224AF
@@ -23408,6 +23441,7 @@ SqTrSel_CaseD 00F229C7
 SqTrSel_CaseE 00F229D4
 SqTrSel_CaseF 00F229F1
 PlayMode_SendStopEvent 00F229FE
+PlayMode_SendStopEvent_Loop 00F22A08
 SqTrSel_CaseG 00F22A0E
 SqTrSel_CaseG_JumpTable 00F22A36
 SqTrSel_CaseG_OnTitleDpdoc 00F22A39
@@ -23461,10 +23495,13 @@ SoundBank_InitDefaults_Type2 00F22F26
 SoundBank_InitDefaults_Type4 00F22F34
 SoundBank_InitEntryDefaults 00F22F3C
 SoundBank_NextEntry1 00F22F67
+SoundBank_NextEntry1_Loop 00F22F73
 SoundBank_InitTrackParams 00F22F76
 SoundBank_InitTrackParams_Inner 00F22F7D
+SoundBank_InitTrackParams_Inner_Loop 00F22F7E
 SoundBank_InitTrack_Loop 00F22F83
 SoundBank_InitTrack_ByteFields 00F22F9B
+SoundBank_InitTrack_ByteFields_Loop 00F22FAC
 SoundBank_InitTrack_WordFields 00F22FC2
 SoundBank_InitTrack_ClearTail 00F22FE6
 SoundBank_DefaultTrackData 00F22FFB
@@ -23495,8 +23532,8 @@ SMF_ResetMidiChannelMap 00F23178
 SMF_ResetMidiChanMap_Loop 00F2317D
 SoundBank_LoadToWorkRAM 00F231B0
 SMF_InitSequencerState 00F231FB
+SMF_ReadMThd_Start 00F23237
 SMF_ReadMThd_ByteLoop 00F2323E
-SMF_ReadMThd_Start 00F2323E
 SMF_ReadMThd_Mismatch 00F2326A
 SMF_ReadMThd_Matched 00F23273
 FloppyIO_WaitReadComplete 00F232C5
@@ -23511,6 +23548,7 @@ SMF_ReadLoopWithRetry 00F23393
 SMF_MainLoop_FloppyErr1 00F233A9
 SMF_MainLoop_DispatchEvents 00F233AF
 SMF_TempoScaling_Loop 00F233B5
+SMF_TempoScaling_Loop_Loop 00F233CE
 SMF_MainLoop_FloppyErr2 00F233E0
 SMF_CheckMetaEvent 00F233E6
 SMF_MetaEvent_FloppyErr 00F23402
@@ -23663,7 +23701,7 @@ SMF_VoiceData_ReadTrackFailed 00F23DE9
 SMF_VoiceData_ParseFailed 00F23DFB
 SMF_VoiceData_CheckMetaFlag 00F23E05
 SMF_VoiceData_MetaParseFailed 00F23E4A
-SMF_VoiceData_CheckEndOfTrack 00F23EAE
+SMF_VoiceData_CheckEndOfTrack 00F23E54
 SMF_VoiceData_HandleEndOfTrack 00F23EC5
 SMF_VoiceData_DrainDone 00F23EC9
 SMF_VoiceData_DrainRemaining 00F23EC9
@@ -23883,6 +23921,7 @@ VoiceParam_Cmd_NoteOffByCh 00F254D2
 VoiceParam_NullRet 00F254D6
 VoiceParam_ReadUpdate_Table 00F254D7
 MidiEvent_HandlePitchBendB 00F25517
+MidiEvent_HandlePitchBendB_Loop 00F25559
 VoiceParam_NullRet3 00F25597
 MidiEvent_HandleProgramChangeB 00F25598
 MidiPgmChg_CheckModeB 00F255BC
@@ -24202,7 +24241,7 @@ SMF_NoteOn_SlotFound 00F278DE
 SMF_NoteOn_SlotFound_Underflow 00F278F0
 SMF_NoteOn_WriteEventBytes 00F278F0
 SMF_NoteOn_WriteEvent_Underflow 00F27903
-SMF_NoteOn_StoreVoiceData 00F27933
+SMF_NoteOn_StoreVoiceData 00F27909
 SMF_ProgramChange_Handler 00F27966
 SMF_ProgramChange_CalcTime 00F2798A
 SMF_ProgramChange_Underflow 00F279AA
@@ -24226,6 +24265,7 @@ SMF_CC_RPN_Handler 00F27BC0
 SMF_CC_RPN_CalcTime 00F27BCF
 SMF_CC_RPN_Underflow 00F27BF1
 SMF_CC_RPN_WriteCC101 00F27BF7
+SMF_CC_RPN_WriteCC101_Loop 00F27C14
 SMF_CC_RPN_WriteCC101_Underflow 00F27C1E
 SMF_CC_RPN_WriteCC100 00F27C24
 SMF_CC_RPN_WriteCC100_Underflow 00F27C45
@@ -24321,6 +24361,7 @@ SMF_OutputCmd_ErrorCheck2 00F28272
 SMF_OutputCmd_Send51 00F28278
 SMF_OutputCmd_ErrorCheck3 00F28297
 SMF_OutputCmd_Send03 00F2829D
+SMF_OutputCmd_Send03_Loop 00F282B8
 SMF_OutputCmd_ErrorCheck4 00F282BC
 SMF_OutputCmd_SendTempoH 00F282C2
 SMF_OutputCmd_ErrorCheck5 00F282E3
@@ -27013,9 +27054,9 @@ SeqNoteCh_CheckChannel11 00F3AD29
 SeqNoteCh_CompareVoicePos 00F3AD31
 SeqNoteCh_DeactivateCheck82 00F3AD42
 SeqNote_DeactivateChannelBit 00F3AD57
-SeqNoteCh_LoadVoiceAndCompare 00F3AD60
+SeqNoteCh_LoadVoiceAndCompare 00F3AD5F
 SeqNote_HandleMasterChannel 00F3AD6C
-SeqNoteCh_CheckMasterFallback 00F3AD9D
+SeqNoteCh_CheckMasterFallback 00F3AD9F
 SeqNoteCh_DispatchEventType 00F3ADAB
 SeqNoteCh_HandleAccompVoice 00F3ADAB
 SeqNote_HandleAccompChannel 00F3ADAB
@@ -28326,7 +28367,7 @@ SeqScan_StoreTrackEndData 00F42047
 SeqMIDI_ChannelPressureReturn 00F42056
 SeqScan_AdvancePartIndex 00F4207E
 SeqScan_ProcessAllParts 00F42096
-SeqMIDI_GetEventSizeTable 00F420A9
+SeqMIDI_GetEventSizeTable 00F420A8
 SeqMIDI_GetEventSizeLookup 00F420B7
 SeqMIDI_ChannelInRange 00F420F6
 SeqMIDI_ChannelReturn 00F420F6
@@ -32938,7 +32979,7 @@ AccTone_CheckBit3Flag 00F5CE82
 AccTone_CheckDirectAddr 00F5D03D
 AccTone_DirectAddr_Mode1 00F5D049
 AccTone_DirectAddr_Mode2 00F5D04D
-AccTone_ValidateAndWrite 00F5D051
+AccTone_ValidateAndWrite 00F5D059
 AccTone_LookupFailed 00F5D083
 AccTone_LookupDone 00F5D085
 AccTone_InlineBytecodeData 00F5D088
@@ -32968,28 +33009,28 @@ AccVoice_BarCounterBytecodeData_Skip3 00F5D8A7
 AccVoice_BarCounterBytecodeData_Skip4 00F5D8ED
 AccVoice_BarCounterBytecodeData_Skip5 00F5D933
 AccVoice_IncrementBarWithSave_Helper 00F5D961
-AccVoice_BarCounterBytecodeData_Skip6 00F5D9A4
+AccVoice_BarCounterBytecodeData_Skip6 00F5D9AD
 AccVoice_BarCounterBytecodeData_Skip7 00F5D9C8
-AccVoice_BarCounterBytecodeData_Skip8 00F5D9F4
+AccVoice_BarCounterBytecodeData_Skip8 00F5D9FE
 AccVoice_BarCounterBytecodeData_Skip9 00F5DA05
 AccVoice_BarCounterBytecodeData_Skip10 00F5DA39
 AccVoice_BarCounterBytecodeData_Skip11 00F5DA83
 AccVoice_BarCounterBytecodeData_Join 00F5DA86
 AccVoice_BarCounterBytecodeData_Join2 00F5DA8E
 AccVoice_IncrementBarWithSave_Helper2 00F5DA9D
-AccVoice_BarCounterBytecodeData_Skip12 00F5DAE0
+AccVoice_BarCounterBytecodeData_Skip12 00F5DAE9
 AccVoice_BarCounterBytecodeData_Skip13 00F5DB04
-AccVoice_BarCounterBytecodeData_Skip14 00F5DB30
+AccVoice_BarCounterBytecodeData_Skip14 00F5DB3A
 AccVoice_BarCounterBytecodeData_Skip15 00F5DB41
 AccVoice_BarCounterBytecodeData_Skip16 00F5DB75
 AccVoice_BarCounterBytecodeData_Join3 00F5DBC5
 AccVoice_IncrementBarWithSave_Helper3 00F5DBD2
-AccVoice_BarCounterBytecodeData_Skip17 00F5DC1C
+AccVoice_BarCounterBytecodeData_Skip17 00F5DC25
 AccVoice_BarCounterBytecodeData_Skip18 00F5DC40
 AccVoice_BarCounterBytecodeData_Skip19 00F5DC65
 AccVoice_BarCounterBytecodeData_Skip20 00F5DC8F
 AccVoice_BarCounterBytecodeData_Skip21 00F5DCE5
-AccVoice_BarCounterBytecodeData_Skip22 00F5DD11
+AccVoice_BarCounterBytecodeData_Skip22 00F5DD1B
 AccVoice_BarCounterBytecodeData_Skip23 00F5DD22
 AccVoice_BarCounterBytecodeData_Skip24 00F5DD4C
 AccVoice_BarCounterBytecodeData_Skip25 00F5DDA7
@@ -33205,6 +33246,7 @@ AccPatch_UpdateChain_Bass 00F5F062
 AccPatch_UpdateChain_Acc1 00F5F0FE
 AccPatch_UpdateChain_Acc2 00F5F197
 AccPatch_UpdateChain_Acc3 00F5F230
+AccPatch_UpdateChain_Acc3_Loop 00F5F28D
 AccPatch_SyncAllVoiceParams 00F5F2CF
 AccPatch_SyncVoice_Rhythm 00F5F2E2
 AccPatch_SyncRhythm_HasBank 00F5F306
@@ -33294,6 +33336,7 @@ AccPatch_ScanSeq_PaddingByte 00F5F9FE
 AccPatch_ScanToSequenceStart 00F5F9FF
 AccPatch_ScanSeq_ReadLoop 00F5FA02
 AccPatch_ScanSeq_StorePosition 00F5FA15
+AccPatch_ScanSeq_StorePosition_Loop 00F5FA21
 AccPatch_ScanSeq_PaddingWord 00F5FA26
 AccPatch_InitAndLoadSequence 00F5FA28
 AccPatch_InitSeq_ClearLoop 00F5FA30
@@ -34566,9 +34609,9 @@ Tempo_EditBPMClamp 00F65E87
 Tempo_EditBPMApply 00F65E90
 Tempo_EditParam92 00F65E9C
 Tempo_EditBPMClamp_Code_Skip 00F65EC6
-Tempo_EditParam92_Skip2 00F65ED0
+Tempo_EditParam92_Skip2 00F65ECE
 Tempo_EditBPMClamp_Code_Skip3 00F65EE6
-Tempo_EditBPMClamp_Code_Join 00F65EEE
+Tempo_EditBPMClamp_Code_Join 00F65EEC
 Tempo_EditBPMClamp_Code_Skip4 00F65F00
 Tempo_EditParam92_Join2 00F65F0A
 Tempo_EditBPMClamp_Code_Epilogue 00F65F18
@@ -34626,7 +34669,7 @@ SeqRec_InitChannels 00F6639F
 SeqRec_StartRecord 00F663BF
 SeqRec_StartRecordImpl 00F663C4
 SeqRec_StopRecord 00F66418
-SeqRec_StopRecordImpl 00F66424
+SeqRec_StopRecordImpl 00F6642C
 SeqRec_UpdateState 00F66464
 SeqRec_UpdateFlags 00F664A3
 SeqRec_CheckOverflow 00F664A7
@@ -34689,7 +34732,7 @@ RhythmParam_Setup 00F6685A
 RhythmParam_Entry 00F6685D
 Voice_ResolveTableAddr 00F6685E
 RhythmParam_TypeCheck 00F6687C
-RhythmParam_Dispatch 00F66897
+RhythmParam_Dispatch 00F66899
 RhythmParam_CheckExit 00F668C1
 RhythmParam_DispatchTableData 00F668C5
 RhythmParam_Process 00F668C9
@@ -35029,6 +35072,7 @@ CmpNcpTtl_Dispatch_Code_Skip10 00F68550
 CmpNcpTtl_TableDispatch_Case120 00F6856F
 CmpNcpTtl_Dispatch_Code_Skip13 00F685CC
 CmpNcpTtl_TableDispatch_OnToItemNext 00F685EB
+CmpNcpTtl_TableDispatch_OnToItemNext_Skip 00F685F8
 CmpNcpTtl_Dispatch_Code_Skip14 00F68648
 CmpNcpTtl_TableDispatch_OnToValueUp 00F68667
 CmpNcpTtl_Dispatch_Code_Skip15 00F686CA
@@ -35384,6 +35428,7 @@ AccPatch_VoiceAssignDataBlock_Skip 00F6AF9C
 AccPatch_VoiceAssignDataBlock_Skip2 00F6AFBA
 AccPatch_VoiceAssignDataBlock_Skip3 00F6AFD9
 AccPatch_VoiceAssignDataBlock_Return 00F6AFE3
+AccPatch_VoiceAssignDataBlock_Return_Loop 00F6AFE4
 AccPatch_VoiceAssignDataBlock_Loop 00F6AFFF
 AccPatch_VoiceAssignDataBlock_Skip29 00F6B00E
 AccPatch_VoiceAssignDataBlock_Loop2 00F6B025
@@ -35396,6 +35441,7 @@ AccPatch_VoiceAssignDataBlock_Loop8 00F6B06F
 AccPatch_VoiceAssignDataBlock_Skip4 00F6B07C
 AccPatch_VoiceAssignDataBlock_Skip5 00F6B08E
 AccPatch_VoiceAssignDataBlock_Join 00F6B09A
+AccPatch_VoiceAssignDataBlock_Join_Loop 00F6B0AB
 AccPatch_VoiceAssignDataBlock_Return3 00F6B0BD
 AccPatch_VoiceAssignDataBlock_Loop7 00F6B0C0
 AccPatch_VoiceAssignDataBlock_Loop9 00F6B0DD
@@ -35428,6 +35474,7 @@ AccPatch_VoiceAssignDataBlock_Return6 00F6B36B
 AccPatch_VoiceAssignDataBlock_Helper9 00F6B36C
 AccPatch_VoiceAssignDataBlock_Helper10 00F6B39D
 AccPatch_VoiceAssignDataBlock_Helper11 00F6B439
+AccPatch_VoiceAssignDataBlock_Helper11_Loop 00F6B444
 AccPatch_VoiceAssignDataBlock_Return7 00F6B461
 AccPatch_VoiceAssignDataBlock_Helper12 00F6B462
 AccPatch_VoiceAssignDataBlock_Helper13 00F6B48E
@@ -35445,6 +35492,7 @@ AccPatch_VoiceAssignDataBlock_Helper19 00F6B598
 AccPatch_VoiceAssignDataBlock_Skip20 00F6B5B6
 AccPatch_VoiceAssignDataBlock_Return10 00F6B5B9
 AccPatch_VoiceAssignDataBlock_Helper20 00F6B5BA
+AccPatch_VoiceAssignDataBlock_Helper20_Loop 00F6B5D3
 AccPatch_VoiceAssignDataBlock_Join6 00F6B5F2
 AccPatch_VoiceAssignDataBlock_Skip21 00F6B60B
 AccPatch_VoiceAssignDataBlock_Skip22 00F6B60D
@@ -37044,6 +37092,7 @@ PmemOutLGridCheck_OnRamData_Skip5 00F78834
 PmemOutLGridCheck_OnRamData_Join3 00F78839
 PmemOutLGridCheck_OnRamData_Join4 00F788B0
 PmemOutLGridCheck_OnRamData_Skip6 00F788B0
+PmemOutLGridCheck_OnRamData_Skip6_Skip 00F788C6
 PmemOutLGridCheck_OnRamData_Skip7 00F78992
 PmemOutLGridCheck_OnRamData_Join5 00F789A8
 PmemOutLGridCheck_OnRamData_Skip8 00F789B8
@@ -37857,6 +37906,7 @@ AcWelcomScreen_Select_OpCaptureLcd 00F7F4C6
 AcWelcomScreen_Select_NextStep 00F7F4EA
 AcWelcomScreen_Select_StartTimer 00F7F51C
 AcWelcomScreen_SubCpuError 00F7F522
+AcWelcomScreen_SubCpuError_Skip 00F7F53A
 AcWelcomScreen_SubCpuLoaded 00F7F53C
 AcWelcomScreen_DispatchEvent 00F7F53E
 AcWelcomScreen_Paint 00F7F540
@@ -39057,6 +39107,7 @@ WriteFileWithVerify 00F884D7
 WriteVerify_InitCounters 00F884F7
 WriteVerify_WriteLoop 00F884FE
 WriteVerify_WriteLoopNext 00F88524
+WriteVerify_WriteLoopNext_Loop 00F8852C
 WriteVerify_SetupReadback 00F8853B
 WriteVerify_ReadbackLoop 00F88554
 WriteVerify_ReadbackNext 00F8858F
@@ -41256,6 +41307,7 @@ FDC_CMD_SEND_Skip 00F96E2F
 FDC_CMD_SEND_Skip2 00F96E39
 FDC_CMD_SEND_Skip3 00F96E43
 FDC_CMD_SEND_Skip4 00F96E57
+FDC_CMD_SEND_Skip4_Loop 00F96E63
 FDC_CMD_SEND_Skip5 00F96E6B
 FDC_HardwareSetup_Skip6 00F96E74
 FDC_HardwareSetup_Skip7 00F96E91
@@ -41750,7 +41802,8 @@ GetDialEnableState 00F9A03F
 SetDialFocus 00F9A045
 GetDialFocus 00F9A062
 GetDialFocus_Active 00F9A071
-SetDialUp 00F9A088
+SetDialUp 00F9A077
+SetDialUp_Entry 00F9A088
 SetAutoIncDefault 00F9A099
 SetDialDown 00F9A099
 SetAutoInc 00F9A0BB
@@ -45142,6 +45195,7 @@ BitMapOut_RestoreExtra_AuxLoop 00FB4B2A
 BitMapOut_RestoreExtra_CheckConfigBit 00FB4B39
 BitMapOut_RestoreExtra_ConfigLoop 00FB4B52
 BitMapOut_RestoreExtra_CheckDataBit 00FB4B61
+BitMapOut_RestoreExtra_CheckDataBit_Loop 00FB4B7E
 BitMapOut_RestoreExtra_DataTableLoop 00FB4B95
 BitMapOut_RestoreExtra_CheckMiscBit 00FB4BA4
 BitMapOut_RestoreExtra_CheckFlagBits 00FB4BDF
@@ -45251,6 +45305,7 @@ BitMapOut_ApplyPatch_Store 00FB5ACC
 BitMapOut_ApplyPatch_Done 00FB5ADF
 BitMapOut_ApplyPatch_Return 00FB5AE1
 BitMapOut_ByteData_PatchTable 00FB5B26
+BitMapOut_ByteData_PatchTable_Loop 00FB5E72
 EffectMode_CopyVoiceParams 00FB6134
 EffectMode_CopyVoiceParams_Done 00FB61A2
 EffectMode_ByteData_Block1 00FB61A4
@@ -45392,8 +45447,8 @@ Test_Video_RAM_IC207 00FB6DD1
 VramTest_Pattern2 00FB6DF1
 VramTest_Pattern3 00FB6E06
 VramTest_Done 00FB6E1B
-SelfTest_FirmwareVersionCheck 00FB6E24
-SelfTest_InterCPU_Send 00FB6E46
+SelfTest_FirmwareVersionCheck 00FB6E22
+SelfTest_InterCPU_Send 00FB6E43
 SelfTest_WaitBitLoop_Copy 00FB6E59
 SelfTest_WaitBitLoop_Check 00FB6E6D
 SelfTest_WaitDone_CountBits 00FB6E73
@@ -47615,6 +47670,7 @@ UIState_RenderBitmapData_Skip2 00FC8CE2
 ToshiCmd_DefaultHandler_Ret 00FC8D09
 SndParam_FetchSequencerParams 00FC8D0A
 SndParam_WriteLookupAndStore 00FC8D80
+SndParam_WriteLookupAndStore_Loop 00FC8D97
 SwbtWr_FlushAndAppendParams 00FC8D9F
 SwbtWr_FlushDone 00FC8DC0
 SwbtWr_CheckBufferOverflow 00FC8DC4
@@ -47637,9 +47693,11 @@ SwbtWr_WriteParamBlock_Skip3 00FC8FED
 SwbtWr_WriteParamBlock_Join 00FC8FF1
 SwbtWr_WriteParamBlock_Epilogue3 00FC9011
 ExtData_Voice_FullHandler_Helper2 00FC9014
+ExtData_Voice_FullHandler_Helper2_Loop 00FC9044
 SwbtWr_WriteParamBlock_Epilogue4 00FC905C
 ToneGen_ApplyVoiceParams 00FC905F
 ToneGen_DispatchStartVoice 00FC90BA
+ToneGen_DispatchStartVoice_Loop 00FC90BF
 ToneGen_Dispatch_Return 00FC9128
 SwbtWr_NullRet 00FC912E
 Audio_FlushPendingBankSelects 00FC912F
@@ -48556,8 +48614,8 @@ MIDI_QUEUE_EVENT_PAIR 00FCEE14
 QueuePair_FifoFullReturn 00FCEE4B
 QueuePair_LinearBufWrite 00FCEE52
 MIDI_CHANNEL_MESSAGE_DISPATCHER 00FCEE72
+MIDI_CHANNEL_HANDLERS 00FCEE9F
 MIDI_CHANNEL_HANDLER_JUMP_TABLE 00FCEE9F
-MIDI_CHANNEL_HANDLERS 00FCEEA0
 ChanDisp_NoStatusReturn 00FCEEBF
 MIDI_QUEUE_EVENT_TO_SEQUENCER 00FCEEC0
 QueueToSeq_OverflowFlag 00FCEEDD
@@ -51354,6 +51412,7 @@ Synth_InitChannelState_Next 00FE5BC5
 Synth_InitChannelState_Check 00FE5BC8
 InitChannelState_Che_InitVal 00FE5BDD
 InitChannelState_Che_LoopBody 00FE5BE1
+InitChannelState_Che_LoopBody_Loop 00FE5BF8
 InitChannelState_Che_NextIter 00FE5C53
 InitChannelState_Che_LoopCheck 00FE5C55
 Voice_SetTransposeAndAlloc 00FE5C5F
@@ -51479,6 +51538,7 @@ ProcessLayeredNoteOn_WriteReg5 00FE7206
 ProcessLayeredNoteOn_NextIter 00FE7243
 ProcessLayeredNoteOn_InitVal2 00FE724C
 ProcessLayeredNoteOn_LoadIter2 00FE7255
+ProcessLayeredNoteOn_LoadIter2_Loop 00FE7257
 NoteMap_ClaimAndInitVoiceSlot_A 00FE72D6
 NoteMap_LoopAdvance_Next 00FE7343
 LoopAdvance_Next_CheckMem 00FE734F
@@ -51532,6 +51592,7 @@ ProcessEventDispatch_LoadParam4 00FE7CD2
 SeqPart_EmitNoteOn_Full_ResetPartControllers 00FE7D05
 ProcessEventDispatch_LoadIter 00FE7D3A
 SeqPart_EmitNoteOn_Full_SetPartController 00FE7DB9
+SeqPart_EmitNoteOn_Full_SetPartController_Loop 00FE7DCE
 ProcessEventDispatch_InitVal2 00FE7E2C
 ProcessEventDispatch_LoadReg 00FE7E3C
 ProcessEventDispatch_LoadParam5 00FE7E65
@@ -51629,6 +51690,7 @@ SoundFX_Handler_7 00FE88A4
 SoundFX_Handler_7_ClearWord 00FE896C
 SoundFX_Handler_7_LoadReg 00FE8970
 SoundFX_Handler_8 00FE8974
+SoundFX_Handler_8_Loop 00FE8991
 SoundFX_Handler_8_ClearWord 00FE8A68
 SoundFX_Handler_8_LoadReg 00FE8A6C
 SoundFX_Handler_9 00FE8A70
@@ -52900,6 +52962,7 @@ SoundRam_ConvertKn1500Record_Skip 00FEF211
 HdaeRom_DataHandler_Helper 00FEF350
 HdaeRom_DataHandler_Helper_Skip 00FEF366
 HdaeRom_DataHandler_Helper_Skip2 00FEF36C
+HdaeRom_DataHandler_Helper_Skip2_Loop 00FEF38A
 SendPartDataBlock_Return5_Loop2 00FEF3CD
 SendPartDataBlock_Return5_Loop3 00FEF3DA
 SoundRam_FillDefaultRecord 00FEF450
@@ -53430,6 +53493,7 @@ Sprintf_ESci_PadRightSpace 00FF1841
 Sprintf_ESci_PadRightLoop 00FF1850
 Sprintf_ESci_Return 00FF185A
 Sprintf_FormatGGeneral 00FF185E
+Sprintf_FormatGGeneral_Loop 00FF186E
 Sprintf_GGen_ClearArrays 00FF1883
 Sprintf_GGen_CheckLongDouble 00FF18BC
 Sprintf_GGen_LoadDigits 00FF18C6

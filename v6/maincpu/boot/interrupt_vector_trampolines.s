@@ -112,7 +112,7 @@ SndParam_RO_Dispatch:
 	jr	nc, SndParam_RO_Epilogue
 	extz	wa
 	sla	wa, 2
-	lda	xbc, (0xee0fd4:24)
+	lda	xbc, (SndParam_ReadHandlers:24)
 	lda	xbc, (xbc+wa)
 	ld	xwa, (xsp + 6)
 	ld	xhl, (xbc)

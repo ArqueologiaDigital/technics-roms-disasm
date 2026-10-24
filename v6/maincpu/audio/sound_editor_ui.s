@@ -9056,6 +9056,7 @@ SeMenu_DrawPartRadioButtons_Join2:
 SeMenu_DrawTwoPartRadioButtons:
 	ld (COLORBLIT_MODE:24), 0x00
 	ld C, 0x02:opc
+SeMenu_DrawTwoPartRadioButtons_Loop:
 	ld w, (0x065e:16)
 	ld A,C
 	sla A, 0x01
@@ -9165,6 +9166,7 @@ SeMenu_FilterEdit_DataBlock1_Helper:
 SeLfo1_DrawPartLabels:
 	ld	(COLORBLIT_MODE:24), 0
 	ld	c, 4:opc
+SeLfo1_DrawPartLabels_Loop:
 	ld	w, (1630:16)
 	ld	a, c
 	sla	a, 1
@@ -17306,7 +17308,7 @@ EasyCmp_DialGrid:
 	extz xde
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_UP
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, (xsp + 8)
 	ld bc, (xwa + 26)
 	ld xwa, (xsp + 4)
@@ -17317,7 +17319,7 @@ EasyCmp_DialGrid:
 	extz xde
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_DOWN
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 	jrl EasyCmp_SetDialEnable
 AcEasyCmpGridBoxProc_OnIndexswUp:	; cases 29360151, 29360153
@@ -17368,11 +17370,11 @@ EasyCmp_SendEvt091:
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, (xsp + 12)
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 12)
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 	jrl EasyCmp_SetDialEnable
 AcEasyCmpGridBoxProc_OnIndexswDown:	; cases 29360152, 29360154
@@ -17423,11 +17425,11 @@ EasyCmp_IncSendEvt091:
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, (xsp + 12)
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 12)
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 
 EasyCmp_SetDialEnable:
@@ -19167,7 +19169,7 @@ AcSndArgGrid_Init:
 	extz	xde
 	ld	xwa, (xsp+22)
 	ld	xbc, EVT_INDEXSW_UP
-	call	0xf9a077
+	call	SetDialUp
 	ld	xwa, (xsp+8)
 	ld	bc, (xwa+26)
 	ld	xwa, (xsp+4)
@@ -19178,7 +19180,7 @@ AcSndArgGrid_Init:
 	extz	xde
 	ld	xwa, (xsp+22)
 	ld	xbc, EVT_INDEXSW_DOWN
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld	wa, 1:i3
 	jrl	AcSndArgGrid_ScrollCommit
 AcSndArgGridBoxProc_OnIndexswUp:	; cases 29360151, 29360153
@@ -19242,11 +19244,11 @@ AcSndArgGrid_ScrollUp_NoCanScroll:
 	ld	xwa, (xsp+22)
 	ld	xbc, EVT_INDEXSW_UP
 	ld	xde, (xsp+18)
-	call	0xf9a077
+	call	SetDialUp
 	ld	xwa, (xsp+22)
 	ld	xbc, EVT_INDEXSW_DOWN
 	ld	xde, (xsp+18)
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld	wa, 1:i3
 	jrl	AcSndArgGrid_ScrollCommit
 AcSndArgGridBoxProc_OnIndexswDown:	; cases 29360152, 29360154
@@ -19310,11 +19312,11 @@ AcSndArgGrid_ScrollDown_NoCanScroll:
 	ld xwa, (xsp + 22)
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, (xsp + 18)
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, (xsp + 22)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 18)
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 
 AcSndArgGrid_ScrollCommit:

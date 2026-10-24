@@ -399,8 +399,16 @@ def assemble_batch(texts, tree, prelude, chunk=4000):
                     bad.add(k)
             shutil.rmtree(d)
             if not bad:
-                sys.stderr.write(r.stderr[-3000:])
-                break
+                # an error with no line ("<unknown>:0: error: expected relocatable
+                # expression", raised while writing the object): split and retry
+                if len(live) == 1:
+                    break
+                half = len(live) // 2
+                for part in (live[:half], live[half:]):
+                    sub = assemble_batch([texts[i] for i in part], tree, prelude, chunk)
+                    for i, b in zip(part, sub):
+                        res[i] = b
+                return res
             live = [i for k, i in enumerate(live) if k not in bad]
             continue
         subprocess.run([OBJCOPY, "-O", "binary", "-j", ".text", os.path.join(d, "t.o"),
@@ -476,11 +484,38 @@ class Port:
         return cnt
 
     # ---- skeleton: where every line goes in the target
+    def label_votes(self):
+        """target offsets every mapped use of a label requires (absolute operands found
+        in the bytes, relative branch targets): where the target ROM says the label is"""
+        self.lvotes = collections.defaultdict(collections.Counter)
+        for i, (k, d) in enumerate(self.cls):
+            if k not in ("same", "diff") or self.parsed[i][1].startswith((".incbin", ".org")):
+                continue
+            t = self.order[i][0] - BASE + d
+            mn, ops, reqs = self.line_requirements(i, t)
+            for tk, req, v, w in reqs:
+                if tk[2] == "sym" and req is not None and tk[3] in self.labels_src:
+                    self.lvotes[tk[3]][req - BASE] += 1
+
+    def voted(self, labs, lo, hi):
+        """the target offset in [lo, hi] that the uses of `labs` agree on, or None"""
+        c = collections.Counter()
+        for lab in labs:
+            c.update(self.lvotes.get(lab, {}))
+        if not c:
+            return None
+        v, n = c.most_common(1)[0]
+        if n * 5 >= sum(c.values()) * 3 and lo <= v <= hi:
+            return v
+        return None
+
     def skeleton(self):
         order, size, cls = self.order, self.size, self.cls
         ev = []
         self.place = {}                 # label -> target offset
+        self.moved = {}                 # line index -> labels emitted apart from the line
         self.guessed = set()
+        self.label_votes()
         tc = 0
         pend = []
         for i, e in enumerate(order):
@@ -499,10 +534,19 @@ class Port:
             k, d = cls[i]
             if k in ("same", "diff") and e[0] - BASE + d >= tc:
                 t = e[0] - BASE + d
+                labs = self.parsed[i][0]
+                if labs and tc < t:
+                    # target bytes were inserted just before this line: its labels go
+                    # where their uses say, which may be the start of the insertion
+                    v = self.voted(labs, tc, t - 1)
+                    if v is not None:
+                        self.moved[i] = list(labs)
+                        pend.append(("L", i))
                 self.gap(ev, pend, tc, t)
                 ev.append(("line", i, t))
-                for lab in self.parsed[i][0]:
-                    self.place[lab] = t
+                for lab in labs:
+                    if i not in self.moved:
+                        self.place[lab] = t
                 tc = t + n
                 pend = []
             else:
@@ -521,9 +565,14 @@ class Port:
     def gap(self, ev, pend, t0, t1):
         """events for the pending lines and the target bytes [t0, t1)"""
         order, size = self.order, self.size
-        U = [i for i in pend if size[i] > 0]
+        U = [i for i in pend if not isinstance(i, tuple) and size[i] > 0]
         if not U and t0 >= t1:
             for i in pend:
+                if isinstance(i, tuple):
+                    for lab in self.moved[i[1]]:
+                        self.place[lab] = t0
+                    ev.append(("label", i[1], t0))
+                    continue
                 for lab in self.parsed[i][0]:
                     self.place[lab] = t0
                 ev.append(("zero", i, t0))
@@ -533,10 +582,16 @@ class Port:
         last = t0
         rows = []
         for i in pend:
-            labs = self.parsed[i][0]
-            a = order[i][0] - BASE
+            if isinstance(i, tuple):
+                labs = self.moved[i[1]]
+                a = order[i[1]][0] - BASE
+            else:
+                labs = self.parsed[i][0]
+                a = order[i][0] - BASE
             if labs:
-                p = self._fingerprint(a, t0, t1)
+                p = self.voted(labs, last, t1)
+                if p is None:
+                    p = self._fingerprint(a, t0, t1)
                 if p is None or p < last:
                     if U and a <= u0:
                         p = t0
@@ -560,7 +615,10 @@ class Port:
             if p > cur:
                 ev.append(("raw", cur, p))
                 cur = p
-            ev.append(("drop" if size[i] > 0 else "zero", i, p))
+            if isinstance(i, tuple):
+                ev.append(("label", i[1], p))
+            else:
+                ev.append(("drop" if size[i] > 0 else "zero", i, p))
         if t1 > cur:
             ev.append(("raw", cur, t1))
 
@@ -691,6 +749,67 @@ class Port:
             elif best != self.tval(sym):
                 self.newexpr[sym] = best
 
+    def new_labels(self):
+        """labels for target addresses that mapped lines reach but no ported label names:
+        a branch into code v6 has and v7 does not, a second entry point.  Only at the
+        start of an emitted line or raw run (an instruction start); named after the
+        label before them -- `_Skip`/`_Loop` for a branch target ahead of / behind every
+        branch that reaches it, `_Body` where a source label whose uses moved it away
+        stood, `_Entry` for a call or jump target, `_Data` otherwise."""
+        starts = {}
+        for ev in self.events:
+            if ev[0] == "line":
+                starts.setdefault(ev[2], ev)
+            elif ev[0] == "raw":
+                starts.setdefault(ev[1], ev)
+        held = {p for p in self.place.values()}
+        want = collections.defaultdict(list)       # offset -> [(kind, site offset)]
+        for kind, i, t in self.events:
+            if kind != "line" or self.parsed[i][1].startswith((".incbin", ".org")):
+                continue
+            mn, ops, reqs = self.line_requirements(i, t)
+            for tk, req, v, w in reqs:
+                if req is None or not (BASE <= req < BASE + len(self.tgt)):
+                    continue
+                if w == "rel":
+                    if tk[2] == "sym" and self.tval(tk[3]) == req:
+                        continue
+                    want[req - BASE].append(("rel", t))
+                elif tk[2] == "sym" and (tk[3] in self.labels_src or tk[3] in self.equ_expr) \
+                        and self.tval(tk[3]) != req:
+                    want[req - BASE].append(("call" if mn in ("call", "jp") else "data", t))
+        body_of = {}
+        for i, labs in self.moved.items():
+            ev_t = self.order[i][0] - BASE + self.cls[i][1]
+            body_of[ev_t] = labs[0]
+        placed = sorted((p, lab) for lab, p in self.place.items())
+        keys = [p for p, lab in placed]
+        used = set(self.sv) | set(self.place)
+        self.newlab = {}
+        for off in sorted(want):
+            if off in held or off not in starts:
+                continue
+            kinds = {k for k, t in want[off]}
+            if off in body_of:
+                base, suf = body_of[off], "_Body"
+            else:
+                j = bisect.bisect_right(keys, off) - 1
+                base = placed[j][1] if j >= 0 else "Rom"
+                if kinds == {"rel"}:
+                    suf = "_Loop" if all(t > off for k, t in want[off]) else "_Skip"
+                elif "call" in kinds:
+                    suf = "_Entry"
+                else:
+                    suf = "_Data"
+            name, n = base + suf, 2
+            while name in used:
+                name, n = "%s%s%d" % (base, suf, n), n + 1
+            used.add(name)
+            self.newlab[off] = name
+            self.place[name] = off
+        if hasattr(self, "_byaddr"):
+            del self._byaddr
+
     def resolve(self):
         """final text of every mapped line; a line that cannot be shown to reproduce the
         target bytes gets None (raw rows)"""
@@ -803,7 +922,8 @@ class Port:
         for k, (s0, s1, kind, txt) in enumerate(toks):
             if kind != "sym":
                 continue
-            if txt not in self.sv and txt not in self.labels_src and txt not in self.equ_expr:
+            if txt not in self.sv and txt not in self.labels_src and txt not in self.equ_expr \
+                    and txt not in self.place:
                 continue                     # not a symbol of the tree: a bank register (xbc3) or keyword
             v = self.tval(txt)
             if v is None:
@@ -841,7 +961,17 @@ class Port:
                 out(rel, "\t.byte\t" + ", ".join("0x%02x" % x for x in bs[k:k + 8]))
             rawbuf.clear()
 
-        for kind, *rest in self.events:
+        nxtfile = [None] * len(self.events)          # file of the next event that is not raw
+        f = self.order[-1][1]
+        for k in range(len(self.events) - 1, -1, -1):
+            if self.events[k][0] != "raw":
+                f = self.order[self.events[k][1]][1]
+            nxtfile[k] = f
+        for k, (kind, *rest) in enumerate(self.events):
+            if kind in ("raw", "line") and rest[0 if kind == "raw" else 1] in self.newlab:
+                rel = nxtfile[k] if kind == "raw" else self.order[rest[0]][1]
+                flush(rel)
+                out(rel, self.newlab[rest[0 if kind == "raw" else 1]] + ":")
             if kind == "raw":
                 rawbuf.append((rest[0], rest[1]))
                 continue
@@ -873,6 +1003,14 @@ class Port:
                     for lab in labs:
                         out(rel, lab + ":")
                 continue
+            if kind == "label":
+                flush(rel)
+                for lab in self.moved[i]:
+                    out(rel, lab + ":")
+                continue
+            if i in self.moved:
+                labs = [x for x in labs if x not in self.moved[i]]
+                text = "".join(x + ":" for x in labs) + "\t" + body + ("\t" + com if com else "")
             if kind == "org":
                 flush(rel)
                 out(rel, text)
@@ -1033,6 +1171,8 @@ def main():
     raw = sum(e[2] - e[1] for e in P.events if e[0] == "raw")
     print("events:", dict(ek), " raw target bytes:", raw, " guessed referenced labels:", len(P.guessed))
     P.votes()
+    P.new_labels()
+    print("labels added at target addresses no ported label names:", len(P.newlab))
     print("numeric symbols given a new value:", len(P.newequ),
           " with disagreeing uses:", sum(1 for c in P.equ_votes.values() if len(c) > 1))
     P.resolve()

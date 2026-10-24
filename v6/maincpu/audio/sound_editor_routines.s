@@ -57,7 +57,7 @@ SeMenuModeFunc_Handler:
 SeMenuTitleFunc:
 	lda xsp, (xsp - 16)
 	ld xhl, xbc
-	ld	xiy, 0xe0dab6
+	ld xiy, SeMenuTitleFunc_Methods
 	ld xix, xsp
 	ldw bc, 0x8
 	ldirw
@@ -177,7 +177,7 @@ SeTonRan1TitleFunc_Nop:
 SeTonRan2TitleFunc:
 	lda xsp, (xsp - 16)
 	ld xhl, xbc
-	ld	xiy, SeMenuTitleFunc_Methods
+	ld	xiy, SeMenuTitleFunc_Methods_Data
 	ld xix, xsp
 	ldw bc, 0x8
 	ldirw

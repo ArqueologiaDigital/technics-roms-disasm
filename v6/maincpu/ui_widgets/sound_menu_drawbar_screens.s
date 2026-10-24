@@ -472,7 +472,7 @@ InitializeMurai_PtrTable_5:
 	.byte	0xd3, 0x3b, 0xf8, 0x00, 0x50, 0x3c, 0xf8, 0x00
 	.byte	0x29, 0xb2, 0xf7, 0x00, 0x0c, 0xda, 0xf7, 0x00
 	.byte	0x65, 0x25, 0xf8, 0x00, 0x0d, 0x26, 0xf8, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0x5a, 0x18, 0xe8, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00
 Murai_FunctionTable_401:
 ; [nakarest] Naka_Event_Table2  +0x5ae..+0x642 (0xe81590, 148 B)
 ; [nakarest] 4 B at 0xe81620: the end marker of Function slot 0x401 (table 0xe8158c, 37 entries, InitializeMurai) -- entry 37, a pointer to the empty string right after it ("", 00 ff, which starts the next slice), as every function name table ends.
@@ -480,7 +480,7 @@ Murai_FunctionTable_401:
 ; [nakarest] InitializeMurai), 37 entry pointers x 4 bytes (starts 0xe8158c, 144 of its 148
 ; [nakarest] bytes are here or later).
 ; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x44, 0x18, 0xe8, 0x00
+	.byte	0x5a, 0x18, 0xe8, 0x00, 0x44, 0x18, 0xe8, 0x00
 Naka_Event_Table2:
 ; Murai_FunctionNameListEnd -- 1 x char[2]: "" + 0xFF pad, entry 37 (one past the count) of Murai_FunctionTable_401
 ; Murai_FunctionTable_401 (registry slot 0x401 = 0x101 + 0x300, 37 entries, InitializeMurai) names the procedures

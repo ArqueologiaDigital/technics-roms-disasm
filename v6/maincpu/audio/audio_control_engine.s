@@ -6474,6 +6474,7 @@ SndParam_WriteLookupAndStore:
 	ret	z
 	ld	a, (0x906f:16)
 	extz	wa
+SndParam_WriteLookupAndStore_Loop:
 	ld	(0x9072), (xhl+wa)
 	ret
 SwbtWr_FlushAndAppendParams:
@@ -6750,6 +6751,7 @@ ExtData_Voice_FullHandler_Helper2:
 	cpl	a
 	and	a, (xhl)
 	ld	c, a
+ExtData_Voice_FullHandler_Helper2_Loop:
 	ld	a, (36976:16)
 	and	a, (xsp)
 	or	a, c
@@ -6796,6 +6798,7 @@ ToneGen_ApplyVoiceParams:
 ToneGen_DispatchStartVoice:
 	inc	6, xsp
 	retd	0x2
+ToneGen_DispatchStartVoice_Loop:
 	dec	6, xsp
 	pushw_erp	0xfa
 	cp	(SWBTWR_PAYLOAD_1:16), 3
@@ -11789,7 +11792,7 @@ SndParam_DispatchCallback:
 	jr	nc, SndParam_NotFound
 	extz	bc
 	sla	bc, 2
-	lda	xde, (0xee0ff0:24)
+	lda	xde, (SndParam_RegisterHandlers:24)
 	lda	xhl, (xde+bc)
 	ld	bc, (xsp+0xc)
 	ld	de, (xsp+0xa)
@@ -11823,7 +11826,7 @@ SndParam_DispatchTypeDE5:
 	jr	nc, SndParam_Epilogue
 	extz	bc
 	sla	bc, 2
-	lda	xde, (0xee104c:24)
+	lda	xde, (SndParam_WriteHandlers:24)
 	lda	xde, (xde+bc)
 	ld	bc, (xsp+0xc)
 	ld	xhl, (xde)
@@ -11908,7 +11911,7 @@ SndParam_Lkp2_Dispatch:
 	jr	nc, SndParam_Lkp2_NotFound
 	extz	wa
 	sla	wa, 2
-	lda	xbc, (0xee1014:24)
+	lda	xbc, (SndParam_Register2Handlers:24)
 	lda	xhl, (xbc+wa)
 	ld	xwa, (xsp+0x6)
 	ld	bc, (xsp+0xc)

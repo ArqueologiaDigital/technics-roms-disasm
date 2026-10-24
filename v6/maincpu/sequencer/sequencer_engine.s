@@ -4156,7 +4156,7 @@ SeqNoteCh_DeactivateShiftDone:
 SeqNoteCh_CheckChannel11:
 ; TODO(port): v6 bytes with no v7 line -- disassemble
 	.byte	0xc7, 0xe2, 0xcf, 0x11
-	jr	z, 48
+	jr z, SeqNoteCh_LoadVoiceAndCompare
 	jr SeqNote_HandleMasterChannel
 
 SeqNoteCh_CompareVoicePos:
@@ -4181,10 +4181,10 @@ SeqNote_DeactivateChannelBit:
 	cpl bc
 
 ; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xd1, 0x10, 0x23, 0xc9, 0x68, 0x3b, 0xd1
+	.byte	0xd1, 0x10, 0x23, 0xc9, 0x68, 0x3b
 SeqNoteCh_LoadVoiceAndCompare:
 ; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x60, 0x1d, 0x20
+	.byte	0xd1, 0x60, 0x1d, 0x20
 	ld	de, (xix+128)
 	cp wa, de
 	jr nc, SeqNoteCh_CompareVoicePos
@@ -4193,7 +4193,7 @@ SeqNote_HandleMasterChannel:
 	cp	(xsp + 18), 0x14
 	jr nz, SeqNote_HandleAccompChannel
 	cp (xbc), 0x82
-	jr	nz, 40
+	jr nz, SeqNoteCh_CheckMasterFallback
 	ld	a, (xsp + 18)
 	dec 1, a
 	extz wa
@@ -4206,9 +4206,10 @@ SeqNote_HandleMasterChannel:
 
 ; TODO(port): v6 bytes with no v7 line -- disassemble
 	.byte	0xf2, 0xf0, 0x91, 0xf5, 0xee, 0x27, 0x00, 0x78
+	.byte	0xd3, 0x01
 SeqNoteCh_CheckMasterFallback:
 ; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xd3, 0x01, 0xc1, 0x16, 0x23, 0x21
+	.byte	0xc1, 0x16, 0x23, 0x21
 	cp a, 0xff
 	jr z, SeqNote_HandleAccompChannel
 
@@ -17293,10 +17294,10 @@ SeqScan_ProcessAllParts:
 ; TODO(port): v6 bytes with no v7 line -- disassemble
 	.byte	0xef, 0x6c, 0x2e, 0xd8, 0x8e, 0xd1, 0x10, 0x23
 	.byte	0x20, 0xf1, 0x0e, 0x23, 0x50, 0xf1, 0xc6, 0x25
-	.byte	0x00, 0x00, 0xc1
+	.byte	0x00, 0x00
 SeqMIDI_GetEventSizeTable:
 ; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xc6, 0x25, 0x23, 0xda, 0xa9, 0xcb, 0x89
+	.byte	0xc1, 0xc6, 0x25, 0x23, 0xda, 0xa9, 0xcb, 0x89
 	and a, 0xf
 	jr z, SeqMIDI_GetEventSizeLookup
 
@@ -17338,7 +17339,7 @@ SeqMIDI_ChannelOutOfRange:
 	inc 1, a
 	ld	(9670:16), a
 	cp a, 0x10
-	jrl	c, -144
+	jrl c, SeqMIDI_GetEventSizeTable
 ; TODO(port): v6 bytes with no v7 line -- disassemble
 	.byte	0x4e, 0xef, 0x64
 	ret

@@ -9751,6 +9751,7 @@ InitChannelState_Che_LoopBody:
 	ld	(xde + 4), 0x0
 	ld	bc, hl
 	extz	xbc
+InitChannelState_Che_LoopBody_Loop:
 	ld	xde, xbc
 	sll	xde, 2
 	add	xde, xbc
@@ -11763,6 +11764,7 @@ ProcessLayeredNoteOn_InitVal2:
 	jrl	nc, NoteMap_PopIzStoreRet
 ProcessLayeredNoteOn_LoadIter2:
 	ld	wa, iz
+ProcessLayeredNoteOn_LoadIter2_Loop:
 	lda	xbc, (0xc328:16)
 	extz	xwa
 	add	xwa, xbc
@@ -12767,6 +12769,7 @@ SeqPart_EmitNoteOn_Full_SetPartController:	; cases 212, 213, 214, 215, 216
 	cp	wa, 0xffff
 	jrl	z, RhythmBuf_EventDispatchLoop
 	call	RhythmBuf_ReadAlternate
+SeqPart_EmitNoteOn_Full_SetPartController_Loop:
 	ld	iz, hl
 	ld	wa, iz
 	cp	wa, 0xffff
@@ -13964,6 +13967,7 @@ SoundFX_Handler_8:
 	calr	VoiceBank_MapNoteToOffset
 	ld	a, l
 	cp	a, 0xff
+SoundFX_Handler_8_Loop:
 	jrl	z, SoundFX_Handler_8_ClearWord
 	ld	a, (0xcdea:16)
 	sub	a, (0xce20:16)
@@ -24910,6 +24914,7 @@ HdaeRom_DataHandler_Helper_Skip2:
 	ld	c, (xhl+bc)
 	ldfr_berp	c, 240
 	ldto_berp	d, 240
+HdaeRom_DataHandler_Helper_Skip2_Loop:
 	sll	d, 6
 	ld	e, (xwa+19)
 	ld	c, e

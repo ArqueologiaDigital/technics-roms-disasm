@@ -223,7 +223,7 @@ GroupBox_DialDown:
 	ld xde, (xsp + 30)
 	ld xwa, (xsp + 38)
 	ld xbc, EVT_SW_IN
-	calr	SetDialUp
+	calr	SetDialUp_Entry
 	jrl GroupBox_ReturnZero
 
 	; --- Event 0x1e00071: Dial Up ---
@@ -233,7 +233,7 @@ GroupBox_DialUp:
 	ld xde, (xsp + 30)
 	ld xwa, (xsp + 38)
 	ld xbc, EVT_SW_IN
-	calr	280
+	calr SetDialUp
 	jrl GroupBox_ReturnZero
 
 	; --- Event 0x1e00088: Get Dial Focus ---
@@ -376,11 +376,12 @@ GetDialFocus_Active:
 	ld xhl, (DIAL_FOCUS:24)
 	ret
 
+SetDialUp:
 ; TODO(port): v6 bytes with no v7 line -- disassemble
 	.byte	0xf2, 0x4e, 0xef, 0x03, 0x60, 0xf2, 0x56, 0xef
 	.byte	0x03, 0x61, 0xf2, 0x5e, 0xef, 0x03, 0x62, 0x68
 	.byte	0xbd
-SetDialUp:
+SetDialUp_Entry:
 	ld	(0x3ef52:24), xwa
 	ld	(0x3ef5a:24), xbc
 	ld	(0x3ef62:24), xde

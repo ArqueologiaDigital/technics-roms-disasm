@@ -1015,6 +1015,7 @@ FDC_CMD_SEND_Skip4:
 	cp	a, 14
 	jr	z, FDC_CMD_SEND_Skip5
 	ld	a, (xsp)
+FDC_CMD_SEND_Skip4_Loop:
 	and	a, 15
 	cp	a, 11
 	jr	nz, FDC_HardwareSetup_Skip6

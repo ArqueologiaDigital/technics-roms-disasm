@@ -83,7 +83,7 @@ PcgOutGridBoxEventDispatch:
 	extz xde
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_UP
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, (xsp + 8)
 	ld bc, (xwa + 26)
 	ld xwa, (xsp + 4)
@@ -94,7 +94,7 @@ PcgOutGridBoxEventDispatch:
 	extz xde
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_DOWN
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 	jrl PcgOutGridDialConfirm
 AcPcgOutGridBoxProc_OnIndexswUp:	; cases 29360151, 29360153
@@ -145,11 +145,11 @@ PcgOutGrid_CheckAltPrev:
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, (xsp + 12)
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 12)
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 	jrl PcgOutGridDialConfirm
 AcPcgOutGridBoxProc_OnIndexswDown:	; cases 29360152, 29360154
@@ -202,11 +202,11 @@ PcgOutGrid_CheckAltNext:
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, (xsp + 12)
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 12)
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 
 PcgOutGridDialConfirm:

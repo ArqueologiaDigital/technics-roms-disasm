@@ -87,6 +87,7 @@ SoundBank_NextEntry1:
 	jrl c, SoundBank_InitDefaults_Loop
 	pop xbc
 	pop xwa
+SoundBank_NextEntry1_Loop:
 	pop xde
 	pop xhl
 	ret
@@ -99,6 +100,7 @@ SoundBank_InitTrackParams:
 
 SoundBank_InitTrackParams_Inner:
 	push xix
+SoundBank_InitTrackParams_Inner_Loop:
 	push xde
 	push xwa
 	push xbc
@@ -120,6 +122,7 @@ SoundBank_InitTrack_ByteFields:
 	ld	a, (xix+iy)
 	ld	(xhl+iy), a
 	inc	1, iy
+SoundBank_InitTrack_ByteFields_Loop:
 	cp	iy, 7:i3
 	jr	ule, SoundBank_InitTrack_ByteFields
 	ld	a, (36266:16)
@@ -422,10 +425,10 @@ SMF_InitSequencerState:
 	ld xwa, 0x13fa
 	ld (4376:16), xwa
 
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xd9, 0xac, 0x45, 0x3e, 0x35, 0xf2, 0x00
 SMF_ReadMThd_Start:
 
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0xd9, 0xac, 0x45, 0x3e, 0x35, 0xf2, 0x00
 SMF_ReadMThd_ByteLoop:
 	pushw bc
 	push xiy
@@ -440,7 +443,7 @@ SMF_ReadMThd_ByteLoop:
 	ld xwa, 0x13fa
 	add xwa, 0x80
 	ld (4376:16), xwa
-	jrl	-51
+	jrl SMF_ReadMThd_Start
 
 SMF_ReadMThd_Mismatch:
 	ldw (6699:16), 49
@@ -580,6 +583,7 @@ SMF_TempoScaling_Loop:
 	jrl ule, SMF_TempoScaling_Loop
 	call SeqTrack_UpdateChannelVolumes
 	call FloppyIO_ReadNextByte
+SMF_TempoScaling_Loop_Loop:
 	push xwa
 	push xbc
 	ld xbc, 0:i3

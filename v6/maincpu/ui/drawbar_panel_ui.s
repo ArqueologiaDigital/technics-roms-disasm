@@ -561,7 +561,7 @@ AcPmemOutL_Init_Cell01:
 	extz xde
 	ld xwa, (xsp + 16)
 	ld xbc, EVT_INDEXSW_UP
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, (xsp + 4)
 	ld wa, (xwa + 26)
 	ld de, iz
@@ -569,7 +569,7 @@ AcPmemOutL_Init_Cell01:
 	extz xde
 	ld xwa, (xsp + 16)
 	ld xbc, EVT_INDEXSW_DOWN
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 	jr AcPmemOutL_Init_ScrollCommit
 
@@ -586,7 +586,7 @@ AcPmemOutL_Init_Cell3:
 	extz xde
 	ld xwa, (xsp + 16)
 	ld xbc, EVT_INDEXSW_UP
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, (xsp + 4)
 	ld wa, (xwa + 26)
 	ld bc, iz
@@ -596,7 +596,7 @@ AcPmemOutL_Init_Cell3:
 	extz xde
 	ld xwa, (xsp + 16)
 	ld xbc, EVT_INDEXSW_DOWN
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 
 AcPmemOutL_Init_ScrollCommit:
@@ -622,11 +622,11 @@ AcPmemOutLGridBoxProc_OnIndexswUp:
 	ld xwa, (xsp + 16)
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, (xsp + 8)
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, (xsp + 16)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 8)
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 	call SetDialEnable
 	ld xwa, (xsp + 16)
@@ -669,11 +669,11 @@ AcPmemOutL_AutoIncUp_Cell2:
 	ld xwa, (xsp + 16)
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, (xsp + 8)
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, (xsp + 16)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 8)
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 	call SetDialEnable
 	ld xwa, (xsp + 16)
@@ -716,11 +716,11 @@ AcPmemOutL_AutoIncDown_Cell3:
 	ld xwa, (xsp + 16)
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, (xsp + 8)
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, (xsp + 16)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 8)
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 	call SetDialEnable
 	ld xwa, (xsp + 16)
@@ -881,7 +881,7 @@ AcPmemOutR_Init_Cell567:
 	extz xde
 	ld xwa, (xsp + 16)
 	ld xbc, EVT_INDEXSW_UP
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, (xsp + 4)
 	ld wa, (xwa + 26)
 	ld de, iz
@@ -889,7 +889,7 @@ AcPmemOutR_Init_Cell567:
 	extz xde
 	ld xwa, (xsp + 16)
 	ld xbc, EVT_INDEXSW_DOWN
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 	call SetDialEnable
 
@@ -913,11 +913,11 @@ AcPmemOutRGridBoxProc_OnIndexswUp:
 	ld xwa, (xsp + 16)
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, (xsp + 8)
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, (xsp + 16)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 8)
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 	call SetDialEnable
 	ld xwa, (xsp + 16)
@@ -960,11 +960,11 @@ AcPmemOutR_AutoIncUp_Cell6:
 	ld xwa, (xsp + 16)
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, (xsp + 8)
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, (xsp + 16)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 8)
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 	call SetDialEnable
 	ld xwa, (xsp + 16)
@@ -1007,11 +1007,11 @@ AcPmemOutR_AutoIncDown_Cell7:
 	ld xwa, (xsp + 16)
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, (xsp + 8)
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, (xsp + 16)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 8)
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 	call SetDialEnable
 	ld xwa, (xsp + 16)
@@ -1418,7 +1418,7 @@ PmemOutLGridCheck_OnRamData_Join3:
 	push	xwa
 	call	Strcpy
 	inc	8, xsp
-	jr	22
+	jr	PmemOutLGridCheck_OnRamData_Skip6_Skip
 PmemOutLGridCheck_OnRamData_Skip6:
 PmemOutLGridCheck_OnRamData_Join4:
 	ld	a, (xwa)
@@ -1431,6 +1431,7 @@ PmemOutLGridCheck_OnRamData_Join4:
 	push	xwa
 	call	Sprintf_Locked
 	lda	xsp, (xsp+10)
+PmemOutLGridCheck_OnRamData_Skip6_Skip:
 	lda	xde, (xsp+36)
 	ld	xwa, 0x5b0009
 	ld	xbc, EVT_GRID_DRAW
@@ -2773,7 +2774,7 @@ AcCtlMsgGrid_Init:
 	extz xde
 	ld xwa, (xsp + 32)
 	ld xbc, EVT_INDEXSW_UP
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, (xsp + 4)
 	ld bc, (xwa + 26)
 	ld xwa, xiz
@@ -2784,7 +2785,7 @@ AcCtlMsgGrid_Init:
 	extz xde
 	ld xwa, (xsp + 32)
 	ld xbc, EVT_INDEXSW_DOWN
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 	jrl AcCtlMsgGrid_ScrollCommit
 
@@ -2971,11 +2972,11 @@ AcCtlMsgGrid_ScrollUp_AutoScroll:
 	ld xwa, (xsp + 32)
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, (xsp + 24)
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, (xsp + 32)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 24)
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 	jrl AcCtlMsgGrid_ScrollCommit
 AcCtlMsgGridBoxProc_OnIndexswDown:
@@ -3067,11 +3068,11 @@ AcCtlMsgGrid_ScrollDown_AutoScroll:
 	ld xwa, (xsp + 32)
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, (xsp + 24)
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, (xsp + 32)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 24)
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 
 AcCtlMsgGrid_ScrollCommit:
@@ -3445,7 +3446,7 @@ MidiSetup_TtlCase3:
 	extz xde
 	ld xwa, (xsp + 32)
 	ld xbc, EVT_INDEXSW_UP
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, (xsp + 4)
 	ld bc, (xwa + 26)
 	ld xwa, xiz
@@ -3456,7 +3457,7 @@ MidiSetup_TtlCase3:
 	extz xde
 	ld xwa, (xsp + 32)
 	ld xbc, EVT_INDEXSW_DOWN
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 	jrl MidiPart_SetDialEnable
 
@@ -3725,11 +3726,11 @@ MidiPart_SendShowQuery:
 	ld xwa, (xsp + 32)
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, (xsp + 24)
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, (xsp + 32)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 24)
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 	jrl MidiPart_SetDialEnable
 
@@ -3871,11 +3872,11 @@ MidiPart_SendShowQueryUp:
 	ld xwa, (xsp + 32)
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, (xsp + 24)
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, (xsp + 32)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 24)
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 
 MidiPart_SetDialEnable:
@@ -4274,7 +4275,7 @@ MidiPartGridCheck_Skip12:
 	ldw	(xwa), 2
 	ld	wa, (xde)
 	sla	wa, 2
-	lda	xbc, (0xe80666:24)
+	lda	xbc, (Transpose_ValueDisplay_Table:24)
 	ld	xwa, (xbc+wa)
 	push	xwa
 	ld	xwa, (xsp+12)
@@ -4385,7 +4386,7 @@ MidiPart_LookupColumnParam:
 	ld	xwa, (xsp+12)
 	call	SndParam_LookupReadOnly
 	sla	hl, 2
-	lda	xwa, (0xe80666:24)
+	lda	xwa, (Transpose_ValueDisplay_Table:24)
 	ld	xwa, (xwa+hl)
 	push	xwa
 	lda	xwa, (xsp+28)
@@ -4470,7 +4471,7 @@ InitializeMurai:
 	ld (XBC+0x04),XWA
 	ld wa, (Murai_ClassCount_161:24)
 	ld (XBC+0x08),WA
-	lda	xwa, (ClassProps_IvMPver:24)
+	lda xwa, (Murai_ClassTable_161:24)
 	ld (XBC+0x0a),XWA
 	ldw WA, 0x0161
 	call RegisterObjectTable
@@ -4532,7 +4533,7 @@ InitializeMurai:
 	lda xwa, (FunctionProc:24)
 	ld (XBC+0x04),XWA
 	ldw	(XBC+0x08), 0x0024
-	lda	xwa, (0xe81554:24)
+	lda xwa, (Murai_FunctionTable_401:24)
 	ld (XBC+0x0a),XWA
 	ldw WA, 0x0401
 	call RegisterObjectTable
@@ -4822,7 +4823,7 @@ InitializeMurai:
 	lda xwa, (ViewableProc:24)
 	ld (XBC+0x04),XWA
 	ldw (XBC+0x08), 0x0006
-	lda	xwa, (0xe8590c:24)
+	lda xwa, (Murai_ViewableTable_0F0:24)
 	ld (XBC+0x0a),XWA
 	ldw WA, 0x00f0
 	call RegisterObjectTable
@@ -10214,11 +10215,11 @@ IvSdtecd1Proc:
 	ld	xwa, (xsp+4)
 	ld	xbc, EVT_INDEXSW_DOWN
 	ld	xde, 1:i3
-	call	0xf9a077
+	call	SetDialUp
 	ld	xwa, (xsp+4)
 	ld	xbc, EVT_INDEXSW_UP
 	ld	xde, 1:i3
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld	wa, 1:i3
 	call	SetDialEnable
 	jrl	IvSdtecd1_ReturnDefault	; -> 0xF7E6A5
@@ -10241,11 +10242,11 @@ IvSdtecd1Proc_OnIndexswUpAny:
 	ld xwa, (xsp + 4)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, 1:i3
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, (xsp + 4)
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, 1:i3
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 	call SetDialEnable
 	jrl IvSdtecd1_ReturnDefault
@@ -10286,11 +10287,11 @@ IvSdtecd1Proc_OnIndexswDownAny:
 	ld xwa, (xsp + 4)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, 1:i3
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, (xsp + 4)
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, 1:i3
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 	call SetDialEnable
 	jrl IvSdtecd1_ReturnDefault
@@ -11345,7 +11346,7 @@ AcWelcomScreen_Init_SwitchMode:
 	ld xwa, 0xffffffff
 	ld xbc, EVT_SET_KEEP
 	ld xde, 1:i3
-	jrl	1198
+	jrl	AcWelcomScreen_SubCpuError_Skip
 
 AcWelcomScreen_Close:
 	ld xwa, EVT_SELE_DRAW
@@ -11431,7 +11432,7 @@ AcWelcomScreen_RenderBytecode:
 	ld	xwa, 0xffffffff
 	ld	xbc, EVT_SET_KEEP
 	ld	xde, 0:i3
-	jrl	961
+	jrl	AcWelcomScreen_SubCpuError_Skip
 ; AcWelcomScreen_Select_OpMoveBlit: Welcome-script op 2: blits at the position saved in slot arg (0/1, table 0x03ea0c)
 ;   with ClipBlit_Direct, blits at the step's x,y with ClipBlit_Replace, and saves the step in the slot.
 AcWelcomScreen_Select_OpMoveBlit:
@@ -11767,6 +11768,7 @@ AcWelcomScreen_SubCpuError:
 	ld	xwa, NAKA_VIEW_AllInitial
 	ld	xbc, EVT_SHOW
 	ld	xde, 3:i3
+AcWelcomScreen_SubCpuError_Skip:
 ; TODO(port): v6 bytes with no v7 line -- disassemble
 	.byte	0x1d, 0x5e
 AcWelcomScreen_SubCpuLoaded:
@@ -11965,7 +11967,7 @@ PsMixer_ControlCase2:
 	add xde, xbc
 	ld xwa, (xsp + 90)
 	ld xbc, EVT_INDEXSW_UP
-	call	0xf9a077
+	call SetDialUp
 	ld bc, (0x024792:24)
 	extz xbc
 	ld wa, (0x024790:24)
@@ -11975,7 +11977,7 @@ PsMixer_ControlCase2:
 	add xde, xbc
 	ld xwa, (xsp + 90)
 	ld xbc, EVT_INDEXSW_DOWN
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 	call SetDialEnable
 	call GetPartSelect
@@ -12168,7 +12170,7 @@ PsMixer_ControlCase5:
 	add xde, xbc
 	ld xwa, (xsp + 90)
 	ld xbc, EVT_INDEXSW_UP
-	call	0xf9a077
+	call SetDialUp
 	ld bc, (0x024792:24)
 	extz xbc
 	ld wa, iz
@@ -12178,7 +12180,7 @@ PsMixer_ControlCase5:
 	add xde, xbc
 	ld xwa, (xsp + 90)
 	ld xbc, EVT_INDEXSW_DOWN
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 	call SetDialEnable
 	ld (0x024790:24), iz
@@ -12284,7 +12286,7 @@ AudioCtrl_DispatchHandler:
 	add xde, xbc
 	ld xwa, (xsp + 90)
 	ld xbc, EVT_INDEXSW_UP
-	call	0xf9a077
+	call SetDialUp
 	ld bc, (0x024792:24)
 	extz xbc
 	ld wa, (0x024790:24)
@@ -12294,7 +12296,7 @@ AudioCtrl_DispatchHandler:
 	add xde, xbc
 	ld xwa, (xsp + 90)
 	ld xbc, EVT_INDEXSW_DOWN
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 	call SetDialEnable
 	ld xwa, (xsp + 90)
@@ -12359,7 +12361,7 @@ AudioCtrl_SetupPartDisplay:
 	add xde, xbc
 	ld xwa, (xsp + 90)
 	ld xbc, EVT_INDEXSW_UP
-	call	0xf9a077
+	call SetDialUp
 	ld bc, (0x024792:24)
 	extz xbc
 	ld wa, (0x024790:24)
@@ -12369,7 +12371,7 @@ AudioCtrl_SetupPartDisplay:
 	add xde, xbc
 	ld xwa, (xsp + 90)
 	ld xbc, EVT_INDEXSW_DOWN
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 	call SetDialEnable
 	ld xwa, (xsp + 90)
@@ -12842,7 +12844,7 @@ PsMixer_VolumeSelect_Continue:
 	add xde, xbc
 	ld xwa, (xsp + 90)
 	ld xbc, EVT_INDEXSW_UP
-	call	0xf9a077
+	call SetDialUp
 	ld bc, (0x024792:24)
 	extz xbc
 	ld wa, (0x024790:24)
@@ -12852,7 +12854,7 @@ PsMixer_VolumeSelect_Continue:
 	add xde, xbc
 	ld xwa, (xsp + 90)
 	ld xbc, EVT_INDEXSW_DOWN
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 	call SetDialEnable
 	ld xwa, (xsp + 90)

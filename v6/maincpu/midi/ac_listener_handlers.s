@@ -551,7 +551,7 @@ VoiceParam_ListHandler:
 	extz xde
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_UP
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, (xsp + 8)
 	ld bc, (xwa + 26)
 	ld xwa, (xsp + 4)
@@ -562,7 +562,7 @@ VoiceParam_ListHandler:
 	extz xde
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_DOWN
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 	jrl FadeGrid_SetDialEnable
 AcFadeSetGridBoxProc_OnIndexswUp:	; cases 29360151, 29360153
@@ -619,11 +619,11 @@ FadeGrid_CheckFadeOut:
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, (xsp + 12)
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 12)
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 	jrl FadeGrid_SetDialEnable
 AcFadeSetGridBoxProc_OnIndexswDown:	; cases 29360152, 29360154
@@ -678,11 +678,11 @@ FadeGrid_CheckFadeOutAlt:
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, (xsp + 12)
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 12)
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 
 FadeGrid_SetDialEnable:
@@ -1034,7 +1034,7 @@ AcInOutGrid_Init:
 	extz	xde
 	ld	xwa, (xsp+16)
 	ld	xbc, EVT_INDEXSW_UP
-	call	0xf9a077
+	call	SetDialUp
 	ld	xwa, (xsp+4)
 	ld	bc, (xwa+26)
 	ld	xwa, xiz
@@ -1045,7 +1045,7 @@ AcInOutGrid_Init:
 	extz	xde
 	ld	xwa, (xsp+16)
 	ld	xbc, EVT_INDEXSW_DOWN
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld	wa, 1:i3
 	jrl	AcInOutGrid_SetScrollBounds
 AcInOutGridBoxProc_OnIndexswUp:	; cases 29360151, 29360153
@@ -1119,11 +1119,11 @@ AcInOutGrid_ScrollUp_CheckAlt:
 	ld	xwa, (xsp+16)
 	ld	xbc, EVT_INDEXSW_UP
 	ld	xde, (xsp+8)
-	call	0xf9a077
+	call	SetDialUp
 	ld	xwa, (xsp+16)
 	ld	xbc, EVT_INDEXSW_DOWN
 	ld	xde, (xsp+8)
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld	wa, 1:i3
 	jrl	AcInOutGrid_SetScrollBounds	; -> 0xF755FB
 AcInOutGridBoxProc_OnIndexswDown:	; cases 29360152, 29360154
@@ -1195,11 +1195,11 @@ AcInOutGrid_ScrollDown_CheckAlt:
 	ld xwa, (xsp + 16)
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, (xsp + 8)
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, (xsp + 16)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 8)
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 
 AcInOutGrid_SetScrollBounds:

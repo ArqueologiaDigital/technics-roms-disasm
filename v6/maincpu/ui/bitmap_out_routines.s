@@ -1731,6 +1731,7 @@ BitMapOut_RestoreExtra_CheckDataBit:
 	sub xwa, xhl
 	lda xix, (0x03c8e4:24)
 	add xwa, xix
+BitMapOut_RestoreExtra_CheckDataBit_Loop:
 	ld a, (xwa)
 	ld (xbc), a
 	ld xwa, xde
@@ -3960,6 +3961,7 @@ BitMapOut_ByteData_PatchTable:
 	lda xbc, (xhl + 3)
 	sub xbc, xix
 	ld xiy, xbc
+BitMapOut_ByteData_PatchTable_Loop:
 	add xiy, xde
 	ld c, (xwa + 63)
 	ld (xiy), c

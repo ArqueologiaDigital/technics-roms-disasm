@@ -2753,7 +2753,7 @@ InitializeEast:
 	lda xwa, (ResNameProc:24)
 	ld (XBC+0x04),XWA
 	ldw (XBC+0x08), 0x000c
-	lda	xwa, (0xe5a180:24)
+	lda xwa, (East_ResNameTable_318:24)
 	ld (XBC+0x0a),XWA
 	ldw WA, 0x0318
 	call RegisterObjectTable
@@ -2773,7 +2773,7 @@ InitializeEast:
 	lda xwa, (ResNameProc:24)
 	ld (XBC+0x04),XWA
 	ldw (XBC+0x08), 0x000c
-	lda	xwa, (0xe5a1da:24)
+	lda xwa, (East_ResNameTable_319:24)
 	ld (XBC+0x0a),XWA
 	ldw WA, 0x0319
 	call RegisterObjectTable
@@ -2793,7 +2793,7 @@ InitializeEast:
 	lda xwa, (ResNameProc:24)
 	ld (XBC+0x04),XWA
 	ldw (XBC+0x08), 0x000c
-	lda	xwa, (0xe5a240:24)
+	lda xwa, (East_ResNameTable_31A:24)
 	ld (XBC+0x0a),XWA
 	ldw WA, 0x031a
 	call RegisterObjectTable
@@ -3013,7 +3013,7 @@ InitializeEast:
 	lda xwa, (ResNameProc:24)
 	ld (XBC+0x04),XWA
 	ldw (XBC+0x08), 0x0006
-	lda	xwa, (0xe5a9f6:24)
+	lda xwa, (NakaObj_MidiComputerConn_Table:24)
 	ld (XBC+0x0a),XWA
 	ldw WA, 0x035a
 	call RegisterObjectTable
@@ -3033,7 +3033,7 @@ InitializeEast:
 	lda xwa, (ResNameProc:24)
 	ld (XBC+0x04),XWA
 	ldw (XBC+0x08), 0x0011
-	lda	xwa, (0xe5aa36:24)
+	lda xwa, (NakaObj_MidiPmemOutput_Table:24)
 	ld (XBC+0x0a),XWA
 	ldw WA, 0x035b
 	call RegisterObjectTable
@@ -3113,7 +3113,7 @@ InitializeEast:
 	lda xwa, (ResNameProc:24)
 	ld (XBC+0x04),XWA
 	ldw (XBC+0x08), 0x0006
-	lda	xwa, (0xe5ac60:24)
+	lda xwa, (East_ResNameTable_3EC:24)
 	ld (XBC+0x0a),XWA
 	ldw WA, 0x03ec
 	call RegisterObjectTable
@@ -3399,7 +3399,7 @@ AcVocalGrid_DialSetup:
 	extz xde
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_UP
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, (xsp + 8)
 	ld bc, (xwa + 26)
 	ld xwa, (xsp + 4)
@@ -3410,7 +3410,7 @@ AcVocalGrid_DialSetup:
 	extz xde
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_DOWN
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 	jrl AcVocalGrid_SetDialAndRet
 AcVocalGridBoxProc_OnIndexswUp:	; cases 29360151, 29360153
@@ -3465,11 +3465,11 @@ AcVocalGrid_CheckEvent91:
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, (xsp + 12)
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 12)
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 	jrl AcVocalGrid_SetDialAndRet
 AcVocalGridBoxProc_OnIndexswDown:	; cases 29360152, 29360154
@@ -3524,11 +3524,11 @@ AcVocalGrid_CheckEvent91B:
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, (xsp + 12)
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 12)
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 
 AcVocalGrid_SetDialAndRet:

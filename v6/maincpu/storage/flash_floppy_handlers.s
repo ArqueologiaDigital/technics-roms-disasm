@@ -6893,7 +6893,7 @@ CmpSetP1_DialGrid:
 	extz xde
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_UP
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, (xsp + 8)
 	ld bc, (xwa + 26)
 	ld xwa, (xsp + 4)
@@ -6904,7 +6904,7 @@ CmpSetP1_DialGrid:
 	extz xde
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_DOWN
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 	jrl CmpSetP1_SetDialEnable
 AcCmpSetGridBoxProc_OnIndexswUp:	; cases 29360151, 29360153
@@ -6959,11 +6959,11 @@ CmpSetP1_SendAndApplyFunc:
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, (xsp + 12)
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 12)
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 	jrl CmpSetP1_SetDialEnable
 AcCmpSetGridBoxProc_OnIndexswDown:	; cases 29360152, 29360154
@@ -7018,11 +7018,11 @@ CmpSetP1_DialDownSendApply:
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, (xsp + 12)
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 12)
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 
 CmpSetP1_SetDialEnable:
@@ -8041,7 +8041,7 @@ FdcFormat_DialGrid:
 	extz	xde
 	ld	xwa, (xsp+16)
 	ld	xbc, EVT_INDEXSW_UP
-	call	0xf9a077
+	call	SetDialUp
 	ld	xwa, (xsp+8)
 	ld	bc, (xwa+26)
 	ld	xwa, (xsp+4)
@@ -8052,7 +8052,7 @@ FdcFormat_DialGrid:
 	extz	xde
 	ld	xwa, (xsp+16)
 	ld	xbc, EVT_INDEXSW_DOWN
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld	wa, 1:i3
 	jrl	S2cGrid_SetDialEnable
 S2cGridBoxProc_OnIndexswUp:	; cases 29360151, 29360153
@@ -8102,11 +8102,11 @@ S2cGrid_DialDownSendApply:
 	ld xwa, (xsp + 16)
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, (xsp + 12)
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, (xsp + 16)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 12)
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 	jrl S2cGrid_SetDialEnable
 S2cGridBoxProc_OnIndexswDown:	; cases 29360152, 29360154
@@ -8157,11 +8157,11 @@ S2cGrid_DialUpSendApply:
 	ld xwa, (xsp + 16)
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, (xsp + 12)
-	call	0xf9a077
+	call SetDialUp
 	ld xwa, (xsp + 16)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 12)
-	call	SetDialUp
+	call	SetDialUp_Entry
 	ld wa, 1:i3
 
 S2cGrid_SetDialEnable:
