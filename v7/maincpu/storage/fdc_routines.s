@@ -1410,7 +1410,7 @@ FDC_CmdSeek:
 	cp a, (0x8a68:16)
 	ret Z
 ; (was .incbin "includes/romslices/v7_transplant_FDC_CmdRecalibrate_tail.bin")
-	.byte	0xc1, 0x9a, 0x89, 0x19, 0x68, 0x8a
+	ld (35432), (35226:16)
 	ld	wa, 2:i3
 	calr	SOME_DELAY
 	calr	FDC_TIMING_DELAY
@@ -2015,10 +2015,7 @@ FDC_INTERRUPT_HANDLER:
 	cp	(FDC_ERROR_CODE:16), 0
 	jr	nz, FDC_INTERRUPT_HANDLER_Code_Epilogue
 	calr	FDC_Wait_Ready_Timeout
-	.byte	0xc1, 0x88, 0x89
-FDC_INTERRUPT_HANDLER_Code:
-	push	xsp
-	nop	
+	cp	(FDC_ERROR_CODE:16), 0
 	jr	nz, FDC_INTERRUPT_HANDLER_Code_Epilogue
 	calr	FDC_ReadDataRegister
 	ldfr_berp	l, 251

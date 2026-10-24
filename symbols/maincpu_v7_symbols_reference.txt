@@ -5,8 +5,8 @@
 # scripts/analysis/l2_symbol_reference.py --regen
 # Do not hand-edit: rename in the sources and regenerate.
 #
-#   symbols .................. 53,693
-#   semantic names ........... 53,214 (99.1%)
+#   symbols .................. 53,742
+#   semantic names ........... 53,263 (99.1%)
 #   positional names ......... 479
 #
 LED_patterns_indicating_firmware_version 00E00000
@@ -33066,6 +33066,27 @@ AccTone_ExtendAndDispatch_Helper2 00F5D5C6
 AccVoice_GetMeasureStartBlock 00F5D5F6
 AccVoice_BarCounterBytecodeData_Helper2 00F5D61E
 AccTone_JumpTableData_Helper 00F5D649
+AccTone_JumpTableData_Helper_Skip 00F5D6C4
+AccTone_JumpTableData_Helper2 00F5D74C
+AccTone_JumpTableData_Helper3 00F5D765
+AccTone_JumpTableData_Helper_Skip2 00F5D7E0
+AccTone_JumpTableData_Helper_Helper 00F5D867
+AccTone_JumpTableData_Helper_Join 00F5D89A
+AccTone_JumpTableData_Helper_Skip3 00F5D89C
+AccTone_JumpTableData_Helper_Skip4 00F5D89E
+AccTone_JumpTableData_Helper_Skip5 00F5D8AD
+AccTone_JumpTableData_Helper_Skip6 00F5D8B7
+AccTone_JumpTableData_Helper_Skip7 00F5D8BB
+AccTone_JumpTableData_Helper_Join2 00F5D8C0
+AccTone_JumpTableData_Helper_Join3 00F5D8E5
+AccTone_JumpTableData_Helper_Skip8 00F5D8F9
+AccTone_JumpTableData_Helper_Skip9 00F5D8FE
+AccTone_JumpTableData_Helper_Join4 00F5D901
+AccTone_JumpTableData_Helper_Skip10 00F5D935
+AccTone_JumpTableData_Helper_Skip11 00F5D972
+AccTone_JumpTableData_Helper_Skip12 00F5D983
+AccTone_JumpTableData_Helper_Join5 00F5D98D
+AccTone_JumpTableData_Helper_Epilogue 00F5D992
 AccVoice_BarCounterBytecodeData_Helper3 00F5D996
 AccVoice_BarCounterBytecodeData_Helper4 00F5D9AD
 AccVoice_BarCounterBytecodeData_Helper5 00F5D9C4
@@ -33160,6 +33181,7 @@ AccTuning_CallWithSaveRestore 00F5E4A6
 AccTuning_DispatchDataBlock_B 00F5E4B9
 AccTone_LookupByProgramWrapped 00F5E4C8
 AccTone_JumpTableData 00F5E4E3
+AccTone_LookupByProgramWrapped_Join 00F5E4FC
 AccPatch_InitFuncTable 00F5E503
 AccTone_StubReturn_A 00F5E513
 AccTone_StubReturn_B 00F5E514
@@ -33174,6 +33196,29 @@ AccPatch_ClearModeAndInitSlotChain_Wrap 00F5E56B
 AccStyle_TableDataEntry_Helper2 00F5E575
 AccPatch_ClearModeFlag 00F5E57B
 Not_sure_maybe_SOFT_VERSION_related 00F5E581
+Not_sure_maybe_SOFT_VERSION_related_Code_Return 00F5E5A7
+Not_sure_maybe_SOFT_VERSION_related_Loop 00F5E5BF
+Not_sure_maybe_SOFT_VERSION_related_Skip 00F5E5F4
+Not_sure_maybe_SOFT_VERSION_related_Code_Return4 00F5E60B
+Not_sure_maybe_SOFT_VERSION_related_Code_Helper 00F5E60C
+Not_sure_maybe_SOFT_VERSION_related_Code_Helper_Skip 00F5E626
+Not_sure_maybe_SOFT_VERSION_related_Code_Helper_Join 00F5E62E
+Not_sure_maybe_SOFT_VERSION_related_Code_Helper_Skip2 00F5E639
+Not_sure_maybe_SOFT_VERSION_related_Code_Helper_Helper 00F5E63F
+Not_sure_maybe_SOFT_VERSION_related_Code_Join 00F5E643
+Not_sure_maybe_SOFT_VERSION_related_Code_Skip 00F5E659
+Not_sure_maybe_SOFT_VERSION_related_Code_Helper_Return 00F5E661
+Not_sure_maybe_SOFT_VERSION_related_Code_Helper2 00F5E662
+Not_sure_maybe_SOFT_VERSION_related_Code_Skip2 00F5E677
+Not_sure_maybe_SOFT_VERSION_related_Code_Epilogue 00F5E679
+Not_sure_maybe_SOFT_VERSION_related_Code_Return2 00F5E67C
+Not_sure_maybe_SOFT_VERSION_related_Code_Helper3 00F5E67D
+AccPatch_ClearModeFlag_Skip6 00F5E6A4
+AccPatch_ClearModeFlag_Skip7 00F5E6AC
+AccPatch_ClearModeFlag_Return5 00F5E6B4
+Not_sure_maybe_SOFT_VERSION_related_Code_Helper_Helper2 00F5E6B5
+AccPatch_ClearModeFlag_Join4 00F5E6CE
+AccPatch_ClearModeFlag_Return6 00F5E6E9
 AccPatch_CheckAndInitDemo 00F5E6EA
 AccPatch_CheckAndInitDemo_Ret 00F5E6FF
 AccPatch_SlotConfigByteData 00F5E700
@@ -33281,6 +33326,7 @@ AccPatch_SeqPosition_Store_Data 00F5EEBB
 AccPatch_WriteRhythmInit 00F5EED3
 AccPatch_WriteRhythm_Done 00F5EF0B
 AccPatch_ChannelToParamTable 00F5EF0C
+AccPatch_ChannelToRecordPtr 00F5EF1C
 AccPatch_WriteRhythmParams 00F5EF34
 AccPatch_WriteRhythmParam_Loop 00F5EF3D
 AccPatch_WriteRhythmParam_Push 00F5EF7B
@@ -34239,6 +34285,8 @@ RhythmBuf_BarQuartersByTimeSig 00F63AC4
 RhythmBuf_FillEmptyPattern 00F63AD8
 StyleConvert_ReloadParams 00F63B06
 StyleConvert_Reload_Loop 00F63B14
+StyleConvert_ReloadParams_Skip 00F63B33
+StyleConvert_ReloadParams_Return 00F63B3B
 AccPat_CalcAccentVelocity 00F63B3E
 StyleConvert_Reload_CheckEnd 00F63B5B
 StyleConvert_Reload_Return 00F63B65
@@ -35351,7 +35399,7 @@ SndArgNm_DeliverAndReturn 00F69EAD
 SndArgNm_CheckChannelDone_OnSetPtSel 00F69EB3
 SndArgNm_ReturnZero 00F69ED5
 CmpStepTitleFunc 00F69EDE
-CmpStep_DataBlock 00F69EFB
+CmpStepTitle_OnPaint 00F69EFB
 CmpStepTitle_OnPaint_Draw 00F69F1B
 CmpStepTitle_OnHide 00F69F28
 CmpStepTitle_OnSwitchIn 00F69F35
@@ -41500,7 +41548,6 @@ FDC_OUTPUT_CTRL_Skip 00F9785C
 FDC_OUTPUT_CTRL_Skip2 00F97863
 FDC_OUTPUT_CTRL_Join 00F97869
 FDC_INTERRUPT_HANDLER 00F9786F
-FDC_INTERRUPT_HANDLER_Code 00F9788B
 FDC_INTERRUPT_HANDLER_Code_Skip 00F978A1
 FDC_INTERRUPT_HANDLER_Code_Skip2 00F978AD
 FDC_INTERRUPT_HANDLER_Code_Epilogue 00F978B9
@@ -45252,6 +45299,8 @@ BitMapOut_CopyPresetTable_Loop 00FB440A
 BitMapOut_CopyPresetTable_Check 00FB4422
 BitMapOut_CopyExtTable_Loop 00FB4438
 BitMapOut_CopyExtTable_Check 00FB4454
+PanelMemory_RecallRecords_Loop 00FB4462
+PanelMemory_RecallRecords_Join 00FB447E
 PanelMemory_RecallKeepStyle 00FB4509
 PanelMemory_CopySlotToLivePanel 00FB458F
 BitMapOut_SelectiveFieldRestore 00FB45B0

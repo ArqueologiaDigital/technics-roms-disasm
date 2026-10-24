@@ -341,7 +341,7 @@ PanelButton_PairDown_Skip:
 	lda	xbc, (xiz+2)
 	cp	(xbc), 0
 	jr	z, PanelButton_PairDown_Skip2
-	.byte	0xe1, 0xe8, 0x8d, 0xeb
+	or	(36328:16), xhl
 	jr	PanelButton_PairDown_Join
 PanelButton_PairDown_Skip2:
 	ld	xwa, xhl
@@ -376,7 +376,7 @@ PanelButton_PairUp_Skip:
 	lda	xbc, (xiz+2)
 	cp	(xbc), 0
 	jr	z, PanelButton_PairUp_Skip2
-	.byte	0xe1, 0xec, 0x8d, 0xeb
+	or	(36332:16), xhl
 	jr	PanelButton_PairUp_Join
 PanelButton_PairUp_Skip2:
 	ld	xwa, xhl
@@ -7798,7 +7798,7 @@ MIDI_DispatchCC_Guarded:
 	push	xix
 	push	xiy
 	push	xiz
-	.byte 0x1d, 0x8d, 0xfd, 0xfc
+	call MIDI_DispatchCC
 	pop	xiz
 	pop	xiy
 	pop	xix

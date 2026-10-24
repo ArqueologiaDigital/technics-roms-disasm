@@ -671,7 +671,7 @@ AccNoteOn_SpecialDirectAdd:
 	ld	xwa, 0xcb82
 	ld	xbc, (xsp + 2)
 	ldw	de, 0x15
-	.byte 0x1d, 0xc0, 0x21, 0xfe
+	call NoteMap_AddEntry
 	jr	AccNoteOn_FinalizeAndAutoPlay
 AccNoteOn_CheckLayer3Only:
 	ld	xwa, (xsp + 2)
@@ -4084,9 +4084,8 @@ NoteMap_AddEntry_Loop:
 	extz	wa
 	add	wa, 132
 	extz	xwa
-	.byte	0xaf, 0x04, 0x80, 0x80
-	push	xsp
-	pop_a
+	add	xwa, (xsp+4)
+	cp	(xwa), 21
 	jr	nz, NoteMap_AddEntry_Skip2
 	ldto_berp	a, 251
 	ld	c, a
@@ -25002,14 +25001,12 @@ SoundRam_FillDefaultRecord:
 	lda	xix, (xde+183)
 	ldw	bc, 40
 	ldirw
-	.byte	0x85
-	rcf
+	ldi85
 	ld	xiy, xwa
 	lda	xix, (xde+264)
 	ldw	bc, 40
 	ldirw
-	.byte	0x85
-	rcf
+	ldi85
 	ld	xiy, xwa
 	lda	xix, (xde+345)
 	ldw	bc, 40
@@ -25413,9 +25410,7 @@ SendPartDataBlock_Return5_Skip10:
 	incm8	1, (xsp+4)
 	lda	xbc, (xbc+81)
 	lda	xde, (xde+34)
-	.byte	0x8f, 0x04
-	push	xsp
-	pop	sr
+	cp	(xsp+4), 3
 	jrl	c, SoundRam_ConvertKn1500Record_Loop3
 	pop	xiz
 	lda	xsp, (xsp+26)
@@ -26269,10 +26264,7 @@ TmFlash_CompareStrings:
 	call	Strlen
 	inc	8, xsp
 	ld	(xsp+6), hl
-	.byte	0x9f, 0x06
-	push	xsp
-	nop
-	nop
+	cpw	(xsp+6), 0
 	jr	z, TmFlash_CompareStrings_Skip2
 	jr	TmFlash_CompareStrings_Join
 TmFlash_CompareStrings_Loop:

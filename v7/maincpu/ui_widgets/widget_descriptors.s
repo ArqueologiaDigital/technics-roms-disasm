@@ -6259,10 +6259,10 @@ SndArgNmGet_RamPtrsB:	.incbin "includes/generated/naka_widget_descriptors.bin", 
 ; (v10/v9 0xf6a2e2, v7 0xf69ede): ldirw 8 words to its frame and passes
 ; the copy to DirmdEmulator_Entry (v10/v9 0xf9ae97, v7 0xf9aa8a). Four
 ; code addresses inside CmpStepTitleFunc's own region (0xf6a2ff =
-; CmpStep_DataBlock, 0xf6a32c, 0xf6a339, 0xf6a346 in v10/v9; v7
-; relocates them by -0x404 through v7_c_divergence.json) -- code entry
-; points that the accompaniment_engine.s framing does not yet show as
-; code.
+; CmpStepTitle_OnPaint, 0xf6a32c, 0xf6a339, 0xf6a346 in v10/v9; v7
+; relocates them by -0x404 through v7_c_divergence.json): the methods
+; CmpStepTitle_OnPaint, _OnHide, _OnSwitchIn and _Method3Nop in
+; sequencer/accompaniment_engine.s.
 ;
 ; Typed in naka_widget_descriptors.c as uint32_t
 ; CmpStepTitleFunc_ProcTable[4].

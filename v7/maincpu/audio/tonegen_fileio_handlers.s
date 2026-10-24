@@ -533,7 +533,7 @@ PanelTlv_Rule_StoreByte:
 PanelTlv_Rule_ZeroByte:
 	ld	c, (xbc+0x1)
 	extz	bc
-	.byte	0xf3, 0x07, 0xe0, 0xe4, 0x00, 0x00	; ld (XWA+BC),0x00
+	ld	(xwa+bc), 0x00
 	ld	hl, 2:i3
 	ret
 	lda_d16	xwa, (0xf480)
@@ -587,8 +587,7 @@ DSPCfg_SyncBitmapData_Loop:
 	ld	(xsp+8), a
 	ld	xwa, 2:i3
 	add	(xsp+18), xwa
-	.byte	0x8f
-	ld	(PFFC:8), 0:io
+	cp	(xsp+8), 0
 	jr	z, DSPCfg_SyncBitmapData_Join
 DSPCfg_SyncBitmapData_Loop2:
 	ld	xwa, (xsp+18)

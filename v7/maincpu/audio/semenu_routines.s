@@ -47,9 +47,7 @@ SeMenu_StoreEventId:
 	ret
 
 SeMenu_LoadObjectPtr_Data:
-	.byte 0xb0
-	push_a
-	.byte 0x98, 0x06
+	ld (xwa), (1688)
 	ret
 
 SeMenu_LoadMasterPtr:
@@ -1228,9 +1226,7 @@ SeMenu_BitShiftMask_End_Loop3:
 	jr	c, SeMenu_BitShiftMask_End_Loop3
 	ret
 SeMenu_StepParamField:
-	.byte 0x88, 0x06
-	push	xsp
-	nop
+	cp (xwa+6), 0
 	jr	z, SeMenu_StepParamField_Skip
 	cp	(xwa+7), 7
 	jr	ugt, SeMenu_StepParamField_Skip
@@ -1415,9 +1411,7 @@ SeMenu_ToggleSolo:
 	dec	2, xsp
 	lda	xwa, (xsp)
 	calr	SeMenu_SetupMenuDisplay_Finalize
-	.byte 0x87
-	push	xsp
-	nop
+	cp (xsp), 0
 	jr	z, SeMenu_ToggleSolo_Skip7
 	ld	wa, 0:i3
 	jr	SeMenu_ToggleSolo_Join5
@@ -1441,9 +1435,7 @@ SeMenu_SetFilterType:
 	lda	xwa, (xsp)
 	calr	SeMenu_LoadObjEntries
 	lda	xde, (xsp+4)
-	.byte 0x87
-	push	xsp
-	nop
+	cp (xsp), 0
 	jr	nz, SeMenu_SetFilterType_Skip8
 	ld	a, (xsp+2)
 	extz	wa
@@ -1703,10 +1695,7 @@ SeMenu_ApplyPartEdit_Helper2:
 	extz	bc
 	extz	hl
 	lda	xde, (xsp+5)
-	.byte 0x8f
-	ret
-	push	xsp
-	nop
+	cp	(xsp+14), 0
 	jr	nz, SeMenu_TransferPartValues_EndData_Skip18
 	pushw	hl
 	ld	wa, 0:i3
@@ -1761,9 +1750,7 @@ SeMenu_StepParamFieldAndSend_Skip19:
 	ld	c, (xsp+20)
 	extz	bc
 	lda	xde, (xiz+3)
-	.byte 0x8f, 0x04
-	push	xsp
-	nop
+	cp (xsp+4), 0
 	jr	nz, SeMenu_StepParamFieldAndSend_Skip20
 	pushw	hl
 	calr	SeMenu_RegisterElement_Extended
@@ -1968,9 +1955,7 @@ SeCtr2_StepPartField_Join7:
 	ldto_berp a, 251
 	extz	wa
 	lda	xde, (xsp+8)
-	.byte 0x8f, 0x04
-	push	xsp
-	nop
+	cp (xsp+4), 0
 	jr	nz, SeCtr2_StepPartField_Skip26
 	pushw	wa
 	ld	wa, 0:i3
@@ -3062,7 +3047,7 @@ SeLfo1_StepSelectorAndReload_Epilogue3:
 	ret
 SeMenu_ApplyPartEdit_AltStore_Join10:
 	lda	xsp, (xsp-22)
-	.byte 0xd7, 0xfa, 0x04
+	push qiz
 	ld	(xsp+18), e
 	ld	(xsp+20), c
 	ld	(xsp+22), a
@@ -3159,7 +3144,7 @@ SeLfo1_StepSelectorAndReload_Epilogue4:
 	ret
 SeMenu_ApplyPartEdit_AltStore_Join12:
 	lda	xsp, (xsp-22)
-	.byte 0xd7, 0xfa, 0x04
+	push qiz
 	ld	(xsp+18), e
 	ld	(xsp+20), c
 	ld	(xsp+22), a
@@ -3256,7 +3241,7 @@ SeLfo1_StepSelectorAndReload_Epilogue5:
 	ret
 SeMenu_ApplyPartEdit_AltStore_Join14:
 	lda	xsp, (xsp-22)
-	.byte 0xd7, 0xfa, 0x04
+	push qiz
 	ld	(xsp+18), e
 	ld	(xsp+20), c
 	ld	(xsp+22), a
@@ -3577,7 +3562,7 @@ SeMenu_ApplyPartEdit_AltStore_Join20:
 	ret
 SeMenu_ApplyPartEdit_AltStore_Join21:
 	lda	xsp, (xsp-24)
-	.byte 0xd7, 0xfa, 0x04
+	push qiz
 	ld	(xsp+22), c
 	ld	(xsp+24), a
 	lda	xwa, (xsp+14)
@@ -3958,7 +3943,7 @@ SeMenu_DrawAmpEnvGraph_Skip42:
 	ld	bc, hl
 	cp	bc, 0:i3
 	jr	nz, SeMenu_DrawAmpEnvGraph_Skip43
-	.byte 0xd7, 0xfa, 0x04
+	push qiz
 	ld	wa, (xsp+10)
 	ld	bc, (xsp+12)
 	ld	de, iz
@@ -3966,7 +3951,7 @@ SeMenu_DrawAmpEnvGraph_Skip42:
 	ld	bc, hl
 	cp	bc, 0:i3
 	jr	nz, SeMenu_DrawAmpEnvGraph_Skip43
-	.byte 0xd7, 0xfa, 0x04
+	push qiz
 	ld	wa, iz
 	ld	bc, qiz
 	ldw	de, 213
@@ -5315,7 +5300,7 @@ SeMenu_ApplyPartEdit_Entry5_Code_Skip12:
 	pushw	iz
 	pushw 232
 	pushw	iz
-	.byte 0xd7, 0xfa, 0x04
+	push qiz
 	jr	SeMenu_ApplyPartEdit_Entry5_Code_Join7
 SeMenu_ApplyPartEdit_Entry5_Code_Skip13:
 	pushw	iz
@@ -5327,7 +5312,7 @@ SeMenu_ApplyPartEdit_Entry5_Code_Skip13:
 	inc	6, wa
 	pushw	wa
 	pushw	iz
-	.byte 0xd7, 0xfa, 0x04
+	push qiz
 	call	SeGfx_DrawLine
 	lda	xsp, (xsp+16)
 	pushm	(xsp+8)
@@ -5341,7 +5326,7 @@ SeMenu_ApplyPartEdit_Entry5_Code_Join7:
 	inc	8, xsp
 	pushw	(xsp+6)
 	push	xiz
-	.byte 0xd7, 0xfa, 0x04
+	push qiz
 	call	SeMenu_DrawDottedLine
 	inc	8, xsp
 	pop	xiz
@@ -6074,9 +6059,7 @@ SeMenu_HandleMenuChange_End:
 	ret
 
 SeMenu_HandleMenuChange_Data:
-	.byte 0xb0
-	push_a
-	popw	(xsp)
+	ld (xwa), (1719)
 	ret
 SeMenu_CopyWriteUpdate_Step3_Helper14:
 	ld	(1719:16), a
@@ -6121,9 +6104,7 @@ SeMenu_SetPartRecordBits:
 	or	(xde), a
 	jr	SeMenu_SetPartRecordBits_Epilogue2
 SeMenu_SetPartRecordBits_Skip3:
-	.byte 0x87
-	push	xsp
-	push	sr
+	cp (xsp), 2
 	jr	nz, SeMenu_SetPartRecordBits_Skip4
 	ld	a, (xsp+4)
 	or	(xbc), a
@@ -6230,9 +6211,7 @@ SeMenu_StepNoteParamInRange_Skip6:
 	ld	l, 1:opc
 	jr	SeMenu_StepNoteParamInRange_Epilogue
 SeMenu_StepNoteParamInRange_Skip7:
-	.byte 0x8f, 0x04
-	push	xsp
-	nop
+	cp (xsp+4), 0
 	jr	z, SeMenu_StepNoteParamInRange_Skip8
 	ld	a, (xsp+4)
 	cp	a, (xsp+6)
@@ -6373,9 +6352,7 @@ SeMenu_StoreEffectCoeff_Data_Loop:
 	lda	xbc, (xbc+wa)
 	calr SeMenu_StoreEffectCoeff_Data
 	incm8	1, (xsp)
-	.byte 0x87
-	push	xsp
-	push	sr
+	cp (xsp), 2
 	jr	ule, SeMenu_StoreEffectCoeff_Data_Loop
 	lda	xde, (xsp+30)
 	lda	xbc, (xsp+34)
@@ -6419,9 +6396,7 @@ SeMenu_StoreEffectCoeff_Data_Loop2:
 	ldto_berp a, 238
 	cp	a, l
 	jr	ule, SeMenu_StoreEffectCoeff_Data_Join
-	.byte 0x84
-	push	xsp
-	nop
+	cp (xix), 0
 	jr	ge, SeMenu_StoreEffectCoeff_Data_Skip
 	ld	(xiy), 0
 	jr	SeMenu_StoreEffectCoeff_Data_Join
@@ -6429,9 +6404,7 @@ SeMenu_StoreEffectCoeff_Data_Skip:
 	ld	(xiy), l
 SeMenu_StoreEffectCoeff_Data_Join:
 	incm8	1, (xsp)
-	.byte 0x87
-	push	xsp
-	push	sr
+	cp (xsp), 2
 	jr	ule, SeMenu_StoreEffectCoeff_Data_Loop2
 	ld	a, (xbc)
 	and	a, 128
@@ -6466,9 +6439,7 @@ SeMenu_StoreEffectCoeff_Data_Loop3:
 	ld	wa, 0:i3
 	calr	SeMenu_RegisterElement_Extended
 	incm8	1, (xsp)
-	.byte 0x87
-	push	xsp
-	pop	sr
+	cp (xsp), 3
 	jr	c, SeMenu_StoreEffectCoeff_Data_Loop3
 	lda	xsp, (xsp+40)
 	ret

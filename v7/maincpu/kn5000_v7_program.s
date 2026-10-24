@@ -1671,8 +1671,11 @@ Boot_ReadFDCStatus:
 
 ; VoiceSynth command handler case 0
 VoiceSynth_CmdCase0:
-	.byte 0xc2, 0x04, 0xdd, 0x03, 0x3f, 0x00, 0xb0, 0xf6
-	.byte 0x43, 0x14, 0x00, 0x28, 0x00, 0xb3, 0xe8, 0x0e
+	cp (XAPR_PRESENT_FLAG:24), 0
+	ret z
+	ld xhl, 2621460
+	call (xhl)
+	ret
 ; VoiceSynth command handler case 1
 VoiceSynth_CmdCase1:
 ; Get resource info based on resource type (WA 0-9)
@@ -2178,9 +2181,12 @@ Voice_InitBankTables_Loop:
 
 Voice_InitBankTables_SlotLoop:
 ; (was .incbin "includes/romslices/v7_fix_voice_initbanktables_slotloop.bin")
-	.byte	0x45, 0x45, 0xed, 0xf6, 0x00, 0x31, 0x80, 0x00
-	.byte	0x95, 0x11, 0xc9, 0x69, 0x6e, 0xf2, 0xf1, 0x7c
-	.byte	0x7d, 0x02, 0x39, 0x00
+	ld	xiy, Voice_SlotTemplate
+	ldw	bc, 128
+	ldirw
+	dec	1, a
+	jr	nz, Voice_InitBankTables_SlotLoop
+	ldw	(32124:16), 57
 	ret
 	.include "audio/voice_bank_defaults.s"
 Voice_InitBankData:

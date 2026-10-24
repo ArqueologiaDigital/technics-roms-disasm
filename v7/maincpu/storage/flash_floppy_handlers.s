@@ -2608,7 +2608,7 @@ Flash_StoreBaseAndInitAccPatch_Loop5:
 	ld	de, wa
 	inc	4, de
 	lda	xbc, (1952:16)
-	.byte	0xd3, 0x07, 0xe4, 0xe8, 0xf3
+	cp	hl, (xbc+de)
 	jr	nz, Flash_StoreBaseAndInitAccPatch_Sub_Skip2
 	inc	6, wa
 	ld	hl, (xbc+wa)
@@ -2632,7 +2632,7 @@ Flash_StoreBaseAndInitAccPatch_Sub_Skip2:
 	ld	de, wa
 	inc	4, de
 	lda	xbc, (1952:16)
-	.byte	0xd3, 0x07, 0xe4, 0xe8, 0xf3
+	cp	hl, (xbc+de)
 	jr	nz, Flash_StoreBaseAndInitAccPatch_Sub_Skip3
 	inc	6, wa
 	ld	hl, (xbc+wa)
@@ -2656,7 +2656,7 @@ Flash_StoreBaseAndInitAccPatch_Sub_Skip3:
 	ld	de, wa
 	inc	4, de
 	lda	xbc, (1952:16)
-	.byte	0xd3, 0x07, 0xe4, 0xe8, 0xf3
+	cp	hl, (xbc+de)
 	jr	nz, Flash_StoreBaseAndInitAccPatch_Sub_Skip4
 	inc	6, wa
 	ld	hl, (xbc+wa)
@@ -2680,7 +2680,7 @@ Flash_StoreBaseAndInitAccPatch_Sub_Skip4:
 	ld	de, wa
 	inc	4, de
 	lda	xbc, (1952:16)
-	.byte	0xd3, 0x07, 0xe4, 0xe8, 0xf3
+	cp	hl, (xbc+de)
 	jr	nz, Flash_StoreBaseAndInitAccPatch_Sub_Skip5
 	inc	6, wa
 	ld	hl, (xbc+wa)

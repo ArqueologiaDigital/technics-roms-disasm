@@ -528,7 +528,7 @@ PostLswLoad:
 	push	xhl
 	push	xix
 	push	xiz
-	.byte 0x1d, 0xb2, 0xaa, 0xfd
+	call SwbtWr_CallProcessAll
 	call	SwbtWr_ReinitOutputBank
 	pop	xiz
 	pop	xix
@@ -761,7 +761,7 @@ BitMapOut_MergeOutputFields:
 	push	xix
 	push	xiz
 	call	SwbtWr_ReinitOutputBank
-	.byte 0x1d, 0xb2, 0xaa, 0xfd
+	call SwbtWr_CallProcessAll
 	call	SwbtWr_ReinitOutputBank
 	pop	xiz
 	pop	xix
@@ -817,7 +817,7 @@ BitMapOut_MergeOutputFields:
 	push	xhl
 	push	xix
 	push	xiz
-	.byte 0x1d, 0xb2, 0xaa, 0xfd
+	call SwbtWr_CallProcessAll
 	pop	xiz
 	pop	xix
 	pop	xhl
@@ -1412,7 +1412,7 @@ CompIface_SetMax:
 	push	xhl
 	push	xix
 	push	xiz
-	.byte 0x1d, 0xb2, 0xaa, 0xfd
+	call SwbtWr_CallProcessAll
 	call	SwbtWr_ReinitBothBanks
 	pop	xiz
 	pop	xix

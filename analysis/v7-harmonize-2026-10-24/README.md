@@ -81,3 +81,45 @@ rows were read and renamed to v10's name with `--rename-named --only ...`: three
 `AppEvent_InlineHandler_DecLastMeasure_OnTitleSqnotecng` (v7 `AppEvent_SubDispatch_Code_2`),
 `VoiceParam_ModeDispatch_Table`, `MidiStream_PanelEventHandlerTable`, and the
 `PerfMode_MapDisplayNoteToEvent` swap above.
+
+## Verbatim bytes and `.byte` runs: re-framed as instructions and typed data
+
+| step | what                                                                                                             | command                                                                                                                                    |
+|------|------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
+| 1    | the eight flash-update banners round-trip from PNGs (`mono_images.py` covers v7)                                 | `python3 scripts/build/mono_images.py verify`                                                                                              |
+| 2    | the last eight romslice `.incbin`s spelled as `.byte` rows (the inliner now takes `Label:` and an offset/length) | `python3 scripts/converters/inline_romslice_incbin.py FILES`                                                                               |
+| 3    | `.byte` runs whose framing the same label's v10 code confirms, re-framed                                         | `reframe_v7_runs_crosscheck_v10.py` (its docstring gives the three commands)                                                               |
+| 4    | branch operands left numeric by step 3 named; the 19 R3-refused sites on step 3's lines trusted                  | `symbolize_numeric_branches.py --image v7 --trust-traced analysis/v7-harmonize-2026-10-24/r3-trusted-reframed-sites.json --apply --verify` |
+| 5    | the romslice regions the disassembler cannot fully decode, one by one                                            | `python3 scripts/converters/v7_byte_region_to_insns.py FILE LABEL [--auto-indexed] [--fix ...] --apply`                                    |
+| 6    | `.byte` runs in front of a misread instruction tail, or holding a register-indexed `(xrr+rr)` form               | `python3 scripts/converters/reframe_byte_runs_by_decode.py --image v7 --linemap LM.json FILES --apply`                                     |
+| 7    | names: the structural labels steps 4-6 inserted take v10's names where the parents agree                         | `harmonize_by_caller_alignment.py --to v7 ... --apply` (as above)                                                                          |
+
+Step 5 regions: `CmpStep_DataBlock` (32 bytes; it is v10's `CmpStepTitle_OnPaint`, renamed by
+`scripts/renaming/rename_v7_cmpstep_onpaint.sed`), `Not_sure_maybe_SOFT_VERSION_related` (361),
+`AccTone_JumpTableData_Helper` (845, including v10's `_Helper2` and `_Helper3`),
+`BitMapOut_CopyExtTable_Check` (181).  The data were typed by hand: `AccPatch_ChannelToParamTable`
+with `AccPatch_ChannelToRecordPtr` (v7's records are at 0x2BF8-0x2EF8), `RhythmFillIn_PatternTable`
+(v10 still spells its 8 bytes as instructions: `rcf / max / push sr ...`), and the `"XAPR"` / `"TEST"`
+strings.  `FDC_INTERRUPT_HANDLER`'s `.byte 0xc1, 0x88, 0x89 / FDC_INTERRUPT_HANDLER_Code: push xsp /
+nop` is `cp (FDC_ERROR_CODE:16), 0`; the unreferenced mid-instruction label was dropped.  The eight
+romslice `.bin` files no source includes any more were removed (`scripts/build/extract_v7_bins.py`,
+which named one of them, is retired).
+
+| measure (v7)                                  | before (79e035417) | after  | command                              |
+|-----------------------------------------------|--------------------|--------|--------------------------------------|
+| verbatim (DEBT) bytes                         | 6,591              | 0      | `kn5000_verbatim_list.py v7/maincpu` |
+| source coverage                               | 99.7%              | 100.0% | `kn5000_source_coverage.py`          |
+| `.byte` runs after a fall-through instruction | 180                | 78     | `doc_quality_census.py`, row (d)     |
+| ... their bytes                               | 1,427              | 1,018  | `doc_quality_census.py`, row (d)     |
+| `.byte` runs after a terminator               | 119                | 97     | `doc_quality_census.py`, row (d)     |
+| ... their bytes                               | 4,794              | 4,324  | `doc_quality_census.py`, row (d)     |
+| numeric branch targets                        | 7                  | 7      | `doc_quality_census.py`, row (b)     |
+
+The re-framing added labels: v7 now has 53,742 labels, 52,870 of them v10 names and 872 not
+(`version_shared_names.py`).  The 24 new non-v10 names are structural labels symbolize_numeric_branches.py
+put on new branch targets whose v10 name the harmonizer refuses (`parent-differs` or
+`v10-name-misparented`).
+
+What is left in row (d) is mostly forms the backend cannot spell at all (`sll a, hl`, `srl a, bc`,
+`ldcf a, rh3`, `minc1`, the `d7 fa ...` previous-bank forms), each already commented as such, plus
+data runs next to code.

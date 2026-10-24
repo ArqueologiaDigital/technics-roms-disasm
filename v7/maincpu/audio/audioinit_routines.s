@@ -13,7 +13,7 @@ AudioInit_ConfigStereoVoice:
 	extz	xwa
 	add	xwa, xbc
 	cp	(xwa), 0x3
-	.byte 0x67, 0x78
+	jr	c, AudioInit_VoiceNotConfigured
 	ld	a, (PART_SELECT:16)
 	extz	wa
 	lda	xbc, (AudioInit_ChannelMapA:24)
@@ -281,7 +281,7 @@ AudioInit_LoadAndConfigure:
 	ld	wa, (0xc4f8:16)
 	bit	4, wa
 	ret	z
-	.byte 0xf1, 0x63, 0xc1, 0x00, 0xff
+	ld (49507:16), 255
 	ret
 AudioInit_MixFallbackConfig:
 	extz	wa
@@ -362,7 +362,7 @@ AudioInit_VoiceParamDone:
 AudioInit_DrumRoutingCheck:
 	ld	de, 0:i3
 	bit	2, (0xc162:16)
-	.byte 0x6e, 0x16
+	jr nz, AudioInit_ProcessVoiceAssign
 AudioInit_CheckOutputFlags:
 	ld	wa, (0xc4fc:16)
 	and	wa, 0x60
@@ -1376,7 +1376,7 @@ AudioInit_ConfigurePanning:
 	ld	wa, (0xc4fa:16)
 	bit	2, wa
 	ret	nz
-	.byte 0xc1, 0x63, 0xc1, 0x3f, 0xff
+	cp (49507:16), 255
 	jr	nz, AudioInit_Pan_CheckMode0
 	bit	0, (0xc162:16)
 	jr	nz, AudioInit_Pan_SetStereoLeft
