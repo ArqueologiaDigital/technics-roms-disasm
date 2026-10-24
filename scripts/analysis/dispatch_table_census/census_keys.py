@@ -3,7 +3,7 @@
 
 QUESTION IT ANSWERS
   "What does the dispatch census say for THESE images?" when the maps of the others are not built.
-  census.py loops over all eleven images and needs every map; a lane that only touched WSA1 (or works
+  census.py loops over all twelve images and needs every map; a lane that only touched WSA1 (or works
   in a worktree where the KN5000 trees' generated inputs are missing) can still measure its own images.
   The report has the same columns as `census.py --report`, restricted to the keys given.  It never
   writes a snapshot: snapshots stay whole-repository (`make dispatch-census`).
