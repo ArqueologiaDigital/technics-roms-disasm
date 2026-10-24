@@ -140,8 +140,11 @@ class Assembler:
         """The estimated address of forward label `tok`: where the previous pass
         put it, moved by the drift this line has had since. Without the drift a
         pass mixes two layouts (backward labels from this one, forward ones from
-        the last), and the branches that span the difference relax and grow."""
-        here = len(self.out)
+        the last), and the branches that span the difference relax and grow.
+        The drift is measured from the start of the line, not from the current
+        output offset: a line such as `.long A, B, C` has emitted A's word when B
+        is resolved, and counting those bytes would move B and C by 4 and 8."""
+        here = self.line_off.get((self.cur_file, self.cur_line), len(self.out))
         v = self.known[tok] + here - self.prev_off.get((self.cur_file, self.cur_line), here)
         self.assumed[tok] = v
         return v

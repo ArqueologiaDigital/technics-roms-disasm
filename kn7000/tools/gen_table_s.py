@@ -4,8 +4,12 @@
 #
 # Generates a byte-exact source for a KN7000 table-flash image (CPU 0x48000000).
 #
-#   * the uint32 offset directory at 0x0 as typed .long rows;
-#   * every asset segment as .incbin_range, tagged, and -- with --compare -- marked
+#   * the uint32 offset directory at 0x0 as .long <segment> - TableRomDirectory rows;
+#   * every asset segment under the label and header comment tools/table_segments.py
+#     gives it: a JPEG segment as .incbin of its file in src/table/ (written there
+#     with --jpg-dir; a file already there must hold the same bytes, so two builds
+#     share one copy), a 4-byte text marker as .ascii/.asciz, the GUI resource
+#     header as .long <table> rows, the rest as .incbin_range; with --compare each segment is marked
 #     "unchanged" or "CHANGED" against the same segment of another build;
 #   * with --plugin: the SP7001 XAPR plug-in appended after the directory image,
 #     as real MN10300 assembly for its code (unidasm mnemonics re-encoded by the
@@ -17,9 +21,11 @@
 # byte-identical to the dump.
 #
 # Usage:
-#   gen_table_s.py --rom T.rom --out T.s [--compare OTHER.rom --compare-label NAME]
+#   gen_table_s.py --rom T.rom --out T.s [--jpg-dir src/table]
+#                  [--compare OTHER.rom --compare-label NAME]
 #                  [--plugin LO:HI --plugin-code LO:HI] [--sym F.sym ...] [--title ...]
 import argparse
+import hashlib
 import os
 import re
 import struct
@@ -28,6 +34,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import gen_program_s as G     # noqa: E402  (disasm_function, encoder, name_target)
 import gen_symbols as GS      # noqa: E402  (find_tables)
+import table_segments as TS   # noqa: E402  (what each directory segment is)
 
 BASE = 0x48000000
 
@@ -45,18 +52,6 @@ def directory(d):
             break
         ents.append(v)
     return ents                      # segment i = [ents[i], ents[i+1])
-
-
-def tag(seg):
-    if seg[:2] == b"\xff\xd8":
-        return "JPEG"
-    t = ""
-    for b in seg[:4]:
-        if 0x20 <= b < 0x7F:
-            t += chr(b)
-        else:
-            break
-    return t or "data"
 
 
 def load_syms(paths):
@@ -82,12 +77,365 @@ def text(bs):
     return "".join(c if 32 <= ord(c) < 127 and c not in "#;" else f"\\x{ord(c):02X}" for c in s)
 
 
+
+def lowhex(line):
+    """Hex numbers in a comment line in lowercase (the tree's notation rule)."""
+    return re.sub(r"0x[0-9A-Fa-f]+", lambda m: m.group(0).lower(), line)
+
+
+def jpeg_split(seg, start):
+    """-> (jpeg, pad) when `seg` (at file offset `start`) is one JPEG (FF D8 .. FF D9)
+    followed only by the zero bytes that pad it to a 4-byte boundary, else None."""
+    end = seg.rfind(b"\xff\xd9") + 2
+    if seg[:2] != b"\xff\xd8" or end < 4:
+        return None
+    jpeg, pad = seg[:end], seg[end:]
+    if pad != bytes(len(pad)) or len(pad) != -(start + end) % 4:
+        return None
+    return jpeg, pad
+
+
+def jpeg_dims(jpeg):
+    i = 2
+    while i + 9 <= len(jpeg):
+        mark, ln = jpeg[i + 1], struct.unpack_from(">H", jpeg, i + 2)[0]
+        if mark in (0xC0, 0xC1, 0xC2):
+            h, w = struct.unpack_from(">HH", jpeg, i + 5)
+            return w, h
+        i += 2 + ln
+    return None
+
+
+def put_jpeg(jpg_dir, name, jpeg):
+    """Write <jpg_dir>/<name> unless it is already there; it must hold these bytes."""
+    path = os.path.join(jpg_dir, name)
+    if os.path.exists(path):
+        if open(path, "rb").read() != jpeg:
+            sys.exit(f"gen_table_s: {path} exists with other bytes than this build's segment")
+        return
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    open(path, "wb").write(jpeg)
+
+
+def gui_resource_tables(d, s, e, ROMQ):
+    """Segment 0: five header words (four table pointers and a 0) copied out by
+    InitializeResource, zeros, then the four tables. The bitmap, frame-piece and icon
+    tables are {s16 width, s16 height, u8 *pixels} rows ended by an all-zero row, the
+    font table 0x14-byte descriptors ended by an all-zero one; then the pixel and
+    glyph data the rows point at. All pointers are CPU addresses."""
+    tabs = ["ResBitmapTable", "ResFrameTable", "ResIconTable", "ResFontTable"]
+    ptrs = [u32(d, s + 4 * k) for k in range(5)]
+    offs = [p - BASE for p in ptrs[:4]]
+    assert ptrs[4] == 0 and offs == sorted(offs) and s + 20 <= offs[0] and offs[-1] < e, "GUI header"
+    B = [f"    .long\t{', '.join(tabs)}, 0"]
+    cur = s + 20
+
+    def fill(to):
+        assert d[cur:to] == bytes(to - cur), f"GUI tables: non-zero bytes at 0x{cur:x}"
+        return [f"    .space\t0x{to - cur:x}, 0x00"] if to > cur else []
+
+    def blobs(names, end):
+        """Each pointed-at block once, under its first name, up to the next one."""
+        first = {}
+        for p, nm in names:
+            first.setdefault(p, nm)
+        keys = sorted(first)
+        out = []
+        for n, p in enumerate(keys):
+            nxt = keys[n + 1] if n + 1 < len(keys) else end
+            out += [f"{first[p]}:", f"    .incbin_range\t{ROMQ}, 0x{p - BASE:06x}, 0x{nxt - BASE:06x}"]
+        return out, keys
+
+    bounds = offs + [e]
+    for t, (tab, o) in enumerate(zip(tabs, offs)):
+        B += fill(o)
+        B.append(f"{tab}:")
+        hi = BASE + bounds[t + 1]
+        names = []
+        if tab != "ResFontTable":
+            stem = {"ResBitmapTable": "ResBitmap", "ResFrameTable": "ResFrame",
+                    "ResIconTable": "ResIcon"}[tab]
+            rows = []
+            while True:
+                w, h, p = struct.unpack_from("<hhI", d, o + 8 * len(rows))
+                if (w, h, p) == (0, 0, 0):
+                    break
+                assert BASE + o < p < hi, f"{tab}[{len(rows)}] points outside its table's area"
+                rows.append((w, h, p))
+            names = [(p, f"{stem}{k:03d}") for k, (w, h, p) in enumerate(rows)]
+            first = {}
+            for p, nm in names:
+                first.setdefault(p, nm)              # a shared block keeps the first row's name
+            for w, h, p in rows:
+                B += [f"    .word\t{w}, {h}", f"    .long\t{first[p]}"]
+            k = len(rows)
+            B.append("    .long\t0, 0   # end of the table")
+            cur = o + 8 * (k + 1)
+        else:
+            k = 0
+            while True:
+                w, h, desc, cols, gl, kern, dbcs = struct.unpack_from("<HHhHIII", d, o + 0x14 * k)
+                if gl == 0:
+                    assert d[o + 0x14 * k:o + 0x14 * (k + 1)] == bytes(0x14), "font table end"
+                    break
+                names.append((gl, f"ResFont{k:02d}Glyphs"))
+                row = [f"ResFont{k:02d}Glyphs"]
+                for q, nm in ((kern, f"ResFont{k:02d}Kern"), (dbcs, f"ResFont{k:02d}Sjis")):
+                    if q:
+                        assert BASE + o < q < hi, f"font {k}: pointer outside the table's area"
+                        names.append((q, nm))
+                    row.append(nm if q else "0")
+                B += [f"    .word\t{w}, {h}, {desc}, {cols}", f"    .long\t{', '.join(row)}"]
+                k += 1
+            B.append("    .space\t0x14, 0x00   # end of the table")
+            cur = o + 0x14 * (k + 1)
+        lo = min(p for p, _ in names) - BASE
+        B += fill(lo)
+        bl, _keys = blobs(names, hi)
+        B += bl
+        cur = bounds[t + 1]
+    return B
+
+
+def bmp_dims(bmp):
+    """-> (width, height, bits per pixel) of a Windows BMP."""
+    w, h = struct.unpack_from("<ii", bmp, 18)
+    return w, h, struct.unpack_from("<H", bmp, 28)[0]
+
+
+def item_file(it):
+    """-> (kind, file bytes, zero padding after them) when the item is one JPEG
+    (FF D8 .. FF D9) or one Windows BMP (by its size field) followed only by zeros."""
+    if it[:2] == b"\xff\xd8":
+        kind, n = "jpg", it.rfind(b"\xff\xd9") + 2
+    elif it[:2] == b"BM":
+        kind, n = "bmp", u32(it, 2)
+    else:
+        return None
+    if not 4 <= n <= len(it) or it[n:] != bytes(len(it) - n):
+        return None
+    return kind, it[:n], len(it) - n
+
+
+def offset_group(d, s, e, label, ROMQ, jpg_dir, group):
+    """A segment that opens with u32 offsets (from its start; 0 = empty slot) to its
+    items: the table as .long <item> - <segment>, then each item once, under the label
+    of the first slot that points at it; JPEG and BMP items as files in
+    <jpg_dir>/<subdir>/."""
+    prefix, subdir, stems = group
+    seg = d[s:e]
+    first, k = len(seg), 0               # the table ends where its lowest item starts
+    while 4 * k < first:
+        first = min(first, u32(seg, 4 * k) or first)
+        k += 1
+    assert first % 4 == 0, f"{label}: table end not word-aligned"
+    slots = [u32(seg, 4 * k) for k in range(first // 4)]
+    items = sorted(set(o for o in slots if o))
+    assert items[0] == first and items[-1] < len(seg), f"{label}: offsets out of the segment"
+    name = {}
+    for k, o in enumerate(slots):
+        if o:
+            name.setdefault(o, f"{prefix}{k:02d}")
+    B = [f"    .long\t{name[o]} - {label}" if o else "    .long\t0" for o in slots]
+    for n, o in enumerate(items):
+        end = items[n + 1] if n + 1 < len(items) else len(seg)
+        it = seg[o:end]
+        lab = name[o]
+        users = [k for k, v in enumerate(slots) if v == o]
+        B.append("")
+        if len(users) > 1:
+            B.append(f"# slots {', '.join(map(str, users))}")
+        B.append(f"{lab}:")
+        f = item_file(it) if subdir else None
+        if f:
+            kind, data, pad = f
+            slot = int(lab[len(prefix):])
+            fn = f"{subdir}/{slot:02d}_{stems[slot]}.{kind}"
+            put_jpeg(jpg_dir, fn, data)
+            if kind == "jpg":
+                w, h = jpeg_dims(data)
+                what = f"{w}x{h} JPEG"
+            else:
+                w, h, bpp = bmp_dims(data)
+                what = f"{w}x{h} {bpp}-bpp BMP"
+            B.append(f'    .incbin\t"{jpg_dir}/{fn}"   # {what}, {len(data)} bytes')
+            if pad:
+                B.append(f"    .space\t{pad}, 0x00")
+        else:
+            assert not subdir, f"{lab}: item is neither a JPEG nor a BMP"
+            B.append(f"    .incbin_range\t{ROMQ}, 0x{s + o:06x}, 0x{s + end:06x}")
+    return B
+
+
+def asm_string(bs):
+    """A .ascii operand for `bs`: printable ASCII as is, the rest as \\xHH."""
+    out = ""
+    for b in bs:
+        c = chr(b)
+        out += ("\\" + c) if c in '"\\' else c if 0x20 <= b < 0x7F else f"\\x{b:02x}"
+    return f'"{out}"'
+
+
+def string_lines(bs, width=96):
+    """The string `bs` (without its NUL) as .ascii lines and a final .asciz: a line
+    ends after each '~0d' (the help texts' new line) or near `width` at a space."""
+    parts, cur = [], b""
+    i = 0
+    while i < len(bs):
+        cur += bs[i:i + 1]
+        i += 1
+        if cur.endswith(b"~0d") or (len(cur) >= width and cur.endswith(b" ")):
+            parts.append(cur)
+            cur = b""
+    if cur or not parts:
+        parts.append(cur)
+    return ([f"    .ascii\t{asm_string(p)}" for p in parts[:-1]] +
+            [f"    .asciz\t{asm_string(parts[-1])}"])
+
+
+def gap_lines(seg, a, b):
+    """Bytes nothing points at: 0xFF up to a 4-byte boundary, or a .byte row."""
+    gap = seg[a:b]
+    if gap == b"\xff" * len(gap) and len(gap) < 4 and b % 4 == 0:
+        return ["    .align\t4, 0xff"]
+    return [f"    .byte\t{', '.join(f'0x{x:02x}' for x in gap)}"]
+
+
+def help_texts(d, s, e, label):
+    """Segment 67: four language offsets and a 0, then texts and page lists, then the
+    four 100-entry topic indexes; every offset is from the segment start."""
+    seg = d[s:e]
+    langs = [u32(seg, 4 * k) for k in range(len(TS.HELP_LANGS))]
+    assert u32(seg, 16) == 0
+    nul = lambda o: seg.index(0, o) + 1          # noqa: E731
+    pages_n = {}
+    for L in langs:
+        for k in range(TS.HELP_TOPICS):
+            topic, n, pt, ti = struct.unpack_from("<HHII", seg, L + 12 * k)
+            assert topic == k
+            pages_n[pt] = max(pages_n.get(pt, 0), n)
+    items = {}                                     # offset -> (end, kind, label, data)
+
+    def add(off, end, kind, lab, data=None):
+        if off not in items:
+            items[off] = (end, kind, lab, data)
+        assert items[off][:2] == (end, kind), f"HelpTexts: two readings of 0x{off:x}"
+        return items[off][2]
+
+    rows, list_label = {}, {}
+    for (lang, ab), L in zip(TS.HELP_LANGS, langs):
+        add(L, L + 12 * TS.HELP_TOPICS, "index", f"HelpIndex{lang}", ab)
+    for (lang, ab), L in zip(TS.HELP_LANGS, langs):
+        for k in range(TS.HELP_TOPICS):
+            topic, n, pt, ti = struct.unpack_from("<HHII", seg, L + 12 * k)
+            tl = add(ti, nul(ti), "str", f"HelpTitle{ab}{k:02d}")
+            m = pages_n[pt]
+            term = u32(seg, pt + 4 * m) == 0      # most lists end with a 0 word
+            pl = list_label.setdefault(pt, f"HelpPages{ab}{k:02d}")
+            for j in range(m + term):              # lists may share words: one item each
+                add(pt + 4 * j, pt + 4 * j + 4, "word", None)
+            for j in range(m):
+                so = u32(seg, pt + 4 * j)
+                if so:
+                    add(so, nul(so), "str", f"HelpText{ab}{k:02d}_{j}")
+            rows.setdefault(L, []).append((k, n, pl, tl))
+    B = [f"    .long\t{', '.join(f'HelpIndex{lang} - {label}' for lang, _ab in TS.HELP_LANGS)}",
+         "    .long\t0"]
+    cur = 20
+    for off in sorted(items):
+        end, kind, lab, data = items[off]
+        assert off >= cur, f"HelpTexts: 0x{off:x} overlaps the item before it"
+        if off > cur:
+            B += gap_lines(seg, cur, off)
+        if kind == "word":
+            if off in list_label:
+                B.append(f"{list_label[off]}:")
+            so = u32(seg, off)
+            B.append(f"    .long\t{items[so][2]} - {label}" if so else "    .long\t0")
+            cur = end
+            continue
+        B.append(f"{lab}:")
+        if kind == "str":
+            B += string_lines(seg[off:end - 1])
+        else:
+            for k, n, pl, tl in rows[off]:
+                B.append(f"    .word\t{k}, {n}")
+                B.append(f"    .long\t{pl} - {label}, {tl} - {label}")
+        cur = end
+    if cur < len(seg):
+        B += gap_lines(seg, cur, len(seg))
+    return B
+
+
+def directory_image(d, dirents, ROMQ, jpg_dir, other, compare_label):
+    """-> (body lines, segments changed vs `other`) for the directory and its segments."""
+    nseg = len(dirents) - 1
+    build = d[dirents[7]:dirents[8]].split(b"\n")[0].decode("ascii")
+    segs = TS.segment_table(build)
+    B = ["", "# ---- the offset directory ----",
+         "# Segment i starts at TableRomDirectory + dir[i]; the last entry is the end of the",
+         "# directory image. The firmware reaches segment i with",
+         "# `mov (TableRomDirectory + 4 * i), Rn` then `add TABLE_ROM_BASE, Rn`.",
+         "TableRomDirectory:"]
+    for i in range(nseg):
+        B.append(f"    .long\t{segs[i][0]} - TableRomDirectory")
+    B.append("    .long\tTableRomImageEnd - TableRomDirectory")
+    pad = d[4 * len(dirents):dirents[0]]
+    assert set(pad) <= {0}, "directory padding is not zero"
+    B += [f"    .space\t0x{dirents[0]:x} - {len(dirents)} * 4, 0x00",
+          f"    .org\t0x{dirents[0]:06x}"]
+
+    changed = 0
+    for i in range(nseg):
+        s, e = dirents[i], dirents[i + 1]
+        seg = d[s:e]
+        label, kind, jpg, notes = segs[i]
+        note = ""
+        if other:
+            od, oe = other
+            if i + 1 < len(oe):
+                same = od[oe[i]:oe[i + 1]] == seg
+                note = (f"; unchanged vs {compare_label}" if same else
+                        f"; CHANGED vs {compare_label} (was 0x{oe[i + 1] - oe[i]:x} bytes)")
+                changed += not same
+            else:
+                note = f"; not in {compare_label}"
+                changed += 1
+        B += ["", f"# dir[{i}], 0x{e - s:x} bytes{note}."] + [f"# {lowhex(n)}" for n in notes] + [f"{label}:"]
+        if kind == "jpeg":
+            jp = jpeg_split(seg, s)
+            assert jp, f"segment {i} ({label}) is not a padded JPEG"
+            jpeg, pad = jp
+            w, h = jpeg_dims(jpeg)
+            put_jpeg(jpg_dir, jpg, jpeg)
+            B.append(f'    .incbin\t"{jpg_dir}/{jpg}"   # {w}x{h} JPEG, {len(jpeg)} bytes')
+            if pad:
+                B.append("    .align\t4")
+        elif kind == "marker":
+            assert len(seg) == 4, f"segment {i} ({label}) is not a 4-byte marker"
+            text, op = (seg[:-1], ".asciz") if seg.endswith(b"\0") else (seg, ".ascii")
+            assert b"\0" not in text, f"segment {i} ({label}): a NUL inside the marker text"
+            B.append(f"    {op}\t" + asm_string(text).replace("\\x0a", "\\n"))
+        elif kind == "gui":
+            B += gui_resource_tables(d, s, e, ROMQ)
+        elif kind == "help":
+            B += help_texts(d, s, e, label)
+        elif kind == "offtab":
+            B += offset_group(d, s, e, label, ROMQ, jpg_dir, TS.GROUPS[i])
+        else:
+            B.append(f"    .incbin_range\t{ROMQ}, 0x{s:06x}, 0x{e:06x}")
+    B += ["", "TableRomImageEnd:"]
+    return B, changed
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--rom", required=True)
     ap.add_argument("--out", required=True)
     ap.add_argument("--title", default="KN7000 table flash image - byte-exact.")
+    ap.add_argument("--jpg-dir", default="src/table",
+                    help="where the JPEG segments are kept (as the source's .incbin paths name them)")
     ap.add_argument("--compare", help="another build's table image (per-segment equality)")
     ap.add_argument("--compare-label", default="the other build")
     ap.add_argument("--plugin", help="file range LO:HI of an appended XAPR plug-in")
@@ -115,39 +463,10 @@ def main():
          "#",
          f"# Layout: a {len(dirents)}-entry uint32 offset directory at 0x0 (dir[0] = 0x{dirents[0]:X},",
          f"# dir[{nseg}] = 0x{dirents[-1]:X} = end of the directory image), zero padding to",
-         f"# 0x{dirents[0]:X}, then {nseg} asset segments."]
-    body = []
-
-    # ---- directory --------------------------------------------------------
-    body += ["", "# ---- offset directory ----"]
-    for i in range(0, len(dirents), 6):
-        row = dirents[i:i + 6]
-        body.append(f"    .long {', '.join(f'0x{v:08X}' for v in row)}   # dir[{i}..{i + len(row) - 1}]")
-    pad = d[4 * len(dirents):dirents[0]]
-    if set(pad) <= {0}:
-        body.append(f"    .space 0x{dirents[0]:X} - {len(dirents)} * 4, 0x00")
-    else:
-        body.append(f".incbin_range {ROMQ}, 0x{4 * len(dirents):06X}, 0x{dirents[0]:06X}")
-    body.append(f"    .org 0x{dirents[0]:06X}")
-
-    # ---- segments ---------------------------------------------------------
-    body += ["", f"# ---- {nseg} asset segments ----"]
-    changed = 0
-    for i in range(nseg):
-        s, e = dirents[i], dirents[i + 1]
-        note = ""
-        if other:
-            od, oe = other
-            if i + 1 < len(oe):
-                same = od[oe[i]:oe[i + 1]] == d[s:e]
-                note = (f"  unchanged vs {a.compare_label}" if same else
-                        f"  CHANGED vs {a.compare_label} (was 0x{oe[i + 1] - oe[i]:x} bytes)")
-                changed += not same
-            else:
-                note = f"  not in {a.compare_label}"
-                changed += 1
-        body.append(f".incbin_range {ROMQ}, 0x{s:06X}, 0x{e:06X}   "
-                    f"# seg{i:02d} {tag(d[s:e])} (0x{e - s:x} bytes){note}")
+         f"# 0x{dirents[0]:X}, then {nseg} asset segments. Segment names and comments come from",
+         "# tools/table_segments.py; the JPEG segments are files in src/table/.",
+         f"# Reference image: {os.path.basename(a.rom)}, SHA-1 {hashlib.sha1(d).hexdigest()}."]
+    body, changed = directory_image(d, dirents, ROMQ, a.jpg_dir, other, a.compare_label)
     cur = dirents[-1]
 
     used, equ = set(), {}
@@ -167,7 +486,7 @@ def main():
                  f"    .space 0x{len(d):06X} - 0x{cur:06X}, 0xFF"]
     elif cur < len(d):
         body.append(f".incbin_range {ROMQ}, 0x{cur:06X}, 0x{len(d):06X}")
-    body.append(f".org 0x{len(d):06X}   # end of image")
+    body.append(f".org 0x{len(d):06x}   # end of image")
 
     L += ["", ".equ TABLE_ROM_BASE, 0x48000000",
           ".mnbase 0x48000000   # CPU address of output offset 0 (for PC-relative ops)"]

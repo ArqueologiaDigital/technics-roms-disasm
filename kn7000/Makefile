@@ -78,9 +78,22 @@ program-src: tools/gen_program_s.py tools/mn10300_asm.py kn7000.sym kn7000_manua
 		kn7000_exports_from_942.sym $(wildcard annotations/*.ann) baserom/kn7000_program.rom
 	UNIDASM=$(UNIDASM) $(PYTHON) tools/gen_program_s.py
 
-build/kn7000_table.rom: src/table.s tools/kn7asm.py baserom/kn7000_table.rom
+# The table image's pictures live in src/table/: the 57 JPEG segments, and in
+# subdirectories the JPEG/BMP items of the picture-group segments. The same files
+# serve the SP7001 table, whose copies are identical; the rest comes from baserom/.
+TABLE_JPGS := $(wildcard src/table/*.jpg src/table/*/*.jpg src/table/*/*.bmp)
+
+build/kn7000_table.rom: src/table.s $(TABLE_JPGS) tools/kn7asm.py baserom/kn7000_table.rom
 	@mkdir -p build
 	$(ASM) src/table.s -I . -o $@
+
+# Regenerate src/table.s and src/table/ from build 84's image: the directory as
+# offsets to labelled segments, names and comments from tools/table_segments.py. The
+# committed files are the result; the build does not need this.
+.PHONY: table-src
+table-src: tools/gen_table_s.py tools/table_segments.py baserom/kn7000_table.rom
+	$(PYTHON) tools/gen_table_s.py --rom baserom/kn7000_table.rom --out src/table.s \
+	    --jpg-dir src/table --title 'KN7000 "Table" flash image (build 84) - byte-exact.'
 
 build: $(TARGETS)
 
@@ -217,7 +230,7 @@ build/kn7000_program_sp7001.rom: src/sp7001/program.s src/sp7001/symbols.inc too
 	@mkdir -p build
 	$(ASM) src/sp7001/program.s -I . -o $@
 
-build/kn7000_table_sp7001.rom: src/sp7001/table.s tools/kn7asm.py baserom/kn7000_table_sp7001.rom
+build/kn7000_table_sp7001.rom: src/sp7001/table.s $(TABLE_JPGS) tools/kn7asm.py baserom/kn7000_table_sp7001.rom
 	@mkdir -p build
 	$(ASM) src/sp7001/table.s -I . -o $@
 
@@ -359,10 +372,10 @@ xap-src-sp7001: tools/gen_xap_s.py tools/gen_table_s.py tools/gen_program_s.py \
 	    --fw-sym kn7000_sp7001.sym kn7000_sp7001_manual.sym kn7000_sp7001_exports.sym kn7000_sp7001_new.sym
 
 .PHONY: table-src-sp7001
-table-src-sp7001: tools/gen_table_s.py tools/gen_program_s.py tools/gen_symbols.py \
+table-src-sp7001: tools/gen_table_s.py tools/table_segments.py tools/gen_program_s.py tools/gen_symbols.py \
 		$(SP7001_TABLE_SYMS) baserom/kn7000_table.rom baserom/kn7000_table_sp7001.rom
 	UNIDASM=$(UNIDASM) $(PYTHON) tools/gen_table_s.py --rom baserom/kn7000_table_sp7001.rom \
-	    --out src/sp7001/table.s \
+	    --out src/sp7001/table.s --jpg-dir src/table \
 	    --title 'KN7000 SP7001 "Table" flash image (build 83) - byte-exact.' \
 	    --compare baserom/kn7000_table.rom --compare-label "build 84" \
 	    --plugin $(SP7001_PLUGIN) --plugin-code $(SP7001_PLUGIN_CODE) \
