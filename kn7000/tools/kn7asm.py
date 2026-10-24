@@ -399,14 +399,17 @@ class Assembler:
 
     def seed(self, path):
         """Take a previous build's label addresses (write_labels) as the first
-        pass's estimates of forward labels. Only a guess: the passes still run
-        until one is exact, so a stale file costs time, never correctness."""
+        pass's estimates of forward labels. Only a guess, and only trusted when
+        it is right: if the seeded first pass is not exact, assemble() starts
+        over from no estimates (see there), so a stale file costs one pass,
+        never correctness."""
         try:
             for line in open(path):
                 name, value = line.split()
                 self.known[name] = int(value, 16)
         except (OSError, ValueError):
             self.known = {}
+        self.seeded = bool(self.known)
 
     def write_labels(self, path):
         with open(path, "w") as f:
@@ -417,8 +420,19 @@ class Assembler:
         """Assemble `path`, repeating the pass until it is exact: no placeholder
         was needed and every forward address it took from the previous pass is
         where that label really landed. Usually one pass, or two with forward
-        labels."""
-        for _ in range(20):
+        labels.
+
+        A seeded run (seed()) whose first pass is not exact starts over without
+        the seed. Branch relaxation only ever grows an instruction, so the
+        passes settle on the shortest layout only when they start from short
+        branches, as placeholders give. A stale seed can start a conditional
+        branch at the edge of its 8-bit reach in its long `bCC !cc; jmp` form,
+        and that layout is consistent too: the 3 extra bytes keep the target
+        out of reach. Seen 2026-10-24 after a relabelling: `beq` +0x7F at
+        0x48507A39 settled long, 3 bytes off from there on."""
+        for n in range(20):
+            if n == 1 and getattr(self, "seeded", False):
+                self.seeded, self.known, self.line_off, self.enc_cache = False, {}, {}, {}
             self.start_pass()
             self.assemble_file(path)
             undefined = [n for n in self.guessed if n not in self.symbols]
