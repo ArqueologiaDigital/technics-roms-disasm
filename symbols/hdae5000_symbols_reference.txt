@@ -5,8 +5,8 @@
 # scripts/analysis/l2_symbol_reference.py --regen
 # Do not hand-edit: rename in the sources and regenerate.
 #
-#   symbols .................. 5,264
-#   semantic names ........... 5,264 (100.0%)
+#   symbols .................. 5,265
+#   semantic names ........... 5,265 (100.0%)
 #   positional names ......... 0
 #
 HDAE5000_ROM_HEADER 00280000
@@ -1292,9 +1292,10 @@ HDAE5000_PPORT_Svc29_MainHook0538 0028F343
 HDAE5000_PPORT_Svc30_MainHook053C 0028F357
 HDAE5000_VarInt_Encode 0028F36B
 HDAE5000_VarInt_Decode 0028F3BD
-HDAE5000_Filename_Validate 0028F3FD
-HDAE5000_Extension_Check 0028F438
-HDAE5000_Config_Init 0028F4D1
+HDAE5000_Smf_SwapBytes32 0028F3FD
+HDAE5000_Smf_SwapBytes16 0028F438
+HDAE5000_Smf_ReadHeader 0028F447
+HDAE5000_Smf_CheckHeader 0028F4D1
 HDAE5000_Alloc_Memory 0028F543
 HDAE5000_Alloc_Memory__type_A1 0028F55E
 HDAE5000_Alloc_Memory__type_A2 0028F564
@@ -5110,7 +5111,7 @@ HDAE5000_Str_LANFRA003 002E5DA8
 HDAE5000_Str_LANDEU002 002E5DB2
 HDAE5000_Str_LANENG001 002E5DBC
 HDAE5000_Str_XAP 002E5DC6
-HDAE5000_Str_Rb_Extension_Check 002E5DCA
+HDAE5000_Str_Rb_Smf_ReadHeader 002E5DCA
 HDAE5000_Palette_BootSplash 002E5DCE
 HDAE5000_Bitmap_BootSplash 002E61CE
 HDAE5000_Display_Params 002F8DCE

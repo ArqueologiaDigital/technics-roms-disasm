@@ -3255,12 +3255,13 @@ HDAE5000_FlsOverWrSwCatch_Epilogue:
 	ret
 
 
-HDAE5000_FdList_Redisplay:	; 0x289665 (548 bytes)
-	; Set up filesystem buffers at 0x22AA9C
-	; (= redisplay the floppy list built by HDAE5000_FdList_Scan: title
-	; 0x22AA9C to object 0x7F00DE, "*" on the rows whose flag is set.)
-	; --- Register events for filesystem buffer at 0x22AA9C ---
-	lda xwa, (0x22aa9c:24); f2 9c aa 22 30
+; ---------------------------------------------------------------------------
+; Redisplay the floppy list HDAE5000_FdList_Scan built: the text of
+; HDAE5000_RAM_FdList to object 0x7F00DE, and a "*" in front of each row whose
+; selected flag (FdList+0x114) is set, a space otherwise.
+; ---------------------------------------------------------------------------
+HDAE5000_FdList_Redisplay:
+	lda xwa, (HDAE5000_RAM_FdList:24); f2 9c aa 22 30
 	ld xde, xwa				; e8 8a
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 a2 a1 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20 — ld xwa, (xwa+0x0e0a)
@@ -3289,7 +3290,7 @@ HDAE5000_FdList_Redisplay:	; 0x289665 (548 bytes)
 	add wa, 0x000a				; d8 c8 0a 00
 	extz xwa				; e8 12
 	add xwa, 0x0000000e			; e8 c8 0e 00 00 00
-	ld xbc, 0x0022aa9c			; 41 9c aa 22 00
+	ld xbc, HDAE5000_RAM_FdList			; 41 9c aa 22 00
 	add xbc, xwa				; e8 81
 	ld	(xbc), 0x20
 
@@ -3297,7 +3298,7 @@ HDAE5000_FdList_Redisplay:	; 0x289665 (548 bytes)
 	ld wa, de				; da 88
 	extz xwa				; e8 12
 	add xwa, 0x00000114			; e8 c8 14 01 00 00
-	ld xbc, 0x0022aa9c			; 41 9c aa 22 00
+	ld xbc, HDAE5000_RAM_FdList			; 41 9c aa 22 00
 	add xbc, xwa				; e8 81
 	cp	(xbc), 0x01
 	jr nz, .Lfbs_loop_next			; 6e xx
@@ -3308,7 +3309,7 @@ HDAE5000_FdList_Redisplay:	; 0x289665 (548 bytes)
 	add wa, 0x000a				; d8 c8 0a 00
 	extz xwa				; e8 12
 	add xwa, 0x0000000e			; e8 c8 0e 00 00 00
-	ld xbc, 0x0022aa9c			; 41 9c aa 22 00
+	ld xbc, HDAE5000_RAM_FdList			; 41 9c aa 22 00
 	add xbc, xwa				; e8 81
 	ld	(xbc), 0x2a
 
@@ -3319,7 +3320,7 @@ HDAE5000_FdList_Redisplay:	; 0x289665 (548 bytes)
 
 .Lfbs_after_loop:				; 0x289705
 	; --- Register events for second buffer at 0x22AAAA ---
-	lda xwa, (0x22aaaa:24); f2 aa aa 22 30
+	lda xwa, (HDAE5000_RAM_FdList+14:24); f2 aa aa 22 30
 	ld xde, xwa				; e8 8a
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 a2 a1 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20
@@ -3378,7 +3379,7 @@ HDAE5000_CopyToHDScreen:
 	ld wa, iz				; de 88
 	extz xwa				; e8 12
 	add xwa, 0x00000100			; e8 c8 00 01 00 00
-	ld xbc, 0x0022aa9c			; 41 9c aa 22 00
+	ld xbc, HDAE5000_RAM_FdList			; 41 9c aa 22 00
 	add xbc, xwa				; e8 81
 	cp	(xbc), 0x01
 	jr nz, .Lfbs_evt_0009_next		; 6e xx
@@ -3386,7 +3387,7 @@ HDAE5000_CopyToHDScreen:
 	ld wa, iz				; de 88
 	extz xwa				; e8 12
 	add xwa, 0x00000114			; e8 c8 14 01 00 00
-	ld xbc, 0x0022aa9c			; 41 9c aa 22 00
+	ld xbc, HDAE5000_RAM_FdList			; 41 9c aa 22 00
 	add xbc, xwa				; e8 81
 	ld	(xbc), 0x01
 	calr HDAE5000_FdList_Redisplay		; 1e xx xx — self-call
@@ -3429,20 +3430,20 @@ HDAE5000_CopyToHDScreen:
 .Lfbs_evt_0008:					; 0x289833
 	ld xwa, xde				; ea 88
 	add xwa, 0x00000100			; e8 c8 00 01 00 00
-	ld xbc, 0x0022aa9c			; 41 9c aa 22 00
+	ld xbc, HDAE5000_RAM_FdList			; 41 9c aa 22 00
 	add xbc, xwa				; e8 81
 	cp	(xbc), 0x01
 	jr nz, .Lfbs_evt_done			; 6e xx
 	; First flag is set: check second flag at +0x0114
 	ld xwa, xde				; ea 88
 	add xwa, 0x00000114			; e8 c8 14 01 00 00
-	ld xbc, 0x0022aa9c			; 41 9c aa 22 00
+	ld xbc, HDAE5000_RAM_FdList			; 41 9c aa 22 00
 	add xbc, xwa				; e8 81
 	cp	(xbc), 0x01
 	jr nz, .Lfbs_evt_0008_set1		; 6e xx
 	; Second flag is set: clear it to 0
 	add xde, 0x00000114			; ea c8 14 01 00 00
-	ld xwa, 0x0022aa9c			; 40 9c aa 22 00
+	ld xwa, HDAE5000_RAM_FdList			; 40 9c aa 22 00
 	add xwa, xde				; ea 80
 	ld	(xwa), 0x00
 	jr t, .Lfbs_evt_0008_done		; 68 xx
@@ -3450,7 +3451,7 @@ HDAE5000_CopyToHDScreen:
 .Lfbs_evt_0008_set1:				; 0x28986D
 	; Second flag not set: set it to 1
 	add xde, 0x00000114			; ea c8 14 01 00 00
-	ld xwa, 0x0022aa9c			; 40 9c aa 22 00
+	ld xwa, HDAE5000_RAM_FdList			; 40 9c aa 22 00
 	add xwa, xde				; ea 80
 	ld	(xwa), 0x01
 
@@ -3485,7 +3486,7 @@ HDAE5000_CopyToHd_Execute:
 	ld wa, iz
 	extz xwa
 	add xwa, 0x00000114
-	ld xbc, 0x0022aa9c
+	ld xbc, HDAE5000_RAM_FdList
 	add xbc, xwa
 	cp	(xbc), 0x01
 	jrl nz, .LFSD__loop_next
@@ -3509,7 +3510,7 @@ HDAE5000_CopyToHd_Execute:
 	inc 3, wa
 	extz xwa
 	add xwa, 0x0000000e
-	ld xbc, 0x0022aa9c
+	ld xbc, HDAE5000_RAM_FdList
 	add xbc, xwa
 	push xbc
 	lda xwa, (xsp+312)	; lda XWA, XSP+0x0138
@@ -3969,7 +3970,7 @@ HDAE5000_CopyToHDDirSelScreen:
 	ld xbc, EVT_SHOW
 	ld xde, 5:i3
 	call (xhl)
-	lda xwa, (0x22abb0:24)
+	lda xwa, (HDAE5000_RAM_FdList+276:24)
 	ld de, (HDAE5000_RAM_CurDir:24)
 	ldw bc, 0x0014
 	calr HDAE5000_CopyToHd_Execute	; recursive

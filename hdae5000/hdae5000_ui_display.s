@@ -1,9 +1,12 @@
-HDAE5000_RequestMode:	; 0x28AC1F (73 bytes)
-	; A = mode number: cancel a queued (0xFFFFFFFF, 0x01C00014) event
-	; (RootFn_DeleteEvent) and post it anew with param 0x01800000 + A
-	; (RootFn_ApPostEvent).  0x0180nnnn are mode ids: the main CPU's GetModeNow
-	; returns them, and its boot posts (0xFFFFFFFF, 0x01C00014, 0x01800001).
-	; Caller: HDAE5000_LoadSongWithUi, mode 1 when JUMP AFTER LOAD is on.
+; ---------------------------------------------------------------------------
+; Request a mode change: cancel a queued (0xFFFFFFFF, EVT_CHANGE_MODE) event
+; (RootFn_DeleteEvent) and post it anew with param 0x01800000 + A
+; (RootFn_ApPostEvent).  0x0180nnnn are mode ids: the main CPU's GetModeNow
+; returns them, and its boot posts mode 1.  Caller: HDAE5000_LoadSongWithUi,
+; mode 1 when JUMP AFTER LOAD is on.
+; In:  A = mode number
+; ---------------------------------------------------------------------------
+HDAE5000_RequestMode:
 	dec 2, xsp			; allocate local space
 	ld (xsp), a		; save the mode number
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); ld XWA, (0x23A1A2) — workspace ptr
@@ -25,14 +28,16 @@ HDAE5000_RequestMode:	; 0x28AC1F (73 bytes)
 	inc 2, xsp			; deallocate local space
 	ret
 
-HDAE5000_RequestTitle15:	; 0x28AC68 (73 bytes)
-	; A = title number: cancel a queued (0xFFFFFFFF, 0x01C00015) event and post
-	; it anew with param 0x01A00000 + A.  0x01A0nnnn are title ids: the main
-	; CPU's GetTitleNow returns them, and title 0x7F is the one this ROM
-	; registers as "TT_HDDEXT" (RootFn_RegisterTitle in
-	; HDAE5000_Handler_Registration).  Caller: the frame handler, with 0x7F,
-	; when the HD title is not the current one.  The routine after it posts
-	; event 0x01C00016 instead.
+; ---------------------------------------------------------------------------
+; Request a title (screen): cancel a queued (0xFFFFFFFF, 0x01C00015) event and
+; post it anew with param 0x01A00000 + A.  0x01A0nnnn are title ids: the main
+; CPU's GetTitleNow returns them; title 0x7F is the one this ROM registers as
+; "TT_HDDEXT" (RootFn_RegisterTitle in HDAE5000_Handler_Registration).
+; Caller: the frame handler, with 0x7F, when the HD title is not the current
+; one.
+; In:  A = title number
+; ---------------------------------------------------------------------------
+HDAE5000_RequestTitle15:
 	dec 2, xsp			; allocate local space
 	ld (xsp), a		; save the title number
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); ld XWA, (0x23A1A2) — workspace ptr
@@ -78,12 +83,15 @@ HDAE5000_RequestTitle16:
 	inc 2, xsp			; deallocate local space
 	ret
 
-HDAE5000_ShowErrorMessageTitle:	; 0x28ACFA (78 bytes)
-	; WA = error code: HamaFn_SetGlobalError(WA) (the main CPU stores it in
-	; byte 0x7F42), then cancel a queued (0xFFFFFFFF, 0x01C00016) event and post
-	; it anew with title id 0x01A000EE -- title 0xEE, registered by the main
-	; CPU as "TT_MESAGE" (RegTitle 0x1, ..., 0xee in drawbar_panel_ui.s).
-	; Caller: HDAE5000_FdList_Scan, code 2 when the floppy is not ready.
+; ---------------------------------------------------------------------------
+; Show the main CPU's message screen for an error: HamaFn_SetGlobalError(WA)
+; (the main CPU stores it in its byte 0x7F42), then cancel a queued
+; (0xFFFFFFFF, 0x01C00016) event and post it anew with title id 0x01A000EE --
+; title 0xEE, which the main CPU registers as "TT_MESAGE".  Caller:
+; HDAE5000_FdList_Scan, code 2 when the floppy is not ready.
+; In:  WA = error code
+; ---------------------------------------------------------------------------
+HDAE5000_ShowErrorMessageTitle:
 	extz wa
 	ld xbc, (HDAE5000_RAM_MainWorkspacePtr:24); ld XBC, (0x23A1A2) — workspace ptr
 	ld xbc, (xbc + WS_HamaFnTable)             ; ld XBC, (XBC + 0x0E88)
@@ -548,37 +556,42 @@ HDAE5000_SaveSongWithUi:
 	lda xsp, (xsp + 34)		; deallocate stack
 	retd 0x000A			; return and pop 10 bytes
 
-HDAE5000_CopyVersionString:	; 0x28B200 (43 bytes)
-	; Copy the version string "V2.06i" with its NUL (7 bytes, HDAE5000_Str_V206i)
-	; to (XWA) and return HL = its length, 6 (HDAE5000_StrLen).  Caller:
-	; HDAE5000_SetupPage_BuildDriveInfo (hdae5000_hd_driver.s).
-	ld ix, 0:i3			; IX = loop counter = 0
+; ---------------------------------------------------------------------------
+; Copy "V2.06i" with its NUL (7 bytes of HDAE5000_Str_V206i) to a buffer.
+; Caller: HDAE5000_SetupPage_BuildDriveInfo.
+; In:  XWA = buffer
+; Out: HL = 6 (HDAE5000_StrLen of the string).
+; ---------------------------------------------------------------------------
+HDAE5000_CopyVersionString:
+	ld ix, 0:i3
 	cp ix, 7:i3
 	jr nc, HDAE5000_CopyVersionString__len
 HDAE5000_CopyVersionString__loop:
-	lda xhl, (xwa+:1)		; lda XHL, XWA+ (unidasm): XHL = XWA, then XWA++
-	ld bc, ix			; BC = current index
-	extz xbc			; zero-extend to 32 bits
+	lda xhl, (xwa+:1)
+	ld bc, ix
+	extz xbc
 	ld xde, HDAE5000_Str_V206i		; "V2.06i"
-	add xde, xbc			; XDE = &table[index]
-	ld c, (xde)			; C = table byte
-	ld (xhl), c			; store to the caller's buffer
-	inc 1, ix			; index++
+	add xde, xbc
+	ld c, (xde)
+	ld (xhl), c
+	inc 1, ix
 	cp ix, 7:i3
 	jr c, HDAE5000_CopyVersionString__loop
 HDAE5000_CopyVersionString__len:
-	pushw HDAE5000_Str_V206i@hi16			; push 0x2E (size param) -- high half of HDAE5000_Str_V206i
-	pushw HDAE5000_Str_V206i@lo16			; push 0x1C82 (offset param)		; low half of HDAE5000_Str_V206i
+	pushw HDAE5000_Str_V206i@hi16
+	pushw HDAE5000_Str_V206i@lo16
 	call HDAE5000_StrLen
-	inc 4, xsp			; deallocate 4 bytes from stack
+	inc 4, xsp
 	ret
 
-HDAE5000_YieldUntilSem1Zero:	; 0x28B22B (45 bytes)
-	; Loop: HamaFn_ref_sem_X(1) -- the main CPU returns semaphore 1's count
-	; (byte 0x533: ref_sem_X jumps to the routine the v10 build calls
-	; AudioLock_GetCount) -- and while it is not 0, HamaFn_rot_rdq_X(3)
-	; (rotate ready queue 3: let the other tasks run).  Called before every
-	; disk operation that follows a "please wait" screen.
+; ---------------------------------------------------------------------------
+; Wait until the main CPU's semaphore 1 is free: HamaFn_ref_sem_X(1) returns
+; its count (byte 0x533; ref_sem_X jumps to the routine the v10 build calls
+; AudioLock_GetCount), and while it is not 0, HamaFn_rot_rdq_X(3) (rotate
+; ready queue 3: let the other tasks run).  Called before every disk
+; operation that follows a "please wait" screen.
+; ---------------------------------------------------------------------------
+HDAE5000_YieldUntilSem1Zero:
 	jr t, .LYieldUntilSem1Zero__poll
 .LYieldUntilSem1Zero__yield:
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); ld XWA, (0x23A1A2) — workspace ptr
@@ -596,70 +609,75 @@ HDAE5000_YieldUntilSem1Zero:	; 0x28B22B (45 bytes)
 	jr nz, .LYieldUntilSem1Zero__yield		; no: yield and look again
 	ret
 
-HDAE5000_Set_Menu_Visibility:	; 0x28B258 (229 bytes)
-	; Set visibility for 9 menu items via workspace callback +0x0294
-	; Input: A = 0 → show (IZ=1), A != 0 → hide (IZ=0)
+; ---------------------------------------------------------------------------
+; Show (A = 0) or hide (A != 0) nine of this ROM's buttons through
+; RootFn_SetVisible: HDAE5000_OBJ_SELECT_DIR_SW_EDIT, _HD_FILE_LOAD_SW_SAVE,
+; _HD_FILE_LOAD_SW_DEL, _FLS_SELECT_SW_EDIT, _FLS_FILE_LOAD_SW_EDIT and four
+; more.
+; In:  A = 0 to show.  IZ preserved.
+; ---------------------------------------------------------------------------
+HDAE5000_Set_Menu_Visibility:
 	pushw iz
 	cp a, 0:i3
 	jr nz, .Lsmv_hide
-	ld iz, 1:i3			; show mode
+	ld iz, 1:i3
 	jr t, .Lsmv_start
 .Lsmv_hide:
-	ld iz, 0:i3			; hide mode
+	ld iz, 0:i3
 .Lsmv_start:
-	ld bc, iz			; BC = visibility flag
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); ld XWA, (0x23A1A2)
-	ld xwa, (xwa + WS_RootFnTable)             ; ld XWA, (XWA + 0x0E0A)
-	ld xhl, (xwa + RootFn_SetVisible)             ; ld XHL, (XWA + 0x0294)
-	ld xwa, HDAE5000_OBJ_SELECT_DIR_SW_EDIT		; menu item 1
+	ld bc, iz
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
+	ld xwa, (xwa + WS_RootFnTable)
+	ld xhl, (xwa + RootFn_SetVisible)
+	ld xwa, HDAE5000_OBJ_SELECT_DIR_SW_EDIT
 	call (xhl)
 	ld bc, iz
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld xwa, (xwa + WS_RootFnTable)
 	ld xhl, (xwa + RootFn_SetVisible)
-	ld xwa, HDAE5000_OBJ_HD_FILE_LOAD_SW_SAVE		; menu item 2
+	ld xwa, HDAE5000_OBJ_HD_FILE_LOAD_SW_SAVE
 	call (xhl)
 	ld bc, iz
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld xwa, (xwa + WS_RootFnTable)
 	ld xhl, (xwa + RootFn_SetVisible)
-	ld xwa, HDAE5000_OBJ_HD_FILE_LOAD_SW_DEL		; menu item 3
+	ld xwa, HDAE5000_OBJ_HD_FILE_LOAD_SW_DEL
 	call (xhl)
 	ld bc, iz
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld xwa, (xwa + WS_RootFnTable)
 	ld xhl, (xwa + RootFn_SetVisible)
-	ld xwa, HDAE5000_OBJ_FLS_SELECT_SW_EDIT		; menu item 4
+	ld xwa, HDAE5000_OBJ_FLS_SELECT_SW_EDIT
 	call (xhl)
 	ld bc, iz
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld xwa, (xwa + WS_RootFnTable)
 	ld xhl, (xwa + RootFn_SetVisible)
-	ld xwa, HDAE5000_OBJ_FLS_FILE_LOAD_SW_EDIT		; menu item 5
+	ld xwa, HDAE5000_OBJ_FLS_FILE_LOAD_SW_EDIT
 	call (xhl)
 	ld bc, iz
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld xwa, (xwa + WS_RootFnTable)
 	ld xhl, (xwa + RootFn_SetVisible)
-	ld xwa, HDAE5000_OBJ_HD_FILE_LOAD_SW_DELFILE		; menu item 6
+	ld xwa, HDAE5000_OBJ_HD_FILE_LOAD_SW_DELFILE
 	call (xhl)
 	ld bc, iz
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld xwa, (xwa + WS_RootFnTable)
 	ld xhl, (xwa + RootFn_SetVisible)
-	ld xwa, HDAE5000_OBJ_CP_FD_HDSWTO		; menu item 7
+	ld xwa, HDAE5000_OBJ_CP_FD_HDSWTO
 	call (xhl)
 	ld bc, iz
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld xwa, (xwa + WS_RootFnTable)
 	ld xhl, (xwa + RootFn_SetVisible)
-	ld xwa, HDAE5000_OBJ_CP_FD_HDSWSEL		; menu item 8
+	ld xwa, HDAE5000_OBJ_CP_FD_HDSWSEL
 	call (xhl)
 	ld bc, iz
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld xwa, (xwa + WS_RootFnTable)
 	ld xhl, (xwa + RootFn_SetVisible)
-	ld xwa, HDAE5000_OBJ_SW_HD_FORMAT		; menu item 9
+	ld xwa, HDAE5000_OBJ_SW_HD_FORMAT
 	call (xhl)
 	popw iz
 	ret
@@ -771,7 +789,7 @@ HDAE5000_Count_Active_Files__loop:
 	ld wa, de		; WA = current index
 	extz xwa		; zero-extend to 32 bits
 	add xwa, 0x00000114	; add entry size offset
-	ld xbc, 0x0022AA9C	; table base address
+	ld xbc, HDAE5000_RAM_FdList	; table base address
 	add xbc, xwa		; XBC = &table[index]
 	cp (xbc), 0x01	; compare status byte with 1
 	jr nz, HDAE5000_Count_Active_Files__skip
@@ -3901,17 +3919,17 @@ HDAE5000_LyricBoxProc_Epilogue:
 	ret
 
 
-HDAE5000_Lyrics_ClearBuffer:	; 0x28D605 (32 bytes)
-	; Clear the lyric file buffer 0x22B430 (0x5000 bytes), zero (0x2304F2) (the
-	; track end, see HDAE5000_Lyrics_CheckTrackChunk) and the loaded flag
-	; (0x23A19C).  Called by HDAE5000_LyricBoxProc (case 7) and HDAE5000_LoadSong_Tlx.
-	;
-	; The lyrics player keeps the whole lyric file in RAM at 0x22B430 (0x5000
-	; bytes).  Its layout is that of a one-track Standard MIDI File with the
-	; chunk ids renamed: "TLhd" (+0, length 6, format, tracks, division) and
-	; "TLtr" (+14, length), events from +22, each <VarLen delta> FF <type>
-	; <VarLen length> <data> -- see HDAE5000_Lyrics_CheckHeaderChunk and
-	; HDAE5000_Lyrics_ParseEvent.
+; ---------------------------------------------------------------------------
+; Clear HDAE5000_RAM_LyricBuffer (0x5000 bytes), HDAE5000_RAM_LyricFileLength
+; and HDAE5000_RAM_LyricLoaded.  Called by HDAE5000_LyricBoxProc (case 7) and
+; HDAE5000_LoadSong_Tlx.
+; The lyrics player keeps the whole lyric file in RAM.  Its layout is that of
+; a one-track Standard MIDI File with the chunk ids renamed: "TLhd" (+0,
+; length 6, format, tracks, division) and "TLtr" (+14, length), events from
+; +22, each <VarLen delta> FF <type> <VarLen length> <data> -- see
+; HDAE5000_Lyrics_CheckHeaderChunk and HDAE5000_Lyrics_ParseEvent.
+; ---------------------------------------------------------------------------
+HDAE5000_Lyrics_ClearBuffer:
 	pushw 0x5000			; param: size 0x5000
 	pushw 0x0000			; param: fill value 0
 	lda xwa, (HDAE5000_RAM_LyricBuffer:24)		; XWA = lyric buffer 0x22B430
@@ -3989,25 +4007,26 @@ HDAE5000_Lyrics_LoadTestFile:
 	ld xhl, 0:i3			; return success
 	ret
 
-HDAE5000_Lyrics_PlayToPosition:	; 0x28D6D1 (938 bytes)
-	; Advance the lyric display to the song position.  XWA = the event
-	; parameter of HDAE5000_LyricBoxProc's event 0x01CA0004 (its only caller),
-	; C = 1 to redraw.  The target tick is (XWA+4) * (0x230868) (= division / 12,
-	; HDAE5000_Lyrics_ResetState); from the last position (0x23086C) it takes
-	; event after event with HDAE5000_Lyrics_FindEvent (0x7C = any type) until
-	; the running tick passes the target or the end-of-track flag (0x230434)
-	; is set, and acts on the meta type in (0x230430):
-	;   0x05  lyric syllable: append it to the current line (<= 39 chars) and
-	;         move the highlight; CR / LF end the line, and after the third
-	;         line HDAE5000_Lyrics_FillLines(1, ...) scrolls the window;
-	;   0x58  time signature: numerator (0x2307A4), 2^denominator (0x2307A8),
-	;         printed with "%i/%i" (HDAE5000_Fmt_i_i);
-	;   0x7E  data "0...": chord name, printed with "Chord : %s".
-	; A parse error prints "Fault : No Lyrics loaded or corrupt Data - Code
-	; %i %i %i".  Redraw requests go to the lyric box object (0x23A19E) as
-	; SendEvent 0x01CA0008 / 0x01CA0009.
-
-	; --- Prologue: allocate 12 bytes, save XIZ ---
+; ---------------------------------------------------------------------------
+; Advance the lyric display to the song position.  The target tick is
+; (XWA+4) * (RAM 0x230868, = division / 12, HDAE5000_Lyrics_ResetState); from
+; the last position (RAM 0x23086C) it takes event after event with
+; HDAE5000_Lyrics_FindEvent (0x7C = any type) until the running tick passes
+; the target or the end-of-track flag (LyricEvent+4) is set, and acts on the
+; meta type in HDAE5000_RAM_LyricEvent:
+;   0x05  lyric syllable: append it to the current line (<= 39 characters)
+;         and move the highlight; CR / LF end the line, and after the third
+;         line HDAE5000_Lyrics_FillLines(1, ...) scrolls the window;
+;   0x58  time signature: numerator (RAM 0x2307A4), 2^denominator (RAM
+;         0x2307A8), printed with "%i/%i" (HDAE5000_Fmt_i_i);
+;   0x7E  data "0...": the chord name, printed with "Chord : %s".
+; A parse error prints "Fault : No Lyrics loaded or corrupt Data - Code %i
+; %i %i".  Redraw requests go to HDAE5000_RAM_LyricBoxObj as SendEvent
+; 0x01CA0008 / 0x01CA0009.
+; In:  XWA = the parameter of HDAE5000_LyricBoxProc's event 0x01CA0004 (its
+;      only caller), C = 1 to redraw
+; ---------------------------------------------------------------------------
+HDAE5000_Lyrics_PlayToPosition:
 	dec 6, xsp
 	push xiz
 	ld (xsp + 8), c			; save display flag
@@ -4046,7 +4065,7 @@ HDAE5000_Lyrics_PlayToPosition:	; 0x28D6D1 (938 bytes)
 	ld wa, iz
 	add (2295916:24), wa; (0x23086C) += IZ
 	incw 1, (xsp + 6)		; iteration counter++
-	ld wa, (HDAE5000_RAM_LyricBufferEnd:24)		; WA = (0x230430): meta event type
+	ld wa, (HDAE5000_RAM_LyricEvent:24)		; WA = (0x230430): meta event type
 	cp wa, 126			; type 0x7E?
 	jrl z, .Lfo_type_7E
 	cp wa, 88			; type 0x58?
@@ -4652,7 +4671,7 @@ HDAE5000_Lyrics_ReadSongInfo:	; 0x28DBF8 (564 bytes)
 	call (xhl)
 
 	; --- reset the parse state ---
-	ldw (HDAE5000_RAM_LyricBufferEnd:24), 0x00ff; (0x230430) = 0x00FF
+	ldw (HDAE5000_RAM_LyricEvent:24), 0x00ff; (0x230430) = 0x00FF
 	ldw (0x230432:24), 0x0000; (0x230432) = 0
 	ldw (0x230434:24), 0x0000; (0x230434) = 0
 	ldw (0x230436:24), 0x0000; (0x230436) = 0
@@ -4996,7 +5015,7 @@ HDAE5000_Lyrics_FindEvent:	; 0x28E06F (280 bytes)
 	jr z, .Lfr_search_pos_check
 	ld a, (xsp + 8)
 	extz wa
-	cp wa, (HDAE5000_RAM_LyricBufferEnd:24)		; the type wanted?
+	cp wa, (HDAE5000_RAM_LyricEvent:24)		; the type wanted?
 	jr nz, .Lfr_search_pos		; no: next event
 .Lfr_search_pos_check:
 	cp hl, 0:i3
@@ -5042,7 +5061,7 @@ HDAE5000_Lyrics_FindEvent:	; 0x28E06F (280 bytes)
 	jr z, .Lfr_fffe_check
 	ld a, (xsp + 8)
 	extz wa
-	cp wa, (HDAE5000_RAM_LyricBufferEnd:24)		; the type wanted?
+	cp wa, (HDAE5000_RAM_LyricEvent:24)		; the type wanted?
 	jr nz, .Lfr_fffe_loop
 .Lfr_fffe_check:
 	cp hl, 0:i3
@@ -5163,8 +5182,8 @@ HDAE5000_Lyrics_ParseEvent:	; 0x28E187 (772 bytes)
 	add xbc, xwa
 	ld a, (xbc)		; A = meta event type
 	extz wa
-	ld (HDAE5000_RAM_LyricBufferEnd:24), wa		; (0x230430) = meta event type
-	cpw (HDAE5000_RAM_LyricBufferEnd:24), 47		; type 0x2F: end of track?
+	ld (HDAE5000_RAM_LyricEvent:24), wa		; (0x230430) = meta event type
+	cpw (HDAE5000_RAM_LyricEvent:24), 47		; type 0x2F: end of track?
 	jr nz, .Lff_after_type_check
 	; end of track: set the end flag, return 0
 	ldw (0x230434:24), 0x0001		; (0x230434) = 1: end of track
@@ -5246,7 +5265,7 @@ HDAE5000_Lyrics_ParseEvent:	; 0x28E187 (772 bytes)
 	ld wa, (0x230436:24); WA = length
 	extz xwa
 	add xwa, 40			; + 0x28
-	ld xbc, HDAE5000_RAM_LyricBufferEnd			; XBC = 0x00230430
+	ld xbc, HDAE5000_RAM_LyricEvent			; XBC = 0x00230430
 	add xbc, xwa
 	ld (xbc), 0			; null terminate
 	jr t, .Lff_after_copy1
@@ -5493,12 +5512,15 @@ HDAE5000_Lyrics_WriteVarLen:
 	ldw hl, 0xFFFF			; return sentinel
 	ret
 
-HDAE5000_Lyrics_CheckHeaderChunk:	; 0x28E53D (113 bytes)
-	; Check the lyric file's header chunk (the SMF MThd checks with its own
-	; id): "TLhd" at +0 (HDAE5000_MemCmp against HDAE5000_Str_Tlhd, else -1),
-	; big-endian length 6 at +4 (else -2), format <= 0 at +8 (else -3), track
-	; count <= 1 at +10 (else -4), division bit 15 (SMPTE) clear at +12 (else
-	; -5); returns 0 when all hold.  Only caller: HDAE5000_Lyrics_CheckFile.
+; ---------------------------------------------------------------------------
+; Check the lyric file's header chunk (the SMF MThd checks with its own id):
+; "TLhd" at +0 (HDAE5000_MemCmp against HDAE5000_Str_Tlhd, else -1),
+; big-endian length 6 at +4 (else -2), format <= 0 at +8 (else -3), track
+; count <= 1 at +10 (else -4), division bit 15 (SMPTE) clear at +12 (else
+; -5).  Only caller: HDAE5000_Lyrics_CheckFile.
+; Out: XHL = 0 when all hold, else the negative code.
+; ---------------------------------------------------------------------------
+HDAE5000_Lyrics_CheckHeaderChunk:
 	pushw 0x0004		; 4 bytes
 	lda xwa, (HDAE5000_Str_Tlhd:24)		; "TLhd"
 	push xwa			; push source ptr
@@ -5543,10 +5565,13 @@ HDAE5000_Lyrics_CheckHeaderChunk:	; 0x28E53D (113 bytes)
 	ld xhl, 0:i3			; return 0 (success)
 	ret
 
-HDAE5000_Lyrics_CheckTrackChunk:	; 0x28E5AE (59 bytes)
-	; Check the lyric file's track chunk: "TLtr" at +14 (else -10), then
-	; (0x2304F2) = its big-endian length + 22 = the end of the events.
-	; Only caller: HDAE5000_Lyrics_CheckFile.
+; ---------------------------------------------------------------------------
+; Check the lyric file's track chunk: "TLtr" at +14 (else XHL = -10), then
+; HDAE5000_RAM_LyricFileLength = its big-endian length + 22, the end of the
+; events.  Only caller: HDAE5000_Lyrics_CheckFile.
+; Out: XHL = 0, or -10.
+; ---------------------------------------------------------------------------
+HDAE5000_Lyrics_CheckTrackChunk:
 	pushw 0x0004		; 4 bytes
 	lda xwa, (HDAE5000_Str_Tltr:24)		; "TLtr"
 	push xwa
@@ -6430,20 +6455,18 @@ HDAE5000_FDFileSelectProc:
 	lda xsp, (xsp+130:16)	; lda XSP, XSP+130 (restore stack)
 	ret
 
-HDAE5000_FdLyricList_Scan:	; 0x28EF6B (556 bytes)
-	; Build the floppy's lyric-file list (the "LOAD LYRICS FROM FD" screen),
-	; all through the main CPU's file functions (WS_HamaFnTable):
-	;   HamaFn_GetMediaType must be 2 or 3, else return;
-	;   RootFn_SleepMainTask; HamaFn_GetVolumeLabel -> HDAE5000_RAM_FdVolumeLabel
-	;   + " ->";
-	;   _findfirst("*.*") / _findnext / _findclose: every name goes to
-	;   HDAE5000_FdLyricList_AddTlx, which keeps the *.TLX ones (sorted, <= 40);
-	;   for each kept name: fopen_ext(name + ".TTX", "rb"), fread_ext 26 bytes
-	;   into HDAE5000_RAM_FdLyricTitles + 27*i, fclose_ext; and
-	;   HDAE5000_RAM_FdLyricHasMid[i] = fopen_ext(name + ".MID", "rb") >= 0;
-	;   RootFn_WakeUpMainTask.
-
-	; --- Prologue: allocate ~370 bytes of stack ---
+; ---------------------------------------------------------------------------
+; Build the floppy's lyric-file list (the "LOAD LYRICS FROM FD" screen), all
+; through the main CPU's file functions: HamaFn_GetMediaType must be 2 or 3,
+; else return; RootFn_SleepMainTask; HamaFn_GetVolumeLabel ->
+; HDAE5000_RAM_FdVolumeLabel + " ->"; _findfirst("*.*") / _findnext /
+; _findclose: every name goes to HDAE5000_FdLyricList_AddTlx, which keeps the
+; *.TLX ones (sorted, <= 40); for each kept name, fopen_ext(name + ".TTX",
+; "rb"), fread_ext 26 bytes into HDAE5000_RAM_FdLyricTitles + 27 * i,
+; fclose_ext; and HDAE5000_RAM_FdLyricHasMid[i] = (fopen_ext(name + ".MID",
+; "rb") >= 0); RootFn_WakeUpMainTask.
+; ---------------------------------------------------------------------------
+HDAE5000_FdLyricList_Scan:
 	lda xsp, (xsp-370)	; lda XSP, XSP-370
 	push xiz			; save XIZ
 	ld xwa, 0:i3
@@ -6681,16 +6704,16 @@ HDAE5000_FdLyricList_Scan:	; 0x28EF6B (556 bytes)
 	lda xsp, (xsp+370)	; lda XSP, XSP+0x0172
 	ret
 
-HDAE5000_FdLyricList_AddTlx:	; 0x28F197 (614 bytes)
-	; XWA = a file name from the floppy scan (HDAE5000_FdLyricList_Scan).  Keep
-	; it only when it ends in ".TLX" (the reversed, upper-cased name must start
-	; with "XLT." -- HDAE5000_StrRev, HDAE5000_StrUpr, HDAE5000_StrNCmp against
-	; HDAE5000_Str_XLT) and the list holds fewer than 40: its base name (the
-	; extension cut off) is inserted in HDAE5000_StrPrefixCmp order into the
-	; 9-byte slots at HDAE5000_RAM_FdLyricNames, HDAE5000_RAM_FdLyricCount + 1.
-	; Returns 0, or -1 when the list is full.
-
-	; --- Prologue ---
+; ---------------------------------------------------------------------------
+; Keep a file name from the floppy scan when it ends in ".TLX" (the reversed,
+; upper-cased name must start with "XLT.": HDAE5000_StrRev, HDAE5000_StrUpr,
+; HDAE5000_StrNCmp against HDAE5000_Str_XLT) and the list holds fewer than 40:
+; its base name is inserted in HDAE5000_StrPrefixCmp order into the 9-byte
+; slots of HDAE5000_RAM_FdLyricNames, HDAE5000_RAM_FdLyricCount + 1.
+; In:  XWA = file name
+; Out: HL = 0, or -1 when the list is full.
+; ---------------------------------------------------------------------------
+HDAE5000_FdLyricList_AddTlx:
 	lda	xsp, (xsp-100)
 	push xiz
 	push xwa			; save arg1
@@ -7035,11 +7058,12 @@ HDAE5000_VarInt_Decode:		; 0x28F3BD
 	ld xhl, 0xffffffff		; return -1 (invalid VarInt encoding)
 	ret
 
-HDAE5000_Filename_Validate:	; 0x28F3FD (59 bytes)
-	; Unpack 32-bit value by extracting each byte, shifting and combining
-	; Like String_To_Upper but processes all 4 bytes unconditionally
-	; Input: XWA = packed 32-bit value
-	; Output: XHL = combined result
+; ---------------------------------------------------------------------------
+; Reverse the four bytes of XWA (a big-endian SMF long -> native), unrolled.
+; In:  XWA
+; Out: XHL = XWA byte-reversed.  Clobbers XWA, XBC.
+; ---------------------------------------------------------------------------
+HDAE5000_Smf_SwapBytes32:
 	ld xbc, xwa
 	ld xhl, xbc
 	and xhl, 0x000000FF
@@ -7060,18 +7084,21 @@ HDAE5000_Filename_Validate:	; 0x28F3FD (59 bytes)
 	add xhl, xwa
 	ret
 
-HDAE5000_Extension_Check:	; 0x28F438 (153 bytes)
-	; Byte-swap helper: swap high/low bytes of WA, return in HL
-	; Input: WA = 16-bit value
-	; Output: HL = byte-swapped result
-	ld hl, wa			; HL = WA
-	ld h, 0x00:opc			; clear H (keep L = low byte of WA)
-	srl wa, 8			; WA >>= 8 (high byte to low)
-	sll hl, 8			; HL <<= 8 (low byte to high)
-	ld w, 0x00:opc			; clear W
-	add hl, wa			; HL = (orig_low << 8) + orig_high
+; ---------------------------------------------------------------------------
+; Swap the two bytes of WA (a big-endian SMF word -> native).
+; In:  WA
+; Out: HL = WA byte-swapped.  Clobbers WA.
+; The code after its `ret` is HDAE5000_Smf_ReadHeader (no caller).
+; ---------------------------------------------------------------------------
+HDAE5000_Smf_SwapBytes16:
+	ld hl, wa
+	ld h, 0x00:opc
+	srl wa, 8
+	sll hl, 8
+	ld w, 0x00:opc
+	add hl, wa
 	ret
-.Lec_main:				; 0x28F447 — extension check entry
+HDAE5000_Smf_ReadHeader:
 	push xiz
 	ld xiz, xwa			; save parameter in XIZ
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); ld XWA, (0x23A1A2) — workspace ptr
@@ -7088,12 +7115,12 @@ HDAE5000_Extension_Check:	; 0x28F438 (153 bytes)
 	ld xhl, (xwa + RootFn_SleepMainTask)             ; ld XHL, (XWA+0x0538)
 	call (xhl)
 	ld xwa, xiz			; restore parameter
-	lda xbc, (HDAE5000_Str_Rb_Extension_Check:24); lda XBC, 0x2E5DCA — extension data ptr
+	lda xbc, (HDAE5000_Str_Rb_Smf_ReadHeader:24); lda XBC, 0x2E5DCA — extension data ptr
 	ld xde, (HDAE5000_RAM_MainWorkspacePtr:24); ld XDE, (0x23A1A2)
 	ld xde, (xde + WS_HamaFnTable)             ; ld XDE, (XDE+0x0E88)
 	ld_sril xhl, (xde + HamaFn_fopen_ext)             ; ld XHL, (XDE+0x00A0)
 	call (xhl)
-	lda xwa, (0x230eac:24); lda XWA, 0x230EAC
+	lda xwa, (HDAE5000_RAM_SmfHeader:24); lda XWA, 0x230EAC
 	ld xbc, (HDAE5000_RAM_MainWorkspacePtr:24); ld XBC, (0x23A1A2)
 	ld xbc, (xbc + WS_HamaFnTable)             ; ld XBC, (XBC+0x0E88)
 	ld_sril xhl, (xbc + HamaFn_fread_ext)             ; ld XHL, (XBC+0x00A8)
@@ -7108,96 +7135,95 @@ HDAE5000_Extension_Check:	; 0x28F438 (153 bytes)
 	ld xhl, (xwa + RootFn_WakeUpMainTask)             ; ld XHL, (XWA+0x053C)
 	call (xhl)
 .Lec_finish:
-	lda xwa, (0x230eac:24); lda XWA, 0x230EAC
-	calr HDAE5000_Config_Init	; validate config
+	lda xwa, (HDAE5000_RAM_SmfHeader:24); lda XWA, 0x230EAC
+	calr HDAE5000_Smf_CheckHeader	; validate config
 	pop xiz
 	ret
 
-HDAE5000_Config_Init:	; 0x28F4D1 (114 bytes)
-	; Initialize configuration: validate filename, check headers, verify extensions
-	; Input: XWA = pointer to config data structure (XIZ-indexed fields)
-	; Output: XHL = 0 success, -1..-4 error codes
+; ---------------------------------------------------------------------------
+; Check a 14-byte Standard MIDI File header: "MThd" (0x4D546864 after
+; HDAE5000_Smf_SwapBytes32, else -1), length 6 (else -2), format <= 1 (kept in
+; HDAE5000_RAM_SmfFormat, else -3), the track count (HDAE5000_RAM_SmfTrackCount)
+; and the division (HDAE5000_RAM_SmfDivision), whose bit 15 (SMPTE) must be
+; clear (else -4).
+; In:  XWA = header
+; Out: XHL = 0 when it passes, else the negative code.  XIZ preserved.
+; ---------------------------------------------------------------------------
+HDAE5000_Smf_CheckHeader:
 	push xiz
-	ld xiz, xwa			; save config ptr in XIZ
-	ld xwa, (xiz)			; load filename pointer (field 0x00)
-	calr HDAE5000_Filename_Validate
+	ld xiz, xwa
+	ld xwa, (xiz)
+	calr HDAE5000_Smf_SwapBytes32
 	cp xhl, 0x4D546864		; check magic "MThd" (MIDI header, reversed)
 	jr z, .Lci_check1
-	ld xhl, 0xFFFFFFFF		; return -1 (invalid magic)
+	ld xhl, 0xFFFFFFFF
 	jr t, .Lci_exit
 .Lci_check1:
-	ld xwa, (xiz + 4)		; load field at offset 0x04
-	calr HDAE5000_Filename_Validate
-	cp xhl, 0x00000006		; check header size = 6
+	ld xwa, (xiz + 4)
+	calr HDAE5000_Smf_SwapBytes32
+	cp xhl, 0x00000006
 	jr z, .Lci_check2
-	ld xhl, 0xFFFFFFFE		; return -2 (wrong header size)
+	ld xhl, 0xFFFFFFFE
 	jr t, .Lci_exit
 .Lci_check2:
-	ld wa, (xiz + 8)		; load 16-bit field at offset 0x08
-	calr HDAE5000_Extension_Check
-	ld (0x230eba:24), hl; ld (0x230EBA), HL
-	cpw (2297530:24), 0x0001; cp (0x230EBA), 1
-	jr ule, .Lci_check3		; if <= 1, continue
-	ld xhl, 0xFFFFFFFD		; return -3
+	ld wa, (xiz + 8)
+	calr HDAE5000_Smf_SwapBytes16
+	ld (HDAE5000_RAM_SmfFormat:24), hl
+	cpw (HDAE5000_RAM_SmfFormat:24), 0x0001
+	jr ule, .Lci_check3
+	ld xhl, 0xFFFFFFFD
 	jr t, .Lci_exit
 .Lci_check3:
-	ld wa, (xiz + 10)		; load field at offset 0x0A
-	calr HDAE5000_Extension_Check
-	ld (0x230ebc:24), hl; ld (0x230EBC), HL
-	ld wa, (xiz + 12)		; load field at offset 0x0C
-	calr HDAE5000_Extension_Check
-	ld (0x230ebe:24), hl; ld (0x230EBE), HL
-	ld wa, (0x230ebe:24); ld WA, (0x230EBE)
-	bit 15, wa			; test bit 15
-	jr z, .Lci_ok			; if not set, success
-	ld xhl, 0xFFFFFFFC		; return -4
+	ld wa, (xiz + 10)
+	calr HDAE5000_Smf_SwapBytes16
+	ld (HDAE5000_RAM_SmfTrackCount:24), hl
+	ld wa, (xiz + 12)
+	calr HDAE5000_Smf_SwapBytes16
+	ld (HDAE5000_RAM_SmfDivision:24), hl
+	ld wa, (HDAE5000_RAM_SmfDivision:24)
+	bit 15, wa
+	jr z, .Lci_ok
+	ld xhl, 0xFFFFFFFC
 	jr t, .Lci_exit
 .Lci_ok:
-	ld xhl, 0:i3			; return 0 (success)
+	ld xhl, 0:i3
 .Lci_exit:
 	pop xiz
 	ret
 
-HDAE5000_Alloc_Memory:	; 28F543h
-	; Bitmap resource descriptor for the boot splash screen.
-	; (Despite the name it allocates nothing: it is a constant lookup, the
-	;  fifth of five identical descriptors -- 0x28030E/0x28033B/0x280368/
-	;  0x280395 describe the Logo, Hands, FilePanel and Icon bitmaps.)
-	; Input: XBC = request type (0x01E000A1, A2, or A3)
-	; Output: XHL = result based on type:
-	;   A1 -> 0x2E61CE (HDAE5000_Bitmap_BootSplash bitmap data, NOT a palette)
-	;   A2 -> 0x140 (320 decimal - bitmap width)
-	;   A3 -> 0xF0 (240 decimal - bitmap height)
-	;   else -> 0 (invalid type)
-	; A2/A3 give the splash geometry as 320 x 240; at 8bpp that is 76,800
-	; bytes, which agrees with both the 2 x 0x9600 VRAM copy in Boot_Init
-	; and the exact fill of 0x2E61CE-0x2F8DCD.  A2/A3 read as raster
-	; dimensions for the other descriptors too: 0x280395 answers 0x1B/0x1B
-	; and hdae5000_data_tables.s shows HDAE5000_Bitmap_HddIcon is 27 x 27
-	; @ 8bpp with a 28-byte row stride (756 B, the .incbin length there).
-	; The "784-byte icon / 28 x 28" reading recorded here earlier came from
-	; an extraction that over-reads 28 bytes into HDAE5000_Config_Strings.
-	cp xbc, EVT_GET_BITMAP_HEIGHT	; Check for type A3
+; ---------------------------------------------------------------------------
+; Bitmap resource descriptor of the boot splash screen (it allocates nothing:
+; a constant lookup, the fifth of five alike -- Logo, DriveMech, FilePanel,
+; Icon and this one).  320 x 240 at 8 bpp is 76,800 bytes, which agrees with
+; the two 0x9600-byte VRAM copies in HDAE5000_Boot_Init and with the extent
+; of HDAE5000_Bitmap_BootSplash.
+; In:  XBC = EVT_GET_BITMAP_DATA / _WIDTH / _HEIGHT
+; Out: XHL = HDAE5000_Bitmap_BootSplash, 0x140 (320) or 0xF0 (240); 0 for any
+;      other event.
+; ---------------------------------------------------------------------------
+HDAE5000_Alloc_Memory:
+	cp xbc, EVT_GET_BITMAP_HEIGHT
 	jr z, HDAE5000_Alloc_Memory__type_A3
-	cp xbc, EVT_GET_BITMAP_WIDTH	; Check for type A2
+	cp xbc, EVT_GET_BITMAP_WIDTH
 	jr z, HDAE5000_Alloc_Memory__type_A2
-	cp xbc, EVT_GET_BITMAP_DATA	; Check for type A1
+	cp xbc, EVT_GET_BITMAP_DATA
 	jr z, HDAE5000_Alloc_Memory__type_A1
-	ld xhl, 0:i3	; Invalid type - return 0
+	ld xhl, 0:i3
 	ret
 HDAE5000_Alloc_Memory__type_A1:
-	lda xhl, (HDAE5000_Bitmap_BootSplash:24); Return HDAE5000_Bitmap_BootSplash bitmap address
+	lda xhl, (HDAE5000_Bitmap_BootSplash:24)
 	ret
 HDAE5000_Alloc_Memory__type_A2:
-	ld xhl, 0x140	; Return 320 (width)
+	ld xhl, 0x140
 	ret
 HDAE5000_Alloc_Memory__type_A3:
-	ld xhl, 0xF0	; Return 240 (height)
+	ld xhl, 0xF0
 	ret
 
-HDAE5000_Get_Init_Flag:	; 28F570h
-	; Returns HD presence flag in L
-	; Output: L = value from HDAE5000_INIT_FLAG (0x230EDA)
+; ---------------------------------------------------------------------------
+; L = HDAE5000_RAM_HdPresent, HDAE5000_Check_HD_Present's result at boot.
+; ---------------------------------------------------------------------------
+HDAE5000_Get_Init_Flag:
 	ld l, (HDAE5000_RAM_HdPresent:24)
 	ret
 
@@ -7589,76 +7615,76 @@ HDAE5000_Clear_Work_Buffer__copy_loop:
 HDAE5000_Clear_Work_Buffer__copy_done:
 	ret
 
-HDAE5000_Delay_Loop:	; 28F7DDh
-	; Simple nested delay loop - decrements XWA until zero
-	; Input: XWA = delay count (outer loop iterations)
-	; Clobbers: XWA, XBC
-	; Algorithm: Outer loop decrements XWA, inner loop spins on XBC copy
-	ld xbc, xwa	; Copy count for comparison
-	dec 1, xwa	; dec 1, XWA (decrement outer counter)
-	or xbc, xbc	; Check if original was zero
-	ret z	; Return immediately if zero
+; ---------------------------------------------------------------------------
+; Busy-wait: count XWA down to zero.
+; In:  XWA = count
+; Out: clobbers XWA, XBC.
+; ---------------------------------------------------------------------------
+HDAE5000_Delay_Loop:
+	ld xbc, xwa
+	dec 1, xwa
+	or xbc, xbc
+	ret z
 HDAE5000_Delay_Loop__inner_loop:
-	ld xbc, xwa	; Copy remaining count
-	dec 1, xwa	; dec 1, XWA (decrement inner counter)
-	or xbc, xbc	; Check if done
-	jr nz, HDAE5000_Delay_Loop__inner_loop	; Continue spinning until zero
+	ld xbc, xwa
+	dec 1, xwa
+	or xbc, xbc
+	jr nz, HDAE5000_Delay_Loop__inner_loop
 	ret
 
-HDAE5000_VGA_Port_Write:	; 28F7EEh
-	; Write byte to VGA I/O port (memory-mapped at 0x170000)
-	; Input: WA = VGA port number (e.g., 0x3C8, 0x3C9)
-	;        C = data byte to write
-	; VGA DAC ports: 0x3C8 = palette index, 0x3C9 = R/G/B data
-	; Includes 0x100 delay before write to ensure VGA timing
-	dec 2, xsp	; dec 2, XSP (allocate 2 bytes)
+; ---------------------------------------------------------------------------
+; Write a byte to a display-controller I/O port, at HDAE5000_IO_VgaPorts +
+; port, after a 0x100 busy-wait (HDAE5000_Delay_Loop).  Ports used: 0x3C8
+; (palette index), 0x3C9 (palette data).
+; In:  WA = port, C = byte.  IZ preserved; clobbers XWA, XBC.
+; ---------------------------------------------------------------------------
+HDAE5000_VGA_Port_Write:
+	dec 2, xsp
 	pushw iz
-	ld (xsp + 2), c	; ld (XSP+0x02), C  ; save data byte
-	ld iz, wa	; save port number in IZ
-	ld xwa, 0x100	; delay count = 256
-	calr HDAE5000_Delay_Loop	; wait for VGA timing
-	ld wa, iz	; restore port number
-	extz xwa	; zero-extend to 32-bit
-	add xwa, 0x170000
-	ld xbc, xwa	; XBC = 0x170000 + port
-	ld a, (xsp + 2)	; ld A, (XSP+0x02)  ; restore data byte
-	ld (xbc), a	; write byte to VGA port
+	ld (xsp + 2), c
+	ld iz, wa
+	ld xwa, 0x100
+	calr HDAE5000_Delay_Loop
+	ld wa, iz
+	extz xwa
+	add xwa, HDAE5000_IO_VgaPorts
+	ld xbc, xwa
+	ld a, (xsp + 2)
+	ld (xbc), a
 	popw iz
-	inc 2, xsp	; inc 2, XSP (deallocate)
+	inc 2, xsp
 	ret
 
-HDAE5000_Palette_Setup:	; 28F813h
-	; Set one VGA palette entry - converts 8-bit RGB to VGA 6-bit format
-	; Input: A = palette index (0-255)
-	;        XBC = pointer to RGBX color data (4 bytes: R, G, B, unused)
-	;
-	; VGA DAC format: 6-bit per channel (0-63), ROM has 8-bit (0-255)
-	; Conversion: value >> 4, with rounding if bit 3 set and value < 0xF0
-	;
-	; === Write palette index to port 0x3C8 ===
+; ---------------------------------------------------------------------------
+; Set one palette entry: the index to port 0x3C8, then the R, G, B bytes of
+; the 4-byte RGBx entry to port 0x3C9, each as value >> 4, plus 1 when its bit
+; 3 is set and the value is below 0xF0 (rounding) (HDAE5000_VGA_Port_Write).
+; In:  A = index, XBC = the RGBx entry.  XIZ preserved.
+; ---------------------------------------------------------------------------
+HDAE5000_Palette_Setup:
 	push xiz
-	ld xiz, xbc	; XIZ = pointer to RGBX data
-	extz wa	; A = palette index, zero-extend
+	ld xiz, xbc
+	extz wa
 	ld bc, wa
-	ldw wa, 0x3C8	; VGA palette index port
+	ldw wa, 0x3C8
 	calr HDAE5000_VGA_Port_Write
 	;
 	; === Process Red component (XIZ+0) ===
-	bitm 3, (xiz)	; bit 3, (XIZ)  ; check rounding flag
+	bitm 3, (xiz)
 	jr z, HDAE5000_Palette_Setup__red_no_round
 	cp (xiz), 0xF0
 	jr nc, HDAE5000_Palette_Setup__red_high
 	ld a, (xiz)
-	srl a, 4	; srl 4, A  ; divide by 16
-	inc 1, a	; inc 1, A  ; round up
+	srl a, 4
+	inc 1, a
 	extz wa
 	ld bc, wa
-	ldw wa, 0x3C9	; VGA palette data port
+	ldw wa, 0x3C9
 	calr HDAE5000_VGA_Port_Write
 	jr HDAE5000_Palette_Setup__green_start
 HDAE5000_Palette_Setup__red_high:
 	ld a, (xiz)
-	srl a, 4	; srl 4, A
+	srl a, 4
 	extz wa
 	ld bc, wa
 	ldw wa, 0x3C9
@@ -7666,7 +7692,7 @@ HDAE5000_Palette_Setup__red_high:
 	jr HDAE5000_Palette_Setup__green_start
 HDAE5000_Palette_Setup__red_no_round:
 	ld a, (xiz)
-	srl a, 4	; srl 4, A
+	srl a, 4
 	extz wa
 	ld bc, wa
 	ldw wa, 0x3C9
@@ -7674,12 +7700,12 @@ HDAE5000_Palette_Setup__red_no_round:
 	;
 	; === Process Green component (XIZ+1) ===
 HDAE5000_Palette_Setup__green_start:
-	bitm 3, (xiz + 1)	; bit 3, (XIZ+1)
+	bitm 3, (xiz + 1)
 	jr z, HDAE5000_Palette_Setup__green_no_round
 	cp (xiz + 1), 0xF0
 	jr nc, HDAE5000_Palette_Setup__green_high
 	ld a, (xiz + 1)
-	srl a, 4	; srl 4, A
+	srl a, 4
 	inc 1, a
 	extz wa
 	ld bc, wa
@@ -7688,7 +7714,7 @@ HDAE5000_Palette_Setup__green_start:
 	jr HDAE5000_Palette_Setup__blue_start
 HDAE5000_Palette_Setup__green_high:
 	ld a, (xiz + 1)
-	srl a, 4	; srl 4, A
+	srl a, 4
 	extz wa
 	ld bc, wa
 	ldw wa, 0x3C9
@@ -7696,7 +7722,7 @@ HDAE5000_Palette_Setup__green_high:
 	jr HDAE5000_Palette_Setup__blue_start
 HDAE5000_Palette_Setup__green_no_round:
 	ld a, (xiz + 1)
-	srl a, 4	; srl 4, A
+	srl a, 4
 	extz wa
 	ld bc, wa
 	ldw wa, 0x3C9
@@ -7704,12 +7730,12 @@ HDAE5000_Palette_Setup__green_no_round:
 	;
 	; === Process Blue component (XIZ+2) ===
 HDAE5000_Palette_Setup__blue_start:
-	bitm 3, (xiz + 2)	; bit 3, (XIZ+2)
+	bitm 3, (xiz + 2)
 	jr z, HDAE5000_Palette_Setup__blue_no_round
 	cp (xiz + 2), 0xF0
 	jr nc, HDAE5000_Palette_Setup__blue_high
 	ld a, (xiz + 2)
-	srl a, 4	; srl 4, A
+	srl a, 4
 	inc 1, a
 	extz wa
 	ld bc, wa
@@ -7718,7 +7744,7 @@ HDAE5000_Palette_Setup__blue_start:
 	jr HDAE5000_Palette_Setup__done
 HDAE5000_Palette_Setup__blue_high:
 	ld a, (xiz + 2)
-	srl a, 4	; srl 4, A
+	srl a, 4
 	extz wa
 	ld bc, wa
 	ldw wa, 0x3C9
@@ -7726,7 +7752,7 @@ HDAE5000_Palette_Setup__blue_high:
 	jr HDAE5000_Palette_Setup__done
 HDAE5000_Palette_Setup__blue_no_round:
 	ld a, (xiz + 2)
-	srl a, 4	; srl 4, A
+	srl a, 4
 	extz wa
 	ld bc, wa
 	ldw wa, 0x3C9
@@ -7735,37 +7761,38 @@ HDAE5000_Palette_Setup__done:
 	pop xiz
 	ret
 
-HDAE5000_Load_Palette:	; 28F8E0h
-	; Load all 256 VGA palette entries from ROM data
-	; Input: XWA = pointer to palette data (256 entries × 4 bytes)
-	; Iterates from index 255 down to 0, calling Palette_Setup for each
-	;
-	; Each palette entry is 4 bytes: RGBX (X unused)
-	; VGA DAC ports: 0x3C8 = index, 0x3C9 = R/G/B data (mapped at 0x170000+port)
-	dec 4, xsp	; dec 4, XSP (allocate 4 bytes on stack)
+; ---------------------------------------------------------------------------
+; Load all 256 palette entries from a table of 4-byte RGBx entries, index 255
+; down to 0 (HDAE5000_Palette_Setup).
+; In:  XWA = the table.  IZ preserved.
+; ---------------------------------------------------------------------------
+HDAE5000_Load_Palette:
+	dec 4, xsp
 	pushw iz
-	ld (xsp + 2), xwa	; ld (XSP+0x02), XWA  ; store palette ptr
-	ldw iz, 0xFF	; IZ = 255 (palette index counter)
-	cp iz, 0:i3	; initial check
-	jr lt, HDAE5000_Load_Palette__done	; skip loop if IZ < 0 (never happens here)
+	ld (xsp + 2), xwa
+	ldw iz, 0xFF
+	cp iz, 0:i3
+	jr lt, HDAE5000_Load_Palette__done
 HDAE5000_Load_Palette__loop:
-	ldto_berp E, 0xF8	; E = current palette index
+	ldto_berp E, 0xF8
 	ld wa, iz
-	exts xwa	; sign-extend WA to XWA
-	sll xwa, 2	; sll 2, XWA  ; XWA = index × 4
-	ld xbc, xwa	; XBC = offset
-	add xbc, (xsp + 2)	; add XBC, (XSP+0x02)  ; XBC = palette_ptr + offset
-	ld a, e	; A = palette index
-	calr HDAE5000_Palette_Setup	; Set one palette entry
-	sub iz, 0x1	; IZ--
-	jr ge, HDAE5000_Load_Palette__loop	; continue while IZ >= 0
+	exts xwa
+	sll xwa, 2
+	ld xbc, xwa
+	add xbc, (xsp + 2)
+	ld a, e
+	calr HDAE5000_Palette_Setup
+	sub iz, 0x1
+	jr ge, HDAE5000_Load_Palette__loop
 HDAE5000_Load_Palette__done:
 	popw iz
-	inc 4, xsp	; inc 4, XSP (deallocate stack)
+	inc 4, xsp
 	ret
 
-HDAE5000_Finalize_Init:	; 28F90Bh
-	; Stub that just returns (placeholder)
+; ---------------------------------------------------------------------------
+; Empty: a lone `ret`, called at the end of HDAE5000_Boot_Init.
+; ---------------------------------------------------------------------------
+HDAE5000_Finalize_Init:
 	ret
 
 ; ---------------------------------------------------------------------------
@@ -11415,19 +11442,16 @@ HDAE5000_TlxPart_Describe:
 	inc 2, xsp
 	ret
 
-HDAE5000_CheckFileSignature:	; 0x291C0D (2171 bytes)
-	; Complex table initialization (large stack frame)
-	; ^ corrected: HL = 0 if the file data at XBC carries part WA's
-	;   signature, else 0xFFFF.  The signature table HDAE5000_PartSignatureTable has 8-byte
-	;   records {long string; u16 offset; u16 length} indexed by part: "HK"
-	;   at +4 (LSW), "HK" (PMT), 01 08 at +5 (SQT), "H\0K" (CMP),
-	;   "KN5000 SOUND RAM" (TM), "H\0K" (MSP, RCM), "HK" (MD), "TLhd" (TLX);
-	;   compared with HDAE5000_StrNCmp.  Caller: HDAE5000_FdSong_CheckFiles.
-; LTCI: 0x291C0D (2171 bytes)
-	; ^ conversion-region size (local-label prefix .LTCI_), not a routine
-	;   size: HDAE5000_CheckFileSignature (0x291C0D-0x291C57) and
-	;   HDAE5000_FdSong_CheckFiles (0x291C58-0x292150).
-
+; ---------------------------------------------------------------------------
+; Does file data carry a part's signature?  HDAE5000_PartSignatureTable has
+; 8-byte records {long string; u16 offset; u16 length} indexed by part: "HK"
+; at +4 (LSW), "HK" (PMT), 01 08 at +5 (SQT), "H\0K" (CMP), "KN5000 SOUND RAM"
+; (TM), "H\0K" (MSP, RCM), "HK" (MD), "TLhd" (TLX); compared with
+; HDAE5000_StrNCmp.  Caller: HDAE5000_FdSong_CheckFiles.
+; In:  WA = part, XBC = the file's first bytes
+; Out: HL = 0 when it matches, else 0xFFFF.
+; ---------------------------------------------------------------------------
+HDAE5000_CheckFileSignature:
 	ld	de, wa
 	extz xde
 	sll	xde, 0x03

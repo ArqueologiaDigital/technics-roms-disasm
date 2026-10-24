@@ -1,12 +1,12 @@
-HDAE5000_FdList_Scan:	; 0x282E8D (1126 bytes)
-	; Scan the floppy: needs disk status 2 or 3 from the main CPU (workspace
-	; 0x0E88 table +0x08; else HDAE5000_ShowErrorMessageTitle(2) and HL = 0xFFFF),
-	; blanks the list (HDAE5000_FdList_Clear), shows the volume label, then
-	; walks "*.*" with the find-first/next/close callbacks (+0x94/+0x98/+0x9C):
-	; every name whose HDAE5000_FdName_SongNumber is n gets flag 0x22AB9C[n]
-	; = 1 and its 6 characters at row n; flagged rows get a "*".  Caller:
-	; HDDTitleSwCatch.  (Was "configure HD drive parameters ... formats
-	; partition table".)
+; ---------------------------------------------------------------------------
+; Scan the floppy: needs media type 2 or 3 from the main CPU
+; (HamaFn_GetMediaType; else HDAE5000_ShowErrorMessageTitle(2) and HL =
+; 0xFFFF), blanks the list (HDAE5000_FdList_Clear), shows the volume label,
+; then walks "*.*" with HamaFn__findfirst / _findnext / _findclose: every name
+; whose HDAE5000_FdName_SongNumber is n sets present flag n (FdList+0x100) and
+; puts its 6 characters in row n.  Caller: HDDTitleSwCatch.
+; ---------------------------------------------------------------------------
+HDAE5000_FdList_Scan:
 	lda xsp, (xsp-268)	; lda xsp, (xsp + 0xfef4) — alloc 268-byte frame
 	push xiz					; 3e
 	ldw	(xsp+4), 0x0000
@@ -45,13 +45,13 @@ HDAE5000_FdList_Scan:	; 0x282E8D (1126 bytes)
 	pushw hl                                ; push hl (compact)
 	ld xwa, xiz					; ee 88
 	push xwa					; 38
-	lda xwa, (0x22aa9c:24); f2 9c aa 22 30
+	lda xwa, (HDAE5000_RAM_FdList:24); f2 9c aa 22 30
 	push xwa					; 38
 	call HDAE5000_MemCopy					; 1d 9f ae 29
 	lda xsp, (xsp + 0x0e)			; bf 0e 37
 .Lsd_skip_copy:
 	; Register event 0xDE via vtable, with 0x22aa9c as data
-	lda xwa, (0x22aa9c:24); f2 9c aa 22 30
+	lda xwa, (HDAE5000_RAM_FdList:24); f2 9c aa 22 30
 	ld xde, xwa					; e8 8a
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 a2 a1 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20
@@ -89,14 +89,14 @@ HDAE5000_FdList_Scan:	; 0x282E8D (1126 bytes)
 	jr z, .Lsd_loop_done				; 66 6e
 	ld wa, hl					; db 88
 	add wa, 0x0100				; d8 c8 00 01
-	lda xbc, (0x22aa9c:24); f2 9c aa 22 31
+	lda xbc, (HDAE5000_RAM_FdList:24); f2 9c aa 22 31
 	ld	(xbc+wa), 0x01
 	pushw 0x0006					; 0b 06 00
 	lda xwa, (xsp + 0x10)			; bf 10 30
 	push xwa					; 38
 	ld wa, hl					; db 88
 	muls wa, 0x000c				; d8 09 0c 00
-	lda xbc, (0x22aaad:24); f2 ad aa 22 31
+	lda xbc, (HDAE5000_RAM_FdList+17:24); f2 ad aa 22 31
 	exts xwa					; e8 13
 	add xwa, xbc					; e9 80
 	push xwa					; 38
@@ -112,14 +112,14 @@ HDAE5000_FdList_Scan:	; 0x282E8D (1126 bytes)
 	jr z, .Lsd_loop_done				; 66 2f
 	ld wa, hl					; db 88
 	add wa, 0x0100				; d8 c8 00 01
-	lda xbc, (0x22aa9c:24); f2 9c aa 22 31
+	lda xbc, (HDAE5000_RAM_FdList:24); f2 9c aa 22 31
 	ld	(xbc+wa), 0x01
 	pushw 0x0006					; 0b 06 00
 	lda xwa, (xsp + 0x10)			; bf 10 30
 	push xwa					; 38
 	ld wa, hl					; db 88
 	muls wa, 0x000c				; d8 09 0c 00
-	lda xbc, (0x22aaad:24); f2 ad aa 22 31
+	lda xbc, (HDAE5000_RAM_FdList+17:24); f2 ad aa 22 31
 	exts xwa					; e8 13
 	add xwa, xbc					; e9 80
 	push xwa					; 38
@@ -153,14 +153,14 @@ HDAE5000_FdList_Scan:	; 0x282E8D (1126 bytes)
 	add wa, 0x000a				; d8 c8 0a 00
 	extz xwa					; e8 12
 	add xwa, 0x0000000e				; e8 c8 0e 00 00 00
-	ld xbc, 0x0022aa9c				; 41 9c aa 22 00
+	ld xbc, HDAE5000_RAM_FdList				; 41 9c aa 22 00
 	add xbc, xwa					; e8 81
 	ld	(xbc), 0x20
 	; Check if partition marked active
 	ld wa, de					; da 88
 	extz xwa					; e8 12
 	add xwa, 0x00000114				; e8 c8 14 01 00 00
-	ld xbc, 0x0022aa9c				; 41 9c aa 22 00
+	ld xbc, HDAE5000_RAM_FdList				; 41 9c aa 22 00
 	add xbc, xwa					; e8 81
 	cp	(xbc), 0x01
 	jr nz, .Lsd_display_next			; 6e 1c
@@ -170,7 +170,7 @@ HDAE5000_FdList_Scan:	; 0x282E8D (1126 bytes)
 	add wa, 0x000a				; d8 c8 0a 00
 	extz xwa					; e8 12
 	add xwa, 0x0000000e				; e8 c8 0e 00 00 00
-	ld xbc, 0x0022aa9c				; 41 9c aa 22 00
+	ld xbc, HDAE5000_RAM_FdList				; 41 9c aa 22 00
 	add xbc, xwa					; e8 81
 	ld	(xbc), 0x2a
 .Lsd_display_next:
@@ -179,7 +179,7 @@ HDAE5000_FdList_Scan:	; 0x282E8D (1126 bytes)
 	jr c, .Lsd_display_loop			; 67 aa
 .Lsd_display_done:
 	; Register display events via vtable 0x0124
-	lda xwa, (0x22aaaa:24); f2 aa aa 22 30
+	lda xwa, (HDAE5000_RAM_FdList+14:24); f2 aa aa 22 30
 	ld xde, xwa					; e8 8a
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 a2 a1 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20

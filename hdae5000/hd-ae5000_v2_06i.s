@@ -184,7 +184,7 @@
 	.equ HDAE5000_RAM_PportBytesLeft, 0x239164	; bytes SendRegionToPc still has to send
 	.equ HDAE5000_RAM_Errno, 0x230eca	; word: set to 34 (ERANGE) by HDAE5000_Float_Pack / _Double_Pack on overflow
 	.equ HDAE5000_RAM_MathErrorHook, 0x23a1a8	; routine pointer HDAE5000_Float_Pack / _Double_Pack call after setting Errno, when it is non-zero
-	.equ HDAE5000_RAM_LyricBufferEnd, 0x230430	; end of LyricBuffer (0x5000 bytes), the bound of the lyric event scans
+	.equ HDAE5000_RAM_LyricEvent, 0x230430	; the lyric event just parsed, right after LyricBuffer: +0 word meta type (HDAE5000_Lyrics_ParseEvent stores it, 0x2F = end of track; FindEvent compares it), +4 end-of-track flag, +6 its data (Lyrics_ParseEvent, _FindEvent, _PlayToPosition, _ReadSongInfo)
 	.equ HDAE5000_RAM_LyricFileLength, 0x2304f2	; the TLX file's length: the TLtr length (big-endian at LyricBuffer+18) + 22; 0 after HDAE5000_Lyrics_ClearBuffer (Lyrics_CheckTrackChunk, TlxPart_Describe)
 	.equ HDAE5000_RAM_RcmStreamDir, 0x238f1e	; directory of the song whose RCM part is streamed (HDAE5000_LoadSong_Rcm / _SaveSong_Rcm; read by HDAE5000_RcmStream_Read / _Write)
 	.equ HDAE5000_RAM_RcmStreamSong, 0x238f20	; song of that RCM stream
@@ -197,6 +197,12 @@
 	.equ HDAE5000_RAM_FlsBrowserRowBytes, 0x229e5c	; 120 bytes, one per FLS row (unreachable library)
 	.equ HDAE5000_RAM_DirNameHistory, 0x22abf2	; 5-entry history of directory names: {u8 count, u8 recall index, u8 next slot, pad, 5 x 27 bytes} (HDAE5000_NameHistory_Push / _Recall)
 	.equ HDAE5000_RAM_FlsNameHistory, 0x22ad0a	; 5-entry history of FLS names, same layout as DirNameHistory
+	.equ HDAE5000_IO_VgaPorts, 0x170000	; the display controller's I/O ports: port N is at this + N (HDAE5000_VGA_Port_Write; 0x3C8 palette index, 0x3C9 palette data)
+	.equ HDAE5000_RAM_FdList, 0x22aa9c	; the floppy song list: +0 title text (14), +14 the 20 row texts, +0x100 20 present flags (HDAE5000_FdList_Scan), +0x114 20 selected flags (the copy screen toggles them; HDAE5000_FdList_Redisplay marks those rows "*")
+	.equ HDAE5000_RAM_SmfHeader, 0x230eac	; 14 bytes: the header HDAE5000_Smf_ReadHeader reads from a floppy file
+	.equ HDAE5000_RAM_SmfFormat, 0x230eba	; word: SMF format of the checked header, <= 1 (HDAE5000_Smf_CheckHeader)
+	.equ HDAE5000_RAM_SmfTrackCount, 0x230ebc	; word: its track count
+	.equ HDAE5000_RAM_SmfDivision, 0x230ebe	; word: its division; bit 15 (SMPTE) must be clear
 
 ; ----------------------------------------------------------------------------
 ; The main CPU's function tables, as the HD-AE5000 reaches them: workspace
@@ -871,8 +877,13 @@ HDAE5000_Alloc_Memory_1__type_A3:
 	ld xhl, 0xF0	; 240 (height)
 	ret
 
-HDAE5000_Alloc_Memory_2:	; 28033Bh
-	; Returns 0x2BB98E for A1, 0x140 for A2, 0xF0 for A3
+; ---------------------------------------------------------------------------
+; Bitmap resource descriptor of HDAE5000_Bitmap_DriveMech, as
+; HDAE5000_Alloc_Memory (which it allocates nothing either).
+; In:  XBC = EVT_GET_BITMAP_DATA / _WIDTH / _HEIGHT
+; Out: XHL = the bitmap, 0x140 (320) or 0xF0 (240); 0 for any other event.
+; ---------------------------------------------------------------------------
+HDAE5000_Alloc_Memory_2:
 	cp xbc, EVT_GET_BITMAP_HEIGHT
 	jr z, HDAE5000_Alloc_Memory_2__type_A3
 	cp xbc, EVT_GET_BITMAP_WIDTH
@@ -882,17 +893,22 @@ HDAE5000_Alloc_Memory_2:	; 28033Bh
 	ld xhl, 0:i3
 	ret
 HDAE5000_Alloc_Memory_2__type_A1:
-	lda xhl, (HDAE5000_Bitmap_DriveMech:24); Palette data pointer 2
+	lda xhl, (HDAE5000_Bitmap_DriveMech:24)
 	ret
 HDAE5000_Alloc_Memory_2__type_A2:
-	ld xhl, 0x140	; 320 (width)
+	ld xhl, 0x140
 	ret
 HDAE5000_Alloc_Memory_2__type_A3:
-	ld xhl, 0xF0	; 240 (height)
+	ld xhl, 0xF0
 	ret
 
-HDAE5000_Alloc_Memory_3:	; 280368h
-	; Returns 0x2CE98E for A1, 0x140 for A2, 0xF0 for A3
+; ---------------------------------------------------------------------------
+; Bitmap resource descriptor of HDAE5000_Bitmap_FilePanel, as
+; HDAE5000_Alloc_Memory.
+; In:  XBC = EVT_GET_BITMAP_DATA / _WIDTH / _HEIGHT
+; Out: XHL = the bitmap, 0x140 (320) or 0xF0 (240); 0 for any other event.
+; ---------------------------------------------------------------------------
+HDAE5000_Alloc_Memory_3:
 	cp xbc, EVT_GET_BITMAP_HEIGHT
 	jr z, HDAE5000_Alloc_Memory_3__type_A3
 	cp xbc, EVT_GET_BITMAP_WIDTH
@@ -902,13 +918,13 @@ HDAE5000_Alloc_Memory_3:	; 280368h
 	ld xhl, 0:i3
 	ret
 HDAE5000_Alloc_Memory_3__type_A1:
-	lda xhl, (HDAE5000_Bitmap_FilePanel:24); Palette data pointer 3
+	lda xhl, (HDAE5000_Bitmap_FilePanel:24)
 	ret
 HDAE5000_Alloc_Memory_3__type_A2:
-	ld xhl, 0x140	; 320 (width)
+	ld xhl, 0x140
 	ret
 HDAE5000_Alloc_Memory_3__type_A3:
-	ld xhl, 0xF0	; 240 (height)
+	ld xhl, 0xF0
 	ret
 
 ; --- HDAE5000_BitmapHdd_icon (was HDAE5000_Alloc_Memory_4) -------------------
@@ -4193,13 +4209,15 @@ HDAE5000_PPI_Init:	; 0x282B98 (13 bytes)
 	ld (HDAE5000_IO_PpiPortA:24), 0xff
 	ret
 
-HDAE5000_PPI_LoopbackByte:	; 0x282BA5 (130 bytes)
-	; Send byte A to the PPI (0x160002/0x160004, two nibbles, handshake on
-	; 0x160000 bit 4) and read it back from port A -- the loopback of the
-	; hardware test's "PPORT TEST".  (Not the IDE bus: the drive sits on the
-	; ATA registers at 0x130010.., HDAE5000_ATA_*.)
-	; Input: A = byte to transfer. Returns: L = 0x00 on match, 0xFF on mismatch
-	; --- Low nibble phase ---
+; ---------------------------------------------------------------------------
+; Send byte A through the 8255 in two nibbles (ports B and C, handshake on
+; port A bit 4) and read it back from port A -- the loopback of the hardware
+; test's "PPORT TEST".  (Not the drive: that sits on the ATA registers,
+; HDAE5000_ATA_*.)
+; In:  A = byte
+; Out: L = 0x00 when it came back unchanged, 0xFF otherwise.
+; ---------------------------------------------------------------------------
+HDAE5000_PPI_LoopbackByte:
 	ld l, a				; save original byte
 	and a, 0x0f			; mask low nibble
 	set 4, a			; set bit 4 (data strobe)
@@ -4247,48 +4265,51 @@ HDAE5000_PPI_LoopbackByte:	; 0x282BA5 (130 bytes)
 	ld l, 0xFF:opc			; failure: L = 0xFF
 	ret
 
-HDAE5000_HardTest_PortTest:	; 0x282C27 (71 bytes)
-	; "PPORT TEST" of the hardware-test page: loop all 256 byte values through
-	; HDAE5000_PPI_LoopbackByte, OR the failures together and print
-	; "=======> Port Test OK" / "... Error" (0x2E224A / 0x2E2234) with
-	; HDAE5000_HardTest_Print.  (Was "read an IDE register value via PPI".)
+; ---------------------------------------------------------------------------
+; "PPORT TEST" of the hardware-test page: HDAE5000_PPI_Init, then all 256 byte
+; values through HDAE5000_PPI_LoopbackByte with the failures ORed together;
+; prints HDAE5000_Str_PortTestOK when none failed, else
+; HDAE5000_Str_PortTestError (HDAE5000_HardTest_Print).  IZ preserved.
+; ---------------------------------------------------------------------------
+HDAE5000_HardTest_PortTest:
 	dec 2, xsp
 	pushw iz
-	ldw (xsp + 2), 0x0000		; result = 0
+	ldw (xsp + 2), 0x0000
 	calr HDAE5000_PPI_Init
-	ld iz, 0:i3			; IZ = 0 (loop counter)
+	ld iz, 0:i3
 	cp iz, 0x0100
 	jr ge, .Lppi_rd_loop_end
 .Lppi_rd_loop:
-	ldto_berp a, 0xf8		; ld a, izl (extended register)
+	ldto_berp a, 0xf8
 	extz wa
 	calr HDAE5000_PPI_LoopbackByte
-	ld a, l				; result byte from transfer
-	exts wa				; sign-extend to 16-bit
-	or (xsp + 2), wa		; OR into result word
+	ld a, l
+	exts wa
+	or (xsp + 2), wa
 	inc 1, iz
 	cp iz, 0x0100
 	jr lt, .Lppi_rd_loop
 .Lppi_rd_loop_end:
-	cpw (xsp + 2), 0x0000	; test if result is zero
+	cpw (xsp + 2), 0x0000
 	jr nz, .Lppi_rd_nonzero
-	lda xwa, (HDAE5000_Str_PortTestOK:24); 0x2E2234 - error event string
+	lda xwa, (HDAE5000_Str_PortTestOK:24)
 	calr HDAE5000_HardTest_Print
 	jr t, .Lppi_rd_done
 .Lppi_rd_nonzero:
-	lda xwa, (HDAE5000_Str_PortTestError:24); 0x2E224A - success event string
+	lda xwa, (HDAE5000_Str_PortTestError:24)
 	calr HDAE5000_HardTest_Print
 .Lppi_rd_done:
 	popw iz
 	inc 2, xsp
 	ret
 
-HDAE5000_HardTest_HddIdRead:	; 0x282C6E (192 bytes)
-	; "HDD ID READ" of the hardware-test page: HDAE5000_HD_LoadTables,
-	; HDAE5000_HD_GetGeometry, then prints "HD-TYPE : <model>", "Fre Capa:
-	; %3.1f [MB]" (free space / 100.0 as a float) and "=======> HDD OK" or
-	; "... HDD NG!".  (Was "write a sector of data to HD via PPI".)
-	; Large 124-byte stack frame for sector buffer and parameter blocks
+; ---------------------------------------------------------------------------
+; "HDD ID READ" of the hardware-test page: HDAE5000_HD_LoadTables,
+; HDAE5000_HD_GetGeometry, then prints "HD-TYPE : <model>", "Fre Capa: %3.1f
+; [MB]" (the free space / 100.0 as a float) and "=======> HDD OK" or "...
+; HDD NG!" (HDAE5000_HardTest_Print).
+; ---------------------------------------------------------------------------
+HDAE5000_HardTest_HddIdRead:
 	lda xsp, (xsp - 124)		; allocate stack frame
 	ld wa, 0:i3
 	call HDAE5000_HD_LoadTables
@@ -4366,27 +4387,26 @@ HDAE5000_HardTest_HddIdRead:	; 0x282C6E (192 bytes)
 	lda xsp, (xsp + 124)		; deallocate stack frame
 	ret
 
-HDAE5000_FdList_Clear:	; 0x282D2E (270 bytes)
-	; Blank the floppy-list screen: copy the empty title/row templates
-	; (0x2E1CE6, and the "01:" .. "20:" rows at 0x2E1CF4) to 0x22AA9C /
-	; 0x22AAAA and show them in objects 0x7F00DE / 0x7F00D7 (event
-	; 0x01EA000A, then 0x01C0000F), hide 0x7F00D9/0x7F00D8, clear the flag
-	; arrays 0x22AB9C and 0x22ABB0.  (Was "read a sector of data from HD via
-	; PPI ... registers PPI device handlers": no PPI access here.)
-	; Copy 14 bytes: source table → PPI buffer
-	pushw 0x000E			; count = 14
-	lda xwa, (HDAE5000_Str_Blank12Tab:24); 0x2E1CE6
-	push xwa			; source
-	lda xwa, (0x22aa9c:24); 0x22AA9C
-	push xwa			; dest
+; ---------------------------------------------------------------------------
+; Blank the floppy-list screen: the empty title and the "01:" .. "20:" row
+; templates into HDAE5000_RAM_FdList, shown in objects 0x7F00DE / 0x7F00D7
+; (EVT_HDAE_SET_STR_ADR, then EVT_PARA_DRAW), 0x7F00D9 / 0x7F00D8 hidden, and
+; the present / selected flag arrays (FdList+0x100, +0x114) cleared.
+; ---------------------------------------------------------------------------
+HDAE5000_FdList_Clear:
+	pushw 0x000E
+	lda xwa, (HDAE5000_Str_Blank12Tab:24)
+	push xwa
+	lda xwa, (HDAE5000_RAM_FdList:24)
+	push xwa
 	call HDAE5000_MemCopy
-	lda xsp, (xsp + 10)		; pop args
+	lda xsp, (xsp + 10)
 	; Register PPI device: first handler pair (0xDE)
-	lda xwa, (0x22aa9c:24); 0x22AA9C - buffer ptr
+	lda xwa, (HDAE5000_RAM_FdList:24)
 	ld xde, xwa
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); workspace ptr (0x23A1A2)
-	ld xwa, (xwa + WS_RootFnTable)             ; (XWA + 0x0E0A)
-	ld xhl, (xwa + RootFn_ApPostEvent)             ; (XWA + 0x0124)
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
+	ld xwa, (xwa + WS_RootFnTable)
+	ld xhl, (xwa + RootFn_ApPostEvent)
 	ld xwa, HDAE5000_OBJ_CP_FD_VOLLABEL
 	ld xbc, EVT_HDAE_SET_STR_ADR
 	call (xhl)
@@ -4399,15 +4419,15 @@ HDAE5000_FdList_Clear:	; 0x282D2E (270 bytes)
 	ld xde, 0xFFFFFFFF
 	call (xhl)
 	; Copy 241 bytes: second table → PPI buffer
-	pushw 0x00F1			; count = 241
-	lda xwa, (HDAE5000_FdList_RowsTemplate:24); 0x2E1CF4
-	push xwa			; source
-	lda xwa, (0x22aaaa:24); 0x22AAAA
-	push xwa			; dest
+	pushw 0x00F1
+	lda xwa, (HDAE5000_FdList_RowsTemplate:24)
+	push xwa
+	lda xwa, (HDAE5000_RAM_FdList+14:24)
+	push xwa
 	call HDAE5000_MemCopy
-	lda xsp, (xsp + 10)		; pop args
+	lda xsp, (xsp + 10)
 	; Register PPI device: second handler pair (0xD7)
-	lda xwa, (0x22aaaa:24); 0x22AAAA
+	lda xwa, (HDAE5000_RAM_FdList+14:24)
 	ld xde, xwa
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld xwa, (xwa + WS_RootFnTable)
@@ -4440,51 +4460,53 @@ HDAE5000_FdList_Clear:	; 0x282D2E (270 bytes)
 	ld xde, 0:i3
 	call (xhl)
 	; Clear two 20-byte buffers
-	pushw 0x0014			; count = 20
-	pushw 0x0000			; fill = 0
-	lda xwa, (0x22ab9c:24); 0x22AB9C
+	pushw 0x0014
+	pushw 0x0000
+	lda xwa, (HDAE5000_RAM_FdList+256:24)
 	push xwa
 	call HDAE5000_MemFill
-	pushw 0x0014			; count = 20
-	pushw 0x0000			; fill = 0
-	lda xwa, (0x22abb0:24); 0x22ABB0
+	pushw 0x0014
+	pushw 0x0000
+	lda xwa, (HDAE5000_RAM_FdList+276:24)
 	push xwa
 	call HDAE5000_MemFill
-	lda xsp, (xsp + 16)		; pop all args (16 bytes)
+	lda xsp, (xsp + 16)
 	ret
 
-HDAE5000_FdName_SongNumber:	; 0x282E3C (81 bytes)
-	; XWA = a floppy file name: HL = n-1 when it starts with the 2-digit
-	; number n = 1..20 (SPrintf "%2.2d", StrNCmp over its length), else
-	; 0xFFFF.  (Was "transfer a block of data via PPI".)
-	; Iterates entries 1..20, copies block via PPI_Block_Copy, validates buffer,
-	; then compares with MemCompare_Block. Returns matching index-1 or 0xFFFF.
-	dec 8, xsp			; allocate 8 bytes on stack
+; ---------------------------------------------------------------------------
+; The song number a floppy file name starts with: n = 1..20 when the name
+; begins with n as two digits (HDAE5000_SPrintf "%2.2d", HDAE5000_StrNCmp over
+; its length).
+; In:  XWA = file name
+; Out: HL = n - 1, or 0xFFFF.  IZ preserved.
+; ---------------------------------------------------------------------------
+HDAE5000_FdName_SongNumber:
+	dec 8, xsp
 	pushw iz
-	ld (xsp + 6), xwa		; save input parameter
-	ld iz, 1:i3			; IZ = 1 (entry counter)
+	ld (xsp + 6), xwa
+	ld iz, 1:i3
 	cp iz, 0x0014
 	jr gt, .Lptb_not_found
 .Lptb_loop:
 	pushw iz
-	pushw HDAE5000_Fmt_2_2d@hi16			; block size = 46 -- high half of HDAE5000_Fmt_2_2d
-	pushw HDAE5000_Fmt_2_2d@lo16			; source base address		; low half of HDAE5000_Fmt_2_2d
-	lda xwa, (xsp + 8)		; pointer to local buffer
+	pushw HDAE5000_Fmt_2_2d@hi16
+	pushw HDAE5000_Fmt_2_2d@lo16
+	lda xwa, (xsp + 8)
 	push xwa
 	call HDAE5000_SPrintf
-	lda xwa, (xsp + 0x0C)		; pointer to compare buffer
+	lda xwa, (xsp + 0x0C)
 	push xwa
 	call HDAE5000_StrLen
-	pushw hl			; save validation result
-	ld xwa, (xsp + 0x16)		; reload input parameter
+	pushw hl
+	ld xwa, (xsp + 0x16)
 	push xwa
-	lda xwa, (xsp + 0x16)		; pointer to local buffer
+	lda xwa, (xsp + 0x16)
 	push xwa
 	call HDAE5000_StrNCmp
-	add xsp, 0x00000018		; clean up stack (24 bytes)
-	cp hl, 0:i3			; check compare result
+	add xsp, 0x00000018
+	cp hl, 0:i3
 	jr nz, .Lptb_found
-	ld hl, iz			; return index - 1
+	ld hl, iz
 	dec 1, hl
 	jr t, .Lptb_done
 .Lptb_found:
@@ -4492,10 +4514,10 @@ HDAE5000_FdName_SongNumber:	; 0x282E3C (81 bytes)
 	cp iz, 0x0014
 	jr le, .Lptb_loop
 .Lptb_not_found:
-	ldw hl, 0xFFFF			; return -1 (not found)
+	ldw hl, 0xFFFF
 .Lptb_done:
 	popw iz
-	inc 8, xsp			; deallocate 8 bytes
+	inc 8, xsp
 	ret
 
 ; --- HD Drive Setup and Configuration ---

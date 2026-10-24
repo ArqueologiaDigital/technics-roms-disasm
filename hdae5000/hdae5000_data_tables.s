@@ -16110,7 +16110,7 @@ HDAE5000_Str_LANENG001:	; 0x2E5DBC
 HDAE5000_Str_XAP:	; 0x2E5DC6
 	; read by PPORT_Svc28_FlashXapFile at 0x28F314 (pushed operand)
 	.asciz "XAP"
-HDAE5000_Str_Rb_Extension_Check:	; 0x2E5DCA
+HDAE5000_Str_Rb_Smf_ReadHeader:	; 0x2E5DCA
 	; read by Extension_Check at 0x28F474 (lda operand)
 	.asciz "rb"
 	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)

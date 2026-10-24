@@ -275,7 +275,10 @@ RAM = {
     0x2304F2: ("LyricFileLength", "the TLX file's length: the TLtr length (big-endian at LyricBuffer+18) + 22;"
                                   " 0 after HDAE5000_Lyrics_ClearBuffer (Lyrics_CheckTrackChunk,"
                                   " TlxPart_Describe)"),
-    0x230430: ("LyricBufferEnd", "end of LyricBuffer (0x5000 bytes), the bound of the lyric event scans"),
+    0x230430: ("LyricEvent", "the lyric event just parsed, right after LyricBuffer: +0 word meta type"
+                             " (HDAE5000_Lyrics_ParseEvent stores it, 0x2F = end of track; FindEvent compares"
+                             " it), +4 end-of-track flag, +6 its data (Lyrics_ParseEvent, _FindEvent,"
+                             " _PlayToPosition, _ReadSongInfo)"),
     0x238F1E: ("RcmStreamDir", "directory of the song whose RCM part is streamed (HDAE5000_LoadSong_Rcm /"
                                " _SaveSong_Rcm; read by HDAE5000_RcmStream_Read / _Write)"),
     0x238F20: ("RcmStreamSong", "song of that RCM stream"),
@@ -291,6 +294,14 @@ RAM = {
     0x229DA0: ("FlsBrowserPage", "page of the FLS browser (unreachable library; HD_Init sets it)"),
     0x229E57: ("FlsBrowserCursors", "5 cursor bytes, one per FLS-browser page (unreachable library)"),
     0x229E5C: ("FlsBrowserRowBytes", "120 bytes, one per FLS row (unreachable library)"),
+    # fourteenth run: the floppy song list, the SMF header check and the VGA ports
+    0x22AA9C: ("FdList", "the floppy song list: +0 title text (14), +14 the 20 row texts, +0x100 20"
+                         " present flags (HDAE5000_FdList_Scan), +0x114 20 selected flags (the copy screen"
+                         " toggles them; HDAE5000_FdList_Redisplay marks those rows \"*\")"),
+    0x230EAC: ("SmfHeader", "14 bytes: the header HDAE5000_Smf_ReadHeader reads from a floppy file"),
+    0x230EBA: ("SmfFormat", "word: SMF format of the checked header, <= 1 (HDAE5000_Smf_CheckHeader)"),
+    0x230EBC: ("SmfTrackCount", "word: its track count"),
+    0x230EBE: ("SmfDivision", "word: its division; bit 15 (SMPTE) must be clear"),
     # sixth run: list texts the UI objects display (EVT_HDAE_SET_STR_ADR points them here)
     0x22B274: ("PartListText", "nine 14-byte tab-ended part names + NUL (0x7F bytes), HDAE5000_PartList_Build"),
     0x22A0D0: ("DirListText", "24 rows x 21 bytes + NUL: \"NNN:\" and the 16-byte directory name at +4"
@@ -312,6 +323,8 @@ EXTENT = {
     0x2257B2: 0x4380,
     0x22ABF2: 0x8B,
     0x22AD0A: 0x8B,
+    0x22AA9C: 0x128,
+    0x230EAC: 14,
 }
 # I/O registers (full names; same rewriting): the 8255 of the PC link and the drive's ATA task file.  The
 # ATA registers are the standard eight at 0x130010 + 2 * index: the code writes the ATA command opcodes
@@ -338,6 +351,8 @@ IO = {
     0x13001E: ("HDAE5000_IO_AtaStatusCommand", "ATA status (read) / command (write)"),
     0x130020: ("HDAE5000_IO_AtaDeviceControl", "ATA device control: 0x0E (SRST + nIEN) then 0x0A (nIEN)"
                                                " is HDAE5000_ATA_SoftReset"),
+    0x170000: ("HDAE5000_IO_VgaPorts", "the display controller's I/O ports: port N is at this + N"
+                                       " (HDAE5000_VGA_Port_Write; 0x3C8 palette index, 0x3C9 palette data)"),
 }
 # The compiled C addresses a field of a song record as DirNames + field + (0x780 + dir*0x4C0 + song*0x4C) and
 # a field of an FLS record as DirNames + field + (0x24180 + fls*0x90): the constant it loads is the table base
