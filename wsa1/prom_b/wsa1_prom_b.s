@@ -2099,7 +2099,7 @@ wsa1_prom_b_Join:
 T_F409B0_Nop:
 	ret	; F0001A  ret
 wsa1_prom_b_Join2:
-	m_bit 0, MD24, 0x60501b	; F0001B  bit 0,(0x60501b)
+	bit	0, (0x60501b:24)	; F0001B  bit 0,(0x60501b)
 	jr	nz, wsa1_prom_b_Return2	; F00020  jr NZ,0xf00039
 	ld	a, (UiEvent_Byte1:16)	; F00022  ld A,(0x20b8)
 	cp	a, 17	; F00026  cp A,0x11
@@ -2138,7 +2138,7 @@ sub_F0003C:
 	jr	nz, sub_F0003C_Skip	; F0004F  jr NZ,0xf00053
 	jr	sub_F0003C_Return	; F00051  jr T,0xf00096
 sub_F0003C_Skip:
-	m_bit 2, MD16, 0x34bb	; F00053  bit 2,(0x34bb)
+	bit	2, (0x34bb:16)	; F00053  bit 2,(0x34bb)
 	jr	z, sub_F0003C_Skip2	; F00057  jr Z,0xf0005e
 	calr	Transport_StopAllRunning	; F00059  calr 0xf000b9
 	jr	sub_F0003C_Return	; F0005C  jr T,0xf00096
@@ -2284,7 +2284,7 @@ Transport_StopByRunningMask:
 ;          stays sub_XXXXXX with the gap stated.
 ; --------------------------------------------------------------------------
 sub_F00108:
-	m_bit 1, MD16, 0x360b	; F00108  bit 1,(0x360b)
+	bit	1, (0x360b:16)	; F00108  bit 1,(0x360b)
 	jr	z, sub_F00108_Skip3	; F0010C  jr Z,0xf00145
 	ld	xwa, (12288:16)	; F0010E  ld XWA,(0x3000)
 	cp	xwa, 0	; F00112  cp XWA,0x00000000
@@ -2440,9 +2440,9 @@ Transport_StartAllFromZero:
 	jr	nz, Transport_StartAllFromZero_Skip2	; F001CC  jr NZ,0xf001fa
 	bit	2, (TransportC_State:8)	; F001CE  bit 2,(0x95)
 	jr	nz, Transport_StartAllFromZero_Skip2	; F001D1  jr NZ,0xf001fa
-	m_bit 2, MD16, 0x34d9	; F001D3  bit 2,(0x34d9)
+	bit	2, (0x34d9:16)	; F001D3  bit 2,(0x34d9)
 	jr	nz, Transport_StartAllFromZero_Skip	; F001D7  jr NZ,0xf001f1
-	m_bit 1, MD16, 0x34d9	; F001D9  bit 1,(0x34d9)
+	bit	1, (0x34d9:16)	; F001D9  bit 1,(0x34d9)
 	jr	z, Transport_StartAllFromZero_Skip	; F001DD  jr Z,0xf001f1
 	call	T_CountIn_SetMeasureToFirstBar	; F001DF  call 0xf40a40
 	call	T_TransportA_ResetCountersAndPattern	; F001E3  call 0xf40984
@@ -2495,9 +2495,9 @@ Transport_StartAllContinue:
 	jr	nz, Transport_StartAllContinue_Skip6	; F00247  jr NZ,0xf00272
 	bit	2, (TransportC_State:8)	; F00249  bit 2,(0x95)
 	jr	nz, Transport_StartAllContinue_Skip6	; F0024C  jr NZ,0xf00272
-	m_bit 2, MD16, 0x34d9	; F0024E  bit 2,(0x34d9)
+	bit	2, (0x34d9:16)	; F0024E  bit 2,(0x34d9)
 	jr	nz, Transport_StartAllContinue_Skip5	; F00252  jr NZ,0xf0026c
-	m_bit 1, MD16, 0x34d9	; F00254  bit 1,(0x34d9)
+	bit	1, (0x34d9:16)	; F00254  bit 1,(0x34d9)
 	jr	z, Transport_StartAllContinue_Skip5	; F00258  jr Z,0xf0026c
 	call	T_CountIn_SetMeasureToFirstBar	; F0025A  call 0xf40a40
 	call	T_TransportA_ResetCountersAndPattern	; F0025E  call 0xf40984
@@ -2658,10 +2658,10 @@ TransportB_ResetCounters:
 ; Transport_QueueMidiStartOrContinue: when MIDI setting (0x7F34) bit 2 is set: MidiTx_RealtimePending bit 2 (FB CONTINUE) if (0x34BB) bit 3, else bit 1
 ;   (FA START), then T_MIDI_PostSendWork.
 Transport_QueueMidiStartOrContinue:
-	m_bit 2, MD16, 0x7f34	; F00320  bit 2,(0x7f34)
+	bit	2, (0x7f34:16)	; F00320  bit 2,(0x7f34)
 	jr	z, sub_F002F4_Return	; F00324  jr Z,0xf0033e
 	ei	6	; F00326  ei 0x06
-	m_bit 3, MD16, 0x34bb	; F00328  bit 3,(0x34bb)
+	bit	3, (0x34bb:16)	; F00328  bit 3,(0x34bb)
 	jr	z, Transport_QueueMidiStartOrContinue_Skip	; F0032C  jr Z,0xf00334
 	or	(MidiTx_RealtimePending:8), 0x04	; F0032E  or (0xa0),0x04
 	jr	Transport_QueueMidiStartOrContinue_Join	; F00332  jr T,0xf00338
@@ -3220,9 +3220,9 @@ sub_F0082E_Join:
 	calr	sub_F00AA5	; F00874  calr 0xf00aa5
 	jr	sub_F0082E_Join	; F00877  jr T,0xf00865
 sub_F0082E_Skip:
-	m_bit 2, MD24, 0x605017	; F00879  bit 2,(0x605017)
+	bit	2, (0x605017:24)	; F00879  bit 2,(0x605017)
 	jr	nz, sub_F0082E_Skip2	; F0087E  jr NZ,0xf0088a
-	m_bit 2, MD24, 0x605018	; F00880  bit 2,(0x605018)
+	bit	2, (0x605018:24)	; F00880  bit 2,(0x605018)
 	jr	z, sub_F0082E_Skip2	; F00885  jr Z,0xf0088a
 	calr	sub_F00ADD	; F00887  calr 0xf00add
 sub_F0082E_Skip2:
@@ -3292,7 +3292,7 @@ sub_F00903:
 	jr	z, sub_F00903_Skip	; F0091F  jr Z,0xf00923
 	jr	sub_F00903_Join2	; F00921  jr T,0xf00939
 sub_F00903_Skip:
-	m_bit 0, MD16, 0x360b	; F00923  bit 0,(0x360b)
+	bit	0, (0x360b:16)	; F00923  bit 0,(0x360b)
 	jr	z, sub_F00903_Join	; F00927  jr Z,0xf00937
 	ld	wa, (13854:16)	; F00929  ld WA,(0x361e)
 	m_cp_rm MW16, 0x3620, 0	; F0092D  cp WA,(0x3620)
@@ -3308,7 +3308,7 @@ sub_F00903_Join2:
 	jr	z, sub_F00903_Skip2	; F00940  jr Z,0xf00944
 	jr	sub_F00903_Epilogue	; F00942  jr T,0xf00958
 sub_F00903_Skip2:
-	m_bit 1, MD16, 0x360b	; F00944  bit 1,(0x360b)
+	bit	1, (0x360b:16)	; F00944  bit 1,(0x360b)
 	jr	z, sub_F00903_Epilogue	; F00948  jr Z,0xf00958
 	ld	wa, (13858:16)	; F0094A  ld WA,(0x3622)
 	m_cp_rm MW16, 0x3624, 0	; F0094E  cp WA,(0x3624)
@@ -3341,13 +3341,13 @@ sub_F0095D_Epilogue:
 	ret	; F00983  ret
 sub_F00984:
 	or	(PanelLed_Shadow+4:16), 0x40	; F00984  or (0x20d4),0x40
-	m_bit 7, MD16, PanelLed_Shadow+4	; F00989  bit 7,(0x20d4)
+	bit	7, (PanelLed_Shadow+4:16)	; F00989  bit 7,(0x20d4)
 	jr	z, sub_F00984_Return	; F0098D  jr Z,0xf00994
 	and	(PanelLed_Shadow+4:16), 0x7f	; F0098F  and (0x20d4),0x7f
 sub_F00984_Return:
 	ret	; F00994  ret
 sub_F00995:
-	m_bit 6, MD16, PanelLed_Shadow+4	; F00995  bit 6,(0x20d4)
+	bit	6, (PanelLed_Shadow+4:16)	; F00995  bit 6,(0x20d4)
 	jr	nz, sub_F00995_Skip	; F00999  jr NZ,0xf009a2
 	or	(PanelLed_Shadow+4:16), 0x80	; F0099B  or (0x20d4),0x80
 	jr	sub_F00995_Return	; F009A0  jr T,0xf009a7
@@ -3460,7 +3460,7 @@ sub_F00AA5:
 	ld	a, (xiy+3)	; F00AAD  ld A,(XIY+0x03)
 	inc	4, xiy	; F00AB0  inc 4,XIY
 	ld	(6311941:24), xiy	; F00AB2  ld (0x605005),XIY
-	m_bit 0, MD16, 0x34d9	; F00AB7  bit 0,(0x34d9)
+	bit	0, (0x34d9:16)	; F00AB7  bit 0,(0x34d9)
 	jr	z, sub_F00AA5_Return	; F00ABB  jr Z,0xf00adc
 	ld	xiy, 6311945	; F00ABD  ld XIY,0x00605009
 	ld	(xiy), 144	; F00AC2  ld (XIY),0x90
@@ -22181,10 +22181,10 @@ LcdKeyRow2_SoundEditDigitalEffect_Skip:
 	inc	8, xsp	; F0B41C  inc 0,XSP
 	inc	2, xsp	; F0B41E  inc 2,XSP
 	jr	z, LcdKeyRow2_SoundEditDigitalEffect_Skip2	; F0B420  jr Z,0xf0b427
-	m_res 7, MDD+r6, 0xff	; F0B422  res 7,(XIZ+0xff)
+	res	7, (xiz-1)	; F0B422  res 7,(XIZ+0xff)
 	jr	LcdKeyRow2_SoundEditDigitalEffect_Join	; F0B425  jr T,0xf0b42a
 LcdKeyRow2_SoundEditDigitalEffect_Skip2:
-	m_set 7, MDD+r6, 0xff	; F0B427  set 7,(XIZ+0xff)
+	set	7, (xiz-1)	; F0B427  set 7,(XIZ+0xff)
 LcdKeyRow2_SoundEditDigitalEffect_Join:
 	ld	bc, (xiz-1)	; F0B42A  ld BC,(XIZ+0xff)
 	extz	bc	; F0B42D  extz BC
@@ -22270,10 +22270,10 @@ LcdKeyRow3_SoundEditDigitalEffect_Skip:
 	and	c, 64	; F0B4D4  and C,0x40
 	inc	6, xsp	; F0B4D7  inc 6,XSP
 	jr	z, LcdKeyRow3_SoundEditDigitalEffect_Skip2	; F0B4D9  jr Z,0xf0b4e0
-	m_res 6, MDD+r6, 0xff	; F0B4DB  res 6,(XIZ+0xff)
+	res	6, (xiz-1)	; F0B4DB  res 6,(XIZ+0xff)
 	jr	LcdKeyRow3_SoundEditDigitalEffect_Join	; F0B4DE  jr T,0xf0b4e3
 LcdKeyRow3_SoundEditDigitalEffect_Skip2:
-	m_set 6, MDD+r6, 0xff	; F0B4E0  set 6,(XIZ+0xff)
+	set	6, (xiz-1)	; F0B4E0  set 6,(XIZ+0xff)
 LcdKeyRow3_SoundEditDigitalEffect_Join:
 	ld	bc, (xiz-1)	; F0B4E3  ld BC,(XIZ+0xff)
 	extz	bc	; F0B4E6  extz BC
@@ -28853,7 +28853,7 @@ DspEffect_SetSection:		; <- T_DspEffect_SetSection
 	link XIZ,0x0000	; F0F018  link XIZ,0x0000
 	m_ld_m16m MBD+r6, 0x08, DspEffect_Section	; F0F01C  ld (0x2790),(XIZ+0x08)
 	calr	DspEffect_SelectSectionBlock	; F0F021  calr 0xf0f047
-	m_set 7, MD16, 0x2791	; F0F024  set 7,(0x2791)
+	set	7, (0x2791:16)	; F0F024  set 7,(0x2791)
 	unlk XIZ	; F0F028  unlk XIZ
 	ret	; F0F02A  ret
 
@@ -28876,8 +28876,8 @@ DspEffect_SetSectionAndRepaint:		; <- T_DspEffect_SetSectionAndRepaint
 	link XIZ,0x0000	; F0F02B  link XIZ,0x0000
 	m_ld_m16m MBD+r6, 0x08, DspEffect_Section	; F0F02F  ld (0x2790),(XIZ+0x08)
 	calr	DspEffect_SelectSectionBlock	; F0F034  calr 0xf0f047
-	m_set 7, MD16, 0x2791	; F0F037  set 7,(0x2791)
-	m_set 4, MD16, UI_Request_Hi	; F0F03B  set 4,(0x2071)
+	set	7, (0x2791:16)	; F0F037  set 7,(0x2791)
+	set	4, (UI_Request_Hi:16)	; F0F03B  set 4,(0x2071)
 	unlk XIZ	; F0F03F  unlk XIZ
 	ret	; F0F041  ret
 
@@ -29064,7 +29064,7 @@ DspEffect_OnParamEvent_ParamSections:
 ; --------------------------------------------------------------------------
 ; DspEffectEvent_RepaintAndReturn: DspEffect_OnParamEvent's tail: UI_ScreenFlags bit 4 (repaint in place), then its popw hl / ret.
 DspEffectEvent_RepaintAndReturn:
-	m_set 4, MD16, UI_ScreenFlags	; F0F0FF  set 4,(0x2095)
+	set	4, (UI_ScreenFlags:16)	; F0F0FF  set 4,(0x2095)
 DspEffectEvent_RepaintAndReturn_Epilogue:
 	popw	hl	; F0F103  pop HL
 	ret	; F0F104  ret
@@ -29541,7 +29541,7 @@ SoftKeyCol1_DspEffect_Section0:
 	cp	a, 2:i3	; F0F2C4  cp A,2
 	jr	z, SoftKeyCol1_DspEffect_ParamSections_Nop4	; F0F2C6  jr Z,0xf0f2de
 	calr	DspEffect_StepSelectedBlockSend	; F0F2C8  calr 0xf10222
-	m_set 0, MD16, 0x2791	; F0F2CB  set 0,(0x2791)
+	set	0, (0x2791:16)	; F0F2CB  set 0,(0x2791)
 	ld	(PanelDial_DownButton:16), 128	; F0F2CF  ld (0x209b),0x80  <- arms prom_a PanelButton_Accept's substitution for panel button code 0x0D (0xF86615); see the 0xF7D2D8 banner
 	ld	(PanelDial_UpButton:16), 0	; F0F2D4  ld (0x209c),0x00  <- arms prom_a PanelButton_Accept's substitution for panel button code 0x0D (0xF86615); see the 0xF7D2D8 banner
 	jr	SoftKeyCol1_DspEffect_ParamSections_Nop4	; F0F2D9  jr T,0xf0f2de
@@ -29690,7 +29690,7 @@ SoftKeyCol2_DspEffect_EqSections:
 	pushw	17	; F0F315  push 0x0011
 	pushw	0	; F0F318  push 0x0000
 	calr	DspEffect_StepEqBandFc	; F0F31B  calr 0xf10252
-	m_set 0, MD16, 0x2791	; F0F31E  set 0,(0x2791)
+	set	0, (0x2791:16)	; F0F31E  set 0,(0x2791)
 	ld	(PanelDial_DownButton:16), 129	; F0F322  ld (0x209b),0x81  <- arms prom_a PanelButton_Accept's substitution for panel button code 0x0D (0xF86615); see the 0xF7D2D8 banner
 	ld	(PanelDial_UpButton:16), 1	; F0F327  ld (0x209c),0x01  <- arms prom_a PanelButton_Accept's substitution for panel button code 0x0D (0xF86615); see the 0xF7D2D8 banner
 	pop	xiy	; F0F32C  pop XIY
@@ -29850,7 +29850,7 @@ SoftKeyCol3_DspEffect_EqSections:
 SoftKeyCol3_DspEffect_EqSections_Join:
 	pop	xiy	; F0F385  pop XIY
 SoftKeyCol3_DspEffect_EqSections_Join2:
-	m_set 0, MD16, 0x2791	; F0F386  set 0,(0x2791)
+	set	0, (0x2791:16)	; F0F386  set 0,(0x2791)
 	ld	(PanelDial_DownButton:16), 130	; F0F38A  ld (0x209b),0x82  <- arms prom_a PanelButton_Accept's substitution for panel button code 0x0D (0xF86615); see the 0xF7D2D8 banner
 	ld	(PanelDial_UpButton:16), 2	; F0F38F  ld (0x209c),0x02  <- arms prom_a PanelButton_Accept's substitution for panel button code 0x0D (0xF86615); see the 0xF7D2D8 banner
 SoftKeyCol3_DspEffect_EqSections_Return:
@@ -29941,7 +29941,7 @@ SoftKeyCol4_DspEffect_Section0:
 	pushw	0	; F0F3CD  push 0x0000
 	pushw	33	; F0F3D0  push 0x0021
 	call	T_PartParam_StepFieldById	; F0F3D3  call 0xf418d0
-	m_set 0, MD16, 0x2791	; F0F3D7  set 0,(0x2791)
+	set	0, (0x2791:16)	; F0F3D7  set 0,(0x2791)
 	ld	(PanelDial_DownButton:16), 131	; F0F3DB  ld (0x209b),0x83  <- arms prom_a PanelButton_Accept's substitution for panel button code 0x0D (0xF86615); see the 0xF7D2D8 banner
 	ld	(PanelDial_UpButton:16), 3	; F0F3E0  ld (0x209c),0x03  <- arms prom_a PanelButton_Accept's substitution for panel button code 0x0D (0xF86615); see the 0xF7D2D8 banner
 	pop	xiy	; F0F3E5  pop XIY
@@ -30475,7 +30475,7 @@ SoftKeyCol8_DspEffect_BySection:
 ;   (notes/prom_b_dsp_effect_section_arms.py).
 SoftKeyCol8_DspEffect_ParamSections:
 	calr	DspEffect_StepCursorValue	; F0F52E  calr 0xf1069a
-	m_set 0, MD16, 0x2791	; F0F531  set 0,(0x2791)
+	set	0, (0x2791:16)	; F0F531  set 0,(0x2791)
 
 ; --------------------------------------------------------------------------
 ; SoftKeyCol8_DspEffect_ParamSections_Nop0
@@ -30581,7 +30581,7 @@ LcdKeyRow1_DspEffect_BySection:
 ;   (notes/prom_b_dsp_effect_section_arms.py).
 LcdKeyRow1_DspEffect_Section0:
 	calr	DspEffect_ToggleCommonAlgorithm	; F0F570  calr 0xf10175
-	m_set 0, MD16, 0x2791	; F0F573  set 0,(0x2791)
+	set	0, (0x2791:16)	; F0F573  set 0,(0x2791)
 	jr	LcdKeyRow1_DspEffect_ParamSections_Nop4	; F0F577  jr T,0xf0f59e
 
 ; --------------------------------------------------------------------------
@@ -30722,7 +30722,7 @@ LcdKeyRow2_DspEffect_Section0:
 	and	c, 1	; F0F5D8  and C,0x01
 	jr	z, LcdKeyRow2_DspEffect_Section3_Skip	; F0F5DB  jr Z,0xf0f60b
 	ld	(Effect_BlockIndex:16), 0	; F0F5DD  ld (0x2797),0x00
-	m_set 4, MD16, UI_Request_Hi	; F0F5E2  set 4,(0x2071)
+	set	4, (UI_Request_Hi:16)	; F0F5E2  set 4,(0x2071)
 	ld	(10136:16), 0	; F0F5E6  ld (0x2798),0x00
 	jr	LcdKeyRow2_DspEffect_Exit	; F0F5EB  jr T,0xf0f61e
 
@@ -30934,7 +30934,7 @@ LcdKeyRow3_DspEffect_Section0:
 	jr	z, LcdKeyRow3_DspEffect_Section3_Skip	; F0F65B  jr Z,0xf0f67d
 	ld	(Effect_BlockIndex:16), 1	; F0F65D  ld (0x2797),0x01
 	ld	(10136:16), 0	; F0F662  ld (0x2798),0x00
-	m_set 4, MD16, UI_Request_Hi	; F0F667  set 4,(0x2071)
+	set	4, (UI_Request_Hi:16)	; F0F667  set 4,(0x2071)
 	jr	LcdKeyRow3_DspEffect_Exit	; F0F66B  jr T,0xf0f684
 
 ; --------------------------------------------------------------------------
@@ -31093,7 +31093,7 @@ LcdKeyRow4_DspEffect_Section0:
 	and	c, 1	; F0F6BE  and C,0x01
 	jr	z, LcdKeyRow4_DspEffect_Sections12_Skip	; F0F6C1  jr Z,0xf0f6da
 	ld	(Effect_BlockIndex:16), 2	; F0F6C3  ld (0x2797),0x02
-	m_set 4, MD16, UI_Request_Hi	; F0F6C8  set 4,(0x2071)
+	set	4, (UI_Request_Hi:16)	; F0F6C8  set 4,(0x2071)
 	ld	(10136:16), 0	; F0F6CC  ld (0x2798),0x00
 	jr	LcdKeyRow4_DspEffect_Exit	; F0F6D1  jr T,0xf0f6ed
 
@@ -31261,7 +31261,7 @@ LcdKeyRow5_DspEffect_Section0:
 	cp	(0x2798:16), 0x01	; F0F738  cp (0x2798),0x01
 	jr	z, LcdKeyRow5_DspEffect_ParamSections_Nop4	; F0F73D  jr Z,0xf0f75a
 	ld	(10136:16), 1	; F0F73F  ld (0x2798),0x01
-	m_set 4, MD16, UI_Request_Hi	; F0F744  set 4,(0x2071)
+	set	4, (UI_Request_Hi:16)	; F0F744  set 4,(0x2071)
 	jr	LcdKeyRow5_DspEffect_ParamSections_Nop4	; F0F748  jr T,0xf0f75a
 
 ; --------------------------------------------------------------------------
@@ -31287,7 +31287,7 @@ LcdKeyRow5_DspEffect_ParamSections:
 	and	c, 1	; F0F74E  and C,0x01
 	jr	z, LcdKeyRow5_DspEffect_ParamSections_Nop4	; F0F751  jr Z,0xf0f75a
 	calr	DspEffect_ToggleParamMarkAtCursor	; F0F753  calr 0xf10cc4
-	m_set 0, MD16, 0x2791	; F0F756  set 0,(0x2791)
+	set	0, (0x2791:16)	; F0F756  set 0,(0x2791)
 
 ; --------------------------------------------------------------------------
 ; LcdKeyRow5_DspEffect_ParamSections_Nop4
@@ -31375,7 +31375,7 @@ DspEffectSection0_QueuePaintJobs:
 	ld	(PanelDial_DownButton:16), 130	; F0F79D  ld (0x209b),0x82  <- arms prom_a PanelButton_Accept's substitution for panel button code 0x0D (0xF86615); see the 0xF7D2D8 banner
 	ld	(PanelDial_UpButton:16), 2	; F0F7A2  ld (0x209c),0x02  <- arms prom_a PanelButton_Accept's substitution for panel button code 0x0D (0xF86615); see the 0xF7D2D8 banner
 DspEffectSection0_QueuePaintJobs_Skip:
-	m_set 0, MD16, UI_RequestBits	; F0F7A7  set 0,(0x2075)
+	set	0, (UI_RequestBits:16)	; F0F7A7  set 0,(0x2075)
 	ld	c, (UI_ScreenFlags:16)	; F0F7AB  ld C,(0x2095)
 	and	c, 16	; F0F7AF  and C,0x10
 	jr	nz, DspEffectSection0_QueuePaintJobs_Skip3	; F0F7B2  jr NZ,0xf0f7fa
@@ -31435,7 +31435,7 @@ DspEffectSection0_QueuePaintJobs_Skip4:
 EffectEditor_PaintJob0:
 	push	xix	; F0F820  push XIX
 	lda	xix, (T_DisplayList_Run_Stack:24)	; F0F821  lda XIX,0xf42e00
-	m_res 0, MD16, 0x2799	; F0F826  res 0,(0x2799)
+	res	0, (0x2799:16)	; F0F826  res 0,(0x2799)
 	call	T_LCD_BlankThenSetPanel3Layer_Copy	; F0F82A  call 0xf42e10
 	ld	(LCD_CurrentLayer:16), 0	; F0F82E  ld (0x2540),0x00
 	ld	bc, (PanelModeGroup:16)	; F0F833  ld BC,(0x2076)
@@ -31549,7 +31549,7 @@ EffectEditor_PaintJob0_Resume5:
 EffectEditor_PaintJob1:
 	push	xix	; F0F91C  push XIX
 	lda	xix, (LCD_CurrentLayer:16)	; F0F91D  lda XIX,0x2540
-	m_res 1, MD16, 0x2799	; F0F921  res 1,(0x2799)
+	res	1, (0x2799:16)	; F0F921  res 1,(0x2799)
 	set	0, (0xc6:8)	; F0F925  set 0,(0xc6)
 	ld	(xix), 1	; F0F928  ld (XIX),0x01
 	ld	(UI_DrawScratch:16), 0	; F0F92B  ld (0x2640),0x00
@@ -31638,7 +31638,7 @@ EffectEditor_PaintJob2:
 	pushw	hl	; F0F9F1  push HL
 	push	xix	; F0F9F2  push XIX
 	lda	xix, (UI_DrawScratch:16)	; F0F9F3  lda XIX,0x2640
-	m_res 2, MD16, 0x2799	; F0F9F7  res 2,(0x2799)
+	res	2, (0x2799:16)	; F0F9F7  res 2,(0x2799)
 	calr	EffectEditor_PaintBypassIndicator	; F0F9FB  calr 0xf0fd2f
 	ld	(LCD_CurrentLayer:16), 0	; F0F9FE  ld (0x2540),0x00
 	lda	xbc, (EffectEditor_PaintJob2_DL1 + 0x4B:24)	; F0FA03  lda XBC,0xf1447d
@@ -32013,7 +32013,7 @@ DspEffect_EnterEqSection:
 	ld	(PanelDial_DownButton:16), 129	; F0FD74  ld (0x209b),0x81  <- arms prom_a PanelButton_Accept's substitution for panel button code 0x0D (0xF86615); see the 0xF7D2D8 banner
 	ld	(PanelDial_UpButton:16), 1	; F0FD79  ld (0x209c),0x01  <- arms prom_a PanelButton_Accept's substitution for panel button code 0x0D (0xF86615); see the 0xF7D2D8 banner
 DspEffect_EnterEqSection_Skip:
-	m_set 0, MD16, UI_RequestBits	; F0FD7E  set 0,(0x2075)
+	set	0, (UI_RequestBits:16)	; F0FD7E  set 0,(0x2075)
 	ld	c, (10129:16)	; F0FD82  ld C,(0x2791)
 	and	c, 128	; F0FD86  and C,0x80
 	jr	z, DspEffect_EnterEqSection_Skip2	; F0FD89  jr Z,0xf0fda8
@@ -32058,7 +32058,7 @@ DspEffect_EnterEqSection_Skip3:
 EffectEditor_PaintJob3:
 	push	xix	; F0FDCE  push XIX
 	lda	xix, (T_DisplayList_Run_Stack:24)	; F0FDCF  lda XIX,0xf42e00
-	m_res 3, MD16, 0x2799	; F0FDD4  res 3,(0x2799)
+	res	3, (0x2799:16)	; F0FDD4  res 3,(0x2799)
 	call	T_LCD_BlankThenSetPanel3Layer_Copy	; F0FDD8  call 0xf42e10
 	ld	(LCD_CurrentLayer:16), 0	; F0FDDC  ld (0x2540),0x00
 	ld	bc, (PanelModeGroup:16)	; F0FDE1  ld BC,(0x2076)
@@ -32171,7 +32171,7 @@ EffectEditor_PaintJob4:
 	link XIZ,0xfffc	; F0FED6  link XIZ,0xfffc
 	push	xix	; F0FEDA  push XIX
 	lda	xix, (UI_DrawScratch:16)	; F0FEDB  lda XIX,0x2640
-	m_res 4, MD16, 0x2799	; F0FEDF  res 4,(0x2799)
+	res	4, (0x2799:16)	; F0FEDF  res 4,(0x2799)
 	ld	(LCD_CurrentLayer:16), 0	; F0FEE3  ld (0x2540),0x00
 	ld	(xiz-4), xix	; F0FEE8  ld (XIZ+0xfc),XIX
 	pushw	19	; F0FEEB  push 0x0013
@@ -32407,7 +32407,7 @@ DspEffect_EnterParamSection:
 	ld	(PanelDial_DownButton:16), 133	; F100B8  ld (0x209b),0x85  <- arms prom_a PanelButton_Accept's substitution for panel button code 0x0D (0xF86615); see the 0xF7D2D8 banner
 	ld	(PanelDial_UpButton:16), 5	; F100BD  ld (0x209c),0x05  <- arms prom_a PanelButton_Accept's substitution for panel button code 0x0D (0xF86615); see the 0xF7D2D8 banner
 DspEffect_EnterParamSection_Skip:
-	m_set 0, MD16, UI_RequestBits	; F100C2  set 0,(0x2075)
+	set	0, (UI_RequestBits:16)	; F100C2  set 0,(0x2075)
 	pushw	0	; F100C6  push 0x0000
 	ld	bc, (Effect_BlockIndex:16)	; F100C9  ld BC,(0x2797)
 	extz	bc	; F100CD  extz BC
@@ -32419,7 +32419,7 @@ DspEffect_EnterParamSection_Skip:
 	cp	(Effect_Algorithm:16), a	; F100DB  cp (0x2796),A
 	jr	z, DspEffect_EnterParamSection_Skip2	; F100DF  jr Z,0xf100ff
 	ld	(Effect_Algorithm:16), a	; F100E1  ld (0x2796),A
-	m_res 4, MD16, UI_ScreenFlags	; F100E5  res 4,(0x2095)
+	res	4, (UI_ScreenFlags:16)	; F100E5  res 4,(0x2095)
 	ld	(10130:16), 0	; F100E9  ld (0x2792),0x00
 	ld	(10131:16), 1	; F100EE  ld (0x2793),0x01
 	cp	(0x2794:16), 0x08	; F100F3  cp (0x2794),0x08
@@ -32820,7 +32820,7 @@ DspEffect_StepEqBandFc_Join3:
 	add	bc, 97	; F10394  add BC,0x0061
 	pushw	bc	; F10398  push BC
 	call	T_Queue2C00_Append4	; F10399  call 0xf42c80
-	m_set 3, MD16, UI_RequestBits	; F1039D  set 3,(0x2075)
+	set	3, (UI_RequestBits:16)	; F1039D  set 3,(0x2075)
 	inc	8, xsp	; F103A1  inc 0,XSP
 	inc	8, xsp	; F103A3  inc 0,XSP
 DspEffect_StepEqBandFc_Skip8:
@@ -32932,7 +32932,7 @@ DspEffect_StepEqBandGain_Join:
 	add	bc, 97	; F1045F  add BC,0x0061
 	pushw	bc	; F10463  push BC
 	call	T_Queue2C00_Append4	; F10464  call 0xf42c80
-	m_set 3, MD16, UI_RequestBits	; F10468  set 3,(0x2075)
+	set	3, (UI_RequestBits:16)	; F10468  set 3,(0x2075)
 	inc	8, xsp	; F1046C  inc 0,XSP
 	inc	8, xsp	; F1046E  inc 0,XSP
 DspEffect_StepEqBandGain_Skip5:
@@ -33106,7 +33106,7 @@ DspEffect_StepAlgorithm_Join4:
 	add	bc, 97	; F105A7  add BC,0x0061
 	pushw	bc	; F105AB  push BC
 	calr	DspEffect_SetAlgorithm	; F105AC  calr 0xf11365
-	m_set 3, MD16, UI_RequestBits	; F105AF  set 3,(0x2075)
+	set	3, (UI_RequestBits:16)	; F105AF  set 3,(0x2075)
 	pop	xiy	; F105B3  pop XIY
 DspEffect_StepAlgorithm_Epilogue:
 	pop	xix	; F105B4  pop XIX
@@ -33227,8 +33227,8 @@ DspEffect_MoveCursor_Skip6:
 DspEffect_MoveCursor_Skip7:
 	ld	(xix), 8	; F1068A  ld (XIX),0x08
 DspEffect_MoveCursor_Join:
-	m_set 3, MD16, UI_RequestBits	; F1068D  set 3,(0x2075)
-	m_set 4, MD16, UI_ScreenFlags	; F10691  set 4,(0x2095)
+	set	3, (UI_RequestBits:16)	; F1068D  set 3,(0x2075)
+	set	4, (UI_ScreenFlags:16)	; F10691  set 4,(0x2095)
 DspEffect_MoveCursor_Skip8:
 	pop	xix	; F10695  pop XIX
 	popw	hl	; F10696  pop HL
@@ -33420,7 +33420,7 @@ DspEffect_StepU8_Join:
 	add	bc, 97	; F107BB  add BC,0x0061
 	pushw	bc	; F107BF  push BC
 	call	T_Queue2C00_Append4	; F107C0  call 0xf42c80
-	m_set 3, MD16, UI_RequestBits	; F107C4  set 3,(0x2075)
+	set	3, (UI_RequestBits:16)	; F107C4  set 3,(0x2075)
 	inc	8, xsp	; F107C8  inc 0,XSP
 DspEffect_StepU8_Skip5:
 	pop	xix	; F107CA  pop XIX
@@ -33534,7 +33534,7 @@ DspEffect_StepS8_Join:
 	add	bc, 97	; F10870  add BC,0x0061
 	pushw	bc	; F10874  push BC
 	call	T_Queue2C00_Append4	; F10875  call 0xf42c80
-	m_set 3, MD16, UI_RequestBits	; F10879  set 3,(0x2075)
+	set	3, (UI_RequestBits:16)	; F10879  set 3,(0x2075)
 	inc	8, xsp	; F1087D  inc 0,XSP
 DspEffect_StepS8_Skip5:
 	pop	xix	; F1087F  pop XIX
@@ -33673,7 +33673,7 @@ DspEffect_StepU16_Join:
 	add	bc, 97	; F1096E  add BC,0x0061
 	pushw	bc	; F10972  push BC
 	call	T_Queue2C00_Append4	; F10973  call 0xf42c80
-	m_set 3, MD16, UI_RequestBits	; F10977  set 3,(0x2075)
+	set	3, (UI_RequestBits:16)	; F10977  set 3,(0x2075)
 	inc	8, xsp	; F1097B  inc 0,XSP
 	inc	8, xsp	; F1097D  inc 0,XSP
 DspEffect_StepU16_Skip5:
@@ -33819,7 +33819,7 @@ DspEffect_StepEqFc_Join:
 	add	bc, 97	; F10A80  add BC,0x0061
 	pushw	bc	; F10A84  push BC
 	call	T_Queue2C00_Append4	; F10A85  call 0xf42c80
-	m_set 3, MD16, UI_RequestBits	; F10A89  set 3,(0x2075)
+	set	3, (UI_RequestBits:16)	; F10A89  set 3,(0x2075)
 	inc	8, xsp	; F10A8D  inc 0,XSP
 	inc	8, xsp	; F10A8F  inc 0,XSP
 DspEffect_StepEqFc_Skip5:
@@ -33964,7 +33964,7 @@ DspEffect_StepEqQ_Join:
 	add	bc, 97	; F10B92  add BC,0x0061
 	pushw	bc	; F10B96  push BC
 	call	T_Queue2C00_Append4	; F10B97  call 0xf42c80
-	m_set 3, MD16, UI_RequestBits	; F10B9B  set 3,(0x2075)
+	set	3, (UI_RequestBits:16)	; F10B9B  set 3,(0x2075)
 	inc	8, xsp	; F10B9F  inc 0,XSP
 	inc	8, xsp	; F10BA1  inc 0,XSP
 DspEffect_StepEqQ_Skip5:
@@ -34105,7 +34105,7 @@ DspEffect_StepEqGain_Join:
 	add	bc, 97	; F10C98  add BC,0x0061
 	pushw	bc	; F10C9C  push BC
 	call	T_Queue2C00_Append4	; F10C9D  call 0xf42c80
-	m_set 3, MD16, UI_RequestBits	; F10CA1  set 3,(0x2075)
+	set	3, (UI_RequestBits:16)	; F10CA1  set 3,(0x2075)
 	inc	8, xsp	; F10CA5  inc 0,XSP
 	inc	8, xsp	; F10CA7  inc 0,XSP
 DspEffect_StepEqGain_Skip5:
@@ -34263,7 +34263,7 @@ DspEffect_ToggleParamMarkAtCursor_Skip2:
 EffectEditor_PaintJob5:
 	push	xix	; F10D62  push XIX
 	lda	xix, (T_DisplayList_Run_Stack:24)	; F10D63  lda XIX,0xf42e00
-	m_res 5, MD16, 0x2799	; F10D68  res 5,(0x2799)
+	res	5, (0x2799:16)	; F10D68  res 5,(0x2799)
 	call	T_LCD_BlankThenSetPanel3Layer_Copy	; F10D6C  call 0xf42e10
 	ld	(LCD_CurrentLayer:16), 0	; F10D70  ld (0x2540),0x00
 	ld	bc, (PanelModeGroup:16)	; F10D75  ld BC,(0x2076)
@@ -34407,7 +34407,7 @@ EffectEditor_PaintJob5_Resume8:
 ; ⚠ WAS the middle of `Data_F10E0F`.
 ; --------------------------------------------------------------------------
 EffectEditor_PaintJob6:
-	m_res 6, MD16, 0x2799	; F10EB8  res 6,(0x2799)
+	res	6, (0x2799:16)	; F10EB8  res 6,(0x2799)
 	ld	(LCD_CurrentLayer:16), 0	; F10EBC  ld (0x2540),0x00
 	m_ld_m16m MB16, Effect_Algorithm, UI_DrawScratch	; F10EC1  ld (0x2640),(0x2796)
 	lda	xbc, (DL_F146F0:24)	; F10EC7  lda XBC,0xf146f0
@@ -34431,7 +34431,7 @@ EffectEditor_PaintJob6:
 ; ⚠ WAS the middle of `Data_F10E0F`.
 ; --------------------------------------------------------------------------
 EffectEditor_PaintJob7:
-	m_res 7, MD16, 0x2799	; F10EDA  res 7,(0x2799)
+	res	7, (0x2799:16)	; F10EDA  res 7,(0x2799)
 	calr	EffectEditor_PaintBypassIndicator	; F10EDE  calr 0xf0fd2f
 	calr	DspEffect_RepaintParamPage	; F10EE1  calr 0xf10ee9
 	call	T_LCD_ShowAllLayers_StackFrame_Copy	; F10EE4  call 0xf42e14
@@ -37188,7 +37188,7 @@ ScreenEnterBody_MainOutEqualizer:		; <- T_ScreenEnterBody_MainOutEqualizer
 	ld	(PanelDial_DownButton:16), 129	; F122DB  ld (0x209b),0x81  <- arms prom_a PanelButton_Accept's substitution for panel button code 0x0D (0xF86615); see the 0xF7D2D8 banner
 	ld	(PanelDial_UpButton:16), 1	; F122E0  ld (0x209c),0x01  <- arms prom_a PanelButton_Accept's substitution for panel button code 0x0D (0xF86615); see the 0xF7D2D8 banner
 ScreenEnterBody_MainOutEqualizer_Skip40:
-	m_set 0, MD16, UI_RequestBits	; F122E5  set 0,(0x2075)
+	set	0, (UI_RequestBits:16)	; F122E5  set 0,(0x2075)
 	ld	(Effect_BlockIndex:16), 24	; F122E9  ld (0x2797),0x18
 	ld	c, (UI_ScreenId:16)	; F122EE  ld C,(0x207c)
 	m_cp_rm MB16, UI_ScreenId_Previous, 3	; F122F2  cp C,(0x207d)
@@ -37271,7 +37271,7 @@ ExitKey_MainOutEqualizer:
 	ld	c, (PanelEvent_Flags:16)	; F1235B  ld C,(0x28b0)
 	and	c, 1	; F1235F  and C,0x01
 	jr	nz, ExitKey_MainOutEqualizer_Return	; F12362  jr NZ,0xf1236d
-	m_set 7, MD16, UI_Request_Hi	; F12364  set 7,(0x2071)
+	set	7, (UI_Request_Hi:16)	; F12364  set 7,(0x2071)
 	ld	(UI_Request:16), 96	; F12368  ld (0x2070),0x60
 ExitKey_MainOutEqualizer_Return:
 	ret	; F1236D  ret
@@ -37385,7 +37385,7 @@ SoftKeyCol6_MainOutEqualizer:
 	pop	xbc	; F123C0  pop XBC
 	ret	; F123C1  ret
 Draw_MainOutEqualizer:
-	m_res 3, MD16, 0x2799	; F123C2  res 3,(0x2799)
+	res	3, (0x2799:16)	; F123C2  res 3,(0x2799)
 	call	T_LCD_BlankThenSetPanel3Layer_Copy	; F123C6  call 0xf42e10
 	ld	(LCD_CurrentLayer:16), 0	; F123CA  ld (0x2540),0x00
 	lda	xbc, (Unknown_F17780:24)	; F123CF  lda XBC,0xf17780
@@ -37409,7 +37409,7 @@ MainOutEqualizer_PaintEqValues:
 	link XIZ,0xfffc	; F123F4  link XIZ,0xfffc
 	push	xix	; F123F8  push XIX
 	lda	xix, (UI_DrawScratch:16)	; F123F9  lda XIX,0x2640
-	m_res 4, MD16, 0x2799	; F123FD  res 4,(0x2799)
+	res	4, (0x2799:16)	; F123FD  res 4,(0x2799)
 	ld	(LCD_CurrentLayer:16), 0	; F12401  ld (0x2540),0x00
 	ld	(xiz-4), xix	; F12406  ld (XIZ+0xfc),XIX
 	pushw	3	; F12409  push 0x0003
@@ -75534,10 +75534,10 @@ SysExThirdRegion_LocateDrumChunk_Join:
 	ld	wa, (xbc+1)	; F36DAD  ld WA,(XBC+0x01)
 	cp	wa, 0:i3	; F36DB0  cp WA,0
 	jr	nz, SysExThirdRegion_LocateDrumChunk_Skip3	; F36DB2  jr NZ,0xf36dbc
-	m_set 0, MD24, 0x000a01	; F36DB4  set 0,(0x000a01)
+	set	0, (0x000a01:24)	; F36DB4  set 0,(0x000a01)
 	jrl	SysExThirdRegion_LocateDrumChunk_Join2	; F36DB9  jrl T,0xf36e1b
 SysExThirdRegion_LocateDrumChunk_Skip3:
-	m_set 1, MD24, 0x000a01	; F36DBC  set 1,(0x000a01)
+	set	1, (0x000a01:24)	; F36DBC  set 1,(0x000a01)
 	jrl	SysExThirdRegion_LocateDrumChunk_Join2	; F36DC1  jrl T,0xf36e1b
 SysExThirdRegion_LocateDrumChunk_Skip4:
 	ld	xbc, (xiz+14)	; F36DC4  ld XBC,(XIZ+0x0e)
@@ -75711,8 +75711,8 @@ SysExThirdRegion_FetchNextChunk_Skip10:
 	call	T_ToneMsg85_SendParam	; F36F73  call 0xf4347c
 	add	xsp, 20	; F36F77  add XSP,0x00000014
 SysExThirdRegion_FetchNextChunk_Join4:
-	m_res 2, MD24, 0x000a00	; F36F7D  res 2,(0x000a00)
-	m_set 1, MD24, 0x000a00	; F36F82  set 1,(0x000a00)
+	res	2, (0x000a00:24)	; F36F7D  res 2,(0x000a00)
+	set	1, (0x000a00:24)	; F36F82  set 1,(0x000a00)
 SysExThirdRegion_FetchNextChunk_Join5:
 	pop	xix	; F36F87  pop XIX
 	popw	hl	; F36F88  pop HL
@@ -77704,7 +77704,7 @@ SysExThirdRegion_SendReplyChunk_Join3:
 	cpw	(0x000a07:24), 0x0000	; F37F16  cp (0x000a07),0x0000
 	jr	le, SysExThirdRegion_SendReplyChunk_Skip3	; F37F1D  jr LE,0xf37f2d
 	andw	(0x000a00:24), 0xfcfd	; F37F1F  and (0x000a00),0xfcfd
-	m_set 2, MD24, 0x000a00	; F37F26  set 2,(0x000a00)
+	set	2, (0x000a00:24)	; F37F26  set 2,(0x000a00)
 	jr	SysExThirdRegion_SendReplyChunk_Join4	; F37F2B  jr T,0xf37f34
 SysExThirdRegion_SendReplyChunk_Skip3:
 	ldw	(2560:24), 0	; F37F2D  ld (0x000a00),0x0000
@@ -77886,7 +77886,7 @@ sub_F38843:		; <- T_F42664
 	pushw	de	; F38848  push DE
 	push	xix	; F38849  push XIX
 	lda	xix, (sub_F38A09:24)	; F3884A  lda XIX,0xf38a09
-	m_set 4, MD16, Disk_Flags	; F3884F  set 4,(0x21e7)
+	set	4, (Disk_Flags:16)	; F3884F  set 4,(0x21e7)
 	push	xde	; F38853  push XDE
 	push	xhl	; F38854  push XHL
 	push	xix	; F38855  push XIX
@@ -77970,7 +77970,7 @@ Divide32_Unsigned_Remainder_Skip4:
 	cp	d, 16	; F38906  cp D,0x10
 	jr	c, Divide32_Unsigned_Remainder_Loop2	; F38909  jr C,0xf388ba
 	ld	h, (32704:16)	; F3890B  ld H,(0x7fc0)
-	m_res 1, MD16, 0x7fc0	; F3890F  res 1,(0x7fc0)
+	res	1, (0x7fc0:16)	; F3890F  res 1,(0x7fc0)
 	calr	sub_F38B8E	; F38913  calr 0xf38b8e
 	ld	(32704:16), h	; F38916  ld (0x7fc0),H
 	ld	c, (xiz-1)	; F3891A  ld C,(XIZ+0xff)
@@ -78048,7 +78048,7 @@ Divide32_Unsigned_Remainder_Skip4:
 	pushw	3	; F3898D  push 0x0003
 	pushw	145	; F38990  push 0x0091
 	calr	sub_F389A2	; F38993  calr 0xf389a2
-	m_res 4, MD16, Disk_Flags	; F38996  res 4,(0x21e7)
+	res	4, (Disk_Flags:16)	; F38996  res 4,(0x21e7)
 	inc	8, xsp	; F3899A  inc 0,XSP
 	pop	xix	; F3899C  pop XIX
 	popw	de	; F3899D  pop DE
@@ -93667,7 +93667,7 @@ BStore_BootPhase3_Skip:
 	ld	xwa, (6304798:24)	; F440DD  ld XWA,(0x60341e)
 	ld	(13836:16), xwa	; F440E2  ld (0x360c),XWA
 	calr	Seq_RequestRewind	; F440E6  calr 0xf4542d
-	m_bit 0, MD16, 0x34d3	; F440E9  bit 0,(0x34d3)
+	bit	0, (0x34d3:16)	; F440E9  bit 0,(0x34d3)
 	jr	z, BStore_BootPhase3_Skip2	; F440ED  jr Z,0xf440f4
 	or	(0x34d3:16), 0x04	; F440EF  or (0x34d3),0x04
 BStore_BootPhase3_Skip2:
@@ -94052,7 +94052,7 @@ BStore_ResetWorkspaceFields_Loop2:
 	ld	(xix+), wa	; F443B5  ld (XIX+),WA
 	djnz16	bc, -6	; F443B8  djnz BC,0xf443b5
 	ld	a, 0:opc	; F443BB  ld A,0x00
-	m_bit 2, MD16, 0x7f4d	; F443BD  bit 2,(0x7f4d)
+	bit	2, (0x7f4d:16)	; F443BD  bit 2,(0x7f4d)
 	jr	z, BStore_ResetWorkspaceFields_Skip	; F443C1  jr Z,0xf443c5
 	ld	a, 255:opc	; F443C3  ld A,0xff
 BStore_ResetWorkspaceFields_Skip:
@@ -94072,7 +94072,7 @@ BStore_ResetWorkspaceFields_Skip:
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
 sub_F443CC:
-	m_bit 2, MD16, 0x7f4d	; F443CC  bit 2,(0x7f4d)
+	bit	2, (0x7f4d:16)	; F443CC  bit 2,(0x7f4d)
 	jr	z, sub_F443CC_Skip	; F443D0  jr Z,0xf443d7
 	calr	sub_F45E14	; F443D2  calr 0xf45e14
 	jr	sub_F443CC_Join	; F443D5  jr T,0xf443da
@@ -94264,9 +94264,9 @@ Seq_MainLoopService_Skip3:
 	cp	(UI_ScreenLatch:16), 0x08	; F4459F  cp (0x207a),0x08
 	jr	nz, Seq_MainLoopService_Skip5	; F445A4  jr NZ,0xf445bc
 Seq_MainLoopService_Skip4:
-	m_bit 2, MD16, MidiCfg_ModeBits	; F445A6  bit 2,(0x7f32)
+	bit	2, (MidiCfg_ModeBits:16)	; F445A6  bit 2,(0x7f32)
 	jr	z, Seq_MainLoopService_Skip5	; F445AA  jr Z,0xf445bc
-	m_bit 0, MD16, 0x34d9	; F445AC  bit 0,(0x34d9)
+	bit	0, (0x34d9:16)	; F445AC  bit 0,(0x34d9)
 	jr	z, Seq_MainLoopService_Skip5	; F445B0  jr Z,0xf445bc
 	and	(0x34d9:16), 0xfe	; F445B2  and (0x34d9),0xfe
 	or	(UI_ScreenFlags:16), 0x10	; F445B7  or (0x2095),0x10
@@ -94336,9 +94336,9 @@ CountIn_RebuildRoutingOnLastBeat:
 	jr	z, CountIn_RebuildRoutingOnLastBeat_Return	; F4462A  jr Z,0xf4466c
 	cp	a, 10	; F4462C  cp A,0x0a
 	jr	z, CountIn_RebuildRoutingOnLastBeat_Return	; F4462F  jr Z,0xf4466c
-	m_bit 3, MD16, 0x34d4	; F44631  bit 3,(0x34d4)
+	bit	3, (0x34d4:16)	; F44631  bit 3,(0x34d4)
 	jr	z, CountIn_RebuildRoutingOnLastBeat_Return	; F44635  jr Z,0xf4466c
-	m_bit 1, MD16, 0x34d9	; F44637  bit 1,(0x34d9)
+	bit	1, (0x34d9:16)	; F44637  bit 1,(0x34d9)
 	jr	z, CountIn_RebuildRoutingOnLastBeat_Return	; F4463B  jr Z,0xf4466c
 	cpw	(0x3552:16), 0x8001	; F4463D  cp (0x3552),0x8001
 	jr	nz, CountIn_RebuildRoutingOnLastBeat_Return	; F44643  jr NZ,0xf4466c
@@ -94566,7 +94566,7 @@ Seq_SeekTrackToBeatTick_Return:
 ;   each pass by Seq_MainLoopService. Basis: caller + body + Seq_RequestRewind header. (notes/naming-
 ;   pilot-2026-10-06/proposals_wave4_m.json)
 Seq_RewindOnRequest:
-	m_bit 0, MD16, 0x34d3	; F44809  bit 0,(0x34d3)
+	bit	0, (0x34d3:16)	; F44809  bit 0,(0x34d3)
 	jrl	z, Seq_RewindOnRequest_Return	; F4480D  jrl Z,0xf448a2
 	and	(0x34d3:16), 0xfe	; F44810  and (0x34d3),0xfe
 	bit	2, (TransportB_State:8)	; F44815  bit 2,(0x96)
@@ -94588,18 +94588,18 @@ Seq_RewindOnRequest:
 	jr	le, Seq_RewindOnRequest_Skip2	; F44849  jr LE,0xf44875
 	ld	(13650:16), wa	; F4484B  ld (0x3552),WA
 	or	(UI_ScreenFlags:16), 0x10	; F4484F  or (0x2095),0x10
-	m_set 7, MD16, 0x0c05	; F44854  set 7,(0x0c05)
+	set	7, (0x0c05:16)	; F44854  set 7,(0x0c05)
 	call	Seq_LocateNowIfPending_Veneer	; F44858  call 0xf4403c
 	jr	Seq_RewindOnRequest_Return	; F4485C  jr T,0xf448a2
 Seq_RewindOnRequest_Skip:
 	ld	wa, (13858:16)	; F4485E  ld WA,(0x3622)
 	ld	(13650:16), wa	; F44862  ld (0x3552),WA
 	or	(UI_ScreenFlags:16), 0x10	; F44866  or (0x2095),0x10
-	m_set 7, MD16, 0x0c05	; F4486B  set 7,(0x0c05)
+	set	7, (0x0c05:16)	; F4486B  set 7,(0x0c05)
 	call	Seq_LocateNowIfPending_Veneer	; F4486F  call 0xf4403c
 	jr	Seq_RewindOnRequest_Return	; F44873  jr T,0xf448a2
 Seq_RewindOnRequest_Skip2:
-	m_bit 2, MD16, 0x34d3	; F44875  bit 2,(0x34d3)
+	bit	2, (0x34d3:16)	; F44875  bit 2,(0x34d3)
 	jr	z, Seq_RewindOnRequest_Skip3	; F44879  jr Z,0xf44882
 	and	(0x34d3:16), 0xfb	; F4487B  and (0x34d3),0xfb
 	jr	Seq_RewindOnRequest_Join	; F44880  jr T,0xf44886
@@ -94675,7 +94675,7 @@ SeqCycle_CheckOn:		; <- T_SeqCycle_CheckOn
 	cp	(UI_ScreenLatch:16), 0x14	; F448DD  cp (0x207a),0x14
 	jr	nz, SeqCycle_CheckOn_Skip2	; F448E2  jr NZ,0xf448ec
 SeqCycle_CheckOn_Skip:
-	m_bit 0, MD16, 0x360b	; F448E4  bit 0,(0x360b)
+	bit	0, (0x360b:16)	; F448E4  bit 0,(0x360b)
 	jr	nz, SeqCycle_CheckOn_Return	; F448E8  jr NZ,0xf44902
 	jr	SeqCycle_CheckOn_Join	; F448EA  jr T,0xf44900
 SeqCycle_CheckOn_Skip2:
@@ -94684,7 +94684,7 @@ SeqCycle_CheckOn_Skip2:
 	cp	(UI_ScreenLatch:16), 0x08	; F448F3  cp (0x207a),0x08
 	jr	nz, SeqCycle_CheckOn_Join	; F448F8  jr NZ,0xf44900
 SeqCycle_CheckOn_Skip3:
-	m_bit 1, MD16, 0x360b	; F448FA  bit 1,(0x360b)
+	bit	1, (0x360b:16)	; F448FA  bit 1,(0x360b)
 	jr	nz, SeqCycle_CheckOn_Return	; F448FE  jr NZ,0xf44902
 SeqCycle_CheckOn_Join:
 	ld	a, 255:opc	; F44900  ld A,0xff
@@ -94713,7 +94713,7 @@ CycleRecord_CheckOnPreviousScreen:
 	cp	(UI_ScreenLatch_Previous:16), 0x08	; F4490C  cp (0x207b),0x08
 	jr	nz, CycleRecord_CheckOnPreviousScreen_Skip2	; F44911  jr NZ,0xf44919
 CycleRecord_CheckOnPreviousScreen_Skip:
-	m_bit 1, MD16, 0x360b	; F44913  bit 1,(0x360b)
+	bit	1, (0x360b:16)	; F44913  bit 1,(0x360b)
 	jr	nz, CycleRecord_CheckOnPreviousScreen_Return	; F44917  jr NZ,0xf4491b
 CycleRecord_CheckOnPreviousScreen_Skip2:
 	ld	a, 255:opc	; F44919  ld A,0xff
@@ -94737,7 +94737,7 @@ CycleRecord_CheckOnPreviousScreen_Return:
 ;   clears the bit (at once when no track plays). Called on every Seq_MainLoopService pass. Basis: caller + body +
 ;   setters. (notes/naming-pilot-2026-10-06/proposals_wave4_k.json)
 Seq_RestoreSongParamsOnRequest:
-	m_bit 0, MD16, 0x34d2	; F4491C  bit 0,(0x34d2)
+	bit	0, (0x34d2:16)	; F4491C  bit 0,(0x34d2)
 	jr	z, Seq_RestoreSongParamsOnRequest_Return	; F44920  jr Z,0xf4493d
 	ld	xwa, (6304798:24)	; F44922  ld XWA,(0x60341e)
 	cp	xwa, 0	; F44927  cp XWA,0x00000000
@@ -94765,7 +94765,7 @@ Seq_RestoreSongParamsOnRequest_Return:
 ;   when it sets that bit itself, so that ignore lasts two passes. Called by Seq_MainLoopService. Basis: caller + body
 ;   + the arming site. (notes/naming-pilot-2026-10-06/proposals_wave4_l.json)
 Seq_CountDownMidiStartIgnore:
-	m_bit 7, MD16, 0x3550	; F4493E  bit 7,(0x3550)
+	bit	7, (0x3550:16)	; F4493E  bit 7,(0x3550)
 	jr	z, Seq_CountDownMidiStartIgnore_Return	; F44942  jr Z,0xf44959
 	dec	1, (13648:16)	; F44944  dec 1,(0x3550)
 	cp	(0x3550:16), 0x80	; F44948  cp (0x3550),0x80
@@ -94826,30 +94826,30 @@ SeqRecord_HandleTransportBStartStop_Skip:
 	ld	xwa, (12292:16)	; F4498A  ld XWA,(0x3004)
 	cp	xwa, 0	; F4498E  cp XWA,0x00000000
 	jr	z, SeqRecord_HandleTransportBStartStop_Skip3	; F44994  jr Z,0xf449ae
-	m_bit 4, MD16, 0x345a	; F44996  bit 4,(0x345a)
+	bit	4, (0x345a:16)	; F44996  bit 4,(0x345a)
 	jr	z, SeqRecord_HandleTransportBStartStop_Skip2	; F4499A  jr Z,0xf4499f
 	calr	SeqRecord_EndTake	; F4499C  calr 0xf45348
 SeqRecord_HandleTransportBStartStop_Skip2:
-	m_bit 0, MD16, 0x34d9	; F4499F  bit 0,(0x34d9)
+	bit	0, (0x34d9:16)	; F4499F  bit 0,(0x34d9)
 	jrl	z, SeqRecord_HandleTransportBStartStop_Join	; F449A3  jrl Z,0xf44a37
 	or	(0x34d9:16), 0x02	; F449A6  or (0x34d9),0x02
 	jrl	SeqRecord_HandleTransportBStartStop_Join	; F449AB  jrl T,0xf44a37
 SeqRecord_HandleTransportBStartStop_Skip3:
 	ld	a, (13529:16)	; F449AE  ld A,(0x34d9)
 	and	(0x34d9:16), 0xfd	; F449B2  and (0x34d9),0xfd
-	m_bit 0, MD16, 0x34d9	; F449B7  bit 0,(0x34d9)
+	bit	0, (0x34d9:16)	; F449B7  bit 0,(0x34d9)
 	jr	z, SeqRecord_HandleTransportBStartStop_Skip4	; F449BB  jr Z,0xf449c2
 	or	(0x34d9:16), 0x02	; F449BD  or (0x34d9),0x02
 SeqRecord_HandleTransportBStartStop_Skip4:
 	xor	a, (13529:16)	; F449C2  xor A,(0x34d9)
 	bit	1, a	; F449C6  bit 0x01,A
 	jr	z, SeqRecord_HandleTransportBStartStop_Skip7	; F449C9  jr Z,0xf449ea
-	m_bit 1, MD16, 0x360b	; F449CB  bit 1,(0x360b)
+	bit	1, (0x360b:16)	; F449CB  bit 1,(0x360b)
 	jr	nz, SeqRecord_HandleTransportBStartStop_Skip5	; F449CF  jr NZ,0xf449d6
 	or	(0x34d4:16), 0x10	; F449D1  or (0x34d4),0x10
 SeqRecord_HandleTransportBStartStop_Skip5:
 	and	(0x34d4:16), 0xf7	; F449D6  and (0x34d4),0xf7
-	m_bit 1, MD16, 0x34d9	; F449DB  bit 1,(0x34d9)
+	bit	1, (0x34d9:16)	; F449DB  bit 1,(0x34d9)
 	jr	z, SeqRecord_HandleTransportBStartStop_Skip6	; F449DF  jr Z,0xf449e6
 	or	(0x34d4:16), 0x08	; F449E1  or (0x34d4),0x08
 SeqRecord_HandleTransportBStartStop_Skip6:
@@ -94857,14 +94857,14 @@ SeqRecord_HandleTransportBStartStop_Skip6:
 SeqRecord_HandleTransportBStartStop_Skip7:
 	cpw	(0x3552:16), 0x8001	; F449EA  cp (0x3552),0x8001
 	jr	z, SeqRecord_HandleTransportBStartStop_Skip8	; F449F0  jr Z,0xf44a01
-	m_bit 1, MD16, 0x360b	; F449F2  bit 1,(0x360b)
+	bit	1, (0x360b:16)	; F449F2  bit 1,(0x360b)
 	jr	z, SeqRecord_HandleTransportBStartStop_Skip8	; F449F6  jr Z,0xf44a01
 	or	(0x34d4:16), 0x08	; F449F8  or (0x34d4),0x08
 	call	T_NoteRouting_RebuildForSong	; F449FD  call 0xf411b8
 SeqRecord_HandleTransportBStartStop_Skip8:
-	m_bit 1, MD16, 0x345a	; F44A01  bit 1,(0x345a)
+	bit	1, (0x345a:16)	; F44A01  bit 1,(0x345a)
 	jr	z, SeqRecord_HandleTransportBStartStop_Skip11	; F44A05  jr Z,0xf44a28
-	m_bit 1, MD16, 0x34d9	; F44A07  bit 1,(0x34d9)
+	bit	1, (0x34d9:16)	; F44A07  bit 1,(0x34d9)
 	jr	nz, SeqRecord_HandleTransportBStartStop_Skip9	; F44A0B  jr NZ,0xf44a1a
 	ld	xwa, (6304798:24)	; F44A0D  ld XWA,(0x60341e)
 	cp	xwa, 0	; F44A12  cp XWA,0x00000000
@@ -94876,7 +94876,7 @@ SeqRecord_HandleTransportBStartStop_Skip10:
 	calr	SeqRecord_BeginTakeOnTransportStart	; F44A23  calr 0xf44ada
 	jr	SeqRecord_HandleTransportBStartStop_Join	; F44A26  jr T,0xf44a37
 SeqRecord_HandleTransportBStartStop_Skip11:
-	m_bit 6, MD16, 0x225a	; F44A28  bit 6,(0x225a)
+	bit	6, (0x225a:16)	; F44A28  bit 6,(0x225a)
 	jr	z, SeqRecord_HandleTransportBStartStop_Join	; F44A2C  jr Z,0xf44a37
 	and	(0x225a:16), 0xbf	; F44A2E  and (0x225a),0xbf
 	call	T_BStore_Workspace_StoreParamImage	; F44A33  call 0xf42574
@@ -94902,7 +94902,7 @@ sub_F44A3B:
 	ld	xwa, (6304798:24)	; F44A3E  ld XWA,(0x60341e)
 	cp	xwa, 0	; F44A43  cp XWA,0x00000000
 	jr	z, sub_F44A3B_Skip	; F44A49  jr Z,0xf44a54
-	m_bit 1, MD16, 0x345a	; F44A4B  bit 1,(0x345a)
+	bit	1, (0x345a:16)	; F44A4B  bit 1,(0x345a)
 	jr	z, sub_F44A3B_Skip	; F44A4F  jr Z,0xf44a54
 	calr	sub_F44C15	; F44A51  calr 0xf44c15
 sub_F44A3B_Skip:
@@ -94910,12 +94910,12 @@ sub_F44A3B_Skip:
 	ld	xwa, (12296:16)	; F44A59  ld XWA,(0x3008)
 	cp	xwa, 0	; F44A5D  cp XWA,0x00000000
 	jr	z, sub_F44A3B_Skip2	; F44A63  jr Z,0xf44a6e
-	m_bit 4, MD16, 0x345a	; F44A65  bit 4,(0x345a)
+	bit	4, (0x345a:16)	; F44A65  bit 4,(0x345a)
 	jr	z, sub_F44A3B_Skip2	; F44A69  jr Z,0xf44a6e
 	calr	sub_F44C51	; F44A6B  calr 0xf44c51
 sub_F44A3B_Skip2:
 	calr	sub_F44CEA	; F44A6E  calr 0xf44cea
-	m_bit 2, MD16, 0x34d0	; F44A71  bit 2,(0x34d0)
+	bit	2, (0x34d0:16)	; F44A71  bit 2,(0x34d0)
 	jr	z, sub_F44A3B_Skip3	; F44A75  jr Z,0xf44a98
 	cp	(Medley_Source:16), 0x01	; F44A77  cp (0x220b),0x01
 	jr	nz, sub_F44A3B_Skip3	; F44A7C  jr NZ,0xf44a98
@@ -94928,11 +94928,11 @@ sub_F44A3B_Skip2:
 	call	T_Medley_NormFileCommand	; F44A92  call 0xf4257c
 	jr	sub_F44A3B_Return	; F44A96  jr T,0xf44ad9
 sub_F44A3B_Skip3:
-	m_bit 2, MD16, 0x34d4	; F44A98  bit 2,(0x34d4)
+	bit	2, (0x34d4:16)	; F44A98  bit 2,(0x34d4)
 	jr	z, sub_F44A3B_Return	; F44A9C  jr Z,0xf44ad9
 	and	(0x34d4:16), 0xfb	; F44A9E  and (0x34d4),0xfb
 	call	T_Medley_AdvanceInternalSong	; F44AA3  call 0xf43024
-	m_bit 2, MD16, 0x34d0	; F44AA7  bit 2,(0x34d0)
+	bit	2, (0x34d0:16)	; F44AA7  bit 2,(0x34d0)
 	jr	z, sub_F44A3B_Return	; F44AAB  jr Z,0xf44ad9
 	call	T_Transport_StopAllRunning	; F44AAD  call 0xf409ac
 	ldw	bc, 61440	; F44AB1  ld BC,0xf000
@@ -94974,7 +94974,7 @@ SeqRecord_BeginTakeOnTransportStart:
 	calr	Var20A9_SetBits01	; F44ADA  calr 0xf45fae
 	or	(0x3614:16), 0x01	; F44ADD  or (0x3614),0x01
 	calr	SeqRecord_BeginTake	; F44AE2  calr 0xf45761
-	m_bit 1, MD16, 0x34d9	; F44AE5  bit 1,(0x34d9)
+	bit	1, (0x34d9:16)	; F44AE5  bit 1,(0x34d9)
 	jr	z, SeqRecord_BeginTakeOnTransportStart_Return	; F44AE9  jr Z,0xf44aed
 	jr	SeqRecord_BeginTakeOnTransportStart_Return	; F44AEB  jr T,0xf44aed
 SeqRecord_BeginTakeOnTransportStart_Return:
@@ -94997,7 +94997,7 @@ SeqRecord_BeginTakeOnTransportStart_Return:
 ;   SeqCycle_CaptureEndCursors, SeqCycle_LocateToStart). Basis: callers + body. (wsa1/notes/naming-
 ;   pilot-2026-10-06/proposals_prom_b.json)
 Seq_SetTrackBeatsFromTransportB:		; <- T_Seq_SetTrackBeatsFromTransportB
-	m_bit 3, MD16, 0x34bb	; F44AEE  bit 3,(0x34bb)
+	bit	3, (0x34bb:16)	; F44AEE  bit 3,(0x34bb)
 	jr	z, Seq_SetTrackBeatsFromTransportB_Skip	; F44AF2  jr Z,0xf44b0f
 	ld	a, (Seq_BeatTick:8)	; F44AF4  ld A,(0x93)
 	ld	(13403:16), a	; F44AF7  ld (0x345b),A
@@ -95048,16 +95048,16 @@ Seq_ResetPositionOnRequest:		; <- T_Seq_ResetPositionOnRequest
 	and	(0x34d4:16), 0xef	; F44B3F  and (0x34d4),0xef
 	jr	Seq_ResetPositionOnRequest_Return	; F44B44  jr T,0xf44b94
 Seq_ResetPositionOnRequest_Skip:
-	m_bit 0, MD16, 0x34d2	; F44B46  bit 0,(0x34d2)
+	bit	0, (0x34d2:16)	; F44B46  bit 0,(0x34d2)
 	jr	nz, Seq_ResetPositionOnRequest_Return	; F44B4A  jr NZ,0xf44b94
 	bit	2, (TransportB_State:8)	; F44B4C  bit 2,(0x96)
 	jr	nz, Seq_ResetPositionOnRequest_Return	; F44B4F  jr NZ,0xf44b94
-	m_bit 6, MD16, 0x34d4	; F44B51  bit 6,(0x34d4)
+	bit	6, (0x34d4:16)	; F44B51  bit 6,(0x34d4)
 	jr	nz, Seq_ResetPositionOnRequest_Return	; F44B55  jr NZ,0xf44b94
-	m_bit 4, MD16, 0x34d4	; F44B57  bit 4,(0x34d4)
+	bit	4, (0x34d4:16)	; F44B57  bit 4,(0x34d4)
 	jr	z, Seq_ResetPositionOnRequest_Return	; F44B5B  jr Z,0xf44b94
 	and	(0x34d4:16), 0xef	; F44B5D  and (0x34d4),0xef
-	m_bit 3, MD16, 0x34bb	; F44B62  bit 3,(0x34bb)
+	bit	3, (0x34bb:16)	; F44B62  bit 3,(0x34bb)
 	jr	z, Seq_ResetPositionOnRequest_Skip2	; F44B66  jr Z,0xf44b91
 	ld	a, (Seq_BeatTick:8)	; F44B68  ld A,(0x93)
 	ld	(13403:16), a	; F44B6B  ld (0x345b),A
@@ -95107,7 +95107,7 @@ Seq_ResetPositionToSongStart:
 	ld	a, (TransportA_BeatsPerBar:24)	; F44BB2  ld A,(0x605000)
 	ld	(13400:16), a	; F44BB7  ld (0x3458),A
 	ldw	(13398:16), 0	; F44BBB  ld (0x3456),0x0000
-	m_bit 1, MD16, 0x34d9	; F44BC1  bit 1,(0x34d9)
+	bit	1, (0x34d9:16)	; F44BC1  bit 1,(0x34d9)
 	jr	nz, Seq_ResetPositionToSongStart_Skip	; F44BC5  jr NZ,0xf44bd0
 	ldw	(13650:16), 1	; F44BC7  ld (0x3552),0x0001
 	calr	SeqScreen_RepaintIfPlayOrRecord	; F44BCD  calr 0xf45fe5
@@ -95161,7 +95161,7 @@ sub_F44BE8_Return:
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
 sub_F44C15:
-	m_res 1, MD16, 0x3731	; F44C15  res 1,(0x3731)
+	res	1, (0x3731:16)	; F44C15  res 1,(0x3731)
 	ld	(UI_RequestBits:16), 0	; F44C19  ld (0x2075),0x00
 	calr	Seq_LocateNowIfPending	; F44C1E  calr 0xf44c37
 	ld	xwa, (13466:16)	; F44C21  ld XWA,(0x349a)
@@ -95187,7 +95187,7 @@ sub_F44C15:
 ;   behind Seq_LocateNowIfPending_Veneer (Seq_RewindOnRequest's cycle path sets bit 7 just before). Basis: caller
 ;   (veneer header) + body. (notes/naming-pilot-2026-10-06/proposals_wave6_s.json)
 Seq_LocateNowIfPending:
-	m_bit 7, MD16, 0x0c05	; F44C37  bit 7,(0x0c05)
+	bit	7, (0x0c05:16)	; F44C37  bit 7,(0x0c05)
 	jr	z, Seq_LocateNowIfPending_Return	; F44C3B  jr Z,0xf44c50
 	ld	(3077:16), 0	; F44C3D  ld (0x0c05),0x00
 	calr	Seq_LocateToCurrentMeasure	; F44C42  calr 0xf45bd3
@@ -95210,7 +95210,7 @@ Seq_LocateNowIfPending_Return:
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
 sub_F44C51:
-	m_bit 7, MD16, 0x34d8	; F44C51  bit 7,(0x34d8)
+	bit	7, (0x34d8:16)	; F44C51  bit 7,(0x34d8)
 	jr	nz, sub_F44C51_Skip	; F44C55  jr NZ,0xf44c5c
 	and	(0x34d1:16), 0xbf	; F44C57  and (0x34d1),0xbf
 sub_F44C51_Skip:
@@ -95224,7 +95224,7 @@ sub_F44C51_Skip:
 	jr	nz, sub_F44C51_Skip2	; F44C7B  jr NZ,0xf44c7f
 	jr	sub_F44C51_Join	; F44C7D  jr T,0xf44c91
 sub_F44C51_Skip2:
-	m_bit 2, MD16, 0x34bb	; F44C7F  bit 2,(0x34bb)
+	bit	2, (0x34bb:16)	; F44C7F  bit 2,(0x34bb)
 	jr	nz, sub_F44C51_Skip3	; F44C83  jr NZ,0xf44c8f
 	or	(0x34bb:16), 0x04	; F44C85  or (0x34bb),0x04
 	ld	(13648:16), 130	; F44C8A  ld (0x3550),0x82
@@ -95256,9 +95256,9 @@ sub_F44C51_Join2:
 ;   0xFA/0xFB/0xFC -- and (0x0922) bit 0 is clear. Seq_LocateToCurrentMeasure calls it after every locate. Basis:
 ;   callers + body. (notes/naming-pilot-2026-10-06/proposals_wave4_l.json)
 MidiOut_SendSongPosition:
-	m_bit 0, MD16, 0x0922	; F44CA7  bit 0,(0x0922)
+	bit	0, (0x0922:16)	; F44CA7  bit 0,(0x0922)
 	jr	nz, MidiOut_SendSongPosition_Return	; F44CAB  jr NZ,0xf44ce9
-	m_bit 2, MD16, 0x7f34	; F44CAD  bit 2,(0x7f34)
+	bit	2, (0x7f34:16)	; F44CAD  bit 2,(0x7f34)
 	jr	z, MidiOut_SendSongPosition_Return	; F44CB1  jr Z,0xf44ce9
 	m_ld_rm MW8, TransportB_Beat, 2	; F44CB3  ld DE,(0x91)
 	sla	de, 2	; F44CB6  sla 0x02,DE
@@ -95302,11 +95302,11 @@ sub_F44CEA:
 	jr	z, sub_F44CEA_Skip	; F44CED  jr Z,0xf44cf1
 	jr	sub_F44CEA_Join	; F44CEF  jr T,0xf44d2b
 sub_F44CEA_Skip:
-	m_bit 1, MD16, 0x34d9	; F44CF1  bit 1,(0x34d9)
+	bit	1, (0x34d9:16)	; F44CF1  bit 1,(0x34d9)
 	jr	z, sub_F44CEA_Skip3	; F44CF5  jr Z,0xf44d36
-	m_bit 7, MD16, 0x34d9	; F44CF7  bit 7,(0x34d9)
+	bit	7, (0x34d9:16)	; F44CF7  bit 7,(0x34d9)
 	jr	z, sub_F44CEA_Skip2	; F44CFB  jr Z,0xf44d1e
-	m_bit 2, MD16, 0x345a	; F44CFD  bit 2,(0x345a)
+	bit	2, (0x345a:16)	; F44CFD  bit 2,(0x345a)
 	jr	nz, sub_F44CEA_Join	; F44D01  jr NZ,0xf44d2b
 	cp	(0x3459:16), 0x00	; F44D03  cp (0x3459),0x00
 	jrl	nz, sub_F44CEA_Join2	; F44D08  jrl NZ,0xf44d7a
@@ -95321,16 +95321,16 @@ sub_F44CEA_Skip2:
 	calr	SeqScreen_RepaintIfPlayOrRecord	; F44D26  calr 0xf45fe5
 	jr	sub_F44CEA_Join2	; F44D29  jr T,0xf44d7a
 sub_F44CEA_Join:
-	m_bit 1, MD16, 0x345a	; F44D2B  bit 1,(0x345a)
+	bit	1, (0x345a:16)	; F44D2B  bit 1,(0x345a)
 	jr	nz, sub_F44CEA_Skip4	; F44D2F  jr NZ,0xf44d3c
 sub_F44CEA_Loop:
 	calr	sub_F45F19	; F44D31  calr 0xf45f19
 	jr	sub_F44CEA_Join2	; F44D34  jr T,0xf44d7a
 sub_F44CEA_Skip3:
-	m_bit 7, MD16, 0x34d9	; F44D36  bit 7,(0x34d9)
+	bit	7, (0x34d9:16)	; F44D36  bit 7,(0x34d9)
 	jr	z, sub_F44CEA_Loop	; F44D3A  jr Z,0xf44d31
 sub_F44CEA_Skip4:
-	m_bit 1, MD16, 0x34d9	; F44D3C  bit 1,(0x34d9)
+	bit	1, (0x34d9:16)	; F44D3C  bit 1,(0x34d9)
 	jr	z, sub_F44CEA_Join2	; F44D40  jr Z,0xf44d7a
 	ld	wa, (14036:16)	; F44D42  ld WA,(0x36d4)
 	ld	(13650:16), wa	; F44D46  ld (0x3552),WA
@@ -95350,7 +95350,7 @@ sub_F44CEA_Skip5:
 	ld	(13650:16), wa	; F44D76  ld (0x3552),WA
 sub_F44CEA_Join2:
 	and	(0x34d9:16), 0x7f	; F44D7A  and (0x34d9),0x7f
-	m_bit 1, MD16, 0x34d9	; F44D7F  bit 1,(0x34d9)
+	bit	1, (0x34d9:16)	; F44D7F  bit 1,(0x34d9)
 	jr	z, sub_F44CEA_Skip6	; F44D83  jr Z,0xf44d8a
 	or	(0x34d9:16), 0x80	; F44D85  or (0x34d9),0x80
 sub_F44CEA_Skip6:
@@ -95393,7 +95393,7 @@ Seq_StopWhenTracksEnded_Skip:
 	xor	xwa, xwa	; F44DC7  xor XWA,XWA
 	ld	(12300:16), xwa	; F44DC9  ld (0x300c),XWA
 	ld	(12296:16), xwa	; F44DCD  ld (0x3008),XWA
-	m_bit 4, MD16, 0x34bb	; F44DD1  bit 4,(0x34bb)
+	bit	4, (0x34bb:16)	; F44DD1  bit 4,(0x34bb)
 	jr	nz, Seq_StopWhenTracksEnded_Skip2	; F44DD5  jr NZ,0xf44ddc
 	or	(0x34d4:16), 0x04	; F44DD7  or (0x34d4),0x04
 Seq_StopWhenTracksEnded_Skip2:
@@ -95427,7 +95427,7 @@ Seq_StopWhenTracksEnded_Skip5:
 Seq_StopWhenTracksEnded_Skip6:
 	or	(0x34d4:16), 0x10	; F44E22  or (0x34d4),0x10
 	and	(0x34bb:16), 0xf7	; F44E27  and (0x34bb),0xf7
-	m_bit 3, MD16, 0x34d2	; F44E2C  bit 3,(0x34d2)
+	bit	3, (0x34d2:16)	; F44E2C  bit 3,(0x34d2)
 	jr	nz, Seq_StopWhenTracksEnded_Skip7	; F44E30  jr NZ,0xf44e3c
 	or	(0x34d4:16), 0x40	; F44E32  or (0x34d4),0x40
 	or	(0x34d0:16), 0x02	; F44E37  or (0x34d0),0x02
@@ -95484,7 +95484,7 @@ TimedEvents_QueueRoutingRebuild:
 ; Seq_StopPlaybackOnRequest: (0x34D2) bit 1 taken and cleared: T_PartNotes_ReleaseAllTrackNotes, T_F41F18 (SeqEvt_ResetPlayingSlotControllers),
 ;   the playing-track mask (0x60341E) = 0, T_F40CB4 (a bare ret), T_NoteRouting_RebuildForSong.  Basis: body.
 Seq_StopPlaybackOnRequest:
-	m_bit 1, MD16, 0x34d2	; F44E6B  bit 1,(0x34d2)
+	bit	1, (0x34d2:16)	; F44E6B  bit 1,(0x34d2)
 	jr	z, Seq_StopPlaybackOnRequest_Return	; F44E6F  jr Z,0xf44e8d
 	and	(0x34d2:16), 0xfd	; F44E71  and (0x34d2),0xfd
 	call	T_PartNotes_ReleaseAllTrackNotes	; F44E76  call 0xf413c8
@@ -95695,20 +95695,20 @@ sub_F44E8E_Return2:
 ; --------------------------------------------------------------------------
 sub_F4503D:
 	ld	a, (13846:16)	; F4503D  ld A,(0x3616)
-	m_bit 7, MD16, 0x361a	; F45041  bit 7,(0x361a)
+	bit	7, (0x361a:16)	; F45041  bit 7,(0x361a)
 	jr	z, sub_F4503D_Skip	; F45045  jr Z,0xf4504e
 	set	0, a	; F45047  set 0x00,A
-	m_res 7, MD16, 0x361a	; F4504A  res 7,(0x361a)
+	res	7, (0x361a:16)	; F4504A  res 7,(0x361a)
 sub_F4503D_Skip:
-	m_bit 7, MD16, 0x361b	; F4504E  bit 7,(0x361b)
+	bit	7, (0x361b:16)	; F4504E  bit 7,(0x361b)
 	jr	z, sub_F4503D_Skip2	; F45052  jr Z,0xf4505b
 	set	1, a	; F45054  set 0x01,A
-	m_res 7, MD16, 0x361b	; F45057  res 7,(0x361b)
+	res	7, (0x361b:16)	; F45057  res 7,(0x361b)
 sub_F4503D_Skip2:
-	m_bit 7, MD16, 0x3618	; F4505B  bit 7,(0x3618)
+	bit	7, (0x3618:16)	; F4505B  bit 7,(0x3618)
 	jr	z, sub_F4503D_Skip3	; F4505F  jr Z,0xf45068
 	set	2, a	; F45061  set 0x02,A
-	m_res 7, MD16, 0x3618	; F45064  res 7,(0x3618)
+	res	7, (0x3618:16)	; F45064  res 7,(0x3618)
 sub_F4503D_Skip3:
 	pushw	wa	; F45068  push WA
 	call	T_TimedEventRing_Put	; F45069  call 0xf41d64
@@ -95932,14 +95932,14 @@ SeqRecord_RewindForTake:		; <- T_SeqRecord_RewindForTake
 	ldw	(13650:16), 1	; F451EF  ld (0x3552),0x0001
 	and	(0x34d4:16), 0xf7	; F451F5  and (0x34d4),0xf7
 	and	(0x34d9:16), 0x79	; F451FA  and (0x34d9),0x79
-	m_bit 0, MD16, 0x34d9	; F451FF  bit 0,(0x34d9)
+	bit	0, (0x34d9:16)	; F451FF  bit 0,(0x34d9)
 	jr	z, SeqRecord_RewindForTake_Skip4	; F45203  jr Z,0xf45217
 	or	(0x34d9:16), 0x02	; F45205  or (0x34d9),0x02
 	or	(0x34d4:16), 0x08	; F4520A  or (0x34d4),0x08
 	ld	wa, (13650:16)	; F4520F  ld WA,(0x3552)
 	ld	(14036:16), wa	; F45213  ld (0x36d4),WA
 SeqRecord_RewindForTake_Skip4:
-	m_bit 1, MD16, 0x360b	; F45217  bit 1,(0x360b)
+	bit	1, (0x360b:16)	; F45217  bit 1,(0x360b)
 	jr	z, SeqRecord_RewindForTake_Skip5	; F4521B  jr Z,0xf45222
 	or	(0x34d4:16), 0x08	; F4521D  or (0x34d4),0x08
 SeqRecord_RewindForTake_Skip5:
@@ -96154,11 +96154,11 @@ SeqRecord_EndTake_Join:
 	and	(0x34d9:16), 0x79	; F453CD  and (0x34d9),0x79
 	or	(0x34d2:16), 0x01	; F453D2  or (0x34d2),0x01
 	call	T_Transport_StopAllRunning	; F453D7  call 0xf409ac
-	m_bit 1, MD16, 0x3614	; F453DB  bit 1,(0x3614)
+	bit	1, (0x3614:16)	; F453DB  bit 1,(0x3614)
 	jr	nz, SeqRecord_EndTake_Join2	; F453DF  jr NZ,0xf453e4
 	calr	UiRequest_Post08	; F453E1  calr 0xf46026
 SeqRecord_EndTake_Join2:
-	m_res 1, MD16, 0x3614	; F453E4  res 1,(0x3614)
+	res	1, (0x3614:16)	; F453E4  res 1,(0x3614)
 	ret	; F453E8  ret
 
 ; --------------------------------------------------------------------------
@@ -96831,7 +96831,7 @@ SeqRecord_StartIfEventQueued_Skip:
 	ld	(Seq_BeatTick:8), 0:io	; F4574E  ld (0x93),0x00
 	ei	0	; F45751  ei 0x00
 	call	T_Transport_StartAllFromZero	; F45753  call 0xf409b4
-	m_bit 2, MD16, MidiCfg_ModeBits	; F45757  bit 2,(0x7f32)
+	bit	2, (MidiCfg_ModeBits:16)	; F45757  bit 2,(0x7f32)
 	jr	z, SeqRecord_StartIfEventQueued_Return	; F4575B  jr Z,0xf45760
 	calr	Transport_PromoteStartsToRunning	; F4575D  calr 0xf458ea
 SeqRecord_StartIfEventQueued_Return:
@@ -97151,7 +97151,7 @@ SeqBufRing_Discard:		; <- T_SeqBufRing_Discard
 sub_F4598A:
 	and	(TransportC_State:8), 0xed	; F4598A  and (0x95),0xed
 	and	(TransportA_State:8), 0xed	; F4598E  and (0x94),0xed
-	m_bit 5, MD16, 0x34d0	; F45992  bit 5,(0x34d0)
+	bit	5, (0x34d0:16)	; F45992  bit 5,(0x34d0)
 	jr	nz, sub_F4598A_Skip2	; F45996  jr NZ,0xf459a6
 	bit	2, (TransportB_State:8)	; F45998  bit 2,(0x96)
 	jr	z, sub_F4598A_Skip	; F4599B  jr Z,0xf4599f
@@ -97211,7 +97211,7 @@ sub_F459AA_Return:
 ;   CycleRecord_CheckIsRecordTrack = 0. Basis: callers + body + consumer. (notes/naming-
 ;   pilot-2026-10-06/proposals_wave5_p.json)
 Seq_RebuildPlayingSet:
-	m_bit 3, MD16, 0x34bb	; F459D9  bit 3,(0x34bb)
+	bit	3, (0x34bb:16)	; F459D9  bit 3,(0x34bb)
 	jr	z, Seq_RebuildPlayingSet_Skip	; F459DD  jr Z,0xf459f9
 	and	(0x34bb:16), 0xfe	; F459DF  and (0x34bb),0xfe
 	ld	xde, (13466:16)	; F459E4  ld XDE,(0x349a)
@@ -97372,7 +97372,7 @@ Seq_RewindToStart:
 	ldw	(TransportB_Beat:8), 0:io	; F45B21  ld (0x91),0x0000
 	ld	(Seq_BeatTick:8), 0:io	; F45B25  ld (0x93),0x00
 	ei	0	; F45B28  ei 0x00
-	m_bit 5, MD16, 0x34d0	; F45B2A  bit 5,(0x34d0)
+	bit	5, (0x34d0:16)	; F45B2A  bit 5,(0x34d0)
 	jr	nz, Seq_RewindToStart_Skip	; F45B2E  jr NZ,0xf45b3a
 	xor	xwa, xwa	; F45B30  xor XWA,XWA
 	ld	(12300:16), xwa	; F45B32  ld (0x300c),XWA
@@ -97406,7 +97406,7 @@ SeqCycle_RewindToStart:
 	ldw	(TransportB_Beat:8), 0:io	; F45B4A  ld (0x91),0x0000
 	ld	(Seq_BeatTick:8), 0:io	; F45B4E  ld (0x93),0x00
 	ei	0	; F45B51  ei 0x00
-	m_bit 5, MD16, 0x34d0	; F45B53  bit 5,(0x34d0)
+	bit	5, (0x34d0:16)	; F45B53  bit 5,(0x34d0)
 	jr	nz, SeqCycle_RewindToStart_Skip	; F45B57  jr NZ,0xf45b63
 	xor	xwa, xwa	; F45B59  xor XWA,XWA
 	ld	(12300:16), xwa	; F45B5B  ld (0x300c),XWA
@@ -97494,7 +97494,7 @@ SeqTrack_QueueNoteOffAndBendCentre:
 ;   (SeqCycle_RewindToStart, (0x3759)). SeqCycle_LocateToStart's 'locates every track there'. Basis: caller + body. (notes/naming-
 ;   pilot-2026-10-06/proposals_wave3_g.json)
 SeqCycle_LocateTracksToCurrentMeasure:		; <- T_SeqCycle_LocateTracksToCurrentMeasure
-	m_set 0, MD16, 0x3735	; F45BCD  set 0,(0x3735)
+	set	0, (0x3735:16)	; F45BCD  set 0,(0x3735)
 	jr	Seq_LocateToCurrentMeasure_Join	; F45BD1  jr T,0xf45bd7
 
 ; --------------------------------------------------------------------------
@@ -97517,9 +97517,9 @@ SeqCycle_LocateTracksToCurrentMeasure:		; <- T_SeqCycle_LocateTracksToCurrentMea
 ;   (0x34BB) bit 3 set. SeqCycle_LocateToStart enters at SeqCycle_LocateTracksToCurrentMeasure. Basis: body + entry twin + sibling.
 ;   (notes/naming-pilot-2026-10-06/proposals_wave3_h.json)
 Seq_LocateToCurrentMeasure:		; <- T_Seq_LocateToCurrentMeasure
-	m_res 0, MD16, 0x3735	; F45BD3  res 0,(0x3735)
+	res	0, (0x3735:16)	; F45BD3  res 0,(0x3735)
 Seq_LocateToCurrentMeasure_Join:
-	m_bit 0, MD16, 0x34d9	; F45BD7  bit 0,(0x34d9)
+	bit	0, (0x34d9:16)	; F45BD7  bit 0,(0x34d9)
 	jr	z, Seq_LocateToCurrentMeasure_Skip	; F45BDB  jr Z,0xf45be5
 	ld	wa, (13650:16)	; F45BDD  ld WA,(0x3552)
 	ld	(14036:16), wa	; F45BE1  ld (0x36d4),WA
@@ -97534,7 +97534,7 @@ Seq_LocateToCurrentMeasure_Skip:
 	cp	wa, 1:i3	; F45BFD  cp WA,1
 	jr	nz, Seq_LocateToCurrentMeasure_Skip4	; F45BFF  jr NZ,0xf45c18
 Seq_LocateToCurrentMeasure_Skip2:
-	m_bit 0, MD16, 0x3735	; F45C01  bit 0,(0x3735)
+	bit	0, (0x3735:16)	; F45C01  bit 0,(0x3735)
 	jr	nz, Seq_LocateToCurrentMeasure_Skip3	; F45C05  jr NZ,0xf45c0c
 	calr	Seq_RewindToStart	; F45C07  calr 0xf45b1f
 	jr	Seq_LocateToCurrentMeasure_Join2	; F45C0A  jr T,0xf45c0f
@@ -97557,7 +97557,7 @@ Seq_LocateToCurrentMeasure_Loop:
 	ld	(TransportA_BeatsPerBar:24), a	; F45C31  ld (0x605000),A
 	ld	(0xc3:8), a	; F45C36  ld (0xc3),A
 	ld	(6304983:24), a	; F45C39  ld (0x6034d7),A
-	m_bit 0, MD16, 0x3735	; F45C3E  bit 0,(0x3735)
+	bit	0, (0x3735:16)	; F45C3E  bit 0,(0x3735)
 	jr	z, Seq_LocateToCurrentMeasure_Skip5	; F45C42  jr Z,0xf45c48
 	ld	(14169:16), a	; F45C44  ld (0x3759),A
 Seq_LocateToCurrentMeasure_Skip5:
@@ -97596,7 +97596,7 @@ Seq_LocateToCurrentMeasure_Skip7:
 	jr	z, Seq_LocateToCurrentMeasure_Join4	; F45CA3  jr Z,0xf45cb6
 	calr	TimedEventRing_Discard	; F45CA5  calr 0xf45b0a
 	or	(0x34d4:16), 0x10	; F45CA8  or (0x34d4),0x10
-	m_bit 0, MD16, 0x3735	; F45CAD  bit 0,(0x3735)
+	bit	0, (0x3735:16)	; F45CAD  bit 0,(0x3735)
 	jr	nz, Seq_LocateToCurrentMeasure_Join4	; F45CB1  jr NZ,0xf45cb6
 	calr	Nop_CallsEmptyDirectorySlot	; F45CB3  calr 0xf45d04
 Seq_LocateToCurrentMeasure_Join4:
@@ -97709,7 +97709,7 @@ Nop_CallsEmptyDirectorySlot_Return:
 ;   BStore_ResetWorkspaceToDefault ('track-to-part defaults by GM mode'). Basis: caller + body + twin. (notes/naming-
 ;   pilot-2026-10-06/proposals_wave4_m.json)
 BStore_LoadGmTrackDefaults:		; <- T_BStore_LoadGmTrackDefaults
-	m_bit 2, MD16, 0x7f4d	; F45D19  bit 2,(0x7f4d)
+	bit	2, (0x7f4d:16)	; F45D19  bit 2,(0x7f4d)
 	jr	z, BStore_LoadGmTrackDefaults_Return	; F45D1D  jr Z,0xf45d7f
 	push	xwa	; F45D1F  push XWA
 	push	xbc	; F45D20  push XBC
@@ -97772,7 +97772,7 @@ BStore_LoadGmTrackDefaults_Return:
 ;   BStore_ResetWorkspaceToDefault runs both. Basis: caller + body + twin. (notes/naming-
 ;   pilot-2026-10-06/proposals_wave4_n.json)
 BStore_LoadNonGmTrackDefaults:		; <- T_BStore_LoadNonGmTrackDefaults
-	m_bit 2, MD16, 0x7f4d	; F45D80  bit 2,(0x7f4d)
+	bit	2, (0x7f4d:16)	; F45D80  bit 2,(0x7f4d)
 	jr	nz, BStore_LoadNonGmTrackDefaults_Return	; F45D84  jr NZ,0xf45d9a
 	push	xwa	; F45D86  push XWA
 	push	xbc	; F45D87  push XBC
@@ -97818,7 +97818,7 @@ Seq_ResetTrackExpressionToFull:
 	push	xix	; F45D9F  push XIX
 	push	xiy	; F45DA0  push XIY
 	push	xiz	; F45DA1  push XIZ
-	m_bit 3, MD16, 0x34bb	; F45DA2  bit 3,(0x34bb)
+	bit	3, (0x34bb:16)	; F45DA2  bit 3,(0x34bb)
 	jr	nz, Seq_ResetTrackExpressionToFull_Epilogue	; F45DA6  jr NZ,0xf45e0c
 	xor	bc, bc	; F45DA8  xor BC,BC
 Seq_ResetTrackExpressionToFull_Loop:
@@ -97956,7 +97956,7 @@ SeqCycle_TickDeferredAction:		; <- T_SeqCycle_TickDeferredAction
 ;   is set and it is above 0x80. First step of SeqCycle_TickDeferredAction (header: counts (0x3628) down while bit 7
 ;   is set and above 0x80). Basis: caller header + body. (notes/naming-pilot-2026-10-06/proposals_wave5_p.json)
 SeqCycle_CountDownDeferredAction:
-	m_bit 7, MD16, 0x3628	; F45E5F  bit 7,(0x3628)
+	bit	7, (0x3628:16)	; F45E5F  bit 7,(0x3628)
 	jr	nz, SeqCycle_CountDownDeferredAction_Skip	; F45E63  jr NZ,0xf45e67
 	jr	SeqCycle_CountDownDeferredAction_Return	; F45E65  jr T,0xf45e75
 SeqCycle_CountDownDeferredAction_Skip:
@@ -98206,13 +98206,13 @@ sub_F45F4B:
 	ld	(13650:16), wa	; F45F79  ld (0x3552),WA
 	jr	sub_F45F4B_Join	; F45F7D  jr T,0xf45f9f
 sub_F45F4B_Skip:
-	m_res 0, MD16, 0x3731	; F45F7F  res 0,(0x3731)
+	res	0, (0x3731:16)	; F45F7F  res 0,(0x3731)
 	ld	wa, (13860:16)	; F45F83  ld WA,(0x3624)
 	m_cp_mr MW16, 0x3552, 0	; F45F87  cp (0x3552),WA
 	jr	nz, sub_F45F4B_Skip2	; F45F8B  jr NZ,0xf45f9b
 	ld	wa, (13858:16)	; F45F8D  ld WA,(0x3622)
 	ld	(13650:16), wa	; F45F91  ld (0x3552),WA
-	m_set 4, MD16, 0x34b8	; F45F95  set 4,(0x34b8)
+	set	4, (0x34b8:16)	; F45F95  set 4,(0x34b8)
 	jr	sub_F45F4B_Join	; F45F99  jr T,0xf45f9f
 sub_F45F4B_Skip2:
 	incw	1, (13650:16)	; F45F9B  incw 1,(0x3552)
@@ -98289,7 +98289,7 @@ Var34D1_SetBits20:		; <- T_Var34D1_SetBits20
 ;   memory-full message pair. Called each pass by Seq_MainLoopService. Basis: caller + body + producers.
 ;   (notes/naming-pilot-2026-10-06/proposals_wave4_m.json)
 Seq_ShowMemoryFullOnRequest:
-	m_bit 5, MD16, 0x34d1	; F45FCA  bit 5,(0x34d1)
+	bit	5, (0x34d1:16)	; F45FCA  bit 5,(0x34d1)
 	jr	z, Seq_ShowMemoryFullOnRequest_Return	; F45FCE  jr Z,0xf45fe4
 	and	(0x34d1:16), 0xdf	; F45FD0  and (0x34d1),0xdf
 	ld	(UI_StatusCode:16), 15	; F45FD5  ld (0x2880),0x0f
@@ -98406,7 +98406,7 @@ CountIn_SetMeasureToFirstBar:		; <- T_CountIn_SetMeasureToFirstBar
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
 sub_F4603C:		; <- T_F40AC0
-	m_bit 7, MD16, 0x3754	; F4603C  bit 7,(0x3754)
+	bit	7, (0x3754:16)	; F4603C  bit 7,(0x3754)
 	jr	z, sub_F4603C_Return	; F46040  jr Z,0xf46073
 	and	(0x3754:16), 0x7f	; F46042  and (0x3754),0x7f
 	ld	a, (14164:16)	; F46047  ld A,(0x3754)
@@ -98744,7 +98744,7 @@ sub_F4783A_Skip3:
 	ldw	(13282:16), 0	; F478A3  ld (0x33e2),0x0000
 	calr	sub_F479AD	; F478A9  calr 0xf479ad
 	ld	a, 42:opc	; F478AC  ld A,0x2a
-	m_bit 5, MD16, 0x34d0	; F478AE  bit 5,(0x34d0)
+	bit	5, (0x34d0:16)	; F478AE  bit 5,(0x34d0)
 	jr	z, sub_F4783A_Skip4	; F478B2  jr Z,0xf478b6
 	ld	a, 17:opc	; F478B4  ld A,0x11
 sub_F4783A_Skip4:
@@ -98770,9 +98770,9 @@ sub_F4783A_Skip6:
 	ld	(13472:16), e	; F478E2  ld (0x34a0),E
 sub_F4783A_Join3:
 	calr	sub_F47A73	; F478E6  calr 0xf47a73
-	m_bit 2, MD16, 0x34d1	; F478E9  bit 2,(0x34d1)
+	bit	2, (0x34d1:16)	; F478E9  bit 2,(0x34d1)
 	jrl	nz, sub_F4783A_Join5	; F478ED  jrl NZ,0xf4799e
-	m_bit 4, MD16, 0x34d0	; F478F0  bit 4,(0x34d0)
+	bit	4, (0x34d0:16)	; F478F0  bit 4,(0x34d0)
 	jr	nz, sub_F4783A_Skip7	; F478F4  jr NZ,0xf478ff
 	cpw	(0x33e2:16), 0x0078	; F478F6  cp (0x33e2),0x0078
 	jrl	ugt, sub_F4783A_Return	; F478FC  jrl UGT,0xf479a1
@@ -98780,7 +98780,7 @@ sub_F4783A_Skip7:
 	calr	sub_F47C25	; F478FF  calr 0xf47c25
 	bit	2, (TransportB_State:8)	; F47902  bit 2,(0x96)
 	jr	nz, sub_F4783A_Skip8	; F47905  jr NZ,0xf4790d
-	m_bit 5, MD16, 0x34d4	; F47907  bit 5,(0x34d4)
+	bit	5, (0x34d4:16)	; F47907  bit 5,(0x34d4)
 	jr	z, sub_F4783A_Skip12	; F4790B  jr Z,0xf47978
 sub_F4783A_Skip8:
 	call	T_SeqCycle_CheckOn	; F4790D  call 0xf40aa4
@@ -98794,17 +98794,17 @@ sub_F4783A_Skip8:
 	cp	(UI_ScreenLatch:16), 0x08	; F47928  cp (0x207a),0x08
 	jr	nz, sub_F4783A_Skip10	; F4792D  jr NZ,0xf47943
 sub_F4783A_Skip9:
-	m_bit 1, MD16, 0x360b	; F4792F  bit 1,(0x360b)
+	bit	1, (0x360b:16)	; F4792F  bit 1,(0x360b)
 	jr	z, sub_F4783A_Skip12	; F47933  jr Z,0xf47978
 	ld	xwa, (12288:16)	; F47935  ld XWA,(0x3000)
 	cp	xwa, 0	; F47939  cp XWA,0x00000000
 	jr	z, sub_F4783A_Skip10	; F4793F  jr Z,0xf47943
 	jr	sub_F4783A_Join4	; F47941  jr T,0xf47949
 sub_F4783A_Skip10:
-	m_bit 1, MD16, 0x3731	; F47943  bit 1,(0x3731)
+	bit	1, (0x3731:16)	; F47943  bit 1,(0x3731)
 	jr	z, sub_F4783A_Join5	; F47947  jr Z,0xf4799e
 sub_F4783A_Join4:
-	m_res 1, MD16, 0x3731	; F47949  res 1,(0x3731)
+	res	1, (0x3731:16)	; F47949  res 1,(0x3731)
 	ld	xwa, (14026:16)	; F4794D  ld XWA,(0x36ca)
 	ld	(14022:16), xwa	; F47951  ld (0x36c6),XWA
 	ld	(13466:16), xwa	; F47955  ld (0x349a),XWA
@@ -98819,9 +98819,9 @@ sub_F4783A_Join4:
 sub_F4783A_Skip11:
 	jr	sub_F4783A_Join5	; F47976  jr T,0xf4799e
 sub_F4783A_Skip12:
-	m_bit 2, MD16, 0x34d1	; F47978  bit 2,(0x34d1)
+	bit	2, (0x34d1:16)	; F47978  bit 2,(0x34d1)
 	jr	nz, sub_F4783A_Join5	; F4797C  jr NZ,0xf4799e
-	m_bit 4, MD16, 0x34d0	; F4797E  bit 4,(0x34d0)
+	bit	4, (0x34d0:16)	; F4797E  bit 4,(0x34d0)
 	jr	nz, sub_F4783A_Skip13	; F47982  jr NZ,0xf4798c
 	cpw	(0x33e2:16), 0x0078	; F47984  cp (0x33e2),0x0078
 	jr	ugt, sub_F4783A_Return	; F4798A  jr UGT,0xf479a1
@@ -99026,7 +99026,7 @@ sub_F47A73_Skip:
 	jr	c, sub_F47A73_Skip2	; F47AB9  jr C,0xf47ac4
 sub_F47A73_Join:
 	calr	sub_F47AD0	; F47ABB  calr 0xf47ad0
-	m_bit 2, MD16, 0x34d1	; F47ABE  bit 2,(0x34d1)
+	bit	2, (0x34d1:16)	; F47ABE  bit 2,(0x34d1)
 	jr	nz, sub_F47A73_Return	; F47AC2  jr NZ,0xf47acf
 sub_F47A73_Skip2:
 	inc	1, (13471:16)	; F47AC4  inc 1,(0x349f)
@@ -99073,7 +99073,7 @@ sub_F47AD0_Skip:
 	push	xhl	; F47B12  push XHL
 	call	T_BStore_WriteCursorByte_Join6_Veneer	; F47B13  call 0xf40c6c
 	pop	xhl	; F47B17  pop XHL
-	m_bit 2, MD16, 0x34d1	; F47B18  bit 2,(0x34d1)
+	bit	2, (0x34d1:16)	; F47B18  bit 2,(0x34d1)
 	jrl	nz, sub_F47AD0_Return	; F47B1C  jrl NZ,0xf47c19
 	addw	(0x33e2:16), 0x0003	; F47B1F  add (0x33e2),0x0003
 	ld	e, (xhl)	; F47B25  ld E,(XHL)
@@ -99234,7 +99234,7 @@ sub_F47C25_Skip:
 sub_F47C25_Join:
 	calr	sub_F47C1A	; F47C64  calr 0xf47c1a
 	calr	sub_F47C7C	; F47C67  calr 0xf47c7c
-	m_bit 2, MD16, 0x34d1	; F47C6A  bit 2,(0x34d1)
+	bit	2, (0x34d1:16)	; F47C6A  bit 2,(0x34d1)
 	jr	nz, sub_F47C25_Return	; F47C6E  jr NZ,0xf47c7b
 sub_F47C25_Skip2:
 	inc	1, (13471:16)	; F47C70  inc 1,(0x349f)
@@ -99325,7 +99325,7 @@ sub_F47C7C_Skip4:
 	ld	(14024:16), bc	; F47D37  ld (0x36c8),BC
 	popw	wa	; F47D3B  pop WA
 sub_F47C7C_Join2:
-	m_set 1, MD16, 0x3731	; F47D3C  set 1,(0x3731)
+	set	1, (0x3731:16)	; F47D3C  set 1,(0x3731)
 	jrl	sub_F47C7C_Join9	; F47D40  jrl T,0xf47f36
 sub_F47C7C_Join3:
 	ld	wa, (BStore_CursorBlock:16)	; F47D43  ld WA,(0x345c)
@@ -99411,7 +99411,7 @@ sub_F47C7C_Join6:
 	jrl	sub_F47C7C_Join	; F47E04  jrl T,0xf47c88
 sub_F47C7C_Skip11:
 	call	T_BStore_WriteCursorByte_Join6_Veneer	; F47E07  call 0xf40c6c
-	m_bit 2, MD16, 0x34d1	; F47E0B  bit 2,(0x34d1)
+	bit	2, (0x34d1:16)	; F47E0B  bit 2,(0x34d1)
 	jr	z, sub_F47C7C_Skip12	; F47E0F  jr Z,0xf47e24
 	ld	wa, (13460:16)	; F47E11  ld WA,(0x3494)
 	ld	(BStore_CursorBlock:16), wa	; F47E15  ld (0x345c),WA
@@ -99460,7 +99460,7 @@ sub_F47C7C_Skip14:
 	ld	a, (13477:16)	; F47E8E  ld A,(0x34a5)
 	ld	(14164:16), a	; F47E92  ld (0x3754),A
 	or	(0x3754:16), 0x80	; F47E96  or (0x3754),0x80
-	m_bit 4, MD16, 0x34d0	; F47E9B  bit 4,(0x34d0)
+	bit	4, (0x34d0:16)	; F47E9B  bit 4,(0x34d0)
 	jr	z, sub_F47C7C_Skip15	; F47E9F  jr Z,0xf47eac
 	cp	(0x34a4:16), 0x00	; F47EA1  cp (0x34a4),0x00
 	jr	nz, sub_F47C7C_Skip15	; F47EA6  jr NZ,0xf47eac
@@ -99486,7 +99486,7 @@ sub_F47C7C_Skip21:
 	calr	sub_F48309	; F47ECD  calr 0xf48309
 	jrl	sub_F47C7C_Join	; F47ED0  jrl T,0xf47c88
 sub_F47C7C_Skip22:
-	m_bit 4, MD16, 0x34d0	; F47ED3  bit 4,(0x34d0)
+	bit	4, (0x34d0:16)	; F47ED3  bit 4,(0x34d0)
 	jr	z, sub_F47C7C_Skip23	; F47ED7  jr Z,0xf47ee5
 	cp	(0x34a4:16), 0x00	; F47ED9  cp (0x34a4),0x00
 	jr	nz, sub_F47C7C_Skip23	; F47EDE  jr NZ,0xf47ee5
@@ -99521,7 +99521,7 @@ sub_F47C7C_Join8:
 	jrl	sub_F47C7C_Join	; F47F24  jrl T,0xf47c88
 sub_F47C7C_Skip25:
 	call	T_BStore_WriteCursorByte_Join6_Veneer	; F47F27  call 0xf40c6c
-	m_bit 2, MD16, 0x34d1	; F47F2B  bit 2,(0x34d1)
+	bit	2, (0x34d1:16)	; F47F2B  bit 2,(0x34d1)
 	jr	nz, sub_F47C7C_Join9	; F47F2F  jr NZ,0xf47f36
 	calr	sub_F48358	; F47F31  calr 0xf48358
 	jr	sub_F47C7C_Join9	; F47F34  jr T,0xf47f36
@@ -99581,7 +99581,7 @@ CycleRecord_CheckIsRecordTrack_Copy_Skip:
 	ld	b, (13471:16)	; F47F86  ld B,(0x349f)
 	m_cp_rm MB16, 0x36d6, 2	; F47F8A  cp B,(0x36d6)
 	jr	nz, CycleRecord_CheckIsRecordTrack_Copy_Skip2	; F47F8E  jr NZ,0xf47f96
-	m_bit 1, MD16, 0x360b	; F47F90  bit 1,(0x360b)
+	bit	1, (0x360b:16)	; F47F90  bit 1,(0x360b)
 	jr	nz, CycleRecord_CheckIsRecordTrack_Copy_Epilogue	; F47F94  jr NZ,0xf47f98
 CycleRecord_CheckIsRecordTrack_Copy_Skip2:
 	ld	a, 255:opc	; F47F96  ld A,0xff
@@ -100052,7 +100052,7 @@ sub_F482C0:
 	mx_ld_rm MXB, ra_IY, ra_HL, 1	; F482CB  ld A,(XIY+HL)
 	cp	a, 32	; F482D0  cp A,0x20
 	jr	nz, sub_F482C0_Skip	; F482D3  jr NZ,0xf48305
-	m_bit 4, MD16, 0x34d0	; F482D5  bit 4,(0x34d0)
+	bit	4, (0x34d0:16)	; F482D5  bit 4,(0x34d0)
 	jr	z, sub_F482C0_Skip	; F482D9  jr Z,0xf48305
 	cp	(0x34a4:16), 0x00	; F482DB  cp (0x34a4),0x00
 	jr	nz, sub_F482C0_Skip	; F482E0  jr NZ,0xf48305
@@ -101247,7 +101247,7 @@ DiskFile_ReadFirstBlock_Join:
 	ld	(Disk_WindowEnd:16), xwa	; F48F62  ld (0x21d7),XWA
 	call	T_DiskApi_ReadFileToWindow_Entry	; F48F66  call 0xf425a8
 	ld	h, a	; F48F6A  ld H,A
-	m_res 5, MD16, Disk_Flags	; F48F6C  res 5,(0x21e7)
+	res	5, (Disk_Flags:16)	; F48F6C  res 5,(0x21e7)
 	pop	xix	; F48F70  pop XIX
 	popw	hl	; F48F71  pop HL
 	unlk XIZ	; F48F72  unlk XIZ
@@ -102038,7 +102038,7 @@ SeqRecord_SoundAlert_Join2:
 	ld	xwa, (12292:16)	; F4987B  ld XWA,(0x3004)
 	cp	xwa, 0	; F4987F  cp XWA,0x00000000
 	jr	z, SeqRecord_SoundAlert_Skip2	; F49885  jr Z,0xf49895
-	m_bit 3, MD16, 0x34d0	; F49887  bit 3,(0x34d0)
+	bit	3, (0x34d0:16)	; F49887  bit 3,(0x34d0)
 	jr	z, SeqRecord_SoundAlert_Skip	; F4988B  jr Z,0xf49892
 	and	(0x34d0:16), 0xf7	; F4988D  and (0x34d0),0xf7
 SeqRecord_SoundAlert_Skip:
@@ -102075,9 +102075,9 @@ SeqRecord_WriteRingEventsToTracks:
 	calr	SeqRecord_ResetControllersAfterRingOverflow	; F498AB  calr 0xf49afd
 	jrl	SeqRecord_WriteRingEventsToTracks_Return	; F498AE  jrl T,0xf49a3c
 SeqRecord_WriteRingEventsToTracks_Skip12:
-	m_bit 1, MD16, 0x34dd	; F498B1  bit 1,(0x34dd)
+	bit	1, (0x34dd:16)	; F498B1  bit 1,(0x34dd)
 	jr	nz, SeqRecord_WriteRingEventsToTracks_Skip13	; F498B5  jr NZ,0xf498bd
-	m_bit 1, MD16, 0x34d4	; F498B7  bit 1,(0x34d4)
+	bit	1, (0x34d4:16)	; F498B7  bit 1,(0x34d4)
 	jr	nz, SeqRecord_WriteRingEventsToTracks_Skip13	; F498BB  jr NZ,0xf498bd
 SeqRecord_WriteRingEventsToTracks_Skip13:
 	ld	xhl, 6294026	; F498BD  ld XHL,0x00600a0a
@@ -102126,7 +102126,7 @@ SeqRecord_WriteRingEventsToTracks_Skip3:
 SeqRecord_WriteRingEventsToTracks_Skip14:
 	ldw	bc, 5	; F49937  ld BC,0x0005
 	calr	SeqRecord_ReadRingEvent	; F4993A  calr 0xf49ca9
-	m_bit 1, MD16, 0x34d4	; F4993D  bit 1,(0x34d4)
+	bit	1, (0x34d4:16)	; F4993D  bit 1,(0x34d4)
 	jr	z, SeqRecord_WriteRingEventsToTracks_Skip4	; F49941  jr Z,0xf49948
 	ld	(13483:16), 0	; F49943  ld (0x34ab),0x00
 SeqRecord_WriteRingEventsToTracks_Skip4:
@@ -102249,7 +102249,7 @@ CycleRecord_CheckIsRecordTrack_Skip:
 	ld	b, (13471:16)	; F49A5A  ld B,(0x349f)
 	m_cp_rm MB16, 0x36d6, 2	; F49A5E  cp B,(0x36d6)
 	jr	nz, CycleRecord_CheckIsRecordTrack_Skip2	; F49A62  jr NZ,0xf49a6a
-	m_bit 1, MD16, 0x360b	; F49A64  bit 1,(0x360b)
+	bit	1, (0x360b:16)	; F49A64  bit 1,(0x360b)
 	jr	nz, CycleRecord_CheckIsRecordTrack_Epilogue	; F49A68  jr NZ,0xf49a6c
 CycleRecord_CheckIsRecordTrack_Skip2:
 	ld	a, 255:opc	; F49A6A  ld A,0xff
@@ -102257,23 +102257,23 @@ CycleRecord_CheckIsRecordTrack_Epilogue:
 	pop	xbc	; F49A6C  pop XBC
 	ret	; F49A6D  ret
 	ld	a, (13846:16)	; F49A6E  ld A,(0x3616)
-	m_bit 7, MD16, 0x361a	; F49A72  bit 7,(0x361a)
+	bit	7, (0x361a:16)	; F49A72  bit 7,(0x361a)
 	jr	z, CycleRecord_CheckIsRecordTrack_Skip3	; F49A76  jr Z,0xf49a83
 	set	0, a	; F49A78  set 0x00,A
 	ld	(13846:16), a	; F49A7B  ld (0x3616),A
-	m_res 7, MD16, 0x361a	; F49A7F  res 7,(0x361a)
+	res	7, (0x361a:16)	; F49A7F  res 7,(0x361a)
 CycleRecord_CheckIsRecordTrack_Skip3:
-	m_bit 7, MD16, 0x361b	; F49A83  bit 7,(0x361b)
+	bit	7, (0x361b:16)	; F49A83  bit 7,(0x361b)
 	jr	z, CycleRecord_CheckIsRecordTrack_Skip4	; F49A87  jr Z,0xf49a94
 	set	1, a	; F49A89  set 0x01,A
 	ld	(13846:16), a	; F49A8C  ld (0x3616),A
-	m_res 7, MD16, 0x361b	; F49A90  res 7,(0x361b)
+	res	7, (0x361b:16)	; F49A90  res 7,(0x361b)
 CycleRecord_CheckIsRecordTrack_Skip4:
-	m_bit 7, MD16, 0x3618	; F49A94  bit 7,(0x3618)
+	bit	7, (0x3618:16)	; F49A94  bit 7,(0x3618)
 	jr	z, CycleRecord_CheckIsRecordTrack_Skip5	; F49A98  jr Z,0xf49aa5
 	set	2, a	; F49A9A  set 0x02,A
 	ld	(13846:16), a	; F49A9D  ld (0x3616),A
-	m_res 7, MD16, 0x3618	; F49AA1  res 7,(0x3618)
+	res	7, (0x3618:16)	; F49AA1  res 7,(0x3618)
 CycleRecord_CheckIsRecordTrack_Skip5:
 	ld	a, (13846:16)	; F49AA5  ld A,(0x3616)
 	ld	(13482:16), a	; F49AA9  ld (0x34aa),A
@@ -102309,7 +102309,7 @@ CycleRecord_CheckIsRecordTrack_Skip5:
 ;   SeqBuf_Ring is empty. Basis: caller + body + flag writer. (notes/naming-
 ;   pilot-2026-10-06/proposals_wave10_b10.json)
 SeqRecord_CloseHeldNotesAtCycleWrap:
-	m_bit 4, MD16, 0x34b8	; F49ADE  bit 4,(0x34b8)
+	bit	4, (0x34b8:16)	; F49ADE  bit 4,(0x34b8)
 	jr	z, SeqRecord_CloseHeldNotesAtCycleWrap_Return	; F49AE2  jr Z,0xf49afc
 	ld	a, (13483:16)	; F49AE4  ld A,(0x34ab)
 	cp	(0x34aa:16), 0x81	; F49AE8  cp (0x34aa),0x81
@@ -102318,7 +102318,7 @@ SeqRecord_CloseHeldNotesAtCycleWrap:
 SeqRecord_CloseHeldNotesAtCycleWrap_Skip6:
 	ld	(13497:16), a	; F49AF1  ld (0x34b9),A
 	calr	SeqRecord_CloseAllHeldNotes	; F49AF5  calr 0xf49bfa
-	m_res 4, MD16, 0x34b8	; F49AF8  res 4,(0x34b8)
+	res	4, (0x34b8:16)	; F49AF8  res 4,(0x34b8)
 SeqRecord_CloseHeldNotesAtCycleWrap_Return:
 	ret	; F49AFC  ret
 
@@ -102348,15 +102348,15 @@ SeqRecord_ResetControllersAfterRingOverflow:
 	xor	a, a	; F49B0F  xor A,A
 SeqRecord_ResetControllersAfterRingOverflow_Skip7:
 	ld	(13497:16), a	; F49B11  ld (0x34b9),A
-	m_bit 0, MD16, 0x34b8	; F49B15  bit 0,(0x34b8)
+	bit	0, (0x34b8:16)	; F49B15  bit 0,(0x34b8)
 	jr	z, SeqRecord_ResetControllersAfterRingOverflow_Skip8	; F49B19  jr Z,0xf49b1e
 	calr	SeqRecord_WriteModulationResetToTakeTracks	; F49B1B  calr 0xf49b43
 SeqRecord_ResetControllersAfterRingOverflow_Skip8:
-	m_bit 1, MD16, 0x34b8	; F49B1E  bit 1,(0x34b8)
+	bit	1, (0x34b8:16)	; F49B1E  bit 1,(0x34b8)
 	jr	z, SeqRecord_ResetControllersAfterRingOverflow_Skip9	; F49B22  jr Z,0xf49b27
 	calr	SeqRecord_WritePitchBendResetToTakeTracks	; F49B24  calr 0xf49b5c
 SeqRecord_ResetControllersAfterRingOverflow_Skip9:
-	m_bit 2, MD16, 0x34b8	; F49B27  bit 2,(0x34b8)
+	bit	2, (0x34b8:16)	; F49B27  bit 2,(0x34b8)
 	jr	z, SeqRecord_ResetControllersAfterRingOverflow_Skip10	; F49B2B  jr Z,0xf49b30
 	calr	SeqRecord_CloseAllHeldNotes	; F49B2D  calr 0xf49bfa
 SeqRecord_ResetControllersAfterRingOverflow_Skip10:
@@ -103837,7 +103837,7 @@ SeqRecord_CopyTrackCursorsToBaseline:
 ;   bit 1 tested directly, or CycleRecord_CheckOn returning 0 (screen 6/8 + that bit). Basis: callers + body. (notes/naming-
 ;   pilot-2026-10-06/proposals_wave2_f.json)
 CycleRecord_SetUpRecordTrack:		; <- T_CycleRecord_SetUpRecordTrack
-	m_res 0, MD16, 0x3731	; F4A5AD  res 0,(0x3731)
+	res	0, (0x3731:16)	; F4A5AD  res 0,(0x3731)
 	calr	CycleRecord_RestartPass	; F4A5B1  calr 0xf4a5b5
 	ret	; F4A5B4  ret
 
@@ -103866,15 +103866,15 @@ CycleRecord_SetUpRecordTrack:		; <- T_CycleRecord_SetUpRecordTrack
 ;   cycle start to the cycle end measure into take chain 2 (0x36FC), padding a short track with 0x81 beat marks.
 CycleRecord_RestartPass:		; <- T_CycleRecord_RestartPass
 	calr	SeqRecord_RestoreCursorBaseline	; F4A5B5  calr 0xf4b414
-	m_set 0, MD16, 0x3751	; F4A5B8  set 0,(0x3751)
+	set	0, (0x3751:16)	; F4A5B8  set 0,(0x3751)
 	call	T_SeqCycle_CaptureEndCursors	; F4A5BC  call 0xf40b60
 	call	T_SeqCycle_LocateToStart	; F4A5C0  call 0xf40b5c
 	call	T_Seq_SetTrackBeatsFromTransportB	; F4A5C4  call 0xf40ac4
-	m_res 0, MD16, 0x3751	; F4A5C8  res 0,(0x3751)
+	res	0, (0x3751:16)	; F4A5C8  res 0,(0x3751)
 	ld	xwa, (12288:16)	; F4A5CC  ld XWA,(0x3000)
 	cp	xwa, 0	; F4A5D0  cp XWA,0x00000000
 	jrl	z, CycleRecord_RestartPass_Return	; F4A5D6  jrl Z,0xf4a660
-	m_bit 0, MD16, 0x34d9	; F4A5D9  bit 0,(0x34d9)
+	bit	0, (0x34d9:16)	; F4A5D9  bit 0,(0x34d9)
 	jr	z, CycleRecord_RestartPass_Skip	; F4A5DD  jr Z,0xf4a5e7
 	ld	wa, (13650:16)	; F4A5DF  ld WA,(0x3552)
 	ld	(14036:16), wa	; F4A5E3  ld (0x36d4),WA
@@ -103949,7 +103949,7 @@ CycleRecord_RestartPass_Return:
 sub_F4A661:		; <- T_F40BE0
 	calr	CycleRecord_FreeRecordChain	; F4A661  calr 0xf4a6cf
 	calr	SeqRecord_FreeTakeChain2	; F4A664  calr 0xf4a6e7
-	m_bit 1, MD16, 0x34d9	; F4A667  bit 1,(0x34d9)
+	bit	1, (0x34d9:16)	; F4A667  bit 1,(0x34d9)
 	jr	nz, sub_F4A5B5_Skip5	; F4A66B  jr NZ,0xf4a672
 	and	(0x34d4:16), 0xf7	; F4A66D  and (0x34d4),0xf7
 sub_F4A5B5_Skip5:
@@ -104125,7 +104125,7 @@ CycleRecord_CopyCycleRangeToTakeChain2:
 	mul	a, 3	; F4A75C  mul A,0x03
 	ld	xix, 6305024	; F4A75F  ld XIX,0x00603500
 	add	xix, xwa	; F4A764  add XIX,XWA
-	m_bit 7, MDI+r4, 0	; F4A766  bit 7,(XIX)
+	bit	7, (xix)	; F4A766  bit 7,(XIX)
 	jr	nz, CycleRecord_CopyCycleRangeToTakeChain2_Skip	; F4A768  jr NZ,0xf4a76c
 	jr	CycleRecord_CopyCycleRangeToTakeChain2_Join	; F4A76A  jr T,0xf4a78a
 CycleRecord_CopyCycleRangeToTakeChain2_Skip:
@@ -104293,7 +104293,7 @@ CycleRecord_AllocTakeChain2_Return:
 ;   (notes/naming-pilot-2026-10-06/proposals_wave7_w.json)
 CycleRecord_CountCycleRangeBeats:
 	call	T_SeqMasterTrack_UpdateActive	; F4A88A  call 0xf40aa8
-	m_bit 2, MD16, 0x0c8a	; F4A88E  bit 2,(0x0c8a)
+	bit	2, (0x0c8a:16)	; F4A88E  bit 2,(0x0c8a)
 	jr	nz, CycleRecord_CountCycleRangeBeats_Skip	; F4A892  jr NZ,0xf4a899
 	calr	CycleRecord_CountCycleRangeBeatsFromBeatsPerBar	; F4A894  calr 0xf4a8f0
 	jr	CycleRecord_CountCycleRangeBeats_Return	; F4A897  jr T,0xf4a8a0
@@ -104810,7 +104810,7 @@ CycleRecord_AllocRecordChain_Return:
 ;   chain 2's 0x82 tag instead, and the track's end cursor is restored after. Basis: callers + body. (notes/naming-
 ;   pilot-2026-10-06/proposals_wave11_a11.json)
 CycleRecord_WriteStagedEventToRecordTrack:
-	m_bit 0, MD16, 0x3731	; F4ABE8  bit 0,(0x3731)
+	bit	0, (0x3731:16)	; F4ABE8  bit 0,(0x3731)
 	jr	z, CycleRecord_WriteStagedEventToRecordTrack_Skip	; F4ABEC  jr Z,0xf4abf8
 	cp	(Seq_BeatTick:8), 0x14	; F4ABEE  cp (0x93),0x14
 	jr	ule, CycleRecord_WriteStagedEventToRecordTrack_Skip	; F4ABF2  jr ULE,0xf4abf8
@@ -105079,7 +105079,7 @@ sub_F4AE15:
 	ld	a, (xix)	; F4AE38  ld A,(XIX)
 	xor	w, w	; F4AE3A  xor W,W
 	ld	(BStore_CursorOffset:16), wa	; F4AE3C  ld (0x345e),WA
-	m_res 0, MD16, 0x36f1	; F4AE40  res 0,(0x36f1)
+	res	0, (0x36f1:16)	; F4AE40  res 0,(0x36f1)
 sub_F4AE15_Loop:
 	call	T_BStore_StepCursorBackToLeadByte	; F4AE44  call 0xf40b6c
 	cp	(BStore_ErrorCode:16), 0x00	; F4AE48  cp (0x0d4a),0x00
@@ -105101,13 +105101,13 @@ sub_F4AE15_Skip:
 	calr	sub_F4AB60	; F4AE79  calr 0xf4ab60
 	ret	; F4AE7C  ret
 sub_F4AE15_Skip2:
-	m_bit 0, MD16, 0x36f1	; F4AE7D  bit 0,(0x36f1)
+	bit	0, (0x36f1:16)	; F4AE7D  bit 0,(0x36f1)
 	jr	z, sub_F4AE15_Skip3	; F4AE81  jr Z,0xf4ae8b
 	call	CycleRecord_StepCursorOneEvent	; F4AE83  call 0xf4aedd
 	calr	sub_F4AB60	; F4AE87  calr 0xf4ab60
 	ret	; F4AE8A  ret
 sub_F4AE15_Skip3:
-	m_set 0, MD16, 0x36f1	; F4AE8B  set 0,(0x36f1)
+	set	0, (0x36f1:16)	; F4AE8B  set 0,(0x36f1)
 	jr	sub_F4AE15_Loop	; F4AE8F  jr T,0xf4ae44
 sub_F4AE15_Skip4:
 	ld	xhl, 13290	; F4AE91  ld XHL,0x000033ea
@@ -105119,7 +105119,7 @@ sub_F4AE15_Skip4:
 	jr	ugt, sub_F4AE15_Skip5	; F4AEA8  jr UGT,0xf4aeac
 	jr	sub_F4AE15_Join	; F4AEAA  jr T,0xf4aeb2
 sub_F4AE15_Skip5:
-	m_bit 0, MD16, 0x36f1	; F4AEAC  bit 0,(0x36f1)
+	bit	0, (0x36f1:16)	; F4AEAC  bit 0,(0x36f1)
 	jr	z, sub_F4AE15_Loop	; F4AEB0  jr Z,0xf4ae44
 sub_F4AE15_Join:
 	ld	de, (BStore_CursorBlock:16)	; F4AEB2  ld DE,(0x345c)
@@ -105197,7 +105197,7 @@ sub_F4AEEE:
 sub_F4AF08:		; <- T_F40BE8
 	cp	(0x36fa:16), 0xff	; F4AF08  cp (0x36fa),0xff
 	jr	z, sub_F4AEEE_Return	; F4AF0D  jr Z,0xf4af50
-	m_bit 0, MD16, 0x3751	; F4AF0F  bit 0,(0x3751)
+	bit	0, (0x3751:16)	; F4AF0F  bit 0,(0x3751)
 	jr	nz, sub_F4AEEE_Return	; F4AF13  jr NZ,0xf4af50
 	call	T_SeqTrackCursors_Save	; F4AF15  call 0xf40b68
 	ld	wa, (BStore_CursorBlock:16)	; F4AF19  ld WA,(0x345c)
@@ -105293,17 +105293,17 @@ sub_F4AEEE_Return2:
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
 sub_F4AFD5:
-	m_res 0, MD16, 0x3731	; F4AFD5  res 0,(0x3731)
+	res	0, (0x3731:16)	; F4AFD5  res 0,(0x3731)
 	calr	SeqRecord_RestoreCursorBaseline	; F4AFD9  calr 0xf4b414
-	m_set 0, MD16, 0x3751	; F4AFDC  set 0,(0x3751)
+	set	0, (0x3751:16)	; F4AFDC  set 0,(0x3751)
 	call	T_SeqCycle_CaptureEndCursors	; F4AFE0  call 0xf40b60
 	call	T_SeqCycle_LocateToStart	; F4AFE4  call 0xf40b5c
 	call	T_Seq_SetTrackBeatsFromTransportB	; F4AFE8  call 0xf40ac4
-	m_res 0, MD16, 0x3751	; F4AFEC  res 0,(0x3751)
+	res	0, (0x3751:16)	; F4AFEC  res 0,(0x3751)
 	ld	xwa, (12288:16)	; F4AFF0  ld XWA,(0x3000)
 	cp	xwa, 0	; F4AFF4  cp XWA,0x00000000
 	jrl	z, sub_F4AFD5_Return	; F4AFFA  jrl Z,0xf4b08a
-	m_bit 0, MD16, 0x34d9	; F4AFFD  bit 0,(0x34d9)
+	bit	0, (0x34d9:16)	; F4AFFD  bit 0,(0x34d9)
 	jr	z, sub_F4AFD5_Skip	; F4B001  jr Z,0xf4b00b
 	ld	wa, (13650:16)	; F4B003  ld WA,(0x3552)
 	ld	(14036:16), wa	; F4B007  ld (0x36d4),WA
@@ -105424,7 +105424,7 @@ sub_F4B08B_Skip2:
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
 sub_F4B0E7:		; <- T_F40BEC
-	m_set 0, MD16, 0x3731	; F4B0E7  set 0,(0x3731)
+	set	0, (0x3731:16)	; F4B0E7  set 0,(0x3731)
 	calr	SeqRecord_FreeTakeChain2	; F4B0EB  calr 0xf4a6e7
 	ld	wa, (14074:16)	; F4B0EE  ld WA,(0x36fa)
 	ld	(14076:16), wa	; F4B0F2  ld (0x36fc),WA
@@ -105452,7 +105452,7 @@ sub_F4B0E7:		; <- T_F40BEC
 ;   baseline, CycleRecord_AbortMemoryFull, both chains freed. Basis: caller + body. (notes/naming-
 ;   pilot-2026-10-06/proposals_wave5_p.json)
 CycleRecord_CommitTake:		; <- T_CycleRecord_CommitTake
-	m_res 0, MD16, 0x3731	; F4B104  res 0,(0x3731)
+	res	0, (0x3731:16)	; F4B104  res 0,(0x3731)
 	cpw	(BStore_FreeCount:24), 0x0000	; F4B108  cp (0x6034ba),0x0000
 	jr	z, sub_F4B08B_Skip3	; F4B10F  jr Z,0xf4b153
 	ld	(BStore_ErrorCode:16), 0	; F4B111  ld (0x0d4a),0x00
@@ -105505,7 +105505,7 @@ CycleRecord_PadTrackPastCycleEnd:
 	mul	a, 3	; F4B16B  mul A,0x03
 	ld	xix, 6305024	; F4B16E  ld XIX,0x00603500
 	add	xix, xwa	; F4B173  add XIX,XWA
-	m_bit 7, MDI+r4, 0	; F4B175  bit 7,(XIX)
+	bit	7, (xix)	; F4B175  bit 7,(XIX)
 	jr	nz, CycleRecord_PadTrackPastCycleEnd_Skip	; F4B177  jr NZ,0xf4b1e3
 	cpw	(BStore_FreeCount:24), 0x0000	; F4B179  cp (0x6034ba),0x0000
 	jrl	z, CycleRecord_PadTrackPastCycleEnd_Skip2	; F4B180  jrl Z,0xf4b207
@@ -105518,13 +105518,13 @@ CycleRecord_PadTrackPastCycleEnd:
 	dec	1, xix	; F4B196  dec 1,XIX
 	sll	xix, 8	; F4B198  sll 0x08,XIX
 	add	xiy, xix	; F4B19B  add XIY,XIX
-	m_set 7, MDI+r5, 0	; F4B19D  set 7,(XIY)
+	set	7, (xiy)	; F4B19D  set 7,(XIY)
 	add	xiy, 1	; F4B19F  add XIY,0x00000001
 	ldw	(xiy), 0x0000	; F4B1A5  ld (XIY),0x0000
 	add	xiy, 2	; F4B1A9  add XIY,0x00000002
 	ldw	(xiy), 0xffff	; F4B1AF  ld (XIY),0xffff
 	pop	xix	; F4B1B3  pop XIX
-	m_set 7, MDI+r4, 0	; F4B1B4  set 7,(XIX)
+	set	7, (xix)	; F4B1B4  set 7,(XIX)
 	add	xix, 1	; F4B1B6  add XIX,0x00000001
 	ld	(xix), hl	; F4B1BC  ld (XIX),HL
 	ld	xix, 6304894	; F4B1BE  ld XIX,0x0060347e
@@ -105619,7 +105619,7 @@ CycleRecord_CountTrackBeatMarks_Return:
 ;   pilot-2026-10-06/proposals_wave7_w.json)
 CycleRecord_CountBeatsToCycleEnd:
 	call	T_SeqMasterTrack_UpdateActive	; F4B258  call 0xf40aa8
-	m_bit 2, MD16, 0x0c8a	; F4B25C  bit 2,(0x0c8a)
+	bit	2, (0x0c8a:16)	; F4B25C  bit 2,(0x0c8a)
 	jr	nz, CycleRecord_CountBeatsToCycleEnd_Skip	; F4B260  jr NZ,0xf4b267
 	calr	CycleRecord_CountBeatsToCycleEndFromBeatsPerBar	; F4B262  calr 0xf4b295
 	jr	CycleRecord_CountBeatsToCycleEnd_Return	; F4B265  jr T,0xf4b26e
@@ -106195,8 +106195,8 @@ CycleRecord_StepCopyDestToNextBlockOrAlloc_Skip:
 	sla	xwa, 8	; F4B702  sla 0x08,XWA
 	add	xwa, (BStore_HeapBase:16)	; F4B705  add XWA,(0x3604)
 	ld	(BStore_CursorBlockAddr:16), xwa	; F4B709  ld (0x126e),XWA
-	m_bit 7, MDI+r4, 0	; F4B70D  bit 7,(XIX)
-	m_bit 7, MDI+r0, 0	; F4B70F  bit 7,(XWA)
+	bit	7, (xix)	; F4B70D  bit 7,(XIX)
+	bit	7, (xwa)	; F4B70F  bit 7,(XWA)
 	jr	nz, CycleRecord_StepCopyDestToNextBlockOrAlloc_Skip3	; F4B711  jr NZ,0xf4b71a
 CycleRecord_StepCopyDestToNextBlockOrAlloc_Skip2:
 	ld	(BStore_ErrorCode:16), 11	; F4B713  ld (0x0d4a),0x0b
@@ -106234,7 +106234,7 @@ CycleRecord_StepCopySrcToNextBlock:
 	sla	xwa, 8	; F4B73B  sla 0x08,XWA
 	add	xwa, (BStore_HeapBase:16)	; F4B73E  add XWA,(0x3604)
 	ld	(BStore_CursorBlockAddr:16), xwa	; F4B742  ld (0x126e),XWA
-	m_bit 7, MDI+r0, 0	; F4B746  bit 7,(XWA)
+	bit	7, (xwa)	; F4B746  bit 7,(XWA)
 	jr	nz, CycleRecord_StepCopySrcToNextBlock_Skip	; F4B748  jr NZ,0xf4b751
 	ld	(BStore_ErrorCode:16), 11	; F4B74A  ld (0x0d4a),0x0b
 	jr	CycleRecord_StepCopySrcToNextBlock_Return	; F4B74F  jr T,0xf4b75e
@@ -106302,7 +106302,7 @@ CycleRecord_BeatsBeforeMeasureFromTimeSigs_Loop:
 	xor	wa, wa	; F4B794  xor WA,WA
 	ld	a, (3356:16)	; F4B796  ld A,(0x0d1c)
 	add	ix, wa	; F4B79A  add IX,WA
-	m_bit 5, MD16, 0x0c8a	; F4B79C  bit 5,(0x0c8a)
+	bit	5, (0x0c8a:16)	; F4B79C  bit 5,(0x0c8a)
 	jr	nz, CycleRecord_BeatsBeforeMeasureFromTimeSigs_Loop	; F4B7A0  jr NZ,0xf4b78a
 	pushw	ix	; F4B7A2  push IX
 	pushw	bc	; F4B7A3  push BC
@@ -106908,7 +106908,7 @@ CreatorSelectController_OpenOnEvent:		; <- T_CreatorSelectController_OpenOnEvent
 	ld	c, (xix)	; F4C419  ld C,(XIX)
 	and	c, 194	; F4C41B  and C,0xc2
 	jr	nz, CreatorSelectController_OpenOnEvent_Epilogue	; F4C41E  jr NZ,0xf4c42c
-	m_set 7, MD16, UI_RequestBits	; F4C420  set 7,(0x2075)
+	set	7, (UI_RequestBits:16)	; F4C420  set 7,(0x2075)
 	or	(xix), 0x40	; F4C424  or (XIX),0x40
 	ld	(UI_Request:16), 173	; F4C427  ld (0x2070),0xad
 CreatorSelectController_OpenOnEvent_Epilogue:
@@ -106950,7 +106950,7 @@ CreatorSelectController_OnPartEvent_Skip2:
 	cp	(UiEvent_Byte1:16), 0x19	; F4C45D  cp (0x20b8),0x19
 	jr	nz, CreatorSelectController_OnPartEvent_Epilogue	; F4C462  jr NZ,0xf4c468
 CreatorSelectController_OnPartEvent_Join:
-	m_set 4, MD16, UI_ScreenFlags	; F4C464  set 4,(0x2095)
+	set	4, (UI_ScreenFlags:16)	; F4C464  set 4,(0x2095)
 CreatorSelectController_OnPartEvent_Epilogue:
 	popw	hl	; F4C468  pop HL
 	ret	; F4C469  ret
@@ -107010,7 +107010,7 @@ ScreenEnter_CreatorSelectController_Skip2:
 ; --------------------------------------------------------------------------
 ; UI_RequestBits_ClearBit7: m_res 7, MD16, UI_RequestBits (single-cell template; the cell's meaning is not established unless it is named)
 UI_RequestBits_ClearBit7:		; <- T_UI_RequestBits_ClearBit7
-	m_res 7, MD16, UI_RequestBits	; F4C4B0  res 7,(0x2075)
+	res	7, (UI_RequestBits:16)	; F4C4B0  res 7,(0x2075)
 	ret	; F4C4B4  ret
 
 ; --------------------------------------------------------------------------
@@ -107195,7 +107195,7 @@ LcdKeyRow2_CreatorSelectController:
 	cp	(0x2870:16), 0x00	; F4C591  cp (0x2870),0x00
 	jr	nz, LcdKeyRow2_CreatorSelectController_Return	; F4C596  jr NZ,0xf4c5a1
 	ld	(10352:16), 1	; F4C598  ld (0x2870),0x01
-	m_set 4, MD16, UI_Request_Hi	; F4C59D  set 4,(0x2071)
+	set	4, (UI_Request_Hi:16)	; F4C59D  set 4,(0x2071)
 LcdKeyRow2_CreatorSelectController_Return:
 	ret	; F4C5A1  ret
 ; ---------------------------------------------------------------------
@@ -107241,11 +107241,11 @@ ExitKey_CreatorSelectController:
 	ld	c, (UI_ScreenHoldState:16)	; F4C5AB  ld C,(0x2092)
 	and	c, 1	; F4C5AF  and C,0x01
 	jr	z, ExitKey_CreatorSelectController_Skip	; F4C5B2  jr Z,0xf4c5bf
-	m_res 7, MD16, UI_RequestBits	; F4C5B4  res 7,(0x2075)
+	res	7, (UI_RequestBits:16)	; F4C5B4  res 7,(0x2075)
 	ld	(UI_ScreenHoldPending:16), 1	; F4C5B8  ld (0x209a),0x01
 	jr	ExitKey_CreatorSelectController_Return	; F4C5BD  jr T,0xf4c5c8
 ExitKey_CreatorSelectController_Skip:
-	m_set 1, MD16, UI_Request_Hi	; F4C5BF  set 1,(0x2071)
+	set	1, (UI_Request_Hi:16)	; F4C5BF  set 1,(0x2071)
 	ld	(UI_Request:16), 1	; F4C5C3  ld (0x2070),0x01
 ExitKey_CreatorSelectController_Return:
 	ret	; F4C5C8  ret
@@ -109194,7 +109194,7 @@ Seq_BeatsToMeasureAndBeat:		; <- T_Seq_BeatsToMeasureAndBeat
 	call	T_BStore_LoadGeometry_Call	; F4D6F7  call 0xf427fc
 	popw	wa	; F4D6FB  pop WA
 	ld	(BStore_ErrorCode:16), 0	; F4D6FC  ld (0x0d4a),0x00
-	m_bit 2, MD16, 0x0c8a	; F4D701  bit 2,(0x0c8a)
+	bit	2, (0x0c8a:16)	; F4D701  bit 2,(0x0c8a)
 	jr	nz, Seq_BeatsToMeasureAndBeat_Skip4	; F4D705  jr NZ,0xf4d729
 	xor	de, de	; F4D707  xor DE,DE
 	ld	wa, (3157:16)	; F4D709  ld WA,(0x0c55)
@@ -109274,7 +109274,7 @@ BStore_CursorAdvanceXHL_Skip2:
 	m_lda32 MDD+r4, 0x00, 0	; F4D791  lda XWA,XIX+0x00
 	add	xhl, xwa	; F4D794  add XHL,XWA
 	pop	xwa	; F4D796  pop XWA
-	m_bit 7, MDI+r3, 0	; F4D797  bit 7,(XHL)
+	bit	7, (xhl)	; F4D797  bit 7,(XHL)
 	jr	nz, BStore_CursorAdvanceXHL_Skip3	; F4D799  jr NZ,0xf4d7a2
 	ld	(BStore_ErrorCode:16), 11	; F4D79B  ld (0x0d4a),0x0b
 	jr	BStore_CursorAdvanceXHL_Epilogue	; F4D7A0  jr T,0xf4d7a5
@@ -109925,7 +109925,7 @@ SeqRecord_ArmTrack:
 SeqRecord_ArmTrack_Skip:
 	cp	(UI_ScreenLatch:16), 0x06	; F4E26E  cp (0x207a),0x06
 	jr	nz, SeqRecord_ArmTrack_Skip2	; F4E273  jr NZ,0xf4e281
-	m_bit 1, MD16, 0x360b	; F4E275  bit 1,(0x360b)
+	bit	1, (0x360b:16)	; F4E275  bit 1,(0x360b)
 	jr	z, SeqRecord_ArmTrack_Skip2	; F4E279  jr Z,0xf4e281
 	xor	xwa, xwa	; F4E27B  xor XWA,XWA
 	ld	(12288:16), xwa	; F4E27D  ld (0x3000),XWA
@@ -110009,7 +110009,7 @@ CycleRecord_CheckOn:		; <- T_CycleRecord_CheckOn
 	cp	(UI_ScreenLatch:16), 0x08	; F4E319  cp (0x207a),0x08
 	jr	nz, CycleRecord_CheckOn_Skip2	; F4E31E  jr NZ,0xf4e326
 CycleRecord_CheckOn_Skip:
-	m_bit 1, MD16, 0x360b	; F4E320  bit 1,(0x360b)
+	bit	1, (0x360b:16)	; F4E320  bit 1,(0x360b)
 	jr	nz, CycleRecord_CheckOn_Epilogue	; F4E324  jr NZ,0xf4e328
 CycleRecord_CheckOn_Skip2:
 	ld	a, 255:opc	; F4E326  ld A,0xff
@@ -110688,7 +110688,7 @@ RealtimeRecord_ArmAtFirstMeasure_Skip:
 ;   (notes/naming-pilot-2026-10-06/proposals_wave3_j.json)
 RealtimeRecord_Disarm:		; <- T_RealtimeRecord_Disarm
 	ld	(3556:16), 0	; F4EC56  ld (0x0de4),0x00
-	m_bit 1, MD16, 0x34d3	; F4EC5B  bit 1,(0x34d3)
+	bit	1, (0x34d3:16)	; F4EC5B  bit 1,(0x34d3)
 	jr	z, RealtimeRecord_Disarm_Skip2	; F4EC5F  jr Z,0xf4ec80
 	ld	(UI_PartIndex:16), 0	; F4EC61  ld (0x2250),0x00
 	ld	w, 255:opc	; F4EC66  ld W,0xff
@@ -110869,7 +110869,7 @@ sub_F4ED10_Skip3:
 	ld	(3077:16), 228	; F4ED5D  ld (0x0c05),0xe4
 	or	(0x34bb:16), 0x04	; F4ED62  or (0x34bb),0x04
 sub_F4ED10_Join:
-	m_bit 7, MD16, 0x0c05	; F4ED67  bit 7,(0x0c05)
+	bit	7, (0x0c05:16)	; F4ED67  bit 7,(0x0c05)
 	jr	z, sub_F4ED10_Return	; F4ED6B  jr Z,0xf4ed83
 	cp	(0x0c05:16), 0x80	; F4ED6D  cp (0x0c05),0x80
 	jr	le, sub_F4ED10_Skip4	; F4ED72  jr LE,0xf4ed7a
@@ -110950,7 +110950,7 @@ SeqPlayScreen_StepMeasure:
 SeqPlayScreen_StepMeasure_Skip:
 	bit	2, (TransportC_State:8)	; F4EDDD  bit 2,(0x95)
 	jrl	nz, sub_F4EDC6_Skip2	; F4EDE0  jrl NZ,0xf4ee64
-	m_bit 2, MD16, 0x34d9	; F4EDE3  bit 2,(0x34d9)
+	bit	2, (0x34d9:16)	; F4EDE3  bit 2,(0x34d9)
 	jrl	nz, sub_F4EDC6_Skip2	; F4EDE7  jrl NZ,0xf4ee64
 	ld	a, w	; F4EDEA  ld A,W
 	ld	b, w	; F4EDEC  ld B,W
@@ -111032,7 +111032,7 @@ RecordScreen_LcdKeyRow1:		; <- T_RecordScreen_LcdKeyRow1
 ;   REALTIME RECORD screens (RecordScreen_LcdKeyRow1). Basis: caller + body + the bit's readers. (notes/naming-
 ;   pilot-2026-10-06/proposals_wave4_l.json)
 CountIn_ToggleEnable:
-	m_bit 2, MD16, 0x34d9	; F4EE73  bit 2,(0x34d9)
+	bit	2, (0x34d9:16)	; F4EE73  bit 2,(0x34d9)
 	jr	z, CountIn_ToggleEnable_Skip	; F4EE77  jr Z,0xf4ee89
 	m_rd_ld_rr2x RWX, 0x3E, r2	; F4EE79  ld QHL3,DE
 	ld	de, (13650:16)	; F4EE7C  ld DE,(0x3552)
@@ -111042,12 +111042,12 @@ CountIn_ToggleEnable:
 CountIn_ToggleEnable_Skip:
 	bit	2, (TransportA_State:8)	; F4EE89  bit 2,(0x94)
 	jr	z, CountIn_ToggleEnable_Skip2	; F4EE8C  jr Z,0xf4ee9a
-	m_bit 0, MD16, 0x34d9	; F4EE8E  bit 0,(0x34d9)
+	bit	0, (0x34d9:16)	; F4EE8E  bit 0,(0x34d9)
 	jr	nz, CountIn_ToggleEnable_Skip2	; F4EE92  jr NZ,0xf4ee9a
-	m_bit 1, MD16, 0x34d9	; F4EE94  bit 1,(0x34d9)
+	bit	1, (0x34d9:16)	; F4EE94  bit 1,(0x34d9)
 	jr	z, CountIn_ToggleEnable_Return	; F4EE98  jr Z,0xf4eeac
 CountIn_ToggleEnable_Skip2:
-	m_bit 0, MD16, 0x34d9	; F4EE9A  bit 0,(0x34d9)
+	bit	0, (0x34d9:16)	; F4EE9A  bit 0,(0x34d9)
 	jr	z, CountIn_ToggleEnable_Skip3	; F4EE9E  jr Z,0xf4eea7
 	and	(0x34d9:16), 0xfe	; F4EEA0  and (0x34d9),0xfe
 	jr	CountIn_ToggleEnable_Return	; F4EEA5  jr T,0xf4eeac
@@ -111428,12 +111428,12 @@ PartSound_StepBankGroupMember:
 	ld	ix, bc	; F4F0CF  ld IX,BC
 	jr	PartSound_StepBankGroupMember_Join	; F4F0D1  jr T,0xf4f0f3
 PartSound_StepBankGroupMember_Skip:
-	m_bit 4, MD24, 0x002761	; F4F0D3  bit 4,(0x002761)
+	bit	4, (0x002761:24)	; F4F0D3  bit 4,(0x002761)
 	jr	nz, PartSound_StepBankGroupMember_Skip2	; F4F0D8  jr NZ,0xf4f0f0
-	m_bit 5, MD24, 0x002761	; F4F0DA  bit 5,(0x002761)
+	bit	5, (0x002761:24)	; F4F0DA  bit 5,(0x002761)
 	jr	z, PartSound_StepBankGroupMember_Skip2	; F4F0DF  jr Z,0xf4f0f0
 	ldw	ix, 1	; F4F0E1  ld IX,0x0001
-	m_bit 3, MD24, 0x002761	; F4F0E4  bit 3,(0x002761)
+	bit	3, (0x002761:24)	; F4F0E4  bit 3,(0x002761)
 	jr	z, PartSound_StepBankGroupMember_Join	; F4F0E9  jr Z,0xf4f0f3
 	ldw	ix, 0	; F4F0EB  ld IX,0x0000
 	jr	PartSound_StepBankGroupMember_Join	; F4F0EE  jr T,0xf4f0f3
@@ -111470,7 +111470,7 @@ PartSound_StepBankGroupMember_Loop:
 	pop	w	; F4F135  pop W
 	cp	de, hl	; F4F137  cp DE,HL
 	jrl	z, PartSound_StepBankGroupMember_Epilogue	; F4F139  jrl Z,0xf4f26e
-	m_bit 0, MD16, 0x08ec	; F4F13C  bit 0,(0x08ec)
+	bit	0, (0x08ec:16)	; F4F13C  bit 0,(0x08ec)
 	jr	nz, PartSound_StepBankGroupMember_Skip3	; F4F140  jr NZ,0xf4f146
 	cp	e, 4:i3	; F4F142  cp E,4
 	jr	z, PartSound_StepBankGroupMember_Loop	; F4F144  jr Z,0xf4f125
@@ -111494,12 +111494,12 @@ PartSound_StepBankGroupMember_Skip3:
 	ld	(10083:24), a	; F4F181  ld (0x002763),A
 	jrl	PartSound_StepBankGroupMember_Join3	; F4F186  jrl T,0xf4f244
 PartSound_StepBankGroupMember_Skip4:
-	m_bit 4, MD24, 0x002761	; F4F189  bit 4,(0x002761)
+	bit	4, (0x002761:24)	; F4F189  bit 4,(0x002761)
 	jr	nz, PartSound_StepBankGroupMember_Skip6	; F4F18E  jr NZ,0xf4f1be
-	m_bit 5, MD24, 0x002761	; F4F190  bit 5,(0x002761)
+	bit	5, (0x002761:24)	; F4F190  bit 5,(0x002761)
 	jr	z, PartSound_StepBankGroupMember_Skip6	; F4F195  jr Z,0xf4f1be
 	ld	(10082:24), 1	; F4F197  ld (0x002762),0x01
-	m_bit 3, MD24, 0x002761	; F4F19D  bit 3,(0x002761)
+	bit	3, (0x002761:24)	; F4F19D  bit 3,(0x002761)
 	jr	z, PartSound_StepBankGroupMember_Skip5	; F4F1A2  jr Z,0xf4f1b4
 	ld	(10082:24), 0	; F4F1A4  ld (0x002762),0x00
 	ld	(10083:24), 1	; F4F1AA  ld (0x002763),0x01
@@ -111530,11 +111530,11 @@ PartSound_StepBankGroupMember_Skip8:
 	ld	(10083:24), a	; F4F203  ld (0x002763),A
 	jr	PartSound_StepBankGroupMember_Join3	; F4F208  jr T,0xf4f244
 PartSound_StepBankGroupMember_Skip9:
-	m_bit 4, MD24, 0x002761	; F4F20A  bit 4,(0x002761)
+	bit	4, (0x002761:24)	; F4F20A  bit 4,(0x002761)
 	jr	nz, PartSound_StepBankGroupMember_Skip11	; F4F20F  jr NZ,0xf4f22f
-	m_bit 5, MD24, 0x002761	; F4F211  bit 5,(0x002761)
+	bit	5, (0x002761:24)	; F4F211  bit 5,(0x002761)
 	jr	z, PartSound_StepBankGroupMember_Skip11	; F4F216  jr Z,0xf4f22f
-	m_bit 3, MD24, 0x002761	; F4F218  bit 3,(0x002761)
+	bit	3, (0x002761:24)	; F4F218  bit 3,(0x002761)
 	jr	z, PartSound_StepBankGroupMember_Skip10	; F4F21D  jr Z,0xf4f227
 	ld	(10083:24), 1	; F4F21F  ld (0x002763),0x01
 	jr	PartSound_StepBankGroupMember_Join3	; F4F225  jr T,0xf4f244
@@ -114559,9 +114559,9 @@ RetStub_F53000_Join:
 ; --------------------------------------------------------------------------
 T_F42E58_Nop:		; <- T_F42E58, T_F42E5C
 	ret	; F5301A  ret
-	m_set 1, MD16, 0x2134	; F5301B  set 1,(0x2134)
+	set	1, (0x2134:16)	; F5301B  set 1,(0x2134)
 	ret	; F5301F  ret
-	m_set 1, MD16, 0x2134	; F53020  set 1,(0x2134)
+	set	1, (0x2134:16)	; F53020  set 1,(0x2134)
 	ret	; F53024  ret
 
 ; --------------------------------------------------------------------------
@@ -114667,7 +114667,7 @@ ScreenEnterBody_DrawbarScreen_Join:
 	ld	c, (10415:16)	; F5308E  ld C,(0x28af)
 	and	c, 1	; F53092  and C,0x01
 	jr	z, ScreenEnterBody_DrawbarScreen_Skip2	; F53095  jr Z,0xf5309b
-	m_res 0, MD16, 0x28af	; F53097  res 0,(0x28af)
+	res	0, (0x28af:16)	; F53097  res 0,(0x28af)
 ScreenEnterBody_DrawbarScreen_Skip2:
 	ld	c, (UI_ScreenId:16)	; F5309B  ld C,(0x207c)
 	m_cp_rm MB16, UI_ScreenId_Previous, 3	; F5309F  cp C,(0x207d)
@@ -114688,10 +114688,10 @@ ScreenEnterBody_DrawbarScreen_Skip3:
 ScreenEnterBody_DrawbarScreen_Skip4:
 	cp	(0x289e:16), 0x00	; F530C9  cp (0x289e),0x00
 	jr	nz, ScreenEnterBody_DrawbarScreen_Skip5	; F530CE  jr NZ,0xf530d6
-	m_res 0, MD16, UI_RequestBits	; F530D0  res 0,(0x2075)
+	res	0, (UI_RequestBits:16)	; F530D0  res 0,(0x2075)
 	jr	ScreenEnterBody_DrawbarScreen_Join2	; F530D4  jr T,0xf530e4
 ScreenEnterBody_DrawbarScreen_Skip5:
-	m_set 0, MD16, UI_RequestBits	; F530D6  set 0,(0x2075)
+	set	0, (UI_RequestBits:16)	; F530D6  set 0,(0x2075)
 	ld	(PanelDial_DownButton:16), 12	; F530DA  ld (0x209b),0x0c  <- arms prom_a PanelButton_Accept's substitution for panel button code 0x0D (0xF86615); see the 0xF7D2D8 banner
 	ld	(PanelDial_UpButton:16), 11	; F530DF  ld (0x209c),0x0b  <- arms prom_a PanelButton_Accept's substitution for panel button code 0x0D (0xF86615); see the 0xF7D2D8 banner
 ScreenEnterBody_DrawbarScreen_Join2:
@@ -114779,7 +114779,7 @@ LcdKeyRow1_DrawbarScreen:
 	jr	z, LcdKeyRow1_DrawbarScreen_Skip	; F53140  jr Z,0xf53154
 	cp	(PanelModeGroup:16), 0x17	; F53142  cp (0x2076),0x17
 	jr	nz, LcdKeyRow1_DrawbarScreen_Epilogue	; F53147  jr NZ,0xf53161
-	m_set 7, MD16, UI_Request_Hi	; F53149  set 7,(0x2071)
+	set	7, (UI_Request_Hi:16)	; F53149  set 7,(0x2071)
 	ld	(UI_Request:16), 158	; F5314D  ld (0x2070),0x9e
 	jr	LcdKeyRow1_DrawbarScreen_Epilogue	; F53152  jr T,0xf53161
 LcdKeyRow1_DrawbarScreen_Skip:
@@ -114852,7 +114852,7 @@ LcdKeyRow2_DrawbarScreen_Skip:
 	calr	DrawbarScreen_ToggleRowFlag	; F5317E  calr 0xf5323e
 	jr	LcdKeyRow2_DrawbarScreen_Epilogue	; F53181  jr T,0xf5318c
 LcdKeyRow2_DrawbarScreen_Skip2:
-	m_set 7, MD16, UI_Request_Hi	; F53183  set 7,(0x2071)
+	set	7, (UI_Request_Hi:16)	; F53183  set 7,(0x2071)
 	ld	(UI_Request:16), 102	; F53187  ld (0x2070),0x66
 LcdKeyRow2_DrawbarScreen_Epilogue:
 	pop	xix	; F5318C  pop XIX
@@ -114916,7 +114916,7 @@ LcdKeyRow4_DrawbarScreen:
 	calr	DrawbarSettingPage_StepCursorRow	; F531A4  calr 0xf531f5
 	jr	LcdKeyRow4_DrawbarScreen_Epilogue	; F531A7  jr T,0xf531b3
 LcdKeyRow4_DrawbarScreen_Skip:
-	m_set 0, MD16, UI_RequestBits	; F531A9  set 0,(0x2075)
+	set	0, (UI_RequestBits:16)	; F531A9  set 0,(0x2075)
 	and	(xix), 0xfe	; F531AD  and (XIX),0xfe
 	calr	DrawbarScreen_StepParamAtCursor	; F531B0  calr 0xf531dc
 LcdKeyRow4_DrawbarScreen_Epilogue:
@@ -114979,7 +114979,7 @@ LcdKeyRow5_DrawbarScreen:
 	calr	DrawbarSettingPage_StepCursorRow	; F531CB  calr 0xf531f5
 	jr	LcdKeyRow5_DrawbarScreen_Epilogue	; F531CE  jr T,0xf531da
 LcdKeyRow5_DrawbarScreen_Skip:
-	m_set 0, MD16, UI_RequestBits	; F531D0  set 0,(0x2075)
+	set	0, (UI_RequestBits:16)	; F531D0  set 0,(0x2075)
 	or	(xix), 0x01	; F531D4  or (XIX),0x01
 	calr	DrawbarScreen_StepParamAtCursor	; F531D7  calr 0xf531dc
 LcdKeyRow5_DrawbarScreen_Epilogue:
@@ -115041,8 +115041,8 @@ DrawbarSettingPage_StepCursorRow_Skip:
 	jr	z, DrawbarSettingPage_StepCursorRow_Epilogue	; F53211  jr Z,0xf5321d
 	decm8	1, (xix)	; F53213  dec 1,(XIX)
 DrawbarSettingPage_StepCursorRow_Join:
-	m_set 3, MD16, UI_RequestBits	; F53215  set 3,(0x2075)
-	m_set 4, MD16, UI_Request_Hi	; F53219  set 4,(0x2071)
+	set	3, (UI_RequestBits:16)	; F53215  set 3,(0x2075)
+	set	4, (UI_Request_Hi:16)	; F53219  set 4,(0x2071)
 DrawbarSettingPage_StepCursorRow_Epilogue:
 	pop	xix	; F5321D  pop XIX
 	ret	; F5321E  ret
@@ -115068,7 +115068,7 @@ DrawbarScreen_LcdKeyRow2:
 DrawbarScreen_LcdKeyRow2_Skip:
 	ld	(xix), 0	; F5322F  ld (XIX),0x00
 DrawbarScreen_LcdKeyRow2_Join:
-	m_set 4, MD16, UI_Request_Hi	; F53232  set 4,(0x2071)
+	set	4, (UI_Request_Hi:16)	; F53232  set 4,(0x2071)
 	ld	(10399:16), 2	; F53236  ld (0x289f),0x02
 	pop	xix	; F5323B  pop XIX
 	ret	; F5323C  ret
@@ -115102,7 +115102,7 @@ DrawbarScreen_ToggleRowFlag_Join:
 	push	0	; F53254  push 0x00
 	m_push MB16, 0x289c	; F53256  push (0x289c)
 	calr	Drawbar_SendSettingBytes	; F5325A  calr 0xf5418e
-	m_set 4, MD16, UI_ScreenFlags	; F5325D  set 4,(0x2095)
+	set	4, (UI_ScreenFlags:16)	; F5325D  set 4,(0x2095)
 	popw	bc	; F53261  pop BC
 	pop	xix	; F53262  pop XIX
 	ret	; F53263  ret
@@ -115151,11 +115151,11 @@ DrawbarSettingPage_StepAttackTime_Skip2:
 	and	(xix), 0x0f	; F532A6  and (XIX),0x0f
 	or	(xix), c	; F532A9  or (XIX),C
 DrawbarSettingPage_StepAttackTime_Join2:
-	m_set 3, MD16, UI_RequestBits	; F532AB  set 3,(0x2075)
+	set	3, (UI_RequestBits:16)	; F532AB  set 3,(0x2075)
 	push	0	; F532AF  push 0x00
 	m_push MB16, 0x289c	; F532B1  push (0x289c)
 	calr	Drawbar_SendSettingBytes	; F532B5  calr 0xf5418e
-	m_set 4, MD16, UI_ScreenFlags	; F532B8  set 4,(0x2095)
+	set	4, (UI_ScreenFlags:16)	; F532B8  set 4,(0x2095)
 	popw	bc	; F532BC  pop BC
 DrawbarSettingPage_StepAttackTime_Epilogue:
 	pop	xix	; F532BD  pop XIX
@@ -115207,11 +115207,11 @@ DrawbarSettingPage_StepReleaseTime_Skip3:
 	and	(xix), 0xf0	; F53307  and (XIX),0xf0
 	or	(xix), c	; F5330A  or (XIX),C
 DrawbarSettingPage_StepReleaseTime_Join3:
-	m_set 3, MD16, UI_RequestBits	; F5330C  set 3,(0x2075)
+	set	3, (UI_RequestBits:16)	; F5330C  set 3,(0x2075)
 	push	0	; F53310  push 0x00
 	m_push MB16, 0x289c	; F53312  push (0x289c)
 	calr	Drawbar_SendSettingBytes	; F53316  calr 0xf5418e
-	m_set 4, MD16, UI_ScreenFlags	; F53319  set 4,(0x2095)
+	set	4, (UI_ScreenFlags:16)	; F53319  set 4,(0x2095)
 	popw	bc	; F5331D  pop BC
 DrawbarSettingPage_StepReleaseTime_Epilogue2:
 	pop	xix	; F5331E  pop XIX
@@ -115263,11 +115263,11 @@ DrawbarSettingPage_StepPercussiveToneDecay_Skip4:
 	and	(xix), 0xf0	; F53368  and (XIX),0xf0
 	or	(xix), c	; F5336B  or (XIX),C
 DrawbarSettingPage_StepPercussiveToneDecay_Join4:
-	m_set 3, MD16, UI_RequestBits	; F5336D  set 3,(0x2075)
+	set	3, (UI_RequestBits:16)	; F5336D  set 3,(0x2075)
 	push	0	; F53371  push 0x00
 	m_push MB16, 0x289c	; F53373  push (0x289c)
 	calr	Drawbar_SendSettingBytes	; F53377  calr 0xf5418e
-	m_set 4, MD16, UI_ScreenFlags	; F5337A  set 4,(0x2095)
+	set	4, (UI_ScreenFlags:16)	; F5337A  set 4,(0x2095)
 	popw	bc	; F5337E  pop BC
 DrawbarSettingPage_StepPercussiveToneDecay_Epilogue3:
 	pop	xix	; F5337F  pop XIX
@@ -115317,11 +115317,11 @@ DrawbarSettingPage_StepPercussiveToneLevel_Skip5:
 	and	(xix), 0x0f	; F533C3  and (XIX),0x0f
 	or	(xix), c	; F533C6  or (XIX),C
 DrawbarSettingPage_StepPercussiveToneLevel_Join5:
-	m_set 3, MD16, UI_RequestBits	; F533C8  set 3,(0x2075)
+	set	3, (UI_RequestBits:16)	; F533C8  set 3,(0x2075)
 	push	0	; F533CC  push 0x00
 	m_push MB16, 0x289c	; F533CE  push (0x289c)
 	calr	Drawbar_SendSettingBytes	; F533D2  calr 0xf5418e
-	m_set 4, MD16, UI_ScreenFlags	; F533D5  set 4,(0x2095)
+	set	4, (UI_ScreenFlags:16)	; F533D5  set 4,(0x2095)
 	popw	bc	; F533D9  pop BC
 DrawbarSettingPage_StepPercussiveToneLevel_Epilogue4:
 	pop	xix	; F533DA  pop XIX
@@ -115359,7 +115359,7 @@ Drawbar_StepLevel_Skip:
 	jr	z, Drawbar_StepLevel_Skip2	; F533FF  jr Z,0xf53407
 	dec	1, h	; F53401  dec 1,H
 Drawbar_StepLevel_Join:
-	m_set 3, MD16, UI_RequestBits	; F53403  set 3,(0x2075)
+	set	3, (UI_RequestBits:16)	; F53403  set 3,(0x2075)
 Drawbar_StepLevel_Skip2:
 	ld	a, h	; F53407  ld A,H
 	popw	hl	; F53409  pop HL
@@ -117274,7 +117274,7 @@ Drawbar9_1ft_Update_Join3:
 Drawbar9_1ft_Update_Join4:
 	cp	(UI_ScreenId:16), 0xa3	; F53E95  cp (0x207c),0xa3
 	jrl	nz, Drawbar9_1ft_Update_Epilogue	; F53E9A  jrl NZ,0xf5404f
-	m_set 1, MD16, UI_Request_Hi	; F53E9D  set 1,(0x2071)
+	set	1, (UI_Request_Hi:16)	; F53E9D  set 1,(0x2071)
 	ld	(UI_Request:16), 1	; F53EA1  ld (0x2070),0x01
 	jrl	Drawbar9_1ft_Update_Epilogue	; F53EA6  jrl T,0xf5404f
 Drawbar9_1ft_Update_Skip7:
@@ -117405,15 +117405,15 @@ Drawbar9_1ft_Update_Skip11:
 	ld	c, (xix+6)	; F54027  ld C,(XIX+0x06)
 	and	c, 1	; F5402A  and C,0x01
 	.byte 0xCB, 0x23, 0x00	; F5402D  ldcf 0x00,C   [llvm-mc cannot encode this]
-	m_stcf 4, MD16, 0x2896	; F54030  stcf 4,(0x2896)
+	stcf	4, (0x2896:16)	; F54030  stcf 4,(0x2896)
 	ld	c, (xix+6)	; F54034  ld C,(XIX+0x06)
 	srl	c, 1	; F54037  srl 0x01,C
 	and	c, 1	; F5403A  and C,0x01
 	.byte 0xCB, 0x23, 0x00	; F5403D  ldcf 0x00,C   [llvm-mc cannot encode this]
-	m_stcf 5, MD16, 0x2896	; F54040  stcf 5,(0x2896)
+	stcf	5, (0x2896:16)	; F54040  stcf 5,(0x2896)
 	cp	(UI_ScreenId:16), 0xa3	; F54044  cp (0x207c),0xa3
 	jr	nz, Drawbar9_1ft_Update_Epilogue	; F54049  jr NZ,0xf5404f
-	m_set 4, MD16, UI_ScreenFlags	; F5404B  set 4,(0x2095)
+	set	4, (UI_ScreenFlags:16)	; F5404B  set 4,(0x2095)
 Drawbar9_1ft_Update_Epilogue:
 	pop	xix	; F5404F  pop XIX
 	ret	; F54050  ret
@@ -117666,7 +117666,7 @@ Drawbar_EnterScreenIfMarked:		; <- T_Drawbar_EnterScreenIfMarked
 	calr	Drawbar_WaitReloadMark	; F541FF  calr 0xf54210
 	cp	a, 1:i3	; F54202  cp A,1
 	jr	nz, Drawbar_EnterScreenIfMarked_Return	; F54204  jr NZ,0xf5420f
-	m_set 7, MD16, UI_Request_Hi	; F54206  set 7,(0x2071)
+	set	7, (UI_Request_Hi:16)	; F54206  set 7,(0x2071)
 	ld	(UI_Request:16), 163	; F5420A  ld (0x2070),0xa3
 Drawbar_EnterScreenIfMarked_Return:
 	ret	; F5420F  ret
@@ -118822,7 +118822,7 @@ EditValue_StepBitField:
 	ld	xix, (xiz+12)	; F550AD  ld XIX,(XIZ+0x0c)
 	ld	c, (xix+7)	; F550B0  ld C,(XIX+0x07)
 	xor	(PanelEvent_Flags:16), c	; F550B3  xor (0x28b0),C
-	m_set 3, MD16, UI_RequestBits	; F550B7  set 3,(0x2075)
+	set	3, (UI_RequestBits:16)	; F550B7  set 3,(0x2075)
 	ld	xbc, (xiz+8)	; F550BB  ld XBC,(XIZ+0x08)
 	ld	e, (xbc)	; F550BE  ld E,(XBC)
 	ld	a, (xix+1)	; F550C0  ld A,(XIX+0x01)
@@ -119282,7 +119282,7 @@ IndexedParam_AdjustField:
 	pushw	de	; F55360  push DE
 	push	xix	; F55361  push XIX
 	ld	xix, (xiz+10)	; F55362  ld XIX,(XIZ+0x0a)
-	m_set 3, MD16, UI_RequestBits	; F55365  set 3,(0x2075)
+	set	3, (UI_RequestBits:16)	; F55365  set 3,(0x2075)
 	ld	c, (xix+7)	; F55369  ld C,(XIX+0x07)
 	xor	(PanelEvent_Flags:16), c	; F5536C  xor (0x28b0),C
 	ld	c, (PanelEvent_Flags:16)	; F55370  ld C,(0x28b0)
@@ -119679,7 +119679,7 @@ IndexedTable_GetByte_Skip13:
 	pushw	0	; F5555E  push 0x0000
 IndexedTable_GetByte_Join8:
 	call	T_Blink_SetEnable	; F55561  call 0xf42e28
-	m_res 6, MD16, PanelEvent_Flags	; F55565  res 6,(0x28b0)
+	res	6, (PanelEvent_Flags:16)	; F55565  res 6,(0x28b0)
 	popw	bc	; F55569  pop BC
 	jrl	IndexedTable_GetByte_Loop	; F5556A  jrl T,0xf555e1
 IndexedTable_GetByte_Skip14:
@@ -121600,7 +121600,7 @@ ScreenEnter_RealtimeRecordScreen:
 	ld	a, (UI_ScreenId:16)	; F56062  ld A,(0x207c)
 	m_cp_rm MB16, UI_ScreenId_Previous, 1	; F56066  cp A,(0x207d)
 	jr	nz, ScreenEnter_RealtimeRecordScreen_Skip3	; F5606A  jr NZ,0xf560a1
-	m_bit 4, MD16, UI_ScreenFlags	; F5606C  bit 4,(0x2095)
+	bit	4, (UI_ScreenFlags:16)	; F5606C  bit 4,(0x2095)
 	jrl	nz, ScreenEnter_RealtimeRecordScreen_Join	; F56070  jrl NZ,0xf56112
 ScreenEnter_RealtimeRecordScreen_Skip:
 	cp	(UI_ScreenLatch_Previous:16), 0x08	; F56073  cp (0x207b),0x08
@@ -121609,7 +121609,7 @@ ScreenEnter_RealtimeRecordScreen_Skip:
 	jr	nz, ScreenEnter_RealtimeRecordScreen_Skip3	; F5607D  jr NZ,0xf560a1
 	call	T_CallbackQueue_ResetAndRestartTask2	; F5607F  call 0xf42e80
 	call	T_F40CF8	; F56083  call 0xf40cf8
-	m_bit 1, MD16, 0x360b	; F56087  bit 1,(0x360b)
+	bit	1, (0x360b:16)	; F56087  bit 1,(0x360b)
 	jr	z, ScreenEnter_RealtimeRecordScreen_Skip2	; F5608B  jr Z,0xf5609d
 	call	T_SeqCycle_CaptureEndCursors	; F5608D  call 0xf40b60
 	call	T_SeqCycle_LocateToStart	; F56091  call 0xf40b5c
@@ -121618,14 +121618,14 @@ ScreenEnter_RealtimeRecordScreen_Skip:
 ScreenEnter_RealtimeRecordScreen_Skip2:
 	call	T_SongMemory_UpdateFreePercent	; F5609D  call 0xf40d00
 ScreenEnter_RealtimeRecordScreen_Skip3:
-	m_bit 4, MD16, 0x34d1	; F560A1  bit 4,(0x34d1)
+	bit	4, (0x34d1:16)	; F560A1  bit 4,(0x34d1)
 	jr	z, ScreenEnter_RealtimeRecordScreen_Skip4	; F560A5  jr Z,0xf560bb
 	ld	(UI_Request:16), 1	; F560A7  ld (0x2070),0x01
 	ld	(UI_Request_Hi:16), 2	; F560AC  ld (0x2071),0x02
 	and	(0x34d1:16), 0xef	; F560B1  and (0x34d1),0xef
 	and	(0x3614:16), 0xfe	; F560B6  and (0x3614),0xfe
 ScreenEnter_RealtimeRecordScreen_Skip4:
-	m_bit 0, MD16, 0x3758	; F560BB  bit 0,(0x3758)
+	bit	0, (0x3758:16)	; F560BB  bit 0,(0x3758)
 	jr	z, ScreenEnter_RealtimeRecordScreen_Skip5	; F560BF  jr Z,0xf560db
 	ld	a, (14167:16)	; F560C1  ld A,(0x3757)
 	ld	(UI_PartIndex:16), a	; F560C5  ld (0x2250),A
@@ -121635,11 +121635,11 @@ ScreenEnter_RealtimeRecordScreen_Skip4:
 	call	T_Queue2E00_AppendRegs	; F560D3  call 0xf40f3c
 	call	T_NoteRouting_Rebuild	; F560D7  call 0xf411bc
 ScreenEnter_RealtimeRecordScreen_Skip5:
-	m_bit 2, MD16, MidiCfg_ModeBits	; F560DB  bit 2,(0x7f32)
+	bit	2, (MidiCfg_ModeBits:16)	; F560DB  bit 2,(0x7f32)
 	jr	z, ScreenEnter_RealtimeRecordScreen_Skip6	; F560DF  jr Z,0xf560e6
 	and	(0x34d9:16), 0xfe	; F560E1  and (0x34d9),0xfe
 ScreenEnter_RealtimeRecordScreen_Skip6:
-	m_bit 1, MD16, 0x360b	; F560E6  bit 1,(0x360b)
+	bit	1, (0x360b:16)	; F560E6  bit 1,(0x360b)
 	jr	nz, ScreenEnter_RealtimeRecordScreen_Skip7	; F560EA  jr NZ,0xf56100
 	ld	xwa, Draw_RealtimeRecordSongMeasureQuantiTimeSigMasterCycle	; F560EC  ld XWA,0x00f55d12
 	push	xwa	; F560F1  push XWA
@@ -122247,14 +122247,14 @@ SoftKeyCol8Held_SeqPlayAndRealtimeRecord_Epilogue8:
 LcdKeyRow1_RealtimeRecordScreen:
 	bit	7, w	; F56342  bit 0x07,W
 	jr	nz, LcdKeyRow1_RealtimeRecordScreen_Skip20	; F56345  jr NZ,0xf56380
-	m_bit 0, MD16, 0x34d9	; F56347  bit 0,(0x34d9)
+	bit	0, (0x34d9:16)	; F56347  bit 0,(0x34d9)
 	jr	nz, LcdKeyRow1_RealtimeRecordScreen_Skip18	; F5634B  jr NZ,0xf56356
-	m_bit 2, MD16, MidiCfg_ModeBits	; F5634D  bit 2,(0x7f32)
+	bit	2, (MidiCfg_ModeBits:16)	; F5634D  bit 2,(0x7f32)
 	jr	z, LcdKeyRow1_RealtimeRecordScreen_Skip18	; F56351  jr Z,0xf56356
 	jrl	LcdKeyRow1_RealtimeRecordScreen_Return2	; F56353  jrl T,0xf563dc
 LcdKeyRow1_RealtimeRecordScreen_Skip18:
 	call	T_RecordScreen_LcdKeyRow1	; F56356  call 0xf40cfc
-	m_bit 0, MD16, 0x34d9	; F5635A  bit 0,(0x34d9)
+	bit	0, (0x34d9:16)	; F5635A  bit 0,(0x34d9)
 	jr	z, LcdKeyRow1_RealtimeRecordScreen_Skip19	; F5635E  jr Z,0xf56368
 	ldw	(UI_Request:16), 16396	; F56360  ld (0x2070),0x400c
 	jr	LcdKeyRow1_RealtimeRecordScreen_Return2	; F56366  jr T,0xf563dc
@@ -122270,9 +122270,9 @@ LcdKeyRow1_RealtimeRecordScreen_Skip19:
 LcdKeyRow1_RealtimeRecordScreen_Skip20:
 	bit	2, (TransportB_State:8)	; F56380  bit 2,(0x96)
 	jr	nz, LcdKeyRow1_RealtimeRecordScreen_Return2	; F56383  jr NZ,0xf563dc
-	m_bit 2, MD16, 0x34d9	; F56385  bit 2,(0x34d9)
+	bit	2, (0x34d9:16)	; F56385  bit 2,(0x34d9)
 	jr	nz, LcdKeyRow1_RealtimeRecordScreen_Return2	; F56389  jr NZ,0xf563dc
-	m_bit 1, MD16, 0x360b	; F5638B  bit 1,(0x360b)
+	bit	1, (0x360b:16)	; F5638B  bit 1,(0x360b)
 	jr	z, LcdKeyRow1_RealtimeRecordScreen_Join17	; F5638F  jr Z,0xf563d6
 	cpw	(0x3000:16), 0x0000	; F56391  cp (0x3000),0x0000
 	jr	z, LcdKeyRow1_RealtimeRecordScreen_Skip21	; F56397  jr Z,0xf563bc
@@ -122317,18 +122317,18 @@ LcdKeyRow2_RealtimeRecordScreen:
 	jr	nz, LcdKeyRow2_RealtimeRecordScreen_Skip23	; F563E0  jr NZ,0xf5645c
 	bit	2, (TransportB_State:8)	; F563E2  bit 2,(0x96)
 	jrl	nz, LcdKeyRow2_RealtimeRecordScreen_Return3	; F563E5  jrl NZ,0xf56473
-	m_bit 2, MD16, 0x34d9	; F563E8  bit 2,(0x34d9)
+	bit	2, (0x34d9:16)	; F563E8  bit 2,(0x34d9)
 	jrl	nz, LcdKeyRow2_RealtimeRecordScreen_Return3	; F563EC  jrl NZ,0xf56473
-	m_bit 1, MD16, 0x360b	; F563EF  bit 1,(0x360b)
+	bit	1, (0x360b:16)	; F563EF  bit 1,(0x360b)
 	jr	nz, LcdKeyRow2_RealtimeRecordScreen_Skip22	; F563F3  jr NZ,0xf5640e
 	call	T_RealtimeRecordScreen_LcdKeyRow2	; F563F5  call 0xf40cc8
-	m_set 1, MD16, 0x360b	; F563F9  set 1,(0x360b)
+	set	1, (0x360b:16)	; F563F9  set 1,(0x360b)
 	call	T_CycleRecord_SetUpRecordTrack	; F563FD  call 0xf40bdc
 	ld	(14030:16), 1	; F56401  ld (0x36ce),0x01
 	ldw	(UI_Request:16), 32776	; F56406  ld (0x2070),0x8008
 	jr	LcdKeyRow2_RealtimeRecordScreen_Return3	; F5640C  jr T,0xf56473
 LcdKeyRow2_RealtimeRecordScreen_Skip22:
-	m_res 1, MD16, 0x360b	; F5640E  res 1,(0x360b)
+	res	1, (0x360b:16)	; F5640E  res 1,(0x360b)
 	xor	xwa, xwa	; F56412  xor XWA,XWA
 	ld	(14026:16), xwa	; F56414  ld (0x36ca),XWA
 	ld	(14022:16), xwa	; F56418  ld (0x36c6),XWA
@@ -122353,13 +122353,13 @@ LcdKeyRow2_RealtimeRecordScreen_Skip22:
 	call	T_F40BE0	; F56456  call 0xf40be0
 	jr	LcdKeyRow2_RealtimeRecordScreen_Return3	; F5645A  jr T,0xf56473
 LcdKeyRow2_RealtimeRecordScreen_Skip23:
-	m_bit 1, MD16, 0x360b	; F5645C  bit 1,(0x360b)
+	bit	1, (0x360b:16)	; F5645C  bit 1,(0x360b)
 	jr	nz, LcdKeyRow2_RealtimeRecordScreen_Skip24	; F56460  jr NZ,0xf56464
 	jr	LcdKeyRow2_RealtimeRecordScreen_Return3	; F56462  jr T,0xf56473
 LcdKeyRow2_RealtimeRecordScreen_Skip24:
 	bit	2, (TransportB_State:8)	; F56464  bit 2,(0x96)
 	jr	nz, LcdKeyRow2_RealtimeRecordScreen_Skip25	; F56467  jr NZ,0xf5646f
-	m_bit 2, MD16, 0x34d9	; F56469  bit 2,(0x34d9)
+	bit	2, (0x34d9:16)	; F56469  bit 2,(0x34d9)
 	jr	nz, LcdKeyRow2_RealtimeRecordScreen_Return3	; F5646D  jr NZ,0xf56473
 LcdKeyRow2_RealtimeRecordScreen_Skip25:
 	call	T_F40BFC	; F5646F  call 0xf40bfc
@@ -122406,7 +122406,7 @@ LcdKeyRow3_RealtimeRecordScreen_Return4:
 RealtimeRecordScreen_LcdKeyRow3:
 	bit	2, (TransportB_State:8)	; F56492  bit 2,(0x96)
 	jr	nz, RealtimeRecordScreen_LcdKeyRow3_Return	; F56495  jr NZ,0xf5650f
-	m_bit 2, MD16, 0x34d9	; F56497  bit 2,(0x34d9)
+	bit	2, (0x34d9:16)	; F56497  bit 2,(0x34d9)
 	jr	nz, RealtimeRecordScreen_LcdKeyRow3_Return	; F5649B  jr NZ,0xf5650f
 	cp	(0x3752:16), 0x00	; F5649D  cp (0x3752),0x00
 	jr	z, RealtimeRecordScreen_LcdKeyRow3_Skip	; F564A2  jr Z,0xf564c1
@@ -122524,22 +122524,22 @@ Nop_Ret_F56524:
 ;   a cycle-record screen (CycleRecord_CheckOn A = 0) SeqCycle_CaptureEndCursors/LocateToStart; ends with SeqScreen_QueueTrackRecPlayLabels. Basis:
 ;   callers + body. (notes/naming-pilot-2026-10-06/proposals_wave2_f.json)
 Transport_StopWhileRecording:		; <- T_Transport_StopWhileRecording
-	m_set 1, MD16, 0x3614	; F56525  set 1,(0x3614)
+	set	1, (0x3614:16)	; F56525  set 1,(0x3614)
 	call	T_RealtimeRecord_Disarm	; F56529  call 0xf40cec
-	m_res 1, MD16, 0x3614	; F5652D  res 1,(0x3614)
+	res	1, (0x3614:16)	; F5652D  res 1,(0x3614)
 	calr	Transport_StopAllAndWaitC	; F56531  calr 0xf56579
 	call	T_F42578	; F56534  call 0xf42578
 	call	T_Seq_MainLoopService	; F56538  call 0xf409c8
 	call	T_CycleRecord_CheckOn	; F5653C  call 0xf40ccc
 	cp	a, 0:i3	; F56540  cp A,0
 	jr	z, Nop_Ret_F56524_Skip	; F56542  jr Z,0xf56557
-	m_set 1, MD16, 0x34d3	; F56544  set 1,(0x34d3)
+	set	1, (0x34d3:16)	; F56544  set 1,(0x34d3)
 	call	T_SeqRecord_SaveCursorBaseline	; F56548  call 0xf40bd8
 	or	(0x34d4:16), 0x10	; F5654C  or (0x34d4),0x10
 	call	T_NoteRouting_RebuildForSong	; F56551  call 0xf411b8
 	jr	Nop_Ret_F56524_Join	; F56555  jr T,0xf56574
 Nop_Ret_F56524_Skip:
-	m_set 1, MD16, 0x34d3	; F56557  set 1,(0x34d3)
+	set	1, (0x34d3:16)	; F56557  set 1,(0x34d3)
 	call	T_SeqRecord_SaveCursorBaseline	; F5655B  call 0xf40bd8
 	or	(0x34d4:16), 0x10	; F5655F  or (0x34d4),0x10
 	call	T_SeqCycle_CaptureEndCursors	; F56564  call 0xf40b60
@@ -122767,7 +122767,7 @@ ScreenEnter_CycleRecordScreen:
 	ld	a, (UI_ScreenId:16)	; F56654  ld A,(0x207c)
 	m_cp_rm MB16, UI_ScreenId_Previous, 1	; F56658  cp A,(0x207d)
 	jr	nz, ScreenEnter_CycleRecordScreen_Skip3	; F5665C  jr NZ,0xf5668f
-	m_bit 4, MD16, UI_ScreenFlags	; F5665E  bit 4,(0x2095)
+	bit	4, (UI_ScreenFlags:16)	; F5665E  bit 4,(0x2095)
 	jr	nz, ScreenEnter_CycleRecordScreen_Skip6	; F56662  jr NZ,0xf566c6
 ScreenEnter_CycleRecordScreen_Skip:
 	bit	2, (TransportB_State:8)	; F56664  bit 2,(0x96)
@@ -122784,14 +122784,14 @@ ScreenEnter_CycleRecordScreen_Skip2:
 	call	T_Seq_SetTrackBeatsFromTransportB	; F56687  call 0xf40ac4
 	call	T_CycleRecord_SetUpRecordTrack	; F5668B  call 0xf40bdc
 ScreenEnter_CycleRecordScreen_Skip3:
-	m_bit 4, MD16, 0x34d1	; F5668F  bit 4,(0x34d1)
+	bit	4, (0x34d1:16)	; F5668F  bit 4,(0x34d1)
 	jr	z, ScreenEnter_CycleRecordScreen_Skip4	; F56693  jr Z,0xf566a9
 	ld	(UI_Request:16), 1	; F56695  ld (0x2070),0x01
 	ld	(UI_Request_Hi:16), 2	; F5669A  ld (0x2071),0x02
 	and	(0x34d1:16), 0xef	; F5669F  and (0x34d1),0xef
 	and	(0x3614:16), 0xfe	; F566A4  and (0x3614),0xfe
 ScreenEnter_CycleRecordScreen_Skip4:
-	m_bit 2, MD16, MidiCfg_ModeBits	; F566A9  bit 2,(0x7f32)
+	bit	2, (MidiCfg_ModeBits:16)	; F566A9  bit 2,(0x7f32)
 	jr	z, ScreenEnter_CycleRecordScreen_Skip5	; F566AD  jr Z,0xf566b4
 	and	(0x34d9:16), 0xfe	; F566AF  and (0x34d9),0xfe
 ScreenEnter_CycleRecordScreen_Skip5:
@@ -122903,9 +122903,9 @@ Nop_Ret_F5672A:
 LcdKeyRow1_CycleRecordScreen:
 	bit	7, w	; F5672B  bit 0x07,W
 	jr	nz, LcdKeyRow1_CycleRecordScreen_Return2	; F5672E  jr NZ,0xf56751
-	m_bit 0, MD16, 0x34d9	; F56730  bit 0,(0x34d9)
+	bit	0, (0x34d9:16)	; F56730  bit 0,(0x34d9)
 	jr	nz, LcdKeyRow1_CycleRecordScreen_Skip2	; F56734  jr NZ,0xf5673e
-	m_bit 2, MD16, MidiCfg_ModeBits	; F56736  bit 2,(0x7f32)
+	bit	2, (MidiCfg_ModeBits:16)	; F56736  bit 2,(0x7f32)
 	jr	z, LcdKeyRow1_CycleRecordScreen_Skip2	; F5673A  jr Z,0xf5673e
 	jr	LcdKeyRow1_CycleRecordScreen_Return2	; F5673C  jr T,0xf56751
 LcdKeyRow1_CycleRecordScreen_Skip2:
@@ -122934,7 +122934,7 @@ LcdKeyRow2_CycleRecordScreen:
 	jr	nz, LcdKeyRow2_CycleRecordScreen_Skip3	; F56755  jr NZ,0xf56767
 	bit	2, (TransportB_State:8)	; F56757  bit 2,(0x96)
 	jr	nz, LcdKeyRow2_CycleRecordScreen_Return3	; F5675A  jr NZ,0xf5676a
-	m_bit 2, MD16, 0x34d9	; F5675C  bit 2,(0x34d9)
+	bit	2, (0x34d9:16)	; F5675C  bit 2,(0x34d9)
 	jr	nz, LcdKeyRow2_CycleRecordScreen_Return3	; F56760  jr NZ,0xf5676a
 	calr	CycleRecordScreen_IncField	; F56762  calr 0xf56925
 	jr	LcdKeyRow2_CycleRecordScreen_Return3	; F56765  jr T,0xf5676a
@@ -122960,7 +122960,7 @@ LcdKeyRow3_CycleRecordScreen:
 	jr	nz, LcdKeyRow3_CycleRecordScreen_Skip5	; F5676E  jr NZ,0xf5678d
 	bit	2, (TransportB_State:8)	; F56770  bit 2,(0x96)
 	jr	nz, LcdKeyRow3_CycleRecordScreen_Return4	; F56773  jr NZ,0xf56790
-	m_bit 2, MD16, 0x34d9	; F56775  bit 2,(0x34d9)
+	bit	2, (0x34d9:16)	; F56775  bit 2,(0x34d9)
 	jr	nz, LcdKeyRow3_CycleRecordScreen_Return4	; F56779  jr NZ,0xf56790
 	calr	CycleRecordScreen_DecField	; F5677B  calr 0xf56a5f
 	cp	(0x36ce:16), 0x00	; F5677E  cp (0x36ce),0x00
@@ -123018,7 +123018,7 @@ LcdKeyRow5_CycleRecordScreen_Skip7:
 	or	(UI_ScreenFlags:16), 0x10	; F567B3  or (0x2095),0x10
 	bit	2, (TransportB_State:8)	; F567B8  bit 2,(0x96)
 	jr	nz, LcdKeyRow5_CycleRecordScreen_Skip8	; F567BB  jr NZ,0xf567c3
-	m_bit 2, MD16, 0x34d9	; F567BD  bit 2,(0x34d9)
+	bit	2, (0x34d9:16)	; F567BD  bit 2,(0x34d9)
 	jr	nz, LcdKeyRow5_CycleRecordScreen_Return5	; F567C1  jr NZ,0xf567c7
 LcdKeyRow5_CycleRecordScreen_Skip8:
 	call	T_F40BFC	; F567C3  call 0xf40bfc
@@ -123081,7 +123081,7 @@ ExitKey_CycleRecordScreen_Return6:
 NumberPadKey_CycleRecordScreen:
 	bit	2, (TransportB_State:8)	; F567DE  bit 2,(0x96)
 	jr	nz, NumberPadKey_CycleRecordScreen_Return7	; F567E1  jr NZ,0xf5684f
-	m_bit 2, MD16, 0x34d9	; F567E3  bit 2,(0x34d9)
+	bit	2, (0x34d9:16)	; F567E3  bit 2,(0x34d9)
 	jr	nz, NumberPadKey_CycleRecordScreen_Return7	; F567E7  jr NZ,0xf5684f
 	cp	(0x36ce:16), 0x01	; F567E9  cp (0x36ce),0x01
 	jr	z, NumberPadKey_CycleRecordScreen_Skip9	; F567EE  jr Z,0xf567f9
@@ -123390,9 +123390,9 @@ CycleRecordScreen_FieldIncHandlers:
 ;   / Seq_SetTrackBeatsFromTransportB. Basis: table index + body. (notes/naming-
 ;   pilot-2026-10-06/proposals_wave11_t11.json)
 CycleRecordScreen_SwitchCycleOn:
-	m_bit 1, MD16, 0x360b	; F56953  bit 1,(0x360b)
+	bit	1, (0x360b:16)	; F56953  bit 1,(0x360b)
 	jr	nz, CycleRecordScreen_SwitchCycleOn_Return	; F56957  jr NZ,0xf5696c
-	m_set 1, MD16, 0x360b	; F56959  set 1,(0x360b)
+	set	1, (0x360b:16)	; F56959  set 1,(0x360b)
 	calr	sub_F5696D	; F5695D  calr 0xf5696d
 	call	T_SeqCycle_CaptureEndCursors	; F56960  call 0xf40b60
 	call	T_SeqCycle_LocateToStart	; F56964  call 0xf40b5c
@@ -123637,9 +123637,9 @@ CycleRecordScreen_FieldDecHandlers:
 ;   chains, repaints OFF/ON. Basis: table index + body; the same steps LcdKeyRow2_RealtimeRecordScreen takes to switch
 ;   CYCLE RECORD off. (notes/naming-pilot-2026-10-06/proposals_wave11_t11.json)
 CycleRecordScreen_SwitchCycleOff:
-	m_bit 1, MD16, 0x360b	; F56A8D  bit 1,(0x360b)
+	bit	1, (0x360b:16)	; F56A8D  bit 1,(0x360b)
 	jr	z, CycleRecordScreen_SwitchCycleOff_Return	; F56A91  jr Z,0xf56ab0
-	m_res 1, MD16, 0x360b	; F56A93  res 1,(0x360b)
+	res	1, (0x360b:16)	; F56A93  res 1,(0x360b)
 	xor	xwa, xwa	; F56A97  xor XWA,XWA
 	ld	(14026:16), xwa	; F56A99  ld (0x36ca),XWA
 	ld	(14022:16), xwa	; F56A9D  ld (0x36c6),XWA
@@ -123790,7 +123790,7 @@ ModeLeave_SeqPlay:
 	ld	(14026:16), xwa	; F56B69  ld (0x36ca),XWA
 	ld	(14022:16), xwa	; F56B6D  ld (0x36c6),XWA
 	calr	Seq_SavePlayingTrackMask	; F56B71  calr 0xf57443
-	m_bit 0, MD16, 0x3758	; F56B74  bit 0,(0x3758)
+	bit	0, (0x3758:16)	; F56B74  bit 0,(0x3758)
 	jr	z, ModeLeave_SeqPlay_Return	; F56B78  jr Z,0xf56b94
 	ld	a, (14167:16)	; F56B7A  ld A,(0x3757)
 	ld	(UI_PartIndex:16), a	; F56B7E  ld (0x2250),A
@@ -123823,14 +123823,14 @@ ScreenEnter_SeqPlayScreen:
 	ld	a, (UI_ScreenId:16)	; F56B9F  ld A,(0x207c)
 	m_cp_rm MB16, UI_ScreenId_Previous, 1	; F56BA3  cp A,(0x207d)
 	jr	nz, ScreenEnter_SeqPlayScreen_Skip3	; F56BA7  jr NZ,0xf56bec
-	m_bit 4, MD16, UI_ScreenFlags	; F56BA9  bit 4,(0x2095)
+	bit	4, (UI_ScreenFlags:16)	; F56BA9  bit 4,(0x2095)
 	jr	nz, ScreenEnter_SeqPlayScreen_Skip5	; F56BAD  jr NZ,0xf56c1e
 ScreenEnter_SeqPlayScreen_Skip:
 	cp	(UI_ScreenLatch_Previous:16), 0x14	; F56BAF  cp (0x207b),0x14
 	jr	z, ScreenEnter_SeqPlayScreen_Skip3	; F56BB4  jr Z,0xf56bec
 	call	T_CallbackQueue_ResetAndRestartTask2	; F56BB6  call 0xf42e80
 	call	T_SeqPlayScreen_EnsureMeasureNonZero	; F56BBA  call 0xf40d04
-	m_bit 0, MD16, 0x360b	; F56BBE  bit 0,(0x360b)
+	bit	0, (0x360b:16)	; F56BBE  bit 0,(0x360b)
 	jr	z, ScreenEnter_SeqPlayScreen_Join	; F56BC2  jr Z,0xf56bdc
 	bit	2, (TransportB_State:8)	; F56BC4  bit 2,(0x96)
 	jr	z, ScreenEnter_SeqPlayScreen_Skip2	; F56BC7  jr Z,0xf56bd0
@@ -123845,7 +123845,7 @@ ScreenEnter_SeqPlayScreen_Join:
 	ldw	(9830:16), 65535	; F56BE0  ld (0x2666),0xffff
 	ldw	(9834:16), 65535	; F56BE6  ld (0x266a),0xffff
 ScreenEnter_SeqPlayScreen_Skip3:
-	m_bit 0, MD16, 0x3758	; F56BEC  bit 0,(0x3758)
+	bit	0, (0x3758:16)	; F56BEC  bit 0,(0x3758)
 	jr	z, ScreenEnter_SeqPlayScreen_Skip4	; F56BF0  jr Z,0xf56c0c
 	ld	a, (14167:16)	; F56BF2  ld A,(0x3757)
 	ld	(UI_PartIndex:16), a	; F56BF6  ld (0x2250),A
@@ -123915,18 +123915,18 @@ LcdKeyRow1_SeqPlayScreen:
 	bit	7, w	; F56C57  bit 0x07,W
 	jr	nz, LcdKeyRow1_SeqPlayScreen_Skip4	; F56C5A  jr NZ,0xf56cb0
 	and	(UI_RequestBits:16), 0xf6	; F56C5C  and (0x2075),0xf6
-	m_bit 0, MD16, 0x360b	; F56C61  bit 0,(0x360b)
+	bit	0, (0x360b:16)	; F56C61  bit 0,(0x360b)
 	jr	nz, LcdKeyRow1_SeqPlayScreen_Skip3	; F56C65  jr NZ,0xf56c7d
 	bit	2, (TransportB_State:8)	; F56C67  bit 2,(0x96)
 	jr	nz, LcdKeyRow1_SeqPlayScreen_Return2	; F56C6A  jr NZ,0xf56cd5
-	m_set 0, MD16, 0x360b	; F56C6C  set 0,(0x360b)
+	set	0, (0x360b:16)	; F56C6C  set 0,(0x360b)
 	ld	(13863:16), 1	; F56C70  ld (0x3627),0x01
 	ldw	(UI_Request:16), 32788	; F56C75  ld (0x2070),0x8014
 	jr	LcdKeyRow1_SeqPlayScreen_Return2	; F56C7B  jr T,0xf56cd5
 LcdKeyRow1_SeqPlayScreen_Skip3:
-	m_bit 2, MD16, 0x3731	; F56C7D  bit 2,(0x3731)
+	bit	2, (0x3731:16)	; F56C7D  bit 2,(0x3731)
 	jr	nz, LcdKeyRow1_SeqPlayScreen_Return2	; F56C81  jr NZ,0xf56cd5
-	m_res 0, MD16, 0x360b	; F56C83  res 0,(0x360b)
+	res	0, (0x360b:16)	; F56C83  res 0,(0x360b)
 	xor	xwa, xwa	; F56C87  xor XWA,XWA
 	ld	(14026:16), xwa	; F56C89  ld (0x36ca),XWA
 	ld	(14022:16), xwa	; F56C8D  ld (0x36c6),XWA
@@ -124008,7 +124008,7 @@ LcdKeyRow3_SeqPlayScreen:
 	jr	nz, LcdKeyRow3_SeqPlayScreen_Skip7	; F56D20  jr NZ,0xf56d32
 	bit	2, (TransportB_State:8)	; F56D22  bit 2,(0x96)
 	jr	z, LcdKeyRow3_SeqPlayScreen_Skip6	; F56D25  jr Z,0xf56d2d
-	m_bit 0, MD16, 0x360b	; F56D27  bit 0,(0x360b)
+	bit	0, (0x360b:16)	; F56D27  bit 0,(0x360b)
 	jr	nz, LcdKeyRow3_SeqPlayScreen_Return4	; F56D2B  jr NZ,0xf56d45
 LcdKeyRow3_SeqPlayScreen_Skip6:
 	calr	SeqPlayScreen_LcdKeyRow3	; F56D2D  calr 0xf56d46
@@ -124048,7 +124048,7 @@ SeqPlayScreen_LcdKeyRow3_Join:
 	ld	a, 1:opc	; F56D61  ld A,0x01
 	call	T_Kernel_SemaSignal	; F56D63  call 0xf42d88
 	call	T_NoteRouting_RebuildForSong	; F56D67  call 0xf411b8
-	m_bit 0, MD16, 0x360b	; F56D6B  bit 0,(0x360b)
+	bit	0, (0x360b:16)	; F56D6B  bit 0,(0x360b)
 	jr	z, SeqPlayScreen_LcdKeyRow3_Return	; F56D6F  jr Z,0xf56d7d
 	call	T_SeqCycle_CaptureEndCursors	; F56D71  call 0xf40b60
 	call	T_SeqCycle_LocateToStart	; F56D75  call 0xf40b5c
@@ -124199,7 +124199,7 @@ ScreenEnter_CyclePlayScreen:
 	ld	a, (UI_ScreenId:16)	; F56DFB  ld A,(0x207c)
 	m_cp_rm MB16, UI_ScreenId_Previous, 1	; F56DFF  cp A,(0x207d)
 	jr	nz, ScreenEnter_CyclePlayScreen_Skip4	; F56E03  jr NZ,0xf56e3e
-	m_bit 4, MD16, UI_ScreenFlags	; F56E05  bit 4,(0x2095)
+	bit	4, (UI_ScreenFlags:16)	; F56E05  bit 4,(0x2095)
 	jr	nz, ScreenEnter_CyclePlayScreen_Skip5	; F56E09  jr NZ,0xf56e50
 ScreenEnter_CyclePlayScreen_Skip:
 	bit	2, (TransportB_State:8)	; F56E0B  bit 2,(0x96)
@@ -124454,7 +124454,7 @@ ExitKey_CyclePlayScreen_Return2:
 NumberPadKey_CyclePlayScreen:
 	bit	2, (TransportB_State:8)	; F56F09  bit 2,(0x96)
 	jr	nz, NumberPadKey_CyclePlayScreen_Return	; F56F0C  jr NZ,0xf56f7a
-	m_bit 2, MD16, 0x34d9	; F56F0E  bit 2,(0x34d9)
+	bit	2, (0x34d9:16)	; F56F0E  bit 2,(0x34d9)
 	jr	nz, NumberPadKey_CyclePlayScreen_Return	; F56F12  jr NZ,0xf56f7a
 	cp	(0x3627:16), 0x01	; F56F14  cp (0x3627),0x01
 	jr	z, NumberPadKey_CyclePlayScreen_Skip	; F56F19  jr Z,0xf56f24
@@ -124742,11 +124742,11 @@ CyclePlayScreen_FieldIncHandlers:
 ;   SeqCycle_LocateToStart / Seq_SetTrackBeatsFromTransportB. Basis: table index + body. (notes/naming-
 ;   pilot-2026-10-06/proposals_wave11_t11.json)
 CyclePlayScreen_SwitchCycleOn:
-	m_bit 0, MD16, 0x360b	; F5707E  bit 0,(0x360b)
+	bit	0, (0x360b:16)	; F5707E  bit 0,(0x360b)
 	jr	nz, CyclePlayScreen_SwitchCycleOn_Return	; F57082  jr NZ,0xf5709c
 	bit	2, (TransportB_State:8)	; F57084  bit 2,(0x96)
 	jr	nz, CyclePlayScreen_SwitchCycleOn_Return	; F57087  jr NZ,0xf5709c
-	m_set 0, MD16, 0x360b	; F57089  set 0,(0x360b)
+	set	0, (0x360b:16)	; F57089  set 0,(0x360b)
 	calr	sub_F5709D	; F5708D  calr 0xf5709d
 	call	T_SeqCycle_CaptureEndCursors	; F57090  call 0xf40b60
 	call	T_SeqCycle_LocateToStart	; F57094  call 0xf40b5c
@@ -124989,11 +124989,11 @@ CyclePlayScreen_FieldDecHandlers:
 ;   LcdKeyRow1_SeqPlayScreen uses to switch it off. Basis: table index + body. (notes/naming-
 ;   pilot-2026-10-06/proposals_wave11_t11.json)
 CyclePlayScreen_SwitchCycleOff:
-	m_bit 0, MD16, 0x360b	; F571BA  bit 0,(0x360b)
+	bit	0, (0x360b:16)	; F571BA  bit 0,(0x360b)
 	jr	z, CyclePlayScreen_SwitchCycleOff_Return	; F571BE  jr Z,0xf571d7
-	m_bit 2, MD16, 0x3731	; F571C0  bit 2,(0x3731)
+	bit	2, (0x3731:16)	; F571C0  bit 2,(0x3731)
 	jr	nz, CyclePlayScreen_SwitchCycleOff_Return	; F571C4  jr NZ,0xf571d7
-	m_res 0, MD16, 0x360b	; F571C6  res 0,(0x360b)
+	res	0, (0x360b:16)	; F571C6  res 0,(0x360b)
 	xor	xwa, xwa	; F571CA  xor XWA,XWA
 	ld	(14026:16), xwa	; F571CC  ld (0x36ca),XWA
 	ld	(14022:16), xwa	; F571D0  ld (0x36c6),XWA
@@ -125128,7 +125128,7 @@ ScreenEnter_CyclePlayEditScreen:
 	ld	a, (UI_ScreenId:16)	; F57290  ld A,(0x207c)
 	m_cp_rm MB16, UI_ScreenId_Previous, 1	; F57294  cp A,(0x207d)
 	jr	nz, ScreenEnter_CyclePlayEditScreen_Skip5	; F57298  jr NZ,0xf572e9
-	m_bit 4, MD16, UI_ScreenFlags	; F5729A  bit 4,(0x2095)
+	bit	4, (UI_ScreenFlags:16)	; F5729A  bit 4,(0x2095)
 	jr	nz, ScreenEnter_CyclePlayEditScreen_Skip6	; F5729E  jr NZ,0xf572fb
 ScreenEnter_CyclePlayEditScreen_Skip:
 	call	T_CallbackQueue_ResetAndRestartTask2	; F572A0  call 0xf42e80
@@ -130244,9 +130244,9 @@ SC1_WaitTxDrain_Join:
 	jr	z, SC1_WaitTxDrain_Loop	; F5AB7E  jr Z,0xf5ab95
 	bit	4, (PB:8)	; F5AB80  bit 4,(0x1f)
 	jr	nz, SC1_WaitTxDrain_Loop	; F5AB83  jr NZ,0xf5ab95
-	m_bit 1, MD16, SC1_BusyFlags	; F5AB85  bit 1,(0x2a82)
+	bit	1, (SC1_BusyFlags:16)	; F5AB85  bit 1,(0x2a82)
 	jrl	nz, SC1_TxFlush_Exit	; F5AB89  jrl NZ,0xf5b05d
-	m_bit 0, MD16, SC1_BusyFlags	; F5AB8C  bit 0,(0x2a82)
+	bit	0, (SC1_BusyFlags:16)	; F5AB8C  bit 0,(0x2a82)
 	jrl	nz, SC1_TxFlush_Exit	; F5AB90  jrl NZ,0xf5b05d
 	jr	SC1_WaitTxDrain_Join2	; F5AB93  jr T,0xf5aba7
 SC1_WaitTxDrain_Loop:
@@ -130809,7 +130809,7 @@ SC1_State24_RxNextByte:
 	ld	xiy, SC1_RxRing	; F5AF54  ld XIY,0x00002a94
 	m_add_rm MW16, SC1_RxWriteIndex, 5	; F5AF59  add IY,(0x2a92)
 	ld	(xiy), a	; F5AF5D  ld (XIY),A
-	m_bit 0, MD16, SC1_ErrorBits	; F5AF5F  bit 0,(0x2a84)
+	bit	0, (SC1_ErrorBits:16)	; F5AF5F  bit 0,(0x2a84)
 	jr	nz, SC1_State24_RxNextByte_Skip	; F5AF63  jr NZ,0xf5af77
 	incw	1, (SC1_RxWriteIndex:16)	; F5AF65  incw 1,(0x2a92)
 	cpw	(SC1_RxWriteIndex:16), 0x004c	; F5AF69  cp (0x2a92),0x004c
@@ -130895,9 +130895,9 @@ SC1_TxFlush_Body:
 	jr	z, SC1_TxFlush_Exit	; F5AFFA  jr Z,0xf5b05d
 	bit	4, (PB:8)	; F5AFFC  bit 4,(0x1f)
 	jr	nz, SC1_TxFlush_Exit	; F5AFFF  jr NZ,0xf5b05d
-	m_bit 1, MD16, SC1_BusyFlags	; F5B001  bit 1,(0x2a82)
+	bit	1, (SC1_BusyFlags:16)	; F5B001  bit 1,(0x2a82)
 	jr	nz, SC1_TxFlush_Exit	; F5B005  jr NZ,0xf5b05d
-	m_bit 0, MD16, SC1_BusyFlags	; F5B007  bit 0,(0x2a82)
+	bit	0, (SC1_BusyFlags:16)	; F5B007  bit 0,(0x2a82)
 	jr	nz, SC1_TxFlush_Exit	; F5B00B  jr NZ,0xf5b05d
 	ld	wa, (SC1_TxWriteIndex:16)	; F5B00D  ld WA,(0x2ae2)
 	m_sub_rm MW16, SC1_TxReadIndex, 0	; F5B011  sub WA,(0x2ae0)
@@ -131205,7 +131205,7 @@ SC1_RxOp6_Run_Skip2:
 	m_ex_mr MBI+r3, 0, 1	; F5B1E9  ex (XHL),A
 	m_xor_rm MBI+r3, 0, 1	; F5B1EB  xor A,(XHL)
 	inc	1, hl	; F5B1ED  inc 1,HL
-	m_bit 4, MD16, SC1_BusyFlags	; F5B1EF  bit 4,(0x2a82)
+	bit	4, (SC1_BusyFlags:16)	; F5B1EF  bit 4,(0x2a82)
 	jr	z, SC1_RxOp6_Run_Skip4	; F5B1F3  jr Z,0xf5b203
 	cp	a, 0:i3	; F5B1F5  cp A,0
 	jr	nz, SC1_RxOp6_Run_Skip4	; F5B1F7  jr NZ,0xf5b203
@@ -135885,7 +135885,7 @@ Quantize_ApplyRoundMapToTrack_Join2:
 	jr	z, Quantize_ApplyRoundMapToTrack_Join3	; F5DC7F  jr Z,0xf5dcea
 	call	Quantize_ComputeWindowBounds	; F5DC81  call 0xf5ddb2
 	ld	a, (3621:16)	; F5DC85  ld A,(0x0e25)
-	m_bit 7, MD16, 0x0e05	; F5DC89  bit 7,(0x0e05)
+	bit	7, (0x0e05:16)	; F5DC89  bit 7,(0x0e05)
 	jr	nz, Quantize_ApplyRoundMapToTrack_Skip3	; F5DC8D  jr NZ,0xf5dcbf
 	cp	(0x0e26:16), 0x00	; F5DC8F  cp (0x0e26),0x00
 	jr	z, Quantize_ApplyRoundMapToTrack_Skip	; F5DC94  jr Z,0xf5dca6
@@ -136299,7 +136299,7 @@ Quantize_ComputeWindowBounds_Skip18:
 Quantize_CarryRoundedUpEventsToNextBeat:
 	ld	xhl, (BStore_CursorBlockAddr:16)	; F5E01D  ld XHL,(0x126e)
 	push	xhl	; F5E021  push XHL
-	m_bit 0, MD16, 0x0c8a	; F5E022  bit 0,(0x0c8a)
+	bit	0, (0x0c8a:16)	; F5E022  bit 0,(0x0c8a)
 	jrl	z, Quantize_CarryRoundedUpEventsToNextBeat_Skip4	; F5E026  jrl Z,0xf5e0b7
 	xor	hl, hl	; F5E029  xor HL,HL
 	ld	iy, (3338:16)	; F5E02B  ld IY,(0x0d0a)
@@ -136521,7 +136521,7 @@ SongEdit_SortBeatMoveEventToAnchor_Skip:
 	ld	hl, (xhl+1)	; F5E256  ld HL,(XHL+0x01)
 	call	T_BStore_SeekBlock	; F5E259  call 0xf427bc
 	ld	xhl, (BStore_CursorBlockAddr:16)	; F5E25D  ld XHL,(0x126e)
-	m_bit 7, MDI+r3, 0	; F5E261  bit 7,(XHL)
+	bit	7, (xhl)	; F5E261  bit 7,(XHL)
 	jr	nz, SongEdit_SortBeatMoveEventToAnchor_Skip2	; F5E263  jr NZ,0xf5e26c
 	ld	(BStore_ErrorCode:16), 11	; F5E265  ld (0x0d4a),0x0b
 	jr	SongEdit_SortBeatMoveEventToAnchor_Return	; F5E26A  jr T,0xf5e2b8
@@ -136585,7 +136585,7 @@ BStore_CursorStepBack_Skip2:
 	ld	hl, wa	; F5E2D7  ld HL,WA
 	call	T_BStore_SeekBlock	; F5E2D9  call 0xf427bc
 	ld	xhl, (BStore_CursorBlockAddr:16)	; F5E2DD  ld XHL,(0x126e)
-	m_bit 7, MDI+r3, 0	; F5E2E1  bit 7,(XHL)
+	bit	7, (xhl)	; F5E2E1  bit 7,(XHL)
 	jr	nz, BStore_CursorStepBack_Skip3	; F5E2E3  jr NZ,0xf5e2ec
 	ld	(BStore_ErrorCode:16), 11	; F5E2E5  ld (0x0d4a),0x0b
 	jr	BStore_CursorStepBack_Return	; F5E2EA  jr T,0xf5e2ef
@@ -136785,7 +136785,7 @@ SongEdit_DeleteMeasures_Skip6:
 SongEdit_DeleteMeasures_Skip7:
 	ld	a, (3184:16)	; F5E459  ld A,(0x0c70)
 	ld	(3214:16), a	; F5E45D  ld (0x0c8e),A
-	m_bit 6, MD16, 0x0c8a	; F5E461  bit 6,(0x0c8a)
+	bit	6, (0x0c8a:16)	; F5E461  bit 6,(0x0c8a)
 	jr	z, SongEdit_DeleteMeasures_Skip8	; F5E465  jr Z,0xf5e480
 	xor	hl, hl	; F5E467  xor HL,HL
 	ld	l, a	; F5E469  ld L,A
@@ -136840,7 +136840,7 @@ SongEdit_DeleteMeasures_Join3:
 	m_cp_rm MB16, 0x0ca2, 1	; F5E4E8  cp A,(0x0ca2)
 	jrl	ugt, SongEdit_DeleteMeasures_Skip15	; F5E4EC  jrl UGT,0xf5e55f
 	ld	(3214:16), a	; F5E4EF  ld (0x0c8e),A
-	m_bit 6, MD16, 0x0c8a	; F5E4F3  bit 6,(0x0c8a)
+	bit	6, (0x0c8a:16)	; F5E4F3  bit 6,(0x0c8a)
 	jr	z, SongEdit_DeleteMeasures_Skip12	; F5E4F7  jr Z,0xf5e519
 	xor	hl, hl	; F5E4F9  xor HL,HL
 	ld	l, a	; F5E4FB  ld L,A
@@ -136860,7 +136860,7 @@ SongEdit_DeleteMeasures_Skip12:
 	popw	wa	; F5E51D  pop WA
 	cp	(BStore_ErrorCode:16), 0x00	; F5E51E  cp (0x0d4a),0x00
 	jr	nz, SongEdit_DeleteMeasures_Skip13	; F5E523  jr NZ,0xf5e53e
-	m_bit 6, MD16, 0x0c8a	; F5E525  bit 6,(0x0c8a)
+	bit	6, (0x0c8a:16)	; F5E525  bit 6,(0x0c8a)
 	jr	z, SongEdit_DeleteMeasures_Skip14	; F5E529  jr Z,0xf5e55b
 	m_cp_rm MB16, 0x0d1d, 1	; F5E52B  cp A,(0x0d1d)
 	jr	nz, SongEdit_DeleteMeasures_Skip14	; F5E52F  jr NZ,0xf5e55b
@@ -137567,7 +137567,7 @@ BStore_ReadCursorAdvance:
 	ld	hl, wa	; F5EBB7  ld HL,WA
 	call	T_BStore_SeekBlock	; F5EBB9  call 0xf427bc
 	ld	xhl, (BStore_CursorBlockAddr:16)	; F5EBBD  ld XHL,(0x126e)
-	m_bit 7, MDI+r3, 0	; F5EBC1  bit 7,(XHL)
+	bit	7, (xhl)	; F5EBC1  bit 7,(XHL)
 	jr	nz, BStore_ReadCursorAdvance_Skip	; F5EBC3  jr NZ,0xf5ebcc
 	ld	(BStore_ErrorCode:16), 2	; F5EBC5  ld (0x0d4a),0x02
 	jr	BStore_ReadCursorAdvance_Return	; F5EBCA  jr T,0xf5ebcf
@@ -137625,7 +137625,7 @@ BStore_WriteCursorAdvance:
 	ld	hl, wa	; F5EBEC  ld HL,WA
 	call	T_BStore_SeekBlock	; F5EBEE  call 0xf427bc
 	ld	xhl, (BStore_CursorBlockAddr:16)	; F5EBF2  ld XHL,(0x126e)
-	m_bit 7, MDI+r3, 0	; F5EBF6  bit 7,(XHL)
+	bit	7, (xhl)	; F5EBF6  bit 7,(XHL)
 	jr	nz, BStore_WriteCursorAdvance_Skip	; F5EBF8  jr NZ,0xf5ec01
 	ld	(BStore_ErrorCode:16), 2	; F5EBFA  ld (0x0d4a),0x02
 	jr	BStore_WriteCursorAdvance_Join	; F5EBFF  jr T,0xf5ec08
@@ -137796,7 +137796,7 @@ MeasureInsert_Execute_Join3:
 	ld	a, (3184:16)	; F5ED69  ld A,(0x0c70)
 	ld	(3214:16), a	; F5ED6D  ld (0x0c8e),A
 	ld	(3215:16), a	; F5ED71  ld (0x0c8f),A
-	m_bit 6, MD16, 0x0c8a	; F5ED75  bit 6,(0x0c8a)
+	bit	6, (0x0c8a:16)	; F5ED75  bit 6,(0x0c8a)
 	jr	z, MeasureInsert_Execute_Skip9	; F5ED79  jr Z,0xf5ed9c
 	xor	hl, hl	; F5ED7B  xor HL,HL
 	ld	l, a	; F5ED7D  ld L,A
@@ -137849,7 +137849,7 @@ MeasureInsert_Execute_Join5:
 	jr	ugt, MeasureInsert_Execute_Skip17	; F5EDF6  jr UGT,0xf5ee5a
 	ld	(3214:16), a	; F5EDF8  ld (0x0c8e),A
 	ld	(3215:16), a	; F5EDFC  ld (0x0c8f),A
-	m_bit 6, MD16, 0x0c8a	; F5EE00  bit 6,(0x0c8a)
+	bit	6, (0x0c8a:16)	; F5EE00  bit 6,(0x0c8a)
 	jr	z, MeasureInsert_Execute_Skip14	; F5EE04  jr Z,0xf5ee2d
 	xor	hl, hl	; F5EE06  xor HL,HL
 	ld	l, a	; F5EE08  ld L,A
@@ -138053,7 +138053,7 @@ MeasureInsert_InsertToTrack_Skip2:
 	jr	z, MeasureInsert_InsertToTrack_Skip3	; F5F003  jr Z,0xf5f007
 	jr	MeasureInsert_InsertToTrack_Return	; F5F005  jr T,0xf5f02b
 MeasureInsert_InsertToTrack_Skip3:
-	m_bit 3, MD16, 0x0c8a	; F5F007  bit 3,(0x0c8a)
+	bit	3, (0x0c8a:16)	; F5F007  bit 3,(0x0c8a)
 	jr	nz, MeasureInsert_InsertToTrack_Skip4	; F5F00B  jr NZ,0xf5f00f
 	jr	MeasureInsert_InsertToTrack_Return	; F5F00D  jr T,0xf5f02b
 MeasureInsert_InsertToTrack_Skip4:
@@ -138202,7 +138202,7 @@ MeasureInsert_InsertWithinTrack_Skip:
 	call	T_F42778	; F5F1DB  call 0xf42778
 	cp	(BStore_ErrorCode:16), 0x00	; F5F1DF  cp (0x0d4a),0x00
 	jr	nz, MeasureInsert_InsertWithinTrack_Return	; F5F1E4  jr NZ,0xf5f220
-	m_bit 3, MD16, 0x0c8a	; F5F1E6  bit 3,(0x0c8a)
+	bit	3, (0x0c8a:16)	; F5F1E6  bit 3,(0x0c8a)
 	jr	nz, MeasureInsert_InsertWithinTrack_Skip2	; F5F1EA  jr NZ,0xf5f1ee
 	jr	MeasureInsert_InsertWithinTrack_Return	; F5F1EC  jr T,0xf5f220
 MeasureInsert_InsertWithinTrack_Skip2:
@@ -138371,7 +138371,7 @@ SongEdit_CopyMeasures_Join3:
 	ld	a, (3184:16)	; F5F379  ld A,(0x0c70)
 	ld	(3214:16), a	; F5F37D  ld (0x0c8e),A
 	ld	(3215:16), a	; F5F381  ld (0x0c8f),A
-	m_bit 6, MD16, 0x0c8a	; F5F385  bit 6,(0x0c8a)
+	bit	6, (0x0c8a:16)	; F5F385  bit 6,(0x0c8a)
 	jr	z, SongEdit_CopyMeasures_Skip11	; F5F389  jr Z,0xf5f3ac
 	xor	hl, hl	; F5F38B  xor HL,HL
 	ld	l, a	; F5F38D  ld L,A
@@ -138423,7 +138423,7 @@ SongEdit_CopyMeasures_Join6:
 	jr	ugt, SongEdit_CopyMeasures_Skip18	; F5F401  jr UGT,0xf5f465
 	ld	(3214:16), a	; F5F403  ld (0x0c8e),A
 	ld	(3215:16), a	; F5F407  ld (0x0c8f),A
-	m_bit 6, MD16, 0x0c8a	; F5F40B  bit 6,(0x0c8a)
+	bit	6, (0x0c8a:16)	; F5F40B  bit 6,(0x0c8a)
 	jr	z, SongEdit_CopyMeasures_Skip15	; F5F40F  jr Z,0xf5f438
 	xor	hl, hl	; F5F411  xor HL,HL
 	ld	l, a	; F5F413  ld L,A
@@ -138648,16 +138648,16 @@ SongEdit_CopyMeasuresToTrack_Join:
 	ld	(BStore_LinkBlock:16), wa	; F5F69C  ld (0x0cc0),WA
 	ld	wa, (3278:16)	; F5F6A0  ld WA,(0x0cce)
 	ld	(BStore_LastBlockUsed:16), wa	; F5F6A4  ld (0x0cc6),WA
-	m_bit 4, MD16, 0x0c8a	; F5F6A8  bit 4,(0x0c8a)
+	bit	4, (0x0c8a:16)	; F5F6A8  bit 4,(0x0c8a)
 	jr	z, SongEdit_CopyMeasuresToTrack_Skip12	; F5F6AC  jr Z,0xf5f6b8
-	m_bit 3, MD16, 0x0c8a	; F5F6AE  bit 3,(0x0c8a)
+	bit	3, (0x0c8a:16)	; F5F6AE  bit 3,(0x0c8a)
 	jr	nz, SongEdit_CopyMeasuresToTrack_Skip12	; F5F6B2  jr NZ,0xf5f6b8
 	incw	1, (BStore_AllocBytesWanted:16)	; F5F6B4  incw 1,(0x0cae)
 SongEdit_CopyMeasuresToTrack_Skip12:
 	call	T_BStore_AllocChain	; F5F6B8  call 0xf427b4
 	cp	(BStore_ErrorCode:16), 0x00	; F5F6BC  cp (0x0d4a),0x00
 	jr	z, SongEdit_CopyMeasuresToTrack_Skip14	; F5F6C1  jr Z,0xf5f6cf
-	m_bit 0, MD16, 0x0d90	; F5F6C3  bit 0,(0x0d90)
+	bit	0, (0x0d90:16)	; F5F6C3  bit 0,(0x0d90)
 	jr	z, SongEdit_CopyMeasuresToTrack_Skip13	; F5F6C7  jr Z,0xf5f6cc
 	calr	SongEdit_RestoreDestTrackEnd	; F5F6C9  calr 0xf5f9c1
 SongEdit_CopyMeasuresToTrack_Skip13:
@@ -138691,9 +138691,9 @@ SongEdit_CopyMeasuresToTrack_Skip15:
 	sub	ix, hl	; F5F72B  sub IX,HL
 	inc	1, ix	; F5F72D  inc 1,IX
 	ld	(3290:16), ix	; F5F72F  ld (0x0cda),IX
-	m_bit 4, MD16, 0x0c8a	; F5F733  bit 4,(0x0c8a)
+	bit	4, (0x0c8a:16)	; F5F733  bit 4,(0x0c8a)
 	jrl	z, SongEdit_CopyMeasuresToTrack_Join3	; F5F737  jrl Z,0xf5f801
-	m_bit 3, MD16, 0x0c8a	; F5F73A  bit 3,(0x0c8a)
+	bit	3, (0x0c8a:16)	; F5F73A  bit 3,(0x0c8a)
 	jr	nz, SongEdit_CopyMeasuresToTrack_Skip18	; F5F73E  jr NZ,0xf5f787
 	dec	1, ix	; F5F740  dec 1,IX
 	cp	ix, 4:i3	; F5F742  cp IX,4
@@ -138729,9 +138729,9 @@ SongEdit_CopyMeasuresToTrack_Skip18:
 	m_cp_rm MB16, 0x0c71, 1	; F5F790  cp A,(0x0c71)
 	jr	nz, SongEdit_CopyMeasuresToTrack_Join3	; F5F794  jr NZ,0xf5f801
 SongEdit_CopyMeasuresToTrack_Skip19:
-	m_bit 0, MD16, 0x0d90	; F5F796  bit 0,(0x0d90)
+	bit	0, (0x0d90:16)	; F5F796  bit 0,(0x0d90)
 	jrl	z, SongEdit_CopyMeasuresToTrack_Join3	; F5F79A  jrl Z,0xf5f801
-	m_bit 3, MD16, 0x0c8a	; F5F79D  bit 3,(0x0c8a)
+	bit	3, (0x0c8a:16)	; F5F79D  bit 3,(0x0c8a)
 	jr	z, SongEdit_CopyMeasuresToTrack_Join3	; F5F7A1  jr Z,0xf5f801
 	dec	1, ix	; F5F7A3  dec 1,IX
 	cp	ix, 4:i3	; F5F7A5  cp IX,4
@@ -138771,9 +138771,9 @@ SongEdit_CopyMeasuresToTrack_Join3:
 	jrl	SongEdit_CopyMeasuresToTrack_Join8	; F5F801  jrl T,0xf5f971
 SongEdit_CopyMeasuresToTrack_Join4:
 	m_sub_rm MW16, BStore_AllocBytesWanted, 0	; F5F804  sub WA,(0x0cae)
-	m_bit 4, MD16, 0x0c8a	; F5F808  bit 4,(0x0c8a)
+	bit	4, (0x0c8a:16)	; F5F808  bit 4,(0x0c8a)
 	jr	z, SongEdit_CopyMeasuresToTrack_Skip23	; F5F80C  jr Z,0xf5f816
-	m_bit 3, MD16, 0x0c8a	; F5F80E  bit 3,(0x0c8a)
+	bit	3, (0x0c8a:16)	; F5F80E  bit 3,(0x0c8a)
 	jr	nz, SongEdit_CopyMeasuresToTrack_Skip23	; F5F812  jr NZ,0xf5f816
 	dec	1, wa	; F5F814  dec 1,WA
 SongEdit_CopyMeasuresToTrack_Skip23:
@@ -138821,7 +138821,7 @@ SongEdit_CopyMeasuresToTrack_Skip25:
 SongEdit_CopyMeasuresToTrack_Skip26:
 	dec	1, ix	; F5F8A3  dec 1,IX
 SongEdit_CopyMeasuresToTrack_Join5:
-	m_bit 3, MD16, 0x0c8a	; F5F8A5  bit 3,(0x0c8a)
+	bit	3, (0x0c8a:16)	; F5F8A5  bit 3,(0x0c8a)
 	jr	z, SongEdit_CopyMeasuresToTrack_Skip27	; F5F8A9  jr Z,0xf5f8b7
 	ld	ix, (3290:16)	; F5F8AB  ld IX,(0x0cda)
 	ld	wa, (3288:16)	; F5F8AF  ld WA,(0x0cd8)
@@ -138833,9 +138833,9 @@ SongEdit_CopyMeasuresToTrack_Skip27:
 	jr	z, SongEdit_CopyMeasuresToTrack_Skip28	; F5F8C4  jr Z,0xf5f8c9
 	jrl	SongEdit_CopyMeasuresToTrack_Join9	; F5F8C6  jrl T,0xf5f9a6
 SongEdit_CopyMeasuresToTrack_Skip28:
-	m_bit 4, MD16, 0x0c8a	; F5F8C9  bit 4,(0x0c8a)
+	bit	4, (0x0c8a:16)	; F5F8C9  bit 4,(0x0c8a)
 	jr	z, SongEdit_CopyMeasuresToTrack_Skip32	; F5F8CD  jr Z,0xf5f91b
-	m_bit 3, MD16, 0x0c8a	; F5F8CF  bit 3,(0x0c8a)
+	bit	3, (0x0c8a:16)	; F5F8CF  bit 3,(0x0c8a)
 	jr	nz, SongEdit_CopyMeasuresToTrack_Skip32	; F5F8D3  jr NZ,0xf5f91b
 	ld	ix, (3290:16)	; F5F8D5  ld IX,(0x0cda)
 	dec	1, ix	; F5F8D9  dec 1,IX
@@ -138853,7 +138853,7 @@ SongEdit_CopyMeasuresToTrack_Skip29:
 	ld	hl, wa	; F5F8FA  ld HL,WA
 	call	T_BStore_SeekBlock	; F5F8FC  call 0xf427bc
 	ld	xhl, (BStore_CursorBlockAddr:16)	; F5F900  ld XHL,(0x126e)
-	m_bit 7, MDI+r3, 0	; F5F904  bit 7,(XHL)
+	bit	7, (xhl)	; F5F904  bit 7,(XHL)
 	jr	nz, SongEdit_CopyMeasuresToTrack_Skip30	; F5F906  jr NZ,0xf5f910
 	ld	(BStore_ErrorCode:16), 11	; F5F908  ld (0x0d4a),0x0b
 	jrl	SongEdit_CopyMeasuresToTrack_Join9	; F5F90D  jrl T,0xf5f9a6
@@ -138872,9 +138872,9 @@ SongEdit_CopyMeasuresToTrack_Join6:
 	m_cp_rm MB16, 0x0c71, 7	; F5F92A  cp L,(0x0c71)
 	jr	nz, SongEdit_CopyMeasuresToTrack_Join7	; F5F92E  jr NZ,0xf5f965
 SongEdit_CopyMeasuresToTrack_Skip33:
-	m_bit 0, MD16, 0x0d90	; F5F930  bit 0,(0x0d90)
+	bit	0, (0x0d90:16)	; F5F930  bit 0,(0x0d90)
 	jr	z, SongEdit_CopyMeasuresToTrack_Join7	; F5F934  jr Z,0xf5f965
-	m_bit 3, MD16, 0x0c8a	; F5F936  bit 3,(0x0c8a)
+	bit	3, (0x0c8a:16)	; F5F936  bit 3,(0x0c8a)
 	jr	z, SongEdit_CopyMeasuresToTrack_Join7	; F5F93A  jr Z,0xf5f965
 	dec	1, wa	; F5F93C  dec 1,WA
 	cp	wa, 4:i3	; F5F93E  cp WA,4
@@ -138910,7 +138910,7 @@ SongEdit_CopyMeasuresToTrack_Join8:
 	call	T_BStore_CopyRangeBackward	; F5F99D  call 0xf4277c
 	cp	(BStore_ErrorCode:16), 0x00	; F5F9A1  cp (0x0d4a),0x00
 SongEdit_CopyMeasuresToTrack_Join9:
-	m_bit 7, MD16, 0x0c8a	; F5F9A6  bit 7,(0x0c8a)
+	bit	7, (0x0c8a:16)	; F5F9A6  bit 7,(0x0c8a)
 	jr	z, SongEdit_CopyMeasuresToTrack_Return	; F5F9AA  jr Z,0xf5f9c0
 	cp	(BStore_ErrorCode:16), 0x00	; F5F9AC  cp (0x0d4a),0x00
 	jr	z, SongEdit_CopyMeasuresToTrack_Return	; F5F9B1  jr Z,0xf5f9c0
@@ -139177,7 +139177,7 @@ SongEdit_CopyMeasuresWithinTrack_Skip6:
 	ld	(3248:16), wa	; F5FC46  ld (0x0cb0),WA
 	ld	wa, (3406:16)	; F5FC4A  ld WA,(0x0d4e)
 	ld	(BStore_AllocBytesWanted:16), wa	; F5FC4E  ld (0x0cae),WA
-	m_bit 3, MD16, 0x0c8a	; F5FC52  bit 3,(0x0c8a)
+	bit	3, (0x0c8a:16)	; F5FC52  bit 3,(0x0c8a)
 	jr	z, SongEdit_CopyMeasuresWithinTrack_Skip7	; F5FC56  jr Z,0xf5fc5b
 	jrl	SongEdit_CopyMeasuresWithinTrack_Join10	; F5FC58  jrl T,0xf5ffa8
 SongEdit_CopyMeasuresWithinTrack_Skip7:
@@ -139683,12 +139683,12 @@ TrackMerge_Execute_Skip40:
 	call	TrackMerge_CopySource2ToMark	; F60228  call 0xf60272
 	jr	TrackMerge_Execute_Join12	; F6022C  jr T,0xf60201
 TrackMerge_Execute_Join13:
-	m_bit 0, MD16, 0x0c8b	; F6022E  bit 0,(0x0c8b)
+	bit	0, (0x0c8b:16)	; F6022E  bit 0,(0x0c8b)
 	jr	z, TrackMerge_Execute_Skip41	; F60232  jr Z,0xf6023a
 	call	TrackMerge_CopySource2ToMark	; F60234  call 0xf60272
 	jr	TrackMerge_Execute_Join12	; F60238  jr T,0xf60201
 TrackMerge_Execute_Skip41:
-	m_bit 1, MD16, 0x0c8b	; F6023A  bit 1,(0x0c8b)
+	bit	1, (0x0c8b:16)	; F6023A  bit 1,(0x0c8b)
 	jr	z, TrackMerge_Execute_Skip42	; F6023E  jr Z,0xf60246
 	call	TrackMerge_CopySource1ToMark	; F60240  call 0xf60267
 	jr	TrackMerge_Execute_Join12	; F60244  jr T,0xf60201
@@ -139724,7 +139724,7 @@ TrackMerge_Execute_Join14:
 ;   Basis: caller + body. (notes/naming-pilot-2026-10-06/proposals_wave6_t.json)
 TrackMerge_CopySource1ToMark:
 	call	TrackMerge_CopySource1Event	; F60267  call 0xf603e9
-	m_bit 0, MD16, 0x0c8b	; F6026B  bit 0,(0x0c8b)
+	bit	0, (0x0c8b:16)	; F6026B  bit 0,(0x0c8b)
 	jr	z, TrackMerge_CopySource1ToMark	; F6026F  jr Z,0xf60267
 	ret	; F60271  ret
 
@@ -139744,7 +139744,7 @@ TrackMerge_CopySource1ToMark:
 ;   TrackMerge_CopySource1ToMark. Basis: caller + body. (notes/naming-pilot-2026-10-06/proposals_wave6_t.json)
 TrackMerge_CopySource2ToMark:
 	call	TrackMerge_CopySource2Event	; F60272  call 0xf60380
-	m_bit 1, MD16, 0x0c8b	; F60276  bit 1,(0x0c8b)
+	bit	1, (0x0c8b:16)	; F60276  bit 1,(0x0c8b)
 	jr	z, TrackMerge_CopySource2ToMark	; F6027A  jr Z,0xf60272
 	ret	; F6027C  ret
 
@@ -139913,7 +139913,7 @@ TrackMerge_FetchSource1Event_Return:
 TrackMerge_CopySource2Event:
 	ld	xhl, (BStore_CursorBlockAddr:16)	; F60380  ld XHL,(0x126e)
 	mx_st_mr8 MXD, ra_HL, ra_IX, 2	; F60384  ld (XHL+IX),B
-	m_bit 1, MD16, 0x0c8b	; F60389  bit 1,(0x0c8b)
+	bit	1, (0x0c8b:16)	; F60389  bit 1,(0x0c8b)
 	jr	nz, TrackMerge_CopySource2Event_Join	; F6038D  jr NZ,0xf603a0
 	call	TrackMerge_AdvanceWriteCursor	; F6038F  call 0xf60457
 	ld	a, (3359:16)	; F60393  ld A,(0x0d1f)
@@ -139964,7 +139964,7 @@ TrackMerge_CopySource2Event_Skip:
 TrackMerge_CopySource1Event:
 	ld	xhl, (BStore_CursorBlockAddr:16)	; F603E9  ld XHL,(0x126e)
 	mx_st_mr8 MXD, ra_HL, ra_IX, 3	; F603ED  ld (XHL+IX),C
-	m_bit 0, MD16, 0x0c8b	; F603F2  bit 0,(0x0c8b)
+	bit	0, (0x0c8b:16)	; F603F2  bit 0,(0x0c8b)
 	jr	nz, TrackMerge_CopySource1Event_Join	; F603F6  jr NZ,0xf6040d
 	call	TrackMerge_AdvanceWriteCursor	; F603F8  call 0xf60457
 	ld	xhl, (BStore_CursorBlockAddr:16)	; F603FC  ld XHL,(0x126e)
@@ -140096,7 +140096,7 @@ TrackMerge_AdvanceReadCursor_Skip3:
 	ld	hl, wa	; F604EE  ld HL,WA
 	call	T_BStore_SeekBlock	; F604F0  call 0xf427bc
 	ld	xhl, (BStore_CursorBlockAddr:16)	; F604F4  ld XHL,(0x126e)
-	m_bit 7, MDI+r3, 0	; F604F8  bit 7,(XHL)
+	bit	7, (xhl)	; F604F8  bit 7,(XHL)
 	jr	nz, TrackMerge_AdvanceReadCursor_Skip4	; F604FA  jr NZ,0xf60503
 	ld	(BStore_ErrorCode:16), 11	; F604FC  ld (0x0d4a),0x0b
 	jr	sub_F604B7_Entry	; F60501  jr T,0xf60507
@@ -142102,7 +142102,7 @@ S0ngC0py_CopyAllTracks_Skip8:
 	ld	xwa, (xiy)	; F61824  ld XWA,(XIY)
 	ld	(13836:16), xwa	; F61826  ld (0x360c),XWA
 	ld	(14162:16), 0	; F6182A  ld (0x3752),0x00
-	m_bit 0, MD16, 0x360e	; F6182F  bit 0,(0x360e)
+	bit	0, (0x360e:16)	; F6182F  bit 0,(0x360e)
 	jr	z, S0ngC0py_CopyAllTracks_Return	; F61833  jr Z,0xf6187f
 	ld	(14162:16), 1	; F61835  ld (0x3752),0x01
 	jr	S0ngC0py_CopyAllTracks_Return	; F6183A  jr T,0xf6187f
@@ -142528,7 +142528,7 @@ sub_F61AF7_Skip4:
 sub_F61AF7_Join3:
 	cp	(BStore_ErrorCode:16), 0x00	; F61BF4  cp (0x0d4a),0x00
 	jr	nz, sub_F61AF7_Return	; F61BF9  jr NZ,0xf61c0b
-	m_bit 7, MD16, 0x0dec	; F61BFB  bit 7,(0x0dec)
+	bit	7, (0x0dec:16)	; F61BFB  bit 7,(0x0dec)
 	jr	nz, sub_F61AF7_Skip5	; F61BFF  jr NZ,0xf61c07
 	call	sub_F62089	; F61C01  call 0xf62089
 	jr	sub_F61AF7_Return	; F61C05  jr T,0xf61c0b
@@ -142549,9 +142549,9 @@ sub_F61AF7_Return:
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
 sub_F61C0C:
-	m_bit 0, MD16, 0x0c8a	; F61C0C  bit 0,(0x0c8a)
+	bit	0, (0x0c8a:16)	; F61C0C  bit 0,(0x0c8a)
 	jrl	z, sub_F61C0C_Return	; F61C10  jrl Z,0xf61c23
-	m_bit 7, MD16, 0x0dec	; F61C13  bit 7,(0x0dec)
+	bit	7, (0x0dec:16)	; F61C13  bit 7,(0x0dec)
 	jr	nz, sub_F61C0C_Skip	; F61C17  jr NZ,0xf61c1f
 	call	sub_F61C24	; F61C19  call 0xf61c24
 	jr	sub_F61C0C_Return	; F61C1D  jr T,0xf61c23
@@ -142577,7 +142577,7 @@ sub_F61C24:
 	push	xhl	; F61C28  push XHL
 	pushw	bc	; F61C29  push BC
 	pushw	de	; F61C2A  push DE
-	m_bit 0, MD16, 0x0c8a	; F61C2B  bit 0,(0x0c8a)
+	bit	0, (0x0c8a:16)	; F61C2B  bit 0,(0x0c8a)
 	jrl	z, sub_F61C24_Loop2	; F61C2F  jrl Z,0xf61d5d
 sub_F61C24_Join:
 	xor	hl, hl	; F61C32  xor HL,HL
@@ -142652,7 +142652,7 @@ sub_F61C24_Skip2:
 	jr	z, sub_F61C24_Skip5	; F61CCB  jr Z,0xf61d06
 	jr	sub_F61C24_Join2	; F61CCD  jr T,0xf61ca3
 sub_F61C24_Skip3:
-	m_bit 0, MD16, 0x0e1b	; F61CCF  bit 0,(0x0e1b)
+	bit	0, (0x0e1b:16)	; F61CCF  bit 0,(0x0e1b)
 	jr	nz, sub_F61C24_Skip4	; F61CD3  jr NZ,0xf61cf0
 	push	xwa	; F61CD5  push XWA
 	ld	wa, (3338:16)	; F61CD6  ld WA,(0x0d0a)
@@ -142765,7 +142765,7 @@ sub_F61D65:
 sub_F61D65_Skip:
 	ld	(3611:16), 0	; F61DE0  ld (0x0e1b),0x00
 	ld	(3613:16), 0	; F61DE5  ld (0x0e1d),0x00
-	m_bit 0, MD16, 0x0c8a	; F61DEA  bit 0,(0x0c8a)
+	bit	0, (0x0c8a:16)	; F61DEA  bit 0,(0x0c8a)
 	jrl	z, sub_F61D65_Skip14	; F61DEE  jrl Z,0xf61f73
 sub_F61D65_Join:
 	xor	hl, hl	; F61DF1  xor HL,HL
@@ -142829,9 +142829,9 @@ sub_F61D65_Join2:
 	jr	nz, sub_F61D65_Skip6	; F61E71  jr NZ,0xf61ea8
 	mx_cp_mi8 MXB, ra_HL, ra_IY, 0x5f	; F61E73  cp (XHL+IY),0x5f
 	jr	gt, sub_F61D65_Skip6	; F61E79  jr GT,0xf61ea8
-	m_bit 0, MD16, 0x0e1b	; F61E7B  bit 0,(0x0e1b)
+	bit	0, (0x0e1b:16)	; F61E7B  bit 0,(0x0e1b)
 	jr	z, sub_F61D65_Skip4	; F61E7F  jr Z,0xf61e8b
-	m_bit 0, MD16, 0x0e1d	; F61E81  bit 0,(0x0e1d)
+	bit	0, (0x0e1d:16)	; F61E81  bit 0,(0x0e1d)
 	jr	nz, sub_F61D65_Skip4	; F61E85  jr NZ,0xf61e8b
 	call	sub_F61F7B	; F61E87  call 0xf61f7b
 sub_F61D65_Skip4:
@@ -142850,7 +142850,7 @@ sub_F61D65_Skip5:
 	jr	z, sub_F61D65_Skip9	; F61EA3  jr Z,0xf61ee3
 	jrl	sub_F61D65_Join2	; F61EA5  jrl T,0xf61e64
 sub_F61D65_Skip6:
-	m_bit 0, MD16, 0x0e1b	; F61EA8  bit 0,(0x0e1b)
+	bit	0, (0x0e1b:16)	; F61EA8  bit 0,(0x0e1b)
 	jr	nz, sub_F61D65_Skip7	; F61EAC  jr NZ,0xf61ec5
 	push	xwa	; F61EAE  push XWA
 	ld	wa, (3338:16)	; F61EAF  ld WA,(0x0d0a)
@@ -142861,7 +142861,7 @@ sub_F61D65_Skip6:
 	or	(0x0e1b:16), 0x01	; F61EC0  or (0x0e1b),0x01
 sub_F61D65_Skip7:
 	xor	a, a	; F61EC5  xor A,A
-	m_bit 0, MD16, 0x0e1c	; F61EC7  bit 0,(0x0e1c)
+	bit	0, (0x0e1c:16)	; F61EC7  bit 0,(0x0e1c)
 	jr	nz, sub_F61D65_Skip8	; F61ECB  jr NZ,0xf61ed9
 	ld	xhl, (BStore_CursorBlockAddr:16)	; F61ECD  ld XHL,(0x126e)
 	mx_ld_rm MXB, ra_HL, ra_IY, 1	; F61ED1  ld A,(XHL+IY)
@@ -142881,11 +142881,11 @@ sub_F61D65_Skip9:
 sub_F61D65_Skip10:
 	pushw	de	; F61EF8  push DE
 	pushw	bc	; F61EF9  push BC
-	m_bit 0, MD16, 0x0e1c	; F61EFA  bit 0,(0x0e1c)
+	bit	0, (0x0e1c:16)	; F61EFA  bit 0,(0x0e1c)
 	jr	nz, sub_F61D65_Skip13	; F61EFE  jr NZ,0xf61f71
-	m_bit 0, MD16, 0x0e1b	; F61F00  bit 0,(0x0e1b)
+	bit	0, (0x0e1b:16)	; F61F00  bit 0,(0x0e1b)
 	jr	z, sub_F61D65_Skip11	; F61F04  jr Z,0xf61f10
-	m_bit 0, MD16, 0x0e1d	; F61F06  bit 0,(0x0e1d)
+	bit	0, (0x0e1d:16)	; F61F06  bit 0,(0x0e1d)
 	jr	nz, sub_F61D65_Skip11	; F61F0A  jr NZ,0xf61f10
 	call	sub_F61F7B	; F61F0C  call 0xf61f7b
 sub_F61D65_Skip11:
@@ -143153,9 +143153,9 @@ AdvanceDelay_ClampTimingsAtTrackEnd:
 	push	xhl	; F620B3  push XHL
 	pushw	bc	; F620B4  push BC
 	pushw	de	; F620B5  push DE
-	m_bit 7, MD16, 0x0dec	; F620B6  bit 7,(0x0dec)
+	bit	7, (0x0dec:16)	; F620B6  bit 7,(0x0dec)
 	jrl	nz, AdvanceDelay_ClampTimingsAtTrackEnd_Join3	; F620BA  jrl NZ,0xf621b1
-	m_bit 0, MD16, 0x0c8a	; F620BD  bit 0,(0x0c8a)
+	bit	0, (0x0c8a:16)	; F620BD  bit 0,(0x0c8a)
 	jrl	z, AdvanceDelay_ClampTimingsAtTrackEnd_Skip7	; F620C1  jrl Z,0xf621ae
 AdvanceDelay_ClampTimingsAtTrackEnd_Join:
 	xor	hl, hl	; F620C4  xor HL,HL
@@ -143230,7 +143230,7 @@ AdvanceDelay_ClampTimingsAtTrackEnd_Skip2:
 	jr	z, AdvanceDelay_ClampTimingsAtTrackEnd_Skip5	; F6215D  jr Z,0xf62197
 	jr	AdvanceDelay_ClampTimingsAtTrackEnd_Join2	; F6215F  jr T,0xf62135
 AdvanceDelay_ClampTimingsAtTrackEnd_Skip3:
-	m_bit 0, MD16, 0x0e1b	; F62161  bit 0,(0x0e1b)
+	bit	0, (0x0e1b:16)	; F62161  bit 0,(0x0e1b)
 	jr	nz, AdvanceDelay_ClampTimingsAtTrackEnd_Skip4	; F62165  jr NZ,0xf62182
 	push	xwa	; F62167  push XWA
 	ld	wa, (3338:16)	; F62168  ld WA,(0x0d0a)
@@ -143796,7 +143796,7 @@ BStore_ValidateSavedCursor_Skip4:
 	ld	hl, wa	; F62CD2  ld HL,WA
 	calr	BStore_SeekBlock	; F62CD4  calr 0xf63bae
 	ld	xhl, (BStore_CursorBlockAddr:16)	; F62CD7  ld XHL,(0x126e)
-	m_bit 7, MDI+r3, 0	; F62CDB  bit 7,(XHL)
+	bit	7, (xhl)	; F62CDB  bit 7,(XHL)
 	jr	nz, BStore_ValidateSavedCursor_Skip5	; F62CDD  jr NZ,0xf62ce6
 	ld	(BStore_ErrorCode:16), 11	; F62CDF  ld (0x0d4a),0x0b
 	jr	BStore_ValidateSavedCursor_Return	; F62CE4  jr T,0xf62cfd
@@ -144128,7 +144128,7 @@ sub_F62FFA:
 	sla	xwa, 8	; F6300F  sla 0x08,XWA
 	add	xwa, (BStore_HeapBase:16)	; F63012  add XWA,(0x3604)
 	ld	(BStore_CursorBlockAddr:16), xwa	; F63016  ld (0x126e),XWA
-	m_bit 7, MDI+r0, 0	; F6301A  bit 7,(XWA)
+	bit	7, (xwa)	; F6301A  bit 7,(XWA)
 	jr	nz, sub_F62FFA_Skip	; F6301C  jr NZ,0xf63025
 	ld	(BStore_ErrorCode:16), 11	; F6301E  ld (0x0d4a),0x0b
 	jr	sub_F62FFA_Return	; F63023  jr T,0xf63030
@@ -144151,7 +144151,7 @@ CycleRecord_StepCopySrcToNextBlock_Copy:
 	sla	xwa, 8	; F63046  sla 0x08,XWA
 	add	xwa, (BStore_HeapBase:16)	; F63049  add XWA,(0x3604)
 	ld	(BStore_CursorBlockAddr:16), xwa	; F6304D  ld (0x126e),XWA
-	m_bit 7, MDI+r0, 0	; F63051  bit 7,(XWA)
+	bit	7, (xwa)	; F63051  bit 7,(XWA)
 	jr	nz, CycleRecord_StepCopySrcToNextBlock_Copy_Skip	; F63053  jr NZ,0xf6305c
 	ld	(BStore_ErrorCode:16), 11	; F63055  ld (0x0d4a),0x0b
 	jr	CycleRecord_StepCopySrcToNextBlock_Copy_Return	; F6305A  jr T,0xf63069
@@ -144378,7 +144378,7 @@ BStore_CopySrcToPrevBlock:
 	sla	xwa, 8	; F632BE  sla 0x08,XWA
 	add	xwa, (BStore_HeapBase:16)	; F632C1  add XWA,(0x3604)
 	ld	(BStore_CursorBlockAddr:16), xwa	; F632C5  ld (0x126e),XWA
-	m_bit 7, MDI+r0, 0	; F632C9  bit 7,(XWA)
+	bit	7, (xwa)	; F632C9  bit 7,(XWA)
 	jr	nz, BStore_CopySrcToPrevBlock_Skip	; F632CB  jr NZ,0xf632d4
 	ld	(BStore_ErrorCode:16), 11	; F632CD  ld (0x0d4a),0x0b
 	jr	BStore_CopySrcToPrevBlock_Return	; F632D2  jr T,0xf632df
@@ -144403,7 +144403,7 @@ BStore_CopyDestToPrevBlock:
 	sla	xwa, 8	; F632F5  sla 0x08,XWA
 	add	xwa, (BStore_HeapBase:16)	; F632F8  add XWA,(0x3604)
 	ld	(BStore_CursorBlockAddr:16), xwa	; F632FC  ld (0x126e),XWA
-	m_bit 7, MDI+r0, 0	; F63300  bit 7,(XWA)
+	bit	7, (xwa)	; F63300  bit 7,(XWA)
 	jr	nz, BStore_CopyDestToPrevBlock_Skip	; F63302  jr NZ,0xf6330b
 	ld	(BStore_ErrorCode:16), 11	; F63304  ld (0x0d4a),0x0b
 	jr	BStore_CopyDestToPrevBlock_Return	; F63309  jr T,0xf63316
@@ -144447,7 +144447,7 @@ BStore_MovePosForward_Skip2:
 	ld	hl, bc	; F6335C  ld HL,BC
 	calr	BStore_SeekBlock	; F6335E  calr 0xf63bae
 	ld	xhl, (BStore_CursorBlockAddr:16)	; F63361  ld XHL,(0x126e)
-	m_bit 7, MDI+r3, 0	; F63365  bit 7,(XHL)
+	bit	7, (xhl)	; F63365  bit 7,(XHL)
 	jr	nz, BStore_MovePosForward_Skip3	; F63367  jr NZ,0xf63370
 	ld	(BStore_ErrorCode:16), 11	; F63369  ld (0x0d4a),0x0b
 	jr	BStore_MovePosForward_Return	; F6336E  jr T,0xf63382
@@ -144497,7 +144497,7 @@ BStore_MovePosBackward_Skip2:
 	ld	hl, bc	; F633CD  ld HL,BC
 	calr	BStore_SeekBlock	; F633CF  calr 0xf63bae
 	ld	xhl, (BStore_CursorBlockAddr:16)	; F633D2  ld XHL,(0x126e)
-	m_bit 7, MDI+r3, 0	; F633D6  bit 7,(XHL)
+	bit	7, (xhl)	; F633D6  bit 7,(XHL)
 	jr	nz, BStore_MovePosBackward_Skip3	; F633D8  jr NZ,0xf633e1
 	ld	(BStore_ErrorCode:16), 11	; F633DA  ld (0x0d4a),0x0b
 	jr	BStore_MovePosBackward_Return	; F633DF  jr T,0xf633f4
@@ -144633,7 +144633,7 @@ BStore_OpenChainAtSavedCursor_Skip5:
 	ld	hl, wa	; F634EC  ld HL,WA
 	calr	BStore_SeekBlock	; F634EE  calr 0xf63bae
 	ld	xhl, (BStore_CursorBlockAddr:16)	; F634F1  ld XHL,(0x126e)
-	m_bit 7, MDI+r3, 0	; F634F5  bit 7,(XHL)
+	bit	7, (xhl)	; F634F5  bit 7,(XHL)
 	jr	nz, BStore_OpenChainAtSavedCursor_Skip6	; F634F7  jr NZ,0xf63500
 	ld	(BStore_ErrorCode:16), 11	; F634F9  ld (0x0d4a),0x0b
 	jr	BStore_OpenChainAtSavedCursor_Return	; F634FE  jr T,0xf6350f
@@ -144681,7 +144681,7 @@ sub_F6353E_Join:
 	m_cp_rm MB16, 0x0d1c, 3	; F6355B  cp C,(0x0d1c)
 	jr	z, sub_F6353E_Skip3	; F6355F  jr Z,0xf6359b
 sub_F6353E_Loop2:
-	m_bit 1, MD16, 0x0c8a	; F63561  bit 1,(0x0c8a)
+	bit	1, (0x0c8a:16)	; F63561  bit 1,(0x0c8a)
 	jr	z, sub_F6353E_Skip	; F63565  jr Z,0xf63576
 	incw	1, (BStore_AllocBytesWanted:16)	; F63567  incw 1,(0x0cae)
 	calr	BStore_CursorAdvance	; F6356B  calr 0xf635c9
@@ -144769,7 +144769,7 @@ BStore_CursorAdvance_Skip2:
 	ld	hl, wa	; F635F6  ld HL,WA
 	calr	BStore_SeekBlock	; F635F8  calr 0xf63bae
 	ld	xhl, (BStore_CursorBlockAddr:16)	; F635FB  ld XHL,(0x126e)
-	m_bit 7, MDI+r3, 0	; F635FF  bit 7,(XHL)
+	bit	7, (xhl)	; F635FF  bit 7,(XHL)
 	jr	nz, BStore_CursorAdvance_Skip3	; F63601  jr NZ,0xf6360a
 	ld	(BStore_ErrorCode:16), 11	; F63603  ld (0x0d4a),0x0b
 	jr	BStore_CursorAdvance_Return	; F63608  jr T,0xf6360d
@@ -144785,7 +144785,7 @@ Seq_FindMasterTrack:		; <- T_Seq_FindMasterTrack
 	xor	w, w	; F6360E  xor W,W
 	and	(0x0c8a:16), 0xfb	; F63610  and (0x0c8a),0xfb
 	xor	hl, hl	; F63615  xor HL,HL
-	m_bit 6, MD16, 0x0c8a	; F63617  bit 6,(0x0c8a)
+	bit	6, (0x0c8a:16)	; F63617  bit 6,(0x0c8a)
 	jr	nz, Seq_FindMasterTrack_Join	; F6361B  jr NZ,0xf63620
 	nop	; F6361D  nop
 	nop	; F6361E  nop
@@ -144800,7 +144800,7 @@ Seq_FindMasterTrack_Skip:
 	mx_cp_mi8 MXB, ra_IX, ra_HL, 0x20	; F6362E  cp (XIX+HL),0x20
 	pop	xix	; F63634  pop XIX
 	jr	nz, Seq_FindMasterTrack_Skip2	; F63635  jr NZ,0xf63648
-	m_bit 0, MD16, 0x360e	; F63637  bit 0,(0x360e)
+	bit	0, (0x360e:16)	; F63637  bit 0,(0x360e)
 	jr	z, Seq_FindMasterTrack_Return	; F6363B  jr Z,0xf6364c
 	or	(0x0c8a:16), 0x04	; F6363D  or (0x0c8a),0x04
 	ld	w, l	; F63642  ld W,L
@@ -144823,7 +144823,7 @@ BStore_TimeSigFirstMeasure:		; <- T_BStore_TimeSigFirstMeasure
 	and	(0x0c8a:16), 0xdf	; F63651  and (0x0c8a),0xdf
 	ld	a, (6304983:24)	; F63656  ld A,(0x6034d7)
 	ld	(3356:16), a	; F6365B  ld (0x0d1c),A
-	m_bit 2, MD16, 0x0c8a	; F6365F  bit 2,(0x0c8a)
+	bit	2, (0x0c8a:16)	; F6365F  bit 2,(0x0c8a)
 	jrl	z, BStore_TimeSigFirstMeasure_Join2	; F63663  jrl Z,0xf63744
 	ld	a, (3357:16)	; F63666  ld A,(0x0d1d)
 	calr	BStore_OpenChain	; F6366A  calr 0xf638bb
@@ -144906,9 +144906,9 @@ BStore_TimeSigFirstMeasure_Join2:
 	ret	; F63748  ret
 sub_F63749:		; <- T_F427A8
 	m_push MW16, BStore_CursorBlock	; F63749  pushw (0x345c)
-	m_bit 2, MD16, 0x0c8a	; F6374D  bit 2,(0x0c8a)
+	bit	2, (0x0c8a:16)	; F6374D  bit 2,(0x0c8a)
 	jrl	z, sub_F63749_Join	; F63751  jrl Z,0xf63821
-	m_bit 5, MD16, 0x0c8a	; F63754  bit 5,(0x0c8a)
+	bit	5, (0x0c8a:16)	; F63754  bit 5,(0x0c8a)
 	jrl	nz, sub_F63749_Join	; F63758  jrl NZ,0xf63821
 	xor	hl, hl	; F6375B  xor HL,HL
 	ld	xhl, (3312:16)	; F6375D  ld XHL,(0x0cf0)
@@ -145111,7 +145111,7 @@ BStore_OpenChain_Skip4:
 	ld	hl, wa	; F63911  ld HL,WA
 	calr	BStore_SeekBlock	; F63913  calr 0xf63bae
 	ld	xhl, (BStore_CursorBlockAddr:16)	; F63916  ld XHL,(0x126e)
-	m_bit 7, MDI+r3, 0	; F6391A  bit 7,(XHL)
+	bit	7, (xhl)	; F6391A  bit 7,(XHL)
 	jr	nz, BStore_OpenChain_Return	; F6391C  jr NZ,0xf63923
 	ld	(BStore_ErrorCode:16), 11	; F6391E  ld (0x0d4a),0x0b
 BStore_OpenChain_Return:
@@ -145616,7 +145616,7 @@ BStore_RewriteTrackForPart_Loop2:
 	jr	z, BStore_RewriteTrackForPart_Loop	; F63D78  jr Z,0xf63d23
 	jrl	sub_F63CE0_Return	; F63D7A  jrl T,0xf63f87
 BStore_RewriteTrackForPart_Skip2:
-	m_bit 0, MD16, 0x0d45	; F63D7D  bit 0,(0x0d45)
+	bit	0, (0x0d45:16)	; F63D7D  bit 0,(0x0d45)
 	jr	nz, BStore_RewriteTrackForPart_Loop2	; F63D81  jr NZ,0xf63d6f
 BStore_RewriteTrackForPart_Loop3:
 	push	xhl	; F63D83  push XHL
@@ -145720,9 +145720,9 @@ sub_F63CE0_Skip4:
 	pop	xiz	; F63E84  pop XIZ
 	cp	(BStore_ErrorCode:16), 0x00	; F63E85  cp (0x0d4a),0x00
 	jrl	nz, sub_F63CE0_Return	; F63E8A  jrl NZ,0xf63f87
-	m_bit 0, MD16, 0x0d46	; F63E8D  bit 0,(0x0d46)
+	bit	0, (0x0d46:16)	; F63E8D  bit 0,(0x0d46)
 	jr	nz, sub_F63CE0_Skip5	; F63E91  jr NZ,0xf63e9d
-	m_bit 2, MD16, 0x0d46	; F63E93  bit 2,(0x0d46)
+	bit	2, (0x0d46:16)	; F63E93  bit 2,(0x0d46)
 	jrl	nz, BStore_RewriteTrackForPart_Loop3	; F63E97  jrl NZ,0xf63d83
 	jrl	BStore_RewriteTrackForPart_Loop2	; F63E9A  jrl T,0xf63d6f
 sub_F63CE0_Skip5:
@@ -146080,7 +146080,7 @@ sub_F6418E_Loop2:
 	jr	z, sub_F6418E_Loop	; F6424A  jr Z,0xf641fa
 	jrl	sub_F6418E_Return	; F6424C  jrl T,0xf6452a
 sub_F6418E_Skip:
-	m_bit 0, MD16, 0x0d45	; F6424F  bit 0,(0x0d45)
+	bit	0, (0x0d45:16)	; F6424F  bit 0,(0x0d45)
 	jr	nz, sub_F6418E_Loop2	; F64253  jr NZ,0xf6423d
 sub_F6418E_Loop3:
 	push	xhl	; F64255  push XHL
@@ -146204,9 +146204,9 @@ sub_F6418E_Skip3:
 	pop	xiz	; F64372  pop XIZ
 	cp	(BStore_ErrorCode:16), 0x00	; F64373  cp (0x0d4a),0x00
 	jrl	nz, sub_F63CE0_Return	; F64378  jrl NZ,0xf63f87
-	m_bit 0, MD16, 0x0d46	; F6437B  bit 0,(0x0d46)
+	bit	0, (0x0d46:16)	; F6437B  bit 0,(0x0d46)
 	jr	nz, sub_F6418E_Skip4	; F6437F  jr NZ,0xf6438b
-	m_bit 2, MD16, 0x0d46	; F64381  bit 2,(0x0d46)
+	bit	2, (0x0d46:16)	; F64381  bit 2,(0x0d46)
 	jrl	nz, sub_F6418E_Loop3	; F64385  jrl NZ,0xf64255
 	jrl	sub_F6418E_Loop2	; F64388  jrl T,0xf6423d
 sub_F6418E_Skip4:
@@ -146596,9 +146596,9 @@ SongEdit_CheckFreeBlocksForCopy_Skip10:
 	jr	z, SongEdit_CheckFreeBlocksForCopy_Join3	; F6477E  jr Z,0xf647d3
 SongEdit_CheckFreeBlocksForCopy_Skip11:
 	m_sub_rm MW16, BStore_AllocBytesWanted, 0	; F64780  sub WA,(0x0cae)
-	m_bit 4, MD16, 0x0c8a	; F64784  bit 4,(0x0c8a)
+	bit	4, (0x0c8a:16)	; F64784  bit 4,(0x0c8a)
 	jr	z, SongEdit_CheckFreeBlocksForCopy_Skip12	; F64788  jr Z,0xf64792
-	m_bit 3, MD16, 0x0c8a	; F6478A  bit 3,(0x0c8a)
+	bit	3, (0x0c8a:16)	; F6478A  bit 3,(0x0c8a)
 	jr	nz, SongEdit_CheckFreeBlocksForCopy_Skip12	; F6478E  jr NZ,0xf64792
 	dec	1, wa	; F64790  dec 1,WA
 SongEdit_CheckFreeBlocksForCopy_Skip12:
@@ -146609,9 +146609,9 @@ SongEdit_CheckFreeBlocksForCopy_Skip12:
 	jr	SongEdit_CheckFreeBlocksForCopy_Join3	; F647A1  jr T,0xf647d3
 SongEdit_CheckFreeBlocksForCopy_Skip13:
 	m_sub_mr MW16, BStore_AllocBytesWanted, 0	; F647A3  sub (0x0cae),WA
-	m_bit 4, MD16, 0x0c8a	; F647A7  bit 4,(0x0c8a)
+	bit	4, (0x0c8a:16)	; F647A7  bit 4,(0x0c8a)
 	jr	z, SongEdit_CheckFreeBlocksForCopy_Skip14	; F647AB  jr Z,0xf647b7
-	m_bit 3, MD16, 0x0c8a	; F647AD  bit 3,(0x0c8a)
+	bit	3, (0x0c8a:16)	; F647AD  bit 3,(0x0c8a)
 	jr	nz, SongEdit_CheckFreeBlocksForCopy_Skip14	; F647B1  jr NZ,0xf647b7
 	incw	1, (BStore_AllocBytesWanted:16)	; F647B3  incw 1,(0x0cae)
 SongEdit_CheckFreeBlocksForCopy_Skip14:
@@ -146969,7 +146969,7 @@ sub_F64A34_Skip3:
 	jr	nz, sub_F64A34_Skip4	; F64AD7  jr NZ,0xf64adb
 	jr	sub_F64A34_Return2	; F64AD9  jr T,0xf64b1a
 sub_F64A34_Skip4:
-	m_bit 0, MD16, 0x124c	; F64ADB  bit 0,(0x124c)
+	bit	0, (0x124c:16)	; F64ADB  bit 0,(0x124c)
 	jr	z, sub_F64A34_Skip5	; F64ADF  jr Z,0xf64ae8
 	and	(0x124c:16), 0xfe	; F64AE1  and (0x124c),0xfe
 	jr	sub_F64A34_Return2	; F64AE6  jr T,0xf64b1a
@@ -147059,13 +147059,13 @@ BStore_Workspace_LoadFromBank:
 SongGmFlag_ApplyAndRebuildRouting:
 	cp	(0x6034c6:24), 0xff	; F64B7A  cp (0x6034c6),0xff
 	jr	z, SongGmFlag_ApplyAndRebuildRouting_Skip	; F64B80  jr Z,0xf64b91
-	m_bit 2, MD16, 0x7f4d	; F64B82  bit 2,(0x7f4d)
+	bit	2, (0x7f4d:16)	; F64B82  bit 2,(0x7f4d)
 	jr	z, SongGmFlag_ApplyAndRebuildRouting_Skip2	; F64B86  jr Z,0xf64bb1
 	and	(0x7f4d:16), 0xfb	; F64B88  and (0x7f4d),0xfb
 	xor	a, a	; F64B8D  xor A,A
 	jr	SongGmFlag_ApplyAndRebuildRouting_Join	; F64B8F  jr T,0xf64b9e
 SongGmFlag_ApplyAndRebuildRouting_Skip:
-	m_bit 2, MD16, 0x7f4d	; F64B91  bit 2,(0x7f4d)
+	bit	2, (0x7f4d:16)	; F64B91  bit 2,(0x7f4d)
 	jr	nz, SongGmFlag_ApplyAndRebuildRouting_Skip2	; F64B95  jr NZ,0xf64bb1
 	or	(0x7f4d:16), 0x04	; F64B97  or (0x7f4d),0x04
 	ld	a, 4:opc	; F64B9C  ld A,0x04
@@ -148131,7 +148131,7 @@ TrackAssign_StageZero_LcdKeyRow2:		; <- T_TrackAssign_StageZero_LcdKeyRow2
 	calr	TrackAssign_CommitEditedPart	; F65C5E  calr 0xf65d26
 	ld	(3520:16), 0	; F65C61  ld (0x0dc0),0x00
 	ld	a, (3075:16)	; F65C66  ld A,(0x0c03)
-	m_bit 0, MD16, 0x0c07	; F65C6A  bit 0,(0x0c07)
+	bit	0, (0x0c07:16)	; F65C6A  bit 0,(0x0c07)
 	jr	nz, TrackAssign_StageZero_LcdKeyRow2_Skip	; F65C6E  jr NZ,0xf65c78
 	cp	a, 7:i3	; F65C70  cp A,7
 	jr	z, TrackAssign_StageZero_LcdKeyRow2_Join	; F65C72  jr Z,0xf65c7f
@@ -148168,7 +148168,7 @@ TrackAssign_StageZero_LcdKeyRow1:		; <- T_TrackAssign_StageZero_LcdKeyRow1
 	calr	TrackAssign_CommitEditedPart	; F65C9A  calr 0xf65d26
 	ld	(3520:16), 0	; F65C9D  ld (0x0dc0),0x00
 	ld	a, (3075:16)	; F65CA2  ld A,(0x0c03)
-	m_bit 0, MD16, 0x0c07	; F65CA6  bit 0,(0x0c07)
+	bit	0, (0x0c07:16)	; F65CA6  bit 0,(0x0c07)
 	jr	nz, TrackAssign_StageZero_LcdKeyRow1_Skip	; F65CAA  jr NZ,0xf65cb4
 	cp	a, 0:i3	; F65CAC  cp A,0
 	jr	z, TrackAssign_StageZero_LcdKeyRow1_Join	; F65CAE  jr Z,0xf65cbb
@@ -148219,7 +148219,7 @@ TrackAssign_SelectTrackGroup_Skip2:
 	ld	(3520:16), 0	; F65CFA  ld (0x0dc0),0x00
 	or	(0x0c07:16), 0x01	; F65CFF  or (0x0c07),0x01
 TrackAssign_SelectTrackGroup_Join:
-	m_bit 0, MD16, 0x0c07	; F65D04  bit 0,(0x0c07)
+	bit	0, (0x0c07:16)	; F65D04  bit 0,(0x0c07)
 	jr	z, TrackAssign_SelectTrackGroup_Skip3	; F65D08  jr Z,0xf65d0f
 	ld	(3075:16), 8	; F65D0A  ld (0x0c03),0x08
 TrackAssign_SelectTrackGroup_Skip3:
@@ -148889,7 +148889,7 @@ SequencerMedley_OnLeave:		; <- T_SequencerMedley_OnLeave
 	ld	(Medley_Countdown:16), 0	; F66162  ld (0x22d0),0x00
 	and	(0x34bb:16), 0xfb	; F66167  and (0x34bb),0xfb
 	ldw	(6312040:24), 0	; F6616C  ld (0x605068),0x0000
-	m_bit 2, MD16, 0x0e48	; F66173  bit 2,(0x0e48)
+	bit	2, (0x0e48:16)	; F66173  bit 2,(0x0e48)
 	jr	z, SequencerMedley_OnLeave_Skip	; F66177  jr Z,0xf6617f
 	call	T_F42E94	; F66179  call 0xf42e94
 	jr	SequencerMedley_OnLeave_Join	; F6617D  jr T,0xf66183
@@ -148997,7 +148997,7 @@ SequencerMedley_StopPlayback_Skip:
 	ld	(Medley_Playing:16), 0	; F66220  ld (0x0dc1),0x00
 	ld	(Medley_Countdown:16), 0	; F66225  ld (0x22d0),0x00
 	call	T_Medley_Stop	; F6622A  call 0xf43030
-	m_bit 2, MD16, 0x0e48	; F6622E  bit 2,(0x0e48)
+	bit	2, (0x0e48:16)	; F6622E  bit 2,(0x0e48)
 	jr	z, SequencerMedley_StopPlayback_Skip2	; F66232  jr Z,0xf66236
 	jr	SequencerMedley_StopPlayback_Return	; F66234  jr T,0xf66245
 SequencerMedley_StopPlayback_Skip2:
@@ -149988,13 +149988,13 @@ TrackAssignPresets_ApplyPreset_Skip4:
 	jr	nz, TrackAssignPresets_ApplyPreset_Join2	; F6678F  jr NZ,0xf667c7
 	cp	(0x0dfd:16), 0x03	; F66791  cp (0x0dfd),0x03
 	jr	z, TrackAssignPresets_ApplyPreset_Skip5	; F66796  jr Z,0xf667a7
-	m_bit 2, MD16, 0x7f4d	; F66798  bit 2,(0x7f4d)
+	bit	2, (0x7f4d:16)	; F66798  bit 2,(0x7f4d)
 	jr	z, TrackAssignPresets_ApplyPreset_Join2	; F6679C  jr Z,0xf667c7
 	and	(0x7f4d:16), 0xfb	; F6679E  and (0x7f4d),0xfb
 	xor	a, a	; F667A3  xor A,A
 	jr	TrackAssignPresets_ApplyPreset_Join	; F667A5  jr T,0xf667b4
 TrackAssignPresets_ApplyPreset_Skip5:
-	m_bit 2, MD16, 0x7f4d	; F667A7  bit 2,(0x7f4d)
+	bit	2, (0x7f4d:16)	; F667A7  bit 2,(0x7f4d)
 	jr	nz, TrackAssignPresets_ApplyPreset_Join2	; F667AB  jr NZ,0xf667c7
 	or	(0x7f4d:16), 0x04	; F667AD  or (0x7f4d),0x04
 	ld	a, 4:opc	; F667B2  ld A,0x04
@@ -150142,13 +150142,13 @@ TrackAssignPresets_ApplyToAllSongs_Loop2:
 	jr	c, TrackAssignPresets_ApplyToAllSongs_Loop2	; F66917  jr C,0xf668e5
 	cp	(0x0dfd:16), 0x03	; F66919  cp (0x0dfd),0x03
 	jr	z, TrackAssignPresets_ApplyToAllSongs_Skip3	; F6691E  jr Z,0xf6692f
-	m_bit 2, MD16, 0x7f4d	; F66920  bit 2,(0x7f4d)
+	bit	2, (0x7f4d:16)	; F66920  bit 2,(0x7f4d)
 	jr	z, TrackAssignPresets_ApplyToAllSongs_Return	; F66924  jr Z,0xf6694f
 	and	(0x7f4d:16), 0xfb	; F66926  and (0x7f4d),0xfb
 	xor	a, a	; F6692B  xor A,A
 	jr	TrackAssignPresets_ApplyToAllSongs_Join	; F6692D  jr T,0xf6693c
 TrackAssignPresets_ApplyToAllSongs_Skip3:
-	m_bit 2, MD16, 0x7f4d	; F6692F  bit 2,(0x7f4d)
+	bit	2, (0x7f4d:16)	; F6692F  bit 2,(0x7f4d)
 	jr	nz, TrackAssignPresets_ApplyToAllSongs_Return	; F66933  jr NZ,0xf6694f
 	or	(0x7f4d:16), 0x04	; F66935  or (0x7f4d),0x04
 	ld	a, 4:opc	; F6693A  ld A,0x04
@@ -150744,7 +150744,7 @@ SoftKeyCol8_StepRecord:
 ;   keys 7 and 8, captioned CURSOR '<' '>' on STEP RECORD, call it; the shape of StepRecord_ButtonByTrackKind. Basis:
 ;   callers + captions + table. (notes/naming-pilot-2026-10-06/proposals_wave2_c.json)
 StepRecord_CursorKeyByTrackKind:
-	m_bit 0, MD16, UI_ScreenHoldState	; F674AD  bit 0,(0x2092)
+	bit	0, (UI_ScreenHoldState:16)	; F674AD  bit 0,(0x2092)
 	jr	nz, StepRecord_CursorKeyByTrackKind_Return	; F674B1  jr NZ,0xf674cd
 	ld	l, (3683:16)	; F674B3  ld L,(0x0e63)
 	and	l, 3	; F674B7  and L,0x03
@@ -150958,7 +150958,7 @@ StepRecord_NoAction:
 ;   (0x0E63) is 1 for a song track and 2 for the master track (Map_0E63_F6ACA7).
 ;   Screen 0x15's method has the same body; nothing requests screen 0x15 (prom_ab_step_record_screen_names.py).
 StepRecord_ButtonByTrackKind:		; <- T_StepRecord_ButtonByTrackKind
-	m_bit 0, MD16, UI_ScreenHoldState	; F675CC  bit 0,(0x2092)
+	bit	0, (UI_ScreenHoldState:16)	; F675CC  bit 0,(0x2092)
 	jr	nz, StepRecord_ButtonByTrackKind_Return	; F675D0  jr NZ,0xf675f2
 	ld	e, (3683:16)	; F675D2  ld E,(0x0e63)
 	and	e, 3	; F675D6  and E,0x03
@@ -151113,7 +151113,7 @@ StepRecord_ButtonBySubScreen:
 	jr	z, StepRecord_ButtonBySubScreen_Skip	; F676E6  jr Z,0xf676ed
 	and	(0x1071:16), 0xfe	; F676E8  and (0x1071),0xfe
 StepRecord_ButtonBySubScreen_Skip:
-	m_bit 0, MD16, 0x1071	; F676ED  bit 0,(0x1071)
+	bit	0, (0x1071:16)	; F676ED  bit 0,(0x1071)
 	jr	nz, StepRecord_ButtonBySubScreen_Skip5	; F676F1  jr NZ,0xf6771a
 	ld	a, (UI_StepRecord_SubScreen:16)	; F676F3  ld A,(0x0ef5)
 	cp	a, 0:i3	; F676F7  cp A,0
@@ -151400,7 +151400,7 @@ StepRecordSub01_ButtonDispatch_Return:
 	ret	; F678F7  ret
 ; SoftKeyCol1_StepRecordSub00: the 1st of the eight soft keys under the LCD; bit 7 of the code picks the LOWER (set) or UPPER (clear) of the column's two switches; StepRecordSub00_ButtonTable slot 0x00; StepRecordSub00_ButtonTable slot 0x11; StepRecordSub01_ButtonTable slot 0x00; StepRecordSub01_ButtonTable slot 0x11; StepRecordSub02_ButtonTable slot 0x00; StepRecordSub02_ButtonTable slot 0x11; StepRecordSub03_ButtonTable slot 0x00; StepRecordSub03_ButtonTable slot 0x11; StepRecordSub04_ButtonTable slot 0x00; StepRecordSub04_ButtonTable slot 0x11; StepRecordSub05_ButtonTable slot 0x00; StepRecordSub05_ButtonTable slot 0x11; StepRecordSub07_ButtonTable slot 0x00; StepRecordSub07_ButtonTable slot 0x11; StepRecordSub08_ButtonTable slot 0x00; StepRecordSub08_ButtonTable slot 0x11; StepRecordSub09_ButtonTable slot 0x00; StepRecordSub09_ButtonTable slot 0x11; StepRecordSub10_ButtonTable slot 0x00; StepRecordSub10_ButtonTable slot 0x11; StepRecordSub11_ButtonTable slot 0x00; StepRecordSub11_ButtonTable slot 0x11.  Slot -> control: wave7_panel_names_round11.CONTROL.
 SoftKeyCol1_StepRecordSub00:
-	m_bit 2, MD16, UI_RequestBits	; F678F8  bit 2,(0x2075)
+	bit	2, (UI_RequestBits:16)	; F678F8  bit 2,(0x2075)
 	jr	z, StepRecordSub00_SoftKeyCol1	; F678FC  jr Z,0xf6791e
 	ldw	bc, 10	; F678FE  ld BC,0x000a
 	push	xwa	; F67901  push XWA
@@ -153461,7 +153461,7 @@ sub_F68787:		; <- T_F42EE0
 	push	xde	; F68788  push XDE
 	push	xix	; F68789  push XIX
 	push	xiz	; F6878A  push XIZ
-	m_bit 3, MD16, 0x0e4e	; F6878B  bit 3,(0x0e4e)
+	bit	3, (0x0e4e:16)	; F6878B  bit 3,(0x0e4e)
 	jr	z, sub_F68787_Epilogue	; F6878F  jr Z,0xf687e7
 	cp	(0x0e63:16), 0x00	; F68791  cp (0x0e63),0x00
 	jr	nz, sub_F68787_Epilogue	; F68796  jr NZ,0xf687e7
@@ -153567,12 +153567,12 @@ sub_F687ED_Skip:
 	and	a, 1	; F6884E  and A,0x01
 	jr	z, sub_F687ED_Skip2	; F68851  jr Z,0xf68874
 	ld	xhl, 3663	; F68853  ld XHL,0x00000e4f
-	m_bit 3, MDI+r3, 0	; F68858  bit 3,(XHL)
+	bit	3, (xhl)	; F68858  bit 3,(XHL)
 	jr	z, sub_F687ED_Skip2	; F6885A  jr Z,0xf68874
 	ld	a, (BStore_DirEntry:16)	; F6885C  ld A,(0x1008)
 	ld	(3184:16), a	; F68860  ld (0x0c70),A
 	call	T_F40A04	; F68864  call 0xf40a04
-	m_res 7, MD16, 0x0e4f	; F68868  res 7,(0x0e4f)
+	res	7, (0x0e4f:16)	; F68868  res 7,(0x0e4f)
 	ld	(3689:16), 0	; F6886C  ld (0x0e69),0x00
 	calr	StepRecord_BeginSession	; F68871  calr 0xf6a9e3
 sub_F687ED_Skip2:
@@ -153606,9 +153606,9 @@ sub_F687ED_Skip3:
 	and	a, 63	; F688BC  and A,0x3f
 	cp	a, 0:i3	; F688BF  cp A,0
 	jr	nz, sub_F687ED_Return	; F688C1  jr NZ,0xf688cf
-	m_res 3, MD16, 0x0e4f	; F688C3  res 3,(0x0e4f)
-	m_res 1, MD16, 0x1269	; F688C7  res 1,(0x1269)
-	m_res 2, MD16, 0x1269	; F688CB  res 2,(0x1269)
+	res	3, (0x0e4f:16)	; F688C3  res 3,(0x0e4f)
+	res	1, (0x1269:16)	; F688C7  res 1,(0x1269)
+	res	2, (0x1269:16)	; F688CB  res 2,(0x1269)
 sub_F687ED_Return:
 	ret	; F688CF  ret
 
@@ -153691,7 +153691,7 @@ StepRecordSub18_LcdKeyRow2:
 	ld	a, (BStore_DirEntry:16)	; F6890D  ld A,(0x1008)
 	ld	(3184:16), a	; F68911  ld (0x0c70),A
 	call	T_F40A04	; F68915  call 0xf40a04
-	m_res 7, MD16, 0x0e4f	; F68919  res 7,(0x0e4f)
+	res	7, (0x0e4f:16)	; F68919  res 7,(0x0e4f)
 	ld	(3689:16), 0	; F6891D  ld (0x0e69),0x00
 	ld	(4715:16), 1	; F68922  ld (0x126b),0x01
 	calr	StepRecord_BeginSession	; F68927  calr 0xf6a9e3
@@ -153737,7 +153737,7 @@ StepRecordSub18_LcdKeyRow3:
 ;   when SeqBuf_Ring holds input (sub_F6C507 W = 0): kinds 1/2 consume it into the step entry (sub_F67418 ->
 ;   sub_F695B7) and refresh. Basis: caller + body. (notes/naming-pilot-2026-10-06/proposals_wave6_u.json)
 StepRecord_MainLoopService:		; <- T_StepRecord_MainLoopService
-	m_bit 3, MD16, 0x0e4e	; F68951  bit 3,(0x0e4e)
+	bit	3, (0x0e4e:16)	; F68951  bit 3,(0x0e4e)
 	jr	z, StepRecord_MainLoopService_Return	; F68955  jr Z,0xf68971
 	ld	l, (3683:16)	; F68957  ld L,(0x0e63)
 	and	l, 3	; F6895B  and L,0x03
@@ -153790,9 +153790,9 @@ StepRecord_MainLoopService_SongOrMasterTrack:
 	jr	nz, StepRecord_MainLoopService_SongOrMasterTrack_Return	; F6898C  jr NZ,0xf689ab
 	calr	sub_F67418	; F6898E  calr 0xf67418
 	calr	sub_F68982_Nop	; F68991  calr 0xf6b1e8
-	m_bit 0, MD16, UI_ScreenHoldState	; F68994  bit 0,(0x2092)
+	bit	0, (UI_ScreenHoldState:16)	; F68994  bit 0,(0x2092)
 	jr	nz, StepRecord_MainLoopService_SongOrMasterTrack_Return2	; F68998  jr NZ,0xf689ac
-	m_bit 0, MD16, 0x1071	; F6899A  bit 0,(0x1071)
+	bit	0, (0x1071:16)	; F6899A  bit 0,(0x1071)
 	jr	z, StepRecord_MainLoopService_SongOrMasterTrack_Skip	; F6899E  jr Z,0xf689a5
 	and	(0x1071:16), 0xfe	; F689A0  and (0x1071),0xfe
 StepRecord_MainLoopService_SongOrMasterTrack_Skip:
@@ -153817,11 +153817,11 @@ StepRecord_MainLoopService_Kind3:
 	jr	StepRecord_MainLoopService_Kind3_Return	; F689C3  jr T,0xf689de
 StepRecord_MainLoopService_Kind3_Skip:
 	calr	sub_F67418	; F689C5  calr 0xf67418
-	m_bit 0, MD16, UI_ScreenHoldState	; F689C8  bit 0,(0x2092)
+	bit	0, (UI_ScreenHoldState:16)	; F689C8  bit 0,(0x2092)
 	jr	nz, StepRecord_MainLoopService_Kind3_Return2	; F689CC  jr NZ,0xf689df
 	calr	StepRecord_RedrawMeasureRows	; F689CE  calr 0xf6833e
 	calr	sub_F68982_Nop	; F689D1  calr 0xf6b1e8
-	m_bit 0, MD16, UI_ScreenHoldState	; F689D4  bit 0,(0x2092)
+	bit	0, (UI_ScreenHoldState:16)	; F689D4  bit 0,(0x2092)
 	jr	nz, StepRecord_MainLoopService_Kind3_Return2	; F689D8  jr NZ,0xf689df
 	call	StepRecord_PaintPositionMarker_Call	; F689DA  call 0xf6d6d6
 StepRecord_MainLoopService_Kind3_Return:
@@ -153855,7 +153855,7 @@ StepRecord_MainLoopService_Kind0_Return:
 ; --------------------------------------------------------------------------
 sub_F689F5:
 	ld	xiy, 3662	; F689F5  ld XIY,0x00000e4e
-	m_bit 0, MDI+r5, 0	; F689FA  bit 0,(XIY)
+	bit	0, (xiy)	; F689FA  bit 0,(XIY)
 	jr	z, sub_F689F5_Return	; F689FC  jr Z,0xf68a34
 	and	(xiy), 0xfe	; F689FE  and (XIY),0xfe
 	ld	xiy, 4810	; F68A01  ld XIY,0x000012ca
@@ -153874,7 +153874,7 @@ sub_F689F5_Entry:
 	m_rd_ld_rrx RBX, 0x3C, r1	; F68A22  ld A,RL3
 	ld	(xiy), de	; F68A25  ld (XIY),DE
 	m_rd_ld_rrx RWX, 0x3E, r2	; F68A27  ld DE,QHL3
-	m_bit 0, MD16, 0x1071	; F68A2A  bit 0,(0x1071)
+	bit	0, (0x1071:16)	; F68A2A  bit 0,(0x1071)
 	jr	nz, sub_F689F5_Return	; F68A2E  jr NZ,0xf68a34
 	call	T_F431C0	; F68A30  call 0xf431c0
 sub_F689F5_Return:
@@ -153962,9 +153962,9 @@ sub_F689F5_Join2:
 ; --------------------------------------------------------------------------
 sub_F68AD0:
 	ld	xhl, 3663	; F68AD0  ld XHL,0x00000e4f
-	m_bit 2, MDI+r3, 0	; F68AD5  bit 2,(XHL)
+	bit	2, (xhl)	; F68AD5  bit 2,(XHL)
 	jr	z, sub_F68AD0_Return	; F68AD7  jr Z,0xf68b39
-	m_res 2, MDI+r3, 0	; F68AD9  res 2,(XHL)
+	res	2, (xhl)	; F68AD9  res 2,(XHL)
 	calr	BStore_ReadByteAtSongPosition	; F68ADB  calr 0xf6b8bd
 	and	a, 240	; F68ADE  and A,0xf0
 	cp	a, 144	; F68AE1  cp A,0x90
@@ -154045,7 +154045,7 @@ StepRecord_CursorForward:
 sub_F68B3A_Skip:
 	ld	w, 0:opc	; F68B54  ld W,0x00
 	calr	StepRecord_CursorStep	; F68B56  calr 0xf68b91
-	m_bit 5, MD16, 0x0e4f	; F68B59  bit 5,(0x0e4f)
+	bit	5, (0x0e4f:16)	; F68B59  bit 5,(0x0e4f)
 	jr	nz, sub_F68B3A_Skip2	; F68B5D  jr NZ,0xf68b65
 sub_F68B3A_Join:
 	ld	(3664:16), 255	; F68B5F  ld (0x0e50),0xff
@@ -154053,7 +154053,7 @@ sub_F68B3A_Join:
 sub_F68B3A_Skip2:
 	ld	w, 0:opc	; F68B65  ld W,0x00
 	calr	StepRecord_CursorStep	; F68B67  calr 0xf68b91
-	m_res 5, MD16, 0x0e4f	; F68B6A  res 5,(0x0e4f)
+	res	5, (0x0e4f:16)	; F68B6A  res 5,(0x0e4f)
 	jr	sub_F68B3A_Join	; F68B6E  jr T,0xf68b5f
 
 ; --------------------------------------------------------------------------
@@ -154075,7 +154075,7 @@ StepRecord_CursorBack:
 	ld	(3794:16), 255	; F68B70  ld (0x0ed2),0xff
 	ld	w, 1:opc	; F68B75  ld W,0x01
 	calr	StepRecord_CursorStep	; F68B77  calr 0xf68b91
-	m_bit 5, MD16, 0x0e4f	; F68B7A  bit 5,(0x0e4f)
+	bit	5, (0x0e4f:16)	; F68B7A  bit 5,(0x0e4f)
 	jr	nz, StepRecord_CursorBack_Skip	; F68B7E  jr NZ,0xf68b86
 StepRecord_CursorBack_Join:
 	ld	(3664:16), 255	; F68B80  ld (0x0e50),0xff
@@ -154083,7 +154083,7 @@ StepRecord_CursorBack_Join:
 StepRecord_CursorBack_Skip:
 	ld	w, 1:opc	; F68B86  ld W,0x01
 	calr	StepRecord_CursorStep	; F68B88  calr 0xf68b91
-	m_res 5, MD16, 0x0e4f	; F68B8B  res 5,(0x0e4f)
+	res	5, (0x0e4f:16)	; F68B8B  res 5,(0x0e4f)
 	jr	StepRecord_CursorBack_Join	; F68B8F  jr T,0xf68b80
 
 ; --------------------------------------------------------------------------
@@ -154444,7 +154444,7 @@ LcdKeyRow4_StepRecordSub00:
 LcdKeyRow4_StepRecordSub00_Skip2:
 	ld	(4205:16), 0	; F68E03  ld (0x106d),0x00
 	calr	StepRecord_CursorForwardByStepLength	; F68E08  calr 0xf69811
-	m_res 2, MD16, 0x0e4f	; F68E0B  res 2,(0x0e4f)
+	res	2, (0x0e4f:16)	; F68E0B  res 2,(0x0e4f)
 LcdKeyRow4_StepRecordSub00_Join:
 	or	(0x0ed5:16), 0x01	; F68E0F  or (0x0ed5),0x01
 	calr	sub_F69CB4	; F68E14  calr 0xf69cb4
@@ -154462,7 +154462,7 @@ LcdKeyRow4_StepRecordSub00_Join:
 LcdKeyRow4_StepRecordSub00_Skip3:
 	calr	StepRecord_ReturnToTrackKindPage	; F68E35  calr 0xf69c03
 LcdKeyRow4_StepRecordSub00_Join2:
-	m_res 2, MD16, 0x0e4f	; F68E38  res 2,(0x0e4f)
+	res	2, (0x0e4f:16)	; F68E38  res 2,(0x0e4f)
 	call	T_F431B4	; F68E3C  call 0xf431b4
 LcdKeyRow4_StepRecordSub00_Return:
 	ret	; F68E40  ret
@@ -154730,7 +154730,7 @@ StepRecordSub00_LcdKeyRow4_Join:
 	pop	xix	; F68FA4  pop XIX
 	call	(xhl)	; F68FA5  call T,XHL
 	calr	sub_F6742C	; F68FA7  calr 0xf6742c
-	m_res 2, MD16, 0x0e4f	; F68FAA  res 2,(0x0e4f)
+	res	2, (0x0e4f:16)	; F68FAA  res 2,(0x0e4f)
 	or	(0x20a9:16), 0x01	; F68FAE  or (0x20a9),0x01
 StepRecordSub00_LcdKeyRow4_Return:
 	ret	; F68FB3  ret
@@ -155475,7 +155475,7 @@ StepRecord_CursorToPrevMeasure_Loop2:
 	m_cp_rm MW16, 0x0e56, 3	; F69432  cp HL,(0x0e56)
 	jr	z, StepRecord_CursorToPrevMeasure_Loop	; F69436  jr Z,0xf69414
 StepRecord_CursorToPrevMeasure_Skip:
-	m_res 2, MD16, 0x0e4f	; F69438  res 2,(0x0e4f)
+	res	2, (0x0e4f:16)	; F69438  res 2,(0x0e4f)
 	ld	(3664:16), 255	; F6943C  ld (0x0e50),0xff
 	ret	; F69441  ret
 
@@ -155505,7 +155505,7 @@ StepRecord_CursorToNextMeasure:
 	ld	(3791:16), hl	; F69459  ld (0x0ecf),HL
 	ld	(3792:16), 0	; F6945D  ld (0x0ed0),0x00
 	calr	StepRecord_CursorForwardBeatsToTick	; F69462  calr 0xf69814
-	m_res 2, MD16, 0x0e4f	; F69465  res 2,(0x0e4f)
+	res	2, (0x0e4f:16)	; F69465  res 2,(0x0e4f)
 	ld	(3664:16), 255	; F69469  ld (0x0e50),0xff
 StepRecord_CursorToNextMeasure_Return:
 	ret	; F6946E  ret
@@ -155726,7 +155726,7 @@ StepRecord_ShowKind3Page_Skip:
 StepRecord_ShowKind3Page_Skip2:
 	calr	StepRecord_ReturnToTrackKindPage	; F6958F  calr 0xf69c03
 StepRecord_ShowKind3Page_Join:
-	m_res 2, MD16, 0x0e4f	; F69592  res 2,(0x0e4f)
+	res	2, (0x0e4f:16)	; F69592  res 2,(0x0e4f)
 	ret	; F69596  ret
 
 ; --------------------------------------------------------------------------
@@ -155795,7 +155795,7 @@ sub_F69597_Join:
 	calr	sub_F6C507	; F695F8  calr 0xf6c507
 	cp	w, 255	; F695FB  cp W,0xff
 	jr	nz, sub_F69597_Loop2	; F695FE  jr NZ,0xf695d4
-	m_bit 4, MD16, 0x0e4e	; F69600  bit 4,(0x0e4e)
+	bit	4, (0x0e4e:16)	; F69600  bit 4,(0x0e4e)
 	jr	nz, sub_F69597_Skip8	; F69604  jr NZ,0xf69606
 sub_F69597_Skip8:
 	and	(0x0e4e:16), 0xef	; F69606  and (0x0e4e),0xef
@@ -155873,7 +155873,7 @@ sub_F69597_Skip13:
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
 sub_F69692:
-	m_bit 0, MD16, UI_ScreenHoldState	; F69692  bit 0,(0x2092)
+	bit	0, (UI_ScreenHoldState:16)	; F69692  bit 0,(0x2092)
 	ret	; F69696  ret
 
 ; --------------------------------------------------------------------------
@@ -155898,10 +155898,10 @@ sub_F69697_Return:
 	ret	; F696A5  ret
 sub_F69697_Skip:
 	calr	sub_F69780	; F696A6  calr 0xf69780
-	m_bit 1, MD16, 0x0e4f	; F696A9  bit 1,(0x0e4f)
+	bit	1, (0x0e4f:16)	; F696A9  bit 1,(0x0e4f)
 	jr	z, sub_F69697_Return	; F696AD  jr Z,0xf696a5
 	calr	StepRecord_CalcStepAndNoteLength	; F696AF  calr 0xf6a7eb
-	m_res 1, MD16, 0x0e4f	; F696B2  res 1,(0x0e4f)
+	res	1, (0x0e4f:16)	; F696B2  res 1,(0x0e4f)
 	ld	e, (3799:16)	; F696B6  ld E,(0x0ed7)
 	xor	d, d	; F696BA  xor D,D
 	ld	xiy, 3800	; F696BC  ld XIY,0x00000ed8
@@ -155923,7 +155923,7 @@ sub_F69697_Loop:
 	mx_cp_mi8 MXB, ra_IX, ra_IZ, 0x09	; F696EB  cp (XIX+IZ),0x09
 	pop	xix	; F696F1  pop XIX
 	jr	nz, sub_F69697_Join	; F696F2  jr NZ,0xf69704
-	m_bit 2, MD16, 0x7f4d	; F696F4  bit 2,(0x7f4d)
+	bit	2, (0x7f4d:16)	; F696F4  bit 2,(0x7f4d)
 	jr	z, sub_F69697_Skip2	; F696F8  jr Z,0xf696fc
 	jr	sub_F69697_Join	; F696FA  jr T,0xf69704
 sub_F69697_Skip2:
@@ -155979,7 +155979,7 @@ sub_F69697_Join:
 sub_F69697_Skip3:
 	ld	(4205:16), 0	; F69773  ld (0x106d),0x00
 	calr	StepRecord_CursorForwardByStepLength	; F69778  calr 0xf69811
-	m_res 2, MD16, 0x0e4f	; F6977B  res 2,(0x0e4f)
+	res	2, (0x0e4f:16)	; F6977B  res 2,(0x0e4f)
 	ret	; F6977F  ret
 
 ; --------------------------------------------------------------------------
@@ -156040,7 +156040,7 @@ sub_F69780_Join:
 	ld	(3798:16), a	; F697FF  ld (0x0ed6),A
 	cp	a, 0:i3	; F69803  cp A,0
 	jr	nz, sub_F69780_Return	; F69805  jr NZ,0xf69810
-	m_set 1, MD16, 0x0e4f	; F69807  set 1,(0x0e4f)
+	set	1, (0x0e4f:16)	; F69807  set 1,(0x0e4f)
 	or	(0x0ed5:16), 0x01	; F6980B  or (0x0ed5),0x01
 sub_F69780_Return:
 	ret	; F69810  ret
@@ -156098,7 +156098,7 @@ StepRecord_CursorForwardBeatsToTick_Join2:
 	ld	h, (3667:16)	; F69834  ld H,(0x0e53)
 	cp	h, 0:i3	; F69838  cp H,0
 	jr	nz, StepRecord_CursorForwardBeatsToTick_Skip2	; F6983A  jr NZ,0xf69844
-	m_bit 2, MD16, 0x0e4e	; F6983C  bit 2,(0x0e4e)
+	bit	2, (0x0e4e:16)	; F6983C  bit 2,(0x0e4e)
 	jr	z, StepRecord_CursorForwardBeatsToTick_Skip2	; F69840  jr Z,0xf69844
 	ld	h, 96:opc	; F69842  ld H,0x60
 StepRecord_CursorForwardBeatsToTick_Skip2:
@@ -156223,7 +156223,7 @@ StepRecord_StepNoteNumber_Skip:
 	mx_cp_mi8 MXB, ra_DE, ra_IZ, 0x0f	; F698DF  cp (XDE+IZ),0x0f
 	pop	xde	; F698E5  pop XDE
 	jr	nz, StepRecord_StepNoteNumber_Skip2	; F698E6  jr NZ,0xf698f8
-	m_bit 2, MD16, 0x7f4d	; F698E8  bit 2,(0x7f4d)
+	bit	2, (0x7f4d:16)	; F698E8  bit 2,(0x7f4d)
 	jr	z, StepRecord_StepNoteNumber_Skip2	; F698EC  jr Z,0xf698f8
 	cp	a, 0:i3	; F698EE  cp A,0
 	jr	nz, StepRecord_StepNoteNumber_Skip2	; F698F0  jr NZ,0xf698f8
@@ -156262,7 +156262,7 @@ sub_F69910:
 	mx_cp_mi8 MXB, ra_IX, ra_IZ, 0x09	; F6991E  cp (XIX+IZ),0x09
 	pop	xix	; F69924  pop XIX
 	jr	nz, sub_F69910_Return	; F69925  jr NZ,0xf69937
-	m_bit 2, MD16, 0x7f4d	; F69927  bit 2,(0x7f4d)
+	bit	2, (0x7f4d:16)	; F69927  bit 2,(0x7f4d)
 	jr	z, sub_F69910_Skip	; F6992B  jr Z,0xf6992f
 	jr	sub_F69910_Return	; F6992D  jr T,0xf69937
 sub_F69910_Skip:
@@ -156292,7 +156292,7 @@ sub_F69938:
 	mx_cp_mi8 MXB, ra_IX, ra_IZ, 0x09	; F69946  cp (XIX+IZ),0x09
 	pop	xix	; F6994C  pop XIX
 	jr	nz, sub_F69938_Return	; F6994D  jr NZ,0xf6995f
-	m_bit 2, MD16, 0x7f4d	; F6994F  bit 2,(0x7f4d)
+	bit	2, (0x7f4d:16)	; F6994F  bit 2,(0x7f4d)
 	jr	z, sub_F69938_Skip	; F69953  jr Z,0xf69957
 	jr	sub_F69938_Return	; F69955  jr T,0xf6995f
 sub_F69938_Skip:
@@ -156720,7 +156720,7 @@ StepRecord_AdjustEvent14BitValue_Return:
 ;   transport line; 3: sub-screen 15. Step-record handlers call it after an entry is done. Basis: callers + body +
 ;   table targets. (notes/naming-pilot-2026-10-06/proposals_wave2_c.json)
 StepRecord_ReturnToTrackKindPage:
-	m_bit 0, MD16, 0x1071	; F69C03  bit 0,(0x1071)
+	bit	0, (0x1071:16)	; F69C03  bit 0,(0x1071)
 	jr	nz, StepRecord_ReturnToTrackKindPage_Return	; F69C07  jr NZ,0xf69c23
 	ld	l, (3683:16)	; F69C09  ld L,(0x0e63)
 	and	l, 3	; F69C0D  and L,0x03
@@ -156831,7 +156831,7 @@ sub_F69C8F:
 	and	a, 240	; F69CA4  and A,0xf0
 	cp	a, 144	; F69CA7  cp A,0x90
 	jr	nz, sub_F69C8F_Skip	; F69CAA  jr NZ,0xf69cae
-	m_set 2, MDI+r3, 0	; F69CAC  set 2,(XHL)
+	set	2, (xhl)	; F69CAC  set 2,(XHL)
 sub_F69C8F_Skip:
 	ld	(3674:16), 0	; F69CAE  ld (0x0e5a),0x00
 	ret	; F69CB3  ret
@@ -156852,7 +156852,7 @@ sub_F69C8F_Skip:
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
 sub_F69CB4:
-	m_bit 0, MD16, 0x0ed5	; F69CB4  bit 0,(0x0ed5)
+	bit	0, (0x0ed5:16)	; F69CB4  bit 0,(0x0ed5)
 	jr	z, sub_F69CB4_Return	; F69CB8  jr Z,0xf69cbc
 	jr	sub_F69CB4_Join	; F69CBA  jr T,0xf69cbd
 sub_F69CB4_Return:
@@ -156928,7 +156928,7 @@ sub_F69CB4_Skip2:
 	calr	sub_F69F5B	; F69D89  calr 0xf69f5b
 	calr	sub_F67420	; F69D8C  calr 0xf67420
 	call	T_F431C8	; F69D8F  call 0xf431c8
-	m_bit 0, MD16, 0x1071	; F69D93  bit 0,(0x1071)
+	bit	0, (0x1071:16)	; F69D93  bit 0,(0x1071)
 	jr	nz, sub_F69CB4_Return2	; F69D97  jr NZ,0xf69d9d
 	call	T_F431C0	; F69D99  call 0xf431c0
 sub_F69CB4_Return2:
@@ -157454,7 +157454,7 @@ StepRecord_CursorBackToMeasureStart_Loop:
 ;   bar; on error StepRecord_PostSysEx50_87FromW(0x68), W = 0xFF. Basis: callers + body + callee. (notes/naming-
 ;   pilot-2026-10-06/proposals_wave2_d.json)
 StepRecord_LoadMeasureBeat:
-	m_bit 0, MD16, 0x0e4f	; F6A20F  bit 0,(0x0e4f)
+	bit	0, (0x0e4f:16)	; F6A20F  bit 0,(0x0e4f)
 	jr	z, StepRecord_LoadMeasureBeat_Skip3	; F6A213  jr Z,0xf6a25d
 	or	(0x0c8a:16), 0x04	; F6A215  or (0x0c8a),0x04
 StepRecord_LoadMeasureBeat_Join:
@@ -157923,7 +157923,7 @@ sub_F6A4D9_Skip:
 	ld	(4802:16), a	; F6A54B  ld (0x12c2),A
 	ld	(3929:16), a	; F6A54F  ld (0x0f59),A
 	ld	(4790:16), a	; F6A553  ld (0x12b6),A
-	m_bit 0, MD16, UI_ScreenHoldState	; F6A557  bit 0,(0x2092)
+	bit	0, (UI_ScreenHoldState:16)	; F6A557  bit 0,(0x2092)
 	jrl	nz, sub_F6A4D9_Loop	; F6A55B  jrl NZ,0xf6a56c
 	ld	w, (4789:16)	; F6A55E  ld W,(0x12b5)
 	cp	w, 31	; F6A562  cp W,0x1f
@@ -158501,7 +158501,7 @@ StepLength_AddToTick_Return:
 	ld	a, (BStore_DirEntry:16)	; F6A8D8  ld A,(0x1008)
 	ld	(3184:16), a	; F6A8DC  ld (0x0c70),A
 	call	T_F40A04	; F6A8E0  call 0xf40a04
-	m_res 7, MD16, 0x0e4f	; F6A8E4  res 7,(0x0e4f)
+	res	7, (0x0e4f:16)	; F6A8E4  res 7,(0x0e4f)
 	calr	StepRecord_BeginSession	; F6A8E8  calr 0xf6a9e3
 	or	(0x20a9:16), 0x01	; F6A8EB  or (0x20a9),0x01
 StepLength_AddToTick_Epilogue:
@@ -158703,7 +158703,7 @@ StepRecord_BeginSession:
 	ld	(3688:16), 24	; F6AA19  ld (0x0e68),0x18
 	jrl	sub_F6A9E3_Return	; F6AA1E  jrl T,0xf6ab77
 StepRecord_BeginSession_Skip:
-	m_res 7, MD16, 0x0e4f	; F6AA21  res 7,(0x0e4f)
+	res	7, (0x0e4f:16)	; F6AA21  res 7,(0x0e4f)
 	calr	StepRecord_FlushSeqBufRing	; F6AA25  calr 0xf6ad30
 	call	T_TimedEventRing_Discard	; F6AA28  call 0xf40a14
 	calr	StepRecord_ResetCursorIfEntryUnused	; F6AA2C  calr 0xf6ac4d
@@ -158820,7 +158820,7 @@ sub_F6A9E3_Skip11:
 	or	(xiy), 0x08	; F6AB4D  or (XIY),0x08
 	and	(xiy), 0xdf	; F6AB50  and (XIY),0xdf
 	calr	StepRecord_LoadMeasureBeat	; F6AB53  calr 0xf6a20f
-	m_set 1, MD16, 0x0ed5	; F6AB56  set 1,(0x0ed5)
+	set	1, (0x0ed5:16)	; F6AB56  set 1,(0x0ed5)
 	ld	(4800:16), 0	; F6AB5A  ld (0x12c0),0x00
 	cp	(0x126b:16), 0x00	; F6AB5F  cp (0x126b),0x00
 	jr	nz, sub_F6A9E3_Skip12	; F6AB64  jr NZ,0xf6ab69
@@ -158836,7 +158836,7 @@ sub_F6A9E3_Return:
 	ret	; F6AB77  ret
 sub_F6A9E3_Skip13:
 	calr	Nop_Ret_F6AD5A	; F6AB78  calr 0xf6ad5a
-	m_bit 3, MD16, 0x0e4e	; F6AB7B  bit 3,(0x0e4e)
+	bit	3, (0x0e4e:16)	; F6AB7B  bit 3,(0x0e4e)
 	jr	z, sub_F6A9E3_Entry4_Code_Skip	; F6AB7F  jr Z,0xf6ab8b
 	calr	sub_F6ABB6	; F6AB81  calr 0xf6abb6
 	cp	(0x0e63:16), 0x00	; F6AB84  cp (0x0e63),0x00
@@ -158960,7 +158960,7 @@ sub_F6ABE2:
 	calr	sub_F69CB4	; F6ABE7  calr 0xf69cb4
 	calr	sub_F6742C	; F6ABEA  calr 0xf6742c
 	calr	sub_F69476	; F6ABED  calr 0xf69476
-	m_res 2, MD16, 0x0e4f	; F6ABF0  res 2,(0x0e4f)
+	res	2, (0x0e4f:16)	; F6ABF0  res 2,(0x0e4f)
 	ret	; F6ABF4  ret
 sub_F6ABF5:
 	call	sub_F6D5B5	; F6ABF5  call 0xf6d5b5
@@ -159392,7 +159392,7 @@ StepRecord_OnLeave:		; <- T_StepRecord_OnLeave
 	ld	a, (UI_ScreenLatch_Previous:16)	; F6AE63  ld A,(0x207b)
 	cp	(UI_ScreenLatch:16), a	; F6AE67  cp (0x207a),A
 	jrl	z, StepRecord_OnLeave_Return	; F6AE6B  jrl Z,0xf6af56
-	m_bit 0, MD16, 0x106e	; F6AE6E  bit 0,(0x106e)
+	bit	0, (0x106e:16)	; F6AE6E  bit 0,(0x106e)
 	jr	z, StepRecord_OnLeave_Skip	; F6AE72  jr Z,0xf6ae77
 	calr	sub_F6A304	; F6AE74  calr 0xf6a304
 StepRecord_OnLeave_Skip:
@@ -159446,7 +159446,7 @@ StepRecord_OnLeave_Join:
 	ld	(4768:16), wa	; F6AEFD  ld (0x12a0),WA
 	ld	(4713:16), a	; F6AF01  ld (0x1269),A
 	ld	(4715:16), a	; F6AF05  ld (0x126b),A
-	m_res 3, MD16, 0x0e4f	; F6AF09  res 3,(0x0e4f)
+	res	3, (0x0e4f:16)	; F6AF09  res 3,(0x0e4f)
 	call	StepRecord_PaintPositionMarker_Call	; F6AF0D  call 0xf6d6d6
 	calr	StepRecord_OnLeave_Nop	; F6AF11  calr 0xf6af57
 	ld	wa, (6304852:24)	; F6AF14  ld WA,(0x603454)
@@ -159525,9 +159525,9 @@ StepRecord_Tick_Join:
 	jr	nz, StepRecord_Tick_Skip2	; F6AF87  jr NZ,0xf6af8c
 	calr	StepRecord_ClearMsgLineField	; F6AF89  calr 0xf6b1ea
 StepRecord_Tick_Skip2:
-	m_bit 3, MD16, 0x0e4e	; F6AF8C  bit 3,(0x0e4e)
+	bit	3, (0x0e4e:16)	; F6AF8C  bit 3,(0x0e4e)
 	jr	z, StepRecord_Tick_Skip4	; F6AF90  jr Z,0xf6afd8
-	m_bit 0, MD16, 0x106e	; F6AF92  bit 0,(0x106e)
+	bit	0, (0x106e:16)	; F6AF92  bit 0,(0x106e)
 	jr	z, StepRecord_Tick_Skip3	; F6AF96  jr Z,0xf6afbe
 	ld	c, (4207:16)	; F6AF98  ld C,(0x106f)
 	add	c, 5	; F6AF9C  add C,0x05
@@ -159546,7 +159546,7 @@ StepRecord_Tick_Skip3:
 	ld	xiy, 3674	; F6AFBE  ld XIY,0x00000e5a
 	cp	(xiy), 0x00	; F6AFC3  cp (XIY),0x00
 	jr	z, StepRecord_Tick_Skip4	; F6AFC6  jr Z,0xf6afd8
-	m_bit 0, MD16, UI_ScreenHoldState	; F6AFC8  bit 0,(0x2092)
+	bit	0, (UI_ScreenHoldState:16)	; F6AFC8  bit 0,(0x2092)
 	jr	nz, StepRecord_Tick_Skip4	; F6AFCC  jr NZ,0xf6afd8
 	decm8	1, (xiy)	; F6AFCE  dec 1,(XIY)
 	cp	(xiy), 0x00	; F6AFD0  cp (XIY),0x00
@@ -159684,9 +159684,9 @@ BStore_SetSongPositionToChainHead_Skip:
 ; StepRecordSub17_SoftKeyCol7: the SoftKeyCol7 action of StepRecordSub17 -- called only by SoftKeyCol7_StepRecordSub17.
 StepRecordSub17_SoftKeyCol7:
 	ld	xhl, 3663	; F6B075  ld XHL,0x00000e4f
-	m_bit 3, MDI+r3, 0	; F6B07A  bit 3,(XHL)
+	bit	3, (xhl)	; F6B07A  bit 3,(XHL)
 	jr	z, StepRecordSub17_SoftKeyCol7_Skip	; F6B07C  jr Z,0xf6b085
-	m_res 3, MDI+r3, 0	; F6B07E  res 3,(XHL)
+	res	3, (xhl)	; F6B07E  res 3,(XHL)
 	calr	sub_F6ABB6	; F6B080  calr 0xf6abb6
 	jr	StepRecordSub17_SoftKeyCol7_Return	; F6B083  jr T,0xf6b0be
 StepRecordSub17_SoftKeyCol7_Skip:
@@ -159733,7 +159733,7 @@ StepRecordSub17_SoftKeyCol7_Skip3:
 ; --------------------------------------------------------------------------
 ; StepRecordSub17_SoftKeyCol6: the SoftKeyCol6 action of StepRecordSub17 -- called only by SoftKeyCol6_StepRecordSub17.
 StepRecordSub17_SoftKeyCol6:
-	m_res 7, MD16, 0x0e4f	; F6B0C4  res 7,(0x0e4f)
+	res	7, (0x0e4f:16)	; F6B0C4  res 7,(0x0e4f)
 	calr	sub_F6A2FC	; F6B0C8  calr 0xf6a2fc
 	cp	b, 22	; F6B0CB  cp B,0x16
 	jr	z, StepRecordSub17_SoftKeyCol6_Skip4	; F6B0CE  jr Z,0xf6b12f
@@ -159995,7 +159995,7 @@ StepRecord_AppendBeatMarkKeepCursor:
 	calr	BStore_ReadByteAtSongPositionPlus1	; F6B22E  calr 0xf6b8f1
 	cp	a, 132	; F6B231  cp A,0x84
 	jr	nz, StepRecord_AppendBeatMarkKeepCursor_Skip	; F6B234  jr NZ,0xf6b23a
-	m_set 7, MD16, 0x0e4f	; F6B236  set 7,(0x0e4f)
+	set	7, (0x0e4f:16)	; F6B236  set 7,(0x0e4f)
 StepRecord_AppendBeatMarkKeepCursor_Skip:
 	calr	StepRecord_AppendBeatMark	; F6B23A  calr 0xf6b257
 	xor	a, a	; F6B23D  xor A,A
@@ -160022,7 +160022,7 @@ StepRecord_AppendBeatMarkAtTrackEnd:
 	calr	BStore_ReadByteAtSongPositionPlus1	; F6B243  calr 0xf6b8f1
 	cp	a, 132	; F6B246  cp A,0x84
 	jr	nz, StepRecord_AppendBeatMarkAtTrackEnd_Skip	; F6B249  jr NZ,0xf6b24f
-	m_set 7, MD16, 0x0e4f	; F6B24B  set 7,(0x0e4f)
+	set	7, (0x0e4f:16)	; F6B24B  set 7,(0x0e4f)
 StepRecord_AppendBeatMarkAtTrackEnd_Skip:
 	calr	StepRecord_AppendBeatMark	; F6B24F  calr 0xf6b257
 	ret	; F6B252  ret
@@ -160097,9 +160097,9 @@ StepRecord_AppendBeatMark:
 ; --------------------------------------------------------------------------
 sub_F6B276:
 	ld	xhl, 3663	; F6B276  ld XHL,0x00000e4f
-	m_bit 7, MDI+r3, 0	; F6B27B  bit 7,(XHL)
+	bit	7, (xhl)	; F6B27B  bit 7,(XHL)
 	jr	z, sub_F6B276_Return	; F6B27D  jr Z,0xf6b2ec
-	m_res 7, MDI+r3, 0	; F6B27F  res 7,(XHL)
+	res	7, (xhl)	; F6B27F  res 7,(XHL)
 	calr	BStore_IsDirEntryUnused	; F6B281  calr 0xf6c4a5
 	cp	w, 0:i3	; F6B284  cp W,0
 	jr	nz, sub_F6B276_Return	; F6B286  jr NZ,0xf6b2ec
@@ -161657,7 +161657,7 @@ sub_F6BC89_Skip6:
 	mx_cp_mi8 MXB, ra_IX, ra_IZ, 0x09	; F6BD3C  cp (XIX+IZ),0x09
 	pop	xix	; F6BD42  pop XIX
 	jr	nz, sub_F6BC89_Join	; F6BD43  jr NZ,0xf6bd55
-	m_bit 2, MD16, 0x7f4d	; F6BD45  bit 2,(0x7f4d)
+	bit	2, (0x7f4d:16)	; F6BD45  bit 2,(0x7f4d)
 	jr	z, sub_F6BC89_Skip7	; F6BD49  jr Z,0xf6bd4d
 	jr	sub_F6BC89_Join	; F6BD4B  jr T,0xf6bd55
 sub_F6BC89_Skip7:
@@ -161689,7 +161689,7 @@ sub_F6BC89_Skip9:
 	ld	h, a	; F6BD8F  ld H,A
 	push	xhl	; F6BD91  push XHL
 	calr	BStore_ReadByteAtSongPositionAndAdvance	; F6BD92  calr 0xf6b95f
-	m_bit 0, MD16, 0x0eca	; F6BD95  bit 0,(0x0eca)
+	bit	0, (0x0eca:16)	; F6BD95  bit 0,(0x0eca)
 	jr	z, sub_F6BC89_Skip10	; F6BD99  jr Z,0xf6bd9e
 	or	a, 128	; F6BD9B  or A,0x80
 sub_F6BC89_Skip10:
@@ -161709,14 +161709,14 @@ sub_F6BC89_Skip11:
 	cp	a, 0:i3	; F6BDC4  cp A,0
 	jrl	nz, sub_F6BC89_Loop	; F6BDC6  jrl NZ,0xf6bd06
 	calr	BStore_ReadByteAtSongPositionAndAdvance	; F6BDC9  calr 0xf6b95f
-	m_bit 0, MD16, 0x0eca	; F6BDCC  bit 0,(0x0eca)
+	bit	0, (0x0eca:16)	; F6BDCC  bit 0,(0x0eca)
 	jr	z, sub_F6BC89_Skip12	; F6BDD0  jr Z,0xf6bdd5
 	or	a, 128	; F6BDD2  or A,0x80
 sub_F6BC89_Skip12:
 	ld	(4794:16), a	; F6BDD5  ld (0x12ba),A
 	call	BStore_ReadByteAtSongPositionAndAdvance	; F6BDD9  call 0xf6b95f
 	ld	(4795:16), a	; F6BDDD  ld (0x12bb),A
-	m_bit 1, MD16, 0x100e	; F6BDE1  bit 1,(0x100e)
+	bit	1, (0x100e:16)	; F6BDE1  bit 1,(0x100e)
 	jr	z, sub_F6BC89_Skip13	; F6BDE5  jr Z,0xf6bdea
 	or	a, 128	; F6BDE7  or A,0x80
 sub_F6BC89_Skip13:
@@ -161869,7 +161869,7 @@ sub_F6BC89_Skip34:
 	calr	MsgLine_NoteName_Veneer	; F6BF65  calr 0xf67458
 	ret	; F6BF68  ret
 	jrl	sub_F6BC89_Loop2	; F6BF69  jrl T,0xf6be09
-	m_bit 7, MD16, 0x1264	; F6BF6C  bit 7,(0x1264)
+	bit	7, (0x1264:16)	; F6BF6C  bit 7,(0x1264)
 	jrl	z, sub_F6BC89_Loop2	; F6BF70  jrl Z,0xf6be09
 	call	MsgLine_TotalReverb_Veneer	; F6BF73  call 0xf67468
 	ret	; F6BF77  ret
@@ -162740,7 +162740,7 @@ sub_F6C507_Skip:
 sub_F6C515:		; <- T_F42ED8
 	calr	sub_F67440	; F6C515  calr 0xf67440
 	ldw	(4768:16), 0	; F6C518  ld (0x12a0),0x0000
-	m_bit 3, MD16, 0x0e4e	; F6C51E  bit 3,(0x0e4e)
+	bit	3, (0x0e4e:16)	; F6C51E  bit 3,(0x0e4e)
 	jr	z, sub_F6C507_Return	; F6C522  jr Z,0xf6c528
 	call	T_TimedEventRing_Discard	; F6C524  call 0xf40a14
 sub_F6C507_Return:
@@ -163032,10 +163032,10 @@ sub_F6C6DE_Skip:
 	jr	nz, sub_F6C6DE_Loop	; F6C71C  jr NZ,0xf6c713
 	cp	(0x0fca:16), 0x0a	; F6C71E  cp (0x0fca),0x0a
 	jr	nz, sub_F6C6DE_Loop	; F6C723  jr NZ,0xf6c713
-	m_bit 4, MD16, 0x0fcc	; F6C725  bit 4,(0x0fcc)
+	bit	4, (0x0fcc:16)	; F6C725  bit 4,(0x0fcc)
 	jr	z, sub_F6C6DE_Loop	; F6C729  jr Z,0xf6c713
 	ld	a, 1:opc	; F6C72B  ld A,0x01
-	m_bit 4, MD16, 0x0fcb	; F6C72D  bit 4,(0x0fcb)
+	bit	4, (0x0fcb:16)	; F6C72D  bit 4,(0x0fcb)
 	jr	nz, sub_F6C6DE_Return	; F6C731  jr NZ,0xf6c735
 	ld	a, 2:opc	; F6C733  ld A,0x02
 sub_F6C6DE_Return:
@@ -163672,7 +163672,7 @@ sub_F6CB52_Skip3:
 sub_F6CB52_Skip4:
 	calr	StepRecord_ReturnToTrackKindPage	; F6CBCC  calr 0xf69c03
 sub_F6CB52_Join:
-	m_res 2, MD16, 0x0e4f	; F6CBCF  res 2,(0x0e4f)
+	res	2, (0x0e4f:16)	; F6CBCF  res 2,(0x0e4f)
 	ret	; F6CBD3  ret
 ; StepRecordSub11_ButtonDispatch: the panel-button reader of screen 0x0E sub-screen 11 -- StepRecord_SubScreenButtonTable/F67789
 ;   entry 11 (indexed by UI_StepRecord_SubScreen); calls StepRecordSub11_ButtonTable[code & 0x1F].
@@ -163794,7 +163794,7 @@ sub_F6CC6E_Skip:
 	jrl	nz, sub_F6CC6E_Return	; F6CCA6  jrl NZ,0xf6cd3c
 sub_F6CC6E_Skip2:
 	ld	(3527:16), 0	; F6CCA9  ld (0x0dc7),0x00
-	m_bit 7, MD16, 0x0dce	; F6CCAE  bit 7,(0x0dce)
+	bit	7, (0x0dce:16)	; F6CCAE  bit 7,(0x0dce)
 	jr	z, sub_F6CC6E_Skip4	; F6CCB2  jr Z,0xf6ccf9
 	and	(0x1071:16), 0xfe	; F6CCB4  and (0x1071),0xfe
 	call	T_F431B0	; F6CCB9  call 0xf431b0
@@ -163807,7 +163807,7 @@ sub_F6CC6E_Skip2:
 	m_cp_rm MB16, 0x0e53, 1	; F6CCCE  cp A,(0x0e53)
 	jr	nc, sub_F6CC6E_Skip3	; F6CCD2  jr NC,0xf6ccde
 	call	sub_F6741C	; F6CCD4  call 0xf6741c
-	m_res 2, MD16, 0x0e4f	; F6CCD8  res 2,(0x0e4f)
+	res	2, (0x0e4f:16)	; F6CCD8  res 2,(0x0e4f)
 	jr	sub_F6CC6E_Join	; F6CCDC  jr T,0xf6cce7
 sub_F6CC6E_Skip3:
 	ld	(4783:16), 255	; F6CCDE  ld (0x12af),0xff
@@ -163829,7 +163829,7 @@ sub_F6CC6E_Skip4:
 	m_cp_rm MB16, 0x0e53, 1	; F6CD14  cp A,(0x0e53)
 	jr	nc, sub_F6CC6E_Skip5	; F6CD18  jr NC,0xf6cd24
 	call	sub_F6741C	; F6CD1A  call 0xf6741c
-	m_res 2, MD16, 0x0e4f	; F6CD1E  res 2,(0x0e4f)
+	res	2, (0x0e4f:16)	; F6CD1E  res 2,(0x0e4f)
 	jr	sub_F6CC6E_Join2	; F6CD22  jr T,0xf6cd2d
 sub_F6CC6E_Skip5:
 	ld	(4783:16), 255	; F6CD24  ld (0x12af),0xff
@@ -163951,7 +163951,7 @@ LcdKeyRow3_StepRecordSub05_Skip3:
 LcdKeyRow3_StepRecordSub05_Skip4:
 	calr	StepRecord_ReturnToTrackKindPage	; F6CE1E  calr 0xf69c03
 LcdKeyRow3_StepRecordSub05_Join:
-	m_res 2, MD16, 0x0e4f	; F6CE21  res 2,(0x0e4f)
+	res	2, (0x0e4f:16)	; F6CE21  res 2,(0x0e4f)
 	ret	; F6CE25  ret
 
 ; --------------------------------------------------------------------------
@@ -166589,11 +166589,11 @@ sub_F6DA12:
 	ld	a, (xiy+)	; F6DA58  ld A,(XIY+)
 	ld	(xix+), a	; F6DA5B  ld (XIX+),A
 sub_F6DA12_Skip:
-	m_bit 7, MD16, 0x0e62	; F6DA5E  bit 7,(0x0e62)
+	bit	7, (0x0e62:16)	; F6DA5E  bit 7,(0x0e62)
 	jr	z, sub_F6DA12_Return	; F6DA62  jr Z,0xf6da71
 	ld	(xix+), 43	; F6DA64  ld (XIX+),0x2b
 sub_F6DA12_Skip2:
-	m_bit 7, MD16, 0x0e62	; F6DA68  bit 7,(0x0e62)
+	bit	7, (0x0e62:16)	; F6DA68  bit 7,(0x0e62)
 	jr	z, sub_F6DA12_Return	; F6DA6C  jr Z,0xf6da71
 	ld	(xix), 28	; F6DA6E  ld (XIX),0x1c
 sub_F6DA12_Return:
@@ -167583,7 +167583,7 @@ MsgLine_PartSustain_Skip:
 	ldw	bc, 8	; F6E0C8  ld BC,0x0008
 	ldir85	; F6E0CB  ldir
 	xor	hl, hl	; F6E0CD  xor HL,HL
-	m_bit 3, MD16, 0x125a	; F6E0CF  bit 3,(0x125a)
+	bit	3, (0x125a:16)	; F6E0CF  bit 3,(0x125a)
 	jr	nz, MsgLine_PartSustain_Skip2	; F6E0D3  jr NZ,0xf6e0d7
 	ld	l, 4:opc	; F6E0D5  ld L,0x04
 MsgLine_PartSustain_Skip2:
@@ -167755,7 +167755,7 @@ MsgLine_PartEffect_Skip:
 	ldw	bc, 7	; F6E1E8  ld BC,0x0007
 	ldir85	; F6E1EB  ldir
 	xor	hl, hl	; F6E1ED  xor HL,HL
-	m_bit 6, MD16, 0x125a	; F6E1EF  bit 6,(0x125a)
+	bit	6, (0x125a:16)	; F6E1EF  bit 6,(0x125a)
 	jr	nz, MsgLine_PartEffect_Skip2	; F6E1F3  jr NZ,0xf6e1f7
 	ld	l, 4:opc	; F6E1F5  ld L,0x04
 MsgLine_PartEffect_Skip2:
@@ -168460,7 +168460,7 @@ MsgLine_PartTremolo_Skip:
 	ldw	bc, 8	; F6E5DC  ld BC,0x0008
 	ldir85	; F6E5DF  ldir
 	xor	hl, hl	; F6E5E1  xor HL,HL
-	m_bit 7, MD16, 0x125a	; F6E5E3  bit 7,(0x125a)
+	bit	7, (0x125a:16)	; F6E5E3  bit 7,(0x125a)
 	jr	nz, MsgLine_PartTremolo_Skip2	; F6E5E7  jr NZ,0xf6e5eb
 	ld	l, 4:opc	; F6E5E9  ld L,0x04
 MsgLine_PartTremolo_Skip2:
@@ -168651,7 +168651,7 @@ MsgLine_TotalReverb_Skip:
 	ldw	bc, 13	; F6E647  ld BC,0x000d
 	ldir85	; F6E64A  ldir
 	xor	hl, hl	; F6E64C  xor HL,HL
-	m_bit 7, MD16, 0x125a	; F6E64E  bit 7,(0x125a)
+	bit	7, (0x125a:16)	; F6E64E  bit 7,(0x125a)
 	jr	nz, MsgLine_TotalReverb_Skip2	; F6E652  jr NZ,0xf6e656
 	ld	l, 4:opc	; F6E654  ld L,0x04
 MsgLine_TotalReverb_Skip2:
@@ -168905,7 +168905,7 @@ Data_F6E728:
 ;          on -- is called.
 ; --------------------------------------------------------------------------
 MsgLine_PartModulation2:
-	m_bit 0, MD16, UI_ScreenHoldState	; F6E73A  bit 0,(0x2092)
+	bit	0, (UI_ScreenHoldState:16)	; F6E73A  bit 0,(0x2092)
 	jr	nz, MsgLine_PartModulation2_Return	; F6E73E  jr NZ,0xf6e78a
 	calr	MsgLine_ClearTail	; F6E740  calr 0xf6d5f1
 	ld	l, (4697:16)	; F6E743  ld L,(0x1259)
@@ -168987,7 +168987,7 @@ Data_F6E78B:
 ;          on -- is called.
 ; --------------------------------------------------------------------------
 MsgLine_PartCtrlPedal:
-	m_bit 0, MD16, UI_ScreenHoldState	; F6E797  bit 0,(0x2092)
+	bit	0, (UI_ScreenHoldState:16)	; F6E797  bit 0,(0x2092)
 	jr	nz, MsgLine_PartCtrlPedal_Return	; F6E79B  jr NZ,0xf6e7e7
 	calr	MsgLine_ClearTail	; F6E79D  calr 0xf6d5f1
 	ld	l, (4697:16)	; F6E7A0  ld L,(0x1259)
@@ -169069,7 +169069,7 @@ Data_F6E7E8:
 ;          on -- is called.
 ; --------------------------------------------------------------------------
 MsgLine_PartHold:
-	m_bit 0, MD16, UI_ScreenHoldState	; F6E7F3  bit 0,(0x2092)
+	bit	0, (UI_ScreenHoldState:16)	; F6E7F3  bit 0,(0x2092)
 	jr	nz, MsgLine_PartHold_Return	; F6E7F7  jr NZ,0xf6e843
 	calr	MsgLine_ClearTail	; F6E7F9  calr 0xf6d5f1
 	ld	l, (4697:16)	; F6E7FC  ld L,(0x1259)
@@ -169152,7 +169152,7 @@ Data_F6E844:
 ;          on -- is called.
 ; --------------------------------------------------------------------------
 MsgLine_PartRtCreateX:
-	m_bit 0, MD16, UI_ScreenHoldState	; F6E849  bit 0,(0x2092)
+	bit	0, (UI_ScreenHoldState:16)	; F6E849  bit 0,(0x2092)
 	jr	nz, MsgLine_PartRtCreateX_Return	; F6E84D  jr NZ,0xf6e899
 	calr	MsgLine_ClearTail	; F6E84F  calr 0xf6d5f1
 	ld	l, (4697:16)	; F6E852  ld L,(0x1259)
@@ -169235,7 +169235,7 @@ Data_F6E89A:
 ;          on -- is called.
 ; --------------------------------------------------------------------------
 MsgLine_PartRtCreateY:
-	m_bit 0, MD16, UI_ScreenHoldState	; F6E8A6  bit 0,(0x2092)
+	bit	0, (UI_ScreenHoldState:16)	; F6E8A6  bit 0,(0x2092)
 	jr	nz, MsgLine_PartRtCreateY_Return	; F6E8AA  jr NZ,0xf6e8f6
 	calr	MsgLine_ClearTail	; F6E8AC  calr 0xf6d5f1
 	ld	l, (4697:16)	; F6E8AF  ld L,(0x1259)
@@ -169318,7 +169318,7 @@ Data_F6E8F7:
 ;          on -- is called.
 ; --------------------------------------------------------------------------
 MsgLine_PartRtCtrlX:
-	m_bit 0, MD16, UI_ScreenHoldState	; F6E903  bit 0,(0x2092)
+	bit	0, (UI_ScreenHoldState:16)	; F6E903  bit 0,(0x2092)
 	jr	nz, MsgLine_PartRtCtrlX_Return	; F6E907  jr NZ,0xf6e953
 	calr	MsgLine_ClearTail	; F6E909  calr 0xf6d5f1
 	ld	l, (4697:16)	; F6E90C  ld L,(0x1259)
@@ -169401,7 +169401,7 @@ Data_F6E954:
 ;          on -- is called.
 ; --------------------------------------------------------------------------
 MsgLine_PartRtCtrlY:
-	m_bit 0, MD16, UI_ScreenHoldState	; F6E95F  bit 0,(0x2092)
+	bit	0, (UI_ScreenHoldState:16)	; F6E95F  bit 0,(0x2092)
 	jr	nz, MsgLine_PartRtCtrlY_Return	; F6E963  jr NZ,0xf6e9af
 	calr	MsgLine_ClearTail	; F6E965  calr 0xf6d5f1
 	ld	l, (4697:16)	; F6E968  ld L,(0x1259)
@@ -169898,7 +169898,7 @@ sub_F6EC43_Return:
 ; --------------------------------------------------------------------------
 sub_F6EC6A:
 	xor	w, w	; F6EC6A  xor W,W
-	m_bit 0, MD16, 0x0e4f	; F6EC6C  bit 0,(0x0e4f)
+	bit	0, (0x0e4f:16)	; F6EC6C  bit 0,(0x0e4f)
 	jr	z, sub_F6EC6A_Skip2	; F6EC70  jr Z,0xf6ec93
 	xor	hl, hl	; F6EC72  xor HL,HL
 sub_F6EC6A_Join:
@@ -170998,7 +170998,7 @@ Smf_ReadFile_Skip20:
 Smf_ReadFile_Skip21:
 	ld	xwa, (13836:16)	; F6F866  ld XWA,(0x360c)
 	ld	(6304798:24), xwa	; F6F86A  ld (0x60341e),XWA
-	m_bit 0, MD24, 0x603420	; F6F86F  bit 0,(0x603420)
+	bit	0, (0x603420:24)	; F6F86F  bit 0,(0x603420)
 	jr	z, Smf_ReadFile_Skip22	; F6F874  jr Z,0xf6f87d
 	ld	(14162:16), 1	; F6F876  ld (0x3752),0x01
 	jr	Smf_ReadFile_Join7	; F6F87B  jr T,0xf6f882
@@ -172260,7 +172260,7 @@ SmfEvent_ChannelPressure_Return:
 ; --------------------------------------------------------------------------
 ; SmfEvent_ProgramChange: the arm for status 0xCn.
 SmfEvent_ProgramChange:
-	m_bit 0, MD16, 0x124b	; F70008  bit 0,(0x124b)
+	bit	0, (0x124b:16)	; F70008  bit 0,(0x124b)
 	jr	nz, SmfEvent_ProgramChange_Skip2	; F7000C  jr NZ,0xf70027
 	ld	(4665:16), 255	; F7000E  ld (0x1239),0xff
 	cp	(0x2732:16), 0x00	; F70013  cp (0x2732),0x00
@@ -172274,7 +172274,7 @@ SmfEvent_ProgramChange_Skip2:
 	and	iy, 15	; F7002B  and IY,0x000f
 	extz	xiy	; F7002F  extz XIY
 SmfEvent_ProgramChange_Loop:
-	m_bit 0, MD16, 0x11b1	; F70031  bit 0,(0x11b1)
+	bit	0, (0x11b1:16)	; F70031  bit 0,(0x11b1)
 	jr	nz, SmfEvent_ProgramChange_Skip3	; F70035  jr NZ,0xf7003f
 	calr	SmfPart_SetSoundFromProgramChange	; F70037  calr 0xf701f1
 	ld	(4664:16), 0	; F7003A  ld (0x1238),0x00
@@ -172682,7 +172682,7 @@ SmfEvent_PitchBend_Return:
 ; --------------------------------------------------------------------------
 ; SmfEvent_ControlChange: the arm for status 0xBn.
 SmfEvent_ControlChange:
-	m_bit 0, MD16, 0x124b	; F7039A  bit 0,(0x124b)
+	bit	0, (0x124b:16)	; F7039A  bit 0,(0x124b)
 	jr	nz, SmfEvent_ControlChange_Skip2	; F7039E  jr NZ,0xf703b9
 	ld	(4665:16), 255	; F703A0  ld (0x1239),0xff
 	cp	(0x2732:16), 0x00	; F703A5  cp (0x2732),0x00
@@ -173111,7 +173111,7 @@ sub_F705F7_Entry:
 ; --------------------------------------------------------------------------
 ; SmfCC_Volume: DispatchTable_F7048D[7]: SmfEvent_ControlChange's handler for MIDI controller 7.
 SmfCC_Volume:
-	m_bit 0, MD16, 0x124b	; F7063C  bit 0,(0x124b)
+	bit	0, (0x124b:16)	; F7063C  bit 0,(0x124b)
 	jr	nz, SmfCC_Volume_Skip3	; F70640  jr NZ,0xf7065b
 	ld	(4665:16), 255	; F70642  ld (0x1239),0xff
 	cp	(0x2732:16), 0x00	; F70647  cp (0x2732),0x00
@@ -173121,7 +173121,7 @@ SmfCC_Volume_Skip2:
 	ld	(4683:16), 1	; F70653  ld (0x124b),0x01
 	calr	SmfPart_ResetAllRecords	; F70658  calr 0xf71417
 SmfCC_Volume_Skip3:
-	m_bit 0, MD16, 0x11b1	; F7065B  bit 0,(0x11b1)
+	bit	0, (0x11b1:16)	; F7065B  bit 0,(0x11b1)
 	jr	nz, SmfCC_Volume_Skip4	; F7065F  jr NZ,0xf70669
 	calr	SmfPart_SetVolume	; F70661  calr 0xf7067f
 	ld	(4664:16), 0	; F70664  ld (0x1238),0x00
@@ -173171,7 +173171,7 @@ SmfPart_SetVolume:
 ; --------------------------------------------------------------------------
 ; SmfCC_Pan: DispatchTable_F7048D[10]: SmfEvent_ControlChange's handler for MIDI controller 10.
 SmfCC_Pan:
-	m_bit 0, MD16, 0x124b	; F7068A  bit 0,(0x124b)
+	bit	0, (0x124b:16)	; F7068A  bit 0,(0x124b)
 	jr	nz, SmfCC_Pan_Skip2	; F7068E  jr NZ,0xf706a9
 	ld	(4665:16), 255	; F70690  ld (0x1239),0xff
 	cp	(0x2732:16), 0x00	; F70695  cp (0x2732),0x00
@@ -173353,7 +173353,7 @@ SmfCC_BankSelectLsb:
 ; --------------------------------------------------------------------------
 ; SmfCC_Sustain: SmfEvent_ControlChange's arm for MIDI controller 64 (`cp a,64 / jr z`).
 SmfCC_Sustain:
-	m_bit 0, MD16, 0x124b	; F707E6  bit 0,(0x124b)
+	bit	0, (0x124b:16)	; F707E6  bit 0,(0x124b)
 	jr	nz, SmfCC_Sustain_Skip2	; F707EA  jr NZ,0xf70805
 	ld	(4665:16), 255	; F707EC  ld (0x1239),0xff
 	cp	(0x2732:16), 0x00	; F707F1  cp (0x2732),0x00
@@ -173580,7 +173580,7 @@ sub_F7039A_Nop2:
 ; --------------------------------------------------------------------------
 ; SmfCC_Effect3Depth: SmfEvent_ControlChange's arm for MIDI controller 93 (`cp a,93 / jr z`).
 SmfCC_Effect3Depth:
-	m_bit 0, MD16, 0x124b	; F70960  bit 0,(0x124b)
+	bit	0, (0x124b:16)	; F70960  bit 0,(0x124b)
 	jr	nz, SmfCC_Effect3Depth_Skip2	; F70964  jr NZ,0xf7097f
 	ld	(4665:16), 255	; F70966  ld (0x1239),0xff
 	cp	(0x2732:16), 0x00	; F7096B  cp (0x2732),0x00
@@ -173590,7 +173590,7 @@ SmfCC_Effect3Depth_Skip:
 	ld	(4683:16), 1	; F70977  ld (0x124b),0x01
 	calr	SmfPart_ResetAllRecords	; F7097C  calr 0xf71417
 SmfCC_Effect3Depth_Skip2:
-	m_bit 0, MD16, 0x11b1	; F7097F  bit 0,(0x11b1)
+	bit	0, (0x11b1:16)	; F7097F  bit 0,(0x11b1)
 	jr	nz, SmfCC_Effect3Depth_Skip3	; F70983  jr NZ,0xf7098d
 	calr	SmfPart_SetEffect3Depth	; F70985  calr 0xf709a3
 	ld	(4664:16), 0	; F70988  ld (0x1238),0x00
@@ -173640,7 +173640,7 @@ SmfPart_SetEffect3Depth:
 ; --------------------------------------------------------------------------
 ; SmfCC_Effect4Depth: SmfEvent_ControlChange's arm for MIDI controller 94 (`cp a,94 / jr z`).
 SmfCC_Effect4Depth:
-	m_bit 0, MD16, 0x11b1	; F709B6  bit 0,(0x11b1)
+	bit	0, (0x11b1:16)	; F709B6  bit 0,(0x11b1)
 	jr	nz, SmfCC_Effect4Depth_Skip	; F709BA  jr NZ,0xf709c4
 	calr	SmfPart_SetEffect4Depth	; F709BC  calr 0xf709da
 	ld	(4664:16), 0	; F709BF  ld (0x1238),0x00
@@ -173691,7 +173691,7 @@ SmfPart_SetEffect4Depth:
 ; --------------------------------------------------------------------------
 ; SmfCC_Effect1Depth: SmfEvent_ControlChange's arm for MIDI controller 91 (`cp a,91 / jr z`).
 SmfCC_Effect1Depth:
-	m_bit 0, MD16, 0x124b	; F709ED  bit 0,(0x124b)
+	bit	0, (0x124b:16)	; F709ED  bit 0,(0x124b)
 	jr	nz, SmfCC_Effect1Depth_Skip2	; F709F1  jr NZ,0xf70a0c
 	ld	(4665:16), 255	; F709F3  ld (0x1239),0xff
 	cp	(0x2732:16), 0x00	; F709F8  cp (0x2732),0x00
@@ -173701,7 +173701,7 @@ SmfCC_Effect1Depth_Skip:
 	ld	(4683:16), 1	; F70A04  ld (0x124b),0x01
 	calr	SmfPart_ResetAllRecords	; F70A09  calr 0xf71417
 SmfCC_Effect1Depth_Skip2:
-	m_bit 0, MD16, 0x11b1	; F70A0C  bit 0,(0x11b1)
+	bit	0, (0x11b1:16)	; F70A0C  bit 0,(0x11b1)
 	jr	nz, SmfCC_Effect1Depth_Skip3	; F70A10  jr NZ,0xf70a1a
 	calr	SmfPart_SetEffect1Depth	; F70A12  calr 0xf70a30
 	ld	(4664:16), 0	; F70A15  ld (0x1238),0x00
@@ -173924,7 +173924,7 @@ SmfCC_PutRpnParamEvent_Skip:
 	cp	c, 1:i3	; F70B45  cp C,1
 	jr	nz, SmfCC_PutRpnParamEvent_Skip2	; F70B47  jr NZ,0xf70b55
 	or	a, 2	; F70B49  or A,0x02
-	m_bit 7, MD16, 0x11af	; F70B4C  bit 7,(0x11af)
+	bit	7, (0x11af:16)	; F70B4C  bit 7,(0x11af)
 	jr	z, SmfCC_PutRpnParamEvent_Skip2	; F70B50  jr Z,0xf70b55
 	or	a, 1	; F70B52  or A,0x01
 SmfCC_PutRpnParamEvent_Skip2:
@@ -174361,10 +174361,10 @@ SmfCC_PutParamEvent:
 	push	xiy	; F70E27  push XIY
 	calr	TrackCursor_Load	; F70E28  calr 0xf7124e
 	ld	a, 176:opc	; F70E2B  ld A,0xb0
-	m_bit 7, MD16, 0x11b0	; F70E2D  bit 7,(0x11b0)
+	bit	7, (0x11b0:16)	; F70E2D  bit 7,(0x11b0)
 	jr	z, SmfCC_PutParamEvent_Skip	; F70E31  jr Z,0xf70e3f
 	or	a, 2	; F70E33  or A,0x02
-	m_bit 7, MD16, 0x11af	; F70E36  bit 7,(0x11af)
+	bit	7, (0x11af:16)	; F70E36  bit 7,(0x11af)
 	jr	z, SmfCC_PutParamEvent_Skip	; F70E3A  jr Z,0xf70e3f
 	or	a, 1	; F70E3C  or A,0x01
 SmfCC_PutParamEvent_Skip:
@@ -174443,7 +174443,7 @@ SmfCC_PutParamEvent_Return:
 SmfEvent_NoteOn:
 	ld	xiy, 12378	; F70ED5  ld XIY,0x0000305a
 SmfEvent_NoteOn_Loop:
-	m_bit 7, MDI+r5, 0	; F70EDA  bit 7,(XIY)
+	bit	7, (xiy)	; F70EDA  bit 7,(XIY)
 	jr	nz, SmfEvent_NoteOn_Skip	; F70EDC  jr NZ,0xf70ee2
 	ld	xix, xiy	; F70EDE  ld XIX,XIY
 	jr	SmfEvent_NoteOn_Join	; F70EE0  jr T,0xf70ef8
@@ -174455,7 +174455,7 @@ SmfEvent_NoteOn_Skip:
 	jrl	SmfEvent_NoteOn_Return	; F70EF5  jrl T,0xf70fd9
 SmfEvent_NoteOn_Join:
 	or	(0x11b1:16), 0x01	; F70EF8  or (0x11b1),0x01
-	m_bit 0, MD16, 0x124b	; F70EFD  bit 0,(0x124b)
+	bit	0, (0x124b:16)	; F70EFD  bit 0,(0x124b)
 	jr	nz, SmfEvent_NoteOn_Skip3	; F70F01  jr NZ,0xf70f1c
 	ld	(4665:16), 255	; F70F03  ld (0x1239),0xff
 	cp	(0x2732:16), 0x00	; F70F08  cp (0x2732),0x00
@@ -174643,7 +174643,7 @@ BStore_AdvanceCursorForWrite_Return:
 SmfEvent_NoteOff:
 	ld	xiy, 12378	; F71023  ld XIY,0x0000305a
 SmfEvent_NoteOff_Loop:
-	m_bit 7, MDI+r5, 0	; F71028  bit 7,(XIY)
+	bit	7, (xiy)	; F71028  bit 7,(XIY)
 	jrl	z, SmfEvent_NoteOff_Skip2	; F7102A  jrl Z,0xf710aa
 	ld	a, (xiy)	; F7102D  ld A,(XIY)
 	and	a, 15	; F7102F  and A,0x0f
@@ -175461,9 +175461,9 @@ SmfEvent_SysEx:
 	cp	w, 253	; F71530  cp W,0xfd
 	jrl	nz, SmfEvent_SysEx_Return	; F71533  jrl NZ,0xf71696
 SmfEvent_SysEx_Skip:
-	m_bit 0, MD16, 0x124b	; F71536  bit 0,(0x124b)
+	bit	0, (0x124b:16)	; F71536  bit 0,(0x124b)
 	jrl	nz, SmfEvent_SysEx_Skip3	; F7153A  jrl NZ,0xf715ad
-	m_bit 0, MD16, 0x11b1	; F7153D  bit 0,(0x11b1)
+	bit	0, (0x11b1:16)	; F7153D  bit 0,(0x11b1)
 	jrl	nz, SmfEvent_SysEx_Join2	; F71541  jrl NZ,0xf71693
 	cpw	(Smf_VlqValue:16), 0x0005	; F71544  cp (0x1198),0x0005
 	jrl	nz, SmfEvent_SysEx_Skip3	; F7154A  jrl NZ,0xf715ad
@@ -176683,7 +176683,7 @@ SmfEvent_ChannelPressure_MultiTrack_Return:
 ; --------------------------------------------------------------------------
 ; SmfEvent_ProgramChange_MultiTrack: SmfEvent_DispatchChannelMessage_MultiTrack's arm for status 0xC0.
 SmfEvent_ProgramChange_MultiTrack:
-	m_bit 0, MD16, 0x124b	; F71E89  bit 0,(0x124b)
+	bit	0, (0x124b:16)	; F71E89  bit 0,(0x124b)
 	jr	nz, SmfEvent_ProgramChange_MultiTrack_Skip2	; F71E8D  jr NZ,0xf71ea9
 	ld	(4665:16), 255	; F71E8F  ld (0x1239),0xff
 	cp	(0x2732:16), 0x00	; F71E94  cp (0x2732),0x00
@@ -176699,7 +176699,7 @@ SmfEvent_ProgramChange_MultiTrack_Loop:
 	ld	iy, (4530:16)	; F71EB1  ld IY,(0x11b2)
 	calr	Smf_TrackToSlot	; F71EB5  calr 0xf728fe
 	and	iy, 15	; F71EB8  and IY,0x000f
-	m_bit 0, MD16, 0x11b1	; F71EBC  bit 0,(0x11b1)
+	bit	0, (0x11b1:16)	; F71EBC  bit 0,(0x11b1)
 	jr	nz, SmfEvent_ProgramChange_MultiTrack_Skip3	; F71EC0  jr NZ,0xf71eca
 	calr	SmfPart_SetSoundFromProgramChange	; F71EC2  calr 0xf701f1
 	ld	(4664:16), 0	; F71EC5  ld (0x1238),0x00
@@ -176900,7 +176900,7 @@ SmfEvent_NoteOn_MultiTrack:
 ;   XIY from 0x305A in 7-byte steps to 0x313A.
 	ld	xiy, 12378	; F7208D  ld XIY,0x0000305a
 SmfEvent_NoteOn_MultiTrack_Loop:
-	m_bit 7, MDI+r5, 0	; F72092  bit 7,(XIY)
+	bit	7, (xiy)	; F72092  bit 7,(XIY)
 	jr	nz, SmfEvent_NoteOn_MultiTrack_Skip	; F72094  jr NZ,0xf7209a
 	ld	xix, xiy	; F72096  ld XIX,XIY
 	jr	SmfEvent_NoteOn_MultiTrack_Join	; F72098  jr T,0xf720ab
@@ -176910,7 +176910,7 @@ SmfEvent_NoteOn_MultiTrack_Skip:
 	jr	ule, SmfEvent_NoteOn_MultiTrack_Loop	; F720A6  jr ULE,0xf72092
 	jrl	SmfEvent_NoteOn_MultiTrack_Return	; F720A8  jrl T,0xf721a2
 SmfEvent_NoteOn_MultiTrack_Join:
-	m_bit 0, MD16, 0x124b	; F720AB  bit 0,(0x124b)
+	bit	0, (0x124b:16)	; F720AB  bit 0,(0x124b)
 	jr	nz, SmfEvent_NoteOn_MultiTrack_Skip3	; F720AF  jr NZ,0xf720cb
 	ld	(4665:16), 255	; F720B1  ld (0x1239),0xff
 	cp	(0x2732:16), 0x00	; F720B6  cp (0x2732),0x00
@@ -177031,7 +177031,7 @@ SmfEvent_NoteOn_MultiTrack_Return:
 SmfEvent_NoteOff_MultiTrack:
 	ld	xiy, 12378	; F721A3  ld XIY,0x0000305a
 SmfEvent_NoteOff_MultiTrack_Loop:
-	m_bit 7, MDI+r5, 0	; F721A8  bit 7,(XIY)
+	bit	7, (xiy)	; F721A8  bit 7,(XIY)
 	jr	z, SmfEvent_NoteOff_MultiTrack_Skip2	; F721AA  jr Z,0xf7221f
 	ld	a, (xiy)	; F721AC  ld A,(XIY)
 	and	a, 15	; F721AE  and A,0x0f
@@ -177099,7 +177099,7 @@ SmfEvent_NoteOff_MultiTrack_Return:
 ; --------------------------------------------------------------------------
 ; SmfEvent_ControlChange_MultiTrack: SmfEvent_DispatchChannelMessage_MultiTrack's arm for status 0xB0.
 SmfEvent_ControlChange_MultiTrack:
-	m_bit 0, MD16, 0x124b	; F7222D  bit 0,(0x124b)
+	bit	0, (0x124b:16)	; F7222D  bit 0,(0x124b)
 	jr	nz, SmfEvent_ControlChange_MultiTrack_Skip2	; F72231  jr NZ,0xf7224d
 	ld	(4665:16), 255	; F72233  ld (0x1239),0xff
 	cp	(0x2732:16), 0x00	; F72238  cp (0x2732),0x00
@@ -177504,7 +177504,7 @@ Data_F72495:
 ; --------------------------------------------------------------------------
 ; SmfCC_Volume_MultiTrack: SmfEvent_ControlChange_MultiTrack's DispatchTable_F72323[7], CC 7 -- the multi-track copy of SmfCC_Volume.
 SmfCC_Volume_MultiTrack:
-	m_bit 0, MD16, 0x11b1	; F724A7  bit 0,(0x11b1)
+	bit	0, (0x11b1:16)	; F724A7  bit 0,(0x11b1)
 	jr	nz, SmfCC_Volume_MultiTrack_Skip	; F724AB  jr NZ,0xf724b5
 	calr	SmfPart_SetVolume	; F724AD  calr 0xf7067f
 	ld	(4664:16), 0	; F724B0  ld (0x1238),0x00
@@ -177716,7 +177716,7 @@ SmfCC_BankSelectLsb_MultiTrack:
 	and	w, 127	; F72609  and W,0x7f
 	or	a, l	; F7260C  or A,L
 	ret	; F7260E  ret
-	m_bit 0, MD16, 0x11b1	; F7260F  bit 0,(0x11b1)
+	bit	0, (0x11b1:16)	; F7260F  bit 0,(0x11b1)
 	jr	nz, SmfCC_BankSelectLsb_MultiTrack_Skip	; F72613  jr NZ,0xf7261d
 	calr	SmfCC_Sustain_Nop	; F72615  calr 0xf7083a
 	ld	(4664:16), 0	; F72618  ld (0x1238),0x00
@@ -177749,7 +177749,7 @@ SmfCC_BankSelectLsb_MultiTrack_Skip2:
 ; --------------------------------------------------------------------------
 ; SmfCC_Effect1Depth_MultiTrack: SmfEvent_ControlChange_MultiTrack's `cp A,91` arm, CC 91 -- the multi-track copy of SmfCC_Effect1Depth.
 SmfCC_Effect1Depth_MultiTrack:
-	m_bit 0, MD16, 0x124b	; F7263A  bit 0,(0x124b)
+	bit	0, (0x124b:16)	; F7263A  bit 0,(0x124b)
 	jr	nz, SmfCC_Effect1Depth_MultiTrack_Skip2	; F7263E  jr NZ,0xf7265a
 	ld	(4665:16), 255	; F72640  ld (0x1239),0xff
 	cp	(0x2732:16), 0x00	; F72645  cp (0x2732),0x00
@@ -177759,7 +177759,7 @@ SmfCC_Effect1Depth_MultiTrack_Skip:
 	ld	(4683:16), 1	; F72651  ld (0x124b),0x01
 	call	SmfPart_ResetAllRecords	; F72656  call 0xf71417
 SmfCC_Effect1Depth_MultiTrack_Skip2:
-	m_bit 0, MD16, 0x11b1	; F7265A  bit 0,(0x11b1)
+	bit	0, (0x11b1:16)	; F7265A  bit 0,(0x11b1)
 	jr	nz, SmfCC_Effect1Depth_MultiTrack_Skip3	; F7265E  jr NZ,0xf72668
 	calr	SmfPart_SetEffect1Depth	; F72660  calr 0xf70a30
 	ld	(4664:16), 0	; F72663  ld (0x1238),0x00
@@ -177786,7 +177786,7 @@ SmfCC_Effect1Depth_MultiTrack_Skip3:
 ; --------------------------------------------------------------------------
 ; SmfCC_Effect3Depth_MultiTrack: SmfEvent_ControlChange_MultiTrack's `cp A,93` arm, CC 93 -- the multi-track copy of SmfCC_Effect3Depth.
 SmfCC_Effect3Depth_MultiTrack:
-	m_bit 0, MD16, 0x11b1	; F7267E  bit 0,(0x11b1)
+	bit	0, (0x11b1:16)	; F7267E  bit 0,(0x11b1)
 	jr	nz, SmfCC_Effect3Depth_MultiTrack_Skip	; F72682  jr NZ,0xf7268c
 	calr	SmfPart_SetEffect3Depth	; F72684  calr 0xf709a3
 	ld	(4664:16), 0	; F72687  ld (0x1238),0x00
@@ -177813,7 +177813,7 @@ SmfCC_Effect3Depth_MultiTrack_Skip:
 ; --------------------------------------------------------------------------
 ; SmfCC_Effect4Depth_MultiTrack: SmfEvent_ControlChange_MultiTrack's `cp A,94` arm, CC 94 -- the multi-track copy of SmfCC_Effect4Depth.
 SmfCC_Effect4Depth_MultiTrack:
-	m_bit 0, MD16, 0x11b1	; F726A2  bit 0,(0x11b1)
+	bit	0, (0x11b1:16)	; F726A2  bit 0,(0x11b1)
 	jr	nz, SmfCC_Effect4Depth_MultiTrack_Skip	; F726A6  jr NZ,0xf726b0
 	calr	SmfPart_SetEffect4Depth	; F726A8  calr 0xf709da
 	ld	(4664:16), 0	; F726AB  ld (0x1238),0x00
@@ -178490,12 +178490,12 @@ Smf_MergeTracks_Skip9:
 	calr	SmfMerge_CopySource2ToMark	; F72B81  calr 0xf72bbd
 	jr	Smf_MergeTracks_Join	; F72B84  jr T,0xf72b5d
 Smf_MergeTracks_Join2:
-	m_bit 0, MD16, 0x0c8b	; F72B86  bit 0,(0x0c8b)
+	bit	0, (0x0c8b:16)	; F72B86  bit 0,(0x0c8b)
 	jr	z, Smf_MergeTracks_Skip10	; F72B8A  jr Z,0xf72b91
 	calr	SmfMerge_CopySource2ToMark	; F72B8C  calr 0xf72bbd
 	jr	Smf_MergeTracks_Join	; F72B8F  jr T,0xf72b5d
 Smf_MergeTracks_Skip10:
-	m_bit 1, MD16, 0x0c8b	; F72B91  bit 1,(0x0c8b)
+	bit	1, (0x0c8b:16)	; F72B91  bit 1,(0x0c8b)
 	jr	z, Smf_MergeTracks_Skip11	; F72B95  jr Z,0xf72b9c
 	calr	SmfMerge_CopySource1ToMark	; F72B97  calr 0xf72bb3
 	jr	Smf_MergeTracks_Join	; F72B9A  jr T,0xf72b5d
@@ -178531,7 +178531,7 @@ Smf_MergeTracks_Return:
 ;   twin. (notes/naming-pilot-2026-10-06/proposals_wave7_y.json)
 SmfMerge_CopySource1ToMark:
 	calr	SmfMerge_CopySource1Event	; F72BB3  calr 0xf72d66
-	m_bit 0, MD16, 0x0c8b	; F72BB6  bit 0,(0x0c8b)
+	bit	0, (0x0c8b:16)	; F72BB6  bit 0,(0x0c8b)
 	jr	z, SmfMerge_CopySource1ToMark	; F72BBA  jr Z,0xf72bb3
 	ret	; F72BBC  ret
 
@@ -178554,7 +178554,7 @@ SmfMerge_CopySource1ToMark:
 ;   twin. (notes/naming-pilot-2026-10-06/proposals_wave7_y.json)
 SmfMerge_CopySource2ToMark:
 	calr	SmfMerge_CopySource2Event	; F72BBD  calr 0xf72d04
-	m_bit 1, MD16, 0x0c8b	; F72BC0  bit 1,(0x0c8b)
+	bit	1, (0x0c8b:16)	; F72BC0  bit 1,(0x0c8b)
 	jr	z, SmfMerge_CopySource2ToMark	; F72BC4  jr Z,0xf72bbd
 	ret	; F72BC6  ret
 
@@ -178772,7 +178772,7 @@ SmfMerge_FetchSource1Event_Return:
 SmfMerge_CopySource2Event:
 	ld	xhl, (BStore_CursorBlockAddr:16)	; F72D04  ld XHL,(0x126e)
 	mx_st_mr8 MXD, ra_HL, ra_IX, 2	; F72D08  ld (XHL+IX),B
-	m_bit 1, MD16, 0x0c8b	; F72D0D  bit 1,(0x0c8b)
+	bit	1, (0x0c8b:16)	; F72D0D  bit 1,(0x0c8b)
 	jr	nz, SmfMerge_CopySource2Event_Join	; F72D11  jr NZ,0xf72d23
 	calr	SmfMerge_AdvanceWriteCursor	; F72D13  calr 0xf72dc8
 	ld	xhl, (BStore_CursorBlockAddr:16)	; F72D16  ld XHL,(0x126e)
@@ -178825,7 +178825,7 @@ SmfMerge_CopySource2Event_Skip:
 SmfMerge_CopySource1Event:
 	ld	xhl, (BStore_CursorBlockAddr:16)	; F72D66  ld XHL,(0x126e)
 	mx_st_mr8 MXD, ra_HL, ra_IX, 3	; F72D6A  ld (XHL+IX),C
-	m_bit 0, MD16, 0x0c8b	; F72D6F  bit 0,(0x0c8b)
+	bit	0, (0x0c8b:16)	; F72D6F  bit 0,(0x0c8b)
 	jr	nz, SmfMerge_CopySource1Event_Join	; F72D73  jr NZ,0xf72d85
 	calr	SmfMerge_AdvanceWriteCursor	; F72D75  calr 0xf72dc8
 	ld	xhl, (BStore_CursorBlockAddr:16)	; F72D78  ld XHL,(0x126e)
@@ -178961,7 +178961,7 @@ SmfMerge_AdvanceReadCursor_Skip3:
 	ld	hl, wa	; F72E62  ld HL,WA
 	calr	SongStore_SeekBlock_Copy	; F72E64  calr 0xf72f0a
 	ld	xhl, (BStore_CursorBlockAddr:16)	; F72E67  ld XHL,(0x126e)
-	m_bit 7, MDI+r3, 0	; F72E6B  bit 7,(XHL)
+	bit	7, (xhl)	; F72E6B  bit 7,(XHL)
 	jr	nz, SmfMerge_AdvanceReadCursor_Skip4	; F72E6D  jr NZ,0xf72e76
 	ld	(BStore_ErrorCode:16), 11	; F72E6F  ld (0x0d4a),0x0b
 	jr	sub_F72E27_Entry	; F72E74  jr T,0xf72e79
@@ -179892,7 +179892,7 @@ SmfSplit_AdvanceReadCursor_Skip2:
 	ld	hl, wa	; F7341D  ld HL,WA
 	calr	SongStore_SeekBlock_Copy	; F7341F  calr 0xf72f0a
 	ld	xhl, (BStore_CursorBlockAddr:16)	; F73422  ld XHL,(0x126e)
-	m_bit 7, MDI+r3, 0	; F73426  bit 7,(XHL)
+	bit	7, (xhl)	; F73426  bit 7,(XHL)
 	jr	nz, SmfSplit_AdvanceReadCursor_Skip3	; F73428  jr NZ,0xf73431
 	ld	(BStore_ErrorCode:16), 11	; F7342A  ld (0x0d4a),0x0b
 	jr	SmfSplit_AdvanceReadCursor_Join	; F7342F  jr T,0xf7343b
@@ -180271,7 +180271,7 @@ sub_F73664_Skip:
 	ld	iy, bc	; F73671  ld IY,BC
 	and	(0x124d:16), 0xfe	; F73673  and (0x124d),0xfe
 	ld	(4665:16), 0	; F73678  ld (0x1239),0x00
-	m_bit 2, MD16, 0x7f4d	; F7367D  bit 2,(0x7f4d)
+	bit	2, (0x7f4d:16)	; F7367D  bit 2,(0x7f4d)
 	jr	z, sub_F73664_Skip2	; F73681  jr Z,0xf73688
 	ld	(4665:16), 255	; F73683  ld (0x1239),0xff
 sub_F73664_Skip2:
@@ -180684,7 +180684,7 @@ Smf_WriteFile_Skip6:
 	ld	wa, (13836:16)	; F739A3  ld WA,(0x360c)
 	ld	(4678:16), wa	; F739A7  ld (0x1246),WA
 	ld	(4665:16), 255	; F739AB  ld (0x1239),0xff
-	m_bit 2, MD16, 0x7f4d	; F739B0  bit 2,(0x7f4d)
+	bit	2, (0x7f4d:16)	; F739B0  bit 2,(0x7f4d)
 	jr	nz, Smf_WriteFile_Skip7	; F739B4  jr NZ,0xf739bb
 	ld	(4665:16), 0	; F739B6  ld (0x1239),0x00
 Smf_WriteFile_Skip7:
@@ -180783,9 +180783,9 @@ Smf_WriteFile_Skip9:
 	ld	a, (xiy+)	; F73AE1  ld A,(XIY+)
 	cp	bc, 8	; F73AE4  cp BC,0x0008
 	jr	nz, Smf_WriteFile_Skip10	; F73AE8  jr NZ,0xf73af8
-	m_bit 0, MD16, 0x133e	; F73AEA  bit 0,(0x133e)
+	bit	0, (0x133e:16)	; F73AEA  bit 0,(0x133e)
 	jr	z, Smf_WriteFile_Skip10	; F73AEE  jr Z,0xf73af8
-	m_bit 1, MD16, 0x133e	; F73AF0  bit 1,(0x133e)
+	bit	1, (0x133e:16)	; F73AF0  bit 1,(0x133e)
 	jr	z, Smf_WriteFile_Skip10	; F73AF4  jr Z,0xf73af8
 	ld	a, 32:opc	; F73AF6  ld A,0x20
 Smf_WriteFile_Skip10:
@@ -180804,7 +180804,7 @@ Smf_WriteFile_Skip10:
 Smf_WriteFile_Skip11:
 	djnz16	bc, -52	; F73B12  djnz BC,0xf73ae1
 	ld	(InputStream_Cursor:16), xix	; F73B15  ld (0x1088),XIX
-	m_bit 0, MD16, 0x133e	; F73B19  bit 0,(0x133e)
+	bit	0, (0x133e:16)	; F73B19  bit 0,(0x133e)
 	jrl	z, Smf_WriteFile_Join4	; F73B1D  jrl Z,0xf73eb8
 	call	T_BStore_Workspace_StoreParamImage	; F73B20  call 0xf42574
 	calr	SmfExport_WriteParamSysEx	; F73B24  calr 0xf74ec5
@@ -181382,9 +181382,9 @@ Smf_WriteFile_Skip24:
 	ld	a, (4507:16)	; F74142  ld A,(0x119b)
 	cp	a, 0:i3	; F74146  cp A,0
 	jrl	nz, Smf_WriteFile_Loop6	; F74148  jrl NZ,0xf73efe
-	m_bit 0, MD16, 0x133e	; F7414B  bit 0,(0x133e)
+	bit	0, (0x133e:16)	; F7414B  bit 0,(0x133e)
 	jr	z, Smf_WriteFile_Skip25	; F7414F  jr Z,0xf74158
-	m_bit 0, MD16, 0x11b1	; F74151  bit 0,(0x11b1)
+	bit	0, (0x11b1:16)	; F74151  bit 0,(0x11b1)
 	jrl	z, Smf_WriteFile_Loop6	; F74155  jrl Z,0xf73efe
 Smf_WriteFile_Skip25:
 	ld	c, (4505:16)	; F74158  ld C,(0x1199)
@@ -181697,9 +181697,9 @@ Smf_WriteFile_Join6:
 	jrl	z, Smf_WriteFile_Skip38	; F744C1  jrl Z,0xf7455b
 	jrl	nz, Smf_WriteFile_Loop6	; F744C4  jrl NZ,0xf73efe
 Smf_WriteFile_Skip36:
-	m_bit 0, MD16, 0x133e	; F744C7  bit 0,(0x133e)
+	bit	0, (0x133e:16)	; F744C7  bit 0,(0x133e)
 	jrl	z, Smf_WriteFile_Skip37	; F744CB  jrl Z,0xf744d5
-	m_bit 0, MD16, 0x11b1	; F744CE  bit 0,(0x11b1)
+	bit	0, (0x11b1:16)	; F744CE  bit 0,(0x11b1)
 	jrl	z, Smf_WriteFile_Loop6	; F744D2  jrl Z,0xf73efe
 Smf_WriteFile_Skip37:
 	ld	c, (4505:16)	; F744D5  ld C,(0x1199)
@@ -181753,9 +181753,9 @@ Smf_WriteFile_Skip37:
 	jrl	nz, Smf_WriteFile_Join10	; F74555  jrl NZ,0xf747dc
 	jrl	Smf_WriteFile_Loop6	; F74558  jrl T,0xf73efe
 Smf_WriteFile_Skip38:
-	m_bit 0, MD16, 0x133e	; F7455B  bit 0,(0x133e)
+	bit	0, (0x133e:16)	; F7455B  bit 0,(0x133e)
 	jrl	z, Smf_WriteFile_Skip39	; F7455F  jrl Z,0xf74569
-	m_bit 0, MD16, 0x11b1	; F74562  bit 0,(0x11b1)
+	bit	0, (0x11b1:16)	; F74562  bit 0,(0x11b1)
 	jrl	z, Smf_WriteFile_Loop6	; F74566  jrl Z,0xf73efe
 Smf_WriteFile_Skip39:
 	ld	c, (4505:16)	; F74569  ld C,(0x1199)
@@ -181800,9 +181800,9 @@ Smf_WriteFile_Skip39:
 	jrl	nz, Smf_WriteFile_Join10	; F745D0  jrl NZ,0xf747dc
 	jrl	Smf_WriteFile_Loop6	; F745D3  jrl T,0xf73efe
 Smf_WriteFile_Skip40:
-	m_bit 0, MD16, 0x133e	; F745D6  bit 0,(0x133e)
+	bit	0, (0x133e:16)	; F745D6  bit 0,(0x133e)
 	jrl	z, Smf_WriteFile_Skip41	; F745DA  jrl Z,0xf745e4
-	m_bit 0, MD16, 0x11b1	; F745DD  bit 0,(0x11b1)
+	bit	0, (0x11b1:16)	; F745DD  bit 0,(0x11b1)
 	jrl	z, Smf_WriteFile_Loop6	; F745E1  jrl Z,0xf73efe
 Smf_WriteFile_Skip41:
 	ld	c, (4505:16)	; F745E4  ld C,(0x1199)
@@ -181847,9 +181847,9 @@ Smf_WriteFile_Skip41:
 	jrl	nz, Smf_WriteFile_Join10	; F7464B  jrl NZ,0xf747dc
 	jrl	Smf_WriteFile_Loop6	; F7464E  jrl T,0xf73efe
 Smf_WriteFile_Skip42:
-	m_bit 0, MD16, 0x133e	; F74651  bit 0,(0x133e)
+	bit	0, (0x133e:16)	; F74651  bit 0,(0x133e)
 	jr	z, Smf_WriteFile_Skip43	; F74655  jr Z,0xf7465e
-	m_bit 0, MD16, 0x11b1	; F74657  bit 0,(0x11b1)
+	bit	0, (0x11b1:16)	; F74657  bit 0,(0x11b1)
 	jrl	z, Smf_WriteFile_Loop6	; F7465B  jrl Z,0xf73efe
 Smf_WriteFile_Skip43:
 	ld	c, (4505:16)	; F7465E  ld C,(0x1199)
@@ -181875,18 +181875,18 @@ Smf_WriteFile_Skip44:
 	ld	bc, (4508:16)	; F74693  ld BC,(0x119c)
 	jrl	Smf_WriteFile_Loop6	; F74697  jrl T,0xf73efe
 Smf_WriteFile_Skip45:
-	m_bit 0, MD16, 0x133e	; F7469A  bit 0,(0x133e)
+	bit	0, (0x133e:16)	; F7469A  bit 0,(0x133e)
 	jr	z, Smf_WriteFile_Skip46	; F7469E  jr Z,0xf746a7
-	m_bit 0, MD16, 0x11b1	; F746A0  bit 0,(0x11b1)
+	bit	0, (0x11b1:16)	; F746A0  bit 0,(0x11b1)
 	jrl	z, Smf_WriteFile_Loop6	; F746A4  jrl Z,0xf73efe
 Smf_WriteFile_Skip46:
 	ld	w, 93:opc	; F746A7  ld W,0x5d
 	ld	l, (4508:16)	; F746A9  ld L,(0x119c)
 	jr	Smf_WriteFile_Join7	; F746AD  jr T,0xf74713
 Smf_WriteFile_Skip47:
-	m_bit 0, MD16, 0x133e	; F746AF  bit 0,(0x133e)
+	bit	0, (0x133e:16)	; F746AF  bit 0,(0x133e)
 	jr	z, Smf_WriteFile_Skip48	; F746B3  jr Z,0xf746bc
-	m_bit 0, MD16, 0x11b1	; F746B5  bit 0,(0x11b1)
+	bit	0, (0x11b1:16)	; F746B5  bit 0,(0x11b1)
 	jrl	z, Smf_WriteFile_Loop6	; F746B9  jrl Z,0xf73efe
 Smf_WriteFile_Skip48:
 	ld	w, 94:opc	; F746BC  ld W,0x5e
@@ -181895,9 +181895,9 @@ Smf_WriteFile_Skip48:
 	ld	bc, (4508:16)	; F746C4  ld BC,(0x119c)
 	bit	3, b	; F746C8  bit 0x03,B
 	jrl	z, Smf_WriteFile_Loop6	; F746CB  jrl Z,0xf73efe
-	m_bit 0, MD16, 0x133e	; F746CE  bit 0,(0x133e)
+	bit	0, (0x133e:16)	; F746CE  bit 0,(0x133e)
 	jr	z, Smf_WriteFile_Skip49	; F746D2  jr Z,0xf746db
-	m_bit 0, MD16, 0x11b1	; F746D4  bit 0,(0x11b1)
+	bit	0, (0x11b1:16)	; F746D4  bit 0,(0x11b1)
 	jrl	z, Smf_WriteFile_Loop6	; F746D8  jrl Z,0xf73efe
 Smf_WriteFile_Skip49:
 	ld	w, 64:opc	; F746DB  ld W,0x40
@@ -181909,18 +181909,18 @@ Smf_WriteFile_Skip49:
 Smf_WriteFile_Skip50:
 	ld	w, 91:opc	; F746E8  ld W,0x5b
 	ld	l, 0:opc	; F746EA  ld L,0x00
-	m_bit 0, MD16, 0x133e	; F746EC  bit 0,(0x133e)
+	bit	0, (0x133e:16)	; F746EC  bit 0,(0x133e)
 	jr	z, Smf_WriteFile_Skip51	; F746F0  jr Z,0xf746f9
-	m_bit 0, MD16, 0x11b1	; F746F2  bit 0,(0x11b1)
+	bit	0, (0x11b1:16)	; F746F2  bit 0,(0x11b1)
 	jrl	z, Smf_WriteFile_Loop6	; F746F6  jrl Z,0xf73efe
 Smf_WriteFile_Skip51:
 	ld	l, (4508:16)	; F746F9  ld L,(0x119c)
 	and	l, 127	; F746FD  and L,0x7f
 	jr	Smf_WriteFile_Join7	; F74700  jr T,0xf74713
 Smf_WriteFile_Skip52:
-	m_bit 0, MD16, 0x133e	; F74702  bit 0,(0x133e)
+	bit	0, (0x133e:16)	; F74702  bit 0,(0x133e)
 	jr	z, Smf_WriteFile_Skip53	; F74706  jr Z,0xf7470f
-	m_bit 0, MD16, 0x11b1	; F74708  bit 0,(0x11b1)
+	bit	0, (0x11b1:16)	; F74708  bit 0,(0x11b1)
 	jrl	z, Smf_WriteFile_Loop6	; F7470C  jrl Z,0xf73efe
 Smf_WriteFile_Skip53:
 	ld	l, (4508:16)	; F7470F  ld L,(0x119c)
@@ -182481,12 +182481,12 @@ SmfWrite_EncodeDeltaTime:
 	ld	de, (4226:16)	; F74A89  ld DE,(0x1082)
 	sub	wa, de	; F74A8D  sub WA,DE
 	ld	(4522:16), wa	; F74A8F  ld (0x11aa),WA
-	m_bit 0, MD16, 0x1268	; F74A93  bit 0,(0x1268)
+	bit	0, (0x1268:16)	; F74A93  bit 0,(0x1268)
 	jr	nz, SmfWrite_EncodeDeltaTime_Skip2	; F74A97  jr NZ,0xf74ab6
-	m_bit 1, MD16, 0x133e	; F74A99  bit 1,(0x133e)
+	bit	1, (0x133e:16)	; F74A99  bit 1,(0x133e)
 	jr	z, SmfWrite_EncodeDeltaTime_Skip2	; F74A9D  jr Z,0xf74ab6
 	addw	(0x11aa:16), 0x0180	; F74A9F  add (0x11aa),0x0180
-	m_bit 0, MD16, 0x133e	; F74AA5  bit 0,(0x133e)
+	bit	0, (0x133e:16)	; F74AA5  bit 0,(0x133e)
 	jr	z, SmfWrite_EncodeDeltaTime_Skip	; F74AA9  jr Z,0xf74ab1
 	subw	(0x11aa:16), 0x0122	; F74AAB  sub (0x11aa),0x0122
 SmfWrite_EncodeDeltaTime_Skip:
@@ -183194,7 +183194,7 @@ SmfExport_WriteParamSysEx_Join:
 	ld	a, (xiz+)	; F74F91  ld A,(XIZ+)
 	cp	hl, 19	; F74F94  cp HL,0x0013
 	jr	nz, SmfExport_WriteParamSysEx_Skip6	; F74F98  jr NZ,0xf74fa2
-	m_bit 1, MD16, 0x133e	; F74F9A  bit 1,(0x133e)
+	bit	1, (0x133e:16)	; F74F9A  bit 1,(0x133e)
 	jr	nz, SmfExport_WriteParamSysEx_Skip6	; F74F9E  jr NZ,0xf74fa2
 	ld	a, 0:opc	; F74FA0  ld A,0x00
 SmfExport_WriteParamSysEx_Skip6:
@@ -183609,7 +183609,7 @@ SmfSize_Pass_Loop:
 	calr	SmfSize_WriteTempoEvent	; F75753  calr 0xf761a1
 	ld	(4665:16), 255	; F75756  ld (0x1239),0xff
 	ld	xiy, Data_F75675	; F7575B  ld XIY,0x00f75675
-	m_bit 2, MD16, 0x7f4d	; F75760  bit 2,(0x7f4d)
+	bit	2, (0x7f4d:16)	; F75760  bit 2,(0x7f4d)
 	jr	nz, SmfSize_Pass_Skip2	; F75764  jr NZ,0xf75770
 	ld	xiy, Data_F75675 + 0x8	; F75766  ld XIY,0x00f7567d
 	ld	(4665:16), 0	; F7576B  ld (0x1239),0x00
@@ -183619,9 +183619,9 @@ SmfSize_Pass_Skip2:
 	ld	a, (xiy+)	; F75777  ld A,(XIY+)
 	cp	bc, 8	; F7577A  cp BC,0x0008
 	jr	nz, SmfSize_Pass_Skip3	; F7577E  jr NZ,0xf7578e
-	m_bit 0, MD16, 0x133e	; F75780  bit 0,(0x133e)
+	bit	0, (0x133e:16)	; F75780  bit 0,(0x133e)
 	jr	z, SmfSize_Pass_Skip3	; F75784  jr Z,0xf7578e
-	m_bit 1, MD16, 0x133e	; F75786  bit 1,(0x133e)
+	bit	1, (0x133e:16)	; F75786  bit 1,(0x133e)
 	jr	z, SmfSize_Pass_Skip3	; F7578A  jr Z,0xf7578e
 	ld	a, 32:opc	; F7578C  ld A,0x20
 SmfSize_Pass_Skip3:
@@ -183636,7 +183636,7 @@ SmfSize_Pass_Skip3:
 	ld	xix, (InputStream_Cursor:16)	; F7579A  ld XIX,(0x1088)
 	djnz16	bc, -42	; F7579E  djnz BC,0xf75777
 	ld	(InputStream_Cursor:16), xix	; F757A1  ld (0x1088),XIX
-	m_bit 0, MD16, 0x133e	; F757A5  bit 0,(0x133e)
+	bit	0, (0x133e:16)	; F757A5  bit 0,(0x133e)
 	jrl	z, SmfSize_Pass_Join5	; F757A9  jrl Z,0xf75a8c
 	ld	xiy, 6305440	; F757AC  ld XIY,0x006036a0
 	ld	(3184:16), 0	; F757B1  ld (0x0c70),0x00
@@ -184143,9 +184143,9 @@ SmfSize_Pass_Skip17:
 	ld	a, (4507:16)	; F75CBF  ld A,(0x119b)
 	cp	a, 0:i3	; F75CC3  cp A,0
 	jrl	nz, SmfSize_Pass_Loop4	; F75CC5  jrl NZ,0xf75ad2
-	m_bit 0, MD16, 0x133e	; F75CC8  bit 0,(0x133e)
+	bit	0, (0x133e:16)	; F75CC8  bit 0,(0x133e)
 	jr	z, SmfSize_Pass_Skip18	; F75CCC  jr Z,0xf75cd5
-	m_bit 0, MD16, 0x11b1	; F75CCE  bit 0,(0x11b1)
+	bit	0, (0x11b1:16)	; F75CCE  bit 0,(0x11b1)
 	jrl	z, SmfSize_Pass_Loop4	; F75CD2  jrl Z,0xf75ad2
 SmfSize_Pass_Skip18:
 	ld	c, (4505:16)	; F75CD5  ld C,(0x1199)
@@ -184321,9 +184321,9 @@ SmfSize_Pass_Join7:
 	jr	z, SmfSize_Pass_Skip25	; F75EBF  jr Z,0xf75f30
 	jrl	nz, SmfSize_Pass_Loop4	; F75EC1  jrl NZ,0xf75ad2
 SmfSize_Pass_Skip23:
-	m_bit 0, MD16, 0x133e	; F75EC4  bit 0,(0x133e)
+	bit	0, (0x133e:16)	; F75EC4  bit 0,(0x133e)
 	jrl	z, SmfSize_Pass_Skip24	; F75EC8  jrl Z,0xf75ed2
-	m_bit 0, MD16, 0x11b1	; F75ECB  bit 0,(0x11b1)
+	bit	0, (0x11b1:16)	; F75ECB  bit 0,(0x11b1)
 	jrl	z, SmfSize_Pass_Loop4	; F75ECF  jrl Z,0xf75ad2
 SmfSize_Pass_Skip24:
 	ld	c, (4505:16)	; F75ED2  ld C,(0x1199)
@@ -184367,9 +184367,9 @@ SmfSize_Pass_Skip24:
 	popw	wa	; F75F2C  pop WA
 	jrl	SmfSize_Pass_Loop4	; F75F2D  jrl T,0xf75ad2
 SmfSize_Pass_Skip25:
-	m_bit 0, MD16, 0x133e	; F75F30  bit 0,(0x133e)
+	bit	0, (0x133e:16)	; F75F30  bit 0,(0x133e)
 	jrl	z, SmfSize_Pass_Skip26	; F75F34  jrl Z,0xf75f3e
-	m_bit 0, MD16, 0x11b1	; F75F37  bit 0,(0x11b1)
+	bit	0, (0x11b1:16)	; F75F37  bit 0,(0x11b1)
 	jrl	z, SmfSize_Pass_Loop4	; F75F3B  jrl Z,0xf75ad2
 SmfSize_Pass_Skip26:
 	ld	c, (4505:16)	; F75F3E  ld C,(0x1199)
@@ -184404,9 +184404,9 @@ SmfSize_Pass_Skip26:
 	calr	SmfSize_WriteChannelEvent	; F75F7D  calr 0xf7626a
 	jrl	SmfSize_Pass_Loop4	; F75F80  jrl T,0xf75ad2
 SmfSize_Pass_Skip27:
-	m_bit 0, MD16, 0x133e	; F75F83  bit 0,(0x133e)
+	bit	0, (0x133e:16)	; F75F83  bit 0,(0x133e)
 	jr	z, SmfSize_Pass_Skip28	; F75F87  jr Z,0xf75f90
-	m_bit 0, MD16, 0x11b1	; F75F89  bit 0,(0x11b1)
+	bit	0, (0x11b1:16)	; F75F89  bit 0,(0x11b1)
 	jrl	z, SmfSize_Pass_Loop4	; F75F8D  jrl Z,0xf75ad2
 SmfSize_Pass_Skip28:
 	ld	c, (4505:16)	; F75F90  ld C,(0x1199)
@@ -184441,9 +184441,9 @@ SmfSize_Pass_Skip28:
 	calr	SmfSize_WriteChannelEvent	; F75FCD  calr 0xf7626a
 	jrl	SmfSize_Pass_Loop4	; F75FD0  jrl T,0xf75ad2
 SmfSize_Pass_Skip29:
-	m_bit 0, MD16, 0x133e	; F75FD3  bit 0,(0x133e)
+	bit	0, (0x133e:16)	; F75FD3  bit 0,(0x133e)
 	jr	z, SmfSize_Pass_Skip30	; F75FD7  jr Z,0xf75fe0
-	m_bit 0, MD16, 0x11b1	; F75FD9  bit 0,(0x11b1)
+	bit	0, (0x11b1:16)	; F75FD9  bit 0,(0x11b1)
 	jrl	z, SmfSize_Pass_Loop4	; F75FDD  jrl Z,0xf75ad2
 SmfSize_Pass_Skip30:
 	ld	c, (4505:16)	; F75FE0  ld C,(0x1199)
@@ -184465,26 +184465,26 @@ SmfSize_Pass_Skip31:
 	ld	bc, (4508:16)	; F76005  ld BC,(0x119c)
 	jrl	SmfSize_Pass_Loop4	; F76009  jrl T,0xf75ad2
 SmfSize_Pass_Skip32:
-	m_bit 0, MD16, 0x133e	; F7600C  bit 0,(0x133e)
+	bit	0, (0x133e:16)	; F7600C  bit 0,(0x133e)
 	jr	z, SmfSize_Pass_Skip33	; F76010  jr Z,0xf76019
-	m_bit 0, MD16, 0x11b1	; F76012  bit 0,(0x11b1)
+	bit	0, (0x11b1:16)	; F76012  bit 0,(0x11b1)
 	jrl	z, SmfSize_Pass_Loop4	; F76016  jrl Z,0xf75ad2
 SmfSize_Pass_Skip33:
 	ld	w, 93:opc	; F76019  ld W,0x5d
 	ld	l, (4508:16)	; F7601B  ld L,(0x119c)
 	jr	SmfSize_Pass_Join8	; F7601F  jr T,0xf76072
 SmfSize_Pass_Skip34:
-	m_bit 0, MD16, 0x133e	; F76021  bit 0,(0x133e)
+	bit	0, (0x133e:16)	; F76021  bit 0,(0x133e)
 	jr	z, SmfSize_Pass_Skip35	; F76025  jr Z,0xf7602e
-	m_bit 0, MD16, 0x11b1	; F76027  bit 0,(0x11b1)
+	bit	0, (0x11b1:16)	; F76027  bit 0,(0x11b1)
 	jrl	z, SmfSize_Pass_Loop4	; F7602B  jrl Z,0xf75ad2
 SmfSize_Pass_Skip35:
 	ld	w, 93:opc	; F7602E  ld W,0x5d
 	ld	l, (4508:16)	; F76030  ld L,(0x119c)
 	jr	SmfSize_Pass_Join8	; F76034  jr T,0xf76072
-	m_bit 0, MD16, 0x133e	; F76036  bit 0,(0x133e)
+	bit	0, (0x133e:16)	; F76036  bit 0,(0x133e)
 	jr	z, SmfSize_Pass_Skip36	; F7603A  jr Z,0xf76043
-	m_bit 0, MD16, 0x11b1	; F7603C  bit 0,(0x11b1)
+	bit	0, (0x11b1:16)	; F7603C  bit 0,(0x11b1)
 	jrl	z, SmfSize_Pass_Loop4	; F76040  jrl Z,0xf75ad2
 SmfSize_Pass_Skip36:
 	ld	w, 64:opc	; F76043  ld W,0x40
@@ -184492,18 +184492,18 @@ SmfSize_Pass_Skip36:
 SmfSize_Pass_Skip37:
 	ld	w, 91:opc	; F76047  ld W,0x5b
 	ld	l, 0:opc	; F76049  ld L,0x00
-	m_bit 0, MD16, 0x133e	; F7604B  bit 0,(0x133e)
+	bit	0, (0x133e:16)	; F7604B  bit 0,(0x133e)
 	jr	z, SmfSize_Pass_Skip38	; F7604F  jr Z,0xf76058
-	m_bit 0, MD16, 0x11b1	; F76051  bit 0,(0x11b1)
+	bit	0, (0x11b1:16)	; F76051  bit 0,(0x11b1)
 	jrl	z, SmfSize_Pass_Loop4	; F76055  jrl Z,0xf75ad2
 SmfSize_Pass_Skip38:
 	ld	l, (4508:16)	; F76058  ld L,(0x119c)
 	and	l, 127	; F7605C  and L,0x7f
 	jr	SmfSize_Pass_Join8	; F7605F  jr T,0xf76072
 SmfSize_Pass_Skip39:
-	m_bit 0, MD16, 0x133e	; F76061  bit 0,(0x133e)
+	bit	0, (0x133e:16)	; F76061  bit 0,(0x133e)
 	jr	z, SmfSize_Pass_Skip40	; F76065  jr Z,0xf7606e
-	m_bit 0, MD16, 0x11b1	; F76067  bit 0,(0x11b1)
+	bit	0, (0x11b1:16)	; F76067  bit 0,(0x11b1)
 	jrl	z, SmfSize_Pass_Loop4	; F7606B  jrl Z,0xf75ad2
 SmfSize_Pass_Skip40:
 	ld	l, (4508:16)	; F7606E  ld L,(0x119c)
@@ -184798,12 +184798,12 @@ SmfSize_EncodeDeltaTime:
 	ld	de, (4226:16)	; F7622E  ld DE,(0x1082)
 	sub	wa, de	; F76232  sub WA,DE
 	ld	(4522:16), wa	; F76234  ld (0x11aa),WA
-	m_bit 0, MD16, 0x1268	; F76238  bit 0,(0x1268)
+	bit	0, (0x1268:16)	; F76238  bit 0,(0x1268)
 	jr	nz, SmfSize_EncodeDeltaTime_Skip2	; F7623C  jr NZ,0xf7625b
-	m_bit 1, MD16, 0x133e	; F7623E  bit 1,(0x133e)
+	bit	1, (0x133e:16)	; F7623E  bit 1,(0x133e)
 	jr	z, SmfSize_EncodeDeltaTime_Skip2	; F76242  jr Z,0xf7625b
 	addw	(0x11aa:16), 0x0180	; F76244  add (0x11aa),0x0180
-	m_bit 0, MD16, 0x133e	; F7624A  bit 0,(0x133e)
+	bit	0, (0x133e:16)	; F7624A  bit 0,(0x133e)
 	jr	z, SmfSize_EncodeDeltaTime_Skip	; F7624E  jr Z,0xf76256
 	subw	(0x11aa:16), 0x0122	; F76250  sub (0x11aa),0x0122
 SmfSize_EncodeDeltaTime_Skip:
@@ -192034,7 +192034,7 @@ MeasureDelete_LcdKeyRow3:		; <- T_MeasureDelete_LcdKeyRow3
 	jr	MeasureDelete_LcdKeyRow3_Return	; F7B178  jr T,0xf7b1d0
 MeasureDelete_LcdKeyRow3_Skip2:
 	ld	a, (3091:16)	; F7B17A  ld A,(0x0c13)
-	m_bit 0, MD16, 0x0c35	; F7B17E  bit 0,(0x0c35)
+	bit	0, (0x0c35:16)	; F7B17E  bit 0,(0x0c35)
 	jr	z, MeasureDelete_LcdKeyRow3_Skip3	; F7B182  jr Z,0xf7b186
 	ld	a, 127:opc	; F7B184  ld A,0x7f
 MeasureDelete_LcdKeyRow3_Skip3:
@@ -192468,7 +192468,7 @@ MeasureErase_LcdKeyRow2:		; <- T_MeasureErase_LcdKeyRow2
 	jr	MeasureErase_LcdKeyRow2_Return	; F7B3F6  jr T,0xf7b456
 MeasureErase_LcdKeyRow2_Skip3:
 	ld	a, (3091:16)	; F7B3F8  ld A,(0x0c13)
-	m_bit 1, MD16, 0x0c35	; F7B3FC  bit 1,(0x0c35)
+	bit	1, (0x0c35:16)	; F7B3FC  bit 1,(0x0c35)
 	jr	z, MeasureErase_LcdKeyRow2_Skip4	; F7B400  jr Z,0xf7b404
 	ld	a, 127:opc	; F7B402  ld A,0x7f
 MeasureErase_LcdKeyRow2_Skip4:
@@ -192814,7 +192814,7 @@ MeasureInsert_StepFromTrack:
 	calr	SeqJob_StepTrack	; F7B5FD  calr 0xf7cd30
 	cp	a, 18	; F7B600  cp A,0x12
 	jr	z, MeasureInsert_StepFromTrack_Skip2	; F7B603  jr Z,0xf7b636
-	m_bit 2, MD16, 0x0c35	; F7B605  bit 2,(0x0c35)
+	bit	2, (0x0c35:16)	; F7B605  bit 2,(0x0c35)
 	jr	z, MeasureInsert_StepFromTrack_Skip	; F7B609  jr Z,0xf7b61e
 	ld	l, a	; F7B60B  ld L,A
 	ld	(3552:16), l	; F7B60D  ld (0x0de0),L
@@ -192921,7 +192921,7 @@ MeasureInsert_StepToTrack:
 	calr	SeqJob_StepTrack	; F7B6D6  calr 0xf7cd30
 	cp	a, 18	; F7B6D9  cp A,0x12
 	jr	z, MeasureInsert_StepToTrack_Skip2	; F7B6DC  jr Z,0xf7b70f
-	m_bit 2, MD16, 0x0c35	; F7B6DE  bit 2,(0x0c35)
+	bit	2, (0x0c35:16)	; F7B6DE  bit 2,(0x0c35)
 	jr	z, MeasureInsert_StepToTrack_Skip	; F7B6E2  jr Z,0xf7b6f7
 	ld	l, a	; F7B6E4  ld L,A
 	ld	(3547:16), l	; F7B6E6  ld (0x0ddb),L
@@ -193042,7 +193042,7 @@ MeasureInsert_LcdKeyRow1_Skip:
 	ld	a, (3092:16)	; F7B7AC  ld A,(0x0c14)
 	ld	(3185:16), a	; F7B7B0  ld (0x0c71),A
 	ld	(3184:16), 127	; F7B7B4  ld (0x0c70),0x7f
-	m_bit 2, MD16, 0x0c35	; F7B7B9  bit 2,(0x0c35)
+	bit	2, (0x0c35:16)	; F7B7B9  bit 2,(0x0c35)
 	jr	nz, MeasureInsert_LcdKeyRow1_Skip2	; F7B7BD  jr NZ,0xf7b7c7
 	ld	a, (3091:16)	; F7B7BF  ld A,(0x0c13)
 	ld	(3184:16), a	; F7B7C3  ld (0x0c70),A
@@ -193112,7 +193112,7 @@ MeasureInsert_LoadSavedFields:
 	ld	a, (6304871:24)	; F7B852  ld A,(0x603467)
 	cp	a, 127	; F7B857  cp A,0x7f
 	jr	nz, MeasureInsert_LoadSavedFields_Skip	; F7B85A  jr NZ,0xf7b860
-	m_set 2, MD16, 0x0c35	; F7B85C  set 2,(0x0c35)
+	set	2, (0x0c35:16)	; F7B85C  set 2,(0x0c35)
 MeasureInsert_LoadSavedFields_Skip:
 	ld	(3091:16), a	; F7B860  ld (0x0c13),A
 	ld	(3547:16), a	; F7B864  ld (0x0ddb),A
@@ -193426,7 +193426,7 @@ MeasureC0py_StepFromTrack:
 	calr	SeqJob_StepTrack	; F7BA1E  calr 0xf7cd30
 	cp	a, 18	; F7BA21  cp A,0x12
 	jr	z, MeasureC0py_StepFromTrack_Skip2	; F7BA24  jr Z,0xf7ba57
-	m_bit 3, MD16, 0x0c35	; F7BA26  bit 3,(0x0c35)
+	bit	3, (0x0c35:16)	; F7BA26  bit 3,(0x0c35)
 	jr	z, MeasureC0py_StepFromTrack_Skip	; F7BA2A  jr Z,0xf7ba3f
 	ld	l, a	; F7BA2C  ld L,A
 	ld	(3124:16), l	; F7BA2E  ld (0x0c34),L
@@ -193533,7 +193533,7 @@ MeasureC0py_StepToTrack:
 	calr	SeqJob_StepTrack	; F7BAF7  calr 0xf7cd30
 	cp	a, 18	; F7BAFA  cp A,0x12
 	jr	z, MeasureC0py_StepToTrack_Skip2	; F7BAFD  jr Z,0xf7bb30
-	m_bit 3, MD16, 0x0c35	; F7BAFF  bit 3,(0x0c35)
+	bit	3, (0x0c35:16)	; F7BAFF  bit 3,(0x0c35)
 	jr	z, MeasureC0py_StepToTrack_Skip	; F7BB03  jr Z,0xf7bb18
 	ld	l, a	; F7BB05  ld L,A
 	ld	(3119:16), l	; F7BB07  ld (0x0c2f),L
@@ -193654,7 +193654,7 @@ MeasureC0py_LcdKeyRow1_Skip:
 	ld	a, (3092:16)	; F7BBCD  ld A,(0x0c14)
 	ld	(3185:16), a	; F7BBD1  ld (0x0c71),A
 	ld	(3184:16), 127	; F7BBD5  ld (0x0c70),0x7f
-	m_bit 3, MD16, 0x0c35	; F7BBDA  bit 3,(0x0c35)
+	bit	3, (0x0c35:16)	; F7BBDA  bit 3,(0x0c35)
 	jr	nz, MeasureC0py_LcdKeyRow1_Skip2	; F7BBDE  jr NZ,0xf7bbe8
 	ld	a, (3091:16)	; F7BBE0  ld A,(0x0c13)
 	ld	(3184:16), a	; F7BBE4  ld (0x0c70),A
@@ -193724,7 +193724,7 @@ MeasureC0py_LoadSavedFields:
 	ld	a, (6304879:24)	; F7BC73  ld A,(0x60346f)
 	cp	a, 127	; F7BC78  cp A,0x7f
 	jr	nz, MeasureC0py_LoadSavedFields_Skip	; F7BC7B  jr NZ,0xf7bc81
-	m_set 3, MD16, 0x0c35	; F7BC7D  set 3,(0x0c35)
+	set	3, (0x0c35:16)	; F7BC7D  set 3,(0x0c35)
 MeasureC0py_LoadSavedFields_Skip:
 	ld	(3091:16), a	; F7BC81  ld (0x0c13),A
 	ld	(3119:16), a	; F7BC85  ld (0x0c2f),A
@@ -194134,7 +194134,7 @@ Vel0cityChange_LcdKeyRow2:		; <- T_Vel0cityChange_LcdKeyRow2
 	jr	Vel0cityChange_LcdKeyRow2_Return2	; F7BF0A  jr T,0xf7bf73
 Vel0cityChange_LcdKeyRow2_Skip3:
 	ld	a, (3091:16)	; F7BF0C  ld A,(0x0c13)
-	m_bit 5, MD16, 0x0c35	; F7BF10  bit 5,(0x0c35)
+	bit	5, (0x0c35:16)	; F7BF10  bit 5,(0x0c35)
 	jr	z, Vel0cityChange_LcdKeyRow2_Skip4	; F7BF14  jr Z,0xf7bf18
 	ld	a, 127:opc	; F7BF16  ld A,0x7f
 Vel0cityChange_LcdKeyRow2_Skip4:
@@ -194810,7 +194810,7 @@ Quantize_LcdKeyRow3:		; <- T_Quantize_LcdKeyRow3
 	jrl	Quantize_LcdKeyRow3_Return	; F7C33C  jrl T,0xf7c3b1
 Quantize_LcdKeyRow3_Skip:
 	ld	a, (6304887:24)	; F7C33F  ld A,(0x603477)
-	m_bit 4, MD16, 0x0c35	; F7C344  bit 4,(0x0c35)
+	bit	4, (0x0c35:16)	; F7C344  bit 4,(0x0c35)
 	jr	z, Quantize_LcdKeyRow3_Skip2	; F7C348  jr Z,0xf7c34e
 	ld	a, 127:opc	; F7C34A  ld A,0x7f
 	jr	Quantize_LcdKeyRow3_Join	; F7C34C  jr T,0xf7c355
@@ -196951,11 +196951,11 @@ SongStore_StepSizeTable:
 MeasureInsert_RepeatInsert:
 	cp	(0x0e17:16), 0x00	; F7CDA0  cp (0x0e17),0x00
 	jr	z, MeasureInsert_RepeatInsert_Return	; F7CDA5  jr Z,0xf7ce03
-	m_bit 3, MD16, 0x0c8a	; F7CDA7  bit 3,(0x0c8a)
+	bit	3, (0x0c8a:16)	; F7CDA7  bit 3,(0x0c8a)
 	jr	nz, MeasureInsert_RepeatInsert_Return	; F7CDAB  jr NZ,0xf7ce03
 	ld	c, (3607:16)	; F7CDAD  ld C,(0x0e17)
 	ld	a, (3092:16)	; F7CDB1  ld A,(0x0c14)
-	m_bit 2, MD16, 0x0c35	; F7CDB5  bit 2,(0x0c35)
+	bit	2, (0x0c35:16)	; F7CDB5  bit 2,(0x0c35)
 	jr	z, MeasureInsert_RepeatInsert_Skip	; F7CDB9  jr Z,0xf7cdbd
 	ld	a, 127:opc	; F7CDBB  ld A,0x7f
 MeasureInsert_RepeatInsert_Skip:
@@ -196972,7 +196972,7 @@ MeasureInsert_RepeatInsert_Skip:
 	popw	bc	; F7CDE6  pop BC
 	cp	(UI_StatusCode:16), 0x23	; F7CDE7  cp (0x2880),0x23
 	jr	nz, MeasureInsert_RepeatInsert_Return	; F7CDEC  jr NZ,0xf7ce03
-	m_bit 3, MD16, 0x0c8a	; F7CDEE  bit 3,(0x0c8a)
+	bit	3, (0x0c8a:16)	; F7CDEE  bit 3,(0x0c8a)
 	jr	nz, MeasureInsert_RepeatInsert_Return	; F7CDF2  jr NZ,0xf7ce03
 	ld	wa, (3189:16)	; F7CDF4  ld WA,(0x0c75)
 	m_add_rm MW16, 0x0c77, 0	; F7CDF8  add WA,(0x0c77)
@@ -197001,11 +197001,11 @@ MeasureInsert_RepeatInsert_Return:
 MeasureC0py_RepeatCopy:
 	cp	(0x0e16:16), 0x00	; F7CE04  cp (0x0e16),0x00
 	jr	z, MeasureC0py_RepeatCopy_Return	; F7CE09  jr Z,0xf7ce67
-	m_bit 3, MD16, 0x0c8a	; F7CE0B  bit 3,(0x0c8a)
+	bit	3, (0x0c8a:16)	; F7CE0B  bit 3,(0x0c8a)
 	jr	nz, MeasureC0py_RepeatCopy_Return	; F7CE0F  jr NZ,0xf7ce67
 	ld	c, (3606:16)	; F7CE11  ld C,(0x0e16)
 	ld	a, (3092:16)	; F7CE15  ld A,(0x0c14)
-	m_bit 3, MD16, 0x0c35	; F7CE19  bit 3,(0x0c35)
+	bit	3, (0x0c35:16)	; F7CE19  bit 3,(0x0c35)
 	jr	z, MeasureC0py_RepeatCopy_Skip	; F7CE1D  jr Z,0xf7ce21
 	ld	a, 127:opc	; F7CE1F  ld A,0x7f
 MeasureC0py_RepeatCopy_Skip:
@@ -197022,7 +197022,7 @@ MeasureC0py_RepeatCopy_Skip:
 	popw	bc	; F7CE4A  pop BC
 	cp	(UI_StatusCode:16), 0x23	; F7CE4B  cp (0x2880),0x23
 	jr	nz, MeasureC0py_RepeatCopy_Return	; F7CE50  jr NZ,0xf7ce67
-	m_bit 3, MD16, 0x0c8a	; F7CE52  bit 3,(0x0c8a)
+	bit	3, (0x0c8a:16)	; F7CE52  bit 3,(0x0c8a)
 	jr	nz, MeasureC0py_RepeatCopy_Return	; F7CE56  jr NZ,0xf7ce67
 	ld	wa, (3189:16)	; F7CE58  ld WA,(0x0c75)
 	m_add_rm MW16, 0x0c77, 0	; F7CE5C  add WA,(0x0c77)
@@ -200082,7 +200082,7 @@ Paint_TrackAssign_Skip:
 	ldw	(PanelDial_DownButton:16), 35208	; F7E463  ld (0x209b),0x8988  <- arms prom_a PanelButton_Accept's substitution for panel button code 0x0D (0xF86615); see the 0xF7D2D8 banner
 	ldw	(9830:16), 65535	; F7E469  ld (0x2666),0xffff
 	ldw	(9834:16), 65535	; F7E46F  ld (0x266a),0xffff
-	m_bit 4, MD16, UI_ScreenFlags	; F7E475  bit 4,(0x2095)
+	bit	4, (UI_ScreenFlags:16)	; F7E475  bit 4,(0x2095)
 	jr	nz, Paint_TrackAssign_Skip3	; F7E479  jr NZ,0xf7e4a1
 Paint_TrackAssign_Skip2:
 	calr	LCD_ScreenRedraw_Begin	; F7E47B  calr 0xf7e2d9
@@ -200729,7 +200729,7 @@ Paint_TrackAssignPresets:
 	jr	z, Paint_TrackAssignPresets_Skip	; F7E60D  jr Z,0xf7e60f
 Paint_TrackAssignPresets_Skip:
 	call	T_TrackAssignPresets_InitFromCurrentBank	; F7E60F  call 0xf42bf8
-	m_bit 4, MD16, UI_ScreenFlags	; F7E613  bit 4,(0x2095)
+	bit	4, (UI_ScreenFlags:16)	; F7E613  bit 4,(0x2095)
 	jr	nz, Paint_TrackAssignPresets_Skip2	; F7E617  jr NZ,0xf7e62b
 	call	LCD_ScreenRedraw_Begin	; F7E619  call 0xf7e2d9
 	ld	xiy, DL_TrackAssignPresetsTechnicsSetUp1116	; F7E61D  ld XIY,0x00f3a2bf
@@ -201522,7 +201522,7 @@ TrackAssign_PaintTrackGroup:
 	calr	TrackAssign_DrawTrackRowHighlight	; F7E7A7  calr 0xf7e941
 	calr	TrackAssign_DrawTrackGroupHighlight	; F7E7AA  calr 0xf7e919
 	ld	(LCD_CurrentLayer:16), 0	; F7E7AD  ld (0x2540),0x00
-	m_bit 0, MD16, 0x0c07	; F7E7B2  bit 0,(0x0c07)
+	bit	0, (0x0c07:16)	; F7E7B2  bit 0,(0x0c07)
 	jr	nz, TrackAssign_PaintTrackGroup_Skip	; F7E7B6  jr NZ,0xf7e7d4
 	calr	Paint_TrackLabels1To8	; F7E7B8  calr 0xf7e89f
 	calr	TrackAssign_DrawParts1To8	; F7E7BB  calr 0xf7e8cd
@@ -202442,7 +202442,7 @@ Paint_SongClear:
 	call	T_SongClear_InitFields	; F7EAD4  call 0xf428b8
 	cp	(UI_StatusCode:16), 0x23	; F7EAD8  cp (0x2880),0x23
 	jrl	z, Paint_SongClear_Join	; F7EADD  jrl Z,0xf7ebcf
-	m_bit 4, MD16, UI_ScreenFlags	; F7EAE0  bit 4,(0x2095)
+	bit	4, (UI_ScreenFlags:16)	; F7EAE0  bit 4,(0x2095)
 	jr	nz, Paint_SongClear_Skip	; F7EAE4  jr NZ,0xf7eb16
 	calr	LCD_ScreenRedraw_Begin	; F7EAE6  calr 0xf7e2d9
 	cp	(UI_ScreenStage:16), 0x00	; F7EAE9  cp (0x207e),0x00
@@ -202483,7 +202483,7 @@ Paint_SongClear_Skip3:
 	call	T_DisplayListB_Run	; F7EB74  call 0xf417f4
 	jr	Paint_SongClear_Join	; F7EB78  jr T,0xf7ebcf
 Paint_SongClear_Skip4:
-	m_bit 4, MD16, UI_ScreenFlags	; F7EB7A  bit 4,(0x2095)
+	bit	4, (UI_ScreenFlags:16)	; F7EB7A  bit 4,(0x2095)
 	jr	nz, Paint_SongClear_Skip5	; F7EB7E  jr NZ,0xf7eb8e
 	ld	xiy, DL_SongClearKbSongAttenti0n	; F7EB80  ld XIY,0x00f39a7d
 	ld	xix, Paint_SongClear_DL4	; F7EB85  ld XIX,0x00f39bf8
@@ -202795,7 +202795,7 @@ ScreenNull_SongClear_Nop:
 ; ---------------------------------------------------------------------
 Paint_TrackClear:
 	call	T_CallbackQueue_ResetAndRestartTask2	; F7EC71  call 0xf42e80
-	m_bit 4, MD16, UI_ScreenFlags	; F7EC75  bit 4,(0x2095)
+	bit	4, (UI_ScreenFlags:16)	; F7EC75  bit 4,(0x2095)
 	jr	nz, Paint_TrackClear_Skip	; F7EC79  jr NZ,0xf7ecb3
 	cp	(UI_ScreenStage:16), 0x00	; F7EC7B  cp (0x207e),0x00
 	jr	nz, Paint_TrackClear_Skip2	; F7EC80  jr NZ,0xf7ecbf
@@ -204119,7 +204119,7 @@ ButtonTable_MeasureDelete_StageZero_Nop3:
 ;           notes/wave7_panel_event_index.py (layer 2).
 ; ---------------------------------------------------------------------
 SoftKeyCol5_MeasureDelete_StageZero:
-	m_bit 1, MD16, UI_RequestBits	; F7F03A  bit 1,(0x2075)
+	bit	1, (UI_RequestBits:16)	; F7F03A  bit 1,(0x2075)
 	jr	z, ScreenLeaveBody_MeasureDelete_Skip	; F7F03E  jr Z,0xf7f044
 	call	T_Blink_Stop	; F7F040  call 0xf42e24
 ScreenLeaveBody_MeasureDelete_Skip:
@@ -204352,7 +204352,7 @@ ButtonTable_MeasureDelete_StageZero_Nop16:
 ;           (the rest).
 ; ---------------------------------------------------------------------
 MeasureDelete_StageZero_Button21:
-	m_bit 1, MD16, UI_RequestBits	; F7F0E7  bit 1,(0x2075)
+	bit	1, (UI_RequestBits:16)	; F7F0E7  bit 1,(0x2075)
 	jr	z, ScreenLeaveBody_MeasureDelete_Skip5	; F7F0EB  jr Z,0xf7f0f1
 	call	T_Blink_Stop	; F7F0ED  call 0xf42e24
 ScreenLeaveBody_MeasureDelete_Skip5:
@@ -204495,7 +204495,7 @@ Var2820_Set2B:
 ;   AdvanceDelay_BlinkSelectedField. Basis: caller + body + siblings. (notes/naming-
 ;   pilot-2026-10-06/proposals_wave8_b8.json)
 MeasureDelete_BlinkSelectedField:
-	m_bit 1, MD16, UI_RequestBits	; F7F1C8  bit 1,(0x2075)
+	bit	1, (UI_RequestBits:16)	; F7F1C8  bit 1,(0x2075)
 	jr	z, MeasureDelete_BlinkSelectedField_Return	; F7F1CC  jr Z,0xf7f1f4
 	cp	(0x2267:16), 0x0f	; F7F1CE  cp (0x2267),0x0f
 	jr	z, MeasureDelete_BlinkSelectedField_Return	; F7F1D3  jr Z,0xf7f1f4
@@ -204807,7 +204807,7 @@ ButtonTable_MeasureErase_StageZero_Nop3:
 ;           notes/wave7_panel_event_index.py (layer 2).
 ; ---------------------------------------------------------------------
 SoftKeyCol5_MeasureErase_StageZero:
-	m_bit 1, MD16, UI_RequestBits	; F7F2DE  bit 1,(0x2075)
+	bit	1, (UI_RequestBits:16)	; F7F2DE  bit 1,(0x2075)
 	jr	z, ScreenLeaveBody_MeasureErase_Skip	; F7F2E2  jr Z,0xf7f2e8
 	call	T_Blink_Stop	; F7F2E4  call 0xf42e24
 ScreenLeaveBody_MeasureErase_Skip:
@@ -205117,7 +205117,7 @@ ButtonTable_MeasureErase_StageZero_Nop16:
 ;           (the rest).
 ; ---------------------------------------------------------------------
 MeasureErase_StageZero_Button21:
-	m_bit 1, MD16, UI_RequestBits	; F7F3E2  bit 1,(0x2075)
+	bit	1, (UI_RequestBits:16)	; F7F3E2  bit 1,(0x2075)
 	jr	z, MeasureErase_StageZero_Button21_Skip2	; F7F3E6  jr Z,0xf7f3ec
 	call	T_Blink_Stop	; F7F3E8  call 0xf42e24
 MeasureErase_StageZero_Button21_Skip2:
@@ -205401,7 +205401,7 @@ Var2820_Set2B_2:
 ;   Twin of AdvanceDelay_BlinkSelectedField. Basis: caller + body + siblings. (notes/naming-
 ;   pilot-2026-10-06/proposals_wave8_b8.json)
 MeasureErase_BlinkSelectedField:
-	m_bit 1, MD16, UI_RequestBits	; F7F4F4  bit 1,(0x2075)
+	bit	1, (UI_RequestBits:16)	; F7F4F4  bit 1,(0x2075)
 	jr	z, MeasureErase_BlinkSelectedField_Return	; F7F4F8  jr Z,0xf7f520
 	cp	(0x2267:16), 0x0f	; F7F4FA  cp (0x2267),0x0f
 	jr	z, MeasureErase_BlinkSelectedField_Return	; F7F4FF  jr Z,0xf7f520
@@ -205624,7 +205624,7 @@ ButtonTable_Quantize_StageZero_Nop3:
 ;           notes/wave7_panel_event_index.py (layer 2).
 ; ---------------------------------------------------------------------
 SoftKeyCol5_Quantize_StageZero:
-	m_bit 1, MD16, UI_RequestBits	; F7F60C  bit 1,(0x2075)
+	bit	1, (UI_RequestBits:16)	; F7F60C  bit 1,(0x2075)
 	jr	z, ScreenLeaveBody_Quantize_Skip	; F7F610  jr Z,0xf7f616
 	call	T_Blink_Stop	; F7F612  call 0xf42e24
 ScreenLeaveBody_Quantize_Skip:
@@ -205953,7 +205953,7 @@ ButtonTable_Quantize_StageZero_Nop16:
 ;           (the rest).
 ; ---------------------------------------------------------------------
 Quantize_StageZero_Button21:
-	m_bit 1, MD16, UI_RequestBits	; F7F74E  bit 1,(0x2075)
+	bit	1, (UI_RequestBits:16)	; F7F74E  bit 1,(0x2075)
 	jr	z, Draw_TrackValueFirstMeasureLastMeasureStrengthWindow_Skip3	; F7F752  jr Z,0xf7f758
 	call	T_Blink_Stop	; F7F754  call 0xf42e24
 Draw_TrackValueFirstMeasureLastMeasureStrengthWindow_Skip3:
@@ -206236,7 +206236,7 @@ Var2820_Set2B_3:
 ;   AdvanceDelay_BlinkSelectedField. Basis: caller + body + siblings. (notes/naming-
 ;   pilot-2026-10-06/proposals_wave8_b8.json)
 Quantize_BlinkSelectedField:
-	m_bit 1, MD16, UI_RequestBits	; F7F860  bit 1,(0x2075)
+	bit	1, (UI_RequestBits:16)	; F7F860  bit 1,(0x2075)
 	jr	z, Quantize_BlinkSelectedField_Return	; F7F864  jr Z,0xf7f88c
 	cp	(0x2267:16), 0x0f	; F7F866  cp (0x2267),0x0f
 	jr	z, Quantize_BlinkSelectedField_Return	; F7F86B  jr Z,0xf7f88c
@@ -206409,7 +206409,7 @@ ButtonTable_Vel0cityChange_StageZero_Nop3:
 ;           notes/wave7_panel_event_index.py (layer 2).
 ; ---------------------------------------------------------------------
 SoftKeyCol5_Vel0cityChange_StageZero:
-	m_bit 1, MD16, UI_RequestBits	; F7F958  bit 1,(0x2075)
+	bit	1, (UI_RequestBits:16)	; F7F958  bit 1,(0x2075)
 	jr	z, ScreenLeaveBody_Vel0cityChange_Skip	; F7F95C  jr Z,0xf7f962
 	call	T_Blink_Stop	; F7F95E  call 0xf42e24
 ScreenLeaveBody_Vel0cityChange_Skip:
@@ -206714,7 +206714,7 @@ ButtonTable_Vel0cityChange_StageZero_Nop16:
 ;           (the rest).
 ; ---------------------------------------------------------------------
 Vel0cityChange_StageZero_Button21:
-	m_bit 1, MD16, UI_RequestBits	; F7FA43  bit 1,(0x2075)
+	bit	1, (UI_RequestBits:16)	; F7FA43  bit 1,(0x2075)
 	jr	z, Vel0cityChange_StageZero_Button21_Skip2	; F7FA47  jr Z,0xf7fa4d
 	call	T_Blink_Stop	; F7FA49  call 0xf42e24
 Vel0cityChange_StageZero_Button21_Skip2:
@@ -207021,7 +207021,7 @@ Vel0cityChange_KeypadCommit_Return:
 ;   (the signed value) is selected, puts '+' back in the sign cell (0x2820). Twin of prom_a AdvanceDelay_KeypadSign.
 ;   Basis: caller + body + siblings. (notes/naming-pilot-2026-10-06/proposals_wave8_b8.json)
 Vel0cityChange_KeypadSign:
-	m_bit 1, MD16, UI_RequestBits	; F7FBA4  bit 1,(0x2075)
+	bit	1, (UI_RequestBits:16)	; F7FBA4  bit 1,(0x2075)
 	jr	z, Vel0cityChange_KeypadSign_Return	; F7FBA8  jr Z,0xf7fbb6
 	cp	(0x0db8:16), 0x04	; F7FBAA  cp (0x0db8),0x04
 	jr	z, Vel0cityChange_KeypadSign_Return	; F7FBAF  jr Z,0xf7fbb6
@@ -207036,7 +207036,7 @@ Vel0cityChange_KeypadSign_Return:
 ;   tail. Twin of AdvanceDelay_BlinkSelectedField. Basis: caller + body + siblings. (notes/naming-
 ;   pilot-2026-10-06/proposals_wave8_b8.json)
 Vel0cityChange_BlinkSelectedField:
-	m_bit 1, MD16, UI_RequestBits	; F7FBB7  bit 1,(0x2075)
+	bit	1, (UI_RequestBits:16)	; F7FBB7  bit 1,(0x2075)
 	jr	z, Vel0cityChange_BlinkSelectedField_Return	; F7FBBB  jr Z,0xf7fbe3
 	cp	(0x2267:16), 0x0f	; F7FBBD  cp (0x2267),0x0f
 	jr	z, Vel0cityChange_BlinkSelectedField_Return	; F7FBC2  jr Z,0xf7fbe3
@@ -207200,7 +207200,7 @@ ButtonTable_Transp0se_StageZero_Nop3:
 ;           notes/wave7_panel_event_index.py (layer 2).
 ; ---------------------------------------------------------------------
 SoftKeyCol5_Transp0se_StageZero:
-	m_bit 1, MD16, UI_RequestBits	; F7FCA2  bit 1,(0x2075)
+	bit	1, (UI_RequestBits:16)	; F7FCA2  bit 1,(0x2075)
 	jr	z, ScreenLeaveBody_Transp0se_Skip	; F7FCA6  jr Z,0xf7fcac
 	call	T_Blink_Stop	; F7FCA8  call 0xf42e24
 ScreenLeaveBody_Transp0se_Skip:
@@ -207503,7 +207503,7 @@ ButtonTable_Transp0se_StageZero_Nop16:
 ;           (the rest).
 ; ---------------------------------------------------------------------
 Transp0se_StageZero_Button21:
-	m_bit 1, MD16, UI_RequestBits	; F7FD8A  bit 1,(0x2075)
+	bit	1, (UI_RequestBits:16)	; F7FD8A  bit 1,(0x2075)
 	jr	z, Transp0se_StageZero_Button21_Skip2	; F7FD8E  jr Z,0xf7fd94
 	call	T_Blink_Stop	; F7FD90  call 0xf42e24
 Transp0se_StageZero_Button21_Skip2:
@@ -207805,7 +207805,7 @@ Transp0se_KeypadCommit_Return:
 ;   value) is selected, puts '+' back in the sign cell (0x2820). Twin of AdvanceDelay_KeypadSign. Basis: caller + body
 ;   + siblings. (notes/naming-pilot-2026-10-06/proposals_wave8_b8.json)
 Transp0se_KeypadSign:
-	m_bit 1, MD16, UI_RequestBits	; F7FED3  bit 1,(0x2075)
+	bit	1, (UI_RequestBits:16)	; F7FED3  bit 1,(0x2075)
 	jr	z, Transp0se_KeypadSign_Return	; F7FED7  jr Z,0xf7fee5
 	cp	(0x0df6:16), 0x04	; F7FED9  cp (0x0df6),0x04
 	jr	z, Transp0se_KeypadSign_Return	; F7FEDE  jr Z,0xf7fee5
@@ -207820,7 +207820,7 @@ Transp0se_KeypadSign_Return:
 ;   AdvanceDelay_BlinkSelectedField. Basis: caller + body + siblings. (notes/naming-
 ;   pilot-2026-10-06/proposals_wave8_b8.json)
 Transp0se_BlinkSelectedField:
-	m_bit 1, MD16, UI_RequestBits	; F7FEE6  bit 1,(0x2075)
+	bit	1, (UI_RequestBits:16)	; F7FEE6  bit 1,(0x2075)
 	jr	z, Transp0se_BlinkSelectedField_Return	; F7FEEA  jr Z,0xf7ff12
 	cp	(0x2267:16), 0x0f	; F7FEEC  cp (0x2267),0x0f
 	jr	z, Transp0se_BlinkSelectedField_Return	; F7FEF1  jr Z,0xf7ff12
@@ -207984,7 +207984,7 @@ ButtonTable_AdvanceDelay_StageZero_Nop3:
 ;           notes/wave7_panel_event_index.py (layer 2).
 ; ---------------------------------------------------------------------
 SoftKeyCol5_AdvanceDelay_StageZero:
-	m_bit 1, MD16, UI_RequestBits	; F7FFD1  bit 1,(0x2075)
+	bit	1, (UI_RequestBits:16)	; F7FFD1  bit 1,(0x2075)
 	jr	z, SoftKeyCol5_AdvanceDelay_StageZero_Skip	; F7FFD5  jr Z,0xf7ffdb
 	call	T_Blink_Stop	; F7FFD7  call 0xf42e24
 SoftKeyCol5_AdvanceDelay_StageZero_Skip:

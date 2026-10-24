@@ -2352,7 +2352,7 @@ ButtonTable_AdvanceDelay_StageZero_Nop16:
 ;   the VARIANT-1 already-held rewrite of base code 0x04; the SX-WSA1R is variant 2, so the slot is never
 ;   delivered here.
 AdvanceDelay_StageZero_Button21:
-	m_bit 1, MD16, UI_RequestBits                                ; F800D0  f1 75 20 c9
+	bit	1, (UI_RequestBits:16)                               ; F800D0  f1 75 20 c9
 	jr z, .LF800DA                                       ; F800D4  66 04
 	call T_Blink_Stop                                    ; F800D6  1d 24 2e f4
 .LF800DA:
@@ -2551,7 +2551,7 @@ AdvanceDelay_KeypadCommit:
 ; AdvanceDelay_KeypadSign -- keypad code 0x80: put '+' back in the sign cell (0x2820) unless field 4 is selected
 ; Evidence: `bit 1,(0x2075)` (blink enable, FINDINGS-prom_b-field-blink.md) and `cp (0x0DE5),4` gate `ld (0x2820),0x2B`; field 4 is the only one AdvanceDelay_KeypadCommit converts as signed.
 AdvanceDelay_KeypadSign:
-	m_bit 1, MD16, UI_RequestBits                                ; F8020D  f1 75 20 c9
+	bit	1, (UI_RequestBits:16)                               ; F8020D  f1 75 20 c9
 	jr z, .LF8021F                                       ; F80211  66 0c
 	cp	(AdvanceDelay_Field:16), 0x04                            ; F80213  c1 e5 0d 3f 04
 	jr z, .LF8021F                                       ; F80218  66 05
@@ -2561,7 +2561,7 @@ AdvanceDelay_KeypadSign:
 ; AdvanceDelay_BlinkSelectedField -- start the field blink on the field (0x0DE5) selects
 ; Evidence: unless (0x2075) bit 1 is clear or (0x2267)=0x0F: (0x2540)=0, push BlinkArgPtrs_F8024D[(0x0DE5)], call T_Blink_Command.
 AdvanceDelay_BlinkSelectedField:
-	m_bit 1, MD16, UI_RequestBits                                ; F80220  f1 75 20 c9
+	bit	1, (UI_RequestBits:16)                               ; F80220  f1 75 20 c9
 	jr z, .LF8024C                                       ; F80224  66 26
 	cp	(0x2267:16), 0x0f                            ; F80226  c1 67 22 3f 0f
 	jr z, .LF8024C                                       ; F8022B  66 1f
@@ -2954,7 +2954,7 @@ ButtonTable_N0teChange_StageZero_Nop3:
 ;   LOWER (set) or UPPER (clear) of the column's two switches; ButtonTable_N0teChange_StageZero slot 0x04.
 ; The slot -> control map is notes/wave7_panel_names_round11.py's CONTROL (variant 2).
 SoftKeyCol5_N0teChange_StageZero:
-	m_bit 1, MD16, UI_RequestBits                                ; F804F5  f1 75 20 c9
+	bit	1, (UI_RequestBits:16)                               ; F804F5  f1 75 20 c9
 	jr z, .LF804FF                                       ; F804F9  66 04
 	call T_Blink_Stop                                    ; F804FB  1d 24 2e f4
 .LF804FF:
@@ -3086,7 +3086,7 @@ ButtonTable_N0teChange_StageZero_Nop16:
 ;   VARIANT-1 already-held rewrite of base code 0x04; the SX-WSA1R is variant 2, so the slot is never delivered
 ;   here.
 N0teChange_StageZero_Button21:
-	m_bit 1, MD16, UI_RequestBits                                ; F805E1  f1 75 20 c9
+	bit	1, (UI_RequestBits:16)                               ; F805E1  f1 75 20 c9
 	jr z, .LF805EB                                       ; F805E5  66 04
 	call T_Blink_Stop                                    ; F805E7  1d 24 2e f4
 .LF805EB:
@@ -3248,7 +3248,7 @@ N0teChange_KeypadCommit:
 ; N0teChange_KeypadSign -- keypad code 0x80: put '+' back in (0x2820)
 ; Evidence: `bit 1,(0x2075)` and `cp (0x0DB8),4` gate `ld (0x2820),0x2B`.  This screen's field index is (0x0DED); why it tests (0x0DB8) is not established.
 N0teChange_KeypadSign:
-	m_bit 1, MD16, UI_RequestBits                                ; F80714  f1 75 20 c9
+	bit	1, (UI_RequestBits:16)                               ; F80714  f1 75 20 c9
 	jr z, .LF80726                                       ; F80718  66 0c
 	cp	(0x0db8:16), 0x04                            ; F8071A  c1 b8 0d 3f 04
 	jr z, .LF80726                                       ; F8071F  66 05
@@ -3258,7 +3258,7 @@ N0teChange_KeypadSign:
 ; N0teChange_BlinkSelectedField -- start the field blink on the field (0x0DED) selects
 ; Evidence: unless blink is off or (0x2267)=0x0F: push BlinkArgPtrs_F80754[(0x0DED)], call T_Blink_Command.
 N0teChange_BlinkSelectedField:
-	m_bit 1, MD16, UI_RequestBits                                ; F80727  f1 75 20 c9
+	bit	1, (UI_RequestBits:16)                               ; F80727  f1 75 20 c9
 	jr z, .LF80753                                       ; F8072B  66 26
 	cp	(0x2267:16), 0x0f                            ; F8072D  c1 67 22 3f 0f
 	jr z, .LF80753                                       ; F80732  66 1f
@@ -3376,7 +3376,7 @@ ButtonTable_MeasureC0py_StageZero_Nop3:
 ;   LOWER (set) or UPPER (clear) of the column's two switches; ButtonTable_MeasureC0py_StageZero slot 0x04.
 ; The slot -> control map is notes/wave7_panel_names_round11.py's CONTROL (variant 2).
 SoftKeyCol5_MeasureC0py_StageZero:
-	m_bit 1, MD16, UI_RequestBits                                ; F80812  f1 75 20 c9
+	bit	1, (UI_RequestBits:16)                               ; F80812  f1 75 20 c9
 	jr z, .LF8081C                                       ; F80816  66 04
 	call T_Blink_Stop                                    ; F80818  1d 24 2e f4
 .LF8081C:
@@ -3524,7 +3524,7 @@ ButtonTable_MeasureC0py_StageZero_Nop16:
 ;   the VARIANT-1 already-held rewrite of base code 0x04; the SX-WSA1R is variant 2, so the slot is never
 ;   delivered here.
 MeasureC0py_StageZero_Button21:
-	m_bit 1, MD16, UI_RequestBits                                ; F8092D  f1 75 20 c9
+	bit	1, (UI_RequestBits:16)                               ; F8092D  f1 75 20 c9
 	jr z, .LF80937                                       ; F80931  66 04
 	call T_Blink_Stop                                    ; F80933  1d 24 2e f4
 .LF80937:
@@ -3724,7 +3724,7 @@ MeasureC0py_KeypadSign:
 ; MeasureC0py_BlinkSelectedField -- start the field blink on the field (0x0DBC) selects
 ; Evidence: unless blink is off or (0x2267)=0x0F: push BlinkArgPtrs_F80AAD[(0x0DBC)], call T_Blink_Command; the non-null entries 2/3/5 are the records of (0x12F7)/(0x12F9)/(0x12FC), the variables MeasureC0py_KeypadCommit writes.
 MeasureC0py_BlinkSelectedField:
-	m_bit 1, MD16, UI_RequestBits                                ; F80A80  f1 75 20 c9
+	bit	1, (UI_RequestBits:16)                               ; F80A80  f1 75 20 c9
 	jr z, .LF80AAC                                       ; F80A84  66 26
 	cp	(0x2267:16), 0x0f                            ; F80A86  c1 67 22 3f 0f
 	jr z, .LF80AAC                                       ; F80A8B  66 1f
@@ -3845,7 +3845,7 @@ ButtonTable_MeasureInsert_StageZero_Nop3:
 ;   LOWER (set) or UPPER (clear) of the column's two switches; ButtonTable_MeasureInsert_StageZero slot 0x04.
 ; The slot -> control map is notes/wave7_panel_names_round11.py's CONTROL (variant 2).
 SoftKeyCol5_MeasureInsert_StageZero:
-	m_bit 1, MD16, UI_RequestBits                                ; F80B6F  f1 75 20 c9
+	bit	1, (UI_RequestBits:16)                               ; F80B6F  f1 75 20 c9
 	jr z, .LF80B79                                       ; F80B73  66 04
 	call T_Blink_Stop                                    ; F80B75  1d 24 2e f4
 .LF80B79:
@@ -3995,7 +3995,7 @@ ButtonTable_MeasureInsert_StageZero_Nop16:
 ;   only the VARIANT-1 already-held rewrite of base code 0x04; the SX-WSA1R is variant 2, so the slot is never
 ;   delivered here.
 MeasureInsert_StageZero_Button21:
-	m_bit 1, MD16, UI_RequestBits                                ; F80C8A  f1 75 20 c9
+	bit	1, (UI_RequestBits:16)                               ; F80C8A  f1 75 20 c9
 	jr z, .LF80C94                                       ; F80C8E  66 04
 	call T_Blink_Stop                                    ; F80C90  1d 24 2e f4
 .LF80C94:
@@ -4198,7 +4198,7 @@ MeasureInsert_KeypadSign:
 ; MeasureInsert_BlinkSelectedField -- start the field blink on the field (0x0DDA) selects
 ; Evidence: push BlinkArgPtrs_F80E12[(0x0DDA)], call T_Blink_Command, unless blink is off or (0x2267)=0x0F.
 MeasureInsert_BlinkSelectedField:
-	m_bit 1, MD16, UI_RequestBits                                ; F80DE5  f1 75 20 c9
+	bit	1, (UI_RequestBits:16)                               ; F80DE5  f1 75 20 c9
 	jr z, .LF80E11                                       ; F80DE9  66 26
 	cp	(0x2267:16), 0x0f                            ; F80DEB  c1 67 22 3f 0f
 	jr z, .LF80E11                                       ; F80DF0  66 1f
@@ -4262,7 +4262,7 @@ Paint_S0ngSelectName:
 	ldw (PanelDial_DownButton:16), 0x0605                              ; F80E3B  f1 9b 20 02 05 06
 	ldw (0x2666:16), 0xffff                              ; F80E41  f1 66 26 02 ff ff
 	ldw (0x266a:16), 0xffff                              ; F80E47  f1 6a 26 02 ff ff
-	m_bit 4, MD16, UI_ScreenFlags                                ; F80E4D  f1 95 20 cc
+	bit	4, (UI_ScreenFlags:16)                               ; F80E4D  f1 95 20 cc
 	jr nz, .LF80E69                                      ; F80E51  6e 16
 	calr PromB_LCD_ScreenRedraw_Begin                                          ; F80E53  1e 83 d4
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F80E56  f1 40 25 00 00
@@ -4397,7 +4397,7 @@ sub_F80F4F:
 ; ---------------------------------------------------------------------
 Paint_StepRecordPartSelect:
 	call T_CallbackQueue_ResetAndRestartTask2            ; F80F5A  1d 80 2e f4
-	m_bit 4, MD16, UI_ScreenFlags                                ; F80F5E  f1 95 20 cc
+	bit	4, (UI_ScreenFlags:16)                               ; F80F5E  f1 95 20 cc
 	jr nz, .LF80F8F                                      ; F80F62  6e 2b
 	call T_StepRecordPartSelect_ResetOnEntry                                        ; F80F64  1d c4 2b f4
 	calr PromB_LCD_ScreenRedraw_Begin                                          ; F80F68  1e 6e d3
@@ -4573,7 +4573,7 @@ Paint_SequencerMedley:
 	call T_Medley_SelectField1                                        ; F8106F  1d 7c 2b f4
 .LF81073:
 	call T_SequencerMedley_InitOnEntry                                        ; F81073  1d cc 2b f4
-	m_bit 4, MD16, UI_ScreenFlags                                ; F81077  f1 95 20 cc
+	bit	4, (UI_ScreenFlags:16)                               ; F81077  f1 95 20 cc
 	jr z, .LF81084                                       ; F8107B  66 07
 	cp	(Medley_Source:16), 0x01                            ; F8107D  c1 0b 22 3f 01
 	jr nz, .LF810AA                                      ; F81082  6e 26
@@ -4652,7 +4652,7 @@ ButtonTable_SequencerMedley_Nop3:
 ;   (set) or UPPER (clear) of the column's two switches; ButtonTable_SequencerMedley slots 0x04, 0x15.
 ; The slot -> control map is notes/wave7_panel_names_round11.py's CONTROL (variant 2).
 SoftKeyCol5_SequencerMedley:
-	m_bit 1, MD16, UI_RequestBits                                ; F81137  f1 75 20 c9
+	bit	1, (UI_RequestBits:16)                               ; F81137  f1 75 20 c9
 	jr z, .LF81141                                       ; F8113B  66 04
 	call T_Blink_Stop                                    ; F8113D  1d 24 2e f4
 .LF81141:
@@ -4885,7 +4885,7 @@ SequencerMedley_KeypadSign:
 SequencerMedley_BlinkSelectedField:
 	cp	(Medley_Playing:16), 0x01                            ; F81310  c1 c1 0d 3f 01
 	jr z, .LF81343                                       ; F81315  66 2c
-	m_bit 1, MD16, UI_RequestBits                                ; F81317  f1 75 20 c9
+	bit	1, (UI_RequestBits:16)                               ; F81317  f1 75 20 c9
 	jr z, .LF81343                                       ; F8131B  66 26
 	cp	(0x2267:16), 0x0f                            ; F8131D  c1 67 22 3f 0f
 	jr z, .LF81343                                       ; F81322  66 1f
@@ -5392,7 +5392,7 @@ S0ngSelectName_LoadSongFromBank:
 	ld (BStore_FreeCount:24), wa                                ; F8184D  f2 ba 34 60 50
 	ld xwa, (0x60341e:24)                               ; F81852  e2 1e 34 60 20
 	ld (0x360c:16), xwa                                 ; F81857  f1 0c 36 60
-	m_bit 0, MD24, 0x603420                              ; F8185B  f2 20 34 60 c8
+	bit	0, (0x603420:24)                             ; F8185B  f2 20 34 60 c8
 	jr z, .LF81869                                       ; F81860  66 07
 	ld (0x3752:16), 0x01                                 ; F81862  f1 52 37 00 01
 	jr .LF8186E                                          ; F81867  68 05
@@ -5413,13 +5413,13 @@ S0ngSelectName_LoadSongFromBank:
 	ld (DisplayListB_Stage+12:16), a                                   ; F81898  f1 02 13 41
 	cp	(0x6034c6:24), 0xff                          ; F8189C  c2 c6 34 60 3f ff
 	jr z, .LF818B3                                       ; F818A2  66 0f
-	m_bit 2, MD16, 0x7f4d                                ; F818A4  f1 4d 7f ca
+	bit	2, (0x7f4d:16)                               ; F818A4  f1 4d 7f ca
 	jr z, .LF818D3                                       ; F818A8  66 29
 	and	(0x7f4d:16), 0xfb                            ; F818AA  c1 4d 7f 3c fb
 	xor A,A                                              ; F818AF  c9 d1
 	jr .LF818C0                                          ; F818B1  68 0d
 .LF818B3:
-	m_bit 2, MD16, 0x7f4d                                ; F818B3  f1 4d 7f ca
+	bit	2, (0x7f4d:16)                               ; F818B3  f1 4d 7f ca
 	jr nz, .LF818D3                                      ; F818B7  6e 1a
 	or	(0x7f4d:16), 0x04                            ; F818B9  c1 4d 7f 3e 04
 	ld a, 0x04:opc                                          ; F818BE  21 04
@@ -5658,7 +5658,7 @@ SongStore_SeekBlock:
 ;   "MASTER STEP RECORD" when (0x0E63) = 2) and the page list StepSelectAddrTable_F3D089 gives for
 ;   UI_StepRecord_SubScreen (sub-screen 18: the MASTER TRACK CLEAR / TRACK CLR confirmation).
 Paint_StepRecord:
-	m_bit 0, MD16, 0x1071                                ; F81ACB  f1 71 10 c8
+	bit	0, (0x1071:16)                               ; F81ACB  f1 71 10 c8
 	jrl nz, .LF81BCF                                     ; F81ACF  7e fd 00
 	cp	(UI_ScreenId:16), 0x0e                            ; F81AD2  c1 7c 20 3f 0e
 	jrl nz, .LF81BCF                                     ; F81AD7  7e f5 00
@@ -5873,7 +5873,7 @@ sub_F81C90:
 	and	(0xc6:8), 0xfe                               ; F81D3C  c0 c6 3c fe
 	ret                                                  ; F81D40  0e
 sub_F81D41:
-	m_bit 0, MD16, 0x1071                                ; F81D41  f1 71 10 c8
+	bit	0, (0x1071:16)                               ; F81D41  f1 71 10 c8
 	jrl nz, .LF81DF9                                     ; F81D45  7e b1 00
 	cp	(UI_ScreenId:16), 0x0e                            ; F81D48  c1 7c 20 3f 0e
 	jrl nz, .LF81DF9                                     ; F81D4D  7e a9 00
@@ -6578,7 +6578,7 @@ Queue2C00_DrainPassB:
 ; Evidence: (0x34D0) bit 5 set -> T_Seq_RewindOnMidiStart and T_MIDI_Clock_CatchUpIfAnySlot instead; otherwise (ring-4)!=(ring-8) -> TimedEvents_DrainDue, else res 6,(0x34D4).  Called from MainTask_ServiceTimedEvents and MainTask_Loop 0xF820BC/0xF82127.
 ; Ring 0x60080A (capacity 0x200, FINDINGS-prom_a-ring-buffers.md) is filled at 0xFEA57C/0xFEA585; why its bytes are time-stamped is TimedEvents_DispatchDueRun's evidence.
 TimedEvents_Service:
-	m_bit 5, MD16, 0x34d0                                ; F823E2  f1 d0 34 cd
+	bit	5, (0x34d0:16)                               ; F823E2  f1 d0 34 cd
 	jr z, .LF823F1                                       ; F823E6  66 09
 	call T_Seq_RewindOnMidiStart                                        ; F823E8  1d e4 09 f4
 	call T_MIDI_Clock_CatchUpIfAnySlot                                        ; F823EC  1d 20 07 f4
@@ -6588,7 +6588,7 @@ TimedEvents_Service:
 	ld wa, (xix-4)                                       ; F823F6  9c fc 20
 	m_cp_rm MWD+r4, 0xf8, r0                             ; F823F9  9c f8 f0
 	jr nz, .LF82403                                      ; F823FC  6e 05
-	m_res 6, MD16, 0x34d4                                ; F823FE  f1 d4 34 b6
+	res	6, (0x34d4:16)                               ; F823FE  f1 d4 34 b6
 	ret                                                  ; F82402  0e
 .LF82403:
 	calr TimedEvents_DrainDue                                      ; F82403  1e 01 00
@@ -6597,7 +6597,7 @@ TimedEvents_Service:
 ; Evidence: only when (0x34D4) bit 6 or (0x96) bit 2 is set; loop `ld WA,(XIX-4) / cp (XIX-8),WA / jr z` -> TimedEvents_DispatchDueRun -> `and IZ,IZ / jr nz`.  Also prom_b directory slot T_F4003C.
 TimedEvents_DrainDue:
 	ld XIX,TimedEvents_Ring                                    ; F82407  44 0a 08 60 00
-	m_bit 6, MD16, 0x34d4                                ; F8240C  f1 d4 34 ce
+	bit	6, (0x34d4:16)                               ; F8240C  f1 d4 34 ce
 	jr nz, .LF82417                                      ; F82410  6e 05
 	bit	2, (TransportB_State:8)                                   ; F82412  f0 96 ca
 	jr z, .LF82426                                       ; F82415  66 0f
@@ -6634,7 +6634,7 @@ TimedEvents_DispatchDueRun:
 	minc1_16 iy, 0x01ff                                  ; F82454  dd 38 ff 01
 	cp IY,IX                                             ; F82458  dc f5
 	jr z, .LF824C8                                       ; F8245A  66 6c
-	m_bit 6, MD16, 0x34d4                                ; F8245C  f1 d4 34 ce
+	bit	6, (0x34d4:16)                               ; F8245C  f1 d4 34 ce
 	jr nz, .LF82484                                      ; F82460  6e 22
 	mx_ld_rm MXB, ra_HL, ra_IY, r2                       ; F82462  c3 07 ec f4 22
 	cp B,0x60                                            ; F82467  ca cf 60
@@ -6666,7 +6666,7 @@ TimedEvents_DispatchDueRun:
 	minc1_16 iy, 0x01ff                                  ; F824A0  dd 38 ff 01
 	cp IY,IX                                             ; F824A4  dc f5
 	jr z, .LF824C8                                       ; F824A6  66 20
-	m_bit 6, MD16, 0x34d4                                ; F824A8  f1 d4 34 ce
+	bit	6, (0x34d4:16)                               ; F824A8  f1 d4 34 ce
 	jr nz, .LF82484                                      ; F824AC  6e d6
 	mx_ld_rm MXB, ra_HL, ra_IY, r0                       ; F824AE  c3 07 ec f4 20
 	calr TimedEvents_IsNotYetDue                                      ; F824B3  1e 90 00
@@ -6725,7 +6725,7 @@ TimedEvents_DispatchDueRun:
 	add (xix-2), iz                                      ; F8251E  9c fe 8e
 	m_cp_rm MWD+r4, 0xfc, r0                             ; F82521  9c fc f0
 	jr nz, .LF8252A                                      ; F82524  6e 04
-	m_res 6, MD16, 0x34d4                                ; F82526  f1 d4 34 b6
+	res	6, (0x34d4:16)                               ; F82526  f1 d4 34 b6
 .LF8252A:
 	ret                                                  ; F8252A  0e
 ; TimedEvents_ClassifyStatus -- E = class of status byte A: 0x82 -> 3, 0x88 -> 2, 0x9n -> 1, anything else -> 0
@@ -8096,7 +8096,7 @@ INTT1_Tick:
 	inc 1,A                                       ; F82D56  c9 61
 .LF82D58:
 	ld	(0xa1:8), a                               ; F82D58  f0 a1 41
-	m_bit 2, MD16, MidiCfg_ModeBits                         ; F82D5B  f1 32 7f ca
+	bit	2, (MidiCfg_ModeBits:16)                        ; F82D5B  f1 32 7f ca
 	jr NZ,.LF82DCB                                ; F82D5F  6e 6a
 	m_inc 1, MB8, 0x90                            ; F82D61  c0 90 61
 	bit	0, (TransportC_State:8)                            ; F82D64  f0 95 c8
@@ -8112,9 +8112,9 @@ INTT1_Tick:
 .LF82D7C:
 	cp	(PanelMode:16), 0x0d                     ; F82D7C  c1 78 20 3f 0d
 	jr Z,.LF82D9B                                 ; F82D81  66 18
-	m_bit 2, MD16, 0x7f34                         ; F82D83  f1 34 7f ca
+	bit	2, (0x7f34:16)                        ; F82D83  f1 34 7f ca
 	jr Z,.LF82D9B                                 ; F82D87  66 12
-	m_bit 2, MD16, MidiCfg_ModeBits                         ; F82D89  f1 32 7f ca
+	bit	2, (MidiCfg_ModeBits:16)                        ; F82D89  f1 32 7f ca
 	jr NZ,.LF82D9B                                ; F82D8D  6e 0c
 	push SR                                       ; F82D8F  02
 	ei 0x06                                       ; F82D90  06 06
@@ -8346,7 +8346,7 @@ INTTR4_SequencerTick:
 	jr c, .LF82EB9                                ; F82EB4  67 03
 	ld (XHL),0x00                                 ; F82EB6  b3 00 00
 .LF82EB9:
-	m_bit 2, MD16, MidiCfg_ModeBits                         ; F82EB9  f1 32 7f ca   whatever (0x7F32) bit 2 selects, it swaps the whole handler out
+	bit	2, (MidiCfg_ModeBits:16)                        ; F82EB9  f1 32 7f ca   whatever (0x7F32) bit 2 selects, it swaps the whole handler out
 	jr z, .LF82EC3                                ; F82EBD  66 04
 	jp INTTR4_SequencerTick_Alt                                   ; F82EBF  1b 20 31 f8
 .LF82EC3:
@@ -8417,9 +8417,9 @@ INTTR4_SequencerTick:
 	ld	(TransportB_State:8), a                               ; F82F64  f0 96 41
 	cp	(PanelMode:16), 0x0d                     ; F82F67  c1 78 20 3f 0d
 	jr z, .LF82F86                                ; F82F6C  66 18
-	m_bit 2, MD16, 0x7f34                         ; F82F6E  f1 34 7f ca
+	bit	2, (0x7f34:16)                        ; F82F6E  f1 34 7f ca
 	jr z, .LF82F86                                ; F82F72  66 12
-	m_bit 2, MD16, MidiCfg_ModeBits                         ; F82F74  f1 32 7f ca
+	bit	2, (MidiCfg_ModeBits:16)                        ; F82F74  f1 32 7f ca
 	jr nz, .LF82F86                               ; F82F78  6e 0c
 	push SR                                       ; F82F7A  02
 	ei 0x06                                       ; F82F7B  06 06
@@ -8447,9 +8447,9 @@ INTTR4_SequencerTick:
 	ld (TransportC_State:8), 0x10:io                               ; F82FA8  08 95 10
 	cp	(PanelMode:16), 0x0d                     ; F82FAB  c1 78 20 3f 0d
 	jr z, .LF82FCA                                ; F82FB0  66 18
-	m_bit 2, MD16, 0x7f34                         ; F82FB2  f1 34 7f ca
+	bit	2, (0x7f34:16)                        ; F82FB2  f1 34 7f ca
 	jr z, .LF82FCA                                ; F82FB6  66 12
-	m_bit 2, MD16, MidiCfg_ModeBits                         ; F82FB8  f1 32 7f ca
+	bit	2, (MidiCfg_ModeBits:16)                        ; F82FB8  f1 32 7f ca
 	jr nz, .LF82FCA                               ; F82FBC  6e 0c
 	push SR                                       ; F82FBE  02
 	ei 0x06                                       ; F82FBF  06 06
@@ -11754,14 +11754,14 @@ PanelButton_Route:   ; entry: calr from 0xF861A8, 0xF8687E
 	and L,0x1f                                    ; F861AE  cf cc 1f
 	extz HL                                       ; F861B1  db 12
 	and W,0x80                                    ; F861B3  c8 cc 80
-	m_bit 5, MD16, UI_RequestBits                         ; F861B6  f1 75 20 cd   bit 5,(0x2075)
+	bit	5, (UI_RequestBits:16)                        ; F861B6  f1 75 20 cd   bit 5,(0x2075)
 	jr nz, .LF861C6                               ; F861BA  6e 0a
 	cp L,0x0e                                     ; F861BC  cf cf 0e
 	jr nz, .LF861C6                               ; F861BF  6e 05
 	calr .LF8623C                                 ; F861C1  1e 78 00
 	jr .LF8623B                                   ; F861C4  68 75
 .LF861C6:
-	m_bit 0, MD16, UI_RequestBits                         ; F861C6  f1 75 20 c8   bit 0,(0x2075)
+	bit	0, (UI_RequestBits:16)                        ; F861C6  f1 75 20 c8   bit 0,(0x2075)
 	jr nz, .LF861E6                               ; F861CA  6e 1a
 	cp L,0x0d                                     ; F861CC  cf cf 0d
 	jr nz, .LF861E6                               ; F861CF  6e 15
@@ -11801,7 +11801,7 @@ PanelButton_Route:   ; entry: calr from 0xF861A8, 0xF8687E
 	pushw hl                                      ; F8622B  2b   push HL
 	call (xbc)                                    ; F8622C  b1 e8   call T,XBC
 	inc 4,XSP                                     ; F8622E  ef 64
-	m_bit 4, MD16, UI_Request_Hi                         ; F86230  f1 71 20 cc   bit 4,(0x2071)
+	bit	4, (UI_Request_Hi:16)                        ; F86230  f1 71 20 cc   bit 4,(0x2071)
 	jr z, .LF8623B                                ; F86234  66 05
 	or	(0x2072:16), 0x10                     ; F86236  c1 72 20 3e 10   or (0x2072),0x10
 .LF8623B:
@@ -11899,9 +11899,9 @@ PanelScreen_ApplyPendingId:   ; entry: calr from 0xF86109
 ; ---------------------------------------------------------------------
 .LF86295:
 PanelScreen_ApplyRequest:   ; entry: calr from 0xF8610C
-	m_bit 0, MD16, UI_ScreenFlags                         ; F86295  f1 95 20 c8   bit 0,(0x2095)
+	bit	0, (UI_ScreenFlags:16)                        ; F86295  f1 95 20 c8   bit 0,(0x2095)
 	jr nz, .LF862A2                               ; F86299  6e 07
-	m_bit 4, MD16, UI_RequestBits                         ; F8629B  f1 75 20 cc   bit 4,(0x2075)
+	bit	4, (UI_RequestBits:16)                        ; F8629B  f1 75 20 cc   bit 4,(0x2075)
 	jrl nz, .LF86317                              ; F8629F  7e 75 00
 .LF862A2:
 	ld a, (UI_Request_Hi:16)                            ; F862A2  c1 71 20 21   ld A,(0x2071)
@@ -11931,11 +11931,11 @@ PanelScreen_ApplyRequest:   ; entry: calr from 0xF8610C
 	or	(0x2072:16), 0x10                     ; F862E1  c1 72 20 3e 10   or (0x2072),0x10
 	jr .LF8630A                                   ; F862E6  68 22
 .LF862E8:
-	m_bit 7, MD16, UI_RequestBits                         ; F862E8  f1 75 20 cf   bit 7,(0x2075)
+	bit	7, (UI_RequestBits:16)                        ; F862E8  f1 75 20 cf   bit 7,(0x2075)
 	jr z, .LF86305                                ; F862EC  66 17
 	cp	(0x20a2:16), 0x00                     ; F862EE  c1 a2 20 3f 00   cp (0x20a2),0x00
 	jr nz, .LF86305                               ; F862F3  6e 10
-	m_bit 1, MD16, UI_ScreenFlags                         ; F862F5  f1 95 20 c9   bit 1,(0x2095)
+	bit	1, (UI_ScreenFlags:16)                        ; F862F5  f1 95 20 c9   bit 1,(0x2095)
 	jr nz, .LF86305                               ; F862F9  6e 0a
 	ld a, (UI_ScreenId:16)                            ; F862FB  c1 7c 20 21   ld A,(0x207c)
 	ld a, 0x00:opc                                   ; F862FF  21 00   ld A,0x00
@@ -12054,9 +12054,9 @@ PanelMode_ToScreenId:   ; entry: calr from 0xF8632A
 ; ---------------------------------------------------------------------
 .LF8639C:
 PanelScreen_ApplyRequestForced:   ; entry: calr from 0xF86112
-	m_bit 0, MD16, UI_ScreenFlags                         ; F8639C  f1 95 20 c8   bit 0,(0x2095)
+	bit	0, (UI_ScreenFlags:16)                        ; F8639C  f1 95 20 c8   bit 0,(0x2095)
 	jr nz, .LF863A8                               ; F863A0  6e 06
-	m_bit 4, MD16, UI_RequestBits                         ; F863A2  f1 75 20 cc   bit 4,(0x2075)
+	bit	4, (UI_RequestBits:16)                        ; F863A2  f1 75 20 cc   bit 4,(0x2075)
 	jr nz, .LF863D2                               ; F863A6  6e 2a
 .LF863A8:
 	ld a, (UI_Request_Hi:16)                            ; F863A8  c1 71 20 21   ld A,(0x2071)
@@ -12370,9 +12370,9 @@ PanelScreen_ResolveMethod:   ; entry: calr from 0xF864D6, 0xF864F4, 0xF86528, 0x
 ; ---------------------------------------------------------------------
 .LF86553:
 PanelState_SyncScreenFlags:   ; entry: calr from 0xF86069
-	m_bit 4, MD16, UI_ScreenFlags                         ; F86553  f1 95 20 cc   bit 4,(0x2095)
+	bit	4, (UI_ScreenFlags:16)                        ; F86553  f1 95 20 cc   bit 4,(0x2095)
 	jr z, .LF86569                                ; F86557  66 10
-	m_bit 4, MD16, UI_Request_Hi                         ; F86559  f1 71 20 cc   bit 4,(0x2071)
+	bit	4, (UI_Request_Hi:16)                        ; F86559  f1 71 20 cc   bit 4,(0x2071)
 	jr z, .LF86564                                ; F8655D  66 05
 	and	(UI_ScreenFlags:16), 0xef                     ; F8655F  c1 95 20 3c ef   and (0x2095),0xef
 .LF86564:
@@ -12470,15 +12470,15 @@ PanelEvent_Code03:   ; entry: prom_b directory slot T_PanelEvent_Code03 (T_F40F9
 	bit 0x00,L                                    ; F865CE  cf 33 00
 	jr z, .LF86608                                ; F865D1  66 35
 	xor	(UI_RequestBits:16), 0x10                     ; F865D3  c1 75 20 3d 10   xor (0x2075),0x10
-	m_bit 4, MD16, UI_RequestBits                         ; F865D8  f1 75 20 cc   bit 4,(0x2075)
+	bit	4, (UI_RequestBits:16)                        ; F865D8  f1 75 20 cc   bit 4,(0x2075)
 	jr z, .LF865EB                                ; F865DC  66 0d
-	m_bit 0, MD16, UI_ScreenHoldState                         ; F865DE  f1 92 20 c8   bit 0,(0x2092)
+	bit	0, (UI_ScreenHoldState:16)                        ; F865DE  f1 92 20 c8   bit 0,(0x2092)
 	jr z, .LF865E9                                ; F865E2  66 05
 	or	(UI_RequestBits:16), 0x80                     ; F865E4  c1 75 20 3e 80   or (0x2075),0x80
 .LF865E9:
 	jr .LF86602                                   ; F865E9  68 17
 .LF865EB:
-	m_bit 0, MD16, UI_ScreenHoldState                         ; F865EB  f1 92 20 c8   bit 0,(0x2092)
+	bit	0, (UI_ScreenHoldState:16)                        ; F865EB  f1 92 20 c8   bit 0,(0x2092)
 	jr z, .LF86602                                ; F865EF  66 11
 	cp	(0x20a2:16), 0x00                     ; F865F1  c1 a2 20 3f 00   cp (0x20a2),0x00
 	jr nz, .LF865FD                               ; F865F6  6e 05
@@ -12524,10 +12524,10 @@ PanelButton_Accept:   ; entry: calr from 0xF865A4
 	and C,0x1f                                    ; F8660D  cb cc 1f
 	cp C,0x0d                                     ; F86610  cb cf 0d
 	jr nz, .LF86654                               ; F86613  6e 3f
-	m_bit 0, MD16, UI_RequestBits                         ; F86615  f1 75 20 c8   bit 0,(0x2075)
+	bit	0, (UI_RequestBits:16)                        ; F86615  f1 75 20 c8   bit 0,(0x2075)
 	jr z, .LF86654                                ; F86619  66 39
 	ld c, (PanelDial_UpButton:16)                            ; F8661B  c1 9c 20 23   ld C,(0x209c)
-	m_bit 1, MD16, UiEvent_Byte3                         ; F8661F  f1 ba 20 c9   bit 1,(0x20ba)
+	bit	1, (UiEvent_Byte3:16)                        ; F8661F  f1 ba 20 c9   bit 1,(0x20ba)
 	jr nz, .LF86629                               ; F86623  6e 04
 	ld c, (PanelDial_DownButton:16)                            ; F86625  c1 9b 20 23   ld C,(0x209b)
 .LF86629:
@@ -12587,7 +12587,7 @@ PanelButton_Accept:   ; entry: calr from 0xF865A4
 	or	(0x208c:16), xwa                     ; F866BF  e1 8c 20 e8
 .LF866C3:
 	or	(PanelButton_HeldPairPos:16), xwa                     ; F866C3  e1 84 20 e8
-	m_bit 0, MD16, UiEvent_Byte2                         ; F866C7  f1 b9 20 c8   bit 0,(0x20b9)
+	bit	0, (UiEvent_Byte2:16)                        ; F866C7  f1 b9 20 c8   bit 0,(0x20b9)
 	jr nz, .LF866D7                               ; F866CB  6e 0a
 	xor XWA,0xffffffff                            ; F866CD  e8 cd ff ff ff ff
 	and	(PanelButton_HeldPairPos:16), xwa                     ; F866D3  e1 84 20 c8
@@ -12798,7 +12798,7 @@ PanelEvent_Code21_Dial:   ; entry: calr from 0xF865B8
 	extz WA                                       ; F8685B  d8 12
 	add HL,WA                                     ; F8685D  d8 83
 	ld A,(XHL)                                    ; F8685F  83 21
-	m_bit 0, MD16, UI_RequestBits                         ; F86861  f1 75 20 c8   bit 0,(0x2075)
+	bit	0, (UI_RequestBits:16)                        ; F86861  f1 75 20 c8   bit 0,(0x2075)
 	jr nz, .LF8686F                               ; F86865  6e 08
 	calr .LF8688E                                 ; F86867  1e 24 00
 	calr .LF868CD                                 ; F8686A  1e 60 00
@@ -13007,13 +13007,13 @@ PanelTimer_ScreenHold:   ; entry: calr from 0xF8690F
 	or	(UI_Request_Hi:16), 0x04                     ; F86941  c1 71 20 3e 04   or (0x2071),0x04
 	jr .LF8696A                                   ; F86946  68 22
 .LF86948:
-	m_bit 4, MD16, UI_RequestBits                         ; F86948  f1 75 20 cc   bit 4,(0x2075)
+	bit	4, (UI_RequestBits:16)                        ; F86948  f1 75 20 cc   bit 4,(0x2075)
 	jr nz, .LF86952                               ; F8694C  6e 04
 	dec 0x01, (UI_ScreenHoldTimer:16)                         ; F8694E  c1 73 20 69   dec 1,(0x2073)
 .LF86952:
 	cp	(UI_ScreenHoldTimer:16), 0x00                     ; F86952  c1 73 20 3f 00   cp (0x2073),0x00
 	jr z, .LF8696A                                ; F86957  66 11
-	m_bit 7, MD16, UI_RequestBits                         ; F86959  f1 75 20 cf   bit 7,(0x2075)
+	bit	7, (UI_RequestBits:16)                        ; F86959  f1 75 20 cf   bit 7,(0x2075)
 	jr nz, .LF8696A                               ; F8695D  6e 0b
 	dec 0x01, (UI_ScreenHoldTimer:16)                         ; F8695F  c1 73 20 69   dec 1,(0x2073)
 	jr nz, .LF8696A                               ; F86963  6e 05
@@ -13319,9 +13319,9 @@ List2030_AppendRegs:   ; entry: calr from 0xF8625A, 0xF868D7, prom_b directory s
 ;          third independent witness for the (0x2070)/(0x2071) pairing.
 ; ---------------------------------------------------------------------
 PanelState_CheckRequestAllowed:   ; entry: calr from 0xF8601F, 0xF86066, prom_b directory slot T_PanelState_CheckRequestAllowed, prom_b directory slot T_PanelState_CheckRequestAllowed_2
-	m_bit 6, MD16, UI_Request_Hi                         ; F86AE9  f1 71 20 ce   bit 6,(0x2071)
+	bit	6, (UI_Request_Hi:16)                        ; F86AE9  f1 71 20 ce   bit 6,(0x2071)
 	jr z, .LF86B08                                ; F86AED  66 19
-	m_bit 4, MD16, UI_RequestBits                         ; F86AEF  f1 75 20 cc   bit 4,(0x2075)
+	bit	4, (UI_RequestBits:16)                        ; F86AEF  f1 75 20 cc   bit 4,(0x2075)
 	jr z, .LF86B08                                ; F86AF3  66 13
 	cp	(UI_ScreenId:16), 0x01                     ; F86AF5  c1 7c 20 3f 01   cp (0x207c),0x01
 	jr z, .LF86B03                                ; F86AFA  66 07
@@ -13330,9 +13330,9 @@ PanelState_CheckRequestAllowed:   ; entry: calr from 0xF8601F, 0xF86066, prom_b 
 .LF86B03:
 	and	(UI_Request_Hi:16), 0xbf                     ; F86B03  c1 71 20 3c bf   and (0x2071),0xbf
 .LF86B08:
-	m_bit 0, MD16, UI_ScreenHoldState                         ; F86B08  f1 92 20 c8   bit 0,(0x2092)
+	bit	0, (UI_ScreenHoldState:16)                        ; F86B08  f1 92 20 c8   bit 0,(0x2092)
 	jr nz, .LF86B1B                               ; F86B0C  6e 0d
-	m_bit 4, MD16, UI_RequestBits                         ; F86B0E  f1 75 20 cc   bit 4,(0x2075)
+	bit	4, (UI_RequestBits:16)                        ; F86B0E  f1 75 20 cc   bit 4,(0x2075)
 	jr z, .LF86B1B                                ; F86B12  66 07
 	and	(UI_ScreenFlags:16), 0xfe                     ; F86B14  c1 95 20 3c fe   and (0x2095),0xfe
 	jr .LF86B42                                   ; F86B19  68 27
@@ -13477,7 +13477,7 @@ PanelEvent_Code01_ArmHold:   ; entry: prom_b directory slot T_PanelEvent_Code01_
 	and L,H                                       ; F86BD0  ce c7
 	bit 0x07,L                                    ; F86BD2  cf 33 07
 	jr z, .LF86BEB                                ; F86BD5  66 14
-	m_bit 1, MD24, 0x60f020                       ; F86BD7  f2 20 f0 60 c9   bit 1,(0x60f020)
+	bit	1, (0x60f020:24)                      ; F86BD7  f2 20 f0 60 c9   bit 1,(0x60f020)
 	jr nz, .LF86BF3                               ; F86BDC  6e 15
 	ldw (PanelHold_Index:16), 0x02                         ; F86BDE  f1 96 20 02 02 00   ld (0x2096),0x0002
 	ld (PanelHold_Timer:16), 0x40                          ; F86BE4  f1 a7 20 00 40   ld (0x20a7),0x40
@@ -13550,7 +13550,7 @@ PanelEvent_Code20_ArmHold:   ; entry: prom_b directory slot T_PanelEvent_Code20_
 	jr nz, .LF86C41                               ; F86C24  6e 1b
 	cp	(PanelMode:16), 0x15                     ; F86C26  c1 78 20 3f 15   cp (0x2078),0x15
 	jr z, .LF86C58                                ; F86C2B  66 2b
-	m_bit 1, MD24, 0x60f020                       ; F86C2D  f2 20 f0 60 c9   bit 1,(0x60f020)
+	bit	1, (0x60f020:24)                      ; F86C2D  f2 20 f0 60 c9   bit 1,(0x60f020)
 	jr nz, .LF86C58                               ; F86C32  6e 24
 	ldw (PanelHold_Index:16), 0x07                         ; F86C34  f1 96 20 02 07 00   ld (0x2096),0x0007
 	ld (PanelHold_Timer:16), 0x30                          ; F86C3A  f1 a7 20 00 30   ld (0x20a7),0x30
@@ -19102,14 +19102,14 @@ AssignableSwitch_Poll:
 	ld W,A                                               ; F8A212  c9 88
 	and A,0x40                                           ; F8A214  c9 cc 40
 	srl a, 0x06                                          ; F8A217  c9 ef 06
-	m_bit 0, MD16, 0x7f12                                ; F8A21A  f1 12 7f c8
+	bit	0, (0x7f12:16)                               ; F8A21A  f1 12 7f c8
 	jr z, .LF8A223                                           ; F8A21E  66 03
 	xor A,0x01                                           ; F8A220  c9 cd 01
 .LF8A223:
 	ld (0x2190:16), a                                   ; F8A223  f1 90 21 41
 	and W,0x80                                           ; F8A227  c8 cc 80
 	srl w, 0x07                                          ; F8A22A  c8 ef 07
-	m_bit 1, MD16, 0x7f12                                ; F8A22D  f1 12 7f c9
+	bit	1, (0x7f12:16)                               ; F8A22D  f1 12 7f c9
 	jr z, .LF8A236                                           ; F8A231  66 03
 	xor W,0x01                                           ; F8A233  c8 cd 01
 .LF8A236:
@@ -19439,7 +19439,7 @@ PanelGroupQueue_Append:
 PanelGroupQueue_ExpandToEvents_DeadCopy:
 	push XIX                                             ; F8A44B  3c
 	ld XIX,PanelKeypad_OrdinalToKey_V1+16                                    ; F8A44C  44 dd ad f8 00
-	m_bit 2, MD16, 0x7f37                                ; F8A451  f1 37 7f ca
+	bit	2, (0x7f37:16)                               ; F8A451  f1 37 7f ca
 	jr nz, .LF8A45C                                          ; F8A455  6e 05
 	ld XIX,.LF8AD71                                      ; F8A457  44 71 ad f8 00
 .LF8A45C:
@@ -19887,7 +19887,7 @@ PanelOrdinalToEventValue_B_DeadCopy:
 	jp PanelEvent_CommitValue_DeadCopy                                        ; F8A7D3  1b 00 a5 f8
 .LF8A7D7:
 	jp PanelEvent_Drop_DeadCopy                                        ; F8A7D7  1b 04 a5 f8
-	m_bit 1, MD16, UI_RequestBits                                ; F8A7DB  f1 75 20 c9
+	bit	1, (UI_RequestBits:16)                               ; F8A7DB  f1 75 20 c9
 	jr nz, PanelEvent_Service                                          ; F8A7DF  6e 3c
 	cp e, 0x00:i3                                          ; F8A7E1  cd d8
 	jr z, 0x34                                           ; F8A7E3  66 34
@@ -20417,7 +20417,7 @@ PanelAction_OrdinalToEventValue_A:   ; entry: PanelGroupActionListPool
 	ld d, 0xff:opc                                          ; F8AB1E  24 ff
 	cp e, 0x03:i3                                          ; F8AB20  cd db
 	jr nz, .LF8AB2C                                          ; F8AB22  6e 08
-	m_bit 0, MD16, 0x3614                                ; F8AB24  f1 14 36 c8
+	bit	0, (0x3614:16)                               ; F8AB24  f1 14 36 c8
 	jr z, .LF8AB31                                           ; F8AB28  66 07
 	ld e, 0x08:opc                                          ; F8AB2A  25 08
 .LF8AB2C:
@@ -20668,7 +20668,7 @@ PanelAction_BankButton:   ; entry: PanelGroupActionListPool
 ; (notes/proma-2026-09-25/gen_panel_actions.py)
 ; ---------------------------------------------------------------------
 PanelAction_SoundSelectOrKeypad_V1:   ; entry: PanelGroupActionListPool
-	m_bit 1, MD16, UI_RequestBits                                ; F8ACE8  f1 75 20 c9
+	bit	1, (UI_RequestBits:16)                               ; F8ACE8  f1 75 20 c9
 	jr nz, .LF8AD54                                          ; F8ACEC  6e 66
 	cp e, 0x00:i3                                          ; F8ACEE  cd d8
 	jr z, .LF8AD50                                           ; F8ACF0  66 5e
@@ -22580,12 +22580,12 @@ AsciiField_Clear:
 ;   (0x2663),0x20`; bit 0 also clear -> shift once more.  So 5 -> "5  ", 50 -> "50 ".  Published as T_F41AF4.
 Value_ToAsciiDigits3_LeftJustified:
 	calr Value_ToAsciiDigits3                            ; F8BC8A  1e 4a 00
-	m_bit 1, MD16, 0x2665                                ; F8BC8D  f1 65 26 c9
+	bit	1, (0x2665:16)                               ; F8BC8D  f1 65 26 c9
 	jr nz, .LF8BCAE                                      ; F8BC91  6e 1b
 	ld wa, (Value_AsciiDigits+1:16)                                 ; F8BC93  d1 62 26 20
 	ld (Value_AsciiDigits:16), wa                                  ; F8BC97  f1 61 26 50
 	ld (Value_AsciiDigits+2:16), 0x20                                 ; F8BC9B  f1 63 26 00 20
-	m_bit 0, MD16, 0x2665                                ; F8BCA0  f1 65 26 c8
+	bit	0, (0x2665:16)                               ; F8BCA0  f1 65 26 c8
 	jr nz, .LF8BCAE                                      ; F8BCA4  6e 08
 	ld wa, (Value_AsciiDigits+1:16)                                 ; F8BCA6  d1 62 26 20
 	ld (Value_AsciiDigits:16), wa                                  ; F8BCAA  f1 61 26 50
@@ -22597,10 +22597,10 @@ Value_ToAsciiDigits3_LeftJustified:
 ;   0x00 handler 0xF31BA1 is annotated "decimal readout, unsigned (0xF8BCAF via T_Value_ToAsciiDigits3_RightJustified)".
 Value_ToAsciiDigits3_RightJustified:
 	calr Value_ToAsciiDigits3                            ; F8BCAF  1e 25 00
-	m_bit 1, MD16, 0x2665                                ; F8BCB2  f1 65 26 c9
+	bit	1, (0x2665:16)                               ; F8BCB2  f1 65 26 c9
 	jr nz, .LF8BCC8                                      ; F8BCB6  6e 10
 	ld (Value_AsciiDigits:16), 0x20                                 ; F8BCB8  f1 61 26 00 20
-	m_bit 0, MD16, 0x2665                                ; F8BCBD  f1 65 26 c8
+	bit	0, (0x2665:16)                               ; F8BCBD  f1 65 26 c8
 	jr nz, .LF8BCC8                                      ; F8BCC1  6e 05
 	ld (Value_AsciiDigits+1:16), 0x20                                 ; F8BCC3  f1 62 26 00 20
 .LF8BCC8:
@@ -23302,7 +23302,7 @@ PanelLed_RequestIfBlinkEnableChanged:   ; entry: reachable-run entry
 	orw	(0x2116:16), 0x0004                  ; F8C30C  d1 16 21 3e 04 00
 	jr .LF8C337                                          ; F8C312  68 23
 .LF8C314:
-	m_bit 0, MD16, MIDI_ActivityFlags                                ; F8C314  f1 6f 21 c8
+	bit	0, (MIDI_ActivityFlags:16)                               ; F8C314  f1 6f 21 c8
 	jr nz, .LF8C337                                      ; F8C318  6e 1d
 	ld XIX,PanelLed_Shadow                                    ; F8C31A  44 d0 20 00 00
 	ld a, (UI_RequestBits:16)                                   ; F8C31F  c1 75 20 21
@@ -24396,8 +24396,8 @@ AnalogScan_RamChannel5:
 .LF8DD76:
 	ret                                                  ; F8DD76  0e
 	ld XBC,0xc88dc90e                                    ; F8DD77  41 0e c9 8d c8
-	m_bit 0, MD16, 0x026b                                ; F8DD7C  f1 6b 02 c8
-	m_stcf 1, MDD+r1, 0xc8                               ; F8DD80  b9 c8 a1
+	bit	0, (0x026b:16)                               ; F8DD7C  f1 6b 02 c8
+	stcf	1, (xbc-56)                                  ; F8DD80  b9 c8 a1
 	cp a, 0x02:i3                                          ; F8DD83  c9 da
 	jr ule, .LF8DDB8                                     ; F8DD85  63 31
 	cp a, 0x06:i3                                          ; F8DD87  c9 de
@@ -24701,7 +24701,7 @@ Link_SendCommandE2:
 	call uDMA2_SetSource                                        ; F8E162  1d af e6 f8
 	ld (DMA2V:8), 0x12:io                                      ; F8E166  08 7e 12
 	set	2, (TRUN:8)                                   ; F8E169  f0 20 ba
-	m_set 7, MD24, 0x00008a                              ; F8E16C  f2 8a 00 00 bf
+	set	7, (0x00008a:24)                             ; F8E16C  f2 8a 00 00 bf
 	inc 6,XSP                                            ; F8E171  ef 66
 .LF8E173:
 	cp	(Link_TxBurstsLeft:24), 0x00                          ; F8E173  c2 d9 07 60 3f 00
@@ -24766,7 +24766,7 @@ Link_SendCommandAndLong:
 	call uDMA2_SetSource                                        ; F8E1E0  1d af e6 f8
 	ld (DMA2V:8), 0x12:io                                      ; F8E1E4  08 7e 12
 	set	2, (TRUN:8)                                   ; F8E1E7  f0 20 ba
-	m_set 7, MD24, 0x00008a                              ; F8E1EA  f2 8a 00 00 bf
+	set	7, (0x00008a:24)                             ; F8E1EA  f2 8a 00 00 bf
 	inc 6,XSP                                            ; F8E1EF  ef 66
 .LF8E1F1:
 	cp	(Link_TxBurstsLeft:24), 0x00                          ; F8E1F1  c2 d9 07 60 3f 00
@@ -24836,14 +24836,14 @@ Link_SendCommand3_WaitTicks:
 Link_SendCommand5_WaitDone:
 	link XIZ,0xfffe                                      ; F8E222  ee 0c fe ff
 	m_ldw_mm16 MDD+r6, 0xfe, Tick_Count                      ; F8E226  be fe 16 80 00
-	m_set 6, MD24, 0x00008a                              ; F8E22B  f2 8a 00 00 be
+	set	6, (0x00008a:24)                             ; F8E22B  f2 8a 00 00 be
 	pushw 0x05                                           ; F8E230  0b 05 00
 	ld XBC,(XIZ+0x08)                                    ; F8E233  ae 08 21
 	push XBC                                             ; F8E236  39
 	calr Link_SendCommandAndLong                         ; F8E237  1e 47 ff
 	inc 6,XSP                                            ; F8E23A  ef 66
 .LF8E23C:
-	m_bit 6, MD24, 0x00008a                              ; F8E23C  f2 8a 00 00 ce
+	bit	6, (0x00008a:24)                             ; F8E23C  f2 8a 00 00 ce
 	jr z, .LF8E26A                                       ; F8E241  66 27
 	m_ld_rm MW8, Tick_Count, r1                                ; F8E243  d0 80 21
 	m_sub_rm MWD+r6, 0xfe, r1                            ; F8E246  9e fe a1
@@ -24852,7 +24852,7 @@ Link_SendCommand5_WaitDone:
 	ld (DMA3V:8), 0x00:io                                      ; F8E24F  08 7f 00
 	ld (Link_CompletionSelector:24), 0x00                             ; F8E252  f2 da 07 60 00 00
 	set	1, (P7:8)                                   ; F8E258  f0 13 b9
-	m_res 7, MD24, 0x00008a                              ; F8E25B  f2 8a 00 00 b7
+	res	7, (0x00008a:24)                             ; F8E25B  f2 8a 00 00 b7
 	inc 0x01, (Link_HandshakeTimeouts:24)                           ; F8E260  c2 db 07 60 61
 	ldw wa, 0xffff                                       ; F8E265  30 ff ff
 	jr .LF8E26C                                          ; F8E268  68 02
@@ -25231,7 +25231,7 @@ INT0_Cmd_E2:
 	jr INT0_Link__drop_args                                   ; F8E4EF  68 34
 INT0_Cmd_E6:
 	ld (Link_CompletionSelector:24), 0x00                      ; F8E4F1  f2 da 07 60 00 00
-	m_res 6, MD24, 0x00008a                       ; F8E4F7  f2 8a 00 00 b6   0xE6 takes no payload at all
+	res	6, (0x00008a:24)                      ; F8E4F7  f2 8a 00 00 b6   0xE6 takes no payload at all
 	jr INT0_Link__return                                   ; F8E4FC  68 29
 INT0_Cmd_Other:
 	ld (Link_CompletionSelector:24), 0x01                      ; F8E4FE  f2 da 07 60 00 01
@@ -25422,13 +25422,13 @@ INTTC3_Sel3_ReadRequest:
 	ld (0x600781:24), 0xff                      ; F8E5CA  f2 81 07 60 00 ff
 	ld (Link_CompletionSelector:24), 0x00                      ; F8E5D0  f2 da 07 60 00 00
 	set	1, (P7:8)                            ; F8E5D6  f0 13 b9   P7 bit 1 back to idle
-	m_set 7, MD24, Link_PendingFlags                       ; F8E5D9  f2 92 07 60 bf   "an 0xE2 is pending"
+	set	7, (Link_PendingFlags:24)                      ; F8E5D9  f2 92 07 60 bf   "an 0xE2 is pending"
 	jr INTTC3__return                             ; F8E5DE  68 0e
 
 ; --- selector 4: the payload of an 0xE1 block finished arriving --------------
 INTTC3_Sel4_BlockDone:
 	ld (Link_CompletionSelector:24), 0x00                      ; F8E5E0  f2 da 07 60 00 00
-	m_res 7, MD24, 0x00008a                       ; F8E5E6  f2 8a 00 00 b7   release Link_WaitBlockDone
+	res	7, (0x00008a:24)                      ; F8E5E6  f2 8a 00 00 b7   release Link_WaitBlockDone
 	set	1, (P7:8)                            ; F8E5EB  f0 13 b9   P7 bit 1 back to idle
 INTTC3__return:
 	pop QWA                                       ; F8E5EE  d7 e2 05
@@ -25468,9 +25468,9 @@ Link_ServiceTask:
 	push XIX                                      ; F8E5F6  3c
 	lda xix, (0x6007dd:24)                        ; F8E5F7  f2 dd 07 60 34   XIX = &stall counter
 	ei 0x06                                       ; F8E5FC  06 06
-	m_bit 7, MD24, Link_PendingFlags                       ; F8E5FE  f2 92 07 60 cf   0xE2 pending?
+	bit	7, (Link_PendingFlags:24)                      ; F8E5FE  f2 92 07 60 cf   0xE2 pending?
 	jr z, Link_ServiceTask__watchdog               ; F8E603  66 20
-	m_res 7, MD24, Link_PendingFlags                       ; F8E605  f2 92 07 60 b7
+	res	7, (Link_PendingFlags:24)                      ; F8E605  f2 92 07 60 b7
 	ei 0x00                                       ; F8E60A  06 00
 	ld xbc, (Link_E2Payload+4:24)                        ; F8E60C  e2 8c 07 60 21   field 2: destination
 	push XBC                                      ; F8E611  39
@@ -25543,7 +25543,7 @@ Link_WaitBlockDone:
 	pushw hl                                      ; F8E66D  2b
 	m_ld_rm MW8, Tick_Count, r3                         ; F8E66E  d0 80 23   HL := the tick count at entry
 Link_WaitBlockDone__poll:
-	m_bit 7, MD24, 0x00008a                       ; F8E671  f2 8a 00 00 cf
+	bit	7, (0x00008a:24)                      ; F8E671  f2 8a 00 00 cf
 	jr z, Link_WaitBlockDone__ok                  ; F8E676  66 26
 	m_ld_rm MW8, Tick_Count, r1                         ; F8E678  d0 80 21
 	sub BC,HL                                     ; F8E67B  db a1
@@ -25552,7 +25552,7 @@ Link_WaitBlockDone__poll:
 	ld (DMA3V:8), 0x00:io                              ; F8E683  08 7f 00
 	ld (Link_CompletionSelector:24), 0x00                      ; F8E686  f2 da 07 60 00 00
 	set	1, (P7:8)                            ; F8E68C  f0 13 b9
-	m_res 7, MD24, 0x00008a                       ; F8E68F  f2 8a 00 00 b7
+	res	7, (0x00008a:24)                      ; F8E68F  f2 8a 00 00 b7
 	inc 0x01, (Link_BlockDoneTimeouts:24)                    ; F8E694  c2 e1 07 60 61   error counter
 	ldw wa, 0xffff                                ; F8E699  30 ff ff   timed out
 .LF8E69C:
@@ -26495,7 +26495,7 @@ LCD_Svc_00__step:
 	ldw bc, 0x64                                  ; F8EAEF  31 64 00
 	exts XWA                                      ; F8EAF2  e8 13
 	divs xwa, bc                                 ; F8EAF4  d9 58   / 100 -- back to whole pixels
-	m_bit 0, MD16, LCD_LineFlags                         ; F8EAF6  f1 47 25 c8   were X and Y swapped?
+	bit	0, (LCD_LineFlags:16)                        ; F8EAF6  f1 47 25 c8   were X and Y swapped?
 	jr nz, .LF8EB06                               ; F8EAFA  6e 0a
 	ld (LCD_PlotY:16), wa                           ; F8EAFC  f1 52 25 50   no: the interpolant is Y
 	ld (LCD_PlotX:16), ix                           ; F8EB00  f1 50 25 54       and the loop variable is X
@@ -26737,7 +26737,7 @@ LCD_Line_PlotLowXEnd:
 	ld ix, (LCD_X0:16)                          ; F8EC5F  d1 30 25 24
 	ld wa, (LCD_Y0:16)                          ; F8EC63  d1 32 25 20
 .LF8EC67:
-	m_bit 0, MD16, LCD_LineFlags                         ; F8EC67  f1 47 25 c8
+	bit	0, (LCD_LineFlags:16)                        ; F8EC67  f1 47 25 c8
 	jr nz, .LF8EC77                               ; F8EC6B  6e 0a
 	ld (LCD_PlotY:16), wa                           ; F8EC6D  f1 52 25 50
 	ld (LCD_PlotX:16), ix                           ; F8EC71  f1 50 25 54
@@ -26768,7 +26768,7 @@ LCD_Line_PlotHighXEnd:
 	ld wa, (LCD_X1:16)                          ; F8EC91  d1 34 25 20
 	ld hl, (LCD_Y1:16)                          ; F8EC95  d1 36 25 23
 .LF8EC99:
-	m_bit 0, MD16, LCD_LineFlags                         ; F8EC99  f1 47 25 c8
+	bit	0, (LCD_LineFlags:16)                        ; F8EC99  f1 47 25 c8
 	jr nz, .LF8ECA9                               ; F8EC9D  6e 0a
 	ld (LCD_PlotY:16), hl                           ; F8EC9F  f1 52 25 53
 	ld (LCD_PlotX:16), wa                           ; F8ECA3  f1 50 25 50
@@ -26848,56 +26848,56 @@ LCD_PlotPointAt:
 	bit	0, (0xc6:8)                            ; F8ECEF  f0 c6 c8   (0xC6) bit 0 set = the display is off, do not wait for BUSY
 	jr nz, .LF8ECFB                               ; F8ECF2  6e 07
 .LF8ECF4:
-	m_bit 6, MD24, 0x790000                       ; F8ECF4  f2 00 00 79 ce
+	bit	6, (0x790000:24)                      ; F8ECF4  f2 00 00 79 ce
 	jr nz, .LF8ECF4                               ; F8ECF9  6e f9
 .LF8ECFB:
 	ld (0x790001:24), 0x46                      ; F8ECFB  f2 01 00 79 00 46   CSRW
 	bit	0, (0xc6:8)                            ; F8ED01  f0 c6 c8
 	jr nz, .LF8ED0D                               ; F8ED04  6e 07
 .LF8ED06:
-	m_bit 6, MD24, 0x790000                       ; F8ED06  f2 00 00 79 ce
+	bit	6, (0x790000:24)                      ; F8ED06  f2 00 00 79 ce
 	jr nz, .LF8ED06                               ; F8ED0B  6e f9
 .LF8ED0D:
 	ld (0x790000:24), a                          ; F8ED0D  f2 00 00 79 41   address low
 	bit	0, (0xc6:8)                            ; F8ED12  f0 c6 c8
 	jr nz, .LF8ED1E                               ; F8ED15  6e 07
 .LF8ED17:
-	m_bit 6, MD24, 0x790000                       ; F8ED17  f2 00 00 79 ce
+	bit	6, (0x790000:24)                      ; F8ED17  f2 00 00 79 ce
 	jr nz, .LF8ED17                               ; F8ED1C  6e f9
 .LF8ED1E:
 	ld (0x790000:24), w                          ; F8ED1E  f2 00 00 79 40   address high
 	bit	0, (0xc6:8)                            ; F8ED23  f0 c6 c8
 	jr nz, .LF8ED2F                               ; F8ED26  6e 07
 .LF8ED28:
-	m_bit 6, MD24, 0x790000                       ; F8ED28  f2 00 00 79 ce
+	bit	6, (0x790000:24)                      ; F8ED28  f2 00 00 79 ce
 	jr nz, .LF8ED28                               ; F8ED2D  6e f9
 .LF8ED2F:
 	ld (0x790001:24), 0x43                      ; F8ED2F  f2 01 00 79 00 43   MREAD -- and it auto-increments the cursor, which is why
 	bit	0, (0xc6:8)                            ; F8ED35  f0 c6 c8
 	jr nz, .LF8ED41                               ; F8ED38  6e 07
 .LF8ED3A:
-	m_bit 6, MD24, 0x790000                       ; F8ED3A  f2 00 00 79 ce
+	bit	6, (0x790000:24)                      ; F8ED3A  f2 00 00 79 ce
 	jr nz, .LF8ED3A                               ; F8ED3F  6e f9
 .LF8ED41:
 	ld c, (0x790001:24)                          ; F8ED41  c2 01 00 79 23   C = the byte that is already there
 	bit	0, (0xc6:8)                            ; F8ED46  f0 c6 c8
 	jr nz, .LF8ED52                               ; F8ED49  6e 07
 .LF8ED4B:
-	m_bit 6, MD24, 0x790000                       ; F8ED4B  f2 00 00 79 ce
+	bit	6, (0x790000:24)                      ; F8ED4B  f2 00 00 79 ce
 	jr nz, .LF8ED4B                               ; F8ED50  6e f9
 .LF8ED52:
 	ld (0x790001:24), 0x46                      ; F8ED52  f2 01 00 79 00 46   CSRW again, to undo the MREAD auto-increment
 	bit	0, (0xc6:8)                            ; F8ED58  f0 c6 c8
 	jr nz, .LF8ED64                               ; F8ED5B  6e 07
 .LF8ED5D:
-	m_bit 6, MD24, 0x790000                       ; F8ED5D  f2 00 00 79 ce
+	bit	6, (0x790000:24)                      ; F8ED5D  f2 00 00 79 ce
 	jr nz, .LF8ED5D                               ; F8ED62  6e f9
 .LF8ED64:
 	ld (0x790000:24), a                          ; F8ED64  f2 00 00 79 41
 	bit	0, (0xc6:8)                            ; F8ED69  f0 c6 c8
 	jr nz, .LF8ED75                               ; F8ED6C  6e 07
 .LF8ED6E:
-	m_bit 6, MD24, 0x790000                       ; F8ED6E  f2 00 00 79 ce
+	bit	6, (0x790000:24)                      ; F8ED6E  f2 00 00 79 ce
 	jr nz, .LF8ED6E                               ; F8ED73  6e f9
 .LF8ED75:
 	ld (0x790000:24), w                          ; F8ED75  f2 00 00 79 40
@@ -26910,14 +26910,14 @@ LCD_PlotPointAt:
 	bit	0, (0xc6:8)                            ; F8ED88  f0 c6 c8
 	jr nz, .LF8ED94                               ; F8ED8B  6e 07
 .LF8ED8D:
-	m_bit 6, MD24, 0x790000                       ; F8ED8D  f2 00 00 79 ce
+	bit	6, (0x790000:24)                      ; F8ED8D  f2 00 00 79 ce
 	jr nz, .LF8ED8D                               ; F8ED92  6e f9
 .LF8ED94:
 	ld (0x790001:24), 0x42                      ; F8ED94  f2 01 00 79 00 42   MWRITE
 	bit	0, (0xc6:8)                            ; F8ED9A  f0 c6 c8
 	jr nz, .LF8EDA6                               ; F8ED9D  6e 07
 .LF8ED9F:
-	m_bit 6, MD24, 0x790000                       ; F8ED9F  f2 00 00 79 ce
+	bit	6, (0x790000:24)                      ; F8ED9F  f2 00 00 79 ce
 	jr nz, .LF8ED9F                               ; F8EDA4  6e f9
 .LF8EDA6:
 	ld (0x790000:24), c                          ; F8EDA6  f2 00 00 79 43   the modified byte goes back
@@ -28472,14 +28472,14 @@ LCD_Svc_01_DrawHLine:
 	bit	0, (0xc6:8)                            ; F8F550  f0 c6 c8
 	jr nz, .LF8F55C                               ; F8F553  6e 07
 .LF8F555:
-	m_bit 6, MD24, 0x790000                       ; F8F555  f2 00 00 79 ce
+	bit	6, (0x790000:24)                      ; F8F555  f2 00 00 79 ce
 	jr nz, .LF8F555                               ; F8F55A  6e f9
 .LF8F55C:
 	ld (0x790001:24), 0x4c                      ; F8F55C  f2 01 00 79 00 4c
 	bit	0, (0xc6:8)                            ; F8F562  f0 c6 c8
 	jr nz, .LF8F56E                               ; F8F565  6e 07
 .LF8F567:
-	m_bit 6, MD24, 0x790000                       ; F8F567  f2 00 00 79 ce
+	bit	6, (0x790000:24)                      ; F8F567  f2 00 00 79 ce
 	jr nz, .LF8F567                               ; F8F56C  6e f9
 .LF8F56E:
 	ld (0x790001:24), 0x46                      ; F8F56E  f2 01 00 79 00 46
@@ -28487,14 +28487,14 @@ LCD_Svc_01_DrawHLine:
 	bit	0, (0xc6:8)                            ; F8F578  f0 c6 c8
 	jr nz, .LF8F584                               ; F8F57B  6e 07
 .LF8F57D:
-	m_bit 6, MD24, 0x790000                       ; F8F57D  f2 00 00 79 ce
+	bit	6, (0x790000:24)                      ; F8F57D  f2 00 00 79 ce
 	jr nz, .LF8F57D                               ; F8F582  6e f9
 .LF8F584:
 	ld (0x790000:24), a                          ; F8F584  f2 00 00 79 41
 	bit	0, (0xc6:8)                            ; F8F589  f0 c6 c8
 	jr nz, .LF8F595                               ; F8F58C  6e 07
 .LF8F58E:
-	m_bit 6, MD24, 0x790000                       ; F8F58E  f2 00 00 79 ce
+	bit	6, (0x790000:24)                      ; F8F58E  f2 00 00 79 ce
 	jr nz, .LF8F58E                               ; F8F593  6e f9
 .LF8F595:
 	ld (0x790000:24), w                          ; F8F595  f2 00 00 79 40
@@ -28503,14 +28503,14 @@ LCD_Svc_01_DrawHLine:
 	bit	0, (0xc6:8)                            ; F8F59F  f0 c6 c8
 	jr nz, .LF8F5AB                               ; F8F5A2  6e 07
 .LF8F5A4:
-	m_bit 6, MD24, 0x790000                       ; F8F5A4  f2 00 00 79 ce
+	bit	6, (0x790000:24)                      ; F8F5A4  f2 00 00 79 ce
 	jr nz, .LF8F5A4                               ; F8F5A9  6e f9
 .LF8F5AB:
 	ld (0x790001:24), 0x43                      ; F8F5AB  f2 01 00 79 00 43
 	bit	0, (0xc6:8)                            ; F8F5B1  f0 c6 c8
 	jr nz, .LF8F5BD                               ; F8F5B4  6e 07
 .LF8F5B6:
-	m_bit 6, MD24, 0x790000                       ; F8F5B6  f2 00 00 79 ce
+	bit	6, (0x790000:24)                      ; F8F5B6  f2 00 00 79 ce
 	jr nz, .LF8F5B6                               ; F8F5BB  6e f9
 .LF8F5BD:
 	ld w, (0x790001:24)                          ; F8F5BD  c2 01 00 79 20
@@ -28520,7 +28520,7 @@ LCD_Svc_01_DrawHLine:
 	bit	0, (0xc6:8)                            ; F8F5C9  f0 c6 c8
 	jr nz, .LF8F5D5                               ; F8F5CC  6e 07
 .LF8F5CE:
-	m_bit 6, MD24, 0x790000                       ; F8F5CE  f2 00 00 79 ce
+	bit	6, (0x790000:24)                      ; F8F5CE  f2 00 00 79 ce
 	jr nz, .LF8F5CE                               ; F8F5D3  6e f9
 .LF8F5D5:
 	ld (0x790001:24), 0x46                      ; F8F5D5  f2 01 00 79 00 46
@@ -28528,21 +28528,21 @@ LCD_Svc_01_DrawHLine:
 	bit	0, (0xc6:8)                            ; F8F5DF  f0 c6 c8
 	jr nz, .LF8F5EB                               ; F8F5E2  6e 07
 .LF8F5E4:
-	m_bit 6, MD24, 0x790000                       ; F8F5E4  f2 00 00 79 ce
+	bit	6, (0x790000:24)                      ; F8F5E4  f2 00 00 79 ce
 	jr nz, .LF8F5E4                               ; F8F5E9  6e f9
 .LF8F5EB:
 	ld (0x790000:24), a                          ; F8F5EB  f2 00 00 79 41
 	bit	0, (0xc6:8)                            ; F8F5F0  f0 c6 c8
 	jr nz, .LF8F5FC                               ; F8F5F3  6e 07
 .LF8F5F5:
-	m_bit 6, MD24, 0x790000                       ; F8F5F5  f2 00 00 79 ce
+	bit	6, (0x790000:24)                      ; F8F5F5  f2 00 00 79 ce
 	jr nz, .LF8F5F5                               ; F8F5FA  6e f9
 .LF8F5FC:
 	ld (0x790000:24), w                          ; F8F5FC  f2 00 00 79 40
 	bit	0, (0xc6:8)                            ; F8F601  f0 c6 c8
 	jr nz, .LF8F60D                               ; F8F604  6e 07
 .LF8F606:
-	m_bit 6, MD24, 0x790000                       ; F8F606  f2 00 00 79 ce
+	bit	6, (0x790000:24)                      ; F8F606  f2 00 00 79 ce
 	jr nz, .LF8F606                               ; F8F60B  6e f9
 .LF8F60D:
 	ld (0x790001:24), 0x42                      ; F8F60D  f2 01 00 79 00 42
@@ -28552,7 +28552,7 @@ LCD_Svc_01_DrawHLine:
 	bit	0, (0xc6:8)                            ; F8F61A  f0 c6 c8
 	jr nz, .LF8F626                               ; F8F61D  6e 07
 .LF8F61F:
-	m_bit 6, MD24, 0x790000                       ; F8F61F  f2 00 00 79 ce
+	bit	6, (0x790000:24)                      ; F8F61F  f2 00 00 79 ce
 	jr nz, .LF8F61F                               ; F8F624  6e f9
 .LF8F626:
 	ld (0x790000:24), c                          ; F8F626  f2 00 00 79 43
@@ -28573,7 +28573,7 @@ LCD_Svc_01_DrawHLine:
 	bit	0, (0xc6:8)                            ; F8F64C  f0 c6 c8
 	jr nz, .LF8F658                               ; F8F64F  6e 07
 .LF8F651:
-	m_bit 6, MD24, 0x790000                       ; F8F651  f2 00 00 79 ce
+	bit	6, (0x790000:24)                      ; F8F651  f2 00 00 79 ce
 	jr nz, .LF8F651                               ; F8F656  6e f9
 .LF8F658:
 	ld (0x790001:24), 0x42                      ; F8F658  f2 01 00 79 00 42
@@ -28584,7 +28584,7 @@ LCD_Svc_01_DrawHLine:
 	bit	0, (0xc6:8)                            ; F8F662  f0 c6 c8
 	jr nz, .LF8F66E                               ; F8F665  6e 07
 .LF8F667:
-	m_bit 6, MD24, 0x790000                       ; F8F667  f2 00 00 79 ce
+	bit	6, (0x790000:24)                      ; F8F667  f2 00 00 79 ce
 	jr nz, .LF8F667                               ; F8F66C  6e f9
 .LF8F66E:
 	ld (0x790000:24), a                          ; F8F66E  f2 00 00 79 41
@@ -28595,21 +28595,21 @@ LCD_Svc_01_DrawHLine:
 	bit	0, (0xc6:8)                            ; F8F67B  f0 c6 c8
 	jr nz, .LF8F687                               ; F8F67E  6e 07
 .LF8F680:
-	m_bit 6, MD24, 0x790000                       ; F8F680  f2 00 00 79 ce
+	bit	6, (0x790000:24)                      ; F8F680  f2 00 00 79 ce
 	jr nz, .LF8F680                               ; F8F685  6e f9
 .LF8F687:
 	ld (0x790001:24), 0x47                      ; F8F687  f2 01 00 79 00 47
 	bit	0, (0xc6:8)                            ; F8F68D  f0 c6 c8
 	jr nz, .LF8F699                               ; F8F690  6e 07
 .LF8F692:
-	m_bit 6, MD24, 0x790000                       ; F8F692  f2 00 00 79 ce
+	bit	6, (0x790000:24)                      ; F8F692  f2 00 00 79 ce
 	jr nz, .LF8F692                               ; F8F697  6e f9
 .LF8F699:
 	ld a, (0x790001:24)                          ; F8F699  c2 01 00 79 21
 	bit	0, (0xc6:8)                            ; F8F69E  f0 c6 c8
 	jr nz, .LF8F6AA                               ; F8F6A1  6e 07
 .LF8F6A3:
-	m_bit 6, MD24, 0x790000                       ; F8F6A3  f2 00 00 79 ce
+	bit	6, (0x790000:24)                      ; F8F6A3  f2 00 00 79 ce
 	jr nz, .LF8F6A3                               ; F8F6A8  6e f9
 .LF8F6AA:
 	ld w, (0x790001:24)                          ; F8F6AA  c2 01 00 79 20
@@ -28617,14 +28617,14 @@ LCD_Svc_01_DrawHLine:
 	bit	0, (0xc6:8)                            ; F8F6B3  f0 c6 c8
 	jr nz, .LF8F6BF                               ; F8F6B6  6e 07
 .LF8F6B8:
-	m_bit 6, MD24, 0x790000                       ; F8F6B8  f2 00 00 79 ce
+	bit	6, (0x790000:24)                      ; F8F6B8  f2 00 00 79 ce
 	jr nz, .LF8F6B8                               ; F8F6BD  6e f9
 .LF8F6BF:
 	ld (0x790001:24), 0x43                      ; F8F6BF  f2 01 00 79 00 43
 	bit	0, (0xc6:8)                            ; F8F6C5  f0 c6 c8
 	jr nz, .LF8F6D1                               ; F8F6C8  6e 07
 .LF8F6CA:
-	m_bit 6, MD24, 0x790000                       ; F8F6CA  f2 00 00 79 ce
+	bit	6, (0x790000:24)                      ; F8F6CA  f2 00 00 79 ce
 	jr nz, .LF8F6CA                               ; F8F6CF  6e f9
 .LF8F6D1:
 	ld w, (0x790001:24)                          ; F8F6D1  c2 01 00 79 20
@@ -28635,7 +28635,7 @@ LCD_Svc_01_DrawHLine:
 	bit	0, (0xc6:8)                            ; F8F6DD  f0 c6 c8
 	jr nz, .LF8F6E9                               ; F8F6E0  6e 07
 .LF8F6E2:
-	m_bit 6, MD24, 0x790000                       ; F8F6E2  f2 00 00 79 ce
+	bit	6, (0x790000:24)                      ; F8F6E2  f2 00 00 79 ce
 	jr nz, .LF8F6E2                               ; F8F6E7  6e f9
 .LF8F6E9:
 	ld (0x790001:24), 0x46                      ; F8F6E9  f2 01 00 79 00 46
@@ -28643,28 +28643,28 @@ LCD_Svc_01_DrawHLine:
 	bit	0, (0xc6:8)                            ; F8F6F3  f0 c6 c8
 	jr nz, .LF8F6FF                               ; F8F6F6  6e 07
 .LF8F6F8:
-	m_bit 6, MD24, 0x790000                       ; F8F6F8  f2 00 00 79 ce
+	bit	6, (0x790000:24)                      ; F8F6F8  f2 00 00 79 ce
 	jr nz, .LF8F6F8                               ; F8F6FD  6e f9
 .LF8F6FF:
 	ld (0x790000:24), a                          ; F8F6FF  f2 00 00 79 41
 	bit	0, (0xc6:8)                            ; F8F704  f0 c6 c8
 	jr nz, .LF8F710                               ; F8F707  6e 07
 .LF8F709:
-	m_bit 6, MD24, 0x790000                       ; F8F709  f2 00 00 79 ce
+	bit	6, (0x790000:24)                      ; F8F709  f2 00 00 79 ce
 	jr nz, .LF8F709                               ; F8F70E  6e f9
 .LF8F710:
 	ld (0x790000:24), w                          ; F8F710  f2 00 00 79 40
 	bit	0, (0xc6:8)                            ; F8F715  f0 c6 c8
 	jr nz, .LF8F721                               ; F8F718  6e 07
 .LF8F71A:
-	m_bit 6, MD24, 0x790000                       ; F8F71A  f2 00 00 79 ce
+	bit	6, (0x790000:24)                      ; F8F71A  f2 00 00 79 ce
 	jr nz, .LF8F71A                               ; F8F71F  6e f9
 .LF8F721:
 	ld (0x790001:24), 0x42                      ; F8F721  f2 01 00 79 00 42
 	bit	0, (0xc6:8)                            ; F8F727  f0 c6 c8
 	jr nz, .LF8F733                               ; F8F72A  6e 07
 .LF8F72C:
-	m_bit 6, MD24, 0x790000                       ; F8F72C  f2 00 00 79 ce
+	bit	6, (0x790000:24)                      ; F8F72C  f2 00 00 79 ce
 	jr nz, .LF8F72C                               ; F8F731  6e f9
 .LF8F733:
 	ld (0x790000:24), c                          ; F8F733  f2 00 00 79 43
@@ -28879,7 +28879,7 @@ LCD_Svc_0C_SetLayersOn:
 	bit	0, (0xc6:8)                            ; F8F7DD  f0 c6 c8
 	jr nz, .LF8F7E9                               ; F8F7E0  6e 07
 .LF8F7E2:
-	m_bit 6, MD24, 0x790000                       ; F8F7E2  f2 00 00 79 ce
+	bit	6, (0x790000:24)                      ; F8F7E2  f2 00 00 79 ce
 	jr nz, .LF8F7E2                               ; F8F7E7  6e f9
 .LF8F7E9:
 	ld (0x790000:24), a                          ; F8F7E9  f2 00 00 79 41
@@ -28931,7 +28931,7 @@ LCD_Svc_0D_SetLayersFlashing:
 	bit	0, (0xc6:8)                            ; F8F826  f0 c6 c8
 	jr nz, .LF8F832                               ; F8F829  6e 07
 .LF8F82B:
-	m_bit 6, MD24, 0x790000                       ; F8F82B  f2 00 00 79 ce
+	bit	6, (0x790000:24)                      ; F8F82B  f2 00 00 79 ce
 	jr nz, .LF8F82B                               ; F8F830  6e f9
 .LF8F832:
 	ld (0x790001:24), 0x59                      ; F8F832  f2 01 00 79 00 59   DISP ON
@@ -28940,7 +28940,7 @@ LCD_Svc_0D_SetLayersFlashing:
 	bit	0, (0xc6:8)                            ; F8F83A  f0 c6 c8
 	jr nz, .LF8F846                               ; F8F83D  6e 07
 .LF8F83F:
-	m_bit 6, MD24, 0x790000                       ; F8F83F  f2 00 00 79 ce
+	bit	6, (0x790000:24)                      ; F8F83F  f2 00 00 79 ce
 	jr nz, .LF8F83F                               ; F8F844  6e f9
 .LF8F846:
 	ld (0x790000:24), a                          ; F8F846  f2 00 00 79 41
@@ -30574,7 +30574,7 @@ LCD_Svc_15_DrawLineDashed:
 	exts XWA                                      ; F900EC  e8 13
 	divs xwa, bc                                 ; F900EE  d9 58
 	ld DE,QWA                                     ; F900F0  d7 e2 8a
-	m_bit 0, MD16, LCD_LineFlags                         ; F900F3  f1 47 25 c8
+	bit	0, (LCD_LineFlags:16)                        ; F900F3  f1 47 25 c8
 	jr nz, .LF90103                               ; F900F7  6e 0a
 	ld (LCD_PlotY:16), wa                           ; F900F9  f1 52 25 50
 	ld (LCD_PlotX:16), ix                           ; F900FD  f1 50 25 54
@@ -32184,7 +32184,7 @@ sub_F90989:
 	jr z, .LF909A4                                           ; F9099E  66 04
 	call T_Drawbar_EnterScreenIfMarked                                        ; F909A0  1d 68 2e f4
 .LF909A4:
-	m_bit 4, MD16, UI_ScreenFlags                                ; F909A4  f1 95 20 cc
+	bit	4, (UI_ScreenFlags:16)                               ; F909A4  f1 95 20 cc
 	jr nz, .LF909BC                                          ; F909A8  6e 12
 	ld XWA,Paint_SoundMode_DeadCopy                                    ; F909AA  40 cf 09 f9 00
 	push XWA                                             ; F909AF  38
@@ -32278,7 +32278,7 @@ Paint_SoundModeFields_DeadCopy:   ; entry: named by 1 `ld` operand, first at 0xF
 	call T_DisplayListB_Run                              ; F90A9A  1d f4 17 f4
 ; stale: the live twin calls PartRecord_GetPtr
 	calr	PartRecord_GetPtr - 0x859                       ; F90A9E  1e 3f 32
-	m_bit 0, MD16, ModeScreen_DirtyFields                                ; F90AA1  f1 76 26 c8
+	bit	0, (ModeScreen_DirtyFields:16)                               ; F90AA1  f1 76 26 c8
 	jr z, .LF90AB9                                           ; F90AA5  66 12
 	push XIY                                             ; F90AA7  3d
 	ld A,(XIY+0x03)                                      ; F90AA8  8d 03 21
@@ -32287,7 +32287,7 @@ Paint_SoundModeFields_DeadCopy:   ; entry: named by 1 `ld` operand, first at 0xF
 	call T_DLB_Handler_Decimal2Words                                        ; F90AB4  1d 0c 18 f4
 	pop XIY                                              ; F90AB8  5d
 .LF90AB9:
-	m_bit 1, MD16, ModeScreen_DirtyFields                                ; F90AB9  f1 76 26 c9
+	bit	1, (ModeScreen_DirtyFields:16)                               ; F90AB9  f1 76 26 c9
 	jr z, .LF90AD1                                           ; F90ABD  66 12
 	push XIY                                             ; F90ABF  3d
 	ld A,(XIY+0x08)                                      ; F90AC0  8d 08 21
@@ -32296,7 +32296,7 @@ Paint_SoundModeFields_DeadCopy:   ; entry: named by 1 `ld` operand, first at 0xF
 	call T_DLB_Handler_StringTable2                      ; F90ACC  1d fc 17 f4
 	pop XIY                                              ; F90AD0  5d
 .LF90AD1:
-	m_bit 2, MD16, ModeScreen_DirtyFields                                ; F90AD1  f1 76 26 ca
+	bit	2, (ModeScreen_DirtyFields:16)                               ; F90AD1  f1 76 26 ca
 	jr z, .LF90AE9                                           ; F90AD5  66 12
 	push XIY                                             ; F90AD7  3d
 	ld A,(XIY+0x05)                                      ; F90AD8  8d 05 21
@@ -32305,7 +32305,7 @@ Paint_SoundModeFields_DeadCopy:   ; entry: named by 1 `ld` operand, first at 0xF
 	call T_DLB_Handler_Decimal2Words                                        ; F90AE4  1d 0c 18 f4
 	pop XIY                                              ; F90AE8  5d
 .LF90AE9:
-	m_bit 3, MD16, ModeScreen_DirtyFields                                ; F90AE9  f1 76 26 cb
+	bit	3, (ModeScreen_DirtyFields:16)                               ; F90AE9  f1 76 26 cb
 	jr z, .LF90B01                                           ; F90AED  66 12
 	push XIY                                             ; F90AEF  3d
 	ld A,(XIY+0x07)                                      ; F90AF0  8d 07 21
@@ -32315,7 +32315,7 @@ Paint_SoundModeFields_DeadCopy:   ; entry: named by 1 `ld` operand, first at 0xF
 Paint_SoundModeFields_DeadCopy__F90B00:
 	pop XIY                                              ; F90B00  5d
 .LF90B01:
-	m_bit 4, MD16, ModeScreen_DirtyFields                                ; F90B01  f1 76 26 cc
+	bit	4, (ModeScreen_DirtyFields:16)                               ; F90B01  f1 76 26 cc
 	jr z, .LF90B19                                           ; F90B05  66 12
 	push XIY                                             ; F90B07  3d
 	ld A,(XIY+0x0d)                                      ; F90B08  8d 0d 21
@@ -32324,7 +32324,7 @@ Paint_SoundModeFields_DeadCopy__F90B00:
 	call T_DLB_Handler_StringTable2                      ; F90B14  1d fc 17 f4
 	pop XIY                                              ; F90B18  5d
 .LF90B19:
-	m_bit 5, MD16, ModeScreen_DirtyFields                                ; F90B19  f1 76 26 cd
+	bit	5, (ModeScreen_DirtyFields:16)                               ; F90B19  f1 76 26 cd
 	jr z, .LF90B31                                           ; F90B1D  66 12
 	push XIY                                             ; F90B1F  3d
 	ld A,(XIY+0x0d)                                      ; F90B20  8d 0d 21
@@ -32333,7 +32333,7 @@ Paint_SoundModeFields_DeadCopy__F90B00:
 	call T_DLB_Handler_StringTable2                      ; F90B2C  1d fc 17 f4
 	pop XIY                                              ; F90B30  5d
 .LF90B31:
-	m_bit 7, MD16, ModeScreen_DirtyFields                                ; F90B31  f1 76 26 cf
+	bit	7, (ModeScreen_DirtyFields:16)                               ; F90B31  f1 76 26 cf
 	jr z, .LF90B52                                           ; F90B35  66 1b
 	push XIY                                             ; F90B37  3d
 	ld A,(XIY+0x06)                                      ; F90B38  8d 06 21
@@ -32347,7 +32347,7 @@ Paint_SoundModeFields_DeadCopy__F90B00:
 	call T_DLB_Handler_StringTable2                      ; F90B4D  1d fc 17 f4
 	pop XIY                                              ; F90B51  5d
 .LF90B52:
-	m_bit 6, MD16, ModeScreen_DirtyFields                                ; F90B52  f1 76 26 ce
+	bit	6, (ModeScreen_DirtyFields:16)                               ; F90B52  f1 76 26 ce
 	jr z, .LF90B7B                                           ; F90B56  66 23
 	push XIY                                             ; F90B58  3d
 	ld XIY,0x000078b2                                    ; F90B59  45 b2 78 00 00
@@ -32395,7 +32395,7 @@ Paint_SoundModeFields_DeadCopy__F90B00:
 ;   Paint_SoundModeFields calls ModeScreen_PaintDirtyFields2; truncated at 0xF90C00 by the module there. Basis: caller
 ;   + body + live twin. (notes/naming-pilot-2026-10-06/proposals_wave8_b8.json)
 ModeScreen_PaintDirtyFields2_DeadCopy:
-	m_bit 0, MD16, ModeScreen_DirtyFields2                                ; F90B8E  f1 77 26 c8
+	bit	0, (ModeScreen_DirtyFields2:16)                               ; F90B8E  f1 77 26 c8
 	jr z, .LF90BCD                                           ; F90B92  66 39
 ; stale: 0xF93CF4, the old address the twin-paired call at 0xF90A65 names
 	call	PartRecord_GetSecondHalfPtr - 0x859             ; F90B94  1d f4 3c f9
@@ -32414,7 +32414,7 @@ ModeScreen_PaintDirtyFields2_DeadCopy:
 	ld XIX,0x00f28750                                    ; F90BC4  44 50 87 f2 00
 	call T_DisplayListB_Run                              ; F90BC9  1d f4 17 f4
 .LF90BCD:
-	m_bit 1, MD16, ModeScreen_DirtyFields2                                ; F90BCD  f1 77 26 c9
+	bit	1, (ModeScreen_DirtyFields2:16)                               ; F90BCD  f1 77 26 c9
 ; stale: old target 0xF90C49, inside the block the module at 0xF90C00 overwrote
 	jr	z, 0x76                                           ; F90BD1  66 76
 	cp	(Variant_Flag:8), 0x02                               ; F90BD3  c0 c4 3f 02
@@ -32608,7 +32608,7 @@ InstallPainter_SoundMode:
 	ldw (PanelDial_DownButton:16), 0x0181                              ; F90D78  f1 9b 20 02 81 01
 	or	(UI_RequestBits:16), 0x01                            ; F90D7E  c1 75 20 3e 01
 	and	(0x2688:16), 0xfc                            ; F90D83  c1 88 26 3c fc
-	m_bit 0, MD16, 0x20a9                                ; F90D88  f1 a9 20 c8
+	bit	0, (0x20a9:16)                               ; F90D88  f1 a9 20 c8
 	jr z, .LF90DA0                                       ; F90D8C  66 12
 	ldw (UI_Request:16), 0x40ab                              ; F90D8E  f1 70 20 02 ab 40
 	ld (UI_StatusCode:16), 0x24                                 ; F90D94  f1 80 28 00 24
@@ -32619,7 +32619,7 @@ InstallPainter_SoundMode:
 	jr z, .LF90DAB                                       ; F90DA5  66 04
 	call T_Drawbar_EnterScreenIfMarked                                        ; F90DA7  1d 68 2e f4
 .LF90DAB:
-	m_bit 4, MD16, UI_ScreenFlags                                ; F90DAB  f1 95 20 cc
+	bit	4, (UI_ScreenFlags:16)                               ; F90DAB  f1 95 20 cc
 	jr nz, .LF90DC8                                      ; F90DAF  6e 17
 	and	(0x2688:16), 0xfc                            ; F90DB1  c1 88 26 3c fc
 	ld XWA,Paint_SoundMode                                    ; F90DB6  40 db 0d f9 00
@@ -32710,7 +32710,7 @@ Paint_SoundModeFields:   ; entry: named by 1 `ld` operand, first at 0xF90DC8
 	ld XIX,Paint_C0mbinati0nM0dePage2Sound1_DL                                     ; F90EA1  44 83 97 f2 00
 	call T_DisplayListB_Run                              ; F90EA6  1d f4 17 f4
 	calr PartRecord_GetPtr                                          ; F90EAA  1e 8c 36
-	m_bit 0, MD16, ModeScreen_DirtyFields                                ; F90EAD  f1 76 26 c8
+	bit	0, (ModeScreen_DirtyFields:16)                               ; F90EAD  f1 76 26 c8
 	jr z, .LF90EC9                                       ; F90EB1  66 16
 	push XIY                                             ; F90EB3  3d
 	ld a, (0x0710:16)                                   ; F90EB4  c1 10 07 21
@@ -32720,7 +32720,7 @@ Paint_SoundModeFields:   ; entry: named by 1 `ld` operand, first at 0xF90DC8
 	call T_DLB_Handler_DecimalSigned2Words               ; F90EC4  1d 14 18 f4
 	pop XIY                                              ; F90EC8  5d
 .LF90EC9:
-	m_bit 1, MD16, ModeScreen_DirtyFields                                ; F90EC9  f1 76 26 c9
+	bit	1, (ModeScreen_DirtyFields:16)                               ; F90EC9  f1 76 26 c9
 	jr z, .LF90EE2                                       ; F90ECD  66 13
 	push XIY                                             ; F90ECF  3d
 	ld a, (0x0711:16)                                   ; F90ED0  c1 11 07 21
@@ -32731,7 +32731,7 @@ Paint_SoundModeFields:   ; entry: named by 1 `ld` operand, first at 0xF90DC8
 	call T_DLB_Handler_StringTable2                      ; F90EDD  1d fc 17 f4
 	pop XIY                                              ; F90EE1  5d
 .LF90EE2:
-	m_bit 2, MD16, ModeScreen_DirtyFields                                ; F90EE2  f1 76 26 ca
+	bit	2, (ModeScreen_DirtyFields:16)                               ; F90EE2  f1 76 26 ca
 	jr z, .LF90EFA                                       ; F90EE6  66 12
 	push XIY                                             ; F90EE8  3d
 	ld A,(XIY+0x05)                                      ; F90EE9  8d 05 21
@@ -32740,7 +32740,7 @@ Paint_SoundModeFields:   ; entry: named by 1 `ld` operand, first at 0xF90DC8
 	call T_DLB_Handler_Decimal2Words                                        ; F90EF5  1d 0c 18 f4
 	pop XIY                                              ; F90EF9  5d
 .LF90EFA:
-	m_bit 3, MD16, ModeScreen_DirtyFields                                ; F90EFA  f1 76 26 cb
+	bit	3, (ModeScreen_DirtyFields:16)                               ; F90EFA  f1 76 26 cb
 	jr Z,.LF90F12                                        ; F90EFE  66 12
 	push XIY                                             ; F90F00  3d
 	ld A,(XIY+0x07)                                      ; F90F01  8d 07 21
@@ -32749,7 +32749,7 @@ Paint_SoundModeFields:   ; entry: named by 1 `ld` operand, first at 0xF90DC8
 	call T_DLB_Handler_Decimal2Words                                        ; F90F0D  1d 0c 18 f4
 	pop XIY                                              ; F90F11  5d
 .LF90F12:
-	m_bit 4, MD16, ModeScreen_DirtyFields                                ; F90F12  f1 76 26 cc
+	bit	4, (ModeScreen_DirtyFields:16)                               ; F90F12  f1 76 26 cc
 	jr z, .LF90F2A                                       ; F90F16  66 12
 	push XIY                                             ; F90F18  3d
 	ld A,(XIY+0x0d)                                      ; F90F19  8d 0d 21
@@ -32758,7 +32758,7 @@ Paint_SoundModeFields:   ; entry: named by 1 `ld` operand, first at 0xF90DC8
 	call T_DLB_Handler_StringTable2                      ; F90F25  1d fc 17 f4
 	pop XIY                                              ; F90F29  5d
 .LF90F2A:
-	m_bit 5, MD16, ModeScreen_DirtyFields                                ; F90F2A  f1 76 26 cd
+	bit	5, (ModeScreen_DirtyFields:16)                               ; F90F2A  f1 76 26 cd
 	jr z, .LF90F42                                       ; F90F2E  66 12
 	push XIY                                             ; F90F30  3d
 	ld A,(XIY+0x0d)                                      ; F90F31  8d 0d 21
@@ -32767,7 +32767,7 @@ Paint_SoundModeFields:   ; entry: named by 1 `ld` operand, first at 0xF90DC8
 	call T_DLB_Handler_StringTable2                      ; F90F3D  1d fc 17 f4
 	pop XIY                                              ; F90F41  5d
 .LF90F42:
-	m_bit 7, MD16, ModeScreen_DirtyFields                                ; F90F42  f1 76 26 cf
+	bit	7, (ModeScreen_DirtyFields:16)                               ; F90F42  f1 76 26 cf
 	jr z, .LF90F63                                       ; F90F46  66 1b
 	push XIY                                             ; F90F48  3d
 	ld A,(XIY+0x06)                                      ; F90F49  8d 06 21
@@ -32781,7 +32781,7 @@ Paint_SoundModeFields:   ; entry: named by 1 `ld` operand, first at 0xF90DC8
 	call T_DLB_Handler_StringTable2                      ; F90F5E  1d fc 17 f4
 	pop XIY                                              ; F90F62  5d
 .LF90F63:
-	m_bit 6, MD16, ModeScreen_DirtyFields                                ; F90F63  f1 76 26 ce
+	bit	6, (ModeScreen_DirtyFields:16)                               ; F90F63  f1 76 26 ce
 	jr z, .LF90F8C                                       ; F90F67  66 23
 	push XIY                                             ; F90F69  3d
 	ld XIY,0x000078b2                                    ; F90F6A  45 b2 78 00 00
@@ -32837,7 +32837,7 @@ Paint_SoundModeFields:   ; entry: named by 1 `ld` operand, first at 0xF90DC8
 ;   the SOUND MODE and COMBINATION MODE page-1 field painters, which clear both dirty masks after it. Basis: callers +
 ;   body. (notes/naming-pilot-2026-10-06/proposals_wave3_h.json)
 ModeScreen_PaintDirtyFields2:
-	m_bit 0, MD16, ModeScreen_DirtyFields2                                ; F90F9F  f1 77 26 c8
+	bit	0, (ModeScreen_DirtyFields2:16)                               ; F90F9F  f1 77 26 c8
 	jr z, .LF90FCB                                       ; F90FA3  66 26
 	call PartRecord_GetSecondHalfPtr                                        ; F90FA5  1d 4d 45 f9
 	ld A,(XIY+0x18)                                      ; F90FA9  8d 18 21
@@ -32850,7 +32850,7 @@ ModeScreen_PaintDirtyFields2:
 	call T_DisplayListB_Run                              ; F90FC5  1d f4 17 f4
 	jr .LF90FCB                                          ; F90FC9  68 00
 .LF90FCB:
-	m_bit 1, MD16, ModeScreen_DirtyFields2                                ; F90FCB  f1 77 26 c9
+	bit	1, (ModeScreen_DirtyFields2:16)                               ; F90FCB  f1 77 26 c9
 	jr z, .LF9104B                                       ; F90FCF  66 7a
 	cp	(Variant_Flag:8), 0x02                               ; F90FD1  c0 c4 3f 02
 	jr z, .LF9104B                                       ; F90FD5  66 74
@@ -32889,7 +32889,7 @@ ModeScreen_PaintDirtyFields2:
 	call T_DisplayListB_Run                              ; F91045  1d f4 17 f4
 	jr .LF9104B                                          ; F91049  68 00
 .LF9104B:
-	m_bit 2, MD16, ModeScreen_DirtyFields2                                ; F9104B  f1 77 26 ca
+	bit	2, (ModeScreen_DirtyFields2:16)                               ; F9104B  f1 77 26 ca
 	jrl z, .LF9113E                                      ; F9104F  76 ec 00
 	cp	(Variant_Flag:8), 0x02                               ; F91052  c0 c4 3f 02
 	jr z, .LF910CC                                       ; F91056  66 74
@@ -32989,7 +32989,7 @@ Paint_Drawbar:
 	call T_Drawbar_WaitReloadMark                                        ; F9113F  1d 6c 2e f4
 	cp a, 0x01:i3                                          ; F91143  c9 d9
 	jr nz, .LF9117F                                      ; F91145  6e 38
-	m_bit 1, MD16, 0x2688                                ; F91147  f1 88 26 c9
+	bit	1, (0x2688:16)                               ; F91147  f1 88 26 c9
 	jr nz, .LF911B5                                      ; F9114B  6e 68
 	and	(0x2688:16), 0xfc                            ; F9114D  c1 88 26 3c fc
 	or	(0x2688:16), 0x02                            ; F91152  c1 88 26 3e 02
@@ -33003,7 +33003,7 @@ Paint_Drawbar:
 	call T_DisplayList_Run                               ; F91179  1d f0 17 f4
 	jr .LF911B5                                          ; F9117D  68 36
 .LF9117F:
-	m_bit 0, MD16, 0x2688                                ; F9117F  f1 88 26 c8
+	bit	0, (0x2688:16)                               ; F9117F  f1 88 26 c8
 	jr nz, .LF911B5                                      ; F91183  6e 30
 	and	(0x2688:16), 0xfc                            ; F91185  c1 88 26 3c fc
 	or	(0x2688:16), 0x01                            ; F9118A  c1 88 26 3e 01
@@ -33039,7 +33039,7 @@ Paint_Drawbar:
 ;   Basis: callers + body (+ the GM-mode bit in two notes). (notes/naming-pilot-2026-10-06/proposals_wave2_e.json)
 ModeScreen_DrawGmModeGlyph:
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F911B6  f1 40 25 00 00
-	m_bit 2, MD16, 0x7f4d                                ; F911BB  f1 4d 7f ca
+	bit	2, (0x7f4d:16)                               ; F911BB  f1 4d 7f ca
 	jr nz, .LF911D1                                      ; F911BF  6e 10
 	ld XIY,ModeScreen_DrawGmModeGlyph_DL1                                     ; F911C1  45 30 89 f2 00
 	ld XIX,Paint_C0mbinati0nM0dePage1_DL1                                     ; F911C6  44 38 89 f2 00
@@ -33065,7 +33065,7 @@ PanelDial_UnbindFromButtons:
 ;   step's sign (bit 7 of W is the sign for both Value_ApplyNibbleDeltaClamped and Value_StepWordClamped).
 SoftKeyCol1_Oct:   ; entry: named by 2 `.long` operands, first at 0xF90CD8
 	add W,0x06                                           ; F911E6  c8 c8 06
-	m_bit 2, MD16, UI_RequestBits                                ; F911E9  f1 75 20 ca
+	bit	2, (UI_RequestBits:16)                               ; F911E9  f1 75 20 ca
 	jr z, SoftKeyCol1_Oct_Join                                     ; F911ED  66 00
 SoftKeyCol1_Oct_Join:
 	ldw (PanelDial_DownButton:16), 0x80                                ; F911EF  f1 9b 20 02 80 00
@@ -33103,7 +33103,7 @@ SoftKeyCol1_Oct_Join:
 ;   lower key) is the step's sign (bit 7 of W is the sign for both Value_ApplyNibbleDeltaClamped and Value_StepWordClamped).
 SoftKeyCol2_LvlVol:   ; entry: named by 2 `.long` operands, first at 0xF90CDC
 	add W,0x01                                           ; F9123B  c8 c8 01
-	m_bit 2, MD16, UI_RequestBits                                ; F9123E  f1 75 20 ca
+	bit	2, (UI_RequestBits:16)                               ; F9123E  f1 75 20 ca
 	jr z, SoftKeyCol2_LvlVol_Join                                     ; F91242  66 03
 	add W,0x02                                           ; F91244  c8 c8 02
 SoftKeyCol2_LvlVol_Join:
@@ -33126,7 +33126,7 @@ SoftKeyCol2_LvlVol_Join:
 ;   step's sign (bit 7 of W is the sign for both Value_ApplyNibbleDeltaClamped and Value_StepWordClamped).
 SoftKeyCol3_Pan:   ; entry: named by 2 `.long` operands, first at 0xF90CE0
 	add W,0x01                                           ; F91269  c8 c8 01
-	m_bit 2, MD16, UI_RequestBits                                ; F9126C  f1 75 20 ca
+	bit	2, (UI_RequestBits:16)                               ; F9126C  f1 75 20 ca
 	jr z, SoftKeyCol3_Pan_Join                                     ; F91270  66 03
 	add W,0x02                                           ; F91272  c8 c8 02
 SoftKeyCol3_Pan_Join:
@@ -33149,7 +33149,7 @@ SoftKeyCol3_Pan_Join:
 ;   step's sign (bit 7 of W is the sign for both Value_ApplyNibbleDeltaClamped and Value_StepWordClamped).
 SoftKeyCol4_Eff1:   ; entry: named by 2 `.long` operands, first at 0xF90CE4
 	add W,0x01                                           ; F91297  c8 c8 01
-	m_bit 2, MD16, UI_RequestBits                                ; F9129A  f1 75 20 ca
+	bit	2, (UI_RequestBits:16)                               ; F9129A  f1 75 20 ca
 	jr z, SoftKeyCol4_Eff1_Join                                     ; F9129E  66 03
 	add W,0x02                                           ; F912A0  c8 c8 02
 SoftKeyCol4_Eff1_Join:
@@ -33231,7 +33231,7 @@ SoftKeyCol5_Eff2:
 ;   step's sign (bit 7 of W is the sign for both Value_ApplyNibbleDeltaClamped and Value_StepWordClamped).
 SoftKeyCol6_Rev:   ; entry: named by 2 `.long` operands, first at 0xF90CEC
 	add W,0x01                                           ; F9134A  c8 c8 01
-	m_bit 2, MD16, UI_RequestBits                                ; F9134D  f1 75 20 ca
+	bit	2, (UI_RequestBits:16)                               ; F9134D  f1 75 20 ca
 	jr z, SoftKeyCol6_Rev_Join                                     ; F91351  66 03
 	add W,0x02                                           ; F91353  c8 c8 02
 SoftKeyCol6_Rev_Join:
@@ -33279,7 +33279,7 @@ SoftKeyCol7_Int:
 ;   lower key) is the step's sign (bit 7 of W is the sign for both Value_ApplyNibbleDeltaClamped and Value_StepWordClamped).
 SoftKeyCol8_Midi:   ; entry: named by 1 `.long` operand, first at 0xF90CF4
 	add W,0x01                                           ; F913B1  c8 c8 01
-	m_bit 2, MD16, UI_RequestBits                                ; F913B4  f1 75 20 ca
+	bit	2, (UI_RequestBits:16)                               ; F913B4  f1 75 20 ca
 	jr z, SoftKeyCol8_Midi_Join                                     ; F913B8  66 03
 	add W,0x02                                           ; F913BA  c8 c8 02
 SoftKeyCol8_Midi_Join:
@@ -33364,7 +33364,7 @@ DisplayListPtrs_F90CD8_Nop16:   ; entry: named by 1 `.long` operand, first at 0x
 ;   already held (variant-1 groups 3-6).
 SoftKeyCol1_Oct_AltCode:   ; entry: named by 2 `.long` operands, first at 0xF90D1C
 	add W,0x06                                           ; F91442  c8 c8 06
-	m_bit 2, MD16, UI_RequestBits                                ; F91445  f1 75 20 ca
+	bit	2, (UI_RequestBits:16)                               ; F91445  f1 75 20 ca
 	jr z, .LF9144B                                       ; F91449  66 00
 .LF9144B:
 	jp SoftKeyCol1_Oct_Join                                        ; F9144B  1b ef 11 f9
@@ -33374,7 +33374,7 @@ SoftKeyCol1_Oct_AltCode:   ; entry: named by 2 `.long` operands, first at 0xF90D
 ;   when code c is already held (variant-1 groups 3-6).
 SoftKeyCol2_LvlVol_AltCode:   ; entry: named by 2 `.long` operands, first at 0xF90D20
 	add W,0x01                                           ; F9144F  c8 c8 01
-	m_bit 2, MD16, UI_RequestBits                                ; F91452  f1 75 20 ca
+	bit	2, (UI_RequestBits:16)                               ; F91452  f1 75 20 ca
 	jr z, .LF9145B                                       ; F91456  66 03
 	add W,0x06                                           ; F91458  c8 c8 06
 .LF9145B:
@@ -33385,7 +33385,7 @@ SoftKeyCol2_LvlVol_AltCode:   ; entry: named by 2 `.long` operands, first at 0xF
 ;   code c is already held (variant-1 groups 3-6).
 SoftKeyCol3_Pan_AltCode:   ; entry: named by 2 `.long` operands, first at 0xF90D24
 	add W,0x01                                           ; F9145F  c8 c8 01
-	m_bit 2, MD16, UI_RequestBits                                ; F91462  f1 75 20 ca
+	bit	2, (UI_RequestBits:16)                               ; F91462  f1 75 20 ca
 	jr z, .LF9146B                                       ; F91466  66 03
 	add W,0x06                                           ; F91468  c8 c8 06
 .LF9146B:
@@ -33396,7 +33396,7 @@ SoftKeyCol3_Pan_AltCode:   ; entry: named by 2 `.long` operands, first at 0xF90D
 ;   code c is already held (variant-1 groups 3-6).
 SoftKeyCol4_Eff1_AltCode:   ; entry: named by 2 `.long` operands, first at 0xF90D28
 	add W,0x01                                           ; F9146F  c8 c8 01
-	m_bit 2, MD16, UI_RequestBits                                ; F91472  f1 75 20 ca
+	bit	2, (UI_RequestBits:16)                               ; F91472  f1 75 20 ca
 	jr z, .LF9147B                                       ; F91476  66 03
 	add W,0x06                                           ; F91478  c8 c8 06
 .LF9147B:
@@ -33413,7 +33413,7 @@ SoftKeyCol5_Eff2_AltCode:   ; entry: named by 2 `.long` operands, first at 0xF90
 ;   code c is already held (variant-1 groups 3-6).
 SoftKeyCol6_Rev_AltCode:   ; entry: named by 2 `.long` operands, first at 0xF90D30
 	add W,0x01                                           ; F91483  c8 c8 01
-	m_bit 2, MD16, UI_RequestBits                                ; F91486  f1 75 20 ca
+	bit	2, (UI_RequestBits:16)                               ; F91486  f1 75 20 ca
 	jr z, .LF9148F                                       ; F9148A  66 03
 	add W,0x06                                           ; F9148C  c8 c8 06
 .LF9148F:
@@ -33430,7 +33430,7 @@ SoftKeyCol7_Int_AltCode:   ; entry: named by 2 `.long` operands, first at 0xF90D
 ;   already held (variant-1 groups 3-6).
 SoftKeyCol8_Midi_AltCode:   ; entry: named by 1 `.long` operand, first at 0xF90D38
 	add W,0x01                                           ; F91497  c8 c8 01
-	m_bit 2, MD16, UI_RequestBits                                ; F9149A  f1 75 20 ca
+	bit	2, (UI_RequestBits:16)                               ; F9149A  f1 75 20 ca
 	jr z, .LF914A3                                       ; F9149E  66 03
 	add W,0x03                                           ; F914A0  c8 c8 03
 .LF914A3:
@@ -33600,14 +33600,14 @@ InstallPainter_C0mbinati0nM0de:
 	ld (0x266a:16), xwa                                 ; F91617  f1 6a 26 60
 	and	(UI_ScreenFlags:16), 0xef                            ; F9161B  c1 95 20 3c ef
 	ld (UI_PartIndex:16), 0x00                                 ; F91620  f1 50 22 00 00
-	m_bit 0, MD16, 0x20a9                                ; F91625  f1 a9 20 c8
+	bit	0, (0x20a9:16)                               ; F91625  f1 a9 20 c8
 	jr z, .LF9163B                                       ; F91629  66 10
 	ldw (UI_Request:16), 0x40ab                              ; F9162B  f1 70 20 02 ab 40
 	ld (UI_StatusCode:16), 0x24                                 ; F91631  f1 80 28 00 24
 	and	(0x20a9:16), 0xfe                            ; F91636  c1 a9 20 3c fe
 .LF9163B:
 	or	(UI_RequestBits:16), 0x01                            ; F9163B  c1 75 20 3e 01
-	m_bit 4, MD16, UI_ScreenFlags                                ; F91640  f1 95 20 cc
+	bit	4, (UI_ScreenFlags:16)                               ; F91640  f1 95 20 cc
 	jr nz, InstallPainter_C0mbinati0nM0de_Join                                    ; F91644  6e 36
 	cp	(CombinationMode_Page:16), 0x00                            ; F91646  c1 87 26 3f 00
 	jr nz, .LF91667                                      ; F9164B  6e 1a
@@ -33709,7 +33709,7 @@ Draw_C0mbinati0nM0dePage22Sound:   ; entry: named by 1 `ld` operand, first at 0x
 	ld XIY,DL_F29672                                     ; F91702  45 72 96 f2 00
 	ld XIX,DL_F2967C                                     ; F91707  44 7c 96 f2 00
 	call T_DisplayList_Run                               ; F9170C  1d f0 17 f4
-	m_bit 0, MD16, CombinationMode_Solo                                ; F91710  f1 7d 26 c8
+	bit	0, (CombinationMode_Solo:16)                               ; F91710  f1 7d 26 c8
 	jr z, .LF91724                                       ; F91714  66 0e
 	ld XIY,DL_F2967C                                     ; F91716  45 7c 96 f2 00
 	ld XIX,DL_F29686                                     ; F9171B  44 86 96 f2 00
@@ -34455,7 +34455,7 @@ C0mbinati0nM0de_RepaintPage1Fields:   ; entry: named by 2 `ld` operands, first a
 	ld XIX,Paint_C0mbinati0nM0dePage2Sound1_DL                                     ; F91D42  44 83 97 f2 00
 	call T_DisplayListB_Run                              ; F91D47  1d f4 17 f4
 	calr PartRecord_GetPtr                                          ; F91D4B  1e eb 27
-	m_bit 0, MD16, ModeScreen_DirtyFields                                ; F91D4E  f1 76 26 c8
+	bit	0, (ModeScreen_DirtyFields:16)                               ; F91D4E  f1 76 26 c8
 	jr z, .LF91D66                                       ; F91D52  66 12
 	push XIY                                             ; F91D54  3d
 	ld A,(XIY+0x03)                                      ; F91D55  8d 03 21
@@ -34464,7 +34464,7 @@ C0mbinati0nM0de_RepaintPage1Fields:   ; entry: named by 2 `ld` operands, first a
 	call T_DLB_Handler_Decimal2Words                                        ; F91D61  1d 0c 18 f4
 	pop XIY                                              ; F91D65  5d
 .LF91D66:
-	m_bit 1, MD16, ModeScreen_DirtyFields                                ; F91D66  f1 76 26 c9
+	bit	1, (ModeScreen_DirtyFields:16)                               ; F91D66  f1 76 26 c9
 	jr z, .LF91D7E                                       ; F91D6A  66 12
 	push XIY                                             ; F91D6C  3d
 	ld A,(XIY+0x08)                                      ; F91D6D  8d 08 21
@@ -34473,7 +34473,7 @@ C0mbinati0nM0de_RepaintPage1Fields:   ; entry: named by 2 `ld` operands, first a
 	call T_DLB_Handler_StringTable2                      ; F91D79  1d fc 17 f4
 	pop XIY                                              ; F91D7D  5d
 .LF91D7E:
-	m_bit 2, MD16, ModeScreen_DirtyFields                                ; F91D7E  f1 76 26 ca
+	bit	2, (ModeScreen_DirtyFields:16)                               ; F91D7E  f1 76 26 ca
 	jr z, .LF91D96                                       ; F91D82  66 12
 	push XIY                                             ; F91D84  3d
 	ld A,(XIY+0x05)                                      ; F91D85  8d 05 21
@@ -34482,7 +34482,7 @@ C0mbinati0nM0de_RepaintPage1Fields:   ; entry: named by 2 `ld` operands, first a
 	call T_DLB_Handler_Decimal2Words                                        ; F91D91  1d 0c 18 f4
 	pop XIY                                              ; F91D95  5d
 .LF91D96:
-	m_bit 3, MD16, ModeScreen_DirtyFields                                ; F91D96  f1 76 26 cb
+	bit	3, (ModeScreen_DirtyFields:16)                               ; F91D96  f1 76 26 cb
 	jr z, .LF91DAE                                       ; F91D9A  66 12
 	push XIY                                             ; F91D9C  3d
 	ld A,(XIY+0x07)                                      ; F91D9D  8d 07 21
@@ -34491,7 +34491,7 @@ C0mbinati0nM0de_RepaintPage1Fields:   ; entry: named by 2 `ld` operands, first a
 	call T_DLB_Handler_Decimal2Words                                        ; F91DA9  1d 0c 18 f4
 	pop XIY                                              ; F91DAD  5d
 .LF91DAE:
-	m_bit 4, MD16, ModeScreen_DirtyFields                                ; F91DAE  f1 76 26 cc
+	bit	4, (ModeScreen_DirtyFields:16)                               ; F91DAE  f1 76 26 cc
 	jr z, .LF91DC6                                       ; F91DB2  66 12
 	push XIY                                             ; F91DB4  3d
 	ld A,(XIY+0x0d)                                      ; F91DB5  8d 0d 21
@@ -34500,7 +34500,7 @@ C0mbinati0nM0de_RepaintPage1Fields:   ; entry: named by 2 `ld` operands, first a
 	call T_DLB_Handler_StringTable2                      ; F91DC1  1d fc 17 f4
 	pop XIY                                              ; F91DC5  5d
 .LF91DC6:
-	m_bit 5, MD16, ModeScreen_DirtyFields                                ; F91DC6  f1 76 26 cd
+	bit	5, (ModeScreen_DirtyFields:16)                               ; F91DC6  f1 76 26 cd
 	jr z, .LF91DDF                                       ; F91DCA  66 13
 	push XIY                                             ; F91DCC  3d
 	ld a, (UI_PartIndex:16)                                   ; F91DCD  c1 50 22 21
@@ -34509,7 +34509,7 @@ C0mbinati0nM0de_RepaintPage1Fields:   ; entry: named by 2 `ld` operands, first a
 	call T_DLB_Handler_StringTable2                      ; F91DDA  1d fc 17 f4
 	pop XIY                                              ; F91DDE  5d
 .LF91DDF:
-	m_bit 7, MD16, ModeScreen_DirtyFields                                ; F91DDF  f1 76 26 cf
+	bit	7, (ModeScreen_DirtyFields:16)                               ; F91DDF  f1 76 26 cf
 	jr z, .LF91E00                                       ; F91DE3  66 1b
 	push XIY                                             ; F91DE5  3d
 	ld A,(XIY+0x06)                                      ; F91DE6  8d 06 21
@@ -34523,7 +34523,7 @@ C0mbinati0nM0de_RepaintPage1Fields:   ; entry: named by 2 `ld` operands, first a
 	call T_DLB_Handler_StringTable2                      ; F91DFB  1d fc 17 f4
 	pop XIY                                              ; F91DFF  5d
 .LF91E00:
-	m_bit 6, MD16, ModeScreen_DirtyFields                                ; F91E00  f1 76 26 ce
+	bit	6, (ModeScreen_DirtyFields:16)                               ; F91E00  f1 76 26 ce
 	jr z, .LF91E29                                       ; F91E04  66 23
 	push XIY                                             ; F91E06  3d
 	ld XIY,0x000078b2                                    ; F91E07  45 b2 78 00 00
@@ -34561,13 +34561,13 @@ ScreenLeaveBody_C0mbinati0nM0de:
 ; Body: sets the step magnitude in W to 1 (3 when (0x2075) bit 2 is set) -- the field T_Value_ApplyNibbleDeltaClamped reads, with bit 7 as the sign -- then falls into C0mbinati0nM0de_SelectOrEditPart1.
 SoftKeyCol1_C0mbinati0nM0de_Page2:   ; entry: named by 1 `.long` operand, first at 0xF9157B
 	inc 1,W                                              ; F91E4B  c8 61
-	m_bit 2, MD16, UI_RequestBits                                ; F91E4D  f1 75 20 ca
+	bit	2, (UI_RequestBits:16)                               ; F91E4D  f1 75 20 ca
 	jr z, SoftKeyCol1_C0mbinati0nM0de_Page2_Join                                     ; F91E51  66 02
 	inc 2,W                                              ; F91E53  c8 62
 SoftKeyCol1_C0mbinati0nM0de_Page2_Join:
 	cp	(UI_PartIndex:16), 0x00                            ; F91E55  c1 50 22 3f 00
 	jr z, .LF91E9A                                       ; F91E5A  66 3e
-	m_bit 2, MD16, UI_RequestBits                                ; F91E5C  f1 75 20 ca
+	bit	2, (UI_RequestBits:16)                               ; F91E5C  f1 75 20 ca
 	jr z, .LF91E67                                       ; F91E60  66 05
 	and	(UI_RequestBits:16), 0xf7                            ; F91E62  c1 75 20 3c f7
 .LF91E67:
@@ -34598,13 +34598,13 @@ SoftKeyCol1_C0mbinati0nM0de_Page2_Join:
 ; Body: sets the step magnitude in W to 1 (3 when (0x2075) bit 2 is set) -- the field T_Value_ApplyNibbleDeltaClamped reads, with bit 7 as the sign -- then falls into C0mbinati0nM0de_SelectOrEditPart2.
 SoftKeyCol2_C0mbinati0nM0de_Page2:   ; entry: named by 1 `.long` operand, first at 0xF9157F
 	inc 1,W                                              ; F91EA9  c8 61
-	m_bit 2, MD16, UI_RequestBits                                ; F91EAB  f1 75 20 ca
+	bit	2, (UI_RequestBits:16)                               ; F91EAB  f1 75 20 ca
 	jr z, SoftKeyCol2_C0mbinati0nM0de_Page2_Join                                     ; F91EAF  66 02
 	inc 2,W                                              ; F91EB1  c8 62
 SoftKeyCol2_C0mbinati0nM0de_Page2_Join:
 	cp	(UI_PartIndex:16), 0x01                            ; F91EB3  c1 50 22 3f 01
 	jr z, .LF91EF8                                       ; F91EB8  66 3e
-	m_bit 2, MD16, UI_RequestBits                                ; F91EBA  f1 75 20 ca
+	bit	2, (UI_RequestBits:16)                               ; F91EBA  f1 75 20 ca
 	jr z, .LF91EC5                                       ; F91EBE  66 05
 	and	(UI_RequestBits:16), 0xf7                            ; F91EC0  c1 75 20 3c f7
 .LF91EC5:
@@ -34635,13 +34635,13 @@ SoftKeyCol2_C0mbinati0nM0de_Page2_Join:
 ; Body: sets the step magnitude in W to 1 (3 when (0x2075) bit 2 is set) -- the field T_Value_ApplyNibbleDeltaClamped reads, with bit 7 as the sign -- then falls into C0mbinati0nM0de_SelectOrEditPart3.
 SoftKeyCol3_C0mbinati0nM0de_Page2:   ; entry: named by 1 `.long` operand, first at 0xF91583
 	inc 1,W                                              ; F91F07  c8 61
-	m_bit 2, MD16, UI_RequestBits                                ; F91F09  f1 75 20 ca
+	bit	2, (UI_RequestBits:16)                               ; F91F09  f1 75 20 ca
 	jr z, SoftKeyCol3_C0mbinati0nM0de_Page2_Join                                     ; F91F0D  66 02
 	inc 2,W                                              ; F91F0F  c8 62
 SoftKeyCol3_C0mbinati0nM0de_Page2_Join:
 	cp	(UI_PartIndex:16), 0x02                            ; F91F11  c1 50 22 3f 02
 	jr z, .LF91F56                                       ; F91F16  66 3e
-	m_bit 2, MD16, UI_RequestBits                                ; F91F18  f1 75 20 ca
+	bit	2, (UI_RequestBits:16)                               ; F91F18  f1 75 20 ca
 	jr z, .LF91F23                                       ; F91F1C  66 05
 	and	(UI_RequestBits:16), 0xf7                            ; F91F1E  c1 75 20 3c f7
 .LF91F23:
@@ -34672,13 +34672,13 @@ SoftKeyCol3_C0mbinati0nM0de_Page2_Join:
 ; Body: sets the step magnitude in W to 1 (3 when (0x2075) bit 2 is set) -- the field T_Value_ApplyNibbleDeltaClamped reads, with bit 7 as the sign -- then falls into C0mbinati0nM0de_SelectOrEditPart4.
 SoftKeyCol4_C0mbinati0nM0de_Page2:   ; entry: named by 1 `.long` operand, first at 0xF91587
 	or W,0x01                                            ; F91F65  c8 ce 01
-	m_bit 2, MD16, UI_RequestBits                                ; F91F68  f1 75 20 ca
+	bit	2, (UI_RequestBits:16)                               ; F91F68  f1 75 20 ca
 	jr z, SoftKeyCol4_C0mbinati0nM0de_Page2_Join                                     ; F91F6C  66 02
 	inc 2,W                                              ; F91F6E  c8 62
 SoftKeyCol4_C0mbinati0nM0de_Page2_Join:
 	cp	(UI_PartIndex:16), 0x03                            ; F91F70  c1 50 22 3f 03
 	jr z, .LF91FB5                                       ; F91F75  66 3e
-	m_bit 2, MD16, UI_RequestBits                                ; F91F77  f1 75 20 ca
+	bit	2, (UI_RequestBits:16)                               ; F91F77  f1 75 20 ca
 	jr z, .LF91F82                                       ; F91F7B  66 05
 	and	(UI_RequestBits:16), 0xf7                            ; F91F7D  c1 75 20 3c f7
 .LF91F82:
@@ -34709,13 +34709,13 @@ SoftKeyCol4_C0mbinati0nM0de_Page2_Join:
 ; Body: sets the step magnitude in W to 1 (3 when (0x2075) bit 2 is set) -- the field T_Value_ApplyNibbleDeltaClamped reads, with bit 7 as the sign -- then falls into C0mbinati0nM0de_SelectOrEditPart5.
 SoftKeyCol5_C0mbinati0nM0de_Page2:   ; entry: named by 1 `.long` operand, first at 0xF9158B
 	or W,0x01                                            ; F91FC4  c8 ce 01
-	m_bit 2, MD16, UI_RequestBits                                ; F91FC7  f1 75 20 ca
+	bit	2, (UI_RequestBits:16)                               ; F91FC7  f1 75 20 ca
 	jr z, SoftKeyCol5_C0mbinati0nM0de_Page2_Join                                     ; F91FCB  66 02
 	inc 2,W                                              ; F91FCD  c8 62
 SoftKeyCol5_C0mbinati0nM0de_Page2_Join:
 	cp	(UI_PartIndex:16), 0x04                            ; F91FCF  c1 50 22 3f 04
 	jr z, .LF92014                                       ; F91FD4  66 3e
-	m_bit 2, MD16, UI_RequestBits                                ; F91FD6  f1 75 20 ca
+	bit	2, (UI_RequestBits:16)                               ; F91FD6  f1 75 20 ca
 	jr z, .LF91FE1                                       ; F91FDA  66 05
 	and	(UI_RequestBits:16), 0xf7                            ; F91FDC  c1 75 20 3c f7
 .LF91FE1:
@@ -34746,13 +34746,13 @@ SoftKeyCol5_C0mbinati0nM0de_Page2_Join:
 ; Body: sets the step magnitude in W to 1 (3 when (0x2075) bit 2 is set) -- the field T_Value_ApplyNibbleDeltaClamped reads, with bit 7 as the sign -- then falls into C0mbinati0nM0de_SelectOrEditPart6.
 SoftKeyCol6_C0mbinati0nM0de_Page2:   ; entry: named by 1 `.long` operand, first at 0xF9158F
 	or W,0x01                                            ; F92023  c8 ce 01
-	m_bit 2, MD16, UI_RequestBits                                ; F92026  f1 75 20 ca
+	bit	2, (UI_RequestBits:16)                               ; F92026  f1 75 20 ca
 	jr z, SoftKeyCol6_C0mbinati0nM0de_Page2_Join                                     ; F9202A  66 02
 	inc 2,W                                              ; F9202C  c8 62
 SoftKeyCol6_C0mbinati0nM0de_Page2_Join:
 	cp	(UI_PartIndex:16), 0x05                            ; F9202E  c1 50 22 3f 05
 	jr z, .LF92073                                       ; F92033  66 3e
-	m_bit 2, MD16, UI_RequestBits                                ; F92035  f1 75 20 ca
+	bit	2, (UI_RequestBits:16)                               ; F92035  f1 75 20 ca
 	jr z, .LF92040                                       ; F92039  66 05
 	and	(UI_RequestBits:16), 0xf7                            ; F9203B  c1 75 20 3c f7
 .LF92040:
@@ -34783,13 +34783,13 @@ SoftKeyCol6_C0mbinati0nM0de_Page2_Join:
 ; Body: sets the step magnitude in W to 1 (3 when (0x2075) bit 2 is set) -- the field T_Value_ApplyNibbleDeltaClamped reads, with bit 7 as the sign -- then falls into C0mbinati0nM0de_SelectOrEditPart7.
 SoftKeyCol7_C0mbinati0nM0de_Page2:   ; entry: named by 1 `.long` operand, first at 0xF91593
 	or W,0x01                                            ; F92082  c8 ce 01
-	m_bit 2, MD16, UI_RequestBits                                ; F92085  f1 75 20 ca
+	bit	2, (UI_RequestBits:16)                               ; F92085  f1 75 20 ca
 	jr z, SoftKeyCol7_C0mbinati0nM0de_Page2_Join                                     ; F92089  66 02
 	inc 2,W                                              ; F9208B  c8 62
 SoftKeyCol7_C0mbinati0nM0de_Page2_Join:
 	cp	(UI_PartIndex:16), 0x06                            ; F9208D  c1 50 22 3f 06
 	jr z, .LF920D2                                       ; F92092  66 3e
-	m_bit 2, MD16, UI_RequestBits                                ; F92094  f1 75 20 ca
+	bit	2, (UI_RequestBits:16)                               ; F92094  f1 75 20 ca
 	jr z, .LF9209F                                       ; F92098  66 05
 	and	(UI_RequestBits:16), 0xf7                            ; F9209A  c1 75 20 3c f7
 .LF9209F:
@@ -34820,7 +34820,7 @@ SoftKeyCol7_C0mbinati0nM0de_Page2_Join:
 ; Body: `or W,0x01` (+2 more when (0x2075) bit 2 is set) -- the step for T_Value_ApplyNibbleDeltaClamped -- then falls into C0mbinati0nM0de_SelectOrEditPart8OrStepPart.
 SoftKeyCol8_C0mbinati0nM0de:   ; entry: named by 2 `.long` operands, first at 0xF91517
 	or W,0x01                                            ; F920E1  c8 ce 01
-	m_bit 2, MD16, UI_RequestBits                                ; F920E4  f1 75 20 ca
+	bit	2, (UI_RequestBits:16)                               ; F920E4  f1 75 20 ca
 	jr z, SoftKeyCol8_C0mbinati0nM0de_Join                                     ; F920E8  66 02
 	inc 2,W                                              ; F920EA  c8 62
 SoftKeyCol8_C0mbinati0nM0de_Join:
@@ -34828,7 +34828,7 @@ SoftKeyCol8_C0mbinati0nM0de_Join:
 	jr z, .LF92148                                       ; F920F1  66 55
 	cp	(UI_PartIndex:16), 0x07                            ; F920F3  c1 50 22 3f 07
 	jr z, .LF92138                                       ; F920F8  66 3e
-	m_bit 2, MD16, UI_RequestBits                                ; F920FA  f1 75 20 ca
+	bit	2, (UI_RequestBits:16)                               ; F920FA  f1 75 20 ca
 	jr Z,.LF92105                                        ; F920FE  66 05
 	and	(UI_RequestBits:16), 0xf7                            ; F92100  c1 75 20 3c f7
 .LF92105:
@@ -34907,7 +34907,7 @@ LcdKeyRow1_C0mbinati0nM0de_Page2:   ; entry: named by 1 `.long` operand, first a
 	call T_Kernel_SemaSignal                             ; F921BB  1d 88 2d f4
 	jr .LF92209                                          ; F921BF  68 48
 .LF921C1:
-	m_bit 0, MD16, CombinationMode_Solo                                ; F921C1  f1 7d 26 c8
+	bit	0, (CombinationMode_Solo:16)                               ; F921C1  f1 7d 26 c8
 	jr z, .LF921E9                                       ; F921C5  66 22
 	and	(CombinationMode_Solo:16), 0xfe                            ; F921C7  c1 7d 26 3c fe
 	ld a, 0x00:opc                                          ; F921CC  21 00
@@ -35089,7 +35089,7 @@ PageKey_C0mbinati0nM0de:   ; entry: named by 2 `.long` operands, first at 0xF915
 ;   handler.  The SX-WSA1R is variant 2, so the slot is never delivered here (wave7_panel_names_round11).
 C0mbinati0nM0de_Page2_Button17:   ; entry: named by 1 `.long` operand, first at 0xF915BF
 	add W,0x01                                           ; F92364  c8 c8 01
-	m_bit 2, MD16, UI_RequestBits                                ; F92367  f1 75 20 ca
+	bit	2, (UI_RequestBits:16)                               ; F92367  f1 75 20 ca
 	jr z, .LF92370                                       ; F9236B  66 03
 	add W,0x06                                           ; F9236D  c8 c8 06
 .LF92370:
@@ -35098,7 +35098,7 @@ C0mbinati0nM0de_Page2_Button17:   ; entry: named by 1 `.long` operand, first at 
 ;   handler.  The SX-WSA1R is variant 2, so the slot is never delivered here (wave7_panel_names_round11).
 C0mbinati0nM0de_Page2_Button18:   ; entry: named by 1 `.long` operand, first at 0xF915C3
 	add W,0x01                                           ; F92374  c8 c8 01
-	m_bit 2, MD16, UI_RequestBits                                ; F92377  f1 75 20 ca
+	bit	2, (UI_RequestBits:16)                               ; F92377  f1 75 20 ca
 	jr z, .LF92380                                       ; F9237B  66 03
 	add W,0x06                                           ; F9237D  c8 c8 06
 .LF92380:
@@ -35107,7 +35107,7 @@ C0mbinati0nM0de_Page2_Button18:   ; entry: named by 1 `.long` operand, first at 
 ;   handler.  The SX-WSA1R is variant 2, so the slot is never delivered here (wave7_panel_names_round11).
 C0mbinati0nM0de_Page2_Button19:   ; entry: named by 1 `.long` operand, first at 0xF915C7
 	add W,0x01                                           ; F92384  c8 c8 01
-	m_bit 2, MD16, UI_RequestBits                                ; F92387  f1 75 20 ca
+	bit	2, (UI_RequestBits:16)                               ; F92387  f1 75 20 ca
 	jr z, .LF92390                                       ; F9238B  66 03
 	add W,0x06                                           ; F9238D  c8 c8 06
 .LF92390:
@@ -35116,7 +35116,7 @@ C0mbinati0nM0de_Page2_Button19:   ; entry: named by 1 `.long` operand, first at 
 ;   handler.  The SX-WSA1R is variant 2, so the slot is never delivered here (wave7_panel_names_round11).
 C0mbinati0nM0de_Page2_Button20:   ; entry: named by 1 `.long` operand, first at 0xF915CB
 	add W,0x01                                           ; F92394  c8 c8 01
-	m_bit 2, MD16, UI_RequestBits                                ; F92397  f1 75 20 ca
+	bit	2, (UI_RequestBits:16)                               ; F92397  f1 75 20 ca
 	jr z, .LF923A0                                       ; F9239B  66 03
 	add W,0x06                                           ; F9239D  c8 c8 06
 .LF923A0:
@@ -35125,7 +35125,7 @@ C0mbinati0nM0de_Page2_Button20:   ; entry: named by 1 `.long` operand, first at 
 ;   handler.  The SX-WSA1R is variant 2, so the slot is never delivered here (wave7_panel_names_round11).
 C0mbinati0nM0de_Page2_Button21:   ; entry: named by 1 `.long` operand, first at 0xF915CF
 	add W,0x01                                           ; F923A4  c8 c8 01
-	m_bit 2, MD16, UI_RequestBits                                ; F923A7  f1 75 20 ca
+	bit	2, (UI_RequestBits:16)                               ; F923A7  f1 75 20 ca
 	jr z, .LF923B0                                       ; F923AB  66 03
 	add W,0x06                                           ; F923AD  c8 c8 06
 .LF923B0:
@@ -35134,7 +35134,7 @@ C0mbinati0nM0de_Page2_Button21:   ; entry: named by 1 `.long` operand, first at 
 ;   handler.  The SX-WSA1R is variant 2, so the slot is never delivered here (wave7_panel_names_round11).
 C0mbinati0nM0de_Page2_Button22:   ; entry: named by 1 `.long` operand, first at 0xF915D3
 	add W,0x01                                           ; F923B4  c8 c8 01
-	m_bit 2, MD16, UI_RequestBits                                ; F923B7  f1 75 20 ca
+	bit	2, (UI_RequestBits:16)                               ; F923B7  f1 75 20 ca
 	jr z, .LF923C0                                       ; F923BB  66 03
 	add W,0x06                                           ; F923BD  c8 c8 06
 .LF923C0:
@@ -35143,7 +35143,7 @@ C0mbinati0nM0de_Page2_Button22:   ; entry: named by 1 `.long` operand, first at 
 ;   handler.  The SX-WSA1R is variant 2, so the slot is never delivered here (wave7_panel_names_round11).
 C0mbinati0nM0de_Page2_Button23:   ; entry: named by 1 `.long` operand, first at 0xF915D7
 	add W,0x01                                           ; F923C4  c8 c8 01
-	m_bit 2, MD16, UI_RequestBits                                ; F923C7  f1 75 20 ca
+	bit	2, (UI_RequestBits:16)                               ; F923C7  f1 75 20 ca
 	jr z, .LF923D0                                       ; F923CB  66 03
 	add W,0x06                                           ; F923CD  c8 c8 06
 .LF923D0:
@@ -35152,7 +35152,7 @@ C0mbinati0nM0de_Page2_Button23:   ; entry: named by 1 `.long` operand, first at 
 ;   handler.  The SX-WSA1R is variant 2, so the slot is never delivered here (wave7_panel_names_round11).
 C0mbinati0nM0de_Button24:   ; entry: named by 2 `.long` operands, first at 0xF9155B
 	add W,0x01                                           ; F923D4  c8 c8 01
-	m_bit 2, MD16, UI_RequestBits                                ; F923D7  f1 75 20 ca
+	bit	2, (UI_RequestBits:16)                               ; F923D7  f1 75 20 ca
 	jr z, .LF923E0                                       ; F923DB  66 03
 	add W,0x06                                           ; F923DD  c8 c8 06
 .LF923E0:
@@ -35184,13 +35184,13 @@ C0mbinati0nM0de_EditSelectedRow:
 	sla hl, 0x02                                         ; F923F4  db ec 02
 	ld XIY,0x00f2ab50                                    ; F923F7  45 50 ab f2 00
 	mx_ld_rm MXL, ra_IY, ra_HL, r5                       ; F923FC  e3 07 f4 ec 25
-	m_bit 0, MD16, CombinationMode_EditRow                                ; F92401  f1 78 26 c8
+	bit	0, (CombinationMode_EditRow:16)                               ; F92401  f1 78 26 c8
 	jr nz, .LF9241B                                      ; F92405  6e 14
-	m_bit 3, MD16, CombinationMode_EditRow                                ; F92407  f1 78 26 cb
+	bit	3, (CombinationMode_EditRow:16)                               ; F92407  f1 78 26 cb
 	jr nz, .LF92420                                      ; F9240B  6e 13
-	m_bit 2, MD16, CombinationMode_EditRow                                ; F9240D  f1 78 26 ca
+	bit	2, (CombinationMode_EditRow:16)                               ; F9240D  f1 78 26 ca
 	jr nz, .LF92425                                      ; F92411  6e 12
-	m_bit 1, MD16, CombinationMode_EditRow                                ; F92413  f1 78 26 c9
+	bit	1, (CombinationMode_EditRow:16)                               ; F92413  f1 78 26 c9
 	jr nz, .LF9242A                                      ; F92417  6e 11
 	jr .LF9242D                                          ; F92419  68 12
 .LF9241B:
@@ -35250,12 +35250,12 @@ C0mbinati0nM0de_StepPartSound:
 	ld IX,BC                                             ; F92491  d9 8c
 	jr .LF924B2                                          ; F92493  68 1d
 .LF92495:
-	m_bit 4, MD16, 0x2682                                ; F92495  f1 82 26 cc
+	bit	4, (0x2682:16)                               ; F92495  f1 82 26 cc
 	jr nz, .LF924AF                                      ; F92499  6e 14
-	m_bit 5, MD16, 0x2682                                ; F9249B  f1 82 26 cd
+	bit	5, (0x2682:16)                               ; F9249B  f1 82 26 cd
 	jr z, .LF924AF                                       ; F9249F  66 0e
 	ldw ix, 0x01                                         ; F924A1  34 01 00
-	m_bit 3, MD16, 0x2682                                ; F924A4  f1 82 26 cb
+	bit	3, (0x2682:16)                               ; F924A4  f1 82 26 cb
 	jr z, .LF924B2                                       ; F924A8  66 08
 	ldw ix, 0x00                                         ; F924AA  34 00 00
 	jr .LF924B2                                          ; F924AD  68 03
@@ -35274,7 +35274,7 @@ C0mbinati0nM0de_StepPartSound:
 	cp DE,HL                                             ; F924C7  db f2
 	jrl nz, .LF92597                                     ; F924C9  7e cb 00
 	ld XIX,ValueList_F92618                              ; F924CC  44 18 26 f9 00
-	m_bit 0, MD16, 0x08ec                                ; F924D1  f1 ec 08 c8
+	bit	0, (0x08ec:16)                               ; F924D1  f1 ec 08 c8
 	jr nz, .LF924DC                                      ; F924D5  6e 05
 	ld XIX,ValueList_F92623                              ; F924D7  44 23 26 f9 00
 .LF924DC:
@@ -35288,7 +35288,7 @@ C0mbinati0nM0de_StepPartSound:
 .LF924ED:
 	ld HL,DE                                             ; F924ED  da 8b
 	ldw ix, 0x0a                                         ; F924EF  34 0a 00
-	m_bit 0, MD16, 0x08ec                                ; F924F2  f1 ec 08 c8
+	bit	0, (0x08ec:16)                               ; F924F2  f1 ec 08 c8
 	jr nz, .LF924FB                                      ; F924F6  6e 03
 	ldw ix, 0x09                                         ; F924F8  34 09 00
 .LF924FB:
@@ -35301,7 +35301,7 @@ C0mbinati0nM0de_StepPartSound:
 	cp DE,HL                                             ; F92508  db f2
 	jrl z, .LF92617                                      ; F9250A  76 0a 01
 	ld XIX,ValueList_F92618                              ; F9250D  44 18 26 f9 00
-	m_bit 0, MD16, 0x08ec                                ; F92512  f1 ec 08 c8
+	bit	0, (0x08ec:16)                               ; F92512  f1 ec 08 c8
 	jr nz, .LF9251D                                      ; F92516  6e 05
 	ld XIX,ValueList_F92623                              ; F92518  44 23 26 f9 00
 .LF9251D:
@@ -35323,12 +35323,12 @@ C0mbinati0nM0de_StepPartSound:
 	ld (0x2684:16), a                                   ; F9254E  f1 84 26 41
 	jrl .LF925F3                                         ; F92552  78 9e 00
 .LF92555:
-	m_bit 4, MD16, 0x2682                                ; F92555  f1 82 26 cc
+	bit	4, (0x2682:16)                               ; F92555  f1 82 26 cc
 	jr nz, .LF9257F                                      ; F92559  6e 24
-	m_bit 5, MD16, 0x2682                                ; F9255B  f1 82 26 cd
+	bit	5, (0x2682:16)                               ; F9255B  f1 82 26 cd
 	jr z, .LF9257F                                       ; F9255F  66 1e
 	ld (0x2683:16), 0x01                                 ; F92561  f1 83 26 00 01
-	m_bit 3, MD16, 0x2682                                ; F92566  f1 82 26 cb
+	bit	3, (0x2682:16)                               ; F92566  f1 82 26 cb
 	jr z, .LF92578                                       ; F9256A  66 0c
 	ld (0x2683:16), 0x00                                 ; F9256C  f1 83 26 00 00
 	ld (0x2684:16), 0x01                                 ; F92571  f1 84 26 00 01
@@ -35359,11 +35359,11 @@ C0mbinati0nM0de_StepPartSound:
 	ld (0x2684:16), a                                   ; F925BB  f1 84 26 41
 	jr .LF925F3                                          ; F925BF  68 32
 .LF925C1:
-	m_bit 4, MD16, 0x2682                                ; F925C1  f1 82 26 cc
+	bit	4, (0x2682:16)                               ; F925C1  f1 82 26 cc
 	jr nz, .LF925E1                                      ; F925C5  6e 1a
-	m_bit 5, MD16, 0x2682                                ; F925C7  f1 82 26 cd
+	bit	5, (0x2682:16)                               ; F925C7  f1 82 26 cd
 	jr z, .LF925E1                                       ; F925CB  66 14
-	m_bit 3, MD16, 0x2682                                ; F925CD  f1 82 26 cb
+	bit	3, (0x2682:16)                               ; F925CD  f1 82 26 cb
 	jr z, .LF925DA                                       ; F925D1  66 07
 	ld (0x2684:16), 0x01                                 ; F925D3  f1 84 26 00 01
 	jr .LF925F3                                          ; F925D8  68 19
@@ -35673,7 +35673,7 @@ InstallPainter_SoundGroupMenu:
 	ldw (PanelDial_DownButton:16), 0x0484                              ; F927C6  f1 9b 20 02 84 04
 	or	(UI_RequestBits:16), 0x01                            ; F927CC  c1 75 20 3e 01
 .LF927D1:
-	m_bit 4, MD16, UI_ScreenFlags                                ; F927D1  f1 95 20 cc
+	bit	4, (UI_ScreenFlags:16)                               ; F927D1  f1 95 20 cc
 	jr nz, .LF927ED                                      ; F927D5  6e 16
 	call T_CallbackQueue_ResetAndRestartTask2            ; F927D7  1d 80 2e f4
 	ld XWA,Draw_SoundGroupMenuReMap1ReMap2                                    ; F927DB  40 00 28 f9 00
@@ -35743,7 +35743,7 @@ Draw_SoundGroupMenuReMap1ReMap2:   ; entry: named by 1 `ld` operand, first at 0x
 	inc 1,D                                              ; F92892  cc 61
 	pop E                                                ; F92894  cd 05
 	djnz8 e, .LF92864                                    ; F92896  cd 1c cb
-	m_bit 3, MD16, SoundSel_Bank                                ; F92899  f1 6a 21 cb
+	bit	3, (SoundSel_Bank:16)                               ; F92899  f1 6a 21 cb
 	jr nz, .LF928A4                                      ; F9289D  6e 05
 	calr Draw_Ext1                                      ; F9289F  1e 39 01
 	jr .LF928A7                                          ; F928A2  68 03
@@ -35801,7 +35801,7 @@ Paint_Drum:
 	ld XIX,Paint_Drum_DL1                                     ; F928EC  44 50 ba f2 00
 	call T_DisplayList_Run                               ; F928F1  1d f0 17 f4
 	ld (LCD_CurrentLayer:16), 0x01                                 ; F928F5  f1 40 25 00 01
-	m_bit 5, MD16, SoundSel_Bank                                ; F928FA  f1 6a 21 cd
+	bit	5, (SoundSel_Bank:16)                               ; F928FA  f1 6a 21 cd
 	jr Z,.LF92910                                        ; F928FE  66 10
 	ld XIY,Paint_Drum_DL1                                     ; F92900  45 50 ba f2 00
 	ld XIX,Paint_Drum_DL2                                     ; F92905  44 5a ba f2 00
@@ -35831,7 +35831,7 @@ BankLegend_DrawUser:
 	ld XIX,BankLegend_DrawUser_DL1                                     ; F92940  44 96 bd f2 00
 	call T_DisplayList_Run                               ; F92945  1d f0 17 f4
 	ld (LCD_CurrentLayer:16), 0x01                                 ; F92949  f1 40 25 00 01
-	m_bit 5, MD16, SoundSel_Bank                                ; F9294E  f1 6a 21 cd
+	bit	5, (SoundSel_Bank:16)                               ; F9294E  f1 6a 21 cd
 	jr nz, .LF929A9                                      ; F92952  6e 55
 	ld XIY,BankLegend_DrawUser_DL1                                     ; F92954  45 96 bd f2 00
 	ld XIX,BankLegend_DrawUser_DL4                                     ; F92959  44 a0 bd f2 00
@@ -35845,7 +35845,7 @@ BankLegend_DrawUser:
 	ld XIX,BankLegend_DrawUser_DL3                                     ; F92977  44 48 bd f2 00
 	call T_DisplayList_Run                               ; F9297C  1d f0 17 f4
 	ld (LCD_CurrentLayer:16), 0x01                                 ; F92980  f1 40 25 00 01
-	m_bit 5, MD16, SoundSel_Bank                                ; F92985  f1 6a 21 cd
+	bit	5, (SoundSel_Bank:16)                               ; F92985  f1 6a 21 cd
 	jr nz, .LF929A9                                      ; F92989  6e 1e
 	ld XIY,BankLegend_DrawUser_DL3                                     ; F9298B  45 48 bd f2 00
 	ld XIX,BankLegend_DrawUser_DL2                                     ; F92990  44 52 bd f2 00
@@ -36024,7 +36024,7 @@ SoundBank_SelectExt:
 	ld w, (SoundSel_Bank:16)                                   ; F92B45  c1 6a 21 20
 	bit 0x03,W                                           ; F92B49  c8 33 03
 	jr nz, .LF92B82                                      ; F92B4C  6e 34
-	m_bit 0, MD16, 0x08ec                                ; F92B4E  f1 ec 08 c8
+	bit	0, (0x08ec:16)                               ; F92B4E  f1 ec 08 c8
 	jr z, .LF92B82                                       ; F92B52  66 2e
 	ld a, 0x10:opc                                          ; F92B54  21 10
 	cp (SoundSel_Bank:16), a                                    ; F92B56  c1 6a 21 f9
@@ -36115,7 +36115,7 @@ SoundGroup_StepSelected:
 ; "OK" is drawn at IX 0x236B (x 0xD8, y 0xE2), column 6. Screen 0xA1 is PanelScreen_VtableTable_ViewB entry 0xA1, T_F41550 (InstallPainter_GroupSoundDisplayHold_Entry).
 SoftKeyCol6_SoundGroupMenu:   ; entry: named by 2 `.long` operands, first at 0xF9273A
 	ldw (UI_Request:16), 0x80a1                              ; F92C08  f1 70 20 02 a1 80
-	m_bit 0, MD16, UI_ScreenHoldState                                ; F92C0E  f1 92 20 c8
+	bit	0, (UI_ScreenHoldState:16)                               ; F92C0E  f1 92 20 c8
 	jr z, .LF92C1E                                       ; F92C12  66 0a
 	ld (UI_Request_Hi:16), 0x40                                 ; F92C14  f1 71 20 00 40
 	or	(UI_RequestBits:16), 0x80                            ; F92C19  c1 75 20 3e 80
@@ -36155,7 +36155,7 @@ ExitKey_SoundGroupMenu:   ; entry: named by 1 `.long` operand, first at 0xF92762
 	bit 0x07,W                                           ; F92C31  c8 33 07
 	jr nz, .LF92C4E                                      ; F92C34  6e 18
 	ldw (UI_Request:16), 0x8001                              ; F92C36  f1 70 20 02 01 80
-	m_bit 0, MD16, UI_ScreenHoldState                                ; F92C3C  f1 92 20 c8
+	bit	0, (UI_ScreenHoldState:16)                               ; F92C3C  f1 92 20 c8
 	jr z, .LF92C4C                                       ; F92C40  66 0a
 	ld (UI_ScreenHoldPending:16), 0x01                                 ; F92C42  f1 9a 20 00 01
 	ld (UI_Request_Hi:16), 0x00                                 ; F92C47  f1 71 20 00 00
@@ -36322,9 +36322,9 @@ DisplayListPtrs_F914FB_Nop8:   ; entry: named by 67 `.long` operands, first at 0
 ;          whether any other routine paints it.  Neither was searched.
 ; ---------------------------------------------------------------------
 InstallPainter_GroupSoundDisplayHold:
-	m_bit 6, MD16, 0x2673                                ; F92CE7  f1 73 26 ce
+	bit	6, (0x2673:16)                               ; F92CE7  f1 73 26 ce
 	jr nz, .LF92CF7                                      ; F92CEB  6e 0a
-	m_bit 7, MD16, 0x2673                                ; F92CED  f1 73 26 cf
+	bit	7, (0x2673:16)                               ; F92CED  f1 73 26 cf
 	jr nz, .LF92CF7                                      ; F92CF1  6e 04
 	call T_CallbackQueue_ResetAndRestartTask2            ; F92CF3  1d 80 2e f4
 .LF92CF7:
@@ -36339,7 +36339,7 @@ InstallPainter_GroupSoundDisplayHold:
 	call T_Blink_Stop                                    ; F92D16  1d 24 2e f4
 	or	(UI_RequestBits:16), 0x02                            ; F92D1A  c1 75 20 3e 02
 .LF92D1F:
-	m_bit 4, MD16, UI_ScreenFlags                                ; F92D1F  f1 95 20 cc
+	bit	4, (UI_ScreenFlags:16)                               ; F92D1F  f1 95 20 cc
 	jr nz, .LF92D3C                                      ; F92D23  6e 17
 	or	(0x2673:16), 0x80                            ; F92D25  c1 73 26 3e 80
 	ld XIX,Draw_GroupSoundDisplayHoldGr0up                                    ; F92D2A  44 4f 2d f9 00
@@ -36390,7 +36390,7 @@ GroupSoundDisplayHold_RepaintFields:   ; entry: named by 1 `ld` operand, first a
 	calr GroupSoundDisplayHold_DrawNumberRange                                      ; F92DA1  1e fb 03
 	calr DisplayHold_ShowGroupNumber                                      ; F92DA4  1e 7d 03
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F92DA7  f1 40 25 00 00
-	m_bit 3, MD16, SoundSel_Bank                                ; F92DAC  f1 6a 21 cb
+	bit	3, (SoundSel_Bank:16)                               ; F92DAC  f1 6a 21 cb
 	jr nz, .LF92DB7                                      ; F92DB0  6e 05
 	calr Draw_Ext1                                          ; F92DB2  1e 26 fc
 	jr .LF92DBA                                          ; F92DB5  68 03
@@ -36590,7 +36590,7 @@ SoftKeyCol5_GroupSoundDisplayHold:   ; entry: named by 2 `.long` operands, first
 ; DL_GroupSoundDisplayHoldGr0up draws "GR0UP" and "MENU" at IX 0x1EDF / 0x227A (x 0xB8 / 0xD0, y 0xC5 / 0xDC), over column 6. Screen 0xA0 is T_F41540 (InstallPainter_SoundGroupMenu_Entry).
 SoftKeyCol6_GroupSoundDisplayHold:   ; entry: named by 2 `.long` operands, first at 0xF92C7A
 	ldw (UI_Request:16), 0x80a0                              ; F92F38  f1 70 20 02 a0 80
-	m_bit 0, MD16, UI_ScreenHoldState                                ; F92F3E  f1 92 20 c8
+	bit	0, (UI_ScreenHoldState:16)                               ; F92F3E  f1 92 20 c8
 	jr z, .LF92F4E                                       ; F92F42  66 0a
 	ld (UI_Request_Hi:16), 0x40                                 ; F92F44  f1 71 20 00 40
 	or	(UI_RequestBits:16), 0x80                            ; F92F49  c1 75 20 3e 80
@@ -36754,7 +36754,7 @@ ExitKey_GroupSoundDisplayHold:   ; entry: named by 1 `.long` operand, first at 0
 	bit 0x07,W                                           ; F9306B  c8 33 07
 	jr nz, .LF9308D                                      ; F9306E  6e 1d
 	ldw (UI_Request:16), 0x8001                              ; F93070  f1 70 20 02 01 80
-	m_bit 0, MD16, UI_ScreenHoldState                                ; F93076  f1 92 20 c8
+	bit	0, (UI_ScreenHoldState:16)                               ; F93076  f1 92 20 c8
 	jr z, .LF9308B                                       ; F9307A  66 0f
 	ld (UI_ScreenHoldPending:16), 0x01                                 ; F9307C  f1 9a 20 00 01
 	ld (UI_Request_Hi:16), 0x00                                 ; F93081  f1 71 20 00 00
@@ -36864,7 +36864,7 @@ DisplayHold_ShowGroupNumber:
 ; callers GroupSoundDisplayHold_RepaintFields and GroupCombiDisplayHold_PaintGroupAndNames.
 DisplayHold_DrawHoldHighlight:
 	ld (LCD_CurrentLayer:16), 0x01                                 ; F9315D  f1 40 25 00 01
-	m_bit 0, MD16, DisplayHold_Flag                                ; F93162  f1 7f 26 c8
+	bit	0, (DisplayHold_Flag:16)                               ; F93162  f1 7f 26 c8
 	jr z, .LF93178                                       ; F93166  66 10
 	ld XIY,DisplayHold_DrawHoldHighlight_DL1                                     ; F93168  45 0c ba f2 00
 	ld XIX,DisplayHold_DrawHoldHighlight_DL2                                     ; F9316D  44 16 ba f2 00
@@ -36988,7 +36988,7 @@ GroupSoundDisplayHold_PickSound:
 	inc 4,XSP                                            ; F9328D  ef 64
 	ld a, 0x01:opc                                          ; F9328F  21 01
 	call T_Kernel_SemaSignal                             ; F93291  1d 88 2d f4
-	m_bit 0, MD16, DisplayHold_Flag                                ; F93295  f1 7f 26 c8
+	bit	0, (DisplayHold_Flag:16)                               ; F93295  f1 7f 26 c8
 	jr nz, .LF932C5                                      ; F93299  6e 2a
 	cp	(UI_ScreenId:16), 0xa1                            ; F9329B  c1 7c 20 3f a1
 	jr nz, .LF932AA                                      ; F932A0  6e 08
@@ -36997,7 +36997,7 @@ GroupSoundDisplayHold_PickSound:
 .LF932AA:
 	ldw (UI_Request:16), 0x8002                              ; F932AA  f1 70 20 02 02 80
 .LF932B0:
-	m_bit 0, MD16, UI_ScreenHoldState                                ; F932B0  f1 92 20 c8
+	bit	0, (UI_ScreenHoldState:16)                               ; F932B0  f1 92 20 c8
 	jr z, .LF932C5                                       ; F932B4  66 0f
 	ld (UI_ScreenHoldPending:16), 0x01                                 ; F932B6  f1 9a 20 00 01
 	ld (UI_Request_Hi:16), 0x00                                 ; F932BB  f1 71 20 00 00
@@ -37065,7 +37065,7 @@ GroupSoundDisplayHold_SelectMemberLastPage:
 	inc 4,XSP                                            ; F9334D  ef 64
 	ld a, 0x01:opc                                          ; F9334F  21 01
 	call T_Kernel_SemaSignal                             ; F93351  1d 88 2d f4
-	m_bit 0, MD16, DisplayHold_Flag                                ; F93355  f1 7f 26 c8
+	bit	0, (DisplayHold_Flag:16)                               ; F93355  f1 7f 26 c8
 	jr nz, .LF93385                                      ; F93359  6e 2a
 	cp	(UI_ScreenId:16), 0xa1                            ; F9335B  c1 7c 20 3f a1
 	jr nz, .LF9336A                                      ; F93360  6e 08
@@ -37074,7 +37074,7 @@ GroupSoundDisplayHold_SelectMemberLastPage:
 .LF9336A:
 	ldw (UI_Request:16), 0x8002                              ; F9336A  f1 70 20 02 02 80
 .LF93370:
-	m_bit 0, MD16, UI_ScreenHoldState                                ; F93370  f1 92 20 c8
+	bit	0, (UI_ScreenHoldState:16)                               ; F93370  f1 92 20 c8
 	jr z, .LF93385                                       ; F93374  66 0f
 	ld (UI_ScreenHoldPending:16), 0x01                                 ; F93376  f1 9a 20 00 01
 	ld (UI_Request_Hi:16), 0x00                                 ; F9337B  f1 71 20 00 00
@@ -37108,7 +37108,7 @@ GroupSoundDisplayHold_SelectMemberLastPage__F93386:
 GroupSoundDisplayHold_HighlightSelected:
 	calr LCD_EraseLayer1_FixedRect                                            ; F93398  1e f3 00
 	calr SoundGroup_SelectedMaxMemberIndex                                      ; F9339B  1e e1 fb
-	m_bit 3, MD16, 0x2673                                ; F9339E  f1 73 26 cb
+	bit	3, (0x2673:16)                               ; F9339E  f1 73 26 cb
 	jr nz, .LF933C5                                      ; F933A2  6e 21
 	push_a                                               ; F933A4  14
 	calr PartRecord_GetSecondHalfPtr                                          ; F933A5  1e a5 11
@@ -37503,7 +37503,7 @@ InstallPainter_CombinationGroupMenu:
 	ldw (PanelDial_DownButton:16), 0x0484                              ; F935F7  f1 9b 20 02 84 04
 	or	(UI_RequestBits:16), 0x01                            ; F935FD  c1 75 20 3e 01
 .LF93602:
-	m_bit 4, MD16, UI_ScreenFlags                                ; F93602  f1 95 20 cc
+	bit	4, (UI_ScreenFlags:16)                               ; F93602  f1 95 20 cc
 	jr nz, .LF9361E                                      ; F93606  6e 16
 	call T_CallbackQueue_ResetAndRestartTask2            ; F93608  1d 80 2e f4
 	ld XWA,Draw_CombinationGroupMenuReMap1                                    ; F9360C  40 31 36 f9 00
@@ -37573,7 +37573,7 @@ Draw_CombinationGroupMenuReMap1:   ; entry: named by 1 `ld` operand, first at 0x
 	inc 1,D                                              ; F936C1  cc 61
 	pop E                                                ; F936C3  cd 05
 	djnz8 e, .LF93695                                    ; F936C5  cd 1c cd
-	m_bit 3, MD16, SoundSel_Bank                                ; F936C8  f1 6a 21 cb
+	bit	3, (SoundSel_Bank:16)                               ; F936C8  f1 6a 21 cb
 	jr nz, .LF936D3                                      ; F936CC  6e 05
 	calr Draw_Ext1_2                                          ; F936CE  1e 3f f3
 	jr .LF936D6                                          ; F936D1  68 03
@@ -37641,7 +37641,7 @@ SoftKeyCol4_CombinationGroupMenu:
 	ld a, (SoundSel_Bank:16)                                   ; F93742  c1 6a 21 21
 	bit 0x03,A                                           ; F93746  c9 33 03
 	jr nz, .LF9377F                                      ; F93749  6e 34
-	m_bit 1, MD16, 0x08ec                                ; F9374B  f1 ec 08 c9
+	bit	1, (0x08ec:16)                               ; F9374B  f1 ec 08 c9
 	jr z, .LF9377F                                       ; F9374F  66 2e
 	ld a, 0x10:opc                                          ; F93751  21 10
 	cp (SoundSel_Bank:16), a                                    ; F93753  c1 6a 21 f9
@@ -37716,7 +37716,7 @@ SoftKeyCol5_CombinationGroupMenu:
 ; sits at position 0x236B = x 216, inside column 6's band (x 200-239).
 SoftKeyCol6_CombinationGroupMenu:   ; entry: named by 2 `.long` operands, first at 0xF9356B
 	ldw (UI_Request:16), 0x80a6                              ; F937DB  f1 70 20 02 a6 80
-	m_bit 0, MD16, UI_ScreenHoldState                                ; F937E1  f1 92 20 c8
+	bit	0, (UI_ScreenHoldState:16)                               ; F937E1  f1 92 20 c8
 	jr z, .LF937F1                                       ; F937E5  66 0a
 	ld (UI_Request_Hi:16), 0x40                                 ; F937E7  f1 71 20 00 40
 	or	(UI_RequestBits:16), 0x80                            ; F937EC  c1 75 20 3e 80
@@ -37757,7 +37757,7 @@ ExitKey_CombinationGroupMenu:   ; entry: named by 1 `.long` operand, first at 0x
 	bit 0x07,W                                           ; F93804  c8 33 07
 	jr nz, .LF93821                                      ; F93807  6e 18
 	ldw (UI_Request:16), 0x8002                              ; F93809  f1 70 20 02 02 80
-	m_bit 0, MD16, UI_ScreenHoldState                                ; F9380F  f1 92 20 c8
+	bit	0, (UI_ScreenHoldState:16)                               ; F9380F  f1 92 20 c8
 	jr z, .LF9381F                                       ; F93813  66 0a
 	ld (UI_ScreenHoldPending:16), 0x01                                 ; F93815  f1 9a 20 00 01
 	ld (UI_Request_Hi:16), 0x00                                 ; F9381A  f1 71 20 00 00
@@ -37899,9 +37899,9 @@ ScreenButtonHandlers_GroupCombiDisplayHold:
 ;          whether any other routine paints it.  Neither was searched.
 ; ---------------------------------------------------------------------
 InstallPainter_GroupCombiDisplayHold:
-	m_bit 6, MD16, 0x2673                                ; F938B9  f1 73 26 ce
+	bit	6, (0x2673:16)                               ; F938B9  f1 73 26 ce
 	jr nz, .LF938C9                                      ; F938BD  6e 0a
-	m_bit 7, MD16, 0x2673                                ; F938BF  f1 73 26 cf
+	bit	7, (0x2673:16)                               ; F938BF  f1 73 26 cf
 	jr nz, .LF938C9                                      ; F938C3  6e 04
 	call T_CallbackQueue_ResetAndRestartTask2            ; F938C5  1d 80 2e f4
 .LF938C9:
@@ -37916,7 +37916,7 @@ InstallPainter_GroupCombiDisplayHold:
 	call T_Blink_Stop                                    ; F938E8  1d 24 2e f4
 	or	(UI_RequestBits:16), 0x02                            ; F938EC  c1 75 20 3e 02
 .LF938F1:
-	m_bit 4, MD16, UI_ScreenFlags                                ; F938F1  f1 95 20 cc
+	bit	4, (UI_ScreenFlags:16)                               ; F938F1  f1 95 20 cc
 	jr nz, .LF9390E                                      ; F938F5  6e 17
 	or	(0x2673:16), 0x80                            ; F938F7  c1 73 26 3e 80
 	ld XIX,Draw_GroupCombiDisplayHoldGr0up                                    ; F938FC  44 21 39 f9 00
@@ -37967,7 +37967,7 @@ GroupCombiDisplayHold_PaintGroupAndNames:   ; entry: named by 1 `ld` operand, fi
 	swi 7                                                ; F93970  ff
 	calr GroupCombiDisplayHold_DrawNumberRange                                          ; F93971  1e 30 f8
 	calr DisplayHold_ShowGroupNumber                                          ; F93974  1e ad f7
-	m_bit 3, MD16, SoundSel_Bank                                ; F93977  f1 6a 21 cb
+	bit	3, (SoundSel_Bank:16)                               ; F93977  f1 6a 21 cb
 	jr nz, .LF93982                                      ; F9397B  6e 05
 	calr Draw_Ext1_2                                          ; F9397D  1e 90 f0
 	jr .LF93985                                          ; F93980  68 03
@@ -38160,7 +38160,7 @@ SoftKeyCol5_GroupCombiDisplayHold:   ; entry: named by 2 `.long` operands, first
 ; x 184-239, centred on column 6's band.
 SoftKeyCol6_GroupCombiDisplayHold:   ; entry: named by 2 `.long` operands, first at 0xF9384D
 	ldw (UI_Request:16), 0x80a5                              ; F93AEC  f1 70 20 02 a5 80
-	m_bit 0, MD16, UI_ScreenHoldState                                ; F93AF2  f1 92 20 c8
+	bit	0, (UI_ScreenHoldState:16)                               ; F93AF2  f1 92 20 c8
 	jr z, .LF93B02                                       ; F93AF6  66 0a
 	ld (UI_Request_Hi:16), 0x40                                 ; F93AF8  f1 71 20 00 40
 	or	(UI_RequestBits:16), 0x80                            ; F93AFD  c1 75 20 3e 80
@@ -38339,7 +38339,7 @@ ExitKey_GroupCombiDisplayHold:   ; entry: named by 1 `.long` operand, first at 0
 	bit 0x07,W                                           ; F93C1A  c8 33 07
 	jr nz, .LF93C3C                                      ; F93C1D  6e 1d
 	ldw (UI_Request:16), 0x8002                              ; F93C1F  f1 70 20 02 02 80
-	m_bit 0, MD16, UI_ScreenHoldState                                ; F93C25  f1 92 20 c8
+	bit	0, (UI_ScreenHoldState:16)                               ; F93C25  f1 92 20 c8
 	jr z, .LF93C3A                                       ; F93C29  66 0f
 	ld (UI_ScreenHoldPending:16), 0x01                                 ; F93C2B  f1 9a 20 00 01
 	ld (UI_Request_Hi:16), 0x00                                 ; F93C30  f1 71 20 00 00
@@ -38463,7 +38463,7 @@ GroupCombiDisplayHold_SelectMemberAtRow:
 	inc 4,XSP                                            ; F93D34  ef 64
 	ld a, 0x01:opc                                          ; F93D36  21 01
 	call T_Kernel_SemaSignal                             ; F93D38  1d 88 2d f4
-	m_bit 0, MD16, DisplayHold_Flag                                ; F93D3C  f1 7f 26 c8
+	bit	0, (DisplayHold_Flag:16)                               ; F93D3C  f1 7f 26 c8
 	jr nz, .LF93D6C                                      ; F93D40  6e 2a
 	cp	(UI_ScreenId:16), 0xa1                            ; F93D42  c1 7c 20 3f a1
 	jr nz, .LF93D51                                      ; F93D47  6e 08
@@ -38472,7 +38472,7 @@ GroupCombiDisplayHold_SelectMemberAtRow:
 .LF93D51:
 	ldw (UI_Request:16), 0x8002                              ; F93D51  f1 70 20 02 02 80
 .LF93D57:
-	m_bit 0, MD16, UI_ScreenHoldState                                ; F93D57  f1 92 20 c8
+	bit	0, (UI_ScreenHoldState:16)                               ; F93D57  f1 92 20 c8
 	jr z, .LF93D6C                                       ; F93D5B  66 0f
 	ld (UI_ScreenHoldPending:16), 0x01                                 ; F93D5D  f1 9a 20 00 01
 	ld (UI_Request_Hi:16), 0x00                                 ; F93D62  f1 71 20 00 00
@@ -38538,7 +38538,7 @@ GroupCombiDisplayHold_SelectMemberLastPage:
 	inc 4,XSP                                            ; F93DEF  ef 64
 	ld a, 0x01:opc                                          ; F93DF1  21 01
 	call T_Kernel_SemaSignal                             ; F93DF3  1d 88 2d f4
-	m_bit 0, MD16, DisplayHold_Flag                                ; F93DF7  f1 7f 26 c8
+	bit	0, (DisplayHold_Flag:16)                               ; F93DF7  f1 7f 26 c8
 	jr nz, .LF93E27                                      ; F93DFB  6e 2a
 	cp	(UI_ScreenId:16), 0xa1                            ; F93DFD  c1 7c 20 3f a1
 	jr nz, .LF93E0C                                      ; F93E02  6e 08
@@ -38547,7 +38547,7 @@ GroupCombiDisplayHold_SelectMemberLastPage:
 .LF93E0C:
 	ldw (UI_Request:16), 0x8002                              ; F93E0C  f1 70 20 02 02 80
 .LF93E12:
-	m_bit 0, MD16, UI_ScreenHoldState                                ; F93E12  f1 92 20 c8
+	bit	0, (UI_ScreenHoldState:16)                               ; F93E12  f1 92 20 c8
 	jr z, .LF93E27                                       ; F93E16  66 0f
 	ld (UI_ScreenHoldPending:16), 0x01                                 ; F93E18  f1 9a 20 00 01
 	ld (UI_Request_Hi:16), 0x00                                 ; F93E1D  f1 71 20 00 00
@@ -38561,7 +38561,7 @@ GroupCombiDisplayHold_SelectMemberLastPage:
 GroupCombiDisplayHold_HighlightSelected:
 	calr LCD_EraseLayer1_FixedRect                                          ; F93E28  1e 63 f6
 	calr CombiGroup_MaxMemberIndexOfCurrent                                      ; F93E2B  1e 05 fd
-	m_bit 3, MD16, 0x2673                                ; F93E2E  f1 73 26 cb
+	bit	3, (0x2673:16)                               ; F93E2E  f1 73 26 cb
 	jr nz, .LF93E55                                      ; F93E32  6e 21
 	push_a                                               ; F93E34  14
 	ld l, (0x7f08:16)                                   ; F93E35  c1 08 7f 27
@@ -38961,7 +38961,7 @@ Paint_PowerOnSplash:
 	ldw (LCD_Layer1_SAD:16), 0x2580                              ; F94164  f1 43 25 02 80 25
 	ld (UI_ScreenStage:16), 0x00                                 ; F9416A  f1 7e 20 00 00
 .LF9416F:
-	m_bit 4, MD16, UI_RequestBits                                ; F9416F  f1 75 20 cc
+	bit	4, (UI_RequestBits:16)                               ; F9416F  f1 75 20 cc
 	jrl nz, .LF941F3                                     ; F94173  7e 7d 00
 	cp	(UI_ScreenStage:16), 0x00                            ; F94176  c1 7e 20 3f 00
 	jr nz, .LF941C6                                      ; F9417B  6e 49
@@ -39566,7 +39566,7 @@ PanelDial_DrawValueDigits:   ; entry: named by 1 `ld` operand, first at 0xF94609
 	jr .LF94649                                          ; F94647  68 00
 .LF94649:
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F94649  f1 40 25 00 00
-	m_bit 2, MD16, MidiCfg_ModeBits                                ; F9464E  f1 32 7f ca
+	bit	2, (MidiCfg_ModeBits:16)                               ; F9464E  f1 32 7f ca
 	jr z, .LF9465F                                       ; F94652  66 0b
 	ldw (Value_AsciiDigits:16), 0x2d2d                              ; F94654  f1 61 26 02 2d 2d
 	ld (Value_AsciiDigits+2:16), 0x2d                                 ; F9465A  f1 63 26 00 2d
@@ -40578,7 +40578,7 @@ TestMode_Tick:
 	and XBC,0x00000001                                   ; F9546A  e9 cc 01 00 00 00
 	jr z, .LF9547B                                           ; F95470  66 09
 	ld (UI_Request:16), 0xdd                                 ; F95472  f1 70 20 00 dd
-	m_set 6, MD16, UI_Request_Hi                                ; F95477  f1 71 20 be
+	set	6, (UI_Request_Hi:16)                               ; F95477  f1 71 20 be
 .LF9547B:
 	cp	(UI_ScreenId:16), 0xdd                            ; F9547B  c1 7c 20 3f dd
 	jr nz, .LF95493                                          ; F95480  6e 11
@@ -40587,7 +40587,7 @@ TestMode_Tick:
 	ld C,(XIX)                                           ; F95488  84 23
 	and C,0x03                                           ; F9548A  cb cc 03
 	jr nz, .LF95493                                          ; F9548D  6e 04
-	m_set 4, MD16, UI_ScreenFlags                                ; F9548F  f1 95 20 bc
+	set	4, (UI_ScreenFlags:16)                               ; F9548F  f1 95 20 bc
 .LF95493:
 	cp	(UI_ScreenId:16), 0xdc                            ; F95493  c1 7c 20 3f dc
 	jr nz, .LF9549D                                          ; F95498  6e 03
@@ -40846,7 +40846,7 @@ PanelSwLedCheck_Step:
 .LF956A6:
 	call TestMode_PanelSwitchesToLeds                                      ; F956A6  1d 1c 4e f9
 .LF956AA:
-	m_set 4, MD16, UI_Request_Hi                                ; F956AA  f1 71 20 bc
+	set	4, (UI_Request_Hi:16)                               ; F956AA  f1 71 20 bc
 	pop XIX                                              ; F956AE  5c
 	ret                                                  ; F956AF  0e
 ; PanelSwLedCheck_AllLedsOn -- light every panel LED group from the table at 0xF95C68
@@ -41146,7 +41146,7 @@ Paint_SineWaveCheckMode:
 	jr z, .LF957FC                                           ; F957A5  66 55
 	cp	(Variant_Flag:8), 0x02                               ; F957A7  c0 c4 3f 02
 	jr nz, .LF957B1                                          ; F957AB  6e 04
-	m_set 1, MD16, UI_RequestBits                                ; F957AD  f1 75 20 b9
+	set	1, (UI_RequestBits:16)                               ; F957AD  f1 75 20 b9
 .LF957B1:
 	extz XIX                                             ; F957B1  ec 12
 	ld (XIX+0x05),0x00                                   ; F957B3  bc 05 00 00
@@ -41387,7 +41387,7 @@ NumberPadKey_SineWaveCheckMode:   ; entry: screen button-handler table
 	ld C,H                                               ; F95981  ce 8b
 	dec 1,C                                              ; F95983  cb 69
 	ld (SoundSel_Group:16), c                                   ; F95985  f1 69 21 43
-	m_set 4, MD16, UI_ScreenFlags                                ; F95989  f1 95 20 bc
+	set	4, (UI_ScreenFlags:16)                               ; F95989  f1 95 20 bc
 .LF9598D:
 	popw hl                                              ; F9598D  4b
 	ret                                                  ; F9598E  0e
@@ -41521,7 +41521,7 @@ ScreenEnter_DebugMonitor:
 	and C,0x10                                           ; F959CC  cb cc 10
 	jr nz, .LF959D9                                          ; F959CF  6e 08
 	call LCD_BlankThenSetPanel2Layer                                      ; F959D1  1d 2b 4c f9
-	m_set 7, MD16, UI_RequestBits                                ; F959D5  f1 75 20 bf
+	set	7, (UI_RequestBits:16)                               ; F959D5  f1 75 20 bf
 .LF959D9:
 	calr DebugMonitor_PrintDumpPage                                          ; F959D9  1e 51 02
 	call LCD_ShowLayers1And2_StackFrame                                      ; F959DC  1d 3c 4c f9
@@ -41566,7 +41566,7 @@ SoftKeyCol1_DebugMonitor:   ; entry: screen button-handler table
 	pushw hl                                             ; F95A1E  2b
 	push XIX                                             ; F95A1F  3c
 	lda xix, (0x60a000:24)                               ; F95A20  f2 00 a0 60 34
-	m_set 3, MD16, UI_RequestBits                                ; F95A25  f1 75 20 bb
+	set	3, (UI_RequestBits:16)                               ; F95A25  f1 75 20 bb
 	ld h, 0x81:opc                                          ; F95A29  26 81
 	cp (XIZ+0x08),0x00                                   ; F95A2B  8e 08 3f 00
 	jr nz, .LF95A33                                          ; F95A2F  6e 02
@@ -41605,7 +41605,7 @@ SoftKeyCol2_DebugMonitor:   ; entry: screen button-handler table
 	pushw hl                                             ; F95A7E  2b
 	push XIX                                             ; F95A7F  3c
 	lda xix, (0x60a000:24)                               ; F95A80  f2 00 a0 60 34
-	m_set 3, MD16, UI_RequestBits                                ; F95A85  f1 75 20 bb
+	set	3, (UI_RequestBits:16)                               ; F95A85  f1 75 20 bb
 	ld h, 0x81:opc                                          ; F95A89  26 81
 	cp (XIZ+0x08),0x00                                   ; F95A8B  8e 08 3f 00
 	jr nz, .LF95A93                                          ; F95A8F  6e 02
@@ -41642,7 +41642,7 @@ SoftKeyCol3_DebugMonitor:   ; entry: screen button-handler table
 	pushw hl                                             ; F95AD5  2b
 	push XIX                                             ; F95AD6  3c
 	lda xix, (0x60a000:24)                               ; F95AD7  f2 00 a0 60 34
-	m_set 3, MD16, UI_RequestBits                                ; F95ADC  f1 75 20 bb
+	set	3, (UI_RequestBits:16)                               ; F95ADC  f1 75 20 bb
 	ld h, 0x81:opc                                          ; F95AE0  26 81
 	cp (XIZ+0x08),0x00                                   ; F95AE2  8e 08 3f 00
 	jr nz, .LF95AEA                                          ; F95AE6  6e 02
@@ -41677,7 +41677,7 @@ SoftKeyCol4_DebugMonitor:   ; entry: screen button-handler table
 	pushw hl                                             ; F95B28  2b
 	push XIX                                             ; F95B29  3c
 	lda xix, (0x60a000:24)                               ; F95B2A  f2 00 a0 60 34
-	m_set 3, MD16, UI_RequestBits                                ; F95B2F  f1 75 20 bb
+	set	3, (UI_RequestBits:16)                               ; F95B2F  f1 75 20 bb
 	ld h, 0x81:opc                                          ; F95B33  26 81
 	cp (XIZ+0x08),0x00                                   ; F95B35  8e 08 3f 00
 	jr nz, .LF95B3D                                          ; F95B39  6e 02
@@ -41712,7 +41712,7 @@ SoftKeyCol5_DebugMonitor:   ; entry: screen button-handler table
 	pushw hl                                             ; F95B7B  2b
 	push XIX                                             ; F95B7C  3c
 	lda xix, (0x60a000:24)                               ; F95B7D  f2 00 a0 60 34
-	m_set 3, MD16, UI_RequestBits                                ; F95B82  f1 75 20 bb
+	set	3, (UI_RequestBits:16)                               ; F95B82  f1 75 20 bb
 	ld h, 0x81:opc                                          ; F95B86  26 81
 	cp (XIZ+0x08),0x00                                   ; F95B88  8e 08 3f 00
 	jr nz, .LF95B90                                          ; F95B8C  6e 02
@@ -41747,7 +41747,7 @@ SoftKeyCol6_DebugMonitor:   ; entry: screen button-handler table
 	pushw hl                                             ; F95BCE  2b
 	push XIX                                             ; F95BCF  3c
 	lda xix, (0x60a000:24)                               ; F95BD0  f2 00 a0 60 34
-	m_set 3, MD16, UI_RequestBits                                ; F95BD5  f1 75 20 bb
+	set	3, (UI_RequestBits:16)                               ; F95BD5  f1 75 20 bb
 	ld h, 0x81:opc                                          ; F95BD9  26 81
 	cp (XIZ+0x08),0x00                                   ; F95BDB  8e 08 3f 00
 	jr nz, .LF95BE3                                          ; F95BDF  6e 02
@@ -42293,7 +42293,7 @@ ParamImage_QueueProgramBankPair:   ; entry: reachable-run entry
 	and WA,0x7f7f                                        ; F961FB  d8 cc 7f 7f
 	cp A,W                                               ; F961FF  c8 f1
 	jr z, .LF96256                                       ; F96201  66 53
-	m_bit 0, MD16, 0x2180                                ; F96203  f1 80 21 c8
+	bit	0, (0x2180:16)                               ; F96203  f1 80 21 c8
 	jr nz, .LF96256                                      ; F96207  6e 4d
 	ld XIZ,0x00002c00                                    ; F96209  46 00 2c 00 00
 	mx_st_mr8 MXD, ra_IZ, ra_IX, r4                      ; F9620E  f3 07 f8 f0 44
@@ -45658,7 +45658,7 @@ ParamImage_QueueDiffCombination:   ; entry: prom_b routine directory
 .LF989B1:
 	cp HL,IX                                             ; F989B1  dc f3
 	jrl nc, .LF98AC5                                     ; F989B3  7f 0f 01
-	m_res 0, MD16, 0x2180                                ; F989B6  f1 80 21 b0
+	res	0, (0x2180:16)                               ; F989B6  f1 80 21 b0
 	extz XHL                                             ; F989BA  eb 12
 	ld E,(XHL+Combination_Current)                                    ; F989BC  c3 ed 20 76 25
 	ld d, 0x00:opc                                          ; F989C1  24 00
@@ -45687,7 +45687,7 @@ ParamImage_QueueDiffCombination:   ; entry: prom_b routine directory
 	call Queue2C00_DrainPassB_SaveRegs                                        ; F98A04  1d 18 74 f9
 	ldw	(xiz-4), 0x0000                              ; F98A08  be fc 02 00 00
 .LF98A0D:
-	m_set 5, MD24, 0x60f021                              ; F98A0D  f2 21 f0 60 bd
+	set	5, (0x60f021:24)                             ; F98A0D  f2 21 f0 60 bd
 	cp E,0x1f                                            ; F98A12  cd cf 1f
 	jr ugt, .LF98A32                                     ; F98A15  6b 1b
 	m_push MWD+r6, 0xfc                                  ; F98A17  9e fc 04
@@ -45795,7 +45795,7 @@ ParamImage_QueueDiffCombinationAndParts:   ; entry: prom_b routine directory
 	sub BC,HL                                            ; F98B1D  db a1
 	cp IX,BC                                             ; F98B1F  d9 f4
 	jrl nc, .LF98C2B                                     ; F98B21  7f 07 01
-	m_res 0, MD16, 0x2180                                ; F98B24  f1 80 21 b0
+	res	0, (0x2180:16)                               ; F98B24  f1 80 21 b0
 	extz XIX                                             ; F98B28  ec 12
 	ld L,(XIX+Combination_Current)                                    ; F98B2A  c3 f1 20 76 27
 	cp L,0xff                                            ; F98B2F  cf cf ff
@@ -45827,7 +45827,7 @@ ParamImage_QueueDiffCombinationAndParts:   ; entry: prom_b routine directory
 	call Queue2C00_DrainPassB_SaveRegs                                        ; F98B76  1d 18 74 f9
 	ldw	(xiz-2), 0x0000                              ; F98B7A  be fe 02 00 00
 .LF98B7F:
-	m_set 5, MD24, 0x60f021                              ; F98B7F  f2 21 f0 60 bd
+	set	5, (0x60f021:24)                             ; F98B7F  f2 21 f0 60 bd
 	cp L,0x1f                                            ; F98B84  cf cf 1f
 	jr ugt, .LF98BA4                                     ; F98B87  6b 1b
 	m_push MWD+r6, 0xfe                                  ; F98B89  9e fe 04
@@ -46013,7 +46013,7 @@ ParamImage_QueueDiffCombinationAndParts:   ; entry: prom_b routine directory
 	ld (XBC),H                                           ; F98D52  b1 46
 	jrl .LF98DC9                                         ; F98D54  78 72 00
 .LF98D57:
-	m_set 0, MD16, 0x2180                                ; F98D57  f1 80 21 b8
+	set	0, (0x2180:16)                               ; F98D57  f1 80 21 b8
 	ld BC,IX                                             ; F98D5B  dc 89
 	extz XBC                                             ; F98D5D  e9 12
 	add XBC,(XIZ+0x0e)                                   ; F98D5F  ae 0e 81
@@ -46774,7 +46774,7 @@ MessageScreen_PairTableByLanguage:
 PanelScreen_RequestRedrawIfFieldQueued:
 	bit	1, (0x97:8)                                   ; F99400  f0 97 c9
 	jr z, .LF99459                                       ; F99403  66 54
-	m_bit 3, MD16, 0x2673                                ; F99405  f1 73 26 cb
+	bit	3, (0x2673:16)                               ; F99405  f1 73 26 cb
 	jr nz, .LF99459                                      ; F99409  6e 4e
 	ld l, (UI_ScreenId:16)                                   ; F9940B  c1 7c 20 27
 	xor H,H                                              ; F9940F  ce d6
@@ -47441,7 +47441,7 @@ ScreenButtonRow_SysexBulkDump_Nop31:   ; entry: named by 1 `.long` operand, firs
 ;          whether any other routine paints it.  Neither was searched.
 ; ---------------------------------------------------------------------
 Paint_Sending:
-	m_bit 0, MD24, 0x60f810                              ; F99B82  f2 10 f8 60 c8
+	bit	0, (0x60f810:24)                             ; F99B82  f2 10 f8 60 c8
 	jr z, .LF99BA0                                       ; F99B87  66 17
 	calr LCD_ScreenRedraw_Begin                                      ; F99B89  1e 64 fe
 	ld XIY,DL_Sending                                    ; F99B8C  45 9c d7 f0 00
@@ -47605,7 +47605,7 @@ Paint_SysPartMidiSoundCombination:
 ;          whether any other routine paints it.  Neither was searched.
 ; ---------------------------------------------------------------------
 Paint_SystemExclusivePleaseWait:
-	m_bit 1, MD24, 0x60f810                              ; F99CA1  f2 10 f8 60 c9
+	bit	1, (0x60f810:24)                             ; F99CA1  f2 10 f8 60 c9
 	jr z, .LF99CBF                                       ; F99CA6  66 17
 	calr LCD_ScreenRedraw_Begin                                      ; F99CA8  1e 45 fd
 	ld XIY,DL_SystemExclusivePleaseWait                  ; F99CAB  45 a7 d7 f0 00
@@ -47673,7 +47673,7 @@ Paint_GeneralMidiMode:
 	ld a, (0x7f4d:16)                                   ; F99D28  c1 4d 7f 21
 	ld (UI_ScreenItem:16), a                                   ; F99D2C  f1 20 27 41
 .LF99D30:
-	m_bit 2, MD16, 0x274c                                ; F99D30  f1 4c 27 ca
+	bit	2, (0x274c:16)                               ; F99D30  f1 4c 27 ca
 	jr z, .LF99D3F                                       ; F99D34  66 09
 	ldw (UI_Request:16), 0x0201                              ; F99D36  f1 70 20 02 01 02
 	jrl .LF99DC5                                         ; F99D3C  78 86 00
@@ -47681,7 +47681,7 @@ Paint_GeneralMidiMode:
 	calr LCD_ScreenRedraw_Begin                                      ; F99D3F  1e ae fc
 	cp	(0x2740:16), 0x00                            ; F99D42  c1 40 27 3f 00
 	jr nz, .LF99D76                                      ; F99D47  6e 2d
-	m_bit 1, MD16, 0x274c                                ; F99D49  f1 4c 27 c9
+	bit	1, (0x274c:16)                               ; F99D49  f1 4c 27 c9
 	jr z, .LF99D5D                                       ; F99D4D  66 0e
 	ld XIY,DL_F0DA73                                     ; F99D4F  45 73 da f0 00
 	ld XIX,DL_F0DA93                                     ; F99D54  44 93 da f0 00
@@ -47751,7 +47751,7 @@ ScreenButtonRow_GeneralMidi_Page0_Nop7:   ; entry: named by 1 `.long` operand, f
 ; is drawn, with (0x274C) |= 2, by LcdKeyRow3/4_GeneralMidiMode_Page0; (0x2740) picks the button row and the
 ; page Paint_GeneralMidiMode draws (ScreenButtonRow_GeneralMidi_YesNo / DL_GeneralMidiMidiYesNo).
 LcdKeyRow1_GeneralMidiMode_Page0:   ; entry: named by 1 `.long` operand, first at 0xF99910
-	m_bit 1, MD16, 0x274c                                ; F99DDD  f1 4c 27 c9
+	bit	1, (0x274c:16)                               ; F99DDD  f1 4c 27 c9
 	jr z, .LF99DF2                                       ; F99DE1  66 0f
 	bit 0x07,W                                           ; F99DE3  c8 33 07
 	jr nz, .LF99DF2                                      ; F99DE6  6e 0a
@@ -47769,13 +47769,13 @@ ScreenButtonRow_GeneralMidi_Page0_Nop9:   ; entry: named by 1 `.long` operand, f
 LcdKeyRow3_GeneralMidiMode_Page0:   ; entry: named by 1 `.long` operand, first at 0xF99918
 	bit 0x07,W                                           ; F99DF4  c8 33 07
 	jr nz, .LF99E2B                                      ; F99DF7  6e 32
-	m_bit 2, MD16, UI_ScreenItem                                ; F99DF9  f1 20 27 ca
+	bit	2, (UI_ScreenItem:16)                               ; F99DF9  f1 20 27 ca
 	jr nz, .LF99E2B                                      ; F99DFD  6e 2c
 	or	(UI_ScreenItem:16), 0x04                            ; F99DFF  c1 20 27 3e 04
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F99E04  f1 40 25 00 00
 	ld XIY,DL_F0DA93                                     ; F99E09  45 93 da f0 00
 	call T_DLB_Handler_StringTable                       ; F99E0E  1d f8 17 f4
-	m_bit 1, MD16, 0x274c                                ; F99E12  f1 4c 27 c9
+	bit	1, (0x274c:16)                               ; F99E12  f1 4c 27 c9
 	jr nz, .LF99E2B                                      ; F99E16  6e 13
 	ld XIY,DL_F0DA73                                     ; F99E18  45 73 da f0 00
 	ld XIX,DL_F0DA93                                     ; F99E1D  44 93 da f0 00
@@ -47791,13 +47791,13 @@ LcdKeyRow3_GeneralMidiMode_Page0:   ; entry: named by 1 `.long` operand, first a
 LcdKeyRow4_GeneralMidiMode_Page0:   ; entry: named by 1 `.long` operand, first at 0xF9991C
 	bit 0x07,W                                           ; F99E2C  c8 33 07
 	jr nz, .LF99E63                                      ; F99E2F  6e 32
-	m_bit 2, MD16, UI_ScreenItem                                ; F99E31  f1 20 27 ca
+	bit	2, (UI_ScreenItem:16)                               ; F99E31  f1 20 27 ca
 	jr z, .LF99E63                                       ; F99E35  66 2c
 	and	(UI_ScreenItem:16), 0xfb                            ; F99E37  c1 20 27 3c fb
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F99E3C  f1 40 25 00 00
 	ld XIY,DL_F0DA93                                     ; F99E41  45 93 da f0 00
 	call T_DLB_Handler_StringTable                       ; F99E46  1d f8 17 f4
-	m_bit 1, MD16, 0x274c                                ; F99E4A  f1 4c 27 c9
+	bit	1, (0x274c:16)                               ; F99E4A  f1 4c 27 c9
 	jr nz, .LF99E63                                      ; F99E4E  6e 13
 	ld XIY,DL_F0DA73                                     ; F99E50  45 73 da f0 00
 	ld XIX,DL_F0DA93                                     ; F99E55  44 93 da f0 00
@@ -47878,15 +47878,15 @@ LcdKeyRow3_GeneralMidiYesNo:   ; entry: named by 1 `.long` operand, first at 0xF
 	bit 0x07,W                                           ; F99E85  c8 33 07
 	jr nz, .LF99ED0                                      ; F99E88  6e 46
 	and	(UI_RequestBits:16), 0x6f                            ; F99E8A  c1 75 20 3c 6f
-	m_bit 2, MD16, UI_ScreenItem                                ; F99E8F  f1 20 27 ca
+	bit	2, (UI_ScreenItem:16)                               ; F99E8F  f1 20 27 ca
 	jr z, .LF99EA4                                       ; F99E93  66 0f
-	m_bit 2, MD16, 0x7f4d                                ; F99E95  f1 4d 7f ca
+	bit	2, (0x7f4d:16)                               ; F99E95  f1 4d 7f ca
 	jr nz, .LF99EBB                                      ; F99E99  6e 20
 	or	(0x7f4d:16), 0x04                            ; F99E9B  c1 4d 7f 3e 04
 	ld a, 0x04:opc                                          ; F99EA0  21 04
 	jr .LF99EB1                                          ; F99EA2  68 0d
 .LF99EA4:
-	m_bit 2, MD16, 0x7f4d                                ; F99EA4  f1 4d 7f ca
+	bit	2, (0x7f4d:16)                               ; F99EA4  f1 4d 7f ca
 	jr z, .LF99EBB                                       ; F99EA8  66 11
 	and	(0x7f4d:16), 0xfb                            ; F99EAA  c1 4d 7f 3c fb
 	ld a, 0x00:opc                                          ; F99EAF  21 00
@@ -47968,7 +47968,7 @@ ScreenButtonRow_GeneralMidi_YesNo_Nop31:   ; entry: named by 1 `.long` operand, 
 ;   sets on a mode change), then T_SoundGroup_ReloadSelection (sub_F9433A), XDE/XHL/XIX/XIZ kept -- the shape of mode 0x0A's Enter,
 ;   0xF9FED1.
 PanelMode_MidiEnter:
-	m_set 1, MD16, 0x2134                                ; F99F04  f1 34 21 b9
+	set	1, (0x2134:16)                               ; F99F04  f1 34 21 b9
 	push XDE                                             ; F99F08  3a
 	push XHL                                             ; F99F09  3b
 	push XIX                                             ; F99F0A  3c
@@ -47983,15 +47983,15 @@ PanelMode_MidiEnter:
 ; Evidence: object 0xF41640's +4 slot T_PanelMode_MidiLeave is `jp 0xF99F15`; PanelScreen_CallLeave_A calls +4 with the mode that
 ;   stopped being current.  Same body as mode 0x0A's Leave at 0xF9FEE2.
 PanelMode_MidiLeave:
-	m_set 1, MD16, 0x2134                                ; F99F15  f1 34 21 b9
+	set	1, (0x2134:16)                               ; F99F15  f1 34 21 b9
 	ret                                                  ; F99F19  0e
 ; Var2134_SetBit1: m_set 1, MD16, 0x2134 (single-cell template; the cell's meaning is not established unless it is named)
 Var2134_SetBit1:
-	m_set 1, MD16, 0x2134                                ; F99F1A  f1 34 21 b9
+	set	1, (0x2134:16)                               ; F99F1A  f1 34 21 b9
 	ret                                                  ; F99F1E  0e
 ; Var2134_SetBit1_2: m_set 1, MD16, 0x2134 (single-cell template; the cell's meaning is not established unless it is named)
 Var2134_SetBit1_2:
-	m_set 1, MD16, 0x2134                                ; F99F1F  f1 34 21 b9
+	set	1, (0x2134:16)                               ; F99F1F  f1 34 21 b9
 	ret                                                  ; F99F23  0e
 ; Paint_MidiMenu -- ENTER method of screen 0x70, the MIDI menu: paints its index of MIDI sub-screens
 ; Evidence: ViewB [112] (0xF87101) -> object 0xF41650, +0 `jp 0xF99F24`; PanelMode_ToScreenIdMap[0x12] = 0x70. Lists
@@ -48409,7 +48409,7 @@ Paint_MidiTotalMode:
 	ld (0x2666:16), xbc                                 ; F9A1D3  f1 66 26 61
 	ld xwa, (xiz-4)                                      ; F9A1D7  ae fc 20
 	ld (0x266a:16), xwa                                 ; F9A1DA  f1 6a 26 60
-	m_set 0, MD16, UI_RequestBits                                ; F9A1DE  f1 75 20 b8
+	set	0, (UI_RequestBits:16)                               ; F9A1DE  f1 75 20 b8
 	ld (PanelDial_UpButton:16), 0x04                                 ; F9A1E2  f1 9c 20 00 04
 	ld (PanelDial_DownButton:16), 0x84                                 ; F9A1E7  f1 9b 20 00 84
 	ld C,(XIX)                                           ; F9A1EC  84 23
@@ -48627,7 +48627,7 @@ MidiTotalMode_StepItem:
 	push XIX                                             ; F9A34F  3c
 	lda xix, (UI_ScreenItem:16)                                ; F9A350  f1 20 27 34
 	ld H,(XIZ+0x08)                                      ; F9A354  8e 08 26
-	m_set 3, MD16, UI_RequestBits                                ; F9A357  f1 75 20 bb
+	set	3, (UI_RequestBits:16)                               ; F9A357  f1 75 20 bb
 	ld L,(XIX)                                           ; F9A35B  84 27
 	cp h, 0x00:i3                                          ; F9A35D  ce d8
 	jr nz, .LF9A365                                      ; F9A35F  6e 04
@@ -48659,7 +48659,7 @@ MidiTotalMode_StepItem:
 	ld (XIX),A                                           ; F9A395  b4 41
 	inc 8,XSP                                            ; F9A397  ef 60
 .LF9A399:
-	m_set 4, MD16, UI_ScreenFlags                                ; F9A399  f1 95 20 bc
+	set	4, (UI_ScreenFlags:16)                               ; F9A399  f1 95 20 bc
 	pop XIX                                              ; F9A39D  5c
 	popw hl                                              ; F9A39E  4b
 	unlk XIZ                                             ; F9A39F  ee 0d
@@ -48671,7 +48671,7 @@ MidiTotalMode_StepValue:
 	link XIZ,0x0000                                      ; F9A3A2  ee 0c 00 00
 	pushw hl                                             ; F9A3A6  2b
 	ld H,(XIZ+0x08)                                      ; F9A3A7  8e 08 26
-	m_set 3, MD16, UI_RequestBits                                ; F9A3AA  f1 75 20 bb
+	set	3, (UI_RequestBits:16)                               ; F9A3AA  f1 75 20 bb
 	ld bc, (UI_ScreenItem:16)                                 ; F9A3AE  d1 20 27 21
 	extz BC                                              ; F9A3B2  d9 12
 	extz XBC                                             ; F9A3B4  e9 12
@@ -49362,7 +49362,7 @@ Draw_RealtimeCommandsClock:
 	ld c, (0x7f34:16)                                   ; F9A850  c1 34 7f 23
 	and C,0x04                                           ; F9A854  cb cc 04
 	jrl nz, .LF9A8E0                                     ; F9A857  7e 86 00
-	m_set 2, MD16, 0x7f34                                ; F9A85A  f1 34 7f ba
+	set	2, (0x7f34:16)                               ; F9A85A  f1 34 7f ba
 	pushw 0x04                                           ; F9A85E  0b 04 00
 	pushw 0x04                                           ; F9A861  0b 04 00
 	pushw 0x02                                           ; F9A864  0b 02 00
@@ -49422,7 +49422,7 @@ Draw_RealtimeCommandsClock_2:
 	ld c, (0x7f34:16)                                   ; F9A8FA  c1 34 7f 23
 	and C,0x04                                           ; F9A8FE  cb cc 04
 	jr z, .LF9A950                                       ; F9A901  66 4d
-	m_res 2, MD16, 0x7f34                                ; F9A903  f1 34 7f b2
+	res	2, (0x7f34:16)                               ; F9A903  f1 34 7f b2
 	pushw 0x04                                           ; F9A907  0b 04 00
 	pushw 0xfb                                           ; F9A90A  0b fb 00
 	pushw 0x02                                           ; F9A90D  0b 02 00
@@ -49527,7 +49527,7 @@ Paint_MidiInputOutputFilter:
 	ld (0x2666:16), xbc                                 ; F9A9C3  f1 66 26 61
 	ld xwa, (xiz-4)                                      ; F9A9C7  ae fc 20
 	ld (0x266a:16), xwa                                 ; F9A9CA  f1 6a 26 60
-	m_set 0, MD16, UI_RequestBits                                ; F9A9CE  f1 75 20 b8
+	set	0, (UI_RequestBits:16)                               ; F9A9CE  f1 75 20 b8
 	ld (PanelDial_UpButton:16), 0x80                                 ; F9A9D2  f1 9c 20 00 80
 	ld (PanelDial_DownButton:16), 0x00                                 ; F9A9D7  f1 9b 20 00 00
 	ld C,(XIX)                                           ; F9A9DC  84 23
@@ -49729,7 +49729,7 @@ MidiInputOutputFilter_StepItem:
 	link XIZ,0x0000                                      ; F9AB2C  ee 0c 00 00
 	pushw hl                                             ; F9AB30  2b
 	ld H,(XIZ+0x08)                                      ; F9AB31  8e 08 26
-	m_set 3, MD16, UI_RequestBits                                ; F9AB34  f1 75 20 bb
+	set	3, (UI_RequestBits:16)                               ; F9AB34  f1 75 20 bb
 	ld l, (UI_ScreenItem:16)                                   ; F9AB38  c1 20 27 27
 	cp h, 0x00:i3                                          ; F9AB3C  ce d8
 	jr nz, .LF9AB44                                      ; F9AB3E  6e 04
@@ -49745,7 +49745,7 @@ MidiInputOutputFilter_StepItem:
 	push H                                               ; F9AB4F  ce 04
 	calr StepValue_IncDecClamped                                          ; F9AB51  1e aa f5
 	ld (UI_ScreenItem:16), a                                   ; F9AB54  f1 20 27 41
-	m_set 4, MD16, UI_ScreenFlags                                ; F9AB58  f1 95 20 bc
+	set	4, (UI_ScreenFlags:16)                               ; F9AB58  f1 95 20 bc
 	inc 8,XSP                                            ; F9AB5C  ef 60
 	popw hl                                              ; F9AB5E  4b
 	unlk XIZ                                             ; F9AB5F  ee 0d
@@ -50358,7 +50358,7 @@ Paint_MidiOutProgramChange:
 	ld c, (UI_ScreenLatch:16)                                   ; F9AF8F  c1 7a 20 23
 	m_cp_rm MB16, UI_ScreenLatch_Previous, r3                             ; F9AF93  c1 7b 20 f3
 	jr z, .LF9AFAA                                       ; F9AF97  66 11
-	m_res 4, MD16, UI_ScreenFlags                                ; F9AF99  f1 95 20 b4
+	res	4, (UI_ScreenFlags:16)                               ; F9AF99  f1 95 20 b4
 	ld (UI_ScreenItem:16), 0x00                                 ; F9AF9D  f1 20 27 00 00
 	ld (0x2721:16), 0x00                                 ; F9AFA2  f1 21 27 00 00
 	ld (XIX),0x00                                        ; F9AFA7  b4 00 00
@@ -50370,7 +50370,7 @@ Paint_MidiOutProgramChange:
 	ld (0x2666:16), xbc                                 ; F9AFB5  f1 66 26 61
 	ld xwa, (xiz-23)                                     ; F9AFB9  ae e9 20
 	ld (0x266a:16), xwa                                 ; F9AFBC  f1 6a 26 60
-	m_set 0, MD16, UI_RequestBits                                ; F9AFC0  f1 75 20 b8
+	set	0, (UI_RequestBits:16)                               ; F9AFC0  f1 75 20 b8
 	ld (PanelDial_UpButton:16), 0x04                                 ; F9AFC4  f1 9c 20 00 04
 	ld (PanelDial_DownButton:16), 0x84                                 ; F9AFC9  f1 9b 20 00 84
 	ld c, (UI_ScreenFlags:16)                                   ; F9AFCE  c1 95 20 23
@@ -50600,7 +50600,7 @@ MidiOutProgramChange_StepItem:
 	link XIZ,0x0000                                      ; F9B149  ee 0c 00 00
 	pushw hl                                             ; F9B14D  2b
 	ld H,(XIZ+0x08)                                      ; F9B14E  8e 08 26
-	m_set 3, MD16, UI_RequestBits                                ; F9B151  f1 75 20 bb
+	set	3, (UI_RequestBits:16)                               ; F9B151  f1 75 20 bb
 	ld l, (UI_ScreenItem:16)                                   ; F9B155  c1 20 27 27
 	cp h, 0x00:i3                                          ; F9B159  ce d8
 	jr nz, .LF9B161                                      ; F9B15B  6e 04
@@ -50620,7 +50620,7 @@ MidiOutProgramChange_StepItem:
 	push 0x00                                            ; F9B177  09 00
 	push H                                               ; F9B179  ce 04
 	calr MidiOutProgramChange_EnableBlinkForItem                                      ; F9B17B  1e d4 04
-	m_set 4, MD16, UI_ScreenFlags                                ; F9B17E  f1 95 20 bc
+	set	4, (UI_ScreenFlags:16)                               ; F9B17E  f1 95 20 bc
 	inc 8,XSP                                            ; F9B182  ef 60
 	inc 2,XSP                                            ; F9B184  ef 62
 	popw hl                                              ; F9B186  4b
@@ -50633,7 +50633,7 @@ MidiOutProgramChange_StepValue:
 	link XIZ,0x0000                                      ; F9B18A  ee 0c 00 00
 	pushw hl                                             ; F9B18E  2b
 	ld H,(XIZ+0x08)                                      ; F9B18F  8e 08 26
-	m_set 3, MD16, UI_RequestBits                                ; F9B192  f1 75 20 bb
+	set	3, (UI_RequestBits:16)                               ; F9B192  f1 75 20 bb
 	ld bc, (UI_ScreenItem:16)                                 ; F9B196  d1 20 27 21
 	extz BC                                              ; F9B19A  d9 12
 	cp bc, 0x00:i3                                         ; F9B19C  d9 d8
@@ -51527,7 +51527,7 @@ SoftKeyCol1_ReMapEdit:
 .LF9C189:
 	ld (0x26f9:16), 0x00                                 ; F9C189  f1 f9 26 00 00
 .LF9C18E:
-	m_set 4, MD16, UI_ScreenFlags                                ; F9C18E  f1 95 20 bc
+	set	4, (UI_ScreenFlags:16)                               ; F9C18E  f1 95 20 bc
 .LF9C192:
 	pop XIX                                              ; F9C192  5c
 	unlk XIZ                                             ; F9C193  ee 0d
@@ -51624,7 +51624,7 @@ SoftKeyCol2_ReMapEdit:
 .LF9C276:
 	ld (0x26f9:16), 0x00                                 ; F9C276  f1 f9 26 00 00
 .LF9C27B:
-	m_set 4, MD16, UI_ScreenFlags                                ; F9C27B  f1 95 20 bc
+	set	4, (UI_ScreenFlags:16)                               ; F9C27B  f1 95 20 bc
 .LF9C27F:
 	pop XIX                                              ; F9C27F  5c
 	unlk XIZ                                             ; F9C280  ee 0d
@@ -51741,7 +51741,7 @@ SoftKeyCol5_ReMapEdit:
 .LF9C39A:
 	ld (0x26ff:16), 0x00                                 ; F9C39A  f1 ff 26 00 00
 .LF9C39F:
-	m_set 4, MD16, UI_ScreenFlags                                ; F9C39F  f1 95 20 bc
+	set	4, (UI_ScreenFlags:16)                               ; F9C39F  f1 95 20 bc
 .LF9C3A3:
 	pop XIX                                              ; F9C3A3  5c
 	ret                                                  ; F9C3A4  0e
@@ -51784,7 +51784,7 @@ SoftKeyCol6_ReMapEdit:
 .LF9C402:
 	ld (0x26ff:16), 0x00                                 ; F9C402  f1 ff 26 00 00
 .LF9C407:
-	m_set 4, MD16, UI_ScreenFlags                                ; F9C407  f1 95 20 bc
+	set	4, (UI_ScreenFlags:16)                               ; F9C407  f1 95 20 bc
 .LF9C40B:
 	pop XIX                                              ; F9C40B  5c
 	ret                                                  ; F9C40C  0e
@@ -51868,11 +51868,11 @@ LcdKeyRow1_ReMapEdit:
 	and C,0x01                                           ; F9C4C1  cb cc 01
 	jr nz, .LF9C4D1                                      ; F9C4C4  6e 0b
 	xor	(0x26f3:16), 0x01                            ; F9C4C6  c1 f3 26 3d 01
-	m_set 4, MD16, UI_Request_Hi                                ; F9C4CB  f1 71 20 bc
+	set	4, (UI_Request_Hi:16)                               ; F9C4CB  f1 71 20 bc
 	jr .LF9C4D8                                          ; F9C4CF  68 07
 .LF9C4D1:
 	calr ReMapEdit_AssignSourceToReMap                                      ; F9C4D1  1e 1c 04
-	m_set 4, MD16, UI_ScreenFlags                                ; F9C4D4  f1 95 20 bc
+	set	4, (UI_ScreenFlags:16)                               ; F9C4D4  f1 95 20 bc
 .LF9C4D8:
 	ret                                                  ; F9C4D8  0e
 ; ExitKey_ReMapEdit: HandlerTable23_ReMapEdit slot 15, the 23-slot button table Screen_ReMapEdit_Button indexes through T_PanelCode_ToSlotAndFlags
@@ -51887,7 +51887,7 @@ ExitKey_ReMapEdit:
 	ld (UI_ScreenHoldPending:16), 0x01                                 ; F9C4EB  f1 9a 20 00 01
 	jr .LF9C4FB                                          ; F9C4F0  68 09
 .LF9C4F2:
-	m_set 7, MD16, UI_Request_Hi                                ; F9C4F2  f1 71 20 bf
+	set	7, (UI_Request_Hi:16)                               ; F9C4F2  f1 71 20 bf
 	ld (UI_Request:16), 0x60                                 ; F9C4F6  f1 70 20 00 60
 .LF9C4FB:
 	ret                                                  ; F9C4FB  0e
@@ -52560,7 +52560,7 @@ LcdKeyRow5_SoundCombinationManager:
 	ld c, (PanelEvent_Flags:16)                                   ; F9CAAA  c1 b0 28 23
 	and C,0x01                                           ; F9CAAE  cb cc 01
 	jr z, .LF9CABC                                       ; F9CAB1  66 09
-	m_set 7, MD16, UI_Request_Hi                                ; F9CAB3  f1 71 20 bf
+	set	7, (UI_Request_Hi:16)                               ; F9CAB3  f1 71 20 bf
 	ld (UI_Request:16), 0x5f                                 ; F9CAB7  f1 70 20 00 5f
 .LF9CABC:
 	ret                                                  ; F9CABC  0e
@@ -52576,7 +52576,7 @@ ExitKey_SoundCombinationManager:
 	ld (UI_ScreenHoldPending:16), 0x01                                 ; F9CACF  f1 9a 20 00 01
 	jr .LF9CADF                                          ; F9CAD4  68 09
 .LF9CAD6:
-	m_set 7, MD16, UI_Request_Hi                                ; F9CAD6  f1 71 20 bf
+	set	7, (UI_Request_Hi:16)                               ; F9CAD6  f1 71 20 bf
 	ld (UI_Request:16), 0x60                                 ; F9CADA  f1 70 20 00 60
 .LF9CADF:
 	ret                                                  ; F9CADF  0e
@@ -52742,7 +52742,7 @@ SoundGroupNaming_AdjustBank:
 	inc 8,XSP                                            ; F9CB8A  ef 60
 	cp a, 0x01:i3                                          ; F9CB8C  c9 d9
 	jr nz, .LF9CB94                                      ; F9CB8E  6e 04
-	m_set 4, MD16, UI_ScreenFlags                                ; F9CB90  f1 95 20 bc
+	set	4, (UI_ScreenFlags:16)                               ; F9CB90  f1 95 20 bc
 .LF9CB94:
 	ret                                                  ; F9CB94  0e
 ; SoftKeyCol1_SoundGroupNaming: HandlerTable23_SoundGroupNaming slot 0, the 23-slot button table Screen_SoundGroupNaming_Button indexes through T_PanelCode_ToSlotAndFlags
@@ -53427,7 +53427,7 @@ CombinationGroupNaming_AdjustBank:
 	inc 8,XSP                                            ; F9CFF2  ef 60
 	cp a, 0x01:i3                                          ; F9CFF4  c9 d9
 	jr nz, .LF9CFFC                                      ; F9CFF6  6e 04
-	m_set 4, MD16, UI_ScreenFlags                                ; F9CFF8  f1 95 20 bc
+	set	4, (UI_ScreenFlags:16)                               ; F9CFF8  f1 95 20 bc
 .LF9CFFC:
 	ret                                                  ; F9CFFC  0e
 ; SoftKeyCol1_CombinationGroupNaming: HandlerTable23_CombinationGroupNaming slot 0, the 23-slot button table Screen_CombinationGroupNaming_Button indexes through T_PanelCode_ToSlotAndFlags
@@ -54081,7 +54081,7 @@ SoundCopy_AdjustSourceBank:
 	or	(xix), 0x01                                  ; F9D49D  84 3e 01
 	ld (SoundCopy_SourceSound:16), 0x00                                 ; F9D4A0  f1 9d 26 00 00
 .LF9D4A5:
-	m_set 4, MD16, UI_ScreenFlags                                ; F9D4A5  f1 95 20 bc
+	set	4, (UI_ScreenFlags:16)                               ; F9D4A5  f1 95 20 bc
 .LF9D4A9:
 	pop XIX                                              ; F9D4A9  5c
 	unlk XIZ                                             ; F9D4AA  ee 0d
@@ -54148,10 +54148,10 @@ SoftKeyCol2_SoundCopy:
 	jr nz, .LF9D546                                      ; F9D530  6e 14
 	cp	(SoundCopy_SourceSound:16), 0x00                            ; F9D532  c1 9d 26 3f 00
 	jr z, .LF9D53D                                       ; F9D537  66 04
-	m_set 0, MD16, 0x2900                                ; F9D539  f1 00 29 b8
+	set	0, (0x2900:16)                               ; F9D539  f1 00 29 b8
 .LF9D53D:
 	ld (SoundCopy_SourceSound:16), 0x00                                 ; F9D53D  f1 9d 26 00 00
-	m_set 4, MD16, UI_ScreenFlags                                ; F9D542  f1 95 20 bc
+	set	4, (UI_ScreenFlags:16)                               ; F9D542  f1 95 20 bc
 .LF9D546:
 	pop XIX                                              ; F9D546  5c
 	unlk XIZ                                             ; F9D547  ee 0d
@@ -54333,7 +54333,7 @@ SoundCopy_AdjustDestBank:
 	or	(xix), 0x02                                  ; F9D6E9  84 3e 02
 	ld (SoundCopy_DestSound:16), 0x00                                 ; F9D6EC  f1 a2 26 00 00
 .LF9D6F1:
-	m_set 4, MD16, UI_ScreenFlags                                ; F9D6F1  f1 95 20 bc
+	set	4, (UI_ScreenFlags:16)                               ; F9D6F1  f1 95 20 bc
 .LF9D6F5:
 	pop XIX                                              ; F9D6F5  5c
 	ret                                                  ; F9D6F6  0e
@@ -54379,10 +54379,10 @@ SoftKeyCol6_SoundCopy:
 	jr nz, .LF9D75D                                      ; F9D747  6e 14
 	cp	(SoundCopy_DestSound:16), 0x00                            ; F9D749  c1 a2 26 3f 00
 	jr z, .LF9D754                                       ; F9D74E  66 04
-	m_set 1, MD16, 0x2900                                ; F9D750  f1 00 29 b9
+	set	1, (0x2900:16)                               ; F9D750  f1 00 29 b9
 .LF9D754:
 	ld (SoundCopy_DestSound:16), 0x00                                 ; F9D754  f1 a2 26 00 00
-	m_set 4, MD16, UI_ScreenFlags                                ; F9D759  f1 95 20 bc
+	set	4, (UI_ScreenFlags:16)                               ; F9D759  f1 95 20 bc
 .LF9D75D:
 	ret                                                  ; F9D75D  0e
 ; SoftKeyCols7_8_SoundCopy: HandlerTable23_SoundCopy slots 6,7, the 23-slot button table Screen_SoundCopy_Button indexes through T_PanelCode_ToSlotAndFlags
@@ -54526,13 +54526,13 @@ LcdKeyRow1_SoundCopy:
 	and C,0x01                                           ; F9D8A7  cb cc 01
 	jr z, .LF9D8B7                                       ; F9D8AA  66 0b
 .LF9D8AC:
-	m_set 6, MD16, UI_Request_Hi                                ; F9D8AC  f1 71 20 be
+	set	6, (UI_Request_Hi:16)                               ; F9D8AC  f1 71 20 be
 	ld (UI_Request:16), 0xb3                                 ; F9D8B0  f1 70 20 00 b3
 	jr .LF9D8BE                                          ; F9D8B5  68 07
 .LF9D8B7:
 	or	(xix), 0x02                                  ; F9D8B7  84 3e 02
 .LF9D8BA:
-	m_set 4, MD16, UI_Request_Hi                                ; F9D8BA  f1 71 20 bc
+	set	4, (UI_Request_Hi:16)                               ; F9D8BA  f1 71 20 bc
 .LF9D8BE:
 	pop XIX                                              ; F9D8BE  5c
 	popw hl                                              ; F9D8BF  4b
@@ -54567,7 +54567,7 @@ LcdKeyRow4_SoundCopy:
 	jr .LF9D8F8                                          ; F9D8EF  68 07
 .LF9D8F1:
 	and (XIX),0xfd                                       ; F9D8F1  84 3c fd
-	m_set 4, MD16, UI_Request_Hi                                ; F9D8F4  f1 71 20 bc
+	set	4, (UI_Request_Hi:16)                               ; F9D8F4  f1 71 20 bc
 .LF9D8F8:
 	pop XIX                                              ; F9D8F8  5c
 	ret                                                  ; F9D8F9  0e
@@ -54601,7 +54601,7 @@ ExitKey_SoundCopy:
 	ld (UI_Request:16), 0x6d                                 ; F9D933  f1 70 20 00 6d
 	jr .LF9D941                                          ; F9D938  68 07
 .LF9D93A:
-	m_res 1, MD16, CopyScreen_Page                                ; F9D93A  f1 9a 26 b1
+	res	1, (CopyScreen_Page:16)                               ; F9D93A  f1 9a 26 b1
 	or	(xix), 0x10                                  ; F9D93E  84 3e 10
 .LF9D941:
 	pop XIX                                              ; F9D941  5c
@@ -55249,8 +55249,8 @@ SoundCopy_Execute:
 	calr SoundCopy_RequestSingleSound                                          ; F9DEE6  1e 2f 1c
 	jrl .LF9DF8C                                         ; F9DEE9  78 a0 00
 .LF9DEEC:
-	m_set 2, MD16, CopyScreen_Page                                ; F9DEEC  f1 9a 26 ba
-	m_set 6, MD16, UI_Request_Hi                                ; F9DEF0  f1 71 20 be
+	set	2, (CopyScreen_Page:16)                               ; F9DEEC  f1 9a 26 ba
+	set	6, (UI_Request_Hi:16)                               ; F9DEF0  f1 71 20 be
 	ld (UI_Request:16), 0x5e                                 ; F9DEF4  f1 70 20 00 5e
 	jrl .LF9DF8C                                         ; F9DEF9  78 90 00
 .LF9DEFC:
@@ -55302,9 +55302,9 @@ SoundCopy_Execute:
 	calr SoundCopy_RefreshPartsUsingSound                                          ; F9DF71  1e 8f 1e
 	add XSP,0x00000020                                   ; F9DF74  ef c8 20 00 00 00
 .LF9DF7A:
-	m_res 1, MD16, CopyScreen_Page                                ; F9DF7A  f1 9a 26 b1
+	res	1, (CopyScreen_Page:16)                               ; F9DF7A  f1 9a 26 b1
 	ld (UI_StatusCode:16), 0x23                                 ; F9DF7E  f1 80 28 00 23
-	m_set 6, MD16, UI_Request_Hi                                ; F9DF83  f1 71 20 be
+	set	6, (UI_Request_Hi:16)                               ; F9DF83  f1 71 20 be
 	ld (UI_Request:16), 0xab                                 ; F9DF87  f1 70 20 00 ab
 .LF9DF8C:
 	pop XIX                                              ; F9DF8C  5c
@@ -55402,7 +55402,7 @@ CombinationCopy_AdjustSourceBank:
 	or	(xix), 0x01                                  ; F9E05E  84 3e 01
 	ld (CombinationCopy_SourceCombi:16), 0x00                                 ; F9E061  f1 08 27 00 00
 .LF9E066:
-	m_set 4, MD16, UI_ScreenFlags                                ; F9E066  f1 95 20 bc
+	set	4, (UI_ScreenFlags:16)                               ; F9E066  f1 95 20 bc
 .LF9E06A:
 	pop XIX                                              ; F9E06A  5c
 	unlk XIZ                                             ; F9E06B  ee 0d
@@ -55469,10 +55469,10 @@ SoftKeyCol2_CombinationCopy:
 	jr nz, .LF9E107                                      ; F9E0F1  6e 14
 	cp	(CombinationCopy_SourceCombi:16), 0x00                            ; F9E0F3  c1 08 27 3f 00
 	jr z, .LF9E0FE                                       ; F9E0F8  66 04
-	m_set 0, MD16, 0x2900                                ; F9E0FA  f1 00 29 b8
+	set	0, (0x2900:16)                               ; F9E0FA  f1 00 29 b8
 .LF9E0FE:
 	ld (CombinationCopy_SourceCombi:16), 0x00                                 ; F9E0FE  f1 08 27 00 00
-	m_set 4, MD16, UI_ScreenFlags                                ; F9E103  f1 95 20 bc
+	set	4, (UI_ScreenFlags:16)                               ; F9E103  f1 95 20 bc
 .LF9E107:
 	pop XIX                                              ; F9E107  5c
 	unlk XIZ                                             ; F9E108  ee 0d
@@ -55653,7 +55653,7 @@ CombinationCopy_AdjustDestBank:
 	or	(xix), 0x02                                  ; F9E2AA  84 3e 02
 	ld (CombinationCopy_DestCombi:16), 0x00                                 ; F9E2AD  f1 0d 27 00 00
 .LF9E2B2:
-	m_set 4, MD16, UI_ScreenFlags                                ; F9E2B2  f1 95 20 bc
+	set	4, (UI_ScreenFlags:16)                               ; F9E2B2  f1 95 20 bc
 .LF9E2B6:
 	pop XIX                                              ; F9E2B6  5c
 	ret                                                  ; F9E2B7  0e
@@ -55699,10 +55699,10 @@ SoftKeyCol6_CombinationCopy:
 	jr nz, .LF9E31E                                      ; F9E308  6e 14
 	cp	(CombinationCopy_DestCombi:16), 0x00                            ; F9E30A  c1 0d 27 3f 00
 	jr z, .LF9E315                                       ; F9E30F  66 04
-	m_set 1, MD16, 0x2900                                ; F9E311  f1 00 29 b9
+	set	1, (0x2900:16)                               ; F9E311  f1 00 29 b9
 .LF9E315:
 	ld (CombinationCopy_DestCombi:16), 0x00                                 ; F9E315  f1 0d 27 00 00
-	m_set 4, MD16, UI_ScreenFlags                                ; F9E31A  f1 95 20 bc
+	set	4, (UI_ScreenFlags:16)                               ; F9E31A  f1 95 20 bc
 .LF9E31E:
 	ret                                                  ; F9E31E  0e
 ; SoftKeyCols7_8_CombinationCopy: HandlerTable23_CombinationCopy slots 6,7, the 23-slot button table Screen_CombinationCopy_Button indexes through T_PanelCode_ToSlotAndFlags
@@ -55846,13 +55846,13 @@ LcdKeyRow1_CombinationCopy:
 	and C,0x02                                           ; F9E468  cb cc 02
 	jr z, .LF9E478                                       ; F9E46B  66 0b
 .LF9E46D:
-	m_set 6, MD16, UI_Request_Hi                                ; F9E46D  f1 71 20 be
+	set	6, (UI_Request_Hi:16)                               ; F9E46D  f1 71 20 be
 	ld (UI_Request:16), 0xb3                                 ; F9E471  f1 70 20 00 b3
 	jr .LF9E47F                                          ; F9E476  68 07
 .LF9E478:
 	or	(xix), 0x02                                  ; F9E478  84 3e 02
 .LF9E47B:
-	m_set 4, MD16, UI_Request_Hi                                ; F9E47B  f1 71 20 bc
+	set	4, (UI_Request_Hi:16)                               ; F9E47B  f1 71 20 bc
 .LF9E47F:
 	pop XIX                                              ; F9E47F  5c
 	popw hl                                              ; F9E480  4b
@@ -55875,7 +55875,7 @@ LcdKeyRow3_CombinationCopy:
 	calr CombinationCopy_Execute                                      ; F9E49E  1e 88 04
 	and (XIX),0xfd                                       ; F9E4A1  84 3c fd
 	ld (UI_StatusCode:16), 0x23                                 ; F9E4A4  f1 80 28 00 23
-	m_set 6, MD16, UI_Request_Hi                                ; F9E4A9  f1 71 20 be
+	set	6, (UI_Request_Hi:16)                               ; F9E4A9  f1 71 20 be
 	ld (UI_Request:16), 0xab                                 ; F9E4AD  f1 70 20 00 ab
 .LF9E4B2:
 	pop XIX                                              ; F9E4B2  5c
@@ -55894,7 +55894,7 @@ LcdKeyRow4_CombinationCopy:
 	jr .LF9E4CE                                          ; F9E4C5  68 07
 .LF9E4C7:
 	and (XIX),0xfd                                       ; F9E4C7  84 3c fd
-	m_set 4, MD16, UI_Request_Hi                                ; F9E4CA  f1 71 20 bc
+	set	4, (UI_Request_Hi:16)                               ; F9E4CA  f1 71 20 bc
 .LF9E4CE:
 	pop XIX                                              ; F9E4CE  5c
 	ret                                                  ; F9E4CF  0e
@@ -55928,7 +55928,7 @@ ExitKey_CombinationCopy:
 	ld (UI_Request:16), 0x6d                                 ; F9E509  f1 70 20 00 6d
 	jr .LF9E517                                          ; F9E50E  68 07
 .LF9E510:
-	m_res 1, MD16, CopyScreen_Page                                ; F9E510  f1 9a 26 b1
+	res	1, (CopyScreen_Page:16)                               ; F9E510  f1 9a 26 b1
 	or	(xix), 0x10                                  ; F9E514  84 3e 10
 .LF9E517:
 	pop XIX                                              ; F9E517  5c
@@ -56803,7 +56803,7 @@ ExitKey_DataLoadFilter:
 	ld (UI_ScreenHoldPending:16), 0x01                                 ; F9ECCF  f1 9a 20 00 01
 	jr .LF9ECDF                                          ; F9ECD4  68 09
 .LF9ECD6:
-	m_set 7, MD16, UI_Request_Hi                                ; F9ECD6  f1 71 20 bf
+	set	7, (UI_Request_Hi:16)                               ; F9ECD6  f1 71 20 bf
 	ld (UI_Request:16), 0x6d                                 ; F9ECDA  f1 70 20 00 6d
 .LF9ECDF:
 	ret                                                  ; F9ECDF  0e
@@ -56851,7 +56851,7 @@ Screen_MemoryProtect_Enter:
 ;  notes/prom_a_stray_label_removal.py)
 	ld (0x26a6:16), 0x00                                 ; F9ED44  f1 a6 26 00 00
 .LF9ED49:
-	m_res 0, MD16, UI_RequestBits                                ; F9ED49  f1 75 20 b0
+	res	0, (UI_RequestBits:16)                               ; F9ED49  f1 75 20 b0
 	ld c, (UI_ScreenFlags:16)                                   ; F9ED4D  c1 95 20 23
 	and C,0x10                                           ; F9ED51  cb cc 10
 	jr nz, .LF9ED71                                      ; F9ED54  6e 1b
@@ -56957,7 +56957,7 @@ SoftKeyCols5to8_MemoryProtect:
 	cp a, 0x01:i3                                          ; F9EE2B  c9 d9
 	jr nz, .LF9EE33                                      ; F9EE2D  6e 04
 .LF9EE2F:
-	m_set 4, MD16, UI_ScreenFlags                                ; F9EE2F  f1 95 20 bc
+	set	4, (UI_ScreenFlags:16)                               ; F9EE2F  f1 95 20 bc
 .LF9EE33:
 	ret                                                  ; F9EE33  0e
 ; ExitKey_MemoryProtect: HandlerTable23_MemoryProtect slot 15, the 23-slot button table Screen_MemoryProtect_Button indexes through T_PanelCode_ToSlotAndFlags
@@ -56972,7 +56972,7 @@ ExitKey_MemoryProtect:
 	ld (UI_ScreenHoldPending:16), 0x01                                 ; F9EE46  f1 9a 20 00 01
 	jr .LF9EE56                                          ; F9EE4B  68 09
 .LF9EE4D:
-	m_set 7, MD16, UI_Request_Hi                                ; F9EE4D  f1 71 20 bf
+	set	7, (UI_Request_Hi:16)                               ; F9EE4D  f1 71 20 bf
 	ld (UI_Request:16), 0x6d                                 ; F9EE51  f1 70 20 00 6d
 .LF9EE56:
 	ret                                                  ; F9EE56  0e
@@ -57071,7 +57071,7 @@ ExitKey_SoundMute:
 	ld (UI_ScreenHoldPending:16), 0x01                                 ; F9EF2A  f1 9a 20 00 01
 	jr .LF9EF3A                                          ; F9EF2F  68 09
 .LF9EF31:
-	m_set 7, MD16, UI_Request_Hi                                ; F9EF31  f1 71 20 bf
+	set	7, (UI_Request_Hi:16)                               ; F9EF31  f1 71 20 bf
 	ld (UI_Request:16), 0x6d                                 ; F9EF35  f1 70 20 00 6d
 .LF9EF3A:
 	ret                                                  ; F9EF3A  0e
@@ -57639,7 +57639,7 @@ LcdKeyRow1_DrumsMapNaming:
 	jr nz, .LF9F2E7                                      ; F9F2FB  6e ea
 	ld (0x2700:16), 0x00                                 ; F9F2FD  f1 00 27 00 00
 .LF9F302:
-	m_set 4, MD16, UI_Request_Hi                                ; F9F302  f1 71 20 bc
+	set	4, (UI_Request_Hi:16)                               ; F9F302  f1 71 20 bc
 .LF9F306:
 	pop XIX                                              ; F9F306  5c
 	popw hl                                              ; F9F307  4b
@@ -58889,9 +58889,9 @@ SoundCopy_HandleReceivedSound:
 	calr SoundCopy_RefreshPartsUsingSound                                      ; F9FD8B  1e 75 00
 	add XSP,0x00000016                                   ; F9FD8E  ef c8 16 00 00 00
 .LF9FD94:
-	m_res 1, MD16, CopyScreen_Page                                ; F9FD94  f1 9a 26 b1
+	res	1, (CopyScreen_Page:16)                               ; F9FD94  f1 9a 26 b1
 	ld (UI_StatusCode:16), 0x23                                 ; F9FD98  f1 80 28 00 23
-	m_set 6, MD16, UI_Request_Hi                                ; F9FD9D  f1 71 20 be
+	set	6, (UI_Request_Hi:16)                               ; F9FD9D  f1 71 20 be
 	ld (UI_Request:16), 0xab                                 ; F9FDA1  f1 70 20 00 ab
 	ld (0x2806:16), 0x00                                 ; F9FDA6  f1 06 28 00 00
 .LF9FDAB:
@@ -59026,7 +59026,7 @@ CombinationCopy_RefreshIfCurrentCombi:
 ; PanelMode_System_Enter -- Enter (+0) method of panel mode 10, whose screen is SYSTEM: sets bit 1 of (0x2134) and calls T_SoundGroup_ReloadSelection (prom_a SoundGroup_ReloadSelection)
 ; Evidence: PanelScreen_VtableTable entry [10] (0xF86EE9, view A, read by PanelScreen_CallEnter_A) holds T_PanelMode_System_Enter -> 0xF9FED1; PanelMode_ToScreenIdMap[10] = 0x60, the id of Screen_System (title 'SYSTEM').
 PanelMode_System_Enter:
-	m_set 1, MD16, 0x2134                                ; F9FED1  f1 34 21 b9
+	set	1, (0x2134:16)                               ; F9FED1  f1 34 21 b9
 	push XDE                                             ; F9FED5  3a
 	push XHL                                             ; F9FED6  3b
 	push XIX                                             ; F9FED7  3c
@@ -59040,7 +59040,7 @@ PanelMode_System_Enter:
 ; PanelMode_System_Leave -- Leave (+4) method of panel mode 10 (SYSTEM): sets bit 1 of (0x2134)
 ; Evidence: PanelScreen_VtableTable entry [10] = T_PanelMode_System_Enter, whose +4 slot T_PanelMode_System_Leave jp 0xF9FEE2 (read by PanelScreen_CallLeave_A); PanelMode_ToScreenIdMap[10] = 0x60 (SYSTEM).
 PanelMode_System_Leave:
-	m_set 1, MD16, 0x2134                                ; F9FEE2  f1 34 21 b9
+	set	1, (0x2134:16)                               ; F9FEE2  f1 34 21 b9
 	ret                                                  ; F9FEE6  0e
 ; Screen_System_Enter -- Enter (+0) method of screen 0x60, the SYSTEM menu: restarts task 2's queue and posts its painter
 ; Evidence: PanelScreen_VtableTable_ViewB [96] (0xF870C1) = T_Screen_System_Enter; prom_b T_Screen_System_Enter/1C/20/24 jp 0xF9FEE7/0xF9FEFF/0xF9FF00/0xF9FF27.
@@ -59199,7 +59199,7 @@ ExitKey_System:
 	ld (UI_ScreenHoldPending:16), 0x01                                 ; FA000F  f1 9a 20 00 01
 	jr .LFA001F                                          ; FA0014  68 09
 .LFA0016:
-	m_set 1, MD16, UI_Request_Hi                                ; FA0016  f1 71 20 b9
+	set	1, (UI_Request_Hi:16)                               ; FA0016  f1 71 20 b9
 	ld (UI_Request:16), 0x01                                 ; FA001A  f1 70 20 00 01
 .LFA001F:
 	ret                                                  ; FA001F  0e
@@ -59474,7 +59474,7 @@ ExitKey_TuneScale:
 	ld (UI_ScreenHoldPending:16), 0x01                                 ; FA0253  f1 9a 20 00 01
 	jr .LFA0263                                          ; FA0258  68 09
 .LFA025A:
-	m_set 7, MD16, UI_Request_Hi                                ; FA025A  f1 71 20 bf
+	set	7, (UI_Request_Hi:16)                               ; FA025A  f1 71 20 bf
 	ld (UI_Request:16), 0x60                                 ; FA025E  f1 70 20 00 60
 .LFA0263:
 	ret                                                  ; FA0263  0e
@@ -60465,7 +60465,7 @@ ExitKey_TouchSensitivityOrTest:
 	ld (UI_ScreenHoldPending:16), 0x01                                 ; FA0A9B  f1 9a 20 00 01
 	jr .LFA0AAB                                          ; FA0AA0  68 09
 .LFA0AA2:
-	m_set 7, MD16, UI_Request_Hi                                ; FA0AA2  f1 71 20 bf
+	set	7, (UI_Request_Hi:16)                               ; FA0AA2  f1 71 20 bf
 	ld (UI_Request:16), 0x60                                 ; FA0AA6  f1 70 20 00 60
 .LFA0AAB:
 	ret                                                  ; FA0AAB  0e
@@ -60721,10 +60721,10 @@ SystemTest_BuildNoteLists:
 	ld a, (0x26a7:16)                                   ; FA0CED  c1 a7 26 21
 	and A,0x10                                           ; FA0CF1  c9 cc 10
 	jr z, .LFA0CFD                                       ; FA0CF4  66 07
-	m_set 3, MD24, 0x002902                              ; FA0CF6  f2 02 29 00 bb
+	set	3, (0x002902:24)                             ; FA0CF6  f2 02 29 00 bb
 	jr .LFA0D0A                                          ; FA0CFB  68 0d
 .LFA0CFD:
-	m_res 3, MD24, 0x002902                              ; FA0CFD  f2 02 29 00 b3
+	res	3, (0x002902:24)                             ; FA0CFD  f2 02 29 00 b3
 	jr .LFA0D0A                                          ; FA0D02  68 06
 .LFA0D04:
 	ld (0x2904:24), 0x00                               ; FA0D04  f2 04 29 00 00 00
@@ -61064,7 +61064,7 @@ ExitKey_ControllerAssign:
 	ld (UI_ScreenHoldPending:16), 0x01                                 ; FA0FFC  f1 9a 20 00 01
 	jr .LFA100C                                          ; FA1001  68 09
 .LFA1003:
-	m_set 7, MD16, UI_Request_Hi                                ; FA1003  f1 71 20 bf
+	set	7, (UI_Request_Hi:16)                               ; FA1003  f1 71 20 bf
 	ld (UI_Request:16), 0x60                                 ; FA1007  f1 70 20 00 60
 .LFA100C:
 	ret                                                  ; FA100C  0e
@@ -61081,7 +61081,7 @@ PageKey_ControllerAssign:
 	inc 8,XSP                                            ; FA1022  ef 60
 	cp a, 0x01:i3                                          ; FA1024  c9 d9
 	jr nz, .LFA102C                                      ; FA1026  6e 04
-	m_set 4, MD16, UI_Request_Hi                                ; FA1028  f1 71 20 bc
+	set	4, (UI_Request_Hi:16)                               ; FA1028  f1 71 20 bc
 .LFA102C:
 	ret                                                  ; FA102C  0e
 ; ControllerAssign_StoreCursorRowChoice: CONTROLLER ASSIGN: for the cursor row H = (0x26F1) & 0x0F maps the edited
@@ -61530,7 +61530,7 @@ ExitKey_Initial:
 	pop XBC                                              ; FA13D8  59
 	ret                                                  ; FA13D9  0e
 	call T_CallbackQueue_ResetAndRestartTask2            ; FA13DA  1d 80 2e f4
-	m_res 0, MD16, UI_RequestBits                                ; FA13DE  f1 75 20 b0
+	res	0, (UI_RequestBits:16)                               ; FA13DE  f1 75 20 b0
 	lda xbc, (.LFA13F6:24)                               ; FA13E2  f2 f6 13 fa 31
 	push XBC                                             ; FA13E7  39
 	call T_CallbackQueue_Post                            ; FA13E8  1d 84 2e f4
@@ -61585,7 +61585,7 @@ ExitKey_Initial:
 	inc 8,XSP                                            ; FA1423  ef 60
 	inc 8,XSP                                            ; FA1425  ef 60
 	ret                                                  ; FA1427  0e
-	m_set 1, MD16, UI_Request_Hi                                ; FA1428  f1 71 20 b9
+	set	1, (UI_Request_Hi:16)                               ; FA1428  f1 71 20 b9
 	ld (UI_Request:16), 0x01                                 ; FA142C  f1 70 20 00 01
 	ret                                                  ; FA1431  0e
 ; Initial_AskConfirmation: LcdKeyRow3_Initial at stage 0: UI_ScreenStage = 1 (the confirmation page) unless PanelEvent_Flags bit 0 (notes/FINDINGS-prom_a-initial.md)
@@ -61594,7 +61594,7 @@ Initial_AskConfirmation:   ; entry: reachable-run entry
 	and C,0x01                                           ; FA1436  cb cc 01
 	jr nz, .LFA1444                                      ; FA1439  6e 09
 	ld (UI_ScreenStage:16), 0x01                                 ; FA143B  f1 7e 20 00 01
-	m_set 4, MD16, UI_Request_Hi                                ; FA1440  f1 71 20 bc
+	set	4, (UI_Request_Hi:16)                               ; FA1440  f1 71 20 bc
 .LFA1444:
 	ret                                                  ; FA1444  0e
 ; Initial_ExecuteSelected: the INITIAL screen's execute (LcdKeyRow3_Initial at stage 1): runs Initial_ItemTable[Initial_SelectedItem], 0..6, then status
@@ -61668,7 +61668,7 @@ Initial_Sequencer:   ; entry: named by 1 `.long` operand, first at 0xFA1487
 Initial_Sequencer_Join:   ; entry: reachable-run entry
 	and	(UI_RequestBits:16), 0x6f                            ; FA14C6  c1 75 20 3c 6f
 	ld (UI_StatusCode:16), 0x23                                 ; FA14CB  f1 80 28 00 23
-	m_set 6, MD16, UI_Request_Hi                                ; FA14D0  f1 71 20 be
+	set	6, (UI_Request_Hi:16)                               ; FA14D0  f1 71 20 be
 	ld (UI_Request:16), 0xab                                 ; FA14D4  f1 70 20 00 ab
 	ld (UI_ScreenStage:16), 0x02                                 ; FA14D9  f1 7e 20 00 02
 JumpTable_FA146F_Code_Epilogue:
@@ -61721,7 +61721,7 @@ Initial_CancelConfirm_LcdKeyRow4:
 	and C,0x01                                           ; FA1537  cb cc 01
 	jr nz, .LFA1545                                      ; FA153A  6e 09
 	ld (UI_ScreenStage:16), 0x00                                 ; FA153C  f1 7e 20 00 00
-	m_set 4, MD16, UI_Request_Hi                                ; FA1541  f1 71 20 bc
+	set	4, (UI_Request_Hi:16)                               ; FA1541  f1 71 20 bc
 .LFA1545:
 	ret                                                  ; FA1545  0e
 ; Initial_SelectNextItem: LcdKeyRow5_Initial: the same with Descriptor9_FA1B8B (+7 = 0: the up step).
@@ -61772,7 +61772,7 @@ Initial_ExitKey_Leave:
 	ld (UI_ScreenHoldPending:16), 0x01                                 ; FA15A8  f1 9a 20 00 01
 	jr .LFA15B8                                          ; FA15AD  68 09
 .LFA15AF:
-	m_set 7, MD16, UI_Request_Hi                                ; FA15AF  f1 71 20 bf
+	set	7, (UI_Request_Hi:16)                               ; FA15AF  f1 71 20 bf
 	ld (UI_Request:16), 0x60                                 ; FA15B3  f1 70 20 00 60
 .LFA15B8:
 	ret                                                  ; FA15B8  0e
@@ -61782,7 +61782,7 @@ Initial_CancelConfirm_ExitKey:
 	and C,0x01                                           ; FA15BD  cb cc 01
 	jr nz, .LFA15CB                                      ; FA15C0  6e 09
 	ld (UI_ScreenStage:16), 0x00                                 ; FA15C2  f1 7e 20 00 00
-	m_set 4, MD16, UI_Request_Hi                                ; FA15C7  f1 71 20 bc
+	set	4, (UI_Request_Hi:16)                               ; FA15C7  f1 71 20 bc
 .LFA15CB:
 	ret                                                  ; FA15CB  0e
 ; ==== 0xFA15CC-0xFA5400 -- STRONG-REACHABLE CODE ONLY, emitted by notes/gen_prom_a_cover_round2.py ====
@@ -68842,21 +68842,21 @@ MIDI_RT_Received:
 MIDI_RT_Ignore:
 	ret                                           ; FA550C  0e
 MIDI_RT_NotSensing:
-	m_bit 0, MD16, 0x0925                         ; FA550D  f1 25 09 c8
+	bit	0, (0x0925:16)                        ; FA550D  f1 25 09 c8
 	jr nz, MIDI_RT_Ignore                               ; FA5511  6e f9
 	cp A,0xfd                                     ; FA5513  c9 cf fd   0xFD is undefined in MIDI 1.0; 0xFE/0xFF handled elsewhere
 	jr nc, MIDI_RT_Ignore                               ; FA5516  6f f4
-	m_bit 6, MD16, 0x2094                         ; FA5518  f1 94 20 ce
+	bit	6, (0x2094:16)                        ; FA5518  f1 94 20 ce
 	jr nz, MIDI_RT_Ignore                               ; FA551C  6e ee
 	ld D,A                                        ; FA551E  c9 8c   D = the real-time byte
 	ld	a, (MIDI_RX_SysExState:8)                               ; FA5520  c0 a9 21
 	and A,0x03                                    ; FA5523  c9 cc 03
 	jr nz, MIDI_RT_Ignore                               ; FA5526  6e e4
-	m_bit 2, MD16, MidiCfg_ModeBits                         ; FA5528  f1 32 7f ca   the same mode bit INTTR4_SequencerTick branches on
+	bit	2, (MidiCfg_ModeBits:16)                        ; FA5528  f1 32 7f ca   the same mode bit INTTR4_SequencerTick branches on
 	jrl z, MIDI_RT_ExternalOff                               ; FA552C  76 45 01
 	cp D,0xf8                                     ; FA552F  cc cf f8   0xF8 TIMING CLOCK
 	jr nz, MIDI_RT_NotClock                               ; FA5532  6e 2e
-	m_bit 5, MD16, 0x34d0                         ; FA5534  f1 d0 34 cd
+	bit	5, (0x34d0:16)                        ; FA5534  f1 d0 34 cd
 	jr z, MIDI_Clock_SetTempo                                ; FA5538  66 04
 	inc 0x01, (0x091e:16)                         ; FA553A  c1 1e 09 61
 MIDI_Clock_SetTempo:
@@ -68918,11 +68918,11 @@ MIDI_RT_NotClock:
 	jr z, .LFA55C1                                ; FA55BC  66 03
 	calr SeqBuf_AppendMarker_XIX                                 ; FA55BE  1e 0a 01
 .LFA55C1:
-	m_bit 2, MD16, 0x7f34                         ; FA55C1  f1 34 7f ca
+	bit	2, (0x7f34:16)                        ; FA55C1  f1 34 7f ca
 	jr z, .LFA55DB                                ; FA55C5  66 14
 	cp D,0xfc                                     ; FA55C7  cc cf fc
 	jr nz, .LFA55DB                               ; FA55CA  6e 0f
-	m_set 7, MD16, 0x34bb                         ; FA55CC  f1 bb 34 bf   (0x34BB) bit 7 -- 'stopped by an external 0xFC'
+	set	7, (0x34bb:16)                        ; FA55CC  f1 bb 34 bf   (0x34BB) bit 7 -- 'stopped by an external 0xFC'
 	ld (TransportC_State:8), 0x10:io                               ; FA55D0  08 95 10
 .LFA55D3:
 	bit	2, (TransportB_State:8)                            ; FA55D3  f0 96 ca
@@ -68931,9 +68931,9 @@ MIDI_RT_NotClock:
 .LFA55DB:
 	ret                                           ; FA55DB  0e
 .LFA55DC:
-	m_bit 2, MD16, 0x7f34                         ; FA55DC  f1 34 7f ca
+	bit	2, (0x7f34:16)                        ; FA55DC  f1 34 7f ca
 	jr z, .LFA55D3                                ; FA55E0  66 f1
-	m_bit 2, MD16, 0x34bb                         ; FA55E2  f1 bb 34 ca
+	bit	2, (0x34bb:16)                        ; FA55E2  f1 bb 34 ca
 	jr nz, .LFA55F3                               ; FA55E6  6e 0b
 	cp D,0xfa                                     ; FA55E8  cc cf fa
 	jr z, MIDI_RT_Start                                ; FA55EB  66 1d
@@ -68958,7 +68958,7 @@ MIDI_Clock_CatchUpIfAnySlot:
 .LFA5609:
 	ret                                           ; FA5609  0e
 MIDI_RT_Start:
-	m_set 5, MD16, 0x34d0                         ; FA560A  f1 d0 34 bd
+	set	5, (0x34d0:16)                        ; FA560A  f1 d0 34 bd
 	ld (0x091e:16), 0x00                          ; FA560E  f1 1e 09 00 00
 	push XWA                                      ; FA5613  38
 	xor XWA,XWA                                   ; FA5614  e8 d0
@@ -68970,7 +68970,7 @@ MIDI_RT_Start_ResetCounters:
 	ld	(TransportC_Tick:8), a                               ; FA5620  f0 8d 41   START rewinds transport C to bar 0 beat 0 tick 0
 	ld	(TransportC_Beat:8), wa                              ; FA5623  f0 8e 50
 	ld (TransportC_State:8), 0x01:io                               ; FA5626  08 95 01   and puts it in state 0x01
-	m_bit 0, MD16, 0x34bb                         ; FA5629  f1 bb 34 c8
+	bit	0, (0x34bb:16)                        ; FA5629  f1 bb 34 c8
 	jr z, .LFA563A                                ; FA562D  66 0b
 	xor WA,WA                                     ; FA562F  d8 d0
 	ld	(Seq_BeatTick:8), a                               ; FA5631  f0 93 41
@@ -68997,7 +68997,7 @@ MIDI_Clock_CatchUp_Done:
 	ret                                           ; FA5666  0e
 MIDI_RT_Continue:
 	ld (TransportC_State:8), 0x06:io                               ; FA5667  08 95 06
-	m_bit 0, MD16, 0x34bb                         ; FA566A  f1 bb 34 c8
+	bit	0, (0x34bb:16)                        ; FA566A  f1 bb 34 c8
 	jr z, .LFA5673                                ; FA566E  66 03
 	ld (TransportB_State:8), 0x06:io                               ; FA5670  08 96 06
 .LFA5673:
@@ -69030,11 +69030,11 @@ MIDI_RT_ExternalOff:
 	and A,0x05                                    ; FA567B  c9 cc 05
 	popw wa                                       ; FA567E  48
 	jr z, .LFA569C                                ; FA567F  66 1b
-	m_bit 2, MD16, 0x7f34                         ; FA5681  f1 34 7f ca
+	bit	2, (0x7f34:16)                        ; FA5681  f1 34 7f ca
 	jr z, .LFA569B                                ; FA5685  66 14
 	cp D,0xfc                                     ; FA5687  cc cf fc
 	jr nz, .LFA569B                               ; FA568A  6e 0f
-	m_set 7, MD16, 0x34bb                         ; FA568C  f1 bb 34 bf
+	set	7, (0x34bb:16)                        ; FA568C  f1 bb 34 bf
 	ld (TransportC_State:8), 0x0c:io                               ; FA5690  08 95 0c
 	bit	2, (TransportB_State:8)                            ; FA5693  f0 96 ca
 	jr z, .LFA569B                                ; FA5696  66 03
@@ -69042,9 +69042,9 @@ MIDI_RT_ExternalOff:
 .LFA569B:
 	ret                                           ; FA569B  0e
 .LFA569C:
-	m_bit 2, MD16, 0x7f34                         ; FA569C  f1 34 7f ca
+	bit	2, (0x7f34:16)                        ; FA569C  f1 34 7f ca
 	jr z, .LFA56B2                                ; FA56A0  66 10
-	m_bit 2, MD16, 0x34bb                         ; FA56A2  f1 bb 34 ca
+	bit	2, (0x34bb:16)                        ; FA56A2  f1 bb 34 ca
 	jr nz, .LFA56B2                               ; FA56A6  6e 0a
 	cp D,0xfa                                     ; FA56A8  cc cf fa
 	jr z, .LFA56B3                                ; FA56AB  66 06
@@ -69057,7 +69057,7 @@ MIDI_RT_ExternalOff:
 	ld (INTES0:8), 0xdd:io                               ; FA56B6  08 77 dd
 	jrl MIDI_RT_Start                                  ; FA56B9  78 4e ff
 .LFA56BC:
-	m_bit 0, MD16, 0x34bb                         ; FA56BC  f1 bb 34 c8
+	bit	0, (0x34bb:16)                        ; FA56BC  f1 bb 34 c8
 	jr z, .LFA56CA                                ; FA56C0  66 08
 	set	2, (MidiTx_RealtimePending:8)                            ; FA56C2  f0 a0 ba
 	ld (INTES0:8), 0xdd:io                               ; FA56C5  08 77 dd
@@ -69323,7 +69323,7 @@ MIDI_RX_Drop:
 ;          (0x600D1C) a FREE count and not a used one.
 ; ---------------------------------------------------------------------
 MIDI_RX_DeliverTwo:
-	m_set 0, MD16, MIDI_ActivityFlags                         ; FA57AF  f1 6f 21 b8   MIDI activity
+	set	0, (MIDI_ActivityFlags:16)                        ; FA57AF  f1 6f 21 b8   MIDI activity
 	ld XIX,MidiIn_PortARing                             ; FA57B3  44 1e 0c 60 00
 	cpw	(xix-2), 0x0003                       ; FA57B8  9c fe 3f 03 00   free space >= 3?
 	jr c, MIDI_RX_QueueFull2                      ; FA57BD  67 11
@@ -69383,7 +69383,7 @@ MIDI_RX_AwaitSecondByte:
 ;          that says which message this is.
 ; ---------------------------------------------------------------------
 MIDI_RX_SecondDataByte:
-	m_set 0, MD16, MIDI_ActivityFlags                         ; FA57DE  f1 6f 21 b8   MIDI activity
+	set	0, (MIDI_ActivityFlags:16)                        ; FA57DE  f1 6f 21 b8   MIDI activity
 	bit	1, (MIDI_RX_Flags:8)                            ; FA57E2  f0 9e c9   a Song Position Pointer?
 	jr z, .LFA57E9                                ; FA57E5  66 02
 	ld d, 0xf2:opc                                   ; FA57E7  24 f2   restore the status the F2 handler cleared
@@ -69506,7 +69506,7 @@ MIDI_RX_SysExData:
 	jr z, MIDI_SysEx_DataDone                     ; FA5871  66 10
 	bit	5, (MIDI_RX_SysExState:8)                            ; FA5873  f0 a9 cd
 	jr nz, MIDI_SysEx_DataDone                    ; FA5876  6e 0b
-	m_set 0, MD16, MIDI_ActivityFlags                         ; FA5878  f1 6f 21 b8   MIDI activity
+	set	0, (MIDI_ActivityFlags:16)                        ; FA5878  f1 6f 21 b8   MIDI activity
 	pushw de                                      ; FA587C  2a
 	call T_Ring601646_Put                         ; FA587D  1d 3c 1e f4
 	inc 2,XSP                                     ; FA5881  ef 62
@@ -69673,10 +69673,10 @@ MIDI_PostSendWork:
 ;   map.md 2) ignores incoming clock / start / continue / stop. Last step of MIDI_Reset. Basis: caller + body + the
 ;   bit's only reader. (notes/naming-pilot-2026-10-06/proposals_wave8_c8.json)
 MIDI_SetRealtimeIgnoreFromVariant:
-	m_res 0, MD16, 0x0925                         ; FA5926  f1 25 09 b0
+	res	0, (0x0925:16)                        ; FA5926  f1 25 09 b0
 	cp	(Variant_Flag:8), 0x02                        ; FA592A  c0 c4 3f 02
 	jr nz, .LFA5934                               ; FA592E  6e 04
-	m_set 0, MD16, 0x0925                         ; FA5930  f1 25 09 b8
+	set	0, (0x0925:16)                        ; FA5930  f1 25 09 b8
 .LFA5934:
 	ret                                           ; FA5934  0e
 
@@ -69791,9 +69791,9 @@ MIDI_DrainQueue__next:
 MIDI_DrainQueue__status:
 	ld (MIDI_Fg_RunningStatus:16), h                            ; FA5966  f1 60 09 46   the foreground running status
 	and	(MIDI_Fg_Flags:16), 0xbd                     ; FA596A  c1 63 09 3c bd   clear bits 6 and 1
-	m_bit 0, MD16, MIDI_Fg_SysExState                         ; FA596F  f1 64 09 c8   a SysEx armed?
+	bit	0, (MIDI_Fg_SysExState:16)                        ; FA596F  f1 64 09 c8   a SysEx armed?
 	jr z, MIDI_DrainQueue__next                   ; FA5973  66 cf
-	m_bit 1, MD16, MIDI_Fg_SysExState                         ; FA5975  f1 64 09 c9   and accepted?
+	bit	1, (MIDI_Fg_SysExState:16)                        ; FA5975  f1 64 09 c9   and accepted?
 	jr z, MIDI_DrainQueue__next                   ; FA5979  66 c9
 	cp H,0xf7                                     ; FA597B  ce cf f7   END OF EXCLUSIVE?
 	jr nz, MIDI_DrainQueue__abandon               ; FA597E  6e 11
@@ -69911,7 +69911,7 @@ MIDI_Fg_DataByte:
 	link XIZ,0x0000                               ; FA59FA  ee 0c 00 00
 	pushw hl                                      ; FA59FE  2b
 	ld H,(XIZ+0x08)                               ; FA59FF  8e 08 26
-	m_bit 0, MD16, MIDI_Fg_SysExState                         ; FA5A02  f1 64 09 c8   inside a SysEx?
+	bit	0, (MIDI_Fg_SysExState:16)                        ; FA5A02  f1 64 09 c8   inside a SysEx?
 	jr z, .LFA5A12                                ; FA5A06  66 0a
 	ld C,H                                        ; FA5A08  ce 8b
 	extz BC                                       ; FA5A0A  d9 12
@@ -69919,7 +69919,7 @@ MIDI_Fg_DataByte:
 	calr MIDI_Fg_SysExData                    ; FA5A0D  1e 2d 01   MIDI_Fg_SysExData
 	jr MIDI_Fg_DataByte__pop                      ; FA5A10  68 5e
 .LFA5A12:
-	m_bit 6, MD16, MIDI_Fg_Flags                         ; FA5A12  f1 63 09 ce   a first data byte pending?
+	bit	6, (MIDI_Fg_Flags:16)                        ; FA5A12  f1 63 09 ce   a first data byte pending?
 	jr z, .LFA5A22                                ; FA5A16  66 0a
 	ld C,H                                        ; FA5A18  ce 8b
 	extz BC                                       ; FA5A1A  d9 12
@@ -70046,7 +70046,7 @@ MIDI_Fg_Deliver2:
 ; ---------------------------------------------------------------------
 MIDI_Fg_StashFirstData:
 	link XIZ,0x0000                               ; FA5AAE  ee 0c 00 00
-	m_set 6, MD16, MIDI_Fg_Flags                         ; FA5AB2  f1 63 09 be
+	set	6, (MIDI_Fg_Flags:16)                        ; FA5AB2  f1 63 09 be
 	ld (MIDI_Fg_FirstData),(xiz+0x08)                        ; FA5AB6  8e 08 19 61 09   ld (0x0961),(XIZ+0x08)
 	unlk XIZ                                      ; FA5ABB  ee 0d
 	ret                                           ; FA5ABD  0e
@@ -70167,11 +70167,11 @@ MIDI_Fg_SystemCommon:
 ; ---------------------------------------------------------------------
 MIDI_Fg_SysExData:
 	link XIZ,0x0000                               ; FA5B3D  ee 0c 00 00
-	m_bit 1, MD16, MIDI_Fg_SysExState                         ; FA5B41  f1 64 09 c9   bit 1,(0x0964)
+	bit	1, (MIDI_Fg_SysExState:16)                        ; FA5B41  f1 64 09 c9   bit 1,(0x0964)
 	jr z, .LFA5B5C                                ; FA5B45  66 15
-	m_bit 5, MD16, MIDI_Fg_SysExState                         ; FA5B47  f1 64 09 cd   bit 5,(0x0964)
+	bit	5, (MIDI_Fg_SysExState:16)                        ; FA5B47  f1 64 09 cd   bit 5,(0x0964)
 	jr nz, .LFA5B5C                               ; FA5B4B  6e 0f
-	m_set 0, MD16, MIDI_ActivityFlags                         ; FA5B4D  f1 6f 21 b8   set 0,(0x216f)
+	set	0, (MIDI_ActivityFlags:16)                        ; FA5B4D  f1 6f 21 b8   set 0,(0x216f)
 	ld BC,(XIZ+0x08)                              ; FA5B51  9e 08 21
 	extz BC                                       ; FA5B54  d9 12
 	pushw bc                                      ; FA5B56  29   push BC
@@ -70694,7 +70694,7 @@ MidiIn_SystemSubTable:
 MidiIn_SongPosition:   ; entry: MidiIn_SystemSubTable[2]
 	ld wa, (MidiIn_MsgData1:16)                          ; FA61A4  d1 41 19 20   ld WA,(0x1941)
 	ld	(MidiIn_SongPositionLo:8), a                               ; FA61A8  f0 a4 41   ld (0xa4),A
-	m_bit 2, MD16, 0x7f34                         ; FA61AB  f1 34 7f ca   bit 2,(0x7f34)
+	bit	2, (0x7f34:16)                        ; FA61AB  f1 34 7f ca   bit 2,(0x7f34)
 	jr z, .LFA61B4                                ; FA61AF  66 03
 	set 0x07,W                                    ; FA61B1  c8 31 07
 .LFA61B4:
@@ -70712,7 +70712,7 @@ MidiIn_SongPosition:   ; entry: MidiIn_SystemSubTable[2]
 ; ---------------------------------------------------------------------
 MidiIn_SongSelect:   ; entry: MidiIn_SystemSubTable[3]
 	ld a, (MidiIn_MsgData1:16)                            ; FA61B8  c1 41 19 21   ld A,(0x1941)
-	m_bit 3, MD16, MidiFilter_SongSelect                         ; FA61BC  f1 33 7f cb   bit 3,(0x7f33)
+	bit	3, (MidiFilter_SongSelect:16)                        ; FA61BC  f1 33 7f cb   bit 3,(0x7f33)
 	jr z, .LFA61C5                                ; FA61C0  66 03
 	set 0x07,A                                    ; FA61C2  c9 31 07
 .LFA61C5:
@@ -72274,7 +72274,7 @@ sub_FA6D27:   ; entry: call from 0xFA67E4
 ;          neighbour at 0xFA8BA8.
 ; ---------------------------------------------------------------------
 MidiIn_ProgramChange:   ; entry: MidiIn_ChannelStatusTable[4]
-	m_bit 4, MD16, MidiFilter_ChannelMsgs                         ; FA6D58  f1 39 7f cc   bit 4,(0x7f39)
+	bit	4, (MidiFilter_ChannelMsgs:16)                        ; FA6D58  f1 39 7f cc   bit 4,(0x7f39)
 	jrl z, .LFA6DE2                               ; FA6D5C  76 83 00
 	ld a, (MidiIn_CurrentPart:16)                            ; FA6D5F  c1 76 19 21   ld A,(0x1976)
 	cp A,0xff                                     ; FA6D63  c9 cf ff
@@ -72283,7 +72283,7 @@ MidiIn_ProgramChange:   ; entry: MidiIn_ChannelStatusTable[4]
 	and A,0x0f                                    ; FA6D6C  c9 cc 0f
 	cp a, 0x00:i3                                   ; FA6D6F  c9 d8   cp A,0
 	jr z, .LFA6DE2                                ; FA6D71  66 6f
-	m_bit 3, MD16, MidiCfg_ModeBits                         ; FA6D73  f1 32 7f cb   bit 3,(0x7f32)
+	bit	3, (MidiCfg_ModeBits:16)                        ; FA6D73  f1 32 7f cb   bit 3,(0x7f32)
 	jr z, .LFA6DE2                                ; FA6D77  66 69
 	ld a, (0x7f02:16)                            ; FA6D79  c1 02 7f 21   ld A,(0x7f02)
 	and A,0xf0                                    ; FA6D7D  c9 cc f0
@@ -72345,7 +72345,7 @@ MidiIn_PitchBend:   ; entry: MidiIn_ChannelStatusTable[6]
 .LFA6E02:
 	cp A,0x1f                                     ; FA6E02  c9 cf 1f
 	jr ugt, .LFA6E69                              ; FA6E05  6b 62
-	m_bit 6, MD16, MidiFilter_ChannelMsgs                         ; FA6E07  f1 39 7f ce   bit 6,(0x7f39)
+	bit	6, (MidiFilter_ChannelMsgs:16)                        ; FA6E07  f1 39 7f ce   bit 6,(0x7f39)
 	jr z, .LFA6E69                                ; FA6E0B  66 5c
 	sll a, 0x01                                   ; FA6E0D  c9 ee 01   sll 0x01,A
 	ld XIX,MidiIn_PitchBend_ParamTable            ; FA6E10  44 e8 8b fa 00
@@ -72402,7 +72402,7 @@ MidiIn_ChannelPressure:   ; entry: MidiIn_ChannelStatusTable[5]
 .LFA6E89:
 	cp A,0x1f                                     ; FA6E89  c9 cf 1f
 	jr ugt, .LFA6EEE                              ; FA6E8C  6b 60
-	m_bit 5, MD16, MidiFilter_ChannelMsgs                         ; FA6E8E  f1 39 7f cd   bit 5,(0x7f39)
+	bit	5, (MidiFilter_ChannelMsgs:16)                        ; FA6E8E  f1 39 7f cd   bit 5,(0x7f39)
 	jr z, .LFA6EEE                                ; FA6E92  66 5a
 	sll a, 0x01                                   ; FA6E94  c9 ee 01   sll 0x01,A
 	ld XIX,MidiIn_ChannelPressure_ParamTable      ; FA6E97  44 28 8c fa 00
@@ -72453,7 +72453,7 @@ MidiIn_ReqRouteRebuild_Msg0D:   ; entry: prom_b directory slot T_MidiIn_ReqRoute
 	ld a, (UiEvent_Byte3:16)                            ; FA6EF6  c1 ba 20 21   ld A,(0x20ba)
 	and A,0xdf                                    ; FA6EFA  c9 cc df
 	jr z, .LFA6F03                                ; FA6EFD  66 04
-	m_set 0, MD16, 0x1978                         ; FA6EFF  f1 78 19 b8   set 0,(0x1978)
+	set	0, (0x1978:16)                        ; FA6EFF  f1 78 19 b8   set 0,(0x1978)
 .LFA6F03:
 	ret                                           ; FA6F03  0e
 
@@ -72470,9 +72470,9 @@ MidiIn_ServiceDeferred:   ; entry: prom_b directory slot T_MidiIn_ServiceDeferre
 	ret                                           ; FA6F0A  0e
 .LFA6F0B:
 MidiIn_ServiceRouteRebuild:   ; entry: call from 0xFA6F04
-	m_bit 0, MD16, 0x1978                         ; FA6F0B  f1 78 19 c8   bit 0,(0x1978)
+	bit	0, (0x1978:16)                        ; FA6F0B  f1 78 19 c8   bit 0,(0x1978)
 	jr z, .LFA6F20                                ; FA6F0F  66 0f
-	m_res 0, MD16, 0x1978                         ; FA6F11  f1 78 19 b0   res 0,(0x1978)
+	res	0, (0x1978:16)                        ; FA6F11  f1 78 19 b0   res 0,(0x1978)
 	ld (0x1979:16), 0x80                          ; FA6F15  f1 79 19 00 80   ld (0x1979),0x80
 	calr .LFA6F21                                 ; FA6F1A  1e 04 00
 	calr .LFA701C                                 ; FA6F1D  1e fc 00
@@ -72725,7 +72725,7 @@ MidiOut_ParamChanged:   ; entry: prom_b directory slot T_MidiOut_ParamChanged (T
 	mx_ld_rm MXL, ra_IX, ra_HL, r4                ; FA711C  e3 07 f0 ec 24   ld XIX,(XIX+HL)
 	call (xix)                                    ; FA7121  b4 e8   call T,XIX
 .LFA7123:
-	m_res 7, MD24, 0x60f007                       ; FA7123  f2 07 f0 60 b7   res 7,(0x60f007)
+	res	7, (0x60f007:24)                      ; FA7123  f2 07 f0 60 b7   res 7,(0x60f007)
 	ret                                           ; FA7128  0e
 
 ; ---------------------------------------------------------------------
@@ -72749,9 +72749,9 @@ MidiOut_Param_Ignore:   ; entry: MidiOut_ParamNumberTable[64-111,113-128,130-151
 ;          MidiOut_ParamDispatch reaches unconditionally.
 ; ---------------------------------------------------------------------
 MidiOut_ParamGate_Part0:   ; entry: MidiOut_ParamNumberTable[0]
-	m_bit 7, MD24, 0x60f007                       ; FA712A  f2 07 f0 60 cf   bit 7,(0x60f007)
+	bit	7, (0x60f007:24)                      ; FA712A  f2 07 f0 60 cf   bit 7,(0x60f007)
 	jr nz, .LFA7137                               ; FA712F  6e 06   jr NZ,0xfa7137
-	m_bit 6, MD16, 0x76af                         ; FA7131  f1 af 76 ce   bit 6,(0x76af)
+	bit	6, (0x76af:16)                        ; FA7131  f1 af 76 ce   bit 6,(0x76af)
 	jr nz, .LFA7141                               ; FA7135  6e 0a   jr NZ,0xfa7141
 .LFA7137:
 	ld XIY,MidiOut_ParamClassTable                ; FA7137  45 80 71 fa 00
@@ -72760,9 +72760,9 @@ MidiOut_ParamGate_Part0:   ; entry: MidiOut_ParamNumberTable[0]
 .LFA7141:
 	ret                                           ; FA7141  0e
 MidiOut_ParamGate_Part1:   ; entry: MidiOut_ParamNumberTable[1]
-	m_bit 7, MD24, 0x60f007                       ; FA7142  f2 07 f0 60 cf   bit 7,(0x60f007)
+	bit	7, (0x60f007:24)                      ; FA7142  f2 07 f0 60 cf   bit 7,(0x60f007)
 	jr nz, .LFA714F                               ; FA7147  6e 06   jr NZ,0xfa714f
-	m_bit 6, MD16, 0x76ef                         ; FA7149  f1 ef 76 ce   bit 6,(0x76ef)
+	bit	6, (0x76ef:16)                        ; FA7149  f1 ef 76 ce   bit 6,(0x76ef)
 	jr nz, .LFA7159                               ; FA714D  6e 0a   jr NZ,0xfa7159
 .LFA714F:
 	ld XIY,MidiOut_ParamClassTable                ; FA714F  45 80 71 fa 00
@@ -72771,9 +72771,9 @@ MidiOut_ParamGate_Part1:   ; entry: MidiOut_ParamNumberTable[1]
 .LFA7159:
 	ret                                           ; FA7159  0e
 MidiOut_ParamGate_Part2:   ; entry: MidiOut_ParamNumberTable[2]
-	m_bit 7, MD24, 0x60f007                       ; FA715A  f2 07 f0 60 cf   bit 7,(0x60f007)
+	bit	7, (0x60f007:24)                      ; FA715A  f2 07 f0 60 cf   bit 7,(0x60f007)
 	jr nz, .LFA7167                               ; FA715F  6e 06   jr NZ,0xfa7167
-	m_bit 6, MD16, 0x772f                         ; FA7161  f1 2f 77 ce   bit 6,(0x772f)
+	bit	6, (0x772f:16)                        ; FA7161  f1 2f 77 ce   bit 6,(0x772f)
 	jr nz, .LFA7171                               ; FA7165  6e 0a   jr NZ,0xfa7171
 .LFA7167:
 	ld XIY,MidiOut_ParamClassTable                ; FA7167  45 80 71 fa 00
@@ -72830,7 +72830,7 @@ MidiOut_ParamClassTable:
 ;          that gates MidiIn_ProgramChange on the inbound side.
 ; ---------------------------------------------------------------------
 MidiOut_ProgramChange:   ; entry: MidiOut_ParamClassTable[0]
-	m_bit 4, MD16, MidiFilter_ChannelMsgs                         ; FA71C4  f1 39 7f cc   bit 4,(0x7f39)
+	bit	4, (MidiFilter_ChannelMsgs:16)                        ; FA71C4  f1 39 7f cc   bit 4,(0x7f39)
 	jr z, .LFA7221                                ; FA71C8  66 57
 	ld l, (0x1958:16)                            ; FA71CA  c1 58 19 27   ld L,(0x1958)
 	cp L,0x1f                                     ; FA71CE  cf cf 1f
@@ -72844,7 +72844,7 @@ MidiOut_ProgramChange:   ; entry: MidiOut_ParamClassTable[0]
 	bit 4,(XIX+0x26)                              ; FA71EA  bc 26 cc
 	jr z, .LFA7221                                ; FA71ED  66 32
 	ld a, (0x60f007:24)                          ; FA71EF  c2 07 f0 60 21   ld A,(0x60f007)
-	m_bit 7, MD24, 0x60f007                       ; FA71F4  f2 07 f0 60 cf   bit 7,(0x60f007)
+	bit	7, (0x60f007:24)                      ; FA71F4  f2 07 f0 60 cf   bit 7,(0x60f007)
 	jr nz, .LFA7202                               ; FA71F9  6e 07
 	ld A,(XIX)                                    ; FA71FB  84 21
 	bit 0x06,A                                    ; FA71FD  c9 33 06
@@ -72887,7 +72887,7 @@ MidiOut_CC07_Volume:   ; entry: MidiOut_ParamClassTable[3]
 	mx_ld_rm MXL, ra_IX, ra_HL, r4                ; FA723E  e3 07 f0 ec 24   ld XIX,(XIX+HL)
 	cp XIX,0xffffffff                             ; FA7243  ec cf ff ff ff ff
 	jr z, .LFA725F                                ; FA7249  66 14
-	m_bit 3, MD16, MidiFilter_ChannelMsgs                         ; FA724B  f1 39 7f cb   bit 3,(0x7f39)
+	bit	3, (MidiFilter_ChannelMsgs:16)                        ; FA724B  f1 39 7f cb   bit 3,(0x7f39)
 	jr z, .LFA725F                                ; FA724F  66 0e
 	bit 2,(XIX+0x27)                              ; FA7251  bc 27 ca
 	jr z, .LFA725F                                ; FA7254  66 09
@@ -72920,7 +72920,7 @@ MidiOut_CC5D_Effect3Depth:   ; entry: MidiOut_ParamClassTable[5]
 	mx_ld_rm MXL, ra_IX, ra_HL, r4                ; FA727C  e3 07 f0 ec 24   ld XIX,(XIX+HL)
 	cp XIX,0xffffffff                             ; FA7281  ec cf ff ff ff ff
 	jr z, .LFA729D                                ; FA7287  66 14
-	m_bit 3, MD16, MidiFilter_ChannelMsgs                         ; FA7289  f1 39 7f cb   bit 3,(0x7f39)
+	bit	3, (MidiFilter_ChannelMsgs:16)                        ; FA7289  f1 39 7f cb   bit 3,(0x7f39)
 	jr z, .LFA729D                                ; FA728D  66 0e
 	bit 5,(XIX+0x27)                              ; FA728F  bc 27 cd
 	jr z, .LFA729D                                ; FA7292  66 09
@@ -72953,7 +72953,7 @@ MidiOut_CC5E_Effect4Depth:   ; entry: MidiOut_ParamClassTable[6]
 	mx_ld_rm MXL, ra_IX, ra_HL, r4                ; FA72BA  e3 07 f0 ec 24   ld XIX,(XIX+HL)
 	cp XIX,0xffffffff                             ; FA72BF  ec cf ff ff ff ff
 	jr z, .LFA72D6                                ; FA72C5  66 0f
-	m_bit 3, MD16, MidiFilter_ChannelMsgs                         ; FA72C7  f1 39 7f cb   bit 3,(0x7f39)
+	bit	3, (MidiFilter_ChannelMsgs:16)                        ; FA72C7  f1 39 7f cb   bit 3,(0x7f39)
 	jr z, .LFA72D6                                ; FA72CB  66 09
 	ld e, (0x195a:16)                            ; FA72CD  c1 5a 19 25   ld E,(0x195a)
 	ld w, 0x06:opc                                   ; FA72D1  20 06   ld W,0x06
@@ -72984,7 +72984,7 @@ MidiOut_CC5B_Effect1Depth:   ; entry: MidiOut_ParamClassTable[7]
 	mx_ld_rm MXL, ra_IX, ra_HL, r4                ; FA72F3  e3 07 f0 ec 24   ld XIX,(XIX+HL)
 	cp XIX,0xffffffff                             ; FA72F8  ec cf ff ff ff ff
 	jr Z,.LFA7314                                 ; FA72FE  66 14
-	m_bit 3, MD16, MidiFilter_ChannelMsgs                         ; FA7300  f1 39 7f cb   bit 3,(0x7f39)
+	bit	3, (MidiFilter_ChannelMsgs:16)                        ; FA7300  f1 39 7f cb   bit 3,(0x7f39)
 	jr z, .LFA7314                                ; FA7304  66 0e
 	bit 5,(XIX+0x27)                              ; FA7306  bc 27 cd
 	jr z, .LFA7314                                ; FA7309  66 09
@@ -73017,7 +73017,7 @@ MidiOut_CC0A_Pan:   ; entry: MidiOut_ParamClassTable[8]
 	mx_ld_rm MXL, ra_IX, ra_HL, r4                ; FA7331  e3 07 f0 ec 24   ld XIX,(XIX+HL)
 	cp XIX,0xffffffff                             ; FA7336  ec cf ff ff ff ff
 	jr z, .LFA7352                                ; FA733C  66 14
-	m_bit 3, MD16, MidiFilter_ChannelMsgs                         ; FA733E  f1 39 7f cb   bit 3,(0x7f39)
+	bit	3, (MidiFilter_ChannelMsgs:16)                        ; FA733E  f1 39 7f cb   bit 3,(0x7f39)
 	jr z, .LFA7352                                ; FA7342  66 0e
 	bit 4,(XIX+0x27)                              ; FA7344  bc 27 cc
 	jr z, .LFA7352                                ; FA7347  66 09
@@ -73039,7 +73039,7 @@ MidiOut_CC0A_Pan:   ; entry: MidiOut_ParamClassTable[8]
 ;          Gated on bit 3 of (0x7F39).
 ; ---------------------------------------------------------------------
 MidiOut_Rpn02_CoarseTune:   ; entry: MidiOut_ParamClassTable[9]
-	m_bit 3, MD16, MidiFilter_ChannelMsgs                         ; FA7353  f1 39 7f cb   bit 3,(0x7f39)
+	bit	3, (MidiFilter_ChannelMsgs:16)                        ; FA7353  f1 39 7f cb   bit 3,(0x7f39)
 	jr z, .LFA738E                                ; FA7357  66 35
 	ld a, (0x195b:16)                            ; FA7359  c1 5b 19 21   ld A,(0x195b)
 	and A,0x7f                                    ; FA735D  c9 cc 7f
@@ -73072,7 +73072,7 @@ MidiOut_Rpn02_CoarseTune:   ; entry: MidiOut_ParamClassTable[9]
 ;          Gated on bit 3 of (0x7F39).
 ; ---------------------------------------------------------------------
 MidiOut_Rpn01_FineTune:   ; entry: MidiOut_ParamClassTable[10]
-	m_bit 3, MD16, MidiFilter_ChannelMsgs                         ; FA738F  f1 39 7f cb   bit 3,(0x7f39)
+	bit	3, (MidiFilter_ChannelMsgs:16)                        ; FA738F  f1 39 7f cb   bit 3,(0x7f39)
 	jr z, .LFA73D0                                ; FA7393  66 3b
 	ld a, (0x195b:16)                            ; FA7395  c1 5b 19 21   ld A,(0x195b)
 	and A,0xff                                    ; FA7399  c9 cc ff
@@ -73107,7 +73107,7 @@ MidiOut_Rpn01_FineTune:   ; entry: MidiOut_ParamClassTable[10]
 ;          Gated on bit 3 of (0x7F39).
 ; ---------------------------------------------------------------------
 MidiOut_Rpn00_PitchBendRange:   ; entry: MidiOut_ParamClassTable[11]
-	m_bit 3, MD16, MidiFilter_ChannelMsgs                         ; FA73D1  f1 39 7f cb   bit 3,(0x7f39)
+	bit	3, (MidiFilter_ChannelMsgs:16)                        ; FA73D1  f1 39 7f cb   bit 3,(0x7f39)
 	jr z, .LFA740C                                ; FA73D5  66 35
 	ld a, (0x195b:16)                            ; FA73D7  c1 5b 19 21   ld A,(0x195b)
 	and A,0x7f                                    ; FA73DB  c9 cc 7f
@@ -73234,7 +73234,7 @@ MidiOut_BankSelect_Packed:   ; entry: MidiOut_ParamClassTable[1]
 ;          the inbound handler's controller number wherever one calls it.
 ; ---------------------------------------------------------------------
 MidiOut_CC51_General6:   ; entry: MidiOut_ParamNumberTable[32-63]
-	m_bit 3, MD16, MidiFilter_ChannelMsgs                         ; FA74D0  f1 39 7f cb   bit 3,(0x7f39)
+	bit	3, (MidiFilter_ChannelMsgs:16)                        ; FA74D0  f1 39 7f cb   bit 3,(0x7f39)
 	jr z, .LFA7509                                ; FA74D4  66 33
 	cp	(0x1959:16), 0x18                     ; FA74D6  c1 59 19 3f 18   cp (0x1959),0x18
 	jr nz, .LFA7509                               ; FA74DB  6e 2c
@@ -73343,10 +73343,10 @@ MidiOut_Param98:   ; entry: MidiOut_ParamNumberTable[152]
 	jrl z, .LFA7620                               ; FA758D  76 90 00
 	cp b, 0x02:i3                                   ; FA7590  ca da   cp B,2
 	jr nz, .LFA75E6                               ; FA7592  6e 52
-	m_bit 7, MD16, MidiFilter_BankSelect                         ; FA7594  f1 3a 7f cf   bit 7,(0x7f3a)
+	bit	7, (MidiFilter_BankSelect:16)                        ; FA7594  f1 3a 7f cf   bit 7,(0x7f3a)
 	jrl z, .LFA7620                               ; FA7598  76 85 00
 	ld a, (0x60f007:24)                          ; FA759B  c2 07 f0 60 21   ld A,(0x60f007)
-	m_bit 7, MD24, 0x60f007                       ; FA75A0  f2 07 f0 60 cf   bit 7,(0x60f007)
+	bit	7, (0x60f007:24)                      ; FA75A0  f2 07 f0 60 cf   bit 7,(0x60f007)
 	jr nz, .LFA75B0                               ; FA75A5  6e 09
 	ld a, (MidiCfg_SingleChannel:16)                            ; FA75A7  c1 36 7f 21   ld A,(0x7f36)
 	bit 0x06,A                                    ; FA75AB  c9 33 06
@@ -73373,10 +73373,10 @@ MidiOut_Param98:   ; entry: MidiOut_ParamNumberTable[152]
 	calr .LFA7CE8                                 ; FA75E1  1e 04 07
 	jr .LFA7620                                   ; FA75E4  68 3a
 .LFA75E6:
-	m_bit 4, MD16, MidiFilter_ChannelMsgs                         ; FA75E6  f1 39 7f cc   bit 4,(0x7f39)
+	bit	4, (MidiFilter_ChannelMsgs:16)                        ; FA75E6  f1 39 7f cc   bit 4,(0x7f39)
 	jr z, .LFA7620                                ; FA75EA  66 34
 	ld a, (0x60f007:24)                          ; FA75EC  c2 07 f0 60 21   ld A,(0x60f007)
-	m_bit 7, MD24, 0x60f007                       ; FA75F1  f2 07 f0 60 cf   bit 7,(0x60f007)
+	bit	7, (0x60f007:24)                      ; FA75F1  f2 07 f0 60 cf   bit 7,(0x60f007)
 	jr nz, .LFA7601                               ; FA75F6  6e 09
 	ld a, (MidiCfg_SingleChannel:16)                            ; FA75F8  c1 36 7f 21   ld A,(0x7f36)
 	bit 0x06,A                                    ; FA75FC  c9 33 06
@@ -73407,7 +73407,7 @@ MidiOut_Param98:   ; entry: MidiOut_ParamNumberTable[152]
 ;          the inbound handler's controller number wherever one calls it.
 ; ---------------------------------------------------------------------
 MidiOut_CC79_ResetAllCtrl:   ; entry: MidiOut_ParamNumberTable[173]
-	m_bit 3, MD16, MidiFilter_ChannelMsgs                         ; FA7621  f1 39 7f cb   bit 3,(0x7f39)
+	bit	3, (MidiFilter_ChannelMsgs:16)                        ; FA7621  f1 39 7f cb   bit 3,(0x7f39)
 	jr z, .LFA764E                                ; FA7625  66 27
 	ld l, (0x1959:16)                            ; FA7627  c1 59 19 27   ld L,(0x1959)
 	cp L,0x1f                                     ; FA762B  cf cf 1f
@@ -73435,7 +73435,7 @@ MidiOut_CC79_ResetAllCtrl:   ; entry: MidiOut_ParamNumberTable[173]
 ;          the inbound handler's controller number wherever one calls it.
 ; ---------------------------------------------------------------------
 MidiOut_CC78_AllSoundOff:   ; entry: MidiOut_ParamNumberTable[174]
-	m_bit 3, MD16, MidiFilter_ChannelMsgs                         ; FA764F  f1 39 7f cb   bit 3,(0x7f39)
+	bit	3, (MidiFilter_ChannelMsgs:16)                        ; FA764F  f1 39 7f cb   bit 3,(0x7f39)
 	jr z, .LFA764E                                ; FA7653  66 f9
 	ld l, (0x1959:16)                            ; FA7655  c1 59 19 27   ld L,(0x1959)
 	cp L,0x1f                                     ; FA7659  cf cf 1f
@@ -73490,13 +73490,13 @@ MidiOut_ParamNumberTable_Nop176:   ; entry: MidiOut_ParamNumberTable[176]
 MidiOut_PitchBend:   ; entry: MidiOut_ParamNumberTable[177]; call from 0xFA6E54, 0xFA7E5A, 0xFA7E8C
 	cp b, 0x00:i3                                   ; FA767E  ca d8   cp B,0
 	jr nz, .LFA76BD                               ; FA7680  6e 3b
-	m_bit 7, MD24, 0x60f007                       ; FA7682  f2 07 f0 60 cf   bit 7,(0x60f007)
+	bit	7, (0x60f007:24)                      ; FA7682  f2 07 f0 60 cf   bit 7,(0x60f007)
 	jr nz, .LFA76BD                               ; FA7687  6e 34
 	ld a, (MidiCfg_InOutMode:16)                            ; FA7689  c1 35 7f 21   ld A,(0x7f35)
 	and A,0xf0                                    ; FA768D  c9 cc f0
 	cp a, 0x00:i3                                   ; FA7690  c9 d8   cp A,0
 	jr z, .LFA76A4                                ; FA7692  66 10
-	m_bit 6, MD16, MidiFilter_ChannelMsgs                         ; FA7694  f1 39 7f ce   bit 6,(0x7f39)
+	bit	6, (MidiFilter_ChannelMsgs:16)                        ; FA7694  f1 39 7f ce   bit 6,(0x7f39)
 	jr z, .LFA76BC                                ; FA7698  66 22
 	ld XIX,MidiCfg_SingleChannel                             ; FA769A  44 36 7f 00 00
 	calr .LFA76EE                                 ; FA769F  1e 4c 00
@@ -73544,7 +73544,7 @@ MidiOut_PitchBend__partgate:   ; entry: call from 0xFA76B6
 	bit 6,(XIX+0x26)                              ; FA76DD  bc 26 ce
 	jr z, .LFA771C                                ; FA76E0  66 3a
 	ld a, (0x60f007:24)                          ; FA76E2  c2 07 f0 60 21   ld A,(0x60f007)
-	m_bit 7, MD24, 0x60f007                       ; FA76E7  f2 07 f0 60 cf   bit 7,(0x60f007)
+	bit	7, (0x60f007:24)                      ; FA76E7  f2 07 f0 60 cf   bit 7,(0x60f007)
 	jr nz, .LFA76F5                               ; FA76EC  6e 07
 .LFA76EE:
 ; ---------------------------------------------------------------------
@@ -73597,13 +73597,13 @@ MidiOut_PitchBend__emit:   ; entry: call from 0xFA769F
 MidiOut_CC01_Modulation:   ; entry: MidiOut_ParamNumberTable[178]; call from 0xFA65DB
 	cp b, 0x00:i3                                   ; FA771D  ca d8   cp B,0
 	jr nz, .LFA775C                               ; FA771F  6e 3b
-	m_bit 7, MD24, 0x60f007                       ; FA7721  f2 07 f0 60 cf   bit 7,(0x60f007)
+	bit	7, (0x60f007:24)                      ; FA7721  f2 07 f0 60 cf   bit 7,(0x60f007)
 	jr nz, .LFA775C                               ; FA7726  6e 34
 	ld a, (MidiCfg_InOutMode:16)                            ; FA7728  c1 35 7f 21   ld A,(0x7f35)
 	and A,0xf0                                    ; FA772C  c9 cc f0
 	cp a, 0x00:i3                                   ; FA772F  c9 d8   cp A,0
 	jr z, .LFA7743                                ; FA7731  66 10
-	m_bit 3, MD16, MidiFilter_ChannelMsgs                         ; FA7733  f1 39 7f cb   bit 3,(0x7f39)
+	bit	3, (MidiFilter_ChannelMsgs:16)                        ; FA7733  f1 39 7f cb   bit 3,(0x7f39)
 	jr z, .LFA775B                                ; FA7737  66 22
 	ld XIX,MidiCfg_SingleChannel                             ; FA7739  44 36 7f 00 00
 	calr .LFA7781                                 ; FA773E  1e 40 00
@@ -73682,13 +73682,13 @@ MidiOut_CC01_Modulation__emit:   ; entry: call from 0xFA773E
 MidiOut_CC0B_Expression:   ; entry: MidiOut_ParamNumberTable[179]; call from 0xFA66C4
 	cp b, 0x00:i3                                   ; FA778B  ca d8   cp B,0
 	jr nz, .LFA77CA                               ; FA778D  6e 3b
-	m_bit 7, MD24, 0x60f007                       ; FA778F  f2 07 f0 60 cf   bit 7,(0x60f007)
+	bit	7, (0x60f007:24)                      ; FA778F  f2 07 f0 60 cf   bit 7,(0x60f007)
 	jr nz, .LFA77CA                               ; FA7794  6e 34
 	ld a, (MidiCfg_InOutMode:16)                            ; FA7796  c1 35 7f 21   ld A,(0x7f35)
 	and A,0xf0                                    ; FA779A  c9 cc f0
 	cp a, 0x00:i3                                   ; FA779D  c9 d8   cp A,0
 	jr z, .LFA77B1                                ; FA779F  66 10
-	m_bit 3, MD16, MidiFilter_ChannelMsgs                         ; FA77A1  f1 39 7f cb   bit 3,(0x7f39)
+	bit	3, (MidiFilter_ChannelMsgs:16)                        ; FA77A1  f1 39 7f cb   bit 3,(0x7f39)
 	jr z, .LFA77C9                                ; FA77A5  66 22
 	ld XIX,MidiCfg_SingleChannel                             ; FA77A7  44 36 7f 00 00
 	calr .LFA77F0                                 ; FA77AC  1e 41 00
@@ -73733,7 +73733,7 @@ MidiOut_CC0B_Expression__partgate:   ; entry: call from 0xFA77C3
 	mx_ld_rm MXL, ra_IX, ra_HL, r4                ; FA77DD  e3 07 f0 ec 24   ld XIX,(XIX+HL)
 	cp XIX,0xffffffff                             ; FA77E2  ec cf ff ff ff ff
 	jr z, .LFA77F9                                ; FA77E8  66 0f
-	m_bit 3, MD16, MidiFilter_ChannelMsgs                         ; FA77EA  f1 39 7f cb   bit 3,(0x7f39)
+	bit	3, (MidiFilter_ChannelMsgs:16)                        ; FA77EA  f1 39 7f cb   bit 3,(0x7f39)
 	jr z, .LFA77F9                                ; FA77EE  66 09
 .LFA77F0:
 
@@ -73789,13 +73789,13 @@ MidiOut_CC0B_Expression__emit:   ; entry: call from 0xFA77AC
 MidiOut_ChannelPressure:   ; entry: MidiOut_ParamNumberTable[180]; call from 0xFA6ED9, 0xFA7EA1, 0xFA7EBF
 	cp b, 0x00:i3                                   ; FA77FA  ca d8   cp B,0
 	jr nz, .LFA7839                               ; FA77FC  6e 3b
-	m_bit 7, MD24, 0x60f007                       ; FA77FE  f2 07 f0 60 cf   bit 7,(0x60f007)
+	bit	7, (0x60f007:24)                      ; FA77FE  f2 07 f0 60 cf   bit 7,(0x60f007)
 	jr nz, .LFA7839                               ; FA7803  6e 34
 	ld a, (MidiCfg_InOutMode:16)                            ; FA7805  c1 35 7f 21   ld A,(0x7f35)
 	and A,0xf0                                    ; FA7809  c9 cc f0
 	cp a, 0x00:i3                                   ; FA780C  c9 d8   cp A,0
 	jr z, .LFA7820                                ; FA780E  66 10
-	m_bit 5, MD16, MidiFilter_ChannelMsgs                         ; FA7810  f1 39 7f cd   bit 5,(0x7f39)
+	bit	5, (MidiFilter_ChannelMsgs:16)                        ; FA7810  f1 39 7f cd   bit 5,(0x7f39)
 	jr z, .LFA7838                                ; FA7814  66 22
 	ld XIX,MidiCfg_SingleChannel                             ; FA7816  44 36 7f 00 00
 	calr .LFA786A                                 ; FA781B  1e 4c 00
@@ -73843,7 +73843,7 @@ MidiOut_ChannelPressure__partgate:   ; entry: call from 0xFA7832
 	bit 5,(XIX+0x26)                              ; FA7859  bc 26 cd
 	jr z, .LFA7890                                ; FA785C  66 32
 	ld a, (0x60f007:24)                          ; FA785E  c2 07 f0 60 21   ld A,(0x60f007)
-	m_bit 7, MD24, 0x60f007                       ; FA7863  f2 07 f0 60 cf   bit 7,(0x60f007)
+	bit	7, (0x60f007:24)                      ; FA7863  f2 07 f0 60 cf   bit 7,(0x60f007)
 	jr nz, .LFA7871                               ; FA7868  6e 07
 .LFA786A:
 ; ---------------------------------------------------------------------
@@ -73908,13 +73908,13 @@ MidiOut_ChannelPressure__emit:   ; entry: call from 0xFA781B
 MidiOut_CC40_Hold:   ; entry: MidiOut_ParamNumberTable[181]; call from 0xFA64CF
 	cp b, 0x00:i3                                   ; FA7891  ca d8   cp B,0
 	jr nz, .LFA78D0                               ; FA7893  6e 3b
-	m_bit 7, MD24, 0x60f007                       ; FA7895  f2 07 f0 60 cf   bit 7,(0x60f007)
+	bit	7, (0x60f007:24)                      ; FA7895  f2 07 f0 60 cf   bit 7,(0x60f007)
 	jr nz, .LFA78D0                               ; FA789A  6e 34
 	ld a, (MidiCfg_InOutMode:16)                            ; FA789C  c1 35 7f 21   ld A,(0x7f35)
 	and A,0xf0                                    ; FA78A0  c9 cc f0
 	cp a, 0x00:i3                                   ; FA78A3  c9 d8   cp A,0
 	jr z, .LFA78B7                                ; FA78A5  66 10
-	m_bit 3, MD16, MidiFilter_ChannelMsgs                         ; FA78A7  f1 39 7f cb   bit 3,(0x7f39)
+	bit	3, (MidiFilter_ChannelMsgs:16)                        ; FA78A7  f1 39 7f cb   bit 3,(0x7f39)
 	jr z, .LFA78CF                                ; FA78AB  66 22
 	ld XIX,MidiCfg_SingleChannel                             ; FA78AD  44 36 7f 00 00
 	calr .LFA78F5                                 ; FA78B2  1e 40 00
@@ -74034,7 +74034,7 @@ MidiOut_CC40_Hold__emit:   ; entry: call from 0xFA78B2
 ; ---------------------------------------------------------------------
 
 sub_FA78FF:
-	m_bit 3, MD16, MidiFilter_ChannelMsgs                         ; FA78FF  f1 39 7f cb   bit 3,(0x7f39)
+	bit	3, (MidiFilter_ChannelMsgs:16)                        ; FA78FF  f1 39 7f cb   bit 3,(0x7f39)
 	jr z, .LFA792E                                ; FA7903  66 29
 	ld l, (0x1959:16)                            ; FA7905  c1 59 19 27   ld L,(0x1959)
 	cp L,0x1f                                     ; FA7909  cf cf 1f
@@ -74080,7 +74080,7 @@ sub_FA78FF:
 ; ---------------------------------------------------------------------
 
 sub_FA792F:
-	m_bit 3, MD16, MidiFilter_ChannelMsgs                         ; FA792F  f1 39 7f cb   bit 3,(0x7f39)
+	bit	3, (MidiFilter_ChannelMsgs:16)                        ; FA792F  f1 39 7f cb   bit 3,(0x7f39)
 	jr z, .LFA795E                                ; FA7933  66 29
 	ld l, (0x1959:16)                            ; FA7935  c1 59 19 27   ld L,(0x1959)
 	cp L,0x1f                                     ; FA7939  cf cf 1f
@@ -74124,13 +74124,13 @@ sub_FA792F:
 MidiOut_CC10_RTCreatX:   ; entry: MidiOut_ParamNumberTable[184]; call from 0xFA6970
 	cp b, 0x00:i3                                   ; FA795F  ca d8   cp B,0
 	jr nz, .LFA799E                               ; FA7961  6e 3b
-	m_bit 7, MD24, 0x60f007                       ; FA7963  f2 07 f0 60 cf   bit 7,(0x60f007)
+	bit	7, (0x60f007:24)                      ; FA7963  f2 07 f0 60 cf   bit 7,(0x60f007)
 	jr nz, .LFA799E                               ; FA7968  6e 34
 	ld a, (MidiCfg_InOutMode:16)                            ; FA796A  c1 35 7f 21   ld A,(0x7f35)
 	and A,0xf0                                    ; FA796E  c9 cc f0
 	cp a, 0x00:i3                                   ; FA7971  c9 d8   cp A,0
 	jr z, .LFA7985                                ; FA7973  66 10
-	m_bit 3, MD16, MidiFilter_ChannelMsgs                         ; FA7975  f1 39 7f cb   bit 3,(0x7f39)
+	bit	3, (MidiFilter_ChannelMsgs:16)                        ; FA7975  f1 39 7f cb   bit 3,(0x7f39)
 	jr z, .LFA799D                                ; FA7979  66 22
 	ld XIX,MidiCfg_SingleChannel                             ; FA797B  44 36 7f 00 00
 	calr .LFA79C3                                 ; FA7980  1e 40 00
@@ -74237,13 +74237,13 @@ MidiOut_CC10_RTCreatX__emit:   ; entry: call from 0xFA7980
 MidiOut_CC11_RTCreatY:   ; entry: MidiOut_ParamNumberTable[185]; call from 0xFA69FA
 	cp b, 0x00:i3                                   ; FA79CD  ca d8   cp B,0
 	jr nz, .LFA7A0C                               ; FA79CF  6e 3b
-	m_bit 7, MD24, 0x60f007                       ; FA79D1  f2 07 f0 60 cf   bit 7,(0x60f007)
+	bit	7, (0x60f007:24)                      ; FA79D1  f2 07 f0 60 cf   bit 7,(0x60f007)
 	jr nz, .LFA7A0C                               ; FA79D6  6e 34
 	ld a, (MidiCfg_InOutMode:16)                            ; FA79D8  c1 35 7f 21   ld A,(0x7f35)
 	and A,0xf0                                    ; FA79DC  c9 cc f0
 	cp a, 0x00:i3                                   ; FA79DF  c9 d8   cp A,0
 	jr z, .LFA79F3                                ; FA79E1  66 10
-	m_bit 3, MD16, MidiFilter_ChannelMsgs                         ; FA79E3  f1 39 7f cb   bit 3,(0x7f39)
+	bit	3, (MidiFilter_ChannelMsgs:16)                        ; FA79E3  f1 39 7f cb   bit 3,(0x7f39)
 	jr z, .LFA7A0B                                ; FA79E7  66 22
 	ld XIX,MidiCfg_SingleChannel                             ; FA79E9  44 36 7f 00 00
 	calr .LFA7A31                                 ; FA79EE  1e 40 00
@@ -74350,13 +74350,13 @@ MidiOut_CC11_RTCreatY__emit:   ; entry: call from 0xFA79EE
 MidiOut_CC12_RTCtrlX:   ; entry: MidiOut_ParamNumberTable[186]; call from 0xFA6A84
 	cp b, 0x00:i3                                   ; FA7A3B  ca d8   cp B,0
 	jr nz, .LFA7A7A                               ; FA7A3D  6e 3b
-	m_bit 7, MD24, 0x60f007                       ; FA7A3F  f2 07 f0 60 cf   bit 7,(0x60f007)
+	bit	7, (0x60f007:24)                      ; FA7A3F  f2 07 f0 60 cf   bit 7,(0x60f007)
 	jr nz, .LFA7A7A                               ; FA7A44  6e 34
 	ld a, (MidiCfg_InOutMode:16)                            ; FA7A46  c1 35 7f 21   ld A,(0x7f35)
 	and A,0xf0                                    ; FA7A4A  c9 cc f0
 	cp a, 0x00:i3                                   ; FA7A4D  c9 d8   cp A,0
 	jr z, .LFA7A61                                ; FA7A4F  66 10
-	m_bit 3, MD16, MidiFilter_ChannelMsgs                         ; FA7A51  f1 39 7f cb   bit 3,(0x7f39)
+	bit	3, (MidiFilter_ChannelMsgs:16)                        ; FA7A51  f1 39 7f cb   bit 3,(0x7f39)
 	jr z, .LFA7A79                                ; FA7A55  66 22
 	ld XIX,MidiCfg_SingleChannel                             ; FA7A57  44 36 7f 00 00
 	calr .LFA7A9F                                 ; FA7A5C  1e 40 00
@@ -74463,13 +74463,13 @@ MidiOut_CC12_RTCtrlX__emit:   ; entry: call from 0xFA7A5C
 MidiOut_CC13_RTCtrlY:   ; entry: MidiOut_ParamNumberTable[187]; call from 0xFA6B0E
 	cp b, 0x00:i3                                   ; FA7AA9  ca d8   cp B,0
 	jr nz, .LFA7AE8                               ; FA7AAB  6e 3b
-	m_bit 7, MD24, 0x60f007                       ; FA7AAD  f2 07 f0 60 cf   bit 7,(0x60f007)
+	bit	7, (0x60f007:24)                      ; FA7AAD  f2 07 f0 60 cf   bit 7,(0x60f007)
 	jr nz, .LFA7AE8                               ; FA7AB2  6e 34
 	ld a, (MidiCfg_InOutMode:16)                            ; FA7AB4  c1 35 7f 21   ld A,(0x7f35)
 	and A,0xf0                                    ; FA7AB8  c9 cc f0
 	cp a, 0x00:i3                                   ; FA7ABB  c9 d8   cp A,0
 	jr z, .LFA7ACF                                ; FA7ABD  66 10
-	m_bit 3, MD16, MidiFilter_ChannelMsgs                         ; FA7ABF  f1 39 7f cb   bit 3,(0x7f39)
+	bit	3, (MidiFilter_ChannelMsgs:16)                        ; FA7ABF  f1 39 7f cb   bit 3,(0x7f39)
 	jr z, .LFA7AE7                                ; FA7AC3  66 22
 	ld XIX,MidiCfg_SingleChannel                             ; FA7AC5  44 36 7f 00 00
 	calr .LFA7B0D                                 ; FA7ACA  1e 40 00
@@ -74576,13 +74576,13 @@ MidiOut_CC13_RTCtrlY__emit:   ; entry: call from 0xFA7ACA
 MidiOut_CC02_Modulation2:   ; entry: MidiOut_ParamNumberTable[188]; call from 0xFA685C
 	cp b, 0x00:i3                                   ; FA7B17  ca d8   cp B,0
 	jr nz, .LFA7B56                               ; FA7B19  6e 3b
-	m_bit 7, MD24, 0x60f007                       ; FA7B1B  f2 07 f0 60 cf   bit 7,(0x60f007)
+	bit	7, (0x60f007:24)                      ; FA7B1B  f2 07 f0 60 cf   bit 7,(0x60f007)
 	jr nz, .LFA7B56                               ; FA7B20  6e 34
 	ld a, (MidiCfg_InOutMode:16)                            ; FA7B22  c1 35 7f 21   ld A,(0x7f35)
 	and A,0xf0                                    ; FA7B26  c9 cc f0
 	cp a, 0x00:i3                                   ; FA7B29  c9 d8   cp A,0
 	jr z, .LFA7B3D                                ; FA7B2B  66 10
-	m_bit 3, MD16, MidiFilter_ChannelMsgs                         ; FA7B2D  f1 39 7f cb   bit 3,(0x7f39)
+	bit	3, (MidiFilter_ChannelMsgs:16)                        ; FA7B2D  f1 39 7f cb   bit 3,(0x7f39)
 	jr z, .LFA7B55                                ; FA7B31  66 22
 	ld XIX,MidiCfg_SingleChannel                             ; FA7B33  44 36 7f 00 00
 	calr .LFA7B7B                                 ; FA7B38  1e 40 00
@@ -74689,13 +74689,13 @@ MidiOut_CC02_Modulation2__emit:   ; entry: call from 0xFA7B38
 MidiOut_CC04_CtrlPedal:   ; entry: MidiOut_ParamNumberTable[189]; call from 0xFA68E6
 	cp b, 0x00:i3                                   ; FA7B85  ca d8   cp B,0
 	jr nz, .LFA7BC4                               ; FA7B87  6e 3b
-	m_bit 7, MD24, 0x60f007                       ; FA7B89  f2 07 f0 60 cf   bit 7,(0x60f007)
+	bit	7, (0x60f007:24)                      ; FA7B89  f2 07 f0 60 cf   bit 7,(0x60f007)
 	jr nz, .LFA7BC4                               ; FA7B8E  6e 34
 	ld a, (MidiCfg_InOutMode:16)                            ; FA7B90  c1 35 7f 21   ld A,(0x7f35)
 	and A,0xf0                                    ; FA7B94  c9 cc f0
 	cp a, 0x00:i3                                   ; FA7B97  c9 d8   cp A,0
 	jr z, .LFA7BAB                                ; FA7B99  66 10
-	m_bit 3, MD16, MidiFilter_ChannelMsgs                         ; FA7B9B  f1 39 7f cb   bit 3,(0x7f39)
+	bit	3, (MidiFilter_ChannelMsgs:16)                        ; FA7B9B  f1 39 7f cb   bit 3,(0x7f39)
 	jr z, .LFA7BC3                                ; FA7B9F  66 22
 	ld XIX,MidiCfg_SingleChannel                             ; FA7BA1  44 36 7f 00 00
 	calr .LFA7BE9                                 ; FA7BA6  1e 40 00
@@ -74793,7 +74793,7 @@ MidiOut_CC04_CtrlPedal__emit:   ; entry: call from 0xFA7BA6
 MidiOut_SendController:   ; entry: call from 0xFA725C, 0xFA729A, 0xFA72D3, 0xFA7311, 0xFA734F, 0xFA7506, +13 more
 	pushw bc                                      ; FA7BF3  29   push BC
 	ld a, (0x60f007:24)                          ; FA7BF4  c2 07 f0 60 21   ld A,(0x60f007)
-	m_bit 7, MD24, 0x60f007                       ; FA7BF9  f2 07 f0 60 cf   bit 7,(0x60f007)
+	bit	7, (0x60f007:24)                      ; FA7BF9  f2 07 f0 60 cf   bit 7,(0x60f007)
 	jr NZ,.LFA7C07                                ; FA7BFE  6e 07
 	ld A,(XIX)                                    ; FA7C00  84 21
 	bit 0x06,A                                    ; FA7C02  c9 33 06
@@ -74838,7 +74838,7 @@ MidiOut_SendController:   ; entry: call from 0xFA725C, 0xFA729A, 0xFA72D3, 0xFA7
 ; ---------------------------------------------------------------------
 MidiOut_SendRpn:   ; entry: call from 0xFA738B, 0xFA73CD, 0xFA7409
 	ld a, (0x60f007:24)                          ; FA7C3E  c2 07 f0 60 21   ld A,(0x60f007)
-	m_bit 7, MD24, 0x60f007                       ; FA7C43  f2 07 f0 60 cf   bit 7,(0x60f007)
+	bit	7, (0x60f007:24)                      ; FA7C43  f2 07 f0 60 cf   bit 7,(0x60f007)
 	jr nz, .LFA7C51                               ; FA7C48  6e 07
 	ld A,(XIX)                                    ; FA7C4A  84 21
 	bit 0x06,A                                    ; FA7C4C  c9 33 06
@@ -74884,12 +74884,12 @@ MidiOut_SendRpn:   ; entry: call from 0xFA738B, 0xFA73CD, 0xFA7409
 ;          Gated on bit 7 of (0x7F3A) and bit 7 of the part record's +0x27.
 ; ---------------------------------------------------------------------
 MidiOut_SendBankSelect:   ; entry: call from 0xFA7448, 0xFA7490, 0xFA74CC, 0xFA7580
-	m_bit 7, MD16, MidiFilter_BankSelect                         ; FA7C95  f1 3a 7f cf   bit 7,(0x7f3a)
+	bit	7, (MidiFilter_BankSelect:16)                        ; FA7C95  f1 3a 7f cf   bit 7,(0x7f3a)
 	jr z, .LFA7CE7                                ; FA7C99  66 4c
 	bit 7,(XIX+0x27)                              ; FA7C9B  bc 27 cf
 	jr z, .LFA7CE7                                ; FA7C9E  66 47
 	ld a, (0x60f007:24)                          ; FA7CA0  c2 07 f0 60 21   ld A,(0x60f007)
-	m_bit 7, MD24, 0x60f007                       ; FA7CA5  f2 07 f0 60 cf   bit 7,(0x60f007)
+	bit	7, (0x60f007:24)                      ; FA7CA5  f2 07 f0 60 cf   bit 7,(0x60f007)
 	jr nz, .LFA7CB3                               ; FA7CAA  6e 07
 	ld A,(XIX)                                    ; FA7CAC  84 21
 	bit 0x06,A                                    ; FA7CAE  c9 33 06
@@ -75085,11 +75085,11 @@ sub_FA7DCA:   ; entry: call from 0xFA7DA6
 	ld (0x0920:16), de                           ; FA7DDB  f1 20 09 52   ld (0x0920),DE
 	res	2, (P8:8)                            ; FA7DDF  f0 18 b2   res 2,(0x18)
 	ld w, (0x0922:16)                            ; FA7DE2  c1 22 09 20   ld W,(0x0922)
-	m_res 0, MD16, 0x0922                         ; FA7DE6  f1 22 09 b0   res 0,(0x0922)
+	res	0, (0x0922:16)                        ; FA7DE6  f1 22 09 b0   res 0,(0x0922)
 	ld	a, (P8:8)                               ; FA7DEA  c0 18 21   ld A,(0x18)
 	bit 0x02,A                                    ; FA7DED  c9 33 02
 	jr nz, .LFA7DF6                               ; FA7DF0  6e 04
-	m_set 0, MD16, 0x0922                         ; FA7DF2  f1 22 09 b8   set 0,(0x0922)
+	set	0, (0x0922:16)                        ; FA7DF2  f1 22 09 b8   set 0,(0x0922)
 .LFA7DF6:
 	xor w, (0x0922:16)                            ; FA7DF6  c1 22 09 d0   xor W,(0x0922)
 	jr z, .LFA7E09                                ; FA7DFA  66 0d
@@ -75224,7 +75224,7 @@ sub_FA7E37:   ; entry: call from 0xFA7E17
 	ld a, (0x7f16:16)                            ; FA7F5C  c1 16 7f 21   ld A,(0x7f16)
 	ld (0x1968:16), a                            ; FA7F60  f1 68 19 41   ld (0x1968),A
 	xor A,A                                       ; FA7F64  c9 d1
-	m_bit 0, MD16, 0x2190                         ; FA7F66  f1 90 21 c8   bit 0,(0x2190)
+	bit	0, (0x2190:16)                        ; FA7F66  f1 90 21 c8   bit 0,(0x2190)
 	jr z, .LFA7F6E                                ; FA7F6A  66 02
 	ld a, 0x7f:opc                                   ; FA7F6C  21 7f   ld A,0x7f
 .LFA7F6E:
@@ -75233,7 +75233,7 @@ sub_FA7E37:   ; entry: call from 0xFA7E17
 	ld a, (0x7f17:16)                            ; FA7F75  c1 17 7f 21   ld A,(0x7f17)
 	ld (0x1968:16), a                            ; FA7F79  f1 68 19 41   ld (0x1968),A
 	xor A,A                                       ; FA7F7D  c9 d1
-	m_bit 0, MD16, 0x2191                         ; FA7F7F  f1 91 21 c8   bit 0,(0x2191)
+	bit	0, (0x2191:16)                        ; FA7F7F  f1 91 21 c8   bit 0,(0x2191)
 	jr z, .LFA7F87                                ; FA7F83  66 02
 	ld a, 0x7f:opc                                   ; FA7F85  21 7f   ld A,0x7f
 .LFA7F87:
@@ -75966,7 +75966,7 @@ MidiIn_ReqListRebuild_Msg13_16:   ; entry: prom_b directory slot T_MidiIn_ReqLis
 	jr ugt, .LFA8377                              ; FA836A  6b 0b
 	cp	(UiEvent_Byte3:16), 0x00                     ; FA836C  c1 ba 20 3f 00   cp (0x20ba),0x00
 	jr z, .LFA8377                                ; FA8371  66 04
-	m_set 1, MD16, 0x1978                         ; FA8373  f1 78 19 b9   set 1,(0x1978)
+	set	1, (0x1978:16)                        ; FA8373  f1 78 19 b9   set 1,(0x1978)
 .LFA8377:
 	ret                                           ; FA8377  0e
 
@@ -75998,9 +75998,9 @@ MidiIn_ReqRebuild_Msg03_0A:   ; entry: prom_b directory slot T_MidiIn_ReqRebuild
 .LFA839F:
 	ret                                           ; FA839F  0e
 MidiIn_ServicePartLists:   ; entry: call from 0xFA6F07
-	m_bit 1, MD16, 0x1978                         ; FA83A0  f1 78 19 c9   bit 1,(0x1978)
+	bit	1, (0x1978:16)                        ; FA83A0  f1 78 19 c9   bit 1,(0x1978)
 	jr z, .LFA83AD                                ; FA83A4  66 07
-	m_res 1, MD16, 0x1978                         ; FA83A6  f1 78 19 b1   res 1,(0x1978)
+	res	1, (0x1978:16)                        ; FA83A6  f1 78 19 b1   res 1,(0x1978)
 	calr MidiIn_RebuildPartLists                                   ; FA83AA  1e 01 fe   calr 0xfa81ae
 .LFA83AD:
 	ret                                           ; FA83AD  0e
@@ -78390,9 +78390,9 @@ Queue2C00_PublishStagedIfPending_StaleCopy:
 ;          IS, not that it runs.
 ; ---------------------------------------------------------------------
 ParamChange_Notify_StaleCopy:
-	m_bit 0, MD16, 0x0922                                ; FAA204  f1 22 09 c8
+	bit	0, (0x0922:16)                               ; FAA204  f1 22 09 c8
 	jr z, .LFAA210                                       ; FAA208  66 06
-	m_bit 1, MD16, 0x0922                                ; FAA20A  f1 22 09 c9
+	bit	1, (0x0922:16)                               ; FAA20A  f1 22 09 c9
 	jr nz, .LFAA222                                      ; FAA20E  6e 12
 .LFAA210:
 	push XWA                                             ; FAA210  38
@@ -78487,7 +78487,7 @@ ParamRecord_WriteFieldAndStage_StaleCopy:
 	push XIX                                             ; FAA2B5  3c
 	push XIY                                             ; FAA2B6  3d
 	push XIZ                                             ; FAA2B7  3e
-	m_bit 1, MD24, 0x60f021                              ; FAA2B8  f2 21 f0 60 c9
+	bit	1, (0x60f021:24)                             ; FAA2B8  f2 21 f0 60 c9
 	jr nz, .LFAA314                                      ; FAA2BD  6e 55
 	ld (0x60f01d:24), c                                 ; FAA2BF  f2 1d f0 60 43
 	xor H,H                                              ; FAA2C4  ce d6
@@ -78527,7 +78527,7 @@ ParamRecord_WriteFieldAndStage_StaleCopy:
 	ret                                                  ; FAA31D  0e
 	ret                                                  ; FAA31E  0e
 	pushw de                                             ; FAA31F  2a
-	m_bit 7, MD16, 0x24f1                                ; FAA320  f1 f1 24 cf
+	bit	7, (0x24f1:16)                               ; FAA320  f1 f1 24 cf
 	jr z, .LFAA340                                       ; FAA324  66 1a
 	and	(0x24f1:16), 0x7f                            ; FAA326  c1 f1 24 3c 7f
 	ldw (0x60f080:24), 0xb0                             ; FAA32B  f2 80 f0 60 02 b0 00
@@ -78538,7 +78538,7 @@ ParamRecord_WriteFieldAndStage_StaleCopy:
 .LFAA340:
 	popw de                                              ; FAA340  4a
 	ret                                                  ; FAA341  0e
-	m_bit 2, MD16, MidiCfg_ModeBits                                ; FAA342  f1 32 7f ca
+	bit	2, (MidiCfg_ModeBits:16)                               ; FAA342  f1 32 7f ca
 	jr nz, .LFAA3AA                                      ; FAA346  6e 62
 	push XWA                                             ; FAA348  38
 	push XBC                                             ; FAA349  39
@@ -78568,9 +78568,9 @@ ParamRecord_WriteFieldAndStage_StaleCopy:
 	inc 1,DE                                             ; FAA38B  da 61
 .LFAA38D:
 	ld	(TREG5L:8), de                                     ; FAA38D  f0 32 52
-	m_bit 4, MD16, MidiCfg_ModeBits                                ; FAA390  f1 32 7f cc
+	bit	4, (MidiCfg_ModeBits:16)                               ; FAA390  f1 32 7f cc
 	jr nz, .LFAA3A1                                      ; FAA394  6e 0b
-	m_bit 4, MD24, 0x60f020                              ; FAA396  f2 20 f0 60 cc
+	bit	4, (0x60f020:24)                             ; FAA396  f2 20 f0 60 cc
 	jr nz, .LFAA3A1                                      ; FAA39B  6e 04
 	call T_SysExTx_Tempo                                        ; FAA39D  1d ec 08 f4
 .LFAA3A1:
@@ -78995,9 +78995,9 @@ ParamChange_NotifyClearSource:
 ;          the SAME cell -- so the gate is duplicated, not delegated.
 ; ---------------------------------------------------------------------
 ParamChange_Notify:
-	m_bit 0, MD16, 0x0922                                ; FAA604  f1 22 09 c8
+	bit	0, (0x0922:16)                               ; FAA604  f1 22 09 c8
 	jr z, .LFAA610                                       ; FAA608  66 06
-	m_bit 1, MD16, 0x0922                                ; FAA60A  f1 22 09 c9
+	bit	1, (0x0922:16)                               ; FAA60A  f1 22 09 c9
 	jr nz, .LFAA622                                      ; FAA60E  6e 12
 .LFAA610:
 	push XWA                                             ; FAA610  38
@@ -79119,7 +79119,7 @@ sub_FAA6B1:
 	push XIX                                             ; FAA6B5  3c
 	push XIY                                             ; FAA6B6  3d
 	push XIZ                                             ; FAA6B7  3e
-	m_bit 1, MD24, 0x60f021                              ; FAA6B8  f2 21 f0 60 c9
+	bit	1, (0x60f021:24)                             ; FAA6B8  f2 21 f0 60 c9
 	jr nz, .LFAA714                                      ; FAA6BD  6e 55
 	ld (0x60f01d:24), c                                 ; FAA6BF  f2 1d f0 60 43
 	xor H,H                                              ; FAA6C4  ce d6
@@ -79168,7 +79168,7 @@ T_F407E4_Nop:
 ;   pilot-2026-10-06/proposals_wave2_c.json)
 ParamB0_PublishField0IfPending:
 	pushw de                                             ; FAA71F  2a
-	m_bit 7, MD16, 0x24f1                                ; FAA720  f1 f1 24 cf
+	bit	7, (0x24f1:16)                               ; FAA720  f1 f1 24 cf
 	jr z, .LFAA740                                       ; FAA724  66 1a
 	and	(0x24f1:16), 0x7f                            ; FAA726  c1 f1 24 3c 7f
 	ldw (0x60f080:24), 0xb0                             ; FAA72B  f2 80 f0 60 02 b0 00
@@ -79184,7 +79184,7 @@ ParamB0_PublishField0IfPending:
 ;   byte-identical stale copy at 0xFAA342); then SysExTx_Tempo through T_SysExTx_Tempo unless MidiCfg_ModeBits bit 4 or
 ;   (0x60F020) bit 4, which it clears.  18 call sites, among them List2030_Tempo_Apply and ParamModule_BootPhase1.
 Tempo_ApplyBpm:
-	m_bit 2, MD16, MidiCfg_ModeBits                                ; FAA742  f1 32 7f ca
+	bit	2, (MidiCfg_ModeBits:16)                               ; FAA742  f1 32 7f ca
 	jr nz, .LFAA7AA                                      ; FAA746  6e 62
 	push XWA                                             ; FAA748  38
 	push XBC                                             ; FAA749  39
@@ -79214,9 +79214,9 @@ Tempo_ApplyBpm:
 	inc 1,DE                                             ; FAA78B  da 61
 .LFAA78D:
 	ld	(TREG5L:8), de                                     ; FAA78D  f0 32 52
-	m_bit 4, MD16, MidiCfg_ModeBits                                ; FAA790  f1 32 7f cc
+	bit	4, (MidiCfg_ModeBits:16)                               ; FAA790  f1 32 7f cc
 	jr nz, .LFAA7A1                                      ; FAA794  6e 0b
-	m_bit 4, MD24, 0x60f020                              ; FAA796  f2 20 f0 60 cc
+	bit	4, (0x60f020:24)                             ; FAA796  f2 20 f0 60 cc
 	jr nz, .LFAA7A1                                      ; FAA79B  6e 04
 	call T_SysExTx_Tempo                                        ; FAA79D  1d ec 08 f4
 .LFAA7A1:
@@ -79402,7 +79402,7 @@ ParamModule_BootPhase1_MemoryIntact:
 	pop XDE                                              ; FAA908  5a
 	calr ParamImage_PostAllAsChangeEvents                                      ; FAA909  1e a9 01
 	call Tempo_ApplyBpm                                      ; FAA90C  1d 42 a7 fa
-	m_set 5, MD24, 0x60f021                              ; FAA910  f2 21 f0 60 bd
+	set	5, (0x60f021:24)                             ; FAA910  f2 21 f0 60 bd
 	ld h, 0x00:opc                                          ; FAA915  26 00
 .LFAA917:
 	pushw 0x7f                                           ; FAA917  0b 7f 00
@@ -79461,7 +79461,7 @@ MidiSettings_ResetToDefault:
 	pushw 0x03                                           ; FAA986  0b 03 00
 	pushw 0x91                                           ; FAA989  0b 91 00
 	calr Queue2C00_Append4DrainWhenFull                                      ; FAA98C  1e 31 03
-	m_set 5, MD24, 0x60f021                              ; FAA98F  f2 21 f0 60 bd
+	set	5, (0x60f021:24)                             ; FAA98F  f2 21 f0 60 bd
 	calr Queue2C00_DrainPassB_SaveRegs2                                      ; FAA994  1e 84 01
 	inc 8,XSP                                            ; FAA997  ef 60
 .LFAA999:
@@ -79523,7 +79523,7 @@ MidiSettings_ResetToDefault:
 	add (xiz-4), xbc                                     ; FAAA18  ae fc 89
 	jr .LFAA9FE                                          ; FAAA1B  68 e1
 .LFAAA1D:
-	m_set 1, MD16, 0x7fc0                                ; FAAA1D  f1 c0 7f b9
+	set	1, (0x7fc0:16)                               ; FAAA1D  f1 c0 7f b9
 	lda xix, (MidiCfg_ModeBits:16)                                ; FAAA21  f1 32 7f 34
 	ld h, 0x00:opc                                          ; FAAA25  26 00
 .LFAAA27:
@@ -79552,7 +79552,7 @@ MidiSettings_ResetToDefault:
 	ld (MidiCfg_InOutMode:16), 0x01                                 ; FAAA5E  f1 35 7f 00 01
 	jr .LFAAA69                                          ; FAAA63  68 04
 .LFAAA65:
-	m_set 1, MD16, MidiCfg_InOutMode                                ; FAAA65  f1 35 7f b9
+	set	1, (MidiCfg_InOutMode:16)                               ; FAAA65  f1 35 7f b9
 .LFAAA69:
 	pushw 0xff                                           ; FAAA69  0b ff 00
 	push 0x00                                            ; FAAA6C  09 00
@@ -79611,7 +79611,7 @@ ParamImage_PostAllAsChangeEvents:
 	pushw 0x03                                           ; FAAAC3  0b 03 00
 	pushw 0x91                                           ; FAAAC6  0b 91 00
 	calr Queue2C00_Append4DrainWhenFull                                      ; FAAAC9  1e f4 01
-	m_set 5, MD24, 0x60f021                              ; FAAACC  f2 21 f0 60 bd
+	set	5, (0x60f021:24)                             ; FAAACC  f2 21 f0 60 bd
 	calr Queue2C00_DrainPassB_SaveRegs2                                      ; FAAAD1  1e 47 00
 	lda xix, (Combination_Current:16)                                ; FAAAD4  f1 20 76 34
 	inc 8,XSP                                            ; FAAAD8  ef 60
@@ -79645,7 +79645,7 @@ ParamImage_PostAllAsChangeEvents:
 	add XIX,XBC                                          ; FAAB0A  e9 84
 	jr .LFAAADA                                          ; FAAB0C  68 cc
 .LFAAB0E:
-	m_set 5, MD24, 0x60f021                              ; FAAB0E  f2 21 f0 60 bd
+	set	5, (0x60f021:24)                             ; FAAB0E  f2 21 f0 60 bd
 	calr Queue2C00_DrainPassB_SaveRegs2                                      ; FAAB13  1e 05 00
 	pop XIX                                              ; FAAB16  5c
 	popw hl                                              ; FAAB17  4b
@@ -79699,10 +79699,10 @@ ParamImage_LoadFactoryDefaults:
 	ld (MidiCfg_InOutMode:16), 0x01                                 ; FAAB6E  f1 35 7f 00 01
 	jr .LFAAB79                                          ; FAAB73  68 04
 .LFAAB75:
-	m_set 1, MD16, MidiCfg_InOutMode                                ; FAAB75  f1 35 7f b9
+	set	1, (MidiCfg_InOutMode:16)                               ; FAAB75  f1 35 7f b9
 .LFAAB79:
-	m_res 0, MD16, 0x7fc2                                ; FAAB79  f1 c2 7f b0
-	m_set 1, MD16, 0x7fc0                                ; FAAB7D  f1 c0 7f b9
+	res	0, (0x7fc2:16)                               ; FAAB79  f1 c2 7f b0
+	set	1, (0x7fc0:16)                               ; FAAB7D  f1 c0 7f b9
 	and	(0x7fd6:16), 0xfc                            ; FAAB81  c1 d6 7f 3c fc
 	ld c, (0x7642:16)                                   ; FAAB86  c1 42 76 23
 	pushw bc                                             ; FAAB8A  29
@@ -79906,7 +79906,7 @@ Queue2C00_Append4DrainWhenFull:
 	ld BC,(XIX)                                          ; FAAD00  94 21
 	cp BC,0x01fc                                         ; FAAD02  d9 cf fc 01
 	jr c, .LFAAD14                                       ; FAAD06  67 0c
-	m_set 5, MD24, 0x60f021                              ; FAAD08  f2 21 f0 60 bd
+	set	5, (0x60f021:24)                             ; FAAD08  f2 21 f0 60 bd
 	calr Queue2C00_DrainPassB_SaveRegs2                                      ; FAAD0D  1e 0b fe
 	ldw	(xix), 0x0000                                ; FAAD10  b4 02 00 00
 .LFAAD14:
@@ -79987,7 +79987,7 @@ PartControllers_ResetAllParts:
 	inc 1,H                                              ; FAAE16  ce 61
 	cp H,0x1f                                            ; FAAE18  ce cf 1f
 	jrl ule, .LFAAD23                                    ; FAAE1B  73 05 ff
-	m_set 5, MD24, 0x60f021                              ; FAAE1E  f2 21 f0 60 bd
+	set	5, (0x60f021:24)                             ; FAAE1E  f2 21 f0 60 bd
 	calr Queue2C00_DrainPassB_SaveRegs2                                      ; FAAE23  1e f5 fc
 	pop XIX                                              ; FAAE26  5c
 	popw de                                              ; FAAE27  4a
@@ -80092,7 +80092,7 @@ PartSettings_ResetToDefault:
 	pop XIY                                              ; FAAF01  5d
 	cp L,0x1f                                            ; FAAF02  cf cf 1f
 	jrl ule, .LFAAE3B                                    ; FAAF05  73 33 ff
-	m_set 5, MD24, 0x60f021                              ; FAAF08  f2 21 f0 60 bd
+	set	5, (0x60f021:24)                             ; FAAF08  f2 21 f0 60 bd
 	calr Queue2C00_DrainPassB_SaveRegs2                                      ; FAAF0D  1e 0b fc
 	lda xbc, (0x76a0:16)                                ; FAAF10  f1 a0 76 31
 	ld (xiz-14), xbc                                     ; FAAF14  be f2 61
@@ -80185,7 +80185,7 @@ SystemSettings_ResetToDefault:
 	pushw 0x03                                           ; FAAFB0  0b 03 00
 	pushw 0x91                                           ; FAAFB3  0b 91 00
 	calr Queue2C00_Append4DrainWhenFull                                      ; FAAFB6  1e 07 fd
-	m_set 5, MD24, 0x60f021                              ; FAAFB9  f2 21 f0 60 bd
+	set	5, (0x60f021:24)                             ; FAAFB9  f2 21 f0 60 bd
 	calr Queue2C00_DrainPassB_SaveRegs2                                      ; FAAFBE  1e 5a fb
 	inc 8,XSP                                            ; FAAFC1  ef 60
 .LFAAFC3:
@@ -80282,7 +80282,7 @@ SystemSettings_ResetToDefault:
 	ld (MidiCfg_InOutMode:16), 0x01                                 ; FAB095  f1 35 7f 00 01
 	jr .LFAB0A0                                          ; FAB09A  68 04
 .LFAB09C:
-	m_set 1, MD16, MidiCfg_InOutMode                                ; FAB09C  f1 35 7f b9
+	set	1, (MidiCfg_InOutMode:16)                               ; FAB09C  f1 35 7f b9
 .LFAB0A0:
 	pushw 0xff                                           ; FAB0A0  0b ff 00
 	push 0x00                                            ; FAB0A3  09 00
@@ -80292,10 +80292,10 @@ SystemSettings_ResetToDefault:
 	calr Queue2C00_Append4DrainWhenFull                                      ; FAB0AF  1e 0e fc
 	inc 8,XSP                                            ; FAB0B2  ef 60
 .LFAB0B4:
-	m_res 0, MD16, 0x7fc2                                ; FAB0B4  f1 c2 7f b0
-	m_set 1, MD16, 0x7fc0                                ; FAB0B8  f1 c0 7f b9
+	res	0, (0x7fc2:16)                               ; FAB0B4  f1 c2 7f b0
+	set	1, (0x7fc0:16)                               ; FAB0B8  f1 c0 7f b9
 	and	(0x7fd6:16), 0xfc                            ; FAB0BC  c1 d6 7f 3c fc
-	m_set 5, MD24, 0x60f021                              ; FAB0C1  f2 21 f0 60 bd
+	set	5, (0x60f021:24)                             ; FAB0C1  f2 21 f0 60 bd
 	calr Queue2C00_DrainPassB_SaveRegs2                                      ; FAB0C6  1e 52 fa
 	calr PartControllers_ResetAllParts                                      ; FAB0C9  1e 4d fc
 	call Tempo_ApplyBpm                                      ; FAB0CC  1d 42 a7 fa
@@ -80889,7 +80889,7 @@ ParamB0_PublishPendingFields:
 	ld c, (0x24f1:16)                                   ; FAB5F0  c1 f1 24 23
 	and C,0x80                                           ; FAB5F4  cb cc 80
 	jr z, .LFAB61B                                       ; FAB5F7  66 22
-	m_res 7, MD16, 0x24f1                                ; FAB5F9  f1 f1 24 b7
+	res	7, (0x24f1:16)                               ; FAB5F9  f1 f1 24 b7
 	ld (0x60f080:24), 0xb0                             ; FAB5FD  f2 80 f0 60 00 b0
 	ld (0x60f081:24), 0x00                             ; FAB603  f2 81 f0 60 00 00
 	ld c, (0x24f1:16)                                   ; FAB609  c1 f1 24 23
@@ -81097,7 +81097,7 @@ List2030_ProcessEvents:
 	ld c, (0x2030:16)                                   ; FAB7E6  c1 30 20 23
 	cp C,0xff                                            ; FAB7EA  cb cf ff
 	jr z, .LFAB81E                                       ; FAB7ED  66 2f
-	m_res 0, MD24, 0x60f0c6                              ; FAB7EF  f2 c6 f0 60 b0
+	res	0, (0x60f0c6:24)                             ; FAB7EF  f2 c6 f0 60 b0
 	lda xbc, (ParamNumber_RecordPtrs:24)                 ; FAB7F4  f2 ea cd fa 31
 ; (sub_FAB7F9 removed 2026-10-04: no code names it and the line above falls through into it -- part of List2030_ProcessEvents;
 ;  notes/prom_a_stray_label_removal.py)
@@ -81115,7 +81115,7 @@ List2030_ProcessEvents:
 	pop XIX                                              ; FAB816  5c
 	pop XHL                                              ; FAB817  5b
 	pop XDE                                              ; FAB818  5a
-	m_res 1, MD24, 0x60f020                              ; FAB819  f2 20 f0 60 b1
+	res	1, (0x60f020:24)                             ; FAB819  f2 20 f0 60 b1
 .LFAB81E:
 	ret                                                  ; FAB81E  0e
 ; ---------------------------------------------------------------------
@@ -81170,7 +81170,7 @@ List2030_TranslateToQueue2C00:
 	ldw (0x60f002:24), 0x00                             ; FAB874  f2 02 f0 60 02 00 00
 	jr .LFAB833                                          ; FAB87B  68 b6
 .LFAB87D:
-	m_res 4, MD24, 0x60f021                              ; FAB87D  f2 21 f0 60 b4
+	res	4, (0x60f021:24)                             ; FAB87D  f2 21 f0 60 b4
 	ld BC,(XIX)                                          ; FAB882  94 21
 	extz XBC                                             ; FAB884  e9 12
 	ld (XBC+0x2c00),0xff                                 ; FAB886  f3 e5 00 2c 00 ff
@@ -81308,10 +81308,10 @@ sub_FAB915:
 	jr nz, .LFAB937                                      ; FAB923  6e 12
 	ld c, (0x60f089:24)                                 ; FAB925  c2 89 f0 60 23
 	ld (0x60f0d0:24), c                                 ; FAB92A  f2 d0 f0 60 43
-	m_set 4, MD24, 0x60f021                              ; FAB92F  f2 21 f0 60 bc
+	set	4, (0x60f021:24)                             ; FAB92F  f2 21 f0 60 bc
 	jrl .LFAB9F8                                         ; FAB934  78 c1 00
 .LFAB937:
-	m_res 4, MD24, 0x60f021                              ; FAB937  f2 21 f0 60 b4
+	res	4, (0x60f021:24)                             ; FAB937  f2 21 f0 60 b4
 	ld c, (0x60f080:24)                                 ; FAB93C  c2 80 f0 60 23
 	ld (0x60f01c:24), c                                 ; FAB941  f2 1c f0 60 43
 	ld a, (0x60f089:24)                                 ; FAB946  c2 89 f0 60 21
@@ -81399,7 +81399,7 @@ sub_FABA08:
 	ld A,(XBC+0x01)                                      ; FABA37  89 01 21
 	cp a, 0x07:i3                                          ; FABA3A  c9 df
 	jr nz, .LFABA46                                      ; FABA3C  6e 08
-	m_res 6, MD24, 0x60f089                              ; FABA3E  f2 89 f0 60 b6
+	res	6, (0x60f089:24)                             ; FABA3E  f2 89 f0 60 b6
 	and (XIX),0xbf                                       ; FABA43  84 3c bf
 .LFABA46:
 	ld c, (0x60f020:24)                                 ; FABA46  c2 20 f0 60 23
@@ -81647,10 +81647,10 @@ List2030_Param98_ApplyProgram:
 	jr nz, .LFABC0D                                      ; FABBF9  6e 12
 	ld c, (0x60f089:24)                                 ; FABBFB  c2 89 f0 60 23
 	ld (0x60f0d0:24), c                                 ; FABC00  f2 d0 f0 60 43
-	m_set 4, MD24, 0x60f021                              ; FABC05  f2 21 f0 60 bc
+	set	4, (0x60f021:24)                             ; FABC05  f2 21 f0 60 bc
 	jrl .LFABCD0                                         ; FABC0A  78 c3 00
 .LFABC0D:
-	m_res 4, MD24, 0x60f021                              ; FABC0D  f2 21 f0 60 b4
+	res	4, (0x60f021:24)                             ; FABC0D  f2 21 f0 60 b4
 	ld c, (0x60f080:24)                                 ; FABC12  c2 80 f0 60 23
 	ld (0x60f17f:24), c                                 ; FABC17  f2 7f f1 60 43
 	ld a, (0x60f089:24)                                 ; FABC1C  c2 89 f0 60 21
@@ -81752,7 +81752,7 @@ List2030_ParamB0_Apply:
 ;   of Seq_StopWhenTracksEnded's stop, each of which clears (0x34D8) bit 7 just before. Basis: callers + body + twin
 ;   header. (notes/naming-pilot-2026-10-06/proposals_wave5_o.json)
 Seq_PublishPendingParamB0:
-	m_res 7, MD16, 0x34d8                                ; FABD33  f1 d8 34 b7
+	res	7, (0x34d8:16)                               ; FABD33  f1 d8 34 b7
 	calr ParamB0_PublishPendingFields                                          ; FABD37  1e b1 f8
 	ret                                                  ; FABD3A  0e
 ; ---------------------------------------------------------------------
@@ -84867,7 +84867,7 @@ Evt2030_Class00to1F_Op04:   ; entry: pointer-table entry
 	and E,D
 	bit 0x03,D
 	jr z, .LFADC57
-	m_bit 1, MD24, 0x60f020
+	bit	1, (0x60f020:24)
 	jr z, .LFADC57
 	or E,0x08
 .LFADC57:
@@ -85197,10 +85197,10 @@ Evt2030_Class98_Op00:   ; entry: pointer-table entry
 ; Unknown:  what bit 3 of (0x7F32) is, and what (0x1965) counts.
 ; ---------------------------------------------------------------------
 Evt2030_Class98_Op01:   ; entry: pointer-table entry
-	m_bit 3, MD16, MidiCfg_ModeBits
+	bit	3, (MidiCfg_ModeBits:16)
 	jrl z, Evt2030_Class98_Op01_JumpTable_FADDF1_Nop2
 	inc 0x01, (0x1965:16)
-	m_bit 0, MD16, 0x1965
+	bit	0, (0x1965:16)
 	jr nz, Evt2030_Class98_Op01_JumpTable_FADDF1_Nop2
 	ld l, (MidiCfg_ModeBits:16)
 	and L,0x03
@@ -85611,7 +85611,7 @@ ParamApply_ByModeOfParam80:
 	cp A,0x10
 	pop_a
 	jr nz, .LFADF61
-	m_bit 1, MD16, 0x08ec
+	bit	1, (0x08ec:16)
 	jr nz, .LFADF61
 	and A,0xe7
 .LFADF61:
@@ -85725,7 +85725,7 @@ Dev7F_WriteAllFourSlots_Skip_JumpTable_FAE04D:
 ParamApply_PartProgNormal:   ; entry: pointer-table entry
 	ld bc, (0x1950:16)
 	ld de, (0x1952:16)
-	m_bit 2, MD16, 0x7f4d
+	bit	2, (0x7f4d:16)
 	jr z, .LFAE077
 	cp C,0x09
 	jrl z, .LFAE0FC
@@ -85979,7 +85979,7 @@ ParamApply_DeriveTech:   ; entry: pointer-table entry
 	cp A,0x10
 	pop_a
 	jr nz, .LFAE2D1
-	m_bit 0, MD16, 0x08ec
+	bit	0, (0x08ec:16)
 	jr nz, .LFAE2D1
 	and A,0xe7
 .LFAE2D1:
@@ -86005,7 +86005,7 @@ ParamApply_DeriveMode3:   ; entry: pointer-table entry
 ; ---------------------------------------------------------------------
 Evt2030_Class00to1F_Op00:   ; entry: pointer-table entry
 	inc 0x01, (0x1965:16)
-	m_bit 0, MD16, 0x1965
+	bit	0, (0x1965:16)
 	jr z, .LFAE2F7
 	ld wa, (0x60f0be:24)
 	ld (0x1966:16), wa
@@ -86047,7 +86047,7 @@ sub_FAE30D_JumpTable_FAE30E:
 ; Evidence: arm 0 of the 4-entry table at 0xFAE30E -- the LE32 word at 0xFAE30E reads 0x00FAE31E; reader `ld XIX,0x00fae30e` at 0xFAE301, index (0x7F32) & 3, and DLTable_NormalTechRemap[0] is "NORMAL" (see Evt2030_ProgChgMode3_Notify).
 ; Body: with GM mode on (bit 2 of (0x7F4D), notes/sysex-probes/sysex_general_midi.py) parts 9 and 0x19 take the TECH arm; else XIX = ParamNumber_RecordPtrs[C|0x20], notify {0x81, part, (XIX+0x1D) split into two 7-bit halves} and {part, 0, ((XIX+0x1B)<<3)|((XIX+0x1C)&7), 0xFF} -- the bytes ParamApply_PartProgNormal stores.
 Evt2030_ProgChgNormal_Notify:   ; entry: pointer-table entry
-	m_bit 2, MD16, 0x7f4d
+	bit	2, (0x7f4d:16)
 	jr z, .LFAE32E
 	cp C,0x09
 	jr z, .LFAE36C
@@ -86511,16 +86511,16 @@ SeqBuf_PickRecordPartMask:
 	bit	2, (TransportB_State:8)
 	jr z, .LFAE8BF
 	ld xwa, (0x3000:16)
-	m_set 2, MD24, 0x60f020
+	set	2, (0x60f020:24)
 	jr .LFAE8BF
 .LFAE8AA:
-	m_bit 0, MD16, 0x34e2
+	bit	0, (0x34e2:16)
 	jr z, .LFAE8BF
 	ld xwa, (0x3004:16)
 	jr .LFAE8BF
 .LFAE8B6:
 	ld xwa, (0x1336:16)
-	m_set 3, MD24, 0x60f020
+	set	3, (0x60f020:24)
 .LFAE8BF:
 	and XWA,0x0001ffff
 	ld (0x60f318:24), xwa
@@ -86543,16 +86543,16 @@ SeqBuf_PickRecordPartMask:
 	cp (0x3000:16), xwa
 	jr z, .LFAE915
 	ld xwa, (0x3000:16)
-	m_set 2, MD24, 0x60f020
+	set	2, (0x60f020:24)
 	jr T,.LFAE915
 .LFAE900:
-	m_bit 0, MD16, 0x34e2
+	bit	0, (0x34e2:16)
 	jr z, .LFAE915
 	ld xwa, (0x3004:16)
 	jr .LFAE915
 .LFAE90C:
 	ld xwa, (0x1336:16)
-	m_set 3, MD24, 0x60f020
+	set	3, (0x60f020:24)
 .LFAE915:
 	and XWA,0x0001ffff
 	ld (0x60f318:24), xwa
@@ -86673,12 +86673,12 @@ SeqBuf_PutProgramEvent:   ; entry: pointer-table entry
 	bit 0x07,A
 	jr z, .LFAEA47
 	res 0x07,A
-	m_set 0, MD24, 0x60f300
+	set	0, (0x60f300:24)
 .LFAEA47:
 	bit 0x07,W
 	jr z, .LFAEA54
 	res 0x07,W
-	m_set 1, MD24, 0x60f300
+	set	1, (0x60f300:24)
 .LFAEA54:
 	ld (xix+), wa
 	ld a, (0x60f31c:24)
@@ -86699,19 +86699,19 @@ SeqBuf_PutParamEvent:   ; entry: pointer-table entry
 	bit 0x07,A
 	jr z, .LFAEA8C
 	res 0x07,A
-	m_set 2, MD24, 0x60f300
+	set	2, (0x60f300:24)
 .LFAEA8C:
 	ld (xix+), wa
 	ld wa, (0x60f312:24)
 	bit 0x07,A
 	jr z, .LFAEAA1
 	res 0x07,A
-	m_set 0, MD24, 0x60f300
+	set	0, (0x60f300:24)
 .LFAEAA1:
 	bit 0x07,W
 	jr z, .LFAEAAE
 	res 0x07,W
-	m_set 1, MD24, 0x60f300
+	set	1, (0x60f300:24)
 .LFAEAAE:
 	ld (xix+), wa
 	ld a, (0x60f31c:24)
@@ -86768,7 +86768,7 @@ SeqBuf_PutExpressionEvent:   ; entry: pointer-table entry
 ; SeqBuf_PutChanPressureEvent -- event type 6 of the encoder at 0xFAE921: when bit 0 of (0x7FC2) is set, encode a channel-pressure change as {0xD0, tick, value, slot} and append it to ring 0x600A14
 ; Evidence: the LE32 word at 0xFAE9E8 reads 0x00FAEB46 (index 6); reader `ld XIX,0x00fae9d0` at 0xFAE9A6; KeyValueList_A type 6 belongs only to key 0xB4 (ParamMsg_B4_ChannelPressure).  Body: `bit 0,(0x7fc2) / jr z` gate, `ld A,0xd0`, (0x60F31F) = 4.  What bit 0 of (0x7FC2) is, is not established.
 SeqBuf_PutChanPressureEvent:   ; entry: pointer-table entry
-	m_bit 0, MD16, 0x7fc2
+	bit	0, (0x7fc2:16)
 	jr z, .LFAEB74
 	ld XIX,0x0060f300
 	ld a, 0xd0:opc
@@ -87536,7 +87536,7 @@ SeqEvt_ShadowExpression:   ; entry: pointer-table entry
 	ld e, (0x60f30a:24)
 	extz HL
 	ld l, (0x60f31d:24)
-	m_bit 7, MD16, 0x34d1
+	bit	7, (0x34d1:16)
 	jr nz, .LFAF352
 	set 0x07,E
 	ld XIX,SeqEvt_ExpressionShadow
@@ -87565,18 +87565,18 @@ SeqEvt_ShadowExpression:   ; entry: pointer-table entry
 	call T_Queue2C00_PublishStagedIfPending
 	jr .LFAF3CC
 .LFAF3A6:
-	m_bit 7, MD16, 0x34d1
+	bit	7, (0x34d1:16)
 	jr nz, .LFAF3B2
-	m_bit 7, MD16, 0x34d8
+	bit	7, (0x34d8:16)
 	jr z, .LFAF3F8
 .LFAF3B2:
 	ld a, (0x60f0be:24)
 	set 0x07,A
 	ld (0x24f0:16), a
 	call T_ParamB0_PublishField0IfPending
-	m_bit 7, MD16, 0x34d1
+	bit	7, (0x34d1:16)
 	jr z, .LFAF3CC
-	m_res 7, MD16, 0x34d1
+	res	7, (0x34d1:16)
 .LFAF3CC:
 	extz HL
 	ld l, (0x60f31d:24)
@@ -87922,7 +87922,7 @@ SeqEvt_ApplyProgramEvent_JumpTable_FAF6B8:
 ; Evidence: arm 0 of the 4-entry table at 0xFAF6B8 -- the LE32 word at 0xFAF6B8 reads 0x00FAF6C8; reader `ld XIX,0x00faf6b8` at 0xFAF6AB, index (0x7F32) & 3 = PROG CHANGE MODE (DLTable_NormalTechRemap[0] = "NORMAL").
 ; Body: GM drum parts 9/0x19 take the TECH arm; else T_ParamChange_Notify {0x81, part, (0x60F326) split} and {part, 0, ((0x60F324)<<3)|((0x60F325)&7), 0xFF}, with (0x60F007) = (0x603433)[slot] | 0x80.
 SeqEvt_ProgChgNormal_Notify:   ; entry: pointer-table entry
-	m_bit 2, MD16, 0x7f4d
+	bit	2, (0x7f4d:16)
 	jr z, .LFAF6D8
 	cp C,0x09
 	jr z, .LFAF728
@@ -89597,7 +89597,7 @@ sub_FB3C34_Nop2:
 ; Evidence: `bit 2,(0x7f4d)` at 0xFB2026 (GM mode, notes/sysex-probes/sysex_general_midi.py), `ld A,(0x7f32) / and A,0x03 / cp A,0` at 0xFB202C-0xFB2033 (0 = NORMAL, DLTable_NormalTechRemap[0]), `call ParamApply_ResetPairTablesForGm` at 0xFB2037.
 ; ParamApply_ResetPairTablesForGm fills the pair table 0x60F530 with {0x00,0x1A} and the byte table 0x60F570 with 0x1A, then parts 9 and 0x19 with {0x00,0x20} / 0x20 (0xFB56DA-0xFB5769) -- the two tables ParamApply_StorePairAndDerive writes.
 ParamApply_ResetPairTablesIfGmNormal:
-	m_bit 2, MD16, 0x7f4d                                ; FB2026  f1 4d 7f ca
+	bit	2, (0x7f4d:16)                               ; FB2026  f1 4d 7f ca
 	jr z, .LFB203B                                       ; FB202A  66 0f
 	ld a, (MidiCfg_ModeBits:16)                                   ; FB202C  c1 32 7f 21
 	and A,0x03                                           ; FB2030  c9 cc 03
@@ -89624,7 +89624,7 @@ SysExDump_RunSendJob:
 	ld c, (0x60f802:24)                                 ; FB2049  c2 02 f8 60 23
 	and C,0x80                                           ; FB204E  cb cc 80
 	jr z, JumpTable_FB2081_Code_Skip                                           ; FB2051  66 70
-	m_set 6, MD24, 0x60fd40                              ; FB2053  f2 40 fd 60 be
+	set	6, (0x60fd40:24)                             ; FB2053  f2 40 fd 60 be
 	call MidiInARing_InitIfPanelMode79                                      ; FB2058  1d fd 7e fb
 	call SysExSession_StartProgressScreen                                      ; FB205C  1d 0b 7b fb
 	call SysExDump_Handshake                                      ; FB2060  1d 23 23 fb
@@ -89931,12 +89931,12 @@ SysExCmd_ResetSession:
 	ret                                                  ; FB22CC  0e
 ; SysExJob_TotalKeyboard: bit 3 of (0x60FD40) around SysExXfer_SetJobTotal_TotalKeyboard and SysExDump_SendAllCategories.
 SysExJob_TotalKeyboard:
-	m_set 3, MD24, 0x60fd40                              ; FB22CD  f2 40 fd 60 bb
+	set	3, (0x60fd40:24)                             ; FB22CD  f2 40 fd 60 bb
 	lda xbc, (0x60fce8:24)                               ; FB22D2  f2 e8 fc 60 31
 	push XBC                                             ; FB22D7  39
 	call SysExXfer_SetJobTotal_TotalKeyboard                                      ; FB22D8  1d 9b 74 fb
 	calr SysExDump_SendAllCategories                                      ; FB22DC  1e 03 01
-	m_res 3, MD24, 0x60fd40                              ; FB22DF  f2 40 fd 60 b3
+	res	3, (0x60fd40:24)                             ; FB22DF  f2 40 fd 60 b3
 	pop XBC                                              ; FB22E4  59
 	ret                                                  ; FB22E5  0e
 SysExJob_TotalKeyboard_Nop:
@@ -89979,14 +89979,14 @@ SysExDump_Handshake:
 	pushw hl                                             ; FB2323  2b
 	push XIX                                             ; FB2324  3c
 	lda xix, (0x60fcd8:24)                               ; FB2325  f2 d8 fc 60 34
-	m_res 7, MD24, 0x60fd40                              ; FB232A  f2 40 fd 60 b7
+	res	7, (0x60fd40:24)                             ; FB232A  f2 40 fd 60 b7
 	ld h, 0x00:opc                                          ; FB232F  26 00
 .LFB2331:
 	pushw 0x07                                           ; FB2331  0b 07 00
 	lda xbc, (0xf4fed5:24)                               ; FB2334  f2 d5 fe f4 31
 	push XBC                                             ; FB2339  39
 	call SysExTx_AppendAndSendOnF7                                      ; FB233A  1d 7f 6e fb
-	m_set 2, MD24, 0x60fd40                              ; FB233E  f2 40 fd 60 ba
+	set	2, (0x60fd40:24)                             ; FB233E  f2 40 fd 60 ba
 	call SysExRx_AwaitReply                                      ; FB2343  1d 72 60 fb
 	pushw 0x00                                           ; FB2347  0b 00 00
 	ld XBC,(XIX)                                         ; FB234A  a4 21
@@ -90032,7 +90032,7 @@ SysExDump_Handshake:
 	lda xbc, (0xf4fedc:24)                               ; FB23AD  f2 dc fe f4 31
 	push XBC                                             ; FB23B2  39
 	call SysExTx_AppendAndSendOnF7                                      ; FB23B3  1d 7f 6e fb
-	m_set 2, MD24, 0x60fd40                              ; FB23B7  f2 40 fd 60 ba
+	set	2, (0x60fd40:24)                             ; FB23B7  f2 40 fd 60 ba
 	call SysExRx_AwaitReply                                      ; FB23BC  1d 72 60 fb
 	pushw 0x00                                           ; FB23C0  0b 00 00
 	ld XBC,(XIX)                                         ; FB23C3  a4 21
@@ -90042,7 +90042,7 @@ SysExDump_Handshake:
 	inc 4,XSP                                            ; FB23CC  ef 64
 	cp a, 0x01:i3                                          ; FB23CE  c9 d9
 	jr nz, .LFB23D9                                      ; FB23D0  6e 07
-	m_set 7, MD24, 0x60fd40                              ; FB23D2  f2 40 fd 60 bf
+	set	7, (0x60fd40:24)                             ; FB23D2  f2 40 fd 60 bf
 	jr .LFB23DF                                          ; FB23D7  68 06
 .LFB23D9:
 	dec 1,H                                              ; FB23D9  ce 69
@@ -90596,7 +90596,7 @@ SysExSession_DispatchCommand:
 ;   else F0 50 24 7E F7 (README: 'What an open session answers with').
 SysExSession_AnswerByStatus:
 	pushw hl                                             ; FB28BE  2b
-	m_bit 7, MD24, 0x60fd40                              ; FB28BF  f2 40 fd 60 cf
+	bit	7, (0x60fd40:24)                             ; FB28BF  f2 40 fd 60 cf
 	jr z, .LFB28FD                                       ; FB28C4  66 37
 	call SysExTx_SwapBuffers                                      ; FB28C6  1d 81 80 fb
 	ld xbc, (0x60fcd8:24)                               ; FB28CA  e2 d8 fc 60 21
@@ -90656,14 +90656,14 @@ SysExSession_StartTransfer:
 	push XBC                                             ; FB294E  39
 	call U8Rec16_GetField                                      ; FB294F  1d d3 62 fb
 	ld (0x60fc96:24), a                                 ; FB2953  f2 96 fc 60 41
-	m_set 7, MD24, 0x60fd40                              ; FB2958  f2 40 fd 60 bf
+	set	7, (0x60fd40:24)                             ; FB2958  f2 40 fd 60 bf
 	ld (0x60fd44:24), 0x02                             ; FB295D  f2 44 fd 60 00 02
 	add XSP,0x00000012                                   ; FB2963  ef c8 12 00 00 00
 	jr .LFB2976                                          ; FB2969  68 0b
 .LFB296B:
 	ld XBC,(XIX)                                         ; FB296B  a4 21
 	ld (XBC+0x04),0x18                                   ; FB296D  b9 04 00 18
-	m_res 4, MD24, 0x60fd40                              ; FB2971  f2 40 fd 60 b4
+	res	4, (0x60fd40:24)                             ; FB2971  f2 40 fd 60 b4
 .LFB2976:
 	pop XIX                                              ; FB2976  5c
 	ret                                                  ; FB2977  0e
@@ -91436,7 +91436,7 @@ SysExSession_CategoryEnd:
 	push XIY                                             ; FB3062  3d
 	jp (xwa)                                             ; FB3063  b0 d8
 .LFB3065:
-	m_res 7, MD24, 0x60fd42                              ; FB3065  f2 42 fd 60 b7
+	res	7, (0x60fd42:24)                             ; FB3065  f2 42 fd 60 b7
 .LFB306A:
 	popw hl                                              ; FB306A  4b
 	ret                                                  ; FB306B  0e
@@ -91456,7 +91456,7 @@ SysExSession_CategoryEnd_SystemPartMidi:
 	ld xbc, (0x60fcd8:24)                               ; FB3085  e2 d8 fc 60 21
 	push XBC                                             ; FB308A  39
 	call U8Rec16_SetField                                      ; FB308B  1d 19 62 fb
-	m_set 7, MD24, 0x60fd41                              ; FB308F  f2 41 fd 60 bf
+	set	7, (0x60fd41:24)                             ; FB308F  f2 41 fd 60 bf
 	inc 8,XSP                                            ; FB3094  ef 60
 	ret                                                  ; FB3096  0e
 ; SysExSession_CategoryEnd_Sound: step 6: step 0, bit 6 of (0x60FD41).
@@ -91466,7 +91466,7 @@ SysExSession_CategoryEnd_Sound:
 	ld xbc, (0x60fcd8:24)                               ; FB309D  e2 d8 fc 60 21
 	push XBC                                             ; FB30A2  39
 	call U8Rec16_SetField                                      ; FB30A3  1d 19 62 fb
-	m_set 6, MD24, 0x60fd41                              ; FB30A7  f2 41 fd 60 be
+	set	6, (0x60fd41:24)                             ; FB30A7  f2 41 fd 60 be
 	inc 8,XSP                                            ; FB30AC  ef 60
 	ret                                                  ; FB30AE  0e
 ; SysExSession_CategoryEnd_Stub: step 10, the stubbed-out category: step 0, bit 5 of (0x60FD41).
@@ -91476,7 +91476,7 @@ SysExSession_CategoryEnd_Stub:
 	ld xbc, (0x60fcd8:24)                               ; FB30B5  e2 d8 fc 60 21
 	push XBC                                             ; FB30BA  39
 	call U8Rec16_SetField                                      ; FB30BB  1d 19 62 fb
-	m_set 5, MD24, 0x60fd41                              ; FB30BF  f2 41 fd 60 bd
+	set	5, (0x60fd41:24)                             ; FB30BF  f2 41 fd 60 bd
 	inc 8,XSP                                            ; FB30C4  ef 60
 	ret                                                  ; FB30C6  0e
 ; SysExSession_CategoryEnd_Sequencer: step 14: step 0, bit 4 of (0x60FD41).
@@ -91486,7 +91486,7 @@ SysExSession_CategoryEnd_Sequencer:
 	ld xbc, (0x60fcd8:24)                               ; FB30CD  e2 d8 fc 60 21
 	push XBC                                             ; FB30D2  39
 	call U8Rec16_SetField                                      ; FB30D3  1d 19 62 fb
-	m_set 4, MD24, 0x60fd41                              ; FB30D7  f2 41 fd 60 bc
+	set	4, (0x60fd41:24)                             ; FB30D7  f2 41 fd 60 bc
 	inc 8,XSP                                            ; FB30DC  ef 60
 	ret                                                  ; FB30DE  0e
 ; SysExSession_CategoryEnd_Combination: step 17: step 0, bit 3 of (0x60FD41).
@@ -91496,7 +91496,7 @@ SysExSession_CategoryEnd_Combination:
 	ld xbc, (0x60fcd8:24)                               ; FB30E5  e2 d8 fc 60 21
 	push XBC                                             ; FB30EA  39
 	call U8Rec16_SetField                                      ; FB30EB  1d 19 62 fb
-	m_set 3, MD24, 0x60fd41                              ; FB30EF  f2 41 fd 60 bb
+	set	3, (0x60fd41:24)                             ; FB30EF  f2 41 fd 60 bb
 	inc 8,XSP                                            ; FB30F4  ef 60
 	ret                                                  ; FB30F6  0e
 ; SysExSession_DumpEnd: command 0x04, F0 50 28 7E F7 (end of dump) or 2A 7E (memory full): status 0, end the session.
@@ -91506,7 +91506,7 @@ SysExSession_DumpEnd:
 	ld xbc, (0x60fcd8:24)                               ; FB30FD  e2 d8 fc 60 21
 	push XBC                                             ; FB3102  39
 	call U8Rec16_SetField                                      ; FB3103  1d 19 62 fb
-	m_res 4, MD24, 0x60fd40                              ; FB3107  f2 40 fd 60 b4
+	res	4, (0x60fd40:24)                             ; FB3107  f2 40 fd 60 b4
 	calr SysExSession_OnEnd_SystemPartMidi                                      ; FB310C  1e 6f 00
 	calr SysExSession_OnEnd_Sound                                      ; FB310F  1e ba 00
 	calr SysExSession_OnEnd_Sound_Nop                                      ; FB3112  1e ec 00
@@ -91565,11 +91565,11 @@ Queue2C00_DrainPassBAndPublish:
 	push XIX                                             ; FB315C  3c
 	push XIZ                                             ; FB315D  3e
 	call T_Queue2C00_DrainPassB                          ; FB315E  1d 38 00 f4
-	m_res 0, MD16, 0x124c                                ; FB3162  f1 4c 12 b0
+	res	0, (0x124c:16)                               ; FB3162  f1 4c 12 b0
 	and	(Disk_Flags:16), 0xe7                            ; FB3166  c1 e7 21 3c e7
-	m_set 4, MD24, 0x60f020                              ; FB316B  f2 20 f0 60 bc
+	set	4, (0x60f020:24)                             ; FB316B  f2 20 f0 60 bc
 	call T_Tempo_ApplyBpm                                        ; FB3170  1d 94 07 f4
-	m_res 4, MD24, 0x60f020                              ; FB3174  f2 20 f0 60 b4
+	res	4, (0x60f020:24)                             ; FB3174  f2 20 f0 60 b4
 	pop XIZ                                              ; FB3179  5e
 	pop XIX                                              ; FB317A  5c
 	pop XHL                                              ; FB317B  5b
@@ -91583,7 +91583,7 @@ Queue2C00_DrainPassBAndPublish:
 SysExSession_OnEnd_SystemPartMidi:
 	push XIX                                             ; FB317E  3c
 	lda xix, (.LFB31B3:24)                               ; FB317F  f2 b3 31 fb 34
-	m_bit 7, MD24, 0x60fd41                              ; FB3184  f2 41 fd 60 cf
+	bit	7, (0x60fd41:24)                             ; FB3184  f2 41 fd 60 cf
 	jr z, .LFB31B1                                       ; FB3189  66 26
 	calr ParamImage_WriteHeadersAndSanitize                                      ; FB318B  1e 90 ff
 	lda xiy, (.LFB3196:24)                               ; FB318E  f2 96 31 fb 35
@@ -91600,14 +91600,14 @@ SysExSession_OnEnd_SystemPartMidi:
 	push XIY                                             ; FB31A9  3d
 	jp (xix)                                             ; FB31AA  b4 d8
 .LFB31AC:
-	m_res 7, MD24, 0x60fd41                              ; FB31AC  f2 41 fd 60 b7
+	res	7, (0x60fd41:24)                             ; FB31AC  f2 41 fd 60 b7
 .LFB31B1:
 	pop XIX                                              ; FB31B1  5c
 	ret                                                  ; FB31B2  0e
 .LFB31B3:
-	m_bit 4, MD24, 0x60fd41                              ; FB31B3  f2 41 fd 60 cc
+	bit	4, (0x60fd41:24)                             ; FB31B3  f2 41 fd 60 cc
 	jr z, .LFB31BE                                       ; FB31B8  66 04
-	m_set 0, MD16, 0x124c                                ; FB31BA  f1 4c 12 b8
+	set	0, (0x124c:16)                               ; FB31BA  f1 4c 12 b8
 .LFB31BE:
 	ret                                                  ; FB31BE  0e
 ; Msg0716_PostRestageAllParts_SaveRegs: Saves XDE / XHL / XIX / XIZ around T_Msg0716_PostRestageAllParts (Msg0716_PostRestageAllParts, was
@@ -91635,7 +91635,7 @@ SysExSession_OnEnd_Sound:
 	lda xiy, (0xf4f910:24)                               ; FB31D4  f2 10 f9 f4 35
 	lda xix, (xiz-6)                                     ; FB31D9  be fa 34
 	ldirw                                                ; FB31DC  95 11
-	m_bit 6, MD24, 0x60fd41                              ; FB31DE  f2 41 fd 60 ce
+	bit	6, (0x60fd41:24)                             ; FB31DE  f2 41 fd 60 ce
 	jr z, .LFB31FD                                       ; FB31E3  66 18
 	lda xbc, (xiz-6)                                     ; FB31E5  be fa 31
 	push XBC                                             ; FB31E8  39
@@ -91643,7 +91643,7 @@ SysExSession_OnEnd_Sound:
 	pushw 0x00                                           ; FB31EC  0b 00 00
 	call T_Link_SendBlockIn32ByteChunks                                        ; FB31EF  1d d4 0e f4
 	calr Msg0716_PostRestageAllParts_SaveRegs                                      ; FB31F3  1e c9 ff
-	m_res 6, MD24, 0x60fd41                              ; FB31F6  f2 41 fd 60 b6
+	res	6, (0x60fd41:24)                             ; FB31F6  f2 41 fd 60 b6
 	inc 8,XSP                                            ; FB31FB  ef 60
 .LFB31FD:
 	pop XIX                                              ; FB31FD  5c
@@ -91656,7 +91656,7 @@ SysExSession_OnEnd_Sound_Nop:
 ;   received bank number into BStore_CurrentBank and runs BStore_RebuildFreeListAfterLoad -- then clears bit 4. Basis:
 ;   caller + body + the CategoryEnd bit map. (notes/naming-pilot-2026-10-06/proposals_wave8_c8.json)
 SysExSession_OnEnd_Sequencer:
-	m_bit 4, MD24, 0x60fd41                              ; FB3202  f2 41 fd 60 cc
+	bit	4, (0x60fd41:24)                             ; FB3202  f2 41 fd 60 cc
 	jr z, .LFB3222                                       ; FB3207  66 19
 	push XDE                                             ; FB3209  3a
 	push XHL                                             ; FB320A  3b
@@ -91669,14 +91669,14 @@ SysExSession_OnEnd_Sequencer:
 	pop XIX                                              ; FB321A  5c
 	pop XHL                                              ; FB321B  5b
 	pop XDE                                              ; FB321C  5a
-	m_res 4, MD24, 0x60fd41                              ; FB321D  f2 41 fd 60 b4
+	res	4, (0x60fd41:24)                             ; FB321D  f2 41 fd 60 b4
 .LFB3222:
 	ret                                                  ; FB3222  0e
 ; SysExSession_ClearCombinationReceived: clear bit 3 of (0x60FD41), the bit SysExSession_CategoryEnd_Combination sets.
 SysExSession_ClearCombinationReceived:
-	m_bit 3, MD24, 0x60fd41                              ; FB3223  f2 41 fd 60 cb
+	bit	3, (0x60fd41:24)                             ; FB3223  f2 41 fd 60 cb
 	jr z, .LFB322F                                       ; FB3228  66 05
-	m_res 3, MD24, 0x60fd41                              ; FB322A  f2 41 fd 60 b3
+	res	3, (0x60fd41:24)                             ; FB322A  f2 41 fd 60 b3
 .LFB322F:
 	ret                                                  ; FB322F  0e
 ; SysExSession_Ignore: the in-session table's (PtrTable_F4F916) default, a bare ret.
@@ -95306,7 +95306,7 @@ SysExCmd_DumpRequest_Combination:
 ; SysExDump_StopTransportsAndSend: sets bit 7 of (0x60F802), T_Transport_StopAllRunning with XDE/XHL/XIX/XIZ preserved, then SysExDump_RunSendJob;
 ;   called from SysExCmd_DumpRequestGate.  Basis: body.
 SysExDump_StopTransportsAndSend:
-	m_set 7, MD24, 0x60f802                              ; FB5154  f2 02 f8 60 bf
+	set	7, (0x60f802:24)                             ; FB5154  f2 02 f8 60 bf
 	push XDE                                             ; FB5159  3a
 	push XHL                                             ; FB515A  3b
 	push XIX                                             ; FB515B  3c
@@ -95377,7 +95377,7 @@ SysExRx_AnswerRefused2B2C:
 ;   post {0x91, 3, (0x7F4D), 4} (sysex-probes/decode-findings.json).
 SysExCmd_GmSystemOn:
 	pushw hl                                             ; FB51E7  2b
-	m_set 7, MD24, 0x60f020                              ; FB51E8  f2 20 f0 60 bf
+	set	7, (0x60f020:24)                             ; FB51E8  f2 20 f0 60 bf
 	or	(0x7f4d:16), 0x04                            ; FB51ED  c1 4d 7f 3e 04
 	ld h, (0x7f4d:16)                                   ; FB51F2  c1 4d 7f 26
 	pushw 0x04                                           ; FB51F6  0b 04 00
@@ -95399,7 +95399,7 @@ SysExCmd_GmSystemOff:
 	ld C,(XIX+0x03)                                      ; FB5214  8c 03 23
 	and C,0x04                                           ; FB5217  cb cc 04
 	jr z, .LFB523E                                       ; FB521A  66 22
-	m_set 7, MD24, 0x60f020                              ; FB521C  f2 20 f0 60 bf
+	set	7, (0x60f020:24)                             ; FB521C  f2 20 f0 60 bf
 	extz XIX                                             ; FB5221  ec 12
 	and (XIX+0x03),0xfb                                  ; FB5223  8c 03 3c fb
 	ld H,(XIX+0x03)                                      ; FB5227  8c 03 26
@@ -95994,7 +95994,7 @@ ParamApply_ResetPairTablesForGmOff:
 	inc 1,DE                                             ; FB57DF  da 61
 	jr .LFB57D6                                          ; FB57E1  68 f3
 .LFB57E3:
-	m_set 7, MD16, MidiFilter_BankSelect                                ; FB57E3  f1 3a 7f bf
+	set	7, (MidiFilter_BankSelect:16)                               ; FB57E3  f1 3a 7f bf
 	pop XIX                                              ; FB57E7  5c
 	popw de                                              ; FB57E8  4a
 	popw hl                                              ; FB57E9  4b
@@ -96038,7 +96038,7 @@ SysExRx_ApplyTempo:
 	pop XIX                                              ; FB583F  5c
 	pop XHL                                              ; FB5840  5b
 	pop XDE                                              ; FB5841  5a
-	m_set 4, MD24, 0x60f020                              ; FB5842  f2 20 f0 60 bc
+	set	4, (0x60f020:24)                             ; FB5842  f2 20 f0 60 bc
 	push XDE                                             ; FB5847  3a
 	push XHL                                             ; FB5848  3b
 	push XIX                                             ; FB5849  3c
@@ -96048,7 +96048,7 @@ SysExRx_ApplyTempo:
 	pop XIX                                              ; FB5850  5c
 	pop XHL                                              ; FB5851  5b
 	pop XDE                                              ; FB5852  5a
-	m_res 4, MD24, 0x60f020                              ; FB5853  f2 20 f0 60 b4
+	res	4, (0x60f020:24)                             ; FB5853  f2 20 f0 60 b4
 .LFB5858:
 	pop XIX                                              ; FB5858  5c
 	popw de                                              ; FB5859  4a
@@ -96063,7 +96063,7 @@ SysExRx_ApplyTempo:
 BStore_Workspace_StoreGmModeDefaults:
 	link XIZ,0xfff4                                      ; FB585E  ee 0c f4 ff
 	push XIX                                             ; FB5862  3c
-	m_set 0, MD24, 0x60f01f                              ; FB5863  f2 1f f0 60 b8
+	set	0, (0x60f01f:24)                             ; FB5863  f2 1f f0 60 b8
 	push XDE                                             ; FB5868  3a
 	push XHL                                             ; FB5869  3b
 	push XIX                                             ; FB586A  3c
@@ -96106,7 +96106,7 @@ BStore_Workspace_StoreGmModeDefaults:
 	add XIX,XBC                                          ; FB58BF  e9 84
 	jr .LFB58A5                                          ; FB58C1  68 e2
 .LFB58C3:
-	m_res 0, MD24, 0x60f01f                              ; FB58C3  f2 1f f0 60 b0
+	res	0, (0x60f01f:24)                             ; FB58C3  f2 1f f0 60 b0
 	pop XIX                                              ; FB58C8  5c
 	unlk XIZ                                             ; FB58C9  ee 0d
 	ret                                                  ; FB58CB  0e
@@ -96155,7 +96155,7 @@ GmMode_HandleChange:
 	ld c, (0x60f01f:24)                                 ; FB591F  c2 1f f0 60 23
 	and C,0x01                                           ; FB5924  cb cc 01
 	jr nz, .LFB5970                                      ; FB5927  6e 47
-	m_set 0, MD24, 0x60f01f                              ; FB5929  f2 1f f0 60 b8
+	set	0, (0x60f01f:24)                             ; FB5929  f2 1f f0 60 b8
 	ld bc, (0x605068:24)                                ; FB592E  d2 68 50 60 21
 	and BC,0x8000                                        ; FB5933  d9 cc 00 80
 	jr nz, .LFB5945                                      ; FB5937  6e 0c
@@ -96178,7 +96178,7 @@ GmMode_HandleChange:
 	pushw bc                                             ; FB5951  29
 	calr SysExTx_AnnounceGmMode                                      ; FB5952  1e d9 05
 	calr GmMode_ApplyChange                                      ; FB5955  1e 1a 00
-	m_res 0, MD24, 0x60f01f                              ; FB5958  f2 1f f0 60 b0
+	res	0, (0x60f01f:24)                             ; FB5958  f2 1f f0 60 b0
 	pop XIY                                              ; FB595D  5d
 	jr .LFB5970                                          ; FB595E  68 10
 .LFB5960:
@@ -96234,9 +96234,9 @@ GmMode_ApplyChange:
 	call T_Queue2C00_DrainPassB                          ; FB59C6  1d 38 00 f4
 	call T_UiEventList_Publish                           ; FB59CA  1d 50 0f f4
 	and	(Disk_Flags:16), 0xe7                            ; FB59CE  c1 e7 21 3c e7
-	m_set 4, MD24, 0x60f020                              ; FB59D3  f2 20 f0 60 bc
+	set	4, (0x60f020:24)                             ; FB59D3  f2 20 f0 60 bc
 	call T_Tempo_ApplyBpm                                        ; FB59D8  1d 94 07 f4
-	m_res 4, MD24, 0x60f020                              ; FB59DC  f2 20 f0 60 b4
+	res	4, (0x60f020:24)                             ; FB59DC  f2 20 f0 60 b4
 	pop XIZ                                              ; FB59E1  5e
 	pop XIX                                              ; FB59E2  5c
 	pop XHL                                              ; FB59E3  5b
@@ -97023,7 +97023,7 @@ SysExDump_AwaitFrameAck:
 	pushw hl                                             ; FB6026  2b
 	push XIX                                             ; FB6027  3c
 	lda xix, (0x60fcd8:24)                               ; FB6028  f2 d8 fc 60 34
-	m_bit 7, MD24, 0x60fd40                              ; FB602D  f2 40 fd 60 cf
+	bit	7, (0x60fd40:24)                             ; FB602D  f2 40 fd 60 cf
 	jr z, .LFB6069                                       ; FB6032  66 35
 	ld l, 0x00:opc                                          ; FB6034  27 00
 .LFB6036:
@@ -97103,10 +97103,10 @@ SysExRx_ReceiveBlocking:
 	pushw de                                             ; FB6099  2a
 	pushw ix                                             ; FB609A  2c
 	ld l, 0x00:opc                                          ; FB609B  27 00
-	m_res 5, MD24, 0x60fd40                              ; FB609D  f2 40 fd 60 b5
+	res	5, (0x60fd40:24)                             ; FB609D  f2 40 fd 60 b5
 	m_ld_rm MW8, Tick_Count, r2                                ; FB60A2  d0 80 22
 .LFB60A5:
-	m_bit 5, MD24, 0x60fd40                              ; FB60A5  f2 40 fd 60 cd
+	bit	5, (0x60fd40:24)                             ; FB60A5  f2 40 fd 60 cd
 	jrl nz, .LFB6161                                     ; FB60AA  7e b4 00
 	pushw 0x04                                           ; FB60AD  0b 04 00
 	ld xbc, (0x60fcd8:24)                               ; FB60B0  e2 d8 fc 60 21
@@ -97175,7 +97175,7 @@ SysExRx_ReceiveBlocking:
 	extz BC                                              ; FB6135  d9 12
 	pushw bc                                             ; FB6137  29
 	calr SysExRx_AppendByte                                      ; FB6138  1e 2a 00
-	m_set 5, MD24, 0x60fd40                              ; FB613B  f2 40 fd 60 bd
+	set	5, (0x60fd40:24)                             ; FB613B  f2 40 fd 60 bd
 	jr .LFB6118                                          ; FB6140  68 d6
 .LFB6142:
 	pushw 0x03                                           ; FB6142  0b 03 00
@@ -99505,7 +99505,7 @@ SysExXfer_SetJobTotal_Sequencer:
 	ld (XIX+0x04),XBC                                    ; FB7552  bc 04 61
 	ld XBC,0x00059000                                    ; FB7555  41 00 90 05 00
 	ld (XIX+0x08),XBC                                    ; FB755A  bc 08 61
-	m_bit 6, MD24, 0x60fd40                              ; FB755D  f2 40 fd 60 ce
+	bit	6, (0x60fd40:24)                             ; FB755D  f2 40 fd 60 ce
 	jr z, .LFB7586                                       ; FB7562  66 22
 	calr SysExDump_SequencerUsedBytes                                      ; FB7564  1e e1 01
 	ld (xiz-4), xiy                                      ; FB7567  be fc 65
@@ -99662,7 +99662,7 @@ SysExXfer_SetPart_Sequencer3:
 	ld (XIX+0x04),XBC                                    ; FB76C9  bc 04 61
 	ld XBC,0x00050c00                                    ; FB76CC  41 00 0c 05 00
 	ld (XIX+0x08),XBC                                    ; FB76D1  bc 08 61
-	m_bit 6, MD24, 0x60fd40                              ; FB76D4  f2 40 fd 60 ce
+	bit	6, (0x60fd40:24)                             ; FB76D4  f2 40 fd 60 ce
 	jr z, .LFB76EE                                       ; FB76D9  66 13
 	calr SysExDump_SequencerUsedBytes                                      ; FB76DB  1e 6a 00
 	ld (xiz-4), xiy                                      ; FB76DE  be fc 65
@@ -99745,7 +99745,7 @@ SysExRx_CheckReplyTimeout:
 	link XIZ,0x0000                                      ; FB7785  ee 0c 00 00
 	pushw hl                                             ; FB7789  2b
 	ldw hl, 0x09c4                                       ; FB778A  33 c4 09
-	m_bit 2, MD24, 0x60fd40                              ; FB778D  f2 40 fd 60 ca
+	bit	2, (0x60fd40:24)                             ; FB778D  f2 40 fd 60 ca
 	jr z, .LFB7797                                       ; FB7792  66 03
 	ldw hl, 0x03e8                                       ; FB7794  33 e8 03
 .LFB7797:
@@ -100238,14 +100238,14 @@ SysExSession_SelectProgressScreen:
 	push XIX                                             ; FB7B79  3c
 	lda xix, (0x60f810:24)                               ; FB7B7A  f2 10 f8 60 34
 	ld (XIX),0x02                                        ; FB7B7F  b4 00 02
-	m_bit 6, MD24, 0x60fd40                              ; FB7B82  f2 40 fd 60 ce
+	bit	6, (0x60fd40:24)                             ; FB7B82  f2 40 fd 60 ce
 	jr z, .LFB7B8C                                       ; FB7B87  66 03
 	ld (XIX),0x01                                        ; FB7B89  b4 00 01
 .LFB7B8C:
 	ld C,(XIX)                                           ; FB7B8C  84 23
 	m_cp_rm MB24, 0x60f811, r3                           ; FB7B8E  c2 11 f8 60 f3
 	jr z, .LFB7BA1                                       ; FB7B93  66 0c
-	m_set 6, MD24, 0x60fd42                              ; FB7B95  f2 42 fd 60 be
+	set	6, (0x60fd42:24)                             ; FB7B95  f2 42 fd 60 be
 	ld C,(XIX)                                           ; FB7B9A  84 23
 	ld (0x60f811:24), c                                 ; FB7B9C  f2 11 f8 60 43
 .LFB7BA1:
@@ -100257,7 +100257,7 @@ SysExSession_SelectProgressScreen:
 ;   SysExSession_StartProgressScreen. Basis: caller + body + reader. (notes/naming-
 ;   pilot-2026-10-06/proposals_wave8_d8.json)
 SysExSession_RequestLabelBlockPaint:
-	m_bit 6, MD24, 0x60fd40                              ; FB7BA3  f2 40 fd 60 ce
+	bit	6, (0x60fd40:24)                             ; FB7BA3  f2 40 fd 60 ce
 	jr z, .LFB7BB2                                       ; FB7BA8  66 08
 	ld (0x60f804:24), 0x80                             ; FB7BAA  f2 04 f8 60 00 80
 	jr .LFB7BB8                                          ; FB7BB0  68 06
@@ -100291,7 +100291,7 @@ SysExSession_RefreshProgressScreen:
 ;   values. Basis: caller + body. (notes/naming-pilot-2026-10-06/proposals_wave8_d8.json)
 SysExSession_SaveProgressFields:
 	pushw hl                                             ; FB7BDF  2b
-	m_bit 6, MD24, 0x60fd40                              ; FB7BE0  f2 40 fd 60 ce
+	bit	6, (0x60fd40:24)                             ; FB7BE0  f2 40 fd 60 ce
 	jr z, .LFB7C1F                                       ; FB7BE5  66 38
 	ld h, (0x60f804:24)                                 ; FB7BE7  c2 04 f8 60 26
 	res 0x07,H                                           ; FB7BEC  ce 30 07
@@ -100331,7 +100331,7 @@ SysExSession_UpdateSectionStatus:
 	pushw hl                                             ; FB7C57  2b
 	push XIX                                             ; FB7C58  3c
 	lda xix, (0x60f80a:24)                               ; FB7C59  f2 0a f8 60 34
-	m_bit 6, MD24, 0x60fd40                              ; FB7C5E  f2 40 fd 60 ce
+	bit	6, (0x60fd40:24)                             ; FB7C5E  f2 40 fd 60 ce
 	jr z, .LFB7C93                                       ; FB7C63  66 2e
 	pushw 0x03                                           ; FB7C65  0b 03 00
 	ld xbc, (0x60fce0:24)                               ; FB7C68  e2 e0 fc 60 21
@@ -100345,7 +100345,7 @@ SysExSession_UpdateSectionStatus:
 	inc 6,XSP                                            ; FB7C83  ef 66
 	m_cp_rm MB24, 0x60f805, r6                           ; FB7C85  c2 05 f8 60 f6
 	jr z, .LFB7CBA                                       ; FB7C8A  66 2e
-	m_set 7, MD24, 0x60f804                              ; FB7C8C  f2 04 f8 60 bf
+	set	7, (0x60f804:24)                             ; FB7C8C  f2 04 f8 60 bf
 	jr .LFB7CBA                                          ; FB7C91  68 27
 .LFB7C93:
 	pushw 0x03                                           ; FB7C93  0b 03 00
@@ -100372,9 +100372,9 @@ SysExSession_UpdateSectionStatus:
 ;   pilot-2026-10-06/proposals_wave8_d8.json)
 SysExSession_InitProgressBarScale:
 	push XIX                                             ; FB7CBD  3c
-	m_bit 7, MD24, 0x60fd42                              ; FB7CBE  f2 42 fd 60 cf
+	bit	7, (0x60fd42:24)                             ; FB7CBE  f2 42 fd 60 cf
 	jr nz, .LFB7D07                                      ; FB7CC3  6e 42
-	m_bit 6, MD24, 0x60fd40                              ; FB7CC5  f2 40 fd 60 ce
+	bit	6, (0x60fd40:24)                             ; FB7CC5  f2 40 fd 60 ce
 	jr z, .LFB7CE5                                       ; FB7CCA  66 19
 	ld xbc, (0x60fcf0:24)                               ; FB7CCC  e2 f0 fc 60 21
 	ld XIX,XBC                                           ; FB7CD1  e9 8c
@@ -100394,7 +100394,7 @@ SysExSession_InitProgressBarScale:
 	ld XBC,XIX                                           ; FB7CFC  ec 89
 	or XBC,XBC                                           ; FB7CFE  e9 e1
 	jr z, .LFB7D07                                       ; FB7D00  66 05
-	m_set 7, MD24, 0x60fd42                              ; FB7D02  f2 42 fd 60 bf
+	set	7, (0x60fd42:24)                             ; FB7D02  f2 42 fd 60 bf
 .LFB7D07:
 	pop XIX                                              ; FB7D07  5c
 	ret                                                  ; FB7D08  0e
@@ -100406,7 +100406,7 @@ SysExSession_UpdateProgressBarFill:
 	link XIZ,0xfffc                                      ; FB7D09  ee 0c fc ff
 	pushw hl                                             ; FB7D0D  2b
 	push XIX                                             ; FB7D0E  3c
-	m_bit 6, MD24, 0x60fd40                              ; FB7D0F  f2 40 fd 60 ce
+	bit	6, (0x60fd40:24)                             ; FB7D0F  f2 40 fd 60 ce
 	jr z, .LFB7D52                                       ; FB7D14  66 3c
 	ld xbc, (0x60fcf0:24)                               ; FB7D16  e2 f0 fc 60 21
 	ld (xiz-4), xbc                                      ; FB7D1B  be fc 61
@@ -100427,7 +100427,7 @@ SysExSession_UpdateProgressBarFill:
 	ld (0x60f808:24), h                                 ; FB7D3F  f2 08 f8 60 46
 	m_cp_rm MB24, 0x60f809, r6                           ; FB7D44  c2 09 f8 60 f6
 	jr z, .LFB7D8C                                       ; FB7D49  66 41
-	m_set 7, MD24, 0x60f808                              ; FB7D4B  f2 08 f8 60 bf
+	set	7, (0x60f808:24)                             ; FB7D4B  f2 08 f8 60 bf
 	jr .LFB7D8C                                          ; FB7D50  68 3a
 .LFB7D52:
 	ld xbc, (0x60fd10:24)                               ; FB7D52  e2 10 fd 60 21
@@ -100449,7 +100449,7 @@ SysExSession_UpdateProgressBarFill:
 	ld (0x60f80e:24), h                                 ; FB7D7B  f2 0e f8 60 46
 	m_cp_rm MB24, 0x60f80f, r6                           ; FB7D80  c2 0f f8 60 f6
 	jr z, .LFB7D8C                                       ; FB7D85  66 05
-	m_set 7, MD24, 0x60f80e                              ; FB7D87  f2 0e f8 60 bf
+	set	7, (0x60f80e:24)                             ; FB7D87  f2 0e f8 60 bf
 .LFB7D8C:
 	pop XIX                                              ; FB7D8C  5c
 	popw hl                                              ; FB7D8D  4b
@@ -100462,7 +100462,7 @@ SysExSession_UpdateProgressBarFill:
 SysExSession_DetectProgressChange:
 	push XIX                                             ; FB7D91  3c
 	lda xix, (0x60fd42:24)                               ; FB7D92  f2 42 fd 60 34
-	m_bit 6, MD24, 0x60fd40                              ; FB7D97  f2 40 fd 60 ce
+	bit	6, (0x60fd40:24)                             ; FB7D97  f2 40 fd 60 ce
 	jr z, .LFB7DCE                                       ; FB7D9C  66 30
 	ld c, (0x60f804:24)                                 ; FB7D9E  c2 04 f8 60 23
 	m_cp_rm MB24, 0x60f805, r3                           ; FB7DA3  c2 05 f8 60 f3
@@ -100528,7 +100528,7 @@ SysExDump_ShowResult:
 SysExDump_ShowCompleted:
 	ld (UI_StatusCode:16), 0x23                                 ; FB7E29  f1 80 28 00 23
 	ld (UI_Request:16), 0xab                                 ; FB7E2E  f1 70 20 00 ab
-	m_set 6, MD16, UI_Request_Hi                                ; FB7E33  f1 71 20 be
+	set	6, (UI_Request_Hi:16)                               ; FB7E33  f1 71 20 be
 	ret                                                  ; FB7E37  0e
 ; SysExDump_ShowWriteProtectError: UI_Request = 0xB3, no popup.
 ; SysExDump_ShowWriteProtectError: requests screen 0xB3 -- ScreenEnter_WriteProtectError ("The S0UND or C0MBINATI0N memories
@@ -100549,7 +100549,7 @@ SysExDump_ShowStatusMessage:
 	ld C,(XWA)                                           ; FB7E5A  80 23
 	ld (UI_StatusCode:16), c                                   ; FB7E5C  f1 80 28 43
 	ld (UI_Request:16), 0xab                                 ; FB7E60  f1 70 20 00 ab
-	m_set 6, MD16, UI_Request_Hi                                ; FB7E65  f1 71 20 be
+	set	6, (UI_Request_Hi:16)                               ; FB7E65  f1 71 20 be
 	inc 6,XSP                                            ; FB7E69  ef 66
 	ret                                                  ; FB7E6B  0e
 ; SysExSession_RepaintProgressIfChanged: When a progress value changed ((0x60FD42) bit 6, set by the progress
@@ -100557,9 +100557,9 @@ SysExDump_ShowStatusMessage:
 ;   then clears the changed bit. The last step of SysExSession_StartProgressScreen and
 ;   SysExSession_RefreshProgressScreen. Basis: callers + body. (notes/naming-pilot-2026-10-06/proposals_wave4_m.json)
 SysExSession_RepaintProgressIfChanged:
-	m_bit 6, MD24, 0x60fd42                              ; FB7E6C  f2 42 fd 60 ce
+	bit	6, (0x60fd42:24)                             ; FB7E6C  f2 42 fd 60 ce
 	jr z, .LFB7E99                                       ; FB7E71  66 26
-	m_bit 6, MD24, 0x60fd40                              ; FB7E73  f2 40 fd 60 ce
+	bit	6, (0x60fd40:24)                             ; FB7E73  f2 40 fd 60 ce
 	jr z, .LFB7E88                                       ; FB7E78  66 0e
 	push XDE                                             ; FB7E7A  3a
 	push XHL                                             ; FB7E7B  3b
@@ -100584,7 +100584,7 @@ SysExSession_RepaintProgressIfChanged:
 	pop XHL                                              ; FB7E92  5b
 	pop XDE                                              ; FB7E93  5a
 .LFB7E94:
-	m_res 6, MD24, 0x60fd42                              ; FB7E94  f2 42 fd 60 b6
+	res	6, (0x60fd42:24)                             ; FB7E94  f2 42 fd 60 b6
 .LFB7E99:
 	ret                                                  ; FB7E99  0e
 SysExSession_RepaintProgressIfChanged_Nop:
@@ -100602,7 +100602,7 @@ MessageScreen_Paint_SaveRegs:
 	ret                                                  ; FB7EA7  0e
 ; SysExSession_OnAbort_SystemPartMidi: the abort arm for steps 1-3; bit 4 of (0x60F020) around T_ParamModule_PhaseVector slot +8, T_ParamImage_PostAllAsChangeEvents_Call, T_Tempo_ApplyBpm.
 SysExSession_OnAbort_SystemPartMidi:
-	m_set 4, MD24, 0x60f020                              ; FB7EA8  f2 20 f0 60 bc
+	set	4, (0x60f020:24)                             ; FB7EA8  f2 20 f0 60 bc
 	push XDE                                             ; FB7EAD  3a
 	push XHL                                             ; FB7EAE  3b
 	push XIX                                             ; FB7EAF  3c
@@ -100619,7 +100619,7 @@ SysExSession_OnAbort_SystemPartMidi:
 	pop XIX                                              ; FB7EC9  5c
 	pop XHL                                              ; FB7ECA  5b
 	pop XDE                                              ; FB7ECB  5a
-	m_res 4, MD24, 0x60f020                              ; FB7ECC  f2 20 f0 60 b4
+	res	4, (0x60f020:24)                             ; FB7ECC  f2 20 f0 60 b4
 	ret                                                  ; FB7ED1  0e
 ; SysExSession_OnAbort_Sound: the abort arm for steps 4-6: T_Msg0716_PostClearSoundRamAndRestageAllParts, T_Msg0716_PostRestageAllParts.
 SysExSession_OnAbort_Sound:
@@ -101521,7 +101521,7 @@ SmfPlay_StopAtEndOfTrack:
 	jr nz, .LFB91A7                                      ; FB91AF  6e f6
 .LFB91B1:
 	calr SeqClock_ResetBeatAndTick                                      ; FB91B1  1e b6 ff
-	m_set 4, MD16, UI_ScreenFlags                                ; FB91B4  f1 95 20 bc
+	set	4, (UI_ScreenFlags:16)                               ; FB91B4  f1 95 20 bc
 	call T_MidiFileStream_Close                                        ; FB91B8  1d 20 26 f4
 	and (XIX),0xfd                                       ; FB91BC  84 3c fd
 	ld (SmfPlay_Playing:24), 0x00                             ; FB91BF  f2 48 51 60 00 00
@@ -101753,7 +101753,7 @@ SmfPlay_ReadEventRunningStatus:
 	ld (SmfPlay_LastRead:24), wa                                ; FB9322  f2 45 51 60 50
 	cp hl, 0x00:i3                                         ; FB9327  db d8
 	jr ge, .LFB9330                                      ; FB9329  69 05
-	m_set 0, MD24, SmfPlay_StreamFlags                              ; FB932B  f2 47 51 60 b8
+	set	0, (SmfPlay_StreamFlags:24)                             ; FB932B  f2 47 51 60 b8
 .LFB9330:
 	ld h, (SmfPlay_LastRead:24)                                 ; FB9330  c2 45 51 60 26
 	ld (SmfPlay_LastByte:24), h                                 ; FB9335  f2 56 50 60 46
@@ -101799,7 +101799,7 @@ SmfPlay_ReadEventWithStatus:
 	ld (SmfPlay_LastRead:24), wa                                ; FB938F  f2 45 51 60 50
 	cpw	(xiz-2), 0x0000                              ; FB9394  9e fe 3f 00 00
 	jr ge, .LFB93A0                                      ; FB9399  69 05
-	m_set 0, MD24, SmfPlay_StreamFlags                              ; FB939B  f2 47 51 60 b8
+	set	0, (SmfPlay_StreamFlags:24)                             ; FB939B  f2 47 51 60 b8
 .LFB93A0:
 	ld c, (SmfPlay_LastRead:24)                                 ; FB93A0  c2 45 51 60 23
 	ld (xiz-2), c                                        ; FB93A5  be fe 43
@@ -101851,7 +101851,7 @@ SmfPlay_ReadVlqBytes:
 	ld BC,(XIX)                                          ; FB9402  94 21
 	cp bc, 0x00:i3                                         ; FB9404  d9 d8
 	jr ge, .LFB940D                                      ; FB9406  69 05
-	m_set 0, MD24, SmfPlay_StreamFlags                              ; FB9408  f2 47 51 60 b8
+	set	0, (SmfPlay_StreamFlags:24)                             ; FB9408  f2 47 51 60 b8
 .LFB940D:
 	ld A,H                                               ; FB940D  ce 89
 	pop XIX                                              ; FB940F  5c
@@ -102025,7 +102025,7 @@ SmfPlay_ReadVlqBytes_Copy:
 	ld BC,(XIX)                                          ; FB9564  94 21
 	cp bc, 0x00:i3                                         ; FB9566  d9 d8
 	jr ge, .LFB956F                                      ; FB9568  69 05
-	m_set 0, MD24, SmfPlay_StreamFlags                              ; FB956A  f2 47 51 60 b8
+	set	0, (SmfPlay_StreamFlags:24)                             ; FB956A  f2 47 51 60 b8
 .LFB956F:
 	ld A,H                                               ; FB956F  ce 89
 	pop XIX                                              ; FB9571  5c
@@ -102070,7 +102070,7 @@ SmfPlay_SkipBytes:
 	ld (SmfPlay_LastRead:24), wa                                ; FB95B2  f2 45 51 60 50
 	cp ix, 0x00:i3                                         ; FB95B7  dc d8
 	jr ge, .LFB95C0                                      ; FB95B9  69 05
-	m_set 0, MD24, SmfPlay_StreamFlags                              ; FB95BB  f2 47 51 60 b8
+	set	0, (SmfPlay_StreamFlags:24)                             ; FB95BB  f2 47 51 60 b8
 .LFB95C0:
 	ld c, (SmfPlay_LastRead:24)                                 ; FB95C0  c2 45 51 60 23
 	ld (SmfPlay_LastByte:24), c                                 ; FB95C5  f2 56 50 60 43
@@ -102421,7 +102421,7 @@ SmfPlay_ReadHeader:
 	jr nz, .LFB98E0                                      ; FB9900  6e de
 	ld (0x10cb:16), 0x00                                 ; FB9902  f1 cb 10 00 00
 	calr SmfPlay_ClearEventTimes                                      ; FB9907  1e 5f 05
-	m_set 0, MD24, 0x60505e                              ; FB990A  f2 5e 50 60 b8
+	set	0, (0x60505e:24)                             ; FB990A  f2 5e 50 60 b8
 	calr SmfPlay_ReadDeltaTime                                      ; FB990F  1e 01 fb
 	calr SmfPlay_AdvanceEventTime                                      ; FB9912  1e fb fb
 .LFB9915:
@@ -102552,7 +102552,7 @@ SmfPlay_HandleSysExEvent:
 	ld (SmfPlay_LastRead:24), wa                                ; FB9A31  f2 45 51 60 50
 	cp de, 0x00:i3                                         ; FB9A36  da d8
 	jr ge, .LFB9A3F                                      ; FB9A38  69 05
-	m_set 0, MD24, SmfPlay_StreamFlags                              ; FB9A3A  f2 47 51 60 b8
+	set	0, (SmfPlay_StreamFlags:24)                             ; FB9A3A  f2 47 51 60 b8
 .LFB9A3F:
 	ld d, (SmfPlay_LastRead:24)                                 ; FB9A3F  c2 45 51 60 24
 	ld (SmfPlay_LastByte:24), d                                 ; FB9A44  f2 56 50 60 44
@@ -102602,7 +102602,7 @@ SmfPlay_HandleSysExEvent:
 	ld (SmfPlay_LastRead:24), wa                                ; FB9AB9  f2 45 51 60 50
 	cp de, 0x00:i3                                         ; FB9ABE  da d8
 	jr ge, .LFB9AC7                                      ; FB9AC0  69 05
-	m_set 0, MD24, SmfPlay_StreamFlags                              ; FB9AC2  f2 47 51 60 b8
+	set	0, (SmfPlay_StreamFlags:24)                             ; FB9AC2  f2 47 51 60 b8
 .LFB9AC7:
 	ld d, (SmfPlay_LastRead:24)                                 ; FB9AC7  c2 45 51 60 24
 	ld (SmfPlay_LastByte:24), d                                 ; FB9ACC  f2 56 50 60 44
@@ -102655,12 +102655,12 @@ SmfPlay_ReadSysExEvent:
 ; MidiFileDirectPlay_InitOnEntry: (0x605069) bit 7 set; saves (0x60341E) in (0x605072) and clears it; (0x34BB) bit 2 cleared; (0x60505E) = 0;
 ;   (0x605144) = the byte at 0x7F4D; then 0xFB9089.  Called by Paint_MidiFileDirectPlay, the screen's enter.
 MidiFileDirectPlay_InitOnEntry:
-	m_set 7, MD24, 0x605069                              ; FB9B41  f2 69 50 60 bf
+	set	7, (0x605069:24)                             ; FB9B41  f2 69 50 60 bf
 	ld xbc, (0x60341e:24)                               ; FB9B46  e2 1e 34 60 21
 	ld (0x605072:24), xbc                               ; FB9B4B  f2 72 50 60 61
 	sub XWA,XWA                                          ; FB9B50  e8 a0
 	ld (0x60341e:24), xwa                               ; FB9B52  f2 1e 34 60 60
-	m_res 2, MD16, 0x34bb                                ; FB9B57  f1 bb 34 b2
+	res	2, (0x34bb:16)                               ; FB9B57  f1 bb 34 b2
 	ld (0x60505e:24), 0x00                             ; FB9B5B  f2 5e 50 60 00 00
 	ldw bc, 0x7f4a                                       ; FB9B61  31 4a 7f
 	extz XBC                                             ; FB9B64  e9 12
@@ -102675,7 +102675,7 @@ MidiFileDirectPlay_RestoreOnLeave:
 	ldw (0x605068:24), 0x00                             ; FB9B73  f2 68 50 60 02 00 00
 	ld xbc, (0x605072:24)                               ; FB9B7A  e2 72 50 60 21
 	ld (0x60341e:24), xbc                               ; FB9B7F  f2 1e 34 60 61
-	m_res 2, MD16, 0x34bb                                ; FB9B84  f1 bb 34 b2
+	res	2, (0x34bb:16)                               ; FB9B84  f1 bb 34 b2
 	calr MidiFilePlay_Stop                                      ; FB9B88  1e 3e f6
 	ld (0x60505e:24), 0x00                             ; FB9B8B  f2 5e 50 60 00 00
 	ld c, (0x605144:24)                                 ; FB9B91  c2 44 51 60 23
@@ -102870,7 +102870,7 @@ sub_FB9D2C:
 	cp	(Medley_FileType:16), 0x01                            ; FB9D33  c1 35 0e 3f 01
 	jr nz, .LFB9D42                                      ; FB9D38  6e 08
 	calr MidiFilePlay_ApplyGmOnPartSetup                                      ; FB9D3A  1e 67 fe
-	m_set 7, MD24, 0x605069                              ; FB9D3D  f2 69 50 60 bf
+	set	7, (0x605069:24)                             ; FB9D3D  f2 69 50 60 bf
 .LFB9D42:
 	ret                                                  ; FB9D42  0e
 sub_FB9D43:
@@ -102879,7 +102879,7 @@ sub_FB9D43:
 	cp	(Medley_FileType:16), 0x01                            ; FB9D4A  c1 35 0e 3f 01
 	jr nz, .LFB9D59                                      ; FB9D4F  6e 08
 	calr MidiFilePlay_ApplyGmOffPartSetup                                      ; FB9D51  1e fe fe
-	m_res 7, MD24, 0x605069                              ; FB9D54  f2 69 50 60 b7
+	res	7, (0x605069:24)                             ; FB9D54  f2 69 50 60 b7
 .LFB9D59:
 	ret                                                  ; FB9D59  0e
 ; MidiFileDirectPlay_ApplyPlayAsGm: Applies MIDI FILE DIRECT PLAY's PLAY AS GM switch (0x2732, ON = 0xFF): ON ->
@@ -102937,7 +102937,7 @@ Medley_ToggleMidiFileStream:
 	ld	c, (TransportB_State:8)                                      ; FB9DAC  c0 96 23
 	and C,0x04                                           ; FB9DAF  cb cc 04
 	jr nz, .LFB9DE9                                      ; FB9DB2  6e 35
-	m_res 2, MD16, 0x34bb                                ; FB9DB4  f1 bb 34 b2
+	res	2, (0x34bb:16)                               ; FB9DB4  f1 bb 34 b2
 	ld xbc, (0x60341e:24)                               ; FB9DB8  e2 1e 34 60 21
 	ld (0x3010:16), xbc                                 ; FB9DBD  f1 10 30 61
 	sub XWA,XWA                                          ; FB9DC1  e8 a0
@@ -102946,7 +102946,7 @@ Medley_ToggleMidiFileStream:
 	call T_MidiFileStream_Open                                        ; FB9DCB  1d 18 26 f4
 	cp wa, 0x00:i3                                         ; FB9DCF  d8 d8
 	jr ge, .LFB9DDE                                      ; FB9DD1  69 0b
-	m_set 0, MD24, SmfPlay_StreamFlags                              ; FB9DD3  f2 47 51 60 b8
+	set	0, (SmfPlay_StreamFlags:24)                             ; FB9DD3  f2 47 51 60 b8
 	call Medley_ScheduleNextMidiFile_SaveRegs                                      ; FB9DD8  1d 6d 90 fb
 	jr .LFB9DFC                                          ; FB9DDC  68 1e
 .LFB9DDE:
@@ -102956,7 +102956,7 @@ Medley_ToggleMidiFileStream:
 	jr .LFB9DFC                                          ; FB9DE7  68 13
 .LFB9DE9:
 	calr MidiFilePlay_Stop                                      ; FB9DE9  1e dd f3
-	m_set 4, MD16, UI_ScreenFlags                                ; FB9DEC  f1 95 20 bc
+	set	4, (UI_ScreenFlags:16)                               ; FB9DEC  f1 95 20 bc
 	ld xbc, (0x3010:16)                                 ; FB9DF0  e1 10 30 21
 	ld (0x60341e:24), xbc                               ; FB9DF4  f2 1e 34 60 61
 	ld (XIX),0x00                                        ; FB9DF9  b4 00 00
@@ -102971,14 +102971,14 @@ MidiFileDirectPlay_LcdKeyRow1:
 	ld	c, (TransportB_State:8)                                      ; FB9E07  c0 96 23
 	and C,0x04                                           ; FB9E0A  cb cc 04
 	jr nz, .LFB9E36                                      ; FB9E0D  6e 27
-	m_res 2, MD16, 0x34bb                                ; FB9E0F  f1 bb 34 b2
+	res	2, (0x34bb:16)                               ; FB9E0F  f1 bb 34 b2
 	call T_MidiFileStream_Open                                        ; FB9E13  1d 18 26 f4
 	cp wa, 0x00:i3                                         ; FB9E17  d8 d8
 	jr ge, .LFB9E20                                      ; FB9E19  69 05
 	or	(xix), 0x01                                  ; FB9E1B  84 3e 01
 	jr .LFB9E3D                                          ; FB9E1E  68 1d
 .LFB9E20:
-	m_set 1, MD24, 0x60505e                              ; FB9E20  f2 5e 50 60 b9
+	set	1, (0x60505e:24)                             ; FB9E20  f2 5e 50 60 b9
 	ld (SmfPlay_Playing:24), 0x00                             ; FB9E25  f2 48 51 60 00 00
 	calr MidiInQueue_InjectController0_AllChannels                                      ; FB9E2B  1e 2e f4
 	calr MidiFileDirectPlay_ApplyPlayAsGm                                      ; FB9E2E  1e 29 ff
@@ -102986,7 +102986,7 @@ MidiFileDirectPlay_LcdKeyRow1:
 	jr .LFB9E3D                                          ; FB9E34  68 07
 .LFB9E36:
 	calr MidiFilePlay_Stop                                      ; FB9E36  1e 90 f3
-	m_set 4, MD16, UI_ScreenFlags                                ; FB9E39  f1 95 20 bc
+	set	4, (UI_ScreenFlags:16)                               ; FB9E39  f1 95 20 bc
 .LFB9E3D:
 	pop XIX                                              ; FB9E3D  5c
 	ret                                                  ; FB9E3E  0e
@@ -102997,10 +102997,10 @@ SmfPlay_StartPlayback:
 	calr SeqClock_ResetBeatAndTick                                      ; FB9E44  1e 23 f3
 	and (XIX),0xfd                                       ; FB9E47  84 3c fd
 	and (XIX),0xfb                                       ; FB9E4A  84 3c fb
-	m_res 3, MD16, 0x34bb                                ; FB9E4D  f1 bb 34 b3
+	res	3, (0x34bb:16)                               ; FB9E4D  f1 bb 34 b3
 	ld (SmfPlay_Playing:24), 0x01                             ; FB9E51  f2 48 51 60 00 01
 	call Transport_StartCAndB_SaveRegs                                      ; FB9E57  1d 53 90 fb
-	m_set 4, MD16, UI_ScreenFlags                                ; FB9E5B  f1 95 20 bc
+	set	4, (UI_ScreenFlags:16)                               ; FB9E5B  f1 95 20 bc
 	pop XIX                                              ; FB9E5F  5c
 	ret                                                  ; FB9E60  0e
 ; MidiFilePlay_ClearPosition_Copy: byte-for-byte MidiFilePlay_ClearPosition.
@@ -103057,7 +103057,7 @@ SequencerMedley_MidiFileTick:
 	ld c, (SmfPlay_StreamFlags:24)                                 ; FB9ECC  c2 47 51 60 23
 	and C,0x01                                           ; FB9ED1  cb cc 01
 	jr z, .LFB9EE4                                       ; FB9ED4  66 0e
-	m_res 0, MD24, SmfPlay_StreamFlags                              ; FB9ED6  f2 47 51 60 b0
+	res	0, (SmfPlay_StreamFlags:24)                             ; FB9ED6  f2 47 51 60 b0
 	calr MidiFilePlay_Stop                                      ; FB9EDB  1e eb f2
 	call Medley_ScheduleNextMidiFile_SaveRegs                                      ; FB9EDE  1d 6d 90 fb
 	jr .LFB9F03                                          ; FB9EE2  68 1f
@@ -103071,7 +103071,7 @@ SequencerMedley_MidiFileTick:
 	ld (UI_Request_Hi:16), 0x40                                 ; FB9EF9  f1 71 20 00 40
 	ld (UI_StatusCode:16), 0x3f                                 ; FB9EFE  f1 80 28 00 3f
 .LFB9F03:
-	m_set 4, MD16, UI_ScreenFlags                                ; FB9F03  f1 95 20 bc
+	set	4, (UI_ScreenFlags:16)                               ; FB9F03  f1 95 20 bc
 	jrl .LFB9FDC                                         ; FB9F07  78 d2 00
 .LFB9F0A:
 	ei 0x06                                              ; FB9F0A  06 06
@@ -103103,17 +103103,17 @@ SequencerMedley_MidiFileTick:
 .LFB9F58:
 	cp	(0x10cb:16), 0xff                            ; FB9F58  c1 cb 10 3f ff
 	jr nz, .LFB9F6B                                      ; FB9F5D  6e 0c
-	m_res 0, MD24, SmfPlay_StreamFlags                              ; FB9F5F  f2 47 51 60 b0
+	res	0, (SmfPlay_StreamFlags:24)                             ; FB9F5F  f2 47 51 60 b0
 	call Medley_ScheduleNextMidiFile_SaveRegs                                      ; FB9F64  1d 6d 90 fb
 	jrl .LFB9FDC                                         ; FB9F68  78 71 00
 .LFB9F6B:
 	ld c, (SmfPlay_StreamFlags:24)                                 ; FB9F6B  c2 47 51 60 23
 	and C,0x01                                           ; FB9F70  cb cc 01
 	jr z, .LFB9F87                                       ; FB9F73  66 12
-	m_res 0, MD24, SmfPlay_StreamFlags                              ; FB9F75  f2 47 51 60 b0
+	res	0, (SmfPlay_StreamFlags:24)                             ; FB9F75  f2 47 51 60 b0
 	calr MidiFilePlay_Stop                                      ; FB9F7A  1e 4c f2
 	call Medley_ScheduleNextMidiFile_SaveRegs                                      ; FB9F7D  1d 6d 90 fb
-	m_set 4, MD16, UI_ScreenFlags                                ; FB9F81  f1 95 20 bc
+	set	4, (UI_ScreenFlags:16)                               ; FB9F81  f1 95 20 bc
 	jr .LFB9FDC                                          ; FB9F85  68 55
 .LFB9F87:
 	ld XBC,(XIX)                                         ; FB9F87  a4 21
@@ -103124,7 +103124,7 @@ SequencerMedley_MidiFileTick:
 	ld (SmfPlay_LastRead:24), wa                                ; FB9F96  f2 45 51 60 50
 	cp hl, 0x00:i3                                         ; FB9F9B  db d8
 	jr ge, .LFB9FA4                                      ; FB9F9D  69 05
-	m_set 0, MD24, SmfPlay_StreamFlags                              ; FB9F9F  f2 47 51 60 b8
+	set	0, (SmfPlay_StreamFlags:24)                             ; FB9F9F  f2 47 51 60 b8
 .LFB9FA4:
 	ld h, (SmfPlay_LastRead:24)                                 ; FB9FA4  c2 45 51 60 26
 	ld (SmfPlay_LastByte:24), h                                 ; FB9FA9  f2 56 50 60 46
@@ -103172,7 +103172,7 @@ MidiFileDirectPlay_Tick:
 	ld c, (SmfPlay_StreamFlags:24)                                 ; FBA007  c2 47 51 60 23
 	and C,0x01                                           ; FBA00C  cb cc 01
 	jr z, .LFBA01C                                       ; FBA00F  66 0b
-	m_res 0, MD24, SmfPlay_StreamFlags                              ; FBA011  f2 47 51 60 b0
+	res	0, (SmfPlay_StreamFlags:24)                             ; FBA011  f2 47 51 60 b0
 	calr MidiFilePlay_Stop                                      ; FBA016  1e b0 f1
 	jrl .LFBA108                                         ; FBA019  78 ec 00
 .LFBA01C:
@@ -103214,13 +103214,13 @@ MidiFileDirectPlay_Tick:
 .LFBA088:
 	cp	(0x10cb:16), 0xff                            ; FBA088  c1 cb 10 3f ff
 	jr nz, .LFBA097                                      ; FBA08D  6e 08
-	m_res 0, MD24, SmfPlay_StreamFlags                              ; FBA08F  f2 47 51 60 b0
+	res	0, (SmfPlay_StreamFlags:24)                             ; FBA08F  f2 47 51 60 b0
 	jrl .LFBA108                                         ; FBA094  78 71 00
 .LFBA097:
 	ld c, (SmfPlay_StreamFlags:24)                                 ; FBA097  c2 47 51 60 23
 	and C,0x01                                           ; FBA09C  cb cc 01
 	jr z, .LFBA0AB                                       ; FBA09F  66 0a
-	m_res 0, MD24, SmfPlay_StreamFlags                              ; FBA0A1  f2 47 51 60 b0
+	res	0, (SmfPlay_StreamFlags:24)                             ; FBA0A1  f2 47 51 60 b0
 	calr MidiFilePlay_Stop                                      ; FBA0A6  1e 20 f1
 	jr .LFBA108                                          ; FBA0A9  68 5d
 .LFBA0AB:
@@ -103235,7 +103235,7 @@ MidiFileDirectPlay_Tick:
 	ld (SmfPlay_LastRead:24), wa                                ; FBA0C3  f2 45 51 60 50
 	cp hl, 0x00:i3                                         ; FBA0C8  db d8
 	jr ge, .LFBA0D1                                      ; FBA0CA  69 05
-	m_set 0, MD24, SmfPlay_StreamFlags                              ; FBA0CC  f2 47 51 60 b8
+	set	0, (SmfPlay_StreamFlags:24)                             ; FBA0CC  f2 47 51 60 b8
 .LFBA0D1:
 	ld h, (SmfPlay_LastRead:24)                                 ; FBA0D1  c2 45 51 60 26
 	ld (SmfPlay_LastByte:24), h                                 ; FBA0D6  f2 56 50 60 46
@@ -103486,7 +103486,7 @@ SeqFile_Load:
 ;   0xF8185B does the same inline after a bank load. Basis: callers + body + the flag's other users. (notes/naming-
 ;   pilot-2026-10-06/proposals_wave3_j.json)
 SeqMasterTrack_SetFlagFromTrackMask:
-	m_bit 0, MD24, 0x603420                              ; FBACF3  f2 20 34 60 c8
+	bit	0, (0x603420:24)                             ; FBACF3  f2 20 34 60 c8
 	jr z, .LFBAD01                                       ; FBACF8  66 07
 	ld (0x3752:16), 0x01                                 ; FBACFA  f1 52 37 00 01
 	jr .LFBAD06                                          ; FBACFF  68 05
@@ -104452,7 +104452,7 @@ PartParam_RefuseNumberEntry:
 ;   PartSound_StepBankGroupMember(part).
 PartParam_StepSound:
 	link XIZ,0x0000                                      ; FBBA8E  ee 0c 00 00
-	m_set 3, MD16, UI_RequestBits                                ; FBBA92  f1 75 20 bb
+	set	3, (UI_RequestBits:16)                               ; FBBA92  f1 75 20 bb
 	push 0x00                                            ; FBBA96  09 00
 	m_push MBD+r6, 0x08                                  ; FBBA98  8e 08 04
 	call PartSound_StepBankGroupMember                                      ; FBBA9B  1d 2e f0 f4
@@ -104624,7 +104624,7 @@ PartParam_StepEffect2:
 	pop XIY                                              ; FBBC06  5d
 	cp a, 0x00:i3                                          ; FBBC07  c9 d8
 	jr z, .LFBBC16                                       ; FBBC09  66 0b
-	m_set 6, MD16, UI_Request_Hi                                ; FBBC0B  f1 71 20 be
+	set	6, (UI_Request_Hi:16)                               ; FBBC0B  f1 71 20 be
 	ld (UI_Request:16), 0xb6                                 ; FBBC0F  f1 70 20 00 b6
 	jr .LFBBC26                                          ; FBBC14  68 10
 .LFBBC16:
@@ -104757,7 +104757,7 @@ PartParam_StepMainOut:
 	jr z, .LFBBD2C                                       ; FBBD19  66 11
 	cp	(xiz-1), 0x00                                ; FBBD1B  8e ff 3f 00
 	jr z, .LFBBD2C                                       ; FBBD1F  66 0b
-	m_set 6, MD16, UI_Request_Hi                                ; FBBD21  f1 71 20 be
+	set	6, (UI_Request_Hi:16)                               ; FBBD21  f1 71 20 be
 	ld (UI_Request:16), 0xb6                                 ; FBBD25  f1 70 20 00 b6
 	jr .LFBBD4A                                          ; FBBD2A  68 1e
 .LFBBD2C:
@@ -104833,7 +104833,7 @@ PartParam_StepSubOut:
 	jr z, .LFBBDD6                                       ; FBBDC3  66 11
 	cp	(xiz-1), 0x00                                ; FBBDC5  8e ff 3f 00
 	jr z, .LFBBDD6                                       ; FBBDC9  66 0b
-	m_set 6, MD16, UI_Request_Hi                                ; FBBDCB  f1 71 20 be
+	set	6, (UI_Request_Hi:16)                               ; FBBDCB  f1 71 20 be
 	ld (UI_Request:16), 0xb6                                 ; FBBDCF  f1 70 20 00 b6
 	jr .LFBBDF4                                          ; FBBDD4  68 1e
 .LFBBDD6:
@@ -106019,7 +106019,7 @@ CombiEditPage_OnPartParamEvent:
 	jr z, .LFBC74B                                       ; FBC73D  66 0c
 	cp H,D                                               ; FBC73F  cc f6
 	jr nz, .LFBC747                                      ; FBC741  6e 04
-	m_set 4, MD16, UI_ScreenFlags                                ; FBC743  f1 95 20 bc
+	set	4, (UI_ScreenFlags:16)                               ; FBC743  f1 95 20 bc
 .LFBC747:
 	inc 1,L                                              ; FBC747  cf 61
 	jr .LFBC730                                          ; FBC749  68 e5
@@ -106433,7 +106433,7 @@ CombiEditConfigure_OnPartParamEvent:
 	cp E,0x0a                                            ; FBCAF8  cd cf 0a
 	jr nz, .LFBCB01                                      ; FBCAFB  6e 04
 .LFBCAFD:
-	m_set 4, MD16, UI_ScreenFlags                                ; FBCAFD  f1 95 20 bc
+	set	4, (UI_ScreenFlags:16)                               ; FBCAFD  f1 95 20 bc
 .LFBCB01:
 	popw de                                              ; FBCB01  4a
 	popw hl                                              ; FBCB02  4b
@@ -106443,7 +106443,7 @@ CombiEditConfigure_OnPartParamEvent:
 ;   EDIT part menu.  Seeds the part copies (0x2765/66/6D) from UI_PartIndex, T_SoundGroup_ReloadSelection.
 ModeEnter_CombiEditPart:
 	pushw hl                                             ; FBCB06  2b
-	m_set 1, MD16, 0x2134                                ; FBCB07  f1 34 21 b9
+	set	1, (0x2134:16)                               ; FBCB07  f1 34 21 b9
 	ld h, (UI_PartIndex:16)                                   ; FBCB0B  c1 50 22 26
 	ld (CombiEdit_EntryPart:16), h                                   ; FBCB0F  f1 6d 27 46
 	ld (0x2766:16), h                                   ; FBCB13  f1 66 27 46
@@ -106463,7 +106463,7 @@ ModeEnter_CombiEditPart:
 	popw hl                                              ; FBCB2F  4b
 	ret                                                  ; FBCB30  0e
 sub_FBCB31:
-	m_set 1, MD16, 0x2134                                ; FBCB31  f1 34 21 b9
+	set	1, (0x2134:16)                               ; FBCB31  f1 34 21 b9
 	ld	(UI_PartIndex:16), (CombiEdit_EntryPart:16)             ; FBCB35  c1 6d 27 19 50 22
 	call T_PartIndex_PostChangeEvent                                        ; FBCB3B  1d 9c 2c f4
 	ret                                                  ; FBCB3F  0e
@@ -106546,7 +106546,7 @@ LcdKeyRow1_CombiEditPartSelect:
 	jr nz, .LFBCBEE                                      ; FBCBDE  6e 0e
 	call T_PartIndex_PostChangeEvent                                        ; FBCBE0  1d 9c 2c f4
 	ld	(CombiEdit_Part:16), (UI_PartIndex:16)             ; FBCBE4  c1 50 22 19 65 27
-	m_set 4, MD16, UI_Request_Hi                                ; FBCBEA  f1 71 20 bc
+	set	4, (UI_Request_Hi:16)                               ; FBCBEA  f1 71 20 bc
 .LFBCBEE:
 	pop XIX                                              ; FBCBEE  5c
 	popw hl                                              ; FBCBEF  4b
@@ -106576,7 +106576,7 @@ LcdKeyRow2_CombiEditPartSelect:
 	jr nz, .LFBCC3B                                      ; FBCC1F  6e 1a
 	call T_PartIndex_PostChangeEvent                                        ; FBCC21  1d 9c 2c f4
 	ld	(CombiEdit_Part:16), (UI_PartIndex:16)             ; FBCC25  c1 50 22 19 65 27
-	m_set 4, MD16, UI_Request_Hi                                ; FBCC2B  f1 71 20 bc
+	set	4, (UI_Request_Hi:16)                               ; FBCC2B  f1 71 20 bc
 	jr .LFBCC3B                                          ; FBCC2F  68 0a
 .LFBCC31:
 	cp	(PanelModeGroup:16), 0x16                            ; FBCC31  c1 76 20 3f 16
@@ -106633,7 +106633,7 @@ LcdKeyRow5_CombiEditPartMenu:
 	ld c, (PanelEvent_Flags:16)                                   ; FBCC8B  c1 b0 28 23
 	and C,0x01                                           ; FBCC8F  cb cc 01
 	jr nz, .LFBCC9D                                      ; FBCC92  6e 09
-	m_set 7, MD16, UI_Request_Hi                                ; FBCC94  f1 71 20 bf
+	set	7, (UI_Request_Hi:16)                               ; FBCC94  f1 71 20 bf
 	ld (UI_Request:16), 0x66                                 ; FBCC98  f1 70 20 00 66
 .LFBCC9D:
 	ret                                                  ; FBCC9D  0e
@@ -106643,7 +106643,7 @@ ExitKey_CombiEditPartMenu:
 	ld c, (PanelEvent_Flags:16)                                   ; FBCC9E  c1 b0 28 23
 	and C,0x01                                           ; FBCCA2  cb cc 01
 	jr nz, .LFBCCB0                                      ; FBCCA5  6e 09
-	m_set 1, MD16, UI_Request_Hi                                ; FBCCA7  f1 71 20 b9
+	set	1, (UI_Request_Hi:16)                               ; FBCCA7  f1 71 20 b9
 	ld (UI_Request:16), 0x01                                 ; FBCCAB  f1 70 20 00 01
 .LFBCCB0:
 	ret                                                  ; FBCCB0  0e
@@ -106814,7 +106814,7 @@ ScreenEnter_CombiEditInternalSound:
 	ld (PanelDial_DownButton:16), 0x84                                 ; FBCE32  f1 9b 20 00 84
 	ld (PanelDial_UpButton:16), 0x04                                 ; FBCE37  f1 9c 20 00 04
 .LFBCE3C:
-	m_set 0, MD16, UI_RequestBits                                ; FBCE3C  f1 75 20 b8
+	set	0, (UI_RequestBits:16)                               ; FBCE3C  f1 75 20 b8
 	calr CombiEdit_TakePartIndex                                      ; FBCE40  1e 6e fe
 	calr CombiEditSound_SetRowFieldBlink                                      ; FBCE43  1e a8 02
 	ld c, (UI_ScreenFlags:16)                                   ; FBCE46  c1 95 20 23
@@ -107010,7 +107010,7 @@ SoftKeyCols1to4_CombiEditInternalSound:
 	cp a, 0x01:i3                                          ; FBCFC0  c9 d9
 	jr nz, SoftKeyCols1to4_CombiEditInternalSound_Skip                                    ; FBCFC2  6e 08
 	call T_Blink_Stop                                    ; FBCFC4  1d 24 2e f4
-	m_set 4, MD16, UI_Request_Hi                                ; FBCFC8  f1 71 20 bc
+	set	4, (UI_Request_Hi:16)                               ; FBCFC8  f1 71 20 bc
 SoftKeyCols1to4_CombiEditInternalSound_Skip:
 	pop XIX                                              ; FBCFCC  5c
 	popw hl                                              ; FBCFCD  4b
@@ -107045,7 +107045,7 @@ SoftKeyCols5to8_CombiEditInternalSound:
 	cp a, 0x02:i3                                          ; FBD007  c9 da
 	jr nz, .LFBD013                                      ; FBD009  6e 08
 	call T_Blink_Stop                                    ; FBD00B  1d 24 2e f4
-	m_set 4, MD16, UI_ScreenFlags                                ; FBD00F  f1 95 20 bc
+	set	4, (UI_ScreenFlags:16)                               ; FBD00F  f1 95 20 bc
 .LFBD013:
 	pop XIX                                              ; FBD013  5c
 	popw hl                                              ; FBD014  4b
@@ -107110,7 +107110,7 @@ PageKey_CombiEditInternalSound:
 	ld (0x276a:16), 0x00                                 ; FBD090  f1 6a 27 00 00
 	ld (CombiEdit_Row:16), 0x00                                 ; FBD095  f1 69 27 00 00
 	ld (0x276a:16), 0x01                                 ; FBD09A  f1 6a 27 00 01
-	m_set 4, MD16, UI_Request_Hi                                ; FBD09F  f1 71 20 bc
+	set	4, (UI_Request_Hi:16)                               ; FBD09F  f1 71 20 bc
 .LFBD0A3:
 	ret                                                  ; FBD0A3  0e
 ; NumberPadKey_CombiEditInternalSound: ScreenButtons_CombiEditInternalSound[18], the 23-slot button table ScreenButton_CombiEditInternalSound reads through T_PanelCode_ToSlotAndFlags -- the
@@ -107144,7 +107144,7 @@ NumberPadKey_CombiEditInternalSound:
 	jr nz, .LFBD0E7                                      ; FBD0E1  6e 04
 	call T_Blink_Stop                                    ; FBD0E3  1d 24 2e f4
 .LFBD0E7:
-	m_set 4, MD16, UI_ScreenFlags                                ; FBD0E7  f1 95 20 bc
+	set	4, (UI_ScreenFlags:16)                               ; FBD0E7  f1 95 20 bc
 .LFBD0EB:
 	pop XIX                                              ; FBD0EB  5c
 	popw hl                                              ; FBD0EC  4b
@@ -107162,7 +107162,7 @@ CombiEditSound_SetRowFieldBlink:
 	ld H,A                                               ; FBD0F3  c9 8e
 	cp A,0xff                                            ; FBD0F5  c9 cf ff
 	jr z, .LFBD124                                       ; FBD0F8  66 2a
-	m_set 6, MD16, PanelEvent_Flags                                ; FBD0FA  f1 b0 28 be
+	set	6, (PanelEvent_Flags:16)                               ; FBD0FA  f1 b0 28 be
 	push 0x00                                            ; FBD0FE  09 00
 	m_push MB16, CombiEdit_Part                                  ; FBD100  c1 65 27 04
 	mul A,0x04                                           ; FBD104  c9 08 04
@@ -108417,18 +108417,18 @@ ScreenEnterBody_CombiEditMixer:
 	ld (0x2766:16), c                                   ; FBDC35  f1 66 27 43
 	ld (0x277e:16), 0x00                                 ; FBDC39  f1 7e 27 00 00
 .LFBDC3E:
-	m_set 0, MD16, UI_RequestBits                                ; FBDC3E  f1 75 20 b8
+	set	0, (UI_RequestBits:16)                               ; FBDC3E  f1 75 20 b8
 	calr CombiEditMixer_SetDialButtons                                      ; FBDC42  1e aa 04
 	ld h, (UI_PartIndex:16)                                   ; FBDC45  c1 50 22 26
 	m_cp_rm MB16, CombiEdit_Part, r6                             ; FBDC49  c1 65 27 f6
 	jr z, .LFBDC57                                       ; FBDC4D  66 08
 	ld (CombiEdit_Part:16), h                                   ; FBDC4F  f1 65 27 46
-	m_res 4, MD16, UI_ScreenFlags                                ; FBDC53  f1 95 20 b4
+	res	4, (UI_ScreenFlags:16)                               ; FBDC53  f1 95 20 b4
 .LFBDC57:
 	ld c, (UI_ScreenHoldState:16)                                   ; FBDC57  c1 92 20 23
 	and C,0x01                                           ; FBDC5B  cb cc 01
 	jr z, ScreenEnterBody_CombiEditMixer_Skip                                     ; FBDC5E  66 04
-	m_set 7, MD16, UI_RequestBits                                ; FBDC60  f1 75 20 bf
+	set	7, (UI_RequestBits:16)                               ; FBDC60  f1 75 20 bf
 ScreenEnterBody_CombiEditMixer_Skip:
 	ld c, (CombiEdit_Page:16)                                   ; FBDC64  c1 67 27 23
 	m_cp_rm MB16, 0x2768, r3                             ; FBDC68  c1 68 27 f3
@@ -108504,7 +108504,7 @@ ScreenLeaveBody_CombiEditMixer:
 	jr z, .LFBDD2E                                       ; FBDD23  66 09
 	cp H,0xa1                                            ; FBDD25  ce cf a1
 	jr z, .LFBDD2E                                       ; FBDD28  66 04
-	m_res 7, MD16, UI_RequestBits                                ; FBDD2A  f1 75 20 b7
+	res	7, (UI_RequestBits:16)                               ; FBDD2A  f1 75 20 b7
 .LFBDD2E:
 	ld C,(XIX)                                           ; FBDD2E  84 23
 	cp C,0x08                                            ; FBDD30  cb cf 08
@@ -108651,7 +108651,7 @@ LcdKeyRow1_CombiEditMixer:
 	jr z, .LFBDE57                                       ; FBDE4E  66 07
 	ld (XIX),0x09                                        ; FBDE50  b4 00 09
 .LFBDE53:
-	m_set 4, MD16, UI_Request_Hi                                ; FBDE53  f1 71 20 bc
+	set	4, (UI_Request_Hi:16)                               ; FBDE53  f1 71 20 bc
 .LFBDE57:
 	ld C,H                                               ; FBDE57  ce 8b
 	and C,0x01                                           ; FBDE59  cb cc 01
@@ -108708,7 +108708,7 @@ LcdKeyRow2_CombiEditMixer:
 	jr z, .LFBDEC9                                       ; FBDEC0  66 07
 	ld (XIX),0x0a                                        ; FBDEC2  b4 00 0a
 .LFBDEC5:
-	m_set 4, MD16, UI_Request_Hi                                ; FBDEC5  f1 71 20 bc
+	set	4, (UI_Request_Hi:16)                               ; FBDEC5  f1 71 20 bc
 .LFBDEC9:
 	pop XIX                                              ; FBDEC9  5c
 	popw hl                                              ; FBDECA  4b
@@ -108756,7 +108756,7 @@ LcdKeyRow3_CombiEditMixer:
 	jr z, .LFBDF23                                       ; FBDF1A  66 07
 	ld (XIX),0x0b                                        ; FBDF1C  b4 00 0b
 .LFBDF1F:
-	m_set 4, MD16, UI_Request_Hi                                ; FBDF1F  f1 71 20 bc
+	set	4, (UI_Request_Hi:16)                               ; FBDF1F  f1 71 20 bc
 .LFBDF23:
 	pop XIX                                              ; FBDF23  5c
 	popw hl                                              ; FBDF24  4b
@@ -108804,7 +108804,7 @@ LcdKeyRow4_CombiEditMixer:
 	jr z, .LFBDF83                                       ; FBDF75  66 0c
 	ld (XIX),0x0c                                        ; FBDF77  b4 00 0c
 .LFBDF7A:
-	m_set 4, MD16, UI_Request_Hi                                ; FBDF7A  f1 71 20 bc
+	set	4, (UI_Request_Hi:16)                               ; FBDF7A  f1 71 20 bc
 	jr .LFBDF83                                          ; FBDF7E  68 03
 .LFBDF80:
 	calr CombiEditMixer_ShowOtherParts                                      ; FBDF80  1e 83 01
@@ -108844,7 +108844,7 @@ LcdKeyRow5_CombiEditMixer:
 	jr z, .LFBDFCA                                       ; FBDFC1  66 07
 	ld (XIX),0x07                                        ; FBDFC3  b4 00 07
 .LFBDFC6:
-	m_set 4, MD16, UI_Request_Hi                                ; FBDFC6  f1 71 20 bc
+	set	4, (UI_Request_Hi:16)                               ; FBDFC6  f1 71 20 bc
 .LFBDFCA:
 	pop XIX                                              ; FBDFCA  5c
 	ret                                                  ; FBDFCB  0e
@@ -108909,7 +108909,7 @@ PageKey_CombiEditMixer:
 	calr CombiEditMixer_ResetRowForPage                                      ; FBE04D  1e 69 00
 	inc 0x01, (0x276a:16)                                ; FBE050  c1 6a 27 61
 	inc 0x08, (0x2766:16)                                ; FBE054  c1 66 27 60
-	m_set 4, MD16, UI_Request_Hi                                ; FBE058  f1 71 20 bc
+	set	4, (UI_Request_Hi:16)                               ; FBE058  f1 71 20 bc
 .LFBE05C:
 	ret                                                  ; FBE05C  0e
 ; CombiEditMixer_ColumnKey: (column 0..7), from SoftKeyCols1to8_CombiEditMixer: the part = the edited group ((CombiEdit_Part) & 0xF8) +
@@ -108949,7 +108949,7 @@ CombiEditMixer_ColumnKey:
 	ld (CombiEdit_Part:16), h                                   ; FBE0A5  f1 65 27 46
 	call T_PartIndex_PostChangeEvent                                        ; FBE0A9  1d 9c 2c f4
 	or	(xix), 0x08                                  ; FBE0AD  84 3e 08
-	m_set 4, MD16, UI_Request_Hi                                ; FBE0B0  f1 71 20 bc
+	set	4, (UI_Request_Hi:16)                               ; FBE0B0  f1 71 20 bc
 .LFBE0B4:
 	pop XIX                                              ; FBE0B4  5c
 	popw hl                                              ; FBE0B5  4b
@@ -109016,7 +109016,7 @@ CombiEditMixer_ShowOtherParts:
 	ld (XIX),H                                           ; FBE123  b4 46
 	ld (UI_PartIndex:16), h                                   ; FBE125  f1 50 22 46
 	call T_PartIndex_PostChangeEvent                                        ; FBE129  1d 9c 2c f4
-	m_set 4, MD16, UI_Request_Hi                                ; FBE12D  f1 71 20 bc
+	set	4, (UI_Request_Hi:16)                               ; FBE12D  f1 71 20 bc
 .LFBE131:
 	pop XIX                                              ; FBE131  5c
 	popw hl                                              ; FBE132  4b
@@ -110407,7 +110407,7 @@ CombiEdit_Begin:
 	pop XIX                                              ; FBECD1  5c
 	pop XHL                                              ; FBECD2  5b
 	pop XDE                                              ; FBECD3  5a
-	m_set 1, MD16, 0x2134                                ; FBECD4  f1 34 21 b9
+	set	1, (0x2134:16)                               ; FBECD4  f1 34 21 b9
 	ld h, (UI_PartIndex:16)                                   ; FBECD8  c1 50 22 26
 	ld (CombiEdit_EntryPart:16), h                                   ; FBECDC  f1 6d 27 46
 	ld (0x2766:16), h                                   ; FBECE0  f1 66 27 46
@@ -110425,7 +110425,7 @@ CombiEdit_Begin:
 ; CombiEdit_End: T_CombiEdit_End: (0x2134) bit 1, UI_PartIndex = CombiEdit_EntryPart, T_PartIndex_PostChangeEvent, T_NoteRouting_SetSoloAndRebuild(0),
 ;   (0x276F) = 0, CombiEdit_CompareOff.  Basis: body.
 CombiEdit_End:
-	m_set 1, MD16, 0x2134                                ; FBED02  f1 34 21 b9
+	set	1, (0x2134:16)                               ; FBED02  f1 34 21 b9
 	ld	(UI_PartIndex:16), (CombiEdit_EntryPart:16)             ; FBED06  c1 6d 27 19 50 22
 	call T_PartIndex_PostChangeEvent                                        ; FBED0C  1d 9c 2c f4
 	pushw 0x00                                           ; FBED10  0b 00 00
@@ -110444,7 +110444,7 @@ CombiEdit_SaveOriginalForCompare:
 	push XIX                                             ; FBED27  3c
 	ld (CombiEdit_Comparing:16), 0x00                                 ; FBED28  f1 7f 27 00 00
 	ld (0x216e:16), 0x00                                 ; FBED2D  f1 6e 21 00 00
-	m_set 2, MD16, 0x213b                                ; FBED32  f1 3b 21 ba
+	set	2, (0x213b:16)                               ; FBED32  f1 3b 21 ba
 	lda xbc, (Combination_Current:16)                                ; FBED36  f1 20 76 31
 	ld (xiz-4), xbc                                      ; FBED3A  be fc 61
 	lda xix, (CombiEdit_CompareOriginal:16)                                ; FBED3D  f1 00 14 34
@@ -110482,9 +110482,9 @@ CombiEdit_CompareOff:
 	jr nz, .LFBED93                                      ; FBED7C  6e 15
 	ld (CombiEdit_Comparing:16), 0x00                                 ; FBED7E  f1 7f 27 00 00
 	ld (0x216e:16), 0x00                                 ; FBED83  f1 6e 21 00 00
-	m_set 2, MD16, 0x213b                                ; FBED88  f1 3b 21 ba
+	set	2, (0x213b:16)                               ; FBED88  f1 3b 21 ba
 	calr CombiEdit_SwapForCompare                                      ; FBED8C  1e 46 00
-	m_set 4, MD16, UI_ScreenFlags                                ; FBED8F  f1 95 20 bc
+	set	4, (UI_ScreenFlags:16)                               ; FBED8F  f1 95 20 bc
 .LFBED93:
 	ret                                                  ; FBED93  0e
 ; CombiEdit_CompareOn: when (0x277F) is 0: (0x277F) = 1, (0x216E) = 1, (0x213B) bit 2, CombiEdit_SwapForCompare, T_NoteRouting_SetSoloAndRebuild(0), (0x276F) = 0, a repaint.
@@ -110493,12 +110493,12 @@ CombiEdit_CompareOn:
 	jr nz, .LFBEDBD                                      ; FBED99  6e 22
 	ld (CombiEdit_Comparing:16), 0x01                                 ; FBED9B  f1 7f 27 00 01
 	ld (0x216e:16), 0x01                                 ; FBEDA0  f1 6e 21 00 01
-	m_set 2, MD16, 0x213b                                ; FBEDA5  f1 3b 21 ba
+	set	2, (0x213b:16)                               ; FBEDA5  f1 3b 21 ba
 	calr CombiEdit_SwapForCompare                                      ; FBEDA9  1e 29 00
 	pushw 0x00                                           ; FBEDAC  0b 00 00
 	call T_NoteRouting_SetSoloAndRebuild                                        ; FBEDAF  1d ec 11 f4
 	ld (0x276f:16), 0x00                                 ; FBEDB3  f1 6f 27 00 00
-	m_set 4, MD16, UI_ScreenFlags                                ; FBEDB8  f1 95 20 bc
+	set	4, (UI_ScreenFlags:16)                               ; FBEDB8  f1 95 20 bc
 	popw bc                                              ; FBEDBC  49
 .LFBEDBD:
 	ret                                                  ; FBEDBD  0e
@@ -110651,7 +110651,7 @@ CombiEdit_RestoreEditedIfComparing:
 ; ScreenEnter_CombiEditMenuRedirect: screen 0x33's +0 ENTER -- requests screen 0x34, ScreenEnter_CombiEditMenu
 ;   (UI_Request = 0x34 with UI_Request_Hi bit 7).
 ScreenEnter_CombiEditMenuRedirect:
-	m_set 7, MD16, UI_Request_Hi                                ; FBEED9  f1 71 20 bf
+	set	7, (UI_Request_Hi:16)                               ; FBEED9  f1 71 20 bf
 	ld (UI_Request:16), 0x34                                 ; FBEEDD  f1 70 20 00 34
 	ret                                                  ; FBEEE2  0e
 T_F41A0C_Nop:
@@ -110723,7 +110723,7 @@ T_F41A74_Nop:
 Screen_CombinationNaming_Enter:
 	cp	(UI_ScreenStage:16), 0x01                            ; FBEF1C  c1 7e 20 3f 01
 	jr nz, .LFBEF2E                                      ; FBEF21  6e 0b
-	m_set 1, MD16, UI_Request_Hi                                ; FBEF23  f1 71 20 b9
+	set	1, (UI_Request_Hi:16)                               ; FBEF23  f1 71 20 b9
 	ld (UI_Request:16), 0x02                                 ; FBEF27  f1 70 20 00 02
 	jr .LFBEF74                                          ; FBEF2C  68 46
 .LFBEF2E:
@@ -110739,7 +110739,7 @@ Screen_CombinationNaming_Enter:
 	pop XIY                                              ; FBEF4D  5d
 .LFBEF4E:
 	ld (UI_ScreenStage:16), 0x00                                 ; FBEF4E  f1 7e 20 00 00
-	m_set 0, MD16, UI_RequestBits                                ; FBEF53  f1 75 20 b8
+	set	0, (UI_RequestBits:16)                               ; FBEF53  f1 75 20 b8
 	ld (PanelDial_UpButton:16), 0x0a                                 ; FBEF57  f1 9c 20 00 0a
 	ld (PanelDial_DownButton:16), 0x0b                                 ; FBEF5C  f1 9b 20 00 0b
 	ld c, (UI_ScreenFlags:16)                                   ; FBEF61  c1 95 20 23
@@ -110832,7 +110832,7 @@ LcdKeyRow1_CombinationNaming:
 	ld c, (0x7fd6:16)                                   ; FBEFBA  c1 d6 7f 23
 	and C,0x02                                           ; FBEFBE  cb cc 02
 	jr z, .LFBEFCE                                       ; FBEFC1  66 0b
-	m_set 6, MD16, UI_Request_Hi                                ; FBEFC3  f1 71 20 be
+	set	6, (UI_Request_Hi:16)                               ; FBEFC3  f1 71 20 be
 	ld (UI_Request:16), 0xb3                                 ; FBEFC7  f1 70 20 00 b3
 	jr .LFBEFD1                                          ; FBEFCC  68 03
 .LFBEFCE:
@@ -110871,7 +110871,7 @@ LcdKeyRow5_CombinationNaming:
 	ld c, (PanelEvent_Flags:16)                                   ; FBEFFA  c1 b0 28 23
 	and C,0x01                                           ; FBEFFE  cb cc 01
 	jr nz, .LFBF00C                                      ; FBF001  6e 09
-	m_set 7, MD16, UI_Request_Hi                                ; FBF003  f1 71 20 bf
+	set	7, (UI_Request_Hi:16)                               ; FBF003  f1 71 20 bf
 	ld (UI_Request:16), 0x36                                 ; FBF007  f1 70 20 00 36
 .LFBF00C:
 	ret                                                  ; FBF00C  0e
@@ -110881,7 +110881,7 @@ ExitKey_CombinationNaming:
 	ld c, (PanelEvent_Flags:16)                                   ; FBF00D  c1 b0 28 23
 	and C,0x01                                           ; FBF011  cb cc 01
 	jr nz, .LFBF01F                                      ; FBF014  6e 09
-	m_set 7, MD16, UI_Request_Hi                                ; FBF016  f1 71 20 bf
+	set	7, (UI_Request_Hi:16)                               ; FBF016  f1 71 20 bf
 	ld (UI_Request:16), 0x33                                 ; FBF01A  f1 70 20 00 33
 .LFBF01F:
 	ret                                                  ; FBF01F  0e
@@ -110899,7 +110899,7 @@ CombinationNaming_StepWriteNumber:
 	inc 8,XSP                                            ; FBF02F  ef 60
 	cp a, 0x01:i3                                          ; FBF031  c9 d9
 	jr nz, .LFBF039                                      ; FBF033  6e 04
-	m_set 4, MD16, UI_ScreenFlags                                ; FBF035  f1 95 20 bc
+	set	4, (UI_ScreenFlags:16)                               ; FBF035  f1 95 20 bc
 .LFBF039:
 	ret                                                  ; FBF039  0e
 ; CombinationNaming_WriteToUserMemory: COMBINATION NAMING's WRITE: status 0x25 painted, then Combination_Current
@@ -110961,7 +110961,7 @@ CombinationNaming_WriteToUserMemory:
 	pushw 0x98                                           ; FBF0CA  0b 98 00
 	call T_List2030_Append4                              ; FBF0CD  1d 88 2c f4
 	ld (UI_StatusCode:16), 0x23                                 ; FBF0D1  f1 80 28 00 23
-	m_set 6, MD16, UI_Request_Hi                                ; FBF0D6  f1 71 20 be
+	set	6, (UI_Request_Hi:16)                               ; FBF0D6  f1 71 20 be
 	ld (UI_Request:16), 0xab                                 ; FBF0DA  f1 70 20 00 ab
 	ld (UI_ScreenStage:16), 0x01                                 ; FBF0DF  f1 7e 20 00 01
 	add XSP,0x00000022                                   ; FBF0E4  ef c8 22 00 00 00
@@ -111179,7 +111179,7 @@ LcdKeyRow1_CombinationNamingWrite:
 	link XIZ,0x0000                                      ; FBF274  ee 0c 00 00
 	cpw	(xiz+8), 0x0000                              ; FBF278  9e 08 3f 00 00
 	jr z, .LFBF28A                                       ; FBF27D  66 0b
-	m_set 7, MD16, UI_Request_Hi                                ; FBF27F  f1 71 20 bf
+	set	7, (UI_Request_Hi:16)                               ; FBF27F  f1 71 20 bf
 	ld (UI_Request:16), 0x3c                                 ; FBF283  f1 70 20 00 3c
 	jr .LFBF292                                          ; FBF288  68 08
 .LFBF28A:
@@ -111205,7 +111205,7 @@ ExitKey_CombinationNamingWrite:
 	link XIZ,0x0000                                      ; FBF2AB  ee 0c 00 00
 	cpw	(xiz+8), 0x0000                              ; FBF2AF  9e 08 3f 00 00
 	jr nz, .LFBF2BF                                      ; FBF2B4  6e 09
-	m_set 7, MD16, UI_Request_Hi                                ; FBF2B6  f1 71 20 bf
+	set	7, (UI_Request_Hi:16)                               ; FBF2B6  f1 71 20 bf
 	ld (UI_Request:16), 0x3c                                 ; FBF2BA  f1 70 20 00 3c
 .LFBF2BF:
 	unlk XIZ                                             ; FBF2BF  ee 0d
@@ -111298,7 +111298,7 @@ ScreenEnterBody_CombiEditConfigure:
 	ld (CombiEdit_DirtySound:16), 0xff                                 ; FBF368  f1 70 27 00 ff
 	ld (0x277e:16), 0x00                                 ; FBF36D  f1 7e 27 00 00
 .LFBF372:
-	m_set 0, MD16, UI_RequestBits                                ; FBF372  f1 75 20 b8
+	set	0, (UI_RequestBits:16)                               ; FBF372  f1 75 20 b8
 	ld bc, (CombiEdit_Row:16)                                 ; FBF376  d1 69 27 21
 	extz BC                                              ; FBF37A  d9 12
 	extz XBC                                             ; FBF37C  e9 12
@@ -111420,7 +111420,7 @@ SoftKeyCol2_CombiEditConfigure:
 	jr z, .LFBF4B5                                       ; FBF4A5  66 0e
 	ld (CombiEdit_Row:16), 0x00                                 ; FBF4A7  f1 69 27 00 00
 	or	(xix), 0x10                                  ; FBF4AC  84 3e 10
-	m_set 3, MD16, UI_RequestBits                                ; FBF4AF  f1 75 20 bb
+	set	3, (UI_RequestBits:16)                               ; FBF4AF  f1 75 20 bb
 	jr .LFBF50B                                          ; FBF4B3  68 56
 .LFBF4B5:
 	xor	(PanelEvent_Flags:16), 0x01                            ; FBF4B5  c1 b0 28 3d 01
@@ -111466,8 +111466,8 @@ SoftKeyCol4_CombiEditConfigure:
 	cp	(CombiEdit_Row:16), 0x01                            ; FBF516  c1 69 27 3f 01
 	jr z, .LFBF52C                                       ; FBF51B  66 0f
 	ld (CombiEdit_Row:16), 0x01                                 ; FBF51D  f1 69 27 00 01
-	m_set 4, MD16, UI_Request_Hi                                ; FBF522  f1 71 20 bc
-	m_set 3, MD16, UI_RequestBits                                ; FBF526  f1 75 20 bb
+	set	4, (UI_Request_Hi:16)                               ; FBF522  f1 71 20 bc
+	set	3, (UI_RequestBits:16)                               ; FBF526  f1 75 20 bb
 	jr .LFBF539                                          ; FBF52A  68 0d
 .LFBF52C:
 	push 0x00                                            ; FBF52C  09 00
@@ -111506,8 +111506,8 @@ SoftKeyCol5_CombiEditConfigure:
 	cp C,H                                               ; FBF563  ce f3
 	jr z, .LFBF575                                       ; FBF565  66 0e
 	ld (CombiEdit_Row:16), h                                   ; FBF567  f1 69 27 46
-	m_set 4, MD16, UI_Request_Hi                                ; FBF56B  f1 71 20 bc
-	m_set 3, MD16, UI_RequestBits                                ; FBF56F  f1 75 20 bb
+	set	4, (UI_Request_Hi:16)                               ; FBF56B  f1 71 20 bc
+	set	3, (UI_RequestBits:16)                               ; FBF56F  f1 75 20 bb
 	jr .LFBF580                                          ; FBF573  68 0b
 .LFBF575:
 	push 0x00                                            ; FBF575  09 00
@@ -111547,8 +111547,8 @@ SoftKeyCol6_CombiEditConfigure:
 	cp C,H                                               ; FBF5AB  ce f3
 	jr z, .LFBF5BD                                       ; FBF5AD  66 0e
 	ld (CombiEdit_Row:16), h                                   ; FBF5AF  f1 69 27 46
-	m_set 4, MD16, UI_Request_Hi                                ; FBF5B3  f1 71 20 bc
-	m_set 3, MD16, UI_RequestBits                                ; FBF5B7  f1 75 20 bb
+	set	4, (UI_Request_Hi:16)                               ; FBF5B3  f1 71 20 bc
+	set	3, (UI_RequestBits:16)                               ; FBF5B7  f1 75 20 bb
 	jr .LFBF5C8                                          ; FBF5BB  68 0b
 .LFBF5BD:
 	push 0x00                                            ; FBF5BD  09 00
@@ -111567,8 +111567,8 @@ SoftKeyCol7_CombiEditConfigure:
 	cp	(CombiEdit_Row:16), 0x04                            ; FBF5D1  c1 69 27 3f 04
 	jr z, .LFBF5E7                                       ; FBF5D6  66 0f
 	ld (CombiEdit_Row:16), 0x04                                 ; FBF5D8  f1 69 27 00 04
-	m_set 4, MD16, UI_Request_Hi                                ; FBF5DD  f1 71 20 bc
-	m_set 3, MD16, UI_RequestBits                                ; FBF5E1  f1 75 20 bb
+	set	4, (UI_Request_Hi:16)                               ; FBF5DD  f1 71 20 bc
+	set	3, (UI_RequestBits:16)                               ; FBF5E1  f1 75 20 bb
 	jr .LFBF5F4                                          ; FBF5E5  68 0d
 .LFBF5E7:
 	push 0x00                                            ; FBF5E7  09 00
@@ -111601,7 +111601,7 @@ LcdKeyRow2_CombiEditConfigure:
 	jr z, .LFBF62E                                       ; FBF61E  66 0e
 	ld (CombiEdit_Page:16), 0x00                                 ; FBF620  f1 67 27 00 00
 	ld (CombiEdit_Row:16), 0x00                                 ; FBF625  f1 69 27 00 00
-	m_set 4, MD16, UI_Request_Hi                                ; FBF62A  f1 71 20 bc
+	set	4, (UI_Request_Hi:16)                               ; FBF62A  f1 71 20 bc
 .LFBF62E:
 	ret                                                  ; FBF62E  0e
 ; LcdKeyRow3_CombiEditConfigure: ScreenButtons_CombiEditConfigure[10], the 23-slot button table ScreenButtonBody_CombiEditConfigure reads through T_PanelCode_ToSlotAndFlags -- the
@@ -111616,7 +111616,7 @@ LcdKeyRow3_CombiEditConfigure:
 	jr z, .LFBF654                                       ; FBF644  66 0e
 	ld (CombiEdit_Page:16), 0x01                                 ; FBF646  f1 67 27 00 01
 	ld (CombiEdit_Row:16), 0x00                                 ; FBF64B  f1 69 27 00 00
-	m_set 4, MD16, UI_Request_Hi                                ; FBF650  f1 71 20 bc
+	set	4, (UI_Request_Hi:16)                               ; FBF650  f1 71 20 bc
 .LFBF654:
 	ret                                                  ; FBF654  0e
 ; LcdKeyRow4_CombiEditConfigure: ScreenButtons_CombiEditConfigure[11], the 23-slot button table ScreenButtonBody_CombiEditConfigure reads through T_PanelCode_ToSlotAndFlags -- the
@@ -111631,7 +111631,7 @@ LcdKeyRow4_CombiEditConfigure:
 	jr z, .LFBF67A                                       ; FBF66A  66 0e
 	ld (CombiEdit_Page:16), 0x02                                 ; FBF66C  f1 67 27 00 02
 	ld (CombiEdit_Row:16), 0x00                                 ; FBF671  f1 69 27 00 00
-	m_set 4, MD16, UI_Request_Hi                                ; FBF676  f1 71 20 bc
+	set	4, (UI_Request_Hi:16)                               ; FBF676  f1 71 20 bc
 .LFBF67A:
 	ret                                                  ; FBF67A  0e
 ; ExitKey_CombiEditConfigure: ScreenButtons_CombiEditConfigure[15], the 23-slot button table ScreenButtonBody_CombiEditConfigure reads through T_PanelCode_ToSlotAndFlags -- the
@@ -112157,7 +112157,7 @@ LcdKeyRow1_CombiEditMenu:
 	jr nz, .LFBFB66                                      ; FBFB56  6e 0e
 	call T_PartIndex_PostChangeEvent                                        ; FBFB58  1d 9c 2c f4
 	ld	(CombiEdit_Part:16), (UI_PartIndex:16)             ; FBFB5C  c1 50 22 19 65 27
-	m_set 4, MD16, UI_ScreenFlags                                ; FBFB62  f1 95 20 bc
+	set	4, (UI_ScreenFlags:16)                               ; FBFB62  f1 95 20 bc
 .LFBFB66:
 	pop XIX                                              ; FBFB66  5c
 	ret                                                  ; FBFB67  0e
@@ -112179,7 +112179,7 @@ LcdKeyRow2_CombiEditMenu:
 ; (sub_FBFB8A removed 2026-10-04: no code names it and the line above falls through into it -- part of ScreenButton_CombiEditMenu;
 ;  notes/prom_a_stray_label_removal.py)
 	ld	(CombiEdit_Part:16), (UI_PartIndex:16)             ; FBFB8A  c1 50 22 19 65 27
-	m_set 4, MD16, UI_ScreenFlags                                ; FBFB90  f1 95 20 bc
+	set	4, (UI_ScreenFlags:16)                               ; FBFB90  f1 95 20 bc
 	jr .LFBFB99                                          ; FBFB94  68 03
 .LFBFB96:
 	calr CombiEdit_ToggleSolo                                      ; FBFB96  1e 99 00
@@ -112260,7 +112260,7 @@ ExitKey_CombiEditMenu:
 	ld (UI_ScreenHoldPending:16), 0x01                                 ; FBFC21  f1 9a 20 00 01
 	jr .LFBFC31                                          ; FBFC26  68 09
 .LFBFC28:
-	m_set 1, MD16, UI_Request_Hi                                ; FBFC28  f1 71 20 b9
+	set	1, (UI_Request_Hi:16)                               ; FBFC28  f1 71 20 b9
 	ld (UI_Request:16), 0x01                                 ; FBFC2C  f1 70 20 00 01
 .LFBFC31:
 	ret                                                  ; FBFC31  0e
@@ -112281,7 +112281,7 @@ CombiEdit_ToggleSolo:
 	ld C,(XIX)                                           ; FBFC45  84 23
 	pushw bc                                             ; FBFC47  29
 	call T_NoteRouting_SetSoloAndRebuild                                        ; FBFC48  1d ec 11 f4
-	m_set 4, MD16, UI_ScreenFlags                                ; FBFC4C  f1 95 20 bc
+	set	4, (UI_ScreenFlags:16)                               ; FBFC4C  f1 95 20 bc
 	popw bc                                              ; FBFC50  49
 	pop XIX                                              ; FBFC51  5c
 	ret                                                  ; FBFC52  0e
@@ -112355,7 +112355,7 @@ SoftKeyCol1_CombiEditMenu:
 	pop XHL                                              ; FBFCDB  5b
 	pop XDE                                              ; FBFCDC  5a
 	ld (UI_StatusCode:16), 0x23                                 ; FBFCDD  f1 80 28 00 23
-	m_set 6, MD16, UI_Request_Hi                                ; FBFCE2  f1 71 20 be
+	set	6, (UI_Request_Hi:16)                               ; FBFCE2  f1 71 20 be
 	ld (UI_Request:16), 0xab                                 ; FBFCE6  f1 70 20 00 ab
 	pop XIX                                              ; FBFCEB  5c
 	popw de                                              ; FBFCEC  4a
@@ -112455,7 +112455,7 @@ ScreenLeaveBody_Effect2OutputConflict:
 	cp H,0x15                                            ; FBFDE2  ce cf 15
 	jr nz, .LFBFDF5                                      ; FBFDE5  6e 0e
 .LFBFDE7:
-	m_set 6, MD16, UI_Request_Hi                                ; FBFDE7  f1 71 20 be
+	set	6, (UI_Request_Hi:16)                               ; FBFDE7  f1 71 20 be
 	ld (UI_Request:16), 0xb7                                 ; FBFDEB  f1 70 20 00 b7
 ; Var277E_Set02: ld (0x277e:16), 0x02; popw hl (single-cell template; the cell's meaning is not established unless it is named)
 Var277E_Set02:
@@ -112496,7 +112496,7 @@ ExitKey_Effect2OutputConflict:
 	ld (UI_ScreenHoldPending:16), 0x01                                 ; FBFE31  f1 9a 20 00 01
 	jr .LFBFE41                                          ; FBFE36  68 09
 .LFBFE38:
-	m_set 1, MD16, UI_Request_Hi                                ; FBFE38  f1 71 20 b9
+	set	1, (UI_Request_Hi:16)                               ; FBFE38  f1 71 20 b9
 	ld (UI_Request:16), 0x01                                 ; FBFE3C  f1 70 20 00 01
 .LFBFE41:
 	ret                                                  ; FBFE41  0e
@@ -112545,7 +112545,7 @@ ExitKey_Effect2OutputConflict:
 	pop XIX                                              ; FBFEB7  5c
 	ret                                                  ; FBFEB8  0e
 ScreenEnterBody_WriteProtectError:
-	m_set 7, MD16, UI_RequestBits                                ; FBFEB9  f1 75 20 bf
+	set	7, (UI_RequestBits:16)                               ; FBFEB9  f1 75 20 bf
 	call T_CallbackQueue_ResetAndRestartTask2            ; FBFEBD  1d 80 2e f4
 	lda xbc, (.LFBFF40:24)                               ; FBFEC1  f2 40 ff fb 31
 	push XBC                                             ; FBFEC6  39
@@ -112568,7 +112568,7 @@ ScreenEnterBody_WriteProtectError:
 ; Note:     (0x2075) is the panel mode-flag byte PanelButton_Route and PanelButton_Accept test bit by bit (prom_a 0xF861B6 onward).
 ; ---------------------------------------------------------------------
 Var2075_ClrBit7:
-	m_res 7, MD16, UI_RequestBits                                ; FBFED5  f1 75 20 b7
+	res	7, (UI_RequestBits:16)                               ; FBFED5  f1 75 20 b7
 	ret                                                  ; FBFED9  0e
 ScreenButtonBody_WriteProtectError:
 	link XIZ,0x0000                                      ; FBFEDA  ee 0c 00 00
@@ -112593,8 +112593,8 @@ LcdKeyRow3_WriteProtectError:
 	ld c, (PanelEvent_Flags:16)                                   ; FBFF02  c1 b0 28 23
 	and C,0x01                                           ; FBFF06  cb cc 01
 	jr nz, .LFBFF18                                      ; FBFF09  6e 0d
-	m_res 7, MD16, UI_RequestBits                                ; FBFF0B  f1 75 20 b7
-	m_set 6, MD16, UI_Request_Hi                                ; FBFF0F  f1 71 20 be
+	res	7, (UI_RequestBits:16)                               ; FBFF0B  f1 75 20 b7
+	set	6, (UI_Request_Hi:16)                               ; FBFF0F  f1 71 20 be
 	ld (UI_Request:16), 0x6e                                 ; FBFF13  f1 70 20 00 6e
 .LFBFF18:
 	ret                                                  ; FBFF18  0e
@@ -112608,11 +112608,11 @@ WriteProtectError_Dismiss:
 	ld c, (UI_ScreenHoldState:16)                                   ; FBFF22  c1 92 20 23
 	and C,0x01                                           ; FBFF26  cb cc 01
 	jr z, .LFBFF36                                       ; FBFF29  66 0b
-	m_res 7, MD16, UI_RequestBits                                ; FBFF2B  f1 75 20 b7
+	res	7, (UI_RequestBits:16)                               ; FBFF2B  f1 75 20 b7
 	ld (UI_ScreenHoldPending:16), 0x01                                 ; FBFF2F  f1 9a 20 00 01
 	jr .LFBFF3F                                          ; FBFF34  68 09
 .LFBFF36:
-	m_set 1, MD16, UI_Request_Hi                                ; FBFF36  f1 71 20 b9
+	set	1, (UI_Request_Hi:16)                               ; FBFF36  f1 71 20 b9
 	ld (UI_Request:16), 0x01                                 ; FBFF3A  f1 70 20 00 01
 .LFBFF3F:
 	ret                                                  ; FBFF3F  0e
@@ -112977,7 +112977,7 @@ RemoteImage_LoadHeader:
 	ld a, (0x0891:16)                                   ; FC010C  c1 91 08 21
 	cp a, 0x00:i3                                          ; FC0110  c9 d8
 	jr z, .LFC0133                                       ; FC0112  66 1f
-	m_set 0, MD16, 0x08ec                                ; FC0114  f1 ec 08 b8
+	set	0, (0x08ec:16)                               ; FC0114  f1 ec 08 b8
 .LFC0118:
 	cp A,0x08                                            ; FC0118  c9 cf 08
 	jr c, .LFC0126                                       ; FC011B  67 09
@@ -112994,7 +112994,7 @@ RemoteImage_LoadHeader:
 	ld a, (0x0893:16)                                   ; FC0138  c1 93 08 21
 	cp a, 0x00:i3                                          ; FC013C  c9 d8
 	jr z, .LFC015F                                       ; FC013E  66 1f
-	m_set 1, MD16, 0x08ec                                ; FC0140  f1 ec 08 b9
+	set	1, (0x08ec:16)                               ; FC0140  f1 ec 08 b9
 .LFC0144:
 	cp A,0x08                                            ; FC0144  c9 cf 08
 	jr c, .LFC0152                                       ; FC0147  67 09
@@ -113612,20 +113612,20 @@ T_F4110C_Nop:
 	ret                                                  ; FC0659  0e
 ; Msg0716_SetPendingBit0: set bit 0 of (0x070E) and bit 0 of (0x070F), the 0x0716 module's pending flags.
 Msg0716_SetPendingBit0:
-	m_set 0, MD16, 0x070e                                ; FC065A  f1 0e 07 b8
-	m_set 0, MD16, 0x070f                                ; FC065E  f1 0f 07 b8
+	set	0, (0x070e:16)                               ; FC065A  f1 0e 07 b8
+	set	0, (0x070f:16)                               ; FC065E  f1 0f 07 b8
 	ret                                                  ; FC0662  0e
 Msg0716_SetPendingBit1:
-	m_set 1, MD16, 0x070e                                ; FC0663  f1 0e 07 b9
-	m_set 0, MD16, 0x070f                                ; FC0667  f1 0f 07 b8
+	set	1, (0x070e:16)                               ; FC0663  f1 0e 07 b9
+	set	0, (0x070f:16)                               ; FC0667  f1 0f 07 b8
 	ret                                                  ; FC066B  0e
 Msg0716_SetPendingBit2:
-	m_set 2, MD16, 0x070e                                ; FC066C  f1 0e 07 ba
-	m_set 0, MD16, 0x070f                                ; FC0670  f1 0f 07 b8
+	set	2, (0x070e:16)                               ; FC066C  f1 0e 07 ba
+	set	0, (0x070f:16)                               ; FC0670  f1 0f 07 b8
 	ret                                                  ; FC0674  0e
 Msg0716_SetPendingBit3:
-	m_set 3, MD16, 0x070e                                ; FC0675  f1 0e 07 bb
-	m_set 0, MD16, 0x070f                                ; FC0679  f1 0f 07 b8
+	set	3, (0x070e:16)                               ; FC0675  f1 0e 07 bb
+	set	0, (0x070f:16)                               ; FC0679  f1 0f 07 b8
 	ret                                                  ; FC067D  0e
 T_F41120_Nop:
 	ret                                                  ; FC067E  0e
@@ -114197,7 +114197,7 @@ Msg0716_PartSetProgramHigh:   ; entry: named by 1 `.long` operand, first at 0xFC
 .LFC0C16:
 	or	(0x0702:16), bc                      ; FC0C16  d1 02 07 e9
 .LFC0C1A:
-	m_set 0, MD16, 0x070f                                ; FC0C1A  f1 0f 07 b8
+	set	0, (0x070f:16)                               ; FC0C1A  f1 0f 07 b8
 	ret                                                  ; FC0C1E  0e
 Msg0716_HandlerTables_Nop2:   ; entry: named by 1 `.long` operand, first at 0xFC09D6
 	ret                                                  ; FC0C1F  0e
@@ -114225,7 +114225,7 @@ Msg0716_PartSetVolume:   ; entry: named by 1 `.long` operand, first at 0xFC09DA
 ; Msg0716_PartPostCC40_Sustain: table 0 entry 4: when UiEvent_Byte3 bit 3 is set and bit 0 of byte +0x2C of the part's 64-byte record
 ;   (Msg0716_GetRecordPtrByIndex) is set, Msg0716_PostCC40_Sustain for the part.
 Msg0716_PartPostCC40_Sustain:   ; entry: named by 1 `.long` operand, first at 0xFC09DE
-	m_bit 3, MD16, UiEvent_Byte3                                ; FC0C50  f1 ba 20 cb
+	bit	3, (UiEvent_Byte3:16)                               ; FC0C50  f1 ba 20 cb
 	jr z, .LFC0C6F                                       ; FC0C54  66 19
 	ld W,(XIZ+0x06)                                      ; FC0C56  8e 06 20
 	calr Msg0716_GetRecordPtrByIndex                                      ; FC0C59  1e f2 04
@@ -114295,7 +114295,7 @@ Msg0716_PartPostCtrlInt80:   ; entry: named by 1 `.long` operand, first at 0xFC0
 	ret                                                  ; FC0CC5  0e
 ; Msg0716_PartPostCtrlInt9C: table 0 entry 12: when UiEvent_Byte3 bit 3 is set, Msg0716_PostCtrlInt9C for the part.
 Msg0716_PartPostCtrlInt9C:   ; entry: named by 1 `.long` operand, first at 0xFC09FE
-	m_bit 3, MD16, UiEvent_Byte3                                ; FC0CC6  f1 ba 20 cb
+	bit	3, (UiEvent_Byte3:16)                               ; FC0CC6  f1 ba 20 cb
 	jr z, .LFC0CD5                                       ; FC0CCA  66 09
 	ld A,(XIZ+0x06)                                      ; FC0CCC  8e 06 21
 	ld (XIX+0x01),A                                      ; FC0CCF  bc 01 41
@@ -114339,8 +114339,8 @@ Msg0716_PartPostCtrlInt99:   ; entry: named by 1 `.long` operand, first at 0xFC0
 Msg0716_HandlerTables_Nop41:   ; entry: named by 1 `.long` operand, first at 0xFC0A72
 	ret                                                  ; FC0CFE  0e
 Msg0716_SetPendingBit4:   ; entry: named by 4 `.long` operands, first at 0xFC0A76
-	m_set 4, MD16, 0x070e                                ; FC0CFF  f1 0e 07 bc
-	m_set 0, MD16, 0x070f                                ; FC0D03  f1 0f 07 b8
+	set	4, (0x070e:16)                               ; FC0CFF  f1 0e 07 bc
+	set	0, (0x070f:16)                               ; FC0D03  f1 0f 07 b8
 	ret                                                  ; FC0D07  0e
 Msg0716_PostSysEx50_B2_Call:   ; entry: named by 1 `.long` operand, first at 0xFC0A86
 	calr Msg0716_PostSysEx50_B2                                          ; FC0D08  1e 0b 0b
@@ -114368,7 +114368,7 @@ Msg0716_ScaleTuningPostChangedFields:   ; entry: named by 1 `.long` operand, fir
 	jr z, .LFC0D25                                       ; FC0D20  66 03
 	calr ScaleTuning_PostAllTwelveSemitones                                      ; FC0D22  1e 1c 00
 .LFC0D25:
-	m_bit 7, MD16, UiEvent_Byte3                                ; FC0D25  f1 ba 20 cf
+	bit	7, (UiEvent_Byte3:16)                               ; FC0D25  f1 ba 20 cf
 	jr z, .LFC0D2E                                       ; FC0D29  66 03
 	calr Msg0716_PostSysEx50_B1                                          ; FC0D2B  1e d7 0a
 .LFC0D2E:
@@ -114536,18 +114536,18 @@ Msg0716_SetPendingBit6IfHighNibble:   ; entry: named by 1 `.long` operand, first
 	ld a, (UiEvent_Byte3:16)                                   ; FC0DEE  c1 ba 20 21
 	and A,0xf0                                           ; FC0DF2  c9 cc f0
 	jr z, .LFC0DFF                                       ; FC0DF5  66 08
-	m_set 6, MD16, 0x070e                                ; FC0DF7  f1 0e 07 be
-	m_set 0, MD16, 0x070f                                ; FC0DFB  f1 0f 07 b8
+	set	6, (0x070e:16)                               ; FC0DF7  f1 0e 07 be
+	set	0, (0x070f:16)                               ; FC0DFB  f1 0f 07 b8
 .LFC0DFF:
 	ret                                                  ; FC0DFF  0e
 Msg0716_SetPendingBit5:   ; entry: named by 1 `.long` operand, first at 0xFC0B32
-	m_set 5, MD16, 0x070e                                ; FC0E00  f1 0e 07 bd
-	m_set 0, MD16, 0x070f                                ; FC0E04  f1 0f 07 b8
+	set	5, (0x070e:16)                               ; FC0E00  f1 0e 07 bd
+	set	0, (0x070f:16)                               ; FC0E04  f1 0f 07 b8
 	ret                                                  ; FC0E08  0e
 ; Msg0716_SetPendingBit5_B: byte-identical to Msg0716_SetPendingBit5; the handler tables name both.
 Msg0716_SetPendingBit5_B:   ; entry: named by 1 `.long` operand, first at 0xFC0B36
-	m_set 5, MD16, 0x070e                                ; FC0E09  f1 0e 07 bd
-	m_set 0, MD16, 0x070f                                ; FC0E0D  f1 0f 07 b8
+	set	5, (0x070e:16)                               ; FC0E09  f1 0e 07 bd
+	set	0, (0x070f:16)                               ; FC0E0D  f1 0f 07 b8
 	ret                                                  ; FC0E11  0e
 ; Msg0716_PostCC07_VolumePart20: table 7 entry 3: Msg0716_PostCC07_Volume with part byte 0x20, one past the 32 parts.
 Msg0716_PostCC07_VolumePart20:   ; entry: named by 1 `.long` operand, first at 0xFC0B3A
@@ -114596,7 +114596,7 @@ Msg0716_PostSysEx50_81_Call_Nop:
 ; Msg0716_FlushIfPending: when (0x070F) bit 0 is set -- the bit every Msg0716_PartSetProgram* sets -- Msg0716_FlushPending and clear it; then
 ;   (0x60F021) bit 5 is cleared.
 Msg0716_FlushIfPending:
-	m_bit 0, MD16, 0x070f                                ; FC0E56  f1 0f 07 c8
+	bit	0, (0x070f:16)                               ; FC0E56  f1 0f 07 c8
 	jr z, .LFC0E64                                       ; FC0E5A  66 08
 	calr Msg0716_FlushPending                                      ; FC0E5C  1e 0c 00
 	and	(0x070f:16), 0xfe                            ; FC0E5F  c1 0f 07 3c fe
@@ -114627,7 +114627,7 @@ Msg0716_FlushPending:
 	and	(0x0708:16), wa                      ; FC0EA2  d1 08 07 c8
 	calr Msg0716_FlushPendingParts16to31                                      ; FC0EA6  1e dc 00
 .LFC0EA9:
-	m_bit 5, MD24, 0x60f021                              ; FC0EA9  f2 21 f0 60 cd
+	bit	5, (0x60f021:24)                             ; FC0EA9  f2 21 f0 60 cd
 	jr nz, .LFC0ED6                                      ; FC0EAE  6e 26
 	ld a, (0x7ee4:16)                                   ; FC0EB0  c1 e4 7e 21
 	and A,0x0f                                           ; FC0EB4  c9 cc 0f
@@ -114652,11 +114652,11 @@ Msg0716_FlushPending:
 	and A,0xf0                                           ; FC0EEA  c9 cc f0
 	cp a, 0x00:i3                                          ; FC0EED  c9 d8
 	jr nz, .LFC0EFB                                      ; FC0EEF  6e 0a
-	m_bit 5, MD24, 0x60f021                              ; FC0EF1  f2 21 f0 60 cd
+	bit	5, (0x60f021:24)                             ; FC0EF1  f2 21 f0 60 cd
 	jr nz, .LFC0EFB                                      ; FC0EF6  6e 03
 	calr ModeScreen_ResetOct                                          ; FC0EF8  1e fd 05
 .LFC0EFB:
-	m_bit 5, MD24, 0x60f021                              ; FC0EFB  f2 21 f0 60 cd
+	bit	5, (0x60f021:24)                             ; FC0EFB  f2 21 f0 60 cd
 	jr nz, .LFC0F24                                      ; FC0F00  6e 22
 sub_FC0F02:
 	ld a, (0x7ee4:16)                                   ; FC0F02  c1 e4 7e 21
@@ -114742,23 +114742,23 @@ T_F40FBC_Nop:
 ;   Msg0716_PostOp81_EffectBlock97 / Op82_EffectBlock98 / Op83_EffectBlock99 -- the bits Msg0716_SetPendingBit0..4 set.
 ;   Called first by Msg0716_FlushPending.
 Msg0716_FlushPendingBlocks:
-	m_bit 4, MD16, 0x070e                                ; FC0FC5  f1 0e 07 cc
+	bit	4, (0x070e:16)                               ; FC0FC5  f1 0e 07 cc
 	jr z, .LFC0FCE                                       ; FC0FC9  66 03
 	calr Msg0716_PostOp87_Bytes78B3                                          ; FC0FCB  1e 07 0b
 .LFC0FCE:
-	m_bit 0, MD16, 0x070e                                ; FC0FCE  f1 0e 07 c8
+	bit	0, (0x070e:16)                               ; FC0FCE  f1 0e 07 c8
 	jr z, .LFC0FD7                                       ; FC0FD2  66 03
 	calr Msg0716_PostOp80_Byte7634                                          ; FC0FD4  1e 5e 0a
 .LFC0FD7:
-	m_bit 1, MD16, 0x070e                                ; FC0FD7  f1 0e 07 c9
+	bit	1, (0x070e:16)                               ; FC0FD7  f1 0e 07 c9
 	jr z, .LFC0FE0                                       ; FC0FDB  66 03
 	calr Msg0716_PostOp81_EffectBlock97                                          ; FC0FDD  1e 7d 0a
 .LFC0FE0:
-	m_bit 2, MD16, 0x070e                                ; FC0FE0  f1 0e 07 ca
+	bit	2, (0x070e:16)                               ; FC0FE0  f1 0e 07 ca
 	jr z, .LFC0FE9                                       ; FC0FE4  66 03
 	calr Msg0716_PostOp82_EffectBlock98                                          ; FC0FE6  1e 9c 0a
 .LFC0FE9:
-	m_bit 3, MD16, 0x070e                                ; FC0FE9  f1 0e 07 cb
+	bit	3, (0x070e:16)                               ; FC0FE9  f1 0e 07 cb
 	jr z, .LFC0FF2                                       ; FC0FED  66 03
 	calr Msg0716_PostOp83_EffectBlock99                                          ; FC0FEF  1e bb 0a
 .LFC0FF2:
@@ -114766,11 +114766,11 @@ Msg0716_FlushPendingBlocks:
 ; Msg0716_AllSoundOffParts0to7: unless (0x7F0B) bit 0, and only when (0x070E) bit 5 or 6 is set: Msg0716_PostCC78_AllSoundOff for parts 0..7 --
 ;   the parts Msg0716_PartPostCC78_AllSoundOff skips in that case.  Called last by Msg0716_FlushPending's group posts.
 Msg0716_AllSoundOffParts0to7:
-	m_bit 0, MD16, 0x7f0b                                ; FC0FF3  f1 0b 7f c8
+	bit	0, (0x7f0b:16)                               ; FC0FF3  f1 0b 7f c8
 	jr nz, .LFC101D                                      ; FC0FF7  6e 24
-	m_bit 5, MD16, 0x070e                                ; FC0FF9  f1 0e 07 cd
+	bit	5, (0x070e:16)                               ; FC0FF9  f1 0e 07 cd
 	jr nz, .LFC1005                                      ; FC0FFD  6e 06
-	m_bit 6, MD16, 0x070e                                ; FC0FFF  f1 0e 07 ce
+	bit	6, (0x070e:16)                               ; FC0FFF  f1 0e 07 ce
 	jr z, .LFC101D                                       ; FC1003  66 18
 .LFC1005:
 	ld XIX,0x00000716                                    ; FC1005  44 16 07 00 00
@@ -114790,11 +114790,11 @@ Msg0716_AllSoundOffParts0to7:
 ; Msg0716_PartPostCC78_AllSoundOff: unless (0x7F0B) bit 0, and -- when (0x070E) bit 5 or 6 is set -- only for parts above 7: Msg0716_PostCC78_AllSoundOff
 ;   for the part.  Called by the pending-part loops before the program change.
 Msg0716_PartPostCC78_AllSoundOff:
-	m_bit 0, MD16, 0x7f0b                                ; FC101E  f1 0b 7f c8
+	bit	0, (0x7f0b:16)                               ; FC101E  f1 0b 7f c8
 	jr nz, .LFC1041                                      ; FC1022  6e 1d
-	m_bit 5, MD16, 0x070e                                ; FC1024  f1 0e 07 cd
+	bit	5, (0x070e:16)                               ; FC1024  f1 0e 07 cd
 	jr nz, .LFC1030                                      ; FC1028  6e 06
-	m_bit 6, MD16, 0x070e                                ; FC102A  f1 0e 07 ce
+	bit	6, (0x070e:16)                               ; FC102A  f1 0e 07 ce
 	jr z, .LFC1036                                       ; FC102E  66 06
 .LFC1030:
 	cp (XIZ+0x06),0x07                                   ; FC1030  8e 06 3f 07
@@ -114813,9 +114813,9 @@ Msg0716_PartPostCC78_AllSoundOff:
 ;   between Msg0716_FlushPendingBlocks and its sibling Msg0716_AllSoundOffParts0to7. Basis: caller + body + sibling.
 ;   (notes/naming-pilot-2026-10-06/proposals_wave9_a9.json)
 Msg0716_SustainOffParts0to7:
-	m_bit 6, MD16, 0x070e                                ; FC1042  f1 0e 07 ce
+	bit	6, (0x070e:16)                               ; FC1042  f1 0e 07 ce
 	jrl nz, .LFC10B7                                     ; FC1046  7e 6e 00
-	m_bit 5, MD16, 0x070e                                ; FC1049  f1 0e 07 cd
+	bit	5, (0x070e:16)                               ; FC1049  f1 0e 07 cd
 	jrl z, .LFC10D9                                      ; FC104D  76 89 00
 	ld XIZ,Msg0716_ObjectRecords                         ; FC1050  46 90 08 fc 00
 	ldw de, 0x00                                         ; FC1055  32 00 00
@@ -115444,7 +115444,7 @@ Msg0716_PostCC07_VolumeWithOffset:
 	jr mi, .LFC156F                                      ; FC155D  65 10
 	add a, (0x0710:16)                                   ; FC155F  c1 10 07 81
 	jr pl, .LFC1577                                      ; FC1563  6d 12
-	m_bit 2, MD16, 0x7f4d                                ; FC1565  f1 4d 7f ca
+	bit	2, (0x7f4d:16)                               ; FC1565  f1 4d 7f ca
 	jr z, .LFC1577                                       ; FC1569  66 0c
 	ld a, 0x7f:opc                                          ; FC156B  21 7f
 	jr .LFC1577                                          ; FC156D  68 08
@@ -115480,7 +115480,7 @@ Msg0716_PostCtrlInt9C:
 	ld (XIX),0xb0                                        ; FC159C  b4 00 b0
 	ld (XIX+0x02),0x9c                                   ; FC159F  bc 02 00 9c
 	ld (XIX+0x03),0x00                                   ; FC15A3  bc 03 00 00
-	m_bit 3, MD16, UiEvent_Byte2                                ; FC15A7  f1 b9 20 cb
+	bit	3, (UiEvent_Byte2:16)                               ; FC15A7  f1 b9 20 cb
 	jr z, .LFC15B1                                       ; FC15AB  66 04
 	ld (XIX+0x03),0x7f                                   ; FC15AD  bc 03 00 7f
 .LFC15B1:
@@ -117021,7 +117021,7 @@ SoundGroupName_Lookup:
 	ld XIY,0x00eb0000                                    ; FC20B6  45 00 00 eb 00
 	jr .LFC20D4                                          ; FC20BB  68 17
 .LFC20BD:
-	m_bit 0, MD16, 0x08ec                                ; FC20BD  f1 ec 08 c8
+	bit	0, (0x08ec:16)                               ; FC20BD  f1 ec 08 c8
 	jr nz, .LFC20CA                                      ; FC20C1  6e 07
 	ld XIY,Msg0716_Str_GroupPair_A+0x10                  ; FC20C3  45 45 21 fc 00
 	jr .LFC20F3                                          ; FC20C8  68 29
@@ -117134,7 +117134,7 @@ CombiGroupName_Lookup:
 	ld XIY,0x00ec0000                                    ; FC217A  45 00 00 ec 00
 	jr .LFC2192                                          ; FC217F  68 11
 .LFC2181:
-	m_bit 1, MD16, 0x08ec                                ; FC2181  f1 ec 08 c9
+	bit	1, (0x08ec:16)                               ; FC2181  f1 ec 08 c9
 	jr nz, .LFC218E                                      ; FC2185  6e 07
 	ld XIY,Msg0716_Str_GroupPair_B+0x10                  ; FC2187  45 03 22 fc 00
 	jr .LFC21B1                                          ; FC218C  68 23
@@ -117379,7 +117379,7 @@ SoundCode_FromGroupMember_ModeOffset:
 	add A,0x10                                           ; FC22F7  c9 c8 10
 	jr .LFC230A                                          ; FC22FA  68 0e
 .LFC22FC:
-	m_bit 2, MD16, 0x7f4d                                ; FC22FC  f1 4d 7f ca
+	bit	2, (0x7f4d:16)                               ; FC22FC  f1 4d 7f ca
 	jr nz, .LFC2307                                      ; FC2300  6e 05
 	add A,0x20                                           ; FC2302  c9 c8 20
 	jr .LFC230A                                          ; FC2305  68 03
@@ -117538,7 +117538,7 @@ SoundSel_FromProgramAndBank:
 ;   SoundCode_FromGroupMember_ModeOffset and this routine's table: notes/prom_ab_sound_selection_tables.py.
 ;   Basis: body + callers + ROM round trip.
 SoundSel_FromPresetProgramAndBank:
-	m_bit 2, MD16, 0x7f4d                                ; FC2422  f1 4d 7f ca
+	bit	2, (0x7f4d:16)                               ; FC2422  f1 4d 7f ca
 	jr z, .LFC245D                                       ; FC2426  66 35
 	ld c, (SoundConv_Arg0:24)                                 ; FC2428  c2 10 f0 60 23
 	ld b, (SoundConv_Arg1:24)                                 ; FC242D  c2 11 f0 60 22
@@ -119534,7 +119534,7 @@ NoteRouting_RebuildIfPending:
 	ld bc, (NoteRouting_ChangeFlags:16)                                 ; FC546F  d1 04 4c 21
 	and BC,0x8000                                        ; FC5473  d9 cc 00 80
 	jr z, .LFC54C2                                       ; FC5477  66 49
-	m_res 7, MD16, 0x4c01                                ; FC5479  f1 01 4c b7
+	res	7, (0x4c01:16)                               ; FC5479  f1 01 4c b7
 	ld c, (0x4c22:24)                                   ; FC547D  c2 22 4c 00 23
 	or c, (0x4c21:24)                                 ; FC5482  c2 21 4c 00 e3
 	ld (NoteRouting:24), c                                 ; FC5487  f2 00 22 60 43
@@ -119722,7 +119722,7 @@ NoteRouting_OnPartMidiEvent:
 	add XWA,0x00000158                                   ; FC5650  e8 c8 58 01 00 00
 	add XWA,NoteRouting                                   ; FC5656  e8 c8 00 22 60 00
 	ld (XWA),XBC                                         ; FC565C  b0 61
-	m_set 7, MD16, 0x4c05                                ; FC565E  f1 05 4c bf
+	set	7, (0x4c05:16)                               ; FC565E  f1 05 4c bf
 	inc 6,XSP                                            ; FC5662  ef 66
 	jrl .LFC57EA                                         ; FC5664  78 83 01
 .LFC5667:
@@ -120015,7 +120015,7 @@ NoteRouting_OnPartPlayParamEvent:
 	add XBC,NoteRouting                                   ; FC595C  e9 c8 00 22 60 00
 	ld (XBC),E                                           ; FC5962  b1 45
 .LFC5964:
-	m_set 7, MD16, 0x4c05                                ; FC5964  f1 05 4c bf
+	set	7, (0x4c05:16)                               ; FC5964  f1 05 4c bf
 .LFC5968:
 	pop XIX                                              ; FC5968  5c
 	popw de                                              ; FC5969  4a
@@ -120050,7 +120050,7 @@ NoteRouting_OnPlayModeRequest:
 .LFC599F:
 	andw	(xix+664), 0xffef                    ; FC599F  d3 f1 98 02 3c ef ff
 .LFC59A6:
-	m_set 7, MD16, 0x4c05                                ; FC59A6  f1 05 4c bf
+	set	7, (0x4c05:16)                               ; FC59A6  f1 05 4c bf
 .LFC59AA:
 	pop XIX                                              ; FC59AA  5c
 	ret                                                  ; FC59AB  0e
@@ -120184,10 +120184,10 @@ NoteRouting_OnMidiSystemByte9:   ; entry: named by 1 `.long` operand, first at 0
 	ld C,L                                               ; FC5AB5  cf 8b
 	and C,0x80                                           ; FC5AB7  cb cc 80
 	jr z, .LFC5AC2                                       ; FC5ABA  66 06
-	m_set 3, MD16, NoteRouting_ChangeFlags                                ; FC5ABC  f1 04 4c bb
+	set	3, (NoteRouting_ChangeFlags:16)                               ; FC5ABC  f1 04 4c bb
 	jr .LFC5AC6                                          ; FC5AC0  68 04
 .LFC5AC2:
-	m_res 3, MD16, NoteRouting_ChangeFlags                                ; FC5AC2  f1 04 4c b3
+	res	3, (NoteRouting_ChangeFlags:16)                               ; FC5AC2  f1 04 4c b3
 .LFC5AC6:
 	pop XIX                                              ; FC5AC6  5c
 	popw de                                              ; FC5AC7  4a
@@ -120214,10 +120214,10 @@ NoteRouting_SetMidiOutPorts:
 	ld c, (UiEvent_Byte2:16)                                   ; FC5AE8  c1 b9 20 23
 	and C,0x01                                           ; FC5AEC  cb cc 01
 	jr z, .LFC5AF8                                       ; FC5AEF  66 07
-	m_res 4, MD24, NoteRouting_MidiFlags                              ; FC5AF1  f2 93 24 60 b4
+	res	4, (NoteRouting_MidiFlags:24)                             ; FC5AF1  f2 93 24 60 b4
 	jr .LFC5AFD                                          ; FC5AF6  68 05
 .LFC5AF8:
-	m_set 4, MD24, NoteRouting_MidiFlags                              ; FC5AF8  f2 93 24 60 bc
+	set	4, (NoteRouting_MidiFlags:24)                             ; FC5AF8  f2 93 24 60 bc
 .LFC5AFD:
 	orw	(xix), 0x8000                        ; FC5AFD  94 3e 00 80
 .LFC5B01:
@@ -120227,10 +120227,10 @@ NoteRouting_SetMidiOutPorts:
 	ld c, (UiEvent_Byte2:16)                                   ; FC5B0A  c1 b9 20 23
 	and C,0x02                                           ; FC5B0E  cb cc 02
 	jr z, .LFC5B1A                                       ; FC5B11  66 07
-	m_res 3, MD24, NoteRouting_MidiFlags                              ; FC5B13  f2 93 24 60 b3
+	res	3, (NoteRouting_MidiFlags:24)                             ; FC5B13  f2 93 24 60 b3
 	jr .LFC5B1F                                          ; FC5B18  68 05
 .LFC5B1A:
-	m_set 3, MD24, NoteRouting_MidiFlags                              ; FC5B1A  f2 93 24 60 bb
+	set	3, (NoteRouting_MidiFlags:24)                             ; FC5B1A  f2 93 24 60 bb
 .LFC5B1F:
 	orw	(xix), 0x8000                        ; FC5B1F  94 3e 00 80
 .LFC5B23:
@@ -120291,7 +120291,7 @@ NoteRouting_BuildForSequencerModes:   ; entry: named by 4 `.long` operands, firs
 	jr z, .LFC5BA9                                       ; FC5B97  66 10
 	ld c, (0x4c20:24)                                   ; FC5B99  c2 20 4c 00 23
 	ld (0x602201:24), c                                 ; FC5B9E  f2 01 22 60 43
-	m_set 1, MD16, NoteRouting_ChangeFlags                                ; FC5BA3  f1 04 4c b9
+	set	1, (NoteRouting_ChangeFlags:16)                               ; FC5BA3  f1 04 4c b9
 	jr .LFC5BB2                                          ; FC5BA7  68 09
 .LFC5BA9:
 	push 0x00                                            ; FC5BA9  09 00
@@ -120329,7 +120329,7 @@ NoteRouting_BuildForCombiEditPart:   ; entry: named by 1 `.long` operand, first 
 	ld (0x602201:24), h                                 ; FC5BEF  f2 01 22 60 46
 	cp H,0xff                                            ; FC5BF4  ce cf ff
 	jr z, .LFC5BFF                                       ; FC5BF7  66 06
-	m_set 1, MD16, NoteRouting_ChangeFlags                                ; FC5BF9  f1 04 4c b9
+	set	1, (NoteRouting_ChangeFlags:16)                               ; FC5BF9  f1 04 4c b9
 	jr .LFC5C08                                          ; FC5BFD  68 09
 .LFC5BFF:
 	push 0x00                                            ; FC5BFF  09 00
@@ -120355,7 +120355,7 @@ NoteRouting_BuildForCombiEditPart:   ; entry: named by 1 `.long` operand, first 
 	ld (0x602201:24), h                                 ; FC5C2F  f2 01 22 60 46
 	cp H,0xff                                            ; FC5C34  ce cf ff
 	jr z, .LFC5C3F                                       ; FC5C37  66 06
-	m_set 1, MD16, NoteRouting_ChangeFlags                                ; FC5C39  f1 04 4c b9
+	set	1, (NoteRouting_ChangeFlags:16)                               ; FC5C39  f1 04 4c b9
 	jr .LFC5C48                                          ; FC5C3D  68 09
 .LFC5C3F:
 	push 0x00                                            ; FC5C3F  09 00
@@ -120754,7 +120754,7 @@ NoteRouting_QueueMidiOutSchemeChange:
 	srl a, 0x05                                          ; FC5FC8  c9 ef 05
 	cp A,C                                               ; FC5FCB  cb f1
 	jr z, .LFC5FFB                                       ; FC5FCD  66 2c
-	m_bit 5, MD24, NoteRouting_MidiFlags                              ; FC5FCF  f2 93 24 60 cd
+	bit	5, (NoteRouting_MidiFlags:24)                             ; FC5FCF  f2 93 24 60 cd
 	jr z, .LFC5FEB                                       ; FC5FD4  66 15
 	bit 5,(XIX+0x0293)                                   ; FC5FD6  f3 f1 93 02 cd
 	jr nz, .LFC5FEB                                      ; FC5FDB  6e 0e
@@ -120764,7 +120764,7 @@ NoteRouting_QueueMidiOutSchemeChange:
 	pushw 0x00                                           ; FC5FE6  0b 00 00
 	jr .LFC601C                                          ; FC5FE9  68 31
 .LFC5FEB:
-	m_bit 5, MD24, NoteRouting_MidiFlags                              ; FC5FEB  f2 93 24 60 cd
+	bit	5, (NoteRouting_MidiFlags:24)                             ; FC5FEB  f2 93 24 60 cd
 	jr nz, .LFC6024                                      ; FC5FF0  6e 32
 	bit 5,(XIX+0x0293)                                   ; FC5FF2  f3 f1 93 02 cd
 	jr z, .LFC6024                                       ; FC5FF7  66 2b
@@ -121239,8 +121239,8 @@ NoteRouting_InitDefaults:
 	jrl c, .LFC63AA                                      ; FC6479  77 2e ff
 	and	(NoteRouting_MidiFlags:24), 0x1f                          ; FC647C  c2 93 24 60 3c 1f
 	ld (NoteRouting_SingleChannel:24), 0x00                             ; FC6482  f2 92 24 60 00 00
-	m_set 3, MD24, NoteRouting_MidiFlags                              ; FC6488  f2 93 24 60 bb
-	m_set 4, MD24, NoteRouting_MidiFlags                              ; FC648D  f2 93 24 60 bc
+	set	3, (NoteRouting_MidiFlags:24)                             ; FC6488  f2 93 24 60 bb
+	set	4, (NoteRouting_MidiFlags:24)                             ; FC648D  f2 93 24 60 bc
 	sub XBC,XBC                                          ; FC6492  e9 a1
 	ld (0x602494:24), xbc                               ; FC6494  f2 94 24 60 61
 	ldw (NoteRouting_Mode:24), 0x00                             ; FC6499  f2 98 24 60 02 00 00
@@ -121843,7 +121843,7 @@ MidiInA_ProcessRing:
 	ld C,E                                               ; FC81E5  cd 8b
 	and C,0x02                                           ; FC81E7  cb cc 02
 	jr z, .LFC81FE                                       ; FC81EA  66 12
-	m_bit 5, MD24, NoteRouting_MidiFlags                              ; FC81EC  f2 93 24 60 cd
+	bit	5, (NoteRouting_MidiFlags:24)                             ; FC81EC  f2 93 24 60 cd
 	jr nz, .LFC81FE                                      ; FC81F1  6e 0b
 	lda xbc, (xiz-712)                                   ; FC81F3  f3 f9 38 fd 31
 	push XBC                                             ; FC81F8  39
@@ -121997,7 +121997,7 @@ MidiInA_ProcessRing:
 	ld C,E                                               ; FC837E  cd 8b
 	and C,0x02                                           ; FC8380  cb cc 02
 	jr z, .LFC8397                                       ; FC8383  66 12
-	m_bit 5, MD24, NoteRouting_MidiFlags                              ; FC8385  f2 93 24 60 cd
+	bit	5, (NoteRouting_MidiFlags:24)                             ; FC8385  f2 93 24 60 cd
 	jr nz, .LFC8397                                      ; FC838A  6e 0b
 	lda xbc, (xiz-712)                                   ; FC838C  f3 f9 38 fd 31
 	push XBC                                             ; FC8391  39
@@ -122176,7 +122176,7 @@ MidiInB_ProcessRing:
 	ld C,E                                               ; FC854B  cd 8b
 	and C,0x02                                           ; FC854D  cb cc 02
 	jr z, .LFC8564                                       ; FC8550  66 12
-	m_bit 5, MD24, NoteRouting_MidiFlags                              ; FC8552  f2 93 24 60 cd
+	bit	5, (NoteRouting_MidiFlags:24)                             ; FC8552  f2 93 24 60 cd
 	jr nz, .LFC8564                                      ; FC8557  6e 0b
 	lda xbc, (xiz-712)                                   ; FC8559  f3 f9 38 fd 31
 	push XBC                                             ; FC855E  39
@@ -122330,7 +122330,7 @@ MidiInB_ProcessRing:
 	ld C,E                                               ; FC86E4  cd 8b
 	and C,0x02                                           ; FC86E6  cb cc 02
 	jr z, .LFC86FD                                       ; FC86E9  66 12
-	m_bit 5, MD24, NoteRouting_MidiFlags                              ; FC86EB  f2 93 24 60 cd
+	bit	5, (NoteRouting_MidiFlags:24)                             ; FC86EB  f2 93 24 60 cd
 	jr nz, .LFC86FD                                      ; FC86F0  6e 0b
 	lda xbc, (xiz-712)                                   ; FC86F2  f3 f9 38 fd 31
 	push XBC                                             ; FC86F7  39
@@ -122482,7 +122482,7 @@ Ring601850_ProcessNoteEvents:
 	ld C,L                                               ; FC8859  cf 8b
 	and C,0x02                                           ; FC885B  cb cc 02
 	jr z, .LFC8872                                       ; FC885E  66 12
-	m_bit 5, MD24, NoteRouting_MidiFlags                              ; FC8860  f2 93 24 60 cd
+	bit	5, (NoteRouting_MidiFlags:24)                             ; FC8860  f2 93 24 60 cd
 	jr nz, .LFC8872                                      ; FC8865  6e 0b
 	lda xbc, (xiz-422)                                   ; FC8867  f3 f9 5a fe 31
 	push XBC                                             ; FC886C  39
@@ -122504,7 +122504,7 @@ Ring601850_ProcessNoteEvents:
 	cp H,0x20                                            ; FC888D  ce cf 20
 	jrl c, .LFC87E7                                      ; FC8890  77 54 ff
 .LFC8893:
-	m_bit 5, MD24, NoteRouting_MidiFlags                              ; FC8893  f2 93 24 60 cd
+	bit	5, (NoteRouting_MidiFlags:24)                             ; FC8893  f2 93 24 60 cd
 	jrl z, .LFC87B9                                      ; FC8898  76 1e ff
 	ld c, (xiz-126)                                      ; FC889B  8e 82 23
 	ld (xiz-422), c                                      ; FC889E  f3 f9 5a fe 43
@@ -124421,7 +124421,7 @@ NoteChange_ReleaseMidiInChannelNotes:
 	ld C,L                                               ; FC99CC  cf 8b
 	and C,0x02                                           ; FC99CE  cb cc 02
 	jr z, .LFC99E5                                       ; FC99D1  66 12
-	m_bit 5, MD24, NoteRouting_MidiFlags                              ; FC99D3  f2 93 24 60 cd
+	bit	5, (NoteRouting_MidiFlags:24)                             ; FC99D3  f2 93 24 60 cd
 	jr nz, .LFC99E5                                      ; FC99D8  6e 0b
 	lda xbc, (xiz-410)                                   ; FC99DA  f3 f9 66 fe 31
 	push XBC                                             ; FC99DF  39
@@ -125118,7 +125118,7 @@ PartNotes_ApplyFrame:
 	pushw wa                                             ; FCA054  28
 	calr PartNote_ApplyVelocityOffset                                      ; FCA055  1e a2 0d
 	ld (XIX+0x04),A                                      ; FCA058  bc 04 41
-	m_set 0, MDD+r6, 0xf9                                ; FCA05B  be f9 b8
+	set	0, (xiz-7)                                   ; FCA05B  be f9 b8
 	inc 8,XSP                                            ; FCA05E  ef 60
 	inc 6,XSP                                            ; FCA060  ef 66
 	jr .LFCA068                                          ; FCA062  68 04
@@ -125137,7 +125137,7 @@ PartNotes_ApplyFrame:
 	pushw wa                                             ; FCA07F  28
 	calr PartNote_TransposeForMidiOut                                      ; FCA080  1e aa 0d
 	ld (XIX+0x06),A                                      ; FCA083  bc 06 41
-	m_set 1, MDD+r6, 0xf9                                ; FCA086  be f9 b9
+	set	1, (xiz-7)                                   ; FCA086  be f9 b9
 	inc 6,XSP                                            ; FCA089  ef 66
 	jr .LFCA091                                          ; FCA08B  68 04
 .LFCA08D:
@@ -125150,7 +125150,7 @@ PartNotes_ApplyFrame:
 	jr z, .LFCA0A9                                       ; FCA09D  66 0a
 	ld C,(XIX)                                           ; FCA09F  84 23
 	ld (XIX+0x08),C                                      ; FCA0A1  bc 08 43
-	m_set 2, MDD+r6, 0xf9                                ; FCA0A4  be f9 ba
+	set	2, (xiz-7)                                   ; FCA0A4  be f9 ba
 	jr .LFCA0AD                                          ; FCA0A7  68 04
 .LFCA0A9:
 	ld (XIX+0x08),0xff                                   ; FCA0A9  bc 08 00 ff
@@ -125218,17 +125218,17 @@ PartNotes_ApplyFrame:
 	ld C,(XIX+0x03)                                      ; FCA13B  8c 03 23
 	cp C,0xff                                            ; FCA13E  cb cf ff
 	jr z, .LFCA146                                       ; FCA141  66 03
-	m_set 0, MDD+r6, 0xf9                                ; FCA143  be f9 b8
+	set	0, (xiz-7)                                   ; FCA143  be f9 b8
 .LFCA146:
 	ld C,(XIX+0x06)                                      ; FCA146  8c 06 23
 	cp C,0xff                                            ; FCA149  cb cf ff
 	jr z, .LFCA151                                       ; FCA14C  66 03
-	m_set 1, MDD+r6, 0xf9                                ; FCA14E  be f9 b9
+	set	1, (xiz-7)                                   ; FCA14E  be f9 b9
 .LFCA151:
 	ld C,(XIX+0x08)                                      ; FCA151  8c 08 23
 	cp C,0xff                                            ; FCA154  cb cf ff
 	jr z, .LFCA15C                                       ; FCA157  66 03
-	m_set 2, MDD+r6, 0xf9                                ; FCA159  be f9 ba
+	set	2, (xiz-7)                                   ; FCA159  be f9 ba
 .LFCA15C:
 	m_push MWD+r6, 0xfa                                  ; FCA15C  9e fa 04
 	m_push MWD+r6, 0xfe                                  ; FCA15F  9e fe 04
@@ -132162,7 +132162,7 @@ SoftKeyCol2_SoundEditToneLayerPanning:
 	jrl nz, .LFD1154                                     ; FD10A5  7e ac 00
 	cp a, 0x03:i3                                          ; FD10A8  c9 db
 	jr nz, .LFD10B3                                      ; FD10AA  6e 07
-	m_set 7, MDD+r6, 0xf8                                ; FD10AC  be f8 bf
+	set	7, (xiz-8)                                   ; FD10AC  be f8 bf
 	ld h, 0x00:opc                                          ; FD10AF  26 00
 	jr .LFD10CD                                          ; FD10B1  68 1a
 .LFD10B3:
@@ -132172,7 +132172,7 @@ SoftKeyCol2_SoundEditToneLayerPanning:
 	ld c, (xiz-8)                                        ; FD10B7  8e f8 23
 	and C,0x80                                           ; FD10BA  cb cc 80
 	jr z, .LFD10C6                                       ; FD10BD  66 07
-	m_res 7, MDD+r6, 0xf8                                ; FD10BF  be f8 b7
+	res	7, (xiz-8)                                   ; FD10BF  be f8 b7
 	ld h, 0x03:opc                                          ; FD10C2  26 03
 	jr .LFD10CD                                          ; FD10C4  68 07
 .LFD10C6:
@@ -132537,7 +132537,7 @@ SoftKeyCol3_SoundEditToneLayerKeyLayer:
 	push XBC                                             ; FD13C8  39
 	pushw 0x01                                           ; FD13C9  0b 01 00
 	call Arr27A6_Get                                      ; FD13CC  1d 7b 6c fd
-	m_res 7, MDD+r6, 0xfe                                ; FD13D0  be fe b7
+	res	7, (xiz-2)                                   ; FD13D0  be fe b7
 	ld bc, (xiz-2)                                       ; FD13D3  9e fe 21
 	extz BC                                              ; FD13D6  d9 12
 	pushw bc                                             ; FD13D8  29
@@ -132604,8 +132604,8 @@ SoftKeyCol4_SoundEditToneLayerKeyLayer:
 	push XIY                                             ; FD1468  3d
 	jp (xix)                                             ; FD1469  b4 d8
 .LFD146B:
-	m_res 7, MDD+r6, 0xfe                                ; FD146B  be fe b7
-	m_res 7, MDD+r6, 0xfc                                ; FD146E  be fc b7
+	res	7, (xiz-2)                                   ; FD146B  be fe b7
+	res	7, (xiz-4)                                   ; FD146E  be fc b7
 	ld bc, (xiz-4)                                       ; FD1471  9e fc 21
 	extz BC                                              ; FD1474  d9 12
 	pushw bc                                             ; FD1476  29
@@ -132677,8 +132677,8 @@ SoftKeyCol5_SoundEditToneLayerKeyLayer:
 	push XIY                                             ; FD1510  3d
 	jp (xix)                                             ; FD1511  b4 d8
 .LFD1513:
-	m_res 7, MDD+r6, 0xfe                                ; FD1513  be fe b7
-	m_res 7, MDD+r6, 0xfc                                ; FD1516  be fc b7
+	res	7, (xiz-2)                                   ; FD1513  be fe b7
+	res	7, (xiz-4)                                   ; FD1516  be fc b7
 	ld bc, (xiz-4)                                       ; FD1519  9e fc 21
 	extz BC                                              ; FD151C  d9 12
 	pushw bc                                             ; FD151E  29
@@ -132738,7 +132738,7 @@ SoftKeyCol6_SoundEditToneLayerKeyLayer:
 	push XBC                                             ; FD159A  39
 	pushw 0x03                                           ; FD159B  0b 03 00
 	call Arr27A6_Get                                      ; FD159E  1d 7b 6c fd
-	m_res 7, MDD+r6, 0xfe                                ; FD15A2  be fe b7
+	res	7, (xiz-2)                                   ; FD15A2  be fe b7
 	pushw 0x7f                                           ; FD15A5  0b 7f 00
 	ld bc, (xiz-2)                                       ; FD15A8  9e fe 21
 	extz BC                                              ; FD15AB  d9 12
@@ -132927,7 +132927,7 @@ SoftKeyCol3_SoundEditToneLayerVelocityLayer:
 	push XBC                                             ; FD1714  39
 	pushw 0x01                                           ; FD1715  0b 01 00
 	call Arr27A6_Get                                      ; FD1718  1d 7b 6c fd
-	m_res 7, MDD+r6, 0xfe                                ; FD171C  be fe b7
+	res	7, (xiz-2)                                   ; FD171C  be fe b7
 	lda xbc, (xiz-4)                                     ; FD171F  be fc 31
 	push XBC                                             ; FD1722  39
 	call Var27A3_GetValidSlot                                      ; FD1723  1d 4d 6b fd
@@ -132989,10 +132989,10 @@ SoftKeyCol4_SoundEditToneLayerVelocityLayer:
 	push XBC                                             ; FD17A6  39
 	pushw 0x03                                           ; FD17A7  0b 03 00
 	call Arr27A6_Get                                      ; FD17AA  1d 7b 6c fd
-	m_res 7, MDD+r6, 0xfe                                ; FD17AE  be fe b7
+	res	7, (xiz-2)                                   ; FD17AE  be fe b7
 ; (sub_FD17B1 removed 2026-10-04: no code names it and the line above falls through into it -- part of SoftKeyCol4_SoundEditToneLayerVelocityLayer;
 ;  notes/prom_a_stray_label_removal.py)
-	m_res 7, MDD+r6, 0xfc                                ; FD17B1  be fc b7
+	res	7, (xiz-4)                                   ; FD17B1  be fc b7
 	lda xbc, (xiz-6)                                     ; FD17B4  be fa 31
 	push XBC                                             ; FD17B7  39
 	call Var27A3_GetValidSlot                                      ; FD17B8  1d 4d 6b fd
@@ -133053,8 +133053,8 @@ SoftKeyCol5_SoundEditToneLayerVelocityLayer:
 	push XBC                                             ; FD183D  39
 	pushw 0x04                                           ; FD183E  0b 04 00
 	call Arr27A6_Get                                      ; FD1841  1d 7b 6c fd
-	m_res 7, MDD+r6, 0xfe                                ; FD1845  be fe b7
-	m_res 7, MDD+r6, 0xfc                                ; FD1848  be fc b7
+	res	7, (xiz-2)                                   ; FD1845  be fe b7
+	res	7, (xiz-4)                                   ; FD1848  be fc b7
 	lda xbc, (xiz-6)                                     ; FD184B  be fa 31
 	push XBC                                             ; FD184E  39
 	call Var27A3_GetValidSlot                                      ; FD184F  1d 4d 6b fd
@@ -133111,7 +133111,7 @@ SoftKeyCol6_SoundEditToneLayerVelocityLayer:
 	push XBC                                             ; FD18C9  39
 	pushw 0x03                                           ; FD18CA  0b 03 00
 	call Arr27A6_Get                                      ; FD18CD  1d 7b 6c fd
-	m_res 7, MDD+r6, 0xfe                                ; FD18D1  be fe b7
+	res	7, (xiz-2)                                   ; FD18D1  be fe b7
 	lda xbc, (xiz-4)                                     ; FD18D4  be fc 31
 	push XBC                                             ; FD18D7  39
 	call Var27A3_GetValidSlot                                      ; FD18D8  1d 4d 6b fd
@@ -135564,7 +135564,7 @@ SoftKeyCol4_SoundEditAmpLevel2:
 	push XBC                                             ; FD2DF1  39
 	pushw 0x00                                           ; FD2DF2  0b 00 00
 	call Arr27A6_Get                                      ; FD2DF5  1d 7b 6c fd
-	m_res 7, MDD+r6, 0xfe                                ; FD2DF9  be fe b7
+	res	7, (xiz-2)                                   ; FD2DF9  be fe b7
 	ld bc, (xiz-2)                                       ; FD2DFC  9e fe 21
 	extz BC                                              ; FD2DFF  d9 12
 	pushw bc                                             ; FD2E01  29
@@ -135628,8 +135628,8 @@ SoftKeyCol5_SoundEditAmpLevel2:
 	push XIY                                             ; FD2E8B  3d
 	jp (xix)                                             ; FD2E8C  b4 d8
 .LFD2E8E:
-	m_res 7, MDD+r6, 0xfe                                ; FD2E8E  be fe b7
-	m_res 7, MDD+r6, 0xfc                                ; FD2E91  be fc b7
+	res	7, (xiz-2)                                   ; FD2E8E  be fe b7
+	res	7, (xiz-4)                                   ; FD2E91  be fc b7
 	ld bc, (xiz-4)                                       ; FD2E94  9e fc 21
 	extz BC                                              ; FD2E97  d9 12
 	pushw bc                                             ; FD2E99  29
@@ -135686,7 +135686,7 @@ SoftKeyCol6_SoundEditAmpLevel2:
 	push XBC                                             ; FD2F0F  39
 	pushw 0x00                                           ; FD2F10  0b 00 00
 	call Arr27A6_Get                                      ; FD2F13  1d 7b 6c fd
-	m_res 7, MDD+r6, 0xfe                                ; FD2F17  be fe b7
+	res	7, (xiz-2)                                   ; FD2F17  be fe b7
 	pushw 0x7f                                           ; FD2F1A  0b 7f 00
 	ld bc, (xiz-2)                                       ; FD2F1D  9e fe 21
 	extz BC                                              ; FD2F20  d9 12
@@ -136585,10 +136585,10 @@ LcdKeyRow5_SoundEditAmpEnvelope1:
 	and C,0x20                                           ; FD368A  cb cc 20
 	inc 6,XSP                                            ; FD368D  ef 66
 	jr z, .LFD3696                                       ; FD368F  66 05
-	m_res 5, MDD+r6, 0xfc                                ; FD3691  be fc b5
+	res	5, (xiz-4)                                   ; FD3691  be fc b5
 	jr .LFD3699                                          ; FD3694  68 03
 .LFD3696:
-	m_set 5, MDD+r6, 0xfc                                ; FD3696  be fc bd
+	set	5, (xiz-4)                                   ; FD3696  be fc bd
 .LFD3699:
 	ld bc, (xiz-4)                                       ; FD3699  9e fc 21
 	extz BC                                              ; FD369C  d9 12
@@ -136867,7 +136867,7 @@ SoftKeyCol4_SoundEditAmpEnvelope2:
 	push XBC                                             ; FD392E  39
 	pushw 0x02                                           ; FD392F  0b 02 00
 	call Arr27A6_Get                                      ; FD3932  1d 7b 6c fd
-	m_res 7, MDD+r6, 0xfe                                ; FD3936  be fe b7
+	res	7, (xiz-2)                                   ; FD3936  be fe b7
 	ld bc, (xiz-2)                                       ; FD3939  9e fe 21
 	extz BC                                              ; FD393C  d9 12
 	pushw bc                                             ; FD393E  29
@@ -136933,8 +136933,8 @@ SoftKeyCol5_SoundEditAmpEnvelope2:
 	push XIY                                             ; FD39C8  3d
 	jp (xix)                                             ; FD39C9  b4 d8
 .LFD39CB:
-	m_res 7, MDD+r6, 0xfe                                ; FD39CB  be fe b7
-	m_res 7, MDD+r6, 0xfc                                ; FD39CE  be fc b7
+	res	7, (xiz-2)                                   ; FD39CB  be fe b7
+	res	7, (xiz-4)                                   ; FD39CE  be fc b7
 	ld bc, (xiz-2)                                       ; FD39D1  9e fe 21
 	extz BC                                              ; FD39D4  d9 12
 	pushw bc                                             ; FD39D6  29
@@ -136993,7 +136993,7 @@ SoftKeyCol6_SoundEditAmpEnvelope2:
 	push XBC                                             ; FD3A4C  39
 	pushw 0x02                                           ; FD3A4D  0b 02 00
 	call Arr27A6_Get                                      ; FD3A50  1d 7b 6c fd
-	m_res 7, MDD+r6, 0xfe                                ; FD3A54  be fe b7
+	res	7, (xiz-2)                                   ; FD3A54  be fe b7
 	pushw 0x7f                                           ; FD3A57  0b 7f 00
 	ld bc, (xiz-2)                                       ; FD3A5A  9e fe 21
 	extz BC                                              ; FD3A5D  d9 12
@@ -141958,7 +141958,7 @@ PanelScreen_PostRequest:
 	ld (XIX),BC                                          ; FD60A3  b4 51
 	jr .LFD60AB                                          ; FD60A5  68 04
 .LFD60A7:
-	m_set 4, MD16, UI_Request_Hi                                ; FD60A7  f1 71 20 bc
+	set	4, (UI_Request_Hi:16)                               ; FD60A7  f1 71 20 bc
 .LFD60AB:
 	ld BC,(XIZ+0x0a)                                     ; FD60AB  9e 0a 21
 	extz BC                                              ; FD60AE  d9 12
@@ -142026,7 +142026,7 @@ PanelScreen_PostRequestBit6:
 	ld (UI_StatusCode:16), c                                   ; FD60E0  f1 80 28 43
 	ld A,(XIZ+0x08)                                      ; FD60E4  8e 08 21
 	ld (UI_Request:16), a                                   ; FD60E7  f1 70 20 41
-	m_set 6, MD16, UI_Request_Hi                                ; FD60EB  f1 71 20 be
+	set	6, (UI_Request_Hi:16)                               ; FD60EB  f1 71 20 be
 	unlk XIZ                                             ; FD60EF  ee 0d
 	ret                                                  ; FD60F1  0e
 ; PanelScreen_PostModeRequest: UI_Request := the argument (a panel mode) and UI_Request_Hi bit 1 -- the request
@@ -142038,7 +142038,7 @@ PanelScreen_PostModeRequest:
 	link XIZ,0x0000                                      ; FD60F2  ee 0c 00 00
 	ld C,(XIZ+0x08)                                      ; FD60F6  8e 08 23
 	ld (UI_Request:16), c                                   ; FD60F9  f1 70 20 43
-	m_set 1, MD16, UI_Request_Hi                                ; FD60FD  f1 71 20 b9
+	set	1, (UI_Request_Hi:16)                               ; FD60FD  f1 71 20 b9
 	unlk XIZ                                             ; FD6101  ee 0d
 	ret                                                  ; FD6103  0e
 ; ---------------------------------------------------------------------
@@ -148529,7 +148529,7 @@ EditPage_DrawKeyboardGraph:
 	add XSP,0x00000014                                   ; FD9499  ef c8 14 00 00 00
 	cp (XIZ+0x0a),0x01                                   ; FD949F  8e 0a 3f 01
 	jr nz, .LFD94E1                                      ; FD94A3  6e 3c
-	m_res 7, MDD+r6, 0xf8                                ; FD94A5  be f8 b7
+	res	7, (xiz-8)                                   ; FD94A5  be f8 b7
 	lda xbc, (xiz-10)                                    ; FD94A8  be f6 31
 	push XBC                                             ; FD94AB  39
 	ld wa, (xiz-8)                                       ; FD94AC  9e f8 20
@@ -148563,9 +148563,9 @@ EditPage_DrawKeyboardGraph:
 	inc 2,WA                                             ; FD94F3  d8 62
 	pushw wa                                             ; FD94F5  28
 	calr Arr27A6_Get                                          ; FD94F6  1e 82 d7
-	m_res 7, MDD+r6, 0xf8                                ; FD94F9  be f8 b7
-	m_res 7, MDD+r6, 0xec                                ; FD94FC  be ec b7
-	m_res 7, MDD+r6, 0xea                                ; FD94FF  be ea b7
+	res	7, (xiz-8)                                   ; FD94F9  be f8 b7
+	res	7, (xiz-20)                                  ; FD94FC  be ec b7
+	res	7, (xiz-22)                                  ; FD94FF  be ea b7
 	lda xbc, (xiz-10)                                    ; FD9502  be f6 31
 	push XBC                                             ; FD9505  39
 	ld wa, (xiz-8)                                       ; FD9506  9e f8 20
@@ -148827,10 +148827,10 @@ SoundEditToneLayer_DrawRangeGraph:
 	inc 3,WA                                             ; FD9750  d8 63
 	pushw wa                                             ; FD9752  28
 	calr Arr27A6_Get                                          ; FD9753  1e 25 d5
-	m_res 7, MDD+r6, 0xfe                                ; FD9756  be fe b7
-	m_res 7, MDD+r6, 0xfc                                ; FD9759  be fc b7
-	m_res 7, MDD+r6, 0xfa                                ; FD975C  be fa b7
-	m_res 7, MDD+r6, 0xf8                                ; FD975F  be f8 b7
+	res	7, (xiz-2)                                   ; FD9756  be fe b7
+	res	7, (xiz-4)                                   ; FD9759  be fc b7
+	res	7, (xiz-6)                                   ; FD975C  be fa b7
+	res	7, (xiz-8)                                   ; FD975F  be f8 b7
 	add XSP,0x00000020                                   ; FD9762  ef c8 20 00 00 00
 	cp (XIZ+0x08),0x00                                   ; FD9768  8e 08 3f 00
 	jr nz, .LFD97AB                                      ; FD976C  6e 3d
@@ -148998,7 +148998,7 @@ FilterPage_DrawGraph:
 	push XBC                                             ; FD98D3  39
 	pushw 0x02                                           ; FD98D4  0b 02 00
 	calr Arr27A6_Get                                          ; FD98D7  1e a1 d3
-	m_res 7, MDD+r6, 0xfe                                ; FD98DA  be fe b7
+	res	7, (xiz-2)                                   ; FD98DA  be fe b7
 	lda xbc, (xiz-4)                                     ; FD98DD  be fc 31
 	push XBC                                             ; FD98E0  39
 	pushw 0x03                                           ; FD98E1  0b 03 00
@@ -149187,7 +149187,7 @@ FilterPage_DrawEqualizerGraph:
 	push XBC                                             ; FD9A84  39
 	pushw 0x04                                           ; FD9A85  0b 04 00
 	calr Arr27A6_Get                                          ; FD9A88  1e f0 d1
-	m_res 7, MDD+r6, 0xfe                                ; FD9A8B  be fe b7
+	res	7, (xiz-2)                                   ; FD9A8B  be fe b7
 	lda xbc, (xiz-4)                                     ; FD9A8E  be fc 31
 	push XBC                                             ; FD9A91  39
 	pushw 0x05                                           ; FD9A92  0b 05 00
@@ -149200,7 +149200,7 @@ FilterPage_DrawEqualizerGraph:
 	pushw 0x01                                           ; FD9AA5  0b 01 00
 	calr U8_ShiftLeft                                          ; FD9AA8  1e e9 d1
 	ld H,A                                               ; FD9AAB  c9 8e
-	m_res 7, MDD+r6, 0xfc                                ; FD9AAD  be fc b7
+	res	7, (xiz-4)                                   ; FD9AAD  be fc b7
 	ld de, (xiz-2)                                       ; FD9AB0  9e fe 22
 	extz DE                                              ; FD9AB3  da 12
 	add DE,0x0056                                        ; FD9AB5  da c8 56 00
@@ -149287,7 +149287,7 @@ SoundEditFilterBpf_DrawGraph:
 	push XBC                                             ; FD9B62  39
 	pushw 0x02                                           ; FD9B63  0b 02 00
 	calr Arr27A6_Get                                          ; FD9B66  1e 12 d1
-	m_res 7, MDD+r6, 0xfe                                ; FD9B69  be fe b7
+	res	7, (xiz-2)                                   ; FD9B69  be fe b7
 	lda xbc, (xiz-4)                                     ; FD9B6C  be fc 31
 	push XBC                                             ; FD9B6F  39
 	pushw 0x03                                           ; FD9B70  0b 03 00
@@ -149303,7 +149303,7 @@ SoundEditFilterBpf_DrawGraph:
 	push XBC                                             ; FD9B8B  39
 	pushw 0x04                                           ; FD9B8C  0b 04 00
 	calr Arr27A6_Get                                          ; FD9B8F  1e e9 d0
-	m_res 7, MDD+r6, 0xfa                                ; FD9B92  be fa b7
+	res	7, (xiz-6)                                   ; FD9B92  be fa b7
 	lda xbc, (xiz-8)                                     ; FD9B95  be f8 31
 	push XBC                                             ; FD9B98  39
 	pushw 0x05                                           ; FD9B99  0b 05 00
@@ -163062,7 +163062,7 @@ DiskSaveFile_SaveOrConfirmOverwrite:
 .LFE0662:
 	ld (UI_ScreenPage:16), 0x02                                 ; FE0662  f1 29 22 00 02
 .LFE0667:
-	m_set 4, MD16, UI_Request_Hi                                ; FE0667  f1 71 20 bc
+	set	4, (UI_Request_Hi:16)                               ; FE0667  f1 71 20 bc
 .LFE066B:
 	ret                                                  ; FE066B  0e
 ; DiskSaveFile_SaveNow: Disk_RequestSenseDriveStatus (failure: status 8 / 0 / 0x0C and a delay); ready: status 0x0B,
@@ -163114,7 +163114,7 @@ DiskSaveFile_SaveNow:
 .LFE06D9:
 	ld (0x21fa:16), 0x00                                 ; FE06D9  f1 fa 21 00 00
 	ld (UI_ScreenPage:16), 0x00                                 ; FE06DE  f1 29 22 00 00
-	m_set 4, MD16, UI_Request_Hi                                ; FE06E3  f1 71 20 bc
+	set	4, (UI_Request_Hi:16)                               ; FE06E3  f1 71 20 bc
 .LFE06E7:
 	pop XIX                                              ; FE06E7  5c
 	popw hl                                              ; FE06E8  4b
@@ -163370,7 +163370,7 @@ Disk_MountFloppyWithRetry:
 	set	2, (PB:8)                                   ; FE08C8  f0 1f ba
 	calr Delay_150Ticks                                          ; FE08CB  1e 43 0b
 	res	2, (PB:8)                                   ; FE08CE  f0 1f b2
-	m_res 6, MD16, Disk_Flags                                ; FE08D1  f1 e7 21 b6
+	res	6, (Disk_Flags:16)                               ; FE08D1  f1 e7 21 b6
 	ldw hl, 0x02                                         ; FE08D5  33 02 00
 .LFE08D8:
 	cp hl, 0x00:i3                                         ; FE08D8  db d8
@@ -163386,7 +163386,7 @@ Disk_MountFloppyWithRetry:
 	cp C,0x0b                                            ; FE08EB  cb cf 0b
 	jr nz, .LFE08F7                                          ; FE08EE  6e 07
 	ld (XIX),0x00                                        ; FE08F0  b4 00 00
-	m_set 6, MD16, Disk_Flags                                ; FE08F3  f1 e7 21 be
+	set	6, (Disk_Flags:16)                               ; FE08F3  f1 e7 21 be
 .LFE08F7:
 	ld C,(XIX)                                           ; FE08F7  84 23
 	cp C,0x0a                                            ; FE08F9  cb cf 0a
@@ -163717,7 +163717,7 @@ DiskApi_ReadFileToWindow:
 	add xwa, (Disk_WindowStart:16)                                ; FE0B99  e1 d3 21 80
 	ld (Disk_WindowEnd:16), xwa                                 ; FE0B9D  f1 d7 21 60
 .LFE0BA1:
-	m_res 2, MD16, Disk_Flags                                ; FE0BA1  f1 e7 21 b2
+	res	2, (Disk_Flags:16)                               ; FE0BA1  f1 e7 21 b2
 	calr DiskFile_SetTransferToWindow                                            ; FE0BA5  1e 60 00
 .LFE0BA8:
 	calr DiskFile_ReadBlock                                          ; FE0BA8  1e de 0e
@@ -163825,7 +163825,7 @@ DiskFile_AdvanceWindow:
 	add XBC,0x00000400                                   ; FE0C8E  e9 c8 00 04 00 00
 	m_cp_rm ML16, Disk_WindowEnd, r1                             ; FE0C94  e1 d7 21 f1
 	jr ule, .LFE0C9E                                         ; FE0C98  63 04
-	m_set 2, MD16, Disk_Flags                                ; FE0C9A  f1 e7 21 ba
+	set	2, (Disk_Flags:16)                               ; FE0C9A  f1 e7 21 ba
 .LFE0C9E:
 	sub A,A                                              ; FE0C9E  c9 a1
 .LFE0CA0:
@@ -163961,7 +163961,7 @@ Disk_ScanDirectory:
 	jr lt, .LFE0E17                                           ; FE0E2F  61 e6
 	lda xix, (0x60a080:24)                               ; FE0E31  f2 80 a0 60 34
 	ld (Disk_WindowStart:16), xix                                 ; FE0E36  f1 d3 21 64
-	m_res 2, MD16, Disk_Flags                                ; FE0E3A  f1 e7 21 b2
+	res	2, (Disk_Flags:16)                               ; FE0E3A  f1 e7 21 b2
 	ldw (0x1739:24), 0x1a                               ; FE0E3E  f2 39 17 00 02 1a 00
 	ldw (0x173b:24), 0x00                               ; FE0E45  f2 3b 17 00 02 00 00
 	pushw 0x00                                           ; FE0E4C  0b 00 00
@@ -164676,7 +164676,7 @@ MidiFilePlay_OnSongSelect:
 	res	7, (MidiIn_SongSelectValue:8)                                   ; FE14CC  f0 a3 b7
 	cp	(Disk_LastError:16), 0x01                            ; FE14CF  c1 43 22 3f 01
 	jr nz, .LFE14DC                                          ; FE14D4  6e 06
-	m_set 4, MD16, UI_Request_Hi                                ; FE14D6  f1 71 20 bc
+	set	4, (UI_Request_Hi:16)                               ; FE14D6  f1 71 20 bc
 	jr .LFE14E6                                              ; FE14DA  68 0a
 .LFE14DC:
 	ld (UI_Request:16), 0x01                                 ; FE14DC  f1 70 20 00 01
@@ -164795,7 +164795,7 @@ sub_FE152E_Cases:
 	and (XIX),0xfb                                       ; FE15D8  84 3c fb
 	popw bc                                              ; FE15DB  49
 .LFE15DC:
-	m_set 4, MD16, UI_Request_Hi                                ; FE15DC  f1 71 20 bc
+	set	4, (UI_Request_Hi:16)                               ; FE15DC  f1 71 20 bc
 	calr Disk_PortA3_Release                                          ; FE15E0  1e 14 03
 	jr .LFE15F1                                              ; FE15E3  68 0c
 .LFE15E5:
@@ -164803,7 +164803,7 @@ sub_FE152E_Cases:
 	and (XIX),0xfb                                       ; FE15E8  84 3c fb
 	jr .LFE15F1                                              ; FE15EB  68 04
 .LFE15ED:
-	m_set 4, MD16, UI_Request_Hi                                ; FE15ED  f1 71 20 bc
+	set	4, (UI_Request_Hi:16)                               ; FE15ED  f1 71 20 bc
 .LFE15F1:
 	pop XIX                                              ; FE15F1  5c
 	popw hl                                              ; FE15F2  4b
@@ -164852,9 +164852,9 @@ Medley_LoadNextSongFromDisk:
 	ld xbc, (0x60341e:24)                               ; FE1654  e2 1e 34 60 21
 	or XBC,XBC                                           ; FE1659  e9 e1
 	jr z, .LFE1673                                           ; FE165B  66 16
-	m_res 1, MD16, 0x34d9                                ; FE165D  f1 d9 34 b1
-	m_res 2, MD16, 0x34d9                                ; FE1661  f1 d9 34 b2
-	m_res 3, MD16, 0x34bb                                ; FE1665  f1 bb 34 b3
+	res	1, (0x34d9:16)                               ; FE165D  f1 d9 34 b1
+	res	2, (0x34d9:16)                               ; FE1661  f1 d9 34 b2
+	res	3, (0x34bb:16)                               ; FE1665  f1 bb 34 b3
 	ld (0x2247:16), 0x0f                                 ; FE1669  f1 47 22 00 0f
 	ld (XIX),0x00                                        ; FE166E  b4 00 00
 	jr .LFE1696                                              ; FE1671  68 23
@@ -164872,7 +164872,7 @@ Medley_LoadNextSongFromDisk:
 	jrl c, .LFE15FE                                          ; FE1688  77 73 ff
 .LFE168B:
 	calr Disk_PortA3_Release                                          ; FE168B  1e 69 02
-	m_res 2, MD16, 0x34d0                                ; FE168E  f1 d0 34 b2
+	res	2, (0x34d0:16)                               ; FE168E  f1 d0 34 b2
 	ld a, 0x04:opc                                          ; FE1692  21 04
 	jr .LFE1698                                              ; FE1694  68 02
 .LFE1696:
@@ -164934,7 +164934,7 @@ Medley_AdvanceSong:
 ;   Basis: caller + body + twin. (notes/naming-pilot-2026-10-06/proposals_wave9_c9.json)
 Playback_StopAllBlockingMidiStart:
 	calr Playback_SilenceAll                                          ; FE16F3  1e a0 17
-	m_set 2, MD16, 0x34bb                                ; FE16F6  f1 bb 34 ba
+	set	2, (0x34bb:16)                               ; FE16F6  f1 bb 34 ba
 	calr Transport_StopAllRunning_SaveRegs2                                          ; FE16FA  1e 0a eb
 	ret                                                  ; FE16FD  0e
 ; Playback_StopAll: Playback_SilenceAll (with (0x21E8) bit 6 held: discard the timed-event ring, release track notes, reset
@@ -164954,7 +164954,7 @@ Playback_AcceptMidiStartAndRequestPositionReset:
 	push XIX                                             ; FE1705  3c
 	lda xix, (0x34bb:16)                                ; FE1706  f1 bb 34 34
 	and (XIX),0xfb                                       ; FE170A  84 3c fb
-	m_set 4, MD16, 0x34d4                                ; FE170D  f1 d4 34 bc
+	set	4, (0x34d4:16)                               ; FE170D  f1 d4 34 bc
 	and (XIX),0xf7                                       ; FE1711  84 3c f7
 	calr DiskLoadFile_SendSongSelect_Nop                                          ; FE1714  1e 16 fe
 	pop XIX                                              ; FE1717  5c
@@ -165266,7 +165266,7 @@ Disk_MountFloppy:
 	push XIY                                             ; FE19BB  3d
 	jp (xix)                                             ; FE19BC  b4 d8
 .LFE19BE:
-	m_res 5, MD16, 0x21e8                                ; FE19BE  f1 e8 21 b5
+	res	5, (0x21e8:16)                               ; FE19BE  f1 e8 21 b5
 .LFE19C2:
 	ld XBC,0x000000cf                                    ; FE19C2  41 cf 00 00 00
 	ld (0x221d:16), xbc                                 ; FE19C7  f1 1d 22 61
@@ -165555,7 +165555,7 @@ DiskApi_ReadFileToWindow_Entry:
 	ld (Disk_LastError:16), a                                   ; FE1C3D  f1 43 22 41
 	cp	(UI_ScreenLatch:16), 0x49                            ; FE1C41  c1 7a 20 3f 49
 	jr nz, .LFE1C4C                                          ; FE1C46  6e 04
-	m_res 0, MD16, 0x360b                                ; FE1C48  f1 0b 36 b0
+	res	0, (0x360b:16)                               ; FE1C48  f1 0b 36 b0
 .LFE1C4C:
 	ret                                                  ; FE1C4C  0e
 ; DiskApi_WriteFileFromWindow_Entry: the directory's entry (T_DiskApi_WriteFileFromWindow_Entry): DiskApi_WriteFileFromWindow, A to Disk_LastError.
@@ -165824,7 +165824,7 @@ DiskLoad_ByContentType:
 	jr nz, .LFE1D9F                                          ; FE1D8F  6e 0e
 	calr DiskLoad_Sequencer                                          ; FE1D91  1e d4 05
 	ld H,A                                               ; FE1D94  c9 8e
-	m_res 0, MD16, 0x360b                                ; FE1D96  f1 0b 36 b0
+	res	0, (0x360b:16)                               ; FE1D96  f1 0b 36 b0
 	cp a, 0x01:i3                                          ; FE1D9A  c9 d9
 	jrl nz, .LFE1E20                                         ; FE1D9C  7e 81 00
 .LFE1D9F:
@@ -165864,7 +165864,7 @@ DiskLoad_ByContentType:
 	jr nz, .LFE1DF3                                          ; FE1DE6  6e 0b
 	calr DiskLoad_Sequencer                                          ; FE1DE8  1e 7d 05
 	ld H,A                                               ; FE1DEB  c9 8e
-	m_res 0, MD16, 0x360b                                ; FE1DED  f1 0b 36 b0
+	res	0, (0x360b:16)                               ; FE1DED  f1 0b 36 b0
 	jr .LFE1E20                                              ; FE1DF1  68 2d
 .LFE1DF3:
 	ld C,(XIX)                                           ; FE1DF3  84 23
@@ -165938,7 +165938,7 @@ DiskLoad_PanelLswFile:
 	calr Disk_SetWindowStartToPanelImage                                          ; FE1E70  1e 82 0e
 	calr Disk_SetPanelImageLength                                          ; FE1E73  1e 46 0f
 	calr Disk_SetWindowEndToPanelImageEnd                                          ; FE1E76  1e 03 0f
-	m_res 5, MD16, Disk_Flags                                ; FE1E79  f1 e7 21 b5
+	res	5, (Disk_Flags:16)                               ; FE1E79  f1 e7 21 b5
 	calr DiskApi_ReadFileToWindow                                          ; FE1E7D  1e c3 ec
 	ld H,A                                               ; FE1E80  c9 8e
 	cp a, 0x01:i3                                          ; FE1E82  c9 d9
@@ -166242,8 +166242,8 @@ DiskLoad_StreamFileToLinkRam:
 	ld (xiz-12), xbc                                     ; FE2104  be f4 61
 	ldw	(xiz-4), 0x0001                              ; FE2107  be fc 02 01 00
 	ldw	(xiz-6), 0x0001                              ; FE210C  be fa 02 01 00
-	m_res 5, MD16, Disk_Flags                                ; FE2111  f1 e7 21 b5
-	m_set 1, MD16, Disk_Flags                                ; FE2115  f1 e7 21 b9
+	res	5, (Disk_Flags:16)                               ; FE2111  f1 e7 21 b5
+	set	1, (Disk_Flags:16)                               ; FE2115  f1 e7 21 b9
 	ld HL,(XIZ+0x08)                                     ; FE2119  9e 08 23
 	ld wa, (xiz-8)                                       ; FE211C  9e f8 20
 	sub HL,WA                                            ; FE211F  d8 a3
@@ -166427,7 +166427,7 @@ DiskLoad_StreamFileToLinkRam:
 	call T_Link_SendCommand5_WaitDone                    ; FE22DD  1d 38 12 f4
 	pop XIY                                              ; FE22E1  5d
 .LFE22E2:
-	m_res 1, MD16, Disk_Flags                                ; FE22E2  f1 e7 21 b1
+	res	1, (Disk_Flags:16)                               ; FE22E2  f1 e7 21 b1
 .LFE22E6:
 	ld a, (xiz-1)                                        ; FE22E6  8e ff 21
 	pop XIX                                              ; FE22E9  5c
@@ -166481,7 +166481,7 @@ Disk_LoadSeqToHeap:
 	calr Disk_SetWindowStartToHeap                                          ; FE2350  1e ca 09
 	calr Disk_SetSeqLengthFromWorkspace                                          ; FE2353  1e 70 0a
 	calr Disk_SetWindowEndToHeapPlusSeqLength                                          ; FE2356  1e 4e 0a
-	m_res 5, MD16, Disk_Flags                                ; FE2359  f1 e7 21 b5
+	res	5, (Disk_Flags:16)                               ; FE2359  f1 e7 21 b5
 	calr DiskApi_ReadFileToWindow                                          ; FE235D  1e e3 e7
 	ld (Disk_LastError:16), a                                   ; FE2360  f1 43 22 41
 	ld a, 0x01:opc                                          ; FE2364  21 01
@@ -166511,7 +166511,7 @@ Disk_LoadSqfToWorkspace:
 	ld (XIX+0x0a),0x46                                   ; FE238E  bc 0a 00 46
 	calr Disk_SetWindowStartToWorkspace                                          ; FE2392  1e 9b 09
 	calr Disk_SetWindowEndToWorkspaceEnd                                          ; FE2395  1e 05 0a
-	m_res 1, MD16, Disk_Flags                                ; FE2398  f1 e7 21 b1
+	res	1, (Disk_Flags:16)                               ; FE2398  f1 e7 21 b1
 	calr DiskApi_ReadFileToWindow                                          ; FE239C  1e a4 e7
 	ld H,A                                               ; FE239F  c9 8e
 	cp a, 0x01:i3                                          ; FE23A1  c9 d9
@@ -166606,7 +166606,7 @@ DiskLoad_PanelSlsFile:
 	ld xwa, (xiz-4)                                      ; FE2457  ae fc 20
 	add XWA,0x00000800                                   ; FE245A  e8 c8 00 08 00 00
 	ld (Disk_WindowEnd:16), xwa                                 ; FE2460  f1 d7 21 60
-	m_res 1, MD16, Disk_Flags                                ; FE2464  f1 e7 21 b1
+	res	1, (Disk_Flags:16)                               ; FE2464  f1 e7 21 b1
 	calr DiskApi_ReadFileToWindow                                          ; FE2468  1e d8 e6
 	ld H,A                                               ; FE246B  c9 8e
 	cp a, 0x01:i3                                          ; FE246D  c9 d9
@@ -166636,7 +166636,7 @@ DiskLoad_ReadRemapFile:
 	ld XWA,XIX                                           ; FE249E  ec 88
 	add XWA,0x00000800                                   ; FE24A0  e8 c8 00 08 00 00
 	ld (Disk_WindowEnd:16), xwa                                 ; FE24A6  f1 d7 21 60
-	m_res 1, MD16, Disk_Flags                                ; FE24AA  f1 e7 21 b1
+	res	1, (Disk_Flags:16)                               ; FE24AA  f1 e7 21 b1
 	calr DiskApi_ReadFileToWindow                                          ; FE24AE  1e 92 e6
 	ld H,A                                               ; FE24B1  c9 8e
 	cp a, 0x01:i3                                          ; FE24B3  c9 d9
@@ -166851,7 +166851,7 @@ MidiFileSave_DeleteFile:
 ;   (notes/naming-pilot-2026-10-06/proposals_wave10_a10.json)
 MidiFileSave_ReturnToPage0:
 	ld (UI_ScreenPage:16), 0x00                                 ; FE2642  f1 29 22 00 00
-	m_set 4, MD16, UI_Request_Hi                                ; FE2647  f1 71 20 bc
+	set	4, (UI_Request_Hi:16)                               ; FE2647  f1 71 20 bc
 	ret                                                  ; FE264B  0e
 ; DiskFileDelete_ReportDriveError: The drive-error exit of both FILE DELETE routines (MidiFileSave_DeleteFile,
 ;   DiskSaveFile_DeleteEntryFiles) when Disk_RequestSenseDriveStatus returns non-zero: (0x1736) := 0x0C,
@@ -166864,7 +166864,7 @@ DiskFileDelete_ReportDriveError:
 	calr DiskError_SoundAlertAndWait                                          ; FE2658  1e ac f2
 	pushw 0x05dc                                         ; FE265B  0b dc 05
 	calr Delay_Ticks                                          ; FE265E  1e c0 ed
-	m_set 4, MD16, UI_Request_Hi                                ; FE2661  f1 71 20 bc
+	set	4, (UI_Request_Hi:16)                               ; FE2661  f1 71 20 bc
 	pop XBC                                              ; FE2665  59
 	ret                                                  ; FE2666  0e
 ; DiskSaveFile_DeleteEntryFiles: DISK SAVE : FILE DELETE: Disk_RequestSenseDriveStatus -> (0x1735); ready ->
@@ -166884,7 +166884,7 @@ DiskSaveFile_DeleteEntryFiles:
 	calr StatusMsg_ShowByIndex                                          ; FE2682  1e b3 f1
 	calr Delay_500Ticks                                          ; FE2685  1e 91 ed
 	ld (UI_ScreenPage:16), 0x00                                 ; FE2688  f1 29 22 00 00
-	m_set 4, MD16, UI_Request_Hi                                ; FE268D  f1 71 20 bc
+	set	4, (UI_Request_Hi:16)                               ; FE268D  f1 71 20 bc
 	popw bc                                              ; FE2691  49
 	jr .LFE2697                                              ; FE2692  68 03
 .LFE2694:
@@ -167337,7 +167337,7 @@ DiskSave_StreamLinkRamToFile:
 	pushw de                                             ; FE2AAE  2a
 	push XIX                                             ; FE2AAF  3c
 	ldw	(xiz-8), 0x0001                              ; FE2AB0  be f8 02 01 00
-	m_res 5, MD16, Disk_Flags                                ; FE2AB5  f1 e7 21 b5
+	res	5, (Disk_Flags:16)                               ; FE2AB5  f1 e7 21 b5
 	ld XBC,0x00000c00                                    ; FE2AB9  41 00 0c 00 00
 	ld (xiz-12), xbc                                     ; FE2ABE  be f4 61
 	ldw	(xiz-14), 0x0017                             ; FE2AC1  be f2 02 17 00
@@ -167377,10 +167377,10 @@ DiskSave_StreamLinkRamToFile:
 	push XWA                                             ; FE2B35  38
 	pushw 0x1a                                           ; FE2B36  0b 1a 00
 	call T_Disk_CommandDispatch_SaveRegs_Entry                                        ; FE2B39  1d 34 2d f4
-	m_set 1, MD16, Disk_Flags                                ; FE2B3D  f1 e7 21 b9
+	set	1, (Disk_Flags:16)                               ; FE2B3D  f1 e7 21 b9
 	calr DiskApi_WriteFileFromWindow                                          ; FE2B41  1e 55 df
 	ld H,A                                               ; FE2B44  c9 8e
-	m_res 1, MD16, Disk_Flags                                ; FE2B46  f1 e7 21 b1
+	res	1, (Disk_Flags:16)                               ; FE2B46  f1 e7 21 b1
 	inc 8,XSP                                            ; FE2B4A  ef 60
 	cp a, 0x03:i3                                          ; FE2B4C  c9 db
 	jr z, .LFE2B5B                                           ; FE2B4E  66 0b
@@ -167456,10 +167456,10 @@ DiskSave_StreamLinkRamToFile:
 	push XWA                                             ; FE2C16  38
 	pushw 0x1a                                           ; FE2C17  0b 1a 00
 	call T_Disk_CommandDispatch_SaveRegs_Entry                                        ; FE2C1A  1d 34 2d f4
-	m_set 1, MD16, Disk_Flags                                ; FE2C1E  f1 e7 21 b9
+	set	1, (Disk_Flags:16)                               ; FE2C1E  f1 e7 21 b9
 	calr DiskApi_WriteFileFromWindow                                          ; FE2C22  1e 74 de
 	ld H,A                                               ; FE2C25  c9 8e
-	m_res 1, MD16, Disk_Flags                                ; FE2C27  f1 e7 21 b1
+	res	1, (Disk_Flags:16)                               ; FE2C27  f1 e7 21 b1
 	inc 8,XSP                                            ; FE2C2B  ef 60
 	cp a, 0x03:i3                                          ; FE2C2D  c9 db
 	jr z, .LFE2C3C                                           ; FE2C2F  66 0b
@@ -176284,7 +176284,7 @@ sub_FE6E84:
 	pushw de                                             ; FE6F58  2a
 	push XIX                                             ; FE6F59  3c
 	lda xix, (0x7f02:16)                                ; FE6F5A  f1 02 7f 34
-	m_set 4, MD16, Disk_Flags                                ; FE6F5E  f1 e7 21 bc
+	set	4, (Disk_Flags:16)                               ; FE6F5E  f1 e7 21 bc
 	push XDE                                             ; FE6F62  3a
 	push XHL                                             ; FE6F63  3b
 	push XIX                                             ; FE6F64  3c
@@ -176467,7 +176467,7 @@ sub_FE707A:
 	pushw 0x03                                           ; FE70E9  0b 03 00
 	pushw 0x91                                           ; FE70EC  0b 91 00
 	calr sub_FE7100                                            ; FE70EF  1e 0e 00
-	m_res 4, MD16, Disk_Flags                                ; FE70F2  f1 e7 21 b4
+	res	4, (Disk_Flags:16)                               ; FE70F2  f1 e7 21 b4
 	inc 8,XSP                                            ; FE70F6  ef 60
 	inc 8,XSP                                            ; FE70F8  ef 60
 	pop XIX                                              ; FE70FA  5c
@@ -176588,7 +176588,7 @@ sub_FE6F89_Nop:
 	pushw 0x03                                           ; FE71E9  0b 03 00
 	pushw 0x91                                           ; FE71EC  0b 91 00
 	calr Disk_FormatSelectedMedia                                            ; FE71EF  1e 0e 00
-	m_res 4, MD16, Disk_Flags                                ; FE71F2  f1 e7 21 b4
+	res	4, (Disk_Flags:16)                               ; FE71F2  f1 e7 21 b4
 	inc 8,XSP                                            ; FE71F6  ef 60
 	inc 8,XSP                                            ; FE71F8  ef 60
 	pop XIX                                              ; FE71FA  5c
@@ -177304,7 +177304,7 @@ Medley_SkipToNextInternalSong:
 Medley_AdvanceInternalSong:
 	cp	(Medley_Source:16), 0x00                            ; FE7927  c1 0b 22 3f 00
 	jr nz, .LFE794F                                      ; FE792C  6e 21
-	m_bit 2, MD16, 0x34d0                                ; FE792E  f1 d0 34 ca
+	bit	2, (0x34d0:16)                               ; FE792E  f1 d0 34 ca
 	jr z, .LFE794F                                       ; FE7932  66 1b
 	ld a, (Medley_PlayingSong:16)                                   ; FE7934  c1 0a 22 21
 	m_cp_rm MB16, Medley_LastSong, r1                             ; FE7938  c1 09 22 f1
@@ -177428,7 +177428,7 @@ Medley_ScheduleNextMidiFile:
 	jr nz, .LFE7A62                                      ; FE7A4E  6e 12
 	cp	(Medley_FileType:16), 0x01                            ; FE7A50  c1 35 0e 3f 01
 	jr nz, .LFE7A62                                      ; FE7A55  6e 0b
-	m_bit 2, MD16, 0x34d0                                ; FE7A57  f1 d0 34 ca
+	bit	2, (0x34d0:16)                               ; FE7A57  f1 d0 34 ca
 	jr z, .LFE7A62                                       ; FE7A5B  66 05
 	ld (Medley_Countdown:16), 0x0a                                 ; FE7A5D  f1 d0 22 00 0a
 .LFE7A62:
@@ -178320,7 +178320,7 @@ EditScreen_BootPhase2And4:
 ShowScreen_NoteEditPartSelect:
 	or	(0x34bb:16), 0x04                            ; FE836F  c1 bb 34 3e 04
 	call T_CallbackQueue_ResetAndRestartTask2            ; FE8374  1d 80 2e f4
-	m_res 0, MD24, EditScreen_Mode                              ; FE8378  f2 70 1f 60 b0
+	res	0, (EditScreen_Mode:24)                             ; FE8378  f2 70 1f 60 b0
 	xor C,C                                              ; FE837D  cb d3
 	ld a, 0x0c:opc                                          ; FE837F  21 0c
 	swi 7                                                ; FE8381  ff
@@ -178375,10 +178375,10 @@ Paint_NoteEditPartSelect:
 ;          is blind to this name, --verify reads it back.
 ; ---------------------------------------------------------------------
 ShowScreen_DrumEditPartSelect:
-	m_res 0, MD24, 0x601f77                              ; FE83A3  f2 77 1f 60 b0
+	res	0, (0x601f77:24)                             ; FE83A3  f2 77 1f 60 b0
 	or	(0x34bb:16), 0x04                            ; FE83A8  c1 bb 34 3e 04
 	call T_CallbackQueue_ResetAndRestartTask2            ; FE83AD  1d 80 2e f4
-	m_set 0, MD24, EditScreen_Mode                              ; FE83B1  f2 70 1f 60 b8
+	set	0, (EditScreen_Mode:24)                             ; FE83B1  f2 70 1f 60 b8
 	xor C,C                                              ; FE83B6  cb d3
 	ld a, 0x0c:opc                                          ; FE83B8  21 0c
 	swi 7                                                ; FE83BA  ff
@@ -178808,7 +178808,7 @@ EditPartSelect_OpenEditor:
 	xor XWA,XWA                                          ; FE8780  e8 d0
 	mx_ld_rm MXW, ra_IX, ra_BC, r0                       ; FE8782  d3 07 f0 e4 20
 	ld (0x1336:16), xwa                                 ; FE8787  f1 36 13 60
-	m_bit 0, MD24, EditScreen_Mode                              ; FE878B  f2 70 1f 60 c8
+	bit	0, (EditScreen_Mode:24)                             ; FE878B  f2 70 1f 60 c8
 	jr z, .LFE87A5                                       ; FE8790  66 13
 	ldw (UI_Request:16), 0x8028                              ; FE8792  f1 70 20 02 28 80
 	ld xwa, (0x1336:16)                                 ; FE8798  e1 36 13 20
@@ -178904,14 +178904,14 @@ EditScreen_PartKitIsUserOrExt:
 ; EditScreen_EnterDrumEdit: unless refused by EditScreen_PartKitIsUserOrExt, set EditScreen_Mode bit 0 (DRUM EDIT), (0x601F4D) = (0x601F51),
 ;   (0x601F49) = 10, (0x601F75) = 7, (0x601F76) = 8; then the shared tail.
 EditScreen_EnterDrumEdit:
-	m_bit 0, MD24, 0x601f77                              ; FE8868  f2 77 1f 60 c8
+	bit	0, (0x601f77:24)                             ; FE8868  f2 77 1f 60 c8
 	jr z, .LFE8871                                       ; FE886D  66 02
 	jr .LFE8882                                          ; FE886F  68 11
 .LFE8871:
 	calr EditScreen_PartKitIsUserOrExt                                      ; FE8871  1e bc ff
 	cp a, 0x00:i3                                          ; FE8874  c9 d8
 	jr nz, .LFE8882                                      ; FE8876  6e 0a
-	m_set 0, MD24, 0x601f77                              ; FE8878  f2 77 1f 60 b8
+	set	0, (0x601f77:24)                             ; FE8878  f2 77 1f 60 b8
 	call T_DrumSoundNames_FetchNext                                        ; FE887D  1d ac 2f f4
 	ret                                                  ; FE8881  0e
 .LFE8882:
@@ -178919,7 +178919,7 @@ EditScreen_EnterDrumEdit:
 	ldw (EditField_NewNoteLength:24), 0x0a                             ; FE8886  f2 49 1f 60 02 0a 00
 	ld wa, (0x601f51:24)                                ; FE888D  d2 51 1f 60 20
 	ld (EditField_Inc:24), wa                                ; FE8892  f2 4d 1f 60 50
-	m_set 0, MD24, EditScreen_Mode                              ; FE8897  f2 70 1f 60 b8
+	set	0, (EditScreen_Mode:24)                             ; FE8897  f2 70 1f 60 b8
 	ld (EditMeasure_Beats:24), 0x07                             ; FE889C  f2 75 1f 60 00 07
 	ld (0x601f76:24), 0x08                             ; FE88A2  f2 76 1f 60 00 08
 	jr .LFE88D3                                          ; FE88A8  68 29
@@ -178931,7 +178931,7 @@ EditScreen_EnterNoteEdit:
 	ld (EditField_Inc:24), wa                                ; FE88B3  f2 4d 1f 60 50
 	ld wa, (0x601f4b:24)                                ; FE88B8  d2 4b 1f 60 20
 	ld (EditField_NewNoteLength:24), wa                                ; FE88BD  f2 49 1f 60 50
-	m_res 0, MD24, EditScreen_Mode                              ; FE88C2  f2 70 1f 60 b0
+	res	0, (EditScreen_Mode:24)                             ; FE88C2  f2 70 1f 60 b0
 	ld (EditMeasure_Beats:24), 0x0a                             ; FE88C7  f2 75 1f 60 00 0a
 	ld (0x601f76:24), 0x0b                             ; FE88CD  f2 76 1f 60 00 0b
 .LFE88D3:
@@ -178945,7 +178945,7 @@ EditScreen_EnterNoteEdit:
 	ld a, (UI_ScreenId:16)                                   ; FE88ED  c1 7c 20 21
 	m_cp_rm MB16, UI_ScreenId_Previous, r1                             ; FE88F1  c1 7d 20 f1
 	jr z, .LFE8912                                       ; FE88F5  66 1b
-	m_bit 4, MD16, 0x34d1                                ; FE88F7  f1 d1 34 cc
+	bit	4, (0x34d1:16)                               ; FE88F7  f1 d1 34 cc
 	jr z, .LFE8912                                       ; FE88FB  66 15
 	ld (UI_Request:16), 0x01                                 ; FE88FD  f1 70 20 00 01
 	ld (UI_Request_Hi:16), 0x02                                 ; FE8902  f1 71 20 00 02
@@ -178974,11 +178974,11 @@ EditScreen_EnterNoteEdit:
 	jr z, .LFE8980                                       ; FE8960  66 1e
 	cp	(UI_ScreenId_Previous:16), 0x27                            ; FE8962  c1 7d 20 3f 27
 	jr z, .LFE8980                                       ; FE8967  66 17
-	m_bit 0, MD24, EditScreen_Mode                              ; FE8969  f2 70 1f 60 c8
+	bit	0, (EditScreen_Mode:24)                             ; FE8969  f2 70 1f 60 c8
 	jrl z, .LFE8A7E                                      ; FE896E  76 0d 01
-	m_bit 0, MD24, 0x601f77                              ; FE8971  f2 77 1f 60 c8
+	bit	0, (0x601f77:24)                             ; FE8971  f2 77 1f 60 c8
 	jrl z, .LFE8A7E                                      ; FE8976  76 05 01
-	m_res 0, MD24, 0x601f77                              ; FE8979  f2 77 1f 60 b0
+	res	0, (0x601f77:24)                             ; FE8979  f2 77 1f 60 b0
 	jr .LFE898F                                          ; FE897E  68 0f
 .LFE8980:
 	or	(0x20a9:16), 0x01                            ; FE8980  c1 a9 20 3e 01
@@ -179089,7 +179089,7 @@ EditPos_LoadTickIfShownNote:
 ; DrumEdit_IsOtherNote: in DRUM EDIT (EditScreen_Mode bit 0) reads the note two bytes into the event at the cursor (cursor restored)
 ;   and returns 0xFF when it differs from (0x601F44); 0 when it matches, and always 0 in NOTE EDIT.
 DrumEdit_IsOtherNote:
-	m_bit 0, MD24, EditScreen_Mode                              ; FE8AB3  f2 70 1f 60 c8
+	bit	0, (EditScreen_Mode:24)                             ; FE8AB3  f2 70 1f 60 c8
 	jr z, .LFE8AE3                                       ; FE8AB8  66 29
 	ld wa, (BStore_CursorBlock:16)                                 ; FE8ABA  d1 5c 34 20
 	ld bc, (BStore_CursorOffset:16)                                 ; FE8ABE  d1 5e 34 21
@@ -179128,7 +179128,7 @@ EditScreen_BuildBeatTable:
 	popw de                                              ; FE8B07  4a
 	ld a, (EditScreen_Part:24)                                 ; FE8B08  c2 00 1f 60 21
 	add A,0x01                                           ; FE8B0D  c9 c8 01
-	m_bit 2, MD16, 0x0c8a                                ; FE8B10  f1 8a 0c ca
+	bit	2, (0x0c8a:16)                               ; FE8B10  f1 8a 0c ca
 	jr z, .LFE8B18                                       ; FE8B14  66 02
 	ld A,W                                               ; FE8B16  c8 89
 .LFE8B18:
@@ -179348,7 +179348,7 @@ BStore_CursorSlot_Restore:
 ; NoteEdit_DrawKeyboardRuler: NOTE EDIT: layer 2, ScreenDispatch_FE8D6B[(0x601F53)], (0x601F53) being the ruler's
 ;   scroll position 0..9 that NoteEdit_LcdKeyRow2 / _LcdKeyRow3 step; DRUM EDIT: only 0xFEAFB7.
 NoteEdit_DrawKeyboardRuler:
-	m_bit 0, MD24, EditScreen_Mode                              ; FE8D3C  f2 70 1f 60 c8
+	bit	0, (EditScreen_Mode:24)                             ; FE8D3C  f2 70 1f 60 c8
 	jr nz, .LFE8D5E                                      ; FE8D41  6e 1b
 	ld (LCD_CurrentLayer:16), 0x02                                 ; FE8D43  f1 40 25 00 02
 	ld XIX,ScreenDispatch_FE8D6B                         ; FE8D48  44 6b 8d fe 00
@@ -179636,7 +179636,7 @@ EditScreen_SelectEventAtCursor:
 ; NoteEdit_ScrollRulerToNote: NOTE EDIT only: moves (0x601F53), 0..9, one step at a time until (0x601F6F) is inside the range EditScreen_VisibleNoteRange
 ;   returns (A low, W high); when it moved, NoteEdit_DrawKeyboardRuler and the edit area redrawn.
 NoteEdit_ScrollRulerToNote:
-	m_bit 0, MD24, EditScreen_Mode                              ; FE8F97  f2 70 1f 60 c8
+	bit	0, (EditScreen_Mode:24)                             ; FE8F97  f2 70 1f 60 c8
 	jr nz, .LFE8FDC                                      ; FE8F9C  6e 3e
 	ld a, (NoteEdit_RulerPosition:24)                                 ; FE8F9E  c2 53 1f 60 21
 	ld (0x601f6e:24), a                                 ; FE8FA3  f2 6e 1f 60 41
@@ -179685,7 +179685,7 @@ NoteEdit_TakeKeyboardInput:
 	jr z, .LFE9015                                       ; FE9012  66 01
 	ret                                                  ; FE9014  0e
 .LFE9015:
-	m_bit 7, MD24, EditScreen_ActionTimer                              ; FE9015  f2 58 1f 60 cf
+	bit	7, (EditScreen_ActionTimer:24)                             ; FE9015  f2 58 1f 60 cf
 	jr z, .LFE901D                                       ; FE901A  66 01
 	ret                                                  ; FE901C  0e
 .LFE901D:
@@ -179747,7 +179747,7 @@ NoteEdit_TakeKeyboardInput:
 ;   (0x601F35).
 NoteEdit_HoldKey:
 	ld c, 0x08:opc                                          ; FE90B8  23 08
-	m_bit 0, MD24, EditScreen_Mode                              ; FE90BA  f2 70 1f 60 c8
+	bit	0, (EditScreen_Mode:24)                             ; FE90BA  f2 70 1f 60 c8
 	jr z, .LFE90C3                                       ; FE90BF  66 02
 	ld c, 0x01:opc                                          ; FE90C1  23 01
 .LFE90C3:
@@ -179772,7 +179772,7 @@ NoteEdit_HoldKey:
 ; NoteEdit_ReleaseKey: clears the flag of the slot holding note (0x601F34); A = 0xFF when none does.
 NoteEdit_ReleaseKey:
 	ld c, 0x08:opc                                          ; FE90F8  23 08
-	m_bit 0, MD24, EditScreen_Mode                              ; FE90FA  f2 70 1f 60 c8
+	bit	0, (EditScreen_Mode:24)                             ; FE90FA  f2 70 1f 60 c8
 	jr z, .LFE9103                                       ; FE90FF  66 02
 	ld c, 0x01:opc                                          ; FE9101  23 01
 .LFE9103:
@@ -179822,7 +179822,7 @@ NoteEdit_ClearHeldKeyNotes:
 ; NoteEdit_EnterHeldNotes: DRUM EDIT: one note, EditCursor_Note with slot 0's velocity (NoteEdit_InsertNoteAndSync); NOTE EDIT: every slot with a note
 ;   through NoteEdit_InsertNoteEvent then EditCursor_SyncBeatAndTick, stopping on a BStore error (EditScreen_FlagMemoryFull).
 NoteEdit_EnterHeldNotes:
-	m_bit 0, MD24, EditScreen_Mode                              ; FE915D  f2 70 1f 60 c8
+	bit	0, (EditScreen_Mode:24)                             ; FE915D  f2 70 1f 60 c8
 	jr z, .LFE917E                                       ; FE9162  66 1a
 	ld a, (EditCursor_Note:24)                                 ; FE9164  c2 44 1f 60 21
 	ld (NoteEdit_InputNote:24), a                                 ; FE9169  f2 34 1f 60 41
@@ -179948,7 +179948,7 @@ EditCursor_SyncBeatAndTick:
 EditScreen_StepCursorAfterEntry:
 	calr EditCursor_AdvanceToNextIncStep                                          ; FE9290  1e 76 14
 	calr EditScreen_ExtendChainToCursorBeat                                          ; FE9293  1e b7 13
-	m_bit 2, MD24, EditScreen_CursorFlags                              ; FE9296  f2 5b 1f 60 ca
+	bit	2, (EditScreen_CursorFlags:24)                             ; FE9296  f2 5b 1f 60 ca
 	jr nz, .LFE92BD                                      ; FE929B  6e 20
 	ld a, (EditMeasure_Beats:24)                                 ; FE929D  c2 75 1f 60 21
 	mul A,0x60                                           ; FE92A2  c9 08 60
@@ -179967,7 +179967,7 @@ EditScreen_StepCursorAfterEntry:
 	ret                                                  ; FE92C0  0e
 ; EditScreen_CountDownAction: (0x601F58) - 1 while bit 7 is set and it is above 0x80.
 EditScreen_CountDownAction:
-	m_bit 7, MD24, EditScreen_ActionTimer                              ; FE92C1  f2 58 1f 60 cf
+	bit	7, (EditScreen_ActionTimer:24)                             ; FE92C1  f2 58 1f 60 cf
 	jr nz, .LFE92C9                                      ; FE92C6  6e 01
 	ret                                                  ; FE92C8  0e
 .LFE92C9:
@@ -179980,7 +179980,7 @@ EditScreen_CountDownAction:
 	ret                                                  ; FE92D6  0e
 ; EditScreen_CountDownAction2: the same countdown on (0x601F5A).
 EditScreen_CountDownAction2:
-	m_bit 7, MD24, EditScreen_ActionTimer2                              ; FE92D7  f2 5a 1f 60 cf
+	bit	7, (EditScreen_ActionTimer2:24)                             ; FE92D7  f2 5a 1f 60 cf
 	jr nz, .LFE92DF                                      ; FE92DC  6e 01
 	ret                                                  ; FE92DE  0e
 .LFE92DF:
@@ -180237,7 +180237,7 @@ EditScreen_ShowCursorMeasure:
 	calr EditScreen_DrawVisibleNotes                                          ; FE9549  1e 73 69
 	calr EditScreen_EraseFieldRow                                          ; FE954C  1e 29 62
 	calr EditScreen_DrawFields                                          ; FE954F  1e 84 63
-	m_bit 0, MD24, EditScreen_CursorFlags                              ; FE9552  f2 5b 1f 60 c8
+	bit	0, (EditScreen_CursorFlags:24)                             ; FE9552  f2 5b 1f 60 c8
 	jr z, .LFE955C                                       ; FE9557  66 03
 	calr EditScreen_AuditionEvent                                          ; FE9559  1e d9 0f
 .LFE955C:
@@ -180280,7 +180280,7 @@ EditScreen_WrapAndShowCursorMeasure:
 	calr EditScreen_DrawVisibleNotes                                          ; FE95B4  1e 08 69
 	calr EditScreen_EraseFieldRow                                          ; FE95B7  1e be 61
 	calr EditScreen_DrawFields                                          ; FE95BA  1e 19 63
-	m_bit 0, MD24, EditScreen_CursorFlags                              ; FE95BD  f2 5b 1f 60 c8
+	bit	0, (EditScreen_CursorFlags:24)                             ; FE95BD  f2 5b 1f 60 c8
 	jr z, .LFE95C7                                       ; FE95C2  66 03
 	calr EditScreen_AuditionEvent                                          ; FE95C4  1e 6e 0f
 .LFE95C7:
@@ -180436,7 +180436,7 @@ EditScreen_EndAudition_Call:
 EditScreen_DeferredRedrawAndExtend:   ; entry: named by 1 `.long` operand, first at 0xFE931D
 	calr EditScreen_EraseEditArea_Layer0                                          ; FE973C  1e 93 60
 	calr EditScreen_DrawVisibleNotes                                          ; FE973F  1e 7d 67
-	m_bit 0, MD24, EditScreen_CursorFlags                              ; FE9742  f2 5b 1f 60 c8
+	bit	0, (EditScreen_CursorFlags:24)                             ; FE9742  f2 5b 1f 60 c8
 	jr z, .LFE9753                                       ; FE9747  66 0a
 	calr EditScreen_AppendMissingBeatMarkers                                      ; FE9749  1e 93 00
 	cp	(BStore_ErrorCode:16), 0x00                            ; FE974C  c1 4a 0d 3f 00
@@ -181070,7 +181070,7 @@ DrumEdit_Button23_Nop25:   ; entry: named by 7 `.long` operands, first at 0xFE9C
 ; EditScreen_SoftKeyCol1: the SoftKeyCol1 action of DrumEdit, NoteEdit -- called only by SoftKeyCol1_DrumEdit, SoftKeyCol1_NoteEdit.
 EditScreen_SoftKeyCol1:
 	or	(UI_RequestBits:16), 0x08                            ; FE9CDA  c1 75 20 3e 08
-	m_bit 7, MD24, EditScreen_ActionTimer                              ; FE9CDF  f2 58 1f 60 cf
+	bit	7, (EditScreen_ActionTimer:24)                             ; FE9CDF  f2 58 1f 60 cf
 	jr z, .LFE9CEF                                       ; FE9CE4  66 09
 	cp	(EditScreen_ActionIndex:24), 0x00                          ; FE9CE6  c2 59 1f 60 3f 00
 	jr z, .LFE9CEF                                       ; FE9CEC  66 01
@@ -181139,7 +181139,7 @@ EditCursor_MeasureChangedByCursor:
 ; EditScreen_SoftKeyCol2: the SoftKeyCol2 action of DrumEdit, NoteEdit -- called only by SoftKeyCol2_DrumEdit, SoftKeyCol2_NoteEdit.
 EditScreen_SoftKeyCol2:
 	or	(UI_RequestBits:16), 0x08                            ; FE9D92  c1 75 20 3e 08
-	m_bit 7, MD24, EditScreen_ActionTimer                              ; FE9D97  f2 58 1f 60 cf
+	bit	7, (EditScreen_ActionTimer:24)                             ; FE9D97  f2 58 1f 60 cf
 	jr z, .LFE9DA7                                       ; FE9D9C  66 09
 	cp	(EditScreen_ActionIndex:24), 0x01                          ; FE9D9E  c2 59 1f 60 3f 01
 	jr z, .LFE9DA7                                       ; FE9DA4  66 01
@@ -181198,7 +181198,7 @@ EditCursor_NextBeat:
 	jr nc, .LFE9E17                                      ; FE9E13  6f 02
 	jr .LFE9E4C                                          ; FE9E15  68 35
 .LFE9E17:
-	m_bit 0, MD24, EditScreen_CursorFlags                              ; FE9E17  f2 5b 1f 60 c8
+	bit	0, (EditScreen_CursorFlags:24)                             ; FE9E17  f2 5b 1f 60 c8
 	jr z, .LFE9E3B                                       ; FE9E1C  66 1d
 	ld c, (EditMeasure_Beats:24)                                 ; FE9E1E  c2 75 1f 60 23
 	mul C,0x60                                           ; FE9E23  cb 08 60
@@ -181387,7 +181387,7 @@ EditCursor_PrevBeat:
 	ld wa, (EditCursor_Measure:24)                                ; FE9FEA  d2 3f 1f 60 20
 	m_cp_rm MW24, EditScreen_FirstMeasure, r0                           ; FE9FEF  d2 5d 1f 60 f0
 	jr nz, .LFEA017                                      ; FE9FF4  6e 21
-	m_bit 0, MD24, EditScreen_CursorFlags                              ; FE9FF6  f2 5b 1f 60 c8
+	bit	0, (EditScreen_CursorFlags:24)                             ; FE9FF6  f2 5b 1f 60 c8
 	jr z, .LFEA013                                       ; FE9FFB  66 16
 	cpw	(EditCursor_Measure:24), 0x0001                        ; FE9FFD  d2 3f 1f 60 3f 01 00
 	jr z, .LFEA012                                       ; FEA004  66 0c
@@ -181448,7 +181448,7 @@ EditCursor_SetLastBeatOfPrevMeasure:
 ; EditScreen_QueueRelocateAfterMove: with an event selected: EditScreen_ActionTimer = 0x85, EditScreen_ActionIndex = 1 -- deferred action 1 five
 ;   ticks later.
 EditScreen_QueueRelocateAfterMove:
-	m_bit 0, MD24, EditScreen_CursorFlags                              ; FEA082  f2 5b 1f 60 c8
+	bit	0, (EditScreen_CursorFlags:24)                             ; FEA082  f2 5b 1f 60 c8
 	jr nz, .LFEA08A                                      ; FEA087  6e 01
 	ret                                                  ; FEA089  0e
 .LFEA08A:
@@ -181458,17 +181458,17 @@ EditScreen_QueueRelocateAfterMove:
 ; EditScreen_SoftKeyCol3: the SoftKeyCol3 action of DrumEdit, NoteEdit -- called only by SoftKeyCol3_DrumEdit, SoftKeyCol3_NoteEdit.
 EditScreen_SoftKeyCol3:
 	or	(UI_RequestBits:16), 0x08                            ; FEA097  c1 75 20 3e 08
-	m_bit 7, MD24, EditScreen_ActionTimer                              ; FEA09C  f2 58 1f 60 cf
+	bit	7, (EditScreen_ActionTimer:24)                             ; FEA09C  f2 58 1f 60 cf
 	jr z, .LFEA0AC                                       ; FEA0A1  66 09
 	cp	(EditScreen_ActionIndex:24), 0x02                          ; FEA0A3  c2 59 1f 60 3f 02
 	jr z, .LFEA0AC                                       ; FEA0A9  66 01
 	ret                                                  ; FEA0AB  0e
 .LFEA0AC:
-	m_bit 0, MD24, EditScreen_CursorFlags                              ; FEA0AC  f2 5b 1f 60 c8
+	bit	0, (EditScreen_CursorFlags:24)                             ; FEA0AC  f2 5b 1f 60 c8
 	jr nz, .LFEA0B4                                      ; FEA0B1  6e 01
 	ret                                                  ; FEA0B3  0e
 .LFEA0B4:
-	m_bit 0, MD24, EditScreen_Mode                              ; FEA0B4  f2 70 1f 60 c8
+	bit	0, (EditScreen_Mode:24)                             ; FEA0B4  f2 70 1f 60 c8
 	jr z, .LFEA0C2                                       ; FEA0B9  66 07
 	bit 0x07,W                                           ; FEA0BB  c8 33 07
 	jr z, .LFEA0CB                                       ; FEA0BE  66 0b
@@ -181490,7 +181490,7 @@ EditCursor_NoteUp:
 	ret                                                  ; FEA0D7  0e
 .LFEA0D8:
 	add	(EditCursor_Note:24), 0x01                          ; FEA0D8  c2 44 1f 60 38 01
-	m_bit 0, MD24, EditScreen_Mode                              ; FEA0DE  f2 70 1f 60 c8
+	bit	0, (EditScreen_Mode:24)                             ; FEA0DE  f2 70 1f 60 c8
 	jr z, .LFEA0E8                                       ; FEA0E3  66 03
 	calr DrumEdit_RowFollowNoteUp                                      ; FEA0E5  1e d4 0d
 .LFEA0E8:
@@ -181507,7 +181507,7 @@ EditCursor_NoteDown:
 	ret                                                  ; FEA106  0e
 .LFEA107:
 	sub	(EditCursor_Note:24), 0x01                  ; FEA107  c2 44 1f 60 3a 01
-	m_bit 0, MD24, EditScreen_Mode                              ; FEA10D  f2 70 1f 60 c8
+	bit	0, (EditScreen_Mode:24)                             ; FEA10D  f2 70 1f 60 c8
 	jr z, .LFEA117                                       ; FEA112  66 03
 	calr DrumEdit_RowFollowNoteDown                                      ; FEA114  1e 33 0e
 .LFEA117:
@@ -181520,7 +181520,7 @@ EditCursor_NoteDown:
 ; EditScreen_RedrawEditArea: with (0x601F58) bit 7: erase layer 1, EditScreen_FillSelectedEventBar, LCD_DrawVRuleLeft_OrNothing; otherwise erase layer 0 and
 ;   redraw the events (EditScreen_DrawVisibleNotesExceptSelected) first.
 EditScreen_RedrawEditArea:
-	m_bit 7, MD24, EditScreen_ActionTimer                              ; FEA12D  f2 58 1f 60 cf
+	bit	7, (EditScreen_ActionTimer:24)                             ; FEA12D  f2 58 1f 60 cf
 	jr z, .LFEA13E                                       ; FEA132  66 0a
 	calr EditScreen_EraseEditArea_Layer1                                          ; FEA134  1e 22 57
 	calr EditScreen_FillSelectedEventBar                                          ; FEA137  1e 63 60
@@ -181536,14 +181536,14 @@ EditScreen_RedrawEditArea:
 ; EditScreen_SoftKeyCol4: the SoftKeyCol4 action of DrumEdit, NoteEdit -- called only by SoftKeyCol4_DrumEdit, SoftKeyCol4_NoteEdit.
 EditScreen_SoftKeyCol4:
 	or	(UI_RequestBits:16), 0x08                            ; FEA14E  c1 75 20 3e 08
-	m_bit 7, MD24, EditScreen_ActionTimer                              ; FEA153  f2 58 1f 60 cf
+	bit	7, (EditScreen_ActionTimer:24)                             ; FEA153  f2 58 1f 60 cf
 	jr z, .LFEA15B                                       ; FEA158  66 01
 .LFEA15A:
 	ret                                                  ; FEA15A  0e
 .LFEA15B:
-	m_bit 0, MD24, EditScreen_CursorFlags                              ; FEA15B  f2 5b 1f 60 c8
+	bit	0, (EditScreen_CursorFlags:24)                             ; FEA15B  f2 5b 1f 60 c8
 	jr nz, .LFEA176                                      ; FEA160  6e 14
-	m_bit 0, MD24, EditScreen_Mode                              ; FEA162  f2 70 1f 60 c8
+	bit	0, (EditScreen_Mode:24)                             ; FEA162  f2 70 1f 60 c8
 	jr z, .LFEA15A                                       ; FEA167  66 f1
 	bit 0x07,W                                           ; FEA169  c8 33 07
 	jr nz, .LFEA172                                      ; FEA16C  6e 04
@@ -181611,7 +181611,7 @@ EditField_NewNoteVelocityDown:
 ; NoteEdit_SoftKeyCol5: the SoftKeyCol5 action of NoteEdit -- called only by SoftKeyCol5_NoteEdit.
 NoteEdit_SoftKeyCol5:
 	or	(UI_RequestBits:16), 0x08                            ; FEA1D5  c1 75 20 3e 08
-	m_bit 7, MD24, EditScreen_ActionTimer                              ; FEA1DA  f2 58 1f 60 cf
+	bit	7, (EditScreen_ActionTimer:24)                             ; FEA1DA  f2 58 1f 60 cf
 	jr z, .LFEA1EA                                       ; FEA1DF  66 09
 	cp	(EditScreen_ActionIndex:24), 0x03                          ; FEA1E1  c2 59 1f 60 3f 03
 	jr z, .LFEA1EA                                       ; FEA1E7  66 01
@@ -181626,7 +181626,7 @@ NoteEdit_SoftKeyCol5:
 	ret                                                  ; FEA1F6  0e
 ; EditField_LengthUp: the LEN field + 1 up to 0x2FFF: (0x601F47), or (0x601F49) when (0x601F5B) bit 0 is clear; redraws.
 EditField_LengthUp:
-	m_bit 0, MD24, EditScreen_CursorFlags                              ; FEA1F7  f2 5b 1f 60 c8
+	bit	0, (EditScreen_CursorFlags:24)                             ; FEA1F7  f2 5b 1f 60 c8
 	jr nz, .LFEA200                                      ; FEA1FC  6e 02
 	jr T,.LFEA227                                        ; FEA1FE  68 27
 .LFEA200:
@@ -181651,7 +181651,7 @@ EditField_LengthUp:
 	ret                                                  ; FEA23B  0e
 ; EditField_LengthDown: the LEN field - 1 down to 1 (0 becomes 1); redraws.
 EditField_LengthDown:
-	m_bit 0, MD24, EditScreen_CursorFlags                              ; FEA23C  f2 5b 1f 60 c8
+	bit	0, (EditScreen_CursorFlags:24)                             ; FEA23C  f2 5b 1f 60 c8
 	jr nz, .LFEA245                                      ; FEA241  6e 02
 	jr .LFEA27E                                          ; FEA243  68 39
 .LFEA245:
@@ -181689,7 +181689,7 @@ EditField_LengthDown:
 ; EditField_StepInc: repaint bit 3; unless (0x601F58) bit 7: W bit 7 clear -> EditField_IncUp, set -> EditField_IncDown (the key's two halves).
 EditField_StepInc:
 	or	(UI_RequestBits:16), 0x08                            ; FEA2A5  c1 75 20 3e 08
-	m_bit 7, MD24, EditScreen_ActionTimer                              ; FEA2AA  f2 58 1f 60 cf
+	bit	7, (EditScreen_ActionTimer:24)                             ; FEA2AA  f2 58 1f 60 cf
 	jr z, .LFEA2B2                                       ; FEA2AF  66 01
 	ret                                                  ; FEA2B1  0e
 .LFEA2B2:
@@ -181766,7 +181766,7 @@ EditField_IncDown5:
 	jr .LFEA35F                                          ; FEA36A  68 f3
 ; EditScreen_CursorRight: the 'CURSOR >' key: SoftKeyCol8_NoteEdit and SoftKeyCol7_DrumEdit call it (DRUM EDIT has one column fewer).
 EditScreen_CursorRight:
-	m_bit 7, MD24, EditScreen_ActionTimer                              ; FEA36C  f2 58 1f 60 cf
+	bit	7, (EditScreen_ActionTimer:24)                             ; FEA36C  f2 58 1f 60 cf
 	jr z, .LFEA374                                       ; FEA371  66 01
 	ret                                                  ; FEA373  0e
 .LFEA374:
@@ -181783,7 +181783,7 @@ EditScreen_CursorRight:
 .LFEA39A:
 	calr EditCursor_SplitViewTick                                      ; FEA39A  1e a6 03
 .LFEA39D:
-	m_bit 0, MD24, EditScreen_CursorFlags                              ; FEA39D  f2 5b 1f 60 c8
+	bit	0, (EditScreen_CursorFlags:24)                             ; FEA39D  f2 5b 1f 60 c8
 	jr nz, .LFEA3D1                                      ; FEA3A2  6e 2d
 	calr EditPos_SeekFirstNoteAfterOldCursor                                      ; FEA3A4  1e a2 00
 	call BStoreCursor_ReadByte                                        ; FEA3A7  1d 32 22 ff
@@ -181799,17 +181799,17 @@ EditScreen_CursorRight:
 	ld hl, (EditCursor_TickInMeasure:24)                                ; FEA3C1  d2 54 1f 60 23
 	cp XWA,XHL                                           ; FEA3C6  eb f0
 	jr ule, .LFEA400                                     ; FEA3C8  63 36
-	m_bit 1, MD24, EditScreen_CursorFlags                              ; FEA3CA  f2 5b 1f 60 c9
+	bit	1, (EditScreen_CursorFlags:24)                             ; FEA3CA  f2 5b 1f 60 c9
 	jr nz, .LFEA3E2                                      ; FEA3CF  6e 11
 .LFEA3D1:
 	calr EditPos_SeekNextShownNote                                      ; FEA3D1  1e 13 04
-	m_bit 4, MD24, EditScreen_CursorFlags                              ; FEA3D4  f2 5b 1f 60 cc
+	bit	4, (EditScreen_CursorFlags:24)                             ; FEA3D4  f2 5b 1f 60 cc
 	jr nz, .LFEA404                                      ; FEA3D9  6e 29
-	m_bit 1, MD24, EditScreen_CursorFlags                              ; FEA3DB  f2 5b 1f 60 c9
+	bit	1, (EditScreen_CursorFlags:24)                             ; FEA3DB  f2 5b 1f 60 c9
 	jr z, .LFEA3F0                                       ; FEA3E0  66 0e
 .LFEA3E2:
 	calr EditScreen_ExtendChainToCursorBeat                                      ; FEA3E2  1e 68 02
-	m_bit 2, MD24, EditScreen_CursorFlags                              ; FEA3E5  f2 5b 1f 60 ca
+	bit	2, (EditScreen_CursorFlags:24)                             ; FEA3E5  f2 5b 1f 60 ca
 	jr z, .LFEA404                                       ; FEA3EA  66 18
 	calr EditScreen_FlagMemoryFull                                          ; FEA3EC  1e e5 e7
 	ret                                                  ; FEA3EF  0e
@@ -181869,7 +181869,7 @@ EditPos_SeekFirstNoteAfterOldCursor:
 	jr z, .LFEA46E                                       ; FEA462  66 0a
 .LFEA464:
 	calr EditPos_SeekNextShownNote                                      ; FEA464  1e 80 03
-	m_bit 1, MD24, EditScreen_CursorFlags                              ; FEA467  f2 5b 1f 60 c9
+	bit	1, (EditScreen_CursorFlags:24)                             ; FEA467  f2 5b 1f 60 c9
 	jr nz, .LFEA47E                                      ; FEA46C  6e 10
 .LFEA46E:
 	calr EditScreen_PositionAndMeasureStartTicks                                      ; FEA46E  1e b7 01
@@ -182086,7 +182086,7 @@ EditScreen_ExtendChainToCursorBeat:
 	ld bc, (BStore_CursorOffset:16)                                 ; FEA651  d1 5e 34 21
 	pushw wa                                             ; FEA655  28
 	pushw bc                                             ; FEA656  29
-	m_res 2, MD24, EditScreen_CursorFlags                              ; FEA657  f2 5b 1f 60 b2
+	res	2, (EditScreen_CursorFlags:24)                             ; FEA657  f2 5b 1f 60 b2
 	calr EditScreen_CountBeatMarkersFromMeasureMark                                      ; FEA65C  1e 52 00
 	ld wa, (EditCursor_TickInMeasure:24)                                ; FEA65F  d2 54 1f 60 20
 	div A,0x60                                           ; FEA664  c9 0a 60
@@ -182109,7 +182109,7 @@ EditScreen_ExtendChainToCursorBeat:
 	jr nz, .LFEA687                                      ; FEA69D  6e e8
 	jr .LFEA6A6                                          ; FEA69F  68 05
 .LFEA6A1:
-	m_set 2, MD24, EditScreen_CursorFlags                              ; FEA6A1  f2 5b 1f 60 ba
+	set	2, (EditScreen_CursorFlags:24)                             ; FEA6A1  f2 5b 1f 60 ba
 .LFEA6A6:
 	popw bc                                              ; FEA6A6  49
 	popw wa                                              ; FEA6A7  48
@@ -182309,7 +182309,7 @@ EditPos_LoadEventTick:
 	ret                                                  ; FEA86E  0e
 ; EditScreen_CursorLeft: the 'CURSOR <' key: SoftKeyCol7_NoteEdit and SoftKeyCol6_DrumEdit call it.
 EditScreen_CursorLeft:
-	m_bit 7, MD24, EditScreen_ActionTimer                              ; FEA86F  f2 58 1f 60 cf
+	bit	7, (EditScreen_ActionTimer:24)                             ; FEA86F  f2 58 1f 60 cf
 	jr z, .LFEA877                                       ; FEA874  66 01
 	ret                                                  ; FEA876  0e
 .LFEA877:
@@ -182319,10 +182319,10 @@ EditScreen_CursorLeft:
 	ld (EditCursor_OldTickInView:24), wa                                ; FEA884  f2 56 1f 60 50
 	calr EditCursor_StepBackToIncGrid                                      ; FEA889  1e 93 fe
 	calr EditCursor_SplitViewTick                                      ; FEA88C  1e b4 fe
-	m_bit 0, MD24, EditScreen_CursorFlags                              ; FEA88F  f2 5b 1f 60 c8
+	bit	0, (EditScreen_CursorFlags:24)                             ; FEA88F  f2 5b 1f 60 c8
 	jr nz, .LFEA8E5                                      ; FEA894  6e 4f
 	calr EditPos_SeekLastNoteBeforeOldCursor                                      ; FEA896  1e e6 fb
-	m_bit 3, MD24, EditScreen_CursorFlags                              ; FEA899  f2 5b 1f 60 cb
+	bit	3, (EditScreen_CursorFlags:24)                             ; FEA899  f2 5b 1f 60 cb
 	jrl nz, .LFEA90D                                     ; FEA89E  7e 6c 00
 	ld wa, (EditMeasure_MarkBlock:24)                                ; FEA8A1  d2 12 1f 60 20
 	m_cp_rm MW16, BStore_CursorBlock, r0                             ; FEA8A6  d1 5c 34 f0
@@ -182350,7 +182350,7 @@ EditScreen_CursorLeft:
 	jr nc, .LFEA905                                      ; FEA8E3  6f 20
 .LFEA8E5:
 	calr EditPos_SeekPrevShownNote                                      ; FEA8E5  1e 3b 00
-	m_bit 3, MD24, EditScreen_CursorFlags                              ; FEA8E8  f2 5b 1f 60 cb
+	bit	3, (EditScreen_CursorFlags:24)                             ; FEA8E8  f2 5b 1f 60 cb
 	jr nz, .LFEA90D                                      ; FEA8ED  6e 1e
 	calr EditScreen_PositionAndMeasureStartTicks                                      ; FEA8EF  1e 36 fd
 	cp XWA,XBC                                           ; FEA8F2  e9 f0
@@ -182418,7 +182418,7 @@ NoteEdit_LcdKeyRow1:
 	ld A,(XIX)                                           ; FEA984  84 21
 	bit 0x07,A                                           ; FEA986  c9 33 07
 	jr nz, .LFEA992                                      ; FEA989  6e 07
-	m_bit 7, MD24, EditScreen_ActionTimer                              ; FEA98B  f2 58 1f 60 cf
+	bit	7, (EditScreen_ActionTimer:24)                             ; FEA98B  f2 58 1f 60 cf
 	jr z, .LFEA993                                       ; FEA990  66 01
 .LFEA992:
 	ret                                                  ; FEA992  0e
@@ -182432,7 +182432,7 @@ NoteEdit_LcdKeyRow1:
 ; NoteEdit_LcdKeyRow2: the LcdKeyRow2 action of NoteEdit -- called only by LcdKeyRow2_NoteEdit.
 NoteEdit_LcdKeyRow2:
 	or	(UI_RequestBits:16), 0x08                            ; FEA9A0  c1 75 20 3e 08
-	m_bit 7, MD24, EditScreen_ActionTimer                              ; FEA9A5  f2 58 1f 60 cf
+	bit	7, (EditScreen_ActionTimer:24)                             ; FEA9A5  f2 58 1f 60 cf
 	jr z, .LFEA9B5                                       ; FEA9AA  66 09
 	cp	(EditScreen_ActionIndex:24), 0x04                          ; FEA9AC  c2 59 1f 60 3f 04
 	jr z, .LFEA9B5                                       ; FEA9B2  66 01
@@ -182456,7 +182456,7 @@ NoteEdit_LcdKeyRow2:
 ; NoteEdit_LcdKeyRow3: the LcdKeyRow3 action of NoteEdit -- called only by LcdKeyRow3_NoteEdit.
 NoteEdit_LcdKeyRow3:
 	or	(UI_RequestBits:16), 0x08                            ; FEA9E0  c1 75 20 3e 08
-	m_bit 7, MD24, EditScreen_ActionTimer                              ; FEA9E5  f2 58 1f 60 cf
+	bit	7, (EditScreen_ActionTimer:24)                             ; FEA9E5  f2 58 1f 60 cf
 	jr z, .LFEA9F5                                       ; FEA9EA  66 09
 	cp	(EditScreen_ActionIndex:24), 0x04                          ; FEA9EC  c2 59 1f 60 3f 04
 	jr z, .LFEA9F5                                       ; FEA9F2  66 01
@@ -182479,11 +182479,11 @@ NoteEdit_LcdKeyRow3:
 	ret                                                  ; FEAA1F  0e
 ; EditScreen_LcdKeyRow4: the LcdKeyRow4 action of DrumEdit, NoteEdit -- called only by LcdKeyRow4_DrumEdit, LcdKeyRow4_NoteEdit.
 EditScreen_LcdKeyRow4:
-	m_bit 7, MD24, EditScreen_ActionTimer                              ; FEAA20  f2 58 1f 60 cf
+	bit	7, (EditScreen_ActionTimer:24)                             ; FEAA20  f2 58 1f 60 cf
 	jr z, .LFEAA28                                       ; FEAA25  66 01
 	ret                                                  ; FEAA27  0e
 .LFEAA28:
-	m_bit 0, MD24, EditScreen_CursorFlags                              ; FEAA28  f2 5b 1f 60 c8
+	bit	0, (EditScreen_CursorFlags:24)                             ; FEAA28  f2 5b 1f 60 c8
 	jr nz, .LFEAA30                                      ; FEAA2D  6e 01
 	ret                                                  ; FEAA2F  0e
 .LFEAA30:
@@ -182531,7 +182531,7 @@ UI_GotoDrumEditPartSelect:
 ;   0x13 is of 0x02): EditCursor_MeasurePlus10 / _MeasureMinus10 by W bit 7, unless deferred action 0 is pending.
 EditCursor_MeasureStepHeld:
 	or	(UI_RequestBits:16), 0x08                            ; FEAA94  c1 75 20 3e 08
-	m_bit 7, MD24, EditScreen_ActionTimer                              ; FEAA99  f2 58 1f 60 cf
+	bit	7, (EditScreen_ActionTimer:24)                             ; FEAA99  f2 58 1f 60 cf
 	jr z, .LFEAAA9                                       ; FEAA9E  66 09
 	cp	(EditScreen_ActionIndex:24), 0x00                          ; FEAAA0  c2 59 1f 60 3f 00
 	jr z, .LFEAAA9                                       ; FEAAA6  66 01
@@ -182584,7 +182584,7 @@ EditCursor_MeasureMinus10:
 ; EditCursor_TickStepHeld: Button18 -- the held SoftKeyCol2: EditCursor_TickPlus5 / _TickMinus5, unless deferred action 1 is pending.
 EditCursor_TickStepHeld:
 	or	(UI_RequestBits:16), 0x08                            ; FEAB0E  c1 75 20 3e 08
-	m_bit 7, MD24, EditScreen_ActionTimer                              ; FEAB13  f2 58 1f 60 cf
+	bit	7, (EditScreen_ActionTimer:24)                             ; FEAB13  f2 58 1f 60 cf
 	jr z, .LFEAB23                                       ; FEAB18  66 09
 	cp	(EditScreen_ActionIndex:24), 0x01                          ; FEAB1A  c2 59 1f 60 3f 01
 	jr z, .LFEAB23                                       ; FEAB20  66 01
@@ -182602,17 +182602,17 @@ EditCursor_TickStepHeld:
 ;   bit 7, the sense reversed in DRUM EDIT; UI_RequestBits |= 8.
 EditCursor_NoteStepHeld:
 	or	(UI_RequestBits:16), 0x08                            ; FEAB30  c1 75 20 3e 08
-	m_bit 7, MD24, EditScreen_ActionTimer                              ; FEAB35  f2 58 1f 60 cf
+	bit	7, (EditScreen_ActionTimer:24)                             ; FEAB35  f2 58 1f 60 cf
 	jr z, .LFEAB45                                       ; FEAB3A  66 09
 	cp	(EditScreen_ActionIndex:24), 0x02                          ; FEAB3C  c2 59 1f 60 3f 02
 	jr z, .LFEAB45                                       ; FEAB42  66 01
 	ret                                                  ; FEAB44  0e
 .LFEAB45:
-	m_bit 0, MD24, EditScreen_CursorFlags                              ; FEAB45  f2 5b 1f 60 c8
+	bit	0, (EditScreen_CursorFlags:24)                             ; FEAB45  f2 5b 1f 60 c8
 	jr nz, .LFEAB4D                                      ; FEAB4A  6e 01
 	ret                                                  ; FEAB4C  0e
 .LFEAB4D:
-	m_bit 0, MD24, EditScreen_Mode                              ; FEAB4D  f2 70 1f 60 c8
+	bit	0, (EditScreen_Mode:24)                             ; FEAB4D  f2 70 1f 60 c8
 	jr z, .LFEAB5B                                       ; FEAB52  66 07
 	bit 0x07,W                                           ; FEAB54  c8 33 07
 	jr z, .LFEAB64                                       ; FEAB57  66 0b
@@ -182637,7 +182637,7 @@ EditCursor_NoteUp6:
 	jr ule, .LFEAB85                                     ; FEAB7D  63 06
 	ld (EditCursor_Note:24), 0x7f                             ; FEAB7F  f2 44 1f 60 00 7f
 .LFEAB85:
-	m_bit 0, MD24, EditScreen_Mode                              ; FEAB85  f2 70 1f 60 c8
+	bit	0, (EditScreen_Mode:24)                             ; FEAB85  f2 70 1f 60 c8
 	jr z, .LFEAB8F                                       ; FEAB8A  66 03
 	calr DrumEdit_RowFollowNoteUp                                      ; FEAB8C  1e 2d 03
 .LFEAB8F:
@@ -182660,7 +182660,7 @@ EditCursor_NoteDown6:
 	jr c, .LFEABE1                                       ; FEABBA  67 25
 	ld (EditCursor_Note:24), a                                 ; FEABBC  f2 44 1f 60 41
 .LFEABC1:
-	m_bit 0, MD24, EditScreen_Mode                              ; FEABC1  f2 70 1f 60 c8
+	bit	0, (EditScreen_Mode:24)                             ; FEABC1  f2 70 1f 60 c8
 	jr z, .LFEABCB                                       ; FEABC6  66 03
 	calr DrumEdit_RowFollowNoteDown                                      ; FEABC8  1e 7f 03
 .LFEABCB:
@@ -182677,14 +182677,14 @@ EditCursor_NoteDown6:
 ;   DRUM EDIT, EditField_NewNoteVelocityUp5 / _Down5.
 EditField_VelocityStepHeld:
 	or	(UI_RequestBits:16), 0x08                            ; FEABE9  c1 75 20 3e 08
-	m_bit 7, MD24, EditScreen_ActionTimer                              ; FEABEE  f2 58 1f 60 cf
+	bit	7, (EditScreen_ActionTimer:24)                             ; FEABEE  f2 58 1f 60 cf
 	jr z, .LFEABF6                                       ; FEABF3  66 01
 .LFEABF5:
 	ret                                                  ; FEABF5  0e
 .LFEABF6:
-	m_bit 0, MD24, EditScreen_CursorFlags                              ; FEABF6  f2 5b 1f 60 c8
+	bit	0, (EditScreen_CursorFlags:24)                             ; FEABF6  f2 5b 1f 60 c8
 	jr nz, .LFEAC11                                      ; FEABFB  6e 14
-	m_bit 0, MD24, EditScreen_Mode                              ; FEABFD  f2 70 1f 60 c8
+	bit	0, (EditScreen_Mode:24)                             ; FEABFD  f2 70 1f 60 c8
 	jr z, .LFEABF5                                       ; FEAC02  66 f1
 	bit 0x07,W                                           ; FEAC04  c8 33 07
 	jr nz, .LFEAC0D                                      ; FEAC07  6e 04
@@ -182778,7 +182778,7 @@ EditField_EventVelocityDown5:
 ; EditField_StepLength12: repaint bit 3; unless (0x601F58) bit 7 with (0x601F59) not 3: W bit 7 clear -> EditField_LengthUp12, set -> _LengthDown12.
 EditField_StepLength12:
 	or	(UI_RequestBits:16), 0x08                            ; FEACB6  c1 75 20 3e 08
-	m_bit 7, MD24, EditScreen_ActionTimer                              ; FEACBB  f2 58 1f 60 cf
+	bit	7, (EditScreen_ActionTimer:24)                             ; FEACBB  f2 58 1f 60 cf
 	jr z, .LFEACCB                                       ; FEACC0  66 09
 	cp	(EditScreen_ActionIndex:24), 0x03                          ; FEACC2  c2 59 1f 60 3f 03
 	jr z, .LFEACCB                                       ; FEACC8  66 01
@@ -182793,7 +182793,7 @@ EditField_StepLength12:
 	ret                                                  ; FEACD7  0e
 ; EditField_LengthUp12: the LEN field + 12, clamped to 0x2FFF; redraws.
 EditField_LengthUp12:
-	m_bit 0, MD24, EditScreen_CursorFlags                              ; FEACD8  f2 5b 1f 60 c8
+	bit	0, (EditScreen_CursorFlags:24)                             ; FEACD8  f2 5b 1f 60 c8
 	jr nz, .LFEACE1                                      ; FEACDD  6e 02
 	jr .LFEAD18                                          ; FEACDF  68 37
 .LFEACE1:
@@ -182828,7 +182828,7 @@ EditField_LengthUp12:
 	ret                                                  ; FEAD48  0e
 ; EditField_LengthDown12: the LEN field - 12, clamped to 1; redraws.
 EditField_LengthDown12:
-	m_bit 0, MD24, EditScreen_CursorFlags                              ; FEAD49  f2 5b 1f 60 c8
+	bit	0, (EditScreen_CursorFlags:24)                             ; FEAD49  f2 5b 1f 60 c8
 	jr nz, .LFEAD52                                      ; FEAD4E  6e 02
 	jr .LFEADA1                                          ; FEAD50  68 4f
 .LFEAD52:
@@ -182880,7 +182880,7 @@ EditField_LengthDown12:
 ; EditField_StepInc5: as EditField_StepInc with EditField_IncUp5 / _IncDown5.
 EditField_StepInc5:
 	or	(UI_RequestBits:16), 0x08                            ; FEADE1  c1 75 20 3e 08
-	m_bit 7, MD24, EditScreen_ActionTimer                              ; FEADE6  f2 58 1f 60 cf
+	bit	7, (EditScreen_ActionTimer:24)                             ; FEADE6  f2 58 1f 60 cf
 	jr z, .LFEADEE                                       ; FEADEB  66 01
 	ret                                                  ; FEADED  0e
 .LFEADEE:
@@ -182895,7 +182895,7 @@ EditField_StepInc5:
 ;   forced to 0x60 (restored after), then EditCursor_SplitViewTick and EditCursor_SeekPastTick and a redraw;
 ;   past the view, EditScreen_WrapAndShowCursorMeasure.
 EditCursor_NextBeatStart:
-	m_bit 7, MD24, EditScreen_ActionTimer                              ; FEADFB  f2 58 1f 60 cf
+	bit	7, (EditScreen_ActionTimer:24)                             ; FEADFB  f2 58 1f 60 cf
 	jr z, .LFEAE03                                       ; FEAE00  66 01
 	ret                                                  ; FEAE02  0e
 .LFEAE03:
@@ -182930,7 +182930,7 @@ EditCursor_NextBeatStart:
 ; EditCursor_PrevBeatStart: NoteEdit_Button23 / DrumEdit_Button22: the mirror with EditCursor_StepBackToIncGrid at a 0x60 grid; at view
 ;   tick 0, EditScreen_ShowPreviousMeasure.
 EditCursor_PrevBeatStart:
-	m_bit 7, MD24, EditScreen_ActionTimer                              ; FEAE58  f2 58 1f 60 cf
+	bit	7, (EditScreen_ActionTimer:24)                             ; FEAE58  f2 58 1f 60 cf
 	jr z, .LFEAE60                                       ; FEAE5D  66 01
 	ret                                                  ; FEAE5F  0e
 .LFEAE60:
@@ -182955,7 +182955,7 @@ EditCursor_PrevBeatStart:
 ; DrumEdit_LcdKeyRow3: the LcdKeyRow3 action of DrumEdit -- called only by LcdKeyRow3_DrumEdit.
 DrumEdit_LcdKeyRow3:
 	or	(UI_RequestBits:16), 0x08                            ; FEAE9B  c1 75 20 3e 08
-	m_bit 7, MD24, EditScreen_ActionTimer                              ; FEAEA0  f2 58 1f 60 cf
+	bit	7, (EditScreen_ActionTimer:24)                             ; FEAEA0  f2 58 1f 60 cf
 	jr z, .LFEAEB0                                       ; FEAEA5  66 09
 	cp	(EditScreen_ActionIndex:24), 0x05                          ; FEAEA7  c2 59 1f 60 3f 05
 	jr z, .LFEAEB0                                       ; FEAEAD  66 01
@@ -183006,7 +183006,7 @@ DrumEdit_RowFollowNoteUp:
 ; DrumEdit_LcdKeyRow2: the LcdKeyRow2 action of DrumEdit -- called only by LcdKeyRow2_DrumEdit.
 DrumEdit_LcdKeyRow2:
 	or	(UI_RequestBits:16), 0x08                            ; FEAF29  c1 75 20 3e 08
-	m_bit 7, MD24, EditScreen_ActionTimer                              ; FEAF2E  f2 58 1f 60 cf
+	bit	7, (EditScreen_ActionTimer:24)                             ; FEAF2E  f2 58 1f 60 cf
 	jr z, .LFEAF3E                                       ; FEAF33  66 09
 	cp	(EditScreen_ActionIndex:24), 0x05                          ; FEAF35  c2 59 1f 60 3f 05
 	jr z, .LFEAF3E                                       ; FEAF3B  66 01
@@ -183055,7 +183055,7 @@ DrumEdit_RowFollowNoteDown:
 	ret                                                  ; FEAFB6  0e
 ; DrumEdit_CursorNoteFromRow: DRUM EDIT: EditCursor_Note = DrumEdit_TopRowNote + EditScreen_CursorRow.
 DrumEdit_CursorNoteFromRow:
-	m_bit 0, MD24, EditScreen_Mode                              ; FEAFB7  f2 70 1f 60 c8
+	bit	0, (EditScreen_Mode:24)                             ; FEAFB7  f2 70 1f 60 c8
 	jr z, .LFEAFCF                                       ; FEAFBC  66 11
 	ld wa, (DrumEdit_TopRowNote:24)                                ; FEAFBE  d2 71 1f 60 20
 	ld de, (EditScreen_CursorRow:24)                                ; FEAFC3  d2 73 1f 60 22
@@ -183069,7 +183069,7 @@ DrumEdit_LcdKeyRow1:
 	ld A,(XIX)                                           ; FEAFD5  84 21
 	bit 0x07,A                                           ; FEAFD7  c9 33 07
 	jr nz, .LFEAFE3                                      ; FEAFDA  6e 07
-	m_bit 7, MD24, EditScreen_ActionTimer                              ; FEAFDC  f2 58 1f 60 cf
+	bit	7, (EditScreen_ActionTimer:24)                             ; FEAFDC  f2 58 1f 60 cf
 	jr z, .LFEAFE4                                       ; FEAFE1  66 01
 .LFEAFE3:
 	ret                                                  ; FEAFE3  0e
@@ -183126,7 +183126,7 @@ EditScreen_HighlightCursorRow:
 	ret                                                  ; FEB068  0e
 ; DrumEdit_RedrawRowList: DRUM EDIT: the left column erased (EditScreen_EraseRowLabelArea), DrumEdit_DrawRowNotes, DrumEdit_DrawRowNames.
 DrumEdit_RedrawRowList:
-	m_bit 0, MD24, EditScreen_Mode                              ; FEB069  f2 70 1f 60 c8
+	bit	0, (EditScreen_Mode:24)                             ; FEB069  f2 70 1f 60 c8
 	jr z, .LFEB079                                       ; FEB06E  66 09
 	calr EditScreen_EraseRowLabelArea                                          ; FEB070  1e 18 48
 	calr DrumEdit_DrawRowNotes                                      ; FEB073  1e 04 00
@@ -185939,7 +185939,7 @@ EditScreen_EraseHeaderRow_DL:
 	.byte 0x00, 0x00, 0x14, 0x00, 0x08, 0x01, 0x1F, 0x00  ; FEF7CA
 ; EditScreen_EraseEditArea_Layer0: EditScreen_Mode bit 0 (DRUM EDIT) -> DrumEdit_EraseEditArea_Layer0, else NoteEdit_EraseEditArea_Layer0.  22 call sites.
 EditScreen_EraseEditArea_Layer0:
-	m_bit 0, MD24, EditScreen_Mode                              ; FEF7D2  f2 70 1f 60 c8
+	bit	0, (EditScreen_Mode:24)                             ; FEF7D2  f2 70 1f 60 c8
 	jr z, .LFEF7DD                                       ; FEF7D7  66 04
 	calr DrumEdit_EraseEditArea_Layer0                                            ; FEF7D9  1e 23 00
 	ret                                                  ; FEF7DC  0e
@@ -186078,7 +186078,7 @@ EditScreen_EraseLengthCell_DL:
 ; EditScreen_EraseEditArea_Layer1: LCD_CurrentLayer = 1, then by EditScreen_Mode bit 0 DrumEdit_ or NoteEdit_EraseEditArea.
 EditScreen_EraseEditArea_Layer1:
 	ld (LCD_CurrentLayer:16), 0x01                                 ; FEF859  f1 40 25 00 01
-	m_bit 0, MD24, EditScreen_Mode                              ; FEF85E  f2 70 1f 60 c8
+	bit	0, (EditScreen_Mode:24)                             ; FEF85E  f2 70 1f 60 c8
 	jr z, .LFEF869                                       ; FEF863  66 04
 	calr DrumEdit_EraseEditArea                                          ; FEF865  1e 9c ff
 	ret                                                  ; FEF868  0e
@@ -186172,7 +186172,7 @@ EditScreen_PaintLayer2:
 	ret                                                  ; FEF8D5  0e
 ; EditScreen_DrawFields: DrumEdit_DrawFields in DRUM EDIT, NoteEdit_DrawFields in NOTE EDIT.
 EditScreen_DrawFields:
-	m_bit 0, MD24, EditScreen_Mode                              ; FEF8D6  f2 70 1f 60 c8
+	bit	0, (EditScreen_Mode:24)                             ; FEF8D6  f2 70 1f 60 c8
 	jr z, .LFEF8E1                                       ; FEF8DB  66 04
 	calr DrumEdit_DrawFields                                      ; FEF8DD  1e 27 00
 	ret                                                  ; FEF8E0  0e
@@ -186182,7 +186182,7 @@ EditScreen_DrawFields:
 ; NoteEdit_DrawFields: with an event selected: EditScreen_DrawCursorNote, _DrawEventVelocity, _DrawEventLength; otherwise
 ;   _DrawNewNoteLength; then EditScreen_DrawMeasure, _DrawBeat, _DrawTick, _DrawInc.
 NoteEdit_DrawFields:
-	m_bit 0, MD24, EditScreen_CursorFlags                              ; FEF8E5  f2 5b 1f 60 c8
+	bit	0, (EditScreen_CursorFlags:24)                             ; FEF8E5  f2 5b 1f 60 c8
 	jr z, .LFEF8F7                                       ; FEF8EA  66 0b
 	calr EditScreen_DrawCursorNote                                          ; FEF8EC  1e 8c 11
 	calr EditScreen_DrawEventVelocity                                          ; FEF8EF  1e 54 12
@@ -186199,7 +186199,7 @@ NoteEdit_DrawFields:
 ; DrumEdit_DrawFields: with an event selected: EditScreen_DrawCursorNote, _DrawEventVelocity; otherwise _DrawNewNoteVelocity; then
 ;   MEAS / beat / tick and INC.
 DrumEdit_DrawFields:
-	m_bit 0, MD24, EditScreen_CursorFlags                              ; FEF907  f2 5b 1f 60 c8
+	bit	0, (EditScreen_CursorFlags:24)                             ; FEF907  f2 5b 1f 60 c8
 	jr z, .LFEF916                                       ; FEF90C  66 08
 	calr EditScreen_DrawCursorNote                                          ; FEF90E  1e 6a 11
 	calr EditScreen_DrawEventVelocity                                          ; FEF911  1e 32 12
@@ -186240,7 +186240,7 @@ EditScreen_DrawBeatNumbers:
 	xor WA,WA                                            ; FEF951  d8 d0
 	ld A,E                                               ; FEF953  cd 89
 	mul A,0x18                                           ; FEF955  c9 08 18
-	m_bit 0, MD24, EditScreen_Mode                              ; FEF958  f2 70 1f 60 c8
+	bit	0, (EditScreen_Mode:24)                             ; FEF958  f2 70 1f 60 c8
 	jr z, .LFEF965                                       ; FEF95D  66 06
 	add WA,0x0055                                        ; FEF95F  d8 c8 55 00
 	jr .LFEF969                                          ; FEF963  68 04
@@ -186291,7 +186291,7 @@ EditScreen_DrawMeasureNumbers:
 	cp a, 0x00:i3                                          ; FEF9B9  c9 d8
 	jr z, .LFEF9E9                                       ; FEF9BB  66 2c
 	ld XIY,ScreenDrawPtrs_FEF9FA                         ; FEF9BD  45 fa f9 fe 00
-	m_bit 0, MD24, EditScreen_Mode                              ; FEF9C2  f2 70 1f 60 c8
+	bit	0, (EditScreen_Mode:24)                             ; FEF9C2  f2 70 1f 60 c8
 	jr z, .LFEF9CE                                       ; FEF9C7  66 05
 	ld XIY,ScreenDrawPtrs_FEFA2A                         ; FEF9C9  45 2a fa fe 00
 .LFEF9CE:
@@ -186754,7 +186754,7 @@ EditScreen_DrawCursorTickMarker:
 	ld wa, (EditCursor_TickInMeasure:24)                                ; FEFDB1  d2 54 1f 60 20
 	div A,0x04                                           ; FEFDB6  c9 0a 04
 	xor W,W                                              ; FEFDB9  c8 d0
-	m_bit 0, MD24, EditScreen_Mode                              ; FEFDBB  f2 70 1f 60 c8
+	bit	0, (EditScreen_Mode:24)                             ; FEFDBB  f2 70 1f 60 c8
 	jr z, .LFEFDC8                                       ; FEFDC0  66 06
 	add WA,0x0056                                        ; FEFDC2  d8 c8 56 00
 	jr .LFEFDCC                                          ; FEFDC6  68 04
@@ -186805,7 +186805,7 @@ EditScreen_DrawDataEndMarker:
 	ld (LCD_CurrentLayer:16), 0x01                                 ; FEFE22  f1 40 25 00 01
 	ld wa, (EditScreen_BeatCounter:24)                                ; FEFE27  d2 6c 1f 60 20
 	mul A,0x18                                           ; FEFE2C  c9 08 18
-	m_bit 0, MD24, EditScreen_Mode                              ; FEFE2F  f2 70 1f 60 c8
+	bit	0, (EditScreen_Mode:24)                             ; FEFE2F  f2 70 1f 60 c8
 	jr z, .LFEFE3C                                       ; FEFE34  66 06
 	add WA,0x0056                                        ; FEFE36  d8 c8 56 00
 	jr .LFEFE40                                          ; FEFE3A  68 04
@@ -186841,7 +186841,7 @@ Glyph_FEFE58:
 ; Was `sub_FEFE59`, named by notes/prom_a_census_round8.py (bucket round 10).
 ; ---------------------------------------------------------------------
 LCD_DrawVRuleLeft_OrNothing:
-	m_bit 0, MD24, EditScreen_Mode                              ; FEFE59  f2 70 1f 60 c8
+	bit	0, (EditScreen_Mode:24)                             ; FEFE59  f2 70 1f 60 c8
 	jr z, .LFEFE65                                       ; FEFE5E  66 05
 	ret                                                  ; FEFE60  0e
 	calr LCD_DrawVRuleRight_Layer1                                      ; FEFE61  1e 30 00
@@ -187000,7 +187000,7 @@ EditScreen_DrawVisibleNotesExceptSelected:
 ; EditScreen_VisibleNoteRange: A = the lowest, W = the highest note shown: DRUM EDIT DrumEdit_TopRowNote .. + 11; NOTE EDIT the word pair
 ;   WordTable_FEFFDD[NoteEdit_RulerPosition].
 EditScreen_VisibleNoteRange:
-	m_bit 0, MD24, EditScreen_Mode                              ; FEFFB4  f2 70 1f 60 c8
+	bit	0, (EditScreen_Mode:24)                             ; FEFFB4  f2 70 1f 60 c8
 	jr z, .LFEFFC6                                       ; FEFFB9  66 0b
 	ld wa, (DrumEdit_TopRowNote:24)                                ; FEFFBB  d2 71 1f 60 20
 	ld W,A                                               ; FEFFC0  c9 88
@@ -187032,7 +187032,7 @@ WordTable_FEFFDD:
 EditScreen_DrawEventBar:
 	calr EditBar_LoadEventGeometry                                          ; FEFFF3  1e 9e 02
 	ld (LCD_CurrentLayer:16), 0x00                                 ; FEFFF6  f1 40 25 00 00
-	m_bit 0, MD24, EditScreen_Mode                              ; FEFFFB  f2 70 1f 60 c8
+	bit	0, (EditScreen_Mode:24)                             ; FEFFFB  f2 70 1f 60 c8
 	jr z, .LFF0007                                       ; FF0000  66 05
 	calr DrumEdit_EventMarkRect                                            ; FF0002  1e 8d 00
 	jr .LFF000A                                          ; FF0005  68 03
@@ -187117,7 +187117,7 @@ CoordTable_FF00D1:
 ; EditScreen_DrawSelectedEventBar: with an event selected and its note in EditScreen_VisibleNoteRange: its bar on layer 1 (DrumEdit_DrawSelectedMarkBrackets /
 ;   NoteEdit_DrawSelectedBarInset).
 EditScreen_DrawSelectedEventBar:
-	m_bit 0, MD24, EditScreen_CursorFlags                              ; FF00ED  f2 5b 1f 60 c8
+	bit	0, (EditScreen_CursorFlags:24)                             ; FF00ED  f2 5b 1f 60 c8
 	jr z, .LFF013E                                       ; FF00F2  66 4a
 	calr BStore_CursorSlot_Save                                          ; FF00F4  1e f7 8b
 	calr BStoreCursor_ReadByte                                          ; FF00F7  1e 38 21
@@ -187141,7 +187141,7 @@ EditScreen_DrawSelectedEventBar:
 	jr ugt, .LFF013B                                     ; FF0122  6b 17
 	calr EditBar_LoadEventGeometry                                      ; FF0124  1e 6d 01
 	ld (LCD_CurrentLayer:16), 0x01                                 ; FF0127  f1 40 25 00 01
-	m_bit 0, MD24, EditScreen_Mode                              ; FF012C  f2 70 1f 60 c8
+	bit	0, (EditScreen_Mode:24)                             ; FF012C  f2 70 1f 60 c8
 	jr z, .LFF0138                                       ; FF0131  66 05
 	calr DrumEdit_DrawSelectedMarkBrackets                                      ; FF0133  1e 42 00
 	jr .LFF013B                                          ; FF0136  68 03
@@ -187191,7 +187191,7 @@ DrumEdit_DrawSelectedMarkBrackets:
 ; EditScreen_FillSelectedEventBar: with an event selected and its note in view: layer 1, its bar or mark filled (LCD_FillRect_Grown2Rows in
 ;   DRUM EDIT, NoteEdit_EventBarRect + FillRect in NOTE EDIT).
 EditScreen_FillSelectedEventBar:
-	m_bit 0, MD24, EditScreen_CursorFlags                              ; FF019D  f2 5b 1f 60 c8
+	bit	0, (EditScreen_CursorFlags:24)                             ; FF019D  f2 5b 1f 60 c8
 	jr z, .LFF01F1                                       ; FF01A2  66 4d
 	calr BStore_CursorSlot_Save                                          ; FF01A4  1e 47 8b
 	calr BStoreCursor_ReadByte                                          ; FF01A7  1e 88 20
@@ -187215,7 +187215,7 @@ EditScreen_FillSelectedEventBar:
 	jr ugt, .LFF01EE                                     ; FF01D2  6b 1a
 	calr EditBar_LoadEventGeometry                                      ; FF01D4  1e bd 00
 	ld (LCD_CurrentLayer:16), 0x01                                 ; FF01D7  f1 40 25 00 01
-	m_bit 0, MD24, EditScreen_Mode                              ; FF01DC  f2 70 1f 60 c8
+	bit	0, (EditScreen_Mode:24)                             ; FF01DC  f2 70 1f 60 c8
 	jr z, .LFF01E8                                       ; FF01E1  66 05
 	calr LCD_FillRect_Grown2Rows                                      ; FF01E3  1e 0c 00
 	jr .LFF01EE                                          ; FF01E6  68 06
@@ -187252,9 +187252,9 @@ LCD_FillRect_Grown2Rows:
 ;   (EditScreen_DrawSelectionAtCursor while a deferred action is pending, else EditScreen_FillSelectedEventBar);
 ;   without, all notes and EditScreen_DrawSelectedEventBar.
 EditScreen_RedrawAfterTickMove:
-	m_bit 0, MD24, EditScreen_CursorFlags                              ; FF0205  f2 5b 1f 60 c8
+	bit	0, (EditScreen_CursorFlags:24)                             ; FF0205  f2 5b 1f 60 c8
 	jr z, .LFF0233                                       ; FF020A  66 27
-	m_bit 7, MD24, EditScreen_ActionTimer                              ; FF020C  f2 58 1f 60 cf
+	bit	7, (EditScreen_ActionTimer:24)                             ; FF020C  f2 58 1f 60 cf
 	jr z, .LFF0223                                       ; FF0211  66 10
 	calr EditScreen_EraseEditArea_Layer0                                          ; FF0213  1e bc f5
 	calr EditScreen_DrawVisibleNotesExceptSelected                                          ; FF0216  1e 14 fd
@@ -187279,14 +187279,14 @@ EditScreen_RedrawAfterTickMove:
 ; EditScreen_DrawSelectionAtCursor: with an event selected: its bar drawn at the CURSOR -- EditCursor_Note's row, EditCursor_TickInMeasure,
 ;   EditField_Length long (2 in DRUM EDIT) -- on layer 1: the selection following the cursor.
 EditScreen_DrawSelectionAtCursor:
-	m_bit 0, MD24, EditScreen_CursorFlags                              ; FF0243  f2 5b 1f 60 c8
+	bit	0, (EditScreen_CursorFlags:24)                             ; FF0243  f2 5b 1f 60 c8
 	jr z, .LFF0293                                       ; FF0248  66 49
 	calr EditScreen_VisibleNoteRange                                          ; FF024A  1e 67 fd
 	ld l, (EditCursor_Note:24)                                 ; FF024D  c2 44 1f 60 27
 	calr EditBar_SetRowFromNote                                      ; FF0252  1e a0 00
 	ld wa, (EditCursor_TickInMeasure:24)                                ; FF0255  d2 54 1f 60 20
 	ld (EditBar_Tick:24), wa                                ; FF025A  f2 38 1f 60 50
-	m_bit 0, MD24, EditScreen_Mode                              ; FF025F  f2 70 1f 60 c8
+	bit	0, (EditScreen_Mode:24)                             ; FF025F  f2 70 1f 60 c8
 	jr z, .LFF026F                                       ; FF0264  66 09
 	ldw (EditBar_Length:24), 0x02                             ; FF0266  f2 3b 1f 60 02 02 00
 	jr .LFF0279                                          ; FF026D  68 0a
@@ -187296,7 +187296,7 @@ EditScreen_DrawSelectionAtCursor:
 .LFF0279:
 	calr EditBar_ClipLengthToView                                      ; FF0279  1e 59 00
 	ld (LCD_CurrentLayer:16), 0x01                                 ; FF027C  f1 40 25 00 01
-	m_bit 0, MD24, EditScreen_Mode                              ; FF0281  f2 70 1f 60 c8
+	bit	0, (EditScreen_Mode:24)                             ; FF0281  f2 70 1f 60 c8
 	jr z, .LFF028D                                       ; FF0286  66 05
 	calr LCD_FillRect_Grown2Rows                                      ; FF0288  1e 67 ff
 	jr .LFF0293                                          ; FF028B  68 06
@@ -187350,7 +187350,7 @@ EditBar_ClipLengthToView:
 ; EditBar_SetRowFromNote: (note L, low A): DRUM EDIT row = 11 - (L - A), the list running top-down; NOTE EDIT row = L - A, + 4 at
 ;   NoteEdit_RulerPosition 0.
 EditBar_SetRowFromNote:
-	m_bit 0, MD24, EditScreen_Mode                              ; FF02F5  f2 70 1f 60 c8
+	bit	0, (EditScreen_Mode:24)                             ; FF02F5  f2 70 1f 60 c8
 	jr z, .LFF0309                                       ; FF02FA  66 0d
 	sub L,A                                              ; FF02FC  c9 a7
 	ld h, 0x0b:opc                                          ; FF02FE  26 0b
@@ -187369,7 +187369,7 @@ EditBar_SetRowFromNote:
 ;   _DrawRowGuides and _DrawGridLines.
 EditScreen_PaintStaticLayer:
 	ld (LCD_CurrentLayer:16), 0x02                                 ; FF031F  f1 40 25 00 02
-	m_bit 0, MD24, EditScreen_Mode                              ; FF0324  f2 70 1f 60 c8
+	bit	0, (EditScreen_Mode:24)                             ; FF0324  f2 70 1f 60 c8
 	jr z, .LFF0330                                       ; FF0329  66 05
 	calr Paint_DrumEdit                                      ; FF032B  1e 21 00
 	jr .LFF0333                                          ; FF032E  68 03
@@ -187527,7 +187527,7 @@ EditScreen_DrawRulersAndLegend:
 ;          category legend has no place in NOTE EDIT.
 ; ---------------------------------------------------------------------
 Screen_DrawKitCategoryLegend:
-	m_bit 0, MD24, EditScreen_Mode                              ; FF03C2  f2 70 1f 60 c8
+	bit	0, (EditScreen_Mode:24)                             ; FF03C2  f2 70 1f 60 c8
 	jr z, .LFF03E8                                       ; FF03C7  66 1f
 	ld (LCD_CurrentLayer:16), 0x02                                 ; FF03C9  f1 40 25 00 02
 	calr KitCategoryLegend_Index                         ; FF03CE  1e 6b 00
@@ -187892,7 +187892,7 @@ EditScreen_DrawMeasureStartLines:
 	ld A,(XIX)                                           ; FF07D1  84 21
 	cp a, 0x00:i3                                          ; FF07D3  c9 d8
 	jr z, .LFF0825                                       ; FF07D5  66 4e
-	m_bit 0, MD24, EditScreen_Mode                              ; FF07D7  f2 70 1f 60 c8
+	bit	0, (EditScreen_Mode:24)                             ; FF07D7  f2 70 1f 60 c8
 	jr z, .LFF07FF                                       ; FF07DC  66 21
 	ldw (LCD_Y0:16), 0x2a                                ; FF07DE  f1 32 25 02 2a 00
 	ldw (LCD_Y1:16), 0xa1                                ; FF07E4  f1 36 25 02 a1 00
@@ -187931,7 +187931,7 @@ EditScreen_DrawMeasureStartLines:
 	ret                                                  ; FF0840  0e
 ; EditScreen_DrawGridLines: DrumEdit_DrawBeatLines in DRUM EDIT, EditMeasure_DrawBeatLines in NOTE EDIT.
 EditScreen_DrawGridLines:
-	m_bit 0, MD24, EditScreen_Mode                              ; FF0841  f2 70 1f 60 c8
+	bit	0, (EditScreen_Mode:24)                             ; FF0841  f2 70 1f 60 c8
 	jr z, .LFF084C                                       ; FF0846  66 04
 	calr DrumEdit_DrawBeatLines                                      ; FF0848  1e 5f 00
 	ret                                                  ; FF084B  0e
@@ -188019,7 +188019,7 @@ DrumEdit_DrawDottedVLine:
 ; EditScreen_DrawRowGuides: layer 2: DrumEdit_DrawRowGuides or NoteEdit_DrawRowGuides.
 EditScreen_DrawRowGuides:
 	ld (LCD_CurrentLayer:16), 0x02                                 ; FF090B  f1 40 25 00 02
-	m_bit 0, MD24, EditScreen_Mode                              ; FF0910  f2 70 1f 60 c8
+	bit	0, (EditScreen_Mode:24)                             ; FF0910  f2 70 1f 60 c8
 	jr z, .LFF091B                                       ; FF0915  66 04
 	calr DrumEdit_DrawRowGuides                                      ; FF0917  1e 3a 00
 	ret                                                  ; FF091A  0e
@@ -188234,7 +188234,7 @@ EditScreen_DrawTick_DL:
 ; EditScreen_DrawCursorNote: layer 0: DrumEdit_DrawCursorNoteNumber in DRUM EDIT, NoteEdit_DrawCursorNoteName in NOTE EDIT.
 EditScreen_DrawCursorNote:
 	ld (LCD_CurrentLayer:16), 0x00                                 ; FF0A7B  f1 40 25 00 00
-	m_bit 0, MD24, EditScreen_Mode                              ; FF0A80  f2 70 1f 60 c8
+	bit	0, (EditScreen_Mode:24)                             ; FF0A80  f2 70 1f 60 c8
 	jr z, .LFF0A8B                                       ; FF0A85  66 04
 	calr DrumEdit_DrawCursorNoteNumber                                      ; FF0A87  1e 05 00
 	ret                                                  ; FF0A8A  0e
@@ -188544,7 +188544,7 @@ EditScreen_DrawLengthFrom10000:
 ; EditScreen_DrawInc: layer 0: DrumEdit_DrawIncLabel in DRUM EDIT, NoteEdit_DrawIncNumber in NOTE EDIT.
 EditScreen_DrawInc:
 	ld (LCD_CurrentLayer:16), 0x00                                 ; FF0D03  f1 40 25 00 00
-	m_bit 0, MD24, EditScreen_Mode                              ; FF0D08  f2 70 1f 60 c8
+	bit	0, (EditScreen_Mode:24)                             ; FF0D08  f2 70 1f 60 c8
 	jr z, .LFF0D13                                       ; FF0D0D  66 04
 	calr DrumEdit_DrawIncLabel                                            ; FF0D0F  1e 2c 00
 	ret                                                  ; FF0D12  0e
@@ -191009,12 +191009,12 @@ CallbackQueue_ResetAndRestartTask2_Call:
 	ret                                                  ; FF42B6  0e
 ; ModeEnter_SoundCopy: the +0 ENTER of panel mode 14 (T_ModeEnter_SoundCopy); PanelMode_ToScreenIdMap[14] = 0x5E, Screen_SoundCopy.
 ModeEnter_SoundCopy:
-	m_set 1, MD16, 0x2134                                ; FF42B7  f1 34 21 b9
+	set	1, (0x2134:16)                               ; FF42B7  f1 34 21 b9
 	call T_SoundGroup_ReloadSelection                                        ; FF42BB  1d c8 15 f4
 	ret                                                  ; FF42BF  0e
 ; Var2134_SetBit1_3: m_set 1, MD16, 0x2134 (single-cell template; the cell's meaning is not established unless it is named)
 Var2134_SetBit1_3:
-	m_set 1, MD16, 0x2134                                ; FF42C0  f1 34 21 b9
+	set	1, (0x2134:16)                               ; FF42C0  f1 34 21 b9
 	ret                                                  ; FF42C4  0e
 ; ModeEnter_SoundCopy_Call: calls ModeEnter_SoundCopy and returns (notes/prom_ab_wrapper_names.py; DERIVATIVE)
 ModeEnter_SoundCopy_Call:
@@ -191420,7 +191420,7 @@ Paint_MidiFileDirectPlay:
 	call Mode_SwitchToSound_SaveRegs2                                      ; FF441C  1d db 79 ff
 	call MidiFileDirectPlay_SaveTrackToPartMap                                      ; FF4420  1d 3f 79 ff
 	calr MidiFilePlay_SnapshotRecordBytes                                      ; FF4424  1e 8f 2c
-	m_res 4, MD16, UI_ScreenFlags                                ; FF4427  f1 95 20 b4
+	res	4, (UI_ScreenFlags:16)                               ; FF4427  f1 95 20 b4
 	call T_MidiFileDirectPlay_InitOnEntry                                        ; FF442B  1d 58 09 f4
 	call T_Transport_StopAllRunning                                        ; FF442F  1d ac 09 f4
 	call T_Disk_MountAndScanMidiFilesResetRings                                        ; FF4433  1d 14 26 f4
@@ -191431,7 +191431,7 @@ Paint_MidiFileDirectPlay:
 	ld (UI_Request_Hi:16), 0x80                                 ; FF4443  f1 71 20 00 80
 	jrl .LFF457A                                         ; FF4448  78 2f 01
 .LFF444B:
-	m_set 6, MD16, 0x2094                                ; FF444B  f1 94 20 be
+	set	6, (0x2094:16)                               ; FF444B  f1 94 20 be
 	ld (Disk_SelectedEntry:16), 0x00                                 ; FF444F  f1 24 27 00 00
 	ld (0x272d:16), 0x00                                 ; FF4454  f1 2d 27 00 00
 	ld (0x272e:16), 0x00                                 ; FF4459  f1 2e 27 00 00
@@ -191659,7 +191659,7 @@ LcdKeyRow1_MidiFileDirectPlay:
 	cp C,0x20                                            ; FF45DD  cb cf 20
 	jr z, .LFF45F3                                       ; FF45E0  66 11
 	call T_MidiFileDirectPlay_LcdKeyRow1                                        ; FF45E2  1d 54 09 f4
-	m_set 4, MD16, UI_ScreenFlags                                ; FF45E6  f1 95 20 bc
+	set	4, (UI_ScreenFlags:16)                               ; FF45E6  f1 95 20 bc
 	jr .LFF45F3                                          ; FF45EA  68 07
 .LFF45EC:
 	m_push MWD+r6, 0x08                                  ; FF45EC  9e 08 04
@@ -191776,7 +191776,7 @@ LcdKeyRow4_MidiFileDirectPlay:
 	ld c, (0x60505e:24)                                 ; FF4646  c2 5e 50 60 23
 	and C,0x02                                           ; FF464B  cb cc 02
 	jrl nz, .LFF46BD                                     ; FF464E  7e 6c 00
-	m_set 3, MD16, UI_RequestBits                                ; FF4651  f1 75 20 bb
+	set	3, (UI_RequestBits:16)                               ; FF4651  f1 75 20 bb
 	ld BC,(XIZ+0x08)                                     ; FF4655  9e 08 21
 	and BC,0x0080                                        ; FF4658  d9 cc 80 00
 	jr nz, .LFF46B6                                      ; FF465C  6e 58
@@ -191849,7 +191849,7 @@ LcdKeyRow5_MidiFileDirectPlay:
 	ld c, (0x60505e:24)                                 ; FF46C4  c2 5e 50 60 23
 	and C,0x02                                           ; FF46C9  cb cc 02
 	jrl nz, .LFF473E                                     ; FF46CC  7e 6f 00
-	m_set 3, MD16, UI_RequestBits                                ; FF46CF  f1 75 20 bb
+	set	3, (UI_RequestBits:16)                               ; FF46CF  f1 75 20 bb
 	ld BC,(XIZ+0x08)                                     ; FF46D3  9e 08 21
 	and BC,0x0080                                        ; FF46D6  d9 cc 80 00
 	jr nz, .LFF472E                                      ; FF46DA  6e 52
@@ -192015,7 +192015,7 @@ Paint_DiskL0adFile:
 	ld (UI_Request_Hi:16), 0x80                                 ; FF47DD  f1 71 20 00 80
 .LFF47E2:
 	ld (UI_ScreenItem:16), 0x00                                 ; FF47E2  f1 20 27 00 00
-	m_set 6, MD16, 0x2094                                ; FF47E7  f1 94 20 be
+	set	6, (0x2094:16)                               ; FF47E7  f1 94 20 be
 .LFF47EB:
 	pushw 0x0b                                           ; FF47EB  0b 0b 00
 	pushw 0x0c                                           ; FF47EE  0b 0c 00
@@ -193185,7 +193185,7 @@ Paint_MidiFileL0ad:
 	calr UI_StatusCode_Is0or2or4                                      ; FF502C  1e 6d 25
 	cp wa, 0x00:i3                                         ; FF502F  d8 d8
 	jr nz, .LFF504C                                      ; FF5031  6e 19
-	m_set 6, MD16, 0x2094                                ; FF5033  f1 94 20 be
+	set	6, (0x2094:16)                               ; FF5033  f1 94 20 be
 	ld (0x272d:16), 0x00                                 ; FF5037  f1 2d 27 00 00
 	ld (0x272e:16), 0x00                                 ; FF503C  f1 2e 27 00 00
 	jr .LFF5059                                          ; FF5041  68 16
@@ -193488,7 +193488,7 @@ LcdKeyRow1_MidiFileL0ad:
 	pop XIY                                              ; FF527C  5d
 	jr .LFF52DD                                          ; FF527D  68 5e
 .LFF527F:
-	m_res 3, MD16, UI_RequestBits                                ; FF527F  f1 75 20 b3
+	res	3, (UI_RequestBits:16)                               ; FF527F  f1 75 20 b3
 	ld bc, (Disk_SelectedEntry:16)                                 ; FF5283  d1 24 27 21
 	extz BC                                              ; FF5287  d9 12
 	pushw bc                                             ; FF5289  29
@@ -193623,7 +193623,7 @@ LcdKeyRow4_MidiFileL0ad:
 	link XIZ,0x0000                                      ; FF5310  ee 0c 00 00
 	push XIX                                             ; FF5314  3c
 	lda xix, (Disk_SeqBank:16)                                ; FF5315  f1 2b 27 34
-	m_set 3, MD16, UI_RequestBits                                ; FF5319  f1 75 20 bb
+	set	3, (UI_RequestBits:16)                               ; FF5319  f1 75 20 bb
 	ld BC,(XIZ+0x08)                                     ; FF531D  9e 08 21
 	and BC,0x0080                                        ; FF5320  d9 cc 80 00
 	jrl nz, .LFF53A7                                     ; FF5324  7e 80 00
@@ -193720,7 +193720,7 @@ LcdKeyRow5_MidiFileL0ad:
 	link XIZ,0x0000                                      ; FF53C6  ee 0c 00 00
 	push XIX                                             ; FF53CA  3c
 	lda xix, (Disk_SeqBank:16)                                ; FF53CB  f1 2b 27 34
-	m_set 3, MD16, UI_RequestBits                                ; FF53CF  f1 75 20 bb
+	set	3, (UI_RequestBits:16)                               ; FF53CF  f1 75 20 bb
 	ld BC,(XIZ+0x08)                                     ; FF53D3  9e 08 21
 	and BC,0x0080                                        ; FF53D6  d9 cc 80 00
 	jrl nz, .LFF5450                                     ; FF53DA  7e 73 00
@@ -193860,7 +193860,7 @@ ScreenEnter_DiskSaveFile_Page0:   ; entry: named by 1 `.long` operand, first at 
 	m_cp_rm MB16, UI_ScreenLatch_Previous, r3                             ; FF54B3  c1 7b 20 f3
 	jr z, .LFF54E4                                       ; FF54B7  66 2b
 	call T_Playback_StopAllAndIgnoreMidiStart                                        ; FF54B9  1d 94 25 f4
-	m_set 6, MD16, 0x2094                                ; FF54BD  f1 94 20 be
+	set	6, (0x2094:16)                               ; FF54BD  f1 94 20 be
 	call T_F42610                                        ; FF54C1  1d 10 26 f4
 	ldw hl, 0x00                                         ; FF54C5  33 00 00
 .LFF54C8:
@@ -194360,10 +194360,10 @@ LcdKeyRow1_DiskSaveFile_Page0:
 	ld BC,(XIZ+0x08)                                     ; FF591D  9e 08 21
 	and BC,0x0080                                        ; FF5920  d9 cc 80 00
 	jr nz, .LFF5951                                      ; FF5924  6e 2b
-	m_res 3, MD16, UI_RequestBits                                ; FF5926  f1 75 20 b3
+	res	3, (UI_RequestBits:16)                               ; FF5926  f1 75 20 b3
 	ld (UI_ScreenPage:16), 0x01                                 ; FF592A  f1 29 22 00 01
 	ld (UI_Request_Hi:16), 0x10                                 ; FF592F  f1 71 20 00 10
-	m_res 0, MD16, 0x2726                                ; FF5934  f1 26 27 b0
+	res	0, (0x2726:16)                               ; FF5934  f1 26 27 b0
 	call T_Playback_StopAllAndIgnoreMidiStart                                        ; FF5938  1d 94 25 f4
 	call T_DiskSaveScreen_MountAndScanDirectory                                        ; FF593C  1d b8 25 f4
 	calr UI_StatusCode_Is0or2or4                                      ; FF5940  1e 59 1c
@@ -194403,7 +194403,7 @@ LcdKeyRow4_DiskSaveFile_Page0:
 	ld BC,(XIZ+0x08)                                     ; FF5958  9e 08 21
 	and BC,0x0080                                        ; FF595B  d9 cc 80 00
 	jr nz, .LFF5988                                      ; FF595F  6e 27
-	m_set 0, MD16, 0x2726                                ; FF5961  f1 26 27 b8
+	set	0, (0x2726:16)                               ; FF5961  f1 26 27 b8
 	ld (UI_ScreenPage:16), 0x01                                 ; FF5965  f1 29 22 00 01
 	ld (UI_Request_Hi:16), 0x10                                 ; FF596A  f1 71 20 00 10
 	call T_Playback_StopAllAndIgnoreMidiStart                                        ; FF596F  1d 94 25 f4
@@ -194511,7 +194511,7 @@ LcdKeyRow1_DiskSaveFile_Page1:
 	popw bc                                              ; FF59FC  49
 	jr .LFF5A2A                                          ; FF59FD  68 2b
 .LFF59FF:
-	m_res 3, MD16, UI_RequestBits                                ; FF59FF  f1 75 20 b3
+	res	3, (UI_RequestBits:16)                               ; FF59FF  f1 75 20 b3
 	call Disk_CopyEntry2724HeadToFileName_SaveRegs                                      ; FF5A03  1d 32 78 ff
 	ld c, (0x2726:16)                                   ; FF5A07  c1 26 27 23
 	and C,0x01                                           ; FF5A0B  cb cc 01
@@ -194524,7 +194524,7 @@ LcdKeyRow1_DiskSaveFile_Page1:
 	cp wa, 0x00:i3                                         ; FF5A1D  d8 d8
 	jr z, .LFF5A2A                                       ; FF5A1F  66 09
 	ld (UI_ScreenPage:16), 0x05                                 ; FF5A21  f1 29 22 00 05
-	m_set 4, MD16, UI_Request_Hi                                ; FF5A26  f1 71 20 bc
+	set	4, (UI_Request_Hi:16)                               ; FF5A26  f1 71 20 bc
 .LFF5A2A:
 	unlk XIZ                                             ; FF5A2A  ee 0d
 	ret                                                  ; FF5A2C  0e
@@ -194998,7 +194998,7 @@ LcdKeyRow3_DiskSaveFile_Page5:
 	ld BC,(XIZ+0x08)                                     ; FF5BB6  9e 08 21
 	and BC,0x0080                                        ; FF5BB9  d9 cc 80 00
 	jr nz, .LFF5C07                                      ; FF5BBD  6e 48
-	m_res 3, MD16, UI_RequestBits                                ; FF5BBF  f1 75 20 b3
+	res	3, (UI_RequestBits:16)                               ; FF5BBF  f1 75 20 b3
 	pushw 0x0b                                           ; FF5BC3  0b 0b 00
 	lda xbc, (Disk_FileName:16)                                ; FF5BC6  f1 c8 21 31
 	push XBC                                             ; FF5BCA  39
@@ -195014,7 +195014,7 @@ LcdKeyRow3_DiskSaveFile_Page5:
 	push XWA                                             ; FF5BE5  38
 	call MemCpy_C                                      ; FF5BE6  1d b5 78 ff
 	call SC1_CmdEFAndClearHeldButtons                                      ; FF5BEA  1d 59 79 ff
-	m_res 0, MD16, 0x2726                                ; FF5BEE  f1 26 27 b0
+	res	0, (0x2726:16)                               ; FF5BEE  f1 26 27 b0
 	ld (UI_ScreenPage:16), 0x00                                 ; FF5BF2  f1 29 22 00 00
 	ld (UI_Request:16), 0x40                                 ; FF5BF7  f1 70 20 00 40
 	ld (UI_Request_Hi:16), 0x80                                 ; FF5BFC  f1 71 20 00 80
@@ -195053,7 +195053,7 @@ LcdKeyRow4_DiskSaveFile_Page5:
 	and BC,0x0080                                        ; FF5C11  d9 cc 80 00
 	jr nz, .LFF5C20                                      ; FF5C15  6e 09
 	ld (UI_ScreenPage:16), 0x01                                 ; FF5C17  f1 29 22 00 01
-	m_set 4, MD16, UI_Request_Hi                                ; FF5C1C  f1 71 20 bc
+	set	4, (UI_Request_Hi:16)                               ; FF5C1C  f1 71 20 bc
 .LFF5C20:
 	unlk XIZ                                             ; FF5C20  ee 0d
 	ret                                                  ; FF5C22  0e
@@ -195135,7 +195135,7 @@ ScreenEnter_MidiFileSave_Page0:   ; entry: named by 1 `.long` operand, first at 
 	jr z, .LFF5CBE                                       ; FF5C70  66 4c
 	call T_Playback_StopAllAndIgnoreMidiStart                                        ; FF5C72  1d 94 25 f4
 	ld (0x2730:16), 0x00                                 ; FF5C76  f1 30 27 00 00
-	m_set 6, MD16, 0x2094                                ; FF5C7B  f1 94 20 be
+	set	6, (0x2094:16)                               ; FF5C7B  f1 94 20 be
 	and	(0x133e:16), 0xfc                            ; FF5C7F  c1 3e 13 3c fc
 	ld h, (Disk_FileName:16)                                   ; FF5C84  c1 c8 21 26
 	cp H,0x30                                            ; FF5C88  ce cf 30
@@ -195594,10 +195594,10 @@ LcdKeyRow1_MidiFileSave_Page0:
 	ld BC,(XIZ+0x08)                                     ; FF6072  9e 08 21
 	and BC,0x0080                                        ; FF6075  d9 cc 80 00
 	jr nz, .LFF60A6                                      ; FF6079  6e 2b
-	m_res 3, MD16, UI_RequestBits                                ; FF607B  f1 75 20 b3
+	res	3, (UI_RequestBits:16)                               ; FF607B  f1 75 20 b3
 	ld (UI_ScreenPage:16), 0x01                                 ; FF607F  f1 29 22 00 01
 	ld (UI_Request_Hi:16), 0x10                                 ; FF6084  f1 71 20 00 10
-	m_res 0, MD16, 0x2726                                ; FF6089  f1 26 27 b0
+	res	0, (0x2726:16)                               ; FF6089  f1 26 27 b0
 	call T_Playback_StopAllAndIgnoreMidiStart                                        ; FF608D  1d 94 25 f4
 	call T_Disk_MountAndScanMidiFilesResetRings                                        ; FF6091  1d 14 26 f4
 	calr UI_StatusCode_Is0or2or4                                      ; FF6095  1e 04 15
@@ -195637,7 +195637,7 @@ LcdKeyRow4_MidiFileSave_Page0:
 	ld BC,(XIZ+0x08)                                     ; FF60AD  9e 08 21
 	and BC,0x0080                                        ; FF60B0  d9 cc 80 00
 	jr nz, .LFF60DD                                      ; FF60B4  6e 27
-	m_set 0, MD16, 0x2726                                ; FF60B6  f1 26 27 b8
+	set	0, (0x2726:16)                               ; FF60B6  f1 26 27 b8
 	ld (UI_ScreenPage:16), 0x01                                 ; FF60BA  f1 29 22 00 01
 	ld (UI_Request_Hi:16), 0x10                                 ; FF60BF  f1 71 20 00 10
 	call T_Playback_StopAllAndIgnoreMidiStart                                        ; FF60C4  1d 94 25 f4
@@ -196244,7 +196244,7 @@ LcdKeyRow4_MidiFileSave_Page2:
 	and BC,0x0080                                        ; FF648C  d9 cc 80 00
 	jr nz, .LFF649B                                      ; FF6490  6e 09
 	ld (UI_ScreenPage:16), 0x01                                 ; FF6492  f1 29 22 00 01
-	m_set 4, MD16, UI_Request_Hi                                ; FF6497  f1 71 20 bc
+	set	4, (UI_Request_Hi:16)                               ; FF6497  f1 71 20 bc
 .LFF649B:
 	unlk XIZ                                             ; FF649B  ee 0d
 	ret                                                  ; FF649D  0e
@@ -196337,7 +196337,7 @@ LcdKeyRow4_MidiFileSave_Page3:
 	and BC,0x0080                                        ; FF64FF  d9 cc 80 00
 	jr nz, .LFF650E                                      ; FF6503  6e 09
 	ld (UI_ScreenPage:16), 0x01                                 ; FF6505  f1 29 22 00 01
-	m_set 4, MD16, UI_Request_Hi                                ; FF650A  f1 71 20 bc
+	set	4, (UI_Request_Hi:16)                               ; FF650A  f1 71 20 bc
 .LFF650E:
 	unlk XIZ                                             ; FF650E  ee 0d
 	ret                                                  ; FF6510  0e
@@ -196514,7 +196514,7 @@ LcdKeyRow3_MidiFileSave_Page4:
 	ld BC,(XIZ+0x08)                                     ; FF65BB  9e 08 21
 	and BC,0x0080                                        ; FF65BE  d9 cc 80 00
 	jr z, .LFF65D2                                       ; FF65C2  66 0e
-	m_res 3, MD16, 0x21e8                                ; FF65C4  f1 e8 21 b3
+	res	3, (0x21e8:16)                               ; FF65C4  f1 e8 21 b3
 	ld (UI_Request:16), 0x51                                 ; FF65C8  f1 70 20 00 51
 	ld (UI_Request_Hi:16), 0x80                                 ; FF65CD  f1 71 20 00 80
 .LFF65D2:
@@ -196551,7 +196551,7 @@ LcdKeyRow4_MidiFileSave_Page4:
 	ld BC,(XIZ+0x08)                                     ; FF65DE  9e 08 21
 	and BC,0x0080                                        ; FF65E1  d9 cc 80 00
 	jr z, .LFF65F5                                       ; FF65E5  66 0e
-	m_set 3, MD16, 0x21e8                                ; FF65E7  f1 e8 21 bb
+	set	3, (0x21e8:16)                               ; FF65E7  f1 e8 21 bb
 	ld (UI_Request:16), 0x51                                 ; FF65EB  f1 70 20 00 51
 	ld (UI_Request_Hi:16), 0x80                                 ; FF65F0  f1 71 20 00 80
 .LFF65F5:
@@ -198757,7 +198757,7 @@ Var7FD6_IsBitClear:
 ; DiskL0adFile_LcdKeyRow1: the LcdKeyRow1 action of DiskL0adFile -- called only by LcdKeyRow1_DiskL0adFile.
 DiskL0adFile_LcdKeyRow1:
 	pushw hl                                             ; FF7564  2b
-	m_res 3, MD16, UI_RequestBits                                ; FF7565  f1 75 20 b3
+	res	3, (UI_RequestBits:16)                               ; FF7565  f1 75 20 b3
 	ld h, (Disk_ContentType:16)                                   ; FF7569  c1 25 27 26
 	calr DiskEntry_CopySelectedToFileName                                      ; FF756D  1e 14 fb
 	call T_DiskLoadFile_Execute                                        ; FF7570  1d c8 25 f4
@@ -199457,7 +199457,7 @@ DiskScreen_LeaveOnScreenChange:
 	m_cp_rm MB16, UI_ScreenLatch_Previous, r3                             ; FF7974  c1 7b 20 f3
 	jr z, .LFF7987                                       ; FF7978  66 0d
 	call T_Playback_AcceptMidiStartAgain                                        ; FF797A  1d dc 25 f4
-	m_res 6, MD16, 0x2094                                ; FF797E  f1 94 20 b6
+	res	6, (0x2094:16)                               ; FF797E  f1 94 20 b6
 	ld (UI_ScreenPage:16), 0x00                                 ; FF7982  f1 29 22 00 00
 .LFF7987:
 	pop XDE                                              ; FF7987  5a
@@ -199477,7 +199477,7 @@ DiskFileScreen_LeaveCommon:
 	ldw (DiskSave_Password:16), 0x00                                ; FF7998  f1 0f 22 02 00 00
 	ld (DiskSave_PasswordUnlockCount:16), 0x00                                 ; FF799E  f1 0c 22 00 00
 	or	(0x34d4:16), 0x10                            ; FF79A3  c1 d4 34 3e 10
-	m_res 3, MD16, 0x34bb                                ; FF79A8  f1 bb 34 b3
+	res	3, (0x34bb:16)                               ; FF79A8  f1 bb 34 b3
 	pop XDE                                              ; FF79AC  5a
 	pop XHL                                              ; FF79AD  5b
 	pop XIX                                              ; FF79AE  5c
