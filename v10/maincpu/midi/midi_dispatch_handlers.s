@@ -1125,6 +1125,10 @@ MidiRx_BuildChannelPartLists_Skip4:
 	cp	(0x966e:16), 32
 	jr	nz, MidiRx_BuildChannelPartLists_Loop
 	ret
+; Calls handler C (0..0xbf) of MidiDispatchCC_HandlerTable; BC and DE are saved at 0x964c /
+; 0x964e for the handler.
+;   Skipped while bit 0 of 0xb7e7 or bit 4 of 0xfd50 is set; bit 7 of 0x90e5 is cleared on the
+;   way out in every case.
 MIDI_DispatchCC:
 	bit 0, (0xb7e7:16)
 	jr nz, MidiCC_DispatchCleanupRet
@@ -9865,6 +9869,11 @@ ArpQueue_EnqueueDone:
 	ld (xwa), 0xff
 	ret
 
+; Runs the MIDI output passes until the active buffer is busy (+4 of MIDISEQ_ACTIVE_BUF_PTR's
+; buffer non-zero) or nothing more is pending (the u32 at 0xbcd4 is 0): pre-dispatch, the three
+; ArpQueue_ProcessAndSort_Data_Helper passes, ArpQueue_ComputeAndEnqueue, a chunked flush of the
+; queue at 0xbc5c (SeqOut_FlushWithChunking), MidiSeq_UpdateAllParams, ArpQueue_SwapBuffers and
+; MidiStream_PrevBankCheck.
 ArpQueue_ProcessAndSort_Data:
 	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
 	cp	(xwa+4), 0
@@ -10024,6 +10033,9 @@ SeqOut_ChunkRemainder:
 	inc 2, xsp
 	ret
 
+; Sends a timed buffer out in pieces of 32 bytes (SeqOut_WriteTimedBytes, interrupts at level 6
+; around each), the remainder last.
+;   In:  XWA = buffer descriptor: +0 = byte count, data from +14.  Stores 0xf0 at 0x424 first.
 SeqOut_FlushTimedBuffer:
 	dec 2, xsp
 	push xiz
@@ -10711,6 +10723,8 @@ Part_LookupByIndex:
 	ld	xhl, (xbc+wa)
 	ret
 
+; Reads two bytes through the read pointer at (XWA + 6), advancing it by 2, and returns
+; L = (first << 4) | (second & 0x0f): a value sent as two nibbles.
 MIDI_PackNibbleParam:
 	lda xbc, (xwa + 6)
 	ld xwa, (xbc)
@@ -12844,6 +12858,12 @@ MidiSeq_SwapActiveBuffers:
 MidiSeq_SwapBuffersFallthru:
 	jr MidiSeq_ReinitCurrentBuffer
 
+; Exchanges the active and spare buffer pairs of the MIDI output queue and starts the new
+; active one empty (ArpQueue_ReinitCurrentBuffer).
+;   The swap (0xbcb4 <-> 0xbcb8, 0xbc5c <-> 0xbc60) happens only when the active block (0xbcb4)
+;   has a zero byte +4 and the active queue (0xbc5c) holds data (its +14 and +10 pointers
+;   differ); the new active block then takes byte +3 of the old one.  Otherwise only the
+;   current buffer is re-initialised.
 ArpQueue_SwapBuffers:
 	ld xbc, (0xbcb4:16)
 	cp (xbc + 4), 0x0

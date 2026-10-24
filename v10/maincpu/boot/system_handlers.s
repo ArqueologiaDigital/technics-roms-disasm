@@ -3402,6 +3402,8 @@ SeqBuf_ReadByte:
 	popw ix
 	ret
 
+; Writes the stack byte (+4) to the sequencer event buffer: Seq_RingBuf_WriteByte_512 on the
+; ring descriptor ending at 0x1e549.  Preserves IX and XDE.
 SeqBuf_WriteByte:
 	link	xiz, 0x0000
 	pushw ix
@@ -3606,6 +3608,8 @@ TempoRingBuf_SaveWritePos:
 	popw	ix
 	ret
 
+; Writes the stack byte (+4) to the rhythm event buffer: Seq_RingBuf_WriteByte_512 on the ring
+; descriptor ending at 0x1ef5d.  Preserves IX and XDE.
 RhythmBuf_WriteByte:
 	link	xiz, 0x0000
 	pushw ix
@@ -3666,6 +3670,8 @@ RhythmBuf_SaveWritePos:
 	popw hl
 	ret
 
+; RingBuf_CheckFull_256 on the rhythm event buffer (descriptor ending at 0x1ef5d).  Preserves
+; IX and XDE.
 RhythmBuf_ReadAlternate:
 	pushw ix
 	push xde
@@ -5061,6 +5067,9 @@ Seq_RingBuf_ReadByte_Small_Dequeue:
 	ld (xde - 10), ix
 	ret
 
+; Writes A into a 256-byte ring buffer.
+;   In:  XDE = buffer; the descriptor words below it are the write index (-4) and the free count
+;        (-2).  Out: HL = the free count left, or 0xffff when the buffer was full.
 Seq_RingBuf_WriteByte_Small:
 	cpw (xde - 2), 0x0
 	jr nz, Seq_RingBuf_WriteByte_Small_Store

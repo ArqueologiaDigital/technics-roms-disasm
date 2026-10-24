@@ -3001,6 +3001,7 @@ UI_PostEvent_0x6E:
 	ld xbc, EVT_AICEN_SET
 	jp ApPostEvent
 
+; Posts EVT_EDIT_DOWN_SET with parameter A (zero-extended) to the current target (ApPostEvent).
 UI_PostDialRangeEvent:
 	ld e, a
 	ld d, 0x0:opc
@@ -3009,6 +3010,7 @@ UI_PostDialRangeEvent:
 	ld xbc, EVT_EDIT_DOWN_SET
 	jp ApPostEvent
 
+; Posts EVT_EDIT_UP_SET with parameter A (zero-extended) to the current target (ApPostEvent).
 UI_PostDialValueEvent:
 	ld e, a
 	ld d, 0x0:opc
@@ -3017,6 +3019,10 @@ UI_PostDialValueEvent:
 	ld xbc, EVT_EDIT_UP_SET
 	jp ApPostEvent
 
+; Proc of the Box class: EVT_GET_BOX_COLOR / EVT_GET_BOX_BORDER return the instance's +22 / +24
+; word (sign-extended); EVT_DRAW passes the event to ViewableProc and then draws the box
+; (DrawDesignBox with the +14 rectangle, BC = border, DE = colour).  Other events go to
+; ViewableProc.  VwBoxProc is the same with an index field added.
 BoxProc:
 	push xiz
 	ld xiz, xwa

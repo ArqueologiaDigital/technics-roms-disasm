@@ -1730,6 +1730,9 @@ AudioInit_Dispatch_Finalize:
 	ldw (0xc59a:16), 0
 	ret
 
+; Appends a 4-byte command {A, C, E, stack byte} to the audio-init command list at 0xc4cc
+; (count word 0xc4ca); a full list (49 entries) is first sent (VoiceEvent_HandlerTable) and
+; emptied.  Pops its stack word on return (RETD 2).
 AudioInit_QueueCommand:
 	dec 6, xsp
 	ld (xsp), e

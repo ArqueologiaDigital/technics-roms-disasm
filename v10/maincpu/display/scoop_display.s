@@ -462,6 +462,8 @@ UIRender_DescriptorTable2:
 UIRender_DescriptorTable2_Return:
 	ret
 
+; Splits a value into decimal digits (ParamDigit_DivideValue) and blanks leading digits: when
+; bit 1 of 0x1185 is clear 0x1181 becomes a space, and 0x1182 as well when bit 0 is clear too.
 ParamDigit_ExtractAndFormat:
 	calr ParamDigit_DivideValue
 	bit 1, (4485:16)
@@ -768,6 +770,7 @@ Display_NullHandler:
 	ret
 
 
+; MIDI_SendSysExCmd with the command byte taken from W.
 MIDI_SendSysExFromW:
 	ld a, w
 	call MIDI_SendSysExCmd
@@ -5338,6 +5341,10 @@ DMA_Channel3_CallAndInit:
 	ld	(0x3728:16), 0
 	call DisplayStr_StyleSectionInit
 	ret
+; Saves the current part's selection to slot 0 (VoiceSlot_SaveState), calls
+; VoiceSlot_StatusRet, restores the selection and reads the byte at the read position
+; (VoiceSlot_ReadCurrentParams).  A note-on status (0x9n) sets bit 2 of 0xd54; 0xd5e is cleared
+; either way.
 DMA_FlagCheckWithCalls:
 	; --- Flag-check with calls (42 bytes) ---
 	xor	a, a
@@ -9964,6 +9971,8 @@ SqStep_LowestSetBitOfWord_Skip23:
 	jp	SqStep_LowestSetBitOfWord_Join8
 SqStep_LowestSetBitOfWord_Return2:
 	ret
+; Calls SysEx_BytecodeDispatcher_Tbl2_Helper for the part number byte at 0xeee, then sets bit 0
+; of 0x8d88 and of 0x266a.
 SystemInit_StepHandler_0_Helper2:
 	ld	a, (3822:16)
 	call	SysEx_BytecodeDispatcher_Tbl2_Helper

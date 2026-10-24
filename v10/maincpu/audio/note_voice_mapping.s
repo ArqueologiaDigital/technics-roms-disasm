@@ -19544,6 +19544,8 @@ SendEpilogue_Data_Helper_Case22_Skip12:
 SendEpilogue_Data_Helper_Case22_Return2:
 	ret
 
+; Sends the 5-byte command packet {4, 0xf0, 0x50, 0x87, A} (MIDI_SendCmdPacket, then
+; MIDI_PostSendStub).
 MIDI_SendSysExCmd:
 	dec 6, xsp
 	ld (xsp + 0:8), 0x4

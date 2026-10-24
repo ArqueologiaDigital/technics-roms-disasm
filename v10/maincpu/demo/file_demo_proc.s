@@ -1405,6 +1405,10 @@ Demo_ParseSlideHeader:
 	call SLIDE_Parse_Header
 	ret
 
+; Checks that the open file carries the signature of region A.
+;   In:  A = region.  Seeks to the region's offset (FileIO_FileSigRecs_OffsetCol, 8-byte rows;
+;   FileIO_SeekAndReadBlock from the start) and compares the bytes read (FileIO_ReadByte) with
+;   FileIO_RegionSignatures[A].  A read error counts as a mismatch.
 FileIO_CheckRegionSignature:
 	dec 2, xsp
 	push xiz
@@ -4226,6 +4230,10 @@ FileIO_CloseHandle_Done:
 	ld hl, 0:i3
 	ret
 
+; Creates a file by name for writing (FileOpenDefault) after the 16-byte path prefix
+; FileIO_OpenDefault_PathInit.
+;   In:  XWA = file name.  Out: HL = 0 on success, -11 when FileOpenDefault reports 31, -3 for
+;        any other failure.
 FileIO_OpenDefault:
 	lda xsp, (xsp - 16)
 	ld xde, xwa
@@ -4581,6 +4589,9 @@ FileIO_SeekRead_Extended:
 	ld (0x7f48:16), wa
 	ret
 
+; Calls SeqStep_FileIoHelper on the open file (handle at 0x7f44) and returns HL = 0, or -100
+; when no file is open (recorded at 0x7f48 unless an earlier error is there).  The helper's own
+; result is discarded.
 FileIO_SeekRead_ExtReturn:
 	pushw iz
 	ld iz, 0:i3
@@ -4802,6 +4813,8 @@ FileIO_CopyString_Done:
 	ld (xwa), 0x0
 	ret
 
+; C strncpy: copies at most DE characters of the string at XBC to XWA and zero-fills the rest of
+; the DE bytes.  As in C, no terminator is written when the source fills them.
 FileIO_CopyString_WriteNull:
 	ld xhl, xbc
 	jr FileIO_CopyString_CheckEnd
@@ -5307,6 +5320,8 @@ CheckRecordByFile_ShiftDone:
 	scc8 z, l
 	ret
 
+; Returns in HL the attribute word of the selected file (0x25db8 + 12 * index, index = word at
+; 0x25ea8), or 0 when the index is outside 0..19.
 CheckFileSystemStatus:
 	ld wa, (0x025ea8:24)
 	cp wa, 0:i3
@@ -5397,6 +5412,8 @@ InitRecordTable_ExtLoop:
 	ldw (0x0272ca:24), 0x0000
 	ret
 
+; Returns in L the inserted disk's media type, reading it (GetMediaType) into 0x25db6 first
+; when that byte still holds FileIO_DiskInfoInit_MediaType's initial value.
 GetDiskSizeInfo:
 	ld a, (FileIO_DiskInfoInit_MediaType:24)
 	cp a, (0x25db6:24)
@@ -5430,6 +5447,7 @@ FileIO_GetDiskFreeSpace:
 	ld xhl, (0x025d6c:24)
 	ret
 
+; Resets the disk-information record pointer at 0x25d6c to FileIO_DiskInfoInit's value.
 FileIO_ResetCurrentRecord:
 	ld xwa, (FileIO_DiskInfoInit:24)
 	ld (0x025d6c:24), xwa
@@ -5444,6 +5462,9 @@ FileIO_GetDiskRecordPtr:
 	ld xhl, (0x025d70:24)
 	ret
 
+; Returns in XHL the disk's volume name buffer (0x25d74), filling it when FileIO_SearchFile does
+; not already find FileIO_EmptyVolumeName there: the label GetVolumeLabel returns, or "____"
+; when there is none.
 FileIO_SearchAndLoadFile:
 	push xiz
 	lda xwa, (0x025d74:24)
@@ -6064,6 +6085,7 @@ ValidateFileRange_Found:
 	ld hl, 0:i3
 	ret
 
+; Returns in HL the word at 0x271ea, or -104 when ValidateFileRange rejects it.
 GetFirstPageBase:
 	ld wa, (0x0271ea:24)
 	calr ValidateFileRange
@@ -8538,6 +8560,8 @@ InitWPNav_ClampEnd:
 	ld (0x0271f0:24), wa
 	ret
 
+; Resets the disk-operation state: the six words at 0x8500..0x850a to 0xffff,
+; FileIO_InitRecordTable, and one word from FmmPassword_StateInit to 0x8a0c.
 ResetProgressIndication:
 	ldw (0x8500:16), 0xffff
 	ldw (0x8502:16), 0xffff
@@ -8604,6 +8628,9 @@ InitOp_SkipSetFlag:
 	inc 2, xsp
 	ret
 
+; Undoes InitializeOperationState after a disk operation: clears bits 2 and 3 of 0x28a7,
+; re-initialises the playback state (SeqAcc_InitPlaybackState) and turns MIDI thru off
+; (MidiThru_Disable, tail jump).
 CancelOperationCleanup:
 	ld a, (0x28a7:16)
 	bit 2, a

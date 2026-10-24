@@ -6657,6 +6657,10 @@ SdpartLookupPartId_CheckEnd:
 	ldw hl, 0xffff
 	ret
 
+; Turns an index-switch event into a step.
+;   In:  XWA = event, BC = step for EVT_INDEXSW_UP, DE = step for EVT_INDEXSW_UP_AIC.
+;   Out: HL = BC for EVT_INDEXSW_UP, DE for EVT_INDEXSW_UP_AIC, -DE for EVT_INDEXSW_DOWN, -BC
+;        for EVT_INDEXSW_DOWN_AIC, 0 for any other event.
 SdpartScrollDelta:
 	ld hl, bc
 	cp xwa, EVT_INDEXSW_DOWN
@@ -13050,6 +13054,11 @@ PsMixer_DrawCaptionFrame_Join:
 	pop	xiz
 	lda	xsp, (xsp+22)
 	ret
+; Computes the screen rectangle of mixer row BC.
+;   In:  XWA = 8-byte rectangle to fill, BC = row (signed).
+;   The row's edit switch is 136 + BC mod 5 (GetEditSwPoint); the band spans x = 8..311 and
+;   y = switch y - 9 .. switch y + 31, both minus BC mod 5 and plus the word at +4 of the row's
+;   12-byte record (array based at the u32 at 0x3ea30).
 PsMixer_CalcRowBandRect:
 	dec	8, xsp
 	push	xiz

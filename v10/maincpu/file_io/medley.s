@@ -243,6 +243,10 @@ SeqName_Exit:
 	popw iz
 	ret
 
+; Writes a medley playlist entry as four characters: E, then 'M' and the song number C + 1 in
+; two digits (three digits, without the 'M', from 100 up).  C = 0xff (unused slot) gives three
+; spaces, C = 0xfe (marked) 'M' and two spaces.  No terminator is written.
+;   In:  XWA = destination, E = first character, C = entry byte.
 FormatMedleyNumber:
 	ld (xwa+), e
 	cp c, 0xff

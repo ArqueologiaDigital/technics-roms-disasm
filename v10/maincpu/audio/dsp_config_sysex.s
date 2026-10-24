@@ -809,6 +809,10 @@ AssswbWr_ReturnFail:
 AssswbWr_Return:
 	pop xiz
 	ret
+; Appends the 4-byte command {A, C, E, stack byte} to SWBTWR_EVENT_QUEUE and writes the 0xff end
+; mark after it; the write offset is the word at 0x90de, advanced by 4.  When the offset is 0x1fc
+; or more the command is dropped.  Pops its stack word on return (RETD 2).
+;   Exported to extension ROMs as entry AssswbWr of the Hama function table.
 AssswbWr:
 	ld hl, (0x90de:16)
 	cp hl, 0x1fc
@@ -3329,6 +3333,7 @@ DSPCfg_ReadParam_Map0:
 	ld bc, 0:i3
 	jrl DSPCfg_ResolveWithFallback
 
+; DSPCfg_ResolveWithFallback with BC = 1 (the second parameter map).
 DSPCfg_ReadParam_Map1:
 	ld bc, 1:i3
 	jrl DSPCfg_ResolveWithFallback

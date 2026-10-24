@@ -1051,6 +1051,10 @@ SetWall_ParserInit:
 	pop xiy
 	ret
 
+; Advances the read index IY within the current 256-byte stream block; past 0xff it follows the
+; block's link word (+3) to the next block (block number kept at 0x288b, address via
+; SetWall_StreamIndexResolve at 0x10fd) and restarts at index 5.  When the next block's first
+; byte has bit 7 clear, SEQ_ERROR_CODE is set to 2.
 SetWall_AdvanceStreamPos:
 	inc 1, iy
 	cp iy, 0xff

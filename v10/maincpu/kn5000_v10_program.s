@@ -1553,6 +1553,8 @@ Boot_SetConfigFlag7:
 	set 7, (1030:16)
 	ret
 
+; Returns HL = 1 when bit 7 of the configuration byte 0x406 is set (Boot_SetConfigFlag7), else
+; 0.  The event-queue posters drop an event on a full queue while it is clear.
 Boot_CheckConfigFlag7:
 	ldcf_dd16 7, 0x06, 0x04
 	scc8 c, a
@@ -2672,6 +2674,13 @@ DrawRect_Impl_LastSide:
 	lda	xsp, (xsp+18)
 	ret
 
+; Draws a string through TextRender_BeginDraw, directly on the draw task or queued from any
+; other task.
+;   In:  XWA, XBC = position arguments, XDE = string, stack = three more arguments.
+;   On the draw task (IS_XSP_INSIDE_4K_REGION_AT_1C032) COLORBLIT_MODE_ACTIVE takes
+;   COLORBLIT_MODE and the text is drawn while the word at 0x3044e is non-zero.  Otherwise the
+;   string is copied into the draw queue (Strlen + 1 bytes) with a 30-byte command for the draw
+;   task (DrawQueue_Alloc).
 DrawText_QueueOrDirect:
 	lda xsp, (xsp - 16)
 	push xiz

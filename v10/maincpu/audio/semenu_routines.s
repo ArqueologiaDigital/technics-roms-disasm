@@ -1236,6 +1236,7 @@ SeMenu_LoadPartParam:
 SeMenu_SwitchNop:
 	ret
 
+; Returns L = A << BC (by repeated doubling; BC = 0 returns A).  Clobbers DE.
 SeMenu_BitShiftMask:
 	ld l, a
 	ld de, 0:i3
@@ -6217,6 +6218,8 @@ SeMenu_CopyWriteUpdate_Step3_Helper14:
 	ld	(1719:16), a
 	ret
 
+; Copies the byte at RAM 0x6b8 to (XWA) (spelled `ldmi16 (xwa), 0x6b8`, the memory-to-memory
+; move ld (xwa),(0x6b8)).
 SeMenu_LoadPatchStatus:
 	ldmi16 (xwa), 0x6b8
 	ret

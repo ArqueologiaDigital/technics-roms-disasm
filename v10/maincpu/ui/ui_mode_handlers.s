@@ -1082,6 +1082,7 @@ Report_BlinkLoop_OffDelayInner:
 	ret
 
 
+; Busy-waits 0x1000 x 0x100 loop iterations.  Clobbers WA and BC.
 A_Short_Pause:
 	ld bc, 0:i3
 
@@ -13693,6 +13694,7 @@ CalcValidNoteRow_Invalid:
 	ld l, 0x0:opc
 	ret
 
+; Returns L = 1 when A / 2 >= C, else 0.
 VariScreen_IsHalfRangeAbove:
 	srl a, 1
 	cp a, c

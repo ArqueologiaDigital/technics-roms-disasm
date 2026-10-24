@@ -3727,6 +3727,10 @@ CtrlPanel_PopRetFA2:
 	popw_erp 0xfa
 	ret
 
+; Turns on one indicator bit in one of three groups.
+;   In:  A = (group << 4) | bit; group 0x00, 0x20 or 0x40 (other groups do nothing).
+;   The bit's mask (CtrlPanel_LookupIndicatorEntry) is set in the group's word at 0x8f3a,
+;   0x8f3e or 0x8f42 and cleared in the word after it (0x8f3c, 0x8f40, 0x8f44).
 CtrlPanel_SetIndicatorLED:
 	pushw_erp 0xfa
 	ld c, a
@@ -4017,6 +4021,8 @@ UIState_ProcessSimpleMode:
 	orw	(0x8f3a:16), 0x90
 	ret
 
+; Returns in XHL entry WA (zero-extended byte index) of the u32 table
+; CtrlPanel_SingleBitMaskTable.
 CtrlPanel_LookupIndicatorEntry:
 	extz wa
 	sla wa, 2
@@ -7303,6 +7309,11 @@ SndParam_FetchDone:
 	inc 6, xsp
 	ret
 
+; Resolves a voice selection record in place.
+;   In:  XWA = record: +0/+1 the result bytes, +2 type byte, +3/+4 the selection.
+;   Types up to 0x1f go to SndParam_FetchOscTableEntry; type 0x48 (rhythm) passes {+3, +4, type}
+;   through the buffer at 0x90ea to Rhythm_DispatchNote_Finalize and copies the two bytes it
+;   leaves at 0x90ee back to +0/+1.  Other types are left alone.
 SndParam_ResolveVoiceEntry:
 	push xiz
 	ld xiz, xwa
@@ -8170,6 +8181,7 @@ MIDI_LoadParamsAndDispatchCC:
 	call MIDI_ClearGuardAndDispatchCC
 	ret
 
+; Clears 0x90e5 and falls into MIDI_DispatchCC_Guarded.
 MIDI_ClearGuardAndDispatchCC:
 	ld (0x90e5:16), 0
 
@@ -9273,6 +9285,10 @@ TempoPartStream_CopyLoop:
 TempoPartStream_Done:
 	ret
 
+; Sends the pending entry at 0x91ad, if any (0xff = none): TempoRingBuf_WriteBytes with the
+; entry and the length in bits 0-2 of 0x91ca, at interrupt level 6.  When the byte at 0x90f8 is
+; 0xff, SeqPlay_CheckAndStartPlayback runs with every register saved (AudioCtrl_SaveAllRegs).
+; 0x91ca is cleared.
 TempoRingBuf_ProcessEntry:
 	cp (0x91ad:16), 255
 	jr z, TempoRingBuf_EntryDone
@@ -10663,6 +10679,8 @@ PendingVolume_NextEntry:
 	djnz16 bc, PendingVolume_ScanEntry
 	ret
 
+; Returns in the carry flag bit (0x91c8) of the part mask word at 0xf1d0 (shifted out by
+; repeated SRL).  WA and BC are preserved.
 PartCtrl_CheckBitmaskBit:
 	pushw wa
 	pushw bc
@@ -11771,6 +11789,7 @@ MidiStream_HandlePartSelect:
 MidiStream_PartSelectDone:
 	ret
 
+; Empty routine (`ret`).
 MidiStream_ExtendedDispatch:
 	ret
 ; MidiRx_ApplyProgramChange: Applies a received program change for the part in (0x9644) (E = program): part 20 is

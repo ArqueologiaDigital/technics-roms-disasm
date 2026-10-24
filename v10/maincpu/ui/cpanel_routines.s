@@ -318,6 +318,7 @@ Delay1500L_Done:
 	ret
 
 
+; Busy-waits 3000 iterations of a decrement loop.  Clobbers WA.
 DELAY_3000_LOOPS:
 	ldw wa, 0xbb8
 
@@ -640,6 +641,11 @@ WaitTX_ConfigAndReturn:
 	ret
 
 
+; Starts sending the 16-bit command WA to the control panel.
+;   Resets the LED transmit buffer pointers, puts WA in CPANEL_LED_TX_BUFFER, sets the transmit
+;   flag in CPANEL_TX_RX_FLAGS and state-machine index 4, sets serial channel 1 to 31,250 baud
+;   (BR1CR), drives SCLK1 low, disables reception, clears the pending INTTX1 / INTRX1 / INTA
+;   requests, then writes A to SC1BUF (A holds the PFCR copy at that point, not part of WA).
 CPanel_SendCommand:
 	ei 6
 	ldw (CPANEL_LED_READ_PTR:16), 0

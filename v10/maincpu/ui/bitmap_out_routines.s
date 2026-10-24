@@ -3585,6 +3585,7 @@ BitMapOut_PrepareRender_CheckBit0:
 	pop xiz
 	ret
 
+; Returns in L the byte at 0x8d48.
 BitMapOut_PrepareRender_CheckBit1:
 	ld l, (0x8d48:16)
 	ret

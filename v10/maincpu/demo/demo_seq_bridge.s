@@ -975,6 +975,9 @@ SeqNodeInsert_EmptyList:
 	andmi8 (xhl), 0x7f
 	jr SeqNodeInsert_LinkPrev
 
+; Points 0x10fd at 256-byte block IY (1-based) of the block area whose base is the u32 at
+; 0x110a: (IY - 1) * 256 + base.  Out: XHL = 0.  VoiceSlot_UpdateCurrentPointer does the same
+; with the base at 0x1d5a.
 SeqNode_ResolveSlotPtr:
 	ld hl, iy
 	extz xhl

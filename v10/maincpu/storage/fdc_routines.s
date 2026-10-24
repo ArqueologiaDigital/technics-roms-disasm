@@ -1304,6 +1304,9 @@ FDC_DRIVE_STATUS_Skip9:
 FDC_PRE_OP_CHECK:
 	ret
 
+; Records an FDC error: A goes to FDC_ERROR_CODE unless an earlier error is already there.
+;   Out: L = FDC_ERROR_CODE.  The `nop` branches for 0x33, 0x35 (missing address mark) and
+;   0x36 (data field error) do nothing.
 FDC_Set_Status:
 	cp (FDC_ERROR_CODE:16), 0
 	jr nz, FDC_SetStatus_AlreadySet

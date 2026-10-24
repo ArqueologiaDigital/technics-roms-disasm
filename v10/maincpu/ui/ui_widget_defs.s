@@ -1593,6 +1593,11 @@ MainLswPartAdd:
 	inc 8, xsp
 	retd 0x2
 
+; Requests an LSW_GET from the panel-memory manager.
+;   In:  XWA = the request's first field.  Builds a 12-byte block {XWA, 0, 0, 0} (Malloc) and
+;   calls MainFunction NAKA_MAINFUNC_MainPmanControl with EVT_LSW_GET and the block, then
+;   NAKA_MAINFUNC_MainAutoFree with EVT_AUTO_FREE, both synchronously (FuncCall, unlike
+;   MainLswPut's queued MainFuncCall).  Out: HL = 0.
 MainLswGet:
 	dec 4, xsp
 	push xiz
@@ -5369,6 +5374,8 @@ IvNaming_Return:
 	inc 8, xsp
 	ret
 
+; Returns XHL = 10, the naming window's id, for the file-naming screens (TechnicsFileNaming,
+; SmfFileRename, FormatDiskNaming ...).
 GetNamingWindowID:
 	ld xhl, 0xa
 	ret
@@ -9604,6 +9611,9 @@ FuncProc_PopIzSkip4Ret:
 	inc 4, xsp
 	ret
 
+; Calls a Function object: the function pointer at entry (id & 0xffff) of object table entry
+; (id >> 16) & 0xfff's data array, with XWA/XBC/XDE unchanged.
+;   Out: XHL and XWA = the function's result.  No class check, unlike ApFuncCall.
 FuncCall:
 	ld xhl, xwa
 	srl xhl, 16
@@ -11701,6 +11711,9 @@ GetConst:
 	scc16 nz, hl
 	ret
 
+; Shows or hides a view: clears bit 0 of the instance's +12 flag word when XBC is non-zero, sets
+; it when XBC = 0.
+;   In:  XWA = view id, XBC = visible.  Nothing is redrawn.
 SetVisible:
 	pushw iz
 	ld iz, bc
@@ -11718,6 +11731,8 @@ DrawWidget_Hline_2_Draw:
 	popw iz
 	ret
 
+; Returns HL = 1 when the view XWA is visible (bit 0 of its instance's +12 flag word clear),
+; else 0.  Counterpart of SetVisible.
 GetVisible:
 	calr GetViewInstance
 	ld wa, (xhl + 12)
@@ -17694,6 +17709,12 @@ CommonIDProc_Epilogue:
 	lda xsp, (xsp + 20)
 	ret
 
+; Returns in XHL the address of property BC's field in an object's instance data: the instance
+; (GetViewInstance) plus the sizes of the first BC properties.
+;   In:  XWA = object, BC = property index.
+;   The object's property string (EVT_GET_PROP_STRING, into a 256-byte local buffer) has one
+;   letter per property; letter 'A' + n is property-type object 0x2600000 + n, asked for its
+;   size with EVT_GET_PROP_SIZE.
 IDCountHelper:
 	lda xsp, (xsp-262)
 	push xiz
@@ -18354,6 +18375,7 @@ MainSendEvent_Prologue:
 	ret
 
 
+; Returns in XHL the object that events addressed to 0xffffffff go to (CURRENT_TARGET).
 GetCurrentTarget:
 	ld xhl, (CURRENT_TARGET:24)
 	ret
@@ -19062,6 +19084,13 @@ ApTimer_IncrementCounter:
 	inc 8, xsp
 	ret
 
+; Arms an application timer that will call back after XWA ticks.
+;   In:  XWA = delay in ticks, XBC = object, XDE = a word stored with it (+12), stack +4 / +8 =
+;        two more words (stored at +20 / +16; popped on return, RETD 8).
+;   Takes the first free entry (+8 = 0xffffffff) of the 128 24-byte entries at 0x2f844, sets its
+;   due time to the tick counter (0x30444) + XWA and links it into the list at 0x30448, which is
+;   kept in due-time order.  Quirk: with all 128 entries in use it spins forever.  KillApTimer
+;   cancels a timer by the same four values.
 SetApTimer:
 	lda xsp, (xsp - 16)
 	push xiz
@@ -19197,6 +19226,11 @@ KillApTimer_Return:
 	lda xsp, (xsp + 12)
 	retd 0x8
 
+; Cancels an application timer armed with SetApTimer.
+;   In:  XBC = object, XDE = the word stored at +12, stack +4 / +8 = the two stack arguments it
+;        was armed with (popped on return, RETD 8).
+;   The first timer in the list at 0x30448 whose four fields match is unlinked and freed (+8 =
+;   0xffffffff).  Out: HL = 1 when one was found, else 0.
 KillApTimer:
 	dec 4, xsp
 	push xiz
@@ -19847,6 +19881,7 @@ SetChangeRect_Prologue:
 	popw iz
 	inc 8, xsp
 	ret
+; Empty routine (`ret`).
 SetNeedUpdate:
 	ret
 

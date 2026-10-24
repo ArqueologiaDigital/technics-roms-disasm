@@ -1847,6 +1847,10 @@ FrameLoop_Cleanup:
 	inc 2, xsp
 	retd 0x4
 
+; Draws a frame DE pixels thick inside a rectangle.
+;   In:  XWA = rectangle (copied), BC = style (only style 1 draws), DE = thickness, stack word
+;        = colour for DrawFrame (popped on return, RETD 2).
+;   Each pass draws the rectangle's outline (DrawFrame) and shrinks it by one pixel per side.
 DrawDesignFrame:
 	lda xsp, (xsp - 10)
 	push xiz
@@ -3968,6 +3972,7 @@ PsGridBoxProc:
 
 	.include "ui/psgridbox_routines.s"
 	.include "ui/ui_widget_defs.s"
+; Returns HL = 1 when the point at XWA {x, y} lies on the 320 x 240 screen, else 0.
 IsPointOnScreen:
 	cpw (xwa), 0x0
 	jr lt, IsPointOnScreen_OutOfBounds

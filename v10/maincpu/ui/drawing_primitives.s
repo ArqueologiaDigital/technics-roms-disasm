@@ -1064,6 +1064,10 @@ DrawBox_QueuedExec:
 	calr DrawBox_Impl
 	ret
 
+; Fills a rectangle on the draw task's side of DrawBox.
+;   In:  XWA = rectangle {x1, y1, x2, y2}, BC = colour; 0xf7 draws nothing.
+;   An empty rectangle (x1 > x2 or y1 > y2) is ignored; the rest is clipped to the 320 x 240
+;   screen in place.
 DrawBox_Impl:
 	lda xsp, (xsp - 16)
 	pushw iz
@@ -2775,6 +2779,11 @@ DrawFrameSP_QueuedExec:
 	calr DrawFrameSP_Impl
 	ret
 
+; Draws frame pattern BC at a point on the draw task's side of DrawFrameSP.
+;   In:  XWA = top-left point, BC = pattern number.
+;   Nothing is drawn when the point is off screen (IsPointOnScreen).  The pattern's size and
+;   pixel pointer come from its 8-byte entry in the table at 0x934000 (as GetFrameSPSize reads
+;   it); rows at y >= 240 are not drawn.
 DrawFrameSP_Impl:
 	lda xsp, (xsp - 34)
 	ld (xsp + 26), de

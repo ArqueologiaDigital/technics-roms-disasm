@@ -1140,6 +1140,10 @@ MidiPkt_SendCtlValueSysEx_Epilogue:
 	lda	xsp, (xsp+10)
 	ret
 
+; Tests the up to two gate conditions a MIDI control record names.
+;   In:  XWA = record; bytes +12 and +13 index MidiCtl_GateRecords and MidiCtl_SecondGateRecords
+;        (6-byte entries {pointer, mask, value}; index 0 = no condition).
+;   Out: HL = 0 when every named condition holds ((pointer) & mask = value), 0xffff otherwise.
 MidiPkt_CheckGateCondition:
 	ld c, (xwa + 12)
 	cp c, 0:i3
