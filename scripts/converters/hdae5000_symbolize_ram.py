@@ -314,6 +314,24 @@ RAM = {
                                " (HDAE5000_Lbn_ShowEntry)"),
     0x22AD9E: ("FormatCodeDigits", "the six digits typed on the HD-format attention dialog"
                                    " (HDAE5000_FormatDialog_CodeDigit)"),
+    # sixteenth run: the naming window (HDAE5000_AcHddNamingWindowProc and its On* arms) and the FLS screens
+    0x22A000: ("NamingText", "the name being edited in the naming window, up to 32 characters + NUL"
+                             " (OnSetString / OnGetString hand it over)"),
+    0x22A022: ("NamingApFunction", "the application function of the naming window, NAKA_APFUNC_NamingCheck"
+                                   " unless OnSetApFunction set another; asked for the length and fill character"),
+    0x22A026: ("NamingLength", "word: length of the edited name, at most 32"),
+    0x22A028: ("NamingCursor", "word: cursor position in the name (OnPositionLeft / OnPositionRight)"),
+    0x22A02E: ("NamingSelChar", "word: the selected character of the character table (OnPrevCharacter /"
+                                " OnNextCharacter +-1, OnCharacterRowUpDown +-13)"),
+    0x22A030: ("NamingSelCharDrawn", "word: the selection last drawn, 0xFFFF = none (OnSeleDraw redraws on a"
+                                     " change)"),
+    0x22A034: ("NamingFillCharPtr", "pointer to the character the name is padded with (OnClear, OnInsert,"
+                                    " OnDelete, OnCenterName)"),
+    0x23A06E: ("NameEditBuffer", "16-byte name the naming checks exchange with the naming window"
+                                 " (EVT_GET_STRING into it, then HDAE5000_FlsName_StoreWithUi / DirName_...)"),
+    0x23A098: ("CurFlsItem", "the selected item of the current FLS: FlsItemPageBase + the list selection"),
+    0x22B272: ("FlsItemPageBase", "word: first item of the FLS item page shown, 0 or 16 (the list's"
+                                  " overflow / underflow events switch it)"),
     # sixth run: list texts the UI objects display (EVT_HDAE_SET_STR_ADR points them here)
     0x22B274: ("PartListText", "nine 14-byte tab-ended part names + NUL (0x7F bytes), HDAE5000_PartList_Build"),
     0x22A0D0: ("DirListText", "24 rows x 21 bytes + NUL: \"NNN:\" and the 16-byte directory name at +4"
@@ -339,6 +357,8 @@ EXTENT = {
     0x230EAC: 14,
     0x22A2CA: 0x1F9,
     0x22AE3E: 0x1E0,
+    0x22A000: 0x21,
+    0x23A06E: 0x10,
     0x22AA4C: 12,
     0x22ABE6: 12,
 }

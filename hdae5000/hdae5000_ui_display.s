@@ -7587,7 +7587,7 @@ HDAE5000_Clear_Work_Buffer:	; 28F785h
 	; Handles large counts via QBC (high word of XBC) loop
 	;
 	; === Part 1: Clear work buffer ===
-	ld xde, 0x22A000	; Destination = work buffer
+	ld xde, HDAE5000_RAM_NamingText	; Destination = work buffer
 	ld xbc, 0xF52A	; Count = 62,762 bytes
 	ld ix, bc	; Save low word for odd byte check
 	srl xbc, 1	; srl 1, XBC  ; divide by 2 for word ops

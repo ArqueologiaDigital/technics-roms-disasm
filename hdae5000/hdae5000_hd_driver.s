@@ -2006,7 +2006,7 @@ HDAE5000_HDD_DIRNAMECheck:
 	cp	xbc, EVT_GET_STRING
 	jrl	nz, HDAE5000_HDD_DIRNAMECheck_Done
 	pushw 0x0010
-	lda xwa, (0x23a06e:24)
+	lda xwa, (HDAE5000_RAM_NameEditBuffer:24)
 	push xwa
 	push xde
 	call HDAE5000_StrNCpy
@@ -2046,7 +2046,7 @@ HDAE5000_HDD_DIRNAMECheck_OnSwIn:
 	pushw hl                                ; push HL
 	ld	xwa, xiz
 	push xwa
-	lda xwa, (0x23a06e:24)
+	lda xwa, (HDAE5000_RAM_NameEditBuffer:24)
 	push xwa
 	call HDAE5000_MemCopy
 	lda	xsp, (xsp+14)
@@ -2054,7 +2054,7 @@ HDAE5000_HDD_DIRNAMECheck_OnSwIn:
 	ld	xwa, (xwa + WS_RootFnTable)
 	ld	xix, (xwa + RootFn_GetNamingWindowID)
 	call	(xix)
-	lda xwa, (0x23a06e:24)
+	lda xwa, (HDAE5000_RAM_NameEditBuffer:24)
 	ld	xbc, xwa
 	ld	xwa, xhl
 	ld	xde, xbc
@@ -2069,7 +2069,7 @@ HDAE5000_HDD_DIRNAMECheck_Skip:
 	ld	xwa, (xwa + WS_RootFnTable)
 	ld	xix, (xwa + RootFn_GetNamingWindowID)
 	call	(xix)
-	lda xwa, (0x23a06e:24)
+	lda xwa, (HDAE5000_RAM_NameEditBuffer:24)
 	ld	xbc, xwa
 	ld	xwa, xhl
 	ld	xde, xbc
@@ -2079,7 +2079,7 @@ HDAE5000_HDD_DIRNAMECheck_Skip:
 	ld	xbc, EVT_GET_STRING
 	call	(xhl)
 	ld	wa, (HDAE5000_RAM_CurDir:24)
-	lda xbc, (0x23a06e:24)
+	lda xbc, (HDAE5000_RAM_NameEditBuffer:24)
 	ld	xde, HDAE5000_OBJ_SELECT_DIR
 	calr	HDAE5000_DirName_StoreWithUi
 	ld	xwa, HDAE5000_OBJ_SEL_DIR

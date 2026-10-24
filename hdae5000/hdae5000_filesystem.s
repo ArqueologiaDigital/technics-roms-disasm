@@ -1518,7 +1518,7 @@ HDAE5000_FlsNamingCheck:
 	jrl t, .LFS_RdFSB__a_exit
 .LFS_RdFSB__a_evt3a:			; EVT 0x3A: Read tile — copy 16-byte tile to caller
 	pushw 0x0010                            ; size = 16 bytes (tile data)
-	lda xwa, (0x23a06e:24); src = current tile buffer
+	lda xwa, (HDAE5000_RAM_NameEditBuffer:24); src = current tile buffer
 	push xwa
 	push xde                                ; dest = caller's buffer (from event param)
 	call HDAE5000_StrNCpy
@@ -1559,7 +1559,7 @@ HDAE5000_FlsNamingCheck:
 	pushw hl                                ; push validated length
 	ld xwa, xiz
 	push xwa
-	lda xwa, (0x23a06e:24); dest = current tile buffer
+	lda xwa, (HDAE5000_RAM_NameEditBuffer:24); dest = current tile buffer
 	push xwa
 	call HDAE5000_MemCopy                            ; MemCopy — copy validated name to tile
 	lda xsp, (xsp + 0x0e)
@@ -1567,7 +1567,7 @@ HDAE5000_FlsNamingCheck:
 	ld xwa, (xwa + WS_RootFnTable)
 	ld xix, (xwa + RootFn_GetNamingWindowID)
 	call (xix)		; XHL = the naming window
-	lda xwa, (0x23a06e:24); XDE = tile buffer ptr
+	lda xwa, (HDAE5000_RAM_NameEditBuffer:24); XDE = tile buffer ptr
 	ld xbc, xwa
 	ld xwa, xhl                              ; XWA = the naming window
 	ld xde, xbc                              ; XDE = tile data
@@ -1582,7 +1582,7 @@ HDAE5000_FlsNamingCheck:
 	ld xwa, (xwa + WS_RootFnTable)
 	ld xix, (xwa + RootFn_GetNamingWindowID)
 	call (xix)
-	lda xwa, (0x23a06e:24)
+	lda xwa, (HDAE5000_RAM_NameEditBuffer:24)
 	ld xbc, xwa
 	ld xwa, xhl
 	ld xde, xbc
@@ -1592,7 +1592,7 @@ HDAE5000_FlsNamingCheck:
 	ld xbc, EVT_GET_STRING
 	call (xhl)
 	ld wa, (HDAE5000_RAM_CurFls:24); WA = display row base
-	lda xbc, (0x23a06e:24); XBC = tile buffer
+	lda xbc, (HDAE5000_RAM_NameEditBuffer:24); XBC = tile buffer
 	ld xde, HDAE5000_OBJ_FLS_SELECT                       ; params: left pane tile ID 0xF0
 	calr HDAE5000_FlsName_StoreWithUi		; store the name: please-wait, error screen, name history
 	calr HDAE5000_FlsList_BuildPage	; recursive call — refresh page
@@ -1624,7 +1624,7 @@ HDAE5000_FlsNamingCheck2:
 	jrl t, .LFS_RdFSB__b_exit
 .LFS_RdFSB__b_evt3a:			; EVT 0x3A: Read tile — copy 16-byte tile to caller
 	pushw 0x0010
-	lda xwa, (0x23a06e:24)
+	lda xwa, (HDAE5000_RAM_NameEditBuffer:24)
 	push xwa
 	push xde
 	call HDAE5000_StrNCpy
@@ -1665,7 +1665,7 @@ HDAE5000_FlsNamingCheck2:
 	pushw hl                                ; validated length
 	ld xwa, xiz
 	push xwa
-	lda xwa, (0x23a06e:24)
+	lda xwa, (HDAE5000_RAM_NameEditBuffer:24)
 	push xwa
 	call HDAE5000_MemCopy                            ; MemCopy — name to tile buffer
 	lda xsp, (xsp + 0x0e)
@@ -1673,7 +1673,7 @@ HDAE5000_FlsNamingCheck2:
 	ld xwa, (xwa + WS_RootFnTable)
 	ld xix, (xwa + RootFn_GetNamingWindowID)
 	call (xix)
-	lda xwa, (0x23a06e:24)
+	lda xwa, (HDAE5000_RAM_NameEditBuffer:24)
 	ld xbc, xwa
 	ld xwa, xhl
 	ld xde, xbc
@@ -1688,7 +1688,7 @@ HDAE5000_FlsNamingCheck2:
 	ld xwa, (xwa + WS_RootFnTable)
 	ld xix, (xwa + RootFn_GetNamingWindowID)
 	call (xix)
-	lda xwa, (0x23a06e:24)
+	lda xwa, (HDAE5000_RAM_NameEditBuffer:24)
 	ld xbc, xwa
 	ld xwa, xhl
 	ld xde, xbc
@@ -1698,7 +1698,7 @@ HDAE5000_FlsNamingCheck2:
 	ld xbc, EVT_GET_STRING
 	call (xhl)
 	ld wa, (HDAE5000_RAM_CurFls:24); WA = display row base
-	lda xbc, (0x23a06e:24); XBC = tile buffer
+	lda xbc, (HDAE5000_RAM_NameEditBuffer:24); XBC = tile buffer
 	ld xde, HDAE5000_OBJ_FLS_EDIT                       ; params: right pane tile ID 0x0163
 	calr HDAE5000_FlsName_StoreWithUi		; store the name: please-wait, error screen, name history
 	ld wa, 1:i3                                ; WA = operation mode 1
@@ -1817,7 +1817,7 @@ HDAE5000_FlsScreen_Refresh_Loop:
 	add	xbc, xwa
 	push xbc
 	call HDAE5000_MemCopy
-	ld	wa, (0x22B272:24)
+	ld	wa, (HDAE5000_RAM_FlsItemPageBase:24)
 	add	wa, iz
 	inc	1, wa
 	pushw wa                                ; push WA
@@ -1840,7 +1840,7 @@ HDAE5000_FlsScreen_Refresh_Loop:
 	push xbc
 	call HDAE5000_MemCopy
 	lda	xsp, (xsp+10)
-	ld	bc, (0x22B272:24)
+	ld	bc, (HDAE5000_RAM_FlsItemPageBase:24)
 	add	bc, iz
 	ld	wa, (HDAE5000_RAM_CurFls:24)
 	call HDAE5000_FlsItem_SongRecord
@@ -1855,7 +1855,7 @@ HDAE5000_FlsScreen_Refresh_Loop:
 	push xbc
 	call HDAE5000_MemCopy
 	lda	xsp, (xsp+10)
-	ld	bc, (0x22B272:24)
+	ld	bc, (HDAE5000_RAM_FlsItemPageBase:24)
 	add	bc, iz
 	lda	xwa, (xsp+2)
 	ld	xde, xwa
@@ -1922,7 +1922,7 @@ HDAE5000_FlsScreen_Refresh_Join6:
 	lda	xwa, (xsp+2)
 	ld	xde, xwa
 	ld	wa, (HDAE5000_RAM_CurFls:24)
-	ld	bc, (0x23A098:24)
+	ld	bc, (HDAE5000_RAM_CurFlsItem:24)
 	call HDAE5000_FlsItem_Get
 	ld	iz, hl
 	ld	wa, iz
@@ -2285,13 +2285,13 @@ HDAE5000_FlsLoadScreen_Skip2:
 	jrl	t, HDAE5000_FlsLoadScreen_Done
 HDAE5000_FlsLoadScreen_OnHdaeSelectOk:
 	ld	bc, iz
-	ld	wa, (0x22B272:24)
+	ld	wa, (HDAE5000_RAM_FlsItemPageBase:24)
 	add	wa, bc
-	ld	(0x23a098), wa
+	ld	(HDAE5000_RAM_CurFlsItem), wa
 	lda	xwa, (xsp+4)
 	ld	xde, xwa
 	ld	wa, (HDAE5000_RAM_CurFls:24)
-	ld	bc, (0x23A098:24)
+	ld	bc, (HDAE5000_RAM_CurFlsItem:24)
 	call HDAE5000_FlsItem_Get
 	cp	hl, 0xffff
 	jrl	z, HDAE5000_FlsLoadScreen_Done
@@ -2300,7 +2300,7 @@ HDAE5000_FlsLoadScreen_OnHdaeSelectOk:
 	ld	(0x22AD9A:24), 1
 	ld	wa, (HDAE5000_RAM_CurFls:24)
 	ld	(0x22ad96), wa
-	ld	wa, (0x23A098:24)
+	ld	wa, (HDAE5000_RAM_CurFlsItem:24)
 	ld	(0x22ad98), wa
 	jr	t, HDAE5000_FlsLoadScreen_Join5
 HDAE5000_FlsLoadScreen_Skip3:
@@ -2346,9 +2346,9 @@ HDAE5000_FlsLoadScreen_Join6:
 	jrl	t, HDAE5000_FlsLoadScreen_Done
 HDAE5000_FlsLoadScreen_OnHdaeSelectSave:
 	ld	bc, iz
-	ld	wa, (0x22B272:24)
+	ld	wa, (HDAE5000_RAM_FlsItemPageBase:24)
 	add	wa, bc
-	ld	(0x23a098), wa
+	ld	(HDAE5000_RAM_CurFlsItem), wa
 	ld	wa, 1:i3
 	ld	bc, 0:i3
 	calr	HDAE5000_FlsScreen_Refresh
@@ -2383,12 +2383,12 @@ HDAE5000_FlsLoadScreen_Skip4:
 	call	(xhl)
 	jrl	t, HDAE5000_FlsLoadScreen_Done
 HDAE5000_FlsLoadScreen_OnHdaeUnderFlow:
-	cpw	(0x22B272:24), 0
+	cpw	(HDAE5000_RAM_FlsItemPageBase:24), 0
 	jr	nz, HDAE5000_FlsLoadScreen_Skip5
 	cpw	(HDAE5000_RAM_CurFls:24), 0
 	jrl	z, HDAE5000_FlsLoadScreen_Done
 	decw	1, (HDAE5000_RAM_CurFls:24)
-	ldw	(0x22B272:24), 16
+	ldw	(HDAE5000_RAM_FlsItemPageBase:24), 16
 	ld	wa, 0:i3
 	ld	bc, 0:i3
 	calr	HDAE5000_FlsScreen_Refresh
@@ -2403,7 +2403,7 @@ HDAE5000_FlsLoadScreen_OnHdaeUnderFlow:
 	call	(xhl)
 	jrl	t, HDAE5000_FlsLoadScreen_Done
 HDAE5000_FlsLoadScreen_Skip5:
-	ldw	(0x22B272:24), 0
+	ldw	(HDAE5000_RAM_FlsItemPageBase:24), 0
 	ld	wa, 0:i3
 	ld	bc, 0:i3
 	calr	HDAE5000_FlsScreen_Refresh
@@ -2418,12 +2418,12 @@ HDAE5000_FlsLoadScreen_Skip5:
 	call	(xhl)
 	jrl	t, HDAE5000_FlsLoadScreen_Done
 HDAE5000_FlsLoadScreen_OnHdaeOverFlow:
-	cpw	(0x22B272:24), 0
+	cpw	(HDAE5000_RAM_FlsItemPageBase:24), 0
 	jr	z, HDAE5000_FlsLoadScreen_Skip6
 	cpw	(HDAE5000_RAM_CurFls:24), 119
 	jrl	nc, HDAE5000_FlsLoadScreen_Done
 	incw	1, (HDAE5000_RAM_CurFls:24)
-	ldw	(0x22B272:24), 0
+	ldw	(HDAE5000_RAM_FlsItemPageBase:24), 0
 	ld	wa, 0:i3
 	ld	bc, 0:i3
 	calr	HDAE5000_FlsScreen_Refresh
@@ -2438,7 +2438,7 @@ HDAE5000_FlsLoadScreen_OnHdaeOverFlow:
 	call	(xhl)
 	jr	t, HDAE5000_FlsLoadScreen_Done
 HDAE5000_FlsLoadScreen_Skip6:
-	ldw	(0x22B272:24), 16
+	ldw	(HDAE5000_RAM_FlsItemPageBase:24), 16
 	ld	wa, 0:i3
 	ld	bc, 0:i3
 	calr	HDAE5000_FlsScreen_Refresh
@@ -2454,9 +2454,9 @@ HDAE5000_FlsLoadScreen_Skip6:
 	jr	t, HDAE5000_FlsLoadScreen_Done
 HDAE5000_FlsLoadScreen_OnHdaeChangeSelNum:
 	ld	bc, iz
-	ld	wa, (0x22B272:24)
+	ld	wa, (HDAE5000_RAM_FlsItemPageBase:24)
 	add	wa, bc
-	ld	(0x23a098), wa
+	ld	(HDAE5000_RAM_CurFlsItem), wa
 	ld	wa, 0:i3
 	ld	bc, 1:i3
 	calr	HDAE5000_FlsScreen_Refresh
@@ -2596,7 +2596,7 @@ HDAE5000_FlsEditScreen_Skip:
 	jrl	t, HDAE5000_FlsEditScreen_Done
 HDAE5000_FlsEditScreen_Skip2:
 	ld	wa, (HDAE5000_RAM_CurFls:24)
-	ld	bc, (0x23A098:24)
+	ld	bc, (HDAE5000_RAM_CurFlsItem:24)
 	call HDAE5000_FlsItem_Insert
 	ld	wa, 1:i3
 	ld	bc, 0:i3
@@ -2606,13 +2606,13 @@ HDAE5000_FlsEditScreen_Skip3:
 	bit	0x07, iz
 	jr	z, HDAE5000_FlsEditScreen_Skip4
 	ld	wa, (HDAE5000_RAM_CurFls:24)
-	ld	bc, (0x23A098:24)
+	ld	bc, (HDAE5000_RAM_CurFlsItem:24)
 	ld	de, 0:i3
 	call HDAE5000_FlsItem_SetByte80
 	jr	t, HDAE5000_FlsEditScreen_Join
 HDAE5000_FlsEditScreen_Skip4:
 	ld	wa, (HDAE5000_RAM_CurFls:24)
-	ld	bc, (0x23A098:24)
+	ld	bc, (HDAE5000_RAM_CurFlsItem:24)
 	ld	de, 1:i3
 	call HDAE5000_FlsItem_SetByte80
 HDAE5000_FlsEditScreen_Join:
@@ -2624,13 +2624,13 @@ HDAE5000_FlsEditScreen_Skip5:
 	bit	0x07, iz
 	jr	z, HDAE5000_FlsEditScreen_Skip6
 	ld	wa, (HDAE5000_RAM_CurFls:24)
-	ld	bc, (0x23A098:24)
+	ld	bc, (HDAE5000_RAM_CurFlsItem:24)
 	ld	de, 0:i3
 	call HDAE5000_FlsItem_SetByte112
 	jr	t, HDAE5000_FlsEditScreen_Join2
 HDAE5000_FlsEditScreen_Skip6:
 	ld	wa, (HDAE5000_RAM_CurFls:24)
-	ld	bc, (0x23A098:24)
+	ld	bc, (HDAE5000_RAM_CurFlsItem:24)
 	ld	de, 1:i3
 	call HDAE5000_FlsItem_SetByte112
 HDAE5000_FlsEditScreen_Join2:
@@ -2710,9 +2710,9 @@ HDAE5000_FlsEditScreen_Skip7:
 	call	(xhl)
 	jrl	t, HDAE5000_FlsEditScreen_Done
 HDAE5000_FlsEditScreen_OnHdaeUnderFlow:
-	cpw	(0x22B272:24), 0
+	cpw	(HDAE5000_RAM_FlsItemPageBase:24), 0
 	jrl	z, HDAE5000_FlsEditScreen_Done
-	ldw	(0x22B272:24), 0
+	ldw	(HDAE5000_RAM_FlsItemPageBase:24), 0
 	ld	wa, 1:i3
 	ld	bc, 0:i3
 	calr	HDAE5000_FlsScreen_Refresh
@@ -2727,9 +2727,9 @@ HDAE5000_FlsEditScreen_OnHdaeUnderFlow:
 	call	(xhl)
 	jr	t, HDAE5000_FlsEditScreen_Done
 HDAE5000_FlsEditScreen_OnHdaeOverFlow:
-	cpw	(0x22B272:24), 0
+	cpw	(HDAE5000_RAM_FlsItemPageBase:24), 0
 	jr	nz, HDAE5000_FlsEditScreen_Done
-	ldw	(0x22B272:24), 16
+	ldw	(HDAE5000_RAM_FlsItemPageBase:24), 16
 	ld	wa, 1:i3
 	ld	bc, 0:i3
 	calr	HDAE5000_FlsScreen_Refresh
@@ -2745,8 +2745,8 @@ HDAE5000_FlsEditScreen_OnHdaeOverFlow:
 	jr	t, HDAE5000_FlsEditScreen_Done
 HDAE5000_FlsEditScreen_OnHdaeChangeSelNum:
 	ld	wa, iz
-	add	wa, (0x22B272:24)
-	ld	(0x23a098), wa
+	add	wa, (HDAE5000_RAM_FlsItemPageBase:24)
+	ld	(HDAE5000_RAM_CurFlsItem), wa
 	ld	wa, 1:i3
 	ld	bc, 1:i3
 	calr	HDAE5000_FlsScreen_Refresh
@@ -2809,7 +2809,7 @@ HDAE5000_FlsDel1SwCatch_OnSwIn:
 	jr	nz, HDAE5000_FlsDel1SwCatch_Done
 HDAE5000_FlsDel1SwCatch_Join:
 	ld	wa, (HDAE5000_RAM_CurFls:24)
-	ld	bc, (0x23A098:24)
+	ld	bc, (HDAE5000_RAM_CurFlsItem:24)
 	call HDAE5000_FlsItem_Clear
 	ld	wa, 1:i3
 	ld	bc, 0:i3
@@ -2890,7 +2890,7 @@ HDAE5000_FlsDel2SwCatch_OnSwIn:
 	jr	nz, HDAE5000_FlsDel2SwCatch_Done
 HDAE5000_FlsDel2SwCatch_Join:
 	ld	wa, (HDAE5000_RAM_CurFls:24)
-	ld	bc, (0x23A098:24)
+	ld	bc, (HDAE5000_RAM_CurFlsItem:24)
 	call HDAE5000_FlsItem_Remove
 	ld	wa, 1:i3
 	ld	bc, 0:i3
@@ -3047,7 +3047,7 @@ HDAE5000_FlsFileSelScreen:
 HDAE5000_FlsFileSelScreen_OnHdaeSelectOk:
 	ld	(HDAE5000_RAM_CurSong), iz
 	ld	wa, (HDAE5000_RAM_CurFls:24)
-	ld	bc, (0x23A098:24)
+	ld	bc, (HDAE5000_RAM_CurFlsItem:24)
 	call HDAE5000_FlsItem_IsSet
 	cp	hl, 0xffff
 	jrl	nz, HDAE5000_FlsFileSelScreen_Skip
@@ -3065,11 +3065,11 @@ HDAE5000_FlsFileSelScreen_OnHdaeSelectOk:
 	call	(xhl)
 	calr	HDAE5000_YieldUntilSem1Zero
 	ld	wa, (HDAE5000_RAM_CurFls:24)
-	ld	bc, (0x23A098:24)
+	ld	bc, (HDAE5000_RAM_CurFlsItem:24)
 	ld	de, (HDAE5000_RAM_CurDir:24)
 	call HDAE5000_FlsItem_SetDir
 	ld	wa, (HDAE5000_RAM_CurFls:24)
-	ld	bc, (0x23A098:24)
+	ld	bc, (HDAE5000_RAM_CurFlsItem:24)
 	ld	de, (HDAE5000_RAM_CurSong:24)
 	call HDAE5000_FlsItem_SetSong
 	ld	wa, 1:i3
@@ -3217,11 +3217,11 @@ HDAE5000_FlsOverWrSwCatch_Join:
 	call	(xhl)
 	calr	HDAE5000_YieldUntilSem1Zero
 	ld	wa, (HDAE5000_RAM_CurFls:24)
-	ld	bc, (0x23A098:24)
+	ld	bc, (HDAE5000_RAM_CurFlsItem:24)
 	ld	de, (HDAE5000_RAM_CurDir:24)
 	call HDAE5000_FlsItem_SetDir
 	ld	wa, (HDAE5000_RAM_CurFls:24)
-	ld	bc, (0x23A098:24)
+	ld	bc, (HDAE5000_RAM_CurFlsItem:24)
 	ld	de, (HDAE5000_RAM_CurSong:24)
 	call HDAE5000_FlsItem_SetSong
 	ld	wa, 1:i3
@@ -4087,7 +4087,7 @@ HDAE5000_CP_FD_DIRNAMECheck:
 	jrl nz, .LFSD__hB_default
 	; Event 0x01E0003A: copy data block
 	pushw 0x0010
-	lda xwa, (0x23a06e:24)
+	lda xwa, (HDAE5000_RAM_NameEditBuffer:24)
 	push xwa
 	push xde
 	call HDAE5000_StrNCpy
@@ -4128,7 +4128,7 @@ HDAE5000_CP_FD_DIRNAMECheck:
 	pushw hl                                ; push hl (compact)
 	ld xwa, xiz
 	push xwa
-	lda xwa, (0x23a06e:24)
+	lda xwa, (HDAE5000_RAM_NameEditBuffer:24)
 	push xwa
 	call HDAE5000_MemCopy
 	lda xsp, (xsp + 0x0e)
@@ -4136,7 +4136,7 @@ HDAE5000_CP_FD_DIRNAMECheck:
 	ld xwa, (xwa + WS_RootFnTable)
 	ld xix, (xwa + RootFn_GetNamingWindowID)             ; XIX = (XWA+0x050C)
 	call (xix)
-	lda xwa, (0x23a06e:24)
+	lda xwa, (HDAE5000_RAM_NameEditBuffer:24)
 	ld xbc, xwa
 	ld xwa, xhl
 	ld xde, xbc
@@ -4151,7 +4151,7 @@ HDAE5000_CP_FD_DIRNAMECheck:
 	ld xwa, (xwa + WS_RootFnTable)
 	ld xix, (xwa + RootFn_GetNamingWindowID)
 	call (xix)
-	lda xwa, (0x23a06e:24)
+	lda xwa, (HDAE5000_RAM_NameEditBuffer:24)
 	ld xbc, xwa
 	ld xwa, xhl
 	ld xde, xbc
@@ -4162,7 +4162,7 @@ HDAE5000_CP_FD_DIRNAMECheck:
 	call (xhl)
 	; Update display
 	ld wa, (HDAE5000_RAM_CurDir:24)
-	lda xbc, (0x23a06e:24)
+	lda xbc, (HDAE5000_RAM_NameEditBuffer:24)
 	ld xde, HDAE5000_OBJ_CP_FD_DIRSEL
 	calr HDAE5000_DirName_StoreWithUi
 	ld xwa, HDAE5000_OBJ_SEL_DIR
