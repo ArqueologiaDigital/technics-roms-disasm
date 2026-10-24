@@ -1326,8 +1326,8 @@ DirmdTitle_ESw:
 	pushw	(xsp+264)
 	ld	iz, (xsp+264)
 	pushw	iz
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x98, 0x9a
+	pushw DirmdTitleFunc_Str_DirmdTitleESw_Fmtd_Fmtd@hi16
+	pushw DirmdTitleFunc_Str_DirmdTitleESw_Fmtd_Fmtd@lo16
 	lda	xwa, (xsp+10)
 	push	xwa
 	call	Sprintf_Locked

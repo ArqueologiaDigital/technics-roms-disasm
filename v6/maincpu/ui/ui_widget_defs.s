@@ -693,14 +693,14 @@ PsNumEditBox_Confirm:
 	ld	xwa, (xsp+42)
 	call	GetViewInstance
 	ld	xiz, xhl
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x7e, 0xa1
+	pushw	PsNumEditBox_Confirm_Str_Chr25@hi16
+	pushw	PsNumEditBox_Confirm_Str_Chr25@lo16
 	lda	xwa, (xsp+28)
 	push	xwa
 	call	Strcpy
 	pushw	(xiz+50)
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x80, 0xa1
+	pushw	PsNumEditBox_Confirm_Str_Fmtd@hi16
+	pushw	PsNumEditBox_Confirm_Str_Fmtd@lo16
 	lda	xwa, (xsp+28)
 	push	xwa
 	call	Sprintf_Locked
@@ -710,8 +710,8 @@ PsNumEditBox_Confirm:
 	push	xwa
 	call	Strcat
 	lda	xsp, (xsp+26)
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x84, 0xa1
+	pushw	PsNumEditBox_Confirm_Str_d@hi16
+	pushw	PsNumEditBox_Confirm_Str_d@lo16
 	lda	xwa, (xsp+28)
 	push	xwa
 	call	Strcat
@@ -930,15 +930,15 @@ AcNumEdit_GetText:
 	ld	xwa, (xsp+32)
 	call	GetViewInstance
 	ld	(xsp+4), xhl
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0xae, 0xa1
+	pushw AcNumEdit_GetText_Str_Chr25@hi16
+	pushw AcNumEdit_GetText_Str_Chr25@lo16
 	lda	xwa, (xsp+22)
 	push	xwa
 	call	Strcpy
 	ld	xwa, (xsp+12)
 	pushw	(xwa+54)
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0xb0, 0xa1
+	pushw	AcNumEdit_GetText_Str_Fmtd@hi16
+	pushw	AcNumEdit_GetText_Str_Fmtd@lo16
 	lda	xwa, (xsp+22)
 	push	xwa
 	call	Sprintf_Locked
@@ -948,8 +948,8 @@ AcNumEdit_GetText:
 	push	xwa
 	call	Strcat
 	lda	xsp, (xsp+26)
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0xb4, 0xa1
+	pushw AcNumEdit_GetText_Str_d@hi16
+	pushw AcNumEdit_GetText_Str_d@lo16
 	lda	xwa, (xsp+22)
 	push	xwa
 	call	Strcat
@@ -1424,8 +1424,8 @@ LswEditCheck:
 	cp	xbc, EVT_GET_LSW_STRING
 	jr	nz, LswEditCheck_NotHandled
 	pushw	(xde+4)
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0xb6, 0xa1
+	pushw	LswEditCheck_Str_Fmt3d@hi16
+	pushw	LswEditCheck_Str_Fmt3d@lo16
 	ld	xwa, (xde+8)
 	push	xwa
 	call	Sprintf_Locked
@@ -2019,8 +2019,8 @@ RamEditCheck:
 RamEditCheck_JumpStart:
 	ld	xwa, (xde+14)
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0xba, 0xa1
+	pushw	RamEditCheck_JumpStart_Str_Fmt3d@hi16
+	pushw	RamEditCheck_JumpStart_Str_Fmt3d@lo16
 	ld	xwa, (xde+18)
 	push	xwa
 	call	Sprintf_Locked
@@ -4202,8 +4202,8 @@ PsPageBox_Confirm_DrawValue:
 	call	SendEvent
 	pushw	hl
 	pushw	iz
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x58, 0xa2
+	pushw	PsPageBox_Confirm_DrawValue_Str_PAGE_Fmtd_Fmtd@hi16
+	pushw	PsPageBox_Confirm_DrawValue_Str_PAGE_Fmtd_Fmtd@lo16
 	lda	xwa, (xsp+16)
 	push	xwa
 	call	Sprintf_Locked
@@ -4956,8 +4956,8 @@ IvPageControl_Paint:
 	jr IvPageControl_Dispatch
 
 IvPageControl_GetText:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x64, 0xa2
+	pushw	IvPageControl_GetText_Str_PAGE@hi16
+	pushw	IvPageControl_GetText_Str_PAGE@lo16
 	ld	xwa, (xsp+12)
 	push	xwa
 	call	Strcpy
@@ -5032,8 +5032,8 @@ IvMainEditSwProc:
 	jr IvMainEditSw_ReturnZero
 
 IvMainEditSw_GetText:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x6a, 0xa2
+	pushw	IvMainEditSw_GetText_Str_MnSw@hi16
+	pushw	IvMainEditSw_GetText_Str_MnSw@lo16
 	ld	xwa, (xsp+8)
 	push	xwa
 	call	Strcpy
@@ -5110,8 +5110,8 @@ IvExit_Paint:
 	jr IvExit_ReturnZero
 
 IvExit_GetText:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x70, 0xa2
+	pushw	IvExit_GetText_Str_EXIT@hi16
+	pushw	IvExit_GetText_Str_EXIT@lo16
 	push	xde
 	call	Strcpy
 	inc	8, xsp
@@ -5145,8 +5145,8 @@ IvExitModeProc:
 	jrl IvExitMode_DefaultTail
 
 IvExitMode_GetText:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x76, 0xa2
+	pushw	IvExitMode_GetText_Str_ExMD@hi16
+	pushw	IvExitMode_GetText_Str_ExMD@lo16
 	ld	xwa, (xsp+8)
 	push	xwa
 	call	Strcpy
@@ -5218,8 +5218,8 @@ IvExitScreenProc:
 	jrl IvExitScreen_DefaultTail
 
 IvExitScreen_GetText:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x7c, 0xa2
+	pushw	IvExitScreen_GetText_Str_ExSC@hi16
+	pushw	IvExitScreen_GetText_Str_ExSC@lo16
 	ld	xwa, (xsp+8)
 	push	xwa
 	call	Strcpy
@@ -5290,8 +5290,8 @@ IvExitWindowProc:
 	jrl IvExitWindow_DefaultTail
 
 IvExitWindow_GetText:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x82, 0xa2
+	pushw	IvExitWindow_GetText_Str_ExWn@hi16
+	pushw	IvExitWindow_GetText_Str_ExWn@lo16
 	ld	xwa, (xsp+8)
 	push	xwa
 	call	Strcpy
@@ -5697,8 +5697,8 @@ IvInterrupt_Paint:
 	jr IvInterrupt_ReturnZero
 
 IvInterrupt_GetText:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0xa0, 0xa2
+	pushw	IvInterrupt_GetText_Str_IntT@hi16
+	pushw	IvInterrupt_GetText_Str_IntT@lo16
 	ld	xwa, (xsp+8)
 	push	xwa
 	call	Strcpy
@@ -5733,8 +5733,8 @@ IvIntReminderProc:
 	jr	z, IvIntReminder_GetInterval
 	cp	xbc, EVT_GET_STRING
 	jrl	nz, IvInterruptProc
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0xa6, 0xa2
+	pushw	IvIntReminderProc_Str_iRem@hi16
+	pushw	IvIntReminderProc_Str_iRem@lo16
 	push	xde
 	call	Strcpy
 	inc	8, xsp
@@ -5750,8 +5750,8 @@ IvIntCompleteProc:
 	jr	z, IvIntComplete_GetInterval
 	cp	xbc, EVT_GET_STRING
 	jrl	nz, IvInterruptProc
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0xac, 0xa2
+	pushw	IvIntCompleteProc_Str_iCmp@hi16
+	pushw	IvIntCompleteProc_Str_iCmp@lo16
 	push	xde
 	call	Strcpy
 	inc	8, xsp
@@ -5767,8 +5767,8 @@ IvIntErrorProc:
 	jr	z, IvIntError_GetInterval
 	cp	xbc, EVT_GET_STRING
 	jrl	nz, IvInterruptProc
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0xb2, 0xa2
+	pushw	IvIntErrorProc_Str_iErr@hi16
+	pushw	IvIntErrorProc_Str_iErr@lo16
 	push	xde
 	call	Strcpy
 	inc	8, xsp
@@ -5819,8 +5819,8 @@ IvIntVari_ForwardToInterrupt:
 	jr IvIntVari_ReturnZero
 
 IvIntVari_GetText:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0xb8, 0xa2
+	pushw	IvIntVari_GetText_Str_iVar@hi16
+	pushw	IvIntVari_GetText_Str_iVar@lo16
 	ld	xwa, (xsp+8)
 	push	xwa
 	call	Strcpy
@@ -5843,8 +5843,8 @@ IvIntEasySetProc:
 	jr	z, IvIntEasySet_GetInterval
 	cp	xbc, EVT_GET_STRING
 	jrl	nz, IvInterruptProc
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0xbe, 0xa2
+	pushw	IvIntEasySetProc_Str_iEsy@hi16
+	pushw	IvIntEasySetProc_Str_iEsy@lo16
 	push	xde
 	call	Strcpy
 	inc	8, xsp
@@ -5895,8 +5895,8 @@ IvIntWelcome_ForwardToInterrupt:
 	jr IvIntWelcome_ReturnZero
 
 IvIntWelcome_GetText:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0xc4, 0xa2
+	pushw	IvIntWelcome_GetText_Str_iVar@hi16
+	pushw	IvIntWelcome_GetText_Str_iVar@lo16
 	ld	xwa, (xsp+8)
 	push	xwa
 	call	Strcpy
@@ -6300,8 +6300,8 @@ AcPmemName_Confirm:
 	extz	bc
 	pushw	bc
 	pushw	hl
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0xd0, 0xa2
+	pushw	AcPmemName_Confirm_Str_PMEM_Fmt2d_Fmtd_Fmt16s@hi16
+	pushw	AcPmemName_Confirm_Str_PMEM_Fmt2d_Fmtd_Fmt16s@lo16
 	push	xix
 	call	Sprintf_Locked
 	lda	xsp, (xsp+16)
@@ -6310,16 +6310,16 @@ AcPmemName_Confirm_ZeroIndex:
 	ld	xwa, (xde)
 	push	xwa
 	pushw	hl
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0xe2, 0xa2
+	pushw	AcPmemName_Confirm_ZeroIndex_Str_PMEM_Fmt2d_Fmt16s@hi16
+	pushw	AcPmemName_Confirm_ZeroIndex_Str_PMEM_Fmt2d_Fmt16s@lo16
 	push	xix
 	call	Sprintf_Locked
 	lda	xsp, (xsp+14)
 	jr	AcPmemName_Confirm_SendEvent
 AcPmemName_Confirm_EmptySlot:
 	pushw	hl
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0xf2, 0xa2
+	pushw	AcPmemName_Confirm_EmptySlot_Str_PMEM_Fmt2d@hi16
+	pushw	AcPmemName_Confirm_EmptySlot_Str_PMEM_Fmt2d@lo16
 	push	xix
 	call	Sprintf_Locked
 	lda	xsp, (xsp+10)
@@ -6500,8 +6500,8 @@ AcMixerVol_DrawChannel:
 	inc 4,WA
 	ld (XBC+0x02),WA
 	pushw	(xsp+4)
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0xb4, 0xa5
+	pushw	AcMixerVol_DrawChannel_Str_Fmt3d@hi16
+	pushw	AcMixerVol_DrawChannel_Str_Fmt3d@lo16
 	lda	xwa, (xsp+24)
 	push	xwa
 	call	Sprintf_Locked
@@ -7185,8 +7185,8 @@ DbMemDump_Confirm_RowLoop:
 	ld XWA,XIZ
 	srl XWA, 16
 	pushw wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0xca, 0xa5
+	pushw DbMemDump_Confirm_RowLoop_Str_Fmt2X_Fmt4X@hi16
+	pushw DbMemDump_Confirm_RowLoop_Str_Fmt2X_Fmt4X@lo16
 	lda xwa, (xsp + 0x26)
 	push XWA
 	call Sprintf_Locked
@@ -7224,8 +7224,8 @@ DbMemDump_Confirm_RowLoop:
 	ld	a, (xbc)
 	extz	wa
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0xd6, 0xa5
+	pushw	DbMemDump_Confirm_RowLoop_Str_Fmt2X_Fmt2X_Fmt2X_Fmt2X_Fmt2X@hi16
+	pushw	DbMemDump_Confirm_RowLoop_Str_Fmt2X_Fmt2X_Fmt2X_Fmt2X_Fmt2X@lo16
 	lda	xwa, (xsp+40)
 	push	xwa
 	call	Sprintf_Locked
@@ -7896,8 +7896,8 @@ PsTrkSw_Confirm_DrawGeometry:
 	ld	wa, (xwa+22)
 	inc	1, wa
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x28, 0xa7
+	pushw PsTrkSw_Confirm_DrawGeometry_Str_Fmtd@hi16
+	pushw PsTrkSw_Confirm_DrawGeometry_Str_Fmtd@lo16
 	lda	xwa, (xsp+124)
 	push	xwa
 	call	Sprintf_Locked
@@ -8340,8 +8340,8 @@ AcTrkSw_Reset_DrawTrack:
 	cp	bc, 0:i3
 	jrl	ule, AcTrkSw_Select_CheckTrackNum
 AcTrkSw_Select:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x2c, 0xa7
+	pushw	PsTextBox_Str_LineBreak@hi16
+	pushw	PsTextBox_Str_LineBreak@lo16
 	ld	xwa, (xsp+14)
 	push	xwa
 	call	StrSearch_Init
@@ -8575,8 +8575,8 @@ ObjectProc_OnGetPropString:
 	call	SendEvent
 	or	xhl, xhl
 	jr	z, ObjectProc_Skip
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x94, 0xa7
+	pushw ObjectProc_OnGetPropString_Str_YZ@hi16
+	pushw ObjectProc_OnGetPropString_Str_YZ@lo16
 	ld	xwa, (xsp+140)
 	push	xwa
 	call	Strcat
@@ -8601,8 +8601,8 @@ ObjectProc_OnGetPropName:
 	lda	xde, (xwa+4)
 	cp	(xhl), 89
 	jr	nz, ObjectProc_Skip2
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x98, 0xa7
+	pushw ObjectProc_OnGetPropName_Str_name@hi16
+	pushw ObjectProc_OnGetPropName_Str_name@lo16
 	ld	xwa, (xde)
 	push	xwa
 	jr	ObjectProc_Join
@@ -8612,16 +8612,16 @@ ObjectProc_Skip2:
 	ld	xwa, (xde)
 	cp	(xbc), 90
 	jr	nz, ObjectProc_Skip3
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x9e, 0xa7
+	pushw ObjectProc_OnGetPropName_Str_romram@hi16
+	pushw ObjectProc_OnGetPropName_Str_romram@lo16
 	push	xwa
 ObjectProc_Join:
 	call	Strcpy
 	inc	8, xsp
 	jrl	ObjectProc_Join4
 ObjectProc_Skip3:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0xa6, 0xa7
+	pushw ObjectProc_OnGetPropName_Str_Empty@hi16
+	pushw ObjectProc_OnGetPropName_Str_Empty@lo16
 	push	xwa
 	call	Strcpy
 	inc	8, xsp
@@ -13719,16 +13719,16 @@ RectX1Proc:
 	jr EdgeDraw_BottomLeft_Done
 
 EdgeDraw_TopRight_Inner:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x74, 0xa9
+	pushw	EdgeDraw_TopRight_Inner_Str_left@hi16
+	pushw	EdgeDraw_TopRight_Inner_Str_left@lo16
 	ld	xwa, (xsp+268)
 	push	xwa
 	call	Strcat
 	inc	8, xsp
 	jr	EdgeDraw_BottomLeft
 EdgeDraw_TopRight_Done:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x7a, 0xa9
+	pushw	EdgeDraw_TopRight_Inner_Str_LBrace@hi16
+	pushw	EdgeDraw_TopRight_Inner_Str_LBrace@lo16
 	lda	xwa, (xsp+12)
 	push	xwa
 	call	Strcpy
@@ -13811,8 +13811,8 @@ RectY1Proc:
 	jr EdgeDraw_BottomRight_Draw
 
 EdgeDraw_BottomRight:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x7c, 0xa9
+	pushw	EdgeDraw_BottomRight_Str_top@hi16
+	pushw	EdgeDraw_BottomRight_Str_top@lo16
 	ld	xwa, (xsp+12)
 	push	xwa
 	call	Strcat
@@ -13885,8 +13885,8 @@ RectX2Proc:
 	jr TabDraw_TopEdge_Execute
 
 TabDraw_TopEdge:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x82, 0xa9
+	pushw	TabDraw_TopEdge_Str_width@hi16
+	pushw	TabDraw_TopEdge_Str_width@lo16
 	ld	xwa, (xsp+12)
 	push	xwa
 	call	Strcat
@@ -13987,8 +13987,8 @@ RectY2Proc:
 	jr RectY2Proc_ReturnZero
 
 RectY2Proc_OnGetPropMember:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x8a, 0xa9
+	pushw	RectY2Proc_MemberName@hi16
+	pushw	RectY2Proc_MemberName@lo16
 	ld	xwa, (xsp+12)
 	push	xwa
 	call	Strcat
@@ -13996,8 +13996,8 @@ RectY2Proc_OnGetPropMember:
 	ld	xhl, 1:i3
 	jr	RectY2Proc_Epilogue
 RectY2Proc_OnMakeDump:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x92, 0xa9
+	pushw	RectY2Proc_DumpClose@hi16
+	pushw	RectY2Proc_DumpClose@lo16
 	ld	xwa, (xsp+12)
 	push	xwa
 	call	Strcat
@@ -14157,16 +14157,16 @@ PointXProc:
 	jr PointXProc_ForwardToCommon
 
 PointXProc_OnGetPropMember:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x94, 0xa9
+	pushw	PointXProc_MemberName@hi16
+	pushw	PointXProc_MemberName@lo16
 	ld	xwa, (xsp+264)
 	push	xwa
 	call	Strcat
 	inc	8, xsp
 	jr	PointXProc_OnCheckPropString
 PointXProc_OnMakeDump:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x98, 0xa9
+	pushw	PointXProc_DumpOpen@hi16
+	pushw	PointXProc_DumpOpen@lo16
 	lda	xwa, (xsp+8)
 	push	xwa
 	call	Strcpy
@@ -14243,8 +14243,8 @@ PointYProc:
 	jr PointYProc_ForwardToCommon
 
 PointYProc_OnGetPropMember:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x9a, 0xa9
+	pushw	PointYProc_MemberName@hi16
+	pushw	PointYProc_MemberName@lo16
 	ld	xwa, (xsp+8)
 	push	xwa
 	call	Strcat
@@ -14252,8 +14252,8 @@ PointYProc_OnGetPropMember:
 	ld	xhl, 1:i3
 	jr	PointYProc_Epilogue
 PointYProc_OnMakeDump:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x9e, 0xa9
+	pushw	PointYProc_DumpClose@hi16
+	pushw	PointYProc_DumpClose@lo16
 	ld	xwa, (xsp+8)
 	push	xwa
 	call	Strcat
@@ -14377,8 +14377,8 @@ ClassIDProc_OnGetPropDataCountSp:
 	jrl ClassIDProc_Epilogue
 
 ClassIDProc_OnMakeDump:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0xa0, 0xa9
+	pushw	ClassIDProc_DumpPrefix@hi16
+	pushw	ClassIDProc_DumpPrefix@lo16
 	lda	xwa, (xsp+20)
 	push	xwa
 	call	Strcpy
@@ -15157,8 +15157,8 @@ ScrollBar_Setup:
 	ld	xwa, (xsp+14)
 	jrl	ScrollBar_ReturnAlt
 ScrollBar_CalcRange:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0xa4, 0xa9
+	pushw	ScrollBar_CalcRange_Str_DQuote@hi16
+	pushw	ScrollBar_CalcRange_Str_DQuote@lo16
 	lda	xwa, (xsp+18)
 	push	xwa
 	call	Strcpy
@@ -15167,8 +15167,8 @@ ScrollBar_CalcRange:
 	lda	xwa, (xsp+26)
 	push	xwa
 	call	Strcat
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0xa6, 0xa9
+	pushw	ScrollBar_CalcRange_Str_DQuote_2@hi16
+	pushw	ScrollBar_CalcRange_Str_DQuote_2@lo16
 	lda	xwa, (xsp+34)
 	push	xwa
 	call	Strcat
@@ -15262,8 +15262,8 @@ FontIDProc_OnGetPropDataCountSp:
 	jrl FontIDProc_Epilogue
 
 FontIDProc_OnMakeDump:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0xa8, 0xa9
+	pushw	FontIDProc_DumpPrefix@hi16
+	pushw	FontIDProc_DumpPrefix@lo16
 	lda	xwa, (xsp+12)
 	push	xwa
 	call	Strcpy
@@ -15383,8 +15383,8 @@ IconIDProc_OnGetPropDataCountSp:
 	jrl IconIDProc_Epilogue
 
 IconIDProc_OnMakeDump:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0xac, 0xa9
+	pushw	IconIDProc_DumpPrefix@hi16
+	pushw	IconIDProc_DumpPrefix@lo16
 	lda	xwa, (xsp+12)
 	push	xwa
 	call	Strcpy
@@ -15504,8 +15504,8 @@ BitmapIDProc_OnGetPropDataCountSp:
 	jrl BitmapIDProc_Epilogue
 
 BitmapIDProc_OnMakeDump:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0xb4, 0xa9
+	pushw	BitmapIDProc_DumpPrefix@hi16
+	pushw	BitmapIDProc_DumpPrefix@lo16
 	lda	xwa, (xsp+12)
 	push	xwa
 	call	Strcpy
@@ -15673,8 +15673,8 @@ ApFuncIDProc_OnGetPropDataCountSp:
 	jrl ApFuncIDProc_Epilogue
 
 ApFuncIDProc_OnMakeDump:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0xb8, 0xa9
+	pushw	ApFuncIDProc_DumpPrefix@hi16
+	pushw	ApFuncIDProc_DumpPrefix@lo16
 	lda	xwa, (xsp+24)
 	push	xwa
 	call	Strcpy
@@ -15866,8 +15866,8 @@ MainFuncIDProc_OnGetPropDataCountSp:
 	jrl MainFuncIDProc_Epilogue
 
 MainFuncIDProc_OnMakeDump:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0xbc, 0xa9
+	pushw	MainFuncIDProc_DumpPrefix@hi16
+	pushw	MainFuncIDProc_DumpPrefix@lo16
 	lda	xwa, (xsp+24)
 	push	xwa
 	call	Strcpy
@@ -16058,8 +16058,8 @@ ViewID_EventSwitch:
 	ld	xwa, (xwa+8)
 	cp	xwa, (xsp+16)
 	jr	nz, ViewID_Select_Lookup
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0xc0, 0xa9
+	pushw	ViewID_EventSwitch_Str_idNONE@hi16
+	pushw	ViewID_EventSwitch_Str_idNONE@lo16
 	ld	xwa, (xsp+8)
 	ld	xwa, (xwa+4)
 	push	xwa
@@ -16077,8 +16077,8 @@ ViewID_Select_Lookup:
 	cp	(xhl), 0
 	jr	z, ViewID_Select_NoName
 	push	xhl
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0xc8, 0xa9
+	pushw	ViewID_Select_Lookup_Str_idi_Fmts@hi16
+	pushw	ViewID_Select_Lookup_Str_idi_Fmts@lo16
 	ld	xwa, (xsp+12)
 	ld	xwa, (xwa+4)
 	push	xwa
@@ -16104,8 +16104,8 @@ ViewID_Select_NoName:
 	ld	qwa, 0
 	pushw	wa
 	push	xhl
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0xce, 0xa9
+	pushw	ViewID_Select_NoName_Str_idi_Fmts_Fmtd@hi16
+	pushw	ViewID_Select_NoName_Str_idi_Fmts_Fmtd@lo16
 	ld	xwa, (xde+4)
 	push	xwa
 	call	Sprintf_Locked
@@ -16117,8 +16117,8 @@ ViewID_EnumCount:
 	jrl ViewID_Return
 
 ViewID_GetInfoStr:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0xd6, 0xa9
+	pushw	ViewID_GetInfoStr_Str_sword@hi16
+	pushw	ViewID_GetInfoStr_Str_sword@lo16
 	lda	xwa, (xsp+24)
 	push	xwa
 	call	Strcpy
@@ -16159,8 +16159,8 @@ ViewID_GetCurrent:
 	cp	(xhl), 0
 	jr	z, ViewID_GetCurrent_NoName
 	push	xhl
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0xde, 0xa9
+	pushw ViewID_GetCurrent_Str_idi_Fmts@hi16
+	pushw ViewID_GetCurrent_Str_idi_Fmts@lo16
 	ld	xwa, (xsp+12)
 	ld	xwa, (xwa+4)
 	push	xwa
@@ -16182,16 +16182,16 @@ ViewID_GetCurrent_NoName:
 	ld	qwa, 0
 	pushw	wa
 	push	xhl
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0xe4, 0xa9
+	pushw	ViewID_GetCurrent_NoName_Str_idi_Fmts_Fmtd@hi16
+	pushw	ViewID_GetCurrent_NoName_Str_idi_Fmts_Fmtd@lo16
 	ld	xwa, (xbc+4)
 	push	xwa
 	call	Sprintf_Locked
 	lda	xsp, (xsp+14)
 	jr	ViewID_ReturnZero
 ViewID_GetCurrent_None:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0xec, 0xa9
+	pushw ViewID_GetCurrent_None_Str_idNONE@hi16
+	pushw ViewID_GetCurrent_None_Str_idNONE@lo16
 	ld xwa, (xsp + 8)
 	ld xwa, (xwa + 4)
 	push xwa
@@ -16363,8 +16363,8 @@ ScreenID_EventSwitch:
 	ld XWA,(XWA+0x08)
 	cp XWA,(XSP+0x10)
 	jr nz, .Lc_fa8308
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0xf4, 0xa9
+	pushw ScreenID_EventSwitch_Str_idNONE@hi16
+	pushw ScreenID_EventSwitch_Str_idNONE@lo16
 	ld XWA,(XSP+0x08)
 	ld XWA,(XWA+0x04)
 	push XWA
@@ -16383,8 +16383,8 @@ ScreenID_Select_Lookup:
 	cp	(xhl), 0
 	jr	z, ScreenID_Select_NoName
 	push	xhl
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0xfc, 0xa9
+	pushw	ScreenID_Select_Lookup_Str_idi_Fmts@hi16
+	pushw	ScreenID_Select_Lookup_Str_idi_Fmts@lo16
 	ld	xwa, (xsp+12)
 	ld	xwa, (xwa+4)
 	push	xwa
@@ -16414,8 +16414,8 @@ ScreenID_Select_NoName:
 	ld	qwa, 0
 	pushw	wa
 	push	xhl
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x02, 0xaa
+	pushw	ScreenID_Select_NoName_Str_idi_Fmts_Fmtd@hi16
+	pushw	ScreenID_Select_NoName_Str_idi_Fmts_Fmtd@lo16
 	ld	xwa, (xde+4)
 	push	xwa
 	call	Sprintf_Locked
@@ -16445,8 +16445,8 @@ ScreenID_GetCurrent:
 	cp (XHL),0x00
 	jr z, ScreenID_GetCurrent_NoName
 	push XHL
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x0a, 0xaa
+	pushw ScreenID_GetCurrent_Str_idi_Fmts@hi16
+	pushw ScreenID_GetCurrent_Str_idi_Fmts@lo16
 	ld XWA,(XSP+0x0c)
 	ld XWA,(XWA+0x04)
 	push XWA
@@ -16468,16 +16468,16 @@ ScreenID_GetCurrent_NoName:
 	ld	qwa, 0
 	pushw	wa
 	push	xhl
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x10, 0xaa
+	pushw	ScreenID_GetCurrent_NoName_Str_idi_Fmts_Fmtd@hi16
+	pushw	ScreenID_GetCurrent_NoName_Str_idi_Fmts_Fmtd@lo16
 	ld	xwa, (xbc+4)
 	push	xwa
 	call	Sprintf_Locked
 	lda	xsp, (xsp+14)
 	jr	ScreenID_ReturnZero
 ScreenID_GetCurrent_None:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x18, 0xaa
+	pushw	ScreenID_GetCurrent_None_Str_idNONE@hi16
+	pushw	ScreenID_GetCurrent_None_Str_idNONE@lo16
 	ld	xwa, (xsp+8)
 	ld	xwa, (xwa+4)
 	push	xwa
@@ -16510,8 +16510,8 @@ ScreenID_EnumOpen_ScanLoop:
 	cp	(xhl), 0
 	jr	z, ScreenID_EnumOpen_ScanNoName
 	push	xhl
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x20, 0xaa
+	pushw	ScreenID_EnumOpen_ScanLoop_Str_idi_Fmts@hi16
+	pushw	ScreenID_EnumOpen_ScanLoop_Str_idi_Fmts@lo16
 	lda	xwa, (xsp+28)
 	push	xwa
 	call	Sprintf_Locked
@@ -16538,8 +16538,8 @@ ScreenID_EnumOpen_ScanNoName:
 	ld	qwa, 0
 	pushw	wa
 	push	xhl
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x26, 0xaa
+	pushw	ScreenID_EnumOpen_ScanNoName_Str_idi_Fmts_Fmtd@hi16
+	pushw	ScreenID_EnumOpen_ScanNoName_Str_idi_Fmts_Fmtd@lo16
 	lda	xwa, (xsp+30)
 	push	xwa
 	call	Sprintf_Locked
@@ -16578,8 +16578,8 @@ ScreenID_EnumOpen_NotFound:
 	ld	xwa, (xsp+4)
 	ld	xwa, (xwa+4)
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x2e, 0xaa
+	pushw	ScreenID_EnumOpen_NotFound_Str_idNONE@hi16
+	pushw	ScreenID_EnumOpen_NotFound_Str_idNONE@lo16
 	call	Strcmp
 	inc	8, xsp
 	cp	hl, 0:i3
@@ -16705,8 +16705,8 @@ WindowID_EventSwitch:
 	ld XWA,(XWA+0x08)
 	cp XWA,(XSP+0x10)
 	jr nz, .Lc_fa8698
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x36, 0xaa
+	pushw WindowID_EventSwitch_Str_idNONE@hi16
+	pushw WindowID_EventSwitch_Str_idNONE@lo16
 	ld XWA,(XSP+0x08)
 	ld XWA,(XWA+0x04)
 	push XWA
@@ -16725,8 +16725,8 @@ WindowID_Select_Lookup:
 	cp	(xhl), 0
 	jr	z, WindowID_Select_NoName
 	push	xhl
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x3e, 0xaa
+	pushw	WindowID_Select_Lookup_Str_idi_Fmts@hi16
+	pushw	WindowID_Select_Lookup_Str_idi_Fmts@lo16
 	ld	xwa, (xsp+12)
 	ld	xwa, (xwa+4)
 	push	xwa
@@ -16756,8 +16756,8 @@ WindowID_Select_NoName:
 	ld	qwa, 0
 	pushw	wa
 	push	xhl
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x44, 0xaa
+	pushw	WindowID_Select_NoName_Str_idi_Fmts_Fmtd@hi16
+	pushw	WindowID_Select_NoName_Str_idi_Fmts_Fmtd@lo16
 	ld	xwa, (xde+4)
 	push	xwa
 	call	Sprintf_Locked
@@ -16787,8 +16787,8 @@ WindowID_GetCurrent:
 	cp (XHL),0x00
 	jr z, WindowID_GetCurrent_NoName
 	push XHL
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x4c, 0xaa
+	pushw WindowID_GetCurrent_Str_idi_Fmts@hi16
+	pushw WindowID_GetCurrent_Str_idi_Fmts@lo16
 	ld XWA,(XSP+0x0c)
 	ld XWA,(XWA+0x04)
 	push XWA
@@ -16810,16 +16810,16 @@ WindowID_GetCurrent_NoName:
 	ld	qwa, 0
 	pushw	wa
 	push	xhl
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x52, 0xaa
+	pushw	WindowID_GetCurrent_NoName_Str_idi_Fmts_Fmtd@hi16
+	pushw	WindowID_GetCurrent_NoName_Str_idi_Fmts_Fmtd@lo16
 	ld	xwa, (xbc+4)
 	push	xwa
 	call	Sprintf_Locked
 	lda	xsp, (xsp+14)
 	jr	WindowID_ReturnZero
 WindowID_GetCurrent_None:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x5a, 0xaa
+	pushw	WindowID_GetCurrent_None_Str_idNONE@hi16
+	pushw	WindowID_GetCurrent_None_Str_idNONE@lo16
 	ld	xwa, (xsp+8)
 	ld	xwa, (xwa+4)
 	push	xwa
@@ -16852,8 +16852,8 @@ WindowID_EnumOpen_ScanLoop:
 	cp	(xhl), 0
 	jr	z, WindowID_EnumOpen_ScanNoName
 	push	xhl
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x62, 0xaa
+	pushw	WindowID_EnumOpen_ScanLoop_Str_idi_Fmts@hi16
+	pushw	WindowID_EnumOpen_ScanLoop_Str_idi_Fmts@lo16
 	lda	xwa, (xsp+28)
 	push	xwa
 	call	Sprintf_Locked
@@ -16880,8 +16880,8 @@ WindowID_EnumOpen_ScanNoName:
 	ld	qwa, 0
 	pushw	wa
 	push	xhl
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x68, 0xaa
+	pushw	WindowID_EnumOpen_ScanNoName_Str_idi_Fmts_Fmtd@hi16
+	pushw	WindowID_EnumOpen_ScanNoName_Str_idi_Fmts_Fmtd@lo16
 	lda	xwa, (xsp+30)
 	push	xwa
 	call	Sprintf_Locked
@@ -16920,8 +16920,8 @@ WindowID_EnumOpen_NotFound:
 	ld	xwa, (xsp+4)
 	ld	xwa, (xwa+4)
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x70, 0xaa
+	pushw	WindowID_EnumOpen_NotFound_Str_idNONE@hi16
+	pushw	WindowID_EnumOpen_NotFound_Str_idNONE@lo16
 	call	Strcmp
 	inc	8, xsp
 	cp	hl, 0:i3
@@ -17043,8 +17043,8 @@ ModeID_EnumFill:
 	jr	nz, ModeID_EnumFill_HasName
 	ld	xwa, (xiz+8)
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x78, 0xaa
+	pushw	ModeID_EnumFill_Str_Mode_Fmtd@hi16
+	pushw	ModeID_EnumFill_Str_Mode_Fmtd@lo16
 	push	xbc
 	call	Sprintf_Locked
 	lda	xsp, (xsp+12)
@@ -17102,8 +17102,8 @@ ModeID_GetNext:
 	ld XBC,(XIZ)
 	ld QBC,0
 	pushw bc
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x94, 0xaa
+	pushw ModeID_GetNext_Str_Mode_Fmtd@hi16
+	pushw ModeID_GetNext_Str_Mode_Fmtd@lo16
 	ld XWA,(XWA)
 	push XWA
 	call Sprintf_Locked
@@ -17150,8 +17150,8 @@ ModeID_EnumOpen_SearchLoop:
 	jr	nz, ModeID_EnumOpen_Compare
 	ld	xwa, (xsp+8)
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x9c, 0xaa
+	pushw	ModeID_EnumOpen_SearchLoop_Str_Mode_Fmtd@hi16
+	pushw	ModeID_EnumOpen_SearchLoop_Str_Mode_Fmtd@lo16
 	push	xbc
 	call	Sprintf_Locked
 	lda	xsp, (xsp+12)
@@ -17282,8 +17282,8 @@ TitleID_EnumFill:
 	jr	nz, TitleID_EnumFill_HasName
 	ld	xwa, (xiz+8)
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0xa4, 0xaa
+	pushw	TitleID_EnumFill_Str_Title_Fmtd@hi16
+	pushw	TitleID_EnumFill_Str_Title_Fmtd@lo16
 	push	xbc
 	call	Sprintf_Locked
 	lda	xsp, (xsp+12)
@@ -17341,8 +17341,8 @@ TitleID_GetNext:
 	ld XBC,(XIZ)
 	ld QBC,0
 	pushw bc
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0xc0, 0xaa
+	pushw TitleID_GetNext_Str_Title_Fmtd@hi16
+	pushw TitleID_GetNext_Str_Title_Fmtd@lo16
 	ld XWA,(XWA)
 	push XWA
 	call Sprintf_Locked
@@ -17389,8 +17389,8 @@ TitleID_EnumOpen_SearchLoop:
 	jr	nz, TitleID_EnumOpen_Compare
 	ld	xwa, (xsp+8)
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0xc8, 0xaa
+	pushw	TitleID_EnumOpen_SearchLoop_Str_Title_Fmtd@hi16
+	pushw	TitleID_EnumOpen_SearchLoop_Str_Title_Fmtd@lo16
 	push	xbc
 	call	Sprintf_Locked
 	lda	xsp, (xsp+12)
@@ -17477,8 +17477,8 @@ NameProc_Close:
 	jr NameProc_DefaultForward
 
 NameProc_GetText:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0xd8, 0xaa
+	pushw NameProc_GetText_Str_Empty@hi16
+	pushw NameProc_GetText_Str_Empty@lo16
 	jr NameProc_ReturnZero
 
 NameProc_GetText_CopyStr:
@@ -17544,8 +17544,8 @@ ConstFlagProc_SetValue:
 	jr ConstFlagProc_SetValue_Store
 
 ConstFlagProc_SetValue_Check:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0xe4, 0xaa
+	pushw ConstFlagProc_SetValue_Check_Str_Empty@hi16
+	pushw ConstFlagProc_SetValue_Check_Str_Empty@lo16
 	ld xwa, (xsp + 8)
 	ld xwa, (xwa + 4)
 	push xwa
@@ -17667,8 +17667,8 @@ CommonIDProc_CheckAvail:
 CommonIDProc_OnDumpPointerEx:
 	ld	xwa, (xsp+16)
 	ld	(xsp+4), xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0xe6, 0xaa
+	pushw CommonIDProc_DumpPointer_Str_Empty@hi16
+	pushw CommonIDProc_DumpPointer_Str_Empty@lo16
 CommonIDProc_Join:
 	ld	xwa, (xsp+8)
 	ld	xwa, (xwa+4)

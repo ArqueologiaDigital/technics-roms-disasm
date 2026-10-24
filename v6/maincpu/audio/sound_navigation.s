@@ -38,8 +38,8 @@ GetSoundName_BuildString:
 	ld	(xwa+16), 0
 	jr	GetSoundName_DispatchResult	; -> 0xF98941
 GetSoundName_DefaultString:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0xea, 0x98
+	pushw	GetSoundName_Str_DashedName@hi16
+	pushw	GetSoundName_Str_DashedName@lo16
 	ld	xwa, (xsp+14)
 	push	xwa
 	call	Strcpy

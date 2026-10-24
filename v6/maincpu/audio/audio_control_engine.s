@@ -4424,14 +4424,14 @@ MidiMsg_LoopAndFlush:
 	ret
 Display_SetupAndPrepareRender:
 	pushw	0x20
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0xe0, 0xb2
+	pushw	DataSlot_HeaderTemplate@hi16
+	pushw	DataSlot_HeaderTemplate@lo16
 	pushw	0x0
 	pushw	0xf980
 	call	Mem_Copy
 	pushw	0x620
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x00, 0xb3
+	pushw	SndParamRam_DefaultImage@hi16
+	pushw	SndParamRam_DefaultImage@lo16
 	pushw	0x0
 	pushw	0xf9a0
 	call	Mem_Copy
@@ -4452,8 +4452,8 @@ Display_RegionDone:
 Display_CopyAndRenderBitmaps:
 	pushw	iz
 	pushw	0x10
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x20, 0xb9
+	pushw	Display_CopyAndRenderBitmaps_Str_HK@hi16
+	pushw	Display_CopyAndRenderBitmaps_Str_HK@lo16
 	pushw	0x1e
 	pushw	0xd350
 	call	Mem_Copy

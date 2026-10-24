@@ -1835,8 +1835,7 @@ AccMidi_VelNonZero:
 	ret
 AccMidi_ParseNoteOn:
 	calr AccMidi_ParseCommon
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xc1, 0x75, 0x33, 0x3f, 0x91
+	cp	(0x3375:16), 0x91
 	jr nz, AccMidi_ParseNoteOn_StorePos
 	ld	a, (xhl+iy)
 	ld	(0x337b:16), a
@@ -2751,8 +2750,7 @@ AccVoice_NoteRangeCheck:
 	call Rhythm_NoteRangeCheck
 
 AccVoice_VelocityLookup:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xc1, 0x75, 0x33, 0x3f, 0x91
+	cp	(13173:16), 145
 	jr	z, AccVoice_UseVoiceMap
 	call	Rhythm_VelocityLookup_A
 	jr	AccVoice_CorrectReturn
@@ -4293,8 +4291,7 @@ AccVoice_SetupAll_Dispatch:
 	ret
 
 AccVoice_SetupKbd1:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xc1, 0xf3, 0x31, 0x3c, 0x0f
+	and	(0x31f3:16), 0x0f
 	cp	(0x322d:16), 0x80
 	jr nc, AccVoice_SetupKbd1_Free
 	ld	(0x331c:16), 0x01
@@ -4402,8 +4399,7 @@ AccVoice_SetupAcc4_Return:
 	ret
 
 AccVoice_ResetAll:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xc1, 0xf3, 0x31, 0x3c, 0x0f
+	and	(0x31f3:16), 0x0f
 	and	(0x31f4:16), 0x0f
 	and	(0x31f5:16), 0x0f
 	and	(0x31f6:16), 0x0f
@@ -4577,8 +4573,7 @@ AccVoice_Reassign_Return:
 	ret
 
 AccVoice_SplitPointSetup:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xc1, 0xf3, 0x31, 0x3c, 0x0f
+	and	(0x31f3:16), 0x0f
 	and	(0x31f4:16), 0x0f
 	and	(0x31f5:16), 0x0f
 	and	(0x31f6:16), 0x0f
@@ -4738,8 +4733,7 @@ AccInit_AllPartPositions:
 	ldw	(12753:16), 6
 	ret
 AccVoice_ThirdLayer:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xc1, 0xf3, 0x31, 0x3c, 0x0f
+	and	(0x31f3:16), 0x0f
 	and	(0x31f4:16), 0x0f
 	and	(0x31f5:16), 0x0f
 	and	(0x31f6:16), 0x0f
@@ -9929,8 +9923,7 @@ AccDir_Adjust_RightDec:
 	calr AccDir_DispatchEvent
 
 AccDir_Adjust_LeftHand:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xf1, 0xe7, 0x33, 0xcb
+	bit	3, (0x33e7:16)
 	jr	z, AccDir_Adjust_SetChanged
 	and	(0x33e7:16), 247
 	cp	(0x33ec:16), 128
@@ -23312,12 +23305,15 @@ DrumParam_PointerTableAndData:
 	.byte 0x00, 0x00
 ; +0x02  8 x LE32 -- the address of array k, k = W & 7
 DrumParam_Lookup_Data:
+	.long DrumParam_PointerTableAndData + 0x32	; array 0
+	.long DrumParam_PointerTableAndData + 0x272	; array 1
+	.long DrumParam_PointerTableAndData + 0x152	; array 2
+	.long DrumParam_PointerTableAndData + 0x212	; array 3
+	.long DrumParam_PointerTableAndData + 0xf2	; array 4
+	.long DrumParam_PointerTableAndData + 0x1b2	; array 5
+	.long DrumParam_PointerTableAndData + 0x92	; array 6
+	.long DrumParam_PointerTableAndData + 0x32	; array 7
 ; +0x022  16 B -- not pointed at by the table
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xd7, 0x41, 0xf6, 0x00, 0x17, 0x44, 0xf6, 0x00
-	.byte	0xf7, 0x42, 0xf6, 0x00, 0xb7, 0x43, 0xf6, 0x00
-	.byte	0x97, 0x42, 0xf6, 0x00, 0x57, 0x43, 0xf6, 0x00
-	.byte	0x37, 0x42, 0xf6, 0x00, 0xd7, 0x41, 0xf6, 0x00
 	.fill 16, 1, 0xf4
 ; +0x032  96 B -- array 0, 7
 	.zero 48
@@ -36723,8 +36719,8 @@ StylCnvDisp_Subtype80_Process:
 	ldw	(0x4820:16), 0
 StylCnvDisp_ScanFileLoop:
 	pushw 0x0003
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe4, 0x00, 0x0b, 0x54, 0xc1
+	pushw StylCnv_Str_Stars@hi16
+	pushw StylCnv_Str_Stars@lo16
 	ld WA,(XSP+0x0a)
 	inc 2,WA
 	extz XWA

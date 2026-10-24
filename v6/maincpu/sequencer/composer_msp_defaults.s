@@ -153,23 +153,35 @@ MSP_Default_VarIndex:		.byte 0, 1, 2		; group 1
 
 ; Group offset table A (byte offsets for 7 groups)
 MSP_Default_GroupOffsetA:
+	.short	PartGrid_ColumnJumpTable - PartGrid_ColumnJumpTable
+	.short	PartGrid_ColumnDispatch_FlashSection1 - PartGrid_ColumnJumpTable
+	.short	PartGrid_ColumnDispatch_FlashSection2 - PartGrid_ColumnJumpTable
+	.short	PartGrid_ColumnDispatch_FlashSection3 - PartGrid_ColumnJumpTable
+	.short	PartGrid_ColumnDispatch_FlashSection4 - PartGrid_ColumnJumpTable
+	.short	PartGrid_ColumnDispatch_FlashSection5 - PartGrid_ColumnJumpTable
+	.short	PartGrid_ColumnDispatch_FlashSection6 - PartGrid_ColumnJumpTable
 
 ; Group offset table B (duplicate)
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x06, 0x00, 0x0c, 0x00, 0x12, 0x00
-	.byte	0x18, 0x00, 0x1e, 0x00, 0x24, 0x00
 MSP_Default_GroupOffsetB:
+	.short	NOTE_EVENT_DISPATCH_1 - NOTE_EVENT_DISPATCH_1
+	.short	NoteEventBuffer_CopyToSlot_LoadSection1 - NOTE_EVENT_DISPATCH_1
+	.short	NoteEventBuffer_CopyToSlot_LoadSection2 - NOTE_EVENT_DISPATCH_1
+	.short	NoteEventBuffer_CopyToSlot_LoadSection3 - NOTE_EVENT_DISPATCH_1
+	.short	NoteEventBuffer_CopyToSlot_LoadSection4 - NOTE_EVENT_DISPATCH_1
+	.short	NoteEventBuffer_CopyToSlot_LoadSection5 - NOTE_EVENT_DISPATCH_1
+	.short	NoteEventBuffer_CopyToSlot_LoadSection6 - NOTE_EVENT_DISPATCH_1
 
 ; Variation size table (cumulative)
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x06, 0x00, 0x0c, 0x00, 0x12, 0x00
-	.byte	0x18, 0x00, 0x1e, 0x00, 0x24, 0x00
 MSP_Default_VarSize:
+	.short	NOTE_EVENT_DISPATCH_2 - NOTE_EVENT_DISPATCH_2
+	.short	NOTE_EVENT_DISPATCH_2b - NOTE_EVENT_DISPATCH_2
+	.short	NoteEventBuffer_Store_WriteSection2 - NOTE_EVENT_DISPATCH_2
+	.short	NoteEventBuffer_Store_WriteSection3 - NOTE_EVENT_DISPATCH_2
+	.short	NoteEventBuffer_Store_WriteSection4 - NOTE_EVENT_DISPATCH_2
+	.short	NoteEventBuffer_Store_WriteSection5 - NOTE_EVENT_DISPATCH_2
+	.short	NoteEventBuffer_Store_WriteSection6 - NOTE_EVENT_DISPATCH_2
 
 ; Part-to-bank mapping (14 entries)
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x0a, 0x00, 0x64, 0x00, 0x6d, 0x00
-	.byte	0x76, 0x00, 0x7f, 0x00, 0x88, 0x00
 MSP_Default_PartBankMap:	.byte 0, 0		; part 0: bank 0.0
 				.byte 0, 1		; part 1: bank 0.1
 				.byte 0, 2		; part 2: bank 0.2

@@ -13290,8 +13290,7 @@ UIParam_ScanAndCollect:
 	lda	xsp, (xsp - 68)
 	pushw_erp	0xfa
 	ld	(0xcdf2:16), 0
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xc1, 0xeb, 0xcd, 0x3f, 0x0f
+	cp	(0xcdeb:16), 15
 	jr	ule, UIParam_SetDefaultCount
 	ld	a, (0xcdeb:16)
 	sub	a, 0xf

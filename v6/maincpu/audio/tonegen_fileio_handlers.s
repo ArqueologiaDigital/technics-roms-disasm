@@ -927,32 +927,32 @@ SndParamBank_WriteFlashDefaults:
 	push	xiz
 	call	Memset
 	pushw	0x2
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x20, 0x92
+	pushw	SndParamBank_OptionDefault_00@hi16
+	pushw	SndParamBank_OptionDefault_00@lo16
 	push	xiz
 	call	Mem_Copy
 	pushw	0xc
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x28, 0x92
+	pushw	SndParamBank_OptionDefault_10@hi16
+	pushw	SndParamBank_OptionDefault_10@lo16
 	lda	xwa, (xiz + 16)
 	push	xwa
 	call	Mem_Copy
 	lda	xsp, (xsp + 28)
 	pushw	0x4
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x34, 0x92
+	pushw	SndParamBank_OptionDefault_20@hi16
+	pushw	SndParamBank_OptionDefault_20@lo16
 	lda	xwa, (xiz + 32)
 	push	xwa
 	call	Mem_Copy
 	pushw	0x4
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x24, 0x92
+	pushw	SndParamBank_OptionDefault_30@hi16
+	pushw	SndParamBank_OptionDefault_30@lo16
 	lda	xwa, (xiz + 48)
 	push	xwa
 	call	Mem_Copy
 	pushw	0x6
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x38, 0x92
+	pushw	SndParamBank_OptionDefault_40@hi16
+	pushw	SndParamBank_OptionDefault_40@lo16
 	lda	xwa, (xiz + 64)
 	push	xwa
 	call	Mem_Copy
@@ -989,27 +989,27 @@ SndParamBank_RestoreOptionBlock:
 	push	xiz
 	call	Mem_Copy
 	pushw	0xc
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x28, 0x92
+	pushw	SndParamBank_OptionDefault_10@hi16
+	pushw	SndParamBank_OptionDefault_10@lo16
 	lda	xwa, (xiz + 16)
 	push	xwa
 	call	Mem_Copy
 	lda	xsp, (xsp + 28)
 	pushw	0x4
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x34, 0x92
+	pushw	SndParamBank_OptionDefault_20@hi16
+	pushw	SndParamBank_OptionDefault_20@lo16
 	lda	xwa, (xiz + 32)
 	push	xwa
 	call	Mem_Copy
 	pushw	0x4
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x24, 0x92
+	pushw	SndParamBank_OptionDefault_30@hi16
+	pushw	SndParamBank_OptionDefault_30@lo16
 	lda	xwa, (xiz + 48)
 	push	xwa
 	call	Mem_Copy
 	pushw	0x6
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x38, 0x92
+	pushw	SndParamBank_OptionDefault_40@hi16
+	pushw	SndParamBank_OptionDefault_40@lo16
 	lda	xwa, (xiz + 64)
 	push	xwa
 	call	Mem_Copy

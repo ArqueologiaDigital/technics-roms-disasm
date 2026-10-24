@@ -16945,8 +16945,8 @@ PsCmpMeasBox_HandleEvtBC:
 	inc	1, a
 	extz	wa
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0x7a, 0xdd
+	pushw	PsCmpMeasBox_HandleEvtBC_Str_Fmtd@hi16
+	pushw	PsCmpMeasBox_HandleEvtBC_Str_Fmtd@lo16
 	lda	xwa, (xsp+10)
 	push	xwa
 	call	Sprintf_Locked
@@ -17011,8 +17011,8 @@ PsCmpMemBox_HandleEvtBC:
 	ld	a, (14579:16)
 	extz	wa
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0x7e, 0xdd
+	pushw	PsCmpMemBox_HandleEvtBC_Str_Fmt2d@hi16
+	pushw	PsCmpMemBox_HandleEvtBC_Str_Fmt2d@lo16
 	lda	xwa, (xsp+10)
 	push	xwa
 	call	Sprintf_Locked
@@ -17083,8 +17083,8 @@ AcCmpTempoBoxProc_OnLswData:
 	cp	xwa, 4
 	jr	nz, CmpFunc_Return
 	pushm	(xiz+4)
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0x82, 0xdd
+	pushw	AcCmpTempoBox_HandleEvt1C_Str_Fmt3d@hi16
+	pushw	AcCmpTempoBox_HandleEvt1C_Str_Fmt3d@lo16
 	lda	xwa, (xsp+10)
 	push	xwa
 	call	Sprintf_Locked
@@ -17605,8 +17605,8 @@ EasyCmp_GridCheck_EventCase1:
 EasyCmp_GridCheck_EventCase2:
 	extz	wa
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0x12, 0xdf
+	pushw	EasyCmp_GridCheck_EventCase2_Str_Fmt3d@hi16
+	pushw	EasyCmp_GridCheck_EventCase2_Str_Fmt3d@lo16
 	push	xde
 	call	Sprintf_Locked
 	lda	xsp, (xsp+10)
@@ -18642,8 +18642,8 @@ RgpSetBnk_EvtEnc_SendAudioCmd:
 	inc	1, a
 	extz	wa
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0xbc, 0xe2
+	pushw	RgpSetBnk_EvtEnc_SendAudioCmd_Str_PAD_Fmtd@hi16
+	pushw	RgpSetBnk_EvtEnc_SendAudioCmd_Str_PAD_Fmtd@lo16
 	push	xde
 	call	Sprintf_Locked
 	lda	xsp, (xsp+10)
@@ -18843,8 +18843,8 @@ PsMspMeasBoxProc_OnPaintOrRepaint:
 	call	GetViewInstance
 	ld	wa, (32342:16)
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0xf8, 0xe2
+	pushw	MspMeasBox_HandleEvtBC_Str_MEASURE_Fmtd@hi16
+	pushw	MspMeasBox_HandleEvtBC_Str_MEASURE_Fmtd@lo16
 	lda	xwa, (xsp+10)
 	push	xwa
 	call	Sprintf_Locked
@@ -18904,8 +18904,8 @@ PsMspMemBoxProc_OnPaintOrRepaint:
 MspMemBox_ClampValue:
 	extz	wa
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0x06, 0xe3
+	pushw	MspMemBox_ClampValue_Str_MEMORY_Fmt2d@hi16
+	pushw	MspMemBox_ClampValue_Str_MEMORY_Fmt2d@lo16
 	lda	xwa, (xsp+10)
 	push	xwa
 	call	Sprintf_Locked
@@ -19021,8 +19021,8 @@ AcSndArgGrid_BnkDispatch:
 	inc	1, a
 	extz	wa
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0x14, 0xe3
+	pushw	AcSndArgGrid_BnkDispatch_Str_Fmtd@hi16
+	pushw	AcSndArgGrid_BnkDispatch_Str_Fmtd@lo16
 	lda	xwa, (xsp+10)
 	push	xwa
 	call	Sprintf_Locked

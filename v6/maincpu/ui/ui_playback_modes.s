@@ -2188,8 +2188,8 @@ NameGetFuncCall_Dispatch:
 	inc	1, a
 	extz	wa
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe2, 0x00, 0x0b, 0xf2, 0x00
+	pushw	NameGetFuncCall_Dispatch_Str_Fmt2d_Fmts@hi16
+	pushw	NameGetFuncCall_Dispatch_Str_Fmt2d_Fmts@lo16
 	pushw	0
 	pushw	7244
 	call	Sprintf_Locked
@@ -2206,8 +2206,8 @@ NameGetFuncCall_OnGetDiskFileName:
 	call	GetCurrentFileIndex
 	inc	1, hl
 	pushw	hl
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe2, 0x00, 0x0b, 0xfc, 0x00
+	pushw	NameGetFuncCall_Dispatch_Str_FILE_Fmt2d_Fmts@hi16
+	pushw	NameGetFuncCall_Dispatch_Str_FILE_Fmt2d_Fmts@lo16
 	pushw	0
 	pushw	7266
 	call	Sprintf_Locked
@@ -2225,8 +2225,8 @@ NameGetFuncCall_OnGetSmfFileName:
 	call	GetFirstPageBase
 	inc	1, hl
 	pushw	hl
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe2, 0x00, 0x0b, 0x08, 0x01
+	pushw	NameGetFuncCall_Dispatch_Str_Fmt3d_Fmts@hi16
+	pushw	NameGetFuncCall_Dispatch_Str_Fmt3d_Fmts@lo16
 	pushw	0
 	pushw	7280
 	call	Sprintf_Locked
@@ -2268,8 +2268,8 @@ NameGetFuncCall_OnGetDocFileNo:
 	call	FileIO_GetCurrentFileIndex_Alt
 	inc	1, hl
 	pushw	hl
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe2, 0x00, 0x0b, 0x10, 0x01
+	pushw	NameGetFuncCall_Dispatch_Str_Fmt2d_Fmts_2@hi16
+	pushw	NameGetFuncCall_Dispatch_Str_Fmt2d_Fmts_2@lo16
 	pushw	0
 	pushw	7358
 	call	Sprintf_Locked
@@ -2309,8 +2309,8 @@ NameGetFuncCall_OnGetPdFileNo:
 	call	GetCurrentFileIndexAlt
 	inc	1, hl
 	pushw	hl
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe2, 0x00, 0x0b, 0x18, 0x01
+	pushw	NameGetFuncCall_Dispatch_Str_Fmt2d_Fmts_3@hi16
+	pushw	NameGetFuncCall_Dispatch_Str_Fmt2d_Fmts_3@lo16
 	pushw	0
 	pushw	7362
 	call	Sprintf_Locked

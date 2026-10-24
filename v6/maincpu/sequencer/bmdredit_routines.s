@@ -4491,8 +4491,7 @@ BmDrEdit_PrepareSecondaryNoteDisplay:
 	cp a, (xsp + 2)
 	jr ugt, BmDrEdit_RestoreReturn
 	mrdb5	0x8f, 0x04, 0x19, 0x0c, 0x28
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x8f, 0x02, 0x19, 0x0e, 0x28
+	mrdb5	0x8f, 0x02, 0x19, 0x0e, 0x28
 	call SeqData_AdvancePosition
 	call SeqData_AdvancePosition
 	call SeqData_ReadNextByte

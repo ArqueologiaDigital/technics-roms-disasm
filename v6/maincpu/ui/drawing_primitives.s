@@ -3565,8 +3565,8 @@ DrawBitmapFile_Impl:
 	ld (XSP+0x0434),XBC
 	ld (XSP+0x0438),XWA
 	pushw 0x0002
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0xf6, 0xac
+	pushw DrawBitmapFile_Str_BM@hi16
+	pushw DrawBitmapFile_Str_BM@lo16
 	ld XWA,(XSP+0x043a)
 	push XWA
 	call String_Compare

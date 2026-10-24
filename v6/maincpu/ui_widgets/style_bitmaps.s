@@ -394,14 +394,17 @@ BitMapOut_UpdateDisplayWidget_Str_Non_Panel_Memory:	.incbin "includes/generated/
 EffectMode_PresetFieldMap:	.incbin "includes/generated/naka_style_bitmaps.bin", 0xA1C, 0xBA
 ; OneTchFUNC_CaseTable -- 6 x int16: the case offsets of OneTchFUNC's compiled switch, relative to BitMapOut_ByteData_WidgetTable
 OneTchFUNC_CaseTable:
+	.short	BitMapOut_ByteData_WidgetTable - BitMapOut_ByteData_WidgetTable
+	.short	BitMapOut_ApplyWidgetPatch - BitMapOut_ByteData_WidgetTable
+	.short	BitMapOut_ApplyWidgetPatch - BitMapOut_ByteData_WidgetTable
+	.short	BitMapOut_ApplyWidgetPatch - BitMapOut_ByteData_WidgetTable
+	.short	BitMapOut_ApplyWidgetPatch - BitMapOut_ByteData_WidgetTable
+	.short	BitMapOut_ApplyWidgetPatch - BitMapOut_ByteData_WidgetTable
 ; StyleNameOverride_C2C5 -- 22 x {u16 style index, char name[16]}: display names that replace the table_data
 ; style record's own (record + 43) while the title is TT_MSCTSEL / TT_MSALPSEL (0xC2 / 0xC5).  Searched by
 ; StyleName_FindOverride_C2C5 for EffectMode_DisplayPresetName; on a miss the name comes from
 ; STYLEREC_PTRTABLE_C2C5 (0x986000).  Typed in ui_widgets/naka_style_bitmaps.c
 ; (scripts/converters/style_name_override_retype.py).
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x18, 0x00, 0x18, 0x00, 0x18, 0x00
-	.byte	0x18, 0x00, 0x18, 0x00
 StyleNameOverride_C2C5:	.incbin "includes/generated/naka_style_bitmaps.bin", 0xAE2, 0x18C
 ; StyleNameOverride_Default -- 5 x {u16 style index, char name[16]}: the same overrides for TT_ONETCH (0xC0) and
 ; NormScreenProc, whose fallback is STYLEREC_PTRTABLE_DEFAULT (0x987000).  Searched by
@@ -444,21 +447,36 @@ DramTest_IC10IC9_Regions:	.incbin "includes/generated/naka_style_bitmaps.bin", 0
 SramTest_IC21Regions:	.incbin "includes/generated/naka_style_bitmaps.bin", 0xE7A, 0xA
 ; TEST2FUNC_CaseTable -- 6 x int16: the case offsets of TEST2FUNC's compiled switch, relative to TEST2FUNC_DispatchReturn
 TEST2FUNC_CaseTable:
+	.short	TEST2FUNC_DispatchReturn - TEST2FUNC_DispatchReturn
+	.short	TableDispatch_Return3 - TEST2FUNC_DispatchReturn
+	.short	TableDispatch_Return3 - TEST2FUNC_DispatchReturn
+	.short	TableDispatch_Return3 - TEST2FUNC_DispatchReturn
+	.short	TableDispatch_Return3 - TEST2FUNC_DispatchReturn
+	.short	TableDispatch_Return3 - TEST2FUNC_DispatchReturn
 ; TEST3FUNC_CaseTable -- 6 x int16: the case offsets of TEST3FUNC's compiled switch, relative to TEST3FUNC_DispatchReturn
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x03, 0x00, 0x03, 0x00, 0x03, 0x00
-	.byte	0x03, 0x00, 0x03, 0x00
 TEST3FUNC_CaseTable:
+	.short	TEST3FUNC_DispatchReturn - TEST3FUNC_DispatchReturn
+	.short	TableDispatch_Return4 - TEST3FUNC_DispatchReturn
+	.short	TableDispatch_Return4 - TEST3FUNC_DispatchReturn
+	.short	TableDispatch_Return4 - TEST3FUNC_DispatchReturn
+	.short	TableDispatch_Return4 - TEST3FUNC_DispatchReturn
+	.short	TableDispatch_Return4 - TEST3FUNC_DispatchReturn
 ; TEST4FUNC_CaseTable -- 6 x int16: the case offsets of TEST4FUNC's compiled switch, relative to TEST4FUNC_DispatchReturn
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x03, 0x00, 0x03, 0x00, 0x03, 0x00
-	.byte	0x03, 0x00, 0x03, 0x00
 TEST4FUNC_CaseTable:
+	.short	TEST4FUNC_DispatchReturn - TEST4FUNC_DispatchReturn
+	.short	TableDispatch_Return5 - TEST4FUNC_DispatchReturn
+	.short	TableDispatch_Return5 - TEST4FUNC_DispatchReturn
+	.short	TableDispatch_Return5 - TEST4FUNC_DispatchReturn
+	.short	TableDispatch_Return5 - TEST4FUNC_DispatchReturn
+	.short	TableDispatch_Return5 - TEST4FUNC_DispatchReturn
 ; TEST6FUNC_CaseTable -- 6 x int16: the case offsets of TEST6FUNC's compiled switch, relative to TEST6FUNC_DispatchReturn
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x03, 0x00, 0x03, 0x00, 0x03, 0x00
-	.byte	0x03, 0x00, 0x03, 0x00
 TEST6FUNC_CaseTable:
+	.short	TEST6FUNC_DispatchReturn - TEST6FUNC_DispatchReturn
+	.short	TableDispatch_Return - TEST6FUNC_DispatchReturn
+	.short	TableDispatch_Return - TEST6FUNC_DispatchReturn
+	.short	TableDispatch_Return - TEST6FUNC_DispatchReturn
+	.short	TableDispatch_Return - TEST6FUNC_DispatchReturn
+	.short	TableDispatch_Return - TEST6FUNC_DispatchReturn
 ; -----------------------------------------------------------------------------
 ; [nakarest_retype] Bitmap_FadeInPicture
 ; Bitmap_FadeInPicture  --  112 x 25 bitmap, 8 bpp, row stride 112, 2800 bytes
@@ -496,9 +514,6 @@ TEST6FUNC_CaseTable:
 ; Typed in naka_style_bitmaps.c as uint8_t Bitmap_FadeInPicture[25][112]
 ; (rows of 112 bytes).
 ; -----------------------------------------------------------------------------
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x03, 0x00, 0x03, 0x00, 0x03, 0x00
-	.byte	0x03, 0x00, 0x03, 0x00
 Bitmap_FadeInPicture:	.incbin "includes/generated/naka_style_bitmaps.bin", 0xEB4, 0xAF0
 ; -----------------------------------------------------------------------------
 ; [nakarest_retype] Bitmap_FadeInText

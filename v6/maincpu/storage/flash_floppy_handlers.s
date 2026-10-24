@@ -56,13 +56,14 @@ SeScreenData_0x4D34:
 ; [v10] F1593A..F15952  6 x u32 pointer
 	.long	SeScreenData_0x4D01
 	.long	SeScreenData_0x4D01
+	.long	SeScreenData_0x4D01 + 0xa
+	.long	SeScreenData_0x4D01 + 0x14
+	.long	SeScreenData_0x4D01 + 0x1f
+	.long	SeScreenData_0x4D01 + 0x29
 ; bound record list (6 records {u8 op, u8 len, payload}), read by GraphicsRender_Start; ends 0xF15965
 ; evidence: pairs table 0xF1587D
 ; single bound record (op 0x00, 10 B), read by GraphicsRender_Start
 ; evidence: recptrs table 0xF15965
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xe8, 0x57, 0xf1, 0x00, 0xf2, 0x57, 0xf1, 0x00
-	.byte	0xfd, 0x57, 0xf1, 0x00, 0x07, 0x58, 0xf1, 0x00
 SeScreenData_0x4D4C:
 ; [v10] F15952..F1598F  [flags:u8][len:u8][payload] records
 ; [v10] F15952 flags=0x00 len=10
@@ -119,8 +120,7 @@ SeScreenData_0x4DAD:
 	.byte	0x00, 0x0a, 0x62, 0x06, 0xff, 0x00, 0x20, 0x64, 0x0d, 0x02
 ; [v10] F159C7 flags=0x02 len=15
 	.byte	0x02, 0x0f, 0x63, 0x06, 0x0f, 0x00, 0x20
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0d, 0x34, 0xf1, 0x00
+	.long	SeMenu_DrawLfoPartSwitches_Records + 0x10
 	.byte	0x03, 0x00, 0xbb, 0x0f
 ; [v10] F159D6 flags=0x00 len=10
 	.byte	0x00, 0x0a, 0x64, 0x06, 0xff, 0x00, 0x20, 0x13, 0x12, 0x03
@@ -132,11 +132,11 @@ SeScreenData_0x4DDA:
 ; [v10] F159E0..F159F4  5 x u32 pointer
 	.long	SeScreenData_0x4DAD
 	.long	SeScreenData_0x4DAD
+	.long	SeScreenData_0x4DAD + 0xa
+	.long	SeScreenData_0x4DAD + 0x14
+	.long	SeScreenData_0x4DAD + 0x23
 ; bound record list (4 records {u8 op, u8 len, payload}), read by GraphicsRender_Start; ends 0xF159F2
 ; evidence: pairs table 0xF1587D
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x94, 0x58, 0xf1, 0x00, 0x9e, 0x58, 0xf1, 0x00
-	.byte	0xad, 0x58, 0xf1, 0x00
 SeScreenData_0x4DEE:
 ; [v10] F159F4..F15A1C  [flags:u8][len:u8][payload] records
 ; [v10] F159F4 flags=0x00 len=10
@@ -154,11 +154,11 @@ SeScreenData_0x4E16:
 ; [v10] F15A1C..F15A30  5 x u32 pointer
 	.long	SeScreenData_0x4DEE
 	.long	SeScreenData_0x4DEE
+	.long	SeScreenData_0x4DEE + 0xa
+	.long	SeScreenData_0x4DEE + 0x14
+	.long	SeScreenData_0x4DEE + 0x1e
 ; bound record list (4 records {u8 op, u8 len, payload}), read by GraphicsRender_Start; ends 0xF15A30
 ; evidence: pairs table 0xF1587D
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xd5, 0x58, 0xf1, 0x00, 0xdf, 0x58, 0xf1, 0x00
-	.byte	0xe9, 0x58, 0xf1, 0x00
 SeScreenData_0x4E2A:
 ; [v10] F15A30..F15A5A  [flags:u8][len:u8][payload] records
 ; [v10] F15A30 flags=0x00 len=10
@@ -175,17 +175,16 @@ SeScreenData_0x4E54:
 ; [v10] F15A5A..F15A6E  5 x u32 pointer
 	.long	SeScreenData_0x4E2A
 	.long	SeScreenData_0x4E2A
+	.long	SeScreenData_0x4E2A + 0xa
+	.long	SeScreenData_0x4E2A + 0x15
+	.long	SeScreenData_0x4E2A + 0x20
 ; bound record list (3 records {u8 op, u8 len, payload}), read by GraphicsRender_Start; ends 0xF15A67
 ; evidence: pairs table 0xF1587D
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x11, 0x59, 0xf1, 0x00, 0x1c, 0x59, 0xf1, 0x00
-	.byte	0x27, 0x59, 0xf1, 0x00
 SeScreenData_0x4E68:
 ; [v10] F15A6E..F15A91  [flags:u8][len:u8][payload] records
 ; [v10] F15A6E flags=0x02 len=15
 	.byte	0x02, 0x0f, 0x61, 0x06, 0x01, 0x00, 0x20
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xa8, 0x13, 0xf1, 0x00
+	.long	SeMenu_DrawPartSelector_Records3 + 0x53
 	.byte	0x03, 0x00, 0x0b, 0x0b
 ; -> 0xF15A5D
 ; [v10] F15A7D flags=0x00 len=10
@@ -200,10 +199,10 @@ SeScreenData_0x4E8B:
 ; [v10] F15A91..F15AA1  4 x u32 pointer
 	.long	SeScreenData_0x4E68
 	.long	SeScreenData_0x4E68
+	.long	SeScreenData_0x4E68 + 0xf
+	.long	SeScreenData_0x4E68 + 0x19
 ; 12 pointers to record-pointer tables, one per screen variant = the byte at RAM 0x670; entry -> SeGfx_DrawIndexedBoundRecord
 ; evidence: SeDigEff_DrawField (0xF1011C)
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x54, 0x59, 0xf1, 0x00, 0x5e, 0x59, 0xf1, 0x00
 SeDigEff_DrawField_Records2:
 	.long	SeScreenData_0x4D34
 	.long	SeScreenData_0x4D34
@@ -220,17 +219,20 @@ SeDigEff_DrawField_Records2:
 ; 12 list END pointers, one per screen variant = the byte at RAM 0x670, for the static list the code starts with `ld xiy, <start>`
 ; evidence: SeDigEff_DrawStaticScreen (0xF0FFF6)
 SeDigEff_DrawStaticScreen_Records9:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x3f, 0x52, 0xf1, 0x00, 0x3f, 0x52, 0xf1, 0x00
-	.byte	0x3f, 0x52, 0xf1, 0x00, 0x3f, 0x52, 0xf1, 0x00
+	.long	SeDigEff_DrawStaticScreen_Records + 0x96
+	.long	SeDigEff_DrawStaticScreen_Records + 0x96
+	.long	SeDigEff_DrawStaticScreen_Records + 0x96
+	.long	SeDigEff_DrawStaticScreen_Records + 0x96
 	.long	SeDigEff_DrawStaticScreen_Records2
 	.long	SeDigEff_DrawStaticScreen_Records2
+	.long	SeDigEff_DrawStaticScreen_Records + 0x78
+	.long	SeDigEff_DrawStaticScreen_Records + 0x78
+	.long	SeDigEff_DrawStaticScreen_Records + 0x78
+	.long	SeDigEff_DrawStaticScreen_Records + 0x78
+	.long	SeDigEff_DrawStaticScreen_Records + 0x5a
+	.long	SeDigEff_DrawStaticScreen_Records + 0x5a
 ; fixed-width string table, 13 chars per entry, 168 B: the text choices of a bound op02/op07 record (its +7 pointer; +11 = chars per entry)
 ; evidence: bound op02 record 0xF164CD
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x21, 0x52, 0xf1, 0x00, 0x21, 0x52, 0xf1, 0x00
-	.byte	0x21, 0x52, 0xf1, 0x00, 0x21, 0x52, 0xf1, 0x00
-	.byte	0x03, 0x52, 0xf1, 0x00, 0x03, 0x52, 0xf1, 0x00
 SeValText_DigEffTypes:
 ; [v10] F15B01..F15BA9  effect name table, 12 x 13 chars then 2 x 6
 	.ascii	"CELESTE 1    "
@@ -538,8 +540,7 @@ SeMenuTitle_Records2:
 SeScreenData_0x5400:
 ; [v10] F16006 flags=0x07 len=17
 	.byte	0x07, 0x11, 0x61, 0x06, 0x7f, 0x00, 0x1c
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x49, 0x3a, 0xf1, 0x00
+	.long	SeMenu_NameEditor_HighlightChar_Records2 + 0xc
 	.byte	0x03, 0x00, 0x3d, 0x00, 0x35, 0x00
 ; [v10] F16017 flags=0x07 len=17
 	.byte	0x07, 0x11, 0x00, 0x00, 0x00, 0x00, 0x1c
@@ -552,8 +553,7 @@ SeScreenData_0x5400:
 SeScreenData_0x5422:
 ; [v10] F16028 flags=0x07 len=17
 	.byte	0x07, 0x11, 0x6f, 0x06, 0x1f, 0x00, 0x17
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xa6, 0x2b, 0xf1, 0x00
+	.long	SeScreenData_0x1F80 + 0x149
 	.byte	0x02, 0x00, 0x3d, 0x00, 0x7a, 0x00
 ; [v10] F16039 flags=0x07 len=17
 	.byte	0x07, 0x11, 0x00, 0x00, 0x00, 0x00, 0x17
@@ -581,8 +581,7 @@ SeScreenData_0x545D:
 SeScreenData_0x546A:
 ; [v10] F16070 flags=0x07 len=17
 	.byte	0x07, 0x11, 0x70, 0x06, 0x1f, 0x00, 0x17
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xa6, 0x2b, 0xf1, 0x00
+	.long	SeScreenData_0x1F80 + 0x149
 	.byte	0x02, 0x00, 0x3d, 0x00, 0x98, 0x00
 ; [v10] F16081 flags=0x07 len=17
 	.byte	0x07, 0x11, 0x00, 0x00, 0x00, 0x00, 0x17
@@ -613,13 +612,11 @@ SeScreenData_0x54B2:
 SeMenuTitle_DrawField_Records:
 ; [v10] F160C4 flags=0x07 len=17
 	.byte	0x07, 0x11, 0x6c, 0x06, 0x03, 0x00, 0x17
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x2f, 0x45, 0xf1, 0x00
+	.long	SeScreenData_0x39BE + 0x94
 	.byte	0x03, 0x00, 0x03, 0x01, 0x7a, 0x00
 ; [v10] F160D5 flags=0x07 len=17
 	.byte	0x07, 0x11, 0x6c, 0x06, 0x0c, 0x02, 0x17
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x2f, 0x45, 0xf1, 0x00
+	.long	SeScreenData_0x39BE + 0x94
 	.byte	0x03, 0x00, 0x03, 0x01, 0x98, 0x00
 ; single bound record (op 0x03, 11 B), read by GraphicsRender_Start
 ; evidence: recptrs table 0xF16101
@@ -816,8 +813,7 @@ SeAmpAmp1_DrawField_Records4:
 ; evidence: recptrs table 0xF1642F
 SeAmpEnv1_DrawStaticScreen_Records2:
 	.byte	0x02, 0x0f, 0x60, 0x06, 0x20, 0x05, 0x20
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xa8, 0x13, 0xf1, 0x00
+	.long	SeMenu_DrawPartSelector_Records3 + 0x53
 	.byte	0x03, 0x00, 0x70, 0x1d
 ; single bound record (op 0x00, 10 B), read by GraphicsRender_Start
 ; evidence: recptrs table 0xF1642F
@@ -1091,8 +1087,8 @@ InitializeNaka:
 	ldw WA, 0x03fd
 	call RegisterObjectTable
 	pushw 0x000b
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0x1a, 0x48
+	pushw InitializeNaka_Str_TT_FDMSP@hi16
+	pushw InitializeNaka_Str_TT_FDMSP@lo16
 	ld XWA,0x000000fd
 	ld XBC,NAKA_APFUNC_DefaultFunction
 	ld XDE,NAKA_VIEW_ftdemo01
@@ -5290,8 +5286,7 @@ ToneParam_ExtendedOpsBlock_Skip15:
 	jr	z, ToneParam_ExtendedOpsBlock_Skip16
 	ld	(xsp+4), hl
 ToneParam_ExtendedOpsBlock_Skip16:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xf1, 0xf4, 0x38, 0x00, 0x10
+	ld	(0x38f4:16), 16
 	ld	(0x38f5:16), 24
 	calr	ToneParam_ExtendedOpsBlock_Helper2_Helper
 	cp	hl, 0:i3
@@ -5355,15 +5350,13 @@ ToneParam_ExtendedOpsBlock_Skip24:
 	ld	(xsp+4), hl
 ToneParam_ExtendedOpsBlock_Skip25:
 	ld	(0x38f4:16), 15
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xf1, 0xf5, 0x38, 0x00, 0x11
+	ld	(0x38f5:16), 17
 	calr	ToneParam_ExtendedOpsBlock_Helper2_Helper
 	cp	hl, 0:i3
 	jr	z, ToneParam_ExtendedOpsBlock_Skip26
 	ld	(xsp+4), hl
 ToneParam_ExtendedOpsBlock_Skip26:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xf1, 0xf4, 0x38, 0x00, 0x10
+	ld	(0x38f4:16), 16
 	ld	(0x38f5:16), 25
 	calr	ToneParam_ExtendedOpsBlock_Helper2_Helper
 	cp	hl, 0:i3
@@ -6484,225 +6477,225 @@ InitializeSuna:
 	ldw WA, 0x03ed
 	call RegisterObjectTable
 	pushw 0x0004
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0xfa, 0xc8
+	pushw InitializeSuna_Str_MD_CMP@hi16
+	pushw InitializeSuna_Str_MD_CMP@lo16
 	ld XWA,0x0000000e
 	ld XBC,NAKA_MAINFUNC_CmpModeFunc
 	ld XDE,TITLE_CMMENU
 	call RegisterMode
 	pushw 0x0004
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0x02, 0xc9
+	pushw InitializeSuna_Str_MD_MSP@hi16
+	pushw InitializeSuna_Str_MD_MSP@lo16
 	ld XWA,0x0000000f
 	ld XBC,NAKA_APFUNC_DefaultFunction
 	ld XDE,TITLE_MSPMENU
 	call RegisterMode
 	pushw 0x0004
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0x0a, 0xc9
+	pushw InitializeSuna_Str_MD_MSP_REC@hi16
+	pushw InitializeSuna_Str_MD_MSP_REC@lo16
 	ld XWA,0x00000010
 	ld XBC,NAKA_APFUNC_DefaultFunction
 	ld XDE,TITLE_MSPREC
 	call RegisterMode
 	pushw 0x0004
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0x16, 0xc9
+	pushw InitializeSuna_Str_MD_SND_ARG@hi16
+	pushw InitializeSuna_Str_MD_SND_ARG@lo16
 	ld XWA,0x00000011
 	ld XBC,NAKA_MAINFUNC_SndArgModeFunc
 	ld XDE,TITLE_SNDARG
 	call RegisterMode
 	pushw 0x0004
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0x22, 0xc9
+	pushw InitializeSuna_Str_TT_STYLCNVWAIT@hi16
+	pushw InitializeSuna_Str_TT_STYLCNVWAIT@lo16
 	ld XWA,0x00000010
 	ld XBC,NAKA_MAINFUNC_StylCnvWaitTtlFunc
 	ld XDE,0x00100000
 	call RegisterTitle
 	pushw 0x0004
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0x32, 0xc9
+	pushw InitializeSuna_Str_TT_STYLCNVMODL@hi16
+	pushw InitializeSuna_Str_TT_STYLCNVMODL@lo16
 	ld XWA,0x00000011
 	ld XBC,NAKA_MAINFUNC_StylCnvModlTtlFunc
 	ld XDE,0x00110000
 	call RegisterTitle
 	pushw 0x0004
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0x42, 0xc9
+	pushw InitializeSuna_Str_TT_STYLCNVCNVT@hi16
+	pushw InitializeSuna_Str_TT_STYLCNVCNVT@lo16
 	ld XWA,0x00000012
 	ld XBC,NAKA_MAINFUNC_StylCnvCnvtTtlFunc
 	ld XDE,0x00120000
 	call RegisterTitle
 	pushw 0x0004
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0x52, 0xc9
+	pushw InitializeSuna_Str_TT_STYLCNVSTOR@hi16
+	pushw InitializeSuna_Str_TT_STYLCNVSTOR@lo16
 	ld XWA,0x00000013
 	ld XBC,NAKA_MAINFUNC_StylCnvStorTtlFunc
 	ld XDE,0x00130000
 	call RegisterTitle
 	pushw 0x0004
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0x62, 0xc9
+	pushw InitializeSuna_Str_TT_STYLCNVTXT@hi16
+	pushw InitializeSuna_Str_TT_STYLCNVTXT@lo16
 	ld XWA,0x00000014
 	ld XBC,NAKA_MAINFUNC_StylCnvTxtTtlFunc
 	ld XDE,0x00140000
 	call RegisterTitle
 	pushw 0x0004
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0x70, 0xc9
+	pushw InitializeSuna_Str_TT_STYLCNVSEL@hi16
+	pushw InitializeSuna_Str_TT_STYLCNVSEL@lo16
 	ld XWA,0x00000015
 	ld XBC,NAKA_MAINFUNC_StylCnvSelTtlFunc
 	ld XDE,0x00150000
 	call RegisterTitle
 	pushw 0x0004
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0x7e, 0xc9
+	pushw InitializeSuna_Str_TT_STYLCNVCONT@hi16
+	pushw InitializeSuna_Str_TT_STYLCNVCONT@lo16
 	ld XWA,0x00000016
 	ld XBC,NAKA_MAINFUNC_StylCnvContTtlFunc
 	ld XDE,0x00160000
 	call RegisterTitle
 	pushw 0x0004
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0x8e, 0xc9
+	pushw InitializeSuna_Str_TT_CMMENU@hi16
+	pushw InitializeSuna_Str_TT_CMMENU@lo16
 	ld XWA,0x000000b0
 	ld XBC,NAKA_MAINFUNC_CmpMenuTtlFunc
 	ld XDE,0x00b00000
 	call RegisterTitle
 	pushw 0x0004
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0x98, 0xc9
+	pushw InitializeSuna_Str_TT_CMBKSL@hi16
+	pushw InitializeSuna_Str_TT_CMBKSL@lo16
 	ld XWA,0x000000b1
 	ld XBC,NAKA_MAINFUNC_CmpBkslTtlFunc
 	ld XDE,0x00b10000
 	call RegisterTitle
 	pushw 0x0004
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0xa2, 0xc9
+	pushw InitializeSuna_Str_TT_CMBKSL_S@hi16
+	pushw InitializeSuna_Str_TT_CMBKSL_S@lo16
 	ld XWA,0x000000b2
 	ld XBC,NAKA_MAINFUNC_CmpBksl_STtlFunc
 	ld XDE,0x00b20000
 	call RegisterTitle
 	pushw 0x0004
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0xae, 0xc9
+	pushw InitializeSuna_Str_TT_CMNAME@hi16
+	pushw InitializeSuna_Str_TT_CMNAME@lo16
 	ld XWA,0x000000b3
 	ld XBC,NAKA_APFUNC_DefaultFunction
 	ld XDE,0x00b30000
 	call RegisterTitle
 	pushw 0x0004
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0xb8, 0xc9
+	pushw InitializeSuna_Str_TT_CMSET@hi16
+	pushw InitializeSuna_Str_TT_CMSET@lo16
 	ld XWA,0x000000b4
 	ld XBC,NAKA_MAINFUNC_CmpSetTtlFunc
 	ld XDE,0x00b40000
 	call RegisterTitle
 	pushw 0x0004
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0xc2, 0xc9
+	pushw InitializeSuna_Str_TT_CMREAL@hi16
+	pushw InitializeSuna_Str_TT_CMREAL@lo16
 	ld XWA,0x000000b5
 	ld XBC,NAKA_MAINFUNC_CmpRealTtlFunc
 	ld XDE,0x00b50000
 	call RegisterTitle
 	pushw 0x0004
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0xcc, 0xc9
+	pushw InitializeSuna_Str_TT_CMSTEP@hi16
+	pushw InitializeSuna_Str_TT_CMSTEP@lo16
 	ld XWA,0x000000b6
 	ld XBC,NAKA_MAINFUNC_CmpStepTitleFunc
 	ld XDE,0x00b60000
 	call RegisterTitle
 	pushw 0x0004
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0xd6, 0xc9
+	pushw InitializeSuna_Str_TT_CMBAL@hi16
+	pushw InitializeSuna_Str_TT_CMBAL@lo16
 	ld XWA,0x000000b7
 	ld XBC,NAKA_APFUNC_DefaultFunction
 	ld XDE,0x00b70000
 	call RegisterTitle
 	pushw 0x0004
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0xe0, 0xc9
+	pushw InitializeSuna_Str_TT_CMPNCP@hi16
+	pushw InitializeSuna_Str_TT_CMPNCP@lo16
 	ld XWA,0x000000b8
 	ld XBC,NAKA_MAINFUNC_CmpNcpTtlFunc
 	ld XDE,0x00b80000
 	call RegisterTitle
 	pushw 0x0004
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0xea, 0xc9
+	pushw InitializeSuna_Str_TT_CMSEQCP@hi16
+	pushw InitializeSuna_Str_TT_CMSEQCP@lo16
 	ld XWA,0x000000b9
 	ld XBC,NAKA_MAINFUNC_S2cTtlFunc
 	ld XDE,0x00b90000
 	call RegisterTitle
 	pushw 0x0004
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0xf6, 0xc9
+	pushw InitializeSuna_Str_TT_CMEASY@hi16
+	pushw InitializeSuna_Str_TT_CMEASY@lo16
 	ld XWA,0x000000ba
 	ld XBC,NAKA_MAINFUNC_CmEsyTtlFunc
 	ld XDE,0x00ba0000
 	call RegisterTitle
 	pushw 0x0004
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0x00, 0xca
+	pushw InitializeSuna_Str_TT_CMBEND@hi16
+	pushw InitializeSuna_Str_TT_CMBEND@lo16
 	ld XWA,0x000000bb
 	ld XBC,NAKA_APFUNC_DefaultFunction
 	ld XDE,0x00bb0000
 	call RegisterTitle
 	pushw 0x0004
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0x0a, 0xca
+	pushw InitializeSuna_Str_TT_CMMODE@hi16
+	pushw InitializeSuna_Str_TT_CMMODE@lo16
 	ld XWA,0x000000bd
 	ld XBC,NAKA_APFUNC_DefaultFunction
 	ld XDE,0x00bd0000
 	call RegisterTitle
 	pushw 0x0004
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0x14, 0xca
+	pushw InitializeSuna_Str_TT_CMCSTMCP@hi16
+	pushw InitializeSuna_Str_TT_CMCSTMCP@lo16
 	ld XWA,0x000000be
 	ld XBC,NAKA_MAINFUNC_CstmCpTtlFunc
 	ld XDE,0x00be0000
 	call RegisterTitle
 	pushw 0x0004
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0x20, 0xca
+	pushw InitializeSuna_Str_TT_MSPBKSL@hi16
+	pushw InitializeSuna_Str_TT_MSPBKSL@lo16
 	ld XWA,0x000000c8
 	ld XBC,NAKA_MAINFUNC_MspBkslTtlFunc
 	ld XDE,0x00c80000
 	call RegisterTitle
 	pushw 0x0004
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0x2c, 0xca
+	pushw InitializeSuna_Str_TT_MSPREC@hi16
+	pushw InitializeSuna_Str_TT_MSPREC@lo16
 	ld XWA,0x000000c9
 	ld XBC,NAKA_MAINFUNC_MspRecTtlFunc
 	ld XDE,0x00c90000
 	call RegisterTitle
 	pushw 0x0004
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0x36, 0xca
+	pushw InitializeSuna_Str_TT_MSPMENU@hi16
+	pushw InitializeSuna_Str_TT_MSPMENU@lo16
 	ld XWA,0x000000ca
 	ld XBC,NAKA_MAINFUNC_MspMenuTtlFunc
 	ld XDE,0x00ca0000
 	call RegisterTitle
 	pushw 0x0004
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0x42, 0xca
+	pushw InitializeSuna_Str_TT_MSPNAME@hi16
+	pushw InitializeSuna_Str_TT_MSPNAME@lo16
 	ld XWA,0x000000cb
 	ld XBC,NAKA_MAINFUNC_MspNameTtlFunc
 	ld XDE,0x00cb0000
 	call RegisterTitle
 	pushw 0x0004
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0x4e, 0xca
+	pushw InitializeSuna_Str_TT_MSPGROUP@hi16
+	pushw InitializeSuna_Str_TT_MSPGROUP@lo16
 	ld XWA,0x000000cc
 	ld XBC,NAKA_APFUNC_DefaultFunction
 	ld XDE,0x00cc0000
 	call RegisterTitle
 	pushw 0x0004
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0x5a, 0xca
+	pushw InitializeSuna_Str_TT_SNDARG@hi16
+	pushw InitializeSuna_Str_TT_SNDARG@lo16
 	ld XWA,0x000000dc
 	ld XBC,NAKA_MAINFUNC_SndArgTtlFunc
 	ld XDE,0x00dc0000
 	call RegisterTitle
 	pushw 0x0004
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0x64, 0xca
+	pushw InitializeSuna_Str_TT_APCSEL@hi16
+	pushw InitializeSuna_Str_TT_APCSEL@lo16
 	ld XWA,0x000000ed
 	ld XBC,NAKA_APFUNC_DefaultFunction
 	ld XDE,NAKA_VIEW_ApcSelScreen
@@ -6739,9 +6732,9 @@ CmpBndRng_BoundCase:
 	jr CmpBndRng_CallStrcpy
 
 CmpBndRng_DefaultString:
+	pushw CmpBndRng_DefaultString_Str_ERR@hi16
+	pushw CmpBndRng_DefaultString_Str_ERR@lo16
 
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0x12, 0xce
 CmpBndRng_CallStrcpy:
 	push	xwa
 	call	Strcpy
@@ -7176,8 +7169,8 @@ UI_COMPONENT_DISPATCH:
 	inc	1, a
 	extz	wa
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0xe4, 0xce
+	pushw	UI_COMPONENT_DISPATCH_Str_Fmtd@hi16
+	pushw	UI_COMPONENT_DISPATCH_Str_Fmtd@lo16
 	push	xde
 	call	Sprintf_Locked
 	lda	xsp, (xsp+10)
@@ -7196,8 +7189,8 @@ UI_COMPONENT_DISPATCH_CASE1:
 	lda	xbc, (252430:24)
 	ld	xwa, (xbc+wa)
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0xe8, 0xce
+	pushw	UI_COMPONENT_DISPATCH_CASE1_Str_Fmts_Fmts@hi16
+	pushw	UI_COMPONENT_DISPATCH_CASE1_Str_Fmts_Fmts@lo16
 	push	xde
 	call	Sprintf_Locked
 	lda	xsp, (xsp+16)
@@ -7815,8 +7808,8 @@ PsS2cFmeas_HandleScroll:
 	call	GetViewInstance
 	ld	xiz, xhl
 	push_sd16w	0xd2, 0x38
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0x84, 0xd5
+	pushw	PsS2cFmeas_HandleScroll_Str_Fmt3d@hi16
+	pushw	PsS2cFmeas_HandleScroll_Str_Fmt3d@lo16
 	lda	xwa, (xsp+10)
 	push	xwa
 	call	Sprintf_Locked
@@ -7867,8 +7860,8 @@ PsS2cLmeas_HandleScroll:
 	call	GetViewInstance
 	ld	xiz, xhl
 	push_sd16w	0xd4, 0x38
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0x88, 0xd5
+	pushw	PsS2cLmeas_HandleScroll_Str_Fmt3d@hi16
+	pushw	PsS2cLmeas_HandleScroll_Str_Fmt3d@lo16
 	lda	xwa, (xsp+10)
 	push	xwa
 	call	Sprintf_Locked
@@ -7920,8 +7913,8 @@ PsSeqSongNo_HandleScroll:
 	inc	1, a
 	extz	wa
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0x8c, 0xd5
+	pushw	PsSeqSongNo_HandleScroll_Str_SONG_Fmt2d@hi16
+	pushw	PsSeqSongNo_HandleScroll_Str_SONG_Fmt2d@lo16
 	lda	xwa, (xsp+10)
 	push	xwa
 	call	Sprintf_Locked

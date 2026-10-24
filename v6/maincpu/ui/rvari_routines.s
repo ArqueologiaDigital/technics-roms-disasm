@@ -170,8 +170,8 @@ RVari_SelectE_SecondItem_Draw:
 	extz	wa
 	add	wa, bc
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x5a, 0x15
+	pushw RVari_SelectE_SecondItem_Draw_Str_Fmtd@hi16
+	pushw RVari_SelectE_SecondItem_Draw_Str_Fmtd@lo16
 	lda	xwa, (xsp+26)
 	push	xwa
 	call	Sprintf_Locked
@@ -365,8 +365,8 @@ RVari_SelectO_SecondItem_Draw:
 	extz	wa
 	add	wa, bc
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x5e, 0x15
+	pushw RVari_SelectO_SecondItem_Draw_Str_Fmtd@hi16
+	pushw RVari_SelectO_SecondItem_Draw_Str_Fmtd@lo16
 	lda	xwa, (xsp+26)
 	push	xwa
 	call	Sprintf_Locked
@@ -848,8 +848,8 @@ RVari_ConfirmF_Item_Draw:
 	lda	xbc, (ParamStr_Table_04:24)
 	ld	xwa, (xbc+wa)
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x62, 0x15
+	pushw RVari_ConfirmF_Item_Draw_Str_Fmts@hi16
+	pushw RVari_ConfirmF_Item_Draw_Str_Fmts@lo16
 	lda	xwa, (xsp+28)
 	push	xwa
 	call	Sprintf_Locked
@@ -984,8 +984,8 @@ RVari_Confirm_TypeNotF:
 	pushw wa
 	ld XWA,(XIZ+0x2c)
 	pushm (xwa)
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x66, 0x15
+	pushw RVari_Confirm_TypeNotF_Str_PAGE_Fmtd_Fmtd@hi16
+	pushw RVari_Confirm_TypeNotF_Str_PAGE_Fmtd_Fmtd@lo16
 	lda xwa, (xsp+284)
 	push xwa
 	call Sprintf_Locked
@@ -1135,8 +1135,8 @@ RVari_ConfirmE_Item_Draw:
 	extz	wa
 	add	wa, bc
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x72, 0x15
+	pushw RVari_ConfirmE_Item_Draw_Str_Fmtd@hi16
+	pushw RVari_ConfirmE_Item_Draw_Str_Fmtd@lo16
 	lda	xwa, (xsp+26)
 	push	xwa
 	call	Sprintf_Locked
@@ -1379,8 +1379,8 @@ RVari_EnumNotifyF_Item_Draw:
 	lda	xbc, (ParamStr_Table_04:24)
 	ld	xwa, (xbc+wa)
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x76, 0x15
+	pushw RVari_EnumNotifyF_Item_Draw_Str_Fmts@hi16
+	pushw RVari_EnumNotifyF_Item_Draw_Str_Fmts@lo16
 	lda	xwa, (xsp+284)
 	push	xwa
 	call	Sprintf_Locked
@@ -1548,8 +1548,8 @@ RVari_EnumNotifyE_Item_Draw:
 	extz	wa
 	add	wa, bc
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x7a, 0x15
+	pushw RVari_EnumNotifyE_Item_Draw_Str_Fmtd@hi16
+	pushw RVari_EnumNotifyE_Item_Draw_Str_Fmtd@lo16
 	lda	xwa, (xsp+282)
 	push	xwa
 	call	Sprintf_Locked

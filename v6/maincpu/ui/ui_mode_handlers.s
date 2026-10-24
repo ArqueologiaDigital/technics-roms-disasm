@@ -3380,8 +3380,8 @@ MasterSetup_GetNameB_DrawString:
 	pushw	(xwa)
 	ld	xwa, (xiz+74)
 	pushw	(xwa)
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x1c, 0x0c
+	pushw	MasterSetup_GetNameB_DrawString_Str_Fmtc_Fmtd_Fmtd@hi16
+	pushw	MasterSetup_GetNameB_DrawString_Str_Fmtc_Fmtd_Fmtd@lo16
 	lda	xwa, (xsp+30)
 	push	xwa
 	call	Sprintf_Locked
@@ -3542,8 +3542,8 @@ MstStyleAlp_CellSelect:
 	jr t, MstStyleAlp_PadLoopCond
 MstStyleAlp_AppendPadChar:
 	pushw	1
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x36, 0x0c
+	pushw	MstStyleAlp_AppendPadChar_Str_Blank1@hi16
+	pushw	MstStyleAlp_AppendPadChar_Str_Blank1@lo16
 	lda	xwa, (xsp+22)
 	push	xwa
 	call	Strncat
@@ -3574,8 +3574,8 @@ MstStyleAlp_PadLoopCond:
 	jr	c, MstStyleAlp_AppendPadChar
 	jrl	MstStyleAlp_FinalSendEvent
 MstStyleAlp_OverflowStr:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x38, 0x0c
+	pushw	MstStyleAlp_OverflowStr_Str_Blank32@hi16
+	pushw	MstStyleAlp_OverflowStr_Str_Blank32@lo16
 	ld	xwa, (xsp+16)
 	push	xwa
 	call	Strcpy
@@ -3597,8 +3597,8 @@ MstStyleAlp_CopyEntryAndPad:
 	jr t, MstStyleAlp_PadLoopCond2
 MstStyleAlp_AppendPadChar2:
 	pushw	1
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x5a, 0x0c
+	pushw	MstStyleAlp_AppendPadChar2_Str_Blank1@hi16
+	pushw	MstStyleAlp_AppendPadChar2_Str_Blank1@lo16
 	lda	xwa, (xsp+22)
 	push	xwa
 	call	Strncat
@@ -4045,8 +4045,8 @@ MstStyle1Grid_CellSelect:
 	jr	MstStyle1Grid_PadLeft_Check
 MstStyle1Grid_PadLeft_Loop:
 	pushw	1
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x78, 0x0c
+	pushw	MstStyle1Grid_PadLeft_Loop_Str_Blank1@hi16
+	pushw	MstStyle1Grid_PadLeft_Loop_Str_Blank1@lo16
 	lda	xwa, (xsp+18)
 	push	xwa
 	call	Strncat
@@ -4073,8 +4073,8 @@ MstStyle1Grid_PadLeft_Check:
 	jr	c, MstStyle1Grid_PadLeft_Loop
 	jr	MstStyle1Grid_CheckPlayAudio
 MstStyle1Grid_OutOfRange:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x7a, 0x0c
+	pushw	MstStyle1Grid_OutOfRange_Str_Blank16@hi16
+	pushw	MstStyle1Grid_OutOfRange_Str_Blank16@lo16
 	push	xbc
 	call	Strcpy
 	inc	8, xsp
@@ -4092,8 +4092,8 @@ MstStyle1Grid_BottomSection:
 	jr	MstStyle1Grid_PadLeft_CheckB
 MstStyle1Grid_PadLeft_LoopB:
 	pushw	1
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x8c, 0x0c
+	pushw	MstStyle1Grid_PadLeft_LoopB_Str_Blank1@hi16
+	pushw	MstStyle1Grid_PadLeft_LoopB_Str_Blank1@lo16
 	lda	xwa, (xsp+18)
 	push	xwa
 	call	Strncat
@@ -4620,8 +4620,8 @@ MstStyle1Sub_GetNameB_DrawString:
 	pushw	(xwa)
 	ld	xwa, (xbc+82)
 	pushw	(xwa)
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x9c, 0x0c
+	pushw	MstStyle1Sub_GetNameB_DrawString_Str_Fmtd_Fmtd@hi16
+	pushw	MstStyle1Sub_GetNameB_DrawString_Str_Fmtd_Fmtd@lo16
 	lda	xwa, (xsp+28)
 	push	xwa
 	call	Sprintf_Locked
@@ -4779,8 +4779,8 @@ MstStyle1SubGrid_PadLeft_Check:
 	jr	c, MstStyle1SubGrid_PadLeft_Loop
 	jr	MstStyle1SubGrid_CheckPlayAudio
 MstStyle1SubGrid_OutOfRange:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0xb2, 0x0c
+	pushw	MstStyle1SubGrid_OutOfRange_Str_Blank16@hi16
+	pushw	MstStyle1SubGrid_OutOfRange_Str_Blank16@lo16
 	push	xde
 	call	Strcpy
 	inc	8, xsp
@@ -5908,8 +5908,8 @@ MstStyle2_GetNameB_DrawString:
 	add	xwa, (213202:24)
 	ld	xwa, (xwa)
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0xd4, 0x0c
+	pushw MstStyle2_GetNameB_DrawString_Str_Fmts@hi16
+	pushw MstStyle2_GetNameB_DrawString_Str_Fmts@lo16
 	lda	xwa, (xsp+34)
 	push	xwa
 	call	Sprintf_Locked
@@ -5934,8 +5934,8 @@ MstStyle2_GetNameB_DrawString:
 	dec	1, wa
 	cp	wa, (xhl)
 	jr	le, MstStyle2_NameB_DrawCurrent
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0xd8, 0x0c
+	pushw MstStyle2_GetNameB_DrawString_Str_Blank17@hi16
+	pushw MstStyle2_GetNameB_DrawString_Str_Blank17@lo16
 	push	xde
 	call	Strcpy
 	inc	8, xsp
@@ -5947,8 +5947,8 @@ MstStyle2_NameB_DrawCurrent:
 	add	xwa, (213202:24)
 	ld	xwa, (xwa)
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0xf0, 0x0c
+	pushw	MstStyle2_NameB_DrawCurrent_Str_Fmts@hi16
+	pushw	MstStyle2_NameB_DrawCurrent_Str_Fmts@lo16
 	push	xde
 	call	Sprintf_Locked
 	lda	xsp, (xsp+12)
@@ -5963,8 +5963,8 @@ MstStyle2_NameB_DrawLower:
 	add	xwa, (213202:24)
 	ld	xwa, (xwa)
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0xfa, 0x0c
+	pushw	MstStyle2_NameB_DrawLower_Str_Fmts@hi16
+	pushw	MstStyle2_NameB_DrawLower_Str_Fmts@lo16
 	push	xde
 	call	Sprintf_Locked
 	lda	xsp, (xsp+12)
@@ -6039,8 +6039,8 @@ MstStyle2_NameB_Render:
 	add	xbc, xwa
 	ld	xwa, (xbc)
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x04, 0x0d
+	pushw MstStyle2_NameB_Render_Str_Fmts@hi16
+	pushw MstStyle2_NameB_Render_Str_Fmts@lo16
 	lda	xwa, (xsp+26)
 	push	xwa
 	call	Sprintf_Locked
@@ -6219,8 +6219,8 @@ MstGrid2_CellSelect:
 	jr	MstGrid2_PadLeft_CheckA
 MstGrid2_PadLeft_LoopA:
 	pushw	1
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x16, 0x0d
+	pushw	MstGrid2_PadLeft_LoopA_Str_Blank1@hi16
+	pushw	MstGrid2_PadLeft_LoopA_Str_Blank1@lo16
 	lda	xwa, (xsp+26)
 	push	xwa
 	call	Strncat
@@ -6263,8 +6263,8 @@ MstGrid2_UpperHalf:
 	jr	MstGrid2_PadLeft_CheckB
 MstGrid2_PadLeft_LoopB:
 	pushw	1
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x3a, 0x0d
+	pushw	MstGrid2_PadLeft_LoopB_Str_Blank1@hi16
+	pushw	MstGrid2_PadLeft_LoopB_Str_Blank1@lo16
 	lda	xwa, (xsp+26)
 	push	xwa
 	call	Strncat
@@ -6309,8 +6309,8 @@ MstGrid2_LowerSection:
 	jr	MstGrid2_PadLeft_CheckC
 MstGrid2_PadLeft_LoopC:
 	pushw	1
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x5e, 0x0d
+	pushw	MstGrid2_PadLeft_LoopC_Str_Blank1@hi16
+	pushw	MstGrid2_PadLeft_LoopC_Str_Blank1@lo16
 	lda	xwa, (xsp+26)
 	push	xwa
 	call	Strncat
@@ -6362,8 +6362,8 @@ MstGrid2_BottomRight:
 	jr	MstGrid2_PadLeft_CheckD
 MstGrid2_PadLeft_LoopD:
 	pushw	1
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x82, 0x0d
+	pushw	MstGrid2_PadLeft_LoopD_Str_Blank1@hi16
+	pushw	MstGrid2_PadLeft_LoopD_Str_Blank1@lo16
 	lda	xwa, (xsp+26)
 	push	xwa
 	call	Strncat
@@ -6917,8 +6917,8 @@ TchSensGridCheck_OnLswData:
 	lda	xbc, (xsp+4)
 	ld	(xwa+4), xbc
 	pushw	(xix)
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0xe4, 0x0d
+	pushw	TchSensGridCheck_OnLswData_Str_Fmt3d_3@hi16
+	pushw	TchSensGridCheck_OnLswData_Str_Fmt3d_3@lo16
 	push	xbc
 	call	Sprintf_Locked
 	lda	xsp, (xsp+10)
@@ -6962,8 +6962,8 @@ TchSensGridCheck_OnLswData_Skip3:
 	ldw	(xbc), 5
 	ld	(xhl), xiz
 	pushw	(xix)
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0xf0, 0x0d
+	pushw	TchSensGridCheck_OnLswData_Str_Fmt3d@hi16
+	pushw	TchSensGridCheck_OnLswData_Str_Fmt3d@lo16
 	push	xiz
 	call	Sprintf_Locked
 	lda	xsp, (xsp+10)
@@ -6980,8 +6980,8 @@ TchSensGridCheck_OnLswData_Skip4:
 	ldw	(xbc), 6
 	ld	(xhl), xiz
 	pushw	(xix)
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0xf4, 0x0d
+	pushw	TchSensGridCheck_OnLswData_Str_Fmt3d_2@hi16
+	pushw	TchSensGridCheck_OnLswData_Str_Fmt3d_2@lo16
 	push	xiz
 	call	Sprintf_Locked
 	lda	xsp, (xsp+10)
@@ -7007,8 +7007,8 @@ TchSensGrid_CellSelect:
 	ld XWA,0x00000100
 	call SndParam_LookupReadOnly
 	pushw hl
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0xf8, 0x0d
+	pushw TchSensGrid_CellSelect_Str_Fmt3d@hi16
+	pushw TchSensGrid_CellSelect_Str_Fmt3d@lo16
 	lda xwa, (xsp + 0x0a)
 	push XWA
 	call Sprintf_Locked
@@ -7049,8 +7049,8 @@ TchSensGrid_CheckCell_1_5:
 	ld	xwa, 258
 	call	SndParam_LookupReadOnly
 	pushw	hl
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x04, 0x0e
+	pushw	TchSensGrid_CheckCell_1_5_Str_Fmt3d@hi16
+	pushw	TchSensGrid_CheckCell_1_5_Str_Fmt3d@lo16
 	lda	xwa, (xsp+10)
 	push	xwa
 	call	Sprintf_Locked
@@ -7068,8 +7068,8 @@ TchSensGrid_CheckCell_1_6:
 	ld	xwa, 259
 	call	SndParam_LookupReadOnly
 	pushw	hl
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x08, 0x0e
+	pushw	TchSensGrid_CheckCell_1_6_Str_Fmt3d@hi16
+	pushw	TchSensGrid_CheckCell_1_6_Str_Fmt3d@lo16
 	lda	xwa, (xsp+10)
 	push	xwa
 	call	Sprintf_Locked
@@ -7746,8 +7746,8 @@ FSWAssGridCheck_OnLswData:
 	lda	xbc, (FswAssign_FunctionNames:24)
 	ld	xwa, (xbc+hl)
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0xf2, 0x10
+	pushw FSWAssGridCheck_OnLswData_Str_Fmts@hi16
+	pushw FSWAssGridCheck_OnLswData_Str_Fmts@lo16
 	lda	xwa, (xsp+12)
 	push	xwa
 	call	Sprintf_Locked
@@ -7774,8 +7774,8 @@ FSWAssGridCheck_OnLswData_Skip:
 	lda	xbc, (FswAssign_FunctionNames:24)
 	ld	xwa, (xbc+hl)
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0xf6, 0x10
+	pushw FSWAssGrid_EventDispatch_Entry_Str_Fmts@hi16
+	pushw FSWAssGrid_EventDispatch_Entry_Str_Fmts@lo16
 	lda	xwa, (xsp+12)
 	push	xwa
 	call	Sprintf_Locked
@@ -7800,8 +7800,8 @@ FSWAssGridCheck_OnLswData_Skip2:
 	lda	xbc, (FswAssign_FunctionNames:24)
 	ld	xwa, (xbc+hl)
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0xfa, 0x10
+	pushw FSWAssGrid_EventDispatch_Entry_Str_Fmts_2@hi16
+	pushw FSWAssGrid_EventDispatch_Entry_Str_Fmts_2@lo16
 	lda	xwa, (xsp+12)
 	push	xwa
 	call	Sprintf_Locked
@@ -7826,8 +7826,8 @@ FSWAssGridCheck_Skip3:
 	lda	xbc, (FswAssign_FunctionNames:24)
 	ld	xwa, (xbc+hl)
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0xfe, 0x10
+	pushw FSWAssGrid_EventDispatch_Entry_Str_Fmts_3@hi16
+	pushw FSWAssGrid_EventDispatch_Entry_Str_Fmts_3@lo16
 	lda	xwa, (xsp+12)
 	push	xwa
 	call	Sprintf_Locked
@@ -7853,8 +7853,8 @@ FSWAssGridCheck_Skip4:
 	lda	xbc, (FswAssign_FunctionNames:24)
 	ld	xwa, (xbc+hl)
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x02, 0x11
+	pushw FSWAssGrid_EventDispatch_Entry_Str_Fmts_4@hi16
+	pushw FSWAssGrid_EventDispatch_Entry_Str_Fmts_4@lo16
 	lda	xwa, (xsp+12)
 	push	xwa
 	call	Sprintf_Locked
@@ -7879,8 +7879,8 @@ FSWAssGridCheck_Skip5:
 	lda	xbc, (FswAssign_FunctionNames:24)
 	ld	xwa, (xbc+hl)
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x06, 0x11
+	pushw FSWAssGrid_EventDispatch_Entry_Str_Fmts_5@hi16
+	pushw FSWAssGrid_EventDispatch_Entry_Str_Fmts_5@lo16
 	lda	xwa, (xsp+12)
 	push	xwa
 	call	Sprintf_Locked
@@ -7905,8 +7905,8 @@ FSWAssGridCheck_Skip6:
 	lda	xbc, (FswAssign_FunctionNames:24)
 	ld	xwa, (xbc+hl)
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x0a, 0x11
+	pushw FSWAssGrid_EventDispatch_Entry_Str_Fmts_6@hi16
+	pushw FSWAssGrid_EventDispatch_Entry_Str_Fmts_6@lo16
 	lda	xwa, (xsp+12)
 	push	xwa
 	call	Sprintf_Locked
@@ -7940,8 +7940,8 @@ FSWAssGrid_CellSelect:
 	lda xbc, (FswAssign_FunctionNames:24)
 	ld	xwa, (xbc+hl)
 	push XWA
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x0e, 0x11
+	pushw FSWAssGrid_CellSelect_Str_Fmts@hi16
+	pushw FSWAssGrid_CellSelect_Str_Fmts@lo16
 	lda xwa, (xsp + 0x0c)
 	push XWA
 	call Sprintf_Locked
@@ -7967,8 +7967,8 @@ FSWAssGrid_CheckCell_1_3:
 	lda xbc, (FswAssign_FunctionNames:24)
 	ld	xwa, (xbc+hl)
 	push XWA
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x12, 0x11
+	pushw FSWAssGrid_CheckCell_1_3_Str_Fmts@hi16
+	pushw FSWAssGrid_CheckCell_1_3_Str_Fmts@lo16
 	lda xwa, (xsp + 0x0c)
 	push XWA
 	call Sprintf_Locked
@@ -7994,8 +7994,8 @@ FSWAssGrid_CheckCell_1_4:
 	lda xbc, (FswAssign_FunctionNames:24)
 	ld	xwa, (xbc+hl)
 	push XWA
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x16, 0x11
+	pushw FSWAssGrid_CheckCell_1_4_Str_Fmts@hi16
+	pushw FSWAssGrid_CheckCell_1_4_Str_Fmts@lo16
 	lda xwa, (xsp + 0x0c)
 	push XWA
 	call Sprintf_Locked
@@ -8021,8 +8021,8 @@ FSWAssGrid_CheckCell_1_5:
 	lda xbc, (FswAssign_FunctionNames:24)
 	ld	xwa, (xbc+hl)
 	push XWA
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x1a, 0x11
+	pushw FSWAssGrid_CheckCell_1_5_Str_Fmts@hi16
+	pushw FSWAssGrid_CheckCell_1_5_Str_Fmts@lo16
 	lda xwa, (xsp + 0x0c)
 	push XWA
 	call Sprintf_Locked
@@ -8048,8 +8048,8 @@ FSWAssGrid_CheckCell_1_6:
 	lda xbc, (FswAssign_FunctionNames:24)
 	ld	xwa, (xbc+hl)
 	push XWA
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x1e, 0x11
+	pushw FSWAssGrid_CheckCell_1_6_Str_Fmts@hi16
+	pushw FSWAssGrid_CheckCell_1_6_Str_Fmts@lo16
 	lda xwa, (xsp + 0x0c)
 	push XWA
 	call Sprintf_Locked
@@ -8075,8 +8075,8 @@ FSWAssGrid_CheckCell_1_7:
 	lda xbc, (FswAssign_FunctionNames:24)
 	ld	xwa, (xbc+hl)
 	push XWA
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x22, 0x11
+	pushw FSWAssGrid_CheckCell_1_7_Str_Fmts@hi16
+	pushw FSWAssGrid_CheckCell_1_7_Str_Fmts@lo16
 	lda xwa, (xsp + 0x0c)
 	push XWA
 	call Sprintf_Locked
@@ -8102,8 +8102,8 @@ FSWAssGrid_CheckCell_1_8:
 	lda xbc, (FswAssign_FunctionNames:24)
 	ld	xwa, (xbc+hl)
 	push XWA
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x26, 0x11
+	pushw FSWAssGrid_CheckCell_1_8_Str_Fmts@hi16
+	pushw FSWAssGrid_CheckCell_1_8_Str_Fmts@lo16
 	lda xwa, (xsp + 0x0c)
 	push XWA
 	call Sprintf_Locked
@@ -8490,8 +8490,8 @@ PmExpFilter_DrawCellBank1:
 	lda	xbc, (ParamStr_Table_01:24)
 	ld	xwa, (xbc+wa)
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x08, 0x13
+	pushw	PmExpFilter_DrawCellBank1_Str_Fmts@hi16
+	pushw	PmExpFilter_DrawCellBank1_Str_Fmts@lo16
 	push	xde
 	call	Sprintf_Locked
 	lda	xsp, (xsp+12)
@@ -8528,8 +8528,8 @@ PmExpFilter_DrawCellBank1:
 	add	bc, wa
 	inc	1, bc
 	ld	(xhl+2), bc
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x0c, 0x13
+	pushw PmExpFilter_DrawCellBank1_Str_PAGE_2_3@hi16
+	pushw PmExpFilter_DrawCellBank1_Str_PAGE_2_3@lo16
 	lda	xwa, (xsp+28)
 	push	xwa
 	call	Strcpy
@@ -8558,8 +8558,8 @@ PmExpFilter_DrawCellBank2:
 	lda xbc, (ParamStr_Table_02:24)
 	ld	xwa, (xbc+wa)
 	push XWA
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x16, 0x13
+	pushw PmExpFilter_DrawCellBank2_Str_Fmts@hi16
+	pushw PmExpFilter_DrawCellBank2_Str_Fmts@lo16
 	push XDE
 	call Sprintf_Locked
 	lda xsp, (xsp + 0x0c)
@@ -8596,8 +8596,8 @@ PmExpFilter_DrawCellBank2:
 	add	bc, wa
 	inc	1, bc
 	ld	(xhl+2), bc
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x1a, 0x13
+	pushw PmExpFilter_DrawCellBank2_Str_PAGE_3_3@hi16
+	pushw PmExpFilter_DrawCellBank2_Str_PAGE_3_3@lo16
 	lda	xwa, (xsp+28)
 	push	xwa
 	call	Strcpy
@@ -9129,8 +9129,8 @@ PmExpFilterCheck_PushNameB:
 	jr PmExpFilterCheck_StrcpySend
 
 PmExpFilterCheck_PushDefault:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x9a, 0x13
+	pushw PmExpFilterCheck_PushDefault_Str_Blank3@hi16
+	pushw PmExpFilterCheck_PushDefault_Str_Blank3@lo16
 	push xde
 
 PmExpFilterCheck_StrcpySend:
@@ -9691,8 +9691,8 @@ DispTimeSetGridCheck_OnLswData:
 	add	xde, xwa
 	ld	xwa, (xde)
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x56, 0x14
+	pushw DispTimeSetGridCheck_OnLswData_Str_Fmts@hi16
+	pushw DispTimeSetGridCheck_OnLswData_Str_Fmts@lo16
 	push	xbc
 	call	Sprintf_Locked
 	lda	xsp, (xsp+12)
@@ -9716,8 +9716,8 @@ DispTimeSetGridCheck_OnLswData_Skip4:
 	add	xde, xwa
 	ld	xwa, (xde)
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x5a, 0x14
+	pushw DispTimeSetGridCheck_OnLswData_Str_Fmts_3@hi16
+	pushw DispTimeSetGridCheck_OnLswData_Str_Fmts_3@lo16
 	push	xbc
 	call	Sprintf_Locked
 	lda	xsp, (xsp+12)
@@ -9743,8 +9743,8 @@ DispTimeSetGridCheck_OnLswData_Skip5:
 	add	xde, xwa
 	ld	xwa, (xde)
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x5e, 0x14
+	pushw DispTimeSetGridCheck_OnLswData_Str_Fmts_4@hi16
+	pushw DispTimeSetGridCheck_OnLswData_Str_Fmts_4@lo16
 	push	xbc
 	call	Sprintf_Locked
 	lda	xsp, (xsp+12)
@@ -9768,8 +9768,8 @@ DispTimeSetGridCheck_OnLswData_Skip6:
 	add	xde, xwa
 	ld	xwa, (xde)
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x62, 0x14
+	pushw DispTimeSetGridCheck_OnLswData_Str_Fmts_5@hi16
+	pushw DispTimeSetGridCheck_OnLswData_Str_Fmts_5@lo16
 	push	xbc
 	call	Sprintf_Locked
 	lda	xsp, (xsp+12)
@@ -9795,8 +9795,8 @@ DispTimeSetGridCheck_OnLswData_Skip7:
 	add	xbc, xwa
 	ld	xwa, (xbc)
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x66, 0x14
+	pushw DispTimeSetGridCheck_OnLswData_Str_Fmts_2@hi16
+	pushw DispTimeSetGridCheck_OnLswData_Str_Fmts_2@lo16
 	push	xix
 	call	Sprintf_Locked
 	lda	xsp, (xsp+12)
@@ -9818,8 +9818,8 @@ DispTimeSetGridCheck_OnLswData_Skip8:
 	add	xbc, xwa
 	ld	xwa, (xbc)
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x6a, 0x14
+	pushw DispTimeSetGridCheck_OnLswData_Str_Fmts_6@hi16
+	pushw DispTimeSetGridCheck_OnLswData_Str_Fmts_6@lo16
 	push	xix
 	call	Sprintf_Locked
 	lda	xsp, (xsp+12)
@@ -9848,8 +9848,8 @@ DispTimeSetCheck_CellDecode:
 	lda xde, (ParamStr_Table_03:24)
 	ld	xwa, (xde+wa)
 	push XWA
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x6e, 0x14
+	pushw DispTimeSetCheck_CellDecode_Str_Fmts@hi16
+	pushw DispTimeSetCheck_CellDecode_Str_Fmts@lo16
 	push XBC
 	call Sprintf_Locked
 	lda xsp, (xsp + 0x0c)
@@ -9870,8 +9870,8 @@ DispTimeSetCheck_TryRow3:
 	sla WA, 0x02
 	ld	xwa, (xde+wa)
 	push XWA
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x72, 0x14
+	pushw DispTimeSetCheck_TryRow3_Str_Fmts@hi16
+	pushw DispTimeSetCheck_TryRow3_Str_Fmts@lo16
 	push XBC
 	call Sprintf_Locked
 	lda xsp, (xsp + 0x0c)
@@ -9891,8 +9891,8 @@ DispTimeSetCheck_TryRow4:
 	sla WA, 0x02
 	ld	xwa, (xde+wa)
 	push XWA
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x76, 0x14
+	pushw DispTimeSetCheck_TryRow4_Str_Fmts@hi16
+	pushw DispTimeSetCheck_TryRow4_Str_Fmts@lo16
 	push XBC
 	call Sprintf_Locked
 	lda xsp, (xsp + 0x0c)
@@ -9912,8 +9912,8 @@ DispTimeSetCheck_TryRow5:
 	sla WA, 0x02
 	ld	xwa, (xde+wa)
 	push XWA
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x7a, 0x14
+	pushw DispTimeSetCheck_TryRow5_Str_Fmts@hi16
+	pushw DispTimeSetCheck_TryRow5_Str_Fmts@lo16
 	push XBC
 	call Sprintf_Locked
 	lda xsp, (xsp + 0x0c)
@@ -9933,8 +9933,8 @@ DispTimeSetCheck_TryRow6:
 	sla WA, 0x02
 	ld	xwa, (xde+wa)
 	push XWA
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x7e, 0x14
+	pushw DispTimeSetCheck_TryRow6_Str_Fmts@hi16
+	pushw DispTimeSetCheck_TryRow6_Str_Fmts@lo16
 	push XBC
 	call Sprintf_Locked
 	lda xsp, (xsp + 0x0c)
@@ -9954,8 +9954,8 @@ DispTimeSetCheck_TryRow7:
 	sla WA, 0x02
 	ld	xwa, (xde+wa)
 	push XWA
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x82, 0x14
+	pushw DispTimeSetCheck_TryRow7_Str_Fmts@hi16
+	pushw DispTimeSetCheck_TryRow7_Str_Fmts@lo16
 	push XBC
 	call Sprintf_Locked
 	lda xsp, (xsp + 0x0c)
@@ -10303,8 +10303,8 @@ IvPageOverWr_KeyPress:
 	jrl IvPageOverWr_SendAndReturn
 
 IvPageOverWr_GetName:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x94, 0x14
+	pushw	IvPageOverWr_GetName_Str_PAGE@hi16
+	pushw	IvPageOverWr_GetName_Str_PAGE@lo16
 	ld	xwa, (xsp+8)
 	push	xwa
 	call	Strcpy
@@ -10562,8 +10562,8 @@ MssName_EventDispatch:
 	ld	xwa, (xbc)
 	or	xwa, xwa
 	jr	nz, MssName_EventDispatch_Skip
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x9a, 0x14
+	pushw	MssName_EventDispatch_Str_Memory_data@hi16
+	pushw	MssName_EventDispatch_Str_Memory_data@lo16
 	ld	xwa, (xiz+18)
 	push	xwa
 	call	Strcpy
@@ -10698,8 +10698,8 @@ AcPmBkNoBox_Match:
 	ld	bc, (xiz+4)
 	cp	bc, 0:i3
 	jr	nz, AcPmBkNoBox_FormatBankNo
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0xc4, 0x14
+	pushw	AcPmBkNoBox_Match_Str_Blank8@hi16
+	pushw	AcPmBkNoBox_Match_Str_Blank8@lo16
 	push	xde
 	call	Strcpy
 	inc	8, xsp
@@ -10716,8 +10716,8 @@ AcPmBkNoBox_FormatBankNo:
 	divs	bc, 8
 	inc	1, bc
 	pushw	bc
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0xce, 0x14
+	pushw	AcPmBkNoBox_FormatBankNo_Str_Fmtd_Fmtd@hi16
+	pushw	AcPmBkNoBox_FormatBankNo_Str_Fmtd_Fmtd@lo16
 	push	xde
 	call	Sprintf_Locked
 	lda	xsp, (xsp+12)
@@ -10792,8 +10792,8 @@ AcBkNoBox_Match:
 	inc	1, l
 	extz	hl
 	pushw	hl
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0xd6, 0x14
+	pushw	AcBkNoBox_Match_Str_Fmtd@hi16
+	pushw	AcBkNoBox_Match_Str_Fmtd@lo16
 	lda	xwa, (xsp+10)
 	push	xwa
 	call	Sprintf_Locked
@@ -11493,8 +11493,8 @@ AcPmBkEdit_BankEdit:
 	inc 1,A
 	extz WA
 	pushw wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0xee, 0x14
+	pushw AcPmBkEdit_BankEdit_Str_Fmtd@hi16
+	pushw AcPmBkEdit_BankEdit_Str_Fmtd@lo16
 	ld XWA,(XSP+0x0e)
 	push XWA
 	call Sprintf_Locked
@@ -11878,8 +11878,8 @@ GmOnOffFunc:
 	cp	xbc, EVT_GET_LSW_STRING
 	jrl	nz, GmOnOff_DefaultReturn
 	pushw	(xde+4)
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x06, 0x15
+	pushw	GmOnOffFunc_Str_Empty@hi16
+	pushw	GmOnOffFunc_Str_Empty@lo16
 	ld	xwa, (xde+8)
 	push	xwa
 	call	Sprintf_Locked
@@ -12395,8 +12395,8 @@ VariScreen_DrawNameString:
 	extz	wa
 	add	wa, bc
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x0e, 0x15
+	pushw VariScreen_DrawNameString_Str_Fmtd@hi16
+	pushw VariScreen_DrawNameString_Str_Fmtd@lo16
 	lda	xwa, (xsp+40)
 	push	xwa
 	call	Sprintf_Locked
@@ -12674,8 +12674,8 @@ VariScreen_DrawRightNameString:
 	extz	wa
 	add	wa, bc
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x12, 0x15
+	pushw VariScreen_DrawRightNameString_Str_Fmtd@hi16
+	pushw VariScreen_DrawRightNameString_Str_Fmtd@lo16
 	lda	xwa, (xsp+40)
 	push	xwa
 	call	Sprintf_Locked
@@ -12806,8 +12806,8 @@ VariScreen_HandleConfirm:
 	pushw wa
 	ld	xwa, (xbc+44)
 	pushw	(xwa)
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x16, 0x15
+	pushw	VariScreen_HandleConfirm_Str_PAGE_Fmtd_Fmtd@hi16
+	pushw	VariScreen_HandleConfirm_Str_PAGE_Fmtd_Fmtd@lo16
 	lda	xwa, (xsp+298)
 	push	xwa
 	call	Sprintf_Locked
@@ -12967,8 +12967,8 @@ VariScreen_ConfirmDrawNameAudio:
 	extz	wa
 	add	wa, bc
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x22, 0x15
+	pushw VariScreen_ConfirmDrawNameAudio_Str_Fmtd@hi16
+	pushw VariScreen_ConfirmDrawNameAudio_Str_Fmtd@lo16
 	lda	xwa, (xsp+40)
 	push	xwa
 	call	Sprintf_Locked
@@ -13180,8 +13180,8 @@ VariScreen_EnumDrawNameAudio:
 	extz	wa
 	add	wa, bc
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x26, 0x15
+	pushw VariScreen_EnumDrawNameAudio_Str_Fmtd@hi16
+	pushw VariScreen_EnumDrawNameAudio_Str_Fmtd@lo16
 	lda	xwa, (xsp+40)
 	push	xwa
 	call	Sprintf_Locked
@@ -14023,8 +14023,8 @@ RVari_Select_CheckSameBank:
 	lda	xbc, (ParamStr_Table_04:24)
 	ld	xwa, (xbc+wa)
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x52, 0x15
+	pushw	RVari_Select_CheckSameBank_Str_Fmts@hi16
+	pushw	RVari_Select_CheckSameBank_Str_Fmts@lo16
 	lda	xwa, (xsp+28)
 	push	xwa
 	call	Sprintf_Locked
@@ -14144,8 +14144,8 @@ RVari_Select_CheckSameBank:
 	lda	xbc, (ParamStr_Table_04:24)
 	ld	xwa, (xbc+wa)
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x56, 0x15
+	pushw	RVari_Select_CheckSameBank_Str_Fmts_2@hi16
+	pushw	RVari_Select_CheckSameBank_Str_Fmts_2@lo16
 	lda	xwa, (xsp+28)
 	push	xwa
 	call	Sprintf_Locked

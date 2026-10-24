@@ -763,8 +763,8 @@ IvTimer_HandleDestroy:
 	jr IvTimer_ReturnZero
 
 IvTimer_HandleEvent3A:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x98, 0x97
+	pushw	IvTimer_HandleEvent3A_Str_N1shot@hi16
+	pushw	IvTimer_HandleEvent3A_Str_N1shot@lo16
 	ld	xwa, (xsp+12)
 	push	xwa
 	call	Strcpy
@@ -1376,8 +1376,8 @@ Slider_Case1E00067:
 	jrl Slider_UpdateDone
 
 Slider_Case1E0006A:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x9e, 0x97
+	pushw	IvIndexSwCtrlProc_Str_ISC@hi16
+	pushw	IvIndexSwCtrlProc_Str_ISC@lo16
 	ld	xwa, (xsp+12)
 	push	xwa
 	call	Strcpy
@@ -1746,8 +1746,8 @@ IvIndexSwDelayProc_OnDraw:
 	jr Bounds_Done
 
 IvIndexSwDelayProc_OnGetString:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0xa2, 0x97
+	pushw	IvIndexSwDelayProc_Str_ISD@hi16
+	pushw	IvIndexSwDelayProc_Str_ISD@lo16
 	ld	xwa, (xsp+8)
 	push	xwa
 	call	Strcpy
@@ -1830,8 +1830,8 @@ IvWaitWinCtlProc_OnDraw:
 	jr Edit_Update
 
 IvWaitWinCtlProc_OnGetString:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0xa6, 0x97
+	pushw	IvWaitWinCtlProc_Str_WWC@hi16
+	pushw	IvWaitWinCtlProc_Str_WWC@lo16
 	push	xde
 	call	Strcpy
 	inc	8, xsp

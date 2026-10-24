@@ -1255,8 +1255,8 @@ FDemoText_ByteData_DisplayRefresh_Skip:
 	ld	qwa, 0
 	pushw	wa
 	push	xhl
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0xda, 0xfc
+	pushw FDemoText_ByteData_DisplayRefresh_Str_Fmts_Fmtd@hi16
+	pushw FDemoText_ByteData_DisplayRefresh_Str_Fmts_Fmtd@lo16
 	pushw 2
 	pushw 18422
 	call	Sprintf_Locked
@@ -1948,8 +1948,8 @@ FDemoText_TextDispatch_Skip3:
 	dec	1, wa
 	ld	(0x024876:24), wa
 	push	xbc
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0x6a, 0xfd
+	pushw	FDemoText_ByteData_LayoutEngine_Str_Fmt8s@hi16
+	pushw	FDemoText_ByteData_LayoutEngine_Str_Fmt8s@lo16
 	pushw	2
 	pushw	0x4878
 	call	Sprintf_Locked
@@ -2902,8 +2902,8 @@ Seq_InitVoiceStructures:
 	ld (0x0249c8:24), xwa
 	ldiw_erp 0xfa, 0
 Seq_InitVoiceLoop:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0x08, 0xff
+	pushw	Seq_InitVoiceStructures_Str_Empty@hi16
+	pushw	Seq_InitVoiceStructures_Str_Empty@lo16
 	ld	bc, qiz
 	muls	bc, 24
 	lda	xwa, (149976:24)
@@ -3027,8 +3027,8 @@ Seq_LoadResource_Proceed:
 	lda	xwa, (xsp+8)			; buffer (adjusted for push)
 	push	xwa
 	call	Strcat			; format/prepare
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0x4c, 0xff
+	pushw	Seq_LoadResource_Proceed_Str_PRE@hi16				; resource ID high
+	pushw	Seq_LoadResource_Proceed_Str_PRE@lo16				; resource ID low
 	lda	xwa, (xsp+16)			; buffer
 	push	xwa
 	call	Strcat			; format/prepare
@@ -3038,8 +3038,8 @@ Seq_LoadResource_Proceed:
 	call	FileIO_OpenWithMode				; open display resource
 	cp	hl, 0:i3
 	jr	lt, Seq_Epilogue32			; failed
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0x1c, 0xff
+	pushw	Seq_LoadResource_Proceed_Str_PRESENTATION@hi16
+	pushw	Seq_LoadResource_Proceed_Str_PRESENTATION@lo16
 	ld	xwa, 149704			; data source
 	ld	xbc, 256			; size 256
 	ld	xde, Presentation_TagStrTable			; destination descriptor
@@ -3071,8 +3071,8 @@ Seq_FillBufferLoop:
 	call	Strncpy				; format string into buffer
 	lda	xwa, (xsp+18)			; buffer (adjusted)
 	ld	(xwa+8), 0			; null-terminate at offset 8
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0x6a, 0xff
+	pushw	Seq_FillBufferLoop_Str_ACT@hi16
+	pushw	Seq_FillBufferLoop_Str_ACT@lo16				; resource ID
 	push	xwa
 	call	Strcat			; format/prepare
 	lda	xsp, (xsp+22)			; clean stack
@@ -3091,8 +3091,8 @@ Seq_FillBufferLoop:
 	calr	FDemo_AllocBuffer
 	ld	xwa, xhl
 	ld	(149968:24), xwa	; store result
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0x60, 0xff
+	pushw	Seq_FillBufferLoop_Str_ACTION@hi16
+	pushw	Seq_FillBufferLoop_Str_ACTION@lo16
 	ld	xbc, xiz				; info ptr
 	ld	xde, Seq_FillBufferLoop_Str_ACTION_2			; destination descriptor
 	calr	FDemoText_ReadTaggedBlock

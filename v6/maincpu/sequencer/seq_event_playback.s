@@ -3118,155 +3118,155 @@ InitializeEast:
 	ldw WA, 0x03ec
 	call RegisterObjectTable
 	pushw 0x0003
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe5, 0x00, 0x0b, 0x96, 0xac
+	pushw East_ResNames_3EC_Strings@hi16
+	pushw East_ResNames_3EC_Strings@lo16
 	ld	xwa, 5:i3
 	ld	xbc, NAKA_APFUNC_DefaultFunction
 	ld	xde, TITLE_MDMENU
 	call	RegisterMode
 	pushw	3
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe5, 0x00, 0x0b, 0x9e, 0xac
+	pushw	InitializeEast_Str_TT_REVEQMENU@hi16
+	pushw	InitializeEast_Str_TT_REVEQMENU@lo16
 	ld	xwa, 9
 	ld	xbc, NAKA_APFUNC_DefaultFunction
 	ld	xde, 589824
 	call	RegisterTitle
 	pushw	3
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe5, 0x00, 0x0b, 0xac, 0xac
+	pushw	InitializeEast_Str_TT_SDOCT@hi16
+	pushw	InitializeEast_Str_TT_SDOCT@lo16
 	ld	xwa, 15
 	ld	xbc, NAKA_APFUNC_DefaultFunction
 	ld	xde, 983040
 	call	RegisterTitle
 	pushw	3
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe5, 0x00, 0x0b, 0xb6, 0xac
+	pushw	InitializeEast_Str_TT_REVPRESET@hi16
+	pushw	InitializeEast_Str_TT_REVPRESET@lo16
 	ld	xwa, 24
 	ld	xbc, NAKA_APFUNC_DefaultFunction
 	ld	xde, 1572864
 	call	RegisterTitle
 	pushw	3
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe5, 0x00, 0x0b, 0xc4, 0xac
+	pushw	InitializeEast_Str_TT_EQPRESET@hi16
+	pushw	InitializeEast_Str_TT_EQPRESET@lo16
 	ld	xwa, 25
 	ld	xbc, NAKA_APFUNC_DefaultFunction
 	ld	xde, 1638400
 	call	RegisterTitle
 	pushw	3
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe5, 0x00, 0x0b, 0xd0, 0xac
+	pushw	InitializeEast_Str_TT_REVEQPRESET@hi16
+	pushw	InitializeEast_Str_TT_REVEQPRESET@lo16
 	ld	xwa, 26
 	ld	xbc, NAKA_APFUNC_DefaultFunction
 	ld	xde, 1703936
 	call	RegisterTitle
 	pushw	3
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe5, 0x00, 0x0b, 0xe0, 0xac
+	pushw	InitializeEast_Str_TT_MDMENU@hi16
+	pushw	InitializeEast_Str_TT_MDMENU@lo16
 	ld	xwa, 80
 	ld	xbc, NAKA_APFUNC_DefaultFunction
 	ld	xde, 5242880
 	call	RegisterTitle
 	pushw	3
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe5, 0x00, 0x0b, 0xea, 0xac
+	pushw	InitializeEast_Str_TT_MDPART@hi16
+	pushw	InitializeEast_Str_TT_MDPART@lo16
 	ld	xwa, 81
 	ld	xbc, NAKA_APFUNC_DefaultFunction
 	ld	xde, 5308416
 	call	RegisterTitle
 	pushw	3
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe5, 0x00, 0x0b, 0xf4, 0xac
+	pushw	InitializeEast_Str_TT_MDCTRL@hi16
+	pushw	InitializeEast_Str_TT_MDCTRL@lo16
 	ld	xwa, 82
 	ld	xbc, NAKA_APFUNC_DefaultFunction
 	ld	xde, 5373952
 	call	RegisterTitle
 	pushw	3
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe5, 0x00, 0x0b, 0xfe, 0xac
+	pushw	InitializeEast_Str_TT_MDREAL@hi16
+	pushw	InitializeEast_Str_TT_MDREAL@lo16
 	ld	xwa, 83
 	ld	xbc, NAKA_APFUNC_DefaultFunction
 	ld	xde, 5439488
 	call	RegisterTitle
 	pushw	3
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe5, 0x00, 0x0b, 0x08, 0xad
+	pushw	InitializeEast_Str_TT_MDCOM@hi16
+	pushw	InitializeEast_Str_TT_MDCOM@lo16
 	ld	xwa, 84
 	ld	xbc, NAKA_APFUNC_DefaultFunction
 	ld	xde, 5505024
 	call	RegisterTitle
 	pushw	3
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe5, 0x00, 0x0b, 0x12, 0xad
+	pushw	InitializeEast_Str_TT_MDINOUT@hi16
+	pushw	InitializeEast_Str_TT_MDINOUT@lo16
 	ld	xwa, 85
 	ld	xbc, NAKA_APFUNC_DefaultFunction
 	ld	xde, 5570560
 	call	RegisterTitle
 	pushw	3
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe5, 0x00, 0x0b, 0x1e, 0xad
+	pushw	InitializeEast_Str_TT_MDPRESET@hi16
+	pushw	InitializeEast_Str_TT_MDPRESET@lo16
 	ld	xwa, 86
 	ld	xbc, NAKA_APFUNC_DefaultFunction
 	ld	xde, 5636096
 	call	RegisterTitle
 	pushw	3
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe5, 0x00, 0x0b, 0x2a, 0xad
+	pushw	InitializeEast_Str_TT_MDEXC@hi16
+	pushw	InitializeEast_Str_TT_MDEXC@lo16
 	ld	xwa, 87
 	ld	xbc, NAKA_APFUNC_DefaultFunction
 	ld	xde, 5701632
 	call	RegisterTitle
 	pushw	3
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe5, 0x00, 0x0b, 0x34, 0xad
+	pushw	InitializeEast_Str_TT_MDGMMODE@hi16
+	pushw	InitializeEast_Str_TT_MDGMMODE@lo16
 	ld	xwa, 88
 	ld	xbc, NAKA_APFUNC_DefaultFunction
 	ld	xde, 5767168
 	call	RegisterTitle
 	pushw	3
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe5, 0x00, 0x0b, 0x40, 0xad
+	pushw	InitializeEast_Str_TT_MDTXPCG@hi16
+	pushw	InitializeEast_Str_TT_MDTXPCG@lo16
 	ld	xwa, 89
 	ld	xbc, NAKA_APFUNC_DefaultFunction
 	ld	xde, 5832704
 	call	RegisterTitle
 	pushw	3
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe5, 0x00, 0x0b, 0x4c, 0xad
+	pushw	InitializeEast_Str_TT_MDCOMP@hi16
+	pushw	InitializeEast_Str_TT_MDCOMP@lo16
 	ld	xwa, 90
 	ld	xbc, NAKA_APFUNC_DefaultFunction
 	ld	xde, 5898240
 	call	RegisterTitle
 	pushw	3
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe5, 0x00, 0x0b, 0x56, 0xad
+	pushw	InitializeEast_Str_TT_MDPMLCTL@hi16
+	pushw	InitializeEast_Str_TT_MDPMLCTL@lo16
 	ld	xwa, 91
 	ld	xbc, NAKA_APFUNC_DefaultFunction
 	ld	xde, 5963776
 	call	RegisterTitle
 	pushw	3
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe5, 0x00, 0x0b, 0x62, 0xad
+	pushw	InitializeEast_Str_TT_MDSETUP@hi16
+	pushw	InitializeEast_Str_TT_MDSETUP@lo16
 	ld	xwa, 92
 	ld	xbc, NAKA_APFUNC_DefaultFunction
 	ld	xde, 6029312
 	call	RegisterTitle
 	pushw	3
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe5, 0x00, 0x0b, 0x6e, 0xad
+	pushw	InitializeEast_Str_TT_ETVOCAL@hi16
+	pushw	InitializeEast_Str_TT_ETVOCAL@lo16
 	ld	xwa, 215
 	ld	xbc, NAKA_APFUNC_DefaultFunction
 	ld	xde, 14090240
 	call	RegisterTitle
 	pushw	3
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe5, 0x00, 0x0b, 0x7a, 0xad
+	pushw	InitializeEast_Str_TT_ETFADEIN@hi16
+	pushw	InitializeEast_Str_TT_ETFADEIN@lo16
 	ld	xwa, 216
 	ld	xbc, NAKA_APFUNC_DefaultFunction
 	ld	xde, 14155776
 	call	RegisterTitle
 	pushw	3
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe5, 0x00, 0x0b, 0x86, 0xad
+	pushw	InitializeEast_Str_TT_SPLITSEL@hi16
+	pushw	InitializeEast_Str_TT_SPLITSEL@lo16
 	ld	xwa, 236
 	ld	xbc, NAKA_APFUNC_DefaultFunction
 	ld	xde, NAKA_VIEW_SplitSetting
@@ -3771,8 +3771,8 @@ VocalistGridCheck_Join5:
 VocalistGridCheck_Skip6:
 	inc	1, wa
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0xfe, 0xee
+	pushw VocalistGrid_DispatchData_Str_Fmt2d@hi16
+	pushw VocalistGrid_DispatchData_Str_Fmt2d@lo16
 	ld	xwa, (xsp+14)
 	push	xwa
 	call	Sprintf_Locked
@@ -3787,8 +3787,8 @@ VocalistGridCheck_Switch2_Case11522:
 	ld	wa, (xbc)
 	inc	1, wa
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0x0a, 0xef
+	pushw	VocalistGrid_DispatchData_Str_Fmt3d@hi16
+	pushw	VocalistGrid_DispatchData_Str_Fmt3d@lo16
 	ld	xwa, (xsp+14)
 	push	xwa
 	call	Sprintf_Locked
@@ -3802,8 +3802,8 @@ VocalistGridCheck_Switch2_Case11524:
 	ld	wa, (xbc)
 	inc	1, wa
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0x16, 0xef
+	pushw VocalistGrid_DispatchData_Str_Fmtd@hi16
+	pushw VocalistGrid_DispatchData_Str_Fmtd@lo16
 	ld	xwa, (xsp+14)
 	push	xwa
 	call	Sprintf_Locked
@@ -3819,8 +3819,8 @@ VocalistGridCheck_Switch2_Case11526:
 	lda	xbc, (MidiPart_NoteNameTable:24)
 	ld	xwa, (xbc+wa)
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0x22, 0xef
+	pushw VocalistGrid_DispatchData_Str_Fmts@hi16
+	pushw VocalistGrid_DispatchData_Str_Fmts@lo16
 	ld	xwa, (xsp+16)
 	push	xwa
 	call	Sprintf_Locked
@@ -3881,8 +3881,8 @@ VocalistGridCheck_Join8:
 	jr	VocalistGridCheck_Join9
 VocalistGridCheck_Skip12:
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0x76, 0xef
+	pushw VocalistGrid_DispatchData_Str_CC_Fmt3d@hi16
+	pushw VocalistGrid_DispatchData_Str_CC_Fmt3d@lo16
 	ld	xwa, (xsp+14)
 	push	xwa
 	call	Sprintf_Locked
@@ -3917,8 +3917,8 @@ VocalistGridCheck_Switch2_Case11532:	; cases 11532, 11536
 	lda	xwa, (VocalistGrid_DispatchData_PtrTable:24)
 	ld	xwa, (xwa+bc)
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0x82, 0xef
+	pushw VocalistGrid_DispatchData_Str_Fmts_Fmts_Fmts@hi16
+	pushw VocalistGrid_DispatchData_Str_Fmts_Fmts_Fmts@lo16
 	ld	xwa, (xsp+24)
 	push	xwa
 	call	Sprintf_Locked
@@ -3998,8 +3998,8 @@ VocalistGridCheck_Skip15:
 	call	SndParam_LookupReadOnly
 	inc	1, hl
 	pushw	hl
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0xae, 0xef
+	pushw	VocalistGrid_CheckDispData_Str_Fmt2d@hi16
+	pushw	VocalistGrid_CheckDispData_Str_Fmt2d@lo16
 	lda	xwa, (xsp+26)
 	push	xwa
 	call	Sprintf_Locked
@@ -4015,8 +4015,8 @@ VocalistGrid_DispatchData_Case11522:
 	call	SndParam_LookupReadOnly
 	inc	1, hl
 	pushw	hl
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0xba, 0xef
+	pushw	VocalistGrid_CheckDispData_Str_Fmt3d@hi16
+	pushw	VocalistGrid_CheckDispData_Str_Fmt3d@lo16
 	lda	xwa, (xsp+26)
 	push	xwa
 	call	Sprintf_Locked
@@ -4031,8 +4031,8 @@ VocalistGrid_DispatchData_Case11524:
 	call	SndParam_LookupReadOnly
 	inc	1, hl
 	pushw	hl
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0xc6, 0xef
+	pushw	VocalistGrid_CheckDispData_Str_Fmtd@hi16
+	pushw	VocalistGrid_CheckDispData_Str_Fmtd@lo16
 	lda	xwa, (xsp+26)
 	push	xwa
 	call	Sprintf_Locked
@@ -4049,8 +4049,8 @@ VocalistGrid_DispatchData_Case11526:
 	lda	xwa, (MidiPart_NoteNameTable:24)
 	ld	xwa, (xwa+hl)
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0xd2, 0xef
+	pushw	VocalistGrid_CheckDispData_Str_Fmts@hi16
+	pushw	VocalistGrid_CheckDispData_Str_Fmts@lo16
 	lda	xwa, (xsp+28)
 	push	xwa
 	call	Sprintf_Locked
@@ -4115,8 +4115,8 @@ VocalistGridCheck_Skip21:
 	ld	xwa, 11530
 	call	SndParam_LookupReadOnly
 	pushw	hl
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0x26, 0xf0
+	pushw	VocalistGridCheck_Entry2_Str_CC_Fmt3d@hi16
+	pushw	VocalistGridCheck_Entry2_Str_CC_Fmt3d@lo16
 	lda	xwa, (xsp+26)
 	push	xwa
 	call	Sprintf_Locked
@@ -4151,8 +4151,8 @@ VocalistGrid_DispatchData_Case11532:
 	lda	xwa, (VocalistGrid_DispatchData_PtrTable:24)
 	ld	xwa, (xwa+hl)
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0x32, 0xf0
+	pushw	VocalistGridCheck_Entry2_Str_Fmts_Fmts_Fmts@hi16
+	pushw	VocalistGridCheck_Entry2_Str_Fmts_Fmts_Fmts@lo16
 	lda	xwa, (xsp+36)
 	push	xwa
 	call	Sprintf_Locked
@@ -4186,8 +4186,8 @@ VocalistGrid_DispatchData_Case11536:
 	lda	xwa, (VocalistGrid_DispatchData_PtrTable:24)
 	ld	xwa, (xwa+hl)
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0x3a, 0xf0
+	pushw	VocalistGridCheck_Entry2_Str_Fmts_Fmts_Fmts_2@hi16
+	pushw	VocalistGridCheck_Entry2_Str_Fmts_Fmts_Fmts_2@lo16
 	lda	xwa, (xsp+36)
 	push	xwa
 	call	Sprintf_Locked
@@ -5256,8 +5256,8 @@ SplitPoint_HandleNoteEvt:
 	lda	xbc, (SplitPoint_NoteNameTable:24)
 	ld	xwa, (xbc+wa)
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0x20, 0xf8
+	pushw SplitPointFunc_LocalInit_Strings@hi16
+	pushw SplitPointFunc_LocalInit_Strings@lo16
 	ld	xwa, (xde+8)
 	push	xwa
 	call	Sprintf_Locked

@@ -95,13 +95,19 @@ JumpInsert_ValueNames:	.incbin "includes/generated/naka_disk_warning.bin", 0x9DE
 ; [nakarest] it; reached through source references JumpInsertFunc (file_io/misc_ui.s: `add xbc,
 ; [nakarest] JumpInsertFunc_CaseTable`).
 JumpInsertFunc_CaseTable:
+	.short	JumpInsertFunc_OnGetLargeStep - JumpInsert_DispatchBody
+	.short	JumpInsertFunc_OnGetLargeStep - JumpInsert_DispatchBody
+	.short	JumpInsert_Error - JumpInsert_DispatchBody
+	.short	JumpInsert_Error - JumpInsert_DispatchBody
+	.short	JumpInsert_Error - JumpInsert_DispatchBody
+	.short	JumpInsertFunc_OnGetMax - JumpInsert_DispatchBody
+	.short	JumpInsert_Error - JumpInsert_DispatchBody
+	.short	JumpInsertFunc_OnGetRamAddress - JumpInsert_DispatchBody
+	.short	JumpInsertFunc_OnGetLargeStep - JumpInsert_DispatchBody
+	.short	JumpInsert_DispatchBody - JumpInsert_DispatchBody
 ; FilePriority_SettingNames -- 2 x pointer + 2 x char[12]: text of the file-priority bit: [0] " TECHNICS ", [1] "   SMF    "
 ; FilePriorityFunc (file_io/misc_ui.s) answers EVT_GET_BIT_STRING with entry [bit & 1], Strcpy'd to the caller's buffer;
 ; the bit is bit 0 of RAM 0x340F4 (its EVT_GET_BIT_ADDRESS), which FileIO_DiskEventDispatch tests for floppy/HD media.
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x1e, 0x00, 0x1e, 0x00, 0x26, 0x00, 0x26, 0x00
-	.byte	0x26, 0x00, 0x22, 0x00, 0x26, 0x00, 0x2a, 0x00
-	.byte	0x1e, 0x00, 0x00, 0x00
 FilePriority_SettingNames:	.incbin "includes/generated/naka_disk_warning.bin", 0xA4C, 0x20
 ; [nakarest] naka_disk_warning+0xa6c  +0xa6c..+0xb46 (0xea9718, 218 B)
 ; [nakarest] A table of 6 pointers into this piece (218 B at 0xea9718), then text; entry 0
@@ -123,25 +129,44 @@ IvIndexSwCtrlProc_Str_ISC:		.incbin "includes/generated/naka_disk_warning.bin", 
 IvIndexSwDelayProc_Str_ISD:		.incbin "includes/generated/naka_disk_warning.bin", 0xBF2, 0x4	; "ISD"
 IvWaitWinCtlProc_Str_WWC:		.incbin "includes/generated/naka_disk_warning.bin", 0xBF6, 0x4	; "WWC"
 FDC_WaitReady_CaseTable:
+	.short	FDC_CONFIG_VERIFY_Code - FDC_CONFIG_VERIFY_Code
+	.short	FDC_CONFIG_VERIFY_Case1 - FDC_CONFIG_VERIFY_Code
+	.short	FDC_CONFIG_VERIFY_Case2 - FDC_CONFIG_VERIFY_Code
+	.short	FDC_CONFIG_VERIFY_Case3 - FDC_CONFIG_VERIFY_Code
+	.short	FDC_CONFIG_VERIFY_Case4 - FDC_CONFIG_VERIFY_Code
+	.short	FDC_CONFIG_VERIFY_Case5 - FDC_CONFIG_VERIFY_Code
 ; FDC_COMMAND_DISPATCHER_CaseTable -- 12 x int16: the case offsets of FDC_COMMAND_DISPATCHER's compiled switch, relative to FDC_CMD_HANDLER_BASE
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x15, 0x00, 0x2b, 0x00, 0x41, 0x00
-	.byte	0x57, 0x00, 0x6c, 0x00
 FDC_COMMAND_DISPATCHER_CaseTable:
+	.short	FDC_CMD_HANDLER_BASE - FDC_CMD_HANDLER_BASE
+	.short	FDC_CheckDriveCount - FDC_CMD_HANDLER_BASE
+	.short	FDC_CheckDriveCount - FDC_CMD_HANDLER_BASE
+	.short	FDC_CheckDriveCount - FDC_CMD_HANDLER_BASE
+	.short	FDC_CheckDriveCount - FDC_CMD_HANDLER_BASE
+	.short	FDC_CheckDriveCount - FDC_CMD_HANDLER_BASE
+	.short	FDC_ReturnZero - FDC_CMD_HANDLER_BASE
+	.short	FDC_ReturnZero - FDC_CMD_HANDLER_BASE
+	.short	FDC_ReturnZero - FDC_CMD_HANDLER_BASE
+	.short	FDC_ErrorInvalidDrive - FDC_CMD_HANDLER_BASE
+	.short	FDC_ReturnZero - FDC_CMD_HANDLER_BASE
+	.short	FDC_CheckDriveCount - FDC_CMD_HANDLER_BASE
 ; FDC_CommandEntry_CopyParams_CaseTable -- 12 x int16: the case offsets of FDC_CommandEntry_CopyParams's compiled switch, relative to FDC_HANDLER_DISPATCH_BASE
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x0e, 0x00, 0x0e, 0x00, 0x0e, 0x00
-	.byte	0x0e, 0x00, 0x0e, 0x00, 0x08, 0x00, 0x08, 0x00
-	.byte	0x08, 0x00, 0x0b, 0x00, 0x08, 0x00, 0x0e, 0x00
 FDC_CommandEntry_CopyParams_CaseTable:
+	.short	FDC_HANDLER_DISPATCH_BASE - FDC_HANDLER_DISPATCH_BASE
+	.short	FDC_HANDLER_01 - FDC_HANDLER_DISPATCH_BASE
+	.short	FDC_HANDLER_02 - FDC_HANDLER_DISPATCH_BASE
+	.short	FDC_HANDLER_03 - FDC_HANDLER_DISPATCH_BASE
+	.short	FDC_HANDLER_04 - FDC_HANDLER_DISPATCH_BASE
+	.short	FDC_HANDLER_05 - FDC_HANDLER_DISPATCH_BASE
+	.short	FDC_HANDLER_06 - FDC_HANDLER_DISPATCH_BASE
+	.short	FDC_HANDLER_07 - FDC_HANDLER_DISPATCH_BASE
+	.short	FDC_HANDLER_08 - FDC_HANDLER_DISPATCH_BASE
+	.short	FDC_HANDLER_09 - FDC_HANDLER_DISPATCH_BASE
+	.short	FDC_HANDLER_10 - FDC_HANDLER_DISPATCH_BASE
+	.short	FDC_HANDLER_11 - FDC_HANDLER_DISPATCH_BASE
 ; CtrlPanel_DialStepByDelta -- 33 x int32_t: EVT_DIAL step for dial delta -16..+16 (index = delta + 16)
 ; CtrlPanel_HandleSerialPort (boot/main_title_ctrl_panel.s), panel packet with payload1 == 33: payload2 + 16,
 ; sign-extended, x4, loads the 32-bit step and posts it as the EVT_DIAL parameter.
 ; The table is odd-symmetric (+d -> -step(d)), so the panel delta sign is inverted, and |step| saturates at 7.
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x05, 0x00, 0x0d, 0x00, 0x15, 0x00
-	.byte	0x1d, 0x00, 0x25, 0x00, 0x2d, 0x00, 0x32, 0x00
-	.byte	0x37, 0x00, 0x3c, 0x00, 0x41, 0x00, 0x46, 0x00
 CtrlPanel_DialStepByDelta:	.incbin "includes/generated/naka_disk_warning.bin", 0xC36, 0x84
 ; CtrlPanel_SwitchRowBit -- 32 x uint32_t: entry i = 1 << i, the bit for panel switch row i
 ; SwbtB3_OnPanelEvent's 0xA9 path (boot/main_title_ctrl_panel.s) indexes it by the row in
@@ -155,27 +180,61 @@ CtrlPanel_SwitchRowBit:	.incbin "includes/generated/naka_disk_warning.bin", 0xCB
 GetSoundName_Str_DashedName:	.incbin "includes/generated/naka_disk_warning.bin", 0xD3A, 0x12
 ; MainPmanControl_CaseTable -- 6 x int16: the case offsets of MainPmanControl's compiled switch, relative to MainPmanCtrl_DispatchTable
 MainPmanControl_CaseTable:
+	.short	MainPmanCtrl_Case0 - MainPmanCtrl_DispatchTable
+	.short	MainPmanCtrl_Case1 - MainPmanCtrl_DispatchTable
+	.short	MainPmanCtrl_OnLswGet - MainPmanCtrl_DispatchTable
+	.short	MainPmanCtrl_OnLswPartPut - MainPmanCtrl_DispatchTable
+	.short	MainPmanCtrl_OnLswPartAdd - MainPmanCtrl_DispatchTable
+	.short	MainPmanCtrl_OnLswPartGet - MainPmanCtrl_DispatchTable
 ; CtrlPanel_DispatchByIndex_CaseTable -- 43 x int16: the case offsets of CtrlPanel_DispatchByIndex's compiled switch, relative to CtrlPanel_FrameDispatchTable
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x11, 0x00, 0x22, 0x00, 0x64, 0x00
-	.byte	0x7d, 0x00, 0x96, 0x00
 CtrlPanel_DispatchByIndex_CaseTable:
+	.short	CtrlPanel_FrameReturn - CtrlPanel_FrameDispatchTable
+	.short	CtrlPanel_AfterTopMargin - CtrlPanel_FrameDispatchTable
+	.short	CtrlPanel_AfterLeftMargin - CtrlPanel_FrameDispatchTable
+	.short	GetClientBox2_ThreePixelInset - CtrlPanel_FrameDispatchTable
+	.short	GetClientBox2_OnePixelShadowFrame - CtrlPanel_FrameDispatchTable
+	.short	GetClientBox2_TwoPixelShadowFrame - CtrlPanel_FrameDispatchTable
+	.short	CtrlPanel_AfterTopMargin - CtrlPanel_FrameDispatchTable
+	.short	CtrlPanel_AfterTopMargin - CtrlPanel_FrameDispatchTable
+	.short	CtrlPanel_AfterTopMargin - CtrlPanel_FrameDispatchTable
+	.short	CtrlPanel_AfterLeftMargin - CtrlPanel_FrameDispatchTable
+	.short	GetClientBox2_ThreePixelInset - CtrlPanel_FrameDispatchTable
+	.short	CtrlPanel_FrameDispatchTable - CtrlPanel_FrameDispatchTable
+	.short	GetClientBox2_LeftChevron12 - CtrlPanel_FrameDispatchTable
+	.short	GetClientBox2_LeftChevron16 - CtrlPanel_FrameDispatchTable
+	.short	GetClientBox2_LeftChevron24 - CtrlPanel_FrameDispatchTable
+	.short	GetClientBox2_LeftChevron32 - CtrlPanel_FrameDispatchTable
+	.short	GetClientBox2_LeftChevron48 - CtrlPanel_FrameDispatchTable
+	.short	GetClientBox2_LeftOnOffTab16 - CtrlPanel_FrameDispatchTable
+	.short	GetClientBox2_Case41 - CtrlPanel_FrameDispatchTable
+	.short	GetClientBox2_LeftOnOffTab32 - CtrlPanel_FrameDispatchTable
+	.short	GetClientBox2_Case43 - CtrlPanel_FrameDispatchTable
+	.short	GetClientBox2_RightChevron12 - CtrlPanel_FrameDispatchTable
+	.short	GetClientBox2_RightChevron16 - CtrlPanel_FrameDispatchTable
+	.short	GetClientBox2_RightChevron24 - CtrlPanel_FrameDispatchTable
+	.short	GetClientBox2_RightChevron32 - CtrlPanel_FrameDispatchTable
+	.short	GetClientBox2_RightChevron48 - CtrlPanel_FrameDispatchTable
+	.short	GetClientBox2_RightOnOffTab16 - CtrlPanel_FrameDispatchTable
+	.short	GetClientBox2_Case50 - CtrlPanel_FrameDispatchTable
+	.short	GetClientBox2_RightOnOffTab32 - CtrlPanel_FrameDispatchTable
+	.short	GetClientBox2_Case52 - CtrlPanel_FrameDispatchTable
+	.short	CtrlPanel_AfterTopMargin - CtrlPanel_FrameDispatchTable
+	.short	CtrlPanel_AfterLeftMargin - CtrlPanel_FrameDispatchTable
+	.short	CtrlPanel_AfterTopMargin - CtrlPanel_FrameDispatchTable
+	.short	CtrlPanel_AfterLeftMargin - CtrlPanel_FrameDispatchTable
+	.short	CtrlPanel_AfterTopMargin - CtrlPanel_FrameDispatchTable
+	.short	CtrlPanel_AfterLeftMargin - CtrlPanel_FrameDispatchTable
+	.short	CtrlPanel_AfterTopMargin - CtrlPanel_FrameDispatchTable
+	.short	CtrlPanel_AfterLeftMargin - CtrlPanel_FrameDispatchTable
+	.short	CtrlPanel_AfterLeftMargin - CtrlPanel_FrameDispatchTable
+	.short	CtrlPanel_AfterLeftMargin - CtrlPanel_FrameDispatchTable
+	.short	CtrlPanel_AfterLeftMargin - CtrlPanel_FrameDispatchTable
+	.short	CtrlPanel_AfterLeftMargin - CtrlPanel_FrameDispatchTable
+	.short	CtrlPanel_AfterLeftMargin - CtrlPanel_FrameDispatchTable
 ; GroupBox_ModeSwitchGroup -- 32 x u32: mode-switch group key per Mode-table slot (index = mode id & 0xFFFF)
 ; GroupBox_HandleStateCompare (EVT_SW_IN_MODE, param = requested mode) compares key[current] with key[requested]:
 ; equal -> EVT_CHANGE_MODE MD_NORMAL, else -> EVT_CHANGE_MODE requested.  E.g. MD_SOUND and MD_SOUNDEDIT share
 ; 0x101; MD_SEQ, MD_SEQ_REAL/EDIT/STEP share 0x106.  Slots 21-31 and MD_PS/MD_NORMAL are 0xFF.  The keys are only compared.
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x38, 0x01, 0x33, 0x01, 0xa5, 0x00, 0x04, 0x00
-	.byte	0xaa, 0x00, 0x08, 0x00, 0x33, 0x01, 0x33, 0x01
-	.byte	0x33, 0x01, 0xa5, 0x00, 0x04, 0x00, 0x00, 0x00
-	.byte	0xb4, 0x00, 0xca, 0x00, 0xe0, 0x00, 0x3c, 0x00
-	.byte	0x52, 0x00, 0xf6, 0x00, 0x01, 0x01, 0x68, 0x00
-	.byte	0x73, 0x00, 0xbf, 0x00, 0xd5, 0x00, 0xeb, 0x00
-	.byte	0x47, 0x00, 0x5d, 0x00, 0x15, 0x01, 0x20, 0x01
-	.byte	0x87, 0x00, 0x92, 0x00, 0x33, 0x01, 0xa5, 0x00
-	.byte	0x33, 0x01, 0xa5, 0x00, 0x33, 0x01, 0xa5, 0x00
-	.byte	0x33, 0x01, 0xa5, 0x00, 0xa5, 0x00, 0xa5, 0x00
-	.byte	0xa5, 0x00, 0xa5, 0x00, 0xa5, 0x00
 GroupBox_ModeSwitchGroup:	.incbin "includes/generated/naka_disk_warning.bin", 0xDAE, 0x80
 ; GroupBox_EventCaseMap -- 39 x uint8_t: case number (0-12) for each event GroupBoxProc switches on
 ; Slots 0-9 = EVT_SHOW..EVT_ALL_PAINT (0x1C00001+i), 10-19 = 0x1E0008B+i, 20-38 = 0x1E00091+i.
@@ -186,35 +245,64 @@ GroupBox_EventCaseMap:	.incbin "includes/generated/naka_disk_warning.bin", 0xE2E
 GroupBox_EventCaseMap_Pad:	.incbin "includes/generated/naka_disk_warning.bin", 0xE55, 0x1
 ; CtrlPanel_FuncDispatch_CaseTable -- 13 x int16: the case offsets of CtrlPanel_FuncDispatch's compiled switch, relative to GroupBox_HandlePartChange
 CtrlPanel_FuncDispatch_CaseTable:
+	.short	GroupBox_NavUpDown - GroupBox_HandlePartChange
+	.short	GroupBox_ForwardToBoxProc - GroupBox_HandlePartChange
+	.short	GroupBox_ReturnZero - GroupBox_HandlePartChange
+	.short	GroupBoxProc_OnRefreshApTask - GroupBox_HandlePartChange
+	.short	GroupBoxProc_OnRefreshSwEvent - GroupBox_HandlePartChange
+	.short	GroupBoxProc_Case5 - GroupBox_HandlePartChange
+	.short	GroupBoxProc_Case6 - GroupBox_HandlePartChange
+	.short	GroupBoxProc_OnShow - GroupBox_HandlePartChange
+	.short	GroupBoxProc_OnHide - GroupBox_HandlePartChange
+	.short	GroupBoxProc_OnSwIn - GroupBox_HandlePartChange
+	.short	GroupBoxProc_OnSwOn - GroupBox_HandlePartChange
+	.short	GroupBoxProc_OnSwOff - GroupBox_HandlePartChange
+	.short	GroupBoxProc_OnAllPaint - GroupBox_HandlePartChange
 ; GetEditSwPoint_CaseTable -- 13 x int16: the case offsets of GetEditSwPoint's compiled switch, relative to EditSwParam_Mode0
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0f, 0x0b, 0xc9, 0x0b, 0xc5, 0x0b, 0x2b, 0x0b
-	.byte	0x4e, 0x0b, 0x1d, 0x0b, 0x24, 0x0b, 0x4c, 0x05
-	.byte	0xad, 0x05, 0xa0, 0x07, 0x57, 0x06, 0xfa, 0x06
-	.byte	0xec, 0x05
 GetEditSwPoint_CaseTable:
+	.short	EditSwParam_TempoTable - EditSwParam_Mode0
+	.short	GetEditSwPoint_Column2 - EditSwParam_Mode0
+	.short	GetEditSwPoint_Column3 - EditSwParam_Mode0
+	.short	GetEditSwPoint_Column4 - EditSwParam_Mode0
+	.short	GetEditSwPoint_Column5 - EditSwParam_Mode0
+	.short	GetEditSwPoint_Column6 - EditSwParam_Mode0
+	.short	GetEditSwPoint_Column7 - EditSwParam_Mode0
+	.short	GetEditSwPoint_Column8 - EditSwParam_Mode0
+	.short	GetEditSwPoint_RightRow1 - EditSwParam_Mode0
+	.short	GetEditSwPoint_RightRow2 - EditSwParam_Mode0
+	.short	GetEditSwPoint_RightRow3 - EditSwParam_Mode0
+	.short	GetEditSwPoint_RightRow4 - EditSwParam_Mode0
+	.short	GetEditSwPoint_RightRow5 - EditSwParam_Mode0
 ; SetWallPaper_CaseTable -- 6 x int16: the case offsets of SetWallPaper's compiled switch, relative to SetWallPaper_DispatchData
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x46, 0x00, 0x4b, 0x00, 0x50, 0x00, 0x55, 0x00
-	.byte	0x5a, 0x00, 0x5f, 0x00, 0x64, 0x00, 0x69, 0x00
-	.byte	0x04, 0x00, 0x12, 0x00, 0x20, 0x00, 0x2e, 0x00
-	.byte	0x3c, 0x00
 SetWallPaper_CaseTable:
+	.short	SetWallPaper_DispatchData - SetWallPaper_DispatchData
+	.short	SetWallPaper_CaseData - SetWallPaper_DispatchData
+	.short	SetWallPaper_MenuWallBorder - SetWallPaper_DispatchData
+	.short	SetWallPaper_Default - SetWallPaper_DispatchData
+	.short	SetWallPaper_Loop - SetWallPaper_DispatchData
+	.short	SetWallPaper_Loop - SetWallPaper_DispatchData
 ; IvDirmdScreenProc_Str_K -- 15 x int16: the case offsets of IvDirmdScreenProc's compiled switch, relative to DirmdEmu_CaseB
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x0f, 0x00, 0x1c, 0x00, 0x09, 0x00
-	.byte	0x18, 0x00, 0x18, 0x00
 IvDirmdScreenProc_Str_K:
+	.short	IvDirmdScreenProc_OnShow - DirmdEmu_CaseB
+	.short	IvDirmdScreenProc_OnHide - DirmdEmu_CaseB
+	.short	DirmdEmu_CaseE - DirmdEmu_CaseB
+	.short	DirmdEmu_CaseE - DirmdEmu_CaseB
+	.short	DirmdEmu_CaseE - DirmdEmu_CaseB
+	.short	DirmdEmu_CaseE - DirmdEmu_CaseB
+	.short	IvDirmdScreenProc_OnSwIn - DirmdEmu_CaseB
+	.short	DirmdEmu_CaseE - DirmdEmu_CaseB
+	.short	DirmdEmu_CaseE - DirmdEmu_CaseB
+	.short	IvDirmdScreenProc_OnAllPaint - DirmdEmu_CaseB
+	.short	DirmdEmu_CaseE - DirmdEmu_CaseB
+	.short	DirmdEmu_CaseE - DirmdEmu_CaseB
+	.short	TaskWake_ZeroReturn - DirmdEmu_CaseB
+	.short	TaskWake_ZeroReturn - DirmdEmu_CaseB
+	.short	IvDirmdScreenProc_OnParaDraw - DirmdEmu_CaseB
 ; [nakarest] naka_disk_warning+0xeb4  +0xeb4..+0xf12 (0xea9b60, 94 B)
 ; [nakarest] A table of 4 pointers (94 B at 0xea9b60), then text; entry 0 points at
 ; [nakarest] "\xC1\x9C\x8C!\xC1\x9D\x8C\xF1f0\xFF"; no registered NAKA table points into it;
 ; [nakarest] reached through source references DirmdTitleFunc (audio/presentation_sound_nav.s:
 ; [nakarest] `ld xiy, DirmdTitle_EmulatorMethods`).
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x4b, 0x00, 0x5d, 0x00, 0x25, 0x01, 0x25, 0x01
-	.byte	0x25, 0x01, 0x25, 0x01, 0xd8, 0x00, 0x25, 0x01
-	.byte	0x25, 0x01, 0x71, 0x00, 0x25, 0x01, 0x25, 0x01
-	.byte	0xd4, 0x00, 0xd4, 0x00, 0xad, 0x00
 DirmdTitle_EmulatorMethods:			.incbin "includes/generated/naka_disk_warning.bin", 0xEB4, 0x10	; 4 x 32-bit pointer
 DirmdTitleFunc_Str_DirmdTitleNew:		.incbin "includes/generated/naka_disk_warning.bin", 0xEC4, 0x12	; "DirmdTitleNew();"
 DirmdTitleFunc_Str_DirmdTitleOld:		.incbin "includes/generated/naka_disk_warning.bin", 0xED6, 0x12	; "DirmdTitleOld();"
@@ -224,21 +312,38 @@ DirmdTitleFunc_Str_DirmdTitleCur:		.incbin "includes/generated/naka_disk_warning
 ; (DirmdEmulator subtracts EVT_NONE, rejects anything outside 0..15, then `jp t, (xix+bc)`).  Four events
 ; have cases; the rest go straight to DirmdEmu_DefaultCase.  Was a 32-byte slice of naka_disk_warning.bin.
 DirmdEmulator_CaseTable:
+	.short DirmdEmu_DefaultCase - DirmdEmulator_Dispatch	; EVT_NONE
+	.short DirmdEmu_DefaultCase - DirmdEmulator_Dispatch	; EVT_SHOW
+	.short DirmdEmulator_Dispatch - DirmdEmulator_Dispatch	; EVT_HIDE
+	.short DirmdEmu_DefaultCase - DirmdEmulator_Dispatch	; EVT_NONE+3
+	.short DirmdEmu_DefaultCase - DirmdEmulator_Dispatch	; EVT_NONE+4
+	.short DirmdEmu_DefaultCase - DirmdEmulator_Dispatch	; EVT_NONE+5
+	.short DirmdEmu_DefaultCase - DirmdEmulator_Dispatch	; EVT_ACTION
+	.short DirmdEmu_OnSwitchIn - DirmdEmulator_Dispatch	; EVT_SW_IN
+	.short DirmdEmu_DefaultCase - DirmdEmulator_Dispatch	; EVT_SW_ON
+	.short DirmdEmu_DefaultCase - DirmdEmulator_Dispatch	; EVT_SW_OFF
+	.short DirmdEmu_OnAllPaint - DirmdEmulator_Dispatch	; EVT_ALL_PAINT
+	.short DirmdEmu_DefaultCase - DirmdEmulator_Dispatch	; EVT_PAINT
+	.short DirmdEmu_DefaultCase - DirmdEmulator_Dispatch	; EVT_REPAINT
+	.short DirmdEmu_DefaultCase - DirmdEmulator_Dispatch	; EVT_DRAW
+	.short DirmdEmu_DefaultCase - DirmdEmulator_Dispatch	; EVT_SELE_DRAW
+	.short DirmdEmu_OnParaDraw - DirmdEmulator_Dispatch	; EVT_PARA_DRAW
 ; WindowProc_CaseTable -- 10 x int16: the case offsets of WindowProc's compiled switch, relative to WindowProc_EventDispatch
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x80, 0x00, 0x80, 0x00, 0x00, 0x00, 0x80, 0x00
-	.byte	0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0x53, 0x00
-	.byte	0x80, 0x00, 0x80, 0x00, 0x0f, 0x00, 0x80, 0x00
-	.byte	0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0x3b, 0x00
 WindowProc_CaseTable:
+	.short	WindowProc_EventDispatch - WindowProc_EventDispatch
+	.short	WindowProc_OnHide - WindowProc_EventDispatch
+	.short	WindowProc_DefaultHandler - WindowProc_EventDispatch
+	.short	WindowProc_DefaultHandler - WindowProc_EventDispatch
+	.short	WindowProc_DefaultHandler - WindowProc_EventDispatch
+	.short	WindowProc_DefaultHandler - WindowProc_EventDispatch
+	.short	WindowProc_OnSwIn - WindowProc_EventDispatch
+	.short	WindowProc_OnSwIn - WindowProc_EventDispatch
+	.short	WindowProc_OnSwIn - WindowProc_EventDispatch
+	.short	WindowProc_OnAllPaint - WindowProc_EventDispatch
 ; WndScroll_CharSetCaptions -- 3 x u32: the caption of each character set of the naming window, indexed by the set
 ; number in RAM 0x274DA (0 upper case, 1 lower case, 2 symbols, the order of AcNaming_PageCharLists).
 ; WndScroll_SendSelectionEvents (ui/ui_window_procs.s) scales the set by 4 and sends the string to view 0x1D
 ; with EVT_PARA_DRAW.
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0xc7, 0x00, 0xbf, 0x02, 0xbf, 0x02
-	.byte	0xbf, 0x02, 0xbf, 0x02, 0x4f, 0x02, 0x4f, 0x02
-	.byte	0x4f, 0x02, 0xe8, 0x01
 WndScroll_CharSetCaptions:	.incbin "includes/generated/naka_disk_warning.bin", 0xF46, 0xC
 ; WndScroll_CharSetCaptionText -- 42 x char: " !#$%&?.... ", "abc...123...", "ABC...123..." (NUL + 0xFF each),
 ; the strings WndScroll_CharSetCaptions points at.
@@ -446,13 +551,18 @@ AcNaming_FillCharUnderscore:	.incbin "includes/generated/naka_disk_warning.bin",
 AcNaming_FillCharSpace:	.incbin "includes/generated/naka_disk_warning.bin", 0x1248, 0x2
 ; WndEvt_DispatchByEventCode_CaseTable -- 9 x int16: the case offsets of WndEvt_DispatchByEventCode's compiled switch, relative to WndEvt_EventCodeDispatch
 WndEvt_DispatchByEventCode_CaseTable:
+	.short	WndEvt_EventCodeDispatch - WndEvt_EventCodeDispatch
+	.short	WndEvt_DispatchByEventCode_CursorRight - WndEvt_EventCodeDispatch
+	.short	WndEvt_DispatchByEventCode_PrevChar - WndEvt_EventCodeDispatch
+	.short	WndEvt_DispatchByEventCode_CharRowUpDown - WndEvt_EventCodeDispatch
+	.short	WndEvt_DispatchByEventCode_NextChar - WndEvt_EventCodeDispatch
+	.short	WndEvt_DispatchByEventCode_InsertBlank - WndEvt_EventCodeDispatch
+	.short	WndEvt_DispatchByEventCode_DeleteChar - WndEvt_EventCodeDispatch
+	.short	WndEvt_DispatchByEventCode_CenterName - WndEvt_EventCodeDispatch
+	.short	WndEvt_DispatchByEventCode_ClearName - WndEvt_EventCodeDispatch
 ; ModeEditProc_Str_ModeIdAndName: "0x%02X : %s": format of the mode edit box's caption -- the current mode's entry
 ;   number (low word of GetModeNow) and the name the mode returns for EVT_GET_NAME. Basis: readers + bytes -- the
 ;   TitleEdit box uses an identical string (TitleEdit_HandlePaint_Str_N0x_Fmt2X_Fmts).
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x2d, 0x00, 0x61, 0x00, 0xdd, 0x00
-	.byte	0xae, 0x02, 0x69, 0x03, 0xdf, 0x03, 0x55, 0x04
-	.byte	0x9e, 0x05
 ModeEditProc_Str_ModeIdAndName:			.incbin "includes/generated/naka_disk_warning.bin", 0x125C, 0xC
 TitleEdit_HandlePaint_Str_N0x_Fmt2X_Fmts:	.incbin "includes/generated/naka_disk_warning.bin", 0x1268, 0xC	; "0x%02X : %s"
 ; UserBitmapCheck_Bitmap24x24 -- a 24 x 24 bitmap, one byte per pixel.  UserBitmapCheck answers
@@ -514,23 +624,36 @@ PsGridBox_Scroll_Render_Str_PART_CHANNEL_OCTAVE_LOCAL:		.incbin "includes/genera
 PsGridBox_Scroll_Render_Str_RIGHT1_RIGHT2_LEFT_PART4_PART5:	.incbin "includes/generated/naka_disk_warning.bin", 0x1566, 0x36	; "|-|RIGHT1|RIGHT2|LEFT|PART4|PART5|PART6|PART7|PART8|"
 ; PsGridBoxProc_CaseTable -- 8 x int16: the case offsets of PsGridBoxProc's compiled switch, relative to PsGridBox_Init
 PsGridBoxProc_CaseTable:
+	.short	PsGridBoxProc_OnGetFixedColStr - PsGridBox_Init
+	.short	PsGridBoxProc_OnGetFixedRowStr - PsGridBox_Init
+	.short	PsGridBoxProc_OnGridDraw - PsGridBox_Init
+	.short	PsGridBoxProc_OnRequestGridDraw - PsGridBox_Init
+	.short	PsGridBoxProc_OnSetSelectedCel - PsGridBox_Init
+	.short	PsGridBoxProc_OnGetSelectedCel - PsGridBox_Init
+	.short	PsGridBox_Default - PsGridBox_Init
+	.short	PsGridBoxProc_OnCheckGridIndex - PsGridBox_Init
 ; AcGridBoxProc_CaseTable -- 7 x int16: the case offsets of AcGridBoxProc's compiled switch, relative to AcGridBox_Init
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xc3, 0x09, 0xca, 0x09, 0x87, 0x08, 0x81, 0x09
-	.byte	0xdf, 0x09, 0xbb, 0x0a, 0x0b, 0x0b, 0xdb, 0x0a
 AcGridBoxProc_CaseTable:
+	.short	AcGridBoxProc_OnIndexswUp - AcGridBox_Init
+	.short	AcGridBoxProc_OnIndexswDown - AcGridBox_Init
+	.short	AcGridBoxProc_OnIndexswUp - AcGridBox_Init
+	.short	AcGridBoxProc_OnIndexswDown - AcGridBox_Init
+	.short	AcGridBox_Default - AcGridBox_Init
+	.short	AcGridBox_CellSelect - AcGridBox_Init
+	.short	AcGridBox_CellSelect - AcGridBox_Init
 ; GridCheck_Str_CellColRow: "%d-%d": format GridCheck_CellSelect fills with the selected cell's column (high word of
 ;   the event parameter) and row (low word) before sending EVT_GRID_DRAW to the focus object. Basis: readers + bytes.
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x6b, 0x00, 0x16, 0x01, 0x6b, 0x00, 0x16, 0x01
-	.byte	0x00, 0x02, 0xe9, 0x01, 0xe9, 0x01
 GridCheck_Str_CellColRow:
 	.incbin "includes/generated/naka_disk_warning.bin", 0x15ba, 0x6
 ; GridCheck_CaseTable -- 7 x int16: the case offsets of GridCheck's compiled switch, relative to GridCheck_JumpEnd
 GridCheck_CaseTable:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x3f, 0x00, 0x00, 0x00, 0x00, 0x00
+	.short	GridCheck_JumpEnd - GridCheck_JumpEnd
+	.short	GridCheck_JumpEnd - GridCheck_JumpEnd
+	.short	GridCheck_JumpEnd - GridCheck_JumpEnd
+	.short	GridCheck_JumpEnd - GridCheck_JumpEnd
+	.short	GridCheck_Return - GridCheck_JumpEnd
+	.short	GridCheck_JumpEnd - GridCheck_JumpEnd
+	.short	GridCheck_JumpEnd - GridCheck_JumpEnd
 PsNumEditBox_Confirm_Str_Chr25:		.incbin "includes/generated/naka_disk_warning.bin", 0x15CE, 0x2	; "%"
 PsNumEditBox_Confirm_Str_Fmtd:		.incbin "includes/generated/naka_disk_warning.bin", 0x15D0, 0x4	; "%d"
 PsNumEditBox_Confirm_Str_d:		.incbin "includes/generated/naka_disk_warning.bin", 0x15D4, 0x2	; "d"
@@ -555,13 +678,19 @@ LswEditCheck_Str_Fmt3d:			.incbin "includes/generated/naka_disk_warning.bin", 0x
 RamEditCheck_JumpStart_Str_Fmt3d:	.incbin "includes/generated/naka_disk_warning.bin", 0x160A, 0x4	; "%3d"
 ; RamEditCheck_CaseTable -- 10 x int16: the case offsets of RamEditCheck's compiled switch, relative to RamEditCheck_JumpStart
 RamEditCheck_CaseTable:
+	.short	RamEditCheck_OnGetLargeStep - RamEditCheck_JumpStart
+	.short	RamEditCheck_OnGetSmallStep - RamEditCheck_JumpStart
+	.short	RamEditCheck_NotHandled - RamEditCheck_JumpStart
+	.short	RamEditCheck_NotHandled - RamEditCheck_JumpStart
+	.short	RamEditCheck_NotHandled - RamEditCheck_JumpStart
+	.short	RamEditCheck_OnGetMax - RamEditCheck_JumpStart
+	.short	RamEditCheck_OnGetMin - RamEditCheck_JumpStart
+	.short	RamEditCheck_OnGetRamAddress - RamEditCheck_JumpStart
+	.short	RamEditCheck_OnGetLargeStep - RamEditCheck_JumpStart
+	.short	RamEditCheck_JumpStart - RamEditCheck_JumpStart
 ; BitEditCheck_FalseTrueNames -- 2 x uint32_t + 2 x char[6]: {"FALSE", "TRUE "}, indexed by the bit's value (0/1)
 ; BitEditCheck (ui/ui_widget_defs.s), EVT_GET_BIT_STRING: (value & 1) * 4 selects the entry and Strcpy copies it
 ; to the caller's buffer; the bit is mask 0x8000 (EVT_GET_BIT) of RAM 0x276ce (EVT_GET_BIT_ADDRESS).
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x19, 0x00, 0x1d, 0x00, 0x36, 0x00, 0x36, 0x00
-	.byte	0x36, 0x00, 0x21, 0x00, 0x28, 0x00, 0x2f, 0x00
-	.byte	0x19, 0x00, 0x00, 0x00
 BitEditCheck_FalseTrueNames:	.incbin "includes/generated/naka_disk_warning.bin", 0x1622, 0x14
 ; [nakarest] naka_disk_warning+0x1636  +0x1636..+0x163a (0xeaa2e2, 4 B)
 ; [nakarest] Text (4 B at 0xeaa2e2), first string "ON"; no registered NAKA table points into it;
@@ -636,16 +765,27 @@ ButtonState_DispatchDSP_InlineData_Str_YES:	.incbin "includes/generated/naka_dis
 Str_No:	.incbin "includes/generated/naka_disk_warning.bin", 0x166A, 0x4
 ; ButtonState_DispatchDSP_CaseTable -- 17 x int16: the case offsets of ButtonState_DispatchDSP's compiled switch, relative to ButtonState_DispatchDSP_InlineData
 ButtonState_DispatchDSP_CaseTable:
+	.short	ButtonState_DispatchDSP_InlineData - ButtonState_DispatchDSP_InlineData
+	.short	ButtonState_DispatchDSP_CaptionUpChevron - ButtonState_DispatchDSP_InlineData
+	.short	ButtonState_DispatchDSP_CaptionDownChevron - ButtonState_DispatchDSP_InlineData
+	.short	ButtonState_Paint_DrawAligned - ButtonState_DispatchDSP_InlineData
+	.short	ButtonState_DispatchDSP_CaptionOn - ButtonState_DispatchDSP_InlineData
+	.short	ButtonState_DispatchDSP_CaptionOff - ButtonState_DispatchDSP_InlineData
+	.short	ButtonState_DispatchDSP_CaptionOk - ButtonState_DispatchDSP_InlineData
+	.short	ButtonState_DispatchDSP_CaptionLessThan - ButtonState_DispatchDSP_InlineData
+	.short	ButtonState_DispatchDSP_CaptionGreaterThan - ButtonState_DispatchDSP_InlineData
+	.short	ButtonState_DispatchDSP_CaptionYes - ButtonState_DispatchDSP_InlineData
+	.short	ButtonState_DispatchDSP_Case10 - ButtonState_DispatchDSP_InlineData
+	.short	ButtonState_Paint_DrawAligned - ButtonState_DispatchDSP_InlineData
+	.short	ButtonState_DispatchDSP_CaptionUpTriangle - ButtonState_DispatchDSP_InlineData
+	.short	ButtonState_DispatchDSP_CaptionDownTriangle - ButtonState_DispatchDSP_InlineData
+	.short	ButtonState_Paint_DrawAligned - ButtonState_DispatchDSP_InlineData
+	.short	ButtonState_DispatchDSP_CaptionLeftTriangle - ButtonState_DispatchDSP_InlineData
+	.short	ButtonState_DispatchDSP_CaptionRightTriangle - ButtonState_DispatchDSP_InlineData
 ; AcIndexEdit_SwitchDirCaseMap -- 17 x uint8_t: case 0-2 for the widget's instance byte (0..16)
 ; AcIndexEdit_DispatchDSP (ui/ui_widget_defs.s) reads instance +40 (PsWideESBox) or +38, bounds it 0..16,
 ; and jumps through AcIndexEdit_DispatchDSP_CaseTable: 0 = EVT_INDEXSW_DOWN if parameter bit 7 set
 ; else EVT_INDEXSW_UP, 1 = EVT_INDEXSW_UP, 2 = EVT_INDEXSW_DOWN.
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x13, 0x00, 0x1a, 0x00, 0x77, 0x00
-	.byte	0x2f, 0x00, 0x36, 0x00, 0x3d, 0x00, 0x44, 0x00
-	.byte	0x4b, 0x00, 0x60, 0x00, 0x67, 0x00, 0x77, 0x00
-	.byte	0x21, 0x00, 0x28, 0x00, 0x77, 0x00, 0x52, 0x00
-	.byte	0x59, 0x00
 AcIndexEdit_SwitchDirCaseMap:	.incbin "includes/generated/naka_disk_warning.bin", 0x1690, 0x11
 ; AcIndexEdit_SwitchDirCaseMap_Pad -- 1 x uint8_t: 0xFF fill so AcIndexEdit_DispatchDSP_CaseTable starts even
 AcIndexEdit_SwitchDirCaseMap_Pad:	.incbin "includes/generated/naka_disk_warning.bin", 0x16A1, 0x1
@@ -654,8 +794,9 @@ AcIndexEdit_SwitchDirCaseMap_Pad:	.incbin "includes/generated/naka_disk_warning.
 ; [nakarest] reached through source references AcIndexEdit_DispatchDSP (ui/ui_widget_defs.s: `ld
 ; [nakarest] xix, AcIndexEdit_DispatchDSP_CaseTable`).
 AcIndexEdit_DispatchDSP_CaseTable:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x27, 0x00, 0x39, 0x00
+	.short	AcIndexEdit_DispatchDSP_InlineData - AcIndexEdit_DispatchDSP_InlineData
+	.short	AcIndexEditSwProc_OnUpStyle - AcIndexEdit_DispatchDSP_InlineData
+	.short	AcIndexEditSwProc_OnDownStyle - AcIndexEdit_DispatchDSP_InlineData
 PsPageBox_Confirm_DrawValue_Str_PAGE_Fmtd_Fmtd:	.incbin "includes/generated/naka_disk_warning.bin", 0x16A8, 0xC	; "PAGE %d/%d"
 IvPageControl_GetText_Str_PAGE:			.incbin "includes/generated/naka_disk_warning.bin", 0x16B4, 0x6	; "PAGE"
 IvMainEditSw_GetText_Str_MnSw:			.incbin "includes/generated/naka_disk_warning.bin", 0x16BA, 0x6	; "MnSw"
@@ -792,16 +933,30 @@ ObjectProc_OnGetPropName_Str_romram:	.incbin "includes/generated/naka_disk_warni
 ObjectProc_OnGetPropName_Str_Empty:	.incbin "includes/generated/naka_disk_warning.bin", 0x1BF6, 0x2	; ""
 ; ObjectProc_CaseTable -- 20 x int16: the case offsets of ObjectProc's compiled switch, relative to AcTrkSw_Return
 ObjectProc_CaseTable:
+	.short	AcTrkSw_Return - AcTrkSw_Return
+	.short	ObjectProc_OnGetParentClass - AcTrkSw_Return
+	.short	ObjectProc_OnGetClassName - AcTrkSw_Return
+	.short	ObjectProc_OnGetProcedure - AcTrkSw_Return
+	.short	ObjectProc_OnCheckClass - AcTrkSw_Return
+	.short	ExitWindow_Init - AcTrkSw_Return
+	.short	ExitWindow_Init - AcTrkSw_Return
+	.short	ObjectProc_OnGetPropCount - AcTrkSw_Return
+	.short	ObjectProc_OnGetPropName - AcTrkSw_Return
+	.short	ObjectProc_OnGetPropString - AcTrkSw_Return
+	.short	ObjectProc_OnCopyProperty - AcTrkSw_Return
+	.short	ObjectProc_OnDumpProperty - AcTrkSw_Return
+	.short	ObjectProc_OnDumpPointer - AcTrkSw_Return
+	.short	ObjectProc_OnGetProperty - AcTrkSw_Return
+	.short	ObjectProc_OnSetProperty - AcTrkSw_Return
+	.short	ObjectProc_OnGetPropData - AcTrkSw_Return
+	.short	ObjectProc_OnGetPropDataCount - AcTrkSw_Return
+	.short	ObjectProc_OnGetInstanceSize - AcTrkSw_Return
+	.short	ObjectProc_OnGetPropChar - AcTrkSw_Return
+	.short	ObjectProc_OnAutoFree - AcTrkSw_Return
 ; NakaMode_InitRecord -- 1 x 14-byte struct {u32 mode_proc, s32 start_title, s16 user_id, u32 name}: blank Mode object
 ; InitializeObjectTable (ui/ui_widget_defs.s, loop InitializeObjectTable_Loop2) copies it (7 words) into all 32 records at
 ; RAM 0x328FC, then registers them as class Mode.  ModeProc reads +0 (GET_MODE_PROC/_ID), +4 (GET_START_TITLE),
 ; +8 (GET_USER_ID, sign-extended), +10 (GET_NAME).  Values: NAKA_APFUNC_DefaultFunction, -1, -1, "".
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x05, 0x00, 0x32, 0x00, 0x14, 0x00
-	.byte	0x41, 0x00, 0x9d, 0x02, 0x9d, 0x02, 0x99, 0x00
-	.byte	0xa8, 0x00, 0x50, 0x00, 0x12, 0x01, 0x4e, 0x01
-	.byte	0x8c, 0x01, 0xca, 0x01, 0x0d, 0x02, 0x4f, 0x02
-	.byte	0x5d, 0x02, 0x23, 0x00, 0x6e, 0x02, 0x8d, 0x02
 NakaMode_InitRecord:	.incbin "includes/generated/naka_disk_warning.bin", 0x1C20, 0xE
 ; NakaMode_InitName -- 2 x char: "" + 0xFF fill, name of a blank Mode object
 ; NakaMode_InitRecord.name points here.
@@ -824,16 +979,24 @@ RegisterObject_Str_EmptyName:	.incbin "includes/generated/naka_disk_warning.bin"
 UnRegisterObject_EmptyName:	.incbin "includes/generated/naka_disk_warning.bin", 0x1C4A, 0x2
 ; ClassProc_CaseTable -- 8 x int16: the case offsets of ClassProc's compiled switch, relative to ClassProc_Event_LoadFromWA
 ClassProc_CaseTable:
+	.short	ClassProc_Event_LoadFromWA - ClassProc_Event_LoadFromWA
+	.short	ClassProc_Event_LoadFromHL - ClassProc_Event_LoadFromWA
+	.short	ClassProc_Event_LoadFromIZ - ClassProc_Event_LoadFromWA
+	.short	ClassProc_OnGetInstanceSizeSp - ClassProc_Event_LoadFromWA
+	.short	ClassProc_OnCheckClassSp - ClassProc_Event_LoadFromWA
+	.short	ClassProc_OnGetPropStringEx - ClassProc_Event_LoadFromWA
+	.short	ClassProc_OnGetPropCountSp - ClassProc_Event_LoadFromWA
+	.short	ClassProc_OnGetPropNameSp - ClassProc_Event_LoadFromWA
 ; ModeProc_CaseTable -- 6 x int16: the case offsets of ModeProc's compiled switch, relative to NakaWidget_ReturnConst_0x1600006
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x05, 0x00, 0x0a, 0x00, 0x18, 0x00
-	.byte	0x20, 0x00, 0x7a, 0x00, 0x04, 0x01, 0x1e, 0x01
 ModeProc_CaseTable:
+	.short	ModeProc_OnGetModeProc - NakaWidget_ReturnConst_0x1600006
+	.short	ModeProc_OnGetModeProcId - NakaWidget_ReturnConst_0x1600006
+	.short	ModeProc_OnGetStartTitle - NakaWidget_ReturnConst_0x1600006
+	.short	ModeProc_OnGetModeNow - NakaWidget_ReturnConst_0x1600006
+	.short	ModeProc_OnGetModeOld - NakaWidget_ReturnConst_0x1600006
+	.short	ModeProc_OnGetUserId - NakaWidget_ReturnConst_0x1600006
 ; Mode_UnregisteredName -- 2 x char: "" plus a 0xFF alignment pad, the name UnregisteredMode (ui/ui_widget_defs.s)
 ; stores at +10 of a 14-byte mode record (RAM 0x328FC + 14*mode), where RegisterMode stores the mode's name ("MD_NORMAL" ...).
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x1c, 0x00, 0x3d, 0x00, 0x53, 0x00, 0x9a, 0x00
-	.byte	0xa2, 0x00, 0x6a, 0x00
 Mode_UnregisteredName:	.incbin "includes/generated/naka_disk_warning.bin", 0x1C68, 0x2
 ; UnregisteredTitle_EmptyName -- 2 x char: "" + 0xFF fill, title name of an unregistered title slot
 ; UnregisteredTitle (ui/ui_widget_defs.s) stores its address at +10 of the 22-byte title record
@@ -856,15 +1019,25 @@ TitleProc_EasySetHold0Tail:	.incbin "includes/generated/naka_disk_warning.bin", 
 TitleProc_EasySetHold1to11:	.incbin "includes/generated/naka_disk_warning.bin", 0x1C7A, 0x9A
 ; TitleProc_Str_j -- 6 x int16: the case offsets of TitleProc's compiled switch, relative to TitleProc_EventDispatch
 TitleProc_Str_j:
+	.short	TitleProc_OnGetUserId - TitleProc_EventDispatch
+	.short	TitleProc_OnGetTitleProc - TitleProc_EventDispatch
+	.short	TitleProc_OnGetTitleProcId - TitleProc_EventDispatch
+	.short	TitleProc_OnGetStartScreen - TitleProc_EventDispatch
+	.short	TitleProc_OnGetTitleNow - TitleProc_EventDispatch
+	.short	TitleProc_OnGetTitleOld - TitleProc_EventDispatch
 ; Title_InterruptTimeTicks -- 13 x s16: IntTimeID -> timeout of an interrupt screen, in ApTimer ticks (IT_1Sec..IT_10Sec = 42..417).
 ; SetInterruptTime (ui/ui_widget_defs.s) stores entry [id] at RAM 0x2BC32; TitleProc uses it as the interval of the
 ; EVT_RETURN_TITLE timer (ResetApTimer).  Ids are the IntTimeID enum: 0 IT_Off (0), 1 IT_Default, 2 IT_Hold (167 each).
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x6a, 0x00, 0x1c, 0x00, 0x3d, 0x00, 0x53, 0x00
-	.byte	0x9a, 0x00, 0xa2, 0x00
 Title_InterruptTimeTicks:	.incbin "includes/generated/naka_disk_warning.bin", 0x1D20, 0x1A
 ; ViewableProc_CaseTable -- 7 x int16: the case offsets of ViewableProc's compiled switch, relative to Viewable_GetClassProc
 ViewableProc_CaseTable:
+	.short	ViewableProc_OnPaint - Viewable_GetClassProc
+	.short	ViewableProc_OnRepaint - Viewable_GetClassProc
+	.short	Viewable_ReturnZero - Viewable_GetClassProc
+	.short	Viewable_ReturnZero - Viewable_GetClassProc
+	.short	Viewable_ReturnZero - Viewable_GetClassProc
+	.short	Viewable_DefaultDispatch - Viewable_GetClassProc
+	.short	Viewable_ReturnZero - Viewable_GetClassProc
 ; [nakarest] naka_disk_warning+0x1d48  +0x1d48..+0x1d52 (0xeaa9f4, 10 B)
 ; [nakarest] Text (10 B at 0xeaa9f4), first string "bool %s%d"; no registered NAKA table points
 ; [nakarest] into it; reached through source references BoxStyle7_Setup (ui/ui_widget_defs.s:
@@ -873,9 +1046,6 @@ ViewableProc_CaseTable:
 ;   "bool <prop name><index>" of the pointed-to member (EVT_DUMP_PROPERTY_EX uses BoxStyle7_CalcWidth_Str_Fmts_Fmtd,
 ;   "&%s%d"). Basis: readers + bytes -- BoxStyle7_Setup is pBoolProc's EVT_DUMP_POINTER_EX case; it gets the name with
 ;   EVT_GET_PROP_NAME and Sprintf_Locked(out, this, name, index).
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x4b, 0x00, 0x91, 0x00, 0xc2, 0x00, 0xc2, 0x00
-	.byte	0xc2, 0x00, 0x33, 0x03, 0xc2, 0x00
 pBoolProc_DumpPointerFmt:	.incbin "includes/generated/naka_disk_warning.bin", 0x1D48, 0xA
 ; [nakarest] naka_disk_warning+0x1d52  +0x1d52..+0x1d58 (0xeaa9fe, 6 B)
 ; [nakarest] Text (6 B at 0xeaa9fe), first string "&%s%d"; no registered NAKA table points into
@@ -1060,13 +1230,17 @@ ConstFlagProc_SetValue_Check_Str_Empty:	.incbin "includes/generated/naka_disk_wa
 CommonIDProc_DumpPointer_Str_Empty:	.incbin "includes/generated/naka_disk_warning.bin", 0x1F36, 0x2
 ; CommonIDProc_CaseTable -- 7 x int16: the case offsets of CommonIDProc's compiled switch, relative to CommonIDProc_OnGetPropDataSp
 CommonIDProc_CaseTable:
+	.short	CommonIDProc_ReturnZero - CommonIDProc_OnGetPropDataSp
+	.short	CommonIDProc_OnDumpPropertyEx - CommonIDProc_OnGetPropDataSp
+	.short	CommonIDProc_OnDumpPointerEx - CommonIDProc_OnGetPropDataSp
+	.short	CommonIDProc_OnDumpPropertyEx - CommonIDProc_OnGetPropDataSp
+	.short	CommonIDProc_OnSetPropertyEx - CommonIDProc_OnGetPropDataSp
+	.short	CommonIDProc_OnGetPropDataSp - CommonIDProc_OnGetPropDataSp
+	.short	CommonIDProc_OnGetPropDataCountSp - CommonIDProc_OnGetPropDataSp
 ; DrawIcons_PixelPairTable -- 256 x {u8 left, u8 right}: the two colour indices of the two 4-bpp pixels in one
 ; icon byte (high nibble = left pixel), nibble n -> n for n < 8, else 0xF0 + n.  DrawIcons_Impl writes
 ; entry [byte] as one word per icon byte, 12 bytes x 24 rows: a 24 x 24 icon.  Typed in
 ; ui_widgets/naka_disk_warning.c (scripts/converters/icon_pixel_pair_table_retype.py).
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x96, 0x00, 0x3e, 0x00, 0x23, 0x00, 0x3e, 0x00
-	.byte	0x9b, 0x00, 0x00, 0x00, 0x17, 0x00
 DrawIcons_PixelPairTable:	.incbin "includes/generated/naka_disk_warning.bin", 0x1F46, 0x200
 ; DrawBitmapFile_Str_BM: "BM": the BMP file signature DrawBitmapFile_Impl checks (String_Compare, 2 chars) before
 ;   drawing a bitmap file; mismatch returns. Basis: readers + bytes -- sibling of CaptureLcd_Str_BM; bytes 42 4D 00
@@ -1074,24 +1248,52 @@ DrawIcons_PixelPairTable:	.incbin "includes/generated/naka_disk_warning.bin", 0x
 DrawBitmapFile_Str_BM:	.incbin "includes/generated/naka_disk_warning.bin", 0x2146, 0x4
 ; DrawPartGroup_DispatchByType_CaseTable -- 16 x int16: the case offsets of DrawPartGroup_DispatchByType's compiled switch, relative to DrawPartGroup_TableJump_DefaultCase
 DrawPartGroup_DispatchByType_CaseTable:
+	.short	DrawDesignBox_PartGroupStyle_LeftChevron16 - DrawPartGroup_TableJump_DefaultCase
+	.short	DrawDesignBox_PartGroupStyle_LeftChevron24 - DrawPartGroup_TableJump_DefaultCase
+	.short	DrawDesignBox_PartGroupStyle_LeftChevron32 - DrawPartGroup_TableJump_DefaultCase
+	.short	DrawDesignBox_PartGroupStyle_LeftChevron48 - DrawPartGroup_TableJump_DefaultCase
+	.short	DrawDesignBox_PartGroupStyle_LeftOnOffTab16 - DrawPartGroup_TableJump_DefaultCase
+	.short	DrawDesignBox_PartGroupStyle_LeftOnOffTab24 - DrawPartGroup_TableJump_DefaultCase
+	.short	DrawDesignBox_PartGroupStyle_LeftOnOffTab32 - DrawPartGroup_TableJump_DefaultCase
+	.short	DrawDesignBox_PartGroupStyle_LeftOnOffTab48 - DrawPartGroup_TableJump_DefaultCase
+	.short	DrawDesignBox_PartGroupStyle_RightChevron16 - DrawPartGroup_TableJump_DefaultCase
+	.short	DrawDesignBox_PartGroupStyle_RightChevron24 - DrawPartGroup_TableJump_DefaultCase
+	.short	DrawDesignBox_PartGroupStyle_RightChevron32 - DrawPartGroup_TableJump_DefaultCase
+	.short	DrawDesignBox_PartGroupStyle_RightChevron48 - DrawPartGroup_TableJump_DefaultCase
+	.short	DrawDesignBox_PartGroupStyle_RightOnOffTab16 - DrawPartGroup_TableJump_DefaultCase
+	.short	DrawDesignBox_PartGroupStyle_RightOnOffTab24 - DrawPartGroup_TableJump_DefaultCase
+	.short	DrawDesignBox_PartGroupStyle_RightOnOffTab32 - DrawPartGroup_TableJump_DefaultCase
+	.short	DrawDesignBox_PartGroupStyle_RightOnOffTab48 - DrawPartGroup_TableJump_DefaultCase
 ; Draw_DispatchByPartType_CaseTable -- 25 x int16: the case offsets of Draw_DispatchByPartType's compiled switch, relative to Draw_StyledBoxWithFrame
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x63, 0x00, 0x91, 0x00, 0xbf, 0x00, 0xf3, 0x00
-	.byte	0x26, 0x01, 0x3c, 0x01, 0x52, 0x01, 0x6b, 0x01
-	.byte	0x7a, 0x00, 0xa8, 0x00, 0xd9, 0x00, 0x0c, 0x01
-	.byte	0x89, 0x01, 0x9f, 0x01, 0xb5, 0x01, 0xce, 0x01
 Draw_DispatchByPartType_CaseTable:
+	.short	Draw_StyledBoxWithFrame - Draw_StyledBoxWithFrame
+	.short	DrawDesignBox_Impl_FramedBox - Draw_StyledBoxWithFrame
+	.short	DrawDesignBox_Impl_FramedBox - Draw_StyledBoxWithFrame
+	.short	DrawDesignBox_Impl_FramedBox - Draw_StyledBoxWithFrame
+	.short	DrawDesignBox_Impl_DropShadow1px - Draw_StyledBoxWithFrame
+	.short	DrawDesignBox_Impl_DropShadow2px - Draw_StyledBoxWithFrame
+	.short	DrawDesignBox_IconStyle - Draw_StyledBoxWithFrame
+	.short	DrawDesignBox_PartGroupStyle - Draw_StyledBoxWithFrame
+	.short	DrawDesignBox_PartGroupStyle - Draw_StyledBoxWithFrame
+	.short	DrawDesignBox_PartGroupStyle - Draw_StyledBoxWithFrame
+	.short	DrawDesignBox_PartGroupStyle - Draw_StyledBoxWithFrame
+	.short	DrawDesignBox_PartGroupStyle - Draw_StyledBoxWithFrame
+	.short	DrawDesignBox_Impl_Bevel1px - Draw_StyledBoxWithFrame
+	.short	DrawDesignBox_Impl_Bevel2px - Draw_StyledBoxWithFrame
+	.short	DrawDesignBox_Impl_Bevel1px - Draw_StyledBoxWithFrame
+	.short	DrawDesignBox_Impl_Bevel2px - Draw_StyledBoxWithFrame
+	.short	DrawDesignBox_Impl_BlackEdgeBevel1px - Draw_StyledBoxWithFrame
+	.short	DrawDesignBox_Impl_BlackEdgeBevel2px - Draw_StyledBoxWithFrame
+	.short	DrawDesignBox_Impl_BlackEdgeBevel1px - Draw_StyledBoxWithFrame
+	.short	DrawDesignBox_Impl_BlackEdgeBevel2px - Draw_StyledBoxWithFrame
+	.short	DrawDesignBox_Impl_BlackEdgeBevelCorners - Draw_StyledBoxWithFrame
+	.short	DrawDesignBox_Impl_BevelCorners - Draw_StyledBoxWithFrame
+	.short	DrawDesignBox_Impl_BevelCorners - Draw_StyledBoxWithFrame
+	.short	DrawDesignBox_Impl_BevelTopCorners - Draw_StyledBoxWithFrame
+	.short	DrawDesignBox_Impl_Case204 - Draw_StyledBoxWithFrame
 ; Gfx_LoadSplashBMP_Str_BM: "BM": the BMP signature Gfx_LoadSplashBMP compares with the first 2 bytes of the 14-byte
 ;   file header it just read; mismatch fails validation. Basis: readers + bytes -- bytes 42 4D 00 FF; same use as
 ;   DrawBitmapFile and CaptureLcd_Str_BM.
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x1e, 0x00, 0x1e, 0x00, 0x1e, 0x00
-	.byte	0x15, 0x00, 0x0c, 0x00, 0x03, 0x03, 0x8d, 0x04
-	.byte	0x8d, 0x04, 0x8d, 0x04, 0x8d, 0x04, 0x8d, 0x04
-	.byte	0x11, 0x01, 0x0c, 0x01, 0x11, 0x01, 0x0c, 0x01
-	.byte	0xec, 0x01, 0xe7, 0x01, 0xec, 0x01, 0xe7, 0x01
-	.byte	0x65, 0x0f, 0x77, 0x09, 0x77, 0x09, 0xe1, 0x0b
-	.byte	0x9c, 0x0d
 Gfx_LoadSplashBMP_Str_BM:		.incbin "includes/generated/naka_disk_warning.bin", 0x219C, 0x4
 CaptureLcd_Str_BM:		.incbin "includes/generated/naka_disk_warning.bin", 0x21A0, 0x4	; "BM"
 CaptureLcd_Str_HKLCD_Fmt3d_BMP:	.incbin "includes/generated/naka_disk_warning.bin", 0x21A4, 0xE	; "HKLCD%03d.BMP"

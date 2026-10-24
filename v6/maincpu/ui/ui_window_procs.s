@@ -1231,8 +1231,8 @@ ModeEditProc_OnDraw:
 	call	GetModeNow
 	ld	qhl, 0
 	pushw	hl
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x0c, 0x9e
+	pushw	ModeEditProc_Str_ModeIdAndName@hi16
+	pushw	ModeEditProc_Str_ModeIdAndName@lo16
 	lda	xwa, (xsp+14)
 	push	xwa
 	call	Sprintf_Locked
@@ -1363,8 +1363,8 @@ TitleEditProc_OnDraw:
 	call	GetTitleNow
 	ld	qhl, 0
 	pushw	hl
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x18, 0x9e
+	pushw	TitleEdit_HandlePaint_Str_N0x_Fmt2X_Fmts@hi16
+	pushw	TitleEdit_HandlePaint_Str_N0x_Fmt2X_Fmts@lo16
 	lda	xwa, (xsp+14)
 	push	xwa
 	call	Sprintf_Locked
@@ -1701,8 +1701,8 @@ VwUserBitmapByName_HandlePaint:
 	lda	xwa, (xsp+8)
 	push	xwa
 	call	Strcpy
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x64, 0xa0
+	pushw	VwUserBitmapByName_Str_BmpExt@hi16
+	pushw	VwUserBitmapByName_Str_BmpExt@lo16
 	lda	xwa, (xsp+16)
 	push	xwa
 	call	Strcat
@@ -2347,8 +2347,8 @@ TextBox_SetupWordwrap:
 	jrl ule, TextBox_FreeBuffer
 
 TextBox_DrawLineLoop:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x82, 0xa0
+	pushw TextBox_Str_LineBreak@hi16
+	pushw TextBox_Str_LineBreak@lo16
 	push XIZ
 	call StrSearch_Init
 	inc	8, xsp
@@ -3008,16 +3008,16 @@ AcTempoBox_MatchTempoID:
 	ld	xwa, 4:i3
 	call	SndParam_LookupReadOnly
 	pushw	hl
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x84, 0xa0
+	pushw	AcTempoBox_MatchTempoID_Str_aa_Fmt3d@hi16
+	pushw	AcTempoBox_MatchTempoID_Str_aa_Fmt3d@lo16
 	lda	xwa, (xsp+10)
 	push	xwa
 	call	Sprintf_Locked
 	lda	xsp, (xsp+10)
 	jr	AcTempoBox_SendConfirmEvent
 AcTempoBox_CopyTempoString:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x8c, 0xa0
+	pushw	AcTempoBox_CopyTempoString_Str_aa@hi16
+	pushw	AcTempoBox_CopyTempoString_Str_aa@lo16
 	lda	xwa, (xsp+8)
 	push	xwa
 	call	Strcpy
@@ -3818,8 +3818,8 @@ PsListBox_SendEvent:
 	jr PsListBox_ReturnZero
 
 PsListBox_GetText:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x94, 0xa0
+	pushw	PsListBox_GetText_Str_No_My_Car_Day_Memory_AyaSam@hi16
+	pushw	PsListBox_GetText_Str_No_My_Car_Day_Memory_AyaSam@lo16
 	ld	xwa, (xsp+298)
 	push	xwa
 	call	Strcpy
@@ -6337,8 +6337,8 @@ Gfx_LoadSplashBMP:
 	cp IZ,0x000e
 	jrl nz, SplashScreen_Return
 	pushw 0x0002
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x4c, 0xad
+	pushw Gfx_LoadSplashBMP_Str_BM@hi16
+	pushw Gfx_LoadSplashBMP_Str_BM@lo16
 	lda xwa, (xsp + 0x0450)
 	push XWA
 	call String_Compare
@@ -7122,8 +7122,8 @@ CaptureLcd:
 	lda xsp, (xsp - 0x0446)
 	pushw iz
 	lda xwa, (xsp + 0x043a)
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x50, 0xad
+	pushw CaptureLcd_Str_BM@hi16
+	pushw CaptureLcd_Str_BM@lo16
 	push XWA
 	call Strcpy
 	lda xbc, (xsp + 0x0442)
@@ -7154,8 +7154,8 @@ CaptureLcd:
 	ld	(xbc+36), xwa
 	ld	xwa, (0x03044a:24)
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x54, 0xad
+	pushw	CaptureLcd_Str_HKLCD_Fmt3d_BMP@hi16
+	pushw	CaptureLcd_Str_HKLCD_Fmt3d_BMP@lo16
 	lda	xwa, (xsp+18)
 	push	xwa
 	call	Sprintf_Locked

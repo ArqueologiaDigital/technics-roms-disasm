@@ -514,8 +514,8 @@ PcgOutGridCheck_OnRamData:
 	ld	xwa, (xwa)
 	inc	1, xwa
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0x54, 0xff
+	pushw	PcgOutGridCheck_LocalInit_Strings@hi16
+	pushw	PcgOutGridCheck_LocalInit_Strings@lo16
 	push	xhl
 	call	Sprintf_Locked
 	lda	xsp, (xsp+12)
@@ -532,8 +532,8 @@ PcgOutGridCheckJumpTable_Entry_Code_Skip:
 	ld	xwa, (xwa)
 	inc	1, xwa
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0x5a, 0xff
+	pushw	PcgOutGridCheckJumpTable_Entry2_Str_Fmt3d@hi16
+	pushw	PcgOutGridCheckJumpTable_Entry2_Str_Fmt3d@lo16
 	push	xhl
 	call	Sprintf_Locked
 	lda	xsp, (xsp+12)
@@ -549,8 +549,8 @@ PcgOutGridCheckJumpTable_Entry_Code_Skip2:
 	ldw	(xbc), 2
 	cp	(0x24770:24), 255
 	jr	nz, PcgOutGridCheckJumpTable_Entry_Code_Skip3
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0x60, 0xff
+	pushw	PcgOutGridCheckJumpTable_Entry2_Str_Dash_Dash_Dash@hi16
+	pushw	PcgOutGridCheckJumpTable_Entry2_Str_Dash_Dash_Dash@lo16
 	push	xhl
 	call	Strcpy
 	inc	8, xsp
@@ -560,8 +560,8 @@ PcgOutGridCheckJumpTable_Entry_Code_Skip2:
 	ld	xbc, EVT_GRID_DRAW
 	call	SendEvent
 	ldw	(xsp+6), 4
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0x66, 0xff
+	pushw	PcgOutGridCheckJumpTable_Entry2_Str_OFF@hi16
+	pushw	PcgOutGridCheckJumpTable_Entry2_Str_OFF@lo16
 	lda	xwa, (xsp+16)
 	push	xwa
 	call	Strcpy
@@ -574,8 +574,8 @@ PcgOutGridCheckJumpTable_Entry_Code_Skip2:
 PcgOutGridCheckJumpTable_Entry_Code_Skip3:
 	ld	xwa, (xwa)
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0x6e, 0xff
+	pushw	PcgOutGridCheckJumpTable_Entry2_Str_Fmt3d_2@hi16
+	pushw	PcgOutGridCheckJumpTable_Entry2_Str_Fmt3d_2@lo16
 	push	xhl
 	call	Sprintf_Locked
 	lda	xsp, (xsp+12)
@@ -591,8 +591,8 @@ PcgOutGridCheckJumpTable_Entry_Code_Skip3:
 	sll	wa, 7
 	add	wa, bc
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0x74, 0xff
+	pushw	PcgOutGridCheckJumpTable_Entry2_Str_Fmt5d@hi16
+	pushw	PcgOutGridCheckJumpTable_Entry2_Str_Fmt5d@lo16
 	lda	xwa, (xsp+18)
 	push	xwa
 	call	Sprintf_Locked
@@ -610,8 +610,8 @@ PcgOutGridCheckJumpTable_Entry_Code_Skip4:
 	ld	xwa, (xwa)
 	cp	xwa, 0xffffffff
 	jr	nz, PcgOutGridCheckJumpTable_Entry_Code_Skip5
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0x7c, 0xff
+	pushw	PcgOutGridCheckJumpTable_Entry2_Str_Dash_Dash_Dash_2@hi16
+	pushw	PcgOutGridCheckJumpTable_Entry2_Str_Dash_Dash_Dash_2@lo16
 	push	xhl
 	call	Strcpy
 	inc	8, xsp
@@ -621,8 +621,8 @@ PcgOutGridCheckJumpTable_Entry_Code_Skip4:
 	ld	xbc, EVT_GRID_DRAW
 	call	SendEvent
 	ldw	(xsp+6), 3
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0x82, 0xff
+	pushw	PcgOutGridCheckJumpTable_Entry2_Str_OFF_2@hi16
+	pushw	PcgOutGridCheckJumpTable_Entry2_Str_OFF_2@lo16
 	lda	xwa, (xsp+16)
 	push	xwa
 	call	Strcpy
@@ -633,8 +633,8 @@ PcgOutGridCheckJumpTable_Entry_Code_Skip4:
 	ld	xbc, EVT_GRID_DRAW
 	call	SendEvent
 	ldw	(xsp+6), 4
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0x88, 0xff
+	pushw	PcgOutGridCheckJumpTable_Entry2_Str_OFF_3@hi16
+	pushw	PcgOutGridCheckJumpTable_Entry2_Str_OFF_3@lo16
 	lda	xwa, (xsp+16)
 	push	xwa
 	call	Strcpy
@@ -648,8 +648,8 @@ PcgOutGridCheckJumpTable_Entry_Code_Skip5:
 	ld	a, (0x2476e:24)
 	exts	wa
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0x90, 0xff
+	pushw	PcgOutGridCheckJumpTable_Entry2_Str_Fmt3d_3@hi16
+	pushw	PcgOutGridCheckJumpTable_Entry2_Str_Fmt3d_3@lo16
 	push	xhl
 	call	Sprintf_Locked
 	lda	xsp, (xsp+10)
@@ -661,8 +661,8 @@ PcgOutGridCheckJumpTable_Entry_Code_Skip5:
 	ldw	(xsp+6), 3
 	ld	xwa, (xiz+14)
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0x96, 0xff
+	pushw	PcgOutGridCheckJumpTable_Entry2_Str_Fmt3d_4@hi16
+	pushw	PcgOutGridCheckJumpTable_Entry2_Str_Fmt3d_4@lo16
 	lda	xwa, (xsp+20)
 	push	xwa
 	call	Sprintf_Locked
@@ -679,8 +679,8 @@ PcgOutGridCheckJumpTable_Entry_Code_Skip5:
 	sll	wa, 7
 	add	wa, bc
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0x9c, 0xff
+	pushw	PcgOutGridCheckJumpTable_Entry2_Str_Fmt5d_2@hi16
+	pushw	PcgOutGridCheckJumpTable_Entry2_Str_Fmt5d_2@lo16
 	lda	xwa, (xsp+18)
 	push	xwa
 	call	Sprintf_Locked
@@ -715,8 +715,8 @@ PcgOutCheckGridDataStructure:
 	inc 1,A
 	extz WA
 	pushw wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0xa4, 0xff
+	pushw PcgOutCheckGridDataStructure_Str_Fmt3d@hi16
+	pushw PcgOutCheckGridDataStructure_Str_Fmt3d@lo16
 	push XBC
 	call Sprintf_Locked
 	lda xsp, (xsp + 0x0a)
@@ -730,8 +730,8 @@ PcgOutCheck_SendPreset1:
 	inc	1, a
 	extz	wa
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0xaa, 0xff
+	pushw	PcgOutCheck_SendPreset1_Str_Fmt3d@hi16
+	pushw	PcgOutCheck_SendPreset1_Str_Fmt3d@lo16
 	push	xbc
 	call	Sprintf_Locked
 	lda	xsp, (xsp+10)
@@ -743,8 +743,8 @@ PcgOutCheck_SendPreset1:
 PcgOutCheck_SendPreset2:
 	cp	(0x24770:24), 255
 	jr	nz, PcgOutCheck_SendPreset2Named
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0xb0, 0xff
+	pushw	PcgOutCheck_SendPreset2_Str_Dash_Dash_Dash@hi16
+	pushw	PcgOutCheck_SendPreset2_Str_Dash_Dash_Dash@lo16
 	push	xbc
 	call	Strcpy
 	inc	8, xsp
@@ -754,8 +754,8 @@ PcgOutCheck_SendPreset2:
 	ld	xbc, EVT_GRID_DRAW
 	call	SendEvent
 	ldw	(xsp+6), 4
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0xb6, 0xff
+	pushw	PcgOutCheck_SendPreset2_Str_OFF@hi16
+	pushw	PcgOutCheck_SendPreset2_Str_OFF@lo16
 	lda	xwa, (xsp+16)
 	push	xwa
 	call	Strcpy
@@ -769,8 +769,8 @@ PcgOutCheck_SendPreset2Named:
 	ld	a, (149358:24)
 	exts	wa
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0xbe, 0xff
+	pushw	PcgOutCheck_SendPreset2Named_Str_Fmt3d@hi16
+	pushw	PcgOutCheck_SendPreset2Named_Str_Fmt3d@lo16
 	push	xbc
 	call	Sprintf_Locked
 	lda	xsp, (xsp+10)
@@ -787,8 +787,8 @@ PcgOutCheck_SendPreset2Named:
 	sll	wa, 7
 	add	wa, bc
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0xc4, 0xff
+	pushw	PcgOutCheck_SendPreset2Named_Str_Fmt5d@hi16
+	pushw	PcgOutCheck_SendPreset2Named_Str_Fmt5d@lo16
 	lda	xwa, (xsp+18)
 	push	xwa
 	call	Sprintf_Locked
@@ -802,8 +802,8 @@ PcgOutCheck_SendPreset3:
 	ldw	(xwa), 2
 	cp	(0x24770:24), 255
 	jr	nz, PcgOutCheck_SendPreset3Named
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0xcc, 0xff
+	pushw	PcgOutCheck_SendPreset3_Str_Dash_Dash_Dash@hi16
+	pushw	PcgOutCheck_SendPreset3_Str_Dash_Dash_Dash@lo16
 	push	xbc
 	call	Strcpy
 	inc	8, xsp
@@ -813,8 +813,8 @@ PcgOutCheck_SendPreset3:
 	ld	xbc, EVT_GRID_DRAW
 	call	SendEvent
 	ldw	(xsp+6), 3
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0xd2, 0xff
+	pushw	PcgOutCheck_SendPreset3_Str_OFF@hi16
+	pushw	PcgOutCheck_SendPreset3_Str_OFF@lo16
 	lda	xwa, (xsp+16)
 	push	xwa
 	call	Strcpy
@@ -825,8 +825,8 @@ PcgOutCheck_SendPreset3:
 	ld	xbc, EVT_GRID_DRAW
 	call	SendEvent
 	ldw	(xsp+6), 4
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0xd8, 0xff
+	pushw	PcgOutCheck_SendPreset3_Str_OFF_2@hi16
+	pushw	PcgOutCheck_SendPreset3_Str_OFF_2@lo16
 	lda	xwa, (xsp+16)
 	push	xwa
 	call	Strcpy
@@ -840,8 +840,8 @@ PcgOutCheck_SendPreset3Named:
 	ld	a, (149358:24)
 	exts	wa
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0xe0, 0xff
+	pushw	PcgOutCheck_SendPreset3Named_Str_Fmt3d@hi16
+	pushw	PcgOutCheck_SendPreset3Named_Str_Fmt3d@lo16
 	push	xbc
 	call	Sprintf_Locked
 	lda	xsp, (xsp+10)
@@ -854,8 +854,8 @@ PcgOutCheck_SendPreset3Named:
 	ld	a, (149360:24)
 	exts	wa
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0xe6, 0xff
+	pushw	PcgOutCheck_SendPreset3Named_Str_Fmt3d_2@hi16
+	pushw	PcgOutCheck_SendPreset3Named_Str_Fmt3d_2@lo16
 	lda	xwa, (xsp+18)
 	push	xwa
 	call	Sprintf_Locked
@@ -873,8 +873,8 @@ PcgOutCheck_SendPreset3Named:
 	sll	wa, 7
 	add	wa, bc
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0xec, 0xff
+	pushw	PcgOutCheck_SendPreset3Named_Str_Fmt5d@hi16
+	pushw	PcgOutCheck_SendPreset3Named_Str_Fmt5d@lo16
 	lda	xwa, (xsp+18)
 	push	xwa
 	call	Sprintf_Locked

@@ -537,49 +537,73 @@ MasterSetup_GetNameB_DrawString_Str_Fmtc_Fmtd_Fmtd:	aligned_string "%c:%d/%d  "
 ; "ON "/"OFF" (0x258/0x25C, 0x270/0x26C) by TchSensGrid.
 ; ---------------------------------------------------------------------------
 AcMstStyleAlpGridBoxProc_EventOffsets:	; read by AcMstStyleAlpGridBoxProc via MasterSetup_EventDispatch (AcMstStyleAlpGridBoxProc_EventOffsets)
+	.short	AcMstStyleAlp_Boundary_OnIndexswUp - AcMstStyleAlp_Boundary_Skip
+	.short	AcMstStyleAlp_Boundary_OnIndexswDown - AcMstStyleAlp_Boundary_Skip
+	.short	AcMstStyleAlp_Boundary_OnIndexswUp - AcMstStyleAlp_Boundary_Skip
+	.short	AcMstStyleAlp_Boundary_OnIndexswDown - AcMstStyleAlp_Boundary_Skip
+	.short	MasterSetup_InheritedProc_Fallback - AcMstStyleAlp_Boundary_Skip
+	.short	AcMstStyleAlpGridBoxProc_OnLswData - AcMstStyleAlp_Boundary_Skip
+	.short	AcMstStyleAlpGridBoxProc_OnLswData - AcMstStyleAlp_Boundary_Skip
 ; MstStyleAlp_AppendPadChar_Str_Blank1: String " " read by its owner: Strncat(buf, this, 1): one pad space. Basis:
 ;   readers + bytes.
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xe5, 0x02, 0x13, 0x05, 0xe5, 0x02, 0x13, 0x05
-	.byte	0x1d, 0x08, 0xf3, 0x07, 0xf3, 0x07
 MstStyleAlp_AppendPadChar_Str_Blank1:
 	aligned_string " "
 MstStyleAlp_OverflowStr_Str_Blank32:	aligned_string "                                "
 MstStyleAlp_AppendPadChar2_Str_Blank1:	aligned_string " "
 MstStyleAlpGridCheck_EventOffsets:	; read by MstStyleAlpGridCheck via MstStyleAlp_EventDispatch (MstStyleAlpGridCheck_EventOffsets)
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0xf1, 0x01, 0xf1, 0x01, 0xf1, 0x01
+	.short	MstStyleAlp_EventDispatch - MstStyleAlp_EventDispatch
+	.short	MstStyleAlp_EventDispatch - MstStyleAlp_EventDispatch
+	.short	MstStyleAlp_EventDispatch - MstStyleAlp_EventDispatch
+	.short	MstStyleAlp_EventDispatch - MstStyleAlp_EventDispatch
+	.short	EffectMode_SendEvent_Return - MstStyleAlp_EventDispatch
+	.short	EffectMode_SendEvent_Return - MstStyleAlp_EventDispatch
+	.short	EffectMode_SendEvent_Return - MstStyleAlp_EventDispatch
 AcMstStyle1GridBoxProc_EventOffsets:	; read by AcMstStyle1GridBoxProc via MstStyle_EventDispatch (AcMstStyle1GridBoxProc_EventOffsets)
+	.short	AcMstStyle1GridBoxProc_OnIndexswUp - MstStyle_EventDispatch
+	.short	AcMstStyle1GridBoxProc_OnIndexswDown - MstStyle_EventDispatch
+	.short	AcMstStyle1GridBoxProc_OnIndexswUp - MstStyle_EventDispatch
+	.short	AcMstStyle1GridBoxProc_OnIndexswDown - MstStyle_EventDispatch
+	.short	MstStyle_InheritedProc_Fallback - MstStyle_EventDispatch
+	.short	MstStyle_ForwardToChild - MstStyle_EventDispatch
+	.short	MstStyle_ForwardToChild - MstStyle_EventDispatch
 ; MstStyle1Grid_PadLeft_Loop_Str_Blank1: String " " read by its owner: MstStyle1Grid_PadLeft_Loop: Strncat(buf, this,
 ;   1). Basis: readers + bytes.
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x59, 0x00, 0x65, 0x01, 0x59, 0x00, 0x65, 0x01
-	.byte	0x10, 0x03, 0xf8, 0x02, 0xf8, 0x02
 MstStyle1Grid_PadLeft_Loop_Str_Blank1:
 	aligned_string " "
 MstStyle1Grid_OutOfRange_Str_Blank16:	aligned_string "                "
 MstStyle1Grid_PadLeft_LoopB_Str_Blank1:	aligned_string " "
 MstStyle1GridCheck_EventOffsets:	; read by MstStyle1GridCheck via MstStyle1Grid_EventDispatch (MstStyle1GridCheck_EventOffsets)
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x6a, 0x01, 0x00, 0x00, 0x00, 0x00
+	.short	MstStyle1Grid_EventDispatch - MstStyle1Grid_EventDispatch
+	.short	MstStyle1Grid_EventDispatch - MstStyle1Grid_EventDispatch
+	.short	MstStyle1Grid_EventDispatch - MstStyle1Grid_EventDispatch
+	.short	MstStyle1Grid_EventDispatch - MstStyle1Grid_EventDispatch
+	.short	MstStyle1Grid_Epilogue - MstStyle1Grid_EventDispatch
+	.short	MstStyle1Grid_EventDispatch - MstStyle1Grid_EventDispatch
+	.short	MstStyle1Grid_EventDispatch - MstStyle1Grid_EventDispatch
 MstStyle1Sub_GetNameB_DrawString_Str_Fmtd_Fmtd:	aligned_string "%d/%d"
 AcMstStyle1SubGridBoxProc_EventOffsets:	; read by AcMstStyle1SubGridBoxProc via MstStyle1_EventDispatch (AcMstStyle1SubGridBoxProc_EventOffsets)
+	.short	AcMstStyle1SubGridBoxProc_OnIndexswUp - MstStyle1_EventDispatch
+	.short	AcMstStyle1SubGridBoxProc_OnIndexswDown - MstStyle1_EventDispatch
+	.short	AcMstStyle1SubGridBoxProc_OnIndexswUp - MstStyle1_EventDispatch
+	.short	AcMstStyle1SubGridBoxProc_OnIndexswDown - MstStyle1_EventDispatch
+	.short	MstStyle1Sub_InheritedFallback - MstStyle1_EventDispatch
+	.short	MstStyle1Sub_ForwardToChild - MstStyle1_EventDispatch
+	.short	MstStyle1Sub_ForwardToChild - MstStyle1_EventDispatch
 ; MstStyle1SubGrid_PadLeft_Loop_Str_Blank1: String " " read by its owner: MstStyle1SubGrid_PadLeft_Loop: Strncat(buf,
 ;   this, 1). Basis: readers + bytes.
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xcc, 0x01, 0xfa, 0x02, 0xcc, 0x01, 0xfa, 0x02
-	.byte	0x29, 0x05, 0x11, 0x05, 0x11, 0x05
 MstStyle1SubGrid_PadLeft_Loop_Str_Blank1:
 	aligned_string " "
 MstStyle1SubGrid_OutOfRange_Str_Blank16:	aligned_string "                "
 MstStyle1SubGrid_PadLeft_LoopB_Str_Blank1:
 	aligned_string " "
 MstStyle1SubGridCheck_EventOffsets:	; read by MstStyle1SubGridCheck via MstStyle1Sub_EventDispatch (MstStyle1SubGridCheck_EventOffsets)
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x5e, 0x01, 0x00, 0x00, 0x00, 0x00
+	.short	MstStyle1Sub_EventDispatch - MstStyle1Sub_EventDispatch
+	.short	MstStyle1Sub_EventDispatch - MstStyle1Sub_EventDispatch
+	.short	MstStyle1Sub_EventDispatch - MstStyle1Sub_EventDispatch
+	.short	MstStyle1Sub_EventDispatch - MstStyle1Sub_EventDispatch
+	.short	MstStyle1SubGrid_Epilogue - MstStyle1Sub_EventDispatch
+	.short	MstStyle1Sub_EventDispatch - MstStyle1Sub_EventDispatch
+	.short	MstStyle1Sub_EventDispatch - MstStyle1Sub_EventDispatch
 MstStyle2_GetNameB_DrawString_Str_Fmts:		aligned_string "%s:"
 MstStyle2_GetNameB_DrawString_Str_Blank17:	aligned_string "                 "
 MstStyle2_GetNameB_DrawString_Str_Blank5:
@@ -592,11 +616,15 @@ MstStyle2_NameB_DrawLower_Str_TEMPO:
 	aligned_string "TEMPO"
 MstStyle2_NameB_Render_Str_Fmts:	aligned_string "%s"
 AcMstStyle2GridBoxProc_EventOffsets:	; read by AcMstStyle2GridBoxProc via MstStyle1Page_EventDispatch (AcMstStyle2GridBoxProc_EventOffsets)
+	.short	AcMstStyle2GridBoxProc_OnIndexswUp - MstStyle1Page_EventDispatch
+	.short	AcMstStyle2GridBoxProc_OnIndexswDown - MstStyle1Page_EventDispatch
+	.short	AcMstStyle2GridBoxProc_OnIndexswUp - MstStyle1Page_EventDispatch
+	.short	AcMstStyle2GridBoxProc_OnIndexswDown - MstStyle1Page_EventDispatch
+	.short	MstStyle2_InheritedFallback - MstStyle1Page_EventDispatch
+	.short	MstStyle2_ForwardToChild - MstStyle1Page_EventDispatch
+	.short	MstStyle2_ForwardToChild - MstStyle1Page_EventDispatch
 ; MstGrid2_PadLeft_LoopA_Str_Blank1: String " " read by its owner: MstGrid2_PadLeft_LoopA: Strncat(buf, this, 1).
 ;   Basis: readers + bytes.
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x5a, 0x05, 0x6a, 0x07, 0x5a, 0x05, 0x6a, 0x07
-	.byte	0xae, 0x0b, 0x96, 0x0b, 0x96, 0x0b
 MstGrid2_PadLeft_LoopA_Str_Blank1:
 	aligned_string " "
 MstGrid2_OutOfRange_LowCol_Str_Blank32:
@@ -613,15 +641,23 @@ MstGrid2_OutOfRange_HighCol2_Str_Blank32:
 MstGrid2_OutOfRange_BeyondMax_Str_Blank32:
 	aligned_string "                                "
 MstStyle2GridCheck_EventOffsets:	; read by MstStyle2GridCheck via MstGrid2_ScrollJumpTable (MstStyle2GridCheck_EventOffsets)
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0xdb, 0x02, 0xdb, 0x02, 0xdb, 0x02
+	.short	MstGrid2_ScrollJumpTable - MstGrid2_ScrollJumpTable
+	.short	MstGrid2_ScrollJumpTable - MstGrid2_ScrollJumpTable
+	.short	MstGrid2_ScrollJumpTable - MstGrid2_ScrollJumpTable
+	.short	MstGrid2_ScrollJumpTable - MstGrid2_ScrollJumpTable
+	.short	MstGrid2_Return - MstGrid2_ScrollJumpTable
+	.short	MstGrid2_Return - MstGrid2_ScrollJumpTable
+	.short	MstGrid2_Return - MstGrid2_ScrollJumpTable
 AcTchSensGridBoxProc_EventOffsets:	; read by AcTchSensGridBoxProc via MstStyle2_EventDispatch (AcTchSensGridBoxProc_EventOffsets)
+	.short	AcTchSensGridBoxProc_OnIndexswUp - MstStyle2_EventDispatch
+	.short	AcTchSensGridBoxProc_OnIndexswDown - MstStyle2_EventDispatch
+	.short	AcTchSensGridBoxProc_OnIndexswUp - MstStyle2_EventDispatch
+	.short	AcTchSensGridBoxProc_OnIndexswDown - MstStyle2_EventDispatch
+	.short	TchSens_InheritedFallback - MstStyle2_EventDispatch
+	.short	AcTchSensGridBoxProc_OnLswData - MstStyle2_EventDispatch
+	.short	AcTchSensGridBoxProc_OnLswData - MstStyle2_EventDispatch
 ; TchSensGridCheck_OnLswData_Str_Fmt3d_3: String "%3d" read by its owner: Sprintf_Locked format. Basis: readers +
 ;   bytes.
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x6a, 0x00, 0x27, 0x01, 0x6a, 0x00, 0x27, 0x01
-	.byte	0x34, 0x02, 0x0c, 0x02, 0x0c, 0x02
 TchSensGridCheck_OnLswData_Str_Fmt3d_3:
 	aligned_string "%3d"
 TchSensGridCheck_OnLswData_Str_ON:
@@ -638,10 +674,21 @@ TchSensGrid_CheckCell_1_4_Str_ON:
 TchSensGrid_CheckCell_1_5_Str_Fmt3d:	aligned_string "%3d"
 TchSensGrid_CheckCell_1_6_Str_Fmt3d:	aligned_string "%3d"
 TchSensGridCheck_EventOffsets:	; read by TchSensGridCheck via TchSensGrid_EventDispatch (TchSensGridCheck_EventOffsets)
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x7c, 0x00, 0x00, 0x00, 0x7c, 0x00
-	.byte	0xf8, 0x02, 0xfe, 0x00, 0xfe, 0x00
+	.short	TchSensGrid_EventDispatch - TchSensGrid_EventDispatch
+	.short	TchSensGridCheck_OnIndexswDown - TchSensGrid_EventDispatch
+	.short	TchSensGrid_EventDispatch - TchSensGrid_EventDispatch
+	.short	TchSensGridCheck_OnIndexswDown - TchSensGrid_EventDispatch
+	.short	TchSensGrid_ReturnZero - TchSensGrid_EventDispatch
+	.short	TchSensGridCheck_OnLswData - TchSensGrid_EventDispatch
+	.short	TchSensGridCheck_OnLswData - TchSensGrid_EventDispatch
 AcFSWAssGridBoxProc_EventOffsets:	; read by AcFSWAssGridBoxProc via TchSens_EventDispatch (AcFSWAssGridBoxProc_EventOffsets)
+	.short	AcFSWAssGridBoxProc_OnIndexswUp - TchSens_EventDispatch
+	.short	AcFSWAssGridBoxProc_OnIndexswDown - TchSens_EventDispatch
+	.short	AcFSWAssGridBoxProc_OnIndexswUp - TchSens_EventDispatch
+	.short	AcFSWAssGridBoxProc_OnIndexswDown - TchSens_EventDispatch
+	.short	FSWAss_InheritedFallback - TchSens_EventDispatch
+	.short	AcFSWAssGridBoxProc_OnLswData - TchSens_EventDispatch
+	.short	AcFSWAssGridBoxProc_OnLswData - TchSens_EventDispatch
 ; FswAssign_FunctionCodes / FswAssign_FunctionNames: the foot-switch
 ; assignable functions.  FSWAssGrid_EventDispatch (ui/ui_mode_handlers.s)
 ; indexes the codes with `ld c, (xbc+hl)` (FswAssign_FunctionCodes)
@@ -649,9 +696,6 @@ AcFSWAssGridBoxProc_EventOffsets:	; read by AcFSWAssGridBoxProc via TchSens_Even
 ; `ld xwa, (xbc+hl)` (FswAssign_FunctionNames).  31 codes -- 0x00
 ; is OFF, then 0x90.. in the order of the names -- and a 0xFF terminator;
 ; 31 name pointers, entry k naming code k.
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x6a, 0x00, 0x0e, 0x01, 0x6a, 0x00, 0x0e, 0x01
-	.byte	0x02, 0x02, 0xda, 0x01, 0xda, 0x01
 FswAssign_FunctionCodes:
 	.byte 0x00, 0x90, 0x91, 0xb3, 0xb4, 0xc0, 0xc1, 0xc2, 0xc3, 0xc4, 0xc5, 0xc6, 0xc7, 0xb2, 0x88, 0x92
 	.byte 0x93, 0x94, 0x95, 0x40, 0x96, 0x99, 0x97, 0x98, 0xad, 0xb0, 0xb1, 0xb8, 0xb9, 0xb6, 0xb7, 0xff
@@ -728,13 +772,20 @@ FSWAssGrid_CheckCell_1_6_Str_Fmts:	aligned_string "%s"
 FSWAssGrid_CheckCell_1_7_Str_Fmts:	aligned_string "%s"
 FSWAssGrid_CheckCell_1_8_Str_Fmts:	aligned_string "%s"
 FSWAssGridCheck_EventOffsets:	; read by FSWAssGridCheck via FSWAssGrid_EventDispatch (FSWAssGridCheck_EventOffsets)
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x2f, 0x02, 0x00, 0x00, 0x2f, 0x02
-	.byte	0xea, 0x08, 0x5b, 0x04, 0x5b, 0x04
+	.short	FSWAssGrid_EventDispatch - FSWAssGrid_EventDispatch
+	.short	FSWAssGridCheck_OnIndexswDown - FSWAssGrid_EventDispatch
+	.short	FSWAssGrid_EventDispatch - FSWAssGrid_EventDispatch
+	.short	FSWAssGridCheck_OnIndexswDown - FSWAssGrid_EventDispatch
+	.short	AudioTable_ReturnZero - FSWAssGrid_EventDispatch
+	.short	FSWAssGridCheck_OnLswData - FSWAssGrid_EventDispatch
+	.short	FSWAssGridCheck_OnLswData - FSWAssGrid_EventDispatch
 FswAsIniFunc_EventOffsets:	; read by FswAsIniFunc via FswAsIni_EventDispatch (FswAsIniFunc_EventOffsets), six entries
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x06, 0x00, 0x00, 0x00, 0x06, 0x00, 0x06, 0x00
-	.byte	0x06, 0x00, 0x06, 0x00
+	.short	SeqLoadFunc_ReturnZero - FswAsIni_EventDispatch
+	.short	FswAsIni_EventDispatch - FswAsIni_EventDispatch
+	.short	SeqLoadFunc_ReturnZero - FswAsIni_EventDispatch
+	.short	SeqLoadFunc_ReturnZero - FswAsIni_EventDispatch
+	.short	SeqLoadFunc_ReturnZero - FswAsIni_EventDispatch
+	.short	SeqLoadFunc_ReturnZero - FswAsIni_EventDispatch
 ParamStr_Table_01:
 	.long ParamStr01_RhythmSelection
 	.long ParamStr01_Tempo
@@ -785,13 +836,17 @@ PmExpFilter_DrawCellBank2_Str_Fmts:	.byte 0x25, 0x73, 0x00, 0xff
 PmExpFilter_DrawCellBank2_Str_PAGE_3_3:
 	aligned_string "PAGE 3/3"
 AcPmExpFilterGridBoxProc_EventOffsets:	; read by AcPmExpFilterGridBoxProc via PmemPageCtl_EventDispatch (AcPmExpFilterGridBoxProc_EventOffsets)
+	.short	AcPmExpFilterGridBoxProc_OnIndexswUp - PmemPageCtl_EventDispatch
+	.short	AcPmExpFilterGridBoxProc_OnIndexswDown - PmemPageCtl_EventDispatch
+	.short	AcPmExpFilterGridBoxProc_OnIndexswUp - PmemPageCtl_EventDispatch
+	.short	AcPmExpFilterGridBoxProc_OnIndexswDown - PmemPageCtl_EventDispatch
+	.short	PmExpFilter_DefaultInherited - PmemPageCtl_EventDispatch
+	.short	AcPmExpFilterGridBoxProc_OnLswData - PmemPageCtl_EventDispatch
+	.short	AcPmExpFilterGridBoxProc_OnLswData - PmemPageCtl_EventDispatch
 ; PmExpFilter_CellKeys / PmExpFilter_AltKeys: two lists of nine u32 sound-
 ; parameter KEYS -- all 18 are the +0x00 key of an 18-byte descriptor in this
 ; file -- that PmExpFilterGridCheck picks with `ld xwa, (xbc+wa)` (cell
 ; index 2..10) through PmExpFilter_CellKeys / PmExpFilter_AltKeys.
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xbe, 0x02, 0xa7, 0x03, 0xbe, 0x02, 0xa7, 0x03
-	.byte	0x4e, 0x05, 0xc8, 0x04, 0xc8, 0x04
 PmExpFilter_CellKeys:
 	.long 0x00002900, 0x00002901, 0x00002904
 	.long 0x00002902, 0x00002903, 0x0000290a
@@ -820,15 +875,23 @@ PmExpFilterCheck_AltDecode_Str_OFF:
 	aligned_string "OFF"
 PmExpFilterCheck_PushDefault_Str_Blank3:	aligned_string "   "
 PmExpFilterGridCheck_EventOffsets:	; read by PmExpFilterGridCheck via PmExpFilter_EventDispatch (PmExpFilterGridCheck_EventOffsets)
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x7c, 0x00, 0x00, 0x00, 0x7c, 0x00
-	.byte	0x97, 0x02, 0xfa, 0x00, 0xfa, 0x00
+	.short	PmExpFilter_EventDispatch - PmExpFilter_EventDispatch
+	.short	PmExpFilterGridCheck_OnIndexswDown - PmExpFilter_EventDispatch
+	.short	PmExpFilter_EventDispatch - PmExpFilter_EventDispatch
+	.short	PmExpFilterGridCheck_OnIndexswDown - PmExpFilter_EventDispatch
+	.short	SeqLoad_StoreReturnZero - PmExpFilter_EventDispatch
+	.short	PmExpFilterGridCheck_OnLswData - PmExpFilter_EventDispatch
+	.short	PmExpFilterGridCheck_OnLswData - PmExpFilter_EventDispatch
 AcDispTimeSetGridBoxProc_EventOffsets:	; read by AcDispTimeSetGridBoxProc via PmExpFilter2_EventDispatch (AcDispTimeSetGridBoxProc_EventOffsets)
+	.short	AcDispTimeSetGridBoxProc_OnIndexswUp - PmExpFilter2_EventDispatch
+	.short	AcDispTimeSetGridBoxProc_OnIndexswDown - PmExpFilter2_EventDispatch
+	.short	AcDispTimeSetGridBoxProc_OnIndexswUp - PmExpFilter2_EventDispatch
+	.short	AcDispTimeSetGridBoxProc_OnIndexswDown - PmExpFilter2_EventDispatch
+	.short	DispTimeSet_DefaultInherited - PmExpFilter2_EventDispatch
+	.short	AcDispTimeSetGridBoxProc_OnLswData - PmExpFilter2_EventDispatch
+	.short	AcDispTimeSetGridBoxProc_OnLswData - PmExpFilter2_EventDispatch
 	; data-as-code (v10_data_as_code_census.py, STRICT rule): 0xED1437-0xED1452 (27 B), unreached CODE-territory, was disassembled as 22 plausible-but-dead instruction lines; per=100% dist=8 near PmExpFilter_CellKeys+9
 	; data-as-code (v10_data_as_code_census.py, STRICT rule): 0xED1453-0xED146E (27 B), unreached CODE-territory, was disassembled as 22 plausible-but-dead instruction lines; per=100% dist=8 near PmExpFilter_AltKeys+1
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xd5, 0x00, 0x79, 0x01, 0xd5, 0x00, 0x79, 0x01
-	.byte	0x6d, 0x02, 0x45, 0x02, 0x45, 0x02
 ParamStr_Table_03:
 	.long FadeTimeStr_Off
 	.long FadeTimeStr_Default
@@ -870,10 +933,14 @@ DispTimeSetCheck_TryRow5_Str_Fmts:	.byte	0x25, 0x73, 0x00, 0xff
 DispTimeSetCheck_TryRow6_Str_Fmts:	.byte	0x25, 0x73, 0x00, 0xff
 DispTimeSetCheck_TryRow7_Str_Fmts:	.byte	0x25, 0x73, 0x00, 0xff
 DispTimeSetGridCheck_EventOffsets:	; read by DispTimeSetGridCheck via DispTimeSet_EventDispatch (DispTimeSetGridCheck_EventOffsets)
+	.short	DispTimeSet_EventDispatch - DispTimeSet_EventDispatch
+	.short	DispTimeSetGridCheck_OnIndexswDown - DispTimeSet_EventDispatch
+	.short	DispTimeSet_EventDispatch - DispTimeSet_EventDispatch
+	.short	DispTimeSetGridCheck_OnIndexswDown - DispTimeSet_EventDispatch
+	.short	DispTimeSet_ReturnZero - DispTimeSet_EventDispatch
+	.short	DispTimeSetGridCheck_OnLswData - DispTimeSet_EventDispatch
+	.short	DispTimeSetGridCheck_OnLswData - DispTimeSet_EventDispatch
 ; IvPageOverWr_GetName_Str_PAGE: String "PAGE" read by its owner: Strcpy source. Basis: readers + bytes.
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x36, 0x01, 0x00, 0x00, 0x36, 0x01
-	.byte	0xbc, 0x05, 0x83, 0x02, 0x83, 0x02
 IvPageOverWr_GetName_Str_PAGE:
 	aligned_string "PAGE"
 MssName_EventDispatch_Str_Memory_data:	aligned_string "Memory data "
@@ -881,10 +948,16 @@ MssName_EventDispatch_Str_Blank2:
 	.byte	0x20, 0x20, 0x00, 0xff
 MssName_EventDispatch_Str_Blank2_2:	.byte	0x20, 0x20, 0x00, 0xff
 MssNameFunc_CaseTable:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xa4, 0x00, 0xa4, 0x00, 0xb9, 0x00, 0xb9, 0x00
-	.byte	0xb9, 0x00, 0xa8, 0x00, 0xa4, 0x00, 0xaf, 0x00
-	.byte	0xb5, 0x00, 0x00, 0x00
+	.short	MssNameFunc_OnGetLargeStep - MssName_EventDispatch
+	.short	MssNameFunc_OnGetLargeStep - MssName_EventDispatch
+	.short	MssName_ReturnZero - MssName_EventDispatch
+	.short	MssName_ReturnZero - MssName_EventDispatch
+	.short	MssName_ReturnZero - MssName_EventDispatch
+	.short	MssNameFunc_OnGetMax - MssName_EventDispatch
+	.short	MssNameFunc_OnGetLargeStep - MssName_EventDispatch
+	.short	MssNameFunc_OnGetRamAddress - MssName_EventDispatch
+	.short	MssNameFunc_OnGetRamSize - MssName_EventDispatch
+	.short	MssName_EventDispatch - MssName_EventDispatch
 AcPmBkNoBox_Match_Str_Blank8:		aligned_string "        "
 AcPmBkNoBox_FormatBankNo_Str_Fmtd_Fmtd:	aligned_string "%d-%d:"
 AcBkNoBox_Match_Str_Fmtd:		.byte 0x25, 0x64, 0x3a, 0x00
@@ -894,12 +967,18 @@ AcPmBkEdit_BankChanged_Str_BANK_Fmt2d:
 	aligned_string "BANK%2d:"
 AcPmBkEdit_BankEdit_Str_Fmtd:	.byte	0x25, 0x64, 0x3a, 0x00
 PmBkNameFunc_CaseTable:
+	.short	PmBkNameFunc_OnGetLargeStep - PmBkName_EventDispatch
+	.short	PmBkNameFunc_OnGetLargeStep - PmBkName_EventDispatch
+	.short	PmBkName_ReturnZero - PmBkName_EventDispatch
+	.short	PmBkName_ReturnZero - PmBkName_EventDispatch
+	.short	PmBkName_ReturnZero - PmBkName_EventDispatch
+	.short	PmBkNameFunc_OnGetMax - PmBkName_EventDispatch
+	.short	PmBkName_ReturnZero - PmBkName_EventDispatch
+	.short	PmBkName_DataBytes - PmBkName_EventDispatch
+	.short	PmBkNameFunc_OnGetLargeStep - PmBkName_EventDispatch
+	.short	PmBkName_EventDispatch - PmBkName_EventDispatch
 ; GmOnOffFunc_Str_Empty: String "" read by its owner: Sprintf_Locked format on EVT_GET_LSW_STRING: an empty string.
 ;   Basis: readers + bytes.
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x01, 0x00, 0x01, 0x00, 0x0a, 0x00, 0x0a, 0x00
-	.byte	0x0a, 0x00, 0x04, 0x00, 0x0a, 0x00, 0x0d, 0x00
-	.byte	0x01, 0x00, 0x00, 0x00
 GmOnOffFunc_Str_Empty:	.byte	0x00, 0xff
 VariScreen_HandlePaint_Str_SOUND:	.byte	0x53, 0x4f, 0x55, 0x4e, 0x44, 0x00
 VariScreen_DrawNameString_Str_Fmtd:		.byte	0x25, 0x64, 0x3a, 0x00
@@ -1023,19 +1102,28 @@ ToneGen_ParamWriteDispatch_Str_N5_NORMAL_SOUND_check_with_TOUCH:
 ToneGen_ParamWriteDispatch_Str_N6_SINE_WAVE_ROM_check_16dB_DOWN:
 	aligned_string "(6)SINE WAVE & ROM check 16dB DOWN"
 ToneGen_WriteParamByIndex_CaseTable:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x56, 0x00, 0xae, 0x00, 0xdd, 0x00
-	.byte	0x0b, 0x01, 0x39, 0x01
+	.short	ToneGen_ParamWriteDispatch - ToneGen_ParamWriteDispatch
+	.short	ToneGen_WriteParamByIndex_DrawOutselCheckItem - ToneGen_ParamWriteDispatch
+	.short	ToneGen_WriteParamByIndex_DrawHighSoundCheckItem - ToneGen_ParamWriteDispatch
+	.short	ToneGen_WriteParamByIndex_DrawLowSoundCheckItem - ToneGen_ParamWriteDispatch
+	.short	ToneGen_WriteParamByIndex_DrawNormalSoundCheckItem - ToneGen_ParamWriteDispatch
+	.short	ToneGen_WriteParamByIndex_DrawSineWaveMinus16dBItem - ToneGen_ParamWriteDispatch
 WallHomeEdit_Text:
 	aligned_string "DEFAULT"
 WallHomeEdit_PushSndAddr_Str_USER:	aligned_string " USER  "
 WallHomeEdit_LoadSndAddr3_Str_ERROR:
 	aligned_string " ERROR "
 WallHomeEditCheck_CaseTable:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x9c, 0x00, 0x9c, 0x00, 0x60, 0x00, 0x60, 0x00
-	.byte	0x60, 0x00, 0x9c, 0x00, 0x60, 0x00, 0xa0, 0x00
-	.byte	0xa7, 0x00, 0x64, 0x00
+	.short	WallHomeEditCheck_OnGetLargeStep - WallHomeEdit_EventDispatch
+	.short	WallHomeEditCheck_OnGetLargeStep - WallHomeEdit_EventDispatch
+	.short	WallHomeEditCheck_ReturnFalse - WallHomeEdit_EventDispatch
+	.short	WallHomeEditCheck_ReturnFalse - WallHomeEdit_EventDispatch
+	.short	WallHomeEditCheck_ReturnFalse - WallHomeEdit_EventDispatch
+	.short	WallHomeEditCheck_OnGetLargeStep - WallHomeEdit_EventDispatch
+	.short	WallHomeEditCheck_ReturnFalse - WallHomeEdit_EventDispatch
+	.short	WallHomeEditCheck_OnGetRamAddress - WallHomeEdit_EventDispatch
+	.short	WallHomeEditCheck_OnGetRamSize - WallHomeEdit_EventDispatch
+	.short	WallHomeEditCheck_OnGetRamString - WallHomeEdit_EventDispatch
 WallMenuEdit_Text:
 	aligned_string "DEFAULT"
 WallMenuEdit_EventDispatch_Str_USER:
@@ -1043,10 +1131,16 @@ WallMenuEdit_EventDispatch_Str_USER:
 WallMenuEdit_EventDispatch_Str_ERROR:
 	aligned_string " ERROR "
 WallMenuEditCheck_CaseTable:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x31, 0x00, 0x31, 0x00, 0x40, 0x00, 0x40, 0x00
-	.byte	0x40, 0x00, 0x31, 0x00, 0x40, 0x00, 0x35, 0x00
-	.byte	0x3c, 0x00, 0x00, 0x00
+	.short	WallMenuEditCheck_OnGetLargeStep - WallMenuEdit_EventDispatch
+	.short	WallMenuEditCheck_OnGetLargeStep - WallMenuEdit_EventDispatch
+	.short	WallOthEditCheck_RetZero - WallMenuEdit_EventDispatch
+	.short	WallOthEditCheck_RetZero - WallMenuEdit_EventDispatch
+	.short	WallOthEditCheck_RetZero - WallMenuEdit_EventDispatch
+	.short	WallMenuEditCheck_OnGetLargeStep - WallMenuEdit_EventDispatch
+	.short	WallOthEditCheck_RetZero - WallMenuEdit_EventDispatch
+	.short	WallMenuEditCheck_OnGetRamAddress - WallMenuEdit_EventDispatch
+	.short	WallMenuEditCheck_OnGetRamSize - WallMenuEdit_EventDispatch
+	.short	WallMenuEdit_EventDispatch - WallMenuEdit_EventDispatch
 WallOthEdit_Text:
 	aligned_string "DEFAULT"
 WallOthEdit_EventDispatch_Str_USER:
@@ -1054,10 +1148,16 @@ WallOthEdit_EventDispatch_Str_USER:
 WallOthEdit_EventDispatch_Str_ERROR:
 	aligned_string " ERROR "
 WallOthEditCheck_CaseTable:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x31, 0x00, 0x31, 0x00, 0x40, 0x00, 0x40, 0x00
-	.byte	0x40, 0x00, 0x31, 0x00, 0x40, 0x00, 0x35, 0x00
-	.byte	0x3c, 0x00, 0x00, 0x00
+	.short	WallOthEditCheck_OnGetLargeStep - WallOthEdit_EventDispatch
+	.short	WallOthEditCheck_OnGetLargeStep - WallOthEdit_EventDispatch
+	.short	WallOthCheckLoop_RetZero - WallOthEdit_EventDispatch
+	.short	WallOthCheckLoop_RetZero - WallOthEdit_EventDispatch
+	.short	WallOthCheckLoop_RetZero - WallOthEdit_EventDispatch
+	.short	WallOthEditCheck_OnGetLargeStep - WallOthEdit_EventDispatch
+	.short	WallOthCheckLoop_RetZero - WallOthEdit_EventDispatch
+	.short	WallOthEditCheck_OnGetRamAddress - WallOthEdit_EventDispatch
+	.short	WallOthEditCheck_OnGetRamSize - WallOthEdit_EventDispatch
+	.short	WallOthEdit_EventDispatch - WallOthEdit_EventDispatch
 LngTable_UserInitialWallpaper:	; returned by WallSureLngCheck
 	.long Str_UserInitialWallpaper_EN	; EN
 	.long Str_UserInitialWallpaper_DE	; DE
@@ -1072,16 +1172,24 @@ Str_UserInitialWallpaper_FR:	aligned_string "USER INITIAL va remplacer votre fon
 Str_UserInitialWallpaper_DE:	aligned_string "USER INITIAL ersetzt das aktuelle Hintergrundbild durch eine schwarze Fläche !"
 Str_UserInitialWallpaper_EN:	aligned_string "USER INITIAL will replace the current user wallpaper with the \"Plain Black\" wallpaper!"
 MainSysControl_CaseTable:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x26, 0x00, 0x2c, 0x00, 0x32, 0x00
-	.byte	0x1a, 0x00, 0x08, 0x00, 0x0e, 0x00, 0x20, 0x00
-	.byte	0x14, 0x00
+	.short	MainSysCtrl_DispatchTable - MainSysCtrl_DispatchTable
+	.short	MainSysCtrl_OnInitCurrentPanel - MainSysCtrl_DispatchTable
+	.short	MainSysCtrl_Entry7 - MainSysCtrl_DispatchTable
+	.short	MainSysCtrl_OnInitMidiSetting - MainSysCtrl_DispatchTable
+	.short	MainSysCtrl_Entry4_CopyBitmaps - MainSysCtrl_DispatchTable
+	.short	MainSysCtrl_Entry1_AccDemo - MainSysCtrl_DispatchTable
+	.short	MainSysCtrl_Entry2_PartInit - MainSysCtrl_DispatchTable
+	.short	MainSysCtrl_Entry5_VoiceInit - MainSysCtrl_DispatchTable
+	.short	MainSysCtrl_Entry3_Misc - MainSysCtrl_DispatchTable
 CntIniFunc_CaseTable:
+	.short	CntIniFunc_EventDispatch - CntIniFunc_EventDispatch
+	.short	CntIniFunc_ReturnZero - CntIniFunc_EventDispatch
+	.short	CntIniFunc_ReturnZero - CntIniFunc_EventDispatch
+	.short	CntIniFunc_ReturnZero - CntIniFunc_EventDispatch
+	.short	CntIniFunc_ReturnZero - CntIniFunc_EventDispatch
+	.short	CntIniFunc_ReturnZero - CntIniFunc_EventDispatch
 
 
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x08, 0x00, 0x08, 0x00, 0x08, 0x00
-	.byte	0x08, 0x00, 0x08, 0x00
 ParamStr_Table_06:
 	.long SplitNoteStr_C
 	.long SplitNoteStr_DFlat
@@ -2714,14 +2822,25 @@ Protocol_values_for_LED_rows:
 AudioCtl_SmallTables:
 	.byte 4, 2, 6, 7, 5, 3
 ExtData_VoiceParam_DispatchBytecode_CaseTable:
+	.short	ExtData_VoiceParam_DispatchBytecode_ModeSound - ExtData_VoiceParam_DispatchBytecode_ModeMsp
+	.short	ExtData_VoiceParam_DispatchBytecode_ModeSound - ExtData_VoiceParam_DispatchBytecode_ModeMsp
+	.short	ExtData_VoiceParam_DispatchBytecode_ModeControl - ExtData_VoiceParam_DispatchBytecode_ModeMsp
+	.short	ExtData_VoiceParam_DispatchBytecode_ModeMidi - ExtData_VoiceParam_DispatchBytecode_ModeMsp
+	.short	ExtData_VoiceParam_DispatchBytecode_ModeDisk - ExtData_VoiceParam_DispatchBytecode_ModeMsp
+	.short	ExtData_VoiceParam_DispatchBytecode_ModeEntertainer - ExtData_VoiceParam_DispatchBytecode_ModeMsp
+	.short	ExtData_VoiceParam_DispatchBytecode_ModeSeq - ExtData_VoiceParam_DispatchBytecode_ModeMsp
+	.short	ExtData_VoiceParam_DispatchBytecode_ModeSeqErec - ExtData_VoiceParam_DispatchBytecode_ModeMsp
+	.short	SndParamF9A541_ResBit7_Code_Epilogue - ExtData_VoiceParam_DispatchBytecode_ModeMsp
+	.short	ExtData_VoiceParam_DispatchBytecode_ModeSeqReal - ExtData_VoiceParam_DispatchBytecode_ModeMsp
+	.short	ExtData_VoiceParam_DispatchBytecode_ModeSeq - ExtData_VoiceParam_DispatchBytecode_ModeMsp
+	.short	ExtData_VoiceParam_DispatchBytecode_ModeSeq - ExtData_VoiceParam_DispatchBytecode_ModeMsp
+	.short	ExtData_VoiceParam_DispatchBytecode_ModeCmp - ExtData_VoiceParam_DispatchBytecode_ModeMsp
+	.short	ExtData_VoiceParam_DispatchBytecode_ModeMsp - ExtData_VoiceParam_DispatchBytecode_ModeMsp
+	.short	SndParamF9A541_ResBit7_Code_Epilogue - ExtData_VoiceParam_DispatchBytecode_ModeMsp
+	.short	ExtData_VoiceParam_DispatchBytecode_ModeSndArg - ExtData_VoiceParam_DispatchBytecode_ModeMsp
+	.short	ExtData_VoiceParam_DispatchBytecode_Case18 - ExtData_VoiceParam_DispatchBytecode_ModeMsp
 ; BeatLed_ThreeBeatMasks: START/STOP BEAT LED masks for a three-beat cycle: beat counter (0x416) & 7 -> 1, 2, 4, 1, 2,
 ;   4 (BEAT 1-3), used when (0x433) is 3 or 6. Basis: readers + bytes.
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x23, 0x00, 0x23, 0x00, 0x2b, 0x00, 0x27, 0x00
-	.byte	0x2f, 0x00, 0x33, 0x00, 0x0c, 0x00, 0x1f, 0x00
-	.byte	0x3c, 0x00, 0x10, 0x00, 0x0c, 0x00, 0x0c, 0x00
-	.byte	0x04, 0x00, 0x00, 0x00, 0x3c, 0x00, 0x08, 0x00
-	.byte	0x37, 0x00
 BeatLed_ThreeBeatMasks:
 	.byte 1, 2, 4, 1, 2, 4
 ; BeatLed_FourBeatMasks: START/STOP BEAT LED masks for a four-beat cycle: beat counter (0x416) & 3 -> 1, 2, 4, 8 (BEAT
@@ -2729,11 +2848,16 @@ BeatLed_ThreeBeatMasks:
 BeatLed_FourBeatMasks:
 	.byte 1, 2, 4, 8, 1, 2, 4, 8
 UIState_ProcessExtendedMode_CaseTable:
+	.short	UIState_ProcessExtendedMode_Cases - UIState_ProcessExtendedMode_Cases
+	.short	UIState_ProcessExtendedMode_Case1 - UIState_ProcessExtendedMode_Cases
+	.short	UIState_ProcessExtendedMode_Case1 - UIState_ProcessExtendedMode_Cases
+	.short	UIState_ProcessExtendedMode_Case3 - UIState_ProcessExtendedMode_Cases
+	.short	UIState_ProcessExtendedMode_Case4 - UIState_ProcessExtendedMode_Cases
+	.short	UIState_ProcessExtendedMode_Case5 - UIState_ProcessExtendedMode_Cases
+	.short	UIState_ProcessExtendedMode_Case5 - UIState_ProcessExtendedMode_Cases
+	.short	UIState_ProcessExtendedMode_Case7 - UIState_ProcessExtendedMode_Cases
 ; CtrlPanel_SingleBitMaskTable: 32 x u32 single-bit masks, entry k = 1 << k, returned in XHL by
 ;   CtrlPanel_LookupIndicatorEntry. Basis: readers + bytes.
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x34, 0x00, 0x34, 0x00, 0x0e, 0x00
-	.byte	0x27, 0x00, 0x07, 0x00, 0x07, 0x00, 0x2e, 0x00
 CtrlPanel_SingleBitMaskTable:
 	.long 0x00000001, 0x00000002, 0x00000004, 0x00000008
 	.long 0x00000010, 0x00000020, 0x00000040, 0x00000080
@@ -3263,23 +3387,41 @@ PanelMem_FixupTagColumn:
 	; `cp wa, 11` / `add wa, wa` / `ld wa, (xix+wa)` / `jp_rr` from 0xFC8570
 	; (no label there in audio_control_engine.s, so the offsets are numeric).
 ExtData_ToneParam_DispatchHandler_CaseTable:
+	.short	ExtData_ToneParam_DispatchHandler_OnVoiceSelect - ExtData_ToneParam_DispatchHandler_OnVoiceSelect
+	.short	ExtData_ToneParam_DispatchHandler_Case1 - ExtData_ToneParam_DispatchHandler_OnVoiceSelect
+	.short	ExtData_ToneParam_DispatchHandler_Case1 - ExtData_ToneParam_DispatchHandler_OnVoiceSelect
+	.short	ExtData_ToneParam_DispatchHandler_Case3 - ExtData_ToneParam_DispatchHandler_OnVoiceSelect
+	.short	ExtData_ToneParam_DispatchHandler_Case4 - ExtData_ToneParam_DispatchHandler_OnVoiceSelect
+	.short	ExtData_ToneParam_DispatchHandler_Case5 - ExtData_ToneParam_DispatchHandler_OnVoiceSelect
+	.short	ExtData_ToneParam_DispatchHandler_Case6 - ExtData_ToneParam_DispatchHandler_OnVoiceSelect
+	.short	ExtData_ToneParam_DispatchHandler_Case7 - ExtData_ToneParam_DispatchHandler_OnVoiceSelect
+	.short	ExtData_ToneParam_DispatchHandler_Case8 - ExtData_ToneParam_DispatchHandler_OnVoiceSelect
+	.short	ExtData_ToneParam_DispatchHandler_Case9 - ExtData_ToneParam_DispatchHandler_OnVoiceSelect
+	.short	ExtData_ToneParam_DispatchHandler_Case10 - ExtData_ToneParam_DispatchHandler_OnVoiceSelect
+	.short	ExtData_ToneParam_DispatchHandler_Case11 - ExtData_ToneParam_DispatchHandler_OnVoiceSelect
 	; +0x8AE: 9 jump offsets, ExtData_ToneParam_AltDispatch (0xFC7F9F), from 0xFC8793.
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x20, 0x00, 0x20, 0x00, 0x02, 0x00
-	.byte	0x05, 0x00, 0x08, 0x00, 0x0b, 0x00, 0x0e, 0x00
-	.byte	0x11, 0x00, 0x14, 0x00, 0x17, 0x00, 0x1a, 0x00
 ExtData_ToneParam_AltDispatch_CaseTable:
+	.short	ExtData_ToneParam_AltDispatch_WholeByteFields - ExtData_ToneParam_AltDispatch_WholeByteFields
+	.short	ExtData_ToneParam_AltDispatch_DrawbarNibbleFields - ExtData_ToneParam_AltDispatch_WholeByteFields
+	.short	ExtData_ToneParam_AltDispatch_DrawbarNibbleFields - ExtData_ToneParam_AltDispatch_WholeByteFields
+	.short	ExtData_ToneParam_AltDispatch_DrawbarFootages - ExtData_ToneParam_AltDispatch_WholeByteFields
+	.short	ExtData_ToneParam_AltDispatch_DrawbarFootages - ExtData_ToneParam_AltDispatch_WholeByteFields
+	.short	ExtData_ToneParam_AltDispatch_DrawbarFootages - ExtData_ToneParam_AltDispatch_WholeByteFields
+	.short	ExtData_ToneParam_AltDispatch_DrawbarFootages - ExtData_ToneParam_AltDispatch_WholeByteFields
+	.short	ExtData_ToneParam_AltDispatch_Drawbar1FootAndSwitches - ExtData_ToneParam_AltDispatch_WholeByteFields
+	.short	ExtData_ToneParam_AltDispatch_WholeByteFields - ExtData_ToneParam_AltDispatch_WholeByteFields
 	; +0x8C0: 9 jump offsets, ExtData_ToneParam_AltBody (0xFC8009), from 0xFC87FD.
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x02, 0x00, 0x02, 0x00, 0x04, 0x00
-	.byte	0x04, 0x00, 0x04, 0x00, 0x04, 0x00, 0x06, 0x00
-	.byte	0x00, 0x00
 ExtData_ToneParam_AltBody_CaseTable:
+	.short	ExtData_ToneParam_AltBody_OnStyleProgram - ExtData_ToneParam_AltBody_OnStyleProgram
+	.short	ExtData_ToneParam_AltBody_Case1 - ExtData_ToneParam_AltBody_OnStyleProgram
+	.short	ExtData_ToneParam_AltBody_Case1 - ExtData_ToneParam_AltBody_OnStyleProgram
+	.short	ExtData_ToneParam_AltBody_Case3 - ExtData_ToneParam_AltBody_OnStyleProgram
+	.short	ExtData_ToneParam_AltBody_Case4 - ExtData_ToneParam_AltBody_OnStyleProgram
+	.short	ExtData_ToneParam_AltBody_Case5 - ExtData_ToneParam_AltBody_OnStyleProgram
+	.short	ExtData_ToneParam_AltBody_Case5 - ExtData_ToneParam_AltBody_OnStyleProgram
+	.short	ExtData_ToneParam_AltBody_Case7 - ExtData_ToneParam_AltBody_OnStyleProgram
+	.short	ExtData_ToneParam_AltBody_Case8 - ExtData_ToneParam_AltBody_OnStyleProgram
 	; +0x8D2: 4 bytes, indexed by a value & 3 in ExtData_ToneParam_MultiChannel.
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x10, 0x00, 0x10, 0x00, 0x02, 0x00
-	.byte	0x04, 0x00, 0x07, 0x00, 0x07, 0x00, 0x0a, 0x00
-	.byte	0x0d, 0x00
 ExtData_ToneParam_MultiChannel_Data:
 	.byte 1, 1, 2, 3
 	; +0x8D6: 4 bytes, indexed by (RAM 0xFD02) & 3 in ExtData_Voice_MixedHandler.

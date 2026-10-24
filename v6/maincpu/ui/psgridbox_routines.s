@@ -995,8 +995,8 @@ PsGridBoxProc_OnRequestGridDraw:
 	ld (xde+4), xwa
 	pushm (xbc)
 	pushm (xde)
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0xf0, 0xa0
+	pushw PsGridBox_Scroll_Render_Str_Fmtd_Fmtd@hi16
+	pushw PsGridBox_Scroll_Render_Str_Fmtd_Fmtd@lo16
 	push xwa
 	call Sprintf_Locked
 	lda xsp, (xsp+12)

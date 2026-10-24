@@ -73,8 +73,8 @@ CmptCnctDrawConnectionDiagram:
 	jr	z, CmptCnct_DrawDiagram1
 	cp	bc, 0:i3
 	jr	nz, CmptCnct_DrawDiagramDefault
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0x4e, 0xf8
+	pushw	MdCmptCnctFunc_LocalInit_Strings@hi16
+	pushw	MdCmptCnctFunc_LocalInit_Strings@lo16
 	push	xwa
 	call	Strcpy
 	inc	8, xsp
@@ -84,8 +84,8 @@ CmptCnctDrawConnectionDiagram:
 	ldw	de, 296
 	jr	CmptCnctBitmapDrawComplete
 CmptCnct_DrawDiagram1:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0x68, 0xf8
+	pushw	CmptCnct_DrawDiagram1_Str_KN_as_master@hi16
+	pushw	CmptCnct_DrawDiagram1_Str_KN_as_master@lo16
 	push	xwa
 	call	Strcpy
 	inc	8, xsp
@@ -95,8 +95,8 @@ CmptCnct_DrawDiagram1:
 	ldw	de, 296
 	jr	CmptCnctBitmapDrawComplete
 CmptCnct_DrawDiagram2:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0x82, 0xf8
+	pushw	CmptCnct_DrawDiagram2_Str_KN_as_slave@hi16
+	pushw	CmptCnct_DrawDiagram2_Str_KN_as_slave@lo16
 	push	xwa
 	call	Strcpy
 	inc	8, xsp
@@ -106,8 +106,8 @@ CmptCnct_DrawDiagram2:
 	ldw	de, 296
 	jr	CmptCnctBitmapDrawComplete
 CmptCnct_DrawDiagramDefault:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0x9c, 0xf8
+	pushw	CmptCnct_DrawDiagramDefault_Str_Error@hi16
+	pushw	CmptCnct_DrawDiagramDefault_Str_Error@lo16
 	push	xwa
 	call	Strcpy
 	inc	8, xsp
@@ -167,8 +167,8 @@ PcgModeDisplayString_Bank1:
 	jr PcgMode_CopyStrEntry
 
 PcgMode_CopyStrCustom:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0xca, 0xf8
+	pushw PcgMode_CopyStrCustom_Str_GM@hi16
+	pushw PcgMode_CopyStrCustom_Str_GM@lo16
 	ld xwa, (xwa)
 	push xwa
 	jr PcgMode_CallStrcpy
@@ -231,8 +231,8 @@ DrumType_CopyStrBank1:
 	jr DrumType_CopyStrEntry
 
 DrumType_CopyStrCustom:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0xf2, 0xf8
+	pushw DrumType_CopyStrCustom_Str_GM@hi16
+	pushw DrumType_CopyStrCustom_Str_GM@lo16
 	ld xwa, (xwa)
 	push xwa
 	jr DrumType_CallStrcpy

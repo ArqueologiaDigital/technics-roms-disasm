@@ -1353,8 +1353,8 @@ PmemOutLGridCheck_OnRamData:
 	sra	xbc, 3
 	inc	1, xbc
 	pushw	bc
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0x3a, 0x01
+	pushw	PmemOutLGridCheck_LocalInit_Strings@hi16
+	pushw	PmemOutLGridCheck_LocalInit_Strings@lo16
 	push	xhl
 	call	Sprintf_Locked
 	lda	xsp, (xsp+12)
@@ -1412,8 +1412,8 @@ PmemOutLGridCheck_OnRamData_Join3:
 	add	xwa, (xsp+32)
 	bit	7, (xwa)
 	jr	z, PmemOutLGridCheck_OnRamData_Skip6
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0x50, 0x01
+	pushw	PmemOutLGridCheck_Row0_Str_OFF@hi16
+	pushw	PmemOutLGridCheck_Row0_Str_OFF@lo16
 	lda	xwa, (xsp+48)
 	push	xwa
 	call	Strcpy
@@ -1424,8 +1424,9 @@ PmemOutLGridCheck_OnRamData_Join4:
 	ld	a, (xwa)
 	extz	wa
 	pushw	wa
+	pushw	PmemOutLGridCheck_OnRamData_Str_Fmt3d_2@hi16
 ; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0x56, 0x01
+	.byte	0x0b, 0x56, 0x01
 	lda	xwa, (xsp+50)
 	push	xwa
 	call	Sprintf_Locked
@@ -1468,8 +1469,8 @@ PmemOutLGridCheck_OnRamData_Join4:
 	add	xwa, (xsp+32)
 	bit	7, (xwa)
 	jr	z, PmemOutLGridCheck_OnRamData_Skip7
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0x62, 0x01
+	pushw	PmemOutLGridCheck_OnRamData_Str_OFF@hi16
+	pushw	PmemOutLGridCheck_OnRamData_Str_OFF@lo16
 	lda	xwa, (xsp+48)
 	push	xwa
 	call	Strcpy
@@ -1479,8 +1480,8 @@ PmemOutLGridCheck_OnRamData_Skip7:
 	ld	a, (xwa)
 	extz	wa
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0x68, 0x01
+	pushw	PmemOutLGridCheck_OnRamData_Str_Fmt3d_3@hi16
+	pushw	PmemOutLGridCheck_OnRamData_Str_Fmt3d_3@lo16
 	lda	xwa, (xsp+50)
 	push	xwa
 	call	Sprintf_Locked
@@ -1572,8 +1573,8 @@ PmemOutLGridCheck_OnRamData_Skip10:
 	lda	xbc, (xsp+44)
 	bit	7, (xwa)
 	jr	z, PmemOutLGridCheck_OnRamData_Skip11
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0x7a, 0x01
+	pushw	PmemOutLGridCheck_OnRamData_Str_OFF_2@hi16
+	pushw	PmemOutLGridCheck_OnRamData_Str_OFF_2@lo16
 	push	xbc
 	call	Strcpy
 	inc	8, xsp
@@ -1582,8 +1583,8 @@ PmemOutLGridCheck_OnRamData_Skip11:
 	ld	a, (xwa)
 	extz	wa
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0x80, 0x01
+	pushw	PmemOutLGridCheck_OnRamData_Str_Fmt3d_4@hi16
+	pushw	PmemOutLGridCheck_OnRamData_Str_Fmt3d_4@lo16
 	push	xbc
 	call	Sprintf_Locked
 	lda	xsp, (xsp+10)
@@ -1613,8 +1614,8 @@ PmemOutLGridCheck_OnRamData_Join7:
 	ld	a, (xwa)
 	extz	wa
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0x86, 0x01
+	pushw	PmemOutLGridCheck_OnRamData_Str_Fmt3d_5@hi16
+	pushw	PmemOutLGridCheck_OnRamData_Str_Fmt3d_5@lo16
 	lda	xwa, (xsp+50)
 	push	xwa
 	call	Sprintf_Locked
@@ -1643,8 +1644,8 @@ PmemOutLGridCheck_OnRamData_Join7:
 	add	xwa, (xsp+32)
 	bit	7, (xwa)
 	jr	z, PmemOutLGridCheck_OnRamData_Skip12
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0x8c, 0x01
+	pushw	PmemOutLGridCheck_OnRamData_Str_OFF_3@hi16
+	pushw	PmemOutLGridCheck_OnRamData_Str_OFF_3@lo16
 	lda	xwa, (xsp+48)
 	push	xwa
 	call	Strcpy
@@ -1654,8 +1655,8 @@ PmemOutLGridCheck_OnRamData_Skip12:
 	ld	a, (xwa)
 	extz	wa
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0x92, 0x01
+	pushw	PmemOutLGridCheck_OnRamData_Str_Fmt3d_6@hi16
+	pushw	PmemOutLGridCheck_OnRamData_Str_Fmt3d_6@lo16
 	lda	xwa, (xsp+50)
 	push	xwa
 	call	Sprintf_Locked
@@ -1688,8 +1689,8 @@ PmemOutLGridCheck_OnRamData_Skip13:
 	ld	xwa, (xwa)
 	bit	7, wa
 	jr	z, PmemOutLGridCheck_OnRamData_Skip14
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0x98, 0x01
+	pushw	PmemOutLGridCheck_OnRamData_Str_OFF_4@hi16
+	pushw	PmemOutLGridCheck_OnRamData_Str_OFF_4@lo16
 	ld	xwa, (xsp+16)
 	push	xwa
 	call	Strcpy
@@ -1697,8 +1698,8 @@ PmemOutLGridCheck_OnRamData_Skip13:
 	jr	PmemOutLGridCheck_OnRamData_Join9
 PmemOutLGridCheck_OnRamData_Skip14:
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0x9e, 0x01
+	pushw	PmemOutLGridCheck_OnRamData_Str_Fmt3d_7@hi16
+	pushw	PmemOutLGridCheck_OnRamData_Str_Fmt3d_7@lo16
 	ld	xwa, (xsp+20)
 	push	xwa
 	call	Sprintf_Locked
@@ -1722,8 +1723,8 @@ PmemOutLGridCheck_OnRamData_Skip15:
 	ld	xwa, (xsp+28)
 	ld	xwa, (xwa)
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0xa4, 0x01
+	pushw	PmemOutLGridCheck_OnRamData_Str_Fmt3d_8@hi16
+	pushw	PmemOutLGridCheck_OnRamData_Str_Fmt3d_8@lo16
 	ld	xwa, (xsp+20)
 	push	xwa
 	call	Sprintf_Locked
@@ -1746,8 +1747,8 @@ PmemOutLGridCheck_OnRamData_Skip16:
 	ld	xwa, (xwa)
 	bit	7, wa
 	jr	z, PmemOutLGridCheck_OnRamData_Skip17
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0xaa, 0x01
+	pushw	PmemOutLGridCheck_OnRamData_Str_OFF_5@hi16
+	pushw	PmemOutLGridCheck_OnRamData_Str_OFF_5@lo16
 	ld	xwa, (xsp+16)
 	push	xwa
 	call	Strcpy
@@ -1755,8 +1756,8 @@ PmemOutLGridCheck_OnRamData_Skip16:
 	jr	PmemOutLGridCheck_OnRamData_Join10
 PmemOutLGridCheck_OnRamData_Skip17:
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0xb0, 0x01
+	pushw	PmemOutLGridCheck_OnRamData_Str_Fmt3d_9@hi16
+	pushw	PmemOutLGridCheck_OnRamData_Str_Fmt3d_9@lo16
 	ld	xwa, (xsp+20)
 	push	xwa
 	call	Sprintf_Locked
@@ -1798,8 +1799,8 @@ PmemOutL_GridCheck:
 	inc 1,C
 	extz BC
 	pushw bc
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0xb6, 0x01
+	pushw PmemOutL_GridCheck_Str_Fmt2d_Fmtd@hi16
+	pushw PmemOutL_GridCheck_Str_Fmt2d_Fmtd@lo16
 	push XDE
 	call Sprintf_Locked
 	lda xsp, (xsp + 0x0c)
@@ -2220,8 +2221,8 @@ PmemOutRGridCheck_OnRamData:
 	add	xwa, xiz
 	bit	7, (xwa)
 	jr	z, PmemOutRGridCheck_OnRamData_Skip
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0x00, 0x02
+	pushw	PmemOutRGridCheck_LocalInit_Strings@hi16
+	pushw	PmemOutRGridCheck_LocalInit_Strings@lo16
 	ld	xwa, (xsp+16)
 	push	xwa
 	call	Strcpy
@@ -2231,8 +2232,8 @@ PmemOutRGridCheck_OnRamData_Skip:
 	ld	a, (xwa)
 	extz	wa
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0x06, 0x02
+	pushw PmemOutRGridCheck_OnRamData_Str_Fmt3d@hi16
+	pushw PmemOutRGridCheck_OnRamData_Str_Fmt3d@lo16
 	ld	xwa, (xsp+18)
 	push	xwa
 	call	Sprintf_Locked
@@ -2264,8 +2265,8 @@ PmemOutRGridCheck_OnRamData_Join3:
 	ld	a, (xwa)
 	extz	wa
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0x0c, 0x02
+	pushw PmemOutRGridCheck_OnRamData_Str_Fmt3d_2@hi16
+	pushw PmemOutRGridCheck_OnRamData_Str_Fmt3d_2@lo16
 	lda	xwa, (xsp+46)
 	push	xwa
 	call	Sprintf_Locked
@@ -2295,8 +2296,8 @@ PmemOutRGridCheck_OnRamData_Join3:
 	add	xwa, (xsp+28)
 	bit	7, (xwa)
 	jr	z, PmemOutRGridCheck_OnRamData_Skip2
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0x12, 0x02
+	pushw PmemOutRGridCheck_OnRamData_Str_OFF@hi16
+	pushw PmemOutRGridCheck_OnRamData_Str_OFF@lo16
 	lda	xwa, (xsp+44)
 	push	xwa
 	call	Strcpy
@@ -2306,8 +2307,8 @@ PmemOutRGridCheck_OnRamData_Skip2:
 	ld	a, (xwa)
 	extz	wa
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0x18, 0x02
+	pushw PmemOutRGridCheck_OnRamData_Str_Fmt3d_3@hi16
+	pushw PmemOutRGridCheck_OnRamData_Str_Fmt3d_3@lo16
 	lda	xwa, (xsp+46)
 	push	xwa
 	call	Sprintf_Locked
@@ -2343,8 +2344,8 @@ PmemOutRGridCheck_OnRamData_Skip3:
 	add	xwa, (xsp+28)
 	bit	7, (xwa)
 	jr	z, PmemOutRGridCheck_OnRamData_Skip4
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0x1e, 0x02
+	pushw PmemOutRGridCheck_OnRamData_Str_OFF_2@hi16
+	pushw PmemOutRGridCheck_OnRamData_Str_OFF_2@lo16
 	ld	xwa, (xsp+16)
 	push	xwa
 	call	Strcpy
@@ -2354,8 +2355,8 @@ PmemOutRGridCheck_OnRamData_Skip4:
 	ld	a, (xwa)
 	extz	wa
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0x24, 0x02
+	pushw PmemOutRGridCheck_OnRamData_Str_Fmt3d_4@hi16
+	pushw PmemOutRGridCheck_OnRamData_Str_Fmt3d_4@lo16
 	ld	xwa, (xsp+18)
 	push	xwa
 	call	Sprintf_Locked
@@ -2387,8 +2388,8 @@ PmemOutRGridCheck_OnRamData_Join5:
 	ld	a, (xwa)
 	extz	wa
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0x2a, 0x02
+	pushw PmemOutRGridCheck_OnRamData_Str_Fmt3d_5@hi16
+	pushw PmemOutRGridCheck_OnRamData_Str_Fmt3d_5@lo16
 	lda	xwa, (xsp+46)
 	push	xwa
 	call	Sprintf_Locked
@@ -2419,8 +2420,8 @@ PmemOutRGridCheck_OnRamData_Join5:
 	lda	xbc, (xsp+40)
 	bit	7, (xwa)
 	jr	z, PmemOutRGridCheck_OnRamData_Skip5
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0x30, 0x02
+	pushw PmemOutRGridCheck_OnRamData_Str_OFF_3@hi16
+	pushw PmemOutRGridCheck_OnRamData_Str_OFF_3@lo16
 	push	xbc
 	call	Strcpy
 	inc	8, xsp
@@ -2429,8 +2430,8 @@ PmemOutRGridCheck_OnRamData_Skip5:
 	ld	a, (xwa)
 	extz	wa
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0x36, 0x02
+	pushw PmemOutRGridCheck_OnRamData_Str_Fmt3d_6@hi16
+	pushw PmemOutRGridCheck_OnRamData_Str_Fmt3d_6@lo16
 	push	xbc
 	call	Sprintf_Locked
 	lda	xsp, (xsp+10)
@@ -2466,8 +2467,8 @@ PmemOutRGridCheck_OnRamData_Skip6:
 	ld	xwa, (xiz+14)
 	bit	7, wa
 	jr	z, PmemOutRGridCheck_OnRamData_Skip7
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0x3c, 0x02
+	pushw PmemOutRGridCheck_OnRamData_Str_OFF_4@hi16
+	pushw PmemOutRGridCheck_OnRamData_Str_OFF_4@lo16
 	ld	xwa, (xsp+16)
 	push	xwa
 	call	Strcpy
@@ -2475,8 +2476,8 @@ PmemOutRGridCheck_OnRamData_Skip6:
 	jr	PmemOutRGridCheck_OnRamData_Join7
 PmemOutRGridCheck_OnRamData_Skip7:
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0x42, 0x02
+	pushw PmemOutRGridCheck_OnRamData_Str_Fmt3d_7@hi16
+	pushw PmemOutRGridCheck_OnRamData_Str_Fmt3d_7@lo16
 	ld	xwa, (xsp+20)
 	push	xwa
 	call	Sprintf_Locked
@@ -2501,8 +2502,8 @@ PmemOutRGridCheck_OnRamData_Skip8:
 	ldw	(xwa), 1
 	ld	xwa, (xde)
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0x48, 0x02
+	pushw PmemOutRGridCheck_OnRamData_Str_Fmt3d_8@hi16
+	pushw PmemOutRGridCheck_OnRamData_Str_Fmt3d_8@lo16
 	ld	xwa, (xsp+20)
 	push	xwa
 	call	Sprintf_Locked
@@ -2525,8 +2526,8 @@ PmemOutRGridCheck_OnRamData_Skip9:
 	ld	xwa, (xde)
 	bit	7, wa
 	jr	z, PmemOutRGridCheck_OnRamData_Skip10
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0x4e, 0x02
+	pushw PmemOutRGridCheck_OnRamData_Str_OFF_5@hi16
+	pushw PmemOutRGridCheck_OnRamData_Str_OFF_5@lo16
 	ld	xwa, (xsp+16)
 	push	xwa
 	call	Strcpy
@@ -2534,8 +2535,8 @@ PmemOutRGridCheck_OnRamData_Skip9:
 	jr	PmemOutRGridCheck_OnRamData_Join8
 PmemOutRGridCheck_OnRamData_Skip10:
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0x54, 0x02
+	pushw PmemOutRGridCheck_OnRamData_Str_Fmt3d_9@hi16
+	pushw PmemOutRGridCheck_OnRamData_Str_Fmt3d_9@lo16
 	ld	xwa, (xsp+20)
 	push	xwa
 	call	Sprintf_Locked
@@ -2586,8 +2587,8 @@ CtlMsgGrid_EventHandler:
 	add XBC,XWA
 	bit 7,(XBC)
 	jr z, CtlMsg_SendAudioCommand
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0x5a, 0x02
+	pushw CtlMsgGrid_EventHandler_Str_OFF@hi16
+	pushw CtlMsgGrid_EventHandler_Str_OFF@lo16
 	ld XWA,(XSP+0x10)
 	push XWA
 	call Strcpy
@@ -2597,8 +2598,8 @@ CtlMsg_SendAudioCommand:
 	ld	a, (xbc)
 	extz	wa
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0x60, 0x02
+	pushw	CtlMsg_SendAudioCommand_Str_Fmt3d@hi16
+	pushw	CtlMsg_SendAudioCommand_Str_Fmt3d@lo16
 	ld	xwa, (xsp+18)
 	push	xwa
 	call	Sprintf_Locked
@@ -2618,8 +2619,8 @@ CtlMsg_ReadOffsetAndSend:
 	ld	a, (xbc)
 	extz	wa
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0x66, 0x02
+	pushw	CtlMsg_ReadOffsetAndSend_Str_Fmt3d@hi16
+	pushw	CtlMsg_ReadOffsetAndSend_Str_Fmt3d@lo16
 	ld	xwa, (xsp+18)
 	push	xwa
 	call	Sprintf_Locked
@@ -2645,8 +2646,8 @@ CtlMsg_ComputeAndCheck:
 	add XWA,XBC
 	bit 7,(XWA)
 	jr z, CtlMsg_SendParamValue
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0x6c, 0x02
+	pushw CtlMsg_ComputeAndCheck_Str_OFF@hi16
+	pushw CtlMsg_ComputeAndCheck_Str_OFF@lo16
 	ld XWA,(XSP+0x10)
 	push XWA
 	call Strcpy
@@ -2656,8 +2657,8 @@ CtlMsg_SendParamValue:
 	ld	a, (xwa)
 	extz	wa
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0x72, 0x02
+	pushw	CtlMsg_SendParamValue_Str_Fmt3d@hi16
+	pushw	CtlMsg_SendParamValue_Str_Fmt3d@lo16
 	ld	xwa, (xsp+18)
 	push	xwa
 	call	Sprintf_Locked
@@ -4202,8 +4203,8 @@ MidiPartGridCheck_Loop:
 	call	SndParam_LookupReadOnly
 	cp	hl, 0:i3
 	jr	nz, MidiPartGridCheck_Skip9
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0xc0, 0x06
+	pushw	MidiPartGridCheck_LocalInit_Strings@hi16
+	pushw	MidiPartGridCheck_LocalInit_Strings@lo16
 	lda	xwa, (xsp+28)
 	push	xwa
 	call	Strcpy
@@ -4214,8 +4215,8 @@ MidiPartGridCheck_Skip9:
 	ld	wa, (xwa+4)
 	inc	1, wa
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0xc6, 0x06
+	pushw	MidiPartGridCheck_OnLswData_Str_Fmt2d@hi16
+	pushw	MidiPartGridCheck_OnLswData_Str_Fmt2d@lo16
 	lda	xwa, (xsp+30)
 	push	xwa
 	call	Sprintf_Locked
@@ -4236,8 +4237,8 @@ MidiPartGridCheck_Skip10:
 	ldw	(xwa), 1
 	cpw	(xde), 0
 	jr	nz, MidiPartGridCheck_Skip11
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0xce, 0x06
+	pushw	MidiPartGridCheck_OnLswData_Str_OFF@hi16
+	pushw	MidiPartGridCheck_OnLswData_Str_OFF@lo16
 	ld	xwa, (xsp+12)
 	push	xwa
 	call	Strcpy
@@ -4250,8 +4251,8 @@ MidiPartGridCheck_Skip11:
 	call	SndParam_LookupReadOnly
 	inc	1, hl
 	pushw	hl
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0xd4, 0x06
+	pushw	MidiPartGridCheck_OnLswData_Str_Fmt2d_2@hi16
+	pushw	MidiPartGridCheck_OnLswData_Str_Fmt2d_2@lo16
 	lda	xwa, (xsp+30)
 	push	xwa
 	call	Sprintf_Locked
@@ -4351,8 +4352,8 @@ MidiSetup_EventHandler:
 	call SndParam_LookupReadOnly
 	cp hl, 0:i3
 	jr nz, MidiPart_AudioCmdDisplay
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0xe8, 0x06
+	pushw MidiSetup_EventHandler_Str_OFF@hi16
+	pushw MidiSetup_EventHandler_Str_OFF@lo16
 	lda xwa, (xsp + 0x1c)
 	push XWA
 	call Strcpy
@@ -4363,8 +4364,8 @@ MidiPart_AudioCmdDisplay:
 	call	SndParam_LookupReadOnly
 	inc	1, hl
 	pushw	hl
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0xee, 0x06
+	pushw	MidiPart_AudioCmdDisplay_Str_Fmt2d@hi16
+	pushw	MidiPart_AudioCmdDisplay_Str_Fmt2d@lo16
 	lda	xwa, (xsp+30)
 	push	xwa
 	call	Sprintf_Locked
@@ -4836,106 +4837,106 @@ InitializeMurai:
 	ldw WA, 0x03f0
 	call RegisterObjectTable
 	pushw 0x0001
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0x9a, 0x64
+	pushw InitializeMurai_Str_MD_SOUND@hi16
+	pushw	InitializeMurai_Str_MD_SOUND@lo16
 	ld	xwa, 2:i3
 	ld	xbc, NAKA_APFUNC_DefaultFunction
 	ld	xde, TITLE_SDMENU
 	call	RegisterMode
 	pushw	1
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0xa4, 0x64
+	pushw	InitializeMurai_Str_TT_SDMENU@hi16
+	pushw	InitializeMurai_Str_TT_SDMENU@lo16
 	ld	xwa, 2:i3
 	ld	xbc, NAKA_APFUNC_DefaultFunction
 	ld	xde, 0x020000
 	call	RegisterTitle
 	pushw	1
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0xae, 0x64
+	pushw	InitializeMurai_Str_TT_SDPART@hi16
+	pushw	InitializeMurai_Str_TT_SDPART@lo16
 	ld	xwa, 3:i3
 	ld	xbc, NAKA_APFUNC_DefaultFunction
 	ld	xde, 0x030000
 	call	RegisterTitle
 	pushw	1
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0xb8, 0x64
+	pushw	InitializeMurai_Str_TT_SDMTUNE@hi16
+	pushw	InitializeMurai_Str_TT_SDMTUNE@lo16
 	ld	xwa, 4:i3
 	ld	xbc, NAKA_APFUNC_DefaultFunction
 	ld	xde, 0x040000
 	call	RegisterTitle
 	pushw	1
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0xc4, 0x64
+	pushw	InitializeMurai_Str_TT_SDSCLTYP@hi16
+	pushw	InitializeMurai_Str_TT_SDSCLTYP@lo16
 	ld	xwa, 5:i3
 	ld	xbc, NAKA_APFUNC_DefaultFunction
 	ld	xde, 0x050000
 	call	RegisterTitle
 	pushw	1
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0xd0, 0x64
+	pushw	InitializeMurai_Str_TT_SDLFTHLD@hi16
+	pushw	InitializeMurai_Str_TT_SDLFTHLD@lo16
 	ld	xwa, 7:i3
 	ld	xbc, NAKA_APFUNC_DefaultFunction
 	ld	xde, 0x070000
 	call	RegisterTitle
 	pushw	1
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0xdc, 0x64
+	pushw	InitializeMurai_Str_TT_SDMIXER@hi16
+	pushw	InitializeMurai_Str_TT_SDMIXER@lo16
 	ld	xwa, 8
 	ld	xbc, NAKA_APFUNC_DefaultFunction
 	ld	xde, 0x080000
 	call	RegisterTitle
 	pushw	1
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0xe8, 0x64
+	pushw	InitializeMurai_Str_TT_SDTECD@hi16
+	pushw	InitializeMurai_Str_TT_SDTECD@lo16
 	ld	xwa, 13
 	ld	xbc, NAKA_APFUNC_DefaultFunction
 	ld	xde, 0x0d0000
 	call	RegisterTitle
 	pushw	1
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0xf2, 0x64
+	pushw	InitializeMurai_Str_TT_SQMIXER@hi16
+	pushw	InitializeMurai_Str_TT_SQMIXER@lo16
 	ld	xwa, 165
 	ld	xbc, NAKA_APFUNC_DefaultFunction
 	ld	xde, 0xa50000
 	call	RegisterTitle
 	pushw	1
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0xfe, 0x64
+	pushw	InitializeMurai_Str_TT_DEMOFEATURE@hi16
+	pushw	InitializeMurai_Str_TT_DEMOFEATURE@lo16
 	ld	xwa, 228
 	ld	xbc, NAKA_APFUNC_DefaultFunction
 	ld	xde, NAKA_VIEW_Demofeature
 	call	RegisterTitle
 	pushw	1
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0x0e, 0x65
+	pushw	InitializeMurai_Str_TT_DRAWBAR@hi16
+	pushw	InitializeMurai_Str_TT_DRAWBAR@lo16
 	ld	xwa, 234
 	ld	xbc, NAKA_APFUNC_DefaultFunction
 	ld	xde, NAKA_VIEW_Drawbar
 	call	RegisterTitle
 	pushw	1
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0x1a, 0x65
+	pushw	InitializeMurai_Str_TT_ACCORDION@hi16
+	pushw	InitializeMurai_Str_TT_ACCORDION@lo16
 	ld	xwa, 235
 	ld	xbc, NAKA_APFUNC_DefaultFunction
 	ld	xde, NAKA_VIEW_Accordion
 	call	RegisterTitle
 	pushw	1
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0x28, 0x65
+	pushw	InitializeMurai_Str_TT_MESAGE@hi16
+	pushw	InitializeMurai_Str_TT_MESAGE@lo16
 	ld	xwa, 238
 	ld	xbc, NAKA_APFUNC_DefaultFunction
 	ld	xde, NAKA_VIEW_Mesage
 	call	RegisterTitle
 	pushw	1
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0x32, 0x65
+	pushw	InitializeMurai_Str_TT_WELCOM@hi16
+	pushw	InitializeMurai_Str_TT_WELCOM@lo16
 	ld	xwa, 239
 	ld	xbc, NAKA_APFUNC_DefaultFunction
 	ld	xde, NAKA_VIEW_Welcom
 	call	RegisterTitle
 	pushw	1
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0x3c, 0x65
+	pushw	InitializeMurai_Str_TT_SOFTVER@hi16
+	pushw	InitializeMurai_Str_TT_SOFTVER@lo16
 	ld	xwa, 240
 	ld	xbc, NAKA_APFUNC_DefaultFunction
 	ld	xde, NAKA_VIEW_Softver
@@ -5264,9 +5265,9 @@ LswLeftHold_OnGetLswString:
 	jr LswLeftHold_CopyAndReturn
 
 LswLeftHold_DefaultStr:
+	pushw LswLeftHold_Str_ERR@hi16
+	pushw LswLeftHold_Str_ERR@lo16
 
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0xb6, 0x51
 LswLeftHold_CopyAndReturn:
 	push	xwa
 	call	Strcpy
@@ -5626,8 +5627,8 @@ IvSdpart_DispatchEvent:
 	jr IvSdpart_ReturnHandled
 
 IvSdpart_GetText:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0x5a, 0x54
+	pushw	IvSdpart_GetText_Str_SdPT@hi16
+	pushw	IvSdpart_GetText_Str_SdPT@lo16
 	ld	xwa, (xsp+8)
 	push	xwa
 	call	Strcpy
@@ -7121,8 +7122,8 @@ LswSound:
 	ld	xwa, (xhl)
 	bit	15, qwa
 	jr	nz, LswSound_ReturnThis
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0x86, 0x54
+	pushw	LswSound_Str_Dash_Dash_Dash_Dash@hi16
+	pushw	LswSound_Str_Dash_Dash_Dash_Dash@lo16
 	ld	xwa, (xde+8)
 	push	xwa
 	call	Strcpy
@@ -7216,8 +7217,8 @@ LswVolume:
 	cp	wa, 128
 	jr	ge, LswVolume_OverflowStr
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0x98, 0x54
+	pushw	LswVolume_Str_Fmt4d@hi16
+	pushw	LswVolume_Str_Fmt4d@lo16
 	push	xbc
 	call	Sprintf_Locked
 	lda	xsp, (xsp+10)
@@ -7339,8 +7340,8 @@ LswMute:
 	cp	wa, 128
 	jr	ge, LswMute_OverflowStr
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0xa8, 0x54
+	pushw	LswMute_Str_Fmt4d@hi16
+	pushw	LswMute_Str_Fmt4d@lo16
 	push	xbc
 	call	Sprintf_Locked
 	lda	xsp, (xsp+10)
@@ -7581,15 +7582,15 @@ LswReverb:
 	bit	13, wa
 	jr	z, LswReverb_InactiveStr
 	pushw	(xde+4)
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0xcc, 0x54
+	pushw	LswReverb_Str_Fmt3d@hi16
+	pushw	LswReverb_Str_Fmt3d@lo16
 	push	xbc
 	call	Sprintf_Locked
 	lda	xsp, (xsp+10)
 	jr	LswReverb_ReturnThis
 LswReverb_InactiveStr:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0xd0, 0x54
+	pushw	LswReverb_InactiveStr_Str_Dash_Dash@hi16
+	pushw	LswReverb_InactiveStr_Str_Dash_Dash@lo16
 	push	xbc
 	call	Strcpy
 	inc	8, xsp
@@ -7695,15 +7696,15 @@ LswDSPEffect:
 	bit	12, wa
 	jr	z, LswDSPEff_InactiveStr
 	pushw	(xde+4)
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0xd4, 0x54
+	pushw	LswDSPEffect_Str_Fmt3d@hi16
+	pushw	LswDSPEffect_Str_Fmt3d@lo16
 	push	xbc
 	call	Sprintf_Locked
 	lda	xsp, (xsp+10)
 	jr	LswDSPEff_ReturnThis
 LswDSPEff_InactiveStr:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0xd8, 0x54
+	pushw	LswDSPEff_InactiveStr_Str_Dash_Dash@hi16
+	pushw	LswDSPEff_InactiveStr_Str_Dash_Dash@lo16
 	push	xbc
 	call	Strcpy
 	inc	8, xsp
@@ -7986,15 +7987,15 @@ LswSustainLength:
 	ld	wa, (xde+4)
 	inc	1, wa
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0xf4, 0x54
+	pushw	LswSustainLength_Str_Fmt2d@hi16
+	pushw	LswSustainLength_Str_Fmt2d@lo16
 	push	xbc
 	call	Sprintf_Locked
 	lda	xsp, (xsp+10)
 	jr	LswSustLen_ReturnThis
 LswSustLen_InactiveStr:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0xf8, 0x54
+	pushw	LswSustLen_InactiveStr_Str_Dash_Dash@hi16
+	pushw	LswSustLen_InactiveStr_Str_Dash_Dash@lo16
 	push	xbc
 	call	Strcpy
 	inc	8, xsp
@@ -8088,8 +8089,8 @@ LswKeyShift:
 	sub	wa, 64
 	jr	z, LswKeyShift_ZeroStr
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0xfc, 0x54
+	pushw	LswKeyShift_Str_Fmt3d@hi16
+	pushw	LswKeyShift_Str_Fmt3d@lo16
 	push	xbc
 	call	Sprintf_Locked
 	lda	xsp, (xsp+10)
@@ -8204,8 +8205,8 @@ LswTuning:
 	sub	wa, 128
 	jr	z, LswTuning_ZeroStr
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0x0a, 0x55
+	pushw	LswTuning_Str_Fmt4d@hi16
+	pushw	LswTuning_Str_Fmt4d@lo16
 	push	xbc
 	call	Sprintf_Locked
 	lda	xsp, (xsp+10)
@@ -8313,15 +8314,15 @@ LswBendRange:
 	bit	7, wa
 	jr	z, LswBendRng_InactiveStr
 	pushw	(xde+4)
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0x1c, 0x55
+	pushw	LswBendRange_Str_Fmt3d@hi16
+	pushw	LswBendRange_Str_Fmt3d@lo16
 	push	xbc
 	call	Sprintf_Locked
 	lda	xsp, (xsp+10)
 	jr	LswBendRng_ReturnThis
 LswBendRng_InactiveStr:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0x20, 0x55
+	pushw	LswBendRng_InactiveStr_Str_Dash_Dash@hi16
+	pushw	LswBendRng_InactiveStr_Str_Dash_Dash@lo16
 	push	xbc
 	call	Strcpy
 	inc	8, xsp
@@ -9017,21 +9018,21 @@ LswMidiChannel:
 	ld	wa, (xiz+4)
 	inc	1, wa
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0x6c, 0x55
+	pushw	LswMidiChannel_Str_CH_Fmt2d@hi16
+	pushw	LswMidiChannel_Str_CH_Fmt2d@lo16
 	push	xbc
 	call	Sprintf_Locked
 	lda	xsp, (xsp+10)
 	jr	LswMidi_LoadReturnValue
 LswMidi_StrChannelAlt:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0x72, 0x55
+	pushw LswMidi_StrChannelAlt_Str_OFF@hi16
+	pushw LswMidi_StrChannelAlt_Str_OFF@lo16
 	push xbc
 	jr LswMidi_StrCopyReturn
 
 LswMidi_StrOff:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0x78, 0x55
+	pushw LswMidi_StrOff_Str_Dash_Dash@hi16
+	pushw LswMidi_StrOff_Str_Dash_Dash@lo16
 	ld xwa, (xiz + 8)
 	push xwa
 
@@ -9170,8 +9171,8 @@ IvMessage_SelectionChange:
 	jr IvMessage_Epilogue
 
 IvMessage_GetText:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0xd6, 0xd6
+	pushw	IvMessage_GetText_Str_Msg@hi16
+	pushw	IvMessage_GetText_Str_Msg@lo16
 	push	xde
 	call	Strcpy
 	inc	8, xsp
@@ -9574,8 +9575,8 @@ MsgHeader_BuildLoop:
 	add	xbc, (xwa+6)
 	ld	xwa, (xbc)
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0xb2, 0xd7
+	pushw	MsgHeader_BuildLoop_Str_Fmts_Fmt2d@hi16
+	pushw	MsgHeader_BuildLoop_Str_Fmts_Fmt2d@lo16
 	push	xiz
 	call	Sprintf_Locked
 	lda	xsp, (xsp+20)
@@ -9915,8 +9916,8 @@ IvAccordion_DispatchEvent:
 	jr IvAccordion_ReturnHandled
 
 IvAccordion_GetText:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0xca, 0xd8
+	pushw	IvAccordion_GetText_Str_Acdn@hi16
+	pushw	IvAccordion_GetText_Str_Acdn@lo16
 	push	xiz
 	call	Strcpy
 	inc	8, xsp
@@ -9976,8 +9977,8 @@ AccordionX_Paint:
 	jr StringCopyReturn
 
 AccordionX_GetText:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0xd0, 0xd8
+	pushw	AccordionX_GetText_Str_Acdn@hi16
+	pushw	AccordionX_GetText_Str_Acdn@lo16
 	ld	xwa, (xsp+8)
 	push	xwa
 	call	Strcpy
@@ -10164,8 +10165,8 @@ Sdtecd_Paint:
 	jr Sdtecd_ReturnZero
 
 Sdtecd_GetText:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0xd6, 0xd8
+	pushw	Sdtecd_GetText_Str_TeCd@hi16
+	pushw	Sdtecd_GetText_Str_TeCd@lo16
 	ld	xwa, (xsp+8)
 	push	xwa
 	call	Strcpy
@@ -10341,8 +10342,8 @@ Sdtecd1_SendEventReturn:
 	jr IvSdtecd1_ReturnDefault
 
 Sdtecd1_GetText:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0x32, 0xd9
+	pushw	Sdtecd1_GetText_Str_TeC1@hi16
+	pushw	Sdtecd1_GetText_Str_TeC1@lo16
 	push	xiz
 	call	Strcpy
 	inc	8, xsp
@@ -10386,9 +10387,9 @@ LswOrchestrator:
 	jr LswOrch_StrCopyReturn
 
 LswOrch_StrDefault:
+	pushw LswOrch_StrDefault_Str_CONDUCTOR@hi16
+	pushw LswOrch_StrDefault_Str_CONDUCTOR@lo16
 
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0x26, 0xda
 LswOrch_StrCopyReturn:
 	push	xwa
 	call	Strcpy
@@ -10652,8 +10653,8 @@ LswTuning_SearchLoop:
 	div	wa, 3
 	add	wa, 27
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0x86, 0xda
+	pushw	LswTuning_SearchLoop_Str_N4_Fmtd_0@hi16
+	pushw	LswTuning_SearchLoop_Str_N4_Fmtd_0@lo16
 	lda	xwa, (xsp+8)
 	push	xwa
 	call	Sprintf_Locked
@@ -10869,8 +10870,8 @@ Sdscltyp2_Paint:
 	jr IvSdscltyp2_ReturnZeroJmp
 
 Sdscltyp2_GetText:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0xc0, 0xda
+	pushw	Sdscltyp2_GetText_Str_Scl2@hi16
+	pushw	Sdscltyp2_GetText_Str_Scl2@lo16
 	ld	xwa, (xsp+8)
 	push	xwa
 	call	Strcpy
@@ -10920,9 +10921,9 @@ LswScalingType:
 	jr LswScaleType_StrCopyReturn
 
 LswScaleType_StrDefault:
+	pushw LswScaleType_StrDefault_Str_NO_TYPE@hi16
+	pushw LswScaleType_StrDefault_Str_NO_TYPE@lo16
 
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0x18, 0xdc
 LswScaleType_StrCopyReturn:
 	push	xbc
 	call	Strcpy
@@ -11117,15 +11118,15 @@ LswScalingKeyX:
 	or	xhl, xhl
 	jr	z, LswScaleKeyX_StrZero
 	push	xhl
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0x42, 0xdd
+	pushw	LswScalingKeyX_Str_Fmt4d@hi16
+	pushw	LswScalingKeyX_Str_Fmt4d@lo16
 	push	xwa
 	call	Sprintf_Locked
 	lda	xsp, (xsp+12)
 	jr	LswScaleKeyX_LoadReturn
 LswScaleKeyX_StrZero:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0x48, 0xdd
+	pushw	LswScaleKeyX_StrZero_Str_N0@hi16
+	pushw	LswScaleKeyX_StrZero_Str_N0@lo16
 	push	xwa
 	call	Strcpy
 	inc	8, xsp
@@ -11208,8 +11209,8 @@ Softver_ShowHide:
 	ld	xwa, xiz
 	call	InheritedProc
 	pushw	(Softver_ShowHide_Data:24)
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0x4e, 0xdd
+	pushw	Softver_ShowHide_Str_Fmt4d@hi16
+	pushw	Softver_ShowHide_Str_Fmt4d@lo16
 	lda	xwa, (xsp+10)
 	push	xwa
 	call	Sprintf_Locked
@@ -11220,8 +11221,8 @@ Softver_ShowHide:
 	call	SendEvent
 	call	Boot_ParseTableDataTimestamp
 	pushw	hl
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0x52, 0xdd
+	pushw	Softver_ShowHide_Str_Fmt4d_2@hi16
+	pushw	Softver_ShowHide_Str_Fmt4d_2@lo16
 	lda	xwa, (xsp+10)
 	push	xwa
 	call	Sprintf_Locked
@@ -11232,8 +11233,8 @@ Softver_ShowHide:
 	call	SendEvent
 	call	Boot_GetSystemPointer
 	pushw	hl
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0x56, 0xdd
+	pushw	Softver_ShowHide_Str_Fmt4d_3@hi16
+	pushw	Softver_ShowHide_Str_Fmt4d_3@lo16
 	lda	xwa, (xsp+10)
 	push	xwa
 	call	Sprintf_Locked
@@ -11244,8 +11245,8 @@ Softver_ShowHide:
 	call	SendEvent
 	call	Boot_ParseSubCPUTimestamp
 	pushw	hl
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0x5a, 0xdd
+	pushw	Softver_ShowHide_Str_Fmt4d_4@hi16
+	pushw	Softver_ShowHide_Str_Fmt4d_4@lo16
 	lda	xwa, (xsp+10)
 	push	xwa
 	call	Sprintf_Locked
@@ -11266,9 +11267,9 @@ Softver_SendEvent:
 	jr	MPver_ReturnZero
 
 Softver_GetText:
+	pushw	Softver_GetText_Str_Soft@hi16
 ; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0x5e, 0xdd, 0x3a, 0x1d
-	.byte	0x72, 0x06, 0xff
+	.byte	0x0b, 0x5e, 0xdd, 0x3a, 0x1d, 0x72, 0x06, 0xff
 Softver_ReturnZero:
 
 Softver_Epilogue:
@@ -12883,8 +12884,8 @@ PsMixerControlProc_OnSoundName:
 	lda	xbc, (0x03ea34:24)
 	ld	xwa, (xbc+wa)
 	push XWA
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0x84, 0xf4
+	pushw PsMixerControlProc_OnSoundName_Str_Fmts_SOUND_Fmts@hi16
+	pushw PsMixerControlProc_OnSoundName_Str_Fmts_SOUND_Fmts@lo16
 	lda xwa, (xsp + 0x1e)
 	push XWA
 	call Sprintf_Locked
@@ -12932,8 +12933,8 @@ PsMixer_EventFwd_Next:
 
 ; PsMixer control common handler
 PsMixer_ControlCommon:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0x92, 0xf4
+	pushw	PsMixer_ControlCommon_Str_RIGHT_1_Sound_Name_xxxxx@hi16
+	pushw	PsMixer_ControlCommon_Str_RIGHT_1_Sound_Name_xxxxx@lo16
 	ld	xwa, (xsp+86)
 	push	xwa
 	call	Strcpy
@@ -15255,8 +15256,8 @@ PsMixer_CtlTypeProc1_Loop:
 	lda	xwa, (0x03ea34:24)
 	ld	xwa, (xwa+hl)
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0x76, 0xf7
+	pushw	PsMixer_CtlTypeProc1_Str_Fmts@hi16
+	pushw	PsMixer_CtlTypeProc1_Str_Fmts@lo16
 	lda	xwa, (xsp+30)
 	push	xwa
 	call	Sprintf_Locked
@@ -15514,8 +15515,8 @@ PsMixer_CtlTypeProc10_Loop:
 	lda	xbc, (256804:24)
 	ld	xwa, (xbc+wa)
 	push	xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0x7a, 0xf7
+	pushw	PsMixer_CtlTypeProc10_Str_Fmts@hi16
+	pushw	PsMixer_CtlTypeProc10_Str_Fmts@lo16
 	lda	xwa, (xsp+12)
 	push	xwa
 	call	Sprintf_Locked
@@ -16159,8 +16160,8 @@ IvDrawbar_DispatchEvent:
 	jr IvDrawbar_ReturnHandled
 
 IvDrawbar_GetText:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0x2e, 0xf8
+	pushw	IvDrawbar_GetText_Str_Draw@hi16
+	pushw	IvDrawbar_GetText_Str_Draw@lo16
 	ld	xwa, (xsp+8)
 	push	xwa
 	call	Strcpy
@@ -16565,8 +16566,8 @@ DrawCombo_Paint:
 	jrl DrawCombo_SendEvent
 
 DrawCombo_GetText:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0x34, 0xf8
+	pushw	DrawCombo_GetText_Str_PAGE@hi16
+	pushw	DrawCombo_GetText_Str_PAGE@lo16
 	ld	xwa, (xsp+8)
 	push	xwa
 	call	Strcpy
@@ -17516,8 +17517,8 @@ IvDrawbar1_DispatchEvent:
 	jr IvDrawbar1_ReturnHandled
 
 IvDrawbar1_GetText:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0x3a, 0xf8
+	pushw	IvDrawbar1_GetText_Str_Drw1@hi16
+	pushw	IvDrawbar1_GetText_Str_Drw1@lo16
 	ld	xwa, (xsp+8)
 	push	xwa
 	call	Strcpy
@@ -17703,8 +17704,8 @@ IvDrawbar2_MainFuncCallShared:
 	jr IvDrawbar_ReturnZeroJmp
 
 IvDrawbar2_GetText:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0x40, 0xf8
+	pushw	IvDrawbar2_GetText_Str_Drw2@hi16
+	pushw	IvDrawbar2_GetText_Str_Drw2@lo16
 	ld	xwa, (xsp+8)
 	push	xwa
 	call	Strcpy
@@ -17841,8 +17842,8 @@ IvDrawbarNorm_SendEvent:
 	jr IvDrawbarNorm_ReturnZeroJmp
 
 DrawbarNorm_GetText:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0x46, 0xf8
+	pushw	DrawbarNorm_GetText_Str_DrwN@hi16
+	pushw	DrawbarNorm_GetText_Str_DrwN@lo16
 	ld	xwa, (xsp+8)
 	push	xwa
 	call	Strcpy
@@ -17883,8 +17884,8 @@ DrawbarSndE_Paint:
 	jr DrawbarSndE_ReturnZero
 
 DrawbarSndE_GetText:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0x4c, 0xf8
+	pushw	DrawbarSndE_GetText_Str_DrwE@hi16
+	pushw	DrawbarSndE_GetText_Str_DrwE@lo16
 	push	xde
 	call	Strcpy
 	inc	8, xsp
@@ -18347,8 +18348,8 @@ PsVari_GetText:
 	ld XWA,(XSP+0x0118)
 	call GetViewInstance
 	pushm (xhl + 0x24)
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0xa0, 0xf8
+	pushw PsVari_GetText_Str_EditSw_Fmtd@hi16
+	pushw PsVari_GetText_Str_EditSw_Fmtd@lo16
 	ld XWA,(XSP+0x011a)
 	push XWA
 	call Sprintf_Locked
@@ -18569,8 +18570,8 @@ Demofeat1_Paint:
 	jr Demofeat1_ReturnZero
 
 Demofeat1_GetText:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0xaa, 0xf8
+	pushw	Demofeat1_GetText_Str_Fdm1@hi16
+	pushw	Demofeat1_GetText_Str_Fdm1@lo16
 	push	xde
 	call	Strcpy
 	inc	8, xsp
@@ -18628,8 +18629,8 @@ Demofeat2_SendEvent:
 	jr Demofeat2_ReturnZero
 
 Demofeat2_GetText:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0xb0, 0xf8
+	pushw	Demofeat2_GetText_Str_Fdm2@hi16
+	pushw	Demofeat2_GetText_Str_Fdm2@lo16
 	push	xde
 	call	Strcpy
 	inc	8, xsp

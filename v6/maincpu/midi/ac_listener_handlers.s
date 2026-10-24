@@ -60,9 +60,9 @@ AcLswBox_AddOffsetAndPush:
 	jr AcLswBox_StrcpyAndReturn
 
 AcLswBox_PushDefaultStr:
+	pushw MdSetupLoadFunc_CaseTable_Strings@hi16
+	pushw MdSetupLoadFunc_CaseTable_Strings@lo16
 
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0x42, 0xf9
 AcLswBox_StrcpyAndReturn:
 	ld	xwa, (xsp+8)
 	push	xwa
@@ -288,9 +288,9 @@ AcLswEdit_AddOffsetAndPush:
 	jr AcLswEdit_StrcpyAndReturn
 
 AcLswEdit_PushDefaultStr:
+	pushw AcLswEdit_PushDefaultStr_Str_Error@hi16
+	pushw AcLswEdit_PushDefaultStr_Str_Error@lo16
 
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0x48, 0xf9
 AcLswEdit_StrcpyAndReturn:
 	ld	xwa, (xsp+8)
 	push	xwa
@@ -870,8 +870,8 @@ FadeSetGridCheck_Skip:
 	jrl	nz, SndParam_ReturnZero2
 FadeSetGridCheck_OnLswData_Join:
 	pushm	(xde)
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0xa4, 0xf9
+	pushw	FadeSetGridCheck_LocalInit_Strings@hi16
+	pushw	FadeSetGridCheck_LocalInit_Strings@lo16
 	push	xbc
 	call	Sprintf_Locked
 	lda	xsp, (xsp+10)
@@ -927,8 +927,8 @@ AcInOutGrid_Handler:
 SndParam_LookupAndSendCmd:
 	call	SndParam_LookupReadOnly
 	pushw	hl
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0xbe, 0xf9
+	pushw	SndParam_LookupAndSendCmd_Str_Fmt2d_measure@hi16
+	pushw	SndParam_LookupAndSendCmd_Str_Fmt2d_measure@lo16
 	lda	xwa, (xsp+18)
 	push	xwa
 	call	Sprintf_Locked
@@ -1600,16 +1600,16 @@ InOutGridCheck_Skip7:
 	ld	wa, (xiz+4)
 	exts	wa
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0x04, 0xfd
+	pushw	InOutGridCheck_LocalInit_Strings@hi16
+	pushw	InOutGridCheck_LocalInit_Strings@lo16
 	lda	xwa, (xsp+18)
 	push	xwa
 	call	Sprintf_Locked
 	lda	xsp, (xsp+10)
 	jr	InOutGridCheck_Join2
 InOutGridCheck_Skip8:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0x0a, 0xfd
+	pushw	Data_InOutGridDispatch_Str_Blank5@hi16
+	pushw	Data_InOutGridDispatch_Str_Blank5@lo16
 	lda	xwa, (xsp+16)
 	push	xwa
 	call	Strcpy
@@ -1630,16 +1630,16 @@ InOutGridCheck_Skip9:
 	pushm	(xiz+4)
 	; v10 does not spell this byte either
 	; v10 does not spell this byte either
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0x10, 0xfd
+	pushw	Data_InOutGridDispatch_Str_Fmt3d@hi16
+	pushw	Data_InOutGridDispatch_Str_Fmt3d@lo16
 	lda	xwa, (xsp+18)
 	push	xwa
 	call	Sprintf_Locked
 	lda	xsp, (xsp+10)
 	jr	InOutGridCheck_Join3
 InOutGridCheck_Skip10:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0x16, 0xfd
+	pushw	Data_InOutGridDispatch_Str_Blank5_2@hi16
+	pushw	Data_InOutGridDispatch_Str_Blank5_2@lo16
 	lda	xwa, (xsp+16)
 	push	xwa
 	call	Strcpy
@@ -1794,8 +1794,8 @@ Data_InOutGridDispatch_VelocityInput:
 	cp	hl, 0:i3
 	jrl	nz, MdPreset_ReturnZero2	; -> 0xF75DF4
 	ldw	(xwa), 3
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0x1c, 0xfd
+	pushw	Data_ParaLoadOptDispatch_Str_Blank5@hi16
+	pushw	Data_ParaLoadOptDispatch_Str_Blank5@lo16
 	lda	xwa, (xsp+16)
 	push	xwa
 	call	Strcpy
@@ -1811,8 +1811,8 @@ InOutGridCheck_Skip14:
 	call	SndParam_LookupReadOnly
 	exts	hl
 	pushw	hl
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0x22, 0xfd
+	pushw	Data_ParaLoadOptDispatch_Str_Fmt3d@hi16
+	pushw	Data_ParaLoadOptDispatch_Str_Fmt3d@lo16
 	lda	xwa, (xsp+18)
 	push	xwa
 	call	Sprintf_Locked
@@ -1827,8 +1827,8 @@ InOutGridCheck_Skip15:
 	ld	xwa, 20482
 	call	SndParam_LookupReadOnly
 	pushw	hl
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0x28, 0xfd
+	pushw	Data_ParaLoadOptDispatch_Str_Fmt3d_2@hi16
+	pushw	Data_ParaLoadOptDispatch_Str_Fmt3d_2@lo16
 	lda	xwa, (xsp+18)
 	push	xwa
 	call	Sprintf_Locked
@@ -1849,8 +1849,8 @@ Data_InOutGridDispatch_VelocityOffsetOrFix:
 	jr	z, Data_InOutGridDispatch_VelocityOffsetOrFix_Skip16	; -> 0xF75CD3
 	cp	hl, 0:i3
 	jrl	nz, MdPreset_ReturnZero2	; -> 0xF75DF4
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0x2e, 0xfd
+	pushw	Data_ParaLoadOptDispatch_Str_Blank5_2@hi16
+	pushw	Data_ParaLoadOptDispatch_Str_Blank5_2@lo16
 	lda	xwa, (xsp+16)
 	push	xwa
 	call	Strcpy
@@ -1865,8 +1865,8 @@ Data_InOutGridDispatch_VelocityOffsetOrFix_Skip16:
 	call	SndParam_LookupReadOnly
 	exts	hl
 	pushw	hl
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0x34, 0xfd
+	pushw	Data_ParaLoadOptDispatch_Str_Fmt3d_3@hi16
+	pushw	Data_ParaLoadOptDispatch_Str_Fmt3d_3@lo16
 	lda	xwa, (xsp+18)
 	push	xwa
 	call	Sprintf_Locked
@@ -1880,8 +1880,8 @@ Data_InOutGridDispatch_VelocityOffsetOrFix_Skip17:
 	ld	xwa, 20482
 	call	SndParam_LookupReadOnly
 	pushw	hl
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0x3a, 0xfd
+	pushw	Data_ParaLoadOptDispatch_Str_Fmt3d_4@hi16
+	pushw	Data_ParaLoadOptDispatch_Str_Fmt3d_4@lo16
 	lda	xwa, (xsp+18)
 	push	xwa
 	call	Sprintf_Locked
@@ -2016,8 +2016,8 @@ IvMpst_HandleClose:
 	jrl IvMpst_SendEventEpilogue
 
 IvMpst_HandleGetName:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe7, 0x00, 0x0b, 0x84, 0xfd
+	pushw	InOutGridCheck_CaseTable_Strings@hi16
+	pushw	InOutGridCheck_CaseTable_Strings@lo16
 	ld	xwa, (xsp+8)
 	push	xwa
 	call	Strcpy

@@ -4069,8 +4069,7 @@ SeqNoteCh_CheckStatusByte:
 	ld (xsp + 6), 0x0
 
 SeqNoteCh_CheckMasterChan:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x8f, 0x12, 0x3f, 0x14
+	cp	(xsp + 18), 0x14
 	jr nz, SeqNoteCh_CheckZeroChannel
 	ldto_berp A, 0xfb
 	extz wa
@@ -4191,8 +4190,7 @@ SeqNoteCh_LoadVoiceAndCompare:
 	jr nc, SeqNoteCh_CompareVoicePos
 
 SeqNote_HandleMasterChannel:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x8f, 0x12, 0x3f, 0x14
+	cp	(xsp + 18), 0x14
 	jr nz, SeqNote_HandleAccompChannel
 	cp (xbc), 0x82
 	jr	nz, 40
@@ -9304,7 +9302,8 @@ VoiceAlloc_CompareLocalIdx:
 	jr z, BitMapOut_CompletionJoin
 
 BitMapOut_WriteMultiIdx:
-	mrib4	0x82, 0xfa19, 0xfa, 0x22
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0x82, 0x19, 0xfa, 0x22
 	mrdb5	0x8a, 0x01, 0x19, 0xfc, 0x22
 	mrdb5	0x8a, 0x02, 0x19, 0xfe, 0x22
 	mrdb5	0x8a, 0x03, 0x19, 0x00, 0x23
@@ -9379,8 +9378,9 @@ BitMapOut_PrepareAndDisplaySimple:
 
 	lda xwa, (xsp + 12)
 
-	mrib4	0x80, 0xfa19, 0xfa, 0x22
 
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0x80, 0x19, 0xfa, 0x22
 	mrdb5	0x88, 0x01, 0x19, 0xfc, 0x22
 
 	mrdb5	0x88, 0x02, 0x19, 0xfe, 0x22
@@ -32860,8 +32860,7 @@ SeqPart_VelExprEdit:
 	lda xbc, (Display_FontPalette_Table:24)
 	ld	xwa, (xbc+hl)
 	ld (xsp + 4), xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xc1, 0xe6, 0x25, 0x3f, 0x00
+	cp	(9702:16), 0
 	jrl z, SeqPart_VelExprFinalExit
 	cp	(9704:16), 0
 	jrl z, SeqPart_VelExprFinalExit

@@ -3340,8 +3340,8 @@ BitMapOut_UpdateDisplayWidget:
 	cp a, 0:i3
 	jr nz, BitMapOut_UpdateWidget_CheckType
 	pushw 0x10
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xeb, 0x00, 0x0b, 0xcc, 0x7a
+	pushw BitMapOut_UpdateDisplayWidget_Str_Non_Panel_Memory@hi16
+	pushw BitMapOut_UpdateDisplayWidget_Str_Non_Panel_Memory@lo16
 	jr BitMapOut_UpdateWidget_TypeA
 
 BitMapOut_UpdateWidget_CheckType:

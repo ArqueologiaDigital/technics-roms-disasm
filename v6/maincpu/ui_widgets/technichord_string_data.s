@@ -1090,14 +1090,20 @@ Str_PartName_Right1:	.incbin "includes/generated/naka_technichord_strings.bin", 
 IvSdpart_GetText_Str_SdPT:	.incbin "includes/generated/naka_technichord_strings.bin", 0xF5FC, 0x6
 ; IvSdpartProc_CaseTable -- 10 x int16: the case offsets of IvSdpartProc's compiled switch, relative to IvSdpart_Init
 IvSdpartProc_CaseTable:
+	.short	IvSdpartProc_OnIndexswUp - IvSdpart_Init
+	.short	IvSdpartProc_OnIndexswUp - IvSdpart_Init
+	.short	IvSdpartProc_OnIndexswUp - IvSdpart_Init
+	.short	IvSdpartProc_OnIndexswUp - IvSdpart_Init
+	.short	IvSdpart_ForwardToBase - IvSdpart_Init
+	.short	IvSdpartProc_OnLswData - IvSdpart_Init
+	.short	IvSdpart_ForwardToBase - IvSdpart_Init
+	.short	IvSdpart_ForwardToBase - IvSdpart_Init
+	.short	IvSdpart_ForwardToBase - IvSdpart_Init
+	.short	IvSdpartProc_OnSoundName - IvSdpart_Init
 ; [nakarest] naka_technichord_strings+0xf616  +0xf616..+0xf63e (0xe95564, 40 B)
 ; [nakarest] Text (40 B at 0xe95564), first string " ------ "; no registered NAKA table points
 ; [nakarest] into it; reached through source references SdpartUpdatePartUI_Confirm
 ; [nakarest] (ui/drawbar_panel_ui.s: `ld xde, SdpartUpdatePartUI_Confirm_Str_Dash_Dash_Dash_Dash`).
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xd5, 0x01, 0xd5, 0x01, 0xd5, 0x01, 0xd5, 0x01
-	.byte	0xb1, 0x03, 0xff, 0x02, 0xb1, 0x03, 0xb1, 0x03
-	.byte	0xb1, 0x03, 0x4d, 0x03
 SdpartUpdatePartUI_Confirm_Str_Dash_Dash_Dash_Dash:	.incbin "includes/generated/naka_technichord_strings.bin", 0xF616, 0x12	; "     ------     "
 LswSound_Str_Dash_Dash_Dash_Dash:			.incbin "includes/generated/naka_technichord_strings.bin", 0xF628, 0x12	; "     ------     "
 LswVolume_Str_Fmt4d:					.incbin "includes/generated/naka_technichord_strings.bin", 0xF63A, 0x4	; "%4d"
@@ -3146,6 +3152,19 @@ WelcomeScreen_ClearRect:	.incbin "includes/generated/naka_technichord_strings.bi
 ; Typed as int16_t WelcomeScript_OpJumpOffsets[13].
 ; -----------------------------------------------------------------------------
 AcWelcomScreen_Select_CaseTable:
+	.short	AcWelcomScreen_RenderBytecode - AcWelcomScreen_RenderBytecode
+	.short	AcWelcomScreen_Select_NextStep - AcWelcomScreen_RenderBytecode
+	.short	AcWelcomScreen_Select_OpMoveBlit - AcWelcomScreen_RenderBytecode
+	.short	AcWelcomScreen_Select_Case3 - AcWelcomScreen_RenderBytecode
+	.short	AcWelcomScreen_Select_OpDrawGlyphC - AcWelcomScreen_RenderBytecode
+	.short	AcWelcomScreen_Select_OpDrawGlyphO - AcWelcomScreen_RenderBytecode
+	.short	AcWelcomScreen_Select_OpDrawGlyphL - AcWelcomScreen_RenderBytecode
+	.short	AcWelcomScreen_Select_OpDrawGlyphR - AcWelcomScreen_RenderBytecode
+	.short	AcWelcomScreen_Select_OpDrawGlyphsIn - AcWelcomScreen_RenderBytecode
+	.short	AcWelcomScreen_Select_OpDrawColorWord - AcWelcomScreen_RenderBytecode
+	.short	AcWelcomScreen_Select_OpCaptureLcd - AcWelcomScreen_RenderBytecode
+	.short	AcWelcomScreen_Select_OpDrawGlyphU - AcWelcomScreen_RenderBytecode
+	.short	AcWelcomScreen_Select_OpDrawColorWord - AcWelcomScreen_RenderBytecode
 ; -----------------------------------------------------------------------------
 ; [nakarest_retype] PsMixer_ControlProcTable
 ; PsMixer_ControlProcTable  --  11 x u32 code addresses
@@ -3168,11 +3187,6 @@ AcWelcomScreen_Select_CaseTable:
 ;
 ; Typed as uint32_t PsMixer_ControlProcTable[11].
 ; -----------------------------------------------------------------------------
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x80, 0x03, 0x0f, 0x00, 0xa2, 0x00
-	.byte	0xb3, 0x00, 0xd0, 0x00, 0xed, 0x00, 0x25, 0x01
-	.byte	0x41, 0x01, 0x82, 0x01, 0x5c, 0x03, 0x09, 0x01
-	.byte	0x82, 0x01
 PsMixer_ControlProcTable:
 	.long	PsMixer_CtlTypeProc0
 	.long	PsMixer_CtlTypeProc1
@@ -3884,15 +3898,21 @@ PsMixerControlProc_OnSoundName_Str_Fmts_SOUND_Fmts:	.incbin "includes/generated/
 PsMixer_ControlCommon_Str_RIGHT_1_Sound_Name_xxxxx:	.incbin "includes/generated/naka_technichord_strings.bin", 0x19640, 0x1A	; "RIGHT 1: Sound Name xxxxx"
 ; PsMixerControlProc_CaseTable -- 10 x int16: the case offsets of PsMixerControlProc's compiled switch, relative to PsMixer_ControlHandler
 PsMixerControlProc_CaseTable:
+	.short	PsMixer_ControlCase8 - PsMixer_ControlHandler
+	.short	PsMixer_ControlCase8 - PsMixer_ControlHandler
+	.short	PsMixer_ControlCase8 - PsMixer_ControlHandler
+	.short	PsMixer_ControlCase8 - PsMixer_ControlHandler
+	.short	PsMixer_ControlReturn - PsMixer_ControlHandler
+	.short	PsMixerControlProc_OnLswData - PsMixer_ControlHandler
+	.short	PsMixer_ControlReturn - PsMixer_ControlHandler
+	.short	PsMixerControlProc_OnPageChange - PsMixer_ControlHandler
+	.short	PsMixer_ControlReturn - PsMixer_ControlHandler
+	.short	PsMixerControlProc_OnSoundName - PsMixer_ControlHandler
 ; PartMixer_RowTable -- 15 x {u16 kind, u16 ctl_type, s16 band_dy, u16 initial_row, u32 caption}: the Part Mixer's rows
 ; PartMixer_Init stores it at RAM 0x3EA30 (Util_StorePartArrayBase); row r = base + 12*r (Util_SignExtendAndDouble).
 ; kind -> PsMixer_RowKindApFuncId (31 SOUND, 14 PAN, 15 VOLUME, 13 REVERB, 12 DSP EFF, 3 DIGITAL EFF, 9 KEY SHIFT,
 ; 1 MIDI, 0 LOCAL, 32 blank); ctl_type -> PsMixer_CtlTypeProc<n>; band_dy shifts PsMixer_CalcRowBandRect's band;
 ; initial_row = 1 marks the row the cursor starts on in each page of 5; caption is drawn by PsMixer_DrawCaptionFrame.
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x70, 0x07, 0x70, 0x07, 0x70, 0x07, 0x70, 0x07
-	.byte	0x23, 0x0c, 0xaf, 0x07, 0x23, 0x0c, 0x9e, 0x02
-	.byte	0x23, 0x0c, 0x47, 0x0b
 PartMixer_RowTable:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1966E, 0xB4
 ; PartMixer_Row14Caption -- 2 x char: "" plus a 0xFF alignment pad, the caption (record +8) of part-mixer row 14,
 ; a blank row (kind 32); PsMixer_DrawCaptionFrame draws record +8 as the row caption.
@@ -4109,27 +4129,40 @@ DrawbarBitmap_SliderX:	.incbin "includes/generated/naka_technichord_strings.bin"
 Drawbar_LevelBitmapOffsets:	.incbin "includes/generated/naka_technichord_strings.bin", 0x19A12, 0x24
 ; DemoMenu_WorkspaceFunc_CaseTable -- 6 x int16: the case offsets of DemoMenu_WorkspaceFunc's compiled switch, relative to DemoMenu_WorkspaceDispatch
 DemoMenu_WorkspaceFunc_CaseTable:
+	.short	DemoMenu_WorkspaceDispatch - DemoMenu_WorkspaceDispatch
+	.short	DemoMenu_BuildItemWorkspace_Case10 - DemoMenu_WorkspaceDispatch
+	.short	DemoMenu_BuildItemWorkspace_Case11 - DemoMenu_WorkspaceDispatch
+	.short	DemoMenu_BuildItemWorkspace_Case12 - DemoMenu_WorkspaceDispatch
+	.short	DemoMenu_BuildItemWorkspace_Case13 - DemoMenu_WorkspaceDispatch
+	.short	DemoMenu_BuildItemWorkspace_Case14 - DemoMenu_WorkspaceDispatch
 ; DemoMenu_DescriptorFunc_CaseTable -- 6 x int16: the case offsets of DemoMenu_DescriptorFunc's compiled switch, relative to DemoDesc_DispatchTable
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x07, 0x00, 0x0e, 0x00, 0x15, 0x00
-	.byte	0x1c, 0x00, 0x23, 0x00
 DemoMenu_DescriptorFunc_CaseTable:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x06, 0x00, 0x0c, 0x00, 0x12, 0x00
-	.byte	0x18, 0x00, 0x1e, 0x00
+	.short	DemoDesc_DispatchTable - DemoDesc_DispatchTable
+	.short	DemoMenu_DescriptorFunc_Case10 - DemoDesc_DispatchTable
+	.short	DemoMenu_DescriptorFunc_Case11 - DemoDesc_DispatchTable
+	.short	DemoMenu_DescriptorFunc_Case12 - DemoDesc_DispatchTable
+	.short	DemoMenu_DescriptorFunc_Case13 - DemoDesc_DispatchTable
+	.short	DemoMenu_DescriptorFunc_Case14 - DemoDesc_DispatchTable
 PsVari_GetText_Str_EditSw_Fmtd:	.incbin "includes/generated/naka_technichord_strings.bin", 0x19A4E, 0xA	; "EditSw%d"
 Demofeat1_GetText_Str_Fdm1:	.incbin "includes/generated/naka_technichord_strings.bin", 0x19A58, 0x6	; "Fdm1"
 Demofeat2_GetText_Str_Fdm2:	.incbin "includes/generated/naka_technichord_strings.bin", 0x19A5E, 0x6	; "Fdm2"
 ; AcPresentationControlProc_CaseTable -- 11 x int16: the case offsets of AcPresentationControlProc's compiled switch, relative to AcPresCtrl_EventDispatch
 AcPresentationControlProc_CaseTable:
+	.short	AcPresCtrl_EventDispatch - AcPresCtrl_EventDispatch
+	.short	AcPresCtrl_DefaultCase - AcPresCtrl_EventDispatch
+	.short	AcPresCtrl_DefaultCase - AcPresCtrl_EventDispatch
+	.short	AcPresCtrl_DefaultCase - AcPresCtrl_EventDispatch
+	.short	AcPresentationControlProc_OnAction - AcPresCtrl_EventDispatch
+	.short	AcPresentationControlProc_OnSwIn - AcPresCtrl_EventDispatch
+	.short	AcPresentationControlProc_OnSwIn - AcPresCtrl_EventDispatch
+	.short	AcPresentationControlProc_OnSwIn - AcPresCtrl_EventDispatch
+	.short	AcPresCtrl_DefaultCase - AcPresCtrl_EventDispatch
+	.short	AcPresent_ReturnZeroJmp - AcPresCtrl_EventDispatch
+	.short	AcPresent_ReturnZeroJmp - AcPresCtrl_EventDispatch
 ; DemoDisk_LangPromptTable -- 6 x uint32_t: per-language prompt "To Starting an external DEMO, please insert a feature
 ; demo disk. Loading external demo data will erase any existing Sequencer data." (English, German, English, English,
 ; "Italian" placeholder, Indonesian). FDemoText (demo/fdemotext_routines.s) returns it for EVT_GET_LANGUAGE_PTR;
 ; AcLanguageTextProc draws entry [help language 0x340e4].
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x28, 0x01, 0x28, 0x01, 0x28, 0x01
-	.byte	0xed, 0x00, 0x1d, 0x00, 0x1d, 0x00, 0x1d, 0x00
-	.byte	0x28, 0x01, 0x24, 0x01, 0x24, 0x01
 DemoDisk_LangPromptTable:	.incbin "includes/generated/naka_technichord_strings.bin", 0x19A7A, 0x18
 ; [nakarest] DemoDiskPrompt_Indonesian  +0x19a92..+0x19b34 (0xe9f9e0, 162 B)
 ; [nakarest] Text (162 B at 0xe9f9e0), first string "Untuk memulai suatu DEMO eksternal,
@@ -4188,9 +4221,13 @@ FDemoText_FullSendBitByPart:	.incbin "includes/generated/naka_technichord_string
 FDemoText_PartialResendBit:	.incbin "includes/generated/naka_technichord_strings.bin", 0x19D82, 0x4
 ; FDemoText_ByteData_VoiceProbeC_CaseTable -- 7 x int16: the case offsets of FDemoText_ByteData_VoiceProbeC's compiled switch, relative to FDemoText_ByteData_VoiceProbeC_RequestPartialResendAll
 FDemoText_ByteData_VoiceProbeC_CaseTable:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x06, 0x00
-	.byte	0x06, 0x00, 0x06, 0x00, 0x0d, 0x00
+	.short	FDemoText_ByteData_VoiceProbeC_RequestPartialResendAll - FDemoText_ByteData_VoiceProbeC_RequestPartialResendAll
+	.short	FDemoText_ByteData_VoiceProbeC_RequestPartialResendAll - FDemoText_ByteData_VoiceProbeC_RequestPartialResendAll
+	.short	FDemoText_ByteData_VoiceProbeC_Case3 - FDemoText_ByteData_VoiceProbeC_RequestPartialResendAll
+	.short	FDemoText_ByteData_VoiceProbeC_Case3 - FDemoText_ByteData_VoiceProbeC_RequestPartialResendAll
+	.short	FDemoText_ByteData_VoiceProbeC_Case3 - FDemoText_ByteData_VoiceProbeC_RequestPartialResendAll
+	.short	FDemoText_ByteData_VoiceProbeC_Case3 - FDemoText_ByteData_VoiceProbeC_RequestPartialResendAll
+	.short	FDemoText_ByteData_VoiceProbeC_Case7 - FDemoText_ByteData_VoiceProbeC_RequestPartialResendAll
 FDemoText_InitFuncTable:	.incbin "includes/generated/naka_technichord_strings.bin", 0x19d94, 0x10
 ; FDemoText_MarkupTagTable -- word 0 (tag-name pointer, "BR") of a 15 x {u32 tag name, u32 handler} table: 14 feature-demo
 ; markup tags (BR, CENTER, /CENTER, FONT, /FONT, IMG, SHOW, EXEC, ACT, /ACT, PRESENTATION, /PRESENTATION, ACTION, /ACTION;
@@ -4405,19 +4442,30 @@ FDemo_DisplayResourceData_Str_SQT:	.incbin "includes/generated/naka_technichord_
 FDemo_DisplayResourceData_Str_rb:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A128, 0x4	; "rb"
 ; MainPreControl_CaseTable -- 11 x int16: the case offsets of MainPreControl's compiled switch, relative to MainPreControl_Dispatch
 MainPreControl_CaseTable:
+	.short	FDemo_DisplayCtrlJumpHandler - MainPreControl_Dispatch
+	.short	MainPreControl_OnReadActionReq - MainPreControl_Dispatch
+	.short	MainPreControl_OnReadSongReq - MainPreControl_Dispatch
+	.short	MainPreControl_OnStartPresentation - MainPreControl_Dispatch
+	.short	MainPreControl_ReturnNull - MainPreControl_Dispatch
+	.short	MainPreControl_ReturnNull - MainPreControl_Dispatch
+	.short	MainPreControl_ReturnNull - MainPreControl_Dispatch
+	.short	MainPreControl_ReturnNull - MainPreControl_Dispatch
+	.short	MainPreControl_OnExistPresentation - MainPreControl_Dispatch
+	.short	MainPreControl_Dispatch - MainPreControl_Dispatch
+	.short	MainPreControl_OnExitPresentation - MainPreControl_Dispatch
 ; ApPreControl_CaseTable -- 7 x int16: the case offsets of ApPreControl's compiled switch, relative to Seq_PostMelodyEvent
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0a, 0x00, 0x34, 0x00, 0x1f, 0x00, 0x4d, 0x00
-	.byte	0x07, 0x00, 0x07, 0x00, 0x07, 0x00, 0x07, 0x00
-	.byte	0x67, 0x00, 0x00, 0x00, 0x58, 0x00
 ApPreControl_CaseTable:
+	.short	ApPreControl_OnReadPresentation - Seq_PostMelodyEvent
+	.short	ApPreControl_OnReadAction - Seq_PostMelodyEvent
+	.short	ApPreControl_OnReadSong - Seq_PostMelodyEvent
+	.short	ApPreControl_ReturnNull - Seq_PostMelodyEvent
+	.short	ApPreControl_OnStartSong - Seq_PostMelodyEvent
+	.short	ApPreControl_ReturnNull - Seq_PostMelodyEvent
+	.short	Seq_StartWithFullInit - Seq_PostMelodyEvent
 ; [nakarest] naka_technichord_strings+0x1a150  +0x1a150..+0x1a15a (0xea009e, 10 B)
 ; [nakarest] Text (10 B at 0xea009e), first string "FEATURE "; no registered NAKA table points
 ; [nakarest] into it; reached through source references FDemo_LoadRegsAndPostEvent
 ; [nakarest] (demo/file_demo_proc.s: `ld xde, 0x00ea009e`).
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x17, 0x00, 0x74, 0x00, 0x2c, 0x00, 0x0b, 0x00
-	.byte	0x8c, 0x00, 0x0b, 0x00, 0x10, 0x00
 FDemo_LoadRegsAndPostEvent_Str_FEATURE:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A150, 0xA	; "FEATURE "
 ; [nakarest] naka_technichord_strings+0x1a15a  +0x1a15a..+0x1a15e (0xea00a8, 4 B)
 ; [nakarest] Text (4 B at 0xea00a8), first string "rb"; no registered NAKA table points into it;
@@ -5280,13 +5328,16 @@ Str_SmfConvert_GmToGm:			.incbin "includes/generated/naka_technichord_strings.bi
 SmfFN_UpdateFilenameField_Str_MID:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A842, 0xE	; "________.MID"
 ; FmmSmfFileNameFunc_CaseTable -- 6 x int16: the case offsets of FmmSmfFileNameFunc's compiled switch, relative to SmfFN_JumpTable
 FmmSmfFileNameFunc_CaseTable:
+	.short	FmmSmfFileNameFunc_OnSetSelectedFileNumber - FmmSmfFileNameFunc_Code
+	.short	FmmSmfFileNameFunc_OnGetSelectedFileNumber - FmmSmfFileNameFunc_Code
+	.short	FmmSmfFileNameFunc_Code - FmmSmfFileNameFunc_Code
+	.short	FmmSmfFileNameFunc_OnOnWindow - FmmSmfFileNameFunc_Code
+	.short	FmmSmfFileNameFunc_OnOffWindow - FmmSmfFileNameFunc_Code
+	.short	FmmSmfFileNameFunc_OnWhichWindow - FmmSmfFileNameFunc_Code
 ; WPScan_SlotFlagBits -- 4 x u8: for scan slots 0..3, the bit number tested and recorded (1 << value)
 ; WP_ScanAvailability: the slot is considered when CheckFileSystemStatus's flag word has bit `value`; the value also
 ; picks the check (3: FileIO_ValidateAndOpenFile, 2: signature + region, other: signature); a pass sets the bit in
 ; RAM 0x89F6.  WP_FindNextSlot walks the slots round-robin for the next bit present in 0x89F6.
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xb5, 0x07, 0xe6, 0x07, 0x00, 0x00, 0xa0, 0x07
-	.byte	0xa7, 0x07, 0xae, 0x07
 WPScan_SlotFlagBits:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A85C, 0x4
 ; SingleLoad_MemoryBankNames -- 3 x uint32_t: 15-column name of memory bank 0-2 {"   MEMORY-A    ", "   MEMORY-B    ",
 ; "   MEMORY-C    "}. WP_GetPresetName1 (file_io/wallpaper.s) stores the marker byte E, copies entry [BC] after it

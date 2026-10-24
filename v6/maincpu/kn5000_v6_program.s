@@ -1063,27 +1063,44 @@ SeCopyTitleFunc_SwitchHandlers:
 ; data read by SeDigEffTitleFunc_DispatchSwitch+0x4AF (0xF0DC4D)
 ; evidence: `lda xix, (this)` then `ld WA,(XIX+WA) / lda XIX,0xf0dc61`
 ToneGen_ParamTable_0x2EE:
+	.short	SeDigEff_OnColumn3_CelesteChorusDetune - SeDigEff_OnColumn3_CelesteChorusDetune
+	.short	SeDigEff_OnColumn3_CelesteChorusDetune - SeDigEff_OnColumn3_CelesteChorusDetune
+	.short	SeDigEff_OnColumn3_CelesteChorusDetune - SeDigEff_OnColumn3_CelesteChorusDetune
+	.short	SeDigEff_OnColumn3_CelesteChorusDetune - SeDigEff_OnColumn3_CelesteChorusDetune
+	.short	SeDigEff_OnColumn3_Depth - SeDigEff_OnColumn3_CelesteChorusDetune
+	.short	SeDigEff_OnColumn3_Depth - SeDigEff_OnColumn3_CelesteChorusDetune
+	.short	SeDigEff_OnColumn3_TremoloWave - SeDigEff_OnColumn3_CelesteChorusDetune
+	.short	SeDigEff_OnColumn3_Depth - SeDigEff_OnColumn3_CelesteChorusDetune
+	.short	SeDigEff_OnColumn3_SingleDelayKey - SeDigEff_OnColumn3_CelesteChorusDetune
+	.short	SeDigEff_OnColumn3_RepeatDelaySustain - SeDigEff_OnColumn3_CelesteChorusDetune
+	.short	SeDigEff_OnColumn3_Depth - SeDigEff_OnColumn3_CelesteChorusDetune
+	.short	SeDigEff_OnColumn3_Depth - SeDigEff_OnColumn3_CelesteChorusDetune
 ; data read by SeDigEffTitleFunc_DispatchSwitch+0x55A (0xF0DCF8)
 ; evidence: `lda xix, (this)` then `ld WA,(XIX+WA) / lda XIX,0xf0dd0c`
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x29, 0x00, 0x29, 0x00, 0x31, 0x00, 0x29, 0x00
-	.byte	0x39, 0x00, 0x45, 0x00, 0x29, 0x00, 0x29, 0x00
 ToneGen_ParamTable_0x306:
+	.short	SeDigEff_OnColumn4_DelaySpeed2 - SeDigEff_OnColumn4_DelaySpeed2
+	.short	SeDigEff_OnColumn4_DelaySpeed2 - SeDigEff_OnColumn4_DelaySpeed2
+	.short	SeDigEff_OnColumn4_DelaySpeed2 - SeDigEff_OnColumn4_DelaySpeed2
+	.short	SeDigEff_OnColumn4_DelaySpeed2 - SeDigEff_OnColumn4_DelaySpeed2
+	.short	SeDigEff_OnColumn4_DelaySpeed2 - SeDigEff_OnColumn4_DelaySpeed2
+	.short	SeDigEff_OnColumn4_DelaySpeed2 - SeDigEff_OnColumn4_DelaySpeed2
+	.short	SeDigEff_OnColumn4_Balance - SeDigEff_OnColumn4_DelaySpeed2
+	.short	SeDigEff_OnColumn4_DelaySpeed2 - SeDigEff_OnColumn4_DelaySpeed2
+	.short	SeDigEff_OnColumn4_Balance - SeDigEff_OnColumn4_DelaySpeed2
+	.short	SeDigEff_OnColumn4_RepeatDelayRelease - SeDigEff_OnColumn4_DelaySpeed2
 ; data read by SeDigEffTitleFunc_DispatchSwitch+0x5EB (0xF0DD89)
 ; evidence: `lda xix, (this)` then `ld WA,(XIX+WA) / lda XIX,0xf0dd9d`
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0x29, 0x00, 0x00, 0x00
-	.byte	0x29, 0x00, 0x31, 0x00
 ToneGen_ParamTable_0x31A:
+	.short	SeDigEff_OnColumn5_CelesteChorusBalance - SeDigEff_OnColumn5_CelesteChorusBalance
+	.short	SeDigEff_OnColumn5_CelesteChorusBalance - SeDigEff_OnColumn5_CelesteChorusBalance
+	.short	SeDigEff_OnColumn5_CelesteChorusBalance - SeDigEff_OnColumn5_CelesteChorusBalance
+	.short	SeDigEff_OnColumn5_CelesteChorusBalance - SeDigEff_OnColumn5_CelesteChorusBalance
+	.short	SeDigEff_OnColumn5_EnsembleDetune - SeDigEff_OnColumn5_CelesteChorusBalance
+	.short	SeDigEff_OnColumn5_EnsembleDetune - SeDigEff_OnColumn5_CelesteChorusBalance
 ; data read by SeMenu_PopupDialog_Close_Data+0x1D (0xF0E9E4)
 ; evidence: `lda xbc, (this)` then `ld XHL,(XBC+WA) / call T,XHL`
 ; data read by SeMenu_ListSelector_HandleInput+0x1A (0xF0EB24)
 ; evidence: `lda xbc, (this)` then `ld XHL,(XBC+WA) / call T,XHL`
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x29, 0x00, 0x29, 0x00
 ToneGen_ParamTable_0x326:
 	.long	UpdSeSel_ProcessStep
 	.long	UpdSeSel_ExtendedOps_Data
@@ -3197,8 +3214,8 @@ AcChordBox_HandleChordUpdate:
 	ld	xde, xiz
 	call	InheritedProc
 	push	xiz
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x96, 0x1b
+	pushw	AcChordBox_HandleChordUpdate_Str_Fmts@hi16
+	pushw	AcChordBox_HandleChordUpdate_Str_Fmts@lo16
 	lda	xwa, (xsp+12)
 	push	xwa
 	call	Sprintf_Locked

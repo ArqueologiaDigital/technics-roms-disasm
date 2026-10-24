@@ -7000,8 +7000,7 @@ SLIDE_Decompress_4K_MainLoop:
 	jr nz, SLIDE_Decompress_4K_CheckLiteral
 	cp xhl, xix
 	jrl nc, SLIDE_Decompress_4K_Done
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xc5, 0x34, 0x25
+	ld E, (xbc3+)
 	ld a, e
 	extz wa
 	ldfr_werp WA, 0x30
@@ -7013,13 +7012,11 @@ SLIDE_Decompress_4K_CheckLiteral:
 	jr z, SLIDE_Decompress_4K_CopyMatch
 	cp xhl, xix
 	jrl nc, SLIDE_Decompress_4K_Done
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xc5, 0x34, 0x25
+	ld E, (xbc3+)
 	ld a, e
 	extz wa
 	ld e, a
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xf5, 0x38, 0x45
+	ld (xde3+), e
 	inc 1, xhl
 	ld wa, bc
 	inc 1, bc
@@ -7032,14 +7029,12 @@ SLIDE_Decompress_4K_CheckLiteral:
 SLIDE_Decompress_4K_CopyMatch:
 	cp xhl, xix
 	jr nc, SLIDE_Decompress_4K_Done
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xc5, 0x34, 0x21
+	ld A, (xbc3+)
 	extz wa
 	ldfr_werp WA, 0x32
 	cp xhl, xix
 	jr nc, SLIDE_Decompress_4K_Done
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xc5, 0x34, 0x21
+	ld A, (xbc3+)
 	ldfr_berp A, 0xf8
 	extz iz
 	ld wa, iz
@@ -7063,8 +7058,7 @@ SLIDE_Decompress_4K_CopyLoop:
 	ld a, (xwa)
 	extz wa
 	ld e, a
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xf5, 0x38, 0x45
+	ld (xde3+), e
 	inc 1, xhl
 	ld wa, bc
 	inc 1, bc
@@ -7138,8 +7132,7 @@ SLIDE_Decompress_8K_MainLoop:
 	jr nz, SLIDE_Decompress_8K_CheckLiteral
 	cp xhl, xix
 	jrl nc, SLIDE_Decompress_8K_Done
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xc5, 0x34, 0x25
+	ld E, (xbc3+)
 	ld a, e
 	extz wa
 	ldfr_werp WA, 0x30
@@ -7151,13 +7144,11 @@ SLIDE_Decompress_8K_CheckLiteral:
 	jr z, SLIDE_Decompress_8K_CopyMatch
 	cp xhl, xix
 	jrl nc, SLIDE_Decompress_8K_Done
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xc5, 0x34, 0x25
+	ld E, (xbc3+)
 	ld a, e
 	extz wa
 	ld e, a
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xf5, 0x38, 0x45
+	ld (xde3+), e
 	inc 1, xhl
 	ld wa, bc
 	inc 1, bc
@@ -7170,14 +7161,12 @@ SLIDE_Decompress_8K_CheckLiteral:
 SLIDE_Decompress_8K_CopyMatch:
 	cp xhl, xix
 	jr nc, SLIDE_Decompress_8K_Done
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xc5, 0x34, 0x21
+	ld A, (xbc3+)
 	extz wa
 	ldfr_werp WA, 0x32
 	cp xhl, xix
 	jr nc, SLIDE_Decompress_8K_Done
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xc5, 0x34, 0x21
+	ld A, (xbc3+)
 	ldfr_berp A, 0xf8
 	extz iz
 	ld wa, iz
@@ -7201,8 +7190,7 @@ SLIDE_Decompress_8K_CopyLoop:
 	ld a, (xwa)
 	extz wa
 	ld e, a
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xf5, 0x38, 0x45
+	ld (xde3+), e
 	inc 1, xhl
 	ld wa, bc
 	inc 1, bc
@@ -7391,8 +7379,8 @@ Detect_Disk_Type:
 	ld	xde, xiz
 	calr	FDC_ReadSectors
 	pushw	38	; string length
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe0, 0x00, 0x0b, 0x38, 0x00
+	pushw	FILETYPE_SIG_PROGRAM_1@hi16
+	pushw	FILETYPE_SIG_PROGRAM_1@lo16	; "Technics KN5000 Program  DATA FILE 1/2"
 	push	xiz
 	call	String_Compare
 	add	xsp, 10
@@ -7402,8 +7390,8 @@ Detect_Disk_Type:
 	jrl	DetectDisk_FreeBufAndReturn
 DetectDisk_CheckProgram2of2:
 	pushw	38	; string length
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe0, 0x00, 0x0b, 0x60, 0x00
+	pushw	FILETYPE_SIG_PROGRAM_2@hi16
+	pushw	FILETYPE_SIG_PROGRAM_2@lo16	; "Technics KN5000 Program  DATA FILE 2/2"
 	push	xiz
 	call	String_Compare
 	add	xsp, 10
@@ -7413,8 +7401,8 @@ DetectDisk_CheckProgram2of2:
 	jrl	DetectDisk_FreeBufAndReturn
 DetectDisk_CheckTable1of2:
 	pushw	38	; string length
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe0, 0x00, 0x0b, 0xb0, 0x00
+	pushw	FILETYPE_SIG_TABLE_1@hi16
+	pushw	FILETYPE_SIG_TABLE_1@lo16	; "Technics KN5000 Table    DATA FILE 1/2"
 	push	xiz
 	call	String_Compare
 	add	xsp, 10
@@ -7424,8 +7412,8 @@ DetectDisk_CheckTable1of2:
 	jrl	DetectDisk_FreeBufAndReturn
 DetectDisk_CheckTable2of2:
 	pushw	38	; string length
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe0, 0x00, 0x0b, 0xd8, 0x00
+	pushw	FILETYPE_SIG_TABLE_2@hi16
+	pushw	FILETYPE_SIG_TABLE_2@lo16	; "Technics KN5000 Table    DATA FILE 2/2"
 	push	xiz
 	call	String_Compare
 	add	xsp, 10
@@ -7435,8 +7423,8 @@ DetectDisk_CheckTable2of2:
 	jr	DetectDisk_FreeBufAndReturn
 DetectDisk_CheckCmpCustom:
 	pushw	38	; string length
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe0, 0x00, 0x0b, 0x28, 0x01
+	pushw	FILETYPE_SIG_CMPCUSTOM@hi16
+	pushw	FILETYPE_SIG_CMPCUSTOM@lo16	; "Technics KN5000 CMPCUSTOMDATA FILE"
 	push	xiz
 	call	String_Compare
 	add	xsp, 10
@@ -7446,8 +7434,8 @@ DetectDisk_CheckCmpCustom:
 	jr	DetectDisk_FreeBufAndReturn
 DetectDisk_CheckHDAEPRG:
 	pushw	38	; string length
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe0, 0x00, 0x0b, 0x50, 0x01
+	pushw	FILETYPE_SIG_HDAE_PRG@hi16
+	pushw	FILETYPE_SIG_HDAE_PRG@lo16	; "Technics KN5000 HD-AEPRG DATA FILE"
 	push	xiz
 	call	String_Compare
 	add	xsp, 10
@@ -7457,8 +7445,8 @@ DetectDisk_CheckHDAEPRG:
 	jr	DetectDisk_FreeBufAndReturn
 DetectDisk_CheckProgramPCK:
 	pushw	38	; string length
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe0, 0x00, 0x0b, 0x88, 0x00
+	pushw	FILETYPE_SIG_PROGRAM_PCK@hi16
+	pushw	FILETYPE_SIG_PROGRAM_PCK@lo16	; "Technics KN5000 Program  DATA FILE PCK"
 	push	xiz
 	call	String_Compare
 	add	xsp, 10
@@ -7468,8 +7456,8 @@ DetectDisk_CheckProgramPCK:
 	jr	DetectDisk_FreeBufAndReturn
 DetectDisk_CheckTablePCK:
 	pushw	38	; string length
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe0, 0x00, 0x0b, 0x00, 0x01
+	pushw	FILETYPE_SIG_TABLE_PCK@hi16
+	pushw	FILETYPE_SIG_TABLE_PCK@lo16	; "Technics KN5000 Table    DATA FILE PCK"
 	push	xiz
 	call	String_Compare
 	add	xsp, 10
@@ -8472,8 +8460,8 @@ LZSS_Decompress_ReadHeader:
 	cp	iz, 6:i3
 	jr	c, LZSS_Decompress_ReadHeader
 	pushw	5	; lenght: 5 bytes
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe0, 0x00, 0x0b, 0x88, 0x01
+	pushw	SLIDE_STRING_2@hi16
+	pushw	SLIDE_STRING_2@lo16	; "SLIDE"
 	push	xwa
 	call	String_Compare
 	add	xsp, 10

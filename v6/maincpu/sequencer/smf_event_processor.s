@@ -3621,8 +3621,8 @@ SeqStep_MallocWrapper:
 	inc	2, xsp
 	ret
 FileOpenDefault:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe4, 0x00, 0x0b, 0x0e, 0x50
+	pushw FileOpenDefault_Str_w@hi16
+	pushw FileOpenDefault_Str_w@lo16
 	ld xwa, (xsp + 8)
 	push xwa
 	call FileOpen
@@ -3647,8 +3647,8 @@ SeqStep_ByteBlockF245:
 	ld	wa, (0x1e53c:24)
 	ld	(xsp+4), wa
 	ldw	(0x1e53c:24), 0
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe4, 0x00, 0x0b, 0x12, 0x50
+	pushw	SeqStep_ByteBlockF245_Str_d@hi16
+	pushw	SeqStep_ByteBlockF245_Str_d@lo16
 	ld	xwa, (xsp+14)
 	push	xwa
 	call	FileOpen
@@ -3671,8 +3671,8 @@ SeqStep_ByteBlockF245_Skip4:
 	ld	wa, (xsp+4)
 	exts	wa
 	ld	(0x1e53c:24), wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe4, 0x00, 0x0b, 0x14, 0x50
+	pushw	SeqStep_ByteBlockF245_Str_wb@hi16
+	pushw	SeqStep_ByteBlockF245_Str_wb@lo16
 	ld	xwa, (xsp+14)
 	push	xwa
 	call	FileOpen
@@ -3868,8 +3868,8 @@ SeqStep_FileSeekError:
 SeqStep_FileSeekCleanup:
 	dec 6, xsp
 	push xiz
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe4, 0x00, 0x0b, 0x18, 0x50
+	pushw SeqStep_FileSeekCleanup_Str_r@hi16
+	pushw SeqStep_FileSeekCleanup_Str_r@lo16
 	ld xwa, (xsp + 18)
 	push xwa
 	call FileOpen
@@ -3881,8 +3881,8 @@ SeqStep_FileSeekCleanup:
 	cpw (0x1e53c:24), 13
 	jr nz, SeqStep_FileTellSetup
 	ldw (0x01e53c:24), 0x0000
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe4, 0x00, 0x0b, 0x1a, 0x50
+	pushw SeqStep_FileSeekCleanup_Str_d@hi16
+	pushw SeqStep_FileSeekCleanup_Str_d@lo16
 	ld xwa, (xsp + 18)
 	push xwa
 	call FileOpen
@@ -3901,8 +3901,8 @@ SeqStep_FileTellSetup:
 	jrl SeqStep_FileTellExit
 
 SeqStep_FileTellReturn:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe4, 0x00, 0x0b, 0x1c, 0x50
+	pushw SeqStep_FileTellReturn_Str_r@hi16
+	pushw SeqStep_FileTellReturn_Str_r@lo16
 	ld xwa, (xsp + 22)
 	push xwa
 	call FileOpen
@@ -3922,8 +3922,8 @@ SeqStep_FileTellReturn:
 
 SeqStep_FileTellProcess:
 	ldw (0x01e53c:24), 0x0000
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe4, 0x00, 0x0b, 0x1e, 0x50
+	pushw SeqStep_FileTellProcess_Str_a@hi16
+	pushw SeqStep_FileTellProcess_Str_a@lo16
 	ld xwa, (xsp + 22)
 	push xwa
 	call FileOpen
@@ -3978,8 +3978,8 @@ SeqStep_FileTellExit:
 SeqStep_FileTellFinal:
 	lda	xsp, (xsp-36)
 	push	xiz
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe4, 0x00, 0x0b, 0x20, 0x50
+	pushw	SeqStep_FileTellFinal_Str_d@hi16
+	pushw	SeqStep_FileTellFinal_Str_d@lo16
 	ld	xwa, (xsp+48)
 	push	xwa
 	call	FileOpen
@@ -7701,8 +7701,8 @@ SeqChan_ReadNextFromLoop:
 	ld	xwa, (xiz+34)
 	lda	xwa, (xwa+26)
 	ld	(xsp+6), xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe4, 0x00, 0x0b, 0x22, 0x50
+	pushw SeqChan_ReadNextFromLoop_Str_Dot@hi16
+	pushw SeqChan_ReadNextFromLoop_Str_Dot@lo16
 	lda	xwa, (xsp+14)
 	push	xwa
 	call	Strcpy
@@ -7902,8 +7902,8 @@ SeqStep_SectorCompareBlock_Skip4:
 	ret
 	dec	2, xsp
 	push	xiz
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe4, 0x00, 0x0b, 0x2e, 0x50
+	pushw	SeqStep_SectorCompareBlock_Str_r@hi16
+	pushw	SeqStep_SectorCompareBlock_Str_r@lo16
 	ld	xwa, (xsp+14)
 	push	xwa
 	call	FileOpen
@@ -8030,8 +8030,8 @@ SeqChan_ByteBlockC_Skip:
 	jr	SeqChan_ByteBlockC_Epilogue
 SeqChan_ByteBlockC_Skip2:
 	pushw 512
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe4, 0x00, 0x0b, 0x30, 0x50
+	pushw SeqChan_ByteBlockC_Str_Empty@hi16
+	pushw SeqChan_ByteBlockC_Str_Empty@lo16
 	push	xiz
 	call	Mem_Copy
 	lda	xsp, (xsp+10)
@@ -9422,9 +9422,10 @@ GetDiskFreeSpace_Case4:
 	ld	(xiz), xwa
 
 FileIO_ReadFreeSpaceViaFAT:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe4, 0x00, 0x0b, 0xf6, 0x50, 0x0b, 0xe4
-	.byte	0x00, 0x0b, 0xf8, 0x50
+	pushw FileIO_ReadFreeSpaceViaFAT_Str_d@hi16
+	pushw FileIO_ReadFreeSpaceViaFAT_Str_d@lo16
+	pushw FileIO_ReadFreeSpaceViaFAT_Str_A@hi16
+	pushw FileIO_ReadFreeSpaceViaFAT_Str_A@lo16
 	call FileOpen
 	inc 8, xsp
 	ld xiz, xhl
@@ -9469,9 +9470,10 @@ GetVolumeLabel_JumpTable:
 	jrl	GetVolumeLabel_Return
 
 FileIO_ReadVolumeLabelEntry:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe4, 0x00, 0x0b, 0x0a, 0x51, 0x0b, 0xe4
-	.byte	0x00, 0x0b, 0x0c, 0x51
+	pushw FileIO_ReadVolumeLabelEntry_Str_d@hi16
+	pushw FileIO_ReadVolumeLabelEntry_Str_d@lo16
+	pushw FileIO_ReadVolumeLabelEntry_Str_A@hi16
+	pushw FileIO_ReadVolumeLabelEntry_Str_A@lo16
 	call FileOpen
 	inc 8, xsp
 	ld xiz, xhl
@@ -9551,8 +9553,8 @@ FileIO_CheckPathAndVolumeLabel:
 
 PathInfo_BuildAndOpen:
 	ld	(xsp+6), 0
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe4, 0x00, 0x0b, 0x1e, 0x51
+	pushw	PathInfo_BuildAndOpen_Str_A@hi16
+	pushw	PathInfo_BuildAndOpen_Str_A@lo16
 	lda	xwa, (xsp+10)
 	push	xwa
 	call	Strcat
@@ -9561,8 +9563,8 @@ PathInfo_BuildAndOpen:
 	lda	xwa, (xsp+18)
 	push	xwa
 	call	Strcat
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe4, 0x00, 0x0b, 0x22, 0x51
+	pushw	PathInfo_BuildAndOpen_Str_wb@hi16
+	pushw	PathInfo_BuildAndOpen_Str_wb@lo16
 	lda	xwa, (xsp+26)
 	push	xwa
 	call	FileOpen
@@ -9612,8 +9614,8 @@ FileIO_ParseLoop_CheckChar:
 	ld	xwa, (xsp+18)
 	cp	(xwa), 0
 	jr	z, FileIO_ParseLoop_AppendSlash
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe4, 0x00, 0x0b, 0x26, 0x51
+	pushw	FileIO_ParseLoop_CheckChar_Str_Backslash@hi16
+	pushw	FileIO_ParseLoop_CheckChar_Str_Backslash@lo16
 	ld	xwa, (xsp+22)
 	push	xwa
 	call	Strcat
@@ -9709,8 +9711,8 @@ FindFirst_ParseAndOpen:
 	ld	xhl, 4294967295
 	jrl	FdcFile_Epilogue20
 FindFirst_OpenDir:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe4, 0x00, 0x0b, 0x28, 0x51
+	pushw	FindFirst_OpenDir_Str_d@hi16
+	pushw	FindFirst_OpenDir_Str_d@lo16
 	ld	xwa, xiz
 	push	xwa
 	call	FileOpen
@@ -10357,8 +10359,8 @@ SndTable_LookupA:
 	ld (0x02358a:24), 0x01
 	lda xbc, (0x022d72:24)
 	ld (0x03e3ee:24), xbc
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe4, 0x00, 0x0b, 0x2a, 0x51
+	pushw SndTable_LookupA_Str_rb@hi16
+	pushw SndTable_LookupA_Str_rb@lo16
 	push xwa
 	call FileOpen
 	inc 8, xsp
@@ -10547,8 +10549,8 @@ FDC_DetectSector_Return1B:
 
 FDC_DetectSector_CheckPianoDisc:
 	pushw	11	; 11 bytes
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe4, 0x00, 0x0b, 0x2e, 0x51
+	pushw	FDC_DetectSector_CheckPianoDisc_Str_N1_PianoDisc@hi16
+	pushw	FDC_DetectSector_CheckPianoDisc_Str_N1_PianoDisc@lo16	; "1 PianoDisc"
 	lda	xwa, (148302:24)
 	push	xwa
 	call	String_Compare

@@ -35,8 +35,8 @@ FDemo_DisplayResourceData_Loop:
 	call	Strncpy
 	lda	xwa, (xsp+0x116)
 	ld	(xwa+0x8), 0
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe9, 0x00, 0x0b, 0x74, 0xff
+	pushw	FDemo_DisplayResourceData_Str_SQT@hi16
+	pushw	FDemo_DisplayResourceData_Str_SQT@lo16
 	push	xwa
 	call	Strcat
 	lda	xsp, (xsp+22)
@@ -4589,8 +4589,8 @@ FileIO_CompareFiles:
 	lda xwa, (xsp + 16)
 	ld xbc, xde
 	call FileIO_BuildFilePath
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x3c, 0x02
+	pushw FileIO_CompareFiles_Str_wb@hi16
+	pushw FileIO_CompareFiles_Str_wb@lo16
 	lda xwa, (xsp + 20)
 	push xwa
 	call FileOpen
@@ -4612,8 +4612,8 @@ FileIO_Compare_Return:
 	lda xwa, (xsp + 32)
 	ld xbc, (xsp + 48)
 	call FileIO_BuildFilePath
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xea, 0x00, 0x0b, 0x40, 0x02
+	pushw FileIO_Compare_Mismatch_Str_rb@hi16
+	pushw FileIO_Compare_Mismatch_Str_rb@lo16
 	lda xwa, (xsp + 36)
 	push xwa
 	call FileOpen

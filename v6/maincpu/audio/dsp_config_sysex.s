@@ -1049,8 +1049,8 @@ MidiSysEx_BuildAndSend:
 	or	xiz, xiz
 	jr	z, MidiSysEx_BuildAndSend_Exit
 	pushw	0x7
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xee, 0x00, 0x0b, 0xb6, 0x4e
+	pushw	Midi_BankProgramTemplate@hi16
+	pushw	Midi_BankProgramTemplate@lo16
 	push	xiz
 	call	Mem_Copy
 	lda	xsp, (xsp + 10)

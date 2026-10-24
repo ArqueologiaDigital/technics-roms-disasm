@@ -1389,9 +1389,13 @@ AcCmpSetGridBox_RowDownSteps:	.byte	0x01, 0x00, 0x01, 0x00, 0x03, 0x00
 	.byte 0x02, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00
 	.byte	0x01, 0x00, 0x01, 0x00
 AcCmpSetGridBoxProc_CaseTable:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x6a, 0x00, 0x1c, 0x01, 0x6a, 0x00, 0x1c, 0x01
-	.byte	0x0c, 0x02, 0xf5, 0x01, 0xf5, 0x01
+	.short	AcCmpSetGridBoxProc_OnIndexswUp - CmpSetP1_DialGrid
+	.short	AcCmpSetGridBoxProc_OnIndexswDown - CmpSetP1_DialGrid
+	.short	AcCmpSetGridBoxProc_OnIndexswUp - CmpSetP1_DialGrid
+	.short	AcCmpSetGridBoxProc_OnIndexswDown - CmpSetP1_DialGrid
+	.short	AcCmpSetGridBoxProc_DefaultInherited - CmpSetP1_DialGrid
+	.short	AcCmpSetGridBoxProc_ForwardToApFunc - CmpSetP1_DialGrid
+	.short	AcCmpSetGridBoxProc_ForwardToApFunc - CmpSetP1_DialGrid
 NoteDataB_Natural:
 	.byte 0x42, 0x20, 0x00, 0xff
 NoteDataB_Flat:
@@ -1457,13 +1461,22 @@ StrTimeSig_1_2:
 UI_COMPONENT_DISPATCH_Str_Fmtd:			.byte 0x25, 0x64, 0x00, 0xff
 UI_COMPONENT_DISPATCH_CASE1_Str_Fmts_Fmts:	aligned_string "%s (%s)"
 CmpSetP1_GridCheck_CaseTable:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x1a, 0x00, 0xa4, 0x00, 0xa4, 0x00
-	.byte	0x55, 0x00, 0x60, 0x00, 0x7e, 0x00, 0x82, 0x00
+	.short	UI_COMPONENT_DISPATCH - UI_COMPONENT_DISPATCH
+	.short	UI_COMPONENT_DISPATCH_CASE1 - UI_COMPONENT_DISPATCH
+	.short	WidgetHandler_PostEventAndReturnZero - UI_COMPONENT_DISPATCH
+	.short	WidgetHandler_PostEventAndReturnZero - UI_COMPONENT_DISPATCH
+	.short	UI_COMPONENT_DISPATCH_CASE2 - UI_COMPONENT_DISPATCH
+	.short	UI_COMPONENT_DISPATCH_CASE3 - UI_COMPONENT_DISPATCH
+	.short	UI_COMPONENT_DISPATCH_CASE4 - UI_COMPONENT_DISPATCH
+	.short	UI_COMPONENT_DISPATCH_CASE5 - UI_COMPONENT_DISPATCH
 CmpSetP1GridCheck_CaseTable:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x38, 0x00, 0x00, 0x00, 0x38, 0x00
-	.byte	0x72, 0x01, 0x72, 0x01, 0x72, 0x01
+	.short	CmpSetP1_GridCheck_EventEnc - CmpSetP1_GridCheck_EventEnc
+	.short	CmpSetP1GridCheck_OnIndexswDown - CmpSetP1_GridCheck_EventEnc
+	.short	CmpSetP1_GridCheck_EventEnc - CmpSetP1_GridCheck_EventEnc
+	.short	CmpSetP1GridCheck_OnIndexswDown - CmpSetP1_GridCheck_EventEnc
+	.short	Widget_PostEvtReturnZero - CmpSetP1_GridCheck_EventEnc
+	.short	Widget_PostEvtReturnZero - CmpSetP1_GridCheck_EventEnc
+	.short	Widget_PostEvtReturnZero - CmpSetP1_GridCheck_EventEnc
 StrPanRight63:	aligned_string "Right 63"
 StrPanRight62:	aligned_string "Right 62"
 StrPanRight61:	aligned_string "Right 61"
@@ -1593,13 +1606,17 @@ StrPanLeft62:	aligned_string " Left 62"
 StrPanLeft63:	aligned_string " Left 63"
 StrPanLeft64:	aligned_string " Left 64"
 CmpSetGridCheck_CaseTable:
+	.short	GridCheck_Handler0 - GridCheck_Handler0
+	.short	GridCheck_Handler1 - GridCheck_Handler0
+	.short	GridCheck_Handler0 - GridCheck_Handler0
+	.short	GridCheck_Handler1 - GridCheck_Handler0
+	.short	GridCheck_ReturnZero - GridCheck_Handler0
+	.short	GridCheck_ReturnZero - GridCheck_Handler0
+	.short	GridCheck_ReturnZero - GridCheck_Handler0
 ; S2cMemNoBox_SectionNameStrPtrs: 30 x u32 string pointers, the style-section names "A-vari1" .. "C-vari4", "A-INT1"
 ;   .. "C-END2": AcS2cMemNoBoxProc (style-to-Composer convert screen) Sprintf's entry [(0x38F3)] on EVT_PAINT /
 ;   EVT_REPAINT and draws it. Entry 0 is the label; PtrTbl_StyleSectShortNames (entry 1) has no reader. Basis: readers
 ;   + bytes.
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x48, 0x00, 0x00, 0x00, 0x48, 0x00
-	.byte	0xf3, 0x00, 0xf3, 0x00, 0xf3, 0x00
 S2cMemNoBox_SectionNameStrPtrs:	.byte	0x7c, 0xd5, 0xe1, 0x00
 PtrTbl_StyleSectShortNames:
 	.long StrStyleSect_A_Vari2
@@ -1816,9 +1833,13 @@ StrTranspose_Minus24:
 StrTranspose_Minus25:
 	.byte 0x2d, 0x32, 0x35, 0x00
 S2cGridBoxProc_CaseTable:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x76, 0x00, 0x26, 0x01, 0x76, 0x00, 0x26, 0x01
-	.byte	0x3c, 0x02, 0x00, 0x02, 0x00, 0x02
+	.short	S2cGridBoxProc_OnIndexswUp - FdcFormat_DialGrid
+	.short	S2cGridBoxProc_OnIndexswDown - FdcFormat_DialGrid
+	.short	S2cGridBoxProc_OnIndexswUp - FdcFormat_DialGrid
+	.short	S2cGridBoxProc_OnIndexswDown - FdcFormat_DialGrid
+	.short	S2cGridBoxProc_DefaultInherited - FdcFormat_DialGrid
+	.short	S2cGridBoxProc_ForwardToApFunc - FdcFormat_DialGrid
+	.short	S2cGridBoxProc_ForwardToApFunc - FdcFormat_DialGrid
 S2c_GridCheck_Dispatch_Data:	.byte	0xd9, 0x38
 	.byte	0x00, 0x00, 0xda, 0x38, 0x00, 0x00, 0xdb, 0x38
 	.byte	0x00, 0x00, 0xdc, 0x38, 0x00, 0x00, 0xdd, 0x38
@@ -1850,13 +1871,17 @@ StrBeat01:	.asciz " 1 "
 StrBeatOff:
 	.byte	0x4f, 0x46, 0x46, 0x00
 S2cGridCheck_CaseTable:
+	.short	S2c_GridCheck_DataBlock - S2c_GridCheck_DataBlock
+	.short	S2cGridCheck_OnIndexswDown - S2c_GridCheck_DataBlock
+	.short	S2c_GridCheck_DataBlock - S2c_GridCheck_DataBlock
+	.short	S2cGridCheck_OnIndexswDown - S2c_GridCheck_DataBlock
+	.short	S2c_GridCheck_EventEnc - S2c_GridCheck_DataBlock
+	.short	S2c_GridCheck_EventEnc - S2c_GridCheck_DataBlock
+	.short	S2c_GridCheck_EventEnc - S2c_GridCheck_DataBlock
 ; PsCmpCpFPtnBox_PatternNameStrPtrs: 27 x u32 string pointers, the accompaniment-pattern names (" Vari1 ", Vari2-4,
 ;   Intro1/2, Ending1/2, V1-V4 FillIn1/2, Vari1-4, Intro1/2, FillIn1/2, Ending1/2, All): PsCmpCpFPtnBoxProc (Composer
 ;   copy, source pattern box) Sprintf's entry [(0x3453)] on EVT_PAINT / EVT_REPAINT. Entry 0 is the label;
 ;   PtrTbl_StylePatternLongNames (entry 1) has no reader. Basis: readers + bytes.
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x38, 0x00, 0x00, 0x00, 0x38, 0x00
-	.byte	0xce, 0x00, 0xce, 0x00, 0xce, 0x00
 PsCmpCpFPtnBox_PatternNameStrPtrs:	.byte	0xa8, 0xd9, 0xe1, 0x00
 PtrTbl_StylePatternLongNames:
 	.long StrStylePatt_Vari2b
@@ -2196,9 +2221,13 @@ StyleVarGrp_AEnd1:
 StyleVarGrp_AEnd2b:
 	.byte	0x41, 0x00
 AcEasyCmpGridBoxProc_CaseTable:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x6a, 0x00, 0x0e, 0x01, 0x6a, 0x00, 0x0e, 0x01
-	.byte	0xf0, 0x01, 0xd9, 0x01, 0xd9, 0x01
+	.short	AcEasyCmpGridBoxProc_OnIndexswUp - EasyCmp_DialGrid
+	.short	AcEasyCmpGridBoxProc_OnIndexswDown - EasyCmp_DialGrid
+	.short	AcEasyCmpGridBoxProc_OnIndexswUp - EasyCmp_DialGrid
+	.short	AcEasyCmpGridBoxProc_OnIndexswDown - EasyCmp_DialGrid
+	.short	AcEasyCmpGridBoxProc_CallInherited - EasyCmp_DialGrid
+	.short	AcEasyCmpGridBoxProc_PassToApFunc - EasyCmp_DialGrid
+	.short	AcEasyCmpGridBoxProc_PassToApFunc - EasyCmp_DialGrid
 StrGenre_Waltz:		aligned_string "     Waltz      "
 StrGenre_RockBallad:	aligned_string "  Rock Ballad   "
 StrGenre_Country:	aligned_string "    Country     "
@@ -2214,13 +2243,17 @@ EasyCmp_GridCheck_EventEnc_Str_OFF:
 	.byte	0x46, 0x00
 EasyCmp_GridCheck_EventCase2_Str_Fmt3d:	.byte	0x25, 0x33, 0x64, 0x00
 EasyCmpGridCheck_CaseTable:
+	.short	EasyCmp_GridCheck_DataBlock - EasyCmp_GridCheck_DataBlock
+	.short	EasyCmpGridCheck_OnIndexswDown - EasyCmp_GridCheck_DataBlock
+	.short	EasyCmp_GridCheck_DataBlock - EasyCmp_GridCheck_DataBlock
+	.short	EasyCmpGridCheck_OnIndexswDown - EasyCmp_GridCheck_DataBlock
+	.short	EasyCmp_GridCheck_EventCase4 - EasyCmp_GridCheck_DataBlock
+	.short	EasyCmp_GridCheck_EventCase4 - EasyCmp_GridCheck_DataBlock
+	.short	EasyCmp_GridCheck_EventCase4 - EasyCmp_GridCheck_DataBlock
 ; MspNameBnkFunc_BankNamesInit: Initializer of MspNameBnkFunc's local array: 4 x u32 string pointers {"User1",
 ;   "User2", "COMPILE1", "COMPILE2"}, the MSP naming screen's bank-value captions. MspNameBnkFunc copies the 16 bytes
 ;   into its frame and Strcpy's entry [value] for the caption; EVT_GET_MAX answers 3, the value lives at RAM 0x7EA2.
 ;   Basis: readers + bytes.
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x48, 0x00, 0x00, 0x00, 0x48, 0x00
-	.byte	0x18, 0x01, 0x18, 0x01, 0x18, 0x01
 MspNameBnkFunc_BankNamesInit:	.byte	0x52, 0xdf, 0xe1, 0x00
 	.long StrBankShort_User2
 	.long StrBankShort_Compile1
@@ -2230,10 +2263,16 @@ StrBankShort_Compile1:	aligned_string "COMPILE1"
 StrBankShort_User2:	aligned_string "User2   "
 StrBankShort_User1:	aligned_string "User1   "
 MspNameBnkFunc_CaseTable:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x1c, 0x00, 0x1c, 0x00, 0x69, 0x00, 0x69, 0x00
-	.byte	0x69, 0x00, 0x20, 0x00, 0x69, 0x00, 0x24, 0x00
-	.byte	0x1c, 0x00, 0x00, 0x00
+	.short	MspNameBnkFunc_OnGetLargeStep - EasyCmp_GridEvtCase_Default
+	.short	MspNameBnkFunc_OnGetLargeStep - EasyCmp_GridEvtCase_Default
+	.short	MspNaming_CleanupExit - EasyCmp_GridEvtCase_Default
+	.short	MspNaming_CleanupExit - EasyCmp_GridEvtCase_Default
+	.short	MspNaming_CleanupExit - EasyCmp_GridEvtCase_Default
+	.short	MspNameBnkFunc_OnGetMax - EasyCmp_GridEvtCase_Default
+	.short	MspNaming_CleanupExit - EasyCmp_GridEvtCase_Default
+	.short	MspNameBnkFunc_OnGetRamAddress - EasyCmp_GridEvtCase_Default
+	.short	MspNameBnkFunc_OnGetLargeStep - EasyCmp_GridEvtCase_Default
+	.short	EasyCmp_GridEvtCase_Default - EasyCmp_GridEvtCase_Default
 PtrTbl_MspCompileBankLabels:
 	.long StrMspUserBank1Label
 	.long StrMspUserBank2Label
@@ -2316,11 +2355,15 @@ StrMsBankLong2_Effect1:				aligned_string "    Effect 1    "
 RgpSetBnk_EvtEnc_SendAudioCmd_Str_PAD_Fmtd:	.byte 0x50, 0x41, 0x44, 0x25
 	.byte	0x64, 0x00
 MspRGrpSetGridCheck_CaseTable:
+	.short	MspRGrpSetGridCheck_DataBlock - MspRGrpSetGridCheck_DataBlock
+	.short	MspRGrpSetGridCheck_OnIndexswDown - MspRGrpSetGridCheck_DataBlock
+	.short	MspRGrpSetGridCheck_DataBlock - MspRGrpSetGridCheck_DataBlock
+	.short	MspRGrpSetGridCheck_OnIndexswDown - MspRGrpSetGridCheck_DataBlock
+	.short	AudioEvt_GetFocusRetZero_Return - MspRGrpSetGridCheck_DataBlock
+	.short	AudioEvt_GetFocusRetZero_Return - MspRGrpSetGridCheck_DataBlock
+	.short	AudioEvt_GetFocusRetZero_Return - MspRGrpSetGridCheck_DataBlock
 ; PsRgpSetBnkBox_CompileBankStrPtrs: 2 x u32 string pointers {"COMPILE BANK:1", "COMPILE BANK:2"}: PsRgpSetBnkBoxProc
 ;   Sprintf's entry [(0x7EA1)] on EVT_PAINT / EVT_REPAINT and draws it. Basis: readers + bytes.
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x48, 0x00, 0x00, 0x00, 0x48, 0x00
-	.byte	0x41, 0x01, 0x41, 0x01, 0x41, 0x01
 PsRgpSetBnkBox_CompileBankStrPtrs:
 	.long StrCompileBank1
 	.long StrCompileBank2
@@ -2341,29 +2384,43 @@ MspPlayModeFunc_ModeNamesInit:
 StrSyncToRhythm:	aligned_string "SYNC TO RHYTHM   "
 StrInstantStart:	aligned_string "INSTANT START    "
 MspPlayModeFunc_CaseTable:
+	.short	MspPlayModeFunc_OnGetLargeStep - MspPlayModeFunc_DataBlock
+	.short	MspPlayModeFunc_OnGetLargeStep - MspPlayModeFunc_DataBlock
+	.short	AcSndArgGrid_BoxCase1 - MspPlayModeFunc_DataBlock
+	.short	AcSndArgGrid_BoxCase1 - MspPlayModeFunc_DataBlock
+	.short	AcSndArgGrid_BoxCase1 - MspPlayModeFunc_DataBlock
+	.short	MspPlayModeFunc_OnGetMax - MspPlayModeFunc_DataBlock
+	.short	AcSndArgGrid_BoxCase1 - MspPlayModeFunc_DataBlock
+	.short	MspPlayModeFunc_OnGetRamAddress - MspPlayModeFunc_DataBlock
+	.short	MspPlayModeFunc_OnGetMax - MspPlayModeFunc_DataBlock
+	.short	MspPlayModeFunc_DataBlock - MspPlayModeFunc_DataBlock
 ; AcSndArgGridBox_RowPartBitsInit: Initializer of AcSndArgGridBoxProc's local array: 5 x u8 {0x01, 0x02, 0x04, 0x08,
 ;   0x10} (+ 0xFF pad), the Sound Arranger part-select bit for grid rows 2..6. On INDEX UP / DOWN the proc stores
 ;   entry [row - 2] in the selector 0x32F2 (1 = DRUM part 0x14, 2 = BASS 0x13, 4 / 8 / 16 = ACCOMP1-3 0x10-0x12) and
 ;   sends EVT_SET_PT_SEL. Basis: readers + bytes.
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x23, 0x00, 0x23, 0x00, 0x4c, 0x00, 0x4c, 0x00
-	.byte	0x4c, 0x00, 0x32, 0x00, 0x4c, 0x00, 0x36, 0x00
-	.byte	0x32, 0x00, 0x00, 0x00
 AcSndArgGridBox_RowPartBitsInit:
 	.byte	0x01, 0x02, 0x04, 0x08, 0x10, 0xff
 AcSndArgGridBoxProc_CaseTable:
+	.short	AcSndArgGridBoxProc_OnIndexswUp - AcSndArgGrid_Init
+	.short	AcSndArgGridBoxProc_OnIndexswDown - AcSndArgGrid_Init
+	.short	AcSndArgGridBoxProc_OnIndexswUp - AcSndArgGrid_Init
+	.short	AcSndArgGridBoxProc_OnIndexswDown - AcSndArgGrid_Init
+	.short	AcSndArgGrid_ForwardToBase - AcSndArgGrid_Init
+	.short	AcSndArgGridBoxProc_OnLswData - AcSndArgGrid_Init
+	.short	AcSndArgGrid_ForwardToParent - AcSndArgGrid_Init
 ; SndArgGridCheck's switch on (event - EVT_INDEXSW_UP), 0..6: s16 offsets from
 ; SndArgGridCheck_JumpTableFallthrough (`lda xix, (<base>:24); jp t, (xix+wa)`).  Only EVT_INDEX_SELECT
 ; has a case; the fallthrough also returns.  (The 0x00EA at entry 4 was once spelled `.long
 ; Presentation_RootEntry`, whose address is 0xEA0000.)
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x6e, 0x00, 0x4c, 0x01, 0x6e, 0x00, 0x4c, 0x01
-	.byte	0x93, 0x03, 0x56, 0x02, 0x6e, 0x03
 SndArgGridCheck_CaseTable:
+	.short	SndArgGridCheck_JumpTableFallthrough - SndArgGridCheck_JumpTableFallthrough	; EVT_INDEXSW_UP
+	.short	SndArgGridCheck_JumpTableFallthrough - SndArgGridCheck_JumpTableFallthrough	; EVT_INDEXSW_DOWN
+	.short	SndArgGridCheck_JumpTableFallthrough - SndArgGridCheck_JumpTableFallthrough	; EVT_INDEXSW_UP_AIC
+	.short	SndArgGridCheck_JumpTableFallthrough - SndArgGridCheck_JumpTableFallthrough	; EVT_INDEXSW_DOWN_AIC
+	.short	SndArgGridCheck_Return - SndArgGridCheck_JumpTableFallthrough		; EVT_INDEX_SELECT
+	.short	SndArgGridCheck_JumpTableFallthrough - SndArgGridCheck_JumpTableFallthrough	; EVT_LSW_DATA
+	.short	SndArgGridCheck_JumpTableFallthrough - SndArgGridCheck_JumpTableFallthrough	; EVT_RAM_DATA
 
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0xea, 0x00, 0x00, 0x00, 0x00, 0x00
 SLOT_NAME_PTRS:	; Pointer table for rhythm slot names
 	.long SLOT_NAME_MEMORY_A
 	.long SLOT_NAME_MEMORY_B
@@ -2415,11 +2472,17 @@ SLOT_NAME_MEMORY_A:	aligned_string "MEMORY A "
 
 MsgBox_AttentionHeader:
 	; Control codes/header
+	.short	StylCnvStorBnkSel_OnGetLargeStep - StylCnvStorBnkSel_DataBlock
+	.short	StylCnvStorBnkSel_OnGetLargeStep - StylCnvStorBnkSel_DataBlock
+	.short	PsSCTxtBox_EventDispatch - StylCnvStorBnkSel_DataBlock
+	.short	PsSCTxtBox_EventDispatch - StylCnvStorBnkSel_DataBlock
+	.short	PsSCTxtBox_EventDispatch - StylCnvStorBnkSel_DataBlock
+	.short	StylCnvStorBnkSel_OnGetMax - StylCnvStorBnkSel_DataBlock
+	.short	PsSCTxtBox_EventDispatch - StylCnvStorBnkSel_DataBlock
+	.short	StylCnvStorBnkSel_OnGetRamAddress - StylCnvStorBnkSel_DataBlock
+	.short	StylCnvStorBnkSel_OnGetLargeStep - StylCnvStorBnkSel_DataBlock
+	.short	StylCnvStorBnkSel_DataBlock - StylCnvStorBnkSel_DataBlock
 	; Localization: Attention (6 languages)
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x1c, 0x00, 0x1c, 0x00, 0x2d, 0x00, 0x2d, 0x00
-	.byte	0x2d, 0x00, 0x20, 0x00, 0x2d, 0x00, 0x27, 0x00
-	.byte	0x1c, 0x00, 0x00, 0x00
 MSG_ATTENTION_EN:	aligned_string "ATTENTION!"	; English (12 bytes)
 MSG_ATTENTION_DE:	.asciz "ACHTUNG !"	; German (10 bytes)
 MSG_ATTENTION_FR:	aligned_string "ATTENTION!"	; French (12 bytes)

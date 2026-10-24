@@ -582,8 +582,8 @@ CheckFDStatusLoad_Entry:
 CheckFDStatusLoad_DoLoad:
 	lda xwa, (CheckFDStatusLoad_DoLoad_Str_rb:24)
 	push xwa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0x84, 0xff
+	pushw CheckFDStatusLoad_DoLoad_Str_A_HKEXT_XAP@hi16
+	pushw CheckFDStatusLoad_DoLoad_Str_A_HKEXT_XAP@lo16
 	call FileOpen
 	inc 8, xsp
 	ld xiz, xhl
@@ -610,8 +610,8 @@ CheckFDStatusLoad_Return:
 ; into DRAM at 0x200000, checks result, jumps to extension entry point
 LoadExtROM_Entry:
 	pushw	4
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0x9c, 0xff
+	pushw	LoadExtROM_Entry_Str_XAPR@hi16
+	pushw	LoadExtROM_Entry_Str_XAPR@lo16
 	ld	xwa, 2097152
 	push	xwa
 	call	String_Compare
@@ -633,8 +633,8 @@ Xapr_GetPresentFlag:
 
 Xapr_DetectOnInit:
 	pushw	4
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0xb0, 0xff
+	pushw	LoadExtROM_JumpEntry_Str_XAPR@hi16
+	pushw	LoadExtROM_JumpEntry_Str_XAPR@lo16
 	ld	xwa, 2621440
 	push	xwa
 	call	String_Compare
@@ -667,8 +667,8 @@ Xapr_CallFrameHandler:
 ;   ScreenGroup_ReInit tail-jumps here at the end of init phase 0.
 Xapr_DetectAndCallBootInit:
 	pushw	4	; 4 bytes
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe1, 0x00, 0x0b, 0xc6, 0xff
+	pushw	LoadExtROM_JumpEntry_Data@hi16
+	pushw	LoadExtROM_JumpEntry_Data@lo16	; "XAPR"
 	ld	xwa, 2621440
 	push	xwa
 	call	String_Compare

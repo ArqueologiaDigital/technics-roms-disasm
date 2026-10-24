@@ -1070,6 +1070,13 @@ TrAsGrid_DirectionLabel2_Str:	.incbin "includes/generated/naka_widget_tables_1.b
 ; AcTrAsGridBoxProc_CaseTable[7].
 ; -----------------------------------------------------------------------------
 AcTrAsGridBoxProc_CaseTable:
+	.short	AcTrAsGridBoxProc_OnIndexswUp - TrAsGrid_HandleInit
+	.short	AcTrAsGridBoxProc_OnIndexswDown - TrAsGrid_HandleInit
+	.short	AcTrAsGridBoxProc_OnIndexswUp - TrAsGrid_HandleInit
+	.short	AcTrAsGridBoxProc_OnIndexswDown - TrAsGrid_HandleInit
+	.short	TrAsGrid_PassThrough - TrAsGrid_HandleInit
+	.short	TrAsGrid_HandleSelectEvent - TrAsGrid_HandleInit
+	.short	TrAsGrid_HandleSelectEvent - TrAsGrid_HandleInit
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] TrAsGrid_LookupTable_Table
 ; TrAsGrid_LookupTable_Table -- read by TrAsGrid_LookupTable (v10/v9
@@ -1080,9 +1087,6 @@ AcTrAsGridBoxProc_CaseTable:
 ; Typed in naka_widget_tables_1.c as uint8_t
 ; TrAsGrid_LookupTable_Table[32].
 ; -----------------------------------------------------------------------------
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x8d, 0x00, 0xfa, 0x01, 0x8d, 0x00, 0xfa, 0x01
-	.byte	0x70, 0x04, 0x96, 0x03, 0x96, 0x03
 TrAsGrid_LookupTable_Table:	.incbin "includes/generated/naka_widget_tables_1.bin", 0x23F2, 0x20
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] TrAsGrid_ByteData1_Table
@@ -1277,6 +1281,13 @@ TrAsGridChk_Part3_UpCheckType0_Str:	.incbin "includes/generated/naka_widget_tabl
 ; TrAsGridCheck_CaseTable[7].
 ; -----------------------------------------------------------------------------
 TrAsGridCheck_CaseTable:
+	.short	TrAsGridCheck_Cases - TrAsGridCheck_Cases
+	.short	TrAsGridCheck_OnIndexswDown - TrAsGridCheck_Cases
+	.short	TrAsGridCheck_Cases - TrAsGridCheck_Cases
+	.short	TrAsGridCheck_OnIndexswDown - TrAsGridCheck_Cases
+	.short	TrAsGridChk_ReturnZero - TrAsGridCheck_Cases
+	.short	TrAsGridChk_ReturnZero - TrAsGridCheck_Cases
+	.short	TrAsGridChk_ReturnZero - TrAsGridCheck_Cases
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] VoiceConfig_LookupByScreenType_Table
 ; VoiceConfig_LookupByScreenType_Table -- read by
@@ -1287,9 +1298,6 @@ TrAsGridCheck_CaseTable:
 ; Typed in naka_widget_tables_1.c as uint8_t
 ; VoiceConfig_LookupByScreenType_Table[6].
 ; -----------------------------------------------------------------------------
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x3c, 0x01, 0x00, 0x00, 0x3c, 0x01
-	.byte	0xe2, 0x04, 0xe2, 0x04, 0xe2, 0x04
 VoiceConfig_LookupByScreenType_Table:	.incbin "includes/generated/naka_widget_tables_1.bin", 0x2488, 0x6
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] VoiceConfig_LoadTableA_Table
@@ -1349,6 +1357,16 @@ MuteChSel_Dispatch_Strings:	.incbin "includes/generated/naka_widget_tables_1.bin
 ; SmfMuteChSelFunc_CaseTable[10].
 ; -----------------------------------------------------------------------------
 SmfMuteChSelFunc_CaseTable:
+	.short	SmfMuteChSelFunc_OnGetLargeStep - MuteChSel_Dispatch
+	.short	SmfMuteChSelFunc_OnGetLargeStep - MuteChSel_Dispatch
+	.short	MuteChSel_ReturnZero - MuteChSel_Dispatch
+	.short	MuteChSel_ReturnZero - MuteChSel_Dispatch
+	.short	MuteChSel_ReturnZero - MuteChSel_Dispatch
+	.short	SmfMuteChSelFunc_OnGetMax - MuteChSel_Dispatch
+	.short	MuteChSel_ReturnZero - MuteChSel_Dispatch
+	.short	SmfMuteChSelFunc_OnGetRamAddress - MuteChSel_Dispatch
+	.short	SmfMuteChSelFunc_OnGetLargeStep - MuteChSel_Dispatch
+	.short	MuteChSel_Dispatch - MuteChSel_Dispatch
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] SqTrAsPsSong_Dispatch_PtrTable
 ; SqTrAsPsSong_Dispatch_PtrTable -- 11 u32 addresses, read by
@@ -1358,10 +1376,6 @@ SmfMuteChSelFunc_CaseTable:
 ; Typed in naka_widget_tables_1.c as uint32_t
 ; SqTrAsPsSong_Dispatch_PtrTable[11].
 ; -----------------------------------------------------------------------------
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x1e, 0x00, 0x1e, 0x00, 0x29, 0x00, 0x29, 0x00
-	.byte	0x29, 0x00, 0x22, 0x00, 0x29, 0x00, 0x2d, 0x00
-	.byte	0x1e, 0x00, 0x00, 0x00
 SqTrAsPsSong_Dispatch_PtrTable:	.incbin "includes/generated/naka_widget_tables_1.bin", 0x256E, 0x2C
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] SqTrAsPsSong_Dispatch_Strings
@@ -1384,6 +1398,16 @@ SqTrAsPsSong_Dispatch_Strings:	.incbin "includes/generated/naka_widget_tables_1.
 ; SqTrAsPsSongFunc_CaseTable[10].
 ; -----------------------------------------------------------------------------
 SqTrAsPsSongFunc_CaseTable:
+	.short	SqTrAsPsSongFunc_OnGetLargeStep - SqTrAsPsSong_Dispatch
+	.short	SqTrAsPsSongFunc_OnGetLargeStep - SqTrAsPsSong_Dispatch
+	.short	SqTrAsPsSong_ReturnZero - SqTrAsPsSong_Dispatch
+	.short	SqTrAsPsSong_ReturnZero - SqTrAsPsSong_Dispatch
+	.short	SqTrAsPsSong_ReturnZero - SqTrAsPsSong_Dispatch
+	.short	SqTrAsPsSongFunc_OnGetMax - SqTrAsPsSong_Dispatch
+	.short	SqTrAsPsSong_ReturnZero - SqTrAsPsSong_Dispatch
+	.short	SqTrAsPsSongFunc_OnGetRamAddress - SqTrAsPsSong_Dispatch
+	.short	SqTrAsPsSongFunc_OnGetLargeStep - SqTrAsPsSong_Dispatch
+	.short	SqTrAsPsSong_Dispatch - SqTrAsPsSong_Dispatch
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] SqAftSetFunc_PtrTable
 ; SqAftSetFunc_PtrTable -- 2 u32 addresses, read by SqAftSetFunc (v10/v9
@@ -1392,10 +1416,6 @@ SqTrAsPsSongFunc_CaseTable:
 ;
 ; Typed in naka_widget_tables_1.c as uint32_t SqAftSetFunc_PtrTable[2].
 ; -----------------------------------------------------------------------------
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x1e, 0x00, 0x1e, 0x00, 0x29, 0x00, 0x29, 0x00
-	.byte	0x29, 0x00, 0x22, 0x00, 0x29, 0x00, 0x2d, 0x00
-	.byte	0x1e, 0x00, 0x00, 0x00
 SqAftSetFunc_PtrTable:	.incbin "includes/generated/naka_widget_tables_1.bin", 0x261C, 0x8
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] SqAftSetFunc_Strings
@@ -1447,6 +1467,16 @@ MuteChSet_Dispatch_Strings:	.incbin "includes/generated/naka_widget_tables_1.bin
 ; MuteChSetFunc_CaseTable[10].
 ; -----------------------------------------------------------------------------
 MuteChSetFunc_CaseTable:
+	.short	MuteChSetFunc_OnGetLargeStep - MuteChSet_Dispatch
+	.short	MuteChSetFunc_OnGetLargeStep - MuteChSet_Dispatch
+	.short	MuteChSetFunc_Exit - MuteChSet_Dispatch
+	.short	MuteChSetFunc_Exit - MuteChSet_Dispatch
+	.short	MuteChSetFunc_Exit - MuteChSet_Dispatch
+	.short	MuteChSetFunc_OnGetMax - MuteChSet_Dispatch
+	.short	MuteChSetFunc_Exit - MuteChSet_Dispatch
+	.short	MuteChSetFunc_OnGetRamAddress - MuteChSet_Dispatch
+	.short	MuteChSetFunc_OnGetLargeStep - MuteChSet_Dispatch
+	.short	MuteChSet_Dispatch - MuteChSet_Dispatch
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] AcDemoMedley_HandleScrollEvent_Str
 ; AcDemoMedley_HandleScrollEvent_Str -- NUL-terminated string(s), 12
@@ -1456,10 +1486,6 @@ MuteChSetFunc_CaseTable:
 ; Typed in naka_widget_tables_1.c as char
 ; AcDemoMedley_HandleScrollEvent_Str[12].
 ; -----------------------------------------------------------------------------
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x1e, 0x00, 0x1e, 0x00, 0x52, 0x00, 0x52, 0x00
-	.byte	0x52, 0x00, 0x22, 0x00, 0x52, 0x00, 0x29, 0x00
-	.byte	0x1e, 0x00, 0x00, 0x00
 AcDemoMedley_HandleScrollEvent_Str:	.incbin "includes/generated/naka_widget_tables_1.bin", 0x2724, 0xC
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] AcDemoMedley_HandleScrollEvent_Str_2
@@ -1499,6 +1525,16 @@ DemoMedDsp_Dispatch_Str:	.incbin "includes/generated/naka_widget_tables_1.bin", 
 ; DemoMedDspCheck_CaseTable[10].
 ; -----------------------------------------------------------------------------
 DemoMedDspCheck_CaseTable:
+	.short	DemoMedDspCheck_OnGetLargeStep - DemoMedDsp_Dispatch
+	.short	DemoMedDspCheck_OnGetSmallStep - DemoMedDsp_Dispatch
+	.short	DPLoad_DspReturn - DemoMedDsp_Dispatch
+	.short	DPLoad_DspReturn - DemoMedDsp_Dispatch
+	.short	DPLoad_DspReturn - DemoMedDsp_Dispatch
+	.short	DemoMedDspCheck_OnGetMax - DemoMedDsp_Dispatch
+	.short	DemoMedDspCheck_OnGetMin - DemoMedDsp_Dispatch
+	.short	DemoMedDspCheck_OnGetRamAddress - DemoMedDsp_Dispatch
+	.short	DemoMedDspCheck_OnGetSmallStep - DemoMedDsp_Dispatch
+	.short	DemoMedDsp_Dispatch - DemoMedDsp_Dispatch
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] PlayModeStr_Play
 ; PlayModeStr_Play -- NUL-terminated string(s), 6 bytes, used by
@@ -1507,10 +1543,6 @@ DemoMedDspCheck_CaseTable:
 ;
 ; Typed in naka_widget_tables_1.c as char PlayModeStr_Play[6].
 ; -----------------------------------------------------------------------------
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x20, 0x00, 0x24, 0x00, 0x3d, 0x00, 0x3d, 0x00
-	.byte	0x3d, 0x00, 0x28, 0x00, 0x2f, 0x00, 0x36, 0x00
-	.byte	0x24, 0x00, 0x00, 0x00
 PlayModeStr_Play:	.incbin "includes/generated/naka_widget_tables_1.bin", 0x2768, 0x6
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] DPPlayDsp_Dispatch_Str
@@ -1531,6 +1563,16 @@ DPPlayDsp_Dispatch_Str:	.incbin "includes/generated/naka_widget_tables_1.bin", 0
 ; DPPlayDspCheck_CaseTable[10].
 ; -----------------------------------------------------------------------------
 DPPlayDspCheck_CaseTable:
+	.short	DPPlayDspCheck_OnGetLargeStep - DPPlayDsp_Dispatch
+	.short	DPPlayDspCheck_OnGetSmallStep - DPPlayDsp_Dispatch
+	.short	DPPlay_DspReturn - DPPlayDsp_Dispatch
+	.short	DPPlay_DspReturn - DPPlayDsp_Dispatch
+	.short	DPPlay_DspReturn - DPPlayDsp_Dispatch
+	.short	DPPlayDspCheck_OnGetMax - DPPlayDsp_Dispatch
+	.short	DPPlayDspCheck_OnGetMin - DPPlayDsp_Dispatch
+	.short	DPPlayDspCheck_OnGetRamAddress - DPPlayDsp_Dispatch
+	.short	DPPlayDspCheck_OnGetSmallStep - DPPlayDsp_Dispatch
+	.short	DPPlayDsp_Dispatch - DPPlayDsp_Dispatch
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] PlayModeStr_Pause
 ; PlayModeStr_Pause -- NUL-terminated string(s), 6 bytes, used by
@@ -1539,10 +1581,6 @@ DPPlayDspCheck_CaseTable:
 ;
 ; Typed in naka_widget_tables_1.c as char PlayModeStr_Pause[6].
 ; -----------------------------------------------------------------------------
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x20, 0x00, 0x24, 0x00, 0x3d, 0x00, 0x3d, 0x00
-	.byte	0x3d, 0x00, 0x28, 0x00, 0x2f, 0x00, 0x36, 0x00
-	.byte	0x24, 0x00, 0x00, 0x00
 PlayModeStr_Pause:	.incbin "includes/generated/naka_widget_tables_1.bin", 0x2788, 0x6
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] DPPauseDsp_Dispatch_Str
@@ -1563,6 +1601,16 @@ DPPauseDsp_Dispatch_Str:	.incbin "includes/generated/naka_widget_tables_1.bin", 
 ; DPPauseDspCheck_CaseTable[10].
 ; -----------------------------------------------------------------------------
 DPPauseDspCheck_CaseTable:
+	.short	DPPauseDspCheck_OnGetLargeStep - DPPauseDsp_Dispatch
+	.short	DPPauseDspCheck_OnGetSmallStep - DPPauseDsp_Dispatch
+	.short	DPPause_DspReturn - DPPauseDsp_Dispatch
+	.short	DPPause_DspReturn - DPPauseDsp_Dispatch
+	.short	DPPause_DspReturn - DPPauseDsp_Dispatch
+	.short	DPPauseDspCheck_OnGetMax - DPPauseDsp_Dispatch
+	.short	DPPauseDspCheck_OnGetMin - DPPauseDsp_Dispatch
+	.short	DPPauseDspCheck_OnGetRamAddress - DPPauseDsp_Dispatch
+	.short	DPPauseDspCheck_OnGetSmallStep - DPPauseDsp_Dispatch
+	.short	DPPauseDsp_Dispatch - DPPauseDsp_Dispatch
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] DPPauseDspCheck_CaseTable_Strings
 ; DPPauseDspCheck_CaseTable_Strings -- 6 bytes of NUL-terminated strings
@@ -1574,10 +1622,6 @@ DPPauseDspCheck_CaseTable:
 ; Readers (claims_lint.py unread-claims, 2026-10-02): IvExitTrSel_CopyString (0xF2D218, pushw far
 ;   pointer)
 ; -----------------------------------------------------------------------------
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x20, 0x00, 0x24, 0x00, 0x3d, 0x00, 0x3d, 0x00
-	.byte	0x3d, 0x00, 0x28, 0x00, 0x2f, 0x00, 0x36, 0x00
-	.byte	0x24, 0x00, 0x00, 0x00
 DPPauseDspCheck_CaseTable_Strings:	.incbin "includes/generated/naka_widget_tables_1.bin", 0x27A8, 0x6
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] Kubo_ApFuncTable_128

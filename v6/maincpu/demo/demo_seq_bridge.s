@@ -324,8 +324,8 @@ SongBankLookup_BuildAudioCmd:
 	ld	a, (xix)
 	extz	wa
 	pushw	wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xe2, 0x00, 0x0b, 0x02, 0x02
+	pushw	SongBankLookup_BuildAudioCmd_Str_Fmt3d_FmtPct@hi16
+	pushw	SongBankLookup_BuildAudioCmd_Str_Fmt3d_FmtPct@lo16
 	push	xiz
 	call	Sprintf_Locked
 	lda	xsp, (xsp+10)

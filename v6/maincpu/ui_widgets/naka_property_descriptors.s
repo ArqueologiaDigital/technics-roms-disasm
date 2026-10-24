@@ -712,6 +712,5 @@ Suna_FunctionTable_104:
 ; = class 0x1600001 (FunctionProc), 1 entries (immediate count), id 0x404.
 ; v7 names this label's address (0xE176DC) as a 24-bit operand at 0xF1970D, 0xF7603A.
 Suna_FunctionTable_404:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xe6, 0x76, 0xe1, 0x00
+	.long Suna_FunctionNameListEnd + 2	; -> "PaintArrowProc" name string
 	.long Suna_FunctionNameListEnd	; -> "", the end of the list

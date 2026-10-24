@@ -393,13 +393,21 @@ TitleFunc_LifecycleDispatch_OnFormat2dd_Str_Debug_Test:	.byte	0x0a, 0x44, 0x65, 
 TitleFunc_LifecycleDispatch_OnFormat2hd_Str_Debug_Test:	.byte	0x0a
 	.asciz	"Debug Test"
 TitleFunc_LifecycleDispatch_CaseTable:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x0e, 0x00, 0x30, 0x00, 0x58, 0x00
-	.byte	0x65, 0x00, 0x72, 0x00, 0x7f, 0x00, 0x82, 0x00
+	.short	TitleFunc_LifecycleTable - TitleFunc_LifecycleTable
+	.short	TitleFunc_LifecycleDispatch_OnStopFddTest - TitleFunc_LifecycleTable
+	.short	TitleFunc_LifecycleDispatch_OnFddTestLoop - TitleFunc_LifecycleTable
+	.short	TitleFunc_LifecycleDispatch_OnListDirectory - TitleFunc_LifecycleTable
+	.short	TitleFunc_LifecycleDispatch_OnFormat2dd - TitleFunc_LifecycleTable
+	.short	TitleFunc_LifecycleDispatch_OnFormat2hd - TitleFunc_LifecycleTable
+	.short	TitleFunc_LifecycleDispatch_OnListLswFiles - TitleFunc_LifecycleTable
+	.short	TitleFunc_Return - TitleFunc_LifecycleTable
 TestTitleFunc_CaseTable:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x0b, 0x00, 0x21, 0x00, 0x16, 0x00
-	.byte	0x2c, 0x00, 0x37, 0x00
+	.short	TitleFunc_ActionDispatch - TitleFunc_ActionDispatch
+	.short	TestTitleFunc_OnTitleOld - TitleFunc_ActionDispatch
+	.short	TestTitleFunc_OnTitleInactivate - TitleFunc_ActionDispatch
+	.short	TestTitleFunc_OnTitleActivate - TitleFunc_ActionDispatch
+	.short	TestTitleFunc_OnTitleInterrupt - TitleFunc_ActionDispatch
+	.short	TestTitleFunc_OnTitleInterruptReturn - TitleFunc_ActionDispatch
 ListDir2_Entry_Str_A_HAMA_LSW:	.byte	0x41, 0x3a, 0x5c, 0x48
 	.byte	0x41, 0x4d, 0x41, 0x5c, 0x2a, 0x2e, 0x4c, 0x53
 	.byte	0x57, 0x00
@@ -471,9 +479,13 @@ FDTestDlg_FormatDisplay_Str_File_Name_20_charact:	.byte	0x46, 0x69, 0x6c, 0x65
 	.byte	0x20, 0x63, 0x68, 0x61, 0x72, 0x61, 0x63, 0x74
 	.byte	0x00, 0xff
 FDTestDialogProc_CaseTable:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x33, 0x00, 0x00, 0x00, 0x00, 0x00
+	.short	FDTestDlg_DefaultCase - FDTestDlg_DefaultCase
+	.short	FDTestDlg_DefaultCase - FDTestDlg_DefaultCase
+	.short	FDTestDlg_DefaultCase - FDTestDlg_DefaultCase
+	.short	FDTestDlg_DefaultCase - FDTestDlg_DefaultCase
+	.short	FDTestDlg_Unhandled - FDTestDlg_DefaultCase
+	.short	FDTestDlg_DefaultCase - FDTestDlg_DefaultCase
+	.short	FDTestDlg_DefaultCase - FDTestDlg_DefaultCase
 RegHamaTitle1_Entry_Str_TEST_HAMA:
 	.byte	0x54, 0x45, 0x53, 0x54, 0x5f, 0x48, 0x41, 0x4d
 	.byte	0x41, 0x00

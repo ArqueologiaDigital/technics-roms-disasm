@@ -377,13 +377,13 @@ def assemble_batch(texts, tree, prelude, chunk=4000):
         if not live:
             break
         d = tempfile.mkdtemp(prefix="port-asm-")
-        src = [prelude, "\t.text"]
-        base = len(prelude.split("\n")) + 1
+        src = prelude.split("\n") + ["\t.text"]
         lineof = {}
         for k, i in enumerate(live):
             src.append("__t%d:" % k)
-            lineof[base + 2 * k + 2] = k
-            src.append("\t" + texts[i])
+            for ln in texts[i].split("\n"):      # `.set` lines, then the line under test
+                src.append("\t" + ln)
+                lineof[len(src)] = k
         src.append("__t%d:" % len(live))
         open(os.path.join(d, "t.s"), "w", encoding="latin-1").write("\n".join(src) + "\n")
         r = subprocess.run([MC, "-triple=tlcs900", "-filetype=obj", "-I", os.path.join(ROOT, tree, "maincpu"),
@@ -449,6 +449,11 @@ class Port:
             if m:
                 self.equ_expr.setdefault(m.group(1), (i, m.group(2), m.group(3), m.group(4)))
         self.refcount = self._refcount()
+        self.macros = set(re.findall(r'^\s*\.macro\s+([A-Za-z_.$][\w.$]*)', macro_prelude(args.src)
+                                     + open(os.path.join(ROOT, args.src, "maincpu", "shared", "macros.s"),
+                                            encoding="latin-1").read(), re.M))
+        self.macros_lc = {x.lower() for x in self.macros}
+        self.macro_rel = set()          # symbols a macro body branches to relatively
         self.newequ = {}
         self.newexpr = {}
 
@@ -619,36 +624,46 @@ class Port:
                 if len(tk) == 1 and el.strip() == tk[0][3]:
                     s0, s1, kind, txt = tk[0]
                     out.append(((pos + s0, pos + s1, kind, txt), le(bt, k * w, w), le(bs, k * w, w), w))
+                else:
+                    # an expression (`Case - Base`): its symbols take their target values
+                    for s0, s1, kind, txt in tk:
+                        out.append(((pos + s0, pos + s1, kind, txt), None, None, 0))
                 pos += len(el) + 1
             return mn, ops, out
         toks = tokens(ops)
-        for tk in toks:
-            s0, s1, kind, txt = tk
-            if mn in REL and tk is toks[-1]:
-                w = REL_W.get(mn, 1)
-                disp = sval(le(bt, n - w, w), w)
-                out.append((tk, BASE + t + n + disp, None, "rel"))
-                continue
+        vals = []
+        for k, (s0, s1, kind, txt) in enumerate(toks):
             v = int(txt, 0) if kind == "num" else self.sv.get(txt)
-            if v is None or v < 0:
-                out.append((tk, None, None, 0))
+            vals.append(v if v is not None and v >= 0 else None)
+        # locate the biggest values first, each in bytes no other token has claimed
+        # (`ld (0x3910:16), 16`: the 0x10 of the address is not the immediate 16)
+        claimed = set()
+        found = {}
+        for k in sorted(range(len(toks)), key=lambda k: -(vals[k] if vals[k] is not None else -1)):
+            v = vals[k]
+            if v is None or (mn in REL and k == len(toks) - 1):
                 continue
-            found = None
             for w in (4, 3, 2, 1):
                 if v >= 1 << (8 * w):
                     continue
-                offs = [o for o in range(n - w + 1) if le(bs, o, w) == v]
+                offs = [o for o in range(n - w + 1) if le(bs, o, w) == v
+                        and not claimed.intersection(range(o, o + w))]
                 dif = [o for o in offs if bs[o:o + w] != bt[o:o + w]]
-                if len(dif) == 1:
-                    found = (dif[0], w)
+                hit = dif[0] if len(dif) == 1 else (offs[0] if offs and not dif else None)
+                if hit is not None:
+                    found[k] = (hit, w)
+                    claimed.update(range(hit, hit + w))
                     break
-                if offs and not dif:
-                    found = (offs[0], w)
-                    break
-            if found:
-                out.append((tk, le(bt, found[0], found[1]), v, found[1]))
+        for k, tk in enumerate(toks):
+            if mn in REL and k == len(toks) - 1:
+                w = REL_W.get(mn, 1)
+                disp = sval(le(bt, n - w, w), w)
+                out.append((tk, BASE + t + n + disp, None, "rel"))
+            elif k in found:
+                o, w = found[k]
+                out.append((tk, le(bt, o, w), vals[k], w))
             else:
-                out.append((tk, None, v, 0))
+                out.append((tk, None, vals[k], 0))
         return mn, ops, out
 
     def votes(self):
@@ -680,6 +695,7 @@ class Port:
         """final text of every mapped line; a line that cannot be shown to reproduce the
         target bytes gets None (raw rows)"""
         cands = []
+        self.failed = []                 # lines that became raw rows, for --dump-failed
         self.text = {}
         self.cpatch = {}                 # generated bin -> {offset: target byte}
         st = collections.Counter()
@@ -707,6 +723,13 @@ class Port:
                 st["incbin-raw"] += 1
                 continue
             mn, ops, reqs = self.line_requirements(i, t)
+            if mn in self.macros_lc and self.rom[a:a + n] == self.tgt[t:t + n]:
+                # a macro whose body branches relatively cannot be assembled on its own (its
+                # target is a label in another place); equal bytes are kept and the full
+                # build checks them like every other line
+                self.text[i] = body
+                st["kept-macro"] += 1
+                continue
             test = self.subst(body, ops, reqs, t, n, rewrite=False)
             new = self.subst(body, ops, reqs, t, n, rewrite=True)
             cands.append((i, t, n, body, test, new))
@@ -715,13 +738,13 @@ class Port:
             flat.append(test[0] if test else "nop")
             flat.append(new[0] if new else "nop")
         print("  isolated assembly of %d texts ..." % len(flat))
-        enc = assemble_batch(flat, self.args.src, macro_prelude(self.args.src))
+        enc = assemble_batch(flat, self.args.src, self.prelude())
         for k, (i, t, n, body, test, new) in enumerate(cands):
             want = self.tgt[t:t + n]
             if test and enc[2 * k] == want:
                 self.text[i] = body
                 st["kept"] += 1
-            elif new and enc[2 * k + 1] == want:
+            elif new and new[1] != body and enc[2 * k + 1] == want:
                 self.text[i] = new[1]
                 st["rewritten"] += 1
             elif body.split(None, 1)[0].lower() in (".ascii", ".asciz") and n:
@@ -730,65 +753,68 @@ class Port:
             else:
                 self.text[i] = None
                 st["raw"] += 1
+                self.failed.append((i, t, n, body, test, new, enc[2 * k], enc[2 * k + 1]))
         self.stats = st
 
     def subst(self, body, ops, reqs, t, n, rewrite):
-        """-> (test text: symbols replaced by target values, final text) or None"""
-        if not reqs:
-            return (body, body)
-        test, final, pos = [], [], 0
-        here = BASE + t + n
-        for tk, req, v, w in reqs:
-            s0, s1, kind, txt = tk
-            test.append(ops[pos:s0])
-            final.append(ops[pos:s0])
-            pos = s1
-            if w == "rel":
-                tv = self.tval(txt) if kind == "sym" else None
-                if not rewrite:
-                    if kind == "num":
-                        test.append(txt)
-                        final.append(txt)
-                        continue
-                    if tv is None:
-                        return None
-                    test.append(str(tv - here))
-                    final.append(txt)
+        """-> (test text, final text) or None.  The final text is the body (rewrite=False)
+        or the body with every operand taken from the target bytes; the test text is
+        `.set` lines giving each symbol of the final text its target value, then the final
+        text with a relative-branch target written as its displacement."""
+        if not rewrite or not reqs:
+            final = body
+        else:
+            out, pos = [], 0
+            here = BASE + t + n
+            for tk, req, v, w in reqs:
+                s0, s1, kind, txt = tk
+                out.append(ops[pos:s0])
+                pos = s1
+                if req is None:
+                    out.append(txt)
                     continue
-                test.append(str(req - here))
-                if tv == req:
-                    final.append(txt)
+                if w == "rel":
+                    if kind == "sym" and self.tval(txt) == req:
+                        out.append(txt)
+                    else:
+                        nm = self.label_at(req)
+                        out.append(nm if nm else str(req - here))
+                    continue
+                if kind == "num":
+                    out.append(fmt_like(txt, req) if req != int(txt, 0) else txt)
+                    continue
+                if self.tval(txt) == req:
+                    out.append(txt)
+                elif txt not in self.equ_lines and self.label_at(req):
+                    out.append(self.label_at(req))
                 else:
-                    nm = self.label_at(req)
-                    final.append(nm if nm else str(req - here))
+                    out.append(hex(req))
+            out.append(ops[pos:])
+            final = body.split(None, 1)[0] + "\t" + "".join(out).strip()
+        test = self.test_text(final, t, n)
+        return (test, final) if test is not None else None
+
+    def test_text(self, final, t, n):
+        p = final.split(None, 1)
+        mn, ops = p[0], (p[1] if len(p) > 1 else "")
+        toks = tokens(ops)
+        defs, out, pos = [], [], 0
+        here = BASE + t + n
+        for k, (s0, s1, kind, txt) in enumerate(toks):
+            if kind != "sym":
                 continue
-            if kind == "num":
-                val = int(txt, 0)
-                if rewrite and req is not None and req != val:
-                    test.append(hex(req))
-                    final.append(fmt_like(txt, req))
-                else:
-                    test.append(txt)
-                    final.append(txt)
+            if txt not in self.sv and txt not in self.labels_src and txt not in self.equ_expr:
+                continue                     # not a symbol of the tree: a bank register (xbc3) or keyword
+            v = self.tval(txt)
+            if v is None:
+                return None
+            if mn.lower() in REL and k == len(toks) - 1:
+                out.append(ops[pos:s0] + str(v - here))
+                pos = s1
                 continue
-            tv = self.tval(txt)
-            if not rewrite or req is None:
-                if tv is None:
-                    return None
-                test.append(hex(tv) if tv >= 0 else str(tv))
-                final.append(txt)
-                continue
-            test.append(hex(req))
-            if tv == req:
-                final.append(txt)
-            elif txt not in self.equ_lines and self.label_at(req):
-                final.append(self.label_at(req))
-            else:
-                final.append(hex(req))
-        test.append(ops[pos:])
-        final.append(ops[pos:])
-        m0 = body.split(None, 1)[0]
-        return (m0 + " " + "".join(test), m0 + "\t" + "".join(final).strip())
+            defs.append(".set %s, %d" % (txt, v))
+        out.append(ops[pos:])
+        return "\n".join(defs + [mn + " " + "".join(out)])
 
     # ---- writing the target tree
     TODO = "; TODO(port): %s bytes with no %s line -- disassemble"
@@ -900,6 +926,25 @@ class Port:
         json.dump({k: {str(o): b for o, b in sorted(v.items())} for k, v in self.cpatch.items()},
                   open(os.path.join(self.cache, "c_target_%s.json" % dst), "w"))
 
+    def prelude(self):
+        """the macro definitions, and target values for the symbols their bodies name
+        (`call RegisterTitle` inside RegTitle)"""
+        text = macro_prelude(self.args.src)
+        names = set()
+        for ln in text.split("\n")[1:]:
+            p = code_part(ln).split(None, 1)
+            if len(p) == 2 and p[0].lower() in REL:
+                self.macro_rel.update(m.group(1) for m in IDENT.finditer(p[1]))
+            for m in IDENT.finditer(code_part(ln)):
+                if m.group(1) in self.sv and m.group(1).lower() not in RESERVED:
+                    names.add(m.group(1))
+        defs = []
+        for nm in sorted(names - self.macro_rel):
+            v = self.tval(nm)
+            if v is not None and not nm.startswith("."):
+                defs.append(".set %s, %d" % (nm, v))
+        return text + "\n" + "\n".join(defs)
+
     def label_at(self, addr):
         if not hasattr(self, "_byaddr"):
             self._byaddr = {}
@@ -966,6 +1011,8 @@ def main():
     ap.add_argument("--cache")
     ap.add_argument("--emit", action="store_true")
     ap.add_argument("--cdiv", action="store_true", help="only write the C-data divergence json")
+    ap.add_argument("--dump-failed", metavar="FILE", help="write the lines that became raw rows, with "
+                    "their source and target bytes")
     args = ap.parse_args()
     if args.cdiv:
         return c_divergence(args)
@@ -990,6 +1037,14 @@ def main():
           " with disagreeing uses:", sum(1 for c in P.equ_votes.values() if len(c) > 1))
     P.resolve()
     print("line resolution:", dict(P.stats))
+    if args.dump_failed:
+        with open(args.dump_failed, "w", encoding="latin-1") as fh:
+            for i, t, n, body, test, new, e0, e1 in P.failed:
+                a = P.order[i][0] - BASE
+                fh.write("%06x %s:%d\t%s\n  src %s\n  tgt %s\n  test %s -> %s\n  new  %s -> %s\n" % (
+                    BASE + t, P.order[i][1], P.order[i][2], body, P.rom[a:a + n].hex(" "),
+                    P.tgt[t:t + n].hex(" "), test and repr(test[0]), e0 and e0.hex(" "), new and new[1],
+                    e1 and e1.hex(" ")))
     if args.emit:
         P.emit()
         print("wrote %s/maincpu: %d raw target bytes in TODO(port) rows" % (args.dst, P.rawbytes))

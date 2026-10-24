@@ -6639,8 +6639,8 @@ DataBuf_Data_FormatDispatch:
 	call	Mem_Copy
 	lda	xwa, (0xf9a0:16)
 	pushw	1568
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x00, 0xb3
+	pushw	SndParamRam_DefaultImage@hi16
+	pushw	SndParamRam_DefaultImage@lo16
 	push	xwa
 	call	Mem_Copy
 	lda	xsp, (xsp+30)
@@ -6706,8 +6706,8 @@ DataBuf_InitSlotFromPreset:
 	lda xwa, (0xfda2:16)
 	sub xwa, 0xf9a0
 	pushw wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x00, 0xb3
+	pushw SndParamRam_DefaultImage@hi16
+	pushw SndParamRam_DefaultImage@lo16
 	push xbc
 	call	Mem_Copy
 	lda xsp, (xsp + 20)
@@ -6734,8 +6734,8 @@ DataBuf_InitSlotFromPreset_Alt:
 	lda xwa, (0xfda2:16)
 	sub xwa, 0xf9a0
 	pushw wa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xed, 0x00, 0x0b, 0x00, 0xb3
+	pushw SndParamRam_DefaultImage@hi16
+	pushw SndParamRam_DefaultImage@lo16
 	push xbc
 	call	Mem_Copy
 	lda xsp, (xsp + 20)
@@ -6937,8 +6937,8 @@ SndParam_AllocAndCopyPreset:
 	cp (xsp + 4), 0x3
 	jrl	nc, SoundData_FreeSoundPtr
 	pushw 0xea
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xee, 0x00, 0x0b, 0x02, 0x15
+	pushw SndParam_PresetBanks@hi16
+	pushw SndParam_PresetBanks@lo16
 	push xiz
 	call	Mem_Copy
 	lda xsp, (xsp + 10)
@@ -7192,8 +7192,8 @@ MidiSysEx_SendAllParams:
 	cp hl, 0:i3
 	jr	z, MidiSysEx_SendReverbParam
 	pushw 0xe
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xee, 0x00, 0x0b, 0xdc, 0x2b
+	pushw Vocalist_SysExTemplate@hi16
+	pushw Vocalist_SysExTemplate@lo16
 	push xiz
 	call	Mem_Copy
 	lda xsp, (xsp + 10)
@@ -7220,8 +7220,8 @@ MidiSysEx_SendReverbParam:
 	cp hl, 0:i3
 	jr	z, MidiSysEx_SendProgramChange
 	pushw 0xe
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xee, 0x00, 0x0b, 0xdc, 0x2b
+	pushw Vocalist_SysExTemplate@hi16
+	pushw Vocalist_SysExTemplate@lo16
 	push xiz
 	call	Mem_Copy
 	lda xsp, (xsp + 10)
@@ -7264,8 +7264,8 @@ MidiSysEx_SendProgramChange:
 	cp hl, 0:i3
 	jr	z, MidiSysEx_SendControlChange1
 	pushw 0x2
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xee, 0x00, 0x0b, 0xee, 0x2b
+	pushw Vocalist_ProgramChangeTemplate@hi16
+	pushw Vocalist_ProgramChangeTemplate@lo16
 	push xiz
 	call	Mem_Copy
 	lda xsp, (xsp + 10)
@@ -7296,8 +7296,8 @@ MidiSysEx_SendControlChange1:
 	cp hl, 0:i3
 	jr	z, MidiSysEx_SendControlChange2
 	pushw 0x3
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xee, 0x00, 0x0b, 0xea, 0x2b
+	pushw Vocalist_ControlChangeTemplate@hi16
+	pushw Vocalist_ControlChangeTemplate@lo16
 	push xiz
 	call	Mem_Copy
 	lda xsp, (xsp + 10)
@@ -7328,8 +7328,8 @@ MidiSysEx_SendControlChange2:
 	cp hl, 0:i3
 	jr	z, MidiSysEx_CheckDelayAndSend
 	pushw 0x3
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xee, 0x00, 0x0b, 0xea, 0x2b
+	pushw Vocalist_ControlChangeTemplate@hi16
+	pushw Vocalist_ControlChangeTemplate@lo16
 	push xiz
 	call	Mem_Copy
 	lda xsp, (xsp + 10)
@@ -7367,8 +7367,8 @@ MidiSysEx_SendAfterDelay:
 	cp hl, 0:i3
 	jr	z, MidiSysEx_SendBankData1
 	pushw 0xe
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xee, 0x00, 0x0b, 0xdc, 0x2b
+	pushw Vocalist_SysExTemplate@hi16
+	pushw Vocalist_SysExTemplate@lo16
 	push xiz
 	call	Mem_Copy
 	lda xsp, (xsp + 10)
@@ -7397,8 +7397,8 @@ MidiSysEx_SendBankData1:
 	cp hl, 0:i3
 	jr	z, MidiSysEx_SendBankData2
 	pushw 0xe
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xee, 0x00, 0x0b, 0xdc, 0x2b
+	pushw Vocalist_SysExTemplate@hi16
+	pushw Vocalist_SysExTemplate@lo16
 	push xiz
 	call	Mem_Copy
 	lda xsp, (xsp + 10)
@@ -7442,8 +7442,8 @@ MidiSysEx_SendBankData2:
 	cp hl, 0:i3
 	jr	z, MidiSysEx_SendBankData3
 	pushw 0xe
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xee, 0x00, 0x0b, 0xdc, 0x2b
+	pushw Vocalist_SysExTemplate@hi16
+	pushw Vocalist_SysExTemplate@lo16
 	push xiz
 	call	Mem_Copy
 	lda xsp, (xsp + 10)
@@ -7489,8 +7489,8 @@ MidiSysEx_SendBankData3:
 	cp hl, 0:i3
 	jr	z, MidiSysEx_FreeAndReturn
 	pushw 0xe
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xee, 0x00, 0x0b, 0xdc, 0x2b
+	pushw Vocalist_SysExTemplate@hi16
+	pushw Vocalist_SysExTemplate@lo16
 	push xiz
 	call	Mem_Copy
 	lda xsp, (xsp + 10)
@@ -7552,8 +7552,8 @@ MidiSysEx_SendAllPartChannels:
 	ldw	(xsp+4), 0
 MidiSysEx_SendPartChanLoop:
 	pushw	14
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0xee, 0x00, 0x0b, 0xf0, 0x2b
+	pushw	Vocalist_PartSysExTemplate@hi16
+	pushw	Vocalist_PartSysExTemplate@lo16
 	push xiz
 	call	Mem_Copy
 	lda	xsp, (xsp+10)

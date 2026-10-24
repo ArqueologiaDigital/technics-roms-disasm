@@ -1203,16 +1203,21 @@ PanelTlv_ResetMasks:	.incbin "includes/generated/naka_extension_device.bin", 0x2
 PanelTlv_CompanionPartTags:	.incbin "includes/generated/naka_extension_device.bin", 0x2B26, 0x18
 ; PanelTlv_ApplyFieldRule_CaseOffsets -- 9 x int16: the case offsets of PanelTlv_ApplyFieldRule's compiled switch, relative to PanelTlv_ApplyFieldRule_OnKeepBits
 PanelTlv_ApplyFieldRule_CaseOffsets:
+	.short	PanelTlv_ApplyFieldRule_OnKeepBits - PanelTlv_ApplyFieldRule_OnKeepBits
+	.short	PanelTlv_ApplyFieldRule_OnClearBits - PanelTlv_ApplyFieldRule_OnKeepBits
+	.short	PanelTlv_ApplyFieldRule_OnSetBits - PanelTlv_ApplyFieldRule_OnKeepBits
+	.short	PanelTlv_ApplyFieldRule_OnResetOutsideRange - PanelTlv_ApplyFieldRule_OnKeepBits
+	.short	PanelTlv_ApplyFieldRule_OnResetInsideRange - PanelTlv_ApplyFieldRule_OnKeepBits
+	.short	PanelTlv_ApplyFieldRule_OnResetUnlessListed - PanelTlv_ApplyFieldRule_OnKeepBits
+	.short	PanelTlv_ApplyFieldRule_OnResetIfListed - PanelTlv_ApplyFieldRule_OnKeepBits
+	.short	PanelTlv_ApplyFieldRule_OnStoreByte - PanelTlv_ApplyFieldRule_OnKeepBits
+	.short	PanelTlv_ApplyFieldRule_OnZeroByte - PanelTlv_ApplyFieldRule_OnKeepBits
 ; SndParamBank_OptionDefault_NN -- the defaults of the five fields of the 0x50-byte block at Custom Data Flash
 ; 0x3D3400 (+0x00 2 B -- this slice is 4 B, of which the first 2 are copied --, +0x10 12 B, +0x20 4 B, +0x30 4 B,
 ; +0x40 6 B).  SndParamBank_WriteFlashDefaults builds the block from them; SndParamBank_RestoreOptionBlock (factory
 ; reset) rebuilds it keeping the flash's own +0x00; SndParamBank_LoadOptionBlock copies the five fields to RAM
 ; 0x340E4, 0x340E6, 0x340F2, 0x340F6, 0x340FA, read by the ParaLoadOpt_* dialog (midi/param_load_routines.s)
 ; and demo/file_demo_proc.s -- hence "option".
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x05, 0x00, 0x0a, 0x00, 0x0f, 0x00
-	.byte	0x14, 0x00, 0x19, 0x00, 0x1e, 0x00, 0x23, 0x00
-	.byte	0x28, 0x00
 SndParamBank_OptionDefault_00:	.incbin "includes/generated/naka_extension_device.bin", 0x2B50, 0x4
 SndParamBank_OptionDefault_30:	.incbin "includes/generated/naka_extension_device.bin", 0x2B54, 0x4
 SndParamBank_OptionDefault_10:	.incbin "includes/generated/naka_extension_device.bin", 0x2B58, 0xC
@@ -1230,28 +1235,43 @@ SndParamBank_Default1:		.incbin "includes/generated/naka_extension_device.bin", 
 SndParamBank_Default2:		.incbin "includes/generated/naka_extension_device.bin", 0x2D52, 0xEA
 ; CtrlPanel_IndicatorJumpTable_CaseTable -- 9 x int16: the case offsets of CtrlPanel_IndicatorJumpTable's compiled switch, relative to DSPCfg_Param_CaseC
 CtrlPanel_IndicatorJumpTable_CaseTable:
+	.short	DSPCfg_Param_CaseC - DSPCfg_Param_CaseC
+	.short	DSPCfg_Param_CaseC - DSPCfg_Param_CaseC
+	.short	DSPCfg_Param_CaseC - DSPCfg_Param_CaseC
+	.short	DSPCfg_Param_CaseC - DSPCfg_Param_CaseC
+	.short	CtrlPanel_IndicatorJumpTable_SaveLanguage - DSPCfg_Param_CaseC
+	.short	CtrlPanel_IndicatorJumpTable_SaveDisplayTime - DSPCfg_Param_CaseC
+	.short	CtrlPanel_IndicatorJumpTable_SaveDiskSetup - DSPCfg_Param_CaseC
+	.short	CtrlPanel_IndicatorJumpTable_SaveParamLoadOptions - DSPCfg_Param_CaseC
+	.short	CtrlPanel_IndicatorJumpTable_SaveWallpaper - DSPCfg_Param_CaseC
 ; Audio_DispatchCommand_CaseTable -- 9 x int16: the case offsets of Audio_DispatchCommand's compiled switch, relative to DSPCfg_Param_CaseD
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x01, 0x00, 0x12, 0x00, 0x24, 0x00, 0x35, 0x00
-	.byte	0x46, 0x00
 Audio_DispatchCommand_CaseTable:
+	.short	DSPCfg_Param_CaseD - DSPCfg_Param_CaseD
+	.short	DSPCfg_Param_CaseD - DSPCfg_Param_CaseD
+	.short	DSPCfg_Param_CaseD - DSPCfg_Param_CaseD
+	.short	DSPCfg_Param_CaseD - DSPCfg_Param_CaseD
+	.short	Audio_DispatchCommand_LoadHelpLanguage - DSPCfg_Param_CaseD
+	.short	Audio_DispatchCommand_LoadDispTimeSet - DSPCfg_Param_CaseD
+	.short	Audio_DispatchCommand_LoadSetupOptions - DSPCfg_Param_CaseD
+	.short	Audio_DispatchCommand_LoadParaLoadOptions - DSPCfg_Param_CaseD
+	.short	Audio_DispatchCommand_LoadWallSetOptions - DSPCfg_Param_CaseD
 ; PanelDisplay_DispatchByMode_CaseTable -- 9 x int16: the case offsets of PanelDisplay_DispatchByMode's compiled switch, relative to PanelDisplay_DispatchData
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x01, 0x00, 0x11, 0x00, 0x21, 0x00, 0x32, 0x00
-	.byte	0x43, 0x00
 PanelDisplay_DispatchByMode_CaseTable:
+	.short	DSPCfg_Param_Default - PanelDisplay_DispatchData
+	.short	DSPCfg_Param_Default - PanelDisplay_DispatchData
+	.short	DSPCfg_Param_Default - PanelDisplay_DispatchData
+	.short	DSPCfg_Param_Default - PanelDisplay_DispatchData
+	.short	PanelDisplay_DispatchData - PanelDisplay_DispatchData
+	.short	PanelDisplay_DispatchByMode_CmpDisplayTime - PanelDisplay_DispatchData
+	.short	PanelDisplay_DispatchByMode_CmpDiskSetup - PanelDisplay_DispatchData
+	.short	PanelDisplay_DispatchByMode_CmpParamLoadOptions - PanelDisplay_DispatchData
+	.short	PanelDisplay_DispatchByMode_CmpWallpaper - PanelDisplay_DispatchData
 ; PanelButton_ActionListPool -- the 53 control-panel action lists: 8-byte actions {event_id, event_arg,
 ; shift, mask, u32 handler}, each list ended by event_id 0xFF.  PanelButton_ActionLists and
 ; PanelButton_HelpModeActionLists point into it, one list per panel event index; PanelButton_DispatchChange
 ; (audio/tonegen_fileio_handlers.s) walks them.  Typed in ui_widgets/naka_extension_device.c
 ; (panel_button_action_t, PanelActions_*), each action commented with the buttons its mask selects
 ; (MAME kn5000.cpp names); scripts/converters/panel_button_actions_retype.py.
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x8f, 0x00, 0x8f, 0x00, 0x8f, 0x00, 0x8f, 0x00
-	.byte	0x00, 0x00, 0x1c, 0x00, 0x3a, 0x00, 0x56, 0x00
-	.byte	0x72, 0x00
 PanelButton_ActionListPool:	.incbin "includes/generated/naka_extension_device.bin", 0x2e72, 0x5e0
 ; PanelButton_ActionLists -- 32 list pointers, one per panel event index: 0..10 = left-panel segments
 ; 0..10, 11..21 = right-panel segments 0..10, 22..30 = other inputs, 31 = an empty list.  Read by
