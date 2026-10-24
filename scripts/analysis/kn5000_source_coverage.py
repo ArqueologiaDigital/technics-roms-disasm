@@ -120,6 +120,7 @@ ROMS = {
     "v10/maincpu": ("maincpu v10", 2097152),
     "v9/maincpu": ("maincpu v9", 2097152),
     "v7/maincpu": ("maincpu v7", 2097152),
+    "v6/maincpu": ("maincpu v6", 2097152),
     "v142/subcpu": ("subcpu payload v142", 196608),
     "subcpu/boot": ("subcpu boot (IC30)", 131072),
     "table_data": ("table data", 2097152),
@@ -367,6 +368,34 @@ def tagged_debt(root):
 
 
 # --------------------------------------------------------------------------
+# Ported-tree debt: scripts/converters/port_maincpu_version.py writes the target
+# bytes that no line of the source tree maps to as `.byte` rows under a
+# `; TODO(port): ...` line.  Those rows are ROM bytes copied, unexplained, into
+# the source -- the same thing as an `.incbin` of a committed blob -- so they are
+# moved from "typed data" to verbatim debt.  A block ends at the first line that
+# is not a `.byte` row (a label, an instruction, a blank line).
+# --------------------------------------------------------------------------
+PORT_TODO = re.compile(r';\s*TODO\(port\)')
+
+
+def port_todo_bytes(path):
+    n = 0
+    inblock = False
+    for raw in open(path, encoding="latin-1").read().split("\n"):
+        if PORT_TODO.search(raw):
+            inblock = True
+            continue
+        if not inblock:
+            continue
+        m = DIRECTIVE_RE.match(strip_comment(raw))
+        if m and m.group(1) == "byte" and not re.match(r'^\s*[A-Za-z_.$][\w.$]*\s*:', raw):
+            n += directive_bytes("byte", m.group(2))
+        else:
+            inblock = False
+    return n
+
+
+# --------------------------------------------------------------------------
 # Per-KN5000-root measurement
 # --------------------------------------------------------------------------
 def measure_kn5000_root(root):
@@ -394,7 +423,9 @@ def measure_kn5000_root(root):
             else:
                 verbatim += size
         td, mc = scan_directives(f)
-        typed += td
+        pd = port_todo_bytes(f)
+        typed += td - pd
+        verbatim += pd
         macro_calls += mc
     return dict(verbatim=verbatim, clang=clang, roundtrip=roundtrip, typed=typed, macro_calls=macro_calls)
 

@@ -149,7 +149,7 @@ everything: all wsa1 kn7000 kn2400 kn6000 kn6500 hdsx3
 gate: all
 	python3 scripts/analysis/assert_images_assemble.py
 	python3 scripts/analysis/assert_byte_identical.py
-	$(MAKE) --no-print-directory verify-v8-reference verify-subprogram-update-images
+	$(MAKE) --no-print-directory verify-v8-reference verify-v6-reference verify-subprogram-update-images
 	python3 scripts/generators/create_v141_subcpu_source.py --check
 
 # The v1.40 Sub-CPU update image (File Type 007) has no source build (v1.41's is also
@@ -170,7 +170,7 @@ gate-all: gate gate-wsa1 gate-kn7000 gate-kn2400 gate-kn6000 gate-kn6500 gate-hd
 	python3 scripts/analysis/assert_toolchain_is_a_prerequisite.py
 
 # LLVM build targets (primary)
-llvm-all: rebuilt_ROMs/kn5000_v10_program.llvm.rom rebuilt_ROMs/kn5000_v9_program.llvm.rom original_ROMs/kn5000_v8_program.rom rebuilt_ROMs/kn5000_v8_program.llvm.rom rebuilt_ROMs/kn5000_v7_program.llvm.rom rebuilt_ROMs/kn5000_subprogram_v142.llvm.rom rebuilt_ROMs/kn5000_subprogram_v142_compressed.rom rebuilt_ROMs/kn5000_subprogram_v141.llvm.rom rebuilt_ROMs/kn5000_subprogram_v141_compressed.rom rebuilt_ROMs/kn5000_subcpu_boot.llvm.rom rebuilt_ROMs/hd-ae5000_v2_06i.llvm.rom rebuilt_ROMs/kn5000_table_data.llvm.rom rebuilt_ROMs/kn5000_custom_data.llvm.rom
+llvm-all: rebuilt_ROMs/kn5000_v10_program.llvm.rom rebuilt_ROMs/kn5000_v9_program.llvm.rom original_ROMs/kn5000_v8_program.rom rebuilt_ROMs/kn5000_v8_program.llvm.rom rebuilt_ROMs/kn5000_v7_program.llvm.rom original_ROMs/kn5000_v6_program.rom rebuilt_ROMs/kn5000_v6_program.llvm.rom rebuilt_ROMs/kn5000_subprogram_v142.llvm.rom rebuilt_ROMs/kn5000_subprogram_v142_compressed.rom rebuilt_ROMs/kn5000_subprogram_v141.llvm.rom rebuilt_ROMs/kn5000_subprogram_v141_compressed.rom rebuilt_ROMs/kn5000_subcpu_boot.llvm.rom rebuilt_ROMs/hd-ae5000_v2_06i.llvm.rom rebuilt_ROMs/kn5000_table_data.llvm.rom rebuilt_ROMs/kn5000_custom_data.llvm.rom
 
 # ============================================================================
 # C-compiled ScreenData paramblocks
@@ -1029,7 +1029,9 @@ $(1)-progress: rebuilt_ROMs/kn5000_$(1)_program.llvm.rom original_ROMs/kn5000_$(
 endef
 
 $(eval $(call PORTED_MAINCPU,v6,V6))
-.PHONY: v6-c-bins v6-c-bins-raw v6-progress verify-v6-reference
+# v6-c-bins is deliberately not .PHONY: like v7-extract-bins it is an intermediate with no file, so
+# `make -q` (assert_byte_identical.py's staleness check) does not call the ROM out of date.
+.PHONY: v6-progress verify-v6-reference
 
 # --- Subcpu payload ---
 rebuilt_ROMs/kn5000_subprogram_v142.llvm.o: $(V142_SRC) $(LLVM_MC)
@@ -1516,6 +1518,8 @@ clean:
 	rm -rf v9/maincpu/includes/generated/
 	rm -f rebuilt_ROMs/kn5000_v7_program.llvm.*
 	rm -rf v7/maincpu/includes/generated/
+	rm -f rebuilt_ROMs/kn5000_v6_program.llvm.*
+	rm -rf v6/maincpu/includes/generated/
 	rm -f rebuilt_ROMs/kn5000_subprogram_v142.llvm.*
 	rm -f rebuilt_ROMs/kn5000_subprogram_v142_compressed.rom
 	rm -f rebuilt_ROMs/kn5000_subprogram_v141.llvm.*

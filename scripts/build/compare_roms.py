@@ -15,6 +15,8 @@ for entry in [
 	# uncommitted copy from the private romset (Makefile, KN5000_V8_REF).
 	("maincpu v8",		"kn5000_v8_program.rom",	"kn5000_v8_program.llvm.rom",		0xE00000),
 	("maincpu v7",		"kn5000_v7_program.rom",	"kn5000_v7_program.llvm.rom",		0xE00000),
+	# v6 is ported from v7; its reference image is an uncommitted copy (Makefile, KN5000_V6_REF).
+	("maincpu v6",		"kn5000_v6_program.rom",	"kn5000_v6_program.llvm.rom",		0xE00000),
 	("subcpu payload v142",	"kn5000_subprogram_v142.rom",	"kn5000_subprogram_v142.llvm.rom",	0x0400),
 	# Whole-file SLIDE4K firmware-update image of the v142 payload (File Type
 	# 007); rebuilt by compressing the built payload with the factory stream's

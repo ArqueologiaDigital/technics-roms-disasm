@@ -188,6 +188,7 @@ Symbol reference files in `symbols/` provide address-to-name mappings for extern
 | `symbols/maincpu_v9_symbols_reference.txt`  | Main CPU v9                                       | 53,736  | 0xE00000 - 0xFFFFE8                                        |
 | `symbols/maincpu_v8_symbols_reference.txt`  | Main CPU v8 (same rows as v9: same source, link)  | 53,736  | 0xE00000 - 0xFFFFE8                                        |
 | `symbols/maincpu_v7_symbols_reference.txt`  | Main CPU v7                                       | 53,559  | 0xE00000 - 0xFFFFE8                                        |
+| `symbols/maincpu_v6_symbols_reference.txt`  | Main CPU v6                                       | 53,559  | 0xE00000 - 0xFFFFE8                                        |
 | `symbols/subcpu_symbols_reference.txt`      | Sub CPU payload v1.42                             | 5,064   | 0x000400 - 0x0451CC (past the image: DRAM `.equ` symbols)  |
 | `symbols/subcpu_v141_symbols_reference.txt` | Sub CPU payload v1.41                             | 5,063   | 0x000400 - 0x0451B4 (past the image: DRAM `.equ` symbols)  |
 | `symbols/subcpu_boot_symbols_reference.txt` | Sub CPU boot                                      | 200     | 0xFF8000 - 0x1000000 (last row is the linker `end` marker) |
@@ -196,7 +197,7 @@ Symbol reference files in `symbols/` provide address-to-name mappings for extern
 
 **In sync as of 2026-10-24** (counts above from that day's
 `python3 scripts/analysis/l2_symbol_reference.py --check`, which reports 100 %
-NAME+ADDRESS agreement for all ten files, `maincpu_v8` and `subcpu_v141` included; first regenerated this way on
+NAME+ADDRESS agreement for all ten files, `maincpu_v8` and `subcpu_v141` included (eleven with `maincpu_v6`, added later that day); first regenerated this way on
 2026-09-25, after the Wave 2 merges, with `--regen`). **Use that script to regenerate** --
 it knows the per-version maincpu split (v7/v9/v10 are separate links; a v7
 address looked up in the v10 file is wrong) and writes the header block itself.
@@ -1284,6 +1285,7 @@ When encountering disputed interpretations:
 | maincpu v9          | `v9/maincpu/kn5000_v9_program.s`                                 | 100.00%    | 100.0%                | 0 B           |
 | maincpu v8          | v9 source, `--defsym FW_VERSION_BYTE=0x08`                       | 100.00%    | as v9                 | as v9         |
 | maincpu v7          | `v7/maincpu/kn5000_v7_program.s`                                 | 100.00%    | 99.7%                 | 6,591 B       |
+| maincpu v6          | `v6/maincpu/kn5000_v6_program.s` (ported from v7)                | 100.00%    | 97.0%                 | 62,327 B      |
 | subcpu payload v142 | `v142/subcpu/kn5000_subprogram_v142.s`                           | 100.00%    | 100.0%                | 0 B           |
 | subcpu payload v141 | `v141/subcpu/kn5000_subprogram_v141.s` (generated: v142 + EDITS) | 100.00%    | not measured          | 0 B           |
 | subcpu boot (IC30)  | `subcpu/boot/kn5000_subcpu_boot.s`                               | 100.00%    | 100.0%                | 0 B           |
@@ -1310,6 +1312,15 @@ kept out of this public repository by choice. `make` copies it, git-ignored, fro
 `$(PROJECTS_ROOT)/technics_roms/roms/kn5000/kn5000_v8_program.rom`). It refuses a copy whose
 SHA-1 is not `a10a6f5a35175b74c3cfb42cef3bdf571c2858bb`, and it stops with a message when the
 file is missing. `make gate` re-checks the copy (`verify-v8-reference`).
+
+**maincpu v6** has its own tree, `v6/maincpu`, generated from `v7/maincpu` by
+`scripts/converters/port_maincpu_version.py` (`v6/maincpu/README.md`): v7's lines where they
+assemble to the v6 bytes, v7's lines with operands read from the v6 bytes where only an operand
+differs, and `.byte` rows under `; TODO(port): ...` where no v7 line maps (counted as verbatim
+debt). Its C data is v7's, patched by `v6/maincpu/includes/v6_c_divergence.json`
+(`scripts/build/apply_c_divergence.py v6`). Like v8's, its reference image is not committed:
+`KN5000_V6_REF` (SHA-1 `51108e2d75b180a034395e90bd40ca2bd2a0adfb`), checked by `verify-v6-reference`
+in `make gate`.
 
 **Source** and **Verbatim blob** are `python3 scripts/analysis/kn5000_source_coverage.py`,
 measured 2026-10-24: the script splits every ROM byte into assembly, typed data (including
