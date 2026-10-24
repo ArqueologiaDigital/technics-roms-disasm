@@ -14609,7 +14609,7 @@ ComputeNoteBitPositi_Data:
 	xor	hl, hl
 	xor	iy, iy
 	xor	wa, wa
-ComputeNoteBitPositi_Data_Loop:
+ComputeNoteBitPositi_Loop:
 	pushw	bc
 	ld	xiz, 0xce26
 	ld	l, (xiz)
@@ -14631,7 +14631,7 @@ ComputeNoteBitPositi_Data_Loop:
 Voice_ComputeNoteBitPosition_Skip:
 	popw	bc
 	inc	1, iy
-	djnz16	bc, ComputeNoteBitPositi_Data_Loop
+	djnz16	bc, ComputeNoteBitPositi_Loop
 	or	de, 1
 	ld	c, 11:opc
 	sub	c, a

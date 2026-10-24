@@ -3184,12 +3184,12 @@ TrAsGridCheck_Cases_Skip3:
 	dec	2, e
 	extz	de
 	ld	wa, de
-	jr	TrAsGridCheck_Cases_Skip4_Skip
+	jr	TrAsGridCheck_Cases_Skip5
 TrAsGridCheck_Cases_Skip4:
 	inc	6, e
 	extz	de
 	ld	wa, de
-TrAsGridCheck_Cases_Skip4_Skip:
+TrAsGridCheck_Cases_Skip5:
 	calr	TrAsGrid_LookupTable
 	or (62096:16), hl
 TrAsGridCheck_Cases_Join2:
@@ -3283,12 +3283,12 @@ TrAsGridCheck_OnIndexswDown_Skip7:
 	dec	2, e
 	extz	de
 	ld	wa, de
-	jr	TrAsGridCheck_OnIndexswDown_Skip8_Skip
+	jr	TrAsGridCheck_OnIndexswDown_Skip
 TrAsGridCheck_OnIndexswDown_Skip8:
 	inc	6, e
 	extz	de
 	ld	wa, de
-TrAsGridCheck_OnIndexswDown_Skip8_Skip:
+TrAsGridCheck_OnIndexswDown_Skip:
 	calr	TrAsGrid_LookupTable
 	cpl	hl
 	and (62096:16), hl

@@ -5307,7 +5307,7 @@ SeqDMA_MultiWrite_SoundEdit:
 	ld a, (xsp + 6)
 	extz wa
 	cp wa, 0:i3
-	jr	ule, SeqDMA_MultiWrite_SoundEdit_Loop_Skip
+	jr	ule, SeqDMA_MultiWrite_SoundEdit_Skip
 
 SeqDMA_MultiWrite_SoundEdit_Loop:
 	ld xwa, (xsp + 2)
@@ -5322,7 +5322,7 @@ SeqDMA_MultiWrite_SoundEdit_Loop:
 	extz	wa
 	cp	iz, wa
 	jr	c, SeqDMA_MultiWrite_SoundEdit_Loop
-SeqDMA_MultiWrite_SoundEdit_Loop_Skip:
+SeqDMA_MultiWrite_SoundEdit_Skip:
 	popw	iz
 	inc	6, xsp
 	ret
@@ -5335,7 +5335,7 @@ SeqDMA_MultiWrite_SoundEdit_Loop_Skip:
 	extz	wa
 	cp	wa, 0:i3
 	jr	ule, SeqDMA_MultiWrite_SoundEdit_Done
-SeqDMA_MultiWrite_SoundEdit_Loop_Skip_Loop:
+SeqDMA_MultiWrite_SoundEdit_Loop2:
 	ld	xwa, (xsp+2)
 	ld	c, (xwa+)
 	ld	(xsp+2), xwa
@@ -5347,7 +5347,7 @@ SeqDMA_MultiWrite_SoundEdit_Loop_Skip_Loop:
 	ld a, (xsp + 6)
 	extz wa
 	cp iz, wa
-	jr	c, SeqDMA_MultiWrite_SoundEdit_Loop_Skip_Loop
+	jr	c, SeqDMA_MultiWrite_SoundEdit_Loop2
 
 SeqDMA_MultiWrite_SoundEdit_Done:
 	popw iz

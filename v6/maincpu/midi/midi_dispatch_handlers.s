@@ -645,9 +645,9 @@ UIState_DisplayUpdate_BitmapHandler_Helper:
 UIState_DisplayUpdate_BitmapHandler_Skip:
 	ldw	wa, 0xffff
 	ldw	bc, 16
-UIState_DisplayUpdate_BitmapHandler_Skip_Loop:
+UIState_DisplayUpdate_BitmapHandler_Loop3:
 	ld	(xix+), wa
-	djnz16	bc, UIState_DisplayUpdate_BitmapHandler_Skip_Loop
+	djnz16	bc, UIState_DisplayUpdate_BitmapHandler_Loop3
 	ld	xix, 0x9454
 	cp	(0x95ad:16), 128
 	jr	z, UIState_DisplayUpdate_BitmapHandler_Skip2
@@ -655,9 +655,9 @@ UIState_DisplayUpdate_BitmapHandler_Skip_Loop:
 UIState_DisplayUpdate_BitmapHandler_Skip2:
 	xor	wa, wa
 	ldw	bc, 64
-UIState_DisplayUpdate_BitmapHandler_Skip2_Loop:
+UIState_DisplayUpdate_BitmapHandler_Loop4:
 	ld	(xix+), wa
-	djnz16	bc, UIState_DisplayUpdate_BitmapHandler_Skip2_Loop
+	djnz16	bc, UIState_DisplayUpdate_BitmapHandler_Loop4
 	ld	xix, 0x9434
 	ld	xiy, 0x9454
 	cp	(0x95ad:16), 128

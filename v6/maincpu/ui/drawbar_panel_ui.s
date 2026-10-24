@@ -4978,9 +4978,9 @@ BitmapAccger16_Height:
 
 BitmapDrawsw:
 	cp xbc, EVT_GET_BITMAP_HEIGHT
-	jr	z, BitmapDrawsw_DataPtr_Skip4
-	cp xbc, EVT_GET_BITMAP_WIDTH
 	jr	z, BitmapDrawsw_DataPtr_Skip5
+	cp xbc, EVT_GET_BITMAP_WIDTH
+	jr	z, BitmapDrawsw_DataPtr_Skip6
 	cp xbc, EVT_GET_BITMAP_DATA
 	jr z, BitmapDrawsw_DataPtr
 	ld xhl, 0:i3
@@ -4989,10 +4989,10 @@ BitmapDrawsw:
 BitmapDrawsw_DataPtr:
 	lda	xhl, (Bitmap_Accita16:24)
 	ret
-BitmapDrawsw_DataPtr_Skip5:
+BitmapDrawsw_DataPtr_Skip6:
 	ld	xhl, 120
 	ret
-BitmapDrawsw_DataPtr_Skip4:
+BitmapDrawsw_DataPtr_Skip5:
 	ld	xhl, 95
 	ret
 	cp	xbc, 0x1e000a3
@@ -5017,10 +5017,10 @@ BitmapDrawsw_DataPtr_Skip:
 	cp	xbc, 0x1e000a2
 	jr	z, BitmapDrawsw_Width
 	cp	xbc, 0x1e000a1
-	jr	z, BitmapDrawsw_DataPtr_Skip_Skip
+	jr	z, BitmapDrawsw_DataPtr_Skip4
 	ld	xhl, 0:i3
 	ret
-BitmapDrawsw_DataPtr_Skip_Skip:
+BitmapDrawsw_DataPtr_Skip4:
 	lda	xhl, (Bitmap_SomeArrows:24)
 	ret
 

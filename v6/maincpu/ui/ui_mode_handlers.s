@@ -1588,7 +1588,7 @@ SelfTest_CountBits_Loop:
 	ldto_berp	c, 250	; ld c, qizh
 	extz	bc
 	lda	xwa, (xsp+2)
-	ld_rrb	a, xwa, bc
+	ld	a, (xwa+bc)
 	extz	wa
 	calr	SelfTest_PopCount
 	ldto_berp	a, 251	; ld a, qizl

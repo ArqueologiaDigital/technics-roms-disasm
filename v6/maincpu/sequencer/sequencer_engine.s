@@ -1375,13 +1375,13 @@ SeqAcc_InitPlayback_ScanParts:
 	call Voice_ScanAvailableChannel
 	ld wa, 0:i3
 	call SeqScan_ProcessAllParts
-	calr SeqPlay_IterateAllChannels
+	calr	SeqPlay_IterateAllChannels
 	ld wa, 0:i3
 	ld bc, 0:i3
-	calr SeqPlay_AssignAccompVoices
+	calr	SeqPlay_AssignAccompVoices
 	ld wa, 0:i3
 	ld bc, 0:i3
-	calr SeqPlay_AssignBassVoices
+	calr	SeqPlay_AssignBassVoices
 	ld wa, 0:i3
 	ldw bc, 0xd
 	call Part_FindVoiceByByte
@@ -1392,9 +1392,8 @@ SeqAcc_InitPlayback_ScanParts:
 	ld bc, 1:i3
 	and a, 0xf
 	jr z, SeqAcc_InitPlayback_DrumShiftDone
+	slaa bc
 
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xd9, 0xfc
 SeqAcc_InitPlayback_DrumShiftDone:
 	and bc, (0xf19e:16)
 	jr z, SeqPlay_MidiTimingJP
@@ -1472,8 +1471,7 @@ SeqPlay_RestartWithVoiceConfig_Skip2:
 	ld	bc, 1:i3
 	and	a, 15
 	jr	z, SeqPlay_RestartWithVoiceConfig_Skip3
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xd9, 0xfc
+	.byte 0xd9, 0xfc	; sla a,bc
 SeqPlay_RestartWithVoiceConfig_Skip3:
 	and	bc, (0xf19e:16)
 	jr	z, SeqPlay_RestartWithVoiceConfig_Skip4
@@ -3424,7 +3422,7 @@ SeqNote_NoteOn_ReadPosition:
 	ldmi16 (xsp + 8), 0x41b
 	ei 0
 	cp	(7564:16), 1
-	jrl nz, SeqNote_ProcessCurrentChannel
+	jrl	nz, SeqNote_AllocateSubChannel
 	ld	wa, (7536:16)
 	cp wa, (xsp + 4)
 	jr ugt, SeqNote_FindExtraChannel
@@ -3468,7 +3466,7 @@ SeqNote_FindExtra_ProcessChannel:
 SeqNote_AllocateMainChannel:
 	ld	wa, (7536:16)
 	cp (xsp + 4), wa
-	jrl nz, SeqNote_ProcessCurrentChannel
+	jrl	nz, SeqNote_AllocateSubChannel
 	cp	(7534:16), 1
 	jr nz, SeqNote_AllocateBassChannel
 	cp (xsp + 8), 0x46
@@ -3503,11 +3501,11 @@ SeqNote_AllocateMainChannel:
 
 SeqNote_AllocateBassChannel:
 	cp	(7535:16), 1
-	jrl	nz, SeqNote_ProcessCurrentChannel
+	jrl nz, SeqNote_AllocateSubChannel
 	cp (xsp + 8), 0x38
-	jrl	c, SeqNote_ProcessCurrentChannel
+	jrl c, SeqNote_AllocateSubChannel
 	cp	(0x284a:16), 0
-	jrl	nz, SeqNote_ProcessCurrentChannel
+	jrl nz, SeqNote_AllocateSubChannel
 	ld	a, (8984:16)
 	extz wa
 	lda xhl, (xsp + 10)
@@ -3551,21 +3549,20 @@ SeqNote_AllocateBassChannel:
 	ld bc, 1:i3
 	and a, 0xf
 	jr z, SeqNote_AllocBass_SetBitAndFlags
+	slaa bc
 
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xd9, 0xfc
 SeqNote_AllocBass_SetBitAndFlags:
-
-SeqNote_AllocateSubChannel:
-
-SeqNote_AllocSub_SetBitAndFlags:
 	or	(8976:16), bc
 	ld	(7526:16), 1
 	ld	(0x284a:16), 1
 
-SeqNote_ProcessCurrentChannel:
+SeqNote_AllocateSubChannel:
 	cp	(8982:16), 255
-	jr nz, SeqNote_ProcessCurrent_DrumCheck
+	jr	nz, SeqNote_ProcessCurrent_DrumCheck
+
+SeqNote_AllocSub_SetBitAndFlags:
+
+SeqNote_ProcessCurrentChannel:
 	jr VoiceConfig_SlotCheck
 
 SeqNote_ProcessCurrent_ComparePos:
@@ -4145,9 +4142,8 @@ SeqNoteCh_WriteStatusByte:
 	ld bc, 1:i3
 	and a, 0xf
 	jr z, SeqNoteCh_DeactivateShiftDone
+	slaa bc
 
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xd9, 0xfc
 SeqNoteCh_DeactivateShiftDone:
 	jr SeqNote_DeactivateChannelBit
 
@@ -4173,9 +4169,8 @@ SeqNoteCh_DeactivateCheck82:
 	ld bc, 1:i3
 	and a, 0xf
 	jr z, SeqNote_DeactivateChannelBit
+	slaa bc
 
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xd9, 0xfc
 SeqNote_DeactivateChannelBit:
 	cpl bc
 	and	(8976:16), bc
@@ -4202,7 +4197,7 @@ SeqNote_HandleMasterChannel:
 	jr	nz, SeqNote_HandleMasterChannel_Skip
 	bit 2, (1054:16)
 
-	call_24	nz, (AccWrap_PlayModeStartPlay)
+	call	nz, (16093680)
 SeqNote_HandleMasterChannel_Skip:
 	ld	l, 0:opc
 	jrl	SeqNote_WriteEvent_Return
@@ -4415,9 +4410,8 @@ SeqNote_ScanNextEvent_ClearBit:
 	ld bc, 1:i3
 	and a, 0xf
 	jr z, SeqNote_ScanNextEvent_ShiftDone
+	slaa bc
 
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xd9, 0xfc
 SeqNote_ScanNextEvent_ShiftDone:
 	cpl bc
 	and (SEQ_ACTIVE_PARTS:16), bc
@@ -17243,9 +17237,8 @@ SeqScan_CheckPartActiveAndStore:
 	ld	a, (9670:16)
 	and a, 0xf
 	jr z, SeqMIDI_HandleChannelPressure
+	slaa bc
 
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xd9, 0xfc
 SeqMIDI_HandleChannelPressure:
 	and	bc, (8976:16)
 	jrl nz, SeqMIDI_HandlePitchBend
@@ -17256,9 +17249,8 @@ SeqScan_StoreTrackEndData:
 	ld a, c
 	and a, 0xf
 	jr z, SeqMIDI_ChannelPressureReturn
+	slaa de
 
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xda, 0xfc
 SeqMIDI_ChannelPressureReturn:
 	and	de, (8976:16)
 	jr z, SeqScan_AdvancePartIndex
@@ -17302,8 +17294,7 @@ SeqMIDI_GetEventSizeTable:
 	and a, 0xf
 	jr z, SeqMIDI_GetEventSizeLookup
 
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xda, 0xfc
+	.byte	0xda, 0xfc	; sla A,DE
 SeqMIDI_GetEventSizeLookup:
 	and	de, (0x2310:16)
 	jr	z, SeqMIDI_ChannelOutOfRange_Skip
@@ -19788,18 +19779,18 @@ SeqTimer_BarChangeProcess:
 	jr	nz, SeqTimer_BarChangeProcess_Skip
 	ld	wa, 4:i3
 	ld	bc, 1:i3
-	jr	SeqTimer_BarChangeProcess_Skip_Skip
+	jr	SeqTimer_BarChangeProcess_Skip2
 SeqTimer_BarChangeProcess_Skip:
 	ld wa, 4:i3
 	ld	bc, 0:i3
-SeqTimer_BarChangeProcess_Skip_Skip:
+SeqTimer_BarChangeProcess_Skip2:
 	calr SeqStatus_SetOrClearBit
 	ld (4330:16), 1
 	ld	e, 0:opc
 	cp_erpb	251, 255
-	jr	nz, SeqTimer_BarChangeProcess_Skip_Skip_Skip
+	jr	nz, SeqTimer_BarChangeProcess_Skip3
 	ld	e, 4:opc
-SeqTimer_BarChangeProcess_Skip_Skip_Skip:
+SeqTimer_BarChangeProcess_Skip3:
 	extz	de
 	pushw 0x4
 	ldw wa, 0x91

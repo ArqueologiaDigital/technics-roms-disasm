@@ -7421,9 +7421,9 @@ PortConfig_Handler_0_Skip:
 	ld	xix, 3786
 	ldw	wa, 8224
 	ldw	bc, 15
-PortConfig_Handler_0_Skip_Loop:
+PortConfig_Handler_0_Loop:
 	ld	(xix+), wa
-	djnz16	bc, PortConfig_Handler_0_Skip_Loop
+	djnz16	bc, PortConfig_Handler_0_Loop
 	pop	xix
 	popw	bc
 	popw	wa
@@ -9614,11 +9614,11 @@ SysEx_BytecodeDispatcher_Helper4_Skip15:
 	call	VoiceState_DataBlock2_Helper2
 	ldb_d8	c, (0x0e49)
 	xor	b, b
-SysEx_BytecodeDispatcher_Helper4_Skip15_Loop:
+SysEx_BytecodeDispatcher_Helper4_Loop4:
 	pushw	bc
 	call	VoiceSlot_DispatchRet
 	popw	bc
-	djnz16	bc, SysEx_BytecodeDispatcher_Helper4_Skip15_Loop
+	djnz16	bc, SysEx_BytecodeDispatcher_Helper4_Loop4
 	ld	xiy, 0x0d8f
 	ldb_d8	w, (0x0dd2)
 	call	DisplayMode_Handler_3_Helper16
@@ -10467,7 +10467,7 @@ VoiceSlot_FinalRetZ_Skip2:
 	inc	1, wa
 	ld	bc, wa
 	ld	iy, (xix+iz)
-VoiceSlot_FinalRetZ_Skip2_Loop:
+VoiceSlot_FinalRetZ_Loop5:
 	call	VoiceSlot_UpdateCurrentPointer
 	ld	xhl, (4349:16)
 	ld	iy, (xhl+3)
@@ -10476,7 +10476,7 @@ VoiceSlot_FinalRetZ_Skip2_Loop:
 	cp	iy, 65535
 	jrl	z, VoiceSlot_FinalRetZ_Skip3
 VoiceSlot_FinalRetZ_Loop2:
-	djnz16	bc, VoiceSlot_FinalRetZ_Skip2_Loop
+	djnz16	bc, VoiceSlot_FinalRetZ_Loop5
 	add	de, 5
 	ld	xix, 61944
 	cp	iy, (xix+iz)
@@ -12427,14 +12427,14 @@ VoiceState_DataBlock2_Skip38:
 	ld	bc, (4357:16)
 	sub	wa, bc
 	ld	bc, wa
-VoiceState_DataBlock2_Skip38_Loop:
+VoiceState_DataBlock2_Loop14:
 	pushw	bc
 	call	ScoopDisp_StepMeasureBack
 	popw	bc
 	ld	wa, (13922:16)
 	cp wa, (4357:16)
 	jrl	le, VoiceState_DataBlock2_Return9
-	djnz16	bc, VoiceState_DataBlock2_Skip38_Loop
+	djnz16	bc, VoiceState_DataBlock2_Loop14
 VoiceState_DataBlock2_Return9:
 	ret
 SubCPU_ToneParamDisplay:
@@ -13761,11 +13761,11 @@ OscScope_UpdateDisplay_Skip2:
 	jrl	z, OscScope_UpdateDisplay_Skip
 	exts	wa
 	ld	bc, wa
-OscScope_UpdateDisplay_Skip2_Loop:
+OscScope_UpdateDisplay_Loop2:
 	pushw	bc
 	call	OscScope_UpdateDisplay_Helper
 	popw	bc
-	djnz16	bc, OscScope_UpdateDisplay_Skip2_Loop
+	djnz16	bc, OscScope_UpdateDisplay_Loop2
 OscScope_UpdateDisplay_Skip:
 	call	DisplayStr_BytecodeBlock_A_Code_Helper
 	ldw	(3778:16), 0
@@ -16444,7 +16444,7 @@ ParamPopup_PartPedal_Skip10:
 	pushw	bc
 	call	OscScope_UpdateDisplay_Helper
 	popw	bc
-ParamPopup_PartPedal_Skip10_Loop:
+ParamPopup_PartPedal_Loop2:
 	pushw	bc
 	call	VoiceBank_ProcessCommand
 	popw	bc
@@ -16453,7 +16453,7 @@ ParamPopup_PartPedal_Skip10_Loop:
 	popw	bc
 	cp	(0x0ef6:16), 0
 	jrl	nz, Tbl_PedalNames_Return
-	djnz16	bc, ParamPopup_PartPedal_Skip10_Loop
+	djnz16	bc, ParamPopup_PartPedal_Loop2
 	cpw	(0x0ec2:16), 48
 	jrl	nz, Tbl_PedalNames_Join3
 	call	DisplayStr_BytecodeBlock_A_Code_Helper

@@ -9172,7 +9172,7 @@ SeLfo1_DrawPartLabels_Loop:
 	sla	a, 1
 	dec	1, a
 	.byte 0xc8, 0xff
-	jr	c, SeLfo1_DrawPartLabels_Skip_Skip
+	jr	c, SeLfo1_DrawPartLabels_Skip2
 	.byte 0xcb, 0x04
 	xor	b, b
 	sla	bc, 2
@@ -9184,14 +9184,14 @@ SeLfo1_DrawPartLabels_Skip:
 	call	SeGfx_DrawStaticList
 	pop	c
 	jr	SeMenu_PresetBrowser_Data_Code_Join
-SeLfo1_DrawPartLabels_Skip_Skip:
+SeLfo1_DrawPartLabels_Skip2:
 	push	c
 	xor	b, b
 	sla	bc, 2
 	ld	xiz, SeScreenData_0x3821
-	ld_rrl	xiy, xiz, bc
+	ld	xiy, (xiz+bc)
 	add	bc, 4
-	ld_rrl	xix, xiz, bc
+	ld	xix, (xiz+bc)
 	call	SeGfx_DrawStaticList
 	pop c
 SeMenu_PresetBrowser_Data_Code_Join:

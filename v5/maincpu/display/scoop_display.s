@@ -397,37 +397,37 @@ GraphicsRender_EventCheck_Body:
 	call	Scoop_CurveUpdate_SegmentEnd
 	pop	xwa
 	ret
-GraphicsRender_EventCheck_Body_Entry:
+GraphicsRender_EventCheck_Entry:
 	push	xwa
 	ld	xwa, xiy
 	call	Scoop_CurveUpdate_SegmentEnd
 	pop	xwa
 	ret
-GraphicsRender_EventCheck_Body_Entry_Entry:
+GraphicsRender_EventCheck_Entry2:
 	bit	0, (0x205e6:24)
-	jr	nz, GraphicsRender_EventCheck_Body_Skip
+	jr	nz, GraphicsRender_EventCheck_Skip
 	ret
-GraphicsRender_EventCheck_Body_Skip:
+GraphicsRender_EventCheck_Skip:
 	push	xwa
 	ld	xwa, xiy
 	call	Scoop_GlideParam_Setup
 	pop	xwa
 	ret
-GraphicsRender_EventCheck_Body_Skip_Entry:
+GraphicsRender_EventCheck_Entry4:
 	bit	0, (0x205e6:24)
-	jr	nz, GraphicsRender_EventCheck_Body_Skip_Skip
+	jr	nz, GraphicsRender_EventCheck_Skip2
 	ret
-GraphicsRender_EventCheck_Body_Skip_Skip:
+GraphicsRender_EventCheck_Skip2:
 	push	xwa
 	ld	xwa, xiy
 	call	ColorBlit_ComputeRectAndBlit
 	pop	xwa
 	ret
-GraphicsRender_EventCheck_Body_Skip_Skip_Entry:
+GraphicsRender_EventCheck_Entry3:
 	bit	0, (0x205e6:24)
-	jr	nz, GraphicsRender_EventCheck_Body_Skip_Skip_Skip
+	jr	nz, GraphicsRender_EventCheck_Skip3
 	ret
-GraphicsRender_EventCheck_Body_Skip_Skip_Skip:
+GraphicsRender_EventCheck_Skip3:
 	push	xwa
 	ld	xwa, xiy
 	call Scoop_EventLoop_36Entry
@@ -7428,9 +7428,9 @@ PortConfig_Handler_0_Skip:
 	ld	xix, 3786
 	ldw	wa, 8224
 	ldw	bc, 15
-PortConfig_Handler_0_Skip_Loop:
+PortConfig_Handler_0_Loop:
 	ld	(xix+), wa
-	djnz16	bc, PortConfig_Handler_0_Skip_Loop
+	djnz16	bc, PortConfig_Handler_0_Loop
 	pop	xix
 	popw	bc
 	popw	wa
@@ -9621,11 +9621,11 @@ SysEx_BytecodeDispatcher_Helper4_Skip15:
 	call	VoiceState_DataBlock2_Helper2
 	ldb_d8	c, (0x0e49)
 	xor	b, b
-SysEx_BytecodeDispatcher_Helper4_Skip15_Loop:
+SysEx_BytecodeDispatcher_Helper4_Loop4:
 	pushw	bc
 	call	VoiceSlot_DispatchRet
 	popw	bc
-	djnz16	bc, SysEx_BytecodeDispatcher_Helper4_Skip15_Loop
+	djnz16	bc, SysEx_BytecodeDispatcher_Helper4_Loop4
 	ld	xiy, 0x0d8f
 	ldb_d8	w, (0x0dd2)
 	call	DisplayMode_Handler_3_Helper16
@@ -10474,7 +10474,7 @@ VoiceSlot_FinalRetZ_Skip2:
 	inc	1, wa
 	ld	bc, wa
 	ld	iy, (xix+iz)
-VoiceSlot_FinalRetZ_Skip2_Loop:
+VoiceSlot_FinalRetZ_Loop5:
 	call	VoiceSlot_UpdateCurrentPointer
 	ld	xhl, (4349:16)
 	ld	iy, (xhl+3)
@@ -10483,7 +10483,7 @@ VoiceSlot_FinalRetZ_Skip2_Loop:
 	cp	iy, 65535
 	jrl	z, VoiceSlot_FinalRetZ_Skip3
 VoiceSlot_FinalRetZ_Loop2:
-	djnz16	bc, VoiceSlot_FinalRetZ_Skip2_Loop
+	djnz16	bc, VoiceSlot_FinalRetZ_Loop5
 	add	de, 5
 	ld	xix, 61944
 	cp	iy, (xix+iz)
@@ -12434,14 +12434,14 @@ VoiceState_DataBlock2_Skip38:
 	ld	bc, (4357:16)
 	sub	wa, bc
 	ld	bc, wa
-VoiceState_DataBlock2_Skip38_Loop:
+VoiceState_DataBlock2_Loop14:
 	pushw	bc
 	call	ScoopDisp_StepMeasureBack
 	popw	bc
 	ld	wa, (13922:16)
 	cp wa, (4357:16)
 	jrl	le, VoiceState_DataBlock2_Return9
-	djnz16	bc, VoiceState_DataBlock2_Skip38_Loop
+	djnz16	bc, VoiceState_DataBlock2_Loop14
 VoiceState_DataBlock2_Return9:
 	ret
 SubCPU_ToneParamDisplay:
@@ -13768,11 +13768,11 @@ OscScope_UpdateDisplay_Skip2:
 	jrl	z, OscScope_UpdateDisplay_Skip
 	exts	wa
 	ld	bc, wa
-OscScope_UpdateDisplay_Skip2_Loop:
+OscScope_UpdateDisplay_Loop2:
 	pushw	bc
 	call	OscScope_UpdateDisplay_Helper
 	popw	bc
-	djnz16	bc, OscScope_UpdateDisplay_Skip2_Loop
+	djnz16	bc, OscScope_UpdateDisplay_Loop2
 OscScope_UpdateDisplay_Skip:
 	call	DisplayStr_BytecodeBlock_A_Code_Helper
 	ldw	(3778:16), 0
@@ -16451,7 +16451,7 @@ ParamPopup_PartPedal_Skip10:
 	pushw	bc
 	call	OscScope_UpdateDisplay_Helper
 	popw	bc
-ParamPopup_PartPedal_Skip10_Loop:
+ParamPopup_PartPedal_Loop2:
 	pushw	bc
 	call	VoiceBank_ProcessCommand
 	popw	bc
@@ -16460,7 +16460,7 @@ ParamPopup_PartPedal_Skip10_Loop:
 	popw	bc
 	cp	(0x0ef6:16), 0
 	jrl	nz, Tbl_PedalNames_Return
-	djnz16	bc, ParamPopup_PartPedal_Skip10_Loop
+	djnz16	bc, ParamPopup_PartPedal_Loop2
 	cpw	(0x0ec2:16), 48
 	jrl	nz, Tbl_PedalNames_Join3
 	call	DisplayStr_BytecodeBlock_A_Code_Helper
@@ -16893,7 +16893,7 @@ Display_RedrawMainContent:
 	jr nz, Scoop_RedrawMainContent_End
 	ld (COLORBLIT_MODE:24), 0x00
 	ld XIY,SqStep_PopupLineField
-	call	GraphicsRender_EventCheck_Body_Entry
+	call	GraphicsRender_EventCheck_Entry
 Scoop_RedrawMainContent_End:
 	ret
 
@@ -16936,13 +16936,13 @@ Display_RedrawTitleBar:
 	cpw (0x0e4c:16), 0x03e8
 	jr c, Scoop_TitleBar_ShowBPM_Part0
 	ld XIY,SqStep_Row1NumberDash
-	call	GraphicsRender_EventCheck_Body_Entry_Entry
+	call	GraphicsRender_EventCheck_Entry2
 	jr t, Scoop_TitleBar_Part1Check
 Scoop_TitleBar_ShowBPM_Part0:
 	ld wa, (3660:16)
 	ld (4487:16), wa
 	ld xiy, Scoop_TitleBar_ShowBPM_Part0_Data
-	call	GraphicsRender_EventCheck_Body_Skip_Skip_Entry
+	call	GraphicsRender_EventCheck_Entry3
 
 Scoop_TitleBar_Part1Check:
 	cpw (3662:16), 0
@@ -16952,14 +16952,14 @@ Scoop_TitleBar_Part1Check:
 	cpw (3662:16), 1000
 	jr c, Scoop_TitleBar_ShowBPM_Part1
 	ld xiy, SqStep_Row2NumberDash
-	call	GraphicsRender_EventCheck_Body_Entry_Entry
+	call	GraphicsRender_EventCheck_Entry2
 	jr Scoop_TitleBar_Part2Check
 
 Scoop_TitleBar_ShowBPM_Part1:
 	ld wa, (3662:16)
 	ld (4489:16), wa
 	ld xiy, Scoop_TitleBar_ShowBPM_Part1_Data
-	call	GraphicsRender_EventCheck_Body_Skip_Skip_Entry
+	call	GraphicsRender_EventCheck_Entry3
 
 Scoop_TitleBar_Part2Check:
 	cpw (3664:16), 0
@@ -16969,14 +16969,14 @@ Scoop_TitleBar_Part2Check:
 	cpw (3664:16), 1000
 	jr c, Scoop_TitleBar_ShowBPM_Part2
 	ld xiy, SqStep_Row3NumberDash
-	call	GraphicsRender_EventCheck_Body_Entry_Entry
+	call	GraphicsRender_EventCheck_Entry2
 	jr Scoop_TitleBar_End
 
 Scoop_TitleBar_ShowBPM_Part2:
 	ld wa, (3664:16)
 	ld (4491:16), wa
 	ld xiy, Scoop_TitleBar_ShowBPM_Part2_Data
-	call	GraphicsRender_EventCheck_Body_Skip_Skip_Entry
+	call	GraphicsRender_EventCheck_Entry3
 
 Scoop_TitleBar_End:
 	ret
@@ -17192,7 +17192,7 @@ Scoop_SidePanel_DrawOneSlot:
 	ld l, (xiy)
 	ld (xwa + 7), l
 	ld xiy, 0x11d4
-	call	GraphicsRender_EventCheck_Body_Entry_Entry
+	call	GraphicsRender_EventCheck_Entry2
 	popw bc
 	popw de
 	pop xix
@@ -17224,7 +17224,7 @@ Display_RedrawAltContent:
 	ld (4584:16), 78
 	ld (4585:16), 68
 	ld xiy, 0x11e3
-	call	GraphicsRender_EventCheck_Body_Entry_Entry
+	call	GraphicsRender_EventCheck_Entry2
 	jr Scoop_AltContent_End
 
 Scoop_AltContent_ClearRegions:
@@ -17248,7 +17248,7 @@ Scoop_AltContent_ClearOneRegion:
 	ld (4590:16), bc
 	ld (4592:16), hl
 	ld xiy, 0x11ea
-	call	GraphicsRender_EventCheck_Body_Skip_Entry
+	call	GraphicsRender_EventCheck_Entry4
 	ret
 
 Display_RedrawButtonLabels:

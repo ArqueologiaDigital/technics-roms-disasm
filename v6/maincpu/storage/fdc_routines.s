@@ -1968,10 +1968,10 @@ FDC_MC_EXIT_Code_Skip3:
 	ld	iz, 1:i3
 	cp	iz, 0:i3
 	jr	z, FDC_MC_EXIT_Code_Epilogue
-FDC_MC_EXIT_Code_Skip3_Loop:
+FDC_MC_EXIT_Code_Loop2:
 	ldw	wa, 10
 	calr	SOME_DELAY
-	djnz16	iz, FDC_MC_EXIT_Code_Skip3_Loop
+	djnz16	iz, FDC_MC_EXIT_Code_Loop2
 FDC_MC_EXIT_Code_Epilogue:
 	popw	iz
 	ret

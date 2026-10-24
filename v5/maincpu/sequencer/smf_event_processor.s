@@ -2127,12 +2127,12 @@ SMF_NoteOn_StoreVoiceData:
 	jr	lt, SMF_NoteOn_StoreVoiceData_Skip
 	pop	xbc
 	pop	xwa
-	jp	SMF_NoteOn_StoreVoiceData_Skip_Entry
+	jp	SMF_NoteOn_StoreVoiceData_Entry
 SMF_NoteOn_StoreVoiceData_Skip:
 	pop	xbc
 	pop	xwa
 	jp	SMF_FlushAndFinalize
-SMF_NoteOn_StoreVoiceData_Skip_Entry:
+SMF_NoteOn_StoreVoiceData_Entry:
 	ld xix, 0x11f9
 	lda	xix, (xix+hl)
 	ld a, 0x80:opc

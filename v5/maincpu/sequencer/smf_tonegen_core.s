@@ -1141,11 +1141,11 @@ SMF_VoiceData_DispatchAndParse:
 	ld xbc, 0:i3
 	ld xwa, (FILEIO_BLOCK_BYTES:16)
 	cp xwa, xbc
-	jr	lt, SMF_MTrk_FileSizeReadFailed_Skip
+	jr	lt, SMF_MTrk_FileSizeReadFailed_Skip3
 	pop xbc
 	pop xwa
 	jp	SMF_MTrk_FileSizeReadFailed_Entry
-SMF_MTrk_FileSizeReadFailed_Skip:
+SMF_MTrk_FileSizeReadFailed_Skip3:
 	pop	xbc
 	pop	xwa
 	ld	(0xef6:16), 255
@@ -1154,7 +1154,7 @@ SMF_MTrk_FileSizeReadFailed_Entry:
 	ld	(xix+), a
 	djnz16	bc, SMF_MTrk_SignatureMatch_Loop
 	ld	(0x108c:16), 0
-SMF_MTrk_FileSizeReadFailed_Entry_Loop:
+SMF_MTrk_FileSizeReadFailed_Loop:
 	cp	(0x10e3:16), 0
 	jrl	nz, SMF_EventFailureExit
 	push	xwa
@@ -1162,32 +1162,32 @@ SMF_MTrk_FileSizeReadFailed_Entry_Loop:
 	ld	xbc, 0:i3
 	ld	xwa, (0x1a2d:16)
 	cp	xwa, xbc
-	jr	lt, SMF_MTrk_FileSizeReadFailed_Entry_Skip
+	jr	lt, SMF_MTrk_FileSizeReadFailed_Skip
 	pop	xbc
 	pop	xwa
-	jp	SMF_MTrk_FileSizeReadFailed_Entry_Skip_Entry
-SMF_MTrk_FileSizeReadFailed_Entry_Skip:
+	jp	SMF_MTrk_FileSizeReadFailed_Entry2
+SMF_MTrk_FileSizeReadFailed_Skip:
 	pop	xbc
 	pop	xwa
 	ld	(0xef6:16), 255
 	jrl	SMF_NullRet
-SMF_MTrk_FileSizeReadFailed_Entry_Skip_Entry:
+SMF_MTrk_FileSizeReadFailed_Entry2:
 	call	FloppyIO_ReadToTrackBuffer
 	push	xwa
 	push	xbc
 	ld	xbc, 0:i3
 	ld	xwa, (0x1a2d:16)
 	cp	xwa, xbc
-	jr	lt, SMF_MTrk_FileSizeReadFailed_Entry_Skip_Entry_Skip
+	jr	lt, SMF_MTrk_FileSizeReadFailed_Skip2
 	pop	xbc
 	pop	xwa
-	jp	SMF_MTrk_FileSizeReadFailed_Entry_Skip_Entry_Skip_Entry
-SMF_MTrk_FileSizeReadFailed_Entry_Skip_Entry_Skip:
+	jp	SMF_MTrk_FileSizeReadFailed_Entry3
+SMF_MTrk_FileSizeReadFailed_Skip2:
 	pop	xbc
 	pop	xwa
 	ld	(0xef6:16), 255
 	jrl	SMF_NullRet
-SMF_MTrk_FileSizeReadFailed_Entry_Skip_Entry_Skip_Entry:
+SMF_MTrk_FileSizeReadFailed_Entry3:
 	call	SeqTrack_DispatchPartEvt
 	ld	iy, (0x108d:16)
 	call	SoundGen_ClampVoiceIndexMin1
@@ -1234,7 +1234,7 @@ SMF_VoiceData_CheckEndOfTrack:
 	cp (4009:16), 255
 	jrl z, SMF_VoiceData_HandleEndOfTrack
 	cp (4323:16), 0
-	jrl	z, SMF_MTrk_FileSizeReadFailed_Entry_Loop
+	jrl	z, SMF_MTrk_FileSizeReadFailed_Loop
 	ld (3830:16), 255
 	jr SMF_EventFailureExit
 
@@ -1271,7 +1271,7 @@ SMF_VoiceData_SysExFailed:
 	jrl SMF_NullRet
 
 SMF_VoiceData_SysExContinue:
-	jrl	SMF_MTrk_FileSizeReadFailed_Entry_Loop
+	jrl	SMF_MTrk_FileSizeReadFailed_Loop
 
 SMF_VoiceData_CheckMidiStatus:
 	bit 7, a
@@ -1287,7 +1287,7 @@ SMF_VoiceData_CheckMidiStatus:
 	jr lt, SMF_VoiceData_MidiStatusFailed
 	pop xbc
 	pop xwa
-	jp	SMF_MTrk_FileSizeReadFailed_Entry_Loop
+	jp	SMF_MTrk_FileSizeReadFailed_Loop
 
 SMF_VoiceData_MidiStatusFailed:
 	pop xbc
@@ -1309,7 +1309,7 @@ SMF_VoiceData_ReadMidiRunning:
 	jr lt, SMF_VoiceData_RunningMidiFailed
 	pop xbc
 	pop xwa
-	jp	SMF_MTrk_FileSizeReadFailed_Entry_Loop
+	jp	SMF_MTrk_FileSizeReadFailed_Loop
 
 SMF_VoiceData_RunningMidiFailed:
 	pop xbc

@@ -213,18 +213,67 @@ def align(a, b, k=16, max_gap=24000):
 
 
 # ------------------------------------------------------------------ instruction decoding
+UNIDASM = os.path.expanduser("~/compartilhado/tools/unidasm")
+UNSPELLED = "=byte "    # text prefix: an instruction MAME decodes that llvm-mc cannot spell
+
+
+def unidasm_region(bs):
+    """MAME's linear decode of bs: {offset: (length, text)}"""
+    d = tempfile.mkdtemp(prefix="port-unidasm-")
+    f = os.path.join(d, "seg.bin")
+    open(f, "wb").write(bs)
+    out = subprocess.run([UNIDASM, f, "-arch", "tlcs900", "-basepc", "0"], capture_output=True,
+                         text=True).stdout
+    shutil.rmtree(d)
+    res = {}
+    for ln in out.splitlines():
+        m = re.match(r'^([0-9a-f]+):\s+((?:[0-9a-f]{2} )+)\s*(.*)$', ln)
+        if m:
+            res[int(m.group(1), 16)] = (len(m.group(2).split()), m.group(3).strip())
+    return res
+
+
+def mame_spellings(text, off, n):
+    """llvm-mc spellings to try for one MAME-decoded instruction at offset off"""
+    t = text.lower()
+    mn, _, ops = t.partition(" ")
+    ops = ", ".join(x.strip() for x in ops.split(",")) if ops else ""
+    if mn in REL and ops:
+        parts = ops.split(", ")
+        try:
+            tgt = int(parts[-1], 16)
+            parts[-1] = str(tgt - (off + n))
+            ops = ", ".join(parts)
+        except ValueError:
+            pass
+    m = re.match(r'^(0x[0-9a-f]+), (\w+)$', ops)
+    if mn in ("sll", "srl", "sla", "sra", "rl", "rr", "rlc", "rrc") and m:
+        ops = "%s, %d" % (m.group(2), int(m.group(1), 16) or 16)
+    m = re.match(r'^(\w+), (x\w\w[+-].*)$', ops)
+    if mn == "lda" and m:
+        ops = "%s, (%s)" % (m.group(1), m.group(2))
+    base = mn + (" " + ops if ops else "")
+    cands = [base]
+    if re.search(r'\((0x[0-9a-f]+)\)', base):
+        for suf in (":8", ":16", ":24"):
+            cands.append(re.sub(r'\((0x[0-9a-f]+)\)', r"(\1" + suf + ")", base))
+    return cands
+
+
 def decode_region(bs, limit=400):
     """-> [(offset, length, text)] for the instructions llvm-mc decodes from bs, each
-    re-encoding to exactly its own bytes; a byte that does not decode (or whose
-    instruction does not re-encode identically) is an item (offset, 1, None)"""
+    re-encoding to exactly its own bytes.  Where llvm-mc cannot decode, MAME's decode of
+    that one instruction is tried in llvm-mc spellings; if none re-encodes, the item's
+    text is UNSPELLED + MAME's text (a `.byte` row with that comment).  A byte that starts
+    no instruction either decodes is an item (offset, 1, None)."""
     out = []
     pos = 0
+    mame = None
     for _ in range(limit):
         if pos >= len(bs):
             break
         r = subprocess.run([MC, "-triple=tlcs900", "--disassemble", "-show-encoding"],
                            input=" ".join("0x%02x" % x for x in bs[pos:]), capture_output=True, text=True)
-        moved = False
         for ln in r.stdout.splitlines():
             m = re.match(r'^\s*(.*?)\s*; encoding: \[(.*)\]\s*$', ln)
             if not m:
@@ -234,21 +283,68 @@ def decode_region(bs, limit=400):
                 break
             out.append((pos, len(enc), re.sub(r'\s+', " ", m.group(1)).strip()))
             pos += len(enc)
-            moved = True
-        if pos < len(bs):
-            out.append((pos, 1, None))          # this byte does not start a clean instruction
+        if pos >= len(bs):
+            break
+        if mame is None:
+            mame = unidasm_region(bs)
+        if pos in mame and pos + mame[pos][0] <= len(bs) and mame[pos][1].split(None, 1)[0] != "db":
+            n, text = mame[pos]
+            cands = mame_spellings(text, pos, n)
+            enc = assemble_batch(cands, "v7", "")
+            hit = next((c for c, e in zip(cands, enc) if e == bs[pos:pos + n]), None)
+            out.append((pos, n, hit if hit else UNSPELLED + text))
+            pos += n
+        else:
+            out.append((pos, 1, None))          # this byte does not start an instruction
             pos += 1
     while pos < len(bs):
         out.append((pos, 1, None))
         pos += 1
-    return out
+    return natural(out, bs)
+
+
+# the disassembler prints some forms under a pseudo mnemonic that the sources spell naturally
+NATURAL = [
+    (re.compile(r'^ld_rr[bwl] (\w+), (\w+), (\w+)$'), r"ld \1, (\2+\3)"),
+    (re.compile(r'^(push|pop)_a$'), r"\1 a"),
+    (re.compile(r'^call_24 (.*)$'), r"call \1"),
+    (re.compile(r'^jp_24 (.*)$'), r"jp \1"),
+]
+
+
+def natural(items, bs):
+    """replace a pseudo-mnemonic text by its natural spelling when that encodes the same"""
+    cands = []
+    for k, (o, l, t) in enumerate(items):
+        if t is None:
+            continue
+        for rx, sub in NATURAL:
+            if rx.match(t):
+                cands.append((k, rx.sub(sub, t)))
+                break
+    if not cands:
+        return items
+    enc = assemble_batch([c for k, c in cands], "v7", "")
+    items = list(items)
+    for (k, c), e in zip(cands, enc):
+        o, l, t = items[k]
+        if e == bs[o:o + l]:
+            items[k] = (o, l, c)
+    return items
+
+
+def label_stem(name):
+    """a label without the suffixes this tool and disassemble_port_todo.py add to make
+    names for unnamed targets, so a new name is built on the routine, not on another
+    generated name (Foo_Skip, not Foo_Skip_Skip2)"""
+    return re.sub(r'(_(?:Skip|Loop|Entry|Data|Body)\d*)+$', "", name) or name
 
 
 def skeleton(text):
     """an instruction's shape: its text with every number replaced by #"""
     if text is None:
         return None
-    return re.sub(r'-?\b\d+\b', "#", text)
+    return re.sub(r'-?\b(0x[0-9a-f]+|\d+)\b', "#", text)
 
 
 # ------------------------------------------------------------------ driver
@@ -560,7 +656,7 @@ class Port:
         kept when it pairs more lines than the byte mapping maps with equal bytes."""
         starts = sorted((e[0] - BASE, i) for i, e in enumerate(self.order) if self.size[i] > 0)
         keys = [a for a, i in starts]
-        cache = os.path.join(self.cache, "realign_%s.json" % hashlib.sha1(self.rom + self.tgt).hexdigest()[:16])
+        cache = os.path.join(self.cache, "realign4_%s.json" % hashlib.sha1(self.rom + self.tgt).hexdigest()[:16])
         memo = json.load(open(cache)) if os.path.exists(cache) else {}
         self.realigned = collections.Counter()
         for pa, ea, pb, eb in gaps:
@@ -1002,7 +1098,7 @@ class Port:
                 base, suf = body_of[off], "_Body"
             else:
                 j = bisect.bisect_right(keys, off) - 1
-                base = placed[j][1] if j >= 0 else "Rom"
+                base = label_stem(placed[j][1]) if j >= 0 else "Rom"
                 if kinds == {"rel"}:
                     suf = "_Loop" if all(t > off for k, t in want[off]) else "_Skip"
                 elif "call" in kinds:

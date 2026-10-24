@@ -14,9 +14,11 @@ HOW
   2. A TODO(port) block is CODE when the nearest byte-emitting line before it and the
      nearest one after it (labels and comments skipped) are both instructions.  Its first
      byte is an instruction start: it follows an instruction, or a label.
-  3. llvm-mc --disassemble decodes the block; every decoded instruction is assembled again
-     alone and must give back its own bytes, and the instructions must tile the block
-     exactly.  A block that fails either test is left as `.byte`.
+  3. port_maincpu_version.decode_region decodes the block with llvm-mc; every instruction
+     re-encodes to its own bytes.  Where llvm-mc cannot decode, MAME's unidasm decode of that
+     instruction is tried in llvm-mc spellings; one that no spelling reproduces becomes a
+     `.byte` row with MAME's text as its comment (a form the backend cannot write).  A block
+     with a byte that starts no instruction in either decoder is left as it was.
   4. Operands: a relative branch, call or jump to an address that holds a label is written
      with that label; to an instruction start with no label, with a new label named after
      the label before it (`_Skip` / `_Loop` for a branch target ahead of / behind the
@@ -147,7 +149,7 @@ class Tree:
 
     def enclosing(self, addr):
         j = bisect.bisect_right(self.keys, addr) - 1
-        return self.sorted_labels[j][1] if j >= 0 else "Rom"
+        return P.label_stem(self.sorted_labels[j][1]) if j >= 0 else "Rom"
 
     def new_name(self, addr, suffix):
         base = self.enclosing(addr)
@@ -160,6 +162,12 @@ class Tree:
         self.keys.insert(j, addr)
         self.sorted_labels.insert(j, (addr, name))
         return name
+
+
+def unspelled_row(T, text, addr, n):
+    """an instruction MAME decodes and llvm-mc cannot spell: its bytes, MAME's text as comment"""
+    bs = T.rom[addr - BASE:addr - BASE + n]
+    return ".byte\t" + ", ".join("0x%02x" % x for x in bs) + "\t; " + text[len(P.UNSPELLED):]
 
 
 def symbolize(T, text, addr, n, inst_starts, newlabels):
@@ -190,10 +198,10 @@ def symbolize(T, text, addr, n, inst_starts, newlabels):
                 ops = ops[:m.start(1)] + nm
         return mn + "\t" + ops
     if mn in ("call", "jp"):
-        m = re.search(r'(\d+)\s*$', ops)
-        if m and BASE <= int(m.group(1)) < BASE + len(T.rom):
-            nm = target_label(int(m.group(1)), "_Entry")
-            ops = ops[:m.start(1)] + (nm if nm else "0x%06x" % int(m.group(1)))
+        m = re.search(r"(?<![\w.])(0x[0-9a-f]+|\d+)\s*$", ops)
+        if m and BASE <= int(m.group(1), 0) < BASE + len(T.rom):
+            nm = target_label(int(m.group(1), 0), "_Entry")
+            ops = ops[:m.start(1)] + (nm if nm else "0x%06x" % int(m.group(1), 0))
         return mn + "\t" + ops
 
     def mem(m):
@@ -225,44 +233,23 @@ def main():
     kinds = collections.Counter(b[4] for b in blocks)
     print("TODO(port) blocks: %d (%s), %d bytes" % (len(blocks), dict(kinds), sum(len(b[3]) for b in blocks)))
     # decode every code block; collect instruction starts first (for new labels)
-    decoded = {}
+    good = {}
+    inst_starts = set()
     for k, (first, last, a, bs, kind) in enumerate(blocks):
         if kind != "code":
             continue
-        texts = mc_decode(bs)
-        if not texts:
-            continue
-        decoded[k] = texts
-    flat, owner = [], []
-    for k, texts in decoded.items():
-        for t in texts:
-            flat.append(t)
-            owner.append(k)
-    enc = P.assemble_batch(flat, args.tree, P.macro_prelude(args.tree))
-    per = collections.defaultdict(list)
-    for t, k, b in zip(flat, owner, enc):
-        per[k].append((t, b))
-    good = {}
-    inst_starts = set()
-    for k, items in per.items():
-        first, last, a, bs, kind = blocks[k]
-        pos, ok = 0, True
-        seq = []
-        for t, b in items:
-            if b is None or bs[pos:pos + len(b)] != b:
-                ok = False
-                break
-            seq.append((a + pos, len(b), t))
-            pos += len(b)
-        if ok and pos == len(bs):
-            good[k] = seq
-            inst_starts.update(x[0] for x in seq)
+        items = P.decode_region(bs)
+        if any(t is None for o, l, t in items):
+            continue                        # a byte that starts no instruction: not clean code
+        good[k] = [(a + o, l, t) for o, l, t in items]
+        inst_starts.update(a + o for o, l, t in items)
     print("code blocks decoded and round-tripped: %d of %d (%d bytes)" % (
         len(good), kinds["code"], sum(len(blocks[k][3]) for k in good)))
     newlabels = {}
     rewritten = {}
     for k, seq in good.items():
-        rewritten[k] = [(ad, n, symbolize(T, t, ad, n, inst_starts, newlabels)) for ad, n, t in seq]
+        rewritten[k] = [(ad, n, unspelled_row(T, t, ad, n) if t.startswith(P.UNSPELLED)
+                         else symbolize(T, t, ad, n, inst_starts, newlabels)) for ad, n, t in seq]
     # numeric branch / call targets elsewhere in the tree (the porter writes a number when
     # no label stands at the target yet): name them now that the blocks have instruction starts
     fixups = {}

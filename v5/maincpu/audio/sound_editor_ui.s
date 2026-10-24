@@ -7881,7 +7881,7 @@ SeGfx_StaticOp15_FromBuf:
 	call	SeGfx_StaticOp06_CellTextFont0
 	pop	xwa
 	ret
-SeGfx_StaticOp15_FromBuf_Entry2:
+SeGfx_StaticOp15_FromBuf_Entry3:
 	push	xwa
 	ld	xwa, xiy
 	call	SeGfx_StaticOp07_CellTextFont1
@@ -7899,7 +7899,7 @@ SeGfx_StaticOp15_FromBuf_Entry:
 	call	ColorBlit_ComputeRectAndBlit
 	pop	xwa
 	ret
-SeGfx_StaticOp15_FromBuf_Entry_Entry:
+SeGfx_StaticOp15_FromBuf_Entry2:
 	ld	(0x3efa4:24), 0
 	push	xwa
 	ld	xwa, 0x6ca
@@ -8112,7 +8112,7 @@ SeMenu_DrawDottedLine:
 	ld	wa, (xiz+14)
 	ld	(1746:16), wa
 	ld	(COLORBLIT_MODE:24), 0
-	call	SeGfx_StaticOp15_FromBuf_Entry_Entry
+	call	SeGfx_StaticOp15_FromBuf_Entry2
 	pop	xiy
 	pop	xix
 	pop	xhl
@@ -9175,7 +9175,7 @@ SeLfo1_DrawPartLabels_Loop:
 	sla	a, 1
 	dec	1, a
 	.byte 0xc8, 0xff
-	jr	c, SeLfo1_DrawPartLabels_Skip_Skip
+	jr	c, SeLfo1_DrawPartLabels_Skip2
 	.byte 0xcb, 0x04
 	xor	b, b
 	sla	bc, 2
@@ -9187,14 +9187,14 @@ SeLfo1_DrawPartLabels_Skip:
 	call	SeGfx_DrawStaticList
 	pop	c
 	jr	SeMenu_PresetBrowser_Data_Code_Join
-SeLfo1_DrawPartLabels_Skip_Skip:
+SeLfo1_DrawPartLabels_Skip2:
 	push	c
 	xor	b, b
 	sla	bc, 2
 	ld	xiz, SeScreenData_0x3821
-	ld_rrl	xiy, xiz, bc
+	ld	xiy, (xiz+bc)
 	add	bc, 4
-	ld_rrl	xix, xiz, bc
+	ld	xix, (xiz+bc)
 	call	SeGfx_DrawStaticList
 	pop c
 SeMenu_PresetBrowser_Data_Code_Join:
@@ -10230,7 +10230,7 @@ SeMenu_DrawWriteDestName_Skip7:
 	ld	(xiy-3), c
 	ld	(xiy-2), ix
 	sub	xiy, 4
-	call	SeGfx_StaticOp15_FromBuf_Entry2
+	call	SeGfx_StaticOp15_FromBuf_Entry3
 	ret
 ; SeWrtSnd_DrawStaticScreen: Static-screen routine of sound-editor title 0x3F TT_SEWRTSND (entry 31 of
 ;  SeTitle_StaticScreenTable, indexed by title id - 0x20): draws the page's fixed captions and frames. Basis: the
