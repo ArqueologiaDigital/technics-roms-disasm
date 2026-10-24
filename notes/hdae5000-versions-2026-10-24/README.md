@@ -154,8 +154,32 @@ trees drift apart.
 
 ## v1.15i and v1.10i: not ported
 
-The sizing above is all that this lane did for them. v1.15i needs its own tree. The porting tool is
-generic: `port_hdae5000_version.py init v1_15i` starts one, once
-`original_ROMs/hd-ae5000_v1_15i.ic4` exists. Expect more hand work than for v2.01i: the layout
-moved, the FilePanel picture is missing, and the boot splash, the UI table and the RAM image all
-differ. Port v1.10i from the v1.15i tree.
+Only the sizing above was done for them, plus one trial run of the porting tool on v1.15i. That run
+was thrown away and nothing of it is committed.
+
+- After `init`, `fix` and three `code / strings / fix` rounds, `status v1_15i` still showed 2,099
+  hunks, with 121,119 of 524,288 bytes equal in place. The `fix` pass oscillated: the same 4
+  constants flipped between two values on every round, because two uses of each wanted different
+  values. v2.01i got there from 1,682 hunks.
+- `uitables` refused v1.15i: "#3 caption arena not NUL-terminated". Its UI records do not follow
+  v2.x's per-class body lengths (`UI_F` in the tool), so v1.x needs its own record model first.
+  The table locations themselves are found generically, by
+  `python3 scripts/tools/port_hdae5000_version.py tables v2_06i v2_01i v1_15i v1_10i`:
+
+  | version | object table | name table | objects | class-name table |
+  |---------|--------------|------------|---------|------------------|
+  | v2.06i  | 0x2a5d2c     | 0x2a6984   | 789     | 0x2f9832         |
+  | v2.01i  | 0x2a5558     | 0x2a61a4   | 786     | 0x2f8d0e         |
+  | v1.15i  | 0x2a16a4     | 0x2a2280   | 758     | 0x2e128e         |
+  | v1.10i  | 0x2a1572     | 0x2a2142   | 755     | 0x2e10fe         |
+
+- v1.x also has no FilePanel picture, and its boot splash differs (a `VERSION_ASSETS` entry in
+  `scripts/build/hdae5000_images.py` each).
+
+A v1.15i tree is therefore a lane of its own:
+
+1. a v1.x record model for `uitables`;
+2. the pictures;
+3. then the same port loop, starting from `port_hdae5000_version.py init v1_15i` (it reads the dump
+   from the private romset when `original_ROMs/hd-ae5000_v1_15i.ic4` is absent);
+4. then v1.10i, from the v1.15i tree.

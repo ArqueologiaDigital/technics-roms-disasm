@@ -55,6 +55,7 @@ RUN (from the repo root)
     python3 scripts/tools/port_hdae5000_version.py strings  v2_01i [N ...] [--dry]
     python3 scripts/tools/port_hdae5000_version.py uitables v2_01i
     python3 scripts/tools/port_hdae5000_version.py show     v2_01i N [--code]
+    python3 scripts/tools/port_hdae5000_version.py tables   v2_06i v2_01i v1_15i v1_10i  # UI table locations
     The target image is original_ROMs/hd-ae5000_<ver>.ic4 (make copies it there)
     or $KN5000_ROMS_DIR/hd-ae5000_<ver>.ic4.  Scratch goes to
     $TMPDIR/port_hdae5000_<ver>/ (TMPDIR defaults to ~/compartilhado/tmp).
@@ -1437,13 +1438,34 @@ def ui_name_pool(R, g):
     return out, end
 
 
+def find_classtab(R):
+    """The class-name table: its first entry points at "SelectListProc" and at least
+    eight entries in a row point at NUL-terminated names ending in "Proc"."""
+    t = R.find(b"SelectListProc\0")
+    if t < 0:
+        return None
+    ptr = (t + BASE).to_bytes(4, "little")
+    k = R.find(ptr)
+    while k >= 0:
+        n = 0
+        while n < 13:
+            a = int.from_bytes(R[k + 4 * n:k + 4 * n + 4], "little")
+            if not (BASE <= a < BASE + 0x80000) or not R[a - BASE:].split(b"\0", 1)[0].endswith(b"Proc"):
+                break
+            n += 1
+        if n >= 8:              # v2.x: 13 classes; older versions have fewer
+            return k + BASE
+        k = R.find(ptr, k + 1)
+    return None
+
+
 def cmd_uitables(ver, tag="v2.01i"):
     bld, ref, hs, full = cmd_status(ver, verbose=False, want_blocks=True)
     ctx = Ctx(bld, ref, full)
     inv = {n: b for b, n in ctx.bmap.items()}
-    classtab = inv.get("HDAE5000_ClassName_Table")
+    classtab = inv.get("HDAE5000_ClassName_Table") or find_classtab(ref)
     if classtab is None:
-        sys.exit("HDAE5000_ClassName_Table does not map onto the target yet")
+        sys.exit("HDAE5000_ClassName_Table not found in the target")
     g = ui_generate(ref, classtab)
     pool_text, name_end = ui_name_pool(ref, g)
     names = g["names"]
@@ -1679,6 +1701,14 @@ def main():
         cmd_strings(ver, only, dry="--dry" in a)
     elif cmd == "uitables":
         cmd_uitables(ver)
+    elif cmd == "tables":
+        # where the UI object tables are in a version's image (no tree needed)
+        for v in [ver] + a[2:]:
+            R = ref_image(v)
+            pt, nt, n = ui_tables_of(R)
+            c = find_classtab(R)
+            print("%-7s object table 0x%06x, name table 0x%06x, %d objects, class-name table %s"
+                  % (v, pt, nt, n, "0x%06x" % c if c else "not found"))
     elif cmd == "farptrs":
         cmd_farptrs(ver, dry="--dry" in a)
     elif cmd == "show":
