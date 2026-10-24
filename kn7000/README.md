@@ -56,6 +56,10 @@ tools/dump_table_dir.py   Annotates the table directory.
 disasm/         Reference disassembly listings (see below).
 src/sp7001/     The SP7001 firmware (program 942 / table 83), GENERATED: see "SP7001".
 src/b80/table.s Table build 80: table 83's image with one byte changed, no plug-in.
+src/b935/       Program build 935 (v1.5), GENERATED, ported from 941: see "Program builds 935 and 893".
+src/b893/       Program build 893 (v1.3, Felipe's own instrument), GENERATED the same way.
+kn7000_b935*.sym, kn7000_b893*.sym  Their symbols: ported from 941 through the offset map, plus
+                names carried by code.
 src/ic18/boot.s IC18's first 64 KB, the boot ROM and update system, GENERATED, fully
                 disassembled: see "IC18". kn7000_ic18.sym holds its names.
 src/cnv/        The seven Style Convert Disk converters (.CNV), GENERATED, fully
@@ -79,6 +83,9 @@ make verify-sp7001     # SP7001 firmware (942 / 83) + BASEEXT.XAP: assert 100% b
 make verify-sp7001-floppy  # table 83 vs the SP7001 update's two table disks (+ SMCKTB*.INF)
 make verify-table80    # table build 80 from src/b80/table.s (+ table 83): assert 100% byte-match
 make verify-ic18       # the IC18 boot ROM from src/ic18/boot.s: assert 100% byte-match
+make verify-935        # program build 935 (v1.5) from src/b935/: assert 100% byte-match
+make verify-893        # program build 893 (v1.3) from src/b893/: assert 100% byte-match
+make symbols-935 program-src-935 ported-names-935 check-names-935   # regenerate / check it (same for 893)
 make ic18-src          # regenerate src/ic18/boot.s (needs unidasm and baserom/kn7000_program.rom)
 make symbols-sp7001    # port the 941/84 symbols to 942/83 (+ the plug-in's own names)
 make program-src-sp7001 table-src-sp7001   # regenerate src/sp7001/*.s (needs unidasm)
@@ -277,6 +284,29 @@ and its 84 segments) with one byte different, the second digit of segment 07's b
 against `"83\n"`, at 0x139EE9), and erased flash where table 83 has its plug-in.
 [`src/b80/table.s`](src/b80/table.s) therefore holds no copy of table 83: it takes the bytes of the
 table-83 build and spells out the one that differs. `make verify-table80`.
+
+### Program builds 935 (v1.5) and 893 (v1.3)
+
+Program 935, the release before 941, is a third byte-exact program target, made like 942 by
+porting rather than re-deriving. Its reference is the EPROM pair of the private romset,
+de-interleaved into `baserom/kn7000_program_b935.rom` (not committed; SHA-1 `5690195d...`).
+Unlike 942 it is not 941 plus a few insertions: 941 rewrote and reordered the DSP boot code at
+the front of code region 1 and moved blocks of the data region. So `gen_program_s.py --profile
+b935` ports what the offset map places 1:1 and drops what it cannot. All 2302 reflection names
+sit where 935's own tables put them, and 4420 of 941's 4426 symbol rows port. Two more names are
+carried by code (`tools/port_names_by_code.py`). `tools/check_ported_names.py` finds 3609 of the
+ported names on the same relocation-masked routine as in 941, and one on an edited routine. The
+result is 3104 named + 33 unnamed region-1 functions and all 529 library functions as MN10300
+assembly, with no `.byte` escape. `make verify-935`.
+
+Program 893 is the program flash of Felipe's own instrument (the romset's halves are the
+dumper's reads; it pairs with table 80). It is made the same way (`--profile b893`). 2206 of the
+2298 reflection names in its own tables sit at the ported address. The other 92 take the
+table's address: they name rewritten code or ambiguous runs. 4404 of the 4426 symbol rows port,
+and 2 names are carried by code. 3550 of the ported names sit on the same routine as in 941 and
+49 on an edited one (mostly SD-card handlers). The result is 3094 named + 33 unnamed region-1
+functions and 527 library functions, with no `.byte` escape. `make verify-893`. Measurements,
+method and what is left: [`notes/older-program-builds.md`](notes/older-program-builds.md).
 
 ## Style Convert Disk converters (.CNV)
 

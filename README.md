@@ -92,7 +92,8 @@ from its own (never published) repository, `kn7000_disassembly`, which is now de
 
     make kn7000        the KN7000's program + table (941/84) and IC19 picture images
     make gate-kn7000   their byte-identity gates, plus the SP7001 set (942/83), the seven
-                       Style Convert Disk converters, table build 80 and the IC18 boot ROM
+                       Style Convert Disk converters, table build 80, the IC18 boot ROM and
+                       program builds 935 (v1.5) and 893 (v1.3)
 
 `make everything` and `make gate-all` include it. The KN7000 runs on a Panasonic MN10300, not the
 TLCS-900, so `kn7000/` has its own assembler (`kn7000/tools/kn7asm.py`) and its own
@@ -135,7 +136,7 @@ rebuild was at about 85% byte-match on 23 Dec 2025. It now assembles with its ow
 |-------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------|
 | KN5000                              | main CPU v10, v9, v8 and v7; sub-CPU payload v1.42 and v1.41, each with its compressed update image; sub-CPU boot (IC30); table data; custom data (IC19); HD-AE5000 v2.06i (12), plus the v1.40 update image's decompression check | `make gate`                                           |
 | SX-WSA1R                            | prom_a (IC12), prom_b (IC13), prom_c (IC28), prom_d (4)                                                                                                                                                                            | `make gate-wsa1`                                      |
-| KN7000                              | program 941 and table 84; IC19 picture ROM; SP7001 program 942, table 83 and BASEEXT.XAP; table build 80; the IC18 boot ROM (first 64 KB); the seven Style Convert Disk converters                                                 | `make gate-kn7000`                                    |
+| KN7000                              | program 941 and table 84; IC19 picture ROM; SP7001 program 942, table 83 and BASEEXT.XAP; table build 80; the IC18 boot ROM (first 64 KB); the seven Style Convert Disk converters; program builds 935 (v1.5) and 893 (v1.3)       | `make gate-kn7000`                                    |
 | KN2400/2600, KN6000, KN6500, HD-SX3 | one program image each                                                                                                                                                                                                             | `make gate-kn2400 gate-kn6000 gate-kn6500 gate-hdsx3` |
 
     make everything    build every model

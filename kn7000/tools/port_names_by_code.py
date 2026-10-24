@@ -33,6 +33,10 @@
 #                         --b-rom B.rom --b-base 0x... --b-code LO:HI[:CPU] ... --b-sym B.sym ...
 #                         --b-labels B/src/labels.inc --out B_ported.sym --title "..."
 #                         [--unidasm PATH] [--min 8]
+#   B's unnamed entries come from a gen_image_s.py labels.inc (--b-labels), or, for
+#   a source gen_program_s.py wrote (a KN7000 build ported from 941), from the
+#   func_<ADDR> labels its .s files define (--b-src FILE ...); with --b-src, the
+#   entries an earlier run named are read back from --out itself.
 import argparse
 import os
 import re
@@ -117,7 +121,9 @@ def main():
     ap.add_argument("--b-base", type=lambda v: int(v, 0), required=True)
     ap.add_argument("--b-code", action="append", required=True)
     ap.add_argument("--b-sym", nargs="+", required=True, help="B's names (never overridden)")
-    ap.add_argument("--b-labels", required=True, help="B's generated labels.inc (its entries)")
+    ap.add_argument("--b-labels", help="B's generated labels.inc (its entries)")
+    ap.add_argument("--b-src", nargs="+", metavar="FILE",
+                    help="instead of --b-labels: B's generated .s files (their func_<ADDR> labels)")
     ap.add_argument("--out", required=True)
     ap.add_argument("--title", required=True)
     ap.add_argument("--min", type=int, default=8,
@@ -137,9 +143,18 @@ def main():
     # regenerated with --out among its symbol files), so a rerun is a fixed point
     before = set(load([a.out]).values()) if os.path.exists(a.out) else set()
     b_entries = {}
-    for nm, v in re.findall(r"^\.equ\s+(\w+),\s*0x([0-9a-fA-F]+)", open(a.b_labels).read(), re.M):
-        if re.fullmatch(r"func_[0-9A-F]{8}", nm) or nm in before:
-            b_entries[int(v, 16)] = nm
+    if (a.b_labels is None) == (a.b_src is None):
+        sys.exit("port_names_by_code: give exactly one of --b-labels and --b-src")
+    if a.b_labels:
+        for nm, v in re.findall(r"^\.equ\s+(\w+),\s*0x([0-9a-fA-F]+)", open(a.b_labels).read(), re.M):
+            if re.fullmatch(r"func_[0-9A-F]{8}", nm) or nm in before:
+                b_entries[int(v, 16)] = nm
+    else:
+        for path in a.b_src:              # .s files hold raw ROM bytes: read them as bytes
+            for m in re.finditer(rb"^func_([0-9A-F]{8}):", open(path, "rb").read(), re.M):
+                b_entries[int(m.group(1), 16)] = "func_" + m.group(1).decode()
+        if os.path.exists(a.out):
+            b_entries.update(load([a.out]))
 
     sa, weak = {}, 0
     for cpu, nm in a_names.items():
