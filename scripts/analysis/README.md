@@ -513,3 +513,11 @@ WARNING: every number here is a property of the DECODER as much as of the bytes,
 so quote the toolchain commit beside it. `--roundtrip` and `--oracle` take a few
 minutes each; `--check` is seconds and needs no `make`.  Full account of what was fixed and
 what resisted: `notes/lanes/llvmalumem-2026-09-02.md`.
+
+## Added 2026-10-24 (wave1/hygiene, issue triage)
+
+| script                         | question it answers                                                                                                                                                                                                                                         |
+|--------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `issue_triage_measurements.py` | Do the open issues whose goal is a property of the tree (no `LABEL_` left, no numeric jump targets, images / demo MIDI / fonts extracted, jump tables documented, no live `tmp94c241.inc`) meet it today? Each closing comment quotes a line of its output. |
+
+    python3 scripts/analysis/issue_triage_measurements.py

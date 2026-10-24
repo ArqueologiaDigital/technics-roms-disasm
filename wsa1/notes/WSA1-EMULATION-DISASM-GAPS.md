@@ -157,7 +157,8 @@ and 0x20-0x29 carry staging words 0-6, 7-11 and 12-21. So a trace can be joined 
 instead of being a bare register number. That is a DECODE improvement and nothing more.
 
 **WHAT IS STILL OPEN, and it is the whole original question.** *"Located, not named."* Every
-producer in that index is a bare `sub_XXXXXX` label. **Not one register in this device is called
+producer in that index was a bare `sub_XXXXXX` label when this was written (most have
+names since; the three cited below are given by their 2026-10-24 names). **Not one register in this device is called
 pitch, level, wave address or anything else, here, in the source, or in the driver.** No
 synthesis is possible on this, and the driver still stores 4096 words and acts on none of them.
 
@@ -171,13 +172,13 @@ synthesis is possible on this, and the driver still stores 4096 words and acts o
 
 **Where to look, in the order the producer index makes cheapest.**
 * **Word 6 -> block `0x0180 + channel` first**, because it is the ONE register the firmware reads
-  back (gap F) and it has exactly **two** producers: `sub_FA96F7__FA9801` and `sub_FA9C60__FA9F06`.
+  back (gap F) and it has exactly **two** producers: `Voice_StageRegs_CD__FA9801` and `Voice_StageRegs_0180_AB__FA9F06`.
   Two routines, one register, and an emulator stub already waiting for the answer.
 * **Eleven of the 22 words have exactly two write sites** -- words 2, 3, 6, 10, 11 and 16-21. A
   register with two producers is one routine-read away from a meaning.
 * Word 1 -> block `0x0040 + channel` has the most (nine sites, six routines), four of which are the
   same shape stepping record arrays of stride 8, 6, 6 and 4 through the shared 28-byte callee
-  `sub_FC4D85` -- the strongest structural signal in the subsystem.
+  `Pack104_SetInputs_Rec0C_E08C` -- the strongest structural signal in the subsystem.
 * ⚠ **Do not import the `0x00104000` formula into this gap.** `FINDINGS-prom_c-dev10c-producers.md`
   sec.3 derives `SAT(P[+0x0A] + P[+0x12] +/- delta)` for registers `0x0040`/`0x0080 + chan`, and
   says in as many words that **those are `0x00104000` registers, not `0x0010C000` ones**. Both
@@ -420,7 +421,7 @@ release -- then every note-on path in the emulator is running on a false premise
 
 ★ **THE SHORTEST PATH IS NOW TWO ROUTINES LONG.** Register block `0x0180 + channel` is staging
 word 6, and `notes/FINDINGS-prom_c-dev10c-producers.md` sec.2 gives word 6 exactly **two**
-producers: `sub_FA96F7__FA9801` and `sub_FA9C60__FA9F06`. Read those two and this stub can be
+producers: `Voice_StageRegs_CD__FA9801` and `Voice_StageRegs_0180_AB__FA9F06`. Read those two and this stub can be
 replaced with something true, or shown to need more. That note's own "what the next pass should do"
 puts the same pair first.
 

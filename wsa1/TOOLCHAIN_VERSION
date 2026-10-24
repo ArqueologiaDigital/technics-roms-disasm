@@ -8,10 +8,20 @@
 # commits on top, appended below.
 
 Branch: tlcs900_backend
-Commit: dbb72df07371 (dbb72df073711ef98be1e41f003e04a7022bf120)
-Date: 2026-09-01
-Subject: [TLCS900] A regression guard for the SX-WSA1R's sound-code C7 forms
+Commit: a3a81863f87d (a3a81863f87d4fbd5a9b728ec12d7a55da456360)
+Date: 2026-10-02
+Subject: [TLCS900] The register-indexed operand (xrr+rr) on every memory operation
 Repository: /home/fsanches/compartilhado/llvm-project
+Binary: llvm-mc sha256 118bb4d6766e60b3a76bd04cf7b085871aa10094e27db784b2dea665f3b1f975
+
+# ⚠ THIS RECORD FOLLOWS ../TOOLCHAIN_VERSION.  wsa1/Makefile builds with
+# $(PROJECTS_ROOT)/llvm-project/build/bin/llvm-mc, the same binary as the KN5000
+# tree, so the pin is the root file's.  Root UPDATE 11 (2026-09-02) through
+# UPDATE 21 (a3a81863f87d) were recorded only there and are not repeated here.
+# The head above was still dbb72df07371 (UPDATE 10 below) until 2026-10-24, when it
+# was corrected from the root record: same commit, date, subject and binary hash.  That day the llvm-mc in use
+# hashed to 118bb4d6... and `make gate-wsa1` printed
+# `PASS: every rebuilt ROM is byte-identical.` (prom_a/b/c/d ok).
 
 # The WSA1's two processors are Toshiba TMP95C061 (TLCS-900/H), the same family
 # as the KN5000's TMP94C241, so the same backend assembles both trees. Any form

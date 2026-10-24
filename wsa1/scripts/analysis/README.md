@@ -172,6 +172,19 @@ within one commit and no lane owned it.
 ⚠ It measures **territory, not understanding** -- a `.byte` run counts as converted while
 telling you nothing. A floor on effort, never a claim about documentation quality.
 
+`--markdown` prints a space-padded table; its `.incbin` spans column counts live directives
+(until 2026-10-24 it counted the string `.incbin`, comments included, and read 61/320/31 for
+prom_a/b/c with zero `.incbin` bytes left).
+
+## `doc_symbol_check.py`
+**"Which backticked names in this note are no longer symbols of any WSA1 image?"**
+
+    python3 scripts/analysis/doc_symbol_check.py notes/SOME-NOTE.md [...]
+
+Reads `llvm-nm` of the four linked ELFs (build first) and lists each symbol-shaped
+`backticked` name none of them defines.  The output is candidates: MAME and C identifiers
+show up too, so read each line before editing the note.  Exit 1 when any are listed.
+
 ## `prom_b_small_span_classify.py`
 **"Of the `.incbin` spans left in prom_b, what are the SMALL ones (<= 128 bytes)
 and what sits immediately before and after each of them in the source?"**

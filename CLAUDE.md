@@ -3,8 +3,9 @@
 > ⚠️ **Beads was decommissioned on 2026-07-27** at the owner's request. `bd` and
 > `beads-lite` were removed from the machine — do not run them and do not reinstall
 > them. `.beads/issues.jsonl` **stays** and remains this project's task list: read
-> it with `jq`/`grep`, write it by editing it directly, publish it with
-> `make issues` (which reads the file itself and never invoked `bd`).
+> it with `jq`/`grep`, write it by editing it directly. The website has had no issues
+> page since technics-docs f6fcaa6 (2026-09-04), so `make issues` now refuses;
+> `python3 scripts/build/export_issues_to_website.py OUT.md` renders the file to Markdown.
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
@@ -41,7 +42,7 @@ to this repository, `kn7000/` commits included.
 Detailed documentation is at `../technics-docs/`. Key pages:
 - **Hardware**: `hardware-architecture.md`, `memory-map.md`, `cpu-subsystem.md`
 - **Protocols**: `control-panel-protocol.md`, `inter-cpu-protocol.md`, `boot-sequence.md`
-- **Progress**: `rom-reconstruction.md`, `issues.md`, `reverse-engineering.md`
+- **Progress**: `rom-reconstruction.md`, `reverse-engineering.md`
 - **Subsystems**: `audio-subsystem.md`, `fdc-subsystem.md`, `hdae5000.md`
 - **Data Formats**: `lzss-compression.md` (0x3E0000 address resolved - see [Firmware Update System](../technics-docs/lzss-compression.md#firmware-update-system-and-0x3e0000))
 
@@ -63,8 +64,9 @@ Issues live in `.beads/issues.jsonl` as plain JSON lines, edited by hand (see Is
 # Build all ROMs (LLVM, primary) and run byte comparison
 make all
 
-# Full build: both ASL and LLVM (for cross-verification)
-make all-full
+# The byte-identity gate (assemble check + byte compare of all nine KN5000 images)
+make gate
+make gate-all           # KN5000 + WSA1R + KN7000 gates
 
 # Build specific ROM targets
 make rebuilt_ROMs/kn5000_v10_program.llvm.rom         # Main CPU
@@ -74,33 +76,38 @@ make rebuilt_ROMs/kn5000_table_data.llvm.rom          # Table data
 make rebuilt_ROMs/kn5000_custom_data.llvm.rom         # Custom data
 make rebuilt_ROMs/hd-ae5000_v2_06i.llvm.rom           # HDAE5000
 
-# Reconvert from archived ASL sources (regenerates .s files from archive/asl/)
-make llvm-convert-all
+# NOT a routine step: llvm-convert* regenerates the authoritative .s trees from the
+# archived, pre-rename ASL sources in archive/asl/ and would overwrite everything done
+# since.  The targets refuse unless ALLOW_ASL_RECONVERT=1 (archaeology only, in a
+# scratch worktree).
+# make ALLOW_ASL_RECONVERT=1 llvm-convert-all
 
 # Clean build artifacts
 make clean              # LLVM build artifacts
 make clean-all          # All (LLVM + legacy ASL)
 
-# Rebuild preset data (assemble + LZSS compress)
-make rebuild-preset-data
+# Rebuild the demo-song preset payloads (MIDI + YAML -> LZSS)
+make rebuild-demo-presets
 
 # Verify rebuilt ROMs against originals (runs automatically after make all)
 python scripts/build/compare_roms.py
 
 # Update documentation website
 make gallery            # Convert images to PNG for gallery
-make issues             # Export issue tracker to website
-make rom-status         # Generate ROM status diagram
-make website            # All of the above (gallery + issues + rom-status)
+make issues             # RETIRED: refuses; the website has had no issues page since 2026-09-04
+make rom-status         # Generate ROM status diagram (classes from data_range_census.py)
+make website            # gallery + rom-status; pass DOCS_DIR=/abs/path/technics-docs from a worktree
 ```
 
 ### Assembly Source Organization
 - **LLVM assembly** (authoritative, in `*/` directories): `.s` files using LLVM/GNU syntax for TLCS-900
-  - `maincpu/kn5000_v10_program.s` + 30 modular includes (shared/, file_io/)
-  - `subcpu/kn5000_subprogram_v142.s`, `subcpu/boot/kn5000_subcpu_boot.s`
+  - `v10/maincpu/kn5000_v10_program.s` + 156 more `.s` files under `v10/maincpu/`
+    (likewise `v9/maincpu/`, `v7/maincpu/`)
+  - `v142/subcpu/kn5000_subprogram_v142.s`, `subcpu/boot/kn5000_subcpu_boot.s`
   - `hdae5000/hd-ae5000_v2_06i.s`, `table_data/kn5000_table_data.s` + shared includes
   - `custom_data/kn5000_custom_data.s`
-- **ASL sources** (archived in `archive/asl/`): Original ASL syntax, used by `scripts/converters/asl_to_llvm.py`
+- **ASL sources** (archived in `archive/asl/`): Original ASL syntax, read only by the guarded
+  `llvm-convert*` targets (`scripts/converters/asl_to_llvm.py`), never by the build
 - **Build pipeline**: `llvm-mc -triple=tlcs900` → `ld.lld` → `llvm-objcopy` → raw binary
 - **Binary data files**: `*/includes/*.bin`, `*/images/*.bin` — referenced via `.incbin`
 
@@ -161,20 +168,21 @@ When creating new scripts, place them in the appropriate `scripts/` subdirectory
 
 Symbol reference files in `symbols/` provide address-to-name mappings for external tools:
 
-| File | ROM | Symbols | Address Range |
-|------|-----|---------|---------------|
-| `symbols/maincpu_symbols_reference.txt` | Main CPU **v10** (identical to `maincpu_v10_...`) | 47,836 | 0xE00000 - 0xFFFFE8 |
-| `symbols/maincpu_v9_symbols_reference.txt` | Main CPU v9 | 47,830 | 0xE00000 - 0xFFFFE8 |
-| `symbols/maincpu_v7_symbols_reference.txt` | Main CPU v7 | 47,920 | 0xE00000 - 0xFFFFE8 |
-| `symbols/subcpu_symbols_reference.txt` | Sub CPU payload v1.42 | 5,560 | 0x000400 - 0x03EE75 |
-| `symbols/subcpu_boot_symbols_reference.txt` | Sub CPU boot | 201 | 0xFF8000 - 0x1000000 (last row is the linker `end` marker) |
-| `symbols/table_data_symbols_reference.txt` | Table data | 4,759 | 0x800000 - 0x9FFEF0 |
-| `symbols/hdae5000_symbols_reference.txt` | HDAE5000 expansion | 3,932 | 0x280000 - 0x300000 |
+| File                                        | ROM                                               | Symbols | Address Range                                              |
+|---------------------------------------------|---------------------------------------------------|---------|------------------------------------------------------------|
+| `symbols/maincpu_symbols_reference.txt`     | Main CPU **v10** (identical to `maincpu_v10_...`) | 53,744  | 0xE00000 - 0xFFFFE8                                        |
+| `symbols/maincpu_v10_symbols_reference.txt` | Main CPU v10                                      | 53,744  | 0xE00000 - 0xFFFFE8                                        |
+| `symbols/maincpu_v9_symbols_reference.txt`  | Main CPU v9                                       | 53,736  | 0xE00000 - 0xFFFFE8                                        |
+| `symbols/maincpu_v7_symbols_reference.txt`  | Main CPU v7                                       | 53,559  | 0xE00000 - 0xFFFFE8                                        |
+| `symbols/subcpu_symbols_reference.txt`      | Sub CPU payload v1.42                             | 5,053   | 0x000400 - 0x03EE75                                        |
+| `symbols/subcpu_boot_symbols_reference.txt` | Sub CPU boot                                      | 200     | 0xFF8000 - 0x1000000 (last row is the linker `end` marker) |
+| `symbols/table_data_symbols_reference.txt`  | Table data                                        | 4,759   | 0x800000 - 0x9FFEF0                                        |
+| `symbols/hdae5000_symbols_reference.txt`    | HDAE5000 expansion                                | 4,099   | 0x280000 - 0x300000 (last row is the linker `end` marker)  |
 
-**In sync as of 2026-09-25** (after the Wave 2 merges): regenerated from each
-image's linked ELF by `python3 scripts/analysis/l2_symbol_reference.py --regen`,
-and `python3 scripts/analysis/l2_symbol_reference.py --check` reports 100 %
-NAME+ADDRESS agreement for all eight files. **Use that script to regenerate** --
+**In sync as of 2026-10-24** (counts above from that day's
+`python3 scripts/analysis/l2_symbol_reference.py --check`, which reports 100 %
+NAME+ADDRESS agreement for all eight files; first regenerated this way on
+2026-09-25, after the Wave 2 merges, with `--regen`). **Use that script to regenerate** --
 it knows the per-version maincpu split (v7/v9/v10 are separate links; a v7
 address looked up in the v10 file is wrong) and writes the header block itself.
 The hand recipe below is kept for reference. Rows are `NAME 00ADDRESS` (8 hex
@@ -266,7 +274,7 @@ commit.
 
 ### Image Extraction and Gallery Updates
 
-When new images are discovered and extracted as `.bin` files in `maincpu/images/` or `table_data/images/`:
+When new images are discovered and extracted as `.bin` files in `v10/maincpu/images/` (and its `v9/`, `v7/` twins) or `table_data/images/`:
 
 1. **Add metadata** to `scripts/build/convert_images.py` in the `IMAGE_METADATA` dictionary:
    - Filename
@@ -292,7 +300,7 @@ This ensures the documentation website always reflects the latest extracted imag
 1. **Assembly source** -- Add/update `EVT_*` `.equ` constants in each tree's `shared/event_codes.s` (`v10/maincpu`, `v9/maincpu`, `v7/maincpu`, `hdae5000`), named after the firmware's own `EV_*`/`MT_*` name tables (catalog: `notes/event-codes-2026-10-02/`; apply with `scripts/tools/apply_event_constants.py`); replace raw hex values with symbolic names (e.g., `EVT_PARA_DRAW`)
 2. **Event codes reference page** -- Update `../technics-docs/event-codes.md` with new codes, dispatch paths, and descriptions
 3. **HDAE5000 homebrew page** -- Update `../technics-docs/hdae5000-homebrew.md` if the discovery affects handler registration or activation flow
-4. **Mines project** -- Update `../../Mines/CLAUDE.md` if applicable
+4. **Mines project** -- Update `../Mines/CLAUDE.md` if applicable
 
 **This policy exists because** event codes are the primary interface between the firmware and extension ROMs. Inconsistent documentation across the disassembly, website, and homebrew project causes confusion. The canonical event code reference is `../technics-docs/event-codes.md`.
 
@@ -301,13 +309,15 @@ This ensures the documentation website always reflects the latest extracted imag
 The documentation website at `../technics-docs/` must be kept in sync with project progress. **Run these commands regularly:**
 
 ```bash
-make website   # Updates gallery, issues, and ROM status diagram
+make website   # Updates gallery and ROM status diagram
 ```
 
 This runs:
 1. `make gallery` - Converts extracted images to PNG
-2. `make issues` - Exports Beads issue tracker to `issues.md`
-3. `make rom-status` - Regenerates the ROM status visualization diagram
+2. `make rom-status` - Regenerates the ROM status visualization diagram
+
+(`make issues` used to be step 2; it now refuses, because the website has had no issues page since
+technics-docs f6fcaa6, 2026-09-04.)
 
 **When to update the website:**
 - After extracting new images
@@ -321,20 +331,17 @@ Always commit both repositories together when making website updates.
 
 **The ROM status diagram must be kept in sync with disassembly progress.**
 
-The file `scripts/build/generate_rom_status_diagram.py` generates an SVG visualization showing the disassembly status of each ROM component. This diagram provides an at-a-glance view of project progress.
+The file `scripts/build/generate_rom_status_diagram.py` generates a PNG (`<DOCS_DIR>/assets/images/rom-status-diagram.png`, `DOCS_DIR` defaulting to `../technics-docs`) showing, byte by byte, what kind of source emits each of six KN5000 images (main CPU v10, table data, sub-CPU boot, sub-CPU payload v1.42, custom data, HD-AE5000). This diagram provides an at-a-glance view of project progress.
 
-**Status categories:**
-| Color | Category | Description |
-|-------|----------|-------------|
-| Green | Disassembled Code | Properly disassembled with symbolic instructions |
-| Blue | Known Data | Documented data structures |
-| Cyan | String Data | Text strings |
-| Light Green | Pointer/Jump Tables | Tables of addresses |
-| Purple | Binary Includes | External binary files not yet analyzed |
-| Red | Raw Bytes (unknown) | Hex bytes with unknown purpose |
-| Orange | Raw Bytes (known code) | Code not yet disassembled |
-| Gray | Padding/Unused | Fill bytes (0x00 or 0xFF) |
-| Yellow | Undetermined | Not yet categorized |
+**Status categories** (since 2026-10-24 taken from `scripts/analysis/data_range_census.py`'s per-byte map; the script refuses to draw if any byte falls in no bucket):
+| Color       | Category                  | Description                                                                                     |
+|-------------|---------------------------|-------------------------------------------------------------------------------------------------|
+| Green       | Assembly code             | census bucket CODE: instruction statements                                                      |
+| Light Green | Compiled C                | data whose every line is an `.incbin` of byte-exact clang output (`<tree>/includes/generated/`) |
+| Blue        | Data, purpose explained   | census grade KNOWN-A: purpose stated, evidence cited                                            |
+| Cyan        | Data, named               | census grade KNOWN-B: descriptive name and header                                               |
+| Red         | Data, purpose unexplained | census grade UNKNOWN                                                                            |
+| Gray        | Filler                    | census grade FILLER: verified uniform fill, >= 16 B                                             |
 
 **Regeneration triggers:**
 - After disassembling new code sections
@@ -359,13 +366,13 @@ This is a strict policy to prevent documentation from becoming outdated as symbo
 1. **Before committing documentation changes**, verify that all symbol names mentioned exist in the assembly:
    ```bash
    # Search for a symbol in the assembly
-   grep -n "SYMBOL_NAME" maincpu/kn5000_v10_program.s
+   command grep -rn "SYMBOL_NAME" v10/maincpu/
    ```
 
 2. **When renaming symbols in assembly**, search documentation for the old name:
    ```bash
    # Find all references in documentation
-   grep -rn "OLD_SYMBOL_NAME" ../technics-docs/ maincpu/ subcpu/ table_data/ hdae5000/
+   command grep -rn "OLD_SYMBOL_NAME" ../technics-docs/ v10/ v9/ v7/ v142/ subcpu/ table_data/ custom_data/ hdae5000/ docs/ notes/
    ```
 
 3. **Common symbol categories to check:**
@@ -380,7 +387,7 @@ This is a strict policy to prevent documentation from becoming outdated as symbo
 
 5. **When in doubt**, grep the assembly for the address to find the current label:
    ```bash
-   grep "FC4489\|0xFC4489" maincpu/*.s  # Find label at address 0xFC4489
+   grep -i ' 00FC4489$' symbols/maincpu_v10_symbols_reference.txt  # label at 0xFC4489 (sources carry no address comments)
    ```
 
 **This policy exists because stale symbol names in documentation cause confusion and make it harder for contributors to navigate between docs and source code.**
@@ -441,10 +448,10 @@ asking. The archived issues are at
 
 The task list is:
 - Versioned via `.beads/issues.jsonl` in git (single source of truth)
-- Exported to the website via `make issues` (reads JSONL directly)
-- Visible at `/issues/` on the documentation site
+- No longer published on the website (technics-docs f6fcaa6, 2026-09-04, retired the `/issues/` page;
+  `make issues` refuses); `python3 scripts/build/export_issues_to_website.py OUT.md` renders it to Markdown
 
-**Quick access:** read `.beads/issues.jsonl`, or see `../technics-docs/issues.md` for the web version.
+**Quick access:** read `.beads/issues.jsonl`.
 
 ### Disassembly Quality Standards (MANDATORY)
 
@@ -766,7 +773,7 @@ This is a strict policy to maintain consistency across all ROM components and en
    ```
 
 4. **Documentation requirement:**
-   - Add comments noting cross-ROM references: `; Cross-ref: maincpu/kn5000_v10_program.asm`
+   - Add comments noting cross-ROM references: `; Cross-ref: v10/maincpu/kn5000_v10_program.s`
    - Document the purpose of the call/reference if known
    - Update both assembly files to maintain bidirectional awareness
 
@@ -1048,7 +1055,8 @@ echo "XX XX XX XX" | xxd -r -p > /tmp/bytes.bin
 
 **Reference files available:**
 - `original_ROMs/kn5000_subcpu_boot.ic30.unidasm` - Sub CPU boot ROM
-- `original_ROMs/kn5000_v10_program.ic9.unidasm` - Main CPU ROM (if available)
+- `original_ROMs/kn5000_v10_program.rom.unidasm` - Main CPU ROM v10
+- `original_ROMs/kn5000_subprogram_v142.rom.unidasm` - Sub CPU payload v1.42
 - `original_ROMs/hd-ae5000_v2_06i.ic4.unidasm` - HDAE5000 expansion ROM
 
 **Note:** unidasm provides a linear disassembly without distinguishing code from data. Manual analysis is still required to identify routine boundaries, data tables, and add meaningful labels/comments.
@@ -1215,9 +1223,9 @@ When encountering disputed interpretations:
 3. **Add investigation items** - document what research would resolve the dispute
 4. **Update when resolved** - move to confirmed findings once agreement is reached
 
-| Topic | Status | Claude's View | Human's Concern | Details |
-|-------|--------|---------------|-----------------|---------|
-| **Preset Data Destination** | 🟡 PARTIALLY RESOLVED | LZSS preset data (~33KB) goes to Sub CPU 0xF000+ | Transfer sizes don't match, fallback produces invalid data | `table_data/preset_data.asm`, `../technics-docs/lzss-compression.md` |
+| Topic                       | Status               | Claude's View                                    | Human's Concern                                            | Details                                                                                                  |
+|-----------------------------|----------------------|--------------------------------------------------|------------------------------------------------------------|----------------------------------------------------------------------------------------------------------|
+| **Preset Data Destination** | 🟡 PARTIALLY RESOLVED | LZSS preset data (~33KB) goes to Sub CPU 0xF000+ | Transfer sizes don't match, fallback produces invalid data | `table_data/kn5000_table_data.s` (`Compressed_Preset_Data_LZSS`), `../technics-docs/lzss-compression.md` |
 
 **Resolved: Address 0x3E0000 Mapping**
 - [x] ~~Trace what `0x3E0000` actually maps to during boot~~ → **Custom Data Flash** (not Table Data ROM)
@@ -1237,30 +1245,32 @@ When encountering disputed interpretations:
 
 ### ROM Components
 
-| Component | Authoritative source | Byte-match | Not `.incbin` |
-|---|---|---|---|
-| maincpu v10 | `v10/maincpu/kn5000_v10_program.s` | 100.00% | 59.0% |
-| maincpu v9 | `v9/maincpu/kn5000_v9_program.s` | 100.00% | 59.0% |
-| maincpu v7 | `v7/maincpu/kn5000_v7_program.s` | 100.00% | 52.5% |
-| subcpu payload v142 | `v142/subcpu/kn5000_subprogram_v142.s` | 100.00% | 100.0% |
-| subcpu boot (IC30) | `subcpu/boot/kn5000_subcpu_boot.s` | 100.00% | 100.0% |
-| table_data | `table_data/kn5000_table_data.s` | 100.00% | 46.9% |
-| custom_data (IC19) | `custom_data/kn5000_custom_data.s` | 100.00% | 36.3% |
-| hdae5000 | `hdae5000/hd-ae5000_v2_06i.s` | 100.00% | 40.3% |
+| Component           | Authoritative source                   | Byte-match | Source (not verbatim) | Verbatim blob |
+|---------------------|----------------------------------------|------------|-----------------------|---------------|
+| maincpu v10         | `v10/maincpu/kn5000_v10_program.s`     | 100.00%    | 100.0%                | 0 B           |
+| maincpu v9          | `v9/maincpu/kn5000_v9_program.s`       | 100.00%    | 100.0%                | 0 B           |
+| maincpu v7          | `v7/maincpu/kn5000_v7_program.s`       | 100.00%    | 99.7%                 | 6,591 B       |
+| subcpu payload v142 | `v142/subcpu/kn5000_subprogram_v142.s` | 100.00%    | 100.0%                | 0 B           |
+| subcpu boot (IC30)  | `subcpu/boot/kn5000_subcpu_boot.s`     | 100.00%    | 100.0%                | 0 B           |
+| table_data          | `table_data/kn5000_table_data.s`       | 100.00%    | 84.8%                 | 318,468 B     |
+| custom_data (IC19)  | `custom_data/kn5000_custom_data.s`     | 100.00%    | 100.0%                | 0 B           |
+| hdae5000            | `hdae5000/hd-ae5000_v2_06i.s`          | 100.00%    | 100.0%                | 0 B           |
 
-The two columns answer different questions and must not be conflated. **Byte-match** is
-`python scripts/build/compare_roms.py`; measured 2026-08-21 it printed `romset bytematch:
-100.00%` with all nine LLVM sections at 100.00%. (The ninth, `subcpu v142 update image`,
+The two kinds of column answer different questions and must not be conflated. **Byte-match** is
+`python scripts/build/compare_roms.py`; measured 2026-10-24 it printed `romset bytematch:
+100.00%` with all nine LLVM sections at 100.00% (the certifying gate is `make gate`,
+`scripts/analysis/assert_byte_identical.py`). (The ninth, `subcpu v142 update image`,
 has no source row of its own. `DISASSEMBLY_PLAN.md`'s standing invariant counts **15**
 sections; the extra six are the legacy ASL mirror builds, which only run when their
 `.rebuilt.rom` artefacts are present in `rebuilt_ROMs/`.)
 
-**Not `.incbin`** is `python3 scripts/analysis/kn5000_source_coverage.py`, measured
-2026-08-21: the share of ROM bytes that do *not* enter the build through an `.incbin`.
-Read it with the script's own `of which C` column, because compiled C counts on the
-`.incbin` side, not the source side: of maincpu v10's 860,028 `.incbin` bytes, 855,100 are
-byte-exact recompiled C and only 4,928 (0.23% of the ROM) are a raw blob. So a low figure
-here does not mean "unexplained". Two further caveats: on 2026-08-21 the v7 row was flattered by
+**Source** and **Verbatim blob** are `python3 scripts/analysis/kn5000_source_coverage.py`,
+measured 2026-10-24: the script splits every ROM byte into assembly, typed data (including
+`.incbin`s that a committed generator rebuilds from checked-in source), clang-compiled C and
+verbatim blob (an `.incbin` nothing regenerates); "source" is everything but the blob.
+(Until 2026-10 this column was "Not `.incbin`", measured 2026-08-21, when maincpu v10 still
+held 855,100 B of recompiled C behind `.incbin`; the same script now counts 9,270 B of C
+there.) Two further caveats: on 2026-08-21 the v7 row was flattered by
 `scripts/build/extract_v7_bins.py`, which then copied 842,796 B of the v7 ROM into its own
 "source" at build time (703,693 B of that reproduced by no source at all). Re-measured
 2026-10-03, `kn5000_source_coverage.py` counts 8,181 B of v7 as verbatim debt, and
@@ -1276,7 +1286,7 @@ See `../technics-docs/rom-reconstruction.md` for the narrative breakdown.
 
 ### Key Files
 
-- **tmp94c241.inc**: Macros for TMP94C241F instructions not natively supported by ASL (which only supports TMP96C141). These encode raw byte sequences for unsupported opcodes like LDI, LDIR, MUL/DIV variants, and shift operations.
+- **archive/asl/tmp94c241.inc** (archived with the ASL sources): Macros for TMP94C241F instructions not natively supported by ASL (which only supports TMP96C141). These encode raw byte sequences for unsupported opcodes like LDI, LDIR, MUL/DIV variants, and shift operations.
 
 - **scripts/build/compare_roms.py**: Post-build verification that compares rebuilt ROMs byte-by-byte against originals in `original_ROMs/` and reports match percentage.
 
@@ -1286,7 +1296,7 @@ See `../technics-docs/rom-reconstruction.md` for the narrative breakdown.
 
 - `original_ROMs/`: Original firmware dumps and reference disassembly (`.unidasm` files)
 - `rebuilt_ROMs/`: Build output (created by make)
-- `maincpu/images/`, `maincpu/includes/`: Binary image data included in main CPU ROM
+- `v10/maincpu/images/`, `v10/maincpu/includes/` (and the `v9/`, `v7/` twins): Binary image data included in main CPU ROM
 - `table_data/images/`: BMP assets for feature demo
 - `hdae5000/`: HDAE5000 hard disk expansion ROM disassembly
 - `docs/`: Protocol analysis notes (control panel serial communication)

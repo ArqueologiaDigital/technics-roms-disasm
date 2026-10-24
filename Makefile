@@ -927,28 +927,46 @@ rebuilt_ROMs/kn5000_custom_data.llvm.rom: rebuilt_ROMs/kn5000_custom_data.llvm.e
 # ============================================================================
 # LLVM conversion targets (regenerate .s from ASL sources)
 # ============================================================================
-# These targets convert ASL .asm sources to LLVM .s files using the converter.
-# Only needed when ASL sources change; the .s files are the authoritative source.
+# These targets convert the ARCHIVED ASL .asm sources to LLVM .s files and write
+# them OVER the authoritative trees (v10/maincpu, v142/subcpu, subcpu/boot,
+# hdae5000, table_data, custom_data).  archive/asl/ is the pre-rename snapshot
+# taken when LLVM became authoritative (38e7d9f): running any of these would
+# replace every semantic label, comment and C conversion made since with the old
+# LABEL_* text.  They are kept only for archaeology and refuse to run unless
+# ALLOW_ASL_RECONVERT=1 is given on the command line -- and then only inside a
+# throw-away worktree.
 
-llvm-convert: scripts/converters/asl_to_llvm.py archive/asl/maincpu/kn5000_v10_program.asm archive/asl/tmp94c241.inc
+.PHONY: llvm-convert-subcpu llvm-convert-boot llvm-convert-hdae5000 llvm-convert-tabledata llvm-convert-customdata
+.PHONY: asl-reconvert-guard
+asl-reconvert-guard:
+ifneq ($(ALLOW_ASL_RECONVERT),1)
+	@echo "REFUSED: llvm-convert* regenerates the authoritative .s trees from the archived," >&2
+	@echo "pre-rename ASL sources in archive/asl/ and would overwrite all work done since the" >&2
+	@echo "LLVM sources became authoritative.  The .s files are edited directly now." >&2
+	@echo "If you really want the old conversion (archaeology, in a scratch worktree), run:" >&2
+	@echo "    make ALLOW_ASL_RECONVERT=1 $(MAKECMDGOALS)" >&2
+	@exit 1
+endif
+
+llvm-convert: asl-reconvert-guard scripts/converters/asl_to_llvm.py archive/asl/maincpu/kn5000_v10_program.asm archive/asl/tmp94c241.inc
 	python scripts/converters/asl_to_llvm.py archive/asl/maincpu/kn5000_v10_program.asm --output-dir v10/maincpu
 
-llvm-convert-subcpu: scripts/converters/asl_to_llvm.py archive/asl/subcpu/kn5000_subprogram_v142.asm archive/asl/tmp94c241.inc rebuilt_ROMs/kn5000_subprogram_v142.full
+llvm-convert-subcpu: asl-reconvert-guard scripts/converters/asl_to_llvm.py archive/asl/subcpu/kn5000_subprogram_v142.asm archive/asl/tmp94c241.inc rebuilt_ROMs/kn5000_subprogram_v142.full
 	python scripts/converters/asl_to_llvm.py archive/asl/subcpu/kn5000_subprogram_v142.asm --rom-base 0x0400 --rom-size 0x3EB00 --rom-file rebuilt_ROMs/kn5000_subprogram_v142.full --output-dir v142/subcpu
 
-llvm-convert-boot: scripts/converters/asl_to_llvm.py archive/asl/subcpu/boot/kn5000_subcpu_boot.asm archive/asl/tmp94c241.inc
+llvm-convert-boot: asl-reconvert-guard scripts/converters/asl_to_llvm.py archive/asl/subcpu/boot/kn5000_subcpu_boot.asm archive/asl/tmp94c241.inc
 	python scripts/converters/asl_to_llvm.py archive/asl/subcpu/boot/kn5000_subcpu_boot.asm --rom-base 0xFE0000 --rom-size 0x20000 --rom-file original_ROMs/kn5000_subcpu_boot.ic30 --output-dir subcpu/boot
 
-llvm-convert-hdae5000: scripts/converters/asl_to_llvm.py archive/asl/hdae5000/hd-ae5000_v2_06i.asm archive/asl/tmp94c241.inc
+llvm-convert-hdae5000: asl-reconvert-guard scripts/converters/asl_to_llvm.py archive/asl/hdae5000/hd-ae5000_v2_06i.asm archive/asl/tmp94c241.inc
 	python scripts/converters/asl_to_llvm.py archive/asl/hdae5000/hd-ae5000_v2_06i.asm --rom-base 0x280000 --rom-size 0x80000 --rom-file original_ROMs/hd-ae5000_v2_06i.ic4 --output-dir hdae5000
 
-llvm-convert-tabledata: scripts/converters/asl_to_llvm.py archive/asl/table_data/kn5000_table_data.asm archive/asl/tmp94c241.inc
+llvm-convert-tabledata: asl-reconvert-guard scripts/converters/asl_to_llvm.py archive/asl/table_data/kn5000_table_data.asm archive/asl/tmp94c241.inc
 	python scripts/converters/asl_to_llvm.py archive/asl/table_data/kn5000_table_data.asm --rom-base 0x800000 --rom-size 0x200000 --rom-file original_ROMs/kn5000_table_data.rom --output-dir table_data
 
-llvm-convert-customdata: scripts/converters/asl_to_llvm.py archive/asl/custom_data/kn5000_custom_data.asm archive/asl/tmp94c241.inc
+llvm-convert-customdata: asl-reconvert-guard scripts/converters/asl_to_llvm.py archive/asl/custom_data/kn5000_custom_data.asm archive/asl/tmp94c241.inc
 	python scripts/converters/asl_to_llvm.py archive/asl/custom_data/kn5000_custom_data.asm --rom-base 0x300000 --rom-size 0x100000 --rom-file original_ROMs/kn5000_custom_data.ic19 --output-dir custom_data
 
-llvm-convert-all: llvm-convert llvm-convert-subcpu llvm-convert-boot llvm-convert-hdae5000 llvm-convert-tabledata llvm-convert-customdata
+llvm-convert-all: asl-reconvert-guard llvm-convert llvm-convert-subcpu llvm-convert-boot llvm-convert-hdae5000 llvm-convert-tabledata llvm-convert-customdata
 
 # ============================================================================
 # Legacy ASL build targets (archived sources)
@@ -1137,17 +1155,29 @@ rebuilt_ROMs/hd-ae5000_v2_06i.rebuilt.rom: rebuilt_ROMs/hd-ae5000_v2_06i.rebuilt
 # ============================================================================
 # Documentation website targets
 # ============================================================================
-DOCS_DIR=../technics-docs
+# The website checkout (override: make rom-status DOCS_DIR=/abs/path/technics-docs,
+# e.g. from a worktree, where ../technics-docs does not exist).
+DOCS_DIR ?= ../technics-docs
 DOCS_GALLERY=$(DOCS_DIR)/assets/images/gallery
 
 gallery:
 	python scripts/build/convert_images.py $(DOCS_GALLERY)
 
+# Retired.  This target used to cd into a different project (kn5000_project) and
+# export ITS issues.jsonl, not this repo's.  The website has had no issues page
+# since technics-docs f6fcaa6 (2026-09-04, "Retire the frozen issue-tracker
+# dump"); its CLAUDE.md says there should not be one.  The task list is
+# .beads/issues.jsonl, read directly.  scripts/build/export_issues_to_website.py
+# still renders it to a Markdown file named on its command line.
 issues:
-	cd $(PROJECTS_ROOT)/kn5000_project && python scripts/export_issues_to_website.py $(DOCS_DIR)/issues.md
+	@echo "REFUSED: the website has no issues page since technics-docs f6fcaa6 (2026-09-04)." >&2
+	@echo "Read .beads/issues.jsonl directly, or render it to a file of your choice with:" >&2
+	@echo "    python3 scripts/build/export_issues_to_website.py OUT.md" >&2
+	@exit 1
 
+# Classes come from scripts/analysis/data_range_census.py (see the script's docstring).
 rom-status:
-	python scripts/build/generate_rom_status_diagram.py
+	python3 scripts/build/generate_rom_status_diagram.py --docs-dir $(DOCS_DIR)
 
 # Code-coverage evidence ledger (CLAUDE.md "Code-Coverage Evidence Ledger"): rebuild the address maps in scratch,
 # compare with the newest committed snapshot (exit 1 if a figure rose), then write today's snapshot to docs/coverage/.
@@ -1161,7 +1191,7 @@ dispatch-census:
 semantic-score:
 	python3 scripts/analysis/semantic_score.py
 
-website: gallery issues rom-status
+website: gallery rom-status
 	@echo "Website content updated. Don't forget to commit technics-docs."
 
 # ============================================================================

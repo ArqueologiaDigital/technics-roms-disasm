@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
-"""kn5000_source_coverage.py -- a trustworthy territorial-debt inventory for all 13
-gated images (9 KN5000 + 4 WSA1R).
+"""kn5000_source_coverage.py -- a trustworthy territorial-debt inventory for the 13
+gated images (9 KN5000 + 4 WSA1R).  It prints 12 rows: the compressed v1.42 update
+image is gated but not measured on its own, being the v1.42 payload recompressed.
 
 QUESTION ANSWERED: for each gated ROM, how many bytes enter the byte-exact build as
 REAL source -- assembly, typed/derived data, or C compiled byte-exact by clang -- and
@@ -554,6 +555,11 @@ def main():
         row = report_row(label, total, m)
         for k in grand:
             grand[k] += row[k]
+    kn = dict(grand)
+    print(f"{'KN5000 ' + str(len(ROMS)) + ' IMAGES':24s} {kn['rom']:10,d}  asm {kn['assembly']:10,d}  "
+          f"typed {kn['typed']:10,d}  clang {kn['clang']:9,d}  "
+          f"verbatim(DEBT) {kn['verbatim']:9,d}  "
+          f"{100*(kn['rom']-kn['verbatim'])/kn['rom']:5.1f}% source")
     wrows = wsa1_rows()
     print_wsa1(wrows)
     for r in wrows.values():
@@ -561,7 +567,7 @@ def main():
         grand["assembly"] += r["assembly"]
         grand["typed"] += r["typed"]
         grand["verbatim"] += r["verbatim"]
-    print(f"\n{'ALL 13 IMAGES':24s} {grand['rom']:10,d}  asm {grand['assembly']:10,d}  "
+    print(f"\n{'ALL ' + str(len(ROMS) + len(wrows)) + ' IMAGES':24s} {grand['rom']:10,d}  asm {grand['assembly']:10,d}  "
           f"typed {grand['typed']:10,d}  clang {grand['clang']:9,d}  "
           f"verbatim(DEBT) {grand['verbatim']:9,d}  "
           f"{100*(grand['rom']-grand['verbatim'])/grand['rom']:5.1f}% source")
