@@ -240,6 +240,7 @@ lane's gate is `make gate-wsa1` and not `make gate-all`.
   320x120, 320x125, 320x240, **318,468 B** total. They are already image files
   in the source with no transform to invert, so there is nothing for a PNG
   round trip to add.
+  **Superseded 2026-10-24:** `scripts/build/ftbmp_images.py` now round-trips these six BMPs (each `FTBMPnn.BMP` is built from a committed `FTBMPnn.png` plus `table_data/images/ftbmp_headers.json`; `make verify-ftbmp` checks it against the ROM), and `kn5000_source_coverage.py` counts table data's verbatim bytes as 0. See `notes/table-data-bmp-lane-2026-09-02.md` for why the decision changed.
 * `python3 scripts/analysis/l4_find_unrecognised_images.py` examines 72 opaque
   blobs at 16 candidate widths and returns **6** that are image-like and
   control-clean — all in `v7/maincpu/includes/romslices/`, scores 0.462 to

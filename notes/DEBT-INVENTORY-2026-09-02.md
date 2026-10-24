@@ -174,6 +174,8 @@ uncompressed Windows BMPs, viewable in any image tool, and a round-trip
 generator would add machinery to discard the artefact Technics's own toolchain
 shipped. **v7's 120,666 B is the only genuine verbatim debt left in the tree.**
 
+> **Superseded 2026-10-24:** `scripts/build/ftbmp_images.py` now round-trips these six BMPs (each `FTBMPnn.BMP` is built from a committed `FTBMPnn.png` plus `table_data/images/ftbmp_headers.json`; `make verify-ftbmp` checks it against the ROM), and `kn5000_source_coverage.py` counts table data's verbatim bytes as 0. See `notes/table-data-bmp-lane-2026-09-02.md` for why the decision changed.
+
 ★ The lesson is not the arithmetic. A summary table at the top of a document
 disagreed with the document's own body for a day, and it was the *table* that
 got quoted onward — into the docs website and into a session report — because it
@@ -422,6 +424,7 @@ wsa1/prom_c, wsa1/prom_d. Remaining, in order:
   already said so. The remaining 17,570 B is a documented stale remnant.
   **Real verbatim debt is therefore 225,670 B, not 544,138 B**, and v7 — not
   table_data — is the largest genuine block in the tree.
+  **Superseded 2026-10-24:** `scripts/build/ftbmp_images.py` now round-trips these six BMPs (each `FTBMPnn.BMP` is built from a committed `FTBMPnn.png` plus `table_data/images/ftbmp_headers.json`; `make verify-ftbmp` checks it against the ROM), and `kn5000_source_coverage.py` counts table data's verbatim bytes as 0. See `notes/table-data-bmp-lane-2026-09-02.md` for why the decision changed.
 * **v7 123,927 B** — 272 live `romslices/*.bin` transplants plus 2 raw patches,
   itemised by `scripts/analysis/v7_no_source_bytes.py`. The mechanical
   pointer-table technique is EXHAUSTED (0 candidates remain).

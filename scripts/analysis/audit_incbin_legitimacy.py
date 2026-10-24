@@ -14,7 +14,8 @@ Categories, and why each is legitimate:
     images/                    rebuilt from a committed PNG or palette text by one of the
                                round-trip converters in scripts/build/
     section_*                  style banks rebuilt from committed .styles event listings
-    FTBMP                      genuine Windows BMP files, stored verbatim by the firmware
+    FTBMP                      genuine Windows BMP files the firmware reads whole, rebuilt
+                               from a committed PNG + header JSON by ftbmp_images.py
     stale_*.bin (help_databases/) the two former icons_to_strings.bin remnants (stale German
                                help DB body + the English DB's duplicated tail), now DERIVED
                                from the live help_db_english/german_compressed.bin build
@@ -44,7 +45,7 @@ RULES = [
     (('stale_style_records_residue.bin', 'stale_help_db_german_head.bin'),
      'derived from the live help_db_*_compressed.bin build products'),
     (('demo_preset', 'help_db'), 'compressed, codec has a committed encoder'),
-    (('FTBMP',), 'genuine Windows BMP stored verbatim'),
+    (('FTBMP',), 'Windows BMP rebuilt from a committed PNG + header JSON'),
     (('images/',), 'rebuilt from a committed PNG or palette text'),
     (('section_',), 'style bank rebuilt from committed .styles'),
     (('icons_to_strings.bin',), 'SLIDE8K remnant, compressed and documented'),

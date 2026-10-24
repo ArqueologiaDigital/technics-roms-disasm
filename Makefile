@@ -39,7 +39,7 @@ CLANG=$(LLVM_BIN)/clang
 .PHONY: decompress-demo-presets rebuild-demo-presets verify-demo-presets demo-midi demo-sidecars
 .PHONY: style-events style-midi verify-style-midi
 .PHONY: decompress-help-databases rebuild-help-databases verify-help-databases
-.PHONY: verify-stale-help-duplicate
+.PHONY: verify-stale-help-duplicate verify-ftbmp
 .PHONY: audit-icons-blob
 .PHONY: dsp dsp-verify dsp-flowcharts
 
@@ -903,8 +903,25 @@ rebuilt_ROMs/hd-ae5000_v2_06i.llvm.elf: rebuilt_ROMs/hd-ae5000_v2_06i.llvm.o hda
 rebuilt_ROMs/hd-ae5000_v2_06i.llvm.rom: rebuilt_ROMs/hd-ae5000_v2_06i.llvm.elf
 	$(LLVM_OBJCOPY) -O binary $< $@
 
+# The six Feature Demo BMPs (FTBMP01..06.BMP) are built from their committed PNGs
+# plus the header fields in ftbmp_headers.json; scripts/build/ftbmp_images.py
+# `verify` asserts the round trip against the committed .BMP and the ROM.  The
+# .BMP files stay tracked as a build cache, like Wallpaper_*.bin, so they are named
+# here as real outputs (not behind the output-less `tabledata-images`): an edited
+# PNG makes them, and then the table_data object, out of date.  `build` touches an
+# output whose bytes did not change, so a checkout's mtime order cannot make this
+# rule rerun on every invocation.
+FTBMP_BMPS = $(foreach n,1 2 3 4 5 6,table_data/images/FTBMP0$(n).BMP)
+FTBMP_SRC  = $(FTBMP_BMPS:.BMP=.png) table_data/images/ftbmp_headers.json
+
+$(FTBMP_BMPS) &: $(FTBMP_SRC) scripts/build/ftbmp_images.py
+	python3 scripts/build/ftbmp_images.py build
+
+verify-ftbmp:
+	python3 scripts/build/ftbmp_images.py verify
+
 # --- Table data ---
-rebuilt_ROMs/kn5000_table_data.llvm.o: $(TABLEDATA_SRC) $(DEMO_PRESET_COMPRESSED) $(HELP_DB_COMPRESSED) $(STALE_HELP_DUPLICATE) tabledata-images $(TABLEDATA_IMAGE_SRC) $(INDEXED_IMAGE_SRC) $(STYLE_EVENT_BINS) $(LLVM_MC)
+rebuilt_ROMs/kn5000_table_data.llvm.o: $(TABLEDATA_SRC) $(DEMO_PRESET_COMPRESSED) $(HELP_DB_COMPRESSED) $(STALE_HELP_DUPLICATE) tabledata-images $(TABLEDATA_IMAGE_SRC) $(INDEXED_IMAGE_SRC) $(STYLE_EVENT_BINS) $(FTBMP_BMPS) $(LLVM_MC)
 	mkdir -p rebuilt_ROMs
 	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I table_data -o $@ table_data/kn5000_table_data.s
 

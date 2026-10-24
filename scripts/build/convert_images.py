@@ -179,7 +179,22 @@ IMAGE_METADATA = {
     "Wallpaper_0.bin": (320, 240, 8, "Preset wallpaper 0 (gradient)"),
     # Entry 1: 0x900000-0x912C00 in table_data ROM
     "Wallpaper_1.bin": (320, 240, 8, "Preset wallpaper 1 (gradient)"),
+
+    # Feature Demo slide images from table_data ROM (Feature_Bitmap_1..6 at
+    # 0x880418..0x8BAFE6). These are complete Windows BMP files carrying their
+    # own 256-entry palette, so they are converted with that palette, not the
+    # maincpu one; their committed source is FTBMPnn.png + ftbmp_headers.json
+    # (scripts/build/ftbmp_images.py).
+    "FTBMP01.BMP": (320, 240, 8, "Feature Demo: 'Technics' wordmark over a world-map globe"),
+    "FTBMP02.BMP": (320, 130, 8, "Feature Demo: keyboard from above, coloured rings at its speakers"),
+    "FTBMP03.BMP": (320, 120, 8, "Feature Demo: a fan of floppy disks"),
+    "FTBMP04.BMP": (320, 120, 8, "Feature Demo: floppy disks going into the disk drive"),
+    "FTBMP05.BMP": (320, 125, 8, "Feature Demo: keyboard circled by two curved arrows"),
+    "FTBMP06.BMP": (320, 240, 8, "Feature Demo: 'KN5000' and a rainbow comet over a starfield"),
 }
+
+# Images stored as self-describing Windows BMP files (header + own palette).
+BMP_FILE_IMAGES = {name for name in IMAGE_METADATA if name.endswith(".BMP")}
 
 
 def convert_1bit_image(data: bytes, width: int, height: int) -> Image.Image:
@@ -272,6 +287,15 @@ def convert_image(bin_path: Path, output_dir: Path, palette: list = None) -> boo
     width, height, bit_depth, description = meta[:4]
     row_stride = meta[4] if len(meta) > 4 else None
 
+    if filename in BMP_FILE_IMAGES:
+        img = Image.open(bin_path)
+        if img.size != (width, height):
+            print(f"  Warning: {filename} is {img.size[0]}x{img.size[1]}, metadata says {width}x{height}")
+        output_name = bin_path.stem + ".png"
+        img.convert('RGB').save(output_dir / output_name)
+        print(f"  Converted: {filename} -> {output_name} ({width}x{height}, own BMP palette)")
+        return True
+
     with open(bin_path, 'rb') as f:
         data = f.read()
 
@@ -361,7 +385,7 @@ def main():
         print(f"=== {dir_name} Images ===")
         print(f"Source: {images_dir}")
 
-        bin_files = sorted(images_dir.glob("*.bin"))
+        bin_files = sorted(images_dir.glob("*.bin")) + sorted(images_dir.glob("*.BMP"))
         converted = 0
         skipped = 0
 

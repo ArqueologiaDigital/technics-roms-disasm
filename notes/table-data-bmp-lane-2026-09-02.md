@@ -1,6 +1,35 @@
 # Lane BMP -- table_data's six FTBMP files are already in their best form
 (2026-09-02)
 
+> **Superseded 2026-10-24 (lane tabledata-ftbmp).** The round trip this note
+> argued against now exists: `scripts/build/ftbmp_images.py` rebuilds each
+> `FTBMPnn.BMP` from `table_data/images/FTBMPnn.png` (palette indices; the PNG's
+> PLTE is the BMP's 256 entries in their original order) and
+> `table_data/images/ftbmp_headers.json` (every header field), and `verify`
+> compares the result with both the committed `.BMP` and the ROM span. The point
+> below about viewability still holds -- a BMP was already viewable. What changed
+> is the owner's choice of source form: the six files now follow the same
+> PNG-is-the-source rule as the other table_data images, the header values
+> become reviewable data that `build` checks against the PNG's size, and
+> `kn5000_source_coverage.py` stops counting 318,468 B of table data as verbatim
+> debt. The `.BMP` files stay committed as a build cache, so the genuine artefact
+> is still in the tree and the byte gate still proves it unchanged.
+>
+> **Measured figures (correction).** Commit 2af96807f's message quoted the table
+> data split as "typed 1,128,304 -> 1,446,772" (and the lane report added asm
+> 650,380). Those absolute numbers do not reproduce; most likely they were read
+> on a tree whose generated includes had not been built yet. After `make -j3 gate` (which runs `make all`),
+> `python3 scripts/analysis/kn5000_source_coverage.py` prints:
+>
+> | tree                          | table data asm | typed     | verbatim(DEBT) | source | ALL 13 verbatim |
+> |-------------------------------|----------------|-----------|----------------|--------|-----------------|
+> | main @ ea51f2d51 (before)     | 103,271        | 1,675,413 | 318,468        | 84.8%  | 325,059         |
+> | wave1/tabledata-ftbmp (after) | 103,271        | 1,993,881 | 0              | 100.0% | 6,591           |
+>
+> The delta (+318,468 B typed, -318,468 B verbatim) and the percentages quoted
+> in that commit message were right. (main @ ea51f2d51 is ahead of this branch's
+> base 908218944 only by notes and kn7000/ commits; no table data byte differs.)
+
 LLVM: tlcs900_backend@dbb72df07371 (dbb72df073711ef98be1e41f003e04a7022bf120)
 
 ## Question this answers
