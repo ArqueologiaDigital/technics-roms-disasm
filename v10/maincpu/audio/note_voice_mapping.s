@@ -28493,6 +28493,9 @@ Sprintf_OutputCallback:
 	ld	(xwa), 0
 	ret
 
+; C free(p): returns a Malloc block to the address-ordered free list at 0x3d52c, under kernel
+; semaphore 1, merging it with the free neighbours it touches.
+;   In:  stack +4 = p (0 is ignored).  A block already on the list is left alone.
 Free:
 	ld xwa, (xsp + 4)
 	or xwa, xwa
@@ -28911,6 +28914,10 @@ Mem_Compare_Block4:
 	djnz16 de, Mem_Compare_Block4
 	ret
 
+; C memcpy(dst, src, n): copies n bytes and returns dst in XHL.
+;   In:  stack +4 = dst, +8 = src (u32), +12 = n (u16).  Returns at once when n = 0 or dst = src.
+;   Copies one byte first when dst is odd, then words (LDIRW), then a trailing odd byte; the
+;   copy runs upwards, so overlapping moves to a higher address are not safe.
 Mem_Copy:
 	ld bc, (xsp + 12)
 	ld xhl, (xsp + 4)
@@ -29064,6 +29071,12 @@ Strchr_Loop:
 	ld	xhl, 0:i3
 	ret
 
+; C malloc(n): first-fit allocation from the free list at 0x3d52c, under kernel semaphore 1.
+;   In:  stack +4 = n (u16, rounded up to even).  Out: XHL = block, or 0 when nothing fits and
+;        Heap_Alloc cannot extend the heap.
+;   Free blocks carry a 6-byte header {next (u32), size (u16)}; a block is split when at least
+;   10 bytes would remain.  When the list has no fit the block is carved from the heap top
+;   (Heap_Alloc).  The returned pointer is just past the header, which Free reads back.
 Malloc:
 	dec 6, xsp
 	push xiz
@@ -29176,6 +29189,10 @@ Strcmp:
 	pop xiz
 	ret
 
+; C strcpy(dst, src): copies the NUL-terminated string at src to dst and returns dst in XHL.
+;   In:  stack +4 = dst, +8 = src (caller pops).
+;   Implemented as Sprintf_StringNSearch(dst, src, 0, 0xfffe) (memccpy); when no NUL is found
+;   within 0xfffe bytes it writes a NUL at dst+0xffff.
 Strcpy:
 	push xiz
 	pushw 0xfffe
@@ -29298,6 +29315,9 @@ Itoa_WithBase:
 	lda xsp, (xsp + 10)
 	ret
 
+; C memset(dst, c, n): fills n bytes with c and returns dst in XHL.
+;   In:  stack +4 = dst, +8 = c (byte), +10 = n (u16).
+;   Byte stores up to a 4-byte boundary, then long-word stores, then the tail bytes.
 Memset:
 	ld bc, (xsp + 10)
 	ld xhl, (xsp + 4)

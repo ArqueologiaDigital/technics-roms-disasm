@@ -10517,6 +10517,11 @@ VoiceSlot_AdvancePointer:
 	pop xiy
 	ret
 
+; Reads the current parameter byte of the voice selected for the part number at 0xeee.
+;   The record is (word at 0xc9e + 2*(part-1), minus 1) * 256 + the u32 base at 0x1d5a; its
+;   address is stored at 0x10fd (VoiceSlot_UpdateCurrentPointer).  The byte index is the byte
+;   at 0xcbe + (part-1).
+;   Out: WA = the byte (W = 0), XHL = the record, IZ = 2*(part-1).
 VoiceSlot_ReadCurrentParams:
 	call VoiceSlot_ComputeWordIndex
 	push xde
@@ -10536,6 +10541,11 @@ VoiceSlot_ReadCurrentParams:
 	xor w, w
 	ret
 
+; Peeks the byte one past the current part's read position (offset word 0xdf5 = 1, then
+; VoiceSlot_FlagCheckDone).  The position is a block number (word at 0xc9e + 2*(part-1)) in a
+; chain of 256-byte blocks based at the u32 at 0x1d5a, and an index (byte at 0xcbe + part-1);
+; the part number is the byte at 0xeee.  Past the end of a block it reads byte 5 of the next
+; block (link word at +3); with no next block (0xffff) it returns W = 0xff.  Out: A = the byte.
 VoiceSlot_FlagCheck:
 	ldw (3573:16), 1
 	call VoiceSlot_FlagCheckDone
@@ -11753,6 +11763,10 @@ Display_ModePopupIds:
 VoiceSlot_StatusRet_Tbl2:
 	.byte	0x00, 0x06, 0x04, 0x05, 0x03, 0x07, 0x02, 0x07, 0x01, 0x07, 0x07, 0x07
 
+; Saves the current part's voice selection into save slot A (0..7, 8 bytes each at 0xdff).
+;   Slot = {word at 0xc9e + 2*(part-1), byte +32 of the record at 0xcbe + (part-1),
+;   byte 0xd57, word 0xd58, word 0xd5a}; the part number is the byte at 0xeee.  Registers are
+;   preserved.  VoiceSlot_RestoreState writes the same fields back.
 VoiceSlot_SaveState:
 	pushw wa
 	push xhl
@@ -11786,6 +11800,9 @@ VoiceSlot_SaveState:
 	popw wa
 	ret
 
+; Restores the current part's voice selection from save slot A (0..7) written by
+; VoiceSlot_SaveState (VoiceState_RestoreEntry, VoiceState_RestoreDone).  Preserves WA, XHL,
+; XIZ and XIY.
 VoiceSlot_RestoreState:
 	pushw wa
 	push xhl

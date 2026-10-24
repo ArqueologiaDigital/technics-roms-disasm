@@ -2904,6 +2904,9 @@ UI_PostPartChangeEvent:
 	inc 2, xsp
 	ret
 
+; Requests a change to title TITLE_PS + A: removes any queued EVT_CHANGE_TITLE (DeleteEvent) and
+; posts a new one with that title to the current target (ApPostEvent).
+;   In:  A = title offset from TITLE_PS.
 UI_PostModeChangeEvent:
 	dec 2, xsp
 	ld (xsp), a
@@ -3051,6 +3054,10 @@ BoxProc_Return:
 	pop xiz
 	ret
 
+; Returns a view's client rectangle.
+;   In:  XWA = view id, XBC = 8-byte rectangle to fill.
+;   Starts from the view instance's rectangle (+14) and its frame style (+24 word), then
+;   GetClientBox2 copies it to XBC and insets it for that style.
 GetClientBox:
 	dec 8, xsp
 	push xiz

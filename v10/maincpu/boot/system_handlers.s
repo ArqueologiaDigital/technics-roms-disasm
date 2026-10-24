@@ -3487,6 +3487,9 @@ SeqBuf_SaveWritePos:
 	popw hl
 	ret
 
+; Takes the next byte from the 2048-byte ring buffer whose descriptor ends at 0x1e753
+; (Seq_RingBuf_PeekByte).  Out: HL = the byte, or 0xffff when the buffer is empty.
+;   Preserves IX and XDE.
 TempoRingBuf_ReadByte:
 	pushw ix
 	push xde

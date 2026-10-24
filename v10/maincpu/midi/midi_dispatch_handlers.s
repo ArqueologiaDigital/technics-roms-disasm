@@ -8544,6 +8544,9 @@ MidiChan_DequeueVoiceEntry_Skip:
 	ld	(xwa), 255
 	ret
 
+; Stores E at (XWA + BC) for BC = 0..15 (a compiled switch with one case per offset); any other
+; BC returns without a store.  Despite the name nothing is read.
+;   In:  XWA = base, BC = offset, E = value.
 MIDI_ReadChannelParam:
 	extz bc
 	cp bc, 0:i3

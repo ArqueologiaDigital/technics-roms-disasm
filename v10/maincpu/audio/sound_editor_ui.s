@@ -7819,6 +7819,8 @@ SeGfx_DrawStaticList:
 	pop xbc
 	pop xwa
 	ret
+; Calls GraphicsRender_Start with XWA = XIY and XBC = XIX, preserving XWA and XBC: the
+; sound-editor pages keep the display-list pointer in XIY and its argument in XIX.
 SeGfx_DrawBoundList:
 	; --- Wrapper function 2: same pattern ---
 	push xwa
@@ -8219,6 +8221,10 @@ SeTitle_StaticScreenTable:
 	.long SeTitle_UnusedSlot
 	.long SeTitle_UnusedSlot
 
+; Redraws one parameter field of the current sound-editor title.
+;   In:  stack +4 = title id (0x20..0x4f), stack +6 = field index (byte, handed to the drawer in A).
+;   Calls SeTitle_FieldDrawTable[title - 0x20], then sets bit 3 of 0xe3e2.  Every register is
+;   preserved.
 SeTitle_DrawField:
 	push xiz
 	ld xiz, xsp

@@ -919,6 +919,13 @@ SeMenu_SetFlags_Type0x4x:
 	ormi8 (xde), 0xc0
 	ret
 
+; Registers the sound editor's per-part display elements for the current page.
+;   In:  A = non-zero to load only the current part's value while SOLO (byte 0x65c) is on.
+;   Picks the part (part-parameter byte 0 when the state byte 0x6ae is 0 and the byte at 0x8d38
+;   is 0x22, else SeMenu_ValidatePartNumber), then fills a 4-byte local array from the bytes at
+;   0x6ba + part-1 (SeMenu_LoadParamByte), for parts 1..4 or for the one part.  With state 0
+;   each part gets SeMenu_RegisterElement_Extended (BC = 0x17, stack word 0x7f); otherwise two
+;   objects are set up with SeMenu_SetupDisplayObject_Alt1.
 SeMenu_SetupMenuDisplay:
 	lda xsp, (xsp - 14)
 	pushw_erp 0xfa
@@ -1052,6 +1059,11 @@ SeMenu_SetCurrentPart_Skip:
 	ld	(1629:16), 1
 	ret
 
+; Returns a selectable sound-editor part in (XWA) and makes it the current one (RAM 0x65d).
+;   In:  XWA = destination byte.
+;   The part at 0x65d is kept when it is 1..4 and enabled (SeMenu_IsPartEnabled, mask byte
+;   0x65e); a value outside 1..4 becomes 1; a disabled part is replaced by the first enabled one
+;   of 1..4, or by 1 when none is.
 SeMenu_ValidatePartNumber:
 	dec 4, xsp
 	pushw_erp 0xfa
@@ -1186,6 +1198,8 @@ SeMenu_IsPartEnabled_CheckMask:
 	scc16 nz, hl
 	ret
 
+; Stores C in byte WA of the sound-editor part parameter block at 0x660.
+;   In:  WA = parameter index, C = value.  Counterpart of SeMenu_LoadPartParam.
 SeMenu_StorePartParam:
 	extz wa
 	lda xde, (1632:16)
@@ -1194,6 +1208,8 @@ SeMenu_StorePartParam:
 	ld (xwa), c
 	ret
 
+; Copies byte WA of the sound-editor part parameter block at 0x660 to (XBC).
+;   In:  WA = parameter index, XBC = destination byte.  Counterpart of SeMenu_StorePartParam.
 SeMenu_LoadPartParam:
 	extz wa
 	lda xde, (1632:16)
@@ -2034,6 +2050,7 @@ SeMenu_ReadObjData:
 	ldmi16 (xwa), 0x693
 	ret
 
+; Stores A as the sound editor's current step (RAM byte 0x693).
 SeMenu_SetCurrentStep:
 	ld (1683:16), a
 	ret
@@ -2042,6 +2059,7 @@ SeMenu_ResetSubIndex:
 	ld (1684:16), 0
 	ret
 
+; Increments the sound editor's sub-index byte at 0x694 and returns the new value in L.
 SeMenu_AdvanceSubIndex:
 	ld l, (1684:16)
 	inc 1, l
@@ -5949,6 +5967,9 @@ SeMenu_SetSelectedRow_Data:
 	ld	(xwa), (0x6af)
 	ret
 
+; Copies the sound-editor state byte at RAM 0x6ae to (XWA); callers test it for 0, 1 or 2.
+;   The instruction is spelled `ldmi16 (xwa), 0x6ae`, which encodes the memory-to-memory move
+;   `ld (xwa), (0x6ae)` (see TLCS900InstrInfo.td), not a store of the number 0x6ae.
 SeMenu_LoadObjEntries:
 	ldmi16 (xwa), 0x6ae
 	ret

@@ -4338,6 +4338,11 @@ DrawDottedLine_Impl_Epilogue2:
 	lda	xsp, (xsp+52)
 	ret
 
+; Draws a design box (DrawDesignBox_Impl) with XWA = rectangle, BC and DE as style arguments.
+;   On the draw task's own stack (IS_XSP_INSIDE_4K_REGION_AT_1C032) it draws at once, and only
+;   while the word at 0x3044e is non-zero; from any other task it queues a 16-byte command
+;   {DrawDesignBox_QueueCallback, rectangle, BC, DE} for the draw task (DrawQueue_Alloc,
+;   DrawRing_Post).
 DrawDesignBox:	; SysData_FAD559
 	dec 4, xsp
 	push xiz

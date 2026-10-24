@@ -9008,6 +9008,12 @@ UnRegisterObject:
 	pop xiz
 	ret
 
+; Passes the event being handled to the parent of the current class (the base-class call of the
+; UI object system).
+;   In:  XWA/XBC/XDE as the class proc received them; they reach the parent's proc unchanged.
+;   Out: XHL = the parent proc's result, or 0 when the class has no parent (0xffffffff).
+;   The current class id is 0x2bc14; its record's +4 word is the parent class, which is made
+;   current for the duration of the call and 0x2bc14 is restored afterwards.
 InheritedProc:
 	dec 4, xsp
 	push xiz
@@ -9103,6 +9109,7 @@ SetRootParam:
 	ld (ROOT_PARAM:24), xwa
 	ret
 
+; Returns in XHL the object of the event SendEvent is dispatching (FOCUS_OBJECT).
 GetFocusObject:
 	ld xhl, (FOCUS_OBJECT:24)
 	ret
@@ -9633,6 +9640,12 @@ ApFuncCall_VirtualDispatch:
 	ret
 
 
+; Calls an ApFunction object: the function pointer that the object id indexes in its table.
+;   In:  XWA = object id, XBC / XDE = the arguments passed on to the function.
+;   Out: XHL = the function's result, or 0 when the object is not of class
+;        NAKA_CLASS_ApFunction (checked first with EVT_CHECK_CLASS through SendEvent).
+;   The function is entry (id & 0xffff) of object table entry (id >> 16)'s data array, called
+;   with XWA = the object id.
 ApFuncCall:
 	dec 8, xsp
 	push xiz
@@ -9711,6 +9724,8 @@ MainFuncCall_DispatchDSP:
 	ld xhl, (xde)
 	ret
 
+; Calls a MainFunction object by posting the call to the main event queue (MainPostEvent with
+; the same XWA/XBC/XDE) and returns XHL = 0 without waiting for it.
 MainFuncCall:
 	call MainPostEvent
 	ld xhl, 0:i3
@@ -10990,6 +11005,7 @@ TitleFunc_Epilogue34:
 	lda xsp, (xsp + 34)
 	ret
 
+; Returns in XHL the current title as an object id (0x01a0nnnn, TITLE_NOW).
 GetTitleNow:
 	ld xhl, (TITLE_NOW:24)
 	ret
@@ -12138,6 +12154,9 @@ FrameDraw_Return:
 	pop xiz
 	ret
 
+; Returns the instance pointer an object id names: entry (id & 0xffff) of the u32 data array of
+; object table entry (id >> 16) & 0xfff (the entry's +10 pointer).
+;   In:  XWA = object id.  Out: XHL = that entry.  No range check.
 GetViewInstance:
 	ld xbc, xwa
 	srl xbc, 16
@@ -17439,6 +17458,14 @@ pStringProc:
 EventIDProc:
 	jrl slongProc
 
+; Shared property-method handler for the typed property procs (scharProc, uwordProc, boolProc,
+; RectX1Proc ...).
+;   In:  XWA = property object, XBC = event, XDE = parameter.  Out: XHL = result.
+;   The property's instance (EVT_GET_INSTANCE) holds the value pointer (+4) and, at +8, a list
+;   of 8-byte {name string, value} pairs.  EVT_MAKE_DUMP and EVT_CHECK_PROP_STRING return 0,
+;   EVT_GET_PROP_MEMBER returns 1.  EVT_COPY_PROPERTY_EX .. +6 go through
+;   CommonIDProc_CaseTable: dump as text (the value's name from the list, Strcpy into the
+;   parameter's buffer), set from text (Strcmp against the names), get the data or the count.
 CommonIDProc:
 	lda xsp, (xsp - 20)
 	push xiz
@@ -17677,6 +17704,12 @@ IDCountHelper_Done:
 	lda xsp, (xsp+262)
 	ret
 
+; Computes where an ID-type property's field starts inside its object's instance data.
+;   In:  XWA = the property descriptor (+0 = its index among the object's properties, +8 = the
+;        object).  Out: XHL = the object's instance (EVT_GET_INSTANCE) plus the summed
+;        EVT_GET_PROP_SIZE of the properties before it.
+;   The object's property string (EVT_GET_PROP_STRING) lists one letter per property; letter
+;   'A' + n names property-type object 0x2600000 + n, which is asked for its size.
 IDCursorAdvance:
 	lda xsp, (xsp-136)
 	pushw iz
@@ -17804,6 +17837,16 @@ EventHandler_DispatchLoop:
 	lda xsp, (xsp + 12)
 	ret
 
+; Synchronous event dispatch: calls the target's class proc with the event and returns its result.
+;   In:  XWA = object id (0xffffffff = the current target, GetCurrentTarget), XBC = event,
+;        XDE = parameter.  Out: XHL = the class proc's result.
+;   The object's table proc (object table entry (id >> 16) & 0xfff, +4) is asked for the class
+;   with EVT_GET_CLASS_SP; that class id becomes the current class (0x2bc14, which InheritedProc
+;   walks up), and the class record's proc (+0 of the 24-byte record in the class table's data
+;   array) is called with XWA/XBC/XDE.  FOCUS_OBJECT / FOCUS_EVENT / FOCUS_PARAM hold the event
+;   being dispatched and are restored afterwards, as is 0x2bc14, so the call nests.  When the
+;   word at 0x3ef4e is non-zero it yields to ready queue 3 (TaskSched_YieldToQueue) before
+;   returning.
 SendEvent:
 	lda xsp, (xsp - 24)
 	push xiz
@@ -17889,6 +17932,10 @@ EventRoute_DispatchJump:
 	pop xiz
 	lda xsp, (xsp + 24)
 	ret
+; Queues {object, event, parameter} on the application event queue (the queue of ApPostEvent).
+;   In:  XWA = object, XBC = event, XDE = parameter.
+;   Quirk: when the queue is full it releases semaphore 4 and spins forever; ApPostEvent waits
+;   or drops instead.
 PostEvent:
 	dec 8, xsp
 	push xiz
@@ -18611,6 +18658,13 @@ MainDeleteSpecEvent_Epilogue:
 	inc 8, xsp
 	ret
 
+; Queues {object, event, parameter} on the 1024-entry application event queue for later dispatch.
+;   In:  XWA = object, XBC = event, XDE = parameter.
+;   The queue is 12-byte records at 0x2bc34, write index 0x2ec36, read index 0x2ec34 (wrapping
+;   after 0x3ff), guarded by kernel semaphore 4; each post counts in 0x2f840 and signals
+;   semaphore 2 to wake the dispatching task.  While the queue is full the event is dropped
+;   when Boot_CheckConfigFlag7 returns 0; otherwise the task yields (queue 3) and retries.
+;   Compare PostEvent, which hangs when the queue is full.
 ApPostEvent:
 	dec 8, xsp
 	push xiz
@@ -18677,6 +18731,12 @@ ApDeliveryEvent_Prologue:
 	inc 8, xsp
 	ret
 
+; Posts an event to be delivered to a given object through the current target.
+;   In:  XWA = object (0xffffffff = post the event as is), XBC = event, XDE = parameter.
+;   For a real object a 12-byte {object, event, parameter} block is allocated (Malloc) and
+;   EVT_DELIVERY_EVENT with the block as parameter is queued for object 0xffffffff; otherwise
+;   {0xffffffff, event, parameter} is queued.  Queue, semaphores and full-queue handling as in
+;   ApPostEvent.
 ApDeliveryEvent:
 	lda xsp, (xsp - 12)
 	push xiz

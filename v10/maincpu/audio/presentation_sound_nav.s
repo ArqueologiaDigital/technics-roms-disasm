@@ -350,6 +350,7 @@ GroupBox_Epilogue:
 	lda xsp, (xsp + 40)
 	ret
 
+; Stores WA in DIAL_ENABLE; while it is 0 GetDialFocus reports no focus (0xffffffff).
 SetDialEnable:
 	ld (DIAL_ENABLE:24), wa
 	ret
@@ -378,12 +379,17 @@ GetDialFocus_Active:
 	ld xhl, (DIAL_FOCUS:24)
 	ret
 
+; Sets what the data dial's up direction sends: DIAL_UP_CALLBACK = XWA, DIAL_UP_EVENT = XBC,
+; DIAL_UP_PARAM = XDE, then moves the dial focus to object XWA (SetDialFocus, which broadcasts
+; EVT_CHANGE_DIAL_FOCUS when the focus changes).
 SetDialUp:
 	ld (DIAL_UP_CALLBACK:24), xwa
 	ld (DIAL_UP_EVENT:24), xbc
 	ld (DIAL_UP_PARAM:24), xde
 	jr SetDialFocus
 
+; Sets what the data dial's down direction sends: DIAL_DOWN_CALLBACK = XWA, DIAL_DOWN_EVENT =
+; XBC, DIAL_DOWN_PARAM = XDE, then moves the dial focus to object XWA (SetDialFocus).
 SetDialDown:
 	ld (DIAL_DOWN_CALLBACK:24), xwa
 	ld (DIAL_DOWN_EVENT:24), xbc
@@ -406,6 +412,14 @@ SetAutoIncDefault:
 	inc 4, xsp
 	ret
 
+; Starts auto-repeat for the panel switch whose event is being handled.
+;   In:  XWA = object, XBC = event, XDE = parameter to repeat.
+;   Acts only while the root event is EVT_AUTO_INC, EVT_SW_OFF, EVT_SW_IN or EVT_SW_ON and the
+;   root parameter (the switch) is at most 0xff.  The switch's slot (bits 0-4) and bank (bit 7)
+;   select a 14-byte entry of the table at 0x274e8 (28 bytes per switch); XWA/XBC/XDE are
+;   stored at +2/+6/+10.  If the entry was idle (+1 = 0) it is marked active and an
+;   application timer (SetApTimer, 0x10 ticks) is armed to send EVT_AUTO_INC with the same
+;   switch parameter to the root object.
 SetAutoInc:
 	lda xsp, (xsp - 18)
 	pushw iz
@@ -728,6 +742,11 @@ Screen_Return:
 	lda xsp, (xsp + 12)
 	ret
 
+; Returns the screen position of an edit switch (the switches beside the display).
+;   In:  WA = switch code, XBC = 4-byte point {x, y} to fill.
+;   Codes 0x88..0x8c are the left column (x = 0) and the GetEditSwPoint_CaseTable codes
+;   0..12 include the right column (x = 0x13f); the rows are at y = 0x2b, 0x55, 0x7f, 0xa9,
+;   0xd3.  Other codes go to EditSwParam_Default.
 GetEditSwPoint:
 	ld hl, wa
 	lda xde, (xbc + 2)

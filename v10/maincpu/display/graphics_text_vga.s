@@ -2691,6 +2691,9 @@ VGA_ClearVRAM:
 	lda xsp, (xsp + 16)
 	ret
 
+; Writes C to byte WA of the VGA controller's register window at 0x170000, after a
+; 128-iteration busy-wait.
+;   In:  WA = register offset, C = value.  Clobbers DE.
 _Write_VGA_Register:
 	ld de, 0:i3
 

@@ -4144,10 +4144,18 @@ LoadSecondary_Return:
 	popw iz
 	ret
 
+; Returns in HL the last file I/O error code (the word at 0x7f48, set negative by the FileIO
+; routines; the C-library ferror).
 FileIO_ReturnError:
 	ld hl, (0x7f48:16)
 	ret
 
+; Opens a file by name for the C-library fopen and makes it the current file (handle at 0x7f44).
+;   In:  XWA = file name, XBC = mode string ("r..." / "w...").
+;   The name is appended to the 128-byte path prefix FileIO_OpenWithMode_PathInit
+;   (FileIO_BuildFilePath) and opened with FileOpen.  Out: HL = 0 on success, else a negative
+;   code that is also stored at 0x7f48: -2 open for read failed, -11 open for write failed with
+;   the word at 0x1e53c = 31, -3 any other write failure, -1 any other mode.
 FileIO_OpenWithMode:
 	lda xsp, (xsp - 128)
 	push xiz
@@ -4202,6 +4210,8 @@ FileIO_OpenMode_Return:
 	lda xsp, (xsp+128:16)
 	ret
 
+; Closes the open file (FileClose on the handle at 0x7f44) and clears the handle; does nothing
+; when no file is open.  Out: HL = 0.  The C-library fclose goes through here.
 FileIO_CloseHandle:
 	ld xwa, (0x7f44:16)
 	or xwa, xwa
@@ -4362,6 +4372,11 @@ FileIO_SeekToOffset:
 	popw iz
 	ret
 
+; Reads up to XBC bytes from the open file into XWA, in chunks of at most 0x7fff (FileRead).
+;   Uses the handle at 0x7f44.  Out: XHL = bytes read, or a negative code: -100 when no file is
+;   open, -2 when a chunk comes back short without the handle's end-of-file flag (bit 15 of
+;   its +6 word).  A short read at end of file returns the count.  A new error is recorded at
+;   0x7f48 unless an earlier one is there.  The C-library fread goes through here.
 FileIO_ReadBlock:
 	lda xsp, (xsp - 18)
 	push xiz
@@ -4757,6 +4772,8 @@ FileIO_ValidateRecord_Return:
 	ld	xbc, FileIO_ValidateRecord_Ok_Str_MID	; pointer to "________.MID"
 	jr FileIO_CopyString
 
+; Copies the NUL-terminated string at XBC to XWA, terminator included.
+;   Out: XWA points at the destination's terminator, XDE at the source's.
 FileIO_CopyString:
 	ld xde, xbc
 	cp (xde), 0x0
@@ -4796,6 +4813,8 @@ FileIO_CopyString_Return:
 	djnz16 de, FileIO_CopyString_Return
 	ret
 
+; C strcat: appends the NUL-terminated string at XBC to the one at XWA.
+;   Out: XWA points at the new terminator, XDE at the source's.
 FileIO_BuildFilePath:
 	ld xde, xbc
 	cp (xwa), 0x0
@@ -4902,6 +4921,9 @@ FileIO_FormatIndex_AddChar:
 	ld xbc, xde
 	jrl FileIO_CopyString
 
+; Builds "<XBC>.<extension>" at XWA: copies the base name (FileIO_CopyString), appends "." and
+; FileIO_TypeExtensions[E] (FileIO_BuildFilePath twice).
+;   In:  XWA = destination, XBC = base name, E = file type index.
 FileIO_ReadHeader:
 	dec 2, xsp
 	push xiz
@@ -8527,6 +8549,12 @@ FileIO_DiskRemoved:
 	call ApPostEvent
 	ret
 
+; Stops playback and resets the sound engine before a disk operation.
+;   In:  A = non-zero to also set bit 2 of 0x28a7.
+;   Calls, in order: SeqBuf_Init, NoteMap_SendAllNotesOff, Part_ReinitAllActive,
+;   AccWrap_PlayModeDispatch, AccompSeq_StopSequence, AudioInit_RefreshToneBank,
+;   NoteMap_ProcessAndMerge, Voice_InitializeAll, Voice_InitTablePair, Voice_InitTableGroup,
+;   MIDI_SendAllSoundOff and MidiThru_Enable.
 InitializeOperationState:
 	dec 2, xsp
 	ld (xsp), a
@@ -8562,6 +8590,9 @@ CancelOp_ClearSeq:
 	call SeqAcc_InitPlaybackState
 	jp MidiThru_Disable
 
+; Calls CPanel_InitButtonState_SaveRegs, then tail-jumps to RefreshSwEvent, which clears the
+; TRANSITION_* state, deletes queued EVT_SW_ON / EVT_SW_IN / EVT_SW_OFF events and posts
+; EVT_REFRESH_SW_EVENT.
 SignalProgressUpdate:
 	call CPanel_InitButtonState_SaveRegs
 	jp RefreshSwEvent

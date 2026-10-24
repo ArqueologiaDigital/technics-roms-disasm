@@ -829,6 +829,10 @@ AssswbWr:
 AssswbWr_BufferFull:
 	retd 0x2
 
+; Appends the 4-byte command {A, C, E, stack byte} to the buffer at 0xbf39 and writes the 0xff
+; end mark after it; the write offset is the word at 0x90e2, advanced by 4.  When the offset
+; is 0xfc or more the command is dropped.  Pops its stack word on return (RETD 2).
+;   Exported to extension ROMs as entry AddswbWr of the Hama function table.
 AddswbWr:
 	ld hl, (0x90e2:16)
 	cp hl, 0xfc
@@ -1029,6 +1033,9 @@ SwbtWr_QueueMainEvent:
 SwbtWr_QueueMainEvent_Done:
 	ret
 
+; Appends a 4-byte {DE, WA} entry to the buffer at 0xbf39 and writes the 0xff end mark after
+; it.  The write offset is the word at 0x90e2, advanced by 4; when it is above 251 the entry is
+; dropped.
 SwbtWr_QueuePostEvent:
 	cpw (0x90e2:16), 251
 	jr ugt, SwbtWr_QueuePostEvent_Done
@@ -3310,6 +3317,7 @@ DSPCfg_ResolveWithFallback_Return:
 	lda xsp, (xsp + 18)
 	ret
 
+; DSPCfg_ResolveWithFallback with BC = 0 (the first parameter map).
 DSPCfg_ReadParam_Map0:
 	ld bc, 0:i3
 	jrl DSPCfg_ResolveWithFallback
@@ -5425,6 +5433,14 @@ AudioModeChange_Handler:
 	call AudioInit_DispatchChanges
 	ret
 
+; Recomputes the audio routing state after a part or mode change and re-applies it.
+;   Refreshes the status word 0xc598 (Audio_CheckInitStatus) and, when its bits 5-6 are clear,
+;   the tone bank (AudioInit_RefreshToneBank).  With bit 1 of 0xfc67 set, 0xc1fe gets bit 2 or
+;   is cleared (bit 4 of 0xc594); bit 3 of 0xc1fe is then cleared, 0xc2b4, 0xc2bc, 0xc200 and
+;   0xc201 are set to 0xff and bits 0 and 8 of 0xc59c set.  The per-mode voice handler
+;   AudioVoiceHandler_Table[CURRENT_MODE] is called with WA = 0 (unless it is the
+;   AudioVoiceHandler_NoneSentinel, which ends the routine), then the drum routing, drum save,
+;   voice parameter, part flag and change dispatch steps (AudioInit_*).
 Audio_CheckSubsystemReady:
 	call Audio_CheckInitStatus
 	ld wa, (0xc598:16)

@@ -86,6 +86,11 @@ DrawLine_QueuedExec:
 	calr DrawLine_Impl
 	ret
 
+; Draws a line between two points on the draw task's side of DrawLine.
+;   In:  XWA = first point {x, y}, XBC = second point, DE = colour or pattern argument.
+;   Returns without drawing when either point is off screen (IsPointOnScreen).  The step
+;   direction and slope are computed per axis (Math_DivideSigned32 / Math_Multiply32) and the
+;   touched area is reported with SetChangeRect.
 DrawLine_Impl:
 	lda xsp, (xsp - 66)
 	push xiz
