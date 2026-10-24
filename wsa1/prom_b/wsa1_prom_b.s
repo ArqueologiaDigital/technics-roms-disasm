@@ -3604,8 +3604,8 @@ sub_F00CA2:
 	push	xbc	; F00CA9  push XBC
 	lda	xwa, (xiz-4)	; F00CAA  lda XWA,XIZ+0xfc
 	push	xwa	; F00CAD  push XWA
-	m_push MWD+r6, 0x0a	; F00CAE  pushw (XIZ+0x0a)
-	m_push MWD+r6, 0x08	; F00CB1  pushw (XIZ+0x08)
+	pushw	(xiz+10)	; F00CAE  pushw (XIZ+0x0a)
+	pushw	(xiz+8)	; F00CB1  pushw (XIZ+0x08)
 	call	16629032	; F00CB4  call 0xfdbd28
 	inc	8, xsp	; F00CB8  inc 0,XSP
 	inc	4, xsp	; F00CBA  inc 4,XSP
@@ -3633,8 +3633,8 @@ sub_F00CE3:
 	push	xbc	; F00CEA  push XBC
 	lda	xwa, (xiz-4)	; F00CEB  lda XWA,XIZ+0xfc
 	push	xwa	; F00CEE  push XWA
-	m_push MWD+r6, 0x0a	; F00CEF  pushw (XIZ+0x0a)
-	m_push MWD+r6, 0x08	; F00CF2  pushw (XIZ+0x08)
+	pushw	(xiz+10)	; F00CEF  pushw (XIZ+0x0a)
+	pushw	(xiz+8)	; F00CF2  pushw (XIZ+0x08)
 	call	16629032	; F00CF5  call 0xfdbd28
 	inc	8, xsp	; F00CF9  inc 0,XSP
 	inc	4, xsp	; F00CFB  inc 4,XSP
@@ -3662,8 +3662,8 @@ sub_F00D24:
 	push	xbc	; F00D2B  push XBC
 	lda	xwa, (xiz-4)	; F00D2C  lda XWA,XIZ+0xfc
 	push	xwa	; F00D2F  push XWA
-	m_push MWD+r6, 0x0a	; F00D30  pushw (XIZ+0x0a)
-	m_push MWD+r6, 0x08	; F00D33  pushw (XIZ+0x08)
+	pushw	(xiz+10)	; F00D30  pushw (XIZ+0x0a)
+	pushw	(xiz+8)	; F00D33  pushw (XIZ+0x08)
 	call	16629032	; F00D36  call 0xfdbd28
 	inc	8, xsp	; F00D3A  inc 0,XSP
 	inc	4, xsp	; F00D3C  inc 4,XSP
@@ -3691,8 +3691,8 @@ sub_F00D65:
 	push	xbc	; F00D6C  push XBC
 	lda	xwa, (xiz-4)	; F00D6D  lda XWA,XIZ+0xfc
 	push	xwa	; F00D70  push XWA
-	m_push MWD+r6, 0x0a	; F00D71  pushw (XIZ+0x0a)
-	m_push MWD+r6, 0x08	; F00D74  pushw (XIZ+0x08)
+	pushw	(xiz+10)	; F00D71  pushw (XIZ+0x0a)
+	pushw	(xiz+8)	; F00D74  pushw (XIZ+0x08)
 	call	16629032	; F00D77  call 0xfdbd28
 	inc	8, xsp	; F00D7B  inc 0,XSP
 	inc	4, xsp	; F00D7D  inc 4,XSP
@@ -18512,8 +18512,8 @@ ScreenButton_SoundEditPitchTune:		; <- T_ScreenButton_SoundEditPitchTune
 	push	xbc	; F0A007  push XBC
 	lda	xwa, (xiz-4)	; F0A008  lda XWA,XIZ+0xfc
 	push	xwa	; F0A00B  push XWA
-	m_push MWD+r6, 0x0a	; F0A00C  pushw (XIZ+0x0a)
-	m_push MWD+r6, 0x08	; F0A00F  pushw (XIZ+0x08)
+	pushw	(xiz+10)	; F0A00C  pushw (XIZ+0x0a)
+	pushw	(xiz+8)	; F0A00F  pushw (XIZ+0x08)
 	call	PanelEvent_ToFieldIndex	; F0A012  call 0xfd7905
 	inc	8, xsp	; F0A016  inc 0,XSP
 	inc	4, xsp	; F0A018  inc 4,XSP
@@ -18560,8 +18560,8 @@ ScreenButton_SoundEditPitchEnvelope1:		; <- T_ScreenButton_SoundEditPitchEnvelop
 	push	xbc	; F0A058  push XBC
 	lda	xwa, (xiz-4)	; F0A059  lda XWA,XIZ+0xfc
 	push	xwa	; F0A05C  push XWA
-	m_push MWD+r6, 0x0a	; F0A05D  pushw (XIZ+0x0a)
-	m_push MWD+r6, 0x08	; F0A060  pushw (XIZ+0x08)
+	pushw	(xiz+10)	; F0A05D  pushw (XIZ+0x0a)
+	pushw	(xiz+8)	; F0A060  pushw (XIZ+0x08)
 	call	PanelEvent_ToFieldIndex	; F0A063  call 0xfd7905
 	inc	8, xsp	; F0A067  inc 0,XSP
 	inc	4, xsp	; F0A069  inc 4,XSP
@@ -18612,8 +18612,8 @@ ScreenButton_SoundEditPitchEnvelope2:		; <- T_ScreenButton_SoundEditPitchEnvelop
 	push	xbc	; F0A0B8  push XBC
 	lda	xwa, (xiz-4)	; F0A0B9  lda XWA,XIZ+0xfc
 	push	xwa	; F0A0BC  push XWA
-	m_push MWD+r6, 0x0a	; F0A0BD  pushw (XIZ+0x0a)
-	m_push MWD+r6, 0x08	; F0A0C0  pushw (XIZ+0x08)
+	pushw	(xiz+10)	; F0A0BD  pushw (XIZ+0x0a)
+	pushw	(xiz+8)	; F0A0C0  pushw (XIZ+0x08)
 	call	PanelEvent_ToFieldIndex	; F0A0C3  call 0xfd7905
 	inc	8, xsp	; F0A0C7  inc 0,XSP
 	inc	4, xsp	; F0A0C9  inc 4,XSP
@@ -18664,8 +18664,8 @@ ScreenButton_SoundEditPitchLfo:		; <- T_ScreenButton_SoundEditPitchLfo
 	push	xbc	; F0A118  push XBC
 	lda	xwa, (xiz-4)	; F0A119  lda XWA,XIZ+0xfc
 	push	xwa	; F0A11C  push XWA
-	m_push MWD+r6, 0x0a	; F0A11D  pushw (XIZ+0x0a)
-	m_push MWD+r6, 0x08	; F0A120  pushw (XIZ+0x08)
+	pushw	(xiz+10)	; F0A11D  pushw (XIZ+0x0a)
+	pushw	(xiz+8)	; F0A120  pushw (XIZ+0x08)
 	call	PanelEvent_ToFieldIndex	; F0A123  call 0xfd7905
 	inc	8, xsp	; F0A127  inc 0,XSP
 	inc	4, xsp	; F0A129  inc 4,XSP
@@ -20314,8 +20314,8 @@ ScreenButton_SoundEditCopy:		; <- T_ScreenButton_SoundEditCopy
 	push	xbc	; F0A915  push XBC
 	lda	xwa, (xiz-4)	; F0A916  lda XWA,XIZ+0xfc
 	push	xwa	; F0A919  push XWA
-	m_push MWD+r6, 0x0a	; F0A91A  pushw (XIZ+0x0a)
-	m_push MWD+r6, 0x08	; F0A91D  pushw (XIZ+0x08)
+	pushw	(xiz+10)	; F0A91A  pushw (XIZ+0x0a)
+	pushw	(xiz+8)	; F0A91D  pushw (XIZ+0x08)
 	call	PanelEvent_ToFieldIndex	; F0A920  call 0xfd7905
 	inc	8, xsp	; F0A924  inc 0,XSP
 	inc	4, xsp	; F0A926  inc 4,XSP
@@ -20362,8 +20362,8 @@ ScreenButton_SoundEditMemoryWrite:		; <- T_ScreenButton_SoundEditMemoryWrite
 	push	xbc	; F0A966  push XBC
 	lda	xwa, (xiz-4)	; F0A967  lda XWA,XIZ+0xfc
 	push	xwa	; F0A96A  push XWA
-	m_push MWD+r6, 0x0a	; F0A96B  pushw (XIZ+0x0a)
-	m_push MWD+r6, 0x08	; F0A96E  pushw (XIZ+0x08)
+	pushw	(xiz+10)	; F0A96B  pushw (XIZ+0x0a)
+	pushw	(xiz+8)	; F0A96E  pushw (XIZ+0x08)
 	call	PanelEvent_ToFieldIndex	; F0A971  call 0xfd7905
 	inc	8, xsp	; F0A975  inc 0,XSP
 	inc	4, xsp	; F0A977  inc 4,XSP
@@ -20414,8 +20414,8 @@ ScreenButton_SoundEditNaming:		; <- T_ScreenButton_SoundEditNaming
 	push	xbc	; F0A9C6  push XBC
 	lda	xwa, (xiz-4)	; F0A9C7  lda XWA,XIZ+0xfc
 	push	xwa	; F0A9CA  push XWA
-	m_push MWD+r6, 0x0a	; F0A9CB  pushw (XIZ+0x0a)
-	m_push MWD+r6, 0x08	; F0A9CE  pushw (XIZ+0x08)
+	pushw	(xiz+10)	; F0A9CB  pushw (XIZ+0x0a)
+	pushw	(xiz+8)	; F0A9CE  pushw (XIZ+0x08)
 	call	PanelEvent_ToFieldIndex	; F0A9D1  call 0xfd7905
 	inc	8, xsp	; F0A9D5  inc 0,XSP
 	inc	4, xsp	; F0A9D7  inc 4,XSP
@@ -20462,8 +20462,8 @@ ScreenButton_SoundEditDigitalEffect:		; <- T_ScreenButton_SoundEditDigitalEffect
 	push	xbc	; F0AA17  push XBC
 	lda	xwa, (xiz-4)	; F0AA18  lda XWA,XIZ+0xfc
 	push	xwa	; F0AA1B  push XWA
-	m_push MWD+r6, 0x0a	; F0AA1C  pushw (XIZ+0x0a)
-	m_push MWD+r6, 0x08	; F0AA1F  pushw (XIZ+0x08)
+	pushw	(xiz+10)	; F0AA1C  pushw (XIZ+0x0a)
+	pushw	(xiz+8)	; F0AA1F  pushw (XIZ+0x08)
 	call	PanelEvent_ToFieldIndex	; F0AA22  call 0xfd7905
 	inc	8, xsp	; F0AA26  inc 0,XSP
 	inc	4, xsp	; F0AA28  inc 4,XSP
@@ -20510,8 +20510,8 @@ ScreenButton_SoundEditDigitalEffectFromMenu:		; <- T_ScreenButton_SoundEditDigit
 	push	xbc	; F0AA68  push XBC
 	lda	xwa, (xiz-4)	; F0AA69  lda XWA,XIZ+0xfc
 	push	xwa	; F0AA6C  push XWA
-	m_push MWD+r6, 0x0a	; F0AA6D  pushw (XIZ+0x0a)
-	m_push MWD+r6, 0x08	; F0AA70  pushw (XIZ+0x08)
+	pushw	(xiz+10)	; F0AA6D  pushw (XIZ+0x0a)
+	pushw	(xiz+8)	; F0AA70  pushw (XIZ+0x08)
 	call	PanelEvent_ToFieldIndex	; F0AA73  call 0xfd7905
 	inc	8, xsp	; F0AA77  inc 0,XSP
 	inc	4, xsp	; F0AA79  inc 4,XSP
@@ -20572,8 +20572,8 @@ ScreenButton_SoundEditDspEffect:		; <- T_ScreenButton_SoundEditDspEffect
 	push	xbc	; F0AABA  push XBC
 	lda	xwa, (xiz-4)	; F0AABB  lda XWA,XIZ+0xfc
 	push	xwa	; F0AABE  push XWA
-	m_push MWD+r6, 0x0a	; F0AABF  pushw (XIZ+0x0a)
-	m_push MWD+r6, 0x08	; F0AAC2  pushw (XIZ+0x08)
+	pushw	(xiz+10)	; F0AABF  pushw (XIZ+0x0a)
+	pushw	(xiz+8)	; F0AAC2  pushw (XIZ+0x08)
 	call	PanelEvent_ToFieldIndex	; F0AAC5  call 0xfd7905
 	inc	8, xsp	; F0AAC9  inc 0,XSP
 	inc	4, xsp	; F0AACB  inc 4,XSP
@@ -20581,8 +20581,8 @@ ScreenButton_SoundEditDspEffect:		; <- T_ScreenButton_SoundEditDspEffect
 	jr	z, ScreenButton_SoundEditDspEffect_Skip	; F0AAD1  jr Z,0xf0aaf6
 	pushw	0	; F0AAD3  push 0x0000
 	call	Var27DF_Set	; F0AAD6  call 0xfd6104
-	m_push MWD+r6, 0x0a	; F0AADA  pushw (XIZ+0x0a)
-	m_push MWD+r6, 0x08	; F0AADD  pushw (XIZ+0x08)
+	pushw	(xiz+10)	; F0AADA  pushw (XIZ+0x0a)
+	pushw	(xiz+8)	; F0AADD  pushw (XIZ+0x08)
 	call	T_ScreenButtonBody_DspEffect	; F0AAE0  call 0xf42f50
 	call	PanelScreen_RequestPending	; F0AAE4  call 0xfd60b9
 	inc	6, xsp	; F0AAE8  inc 6,XSP
@@ -20613,8 +20613,8 @@ ScreenButton_SoundEditDrumMenu:		; <- T_ScreenButton_SoundEditDrumMenu
 	push	xbc	; F0AB00  push XBC
 	lda	xwa, (xiz-4)	; F0AB01  lda XWA,XIZ+0xfc
 	push	xwa	; F0AB04  push XWA
-	m_push MWD+r6, 0x0a	; F0AB05  pushw (XIZ+0x0a)
-	m_push MWD+r6, 0x08	; F0AB08  pushw (XIZ+0x08)
+	pushw	(xiz+10)	; F0AB05  pushw (XIZ+0x0a)
+	pushw	(xiz+8)	; F0AB08  pushw (XIZ+0x08)
 	call	PanelEvent_ToFieldIndex	; F0AB0B  call 0xfd7905
 	inc	8, xsp	; F0AB0F  inc 0,XSP
 	inc	4, xsp	; F0AB11  inc 4,XSP
@@ -20780,7 +20780,7 @@ SoftKeyCol3_SoundEditDrumMenu_Join:
 	pushw	wa	; F0AC1B  push WA
 	pushw	2	; F0AC1C  push 0x0002
 	call	ModelingPage_GroupStartIndex	; F0AC1F  call 0xfda002
-	m_push MWD+r6, 0xf8	; F0AC23  pushw (XIZ+0xf8)
+	pushw	(xiz-8)	; F0AC23  pushw (XIZ+0xf8)
 	call	ToneMsg88_Id14	; F0AC26  call 0xfd66a6
 	pushw	1	; F0AC2A  push 0x0001
 	pushw	203	; F0AC2D  push 0x00cb
@@ -20842,7 +20842,7 @@ SoftKeyCol4_SoundEditDrumMenu_Skip:
 	jr	z, SoftKeyCol4_SoundEditDrumMenu_Skip2	; F0AC8F  jr Z,0xf0acae
 	decm	1, (xiz-4)	; F0AC91  decw 1,(XIZ+0xfc)
 SoftKeyCol4_SoundEditDrumMenu_Join:
-	m_push MWD+r6, 0xfc	; F0AC94  pushw (XIZ+0xfc)
+	pushw	(xiz-4)	; F0AC94  pushw (XIZ+0xfc)
 	call	ToneMsg88_Id14	; F0AC97  call 0xfd66a6
 	pushw	1	; F0AC9B  push 0x0001
 	pushw	203	; F0AC9E  push 0x00cb
@@ -24265,7 +24265,7 @@ SoundEditCopy_ResolveSelectedSound_Resume2:
 	push	xiy	; F0C304  push XIY
 	jp	(xix)	; F0C305  jp T,XIX
 SoundEditCopy_ResolveSelectedSound_Resume3:
-	m_push MWD+r6, 0xf6	; F0C307  pushw (XIZ+0xf6)
+	pushw	(xiz-10)	; F0C307  pushw (XIZ+0xf6)
 	pushw	de	; F0C30A  push DE
 	ld	bc, (xiz-2)	; F0C30B  ld BC,(XIZ+0xfe)
 	extz	bc	; F0C30E  extz BC
@@ -28299,7 +28299,7 @@ Blink_SetupNumberFieldAndDraw_Join:
 	ld	a, (xbc)	; F0EAEA  ld A,(XBC)
 	cp	h, a	; F0EAEC  cp H,A
 	jr	nc, Blink_SetupNumberFieldAndDraw_Skip3	; F0EAEE  jr NC,0xf0eaf8
-	m_srl_m MW16, 0x28d4	; F0EAF0  srlw (0x28d4)
+	srlw	(0x28d4:16)	; F0EAF0  srlw (0x28d4)
 	inc	1, h	; F0EAF4  inc 1,H
 	jr	Blink_SetupNumberFieldAndDraw_Join	; F0EAF6  jr T,0xf0eae7
 Blink_SetupNumberFieldAndDraw_Skip3:
@@ -28498,7 +28498,7 @@ sub_F0EC4A_Join:
 	ld	a, (xbc)	; F0EC78  ld A,(XBC)
 	cp	d, a	; F0EC7A  cp D,A
 	jr	nc, sub_F0EC4A_Skip	; F0EC7C  jr NC,0xf0ec86
-	m_srl_m MW16, 0x28d4	; F0EC7E  srlw (0x28d4)
+	srlw	(0x28d4:16)	; F0EC7E  srlw (0x28d4)
 	inc	1, d	; F0EC82  inc 1,D
 	jr	sub_F0EC4A_Join	; F0EC84  jr T,0xf0ec75
 sub_F0EC4A_Skip:
@@ -28541,7 +28541,7 @@ sub_F0EC4A_Join2:
 	ld	d, 0:opc	; F0ECED  ld D,0x00
 	jr	sub_F0EC4A_Join3	; F0ECEF  jr T,0xf0ecf7
 sub_F0EC4A_Loop:
-	m_sll_m MW16, 0x28d4	; F0ECF1  sllw (0x28d4)
+	sllw	(0x28d4:16)	; F0ECF1  sllw (0x28d4)
 	inc	1, d	; F0ECF5  inc 1,D
 sub_F0EC4A_Join3:
 	cp	d, l	; F0ECF7  cp D,L
@@ -29236,8 +29236,8 @@ ScreenButtonBody_DspEffect:		; <- T_ScreenButtonBody_DspEffect
 	link XIZ,0x0000	; F0F17C  link XIZ,0x0000
 	push	xix	; F0F180  push XIX
 	lda	xix, (10129:16)	; F0F181  lda XIX,0x2791
-	m_push MWD+r6, 0x0a	; F0F185  pushw (XIZ+0x0a)
-	m_push MWD+r6, 0x08	; F0F188  pushw (XIZ+0x08)
+	pushw	(xiz+10)	; F0F185  pushw (XIZ+0x0a)
+	pushw	(xiz+8)	; F0F188  pushw (XIZ+0x08)
 	call	T_PanelCode_ToSlotAndFlags	; F0F18B  call 0xf42c74
 	mul	a, 4	; F0F18F  mul A,0x04
 	extz	xwa	; F0F192  extz XWA
@@ -32802,7 +32802,7 @@ DspEffect_StepEqBandFc_Join3:
 	ld	c, (xiz-4)	; F10367  ld C,(XIZ+0xfc)
 	pushw	bc	; F1036A  push BC
 	push	0	; F1036B  push 0x00
-	m_push MBD+r6, 0x0a	; F1036D  push (XIZ+0x0a)
+	push	(xiz+10)	; F1036D  push (XIZ+0x0a)
 	ld	bc, (Effect_BlockIndex:16)	; F10370  ld BC,(0x2797)
 	extz	bc	; F10374  extz BC
 	add	bc, 97	; F10376  add BC,0x0061
@@ -33414,7 +33414,7 @@ DspEffect_StepU8_Join:
 	push	0	; F107AC  push 0x00
 	push	h	; F107AE  push H
 	push	0	; F107B0  push 0x00
-	m_push MBD+r6, 0x0a	; F107B2  push (XIZ+0x0a)
+	push	(xiz+10)	; F107B2  push (XIZ+0x0a)
 	ld	bc, (Effect_BlockIndex:16)	; F107B5  ld BC,(0x2797)
 	extz	bc	; F107B9  extz BC
 	add	bc, 97	; F107BB  add BC,0x0061
@@ -33528,7 +33528,7 @@ DspEffect_StepS8_Join:
 	push	0	; F10861  push 0x00
 	push	h	; F10863  push H
 	push	0	; F10865  push 0x00
-	m_push MBD+r6, 0x0a	; F10867  push (XIZ+0x0a)
+	push	(xiz+10)	; F10867  push (XIZ+0x0a)
 	ld	bc, (Effect_BlockIndex:16)	; F1086A  ld BC,(0x2797)
 	extz	bc	; F1086E  extz BC
 	add	bc, 97	; F10870  add BC,0x0061
@@ -33655,7 +33655,7 @@ DspEffect_StepU16_Join:
 	ld	c, (xiz-10)	; F10941  ld C,(XIZ+0xf6)
 	pushw	bc	; F10944  push BC
 	push	0	; F10945  push 0x00
-	m_push MBD+r6, 0x0a	; F10947  push (XIZ+0x0a)
+	push	(xiz+10)	; F10947  push (XIZ+0x0a)
 	ld	bc, (Effect_BlockIndex:16)	; F1094A  ld BC,(0x2797)
 	extz	bc	; F1094E  extz BC
 	add	bc, 97	; F10950  add BC,0x0061
@@ -33801,7 +33801,7 @@ DspEffect_StepEqFc_Join:
 	ld	c, (xiz-4)	; F10A53  ld C,(XIZ+0xfc)
 	pushw	bc	; F10A56  push BC
 	push	0	; F10A57  push 0x00
-	m_push MBD+r6, 0x0a	; F10A59  push (XIZ+0x0a)
+	push	(xiz+10)	; F10A59  push (XIZ+0x0a)
 	ld	bc, (Effect_BlockIndex:16)	; F10A5C  ld BC,(0x2797)
 	extz	bc	; F10A60  extz BC
 	add	bc, 97	; F10A62  add BC,0x0061
@@ -33946,7 +33946,7 @@ DspEffect_StepEqQ_Join:
 	ld	c, (xiz-4)	; F10B65  ld C,(XIZ+0xfc)
 	pushw	bc	; F10B68  push BC
 	push	0	; F10B69  push 0x00
-	m_push MBD+r6, 0x0a	; F10B6B  push (XIZ+0x0a)
+	push	(xiz+10)	; F10B6B  push (XIZ+0x0a)
 	ld	bc, (Effect_BlockIndex:16)	; F10B6E  ld BC,(0x2797)
 	extz	bc	; F10B72  extz BC
 	add	bc, 97	; F10B74  add BC,0x0061
@@ -34087,7 +34087,7 @@ DspEffect_StepEqGain_Join:
 	ld	c, (xiz-4)	; F10C6B  ld C,(XIZ+0xfc)
 	pushw	bc	; F10C6E  push BC
 	push	0	; F10C6F  push 0x00
-	m_push MBD+r6, 0x0a	; F10C71  push (XIZ+0x0a)
+	push	(xiz+10)	; F10C71  push (XIZ+0x0a)
 	ld	bc, (Effect_BlockIndex:16)	; F10C74  ld BC,(0x2797)
 	extz	bc	; F10C78  extz BC
 	add	bc, 97	; F10C7A  add BC,0x0061
@@ -34148,9 +34148,9 @@ DspEffect_StepEqGain_Skip5:
 DspEffect_StepSlowFast:
 	link XIZ,0x0000	; F10CAF  link XIZ,0x0000
 	push	0	; F10CB3  push 0x00
-	m_push MBD+r6, 0x0a	; F10CB5  push (XIZ+0x0a)
+	push	(xiz+10)	; F10CB5  push (XIZ+0x0a)
 	push	0	; F10CB8  push 0x00
-	m_push MBD+r6, 0x08	; F10CBA  push (XIZ+0x08)
+	push	(xiz+8)	; F10CBA  push (XIZ+0x08)
 	calr	DspEffect_StepU8	; F10CBD  calr 0xf1071b
 	pop	xbc	; F10CC0  pop XBC
 	unlk XIZ	; F10CC1  unlk XIZ
@@ -34793,7 +34793,7 @@ DspEffect_PaintParamEditor_Join:
 DspEffect_LoadByte:
 	link XIZ,0x0000	; F11171  link XIZ,0x0000
 	push	0	; F11175  push 0x00
-	m_push MBD+r6, 0x08	; F11177  push (XIZ+0x08)
+	push	(xiz+8)	; F11177  push (XIZ+0x08)
 	ld	bc, (Effect_BlockIndex:16)	; F1117A  ld BC,(0x2797)
 	extz	bc	; F1117E  extz BC
 	add	bc, 97	; F11180  add BC,0x0061
@@ -34824,7 +34824,7 @@ DspEffect_LoadByte:
 DspEffect_LoadByteBias36:
 	link XIZ,0x0000	; F11191  link XIZ,0x0000
 	push	0	; F11195  push 0x00
-	m_push MBD+r6, 0x08	; F11197  push (XIZ+0x08)
+	push	(xiz+8)	; F11197  push (XIZ+0x08)
 	ld	bc, (Effect_BlockIndex:16)	; F1119A  ld BC,(0x2797)
 	extz	bc	; F1119E  extz BC
 	add	bc, 97	; F111A0  add BC,0x0061
@@ -34860,7 +34860,7 @@ DspEffect_LoadWord:
 	lda	xbc, (UI_DrawScratch:16)	; F111BC  lda XBC,0x2640
 	ld	(xiz-6), xbc	; F111C0  ld (XIZ+0xfa),XBC
 	push	0	; F111C3  push 0x00
-	m_push MBD+r6, 0x08	; F111C5  push (XIZ+0x08)
+	push	(xiz+8)	; F111C5  push (XIZ+0x08)
 	ld	wa, (Effect_BlockIndex:16)	; F111C8  ld WA,(0x2797)
 	extz	wa	; F111CC  extz WA
 	add	wa, 97	; F111CE  add WA,0x0061
@@ -34906,7 +34906,7 @@ DspEffect_LoadEqFc:
 	push	xix	; F11204  push XIX
 	lda	xix, (xiz-2)	; F11205  lda XIX,XIZ+0xfe
 	push	0	; F11208  push 0x00
-	m_push MBD+r6, 0x08	; F1120A  push (XIZ+0x08)
+	push	(xiz+8)	; F1120A  push (XIZ+0x08)
 	ld	bc, (Effect_BlockIndex:16)	; F1120D  ld BC,(0x2797)
 	extz	bc	; F11211  extz BC
 	add	bc, 97	; F11213  add BC,0x0061
@@ -34954,7 +34954,7 @@ DspEffect_LoadEqQ:
 	push	xix	; F1124F  push XIX
 	lda	xix, (xiz-2)	; F11250  lda XIX,XIZ+0xfe
 	push	0	; F11253  push 0x00
-	m_push MBD+r6, 0x08	; F11255  push (XIZ+0x08)
+	push	(xiz+8)	; F11255  push (XIZ+0x08)
 	ld	bc, (Effect_BlockIndex:16)	; F11258  ld BC,(0x2797)
 	extz	bc	; F1125C  extz BC
 	add	bc, 97	; F1125E  add BC,0x0061
@@ -35001,7 +35001,7 @@ DspEffect_LoadEqGain:
 	push	xix	; F1129A  push XIX
 	lda	xix, (xiz-2)	; F1129B  lda XIX,XIZ+0xfe
 	push	0	; F1129E  push 0x00
-	m_push MBD+r6, 0x08	; F112A0  push (XIZ+0x08)
+	push	(xiz+8)	; F112A0  push (XIZ+0x08)
 	ld	bc, (Effect_BlockIndex:16)	; F112A3  ld BC,(0x2797)
 	extz	bc	; F112A7  extz BC
 	add	bc, 97	; F112A9  add BC,0x0061
@@ -35046,7 +35046,7 @@ DspEffect_LoadEqGain:
 DspEffect_LoadSlowFast:
 	link XIZ,0x0000	; F112DD  link XIZ,0x0000
 	push	0	; F112E1  push 0x00
-	m_push MBD+r6, 0x08	; F112E3  push (XIZ+0x08)
+	push	(xiz+8)	; F112E3  push (XIZ+0x08)
 	calr	DspEffect_LoadByte	; F112E6  calr 0xf11171
 	popw	bc	; F112E9  pop BC
 	unlk XIZ	; F112EA  unlk XIZ
@@ -35420,7 +35420,7 @@ DspEffect_CopyAlgorithmDefaults_Fwd:		; <- T_DspEffect_CopyAlgorithmDefaults_Fwd
 	ld	xbc, (xiz+10)	; F1155A  ld XBC,(XIZ+0x0a)
 	push	xbc	; F1155D  push XBC
 	push	0	; F1155E  push 0x00
-	m_push MBD+r6, 0x08	; F11560  push (XIZ+0x08)
+	push	(xiz+8)	; F11560  push (XIZ+0x08)
 	calr	DspEffect_CopyAlgorithmDefaults	; F11563  calr 0xf1162e
 	inc	6, xsp	; F11566  inc 6,XSP
 	unlk XIZ	; F11568  unlk XIZ
@@ -35646,7 +35646,7 @@ DspEffect_RepairParams:
 	lda	xbc, (xiz-38)	; F116CB  lda XBC,XIZ+0xda
 	push	xbc	; F116CE  push XBC
 	push	0	; F116CF  push 0x00
-	m_push MBD+r6, 0x08	; F116D1  push (XIZ+0x08)
+	push	(xiz+8)	; F116D1  push (XIZ+0x08)
 	calr	DspEffect_CopyAlgorithmDefaults	; F116D4  calr 0xf1162e
 	ld	l, 0:opc	; F116D7  ld L,0x00
 	ld	c, 4:opc	; F116D9  ld C,0x04
@@ -36409,9 +36409,9 @@ DspEffect_RepairSlowFast:
 	ld	xwa, (xiz+12)	; F11C18  ld XWA,(XIZ+0x0c)
 	push	xwa	; F11C1B  push XWA
 	push	0	; F11C1C  push 0x00
-	m_push MBD+r6, 0x0a	; F11C1E  push (XIZ+0x0a)
+	push	(xiz+10)	; F11C1E  push (XIZ+0x0a)
 	push	0	; F11C21  push 0x00
-	m_push MBD+r6, 0x08	; F11C23  push (XIZ+0x08)
+	push	(xiz+8)	; F11C23  push (XIZ+0x08)
 	calr	DspEffect_RepairU8	; F11C26  calr 0xf1195a
 	inc	8, xsp	; F11C29  inc 0,XSP
 	inc	4, xsp	; F11C2B  inc 4,XSP
@@ -36639,7 +36639,7 @@ DspParam_WriteByNumber_Join2:
 	ld	c, (xix+2)	; F11E38  ld C,(XIX+0x02)
 	pushw	bc	; F11E3B  push BC
 	push	0	; F11E3C  push 0x00
-	m_push MBD+r6, 0xae	; F11E3E  push (XIZ+0xae)
+	push	(xiz-82)	; F11E3E  push (XIZ+0xae)
 	ld	c, (xix+1)	; F11E41  ld C,(XIX+0x01)
 	pushw	bc	; F11E44  push BC
 	ld	c, (xix)	; F11E45  ld C,(XIX)
@@ -37235,8 +37235,8 @@ ScreenEnterBody_MainOutEqualizer_Epilogue:
 ;   Screen_MainOutEqualizer_Button): T_PanelCode_ToSlotAndFlags, then DispatchTable_F1394F[slot].
 ScreenButtonBody_MainOutEqualizer:		; <- T_ScreenButtonBody_MainOutEqualizer
 	link XIZ,0x0000	; F12334  link XIZ,0x0000
-	m_push MWD+r6, 0x0a	; F12338  pushw (XIZ+0x0a)
-	m_push MWD+r6, 0x08	; F1233B  pushw (XIZ+0x08)
+	pushw	(xiz+10)	; F12338  pushw (XIZ+0x0a)
+	pushw	(xiz+8)	; F1233B  pushw (XIZ+0x08)
 	call	T_PanelCode_ToSlotAndFlags	; F1233E  call 0xf42c74
 	mul	a, 4	; F12342  mul A,0x04
 	extz	xwa	; F12345  extz XWA
@@ -75317,7 +75317,7 @@ SysExThirdRegion_LocateDrumEntryChunk_Skip:
 	pushw	1	; F36BE6  push 0x0001
 SysExThirdRegion_LocateDrumEntryChunk_Join:
 	push	0	; F36BE9  push 0x00
-	m_push MBD+r6, 0x0e	; F36BEB  push (XIZ+0x0e)
+	push	(xiz+14)	; F36BEB  push (XIZ+0x0e)
 	pushw	de	; F36BEE  push DE
 	ld	xbc, (xiz+8)	; F36BEF  ld XBC,(XIZ+0x08)
 	push	xbc	; F36BF2  push XBC
@@ -75478,7 +75478,7 @@ SysExThirdRegion_LocateDrumChunk:
 	push	xbc	; F36D1E  push XBC
 	push	0	; F36D1F  push 0x00
 	push	h	; F36D21  push H
-	m_push MWD+r6, 0x0c	; F36D23  pushw (XIZ+0x0c)
+	pushw	(xiz+12)	; F36D23  pushw (XIZ+0x0c)
 	push	xix	; F36D26  push XIX
 	calr	SysExThirdRegion_LocateDrumEntryChunk	; F36D27  calr 0xf36b94
 	inc	8, xsp	; F36D2A  inc 0,XSP
@@ -77255,7 +77255,7 @@ SysExToneImage_WriteByte_Skip8:
 	cp	xix, 138	; F37B25  cp XIX,0x0000008a
 	jr	nc, SysExToneImage_WriteByte_Skip9	; F37B2B  jr NC,0xf37b46
 	push	0	; F37B2D  push 0x00
-	m_push MB24, 0x000a02	; F37B2F  push (0x000a02)
+	push	(0x000a02:24)	; F37B2F  push (0x000a02)
 	ld	xbc, xix	; F37B34  ld XBC,XIX
 	sub	xbc, 135	; F37B36  sub XBC,0x00000087
 	add	xbc, 70	; F37B3C  add XBC,0x00000046
@@ -77266,7 +77266,7 @@ SysExToneImage_WriteByte_Skip9:
 	cp	xix, 138	; F37B49  cp XIX,0x0000008a
 	jr	nz, SysExToneImage_WriteByte_Skip10	; F37B4F  jr NZ,0xf37b6a
 	push	0	; F37B51  push 0x00
-	m_push MB24, 0x000a02	; F37B53  push (0x000a02)
+	push	(0x000a02:24)	; F37B53  push (0x000a02)
 	ld	xbc, xix	; F37B58  ld XBC,XIX
 	sub	xbc, 138	; F37B5A  sub XBC,0x0000008a
 	add	xbc, 69	; F37B60  add XBC,0x00000045
@@ -77278,7 +77278,7 @@ SysExToneImage_WriteByte_Skip10:
 	cp	xix, 207	; F37B72  cp XIX,0x000000cf
 	jr	ugt, SysExToneImage_WriteByte_Skip11	; F37B78  jr UGT,0xf37b8d
 	push	0	; F37B7A  push 0x00
-	m_push MB24, 0x000a02	; F37B7C  push (0x000a02)
+	push	(0x000a02:24)	; F37B7C  push (0x000a02)
 	ld	xbc, xix	; F37B81  ld XBC,XIX
 	sub	xbc, 139	; F37B83  sub XBC,0x0000008b
 	pushw	bc	; F37B89  push BC
@@ -77397,7 +77397,7 @@ SysExToneImage_WriteByte_Skip15:
 	cp	xix, 82	; F37CAC  cp XIX,0x00000052
 	jr	nz, SysExToneImage_WriteByte_Skip16	; F37CB2  jr NZ,0xf37ccc
 	push	0	; F37CB4  push 0x00
-	m_push MB24, 0x000a02	; F37CB6  push (0x000a02)
+	push	(0x000a02:24)	; F37CB6  push (0x000a02)
 	ld	xbc, xix	; F37CBB  ld XBC,XIX
 	sub	xbc, 82	; F37CBD  sub XBC,0x00000052
 	add	xbc, 69	; F37CC3  add XBC,0x00000045
@@ -77409,7 +77409,7 @@ SysExToneImage_WriteByte_Skip16:
 	cp	xix, 151	; F37CD4  cp XIX,0x00000097
 	jr	ugt, SysExToneImage_WriteByte_Skip17	; F37CDA  jr UGT,0xf37cf3
 	push	0	; F37CDC  push 0x00
-	m_push MB24, 0x000a02	; F37CDE  push (0x000a02)
+	push	(0x000a02:24)	; F37CDE  push (0x000a02)
 	ld	xbc, xix	; F37CE3  ld XBC,XIX
 	sub	xbc, 83	; F37CE5  sub XBC,0x00000053
 	pushw	bc	; F37CEB  push BC
@@ -77615,7 +77615,7 @@ SysExThirdRegion_SendReplyChunk:		; <- T_SysExThirdRegion_SendReplyChunk
 	pushw	hl	; F37E20  push HL
 	pushw	de	; F37E21  push DE
 	push	xix	; F37E22  push XIX
-	m_push MW24, 0x000a09	; F37E23  pushw (0x000a09)
+	pushw	(0x000a09:24)	; F37E23  pushw (0x000a09)
 	lda	xbc, (2571:24)	; F37E28  lda XBC,0x000a0b
 	push	xbc	; F37E2D  push XBC
 	calr	SysExThirdRegion_BuildReplyHeader	; F37E2E  calr 0xf37db4
@@ -77740,9 +77740,9 @@ Divide32_Unsigned_Quotient:
 	sub	xix, xix	; F37F45  sub XIX,XIX
 Divide32_Unsigned_Quotient_Loop:
 	sll	xix, 1	; F37F47  sll 0x01,XIX
-	m_sll_m MWD+r6, 0x08	; F37F4A  sllw (XIZ+0x08)
+	sllw	(xiz+8)	; F37F4A  sllw (XIZ+0x08)
 	.byte 0xD8, 0x24, 0x00	; F37F4D  stcf 0x00,WA   [llvm-mc cannot encode this]
-	m_sll_m MWD+r6, 0x0a	; F37F50  sllw (XIZ+0x0a)
+	sllw	(xiz+10)	; F37F50  sllw (XIZ+0x0a)
 	.byte 0xDC, 0x24, 0x00	; F37F53  stcf 0x00,IX   [llvm-mc cannot encode this]
 	add	(xiz+10), wa	; F37F56  add (XIZ+0x0a),WA
 	sll	xiy, 1	; F37F59  sll 0x01,XIY
@@ -77809,9 +77809,9 @@ Divide32_Unsigned_Remainder:
 	sub	xiy, xiy	; F37F9C  sub XIY,XIY
 Divide32_Unsigned_Remainder_Loop:
 	sll	xiy, 1	; F37F9E  sll 0x01,XIY
-	m_sll_m MWD+r6, 0x08	; F37FA1  sllw (XIZ+0x08)
+	sllw	(xiz+8)	; F37FA1  sllw (XIZ+0x08)
 	.byte 0xD8, 0x24, 0x00	; F37FA4  stcf 0x00,WA   [llvm-mc cannot encode this]
-	m_sll_m MWD+r6, 0x0a	; F37FA7  sllw (XIZ+0x0a)
+	sllw	(xiz+10)	; F37FA7  sllw (XIZ+0x0a)
 	.byte 0xDD, 0x24, 0x00	; F37FAA  stcf 0x00,IY   [llvm-mc cannot encode this]
 	add	(xiz+10), wa	; F37FAD  add (XIZ+0x0a),WA
 	sll	xix, 1	; F37FB0  sll 0x01,XIX
@@ -78182,14 +78182,14 @@ sub_F38A79:
 sub_F38A79_Loop:
 	pushw	9	; F38A96  push 0x0009
 	ld	(xiz-3), hl	; F38A99  ld (XIZ+0xfd),HL
-	m_push MWD+r6, 0xfd	; F38A9C  pushw (XIZ+0xfd)
+	pushw	(xiz-3)	; F38A9C  pushw (XIZ+0xfd)
 	lda	xiy, (sub_F38A79_Resume:24)	; F38A9F  lda XIY,0xf38aa7
 	push	xiy	; F38AA4  push XIY
 	jp	(xix)	; F38AA5  jp T,XIX
 sub_F38A79_Resume:
 	pushw	9	; F38AA7  push 0x0009
 	ld	(xiz-5), de	; F38AAA  ld (XIZ+0xfb),DE
-	m_push MWD+r6, 0xfb	; F38AAD  pushw (XIZ+0xfb)
+	pushw	(xiz-5)	; F38AAD  pushw (XIZ+0xfb)
 	lda	xiy, (sub_F38AA7_Resume:24)	; F38AB0  lda XIY,0xf38ab8
 	push	xiy	; F38AB5  push XIY
 	jp	(xix)	; F38AB6  jp T,XIX
@@ -78208,14 +78208,14 @@ sub_F38AA7_Resume:
 sub_F38A79_Loop2:
 	pushw	9	; F38ADB  push 0x0009
 	ld	(xiz-3), hl	; F38ADE  ld (XIZ+0xfd),HL
-	m_push MWD+r6, 0xfd	; F38AE1  pushw (XIZ+0xfd)
+	pushw	(xiz-3)	; F38AE1  pushw (XIZ+0xfd)
 	lda	xiy, (sub_F38AB8_Resume:24)	; F38AE4  lda XIY,0xf38aec
 	push	xiy	; F38AE9  push XIY
 	jp	(xix)	; F38AEA  jp T,XIX
 sub_F38AB8_Resume:
 	pushw	9	; F38AEC  push 0x0009
 	ld	(xiz-5), de	; F38AEF  ld (XIZ+0xfb),DE
-	m_push MWD+r6, 0xfb	; F38AF2  pushw (XIZ+0xfb)
+	pushw	(xiz-5)	; F38AF2  pushw (XIZ+0xfb)
 	lda	xiy, (sub_F38AEC_Resume:24)	; F38AF5  lda XIY,0xf38afd
 	push	xiy	; F38AFA  push XIY
 	jp	(xix)	; F38AFB  jp T,XIX
@@ -78305,14 +78305,14 @@ sub_F38B8E:
 sub_F38B8E_Loop:
 	pushw	9	; F38BAB  push 0x0009
 	ld	(xiz-3), hl	; F38BAE  ld (XIZ+0xfd),HL
-	m_push MWD+r6, 0xfd	; F38BB1  pushw (XIZ+0xfd)
+	pushw	(xiz-3)	; F38BB1  pushw (XIZ+0xfd)
 	lda	xiy, (sub_F38B8E_Resume:24)	; F38BB4  lda XIY,0xf38bbc
 	push	xiy	; F38BB9  push XIY
 	jp	(xix)	; F38BBA  jp T,XIX
 sub_F38B8E_Resume:
 	pushw	9	; F38BBC  push 0x0009
 	ld	(xiz-5), de	; F38BBF  ld (XIZ+0xfb),DE
-	m_push MWD+r6, 0xfb	; F38BC2  pushw (XIZ+0xfb)
+	pushw	(xiz-5)	; F38BC2  pushw (XIZ+0xfb)
 	lda	xiy, (sub_F38BBC_Resume:24)	; F38BC5  lda XIY,0xf38bcd
 	push	xiy	; F38BCA  push XIY
 	jp	(xix)	; F38BCB  jp T,XIX
@@ -78331,14 +78331,14 @@ sub_F38BBC_Resume:
 sub_F38B8E_Loop2:
 	pushw	9	; F38BF0  push 0x0009
 	ld	(xiz-3), hl	; F38BF3  ld (XIZ+0xfd),HL
-	m_push MWD+r6, 0xfd	; F38BF6  pushw (XIZ+0xfd)
+	pushw	(xiz-3)	; F38BF6  pushw (XIZ+0xfd)
 	lda	xiy, (sub_F38BCD_Resume:24)	; F38BF9  lda XIY,0xf38c01
 	push	xiy	; F38BFE  push XIY
 	jp	(xix)	; F38BFF  jp T,XIX
 sub_F38BCD_Resume:
 	pushw	9	; F38C01  push 0x0009
 	ld	(xiz-5), de	; F38C04  ld (XIZ+0xfb),DE
-	m_push MWD+r6, 0xfb	; F38C07  pushw (XIZ+0xfb)
+	pushw	(xiz-5)	; F38C07  pushw (XIZ+0xfb)
 	lda	xiy, (sub_F38C01_Resume:24)	; F38C0A  lda XIY,0xf38c12
 	push	xiy	; F38C0F  push XIY
 	jp	(xix)	; F38C10  jp T,XIX
@@ -101146,7 +101146,7 @@ DiskFile_CheckSignature_Join8:
 	cp	(UI_ScreenPage:16), 0x01	; F48E9B  cp (0x2229),0x01
 	jr	nz, DiskFile_CheckSignature_Skip14	; F48EA0  jr NZ,0xf48ead
 	push	0	; F48EA2  push 0x00
-	m_push MB16, 0x2737	; F48EA4  push (0x2737)
+	push	(0x2737:16)	; F48EA4  push (0x2737)
 	calr	sub_F48F9F	; F48EA8  calr 0xf48f9f
 	jr	DiskFile_CheckSignature_Join9	; F48EAB  jr T,0xf48ebc
 DiskFile_CheckSignature_Skip14:
@@ -101318,7 +101318,7 @@ sub_F48F9F_Join:
 	cp	bc, hl	; F48FBE  cp BC,HL
 	jr	nc, sub_F48F9F_Skip	; F48FC0  jr NC,0xf48fd3
 	push	0	; F48FC2  push 0x00
-	m_push MBD+r6, 0x0a	; F48FC4  push (XIZ+0x0a)
+	push	(xiz+10)	; F48FC4  push (XIZ+0x0a)
 	push	0	; F48FC7  push 0x00
 	push	d	; F48FC9  push D
 	calr	PartRecords_RepostMatchingProgramBank	; F48FCB  calr 0xf48fd8
@@ -101367,14 +101367,14 @@ PartRecords_RepostMatchingProgramBank_Loop:
 	jr	nz, PartRecords_RepostMatchingProgramBank_Skip	; F48FFB  jr NZ,0xf49027
 	pushw	127	; F48FFD  push 0x007f
 	push	0	; F49000  push 0x00
-	m_push MBD+r6, 0x0a	; F49002  push (XIZ+0x0a)
+	push	(xiz+10)	; F49002  push (XIZ+0x0a)
 	pushw	1	; F49005  push 0x0001
 	push	0	; F49008  push 0x00
 	push	h	; F4900A  push H
 	call	T_Queue2E00_Append4	; F4900C  call 0xf42c84
 	pushw	255	; F49010  push 0x00ff
 	push	0	; F49013  push 0x00
-	m_push MBD+r6, 0x08	; F49015  push (XIZ+0x08)
+	push	(xiz+8)	; F49015  push (XIZ+0x08)
 	pushw	0	; F49018  push 0x0000
 	push	0	; F4901B  push 0x00
 	push	h	; F4901D  push H
@@ -101456,9 +101456,9 @@ DiskFile_BuildLinkCopyRecords_Loop:
 	jrl	DiskFile_BuildLinkCopyRecords_Join5	; F490AA  jrl T,0xf493f4
 DiskFile_BuildLinkCopyRecords_Skip:
 	push	0	; F490AD  push 0x00
-	m_push MB16, 0x2727	; F490AF  push (0x2727)
+	push	(0x2727:16)	; F490AF  push (0x2727)
 	push	0	; F490B3  push 0x00
-	m_push MB16, 0x2728	; F490B5  push (0x2728)
+	push	(0x2728:16)	; F490B5  push (0x2728)
 	cp	(0x2727:16), 0x08	; F490B9  cp (0x2727),0x08
 	jr	nc, DiskFile_BuildLinkCopyRecords_Skip2	; F490BE  jr NC,0xf490e2
 	calr	UserSoundBank_RemoteGroupAddr	; F490C0  calr 0xf493fa
@@ -101486,9 +101486,9 @@ DiskFile_BuildLinkCopyRecords_Skip2:
 DiskFile_BuildLinkCopyRecords_Join:
 	pop	xiy	; F49102  pop XIY
 	push	0	; F49103  push 0x00
-	m_push MB16, 0x2737	; F49105  push (0x2737)
+	push	(0x2737:16)	; F49105  push (0x2737)
 	push	0	; F49109  push 0x00
-	m_push MB16, 0x2736	; F4910B  push (0x2736)
+	push	(0x2736:16)	; F4910B  push (0x2736)
 	cp	(0x2737:16), 0x08	; F4910F  cp (0x2737),0x08
 	jr	nc, DiskFile_BuildLinkCopyRecords_Skip3	; F49114  jr NC,0xf49139
 	calr	UserSoundBank_RemoteGroupAddr	; F49116  calr 0xf493fa
@@ -101520,31 +101520,31 @@ DiskFile_BuildLinkCopyRecords_Join2:
 	ld	xix, (xiz+8)	; F49163  ld XIX,(XIZ+0x08)
 	add	xix, 10	; F49166  add XIX,0x0000000a
 	push	0	; F4916C  push 0x00
-	m_push MB16, 0x2727	; F4916E  push (0x2727)
+	push	(0x2727:16)	; F4916E  push (0x2727)
 	push	0	; F49172  push 0x00
-	m_push MB16, 0x2728	; F49174  push (0x2728)
+	push	(0x2728:16)	; F49174  push (0x2728)
 	calr	UserSoundBank_RemoteGroupAddr	; F49178  calr 0xf493fa
 	ld	(xix), xiy	; F4917B  ld (XIX),XIY
 	push	0	; F4917D  push 0x00
-	m_push MB16, 0x2737	; F4917F  push (0x2737)
+	push	(0x2737:16)	; F4917F  push (0x2737)
 	push	0	; F49183  push 0x00
-	m_push MB16, 0x2736	; F49185  push (0x2736)
+	push	(0x2736:16)	; F49185  push (0x2736)
 	calr	UserSoundBank_RemoteGroupAddr	; F49189  calr 0xf493fa
 	ld	(xix+6), xiy	; F4918C  ld (XIX+0x06),XIY
 	ldw	(xix+4), 0x1648	; F4918F  ld (XIX+0x04),0x1648
 	jrl	DiskFile_BuildLinkCopyRecords_Join3	; F49194  jrl T,0xf4926b
 DiskFile_BuildLinkCopyRecords_Skip4:
 	push	0	; F49197  push 0x00
-	m_push MB16, 0x2727	; F49199  push (0x2727)
+	push	(0x2727:16)	; F49199  push (0x2727)
 	push	0	; F4919D  push 0x00
-	m_push MB16, 0x2728	; F4919F  push (0x2728)
+	push	(0x2728:16)	; F4919F  push (0x2728)
 	calr	UserSoundBank_RemoteGroupAddr	; F491A3  calr 0xf493fa
 	ld	xbc, (xiz+8)	; F491A6  ld XBC,(XIZ+0x08)
 	ld	(xbc), xiy	; F491A9  ld (XBC),XIY
 	push	0	; F491AB  push 0x00
-	m_push MB16, 0x2737	; F491AD  push (0x2737)
+	push	(0x2737:16)	; F491AD  push (0x2737)
 	push	0	; F491B1  push 0x00
-	m_push MB16, 0x2736	; F491B3  push (0x2736)
+	push	(0x2736:16)	; F491B3  push (0x2736)
 	calr	UserSoundBank_RemoteGroupAddr	; F491B7  calr 0xf493fa
 	ld	xbc, (xiz+8)	; F491BA  ld XBC,(XIZ+0x08)
 	ld	(xbc+6), xiy	; F491BD  ld (XBC+0x06),XIY
@@ -101553,17 +101553,17 @@ DiskFile_BuildLinkCopyRecords_Skip4:
 	ld	xbc, 10	; F491C8  ld XBC,0x0000000a
 	add	(xiz+8), xbc	; F491CD  add (XIZ+0x08),XBC
 	push	0	; F491D0  push 0x00
-	m_push MB16, 0x2727	; F491D2  push (0x2727)
+	push	(0x2727:16)	; F491D2  push (0x2727)
 	push	0	; F491D6  push 0x00
-	m_push MB16, 0x2728	; F491D8  push (0x2728)
+	push	(0x2728:16)	; F491D8  push (0x2728)
 	calr	UserSoundBank_RemoteGroupAddr	; F491DC  calr 0xf493fa
 	add	xiy, 65536	; F491DF  add XIY,0x00010000
 	ld	xbc, (xiz+8)	; F491E5  ld XBC,(XIZ+0x08)
 	ld	(xbc), xiy	; F491E8  ld (XBC),XIY
 	push	0	; F491EA  push 0x00
-	m_push MB16, 0x2737	; F491EC  push (0x2737)
+	push	(0x2737:16)	; F491EC  push (0x2737)
 	push	0	; F491F0  push 0x00
-	m_push MB16, 0x2736	; F491F2  push (0x2736)
+	push	(0x2736:16)	; F491F2  push (0x2736)
 	calr	UserSoundBank_RemoteGroupAddr	; F491F6  calr 0xf493fa
 	add	xiy, 65536	; F491F9  add XIY,0x00010000
 	ld	xbc, (xiz+8)	; F491FF  ld XBC,(XIZ+0x08)
@@ -101586,7 +101586,7 @@ DiskFile_BuildLinkCopyRecords_Skip5:
 DiskFile_BuildLinkCopyRecords_Skip6:
 	pushw	hl	; F49225  push HL
 	push	0	; F49226  push 0x00
-	m_push MB16, 0x2728	; F49228  push (0x2728)
+	push	(0x2728:16)	; F49228  push (0x2728)
 	calr	UserSoundBank_RemoteGroupAddr	; F4922C  calr 0xf493fa
 	ld	xix, xiy	; F4922F  ld XIX,XIY
 	ld	c, d	; F49231  ld C,D
@@ -101596,9 +101596,9 @@ DiskFile_BuildLinkCopyRecords_Skip6:
 	ld	xbc, (xiz+8)	; F4923B  ld XBC,(XIZ+0x08)
 	ld	(xbc), xiy	; F4923E  ld (XBC),XIY
 	push	0	; F49240  push 0x00
-	m_push MB16, 0x2737	; F49242  push (0x2737)
+	push	(0x2737:16)	; F49242  push (0x2737)
 	push	0	; F49246  push 0x00
-	m_push MB16, 0x2736	; F49248  push (0x2736)
+	push	(0x2736:16)	; F49248  push (0x2736)
 	calr	UserSoundBank_RemoteGroupAddr	; F4924C  calr 0xf493fa
 	ld	xix, xiy	; F4924F  ld XIX,XIY
 	ld	bc, (10040:16)	; F49251  ld BC,(0x2738)
@@ -101615,7 +101615,7 @@ DiskFile_BuildLinkCopyRecords_Join3:
 DiskFile_BuildLinkCopyRecords_Skip7:
 	pushw	hl	; F49270  push HL
 	push	0	; F49271  push 0x00
-	m_push MB16, 0x2728	; F49273  push (0x2728)
+	push	(0x2728:16)	; F49273  push (0x2728)
 	calr	UserSoundBank_RemoteGroupAddr	; F49277  calr 0xf493fa
 	ld	xix, xiy	; F4927A  ld XIX,XIY
 	ld	c, d	; F4927C  ld C,D
@@ -101626,9 +101626,9 @@ DiskFile_BuildLinkCopyRecords_Skip7:
 	ld	xbc, (xiz+8)	; F49287  ld XBC,(XIZ+0x08)
 	ld	(xbc), xiy	; F4928A  ld (XBC),XIY
 	push	0	; F4928C  push 0x00
-	m_push MB16, 0x2737	; F4928E  push (0x2737)
+	push	(0x2737:16)	; F4928E  push (0x2737)
 	push	0	; F49292  push 0x00
-	m_push MB16, 0x2736	; F49294  push (0x2736)
+	push	(0x2736:16)	; F49294  push (0x2736)
 	calr	UserSoundBank_RemoteGroupAddr	; F49298  calr 0xf493fa
 	ld	xix, xiy	; F4929B  ld XIX,XIY
 	ld	bc, (10040:16)	; F4929D  ld BC,(0x2738)
@@ -102787,9 +102787,9 @@ SeqRecord_WriteBeatMarkAndAgeHeldNotes_Join4:
 	ld	hl, wa	; F49DB8  ld HL,WA
 	jr	SeqRecord_WriteBeatMarkAndAgeHeldNotes_Join4	; F49DBA  jr T,0xf49d97
 SeqRecord_WriteBeatMarkAndAgeHeldNotes_Skip6:
-	m_push MB16, 0x349f	; F49DBC  push (0x349f)
+	push	(0x349f:16)	; F49DBC  push (0x349f)
 	call	SeqRecord_SplitHeldNoteAtBeatLimit	; F49DC0  call 0xf49de6
-	m_pop MD16, 0x349f	; F49DC4  pop (0x349f)
+	pop	(0x349f:16)	; F49DC4  pop (0x349f)
 	cp	(0x33de:16), 0xff	; F49DC8  cp (0x33de),0xff
 	jr	z, SeqRecord_WriteBeatMarkAndAgeHeldNotes_Skip7	; F49DCD  jr Z,0xf49dd9
 	xor	wa, wa	; F49DCF  xor WA,WA
@@ -102820,9 +102820,9 @@ SeqRecord_WriteBeatMarkAndAgeHeldNotes_Skip7:
 SeqRecord_SplitHeldNoteAtBeatLimit:
 	calr	sub_F49DF8	; F49DE6  calr 0xf49df8
 	calr	sub_F49F46	; F49DE9  calr 0xf49f46
-	m_push MB16, 0x33de	; F49DEC  push (0x33de)
+	push	(0x33de:16)	; F49DEC  push (0x33de)
 	calr	SeqRecord_WriteNoteOn	; F49DF0  calr 0xf49f6d
-	m_pop MD16, 0x33de	; F49DF3  pop (0x33de)
+	pop	(0x33de:16)	; F49DF3  pop (0x33de)
 	ret	; F49DF7  ret
 
 ; --------------------------------------------------------------------------
@@ -104319,8 +104319,8 @@ CycleRecord_CountCycleRangeBeats_Return:
 ;   kept. The MASTER-on arm of CycleRecord_CountCycleRangeBeats. Basis: caller + caller header + body. (notes/naming-
 ;   pilot-2026-10-06/proposals_wave8_a8.json)
 CycleRecord_CountCycleRangeBeatsFromTimeSigs:
-	m_push MW16, BStore_CursorBlock	; F4A8A1  pushw (0x345c)
-	m_push MW16, BStore_CursorOffset	; F4A8A5  pushw (0x345e)
+	pushw	(BStore_CursorBlock:16)	; F4A8A1  pushw (0x345c)
+	pushw	(BStore_CursorOffset:16)	; F4A8A5  pushw (0x345e)
 	ld	bc, (13860:16)	; F4A8A9  ld BC,(0x3624)
 	inc	1, bc	; F4A8AD  inc 1,BC
 	ld	(3216:16), bc	; F4A8AF  ld (0x0c90),BC
@@ -104328,19 +104328,19 @@ CycleRecord_CountCycleRangeBeatsFromTimeSigs:
 	pushw	wa	; F4A8B5  push WA
 	calr	CycleRecord_BeatsBeforeMeasureFromTimeSigs	; F4A8B6  calr 0xf4b771
 	popw	wa	; F4A8B9  pop WA
-	m_popw MD16, BStore_CursorOffset	; F4A8BA  popw (0x345e)
-	m_popw MD16, BStore_CursorBlock	; F4A8BE  popw (0x345c)
+	popw	(BStore_CursorOffset:16)	; F4A8BA  popw (0x345e)
+	popw	(BStore_CursorBlock:16)	; F4A8BE  popw (0x345c)
 	ld	(14066:16), ix	; F4A8C2  ld (0x36f2),IX
-	m_push MW16, BStore_CursorBlock	; F4A8C6  pushw (0x345c)
-	m_push MW16, BStore_CursorOffset	; F4A8CA  pushw (0x345e)
+	pushw	(BStore_CursorBlock:16)	; F4A8C6  pushw (0x345c)
+	pushw	(BStore_CursorOffset:16)	; F4A8CA  pushw (0x345e)
 	ld	bc, (13858:16)	; F4A8CE  ld BC,(0x3622)
 	ld	(3216:16), bc	; F4A8D2  ld (0x0c90),BC
 	ld	a, w	; F4A8D6  ld A,W
 	pushw	wa	; F4A8D8  push WA
 	calr	CycleRecord_BeatsBeforeMeasureFromTimeSigs	; F4A8D9  calr 0xf4b771
 	popw	wa	; F4A8DC  pop WA
-	m_popw MD16, BStore_CursorOffset	; F4A8DD  popw (0x345e)
-	m_popw MD16, BStore_CursorBlock	; F4A8E1  popw (0x345c)
+	popw	(BStore_CursorOffset:16)	; F4A8DD  popw (0x345e)
+	popw	(BStore_CursorBlock:16)	; F4A8E1  popw (0x345c)
 	ld	wa, (14066:16)	; F4A8E5  ld WA,(0x36f2)
 	sub	wa, ix	; F4A8E9  sub WA,IX
 	ld	(14066:16), wa	; F4A8EB  ld (0x36f2),WA
@@ -105645,8 +105645,8 @@ CycleRecord_CountBeatsToCycleEnd_Return:
 ;   CycleRecord_CountBeatsToCycleEnd. Basis: caller + caller header + body + twin. (notes/naming-
 ;   pilot-2026-10-06/proposals_wave8_a8.json)
 CycleRecord_CountBeatsToCycleEndFromTimeSigs:
-	m_push MW16, BStore_CursorBlock	; F4B26F  pushw (0x345c)
-	m_push MW16, BStore_CursorOffset	; F4B273  pushw (0x345e)
+	pushw	(BStore_CursorBlock:16)	; F4B26F  pushw (0x345c)
+	pushw	(BStore_CursorOffset:16)	; F4B273  pushw (0x345e)
 	ld	bc, (13860:16)	; F4B277  ld BC,(0x3624)
 	inc	1, bc	; F4B27B  inc 1,BC
 	ld	(3216:16), bc	; F4B27D  ld (0x0c90),BC
@@ -105654,8 +105654,8 @@ CycleRecord_CountBeatsToCycleEndFromTimeSigs:
 	pushw	wa	; F4B283  push WA
 	calr	CycleRecord_BeatsBeforeMeasureFromTimeSigs	; F4B284  calr 0xf4b771
 	popw	wa	; F4B287  pop WA
-	m_popw MD16, BStore_CursorOffset	; F4B288  popw (0x345e)
-	m_popw MD16, BStore_CursorBlock	; F4B28C  popw (0x345c)
+	popw	(BStore_CursorOffset:16)	; F4B288  popw (0x345e)
+	popw	(BStore_CursorBlock:16)	; F4B28C  popw (0x345c)
 	ld	(14068:16), ix	; F4B290  ld (0x36f4),IX
 	ret	; F4B294  ret
 
@@ -107029,8 +107029,8 @@ UI_RequestBits_ClearBit7:		; <- T_UI_RequestBits_ClearBit7
 ;   (ViewB entry 0xAD) points at the thunk triple starting at T_ScreenEnter_CreatorSelectController, and slot T_ScreenButton_CreatorSelectController jumps here.
 ScreenButton_CreatorSelectController:		; <- T_ScreenButton_CreatorSelectController
 	link XIZ,0x0000	; F4C4B5  link XIZ,0x0000
-	m_push MWD+r6, 0x0a	; F4C4B9  pushw (XIZ+0x0a)
-	m_push MWD+r6, 0x08	; F4C4BC  pushw (XIZ+0x08)
+	pushw	(xiz+10)	; F4C4B9  pushw (XIZ+0x0a)
+	pushw	(xiz+8)	; F4C4BC  pushw (XIZ+0x08)
 	call	T_PanelCode_ToSlotAndFlags	; F4C4BF  call 0xf42c74
 	mul	a, 4	; F4C4C3  mul A,0x04
 	extz	xwa	; F4C4C6  extz XWA
@@ -107082,7 +107082,7 @@ SoftKeyCols2to7_CreatorSelectController:
 	jrl	SoftKeyCols2to7_CreatorSelectController_Epilogue	; F4C502  jrl T,0xf4c585
 SoftKeyCols2to7_CreatorSelectController_Skip:
 	push	0	; F4C505  push 0x00
-	m_push MB16, PanelEvent_ButtonCode	; F4C507  push (0x28b1)
+	push	(PanelEvent_ButtonCode:16)	; F4C507  push (0x28b1)
 	lda	xiy, (SoftKeyCols2to7_CreatorSelectController_Resume:24)	; F4C50B  lda XIY,0xf4c513
 	push	xiy	; F4C510  push XIY
 	jp	(xix)	; F4C511  jp T,XIX
@@ -107098,7 +107098,7 @@ SoftKeyCols2to7_CreatorSelectController_Resume:
 	jr	z, SoftKeyCols2to7_CreatorSelectController_Epilogue	; F4C527  jr Z,0xf4c585
 	pushw	63	; F4C529  push 0x003f
 	push	0	; F4C52C  push 0x00
-	m_push MB16, PanelEvent_ButtonCode	; F4C52E  push (0x28b1)
+	push	(PanelEvent_ButtonCode:16)	; F4C52E  push (0x28b1)
 	lda	xiy, (SoftKeyCols2to7_CreatorSelectController_Resume2:24)	; F4C532  lda XIY,0xf4c53a
 	push	xiy	; F4C537  push XIY
 	jp	(xix)	; F4C538  jp T,XIX
@@ -107109,7 +107109,7 @@ SoftKeyCols2to7_CreatorSelectController_Resume2:
 	jr	SoftKeyCols2to7_CreatorSelectController_Join	; F4C53F  jr T,0xf4c57b
 SoftKeyCols2to7_CreatorSelectController_Skip2:
 	push	0	; F4C541  push 0x00
-	m_push MB16, PanelEvent_ButtonCode	; F4C543  push (0x28b1)
+	push	(PanelEvent_ButtonCode:16)	; F4C543  push (0x28b1)
 	lda	xiy, (SoftKeyCols2to7_CreatorSelectController_Resume3:24)	; F4C547  lda XIY,0xf4c54f
 	push	xiy	; F4C54C  push XIY
 	jp	(xix)	; F4C54D  jp T,XIX
@@ -107125,7 +107125,7 @@ SoftKeyCols2to7_CreatorSelectController_Resume3:
 	jr	z, SoftKeyCols2to7_CreatorSelectController_Epilogue	; F4C563  jr Z,0xf4c585
 	pushw	63	; F4C565  push 0x003f
 	push	0	; F4C568  push 0x00
-	m_push MB16, PanelEvent_ButtonCode	; F4C56A  push (0x28b1)
+	push	(PanelEvent_ButtonCode:16)	; F4C56A  push (0x28b1)
 	lda	xiy, (SoftKeyCols2to7_CreatorSelectController_Resume4:24)	; F4C56E  lda XIY,0xf4c576
 	push	xiy	; F4C573  push XIY
 	jp	(xix)	; F4C574  jp T,XIX
@@ -107942,13 +107942,13 @@ SysExDump_PrepareSequencerData:		; <- T_SysExDump_PrepareSequencerData
 	ld	(6304977:24), xwa	; F4CA37  ld (0x6034d1),XWA
 	calr	BStore_Workspace_CopyToBank	; F4CA3C  calr 0xf4cb0d
 	calr	BStore_CompactBlocks	; F4CA3F  calr 0xf4c811
-	m_push MW24, 0x603452	; F4CA42  pushw (0x603452)
-	m_push MW24, BStore_FreeHead	; F4CA47  pushw (0x6034b8)
-	m_push MW24, BStore_FreeCount	; F4CA4C  pushw (0x6034ba)
+	pushw	(0x603452:24)	; F4CA42  pushw (0x603452)
+	pushw	(BStore_FreeHead:24)	; F4CA47  pushw (0x6034b8)
+	pushw	(BStore_FreeCount:24)	; F4CA4C  pushw (0x6034ba)
 	calr	BStore_Workspace_CopyFromBank	; F4CA51  calr 0xf4cb34
-	m_popw MD24, BStore_FreeCount	; F4CA54  popw (0x6034ba)
-	m_popw MD24, BStore_FreeHead	; F4CA59  popw (0x6034b8)
-	m_popw MD24, 0x603452	; F4CA5E  popw (0x603452)
+	popw	(BStore_FreeCount:24)	; F4CA54  popw (0x6034ba)
+	popw	(BStore_FreeHead:24)	; F4CA59  popw (0x6034b8)
+	popw	(0x603452:24)	; F4CA5E  popw (0x603452)
 	ret	; F4CA63  ret
 
 ; --------------------------------------------------------------------------
@@ -108009,13 +108009,13 @@ SeqFile_PrepareSaveAllBanks:		; <- T_SeqFile_PrepareSaveAllBanks
 	ld	xwa, (13836:16)	; F4CAAF  ld XWA,(0x360c)
 	ld	(xde), xwa	; F4CAB3  ld (XDE),XWA
 	calr	BStore_CompactBlocks	; F4CAB5  calr 0xf4c811
-	m_push MW24, 0x603452	; F4CAB8  pushw (0x603452)
-	m_push MW24, BStore_FreeHead	; F4CABD  pushw (0x6034b8)
-	m_push MW24, BStore_FreeCount	; F4CAC2  pushw (0x6034ba)
+	pushw	(0x603452:24)	; F4CAB8  pushw (0x603452)
+	pushw	(BStore_FreeHead:24)	; F4CABD  pushw (0x6034b8)
+	pushw	(BStore_FreeCount:24)	; F4CAC2  pushw (0x6034ba)
 	calr	BStore_Workspace_CopyFromBank	; F4CAC7  calr 0xf4cb34
-	m_popw MD24, BStore_FreeCount	; F4CACA  popw (0x6034ba)
-	m_popw MD24, BStore_FreeHead	; F4CACF  popw (0x6034b8)
-	m_popw MD24, 0x603452	; F4CAD4  popw (0x603452)
+	popw	(BStore_FreeCount:24)	; F4CACA  popw (0x6034ba)
+	popw	(BStore_FreeHead:24)	; F4CACF  popw (0x6034b8)
+	popw	(0x603452:24)	; F4CAD4  popw (0x603452)
 	ret	; F4CAD9  ret
 
 ; --------------------------------------------------------------------------
@@ -114607,8 +114607,8 @@ T_F42E48_Nop:		; <- T_F42E48
 ; --------------------------------------------------------------------------
 DrawbarScreen_Dispatch:		; <- T_DrawbarScreen_Dispatch
 	link XIZ,0x0000	; F5302A  link XIZ,0x0000
-	m_push MWD+r6, 0x0a	; F5302E  pushw (XIZ+0x0a)
-	m_push MWD+r6, 0x08	; F53031  pushw (XIZ+0x08)
+	pushw	(xiz+10)	; F5302E  pushw (XIZ+0x0a)
+	pushw	(xiz+8)	; F53031  pushw (XIZ+0x08)
 	call	T_PanelCode_ToSlotAndFlags	; F53034  call 0xf42c74
 	mul	a, 4	; F53038  mul A,0x04
 	extz	xwa	; F5303B  extz XWA
@@ -115100,7 +115100,7 @@ DrawbarScreen_ToggleRowFlag_Skip:
 	xor	(xix), 0x20	; F53251  xor (XIX),0x20
 DrawbarScreen_ToggleRowFlag_Join:
 	push	0	; F53254  push 0x00
-	m_push MB16, 0x289c	; F53256  push (0x289c)
+	push	(0x289c:16)	; F53256  push (0x289c)
 	calr	Drawbar_SendSettingBytes	; F5325A  calr 0xf5418e
 	set	4, (UI_ScreenFlags:16)	; F5325D  set 4,(0x2095)
 	popw	bc	; F53261  pop BC
@@ -115153,7 +115153,7 @@ DrawbarSettingPage_StepAttackTime_Skip2:
 DrawbarSettingPage_StepAttackTime_Join2:
 	set	3, (UI_RequestBits:16)	; F532AB  set 3,(0x2075)
 	push	0	; F532AF  push 0x00
-	m_push MB16, 0x289c	; F532B1  push (0x289c)
+	push	(0x289c:16)	; F532B1  push (0x289c)
 	calr	Drawbar_SendSettingBytes	; F532B5  calr 0xf5418e
 	set	4, (UI_ScreenFlags:16)	; F532B8  set 4,(0x2095)
 	popw	bc	; F532BC  pop BC
@@ -115209,7 +115209,7 @@ DrawbarSettingPage_StepReleaseTime_Skip3:
 DrawbarSettingPage_StepReleaseTime_Join3:
 	set	3, (UI_RequestBits:16)	; F5330C  set 3,(0x2075)
 	push	0	; F53310  push 0x00
-	m_push MB16, 0x289c	; F53312  push (0x289c)
+	push	(0x289c:16)	; F53312  push (0x289c)
 	calr	Drawbar_SendSettingBytes	; F53316  calr 0xf5418e
 	set	4, (UI_ScreenFlags:16)	; F53319  set 4,(0x2095)
 	popw	bc	; F5331D  pop BC
@@ -115265,7 +115265,7 @@ DrawbarSettingPage_StepPercussiveToneDecay_Skip4:
 DrawbarSettingPage_StepPercussiveToneDecay_Join4:
 	set	3, (UI_RequestBits:16)	; F5336D  set 3,(0x2075)
 	push	0	; F53371  push 0x00
-	m_push MB16, 0x289c	; F53373  push (0x289c)
+	push	(0x289c:16)	; F53373  push (0x289c)
 	calr	Drawbar_SendSettingBytes	; F53377  calr 0xf5418e
 	set	4, (UI_ScreenFlags:16)	; F5337A  set 4,(0x2095)
 	popw	bc	; F5337E  pop BC
@@ -115319,7 +115319,7 @@ DrawbarSettingPage_StepPercussiveToneLevel_Skip5:
 DrawbarSettingPage_StepPercussiveToneLevel_Join5:
 	set	3, (UI_RequestBits:16)	; F533C8  set 3,(0x2075)
 	push	0	; F533CC  push 0x00
-	m_push MB16, 0x289c	; F533CE  push (0x289c)
+	push	(0x289c:16)	; F533CE  push (0x289c)
 	calr	Drawbar_SendSettingBytes	; F533D2  calr 0xf5418e
 	set	4, (UI_ScreenFlags:16)	; F533D5  set 4,(0x2095)
 	popw	bc	; F533D9  pop BC
@@ -115436,7 +115436,7 @@ SoftKeyCol1_DrawbarScreen:
 	and	(xix), 0xf0	; F5342B  and (XIX),0xf0
 	or	(xix), a	; F5342E  or (XIX),A
 	push	0	; F53430  push 0x00
-	m_push MB16, 0x289c	; F53432  push (0x289c)
+	push	(0x289c:16)	; F53432  push (0x289c)
 	calr	Drawbar_SendPartParams	; F53436  calr 0xf540f3
 	lda	xbc, (Drawbar1_16ft_Update:24)	; F53439  lda XBC,0xf5394c
 	push	xbc	; F5343E  push XBC
@@ -115519,7 +115519,7 @@ SoftKeyCol2_DrawbarScreen:
 	and	(xix), 0xf0	; F5346D  and (XIX),0xf0
 	or	(xix), a	; F53470  or (XIX),A
 	push	0	; F53472  push 0x00
-	m_push MB16, 0x289c	; F53474  push (0x289c)
+	push	(0x289c:16)	; F53474  push (0x289c)
 	calr	Drawbar_SendPartParams	; F53478  calr 0xf540f3
 	lda	xbc, (Drawbar2_5_1_3ft_Update:24)	; F5347B  lda XBC,0xf539c0
 	push	xbc	; F53480  push XBC
@@ -115605,7 +115605,7 @@ SoftKeyCol3_DrawbarScreen:
 	and	(xix), 0x0f	; F534B8  and (XIX),0x0f
 	or	(xix), a	; F534BB  or (XIX),A
 	push	0	; F534BD  push 0x00
-	m_push MB16, 0x289c	; F534BF  push (0x289c)
+	push	(0x289c:16)	; F534BF  push (0x289c)
 	calr	Drawbar_SendPartParams	; F534C3  calr 0xf540f3
 	lda	xbc, (Drawbar3_8ft_Update:24)	; F534C6  lda XBC,0xf53a34
 	push	xbc	; F534CB  push XBC
@@ -115691,7 +115691,7 @@ SoftKeyCol4_DrawbarScreen:
 	and	(xix), 0x0f	; F53503  and (XIX),0x0f
 	or	(xix), a	; F53506  or (XIX),A
 	push	0	; F53508  push 0x00
-	m_push MB16, 0x289c	; F5350A  push (0x289c)
+	push	(0x289c:16)	; F5350A  push (0x289c)
 	calr	Drawbar_SendPartParams	; F5350E  calr 0xf540f3
 	lda	xbc, (Drawbar4_4ft_Update:24)	; F53511  lda XBC,0xf53ac3
 	push	xbc	; F53516  push XBC
@@ -115772,7 +115772,7 @@ SoftKeyCol5_DrawbarScreen:
 	and	(xix), 0xf0	; F53545  and (XIX),0xf0
 	or	(xix), a	; F53548  or (XIX),A
 	push	0	; F5354A  push 0x00
-	m_push MB16, 0x289c	; F5354C  push (0x289c)
+	push	(0x289c:16)	; F5354C  push (0x289c)
 	calr	Drawbar_SendPartParams	; F53550  calr 0xf540f3
 	lda	xbc, (Drawbar5_2_2_3ft_Update:24)	; F53553  lda XBC,0xf53b52
 	push	xbc	; F53558  push XBC
@@ -115856,7 +115856,7 @@ SoftKeyCol6_DrawbarScreen:
 	and	(xix), 0x0f	; F53590  and (XIX),0x0f
 	or	(xix), a	; F53593  or (XIX),A
 	push	0	; F53595  push 0x00
-	m_push MB16, 0x289c	; F53597  push (0x289c)
+	push	(0x289c:16)	; F53597  push (0x289c)
 	calr	Drawbar_SendPartParams	; F5359B  calr 0xf540f3
 	lda	xbc, (Drawbar6_2ft_Update:24)	; F5359E  lda XBC,0xf53bc6
 	push	xbc	; F535A3  push XBC
@@ -115937,7 +115937,7 @@ SoftKeyCol7_DrawbarScreen:
 	and	(xix), 0xf0	; F535D2  and (XIX),0xf0
 	or	(xix), a	; F535D5  or (XIX),A
 	push	0	; F535D7  push 0x00
-	m_push MB16, 0x289c	; F535D9  push (0x289c)
+	push	(0x289c:16)	; F535D9  push (0x289c)
 	calr	Drawbar_SendPartParams	; F535DD  calr 0xf540f3
 	lda	xbc, (Drawbar7_1_3_5ft_Update:24)	; F535E0  lda XBC,0xf53c55
 	push	xbc	; F535E5  push XBC
@@ -116021,7 +116021,7 @@ SoftKeyCol8_DrawbarScreen:
 	and	(xix), 0x0f	; F5361D  and (XIX),0x0f
 	or	(xix), a	; F53620  or (XIX),A
 	push	0	; F53622  push 0x00
-	m_push MB16, 0x289c	; F53624  push (0x289c)
+	push	(0x289c:16)	; F53624  push (0x289c)
 	calr	Drawbar_SendPartParams	; F53628  calr 0xf540f3
 	lda	xbc, (Drawbar8_1_1_3ft_Update:24)	; F5362B  lda XBC,0xf53cc9
 	push	xbc	; F53630  push XBC
@@ -116068,7 +116068,7 @@ PageKey_DrawbarScreen:
 	and	(xix), 0xf0	; F5365F  and (XIX),0xf0
 	or	(xix), a	; F53662  or (XIX),A
 	push	0	; F53664  push 0x00
-	m_push MB16, 0x289c	; F53666  push (0x289c)
+	push	(0x289c:16)	; F53666  push (0x289c)
 	calr	Drawbar_SendPartParams	; F5366A  calr 0xf540f3
 	lda	xbc, (Drawbar9_1ft_Update:24)	; F5366D  lda XBC,0xf53d58
 	push	xbc	; F53672  push XBC
@@ -119218,7 +119218,7 @@ IndexedTable_GetByte:
 	link XIZ,0x0000	; F5533C  link XIZ,0x0000
 	push	xix	; F55340  push XIX
 	push	0	; F55341  push 0x00
-	m_push MBD+r6, 0x08	; F55343  push (XIZ+0x08)
+	push	(xiz+8)	; F55343  push (XIZ+0x08)
 	calr	IndexedTable_GetPtr	; F55346  calr 0xf55321
 	ld	xix, xiy	; F55349  ld XIX,XIY
 	ld	bc, (xiz+10)	; F5534B  ld BC,(XIZ+0x0a)
@@ -119291,7 +119291,7 @@ IndexedParam_AdjustField:
 	add	(xiz+8), 0x20	; F55379  add (XIZ+0x08),0x20
 IndexedTable_GetByte_Skip:
 	push	0	; F5537D  push 0x00
-	m_push MBD+r6, 0x08	; F5537F  push (XIZ+0x08)
+	push	(xiz+8)	; F5537F  push (XIZ+0x08)
 	calr	IndexedTable_GetPtr	; F55382  calr 0xf55321
 	ld	(xiz-11), xiy	; F55385  ld (XIZ+0xf5),XIY
 	ld	c, (xix)	; F55388  ld C,(XIX)
@@ -119386,7 +119386,7 @@ IndexedTable_GetByte_Skip7:
 	ld	c, (xix)	; F5543F  ld C,(XIX)
 	pushw	bc	; F55441  push BC
 	push	0	; F55442  push 0x00
-	m_push MBD+r6, 0x08	; F55444  push (XIZ+0x08)
+	push	(xiz+8)	; F55444  push (XIZ+0x08)
 	calr	List2030_Append4	; F55447  calr 0xf552cc
 	jr	IndexedTable_GetByte_Join5	; F5544A  jr T,0xf55473
 IndexedTable_GetByte_Skip8:
@@ -119406,7 +119406,7 @@ IndexedTable_GetByte_Skip8:
 	ld	c, (xix)	; F55468  ld C,(XIX)
 	pushw	bc	; F5546A  push BC
 	push	0	; F5546B  push 0x00
-	m_push MBD+r6, 0x08	; F5546D  push (XIZ+0x08)
+	push	(xiz+8)	; F5546D  push (XIZ+0x08)
 	calr	Queue2C00_Append4	; F55470  calr 0xf55231
 IndexedTable_GetByte_Join5:
 	inc	8, xsp	; F55473  inc 0,XSP
@@ -119807,13 +119807,13 @@ IndexedTable_GetByte_Skip25:
 	ld	a, (xbc)	; F55678  ld A,(XBC)
 	pushw	wa	; F5567A  push WA
 	push	0	; F5567B  push 0x00
-	m_push MBD+r6, 0x08	; F5567D  push (XIZ+0x08)
+	push	(xiz+8)	; F5567D  push (XIZ+0x08)
 	calr	List2030_Append4	; F55680  calr 0xf552cc
 	inc	8, xsp	; F55683  inc 0,XSP
 	jr	IndexedTable_GetByte_Join15	; F55685  jr T,0xf556ca
 IndexedTable_GetByte_Skip26:
 	push	0	; F55687  push 0x00
-	m_push MBD+r6, 0x08	; F55689  push (XIZ+0x08)
+	push	(xiz+8)	; F55689  push (XIZ+0x08)
 	calr	IndexedTable_GetPtr	; F5568C  calr 0xf55321
 	ld	xix, xiy	; F5568F  ld XIX,XIY
 	ld	xbc, (xiz+10)	; F55691  ld XBC,(XIZ+0x0a)
@@ -119838,7 +119838,7 @@ IndexedTable_GetByte_Skip26:
 	ld	a, (xbc)	; F556BB  ld A,(XBC)
 	pushw	wa	; F556BD  push WA
 	push	0	; F556BE  push 0x00
-	m_push MBD+r6, 0x08	; F556C0  push (XIZ+0x08)
+	push	(xiz+8)	; F556C0  push (XIZ+0x08)
 	calr	Queue2C00_Append4	; F556C3  calr 0xf55231
 	inc	8, xsp	; F556C6  inc 0,XSP
 	inc	2, xsp	; F556C8  inc 2,XSP
@@ -144819,7 +144819,7 @@ Seq_FindMasterTrack_Return:
 ;   BStore_LoadStartBeatsPerBar stub; BStore_SeekMeasure and CycleRecord_BeatsBeforeMeasureFromTimeSigs start with it. Basis: callers + body.
 ;   (notes/naming-pilot-2026-10-06/proposals_wave4_k.json)
 BStore_TimeSigFirstMeasure:		; <- T_BStore_TimeSigFirstMeasure
-	m_push MW16, BStore_CursorBlock	; F6364D  pushw (0x345c)
+	pushw	(BStore_CursorBlock:16)	; F6364D  pushw (0x345c)
 	and	(0x0c8a:16), 0xdf	; F63651  and (0x0c8a),0xdf
 	ld	a, (6304983:24)	; F63656  ld A,(0x6034d7)
 	ld	(3356:16), a	; F6365B  ld (0x0d1c),A
@@ -144902,10 +144902,10 @@ BStore_TimeSigFirstMeasure_Join:
 	ld	(3356:16), a	; F6373B  ld (0x0d1c),A
 	or	(0x0c8a:16), 0x20	; F6373F  or (0x0c8a),0x20
 BStore_TimeSigFirstMeasure_Join2:
-	m_popw MD16, BStore_CursorBlock	; F63744  popw (0x345c)
+	popw	(BStore_CursorBlock:16)	; F63744  popw (0x345c)
 	ret	; F63748  ret
 sub_F63749:		; <- T_F427A8
-	m_push MW16, BStore_CursorBlock	; F63749  pushw (0x345c)
+	pushw	(BStore_CursorBlock:16)	; F63749  pushw (0x345c)
 	bit	2, (0x0c8a:16)	; F6374D  bit 2,(0x0c8a)
 	jrl	z, sub_F63749_Join	; F63751  jrl Z,0xf63821
 	bit	5, (0x0c8a:16)	; F63754  bit 5,(0x0c8a)
@@ -144983,7 +144983,7 @@ sub_F63749_Skip5:
 sub_F63749_Skip6:
 	call	BStore_TimeSigAdvanceOneMeasure	; F6381D  call 0xf6382b
 sub_F63749_Join:
-	m_popw MD16, BStore_CursorBlock	; F63821  popw (0x345c)
+	popw	(BStore_CursorBlock:16)	; F63821  popw (0x345c)
 	ld	(BStore_ErrorCode:16), 0	; F63825  ld (0x0d4a),0x00
 	ret	; F6382A  ret
 ; BStore_TimeSigAdvanceOneMeasure: Shared tail of the time-signature walk: steps the cursor past (0x0D1C) 0x81 beat
@@ -145652,9 +145652,9 @@ sub_F63CE0_Entry:
 	m_rd_pushx RLX, 0x38	; F63DD9  push XDE3
 	pushw	wa	; F63DDC  push WA
 	push	xiy	; F63DDD  push XIY
-	m_push MW16, 0x0cbc	; F63DDE  pushw (0x0cbc)
+	pushw	(0x0cbc:16)	; F63DDE  pushw (0x0cbc)
 	calr	sub_F6411C	; F63DE2  calr 0xf6411c
-	m_popw MD16, 0x0cbc	; F63DE5  popw (0x0cbc)
+	popw	(0x0cbc:16)	; F63DE5  popw (0x0cbc)
 	pop	xiy	; F63DE9  pop XIY
 	popw	wa	; F63DEA  pop WA
 	m_rd_popx RLX, 0x38	; F63DEB  pop XDE3
@@ -145699,7 +145699,7 @@ sub_F63CE0_Skip4:
 	ld	(3401:16), a	; F63E4A  ld (0x0d49),A
 	and	(0x0d49:16), 0x02	; F63E4E  and (0x0d49),0x02
 	ldib_erp	60, 6	; F63E53  ld RL3,6
-	m_sla_m MB16, 0x0d49	; F63E56  sla (0x0d49)
+	sla	(0x0d49:16)	; F63E56  sla (0x0d49)
 	.byte 0xC7, 0x3C, 0x1C, 0xF8	; F63E5A  djnz RL3,0xf63e56   [llvm-mc cannot encode this]
 	push	xiz	; F63E5E  push XIZ
 	ld	xiz, (BStore_CursorBlockAddr:16)	; F63E5F  ld XIZ,(0x126e)
@@ -145708,9 +145708,9 @@ sub_F63CE0_Skip4:
 	m_rd_pushx RLX, 0x38	; F63E67  push XDE3
 	pushw	wa	; F63E6A  push WA
 	push	xiy	; F63E6B  push XIY
-	m_push MW16, 0x0cbc	; F63E6C  pushw (0x0cbc)
+	pushw	(0x0cbc:16)	; F63E6C  pushw (0x0cbc)
 	calr	sub_F63F88	; F63E70  calr 0xf63f88
-	m_popw MD16, 0x0cbc	; F63E73  popw (0x0cbc)
+	popw	(0x0cbc:16)	; F63E73  popw (0x0cbc)
 	pop	xiy	; F63E77  pop XIY
 	popw	wa	; F63E78  pop WA
 	m_rd_popx RLX, 0x38	; F63E79  pop XDE3
@@ -146126,9 +146126,9 @@ sub_F6418E_Entry:
 	pushw	bc	; F642B7  push BC
 	pushw	de	; F642B8  push DE
 	push	xiy	; F642B9  push XIY
-	m_push MW16, 0x0cbc	; F642BA  pushw (0x0cbc)
+	pushw	(0x0cbc:16)	; F642BA  pushw (0x0cbc)
 	calr	sub_F6411C	; F642BE  calr 0xf6411c
-	m_popw MD16, 0x0cbc	; F642C1  popw (0x0cbc)
+	popw	(0x0cbc:16)	; F642C1  popw (0x0cbc)
 	pop	xiy	; F642C5  pop XIY
 	popw	de	; F642C6  pop DE
 	popw	bc	; F642C7  pop BC
@@ -146179,7 +146179,7 @@ sub_F6418E_Skip3:
 	ld	(3401:16), a	; F64334  ld (0x0d49),A
 	and	(0x0d49:16), 0x02	; F64338  and (0x0d49),0x02
 	ldib_erp	60, 6	; F6433D  ld RL3,6
-	m_sla_m MB16, 0x0d49	; F64340  sla (0x0d49)
+	sla	(0x0d49:16)	; F64340  sla (0x0d49)
 	.byte 0xC7, 0x3C, 0x1C, 0xF8	; F64344  djnz RL3,0xf64340   [llvm-mc cannot encode this]
 	push	xiz	; F64348  push XIZ
 	ld	xiz, (BStore_CursorBlockAddr:16)	; F64349  ld XIZ,(0x126e)
@@ -146190,9 +146190,9 @@ sub_F6418E_Skip3:
 	pushw	bc	; F64355  push BC
 	pushw	de	; F64356  push DE
 	push	xiy	; F64357  push XIY
-	m_push MW16, 0x0cbc	; F64358  pushw (0x0cbc)
+	pushw	(0x0cbc:16)	; F64358  pushw (0x0cbc)
 	calr	sub_F63F90	; F6435C  calr 0xf63f90
-	m_popw MD16, 0x0cbc	; F6435F  popw (0x0cbc)
+	popw	(0x0cbc:16)	; F6435F  popw (0x0cbc)
 	pop	xiy	; F64363  pop XIY
 	popw	de	; F64364  pop DE
 	popw	bc	; F64365  pop BC
@@ -153029,13 +153029,13 @@ StepRecord_SetRowEventFlags:
 	m_rd_ld_rr2x RBX, 0x3C, r1	; F68504  ld RL3,A
 	ld	a, c	; F68507  ld A,C
 	rcf	; F68509  rcf
-	m_stcf_a MD16, 0x106c	; F6850A  stcf A,(0x106c)
+	stcf	a, (0x106c:16)	; F6850A  stcf A,(0x106c)
 	m_rd_ld_rrx RBX, 0x3C, r1	; F6850E  ld A,RL3
 	inc	1, c	; F68511  inc 1,C
 	m_rd_ld_rr2x RBX, 0x3C, r1	; F68513  ld RL3,A
 	ld	a, c	; F68516  ld A,C
 	rcf	; F68518  rcf
-	m_stcf_a MD16, 0x106c	; F68519  stcf A,(0x106c)
+	stcf	a, (0x106c:16)	; F68519  stcf A,(0x106c)
 	m_rd_ld_rrx RBX, 0x3C, r1	; F6851D  ld A,RL3
 	dec	1, c	; F68520  dec 1,C
 	ld	a, (4039:16)	; F68522  ld A,(0x0fc7)
@@ -153046,7 +153046,7 @@ StepRecord_SetRowEventFlags:
 	m_rd_ld_rr2x RBX, 0x3C, r1	; F68530  ld RL3,A
 	ld	a, c	; F68533  ld A,C
 	scf	; F68535  scf
-	m_stcf_a MD16, 0x106c	; F68536  stcf A,(0x106c)
+	stcf	a, (0x106c:16)	; F68536  stcf A,(0x106c)
 	m_rd_ld_rrx RBX, 0x3C, r1	; F6853A  ld A,RL3
 sub_F68504_Code_Loop:
 	pushw	bc	; F6853D  push BC
@@ -153062,13 +153062,13 @@ sub_F68504_Code_Loop:
 	m_rd_ld_rr2x RBX, 0x3C, r1	; F68557  ld RL3,A
 	ld	a, c	; F6855A  ld A,C
 	rcf	; F6855C  rcf
-	m_stcf_a MD16, 0x106c	; F6855D  stcf A,(0x106c)
+	stcf	a, (0x106c:16)	; F6855D  stcf A,(0x106c)
 	m_rd_ld_rrx RBX, 0x3C, r1	; F68561  ld A,RL3
 	inc	1, c	; F68564  inc 1,C
 	m_rd_ld_rr2x RBX, 0x3C, r1	; F68566  ld RL3,A
 	ld	a, c	; F68569  ld A,C
 	scf	; F6856B  scf
-	m_stcf_a MD16, 0x106c	; F6856C  stcf A,(0x106c)
+	stcf	a, (0x106c:16)	; F6856C  stcf A,(0x106c)
 	m_rd_ld_rrx RBX, 0x3C, r1	; F68570  ld A,RL3
 sub_F68504_Code_Return:
 	ret	; F68573  ret
@@ -154110,8 +154110,8 @@ StepRecord_CursorStep:
 	calr	StepRecord_AppendLatchedParamEvents	; F68B91  calr 0xf6a908
 	xor	a, a	; F68B94  xor A,A
 	calr	StepRecord_SaveCursorToSlot	; F68B96  calr 0xf6c292
-	m_push MW16, 0x12b2	; F68B99  pushw (0x12b2)
-	m_push MW16, 0x0e58	; F68B9D  pushw (0x0e58)
+	pushw	(0x12b2:16)	; F68B99  pushw (0x12b2)
+	pushw	(0x0e58:16)	; F68B9D  pushw (0x0e58)
 	ld	(3778:16), 0	; F68BA1  ld (0x0ec2),0x00
 	calr	StepRecord_ReadEventTickAtCursor	; F68BA6  calr 0xf68dbe
 	ld	(3789:16), a	; F68BA9  ld (0x0ecd),A
@@ -154166,8 +154166,8 @@ StepRecord_CursorStep_Skip7:
 	popw	de	; F68C29  pop DE
 	xor	a, a	; F68C2A  xor A,A
 	calr	StepRecord_SaveCursorToSlot	; F68C2C  calr 0xf6c292
-	m_push MW16, 0x12b2	; F68C2F  pushw (0x12b2)
-	m_push MW16, 0x0e58	; F68C33  pushw (0x0e58)
+	pushw	(0x12b2:16)	; F68C2F  pushw (0x12b2)
+	pushw	(0x0e58:16)	; F68C33  pushw (0x0e58)
 	calr	TrackCursor_StepBackKeepBeatPosition	; F68C37  calr 0xf6b770
 	calr	BStore_ReadByteAtSongPosition	; F68C3A  calr 0xf6b8bd
 	cp	a, 129	; F68C3D  cp A,0x81
@@ -154181,8 +154181,8 @@ StepRecord_CursorStep_Skip7:
 	ret	; F68C55  ret
 StepRecord_CursorStep_Skip8:
 	ld	(3667:16), 84	; F68C56  ld (0x0e53),0x54
-	m_popw MD16, 0x0e58	; F68C5B  popw (0x0e58)
-	m_popw MD16, 0x12b2	; F68C5F  popw (0x12b2)
+	popw	(0x0e58:16)	; F68C5B  popw (0x0e58)
+	popw	(0x12b2:16)	; F68C5F  popw (0x12b2)
 	xor	a, a	; F68C63  xor A,A
 	calr	StepRecord_RestoreCursorFromSlot	; F68C65  calr 0xf6c2e5
 	calr	StepRecord_ReturnToTrackKindPage	; F68C68  calr 0xf69c03
@@ -154302,8 +154302,8 @@ StepRecord_CursorStep_Skip16:
 	jrl	StepRecord_CursorStep_Join3	; F68D47  jrl T,0xf68c8b
 StepRecord_CursorStep_Join4:
 	ld	(3667:16), e	; F68D4A  ld (0x0e53),E
-	m_popw MD16, 0x0e58	; F68D4E  popw (0x0e58)
-	m_popw MD16, 0x12b2	; F68D52  popw (0x12b2)
+	popw	(0x0e58:16)	; F68D4E  popw (0x0e58)
+	popw	(0x12b2:16)	; F68D52  popw (0x12b2)
 	xor	a, a	; F68D56  xor A,A
 	calr	StepRecord_RestoreCursorFromSlot	; F68D58  calr 0xf6c2e5
 	calr	StepRecord_ReturnToTrackKindPage	; F68D5B  calr 0xf69c03
@@ -157117,7 +157117,7 @@ sub_F69DBD_Skip5:
 	m_rd_ld_rr2x RBX, 0x3C, r1	; F69F43  ld RL3,A
 	ld	a, c	; F69F46  ld A,C
 	scf	; F69F48  scf
-	m_stcf_a MDI+r4, 0	; F69F49  stcf A,(XIX)
+	stcf	a, (xix)	; F69F49  stcf A,(XIX)
 	m_rd_ld_rrx RBX, 0x3C, r1	; F69F4B  ld A,RL3
 	push	xix	; F69F4E  push XIX
 	jrl	sub_F69DBD_Loop	; F69F4F  jrl T,0xf69e7f
@@ -160193,7 +160193,7 @@ sub_F6B2EE_Entry:
 	m_rd_ld_rr2x RBX, 0x3C, r1	; F6B32B  ld RL3,A
 	ld	a, c	; F6B32E  ld A,C
 	scf	; F6B330  scf
-	m_xorcf_a MDI+r5, 0	; F6B331  xorcf A,(XIY)
+	xorcf	a, (xiy)	; F6B331  xorcf A,(XIY)
 	m_rd_ld_rrx RBX, 0x3C, r1	; F6B333  ld A,RL3
 	jr	nc, sub_F6B2EE_Skip	; F6B336  jr NC,0xf6b343
 	inc	1, c	; F6B338  inc 1,C
@@ -160213,7 +160213,7 @@ sub_F6B2EE_Entry2:
 	m_rd_ld_rr2x RBX, 0x3C, r1	; F6B34B  ld RL3,A
 	ld	a, c	; F6B34E  ld A,C
 	scf	; F6B350  scf
-	m_xorcf_a MDI+r5, 0	; F6B351  xorcf A,(XIY)
+	xorcf	a, (xiy)	; F6B351  xorcf A,(XIY)
 	m_rd_ld_rrx RBX, 0x3C, r1	; F6B353  ld A,RL3
 	jr	nc, sub_F6B2EE_Skip2	; F6B356  jr NC,0xf6b37c
 	inc	1, c	; F6B358  inc 1,C
@@ -160225,7 +160225,7 @@ sub_F6B2EE_Entry3:
 	m_rd_ld_rr2x RBX, 0x3C, r1	; F6B363  ld RL3,A
 	ld	a, c	; F6B366  ld A,C
 	scf	; F6B368  scf
-	m_xorcf_a MDI+r5, 0	; F6B369  xorcf A,(XIY)
+	xorcf	a, (xiy)	; F6B369  xorcf A,(XIY)
 	m_rd_ld_rrx RBX, 0x3C, r1	; F6B36B  ld A,RL3
 	jr	nc, sub_F6B2EE_Skip3	; F6B36E  jr NC,0xf6b380
 	inc	1, c	; F6B370  inc 1,C
@@ -160707,9 +160707,9 @@ sub_F6B740_Skip:
 ;   TrackCursor_StepBackKeepBeatPosition; the re-bar, time-signature and cursor-step walks use it. Basis: callers +
 ;   body + twin. (notes/naming-pilot-2026-10-06/proposals_wave8_a8.json)
 TrackCursor_StepForwardKeepBeatPosition:
-	m_push MW16, 0x0e54	; F6B75E  pushw (0x0e54)
+	pushw	(0x0e54:16)	; F6B75E  pushw (0x0e54)
 	calr	sub_F6B740	; F6B762  calr 0xf6b740
-	m_popw MD16, 0x0e54	; F6B765  popw (0x0e54)
+	popw	(0x0e54:16)	; F6B765  popw (0x0e54)
 	ret	; F6B769  ret
 
 ; --------------------------------------------------------------------------
@@ -160750,9 +160750,9 @@ TrackCursor_StepBack:
 ;   it crosses. The step-record time-signature searches and StepRecord_CursorStep walk back with it. Basis: callers +
 ;   caller header + body. (notes/naming-pilot-2026-10-06/proposals_wave8_a8.json)
 TrackCursor_StepBackKeepBeatPosition:
-	m_push MW16, 0x0e54	; F6B770  pushw (0x0e54)
+	pushw	(0x0e54:16)	; F6B770  pushw (0x0e54)
 	calr	TrackCursor_StepBack	; F6B774  calr 0xf6b76a
-	m_popw MD16, 0x0e54	; F6B777  popw (0x0e54)
+	popw	(0x0e54:16)	; F6B777  popw (0x0e54)
 	ret	; F6B77B  ret
 
 ; --------------------------------------------------------------------------
@@ -163254,7 +163254,7 @@ sub_F6C877_Skip3:
 	m_rd_ld_rr2x RBX, 0x3C, r1	; F6C8D7  ld RL3,A
 	ld	a, c	; F6C8DA  ld A,C
 	scf	; F6C8DC  scf
-	m_stcf_a MDI+r4, 0	; F6C8DD  stcf A,(XIX)
+	stcf	a, (xix)	; F6C8DD  stcf A,(XIX)
 	m_rd_ld_rrx RBX, 0x3C, r1	; F6C8DF  ld A,RL3
 	popw	bc	; F6C8E2  pop BC
 	jr	sub_F6C877_Loop	; F6C8E3  jr T,0xf6c879
@@ -174674,8 +174674,8 @@ SmfEvent_NoteOff_Skip:
 	ld	xhl, (BStore_CursorBlockAddr:16)	; F7106C  ld XHL,(0x126e)
 	mx_st_mr8 MXD, ra_HL, ra_IX, 0	; F71070  ld (XHL+IX),W
 	pop	xhl	; F71075  pop XHL
-	m_push MW16, BStore_CursorBlock	; F71076  pushw (0x345c)
-	m_push MW16, BStore_CursorOffset	; F7107A  pushw (0x345e)
+	pushw	(BStore_CursorBlock:16)	; F71076  pushw (0x345c)
+	pushw	(BStore_CursorOffset:16)	; F7107A  pushw (0x345e)
 	ld	(BStore_CursorBlock:16), hl	; F7107E  ld (0x345c),HL
 	ld	(BStore_CursorOffset:16), ix	; F71082  ld (0x345e),IX
 	pushw	wa	; F71086  push WA
@@ -174689,8 +174689,8 @@ SmfEvent_NoteOff_Skip:
 	mx_st_mr8 MXD, ra_IX, ra_IY, 1	; F71099  ld (XIX+IY),A
 	pop	xiy	; F7109E  pop XIY
 	pop	xix	; F7109F  pop XIX
-	m_popw MD16, BStore_CursorOffset	; F710A0  popw (0x345e)
-	m_popw MD16, BStore_CursorBlock	; F710A4  popw (0x345c)
+	popw	(BStore_CursorOffset:16)	; F710A0  popw (0x345e)
+	popw	(BStore_CursorBlock:16)	; F710A4  popw (0x345c)
 	jr	SmfEvent_NoteOff_Return	; F710A8  jr T,0xf710b9
 SmfEvent_NoteOff_Skip2:
 	add	xiy, 7	; F710AA  add XIY,0x00000007
@@ -177062,8 +177062,8 @@ SmfEvent_NoteOff_MultiTrack_Skip:
 	ld	xhl, (BStore_CursorBlockAddr:16)	; F721E9  ld XHL,(0x126e)
 	mx_st_mr8 MXD, ra_HL, ra_IX, 0	; F721ED  ld (XHL+IX),W
 	pop	xhl	; F721F2  pop XHL
-	m_push MW16, BStore_CursorBlock	; F721F3  pushw (0x345c)
-	m_push MW16, BStore_CursorOffset	; F721F7  pushw (0x345e)
+	pushw	(BStore_CursorBlock:16)	; F721F3  pushw (0x345c)
+	pushw	(BStore_CursorOffset:16)	; F721F7  pushw (0x345e)
 	ld	(BStore_CursorBlock:16), hl	; F721FB  ld (0x345c),HL
 	ld	(BStore_CursorOffset:16), ix	; F721FF  ld (0x345e),IX
 	pushw	wa	; F72203  push WA
@@ -177072,8 +177072,8 @@ SmfEvent_NoteOff_MultiTrack_Skip:
 	ld	ix, (BStore_CursorOffset:16)	; F72208  ld IX,(0x345e)
 	ld	xhl, (BStore_CursorBlockAddr:16)	; F7220C  ld XHL,(0x126e)
 	mx_st_mr8 MXD, ra_HL, ra_IX, 1	; F72210  ld (XHL+IX),A
-	m_popw MD16, BStore_CursorOffset	; F72215  popw (0x345e)
-	m_popw MD16, BStore_CursorBlock	; F72219  popw (0x345c)
+	popw	(BStore_CursorOffset:16)	; F72215  popw (0x345e)
+	popw	(BStore_CursorBlock:16)	; F72219  popw (0x345c)
 	jr	SmfEvent_NoteOff_MultiTrack_Return	; F7221D  jr T,0xf7222c
 SmfEvent_NoteOff_MultiTrack_Skip2:
 	add	iy, 7	; F7221F  add IY,0x0007
@@ -180343,12 +180343,12 @@ sub_F73664_Join2:
 	jrl	sub_F73664_Loop2	; F73721  jrl T,0xf737dc
 sub_F73664_Skip10:
 	calr	sub_F73818	; F73724  calr 0xf73818
-	m_push MW16, BStore_CursorBlock	; F73727  pushw (0x345c)
-	m_push MW16, BStore_CursorOffset	; F7372B  pushw (0x345e)
+	pushw	(BStore_CursorBlock:16)	; F73727  pushw (0x345c)
+	pushw	(BStore_CursorOffset:16)	; F7372B  pushw (0x345e)
 	calr	SmfWrite_AdvanceSongCursor	; F7372F  calr 0xf74e86
 	calr	SmfWrite_ReadSongByte	; F73732  calr 0xf74e71
-	m_popw MD16, BStore_CursorOffset	; F73735  popw (0x345e)
-	m_popw MD16, BStore_CursorBlock	; F73739  popw (0x345c)
+	popw	(BStore_CursorOffset:16)	; F73735  popw (0x345e)
+	popw	(BStore_CursorBlock:16)	; F73739  popw (0x345c)
 	cp	a, 0:i3	; F7373D  cp A,0
 	jrl	nz, sub_F73664_Loop2	; F7373F  jrl NZ,0xf737dc
 	ld	a, (4298:16)	; F73742  ld A,(0x10ca)
@@ -180356,12 +180356,12 @@ sub_F73664_Skip10:
 	jrl	sub_F73664_Loop2	; F73749  jrl T,0xf737dc
 sub_F73664_Skip11:
 	calr	sub_F73818	; F7374C  calr 0xf73818
-	m_push MW16, BStore_CursorBlock	; F7374F  pushw (0x345c)
-	m_push MW16, BStore_CursorOffset	; F73753  pushw (0x345e)
+	pushw	(BStore_CursorBlock:16)	; F7374F  pushw (0x345c)
+	pushw	(BStore_CursorOffset:16)	; F73753  pushw (0x345e)
 	calr	SmfWrite_AdvanceSongCursor	; F73757  calr 0xf74e86
 	calr	SmfWrite_ReadSongByte	; F7375A  calr 0xf74e71
-	m_popw MD16, BStore_CursorOffset	; F7375D  popw (0x345e)
-	m_popw MD16, BStore_CursorBlock	; F73761  popw (0x345c)
+	popw	(BStore_CursorOffset:16)	; F7375D  popw (0x345e)
+	popw	(BStore_CursorBlock:16)	; F73761  popw (0x345c)
 	ld	l, a	; F73765  ld L,A
 	push	xhl	; F73767  push XHL
 	calr	SmfWrite_ReadSongByte	; F73768  calr 0xf74e71
@@ -180665,10 +180665,10 @@ Smf_WriteFile_Join:
 	sla	wa, 3	; F7395F  sla 0x03,WA
 	extz	xwa	; F73962  extz XWA
 	add	xiy, xwa	; F73964  add XIY,XWA
-	m_push MW16, Disk_FileName	; F73966  pushw (0x21c8)
-	m_push MW16, Disk_FileName+2	; F7396A  pushw (0x21ca)
-	m_push MW16, Disk_FileName+4	; F7396E  pushw (0x21cc)
-	m_push MW16, Disk_FileName+6	; F73972  pushw (0x21ce)
+	pushw	(Disk_FileName:16)	; F73966  pushw (0x21c8)
+	pushw	(Disk_FileName+2:16)	; F7396A  pushw (0x21ca)
+	pushw	(Disk_FileName+4:16)	; F7396E  pushw (0x21cc)
+	pushw	(Disk_FileName+6:16)	; F73972  pushw (0x21ce)
 	ld	xix, Disk_FileName	; F73976  ld XIX,0x000021c8
 	ldw	bc, 4	; F7397B  ld BC,0x0004
 	ldirw	; F7397E  ldirw
@@ -180676,10 +180676,10 @@ Smf_WriteFile_Join:
 	ld	(Disk_FileName+9:16), 73	; F73985  ld (0x21d1),0x49
 	ld	(Disk_FileName+10:16), 68	; F7398A  ld (0x21d2),0x44
 	call	T_DiskApi_DeleteFile_Call	; F7398F  call 0xf425b0
-	m_popw MD16, Disk_FileName+6	; F73993  popw (0x21ce)
-	m_popw MD16, Disk_FileName+4	; F73997  popw (0x21cc)
-	m_popw MD16, Disk_FileName+2	; F7399B  popw (0x21ca)
-	m_popw MD16, Disk_FileName	; F7399F  popw (0x21c8)
+	popw	(Disk_FileName+6:16)	; F73993  popw (0x21ce)
+	popw	(Disk_FileName+4:16)	; F73997  popw (0x21cc)
+	popw	(Disk_FileName+2:16)	; F7399B  popw (0x21ca)
+	popw	(Disk_FileName:16)	; F7399F  popw (0x21c8)
 Smf_WriteFile_Skip6:
 	ld	wa, (13836:16)	; F739A3  ld WA,(0x360c)
 	ld	(4678:16), wa	; F739A7  ld (0x1246),WA
@@ -181158,12 +181158,12 @@ Smf_WriteFile_Join4:
 	jr	z, Smf_WriteFile_Skip14	; F73ECB  jr Z,0xf73eec
 	cp	a, 129	; F73ECD  cp A,0x81
 	jr	z, Smf_WriteFile_Skip14	; F73ED0  jr Z,0xf73eec
-	m_push MW16, BStore_CursorBlock	; F73ED2  pushw (0x345c)
-	m_push MW16, BStore_CursorOffset	; F73ED6  pushw (0x345e)
+	pushw	(BStore_CursorBlock:16)	; F73ED2  pushw (0x345c)
+	pushw	(BStore_CursorOffset:16)	; F73ED6  pushw (0x345e)
 	calr	SmfWrite_AdvanceSongCursor	; F73EDA  calr 0xf74e86
 	calr	SmfWrite_ReadSongByte	; F73EDD  calr 0xf74e71
-	m_popw MD16, BStore_CursorOffset	; F73EE0  popw (0x345e)
-	m_popw MD16, BStore_CursorBlock	; F73EE4  popw (0x345c)
+	popw	(BStore_CursorOffset:16)	; F73EE0  popw (0x345e)
+	popw	(BStore_CursorBlock:16)	; F73EE4  popw (0x345c)
 	ld	(4228:16), a	; F73EE8  ld (0x1084),A
 Smf_WriteFile_Skip14:
 	ldw	(4230:16), 0	; F73EEC  ld (0x1086),0x0000
@@ -183942,12 +183942,12 @@ SmfSize_Pass_Join5:
 	jr	z, SmfSize_Pass_Skip7	; F75A9F  jr Z,0xf75ac0
 	cp	a, 129	; F75AA1  cp A,0x81
 	jr	z, SmfSize_Pass_Skip7	; F75AA4  jr Z,0xf75ac0
-	m_push MW16, BStore_CursorBlock	; F75AA6  pushw (0x345c)
-	m_push MW16, BStore_CursorOffset	; F75AAA  pushw (0x345e)
+	pushw	(BStore_CursorBlock:16)	; F75AA6  pushw (0x345c)
+	pushw	(BStore_CursorOffset:16)	; F75AAA  pushw (0x345e)
 	calr	SmfSize_AdvanceSongCursor	; F75AAE  calr 0xf76567
 	calr	SmfSize_ReadSongByte	; F75AB1  calr 0xf76552
-	m_popw MD16, BStore_CursorOffset	; F75AB4  popw (0x345e)
-	m_popw MD16, BStore_CursorBlock	; F75AB8  popw (0x345c)
+	popw	(BStore_CursorOffset:16)	; F75AB4  popw (0x345e)
+	popw	(BStore_CursorBlock:16)	; F75AB8  popw (0x345c)
 	ld	(4228:16), a	; F75ABC  ld (0x1084),A
 SmfSize_Pass_Skip7:
 	ldw	(4230:16), 0	; F75AC0  ld (0x1086),0x0000
