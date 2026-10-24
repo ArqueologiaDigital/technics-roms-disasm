@@ -691,13 +691,13 @@ HDAE5000_HDAETitleFunc:
 	pushw 0x0021
 	lda xwa, (HDAE5000_Str_STATUS:24); f2 e6 1d 2e 30
 	push xwa				; 38
-	lda xwa, (0x22abc4:24); f2 c4 ab 22 30
+	lda xwa, (HDAE5000_RAM_PcLinkStatusText:24); f2 c4 ab 22 30
 	push xwa				; 38
 	call HDAE5000_MemCopy				; 1d 9f ae 29 — MemCopy
 	lda xsp, (xsp + 0x0a)			; bf 0a 37
 
 	; Register event for volume label display
-	lda xwa, (0x22abc4:24); f2 c4 ab 22 30
+	lda xwa, (HDAE5000_RAM_PcLinkStatusText:24); f2 c4 ab 22 30
 	ld xde, xwa				; e8 8a
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 a2 a1 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20 — ld xwa, (xwa+0x0e0a)
@@ -2822,14 +2822,16 @@ HDAE5000_HDD_UTIL_PAGE_Epilogue:
 	lda	xsp, (xsp+112)
 	ret
 
+; ---------------------------------------------------------------------------
+; PC-link service 26: show a status string on the PC-link page -- at most 25
+; characters (HDAE5000_StrLen, clamped; HDAE5000_StrNCpy) into
+; HDAE5000_RAM_PcLinkStatusText+7, then RootFn_ApPostEvent posts
+; EVT_HDAE_SET_STR_ADR (XDE = the text) and EVT_PARA_DRAW to
+; HDAE5000_OBJ_PP_STATUS.  The link loop uses it for its status and error
+; strings.  HDAE5000_PcLink_ShowStatus is the same with RootFn_SendEvent.
+; In:  XWA = string.  XIZ preserved.
+; ---------------------------------------------------------------------------
 HDAE5000_PPORT_Svc26_ShowStatus:
-	; PC-link service 26: HDAE5000_PPORT_ServiceTable[26] (argument XBC =
-	; string).  Copies at most 25 characters (HDAE5000_StrLen, clamp 0x19,
-	; HDAE5000_StrNCpy) to RAM 0x22ABCB and makes two host calls through
-	; workspace[0x0E0A]+0x0124 addressed to 0x007F0068 = object set 0x7F
-	; (this ROM's UI objects), object 0x68 = 104, whose resource name in
-	; HDAE5000_UiObjectName_PtrTable is "PP_STATUS".  The PC-link loop uses
-	; it for its status and error strings (service 0x1A = 26).
 	push xiz
 	ld	xiz, xwa
 	ld	xwa, xiz
@@ -2843,11 +2845,11 @@ HDAE5000_PPORT_Svc26_ShowStatus_Join:
 	pushw hl                                ; push HL
 	ld	xwa, xiz
 	push xwa
-	lda xwa, (0x22abcb:24)
+	lda xwa, (HDAE5000_RAM_PcLinkStatusText+7:24)
 	push xwa
 	call HDAE5000_StrNCpy
 	lda	xsp, (xsp+10)
-	lda xwa, (0x22abc4:24)
+	lda xwa, (HDAE5000_RAM_PcLinkStatusText:24)
 	ld	xde, xwa
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_RootFnTable)
@@ -2866,36 +2868,38 @@ HDAE5000_PPORT_Svc26_ShowStatus_Join:
 	ret
 
 
-HDAE5000_PcLink_ShowStatus:	; 0x284DE9 (355 bytes)
-	; Part 1: Display error message (0x284DE9)
-	; XWA = string address. Validates length, copies to buffer, displays.
-	; (= the PC-link page status line: up to 25 characters into 0x22ABCB,
-	; shown in object 0x7F0068, "PP_STATUS" in HDAE5000_UiObjectName_PtrTable.)
+; ---------------------------------------------------------------------------
+; Show a status string on the PC-link page, as service 26
+; (HDAE5000_PPORT_Svc26_ShowStatus) but sending the two events with
+; RootFn_SendEvent instead of posting them.
+; In:  XWA = string.  XIZ preserved.
+; ---------------------------------------------------------------------------
+HDAE5000_PcLink_ShowStatus:
 	push xiz
-	ld xiz, xwa			; save string address
+	ld xiz, xwa
 	ld xwa, xiz
 	push xwa
 	call HDAE5000_StrLen
-	inc 4, xsp			; cleanup arg
-	cp hl, 0x0019			; cap length at 25
+	inc 4, xsp
+	cp hl, 0x0019
 	jr ule, .Lhec_len_ok
 	ldw hl, 0x0019
 .Lhec_len_ok:
-	pushw hl			; push length
+	pushw hl
 	ld xwa, xiz
-	push xwa			; push source
-	lda xwa, (0x22abcb:24); 0x22ABCB — dest buffer
+	push xwa
+	lda xwa, (HDAE5000_RAM_PcLinkStatusText+7:24)
 	push xwa
 	call HDAE5000_StrNCpy
-	lda xsp, (xsp + 10)		; cleanup 10 bytes of args
+	lda xsp, (xsp + 10)
 	; Display error string
-	lda xwa, (0x22abc4:24); 0x22ABC4 — display buffer
+	lda xwa, (HDAE5000_RAM_PcLinkStatusText:24)
 	ld xde, xwa
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); (0x23A1A2)
-	ld xwa, (xwa + WS_RootFnTable)             ; (XWA+0x0E0A)
-	ld_sril xhl, (xwa + RootFn_SendEvent)             ; (XWA+0x0100) — display handler
-	ld xwa, HDAE5000_OBJ_PP_STATUS		; display params
-	ld xbc, EVT_HDAE_SET_STR_ADR		; color/position
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
+	ld xwa, (xwa + WS_RootFnTable)
+	ld_sril xhl, (xwa + RootFn_SendEvent)
+	ld xwa, HDAE5000_OBJ_PP_STATUS
+	ld xbc, EVT_HDAE_SET_STR_ADR
 	call (xhl)
 	; Clear display line
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)

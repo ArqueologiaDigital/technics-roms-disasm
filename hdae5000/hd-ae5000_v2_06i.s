@@ -161,6 +161,27 @@
 	.equ HDAE5000_RAM_HdUsageSystem, 0x229d1c	; the system area (sectors before the data area) in units of 10,000 bytes
 	.equ HDAE5000_RAM_HdRetries, 0x229d93	; retries left: 7 for HD_WriteTables / _ReadTables, 5 for HD_CountFreeClusters
 	.equ HDAE5000_RAM_HdStatusBytes, 0x229daf	; ten bytes HD_ClearStatusBytes zeroes; no reader found
+	.equ HDAE5000_RAM_PportInfoBlock, 0x238f2e	; the PC-link info block, 0xD2 bytes: +0 part mask, +2 song name (26), +0x1C directory name (16), +0x2C/+0x34/+0x3C the FGB/FEB/FLS block descriptors (HDAE5000_HD_GetBlockInfo), +0x46 nine-byte part records (service 13), +0x97 drive model (30), +0xB5.. geometry (service 3), +0xCA work buffer address (service 19), +0xCE the slot of the open read
+	.equ HDAE5000_RAM_PportReadState, 0x23a1a6	; 0 no read open, 1 opened by service 24 (ReadOpenHD), 2 reading (service 25 continues with HD_ReadFileNext)
+	.equ HDAE5000_RAM_PportArg1, 0x2390d6	; byte 1 of the command packet, latched by HDAE5000_PPORT_LatchPacketArgs (stored in a word slot, as are Arg2..4)
+	.equ HDAE5000_RAM_PportArg2, 0x2390d8	; byte 2 of the command packet (HDAE5000_PPORT_LatchPacketArgs)
+	.equ HDAE5000_RAM_PportArg3, 0x2390da	; byte 3 of the command packet (HDAE5000_PPORT_LatchPacketArgs)
+	.equ HDAE5000_RAM_PportArg4, 0x2390dc	; byte 4 of the command packet (HDAE5000_PPORT_LatchPacketArgs)
+	.equ HDAE5000_RAM_PportInfoPtr, 0x239100	; XIX of service 1 (the address of PportInfoBlock), kept by HDAE5000_PPORT_GetInfoBlock / _CopyInfoToPacket
+	.equ HDAE5000_RAM_PportBlockPtr, 0x239158	; start of the block HDAE5000_PPORT_SendBlock / _RecvBlock moves; a retry restarts from it
+	.equ HDAE5000_RAM_PportBlockLen, 0x23915c	; byte count of that block
+	.equ HDAE5000_RAM_PportSectorBuffer, 0x239268	; 512 bytes: a sector received by HDAE5000_PPORT_RecvSector, or read for HDAE5000_PPORT_InitRegionDescriptors_Lookup
+	.equ HDAE5000_RAM_PcLinkStatusText, 0x22abc4	; the text of the PC-link page's PP_STATUS object; the status string goes in at +7, at most 25 characters (HDAE5000_PcLink_ShowStatus, service 26)
+	.equ HDAE5000_RAM_PportPartMask, 0x2390e2	; the parts (bits 0-7) a link command works on; InitRegionDescriptors sizes one region per set bit
+	.equ HDAE5000_RAM_PportPartMaskHi, 0x2390e4	; bit 0: the ninth part (TLX), with PportPartMask
+	.equ HDAE5000_RAM_PportStepError, 0x2390e6	; 1 when a service call of InitRegionDescriptors_Lookup / SendRegionToPc (or a command handler) failed
+	.equ HDAE5000_RAM_PportSizeFieldOffset, 0x2390ec	; byte offset of the size field in a part file's first sector (InitRegionDescriptors -> _Lookup)
+	.equ HDAE5000_RAM_PportSizeFieldWidth, 0x2390ee	; 0x20: that field is a long; 0x10: a word counting 16-byte units
+	.equ HDAE5000_RAM_PportSendMaskLo, 0x2390f0	; low byte of the part mask SendRegionToPc puts in PportInfoBlock+0 before opening the read (service 24)
+	.equ HDAE5000_RAM_PportSendMaskHi, 0x2390f2	; its high byte
+	.equ HDAE5000_RAM_PportSectorOffset, 0x2390f8	; word: byte offset into PportSectorBuffer while SendRegionToPc sends it; 512 = read the next sector
+	.equ HDAE5000_RAM_PportRegions, 0x239108	; (address, size) long pairs: SendTwoRegions sends pairs 0 and 1; InitRegionDescriptors stores part sizes in the slots
+	.equ HDAE5000_RAM_PportBytesLeft, 0x239164	; bytes SendRegionToPc still has to send
 
 ; ----------------------------------------------------------------------------
 ; The main CPU's function tables, as the HD-AE5000 reaches them: workspace

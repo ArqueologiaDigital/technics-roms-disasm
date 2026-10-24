@@ -227,6 +227,45 @@ RAM = {
     0x229D18: ("HdUsageDrive", "the drive in units of 10,000 bytes (HD_ComputeDiskUsage)"),
     0x229D1C: ("HdUsageSystem", "the system area (sectors before the data area) in units of 10,000 bytes"),
     0x229DAF: ("HdStatusBytes", "ten bytes HD_ClearStatusBytes zeroes; no reader found"),
+    # tenth run: the PC-link services' shared block (its address is what service 1, GetInfoBlockPointer,
+    # hands to the PC; the trace strings of services 3-6, 13 and 19 name its fields)
+    0x238F2E: ("PportInfoBlock", "the PC-link info block, 0xD2 bytes: +0 part mask, +2 song name (26),"
+                                 " +0x1C directory name (16), +0x2C/+0x34/+0x3C the FGB/FEB/FLS block"
+                                 " descriptors (HDAE5000_HD_GetBlockInfo), +0x46 nine-byte part records"
+                                 " (service 13), +0x97 drive model (30), +0xB5.. geometry (service 3),"
+                                 " +0xCA work buffer address (service 19), +0xCE the slot of the open read"),
+    0x23A1A6: ("PportReadState", "0 no read open, 1 opened by service 24 (ReadOpenHD), 2 reading (service"
+                                 " 25 continues with HD_ReadFileNext)"),
+    0x2390D6: ("PportArg1", "byte 1 of the command packet, latched by HDAE5000_PPORT_LatchPacketArgs"
+                            " (stored in a word slot, as are Arg2..4)"),
+    0x2390D8: ("PportArg2", "byte 2 of the command packet (HDAE5000_PPORT_LatchPacketArgs)"),
+    0x2390DA: ("PportArg3", "byte 3 of the command packet (HDAE5000_PPORT_LatchPacketArgs)"),
+    0x2390DC: ("PportArg4", "byte 4 of the command packet (HDAE5000_PPORT_LatchPacketArgs)"),
+    0x239100: ("PportInfoPtr", "XIX of service 1 (the address of PportInfoBlock), kept by"
+                               " HDAE5000_PPORT_GetInfoBlock / _CopyInfoToPacket"),
+    0x239158: ("PportBlockPtr", "start of the block HDAE5000_PPORT_SendBlock / _RecvBlock moves; a retry"
+                                " restarts from it"),
+    0x23915C: ("PportBlockLen", "byte count of that block"),
+    0x239268: ("PportSectorBuffer", "512 bytes: a sector received by HDAE5000_PPORT_RecvSector, or read for"
+                                    " HDAE5000_PPORT_InitRegionDescriptors_Lookup"),
+    0x2390E2: ("PportPartMask", "the parts (bits 0-7) a link command works on; InitRegionDescriptors"
+                                " sizes one region per set bit"),
+    0x2390E4: ("PportPartMaskHi", "bit 0: the ninth part (TLX), with PportPartMask"),
+    0x2390E6: ("PportStepError", "1 when a service call of InitRegionDescriptors_Lookup / SendRegionToPc"
+                                 " (or a command handler) failed"),
+    0x2390EC: ("PportSizeFieldOffset", "byte offset of the size field in a part file's first sector"
+                                       " (InitRegionDescriptors -> _Lookup)"),
+    0x2390EE: ("PportSizeFieldWidth", "0x20: that field is a long; 0x10: a word counting 16-byte units"),
+    0x2390F0: ("PportSendMaskLo", "low byte of the part mask SendRegionToPc puts in PportInfoBlock+0 before"
+                                  " opening the read (service 24)"),
+    0x2390F2: ("PportSendMaskHi", "its high byte"),
+    0x2390F8: ("PportSectorOffset", "word: byte offset into PportSectorBuffer while SendRegionToPc sends it;"
+                                    " 512 = read the next sector"),
+    0x239164: ("PportBytesLeft", "bytes SendRegionToPc still has to send"),
+    0x239108: ("PportRegions", "(address, size) long pairs: SendTwoRegions sends pairs 0 and 1;"
+                               " InitRegionDescriptors stores part sizes in the slots"),
+    0x22ABC4: ("PcLinkStatusText", "the text of the PC-link page's PP_STATUS object; the status string goes"
+                                   " in at +7, at most 25 characters (HDAE5000_PcLink_ShowStatus, service 26)"),
     # sixth run: list texts the UI objects display (EVT_HDAE_SET_STR_ADR points them here)
     0x22B274: ("PartListText", "nine 14-byte tab-ended part names + NUL (0x7F bytes), HDAE5000_PartList_Build"),
     0x22A0D0: ("DirListText", "24 rows x 21 bytes + NUL: \"NNN:\" and the 16-byte directory name at +4"
@@ -240,6 +279,10 @@ EXTENT = {
     0x200000: 0x200,
     0x200628: 0x200,
     0x229DAF: 10,
+    0x238F2E: 0xD2,
+    0x239268: 0x200,
+    0x239108: 0x50,
+    0x22ABC4: 0x21,
 }
 # I/O registers (full names; same rewriting): the 8255 of the PC link and the drive's ATA task file.  The
 # ATA registers are the standard eight at 0x130010 + 2 * index: the code writes the ATA command opcodes
