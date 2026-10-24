@@ -1,3 +1,24 @@
+; =============================================================================
+; HD-AE5000 expansion ROM v2.01i  (IC4, 512 KiB at 0x280000)
+; =============================================================================
+; PORTED from the v2.06i tree (hdae5000/) by scripts/tools/port_hdae5000_version.py,
+; then by hand: notes/hdae5000-versions-2026-10-24/README.md lists what differs and
+; port-edits/ there holds every hand edit as a script.  Names and routine headers
+; are v2.06i's wherever the code is the same.  `make gate` rebuilds this tree
+; byte-identical to the v2.01i dump (SHA-1 0160c17baa7b026771872126d8146038a19ef53b).
+;
+; ADDRESSES AND OBJECT NUMBERS QUOTED IN COMMENTS ARE v2.06i'S unless a comment
+;   says otherwise: the comments came with the code.  Most of the v2.01i image lies
+;   0x7F2 or 0xB0A bytes below its v2.06i twin (scripts/analysis/hdae5000_version_delta.py),
+;   the RAM variables from 0x229DAD up 2 to 0x96 bytes below.  Trust the labels:
+;   rebuilt_ROMs/hd-ae5000_v2_01i.llvm.elf and symbols/hdae5000_v2_01i_symbols_reference.txt
+;   give every name's v2.01i address.  The UI object section of hdae5000_data_tables.s
+;   is the exception: it is generated from this ROM and numbers objects as v2.01i does.
+;
+; What this tree does not hold -- shared/event_codes.s and the pictures that did not
+; change -- comes from hdae5000/ through the build's second -I.
+; =============================================================================
+
 
 	.text
 
@@ -52,8 +73,6 @@
 	.equ HDAE5000_RAM_SeparateBassPartSent, 0x23a02c	; bass part last sent by HDAE5000_SeparateOutput_Apply
 	.equ HDAE5000_RAM_MainWorkspacePtr, 0x23a10c	; the main CPU's workspace; every call into it is (this)->0x0E88 or ->0x0E0A table + offset (init image: 4 bytes after HDAE5000_LyricBoxObj_Init; the object table at 0x027ED2)
 	.equ HDAE5000_RAM_LyricJump, 0x229dac	; sector-1 setting byte; handler "LyricJumpEditCheck" returns its address
-	.equ HDAE5000_RAM_LyricForeColor, 0x229dc6	; sector-1 setting byte 0..4; "LyricForeColorCheck"; palette code via HDAE5000_Lyrics_ResetState
-	.equ HDAE5000_RAM_LyricBackColor, 0x229dd7	; sector-1 setting byte 0..4; "LyricBackColorCheck"; palette code via HDAE5000_Lyrics_ResetState
 	.equ HDAE5000_RAM_LyricBuffer, 0x22b430	; the lyric file, 0x5000 bytes: TLhd/TLtr chunks, events from +22 (HDAE5000_Lyrics_ClearBuffer, _ParseEvent)
 	.equ HDAE5000_RAM_LyricLines, 0x23a032	; six 40-byte text lines of the lyric window (HDAE5000_Lyrics_FillLines)
 	.equ HDAE5000_RAM_LyricLoaded, 0x23a106	; 1 once a lyric file passed its checks (HDAE5000_Lyrics_CheckFile)
@@ -331,191 +350,15 @@
 	.equ HamaFn_ChangePalette, 0x0138	; -> 0xFAF2C7 (index 78)
 	.equ HamaFn_ChangeWall, 0x013c	; -> 0xFAF20B (index 79)
 
-; HDAE5000 Hard Disk Expansion ROM Disassembly
-; Original file: hd-ae5000_v2_06i.ic4
-; Size: 512KB (0x80000 bytes)
-; Base address: 0x280000 (mapped in main CPU address space)
-;
-; This ROM is part of the optional HD-AE5000 hard disk expansion for the
-; Technics KN5000 music keyboard. It provides:
-;   - Hard disk file management
-;   - PC parallel port communication (PPORT)
-;   - Additional UI elements for HD operations
-;
-; Version: 2.33J (as stated in ROM strings)
-; Date: Juli-Oktober 1996
-; Author: M. Kitajima (Technics Software section)
-;
-; Entry Points (called by main CPU via validation at boot):
-;   0x280008 - JP to HDAE5000_Boot_Init (0x28F576)
-;   0x280010 - JP to HDAE5000_Frame_Handler (0x28F662)
-;
-; Hardware accessed:
-;   0x160000-0x160006 - HDAE5000 PPI (8255) ports
-;   0x23xxxx - RAM workspace (shared with main CPU)
-;
-; ROM Layout (file offsets → memory addresses):
-;   0x00000-0x0001F  Header with "XAPR4" magic and entry vectors (32 bytes)
-;   0x00020-0x0F575  Code section 1 - setup routines (62806 bytes)
-;   0x0F576-0x0F661  HDAE5000_Boot_Init routine (236 bytes)
-;   0x0F662-0x15421  Code section 2 part A - frame handler (0x28F662-0x295421)
-;   0x15422-0x15FC0  PPORT command menu strings (0x295422-0x295FC0, ~1440 bytes)
-;                    Contains 20+ menu items: "Exit PPORT", "Read FSB from HD",
-;                    "Send data to PC", "Formatting HD", etc.
-;   0x15FC1-0x1A3AF  Code section 2 part B - more routines
-;   0x1A3B0-0x1A3DF  Version info block (0x2999B0-0x2999DF):
-;                    "Technics Software section    M. Kitajima"
-;                    Version: "2.33J", also "2.21"
-;                    "TECHNICS KN5000"
-;   0x1C9FF-0x1D9FF  UI configuration strings (0x29BFE0-0x29CFF0):
-;                    "infofont", "reversecolor", "fontcolor", "dial", etc.
-;   0x1D000-0x65DCD  Additional code, lookup tables, German error messages
-;   0x65DCE-0x661CD  HDAE5000_Palette_BootSplash - 256 RGBX VGA entries (1,024 bytes)
-;   0x661CE-0x78DCD  HDAE5000_Bitmap_BootSplash - boot splash bitmap
-;                    (0x2E61CE, 320x240 8bpp indexed, 76,800 bytes)
-;   0x78DCE-0x7A134  HDAE5000_Display_Params + HDAE5000_DataSegmentImage
-;   0x7A135-0x7FFFF  Padding zeros (24,267 bytes; the ROM's last non-zero
-;                    byte is at file offset 0x7A134 = 0x2FA134)
-;
-; Key Routine Addresses (within code sections):
-;
-; Code Section 1 (0x280020-0x28F575):
-;   0x280020  HDAE5000_Handler_Registration - Handler registration entry (DISASSEMBLED)
-;   0x28030E  HDAE5000_Alloc_Memory_1 - bitmap resource descriptor (see below)
-;   0x28033B  HDAE5000_Alloc_Memory_2 - bitmap resource descriptor
-;   0x280368  HDAE5000_Alloc_Memory_3 - bitmap resource descriptor
-;   0x2803C2  HDAE5000_UiState_Reset - Register frame handler callback
-;   0x28F543  HDAE5000_Alloc_Memory - Display parameter lookup (DISASSEMBLED)
-;   0x28F570  HDAE5000_Get_Init_Flag - Return HD presence flag (DISASSEMBLED)
-;
-; Code Section 2 (0x28F662-0x2FFFFF):
-;   0x28F662  HDAE5000_Frame_Handler - Main frame handler entry (DISASSEMBLED)
-;                Calculates display offset, calls registered callbacks
-;   0x28F6E0  HDAE5000_Frame_Handler_Status - Status check section (DISASSEMBLED)
-;                Monitors bit 2, triggers display init on state change
-;   0x28F781  HDAE5000_Frame_Handler_Exit - Exit via JP to PPORT (DISASSEMBLED)
-;   0x28F785  HDAE5000_Clear_Work_Buffer - Clear/init work buffer (DISASSEMBLED)
-;   0x28F7DD  HDAE5000_Delay_Loop - Nested delay loop (DISASSEMBLED)
-;   0x28F7EE  HDAE5000_VGA_Port_Write - Write to VGA port (mem-mapped at 0x170000) (DISASSEMBLED)
-;   0x28F813  HDAE5000_Palette_Setup - Set one VGA palette entry (DISASSEMBLED)
-;   0x28F8E0  HDAE5000_Load_Palette - Load all 256 palette entries (DISASSEMBLED)
-;   0x28F90B  HDAE5000_Finalize_Init - Just returns (1-byte stub) (DISASSEMBLED)
-;   0x28F90C  HDAE5000_HD_FormatDrive - format the drive (see its header)
-;   0x28F97E  HDAE5000_DirName_Address - Calculate 16-byte offset in table
-;   0x28F98B  HDAE5000_DirName_SetAndStore - Copy data to table at 0x201632
-;   0x28F9AD  HDAE5000_Dir_IsBlankName - Memory check routine
-;   0x28F9EB  HDAE5000_Dir_CountEmptySongs - Count invalid entries
-;   0x28FA1E  HDAE5000_SongRecord_Address - Calculate address with 0x4C multiplier
-;   0x28FA56  HDAE5000_SongName_SetAndStore - Copy table entry
-;   0x28FAA0  HDAE5000_FlsRecord_Address - Calculate address with 0x90 multiplier
-;   0x28FABA  HDAE5000_FlsName_SetAndStore - Copy 0x90-stride entry
-;   0x28FAE9  HDAE5000_Fls_IsBlankName - Check table entry validity
-;   0x28FB26  HDAE5000_FlsItem_SongRecord - Get entry address with validation
-;   0x28FBB1  HDAE5000_FlsItem_IsSet - Validate entry at coordinates
-;   0x29501C  HDAE5000_PPORT_ServicePending - PPORT state machine entry
-;   0x295009  HDAE5000_PPORT_Svc27 - PPORT utility function
-;   0x295046  HDAE5000_PPORT_SwitchToLink - context switch main -> PC link
-;   0x295058  HDAE5000_PPORT_YieldToMain - context switch PC link -> main
-;   0x2950CC  HDAE5000_PPORT_ReturnToLink - resume the link, detect its end
-;   0x2950F8  HDAE5000_PPORT_CallService - link asks main to run service WA (heavily used)
-;   0x29511C  HDAE5000_PPORT_ServiceDispatch - PPORT setup routine
-;   0x2952D6  HDAE5000_PPORT_LinkMain - PPORT menu handler
-;   0x2952F8  HDAE5000_PPORT_Execute - Execute PPORT command
-;   0x2953E2  HDAE5000_PPORT_Cmd_Table - Jump table for PPORT commands
-;   0x295412  HDAE5000_PPORT_Strings - Command menu strings
-;   0x2958D6  HDAE5000_PPORT_Cmd06_WriteFsbToHd - command 06 "Writing FSB to HD"
-;   0x295914  HDAE5000_PPORT_Cmd07_LoadHdToMemory - command 07 "Load HD to Memory"
-;   0x2959F6  HDAE5000_PPORT_Cmd08_SendDataToPc - command 08 "Send data to PC"
-;   0x295D3C  HDAE5000_PPORT_Cmd09_SendFilesToPc - command 09 "Sending files to PC"
-;   0x29605A  HDAE5000_PPORT_Cmd10_RcvDataFromPc - command 10 "Rcv data from PC"
-;   0x296294  HDAE5000_PPORT_Cmd11_SaveMemoryToHd - command 11 "Save memory to HD"
-;   0x2967B4  HDAE5000_PPORT_LatchPacketArgs - Display utility
-;   0x2967E4  HDAE5000_PPORT_RequestSongInfo - Display utility 2
-;   0x29AE9F  HDAE5000_MemCopy - Memory copy utility
-;   0x29AFF0  HDAE5000_StrNCpy - Memory copy variant
-;   0x29AFBE  HDAE5000_StrNCmp - Memory compare
-;   0x29AF71  HDAE5000_StrLen - Memory utility
-;   0x29B72D  HDAE5000_Multiply - 32-bit multiply routine
-;   0x2971A3  HDAE5000_Check_HD_Present - Hard disk presence detection
-;   0x2999B0  HDAE5000_Version_Info - Version string block:
-;                "Technics Software section    M. Kitajima"
-;                Version "2.33J", "2.21", "TECHNICS KN5000"
-;   0x29BFE0  HDAE5000_UI_Config - UI configuration strings
-;   0x2A898E  bitmaps and palettes (the retired HDAE5000_Font_Data label
-;                claimed font data at 0x2BA1A6; there is none -- see
-;                hdae5000_data_tables.s)
-;   0x2E1C82  the C program's .rodata, 0x2E1C82-0x2E3703, one label per object
-;                (strings, switch tables, templates), each naming its readers
-;                (scripts/generators/gen_hdae5000_rodata.py).  The six range
-;                names that stood here (Config/Test/Dir/Path strings, Char
-;                tables, UI icons) did not survive that typing.
-;   0x2E3704  HDAE5000_Multilingual_Messages - Trilingual UI messages (EN/DE/FR)
-;   0x2E5B80  the lyrics module's .rodata, 0x2E5B80-0x2E5DCD (gen_hdae5000_rodata.py
-;                --block2): lyric messages, TLhd/TLtr tags, .TLX/.TTX/.MID
-;   0x2F8DCE  HDAE5000_Display_Params - File extensions, device names, config
-;   0x2F94B2  HDAE5000_DataSegmentImage - Data copied to 0x23952A (0xC82 bytes)
-;
-; RAM Workspace (0x23xxxx):
-;   0x23A19E  HDAE5000_RAM_LyricBoxObj - the open lyric box's object id
-;   0x23A1A2  HDAE5000_RAM_MainWorkspacePtr - the main CPU's object table (0x027ED2)
-;   0x230EC2  HDAE5000_WORK_TEMP - Temporary work variable
-;   0x230EC4  HDAE5000_STATE_VAR - State variable
-;   0x230EC6  HDAE5000_CALC_RESULT - Calculation result storage
-;   0x230ECC  HDAE5000_HANDLER_1 - Handler function pointer 1
-;   0x230ED0  HDAE5000_PREV_STATE - Previous state value
-;   0x230ED2  HDAE5000_HANDLER_2 - Handler function pointer 2
-;   0x230ED6  HDAE5000_HANDLER_3 - Handler function pointer 3
-;   0x230EDA  HDAE5000_INIT_FLAG - Initialization result flag
-;   0x22A000  HDAE5000_WORK_BUFFER - Work buffer (0xF52A bytes, cleared at init)
-;   0x23952A  HDAE5000_DATA_COPY_DEST - Data copy destination
-;
-; Hard Disk RAM Variables (0x229Dxx):
-;   0x229D90  HD_STATUS_FLAG - Current drive status
-;   0x229D92  HDAE5000_RAM_HdInitResult - HD_Init's step code (0 = no HD)
-;   0x229D99  HDAE5000_RAM_WriteProtect .. 0x229DAE HDAE5000_RAM_LyricBackColor -
-;             the user settings (write protection/confirm, quick load, load by
-;             number, jump after load, lyric jump and colours), not drive flags
-;   0x229DC8  HD_CONTROL_FLAG - Control register shadow
-;   0x229DD9  HD_ENABLE_FLAG - Drive enabled flag
-;   0x23A08E  HDAE5000_RAM_DirPageBase - first directory of the list page
-;
-; Hard Disk Interface:
-;   The HD-AE5000 uses an IDE/ATA hard disk accessed via PPI bridge.
-;   The disk uses CHS (Cylinder/Head/Sector) addressing.
-;   Debug strings reveal parameters: hddtrck, hddhead, hddsctr, hddscby
-;
-; Filesystem Structures:
-;   FSB - File System Block (master metadata)
-;   FGB - File Group Block (file grouping)
-;   FEB - File Entry Block (individual file metadata)
-;
-; PPORT (PC Parallel Port) Command Menu:
-;   The HD-AE5000 provides a parallel port interface for PC communication.
-;   Command menu strings at 0x295412 define available operations:
-;
-;   01>Send Infos About HD   - Send HD information to PC
-;   02>Exit PPORT            - Exit PPORT mode
-;   03>Read FSB from HD      - Read File System Block from HD
-;   04>Sending FSB to PC     - Transfer FSB data to PC
-;   05>Rcv FSB from PC       - Receive FSB data from PC
-;   06>Writing FSB to HD     - Write FSB data to HD
-;   07>Load HD to Memory     - Load HD content to memory
-;   08>Send data to PC       - Send data block to PC
-;   09>Sending files to PC   - Transfer files to PC
-;   10>Rcv data from PC      - Receive data from PC
-;   11>Save memory to HD     - Save memory content to HD
-;   12>nothing               - (reserved)
-;   13>Rcv data from PC      - Receive data from PC (variant)
-;   14>Sending infos to PC   - Send info block to PC
-;   15>nothing               - (reserved)
-;   16>Delete files          - Delete files from HD
-;   17>Formating HD          - Format hard disk
-;   18>Switch HD-motor off   - Turn off HD motor
-;   19>nothing               - (reserved)
-;   20>Send XapFile flash    - Flash XapFile data
-;
-; PPORT Command Handler Jump Table at 0x2953E2:
-;   Contains 17 handler addresses for commands 01-17+
+; HD-AE5000 Hard Disk Expansion ROM, v2.01i
+;   Version string "V2.01i" (HDAE5000_Str_V201i).  The credits block
+;   HDAE5000_Version_Info ("Technics Software section M. Kitajima 2.33J 2.21
+;   TECHNICS KN5000 Juli-Oktober 1996") is the same in all four dumped versions.
+;   Entry vectors at 0x280008 / 0x280010: jp HDAE5000_Boot_Init, jp
+;   HDAE5000_Frame_Handler, as in v2.06i.
+;   The ROM layout, the hardware it drives and the PC-link (PPORT) command menu are
+;   described in the same place in hdae5000/hd-ae5000_v2_06i.s; this version has
+;   the same parts in the same order, at the addresses the symbol file gives.
 
 
 	.org 0x280000 - 0x280000, 0xFF
@@ -530,7 +373,7 @@ HDAE5000_ROM_HEADER:
 	.byte 0x2f, 0x00	; Unknown (possibly size/flags)
 
 ; Entry point 1 - Jump to boot initialization
-HDAE5000_ENTRY_1:	; 280008h
+HDAE5000_ENTRY_1:
 	jp HDAE5000_Boot_Init	; Called when main CPU validates HDAE5000 presence
 
 ; Padding after vector
@@ -540,7 +383,7 @@ HDAE5000_ENTRY_1:	; 280008h
 	nop
 
 ; Entry point 2 - Jump to frame handler (called periodically)
-HDAE5000_ENTRY_2:	; 280010h
+HDAE5000_ENTRY_2:
 	jp HDAE5000_Frame_Handler	; Called from main loop for HD status updates
 
 ; Padding after vector
@@ -550,13 +393,13 @@ HDAE5000_ENTRY_2:	; 280010h
 	nop
 
 ; Unused entry vectors (return immediately)
-HDAE5000_ENTRY_3:	; 280018h
+HDAE5000_ENTRY_3:
 	ret
 	nop
 	nop
 	nop
 
-HDAE5000_ENTRY_4:	; 28001Ch
+HDAE5000_ENTRY_4:
 	ret
 	nop
 	nop
@@ -631,7 +474,7 @@ HDAE5000_ENTRY_4:	; 28001Ch
 ;   XBC = pointer to the record on the stack
 ; ----------------------------------------------------------------------------
 
-HDAE5000_Handler_Registration:	; 280020h
+HDAE5000_Handler_Registration:
 	; Allocate 14-byte parameter block on stack
 	lda xsp, (xsp - 14)	; lda XSP, XSP - 0Eh  (allocate 14 bytes)
 
@@ -702,7 +545,7 @@ HDAE5000_Handler_Registration:	; 280020h
 	ld XWA, (xwa + WS_RootFnTable)
 	ld XWA, (xwa + RootFn_ApFunctionProc)             ; Handler function via table offset 0x0248
 	ld (xsp + 4), xwa
-	ldw (xsp + 8), 0x43	; ld (XSP+0x08), 0045h  ; size = 69 bytes
+	ldw (xsp + 8), 0x43	; entry count = 67 (v2.06i: 0x45 = 69)
 	lda xwa, (0x2394ce:24)
 	ld (xsp + 10), xwa
 	lda xwa, (xsp)
@@ -720,7 +563,7 @@ HDAE5000_Handler_Registration:	; 280020h
 	ld XWA, (xwa + WS_RootFnTable)
 	ld XWA, (xwa + RootFn_ApFunctionProc)             ; Handler function via table offset 0x0248
 	ld (xsp + 4), xwa
-	ldw (xsp + 8), 0x43	; ld (XSP+0x08), 0045h  ; size = 69 bytes
+	ldw (xsp + 8), 0x43	; entry count = 67 (v2.06i: 0x45 = 69)
 	lda xwa, (0x2395de:24)
 	ld (xsp + 10), xwa
 	lda xwa, (xsp)
@@ -810,7 +653,7 @@ HDAE5000_Handler_Registration:	; 280020h
 	ld XWA, (xwa + WS_RootFnTable)
 	ld XWA, (xwa + RootFn_ViewableProc)             ; Handler function via table offset 0x0280
 	ld (xsp + 4), xwa
-	ldw (xsp + 8), 0x312	; ld (XSP+0x08), 0315h  ; entry count = 789 objects
+	ldw (xsp + 8), 0x312	; entry count = 786 objects (v2.06i: 0x315 = 789)
 	lda xwa, (HDAE5000_UiObject_PtrTable:24)	; = HDAE5000_UiObject_PtrTable
 	ld (xsp + 10), xwa
 	lda xwa, (xsp)
@@ -828,7 +671,7 @@ HDAE5000_Handler_Registration:	; 280020h
 	ld XWA, (xwa + WS_RootFnTable)
 	ld XWA, (xwa + RootFn_ResNameProc)             ; Handler function via table offset 0x0148
 	ld (xsp + 4), xwa
-	ldw (xsp + 8), 0x312	; ld (XSP+0x08), 0315h  ; entry count = 789 objects
+	ldw (xsp + 8), 0x312	; entry count = 786 objects (v2.06i: 0x315 = 789)
 	lda xwa, (HDAE5000_UiObjectName_PtrTable:24)	; = HDAE5000_UiObjectName_PtrTable
 	ld (xsp + 10), xwa
 	lda xwa, (xsp)
@@ -873,7 +716,7 @@ HDAE5000_Handler_Registration:	; 280020h
 ; Output: XHL = the answer, or 0 for any other request
 ; ----------------------------------------------------------------------------
 
-HDAE5000_Alloc_Memory_1:	; 28030Eh
+HDAE5000_Alloc_Memory_1:
 	; Returns 0x2A898E for A1, 0x140 for A2, 0xF0 for A3
 	cp xbc, EVT_GET_BITMAP_HEIGHT
 	jr z, HDAE5000_Alloc_Memory_1__type_A3
@@ -947,7 +790,7 @@ HDAE5000_Alloc_Memory_3__type_A3:
 ; The label is the firmware's own name.  HDAE5000_ObjHandler_Table entry 39
 ; (ROM 0x2F94B2 + 0x9C) holds 0x280395, and the parallel HDAE5000_ObjName_Table
 ; entry (ROM 0x2F95CA + 0x9C) points at 0x29BD0A = "BitmapHdd_icon".
-HDAE5000_BitmapHdd_icon:	; 280395h
+HDAE5000_BitmapHdd_icon:
 	; Resource descriptor for HDAE5000_Bitmap_HddIcon.  Allocates nothing.
 	cp xbc, EVT_GET_BITMAP_HEIGHT
 	jr z, HDAE5000_BitmapHdd_icon__type_A3
@@ -988,7 +831,7 @@ HDAE5000_BitmapHdd_icon__type_A3:
 ;   0x28B3EA-0x28F542  UI handler, file ops, path/string utilities (16,857 bytes)
 ; ============================================================================
 
-HDAE5000_UiState_Reset:	; 0x2803C2
+HDAE5000_UiState_Reset:
 	; Reset the browser selection (0x23A08E, 0x23A092 directory, 0x23A094
 	; song = 0), the load-by-number block 0x22AA58 (template 0x2E1CA2), and
 	; the save-option record 0x22AA4C (template 0x2E1C96, mask 0x1FF, then
@@ -4218,7 +4061,7 @@ HDAE5000_HardTestPage:
 	ret						; 0e
 
 ; --- PPI/IDE Low-Level I/O ---
-HDAE5000_PPI_Init:	; 0x282B98 (13 bytes)
+HDAE5000_PPI_Init:	; (13 bytes)
 	; 8255 control word 0x90: mode 0, port A input, ports B and C output;
 	; then 0xFF to port A.
 	ld (HDAE5000_IO_PpiControl:24), 0x90
@@ -4341,7 +4184,7 @@ HDAE5000_HardTest_HddIdRead:
 	call HDAE5000_MemFill
 	; MemCopy_Block: copy 46 bytes from 0x2264 offset
 	pushw	HDAE5000_Str_HDTYPE@hi16
-	pushw	0x1a72
+	pushw	HDAE5000_Str_HDTYPE@lo16		; low half of HDAE5000_Str_HDTYPE
 	lda xwa, (xsp + 36)
 	push xwa			; dest address
 	call HDAE5000_StrCpy
@@ -4383,7 +4226,7 @@ HDAE5000_HardTest_HddIdRead:
 	ld xix, (xiy + 0)
 	push xix
 	pushw HDAE5000_Fmt_Fre_Capa_3_1f_MB@hi16			; count = 46 -- high half of HDAE5000_Fmt_Fre_Capa_3_1f_MB
-	pushw	0x1a7e
+	pushw	HDAE5000_Fmt_Fre_Capa_3_1f_MB@lo16		; low half of HDAE5000_Fmt_Fre_Capa_3_1f_MB
 	lda xwa, (xsp + 44)
 	push xwa
 	call HDAE5000_SPrintf
@@ -4506,7 +4349,7 @@ HDAE5000_FdName_SongNumber:
 .Lptb_loop:
 	pushw iz
 	pushw HDAE5000_Fmt_2_2d@hi16
-	pushw	0x1abc
+	pushw	HDAE5000_Fmt_2_2d@lo16		; low half of HDAE5000_Fmt_2_2d
 	lda xwa, (xsp + 8)
 	push xwa
 	call HDAE5000_SPrintf

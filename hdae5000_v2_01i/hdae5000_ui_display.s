@@ -322,7 +322,7 @@ HDAE5000_LoadSongWithUi:
 	calr HDAE5000_YieldUntilSem1Zero	; 1e xx xx
 	jr t, .Ldm_common			; 68 xx
 
-.Ldm_mode2:					; 0x28AF6D
+.Ldm_mode2:
 	; Mode 2: register event via +0x0124 vtable, then call +0x0E88/+0x00E4
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 a2 a1 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20 — ld xwa, (xwa+0x0e0a)
@@ -338,7 +338,7 @@ HDAE5000_LoadSongWithUi:
 	call (xhl)				; b3 e8
 	calr HDAE5000_YieldUntilSem1Zero	; 1e xx xx
 
-.Ldm_common:					; 0x28AFA1
+.Ldm_common:
 	; Common: dispatch via saved args
 	pushw iz                                ; push iz (compact 16-bit)
 	pushw 0x0000
@@ -358,7 +358,7 @@ HDAE5000_LoadSongWithUi:
 	calr HDAE5000_RequestMode		; 1e xx xx
 	jrl t, .Ldm_done			; 78 xx xx
 
-.Ldm_success_check:				; 0x28AFCF
+.Ldm_success_check:
 	cp iz, 1:i3				; de d9
 	jr nz, .Ldm_mode2_dereg		; 6e xx
 
@@ -379,7 +379,7 @@ HDAE5000_LoadSongWithUi:
 	call (xhl)				; b3 e8
 	jrl t, .Ldm_done			; 78 xx xx
 
-.Ldm_mode2_dereg:				; 0x28B00E
+.Ldm_mode2_dereg:
 	; Mode 2 deregistration: via +0x0124 vtable
 	ld xwa, (xsp + 0x0e)			; af 0e 20
 	ld xbc, (HDAE5000_RAM_MainWorkspacePtr:24); e2 a2 a1 23 21
@@ -397,7 +397,7 @@ HDAE5000_LoadSongWithUi:
 	call (xhl)				; b3 e8
 	jrl t, .Ldm_done			; 78 xx xx
 
-.Ldm_fail:					; 0x28B049
+.Ldm_fail:
 	; Failure path: register error event
 	cp iz, 1:i3				; de d9
 	jr nz, .Ldm_fail_mode2			; 6e xx
@@ -412,7 +412,7 @@ HDAE5000_LoadSongWithUi:
 	call (xhl)				; b3 e8
 	jr t, .Ldm_fail_common			; 68 xx
 
-.Ldm_fail_mode2:				; 0x28B06C
+.Ldm_fail_mode2:
 	; Fail mode 2: via +0x0124 vtable
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 a2 a1 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20 — ld xwa, (xwa+0x0e0a)
@@ -422,7 +422,7 @@ HDAE5000_LoadSongWithUi:
 	ld xde, 0:i3				; ea a8
 	call (xhl)				; b3 e8
 
-.Ldm_fail_common:				; 0x28B089
+.Ldm_fail_common:
 	; Register error display handlers
 	ld xbc, (xsp + 0x0e)			; af 0e 21
 	ld xwa, HDAE5000_OBJ_ERR_LOAD_EXIT			; 40 9e 02 7f 00
@@ -452,7 +452,7 @@ HDAE5000_LoadSongWithUi:
 	ld xde, 0xffffffff			; 42 ff ff ff ff
 	call (xhl)				; b3 e8
 
-.Ldm_done:					; 0x28B0E8
+.Ldm_done:
 	; --- Epilogue ---
 	ld hl, (xsp + 0x02)			; 9f 02 23
 	popw iz                                 ; pop iz (compact 16-bit)
@@ -557,7 +557,7 @@ HDAE5000_SaveSongWithUi:
 	retd 0x000A			; return and pop 10 bytes
 
 ; ---------------------------------------------------------------------------
-; Copy "V2.06i" with its NUL (7 bytes of HDAE5000_Str_V206i) to a buffer.
+; Copy "V2.01i" with its NUL (7 bytes of HDAE5000_Str_V201i) to a buffer.
 ; Caller: HDAE5000_SetupPage_BuildDriveInfo.
 ; In:  XWA = buffer
 ; Out: HL = 6 (HDAE5000_StrLen of the string).
@@ -570,7 +570,7 @@ HDAE5000_CopyVersionString__loop:
 	lda xhl, (xwa+:1)
 	ld bc, ix
 	extz xbc
-	ld xde, HDAE5000_Str_V206i		; "V2.06i"
+	ld xde, HDAE5000_Str_V201i		; "V2.01i"
 	add xde, xbc
 	ld c, (xde)
 	ld (xhl), c
@@ -578,8 +578,8 @@ HDAE5000_CopyVersionString__loop:
 	cp ix, 7:i3
 	jr c, HDAE5000_CopyVersionString__loop
 HDAE5000_CopyVersionString__len:
-	pushw HDAE5000_Str_V206i@hi16
-	pushw	0x1490
+	pushw HDAE5000_Str_V201i@hi16
+	pushw	HDAE5000_Str_V201i@lo16		; low half of HDAE5000_Str_V201i
 	call HDAE5000_StrLen
 	inc 4, xsp
 	ret
@@ -685,7 +685,7 @@ HDAE5000_Set_Menu_Visibility:
 ; HDAE5000_NameHistory_AfterPushNop: Empty routine (a lone ret) that HDAE5000_NameHistory_Push calls last, with XWA =
 ;   the history it just updated; its only caller. Basis: the single calr in NameHistory_Push (ROM search finds no
 ;   other reference to 0x28B33D).
-HDAE5000_NameHistory_AfterPushNop:	; 0x28B33D (1 bytes)
+HDAE5000_NameHistory_AfterPushNop:	; (1 bytes)
 	ret
 
 ; ---------------------------------------------------------------------------
@@ -801,7 +801,7 @@ HDAE5000_Count_Active_Files__skip:
 	ret
 
 ; --- UI Handler, File Operations, Path/String Utilities ---
-HDAE5000_UiObj_SetCaption:	; 0x28B3EA
+HDAE5000_UiObj_SetCaption:
 	; XWA = UI object id, XBC = string: ask the main CPU for the object's
 	; record (workspace 0x0E0A table +0x2C4 -> XHL) and store the string
 	; pointer at +0x16 -- the caption slot of the label records (see the
@@ -1000,7 +1000,7 @@ HDAE5000_AcLanguageText1Proc_Join:
 	ldw (xsp + 0x04), 65535
 	pushw 0x0008
 	pushw HDAE5000_Str_LANENG00@hi16
-	pushw	0x2da4
+	pushw	HDAE5000_Str_LANENG00@lo16		; low half of HDAE5000_Str_LANENG00
 	ld	xwa, xiz
 	push xwa
 	call HDAE5000_StrNCmp
@@ -1011,7 +1011,7 @@ HDAE5000_AcLanguageText1Proc_Join:
 HDAE5000_AcLanguageText1Proc_Join2:
 	pushw 0x0008
 	pushw HDAE5000_Str_LANDEU00@hi16
-	pushw	0x2dae
+	pushw	HDAE5000_Str_LANDEU00@lo16		; low half of HDAE5000_Str_LANDEU00
 	ld	xwa, xiz
 	push xwa
 	call HDAE5000_StrNCmp
@@ -1022,7 +1022,7 @@ HDAE5000_AcLanguageText1Proc_Join2:
 HDAE5000_AcLanguageText1Proc_Join3:
 	pushw 0x0008
 	pushw HDAE5000_Str_LANFRA00@hi16
-	pushw	0x2db8
+	pushw	HDAE5000_Str_LANFRA00@lo16		; low half of HDAE5000_Str_LANFRA00
 	ld	xwa, xiz
 	push xwa
 	call HDAE5000_StrNCmp
@@ -1069,34 +1069,109 @@ HDAE5000_AcLanguageText1Proc_Msg001:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg001_LangDE
 	pushw HDAE5000_LangMsg_001_EN@hi16
-	pushw	0x2dc2
+	pushw	HDAE5000_LangMsg_001_EN@lo16		; low half of HDAE5000_LangMsg_001_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp
 HDAE5000_AcLanguageText1Proc_Msg001_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr	nz, HDAE5000_AcLanguageText1Proc_Msg004_LangFR
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg001_LangFR
 	pushw	HDAE5000_LangMsg_001_DE@hi16
-	pushw	0x2df2
+	pushw	HDAE5000_LangMsg_001_DE@lo16		; low half of HDAE5000_LangMsg_001_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
+	inc 8, xsp
 HDAE5000_AcLanguageText1Proc_Msg001_LangFR:
+	cpw	(xsp+4), 0x0003
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
+	pushw HDAE5000_LangMsg_001_FR@hi16
+	pushw	HDAE5000_LangMsg_001_FR@lo16		; low half of HDAE5000_LangMsg_001_FR
+	lda	xwa, (xsp+10)
+	push xwa
+	call HDAE5000_StrCpy
+	inc 8, xsp
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg002:
+	cpw	(xsp+4), 0x0001
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg002_LangDE
+	pushw HDAE5000_LangMsg_002_EN@hi16
+	pushw	HDAE5000_LangMsg_002_EN@lo16		; low half of HDAE5000_LangMsg_002_EN
+	lda	xwa, (xsp+10)
+	push xwa
+	call HDAE5000_StrCpy
+	inc 8, xsp
 HDAE5000_AcLanguageText1Proc_Msg002_LangDE:
+	cpw	(xsp+4), 0x0002
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg002_LangFR
+	pushw	HDAE5000_LangMsg_002_DE@hi16
+	pushw	HDAE5000_LangMsg_002_DE@lo16		; low half of HDAE5000_LangMsg_002_DE
+	lda	xwa, (xsp+10)
+	push xwa
+	call HDAE5000_StrCpy
+	inc 8, xsp
 HDAE5000_AcLanguageText1Proc_Msg002_LangFR:
+	cpw	(xsp+4), 0x0003
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
+	pushw HDAE5000_LangMsg_002_FR@hi16
+	pushw	HDAE5000_LangMsg_002_FR@lo16		; low half of HDAE5000_LangMsg_002_FR
+	lda	xwa, (xsp+10)
+	push xwa
+	call HDAE5000_StrCpy
+	inc 8, xsp
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg003:
+	cpw	(xsp+4), 0x0001
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg003_LangDE
+	pushw HDAE5000_LangMsg_003_EN@hi16
+	pushw	HDAE5000_LangMsg_003_EN@lo16		; low half of HDAE5000_LangMsg_003_EN
+	lda	xwa, (xsp+10)
+	push xwa
+	call HDAE5000_StrCpy
+	inc 8, xsp
 HDAE5000_AcLanguageText1Proc_Msg003_LangDE:
+	cpw	(xsp+4), 0x0002
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg003_LangFR
+	pushw	HDAE5000_LangMsg_003_DE@hi16
+	pushw	HDAE5000_LangMsg_003_DE@lo16		; low half of HDAE5000_LangMsg_003_DE
+	lda	xwa, (xsp+10)
+	push xwa
+	call HDAE5000_StrCpy
+	inc 8, xsp
 HDAE5000_AcLanguageText1Proc_Msg003_LangFR:
+	cpw	(xsp+4), 0x0003
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
+	pushw HDAE5000_LangMsg_003_FR@hi16
+	pushw	HDAE5000_LangMsg_003_FR@lo16		; low half of HDAE5000_LangMsg_003_FR
+	lda	xwa, (xsp+10)
+	push xwa
+	call HDAE5000_StrCpy
+	inc 8, xsp
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg004:
+	cpw	(xsp+4), 0x0001
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg004_LangDE
+	pushw HDAE5000_LangMsg_004_EN@hi16
+	pushw	HDAE5000_LangMsg_004_EN@lo16		; low half of HDAE5000_LangMsg_004_EN
+	lda	xwa, (xsp+10)
+	push xwa
+	call HDAE5000_StrCpy
+	inc 8, xsp
 HDAE5000_AcLanguageText1Proc_Msg004_LangDE:
+	cpw	(xsp+4), 0x0002
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg004_LangFR
+	pushw	HDAE5000_LangMsg_004_DE@hi16
+	pushw	HDAE5000_LangMsg_004_DE@lo16		; low half of HDAE5000_LangMsg_004_DE
+	lda	xwa, (xsp+10)
+	push xwa
+	call HDAE5000_StrCpy
 	inc 8, xsp
 HDAE5000_AcLanguageText1Proc_Msg004_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_004_FR@hi16
-	pushw	0x2e2e
+	pushw	HDAE5000_LangMsg_004_FR@lo16		; low half of HDAE5000_LangMsg_004_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1106,7 +1181,7 @@ HDAE5000_AcLanguageText1Proc_Msg005:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg005_LangDE
 	pushw HDAE5000_LangMsg_005_EN@hi16
-	pushw	0x2e50
+	pushw	HDAE5000_LangMsg_005_EN@lo16		; low half of HDAE5000_LangMsg_005_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1114,8 +1189,8 @@ HDAE5000_AcLanguageText1Proc_Msg005:
 HDAE5000_AcLanguageText1Proc_Msg005_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg005_LangFR
-	pushw	HDAE5000_LangMsg_002_DE@hi16
-	pushw	0x2e7c
+	pushw	HDAE5000_LangMsg_005_DE@hi16
+	pushw	HDAE5000_LangMsg_005_DE@lo16		; low half of HDAE5000_LangMsg_005_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1124,7 +1199,7 @@ HDAE5000_AcLanguageText1Proc_Msg005_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_005_FR@hi16
-	pushw	0x2eb4
+	pushw	HDAE5000_LangMsg_005_FR@lo16		; low half of HDAE5000_LangMsg_005_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1134,7 +1209,7 @@ HDAE5000_AcLanguageText1Proc_Msg006:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg006_LangDE
 	pushw HDAE5000_LangMsg_006_EN@hi16
-	pushw	0x2ed2
+	pushw	HDAE5000_LangMsg_006_EN@lo16		; low half of HDAE5000_LangMsg_006_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1142,8 +1217,8 @@ HDAE5000_AcLanguageText1Proc_Msg006:
 HDAE5000_AcLanguageText1Proc_Msg006_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg006_LangFR
-	pushw	HDAE5000_LangMsg_003_DE@hi16
-	pushw	0x2ee8
+	pushw	HDAE5000_LangMsg_006_DE@hi16
+	pushw	HDAE5000_LangMsg_006_DE@lo16		; low half of HDAE5000_LangMsg_006_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1152,7 +1227,7 @@ HDAE5000_AcLanguageText1Proc_Msg006_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_006_FR@hi16
-	pushw	0x2efe
+	pushw	HDAE5000_LangMsg_006_FR@lo16		; low half of HDAE5000_LangMsg_006_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1162,7 +1237,7 @@ HDAE5000_AcLanguageText1Proc_Msg007:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg007_LangDE
 	pushw HDAE5000_LangMsg_007_EN@hi16
-	pushw	0x2f14
+	pushw	HDAE5000_LangMsg_007_EN@lo16		; low half of HDAE5000_LangMsg_007_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1170,8 +1245,8 @@ HDAE5000_AcLanguageText1Proc_Msg007:
 HDAE5000_AcLanguageText1Proc_Msg007_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg007_LangFR
-	pushw	HDAE5000_LangMsg_004_DE@hi16
-	pushw	0x2f24
+	pushw	HDAE5000_LangMsg_007_DE@hi16
+	pushw	HDAE5000_LangMsg_007_DE@lo16		; low half of HDAE5000_LangMsg_007_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1180,7 +1255,7 @@ HDAE5000_AcLanguageText1Proc_Msg007_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_007_FR@hi16
-	pushw	0x2f34
+	pushw	HDAE5000_LangMsg_007_FR@lo16		; low half of HDAE5000_LangMsg_007_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1190,7 +1265,7 @@ HDAE5000_AcLanguageText1Proc_Msg008:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg008_LangDE
 	pushw HDAE5000_LangMsg_008_EN@hi16
-	pushw	0x2f44
+	pushw	HDAE5000_LangMsg_008_EN@lo16		; low half of HDAE5000_LangMsg_008_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1198,8 +1273,8 @@ HDAE5000_AcLanguageText1Proc_Msg008:
 HDAE5000_AcLanguageText1Proc_Msg008_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg008_LangFR
-	pushw	HDAE5000_LangMsg_005_DE@hi16
-	pushw	0x2f5a
+	pushw	HDAE5000_LangMsg_008_DE@hi16
+	pushw	HDAE5000_LangMsg_008_DE@lo16		; low half of HDAE5000_LangMsg_008_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1208,7 +1283,7 @@ HDAE5000_AcLanguageText1Proc_Msg008_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_008_FR@hi16
-	pushw	0x2f70
+	pushw	HDAE5000_LangMsg_008_FR@lo16		; low half of HDAE5000_LangMsg_008_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1218,7 +1293,7 @@ HDAE5000_AcLanguageText1Proc_Msg009:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg009_LangDE
 	pushw HDAE5000_LangMsg_009_EN@hi16
-	pushw	0x2f86
+	pushw	HDAE5000_LangMsg_009_EN@lo16		; low half of HDAE5000_LangMsg_009_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1226,8 +1301,8 @@ HDAE5000_AcLanguageText1Proc_Msg009:
 HDAE5000_AcLanguageText1Proc_Msg009_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg009_LangFR
-	pushw	HDAE5000_LangMsg_006_DE@hi16
-	pushw	0x2f9a
+	pushw	HDAE5000_LangMsg_009_DE@hi16
+	pushw	HDAE5000_LangMsg_009_DE@lo16		; low half of HDAE5000_LangMsg_009_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1236,7 +1311,7 @@ HDAE5000_AcLanguageText1Proc_Msg009_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_009_FR@hi16
-	pushw	0x2fae
+	pushw	HDAE5000_LangMsg_009_FR@lo16		; low half of HDAE5000_LangMsg_009_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1246,7 +1321,7 @@ HDAE5000_AcLanguageText1Proc_Msg010:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg010_LangDE
 	pushw HDAE5000_LangMsg_010_EN@hi16
-	pushw	0x2fc2
+	pushw	HDAE5000_LangMsg_010_EN@lo16		; low half of HDAE5000_LangMsg_010_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1254,8 +1329,8 @@ HDAE5000_AcLanguageText1Proc_Msg010:
 HDAE5000_AcLanguageText1Proc_Msg010_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg010_LangFR
-	pushw	HDAE5000_LangMsg_007_DE@hi16
-	pushw	0x2fda
+	pushw	HDAE5000_LangMsg_010_DE@hi16
+	pushw	HDAE5000_LangMsg_010_DE@lo16		; low half of HDAE5000_LangMsg_010_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1264,7 +1339,7 @@ HDAE5000_AcLanguageText1Proc_Msg010_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_010_FR@hi16
-	pushw	0x2ff2
+	pushw	HDAE5000_LangMsg_010_FR@lo16		; low half of HDAE5000_LangMsg_010_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1274,7 +1349,7 @@ HDAE5000_AcLanguageText1Proc_Msg011:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg011_LangDE
 	pushw HDAE5000_LangMsg_011_EN@hi16
-	pushw	0x300a
+	pushw	HDAE5000_LangMsg_011_EN@lo16		; low half of HDAE5000_LangMsg_011_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1282,8 +1357,8 @@ HDAE5000_AcLanguageText1Proc_Msg011:
 HDAE5000_AcLanguageText1Proc_Msg011_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg011_LangFR
-	pushw	HDAE5000_LangMsg_008_DE@hi16
-	pushw	0x301a
+	pushw	HDAE5000_LangMsg_011_DE@hi16
+	pushw	HDAE5000_LangMsg_011_DE@lo16		; low half of HDAE5000_LangMsg_011_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1292,7 +1367,7 @@ HDAE5000_AcLanguageText1Proc_Msg011_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_011_FR@hi16
-	pushw	0x302a
+	pushw	HDAE5000_LangMsg_011_FR@lo16		; low half of HDAE5000_LangMsg_011_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1302,7 +1377,7 @@ HDAE5000_AcLanguageText1Proc_Msg012:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg012_LangDE
 	pushw HDAE5000_LangMsg_012_EN@hi16
-	pushw	0x303a
+	pushw	HDAE5000_LangMsg_012_EN@lo16		; low half of HDAE5000_LangMsg_012_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1310,8 +1385,8 @@ HDAE5000_AcLanguageText1Proc_Msg012:
 HDAE5000_AcLanguageText1Proc_Msg012_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg012_LangFR
-	pushw	HDAE5000_LangMsg_009_DE@hi16
-	pushw	0x304a
+	pushw	HDAE5000_LangMsg_012_DE@hi16
+	pushw	HDAE5000_LangMsg_012_DE@lo16		; low half of HDAE5000_LangMsg_012_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1320,7 +1395,7 @@ HDAE5000_AcLanguageText1Proc_Msg012_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_012_FR@hi16
-	pushw	0x305a
+	pushw	HDAE5000_LangMsg_012_FR@lo16		; low half of HDAE5000_LangMsg_012_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1330,7 +1405,7 @@ HDAE5000_AcLanguageText1Proc_Msg013:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg013_LangDE
 	pushw HDAE5000_LangMsg_013_EN@hi16
-	pushw	0x306a
+	pushw	HDAE5000_LangMsg_013_EN@lo16		; low half of HDAE5000_LangMsg_013_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1338,8 +1413,8 @@ HDAE5000_AcLanguageText1Proc_Msg013:
 HDAE5000_AcLanguageText1Proc_Msg013_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg013_LangFR
-	pushw	HDAE5000_LangMsg_010_DE@hi16
-	pushw	0x3078
+	pushw	HDAE5000_LangMsg_013_DE@hi16
+	pushw	HDAE5000_LangMsg_013_DE@lo16		; low half of HDAE5000_LangMsg_013_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1348,7 +1423,7 @@ HDAE5000_AcLanguageText1Proc_Msg013_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_013_FR@hi16
-	pushw	0x3086
+	pushw	HDAE5000_LangMsg_013_FR@lo16		; low half of HDAE5000_LangMsg_013_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1358,7 +1433,7 @@ HDAE5000_AcLanguageText1Proc_Msg014:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg014_LangDE
 	pushw HDAE5000_LangMsg_014_EN@hi16
-	pushw	0x3094
+	pushw	HDAE5000_LangMsg_014_EN@lo16		; low half of HDAE5000_LangMsg_014_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1366,8 +1441,8 @@ HDAE5000_AcLanguageText1Proc_Msg014:
 HDAE5000_AcLanguageText1Proc_Msg014_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg014_LangFR
-	pushw	HDAE5000_LangMsg_011_DE@hi16
-	pushw	0x30a0
+	pushw	HDAE5000_LangMsg_014_DE@hi16
+	pushw	HDAE5000_LangMsg_014_DE@lo16		; low half of HDAE5000_LangMsg_014_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1376,7 +1451,7 @@ HDAE5000_AcLanguageText1Proc_Msg014_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_014_FR@hi16
-	pushw	0x30ac
+	pushw	HDAE5000_LangMsg_014_FR@lo16		; low half of HDAE5000_LangMsg_014_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1386,7 +1461,7 @@ HDAE5000_AcLanguageText1Proc_Msg015:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg015_LangDE
 	pushw HDAE5000_LangMsg_015_EN@hi16
-	pushw	0x30b8
+	pushw	HDAE5000_LangMsg_015_EN@lo16		; low half of HDAE5000_LangMsg_015_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1394,8 +1469,8 @@ HDAE5000_AcLanguageText1Proc_Msg015:
 HDAE5000_AcLanguageText1Proc_Msg015_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg015_LangFR
-	pushw	HDAE5000_LangMsg_012_DE@hi16
-	pushw	0x30c8
+	pushw	HDAE5000_LangMsg_015_DE@hi16
+	pushw	HDAE5000_LangMsg_015_DE@lo16		; low half of HDAE5000_LangMsg_015_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1404,7 +1479,7 @@ HDAE5000_AcLanguageText1Proc_Msg015_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_015_FR@hi16
-	pushw	0x30d8
+	pushw	HDAE5000_LangMsg_015_FR@lo16		; low half of HDAE5000_LangMsg_015_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1414,7 +1489,7 @@ HDAE5000_AcLanguageText1Proc_Msg016:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg016_LangDE
 	pushw HDAE5000_LangMsg_016_EN@hi16
-	pushw	0x30e8
+	pushw	HDAE5000_LangMsg_016_EN@lo16		; low half of HDAE5000_LangMsg_016_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1422,8 +1497,8 @@ HDAE5000_AcLanguageText1Proc_Msg016:
 HDAE5000_AcLanguageText1Proc_Msg016_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg016_LangFR
-	pushw	HDAE5000_LangMsg_013_DE@hi16
-	pushw	0x30fe
+	pushw	HDAE5000_LangMsg_016_DE@hi16
+	pushw	HDAE5000_LangMsg_016_DE@lo16		; low half of HDAE5000_LangMsg_016_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1432,7 +1507,7 @@ HDAE5000_AcLanguageText1Proc_Msg016_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_016_FR@hi16
-	pushw	0x3114
+	pushw	HDAE5000_LangMsg_016_FR@lo16		; low half of HDAE5000_LangMsg_016_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1442,7 +1517,7 @@ HDAE5000_AcLanguageText1Proc_Msg017:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg017_LangDE
 	pushw HDAE5000_LangMsg_017_EN@hi16
-	pushw	0x312a
+	pushw	HDAE5000_LangMsg_017_EN@lo16		; low half of HDAE5000_LangMsg_017_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1450,8 +1525,8 @@ HDAE5000_AcLanguageText1Proc_Msg017:
 HDAE5000_AcLanguageText1Proc_Msg017_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg017_LangFR
-	pushw	HDAE5000_LangMsg_014_DE@hi16
-	pushw	0x314a
+	pushw	HDAE5000_LangMsg_017_DE@hi16
+	pushw	HDAE5000_LangMsg_017_DE@lo16		; low half of HDAE5000_LangMsg_017_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1460,7 +1535,7 @@ HDAE5000_AcLanguageText1Proc_Msg017_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_017_FR@hi16
-	pushw	0x316a
+	pushw	HDAE5000_LangMsg_017_FR@lo16		; low half of HDAE5000_LangMsg_017_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1470,7 +1545,7 @@ HDAE5000_AcLanguageText1Proc_Msg018:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg018_LangDE
 	pushw HDAE5000_LangMsg_018_EN@hi16
-	pushw	0x318a
+	pushw	HDAE5000_LangMsg_018_EN@lo16		; low half of HDAE5000_LangMsg_018_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1478,8 +1553,8 @@ HDAE5000_AcLanguageText1Proc_Msg018:
 HDAE5000_AcLanguageText1Proc_Msg018_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg018_LangFR
-	pushw	HDAE5000_LangMsg_015_DE@hi16
-	pushw	0x31aa
+	pushw	HDAE5000_LangMsg_018_DE@hi16
+	pushw	HDAE5000_LangMsg_018_DE@lo16		; low half of HDAE5000_LangMsg_018_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1488,7 +1563,7 @@ HDAE5000_AcLanguageText1Proc_Msg018_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_018_FR@hi16
-	pushw	0x31ca
+	pushw	HDAE5000_LangMsg_018_FR@lo16		; low half of HDAE5000_LangMsg_018_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1498,7 +1573,7 @@ HDAE5000_AcLanguageText1Proc_Msg019:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg019_LangDE
 	pushw HDAE5000_LangMsg_019_EN@hi16
-	pushw	0x31ea
+	pushw	HDAE5000_LangMsg_019_EN@lo16		; low half of HDAE5000_LangMsg_019_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1506,8 +1581,8 @@ HDAE5000_AcLanguageText1Proc_Msg019:
 HDAE5000_AcLanguageText1Proc_Msg019_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg019_LangFR
-	pushw	HDAE5000_LangMsg_016_DE@hi16
-	pushw	0x3236
+	pushw	HDAE5000_LangMsg_019_DE@hi16
+	pushw	HDAE5000_LangMsg_019_DE@lo16		; low half of HDAE5000_LangMsg_019_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1516,7 +1591,7 @@ HDAE5000_AcLanguageText1Proc_Msg019_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_019_FR@hi16
-	pushw	0x3286
+	pushw	HDAE5000_LangMsg_019_FR@lo16		; low half of HDAE5000_LangMsg_019_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1526,7 +1601,7 @@ HDAE5000_AcLanguageText1Proc_Msg020:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg020_LangDE
 	pushw HDAE5000_LangMsg_020_EN@hi16
-	pushw	0x32d6
+	pushw	HDAE5000_LangMsg_020_EN@lo16		; low half of HDAE5000_LangMsg_020_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1534,8 +1609,8 @@ HDAE5000_AcLanguageText1Proc_Msg020:
 HDAE5000_AcLanguageText1Proc_Msg020_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg020_LangFR
-	pushw	HDAE5000_LangMsg_017_DE@hi16
-	pushw	0x32fa
+	pushw	HDAE5000_LangMsg_020_DE@hi16
+	pushw	HDAE5000_LangMsg_020_DE@lo16		; low half of HDAE5000_LangMsg_020_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1544,7 +1619,7 @@ HDAE5000_AcLanguageText1Proc_Msg020_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_020_FR@hi16
-	pushw	0x331e
+	pushw	HDAE5000_LangMsg_020_FR@lo16		; low half of HDAE5000_LangMsg_020_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1554,7 +1629,7 @@ HDAE5000_AcLanguageText1Proc_Msg021:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg021_LangDE
 	pushw HDAE5000_LangMsg_021_EN@hi16
-	pushw	0x3342
+	pushw	HDAE5000_LangMsg_021_EN@lo16		; low half of HDAE5000_LangMsg_021_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1562,8 +1637,8 @@ HDAE5000_AcLanguageText1Proc_Msg021:
 HDAE5000_AcLanguageText1Proc_Msg021_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg021_LangFR
-	pushw	HDAE5000_LangMsg_018_DE@hi16
-	pushw	0x336c
+	pushw	HDAE5000_LangMsg_021_DE@hi16
+	pushw	HDAE5000_LangMsg_021_DE@lo16		; low half of HDAE5000_LangMsg_021_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1572,7 +1647,7 @@ HDAE5000_AcLanguageText1Proc_Msg021_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_021_FR@hi16
-	pushw	0x3398
+	pushw	HDAE5000_LangMsg_021_FR@lo16		; low half of HDAE5000_LangMsg_021_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1582,7 +1657,7 @@ HDAE5000_AcLanguageText1Proc_Msg022:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg022_LangDE
 	pushw HDAE5000_LangMsg_022_EN@hi16
-	pushw	0x33c2
+	pushw	HDAE5000_LangMsg_022_EN@lo16		; low half of HDAE5000_LangMsg_022_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1590,8 +1665,8 @@ HDAE5000_AcLanguageText1Proc_Msg022:
 HDAE5000_AcLanguageText1Proc_Msg022_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg022_LangFR
-	pushw	HDAE5000_LangMsg_019_DE@hi16
-	pushw	0x33ee
+	pushw	HDAE5000_LangMsg_022_DE@hi16
+	pushw	HDAE5000_LangMsg_022_DE@lo16		; low half of HDAE5000_LangMsg_022_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1600,7 +1675,7 @@ HDAE5000_AcLanguageText1Proc_Msg022_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_022_FR@hi16
-	pushw	0x3418
+	pushw	HDAE5000_LangMsg_022_FR@lo16		; low half of HDAE5000_LangMsg_022_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1610,7 +1685,7 @@ HDAE5000_AcLanguageText1Proc_Msg023:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg023_LangDE
 	pushw HDAE5000_LangMsg_023_EN@hi16
-	pushw	0x3444
+	pushw	HDAE5000_LangMsg_023_EN@lo16		; low half of HDAE5000_LangMsg_023_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1618,8 +1693,8 @@ HDAE5000_AcLanguageText1Proc_Msg023:
 HDAE5000_AcLanguageText1Proc_Msg023_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg023_LangFR
-	pushw	HDAE5000_LangMsg_020_DE@hi16
-	pushw	0x3458
+	pushw	HDAE5000_LangMsg_023_DE@hi16
+	pushw	HDAE5000_LangMsg_023_DE@lo16		; low half of HDAE5000_LangMsg_023_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1628,7 +1703,7 @@ HDAE5000_AcLanguageText1Proc_Msg023_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_023_FR@hi16
-	pushw	0x346c
+	pushw	HDAE5000_LangMsg_023_FR@lo16		; low half of HDAE5000_LangMsg_023_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1638,7 +1713,7 @@ HDAE5000_AcLanguageText1Proc_Msg024:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg024_LangDE
 	pushw HDAE5000_LangMsg_024_EN@hi16
-	pushw	0x3480
+	pushw	HDAE5000_LangMsg_024_EN@lo16		; low half of HDAE5000_LangMsg_024_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1646,8 +1721,8 @@ HDAE5000_AcLanguageText1Proc_Msg024:
 HDAE5000_AcLanguageText1Proc_Msg024_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg024_LangFR
-	pushw	HDAE5000_LangMsg_021_DE@hi16
-	pushw	0x34b8
+	pushw	HDAE5000_LangMsg_024_DE@hi16
+	pushw	HDAE5000_LangMsg_024_DE@lo16		; low half of HDAE5000_LangMsg_024_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1656,7 +1731,7 @@ HDAE5000_AcLanguageText1Proc_Msg024_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_024_FR@hi16
-	pushw	0x3504
+	pushw	HDAE5000_LangMsg_024_FR@lo16		; low half of HDAE5000_LangMsg_024_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1666,7 +1741,7 @@ HDAE5000_AcLanguageText1Proc_Msg025:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg025_LangDE
 	pushw HDAE5000_LangMsg_025_EN@hi16
-	pushw	0x354a
+	pushw	HDAE5000_LangMsg_025_EN@lo16		; low half of HDAE5000_LangMsg_025_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1674,8 +1749,8 @@ HDAE5000_AcLanguageText1Proc_Msg025:
 HDAE5000_AcLanguageText1Proc_Msg025_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg025_LangFR
-	pushw	HDAE5000_LangMsg_022_DE@hi16
-	pushw	0x357a
+	pushw	HDAE5000_LangMsg_025_DE@hi16
+	pushw	HDAE5000_LangMsg_025_DE@lo16		; low half of HDAE5000_LangMsg_025_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1684,7 +1759,7 @@ HDAE5000_AcLanguageText1Proc_Msg025_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_025_FR@hi16
-	pushw	0x35ba
+	pushw	HDAE5000_LangMsg_025_FR@lo16		; low half of HDAE5000_LangMsg_025_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1694,7 +1769,7 @@ HDAE5000_AcLanguageText1Proc_Msg026:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg026_LangDE
 	pushw HDAE5000_LangMsg_026_EN@hi16
-	pushw	0x35ea
+	pushw	HDAE5000_LangMsg_026_EN@lo16		; low half of HDAE5000_LangMsg_026_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1702,8 +1777,8 @@ HDAE5000_AcLanguageText1Proc_Msg026:
 HDAE5000_AcLanguageText1Proc_Msg026_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg026_LangFR
-	pushw	HDAE5000_LangMsg_023_DE@hi16
-	pushw	0x3618
+	pushw	HDAE5000_LangMsg_026_DE@hi16
+	pushw	HDAE5000_LangMsg_026_DE@lo16		; low half of HDAE5000_LangMsg_026_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1712,7 +1787,7 @@ HDAE5000_AcLanguageText1Proc_Msg026_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_026_FR@hi16
-	pushw	0x3652
+	pushw	HDAE5000_LangMsg_026_FR@lo16		; low half of HDAE5000_LangMsg_026_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1722,7 +1797,7 @@ HDAE5000_AcLanguageText1Proc_Msg027:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg027_LangDE
 	pushw HDAE5000_LangMsg_027_EN@hi16
-	pushw	0x3678
+	pushw	HDAE5000_LangMsg_027_EN@lo16		; low half of HDAE5000_LangMsg_027_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1730,8 +1805,8 @@ HDAE5000_AcLanguageText1Proc_Msg027:
 HDAE5000_AcLanguageText1Proc_Msg027_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg027_LangFR
-	pushw	HDAE5000_LangMsg_024_DE@hi16
-	pushw	0x36a0
+	pushw	HDAE5000_LangMsg_027_DE@hi16
+	pushw	HDAE5000_LangMsg_027_DE@lo16		; low half of HDAE5000_LangMsg_027_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1740,7 +1815,7 @@ HDAE5000_AcLanguageText1Proc_Msg027_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_027_FR@hi16
-	pushw	0x36d2
+	pushw	HDAE5000_LangMsg_027_FR@lo16		; low half of HDAE5000_LangMsg_027_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1750,7 +1825,7 @@ HDAE5000_AcLanguageText1Proc_Msg028:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg028_LangDE
 	pushw HDAE5000_LangMsg_028_EN@hi16
-	pushw	0x370e
+	pushw	HDAE5000_LangMsg_028_EN@lo16		; low half of HDAE5000_LangMsg_028_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1758,8 +1833,8 @@ HDAE5000_AcLanguageText1Proc_Msg028:
 HDAE5000_AcLanguageText1Proc_Msg028_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg028_LangFR
-	pushw	HDAE5000_LangMsg_025_DE@hi16
-	pushw	0x376c
+	pushw	HDAE5000_LangMsg_028_DE@hi16
+	pushw	HDAE5000_LangMsg_028_DE@lo16		; low half of HDAE5000_LangMsg_028_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1768,7 +1843,7 @@ HDAE5000_AcLanguageText1Proc_Msg028_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_028_FR@hi16
-	pushw	0x37d8
+	pushw	HDAE5000_LangMsg_028_FR@lo16		; low half of HDAE5000_LangMsg_028_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1778,7 +1853,7 @@ HDAE5000_AcLanguageText1Proc_Msg029:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg029_LangDE
 	pushw HDAE5000_LangMsg_029_EN@hi16
-	pushw	0x382e
+	pushw	HDAE5000_LangMsg_029_EN@lo16		; low half of HDAE5000_LangMsg_029_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1786,8 +1861,8 @@ HDAE5000_AcLanguageText1Proc_Msg029:
 HDAE5000_AcLanguageText1Proc_Msg029_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg029_LangFR
-	pushw	HDAE5000_LangMsg_026_DE@hi16
-	pushw	0x386a
+	pushw	HDAE5000_LangMsg_029_DE@hi16
+	pushw	HDAE5000_LangMsg_029_DE@lo16		; low half of HDAE5000_LangMsg_029_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1796,7 +1871,7 @@ HDAE5000_AcLanguageText1Proc_Msg029_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_029_FR@hi16
-	pushw	0x38ac
+	pushw	HDAE5000_LangMsg_029_FR@lo16		; low half of HDAE5000_LangMsg_029_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1806,7 +1881,7 @@ HDAE5000_AcLanguageText1Proc_Msg030:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg030_LangDE
 	pushw HDAE5000_LangMsg_030_EN@hi16
-	pushw	0x38ee
+	pushw	HDAE5000_LangMsg_030_EN@lo16		; low half of HDAE5000_LangMsg_030_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1814,8 +1889,8 @@ HDAE5000_AcLanguageText1Proc_Msg030:
 HDAE5000_AcLanguageText1Proc_Msg030_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg030_LangFR
-	pushw	HDAE5000_LangMsg_027_DE@hi16
-	pushw	0x3922
+	pushw	HDAE5000_LangMsg_030_DE@hi16
+	pushw	HDAE5000_LangMsg_030_DE@lo16		; low half of HDAE5000_LangMsg_030_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1824,7 +1899,7 @@ HDAE5000_AcLanguageText1Proc_Msg030_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_030_FR@hi16
-	pushw	0x3966
+	pushw	HDAE5000_LangMsg_030_FR@lo16		; low half of HDAE5000_LangMsg_030_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1834,7 +1909,7 @@ HDAE5000_AcLanguageText1Proc_Msg031:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg031_LangDE
 	pushw HDAE5000_LangMsg_031_EN@hi16
-	pushw	0x39a8
+	pushw	HDAE5000_LangMsg_031_EN@lo16		; low half of HDAE5000_LangMsg_031_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1842,8 +1917,8 @@ HDAE5000_AcLanguageText1Proc_Msg031:
 HDAE5000_AcLanguageText1Proc_Msg031_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg031_LangFR
-	pushw	HDAE5000_LangMsg_028_DE@hi16
-	pushw	0x39de
+	pushw	HDAE5000_LangMsg_031_DE@hi16
+	pushw	HDAE5000_LangMsg_031_DE@lo16		; low half of HDAE5000_LangMsg_031_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1852,7 +1927,7 @@ HDAE5000_AcLanguageText1Proc_Msg031_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_031_FR@hi16
-	pushw	0x3a20
+	pushw	HDAE5000_LangMsg_031_FR@lo16		; low half of HDAE5000_LangMsg_031_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1862,7 +1937,7 @@ HDAE5000_AcLanguageText1Proc_Msg032:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg032_LangDE
 	pushw HDAE5000_LangMsg_032_EN@hi16
-	pushw	0x3a58
+	pushw	HDAE5000_LangMsg_032_EN@lo16		; low half of HDAE5000_LangMsg_032_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1870,8 +1945,8 @@ HDAE5000_AcLanguageText1Proc_Msg032:
 HDAE5000_AcLanguageText1Proc_Msg032_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg032_LangFR
-	pushw	HDAE5000_LangMsg_029_DE@hi16
-	pushw	0x3a7a
+	pushw	HDAE5000_LangMsg_032_DE@hi16
+	pushw	HDAE5000_LangMsg_032_DE@lo16		; low half of HDAE5000_LangMsg_032_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1880,7 +1955,7 @@ HDAE5000_AcLanguageText1Proc_Msg032_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_032_FR@hi16
-	pushw	0x3aa0
+	pushw	HDAE5000_LangMsg_032_FR@lo16		; low half of HDAE5000_LangMsg_032_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1890,7 +1965,7 @@ HDAE5000_AcLanguageText1Proc_Msg033:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg033_LangDE
 	pushw HDAE5000_LangMsg_033_EN@hi16
-	pushw	0x3ad0
+	pushw	HDAE5000_LangMsg_033_EN@lo16		; low half of HDAE5000_LangMsg_033_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1898,8 +1973,8 @@ HDAE5000_AcLanguageText1Proc_Msg033:
 HDAE5000_AcLanguageText1Proc_Msg033_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg033_LangFR
-	pushw	HDAE5000_LangMsg_030_DE@hi16
-	pushw	0x3afa
+	pushw	HDAE5000_LangMsg_033_DE@hi16
+	pushw	HDAE5000_LangMsg_033_DE@lo16		; low half of HDAE5000_LangMsg_033_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1908,7 +1983,7 @@ HDAE5000_AcLanguageText1Proc_Msg033_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_033_FR@hi16
-	pushw	0x3b30
+	pushw	HDAE5000_LangMsg_033_FR@lo16		; low half of HDAE5000_LangMsg_033_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1918,7 +1993,7 @@ HDAE5000_AcLanguageText1Proc_Msg034:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg034_LangDE
 	pushw HDAE5000_LangMsg_034_EN@hi16
-	pushw	0x3b5a
+	pushw	HDAE5000_LangMsg_034_EN@lo16		; low half of HDAE5000_LangMsg_034_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1926,8 +2001,8 @@ HDAE5000_AcLanguageText1Proc_Msg034:
 HDAE5000_AcLanguageText1Proc_Msg034_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg034_LangFR
-	pushw	HDAE5000_LangMsg_031_DE@hi16
-	pushw	0x3b7a
+	pushw	HDAE5000_LangMsg_034_DE@hi16
+	pushw	HDAE5000_LangMsg_034_DE@lo16		; low half of HDAE5000_LangMsg_034_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1936,7 +2011,7 @@ HDAE5000_AcLanguageText1Proc_Msg034_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_034_FR@hi16
-	pushw	0x3ba0
+	pushw	HDAE5000_LangMsg_034_FR@lo16		; low half of HDAE5000_LangMsg_034_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1946,7 +2021,7 @@ HDAE5000_AcLanguageText1Proc_Msg035:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg035_LangDE
 	pushw HDAE5000_LangMsg_035_EN@hi16
-	pushw	0x3bc2
+	pushw	HDAE5000_LangMsg_035_EN@lo16		; low half of HDAE5000_LangMsg_035_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1954,8 +2029,8 @@ HDAE5000_AcLanguageText1Proc_Msg035:
 HDAE5000_AcLanguageText1Proc_Msg035_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg035_LangFR
-	pushw	HDAE5000_LangMsg_032_DE@hi16
-	pushw	0x3bd8
+	pushw	HDAE5000_LangMsg_035_DE@hi16
+	pushw	HDAE5000_LangMsg_035_DE@lo16		; low half of HDAE5000_LangMsg_035_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1964,7 +2039,7 @@ HDAE5000_AcLanguageText1Proc_Msg035_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_035_FR@hi16
-	pushw	0x3c06
+	pushw	HDAE5000_LangMsg_035_FR@lo16		; low half of HDAE5000_LangMsg_035_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1974,7 +2049,7 @@ HDAE5000_AcLanguageText1Proc_Msg036:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg036_LangDE
 	pushw HDAE5000_LangMsg_036_EN@hi16
-	pushw	0x3c34
+	pushw	HDAE5000_LangMsg_036_EN@lo16		; low half of HDAE5000_LangMsg_036_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1982,8 +2057,8 @@ HDAE5000_AcLanguageText1Proc_Msg036:
 HDAE5000_AcLanguageText1Proc_Msg036_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg036_LangFR
-	pushw	HDAE5000_LangMsg_033_DE@hi16
-	pushw	0x3c4c
+	pushw	HDAE5000_LangMsg_036_DE@hi16
+	pushw	HDAE5000_LangMsg_036_DE@lo16		; low half of HDAE5000_LangMsg_036_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -1992,7 +2067,7 @@ HDAE5000_AcLanguageText1Proc_Msg036_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_036_FR@hi16
-	pushw	0x3c7e
+	pushw	HDAE5000_LangMsg_036_FR@lo16		; low half of HDAE5000_LangMsg_036_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2002,7 +2077,7 @@ HDAE5000_AcLanguageText1Proc_Msg037:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg037_LangDE
 	pushw HDAE5000_LangMsg_037_EN@hi16
-	pushw	0x3ca2
+	pushw	HDAE5000_LangMsg_037_EN@lo16		; low half of HDAE5000_LangMsg_037_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2010,8 +2085,8 @@ HDAE5000_AcLanguageText1Proc_Msg037:
 HDAE5000_AcLanguageText1Proc_Msg037_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg037_LangFR
-	pushw	HDAE5000_LangMsg_034_DE@hi16
-	pushw	0x3cb8
+	pushw	HDAE5000_LangMsg_037_DE@hi16
+	pushw	HDAE5000_LangMsg_037_DE@lo16		; low half of HDAE5000_LangMsg_037_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2020,7 +2095,7 @@ HDAE5000_AcLanguageText1Proc_Msg037_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_037_FR@hi16
-	pushw	0x3cee
+	pushw	HDAE5000_LangMsg_037_FR@lo16		; low half of HDAE5000_LangMsg_037_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2030,7 +2105,7 @@ HDAE5000_AcLanguageText1Proc_Msg038:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg038_LangDE
 	pushw HDAE5000_LangMsg_038_EN@hi16
-	pushw	0x3d16
+	pushw	HDAE5000_LangMsg_038_EN@lo16		; low half of HDAE5000_LangMsg_038_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2038,8 +2113,8 @@ HDAE5000_AcLanguageText1Proc_Msg038:
 HDAE5000_AcLanguageText1Proc_Msg038_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg038_LangFR
-	pushw	HDAE5000_LangMsg_035_DE@hi16
-	pushw	0x3d30
+	pushw	HDAE5000_LangMsg_038_DE@hi16
+	pushw	HDAE5000_LangMsg_038_DE@lo16		; low half of HDAE5000_LangMsg_038_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2048,7 +2123,7 @@ HDAE5000_AcLanguageText1Proc_Msg038_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_038_FR@hi16
-	pushw	0x3d64
+	pushw	HDAE5000_LangMsg_038_FR@lo16		; low half of HDAE5000_LangMsg_038_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2058,7 +2133,7 @@ HDAE5000_AcLanguageText1Proc_Msg039:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg039_LangDE
 	pushw HDAE5000_LangMsg_039_EN@hi16
-	pushw	0x3d8c
+	pushw	HDAE5000_LangMsg_039_EN@lo16		; low half of HDAE5000_LangMsg_039_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2066,8 +2141,8 @@ HDAE5000_AcLanguageText1Proc_Msg039:
 HDAE5000_AcLanguageText1Proc_Msg039_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg039_LangFR
-	pushw	HDAE5000_LangMsg_036_DE@hi16
-	pushw	0x3da6
+	pushw	HDAE5000_LangMsg_039_DE@hi16
+	pushw	HDAE5000_LangMsg_039_DE@lo16		; low half of HDAE5000_LangMsg_039_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2076,7 +2151,7 @@ HDAE5000_AcLanguageText1Proc_Msg039_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_039_FR@hi16
-	pushw	0x3dda
+	pushw	HDAE5000_LangMsg_039_FR@lo16		; low half of HDAE5000_LangMsg_039_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2086,7 +2161,7 @@ HDAE5000_AcLanguageText1Proc_Msg040:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg040_LangDE
 	pushw HDAE5000_LangMsg_040_EN@hi16
-	pushw	0x3e08
+	pushw	HDAE5000_LangMsg_040_EN@lo16		; low half of HDAE5000_LangMsg_040_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2094,8 +2169,8 @@ HDAE5000_AcLanguageText1Proc_Msg040:
 HDAE5000_AcLanguageText1Proc_Msg040_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg040_LangFR
-	pushw	HDAE5000_LangMsg_037_DE@hi16
-	pushw	0x3e22
+	pushw	HDAE5000_LangMsg_040_DE@hi16
+	pushw	HDAE5000_LangMsg_040_DE@lo16		; low half of HDAE5000_LangMsg_040_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2104,7 +2179,7 @@ HDAE5000_AcLanguageText1Proc_Msg040_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_040_FR@hi16
-	pushw	0x3e56
+	pushw	HDAE5000_LangMsg_040_FR@lo16		; low half of HDAE5000_LangMsg_040_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2114,7 +2189,7 @@ HDAE5000_AcLanguageText1Proc_Msg041:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg041_LangDE
 	pushw HDAE5000_LangMsg_041_EN@hi16
-	pushw	0x3e80
+	pushw	HDAE5000_LangMsg_041_EN@lo16		; low half of HDAE5000_LangMsg_041_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2122,8 +2197,8 @@ HDAE5000_AcLanguageText1Proc_Msg041:
 HDAE5000_AcLanguageText1Proc_Msg041_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg041_LangFR
-	pushw	HDAE5000_LangMsg_038_DE@hi16
-	pushw	0x3e9a
+	pushw	HDAE5000_LangMsg_041_DE@hi16
+	pushw	HDAE5000_LangMsg_041_DE@lo16		; low half of HDAE5000_LangMsg_041_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2132,7 +2207,7 @@ HDAE5000_AcLanguageText1Proc_Msg041_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_041_FR@hi16
-	pushw	0x3ece
+	pushw	HDAE5000_LangMsg_041_FR@lo16		; low half of HDAE5000_LangMsg_041_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2142,7 +2217,7 @@ HDAE5000_AcLanguageText1Proc_Msg042:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg042_LangDE
 	pushw HDAE5000_LangMsg_042_EN@hi16
-	pushw	0x3ef8
+	pushw	HDAE5000_LangMsg_042_EN@lo16		; low half of HDAE5000_LangMsg_042_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2150,8 +2225,8 @@ HDAE5000_AcLanguageText1Proc_Msg042:
 HDAE5000_AcLanguageText1Proc_Msg042_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg042_LangFR
-	pushw	HDAE5000_LangMsg_039_DE@hi16
-	pushw	0x3f22
+	pushw	HDAE5000_LangMsg_042_DE@hi16
+	pushw	HDAE5000_LangMsg_042_DE@lo16		; low half of HDAE5000_LangMsg_042_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2160,7 +2235,7 @@ HDAE5000_AcLanguageText1Proc_Msg042_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_042_FR@hi16
-	pushw	0x3f50
+	pushw	HDAE5000_LangMsg_042_FR@lo16		; low half of HDAE5000_LangMsg_042_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2170,7 +2245,7 @@ HDAE5000_AcLanguageText1Proc_Msg043:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg043_LangDE
 	pushw HDAE5000_LangMsg_043_EN@hi16
-	pushw	0x3f82
+	pushw	HDAE5000_LangMsg_043_EN@lo16		; low half of HDAE5000_LangMsg_043_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2178,8 +2253,8 @@ HDAE5000_AcLanguageText1Proc_Msg043:
 HDAE5000_AcLanguageText1Proc_Msg043_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg043_LangFR
-	pushw	HDAE5000_LangMsg_040_DE@hi16
-	pushw	0x3fca
+	pushw	HDAE5000_LangMsg_043_DE@hi16
+	pushw	HDAE5000_LangMsg_043_DE@lo16		; low half of HDAE5000_LangMsg_043_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2188,7 +2263,7 @@ HDAE5000_AcLanguageText1Proc_Msg043_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_043_FR@hi16
-	pushw	0x4026
+	pushw	HDAE5000_LangMsg_043_FR@lo16		; low half of HDAE5000_LangMsg_043_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2198,7 +2273,7 @@ HDAE5000_AcLanguageText1Proc_Msg044:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg044_LangDE
 	pushw HDAE5000_LangMsg_044_EN@hi16
-	pushw	0x407e
+	pushw	HDAE5000_LangMsg_044_EN@lo16		; low half of HDAE5000_LangMsg_044_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2206,8 +2281,8 @@ HDAE5000_AcLanguageText1Proc_Msg044:
 HDAE5000_AcLanguageText1Proc_Msg044_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg044_LangFR
-	pushw	HDAE5000_LangMsg_041_DE@hi16
-	pushw	0x40c6
+	pushw	HDAE5000_LangMsg_044_DE@hi16
+	pushw	HDAE5000_LangMsg_044_DE@lo16		; low half of HDAE5000_LangMsg_044_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2216,7 +2291,7 @@ HDAE5000_AcLanguageText1Proc_Msg044_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_044_FR@hi16
-	pushw	0x4122
+	pushw	HDAE5000_LangMsg_044_FR@lo16		; low half of HDAE5000_LangMsg_044_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2226,7 +2301,7 @@ HDAE5000_AcLanguageText1Proc_Msg045:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg045_LangDE
 	pushw HDAE5000_LangMsg_045_EN@hi16
-	pushw	0x417a
+	pushw	HDAE5000_LangMsg_045_EN@lo16		; low half of HDAE5000_LangMsg_045_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2234,8 +2309,8 @@ HDAE5000_AcLanguageText1Proc_Msg045:
 HDAE5000_AcLanguageText1Proc_Msg045_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg045_LangFR
-	pushw	HDAE5000_LangMsg_042_DE@hi16
-	pushw	0x41de
+	pushw	HDAE5000_LangMsg_045_DE@hi16
+	pushw	HDAE5000_LangMsg_045_DE@lo16		; low half of HDAE5000_LangMsg_045_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2244,7 +2319,7 @@ HDAE5000_AcLanguageText1Proc_Msg045_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_045_FR@hi16
-	pushw	0x4240
+	pushw	HDAE5000_LangMsg_045_FR@lo16		; low half of HDAE5000_LangMsg_045_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2254,7 +2329,7 @@ HDAE5000_AcLanguageText1Proc_Msg046:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg046_LangDE
 	pushw HDAE5000_LangMsg_046_EN@hi16
-	pushw	0x4296
+	pushw	HDAE5000_LangMsg_046_EN@lo16		; low half of HDAE5000_LangMsg_046_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2262,8 +2337,8 @@ HDAE5000_AcLanguageText1Proc_Msg046:
 HDAE5000_AcLanguageText1Proc_Msg046_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg046_LangFR
-	pushw	HDAE5000_LangMsg_043_DE@hi16
-	pushw	0x42ea
+	pushw	HDAE5000_LangMsg_046_DE@hi16
+	pushw	HDAE5000_LangMsg_046_DE@lo16		; low half of HDAE5000_LangMsg_046_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2272,7 +2347,7 @@ HDAE5000_AcLanguageText1Proc_Msg046_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_046_FR@hi16
-	pushw	0x434c
+	pushw	HDAE5000_LangMsg_046_FR@lo16		; low half of HDAE5000_LangMsg_046_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2282,7 +2357,7 @@ HDAE5000_AcLanguageText1Proc_Msg047:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg047_LangDE
 	pushw HDAE5000_LangMsg_047_EN@hi16
-	pushw	0x4392
+	pushw	HDAE5000_LangMsg_047_EN@lo16		; low half of HDAE5000_LangMsg_047_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2290,8 +2365,8 @@ HDAE5000_AcLanguageText1Proc_Msg047:
 HDAE5000_AcLanguageText1Proc_Msg047_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg047_LangFR
-	pushw	HDAE5000_LangMsg_044_DE@hi16
-	pushw	0x43d0
+	pushw	HDAE5000_LangMsg_047_DE@hi16
+	pushw	HDAE5000_LangMsg_047_DE@lo16		; low half of HDAE5000_LangMsg_047_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2300,7 +2375,7 @@ HDAE5000_AcLanguageText1Proc_Msg047_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_047_FR@hi16
-	pushw	0x441c
+	pushw	HDAE5000_LangMsg_047_FR@lo16		; low half of HDAE5000_LangMsg_047_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2310,7 +2385,7 @@ HDAE5000_AcLanguageText1Proc_Msg048:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg048_LangDE
 	pushw HDAE5000_LangMsg_048_EN@hi16
-	pushw	0x444c
+	pushw	HDAE5000_LangMsg_048_EN@lo16		; low half of HDAE5000_LangMsg_048_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2318,8 +2393,8 @@ HDAE5000_AcLanguageText1Proc_Msg048:
 HDAE5000_AcLanguageText1Proc_Msg048_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg048_LangFR
-	pushw	HDAE5000_LangMsg_045_DE@hi16
-	pushw	0x4482
+	pushw	HDAE5000_LangMsg_048_DE@hi16
+	pushw	HDAE5000_LangMsg_048_DE@lo16		; low half of HDAE5000_LangMsg_048_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2328,7 +2403,7 @@ HDAE5000_AcLanguageText1Proc_Msg048_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_048_FR@hi16
-	pushw	0x44c4
+	pushw	HDAE5000_LangMsg_048_FR@lo16		; low half of HDAE5000_LangMsg_048_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2338,7 +2413,7 @@ HDAE5000_AcLanguageText1Proc_Msg049:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg049_LangDE
 	pushw HDAE5000_LangMsg_049_EN@hi16
-	pushw	0x450a
+	pushw	HDAE5000_LangMsg_049_EN@lo16		; low half of HDAE5000_LangMsg_049_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2346,8 +2421,8 @@ HDAE5000_AcLanguageText1Proc_Msg049:
 HDAE5000_AcLanguageText1Proc_Msg049_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg049_LangFR
-	pushw	HDAE5000_LangMsg_046_DE@hi16
-	pushw	0x4554
+	pushw	HDAE5000_LangMsg_049_DE@hi16
+	pushw	HDAE5000_LangMsg_049_DE@lo16		; low half of HDAE5000_LangMsg_049_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2356,7 +2431,7 @@ HDAE5000_AcLanguageText1Proc_Msg049_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_049_FR@hi16
-	pushw	0x45ac
+	pushw	HDAE5000_LangMsg_049_FR@lo16		; low half of HDAE5000_LangMsg_049_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2366,7 +2441,7 @@ HDAE5000_AcLanguageText1Proc_Msg050:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg050_LangDE
 	pushw HDAE5000_LangMsg_050_EN@hi16
-	pushw	0x45d6
+	pushw	HDAE5000_LangMsg_050_EN@lo16		; low half of HDAE5000_LangMsg_050_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2374,8 +2449,8 @@ HDAE5000_AcLanguageText1Proc_Msg050:
 HDAE5000_AcLanguageText1Proc_Msg050_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg050_LangFR
-	pushw	HDAE5000_LangMsg_047_DE@hi16
-	pushw	0x45f6
+	pushw	HDAE5000_LangMsg_050_DE@hi16
+	pushw	HDAE5000_LangMsg_050_DE@lo16		; low half of HDAE5000_LangMsg_050_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2384,7 +2459,7 @@ HDAE5000_AcLanguageText1Proc_Msg050_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_050_FR@hi16
-	pushw	0x4630
+	pushw	HDAE5000_LangMsg_050_FR@lo16		; low half of HDAE5000_LangMsg_050_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2394,7 +2469,7 @@ HDAE5000_AcLanguageText1Proc_Msg051:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg051_LangDE
 	pushw HDAE5000_LangMsg_051_EN@hi16
-	pushw	0x4654
+	pushw	HDAE5000_LangMsg_051_EN@lo16		; low half of HDAE5000_LangMsg_051_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2402,8 +2477,8 @@ HDAE5000_AcLanguageText1Proc_Msg051:
 HDAE5000_AcLanguageText1Proc_Msg051_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg051_LangFR
-	pushw	HDAE5000_LangMsg_048_DE@hi16
-	pushw	0x4676
+	pushw	HDAE5000_LangMsg_051_DE@hi16
+	pushw	HDAE5000_LangMsg_051_DE@lo16		; low half of HDAE5000_LangMsg_051_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2412,7 +2487,7 @@ HDAE5000_AcLanguageText1Proc_Msg051_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_051_FR@hi16
-	pushw	0x469e
+	pushw	HDAE5000_LangMsg_051_FR@lo16		; low half of HDAE5000_LangMsg_051_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2422,7 +2497,7 @@ HDAE5000_AcLanguageText1Proc_Msg052:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg052_LangDE
 	pushw HDAE5000_LangMsg_052_EN@hi16
-	pushw	0x46bc
+	pushw	HDAE5000_LangMsg_052_EN@lo16		; low half of HDAE5000_LangMsg_052_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2430,8 +2505,8 @@ HDAE5000_AcLanguageText1Proc_Msg052:
 HDAE5000_AcLanguageText1Proc_Msg052_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg052_LangFR
-	pushw	HDAE5000_LangMsg_049_DE@hi16
-	pushw	0x46cc
+	pushw	HDAE5000_LangMsg_052_DE@hi16
+	pushw	HDAE5000_LangMsg_052_DE@lo16		; low half of HDAE5000_LangMsg_052_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2440,7 +2515,7 @@ HDAE5000_AcLanguageText1Proc_Msg052_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_052_FR@hi16
-	pushw	0x46de
+	pushw	HDAE5000_LangMsg_052_FR@lo16		; low half of HDAE5000_LangMsg_052_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2450,7 +2525,7 @@ HDAE5000_AcLanguageText1Proc_Msg053:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg053_LangDE
 	pushw HDAE5000_LangMsg_053_EN@hi16
-	pushw	0x46ee
+	pushw	HDAE5000_LangMsg_053_EN@lo16		; low half of HDAE5000_LangMsg_053_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2458,8 +2533,8 @@ HDAE5000_AcLanguageText1Proc_Msg053:
 HDAE5000_AcLanguageText1Proc_Msg053_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg053_LangFR
-	pushw	HDAE5000_LangMsg_050_DE@hi16
-	pushw	0x46fe
+	pushw	HDAE5000_LangMsg_053_DE@hi16
+	pushw	HDAE5000_LangMsg_053_DE@lo16		; low half of HDAE5000_LangMsg_053_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2468,7 +2543,7 @@ HDAE5000_AcLanguageText1Proc_Msg053_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_053_FR@hi16
-	pushw	0x470e
+	pushw	HDAE5000_LangMsg_053_FR@lo16		; low half of HDAE5000_LangMsg_053_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2478,7 +2553,7 @@ HDAE5000_AcLanguageText1Proc_Msg054:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg054_LangDE
 	pushw HDAE5000_LangMsg_054_EN@hi16
-	pushw	0x471e
+	pushw	HDAE5000_LangMsg_054_EN@lo16		; low half of HDAE5000_LangMsg_054_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2486,8 +2561,8 @@ HDAE5000_AcLanguageText1Proc_Msg054:
 HDAE5000_AcLanguageText1Proc_Msg054_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg054_LangFR
-	pushw	HDAE5000_LangMsg_051_DE@hi16
-	pushw	0x474a
+	pushw	HDAE5000_LangMsg_054_DE@hi16
+	pushw	HDAE5000_LangMsg_054_DE@lo16		; low half of HDAE5000_LangMsg_054_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2496,7 +2571,7 @@ HDAE5000_AcLanguageText1Proc_Msg054_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_054_FR@hi16
-	pushw	0x4772
+	pushw	HDAE5000_LangMsg_054_FR@lo16		; low half of HDAE5000_LangMsg_054_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2506,7 +2581,7 @@ HDAE5000_AcLanguageText1Proc_Msg055:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg055_LangDE
 	pushw HDAE5000_LangMsg_055_EN@hi16
-	pushw	0x47b0
+	pushw	HDAE5000_LangMsg_055_EN@lo16		; low half of HDAE5000_LangMsg_055_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2514,8 +2589,8 @@ HDAE5000_AcLanguageText1Proc_Msg055:
 HDAE5000_AcLanguageText1Proc_Msg055_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg055_LangFR
-	pushw	HDAE5000_LangMsg_052_DE@hi16
-	pushw	0x4802
+	pushw	HDAE5000_LangMsg_055_DE@hi16
+	pushw	HDAE5000_LangMsg_055_DE@lo16		; low half of HDAE5000_LangMsg_055_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2524,7 +2599,7 @@ HDAE5000_AcLanguageText1Proc_Msg055_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_055_FR@hi16
-	pushw	0x4866
+	pushw	HDAE5000_LangMsg_055_FR@lo16		; low half of HDAE5000_LangMsg_055_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2534,7 +2609,7 @@ HDAE5000_AcLanguageText1Proc_Msg056:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg056_LangDE
 	pushw HDAE5000_LangMsg_056_EN@hi16
-	pushw	0x48cc
+	pushw	HDAE5000_LangMsg_056_EN@lo16		; low half of HDAE5000_LangMsg_056_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2542,8 +2617,8 @@ HDAE5000_AcLanguageText1Proc_Msg056:
 HDAE5000_AcLanguageText1Proc_Msg056_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg056_LangFR
-	pushw	HDAE5000_LangMsg_053_DE@hi16
-	pushw	0x48da
+	pushw	HDAE5000_LangMsg_056_DE@hi16
+	pushw	HDAE5000_LangMsg_056_DE@lo16		; low half of HDAE5000_LangMsg_056_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2552,7 +2627,7 @@ HDAE5000_AcLanguageText1Proc_Msg056_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_056_FR@hi16
-	pushw	0x48ea
+	pushw	HDAE5000_LangMsg_056_FR@lo16		; low half of HDAE5000_LangMsg_056_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2562,7 +2637,7 @@ HDAE5000_AcLanguageText1Proc_Msg057:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg057_LangDE
 	pushw HDAE5000_LangMsg_057_EN@hi16
-	pushw	0x48fe
+	pushw	HDAE5000_LangMsg_057_EN@lo16		; low half of HDAE5000_LangMsg_057_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2570,8 +2645,8 @@ HDAE5000_AcLanguageText1Proc_Msg057:
 HDAE5000_AcLanguageText1Proc_Msg057_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg057_LangFR
-	pushw	HDAE5000_LangMsg_054_DE@hi16
-	pushw	0x491c
+	pushw	HDAE5000_LangMsg_057_DE@hi16
+	pushw	HDAE5000_LangMsg_057_DE@lo16		; low half of HDAE5000_LangMsg_057_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2580,7 +2655,7 @@ HDAE5000_AcLanguageText1Proc_Msg057_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_057_FR@hi16
-	pushw	0x493c
+	pushw	HDAE5000_LangMsg_057_FR@lo16		; low half of HDAE5000_LangMsg_057_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2590,7 +2665,7 @@ HDAE5000_AcLanguageText1Proc_Msg058:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg058_LangDE
 	pushw HDAE5000_LangMsg_058_EN@hi16
-	pushw	0x4958
+	pushw	HDAE5000_LangMsg_058_EN@lo16		; low half of HDAE5000_LangMsg_058_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2598,8 +2673,8 @@ HDAE5000_AcLanguageText1Proc_Msg058:
 HDAE5000_AcLanguageText1Proc_Msg058_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg058_LangFR
-	pushw	HDAE5000_LangMsg_055_DE@hi16
-	pushw	0x49aa
+	pushw	HDAE5000_LangMsg_058_DE@hi16
+	pushw	HDAE5000_LangMsg_058_DE@lo16		; low half of HDAE5000_LangMsg_058_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2608,7 +2683,7 @@ HDAE5000_AcLanguageText1Proc_Msg058_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_058_FR@hi16
-	pushw	0x4a0e
+	pushw	HDAE5000_LangMsg_058_FR@lo16		; low half of HDAE5000_LangMsg_058_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2618,7 +2693,7 @@ HDAE5000_AcLanguageText1Proc_Msg059:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg059_LangDE
 	pushw HDAE5000_LangMsg_059_EN@hi16
-	pushw	0x4a6c
+	pushw	HDAE5000_LangMsg_059_EN@lo16		; low half of HDAE5000_LangMsg_059_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2626,8 +2701,8 @@ HDAE5000_AcLanguageText1Proc_Msg059:
 HDAE5000_AcLanguageText1Proc_Msg059_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg059_LangFR
-	pushw	HDAE5000_LangMsg_056_DE@hi16
-	pushw	0x4a88
+	pushw	HDAE5000_LangMsg_059_DE@hi16
+	pushw	HDAE5000_LangMsg_059_DE@lo16		; low half of HDAE5000_LangMsg_059_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2636,7 +2711,7 @@ HDAE5000_AcLanguageText1Proc_Msg059_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_059_FR@hi16
-	pushw	0x4aa6
+	pushw	HDAE5000_LangMsg_059_FR@lo16		; low half of HDAE5000_LangMsg_059_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2646,7 +2721,7 @@ HDAE5000_AcLanguageText1Proc_Msg060:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg060_LangDE
 	pushw HDAE5000_LangMsg_060_EN@hi16
-	pushw	0x4ac4
+	pushw	HDAE5000_LangMsg_060_EN@lo16		; low half of HDAE5000_LangMsg_060_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2654,8 +2729,8 @@ HDAE5000_AcLanguageText1Proc_Msg060:
 HDAE5000_AcLanguageText1Proc_Msg060_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg060_LangFR
-	pushw	HDAE5000_LangMsg_057_DE@hi16
-	pushw	0x4b14
+	pushw	HDAE5000_LangMsg_060_DE@hi16
+	pushw	HDAE5000_LangMsg_060_DE@lo16		; low half of HDAE5000_LangMsg_060_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2664,7 +2739,7 @@ HDAE5000_AcLanguageText1Proc_Msg060_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_060_FR@hi16
-	pushw	0x4b64
+	pushw	HDAE5000_LangMsg_060_FR@lo16		; low half of HDAE5000_LangMsg_060_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2674,7 +2749,7 @@ HDAE5000_AcLanguageText1Proc_Msg061:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg061_LangDE
 	pushw HDAE5000_LangMsg_061_EN@hi16
-	pushw	0x4b66
+	pushw	HDAE5000_LangMsg_061_EN@lo16		; low half of HDAE5000_LangMsg_061_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2682,8 +2757,8 @@ HDAE5000_AcLanguageText1Proc_Msg061:
 HDAE5000_AcLanguageText1Proc_Msg061_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg061_LangFR
-	pushw	HDAE5000_LangMsg_058_DE@hi16
-	pushw	0x4bb2
+	pushw	HDAE5000_LangMsg_061_DE@hi16
+	pushw	HDAE5000_LangMsg_061_DE@lo16		; low half of HDAE5000_LangMsg_061_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2692,7 +2767,7 @@ HDAE5000_AcLanguageText1Proc_Msg061_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_061_FR@hi16
-	pushw	0x4c02
+	pushw	HDAE5000_LangMsg_061_FR@lo16		; low half of HDAE5000_LangMsg_061_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2702,7 +2777,7 @@ HDAE5000_AcLanguageText1Proc_Msg062:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg062_LangDE
 	pushw HDAE5000_LangMsg_062_EN@hi16
-	pushw	0x4c04
+	pushw	HDAE5000_LangMsg_062_EN@lo16		; low half of HDAE5000_LangMsg_062_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2710,8 +2785,8 @@ HDAE5000_AcLanguageText1Proc_Msg062:
 HDAE5000_AcLanguageText1Proc_Msg062_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg062_LangFR
-	pushw	HDAE5000_LangMsg_059_DE@hi16
-	pushw	0x4c20
+	pushw	HDAE5000_LangMsg_062_DE@hi16
+	pushw	HDAE5000_LangMsg_062_DE@lo16		; low half of HDAE5000_LangMsg_062_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2720,7 +2795,7 @@ HDAE5000_AcLanguageText1Proc_Msg062_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_062_FR@hi16
-	pushw	0x4c3c
+	pushw	HDAE5000_LangMsg_062_FR@lo16		; low half of HDAE5000_LangMsg_062_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2730,7 +2805,7 @@ HDAE5000_AcLanguageText1Proc_Msg064:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg064_LangDE
 	pushw HDAE5000_LangMsg_064_EN@hi16
-	pushw	0x4c3e
+	pushw	HDAE5000_LangMsg_064_EN@lo16		; low half of HDAE5000_LangMsg_064_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2738,8 +2813,8 @@ HDAE5000_AcLanguageText1Proc_Msg064:
 HDAE5000_AcLanguageText1Proc_Msg064_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg064_LangFR
-	pushw	HDAE5000_LangMsg_060_DE@hi16
-	pushw	0x4c5a
+	pushw	HDAE5000_LangMsg_064_DE@hi16
+	pushw	HDAE5000_LangMsg_064_DE@lo16		; low half of HDAE5000_LangMsg_064_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2748,91 +2823,7 @@ HDAE5000_AcLanguageText1Proc_Msg064_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_064_FR@hi16
-	pushw	0x4c78
-	lda	xwa, (xsp+10)
-	push xwa
-	call HDAE5000_StrCpy
-	inc 8, xsp
-	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
-HDAE5000_AcLanguageText1Proc_Msg065:
-	cpw	(xsp+4), 0x0001
-	jr	nz, HDAE5000_AcLanguageText1Proc_Msg065_LangDE
-	pushw HDAE5000_LangMsg_065_EN@hi16
-	pushw	0x4c9a
-	lda	xwa, (xsp+10)
-	push xwa
-	call HDAE5000_StrCpy
-	inc 8, xsp
-HDAE5000_AcLanguageText1Proc_Msg065_LangDE:
-	cpw	(xsp+4), 0x0002
-	jr	nz, HDAE5000_AcLanguageText1Proc_Msg065_LangFR
-	pushw	HDAE5000_LangMsg_061_DE@hi16
-	pushw	0x4cc0
-	lda	xwa, (xsp+10)
-	push xwa
-	call HDAE5000_StrCpy
-	inc 8, xsp
-HDAE5000_AcLanguageText1Proc_Msg065_LangFR:
-	cpw	(xsp+4), 0x0003
-	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
-	pushw HDAE5000_LangMsg_065_FR@hi16
-	pushw	0x4cf4
-	lda	xwa, (xsp+10)
-	push xwa
-	call HDAE5000_StrCpy
-	inc 8, xsp
-	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
-HDAE5000_AcLanguageText1Proc_Msg066:
-	cpw	(xsp+4), 0x0001
-	jr	nz, HDAE5000_AcLanguageText1Proc_Msg066_LangDE
-	pushw HDAE5000_LangMsg_066_EN@hi16
-	pushw	0x4d24
-	lda	xwa, (xsp+10)
-	push xwa
-	call HDAE5000_StrCpy
-	inc 8, xsp
-HDAE5000_AcLanguageText1Proc_Msg066_LangDE:
-	cpw	(xsp+4), 0x0002
-	jr	nz, HDAE5000_AcLanguageText1Proc_Msg066_LangFR
-	pushw	HDAE5000_LangMsg_062_DE@hi16
-	pushw	0x4d38
-	lda	xwa, (xsp+10)
-	push xwa
-	call HDAE5000_StrCpy
-	inc 8, xsp
-HDAE5000_AcLanguageText1Proc_Msg066_LangFR:
-	cpw	(xsp+4), 0x0003
-	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
-	pushw HDAE5000_LangMsg_066_FR@hi16
-	pushw	0x4d4e
-	lda	xwa, (xsp+10)
-	push xwa
-	call HDAE5000_StrCpy
-	inc 8, xsp
-	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
-HDAE5000_AcLanguageText1Proc_Msg067:
-	cpw	(xsp+4), 0x0001
-	jr	nz, HDAE5000_AcLanguageText1Proc_Msg067_LangDE
-	pushw HDAE5000_LangMsg_067_EN@hi16
-	pushw	0x4d64
-	lda	xwa, (xsp+10)
-	push xwa
-	call HDAE5000_StrCpy
-	inc 8, xsp
-HDAE5000_AcLanguageText1Proc_Msg067_LangDE:
-	cpw	(xsp+4), 0x0002
-	jr	nz, HDAE5000_AcLanguageText1Proc_Msg067_LangFR
-	pushw	HDAE5000_Str_SpringeNachLaden@hi16
-	pushw	0x4d74
-	lda	xwa, (xsp+10)
-	push xwa
-	call HDAE5000_StrCpy
-	inc 8, xsp
-HDAE5000_AcLanguageText1Proc_Msg067_LangFR:
-	cpw	(xsp+4), 0x0003
-	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
-	pushw HDAE5000_LangMsg_067_FR@hi16
-	pushw	0x4d88
+	pushw	HDAE5000_LangMsg_064_FR@lo16		; low half of HDAE5000_LangMsg_064_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2842,7 +2833,7 @@ HDAE5000_AcLanguageText1Proc_Msg200:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg200_LangDE
 	pushw HDAE5000_LangMsg_200_EN@hi16
-	pushw	0x4d9a
+	pushw	HDAE5000_LangMsg_200_EN@lo16		; low half of HDAE5000_LangMsg_200_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2851,7 +2842,7 @@ HDAE5000_AcLanguageText1Proc_Msg200_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg200_LangFR
 	pushw	HDAE5000_LangMsg_200_DE@hi16
-	pushw	0x4d9e
+	pushw	HDAE5000_LangMsg_200_DE@lo16		; low half of HDAE5000_LangMsg_200_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2860,7 +2851,7 @@ HDAE5000_AcLanguageText1Proc_Msg200_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_200_FR@hi16
-	pushw	0x4da2
+	pushw	HDAE5000_LangMsg_200_FR@lo16		; low half of HDAE5000_LangMsg_200_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2870,7 +2861,7 @@ HDAE5000_AcLanguageText1Proc_Msg201:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg201_LangDE
 	pushw HDAE5000_LangMsg_201_EN@hi16
-	pushw	0x4da6
+	pushw	HDAE5000_LangMsg_201_EN@lo16		; low half of HDAE5000_LangMsg_201_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2879,7 +2870,7 @@ HDAE5000_AcLanguageText1Proc_Msg201_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg201_LangFR
 	pushw	HDAE5000_LangMsg_201_DE@hi16
-	pushw	0x4daa
+	pushw	HDAE5000_LangMsg_201_DE@lo16		; low half of HDAE5000_LangMsg_201_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2888,7 +2879,7 @@ HDAE5000_AcLanguageText1Proc_Msg201_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_201_FR@hi16
-	pushw	0x4db0
+	pushw	HDAE5000_LangMsg_201_FR@lo16		; low half of HDAE5000_LangMsg_201_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2898,7 +2889,7 @@ HDAE5000_AcLanguageText1Proc_Msg202:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg202_LangDE
 	pushw HDAE5000_LangMsg_202_EN@hi16
-	pushw	0x4db4
+	pushw	HDAE5000_LangMsg_202_EN@lo16		; low half of HDAE5000_LangMsg_202_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2907,7 +2898,7 @@ HDAE5000_AcLanguageText1Proc_Msg202_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg202_LangFR
 	pushw	HDAE5000_LangMsg_202_DE@hi16
-	pushw	0x4db8
+	pushw	HDAE5000_LangMsg_202_DE@lo16		; low half of HDAE5000_LangMsg_202_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2916,7 +2907,7 @@ HDAE5000_AcLanguageText1Proc_Msg202_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_202_FR@hi16
-	pushw	0x4dbc
+	pushw	HDAE5000_LangMsg_202_FR@lo16		; low half of HDAE5000_LangMsg_202_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2926,7 +2917,7 @@ HDAE5000_AcLanguageText1Proc_Msg203:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg203_LangDE
 	pushw HDAE5000_LangMsg_203_EN@hi16
-	pushw	0x4dc0
+	pushw	HDAE5000_LangMsg_203_EN@lo16		; low half of HDAE5000_LangMsg_203_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2935,7 +2926,7 @@ HDAE5000_AcLanguageText1Proc_Msg203_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg203_LangFR
 	pushw	HDAE5000_LangMsg_203_DE@hi16
-	pushw	0x4dc8
+	pushw	HDAE5000_LangMsg_203_DE@lo16		; low half of HDAE5000_LangMsg_203_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2944,7 +2935,7 @@ HDAE5000_AcLanguageText1Proc_Msg203_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_203_FR@hi16
-	pushw	0x4dd0
+	pushw	HDAE5000_LangMsg_203_FR@lo16		; low half of HDAE5000_LangMsg_203_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2954,7 +2945,7 @@ HDAE5000_AcLanguageText1Proc_Msg206:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg206_LangDE
 	pushw HDAE5000_LangMsg_206_EN@hi16
-	pushw	0x4dd8
+	pushw	HDAE5000_LangMsg_206_EN@lo16		; low half of HDAE5000_LangMsg_206_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2963,7 +2954,7 @@ HDAE5000_AcLanguageText1Proc_Msg206_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg206_LangFR
 	pushw	HDAE5000_LangMsg_206_DE@hi16
-	pushw	0x4dea
+	pushw	HDAE5000_LangMsg_206_DE@lo16		; low half of HDAE5000_LangMsg_206_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2972,7 +2963,7 @@ HDAE5000_AcLanguageText1Proc_Msg206_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_206_FR@hi16
-	pushw	0x4dfc
+	pushw	HDAE5000_LangMsg_206_FR@lo16		; low half of HDAE5000_LangMsg_206_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2982,7 +2973,7 @@ HDAE5000_AcLanguageText1Proc_Msg207:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg207_LangDE
 	pushw HDAE5000_LangMsg_207_EN@hi16
-	pushw	0x4e10
+	pushw	HDAE5000_LangMsg_207_EN@lo16		; low half of HDAE5000_LangMsg_207_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2991,7 +2982,7 @@ HDAE5000_AcLanguageText1Proc_Msg207_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg207_LangFR
 	pushw	HDAE5000_LangMsg_207_DE@hi16
-	pushw	0x4e1e
+	pushw	HDAE5000_LangMsg_207_DE@lo16		; low half of HDAE5000_LangMsg_207_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -3000,7 +2991,7 @@ HDAE5000_AcLanguageText1Proc_Msg207_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_207_FR@hi16
-	pushw	0x4e2c
+	pushw	HDAE5000_LangMsg_207_FR@lo16		; low half of HDAE5000_LangMsg_207_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -3010,7 +3001,7 @@ HDAE5000_AcLanguageText1Proc_Msg208:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg208_LangDE
 	pushw HDAE5000_LangMsg_208_EN@hi16
-	pushw	0x4e3a
+	pushw	HDAE5000_LangMsg_208_EN@lo16		; low half of HDAE5000_LangMsg_208_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -3019,7 +3010,7 @@ HDAE5000_AcLanguageText1Proc_Msg208_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg208_LangFR
 	pushw	HDAE5000_LangMsg_208_DE@hi16
-	pushw	0x4e48
+	pushw	HDAE5000_LangMsg_208_DE@lo16		; low half of HDAE5000_LangMsg_208_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -3028,7 +3019,7 @@ HDAE5000_AcLanguageText1Proc_Msg208_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_208_FR@hi16
-	pushw	0x4e56
+	pushw	HDAE5000_LangMsg_208_FR@lo16		; low half of HDAE5000_LangMsg_208_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -3038,7 +3029,7 @@ HDAE5000_AcLanguageText1Proc_Msg209:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg209_LangDE
 	pushw HDAE5000_LangMsg_209_EN@hi16
-	pushw	0x4e64
+	pushw	HDAE5000_LangMsg_209_EN@lo16		; low half of HDAE5000_LangMsg_209_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -3047,7 +3038,7 @@ HDAE5000_AcLanguageText1Proc_Msg209_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg209_LangFR
 	pushw	HDAE5000_LangMsg_209_DE@hi16
-	pushw	0x4e74
+	pushw	HDAE5000_LangMsg_209_DE@lo16		; low half of HDAE5000_LangMsg_209_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -3056,7 +3047,7 @@ HDAE5000_AcLanguageText1Proc_Msg209_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_209_FR@hi16
-	pushw	0x4e84
+	pushw	HDAE5000_LangMsg_209_FR@lo16		; low half of HDAE5000_LangMsg_209_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -3066,7 +3057,7 @@ HDAE5000_AcLanguageText1Proc_Msg210:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg210_LangDE
 	pushw HDAE5000_LangMsg_210_EN@hi16
-	pushw	0x4e94
+	pushw	HDAE5000_LangMsg_210_EN@lo16		; low half of HDAE5000_LangMsg_210_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -3075,7 +3066,7 @@ HDAE5000_AcLanguageText1Proc_Msg210_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg210_LangFR
 	pushw	HDAE5000_LangMsg_210_DE@hi16
-	pushw	0x4ea0
+	pushw	HDAE5000_LangMsg_210_DE@lo16		; low half of HDAE5000_LangMsg_210_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -3084,7 +3075,7 @@ HDAE5000_AcLanguageText1Proc_Msg210_LangFR:
 	cpw	(xsp+4), 0x0003
 	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_210_FR@hi16
-	pushw	0x4eaa
+	pushw	HDAE5000_LangMsg_210_FR@lo16		; low half of HDAE5000_LangMsg_210_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -3094,7 +3085,7 @@ HDAE5000_AcLanguageText1Proc_Msg211:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg211_LangDE
 	pushw HDAE5000_LangMsg_211_EN@hi16
-	pushw	0x4eb6
+	pushw	HDAE5000_LangMsg_211_EN@lo16		; low half of HDAE5000_LangMsg_211_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -3103,7 +3094,7 @@ HDAE5000_AcLanguageText1Proc_Msg211_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg211_LangFR
 	pushw	HDAE5000_LangMsg_211_DE@hi16
-	pushw	0x4ee0
+	pushw	HDAE5000_LangMsg_211_DE@lo16		; low half of HDAE5000_LangMsg_211_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -3112,7 +3103,7 @@ HDAE5000_AcLanguageText1Proc_Msg211_LangFR:
 	cpw	(xsp+4), 0x0003
 	jr	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_211_FR@hi16
-	pushw	0x4f26
+	pushw	HDAE5000_LangMsg_211_FR@lo16		; low half of HDAE5000_LangMsg_211_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -3122,7 +3113,7 @@ HDAE5000_AcLanguageText1Proc_Msg212:
 	cpw	(xsp+4), 0x0001
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg212_LangDE
 	pushw HDAE5000_LangMsg_212_EN@hi16
-	pushw	0x4f56
+	pushw	HDAE5000_LangMsg_212_EN@lo16		; low half of HDAE5000_LangMsg_212_EN
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -3131,7 +3122,7 @@ HDAE5000_AcLanguageText1Proc_Msg212_LangDE:
 	cpw	(xsp+4), 0x0002
 	jr	nz, HDAE5000_AcLanguageText1Proc_Msg212_LangFR
 	pushw	HDAE5000_LangMsg_212_DE@hi16
-	pushw	0x4f82
+	pushw	HDAE5000_LangMsg_212_DE@lo16		; low half of HDAE5000_LangMsg_212_DE
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -3140,7 +3131,7 @@ HDAE5000_AcLanguageText1Proc_Msg212_LangFR:
 	cpw	(xsp+4), 0x0003
 	jr	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_212_FR@hi16
-	pushw	0x4faa
+	pushw	HDAE5000_LangMsg_212_FR@lo16		; low half of HDAE5000_LangMsg_212_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -3148,7 +3139,7 @@ HDAE5000_AcLanguageText1Proc_Msg212_LangFR:
 	jr	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_NoMessage:
 	pushw HDAE5000_LangMsg_NoMessage@hi16
-	pushw	0x4fce
+	pushw	HDAE5000_LangMsg_NoMessage@lo16		; low half of HDAE5000_LangMsg_NoMessage
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
@@ -3733,7 +3724,7 @@ HDAE5000_LyricBoxProc_Ev01CA0005_Join:
 	ld	wa, (0x230766:24)
 	pushw wa
 	pushw HDAE5000_Fmt_03i_i@hi16
-	pushw	0x50a4
+	pushw	HDAE5000_Fmt_03i_i@lo16		; low half of HDAE5000_Fmt_03i_i
 	lda xwa, (0x230756:24)
 	push xwa
 	call HDAE5000_SPrintf
@@ -3950,22 +3941,22 @@ HDAE5000_Lyrics_PlayToPosition:
 	ld xiz, xwa			; XIZ = param struct ptr
 
 	; --- Compute sector count, check limits ---
-	ld xbc, (0x230810:24); XBC = (0x230868)
+	ld xbc, (0x230810:24); XBC = (0x230810)
 	ld xwa, (xiz + 4)		; XWA = param[4]
 	call HDAE5000_Multiply		; target tick = (0x230868) * (XWA+4)
-	cp (2295820:24), xhl; cp (0x230864), XHL
+	cp (2295820:24), xhl; cp (0x23080c), XHL
 	jrl z, .Lfo_epilogue		; same tick as last time: nothing to do
-	ld (0x23080c:24), xhl; (0x230864) = XHL
+	ld (0x23080c:24), xhl; (0x23080c) = XHL
 	ld xwa, (0x230444:24); XWA = (0x230444)
-	cp xwa, (2295820:24); cp XWA, (0x230864)
+	cp xwa, (2295820:24); cp XWA, (0x23080c)
 	jrl ugt, .Lfo_epilogue		; running tick already past it: exit
 	cpw (2294836:24), 0		; end-of-track flag
 	jrl nz, .Lfo_epilogue		; if abort, exit
 	ldw (xsp + 6), 0		; iteration counter = 0
 
 	; --- next event ---
-.Lfo_loop:				; 0x28D70E
-	ld wa, (0x230814:24)		; WA = (0x23086C): position of the last event
+.Lfo_loop:
+	ld wa, (0x230814:24)		; WA = (0x230814): position of the last event
 	extz xwa
 	push xwa			; push offset arg
 	ldw wa, 124			; WA = 0x7C
@@ -3980,7 +3971,7 @@ HDAE5000_Lyrics_PlayToPosition:
 
 	; --- event found: advance, dispatch on its meta type ---
 	ld wa, iz
-	add (2295828:24), wa; (0x23086C) += IZ
+	add (2295828:24), wa; (0x230814) += IZ
 	incw 1, (xsp + 6)		; iteration counter++
 	ld wa, (HDAE5000_RAM_LyricEvent:24)
 	cp wa, 126			; type 0x7E?
@@ -3991,12 +3982,12 @@ HDAE5000_Lyrics_PlayToPosition:
 	jrl nz, .Lfo_end_iter		; other types: ignored
 
 	; --- type 0x05 (lyric): CR / LF end the line ---
-	cp (0x230610:24), 0x0d; cp (0x230636), 0x0D
+	cp (0x230610:24), 0x0d; cp (0x230610), 0x0D
 	jr z, .Lfo_type5_newline
-	cp (0x230610:24), 0x0a; cp (0x230636), 0x0A
+	cp (0x230610:24), 0x0a; cp (0x230610), 0x0A
 	jrl nz, .Lfo_string_handler	; not newline → string handler
 
-.Lfo_type5_newline:			; 0x28D768
+.Lfo_type5_newline:
 	ldw (0x2304e4:24), 0x0000		; (0x2304E4) = 0: column
 	cp (0x2304ee:24), 0x02; cp (0x2304EE), 2
 	jr nc, .Lfo_file_delete		; from the third line on: scroll
@@ -4004,13 +3995,13 @@ HDAE5000_Lyrics_PlayToPosition:
 	jrl t, .Lfo_epilogue
 
 	; --- parse error: print the fault message ---
-.Lfo_display:				; 0x28D77F
+.Lfo_display:
 	pushm (xsp + 6)		; push iteration counter
 	pushw_da 0x72, 0x07, 0x23	; pushw (0x2307B6)
 	push xiz			; push result
 	pushw HDAE5000_Fmt_Fault_No_Lyrics_loaded_o@hi16			; width -- high half of HDAE5000_Fmt_Fault_No_Lyrics_loaded_o
-	pushw	0x50e0
-	lda xwa, (0x230690:24); &0x2306B6
+	pushw	HDAE5000_Fmt_Fault_No_Lyrics_loaded_o@lo16		; low half of HDAE5000_Fmt_Fault_No_Lyrics_loaded_o
+	lda xwa, (0x230690:24); &0x230690
 	push xwa
 	call HDAE5000_SPrintf
 	lda xsp, (xsp + 16)		; pop 16 bytes
@@ -4025,16 +4016,16 @@ HDAE5000_Lyrics_PlayToPosition:
 	jrl t, .Lfo_epilogue
 
 	; --- scroll the window one line, refill the last ---
-.Lfo_file_delete:			; 0x28D7BB
-	ld bc, (0x230818:24); BC = (0x230870)
+.Lfo_file_delete:
+	ld bc, (0x230818:24); BC = (0x230818)
 	ld wa, 1:i3
 	calr HDAE5000_Lyrics_FillLines
 	ld xiz, xhl
 	ld (0x2304f0:24), 0x00; (0x2304F0) = 0
 	cp xiz, 0
 	jr le, .Lfo_skip_iz_store1
-	ld (0x230818:24), iz; (0x230870) = IZ
-.Lfo_skip_iz_store1:			; 0x28D7DA
+	ld (0x230818:24), iz; (0x230818) = IZ
+.Lfo_skip_iz_store1:
 	cp (xsp + 8), 1		; check display flag
 	jr nz, .Lfo_after_vtable1
 	; Vtable call: update display
@@ -4045,21 +4036,21 @@ HDAE5000_Lyrics_PlayToPosition:
 	ld xbc, EVT_HDAE_LYRIC_ALL_DRAW		; 0x01CA0008
 	ld xde, 0:i3
 	call (xhl)
-.Lfo_after_vtable1:			; 0x28D7FD
+.Lfo_after_vtable1:
 	jrl t, .Lfo_epilogue
 
 	; --- syllable: append to the line ---
-.Lfo_string_handler:			; 0x28D800
-	lda xwa, (0x230610:24); &0x230636
+.Lfo_string_handler:
+	lda xwa, (0x230610:24); &0x230610
 	push xwa
 	call HDAE5000_StrLen
 	inc 4, xsp			; pop 8 bytes
 	ld (xsp + 4), hl		; save strlen result
 	cp hl, 34
 	jrl gt, .Lfo_epilogue		; if > 39, exit
-	lda xwa, (0x230610:24); &0x230636
+	lda xwa, (0x230610:24); &0x230610
 	push xwa
-	lda xwa, (0x23051a:24)		; &0x23051E: syllable copy
+	lda xwa, (0x23051a:24)		; &0x23051A: syllable copy
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp			; pop stack frame
@@ -4075,15 +4066,15 @@ HDAE5000_Lyrics_PlayToPosition:
 	inc 1, (2295022:24); (0x2304EE)++
 	jr t, .Lfo_after_trunc
 
-.Lfo_file_delete2:			; 0x28D84C
-	ld bc, (0x230818:24); BC = (0x230870)
+.Lfo_file_delete2:
+	ld bc, (0x230818:24); BC = (0x230818)
 	ld wa, 1:i3
 	calr HDAE5000_Lyrics_FillLines
 	ld xiz, xhl
 	cp xiz, 0
 	jr le, .Lfo_skip_iz_store2
-	ld (0x230818:24), iz; (0x230870) = IZ
-.Lfo_skip_iz_store2:			; 0x28D865
+	ld (0x230818:24), iz; (0x230818) = IZ
+.Lfo_skip_iz_store2:
 	cp (xsp + 8), 1		; check display flag
 	jr nz, .Lfo_after_trunc
 	; Vtable call
@@ -4096,7 +4087,7 @@ HDAE5000_Lyrics_PlayToPosition:
 	call (xhl)
 
 	; --- highlight: pixel position of the syllable in the line ---
-.Lfo_after_trunc:			; 0x28D888
+.Lfo_after_trunc:
 	ld a, (0x2304ee:24); A = (0x2304EE)
 	extz wa
 	add wa, 16			; WA += 0x10
@@ -4105,22 +4096,22 @@ HDAE5000_Lyrics_PlayToPosition:
 	extz wa
 	ld bc, wa			; BC = index
 	add bc, bc			; BC *= 2
-	lda xde, (0x230774:24); XDE = &0x2307B8
+	lda xde, (0x230774:24); XDE = &0x230774
 	ld wa, (0x2304e4:24); WA = (0x2304E4)
 	extz xwa
 	add xwa, xwa			; XWA *= 2
-	ld xhl, 2295744		; XHL = 0x0023080E
+	ld xhl, 2295744		; XHL = 0x002307C0
 	add xhl, xwa			; XHL += XWA*2
 	ld wa, (xhl)			; WA = offset table[position]
 	add	wa, (xde+bc)	; WA += (XDE + BC)
-	ld (0x230822:24), wa; (0x23087A) = WA
+	ld (0x230822:24), wa; (0x230822) = WA
 	; (0x23087C) = width entry of the current line
 	ld a, (0x2304ee:24); A = (0x2304EE)
 	extz wa
-	lda xbc, (0x2307ba:24); XBC = &0x230808
+	lda xbc, (0x2307ba:24); XBC = &0x2307ba
 	ld	a, (xbc+wa)	; A = (XBC + WA)
 	extz wa
-	ld (0x230824:24), wa; (0x23087C) = WA
+	ld (0x230824:24), wa; (0x230824) = WA
 	; Update position
 	ld wa, (xsp + 4)		; WA = strlen
 	add (2295012:24), wa; (0x2304E4) += strlen
@@ -4137,31 +4128,31 @@ HDAE5000_Lyrics_PlayToPosition:
 	call (xhl)
 
 	; --- Check if at end position ---
-.Lfo_after_vtable3:			; 0x28D90D
+.Lfo_after_vtable3:
 	ld wa, (0x2304e4:24); WA = (0x2304E4)
-	cp wa, (2295832:24); cp WA, (0x230870)
+	cp wa, (2295832:24); cp WA, (0x230818)
 	jrl nz, .Lfo_end_iter		; if not at end, continue
 	; Check terminator byte
-	cp (0x230826:24), 0x0d; cp (0x230882), 0x0D
+	cp (0x230826:24), 0x0d; cp (0x230826), 0x0D
 	jr nz, .Lfo_not_cr
-	cp (0x230826:24), 0x0a; cp (0x230882), 0x0A
+	cp (0x230826:24), 0x0a; cp (0x230826), 0x0A
 	jrl z, .Lfo_end_iter		; if CR+LF, end iteration
-.Lfo_not_cr:				; 0x28D92B
+.Lfo_not_cr:
 	ldw (0x2304e4:24), 0x0000		; (0x2304E4) = 0: column
 	cp (0x2304ee:24), 0x02; cp (0x2304EE), 2
 	jr nc, .Lfo_file_delete3
 	inc 1, (2295022:24)
 	jrl t, .Lfo_end_iter
 
-.Lfo_file_delete3:			; 0x28D942
-	ld bc, (0x230818:24); BC = (0x230870)
+.Lfo_file_delete3:
+	ld bc, (0x230818:24); BC = (0x230818)
 	ld wa, 1:i3
 	calr HDAE5000_Lyrics_FillLines
 	ld xiz, xhl
 	cp xiz, 0
 	jr le, .Lfo_skip_iz_store3
-	ld (0x230818:24), iz; (0x230870) = IZ
-.Lfo_skip_iz_store3:			; 0x28D95B
+	ld (0x230818:24), iz; (0x230818) = IZ
+.Lfo_skip_iz_store3:
 	cp (xsp + 8), 1
 	jrl nz, .Lfo_end_iter
 	; Vtable call
@@ -4175,39 +4166,39 @@ HDAE5000_Lyrics_PlayToPosition:
 	jrl t, .Lfo_end_iter
 
 	; --- type 0x58: time signature ---
-.Lfo_type_58:				; 0x28D982
+.Lfo_type_58:
 	ld a, (0x230610:24)		; A = numerator
-	ld (0x230760:24), a; (0x2307A4) = A
+	ld (0x230760:24), a; (0x230760) = A
 	cp (0x230611:24), 0x01		; denominator as a power of two
 	jr nz, .Lfo_58_check2
-	ld (0x230764:24), 0x02; (0x2307A8) = 2
-	ldw (0x23076a:24), 0x0018; (0x2307AE) = 0x0018
-.Lfo_58_check2:				; 0x28D9A1
+	ld (0x230764:24), 0x02; (0x230764) = 2
+	ldw (0x23076a:24), 0x0018; (0x23076A) = 0x0018
+.Lfo_58_check2:
 	cp (0x230611:24), 0x02
 	jr nz, .Lfo_58_check3
 	ld (0x230764:24), 0x04
 	ldw (0x23076a:24), 0x000c; 0x000C
-.Lfo_58_check3:				; 0x28D9B6
+.Lfo_58_check3:
 	cp (0x230611:24), 0x03
 	jr nz, .Lfo_58_check4
 	ld (0x230764:24), 0x08
 	ldw (0x23076a:24), 0x0006; 0x0006
-.Lfo_58_check4:				; 0x28D9CB
+.Lfo_58_check4:
 	cp (0x230611:24), 0x04
 	jr nz, .Lfo_58_done_checks
 	ld (0x230764:24), 0x10; 0x10
 	ldw (0x23076a:24), 0x0003; 0x0003
-.Lfo_58_done_checks:			; 0x28D9E0
+.Lfo_58_done_checks:
 	; print "%i/%i"
-	ld a, (0x230764:24); A = (0x2307A8)
+	ld a, (0x230764:24); A = (0x230764)
 	extz wa
 	pushw wa
-	ld a, (0x230760:24); A = (0x2307A4)
+	ld a, (0x230760:24); A = (0x230760)
 	extz wa
 	pushw wa
 	pushw HDAE5000_Fmt_i_i@hi16			; width -- high half of HDAE5000_Fmt_i_i
-	pushw	0x511e
-	lda xwa, (0x23074c:24); &0x230790
+	pushw	HDAE5000_Fmt_i_i@lo16		; low half of HDAE5000_Fmt_i_i
+	lda xwa, (0x23074c:24); &0x23074c
 	push xwa
 	call HDAE5000_SPrintf
 	lda xsp, (xsp + 12)		; pop 12 bytes
@@ -4222,16 +4213,16 @@ HDAE5000_Lyrics_PlayToPosition:
 	jr t, .Lfo_end_iter
 
 	; --- type 0x7E: chord name when the data starts with '0' ---
-.Lfo_type_7E:				; 0x28DA22
-	ld a, (0x230610:24); A = (0x230636)
+.Lfo_type_7E:
+	ld a, (0x230610:24); A = (0x230610)
 	cp a, 48
 	jr nz, .Lfo_end_iter
 	; print "Chord : %s" with the rest of the data
-	lda xwa, (0x230611:24); &0x230637
+	lda xwa, (0x230611:24); &0x230611
 	push xwa
 	pushw HDAE5000_Fmt_Chord_s@hi16			; width -- high half of HDAE5000_Fmt_Chord_s
-	pushw	0x5126
-	lda xwa, (0x230690:24); &0x2306B6
+	pushw	HDAE5000_Fmt_Chord_s@lo16		; low half of HDAE5000_Fmt_Chord_s
+	lda xwa, (0x230690:24); &0x230690
 	push xwa
 	call HDAE5000_SPrintf
 	lda xsp, (xsp + 12)		; pop 12 bytes
@@ -4245,15 +4236,15 @@ HDAE5000_Lyrics_PlayToPosition:
 	call (xhl)
 
 	; --- End of iteration: check loop condition ---
-.Lfo_end_iter:				; 0x28DA62
+.Lfo_end_iter:
 	ld xwa, (0x230444:24)		; XWA = (0x230444): running tick
-	cp xwa, (2295820:24); cp XWA, (0x230864)
+	cp xwa, (2295820:24); cp XWA, (0x23080c)
 	jr ugt, .Lfo_epilogue		; if past limit, exit
 	cp xiz, 0
 	jrl gt, .Lfo_loop		; if XIZ > 0, continue loop
 
 	; --- Epilogue ---
-.Lfo_epilogue:				; 0x28DA77
+.Lfo_epilogue:
 	pop xiz
 	inc 6, xsp
 	ret
@@ -4273,10 +4264,10 @@ HDAE5000_Lyrics_PlayToPosition:
 	; LyricBackColorCheck handlers, which read those bytes).
 	; Sets (0x23A19A) = 1.  Returns XHL = 0.
 	; ============================================================
-HDAE5000_Lyrics_ResetState:	; 0x28DA7B (381 bytes)
+HDAE5000_Lyrics_ResetState:	; (381 bytes)
 
 	; --- clear the line state ---
-	ld (0x23a104:24), 0x01		; (0x23A19A) = 1
+	ld (0x23a104:24), 0x01		; (0x23A104) = 1
 	ldw (0x2304e0:24), 0x0000; (0x2304E0) = 0
 	ldw (0x2304e2:24), 0x0000; (0x2304E2) = 0
 	ldw (0x2304e4:24), 0x0000; (0x2304E4) = 0
@@ -4288,8 +4279,8 @@ HDAE5000_Lyrics_ResetState:	; 0x28DA7B (381 bytes)
 	; blank the text lines: 240 bytes at 0x23A0AA
 
 	; --- clear the event/position state ---
-	ldw (0x230818:24), 0x0000; (0x230870) = 0
-	ldw (0x230814:24), 0x0000; (0x23086C) = 0
+	ldw (0x230818:24), 0x0000; (0x230818) = 0
+	ldw (0x230814:24), 0x0000; (0x230814) = 0
 	ldw (0x230438:24), 0x0000; (0x230438) = 0
 	ldw (0x23043a:24), 0x0000; (0x23043A) = 0
 	ldw (0x23043c:24), 0x0000; (0x23043C) = 0
@@ -4306,22 +4297,22 @@ HDAE5000_Lyrics_ResetState:	; 0x28DA7B (381 bytes)
 	ld xwa, 0:i3
 	ld (0x230454:24), xwa; (0x230454) = 0
 	ld xwa, 4294967295		; 0xFFFFFFFF
-	ld (0x23080c:24), xwa; (0x230864) = 0xFFFFFFFF
-	ldw (0x23081a:24), 0x0000; (0x230872) = 0
-	ldw (0x23081c:24), 0x0000; (0x230874) = 0
+	ld (0x23080c:24), xwa; (0x23080c) = 0xFFFFFFFF
+	ldw (0x23081a:24), 0x0000; (0x23081a) = 0
+	ldw (0x23081c:24), 0x0000; (0x23081c) = 0
 	ld xwa, 0:i3
-	ld (0x23081e:24), xwa; (0x230876) = 0
+	ld (0x23081e:24), xwa; (0x23081e) = 0
 
 	; --- info line = "Info" ---
 	pushw HDAE5000_Str_Info@hi16		; high half of HDAE5000_Str_Info
-	pushw	0x5140
-	lda xwa, (0x230690:24)		; &0x2306B6: info line
+	pushw	HDAE5000_Str_Info@lo16		; low half of HDAE5000_Str_Info
+	lda xwa, (0x230690:24)		; &0x230690: info line
 	push xwa
 	call HDAE5000_StrCpy
 	inc	8, xsp
 
-	ldw (0x230766:24), 0x0001; (0x2307AA) = 1
-	ldw (0x230768:24), 0x0000; (0x2307AC) = 0
+	ldw (0x230766:24), 0x0001; (0x230766) = 1
+	ldw (0x230768:24), 0x0000; (0x230768) = 0
 
 	; --- (0x230868) = division / 12 ---
 	ld wa, (HDAE5000_RAM_LyricBuffer+12:24)		; WA = TLhd division (big-endian)
@@ -4333,7 +4324,7 @@ HDAE5000_Lyrics_ResetState:	; 0x28DA7B (381 bytes)
 	ld (0x230810:24), xhl		; (0x230868) = division / 12
 	; --- LyricForeColor (0x229DAD) -> palette code (0x23087E) ---
 	; --- LyricBackColor (0x229DAE) -> palette code (0x230880) ---
-.Lfs_type2_done:			; 0x28DBF5
+.Lfs_type2_done:
 	ld xhl, 0:i3		; return 0
 	ret
 
@@ -4353,7 +4344,7 @@ HDAE5000_Lyrics_ResetState:	; 0x28DA7B (381 bytes)
 	; Then SendEvent(lyric box (0x23A19E), 0x01CA0005, 0), reset the
 	; parse state and position on the first event.  Returns 0.
 	; ============================================================
-HDAE5000_Lyrics_ReadSongInfo:	; 0x28DBF8 (564 bytes)
+HDAE5000_Lyrics_ReadSongInfo:	; (564 bytes)
 
 	; --- meta 0x02 (copyright) -> 0x230736, <= 50 chars ---
 	ld xwa, 0:i3
@@ -4366,44 +4357,44 @@ HDAE5000_Lyrics_ReadSongInfo:	; 0x28DBF8 (564 bytes)
 	jr le, .Lfl_default1		; if result <= 0, use default
 
 	; found: copy, at most 50
-	cpw (2294838:24), 36; cp (0x230436), 0x32
+	cpw (2294838:24), 36; cp (0x230436), 0x24
 	jr c, .Lfl_short1
 	pushw 36
-	lda xwa, (0x230610:24); &0x230636
+	lda xwa, (0x230610:24); &0x230610
 	push xwa
-	lda xwa, (0x230710:24); &0x230736
+	lda xwa, (0x230710:24); &0x230710
 	push xwa
 	call HDAE5000_StrNCpy
 	lda xsp, (xsp + 10)		; pop 10 bytes
-	ld (0x230733:24), 0x00; (0x230767) = null terminator
+	ld (0x230733:24), 0x00; (0x230733) = null terminator
 	jr t, .Lfl_block2
-.Lfl_short1:				; 0x28DC34
+.Lfl_short1:
 	; Copy actual length
 	ld wa, (0x230436:24); WA = (0x230436)
 	pushw wa
-	lda xwa, (0x230610:24); &0x230636
+	lda xwa, (0x230610:24); &0x230610
 	push xwa
-	lda xwa, (0x230710:24); &0x230736
+	lda xwa, (0x230710:24); &0x230710
 	push xwa
 	call HDAE5000_StrNCpy
 	lda xsp, (xsp + 10)		; pop 10 bytes
 	; Null-terminate at actual length
 	ld wa, (0x230436:24); WA = (0x230436)
 	extz xwa
-	ld xbc, 2295568			; XBC = 0x00230736
+	ld xbc, 2295568			; XBC = 0x00230710
 	add xbc, xwa
 	ld (xbc), 0			; *(base + len) = 0
 	jr t, .Lfl_block2
-.Lfl_default1:				; 0x28DC60
+.Lfl_default1:
 	; not found: "No Copyright Info"
 	pushw HDAE5000_Str_NoCopyrightInfo@hi16		; high half of HDAE5000_Str_NoCopyrightInfo
-	pushw	0x5164
-	lda xwa, (0x230710:24); &0x230736
+	pushw	HDAE5000_Str_NoCopyrightInfo@lo16		; low half of HDAE5000_Str_NoCopyrightInfo
+	lda xwa, (0x230710:24); &0x230710
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp			; pop stack frame
 
-.Lfl_block2:				; 0x28DC72
+.Lfl_block2:
 	; --- meta 0x03 (track name) -> 0x230768, <= 40 chars ---
 	ld xwa, 0:i3
 	push xwa
@@ -4415,44 +4406,44 @@ HDAE5000_Lyrics_ReadSongInfo:	; 0x28DBF8 (564 bytes)
 	jr le, .Lfl_default2		; if result <= 0, use default
 
 	; found: copy, at most 40
-	cpw (2294838:24), 23; cp (0x230436), 0x28
+	cpw (2294838:24), 23; cp (0x230436), 0x17
 	jr c, .Lfl_short2
 	; Truncate at 40
 	pushw 23
-	lda xwa, (0x230610:24); &0x230636
+	lda xwa, (0x230610:24); &0x230610
 	push xwa
-	lda xwa, (0x230734:24); &0x230768
+	lda xwa, (0x230734:24); &0x230734
 	push xwa
 	call HDAE5000_StrNCpy
 	lda xsp, (xsp + 10)
-	ld (0x23074a:24), 0x00; (0x23078F) = null terminator
+	ld (0x23074a:24), 0x00; (0x23074A) = null terminator
 	jr t, .Lfl_block3
-.Lfl_short2:				; 0x28DCAE
+.Lfl_short2:
 	; Copy actual length
 	ld wa, (0x230436:24); WA = (0x230436)
 	pushw wa
-	lda xwa, (0x230610:24); &0x230636
+	lda xwa, (0x230610:24); &0x230610
 	push xwa
-	lda xwa, (0x230734:24); &0x230768
+	lda xwa, (0x230734:24); &0x230734
 	push xwa
 	call HDAE5000_StrNCpy
 	lda xsp, (xsp + 10)
 	ld wa, (0x230436:24); WA = (0x230436)
 	extz xwa
-	ld xbc, 2295604			; XBC = 0x00230768
+	ld xbc, 2295604			; XBC = 0x00230734
 	add xbc, xwa
 	ld (xbc), 0			; *(base + len) = 0
 	jr t, .Lfl_block3
-.Lfl_default2:				; 0x28DCDA
+.Lfl_default2:
 	; not found: "No Song Title" (into 0x230736)
 	pushw HDAE5000_Str_NoSongTitle@hi16		; high half of HDAE5000_Str_NoSongTitle
-	pushw	0x5176
-	lda xwa, (0x230710:24); &0x230736
+	pushw	HDAE5000_Str_NoSongTitle@lo16		; low half of HDAE5000_Str_NoSongTitle
+	lda xwa, (0x230710:24); &0x230710
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp			; pop stack frame
 
-.Lfl_block3:				; 0x28DCEC
+.Lfl_block3:
 	; --- meta 0x58 (time signature) ---
 	ld xwa, 0:i3
 	push xwa
@@ -4465,8 +4456,8 @@ HDAE5000_Lyrics_ReadSongInfo:	; 0x28DBF8 (564 bytes)
 
 	; found: nn = numerator, dd = log2(denominator)
 	ld a, (0x230610:24)		; numerator
-	ld (0x230760:24), a; (0x2307A4) = A
-	ld (0x230762:24), a; (0x2307A6) = A
+	ld (0x230760:24), a; (0x230760) = A
+	ld (0x230762:24), a; (0x230762) = A
 
 	; denominator 2^dd -> (0x2307A8), 48 / 2^dd -> (0x2307AE)/(0x2307B0):
 	cp (0x230611:24), 0x01		; dd = 1: /2
@@ -4474,44 +4465,44 @@ HDAE5000_Lyrics_ReadSongInfo:	; 0x28DBF8 (564 bytes)
 	ld (0x230764:24), 0x02
 	ldw (0x23076a:24), 0x0018
 	ldw (0x23076c:24), 0x0018
-.Lfl_audio_ch2:				; 0x28DD2E
+.Lfl_audio_ch2:
 	cp (0x230611:24), 0x02		; dd = 2: /4
 	jr nz, .Lfl_audio_ch3
 	ld (0x230764:24), 0x04
 	ldw (0x23076a:24), 0x000c
 	ldw (0x23076c:24), 0x000c
-.Lfl_audio_ch3:				; 0x28DD4A
+.Lfl_audio_ch3:
 	cp (0x230611:24), 0x03		; dd = 3: /8
 	jr nz, .Lfl_audio_ch4
 	ld (0x230764:24), 0x08
 	ldw (0x23076a:24), 0x0006
 	ldw (0x23076c:24), 0x0006
-.Lfl_audio_ch4:				; 0x28DD66
+.Lfl_audio_ch4:
 	cp (0x230611:24), 0x04		; dd = 4: /16
 	jr nz, .Lfl_audio_done
 	ld (0x230764:24), 0x10
 	ldw (0x23076a:24), 0x0003
 	ldw (0x23076c:24), 0x0003
 	jr t, .Lfl_audio_done
-.Lfl_audio_default:			; 0x28DD84
+.Lfl_audio_default:
 	; not found: 4/4, 12
-	ld (0x230762:24), 0x04; (0x2307A6) = 4
-	ld (0x230760:24), 0x04; (0x2307A4) = 4
-	ld (0x230764:24), 0x04; (0x2307A8) = 4
-	ldw (0x23076a:24), 0x000c; (0x2307AE) = 12
-	ldw (0x23076c:24), 0x000c; (0x2307B0) = 12
+	ld (0x230762:24), 0x04; (0x230762) = 4
+	ld (0x230760:24), 0x04; (0x230760) = 4
+	ld (0x230764:24), 0x04; (0x230764) = 4
+	ldw (0x23076a:24), 0x000c; (0x23076A) = 12
+	ldw (0x23076c:24), 0x000c; (0x23076C) = 12
 
-.Lfl_audio_done:			; 0x28DDA4
+.Lfl_audio_done:
 	; --- print "%i/%i" into 0x230790 ---
-	ld a, (0x230764:24); A = (0x2307A8)
+	ld a, (0x230764:24); A = (0x230764)
 	extz wa
 	pushw wa
-	ld a, (0x230760:24); A = (0x2307A4)
+	ld a, (0x230760:24); A = (0x230760)
 	extz wa
 	pushw wa
 	pushw HDAE5000_Fmt_i_i_File_Load@hi16			; 0x2E -- high half of HDAE5000_Fmt_i_i_File_Load
-	pushw	0x5184
-	lda xwa, (0x23074c:24); &0x230790
+	pushw	HDAE5000_Fmt_i_i_File_Load@lo16		; low half of HDAE5000_Fmt_i_i_File_Load
+	lda xwa, (0x23074c:24); &0x23074c
 	push xwa
 	call HDAE5000_SPrintf
 	lda xsp, (xsp + 12)		; pop 12 bytes
@@ -4531,7 +4522,7 @@ HDAE5000_Lyrics_ReadSongInfo:	; 0x28DBF8 (564 bytes)
 	ldw (0x230434:24), 0x0000; (0x230434) = 0
 	ldw (0x230436:24), 0x0000; (0x230436) = 0
 	ld (0x2304f0:24), 0x00; (0x2304F0) = 0
-	ldw (0x230816:24), 0x0000; (0x23086E) = 0
+	ldw (0x230816:24), 0x0000; (0x230816) = 0
 	ld xwa, 0:i3
 	ld (0x230440:24), xwa; (0x230440) = 0
 
@@ -4561,10 +4552,10 @@ HDAE5000_Lyrics_ReadSongInfo:	; 0x28DBF8 (564 bytes)
 	; last event used.  Callers: HDAE5000_Lyrics_PlayToPosition
 	; (scroll) and HDAE5000_LyricBoxProc (initial fill).
 	; ============================================================
-HDAE5000_Lyrics_FillLines:	; 0x28DE2C (579 bytes)
+HDAE5000_Lyrics_FillLines:	; (579 bytes)
 
 	; --- Prologue: allocate stack frame, save registers ---
-	lda xsp, (xsp - 54)		; allocate 58 bytes of locals
+	lda xsp, (xsp - 54)		; allocate 54 bytes of locals
 	pushw iz			; save IZ
 	ld (xsp + 54), bc		; save the event position
 	ld xbc, (0x230440:24); XBC = (0x230440)
@@ -4579,11 +4570,11 @@ HDAE5000_Lyrics_FillLines:	; 0x28DE2C (579 bytes)
 	ldw (xsp + 2), 0		; slot = 0
 	cpw (xsp + 2), 5		; while slot < 5
 	jr ge, .Lfd_copy_done
-.Lfd_copy_loop:				; 0x28DE53
+.Lfd_copy_loop:
 	; second argument: line[slot+1] = 0x23A0D2 + 40*slot
 	ld wa, (xsp + 2)
 	muls wa, 35
-	lda xbc, (0x23a055:24); XBC = 0x23A0D2
+	lda xbc, (0x23a055:24); XBC = 0x23A055
 	exts xwa
 	add xwa, xbc
 	push xwa
@@ -4612,13 +4603,13 @@ HDAE5000_Lyrics_FillLines:	; 0x28DE2C (579 bytes)
 	incw 1, (xsp + 2)		; slot++
 	cpw (xsp + 2), 5
 	jr lt, .Lfd_copy_loop
-.Lfd_copy_done:				; 0x28DEAC
+.Lfd_copy_done:
 	ld c, 5:opc		; C = 5: fill only the last line
 	jr t, .Lfd_setup_loop
-.Lfd_else:				; 0x28DEB0
+.Lfd_else:
 	ld c, 0:opc			; C = 0
 
-.Lfd_setup_loop:			; 0x28DEB2
+.Lfd_setup_loop:
 	; --- fill lines C..5 ---
 	ld wa, (xsp + 54)		; WA = saved BC param
 	ld (xsp + 4), wa		; local[4] = event position
@@ -4628,7 +4619,7 @@ HDAE5000_Lyrics_FillLines:	; 0x28DE2C (579 bytes)
 	cpw (xsp + 2), 6		; if count >= 6
 	jrl ge, .Lfd_epilogue		;   skip to epilogue
 
-.Lfd_outer_loop:			; 0x28DEC7
+.Lfd_outer_loop:
 	; --- next lyric event (meta 0x05) ---
 	ld (xsp + 18), 0		; line being built at local[0x12] = ""
 	ld wa, (xsp + 4)		; WA = entry index
@@ -4646,7 +4637,7 @@ HDAE5000_Lyrics_FillLines:	; 0x28DE2C (579 bytes)
 	jrl le, .Lfd_no_entry
 
 	; CR: end of line
-	cp (0x230610:24), 0x0d; cp (0x230636), 0x0D
+	cp (0x230610:24), 0x0d; cp (0x230610), 0x0D
 	jr nz, .Lfd_try_0a		; if != 0x0D, try next type
 
 	; --- CR: store the line built so far ---
@@ -4663,7 +4654,7 @@ HDAE5000_Lyrics_FillLines:	; 0x28DE2C (579 bytes)
 	call HDAE5000_StrCpy			; memcpy
 	inc 8, xsp			; pop stack frame
 
-.Lfd_strlen_store:			; 0x28DF1D
+.Lfd_strlen_store:
 	; store the line length, next line
 	ld wa, (xsp + 2)		; slot
 	muls wa, 35
@@ -4681,7 +4672,7 @@ HDAE5000_Lyrics_FillLines:	; 0x28DE2C (579 bytes)
 	cpw (xsp + 2), 6		; if slot < 6
 	jrl lt, .Lfd_outer_loop		;   continue outer loop
 
-.Lfd_epilogue:				; 0x28DF50
+.Lfd_epilogue:
 	; --- Restore state and return ---
 	ld xwa, (xsp + 10)
 	ld (0x230440:24), xwa; restore (0x230440)
@@ -4693,14 +4684,14 @@ HDAE5000_Lyrics_FillLines:	; 0x28DE2C (579 bytes)
 	lda xsp, (xsp + 54)		; deallocate stack frame
 	ret
 
-.Lfd_try_0a:				; 0x28DF6A
+.Lfd_try_0a:
 	; --- LF: an empty line ---
-	cp (0x230610:24), 0x0a; cp (0x230636), 0x0A
+	cp (0x230610:24), 0x0a; cp (0x230610), 0x0A
 	jr nz, .Lfd_other_type
 	ld xwa, (xsp + 6)		; result
 	ld (xsp + 4), wa		; save
 	pushw HDAE5000_Str_Empty_File_Delete@hi16			; max = 0x2E -- high half of HDAE5000_Str_Empty_File_Delete
-	pushw	0x518c
+	pushw	HDAE5000_Str_Empty_File_Delete@lo16		; low half of HDAE5000_Str_Empty_File_Delete
 	ld wa, (xsp + 6)		; slot (offset)
 	muls wa, 35
 	lda xbc, (HDAE5000_RAM_LyricLines:24)
@@ -4711,32 +4702,32 @@ HDAE5000_Lyrics_FillLines:	; 0x28DE2C (579 bytes)
 	inc 8, xsp			; pop frame
 	jr t, .Lfd_strlen_store		; goto strlen/store
 
-.Lfd_other_type:			; 0x28DF97
+.Lfd_other_type:
 	; --- syllable: append if the line stays <= 39 chars ---
-	lda xwa, (0x230610:24); XWA = &0x230636
+	lda xwa, (0x230610:24); XWA = &0x230610
 	push xwa
 	call HDAE5000_StrLen			; strlen(0x230636)
 	inc 4, xsp			; pop 4 bytes
-	cp hl, 34			; if strlen <= 39
+	cp hl, 34			; if strlen <= 34
 	jr ule, .Lfd_short_string	;   handle short string
 	; syllable alone longer than a line: skip it
 	ld xwa, (xsp + 6)		; result
 	ld (xsp + 4), wa
 	jrl t, .Lfd_outer_loop
 
-.Lfd_short_string:			; 0x28DFB2
+.Lfd_short_string:
 	lda xwa, (xsp + 18)		; &local[0x12]
 	push xwa
 	call HDAE5000_StrLen			; strlen(&local)
 	ld iz, hl			; IZ = local strlen
-	lda xwa, (0x230610:24); &0x230636
+	lda xwa, (0x230610:24); &0x230610
 	push xwa
 	call HDAE5000_StrLen			; strlen(0x230636)
 	inc 8, xsp			; pop frame
 	add hl, iz			; HL = combined length
-	cp hl, 34			; if combined > 39
+	cp hl, 34			; if combined > 34
 	jr ugt, .Lfd_tail_copy		; does not fit: store the line
-	lda xwa, (0x230610:24); &0x230636
+	lda xwa, (0x230610:24); &0x230610
 	push xwa
 	lda xwa, (xsp + 22)		; &local[0x12] (offset by push)
 	push xwa
@@ -4745,13 +4736,13 @@ HDAE5000_Lyrics_FillLines:	; 0x28DE2C (579 bytes)
 	ld xwa, (xsp + 6)		; result
 	ld (xsp + 4), wa		; save
 
-.Lfd_no_entry:				; 0x28DFE6
+.Lfd_no_entry:
 	; --- no event (0): empty line ---
 	ld xwa, (xsp + 6)		; XWA = result
 	or xwa, xwa			; test zero
 	jr nz, .Lfd_check_positive	; if nonzero, check further
 	pushw HDAE5000_Str_Empty_File_Delete_2@hi16			; max = 0x2E -- high half of HDAE5000_Str_Empty_File_Delete_2
-	pushw	0x518e
+	pushw	HDAE5000_Str_Empty_File_Delete_2@lo16		; low half of HDAE5000_Str_Empty_File_Delete_2
 	ld wa, (xsp + 6)		; slot (offset)
 	muls wa, 35
 	lda xbc, (HDAE5000_RAM_LyricLines:24)
@@ -4762,12 +4753,12 @@ HDAE5000_Lyrics_FillLines:	; 0x28DE2C (579 bytes)
 	inc 8, xsp			; pop frame
 	jrl t, .Lfd_strlen_store	; goto strlen/store
 
-.Lfd_check_positive:			; 0x28E00D
+.Lfd_check_positive:
 	ld xwa, (xsp + 6)		; XWA = result
 	cp xwa, 0
 	jrl gt, .Lfd_outer_loop + 4	; if result > 0, continue
 
-.Lfd_tail_copy:				; 0x28E019
+.Lfd_tail_copy:
 	; --- store the built line ---
 	lda xwa, (xsp + 18)		; &local[0x12]
 	push xwa
@@ -4808,7 +4799,7 @@ HDAE5000_Lyrics_FillLines:	; 0x28DE2C (579 bytes)
 	; Callers: HDAE5000_Lyrics_PlayToPosition, _ReadSongInfo,
 	; _FillLines.
 	; ============================================================
-HDAE5000_Lyrics_FindEvent:	; 0x28E06F (280 bytes)
+HDAE5000_Lyrics_FindEvent:	; (280 bytes)
 	dec 8, xsp			; allocate 8 bytes
 	pushw iz
 	ld (xsp + 4), de		; DE: events to skip / -1 / -2
@@ -4955,7 +4946,7 @@ HDAE5000_Lyrics_FindEvent:	; 0x28E06F (280 bytes)
 	;   0xFFFB event runs past 20457
 	; QIZH holds flag bit 0.
 	; ============================================================
-HDAE5000_Lyrics_ParseEvent:	; 0x28E187 (772 bytes)
+HDAE5000_Lyrics_ParseEvent:	; (772 bytes)
 
 	; --- Prologue ---
 	dec 4, xsp			; allocate 8 bytes
@@ -4969,11 +4960,11 @@ HDAE5000_Lyrics_ParseEvent:	; 0x28E187 (772 bytes)
 	inc 4, wa		; WA += 4
 	cp wa, 20457			; start+4 within addressable range?
 	jr ule, .Lff_start
-	ldw (0x230772:24), 0xffff; (0x2307B6) = 0xFFFF — error
+	ldw (0x230772:24), 0xffff; (0x230772) = 0xFFFF — error
 	ld hl, 0:i3
 	jrl t, .Lff_epilogue
 
-.Lff_start:				; 0x28E1AA
+.Lff_start:
 	ld iz, (xsp + 4)		; IZ = event position
 	ld a, (xsp + 6)		; A = flags
 	and a, 1			; isolate bit 0
@@ -4981,7 +4972,7 @@ HDAE5000_Lyrics_ParseEvent:	; 0x28E187 (772 bytes)
 	jr nz, .Lff_skip_backup_flag
 	ldib_erp 0xfb, 1		; QIZH = 1: flag bit 0 set
 
-.Lff_skip_backup_flag:			; 0x28E1BA
+.Lff_skip_backup_flag:
 	cpib_erp 0xfb, 1		; check QIZH == 1
 	jr nz, .Lff_skip_backup_save
 	; Save current position before overwriting
@@ -4990,17 +4981,17 @@ HDAE5000_Lyrics_ParseEvent:	; 0x28E187 (772 bytes)
 	ld wa, (xsp + 4)
 	ld (0x230438:24), wa		; (0x230438) = event position
 
-.Lff_skip_backup_save:			; 0x28E1D1
+.Lff_skip_backup_save:
 	ld wa, iz
 	calr HDAE5000_Lyrics_ReadVarLen
-	ld (0x230808:24), xhl		; (0x230860) = delta time
+	ld (0x230808:24), xhl		; (0x230808) = delta time
 	cp xhl, 4294967295		; == 0xFFFFFFFF?
 	jr nz, .Lff_after_space_check
-	ldw (0x230772:24), 0xfffe; (0x2307B6) = 0xFFFE — error
+	ldw (0x230772:24), 0xfffe; (0x230772) = 0xFFFE — error
 	ld hl, 0:i3
 	jrl t, .Lff_epilogue
 
-.Lff_after_space_check:			; 0x28E1EF
+.Lff_after_space_check:
 	cpib_erp 0xfb, 1
 	jr nz, .Lff_skip_backup_copy
 	; flag bit 0: keep the previous tick values
@@ -5008,13 +4999,13 @@ HDAE5000_Lyrics_ParseEvent:	; 0x28E187 (772 bytes)
 	ld (0x230448:24), xwa; (0x230448) = XWA
 	ld xwa, (0x23044c:24); XWA = (0x23044C)
 	ld (0x230454:24), xwa; (0x230454) = XWA
-	ld xwa, (0x230808:24); XWA = (0x230860)
+	ld xwa, (0x230808:24); XWA = (0x230808)
 	ld (0x23044c:24), xwa; (0x23044C) = XWA
 
-.Lff_skip_backup_copy:			; 0x28E212
-	ld xwa, (0x230808:24); XWA = (0x230860)
+.Lff_skip_backup_copy:
+	ld xwa, (0x230808:24); XWA = (0x230808)
 	add (0x230440:24), xwa                ; (0x230440) += XWA
-	add iz, (2295814:24); IZ += (0x23085E)
+	add iz, (2295814:24); IZ += (0x230806)
 	ld wa, iz
 	inc 1, iz			; IZ++
 	; status byte at buffer[pos + 22]
@@ -5028,7 +5019,7 @@ HDAE5000_Lyrics_ParseEvent:	; 0x28E187 (772 bytes)
 	ld hl, 0:i3
 	jrl t, .Lff_epilogue
 
-.Lff_byte2_read:			; 0x28E245
+.Lff_byte2_read:
 	ld wa, iz
 	inc 1, iz			; IZ++
 	extz xwa
@@ -5043,33 +5034,33 @@ HDAE5000_Lyrics_ParseEvent:	; 0x28E187 (772 bytes)
 	; end of track: set the end flag, return 0
 	ldw (0x230434:24), 0x0001		; (0x230434) = 1: end of track
 	ld xwa, 4294967295		; 0xFFFFFFFF
-	ld (0x230808:24), xwa; (0x230860) = -1
+	ld (0x230808:24), xwa; (0x230808) = -1
 	ld hl, 0:i3
 	jrl t, .Lff_epilogue
 
-.Lff_after_type_check:			; 0x28E280
+.Lff_after_type_check:
 	ld wa, iz
 	calr HDAE5000_Lyrics_ReadVarLen
 	ld xwa, xhl
 	cp xwa, 4294967295		; == 0xFFFFFFFF?
 	jr nz, .Lff_after_format_calc
-	ldw (0x230772:24), 0xfffc; (0x2307B6) = 0xFFFC — error
+	ldw (0x230772:24), 0xfffc; (0x230772) = 0xFFFC — error
 	ld hl, 0:i3
 	jrl t, .Lff_epilogue
 
-.Lff_after_format_calc:			; 0x28E29B
-	add iz, (2295814:24); IZ += (0x23085E)
+.Lff_after_format_calc:
+	add iz, (2295814:24); IZ += (0x230806)
 	ld (0x230436:24), hl		; (0x230436) = data length
 	; the event must end inside the buffer
 	ld wa, iz
 	add wa, (2294838:24); WA += (0x230436)
 	cp wa, 20457
 	jr ule, .Lff_after_limit2
-	ldw (0x230772:24), 0xfffb; (0x2307B6) = 0xFFFB — error
+	ldw (0x230772:24), 0xfffb; (0x230772) = 0xFFFB — error
 	ld hl, 0:i3
 	jrl t, .Lff_epilogue
 
-.Lff_after_limit2:			; 0x28E2BE
+.Lff_after_limit2:
 	ld wa, iz
 	add wa, (2294838:24); WA += (0x230436)
 	ld (0x23043a:24), wa; (0x23043A) = WA — end position
@@ -5080,22 +5071,22 @@ HDAE5000_Lyrics_ParseEvent:	; 0x28E187 (772 bytes)
 	ld (0x230450:24), xhl; (0x230450) = XHL
 	cp xhl, 4294967295
 	jr nz, .Lff_after_error3
-	ldw (0x230772:24), 0xfffa; (0x2307B6) = 0xFFFA — error
+	ldw (0x230772:24), 0xfffa; (0x230772) = 0xFFFA — error
 	ld hl, 0:i3
 	jrl t, .Lff_epilogue
 
-.Lff_after_error3:			; 0x28E2ED
+.Lff_after_error3:
 	; byte at next event + its delta size + 4 -> (0x230882)
 	ld wa, iz
 	add wa, (2294838:24); WA += (0x230436)
-	add wa, (2295814:24); WA += (0x23085E)
+	add wa, (2295814:24); WA += (0x230806)
 	inc 4, wa			; WA += 4
 	extz xwa
 	add xwa, 22
 	ld xbc, HDAE5000_RAM_LyricBuffer
 	add xbc, xwa
 	ld a, (xbc)
-	ld (0x230826:24), a; (0x230882) = A
+	ld (0x230826:24), a; (0x230826) = A
 
 	; --- flag bit 0: data -> 0x230458 (<= 127) ---
 	cpib_erp 0xfb, 1
@@ -5125,7 +5116,7 @@ HDAE5000_Lyrics_ParseEvent:	; 0x28E187 (772 bytes)
 	ld (xbc), 0			; null terminate
 	jr t, .Lff_after_copy1
 
-.Lff_long_copy1:			; 0x28E35F
+.Lff_long_copy1:
 	pushw 127			; max = 0x7F
 	ld wa, iz
 	extz xwa
@@ -5139,7 +5130,7 @@ HDAE5000_Lyrics_ParseEvent:	; 0x28E187 (772 bytes)
 	lda xsp, (xsp + 10)
 	ld (0x2304d7:24), 0x00; (0x2304D7) = 0 — null terminate at 127
 
-.Lff_after_copy1:			; 0x28E387
+.Lff_after_copy1:
 	; --- (0x230444) = tick of the next event ---
 	ld xwa, (0x230440:24); XWA = (0x230440)
 	add xwa, (2294864:24); XWA += (0x230450)
@@ -5162,19 +5153,19 @@ HDAE5000_Lyrics_ParseEvent:	; 0x28E187 (772 bytes)
 	ld xbc, HDAE5000_RAM_LyricBuffer
 	add xbc, xwa
 	push xbc
-	lda xwa, (0x230610:24); &0x230636
+	lda xwa, (0x230610:24); &0x230610
 	push xwa
 	call HDAE5000_MemCopy			; strcpy_len
 	lda xsp, (xsp + 10)
 	; Null-terminate
 	ld wa, (0x230436:24)
 	extz xwa
-	ld xbc, 2295312			; 0x00230636
+	ld xbc, 2295312			; 0x00230610
 	add xbc, xwa
 	ld (xbc), 0
 	jr t, .Lff_after_copy2
 
-.Lff_long_copy2:			; 0x28E3E3
+.Lff_long_copy2:
 	pushw 127
 	ld wa, iz
 	extz xwa
@@ -5182,18 +5173,18 @@ HDAE5000_Lyrics_ParseEvent:	; 0x28E187 (772 bytes)
 	ld xbc, HDAE5000_RAM_LyricBuffer
 	add xbc, xwa
 	push xbc
-	lda xwa, (0x230610:24); &0x230636
+	lda xwa, (0x230610:24); &0x230610
 	push xwa
 	call HDAE5000_MemCopy
 	lda xsp, (xsp + 10)
-	ld (0x23068f:24), 0x00; (0x2306B5) = 0
+	ld (0x23068f:24), 0x00; (0x23068F) = 0
 
-.Lff_after_copy2:			; 0x28E40B
+.Lff_after_copy2:
 	ld hl, (0x23043a:24); HL = (0x23043A) — end position
 	sub hl, (xsp + 4)		; HL = event size
 
 	; --- Epilogue ---
-.Lff_epilogue:				; 0x28E413
+.Lff_epilogue:
 	pop xiz
 	inc 4, xsp
 	ret
@@ -5205,7 +5196,7 @@ HDAE5000_Lyrics_ParseEvent:	; 0x28E187 (772 bytes)
 	; Input: WA = sector index
 	; Output: HL = 16-bit value from two consecutive table entries
 	; ============================================================
-HDAE5000_Read_Table_Word:		; 0x28E417
+HDAE5000_Read_Table_Word:
 	ld bc, wa
 	inc 1, bc			; BC = WA + 1
 	extz xbc
@@ -5233,7 +5224,7 @@ HDAE5000_Read_Table_Word:		; 0x28E417
 	; Input: WA = sector index
 	; Output: XHL = 24-bit value from 3 consecutive table entries
 	; ============================================================
-HDAE5000_Read_Table_Multi:		; 0x28E44B
+HDAE5000_Read_Table_Multi:
 	ld bc, wa
 	extz xbc
 	add xbc, 22
@@ -5245,7 +5236,7 @@ HDAE5000_Read_Table_Multi:		; 0x28E44B
 	ld ix, 0:i3
 	cp ix, 3:i3
 	ret nc				; if count >= 3, return early
-.Lff_h2_loop:				; 0x28E468
+.Lff_h2_loop:
 	ld bc, wa
 	add bc, ix			; BC = WA + IX
 	extz xbc
@@ -5268,7 +5259,7 @@ HDAE5000_Read_Table_Multi:		; 0x28E44B
 	; Output: XHL = the value, or -1 when no byte of the first four
 	; ends it; (0x23085E) = number of bytes read.
 	; ============================================================
-HDAE5000_Lyrics_ReadVarLen:	; 0x28E48B (87 bytes)
+HDAE5000_Lyrics_ReadVarLen:	; (87 bytes)
 	ld xhl, 0:i3			; XHL = accumulator (decoded value)
 	ld ix, 0:i3			; IX = byte index (0-3)
 	cp ix, 4:i3			; guard: max 4 bytes per VarInt
@@ -5298,7 +5289,7 @@ HDAE5000_Lyrics_ReadVarLen:	; 0x28E48B (87 bytes)
 	; Continuation=0 → VarInt complete, return decoded value
 	ld wa, ix			; WA = bytes consumed (0-based)
 	inc 1, wa			; WA = byte count (1-based)
-	ld (0x230806:24), wa; store bytes consumed to (0x23085E)
+	ld (0x230806:24), wa; store bytes consumed to (0x230806)
 	ret		; return XHL = value
 .Lcds_continue:
 	sll xhl, 7			; make room for next 7-bit chunk
@@ -5598,9 +5589,9 @@ HDAE5000_FDFileSelectProc:
 	call (xhl)
 
 	pushw HDAE5000_Str_Empty_FDFileSelectProc@hi16
-	pushw	0x519c
-	pushw	HDAE5000_RAM_FdVolumeLabel@hi16
-	pushw	HDAE5000_RAM_FdVolumeLabel@lo16		; low half of HDAE5000_RAM_FdVolumeLabel
+	pushw	HDAE5000_Str_Empty_FDFileSelectProc@lo16		; low half of HDAE5000_Str_Empty_FDFileSelectProc
+	pushw	0x0023
+	pushw	0x0e1e
 	call HDAE5000_StrCpy
 	inc 8, xsp			; clean 8 bytes
 
@@ -5972,7 +5963,7 @@ HDAE5000_FDFileSelectProc:
 	pushw 0x0023
 	pushw 0x0e1e
 	pushw HDAE5000_Fmt_s_s@hi16
-	pushw	0x5210
+	pushw	HDAE5000_Fmt_s_s@lo16		; low half of HDAE5000_Fmt_s_s
 	lda xwa, (xsp + 0x16)
 	push xwa
 	call HDAE5000_SPrintf
@@ -5992,7 +5983,7 @@ HDAE5000_FDFileSelectProc:
 	pushw 0x0023
 	pushw 0x0e1e
 	pushw HDAE5000_Fmt_s_s_FDFileSelectProc@hi16
-	pushw	0x5216
+	pushw	HDAE5000_Fmt_s_s_FDFileSelectProc@lo16		; low half of HDAE5000_Fmt_s_s_FDFileSelectProc
 	lda xwa, (xsp + 0x16)
 	push xwa
 	call HDAE5000_SPrintf
@@ -6038,7 +6029,7 @@ HDAE5000_FDFileSelectProc:
 	push xwa
 	call HDAE5000_MemFill
 	pushw HDAE5000_ROM_HEADER@hi16
-	pushw HDAE5000_ROM_HEADER@lo16
+	pushw HDAE5000_ROM_HEADER@lo16		; low half of HDAE5000_ROM_HEADER
 	lda xwa, (HDAE5000_RAM_FdLyricHasMid:24)
 	push xwa
 	call HDAE5000_MemFill
@@ -6283,7 +6274,7 @@ HDAE5000_FDFileSelectProc:
 	push xwa			; format buffer
 	call HDAE5000_StrCpy
 	pushw	HDAE5000_Str_TLX_FDFileSelectProc@hi16
-	pushw	0x521c
+	pushw	HDAE5000_Str_TLX_FDFileSelectProc@lo16		; low half of HDAE5000_Str_TLX_FDFileSelectProc
 	lda xwa, (xsp + 0x16)
 	push xwa
 	call HDAE5000_StrCat
@@ -6361,7 +6352,7 @@ HDAE5000_FdLyricList_Scan:
 	cp l, 2:i3			; if L != 2 either
 	jrl nz, .Lpb_exit		;   return
 
-.Lpb_continue:				; 0x28EF8E
+.Lpb_continue:
 	; --- Call vtable method at +0x0538 ---
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld xwa, (xwa + WS_RootFnTable)             ; XWA = (XWA + 0x0E0A)
@@ -6392,11 +6383,11 @@ HDAE5000_FdLyricList_Scan:
 	lda xsp, (xsp + 14)		; pop 14 bytes
 	jr t, .Lpb_after_path
 
-.Lpb_empty_path:			; 0x28EFD2
+.Lpb_empty_path:
 	ld (HDAE5000_RAM_FdVolumeLabel:24), 0x00
 
-.Lpb_after_path:			; 0x28EFD8
-	ld (0x230e26:24), 0x00; (0x230E82) = '\0'
+.Lpb_after_path:
+	ld (0x230e26:24), 0x00; (0x230E26) = '\0'
 	lda xwa, (HDAE5000_RAM_FdVolumeLabel:24)
 	push xwa
 	call HDAE5000_StrLen			; strlen(path buffer)
@@ -6406,13 +6397,13 @@ HDAE5000_FdLyricList_Scan:
 
 	; Append separator
 	pushw HDAE5000_Str_Chr202D3E@hi16			; max = 0x2E -- high half of HDAE5000_Str_Chr202D3E
-	pushw	0x5246
-	pushw	HDAE5000_RAM_FdVolumeLabel@hi16
-	pushw	HDAE5000_RAM_FdVolumeLabel@lo16		; low half of HDAE5000_RAM_FdVolumeLabel
+	pushw	HDAE5000_Str_Chr202D3E@lo16		; low half of HDAE5000_Str_Chr202D3E
+	pushw	0x0023
+	pushw	0x0e1e
 	call HDAE5000_StrCat
 	inc 8, xsp
 
-.Lpb_no_separator:			; 0x28F000
+.Lpb_no_separator:
 	; --- Call vtable method at +0x0094 to scan directory ---
 	lda xwa, (HDAE5000_Str_Chr2A2E2A:24); XWA = 0x2E5D54 (param)
 	ld xde, xwa
@@ -6432,12 +6423,12 @@ HDAE5000_FdLyricList_Scan:
 
 	jr t, .Lpb_validate		; always jump to validation
 
-.Lpb_retry:				; 0x28F02C
+.Lpb_retry:
 	lda xwa, (xsp + 14)
 	calr HDAE5000_FdLyricList_AddTlx
 	ld (xsp + 4), xhl
 
-.Lpb_validate:				; 0x28F035
+.Lpb_validate:
 	; --- Call vtable method at +0x0098 (validate/next) ---
 	lda xwa, (xsp + 8)		; XWA = &local[0x08]
 	ld xbc, xwa
@@ -6461,7 +6452,7 @@ HDAE5000_FdLyricList_Scan:
 	cp iz, (HDAE5000_RAM_FdLyricCount:24)	; entry count
 	jrl nc, .Lpb_loop_done		; if IZ >= count, done
 
-.Lpb_entry_loop:			; 0x28F06E
+.Lpb_entry_loop:
 	; Compute entry address: 0x230884 + IZ*9
 	ld wa, iz
 	extz xwa
@@ -6477,7 +6468,7 @@ HDAE5000_FdLyricList_Scan:
 
 	; Append separator string
 	pushw	HDAE5000_Str_TTX@hi16
-	pushw	0x524e
+	pushw	HDAE5000_Str_TTX@lo16		; low half of HDAE5000_Str_TTX
 	lda xwa, (xsp+286)
 	push xwa
 	call HDAE5000_StrCat
@@ -6525,7 +6516,7 @@ HDAE5000_FdLyricList_Scan:
 	push xwa
 	call HDAE5000_StrCpy			; memcpy
 	pushw	HDAE5000_Str_MID@hi16
-	pushw	0x5258
+	pushw	HDAE5000_Str_MID@lo16		; low half of HDAE5000_Str_MID
 	lda xwa, (xsp+286)
 	push xwa
 	call HDAE5000_StrCat			; strcat
@@ -6550,14 +6541,14 @@ HDAE5000_FdLyricList_Scan:
 	ld (xbc), 1			; flag[IZ] = 1
 	jr t, .Lpb_entry_next
 
-.Lpb_set_zero:				; 0x28F153
+.Lpb_set_zero:
 	ld wa, iz
 	extz xwa
 	ld xbc, HDAE5000_RAM_FdLyricHasMid
 	add xbc, xwa
 	ld (xbc), 0			; flag[IZ] = 0
 
-.Lpb_entry_next:			; 0x28F161
+.Lpb_entry_next:
 	; --- Call vtable method at +0x00AC (advance) ---
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld xwa, (xwa + WS_HamaFnTable)
@@ -6569,14 +6560,14 @@ HDAE5000_FdLyricList_Scan:
 	cp iz, (HDAE5000_RAM_FdLyricCount:24)
 	jrl c, .Lpb_entry_loop		; if IZ < count, loop
 
-.Lpb_loop_done:				; 0x28F17C
+.Lpb_loop_done:
 	; --- Call vtable method at +0x053C (finalize) ---
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld xwa, (xwa + WS_RootFnTable)
 	ld xhl, (xwa + RootFn_WakeUpMainTask)             ; XHL = (XWA + 0x053C)
 	call (xhl)
 
-.Lpb_exit:				; 0x28F18D
+.Lpb_exit:
 	; --- Epilogue: return result and deallocate ---
 	ld xhl, (xsp + 4)		; XHL = result
 	pop xiz				; restore XIZ
@@ -6607,7 +6598,7 @@ HDAE5000_FdLyricList_AddTlx:
 	call HDAE5000_StrUpr			; validate
 	pushw 0x0004
 	pushw HDAE5000_Str_XLT@hi16
-	pushw	0x5262
+	pushw	HDAE5000_Str_XLT@lo16		; low half of HDAE5000_Str_XLT
 	lda xwa, (xsp + 0x4c)
 	push xwa
 	call HDAE5000_StrNCmp			; search/match
@@ -6760,7 +6751,7 @@ HDAE5000_FdLyricList_AddTlx:
 	; [INFERENCE] they read as file stems: ".TTX", ".MID" and "XLT." sit a
 	; few bytes earlier.  Nothing here concerns directories: the old name
 	; Dir_Event_Check was a misnomer.
-HDAE5000_LanguageTextReturn:	; 0x28F2F7
+HDAE5000_LanguageTextReturn:
 	cp xbc, EVT_GET_LANGUAGE_PTR
 	jr nz, .Ldec_no
 	lda xhl, (HDAE5000_TextPtrs_LANENG001_to_LANENG006:24)
@@ -6772,7 +6763,7 @@ HDAE5000_LanguageTextReturn:	; 0x28F2F7
 	; ============================================================
 	; Format + ROM region setup helper
 	; ============================================================
-HDAE5000_PPORT_Svc28_FlashXapFile:	; 0x28F308
+HDAE5000_PPORT_Svc28_FlashXapFile:
 	; PC-link service 28 (HDAE5000_PPORT_ServiceTable[28]; no trace banner):
 	; builds a descriptor on the stack -- "XAP" (0x2E5DC6), XBC, 0x280000,
 	; 0x2F0000 (this ROM's own range) -- and calls RAM 0x23FEB0 with it;
@@ -6783,7 +6774,7 @@ HDAE5000_PPORT_Svc28_FlashXapFile:	; 0x28F308
 	ld xiz, xbc			; save XBC in XIZ
 	ld (xsp + 0x18), xwa		; save arg1
 	pushw HDAE5000_Str_XAP@hi16
-	pushw	0x52bc
+	pushw	HDAE5000_Str_XAP@lo16		; low half of HDAE5000_Str_XAP
 	lda xwa, (xsp + 0x08)
 	push xwa
 	call HDAE5000_StrCpy
@@ -6804,7 +6795,7 @@ HDAE5000_PPORT_Svc28_FlashXapFile:	; 0x28F308
 	; Vtable helper: call method 0x0538 (flush), return HL=0
 	; ^ "flush" is not established: see the header below.
 	; ============================================================
-HDAE5000_PPORT_Svc29_MainHook0538:		; 0x28F343
+HDAE5000_PPORT_Svc29_MainHook0538:
 	; PC-link service 29: call the main-CPU hook 0x0E0A table +0x538 -- the
 	; one HDAE5000_LoadSong/SaveSong call before a long operation when their
 	; UI flag is 1 -- and return HL = 0.
@@ -6819,7 +6810,7 @@ HDAE5000_PPORT_Svc29_MainHook0538:		; 0x28F343
 	; Vtable helper: call method 0x053C (close), return HL=0
 	; ^ "close" is not established: see the header below.
 	; ============================================================
-HDAE5000_PPORT_Svc30_MainHook053C:		; 0x28F357
+HDAE5000_PPORT_Svc30_MainHook053C:
 	; PC-link service 30: the matching +0x53C hook (called after the
 	; operation); HL = 0.
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
@@ -6844,7 +6835,7 @@ HDAE5000_PPORT_Svc30_MainHook053C:		; 0x28F357
 	; Input: XWA = value to encode, XBC = output buffer pointer
 	; Output: XHL = number of bytes written (1-5)
 	; ============================================================
-HDAE5000_VarInt_Encode:		; 0x28F36B
+HDAE5000_VarInt_Encode:
 	dec 6, xsp			; allocate 6-byte temp buffer
 	ld xix, xwa			; XIX = value to encode
 	ld hl, 0:i3			; HL = byte count
@@ -6897,7 +6888,7 @@ HDAE5000_VarInt_Encode:		; 0x28F36B
 	; Output: XHL = decoded value, or 0xFFFFFFFF on error
 	; Side effect: stores bytes consumed to (XBC)
 	; ============================================================
-HDAE5000_VarInt_Decode:		; 0x28F3BD
+HDAE5000_VarInt_Decode:
 	ld xde, xwa			; XDE = data pointer
 	ld ix, 0:i3			; IX = byte index
 	ld xhl, 0:i3			; XHL = accumulator
@@ -7197,7 +7188,7 @@ HDAE5000_Get_Init_Flag:
 	; (EQU→inline label) HDAE5000_PPORT_Cmd16_DeleteFiles = 0x29659A
 	; (EQU→inline label) HDAE5000_PPORT_Cmd17_FormatHd = 0x296680
 
-HDAE5000_Boot_Init:	; 28F576h
+HDAE5000_Boot_Init:
 	push xiz
 	ld xiz, xwa	; XIZ = workspace pointer from main CPU
 
@@ -7329,7 +7320,7 @@ HDAE5000_Boot_Init__skip_hd_init:
 ;   0x28F90C  Display_Init - Display initialization
 ; ============================================================================
 
-HDAE5000_Frame_Handler:	; 28F662h
+HDAE5000_Frame_Handler:
 	; Frame handler main entry - called periodically from main loop
 	; 1. While a lyric box is open (HDAE5000_RAM_LyricBoxObj != -1): read the
 	;    main CPU's sequencer position through the pointers HDAE5000_Boot_Init
@@ -7389,7 +7380,7 @@ HDAE5000_Frame_Handler:	; 28F662h
 	ld xbc, EVT_HDAE_TICKS	; event 0x01CA0004: advance the lyrics
 	call (xhl)	; RootFn_ApPostEvent
 
-HDAE5000_Frame_Handler_Status:	; 28F6E0h
+HDAE5000_Frame_Handler_Status:
 	; Frame handler status check section
 	; Watches bit 2 of the main CPU's sqsrtc byte; acts when it falls to 0
 	;
@@ -7452,7 +7443,7 @@ HDAE5000_Frame_Handler_Status__init_display:
 	ld xde, 0:i3
 	call (xhl)
 
-HDAE5000_Frame_Handler_Exit:	; 28F781h
+HDAE5000_Frame_Handler_Exit:
 	; Exit frame handler by jumping to PPORT handler
 	jp HDAE5000_PPORT_ServicePending
 
@@ -7460,7 +7451,7 @@ HDAE5000_Frame_Handler_Exit:	; 28F781h
 ; Utility routines (0x28F785 - 0x2953E1)
 ; ----------------------------------------------------------------------------
 
-HDAE5000_Clear_Work_Buffer:	; 28F785h
+HDAE5000_Clear_Work_Buffer:
 	; Clear work buffer and copy initialization data from ROM
 	; Part 1: Clear 0xF52A bytes (62,762) at 0x22A000 using word operations
 	; Part 2: Copy 0x0C82 bytes (3,202) from ROM 0x2F94B2 to RAM 0x23952A
@@ -7470,7 +7461,7 @@ HDAE5000_Clear_Work_Buffer:	; 28F785h
 	;
 	; === Part 1: Clear work buffer ===
 	ld xde, HDAE5000_RAM_NamingText	; Destination = work buffer
-	ld xbc, 0xf4ce	; Count = 62,762 bytes
+	ld xbc, 0xf4ce	; Count = 62,670 bytes
 	ld ix, bc	; Save low word for odd byte check
 	srl xbc, 1	; srl 1, XBC  ; divide by 2 for word ops
 	jr z, HDAE5000_Clear_Work_Buffer__clear_done	; Skip if count was 0 or 1
@@ -7494,7 +7485,7 @@ HDAE5000_Clear_Work_Buffer__no_odd_byte:
 	; === Part 2: Copy init data from ROM to RAM ===
 	ld xde, 0x2394ce	; Destination = RAM init area
 	ld xhl, HDAE5000_DataSegmentImage	; Source = ROM init data
-	ld xbc, 0xc48	; Count = 3,202 bytes
+	ld xbc, 0xc48	; Count = 3,144 bytes
 	or xbc, xbc
 	jr z, HDAE5000_Clear_Work_Buffer__copy_done
 	ldir83	; ldir  ; copy bytes
@@ -7780,11 +7771,11 @@ HDAE5000_Dir_IsBlankName:
 	ld iz, wa		; IZ = tile index
 	ld	qiz, 0
 	pushw HDAE5000_Dir_IsBlankName_Str_Blank16@hi16		; push max length (47)
-	pushw	0x82d6
+	pushw	HDAE5000_Dir_IsBlankName_Str_Blank16@lo16		; low half of HDAE5000_Dir_IsBlankName_Str_Blank16
 	call HDAE5000_StrLen
 	pushw hl		; push reference length
 	pushw	HDAE5000_Dir_IsBlankName_Str_Blank16@hi16
-	pushw	0x82d6
+	pushw	HDAE5000_Dir_IsBlankName_Str_Blank16@lo16		; low half of HDAE5000_Dir_IsBlankName_Str_Blank16
 	ld wa, iz		; restore tile index
 	extz xwa		; zero-extend
 	sll xwa, 4		; XWA *= 16
@@ -7860,7 +7851,7 @@ HDAE5000_SongRecord_Address:
 	inc 4, xsp		; deallocate 4 bytes
 	ret
 
-HDAE5000_SongName_SetAndStore:	; 0x28FA56 (74 bytes)
+HDAE5000_SongName_SetAndStore:	; (74 bytes)
 	; Set the 26-byte name of song record (WA = dir, BC = song) from XDE,
 	; then HDAE5000_HD_StoreTables(stacked word).  No reference to it was
 	; found (scripts/analysis/hdae5000_reachability.py).
@@ -7947,12 +7938,12 @@ HDAE5000_Fls_IsBlankName:
 	ld iz, wa		; IZ = tile index
 	ldw (xsp + 2), 0x0000	; result = 0 (valid)
 	pushw HDAE5000_Fls_IsBlankName_Str_Blank16@hi16		; push max length (47)
-	pushw	0x82e8
+	pushw	HDAE5000_Fls_IsBlankName_Str_Blank16@lo16		; low half of HDAE5000_Fls_IsBlankName_Str_Blank16
 	call HDAE5000_StrLen
 	inc 4, xsp		; clean up 2 args
 	pushw hl		; push reference length
 	pushw HDAE5000_Fls_IsBlankName_Str_Blank16@hi16		; push max length
-	pushw	0x82e8
+	pushw	HDAE5000_Fls_IsBlankName_Str_Blank16@lo16		; low half of HDAE5000_Fls_IsBlankName_Str_Blank16
 	ld wa, iz		; restore tile index
 	calr HDAE5000_FlsRecord_Address	; XHL = tile address
 	push xhl		; push tile address (32-bit)
@@ -8050,7 +8041,7 @@ HDAE5000_FlsItem_SongRecord:
 ;   there are nine (0x2934C8-0x293C95), not eight.
 ; ============================================================================
 
-HDAE5000_FlsItem_IsSet:	; 0x28FBB1 (1497 bytes)
+HDAE5000_FlsItem_IsSet:	; (1497 bytes)
 	; Validate entry at coordinates; calculates table offset
 	; (= HL = 0 if item BC of FLS record WA is set -- both its dir+1 byte
 	; at 0x2257C2 and its song+1 byte at 0x2257E2 are non-zero -- else 0xFFFF)
@@ -11404,7 +11395,7 @@ HDAE5000_FdSong_CheckFiles:
 	push xwa
 	call HDAE5000_MemCopy
 	pushw	HDAE5000_FdSong_CheckFiles_Str_SEQ@hi16
-	pushw	0x8392
+	pushw	HDAE5000_FdSong_CheckFiles_Str_SEQ@lo16		; low half of HDAE5000_FdSong_CheckFiles_Str_SEQ
 	lda	xwa, (xsp+34)
 	push xwa
 	call HDAE5000_StrCpy
@@ -11428,7 +11419,7 @@ HDAE5000_FdSong_CheckFiles:
 	jrl	t, HDAE5000_FdSong_CheckFiles_Epilogue
 HDAE5000_FdSong_CheckFiles_Skip:
 	pushw HDAE5000_FdSong_CheckFiles_Str_SQF@hi16
-	pushw	0x8398
+	pushw	HDAE5000_FdSong_CheckFiles_Str_SQF@lo16		; low half of HDAE5000_FdSong_CheckFiles_Str_SQF
 	lda	xwa, (xsp+16)
 	push xwa
 	call HDAE5000_StrCpy
@@ -11455,7 +11446,7 @@ HDAE5000_FdSong_CheckFiles_Skip2:
 	bit	0x00, wa
 	jr	z, HDAE5000_FdSong_CheckFiles_Skip3
 	pushw HDAE5000_FdSong_CheckFiles_Str_LSW@hi16
-	pushw	0x839e
+	pushw	HDAE5000_FdSong_CheckFiles_Str_LSW@lo16		; low half of HDAE5000_FdSong_CheckFiles_Str_LSW
 	lda	xwa, (xsp+16)
 	push xwa
 	call HDAE5000_StrCpy
@@ -11489,7 +11480,7 @@ HDAE5000_FdSong_CheckFiles_Skip3:
 	bit	0x01, wa
 	jr	z, HDAE5000_FdSong_CheckFiles_Skip4
 	pushw HDAE5000_FdSong_CheckFiles_Str_PMT@hi16
-	pushw	0x83a8
+	pushw	HDAE5000_FdSong_CheckFiles_Str_PMT@lo16		; low half of HDAE5000_FdSong_CheckFiles_Str_PMT
 	lda	xwa, (xsp+16)
 	push xwa
 	call HDAE5000_StrCpy
@@ -11523,7 +11514,7 @@ HDAE5000_FdSong_CheckFiles_Skip4:
 	bit	0x02, wa
 	jr	z, HDAE5000_FdSong_CheckFiles_Skip5
 	pushw HDAE5000_FdSong_CheckFiles_Str_SQT@hi16
-	pushw	0x83b2
+	pushw	HDAE5000_FdSong_CheckFiles_Str_SQT@lo16		; low half of HDAE5000_FdSong_CheckFiles_Str_SQT
 	lda	xwa, (xsp+16)
 	push xwa
 	call HDAE5000_StrCpy
@@ -11557,7 +11548,7 @@ HDAE5000_FdSong_CheckFiles_Skip5:
 	bit	0x03, wa
 	jr	z, HDAE5000_FdSong_CheckFiles_Skip6
 	pushw HDAE5000_FdSong_CheckFiles_Str_CMP@hi16
-	pushw	0x83bc
+	pushw	HDAE5000_FdSong_CheckFiles_Str_CMP@lo16		; low half of HDAE5000_FdSong_CheckFiles_Str_CMP
 	lda	xwa, (xsp+16)
 	push xwa
 	call HDAE5000_StrCpy
@@ -11591,7 +11582,7 @@ HDAE5000_FdSong_CheckFiles_Skip6:
 	bit	0x04, wa
 	jr	z, HDAE5000_FdSong_CheckFiles_Skip7
 	pushw HDAE5000_FdSong_CheckFiles_Str_TM@hi16
-	pushw	0x83c6
+	pushw	HDAE5000_FdSong_CheckFiles_Str_TM@lo16		; low half of HDAE5000_FdSong_CheckFiles_Str_TM
 	lda	xwa, (xsp+16)
 	push xwa
 	call HDAE5000_StrCpy
@@ -11625,7 +11616,7 @@ HDAE5000_FdSong_CheckFiles_Skip7:
 	bit	0x05, wa
 	jr	z, HDAE5000_FdSong_CheckFiles_Skip8
 	pushw HDAE5000_FdSong_CheckFiles_Str_MSP@hi16
-	pushw	0x83ce
+	pushw	HDAE5000_FdSong_CheckFiles_Str_MSP@lo16		; low half of HDAE5000_FdSong_CheckFiles_Str_MSP
 	lda	xwa, (xsp+16)
 	push xwa
 	call HDAE5000_StrCpy
@@ -11659,7 +11650,7 @@ HDAE5000_FdSong_CheckFiles_Skip8:
 	bit	0x06, wa
 	jr	z, HDAE5000_FdSong_CheckFiles_Skip9
 	pushw HDAE5000_FdSong_CheckFiles_Str_RCM@hi16
-	pushw	0x83d8
+	pushw	HDAE5000_FdSong_CheckFiles_Str_RCM@lo16		; low half of HDAE5000_FdSong_CheckFiles_Str_RCM
 	lda	xwa, (xsp+16)
 	push xwa
 	call HDAE5000_StrCpy
@@ -11693,7 +11684,7 @@ HDAE5000_FdSong_CheckFiles_Skip9:
 	bit	0x07, wa
 	jr	z, HDAE5000_FdSong_CheckFiles_Skip10
 	pushw HDAE5000_FdSong_CheckFiles_Str_MD@hi16
-	pushw	0x83e2
+	pushw	HDAE5000_FdSong_CheckFiles_Str_MD@lo16		; low half of HDAE5000_FdSong_CheckFiles_Str_MD
 	lda	xwa, (xsp+16)
 	push xwa
 	call HDAE5000_StrCpy
@@ -11727,7 +11718,7 @@ HDAE5000_FdSong_CheckFiles_Skip10:
 	bit	0x08, wa
 	jr	z, HDAE5000_FdSong_CheckFiles_Done
 	pushw HDAE5000_FdSong_CheckFiles_Str_TLX@hi16
-	pushw	0x83ea
+	pushw	HDAE5000_FdSong_CheckFiles_Str_TLX@lo16		; low half of HDAE5000_FdSong_CheckFiles_Str_TLX
 	lda	xwa, (xsp+16)
 	push xwa
 	call HDAE5000_StrCpy
@@ -11880,10 +11871,10 @@ HDAE5000_CopyFdSongToHd_Join5:
 	calr	HDAE5000_DeleteSongPart_Tm
 HDAE5000_CopyFdSongToHd_Join6:
 	cpw	(xsp+4), 0xffff
-	jr	z, HDAE5000_CopyFdSongToHd_Skip4
+	jr	z, HDAE5000_CopyFdSongToHd_Join8
 	ld	wa, (xsp+50)
 	bit	0x05, wa
-	jr	z, HDAE5000_CopyFdSongToHd_Skip4
+	jr	z, HDAE5000_CopyFdSongToHd_Join8
 	ld	wa, (xsp+40)
 	ld	bc, (xsp+38)
 	ld xde, (xsp + 0x22)
@@ -11891,11 +11882,11 @@ HDAE5000_CopyFdSongToHd_Join6:
 	ld	(xsp + 0x04), hl
 	ld	wa, (xsp+4)
 	cp	wa, 0xffff
-	jr	nz, HDAE5000_CopyFdSongToHd_Skip4
+	jr	nz, HDAE5000_CopyFdSongToHd_Join8
 	ld	wa, (xsp+40)
 	ld	bc, (xsp+38)
 	calr	HDAE5000_DeleteSongPart_Msp
-HDAE5000_CopyFdSongToHd_Skip4:
+HDAE5000_CopyFdSongToHd_Join8:
 	cpw	(xsp+4), 0xffff
 	jr	z, HDAE5000_CopyFdSongToHd_Join7
 	ld	wa, (xsp+50)
@@ -11922,7 +11913,6 @@ HDAE5000_CopyFdSongToHd_Join7:
 	ld	bc, (xsp+38)
 	ld xde, (xsp + 0x22)
 	calr	HDAE5000_CopyFdSongToHd_Md
-HDAE5000_CopyFdSongToHd_Join8:
 	ld (xsp + 0x04), hl
 	ld	wa, (xsp+4)
 	cp	wa, 0xffff
@@ -11958,14 +11948,12 @@ HDAE5000_CopyFdSongToHd_Join10:
 	ld	(xsp+40), 0x00
 	pushw 0x0006
 	ld xwa, (xsp + 0x2c)
-HDAE5000_CopyFdSongToHd_Skip:
 	inc 2, xwa
 	push xwa
 	lda	xwa, (xsp+20)
 	push xwa
 	call HDAE5000_MemCopy
 	lda	xsp, (xsp+18)
-HDAE5000_CopyFdSongToHd_Join11:
 	pushw 0x001a
 	lda	xwa, (xsp+8)
 	push xwa
@@ -12048,7 +12036,7 @@ HDAE5000_CopyFdSongToHd_Lsw:
 	call HDAE5000_MemCopy
 	; Call 0x29AF45 with args
 	pushw	HDAE5000_CopyFdSongToHd_Lsw_Str_LSW@hi16
-	pushw	0x83f4
+	pushw	HDAE5000_CopyFdSongToHd_Lsw_Str_LSW@lo16		; low half of HDAE5000_CopyFdSongToHd_Lsw_Str_LSW
 	lda xwa, (xsp + 34)
 	push xwa
 	call HDAE5000_StrCpy
@@ -12189,7 +12177,7 @@ HDAE5000_CopyFdSongToHd_Pmt:
 	call HDAE5000_MemCopy
 	; Call 0x29AF45 with args
 	pushw	HDAE5000_CopyFdSongToHd_Pmt_Str_PMT@hi16
-	pushw	0x83fe
+	pushw	HDAE5000_CopyFdSongToHd_Pmt_Str_PMT@lo16		; low half of HDAE5000_CopyFdSongToHd_Pmt_Str_PMT
 	lda xwa, (xsp + 38)
 	push xwa
 	call HDAE5000_StrCpy
@@ -12345,7 +12333,7 @@ HDAE5000_CopyFdSongToHd_Sqt:
 	call HDAE5000_MemCopy
 	; Call 0x29AF45 with args
 	pushw	HDAE5000_CopyFdSongToHd_Sqt_Str_SQT@hi16
-	pushw	0x8408
+	pushw	HDAE5000_CopyFdSongToHd_Sqt_Str_SQT@lo16		; low half of HDAE5000_CopyFdSongToHd_Sqt_Str_SQT
 	lda xwa, (xsp + 40)
 	push xwa
 	call HDAE5000_StrCpy
@@ -12497,7 +12485,7 @@ HDAE5000_CopyFdSongToHd_Cmp:
 	push xwa
 	call HDAE5000_MemCopy
 	pushw	HDAE5000_CopyFdSongToHd_Cmp_Str_CMP@hi16
-	pushw	0x8412
+	pushw	HDAE5000_CopyFdSongToHd_Cmp_Str_CMP@lo16		; low half of HDAE5000_CopyFdSongToHd_Cmp_Str_CMP
 	lda xwa, (xsp + 40)
 	push xwa
 	call HDAE5000_StrCpy
@@ -12642,7 +12630,7 @@ HDAE5000_CopyFdSongToHd_Tm:
 	call HDAE5000_MemCopy
 	; Call 0x29AF45 with args
 	pushw	HDAE5000_CopyFdSongToHd_Tm_Str_TM@hi16
-	pushw	0x841c
+	pushw	HDAE5000_CopyFdSongToHd_Tm_Str_TM@lo16		; low half of HDAE5000_CopyFdSongToHd_Tm_Str_TM
 	lda xwa, (xsp + 34)
 	push xwa
 	call HDAE5000_StrCpy
@@ -12753,7 +12741,7 @@ HDAE5000_CopyFdSongToHd_Msp:
 	push xwa
 	call HDAE5000_MemCopy
 	pushw	HDAE5000_CopyFdSongToHd_Msp_Str_MSP@hi16
-	pushw	0x8424
+	pushw	HDAE5000_CopyFdSongToHd_Msp_Str_MSP@lo16		; low half of HDAE5000_CopyFdSongToHd_Msp_Str_MSP
 	lda xwa, (xsp + 34)
 	push xwa
 	call HDAE5000_StrCpy
@@ -12854,7 +12842,7 @@ HDAE5000_CopyFdSongToHd_Rcm:
 	push xwa
 	call HDAE5000_MemCopy
 	pushw	HDAE5000_CopyFdSongToHd_Rcm_Str_RCM@hi16
-	pushw	0x842e
+	pushw	HDAE5000_CopyFdSongToHd_Rcm_Str_RCM@lo16		; low half of HDAE5000_CopyFdSongToHd_Rcm_Str_RCM
 	lda xwa, (xsp + 40)
 	push xwa
 	call HDAE5000_StrCpy
@@ -12997,7 +12985,7 @@ HDAE5000_CopyFdSongToHd_Md:
 	push xwa
 	call HDAE5000_MemCopy
 	pushw	HDAE5000_CopyFdSongToHd_Md_Str_MD@hi16
-	pushw	0x8438
+	pushw	HDAE5000_CopyFdSongToHd_Md_Str_MD@lo16		; low half of HDAE5000_CopyFdSongToHd_Md_Str_MD
 	lda xwa, (xsp + 34)
 	push xwa
 	call HDAE5000_StrCpy
@@ -13098,7 +13086,7 @@ HDAE5000_CopyFdSongToHd_Tlx:
 	push xwa
 	call HDAE5000_MemCopy
 	pushw	HDAE5000_CopyFdSongToHd_Tlx_Str_TLX@hi16
-	pushw	0x8440
+	pushw	HDAE5000_CopyFdSongToHd_Tlx_Str_TLX@lo16		; low half of HDAE5000_CopyFdSongToHd_Tlx_Str_TLX
 	lda xwa, (xsp + 34)
 	push xwa
 	call HDAE5000_StrCpy
@@ -13127,7 +13115,7 @@ HDAE5000_CopyFdSongToHd_Tlx:
 	calr HDAE5000_RoundUpToSector
 	ld (xsp + 30), xhl
 	; Dispatch with XIZ as XBC param
-	lda xwa, (0x230ec0:24); 0x230F32
+	lda xwa, (0x230ec0:24); 0x230EC0
 	ld	xbc, (xsp + 0x1e)
 	ld xde, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld xde, (xde + WS_HamaFnTable)
@@ -13581,7 +13569,7 @@ HDAE5000_DeleteSongParts:
 
 ; --- UI Cell Renderers (9 x 222 bytes each) ---
 ; Delete table entry: check existence, call handler, clear entry (-1), clear flag (0)
-HDAE5000_DeleteSongPart_Lsw:	; 0x2934C8 (222 bytes)
+HDAE5000_DeleteSongPart_Lsw:	; (222 bytes)
 	; Delete part 0 (LSW) of song (WA = directory, BC = song): if slot +36 is
 	; not 0xFFFFFFFF, free its chain (HDAE5000_HD_FreeChain), set the slot to
 	; 0xFFFFFFFF and the part byte +26 to 0.
@@ -15104,7 +15092,7 @@ HDAE5000_PPORT_Svc01_GetInfoBlockPointer:
 	lda xwa, (HDAE5000_RAM_PportInfoBlock:24)
 	push xwa
 	pushw HDAE5000_PPORT_Svc01_GetInfoBlockPointer_Str_ppib_adr_Fmtx@hi16
-	pushw	0x8468
+	pushw	HDAE5000_PPORT_Svc01_GetInfoBlockPointer_Str_ppib_adr_Fmtx@lo16		; low half of HDAE5000_PPORT_Svc01_GetInfoBlockPointer_Str_ppib_adr_Fmtx
 	lda	xwa, (xsp+8)
 	push xwa
 	call HDAE5000_SPrintf
@@ -15171,7 +15159,7 @@ HDAE5000_PPORT_Svc03_SendInfosAboutHd:
 	lda xwa, (HDAE5000_PPORT_Svc03_SendInfosAboutHd_Str_SendInfosAboutHd:24)
 	calr	HDAE5000_DebugTrace
 	pushw HDAE5000_PPORT_Svc03_SendInfosAboutHd_Str_hddname@hi16
-	pushw	0x84b2
+	pushw	HDAE5000_PPORT_Svc03_SendInfosAboutHd_Str_hddname@lo16		; low half of HDAE5000_PPORT_Svc03_SendInfosAboutHd_Str_hddname
 	lda	xwa, (xsp+4)
 	push xwa
 	call HDAE5000_SPrintf
@@ -15187,7 +15175,7 @@ HDAE5000_PPORT_Svc03_SendInfosAboutHd:
 	ld	xwa, (HDAE5000_RAM_PportInfoBlock+181)
 	push xwa
 	pushw HDAE5000_PPORT_Svc03_SendInfosAboutHd_Str_hddtrck_Fmtd@hi16
-	pushw	0x84be
+	pushw	HDAE5000_PPORT_Svc03_SendInfosAboutHd_Str_hddtrck_Fmtd@lo16		; low half of HDAE5000_PPORT_Svc03_SendInfosAboutHd_Str_hddtrck_Fmtd
 	lda	xwa, (xsp+8)
 	push xwa
 	call HDAE5000_SPrintf
@@ -15196,7 +15184,7 @@ HDAE5000_PPORT_Svc03_SendInfosAboutHd:
 	calr	HDAE5000_DebugTrace
 	pushw	(HDAE5000_RAM_PportInfoBlock+185:24)
 	pushw HDAE5000_PPORT_Svc03_SendInfosAboutHd_Str_hddhead_Fmtd@hi16
-	pushw	0x84cc
+	pushw	HDAE5000_PPORT_Svc03_SendInfosAboutHd_Str_hddhead_Fmtd@lo16		; low half of HDAE5000_PPORT_Svc03_SendInfosAboutHd_Str_hddhead_Fmtd
 	lda	xwa, (xsp+6)
 	push xwa
 	call HDAE5000_SPrintf
@@ -15205,7 +15193,7 @@ HDAE5000_PPORT_Svc03_SendInfosAboutHd:
 	calr	HDAE5000_DebugTrace
 	pushw	(HDAE5000_RAM_PportInfoBlock+187:24)
 	pushw HDAE5000_PPORT_Svc03_SendInfosAboutHd_Str_hddsctr_Fmtd@hi16
-	pushw	0x84da
+	pushw	HDAE5000_PPORT_Svc03_SendInfosAboutHd_Str_hddsctr_Fmtd@lo16		; low half of HDAE5000_PPORT_Svc03_SendInfosAboutHd_Str_hddsctr_Fmtd
 	lda	xwa, (xsp+6)
 	push xwa
 	call HDAE5000_SPrintf
@@ -15214,7 +15202,7 @@ HDAE5000_PPORT_Svc03_SendInfosAboutHd:
 	calr	HDAE5000_DebugTrace
 	pushw	(HDAE5000_RAM_PportInfoBlock+189:24)
 	pushw HDAE5000_PPORT_Svc03_SendInfosAboutHd_Str_hddscby_Fmtd@hi16
-	pushw	0x84e8
+	pushw	HDAE5000_PPORT_Svc03_SendInfosAboutHd_Str_hddscby_Fmtd@lo16		; low half of HDAE5000_PPORT_Svc03_SendInfosAboutHd_Str_hddscby_Fmtd
 	lda	xwa, (xsp+6)
 	push xwa
 	call HDAE5000_SPrintf
@@ -15249,7 +15237,7 @@ HDAE5000_PPORT_Svc04_SendInfosAboutDirBlock:
 	ld	xwa, (HDAE5000_RAM_PportInfoBlock+44)
 	push xwa
 	pushw HDAE5000_PPORT_Svc04_SendInfosAboutDirBlock_Str_FGB_ptr_Fmtx@hi16
-	pushw	0x851a
+	pushw	HDAE5000_PPORT_Svc04_SendInfosAboutDirBlock_Str_FGB_ptr_Fmtx@lo16		; low half of HDAE5000_PPORT_Svc04_SendInfosAboutDirBlock_Str_FGB_ptr_Fmtx
 	lda	xwa, (xsp+8)
 	push xwa
 	call HDAE5000_SPrintf
@@ -15258,7 +15246,7 @@ HDAE5000_PPORT_Svc04_SendInfosAboutDirBlock:
 	calr	HDAE5000_DebugTrace
 	pushw	(HDAE5000_RAM_PportInfoBlock+48:24)
 	pushw HDAE5000_PPORT_Svc04_SendInfosAboutDirBlock_Str_FGB_wid_Fmtd@hi16
-	pushw	0x8528
+	pushw	HDAE5000_PPORT_Svc04_SendInfosAboutDirBlock_Str_FGB_wid_Fmtd@lo16		; low half of HDAE5000_PPORT_Svc04_SendInfosAboutDirBlock_Str_FGB_wid_Fmtd
 	lda	xwa, (xsp+6)
 	push xwa
 	call HDAE5000_SPrintf
@@ -15267,7 +15255,7 @@ HDAE5000_PPORT_Svc04_SendInfosAboutDirBlock:
 	calr	HDAE5000_DebugTrace
 	pushw	(HDAE5000_RAM_PportInfoBlock+50:24)
 	pushw HDAE5000_PPORT_Svc04_SendInfosAboutDirBlock_Str_FGB_num_Fmtd@hi16
-	pushw	0x8536
+	pushw	HDAE5000_PPORT_Svc04_SendInfosAboutDirBlock_Str_FGB_num_Fmtd@lo16		; low half of HDAE5000_PPORT_Svc04_SendInfosAboutDirBlock_Str_FGB_num_Fmtd
 	lda	xwa, (xsp+6)
 	push xwa
 	call HDAE5000_SPrintf
@@ -15300,7 +15288,7 @@ HDAE5000_PPORT_Svc05_SendInfosAboutFileSystemBlock:
 	ld	xwa, (HDAE5000_RAM_PportInfoBlock+52)
 	push xwa
 	pushw HDAE5000_PPORT_Svc05_SendInfosAboutFileSystemBlock_Str_FEB_ptr_Fmtx@hi16
-	pushw	0x856e
+	pushw	HDAE5000_PPORT_Svc05_SendInfosAboutFileSystemBlock_Str_FEB_ptr_Fmtx@lo16		; low half of HDAE5000_PPORT_Svc05_SendInfosAboutFileSystemBlock_Str_FEB_ptr_Fmtx
 	lda	xwa, (xsp+8)
 	push xwa
 	call HDAE5000_SPrintf
@@ -15309,7 +15297,7 @@ HDAE5000_PPORT_Svc05_SendInfosAboutFileSystemBlock:
 	calr	HDAE5000_DebugTrace
 	pushw	(HDAE5000_RAM_PportInfoBlock+56:24)
 	pushw HDAE5000_PPORT_Svc05_SendInfosAboutFileSystemBlock_Str_FEB_wid_Fmtd@hi16
-	pushw	0x857c
+	pushw	HDAE5000_PPORT_Svc05_SendInfosAboutFileSystemBlock_Str_FEB_wid_Fmtd@lo16		; low half of HDAE5000_PPORT_Svc05_SendInfosAboutFileSystemBlock_Str_FEB_wid_Fmtd
 	lda	xwa, (xsp+6)
 	push xwa
 	call HDAE5000_SPrintf
@@ -15318,7 +15306,7 @@ HDAE5000_PPORT_Svc05_SendInfosAboutFileSystemBlock:
 	calr	HDAE5000_DebugTrace
 	pushw	(HDAE5000_RAM_PportInfoBlock+58:24)
 	pushw HDAE5000_PPORT_Svc05_SendInfosAboutFileSystemBlock_Str_FEB_num_Fmtd@hi16
-	pushw	0x858a
+	pushw	HDAE5000_PPORT_Svc05_SendInfosAboutFileSystemBlock_Str_FEB_num_Fmtd@lo16		; low half of HDAE5000_PPORT_Svc05_SendInfosAboutFileSystemBlock_Str_FEB_num_Fmtd
 	lda	xwa, (xsp+6)
 	push xwa
 	call HDAE5000_SPrintf
@@ -15354,7 +15342,7 @@ HDAE5000_PPORT_Svc06_SendInfosAboutFlsBlock:
 	ld	xwa, (HDAE5000_RAM_PportInfoBlock+60)
 	push xwa
 	pushw HDAE5000_PPORT_Svc06_SendInfosAboutFlsBlock_Str_FLS_ptr_Fmtx@hi16
-	pushw	0x85bc
+	pushw	HDAE5000_PPORT_Svc06_SendInfosAboutFlsBlock_Str_FLS_ptr_Fmtx@lo16		; low half of HDAE5000_PPORT_Svc06_SendInfosAboutFlsBlock_Str_FLS_ptr_Fmtx
 	lda	xwa, (xsp+8)
 	push xwa
 	call HDAE5000_SPrintf
@@ -15363,7 +15351,7 @@ HDAE5000_PPORT_Svc06_SendInfosAboutFlsBlock:
 	calr	HDAE5000_DebugTrace
 	pushw	(HDAE5000_RAM_PportInfoBlock+64:24)
 	pushw HDAE5000_PPORT_Svc06_SendInfosAboutFlsBlock_Str_FLS_wid_Fmtd@hi16
-	pushw	0x85ca
+	pushw	HDAE5000_PPORT_Svc06_SendInfosAboutFlsBlock_Str_FLS_wid_Fmtd@lo16		; low half of HDAE5000_PPORT_Svc06_SendInfosAboutFlsBlock_Str_FLS_wid_Fmtd
 	lda	xwa, (xsp+6)
 	push xwa
 	call HDAE5000_SPrintf
@@ -15372,7 +15360,7 @@ HDAE5000_PPORT_Svc06_SendInfosAboutFlsBlock:
 	calr	HDAE5000_DebugTrace
 	pushw	(HDAE5000_RAM_PportInfoBlock+66:24)
 	pushw HDAE5000_PPORT_Svc06_SendInfosAboutFlsBlock_Str_FLS_num_Fmtd@hi16
-	pushw	0x85d8
+	pushw	HDAE5000_PPORT_Svc06_SendInfosAboutFlsBlock_Str_FLS_num_Fmtd@lo16		; low half of HDAE5000_PPORT_Svc06_SendInfosAboutFlsBlock_Str_FLS_num_Fmtd
 	lda	xwa, (xsp+6)
 	push xwa
 	call HDAE5000_SPrintf
@@ -15381,7 +15369,7 @@ HDAE5000_PPORT_Svc06_SendInfosAboutFlsBlock:
 	calr	HDAE5000_DebugTrace
 	pushw	(HDAE5000_RAM_PportInfoBlock+68:24)
 	pushw HDAE5000_PPORT_Svc06_SendInfosAboutFlsBlock_Str_FLS_ent_Fmtd@hi16
-	pushw	0x85e6
+	pushw	HDAE5000_PPORT_Svc06_SendInfosAboutFlsBlock_Str_FLS_ent_Fmtd@lo16		; low half of HDAE5000_PPORT_Svc06_SendInfosAboutFlsBlock_Str_FLS_ent_Fmtd
 	lda	xwa, (xsp+6)
 	push xwa
 	call HDAE5000_SPrintf
@@ -15731,7 +15719,7 @@ HDAE5000_PPORT_Svc13_SendInfosAboutSong_Join:
 	lda xwa, (HDAE5000_RAM_PportInfoBlock+28:24)
 	push xwa
 	pushw HDAE5000_PPORT_Svc13_SendInfosAboutSong_Str_dirname_Fmts@hi16
-	pushw	0x86d6
+	pushw	HDAE5000_PPORT_Svc13_SendInfosAboutSong_Str_dirname_Fmts@lo16		; low half of HDAE5000_PPORT_Svc13_SendInfosAboutSong_Str_dirname_Fmts
 	lda	xwa, (xsp+12)
 	push xwa
 	call HDAE5000_SPrintf
@@ -15741,7 +15729,7 @@ HDAE5000_PPORT_Svc13_SendInfosAboutSong_Join:
 	lda xwa, (HDAE5000_RAM_PportInfoBlock+2:24)
 	push xwa
 	pushw HDAE5000_PPORT_Svc13_SendInfosAboutSong_Str_sngname_Fmts@hi16
-	pushw	0x86e4
+	pushw	HDAE5000_PPORT_Svc13_SendInfosAboutSong_Str_sngname_Fmts@lo16		; low half of HDAE5000_PPORT_Svc13_SendInfosAboutSong_Str_sngname_Fmts
 	lda	xwa, (xsp+12)
 	push xwa
 	call HDAE5000_SPrintf
@@ -15941,7 +15929,7 @@ HDAE5000_PPORT_Svc19_SendPointerToFreeBufferSpace:
 	ld	a, (HDAE5000_RAM_PportInfoBlock+202:24)
 	push xwa
 	pushw HDAE5000_PPORT_Svc19_SendPointerToFreeBufferSpace_Str_work_adr_Fmtx@hi16
-	pushw	0x879a
+	pushw	HDAE5000_PPORT_Svc19_SendPointerToFreeBufferSpace_Str_work_adr_Fmtx@lo16		; low half of HDAE5000_PPORT_Svc19_SendPointerToFreeBufferSpace_Str_work_adr_Fmtx
 	lda	xwa, (xsp+8)
 	push xwa
 	call HDAE5000_SPrintf
@@ -16109,7 +16097,7 @@ HDAE5000_PPORT_Svc21_WriteOpenHD_Join:
 	extz wa
 	pushw wa
 	pushw HDAE5000_PPORT_Svc21_WriteOpenHD_Str_SUFFIX_Fmtd@hi16
-	pushw	0x87e6
+	pushw	HDAE5000_PPORT_Svc21_WriteOpenHD_Str_SUFFIX_Fmtd@lo16		; low half of HDAE5000_PPORT_Svc21_WriteOpenHD_Str_SUFFIX_Fmtd
 	lda	xwa, (xsp+14)
 	push xwa
 	call HDAE5000_SPrintf
@@ -16304,7 +16292,7 @@ HDAE5000_PPORT_Svc27:
 ; CallService(0) is a plain "yield until next frame" (the link's polling
 ; loops use it).
 ; ============================================================================
-HDAE5000_PPORT_ServicePending:	; 0x29501C
+HDAE5000_PPORT_ServicePending:
 	; main context, once per frame-handler pass: if a link is active, run the service it
 	; posted (HDAE5000_PPORT_ServiceDispatch) and resume it
 	; (HDAE5000_PPORT_ReturnToLink).
@@ -16539,170 +16527,170 @@ HDAE5000_PPORT_ServiceTable:
 	.long .Lpps_handler_29	; entry 29
 	.long .Lpps_handler_30	; entry 30
 	; --- Handler stubs (commands 0-30) ---
-.Lpps_handler_0:			; 0x2951C2
+.Lpps_handler_0:
 	ret
 	nop
-.Lpps_handler_1:			; 0x2951C4
+.Lpps_handler_1:
 	call HDAE5000_PPORT_Svc01_GetInfoBlockPointer
 	ld xix, xhl
 	ret
 	nop
-.Lpps_handler_2:			; 0x2951CC
+.Lpps_handler_2:
 	call HDAE5000_PPORT_Svc02_TurnHdMotorOff
 	ld wa, hl
 	ret
 	nop
-.Lpps_handler_3:			; 0x2951D4
+.Lpps_handler_3:
 	call HDAE5000_PPORT_Svc03_SendInfosAboutHd
 	ld wa, hl
 	ret
 	nop
-.Lpps_handler_4:			; 0x2951DC
+.Lpps_handler_4:
 	call HDAE5000_PPORT_Svc04_SendInfosAboutDirBlock
 	ret
 	nop
-.Lpps_handler_5:			; 0x2951E2
+.Lpps_handler_5:
 	call HDAE5000_PPORT_Svc05_SendInfosAboutFileSystemBlock
 	ret
 	nop
-.Lpps_handler_6:			; 0x2951E8
+.Lpps_handler_6:
 	call HDAE5000_PPORT_Svc06_SendInfosAboutFlsBlock
 	ret
 	nop
-.Lpps_handler_7:			; 0x2951EE
+.Lpps_handler_7:
 	call HDAE5000_PPORT_Svc07_ReadDirBlockFromHd
 	ld wa, hl
 	ret
 	nop
-.Lpps_handler_8:			; 0x2951F6
+.Lpps_handler_8:
 	call HDAE5000_PPORT_Svc08_ReadFileBlockFromHd
 	ld wa, hl
 	ret
 	nop
-.Lpps_handler_9:			; 0x2951FE
+.Lpps_handler_9:
 	call HDAE5000_PPORT_Svc09_ReadFlsBlockFromHd
 	ld wa, hl
 	ret
 	nop
-.Lpps_handler_10:			; 0x295206
+.Lpps_handler_10:
 	call HDAE5000_PPORT_Svc10_WriteDirBlockToHd
 	ld wa, hl
 	ret
 	nop
-.Lpps_handler_11:			; 0x29520E
+.Lpps_handler_11:
 	call HDAE5000_PPORT_Svc11_WriteFileSystemBlockToHd
 	ld wa, hl
 	ret
 	nop
-.Lpps_handler_12:			; 0x295216
+.Lpps_handler_12:
 	call HDAE5000_PPORT_Svc12_WriteFlsBlockToHd
 	ld wa, hl
 	ret
 	nop
-.Lpps_handler_13:			; 0x29521E
+.Lpps_handler_13:
 	ld wa, bc			; shuffle args
 	ld bc, de
 	call HDAE5000_PPORT_Svc13_SendInfosAboutSong
 	ld wa, hl
 	ret
 	nop
-.Lpps_handler_14:			; 0x29522A
+.Lpps_handler_14:
 	ld wa, bc
 	ld bc, de
 	call HDAE5000_PPORT_Svc14_LoadSongFromHdToMemory
 	ld wa, hl
 	ret
 	nop
-.Lpps_handler_15:			; 0x295236
+.Lpps_handler_15:
 	ld wa, bc
 	ld bc, de
 	call	HDAE5000_PPORT_Svc15_SaveSongInMemoryToHd
 	ld wa, hl
 	ret
 	nop
-.Lpps_handler_16:			; 0x295242
+.Lpps_handler_16:
 	call HDAE5000_PPORT_Svc16_InitWholeSongInMemory
 	ret
 	nop
-.Lpps_handler_17:			; 0x295248
+.Lpps_handler_17:
 	call HDAE5000_PPORT_Svc17_FormatHd
 	ld wa, hl
 	ret
 	nop
-.Lpps_handler_18:			; 0x295250
+.Lpps_handler_18:
 	call HDAE5000_PPORT_Svc18
 	ret
 	nop
-.Lpps_handler_19:			; 0x295256
+.Lpps_handler_19:
 	call HDAE5000_PPORT_Svc19_SendPointerToFreeBufferSpace
 	ld xix, xhl
 	ret
 	nop
-.Lpps_handler_20:			; 0x29525E
+.Lpps_handler_20:
 	call HDAE5000_PPORT_Svc20_PreWholeSongInMemory
 	ret
 	nop
-.Lpps_handler_21:			; 0x295264
+.Lpps_handler_21:
 	ld wa, bc
 	ld bc, de
 	call HDAE5000_PPORT_Svc21_WriteOpenHD
 	ld wa, hl
 	ret
 	nop
-.Lpps_handler_22:			; 0x295270
+.Lpps_handler_22:
 	call HDAE5000_PPORT_Svc22_WriteCloseHD
 	ld wa, hl
 	ret
 	nop
-.Lpps_handler_23:			; 0x295278
+.Lpps_handler_23:
 	ld xwa, xbc			; 32-bit arg shuffle
 	ld xbc, xde
 	call HDAE5000_PPORT_Svc23_WriteFileHD
 	ld wa, hl
 	ret
 	nop
-.Lpps_handler_24:			; 0x295284
+.Lpps_handler_24:
 	ld wa, bc
 	ld bc, de
 	call HDAE5000_PPORT_Svc24_ReadOpenHD
 	ld wa, hl
 	ret
 	nop
-.Lpps_handler_25:			; 0x295290
+.Lpps_handler_25:
 	ld xwa, xbc
 	ld xbc, xde
 	call HDAE5000_PPORT_Svc25_ReadFileHD
 	ld wa, hl
 	ret
 	nop
-.Lpps_handler_26:			; 0x29529C
+.Lpps_handler_26:
 	ld xwa, xbc
 	call HDAE5000_PPORT_Svc26_ShowStatus
 	ld wa, 0:i3
 	ret
 	nop
-.Lpps_handler_27:			; 0x2952A6
+.Lpps_handler_27:
 	ld wa, bc
 	ld bc, de
 	call HDAE5000_PPORT_Svc27
 	ld wa, hl
 	ret
 	nop
-.Lpps_handler_28:			; 0x2952B2
+.Lpps_handler_28:
 	ld xwa, xbc
 	ld xbc, xde
 	call HDAE5000_PPORT_Svc28_FlashXapFile
 	ld wa, hl
 	ret
 	nop
-.Lpps_handler_29:			; 0x2952BE
+.Lpps_handler_29:
 	ld xwa, xbc
 	ld xbc, xde
 	call HDAE5000_PPORT_Svc29_MainHook0538
 	ld wa, hl
 	ret
 	nop
-.Lpps_handler_30:			; 0x2952CA
+.Lpps_handler_30:
 	ld xwa, xbc
 	ld xbc, xde
 	call HDAE5000_PPORT_Svc30_MainHook053C
@@ -16902,7 +16890,7 @@ HDAE5000_PPORT_CommandTable:
 ;  11    0x296680  Cmd12_Nothing - (reserved)
 ; ============================================================================
 
-HDAE5000_PPORT_Cmd_Table:	; 2953E2h
+HDAE5000_PPORT_Cmd_Table:
 	.long HDAE5000_PPORT_Cmd06_WriteFsbToHd
 	.long HDAE5000_PPORT_Cmd07_LoadHdToMemory
 	.long HDAE5000_PPORT_Cmd08_SendDataToPc
@@ -16947,7 +16935,7 @@ HDAE5000_PPORT_Cmd_Table:	; 2953E2h
 ;   Error : Wrong Dll Ver
 ; ============================================================================
 
-HDAE5000_PPORT_Ptrs:	; 295412h
+HDAE5000_PPORT_Ptrs:
 	; 3 pointers to PPORT utility routines (in code_295642_2971a2.bin)
 	; ^ = entries 18-20 of HDAE5000_PPORT_CommandTable (commands 18, 19, 20)
 	.long HDAE5000_PPORT_Cmd18_SwitchHdMotorOff
@@ -16979,7 +16967,7 @@ HDAE5000_PPORT_Ptrs:	; 295412h
 ; unexplained filler: shortening or lengthening any string here (other than
 ; swapping its trailing spaces) would desync every one of those 23 call sites.
 ; -----------------------------------------------------------------------------
-HDAE5000_PPORT_Strings:	; 29541Eh
+HDAE5000_PPORT_Strings:
 	; PPORT command menu strings (21 null-terminated strings)
 	; Format: "NN>Description" where NN = command number
 	.asciz "01>Send Infos About HD"
@@ -17044,7 +17032,7 @@ HDAE5000_PPORT_Cmd01_SendInfosAboutHd_Str_Error_Wrong_Dll_Ver:	.asciz "Error : W
 ;   - Zero padding at end (~65KB)
 ; ============================================================================
 
-HDAE5000_PPORT_Cmd01_SendInfosAboutHd:	; 0x295642 (660 bytes)
+HDAE5000_PPORT_Cmd01_SendInfosAboutHd:	; (660 bytes)
 	; PC-link command 01: HDAE5000_PPORT_CommandTable entry 0; first shows the
 	; status record "01>Send Infos About HD" (HDAE5000_PPORT_Strings + 0, service 26).
 	; The description lines below predate this name and are not re-verified.
@@ -17059,11 +17047,11 @@ HDAE5000_PPORT_Cmd01_SendInfosAboutHd:	; 0x295642 (660 bytes)
 	nop
 	ld a, (xix + 1)			; read flag byte 1
 	nop
-	ld (0x239098:24), a; st (0x2390F4), A
+	ld (0x239098:24), a; st (0x239098), A
 	nop
 	ld a, (xix + 2)			; read flag byte 2
 	nop
-	ld (0x23909a:24), a; st (0x2390F6), A
+	ld (0x23909a:24), a; st (0x23909A), A
 	nop
 	call HDAE5000_PPORT_ClearPacket
 	ld wa, 3:i3				; display command
@@ -17074,10 +17062,10 @@ HDAE5000_PPORT_Cmd01_SendInfosAboutHd:	; 0x295642 (660 bytes)
 	jp z, (.Lc2b_check_compat:24)			; success path
 	nop
 	jp .Lc2b_do_cleanup
-.Lc2b_check_compat:			; 0x295684
-	ld a, (0x239fd2:24); ld A, (0x23A04A) — compatibility byte
+.Lc2b_check_compat:
+	ld a, (0x239fd2:24); ld A, (0x239FD2) — compatibility byte
 	nop
-	cp (2330776:24), a; cp (0x2390F4), A — match?
+	cp (2330776:24), a; cp (0x239098), A — match?
 	nop
 	jp z, (.Lc2b_compat_ok:24)			; match, skip error
 	nop
@@ -17086,23 +17074,23 @@ HDAE5000_PPORT_Cmd01_SendInfosAboutHd:	; 0x295642 (660 bytes)
 	lda xbc, (HDAE5000_PPORT_Cmd01_SendInfosAboutHd_Str_Error_Wrong_Dll_Ver:24); lda XBC, 0x29562A — error string
 	nop
 	call HDAE5000_PPORT_CallService
-.Lc2b_do_cleanup:			; 0x2956A4
+.Lc2b_do_cleanup:
 	call HDAE5000_PPORT_FlagPacketError
 	jp .Lc2b_sum_and_done
-.Lc2b_compat_ok:			; 0x2956AC
+.Lc2b_compat_ok:
 	ldw bc, 0x0097				; BC param
 	nop
 	ldw hl, 0x00CA				; HL param
 	nop
 	call HDAE5000_PPORT_CopyInfoToPacket
-.Lc2b_sum_and_done:			; 0x2956B8
+.Lc2b_sum_and_done:
 	call HDAE5000_PPORT_SendPacket
 	cp (HDAE5000_RAM_PportError:24), 0x01; error check
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)			; jp Z, abort
 	nop
 	jp HDAE5000_PPORT_CommandDone
 
-HDAE5000_PPORT_Cmd02_ExitPport:			; 0x2956CC — command 02 "Exit PPORT" (was: Format HD command handler)
+HDAE5000_PPORT_Cmd02_ExitPport:			; — command 02 "Exit PPORT" (was: Format HD command handler)
 	; PC-link command 02: HDAE5000_PPORT_CommandTable entry 1; first shows the
 	; status record "02>Exit PPORT" (HDAE5000_PPORT_Strings + 24, service 26).
 	; The description lines below predate this name and are not re-verified.
@@ -17123,7 +17111,7 @@ HDAE5000_PPORT_Cmd02_ExitPport:			; 0x2956CC — command 02 "Exit PPORT" (was: F
 	ret
 	nop
 
-HDAE5000_PPORT_Cmd03_ReadFsbFromHd:			; 0x2956F2 — command 03 "Read FSB from HD" (was: Read status command handler)
+HDAE5000_PPORT_Cmd03_ReadFsbFromHd:			; — command 03 "Read FSB from HD" (was: Read status command handler)
 	; PC-link command 03: HDAE5000_PPORT_CommandTable entry 2; first shows the
 	; status record "03>Read FSB from HD" (HDAE5000_PPORT_Strings + 48, service 26).
 	; The description lines below predate this name and are not re-verified.
@@ -17141,14 +17129,14 @@ HDAE5000_PPORT_Cmd03_ReadFsbFromHd:			; 0x2956F2 — command 03 "Read FSB from H
 	jp z, (.Lc2b_rs_sum:24)			; skip cleanup
 	nop
 	call HDAE5000_PPORT_FlagPacketError
-.Lc2b_rs_sum:				; 0x29571A
+.Lc2b_rs_sum:
 	call HDAE5000_PPORT_SendPacket
 	cp (HDAE5000_RAM_PportError:24), 0x01
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)
 	nop
 	jp HDAE5000_PPORT_CommandDone
 
-HDAE5000_PPORT_Cmd04_SendFsbToPc:			; 0x29572E — command 04 "Sending FSB to PC" (was: Read HD sectors command handler)
+HDAE5000_PPORT_Cmd04_SendFsbToPc:			; — command 04 "Sending FSB to PC" (was: Read HD sectors command handler)
 	; PC-link command 04: HDAE5000_PPORT_CommandTable entry 3; first shows the
 	; status record "04>Sending FSB to PC" (HDAE5000_PPORT_Strings + 72, service 26).
 	; The description lines below predate this name and are not re-verified.
@@ -17232,7 +17220,7 @@ HDAE5000_PPORT_Cmd04_SendFsbToPc:			; 0x29572E — command 04 "Sending FSB to PC
 	nop
 	jp HDAE5000_PPORT_CommandDone
 
-HDAE5000_PPORT_Cmd05_RcvFsbFromPc:			; 0x295802 — command 05 "Rcv FSB from PC" (was: Write HD sectors command handler)
+HDAE5000_PPORT_Cmd05_RcvFsbFromPc:			; — command 05 "Rcv FSB from PC" (was: Write HD sectors command handler)
 	; PC-link command 05: HDAE5000_PPORT_CommandTable entry 4; first shows the
 	; status record "05>Rcv FSB from PC" (HDAE5000_PPORT_Strings + 96, service 26).
 	; The description lines below predate this name and are not re-verified.
@@ -17316,7 +17304,7 @@ HDAE5000_PPORT_Cmd05_RcvFsbFromPc:			; 0x295802 — command 05 "Rcv FSB from PC"
 	nop
 	jp HDAE5000_PPORT_CommandDone
 
-HDAE5000_PPORT_Cmd06_WriteFsbToHd:	; 0x2958D6 (62 bytes)
+HDAE5000_PPORT_Cmd06_WriteFsbToHd:	; (62 bytes)
 	; PC-link command 06: HDAE5000_PPORT_CommandTable entry 5; first shows the
 	; status record "06>Writing FSB to HD" (HDAE5000_PPORT_Strings + 120, service 26).
 	; The description lines below predate this name and are not re-verified.
@@ -17343,7 +17331,7 @@ HDAE5000_PPORT_Cmd06_WriteFsbToHd:	; 0x2958D6 (62 bytes)
 	nop
 	jp HDAE5000_PPORT_CommandDone
 
-HDAE5000_PPORT_Cmd07_LoadHdToMemory:	; 0x295914 (226 bytes)
+HDAE5000_PPORT_Cmd07_LoadHdToMemory:	; (226 bytes)
 	; PC-link command 07: HDAE5000_PPORT_CommandTable entry 6; first shows the
 	; status record "07>Load HD to Memory" (HDAE5000_PPORT_Strings + 144, service 26).
 	; The description lines below predate this name and are not re-verified.
@@ -17365,7 +17353,7 @@ HDAE5000_PPORT_Cmd07_LoadHdToMemory:	; 0x295914 (226 bytes)
 	lda xix, (HDAE5000_RAM_PportPacket:24)
 	nop
 	ld a, (xix)				; read byte 0 from PPORT data
-	ld (0x239082:24), a; st (0x2390DE), A — save sector byte
+	ld (0x239082:24), a; st (0x239082), A — save sector byte
 	nop
 	ld w, (HDAE5000_RAM_PportArg3:24)
 	nop
@@ -17374,7 +17362,7 @@ HDAE5000_PPORT_Cmd07_LoadHdToMemory:	; 0x295914 (226 bytes)
 	nop
 	ld a, (xix + 1)			; read byte 1 from PPORT data
 	nop
-	ld (0x239084:24), a; st (0x2390E0), A — save head byte
+	ld (0x239084:24), a; st (0x239084), A — save head byte
 	nop
 	ld w, (HDAE5000_RAM_PportArg4:24)
 	nop
@@ -17390,11 +17378,11 @@ HDAE5000_PPORT_Cmd07_LoadHdToMemory:	; 0x295914 (226 bytes)
 	jp z, (.LPPORT_Cmd07_LoadHdToMemory_Skip1:24)			; skip to end
 	nop
 	jp .Lce_continue
-.Lce_check_head:			; 0x295992
+.Lce_check_head:
 	cp (HDAE5000_RAM_PportPartMaskHi:24), 0x00
 	jp z, (.LPPORT_Cmd07_LoadHdToMemory_Skip1:24)			; skip to end
 	nop
-.Lce_continue:				; 0x29599E
+.Lce_continue:
 	call HDAE5000_PPORT_ClearPacket
 	ld xix, (HDAE5000_RAM_PportInfoPtr:24)	; data source ptr
 	nop
@@ -17420,7 +17408,7 @@ HDAE5000_PPORT_Cmd07_LoadHdToMemory:	; 0x295914 (226 bytes)
 	jp z, (.Lce_final_sum:24)			; skip cleanup
 	nop
 	call HDAE5000_PPORT_FlagPacketError
-.Lce_final_sum:				; 0x2959E2
+.Lce_final_sum:
 	call HDAE5000_PPORT_SendPacket
 	cp (HDAE5000_RAM_PportError:24), 0x01
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)			; abort
@@ -17428,7 +17416,7 @@ HDAE5000_PPORT_Cmd07_LoadHdToMemory:	; 0x295914 (226 bytes)
 .LPPORT_Cmd07_LoadHdToMemory_Skip1:
 	jp HDAE5000_PPORT_CommandDone
 
-HDAE5000_PPORT_Cmd08_SendDataToPc:	; 0x2959F6 (838 bytes)
+HDAE5000_PPORT_Cmd08_SendDataToPc:	; (838 bytes)
 	; PC-link command 08: HDAE5000_PPORT_CommandTable entry 7; first shows the
 	; status record "08>Send data to PC" (HDAE5000_PPORT_Strings + 168, service 26).
 	; The description lines below predate this name and are not re-verified.
@@ -17450,7 +17438,7 @@ HDAE5000_PPORT_Cmd08_SendDataToPc:	; 0x2959F6 (838 bytes)
 	lda xix, (HDAE5000_RAM_PportPacket:24)
 	nop
 	ld a, (xix)				; sector mask byte
-	ld (0x239082:24), a; st (0x2390DE), A
+	ld (0x239082:24), a; st (0x239082), A
 	nop
 	ld w, (HDAE5000_RAM_PportArg3:24)
 	nop
@@ -17461,7 +17449,7 @@ HDAE5000_PPORT_Cmd08_SendDataToPc:	; 0x2959F6 (838 bytes)
 	nop
 	ld a, (xix + 1)			; head mask byte
 	nop
-	ld (0x239084:24), a; st (0x2390E0), A
+	ld (0x239084:24), a; st (0x239084), A
 	nop
 	ld w, (HDAE5000_RAM_PportArg4:24)
 	nop
@@ -17478,11 +17466,11 @@ HDAE5000_PPORT_Cmd08_SendDataToPc:	; 0x2959F6 (838 bytes)
 	jp z, (.Lrfsb_exit:24)			; skip to end
 	nop
 	jp .Lrfsb_continue
-.Lrfsb_check_head:			; 0x295A7A
+.Lrfsb_check_head:
 	cp (HDAE5000_RAM_PportPartMaskHi:24), 0x00
 	jp z, (.Lrfsb_exit:24)			; jp Z, skip to end
 	nop
-.Lrfsb_continue:			; 0x295A86
+.Lrfsb_continue:
 	ld (HDAE5000_RAM_PportStepError:24), 0x00	; clear error flag
 	call HDAE5000_PPORT_ClearPacket
 	ld xix, (HDAE5000_RAM_PportInfoPtr:24)	; data ptr
@@ -17508,7 +17496,7 @@ HDAE5000_PPORT_Cmd08_SendDataToPc:	; 0x2959F6 (838 bytes)
 	cp wa, 0:i3
 	jr z, .Lrfsb_no_error_flag
 	ld (HDAE5000_RAM_PportStepError:24), 0x01; set error flag
-.Lrfsb_no_error_flag:			; 0x295ACE
+.Lrfsb_no_error_flag:
 	call HDAE5000_PPORT_RequestSongInfo
 	ld xix, (HDAE5000_RAM_PportInfoPtr:24)
 	nop
@@ -17596,7 +17584,7 @@ HDAE5000_PPORT_Cmd08_SendDataToPc:	; 0x2959F6 (838 bytes)
 	cp (HDAE5000_RAM_PportStepError:24), 0x00; error flag clear?
 	jr z, .Lrfsb_sum
 	call HDAE5000_PPORT_FlagPacketError
-.Lrfsb_sum:				; 0x295BB0
+.Lrfsb_sum:
 	call HDAE5000_PPORT_SendPacket
 	cp (HDAE5000_RAM_PportError:24), 0x01
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)			; jp Z, abort
@@ -17617,7 +17605,7 @@ HDAE5000_PPORT_Cmd08_SendDataToPc:	; 0x2959F6 (838 bytes)
 	cp (HDAE5000_RAM_PportError:24), 0x01
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)
 	nop
-.Lrfsb_bit1:				; 0x295BEE — Bit 1
+.Lrfsb_bit1:				; — Bit 1
 	ld a, (HDAE5000_RAM_PportPartMask:24)
 	nop
 	and a, 0x02
@@ -17633,7 +17621,7 @@ HDAE5000_PPORT_Cmd08_SendDataToPc:	; 0x2959F6 (838 bytes)
 	cp (HDAE5000_RAM_PportError:24), 0x01
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)
 	nop
-.Lrfsb_bit2:				; 0x295C1C — Bit 2
+.Lrfsb_bit2:				; — Bit 2
 	ld a, (HDAE5000_RAM_PportPartMask:24)
 	nop
 	and a, 0x04
@@ -17649,7 +17637,7 @@ HDAE5000_PPORT_Cmd08_SendDataToPc:	; 0x2959F6 (838 bytes)
 	cp (HDAE5000_RAM_PportError:24), 0x01
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)
 	nop
-.Lrfsb_bit3:				; 0x295C4A — Bit 3
+.Lrfsb_bit3:				; — Bit 3
 	ld a, (HDAE5000_RAM_PportPartMask:24)
 	nop
 	and a, 0x08
@@ -17666,7 +17654,7 @@ HDAE5000_PPORT_Cmd08_SendDataToPc:	; 0x2959F6 (838 bytes)
 	cp (HDAE5000_RAM_PportError:24), 0x01
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)
 	nop
-.Lrfsb_bit4:				; 0x295C7A — Bit 4
+.Lrfsb_bit4:				; — Bit 4
 	ld a, (HDAE5000_RAM_PportPartMask:24)
 	nop
 	and a, 0x10
@@ -17683,7 +17671,7 @@ HDAE5000_PPORT_Cmd08_SendDataToPc:	; 0x2959F6 (838 bytes)
 	cp (HDAE5000_RAM_PportError:24), 0x01
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)
 	nop
-.Lrfsb_bit5:				; 0x295CAA — Bit 5
+.Lrfsb_bit5:				; — Bit 5
 	ld a, (HDAE5000_RAM_PportPartMask:24)
 	nop
 	and a, 0x20
@@ -17700,7 +17688,7 @@ HDAE5000_PPORT_Cmd08_SendDataToPc:	; 0x2959F6 (838 bytes)
 	cp (HDAE5000_RAM_PportError:24), 0x01
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)
 	nop
-.Lrfsb_bit7:				; 0x295CDA — Bit 7
+.Lrfsb_bit7:				; — Bit 7
 	ld a, (HDAE5000_RAM_PportPartMask:24)
 	nop
 	and a, 0x80
@@ -17717,7 +17705,7 @@ HDAE5000_PPORT_Cmd08_SendDataToPc:	; 0x2959F6 (838 bytes)
 	cp (HDAE5000_RAM_PportError:24), 0x01
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)
 	nop
-.Lrfsb_flag2_bit0:			; 0x295D0A — Head flag bit 0
+.Lrfsb_flag2_bit0:			; — Head flag bit 0
 	ld a, (HDAE5000_RAM_PportPartMaskHi:24)
 	nop
 	and a, 0x01
@@ -17733,10 +17721,10 @@ HDAE5000_PPORT_Cmd08_SendDataToPc:	; 0x2959F6 (838 bytes)
 	cp (HDAE5000_RAM_PportError:24), 0x01
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)
 	nop
-.Lrfsb_exit:				; 0x295D38
+.Lrfsb_exit:
 	jp HDAE5000_PPORT_CommandDone
 
-HDAE5000_PPORT_Cmd09_SendFilesToPc:	; 0x295D3C (798 bytes)
+HDAE5000_PPORT_Cmd09_SendFilesToPc:	; (798 bytes)
 	; PC-link command 09: HDAE5000_PPORT_CommandTable entry 8; first shows the
 	; status record "09>Sending files to PC" (HDAE5000_PPORT_Strings + 192, service 26).
 	; The description lines below predate this name and are not re-verified.
@@ -17755,7 +17743,7 @@ HDAE5000_PPORT_Cmd09_SendFilesToPc:	; 0x295D3C (798 bytes)
 	ld xix, (HDAE5000_RAM_PportInfoPtr:24)	; data source ptr
 	nop
 	ld a, (xix)				; read byte 0 from data source
-	ld (0x239082:24), a; st (0x2390DE), A — save sector raw
+	ld (0x239082:24), a; st (0x239082), A — save sector raw
 	nop
 	ld w, (HDAE5000_RAM_PportArg3:24)
 	nop
@@ -17764,7 +17752,7 @@ HDAE5000_PPORT_Cmd09_SendFilesToPc:	; 0x295D3C (798 bytes)
 	nop
 	ld a, (xix + 1)			; read byte 1 from data source
 	nop
-	ld (0x239084:24), a; st (0x2390E0), A — save head raw
+	ld (0x239084:24), a; st (0x239084), A — save head raw
 	nop
 	ld w, (HDAE5000_RAM_PportArg4:24)
 	nop
@@ -17782,7 +17770,7 @@ HDAE5000_PPORT_Cmd09_SendFilesToPc:	; 0x295D3C (798 bytes)
 	jp z, (.Lsfsb_build_buffer:24)			; jp Z, .Lsfsb_build_buffer — skip cleanup
 	nop
 	call HDAE5000_PPORT_FlagPacketError
-.Lsfsb_build_buffer:			; 0x295DB0 — Build transfer buffer
+.Lsfsb_build_buffer:			; — Build transfer buffer
 	lda xix, (HDAE5000_RAM_PportPacket:24)
 	nop
 	ld a, (HDAE5000_RAM_PportPartMask:24)
@@ -17856,7 +17844,7 @@ HDAE5000_PPORT_Cmd09_SendFilesToPc:	; 0x295D3C (798 bytes)
 	cp (HDAE5000_RAM_PportError:24), 0x01; error check
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)			; jp Z, abort
 	nop
-.Lsfsb_bit1:				; 0x295E7C — Bit 1 (0x02)
+.Lsfsb_bit1:				; — Bit 1 (0x02)
 	ld a, (HDAE5000_RAM_PportPartMask:24)
 	nop
 	and a, 0x02
@@ -17874,7 +17862,7 @@ HDAE5000_PPORT_Cmd09_SendFilesToPc:	; 0x295D3C (798 bytes)
 	cp (HDAE5000_RAM_PportError:24), 0x01
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)
 	nop
-.Lsfsb_bit2:				; 0x295EB6 — Bit 2 (0x04)
+.Lsfsb_bit2:				; — Bit 2 (0x04)
 	ld a, (HDAE5000_RAM_PportPartMask:24)
 	nop
 	and a, 0x04
@@ -17892,7 +17880,7 @@ HDAE5000_PPORT_Cmd09_SendFilesToPc:	; 0x295D3C (798 bytes)
 	cp (HDAE5000_RAM_PportError:24), 0x01
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)
 	nop
-.Lsfsb_bit3:				; 0x295EF0 — Bit 3 (0x08)
+.Lsfsb_bit3:				; — Bit 3 (0x08)
 	ld a, (HDAE5000_RAM_PportPartMask:24)
 	nop
 	and a, 0x08
@@ -17911,7 +17899,7 @@ HDAE5000_PPORT_Cmd09_SendFilesToPc:	; 0x295D3C (798 bytes)
 	cp (HDAE5000_RAM_PportError:24), 0x01
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)
 	nop
-.Lsfsb_bit4:				; 0x295F2C — Bit 4 (0x10)
+.Lsfsb_bit4:				; — Bit 4 (0x10)
 	ld a, (HDAE5000_RAM_PportPartMask:24)
 	nop
 	and a, 0x10
@@ -17930,7 +17918,7 @@ HDAE5000_PPORT_Cmd09_SendFilesToPc:	; 0x295D3C (798 bytes)
 	cp (HDAE5000_RAM_PportError:24), 0x01
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)
 	nop
-.Lsfsb_bit5:				; 0x295F68 — Bit 5 (0x20)
+.Lsfsb_bit5:				; — Bit 5 (0x20)
 	ld a, (HDAE5000_RAM_PportPartMask:24)
 	nop
 	and a, 0x20
@@ -17949,7 +17937,7 @@ HDAE5000_PPORT_Cmd09_SendFilesToPc:	; 0x295D3C (798 bytes)
 	cp (HDAE5000_RAM_PportError:24), 0x01
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)
 	nop
-.Lsfsb_bit6:				; 0x295FA4 — Bit 6 (0x40)
+.Lsfsb_bit6:				; — Bit 6 (0x40)
 	ld a, (HDAE5000_RAM_PportPartMask:24)
 	nop
 	and a, 0x40
@@ -17968,7 +17956,7 @@ HDAE5000_PPORT_Cmd09_SendFilesToPc:	; 0x295D3C (798 bytes)
 	cp (HDAE5000_RAM_PportError:24), 0x01
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)
 	nop
-.Lsfsb_bit7:				; 0x295FE0 — Bit 7 (0x80)
+.Lsfsb_bit7:				; — Bit 7 (0x80)
 	ld a, (HDAE5000_RAM_PportPartMask:24)
 	nop
 	and a, 0x80
@@ -17987,7 +17975,7 @@ HDAE5000_PPORT_Cmd09_SendFilesToPc:	; 0x295D3C (798 bytes)
 	cp (HDAE5000_RAM_PportError:24), 0x01
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)
 	nop
-.Lsfsb_bit8:				; 0x29601C — Flag byte 2, bit 0 (0x01)
+.Lsfsb_bit8:				; — Flag byte 2, bit 0 (0x01)
 	ld a, (HDAE5000_RAM_PportPartMaskHi:24)
 	nop
 	and a, 0x01
@@ -18005,10 +17993,10 @@ HDAE5000_PPORT_Cmd09_SendFilesToPc:	; 0x295D3C (798 bytes)
 	cp (HDAE5000_RAM_PportError:24), 0x01
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)
 	nop
-.Lsfsb_exit:				; 0x296056
+.Lsfsb_exit:
 	jp HDAE5000_PPORT_CommandDone
 
-HDAE5000_PPORT_Cmd10_RcvDataFromPc:	; 0x29605A (570 bytes)
+HDAE5000_PPORT_Cmd10_RcvDataFromPc:	; (570 bytes)
 	; PC-link command 10: HDAE5000_PPORT_CommandTable entry 9; first shows the
 	; status record "10>Rcv data from PC" (HDAE5000_PPORT_Strings + 216, service 26).
 	; The description lines below predate this name and are not re-verified.
@@ -18024,11 +18012,11 @@ HDAE5000_PPORT_Cmd10_RcvDataFromPc:	; 0x29605A (570 bytes)
 	nop
 	ld a, (xix + 1)			; flag byte 1
 	nop
-	ld (0x23908c:24), a; st (0x2390E8), A
+	ld (0x23908c:24), a; st (0x23908C), A
 	nop
 	ld a, (xix + 2)			; flag byte 2
 	nop
-	ld (0x23908e:24), a; st (0x2390EA), A
+	ld (0x23908e:24), a; st (0x23908E), A
 	nop
 	; Copy 8 × 32-bit region descriptors from PPORT data to memory
 	ld xwa, (xix + 3)
@@ -18070,10 +18058,10 @@ HDAE5000_PPORT_Cmd10_RcvDataFromPc:	; 0x29605A (570 bytes)
 	ld (HDAE5000_RAM_PportInfoPtr:24), xix	; save data ptr
 	nop
 	; Write saved flag bytes back to buffer
-	ld a, (0x23908c:24); ld A, (0x2390E8)
+	ld a, (0x23908c:24); ld A, (0x23908C)
 	nop
 	ld (xix), a
-	ld a, (0x23908e:24); ld A, (0x2390EA)
+	ld a, (0x23908e:24); ld A, (0x23908E)
 	nop
 	ld (xix + 1), a
 	nop
@@ -18084,7 +18072,7 @@ HDAE5000_PPORT_Cmd10_RcvDataFromPc:	; 0x29605A (570 bytes)
 	ei 7
 	; Test flag byte 1 bit by bit, write corresponding region to HD
 	; Bit 0: custom region
-	ld a, (0x23908c:24); ld A, (0x2390E8)
+	ld a, (0x23908c:24); ld A, (0x23908C)
 	nop
 	and a, 0x01
 	nop
@@ -18095,7 +18083,7 @@ HDAE5000_PPORT_Cmd10_RcvDataFromPc:	; 0x29605A (570 bytes)
 	cp (HDAE5000_RAM_PportError:24), 0x01; error check
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)			; jp Z, abort
 	nop
-.Lrcv_bit1:				; 0x296122 — Bit 1
+.Lrcv_bit1:				; — Bit 1
 	ld a, (0x23908c:24)
 	nop
 	and a, 0x02
@@ -18111,7 +18099,7 @@ HDAE5000_PPORT_Cmd10_RcvDataFromPc:	; 0x29605A (570 bytes)
 	cp (HDAE5000_RAM_PportError:24), 0x01
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)
 	nop
-.Lrcv_bit2:				; 0x296150 — Bit 2
+.Lrcv_bit2:				; — Bit 2
 	ld a, (0x23908c:24)
 	nop
 	and a, 0x04
@@ -18127,7 +18115,7 @@ HDAE5000_PPORT_Cmd10_RcvDataFromPc:	; 0x29605A (570 bytes)
 	cp (HDAE5000_RAM_PportError:24), 0x01
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)
 	nop
-.Lrcv_bit3:				; 0x29617E — Bit 3
+.Lrcv_bit3:				; — Bit 3
 	ld a, (0x23908c:24)
 	nop
 	and a, 0x08
@@ -18144,7 +18132,7 @@ HDAE5000_PPORT_Cmd10_RcvDataFromPc:	; 0x29605A (570 bytes)
 	cp (HDAE5000_RAM_PportError:24), 0x01
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)
 	nop
-.Lrcv_bit4:				; 0x2961AE — Bit 4
+.Lrcv_bit4:				; — Bit 4
 	ld a, (0x23908c:24)
 	nop
 	and a, 0x10
@@ -18161,7 +18149,7 @@ HDAE5000_PPORT_Cmd10_RcvDataFromPc:	; 0x29605A (570 bytes)
 	cp (HDAE5000_RAM_PportError:24), 0x01
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)
 	nop
-.Lrcv_bit5:				; 0x2961DE — Bit 5
+.Lrcv_bit5:				; — Bit 5
 	ld a, (0x23908c:24)
 	nop
 	and a, 0x20
@@ -18178,7 +18166,7 @@ HDAE5000_PPORT_Cmd10_RcvDataFromPc:	; 0x29605A (570 bytes)
 	cp (HDAE5000_RAM_PportError:24), 0x01
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)
 	nop
-.Lrcv_bit7:				; 0x29620E — Bit 7
+.Lrcv_bit7:				; — Bit 7
 	ld a, (0x23908c:24)
 	nop
 	and a, 0x80
@@ -18195,8 +18183,8 @@ HDAE5000_PPORT_Cmd10_RcvDataFromPc:	; 0x29605A (570 bytes)
 	cp (HDAE5000_RAM_PportError:24), 0x01
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)
 	nop
-.Lrcv_flag2_bit0:			; 0x29623E — Flag byte 2, bit 0
-	ld a, (0x23908e:24); ld A, (0x2390EA)
+.Lrcv_flag2_bit0:			; — Flag byte 2, bit 0
+	ld a, (0x23908e:24); ld A, (0x23908E)
 	nop
 	and a, 0x01
 	nop
@@ -18211,14 +18199,14 @@ HDAE5000_PPORT_Cmd10_RcvDataFromPc:	; 0x29605A (570 bytes)
 	cp (HDAE5000_RAM_PportError:24), 0x01
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)
 	nop
-.Lrcv_finish:				; 0x29626C
+.Lrcv_finish:
 	; Restore XIX, write flag bytes back, display final status
 	ld xix, (HDAE5000_RAM_PportInfoPtr:24)
 	nop
-	ld a, (0x23908c:24); ld A, (0x2390E8)
+	ld a, (0x23908c:24); ld A, (0x23908C)
 	nop
 	ld (xix), a
-	ld a, (0x23908e:24); ld A, (0x2390EA)
+	ld a, (0x23908e:24); ld A, (0x23908E)
 	nop
 	ld (xix + 1), a
 	nop
@@ -18229,7 +18217,7 @@ HDAE5000_PPORT_Cmd10_RcvDataFromPc:	; 0x29605A (570 bytes)
 	ei 7
 	jp HDAE5000_PPORT_CommandDone
 
-HDAE5000_PPORT_Cmd11_SaveMemoryToHd:	; 0x296294 (150 bytes)
+HDAE5000_PPORT_Cmd11_SaveMemoryToHd:	; (150 bytes)
 	; PC-link command 11: HDAE5000_PPORT_CommandTable entry 10; first shows the
 	; status record "11>Save memory to HD" (HDAE5000_PPORT_Strings + 240, service 26).
 	; The description lines below predate this name and are not re-verified.
@@ -18284,14 +18272,14 @@ HDAE5000_PPORT_Cmd11_SaveMemoryToHd:	; 0x296294 (150 bytes)
 	jp z, (.Lwfsb_after_error:24)		; skip error handling
 	nop
 	call HDAE5000_PPORT_FlagPacketError
-.Lwfsb_after_error:			; 0x296316
+.Lwfsb_after_error:
 	call HDAE5000_PPORT_SendPacket
 	cp (HDAE5000_RAM_PportError:24), 0x01
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)		; exit to PPORT finish
 	nop
 	jp HDAE5000_PPORT_CommandDone
 
-HDAE5000_PPORT_Cmd12_Nothing:	; 0x29632A
+HDAE5000_PPORT_Cmd12_Nothing:
 	; PC-link command 12: HDAE5000_PPORT_CommandTable entry 11; first shows the
 	; status record "12>nothing" (HDAE5000_PPORT_Strings + 264, service 26).
 	; The description lines below predate this name and are not re-verified.
@@ -18303,7 +18291,7 @@ HDAE5000_PPORT_Cmd12_Nothing:	; 0x29632A
 	call HDAE5000_PPORT_CallService
 	jp HDAE5000_PPORT_CommandDone
 
-HDAE5000_PPORT_Cmd13_RcvDataFromPc:	; 0x29633C (362 bytes)
+HDAE5000_PPORT_Cmd13_RcvDataFromPc:	; (362 bytes)
 	; PC-link command 13: HDAE5000_PPORT_CommandTable entry 12; first shows the
 	; status record "13>Rcv data from PC" (HDAE5000_PPORT_Strings + 288, service 26).
 	; The description lines below predate this name and are not re-verified.
@@ -18338,7 +18326,7 @@ HDAE5000_PPORT_Cmd13_RcvDataFromPc:	; 0x29633C (362 bytes)
 	lda xiy, (HDAE5000_RAM_PportPacket:24)
 	nop
 	add xiy, 0x00000009			; XIY points to source data offset +9
-.Lsdb_copy_loop:			; 0x296394 — copy 26 bytes from XIY+BC to XIX+BC
+.Lsdb_copy_loop:			; — copy 26 bytes from XIY+BC to XIX+BC
 	cp bc, 0x001A				; 26 bytes?
 	jr z, .Lsdb_copy_done			; exit loop
 	ld	a, (xiy+bc)		; ld A, (XIY+BC) — source byte
@@ -18347,7 +18335,7 @@ HDAE5000_PPORT_Cmd13_RcvDataFromPc:	; 0x29633C (362 bytes)
 	nop
 	inc 1, bc
 	jr t, .Lsdb_copy_loop
-.Lsdb_copy_done:			; 0x2963AA
+.Lsdb_copy_done:
 	ld (HDAE5000_RAM_PportStepError:24), 0x00	; clear error flag
 	xor xbc, xbc
 	xor xde, xde
@@ -18366,7 +18354,7 @@ HDAE5000_PPORT_Cmd13_RcvDataFromPc:	; 0x29633C (362 bytes)
 	ldw wa, 0xff00				; error indicator
 	nop
 	ld (HDAE5000_RAM_PportStepError:24), 0x01	; set error flag
-.Lsdb_send_header:			; 0x2963DE
+.Lsdb_send_header:
 	call HDAE5000_PPORT_SendByte			; send header byte via PPORT
 	cp (HDAE5000_RAM_PportError:24), 0x01; error check
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)			; jp Z, abort
@@ -18374,7 +18362,7 @@ HDAE5000_PPORT_Cmd13_RcvDataFromPc:	; 0x29633C (362 bytes)
 	cp (HDAE5000_RAM_PportStepError:24), 0x01	; error flag set?
 	jp z, (.LPPORT_Cmd13_RcvDataFromPc_Skip1:24)			; exit
 	nop
-.Lsdb_sector_loop:			; 0x2963FA — main sector send loop
+.Lsdb_sector_loop:			; — main sector send loop
 	ld xwa, (HDAE5000_RAM_PportRegions+76:24)	; remaining count
 	nop
 	cp xwa, 0x00000000			; all done?
@@ -18400,7 +18388,7 @@ HDAE5000_PPORT_Cmd13_RcvDataFromPc:	; 0x29633C (362 bytes)
 	ldw wa, 0xff00				; error indicator
 	nop
 	ld (HDAE5000_RAM_PportStepError:24), 0x01; set error flag
-.Lsdb_send_sector:			; 0x29644C
+.Lsdb_send_sector:
 	call HDAE5000_PPORT_SendByte			; send byte
 	cp (HDAE5000_RAM_PportError:24), 0x01; error check
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)			; jp Z, abort
@@ -18414,7 +18402,7 @@ HDAE5000_PPORT_Cmd13_RcvDataFromPc:	; 0x29633C (362 bytes)
 	ld (HDAE5000_RAM_PportRegions+76:24), xwa; store back
 	nop
 	jp .Lsdb_sector_loop			; next sector
-.Lsdb_send_final:			; 0x29647A — send final status byte
+.Lsdb_send_final:			; — send final status byte
 	ldw wa, 0x0016				; display command (final)
 	nop
 	ei	0
@@ -18425,7 +18413,7 @@ HDAE5000_PPORT_Cmd13_RcvDataFromPc:	; 0x29633C (362 bytes)
 	nop
 	ldw wa, 0xFF00				; error indicator
 	nop
-.Lsdb_send_final2:			; 0x296492
+.Lsdb_send_final2:
 	call HDAE5000_PPORT_SendByte			; send final byte
 	cp (HDAE5000_RAM_PportError:24), 0x01; error check
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)			; jp Z, abort
@@ -18433,7 +18421,7 @@ HDAE5000_PPORT_Cmd13_RcvDataFromPc:	; 0x29633C (362 bytes)
 .LPPORT_Cmd13_RcvDataFromPc_Skip1:
 	jp HDAE5000_PPORT_CommandDone
 
-HDAE5000_PPORT_Cmd14_SendInfosToPc:	; 0x2964A6 (226 bytes)
+HDAE5000_PPORT_Cmd14_SendInfosToPc:	; (226 bytes)
 	; PC-link command 14: HDAE5000_PPORT_CommandTable entry 13; first shows the
 	; status record "14>Sending infos to PC" (HDAE5000_PPORT_Strings + 312, service 26).
 	; The description lines below predate this name and are not re-verified.
@@ -18467,7 +18455,7 @@ HDAE5000_PPORT_Cmd14_SendInfosToPc:	; 0x2964A6 (226 bytes)
 	jp z, (.Lsfl_build_buffer:24)		; skip cleanup
 	nop
 	call HDAE5000_PPORT_FlagPacketError
-.Lsfl_build_buffer:			; 0x2964FE
+.Lsfl_build_buffer:
 	lda xix, (HDAE5000_RAM_PportPacket:24)
 	nop
 	ld a, (HDAE5000_RAM_PportPartMask:24)
@@ -18520,7 +18508,7 @@ HDAE5000_PPORT_Cmd14_SendInfosToPc:	; 0x2964A6 (226 bytes)
 	nop
 	jp HDAE5000_PPORT_CommandDone
 
-HDAE5000_PPORT_Cmd15_Nothing:	; 0x296588
+HDAE5000_PPORT_Cmd15_Nothing:
 	; PC-link command 15: HDAE5000_PPORT_CommandTable entry 14; first shows the
 	; status record "15>nothing" (HDAE5000_PPORT_Strings + 336, service 26).
 	; The description lines below predate this name and are not re-verified.
@@ -18532,7 +18520,7 @@ HDAE5000_PPORT_Cmd15_Nothing:	; 0x296588
 	call HDAE5000_PPORT_CallService
 	jp HDAE5000_PPORT_CommandDone
 
-HDAE5000_PPORT_Cmd16_DeleteFiles:	; 0x29659A (230 bytes)
+HDAE5000_PPORT_Cmd16_DeleteFiles:	; (230 bytes)
 	; PC-link command 16: HDAE5000_PPORT_CommandTable entry 15; first shows the
 	; status record "16>Delete files" (HDAE5000_PPORT_Strings + 360, service 26).
 	; The description lines below predate this name and are not re-verified.
@@ -18553,7 +18541,7 @@ HDAE5000_PPORT_Cmd16_DeleteFiles:	; 0x29659A (230 bytes)
 	lda xix, (HDAE5000_RAM_PportPacket:24)
 	nop
 	ld a, (xix)			; A = cmd[0]
-	ld (0x239082:24), a; [0x2390DE] = cmd[0] (raw sector byte)
+	ld (0x239082:24), a; [0x239082] = cmd[0] (raw sector byte)
 	nop
 	ld w, (HDAE5000_RAM_PportArg3:24)
 	nop
@@ -18563,7 +18551,7 @@ HDAE5000_PPORT_Cmd16_DeleteFiles:	; 0x29659A (230 bytes)
 	ld (xix), w			; update cmd[0] with masked value
 	ld a, (xix + 1)			; A = cmd[1]
 	nop
-	ld (0x239084:24), a; [0x2390E0] = cmd[1] (raw head byte)
+	ld (0x239084:24), a; [0x239084] = cmd[1] (raw head byte)
 	nop
 	ld w, (HDAE5000_RAM_PportArg4:24)
 	nop
@@ -18580,11 +18568,11 @@ HDAE5000_PPORT_Cmd16_DeleteFiles:	; 0x29659A (230 bytes)
 	jp z, (.Lwmhd_done:24)
 	nop
 	jp .Lwmhd_do_write
-.Lwmhd_check_head:			; 0x29661C
+.Lwmhd_check_head:
 	cp (HDAE5000_RAM_PportPartMaskHi:24), 0x00
 	jp z, (.Lwmhd_done:24)
 	nop
-.Lwmhd_do_write:			; 0x296628
+.Lwmhd_do_write:
 	call HDAE5000_PPORT_ClearPacket
 	ld xix, (HDAE5000_RAM_PportInfoPtr:24)
 	nop
@@ -18610,15 +18598,15 @@ HDAE5000_PPORT_Cmd16_DeleteFiles:	; 0x29659A (230 bytes)
 	jp z, (.Lwmhd_after_write:24)		; skip error
 	nop
 	call HDAE5000_PPORT_FlagPacketError
-.Lwmhd_after_write:			; 0x29666C
+.Lwmhd_after_write:
 	call HDAE5000_PPORT_SendPacket
 	cp (HDAE5000_RAM_PportError:24), 0x01
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)		; exit
 	nop
-.Lwmhd_done:				; 0x29667C
+.Lwmhd_done:
 	jp HDAE5000_PPORT_CommandDone
 
-HDAE5000_PPORT_Cmd17_FormatHd:	; 0x296680 (62 bytes)
+HDAE5000_PPORT_Cmd17_FormatHd:	; (62 bytes)
 	; PC-link command 17: HDAE5000_PPORT_CommandTable entry 16; first shows the
 	; status record "17>Formating HD" (HDAE5000_PPORT_Strings + 384, service 26).
 	; The description lines below predate this name and are not re-verified.
@@ -18645,7 +18633,7 @@ HDAE5000_PPORT_Cmd17_FormatHd:	; 0x296680 (62 bytes)
 	nop
 	jp HDAE5000_PPORT_CommandDone
 
-HDAE5000_PPORT_Cmd18_SwitchHdMotorOff:	; 0x2966BE (60 bytes)
+HDAE5000_PPORT_Cmd18_SwitchHdMotorOff:	; (60 bytes)
 	; PC-link command 18: HDAE5000_PPORT_CommandTable entry 17; first shows the
 	; status record "18>Switch HD-motor off" (HDAE5000_PPORT_Strings + 408, service 26).
 	; The description lines below predate this name and are not re-verified.
@@ -18671,7 +18659,7 @@ HDAE5000_PPORT_Cmd18_SwitchHdMotorOff:	; 0x2966BE (60 bytes)
 	nop
 	jp HDAE5000_PPORT_CommandDone
 
-HDAE5000_PPORT_Cmd19_Nothing:	; 0x2966FA
+HDAE5000_PPORT_Cmd19_Nothing:
 	; PC-link command 19: HDAE5000_PPORT_CommandTable entry 18; first shows the
 	; status record "19>nothing" (HDAE5000_PPORT_Strings + 432, service 26).
 	; The description lines below predate this name and are not re-verified.
@@ -18683,7 +18671,7 @@ HDAE5000_PPORT_Cmd19_Nothing:	; 0x2966FA
 	call HDAE5000_PPORT_CallService
 	jp HDAE5000_PPORT_CommandDone
 
-HDAE5000_PPORT_Cmd20_SendXapFileFlash:	; 0x29670C (164 bytes)
+HDAE5000_PPORT_Cmd20_SendXapFileFlash:	; (164 bytes)
 	; PC-link command 20: HDAE5000_PPORT_CommandTable entry 19; first shows the
 	; status record "20>Send XapFile flash" (HDAE5000_PPORT_Strings + 456, service 26).
 	; The description lines below predate this name and are not re-verified.
@@ -18704,11 +18692,11 @@ HDAE5000_PPORT_Cmd20_SendXapFileFlash:	; 0x29670C (164 bytes)
 	nop
 	ld xwa, (xix + 2)			; read 32-bit parameter
 	nop
-	ld (0x2390a8:24), xwa; st (0x239104), XWA — store parameter
+	ld (0x2390a8:24), xwa; st (0x2390a8), XWA — store parameter
 	nop
 	ld xiy, 0x00010000			; block size 64KB
 	nop
-	ld xde, (0x2390a8:24); ld XDE, (0x239104)
+	ld xde, (0x2390a8:24); ld XDE, (0x2390a8)
 	nop
 	call HDAE5000_PPORT_RecvBlock				; execute operation
 	cp (HDAE5000_RAM_PportError:24), 0x01	; check status flag
@@ -18721,7 +18709,7 @@ HDAE5000_PPORT_Cmd20_SendXapFileFlash:	; 0x29670C (164 bytes)
 	ldw wa, 0x001C				; display command
 	nop
 	call HDAE5000_PPORT_CallService
-	ld (0x23909e:24), wa; st (0x2390FA), WA — save result
+	ld (0x23909e:24), wa; st (0x23909E), WA — save result
 	nop
 	ei	0					; IFF=0: accepts every interrupt level (06 00; was mis-spelled `di`)
 	ld xbc, 0:i3
@@ -18729,7 +18717,7 @@ HDAE5000_PPORT_Cmd20_SendXapFileFlash:	; 0x29670C (164 bytes)
 	ldw wa, 0x001E				; display command
 	nop
 	call HDAE5000_PPORT_CallService
-	ld wa, (0x23909e:24); ld WA, (0x2390FA) — reload result
+	ld wa, (0x23909e:24); ld WA, (0x23909E) — reload result
 	nop
 	cp wa, 0x0058				; check result value
 	jp z, (.Lpu3_success:24)			; jump if success
@@ -18750,7 +18738,7 @@ HDAE5000_PPORT_Cmd20_SendXapFileFlash:	; 0x29670C (164 bytes)
 	call HDAE5000_PPORT_CallService
 	jp HDAE5000_PPORT_CommandDone
 
-HDAE5000_PPORT_CommandDone:	; 0x2967B0 (4 bytes)
+HDAE5000_PPORT_CommandDone:	; (4 bytes)
 	; PPORT command completion - jump to finish handler
 	jp HDAE5000_PPORT_CommandLoop_Poll
 
@@ -18887,7 +18875,7 @@ HDAE5000_PPORT_SendPacket:
 	ld bc, 0:i3				; counter = 0
 	lda xix, (HDAE5000_RAM_PportPacket:24)
 	nop
-.Lpsb_loop1:				; 0x29689A — send buffer bytes and accumulate checksum
+.Lpsb_loop1:				; — send buffer bytes and accumulate checksum
 	cp bc, 0x0100				; 256 iterations?
 	jp z, (.Lpsb_send_checksum:24)			; done, send checksum
 	nop
@@ -18903,11 +18891,11 @@ HDAE5000_PPORT_SendPacket:
 	nop
 	inc 1, bc
 	jr t, .Lpsb_loop1
-.Lpsb_send_checksum:			; 0x2968C8
+.Lpsb_send_checksum:
 	ld bc, 0:i3
 	lda xix, (HDAE5000_RAM_PportChecksum:24)	; checksum bytes
 	nop
-.Lpsb_loop2:				; 0x2968D0 — send 4 checksum bytes
+.Lpsb_loop2:				; — send 4 checksum bytes
 	cp bc, 4:i3
 	jp z, (.Lpsb_finalize:24)			; done
 	nop
@@ -18919,12 +18907,12 @@ HDAE5000_PPORT_SendPacket:
 	nop
 	inc 1, bc
 	jr t, .Lpsb_loop2
-.Lpsb_finalize:				; 0x2968F2
+.Lpsb_finalize:
 	call HDAE5000_PPORT_EndBlock			; finalize transfer
 	cp w, 0:i3				; check result
 	jr z, .Lpsb_exit
 	jp HDAE5000_PPORT_SendPacket		; retry
-.Lpsb_exit:				; 0x2968FE
+.Lpsb_exit:
 	ret
 	nop
 
@@ -18936,7 +18924,7 @@ HDAE5000_PPORT_SendPacket:
 ; HDAE5000_RAM_PportError = 1 and the byte is abandoned.
 ; Out: W = byte.  Clobbers A, L.
 ; ---------------------------------------------------------------------------
-HDAE5000_PPORT_RecvByte:			; 0x296900 — Read one byte from parallel port → W
+HDAE5000_PPORT_RecvByte:			; — Read one byte from parallel port → W
 	ld a, (HDAE5000_IO_PpiPortC:24)
 	nop
 	ld l, a
@@ -19015,7 +19003,7 @@ HDAE5000_PPORT_RecvByte:			; 0x296900 — Read one byte from parallel port → W
 ; Out: clobbers A, L.
 ; I/O: HDAE5000_IO_PpiPortA, _PpiPortB, _PpiPortC
 ; ---------------------------------------------------------------------------
-HDAE5000_PPORT_SendByte:			; 0x2969A0 — Write byte W to parallel port
+HDAE5000_PPORT_SendByte:			; — Write byte W to parallel port
 	ld a, (HDAE5000_IO_PpiPortC:24)	; status
 	nop
 	ld l, a
@@ -19037,7 +19025,7 @@ HDAE5000_PPORT_SendByte:			; 0x2969A0 — Write byte W to parallel port
 	nop
 	ld (HDAE5000_IO_PpiPortB:24), a
 	nop
-.Lpsb_write_phase2:			; 0x2969D6
+.Lpsb_write_phase2:
 	ld a, (HDAE5000_IO_PpiPortC:24)
 	nop
 	ld l, a
@@ -19057,7 +19045,7 @@ HDAE5000_PPORT_SendByte:			; 0x2969A0 — Write byte W to parallel port
 	nop
 	ld (HDAE5000_IO_PpiPortB:24), a
 	nop
-.Lpsb_write_phase3:			; 0x296A06
+.Lpsb_write_phase3:
 	ld a, (HDAE5000_IO_PpiPortC:24)
 	nop
 	ld l, a
@@ -19073,7 +19061,7 @@ HDAE5000_PPORT_SendByte:			; 0x2969A0 — Write byte W to parallel port
 	nop
 	ret
 	nop
-.Lpsb_write_error:			; 0x296A28
+.Lpsb_write_error:
 	ld (HDAE5000_RAM_PportError:24), 0x01	; set error flag
 	ret
 	nop
@@ -19085,7 +19073,7 @@ HDAE5000_PPORT_SendByte:			; 0x2969A0 — Write byte W to parallel port
 ; HDAE5000_RAM_PportError = 1.
 ; Out: W = 0 (block accepted) or 1 (resend).  Clobbers A, L.
 ; ---------------------------------------------------------------------------
-HDAE5000_PPORT_EndBlock:				; 0x296A30 — Finalize parallel port transfer
+HDAE5000_PPORT_EndBlock:				; — Finalize parallel port transfer
 	ld a, (HDAE5000_IO_PpiPortB:24)
 	nop
 	and a, 0xF7
@@ -19172,7 +19160,7 @@ HDAE5000_PPORT_FlagPacketError:
 ; link packet.
 ; In:  BC = first offset, HL = end offset
 ; ---------------------------------------------------------------------------
-HDAE5000_PPORT_CopyInfoToPacket:				; 0x296AC4 — Display + save XIX + copy buffer
+HDAE5000_PPORT_CopyInfoToPacket:				; — Display + save XIX + copy buffer
 	pushw bc
 	nop
 	pushw hl
@@ -19209,7 +19197,7 @@ HDAE5000_PPORT_CopyInfoToPacket:				; 0x296AC4 — Display + save XIX + copy buf
 ; returns W != 0.  Stops when HDAE5000_RAM_PportError is set.
 ; In:  XIY = data, XDE = byte count
 ; ---------------------------------------------------------------------------
-HDAE5000_PPORT_SendBlock:			; 0x296AF8 — Send XIY bytes to PPORT with checksum
+HDAE5000_PPORT_SendBlock:			; — Send XIY bytes to PPORT with checksum
 	ld (HDAE5000_RAM_PportBlockPtr:24), xiy
 	nop
 	ld (HDAE5000_RAM_PportBlockLen:24), xde
@@ -19271,7 +19259,7 @@ HDAE5000_PPORT_SendBlock:			; 0x296AF8 — Send XIY bytes to PPORT with checksum
 ; HDAE5000_RAM_PportError is set.
 ; In:  XIY = buffer, XDE = byte count
 ; ---------------------------------------------------------------------------
-HDAE5000_PPORT_RecvBlock:		; 0x296B7E — Receive XDE bytes into XIY with checksum
+HDAE5000_PPORT_RecvBlock:		; — Receive XDE bytes into XIY with checksum
 	ld (HDAE5000_RAM_PportBlockPtr:24), xiy
 	nop
 	ld (HDAE5000_RAM_PportBlockLen:24), xde
@@ -19347,7 +19335,7 @@ HDAE5000_PPORT_RecvBlock:		; 0x296B7E — Receive XDE bytes into XIY with checks
 ; send the 4 checksum bytes back and HDAE5000_PPORT_EndBlock; again while it
 ; returns W != 0.
 ; ---------------------------------------------------------------------------
-HDAE5000_PPORT_RecvSector:		; 0x296C2A — Receive 512-byte sector block
+HDAE5000_PPORT_RecvSector:		; — Receive 512-byte sector block
 	xor xwa, xwa
 	ld (HDAE5000_RAM_PportChecksum:24), xwa
 	nop
@@ -19400,7 +19388,7 @@ HDAE5000_PPORT_RecvSector:		; 0x296C2A — Receive 512-byte sector block
 ; size} longs) as one checksummed block, then HDAE5000_PPORT_EndBlock; again
 ; while it returns W != 0.
 ; ---------------------------------------------------------------------------
-HDAE5000_PPORT_SendTwoRegions:			; 0x296CA0 — Send two descriptor regions + checksum
+HDAE5000_PPORT_SendTwoRegions:			; — Send two descriptor regions + checksum
 	ld xiy, (HDAE5000_RAM_PportRegions:24)
 	nop
 	ld xde, (HDAE5000_RAM_PportRegions+4:24)
@@ -19478,7 +19466,7 @@ HDAE5000_PPORT_SendTwoRegions:			; 0x296CA0 — Send two descriptor regions + ch
 ; established), then the 4 checksum bytes back and HDAE5000_PPORT_EndBlock;
 ; again while it returns W != 0.
 ; ---------------------------------------------------------------------------
-HDAE5000_PPORT_RecvCustomData:		; 0x296D54 — Receive custom ROM data
+HDAE5000_PPORT_RecvCustomData:		; — Receive custom ROM data
 	ld xiy, 0x0000F980
 	nop
 	ld xde, 0x00000640
@@ -19560,7 +19548,7 @@ HDAE5000_PPORT_RecvCustomData:		; 0x296D54 — Receive custom ROM data
 ; 0x5000).  The slots of HDAE5000_RAM_PportRegions are cleared first.  Stops
 ; at the first lookup that fails (PportStepError = 1).
 ; ---------------------------------------------------------------------------
-HDAE5000_PPORT_InitRegionDescriptors:	; 0x296E08 — Initialize region descriptors
+HDAE5000_PPORT_InitRegionDescriptors:	; — Initialize region descriptors
 	ld xwa, 0:i3
 	ld (HDAE5000_RAM_PportRegions+4:24), xwa
 	nop
@@ -19797,7 +19785,7 @@ HDAE5000_PPORT_InitRegionDescriptors_Lookup:
 ; send it byte by byte, then the checksum and HDAE5000_PPORT_EndBlock; the whole
 ; transfer is repeated while EndBlock returns W != 0.
 ; ---------------------------------------------------------------------------
-HDAE5000_PPORT_SendRegionToPc:		; 0x297054 — Send region data to PC
+HDAE5000_PPORT_SendRegionToPc:		; — Send region data to PC
 	ld xwa, (HDAE5000_RAM_PportBytesLeft:24)
 	nop
 	ld (HDAE5000_RAM_PportBlockPtr:24), xwa
@@ -19948,7 +19936,7 @@ HDAE5000_Check_HD_Present:
 ;   - sprintf-like string formatting library (decimal/hex/octal conversion)
 ; ============================================================================
 
-HDAE5000_HD_Init:	; 0x2971B7 (1902 bytes)
+HDAE5000_HD_Init:	; (1902 bytes)
 	; HD bring-up.  Each step's failure stores its code in RAM 0x229D92
 	; (read back by HDAE5000_Check_HD_Present) and ends at HDAE5000_HD_Init_Fail:
 	;   2  the 32 KB SRAM at 0x230F1C-0x238F1B does not hold 0x5A5A
@@ -20009,8 +19997,8 @@ HDAE5000_HD_Init_SramClearLoop:
 	ld	(HDAE5000_RAM_LoadByNumberMode:24), 1
 	ld	(HDAE5000_RAM_JumpAfterLoad:24), 1
 	ld	(HDAE5000_RAM_LyricJump:24), 1
-	ld	(HDAE5000_RAM_LyricForeColor:24), 0
-	ld	(HDAE5000_RAM_LyricBackColor:24), 1
+	ld	(0x229dc6:24), 0
+	ld	(0x229dd7:24), 1
 	ld	xwa, 0x000017a8
 	ld	(0x229d78), xwa
 	lda xix, (0x2013b2:24)
@@ -20697,7 +20685,7 @@ HDAE5000_HD_UDiv32:
 	; Fill HD file allocation tables with spaces, zeros, 0xFFFFFFFF markers
 	; (blank images of the filesystem tables before HDAE5000_HD_ReadTables
 	; or a format; called from HDAE5000_HD_Init and one other site)
-HDAE5000_HD_InitTables:				; 0x29797F
+HDAE5000_HD_InitTables:
 	push xwa
 	push xbc
 	push xde
@@ -20715,15 +20703,15 @@ HDAE5000_HD_InitTables:				; 0x29797F
 	inc 1, xix
 	jp .Lhciv_fill1
 	; Region 2: structured fill 0x201DB2-0x2257B2 (76-byte records)
-.Lhciv_section2:			; 0x2979A0
+.Lhciv_section2:
 	ld xix, HDAE5000_RAM_SongRecords
 	ld xiy, HDAE5000_RAM_FlsRecords
-.Lhciv_outer2:				; 0x2979AA
+.Lhciv_outer2:
 	cp xix, xiy
 	jp z, (.Lhciv_section3:24)		; jp Z, .Lhciv_section3
 	; Inner: 26 bytes of 0x20 (space)
 	xor xbc, xbc
-.Lhciv_space26:				; 0x2979B3
+.Lhciv_space26:
 	cp xbc, 26
 	jp z, (.Lhciv_zeros:24)		; jp Z, .Lhciv_zeros
 	push xix
@@ -20733,9 +20721,9 @@ HDAE5000_HD_InitTables:				; 0x29797F
 	inc 1, xbc
 	jp .Lhciv_space26
 	; Inner: 10 bytes of 0x00 at offset 26
-.Lhciv_zeros:				; 0x2979CB
+.Lhciv_zeros:
 	ld bc, 0:i3
-.Lhciv_zeros_loop:			; 0x2979CD
+.Lhciv_zeros_loop:
 	cp bc, 10
 	jp z, (HDAE5000_HD_InitTables_Skip:24)		; jp Z, HDAE5000_HD_InitTables_Skip
 	pushw bc
@@ -20746,9 +20734,9 @@ HDAE5000_HD_InitTables:				; 0x29797F
 	inc 1, bc
 	jp .Lhciv_zeros_loop
 	; Inner: 10 × 32-bit 0xFFFFFFFF at offset 36
-HDAE5000_HD_InitTables_Skip:				; 0x2979E9
+HDAE5000_HD_InitTables_Skip:
 	xor xbc, xbc
-.Lhciv_ff_loop:				; 0x2979EB
+.Lhciv_ff_loop:
 	cp xbc, 10
 	jp z, (.Lhciv_next_record:24)		; jp Z, .Lhciv_next_record
 	push xbc
@@ -20766,14 +20754,14 @@ HDAE5000_HD_InitTables_Skip:				; 0x2979E9
 	inc 1, xbc
 	jp .Lhciv_ff_loop
 	; Advance to next 76-byte record
-.Lhciv_next_record:			; 0x297A19
+.Lhciv_next_record:
 	add xix, 76
 	jp .Lhciv_outer2
 	; Region 3: fill 0x2257B2-0x229B32 with 0x00
-.Lhciv_section3:			; 0x297A23
+.Lhciv_section3:
 	ld xix, HDAE5000_RAM_FlsRecords
 	ld xiy, 2267954		; 0x229B32
-.Lhciv_fill_zero:			; 0x297A2D
+.Lhciv_fill_zero:
 	cp xix, xiy
 	jp z, (.Lhciv_section4:24)		; jp Z, .Lhciv_section4
 	ld (xix), 0
@@ -20781,24 +20769,24 @@ HDAE5000_HD_InitTables_Skip:				; 0x2979E9
 	jp .Lhciv_fill_zero
 	; Region 4: fill 0x2257B2 in blocks of 144-byte rows, 120 rows,
 	; 16 bytes of 0x20 per row
-.Lhciv_section4:			; 0x297A3D
+.Lhciv_section4:
 	ld xix, HDAE5000_RAM_FlsRecords
 	ld hl, 0:i3			; row counter
-.Lhciv_row_loop:			; 0x297A44
+.Lhciv_row_loop:
 	cp hl, 120			; 0x78 rows total
 	jp z, (.Lhciv_mem_exit:24)		; jp Z, .Lhciv_mem_exit
 	ld bc, 0:i3			; column counter
-.Lhciv_col_loop:			; 0x297A4F
+.Lhciv_col_loop:
 	cp bc, 16			; 16 bytes per row
 	jp z, (.Lhciv_next_row:24)		; jp Z, .Lhciv_next_row
 	ld	(xix+bc), 0x20
 	inc 1, bc
 	jp .Lhciv_col_loop
-.Lhciv_next_row:			; 0x297A64
+.Lhciv_next_row:
 	add xix, 144			; 0x90 bytes per row stride
 	inc 1, hl
 	jp .Lhciv_row_loop
-.Lhciv_mem_exit:			; 0x297A70
+.Lhciv_mem_exit:
 	pop xiz
 	pop xiy
 	pop xix
@@ -20811,7 +20799,7 @@ HDAE5000_HD_InitTables_Skip:				; 0x2979E9
 	; --- HD presence check wrapper ---
 	; Calls HD config init, returns HL = 0 (success) or 0xFFFF (error)
 	; (C-callable wrapper of HDAE5000_HD_WriteTables, not a presence check.)
-HDAE5000_HD_WriteTables_Status:			; 0x297A78
+HDAE5000_HD_WriteTables_Status:
 	call HDAE5000_HD_WriteTables
 	xor hl, hl
 	cp (HDAE5000_RAM_AtaError:24), 0x00
@@ -20826,7 +20814,7 @@ HDAE5000_HD_WriteTables_Status:			; 0x297A78
 	; 0x229B31 (HDAE5000_HD_InitTables' regions), written to sector
 	; (0x229C64) = 3908 on; then every sector is read back into 0x200228 and
 	; compared 4 bytes at a time.  7 retries; failure -> 0x200222 = 1.
-HDAE5000_HD_WriteTables:			; 0x297A8D
+HDAE5000_HD_WriteTables:
 	push xwa
 	push xbc
 	push xde
@@ -20835,14 +20823,14 @@ HDAE5000_HD_WriteTables:			; 0x297A8D
 	push xiy
 	push xiz
 	ld (HDAE5000_RAM_HdRetries:24), 0x07	; retry counter
-.Lhciv_config_restart:			; 0x297A9A
+.Lhciv_config_restart:
 	ld xwa, (HDAE5000_RAM_TablesStartSector:24)	; HD base sector
 	ld (HDAE5000_RAM_HdTablesSector:24), xwa
 	ld xwa, HDAE5000_RAM_DirNames	; RAM buffer base
 	ld (HDAE5000_RAM_HdTablesPtr:24), xwa
 	xor xwa, xwa
 	ld (HDAE5000_RAM_HdTablesCount:24), xwa
-.Lhciv_write_loop:			; 0x297AB5
+.Lhciv_write_loop:
 	ld xwa, 323			; 0x143 — total sectors
 	cp (HDAE5000_RAM_HdTablesCount:24), xwa	; counter == 323?
 	jp z, (.Lhdd_verify1:24)		; verify phase
@@ -20851,7 +20839,7 @@ HDAE5000_HD_WriteTables:			; 0x297A8D
 	call HDAE5000_ATA_WriteSector			; write sector to HD
 	; Function continues in next block (HD_Detect_Drive)
 
-HDAE5000_HD_WriteTables_Next:	; 0x297AD2 (836 bytes)
+HDAE5000_HD_WriteTables_Next:	; (836 bytes)
 	; (no caller: this label sits inside HDAE5000_HD_WriteTables, right after
 	; its HDAE5000_ATA_WriteSector call; it was HD_Detect_Drive, a region
 	; name.  The region also holds HDAE5000_HD_ReadTables and
@@ -20874,14 +20862,14 @@ HDAE5000_HD_WriteTables_Next:	; 0x297AD2 (836 bytes)
 	jp .Lhciv_write_loop		; loop back to write phase
 
 	; --- Verify phase: read back each sector, compare with RAM ---
-.Lhdd_verify1:				; 0x297B09
+.Lhdd_verify1:
 	ld xwa, (HDAE5000_RAM_TablesStartSector:24)	; base sector
 	ld (HDAE5000_RAM_HdTablesSector:24), xwa
 	ld xwa, HDAE5000_RAM_DirNames
 	ld (HDAE5000_RAM_HdTablesPtr:24), xwa
 	xor xwa, xwa
 	ld (HDAE5000_RAM_HdTablesCount:24), xwa; counter = 0
-.Lhdd_verify_loop1:			; 0x297B24
+.Lhdd_verify_loop1:
 	ld xwa, 323
 	cp (HDAE5000_RAM_HdTablesCount:24), xwa; counter == 323?
 	jp z, (.Lhdd_success1:24)		; jp Z, .Lhdd_success1
@@ -20894,7 +20882,7 @@ HDAE5000_HD_WriteTables_Next:	; 0x297AD2 (836 bytes)
 	ld xix, (HDAE5000_RAM_HdTablesPtr:24); XIX = RAM buffer ptr
 	ld xiy, HDAE5000_RAM_HdSectorBuffer			; XIY = read buffer
 	ld bc, 0:i3
-.Lhdd_compare_loop1:			; 0x297B5D
+.Lhdd_compare_loop1:
 	cp bc, 512			; compared all 512 bytes?
 	jp z, (.Lhdd_verify_next1:24)		; jp Z, .Lhdd_verify_next1
 	ld	xwa, (xix+bc)	; XWA = (XIX+BC)
@@ -20902,7 +20890,7 @@ HDAE5000_HD_WriteTables_Next:	; 0x297AD2 (836 bytes)
 	jp nz, (.Lhdd_error1:24)		; jp NZ, .Lhdd_error1
 	inc 4, bc			; 4 bytes at a time
 	jp .Lhdd_compare_loop1
-.Lhdd_verify_next1:			; 0x297B7B
+.Lhdd_verify_next1:
 	ld xwa, (HDAE5000_RAM_HdTablesSector:24); sector++
 	inc 1, xwa
 	ld (HDAE5000_RAM_HdTablesSector:24), xwa
@@ -20915,7 +20903,7 @@ HDAE5000_HD_WriteTables_Next:	; 0x297AD2 (836 bytes)
 	jp .Lhdd_verify_loop1
 
 	; --- Success exit 1 ---
-.Lhdd_success1:			; 0x297BA7
+.Lhdd_success1:
 	pop xiz
 	pop xiy
 	pop xix
@@ -20926,12 +20914,12 @@ HDAE5000_HD_WriteTables_Next:	; 0x297AD2 (836 bytes)
 	ret
 
 	; --- Error handler 1: retry or set error flag ---
-.Lhdd_error1:				; 0x297BAF
+.Lhdd_error1:
 	cp (HDAE5000_RAM_HdRetries:24), 0x00
 	jp z, (.Lhdd_final_error1:24)		; jp Z, .Lhdd_final_error1
 	dec 1, (HDAE5000_RAM_HdRetries:24); retry--
 	jp .Lhciv_config_restart	; restart from scratch
-.Lhdd_final_error1:			; 0x297BC3
+.Lhdd_final_error1:
 	ld (HDAE5000_RAM_AtaError:24), 0x01
 	xor xwa, xwa
 	ld (HDAE5000_RAM_FreeClusters:24), xwa	; clear
@@ -20939,18 +20927,18 @@ HDAE5000_HD_WriteTables_Next:	; 0x297AD2 (836 bytes)
 
 	; === HD Config Read+Verify Wrapper ===
 	; Calls config init 2, returns HL = 0 (ok) or 0xFFFF (error)
-HDAE5000_HD_ReadTables_Status:				; 0x297BD4
+HDAE5000_HD_ReadTables_Status:
 	call HDAE5000_HD_ReadTables
 	xor hl, hl
 	cp (HDAE5000_RAM_AtaError:24), 0x00; error?
 	jp z, (.Lhdd_wrapper2_ret:24)		; jp Z, .Lhdd_wrapper2_ret
 	ldw hl, 65535
-.Lhdd_wrapper2_ret:			; 0x297BE8
+.Lhdd_wrapper2_ret:
 	ret
 
 	; === HD Config Init 2: Read all sectors, then verify by re-reading ===
 	; (the 323 filesystem-table sectors at (0x229C64) into RAM 0x201632)
-HDAE5000_HD_ReadTables:			; 0x297BE9
+HDAE5000_HD_ReadTables:
 	push xwa
 	push xbc
 	push xde
@@ -20959,7 +20947,7 @@ HDAE5000_HD_ReadTables:			; 0x297BE9
 	push xiy
 	push xiz
 	ld (HDAE5000_RAM_HdRetries:24), 0x07; retry = 7
-.Lhdd_restart2:				; 0x297BF6
+.Lhdd_restart2:
 	ld xwa, (HDAE5000_RAM_TablesStartSector:24); base sector
 	ld (HDAE5000_RAM_HdTablesSector:24), xwa
 	ld xwa, HDAE5000_RAM_DirNames
@@ -20967,7 +20955,7 @@ HDAE5000_HD_ReadTables:			; 0x297BE9
 	xor xwa, xwa
 	ld (HDAE5000_RAM_HdTablesCount:24), xwa; counter = 0
 	; Read phase: read each of 323 sectors into RAM
-.Lhdd_read_loop2:			; 0x297C11
+.Lhdd_read_loop2:
 	ld xwa, 323
 	cp (HDAE5000_RAM_HdTablesCount:24), xwa; counter == 323?
 	jp z, (.Lhdd_verify_start2:24)		; jp Z, .Lhdd_verify_start2
@@ -20988,14 +20976,14 @@ HDAE5000_HD_ReadTables:			; 0x297BE9
 	ld (HDAE5000_RAM_HdTablesPtr:24), xwa
 	jp .Lhdd_read_loop2
 	; Verify phase: re-read each sector, compare with RAM copy
-.Lhdd_verify_start2:			; 0x297C6A
+.Lhdd_verify_start2:
 	ld xwa, (HDAE5000_RAM_TablesStartSector:24)
 	ld (HDAE5000_RAM_HdTablesSector:24), xwa
 	ld xwa, HDAE5000_RAM_DirNames
 	ld (HDAE5000_RAM_HdTablesPtr:24), xwa
 	xor xwa, xwa
 	ld (HDAE5000_RAM_HdTablesCount:24), xwa
-.Lhdd_verify_loop2:			; 0x297C85
+.Lhdd_verify_loop2:
 	ld xwa, 323
 	cp (HDAE5000_RAM_HdTablesCount:24), xwa
 	jp z, (.Lhdd_success2:24)		; jp Z, .Lhdd_success2
@@ -21008,7 +20996,7 @@ HDAE5000_HD_ReadTables:			; 0x297BE9
 	ld xix, (HDAE5000_RAM_HdTablesPtr:24); RAM buffer
 	ld xiy, HDAE5000_RAM_HdSectorBuffer			; read buffer
 	ld bc, 0:i3
-.Lhdd_compare_loop2:			; 0x297CBE
+.Lhdd_compare_loop2:
 	cp bc, 512
 	jp z, (.Lhdd_verify_next2:24)		; jp Z, .Lhdd_verify_next2
 	ld	xwa, (xix+bc)	; XWA = (XIX+BC)
@@ -21016,7 +21004,7 @@ HDAE5000_HD_ReadTables:			; 0x297BE9
 	jp nz, (.Lhdd_error2:24)		; jp NZ, .Lhdd_error2
 	inc 4, bc
 	jp .Lhdd_compare_loop2
-.Lhdd_verify_next2:			; 0x297CDC
+.Lhdd_verify_next2:
 	ld xwa, (HDAE5000_RAM_HdTablesSector:24)
 	inc 1, xwa
 	ld (HDAE5000_RAM_HdTablesSector:24), xwa
@@ -21028,7 +21016,7 @@ HDAE5000_HD_ReadTables:			; 0x297BE9
 	ld (HDAE5000_RAM_HdTablesPtr:24), xwa
 	jp .Lhdd_verify_loop2
 
-.Lhdd_success2:			; 0x297D08
+.Lhdd_success2:
 	pop xiz
 	pop xiy
 	pop xix
@@ -21038,12 +21026,12 @@ HDAE5000_HD_ReadTables:			; 0x297BE9
 	pop xwa
 	ret
 
-.Lhdd_error2:				; 0x297D10
+.Lhdd_error2:
 	cp (HDAE5000_RAM_HdRetries:24), 0x00
 	jp z, (.Lhdd_final_error2:24)		; jp Z, .Lhdd_final_error2
 	dec 1, (HDAE5000_RAM_HdRetries:24)
 	jp .Lhdd_restart2
-.Lhdd_final_error2:			; 0x297D24
+.Lhdd_final_error2:
 	ld (HDAE5000_RAM_AtaError:24), 0x01
 	xor xwa, xwa
 	ld (HDAE5000_RAM_FreeClusters:24), xwa
@@ -21051,13 +21039,13 @@ HDAE5000_HD_ReadTables:			; 0x297BE9
 
 	; === HD Count Used Sectors Wrapper ===
 	; Returns XHL = the FREE-cluster count (0x229C80), or 0 on error.
-HDAE5000_HD_CountFreeClusters_Status:				; 0x297D35
+HDAE5000_HD_CountFreeClusters_Status:
 	call HDAE5000_HD_CountFreeClusters
 	ld xhl, (HDAE5000_RAM_FreeClusters:24)
 	cp (HDAE5000_RAM_AtaError:24), 0x00
 	jr z, .Lhdd_wrapper3_ret
 	xor xhl, xhl			; error → return 0
-.Lhdd_wrapper3_ret:			; 0x297D48
+.Lhdd_wrapper3_ret:
 	ret
 
 	; === Count Used Sectors ===
@@ -21065,7 +21053,7 @@ HDAE5000_HD_CountFreeClusters_Status:				; 0x297D35
 	; entries, (0x229C70) entries in all, into 0x229C80.  Zero = free: the
 	; allocator at 0x297E16 writes chains ending 0xFFFFFFFE and then
 	; subtracts the clusters it took from this same count.  5 retries.
-HDAE5000_HD_CountFreeClusters:			; 0x297D49
+HDAE5000_HD_CountFreeClusters:
 	push xwa
 	push xbc
 	push xde
@@ -21074,14 +21062,14 @@ HDAE5000_HD_CountFreeClusters:			; 0x297D49
 	push xiy
 	push xiz
 	ld (HDAE5000_RAM_HdRetries:24), 0x05; retry = 5
-.Lhdd_restart3:				; 0x297D56
+.Lhdd_restart3:
 	xor xwa, xwa
 	ld (HDAE5000_RAM_FreeClusters:24), xwa; free count = 0
 	ld xwa, (HDAE5000_RAM_FatStartSector:24)	; base sector from
 	ld (HDAE5000_RAM_HdCountSector:24), xwa	; → current sector
 	xor xwa, xwa
 	ld (HDAE5000_RAM_HdCountEntries:24), xwa
-.Lhdd_outer3:				; 0x297D6E
+.Lhdd_outer3:
 	ld xwa, (HDAE5000_RAM_FatEntryCount:24)	; total sectors
 	cp (HDAE5000_RAM_HdCountEntries:24), xwa; counter >= total?
 	jp nc, (.Lhdd_success3:24)		; jp NC, .Lhdd_success3
@@ -21093,7 +21081,7 @@ HDAE5000_HD_CountFreeClusters:			; 0x297D49
 	jp nz, (.Lhdd_error3:24)		; jp NZ, .Lhdd_error3
 	lda xix, (HDAE5000_RAM_HdSectorBuffer:24)
 	ld bc, 0:i3
-.Lhdd_inner3:				; 0x297DA2
+.Lhdd_inner3:
 	cp bc, 512			; scanned all bytes?
 	jp z, (.Lhdd_next_sector3:24)		; jp Z, .Lhdd_next_sector3
 	ld xwa, (HDAE5000_RAM_HdCountEntries:24); increment scan counter
@@ -21107,13 +21095,13 @@ HDAE5000_HD_CountFreeClusters:			; 0x297D49
 	inc 1, xwa
 	ld (HDAE5000_RAM_FreeClusters:24), xwa
 	jp .Lhdd_inner3			; continue scanning
-.Lhdd_next_sector3:			; 0x297DD9
+.Lhdd_next_sector3:
 	ld xwa, (HDAE5000_RAM_HdCountSector:24); sector++
 	inc 1, xwa
 	ld (HDAE5000_RAM_HdCountSector:24), xwa
 	jp .Lhdd_outer3
 
-.Lhdd_success3:			; 0x297DE9
+.Lhdd_success3:
 	pop xiz
 	pop xiy
 	pop xix
@@ -21123,12 +21111,12 @@ HDAE5000_HD_CountFreeClusters:			; 0x297D49
 	pop xwa
 	ret
 
-.Lhdd_error3:				; 0x297DF1
+.Lhdd_error3:
 	cp (HDAE5000_RAM_HdRetries:24), 0x00
 	jp z, (.Lhdd_final_error3:24)		; jp Z, .Lhdd_final_error3
 	dec 1, (HDAE5000_RAM_HdRetries:24)
 	jp .Lhdd_restart3
-.Lhdd_final_error3:			; 0x297E05
+.Lhdd_final_error3:
 	ld (HDAE5000_RAM_AtaError:24), 0x01
 	xor xwa, xwa
 	ld (HDAE5000_RAM_FreeClusters:24), xwa
@@ -21905,7 +21893,7 @@ HDAE5000_HD_FreeChain_Worker:
 ; HDAE5000_HD_ClearStatusBytes.  Only caller: HDAE5000_HD_FormatDrive.
 ; Out: HL = HDAE5000_RAM_AtaError, the worker's step code (0 = formatted).
 ; ---------------------------------------------------------------------------
-HDAE5000_HD_Format:	; 0x298622 (cross-reference from Display_Init)
+HDAE5000_HD_Format:	; (cross-reference from Display_Init)
 	call HDAE5000_HD_Format_Worker
 	xor	hl, hl
 	ld	l, (HDAE5000_RAM_AtaError:24)
@@ -21947,7 +21935,7 @@ HDAE5000_HD_Format_Worker:
 	cp	(HDAE5000_RAM_AtaError:24), 0
 	jp	z, (.LHD_Format_Worker_Skip1:24)
 	ld	a, 0x06:opc
-	jp HDAE5000_HD_Format_CompareLoop_Skip3
+	jp HDAE5000_HD_Format_Exit
 .LHD_Format_Worker_Skip1:
 	call HDAE5000_HD_ParseIdentify
 	call HDAE5000_HD_InitTables
@@ -21955,7 +21943,7 @@ HDAE5000_HD_Format_Worker:
 	cp	(HDAE5000_RAM_AtaError:24), 0
 	jp	z, (.LHD_Format_Worker_Skip2:24)
 	ld	(HDAE5000_RAM_AtaError:24), 1
-	jp HDAE5000_HD_Format_CompareLoop_Skip3
+	jp HDAE5000_HD_Format_Exit
 .LHD_Format_Worker_Skip2:
 	lda xix, (HDAE5000_RAM_HdSectorBuffer:24)
 	call HDAE5000_HD_ZeroSector
@@ -21973,7 +21961,7 @@ HDAE5000_HD_Format_ClearLoop:
 	cp	(HDAE5000_RAM_AtaError:24), 0
 	jp	z, (.LHD_Format_ClearLoop_Skip1:24)
 	ld	(HDAE5000_RAM_AtaError:24), 2
-	jp HDAE5000_HD_Format_CompareLoop_Skip3
+	jp HDAE5000_HD_Format_Exit
 .LHD_Format_ClearLoop_Skip1:
 	ld	xwa, (HDAE5000_RAM_HdFormatSector)
 	add	xwa, 0x00000001
@@ -21998,7 +21986,7 @@ HDAE5000_HD_Format_VerifyLoop:
 	cp	(HDAE5000_RAM_AtaError:24), 0
 	jp	z, (.LHD_Format_VerifyLoop_Skip1:24)
 	ld	(HDAE5000_RAM_AtaError:24), 3
-	jp HDAE5000_HD_Format_CompareLoop_Skip3
+	jp HDAE5000_HD_Format_Exit
 .LHD_Format_VerifyLoop_Skip1:
 	lda xix, (HDAE5000_RAM_HdSectorBuffer:24)
 	lda xiy, (HDAE5000_RAM_HdVerifyBuffer:24)
@@ -22010,7 +21998,7 @@ HDAE5000_HD_Format_CompareLoop:
 	cp	xwa, (xiy+bc)
 	jr	z, HDAE5000_HD_Format_CompareLoop_Skip
 	ld	(HDAE5000_RAM_AtaError:24), 4
-	jp HDAE5000_HD_Format_CompareLoop_Skip3
+	jp HDAE5000_HD_Format_Exit
 HDAE5000_HD_Format_CompareLoop_Skip:
 	inc	4, bc
 	jp HDAE5000_HD_Format_CompareLoop
@@ -22030,19 +22018,19 @@ HDAE5000_HD_Format_CompareLoop_Skip:
 	cp	(HDAE5000_RAM_AtaError:24), 0
 	jp	z, (HDAE5000_HD_Format_CompareLoop_Skip4:24)
 	ld	(HDAE5000_RAM_AtaError), 0x05
-	jp	HDAE5000_HD_Format_CompareLoop_Skip3
+	jp	HDAE5000_HD_Format_Exit
 HDAE5000_HD_Format_CompareLoop_Skip4:
 	call	HDAE5000_ATA_SoftReset
 	cp	(HDAE5000_RAM_AtaError:24), 0x00
 	jp	z, (.LHD_Format_CompareLoop_Skip3:24)
 	ld	(HDAE5000_RAM_AtaError:24), 11
-	jp HDAE5000_HD_Format_CompareLoop_Skip3
+	jp HDAE5000_HD_Format_Exit
 .LHD_Format_CompareLoop_Skip3:
 	call HDAE5000_ATA_IdentifyDevice
 	cp	(HDAE5000_RAM_AtaError:24), 0
 	jp	z, (.LHD_Format_CompareLoop_Skip4:24)
 	ld	(HDAE5000_RAM_AtaError:24), 6
-	jp HDAE5000_HD_Format_CompareLoop_Skip3
+	jp HDAE5000_HD_Format_Exit
 .LHD_Format_CompareLoop_Skip4:
 	call HDAE5000_HD_ParseIdentify
 .LHD_Format_CompareLoop_Skip5:
@@ -22053,13 +22041,13 @@ HDAE5000_HD_Format_CompareLoop_Skip4:
 	cp	(HDAE5000_RAM_AtaError:24), 0
 	jr	z, HDAE5000_HD_Format_CompareLoop_Skip2
 	ld	(HDAE5000_RAM_AtaError:24), 7
-	jp HDAE5000_HD_Format_CompareLoop_Skip3
+	jp HDAE5000_HD_Format_Exit
 HDAE5000_HD_Format_CompareLoop_Skip2:
 	call HDAE5000_HD_CheckSignature
 	cp	(HDAE5000_RAM_HdSignatureOk:24), 1
 	jp	z, (.LHD_Format_CompareLoop_Skip6:24)
 	ld	(HDAE5000_RAM_AtaError:24), 8
-	jp HDAE5000_HD_Format_CompareLoop_Skip3
+	jp HDAE5000_HD_Format_Exit
 .LHD_Format_CompareLoop_Skip6:
 	ld	xix, HDAE5000_RAM_HdSettingsSector+120
 	ld	a, (xix)
@@ -22078,16 +22066,15 @@ HDAE5000_HD_Format_CompareLoop_Skip2:
 	cp	(HDAE5000_RAM_AtaError:24), 0
 	jp	z, (.LHD_Format_CompareLoop_Skip7:24)
 	ld	(HDAE5000_RAM_AtaError:24), 9
-	jp HDAE5000_HD_Format_CompareLoop_Skip3
+	jp HDAE5000_HD_Format_Exit
 .LHD_Format_CompareLoop_Skip7:
 	call HDAE5000_HD_ReadTables
 	cp	(HDAE5000_RAM_AtaError:24), 0x00
-	jp	z, (HDAE5000_HD_Format_CompareLoop_Skip3:24)
+	jp	z, (HDAE5000_HD_Format_Exit:24)
 	ld	(HDAE5000_RAM_AtaError), 0x0a
-	jp	HDAE5000_HD_Format_CompareLoop_Skip3
-HDAE5000_HD_Format_CompareLoop_Skip3:
-	call	HDAE5000_ATA_Standby
+	jp	HDAE5000_HD_Format_Exit
 HDAE5000_HD_Format_Exit:
+	call	HDAE5000_ATA_Standby
 	pop xiz
 	pop xiy
 	pop xix
@@ -24993,7 +24980,7 @@ HDAE5000_DoPrintf_NextChar:
 
 
 ; --- String Formatting Library (sprintf-like) ---
-HDAE5000_Int_To_Decimal_String:	; 0x29A3D2 (80 bytes)
+HDAE5000_Int_To_Decimal_String:	; (80 bytes)
 	; Convert signed 32-bit integer to decimal string
 	; Stack: [+0x0C] = output buffer ptr (with write-ahead), [+0x10] = signed value
 	; Negates if negative, then extracts digits via repeated /10
@@ -25938,7 +25925,7 @@ HDAE5000_SPrintf:
 	lda xwa, (xsp + 0x10)		; XWA = &param area
 	ld (xsp), xwa			; save to local
 	pushw HDAE5000_SPrintf_PutChar@hi16			; push callback addr high word
-	pushw	0xa4e9
+	pushw	HDAE5000_SPrintf_PutChar@lo16		; low half of HDAE5000_SPrintf_PutChar
 	lda xwa, (xsp + 4)		; XWA = &ap (the local saved above): va_list *
 	push xwa			; push &ap (the callback long just pushed is arg 3)
 	ld xwa, (xsp + 0x14)		; XWA = format data
@@ -25957,7 +25944,7 @@ HDAE5000_VSPrintf:
 	ld (HDAE5000_RAM_SPrintfCursor:24), xwa
 	ld (xwa), 0x00		; null-terminate buffer
 	pushw HDAE5000_SPrintf_PutChar@hi16			; push callback addr high word
-	pushw	0xa4e9
+	pushw	HDAE5000_SPrintf_PutChar@lo16		; low half of HDAE5000_SPrintf_PutChar
 	lda xwa, (xsp + 0x10)		; XWA = &ap argument: va_list *
 	push xwa			; push &ap (the callback long just pushed is arg 3)
 	ld xwa, (xsp + 0x10)		; XWA = format data
@@ -25968,7 +25955,7 @@ HDAE5000_VSPrintf:
 	;
 	; --- Sub 3: Byte-write callback (called by HDAE5000_DoPrintf) ---
 	; Appends one byte to buffer at [0x239482], advances pointer, null-terminates.
-HDAE5000_SPrintf_PutChar:				; 0x29AC21
+HDAE5000_SPrintf_PutChar:
 	ld xbc, (HDAE5000_RAM_SPrintfCursor:24)
 	ld xwa, 1:i3			; XWA = 1
 	add (HDAE5000_RAM_SPrintfCursor:24), xwa
@@ -26087,7 +26074,7 @@ HDAE5000_LDiv:
 	; Prepends '-' for negative values when radix==10, then calls Sub 3.
 	; ltoa(long value, char *buf, int radix); returns XHL = buf (the
 	; negative path hands buf+1 to HDAE5000_ULToA and backs the result up).
-HDAE5000_LToA:			; 0x29AD08
+HDAE5000_LToA:
 	ld xbc, (xsp + 8)		; XBC = output buffer ptr
 	ld xde, (xsp + 4)		; XDE = value to convert
 	ld wa, (xsp + 0x0C)		; WA = radix
@@ -26122,7 +26109,7 @@ HDAE5000_LToA:			; 0x29AD08
 	; ultoa(unsigned long value, char *buf, int radix); returns XHL = buf.
 	; Digits come from HDAE5000_UMod32 (remainder) and HDAE5000_UDivMod32
 	; (quotient), i.e. the conversion is unsigned.
-HDAE5000_ULToA:			; 0x29AD44
+HDAE5000_ULToA:
 	lda xsp, (xsp - 46)		; allocate 46-byte frame
 	push xiz			; save XIZ
 	cpw (xsp + 0x3E), 0x0002	; radix < 2?

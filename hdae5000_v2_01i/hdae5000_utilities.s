@@ -1663,18 +1663,11 @@ HDAE5000_Unpacked_Div_Skip2:
 ; ----------------------------------------------------------------------------
 HDAE5000_Str_End_ObjNames:
 	.zero 2
-HDAE5000_Str_LyricBackColorCheck:	; PORT-ORPHAN: its v2.01i object is gone
-HDAE5000_Str_LyricForeColorCheck:	; PORT-ORPHAN: its v2.01i object is gone
 HDAE5000_Str_LyricJumpEditCheck:
 	.asciz "LyricJumpEditCheck"
-HDAE5000_Str_Empty_9:
-	; only in v2.01i
-	.asciz ""
+	.balign 2, 0x00                       ; word-align pad
 HDAE5000_Str_BitmapButt01:
 	.asciz "BitmapButt01"
-HDAE5000_Str_Empty_10:
-	; only in v2.01i
-	.asciz ""
 	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
 HDAE5000_Str_LanguageTextReturn:
 	.asciz "LanguageTextReturn"

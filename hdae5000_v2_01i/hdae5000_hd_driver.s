@@ -420,7 +420,7 @@ HDAE5000_TitleInfo_Build:
 	ld	xwa, (xbc+wa)		; e3 07 e4 e0 20 — ld xwa, (xbc+wa)
 	push xwa				; 38
 	pushw	HDAE5000_Fmt_s@hi16
-	pushw	0x1b6a
+	pushw	HDAE5000_Fmt_s@lo16		; low half of HDAE5000_Fmt_s
 	lda xwa, (xsp + 0x12)			; bf 12 30
 	push xwa				; 38
 	call HDAE5000_SPrintf		; 1d d8 ab 29
@@ -443,7 +443,7 @@ HDAE5000_TitleInfo_Build:
 	ld	xwa, (xbc+wa)		; e3 07 e4 e0 20 — ld xwa, (xbc+wa)
 	push xwa				; 38
 	pushw	HDAE5000_Fmt_s_TitleInfo_Build@hi16
-	pushw	0x1b6e
+	pushw	HDAE5000_Fmt_s_TitleInfo_Build@lo16		; low half of HDAE5000_Fmt_s_TitleInfo_Build
 	lda xwa, (xsp + 0x12)			; bf 12 30
 	push xwa				; 38
 	call HDAE5000_SPrintf		; 1d d8 ab 29
@@ -463,7 +463,7 @@ HDAE5000_TitleInfo_Build:
 	extz wa					; d8 12
 	pushw wa                                ; push wa (compact 16-bit)
 	pushw HDAE5000_Fmt_d@hi16
-	pushw	0x1b72
+	pushw	HDAE5000_Fmt_d@lo16		; low half of HDAE5000_Fmt_d
 	lda xwa, (xsp + 0x10)			; bf 10 30
 	push xwa				; 38
 	call HDAE5000_SPrintf		; 1d d8 ab 29
@@ -483,7 +483,7 @@ HDAE5000_TitleInfo_Build:
 	extz wa					; d8 12
 	pushw wa                                ; push wa (compact 16-bit)
 	pushw HDAE5000_Fmt_d_TitleInfo_Build@hi16
-	pushw	0x1b78
+	pushw	HDAE5000_Fmt_d_TitleInfo_Build@lo16		; low half of HDAE5000_Fmt_d_TitleInfo_Build
 	lda xwa, (xsp + 0x10)			; bf 10 30
 	push xwa				; 38
 	call HDAE5000_SPrintf		; 1d d8 ab 29
@@ -503,7 +503,7 @@ HDAE5000_TitleInfo_Build:
 	extz wa					; d8 12
 	pushw wa                                ; push wa (compact 16-bit)
 	pushw HDAE5000_Fmt_d_TitleInfo_Build_2@hi16
-	pushw	0x1b80
+	pushw	HDAE5000_Fmt_d_TitleInfo_Build_2@lo16		; low half of HDAE5000_Fmt_d_TitleInfo_Build_2
 	lda xwa, (xsp + 0x10)			; bf 10 30
 	push xwa				; 38
 	call HDAE5000_SPrintf		; 1d d8 ab 29
@@ -529,7 +529,7 @@ HDAE5000_TitleInfo_Build:
 	call HDAE5000_UDivMod32		; 1d c5 b8 29
 	push xhl				; 3b — push remainder
 	pushw	HDAE5000_Fmt_4ldMB@hi16
-	pushw	0x1b88
+	pushw	HDAE5000_Fmt_4ldMB@lo16		; low half of HDAE5000_Fmt_4ldMB
 	lda xwa, (xsp + 0x08)			; bf 08 30
 	push xwa				; 38
 	call HDAE5000_SPrintf		; 1d d8 ab 29
@@ -594,11 +594,11 @@ HDAE5000_HdTitleEventCatch:
 	call (xix)				; b4 e8
 	jr t, .Lri_evt_done			; 68 xx
 
-.Lri_evt_0085:					; 0x2834D0
+.Lri_evt_0085:
 	ld xhl, 1:i3				; eb a9
 	jr t, .Lri_evt_done			; 68 xx
 
-.Lri_evt_000d:					; 0x2834D4
+.Lri_evt_000d:
 	calr HDAE5000_TitleInfo_Build		; 1e xx xx — recursive self-call
 	ld xwa, (xsp + 0x08)			; af 08 20
 	ld xbc, xiz				; ee 89
@@ -619,7 +619,7 @@ HDAE5000_HdTitleEventCatch:
 	call (xhl)				; b3 e8
 	ld xhl, 0:i3				; eb a8
 
-.Lri_evt_done:					; 0x283514
+.Lri_evt_done:
 	pop xiz					; 5e
 	inc 8, xsp				; ef 60
 	ret					; 0e
@@ -642,7 +642,7 @@ HDAE5000_HDAETitleFunc:
 	jp	t, (xix+wa)	; jp t, (xix+wa) — F3 indexed jump
 
 	; === Case 2: main setup — read/write, format, init filesystem ===
-.Lri_jt_base:					; 0x28354B (jump table base)
+.Lri_jt_base:					; (jump table base)
 	ld (0x22ae3c:24), 0x00; f2 3c ae 22 00 00
 	lda xwa, (HDAE5000_RAM_TitleInfoText:24); f2 a6 ad 22 30
 	ld xde, xwa				; e8 8a
@@ -718,7 +718,7 @@ HDAE5000_HDAETitleFunc:
 	jrl t, .Lri_done			; 78 xx xx
 
 	; === Case 9: check cylinder count, set disk capacity ===
-.Lri_case9:					; 0x283649
+.Lri_case9:
 	ld a, (HDAE5000_RAM_QuickLoadMode:24)
 	cp a, 3:i3				; c9 db
 	jr z, .Lri_case9_cyl3			; 66 xx
@@ -730,18 +730,18 @@ HDAE5000_HDAETitleFunc:
 	ld (0x23a022:24), xwa; f2 9a a0 23 60
 	jrl t, .Lri_done			; 78 xx xx
 
-.Lri_case9_cyl2:				; 0x283668
+.Lri_case9_cyl2:
 	ld xwa, HDAE5000_OBJ_LOAD_BY_NUM			; 40 8f 00 7f 00
 	ld (0x23a022:24), xwa; f2 9a a0 23 60
 	jrl t, .Lri_done			; 78 xx xx
 
-.Lri_case9_cyl3:				; 0x283675
+.Lri_case9_cyl3:
 	ld xwa, HDAE5000_OBJ_FLS_FILE_LOAD			; 40 3a 01 7f 00
 	ld (0x23a022:24), xwa; f2 9a a0 23 60
 	jrl t, .Lri_done			; 78 xx xx
 
 	; === Case 8: dispatch event to sub-device ===
-.Lri_case8:					; 0x283682
+.Lri_case8:
 	ld xwa, (0x23a022:24); e2 9a a0 23 20
 	ld xbc, (HDAE5000_RAM_MainWorkspacePtr:24); e2 a2 a1 23 21
 	ld xbc, (xbc + WS_RootFnTable)             ; e3 e5 0a 0e 21 — ld xbc, (xbc+0x0e0a)
@@ -777,7 +777,7 @@ HDAE5000_HDAETitleFunc:
 	jr t, .Lri_done				; 68 xx
 
 	; === Case 6: init flag check, set disk size from table ===
-.Lri_case6:					; 0x2836F1
+.Lri_case6:
 	call HDAE5000_Get_Init_Flag		; 1d 70 f5 28
 	ld a, l					; cf 89
 	extz wa					; d8 12
@@ -787,7 +787,7 @@ HDAE5000_HDAETitleFunc:
 	ld (0x23a022:24), xwa; f2 9a a0 23 60
 
 	; === Common exit ===
-.Lri_done:					; 0x28370B
+.Lri_done:
 	ld xhl, 0:i3				; eb a8
 	ret					; 0e
 
@@ -838,7 +838,7 @@ HDAE5000_DirList_BuildPage:
 	inc 1, wa
 	pushw wa                                ; push wa (compact 1-byte)
 	pushw HDAE5000_Fmt_3_3d@hi16
-	pushw	0x1be0
+	pushw	HDAE5000_Fmt_3_3d@lo16		; low half of HDAE5000_Fmt_3_3d
 	lda xwa, (xsp + 0x12)
 	push xwa
 	call HDAE5000_SPrintf
@@ -921,7 +921,7 @@ HDAE5000_DirList_BuildPage:
 ; note and have NOT been re-verified.
 ; Dispatches 0x01EA0000, 0x01EA0001, 0x01EA0006, 0x01EA0007, 0x01EA0008 and
 ; 0x01C00007; every other code falls straight through to .Lfd_done.
-HDAE5000_SEL_DIR_Screen:	; 0x2837F2
+HDAE5000_SEL_DIR_Screen:
 	push xiz
 	ld xiz, xde			; save XDE in XIZ
 
@@ -1286,15 +1286,15 @@ HDAE5000_SongScreen_Refresh:
 	push xwa
 	call HDAE5000_MemFill
 	pushw	HDAE5000_Str_DIRECTORY@hi16
-	pushw	0x1d0e
-	pushw	HDAE5000_RAM_SongScreenTitle@hi16
-	pushw	HDAE5000_RAM_SongScreenTitle@lo16		; low half of HDAE5000_RAM_SongScreenTitle
+	pushw	HDAE5000_Str_DIRECTORY@lo16		; low half of HDAE5000_Str_DIRECTORY
+	pushw	0x0022
+	pushw	0xa038
 	call HDAE5000_StrCat
 	ld	wa, (HDAE5000_RAM_CurDir:24)
 	inc	1, wa
 	pushw wa
 	pushw HDAE5000_Fmt_2_2d_SongScreen_Refresh@hi16
-	pushw	0x1d1a
+	pushw	HDAE5000_Fmt_2_2d_SongScreen_Refresh@lo16		; low half of HDAE5000_Fmt_2_2d_SongScreen_Refresh
 	lda	xwa, (xsp+24)
 	push xwa
 	call HDAE5000_SPrintf
@@ -1305,9 +1305,9 @@ HDAE5000_SongScreen_Refresh:
 	pushw 0xa038
 	call HDAE5000_StrCat
 	pushw	HDAE5000_Str_Chr3A_SongScreen_Refresh@hi16
-	pushw	0x1d20
-	pushw	HDAE5000_RAM_SongScreenTitle@hi16
-	pushw	HDAE5000_RAM_SongScreenTitle@lo16		; low half of HDAE5000_RAM_SongScreenTitle
+	pushw	HDAE5000_Str_Chr3A_SongScreen_Refresh@lo16		; low half of HDAE5000_Str_Chr3A_SongScreen_Refresh
+	pushw	0x0022
+	pushw	0xa038
 	call HDAE5000_StrCat
 	lda	xsp, (xsp+16)
 	pushw 0x0010
@@ -1318,9 +1318,9 @@ HDAE5000_SongScreen_Refresh:
 	pushw 0xa038
 	call HDAE5000_StrNCat
 	pushw	HDAE5000_Str_Blank0Tab@hi16
-	pushw	0x1d22
-	pushw	HDAE5000_RAM_SongScreenTitle@hi16
-	pushw	HDAE5000_RAM_SongScreenTitle@lo16		; low half of HDAE5000_RAM_SongScreenTitle
+	pushw	HDAE5000_Str_Blank0Tab@lo16		; low half of HDAE5000_Str_Blank0Tab
+	pushw	0x0022
+	pushw	0xa038
 	call HDAE5000_StrCat
 	lda	xsp, (xsp+18)
 	ld	a, (xsp+26)
@@ -1369,7 +1369,7 @@ HDAE5000_SongScreen_Refresh_Loop:
 	inc	1, wa
 	pushw wa
 	pushw HDAE5000_Fmt_2_2d_SongScreen_Refresh_2@hi16
-	pushw	0x1d42
+	pushw	HDAE5000_Fmt_2_2d_SongScreen_Refresh_2@lo16		; low half of HDAE5000_Fmt_2_2d_SongScreen_Refresh_2
 	lda	xwa, (xsp+18)
 	push xwa
 	call HDAE5000_SPrintf
@@ -2153,7 +2153,7 @@ HDAE5000_HDD_UTIL_PAGE_OnSwIn_Skip2:
 	push	xwa
 	call	HDAE5000_MemFill
 	pushw	HDAE5000_Str_ERRORNO@hi16
-	pushw	0x1dbc
+	pushw	HDAE5000_Str_ERRORNO@lo16		; low half of HDAE5000_Str_ERRORNO
 	lda	xwa, (xsp+54)
 	push	xwa
 	call	HDAE5000_StrCpy
@@ -2187,7 +2187,7 @@ HDAE5000_HDD_UTIL_PAGE_OnSwIn_Skip:
 	push xwa
 	call HDAE5000_MemFill
 	pushw	HDAE5000_Str_LSWFileInfo@hi16
-	pushw	0x1dca
+	pushw	HDAE5000_Str_LSWFileInfo@lo16		; low half of HDAE5000_Str_LSWFileInfo
 	lda	xwa, (xsp+54)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2200,7 +2200,7 @@ HDAE5000_HDD_UTIL_PAGE_OnSwIn_Skip:
 	push xwa
 	call HDAE5000_MemFill
 	pushw	HDAE5000_Str_Adr@hi16
-	pushw	0x1de4
+	pushw	HDAE5000_Str_Adr@lo16		; low half of HDAE5000_Str_Adr
 	lda	xwa, (xsp+54)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2224,7 +2224,7 @@ HDAE5000_HDD_UTIL_PAGE_OnSwIn_Skip:
 	push xwa
 	call HDAE5000_MemFill
 	pushw	HDAE5000_Str_Size@hi16
-	pushw	0x1dec
+	pushw	HDAE5000_Str_Size@lo16		; low half of HDAE5000_Str_Size
 	lda	xwa, (xsp+54)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2255,7 +2255,7 @@ HDAE5000_HDD_UTIL_PAGE_OnSwIn_Skip:
 	push xwa
 	call HDAE5000_MemFill
 	pushw	HDAE5000_Str_SDAFileInfo@hi16
-	pushw	0x1df4
+	pushw	HDAE5000_Str_SDAFileInfo@lo16		; low half of HDAE5000_Str_SDAFileInfo
 	lda	xwa, (xsp+54)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2268,7 +2268,7 @@ HDAE5000_HDD_UTIL_PAGE_OnSwIn_Skip:
 	push xwa
 	call HDAE5000_MemFill
 	pushw	HDAE5000_Str_Adr_HDD_UTIL_PAGE@hi16
-	pushw	0x1e0e
+	pushw	HDAE5000_Str_Adr_HDD_UTIL_PAGE@lo16		; low half of HDAE5000_Str_Adr_HDD_UTIL_PAGE
 	lda	xwa, (xsp+54)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2292,7 +2292,7 @@ HDAE5000_HDD_UTIL_PAGE_OnSwIn_Skip:
 	push xwa
 	call HDAE5000_MemFill
 	pushw	HDAE5000_Str_Size_HDD_UTIL_PAGE@hi16
-	pushw	0x1e16
+	pushw	HDAE5000_Str_Size_HDD_UTIL_PAGE@lo16		; low half of HDAE5000_Str_Size_HDD_UTIL_PAGE
 	lda	xwa, (xsp+54)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2323,7 +2323,7 @@ HDAE5000_HDD_UTIL_PAGE_OnSwIn_Skip:
 	push xwa
 	call HDAE5000_MemFill
 	pushw	HDAE5000_Str_PMTFileInfo@hi16
-	pushw	0x1e1e
+	pushw	HDAE5000_Str_PMTFileInfo@lo16		; low half of HDAE5000_Str_PMTFileInfo
 	lda	xwa, (xsp+54)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2336,7 +2336,7 @@ HDAE5000_HDD_UTIL_PAGE_OnSwIn_Skip:
 	push xwa
 	call HDAE5000_MemFill
 	pushw	HDAE5000_Str_Adr_HDD_UTIL_PAGE_2@hi16
-	pushw	0x1e38
+	pushw	HDAE5000_Str_Adr_HDD_UTIL_PAGE_2@lo16		; low half of HDAE5000_Str_Adr_HDD_UTIL_PAGE_2
 	lda	xwa, (xsp+54)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2360,7 +2360,7 @@ HDAE5000_HDD_UTIL_PAGE_OnSwIn_Skip:
 	push xwa
 	call HDAE5000_MemFill
 	pushw	HDAE5000_Str_Size_HDD_UTIL_PAGE_2@hi16
-	pushw	0x1e40
+	pushw	HDAE5000_Str_Size_HDD_UTIL_PAGE_2@lo16		; low half of HDAE5000_Str_Size_HDD_UTIL_PAGE_2
 	lda	xwa, (xsp+54)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2391,7 +2391,7 @@ HDAE5000_HDD_UTIL_PAGE_OnSwIn_Skip:
 	push xwa
 	call HDAE5000_MemFill
 	pushw	HDAE5000_Str_SQFFileInfo@hi16
-	pushw	0x1e48
+	pushw	HDAE5000_Str_SQFFileInfo@lo16		; low half of HDAE5000_Str_SQFFileInfo
 	lda	xwa, (xsp+54)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2404,7 +2404,7 @@ HDAE5000_HDD_UTIL_PAGE_OnSwIn_Skip:
 	push xwa
 	call HDAE5000_MemFill
 	pushw	HDAE5000_Str_Adr_HDD_UTIL_PAGE_3@hi16
-	pushw	0x1e62
+	pushw	HDAE5000_Str_Adr_HDD_UTIL_PAGE_3@lo16		; low half of HDAE5000_Str_Adr_HDD_UTIL_PAGE_3
 	lda	xwa, (xsp+54)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2428,7 +2428,7 @@ HDAE5000_HDD_UTIL_PAGE_OnSwIn_Skip:
 	push xwa
 	call HDAE5000_MemFill
 	pushw	HDAE5000_Str_Size_HDD_UTIL_PAGE_3@hi16
-	pushw	0x1e6a
+	pushw	HDAE5000_Str_Size_HDD_UTIL_PAGE_3@lo16		; low half of HDAE5000_Str_Size_HDD_UTIL_PAGE_3
 	lda	xwa, (xsp+54)
 	push xwa
 	call HDAE5000_StrCpy
@@ -2577,7 +2577,7 @@ HDAE5000_PC_DATA_LINK_PAGE:
 	ld xhl, (xhl + WS_RootFnTable)             ; (XHL+0x0E0A)
 	ld_sril xhl, (xhl + RootFn_InheritedProc)             ; (XHL+0x00DC) — callback
 	call (xhl)
-	lda xwa, (HDAE5000_Str_Adr_HDD_UTIL_PAGE_4:24); 0x2E2708 — status buffer
+	lda xwa, (HDAE5000_Str_PCLK:24); 0x2E2708 — status buffer
 	ld xbc, xwa
 	ld xwa, (xsp + 8)
 	ld xde, xbc
@@ -2836,7 +2836,7 @@ HDAE5000_SeparateOutputModeCheck:
 	ld xwa, (xbc)			; load address from table
 	push xwa
 	pushw HDAE5000_Fmt_s_SeparateOutputModeCheck@hi16		; push 0x002E -- high half of HDAE5000_Fmt_s_SeparateOutputModeCheck
-	pushw	0x1ef0
+	pushw	HDAE5000_Fmt_s_SeparateOutputModeCheck@lo16		; low half of HDAE5000_Fmt_s_SeparateOutputModeCheck
 	ld xwa, (xde + 0x12)
 	push xwa
 	call HDAE5000_SPrintf
@@ -2905,7 +2905,7 @@ HDAE5000_SeparateDrumPartCheck:
 	ld xwa, (xbc)
 	push xwa
 	pushw HDAE5000_Fmt_s_SeparateDrumPartCheck@hi16		; push 0x002E -- high half of HDAE5000_Fmt_s_SeparateDrumPartCheck
-	pushw	0x1fb2
+	pushw	HDAE5000_Fmt_s_SeparateDrumPartCheck@lo16		; low half of HDAE5000_Fmt_s_SeparateDrumPartCheck
 	ld xwa, (xde + 0x12)
 	push xwa
 	call HDAE5000_SPrintf
@@ -2974,7 +2974,7 @@ HDAE5000_SeparateBassPartCheck:
 	ld xwa, (xbc)
 	push xwa
 	pushw HDAE5000_Fmt_s_SeparateBassPartCheck@hi16		; push 0x002E -- high half of HDAE5000_Fmt_s_SeparateBassPartCheck
-	pushw	0x2074
+	pushw	HDAE5000_Fmt_s_SeparateBassPartCheck@lo16		; low half of HDAE5000_Fmt_s_SeparateBassPartCheck
 	ld xwa, (xde + 0x12)
 	push xwa
 	call HDAE5000_SPrintf
@@ -3145,7 +3145,7 @@ HDAE5000_SaveOptNameCheck:
 	pushw 0x0023
 	pushw 0x9fd6
 	pushw HDAE5000_Fmt_s_SaveOptNameCheck@hi16
-	pushw	0x20a4
+	pushw	HDAE5000_Fmt_s_SaveOptNameCheck@lo16		; low half of HDAE5000_Fmt_s_SaveOptNameCheck
 	ld xwa, (xde + 18)
 	push xwa
 	call HDAE5000_SPrintf
@@ -3183,7 +3183,7 @@ HDAE5000_SaveOptNameCheck:
 	ret
 
 ; --- HD Configuration Manager and CHS Geometry ---
-HDAE5000_TypeSel_ShowSaveFlags:	; 0x28541C (3728 bytes)
+HDAE5000_TypeSel_ShowSaveFlags:	; (3728 bytes)
 	; Show the nine save-option flags (0x22AA4E..56) as "---"/"NO "/"YES"
 	; (pointer table 0x2E2922) in the objects "RAM_EDIT_LSW".."RAM_EDIT_TLX"
 	; (0x7F0196.., names from HDAE5000_UiObjectName_PtrTable), event
@@ -3454,7 +3454,7 @@ HDAE5000_FileOptNameCheck_Ev01E00047:
 	call HDAE5000_SongRecord_Address
 	push xhl
 	pushw	HDAE5000_Fmt_s_FileOptNameCheck@hi16
-	pushw	0x20c2
+	pushw	HDAE5000_Fmt_s_FileOptNameCheck@lo16		; low half of HDAE5000_Fmt_s_FileOptNameCheck
 	ld xwa, (xiz + 0x12)
 	push xwa
 	call HDAE5000_SPrintf
@@ -3514,7 +3514,7 @@ HDAE5000_SfxLswBitCheck_Ev01E00047:
 	ld xwa, (xbc)
 	push xwa
 	pushw HDAE5000_Fmt_s_SfxLswBitCheck@hi16
-	pushw	0x20da
+	pushw	HDAE5000_Fmt_s_SfxLswBitCheck@lo16		; low half of HDAE5000_Fmt_s_SfxLswBitCheck
 	ld xwa, (xde + 0x12)
 	push xwa
 	call HDAE5000_SPrintf
@@ -3589,7 +3589,7 @@ HDAE5000_SfxPmtBitCheck_Ev01E00047:
 	ld xwa, (xbc)
 	push xwa
 	pushw HDAE5000_Fmt_s_SfxPmtBitCheck@hi16
-	pushw	0x20f2
+	pushw	HDAE5000_Fmt_s_SfxPmtBitCheck@lo16		; low half of HDAE5000_Fmt_s_SfxPmtBitCheck
 	ld xwa, (xde + 0x12)
 	push xwa
 	call HDAE5000_SPrintf
@@ -3664,7 +3664,7 @@ HDAE5000_SfxSqtBitCheck_Ev01E00047:
 	ld xwa, (xbc)
 	push xwa
 	pushw HDAE5000_Fmt_s_SfxSqtBitCheck@hi16
-	pushw	0x210a
+	pushw	HDAE5000_Fmt_s_SfxSqtBitCheck@lo16		; low half of HDAE5000_Fmt_s_SfxSqtBitCheck
 	ld xwa, (xde + 0x12)
 	push xwa
 	call HDAE5000_SPrintf
@@ -3739,7 +3739,7 @@ HDAE5000_SfxCmpBitCheck_Ev01E00047:
 	ld xwa, (xbc)
 	push xwa
 	pushw HDAE5000_Fmt_s_SfxCmpBitCheck@hi16
-	pushw	0x2122
+	pushw	HDAE5000_Fmt_s_SfxCmpBitCheck@lo16		; low half of HDAE5000_Fmt_s_SfxCmpBitCheck
 	ld xwa, (xde + 0x12)
 	push xwa
 	call HDAE5000_SPrintf
@@ -3814,7 +3814,7 @@ HDAE5000_SfxTmBitCheck_Ev01E00047:
 	ld xwa, (xbc)
 	push xwa
 	pushw HDAE5000_Fmt_s_SfxTmBitCheck@hi16
-	pushw	0x213a
+	pushw	HDAE5000_Fmt_s_SfxTmBitCheck@lo16		; low half of HDAE5000_Fmt_s_SfxTmBitCheck
 	ld xwa, (xde + 0x12)
 	push xwa
 	call HDAE5000_SPrintf
@@ -3889,7 +3889,7 @@ HDAE5000_SfxMspBitCheck_Ev01E00047:
 	ld xwa, (xbc)
 	push xwa
 	pushw HDAE5000_Fmt_s_SfxMspBitCheck@hi16
-	pushw	0x2152
+	pushw	HDAE5000_Fmt_s_SfxMspBitCheck@lo16		; low half of HDAE5000_Fmt_s_SfxMspBitCheck
 	ld xwa, (xde + 0x12)
 	push xwa
 	call HDAE5000_SPrintf
@@ -3964,7 +3964,7 @@ HDAE5000_SfxRcmBitCheck_Ev01E00047:
 	ld xwa, (xbc)
 	push xwa
 	pushw HDAE5000_Fmt_s_SfxRcmBitCheck@hi16
-	pushw	0x216a
+	pushw	HDAE5000_Fmt_s_SfxRcmBitCheck@lo16		; low half of HDAE5000_Fmt_s_SfxRcmBitCheck
 	ld xwa, (xde + 0x12)
 	push xwa
 	call HDAE5000_SPrintf
@@ -4039,7 +4039,7 @@ HDAE5000_SfxMdBitCheck_Ev01E00047:
 	ld xwa, (xbc)
 	push xwa
 	pushw HDAE5000_Fmt_s_SfxMdBitCheck@hi16
-	pushw	0x2182
+	pushw	HDAE5000_Fmt_s_SfxMdBitCheck@lo16		; low half of HDAE5000_Fmt_s_SfxMdBitCheck
 	ld xwa, (xde + 0x12)
 	push xwa
 	call HDAE5000_SPrintf
@@ -4116,7 +4116,7 @@ HDAE5000_SfxTlxBitCheck_Ev01E00047:
 	ld xwa, (xbc)
 	push xwa
 	pushw HDAE5000_Fmt_s_SfxTlxBitCheck@hi16
-	pushw	0x219a
+	pushw	HDAE5000_Fmt_s_SfxTlxBitCheck@lo16		; low half of HDAE5000_Fmt_s_SfxTlxBitCheck
 	ld xwa, (xiz + 0x12)
 	push xwa
 	call HDAE5000_SPrintf
@@ -4205,7 +4205,7 @@ HDAE5000_WriteProtectEditCheck_Ev01E00047:
 	ld xwa, (xbc)
 	push xwa
 	pushw HDAE5000_Fmt_s_WriteProtectEditCheck@hi16
-	pushw	0x21b2
+	pushw	HDAE5000_Fmt_s_WriteProtectEditCheck@lo16		; low half of HDAE5000_Fmt_s_WriteProtectEditCheck
 	ld xwa, (xde + 0x12)
 	push xwa
 	call HDAE5000_SPrintf
@@ -4260,7 +4260,7 @@ HDAE5000_LyricJumpEditCheck_Ev01E00047:
 	ld xwa, (xde + 0x0e)
 	push xwa
 	pushw HDAE5000_Fmt_1d@hi16
-	pushw	0x21ca
+	pushw	HDAE5000_Fmt_1d@lo16		; low half of HDAE5000_Fmt_1d
 	ld xwa, (xde + 0x12)
 	push xwa
 	call HDAE5000_SPrintf
@@ -4318,7 +4318,7 @@ HDAE5000_WriteConfirmEditCheck_Ev01E00047:
 	ld xwa, (xbc)
 	push xwa
 	pushw HDAE5000_Fmt_s_WriteConfirmEditCheck@hi16
-	pushw	0x21e2
+	pushw	HDAE5000_Fmt_s_WriteConfirmEditCheck@lo16		; low half of HDAE5000_Fmt_s_WriteConfirmEditCheck
 	ld xwa, (xde + 0x12)
 	push xwa
 	call HDAE5000_SPrintf
@@ -4370,7 +4370,7 @@ HDAE5000_QuickLoadModeEditCheck_Ev01E00047:
 	ld xwa, (xde + 0x0e)
 	push xwa
 	pushw HDAE5000_Fmt_1d_QuickLoadModeEditCheck@hi16
-	pushw	0x21fa
+	pushw	HDAE5000_Fmt_1d_QuickLoadModeEditCheck@lo16		; low half of HDAE5000_Fmt_1d_QuickLoadModeEditCheck
 	ld xwa, (xde + 0x12)
 	push xwa
 	call HDAE5000_SPrintf
@@ -4422,7 +4422,7 @@ HDAE5000_LoadByNumberModeEditCheck_Ev01E00047:
 	ld xwa, (xde + 0x0e)
 	push xwa
 	pushw HDAE5000_Fmt_1d_LoadByNumberModeEditCheck@hi16
-	pushw	0x2212
+	pushw	HDAE5000_Fmt_1d_LoadByNumberModeEditCheck@lo16		; low half of HDAE5000_Fmt_1d_LoadByNumberModeEditCheck
 	ld xwa, (xde + 0x12)
 	push xwa
 	call HDAE5000_SPrintf
@@ -4474,7 +4474,7 @@ HDAE5000_JumpAfterLoadModeEditCheck_Ev01E00047:
 	ld xwa, (xde + 0x0e)
 	push xwa
 	pushw HDAE5000_Fmt_1d_JumpAfterLoadModeEditCheck@hi16
-	pushw	0x222a
+	pushw	HDAE5000_Fmt_1d_JumpAfterLoadModeEditCheck@lo16		; low half of HDAE5000_Fmt_1d_JumpAfterLoadModeEditCheck
 	ld xwa, (xde + 0x12)
 	push xwa
 	call HDAE5000_SPrintf
@@ -4602,7 +4602,7 @@ HDAE5000_SetupPage_BuildDriveInfo:
 	ld xix, (xiy)
 	push xix
 	pushw	HDAE5000_Fmt_6_1f@hi16
-	pushw	0x237c
+	pushw	HDAE5000_Fmt_6_1f@lo16		; low half of HDAE5000_Fmt_6_1f
 	lda xwa, (xsp + 0x2c)
 	push xwa
 	call HDAE5000_SPrintf
@@ -4638,7 +4638,7 @@ HDAE5000_SetupPage_BuildDriveInfo:
 	ld xix, (xiy)
 	push xix
 	pushw HDAE5000_Fmt_6_1f_SetupPage_BuildDriveInfo@hi16		; push 0x002E -- high half of HDAE5000_Fmt_6_1f_SetupPage_BuildDriveInfo
-	pushw	0x2382
+	pushw	HDAE5000_Fmt_6_1f_SetupPage_BuildDriveInfo@lo16		; low half of HDAE5000_Fmt_6_1f_SetupPage_BuildDriveInfo
 	lda xwa, (xsp + 0x24)
 	push xwa
 	call HDAE5000_SPrintf
@@ -4673,7 +4673,7 @@ HDAE5000_SetupPage_BuildDriveInfo:
 	ld xix, (xiy)
 	push xix
 	pushw	HDAE5000_Fmt_6_1f_SetupPage_BuildDriveInfo_2@hi16
-	pushw	0x2388
+	pushw	HDAE5000_Fmt_6_1f_SetupPage_BuildDriveInfo_2@lo16		; low half of HDAE5000_Fmt_6_1f_SetupPage_BuildDriveInfo_2
 	lda xwa, (xsp + 0x2c)
 	push xwa
 	call HDAE5000_SPrintf
@@ -4817,7 +4817,7 @@ HDAE5000_FormatDialog_CodeDigit:
 	jr nz, .LCHSC__not_full
 	; 6 digits entered — match against patterns
 	pushw HDAE5000_Str_HdFormatCode@hi16
-	pushw	0x163a
+	pushw	HDAE5000_Str_HdFormatCode@lo16		; low half of HDAE5000_Str_HdFormatCode
 	lda xwa, (HDAE5000_RAM_FormatCodeDigits:24)
 	push xwa
 	call HDAE5000_StrPrefixCmp			; string compare
@@ -4828,7 +4828,7 @@ HDAE5000_FormatDialog_CodeDigit:
 	jr t, .LCHSC__clear
 .LCHSC__try2:
 	pushw HDAE5000_Str_Track0RecoverCode@hi16
-	pushw	0x1642
+	pushw	HDAE5000_Str_Track0RecoverCode@lo16		; low half of HDAE5000_Str_Track0RecoverCode
 	lda xwa, (HDAE5000_RAM_FormatCodeDigits:24)
 	push xwa
 	call HDAE5000_StrPrefixCmp			; string compare
@@ -5655,7 +5655,7 @@ HDAE5000_Lbn_TypeDigit:
 	jrl t, .Lsw_exit			; 78 xx xx
 
 	; === Case 1: add BC*10 to cylinder, set state=2 ===
-.Lsw_case1:					; 0x286EA4
+.Lsw_case1:
 	ld wa, bc				; d9 88
 	mul wa, 0x000a				; d8 08 0a 00
 	add (HDAE5000_RAM_LbnDir:24), wa; d2 5e aa 22 88
@@ -5669,7 +5669,7 @@ HDAE5000_Lbn_TypeDigit:
 	jrl t, .Lsw_exit			; 78 xx xx
 
 	; === Case 2: add BC to cylinder, set state=3 ===
-.Lsw_case2:					; 0x286ED1
+.Lsw_case2:
 	add (HDAE5000_RAM_LbnDir:24), bc; d2 5e aa 22 89
 	ldw (HDAE5000_RAM_LbnDigitPos:24), 0x0003; f2 5c aa 22 02 03 00
 	pushw 0x0001
@@ -5681,7 +5681,7 @@ HDAE5000_Lbn_TypeDigit:
 	jrl t, .Lsw_exit			; 78 xx xx
 
 	; === Case 3: set head from BC*10, set state=4 ===
-.Lsw_case3:					; 0x286EF8
+.Lsw_case3:
 	ld wa, bc				; d9 88
 	mul wa, 0x000a				; d8 08 0a 00
 	ld (HDAE5000_RAM_LbnSong:24), wa; f2 60 aa 22 50
@@ -5695,7 +5695,7 @@ HDAE5000_Lbn_TypeDigit:
 	jrl t, .Lsw_exit			; 78 xx xx
 
 	; === Case 4: add BC to head, set state=5, then process ===
-.Lsw_case4:					; 0x286F25
+.Lsw_case4:
 	add (HDAE5000_RAM_LbnSong:24), bc; d2 60 aa 22 89
 	ldw (HDAE5000_RAM_LbnDigitPos:24), 0x0005; f2 5c aa 22 02 05 00
 	pushw 0x0001
@@ -5726,7 +5726,7 @@ HDAE5000_Lbn_TypeDigit:
 	jr z, .Lsw_lookup_notfound		; 66 xx
 
 	; --- Found: copy data and seek ---
-.Lsw_lookup_found:				; 0x286F81
+.Lsw_lookup_found:
 	lda xwa, (HDAE5000_RAM_SaveOptions:24); f2 4c aa 22 30
 	ld bc, iz				; de 89
 	pushw 0x0002
@@ -5741,7 +5741,7 @@ HDAE5000_Lbn_TypeDigit:
 	jr t, .Lsw_after_lookup			; 68 xx
 
 	; --- Not found: copy default data and seek with -1 ---
-.Lsw_lookup_notfound:				; 0x286FAA
+.Lsw_lookup_notfound:
 	lda xwa, (HDAE5000_RAM_SaveOptions:24); f2 4c aa 22 30
 	pushw 0x0002
 	lda xde, (HDAE5000_TypeSel_TemplateBlank:24); f2 96 1c 2e 32
@@ -5754,7 +5754,7 @@ HDAE5000_Lbn_TypeDigit:
 	calr HDAE5000_PartList_Build			; 1e xx xx
 
 	; --- After table lookup: check sectors per track ---
-.Lsw_after_lookup:				; 0x286FCD
+.Lsw_after_lookup:
 	cp (HDAE5000_RAM_LoadByNumberMode:24), 0x02; c2 aa 9d 22 3f 02
 	jr nz, .Lsw_exit			; 6e xx
 	; Sectors per track == 2: do display and FS operations
@@ -5788,7 +5788,7 @@ HDAE5000_Lbn_TypeDigit:
 	call (xhl)				; b3 e8
 
 	; === Exit: check QIZ result ===
-.Lsw_exit:					; 0x287030
+.Lsw_exit:
 	ld	wa, qiz
 	cp wa, 0xfffe				; d8 cf fe ff
 	jr z, .Lsw_err_fffe			; 66 xx
@@ -5817,7 +5817,7 @@ HDAE5000_Lbn_TypeDigit:
 	jr t, .Lsw_done				; 68 xx
 
 	; --- Error 0xFFFE: register different error + timer ---
-.Lsw_err_fffe:					; 0x28708B
+.Lsw_err_fffe:
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 a2 a1 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20
 	ld xhl, (xwa + RootFn_PostEvent)             ; e3 e1 04 01 23 — ld xhl, (xwa+0x0104)
@@ -5838,7 +5838,7 @@ HDAE5000_Lbn_TypeDigit:
 	call (xhl)				; b3 e8
 
 	; --- Epilogue ---
-.Lsw_done:					; 0x2870D4
+.Lsw_done:
 	pop xiz					; 5e
 	ret					; 0e
 

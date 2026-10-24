@@ -1173,7 +1173,7 @@ def cmd_strings(ver, only=None, dry=False, tag="v2.01i"):
         # target items
         bi, p = [], b0
         while p < b1:
-            if ref[p - BASE] == 0 and p % 2 == 1 and bi and bi[-1][0] == "s":
+            if ref[p - BASE] == 0 and p % 2 == 1 and (bi[-1][0] == "s" if bi else ref[p - BASE - 1] == 0):
                 bi.append(("p", b"\0", p))
                 p += 1
                 continue
@@ -1182,8 +1182,6 @@ def cmd_strings(ver, only=None, dry=False, tag="v2.01i"):
                 ok = False
                 break
             bi.append(("s", ref[p - BASE:z + 1], p))
-            p = z + 1 - BASE + BASE + 0
-            p = z + 1 + BASE - BASE
             p = z + BASE + 1
         if not ok:
             continue
@@ -1546,6 +1544,79 @@ def cmd_uitables(ver, tag="v2.01i"):
         print(d)
 
 
+# --------------------------------------------------------------------------- far pointers
+
+FAR_HI = re.compile(rb'^(\s*)pushw(\s+)(\.?[A-Za-z_]\w*|0x[0-9a-fA-F]+|\d+)(@hi16)?(.*)$')
+FAR_LO = re.compile(rb'^(\s*)pushw(\s+)(\.?[A-Za-z_]\w*|0x[0-9a-fA-F]+|\d+)(@lo16)?(.*)$')
+
+
+def cmd_farptrs(ver, dry=False):
+    """Every `pushw hi` + `pushw lo` pair whose 32 bits are a ROM address (or a named
+    RAM variable) is spelled `pushw Label@hi16` / `pushw Label@lo16` with the label
+    the build puts at that address.  Bytes cannot check this: the high half of any
+    label in the same 64 KiB assembles alike, so a ported tree may name the wrong one."""
+    bld = do_build(ver)
+    assert bld.ok
+    img = bld.img
+    by = collections.defaultdict(list)
+    for a, n in bld.syms:
+        if not n.startswith("__PM_"):
+            by[a].append(n)
+    equs = read_equs(bld)
+    ram = {v: n for n, (v, f, l) in equs.items() if n.startswith("HDAE5000_RAM_")}
+    ed = Edits(bld.tree)
+    changed = unresolved = 0
+    for k, (f, n, s, e) in enumerate(bld.lines):
+        if e - s != 3 or img[s - BASE] != 0x0b:
+            continue
+        nxt = k + 1
+        while nxt < len(bld.lines) and bld.lines[nxt][3] == bld.lines[nxt][2]:
+            nxt += 1
+        if nxt >= len(bld.lines):
+            continue
+        f2, n2, s2, e2 = bld.lines[nxt]
+        if f2 != f or s2 != e or e2 - s2 != 3 or img[s2 - BASE] != 0x0b:
+            continue
+        t1, t2 = ed.lines(f)[n - 1], ed.lines(f)[n2 - 1]
+        m1, m2 = FAR_HI.match(t1), FAR_LO.match(t2)
+        if not (m1 and m2):
+            continue
+        if not (m1.group(4) or m2.group(4)):
+            # two plain word pushes: only a pair spelled as halves already, or a
+            # numeric high half 0x0028-0x002f / 0x0020-0x0023, is a pointer
+            # a plain pair is taken for a pointer only into ROM (high half 0x0028-0x002f):
+            # a RAM-looking pair can as well be two small arguments (`pushw 0x20` =
+            # a count of 32, `pushw 0` = a fill byte), and v2.06i spells RAM pointers
+            # numerically anyway
+            hi = int.from_bytes(img[s - BASE + 1:s - BASE + 3], "little")
+            if not (re.fullmatch(rb'0x[0-9a-fA-F]+|\d+', m1.group(3)) and 0x28 <= hi <= 0x2f):
+                continue
+        v = (int.from_bytes(img[s - BASE + 1:s - BASE + 3], "little") << 16) | \
+            int.from_bytes(img[s2 - BASE + 1:s2 - BASE + 3], "little")
+        names = by.get(v) if BASE <= v < BASE + 0x80000 else ([ram[v]] if v in ram else None)
+        if not names:
+            unresolved += 1
+            print("  no label at 0x%06x: %s:%d %s / %s" % (v, f, n, t1.decode("latin-1").strip(),
+                                                         t2.decode("latin-1").strip()))
+            continue
+        cur = m1.group(3).decode()
+        name = cur if cur in names else names[0]
+        if name.startswith("__PM_"):
+            continue
+        new1 = m1.group(1) + b"pushw" + m1.group(2) + name.encode() + b"@hi16" + m1.group(5)
+        c2 = m2.group(5)
+        if b"low half of" in c2 or not c2.strip():
+            c2 = b"\t\t; low half of " + name.encode()
+        new2 = m2.group(1) + b"pushw" + m2.group(2) + name.encode() + b"@lo16" + c2
+        if (new1, new2) != (t1, t2):
+            changed += 1
+            ed.set(f, n, new1)
+            ed.set(f2, n2, new2)
+    print("far pointers: %d pairs respelled, %d without a label" % (changed, unresolved))
+    if not dry:
+        ed.write()
+
+
 def cmd_show(ver, idx, ctx=2):
     bld, ref, hs = cmd_status(ver, verbose=False)
     (w0, w1, b0, b1), li = expand(bld, hs[idx])
@@ -1608,6 +1679,8 @@ def main():
         cmd_strings(ver, only, dry="--dry" in a)
     elif cmd == "uitables":
         cmd_uitables(ver)
+    elif cmd == "farptrs":
+        cmd_farptrs(ver, dry="--dry" in a)
     elif cmd == "show":
         cmd_show(ver, int(a[2]))
     else:
