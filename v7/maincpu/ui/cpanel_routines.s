@@ -121,6 +121,8 @@ CPanel_InitHardware:
 	calr DELAY_3000_LOOPS
 	calr CPanel_SendInitSequence
 	ret
+; CPanel_SendInitSequence - Send initialization command sequence to control panel MCUs
+; Commands sent: 0x1f 0x1a, 0x1d 0x00, 0xdd 0x03, 0x1e 0x80
 CPanel_SendInitSequence:
 	ld a, 31:opc
 	ld w, 26:opc
@@ -319,6 +321,19 @@ Delay51T_Loop:
 	cp wa, 51
 	jr lt, Delay51T_Loop
 	ret
+; =============================================================================
+; CPanel_CheckSpecialCombos - Detect special button combos held at power-on
+; =============================================================================
+; Called during boot by CPanel_ScanButtons. Checks four specific button
+; combinations on the control panel and returns a combo code in HL:
+;   0 = No special combo (normal boot)
+;   1 = Factory Reset / Initial Setting (service manual p I-3)
+;   2 = "ALL INITIAL SETTING!" screen + firmware version on LEDs
+;   3 = Software version / internal build numbers screen
+;   4 = Flash Memory Update mode (requires floppy + first-boot condition)
+;
+; See: docs/test-modes.md for full documentation
+; =============================================================================
 CPanel_CheckSpecialCombos:
 	cp (0x8dc2:16), 0x6c
 	jr nz, .Lc_fc39a5

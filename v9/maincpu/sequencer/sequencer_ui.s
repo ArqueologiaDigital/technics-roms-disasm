@@ -5874,11 +5874,13 @@ NoteEditBox_SetupGrid_DrawLenString:
 	ld	xwa, (xbc)
 	ld	xbc, EVT_GET_LEN_STRING
 	jr	NoteEditBoxProc_SetupGridDisplay_Join
+; NoteEditBox_SetupGrid_DrawIncString: parameters 6 and 9: the increment string (EVT_GET_INC_STRING)
 NoteEditBox_SetupGrid_DrawIncString:	; cases 6, 9
 	ld	xwa, (xsp+12)
 	ld	xwa, (xwa+26)
 	ld	xbc, EVT_GET_INC_STRING
 	jr	NoteEditBoxProc_SetupGridDisplay_Join
+; NoteEditBox_SetupGrid_DrawInputLenString: parameters 7 and 8: the input-length string (EVT_GET_INPUT_LEN_STRING)
 NoteEditBox_SetupGrid_DrawInputLenString:	; cases 7, 8
 	ld	xwa, (xsp+12)
 	ld	xwa, (xwa+26)
@@ -5900,7 +5902,7 @@ NoteEditBoxProc_SetupGridDisplay_Join:
 	lda xde, (xsp + 36)
 	ld xhl, 0:i3
 	push xhl
-	pushw 0xff
+	pushw 0xff	; colour pair for DrawStringLeftJustify, not a pointer
 	pushw 0xf5
 	call DrawStringLeftJustify
 	jrl NoteEdit_ReturnZero
@@ -6071,6 +6073,8 @@ NoteEditBox_EventDispatch2_Skip3:
 	pushw	0xfb	; colour pair for DrawString (by value), not a pointer
 	pushw	0xf5
 	jrl	NoteEditBox_EventDispatch2_Join7
+; NoteEditBox_GridDispatch2_DrawLineAtLinePos: part 7 (note edit only): DrawLine (colour 242) at the x from
+;   EVT_GET_LINE_POS
 NoteEditBox_GridDispatch2_DrawLineAtLinePos:
 	ld	xwa, (xsp+12)
 	ld	xwa, (xwa+26)
@@ -6092,11 +6096,15 @@ NoteEditBox_GridDispatch2_DrawLineAtLinePos:
 	ldw	de, 242
 	call	DrawLine
 	jrl	NoteEdit_ReturnZero
+; NoteEditBox_GridDispatch2_DrawNtBitmap: part 3 (note edit): EVT_DRAW to object 0x950014 = TT_SQNOTEEDT viewable 20,
+;   NakaWidget_NTBitmap
 NoteEditBox_GridDispatch2_DrawNtBitmap:
 	ld	xwa, 0x950014
 	ld	xbc, EVT_DRAW
 	ld	xde, (xsp+90)
 	jr	NoteEditBox_EventDispatch2_Join
+; NoteEditBox_GridDispatch2_DrawDrBitmap: part 4 (drum edit): EVT_DRAW to object 0x980011 = TT_SQDRMEDT viewable 17,
+;   NakaWidget_DRBitmap
 NoteEditBox_GridDispatch2_DrawDrBitmap:
 	ld	xwa, 0x980011
 	ld	xbc, EVT_DRAW
@@ -6104,6 +6112,8 @@ NoteEditBox_GridDispatch2_DrawDrBitmap:
 NoteEditBox_EventDispatch2_Join:
 	call	SendEvent
 	jrl	NoteEdit_ReturnZero
+; NoteEditBox_GridDispatch2_DrawNoteMeasureRuler: part 8 (note edit): 11-column measure/beat ruler -- measure number
+;   where EVT_GET_MEAS_CNG_SV is set, else the beat count
 NoteEditBox_GridDispatch2_DrawNoteMeasureRuler:
 	ld	xwa, (xsp+12)
 	ld	xwa, (xwa+26)
@@ -6191,13 +6201,15 @@ NoteEditBox_GridDispatch2_DrawNoteMeasureRuler_Join3:
 	lda	xde, (xsp+36)
 	ld	xhl, (xsp+4)
 	push	xhl
-	pushw	255
+	pushw	255	; colour pair for DrawStringLeftJustify, not a pointer
 	pushw	245
 	call	DrawStringLeftJustify
 	inc1b_erp 251
 	cp_erpb 251, 11
 	jrl c, NoteEditBox_GridDispatch2_DrawNoteMeasureRuler_Loop
 	jrl	NoteEdit_ReturnZero
+; NoteEditBox_GridDispatch2_DrawDrumMeasureRuler: part 13 (drum edit): 8-column measure/beat ruler, same scheme as
+;   part 8
 NoteEditBox_GridDispatch2_DrawDrumMeasureRuler:
 	ld	xwa, (xsp+12)
 	ld	xwa, (xwa+26)
@@ -6285,7 +6297,7 @@ NoteEditBox_GridDispatch2_DrawDrumMeasureRuler_Join5:
 	lda	xde, (xsp+36)
 	ld	xhl, (xsp+4)
 	push	xhl
-	pushw	255
+	pushw	255	; colour pair for DrawStringLeftJustify, not a pointer
 	pushw	245
 	call	DrawStringLeftJustify
 	inc1b_erp 251
@@ -6312,6 +6324,8 @@ NoteEditBox_GridDispatch2_DrawNoteHilight:
 NoteEditBox_EventDispatch2_Join6:
 	call	ApFuncCall
 	jrl	NoteEdit_ReturnZero
+; NoteEditBox_GridDispatch2_DrawKeyNames: part 11 (note edit): the two key-name labels from EVT_GET_KB1_STR /
+;   EVT_GET_KB2_STR
 NoteEditBox_GridDispatch2_DrawKeyNames:
 	lda	xix, (xsp+28)
 	ldw (xix), 5
@@ -6410,6 +6424,8 @@ NoteEditBox_GridDispatch2_DrawKeyNames_Loop3:
 NoteEditBox_EventDispatch2_Join7:
 	call	DrawStringLeftJustify
 	jrl	NoteEdit_ReturnZero
+; NoteEditBox_GridDispatch2_DrawDrumRowNames: part 14 (drum edit): 12 rows of drum note number + instrument name, the
+;   row equal to RAM 0x27A0 highlighted
 NoteEditBox_GridDispatch2_DrawDrumRowNames:
 	ld	xwa, (xsp+12)
 	ld	xwa, (xwa+26)
@@ -7631,6 +7647,10 @@ SndParam_Dispatch:
 	ld	wa, (xix+wa)
 	lda xix, (EntertainerGridCheck_LswRowUp:24)
 	jp	t, (xix+wa)
+; EntertainerGridCheck_LswRowUp: EntertainerGridCheck index-up case for grid rows 0-3:
+;   MainLswAdd(SndParam_Dispatch_Table[row], +1, or +4 on EVT_INDEXSW_UP_AIC) -- steps the row's local-switch value
+;   (row 0 MIC BALANCE = LSW 0x4141, row 3 ON/OFF = 0x4140; rows 1-2 hold -1). Basis: callers + body -- rows 0-3 of
+;   the row switch in EntertainerGridCheck's EVT_INDEXSW_UP case (SndParam_Dispatch_PtrTable_2).
 EntertainerGridCheck_LswRowUp:
 	ld xbc, (xsp+62)
 	sla de, 2
@@ -7654,6 +7674,8 @@ EntertainerGridCheck_TypeRowUp:
 	ld	xbc, EVT_CNG_EFF_TYPE
 	ld	xde, 1:i3
 	jrl	SndParam_Dispatch_Join3
+; EntertainerGridCheck_EffParamRowUp: Rows 5-8 (REVERB TIME, EXCITER FC, EXCITER G, VOLUME): EVT_CNG_EFF_PARA to
+;   EffEditMain with 0x100 + (row - 5), one step up.
 EntertainerGridCheck_EffParamRowUp:	; cases 5, 6, 7, 8
 	dec	5, de
 	exts	xde
@@ -7687,6 +7709,10 @@ EntertainerGridCheck_OnIndexswDown:	; cases 29360152, 29360154
 	ld	wa, (xix+wa)
 	lda xix, (EntertainerGridCheck_LswRowDown:24)
 	jp	t, (xix+wa)
+; EntertainerGridCheck_LswRowDown: EntertainerGridCheck index-down case for grid rows 0-3:
+;   MainLswAdd(SndParam_Dispatch_Table[row], -1, or -4 on EVT_INDEXSW_DOWN_AIC) -- the down twin of
+;   EntertainerGridCheck_LswRowUp (row 0 MIC BALANCE = LSW 0x4141, row 3 ON/OFF = 0x4140). Basis: callers + body --
+;   rows 0-3 of the row switch in EntertainerGridCheck_OnIndexswDown (SndParam_Dispatch_PtrTable).
 EntertainerGridCheck_LswRowDown:
 	ld xde, (xsp+62)
 	sla hl, 2
@@ -12502,6 +12528,8 @@ EffectBox_Dispatch:
 	ld	xwa, (xbc)
 	ld	xbc, EVT_GET_EFF_DLT1_STR
 	jr	EffectBox_Dispatch_Join
+; EffectBox_NameSetup_GetEffDlt2Str: Row 2 of the effect editor box: the value string of effect parameter 2
+;   (MT_GetEffDlt2Str); rows 0 and 1 use Dlt0 / Dlt1 the same way.
 EffectBox_NameSetup_GetEffDlt2Str:
 	ld	xwa, (xbc)
 	ld	xbc, EVT_GET_EFF_DLT2_STR
@@ -13774,6 +13802,8 @@ SqplyFunc_GetValueDispatch:
 	ld xhl, 0:i3
 	ld l, (0x02109c:24)
 	jrl SqplyFunc_Epilogue
+; SqplyFunc_HandleGetValue_MeasureAddr: Field 3 (the measure field of the cycle pages): address of the current measure
+;   word 9832.
 SqplyFunc_HandleGetValue_MeasureAddr:
 	lda xhl, (9832:16)
 	jr SqplyFunc_GetValueReturn
@@ -13800,6 +13830,8 @@ SqplyFunc_HandleGetValue_CycleEndMeasureAddr:
 SqplyFunc_GetValNonPlay2:
 	lda xhl, (9506:16)
 	jr SqplyFunc_GetValueReturn
+; SqplyFunc_HandleGetValue_PunchMeasureAddr: Field 7 (the measure field of the punch pages): address of word 9964,
+;   which the punch start code sets with the current measure.
 SqplyFunc_HandleGetValue_PunchMeasureAddr:
 	lda xhl, (9964:16)
 	jr SqplyFunc_GetValueReturn
@@ -13904,6 +13936,9 @@ SqplyFunc_TrackTypeReturn:
 	exts xhl
 	jr SqplyFunc_Epilogue
 
+; SqplyFunc_OnChkCur: SqplyFunc's EVT_CHK_CUR (MT_ChkCur) handler: 1 when the value-list cursor (0x2109C) is on the
+;   position of parameter XDE. Basis: SqplyFunc compare chain + body; the old name (part query) does not match the
+;   event.
 SqplyFunc_OnChkCur:
 	extz wa
 	dec 4, wa
@@ -13925,9 +13960,13 @@ SqplyFunc_PartQueryDispatch_Join:
 	scc16	z, hl
 	extz	xhl
 	jr	SqplyFunc_Epilogue
+; SqplyFunc_OnChkCur_AtCursorPos2: Parameters 5 (cycle start measure) and 9 (P out-measure): true when the cursor
+;   0x2109C is at position 2.
 SqplyFunc_OnChkCur_AtCursorPos2:	; cases 5, 9
 	ld	l, 2:opc
 	jr	SqplyFunc_PartQueryDispatch_Join
+; SqplyFunc_OnChkCur_AtCursorPos3: Parameters 6 (cycle end measure) and 10 (P count-in): true when the cursor 0x2109C
+;   is at position 3.
 SqplyFunc_OnChkCur_AtCursorPos3:	; cases 6, 10
 	ld	l, 3:opc
 	jr	SqplyFunc_PartQueryDispatch_Join
@@ -13977,6 +14016,8 @@ SqedtFunc:
 	lda xix, (SqedtFunc_OnGetTrkString:24)
 	jp	t, (xix+de)
 ; SqedtFunc parameter dispatch
+; SqedtFunc_OnGetTrkString: SqedtFunc's EVT_GET_TRK_STRING (MT_GetTrkString) case: the track field of the current
+;   sequencer-edit title (0x9C..0xA3). Basis: SqedtFunc event case table entry 0 + body.
 SqedtFunc_OnGetTrkString:
 	ld	xwa, (xsp+8)
 	ld	(xsp+4), xwa
@@ -13992,6 +14033,10 @@ SqedtFunc_OnGetTrkString:
 	ld	hl, (xix+hl)
 	lda xix, (SqedtFunc_TrkString_OnTitleSqnotecng:24)
 	jp	t, (xix+hl)
+; SqedtFunc_TrkString_OnTitleSqnotecng: SqedtFunc's EVT_GET_TRK_STRING case on title TT_SQNOTECNG (0x9F, note change):
+;   the track field from byte 9742, then the shared track-name formatting. Basis: callers + body -- entry 3 (title
+;   0x9F) of the title switch in SqedtFunc_OnGetTrkString; MainExeCall_OnTitleSqnotecng runs the edit on the same
+;   track byte 9742.
 SqedtFunc_TrkString_OnTitleSqnotecng:
 	ld	a, (9742:16)
 	jr	SqedtFunc_TrkString_OnTitleSqvelocng_Join
@@ -14028,6 +14073,9 @@ SqedtFunc_OnGetFmString:
 	ld	hl, (xix+hl)
 	lda xix, (SqedtFunc_FmString_OnTitleSqnotecng:24)
 	jp	t, (xix+hl)
+; SqedtFunc_FmString_OnTitleSqnotecng: SqedtFunc's EVT_GET_FM_STRING case on title TT_SQNOTECNG (0x9F): formats the
+;   from-measure word 9744 (0x2610) with Sqedt_ParamDispatch_Str. Basis: callers + body -- entry 3 of the title switch
+;   in SqedtFunc_OnGetFmString; MainExeCall_OnTitleSqnotecng reads the same word as the first measure.
 SqedtFunc_FmString_OnTitleSqnotecng:
 	pushm (0x2610:16)
 	ld	xwa, Sqedt_ParamDispatch_Str
@@ -14052,6 +14100,10 @@ SqedtFunc_FmString_OnTitleSqvelocng:
 	pushm (0xf229:16)
 	ld	xwa, Sqedt_ParamDispatch_Str_4
 	jr	SqedtFunc_FmString_OnTitleSqadvdly_Join2
+; SqedtFunc_FmString_OnTitleSqadvdly: SqedtFunc's EVT_GET_FM_STRING case for TT_SQADVDLY (0xA0), also the switch
+;   default (title 0xA2 SQMCP and titles outside 0x9C..0xA3): formats the from-measure word 9734 (0x2606). Basis:
+;   callers + body -- entries 4 and 6 and the range checks of SqedtFunc_OnGetFmString's title switch;
+;   MainExeCall_OnTitleSqadvdly reads 9734 as its first measure.
 SqedtFunc_FmString_OnTitleSqadvdly:
 	pushm (0x2606:16)
 	ld	xwa, Sqedt_ParamDispatch_Str_5
@@ -14071,6 +14123,9 @@ SqedtFunc_OnGetLmString:
 	ld	hl, (xix+hl)
 	lda xix, (SqedtFunc_LmString_OnTitleSqnotecng:24)
 	jp	t, (xix+hl)
+; SqedtFunc_LmString_OnTitleSqnotecng: SqedtFunc's EVT_GET_LM_STRING case on title TT_SQNOTECNG (0x9F): formats the
+;   last-measure word 9746 (0x2612) with Sqedt_ParamDispatch_Str_6. Basis: callers + body -- entry 3 of the title
+;   switch in SqedtFunc_OnGetLmString; MainExeCall_OnTitleSqnotecng reads 9746 as the last measure.
 SqedtFunc_LmString_OnTitleSqnotecng:
 	pushm (0x2612:16)
 	ld	xwa, Sqedt_ParamDispatch_Str_6
@@ -14095,6 +14150,10 @@ SqedtFunc_LmString_OnTitleSqvelocng:
 	pushm (0x25fa:16)
 	ld	xwa, Sqedt_ParamDispatch_Str_10
 	jr	SqedtFunc_LmString_OnTitleSqadvdly_Join
+; SqedtFunc_LmString_OnTitleSqadvdly: SqedtFunc's EVT_GET_LM_STRING case for TT_SQADVDLY (0xA0), also the switch
+;   default (title 0xA2 SQMCP and titles outside 0x9C..0xA3): formats the last-measure word 9736 (0x2608). Basis:
+;   callers + body -- entries 4 and 6 and the range checks of SqedtFunc_OnGetLmString's title switch;
+;   MainExeCall_OnTitleSqadvdly reads 9736 as its last measure.
 SqedtFunc_LmString_OnTitleSqadvdly:
 	pushm (0x2608:16)
 	ld	xwa, Sqedt_ParamDispatch_Str_11
@@ -14459,6 +14518,8 @@ SqedtFunc_OnGetScpTtrString_Join2:
 	jrl	SqedtFunc_ModeC_Entry
 
 ; SqedtFunc dispatch case 0
+; SqedtFunc_OnGetSclrNoString: EVT_GET_SCLR_NO_STRING: copies the 6-char "SONG n" label of song-clear song (0x2878)
+;   from Sqedt_ParamDispatch_Table_2 (blank for 10).
 SqedtFunc_OnGetSclrNoString:
 	ld xwa, (xsp + 8)
 	ld (xsp + 4), xwa
@@ -14569,6 +14630,8 @@ StringCopyEpilog:
 	jrl SqedtFunc_Epilogue12
 
 ; SqedtFunc mode D
+; SqedtFunc_OnGetRamAddress: SqedtFunc's EVT_GET_RAM_ADDRESS (MT_GetRamAddress) case: answered by
+;   SqedtFunc_StateChainB for the current title. Basis: SqedtFunc compare chain + body.
 SqedtFunc_OnGetRamAddress:
 	ld xwa, (xsp + 8)
 	calr SqedtFunc_StateChainB
@@ -14596,6 +14659,8 @@ SqedtFunc_OnCurToParam:
 	jp	t, (xix+wa)
 
 ; SqedtFunc value dispatch
+; SqedtFunc_OnCurToParam_CursorPos0: Cursor position 0: parameter 12 (MergeTrackA) on SQTRKMRG, -1 on SQMCP, else
+;   parameter 0 (Trk). Basis: offset-0 case of SqedtFunc_OnCurToParam's cursor switch + body.
 SqedtFunc_OnCurToParam_CursorPos0:
 	extz	hl
 	sub	hl, 155
@@ -14608,12 +14673,17 @@ SqedtFunc_OnCurToParam_CursorPos0:
 	ld	hl, (xix+hl)
 	lda	xix, (SqedtFunc_OnCurToParam_CursorPos0_TrackField:24)
 	jp	t, (xix+hl)
+; SqedtFunc_OnCurToParam_CursorPos0_TrackField: Cursor position 0 on titles 0x9C..0xA1 and 0xA3 (every one but
+;   SQTRKMRG and SQMCP): returns parameter 0, the track field. Basis: callers + body -- the shared case of the title
+;   switch in SqedtFunc_OnCurToParam_CursorPos0 (siblings: _OnTitleSqtrkmrg = parameter 12, SQMCP = -1).
 SqedtFunc_OnCurToParam_CursorPos0_TrackField:
 	ld	l, 0:opc
 	jrl	SqedtFunc_SignExtendAndReturn
 SqedtFunc_OnCurToParam_CursorPos0_OnTitleSqtrkmrg:
 	ld	l, 12:opc
 	jrl	SqedtFunc_SignExtendAndReturn
+; SqedtFunc_OnCurToParam_CursorPos1: Cursor position 1: parameter 1 (FromMeasure) on titles 0x9C..0xA3 except SQMCP,
+;   else -1.
 SqedtFunc_OnCurToParam_CursorPos1:
 	extz	hl
 	sub	hl, 156
@@ -14626,9 +14696,14 @@ SqedtFunc_OnCurToParam_CursorPos1:
 	ld	hl, (xix+hl)
 	lda	xix, (SqedtFunc_OnCurToParam_CursorPos1_FromMeasureField:24)
 	jp	t, (xix+hl)
+; SqedtFunc_OnCurToParam_CursorPos1_FromMeasureField: Cursor position 1 on titles 0x9C..0xA1 and 0xA3 (all but SQMCP):
+;   returns parameter 1, the from-measure field. Basis: callers + body -- the shared case of the title switch in
+;   SqedtFunc_OnCurToParam_CursorPos1 (SQMCP = -1).
 SqedtFunc_OnCurToParam_CursorPos1_FromMeasureField:
 	ld	l, 1:opc
 	jr	SqedtFunc_SignExtendAndReturn
+; SqedtFunc_OnCurToParam_CursorPos2: Cursor position 2: parameter 13 (MergeTrackB) on SQTRKMRG, -1 on SQMCP, else
+;   parameter 2 (LastMeasure).
 SqedtFunc_OnCurToParam_CursorPos2:
 	extz	hl
 	sub	hl, 155
@@ -14641,12 +14716,17 @@ SqedtFunc_OnCurToParam_CursorPos2:
 	ld	hl, (xix+hl)
 	lda	xix, (SqedtFunc_OnCurToParam_CursorPos2_LastMeasureField:24)
 	jp	t, (xix+hl)
+; SqedtFunc_OnCurToParam_CursorPos2_LastMeasureField: Cursor position 2 on titles 0x9C..0xA1 and 0xA3 (all but
+;   SQTRKMRG and SQMCP): returns parameter 2, the last-measure field. Basis: callers + body -- the shared case of the
+;   title switch in SqedtFunc_OnCurToParam_CursorPos2 (siblings: _OnTitleSqtrkmrg = parameter 13, SQMCP = -1).
 SqedtFunc_OnCurToParam_CursorPos2_LastMeasureField:
 	ld	l, 2:opc
 	jr	SqedtFunc_SignExtendAndReturn
 SqedtFunc_OnCurToParam_CursorPos2_OnTitleSqtrkmrg:
 	ld	l, 13:opc
 	jr	SqedtFunc_SignExtendAndReturn
+; SqedtFunc_OnCurToParam_CursorPos3: Cursor position 3: the title's value field (SQQTZ 7, SQMERS 6, SQVELOCNG 5,
+;   SQTRNS 4, SQADVDLY 3), else -1.
 SqedtFunc_OnCurToParam_CursorPos3:
 	cp	l, 156
 	jr	z, SqedtFunc_OnCurToParam_CursorPos3_Skip4
@@ -14706,6 +14786,8 @@ SqedtFunc_ReturnNeg1:
 	jr SqedtFunc_SignExtendAndReturn
 
 ; SqedtFunc sign extend and return
+; SqedtFunc_OnCurToParam_CursorPos6_OnTitleSqtrkmrg: Cursor position 6 on SQTRKMRG: parameter 14 (MergeTrackC). Basis:
+;   compare chain of SqedtFunc_OnCurToParam position 6 + body (not a sign-extend helper).
 SqedtFunc_OnCurToParam_CursorPos6_OnTitleSqtrkmrg:
 	ld l, 0xe:opc
 	jr SqedtFunc_SignExtendAndReturn
@@ -14722,6 +14804,8 @@ SqedtFunc_OnChkCur:
 	jp	t, (xix+wa)
 
 ; Sequencer format dispatch A
+; SqedtFunc_OnChkCur_AtCursorPos0: Fields 0 (Trk) and 12 (MergeTrackA): true when the cursor 0x2109C is at position 0.
+;   Basis: offset-0 case of SqedtFunc_OnChkCur's field switch + body.
 SqedtFunc_OnChkCur_AtCursorPos0:
 	ld	l, 0:opc
 SqedtFunc_OnChkCur_AtCursorPos0_Join:
@@ -14730,18 +14814,27 @@ SqedtFunc_OnChkCur_AtCursorPos0_Join:
 	scc16	z, hl
 	extz	xhl
 	jrl	SqedtFunc_Epilogue12
+; SqedtFunc_OnChkCur_AtCursorPos1: Fields 1 (FromMeasure): true when the cursor 0x2109C is at position 1.
 SqedtFunc_OnChkCur_AtCursorPos1:
 	ld	l, 1:opc
 	jr	SqedtFunc_OnChkCur_AtCursorPos0_Join
+; SqedtFunc_OnChkCur_AtCursorPos2: Fields 2 (LastMeasure) and 13 (MergeTrackB): true when the cursor 0x2109C is at
+;   position 2.
 SqedtFunc_OnChkCur_AtCursorPos2:	; cases 2, 13
 	ld	l, 2:opc
 	jr	SqedtFunc_OnChkCur_AtCursorPos0_Join
+; SqedtFunc_OnChkCur_AtCursorPos3: Fields 3-7 (Adly, Transpose, Velocity, Mers, QuantizeValue): true when the cursor
+;   0x2109C is at position 3.
 SqedtFunc_OnChkCur_AtCursorPos3:	; cases 3, 4, 5, 6, 7
 	ld	l, 3:opc
 	jr	SqedtFunc_OnChkCur_AtCursorPos0_Join
+; SqedtFunc_OnChkCur_AtCursorPos5: Fields 8 (QuantizeStrength) and 10 (Tn): true when the cursor 0x2109C is at
+;   position 5.
 SqedtFunc_OnChkCur_AtCursorPos5:	; cases 8, 10
 	ld	l, 5:opc
 	jr	SqedtFunc_OnChkCur_AtCursorPos0_Join
+; SqedtFunc_OnChkCur_AtCursorPos6: Fields 9 (QuantizeWindow), 11 (Cn) and 14 (MergeTrackC): true when the cursor
+;   0x2109C is at position 6.
 SqedtFunc_OnChkCur_AtCursorPos6:	; cases 9, 11, 14
 	ld	l, 6:opc
 	jr	SqedtFunc_OnChkCur_AtCursorPos0_Join
@@ -14771,26 +14864,38 @@ SqedtFunc_OnChkCur2:
 	ld	wa, (xix+wa)
 	lda	xix, (SqedtFunc_OnChkCur2_McpTrAFields:24)
 	jp	t, (xix+wa)
+; SqedtFunc_OnChkCur2_McpTrAFields: Fields 15-17 (measure-copy track A, from measure, last measure): EVT_CHK_CUR2 is
+;   true when side 0x3E2E0 = 0 and the from-cursor (0x3E2DC) = field - 15. Basis: callers + body -- cases 15-17 of
+;   SqedtFunc_OnChkCur2's field switch (siblings McpTrBFields 18-20, MinsTrAFields 21-23, MinsTrBFields 24-26,
+;   ScpFromFields, ScpToFields).
 SqedtFunc_OnChkCur2_McpTrAFields:
 	cp	(0x03e2e0:24), 0
 	jrl	nz, SeqFunc_ReturnZeroJmp
 	ld	xwa, 15
 	jr	SqedtFunc_OnChkCur2_ScpFromFields_Join2
+; SqedtFunc_OnChkCur2_McpTrBFields: Fields 18-20 (measure-copy TrB, SM, Rep): true when side 0x3E2E0 = 1 and the to-
+;   cursor (0x3E2DE) = field - 18.
 SqedtFunc_OnChkCur2_McpTrBFields:	; cases 18, 19, 20
 	cp	(0x03e2e0:24), 1
 	jrl	nz, SeqFunc_ReturnZeroJmp
 	ld	xwa, 18
 	jr	SqedtFunc_OnChkCur2_ScpToFields_Join3
+; SqedtFunc_OnChkCur2_MinsTrAFields: Fields 21-23 (measure-insert TrA, FM, LM): true when side 0x3E2E0 = 0 and the
+;   from-cursor (0x3E2DC) = field - 21.
 SqedtFunc_OnChkCur2_MinsTrAFields:	; cases 21, 22, 23
 	cp	(0x03e2e0:24), 0
 	jrl	nz, SeqFunc_ReturnZeroJmp
 	ld	xwa, 21
 	jr	SqedtFunc_OnChkCur2_ScpFromFields_Join2
+; SqedtFunc_OnChkCur2_MinsTrBFields: Fields 24-26 (measure-insert TrB, SM, Rep): true when side 0x3E2E0 = 1 and the
+;   to-cursor (0x3E2DE) = field - 24.
 SqedtFunc_OnChkCur2_MinsTrBFields:	; cases 24, 25, 26
 	cp	(0x03e2e0:24), 1
 	jrl	nz, SeqFunc_ReturnZeroJmp
 	ld	xwa, 24
 	jr	SqedtFunc_OnChkCur2_ScpToFields_Join3
+; SqedtFunc_OnChkCur2_ScpFromFields: Fields 27-28 (song-copy from-song, from-track): true when side 0x3E2E0 = 0 and
+;   the from-cursor (0x3E2DC) = field - 27.
 SqedtFunc_OnChkCur2_ScpFromFields:	; cases 27, 28
 	cp	(0x03e2e0:24), 0
 	jrl	nz, SeqFunc_ReturnZeroJmp
@@ -14804,6 +14909,8 @@ SqedtFunc_OnChkCur2_ScpFromFields_Join2:
 	scc16	z, hl
 	extz	xhl
 	jr	SqedtFunc_Epilogue12
+; SqedtFunc_OnChkCur2_ScpToFields: Fields 29-30 (song-copy to-song, to-track): true when side 0x3E2E0 = 1 and the to-
+;   cursor (0x3E2DE) = field - 29.
 SqedtFunc_OnChkCur2_ScpToFields:	; cases 29, 30
 	cp	(0x03e2e0:24), 1
 	jrl	nz, SeqFunc_ReturnZeroJmp
@@ -14873,6 +14980,8 @@ SeqFmt_Field_LoadB:
 SeqFmt_Field_LoadC:
 	lda xhl, (0x2878:16)
 	jrl SqedtFunc_Epilogue
+; SqedtFunc_StateChainB_OnSqNoteCng: EVT_GET_RAM_ADDRESS on title 0x9F TT_SQNOTECNG: parameter 1 -> 0x2610, 2 ->
+;   0x2612, 10 -> 0x2616, 11 -> 0x2658, others -> 0x260E
 SqedtFunc_StateChainB_OnSqNoteCng:
 	cp xiz, 0xb
 	jr z, SeqFmt_Field_LoadF
@@ -14900,6 +15009,8 @@ SeqFmt_Field_LoadF:
 SeqFmt_Field_LoadG:
 	lda xhl, (9742:16)
 	jrl SqedtFunc_Epilogue
+; SqedtFunc_StateChainB_OnSqTrns: EVT_GET_RAM_ADDRESS on title 0x9D TT_SQTRNS: parameter 1 -> 0x261E, 2 -> 0x2620, 4
+;   -> 0x2622, others -> 0x261C
 SqedtFunc_StateChainB_OnSqTrns:
 	cp xiz, 0x4
 	jr z, SeqFmt_Field_LoadI
@@ -14921,6 +15032,8 @@ SeqFmt_Field_LoadI:
 SeqFmt_Field_LoadJ:
 	lda xhl, (9756:16)
 	jrl SqedtFunc_Epilogue
+; SqedtFunc_StateChainB_OnSqMdel: EVT_GET_RAM_ADDRESS on title 0xA3 TT_SQMDEL: parameter 1 -> 0xF1D7, 2 -> 0x262C,
+;   others -> 0xF1D6
 SqedtFunc_StateChainB_OnSqMdel:
 	cp xiz, 0x2
 	jr z, SeqFmt_Field_LoadK
@@ -14936,6 +15049,8 @@ SeqFmt_Field_LoadK:
 SeqFmt_Field_LoadL:
 	lda xhl, (0xf1d6:16)
 	jrl SqedtFunc_Epilogue
+; SqedtFunc_StateChainB_OnSqMers: EVT_GET_RAM_ADDRESS on title 0xA1 TT_SQMERS: parameter 1 -> 0xF1DC, 2 -> 0x2626, 6
+;   -> 0xF1E0, others -> 0xF1DB
 SqedtFunc_StateChainB_OnSqMers:
 	cp xiz, 0x6
 	jr z, SeqFmt_Field_LoadN
@@ -14957,6 +15072,8 @@ SeqFmt_Field_LoadN:
 SeqFmt_Field_LoadO:
 	lda xhl, (0xf1db:16)
 	jrl SqedtFunc_Epilogue
+; SqedtFunc_StateChainB_OnSqQtz: EVT_GET_RAM_ADDRESS on title 0x9C TT_SQQTZ: parameter 1 -> 0xF1F2, 2 -> 0x25FC, 7 ->
+;   0xF1F6, 8 -> 0x2600, 9 -> 0x2602, others -> 0xF1F1
 SqedtFunc_StateChainB_OnSqQtz:
 	cp xiz, 0x9
 	jr z, SeqFmt_Field_LoadS
@@ -14990,6 +15107,8 @@ SeqFmt_Field_LoadS:
 SeqFmt_Field_LoadT:
 	lda xhl, (0xf1f1:16)
 	jrl SqedtFunc_Epilogue
+; SqedtFunc_StateChainB_OnSqVeloCng: EVT_GET_RAM_ADDRESS on title 0x9E TT_SQVELOCNG: parameter 1 -> 0xF229, 2 ->
+;   0x25FA, 5 -> 0xF22E, others -> 0xF228
 SqedtFunc_StateChainB_OnSqVeloCng:
 	cp xiz, 0x5
 	jr z, SeqFmt_Field_LoadV
@@ -15011,6 +15130,8 @@ SeqFmt_Field_LoadV:
 SeqFmt_Field_LoadW:
 	lda xhl, (0xf228:16)
 	jrl SqedtFunc_Epilogue
+; SqedtFunc_StateChainB_OnSqTrkMrg: EVT_GET_RAM_ADDRESS on title 0x9B TT_SQTRKMRG: parameter 13 -> 0xF1D4, 14 ->
+;   0xF1D5, others -> 0xF1D3
 SqedtFunc_StateChainB_OnSqTrkMrg:
 	cp xiz, 0xe
 	jr z, SeqFmt_Field_LoadX
@@ -15026,6 +15147,8 @@ SeqFmt_Field_LoadX:
 SeqFmt_Field_LoadY:
 	lda xhl, (0xf1d3:16)
 	jrl SqedtFunc_Epilogue
+; SqedtFunc_StateChainB_OnSqMcp: EVT_GET_RAM_ADDRESS on title 0xA2 TT_SQMCP: parameter 16 -> 0xF1EA, 17 -> 0x2628, 18
+;   -> 0xF1EE, 19 -> 0xF1EF, 20 -> 0x262A, others -> 0xF1E9
 SqedtFunc_StateChainB_OnSqMcp:
 	cp xiz, 0x14
 	jr z, SeqFmt_Field_LoadAC
@@ -15059,6 +15182,8 @@ SeqFmt_Field_LoadAC:
 SeqFmt_Field_LoadAD:
 	lda xhl, (0xf1e9:16)
 	jrl SqedtFunc_Epilogue
+; SqedtFunc_StateChainB_OnSqMins: EVT_GET_RAM_ADDRESS on title 0xA4 TT_SQMINS: parameter 22 -> 0xF1E2, 23 -> 0x262E,
+;   24 -> 0xF1E6, 25 -> 0xF1E7, 26 -> 0x2630, others -> 0xF1E1
 SqedtFunc_StateChainB_OnSqMins:
 	cp xiz, 0x1a
 	jr z, SeqFmt_Field_LoadAH
@@ -15393,6 +15518,8 @@ DspItem0_TypeChangeHandler:
 DspItem0_TypeDispatch:
 	lda xhl, (0x2976:16)
 	jrl DspItem0_Epilogue
+; DspItem0_TypeChangeHandler_EffDlt0Addr: EVT_GET_RAM_ADDRESS for effect parameter row 0 (EffDlt0): address of word
+;   0x2978[top item 0x021098 + 0].
 DspItem0_TypeChangeHandler_EffDlt0Addr:
 	sla bc, 1
 	ld xwa, (xsp + 4)
@@ -15534,6 +15661,9 @@ Equalizer_DispatchB:
 	ld	hl, (xbc)
 	extz	xhl
 	jrl	Equalizer_PopIzRet
+; Equalizer_DispatchA_Band2FreqPos: EQ item 3 = band 2 frequency: display x of RAM word 0x297c through
+;   Equalizer_FreqDispPos (items 1/2 = band 1, 3/4 = band 2, 5/6 = band 3, 7/8 = band 4; odd = frequency, even =
+;   gain).
 Equalizer_DispatchA_Band2FreqPos:
 	ld	wa, (0x297c:16)
 	extz	xwa

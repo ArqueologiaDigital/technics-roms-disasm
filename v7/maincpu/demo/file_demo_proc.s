@@ -120,10 +120,17 @@ FDemo_DisplayResourceData_Skip6:
 	pop	xiz
 	lda	xsp, (xsp+0x124)
 	ret
+; FDemo_ResetAllocBuffer: Resets the feature-demo load arena: stores SEQ_SONG_SLOTS (the arena start) in the next-free
+;   pointer at RAM 0x25B7E that FDemo_AllocBuffer bumps. Basis: callers + body -- FDemo_DisplayResourceData calls it
+;   once after opening the .SQT file and before allocating a 256-byte FDemo_AllocBuffer block per file block.
 FDemo_ResetAllocBuffer:
 	lda xwa, (SEQ_SONG_SLOTS:24)
 	ld (0x025b7e:24), xwa
 	ret
+; FDemo_AllocBuffer: Bump-allocates XWA bytes from the feature-demo load arena SEQ_SONG_SLOTS..0xFD800 (next-free
+;   pointer at RAM 0x25B7E); returns XHL = the block, or 0 when it does not fit. Basis: callers + body -- the feature-
+;   demo loaders reset the pointer (FDemo_ResetAllocBuffer), then call this per 256-byte file block or for a
+;   whole file and copy/read into the returned block.
 FDemo_AllocBuffer:
 	lda xhl, (SEQ_SONG_SLOTS:24)
 	lda xbc, (0x0fd800:24)
@@ -441,6 +448,11 @@ FDemo_LinkedListSearchInsert_Epilogue:
 	popw	iz
 	inc	8, xsp
 	ret
+; FDemo_RegisterLoadedFile: Copies name XWA into the first free entry (data pointer at +16 == 0) of the 63-entry,
+;   24-byte loaded-file table at RAM 0x249D8 and stores data pointer XBC at +16; HL = 1, or 0 when the table is full.
+;   Basis: callers + body -- FDemo_FileOpenAndProcess, after FDemo_LinkedListSearchInsert found the name neither in
+;   this table nor in the ROM directory, reads the whole file into an FDemo_AllocBuffer block, closes it and registers
+;   name + block here.
 FDemo_RegisterLoadedFile:
 	dec	4, xsp
 	push	xiz
@@ -484,6 +496,7 @@ FDemo_LinkedListLookupNull:
 	ret
 
 FDemo_FileOpenAndProcess:
+	; --- Stack-frame function: alloc, multi-call dispatch (114 bytes) ---
 	lda	xsp, (xsp-22)
 	push	xiz
 	push	xwa
@@ -1753,28 +1766,28 @@ FileIO_LoadRegion0_VRAM:
 	jr LoadRegion0_Return				; return
 LoadRegion0_OpenSuccess:
 	ld	wa, 0:i3
-	calr	FileIO_CheckRegionSignature
+	calr	FileIO_CheckRegionSignature			; check mode availability
 	cp	hl, 0:i3
-	jr	z, LoadRegion0_AltPath
-	call	PreLswLoad
+	jr	z, LoadRegion0_AltPath			; mode not available, alt path
+	call	PreLswLoad				; primary display setup
 	lda	xwa, (63872:16)
 	lda	xbc, (65472:16)
+	ld	xde, xwa				; XDE = base (0xf980)
+	sub	xbc, xde				; XBC = size (0xffc0-0xf980)
+	call	FileIO_ReadBlock				; configure memory range
+	lda	xwa, (1996800:24)	; VRAM region base
 	ld	xde, xwa
-	sub	xbc, xde
-	call	FileIO_ReadBlock
-	lda	xwa, (1996800:24)
-	ld	xde, xwa
-	lda	xbc, (1998848:24)
-	sub	xbc, xde
-	call	FileIO_ReadBlock
-	call	FileIO_ReturnError
-	ld	iz, hl
+	lda	xbc, (1998848:24)	; VRAM region end
+	sub	xbc, xde				; size = 0x800 bytes
+	call	FileIO_ReadBlock				; configure VRAM range
+	call	FileIO_ReturnError				; close resource
+	ld	iz, hl				; IZ = result handle
 	ld	wa, iz
-	call	PostLswLoad
+	call	PostLswLoad				; post-setup
 	jr	LoadRegion0_Finalize
 LoadRegion0_AltPath:
-	call	FileData_AllocLoadAndParse
-	ld	iz, hl
+	call	FileData_AllocLoadAndParse				; alternate path setup
+	ld	iz, hl				; IZ = result
 LoadRegion0_Finalize:
 	call FileIO_CloseHandle			; finalize display
 	ld hl, iz				; return result in HL
@@ -1831,11 +1844,11 @@ LoadRegion1_OpenSuccess:
 	call PanelMemory_PostBankLoad
 	jr LoadRegion1_Finalize
 LoadRegion1_AltPmLoad:
-	call	PrePmLoad
+	call	PrePmLoad				; alternate region setup
 	lda	xwa, (2020176:24)
 	ld	xde, xwa
-	lda	xbc, (2097152:24)
-	sub	xbc, xde
+	lda	xbc, (2097152:24)	; end of DRAM
+	sub	xbc, xde				; size = 0x200000 - 0x1ed350
 	call	FileIO_ReadBlock
 	call	FileIO_ReturnError
 	ld	iz, hl
@@ -1873,29 +1886,29 @@ LoadRegion7_OpenSuccess:
 	cp	hl, 0:i3
 	jr	z, LoadRegion7_ModeError
 	call	PreMidiLoad
-	pushw	1024
-	call	Malloc
-	inc	2, xsp
-	ld	xiz, xhl
-	or	xiz, xiz
-	jr	z, LoadRegion7_AllocFailed
-	pushw	0
-	pushw	1024
-	push	xiz
-	call	Memset
+	pushw	1024				; buffer size
+	call	Malloc				; allocate buffer (Malloc)
+	inc	2, xsp				; clean stack
+	ld	xiz, xhl				; XIZ = buffer ptr
+	or	xiz, xiz				; check null
+	jr	z, LoadRegion7_AllocFailed			; alloc failed
+	pushw	0				; fill value
+	pushw	1024				; fill size
+	push	xiz				; buffer ptr
+	call	Memset				; memset
 	inc	8, xsp
-	ld	xwa, xiz
-	ld	xbc, 1024
+	ld	xwa, xiz				; base address
+	ld	xbc, 1024			; size
 	call	FileIO_ReadBlock
-	ld	xwa, 4009984
+	ld	xwa, 4009984			; flash/file area base
 	push	xwa
 	ld	wa, 1:i3
-	ld	xbc, xiz
-	ldw	de, 1024
-	call	FlashWrite
+	ld	xbc, xiz				; buffer ptr
+	ldw	de, 1024				; size
+	call	FlashWrite				; flash read/copy
 	push	xiz
-	call	Free
-	inc	4, xsp
+	call	Free				; Free buffer
+	inc	4, xsp				; clean stack
 	call	FileIO_ReturnError
 	ld	iz, hl
 	jr	LoadRegion7_PostMidi
@@ -2451,22 +2464,22 @@ SaveRegion0_SpaceOk:
 	call FileIO_ReturnError				; close/cleanup
 	jr SaveRegion0_Return				; return error
 SaveRegion0_OpenSuccess:
-	call	PreLswSave
-	ld	xwa, 63872
-	ld	xbc, (xsp+4)
-	call	FileIO_WriteByte_Impl
-	ld	xwa, 1996800
-	ld	xbc, xiz
-	call	FileIO_WriteByte_Impl
-	call	FileIO_ReturnError
-	ld	iz, hl
+	call	PreLswSave				; pre-save hook
+	ld	xwa, 63872			; VRAM start
+	ld	xbc, (xsp+4)			; VRAM size
+	call	FileIO_WriteByte_Impl				; save range 1
+	ld	xwa, 1996800			; ext mem start
+	ld	xbc, xiz				; ext mem size
+	call	FileIO_WriteByte_Impl				; save range 2
+	call	FileIO_ReturnError				; close
+	ld	iz, hl				; save status
 	ld	wa, iz
-	call	PostLswSave
-	call	FileIO_CloseHandle
+	call	PostLswSave				; post-save hook
+	call	FileIO_CloseHandle			; finalize
 	cp	iz, 0:i3
-	jr	ge, SaveRegion0_Done
+	jr	ge, SaveRegion0_Done			; success
 	lda	xwa, (xsp+8)
-	call	FileIO_OpenDefault
+	call	FileIO_OpenDefault				; error cleanup
 SaveRegion0_Done:
 	ld hl, iz				; return status
 SaveRegion0_Return:
@@ -2525,14 +2538,14 @@ SaveRegion1_OpenSuccess:
 	ld iz, hl
 	jr SaveRegion1_Finalize
 SaveRegion1_AltPmSave:
-	call	PrePmSave
+	call	PrePmSave				; alternate pre-save
 	ld	xwa, 2020176
 	ld	xbc, xiz
 	call	FileIO_WriteByte_Impl
 	call	FileIO_ReturnError
 	ld	iz, hl
 	ld	wa, iz
-	call	PostPmSave
+	call	PostPmSave				; alternate post-save
 SaveRegion1_Finalize:
 	call FileIO_CloseHandle
 	cp iz, 0:i3
@@ -2569,14 +2582,14 @@ SaveRegion7_SpaceOk:
 	call FileIO_ReturnError
 	jr SaveRegion7_Return
 SaveRegion7_OpenSuccess:
-	call	PreMidiSave
-	ld	xwa, 4009984
-	ld	xbc, 1024
+	call	PreMidiSave				; pre-save hook
+	ld	xwa, 4009984			; flash address
+	ld	xbc, 1024			; 1024 bytes
 	call	FileIO_WriteByte_Impl
 	call	FileIO_ReturnError
 	ld	iz, hl
 	ld	wa, iz
-	call	PostMidiSave
+	call	PostMidiSave				; post-save hook
 	call	FileIO_CloseHandle
 	cp	iz, 0:i3
 	jr	ge, SaveRegion7_Done
@@ -2779,14 +2792,14 @@ SaveRegion4_SpaceOk:
 	call FileIO_ReturnError
 	jr SaveRegion4_Return
 SaveRegion4_OpenSuccess:
-	call	PreTmSave
-	ld	xwa, 1966080
-	ld	xbc, 29354
+	call	PreTmSave				; pre-save hook
+	ld	xwa, 1966080			; VRAM base
+	ld	xbc, 29354			; size
 	call	FileIO_WriteByte_Impl
 	call	FileIO_ReturnError
 	ld	iz, hl
 	ld	wa, iz
-	call	PostTmSave
+	call	PostTmSave				; post-save hook
 	call	FileIO_CloseHandle
 	cp	iz, 0:i3
 	jr	ge, SaveRegion4_Done
@@ -3177,6 +3190,13 @@ FileIO_ByteBlock_DemoProc1_Epilogue:
 	pop	xiz
 	lda	xsp, (xsp+36)
 	ret
+; SingleLoad_LoadPanelMemBank: Single-loads panel-memory bank WA of the selected .PMT file into bank BC: checks the
+;   file signature, reads the 16-byte bank name (file 16 + 16 * WA -> RAM 0x1ED350 + 16 + 16 * BC) and the bank's 8
+;   memories (8 * entry size from file 176 + WA * 8 * size -> 0x1ED350 + 176 + BC * 8 * size) between
+;   PanelMemory_PreBankLoad and PanelMemory_PostBankLoad; returns HL = read result, 0xFF98 with no file selected,
+;   0xFF9A on a wrong signature. Basis: callers + body -- SingleLoadDst_PanelMemListProc runs it for parameter 10 (the
+;   execute SingleLoadDstFunc sends) in ALL mode with WA = source bank (0x8960 / 8) and BC = destination bank (0x8966
+;   / 8); FileIO_ByteBlock_DemoProc1 is the one-memory load.
 SingleLoad_LoadPanelMemBank:
 	lda	xsp, (xsp-36)
 	push	xiz
@@ -3369,6 +3389,12 @@ SingleLoad_LoadSong_Epilogue3:
 	pop	xiz
 	lda	xsp, (xsp+30)
 	ret
+; SingleLoad_LoadComposerPattern: Single-loads from the selected .CMP file: opens it (type 3), validates the header
+;   (FileIO_ReadAndValidateHeader, else 0xFF9A) and hands source A = WA and destination C = BC to
+;   SingleLoad_CopyComposerPatternFromFile, which copies one composer pattern, or a whole memory bank when both are 30 +
+;   bank; returns HL = result (0xFF98 with no file selected). Basis: callers + body -- SingleLoadDst_ComposerListProc
+;   runs it for parameter 10 with WA = source position 0x8962 and BC = destination 0x896A, or in ALL mode with both =
+;   position / 10 + 30.
 SingleLoad_LoadComposerPattern:
 	lda	xsp, (xsp-28)
 	pushw	iz
@@ -3420,6 +3446,12 @@ SingleLoad_LoadComposerPattern_Epilogue4:
 	popw	iz
 	lda	xsp, (xsp+28)
 	ret
+; SingleLoad_LoadSoundMemEntry: Single-loads SOUND MEMORY entry WA of the selected .TM file into entry BC: entries
+;   below 40 are 470-byte sounds (file 16 + 470 * WA -> RAM 0x1E0000 + 16 + 470 * BC, flash block BC / 20, BC mod 20),
+;   entries from 40 are the 80-byte records at 0x4AA7 + 80 * (index - 40) (flash block 64); the read is wrapped in
+;   PreTmLoadEntry / PostTmLoadEntry; returns HL = result (0xFF98 no file, 0xFF9A wrong signature).
+;   Basis: callers + body -- SingleLoadDst_SoundMemListProc runs it for parameter 10 outside ALL mode with WA = source
+;   cursor 0x8964 and BC = destination cursor 0x896C.
 SingleLoad_LoadSoundMemEntry:
 	lda	xsp, (xsp-42)
 	pushw	iz
@@ -3544,6 +3576,11 @@ SingleLoad_LoadSoundMemEntry_Epilogue5:
 	popw	iz
 	lda	xsp, (xsp+42)
 	ret
+; SingleLoad_LoadSoundMemBank: Single-loads SOUND MEMORY bank WA of the selected .TM file into bank BC: banks 0-1 are
+;   20 sounds = 9400 bytes (file 16 + 9400 * WA -> RAM 0x1E0000 + 16 + 9400 * BC), bank 2 and up is the 0x2927-byte
+;   block at 0x4980 (the area of entries 40+); the read is wrapped in PostTmLoadEntry_Return /
+;   TmFlashWrite_ValidateParams; returns HL = result (0xFF98 no file, 0xFF9A wrong signature). Basis: callers + body
+;   -- SingleLoadDst_SoundMemListProc runs it for parameter 10 in ALL mode with WA = 0x8964 / 20 and BC = 0x896C / 20.
 SingleLoad_LoadSoundMemBank:
 	lda	xsp, (xsp-36)
 	push	xiz
@@ -6741,6 +6778,11 @@ GetFileEntryByIndex_Epilogue3:
 	pop	xiz
 	lda	xsp, (xsp+26)
 	ret
+; SingleLoadSrc_ReadSqtSongName: Returns XHL = the 16-character name of song WA in the selected .SQT file: opens the
+;   file (type 2, 'rb'), reads 16 bytes at offset 256 + 2048 * WA into 0x25BFE and NUL-terminates them; returns
+;   FileIO_EmptyEntryName when no file is selected or it does not open. Basis: callers + body --
+;   SingleLoadSrc_SequencerListProc puts its result for song 0 in cell 2 of the SEQUENCER source list, under the
+;   'SONG:' row.
 SingleLoadSrc_ReadSqtSongName:
 	lda	xsp, (xsp-26)
 	pushw	iz

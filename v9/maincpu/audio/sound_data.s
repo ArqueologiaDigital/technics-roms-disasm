@@ -282,4 +282,7 @@ SOUND_DATA_GM_SPECIAL:	.incbin "includes/generated/sound_data_gm_special.bin"
 SOUND_DATA_DRUM_KITS:				.incbin "includes/generated/sound_data_drum_kits.bin", 0x0, 0x12
 Scoop_CallDisplayHelper_SingleTableList:	.incbin "includes/generated/sound_data_drum_kits.bin", 0x12, 0x8
 Scoop_CallDisplayHelper_DisplayList_Data:	.incbin "includes/generated/sound_data_drum_kits.bin", 0x1A, 0x20
+; Scoop_TrackTypeNameField: Text-field descriptor (15 bytes: variable 0x118D, 7-character cells, names at +15) and the
+;   20 names it shows for the current track's TRACK ASSIGN value: MELODY x12, DRUM, CHORD, CHORD, CONTROL, RHYTHM,
+;   MELODY x3. Basis: readers + bytes.
 Scoop_TrackTypeNameField:		.incbin "includes/generated/sound_data_drum_kits.bin", 0x3A, 0x9B

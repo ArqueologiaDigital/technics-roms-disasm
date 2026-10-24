@@ -342,6 +342,8 @@ WndEvt_EventCodeDispatch:
 	; v10 does not spell this byte either
 	; v10 does not spell this byte either
 	jrl	WndEvt_EventCodeDispatch_Join3
+; WndEvt_DispatchByEventCode_CursorRight: button 2: cursor (0x274D8) + 1 while below the name length (0x274D6),
+;   EVT_SET_CURSOR
 WndEvt_DispatchByEventCode_CursorRight:
 	ld	wa, (160984:24)
 	ld	bc, wa
@@ -359,6 +361,8 @@ WndEvt_DispatchByEventCode_CursorRight:
 	ld	xbc, (xsp+46)
 	ld	xde, (xsp+42)
 	jrl	WndEvt_EventCodeDispatch_Join3
+; WndEvt_DispatchByEventCode_PrevChar: button 3 (dial down): previous character of the page (0x274DE - 1) written at
+;   the cursor
 WndEvt_DispatchByEventCode_PrevChar:
 	ld	bc, (160990:24)
 	cp	bc, 0:i3
@@ -398,6 +402,8 @@ WndEvt_DispatchByEventCode_PrevChar:
 	ld	xbc, (xsp+46)
 	ld	xde, (xsp+42)
 	jrl	WndEvt_EventCodeDispatch_Join3
+; WndEvt_DispatchByEventCode_CharRowUpDown: button 4: UP moves the character selection one 13-char row up, DOWN one
+;   row down, and writes it at the cursor
 WndEvt_DispatchByEventCode_CharRowUpDown:
 	lda	xde, (AcNaming_PageCharLists:24)
 	lda	xwa, (xsp+12)
@@ -568,6 +574,8 @@ WndEvt_EventCodeDispatch_Join:
 	ld	xbc, (xsp+46)
 	ld	xde, (xsp+42)
 	jrl	WndEvt_EventCodeDispatch_Join3
+; WndEvt_DispatchByEventCode_NextChar: button 5 (dial up): next character of the page (0x274DE + 1) written at the
+;   cursor
 WndEvt_DispatchByEventCode_NextChar:
 	ld	bc, (160986:24)
 	ld	wa, bc
@@ -639,6 +647,8 @@ WndEvt_DispatchByEventCode_NextChar_Join2:
 WndEvt_EventCodeDispatch_Join3:
 	calr	SetAutoInc
 	jrl	UIDialog_ReturnZeroJmp
+; WndEvt_DispatchByEventCode_InsertBlank: button 6: shift the name right from the cursor and put the fill character at
+;   the cursor
 WndEvt_DispatchByEventCode_InsertBlank:
 	ld	iz, (160982:24)
 	dec	1, iz
@@ -681,6 +691,8 @@ WndEvt_DispatchByEventCode_InsertBlank_Skip7:
 	ld	xwa, (xsp+50)
 	ld	xbc, EVT_SET_CURSOR
 	jrl	WndScroll_SendAndReturn
+; WndEvt_DispatchByEventCode_DeleteChar: button 7: delete at the cursor, shift the rest left and put the fill
+;   character at the end
 WndEvt_DispatchByEventCode_DeleteChar:
 	ld	iz, (160984:24)
 	cp	iz, (160982:24)
@@ -723,6 +735,8 @@ WndEvt_DispatchByEventCode_DeleteChar_Skip8:
 	ld	xwa, (xsp+50)
 	ld	xbc, EVT_SET_CURSOR
 	jrl	WndScroll_SendAndReturn
+; WndEvt_DispatchByEventCode_CenterName: button 8: re-pad the name so the leading and trailing fill characters are
+;   split evenly
 WndEvt_DispatchByEventCode_CenterName:
 	ld	qiz, 0
 	ld	iz, 0:i3
@@ -876,6 +890,7 @@ WndEvt_DispatchByEventCode_CenterName_Skip2:
 	ld	xwa, (xsp+50)
 	ld	xbc, EVT_SET_CURSOR
 	jrl	WndScroll_SendAndReturn
+; WndEvt_DispatchByEventCode_ClearName: button 9: fill the whole name with the fill character and move the cursor to 0
 WndEvt_DispatchByEventCode_ClearName:
 	ld	iz, 0:i3
 	; v10 does not spell this byte either
@@ -4117,6 +4132,12 @@ DrawDesignBox_ByteData_Code:
 	ld	xwa, xhl
 	calr	DrawDottedLine_Impl
 	ret
+; DrawDottedLine_Impl: Draw-task body of a plain dotted line: from point (XWA) to point (XBC) (each {x, y} words) in
+;   colour DE, writing straight into OFFSCREEN_BUFFER_1 (320-byte rows) with a 2-on / 3-off pattern (counter 0,1 draw;
+;   2,3 skip; 4 resets), horizontal, vertical and fixed-point sloped cases; ends with SetChangeRect. No draw-mode
+;   dispatch, unlike DrawDottedLineWithMode_Impl. Basis: callers + body -- DrawDesignBox_ByteData (the standard
+;   direct-or-DrawQueue_Alloc wrapper; misnamed, and itself unreferenced) and its queued record function
+;   DrawDesignBox_ByteData_Code call it.
 DrawDottedLine_Impl:
 	lda	xsp, (xsp-52)
 	push	xiz
@@ -4510,14 +4531,20 @@ Draw_StyledBoxWithFrame:
 	ld bc, (xsp + 70)
 	calr DrawBox_Impl
 	jrl DrawFunc_Epilogue74
+; DrawDesignBox_Impl_DropShadow2px: Design id 5: the rect shrunk by 2 at right/bottom, framed box, then a 2-pixel
+;   shadow (two DrawFrame_Impl bars) along the right and bottom edges.
 DrawDesignBox_Impl_DropShadow2px:
 	lda xwa, (xsp + 62)
 	decw	1, (xwa+4)
 	decw	1, (xwa+6)
+; DrawDesignBox_Impl_DropShadow1px: Design id 4: the rect shrunk by 1 at right/bottom, framed box, then a 1-pixel
+;   colour-0 shadow line along the right and bottom edges.
 DrawDesignBox_Impl_DropShadow1px:
 	lda xwa, (xsp + 62)
 	decw	1, (xwa+4)
 	decw	1, (xwa+6)
+; DrawDesignBox_Impl_FramedBox: Design ids 1-3: filled box and frame; 2 adds a frame inset 1 (2-pixel border), 3 a
+;   frame inset 2 (double line); also the tail of ids 4 and 5.
 DrawDesignBox_Impl_FramedBox:	; cases 181, 182, 183
 	lda xwa, (xsp + 62)
 	ld bc, (xsp + 70)
@@ -4614,9 +4641,13 @@ DrawDesignBox_4FrameCross:
 	ld bc, 0:i3
 	calr DrawFrame_Impl
 	jrl DrawFunc_Epilogue74
+; DrawDesignBox_Impl_Bevel2px: Design ids 193/195: as 192/194 with a 2-pixel bevel (sets the ring count to 1 and falls
+;   into the 1-pixel case, which adds 1).
 DrawDesignBox_Impl_Bevel2px:	; cases 193, 195
 	ld xwa, 1:i3
 	ld (xsp + 14), xwa
+; DrawDesignBox_Impl_Bevel1px: Design ids 192/194: filled box with a 1-pixel bevel; 192 draws top/left 0xFF and
+;   bottom/right 0xF8, 194 the reverse.
 DrawDesignBox_Impl_Bevel1px:	; cases 192, 194
 	ld xwa, 1:i3
 	add (xsp + 14), xwa
@@ -4698,9 +4729,13 @@ DrawDesignBox_BorderLoop:
 	cp xwa, (xsp + 14)
 	jrl lt, DrawDesignBox_BorderLoop
 	jrl DrawFunc_Epilogue74
+; DrawDesignBox_Impl_BlackEdgeBevel2px: Design ids 197/199: 2-ring bevel, outer ring colour 7 / 0 (black), inner ring
+;   0xFF / 0xF8; 199 swaps the sides.
 DrawDesignBox_Impl_BlackEdgeBevel2px:	; cases 197, 199
 	ld xwa, 1:i3
 	ld (xsp + 14), xwa
+; DrawDesignBox_Impl_BlackEdgeBevel1px: Design ids 196/198: filled box with a 1-pixel bevel of 0xFF and colour 0
+;   (black); 196 top/left light, 198 the reverse.
 DrawDesignBox_Impl_BlackEdgeBevel1px:	; cases 196, 198
 	ld xwa, 1:i3
 	add (xsp + 14), xwa
@@ -5040,6 +5075,8 @@ DrawPartGroup_StyleB:
 	ldw (xsp + 10), 0x12
 	ldi_erpw 0xfa, 0x13, 0x00
 	jrl DrawPartGroup_Loop
+; DrawDesignBox_PartGroupStyle_LeftChevron16: style 0x81: rounded box with RoundCorner1 corners and the
+;   Frame_ChevronLeft_6x16 piece on the left edge
 DrawDesignBox_PartGroupStyle_LeftChevron16:
 	ld iz, 0:i3
 	ldw (xsp + 8), 0x1
@@ -5047,6 +5084,8 @@ DrawDesignBox_PartGroupStyle_LeftChevron16:
 	ldiw_erp 0xfa, 3
 	ldw (xsp + 12), 0x1a
 	jrl DrawPartGroup_WithAltFlag
+; DrawDesignBox_PartGroupStyle_RightChevron16: style 0xa1: rounded box with RoundCorner1 corners and the
+;   Frame_ChevronRight_6x16 piece on the right edge
 DrawDesignBox_PartGroupStyle_RightChevron16:
 	ld iz, 0:i3
 	ldw (xsp + 8), 0x1
@@ -5054,6 +5093,8 @@ DrawDesignBox_PartGroupStyle_RightChevron16:
 	ldiw_erp 0xfa, 3
 	ldw (xsp + 12), 0x15
 	jrl DrawPartGroup_WithFlag
+; DrawDesignBox_PartGroupStyle_LeftChevron24: style 0x82: rounded box with RoundCorner2 corners and the
+;   Frame_ChevronLeft_8x24 piece on the left edge
 DrawDesignBox_PartGroupStyle_LeftChevron24:
 	ld iz, 4:i3
 	ldw (xsp + 8), 0x5
@@ -5061,6 +5102,8 @@ DrawDesignBox_PartGroupStyle_LeftChevron24:
 	ldiw_erp 0xfa, 7
 	ldw (xsp + 12), 0x1b
 	jrl DrawPartGroup_WithAltFlag
+; DrawDesignBox_PartGroupStyle_RightChevron24: style 0xa2: rounded box with RoundCorner2 corners and the
+;   Frame_ChevronRight_8x24 piece on the right edge
 DrawDesignBox_PartGroupStyle_RightChevron24:
 	ld iz, 4:i3
 	ldw (xsp + 8), 0x5
@@ -5068,6 +5111,8 @@ DrawDesignBox_PartGroupStyle_RightChevron24:
 	ldiw_erp 0xfa, 7
 	ldw (xsp + 12), 0x16
 	jrl DrawPartGroup_WithFlag
+; DrawDesignBox_PartGroupStyle_LeftChevron32: style 0x83: rounded box with RoundCorner5 corners and the
+;   Frame_ChevronLeft_10x32 piece on the left edge
 DrawDesignBox_PartGroupStyle_LeftChevron32:
 	ldw iz, 0x8
 	ldw (xsp + 8), 0x9
@@ -5075,6 +5120,8 @@ DrawDesignBox_PartGroupStyle_LeftChevron32:
 	ldi_erpw 0xfa, 0x0b, 0x00
 	ldw (xsp + 12), 0x1c
 	jrl DrawPartGroup_WithAltFlag
+; DrawDesignBox_PartGroupStyle_RightChevron32: style 0xa3: rounded box with RoundCorner5 corners and the
+;   Frame_ChevronRight_10x32 piece on the right edge
 DrawDesignBox_PartGroupStyle_RightChevron32:
 	ldw iz, 0x8
 	ldw (xsp + 8), 0x9
@@ -5082,6 +5129,8 @@ DrawDesignBox_PartGroupStyle_RightChevron32:
 	ldi_erpw 0xfa, 0x0b, 0x00
 	ldw (xsp + 12), 0x17
 	jrl DrawPartGroup_WithFlag
+; DrawDesignBox_PartGroupStyle_LeftChevron48: style 0x84: rounded box with RoundCorner5 corners and the
+;   Frame_ChevronLeft_15x48 piece on the left edge
 DrawDesignBox_PartGroupStyle_LeftChevron48:
 	ldw iz, 0x8
 	ldw (xsp + 8), 0x9
@@ -5089,6 +5138,8 @@ DrawDesignBox_PartGroupStyle_LeftChevron48:
 	ldi_erpw 0xfa, 0x0b, 0x00
 	ldw (xsp + 12), 0x1d
 	jr DrawPartGroup_WithAltFlag
+; DrawDesignBox_PartGroupStyle_RightChevron48: style 0xa4: rounded box with RoundCorner5 corners and the
+;   Frame_ChevronRight_15x48 piece on the right edge
 DrawDesignBox_PartGroupStyle_RightChevron48:
 	ldw iz, 0x8
 	ldw (xsp + 8), 0x9
@@ -5096,6 +5147,8 @@ DrawDesignBox_PartGroupStyle_RightChevron48:
 	ldi_erpw 0xfa, 0x0b, 0x00
 	ldw (xsp + 12), 0x18
 	jrl DrawPartGroup_WithFlag
+; DrawDesignBox_PartGroupStyle_LeftOnOffTab16: style 0x85: rounded box with RoundCorner1 corners and the
+;   Frame_OnOffTabLeft_20x16 piece on the left edge
 DrawDesignBox_PartGroupStyle_LeftOnOffTab16:
 	ld iz, 0:i3
 	ldw (xsp + 8), 0x1
@@ -5103,6 +5156,8 @@ DrawDesignBox_PartGroupStyle_LeftOnOffTab16:
 	ldiw_erp 0xfa, 3
 	ldw (xsp + 12), 0x1e
 	jr DrawPartGroup_WithAltFlag
+; DrawDesignBox_PartGroupStyle_LeftOnOffTab24: style 0x86: rounded box with RoundCorner2 corners and the
+;   Frame_OnOffTabLeft_24x24 piece on the left edge
 DrawDesignBox_PartGroupStyle_LeftOnOffTab24:
 	ld iz, 4:i3
 	ldw (xsp + 8), 0x5
@@ -5110,6 +5165,8 @@ DrawDesignBox_PartGroupStyle_LeftOnOffTab24:
 	ldiw_erp 0xfa, 7
 	ldw (xsp + 12), 0x1f
 	jr DrawPartGroup_WithAltFlag
+; DrawDesignBox_PartGroupStyle_LeftOnOffTab32: style 0x87: rounded box with RoundCorner5 corners and the
+;   Frame_OnOffTabLeft_29x32 piece on the left edge
 DrawDesignBox_PartGroupStyle_LeftOnOffTab32:
 	ldw iz, 0x8
 	ldw (xsp + 8), 0x9
@@ -5117,6 +5174,8 @@ DrawDesignBox_PartGroupStyle_LeftOnOffTab32:
 	ldi_erpw 0xfa, 0x0b, 0x00
 	ldw (xsp + 12), 0x20
 	jr DrawPartGroup_WithAltFlag
+; DrawDesignBox_PartGroupStyle_LeftOnOffTab48: style 0x88: rounded box with RoundCorner5 corners and the
+;   Frame_OnOffTabLeft_34x48 piece on the left edge
 DrawDesignBox_PartGroupStyle_LeftOnOffTab48:
 	ldw iz, 0x8
 	ldw (xsp + 8), 0x9
@@ -5127,6 +5186,8 @@ DrawDesignBox_PartGroupStyle_LeftOnOffTab48:
 DrawPartGroup_WithAltFlag:
 	ldw (xsp + 16), 0x1
 	jr DrawPartGroup_Loop
+; DrawDesignBox_PartGroupStyle_RightOnOffTab16: style 0xa5: rounded box with RoundCorner1 corners and the
+;   Frame_OnOffTabRight_20x16 piece on the right edge
 DrawDesignBox_PartGroupStyle_RightOnOffTab16:
 	ld iz, 0:i3
 	ldw (xsp + 8), 0x1
@@ -5134,6 +5195,8 @@ DrawDesignBox_PartGroupStyle_RightOnOffTab16:
 	ldiw_erp 0xfa, 3
 	ldw (xsp + 12), 0x22
 	jr DrawPartGroup_WithFlag
+; DrawDesignBox_PartGroupStyle_RightOnOffTab24: style 0xa6: rounded box with RoundCorner2 corners and the
+;   Frame_OnOffTabRight_24x24 piece on the right edge
 DrawDesignBox_PartGroupStyle_RightOnOffTab24:
 	ld iz, 4:i3
 	ldw (xsp + 8), 0x5
@@ -5141,6 +5204,8 @@ DrawDesignBox_PartGroupStyle_RightOnOffTab24:
 	ldiw_erp 0xfa, 7
 	ldw (xsp + 12), 0x23
 	jr DrawPartGroup_WithFlag
+; DrawDesignBox_PartGroupStyle_RightOnOffTab32: style 0xa7: rounded box with RoundCorner5 corners and the
+;   Frame_OnOffTabRight_29x32 piece on the right edge
 DrawDesignBox_PartGroupStyle_RightOnOffTab32:
 	ldw iz, 0x8
 	ldw (xsp + 8), 0x9
@@ -5148,6 +5213,8 @@ DrawDesignBox_PartGroupStyle_RightOnOffTab32:
 	ldi_erpw 0xfa, 0x0b, 0x00
 	ldw (xsp + 12), 0x24
 	jr DrawPartGroup_WithFlag
+; DrawDesignBox_PartGroupStyle_RightOnOffTab48: style 0xa8: rounded box with RoundCorner5 corners and the
+;   Frame_OnOffTabRight_34x48 piece on the right edge
 DrawDesignBox_PartGroupStyle_RightOnOffTab48:
 	ldw iz, 0x8
 	ldw (xsp + 8), 0x9
@@ -5423,6 +5490,8 @@ DrawPartGroup_DrawLeftBorder:
 	ld (xbc), de
 	ld de, 0:i3
 	jrl DrawFunc_DrawLineAndReturn
+; DrawDesignBox_Impl_BevelCorners: Design ids 201/202: 1-ring bevel with 5x5 corner pieces; 201 uses pieces 0x28-0x2B
+;   with 0xFF top/left and 0xF8 bottom/right, 202 (0xca) pieces 0x30-0x33 with the colours swapped.
 DrawDesignBox_Impl_BevelCorners:	; cases 201, 202
 	cpw (xsp + 72), 0xca
 	jr z, DrawPartGroup_StyleCA
@@ -5644,6 +5713,8 @@ DrawPartGroup_DrawCAFrames:
 	decw	1, (xbc)
 	ld de, (xsp + 6)
 	jrl DrawFunc_DrawLineAndReturn
+; DrawDesignBox_Impl_BevelTopCorners: Design id 203: 0xFF/0xF8 bevel box with corner pieces 0x28/0x29 at the top
+;   corners only (bottom corners square).
 DrawDesignBox_Impl_BevelTopCorners:
 	ldw wa, 0x28
 	ld xbc, xhl
@@ -5979,6 +6050,8 @@ DrawDesignBox_Impl_Case204:
 	incw 1, (xwa + 2)
 	ldw de, 0xf8
 	jrl DrawFunc_DrawLineAndReturn
+; DrawDesignBox_Impl_BlackEdgeBevelCorners: Design id 200: the 2-ring 7/0 + 0xFF/0xF8 bevel with 5x5 corner pieces
+;   0x2C-0x2F (DrawFrameSP) at the four corners.
 DrawDesignBox_Impl_BlackEdgeBevelCorners:
 	ldw wa, 0x2c
 	ld xbc, xhl

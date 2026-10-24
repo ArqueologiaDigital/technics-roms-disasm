@@ -35,6 +35,7 @@ AudioDispatch_ClearVoiceFlags:
 	ld	(0xc162:16), 0
 AudioDispatch_SetBusyFlag:
 	orw	(0xc500:16), 0x1
+; Audio voice callback dispatch
 AudioVoice_Callback:
 	ld	a, (CURRENT_MODE:16)
 	extz	wa

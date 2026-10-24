@@ -3,6 +3,9 @@
 ; debug page function names, RTOS command strings, and test list widgets
 
 Hama_ModeInit_Table:
+; table of 6 pointers to NakaInst_* instruction texts ("Select the sound for each part" and
+; its A-D variants); evidence: SndArrLangCheck (audio/sound_editor_ui.s) returns this address in
+; XHL when XBC = 0x01E0009F.  Not HAMA mode data; the name is kept because that file uses it.
 	.long NakaInst_Select_the_sound_for_each_part
 	.long NakaInst_Select_the_sound_for_each_part
 	.long NakaInst_SelectSoundForPart_A
@@ -11,6 +14,8 @@ Hama_ModeInit_Table:
 	.long NakaInst_SelectSoundForPart_D
 InitializeHama_PtrTable:	.byte 0xce, 0xe7, 0xf1, 0x00, 0xa4, 0xe8
 	.byte	0xf1, 0x00, 0x00, 0x00, 0x00, 0x00
+; table of 3 pointers to the NAME strings of the functions in object 0x129's table
+; evidence: InitializeHama `RegObjTablHama 0x1600002, ApFunctionProc, 0x2, <this>, 0x429` -> RegisterObjectTable (descriptor +10 = this; registry 0x27ED2 + 14*index)
 Hama_ApFuncTable_429:	.byte	0x6c, 0xf0
 	.byte 0xe1, 0x00
 	.long HamaStr_hamadeb
@@ -18,6 +23,8 @@ Hama_ApFuncTable_429:	.byte	0x6c, 0xf0
 HamaStr_Empty:	aligned_string ""
 HamaStr_hamadeb:	aligned_string "hamadeb"
 HamaStr_HamaPage1Func:	aligned_string "HamaPage1Func"
+; NakaPropTbl_HamaList: Property-name list (+0x14 `props` field) of the HAMA class "HamaList": a single pointer to "",
+;   i.e. the class adds no properties. Basis: readers + bytes (naka_class_t layout).
 NakaPropTbl_HamaList:
 	.long HamaList_EntryStr_Empty
 HamaList_EntryStr_Empty:	aligned_string ""
@@ -36,12 +43,16 @@ HamaStr_HamaList:
 	aligned_string	"HamaList"
 InitializeHama_Data_3:
 	.byte	0x01, 0x00
+; parameter block of object 0x1C9 (class 0x0160000C, proc ResEventProc); its descriptor's +8 word is read from HamaStr_EV_INDEX_PUTS + 0xe
+; evidence: InitializeHama `RegObjTableHama 0x160000c, ResEventProc, HamaStr_EV_INDEX_PUTS + 0xe, <this>, 0x1c9` -> RegisterObjectTable (descriptor +10 = this; registry 0x27ED2 + 14*index)
 Hama_ResEventTable_1C9:	.byte	0xc6, 0xf0, 0xe1, 0x00, 0x00, 0x00
 	.byte	0x00, 0x00
 HamaStr_EV_INDEX_PUTS:
 	aligned_string	"EV_INDEX_PUTS"
 InitializeHama_Data_5:
 	.byte	0x01, 0x00
+; parameter block of object 0x1E9 (class 0x0160000D, proc ResMethodProc); its descriptor's +8 word is read from HamaStr_MT_CONTINUE + 0xc
+; evidence: InitializeHama `RegObjTableHama 0x160000d, ResMethodProc, HamaStr_MT_CONTINUE + 0xc, <this>, 0x1e9` -> RegisterObjectTable (descriptor +10 = this; registry 0x27ED2 + 14*index)
 Hama_ResMethodTable_1E9:	.byte	0xde, 0xf0, 0xe1, 0x00, 0x00, 0x00
 	.byte	0x00, 0x00
 HamaStr_MT_CONTINUE:
@@ -135,6 +146,8 @@ Hama_FunctionTable_109:
 	.long	SetWall_X
 	.long	ferror_ext
 	.long	0x00000000
+; table of 85 pointers to the NAME strings of the functions in object 0x109's table
+; evidence: InitializeHama `RegObjTablHama 0x1600001, FunctionProc, 0x4b, <this>, 0x409` -> RegisterObjectTable (descriptor +10 = this; registry 0x27ED2 + 14*index)
 Hama_ModeParam_Table:
 	.long HamaStr_HamaListProc
 	.long HamaStr_FDLoadSaveTest

@@ -3752,12 +3752,16 @@ AcIndexEdit_DispatchDSP_InlineData_Skip:
 	ld	xwa, 0xffffffff
 	ld	xbc, EVT_INDEXSW_UP
 	jrl	AcIndexEdit_SendAndReturn
+; AcIndexEditSwProc_OnUpStyle: Up-type styles (SS_Up, SS_On, SS_Right, SS_Yes, SS_Up2, SS_Right2): always
+;   EVT_INDEXSW_UP with the box index.
 AcIndexEditSwProc_OnUpStyle:
 	ld	de, (xsp+4)
 	exts	xde
 	ld	xwa, 0xffffffff
 	ld	xbc, EVT_INDEXSW_UP
 	jrl	AcIndexEdit_SendAndReturn
+; AcIndexEditSwProc_OnDownStyle: Down-type styles (SS_Down, SS_Off, SS_Left, SS_No, SS_Down2, SS_Left2): always
+;   EVT_INDEXSW_DOWN with the box index.
 AcIndexEditSwProc_OnDownStyle:
 	ld	de, (xsp+4)
 	exts	xde
@@ -6920,6 +6924,11 @@ DbMemo_DrawContent_Loop:
 	extz xwa
 	add (xsp + 6), xwa
 	jr DbMemo_DrawContent_Loop
+; DbMemo_PostString: Prints a string in the debug memo window asynchronously: copies it into a Malloc'd buffer, posts
+;   EVT_MEMO_DRAW with the copy (broadcast 0xFFFFFFFF), then EVT_AUTO_FREE so the copy is freed after delivery. Basis:
+;   callers + body -- the DIRMD title's trace calls ("DirmdTitleNew();", "DirmdTitleESw(%d, %d);" ...) and
+;   FDemoText_GetInstanceID's "Error! (GetInstanceID)" pass their message to it; DbMemoProc draws EVT_MEMO_DRAW
+;   strings.
 DbMemo_PostString:
 	dec 4, xsp
 	push xiz
@@ -8668,6 +8677,9 @@ InitializeObjectTable:
 	ld xix, xwa
 	lda xiy, (xwa+15680)
 
+; InitializeObjectTable_Loop: Local loop label of InitializeObjectTable (its first loop): clears the 1120 x 14-byte
+;   view records from RAM 0x27ED2 (+0 = 0xFFFFFFFF, +4 = 0, +8 word = 0, +10 = 0). Referenced only by its own `jr c`
+;   back-branch. Basis: body.
 InitializeObjectTable_Loop:
 	ld xwa, 0xffffffff
 	ld (xix), xwa
@@ -8685,6 +8697,9 @@ InitializeObjectTable_Loop:
 	ld xwa, xbc
 	lda xde, (xbc+448)
 
+; InitializeObjectTable_Loop2: Local loop label of InitializeObjectTable (second loop): copies NakaMode_InitRecord (7
+;   words) into each of the 32 x 14-byte mode records at RAM 0x328FC. Referenced only by its own back-branch (a
+;   comment in disk_warning_strings.s names it). Basis: body.
 InitializeObjectTable_Loop2:
 	ld xiy, NakaMode_InitRecord
 	ld xix, xwa
@@ -8697,6 +8712,9 @@ InitializeObjectTable_Loop2:
 	ld xwa, xbc
 	lda xde, (xbc+5632)
 
+; InitializeObjectTable_Loop3: Local loop label of InitializeObjectTable (third loop): copies Title_RecordTemplate (11
+;   words) into each of the 256 x 22-byte title records at RAM 0x32ABC; the SupportClass registration follows the
+;   loop, it is not part of it. Referenced only by its own back-branch. Basis: body.
 InitializeObjectTable_Loop3:
 	ld xiy, Title_RecordTemplate
 	ld xix, xwa
@@ -8737,6 +8755,9 @@ InitializeObjectTable_Loop3:
 	calr RegisterObjectTable
 	ld iz, 0:i3
 
+; InitializeObjectTable_Loop4: Local loop label of InitializeObjectTable (fourth loop): for IZ = 0..255 registers two
+;   Viewable object tables, slot IZ with base 0x276D2 + 4 * IZ and slot IZ + 0x300 with base 0x27AD2 + 4 * IZ (count
+;   0). Referenced only by its own back-branch. Basis: body.
 InitializeObjectTable_Loop4:
 	lda xbc, (xsp + 2)
 	ld xwa, NAKA_CLASS_Viewable
@@ -19144,6 +19165,10 @@ KillApTimer_CheckNextEntry_Epilogue:
 	pop xiz
 	inc 4, xsp
 	retd 0x8
+; DrawTask_Main: Entry point of task (screen group) 5, the draw task: loops forever taking draw commands from the draw
+;   ring (DrawTask_Dispatch -> DrawRing_TryTake under event 3) and calling each command's function (+0) with XWA = the
+;   command, lowering its priority (TaskSched_ChangePriority 5, 3) while word 0x3EF4E is non-zero. Basis: callers +
+;   body.
 DrawTask_Main:
 	push xiz
 

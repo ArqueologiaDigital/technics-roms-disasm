@@ -404,6 +404,13 @@ SeqPlay_DecPunchInMeasure:
 SeqPlay_DecPunchInMeasure_Skip3:
 	calr	SeqPlay_UpdateStartFromPunchInDown
 	jrl	SeqAcc_SetupRepeatCount
+; SeqPlay_UpdateStartFromPunchIn: After the punch-in measure (0xF238, the "P" in-measure of MT_GetPInMeasString) has
+;   changed, recomputes the playback start measure (words 0x2668 and 0x26EC) as punch-in minus the count in 0xF23F,
+;   first clamping 0xF23F to punch-in - 1 (0x28C3, SeqAcc_UpdateEndPosition); with bit 0 of 0x28B2 set, punch-in 2
+;   instead gives start 0x8002 and 0xF23F = 3, punch-in 3 gives start 1 and 0xF23F = 2, and punch-in 1 leaves both
+;   alone. Basis: callers + body -- SeqPlay_DataBlock_BBE (play-screen case 8) calls it after incrementing 0xF238,
+;   SeqPlay_IncPunchOutMeasure (case 9, punch-out up) after pulling 0xF238 below 0xF23A;
+;   SeqAcc_StartPlaybackFromPosition does the same subtraction when playback starts.
 SeqPlay_UpdateStartFromPunchIn:
 	bit	0, (10418:16)
 	jr	z, SeqPlay_UpdateStartFromPunchIn_Skip2
@@ -434,6 +441,12 @@ SeqPlay_UpdateStartFromPunchIn_Skip2:
 	ld	(9832:16), wa
 	ld	(9964:16), wa
 	ret
+; SeqPlay_UpdateStartFromPunchInDown: Step-down counterpart of SeqPlay_UpdateStartFromPunchIn: recomputes the playback
+;   start words 0x2668 / 0x26EC after the punch-in measure 0xF238 went down -- with bit 0 of 0x28B2 set, punch-in 1
+;   gives start 0x8002 and count-in 0xF23F = 2, punch-in 2 gives 0x2668 = 2, 0x26EC = 0x8002 and 0xF23F = 3; otherwise
+;   it clamps the count-in to punch-in - 1 (0x28C3, SeqAcc_UpdateEndPosition) and sets start = punch-in - count-in.
+;   Basis: callers + body -- SeqPlay_DecPunchInMeasure and SeqPlay_DecPunchOutMeasure call it after lowering 0xF238;
+;   their headers already call it the step-down counterpart.
 SeqPlay_UpdateStartFromPunchInDown:
 	bit	0, (10418:16)
 	jr	z, SeqPlay_UpdateStartFromPunchInDown_Skip2
@@ -464,6 +477,11 @@ SeqPlay_UpdateStartFromPunchInDown_Skip2:
 	ld	(9832:16), wa
 	ld	(9964:16), wa
 	ret
+; SeqPlay_IncPunchOutMeasure: Parameter 9 up on the sequencer play screen: increments the punch-out measure 0xF23A
+;   (MT_GetPOutMeasString), capped at 999; if the punch-in measure 0xF238 is not below it, pulls punch-in to punch-out
+;   - 1, recomputes the start (SeqPlay_UpdateStartFromPunchIn) and runs SeqAcc_SetupRepeatCount. Basis: callers + body
+;   -- SeqAccomp_ParamDelivery_IncPInPOutPCntIn calls it for parameter 9 ("P out-measure 0xF23A");
+;   SeqPlay_UpdateStartFromPunchIn's header already cites it as "case 9, punch-out up".
 SeqPlay_IncPunchOutMeasure:
 	ld	wa, (0xf23a:16)
 	cp	wa, 999
@@ -502,6 +520,11 @@ SeqPlay_DecPunchOutMeasure_Join2:
 	calr	SeqPlay_UpdateStartFromPunchInDown
 	calr	SeqAcc_SetupRepeatCount
 	ret
+; SeqPlay_IncPunchCountIn: Parameter 10 up on the sequencer play screen: increments the punch count-in 0xF23F
+;   (MT_GetPCntInString), capped at 997, clamps it to punch-in - 1 (0x28C3, SeqAcc_UpdateEndPosition), sets the
+;   playback start words 0x2668 / 0x26EC = punch-in - count-in and tail-jumps to SeqAcc_SetupRepeatCount; with bit 0
+;   of 0x28B2 set and punch-in <= 2 it does nothing. Basis: callers + body -- SeqAccomp_ParamDelivery_IncPInPOutPCntIn
+;   calls it for parameter 10 ("P count-in 0xF23F").
 SeqPlay_IncPunchCountIn:
 	bit	0, (10418:16)
 	jr	z, SeqPlay_IncPunchCountIn_Skip3
@@ -20131,6 +20154,7 @@ SeqEvent_MainHandler:
 	ld	wa, (xix+wa)
 	lda xix, (SeqEvent_Dispatch:24)
 	jp	t, (xix+wa)
+; Sequencer event handler dispatch
 SeqEvent_Dispatch:
 	call SeqData_CopyBlockWithLookup
 	ld a, (0x2878:16)
@@ -20438,6 +20462,9 @@ AppEvent_ChainDispatch1_Case1:
 	ld	wa, (xix+wa)
 	lda	xix, (AppEvent_ChainDispatch1_IncFromMeasure_OnTitleSqnotecng:24)
 	jp	t, (xix+wa)
+; AppEvent_ChainDispatch1_IncFromMeasure_OnTitleSqnotecng: TT_SQNOTECNG (title 0x9F) case of EVT_INC_VAL on sequencer-
+;   edit parameter 1: the from-measure word 9744 (last measure 9746) goes up by one (max 999), pushing the last
+;   measure along. Basis: callers + body.
 AppEvent_ChainDispatch1_IncFromMeasure_OnTitleSqnotecng:
 	lda_d16	xiz, (9744)
 	lda_d16	xwa, (9746)
@@ -20462,6 +20489,9 @@ AppEvtHandler_Branch_002_OnTitleSqqtz:
 	lda_d16	xiz, (61938)
 	lda_d16	xwa, (9724)
 	jr	AppEvtHandler_Branch_004
+; AppEvent_ChainDispatch1_IncFromMeasure_OnTitleSqadvdly: TT_SQADVDLY (title 0xA0) case, also the default (titles
+;   outside 0x9C..0xA3 and 0xA2), of EVT_INC_VAL on parameter 1: selects from-measure 9734 / last measure 9736 for the
+;   shared increment. Basis: callers + body.
 AppEvent_ChainDispatch1_IncFromMeasure_OnTitleSqadvdly:
 	lda xiz, (9734:16)
 	lda xwa, (9736:16)
@@ -20505,6 +20535,9 @@ AppEvent_ChainDispatch1_Case2:
 	ld	wa, (xix+wa)
 	lda	xix, (AppEvent_ChainDispatch1_IncLastMeasure_OnTitleSqnotecng:24)
 	jp	t, (xix+wa)
+; AppEvent_ChainDispatch1_IncLastMeasure_OnTitleSqnotecng: TT_SQNOTECNG (title 0x9F) case of EVT_INC_VAL on sequencer-
+;   edit parameter 2: the last-measure word 9746 goes up by one (max 999); the from measure 9744 is pulled down if it
+;   is now larger. Basis: callers + body.
 AppEvent_ChainDispatch1_IncLastMeasure_OnTitleSqnotecng:
 	lda	xiz, (9744:16)
 	lda	xwa, (9746:16)
@@ -20529,6 +20562,9 @@ AppEvtHandler_Branch_006_OnTitleSqqtz:
 	lda	xiz, (61938:16)
 	lda	xwa, (9724:16)
 	jr	AppEvtHandler_Branch_008	; -> 0xF442B4
+; AppEvent_ChainDispatch1_IncLastMeasure_OnTitleSqadvdly: TT_SQADVDLY (title 0xA0) case, also the default (titles
+;   outside 0x9C..0xA3 and 0xA2), of EVT_INC_VAL on parameter 2: selects from-measure 9734 / last measure 9736 for the
+;   shared increment. Basis: callers + body.
 AppEvent_ChainDispatch1_IncLastMeasure_OnTitleSqadvdly:
 	lda xiz, (9734:16)
 	lda xwa, (9736:16)
@@ -20722,6 +20758,9 @@ AppEvent_ChainDispatch1_IncMrgTrackC:
 	ld xbc, EVT_PARA_DRAW
 	ld xde, 0xe
 	jrl AppEvtHandler_Branch_033
+; AppEvent_ChainDispatch1_IncMcpParam: EVT_INC_VAL on sequencer-edit parameter 15: the six TT_SQMCP measure-copy
+;   fields 15..20 (track A 0xf1e9, from 0xf1ea, last 0x2628, track B 0xf1ee, start 0xf1ef, repeat 9770): an inner
+;   switch on N - 15, then all six are redrawn.
 AppEvent_ChainDispatch1_IncMcpParam:	; cases 15, 16, 17, 18, 19, 20
 	sub xwa, 0xf
 	cp xwa, 0x0
@@ -20733,6 +20772,9 @@ AppEvent_ChainDispatch1_IncMcpParam:	; cases 15, 16, 17, 18, 19, 20
 	ld wa, (xwa)
 	lda xix, (AppEvent_ChainDispatch1_IncMcpTrackA:24)
 	jp	t, (xix+wa)
+; AppEvent_ChainDispatch1_IncMcpTrackA: Case 15 (TT_SQMCP track A, RAM 0xF1E9) of EVT_INC_VAL's measure-copy inner
+;   switch: up by one to at most 17 (all tracks); reaching 17 sets track B 0xF1EE to 17 too; then the six MCP fields
+;   are redrawn. Basis: callers + body.
 AppEvent_ChainDispatch1_IncMcpTrackA:
 	ld a, (0xf1e9:16)
 	cp a, 0x11
@@ -20815,6 +20857,9 @@ AppEvtHandler_Branch_024:
 	ld xbc, EVT_PARA_DRAW
 	ld xde, 0x14
 	jrl AppEvtHandler_Branch_033
+; AppEvent_ChainDispatch1_IncMinsParam: EVT_INC_VAL on sequencer-edit parameter 21: the six TT_SQMINS measure-insert
+;   fields 21..26 (track A 0xf1e1, from 0xf1e2, last 0x262e, track B 0xf1e6, start 0xf1e7, repeat 9776): an inner
+;   switch on N - 21, then all six are redrawn.
 AppEvent_ChainDispatch1_IncMinsParam:	; cases 21, 22, 23, 24, 25, 26
 	sub xwa, 0x15
 	cp xwa, 0x0
@@ -20826,6 +20871,9 @@ AppEvent_ChainDispatch1_IncMinsParam:	; cases 21, 22, 23, 24, 25, 26
 	ld wa, (xwa)
 	lda xix, (AppEvent_ChainDispatch1_IncMinsTrackA:24)
 	jp	t, (xix+wa)
+; AppEvent_ChainDispatch1_IncMinsTrackA: Case 21 (TT_SQMINS track A, RAM 0xF1E1) of EVT_INC_VAL's measure-insert inner
+;   switch: up by one to at most 17 (all tracks); reaching 17 sets track B 0xF1E6 to 17 too; then the six MINS fields
+;   are redrawn. Basis: callers + body.
 AppEvent_ChainDispatch1_IncMinsTrackA:
 	ld a, (0xf1e1:16)
 	cp a, 0x11
@@ -20908,6 +20956,9 @@ AppEvtHandler_Branch_027:
 	ld xbc, EVT_PARA_DRAW
 	ld xde, 0x1a
 	jrl AppEvtHandler_Branch_033
+; AppEvent_ChainDispatch1_IncScpParam: EVT_INC_VAL on sequencer-edit parameter 27: the four song-copy fields 27..30
+;   (from-song 9992, from-track 9996, to-song 9994, to-track 9998); a song change reloads its 16-char name (0x2842 /
+;   0x2852) through SeqData_CopyBlock2K.
 AppEvent_ChainDispatch1_IncScpParam:	; cases 27, 28, 29, 30
 	cp xwa, 0x1e
 	jr z, AppEvent_ChainDispatch1_IncScpParam_Skip3
@@ -20972,6 +21023,9 @@ AppEvent_ChainDispatch1_IncScpParam_Join2:
 	ld xbc, EVT_PARA_DRAW
 	ld xde, 0x1e
 	jr AppEvtHandler_Branch_033
+; AppEvent_ChainDispatch1_IncSclrSongNo: EVT_INC_VAL on sequencer-edit parameter 31: the song-clear song number (byte
+;   0x2878, 0..10); reloads the song's data (SeqData_CopyBlockWithLookup, SeqPart_CountActiveVoices) and redraws
+;   parameters 31..34.
 AppEvent_ChainDispatch1_IncSclrSongNo:
 	ld a, (0x2878:16)
 	cp a, 0xa
@@ -21050,6 +21104,8 @@ AppEvent_InlineHandler_Case1:
 	ld	wa, (xix+wa)
 	lda	xix, (AppEvent_InlineHandler_DecFromMeasure_OnTitleSqnotecng:24)
 	jp	t, (xix+wa)
+; AppEvent_InlineHandler_DecFromMeasure_OnTitleSqnotecng: TT_SQNOTECNG (title 0x9F) case of EVT_DEC_VAL on sequencer-
+;   edit parameter 1: the from-measure word 9744 (last measure 9746) goes down by one (min 1). Basis: callers + body.
 AppEvent_InlineHandler_DecFromMeasure_OnTitleSqnotecng:
 	lda	xiz, (9744:16)
 	lda	xwa, (9746:16)
@@ -23059,6 +23115,8 @@ SeqAccomp_SubHandlerA:
 	ld	xbc, EVT_PARA_DRAW
 	ld	xde, 0:i3
 	jrl	ApPlaySyori_Join9
+; SeqAccomp_ParamDelivery_IncCycleEnable: Cycle on: TT_SQCYCPLY sets 0x28B1 bit 0; TT_SQCYCREC assigns the parts, sets
+;   bit 1 and moves the measure to the cycle start.
 SeqAccomp_ParamDelivery_IncCycleEnable:
 	bit	2, (SEQ_TRANSPORT_STATE:16)
 	jrl	nz, AppEvent_ReturnZero
@@ -23154,6 +23212,8 @@ ApPlaySyori_Join3:
 	ld	xbc, EVT_PARA_DRAW
 	ld	xde, 6:i3
 	jrl	ApPlaySyori_Join9
+; SeqAccomp_ParamDelivery_IncPInPOutPCntIn: Parameters 8, 9 and 10 (P in-measure 0xF238, P out-measure 0xF23A, P
+;   count-in 0xF23F) share this body; an inner compare picks the field.
 SeqAccomp_ParamDelivery_IncPInPOutPCntIn:	; cases 8, 9, 10
 	bit	2, (SEQ_TRANSPORT_STATE:16)
 	jrl	nz, AppEvent_ReturnZero
@@ -23202,6 +23262,7 @@ SeqAccomp_ParamDelivery_IncSoloEnable:
 	bit	2, (SEQ_TRANSPORT_STATE:16)
 	jrl	z, ApPlaySyori_Skip15
 	jrl	AppEvent_ReturnZero
+; SeqAccomp sub-handler chain
 SeqAccomp_SubChain:
 	ld xwa, (xsp + 2)
 	cp xwa, 0xb
@@ -24905,8 +24966,10 @@ EtmenuTitleFunc:
 	ld	xde, 0:i3
 	call	ApDeliveryEvent
 	jr	EtmenuTtl_ReturnZero
+; MainExeCall dispatch entry
 MainExe_DispatchEntry:
 	ld	(58096:16), 0
+; MainExeCall dispatch return
 MainExe_DispatchReturn:
 	ld wa, 0:i3
 	calr VoiceParam_SetD6Group
@@ -25021,6 +25084,8 @@ MainExe_Handle91:
 MainExe_SongMemoryLoop:
 	calr SoundCtrl_SendCmd_EE
 	jrl MainExe_ReturnZero
+; MainExeCall_OnTitleSqtrkclr: EXECUTE on TT_SQTRKCLR: calls SeqVoice_InitJmpNop for each track 1-16 whose bit is set
+;   in mask word 9704, drops those bits from 0x2875 and zeroes 9704; with an empty mask it only re-posts the title.
 MainExeCall_OnTitleSqtrkclr:
 	cpw (9704:16), 0
 	jr nz, MainExe_SongMemStart
@@ -25063,6 +25128,8 @@ MainExe_SongMemNextPart:
 MainExe_CallSongHandler:
 	calr	SoundCtrl_SaveAndSendCmd_EE
 	jrl	MainExe_ReturnZero
+; MainExeCall_OnTitleSqtrkmrg: EXECUTE on TT_SQTRKMRG: merges MrgTrA (0xf1d3) and MrgTrB (0xf1d4) into MrgTrC (0xf1d5)
+;   through SeqPart_Compare and moves the tracks' bits in 0x2875 / 0xffec from A and B to C.
 MainExeCall_OnTitleSqtrkmrg:
 	ldmm8	10359, 61907
 	ldmm8	9858, 61908
@@ -25169,6 +25236,8 @@ MainExe_MaskTertiary:
 	and bc, de
 	ld (0x2875:16), bc
 	jrl MainExe_SongMemoryLoop
+; MainExeCall_OnTitleSqqtz: EXECUTE on TT_SQQTZ: track 0xf1f1 (0x11 = all, passed as 127) from measure 0xf1f2, value
+;   0xf1f6 doubled into 9726, then SeqPart_VelocityEditSetup.
 MainExeCall_OnTitleSqqtz:
 	ld a, (0xf1f1:16)
 	cp a, 0x11
@@ -25195,6 +25264,7 @@ MainExe_PatternLoad:
 	jrl	nz, MainExe_SongMemoryLoop
 	ldw	wa, 156
 	jrl	MainExe_CallModeSwitch
+; MainExeCall_OnTitleSqtrns: EXECUTE on TT_SQTRNS: track 9756 from measure 9758 to 9760, then SeqPart_PartSelect.
 MainExeCall_OnTitleSqtrns:
 	ldmm8	10359, 9756
 	ld	wa, (9758:16)
@@ -25208,6 +25278,8 @@ MainExeCall_OnTitleSqtrns:
 	jrl	nz, MainExe_SongMemoryLoop
 	ldw	wa, 157
 	jrl	MainExe_CallModeSwitch
+; MainExeCall_OnTitleSqvelocng: EXECUTE on TT_SQVELOCNG: track 0xf228 from measure 0xf229, velocity amount 0xf22e into
+;   9812, then SeqPart_TransposeSetup (name does not fit).
 MainExeCall_OnTitleSqvelocng:
 	ld	a, (61992:16)
 	cp	a, 17
@@ -25231,6 +25303,8 @@ MainExe_RhythmLoad:
 	jrl	nz, MainExe_SongMemoryLoop
 	ldw	wa, 158
 	jrl	MainExe_CallModeSwitch
+; MainExeCall_OnTitleSqnotecng: EXECUTE on TT_SQNOTECNG: track 9742 from measure 9744 to 9746, then
+;   SeqPart_PartVoiceCheck.
 MainExeCall_OnTitleSqnotecng:
 	ldmm8	10359, 9742
 	ld	wa, (9744:16)
@@ -25244,6 +25318,8 @@ MainExeCall_OnTitleSqnotecng:
 	jrl	nz, MainExe_SongMemoryLoop
 	ldw	wa, 159
 	jrl	MainExe_CallModeSwitch
+; MainExeCall_OnTitleSqadvdly: EXECUTE on TT_SQADVDLY: track 9732 from measure 9734 to 9736, then
+;   SeqPart_VoiceCheckModeB.
 MainExeCall_OnTitleSqadvdly:
 	ldmm8	10359, 9732
 	ld	wa, (9734:16)
@@ -25257,6 +25333,8 @@ MainExeCall_OnTitleSqadvdly:
 	jrl	nz, MainExe_SongMemoryLoop
 	ldw	wa, 160
 	jrl	MainExe_CallModeSwitch
+; MainExeCall_OnTitleSqmers: EXECUTE on TT_SQMERS: track 0xf1db from measure 0xf1dc, MERS choice 0xf1e0 into 9808,
+;   then SeqPart_SinglePartLoad.
 MainExeCall_OnTitleSqmers:
 	ld	a, (61915:16)
 	cp	a, 17
@@ -25280,6 +25358,8 @@ MainExe_AccompLoad:
 	jrl	nz, MainExe_SongMemoryLoop
 	ldw	wa, 161
 	jrl	MainExe_CallModeSwitch
+; MainExeCall_OnTitleSqmcp: EXECUTE on TT_SQMCP: source track 0xf1e9 from measure 0xf1ea, destination track 0xf1ee at
+;   measure 0xf1ef, then SeqPart_DualPartLoad (SeqPart_LoadAndValidateData after error 0x23).
 MainExeCall_OnTitleSqmcp:
 	ld	wa, (61930:16)
 	ld	(9778:16), wa
@@ -25356,6 +25436,8 @@ MainExe_InlineByteData_Join:
 	jrl	nz, MainExe_SongMemoryLoop
 	ldw	wa, 163
 	jr	MainExe_CallModeSwitch
+; MainExeCall_OnTitleSqmins: EXECUTE on TT_SQMINS: track 0xf1e1 from measure 0xf1e2, second track 0xf1e6 at measure
+;   0xf1e7, then SeqPart_ByteBlockA95A (SeqPart_LoadDualPartData after error 0x23).
 MainExeCall_OnTitleSqmins:
 	ld	wa, (61922:16)
 	ld	(9778:16), wa
@@ -25787,6 +25869,7 @@ SingleLoad_PrepareSongSlot:
 	dec	2, xsp
 	pushw	iz
 	ld	(xsp+2), a
+	; ldw (0xf19e),(0x00ffec)
 	ldw	(0xf19e:16), (0xffec:24)
 	call	Audio_CheckSubsystemReady
 	ld	a, (65507:24)
@@ -32761,6 +32844,8 @@ SeqPart_VelCurveData:
 	ld	(9792:16), 48
 	ld	(9794:16), 48
 	jrl	SeqPart_VelocityCurveCalc_Join5
+; SeqPart_VelocityCurveCalc_QtzGrid48: Quantize value 1 (9726 = 2 x 0xF1F6): splits position 9784 at 24/72 and stores
+;   the zone's edge pair in 9792/9794; value 0 uses 48/48, odd values and 12 the 8-step SeqPart_VelRangeToZone path.
 SeqPart_VelocityCurveCalc_QtzGrid48:
 	ld	a, c
 	ld	e, 0:opc

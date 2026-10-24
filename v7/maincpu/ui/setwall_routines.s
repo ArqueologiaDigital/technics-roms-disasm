@@ -35,6 +35,12 @@ SetWall_UpdateSlotIndex:
 SetWall_InlineCodeBlock:
 	call	SetWall_InlineCodeBlock2
 	ret
+; SqTrAs_CursorNextTrack: Track-assign page, next track: applies the pending edit of the cursor track
+;   (SetWall_InlineCodeBlock2), redraws the cursor row (CDlikeSwTtl_SendEvt4, EVT_REQUEST_GRID_DRAW to 0x8B0004)
+;   unless the cursor is 7 (last row of page 1), posts EVT_SET_VISIBLE 0 to 0x8B0003, moves the cursor (0xCDF) up by
+;   one (max 15) and reloads the edited value (0x2873) from the assignment table 0xF1A0 (SetWall_UpdateSlotIndex).
+;   Basis: callers + body -- the only caller is MiddleFuncCall_OnTrAsTrackInc, the handler of EVT_TR_AS_TRACK_INC
+;   (MT_TrAsTrackInc, 'track-assign grid: next track').
 SqTrAs_CursorNextTrack:
 	call	SetWall_InlineCodeBlock2
 	cp (3295:16), 7
@@ -50,6 +56,12 @@ SqTrAs_CursorNextTrack_Skip2:
 	ld	(3295:16), a
 	call	SetWall_UpdateSlotIndex
 	ret
+; SqTrAs_CursorPrevTrack: Track-assign page, previous track: applies the pending edit of the cursor track
+;   (SetWall_InlineCodeBlock2), redraws the cursor row (CDlikeSwTtl_SendEvt4) unless the cursor is 8 (first row of
+;   page 2), posts EVT_SET_VISIBLE 0 to 0x8B0003, moves the cursor (0xCDF) down by one (min 0) and reloads the edited
+;   value (0x2873) from the assignment table 0xF1A0. Basis: callers + body -- the only caller is
+;   MiddleFuncCall_OnTrAsTrackDec, the handler of EVT_TR_AS_TRACK_DEC (MT_TrAsTrackDec, 'track-assign grid: previous
+;   track'); mirror image of SqTrAs_CursorNextTrack.
 SqTrAs_CursorPrevTrack:
 	call	SetWall_InlineCodeBlock2
 	cp (3295:16), 8
@@ -126,6 +138,10 @@ SqTrAs_UpdateOkSwVisibility_Return:
 MiddleFuncCall_DispatchData_Code_Helper3:
 	call	SqTrAs_UpdateOkSwVisibility
 	ret
+; 20 x u8 mask per SetWall slot number 0..0x13 (0xFF, or 0 for slots 13-16):
+; SetWall_CompareAndSwap and SetWall_InlineCodeBlock2_Skip read it with
+; `ld xde,<this>; ld c, (xde+iy)`, iy = a slot number from the RAM slot table
+; at 0xF1A0 -- two such masks are then ANDed (`and a,c`) to test a pair of slots.
 SetWall_SlotMaskTable:
 	swi	7
 	swi	7
@@ -288,6 +304,12 @@ SetWall_InitCallSequences:
 	ld	(3295:16), 8
 	call	SetWall_UpdateSlotIndex
 	ret
+; SqTrAs_CursorToFirstPage: Track-assign page, previous page: applies the pending edit of the cursor track
+;   (SetWall_InlineCodeBlock2), posts EVT_SET_VISIBLE 0 to 0x8B0003, sets the cursor (0xCDF) to track index 0 and
+;   reloads the edited value (0x2873) from 0xF1A0. Its twin SetWall_InitCallSequences (EVT_TR_AS_PAGE_INC) sets the
+;   cursor to 8, so the grid has two pages of 8 tracks. Basis: callers + body -- the only caller is
+;   MiddleFuncCall_OnTrAsPageDec, the handler of EVT_TR_AS_PAGE_DEC (MT_TrAsPageDec, 'track-assign grid: previous
+;   page').
 SqTrAs_CursorToFirstPage:
 	call	SetWall_InlineCodeBlock2
 	call	CDlikeSwTtl_SendStartEvt
@@ -2022,6 +2044,11 @@ SetWall_RetStub2:
 SetWall_MiscDataAndCode:
 	ret
 	ret
+; SqSngName_ApplyNameAndExit: Applies a song name just typed: copies the 16 bytes at 0x1159 to the current song name
+;   (0xF280) and to the name field (+0x100) of the current song slot (SEQ_SONG_SLOTS + 0x800 * (0xFFE3)), then leaves
+;   the naming page: title 0x83 (TITLE_SQEASYREC) when the current title is 0xA7 (TITLE_SQEASYNAME), else 0x8E
+;   (TITLE_SQSNGSEL), through UI_PostModeChangeEvent. Basis: callers + body -- the only caller is
+;   MiddleFuncCall_OnSongNameSet (EVT_SONG_NAME_SET, MT_SongNameSet), which first Strcpys the name into 0x1159 (4441).
 SqSngName_ApplyNameAndExit:
 	ld	xix, 62080
 	ld	xiy, 4441
@@ -2050,6 +2077,11 @@ SqSngName_ApplyNameAndExit_Skip2:
 	call	UI_PostModeChangeEvent
 SqSngName_ApplyNameAndExit_Return:
 	ret
+; SqSngSel_CalcSongUsagePercent: Computes the memory use of song (0x286B) in percent into 0x286C: walks its 16 three-
+;   byte track entries (the current song from 0xF250, another from SEQ_SONG_SLOTS + 0x800 * n + 0xD0), sums the blocks
+;   of every used track (bit 7 set), then blocks * 100 / (0x286D) + 1, capped at 99; 0 for an empty song. Saves and
+;   restores the block pointer 0x10FD. Basis: callers + body -- SqSngSel_CalcSongUsageOnEnter calls it for songs 0..9
+;   and copies 0x286C to the table 0x1145; its header describes this computation.
 SqSngSel_CalcSongUsagePercent:
 	ld	xwa, (4349:16)
 	push	xwa
@@ -2078,7 +2110,7 @@ SqSngSel_CalcSongUsagePercent_Loop:
 	pop	xix
 	pop	xde
 	pop	xbc
-	.byte 0xe7, 0x34, 0x81
+	.byte 0xe7, 0x34, 0x81	; add XBC,XBC3
 SqSngSel_CalcSongUsagePercent_Skip:
 	add	de, 3
 	cp	de, 48
@@ -2100,7 +2132,7 @@ SqSngSel_CalcSongUsagePercent_Join2:
 	ld	(4349:16), xwa
 	ret
 SetWall_MiscDataAndCode_Data:
-	.byte 0xe7, 0x34, 0xa8
+	.byte 0xe7, 0x34, 0xa8	; ld XBC3,0
 	ld	wa, de
 	inc	1, wa
 	ld	hl, (xix+wa)
@@ -2125,7 +2157,7 @@ SetWall_MiscDataAndCode_Data_Code_Join:
 	ld	hl, (xhl+3)
 	cp	hl, 65535
 	jr	z, SetWall_MiscDataAndCode_Data_Code_Return
-	.byte 0xe7, 0x34, 0x61
+	.byte 0xe7, 0x34, 0x61	; inc 1,XBC3
 	jr	SetWall_MiscDataAndCode_Data_Code_Join
 SetWall_MiscDataAndCode_Data_Code_Return:
 	ret

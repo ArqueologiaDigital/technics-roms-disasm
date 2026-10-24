@@ -3394,7 +3394,7 @@ MasterSetup_GetNameB_DrawString:
 	lda	xde, (xsp+12)
 	ld	xhl, 1:i3
 	push	xhl
-	pushw 251
+	pushw 251	; colour pair for DrawString, not a pointer
 	pushw 245
 	call	DrawString
 	jr	SeqFile_ReturnZeroJmp2
@@ -4634,7 +4634,7 @@ MstStyle1Sub_GetNameB_DrawString:
 	lda	xde, (xsp+12)
 	ld	xhl, 6:i3
 	push	xhl
-	pushw	255
+	pushw	255	; colour pair for DrawString, not a pointer
 	pushw	245
 	call	DrawString
 	jr	SeqFile_ReturnZeroJmp
@@ -5922,7 +5922,7 @@ MstStyle2_GetNameB_DrawString:
 	lda	xde, (xsp+18)
 	ld	xhl, 0:i3
 	push	xhl
-	pushw 251
+	pushw 251	; colour pair for DrawString, not a pointer
 	pushw 245
 	call	DrawString
 	ld	xbc, (xiz+82)
@@ -5996,7 +5996,7 @@ MstStyle2_NameB_Render:
 	lda	xde, (xsp+18)
 	ld	xhl, 0:i3
 	push	xhl
-	pushw 251
+	pushw 251	; colour pair for DrawString, not a pointer
 	pushw 245
 	call	DrawString
 	lda	xbc, (xsp+36)
@@ -6017,7 +6017,7 @@ MstStyle2_NameB_Render:
 	lda	xde, (xsp+12)
 	ld	xhl, 0:i3
 	push	xhl
-	pushw 251
+	pushw 251	; colour pair for DrawString, not a pointer
 	pushw 245
 	call	DrawString
 	lda	xhl, (xsp+36)
@@ -6810,6 +6810,7 @@ TchSensGridCheck:
 ;   0x1c0001c -> TchSensGridCheck_OnLswData
 ;   0x1c0001d -> TchSensGridCheck_OnLswData
 	jp	t, (xix+wa)
+; TchSensGridCheck event dispatch (7-entry, events 0x1c00017-0x1c0001d, table 0xed0f08)
 TchSensGrid_EventDispatch:
 	call	GetFocusObject
 	ld	xwa, xhl
@@ -7353,6 +7354,7 @@ FSWAssGridCheck:
 ;   0x1c0001c -> FSWAssGridCheck_OnLswData
 ;   0x1c0001d -> FSWAssGridCheck_OnLswData
 	jp	t, (xix+wa)
+; FSWAssGridCheck event dispatch (7-entry, events 0x1c00017-0x1c0001d, table 0xed1226)
 FSWAssGrid_EventDispatch:
 	call	GetFocusObject
 	ld	xwa, xhl
@@ -8167,6 +8169,7 @@ SeqLoadFunc_ReturnZero:
 	ret
 
 FSWAss_CheckAndNotify:
+	; --- Init/check function (27 bytes) ---
 	ld	xwa, 16512
 	call	SndParam_LookupReadOnly
 	cp	hl, 1:i3
@@ -8177,6 +8180,7 @@ FSWAss_CheckAndNotify:
 	call	SoundParam_NotifyChange
 	ret
 FSWAss_RefreshAllVoices:
+	; --- Multi-call setup function (37 bytes) ---
 	push	xde
 	push	xhl
 	push	xix
@@ -8446,7 +8450,7 @@ PmExpFilter_Repaint:
 	ld (xwa + 6), de
 	ld xde, 0:i3
 	push xde
-	pushw 0xfb
+	pushw 0xfb	; colour pair for DrawString, not a pointer
 	pushw 0xf5
 	ld xde, PmExpFilter_Repaint_Str_FILTER_TYPE
 	call DrawString
@@ -8467,7 +8471,7 @@ PmExpFilter_Repaint:
 	ld (xwa + 6), de
 	ld xde, 0:i3
 	push xde
-	pushw 0xfb
+	pushw 0xfb	; colour pair for DrawString, not a pointer
 	pushw 0xf5
 	ld xde, PmExpFilter_Repaint_Str_ON_OFF
 	call DrawString
@@ -8990,7 +8994,7 @@ PmExpFilterGridCheck_OnLswData_Loop:
 	; v10 does not spell this byte either
 	; v10 does not spell this byte either
 	; v10 does not spell this byte either
-	lda	xbc, (xsp+256)
+	lda	xbc, (xsp+256)	; lda xbc, xsp+0x0100
 	ldw	(xbc), 1
 	inc	2, l
 	extz	hl
@@ -9011,7 +9015,7 @@ PmExpFilterGridCheck_OnLswData_Skip9:
 	; v10 does not spell this byte either
 	; v10 does not spell this byte either
 	; v10 does not spell this byte either
-	lda	xde, (xsp+256)
+	lda	xde, (xsp+256)	; lda xde, xsp+0x0100
 	ld	xbc, EVT_GRID_DRAW
 	jrl	PmExpFilterCheck_DoSend
 PmExpFilterGridCheck_OnLswData_Skip10:
@@ -9036,7 +9040,7 @@ PmExpFilterGridCheck_OnLswData_Loop2:
 	; v10 does not spell this byte either
 	; v10 does not spell this byte either
 	; v10 does not spell this byte either
-	lda	xbc, (xsp+256)
+	lda	xbc, (xsp+256)	; lda xbc, xsp+0x0100
 	ldw	(xbc), 1
 	inc	2, l
 	extz	hl
@@ -9057,7 +9061,7 @@ PmExpFilterGridCheck_OnLswData_Skip12:
 	; v10 does not spell this byte either
 	; v10 does not spell this byte either
 	; v10 does not spell this byte either
-	lda	xde, (xsp+256)
+	lda	xde, (xsp+256)	; lda xde, xsp+0x0100
 	ld	xbc, EVT_GRID_DRAW
 	jrl	PmExpFilterCheck_DoSend
 PmExpFilterGridCheck_OnLswData_Skip13:
@@ -9451,6 +9455,7 @@ DispTimeSetGridCheck:
 ;   0x1c0001c -> DispTimeSetGridCheck_OnLswData
 ;   0x1c0001d -> DispTimeSetGridCheck_OnLswData
 	jp	t, (xix+wa)
+; DispTimeSetGridCheck event dispatch (7-entry, events 0x1c00017-0x1c0001d, table 0xed1582)
 DispTimeSet_EventDispatch:
 	call	GetFocusObject
 	ld	xwa, xhl
@@ -10598,7 +10603,7 @@ MssName_EventDispatch_Skip2:
 	jr	MssName_EventDispatch_Join
 MssName_EventDispatch_Skip3:
 	sll	xwa, 2
-	add	xwa, 9990144
+	add	xwa, 9990144	; = table_data STYLEREC_PTRTABLE_DEFAULT (other UI states); cross-ROM -- table_data assembles separately, constant stays literal
 	ld	xbc, (xwa)
 	ld	a, (xbc+42)
 	extz	wa
@@ -11520,7 +11525,7 @@ AcPmBkEdit_BankEdit:
 AcPmBkEdit_BankEdit_DrawDiff:
 	ld xbc, 0:i3
 	push xbc
-	pushw 0xff
+	pushw 0xff	; colour pair for DrawString (by value), not a pointer
 	pushw 0xf5
 	ld xbc, xde
 	ld xde, xhl

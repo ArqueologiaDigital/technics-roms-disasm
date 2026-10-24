@@ -109,6 +109,11 @@ JumpInsertFunc_CaseTable:
 ; FilePriorityFunc (file_io/misc_ui.s) answers EVT_GET_BIT_STRING with entry [bit & 1], Strcpy'd to the caller's buffer;
 ; the bit is bit 0 of RAM 0x340F4 (its EVT_GET_BIT_ADDRESS), which FileIO_DiskEventDispatch tests for floppy/HD media.
 FilePriority_SettingNames:	.incbin "includes/generated/naka_disk_warning.bin", 0xA4C, 0x20
+; [nakarest] naka_disk_warning+0xa6c  +0xa6c..+0xb46 (0xea9718, 218 B)
+; [nakarest] A table of 6 pointers into this piece (218 B at 0xea9718), then text; entry 0
+; [nakarest] points at "PLEASE WAIT!............"; no registered NAKA table points into it;
+; [nakarest] reached through source references WaitingFunc_DrawMessage (file_io/misc_ui.s: `lda
+; [nakarest] xbc, (WaitingFunc_DrawMessage_PtrTable:24)`).
 WaitingFunc_DrawMessage_PtrTable:	.incbin "includes/generated/naka_disk_warning.bin", 0xA6C, 0xDA	; 6 x 32-bit pointer
 ; AcFileSfx_BitLabelPtrs -- 9 x u32: text of each row of the file-suffix box; [k] = label of mask bit k-1, [0] = blank
 ; AcFileSfxBoxProc (ui/ui_control_panel.s) on EVT_SET_FILE_SFX draws 8 rows, k = 1..8: bit 0 of the mask
@@ -130,6 +135,7 @@ FDC_WaitReady_CaseTable:
 	.short	FDC_CONFIG_VERIFY_Case3 - FDC_CONFIG_VERIFY_Code
 	.short	FDC_CONFIG_VERIFY_Case4 - FDC_CONFIG_VERIFY_Code
 	.short	FDC_CONFIG_VERIFY_Case5 - FDC_CONFIG_VERIFY_Code
+; FDC_COMMAND_DISPATCHER_CaseTable -- 12 x int16: the case offsets of FDC_COMMAND_DISPATCHER's compiled switch, relative to FDC_CMD_HANDLER_BASE
 FDC_COMMAND_DISPATCHER_CaseTable:
 	.short	FDC_CMD_HANDLER_BASE - FDC_CMD_HANDLER_BASE
 	.short	FDC_CheckDriveCount - FDC_CMD_HANDLER_BASE
@@ -143,6 +149,7 @@ FDC_COMMAND_DISPATCHER_CaseTable:
 	.short	FDC_ErrorInvalidDrive - FDC_CMD_HANDLER_BASE
 	.short	FDC_ReturnZero - FDC_CMD_HANDLER_BASE
 	.short	FDC_CheckDriveCount - FDC_CMD_HANDLER_BASE
+; FDC_CommandEntry_CopyParams_CaseTable -- 12 x int16: the case offsets of FDC_CommandEntry_CopyParams's compiled switch, relative to FDC_HANDLER_DISPATCH_BASE
 FDC_CommandEntry_CopyParams_CaseTable:
 	.short	FDC_HANDLER_DISPATCH_BASE - FDC_HANDLER_DISPATCH_BASE
 	.short	FDC_HANDLER_01 - FDC_HANDLER_DISPATCH_BASE
@@ -167,6 +174,9 @@ CtrlPanel_DialStepByDelta:	.incbin "includes/generated/naka_disk_warning.bin", 0
 ; TRANSITION_TIMER (bit 0) on press and ANDs it out on release; the AND of both masks picks combos
 ; (0x1100, 0xA1, 0x91, 0x89 in CtrlPanel_DispatchCombinedState). Rows 0..16 are reachable (cp e, 0x10)
 CtrlPanel_SwitchRowBit:	.incbin "includes/generated/naka_disk_warning.bin", 0xCBA, 0x80
+; GetSoundName_Str_DashedName: " ------ ": 16-character placeholder sound name (NUL, 0xFF pad) that GetSoundName
+;   copies into the caller's buffer instead of a real name when the program lookup is out of range, before posting
+;   EVT_SOUND_NAME. Basis: readers + bytes.
 GetSoundName_Str_DashedName:	.incbin "includes/generated/naka_disk_warning.bin", 0xD3A, 0x12
 ; MainPmanControl_CaseTable -- 6 x int16: the case offsets of MainPmanControl's compiled switch, relative to MainPmanCtrl_DispatchTable
 MainPmanControl_CaseTable:
@@ -486,15 +496,33 @@ WndEvt_DispatchByEventCode_CaseTable:
 	.short	WndEvt_DispatchByEventCode_DeleteChar - WndEvt_EventCodeDispatch
 	.short	WndEvt_DispatchByEventCode_CenterName - WndEvt_EventCodeDispatch
 	.short	WndEvt_DispatchByEventCode_ClearName - WndEvt_EventCodeDispatch
+; ModeEditProc_Str_ModeIdAndName: "0x%02X : %s": format of the mode edit box's caption -- the current mode's entry
+;   number (low word of GetModeNow) and the name the mode returns for EVT_GET_NAME. Basis: readers + bytes -- the
+;   TitleEdit box uses an identical string (TitleEdit_HandlePaint_Str_N0x_Fmt2X_Fmts).
 ModeEditProc_Str_ModeIdAndName:			.incbin "includes/generated/naka_disk_warning.bin", 0x125C, 0xC
 TitleEdit_HandlePaint_Str_N0x_Fmt2X_Fmts:	.incbin "includes/generated/naka_disk_warning.bin", 0x1268, 0xC	; "0x%02X : %s"
 ; UserBitmapCheck_Bitmap24x24 -- a 24 x 24 bitmap, one byte per pixel.  UserBitmapCheck answers
 ; EVT_GET_BITMAP_WIDTH / _HEIGHT with 0x18 and EVT_GET_BITMAP_DATA with this address; VwUserBitmap_HandlePaint
 ; draws it with DrawBitmapSPFast.  Typed in ui_widgets/naka_disk_warning.c (scripts/converters/bitmap_id_tables_retype.py).
 UserBitmapCheck_Bitmap24x24:	.incbin "includes/generated/naka_disk_warning.bin", 0x1274, 0x240
+; VwUserBitmapByName_Str_BmpExt: ".BMP" (NUL, 0xFF pad): extension VwUserBitmapByName_HandlePaint appends (Strcat) to
+;   the view's name to form the bitmap file name it looks up (FDemo_LinkedListLookupField) and draws with
+;   DrawBitmapFile. Basis: readers + bytes.
 VwUserBitmapByName_Str_BmpExt:	.incbin "includes/generated/naka_disk_warning.bin", 0x14B4, 0x6
+; [nakarest] naka_disk_warning+0x14ba  +0x14ba..+0x14be (0xeaa166, 4 B)
+; [nakarest] Text (4 B at 0xeaa166), first string "~7f"; no registered NAKA table points into
+; [nakarest] it; reached through source references EditSw_ByteData (ui/ui_window_procs.s: `ld
+; [nakarest] xwa, EditSw_ByteData_Str_N7f`).
 EditSw_ByteData_Str_N7f:		.incbin "includes/generated/naka_disk_warning.bin", 0x14BA, 0x4	; "~7f"
+; [nakarest] naka_disk_warning+0x14be  +0x14be..+0x14c2 (0xeaa16a, 4 B)
+; [nakarest] Text (4 B at 0xeaa16a), first string "~80"; no registered NAKA table points into
+; [nakarest] it; reached through source references DrawDesignFrame_Skip (ui/ui_window_procs.s:
+; [nakarest] `ld xwa, EditSw_ByteData_Str_N80`).
 EditSw_ByteData_Str_N80:		.incbin "includes/generated/naka_disk_warning.bin", 0x14BE, 0x4	; "~80"
+; [nakarest] naka_disk_warning+0x14c2  +0x14c2..+0x14c6 (0xeaa16e, 4 B)
+; [nakarest] Text (4 B at 0xeaa16e), first string "~81"; no registered NAKA table points into
+; [nakarest] it; reached through source references DrawDesignFrame_Skip2 (ui/ui_window_procs.s:
+; [nakarest] `ld xwa, EditSw_ByteData_Str_N81`).
 EditSw_ByteData_Str_N81:		.incbin "includes/generated/naka_disk_warning.bin", 0x14C2, 0x4	; "~81"
 ; [nakarest] naka_disk_warning+0x14c6  +0x14c6..+0x14ca (0xeaa172, 4 B)
 ; [nakarest] Text (4 B at 0xeaa172), first string "~7f"; no registered NAKA table points into
@@ -511,12 +539,24 @@ DrawEditSw_SelectVariantA_Str_N80:	.incbin "includes/generated/naka_disk_warning
 ; [nakarest] it; reached through source references DrawEditSw_SelectVariantC
 ; [nakarest] (ui/ui_window_procs.s: `ld xwa, DrawEditSw_SelectVariantC_Str_N81`).
 DrawEditSw_SelectVariantC_Str_N81:				.incbin "includes/generated/naka_disk_warning.bin", 0x14CE, 0x4	; "~81"
+; TextBox_Str_LineBreak: "\r": the line-break set TextBox_DrawLineLoop passes to StrSearch_Init (strcspn) to cut the
+;   text at the next CR before word-wrapping and drawing the line. Basis: readers + bytes.
 TextBox_Str_LineBreak:					.incbin "includes/generated/naka_disk_warning.bin", 0x14D2, 0x2
 AcTempoBox_MatchTempoID_Str_aa_Fmt3d:				.incbin "includes/generated/naka_disk_warning.bin", 0x14D4, 0x8	; "~aa=%3d"
 AcTempoBox_CopyTempoString_Str_aa:				.incbin "includes/generated/naka_disk_warning.bin", 0x14DC, 0x8	; "~aa=---"
 PsListBox_GetText_Str_No_My_Car_Day_Memory_AyaSam:		.incbin "includes/generated/naka_disk_warning.bin", 0x14E4, 0x5C	; "No My Car Day|Memory|AyaSam|Sweet Home Town|I am Rocker|Sunday Song|Two Day Drunk?|Samba 2"
 PsGridBox_Scroll_Render_Str_Fmtd_Fmtd:				.incbin "includes/generated/naka_disk_warning.bin", 0x1540, 0x6	; "%d-%d"
+; [nakarest] naka_disk_warning+0x1546  +0x1546..+0x1566 (0xeaa1f2, 32 B)
+; [nakarest] Text (32 B at 0xeaa1f2), first string " PART |CHANNEL|OCTAVE | LOCAL "; no
+; [nakarest] registered NAKA table points into it; reached through source references
+; [nakarest] PsGridBox_Scroll_Render (ui/psgridbox_routines.s: `ld xwa,
+; [nakarest] PsGridBox_Scroll_Render_Str_PART_CHANNEL_OCTAVE_LOCAL`).
 PsGridBox_Scroll_Render_Str_PART_CHANNEL_OCTAVE_LOCAL:		.incbin "includes/generated/naka_disk_warning.bin", 0x1546, 0x20	; " PART  |CHANNEL|OCTAVE | LOCAL "
+; [nakarest] naka_disk_warning+0x1566  +0x1566..+0x159c (0xeaa212, 54 B)
+; [nakarest] Text (54 B at 0xeaa212), first string
+; [nakarest] "|-|RIGHT1|RIGHT2|LEFT|PART4|PART5|PART6|PART7|PA"; no registered NAKA table points
+; [nakarest] into it; reached through source references PsGridBox_Scroll_Render
+; [nakarest] (ui/psgridbox_routines.s: `ld xwa, PsGridBox_Scroll_Render_Str_RIGHT1_RIGHT2_LEFT_PART4_PART5`).
 PsGridBox_Scroll_Render_Str_RIGHT1_RIGHT2_LEFT_PART4_PART5:	.incbin "includes/generated/naka_disk_warning.bin", 0x1566, 0x36	; "|-|RIGHT1|RIGHT2|LEFT|PART4|PART5|PART6|PART7|PART8|"
 ; PsGridBoxProc_CaseTable -- 8 x int16: the case offsets of PsGridBoxProc's compiled switch, relative to PsGridBox_Init
 PsGridBoxProc_CaseTable:
@@ -537,6 +577,8 @@ AcGridBoxProc_CaseTable:
 	.short	AcGridBox_Default - AcGridBox_Init
 	.short	AcGridBox_CellSelect - AcGridBox_Init
 	.short	AcGridBox_CellSelect - AcGridBox_Init
+; GridCheck_Str_CellColRow: "%d-%d": format GridCheck_CellSelect fills with the selected cell's column (high word of
+;   the event parameter) and row (low word) before sending EVT_GRID_DRAW to the focus object. Basis: readers + bytes.
 GridCheck_Str_CellColRow:
 	.incbin "includes/generated/naka_disk_warning.bin", 0x15ba, 0x6
 ; GridCheck_CaseTable -- 7 x int16: the case offsets of GridCheck's compiled switch, relative to GridCheck_JumpEnd
@@ -596,19 +638,63 @@ ButtonState_Paint_EventConfirm_Str_ON:	.incbin "includes/generated/naka_disk_war
 ; [nakarest] it; reached through source references ButtonState_Paint_Default
 ; [nakarest] (ui/ui_widget_defs.s: `ld xde, ButtonState_Paint_EventConfirm_Str_OFF`).
 ButtonState_Paint_EventConfirm_Str_OFF:		.incbin "includes/generated/naka_disk_warning.bin", 0x163A, 0x4	; "OFF"
+; [nakarest] naka_disk_warning+0x163e  +0x163e..+0x1642 (0xeaa2ea, 4 B)
+; [nakarest] Text (4 B at 0xeaa2ea), first string "~9b"; no registered NAKA table points into
+; [nakarest] it; reached through source references ButtonState_DispatchDSP_InlineData
+; [nakarest] (ui/ui_widget_defs.s: `ld xwa, ButtonState_DispatchDSP_InlineData_Str_N9b`).
 ButtonState_DispatchDSP_InlineData_Str_N9b:	.incbin "includes/generated/naka_disk_warning.bin", 0x163E, 0x4	; "~9b"
+; [nakarest] naka_disk_warning+0x1642  +0x1642..+0x1646 (0xeaa2ee, 4 B)
+; [nakarest] Text (4 B at 0xeaa2ee), first string "~98"; no registered NAKA table points into
+; [nakarest] it; reached through source references ButtonState_DispatchDSP_InlineData
+; [nakarest] (ui/ui_widget_defs.s: `ld xwa, ButtonState_DispatchDSP_InlineData_Str_N98`).
 ButtonState_DispatchDSP_InlineData_Str_N98:	.incbin "includes/generated/naka_disk_warning.bin", 0x1642, 0x4	; "~98"
+; [nakarest] naka_disk_warning+0x1646  +0x1646..+0x164a (0xeaa2f2, 4 B)
+; [nakarest] Text (4 B at 0xeaa2f2), first string "~85"; no registered NAKA table points into
+; [nakarest] it; reached through source references ButtonState_DispatchDSP_InlineData
+; [nakarest] (ui/ui_widget_defs.s: `ld xwa, ButtonState_DispatchDSP_InlineData_Str_N85`).
 ButtonState_DispatchDSP_InlineData_Str_N85:	.incbin "includes/generated/naka_disk_warning.bin", 0x1646, 0x4	; "~85"
+; [nakarest] naka_disk_warning+0x164a  +0x164a..+0x164e (0xeaa2f6, 4 B)
+; [nakarest] Text (4 B at 0xeaa2f6), first string "~81"; no registered NAKA table points into
+; [nakarest] it; reached through source references ButtonState_DispatchDSP_InlineData
+; [nakarest] (ui/ui_widget_defs.s: `ld xwa, ButtonState_DispatchDSP_InlineData_Str_N81`).
 ButtonState_DispatchDSP_InlineData_Str_N81:	.incbin "includes/generated/naka_disk_warning.bin", 0x164A, 0x4	; "~81"
 ; [nakarest] NakaInst_OK  +0x164e..+0x166a (0xeaa2fa, 28 B)
 ; [nakarest] 28 B at 0xeaa2fa: split since into the labelled pieces below; code or data uses NakaInst_OK, ButtonState_DispatchDSP_InlineData_Str_OFF, ButtonState_DispatchDSP_InlineData_Str_OK, ButtonState_DispatchDSP_InlineData_Str_Lt and 4 more.
 NakaInst_OK:					.incbin "includes/generated/naka_disk_warning.bin", 0x164E, 0x4
+; [nakarest] naka_disk_warning+0x1652  +0x1652..+0x1656 (0xeaa2fe, 4 B)
+; [nakarest] Text (4 B at 0xeaa2fe), first string "OFF"; no registered NAKA table points into
+; [nakarest] it; reached through source references ButtonState_DispatchDSP_InlineData
+; [nakarest] (ui/ui_widget_defs.s: `ld xwa, ButtonState_DispatchDSP_InlineData_Str_OFF`).
 ButtonState_DispatchDSP_InlineData_Str_OFF:	.incbin "includes/generated/naka_disk_warning.bin", 0x1652, 0x4	; "OFF"
+; [nakarest] naka_disk_warning+0x1656  +0x1656..+0x165a (0xeaa302, 4 B)
+; [nakarest] Text (4 B at 0xeaa302), first string "OK"; no registered NAKA table points into it;
+; [nakarest] reached through source references ButtonState_DispatchDSP_InlineData
+; [nakarest] (ui/ui_widget_defs.s: `ld xwa, ButtonState_DispatchDSP_InlineData_Str_OK`).
 ButtonState_DispatchDSP_InlineData_Str_OK:	.incbin "includes/generated/naka_disk_warning.bin", 0x1656, 0x4	; "OK"
+; [nakarest] naka_disk_warning+0x165a  +0x165a..+0x165c (0xeaa306, 2 B)
+; [nakarest] Text (2 B at 0xeaa306), first string "<"; no registered NAKA table points into it;
+; [nakarest] reached through source references ButtonState_DispatchDSP_InlineData
+; [nakarest] (ui/ui_widget_defs.s: `ld xwa, ButtonState_DispatchDSP_InlineData_Str_Lt`).
 ButtonState_DispatchDSP_InlineData_Str_Lt:	.incbin "includes/generated/naka_disk_warning.bin", 0x165A, 0x2	; "<"
+; [nakarest] naka_disk_warning+0x165c  +0x165c..+0x165e (0xeaa308, 2 B)
+; [nakarest] Text (2 B at 0xeaa308), first string ">"; no registered NAKA table points into it;
+; [nakarest] reached through source references ButtonState_DispatchDSP_InlineData
+; [nakarest] (ui/ui_widget_defs.s: `ld xwa, ButtonState_DispatchDSP_InlineData_Str_Gt`).
 ButtonState_DispatchDSP_InlineData_Str_Gt:	.incbin "includes/generated/naka_disk_warning.bin", 0x165C, 0x2	; ">"
+; [nakarest] naka_disk_warning+0x165e  +0x165e..+0x1662 (0xeaa30a, 4 B)
+; [nakarest] Text (4 B at 0xeaa30a), first string "~7f"; no registered NAKA table points into
+; [nakarest] it; reached through source references ButtonState_DispatchDSP_InlineData
+; [nakarest] (ui/ui_widget_defs.s: `ld xwa, ButtonState_DispatchDSP_InlineData_Str_N7f`).
 ButtonState_DispatchDSP_InlineData_Str_N7f:	.incbin "includes/generated/naka_disk_warning.bin", 0x165E, 0x4	; "~7f"
+; [nakarest] naka_disk_warning+0x1662  +0x1662..+0x1666 (0xeaa30e, 4 B)
+; [nakarest] Text (4 B at 0xeaa30e), first string "~80"; no registered NAKA table points into
+; [nakarest] it; reached through source references ButtonState_DispatchDSP_InlineData
+; [nakarest] (ui/ui_widget_defs.s: `ld xwa, ButtonState_DispatchDSP_InlineData_Str_N80`).
 ButtonState_DispatchDSP_InlineData_Str_N80:	.incbin "includes/generated/naka_disk_warning.bin", 0x1662, 0x4	; "~80"
+; [nakarest] naka_disk_warning+0x1666  +0x1666..+0x166a (0xeaa312, 4 B)
+; [nakarest] Text (4 B at 0xeaa312), first string "YES"; no registered NAKA table points into
+; [nakarest] it; reached through source references ButtonState_DispatchDSP_InlineData
+; [nakarest] (ui/ui_widget_defs.s: `ld xwa, ButtonState_DispatchDSP_InlineData_Str_YES`).
 ButtonState_DispatchDSP_InlineData_Str_YES:	.incbin "includes/generated/naka_disk_warning.bin", 0x1666, 0x4	; "YES"
 ; [nakarest] Str_No  +0x166a..+0x166e (0xeaa316, 4 B)
 ; [nakarest] 4 B at 0xeaa316: split since into the labelled pieces below; code or data uses Str_No.
@@ -707,6 +793,10 @@ AcMixerVol_Channels:	.incbin "includes/generated/naka_disk_warning.bin", 0x1860,
 ; Entries 0-19 are icon bitmaps 12-28 and 31-33 (18 = Bitmap_SoundIcon_Metronome, 19 = Bitmap_SoundIcon_Microphone); 20-34 are 0.
 AcMixerVol_GroupIconBitmap:	.incbin "includes/generated/naka_disk_warning.bin", 0x1978, 0x8C
 AcMixerVol_DrawChannel_Str_Fmt3d:		.incbin "includes/generated/naka_disk_warning.bin", 0x1A04, 0x4	; "%3d"
+; [nakarest] naka_disk_warning+0x1a08  +0x1a08..+0x1a0e (0xeaa6b4, 6 B)
+; [nakarest] Text (6 B at 0xeaa6b4), first string "MUTE"; no registered NAKA table points into
+; [nakarest] it; reached through source references AcMixerVol_DrawChannel (ui/ui_widget_defs.s: `ld
+; [nakarest] xde, AcMixerVol_DrawChannel_Str_MUTE`).
 AcMixerVol_DrawChannel_Str_MUTE:		.incbin "includes/generated/naka_disk_warning.bin", 0x1A08, 0x6	; "MUTE"
 ; [nakarest] naka_disk_warning+0x1a0e  +0x1a0e..+0x1a4e (0xeaa6ba, 64 B)
 ; [nakarest] Text (64 B at 0xeaa6ba), first string "Debug Time!"; no registered NAKA table
@@ -754,6 +844,9 @@ PsTrkSw_SelectStateLabelText:	.incbin "includes/generated/naka_disk_warning.bin"
 ; the same state indexes the 5 strings copied from PsTrkSw_SelectStateLabels
 PsTrkSw_SelectStateColor:	.incbin "includes/generated/naka_disk_warning.bin", 0x1B6E, 0xA
 PsTrkSw_Confirm_DrawGeometry_Str_Fmtd:	.incbin "includes/generated/naka_disk_warning.bin", 0x1B78, 0x4	; "%d"
+; PsTextBox_Str_LineBreak: "\r": the line-break set PsTextBoxProc's EVT_PARA_DRAW line loop (labelled AcTrkSw_Select)
+;   passes to StrSearch_Init to cut the text at the next CR before WordwrapStrings -- the same use as
+;   TextBox_Str_LineBreak. Basis: readers + bytes.
 PsTextBox_Str_LineBreak:			.incbin "includes/generated/naka_disk_warning.bin", 0x1B7C, 0x2
 ; [nakarest] naka_disk_warning+0x1b7e  +0x1b7e..+0x1b88 (0xeaa82a, 10 B)
 ; [nakarest] Text (10 B at 0xeaa82a), first string "PsTextBox"; no registered NAKA table points
@@ -885,6 +978,10 @@ ViewableProc_CaseTable:
 ; [nakarest] Text (10 B at 0xeaa9f4), first string "bool %s%d"; no registered NAKA table points
 ; [nakarest] into it; reached through source references BoxStyle7_Setup (ui/ui_widget_defs.s:
 ; [nakarest] `ld xwa, pBoolProc_DumpPointerFmt`).
+; pBoolProc_DumpPointerFmt: "bool\t%s%d": the Sprintf format pBoolProc uses on EVT_DUMP_POINTER_EX -- a C declaration
+;   "bool <prop name><index>" of the pointed-to member (EVT_DUMP_PROPERTY_EX uses BoxStyle7_CalcWidth_Str_Fmts_Fmtd,
+;   "&%s%d"). Basis: readers + bytes -- BoxStyle7_Setup is pBoolProc's EVT_DUMP_POINTER_EX case; it gets the name with
+;   EVT_GET_PROP_NAME and Sprintf_Locked(out, this, name, index).
 pBoolProc_DumpPointerFmt:	.incbin "includes/generated/naka_disk_warning.bin", 0x1D48, 0xA
 ; [nakarest] naka_disk_warning+0x1d52  +0x1d52..+0x1d58 (0xeaa9fe, 6 B)
 ; [nakarest] Text (6 B at 0xeaa9fe), first string "&%s%d"; no registered NAKA table points into
@@ -895,6 +992,10 @@ BoxStyle7_CalcWidth_Str_Fmts_Fmtd:	.incbin "includes/generated/naka_disk_warning
 ; [nakarest] Text (12 B at 0xeaaa04), first string "sword %s%d"; no registered NAKA table points
 ; [nakarest] into it; reached through source references BoxStyle8_Setup (ui/ui_widget_defs.s:
 ; [nakarest] `ld xwa, pSwordProc_DumpPointerFmt`).
+; pSwordProc_DumpPointerFmt: "sword\t%s%d": the Sprintf format pSwordProc uses on EVT_DUMP_POINTER_EX -- a C
+;   declaration "sword <prop name><index>" of the pointed-to member (EVT_DUMP_PROPERTY_EX uses
+;   BoxStyle8_CalcWidth_Str_Fmts_Fmtd, "&%s%d"). Basis: readers + bytes -- BoxStyle8_Setup is pSwordProc's
+;   EVT_DUMP_POINTER_EX case; it gets the name with EVT_GET_PROP_NAME and Sprintf_Locked(out, this, name, index).
 pSwordProc_DumpPointerFmt:	.incbin "includes/generated/naka_disk_warning.bin", 0x1D58, 0xC
 ; [nakarest] naka_disk_warning+0x1d64  +0x1d64..+0x1d6a (0xeaaa10, 6 B)
 ; [nakarest] Text (6 B at 0xeaaa10), first string "&%s%d"; no registered NAKA table points into
@@ -905,6 +1006,10 @@ BoxStyle8_CalcWidth_Str_Fmts_Fmtd:	.incbin "includes/generated/naka_disk_warning
 ; [nakarest] Text (12 B at 0xeaaa16), first string "uword %s%d"; no registered NAKA table points
 ; [nakarest] into it; reached through source references BoxStyle9_Setup (ui/ui_widget_defs.s:
 ; [nakarest] `ld xwa, pUwordProc_DumpPointerFmt`).
+; pUwordProc_DumpPointerFmt: "uword\t%s%d": the Sprintf format pUwordProc uses on EVT_DUMP_POINTER_EX -- a C
+;   declaration "uword <prop name><index>" of the pointed-to member (EVT_DUMP_PROPERTY_EX uses
+;   BoxStyle9_CalcWidth_Str_Fmts_Fmtd, "&%s%d"). Basis: readers + bytes -- BoxStyle9_Setup is pUwordProc's
+;   EVT_DUMP_POINTER_EX case; it gets the name with EVT_GET_PROP_NAME and Sprintf_Locked(out, this, name, index).
 pUwordProc_DumpPointerFmt:	.incbin "includes/generated/naka_disk_warning.bin", 0x1D6A, 0xC
 ; [nakarest] naka_disk_warning+0x1d76  +0x1d76..+0x1d7c (0xeaaa22, 6 B)
 ; [nakarest] Text (6 B at 0xeaaa22), first string "&%s%d"; no registered NAKA table points into
@@ -915,6 +1020,10 @@ BoxStyle9_CalcWidth_Str_Fmts_Fmtd:	.incbin "includes/generated/naka_disk_warning
 ; [nakarest] Text (12 B at 0xeaaa28), first string "schar %s%d"; no registered NAKA table points
 ; [nakarest] into it; reached through source references BoxStyle10_Setup (ui/ui_widget_defs.s:
 ; [nakarest] `ld xwa, pScharProc_DumpPointerFmt`).
+; pScharProc_DumpPointerFmt: "schar\t%s%d": the Sprintf format pScharProc uses on EVT_DUMP_POINTER_EX -- a C
+;   declaration "schar <prop name><index>" of the pointed-to member (EVT_DUMP_PROPERTY_EX uses
+;   BoxStyle10_CalcWidth_Str_Fmts_Fmtd, "&%s%d"). Basis: readers + bytes -- BoxStyle10_Setup is pScharProc's
+;   EVT_DUMP_POINTER_EX case; it gets the name with EVT_GET_PROP_NAME and Sprintf_Locked(out, this, name, index).
 pScharProc_DumpPointerFmt:	.incbin "includes/generated/naka_disk_warning.bin", 0x1D7C, 0xC
 ; [nakarest] naka_disk_warning+0x1d88  +0x1d88..+0x1d8e (0xeaaa34, 6 B)
 ; [nakarest] Text (6 B at 0xeaaa34), first string "&%s%d"; no registered NAKA table points into
@@ -925,6 +1034,10 @@ BoxStyle10_CalcWidth_Str_Fmts_Fmtd:	.incbin "includes/generated/naka_disk_warnin
 ; [nakarest] Text (12 B at 0xeaaa3a), first string "uchar %s%d"; no registered NAKA table points
 ; [nakarest] into it; reached through source references BoxStyle11_Setup (ui/ui_widget_defs.s:
 ; [nakarest] `ld xwa, pUcharProc_DumpPointerFmt`).
+; pUcharProc_DumpPointerFmt: "uchar\t%s%d": the Sprintf format pUcharProc uses on EVT_DUMP_POINTER_EX -- a C
+;   declaration "uchar <prop name><index>" of the pointed-to member (EVT_DUMP_PROPERTY_EX uses
+;   BoxStyle11_CalcWidth_Str_Fmts_Fmtd, "&%s%d"). Basis: readers + bytes -- BoxStyle11_Setup is pUcharProc's
+;   EVT_DUMP_POINTER_EX case; it gets the name with EVT_GET_PROP_NAME and Sprintf_Locked(out, this, name, index).
 pUcharProc_DumpPointerFmt:	.incbin "includes/generated/naka_disk_warning.bin", 0x1D8E, 0xC
 ; [nakarest] naka_disk_warning+0x1d9a  +0x1d9a..+0x1da0 (0xeaaa46, 6 B)
 ; [nakarest] Text (6 B at 0xeaaa46), first string "&%s%d"; no registered NAKA table points into
@@ -935,6 +1048,10 @@ BoxStyle11_CalcWidth_Str_Fmts_Fmtd:	.incbin "includes/generated/naka_disk_warnin
 ; [nakarest] Text (12 B at 0xeaaa4c), first string "slong %s%d"; no registered NAKA table points
 ; [nakarest] into it; reached through source references BoxStyle12_Setup (ui/ui_widget_defs.s:
 ; [nakarest] `ld xwa, pSlongProc_DumpPointerFmt`).
+; pSlongProc_DumpPointerFmt: "slong\t%s%d": the Sprintf format pSlongProc uses on EVT_DUMP_POINTER_EX -- a C
+;   declaration "slong <prop name><index>" of the pointed-to member (EVT_DUMP_PROPERTY_EX uses
+;   BoxStyle12_CalcWidth_Str_Fmts_Fmtd, "&%s%d"). Basis: readers + bytes -- BoxStyle12_Setup is pSlongProc's
+;   EVT_DUMP_POINTER_EX case; it gets the name with EVT_GET_PROP_NAME and Sprintf_Locked(out, this, name, index).
 pSlongProc_DumpPointerFmt:	.incbin "includes/generated/naka_disk_warning.bin", 0x1DA0, 0xC
 ; [nakarest] naka_disk_warning+0x1dac  +0x1dac..+0x1db2 (0xeaaa58, 6 B)
 ; [nakarest] Text (6 B at 0xeaaa58), first string "&%s%d"; no registered NAKA table points into
@@ -945,6 +1062,10 @@ BoxStyle12_CalcWidth_Str_Fmts_Fmtd:	.incbin "includes/generated/naka_disk_warnin
 ; [nakarest] Text (12 B at 0xeaaa5e), first string "ulong %s%d"; no registered NAKA table points
 ; [nakarest] into it; reached through source references BoxStyle13_Setup (ui/ui_widget_defs.s:
 ; [nakarest] `ld xwa, pUlongProc_DumpPointerFmt`).
+; pUlongProc_DumpPointerFmt: "ulong\t%s%d": the Sprintf format pUlongProc uses on EVT_DUMP_POINTER_EX -- a C
+;   declaration "ulong <prop name><index>" of the pointed-to member (EVT_DUMP_PROPERTY_EX uses
+;   BoxStyle13_CalcWidth_Str_Fmts_Fmtd, "&%s%d"). Basis: readers + bytes -- BoxStyle13_Setup is pUlongProc's
+;   EVT_DUMP_POINTER_EX case; it gets the name with EVT_GET_PROP_NAME and Sprintf_Locked(out, this, name, index).
 pUlongProc_DumpPointerFmt:	.incbin "includes/generated/naka_disk_warning.bin", 0x1DB2, 0xC
 ; [nakarest] naka_disk_warning+0x1dbe  +0x1dbe..+0x1ed0 (0xeaaa6a, 274 B)
 ; [nakarest] Text (274 B at 0xeaaa6a), first string "&%s%d"; no registered NAKA table points
@@ -1039,6 +1160,9 @@ ConstFlagProc_GetValue_Str_romram:	.incbin "includes/generated/naka_disk_warning
 ; (EVT_GET_PROP_MEMBER copies "romram" instead, ConstFlagProc_GetValue_Str_romram).
 ConstFlagProc_DumpText:	.incbin "includes/generated/naka_disk_warning.bin", 0x1F32, 0x2
 ConstFlagProc_SetValue_Check_Str_Empty:	.incbin "includes/generated/naka_disk_warning.bin", 0x1F34, 0x2	; ""
+; CommonIDProc_DumpPointer_Str_Empty: Empty string ("" + 0xFF pad) that CommonIDProc Strcpy's into the caller's dump
+;   buffer for EVT_DUMP_POINTER_EX (ID properties have no pointer form). Basis: readers + bytes --
+;   CommonIDProc_OnDumpPointerEx (CommonIDProc_CaseTable entry 2) pushes it and joins the Strcpy; bytes 00 FF.
 CommonIDProc_DumpPointer_Str_Empty:	.incbin "includes/generated/naka_disk_warning.bin", 0x1F36, 0x2
 ; CommonIDProc_CaseTable -- 7 x int16: the case offsets of CommonIDProc's compiled switch, relative to CommonIDProc_OnGetPropDataSp
 CommonIDProc_CaseTable:
@@ -1054,6 +1178,9 @@ CommonIDProc_CaseTable:
 ; entry [byte] as one word per icon byte, 12 bytes x 24 rows: a 24 x 24 icon.  Typed in
 ; ui_widgets/naka_disk_warning.c (scripts/converters/icon_pixel_pair_table_retype.py).
 DrawIcons_PixelPairTable:	.incbin "includes/generated/naka_disk_warning.bin", 0x1F46, 0x200
+; DrawBitmapFile_Str_BM: "BM": the BMP file signature DrawBitmapFile_Impl checks (String_Compare, 2 chars) before
+;   drawing a bitmap file; mismatch returns. Basis: readers + bytes -- sibling of CaptureLcd_Str_BM; bytes 42 4D 00
+;   FF.
 DrawBitmapFile_Str_BM:	.incbin "includes/generated/naka_disk_warning.bin", 0x2146, 0x4
 ; DrawPartGroup_DispatchByType_CaseTable -- 16 x int16: the case offsets of DrawPartGroup_DispatchByType's compiled switch, relative to DrawPartGroup_TableJump_DefaultCase
 DrawPartGroup_DispatchByType_CaseTable:
@@ -1100,9 +1227,16 @@ Draw_DispatchByPartType_CaseTable:
 	.short	DrawDesignBox_Impl_BevelCorners - Draw_StyledBoxWithFrame
 	.short	DrawDesignBox_Impl_BevelTopCorners - Draw_StyledBoxWithFrame
 	.short	DrawDesignBox_Impl_Case204 - Draw_StyledBoxWithFrame
+; Gfx_LoadSplashBMP_Str_BM: "BM": the BMP signature Gfx_LoadSplashBMP compares with the first 2 bytes of the 14-byte
+;   file header it just read; mismatch fails validation. Basis: readers + bytes -- bytes 42 4D 00 FF; same use as
+;   DrawBitmapFile and CaptureLcd_Str_BM.
 Gfx_LoadSplashBMP_Str_BM:		.incbin "includes/generated/naka_disk_warning.bin", 0x219C, 0x4
 CaptureLcd_Str_BM:		.incbin "includes/generated/naka_disk_warning.bin", 0x21A0, 0x4	; "BM"
 CaptureLcd_Str_HKLCD_Fmt3d_BMP:	.incbin "includes/generated/naka_disk_warning.bin", 0x21A4, 0xE	; "HKLCD%03d.BMP"
+; [nakarest] naka_disk_warning+0x21b2  +0x21b2..+0x21b6 (0xeaae5e, 4 B)
+; [nakarest] Text (4 B at 0xeaae5e), first string "wb"; no registered NAKA table points into it;
+; [nakarest] reached through source references CaptureLcd (ui/ui_window_procs.s: `ld xbc,
+; [nakarest] CaptureLcd_Str_wb`).
 CaptureLcd_Str_wb:		.incbin "includes/generated/naka_disk_warning.bin", 0x21B2, 0x4	; "wb"
 ; ChangeWall_WallpaperTable -- 1 x u32: bitmap address of wallpaper 0, the first field of the wallpaper table
 ; The table is 5 x {u32 bitmap (320 bytes per row), u32 palette, u16 0}; ChangeWall_Impl reads +0 into RAM 0x30452
@@ -1262,11 +1396,27 @@ DrawFunc_Init_FontTable0_Str_Fmt3d:	.incbin "includes/generated/naka_disk_warnin
 ; DrawFunc_Init_Variant1 (display/graphics_text_vga.s) copies it to its frame (`ldirw`, 4 words) and passes the copy to
 ; DrawText_QueueOrDirect as the clip rectangle.  The old C read its last 4 bytes (3F 01 EF 00) as a pointer.
 DrawFunc_Init_Variant1_ClipRect:	.incbin "includes/generated/naka_disk_warning.bin", 0x248C, 0x8
+; [nakarest] naka_disk_warning+0x2494  +0x2494..+0x24a0 (0xeab140, 12 B)
+; [nakarest] Text (12 B at 0xeab140), first string "%1d"; no registered NAKA table points into
+; [nakarest] it; reached through source references DrawFunc_Init_Join
+; [nakarest] (display/graphics_text_vga.s: `ld xwa, DrawFunc_Init_Variant1_Str_Fmt1d`).
 DrawFunc_Init_Variant1_Str_Fmt1d:	.incbin "includes/generated/naka_disk_warning.bin", 0x2494, 0x4	; "%1d"
 DrawFunc_Init_Variant1_Str_Fmt2d:	.incbin "includes/generated/naka_disk_warning.bin", 0x2498, 0x4	; "%2d"
 DrawFunc_Init_Variant1_Str_Fmt3d:	.incbin "includes/generated/naka_disk_warning.bin", 0x249C, 0x4	; "%3d"
+; [nakarest] naka_disk_warning+0x24a0  +0x24a0..+0x24a4 (0xeab14c, 4 B)
+; [nakarest] Text (4 B at 0xeab14c), first string "%2d"; no registered NAKA table points into
+; [nakarest] it; reached through source references DrawFunc_Init_Skip4
+; [nakarest] (display/graphics_text_vga.s: `ld xwa, DrawFunc_Init_Entry_Str_Fmt2d`).
 DrawFunc_Init_Entry_Str_Fmt2d:		.incbin "includes/generated/naka_disk_warning.bin", 0x24A0, 0x4	; "%2d"
+; [nakarest] naka_disk_warning+0x24a4  +0x24a4..+0x24a8 (0xeab150, 4 B)
+; [nakarest] Text (4 B at 0xeab150), first string "%3d"; no registered NAKA table points into
+; [nakarest] it; reached through source references DrawFunc_Init_Skip5
+; [nakarest] (display/graphics_text_vga.s: `ld xwa, DrawFunc_Init_Entry_Str_Fmt3d`).
 DrawFunc_Init_Entry_Str_Fmt3d:		.incbin "includes/generated/naka_disk_warning.bin", 0x24A4, 0x4	; "%3d"
+; [nakarest] naka_disk_warning+0x24a8  +0x24a8..+0x24ac (0xeab154, 4 B)
+; [nakarest] Text (4 B at 0xeab154), first string "%4d"; no registered NAKA table points into
+; [nakarest] it; reached through source references DrawFunc_Init_Skip6
+; [nakarest] (display/graphics_text_vga.s: `ld xwa, DrawFunc_Init_Entry_Str_Fmt4d`).
 DrawFunc_Init_Entry_Str_Fmt4d:		.incbin "includes/generated/naka_disk_warning.bin", 0x24A8, 0x4	; "%4d"
 ; SeGfx_BoundOp06_ClipRect -- 4 x int16_t: clip rectangle {x1 0, y1 0, x2 319, y2 239}, the whole 320 x 240 screen
 ; SeGfx_BoundOp06_Helper (display/graphics_text_vga.s) copies it to its frame (`ldirw`, 4 words) and passes the copy to
@@ -1291,16 +1441,40 @@ DrawFunc_Init_Entry3_Str_Fmt3d:		.incbin "includes/generated/naka_disk_warning.b
 ; SeGfx_BoundOp09_FormatNumber (display/graphics_text_vga.s) copies it to its frame (`ldirw`, 4 words) and passes the copy to
 ; DrawText_QueueOrDirect as the clip rectangle.  The old C read its last 4 bytes (3F 01 EF 00) as a pointer.
 SeGfx_BoundOp09_ClipRect:	.incbin "includes/generated/naka_disk_warning.bin", 0x24C0, 0x8
+; [nakarest] naka_disk_warning+0x24c8  +0x24c8..+0x24cc (0xeab174, 4 B)
+; [nakarest] Text (4 B at 0xeab174), first string "%1d"; no registered NAKA table points into
+; [nakarest] it; reached through source references DrawFunc_Init_Join3
+; [nakarest] (display/graphics_text_vga.s: `ld xwa, DrawFunc_Init_Entry3_Str_Fmt1d`).
 DrawFunc_Init_Entry3_Str_Fmt1d:		.incbin "includes/generated/naka_disk_warning.bin", 0x24C8, 0x4	; "%1d"
+; [nakarest] naka_disk_warning+0x24cc  +0x24cc..+0x24d0 (0xeab178, 4 B)
+; [nakarest] Text (4 B at 0xeab178), first string "%2d"; no registered NAKA table points into
+; [nakarest] it; reached through source references DrawFunc_Init_Join3
+; [nakarest] (display/graphics_text_vga.s: `ld xwa, DrawFunc_Init_Entry3_Str_Fmt2d`).
 DrawFunc_Init_Entry3_Str_Fmt2d:		.incbin "includes/generated/naka_disk_warning.bin", 0x24CC, 0x4	; "%2d"
+; [nakarest] naka_disk_warning+0x24d0  +0x24d0..+0x24d4 (0xeab17c, 4 B)
+; [nakarest] Text (4 B at 0xeab17c), first string "%3d"; no registered NAKA table points into
+; [nakarest] it; reached through source references DrawFunc_Init_Join3
+; [nakarest] (display/graphics_text_vga.s: `ld xwa, DrawFunc_Init_Entry3_Str_Fmt3d_2`).
 DrawFunc_Init_Entry3_Str_Fmt3d_2:	.incbin "includes/generated/naka_disk_warning.bin", 0x24D0, 0x4	; "%3d"
 ; SeGfx_BoundOp0B_ClipRect -- 4 x int16_t: clip rectangle {x1 0, y1 0, x2 319, y2 239}, the whole 320 x 240 screen
 ; SeGfx_BoundOp0B_FormatNumber (display/graphics_text_vga.s) copies it to its frame (`ldirw`, 4 words) and passes the copy to
 ; DrawText_QueueOrDirect as the clip rectangle.  The old C read its last 4 bytes (3F 01 EF 00) as a pointer.
 SeGfx_BoundOp0B_ClipRect:	.incbin "includes/generated/naka_disk_warning.bin", 0x24D4, 0x8
+; [nakarest] naka_disk_warning+0x24dc  +0x24dc..+0x24e0 (0xeab188, 4 B)
+; [nakarest] Text (4 B at 0xeab188), first string "%1d"; no registered NAKA table points into
+; [nakarest] it; reached through source references SeGfx_BoundOp0B_FormatNumber_Join5
+; [nakarest] (display/graphics_text_vga.s: `ld xwa, DrawFunc_Init_Entry3_Str_Fmt1d_2`).
 DrawFunc_Init_Entry3_Str_Fmt1d_2:	.incbin "includes/generated/naka_disk_warning.bin", 0x24DC, 0x4	; "%1d"
+; [nakarest] naka_disk_warning+0x24e0  +0x24e0..+0x24e4 (0xeab18c, 4 B)
+; [nakarest] Text (4 B at 0xeab18c), first string "%2d"; no registered NAKA table points into
+; [nakarest] it; reached through source references SeGfx_BoundOp0B_FormatNumber_Skip
+; [nakarest] (display/graphics_text_vga.s: `.long FmtStr_pct2d`).
 FmtStr_pct2d:				.incbin "includes/generated/naka_disk_warning.bin", 0x24E0, 0x4
 DrawFunc_Init_Entry4_Str_Fmt3d:		.incbin "includes/generated/naka_disk_warning.bin", 0x24E4, 0x4	; "%3d"
+; [nakarest] naka_disk_warning+0x24e8  +0x24e8..+0x24ec (0xeab194, 4 B)
+; [nakarest] Text (4 B at 0xeab194), first string "%2d"; no registered NAKA table points into
+; [nakarest] it; reached through source references SeGfx_BoundOp0B_FormatNumber_Join
+; [nakarest] (display/graphics_text_vga.s: `ld xwa, DrawFunc_Init_Entry5_Str_Fmt2d`).
 DrawFunc_Init_Entry5_Str_Fmt2d:		.incbin "includes/generated/naka_disk_warning.bin", 0x24E8, 0x4	; "%2d"
 DrawFunc_Init_Entry5_Str_Fmt3d:		.incbin "includes/generated/naka_disk_warning.bin", 0x24EC, 0x4	; "%3d"
 DrawFunc_Init_Entry5_Str_Fmt4d:		.incbin "includes/generated/naka_disk_warning.bin", 0x24F0, 0x4	; "%4d"

@@ -539,7 +539,7 @@ AcFileSfx_DrawLoop:
 	ld xde, (xhl)
 	ld xhl, (xix)
 	push xhl
-	pushw 0xff
+	pushw 0xff	; colour pair for DrawString (by value), not a pointer
 	pushw 0xf5
 	jr AcFileSfx_CallDrawString
 
@@ -547,7 +547,7 @@ AcFileSfx_DrawDefault:
 	ld xde, (xhl)
 	ld xhl, (xix)
 	push xhl
-	pushw 0xff
+	pushw 0xff	; colour pair for DrawString, not a pointer
 	pushw 0xf5
 
 AcFileSfx_CallDrawString:
@@ -2615,6 +2615,8 @@ MainPmanCtrl_OnLswAdd:
 	ld de, (xiz+6)
 	call SndParam_LookupByKey
 	jrl MainTitle_SendEventDone
+; MainPmanCtrl_OnLswGet: Reads the parameter into block +4, then posts a 12-byte Malloc copy as EVT_LSW_DATA (and
+;   EVT_AUTO_FREE).
 MainPmanCtrl_OnLswGet:
 	ld xiz, xde
 	ld xwa, (xiz)
@@ -2657,6 +2659,8 @@ MainPmanCtrl_OnLswPartAdd:
 	ld de, (xiz+4)
 	call SndParam_WrapNotify2
 	jrl MainTitle_SendEventDone
+; MainPmanCtrl_OnLswPartGet: Per-part read into block +4, replied as a 12-byte Malloc copy in EVT_LSW_DATA (and
+;   EVT_AUTO_FREE).
 MainPmanCtrl_OnLswPartGet:
 	ld xiz, xde
 	ld xwa, (xiz)
@@ -3102,9 +3106,12 @@ CtrlPanel_DispatchByIndex:
 CtrlPanel_FrameDispatchTable:
 	ld	xde, 4:i3
 	jr	CtrlPanel_ApplyMarginLoop
+; GetClientBox2_ThreePixelInset: styles 3 (triple frame) and 10 (rounded box, 9-pixel corners): client rect = box
+;   inset by 3 on every side
 GetClientBox2_ThreePixelInset:	; cases 26, 33
 	ld	xde, 3:i3
 	jr	CtrlPanel_ApplyMarginLoop
+; GetClientBox2_TwoPixelShadowFrame: style 5 (frame with a 2-pixel drop shadow): right/bottom -2, then inset 1
 GetClientBox2_TwoPixelShadowFrame:
 	ld	xde, 1:i3
 	decm	2, (xiz+4)
@@ -3137,31 +3144,41 @@ CtrlPanel_MarginAdjustStep:
 
 CtrlPanel_MarginDone:
 	jrl CtrlPanel_FrameReturn
+; GetClientBox2_LeftChevron32: style 0x83 (left piece Frame_ChevronLeft_10x32): left edge + piece width, then inset 2
 GetClientBox2_LeftChevron32:
 	lda xbc, (xsp + 6)
 	lda xde, (xsp + 4)
 	ldw wa, 0x1c
 	jr CtrlFrame_AddLeftMargin
+; GetClientBox2_RightChevron32: style 0xa3 (right piece Frame_ChevronRight_10x32): right edge - piece width, then
+;   inset 2
 GetClientBox2_RightChevron32:
 	lda xbc, (xsp + 6)
 	lda xde, (xsp + 4)
 	ldw wa, 0x17
 	jr CtrlFrame_SubRightMargin
+; GetClientBox2_LeftChevron48: style 0x84 (left piece Frame_ChevronLeft_15x48): left edge + piece width, then inset 2
 GetClientBox2_LeftChevron48:
 	lda xbc, (xsp + 6)
 	lda xde, (xsp + 4)
 	ldw wa, 0x1d
 	jr CtrlFrame_AddLeftMargin
+; GetClientBox2_RightChevron48: style 0xa4 (right piece Frame_ChevronRight_15x48): right edge - piece width, then
+;   inset 2
 GetClientBox2_RightChevron48:
 	lda xbc, (xsp + 6)
 	lda xde, (xsp + 4)
 	ldw wa, 0x18
 	jr CtrlFrame_SubRightMargin
+; GetClientBox2_LeftOnOffTab32: style 0x87 (left piece Frame_OnOffTabLeft_29x32): left edge + piece width, then inset
+;   2
 GetClientBox2_LeftOnOffTab32:
 	lda xbc, (xsp + 6)
 	lda xde, (xsp + 4)
 	ldw wa, 0x20
 	jr CtrlFrame_AddLeftMargin
+; GetClientBox2_LeftOnOffTab48: style 0x88 (left piece Frame_OnOffTabLeft_34x48): left edge + piece width, then inset
+;   2
 GetClientBox2_LeftOnOffTab48:
 	lda xbc, (xsp + 6)
 	lda xde, (xsp + 4)
@@ -3172,11 +3189,15 @@ CtrlFrame_AddLeftMargin:
 	ld wa, (xsp + 6)
 	add (xiz), wa
 	jr CtrlPanel_AfterLeftMargin
+; GetClientBox2_RightOnOffTab32: style 0xa7 (right piece Frame_OnOffTabRight_29x32): right edge - piece width, then
+;   inset 2
 GetClientBox2_RightOnOffTab32:
 	lda xbc, (xsp + 6)
 	lda xde, (xsp + 4)
 	ldw wa, 0x24
 	jr CtrlFrame_SubRightMargin
+; GetClientBox2_RightOnOffTab48: style 0xa8 (right piece Frame_OnOffTabRight_34x48): right edge - piece width, then
+;   inset 2
 GetClientBox2_RightOnOffTab48:
 	lda xbc, (xsp + 6)
 	lda xde, (xsp + 4)
@@ -3190,46 +3211,60 @@ CtrlFrame_SubRightMargin:
 CtrlPanel_AfterLeftMargin:
 	ld xde, 2:i3
 	jrl CtrlPanel_ApplyMarginLoop
+; GetClientBox2_OnePixelShadowFrame: style 4 (frame with a 1-pixel drop shadow): right/bottom -1, then inset 1
 GetClientBox2_OnePixelShadowFrame:
 	ld xde, 1:i3
 	decm 1, (xiz + 4)
 	ld wa, 1:i3
 	jrl CtrlPanel_SubFrameOffset
+; GetClientBox2_LeftChevron12: style 0x80 (left piece Frame_ChevronLeft_5x12): left edge + piece width, then inset 1
 GetClientBox2_LeftChevron12:
 	lda xbc, (xsp + 6)
 	lda xde, (xsp + 4)
 	ldw wa, 0x19
 	jr CtrlPanel_Frame_AddLeftMargin
+; GetClientBox2_RightChevron12: style 0xa0 (right piece Frame_ChevronRight_5x12): right edge - piece width, then inset
+;   1
 GetClientBox2_RightChevron12:
 	lda xbc, (xsp + 6)
 	lda xde, (xsp + 4)
 	ldw wa, 0x14
 	jr CtrlPanel_Frame_SubtractTopMargin
+; GetClientBox2_LeftChevron16: style 0x81 (left piece Frame_ChevronLeft_6x16): left edge + piece width, then inset 1
 GetClientBox2_LeftChevron16:
 	lda xbc, (xsp + 6)
 	lda xde, (xsp + 4)
 	ldw wa, 0x1a
 	jr CtrlPanel_Frame_AddLeftMargin
+; GetClientBox2_RightChevron16: style 0xa1 (right piece Frame_ChevronRight_6x16): right edge - piece width, then inset
+;   1
 GetClientBox2_RightChevron16:
 	lda xbc, (xsp + 6)
 	lda xde, (xsp + 4)
 	ldw wa, 0x15
 	jr CtrlPanel_Frame_SubtractTopMargin
+; GetClientBox2_LeftChevron24: style 0x82 (left piece Frame_ChevronLeft_8x24): left edge + piece width, then inset 1
 GetClientBox2_LeftChevron24:
 	lda xbc, (xsp + 6)
 	lda xde, (xsp + 4)
 	ldw wa, 0x1b
 	jr CtrlPanel_Frame_AddLeftMargin
+; GetClientBox2_RightChevron24: style 0xa2 (right piece Frame_ChevronRight_8x24): right edge - piece width, then inset
+;   1
 GetClientBox2_RightChevron24:
 	lda xbc, (xsp + 6)
 	lda xde, (xsp + 4)
 	ldw wa, 0x16
 	jr CtrlPanel_Frame_SubtractTopMargin
+; GetClientBox2_LeftOnOffTab16: style 0x85 (left piece Frame_OnOffTabLeft_20x16): left edge + piece width, then inset
+;   1
 GetClientBox2_LeftOnOffTab16:
 	lda xbc, (xsp + 6)
 	lda xde, (xsp + 4)
 	ldw wa, 0x1e
 	jr CtrlPanel_Frame_AddLeftMargin
+; GetClientBox2_LeftOnOffTab24: style 0x86 (left piece Frame_OnOffTabLeft_24x24): left edge + piece width, then inset
+;   1
 GetClientBox2_LeftOnOffTab24:
 	lda xbc, (xsp + 6)
 	lda xde, (xsp + 4)
@@ -3240,11 +3275,15 @@ CtrlPanel_Frame_AddLeftMargin:
 	ld wa, (xsp + 6)
 	add (xiz), wa
 	jr CtrlPanel_AfterTopMargin
+; GetClientBox2_RightOnOffTab16: style 0xa5 (right piece Frame_OnOffTabRight_20x16): right edge - piece width, then
+;   inset 1
 GetClientBox2_RightOnOffTab16:
 	lda xbc, (xsp + 6)
 	lda xde, (xsp + 4)
 	ldw wa, 0x22
 	jr CtrlPanel_Frame_SubtractTopMargin
+; GetClientBox2_RightOnOffTab24: style 0xa6 (right piece Frame_OnOffTabRight_24x24): right edge - piece width, then
+;   inset 1
 GetClientBox2_RightOnOffTab24:
 	lda xbc, (xsp + 6)
 	lda xde, (xsp + 4)

@@ -1,0 +1,149 @@
+v9: headers-touched 1303
+v7: address-notes-dropped 6, header-ram-rewritten 95, header-removed-quotes-ram-address 16, header-removed-restates-label 36, headers-touched 1024
+REMOVE quotes-ram-address   ExtData_VoiceParam_DispatchBytecode_ModeMsp v7/maincpu/audio/audio_control_engine.s:3056  0x8F1A (v10's code never spells it (moved -156?))
+REWRITE ExtData_VoiceParam_DispatchBytecode_ModeCmp v7/maincpu/audio/audio_control_engine.s:3060  0x8F18->0x8E7C
+REWRITE ExtData_VoiceParam_DispatchBytecode_ModeSndArg v7/maincpu/audio/audio_control_engine.s:3064  0x8F18->0x8E7C
+REWRITE ExtData_VoiceParam_DispatchBytecode_ModeSeq v7/maincpu/audio/audio_control_engine.s:3068  0x8F1E->0x8E82
+REWRITE ExtData_VoiceParam_DispatchBytecode_ModeSeqErec v7/maincpu/audio/audio_control_engine.s:3081  0x8F1E->0x8E82
+REMOVE quotes-ram-address   ExtData_VoiceParam_DispatchBytecode_ModeSound v7/maincpu/audio/audio_control_engine.s:3085  0x8F23 (v10's code never spells it (moved -156?))
+REMOVE quotes-ram-address   ExtData_VoiceParam_DispatchBytecode_ModeMidi v7/maincpu/audio/audio_control_engine.s:3089  0x8F23 (v10's code never spells it (moved -156?))
+REMOVE quotes-ram-address   ExtData_VoiceParam_DispatchBytecode_ModeControl v7/maincpu/audio/audio_control_engine.s:3093  0x8F23 (v10's code never spells it (moved -156?))
+REMOVE quotes-ram-address   ExtData_VoiceParam_DispatchBytecode_ModeDisk v7/maincpu/audio/audio_control_engine.s:3097  0x8F23 (v10's code never spells it (moved -156?))
+REMOVE quotes-ram-address   ExtData_VoiceParam_DispatchBytecode_ModeEntertainer v7/maincpu/audio/audio_control_engine.s:3101  0x8F22 (v10's code never spells it (moved -156?))
+REWRITE ExtData_ToneParam_AltBody_OnStyleProgram v7/maincpu/audio/audio_control_engine.s:5078  0x9130->0x9094, 0x9131->0x9095
+REWRITE MidiStream_GetCategoryLastSlot v7/maincpu/audio/audio_control_engine.s:8046  0x9412->0x9376
+REWRITE MidiVoiceNote_PartAssignsD1D2 v7/maincpu/audio/audio_control_engine.s:10109  0x91B5->0x9119
+REWRITE MidiStream_PartEventMapTable v7/maincpu/audio/audio_control_engine.s:10460  0x379B->0x36FF
+REMOVE quotes-ram-address   DSPCfg_RecordFieldToParamId v7/maincpu/audio/dsp_config_sysex.s:3288  0x4E00 (in a range moved -156; not shown which value the target uses)
+REWRITE DSPCfg_ApplyParamStructFull_Chorus v7/maincpu/audio/dsp_config_sysex.s:3804  0xb7ea->0xb74e
+REMOVE restates-label       VoiceInit_Dispatch v7/maincpu/audio/dsp_config_sysex.s:4571  ; Voice initialization dispatch
+REWRITE SeqEvtBuf_NoteDispatch_DelaySend v7/maincpu/audio/note_voice_mapping.s:13122  0xD050->0xCFB4
+REMOVE quotes-ram-address   SndParam_ApplySystemParam_ScaleTuneUserNote1 v7/maincpu/audio/note_voice_mapping.s:17516  0x4284 (v10's code never spells it (moved -156?))
+REMOVE quotes-ram-address   SndParam_ApplySystemParam_ScaleTuneUserNote5 v7/maincpu/audio/note_voice_mapping.s:17620  0x4288 (v10's code never spells it (moved -156?))
+REMOVE quotes-ram-address   SndParam_ApplySystemParam_ScaleTuneUserNote7 v7/maincpu/audio/note_voice_mapping.s:17672  0x428A (in a range moved -156; not shown which value the target uses)
+REWRITE MidiSysMsg_Handler_OnF3ShortDeltaTime v7/maincpu/audio/note_voice_mapping.s:20956  0xE9E7->0xE921
+REWRITE MidiSysMsg_Handler_OnF4LongDeltaTime v7/maincpu/audio/note_voice_mapping.s:20982  0xE9E7->0xE921
+REWRITE MidiSysMsg_Handler_OnFBTempo v7/maincpu/audio/note_voice_mapping.s:21024  0xE9EB->0xE925
+REWRITE MidiSysMsg_DecodeDeltaTime v7/maincpu/audio/note_voice_mapping.s:21115  0xE9E7->0xE921
+REWRITE SoundData_InitPhase0 v7/maincpu/audio/note_voice_mapping.s:23339  0xE14E->0xE0B2
+REWRITE SeMenu_SetLastSwitch v7/maincpu/audio/semenu_routines.s:6310  0xE3E2->0xE31C
+REWRITE SeMenu_GetLastSwitch v7/maincpu/audio/semenu_routines.s:6317  0xE3E2->0xE31C
+REWRITE SndParam_DispatchPackedEvent v7/maincpu/audio/sndparam_routines.s:2387  0x964C->0x95B0, 0x964E->0x95B2
+REMOVE restates-label       EasyCmp_GridCheck_EventCase1 v7/maincpu/audio/sound_editor_ui.s:17604  ; EasyCmpGridCheck event case 1
+REMOVE restates-label       EasyCmp_GridCheck_EventCase2 v7/maincpu/audio/sound_editor_ui.s:17610  ; EasyCmpGridCheck event case 2
+REMOVE restates-label       EasyCmp_GridCheck_EventCase3 v7/maincpu/audio/sound_editor_ui.s:17619  ; EasyCmpGridCheck event case 3
+REMOVE restates-label       AcSndArgGrid_BnkCase1 v7/maincpu/audio/sound_editor_ui.s:19041  ; AcSndArgGridBnk case 1
+REMOVE restates-label       MainSysCtrl_DispatchTable v7/maincpu/display/graphics_text_vga.s:5217  ; MainSysControl dispatch table
+REWRITE VoiceSlot_SkipByteAndRead v7/maincpu/display/scoop_display.s:11448  0x3721->0x3685
+REMOVE quotes-ram-address   SqStep_BuildAdjacentRowBitmap v7/maincpu/display/scoop_display.s:12152  0x372E (in a range moved -156; not shown which value the target uses)
+REWRITE PanelLed_PendingGroup1Handlers v7/maincpu/extensions/extension_data.s:2657  0x8F3A->0x8E9E, 0x8F3C->0x8EA0, 0x8F3A->0x8E9E
+REWRITE PanelLed_PendingGroup2Handlers v7/maincpu/extensions/extension_data.s:2680  0x8F3E->0x8EA2, 0x8F40->0x8EA4, 0x8F3E->0x8EA2
+REWRITE PanelLed_PendingGroup3Handlers v7/maincpu/extensions/extension_data.s:2707  0x8F42->0x8EA6, 0x8F44->0x8EA8, 0x8F42->0x8EA6
+REWRITE PanelLed_PendingGroup4Handlers v7/maincpu/extensions/extension_data.s:2738  0x8F46->0x8EAA, 0x8F48->0x8EAC, 0x8F46->0x8EAA
+REWRITE PanelLed_HeldGroup1Handlers v7/maincpu/extensions/extension_data.s:2749  0x8F3C->0x8EA0
+REWRITE PanelLed_HeldGroup2Handlers v7/maincpu/extensions/extension_data.s:2756  0x8F40->0x8EA4
+REWRITE PanelLed_HeldGroup3Handlers v7/maincpu/extensions/extension_data.s:2769  0x8F44->0x8EA8
+REWRITE PanelLed_HeldGroup4Handlers v7/maincpu/extensions/extension_data.s:2782  0x8F48->0x8EAC
+REWRITE SplitPoint_LedMaskByPreset v7/maincpu/extensions/extension_data.s:3429  0x8F58->0x8EBC, 0x8F1C->0x8E80
+REWRITE SndParam_ClearRecordTemplate v7/maincpu/extensions/extension_data.s:3589  0x96D4->0x9638, 0x96E0->0x9644, 0x96EC->0x9650, 0x978C->0x96F0
+REWRITE CPanel_ProbePanelMcus v7/maincpu/kn5000_v7_program.s:3499  0x8D7C->0x8CE0
+REMOVE restates-label       VoiceUI_GridCase2 v7/maincpu/midi/ac_listener_handlers.s:721  ; Voice UI grid case 2
+REMOVE restates-label       AcInOutGrid_Handler v7/maincpu/midi/ac_listener_handlers.s:900  ; AcInOutGrid handler
+REWRITE MidiTx_PartTargets_CC7_Volume v7/maincpu/midi/midi_dispatch_handlers.s:2347  0x90E5->0x9049
+REWRITE MidiTx_PartTargets_CC93_Chorus v7/maincpu/midi/midi_dispatch_handlers.s:2360  0x90E5->0x9049
+REWRITE MidiTx_PartTargets_CC91_Reverb v7/maincpu/midi/midi_dispatch_handlers.s:2382  0x90E5->0x9049
+REWRITE MidiTx_PartTargets_CC10_Pan v7/maincpu/midi/midi_dispatch_handlers.s:2397  0x90E5->0x9049
+REWRITE MidiTx_PartTargets_RpnCoarseTune v7/maincpu/midi/midi_dispatch_handlers.s:2410  0x90E5->0x9049
+REWRITE MidiTx_PartTargets_RpnFineTune v7/maincpu/midi/midi_dispatch_handlers.s:2423  0x90E5->0x9049
+REWRITE MidiTx_PartTargets_RpnBendRange v7/maincpu/midi/midi_dispatch_handlers.s:2436  0x90E5->0x9049
+REWRITE MidiTx_PartTargets_CC121_ResetAll v7/maincpu/midi/midi_dispatch_handlers.s:2449  0x90E5->0x9049
+REWRITE MidiTx_PartTargets_CC120_AllSoundOff v7/maincpu/midi/midi_dispatch_handlers.s:2462  0x90E5->0x9049
+REWRITE MidiTx_PartTargets_PitchBend v7/maincpu/midi/midi_dispatch_handlers.s:2475  0x90E5->0x9049
+REWRITE MidiTx_PartTargets_CC1_Modulation v7/maincpu/midi/midi_dispatch_handlers.s:2488  0x90E5->0x9049
+REWRITE MidiTx_PartTargets_CC11_Expression v7/maincpu/midi/midi_dispatch_handlers.s:2501  0x90E5->0x9049
+REWRITE MidiTx_PartTargets_ChannelPressure v7/maincpu/midi/midi_dispatch_handlers.s:2514  0x90E5->0x9049
+REWRITE MidiTx_PartTargets_CC64_Sustain v7/maincpu/midi/midi_dispatch_handlers.s:2527  0x90E5->0x9049
+REWRITE MidiTx_PartTargets_Func09 v7/maincpu/midi/midi_dispatch_handlers.s:2541  0x90E5->0x9049
+REWRITE MidiTx_PartTargets_Func08 v7/maincpu/midi/midi_dispatch_handlers.s:2555  0x90E5->0x9049
+REWRITE MidiTx_PartTargets_Func12 v7/maincpu/midi/midi_dispatch_handlers.s:2569  0x90E5->0x9049
+REWRITE MidiTx_PartTargets_Func13 v7/maincpu/midi/midi_dispatch_handlers.s:2583  0x90E5->0x9049
+REWRITE MidiTx_PartTargets_Func14 v7/maincpu/midi/midi_dispatch_handlers.s:2597  0x90E5->0x9049
+REWRITE MidiTx_PartTargets_Func15 v7/maincpu/midi/midi_dispatch_handlers.s:2611  0x90E5->0x9049
+REWRITE MidiPkt_SetXferBlock_LivePanel v7/maincpu/midi/midi_dispatch_handlers.s:9431  0xBCDC->0xBC40, 0xBCEC->0xBC50, 0xBCCC->0xBC30
+REMOVE quotes-ram-address   MidiPkt_SetXferBlock_CurrentSong v7/maincpu/midi/midi_dispatch_handlers.s:9575  11236 (unmeasured RAM range, not spelled by both trees' code)
+REMOVE quotes-ram-address   MidiPkt_SetXferBlock_SongSlots v7/maincpu/midi/midi_dispatch_handlers.s:9587  11253 (unmeasured RAM range, not spelled by both trees' code)
+REWRITE MidiPkt_GetUsedSize_StyleImage v7/maincpu/midi/midi_dispatch_handlers.s:9696  0xBD18->0xBC7C
+REWRITE MidiPkt_GetUsedSize_SeqEvents v7/maincpu/midi/midi_dispatch_handlers.s:9715  0xBD18->0xBC7C
+REWRITE MidiPkt_GetUsedSize_AccompBlocks v7/maincpu/midi/midi_dispatch_handlers.s:9734  0xBD18->0xBC7C
+REWRITE MidiStream_Delay25Ticks v7/maincpu/midi/midi_dispatch_handlers.s:9797  0xBD18->0xBC7C
+REWRITE MidiSysEx_SendSoundRamEndCmd v7/maincpu/midi/midi_dispatch_handlers.s:11409  0xBD1A->0xBC7E
+REMOVE restates-label       ParaLoadOpt_CaseA v7/maincpu/midi/param_load_routines.s:26  ; ParaLoadOpt case A
+REMOVE restates-label       ParaLoadOpt_CaseD v7/maincpu/midi/param_load_routines.s:179  ; ParaLoadOpt case D
+REMOVE restates-label       ParaLoadOpt_CaseE v7/maincpu/midi/param_load_routines.s:192  ; ParaLoadOpt case E
+REMOVE restates-label       ParaLoadOpt_CaseF v7/maincpu/midi/param_load_routines.s:205  ; ParaLoadOpt case F
+REMOVE restates-label       VoiceUI_MiscHandler v7/maincpu/midi/param_load_routines.s:883  ; Voice UI misc handler
+REWRITE AccDir_TickVector v7/maincpu/sequencer/accompaniment_engine.s:9810  0x3312->0x3276, 0x3313->0x3277
+REWRITE SndArg_TickVector v7/maincpu/sequencer/accompaniment_engine.s:10515  0x338E->0x32F2, 0x338E->0x32F2
+REWRITE AccPatch_ClearModeAndInitSlotChain_Wrap v7/maincpu/sequencer/accompaniment_engine.s:13269  0x35D5->0x3539
+REWRITE AccPatch_CmpRealTick v7/maincpu/sequencer/accompaniment_engine.s:15446  0x379B->0x36FF, 0x379B->0x36FF, 0x35FE->0x3562
+REWRITE ToneGen_PartBitToNoteOnStatus v7/maincpu/sequencer/accompaniment_engine.s:18509  0x379B->0x36FF
+REWRITE ToneGen_PitchClassNoteFormTable v7/maincpu/sequencer/accompaniment_engine.s:19454  0x3431->0x3395, 0x3433->0x3397
+REWRITE AccTiming_ScrollFourBarViewForward v7/maincpu/sequencer/accompaniment_engine.s:20878  0x34D7->0x343B, 0x3747->0x36AB, 0x371A->0x367E, 0x3746->0x36AA, 0x34D9->0x343D, 0x3746->0x36AA
+REWRITE RhythmBuf_FindFreeBlock v7/maincpu/sequencer/accompaniment_engine.s:21698  0x35B0->0x3514, 0x34D4->0x3438
+REWRITE RhythmBuf_BarQuartersByTimeSig v7/maincpu/sequencer/accompaniment_engine.s:22650  0x3560->0x34C4
+REWRITE AccPatch_QuantizeTick v7/maincpu/sequencer/accompaniment_engine.s:23250  0x34DB->0x343F, 0x34DB->0x343F, 0x34DB->0x343F
+REWRITE CmpBkslSTtl_SelectRecPart v7/maincpu/sequencer/accompaniment_engine.s:23851  0x379B->0x36FF
+REWRITE CmpRealTtl_CycleQuantize v7/maincpu/sequencer/accompaniment_engine.s:23902  0xE3E2->0xE31C, 0x34DB->0x343F, 0x34DB->0x343F
+REWRITE CmpNcp_StepSlotInGroup1 v7/maincpu/sequencer/accompaniment_engine.s:25463  0x34D6->0x343A, 0x34CD->0x3431, 0x34EF->0x3453, 0x34EF->0x3453, 0x34CD->0x3431, 0x34D6->0x343A
+REWRITE CmpNcp_StepSlotInGroup2 v7/maincpu/sequencer/accompaniment_engine.s:25511  0x34D6->0x343A, 0x34CD->0x3431, 0x34EF->0x3453, 0x34EF->0x3453, 0x34CD->0x3431, 0x34D6->0x343A
+REMOVE restates-label       RhythmParam_TypeCheck v7/maincpu/sequencer/accompaniment_engine.s:27271  ; Rhythm parameter type check
+REMOVE restates-label       CmpNcpTtl_SpecialMode7 v7/maincpu/sequencer/accompaniment_engine.s:30385  ; CmpNcpTtl special mode 7
+REMOVE restates-label       CmpEsyTtl_Mode1 v7/maincpu/sequencer/accompaniment_engine.s:30945  ; CmpEsyTtl mode 1
+REMOVE restates-label       CmpEsyTtl_SubModeB v7/maincpu/sequencer/accompaniment_engine.s:31039  ; CmpEsyTtl sub-mode B
+REMOVE restates-label       CmpEsyTtl_SubModeC v7/maincpu/sequencer/accompaniment_engine.s:31050  ; CmpEsyTtl sub-mode C
+REMOVE restates-label       CmpEsyTtl_E_Var1 v7/maincpu/sequencer/accompaniment_engine.s:31132  ; CmpEsyTtl E variant 1
+REMOVE restates-label       CmpEsyTtl_E_Var2 v7/maincpu/sequencer/accompaniment_engine.s:31194  ; CmpEsyTtl E variant 2
+REMOVE restates-label       CstmCpTtl_RecMode1 v7/maincpu/sequencer/accompaniment_engine.s:31516  ; CstmCpTtl record mode 1
+REMOVE restates-label       CmpSong_VariantA v7/maincpu/sequencer/accompaniment_engine.s:32309  ; CmpSong variant A
+REWRITE CmpStep_CallSwitchHandler v7/maincpu/sequencer/accompaniment_engine.s:33392  0xE3E2->0xE31C
+REWRITE CmpStep_NoteEntryFrameRecords v7/maincpu/sequencer/accompaniment_engine.s:34014  0x3712->0x3676
+REWRITE CmpStep_NoteEntryAreaBand v7/maincpu/sequencer/accompaniment_engine.s:34043  0x3712->0x3676
+REMOVE quotes-ram-address   AccompSeq_MidiFilterCodeBlock_Step2 v7/maincpu/sequencer/accompseq_routines.s:1653  16254 (in a range moved -156; not shown which value the target uses)
+REMOVE restates-label       VocalistPage_Handler v7/maincpu/sequencer/seq_event_playback.s:4527  ; Vocalist page handler
+REMOVE restates-label       AppEvent_SubDispatch v7/maincpu/sequencer/sequencer_engine.s:21074  ; Application event sub-dispatch
+REMOVE restates-label       SeqState_DispatchEntry v7/maincpu/sequencer/sequencer_engine.s:21672  ; Sequencer state dispatch entry
+REMOVE restates-label       SeqAccomp_EventDispatch v7/maincpu/sequencer/sequencer_engine.s:22905  ; Sequencer accompaniment event dispatch
+REMOVE restates-label       SeqAccomp_StartHelper v7/maincpu/sequencer/sequencer_engine.s:23456  ; SeqAccomp start helper
+REMOVE restates-label       NoteEditSy_ModeDispatch v7/maincpu/sequencer/sequencer_engine.s:23804  ; Note editor mode dispatch
+REMOVE restates-label       EntGrid_CellSelect v7/maincpu/sequencer/sequencer_ui.s:7796  ; Entertainer grid cell select
+REMOVE restates-label       EntGridCheck_Handler v7/maincpu/sequencer/sequencer_ui.s:8071  ; EntertainerGridCheck handler
+REMOVE restates-label       EntertainerGridCheck_OnRetEffFix v7/maincpu/sequencer/sequencer_ui.s:8271  ; EntertainerGridCheck return
+REMOVE restates-label       SqedtFunc_ModeA v7/maincpu/sequencer/sequencer_ui.s:14892  ; SqedtFunc mode A
+REWRITE FDC_COMMAND_DISPATCHER v7/maincpu/storage/fdc_routines.s:313  8A40h->89A4h
+REWRITE FDC_ClearStatus_InitTimer v7/maincpu/storage/fdc_routines.s:1308  35364->35208, 35424->35268
+REWRITE FDC_MODE_CONFIG v7/maincpu/storage/fdc_routines.s:1695  35374->35218, 35379->35223, 35382->35226, 35371->35215, 35380->35224, 35372->35216, 35369->35213
+REWRITE Flash_AssignSlotsToBlocks v7/maincpu/storage/flash_floppy_handlers.s:2354  0x39B7->0x391B
+REMOVE restates-label       PmemOutL_GridCheck_Return v7/maincpu/ui/drawbar_panel_ui.s:1891  ; PmemOutLGridCheck return
+REMOVE restates-label       MidiSetup_GridBoxCase2 v7/maincpu/ui/drawbar_panel_ui.s:3949  ; MidiSetup grid box case 2
+REMOVE restates-label       DemoMenu_WorkspaceFunc v7/maincpu/ui/drawbar_panel_ui.s:18185  ; DemoMenu workspace function
+REWRITE MainTitleCtrl_ChangeTitle v7/maincpu/ui/ui_control_panel.s:2831  36150->35994, 36153->35997
+REMOVE restates-label       DkMdlyPly_ExtendedCheck v7/maincpu/ui/ui_playback_modes.s:1676  ; DkMdlyPly extended check
+REMOVE quotes-ram-address   Str_20469e32473220 v7/maincpu/ui_widgets/effects_sequencer_screens.s:2589  0x8e22 (in a range moved -156; not shown which value the target uses)
+REWRITE S2cMemNoBox_SectionNameStrPtrs v7/maincpu/ui_widgets/naka_screen_dispatch.s:1620  0x398F->0x38F3
+REWRITE PsCmpCpFPtnBox_PatternNameStrPtrs v7/maincpu/ui_widgets/naka_screen_dispatch.s:1885  0x34EF->0x3453
+REWRITE AcMemNoBox_SectionNameStrPtrs v7/maincpu/ui_widgets/naka_screen_dispatch.s:2016  0x34D6->0x343A
+REWRITE AcCmpRecBox_TrackStateStrPtrs v7/maincpu/ui_widgets/naka_screen_dispatch.s:2089  0x379B->0x36FF, 0x34F1->0x3455
+REWRITE MspNameBnkFunc_BankNamesInit v7/maincpu/ui_widgets/naka_screen_dispatch.s:2257  0x7F3E->0x7EA2
+REWRITE PsRgpSetBnkBox_CompileBankStrPtrs v7/maincpu/ui_widgets/naka_screen_dispatch.s:2367  0x7F3D->0x7EA1
+REWRITE MspPlayModeFunc_ModeNamesInit v7/maincpu/ui_widgets/naka_screen_dispatch.s:2381  0x7F3F->0x7EA3
+REWRITE AcSndArgGridBox_RowPartBitsInit v7/maincpu/ui_widgets/naka_screen_dispatch.s:2401  0x338E->0x32F2
+REWRITE SqStep_StepCursor v7/maincpu/ui_widgets/style_ui_params.s:282  0x370F->0x3673
+REMOVE quotes-ram-address   SqStep_NibbleMarkPatterns v7/maincpu/ui_widgets/style_ui_params.s:298  0x372E (in a range moved -156; not shown which value the target uses)
+REWRITE SingleLoadSrc_ListProcByMode v7/maincpu/ui_widgets/technichord_string_data.s:5503  0x89F8->0x895C
+REWRITE SingleLoadDst_AreaListProcs v7/maincpu/ui_widgets/technichord_string_data.s:5562  0x89f8->0x895c, 0x81f0->0x8154
+REWRITE CmpSingleLoadSrc_ListProcByMode v7/maincpu/ui_widgets/technichord_string_data.s:5566  0x89F8->0x895C
+REWRITE AccPart_BitToIndexTable v7/maincpu/ui_widgets/widget_descriptors.s:5492  0x33D4->0x3338, 0x33D4->0x3338, 0x33D4->0x3338
+REWRITE NoteThreshold_PairTable_SecondMaskCol v7/maincpu/ui_widgets/widget_dispatch.s:7467  0xCD2F->0xCC93, 0xCD2E->0xCC92
+REWRITE Harmony_OctaveUpDown_Down v7/maincpu/ui_widgets/widget_dispatch.s:8190  0xCEAA->0xCE0E, 0xE9BE->0xE8F8, 0xceaa->0xce0e
+REWRITE Harmony_FourthOctaveDown_Fourth v7/maincpu/ui_widgets/widget_dispatch.s:8195  0xCEAA->0xCE0E, 0xE9BE->0xE8F8, 0xceaa->0xce0e
+REWRITE Harmony_SeventhFourthUp_Fourth v7/maincpu/ui_widgets/widget_dispatch.s:8202  0xCEAA->0xCE0E, 0xE9BE->0xE8F8, 0xceaa->0xce0e

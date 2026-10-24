@@ -153,6 +153,11 @@ SndParam_RegRamPtrs:
 SndParam_ValueTablePtrPair:
 	.set Naka_SubDispatch_B_Table, SndParam_ValueTablePtrPair
 	.long WidgetParam_MidiCC_Chorus
+; SndParam_WordValueListPtrs: Pointer table indexed by a sound-parameter descriptor's +11 byte whose entries point at
+;   16-bit value lists; the label holds entry 0 = WidgetParam_MidiCC_SysExcl, the list {1, 2, 3, 0x203, 0x201, 0x202}.
+;   Basis: readers -- SndParam_ReadRegWord returns the position (0..5) of the current word in list [+11];
+;   SndParam_SetRegWord writes list[+11][value]. Index range beyond 0 is not traced (entry 1 would be
+;   SndParam_Registry).
 SndParam_WordValueListPtrs:
 	.long WidgetParam_MidiCC_SysExcl
 ; 972 x u32 pointers to sound-parameter descriptor records.  Count pinned by
@@ -1218,6 +1223,10 @@ SndParam_BlockRamPtrs:
 	.long 0x00000000, 0x00000000, 0x00000000, 0x00000000	; 0x3C
 	.long 0x00000000, 0x00000000, 0x00000000, 0x0000fc54	; 0x40
 	.long 0x0000fc26, 0x0000fc32, 0x0000fc3e, 0x0000fc4a	; 0x44
+; SndParam_StyleRecordRamPtr: Entry 0x48 of SndParam_BlockRamPtrs = 0xFC5A, the RAM address of panel record 0x48
+;   (style + tempo). SndParam_ClampReverbTime and SndParam_ClampDelayTime load it directly and clamp the record's +8
+;   word (& 0x1FF) to 40..300: the tempo. Basis: readers + bytes -- `ld xwa, (<this>); ld hl, (xwa+8)`;
+;   SeqTimer_PostTempoUpdate writes the tempo to 0xFC62 = 0xFC5A + 8 via record 0x48 field 8.
 SndParam_StyleRecordRamPtr:
 	.long 0x0000fc5a, 0x0000ff92, 0x00000000, 0x00000000	; 0x48
 	.long 0x00000000, 0x00000000, 0x00000000, 0x00000000	; 0x4C
@@ -1278,20 +1287,58 @@ SndParam_OutOfMemoryMsg:
 ;  v7 copy is v7/maincpu/ui_widgets/sound_config_lookup.c)
 SndParam_InitFuncTable:
 	.long	MIDI_INIT_SEQUENCES, SndParam_InitPhase1_NullRet, SndParam_InitPhase2_NullRet, SndParam_InitPhase3_NullRet
+; FileData_NNPartSourceIndex: 24 x u8 for the 'NN' (.LSW class 3) live-panel import: KN5000 part record i (0..23, RAM
+;   0xF9B4 + 26i) -> index of the 4-byte source record in the file's block at +414 {0x17, 0x14, 0x13, 0x10, 0x11,
+;   0x12, 0..15, 0x15, 0x16}. Basis: readers + bytes -- FileData_ImportNNLivePanel's third loop copies record [map[i]]
+;   to part record i.
 FileData_NNPartSourceIndex:	.incbin "includes/generated/sound_config_lookup.bin", 0x10, 0x18
+; FileData_NNDspEffectAlgoMap: 16 x u8 for the 'NN' panel import: low nibble of the source record byte +341 -> DSP
+;   EFFECT algorithm number written as parameter 0x4900 (byte 0 of effect slot 0, tag 0x61 at destination +756) {0, 1,
+;   32, 33, 35, 9, 10, 4, 5, 0..}. Basis: readers + bytes -- DSPCfg_ConfigureVoiceSlotA (called by
+;   FileData_ImportNNLivePanel / ImportNNPanelMemories) indexes it and calls DSPCfg_WriteParamSimple(0x4900).
 FileData_NNDspEffectAlgoMap:	.incbin "includes/generated/sound_config_lookup.bin", 0x28, 0x10
+; FileData_NNDigitalReverbAlgoMap: 16 x u8 for the 'NN' panel import: high nibble of the source record byte +338 ->
+;   DIGITAL REVERB algorithm number written as parameter 0x4B00 (byte 0 of effect slot 1, tag 0x63 at destination
+;   +782) {17, 17, 20, 21, 21, 21, 10, 10, 10, 10, 0..}. Basis: readers + bytes -- the second half of
+;   DSPCfg_ConfigureVoiceSlotA indexes it and calls DSPCfg_WriteParamSimple(0x4B00); all values lie in slot 1's
+;   accepted set 9, 10, 16..27.
 FileData_NNDigitalReverbAlgoMap:	.incbin "includes/generated/sound_config_lookup.bin", 0x38, 0x10
+; FileData_NNDigitalReverbParamMap: 16 x u8 for the 'NN' panel import: (low nibble of source byte +338) / 2 -> the
+;   value written to each DIGITAL REVERB parameter 0x4B10+i whose DSPCfg_ResolveAndExtract kind is 1 or 2 {15, 30, 45,
+;   55, 70, 78, 85, 90, 92, 94, 70 x6}. Basis: readers + bytes -- the reverb parameter loop of
+;   DSPCfg_ConfigureVoiceSlotA; which reverb parameter kinds 1/2 are is not established.
 FileData_NNDigitalReverbParamMap:	.incbin "includes/generated/sound_config_lookup.bin", 0x48, 0x10
+; FileData_NNTag99ValueMap: 50 x u8 value translation for the 'NN' live-panel import: the source record bytes +389,
+;   +390, +394, +395 index it and the results go to destination +948, +949, +970, +969 (RAM 0xFD34/35/4A/49 = panel
+;   record 0x99 payload +4, +5, +0x1A, +0x19). Basis: readers + bytes -- DSPCfg_VoiceSlotB_ExtractData; what the codes
+;   (0, 0xC0..0xC7, 0x88, 0x92 ...) mean is not established.
 FileData_NNTag99ValueMap:	.incbin "includes/generated/sound_config_lookup.bin", 0x58, 0x32
 ; SndParam_PresetBanks -- 25 sound-parameter banks of 234 bytes, blocks 0..24 of SndParam_GetBlockPointer:
 ; 39 x {u32 live-panel RAM address, u8 b4, u8 b5}, address 0 = unused; entries 0..22 are applied by
 ; SndParam_ApplyBaseBlock, 23..38 by SndParam_ApplyMaskBlock.  Typed in sound_config_lookup.c
 ; (scripts/converters/sndparam_bank_retype.py).
 SndParam_PresetBanks:			.incbin "includes/generated/sound_config_lookup.bin", 0x8A, 0x16DA	; 25 x 234-byte sound-parameter banks (blocks 0..24 of SndParam_GetBlockPointer), typed in sound_config_lookup.c
+; Vocalist_SysExTemplate: 14-byte SysEx template F0 00 00 10 00 35 60 0F 00 00 00 00 00 F7 for the Vocalist settings
+;   (panel record 0x47): the senders copy it, patch +4 (channel, param 0x2D00), +9 (parameter number 0x20 / 0x11 /
+;   0x12 / 0x1C ...) and +12 (value) and send it on MIDI out or the computer port. Basis: readers + bytes --
+;   MidiSysEx_SendAllParams and its continuations Mem_Copy 14 bytes from it; called after the vocalist page OK events.
 Vocalist_SysExTemplate:		.incbin "includes/generated/sound_config_lookup.bin", 0x1764, 0xE
+; Vocalist_ControlChangeTemplate: 3-byte Control Change template B0 10 00 (+ 0xFF pad): controller 16; the Vocalist
+;   senders OR the channel (param 0x2D00, when <= 15) into the status and put param 0x2D04 (or 0x2D06 + 60) in the
+;   value byte. Basis: readers + bytes -- MidiSysEx_SendControlChange1/2 Mem_Copy 3 bytes from it.
 Vocalist_ControlChangeTemplate:	.incbin "includes/generated/sound_config_lookup.bin", 0x1772, 0x4
+; Vocalist_ProgramChangeTemplate: 2-byte Program Change template C0 00: MidiSysEx_SendProgramChange ORs the Vocalist
+;   channel (param 0x2D00, when <= 15) into the status and puts param 0x2D02 in the program byte. Basis: readers +
+;   bytes -- Mem_Copy of 2 bytes from it.
 Vocalist_ProgramChangeTemplate:	.incbin "includes/generated/sound_config_lookup.bin", 0x1776, 0x2
+; Vocalist_PartSysExTemplate: Second copy of the 14-byte Vocalist SysEx template (F0 00 00 10 00 35 60 0F 00 00 00 00
+;   00 F7) used by MidiSysEx_SendAllPartChannels: 16 messages with +4 = part 0..15, +9 = 0x12, +12 = param 0x2D00.
+;   Basis: readers + bytes -- the loop's Mem_Copy source.
 Vocalist_PartSysExTemplate:	.incbin "includes/generated/sound_config_lookup.bin", 0x1778, 0xE
+; Vocalist_PresetRecords: 6 x 8-byte Vocalist presets: MidiSysEx_CopyParamToBuffer copies preset [n] whole into panel
+;   record 0x47 (RAM 0xFC4A, the Vocalist settings that keys 0x2D00.. address) when a vocalist page-1 preset is
+;   confirmed. Basis: readers + bytes -- `sla wa, 3; lda xbc, (<this>); ... Mem_Copy(0xFC4A, entry, 8)`; called from
+;   the 6 cases of MainVocalistPage1OKFunc (EVT_VST_PST_OK).
 Vocalist_PresetRecords:	.incbin "includes/generated/sound_config_lookup.bin", 0x1786, 0x30
 MIDI_ReadChannelParam_CaseTable:
 	.short	MidiChan_ParamDispatch - MidiChan_ParamDispatch
@@ -3597,6 +3644,10 @@ MidiCtl_GateRecords:
 	.byte 0x08, 0x08
 	.long 0x0000fd56	; gate 2
 	.byte 0x04, 0x04
+; MidiCtl_SecondGateRecords: Gate-record array of the second condition byte (+13) of a MIDI control record: 3 x {u32
+;   RAM address, u8 mask, u8 value} (records 3-5 of the 6 at MidiCtl_GateRecords; index 0 unused, 0 = no condition),
+;   testing (RAM 0xFD56 & 0x08), (0xFD59 & 0x20), (0xFD59 & 0x40). Basis: readers + bytes --
+;   MidiPkt_CheckGateCondition_Second indexes it by +13 x 6; MidiCtl_GateRecords is the +12 array.
 MidiCtl_SecondGateRecords:
 	.long 0x0000fd56	; gate 3
 	.byte 0x08, 0x08
@@ -3807,6 +3858,9 @@ CompIface_PortByte_F4:
 ; 0xF5 + pad: CompIface_SendActiveSensing_PC1MAC (0xFDB245) passes it the same way.
 CompIface_PortByte_F5:
 	.byte 0xf5, 0xff
+; ToneKit sound parameter blocks (120 labels, 4226 bytes)
+; Source: maincpu/ui_widgets/tonekit_param_blocks.c
+; Each block is a sequence of 6-byte {min_value, max_value, param_id} records.
 ; DSP effect data: range block of the 41 effect numbers with no DSP record list
 ; (0, 7, 11, 12, 13, 14 ...): 2 x {min,max,param_id} = 12 bytes, though those effects'
 ; count bytes (0xEE5FE0+n) say 5; range-table entries 0,7,11,12,13,14,28,29 ...
@@ -4171,6 +4225,10 @@ ToneKit_ParamBlock_115:	.incbin "includes/generated/tonekit_param_blocks.bin", 0
 ; are the DSP parameter-count bytes (DSPCfg_GetSlotCount, 0xEE5FE0) and
 ; +0x7C..+0x7F is entry 0 of the range table (0xEE6044).
 ToneKit_ParamBlock_116:			.incbin "includes/generated/tonekit_param_blocks.bin", 0x1002, 0x18
+; DspFxParamCountTable: 100 x u8 parameter count of each DSP effect, indexed by effect number 0..99 (e.g. 5, 5, 7, 7,
+;   8 ...; 2 for 57..60 ACOUSTIC ILLUSION). DSPCfg_ApplyParamStruct loops that many parameters of the effect's record
+;   list. Basis: readers + bytes -- DSPCfg_GetSlotCount returns table[effect]; the range-table comment calls these
+;   bytes the parameter count.
 DspFxParamCountTable:	.incbin "includes/generated/tonekit_param_blocks.bin", 0x101A, 0x64
 DSPCfg_LookupAndExtract_PtrTable:	.incbin "includes/generated/tonekit_param_blocks.bin", 0x107E, 0x4	; 200 x 32-bit pointer
 ; =============================================================================
@@ -7402,6 +7460,10 @@ NoteOn_ChannelByVoice:
 ; of the byte it indexes with (13 pairs to the next referenced object).
 NoteThreshold_PairTable:
 	.byte	0x00
+; NoteThreshold_PairTable_SecondMaskCol: Base of the second column of NoteThreshold_PairTable (13 x {u8, u8} for notes
+;   0x54..0x60): the one-bit mask each of those notes contributes to the second status byte (RAM 0xCC93, changes sent
+;   with AddswbWr(0xA8, 0x0C)). Basis: readers + bytes -- NoteMap_MarkEntriesAboveThreshold reads [2*(note - 0x54)]
+;   here and at +0 for the first byte (RAM 0xCC92, AddswbWr 0x0B).
 NoteThreshold_PairTable_SecondMaskCol:	.byte	0x20
 	.byte 0x00, 0x04
 	.byte 0x00, 0x00
@@ -8121,10 +8183,22 @@ Harmony_Offsets4_B:
 ; SoundFX_Handler_10 (0xFE8B91) +2/+3, SoundFX_Handler_11 (0xFE8BB4) +4/+5.
 Harmony_FixedIntervals:
 	.byte	-12
+; Harmony_OctaveUpDown_Down: s8 12 of Harmony_FixedIntervals, subtracted from the reference note RAM 0xCE0E:
+;   SoundFX_Handler_9 (entry 10 of Harmony_HandlerTable, selected by RAM byte 0xE8F8) writes note - 12 (an octave
+;   below) as one of its two harmony notes; its pair is {+12, -12}: an octave above and below. Basis: readers + bytes
+;   -- the only reader is SoundFX_Handler_9's `ld e, (<this>); ld c, (0xce0e); sub c, e`.
 Harmony_OctaveUpDown_Down:	.byte	12
+; Harmony_FourthOctaveDown_Fourth: s8 5 of Harmony_FixedIntervals, subtracted from the reference note RAM 0xCE0E:
+;   SoundFX_Handler_10 (entry 11 of Harmony_HandlerTable, selected by RAM byte 0xE8F8) writes note - 5 (a fourth
+;   below) as one of its two harmony notes; its pair is {-5, -12}: a fourth and an octave below. Basis: readers +
+;   bytes -- the only reader is SoundFX_Handler_10's `ld e, (<this>); ld c, (0xce0e); sub c, e`.
 Harmony_FourthOctaveDown_Fourth:	.byte	5
 SoundFX_Handler_10_Data_2:	.byte	12
 SoundFX_Handler_11_Data:	.byte	-10
+; Harmony_SeventhFourthUp_Fourth: s8 -5 of Harmony_FixedIntervals, subtracted from the reference note RAM 0xCE0E:
+;   SoundFX_Handler_11 (entry 12 of Harmony_HandlerTable, selected by RAM byte 0xE8F8) writes note + 5 (a fourth
+;   above) as one of its two harmony notes; its pair is {+10, +5}: a minor seventh and a fourth above. Basis: readers
+;   + bytes -- the only reader is SoundFX_Handler_11's `ld e, (<this>); ld c, (0xce0e); sub c, e`.
 Harmony_SeventhFourthUp_Fourth:	.byte	-5
 ; 16 x u32 routine pointers, indexed by RAM byte 0xE9BE: UIParam_CallbackDispatch
 ; (0xFE8C1B) does `ld c,(0xe9be); sla bc,2; lda xde,(<this>); add xbc,xde;
@@ -9393,6 +9467,9 @@ SoundRam_Id_KN5000:
 	.asciz "KN5000 SOUND RAM"
 ; 4 x u32 routine pointers: entry 16 of Subsys_HandlerTableList (VoiceInit_Dispatch
 ; calls one entry of it with every subsystem's table).
+; SoundRam_InitFuncTable: Init-phase handler table of this subsystem (4 x u32, slots = init phases 0-3). Basis:
+;   readers + bytes -- entry 16 of Subsys_HandlerTableList, which ScreenGroup_Dispatch walks calling slot WA (init
+;   phase 0-3) of every table; slot 0 is SendPartDataBlock_ClearByte4.
 SoundRam_InitFuncTable:
 	.long SendPartDataBlock_ClearByte4
 	.long SendPartDataBlock_Return4

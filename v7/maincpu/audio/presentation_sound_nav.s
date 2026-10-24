@@ -54,6 +54,9 @@ GroupBoxProc_StartSSFPresentation:
 	call	SndParam_ResolveWidget
 	cp	hl, 65535
 	jrl	z, GroupBox_ReturnZero
+; Loop body: iterates over SSF items via FCCC66, builds workspace fields,
+; and sends event 0x1c0001c for each item via direct SendEvent.
+; Loops until FCCD2E reports no more items (HL == 0xffff).
 GroupBoxProc_SSFItemLoop:
 	ld	xwa, (xsp+10)
 	ld	(xsp+18), xwa
@@ -74,6 +77,13 @@ GroupBoxProc_SSFItemLoop:
 	cp	hl, 65535
 	jr	nz, GroupBoxProc_SSFItemLoop	; -> 0xF99EAD
 	jrl	GroupBox_ReturnZero	; -> 0xF9A119
+	; --- Event 0x1e0006e: Cancel/Back handler ---
+	; Iterates the 17-entry widget structure array at 0x0274e8
+	; (28-byte entries: stride = (ix*8 - ix)*4 = ix*28).
+	; If event param (XWA) is nonzero: activates entries and sends 0x1c00026.
+	; If event param is zero: deactivates entries and sends 0x1c00026.
+	; Each entry has: byte[0]=active, byte[1]=enabled, dword[2]=workspace,
+	; dword[6]=event(0x1c00007), dword[10]=focus_id, offset[14]=secondary.
 GroupBox_CancelBack:
 	ld iz, 0:i3
 
@@ -254,6 +264,8 @@ GroupBoxProc_Case5:
 GroupBoxProc_Case6:
 	call UIRender_RetStub2
 	jrl GroupBox_ReturnZero
+; GroupBoxProc_OnRefreshApTask: EVT_REFRESH_AP_TASK: disables the dial, clears DIAL_FOCUS, InitializeTimer, then sends
+;   EVT_REFRESH_SW_EVENT to itself.
 GroupBoxProc_OnRefreshApTask:
 	ld wa, 0:i3
 	calr SetDialEnable
@@ -824,6 +836,7 @@ GetEditSwPoint_Join:
 	ld	(xbc), wa
 	ldw	(xde), 239
 	ret
+; GetEditSwPoint handler: default (value=0xa0/0x78)
 EditSwParam_Default:
 	ldw (xbc), 0xa0
 	ldw (xde), 0x78
@@ -854,6 +867,8 @@ SetWallPaper_CaseData:
 SetWallPaper_Loop:
 	ld	wa, 1:i3
 	jr	SetWallPaper_Join
+; SetWallPaper_MenuWallBorder: Border type 2: wallpaper 2 when the WallMenu setting (0x340FC) is set, else wallpaper
+;   1.
 SetWallPaper_MenuWallBorder:
 	cpw	(0x0340fc:24), 0
 	jr	z, SetWallPaper_Loop
@@ -1279,6 +1294,7 @@ DirmdTitleFunc:
 	calr DirmdEmulator_Entry
 	lda xsp, (xsp + 16)
 	ret
+; DirmdEmulator dispatch case F
 DirmdTitle_New:
 	ld	a, (ACTIVE_TITLE:16)
 	cp	a, (ACTIVE_TITLE_PREVIOUS:16)
@@ -1300,6 +1316,9 @@ DirmdTitle_Old:
 	ld	xwa, DirmdTitleFunc_Str_DirmdTitleOld
 	call	DbMemo_PostString
 	jp	PsMixer_CtlTypeProc8_Return2
+; DirmdTitle_ESw: DirmdTitle emulator method [2] (ESw), called by DirmdEmulator on EVT_SW_IN with the switch number (&
+;   31) and its bit-7 flag: formats and posts the trace memo "DirmdTitleESw(%d, %d);" then calls
+;   DirmdTitle_SwitchInNullRet(WA = switch, BC = flag), an empty routine
 DirmdTitle_ESw:
 	lda	xsp, (xsp-256)
 	pushw	iz
@@ -1409,6 +1428,7 @@ DirmdEmu_OnSwitchIn:	; EVT_SW_IN: switches 0..255 only; method 2 (switch & 31, b
 	pop	xix
 	pop	xhl
 	pop	xde
+; DirmdEmulator default/fallthrough case
 DirmdEmu_DefaultCase:
 	bit 1, (0xe318:16)
 	jr z, .Lc_f9ab49

@@ -2319,6 +2319,11 @@ TaskSched_SpawnTask:
 	ld (xwa), ix
 	ld (xiy + 2), ix
 	jrl TaskSched_Dispatch
+; TaskSched_ExitCurrentTask: Ends the calling task: on the scheduler stack (XSP := 0x1E53A) clears the current task's
+;   TCB (0x487) bytes +9/+10, sets the current task to 0, unlinks the TCB from its queue (+0 next, +2 prev) and enters
+;   TaskSched_Dispatch; it never returns. Basis: callers + body -- DiskStream_ReaderTask calls it as its last action
+;   once the stream is read (0x2357E := 0); TaskSched_SpawnTask is the start side (TCB +9 := 4, linked into queue 0x4C1 +
+;   4 * priority).
 TaskSched_ExitCurrentTask:
 	ei 6
 	ld xsp, 0x1e53a
@@ -4601,6 +4606,8 @@ SeqBuf_NoteEvent_ReadByte:
 	popw ix
 	ret
 
+; SeqBuf_NoteEvent_WriteByte: Writes the byte argument into the note-event ring buffer (descriptor 0x202CB, 256 bytes,
+;   Seq_RingBuf_WriteByte_Small); the same buffer SeqBuf_NoteEvent_ReadByte reads. Basis: callers + body.
 SeqBuf_NoteEvent_WriteByte:
 	link	xiz, 0
 	pushw	ix
@@ -4686,6 +4693,10 @@ SeqBuf_NoteEvent_SaveWritePtr:
 	popw	ix
 	ret
 
+; SeqBuf_DmaChan0_WriteByte: Writes the byte argument into the ring buffer at descriptor 0x203D5 (256 bytes), the one
+;   inter-CPU DMA channel 0 fills (header bits 7:5 = 0). Not the note-event buffer 0x202CB; the 0x203D5 helpers are
+;   named SeqBuf_SoundEdit_* (Flush, SaveWritePtr, ...) although SeqDMA_MultiWrite_SoundEdit writes 0x204DF, so the
+;   channel number is the only settled name. Basis: callers + body.
 SeqBuf_DmaChan0_WriteByte:
 	link	xiz, 0
 	pushw	ix
@@ -5162,6 +5173,9 @@ Seq_RingBuf_PeekByte_Read:
 	incw 1, (xde - 2)
 	ret
 
+; Seq_RingBuf_ReadAheadToCheckpoint: 2048-byte ring buffer primitive (XDE = descriptor): returns in L the byte at the
+;   read-ahead pointer (-10) and advances it (wrap 0x7FF), or HL = 0xFFFF when it has reached the checkpoint (-6);
+;   frees no space. It reads; it does not write. Basis: callers + body.
 Seq_RingBuf_ReadAheadToCheckpoint:
 	ld	ix, (xde-10)
 	cp	ix, (xde-6)
@@ -7219,11 +7233,11 @@ SLIDE_Parse_Header:
 	push XIZ
 	ld (XSP+0x0a),XBC
 	ld XIZ,XWA
-	ld XIY,SLIDE_STRING
+	ld XIY,SLIDE_STRING	; "SLIDE"
 	lda xix, (xsp + 0x04)
 	ld bc, 3:i3
 	ldirw
-	pushw 0x0005
+	pushw 0x0005	; string length: 5 bytes
 	lda xwa, (xsp + 0x06)
 	push XWA
 	push XIZ
@@ -7379,9 +7393,9 @@ Detect_Disk_Type:
 	ld	bc, 1:i3
 	ld	xde, xiz
 	calr	FDC_ReadSectors
-	pushw	38
+	pushw	38	; string length
 	pushw	FILETYPE_SIG_PROGRAM_1@hi16
-	pushw	FILETYPE_SIG_PROGRAM_1@lo16
+	pushw	FILETYPE_SIG_PROGRAM_1@lo16	; "Technics KN5000 Program  DATA FILE 1/2"
 	push	xiz
 	call	String_Compare
 	add	xsp, 10
@@ -7390,9 +7404,9 @@ Detect_Disk_Type:
 	ld	(xsp+4), 1
 	jrl	DetectDisk_FreeBufAndReturn
 DetectDisk_CheckProgram2of2:
-	pushw	38
+	pushw	38	; string length
 	pushw	FILETYPE_SIG_PROGRAM_2@hi16
-	pushw	FILETYPE_SIG_PROGRAM_2@lo16
+	pushw	FILETYPE_SIG_PROGRAM_2@lo16	; "Technics KN5000 Program  DATA FILE 2/2"
 	push	xiz
 	call	String_Compare
 	add	xsp, 10
@@ -7401,9 +7415,9 @@ DetectDisk_CheckProgram2of2:
 	ld	(xsp+4), 2
 	jrl	DetectDisk_FreeBufAndReturn
 DetectDisk_CheckTable1of2:
-	pushw	38
+	pushw	38	; string length
 	pushw	FILETYPE_SIG_TABLE_1@hi16
-	pushw	FILETYPE_SIG_TABLE_1@lo16
+	pushw	FILETYPE_SIG_TABLE_1@lo16	; "Technics KN5000 Table    DATA FILE 1/2"
 	push	xiz
 	call	String_Compare
 	add	xsp, 10
@@ -7412,9 +7426,9 @@ DetectDisk_CheckTable1of2:
 	ld	(xsp+4), 3
 	jrl	DetectDisk_FreeBufAndReturn
 DetectDisk_CheckTable2of2:
-	pushw	38
+	pushw	38	; string length
 	pushw	FILETYPE_SIG_TABLE_2@hi16
-	pushw	FILETYPE_SIG_TABLE_2@lo16
+	pushw	FILETYPE_SIG_TABLE_2@lo16	; "Technics KN5000 Table    DATA FILE 2/2"
 	push	xiz
 	call	String_Compare
 	add	xsp, 10
@@ -7423,9 +7437,9 @@ DetectDisk_CheckTable2of2:
 	ld	(xsp+4), 4
 	jr	DetectDisk_FreeBufAndReturn
 DetectDisk_CheckCmpCustom:
-	pushw	38
+	pushw	38	; string length
 	pushw	FILETYPE_SIG_CMPCUSTOM@hi16
-	pushw	FILETYPE_SIG_CMPCUSTOM@lo16
+	pushw	FILETYPE_SIG_CMPCUSTOM@lo16	; "Technics KN5000 CMPCUSTOMDATA FILE"
 	push	xiz
 	call	String_Compare
 	add	xsp, 10
@@ -7434,9 +7448,9 @@ DetectDisk_CheckCmpCustom:
 	ld	(xsp+4), 5
 	jr	DetectDisk_FreeBufAndReturn
 DetectDisk_CheckHDAEPRG:
-	pushw	38
+	pushw	38	; string length
 	pushw	FILETYPE_SIG_HDAE_PRG@hi16
-	pushw	FILETYPE_SIG_HDAE_PRG@lo16
+	pushw	FILETYPE_SIG_HDAE_PRG@lo16	; "Technics KN5000 HD-AEPRG DATA FILE"
 	push	xiz
 	call	String_Compare
 	add	xsp, 10
@@ -7445,9 +7459,9 @@ DetectDisk_CheckHDAEPRG:
 	ld	(xsp+4), 6
 	jr	DetectDisk_FreeBufAndReturn
 DetectDisk_CheckProgramPCK:
-	pushw	38
+	pushw	38	; string length
 	pushw	FILETYPE_SIG_PROGRAM_PCK@hi16
-	pushw	FILETYPE_SIG_PROGRAM_PCK@lo16
+	pushw	FILETYPE_SIG_PROGRAM_PCK@lo16	; "Technics KN5000 Program  DATA FILE PCK"
 	push	xiz
 	call	String_Compare
 	add	xsp, 10
@@ -7456,9 +7470,9 @@ DetectDisk_CheckProgramPCK:
 	ld	(xsp+4), 7
 	jr	DetectDisk_FreeBufAndReturn
 DetectDisk_CheckTablePCK:
-	pushw	38
+	pushw	38	; string length
 	pushw	FILETYPE_SIG_TABLE_PCK@hi16
-	pushw	FILETYPE_SIG_TABLE_PCK@lo16
+	pushw	FILETYPE_SIG_TABLE_PCK@lo16	; "Technics KN5000 Table    DATA FILE PCK"
 	push	xiz
 	call	String_Compare
 	add	xsp, 10
@@ -8065,6 +8079,11 @@ HDAE5000_ROM_Transfer_Success:
 
 HDAE5000_ROM_Transfer_Return:
 	retd 0x2
+; HDAE5000_ProgramCustomDataFlash: Programs the 1 MB custom-data flash at 0x300000 word by word (Flash_ProgramWord,
+;   chip 1) from the 512 KB window at 0x200000, banks 0 and 1 selected through port 0x160000. Basis: callers + body --
+;   HDAE5000_Init_BytecodeBlock erases that flash when it is not blank, calls this with bit 0 of the LED port 0x160004
+;   set, then compares 0x300000 against the same window and banks (HDAE5000_VerifyFlashAgainstWindow) and halts blinking bit 3 on
+;   a mismatch.
 HDAE5000_ProgramCustomDataFlash:
 	lda xsp, (xsp - 10)
 	push xiz
@@ -8455,9 +8474,9 @@ LZSS_Decompress_ReadHeader:
 	inc	1, iz
 	cp	iz, 6:i3
 	jr	c, LZSS_Decompress_ReadHeader
-	pushw	5
+	pushw	5	; lenght: 5 bytes
 	pushw	SLIDE_STRING_2@hi16
-	pushw	SLIDE_STRING_2@lo16
+	pushw	SLIDE_STRING_2@lo16	; "SLIDE"
 	push	xwa
 	call	String_Compare
 	add	xsp, 10
@@ -8796,6 +8815,8 @@ DrawBitmap_BitLoop:
 	ld	de, ix
 	extz	xde
 	lda	xbc, (OFFSCREEN_BUFFER_1:24)	; [v10] aparentemente isso é um buffer offscreen
+; Convert Y coordinate to framebuffer row offset: XWA = XDE * 320
+; Uses shift-add: (XDE << 2 + XDE) << 6 = XDE * 5 * 64 = XDE * 320
 Set_XWA_to_320_times_XDE:
 	ld xwa, xde
 	sll xwa, 2		; XWA = Y * 4

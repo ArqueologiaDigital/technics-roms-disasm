@@ -1948,6 +1948,10 @@ PmemOutRGridCheck:
 ; event handling, and message routing.
 ; -----------------------------------------------------------------------------
 
+; PmemOutRGridCheck_OnIndexswUp: PmemOutRGridCheck's INDEX UP case (events EVT_INDEXSW_UP and EVT_INDEXSW_UP_AIC; also
+;   the base of its 7-entry case table), the twin of PmemOutRGridCheck_OnIndexswDown: for grid rows 0-2 it fills a
+;   RAM-edit request (PmemOutRGridCheck_RamRequestInit) for the panel-memory part byte and sends it with MainRamPut /
+;   MainRamAdd. Nothing to do with a TT_MDCTLMSG title. Basis: callers + body.
 PmemOutRGridCheck_OnIndexswUp:
 	call	GetFocusObject
 	ld	xwa, xhl
@@ -11158,6 +11162,8 @@ AcWelcomScreen_RenderBytecode:
 	ld	xbc, EVT_SET_KEEP
 	ld	xde, 0:i3
 	jrl	AcWelcomScreen_DispatchEvent
+; AcWelcomScreen_Select_OpMoveBlit: Welcome-script op 2: blits at the position saved in slot arg (0/1, table 0x03ea0c)
+;   with ClipBlit_Direct, blits at the step's x,y with ClipBlit_Replace, and saves the step in the slot.
 AcWelcomScreen_Select_OpMoveBlit:
 	ld	iz, (xbc+10)
 	cp	iz, 2:i3
@@ -11268,6 +11274,7 @@ AcWelcomScreen_Select_OpDrawGlyphR:
 	ld	xbc, Bitmap_DigitR
 	ldw	de, 16
 	jr	AcWelcomScreen_RenderBytecode_Join
+; AcWelcomScreen_Select_OpDrawGlyphsIn: Welcome-script op 8: draws the letters I and N side by side in colour 255.
 AcWelcomScreen_Select_OpDrawGlyphsIn:
 	lda	xiy, (xbc+4)
 	lda	xix, (xsp+12)
@@ -11290,6 +11297,8 @@ AcWelcomScreen_Select_OpDrawGlyphsIn:
 AcWelcomScreen_RenderBytecode_Join:
 	call	DrawBitmapSP2
 	jrl	AcWelcomScreen_Select_NextStep
+; AcWelcomScreen_Select_OpDrawColorWord: Welcome-script ops 9 and 12: erase the word's previous box (slot 0x03ea24)
+;   and draw COLOR (op 9) or COLOUR (op 12) at the step's x,y in colour arg.
 AcWelcomScreen_Select_OpDrawColorWord:	; cases 9, 12
 	lda	xhl, (0x03ea24:24)
 	cpw	(xhl+10), 65535
@@ -15336,6 +15345,11 @@ PsMixer_CtlTypeProc8_Return:
 	ret
 PsMixer_CtlTypeProc8_Return2:
 	ret
+; DirmdTitle_SwitchInNullRet: Empty routine (`ret`) that the DirmdTitle emulator's switch-in method calls with WA =
+;   switch number and BC = its bit-7 flag right after posting the trace memo "DirmdTitleESw(%d, %d);" with the same
+;   two values -- the memo names this call, whose body is empty in this build. Basis: callers + body -- its only
+;   caller is DirmdTitle_EmulatorMethods[2] (0xF9AE4F), the method DirmdEmulator calls on EVT_SW_IN; the New/Old/Cur
+;   methods tail-jump to the three neighbouring `ret`s.
 DirmdTitle_SwitchInNullRet:
 	ret
 PsMixer_CtlTypeProc8_Return3:

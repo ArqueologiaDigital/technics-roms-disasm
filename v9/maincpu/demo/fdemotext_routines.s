@@ -75,12 +75,20 @@ FDemoText_ByteData_VoiceProbeC:
 	ld	wa, (xix+wa)
 	lda	xix, (FDemoText_ByteData_VoiceProbeC_RequestPartialResendAll:24)
 	jp	t, (xix+wa)
+; FDemoText_ByteData_VoiceProbeC_RequestPartialResendAll: Cases 1 and 2 of FDemoText_ByteData_VoiceProbeC (SWBTWR
+;   codes 0x44-0x46, changed payload byte +1/+2): sets bit 6 of RAM 0x247EC, which makes
+;   FDemoText_ProcessOutputChannels request a partial resend of every active part. Also the switch's offset base.
+;   Basis: callers + body.
 FDemoText_ByteData_VoiceProbeC_RequestPartialResendAll:
 	set	6, (0x247ec:24)
 	ret
+; FDemoText_ByteData_VoiceProbeC_FootagesChanged: Payload +3..+6 (drawbar footages): sets the part's full-send bit in
+;   0x247EC.
 FDemoText_ByteData_VoiceProbeC_FootagesChanged:	; cases 3, 4, 5, 6
 	ld	xwa, FDemoText_FullSendBitByPart
 	jr	FDemoText_ByteData_VoiceProbeC_Join
+; FDemoText_ByteData_VoiceProbeC_Footage1OrSwitchesChanged: Payload +7: the 1' drawbar nibble sets the part's full-
+;   send bit, switch bits 0x10/0x20 its partial-resend bit (0x247EC).
 FDemoText_ByteData_VoiceProbeC_Footage1OrSwitchesChanged:
 	ld	a, (SWBTWR_PAYLOAD_3:16)
 	and	a, 15
@@ -1248,6 +1256,11 @@ FDemoText_ByteData_DisplayRefresh_Join:
 FDemoText_ByteData_DisplayRefresh_Epilogue:
 	pop	xiz
 	ret
+; FDemoText_GetInstanceID: Finds the view object whose name equals the string XWA: walks classes 255..0 and their
+;   instances (CountObject, CheckViewObject), compares each object's name (FDemoText_ByteData_DisplayRefresh) and
+;   returns its id class<<16 | instance in XHL; if none matches it posts "Error! (GetInstanceID)" to the debug memo
+;   and returns 0xFFFFFFFF. Basis: callers + body -- the feature-demo <SHOW> tag handler passes the OBJ attribute and
+;   sends EVT_SHOW to the id it returns; the firmware's own error string names the routine GetInstanceID.
 FDemoText_GetInstanceID:
 	lda xsp, (xsp-136)
 	push	xiz
@@ -1315,6 +1328,12 @@ FDemoText_GetInstanceID_Epilogue2:
 	pop	xiz
 	lda xsp, (xsp+136)
 	ret
+; FDemoText_ReadTaggedBlock: Reads the open file (FileIO_ReadByte) up to the opening tag XDE (e.g. "<PRESENTATION>"),
+;   then copies the text up to the closing tag on the stack (e.g. "</PRESENTATION>") into buffer XWA of XBC bytes,
+;   dropping CR/LF/TAB, NUL-terminated; HL = 0, or 0xFFFD no opening tag, 0xFFFC no closing tag, 0xFFFB buffer full;
+;   `retd 4` pops the tag pointer. Basis: callers + body -- Seq_LoadResource_Proceed passes
+;   <PRESENTATION>/</PRESENTATION> with a 256-byte buffer and Seq_FillBufferLoop <ACTION>/</ACTION>, each on a file it
+;   opened.
 FDemoText_ReadTaggedBlock:
 	lda	xsp, (xsp-22)
 	pushw	iz
@@ -2384,6 +2403,12 @@ FDemoText_TextDispatch_Skip12:
 	pop	xiz
 	lda xsp, (xsp+206)
 	ret
+; FDemoText_ResetLayoutState: Resets the feature-demo page layout: marks all 40 x 60 cells of the occupancy map at RAM
+;   0x251DA free (0x54), zeroes the cursor (0x25B3A x/y) and the depths of the <FONT> font stack (0x25B3E), colour
+;   stack (0x25B60) and <CENTER> stack (0x25B72), and refills their 8 entries with the defaults 5, 0x00FF and 1.
+;   Basis: callers + body -- the <ACT> tag handler calls it on an opening tag before showing PlainScreen and
+;   PresentationControl and drawing the wall; the FONT, /FONT, CENTER, /CENTER handlers push and pop those stacks and
+;   FDemoText_CalcTextExtent scans the 0x54 cells.
 FDemoText_ResetLayoutState:
 	lda	xbc, (0x0251da:24)
 	ld	xwa, xbc

@@ -237,6 +237,7 @@ Sprintf_Percent_PadRightLoop:
 	cpw	(xsp + 8), 0x0
 	jr	gt, Sprintf_Percent_PadRight
 	jrl	Sprintf_MainLoop_ReadNext
+; Sprintf_CheckLengthLL_ConvString: %s: string argument, Strlen, padded to the width
 Sprintf_CheckLengthLL_ConvString:
 	ld	xbc, (xsp + 86)
 	ld	xwa, 4:i3
@@ -312,6 +313,7 @@ Sprintf_String_PadRightLoop:
 	cp	wa, 0:i3
 	jr	nz, Sprintf_String_PadRightSpace
 	jrl	Sprintf_MainLoop_ReadNext
+; Sprintf_CheckLengthLL_ConvSignedDecimal: %d and %i: signed decimal (long when the l flag, bit 6, is set)
 Sprintf_CheckLengthLL_ConvSignedDecimal:	; cases 100, 105
 	ld	wa, (xsp + 6)
 	bit	6, wa
@@ -489,6 +491,7 @@ Sprintf_Decimal_PadRightLoop:
 	cp	wa, 0:i3
 	jr	nz, Sprintf_Decimal_PadRightSpace
 	jrl	Sprintf_MainLoop_ReadNext
+; Sprintf_CheckLengthLL_ConvUnsignedDecimal: %u: unsigned decimal
 Sprintf_CheckLengthLL_ConvUnsignedDecimal:
 	ld	wa, (xsp + 6)
 	bit	6, wa
@@ -602,6 +605,7 @@ Sprintf_Unsigned_PadRightLoop:
 	cp	wa, 0:i3
 	jr	nz, Sprintf_Unsigned_PadRightSpace
 	jrl	Sprintf_MainLoop_ReadNext
+; Sprintf_CheckLengthLL_ConvPointer: %p: sets the long flag and continues as %x
 Sprintf_CheckLengthLL_ConvPointer:
 	setm	6, (xsp + 6)
 Sprintf_Hex_GetArg:
@@ -760,6 +764,7 @@ Sprintf_Hex_PadRightLoop:
 	cp	wa, 0:i3
 	jr	nz, Sprintf_Hex_PadRightSpace
 	jrl	Sprintf_MainLoop_ReadNext
+; Sprintf_CheckLengthLL_ConvOctal: %o: octal
 Sprintf_CheckLengthLL_ConvOctal:
 	ld	wa, (xsp + 6)
 	bit	6, wa
@@ -908,6 +913,7 @@ Sprintf_Octal_PadRightLoop:
 	cp	wa, 0:i3
 	jr	nz, Sprintf_Octal_PadRightSpace
 	jr	Sprintf_MainLoop_ReadNext
+; Sprintf_CheckLengthLL_ConvStoreCount: %n: stores the count of characters written so far through the pointer argument
 Sprintf_CheckLengthLL_ConvStoreCount:
 	ld	xbc, (xsp + 86)
 	ld	xwa, 4:i3
@@ -925,6 +931,9 @@ Sprintf_StoreCount_Short:
 	ld	wa, (xsp + 4)
 	ld	(xbc), wa
 	jr	Sprintf_MainLoop_ReadNext
+; Sprintf_ConvFloat: sprintf's floating-point conversion (%e %f %g %E %G): copies the argument (10 bytes with the L
+;   flag, flags bit 7, else 8), formats it with Sprintf_FormatFloat and adds the length to the output count. Basis:
+;   callers + body.
 Sprintf_ConvFloat:
 	lda	xbc, (xsp + 68)
 	ld	wa, (xsp + 6)

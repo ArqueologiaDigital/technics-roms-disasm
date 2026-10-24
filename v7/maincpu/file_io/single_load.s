@@ -886,6 +886,13 @@ SingleLoadSrc_ComposerListProc_Join9:
 	pop	xiz
 	inc	4, xsp
 	ret
+; SingleLoad_SyncSoundMemCursorGroup: Keeps the SOUND MEMORY source cursor (XDE = 0x8964) and destination cursor
+;   (stack arg = 0x896C) in the same group, below or from 2 x C (C = 20: the 40 sounds vs. the entries from 40 up):
+;   when they differ, an XWA = 5/6 move (source list) copies the source index to the destination and redraws
+;   SingleLoadDstFunc (EVT_PARA_DRAW), a 7/8 move (destination list) copies the destination index to the source and
+;   repaints SingleLoadSrcFunc (EVT_PAINT); retd 4. Basis: callers + body -- SingleLoadSrc_SoundMemListProc
+;   (parameters 5/6) and SingleLoadDst_SoundMemListProc (parameters 7/8) call it after every move with XDE = 0x8964,
+;   pushed 0x896C and XWA = the parameter.
 SingleLoad_SyncSoundMemCursorGroup:
 	ld	xix, (xsp+4)
 	ld	l, c

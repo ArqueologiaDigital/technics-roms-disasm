@@ -1097,6 +1097,9 @@ InitializeNaka:
 	ret
 NAKA_InitDataBlock:
 	ret
+; FtLangText01: Naka ApFunction 0x12B0000, named by entry 0 of the ApFunction name slot 0x42B: feature-demo caption
+;   text; on EVT_GET_LANGUAGE_PTR returns XHL = NAKA_InitDataBlock_PtrTable (6 language pointers, English "Bass Port
+;   Speaker"), else XHL = 0
 FtLangText01:
 	cp	xbc, EVT_GET_LANGUAGE_PTR
 	jr	nz, FtLangText01_Skip
@@ -1105,6 +1108,9 @@ FtLangText01:
 FtLangText01_Skip:
 	ld	xhl, 0:i3
 	ret
+; FtLangText01S: Naka ApFunction 0x12B0001, named by entry 1 of the ApFunction name slot 0x42B: feature-demo caption
+;   text; on EVT_GET_LANGUAGE_PTR returns XHL = FDemo_BassPortSpanishHeading_Texts (6 language pointers, only Spanish
+;   filled: "Altavoz con port<0xF3>n para bajos"), else XHL = 0
 FtLangText01S:
 	cp	xbc, EVT_GET_LANGUAGE_PTR
 	jr	nz, FtLangText01S_Skip2
@@ -1113,6 +1119,9 @@ FtLangText01S:
 FtLangText01S_Skip2:
 	ld	xhl, 0:i3
 	ret
+; FtLangText02: Naka ApFunction 0x12B0002, named by entry 2 of the ApFunction name slot 0x42B: feature-demo caption
+;   text; on EVT_GET_LANGUAGE_PTR returns XHL = NAKA_InitDataBlock_PtrTable_3 (6 language pointers, English "The
+;   KN5000's Special Woofer & Bass Port produce a Rich & Powerful sound!"), else XHL = 0
 FtLangText02:
 	cp	xbc, EVT_GET_LANGUAGE_PTR
 	jr	nz, FtLangText02_Skip3
@@ -1121,6 +1130,9 @@ FtLangText02:
 FtLangText02_Skip3:
 	ld	xhl, 0:i3
 	ret
+; FtLangText03: Naka ApFunction 0x12B0003, named by entry 3 of the ApFunction name slot 0x42B: feature-demo caption
+;   text; on EVT_GET_LANGUAGE_PTR returns XHL = NAKA_InitDataBlock_PtrTable_4 (6 language pointers, English "Huge
+;   Styles"), else XHL = 0
 FtLangText03:
 	cp	xbc, EVT_GET_LANGUAGE_PTR
 	jr	nz, FtLangText03_Skip4
@@ -1129,6 +1141,9 @@ FtLangText03:
 FtLangText03_Skip4:
 	ld	xhl, 0:i3
 	ret
+; FtLangText04: Naka ApFunction 0x12B0004, named by entry 4 of the ApFunction name slot 0x42B: feature-demo caption
+;   text; on EVT_GET_LANGUAGE_PTR returns XHL = NAKA_InitDataBlock_PtrTable_5 (6 language pointers, English "Explore
+;   1000 Musical Styles with the Music Stylist."), else XHL = 0
 FtLangText04:
 	cp	xbc, EVT_GET_LANGUAGE_PTR
 	jr	nz, FtLangText04_Skip5
@@ -1137,6 +1152,9 @@ FtLangText04:
 FtLangText04_Skip5:
 	ld	xhl, 0:i3
 	ret
+; FtLangText05: Naka ApFunction 0x12B0005, named by entry 5 of the ApFunction name slot 0x42B: feature-demo caption
+;   text; on EVT_GET_LANGUAGE_PTR returns XHL = NAKA_InitDataBlock_PtrTable_6 (6 language pointers, English "Add to
+;   your enjoyment with a wide range of Technics Software"), else XHL = 0
 FtLangText05:
 	cp	xbc, EVT_GET_LANGUAGE_PTR
 	jr	nz, FtLangText05_Skip6
@@ -1145,6 +1163,9 @@ FtLangText05:
 FtLangText05_Skip6:
 	ld	xhl, 0:i3
 	ret
+; FtLangText06: Naka ApFunction 0x12B0006, named by entry 6 of the ApFunction name slot 0x42B: feature-demo caption
+;   text; on EVT_GET_LANGUAGE_PTR returns XHL = NAKA_InitDataBlock_PtrTable_7 (6 language pointers, English "And
+;   convert software from almost any other manufacturer!"), else XHL = 0
 FtLangText06:
 	cp	xbc, EVT_GET_LANGUAGE_PTR
 	jr	nz, FtLangText06_Skip7
@@ -1153,6 +1174,9 @@ FtLangText06:
 FtLangText06_Skip7:
 	ld	xhl, 0:i3
 	ret
+; FtLangText07: Naka ApFunction 0x12B0007, named by entry 7 of the ApFunction name slot 0x42B: feature-demo caption
+;   text; on EVT_GET_LANGUAGE_PTR returns XHL = NAKA_InitDataBlock_PtrTable_8 (6 language pointers, English "Store
+;   your favorite software patterns in the Custom Rhythm Group .....permanently!"), else XHL = 0
 FtLangText07:
 	cp	xbc, EVT_GET_LANGUAGE_PTR
 	jr	nz, FtLangText07_Skip8
@@ -1161,6 +1185,9 @@ FtLangText07:
 FtLangText07_Skip8:
 	ld	xhl, 0:i3
 	ret
+; FtLangText08: Naka ApFunction 0x12B0008, named by entry 8 of the ApFunction name slot 0x42B: feature-demo caption
+;   text; on EVT_GET_LANGUAGE_PTR returns XHL = NAKA_InitDataBlock_PtrTable_9 (6 language pointers, English "Accordion
+;   Register"), else XHL = 0
 FtLangText08:
 	cp	xbc, EVT_GET_LANGUAGE_PTR
 	jr	nz, FtLangText08_Skip9
@@ -1169,6 +1196,9 @@ FtLangText08:
 FtLangText08_Skip9:
 	ld	xhl, 0:i3
 	ret
+; FtLangText09: Naka ApFunction 0x12B0009, named by entry 9 of the ApFunction name slot 0x42B: feature-demo caption
+;   text; on EVT_GET_LANGUAGE_PTR returns XHL = NAKA_InitDataBlock_PtrTable_10 (6 language pointers, English "A World
+;   of Accordion Sounds at your fingertips with the Accordion Register!"), else XHL = 0
 FtLangText09:
 	cp	xbc, EVT_GET_LANGUAGE_PTR
 	jr	nz, FtLangText09_Skip10
@@ -1177,6 +1207,9 @@ FtLangText09:
 FtLangText09_Skip10:
 	ld	xhl, 0:i3
 	ret
+; FtLangText10: Naka ApFunction 0x12B000A, named by entry 10 of the ApFunction name slot 0x42B: feature-demo caption
+;   text; on EVT_GET_LANGUAGE_PTR returns XHL = NAKA_InitDataBlock_PtrTable_11 (6 language pointers, English "Digital
+;   Drawbar"), else XHL = 0
 FtLangText10:
 	cp	xbc, EVT_GET_LANGUAGE_PTR
 	jr	nz, FtLangText10_Skip11
@@ -1185,6 +1218,9 @@ FtLangText10:
 FtLangText10_Skip11:
 	ld	xhl, 0:i3
 	ret
+; FtLangText11: Naka ApFunction 0x12B000B, named by entry 11 of the ApFunction name slot 0x42B: feature-demo caption
+;   text; on EVT_GET_LANGUAGE_PTR returns XHL = FtLangText11_Texts (6 language pointers, English "Classic Organ Sounds
+;   with Jazz and Rock Drawbars!"), else XHL = 0
 FtLangText11:
 	cp	xbc, EVT_GET_LANGUAGE_PTR
 	jr	nz, FtLangText11_Skip12
@@ -1193,6 +1229,9 @@ FtLangText11:
 FtLangText11_Skip12:
 	ld	xhl, 0:i3
 	ret
+; FtLangText12: Naka ApFunction 0x12B000C, named by entry 12 of the ApFunction name slot 0x42B: feature-demo caption
+;   text; on EVT_GET_LANGUAGE_PTR returns XHL = NAKA_InitDataBlock_PtrTable_13 (6 language pointers, English "Acoustic
+;   Illusion"), else XHL = 0
 FtLangText12:
 	cp	xbc, EVT_GET_LANGUAGE_PTR
 	jr	nz, FtLangText12_Skip13
@@ -1201,6 +1240,9 @@ FtLangText12:
 FtLangText12_Skip13:
 	ld	xhl, 0:i3
 	ret
+; FtLangText13: Naka ApFunction 0x12B000D, named by entry 13 of the ApFunction name slot 0x42B: feature-demo caption
+;   text; on EVT_GET_LANGUAGE_PTR returns XHL = NAKA_InitDataBlock_PtrTable_14 (6 language pointers, English "Acoustic
+;   Illusion broadens your music to 3-Dimensions!"), else XHL = 0
 FtLangText13:
 	cp	xbc, EVT_GET_LANGUAGE_PTR
 	jr	nz, FtLangText13_Skip14
@@ -1209,6 +1251,9 @@ FtLangText13:
 FtLangText13_Skip14:
 	ld	xhl, 0:i3
 	ret
+; FtLangText14: Naka ApFunction 0x12B000E, named by entry 14 of the ApFunction name slot 0x42B: feature-demo caption
+;   text; on EVT_GET_LANGUAGE_PTR returns XHL = NAKA_InitDataBlock_PtrTable_15 (6 language pointers, English "A host
+;   of features to suit any style of performance!"), else XHL = 0
 FtLangText14:
 	cp	xbc, EVT_GET_LANGUAGE_PTR
 	jr	nz, FtLangText14_Skip15
@@ -1217,6 +1262,9 @@ FtLangText14:
 FtLangText14_Skip15:
 	ld	xhl, 0:i3
 	ret
+; FtLangText15: Naka ApFunction 0x12B000F, named by entry 15 of the ApFunction name slot 0x42B: feature-demo caption
+;   text; on EVT_GET_LANGUAGE_PTR returns XHL = NAKA_InitDataBlock_PtrTable_16 (6 language pointers, English "Huge
+;   Styles"), else XHL = 0
 FtLangText15:
 	cp	xbc, EVT_GET_LANGUAGE_PTR
 	jr	nz, FtLangText15_Skip16
@@ -1225,6 +1273,9 @@ FtLangText15:
 FtLangText15_Skip16:
 	ld	xhl, 0:i3
 	ret
+; FtLangText16: Naka ApFunction 0x12B0010, named by entry 16 of the ApFunction name slot 0x42B: feature-demo caption
+;   text; on EVT_GET_LANGUAGE_PTR returns XHL = FtLangText16_LangStrings (6 language pointers, English "Huge Styles"),
+;   else XHL = 0
 FtLangText16:
 	cp	xbc, EVT_GET_LANGUAGE_PTR
 	jr	nz, FtLangText16_Skip17
@@ -1233,6 +1284,9 @@ FtLangText16:
 FtLangText16_Skip17:
 	ld	xhl, 0:i3
 	ret
+; FtLangText17: Naka ApFunction 0x12B0011, named by entry 17 of the ApFunction name slot 0x42B: feature-demo caption
+;   text; on EVT_GET_LANGUAGE_PTR returns XHL = FtLangText17_Texts (6 language pointers, English "Huge Styles"), else
+;   XHL = 0
 FtLangText17:
 	cp	xbc, EVT_GET_LANGUAGE_PTR
 	jr	nz, FtLangText17_Skip18
@@ -1689,6 +1743,7 @@ Flash_InitBytecodeBlock_Skip9:
 	inc	2, xsp
 	ret
 	jrl	InitializeNaka_Join
+; PartGrid column dispatch (7-entry, table 0xe1611a)
 PartGrid_ColumnDispatch:
 	ld xhl, (RHYTHM_PATTERN_BUF_PTR:16)
 	ld xbc, (3186:16)
@@ -1713,6 +1768,8 @@ PartGrid_ColumnDispatch:
 PartGrid_ColumnJumpTable:
 	ld	xhl, (FLASH_SECTION_PTR_0:16)
 	jr	PartGrid_ColumnDispatch_Return
+; PartGrid_ColumnDispatch_FlashSection1: A = 10..29 selects section (A - 10) / 3 (three per section); A < 10 returns
+;   RHYTHM_PATTERN_BUF_PTR, A >= 30 the buffer pointer at RAM 3186; what A numbers is not established.
 PartGrid_ColumnDispatch_FlashSection1:
 	ld	xhl, (FLASH_SECTION_PTR_1:16)
 	jr	PartGrid_ColumnDispatch_Return
@@ -2059,6 +2116,8 @@ NoteEventBuffer_CopyToSlot:
 NOTE_EVENT_DISPATCH_1:
 	ld xbc, (FLASH_SECTION_PTR_0:16); Case 0: Load dest pointer
 	jr NOTE_EVENT_COPY_COMMON
+; NoteEventBuffer_CopyToSlot_LoadSection1: Value 2: copy Custom Data Flash section 1 (FLASH_SECTION_PTR_1, 0x319800)
+;   into the RAM work buffer at (3186); value N loads section N-1.
 NoteEventBuffer_CopyToSlot_LoadSection1:
 	ld xbc, (FLASH_SECTION_PTR_1:16); Case 1: Load dest pointer
 	jr NOTE_EVENT_COPY_COMMON
@@ -2287,6 +2346,11 @@ Flash_ExtendedOpsBlock_Skip2:
 	ld	a, (xbc)
 	ld	(xhl), a
 	ret
+; Flash_AssignSlotsToBlocks: For owner A, builds the slot assignment list at RAM 0x7A0 from the block list at RAM
+;   0x6D4: the large block (entry 0) gets the first of the 4 large slots whose owner byte is 0 or A, each following
+;   block the next such small slot (of 40); records are {block, 0x500 | slot} with bit 7 set for small slots. Basis:
+;   callers + body -- Flash_InitBytecodeBlock runs it first on its write path (no shortfall), with A = its owner
+;   argument (CstmCp's 0x391B); Flash_WriteSlotOwnerMap and Flash_CopyBlocksToSlots consume the list.
 Flash_AssignSlotsToBlocks:
 	dec 2,XSP
 	pushw iz
@@ -2638,6 +2702,10 @@ Flash_StoreBaseAndInitAccPatch_Sub_Epilogue:
 	pop	xiz
 	inc	2, xsp
 	ret
+; Flash_WriteSlotOwnerMap: Copies the 64 KB section-7 sector into its RAM image at (0x0C96), writes owner A into the
+;   owner byte of every slot in the assignment list at RAM 0x7A0, clears A from the remaining slots after them, then
+;   erases and rewrites the sector (Flash_EraseSectorAndWrite). Basis: callers + body -- Flash_InitBytecodeBlock calls
+;   it on its write path after Flash_AssignSlotsToBlocks built the list, with the same owner A.
 Flash_WriteSlotOwnerMap:
 	ld	xix, (3222:16)
 	ld	xiy, (FLASH_SECTION_PTR_7:16)
@@ -2738,6 +2806,10 @@ Flash_StoreBaseAndInitAccPatch_Skip11:
 	ld	xde, (FLASH_SECTION_PTR_7:16)
 	ld	wa, 1:i3
 	jp	Flash_EraseSectorAndWrite
+; Flash_CopyBlocksToSlots: Copies every block in the assignment list at RAM 0x7A0 from the RAM work area at 0x1E0000
+;   into its slot in the RAM image of the section-7 sector (large block 10,535 bytes, small blocks 470), then erases
+;   and rewrites the sector. Basis: callers + body -- Flash_InitBytecodeBlock calls it right after
+;   Flash_WriteSlotOwnerMap on its write path; Flash_GetSlotAddressAndSize supplies the source and destination addresses.
 Flash_CopyBlocksToSlots:
 	lda	xsp, (xsp-12)
 	push	xiz
@@ -3519,6 +3591,10 @@ Flash_ExtendedOpsBlock_Code_Join:
 	ld xde, (FLASH_SECTION_PTR_7:16)
 	ld wa, 1:i3
 	jp Flash_EraseSectorAndWrite
+; Flash_CountFreeOrOwnedSlots: Counts the owner bytes in the section-7 sector (FLASH_SECTION_PTR_7) that are 0 or
+;   equal C: A = 0 scans the 40 small-slot bytes at +0x10, otherwise the 4 large-slot bytes at +0x50; L = the count.
+;   Basis: callers + body -- Flash_SlotUpdateOpsBlock compares it with the blocks listed at RAM 0x6D4 to report the
+;   large- and small-slot shortfall that Flash_InitBytecodeBlock tests before writing.
 Flash_CountFreeOrOwnedSlots:
 	ld L, 0x00:opc
 	ld xde, (FLASH_SECTION_PTR_7:16)
@@ -4275,6 +4351,11 @@ Flash_WriteBackSlotTable_Skip4:
 	ldirw
 	inc	2, xsp
 	ret
+; FileIO_LoadRcmToFlash: Loads an .RCM file into the custom-data flash: checks the 1 KB header starts 'H',0,'K', then
+;   for flash sections 0..6 resets the buffer at (0x0C72) (NoteEvent_LoadSoundGenParams), reads the length held in
+;   header dword +68+4*i and stores it (NoteEventBuffer_Store i+1); finally reads 0xF400 bytes over the section-7
+;   image, rewrites that sector and calls TmFlash_CopyToExtMem. HL = read result, 0xFF9A on a bad header. Basis:
+;   callers + body -- FileIO_LoadRegion6_Simple (.RCM, extension index 6) calls it once the region signature matched.
 FileIO_LoadRcmToFlash:
 	lda xsp, (xsp - 0x0400)
 	pushw iz
@@ -4391,6 +4472,12 @@ FileIO_LoadRcmToFlash_Epilogue:
 	popw iz
 	lda xsp, (xsp + 0x0400)
 	ret
+; FileIO_SaveRcmFromFlash: Writes the custom-data flash as an .RCM file to the open handle: builds the 1 KB header
+;   from the 'H',0,'K',0 template (MSP_Default_Accompaniment), fills dwords +68..+92 with the sizes of flash sections
+;   0-6 ((+46/+47) * 16) and +28 with the total, fails with HL = 0xFF9B when FileIO_GetDiskFreeSpace is smaller, then
+;   writes the header, sections 1-7 (NoteEventBuffer_CopyToSlot) and 0xF400 bytes of the section-7 image. HL = write
+;   result. Basis: callers + body -- FileIO_SaveRegion6_Simple (region/extension 6) calls it once the file is open for
+;   'wb'; it is the save twin of FileIO_LoadRcmToFlash, which reads the same header and section layout.
 FileIO_SaveRcmFromFlash:
 	lda	xsp, (xsp-1036)
 	push	xiz
@@ -4625,6 +4712,7 @@ FileIO_SaveRcmFromFlash_Join:
 	pop	xiz
 	lda	xsp, (xsp+1036)
 	ret
+; Floppy disk load and store note events via dispatch
 FloppyDisk_LoadNoteEvents:
 	lda xsp, (xsp - 0x0408)
 	pushw iz
@@ -5045,6 +5133,14 @@ ToneParam_ExtendedOpsBlock_Skip2:
 	ld	hl, iz
 	popw	iz
 	ret
+; AccPatch_ConvertLegacyStyleImage: Checks the 3-byte header of the style image just read to (RHYTHM_PATTERN_BUF_PTR)
+;   and brings older formats up to date: 'G',0,'K' or 'L','K','E' is relabelled 'H',0,'K' (the current header, cf.
+;   AccPatch_EnsureStyleImageHeader) and kept; 'F',0,'K', 'F',' ','K', 'L','K','A' or 'L','K','B' is converted into
+;   the current layout (AccPatch_ConvertLegacySectionLayout); anything else rebuilds the default image
+;   (AccDemo_InitDone) and returns 0xFF9A; finally fixes up the 30 records (AccPatch_ResetSectionPartByte2Defaults).
+;   Basis: callers + body -- ToneParam_ExtendedOpsBlock is the composer-data load path FileIO_LoadRegion3_ExtMem takes
+;   when the file's region signature does not match (FileIO_CheckRegionSignature = 0): it reads the block between
+;   cmp_ld_mae and cmp_ld_ato and calls this.
 AccPatch_ConvertLegacyStyleImage:
 	pushw	iz
 	ld	iz, 0:i3
@@ -5312,6 +5408,13 @@ ToneParam_ExtendedOpsBlock_Epilogue:
 	ld HL,IZ
 	popw iz
 	ret
+; AccPatch_ResetSectionPartByte2Defaults: Writes byte 2 of the four 8-byte accompaniment-part entries
+;   (+32/+40/+48/+56) of all 30 section records of the style image at (RHYTHM_PATTERN_BUF_PTR) to 64, 12, 116, 64 --
+;   the values the 'clear' section template AccPatch_DefaultSlotData holds there; what byte 2 means is not
+;   established. Basis: callers + body -- AccPatch_ConvertLegacyStyleImage runs it last on every path (relabelled,
+;   converted or rebuilt default image) when an older-format style image is loaded; the composer single-load path
+;   (SingleLoad_CopyComposerPatternFromFile) writes the same four values into sections taken from a file whose header is
+;   not 'H',0,'K'.
 AccPatch_ResetSectionPartByte2Defaults:
 	ld L, 0x00:opc
 	ld de, 0:i3
@@ -5555,6 +5658,11 @@ DualVoice_LoopCheckNext:
 DualVoice_WriteBackSlots:
 	calr Flash_WriteBackSlotTable
 	jr DualVoice_LoadDoneRetVal
+; FileIO_LoadMspAltFormat: Loads an .MSP file whose header fails the native signature check: between msp_ld_mae and
+;   msp_ld_ato reads it into 0x1E8800..0x1EC400, then FileHdr_ValidateSignature converts 'G',0,'K' / 'LKE' / 'MKB'
+;   files to the native layout (moves +0x100.. up 512 bytes, zero-fills the gap, writes the native header); HL = read
+;   result. Basis: callers + body -- FileIO_LoadRegion5_VRAM (.MSP, extension index 5) runs it when
+;   FileIO_CheckRegionSignature(5) fails, in place of its plain read between the same hooks.
 FileIO_LoadMspAltFormat:
 	pushw iz
 	call msp_ld_mae
@@ -6943,6 +7051,9 @@ CmpSetP1_GridCheck_Case2:
 	call	Strcpy
 	inc	8, xsp
 	jr	CmpSetP1_ReturnZeroJmp
+; CmpSetP1 grid check case 3
+; AcCmpSetGridBoxProc_ForwardToApFunc: EVT_REQUEST_GRID_DRAW, EVT_LSW_DATA and EVT_RAM_DATA are passed on to the
+;   grid's ApFunction (instance +70).
 AcCmpSetGridBoxProc_ForwardToApFunc:
 	ld xwa, xiz
 	call GetViewInstance
@@ -7118,8 +7229,8 @@ UI_COMPONENT_DISPATCH_CASE5_SKIP:
 	push	xwa	; Push parameter
 UI_COMPONENT_DISPATCH_PUSH_CALL:
 	push	xde
-	call	Sprintf_Locked
-	inc	8, xsp
+	call	Sprintf_Locked	; Call handler function
+	inc	8, xsp	; Increment stack pointer
 WidgetHandler_PostEventAndReturnZero:
 	cpw (xsp + 22), 0x4
 	jr z, Widget_PostEvtReturnZero
@@ -7853,6 +7964,7 @@ PsS2cTrans_HandleScroll:
 	ldw	(xbc), 0
 	ldw	(xwa), 255
 	jr	PsS2cTrans_HandleScroll_Join
+; SndArgGridBnk case 0
 PsS2cTrans_HandleScroll_Skip:
 	ldw (xbc), 0xff
 	ldw (xwa), 0xf5
@@ -7903,6 +8015,7 @@ S2cGridBoxProc:
 	ld wa, (xwa)
 	lda xix, (FdcFormat_DialGrid:24)
 	jp	t, (xix+wa)
+; FdcFormat dial grid dispatch (7-entry, table 0xe1d728)
 FdcFormat_DialGrid:
 	ld	xwa, (xsp+16)
 	ld	xbc, xiz
@@ -8056,6 +8169,8 @@ S2cGrid_SetDialEnable:
 	jr FdcFormat_ReturnZeroJmp
 
 ; FdcFormat grid check dispatch
+; S2cGridBoxProc_OnGetFixedColStr: S2cGridBoxProc's EVT_GET_FIXED_COL_STR case: Strcpy's the fixed-column string
+;   (instance +0x3E). Basis: S2cGridBoxProc compare chain + body; it is not an FDC format routine.
 S2cGridBoxProc_OnGetFixedColStr:
 	ld xwa, (xsp + 16)
 	ld xiz, 0x3e
@@ -8076,6 +8191,9 @@ S2cGrid_GetViewAndCopy:
 	call	Strcpy
 	inc	8, xsp
 	jr	FdcFormat_ReturnZeroJmp
+; FdcFormat grid check case 2
+; S2cGridBoxProc_ForwardToApFunc: EVT_REQUEST_GRID_DRAW, EVT_LSW_DATA and EVT_RAM_DATA are passed on to the grid's
+;   ApFunction (instance +70).
 S2cGridBoxProc_ForwardToApFunc:
 	ld xwa, (xsp + 16)
 	call GetViewInstance

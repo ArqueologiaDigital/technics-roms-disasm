@@ -368,6 +368,9 @@ SeMenu_RegisterParamDisplay_ClearLoop:
 	lda xsp, (xsp + 14)
 	ret
 
+; SeMenu_SendPartToneIndex: Sends tone index BC of part A to the tone generator: 6-byte sound-editor command {0x88,
+;   part, 9 (21 when SeMenu_LoadObjEntries returns non-zero), BC >> 8, BC & 0xFF, A - 1}; the single-tone twin of
+;   SeMenu_SendToneIndex (ids 10/22). Basis: callers + body.
 SeMenu_SendPartToneIndex:
 	lda	xsp, (xsp-20)
 	pushw	iz
@@ -660,6 +663,8 @@ SeMenu_InitDisplayColumn_Loop:
 	lda xsp, (xsp + 10)
 	ret
 
+; SeEasy_SendParamValue: Sends the EASY EDIT value at (XBC) of row A: 6-byte sound-editor command {0x88, part, 11, A -
+;   1, value, 0xFF} via SeMenu_FlushDisplayObj. Basis: callers + body.
 SeEasy_SendParamValue:
 	lda	xsp, (xsp-18)
 	ld	(xsp+12), xbc
@@ -714,6 +719,9 @@ SeMenu_SetDisplayValue_Loop:
 	calr SeMenu_FlushDisplayObj
 	lda xsp, (xsp + 14)
 	ret
+; SeWrtMem_SelectMemorySlotSound: Selects SOUND MEMORY slot A (0-39: bank code 16 = A for 0-19, 17 = B for 20-39,
+;   number A mod 20) on the current part: resolves it (SndParam_ApplyProgramChange), writes the result to +0/+1 of
+;   part record 0x00/0x01/0x02 and shows it. Basis: callers + body.
 SeWrtMem_SelectMemorySlotSound:
 	lda	xsp, (xsp-10)
 	ld	(xsp+8), a
@@ -1024,6 +1032,8 @@ SeMenu_SetupMenuDisplay_Finalize:
 	ldmi16 (xwa), 0x65c
 	ret
 
+; SeMenu_SetCurrentPart: Stores A (1..4, else 1) as the sound editor's current part, RAM 0x65D, which
+;   SeMenu_ValidatePartNumber reads back. Basis: callers + body.
 SeMenu_SetCurrentPart:
 	cp	a, 1:i3
 	jr	c, SeMenu_SetCurrentPart_Skip
@@ -1094,6 +1104,10 @@ SeMenu_StorePartMask:
 SeMenu_PartMask_Data:
 	ld	(xwa), (0x65e)
 	ret
+; SeMenu_SetPartEnabled: Sets (C != 0) or clears (C = 0) the enable bit of part A (1..4; bit 2A-2 of the part mask
+;   0x65E), then sends the new mask (as edit element 17, or display object 13 when the object entry is non-zero); A
+;   outside 1..4 does nothing. Basis: callers + body -- SeMenuTitleFunc_DispatchSwitch and SeTonTon1_OnColumn1 test
+;   SeMenu_IsPartEnabled and call it with C = 0 to turn an enabled part off or C = 1 to turn a disabled one on.
 SeMenu_SetPartEnabled:
 	dec	8, xsp
 	ld	(xsp+4), c
@@ -1182,6 +1196,8 @@ SeMenu_LoadPartParam:
 	ld (xbc), a
 	ret
 
+; SeMenu_SwitchNop: Bare `ret`: the 'no action' entry of the sound-editor pages' switch-handler tables (185 slots).
+;   Basis: callers (table entries) + body.
 SeMenu_SwitchNop:
 	ret
 
@@ -1414,6 +1430,9 @@ SeMenu_ToggleSolo_Join5:
 	call	SeMenu_DrawSoloButton
 	inc	2, xsp
 	ret
+; SeMenu_SetFilterType: Sets the filter type: sends the low-3-bit field (code 54, mask 7) of A for the selected part
+;   to the tone generator and keeps A in RAM 0x68C; returns HL = 0. Basis: callers + body -- each
+;   SeFil<type>1_OnSideRow4 passes edit byte 0 with its own type number in bits 0-2.
 SeMenu_SetFilterType:
 	dec	6, xsp
 	ld	(xsp+4), a
@@ -1489,6 +1508,11 @@ SeMenu_TransferPartValues_AltLoop:
 	lda	xwa, (xwa+bc)
 	ld (xde), a
 	jr SeMenu_TransferPartValues_Data
+; SeMenu_GetLfoPartSwitchParamId: Stores in (XBC) the tone-generator parameter id of the per-part LFO switch byte for
+;   LFO page kind A -- 0 (amp) -> 0x26, 1 (pitch) -> 0x06, 2 (filter) -> 0x38 -- and returns HL = 0; any other A
+;   returns HL = 0xFFFF. Basis: callers + body -- SeMenu_CyclePartLfoState passes the id to
+;   SeMenu_RegisterElement_Extended when it sends a part's changed LFO byte, and UpdSeSel_DetailedUpdate_Join2 uses it
+;   to send the four part bytes on entering the LFO screens 47/42/57 (kinds 0/1/2).
 SeMenu_GetLfoPartSwitchParamId:
 	cp a, 1:i3
 	jr nz, SeMenu_TransferPartValues_AltData
@@ -1559,6 +1583,10 @@ SeMenu_TransferPartValues_EndData_Skip9:
 SeMenu_TransferPartValues_EndData_Join:
 	ld	(xbc), a
 	ret
+; SeLfo1_StepSelector: Steps the 1..4 selector of LFO page A (0 = AMP RAM 0x68D, 1 = PITCH 0x68E, 2 = FILTER 0x68F;
+;   other A do nothing): C = 0 steps up, C != 0 steps down, wrapping 4 -> 1 and 1 -> 4. Basis: callers + body --
+;   SeLfo1_StepSelectorAndReload calls it with A = the page and C from the switch value, then re-enters TT_SEAMPLFO1 /
+;   TT_SEPITLFO1 / TT_SEFILLFO1; its header describes this step.
 SeLfo1_StepSelector:
 	cp	a, 0:i3
 	jr	nz, SeMenu_TransferPartValues_EndData_Skip10
@@ -1701,6 +1729,10 @@ SeMenu_TransferPartValues_EndData_Epilogue:
 	pop qiz
 	lda	xsp, (xsp+22)
 	ret
+; SeMenu_StepParamFieldAndSend: Steps the bit field described by the edit record on the stack (+0 value, +6 mask, +7
+;   shift, +8 max, +9 min, +10 step) with clamping; if it changed, sends it to the tone generator, stores it at edit-
+;   buffer index C and redraws via screen code WA. L = 1 changed, 0 not. Basis: callers + body -- the SeXxx_OnColumnN
+;   handlers build the record, call this, then test L.
 SeMenu_StepParamFieldAndSend:
 	dec	8, xsp
 	push	xiz
@@ -1758,6 +1790,9 @@ SeMenu_StepParamFieldAndSend_Epilogue2:
 	pop	xiz
 	inc	8, xsp
 	retd	6
+; SeMenu_SelectPartIfEnabled: Makes part A (1..4) the sound editor's current part (RAM 0x65D) when it is enabled and
+;   not already current; L = 1 if it changed, else 0. Basis: callers + body -- every Se*_OnSideRow2..5 handler passes
+;   its row's part (1..4) and sends the page's redraw event only when L = 1.
 SeMenu_SelectPartIfEnabled:
 	dec	4, xsp
 	ld	(xsp+2), a
@@ -1782,6 +1817,10 @@ SeMenu_SelectPartIfEnabled_Skip22:
 SeMenu_SelectPartIfEnabled_Epilogue3:
 	inc	4, xsp
 	ret
+; SeMenu_CyclePartLfoState: LFO pages: cycles part C's (1..4) LFO byte (page param C+4) off -> on (bit 5, bits 6-7 =
+;   the kind's current number - 1) -> on + bit 4 -> off, then redraws and stores it; WA = 0 amp, 1 pitch, 2 filter.
+;   Basis: callers + body -- only SeAmpLfo1/SePitLfo1/SeFilLfo1 OnSideRow2..5 call it, with WA = page kind and C =
+;   row's part.
 SeMenu_CyclePartLfoState:
 	lda	xsp, (xsp-14)
 	ld	(xsp+10), c
@@ -2234,6 +2273,10 @@ SeTitle_DecodeSwitch_Skip7:
 .Lc_f07349:
 SeTitle_DecodeSwitch_Return:
 	retd 0x0004
+; SeMenu_CopyNameChars: Copies E bytes (E = 0: none) from (XBC) to (XWA), one byte at a time. Basis: callers + body --
+;   its only callers are in the WRITE SOUND name-centring handler (side row 2, SeWrtSnd_OnSideRow2 ->
+;   SeWrtSnd_ClearName_Join), which copies the 16-character name to a scratch buffer and then the non-
+;   blank run into place.
 SeMenu_CopyNameChars:
 	ld	xhl, xbc
 	ld	b, 0:opc
@@ -2323,12 +2366,22 @@ SeMenu_SetupPartDisplay_End_Epilogue:
 	pop	qiz
 	lda	xsp, (xsp+16)
 	ret
+; SeMenu_GetWriteMemSlot: Returns in (XWA) the selected destination slot (0..39, bank = slot/20) of the sound editor's
+;   WRITE TO MEMORY page, RAM 0x6AD. Basis: callers + body -- the SeWrtMem side-row handlers read it, step it within
+;   0..39 and store it back with the setter beside it.
 SeMenu_GetWriteMemSlot:
 	ld	(xwa), (0x6ad)
 	ret
+; SeMenu_SetWriteMemSlot: Stores A as the WRITE TO MEMORY page's selected destination slot (RAM 0x6AD, 0..39): the
+;   setter of SeMenu_GetWriteMemSlot. Basis: callers + body -- SeWrtMem_OnSideRow3/4 read the slot with
+;   SeMenu_GetWriteMemSlot, step it up (max 39) or down (min 0) and store it back with this routine.
 SeMenu_SetWriteMemSlot:
 	stb_d8	(0x6ad), a
 	ret
+; SeMenu_SetNameBufferChar: Writes character C at position A (0..15) of the 16-byte name buffer at 0x20BF3; A > 15
+;   does nothing. Setter twin of SeMenu_GetNameBufferChar. Basis: callers + body -- SeWrtSnd_ClearName fills positions
+;   0..15 with C = 32 through it (its header says so), and the WRITE SOUND character-edit handlers store the edited
+;   character with it.
 SeMenu_SetNameBufferChar:
 	cp	a, 15
 	ret	ugt
@@ -2344,9 +2397,14 @@ SeMenu_GetNameBufferChar:
 	ld	a, (xde+wa)
 	ld	(xbc), a
 	ret
+; SeMenu_PostDialEnable: Zero-extends A and tail-jumps to UI_PostDialEnable, which posts EVT_VALEN_SET with that value
+;   (every caller passes 1: dial enabled). Basis: callers + body -- SeMenu_BindDialToColumn calls it first (its
+;   header: 'posts EVT_VALEN_SET(1)'), and two sound-editor page set-ups call it before posting their dial events.
 SeMenu_PostDialEnable:
 	extz	wa
 	jp	UI_PostDialEnable
+; SeMenu_PostEditUpDownSet: Posts EVT_EDIT_UP_SET (A = 0) or EVT_EDIT_DOWN_SET (A != 0) with the value (C - 1) | E.
+;   Basis: callers + body.
 SeMenu_PostEditUpDownSet:
 	dec	1, c
 	or	c, e
@@ -2358,6 +2416,9 @@ SeMenu_PostEditUpDownSet:
 SeMenu_PostEditUpDownSet_Skip:
 	ld	wa, bc
 	jp	UI_PostDialRangeEvent
+; SeMenu_BindDialToColumn: Points the dial at sound-editor column A (1..8): posts EVT_VALEN_SET(1),
+;   EVT_EDIT_UP_SET(A-1) and EVT_EDIT_DOWN_SET((A-1)|0x80). Basis: callers + body -- every SeXxx_OnColumnN handler
+;   ends with `ld wa, N` + this call.
 SeMenu_BindDialToColumn:
 	dec	2, xsp
 	ld	(xsp), a
@@ -2375,6 +2436,10 @@ SeMenu_BindDialToColumn:
 	calr	SeMenu_PostEditUpDownSet
 	inc	2, xsp
 	ret
+; SeMenu_SwitchToValueStep: Writes the signed value step for a column switch to (XBC) (edit-descriptor byte +10): +1
+;   when A's bits 0-6 are 0 (first bank), -1 otherwise, tripled when A bit 7 is set (switches 17..24). Basis: callers
+;   + body -- the OnColumn handlers fill the descriptor's mask/shift/max/min (+6..+9) and pass their bank byte A from
+;   SeTitle_DecodeSwitch.
 SeMenu_SwitchToValueStep:
 	ld L,A
 	res 0x07,L
@@ -2402,6 +2467,12 @@ SeMenu_CopyWriteUpdate_Step3_Code_3_Helper7_Skip:
 	ld	a, (xde+wa)
 	ld	(xbc), a
 	ret
+; SeMenu_CharToNameCharIndex: Converts character code A to its index in the name-entry character set and stores it at
+;   (XBC): GUI_DisplayStructData_0x118A[A] for A < 130, 0 (the space) for A >= 130 or a result above 95. The table
+;   inverts GUI_DisplayStructData_0x1129 (index -> character: ' ', A-Z, a-z, 0-9, punctuation; 96 entries, all
+;   invert), which SeMenu_CopyWriteUpdate_Step3_Code_3_Helper7 reads the other way. Basis: callers + body -- the WRITE
+;   SOUND name-entry handlers read the character at the cursor (SeMenu_GetNameBufferChar), convert it with this and
+;   store it as page param 1, the character the dial edits.
 SeMenu_CharToNameCharIndex:
 	cp	a, 130
 	jr	c, SeMenu_CharToNameCharIndex_Skip
@@ -2417,6 +2488,11 @@ SeMenu_CharToNameCharIndex_Join:
 	ret	ule
 	ld	(xbc), 0
 	ret
+; SeMenu_GoToPageOnEnabledPart: Switches the sound editor to page WA (SeMenu_SendEvent with C = 0, i.e.
+;   UI_PostModeChangeEvent) after making sure the current part (0x65D) is enabled: keeps it if so, else selects the
+;   first enabled part of 1..N (N = 2 when the mode byte 0x6AE is non-zero, else 4), else part 1. Basis: callers +
+;   body -- SeTonTon1_OnSwitch15/25 and SeMenuTitleFunc_DispatchSwitch_Skip pass page codes 32, 38 and 61 (SeTonTon1's own
+;   code is 34).
 SeMenu_GoToPageOnEnabledPart:
 	dec	6, xsp
 	push	qiz
@@ -2570,6 +2646,9 @@ SeMenu_ApplyPartEdit_End:
 	popw_erp 0xfa
 	lda xsp, (xsp + 14)
 	ret
+; SeLfo1_StepSelectorAndReload: LFO1 pages, column 2: steps the page's 1..4 selector (RAM 0x68D AMP / 0x68E PITCH /
+;   0x68F FILTER; up for a first-bank switch, down otherwise, wrapping) and re-enters the title TT_SEAMPLFO1 /
+;   TT_SEPITLFO1 / TT_SEFILLFO1. Basis: callers + body.
 SeLfo1_StepSelectorAndReload:
 	dec	2, xsp
 	ld	(xsp), c
@@ -5690,6 +5769,13 @@ SeMenu_ApplySynthParam_Alt:
 	lda xsp, (xsp + 38)
 	ret
 
+; SeMenu_GetGroupFirstToneIndex: Returns in the word at XDE the tone index at which group C of the current tone list
+;   starts: the sum of the first C group sizes, page params base.. (RAM 0x660 + base: base 12 for A = 1, 17 for A = 3,
+;   else 18), the per-group byte counts SeMenu_ProcessEffect copied there from bytes +3.. of the 25-byte record it
+;   loads (group count at +2 -> 0x6AC). Basis: callers + body -- SeTonTon1_OnColumn2 (A = 0), SeTonHyb1_OnColumn2 (A =
+;   1) and SeMenuTitleFunc_DispatchSwitch (A = 3) step the group index C within (0x6AC), call it, and send the result
+;   as the tone index (SeMenu_SendPartToneIndex / SeMenu_SendToneIndex); SeMenu_ProcessEffect writes the same three
+;   bases for modes 0 / 1 / 3.
 SeMenu_GetGroupFirstToneIndex:
 	dec	8, xsp
 	push	xiz
@@ -6004,6 +6090,8 @@ SeMenu_SetPatchBank:
 	ld (1720:16), a
 	ret
 
+; SeMenu_SetPartRecordBits: Sets (E = 1) or clears (E = 0) the bits C of byte A of the current part's panel record
+;   (part 0/1/2 -> tag 0 at 0xF9B6, tag 1 at 0xF9D0, tag 2 at 0xF9EA). Basis: callers + body.
 SeMenu_SetPartRecordBits:
 	dec	8, xsp
 	ld	(xsp+2), e
@@ -6061,6 +6149,10 @@ SeMenu_SetPartRecordBits_Skip7:
 SeMenu_SetPartRecordBits_Epilogue2:
 	inc	8, xsp
 	ret
+; SeMenu_StepNoteParamInRange: Steps edit-buffer byte C (bit 7 kept) by the dial step in A, where 0 means off and
+;   1..11 are skipped (12..127), bounded by the neighbour limits E (low) and the pushed word (high); stores it and
+;   returns L = 1, or L = 0 if no move. Basis: callers + body -- the key-range page and the three ordered breakpoints
+;   of AmpAmp2/AmpEnv2/FilFil2.
 SeMenu_StepNoteParamInRange:
 	lda	xsp, (xsp-12)
 	ld	(xsp+6), e
@@ -6207,12 +6299,21 @@ SeMenu_SetDisplayState:
 	ld (1733:16), a
 	ret
 
+; SeMenu_GetDisplayState: Copies RAM 0x6C5 to (XWA): the getter twin of SeMenu_SetDisplayState. Basis: callers + body.
 SeMenu_GetDisplayState:
 	ld	(xwa), (0x6c5)
 	ret
+; SeMenu_SetLastSwitch: Stores A, the switch number just decoded, in RAM 0x065A. Basis: callers + body --
+;   SeMenuTitleFunc_DispatchSwitch stores each decoded switch here right before calling its handler from
+;   GUI_DisplayStructData_0x13FF; while 0xE31C bit 3 is set it reads 0x065A back
+;   (SeMenu_GetLastSwitch) and ignores any other switch.
 SeMenu_SetLastSwitch:
 	ld	(1626:16), a
 	ret
+; SeMenu_GetLastSwitch: Copies RAM 0x065A, the last switch SeMenuTitleFunc_DispatchSwitch dispatched, to (XWA). Basis:
+;   callers + body -- SeMenuTitleFunc_DispatchSwitch reads it when SeMenu_GetPartConfigBit3 (0xE31C bit 3) is set and
+;   then dispatches only a switch equal to it; the setter beside it (SeMenu_SetLastSwitch) stores
+;   every dispatched switch.
 SeMenu_GetLastSwitch:
 	ld	(xwa), (0x65a)
 	ret

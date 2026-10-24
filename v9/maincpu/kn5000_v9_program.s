@@ -2154,6 +2154,10 @@ Voice_InitBankDataSafe_Alt1:
 	call	Voice_BankLookupCode
 	pop	xiz
 	ret
+; Voice_RefreshBankData_Wrap: XIZ-preserving wrapper of Voice_RefreshBankData (Voice_ComputeAllocSize: recomputes the
+;   used size of the accompaniment block area 0x1E8800 into 0x1E881C). Basis: callers + body --
+;   MidiPkt_GetUsedSize_AccompBlocks calls it before reading (0x1E881C) * 16; its header names Voice_RefreshBankData
+;   -> Voice_ComputeAllocSize. Siblings Voice_InitBankDataSafe / _Alt1 are the same wrapper shape.
 Voice_RefreshBankData_Wrap:
 	push	xiz
 	call	Voice_RefreshBankData
@@ -3518,6 +3522,10 @@ CPanel_InitButtonState_SaveRegs:
 	ret
 
 
+; CPanel_ProbePanelMcus: Far-callable entry (`calr CPanel_PanelDetection; ret`, like CPanel_Poll) used by the self-
+;   test: probes the left (0x20) and right (0xE0) panel MCUs and returns A = CPANEL_PANEL_DETECT_FLAGS (bit 0 left
+;   answered, bit 3 right answered). Basis: callers + body -- SelfTest_SramAndRom_CheckROM and
+;   EffectMode_ByteData_DiagEvents store A at 0x8D7C and test `and a, 9`.
 CPanel_ProbePanelMcus:
 	calr CPanel_PanelDetection
 	ret

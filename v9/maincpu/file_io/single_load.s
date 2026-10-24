@@ -200,6 +200,12 @@ SLSrcBankList_FuncBody:
 	pop	xiz
 	inc	6, xsp
 	ret
+; SingleLoadSrc_PanelMemDrawBankName: PANEL MEMORY source list, row 1: writes cell 1 of the list buffer (0x8963) with
+;   the name of bank (0x89FC) / C (C = SingleLoadSrc_PanelMemBankSize, 8) read from the selected .PMT file
+;   (SingleLoadSrc_ReadPmtBankName: 16 bytes at file offset 16 + 16 * bank), pads it to 16 and posts EVT_PARA_DRAW
+;   of 0x8963 to the file-name box XWA. Basis: callers + body -- SingleLoadSrc_PanelMemListProc draws the four rows on
+;   EVT_PAINT with SLSrcBankList_FuncBody (row 0 'BANK:n'), Helper2, this and Helper3, and redraws it on parameter 40
+;   after a bank change.
 SingleLoadSrc_PanelMemDrawBankName:
 	dec	4, xsp
 	push	xiz
@@ -225,6 +231,11 @@ SingleLoadSrc_PanelMemDrawBankName:
 	pop	xiz
 	inc	4, xsp
 	ret
+; SingleLoadSrc_PanelMemDrawMemoryNumber: PANEL MEMORY source list, row 2 (and row 3 in ALL mode): writes cell 2
+;   (0x8978) as StorageArea_UnitNames[mode] ('MEMORY') + ': ' + the memory number within its bank ((0x89FC) mod C + 1,
+;   omitted when ALL flag 0x89FA is set), posts it, and when 0x89FA is set writes cell 3 (0x898D) as 'ALL' and posts
+;   it. Basis: callers + body -- SingleLoadSrc_PanelMemListProc calls it on EVT_PAINT and after every cursor move
+;   (parameters 5 and 6), which change the memory number.
 SingleLoadSrc_PanelMemDrawMemoryNumber:
 	dec	6, xsp
 	push	xiz
@@ -280,6 +291,11 @@ SingleLoadSrc_PanelMemDrawMemoryNumber_Epilogue:
 	pop	xiz
 	inc	6, xsp
 	ret
+; SingleLoadSrc_PanelMemDrawMemoryName: PANEL MEMORY source list, row 3: unless ALL mode (0x89FA set), writes cell 3
+;   (0x898D) with the name of panel memory (0x89FC) read from the selected .PMT file (SingleLoadSrc_ReadPmtMemoryName:
+;   16 bytes at 178 + index * entry size, the size being the file's word at offset 13), pads it and posts
+;   EVT_PARA_DRAW. Basis: callers + body -- SingleLoadSrc_PanelMemListProc calls it on EVT_PAINT and on parameter 40
+;   when a memory change is pending (0x81CE).
 SingleLoadSrc_PanelMemDrawMemoryName:
 	dec	4, xsp
 	push	xiz
@@ -306,6 +322,11 @@ SingleLoadSrc_PanelMemDrawMemoryName_Epilogue:
 	pop	xiz
 	inc	4, xsp
 	ret
+; SingleLoadSrc_PanelMemListProc: Single-load source list for area 0 PANEL MEMORY: EVT_PAINT draws the bank/name rows
+;   (SLSrcBankList_FuncBody, _Helper2, _Helper, _Helper3); event parameter 5 pages by SingleLoadSrc_PanelMemBankSize
+;   (8) up to 80 (RAM 0x89FC), parameter 6 steps by 1, 40 redraws the pending rows; entry [0] of
+;   SingleLoadSrc_ListProcByMode and CmpSingleLoadSrc_ListProcByMode, called with XWA = file-name box, XBC = event,
+;   XDE = parameter
 SingleLoadSrc_PanelMemListProc:
 	dec	4, xsp
 	push	xiz
@@ -497,6 +518,10 @@ SLSrcBankList_FuncBody_Join4:
 	pop	xiz
 	inc	4, xsp
 	ret
+; SingleLoadSrc_SequencerListProc: Single-load source list for area 1 SEQUENCER: EVT_PAINT only -- blank row 0, row 1
+;   '<StorageArea_UnitNames[1] SONG>:', row 2 the file's entry 0 name (SingleLoadSrc_ReadSqtSongName(0)), blank row
+;   3; no paging (one song); entry [1] of SingleLoadSrc_ListProcByMode and CmpSingleLoadSrc_ListProcByMode, called
+;   with XWA = file-name box, XBC = event, XDE = parameter
 SingleLoadSrc_SequencerListProc:
 	dec	4, xsp
 	push	xiz
@@ -562,6 +587,11 @@ SingleLoadSrc_SequencerListProc_Skip11:
 	pop	xiz
 	inc	4, xsp
 	ret
+; SingleLoadSrc_ComposerDrawBankName: COMPOSER source list, rows 0-1: writes cell 0 (0x894E) as the bank caption
+;   SingleLoad_BankCaptionByMode[mode] ('BANK') + ':' and cell 1 (0x8963) as the memory-bank name of position (0x89FE)
+;   / C (WP_GetPresetName1 -> SingleLoad_MemoryBankNames: MEMORY-A/B/C; C = SLSrcComposer_RowsPerColumn, 10), and
+;   posts both with EVT_PARA_DRAW. Basis: callers + body -- SingleLoadSrc_ComposerListProc calls it on EVT_PAINT and
+;   after a +-10 move (parameter 5), the moves that change the bank.
 SingleLoadSrc_ComposerDrawBankName:
 	dec	2, xsp
 	push	xiz
@@ -600,6 +630,12 @@ SingleLoadSrc_ComposerDrawBankName:
 	pop	xiz
 	inc	2, xsp
 	ret
+; SingleLoadSrc_ComposerDrawPatternSlot: COMPOSER source list, rows 2-3 for the slot: writes cell 2 (0x8978) as
+;   StorageArea_UnitNames[mode] ('PATTERN') + ': ' + PtrTbl_VariationNames[(0x89FE) mod C] (VARI 1-4; omitted in ALL
+;   mode 0x89FA) and posts it; then cell 3 (0x898D) is 'ALL' in ALL mode, or for slots 4-9 the fixed section name
+;   (WP_GetBankMemName -> WP_SectionNameTable: INTRO 1 .. ENDING 2); slots 0-3 leave cell 3 to
+;   SingleLoadSrc_ComposerDrawPatternName. Basis: callers + body -- SingleLoadSrc_ComposerListProc calls it on EVT_PAINT and
+;   after every cursor move (parameters 5 and 6).
 SingleLoadSrc_ComposerDrawPatternSlot:
 	dec	8, xsp
 	push	xiz
@@ -671,6 +707,11 @@ SingleLoadSrc_ComposerDrawPatternSlot_Epilogue:
 	pop	xiz
 	inc	8, xsp
 	ret
+; SingleLoadSrc_ComposerDrawPatternName: COMPOSER source list, row 3 for user patterns: unless ALL mode (0x89FA) or
+;   slot (0x89FE) mod C >= 4, writes cell 3 (0x898D) with the 13-character name of pattern (bank, slot) read from the
+;   selected .CMP file (SingleLoadSrc_ReadCmpPatternName: offset 160 + 96 * (4 * bank + slot), the layout of RAM
+;   0x948A0), pads it and posts EVT_PARA_DRAW. Basis: callers + body -- SingleLoadSrc_ComposerListProc calls it on
+;   EVT_PAINT and on parameter 40 when a move left it pending (0x81D6).
 SingleLoadSrc_ComposerDrawPatternName:
 	dec	4, xsp
 	push	xiz
@@ -707,6 +748,11 @@ SingleLoadSrc_ComposerDrawPatternName_Epilogue:
 	pop	xiz
 	inc	4, xsp
 	ret
+; SingleLoadSrc_ComposerListProc: Single-load source list for area 2 COMPOSER: 30 items laid out in columns of
+;   SLSrcComposer_RowsPerColumn (10) -- parameter 5 moves the cursor (RAM 0x89FE) by +-10, parameter 6 by +-1;
+;   EVT_PAINT draws via SingleLoadSrc_ComposerDrawPatternSlot/_Helper4/_Helper6 (WP_GetPresetName1, WP_GetBankMemName); entry
+;   [2] of SingleLoadSrc_ListProcByMode and CmpSingleLoadSrc_ListProcByMode, called with XWA = file-name box, XBC =
+;   event, XDE = parameter
 SingleLoadSrc_ComposerListProc:
 	dec	4, xsp
 	push	xiz
@@ -877,6 +923,13 @@ SingleLoadSrc_ComposerListProc_Join9:
 	pop	xiz
 	inc	4, xsp
 	ret
+; SingleLoad_SyncSoundMemCursorGroup: Keeps the SOUND MEMORY source cursor (XDE = 0x8A00) and destination cursor
+;   (stack arg = 0x8A08) in the same group, below or from 2 x C (C = 20: the 40 sounds vs. the entries from 40 up):
+;   when they differ, an XWA = 5/6 move (source list) copies the source index to the destination and redraws
+;   SingleLoadDstFunc (EVT_PARA_DRAW), a 7/8 move (destination list) copies the destination index to the source and
+;   repaints SingleLoadSrcFunc (EVT_PAINT); retd 4. Basis: callers + body -- SingleLoadSrc_SoundMemListProc
+;   (parameters 5/6) and SingleLoadDst_SoundMemListProc (parameters 7/8) call it after every move with XDE = 0x8A00,
+;   pushed 0x8A08 and XWA = the parameter.
 SingleLoad_SyncSoundMemCursorGroup:
 	ld	xix, (xsp+4)
 	ld	l, c
@@ -916,6 +969,12 @@ SingleLoad_SyncSoundMemCursorGroup_Skip24:
 	calr	SingleLoadSrcFunc
 SingleLoad_SyncSoundMemCursorGroup_Return:
 	retd	4
+; SingleLoadSrc_DrawSoundMemBankRows: Draws rows 0-1 of the single-load SOUND MEMORY source list (21-byte cells at RAM
+;   0x894E / 0x8963): row 0 = the mode's bank caption ("BANK") + ": "; row 1, only while the position 0x8A00 is one of
+;   the 2 x C sounds, = the bank name WP_GetPresetName3(pos / C) ("MEMORY A" / "MEMORY B"); C = entries per bank (20);
+;   posts EVT_PARA_DRAW. Basis: callers + body -- SingleLoadSrc_SoundMemListProc calls it first on EVT_PAINT and on
+;   bank paging (parameter 5) with C = SingleLoadSrc_SoundMemPageSize; for the USER KIT positions row 1 comes from
+;   SingleLoadSrc_DrawUserKitName.
 SingleLoadSrc_DrawSoundMemBankRows:
 	dec	6, xsp
 	ld	(xsp), c
@@ -957,6 +1016,13 @@ SingleLoadSrc_DrawSoundMemBankRows:
 SingleLoadSrc_DrawSoundMemBankRows_Epilogue:
 	inc	6, xsp
 	ret
+; SingleLoadSrc_DrawUserKitName: For a USER KIT position of the SOUND MEMORY source list (0x8A00 >= 2 x C, past the 40
+;   sounds) fills row 1 (cell 1, RAM 0x8963) with the kit name read from the selected sound-memory file
+;   (SingleLoadSrc_ReadTmUserKitName: 16 bytes at file offset 0x4980), pads it and posts EVT_PARA_DRAW; sound
+;   positions are left to SingleLoadSrc_DrawSoundMemBankRows. Basis: callers + body -- SingleLoadSrc_SoundMemListProc
+;   calls it on EVT_PAINT and on parameter 40 (pending row-1 redraw, flag 0x81DE); 0x4980 = 16 + 40 x 470 follows the
+;   40 sound records, the sound-RAM copy of the same name is WP_GetUserName2's 0x1E4980, and bank 2 of
+;   WP_GetPresetName3_PtrTable is "USER KIT".
 SingleLoadSrc_DrawUserKitName:
 	dec	4, xsp
 	push	xiz
@@ -983,6 +1049,12 @@ SingleLoadSrc_DrawUserKitName_Epilogue2:
 	pop	xiz
 	inc	4, xsp
 	ret
+; SingleLoadSrc_DrawSoundMemItemNumber: Fills row 2 of the SOUND MEMORY source list (RAM 0x8978) with
+;   StorageArea_UnitNames[mode] ("MEMORY") + ": " and, unless the ALL flag 0x89FA is set, the 1-based item number --
+;   (0x8A00 - 2C) + 1 for a USER KIT entry, (0x8A00 mod C) + 1 for a sound; with 0x89FA set it also writes "ALL" into
+;   row 3 (RAM 0x898D); posts EVT_PARA_DRAW per row. Basis: callers + body -- SingleLoadSrc_SoundMemListProc calls it
+;   on EVT_PAINT, bank paging (parameter 5) and item stepping (parameter 6), always with C =
+;   SingleLoadSrc_SoundMemPageSize (20).
 SingleLoadSrc_DrawSoundMemItemNumber:
 	dec	6, xsp
 	push	xiz
@@ -1055,6 +1127,13 @@ SingleLoadSrc_DrawSoundMemItemNumber_Epilogue:
 	pop	xiz
 	inc	6, xsp
 	ret
+; SingleLoadSrc_DrawSoundMemItemName: Unless the ALL flag 0x89FA is set, fills row 3 of the SOUND MEMORY source list
+;   (RAM 0x898D) with the name of the item at position 0x8A00 read from the selected file: a sound's name
+;   (SingleLoadSrc_ReadTmSoundName: 16 bytes at 16 + 470 x pos) or, past the 2 x C sounds, a USER KIT entry's name
+;   (SingleLoadSrc_ReadTmUserKitEntryName: ' ' + 13 bytes at 0x4AA7 + 80 x (pos - 2C)); posts EVT_PARA_DRAW. Basis: callers
+;   + body -- SingleLoadSrc_SoundMemListProc calls it on EVT_PAINT and on parameter 40 (pending row-3 redraw, flag
+;   0x81DC); SingleLoadSrc_DrawSoundMemItemNumber draws the matching number row, and the sound-RAM loader sizes the same
+;   two record kinds (470 and 80 bytes).
 SingleLoadSrc_DrawSoundMemItemName:
 	dec	4, xsp
 	push	xiz
@@ -1093,6 +1172,10 @@ SingleLoadSrc_DrawSoundMemItemName_Epilogue:
 	pop	xiz
 	inc	4, xsp
 	ret
+; SingleLoadSrc_SoundMemListProc: Single-load source list for area 3 SOUND MEMORY: pages of
+;   SingleLoadSrc_SoundMemPageSize (20) over RAM 0x8A00; EVT_PAINT draws via
+;   SingleLoadSrc_DrawSoundMemBankRows/_Helper10/_Helper9/_Helper11; entry [3] of SingleLoadSrc_ListProcByMode and
+;   CmpSingleLoadSrc_ListProcByMode, called with XWA = file-name box, XBC = event, XDE = parameter
 SingleLoadSrc_SoundMemListProc:
 	dec	4, xsp
 	push	xiz
@@ -1348,6 +1431,10 @@ SLSrcBankList_FuncBody_Join17:
 	pop	xiz
 	inc	4, xsp
 	ret
+; SingleLoadSrc_BlankListProc: Single-load source list for area 4 (none): on EVT_PAINT writes cell index + empty text
+;   into the four 21-byte rows at RAM 0x894E, pads each (TrimAndPadSmfFilename) and posts EVT_PARA_DRAW -- four blank
+;   rows; ignores every other event; entry [4] of SingleLoadSrc_ListProcByMode and CmpSingleLoadSrc_ListProcByMode,
+;   called with XWA = file-name box, XBC = event, XDE = parameter
 SingleLoadSrc_BlankListProc:
 	dec	4, xsp
 	pushw	iz
@@ -1603,6 +1690,13 @@ SLDstBankList_FuncBody:
 	pop	xiz
 	inc	6, xsp
 	ret
+; SingleLoadDst_DrawPanelMemItemRows: Fills rows 2-3 of the single-load PANEL MEMORY destination list (RAM 0x89CC /
+;   0x89E1): row 2 = StorageArea_UnitNames[mode] ("MEMORY") + ": " + ((0x8A02 mod C) + 1), row 3 = that panel memory's
+;   name from RAM (WP_GetNameByOffset(0x8A02, marker 3): 0x1ED350 + entry size x n + 178); with the ALL flag 0x89FA
+;   set row 2 is the unit name + ":" only and row 3 "ALL"; posts EVT_PARA_DRAW for both. Basis: callers + body --
+;   SingleLoadDst_PanelMemListProc calls it after SLDstBankList_FuncBody (rows 0-1: bank caption + number,
+;   WP_GetConfigName) on EVT_PAINT and bank paging (parameter 7), and alone on stepping (parameter 8), with C =
+;   SingleLoadDst_PanelMemBankSize (8); 0x1ED350 holds the 80 panel memories (MidiPkt_SetXferBlock_PanelMemories).
 SingleLoadDst_DrawPanelMemItemRows:
 	dec	6, xsp
 	push	xiz
@@ -1670,6 +1764,11 @@ SingleLoadDst_DrawPanelMemItemRows_Join:
 	pop	xiz
 	inc	6, xsp
 	ret
+; SingleLoadDst_PanelMemListProc: Single-load destination list for area 0 PANEL MEMORY: banks of
+;   SingleLoadDst_PanelMemBankSize (8) up to 80 over RAM 0x8A02 (parameter 7 pages); EVT_PAINT draws
+;   SLDstBankList_FuncBody (bank caption + WP_GetConfigName) and SingleLoadDst_DrawPanelMemItemRows; entry [0] of
+;   SingleLoadDst_AreaListProcs and CmpSingleLoadDst_AreaListProcs, called with XWA = file-name box, XBC = event, XDE
+;   = parameter
 SingleLoadDst_PanelMemListProc:
 	dec	4, xsp
 	push	xiz
@@ -1851,6 +1950,11 @@ SingleLoadDst_PanelMemListProc_Epilogue:
 	pop	xiz
 	inc	4, xsp
 	ret
+; SingleLoadDst_DrawSongRows: Fills rows 1-2 of the single-load SEQUENCER destination list: row 1 (RAM 0x89B7) =
+;   StorageArea_UnitNames[mode] ("SONG") + ": " + (song 0x8A04 + 1), row 2 (RAM 0x89CC) = that song slot's name
+;   (BuildSlotLabel(song, cell 2, no number): 16 bytes at SEQ_SONG_SLOTS + 0x800 x song + 0x100); posts EVT_PARA_DRAW
+;   for both. Basis: callers + body -- SingleLoadDst_SequencerListProc calls it after blanking rows 0/3 on EVT_PAINT
+;   and after stepping 0x8A04 with parameter 8; its header calls these rows "'SONG: n' + slot label".
 SingleLoadDst_DrawSongRows:
 	dec	4, xsp
 	push	xiz
@@ -1900,6 +2004,11 @@ SingleLoadDst_DrawSongRows:
 	pop	xiz
 	inc	4, xsp
 	ret
+; SingleLoadDst_SequencerListProc: Single-load destination list for area 1 SEQUENCER: EVT_PAINT blanks rows 0/3 and
+;   draws 'SONG: n' + slot label (SingleLoadDst_DrawSongRows, BuildSlotLabel); parameter 8 steps the song number
+;   RAM 0x8A04 up to SingleLoadDst_SequencerSongCount; parameter 10 returns SingleLoad_LoadSong(song); entry
+;   [1] of SingleLoadDst_AreaListProcs and CmpSingleLoadDst_AreaListProcs, called with XWA = file-name box, XBC =
+;   event, XDE = parameter
 SingleLoadDst_SequencerListProc:
 	push	xiz
 	ld	xiz, xwa
@@ -1987,6 +2096,12 @@ SingleLoadDst_SequencerListProc_Skip14:
 SingleLoadDst_SequencerListProc_Epilogue2:
 	pop	xiz
 	ret
+; SingleLoadDst_DrawComposerBankRows: Fills rows 0-1 of the single-load COMPOSER destination list: row 0 (RAM 0x89A2)
+;   = the mode's bank caption ("BANK") + ": ", row 1 (RAM 0x89B7) = the memory bank name of position 0x8A06
+;   (WP_GetPresetName1(0x8A06 / C): "MEMORY-A" / "-B" / "-C"); posts EVT_PARA_DRAW for both. Basis: callers + body --
+;   SingleLoadDst_ComposerListProc calls it on EVT_PAINT and on bank paging (parameter 7) with C =
+;   SingleLoadDst_ComposerBankSize (10 per bank, 30 in all); SingleLoad_MemoryBankNames, the table WP_GetPresetName1
+;   reads, already documents this caller.
 SingleLoadDst_DrawComposerBankRows:
 	dec	2, xsp
 	push	xiz
@@ -2025,6 +2140,13 @@ SingleLoadDst_DrawComposerBankRows:
 	pop	xiz
 	inc	2, xsp
 	ret
+; SingleLoadDst_DrawComposerItemRows: Fills rows 2-3 of the COMPOSER destination list: row 2 (RAM 0x89CC) =
+;   StorageArea_UnitNames[mode] ("PATTERN") + ": " + PtrTbl_VariationNames[0x8A06 mod C] ("VARI 1"-"VARI 4", empty for
+;   sections 4-9), row 3 (RAM 0x89E1) = the section's name (WP_GetBankMemName(bank, section, 3): the RAM record at
+;   0x948A0 for VARI 1-4, else "INTRO 1" .. "ENDING 2"); with the ALL flag 0x89FA set row 2 gets no section and row 3
+;   is "ALL"; posts EVT_PARA_DRAW for both. Basis: callers + body -- SingleLoadDst_ComposerListProc calls it after
+;   SingleLoadDst_DrawComposerBankRows on EVT_PAINT and paging, and alone on stepping (parameter 8), with C =
+;   SingleLoadDst_ComposerBankSize (10).
 SingleLoadDst_DrawComposerItemRows:
 	dec	6, xsp
 	push	xiz
@@ -2092,6 +2214,10 @@ SingleLoadDst_DrawComposerItemRows_Join:
 	pop	xiz
 	inc	6, xsp
 	ret
+; SingleLoadDst_ComposerListProc: Single-load destination list for area 2 COMPOSER: banks of
+;   SingleLoadDst_ComposerBankSize (10) up to 30 over RAM 0x8A06; EVT_PAINT draws SingleLoadDst_DrawComposerBankRows and
+;   _Helper4; entry [2] of SingleLoadDst_AreaListProcs and CmpSingleLoadDst_AreaListProcs, called with XWA = file-name
+;   box, XBC = event, XDE = parameter
 SingleLoadDst_ComposerListProc:
 	dec	4, xsp
 	push	xiz
@@ -2274,6 +2400,12 @@ SingleLoadDst_ComposerListProc_Epilogue3:
 	pop	xiz
 	inc	4, xsp
 	ret
+; SingleLoadDst_DrawSoundMemBankRows: Fills rows 0-1 of the single-load SOUND MEMORY destination list: row 0 (RAM
+;   0x89A2) = bank caption ("BANK") + ": ", row 1 (RAM 0x89B7) = "MEMORY A" / "MEMORY B" (WP_GetPresetName3(0x8A08 /
+;   C)) for the 2 x C sound positions, else the USER KIT name in sound RAM (WP_GetUserName2: 16 bytes at 0x1E4980);
+;   posts EVT_PARA_DRAW for both. Basis: callers + body -- SingleLoadDst_SoundMemListProc calls it with
+;   SingleLoadDst_DrawSoundMemItemRows on EVT_PAINT and on column moves (parameter 7), C = SLDstSoundMem_RowsPerColumn
+;   (20); it is the RAM-side twin of the source list's SingleLoadSrc_DrawSoundMemBankRows/_Helper9, which read the file.
 SingleLoadDst_DrawSoundMemBankRows:
 	dec	6, xsp
 	ld	(xsp), c
@@ -2319,6 +2451,12 @@ SingleLoadDst_DrawSoundMemBankRows_Join11:
 	call	ApPostEvent
 	inc	6, xsp
 	ret
+; SingleLoadDst_DrawSoundMemItemRows: Fills rows 2-3 of the SOUND MEMORY destination list (RAM 0x89CC / 0x89E1): with
+;   the ALL flag 0x89FA set, unit name + ":" and "ALL"; otherwise "MEMORY: n" and the item's name from sound RAM --
+;   for a position 0x8A08 >= 2C the USER KIT entry n = pos - 2C + 1 (WP_GetUserName3: ' ' + 13 bytes at 0x1E4AA7 + 80
+;   x (n - 1)), else the sound n = (pos mod C) + 1 (WP_GetUserName1: 0x1E0010 + 470 x pos); posts EVT_PARA_DRAW for
+;   both. Basis: callers + body -- SingleLoadDst_SoundMemListProc calls it on EVT_PAINT, column moves and item steps
+;   with C = SLDstSoundMem_RowsPerColumn (20); RAM-side twin of SingleLoadSrc_DrawSoundMemItemNumber/_Helper11.
 SingleLoadDst_DrawSoundMemItemRows:
 	dec	6, xsp
 	push	xiz
@@ -2431,6 +2569,10 @@ SingleLoadDst_DrawSoundMemItemRows_Join:
 	pop	xiz
 	inc	6, xsp
 	ret
+; SingleLoadDst_SoundMemListProc: Single-load destination list for area 3 SOUND MEMORY: columns of
+;   SLDstSoundMem_RowsPerColumn (20) over RAM 0x8A08 (parameter 7 moves +-20); EVT_PAINT draws
+;   SingleLoadDst_DrawSoundMemBankRows and _Helper6; entry [3] of SingleLoadDst_AreaListProcs and
+;   CmpSingleLoadDst_AreaListProcs, called with XWA = file-name box, XBC = event, XDE = parameter
 SingleLoadDst_SoundMemListProc:
 	dec	4, xsp
 	push	xiz

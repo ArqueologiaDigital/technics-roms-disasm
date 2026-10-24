@@ -2579,6 +2579,10 @@ EntertainerGridCheck_GridDrawRecInit:	.incbin "includes/generated/naka_effects_s
 ; [nakarest] (sequencer/sequencer_ui.s: `lda xbc, (NoteEdit_MidiNoteNameTable:24)`),
 ; [nakarest] SqedtFunc_OnGetQtzWinString_Join6 (sequencer/sequencer_ui.s: `lda xde,
 ; [nakarest] (NoteEdit_MidiNoteNameTable:24)`).
+; NoteEdit_MidiNoteNameTable: 128 x char[9]: MIDI note name per note number, C-2 .. G8, every character written as a
+;   "~hh" escape (~a0 = flat glyph, ~9e = sharp), e.g. "~43~2d~32" = "C-2"; Strncpy'd 9 bytes at note*9. Basis:
+;   readers + bytes -- NoteEditFunc_OnGetNoteString (title TT_SQNOTEEDT) and SqedtFunc_OnGetTnString/CnString index it
+;   by a note byte * 9.
 NoteEdit_MidiNoteNameTable:	.incbin "includes/generated/naka_effects_seq.bin", 0x89A2, 0x1E4
 ; [nakarest] naka_effects_seq+0x8b86  +0x8b86..+0x8e22 (0xe30b2a, 668 B)
 ; [nakarest] Text (668 B at 0xe30b2a), first string

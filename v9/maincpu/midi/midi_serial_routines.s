@@ -40,12 +40,22 @@ MidiInit_FillLoop:
 	jr c, MidiInit_FillLoop
 	ret
 
+; SndParam_InitPhase1_NullRet: Empty routine (`ret`): init phase 1 (Sub-CPU payload OK) of the sound-parameter
+;   subsystem -- slot 1 of SndParam_InitFuncTable, list entry 5 of Subsys_HandlerTableList, whose slot 0
+;   MIDI_INIT_SEQUENCES builds the SndParam hash table. Basis: callers + body -- ScreenGroup_Dispatch calls slot 1 of
+;   every subsystem table when SubCPU_Payload_GetErrorFlag is 0; same pattern as Xapr_InitPhase1_NullRet.
 SndParam_InitPhase1_NullRet:
 	ret
 
+; SndParam_InitPhase2_NullRet: Empty routine (`ret`): init phase 2 (Sub-CPU payload error) of the sound-parameter
+;   subsystem -- slot 2 of SndParam_InitFuncTable (list entry 5 of Subsys_HandlerTableList). Basis: callers
+;   + body -- ScreenGroup_Dispatch calls slot 2 when SubCPU_Payload_GetErrorFlag is not 0.
 SndParam_InitPhase2_NullRet:
 	ret
 
+; SndParam_InitPhase3_NullRet: Empty routine (`ret`): init phase 3 (the last boot phase) of the sound-parameter
+;   subsystem -- slot 3 of SndParam_InitFuncTable (list entry 5 of Subsys_HandlerTableList). Basis: callers
+;   + body -- the boot code calls ScreenGroup_Dispatch with WA = 3 once after phase 1/2.
 SndParam_InitPhase3_NullRet:
 	ret
 
@@ -472,6 +482,12 @@ MIDI_START_PLAYBACK_REQUEST:
 StartPlay_Return:
 	ret
 
+; MIDI_SystemMessage_OnStart: MIDI START (0xFA) case of MIDI_SYSTEM_MESSAGE_HANDLER: sets 0x28AC bit 5, so that
+;   SysMsg_ClockTransportDispatch counts every following 0xF8 clock in (1108), clears that count and, unless the word
+;   at 0xF19E is non-zero, falls into MIDI_RESET_PLAYBACK_STATE; with 0xF19E set the reset is left to
+;   MIDI_START_PLAYBACK_REQUEST, whose MIDI_APPLY_STARTUP_TIMING then advances the positions by 4 * (count - 1).
+;   Basis: callers + body -- both clock-source paths of the handler (Transport_NoClockSourcePath, AltClk_StartArmTx)
+;   jump here on D = 0xFA, as they jump to Continue_SetRunning on 0xFB.
 MIDI_SystemMessage_OnStart:
 	set 5, (0x28ac:16)
 	ld (1108:16), 0
@@ -865,6 +881,12 @@ MIDI_RX_CONTEXT_SAVE:
 	ld (1104:16), xiz
 	ret
 
+; SC0_InitSerialPort: Init phase 0 of the serial-port subsystem: sets up serial channel 0 (the MIDI / computer-
+;   interface port) -- clears 0xB7E7 bit 0, 0xB7E1 and the 7 saved-register slots of the RX handler, picks the baud-
+;   rate table by region (Get_Region_Code = 4 -> alternate), reads the COM SELECT switch, sends the computer-interface
+;   port byte (0xF5 MAC/PC1, 0xF4 PC2, nothing for MIDI) and programs and enables SC0. Basis: callers + body -- slot 0
+;   of SC0_InitFuncTable (list entry 3 of Subsys_HandlerTableList), which ScreenGroup_Dispatch runs right after
+;   the Sub-CPU payload transfer; slots 1-3 are SC0Init_PaddingStub (`ret`).
 SC0_InitSerialPort:
 	res 0, (0xb7e7:16)
 	ld (0xb7e1:16), 0
@@ -958,6 +980,10 @@ SC0Init_PaddingStub:
 ; (ui_widgets/widget_dispatch.s), and the reader of THAT table was not traced
 ; by the midi lane, so the indexing is not pinned here beyond the 4 entries
 ; that fit before MIDI_SC0_TX_DISPATCH.
+; SC0_InitFuncTable: 4 x u32: the serial-port (SC0) subsystem's init-phase handlers -- SC0_InitSerialPort for phase 0,
+;   SC0Init_PaddingStub (`ret`) for phases 1-3 -- list entry 3 of Subsys_HandlerTableList, which ScreenGroup_Dispatch
+;   walks per boot phase; it dispatches no MIDI. Its header's 'reader not traced' is answered by that list. Basis:
+;   readers + bytes.
 SC0_InitFuncTable:
 	.long SC0_InitSerialPort
 	.long SC0Init_PaddingStub

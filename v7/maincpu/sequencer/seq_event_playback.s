@@ -1100,6 +1100,9 @@ Voice_DecodeStandard_Data:
 	.short 0x0100, 0x017d, 0x017d, 0x017d
 	.short 0x0100, 0x017d, 0x017d, 0x017d
 	.short 0x0100, 0x017d, 0x017d, 0x017d
+; AccPlay_TickVector: Slot 0 of the AccPlay jump-vector block (jp AccPlay_MainDispatch; AccPlay_ToggleEntry /
+;   AccPlay_StopEntry follow); AccompSeq_PeriodicMain calls it once per periodic pass, after AccompSeq_FadeOutTick.
+;   Basis: callers + body.
 AccPlay_TickVector:
 	jp AccPlay_MainDispatch
 AccPlay_JumpTable:
@@ -3560,6 +3563,7 @@ AcVocalGridBoxProc_OnLswData:	; cases 29360156, 29360157
 	ld	xbc, (xsp+16)
 	ld	xde, (xsp+12)
 	jr	AcVocalGrid_FuncCallB
+; AcVocalGridBoxProc function callback A
 AcVocalGrid_FuncCallA:
 	ld xwa, xiz
 	call GetViewInstance
@@ -3940,6 +3944,7 @@ VocalistGridCheck_Skip13:
 	lda	xde, (xsp+12)
 	ld	xbc, EVT_GRID_DRAW
 	jrl	VocalistGridCheck_Join15
+; VocalistGridCheck dispatch handler
 VocalistGrid_CheckHandler:
 	ld (xsp + 4), xbc
 	ld xwa, xde
@@ -4252,6 +4257,8 @@ AcVocalist_ListDispatch:
 	ld	xbc, EVT_PARA_DRAW
 	ld	xde, 0:i3
 	jr	VocalistGridCheck_Join16
+; AcVocalist_ListSetup_HarmonyLocalOn: Vocalist presets 1, 3, 5 (RIGHT1 -> CHORDAL, RIGHT1 -> VOCODER, SMF HARMONY
+;   CHANNEL -> VOCODER) set HARMONY PART LOCAL to ON; presets 0, 2, 4 set it OFF.
 AcVocalist_ListSetup_HarmonyLocalOn:	; cases 1, 3, 5
 	ld	xwa, 0xd7000c
 	ld	xbc, EVT_PARA_DRAW

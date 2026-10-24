@@ -1029,6 +1029,9 @@ SeqBuf_DspSysEx_ReadAndForward_Loop:
 SeqBuf_DspSysEx_ReadAndForward_Done:
 	inc	2, xsp
 	ret
+; CompIface_SerialEnableTx: Empty (ret) computer-interface counterpart of MIDI_SC0_ENABLE_TX: MIDI_SC0_TX_DISPATCH
+;   calls it when COM_SELECT is not MIDI, SeqOut_WriteTimedBytes after queuing bytes in SeqBuf3 for interface types
+;   0/1. Basis: callers + body.
 CompIface_SerialEnableTx:
 	ret
 MidiSysEx_BuildAndSend:
@@ -3191,6 +3194,12 @@ DSPCfg_Data_ParamDispatch_Skip8:
 	ld	hl, wa
 	ld	qiz, 1
 	jr	DSPCfg_Data_ParamDispatch_Join5
+; DSPCfg_FindParamAtRecordOffset: Finds the effect parameter stored at byte offset E of a DSP-block panel record:
+;   walks the effect type's parameter list (XBC, from DspFxRecListPtrTable) with DSPCfg_Data_ParamDispatch, adding up
+;   each parameter's byte size and taking its bit mask, until it reaches offset E with a field whose mask meets the
+;   changed-bit mask at the stacked pointer (or passes E); clears those bits from that mask and returns HL = the index
+;   of the parameter that covers offset E; retd 4. Basis: callers + body -- DSPCfg_RecordFieldToParamId calls it with
+;   E = record offset - 1 and adds 0x10 + HL to the block's id base; its header describes exactly this lookup.
 DSPCfg_FindParamAtRecordOffset:
 	lda	xsp, (xsp-0x18)
 	pushw	iz
@@ -3269,6 +3278,13 @@ DSPCfg_FindParamAtRecordOffset_Skip3:
 	popw	iz
 	lda	xsp, (xsp+0x18)
 	retd	4
+; DSPCfg_RecordFieldToParamId: Maps a SwbtWr change event on a DSP-block panel record -- A = object code 0x61..0x66
+;   ('a'..'f'), C = byte offset (SWBTWR_PAYLOAD_1), E = changed-bit mask (SWBTWR_PAYLOAD_3) -- to a DSP parameter id
+;   stored through the stacked pointer: the block base 0x4900/0x4A00/0x4B00/0x4C00/0x4D00/0x4E00, or for C = 1..16
+;   base + 0x10 + the parameter index that DSPCfg_FindParamAtRecordOffset finds at field C-1 of the effect type's
+;   DspFxRecListPtrTable list. HL = 0, or 0xFFFF for a bad code / no parameter there; retd 4. Basis: callers + body --
+;   EffEdit_DSPConfigBlock (in the SwbtWr lists of codes 0x61, 0x63-0x66) passes the event and then treats id base+0
+;   as an effect-type change (EVT_RET_EFF_FIX) and base+0x10+n as parameter n (EVT_RET_EFF_PARA).
 DSPCfg_RecordFieldToParamId:
 	lda	xsp, (xsp-0xa)
 	push	xiz
@@ -3286,10 +3302,14 @@ DSPCfg_RecordFieldToParamId:
 	ld	wa, (xix+wa)
 	lda	xix, (DSPCfg_RecordFieldToParamId_DspEffectRecord:24)
 	jp	t, (xix+wa)
+; DSPCfg_RecordFieldToParamId_DspEffectRecord: Tag 0x61 (also the switch base): id base 0x4900 in DSP slot 0, the DSP
+;   EFFECT slot. Basis: switch value (tag - 0x61) + body.
 DSPCfg_RecordFieldToParamId_DspEffectRecord:
 	ld	xiz, 0x4900
 	ld	wa, 0:i3
 	jr	DSPCfg_Data_ParamDispatch_Join3
+; DSPCfg_RecordFieldToParamId_Tag62ReverbSlot: Tag 0x62: id base 0x4A00 in DSP slot 1 (the DIGITAL REVERB slot); 0x62
+;   has no panel record of its own.
 DSPCfg_RecordFieldToParamId_Tag62ReverbSlot:
 	ld	xiz, 0x4a00
 	jr	DSPCfg_Data_ParamDispatch_Join2
@@ -3779,6 +3799,8 @@ DSPCfg_ApplyParamStructFull_ParametricEq:
 	ld	xwa, (xsp + 32)
 	ld	(xwa), e
 	jrl	DSPCfg_Epilogue
+; DSPCfg_ApplyParamStructFull_Chorus: Effect 1 (CHORUS): rewrites the record's parameter bytes in place (the path
+;   DataBuf_LoadAndDispatchFormat2 takes when (0xb74e) = 2); the other cases do the same for their effect.
 DSPCfg_ApplyParamStructFull_Chorus:
 	ld	c, (xwa)
 	ld	(xsp + 6), c

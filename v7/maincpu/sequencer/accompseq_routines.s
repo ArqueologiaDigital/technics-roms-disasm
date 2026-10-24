@@ -1622,6 +1622,7 @@ AccompSeq_MidiFilterCodeBlock:
 	or	(0xe31c:16), 8
 	ret
 	ret
+	; No reference found.  Unless (0x7E6F) is set, steps (0xFD12) within 0..12 (bit 7 of W = down).
 AccompSeq_MidiFilterCodeBlock_Step:
 	; No reference found.  Unless (0x7E6F) is set, steps (0xFD12) within 0..12 (bit 7 of W = down).
 	cp	(0x7e6f:16), 0
@@ -2054,6 +2055,7 @@ TempoScale_2Beats:
 	; data, not code: TempoScale_2Beats is reached only as data (1 data), and its instruction decode held swi (scripts/converters/data_as_code_to_bytes.py).
 	.byte	0x80, 0xff, 0xff, 0xff, 0xff, 0x87, 0x81, 0x81, 0x84
 TempoScale_1Beat:
+	; data, not code: TempoScale_1Beat is reached only as data (2 data), and its instruction decode held swi (scripts/converters/data_as_code_to_bytes.py).
 	.byte 0x80, 0xff, 0xff, 0xff, 0xff, 0x87, 0x81, 0x84
 AccompSeq_InitFuncTable:
 	.long	AccompSeq_ResetToFactoryBanks

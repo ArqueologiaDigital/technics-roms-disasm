@@ -1077,6 +1077,8 @@ CtrlPanel_IndicatorJumpTable:
 ; DSP config parameter handler C
 DSPCfg_Param_CaseC:
 	ret
+; CtrlPanel_IndicatorJumpTable_SaveLanguage: Section 4: FlashWrite the 2-byte language setting (RAM 0x340E4) to Custom
+;   Data Flash 0x3D3400 (HelpFlashFunc, EVT_KUBO_FLASH_WRITE).
 CtrlPanel_IndicatorJumpTable_SaveLanguage:
 	ld	xwa, 0x3d3400
 	push	xwa
@@ -1140,6 +1142,7 @@ Audio_DispatchCommand_LoadDispTimeSet:
 	push	xwa
 	ld	xwa, 0x0340e6
 	jr	Audio_DispatchCommand_Join
+; Audio_DispatchCommand_LoadSetupOptions: Option block +0x20 (4 bytes, flash 0x3D3420) -> 0x340F2.
 Audio_DispatchCommand_LoadSetupOptions:
 	pushw	4
 	ld	xwa, 0x3d3420

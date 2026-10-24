@@ -1337,6 +1337,14 @@ SndParam_RegisterMultiField_Data_Join:
 	pop	xiz
 	lda	xsp, (xsp+10)
 	ret
+; SndParam_SetRegWord: Register accessor 5 of the sound-parameter descriptors (word-list parameters): clamps the value
+;   BC to the descriptor's +7..+8 and translates it through the 16-bit list SndParam_WordValueListPtrs[+11]; when that
+;   word differs from the one in the parameter's slot (block SndParam_BlockRamPtrs[+4], word +5) it stores it there
+;   (not in mode DE = 4) and fills the change record at 0x9710 (+2 = 1) with the two byte writes {block, offset, low}
+;   and {block, offset + 1, high}. Returns XHL = 0x9710; 0xFFFF at +0 when the block has no RAM. Basis: callers + body
+;   -- entry 5 of SndParam_RegisterHandlers, picked by descriptor byte +0x0D in SndParam_DispatchCallback; the
+;   descriptor that uses it (MidiChParam_Entry_052) reads back with SndParam_ReadRegWord, the index of the stored word
+;   in the same list.
 SndParam_SetRegWord:
 	dec	2, xsp
 	push	xiz
@@ -2814,6 +2822,11 @@ SndParam_BatchUpdate_Data_Join:
 	pop	xiz
 	lda	xsp, (xsp+22)
 	ret
+; SndParam_DispatchPackedEvent: Loads the 4-byte parameter event at XWA into C, B, E, D and runs MIDI_DispatchCC on it
+;   (handler chosen by byte 0 from the 192-entry MidiDispatchCC_HandlerTable; BC/DE kept at 0x964C/0x964E), preserving
+;   XDE/XHL/XIX/XIZ. Basis: callers + body -- SndParam_PackAndWrite packs {field +4, field +5, value & 127, value >> 7
+;   & 127} into a stack record and passes it here; SndParam_WriteFieldDirect_Data, SndParam_WriteFieldSub_Data and
+;   SndParam_BatchUpdate_Data do the same with their own packed records.
 SndParam_DispatchPackedEvent:
 	ld	c, (xwa)
 	ld	b, (xwa+1)

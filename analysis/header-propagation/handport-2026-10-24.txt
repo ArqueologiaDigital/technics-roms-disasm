@@ -1,0 +1,909 @@
+# Hand-ported v10 headers (scripts/tools/apply_handported_headers.py applies this file).
+# One entry per review-list row: "@@ <target> <label>", a "# note:" saying why the text is
+# true for the target (or why it was not ported), then the header as it reads there.
+# "per the body": the number pair is read from the two bodies; "per the v7 RAM map": from
+# analysis/header-propagation/v7-ram-shift-2026-10-24.txt (scripts/analysis/v7_ram_shift_map.py).
+
+@@ v7 SqSngName_ApplyNameAndExit
+# note: body differs only in CURRENT_TITLE's value (0x8D36 -> 0x8C9A, not quoted); the RAM it quotes (0x1159, 0xF280, 0xFFE3) lies in regions the v7 RAM map (v7-ram-shift-2026-10-24.txt) measures as unmoved; TITLE_* values equal in v7; verbatim
+; SqSngName_ApplyNameAndExit: Applies a song name just typed: copies the 16 bytes at 0x1159 to the current song name
+;   (0xF280) and to the name field (+0x100) of the current song slot (SEQ_SONG_SLOTS + 0x800 * (0xFFE3)), then leaves
+;   the naming page: title 0x83 (TITLE_SQEASYREC) when the current title is 0xA7 (TITLE_SQEASYNAME), else 0x8E
+;   (TITLE_SQSNGSEL), through UI_PostModeChangeEvent. Basis: callers + body -- the only caller is
+;   MiddleFuncCall_OnSongNameSet (EVT_SONG_NAME_SET, MT_SongNameSet), which first Strcpys the name into 0x1159 (4441).
+
+@@ v7 AccPatch_ChannelToParamTable
+# note: names AccPatch_ChannelToRecordPtr, which v7 does not define (v7 spells the table as a transplant .incbin)
+
+@@ v7 AppEvent_SubDispatch
+# note: body differs only in the name of one local jump target (Join8 / Join13), but the one-line header ("Application event sub-dispatch") only restates the label (withdrawn on review, propagate_v10_headers.py --audit)
+
+@@ v7 AudioVoice_Callback
+# note: body differs only in the name of the loaded handler (AudioVoiceHandler_NoneSentinel / AudioInit_MixFallbackDefault_Code); one-line description, verbatim
+; Audio voice callback dispatch
+
+@@ v7 CmpRealTtl_MajorDispatch_OnRightRow5Solo
+# note: v7 calls RhythmSolo_Wrapper, the same routine as v10's CmpRealTtl_ToggleSolo (bodies equal modulo the RAM map); header names v7's label
+; CmpRealTtl_MajorDispatch_OnRightRow5Solo: Switch 12 (right side row 5): RhythmSolo_Wrapper, then repaints
+;   0xB50018..0xB5001C.
+
+@@ v7 CmpStep_UnblockSustainInput
+# note: names CmpStep_SetStepModeAndBlockSustain_Impl, which v7 does not define; v7's wrapper is still AccDraw_Secondary_Helper8_Helper (label harmonization first)
+
+@@ v7 DisplayStr_ClearAndCopyStyleSectionName
+# note: only RAM differs: (0x3728) -> (0x368C) per the body itself; 0x0ECD / 0x0ED8 are in a region the v7 RAM map (v7-ram-shift-2026-10-24.txt) measures as unmoved
+; DisplayStr_ClearAndCopyStyleSectionName: Blanks the 27-character LCD text line at 0x0ECD (DisplayStr_ClearRegion)
+;   and copies the 8-character style-section name DisplayStr_StyleSectionNames[(0x368C)] to 0x0ED8; the caller does
+;   the region update. Basis: callers + body -- DisplayStr_BytecodeBlock_C (entries 1 and 2 of
+;   Display_ModePopupDispatch_Tbl and of SerialPort_ModeSelect_Table) calls it after drawing its RHYTHM label (region
+;   5) and before Display_UpdateRegion3.
+
+@@ v7 DisplayStr_ShowMeasureAndVariation
+# note: v7 calls DMA_ChannelHandler_3_Helper, the same routine as v10's DisplayStr_ShowMeasureNumber (ROM bytes equal but for RAM 0x371A -> 0x367E and relocated calls); header names v7's label
+; DisplayStr_ShowMeasureAndVariation: RHYTHM-track display: writes the measure number (DMA_ChannelHandler_3_Helper),
+;   clears the rest of the line (DisplayStr_ClearRegion) and writes "VARI" and the variation number ((C & 0x30) >> 4)
+;   + 1 at 0x0ED4 (DisplayStr_WriteVariationNumber); marks region 3. Basis: callers + body -- VoiceSlot_StatusRet (pop-up 15) and
+;   SqStep_ShowRhythmVariationEvent call it in display mode 3 with C = the value byte of a tag-0x48 offset-7 event;
+;   DisplayStr_ShowRhythmVariationLine is the mode-2 form.
+
+@@ v7 DisplayStr_ShowRhythmLine
+# note: v7 calls Str_Control_Helper, the same routine as v10's DisplayStr_WriteRhythmName (bodies equal modulo spelling and the RAM map); 0x3722 -> 0x3686 and 0x34AB -> 0x340F per the v7 RAM map (v7-ram-shift-2026-10-24.txt); 0x0ECF / 0x0EF5 / 0x0ED6 / 0x0DEF unmoved
+; DisplayStr_ShowRhythmLine: Builds the RHYTHM pop-up line: marks the status bar (region 0), blanks the text line,
+;   writes "RHYTHM" at 0x0ECF, marks region 5, then Str_Control_Helper applies the program change to part 72 (program
+;   (0x3686), bank (0x0EF5); PartCtrl_WriteProgramChange, AccVoice_DispatchEntry) and copies the 13-character rhythm
+;   name that leaves at 0x340F to 0x0ED6; marks region 3. Basis: callers + body -- TempoRingBuf_OnProgramChangeEvent
+;   and VoiceSlot_StatusRet both set pop-up 4 ((0x0DEF) := 4) and call it for a program change on part 72 (the rhythm
+;   part).
+
+@@ v7 MidiPkt_SendCtlValueSysEx
+# note: the header ties the routine to the MidiPkt_EnqueueControl_33xx family named after v10 RAM addresses (0x336C, 3364); in v7 those buffers sit 156 bytes lower, so the sentence needs rewording, not a port
+
+@@ v7 MidiPkt_SetXferBlock_AccompBlockPool
+# note: only RAM differs: 0xBD18 -> 0xBC7C per the body, descriptor 0xBCEC -> 0xBC50 per the v7 RAM map (v7-ram-shift-2026-10-24.txt); the lengths 0x3900 / 0x20 / 0x2E0 and the 0x1E8xxx addresses are body constants, kept
+; MidiPkt_SetXferBlock_AccompBlockPool: Fills the transfer descriptor at XWA for block 3 of the accompaniment-block-
+;   area transfer: {start 0x1E8B00, end 0x1EC400, length 0x3900}, the 57 x 256-byte block pool
+;   (msp_factory_defaults.s). With bit 6 of 0xBC7C set, the length is the used size ((0x1E881C) * 16,
+;   MidiPkt_GetUsedSize_AccompBlocks) less blocks 1-2 (0x20 + 0x2E0). Basis: callers + body --
+;   MidiPkt_ArpExtHandler_J (command 25, state 20) points the block descriptor 0xBC50 with it, then takes the length
+;   from the message (MidiPkt_SetXferLengthFromMsg); blocks 1-2 are 0x1E8800 (0x20) and 0x1E8820 (0x2E0), the area
+;   Voice_InitBankTables initialises.
+
+@@ v7 MidiPkt_SetXferBlock_SeqEvents
+# note: names MidiPkt_XferOnSeqEventBlock, which v7 does not define
+
+@@ v7 MidiPkt_SetXferBlock_StyleImagePool
+# note: only RAM differs: 0xBD18 -> 0xBC7C per the body, descriptor 0xBCEC -> 0xBC50 per the v7 RAM map (v7-ram-shift-2026-10-24.txt); the 0x9xxxx / 0xAB000 addresses and lengths are body constants, kept
+; MidiPkt_SetXferBlock_StyleImagePool: Fills the transfer descriptor at XWA for block 3 of the style-image transfer:
+;   {start 0x95BC0, end 0xAB000 (SEQ_SONG_SLOTS), length 0x15440}, the pattern block pool behind RHYTHM_PATTERN_BUF_B.
+;   With bit 6 of 0xBC7C set, the length is the used size ((0x9482E) * 16, MidiPkt_GetUsedSize_StyleImage) less
+;   blocks 1-2 (0x60 + 0x1360). Basis: callers + body -- MidiPkt_ArpExtHandler_G (command 17, state 9) points the
+;   block descriptor 0xBC50 with it and then takes the length from the message (MidiPkt_SetXferLengthFromMsg); blocks
+;   1-2 are RHYTHM_PATTERN_BUF_A (0x60) and 0x94860 (0x1360); the group's end step makes MidiSysEx_ProcessBlock run
+;   AccPatch_EnsureStyleImageHeader.
+
+@@ v7 MidiPkt_SetXferTotal_AccompBlocks
+# note: names MidiPkt_XferOnAccompBlocksStart and SysEx_SendMspUserData, which v7 does not define
+
+@@ v7 MidiPkt_SetXferTotal_SeqData
+# note: names SysEx_SendSequencerData, which v7 does not define (v7: SysEx_ResetAndReturn_Helper2)
+
+@@ v7 MidiPkt_SetXferTotal_StyleImage
+# note: names MidiPkt_XferOnStyleImageStart and SysEx_SendStyleImageData, which v7 does not define
+
+@@ v7 PanelEvent_FillSelectedPart
+# note: only PART_SELECT differs: 0x8D3A -> 0x8C9E (the .byte operand and the .equ in v7)
+; PanelEvent_FillSelectedPart: If byte 0 of the panel event at XWA is 0 and byte 1 is not 3, writes the selected part
+;   (PART_SELECT, 0x8C9E) into byte 0. Basis: callers + body -- PanelAction_PostUnlessDemo and the other panel actions
+;   call it on the event frame immediately before PanelEvent_Post.
+
+@@ v7 Rhythm_StepProgram
+# note: only RAM differs: (0x90F7) -> (0x905B) per the body, 0x90F6 -> 0x905A and 0x3540 -> 0x34A4 per the v7 RAM map (v7-ram-shift-2026-10-24.txt); 0xFC5A / 0xFC5B / 0xFF92 unmoved
+; Rhythm_StepProgram: Steps the selected rhythm's program (0xFC5A) up to 13 (W bit 7 clear) or down to 0 (W bit 7 set)
+;   and takes the bank for the new program from the style part's companion bytes 0xFF92[program]: first
+;   PartCtrl_WriteProgramChange with the current program / bank and (0x905B) = 72 (part 0x48), then
+;   SndParam_ApplyProgramChange_Safe with the new pair and (0x905A) = 72, storing the resolved program and bank (&
+;   0x7F) back to 0xFC5A / 0xFC5B. Basis: callers + body -- DrumVoice_Handler6 (entry 6 of DrumVoice_DispatchTable,
+;   chosen by DrumVoice_Select from (0x34A4)) calls it before DrumKit_PostMidiEvents and Rhythm_LoadCurrentTimeSig,
+;   whose header names 0xFC5A / 0xFC5B the rhythm program / bank.
+
+@@ v7 SqStep_ProcessRhythmSectionEvent
+# note: names VoiceCtrl_ParamSetupBytecode_Tbl4, which v7 does not define
+
+@@ v7 SysEx_InitiateSend_SendNoData
+# note: names SysEx_FinishBulkSend, which v7 does not define
+
+@@ v7 SysEx_InitiateSend_SendSequencer
+# note: v7 calls SysEx_ResetAndReturn_Helper2, the same routine as v10's SysEx_SendSequencerData (bodies equal modulo the RAM map); the header does not name it; verbatim
+; SysEx_InitiateSend_SendSequencer: Code 2 = SEQUENCER: size the whole sequencer transfer
+;   (MidiPkt_SetXferTotal_SeqData) and send it.
+
+@@ v7 SysEx_InitiateSend_SendStyleImage
+# note: v7 calls SysEx_ResetAndReturn_Helper, the same routine as v10's SysEx_SendStyleImageData (bodies equal modulo the RAM map); total 0xBCBC -> 0xBC20 per the v7 RAM map (v7-ram-shift-2026-10-24.txt)
+; SysEx_InitiateSend_SendStyleImage: Case 1 (STYLE IMAGE) of SysEx_InitiateSend: sizes the style-image group (total
+;   0xBC20 from RHYTHM_PATTERN_BUF_A) and sends it (SysEx_ResetAndReturn_Helper), then rejoins
+;   SysEx_InitiateSend_Join. Basis: callers + body -- entry 1 of SysExSend_SwitchOffsets; message id 32 (F0 50 2B 01
+;   28 12 50 00 00, style request) selects code 1.
+
+@@ v7 CPanel_CheckSpecialCombos
+# note: body differs only in a RAM operand (36446 -> 36290, -156) and a local label's name; the combo list is the same code; verbatim ('firmware version' is about the LED screen, not this tree)
+; =============================================================================
+; CPanel_CheckSpecialCombos - Detect special button combos held at power-on
+; =============================================================================
+; Called during boot by CPanel_ScanButtons. Checks four specific button
+; combinations on the control panel and returns a combo code in HL:
+;   0 = No special combo (normal boot)
+;   1 = Factory Reset / Initial Setting (service manual p I-3)
+;   2 = "ALL INITIAL SETTING!" screen + firmware version on LEDs
+;   3 = Software version / internal build numbers screen
+;   4 = Flash Memory Update mode (requires floppy + first-boot condition)
+;
+; See: docs/test-modes.md for full documentation
+; =============================================================================
+
+@@ v7 CmpEsyTtl_E_Var2
+# note: body differs only in a RAM operand (-156) and a local label's name, but the one-line header ("CmpEsyTtl E variant 2") only restates the label (withdrawn on review, propagate_v10_headers.py --audit)
+
+@@ v7 CmpNcp_LatchPanelRhythmAsSource
+# note: only RAM differs: 0x34ED / 0x34EE -> 0x3451 / 0x3452 per the body, 0x34D6 -> 0x343A per the v7 RAM map (v7-ram-shift-2026-10-24.txt); 0xFC5A / 0xFC5B unmoved
+; CmpNcp_LatchPanelRhythmAsSource: Copies the panel rhythm selection -- record 0x48 fields 0/1, program 0xFC5A and
+;   bank 0xFC5B & 0x7F -- into 0x3451 / 0x3452, the rhythm the Composer copies from (< 0x80 a preset rhythm of that
+;   bank, 0x80 + n composer memory n). Basis: callers + body -- every caller is on the Composer copy title TT_CMPNCP:
+;   its FROM item handlers 0 and 1, its title-activate set-up, and AccPatch_CallParamLookup after a panel rhythm press
+;   while CURRENT_TITLE = 184; AccPat_DispatchNoteChange copies from (0x3451) into the current pattern 0x343A.
+
+@@ v7 CmpNcp_ResetPatternToVari1
+# note: only RAM differs: 0x34EF -> 0x3453 per the body (and the name of one local jump target); 0xFC5A unmoved
+; CmpNcp_ResetPatternToVari1: Sets the composer's style-pattern index (0x3453) to Vari1 of the current rhythm's
+;   pattern-name set: 16 (StrStylePatt_Vari1) when the rhythm program (0xFC5A) is >= 128, else 0
+;   (StrStylePatt_Vari1b). Basis: callers + body -- CmpNcp_StepSlotInGroup1/2 call it when the slot steps up out of
+;   the special slot (31 -> 4, 32 -> 8), the reverse of their step down, which sets 0x3453 = 26 (ALL);
+;   PsCmpCpFPtnBoxProc_OnPaintOrRepaint prints 0x3453 through the name table where 0 and 16 are 'Vari1' and 26 is
+;   'ALL'.
+
+@@ v7 DisplayStr_WritePartAndSoundName
+# note: names DisplayStr_ShowPartSoundLine, which v7 does not define
+
+@@ v7 DrumParam_StepChannelStyle
+# note: names DrumParam_CopyStyleNameAndReload, which v7 does not define
+
+@@ v7 FDC_STATUS_COPY
+# note: in v7 the drive-count check the header describes is a separate label (FDC_OUTPUT_CTRL after FDC_STATUS_COPY_Code: ret), so the header would describe code that is not this label's
+
+@@ v7 MainExeCall_OnTitleSqtrkmrg
+# note: ROM bytes equal but for RAM 0x7F42 -> 0x7EA6 (-156) and a relocated call; the header's 0xF1D3-0xF1D5 / 0x2875 / 0xFFEC are unmoved; verbatim
+; MainExeCall_OnTitleSqtrkmrg: EXECUTE on TT_SQTRKMRG: merges MrgTrA (0xf1d3) and MrgTrB (0xf1d4) into MrgTrC (0xf1d5)
+;   through SeqPart_Compare and moves the tracks' bits in 0x2875 / 0xffec from A and B to C.
+
+@@ v7 MidiSysEx_ReinitSwbtWrOutput
+# note: names MidiSysEx_FinishPanelXfer, which v7 does not define
+
+@@ v7 MidiSysMsg_SetScaledTempo
+# note: only RAM differs: (0xE9EB) -> (0xE925) per the body (-198); 0x8000 is the tempo flag constant, kept; 0xFC63 / 0x11F5 unmoved
+; MidiSysMsg_SetScaledTempo: Applies a song-stream tempo event: from the two 7-bit bytes at XWA (LSB, MSB) forms the
+;   14-bit value, scales it by (0xE925) / 1000 (Math_Multiply32, Math_DivideU32; nothing when (0xE925) = 0),
+;   clamps to 40..300, puts bit 8 in 0xFC63 bit 0, passes the tempo to SoundParam_NotifyChange (XWA = 4, DE = 3),
+;   recomputes the timer (SeqTimer_UpdateTempoReg) and stores tempo | 0x8000 in 0x11F5; XIZ preserved. Basis: callers
+;   + body -- MidiSysMsg_Handler_OnFBTempo (status 0xFB, header: 'tempo (14-bit value * (0xE925) / 1000, clamped to
+;   40..300), then SeqTimer_UpdateTempoReg') reads the two bytes and calls it.
+
+@@ v7 S2cTtl_MainHandler
+# note: body differs only in a RAM operand (-156) and a local label's name; one-line description, verbatim
+; S2cTtlFunc main handler
+
+@@ v7 SeqTimer_SetPanelTempo
+# note: body differs only in RAM 0x90F9 -> 0x905D (-156), not quoted; 0xFC62 / 0xFC63 unmoved; verbatim
+; SeqTimer_SetPanelTempo: Stores tempo WA (40..300, 9 bits) into the panel tempo word 0xFC62 (low byte, bit 0 of
+;   0xFC63), queues it as SwbtWr param 0x48/8 and reloads the tempo timer (SeqTimer_UpdateTempoReg). Basis: callers +
+;   body -- the only caller is the F0 50 25 (message id 9, tempo) receive handler.
+
+@@ v7 TempoRingBuf_OnPitchBendEvent
+# note: names Display_BytecodeBlock_F_Tbl2_Helper2, which v7 does not define
+
+@@ v7 UIDisp_StepMeasure
+# note: v7 calls VoiceState_DataBlock2_Helper4 / _Helper3, the same routines as v10's UIDisp_StepMeasureForward / Back (bodies equal modulo spelling and local label names); header names v7's labels; 0x0F57 / 0x0F53 / 0x0D39 unmoved
+; UIDisp_StepMeasure: Moves the song position one measure in the note-track display modes (1 and 2): sets 0x0F57 bit 0
+;   and (0x0F53) = 1, keeps W in 0x0D39, then goes forward to the next measure start
+;   (VoiceState_DataBlock2_Helper4) when W bit 7 is set or back (VoiceState_DataBlock2_Helper3) when it is
+;   clear. Basis: callers + body -- UIDisp_DefaultInputHandler (entries 0 and 17 of PerfMode_EventTable_0/_1, where
+;   mode 0 has ScoopDisp_FlagSetAndDispatch -> ScoopDisp_StepMeasureForward/Back) calls it; the go-to-measure routine
+;   uses the same two targets for modes 1 and 2.
+
+@@ v7 AccPatch_SetCursorToChannelStart
+# note: only RAM differs: 0x3612 / 0x3614 -> 0x3576 / 0x3578 per the body, 0x37C9 -> 0x372D per the v7 RAM map (v7-ram-shift-2026-10-24.txt)
+; AccPatch_SetCursorToChannelStart: Points the pattern-data write cursor at the start of the selected accompaniment
+;   channel's data in the current pattern: (0x3576) = that channel's first block number (word from the pattern's
+;   RHYTHM_PATTERN_BUF_A entry, indexed by DrumChannel_MapToIndexB of the one-hot (0x372D)), (0x3578) = 6, the first
+;   data byte after the block header. Basis: callers + body -- AccVoice_SetupSlots_* call it before the routines that
+;   write 0x81/0x83 at that cursor.
+
+@@ v7 DirmdEmu_DefaultCase
+# note: body differs only in RAM operands (-198) and local label names; one-line description, verbatim
+; DirmdEmulator default/fallthrough case
+
+@@ v7 FDC_CmdRecalibrate
+# note: quotes v10 ROM addresses of .set aliases (0xf97696, 0xf975dc, ...) that could not be translated
+
+@@ v7 FdcFormat_DialGrid
+# note: body differs only in a RAM operand (-156) and the ldiw_erp / ld qwa spelling; the table address is the same in v7
+; FdcFormat dial grid dispatch (7-entry, table 0xe1d728)
+
+@@ v7 SingleLoad_CopyComposerPatternFromFile
+# note: only RAM differs: (0x3950) -> (0x38B4) per the body; 0x69800 and 0xFF95 are body constants
+; SingleLoad_CopyComposerPatternFromFile: Composer single-load body: reads the open .CMP file's style image into the
+;   work buffer 0x69800, accepts the headers 'H',0,'K' / 'G',0,'K' / 'L','K','E' (rewriting an older one to 'H',0,'K'
+;   and resetting byte 2 of the copied sections' part entries), then copies source A into destination C with
+;   DualVoice_ParamLoadDone -- one composer pattern, or the ten of a memory bank when both are 30 + bank
+;   (AccStyle_TableDataEntry_Helper); HL = 0xFF95 when a copy fails (0x38B4 = 131), else 0 (0x38B4 = 130 for an
+;   unknown header or a pattern / bank mix). Basis: callers + body -- SingleLoad_LoadComposerPattern hands it source
+;   WA and destination BC after FileIO_ReadAndValidateHeader; its header describes this copy.
+
+@@ v7 SndArg_StoreAccomp1Sound
+# note: only RAM differs: 0x3399 -> 0x32FD and 0x3393 -> 0x32F7 per the body; part record 0xFB56 unmoved
+; SndArg_StoreAccomp1Sound: Sound Arranger: compares the ACCOMP1 part's sound (part record 16 at RAM 0xFB56: program,
+;   bank & 0x7F with bit 6 of record +4 as bit 7) with its last value (word 0x32FD); when it changed, writes program /
+;   bank into +4 / +5 of the current style's arrangement record at XIY and sets 0x32F7 bit 0; then saves the new
+;   value. Basis: callers + body -- third of AccStyle_Process's five per-part steps; selector code 4 = part 0x10, the
+;   ACCOMP1 entry of the part-name table.
+
+@@ v7 SndArg_StoreAccomp2Sound
+# note: only RAM differs: 0x339B -> 0x32FF and 0x3393 -> 0x32F7 per the body; part record 0xFB70 unmoved
+; SndArg_StoreAccomp2Sound: Sound Arranger: compares the ACCOMP2 part's sound (part record 17 at RAM 0xFB70: program,
+;   bank & 0x7F with bit 6 of record +4 as bit 7) with its last value (word 0x32FF); when it changed, writes program /
+;   bank into +6 / +7 of the current style's arrangement record at XIY and sets 0x32F7 bit 0; then saves the new
+;   value. Basis: callers + body -- fourth of AccStyle_Process's five per-part steps; selector code 8 = part 0x11, the
+;   ACCOMP2 entry of the part-name table.
+
+@@ v7 SndArg_StoreAccomp3Sound
+# note: only RAM differs: 0x339D -> 0x3301 and 0x3393 -> 0x32F7 per the body; part record 0xFB8A unmoved
+; SndArg_StoreAccomp3Sound: Sound Arranger: compares the ACCOMP3 part's sound (part record 18 at RAM 0xFB8A: program,
+;   bank & 0x7F with bit 6 of record +4 as bit 7) with its last value (word 0x3301); when it changed, writes program /
+;   bank into +8 / +9 of the current style's arrangement record at XIY and sets 0x32F7 bit 0; then saves the new
+;   value. Basis: callers + body -- last of AccStyle_Process's five per-part steps; selector code 16 = part 0x12, the
+;   ACCOMP3 entry of the part-name table.
+
+@@ v7 SndArg_StoreBassSound
+# note: only RAM differs: 0x3397 -> 0x32FB and 0x3393 -> 0x32F7 per the body; part record 0xFBA4 unmoved
+; SndArg_StoreBassSound: Sound Arranger: compares the BASS part's sound (part record 19 at RAM 0xFBA4: program, bank &
+;   0x7F with bit 6 of record +4 as bit 7) with its last value (word 0x32FB); when it changed, writes program / bank
+;   into +2 / +3 of the current style's arrangement record at XIY and sets 0x32F7 bit 0; then saves the new value.
+;   Basis: callers + body -- second of AccStyle_Process's five per-part steps; selector code 2 = part 0x13, the BASS
+;   entry of the part-name table.
+
+@@ v7 SndArg_StoreDrumSound
+# note: only RAM differs: 0x3395 -> 0x32F9 and 0x3393 -> 0x32F7 per the body; part record 0xFBBE unmoved per the v7 RAM map; 0x1E7810 is a body constant
+; SndArg_StoreDrumSound: Sound Arranger: compares the DRUM part's sound (part record 20 at RAM 0xFBBE: program, bank &
+;   0x7F) with its last value (word 0x32F9); when it changed, writes it into the current style's arrangement record at
+;   XIY -- +0 = program & 0x0F, +1 = bank (bit 7 kept) -- and sets 0x32F7 bit 0; then saves the new value. Basis:
+;   callers + body -- AccStyle_Process (the per-tick Sound Arranger step) calls the five AccVoiceDelta_PartN with XIY
+;   = 0x1E7810 + 10 * index; one-hot selector 1 = part 0x14, the DRUM entry of the part-name table.
+
+@@ v7 SqStep_AdvanceClockByStep
+# note: names SqStep_ComputeStepAndGateTime, which v7 does not define
+
+@@ v7 SqStep_ComputeStepTargetClock
+# note: v7 calls SerialPort_ModeHandler_0_Helper2, the same routine as v10's SqStep_AddStepToClock (ROM bytes equal but for RAM 0x342F -> 0x3393); 0x342F / 0x3430 -> 0x3393 / 0x3394 accordingly; 0x0D57 / 0x0DCE / 0x0DCD / 0x0D5A unmoved per the v7 RAM map; header names v7's label
+; SqStep_ComputeStepTargetClock: Computes the position one step ahead: clock 0x0D57 + step clocks 0x3393, wrapped at
+;   96 (SerialPort_ModeHandler_0_Helper2), goes to the target clock 0x0DCE, and the step's whole 96-clock units 0x3394
+;   (+1 on a wrap) to 0x0DCD. Basis: callers + body -- SqStep_SeekForwardByStep calls it first, then steps the cursor
+;   until the unit counter 0x0D5A has advanced by 0x0DCD and the clock has reached 0x0DCE; its twin
+;   SqStep_AdvanceClockByStep stores the same sum into the clock 0x0D57 itself.
+
+@@ v7 SqStep_LowestSetBitOfWord
+# note: body differs only in where its shared `ret` is labelled (v7: SysInit_BytecodeBlock_Return6); mask 0x1108 unmoved per the v7 RAM map; verbatim
+; SqStep_LowestSetBitOfWord: Returns L = the index (0..15) of the lowest set bit of the 16-bit mask at XIY (low byte
+;   first), or 0xFF when it is 0; A, BC and XIY are preserved. Basis: callers + body -- the TT_SQSTEP dispatcher
+;   (SysEx_BytecodeDispatcher) calls it on the request mask 0x1108 and passes L, after the Helper5-7 remaps, to the
+;   action dispatch SysEx_BytecodeDispatcher_Helper2; same scan as SqStep_LowestSetBitOfByte over two bytes.
+
+@@ v7 SubCPU_SendSoundMemUpdated
+# note: body differs only in RAM operands (-156), not quoted; 0x7800 is a sub-CPU address, kept; verbatim
+; SubCPU_SendSoundMemUpdated: Sends sub-CPU message {2C 30 7F 06 00 00 02 seq A C}: sound-memory entry (A, C) --
+;   0xFF/0xFF = all -- has been transferred; the sub-CPU runs DSP_VoiceState_Dispatch(A, C). Sent after the image at
+;   0x1E0000 is bulk-copied to sub-CPU 0x7800. Basis: callers + body + receiver.
+
+@@ v7 AccGraphics_BoundOp04
+# note: the record's RAM byte 0x39B9 -> 0x391D per the v7 RAM map (the neighbouring CmpStep_ValueFieldRecords bytes show the same -156); v7's span runs on into an unnamed continuation
+; AccGraphics_BoundOp04: Draws one bound display record of op 04 at XIY: ColorBlit_Variant_ByteData colour-blits the
+;   {text cell, width, height} entry of the record's rectangle list that the masked and shifted RAM byte selects (in
+;   the current COLORBLIT_MODE); XWA preserved. The Composer screens' copy of the SeGfx_BoundOp0N single-record
+;   wrappers, beside AccDraw_Init (op 00), AccDraw_Secondary (op 02) and AccGraphics_DataBlock2 (op 03). Basis:
+;   callers + body -- the TT_CMSTEP draw functions pass it a single op-04 record: AccScreen_DataBlock_Data_6 (RAM
+;   0x391D) in AccScreen_DataBlock_Code2 and CmpStep_NoteEntryAreaBand in AccDraw_Secondary_Helper5.
+
+@@ v7 AccPart_GetParamAddr_Wrap
+# note: body differs only in RAM 13268 -> 13112 and the names of two callees not quoted; the decimal RAM 13272 -> 13116 per the v7 RAM map
+; AccPart_GetParamAddr_Wrap: Register-convention wrapper of AccPart_GetParamAddr: XIY = XWA (the record), HL = BC
+;   zero-extended (the offset); returns its result in HL (XWA high half cleared), preserving XIZ. Basis: callers +
+;   body -- AccTuning_ComplexBytecodeData passes XWA = the record from AccTone_LookupByProgram_Dispatch and BC = the
+;   offset from AccPedal_DirectionA_Wrap, then stores HL at 13116.
+
+@@ v7 AccVoice_SetupSlots_Apply
+# note: abbreviates its callees as suffixes of AccPatch_ResolveEntryAddr (_Helper10_Helper, _Helper2), which v7 names differently
+
+@@ v7 CmpSet_StepRhythmBank
+# note: only RAM differs: 0x342D -> 0x3391 and 0x90F7 -> 0x905B per the body; 0xFC5A / 0xFC5B / 0xFF92 unmoved per the v7 RAM map
+; CmpSet_StepRhythmBank: Steps the rhythm bank 0xFC5B of the current rhythm program 0xFC5A (vocabulary of
+;   Rhythm_LoadCurrentTimeSig) up (W bit 7 clear) or down (set), clamped to 0..AccVoice_GetChannelCount(program) (kept
+;   in 0x3391); remembers it as that program's bank in 0xFF92[program] (tag 0x49's payload), applies the pair with
+;   SndParam_ApplyProgramChange_Safe and stores 0xFC5A/0xFC5B. It first passes the old pair to
+;   PartCtrl_WriteProgramChange (0x905B = 72). Basis: callers + body -- DrumVoice_Handler7, entry 7 of
+;   DrumVoice_DispatchTable (DrumVoice_Select from the composer-set page-1 Up/Dn events, W = 0 / 0x80), calls it
+;   before DrumKit_PostMidiEvents and Rhythm_LoadCurrentTimeSig; Rhythm_StepProgram steps the program and
+;   recalls its bank from 0xFF92[program].
+
+@@ v7 FDC_INTERRUPT_HANDLER
+# note: v7 frames this routine differently (a raw .byte `cp` and FDC_INTERRUPT_HANDLER_Code mid-routine, then misdecoded bytes); re-frame v7 first
+
+@@ v7 SeDigEff_OnColumn4_RepeatDelayRelease
+# note: body differs only in the names of the shared join / epilogue labels; verbatim
+; SeDigEff_OnColumn4_RepeatDelayRelease: Type 9 REPEAT DELAY: column 4 is RELEASE, limits 30 and 0.
+
+@@ v7 SeDigEff_OnColumn5_EnsembleDetune
+# note: body differs only in the names of the shared join / epilogue labels; verbatim
+; SeDigEff_OnColumn5_EnsembleDetune: Types 4/5 ENSEMBLE: column 5 is DETUNE, limits +50 and -50.
+
+@@ v7 SndParam_ApplySystemParam
+# note: body differs only in RAM operands (-198 / -156), not quoted; the ids are parameter numbers (body literals), kept; verbatim
+; SndParam_ApplySystemParam: Applies a non-part panel parameter: XWA = id (high byte namespace, low byte field), BC =
+;   value. Ids 0x00xx, 0x4000-0x4006, 0x4080, 0x4140-0x4142 and 0x4280-0x428E are sent now; DSP-slot ids (0x49xx,
+;   0x4Bxx-0x4Exx) are queued for Song_SendPartDataBlocks. Basis: callers + body.
+
+@@ v7 SndParam_ApplySystemParam_SendEqualizerOnOff
+# note: body differs only in RAM (-156) and a callee's name, not quoted; 0x4006 is a parameter id, kept; verbatim
+; SndParam_ApplySystemParam_SendEqualizerOnOff: Id 0x4006 (tag 0x60 +1 bit 5, equalizer on/off): sent at once as COMM
+;   packet 0x25.
+
+@@ v7 SqStep_WriteClockWrapMarkers
+# note: names SystemInit_StepHandler_0_Helper2, which v7 does not define
+
+@@ v7 TempoRingBuf_OnProgramChangeEvent
+# note: names SystemInit_StepHandler_0_Helper2 and VoiceCtrl_ParamSetupBytecode_Tbl3_Helper, which v7 does not define
+
+@@ v7 VocalistPage2OKFunc_Join2
+# note: the v7 body is different code (ApPostEvent / MidiSysEx_SendAllParams vs `ld xhl, 0 / ret`)
+
+@@ v7 AccVoice_SetupSlots_CheckStream
+# note: only RAM differs: slot table 0x3898 -> 0x37FC per the body
+	; Reads the slot's stream pointer (0x37FC + 4 * index) and compares its first byte with 0x90 / 0x91.
+
+@@ v7 DirmdTitle_New
+# note: v7 labels its tail under another name (PostTitle_Function_Skip); one-line description, verbatim
+; DirmdEmulator dispatch case F
+
+@@ v7 DisplayStr_ShowBeatCount
+# note: body differs only in spelling (ldw_d16) and the name of the shared return; 0x0ED4 / 0x0D62 / 0x1181 / 0x0D64 unmoved per the v7 RAM map; verbatim
+; DisplayStr_ShowBeatCount: Writes at 0x0ED4 (7 words blanked first) the beat count (word 0x0D62): when non-zero the
+;   glyph pair 0x1B 0x8B, up to three digits (UIRender_DescriptorTable2 -> 0x1181..) and a '+' when 0x0D64 bit 7 (a
+;   half beat) is set; a zero count shows only glyph 28 when the bit is set. Basis: callers + body --
+;   VoiceSlot_IndexDone (the chord-track display of a position without an event) counts the 0x81 beat markers at the
+;   song-data cursor into 0x0D62 and sets 0x0D64 bit 7 for an off-beat next event, then calls it.
+
+@@ v7 PanelTag72_ApplyPartMix_ReverbSend
+# note: body differs only in the name of the shared epilogue; verbatim
+; PanelTag72_ApplyPartMix_ReverbSend: Payload +7: sent to parts 0x17 and 0x18 as CC 91 (reverb send).
+
+@@ v7 SndParam_ApplySystemParam_ScaleTuneUserNote11
+# note: body differs only in RAM operands (-156), not quoted; 0x428E is a parameter id, kept; RAM 0xFD29 unmoved per the v7 RAM map
+; SndParam_ApplySystemParam_ScaleTuneUserNote11: Id 0x428E (record 0x92 +13, RAM 0xFD29): user scale-tune offset of
+;   the note 11 semitones above the key; sent only when the type is 128 (user).
+
+@@ v7 SoundParam_NotifyChange
+# note: v10's span runs to the end of its file (.include lines); the routine is the same; 0x4002 / 0x4006 are parameter ids, kept; verbatim
+; =============================================================================
+; SoundParam_NotifyChange -- Notify UI of sound parameter change
+; =============================================================================
+; Hashes parameter ID and triggers UI refresh for affected widgets.
+; Called after preset loads: 0x4002 for reverb, 0x4006 for EQ.
+; Args: xwa = parameter ID
+
+@@ v7 TempoRingBuf_IsEmpty
+# note: body differs only in local label names; verbatim
+; TempoRingBuf_IsEmpty: Returns W = 0xFF if the TempoRingBuf ring is empty (TempoRingBuf_CheckEmpty gives HL = 0),
+;   else W = 0. Basis: callers + body -- the Timer_ModeHandler_* tick handlers return early unless it gives W = 0.
+
+@@ v7 TempoRingBuf_OnModulationEvent
+# note: only RAM differs: 0x3721 / 0x3720 -> 0x3685 / 0x3684 per the body; 0x0D8F / 0x0DD2 unmoved per the v7 RAM map
+; TempoRingBuf_OnModulationEvent: Modulation event (status 0xD1) from TempoRingBuf: except in display mode 3 (then it
+;   only consumes one byte), consumes the event into 0x0D8F, value byte +2 -> 0x3685, record length (0x0DD2) = 3,
+;   control-name index (0x3684) = 2 ("MOD. =" in Str_PBendModExpEq) and shows the CONTROL line with the value (pop-up
+;   2). Basis: callers + body -- TempoRingBuf_DispatchEvents sends status 0xD1 here; VoiceSlot_StatusRet's display of
+;   a stored event maps 0xD1 to the same index 2 (0xD0 -> 5 AFT., 0xD2 -> 1 P.BEND, 0xD3 -> 3 EXP.).
+
+@@ v7 FileData_ImportNNLivePanel
+# note: body differs only in the name of the shared epilogue; 0xF980 unmoved per the v7 RAM map; verbatim
+; FileData_ImportNNLivePanel: Foreign .LSW import, stage 1 for header class 3 ('N','N'): between PreLswLoad and
+;   PostLswLoad, reads 0x420 bytes after the 32-byte header and converts its records into the live panel area at
+;   0xF980; HL = 0, 0xFF38 when out of memory, or the read error. Basis: callers + body -- FileData_AllocLoadAndParse
+;   runs it for class 3, where FileData_RawDataBlock (0x660 bytes, same Pre/PostLswLoad bracket) serves classes 1 and
+;   2.
+
+@@ v7 MidiSysEx_FinishSoundRamXfer
+# note: only RAM differs: 0xBD1A -> 0xBC7E per the body; 0x1E0000 is a body constant
+; MidiSysEx_FinishSoundRamXfer: End-of-transfer step for the sound-RAM group: if bit 6 of 0xBC7E is set (blocks 4-5
+;   received: the 16-byte 'KN5000 SOUND RAM' id at 0x1E0000 and the data from 0x1E0010), it sends command packet {4,
+;   0xF0, 0x50, 0x92, 0} (MIDI_SendAllVoicesPitchUpdate via MidiSysEx_SendSoundRamEndCmd) and clears bit 6. It also
+;   copies the 6-byte MidiSysEx_BlockTemplate into its frame and never reads it. Basis: callers + body --
+;   MidiSysEx_ProcessBlock (command 4) calls it second; bit 6 is set only by SeqChan_WriteField_Data_B, the end step
+;   (state 6) of blocks 4-5. The abort path for the same group (MidiSysEx_BlockOp_ToPartDataAndBend) sends the same
+;   packet.
+
+@@ v7 SeDigEff_OnColumn3_RepeatDelaySustain
+# note: v7's span also holds the shared join / epilogue; verbatim
+; SeDigEff_OnColumn3_RepeatDelaySustain: Type 9 REPEAT DELAY: column 3 is SUSTAIN, limits 30 and 0.
+
+@@ v7 SingleLoad_SyncSoundMemCursorGroup
+# note: body differs only in the name of the shared return; the cursors the callers pass, 0x8A00 / 0x8A08, are 0x8964 / 0x896C per the v7 RAM map
+; SingleLoad_SyncSoundMemCursorGroup: Keeps the SOUND MEMORY source cursor (XDE = 0x8964) and destination cursor
+;   (stack arg = 0x896C) in the same group, below or from 2 x C (C = 20: the 40 sounds vs. the entries from 40 up):
+;   when they differ, an XWA = 5/6 move (source list) copies the source index to the destination and redraws
+;   SingleLoadDstFunc (EVT_PARA_DRAW), a 7/8 move (destination list) copies the destination index to the source and
+;   repaints SingleLoadSrcFunc (EVT_PAINT); retd 4. Basis: callers + body -- SingleLoadSrc_SoundMemListProc
+;   (parameters 5/6) and SingleLoadDst_SoundMemListProc (parameters 7/8) call it after every move with XDE = 0x8964,
+;   pushed 0x896C and XWA = the parameter.
+
+@@ v7 CmpStep_ValueFieldRecords
+# note: only RAM differs: the records' RAM bytes 0x39BB / 0x39B8 / 0x39BC / 0x39BF / 0x39C0 -> 0x391F / 0x391C / 0x3920 / 0x3923 / 0x3924 (the .byte operands themselves)
+; CmpStep_ValueFieldRecords: Bound display records of the Composer STEP screen's values (list up to
+;   CmpStep_NoteEntryAreaBand): op-02 text fields for the pattern (RAM 0x391F through the 7-character table "A-vari1"
+;   "A-vari2" ...), the part (0x391C, 8-character "ACCOMP 1" .. "ACCOMP 3" "BASS" "DRUM") and four 1-digit values
+;   (0x3920..0x3923, mask 0x0F, table " 12345678"), then an op-04 and an op-00 record (0x3924).
+;   AccScreen_DataBlock_Code2 draws them with AccGraphics_RenderStart; the label is also the end of
+;   CmpStep_NoteEntryFrameRecords. Basis: readers + bytes.
+
+@@ v7 DisplayStr_ShowPartParamLine
+# note: v7 labels its tail under another name; 0x0ECD / 0x111C / 0x111D unmoved per the v7 RAM map; verbatim
+; DisplayStr_ShowPartParamLine: Rebuilds the LCD text line of the part-parameter pop-up: blanks 27 characters at
+;   0x0ECD, copies the 10-character label ("PAN", "KEY SHIFT", "TUNING", "BEND SENS") selected by (0x111C), formats
+;   the value (0x111D) as 3 digits (offset 64 or 128 per (0x111C)) and redraws region 3. Basis: callers + body --
+;   called whenever the selected parameter (0x111C) or its value (0x111D) changes.
+
+@@ v7 Flash_WriteSlotOwnerMap
+# note: v7 labels its tail under another name; 0x0C96 / 0x7A0 unmoved per the v7 RAM map; verbatim
+; Flash_WriteSlotOwnerMap: Copies the 64 KB section-7 sector into its RAM image at (0x0C96), writes owner A into the
+;   owner byte of every slot in the assignment list at RAM 0x7A0, clears A from the remaining slots after them, then
+;   erases and rewrites the sector (Flash_EraseSectorAndWrite). Basis: callers + body -- Flash_InitBytecodeBlock calls
+;   it on its write path after Flash_AssignSlotsToBlocks built the list, with the same owner A.
+
+@@ v7 PerfMode_IncNoteVelocity
+# note: names PerfMode_DecNoteVelocity, which v7 does not define
+
+@@ v7 SeMenu_DrawLfoPartSwitches
+# note: quotes SeLfo_Part4HatchRecord+36, which v7 spells as SeScreenData_0x3881, and two raw record addresses
+
+@@ v7 AccPatch_GetEventLength
+# note: names AccPatch_CopyEventToCursor and AccPatch_ResolveEntryAddr_Helper18_Helper, which v7 does not define
+
+@@ v7 CmEsyTtl_Dispatch
+# note: body differs only in RAM operands (-156), local label names and a callee's name; one-line description, verbatim
+; CmEsyTtlFunc title dispatch
+
+@@ v7 PerfMode_MapEventNoteToDisplay
+# note: names PerfMode_MapDisplayNoteToEvent and PerfMode_StepNoteNumber, which v7 does not define
+
+@@ v7 TempoRingBuf_OnTempoEvent
+# note: body differs only in local label names; 0x0D8F / 0x0EF2 / 0x0DD2 / 0x0D53 unmoved per the v7 RAM map; verbatim
+; TempoRingBuf_OnTempoEvent: Tempo event (status 0x80) from TempoRingBuf: consumes the 4-byte event into 0x0D8F,
+;   stores the 9-bit tempo byte2 | (byte3 bit 0) << 7 | (byte3 bit 1) << 8 at 0x0EF2, record length (0x0DD2) = 4, sets
+;   0x0D53 bit 4, makes the pop-up 16 (display mode 3) or 6 and shows "TEMPO =" with the value
+;   (DisplayStr_ShowTempoLine). Basis: callers + body -- TempoRingBuf_DispatchEvents sends status
+;   0x80 (exact) here when SeqState_HasModeChanged is 0; the stored word is what
+;   DisplayStr_WriteTempoValue prints after Str_TempoEq.
+
+@@ v7 Flash_CopyBlocksToSlots
+# note: v7 labels its tail under another name; 0x7A0 unmoved per the v7 RAM map; verbatim
+; Flash_CopyBlocksToSlots: Copies every block in the assignment list at RAM 0x7A0 from the RAM work area at 0x1E0000
+;   into its slot in the RAM image of the section-7 sector (large block 10,535 bytes, small blocks 470), then erases
+;   and rewrites the sector. Basis: callers + body -- Flash_InitBytecodeBlock calls it right after
+;   Flash_WriteSlotOwnerMap on its write path; Flash_GetSlotAddressAndSize supplies the source and destination addresses.
+
+@@ v7 ScoopDisp_StepMeasureForward
+# note: names VoiceState_DataBlock2_Tbl_Helper6, which v7 does not define
+
+@@ v7 SeLfo1_DrawPartLabels
+# note: names SeLfo1_DrawStaticScreen and SeMenu_PresetBrowser_Select_Sub_Data, which v7 does not define
+
+@@ v7 DisplayStr_ShowTempoLine
+# note: v7 labels its tail under another name; 0x0ECF / 0x0EF2 / 0xFC5A / 0xFC5B unmoved per the v7 RAM map; verbatim
+; DisplayStr_ShowTempoLine: Builds the TEMPO pop-up line: blanks the text line, copies the 25-character " TEMPO
+;   <glyph>=" template to 0x0ECF (Str_TempoEq with glyph 0x15, or the 0x93 variant when (0xFC5A) = 7 and (0xFC5B) =
+;   2), marks region 5, appends the tempo value (DisplayStr_WriteTempoValue) and marks region 3. Basis:
+;   callers + body -- TempoRingBuf_OnTempoEvent calls it after storing the tempo in 0x0EF2 and setting pop-up 16 or 6.
+
+@@ v7 MidiCC_SetPendingPartVolume
+# note: only RAM differs: 0x94B2 -> 0x9416 per the body, 0x90F8 -> 0x905C per the v7 RAM map (v7 labels that tail under another name)
+; MidiCC_SetPendingPartVolume: Queues a part volume: for target BC with part C <= 31 it stores E | 0x80 in the
+;   pending-volume byte 0x9416[C]; target BC = 0x00B0 instead marks 0x905C, stores E in MIDI_CC_EXPRESSION_PENDING and
+;   calls Audio_WriteBankSelectParams at once. Basis: callers + body -- MidiCC_RxCC7_Volume passes its CC7 target
+;   (function 3, the part) and PerfMode_Evt04_VolumeHandler passes C = PART_SELECT, B = 3; the scanners send each
+;   flagged byte as function 3.
+
+@@ v7 SongPlayer_ResetState
+# note: only RAM differs: block 0xE9C4 -> 0xE8FE; the body's +0x20 and +0x239 stores (0xE9E4 -> 0xE91E, 0xEBFD -> 0xEB37) show the same -198
+; SongPlayer_ResetState: Resets the song-file player: clears its state, mode, flags and counters in the block at
+;   0xE8FE (+0, +0x20, +0x21, +0x23, +0x27, +0x2B, +0x2D, +0x31, +0x239, +0x23D) and re-initialises the track slots
+;   and the SysEx and MIDI ring buffers. Basis: callers + body.
+
+@@ v7 SqStep_SeekSecondGridRow
+# note: v7 labels its tail under another name; verbatim
+; SqStep_SeekSecondGridRow: Moves the block read position past four 0x81 beat markers -- from a measure's start to its
+;   second grid row (the grid shows at most 4 beats per row) -- stepping one byte at a time (VoiceBank_LoadLerpState /
+;   VoiceBank_UpdateLerpState) and stopping before a 0x82 or 0x84 end marker; returns C = the markers passed (4 when
+;   complete). Basis: callers + body -- SqStep_SetupNextGridRow calls it for row 2 of the current measure and draws
+;   the row only when C = 4; SqStep_SetupPrevGridRow calls it when the previous measure has more than 4 beats (its
+;   last row is row 2).
+
+@@ v7 SeMenu_DrawWriteDestName
+# note: body differs only in RAM operands (37098 -> 36942, -156) and spelling, not quoted; 0x20C13 / 0x20C0F unmoved per the v7 RAM map; verbatim
+; SeMenu_DrawWriteDestName: On the MEMORY WRITE screen, fetches the 16-character name of the sound now stored in the
+;   selected destination (bank code 16 for bank A / 17 for B from page param 0, number = param 1 - 1, current part)
+;   with SndParam_ApplyProgramChange / SndParam_ApplyProgramChangeAsync into 0x20C13, maps it to font glyphs and draws
+;   it at text cell 147*40+9 (font-1 text record at 0x20C0F). Basis: callers + body -- SeWrtMem_DrawStaticScreen (draws the
+;   MEMORY WRITE screen) and SeWrtMem_DrawField (redraws the bank/number fields) call it after drawing the bank (A/B)
+;   and number bound records.
+
+@@ v7 SeMenu_ToggleSolo
+# note: v7 misframes part of the body (`.byte 135 / push xsp / nop` for v10's `cp (xsp), 0`); re-frame v7 first
+
+@@ v7 CmpRealTtl_EnterTitle
+# note: v10's span includes CmpRealTtl_EnterTitle_Impl, which v7 calls as RhythmFillIn_PatternTable_Code_Helper (60 ROM bytes equal modulo the v7 RAM map and relocated pointers); 0xE3E2 -> 0xE31C, 0x8D88 -> 0x8CEC, 0x34CD -> 0x3431 per the v7 RAM map; 0x28A7 unmoved per the v7 RAM map
+; CmpRealTtl_EnterTitle: XIZ-preserving set-up run when the Composer REALTIME RECORDING title (TT_CMREAL, 0xB5) is
+;   entered or re-activated: clears 0x28A7 bit 2 and 0xE31C bit 0; unless it comes from TT_CMREAL itself it sets
+;   0x8CEC bit 0 and, when not playing, sets 0x3431 bit 7, runs Seq_DispatcherEntry and, coming from TT_CMBKSL_S,
+;   starts the accompaniment play (AccWrap_PlayModeStartAccPlay). Basis: callers + body -- CmpRealTtl_Dispatch
+;   (EVT_ACTIVATE_STATE phase 2) and CmpRealTtlFunc_OnTitleActivate (phase 5) call it.
+
+@@ v7 SeDigEff_OnColumn3_CelesteChorusDetune
+# note: v7's span also holds the shared join; verbatim
+; SeDigEff_OnColumn3_CelesteChorusDetune: Types 0-3 CELESTE 1/2, CHORUS 1/2 (also the switch base): column 3 is
+;   DETUNE, limits +50 and -50. Basis: switch value (DIGITAL EFFECT type) + body + screen captions.
+
+@@ v7 SeDigEff_OnColumn5_CelesteChorusBalance
+# note: v7's span also holds the shared join; verbatim
+; SeDigEff_OnColumn5_CelesteChorusBalance: Types 0-3 CELESTE 1/2, CHORUS 1/2 (also the switch base): column 5 is
+;   BALANCE, limits 100 and 0. Basis: switch value + body + screen captions.
+
+@@ v7 SqStep_ResetPositionState
+# note: names MemConfig_Handler_1_Helper4 and SqStep_SetupCursorTrack, which v7 does not define
+
+@@ v7 SeDigEff_OnColumn4_DelaySpeed2
+# note: v7's span also holds the shared join; verbatim
+; SeDigEff_OnColumn4_DelaySpeed2: Types 0-5 and 7 (also the switch base): column 4 -- DELAY for CELESTE/CHORUS, SPEED2
+;   for ENSEMBLE and ORGAN TREMOLO -- limits 50 and 0. Basis: switch value + body + screen captions.
+
+@@ v7 ScoopDisp_StepMeasureBack
+# note: names VoiceState_DataBlock2_Tbl_Helper6, which v7 does not define
+
+@@ v7 SqStep_BuildCurrentRowBitmap
+# note: only RAM differs: 0x372E / 0x3732 -> 0x3692 / 0x3696 per the body, 0x3739 -> 0x369D and 0x370F -> 0x3673 per the v7 RAM map; the 0x0Dxx / 0x0Fxx bytes unmoved per the v7 RAM map
+; SqStep_BuildCurrentRowBitmap: Builds the event bitmap of the displayed grid row: puts the cursor back at the row
+;   start ((0x0DE8)/(0x0DEC)), clears 0x3692-0x369D and walks the events to the row end ((0x0DEA)/(0x0DED)); each
+;   event sets bit clock/12 in the byte of its beat (0x3696 + beat, advanced at each 0x81 marker), an END marker 0x82
+;   records its column in 0x0F5B with 0x0F5A = 2, and 0x84 stops the walk. Basis: callers + body --
+;   VoiceSlot_TableSetup calls it once it has found the row's start and end; 0x3696 is the 32-bit step bitmap whose
+;   bit (0x3673) - 1 marks the cursor step.
+
+@@ v7 ExtData_SetTempoIfChanged
+# note: names ExtData_ToneParam_AltBody_OnTempo, which v7 does not define
+
+@@ v7 MainExeCall_OnTitleSqmins
+# note: v7 labels its tail under another name; 0xF1E1-0xF1E7 unmoved per the v7 RAM map; verbatim
+; MainExeCall_OnTitleSqmins: EXECUTE on TT_SQMINS: track 0xf1e1 from measure 0xf1e2, second track 0xf1e6 at measure
+;   0xf1e7, then SeqPart_ByteBlockA95A (SeqPart_LoadDualPartData after error 0x23).
+
+@@ v7 Fat_WriteDirEntry
+# note: body differs only in the names of its jump targets; verbatim
+; Fat_WriteDirEntry: Writes an open file's directory entry back: lets the device stamp the time word +65 (block op 6;
+;   drive A's FDC_ReturnZeroLong stores 0), fetches the directory sector (+26) through the sector cache
+;   (SeqStep_FileIoCheck flags 0x1A, which include the dirty bit 1) and packs the in-memory entry at +52 (name,
+;   attribute +64, time, date, first cluster +69, size +71) into slot +51 with SeqStep_FileSectorReturn, then releases
+;   the entry's bits 3/4. HL = 0, or 10 when no cache buffer was available. Basis: callers + body -- the close slot
+;   (SeqChan_ValidateAndDispatch, FileIO_DriveAFileOps[5]) calls it when the file is dirty (+3 bit 7),
+;   SeqChan_WritePatchData after setting the first name byte to 0xE5 (deleted), and Fat_AllocateClusters before
+;   failing with 15 (no free cluster).
+
+@@ v7 SqStep_SetupPrevGridRow
+# note: bitmap 0x372E -> 0x3692 per the v7 RAM map (the body of SqStep_BuildCurrentRowBitmap shows the same pair); the 0x0Exx / 0xF250 / 0x0D60 operands unmoved per the v7 RAM map
+; SqStep_SetupPrevGridRow: Sets up the grid row above the current one: its measure number (0x0E4C, capped at 1000) and
+;   beat count (0x0E52), then its bitmap at 0x3692 (SqStep_BuildAdjacentRowBitmap with 0x0EC1 = the beat count). The
+;   row above is row 1 of the same measure when the cursor is on a second row (beat >= 4), else the last row of the
+;   previous measure; it is empty in measure 1 row 1 or when the selected track's flag 0xF250[3*(0x0D60 - 1)] bit 7 is
+;   clear. Basis: callers + body -- VoiceSlot_TableSetup calls it right after storing the current row's measure in
+;   0x0E4E.
+
+@@ v7 SqStep_ShowRhythmSectionEvent
+# note: names VoiceCtrl_ParamSetupBytecode_Tbl4, which v7 does not define
+
+@@ v7 ScoopDisp_SeekBackWrapMarkers
+# note: body differs only in spelling and v7's span holding the loop; 0x0DFE / 0x0D58 / 0x0D5C / 0x0D5D unmoved per the v7 RAM map; verbatim
+; ScoopDisp_SeekBackWrapMarkers: Steps the song-data cursor back over A 0x81 events (count in 0x0DFE; each backward
+;   step onto a 0x81 takes 1 from 0x0D58 through VoiceSlot_SubrRetZ), then on back to the preceding 0x81 without
+;   counting, leaving the cursor on the event just after it (snapshot slot 6); it stops at the start of the track (W =
+;   255). Basis: callers + body -- ScoopDisp_StepMeasureBack calls it with A = (0x0D5C) + (0x0D5D) and, when (0x0D5C)
+;   != 0, again with A = (0x0D5C); its header describes this walk back.
+
+@@ v7 SqStep_ParkParamEvent
+# note: body differs only in the names of the shared join and of the tag table (not quoted); 0x0D8F / 0x0D6F / 0x0D53 / 0x0D5E unmoved per the v7 RAM map; verbatim
+; SqStep_ParkParamEvent: Parks a panel-parameter event instead of recording it: from the record at XIY (0x0D8F) it
+;   forms tag = byte +2 with status bit 2 as bit 7 and offset = byte +3, picks the slot -- tags 0x00-0x0F offset 3 ->
+;   slot = tag, 0x10-0x16 offset 3 -> 16-22, 0x98 offset 4 -> 24, 0x48 offset 8 with status & 3 = 0 -> 27, 0x98 offset
+;   1 with value & 0x7F != 0 -> 28 (without clearing 0x0D5E) -- stores the value byte +4 in 0x0D6F[slot], sets 0x0D53
+;   bit 0 and returns A = 1; any other event returns A = 0. Basis: callers + body -- VoiceCtrl_ParamSetupBytecode
+;   writes the 6-byte record only when A = 0, and SqStep_FlushPendingParamEvents rebuilds exactly these (tag, offset)
+;   pairs per slot.
+
+@@ v7 Data_InOutGridDispatch_VelocityInput
+# note: v7 labels its tail under another name; the SndParam ids 0x5000-0x5002 are parameter numbers (v7's body loads 20480 = 0x5000 too), kept; verbatim
+; Data_InOutGridDispatch_VelocityInput: row VELOCITY INPUT: SndParam 0x5000 DIRECT/OFFSET/FIX, then redraws row 3 with
+;   the offset (0x5001) or fixed velocity (0x5002)
+
+@@ v7 SqStep_SetupNextGridRow
+# note: bitmap 0x3736 -> 0x369A per the v7 RAM map; the 0x0Exx / 0xF250 / 0x0D60 operands unmoved per the v7 RAM map
+; SqStep_SetupNextGridRow: Sets up the grid row below the current one: its measure number (0x0E50, capped at 1000) and
+;   beat count (0x0E54), then its bitmap at 0x369A (SqStep_BuildAdjacentRowBitmap with 0x0EC1 = the beat count). The
+;   row below is row 2 of the same measure (beats - 4) when the cursor is on row 1 of a measure longer than 4 beats,
+;   else row 1 of the next measure (at most 4 beats); it is empty when the selected track's flag 0xF250[3*(0x0D60 -
+;   1)] bit 7 is clear. Basis: callers + body -- VoiceSlot_TableSetup calls it after SqStep_SetupPrevGridRow; it is
+;   the mirror image.
+
+@@ v7 FDC_CMD_EXEC
+# note: the 672 bytes from FDC_CMD_EXEC to FDC_MODE_CONFIG are equal in both images modulo the v7 RAM map; the decimal RAM addresses 35432 / 35356 / 35596 / 35402 / 35588 become 35276 / 35200 / 35440 / 35246 / 35432 (-156; the body shows 35432 -> 35276 and 35596 -> 35440)
+; --- FDC_CMD_EXEC: Main FDC command execution engine ---
+; Two nearly identical halves: READ path (command type 1) and
+; WRITE path (command type 8), set in state variable 35276.
+; Each path:
+;   1. Clears status, waits for FDC ready
+;   2. Sets up DMA: clear byte counter (35200), compute sector size
+;      (1024 or 512 based on format), configure DMA direction
+;   3. Sector loop: decrement sector count, advance track/head,
+;      check against max sectors (35440)
+;   4. Accumulates transferred sector count at 35246
+;   5. Error handling: sets error flag (35432=255) on failure
+; Tail calls format-specific routines and status verification.
+; Uses (R+d16) addressing for all FDC state variable access. 672 bytes.
+
+@@ v7 Fat_FreeFileClusters
+# note: body differs only in the names of its jump targets; verbatim
+; Fat_FreeFileClusters: Frees the cluster chain of the file handle on the stack: from its first cluster (+69) it reads
+;   each next link (Fat_ReadEntry) and writes 0 into the FAT entry, until a link is 0 or above (volume +36) - 8;
+;   unless handle +3 bit 5 is set it then zeroes +69, +42 and the file size +71. Basis: callers + body -- the file-op
+;   slot 9 handler (SeqChan_WriteExtendedPatch) calls it for request 21 before writing 0xE5 (deleted) into the entry;
+;   the open path calls it when the truncate flag (+3 bit 4) is set.
+
+@@ v7 SingleLoad_LoadComposerPattern
+# note: v7 labels its tail under another name; the cursors the callers pass, 0x89FE / 0x8A06, are 0x8962 / 0x896A per the v7 RAM map
+; SingleLoad_LoadComposerPattern: Single-loads from the selected .CMP file: opens it (type 3), validates the header
+;   (FileIO_ReadAndValidateHeader, else 0xFF9A) and hands source A = WA and destination C = BC to
+;   SingleLoad_CopyComposerPatternFromFile, which copies one composer pattern, or a whole memory bank when both are 30 +
+;   bank; returns HL = result (0xFF98 with no file selected). Basis: callers + body -- SingleLoadDst_ComposerListProc
+;   runs it for parameter 10 with WA = source position 0x8962 and BC = destination 0x896A, or in ALL mode with both =
+;   position / 10 + 30.
+
+@@ v7 FDemoText_GetInstanceID
+# note: v7 labels its loop under another name; verbatim
+; FDemoText_GetInstanceID: Finds the view object whose name equals the string XWA: walks classes 255..0 and their
+;   instances (CountObject, CheckViewObject), compares each object's name (FDemoText_ByteData_DisplayRefresh) and
+;   returns its id class<<16 | instance in XHL; if none matches it posts "Error! (GetInstanceID)" to the debug memo
+;   and returns 0xFFFFFFFF. Basis: callers + body -- the feature-demo <SHOW> tag handler passes the OBJ attribute and
+;   sends EVT_SHOW to the id it returns; the firmware's own error string names the routine GetInstanceID.
+
+@@ v7 SqStep_FindMsaStateAtCursor
+# note: v7 labels its tail under another name; 0x10F6 unmoved per the v7 RAM map; verbatim
+; SqStep_FindMsaStateAtCursor: Finds the M.S.A. state in force at the song-data cursor: saves the cursor (slot 5) and
+;   block pointer, clears 0x10F6, restarts at the cursor track's first block (MemConfig_VoiceSlotLookup) and steps
+;   forward until the saved position, and for each 0xBn event on the way SqStep_UpdateMsaStateFromEvent sets 0x10F6 = value bit
+;   0 when the event's tag is 0x98, offset 3 and flag byte +5 bit 0 is set; restores everything. Basis: callers + body
+;   -- DisplayStr_ShowRhythmVariationLine calls it and then writes 'M.S.A.' instead of ' RHYTHM' when 0x10F6 bit 0 is
+;   set.
+
+@@ v7 DispTimeSet_EventDispatch
+# note: v7 labels its targets under other names; the table address is the same in v7; one-line description, verbatim
+; DispTimeSetGridCheck event dispatch (7-entry, events 0x1c00017-0x1c0001d, table 0xed1582)
+
+@@ v7 TempoRingBuf_OnNoteEvent
+# note: names SystemInit_StepHandler_0_Helper2, which v7 does not define
+
+@@ v7 Fat_AllocateClusters
+# note: body differs only in local label names and where v7 splits its loop; verbatim
+; Fat_AllocateClusters: Fat_AllocateClusters(file, zero, count): finds `count` free clusters (Fat_ReadEntry == 0),
+;   searching up from the file's cluster word +42 to the volume's cluster limit (vol +54) and then from 2; marks each
+;   end-of-chain (vol +36), links it after the previous one (or sets the first cluster +69), and when `zero` is set
+;   clears the sectors of the last one. HL = 0, 15 (no free cluster), or 10 / a buffer status on I/O failure. Basis:
+;   callers + body -- the directory walk adds one zeroed cluster when the chain ends, and the file-extend path asks
+;   for size / cluster-bytes minus the clusters held.
+
+@@ v7 TempoRingBuf_DispatchEvents
+# note: v7 labels its targets under other names; 0x0DD3 / 0x0DD1 unmoved per the v7 RAM map; verbatim
+; TempoRingBuf_DispatchEvents: Sets bit 0 of 0x0DD3 and records the current event's status in 0x0DD1, then reads
+;   events from TempoRingBuf and dispatches each by status (0x80, 0x85, 0x86, 0xD1, 0xD2 exactly; 0x90/0xB0/0xC0 by
+;   high nibble; anything else to the default handler) until the ring is empty. Basis: callers + body --
+;   Timer_ModeHandler_1 and _3 (the mode-select tick handlers) return early when TempoRingBuf_IsEmpty, otherwise call
+;   it.
+
+@@ v7 SndParam_SetRegWord
+# note: change record 0x9710 -> 0x9674 per the v7 RAM map; v7 labels part of the body under another name
+; SndParam_SetRegWord: Register accessor 5 of the sound-parameter descriptors (word-list parameters): clamps the value
+;   BC to the descriptor's +7..+8 and translates it through the 16-bit list SndParam_WordValueListPtrs[+11]; when that
+;   word differs from the one in the parameter's slot (block SndParam_BlockRamPtrs[+4], word +5) it stores it there
+;   (not in mode DE = 4) and fills the change record at 0x9674 (+2 = 1) with the two byte writes {block, offset, low}
+;   and {block, offset + 1, high}. Returns XHL = 0x9674; 0xFFFF at +0 when the block has no RAM. Basis: callers + body
+;   -- entry 5 of SndParam_RegisterHandlers, picked by descriptor byte +0x0D in SndParam_DispatchCallback; the
+;   descriptor that uses it (MidiChParam_Entry_052) reads back with SndParam_ReadRegWord, the index of the stored word
+;   in the same list.
+
+@@ v7 DrawDottedLine_Impl
+# note: v7 labels its tail under another name (ClampColorToRange_Skip15); verbatim
+; DrawDottedLine_Impl: Draw-task body of a plain dotted line: from point (XWA) to point (XBC) (each {x, y} words) in
+;   colour DE, writing straight into OFFSCREEN_BUFFER_1 (320-byte rows) with a 2-on / 3-off pattern (counter 0,1 draw;
+;   2,3 skip; 4 resets), horizontal, vertical and fixed-point sloped cases; ends with SetChangeRect. No draw-mode
+;   dispatch, unlike DrawDottedLineWithMode_Impl. Basis: callers + body -- DrawDesignBox_ByteData (the standard
+;   direct-or-DrawQueue_Alloc wrapper; misnamed, and itself unreferenced) and its queued record function
+;   DrawDesignBox_ByteData_Code call it.
+
+@@ v7 SingleLoad_LoadSong
+# note: names SingleLoad_FinishSongLoad, which v7 does not define
+
+@@ v7 SingleLoad_LoadSoundMemBank
+# note: v7 labels its tail under another name; the cursors 0x8A00 / 0x8A08 are 0x8964 / 0x896C per the v7 RAM map; 0x4980 is an offset in the 0x1E0000 sound-RAM image, kept
+; SingleLoad_LoadSoundMemBank: Single-loads SOUND MEMORY bank WA of the selected .TM file into bank BC: banks 0-1 are
+;   20 sounds = 9400 bytes (file 16 + 9400 * WA -> RAM 0x1E0000 + 16 + 9400 * BC), bank 2 and up is the 0x2927-byte
+;   block at 0x4980 (the area of entries 40+); the read is wrapped in PostTmLoadEntry_Return /
+;   TmFlashWrite_ValidateParams; returns HL = result (0xFF98 no file, 0xFF9A wrong signature). Basis: callers + body
+;   -- SingleLoadDst_SoundMemListProc runs it for parameter 10 in ALL mode with WA = 0x8964 / 20 and BC = 0x896C / 20.
+
+@@ v7 AccVoice_IndexedTableLookup_Data
+# note: describes v10's spelling (+0x02, 84 x LE32, the retired ld_sril3); v7 spells the table as .byte from another start
+
+@@ v7 SingleLoadDst_DrawSoundMemItemRows
+# note: names SingleLoadSrc_DrawSoundMemItemNumber, which v7 does not define
+
+@@ v7 SingleLoad_LoadPanelMemBank
+# note: v7 labels its tail under another name; the cursors 0x89FC / 0x8A02 are 0x8960 / 0x8966 per the v7 RAM map; 0x1ED350 is a body constant
+; SingleLoad_LoadPanelMemBank: Single-loads panel-memory bank WA of the selected .PMT file into bank BC: checks the
+;   file signature, reads the 16-byte bank name (file 16 + 16 * WA -> RAM 0x1ED350 + 16 + 16 * BC) and the bank's 8
+;   memories (8 * entry size from file 176 + WA * 8 * size -> 0x1ED350 + 176 + BC * 8 * size) between
+;   PanelMemory_PreBankLoad and PanelMemory_PostBankLoad; returns HL = read result, 0xFF98 with no file selected,
+;   0xFF9A on a wrong signature. Basis: callers + body -- SingleLoadDst_PanelMemListProc runs it for parameter 10 (the
+;   execute SingleLoadDstFunc sends) in ALL mode with WA = source bank (0x8960 / 8) and BC = destination bank (0x8966
+;   / 8); FileIO_ByteBlock_DemoProc1 is the one-memory load.
+
+@@ v7 SingleLoad_LoadSoundMemEntry
+# note: v7 labels its tail under another name; the cursors 0x8A00 / 0x8A08 are 0x8964 / 0x896C per the v7 RAM map; 0x4AA7 is an offset in the 0x1E0000 sound-RAM image, kept
+; SingleLoad_LoadSoundMemEntry: Single-loads SOUND MEMORY entry WA of the selected .TM file into entry BC: entries
+;   below 40 are 470-byte sounds (file 16 + 470 * WA -> RAM 0x1E0000 + 16 + 470 * BC, flash block BC / 20, BC mod 20),
+;   entries from 40 are the 80-byte records at 0x4AA7 + 80 * (index - 40) (flash block 64); the read is wrapped in
+;   PreTmLoadEntry / PostTmLoadEntry; returns HL = result (0xFF98 no file, 0xFF9A wrong signature).
+;   Basis: callers + body -- SingleLoadDst_SoundMemListProc runs it for parameter 10 outside ALL mode with WA = source
+;   cursor 0x8964 and BC = destination cursor 0x896C.
+
+@@ v7 AccPatch_ConvertLegacySectionLayout
+# note: names AccPatch_CopySection, which v7 does not define
+
+@@ v7 Fat_CreateDirEntry
+# note: body differs only in local label names and where v7 splits its loop; verbatim
+; Fat_CreateDirEntry: Fat_CreateDirEntry(file, path): creates the directory entry of a file being opened for writing:
+;   finds a free slot (first name byte 0x00 or 0xE5) in the root directory (single-component path; vol +28 start, +44
+;   entries; HL = 16 when full) or in the subdirectory the lookup left in +42, extending that directory with a zeroed
+;   cluster (Fat_AllocateClusters(file, 1, 1)) when its chain ends; it then fills the in-memory entry (slot +51, 8.3
+;   name +52, attribute +64 = 0, first cluster +69 = 0, size +71 = 0), lets the device stamp the time +65 (block op
+;   6), packs it into the sector (SeqStep_FileSectorReturn) and marks the sector dirty. Basis: callers + body -- the
+;   open slot SeqByteBlock_ChannelContainer calls it only when Fat_LookupPath returned 5 (not found) and handle +3 bit
+;   7 is set.
+
+@@ v7 SeWrtSnd_SetupNamingPage
+# note: names SeWrtMem_DrawPage, which v7 does not define
+
+@@ v7 Fat_MountVolume
+# note: body differs only in local label names; 0x55AA is the boot-sector signature, kept; verbatim
+; Fat_MountVolume: Mounts the FAT volume of the device record on the stack (volume = device +26): clears the mounted
+;   flag (+2 bit 0), reads the boot sector into a 538-byte (26 + 512) buffer -- on a partitioned device (+4 bit 7)
+;   first sector 0, checking 0x55AA at +510 and walking the partition table (+446) to entry device +5 -- parses the
+;   BPB into the volume (bytes/sector +38, sectors/cluster +32, reserved +42, FATs +58, root entries +44, total
+;   sectors +8, sectors/FAT +48, geometry +50/+52), derives the FAT, root and data starts and the cluster count +54 (>
+;   4087 -> FAT16 mask 0xFFFF, else 0xFFF, in +36), sets +2 bit 0 and returns HL = 0 or an error (3 no memory, 22 no
+;   0x55AA, 23 broken partition chain, 40 zero bytes/sector or sectors/cluster). Basis: callers + body -- the open
+;   slot FileIO_DriveAFileOps[0] (SeqByteBlock_ChannelContainer) calls it when +2 bit 0 is clear, and
+;   Fat_HandleDiskIoError calls it to re-mount after a disk error.
+
+@@ v7 Fat_LookupPath
+# note: body differs only in local label names; cache 0x2121A unmoved per the v7 RAM map; verbatim
+; Fat_LookupPath: Fat_LookupPath(file, path): resolves the path to its directory entry and loads it into the handle.
+;   First asks the device (block op 7) whether the medium changed and, if so, drops its sectors from the 10-entry
+;   cache at 0x2121A (HL = 6 when one is dirty) and sets device +2 bit 1; then walks the 8.3 components
+;   (FatPath_Next83Component), comparing 11-byte names in the root directory and then in each subdirectory cluster
+;   chain, loading a match with SeqStep_FileSectorComplete (slot +51, first cluster +69 -> +42,
+;   Fat_CountContiguousClusters). HL = 0, 11 bad name, 12 component not a directory, 7 path not found, 5 file not
+;   found, 13 directory/file kind mismatch with handle +3 bit 6, 14 read-only entry opened writable (+3 bit 1), or a
+;   sector-cache error. Basis: callers + body -- the open slot SeqByteBlock_ChannelContainer calls it first and treats
+;   5 as "create" (Fat_CreateDirEntry).
+
+@@ v7 DrawLineWithMode_Impl
+# note: the v10 header is a note about kn5000_v10_program.s itself
+
+
+# ---- 2026-10-24 review round: headers the RAM audit (propagate_v10_headers.py --audit) withdrew, re-ported by hand
+
+@@ v7 ExtData_VoiceParam_DispatchBytecode_ModeMsp
+# note: per the body: the parent ExtData_VoiceParam_DispatchBytecode loads XBC / XDE / XHL / XIY = ENCODER_STATE_BASE + 2 / 6 / 10 / 11 in both trees, and v7 defines ENCODER_STATE_BASE = 0x8e7c (v10 0x8f18), so LED row 2 is 0x8E7E in v7 (the row offset is not a measured RAM-map address; it follows from the base); withdrawn by the RAM audit and re-ported
+; ExtData_VoiceParam_DispatchBytecode_ModeMsp: MD_MSP (CURRENT_MODE 15; also the switch base): sets bit 7 of LED row 2
+;   (0x8E7E). Basis: switch value (CURRENT_MODE - 2) + body.
+
+@@ v7 ExtData_VoiceParam_DispatchBytecode_ModeSound
+# note: per the body: the parent ExtData_VoiceParam_DispatchBytecode loads XBC / XDE / XHL / XIY = ENCODER_STATE_BASE + 2 / 6 / 10 / 11 in both trees, and v7 defines ENCODER_STATE_BASE = 0x8e7c (v10 0x8f18), so LED row 11 is 0x8E87 in v7 (the row offset is not a measured RAM-map address; it follows from the base); withdrawn by the RAM audit and re-ported
+; ExtData_VoiceParam_DispatchBytecode_ModeSound: MD_SOUND / MD_SOUNDEDIT: sets bit 0 of LED row 11 (0x8E87)
+
+@@ v7 ExtData_VoiceParam_DispatchBytecode_ModeMidi
+# note: per the body: the parent ExtData_VoiceParam_DispatchBytecode loads XBC / XDE / XHL / XIY = ENCODER_STATE_BASE + 2 / 6 / 10 / 11 in both trees, and v7 defines ENCODER_STATE_BASE = 0x8e7c (v10 0x8f18), so LED row 11 is 0x8E87 in v7 (the row offset is not a measured RAM-map address; it follows from the base); withdrawn by the RAM audit and re-ported
+; ExtData_VoiceParam_DispatchBytecode_ModeMidi: MD_MIDI: sets bit 2 of LED row 11 (0x8E87)
+
+@@ v7 ExtData_VoiceParam_DispatchBytecode_ModeControl
+# note: per the body: the parent ExtData_VoiceParam_DispatchBytecode loads XBC / XDE / XHL / XIY = ENCODER_STATE_BASE + 2 / 6 / 10 / 11 in both trees, and v7 defines ENCODER_STATE_BASE = 0x8e7c (v10 0x8f18), so LED row 11 is 0x8E87 in v7 (the row offset is not a measured RAM-map address; it follows from the base); withdrawn by the RAM audit and re-ported
+; ExtData_VoiceParam_DispatchBytecode_ModeControl: MD_CONTROL: sets bit 1 of LED row 11 (0x8E87)
+
+@@ v7 ExtData_VoiceParam_DispatchBytecode_ModeDisk
+# note: per the body: the parent ExtData_VoiceParam_DispatchBytecode loads XBC / XDE / XHL / XIY = ENCODER_STATE_BASE + 2 / 6 / 10 / 11 in both trees, and v7 defines ENCODER_STATE_BASE = 0x8e7c (v10 0x8f18), so LED row 11 is 0x8E87 in v7 (the row offset is not a measured RAM-map address; it follows from the base); withdrawn by the RAM audit and re-ported
+; ExtData_VoiceParam_DispatchBytecode_ModeDisk: MD_DISK: sets bit 3 of LED row 11 (0x8E87)
+
+@@ v7 ExtData_VoiceParam_DispatchBytecode_ModeEntertainer
+# note: per the body: the parent ExtData_VoiceParam_DispatchBytecode loads XBC / XDE / XHL / XIY = ENCODER_STATE_BASE + 2 / 6 / 10 / 11 in both trees, and v7 defines ENCODER_STATE_BASE = 0x8e7c (v10 0x8f18), so LED row 10 is 0x8E86 in v7 (the row offset is not a measured RAM-map address; it follows from the base); withdrawn by the RAM audit and re-ported
+; ExtData_VoiceParam_DispatchBytecode_ModeEntertainer: MD_ENTERTAINER: sets bit 3 of LED row 10 (0x8E86)
+
+@@ v7 SndParam_ApplySystemParam_ScaleTuneUserNote1
+# note: same code (passed the body + byte proof); 0x4284 is a parameter id (SndParam_ApplySystemParam's id range 0x4280-0x428E, kept as in that hand port), not RAM; 0xFD1F lies in the unmoved 0xF180-0x3F2F8 run and the v7 body spells it (`ld a, (0xfd1f:16)`); verbatim
+; SndParam_ApplySystemParam_ScaleTuneUserNote1: Id 0x4284 (record 0x92 +3, RAM 0xFD1F): user scale-tune offset of the
+;   note 1 semitone above the key; sent only when the type is 128 (user).
+
+@@ v7 SndParam_ApplySystemParam_ScaleTuneUserNote5
+# note: same code (passed the body + byte proof); 0x4288 is a parameter id (SndParam_ApplySystemParam's id range 0x4280-0x428E, kept as in that hand port), not RAM; 0xFD23 lies in the unmoved 0xF180-0x3F2F8 run and the v7 body spells it (`ld a, (0xfd23:16)`); verbatim
+; SndParam_ApplySystemParam_ScaleTuneUserNote5: Id 0x4288 (record 0x92 +7, RAM 0xFD23): user scale-tune offset of the
+;   note 5 semitones above the key; sent only when the type is 128 (user).
+
+@@ v7 SndParam_ApplySystemParam_ScaleTuneUserNote7
+# note: same code (passed the body + byte proof); 0x428A is a parameter id (SndParam_ApplySystemParam's id range 0x4280-0x428E, kept as in that hand port), not RAM; 0xFD25 lies in the unmoved 0xF180-0x3F2F8 run and the v7 body spells it (`ld a, (0xfd25:16)`); verbatim
+; SndParam_ApplySystemParam_ScaleTuneUserNote7: Id 0x428A (record 0x92 +9, RAM 0xFD25): user scale-tune offset of the
+;   note 7 semitones above the key; sent only when the type is 128 (user).
+
+@@ v7 DSPCfg_RecordFieldToParamId
+# note: same code (passed the body + byte proof); 0x4900-0x4E00 are DSP parameter-id bases (the DSP-slot ids 0x49xx-0x4Exx of SndParam_ApplySystemParam), not RAM; verbatim
+; DSPCfg_RecordFieldToParamId: Maps a SwbtWr change event on a DSP-block panel record -- A = object code 0x61..0x66
+;   ('a'..'f'), C = byte offset (SWBTWR_PAYLOAD_1), E = changed-bit mask (SWBTWR_PAYLOAD_3) -- to a DSP parameter id
+;   stored through the stacked pointer: the block base 0x4900/0x4A00/0x4B00/0x4C00/0x4D00/0x4E00, or for C = 1..16
+;   base + 0x10 + the parameter index that DSPCfg_FindParamAtRecordOffset finds at field C-1 of the effect type's
+;   DspFxRecListPtrTable list. HL = 0, or 0xFFFF for a bad code / no parameter there; retd 4. Basis: callers + body --
+;   EffEdit_DSPConfigBlock (in the SwbtWr lists of codes 0x61, 0x63-0x66) passes the event and then treats id base+0
+;   as an effect-type change (EVT_RET_EFF_FIX) and base+0x10+n as parameter n (EVT_RET_EFF_PARA).
+
+@@ v7 SqStep_BuildAdjacentRowBitmap
+# note: same code; the row bit maps move -156 in v7: v7's SqStep_BuildCurrentRowBitmap loads XIX = 0x3692 and pushes 0x3696 where v10 has 0x372E / 0x3732 (14130), so 0x372E/0x3736/0x3732 -> 0x3692/0x369A/0x3696; 0x0EB5/0x0EB6/0x0EC1/0x0F5A/0x0F5B lie in the unmoved 0x0109-0x29F6 run
+; SqStep_BuildAdjacentRowBitmap: Builds the event bitmap of the grid row above (XIX = 0x3692) or below (XIX = 0x369A):
+;   reads events from the block read position into 0x0EB5 (VoiceBank_ProcessCommand), sets bit (clock 0x0EB6 / 12) of
+;   the current beat byte for each displayable event (VoiceSlot_StatusCheck W = 0), moves to the next byte on a 0x81
+;   beat marker and stops after (0x0EC1) beats or on 0x84; on the 0x82 end marker in the lower row it records the end
+;   position (0x0F5B, 0x0F5A = 3). Basis: callers + body -- SqStep_SetupPrevGridRow and SqStep_SetupNextGridRow call
+;   it last with XIX = 0x3692 / 0x369A and 0x0EC1 = the row's beat count; SqStep_BuildCurrentRowBitmap does the same
+;   for the current row at 0x3696.
+
+@@ v7 SqStep_NibbleMarkPatterns
+# note: same bytes; Display_RedrawSidePanel loads XIY = 0x3692 in v7 where v10 has 0x372E; 0x11D4 is unmoved (v7 spells `ld xwa, 0x11d4` as v10 does)
+; SqStep_NibbleMarkPatterns: 16 x 4 characters: a 4-bit value drawn as 4 marks, bit i -> '*' when set, glyph 0x91 when
+;   clear (entry 0 = 4 x 0x91 ... entry 15 = "****"). Scoop_SidePanel_DrawOneSlot copies entry [nibble] into a static
+;   op-06 text record at RAM 0x11D4 and draws it; Display_RedrawSidePanel runs it for both nibbles of each byte of the
+;   rows' bit maps at RAM 0x3692. Basis: readers + bytes.
+
+@@ v7 MidiPkt_SetXferBlock_CurrentSong
+# note: same code; descriptors per the v7 RAM map and v7's code (`lda xwa, (0xbc40:16)` / `lda xiy, (0xbc50:16)` where v10 has 0xBCDC / 0xBCEC); 0xF180/0xF980 and 0xB0000 are unmoved; the clause 'the send side uses it at 11236' (a stale v10 line number) is dropped
+; MidiPkt_SetXferBlock_CurrentSong: Fills the transfer descriptor at XWA for the current song record: {start 0xF180,
+;   end 0xF980, length 0x800}, block 1 of the sequencer transfer (block 2 = the ten song slots, block 3 = the event
+;   memory at 0xB0000). Basis: callers + body -- MidiPkt_ArpExtHandler_K (command 18, state 0) points the total
+;   descriptor 0xBC40 (MidiPkt_SetXferTotal_SeqData) and the block descriptor 0xBC50 (this) and starts step 11.
+
+@@ v7 MidiPkt_SetXferBlock_SongSlots
+# note: same code; 0xBCEC -> 0xBC50 as for MidiPkt_SetXferBlock_CurrentSong; the clause 'the send side uses it at 11253' (a stale v10 line number) is dropped
+; MidiPkt_SetXferBlock_SongSlots: Fills the transfer descriptor at XWA for the ten song slots: {start SEQ_SONG_SLOTS
+;   (0xAB000), end 0xB0000, length 0x5000}, block 2 of the sequencer transfer. Basis: callers + body --
+;   MidiPkt_ArpExtHandler_L (command 19, state 12) points the block descriptor 0xBC50 with it and continues step 12.
+
+@@ v7 AccompSeq_MidiFilterCodeBlock_Step2
+# note: the comment is v10's own edit history (it quotes the bytes v10 once spelled there, with a v10 jrl displacement), not a description of the code
+
+@@ v7 Str_20469e32473220
+# note: the [nakarest] lines give offsets into v10's NAKA blob (naka_effects_seq+0x8b86..+0x8e22) and v10 ROM addresses; v7's blob layout was not measured

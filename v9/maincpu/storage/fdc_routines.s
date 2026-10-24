@@ -22,6 +22,9 @@ FDC_Read_Status:
 	ld l, (0x110008:24)
 	ret
 
+; FDC_ReadDataRegister: Reads the uPD72068 data register (0x11000A) into L: result-phase bytes and status bytes.
+;   Basis: callers + body -- the result-phase readers (FDC_ResultPhase_Read, FDC_SendAuxCmdReadResult,
+;   FDC_INTERRUPT_HANDLER, INT4_ReadResultLoop, FDC_CONFIG_VERIFY) call it after waiting for RQM.
 FDC_ReadDataRegister:
 	ld l, (0x11000a:24)
 	ret
@@ -38,6 +41,8 @@ FDC_RecordDensityCode:
 	ld	(0x8b22:16), a
 	ret
 
+; FDC_WriteDataRegister: Writes A to the uPD72068 data register (0x11000A): command and parameter bytes. Basis:
+;   callers + body -- FDC_SendCommandByte, FDC_SendParameterByte, INT4_SendSpecifyCmd and FDC_CONFIG_VERIFY call it.
 FDC_WriteDataRegister:
 	ld (0x11000a:24), a
 	ret
@@ -81,6 +86,11 @@ FDC_WaitReady_Skip3:
 FDC_WaitReady_Epilogue:
 	pop	xiz
 	ret
+; FDC_WaitParamByteReady: Waits until the uPD72068 main status register (0x110008) shows RQM|CB (mask 0x90 = 0x90: a
+;   command is in progress and the FDC requests the next byte); after 500 ticks of SYSTEM_TIMESTAMP it gives up and
+;   records status 1 (FDC_Set_Status). Basis: callers + body + twin -- FDC_SendParameterByte calls it before writing
+;   each parameter byte to the data register; the bootloader twin is FDC_WaitComplete (table_data, header 'Wait for
+;   the FDC parameter phase'), called by the bootloader's FDC_SendParameterByte.
 FDC_WaitParamByteReady:
 	push	xiz
 	ld	iz, (SYSTEM_TIMESTAMP:16)
@@ -209,6 +219,9 @@ FDC_CONFIG_VERIFY_Skip10:
 	ld	wa, (xix+wa)
 	lda xix, (FDC_CONFIG_VERIFY_On720KMedia:24)
 	jp	t, (xix+wa)
+; FDC_CONFIG_VERIFY_On720KMedia: Media-type 0 case of FDC_CONFIG_VERIFY's switch on the low nibble of 0x8A6E: stores
+;   drive mode 0 in 0x8A6C, rate/mode bits 0 and FDC_RecordDensityCode(2) -- the 9 x 512 B, 80-track 720 KB (2DD)
+;   setting; codes 4 and 5 and the default run the same body with their own code. Basis: callers + body.
 FDC_CONFIG_VERIFY_On720KMedia:
 	ld (35436:16), 0
 	ldw	(0x8a22:16), 0
@@ -770,6 +783,9 @@ FDC_ResultPhase_Read_Epilogue3:
 	pop	xiz
 	inc	2, xsp
 	ret
+; FDC_SendCommandByte: Drains any pending result phase (FDC_ResultPhase_Read) and writes A to the uPD72068 data
+;   register 0x11000A -- the first byte of a uPD765-style command. Basis: callers + body + twin -- FDC_CMD_SEND sends
+;   every non-auxiliary opcode through it before the parameter bytes; bootloader twin FDC_SendCommandByte.
 FDC_SendCommandByte:
 	dec	2, xsp
 	ld	(xsp), a
@@ -779,6 +795,10 @@ FDC_SendCommandByte:
 	calr	FDC_WriteDataRegister
 	inc	2, xsp
 	ret
+; FDC_SendParameterByte: Waits (500-tick timeout, status 1) until the main status register shows RQM|CB (0x90) and
+;   writes A to the data register 0x11000A -- one command parameter byte. Basis: callers + body + twin -- FDC_CMD_SEND
+;   sends the unit/head byte through it and the SPECIFY / SEEK / FORMAT / READ-WRITE parameter senders call it once
+;   per byte; bootloader twin FDC_SendParameterByte.
 FDC_SendParameterByte:
 	dec	2, xsp
 	ld	(xsp), a
@@ -788,6 +808,10 @@ FDC_SendParameterByte:
 	calr	FDC_WriteDataRegister
 	inc	2, xsp
 	ret
+; FDC_WriteAuxCmdByte: Drains any pending result phase (FDC_ResultPhase_Read), then writes A to the uPD72068 auxiliary
+;   command register 0x110008 (through FDC_Send_Command). Basis: callers + body + twin -- FDC_SendAuxCmd and
+;   FDC_SendAuxCmdReadResult call it after their error check; the bootloader twin with the same body is
+;   FDC_WriteAuxCmdByte.
 FDC_WriteAuxCmdByte:
 	dec	2, xsp
 	ld	(xsp), a
@@ -797,6 +821,9 @@ FDC_WriteAuxCmdByte:
 	calr	FDC_Send_Command
 	inc	2, xsp
 	ret
+; FDC_SendAuxCmd: Checked auxiliary-command send: drains the result phase and, if no FDC error is pending, writes A to
+;   the auxiliary command register 0x110008 through FDC_WriteAuxCmdByte. Basis: callers + body + twin --
+;   FDC_CMD_SEND routes the aux opcodes 0x35, 0x36 and 0x47 here (no result byte); bootloader twin FDC_SendAuxCmd.
 FDC_SendAuxCmd:
 	dec	2, xsp
 	ld	(xsp), a
@@ -809,6 +836,11 @@ FDC_SendAuxCmd:
 FDC_SendAuxCmd_Epilogue:
 	inc	2, xsp
 	ret
+; FDC_SendAuxCmdReadResult: Auxiliary command with a one-byte reply: drains the result phase, and if no error is
+;   pending writes A to the aux register 0x110008, waits for the FDC to offer a byte (FDC_Wait_Ready_Timeout, status 2
+;   on timeout) and stores the byte read from 0x11000A in 0x8A61. Basis: callers + body + twin -- FDC_CMD_SEND routes
+;   the aux opcodes 0x33, 0x34, 0x4F/0x5F (select format), xB (control internal mode) and xE (enable motors) here;
+;   bootloader twin FDC_SendAuxCmdReadResult (byte to 0x0C8F).
 FDC_SendAuxCmdReadResult:
 	dec	2, xsp
 	ld	(xsp), a
@@ -1047,6 +1079,10 @@ FDC_CMD_SEND_Skip11:
 FDC_CMD_SEND_Epilogue:
 	inc	2, xsp
 	ret
+; FDC_ValidateOpcode: Checks the opcode in 0x8A28: L = 0 for the aux opcodes 0x4F/0x33/0x34/0x47/0x35 and for opcodes
+;   whose low 5 bits are 0x02-0x0F, 0x11, 0x19, 0x1D or 0x1E (0x10 excluded); L = 1 otherwise. Basis: callers + body +
+;   twin -- FDC_CMD_SEND stores the opcode, calls it and returns at once when L != 0; bootloader twin
+;   FDC_ValidateOpcode.
 FDC_ValidateOpcode:
 	ld	a, (0x8a28:16)
 	cp	a, 79
@@ -1090,6 +1126,9 @@ FDC_HardwareSetup_Join:
 	and	a, 3
 	extz	wa
 	jrl	FDC_SendParameterByte
+; FDC_SendParams_Specify: Sends the two SPECIFY parameter bytes: SRT<<4 | HUT (0x8A37, 0x8A38 & 0x0F) and HLT<<1 | ND
+;   (0x8A39, 0x8A3A & 1), each through FDC_SendParameterByte. Basis: callers + body + twin -- FDC_CMD_SEND calls it
+;   for opcode 3 (SPECIFY) right after the command byte; bootloader twin FDC_SendParams_Specify.
 FDC_SendParams_Specify:
 	ld	a, (0x8a37:16)
 	sll	a, 4
@@ -1111,6 +1150,10 @@ FDC_SendParams_Specify:
 	or	a, c
 	extz	wa
 	jrl	FDC_SendParameterByte
+; FDC_SendParams_Format: Sends the FORMAT TRACK parameters N (0x8A2E & 7), SC (0x8A32), GPL (0x8A33) and filler D
+;   (0x8A34) through FDC_SendParameterByte. Basis: callers + body + twin -- FDC_CMD_SEND calls it for opcode 0x4D
+;   (FORMAT TRACK) after the unit/head byte; FDC_MODE_CONFIG fills 0x8A2E/0x8A33/0x8A34 (N, gap 80/108/116, fill
+;   0xE5); bootloader twin FDC_SendParams_Format.
 FDC_SendParams_Format:
 	ld	a, (0x8a2e:16)
 	and	a, 7
@@ -1125,10 +1168,17 @@ FDC_SendParams_Format:
 	ld	a, (0x8a34:16)
 	extz	wa
 	jrl	FDC_SendParameterByte
+; FDC_SendParam_SeekTrack: Sends the SEEK target track NCN (FDC_TARGET_TRACK, 0x8A36) through FDC_SendParameterByte.
+;   Basis: callers + body + twin -- FDC_CMD_SEND calls it for opcode 0x0F (SEEK) after the unit/head byte, as issued
+;   by FDC_CmdSeek; bootloader twin FDC_SendParam_SeekTrack.
 FDC_SendParam_SeekTrack:
 	ld	a, (FDC_TARGET_TRACK:16)
 	extz	wa
 	jrl	FDC_SendParameterByte
+; FDC_SendParams_ReadWrite: Sends the data-command parameters C (0x8A2B), H (0x8A2C & 1), R (0x8A2D), N (0x8A2E & 7),
+;   EOT (0x8A2F), GPL (0x8A30), then DTL (0x8A31) -- or STP ((0x8A35) & 3) for the scan opcodes 0xD1/0xD9/0xDD --
+;   through FDC_SendParameterByte. Basis: callers + body + twin -- FDC_CMD_SEND calls it for every opcode not handled
+;   earlier (READ/WRITE DATA 0xC6/0xC5 among them); bootloader twin FDC_SendParams_ReadWrite.
 FDC_SendParams_ReadWrite:
 	ld	a, (0x8a2b:16)
 	extz	wa
@@ -1400,6 +1450,10 @@ FDC_CmdSeek:
 FDC_CmdSeek_Skip:
 	ldw	wa, 16
 	jrl	SOME_DELAY
+; FDC_SubmitReadDataCmd: Issues MT|MF READ DATA (0xC6): stores the opcode in 0x8A28, arms DMA channel 3 for
+;   I/O->memory (FDC_Setup_DMA_Mode), clears the result buffer (FDC_TIMING_DELAY), sends the command with FDC_CMD_SEND
+;   and, if no error, waits for the result (FDC_POST_OP). Basis: callers + body + twin -- FDC_CMD_EXEC (read sectors,
+;   FDC command 3) calls it per same-track burst; instruction twin of the bootloader's FDC_SubmitReadDataCmd.
 FDC_SubmitReadDataCmd:
 	ld	(0x8a28:16), 198
 	calr	FDC_Setup_DMA_Mode
@@ -1637,6 +1691,10 @@ FDC_SECTOR_XFER_Join5:
 FDC_SECTOR_XFER_Epilogue2:
 	popw	iz
 	ret
+; FDC_SubmitWriteDataCmd: Issues MT|MF WRITE DATA (0xC5): stores the opcode in 0x8A28, arms DMA channel 3 for
+;   memory->I/O (FDC_Setup_DMA_Mode), clears the result buffer, sends the command with FDC_CMD_SEND and, if no error,
+;   waits for the result (FDC_POST_OP). Basis: callers + body + twin -- FDC_SECTOR_XFER (write sectors, FDC command 4)
+;   calls it per burst; instruction twin of the bootloader's FDC_SubmitWriteDataCmd.
 FDC_SubmitWriteDataCmd:
 	ld	(0x8a28:16), 197
 	calr	FDC_Setup_DMA_Mode
@@ -2308,6 +2366,12 @@ Reset_Floppy_Disk_Controller:
 
 	; then do a lot of other stuff I still don't undertsand:
 
+; FDTest_ProbeDiskFormat: Main-CPU twin of the bootloader's FDC_ProbeDiskFormat (table_data/boot_disk_probe.s): sets
+;   PHFC = 0x1E, returns when Port D bit 6 is set (no disk), else submits through FDC_CommandEntry the request block
+;   at 0x8B24 (command, drive, head, track, sector, count, buffer 0x8B34): command 0 (initialize, track field 224; the
+;   211 arm is dead, A = 0) and four single-sector reads (command 3, sector 1) at tracks 0, 78, 10 and 40, then waits
+;   200 (SOME_DELAY) and counts the pass in 0xE3DA. Basis: callers + body -- the FDD test title's entry 0
+;   (TitleFunc_LifecycleTable) prints 'TBIOS Test' and calls it; same request sequence as the documented boot twin.
 FDTest_ProbeDiskFormat:
 	ld (PHFC:8), 0x1e:io
 	bit	6, (PD:8)	; Port D bit 6: "FD.I/O signal"

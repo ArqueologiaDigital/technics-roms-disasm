@@ -266,6 +266,8 @@ GroupBoxProc_Case5:
 GroupBoxProc_Case6:
 	call UIRender_RetStub2
 	jrl GroupBox_ReturnZero
+; GroupBoxProc_OnRefreshApTask: EVT_REFRESH_AP_TASK: disables the dial, clears DIAL_FOCUS, InitializeTimer, then sends
+;   EVT_REFRESH_SW_EVENT to itself.
 GroupBoxProc_OnRefreshApTask:
 	ld wa, 0:i3
 	calr SetDialEnable
@@ -868,6 +870,8 @@ SetWallPaper_CaseData:
 SetWallPaper_Loop:
 	ld	wa, 1:i3
 	jr	SetWallPaper_Join
+; SetWallPaper_MenuWallBorder: Border type 2: wallpaper 2 when the WallMenu setting (0x340FC) is set, else wallpaper
+;   1.
 SetWallPaper_MenuWallBorder:
 	cpw	(0x0340fc:24), 0
 	jr	z, SetWallPaper_Loop
@@ -1310,10 +1314,15 @@ DirmdTitle_New_Skip:
 	ld	xwa, DirmdTitleFunc_Str_DirmdTitleNew
 	call	DbMemo_PostString
 	jp	PsMixer_CtlTypeProc8_Return
+; DirmdTitle_Old: DirmdTitle emulator method [1] (Old), called by DirmdEmulator on EVT_HIDE: posts the trace memo
+;   "DirmdTitleOld();" (DbMemo_PostString) and tail-jumps to an empty `ret` (PsMixer_CtlTypeProc8_Return2)
 DirmdTitle_Old:
 	ld	xwa, DirmdTitleFunc_Str_DirmdTitleOld
 	call	DbMemo_PostString
 	jp	PsMixer_CtlTypeProc8_Return2
+; DirmdTitle_ESw: DirmdTitle emulator method [2] (ESw), called by DirmdEmulator on EVT_SW_IN with the switch number (&
+;   31) and its bit-7 flag: formats and posts the trace memo "DirmdTitleESw(%d, %d);" then calls
+;   DirmdTitle_SwitchInNullRet(WA = switch, BC = flag), an empty routine
 DirmdTitle_ESw:
 	lda	xsp, (xsp-256)
 	pushw	iz
@@ -1334,6 +1343,8 @@ DirmdTitle_ESw:
 	popw	iz
 	lda	xsp, (xsp+256)
 	ret
+; DirmdTitle_Cur: DirmdTitle emulator method [3] (Cur): posts the trace memo "DirmdTitleCur();" and tail-jumps to an
+;   empty `ret` (PsMixer_CtlTypeProc8_Return3); DirmdEmulator never calls slot 3
 DirmdTitle_Cur:
 	ld	xwa, DirmdTitleFunc_Str_DirmdTitleCur
 	call	DbMemo_PostString

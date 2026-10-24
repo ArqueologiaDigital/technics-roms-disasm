@@ -35,6 +35,12 @@ SetWall_UpdateSlotIndex:
 SetWall_InlineCodeBlock:
 	call	SetWall_InlineCodeBlock2
 	ret
+; SqTrAs_CursorNextTrack: Track-assign page, next track: applies the pending edit of the cursor track
+;   (SetWall_InlineCodeBlock2), redraws the cursor row (CDlikeSwTtl_SendEvt4, EVT_REQUEST_GRID_DRAW to 0x8B0004)
+;   unless the cursor is 7 (last row of page 1), posts EVT_SET_VISIBLE 0 to 0x8B0003, moves the cursor (0xCDF) up by
+;   one (max 15) and reloads the edited value (0x2873) from the assignment table 0xF1A0 (SetWall_UpdateSlotIndex).
+;   Basis: callers + body -- the only caller is MiddleFuncCall_OnTrAsTrackInc, the handler of EVT_TR_AS_TRACK_INC
+;   (MT_TrAsTrackInc, 'track-assign grid: next track').
 SqTrAs_CursorNextTrack:
 	call	SetWall_InlineCodeBlock2
 	cp (3295:16), 7
@@ -50,6 +56,12 @@ SqTrAs_CursorNextTrack_Skip2:
 	ld	(3295:16), a
 	call	SetWall_UpdateSlotIndex
 	ret
+; SqTrAs_CursorPrevTrack: Track-assign page, previous track: applies the pending edit of the cursor track
+;   (SetWall_InlineCodeBlock2), redraws the cursor row (CDlikeSwTtl_SendEvt4) unless the cursor is 8 (first row of
+;   page 2), posts EVT_SET_VISIBLE 0 to 0x8B0003, moves the cursor (0xCDF) down by one (min 0) and reloads the edited
+;   value (0x2873) from the assignment table 0xF1A0. Basis: callers + body -- the only caller is
+;   MiddleFuncCall_OnTrAsTrackDec, the handler of EVT_TR_AS_TRACK_DEC (MT_TrAsTrackDec, 'track-assign grid: previous
+;   track'); mirror image of SqTrAs_CursorNextTrack.
 SqTrAs_CursorPrevTrack:
 	call	SetWall_InlineCodeBlock2
 	cp (3295:16), 8
@@ -74,9 +86,18 @@ SqTrAs_CursorPrevTrack_Skip2:
 NoRef_SetWall_SlotMap20x2:
 	.byte 0x00, 0x02, 0x00, 0x0a, 0x03, 0x04, 0x05, 0x06, 0x0b, 0x08, 0x09, 0x01, 0x13, 0x0c, 0x0d, 0x0e, 0x0f, 0x07, 0x11, 0x12
 	.byte 0x02, 0x0b, 0x01, 0x04, 0x05, 0x06, 0x07, 0x11, 0x09, 0x0a, 0x03, 0x08, 0x0d, 0x0e, 0x0f, 0x10, 0x10, 0x12, 0x13, 0x0c
+; SqTrAs_PartInc_UpdateOkSw: Track-assign page, EVT_TR_AS_PART_INC: calls the TrAsOkSw (view 0x8B0003) visibility
+;   update -- shown (EVT_SET_VISIBLE 1) when the edited assignment (0x2873) or the cursor track's stored one
+;   (0xF1A0[(0x0CDF)]) is 13-16, else hidden. Basis: callers + body -- only caller MiddleFuncCall_OnTrAsPartInc;
+;   MiddleFuncCall_DispatchData_Helper is the same wrapper for PART_DEC.
 SqTrAs_PartInc_UpdateOkSw:
 	call	SqTrAs_UpdateOkSwVisibility
 	ret
+; SqTrAs_UpdateOkSwVisibility: Track-assign page: shows the TrAsOkSw view 0x8B0003 (EVT_SET_VISIBLE 1,
+;   CDlikeSwTtl_SendStartEvtArg1) when the edited assignment (0x2873) or the cursor track's stored one
+;   (0xF1A0[(0x0CDF)]) is 13-16 (CHORD / APC / CONTROL / RHYTHM), else hides it (EVT_SET_VISIBLE 0,
+;   CDlikeSwTtl_SendStartEvt). Basis: callers + body -- SqTrAs_PartInc_UpdateOkSw (EVT_TR_AS_PART_INC) and
+;   MiddleFuncCall_DispatchData_Helper (PART_DEC) call it; the first one's header describes this update.
 SqTrAs_UpdateOkSwVisibility:
 	ld	a, (0x2873:16)
 	cp	a, 13
@@ -264,6 +285,12 @@ SetWall_InitCallSequences:
 	ld	(3295:16), 8
 	call	SetWall_UpdateSlotIndex
 	ret
+; SqTrAs_CursorToFirstPage: Track-assign page, previous page: applies the pending edit of the cursor track
+;   (SetWall_InlineCodeBlock2), posts EVT_SET_VISIBLE 0 to 0x8B0003, sets the cursor (0xCDF) to track index 0 and
+;   reloads the edited value (0x2873) from 0xF1A0. Its twin SetWall_InitCallSequences (EVT_TR_AS_PAGE_INC) sets the
+;   cursor to 8, so the grid has two pages of 8 tracks. Basis: callers + body -- the only caller is
+;   MiddleFuncCall_OnTrAsPageDec, the handler of EVT_TR_AS_PAGE_DEC (MT_TrAsPageDec, 'track-assign grid: previous
+;   page').
 SqTrAs_CursorToFirstPage:
 	call	SetWall_InlineCodeBlock2
 	call	CDlikeSwTtl_SendStartEvt
@@ -323,6 +350,9 @@ SetWall_DataBlock1:
 	ld	a, (0xffe3:24)
 	ld	(3391:16), a
 	ret
+; SqTrAsPsTtl_NullRet: Empty routine (`ret`; two dead `ret`s follow): the leave-title hook of TT_SQTRASPS --
+;   SqTrAsPsTtlFunc_OnTitleOld calls it between its register saves and does nothing else. Basis: callers + body -- the
+;   X_NullRet convention of these title files (PlayMode_NullRet, DpMdlySmfLyrTtl_NullRet).
 SqTrAsPsTtl_NullRet:
 	ret
 	ret
@@ -1903,6 +1933,13 @@ SetWall_ForwardSkip_Return:
 
 SetWall_InlineCodeBlock3:
 	ret
+; SqSngSel_CalcSongUsageOnEnter: Song-select title, activation phase 2 (the title becomes current): runs
+;   AccWrap_PlayModeDispatch, sets bit 2 of 0x28A7, copies word 0xFFEC to 0xF19E and fills the 10-byte table 0x1145
+;   with each song's memory use in percent (SqSngSel_CalcSongUsagePercent: sum over the song's used tracks * 100 /
+;   (0x286D) + 1, capped at 99, 0 for an empty song; the current song is read from 0xF250, others from SEQ_SONG_SLOTS
+;   + 2048*n + 208). Basis: callers + body -- SqSngSelTtlFunc dispatches EVT_ACTIVATE_STATE phase 2 to
+;   SqTrAs_CondCheck, which calls it (phase 3 goes to SqSngSel_LeaveTitle, which clears 0x28A7 bit 2 again);
+;   SongBank_LookupTableEntry prints 0x1145[song] with "%3d%%".
 SqSngSel_CalcSongUsageOnEnter:
 	call	AccWrap_PlayModeDispatch
 	or (10407:16), 4
@@ -1927,6 +1964,11 @@ SqSngSel_CalcSongUsageOnEnter_Loop2:
 	popw	bc
 	pop	xix
 	ret
+; SqSngSel_LeaveTitle: When the song-select title is left: clears 0x28A7 bit 2 again -- the transport's 'ignore
+;   incoming MIDI Start/Continue' flag that SqSngSel_CalcSongUsageOnEnter set on entry
+;   (Transport_EnableMidiStartContinue clears the same bit) -- and sets panel indicator 0x4C
+;   (CtrlPanel_SetIndicatorBit). Basis: callers + body -- SqSngSelTtlFunc_OnTitleOld (EVT_ACTIVATE_STATE phase 3)
+;   calls it; SqSngSel_CalcSongUsageOnEnter's header names it as the phase-3 step.
 SqSngSel_LeaveTitle:
 	and (10407:16), 251
 	xor	wa, wa
@@ -1952,6 +1994,11 @@ SetWall_RetStub2:
 SetWall_MiscDataAndCode:
 	ret
 	ret
+; SqSngName_ApplyNameAndExit: Applies a song name just typed: copies the 16 bytes at 0x1159 to the current song name
+;   (0xF280) and to the name field (+0x100) of the current song slot (SEQ_SONG_SLOTS + 0x800 * (0xFFE3)), then leaves
+;   the naming page: title 0x83 (TITLE_SQEASYREC) when the current title is 0xA7 (TITLE_SQEASYNAME), else 0x8E
+;   (TITLE_SQSNGSEL), through UI_PostModeChangeEvent. Basis: callers + body -- the only caller is
+;   MiddleFuncCall_OnSongNameSet (EVT_SONG_NAME_SET, MT_SongNameSet), which first Strcpys the name into 0x1159 (4441).
 SqSngName_ApplyNameAndExit:
 	ld	xix, 0xf280
 	ld	xiy, 4441
@@ -1980,6 +2027,11 @@ SqSngName_ApplyNameAndExit_Skip2:
 	call	UI_PostModeChangeEvent
 SqSngName_ApplyNameAndExit_Return:
 	ret
+; SqSngSel_CalcSongUsagePercent: Computes the memory use of song (0x286B) in percent into 0x286C: walks its 16 three-
+;   byte track entries (the current song from 0xF250, another from SEQ_SONG_SLOTS + 0x800 * n + 0xD0), sums the blocks
+;   of every used track (bit 7 set), then blocks * 100 / (0x286D) + 1, capped at 99; 0 for an empty song. Saves and
+;   restores the block pointer 0x10FD. Basis: callers + body -- SqSngSel_CalcSongUsageOnEnter calls it for songs 0..9
+;   and copies 0x286C to the table 0x1145; its header describes this computation.
 SqSngSel_CalcSongUsagePercent:
 	ld	xwa, (4349:16)
 	push	xwa

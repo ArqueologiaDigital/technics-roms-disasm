@@ -77,6 +77,10 @@ FDemoText_ByteData_VoiceProbeC:
 	ld	wa, (xix+wa)
 	lda	xix, (FDemoText_ByteData_VoiceProbeC_RequestPartialResendAll:24)
 	jp	t, (xix+wa)
+; FDemoText_ByteData_VoiceProbeC_RequestPartialResendAll: Cases 1 and 2 of FDemoText_ByteData_VoiceProbeC (SWBTWR
+;   codes 0x44-0x46, changed payload byte +1/+2): sets bit 6 of RAM 0x247EC, which makes
+;   FDemoText_ProcessOutputChannels request a partial resend of every active part. Also the switch's offset base.
+;   Basis: callers + body.
 FDemoText_ByteData_VoiceProbeC_RequestPartialResendAll:
 	set	6, (0x247ec:24)
 	ret
@@ -1269,6 +1273,11 @@ FDemoText_ByteData_DisplayRefresh_Join:
 FDemoText_ByteData_DisplayRefresh_Epilogue:
 	pop	xiz
 	ret
+; FDemoText_GetInstanceID: Finds the view object whose name equals the string XWA: walks classes 255..0 and their
+;   instances (CountObject, CheckViewObject), compares each object's name (FDemoText_ByteData_DisplayRefresh) and
+;   returns its id class<<16 | instance in XHL; if none matches it posts "Error! (GetInstanceID)" to the debug memo
+;   and returns 0xFFFFFFFF. Basis: callers + body -- the feature-demo <SHOW> tag handler passes the OBJ attribute and
+;   sends EVT_SHOW to the id it returns; the firmware's own error string names the routine GetInstanceID.
 FDemoText_GetInstanceID:
 	lda	xsp, (xsp-136)
 	push	xiz
@@ -1335,6 +1344,12 @@ FDemoText_GetInstanceID_Epilogue2:
 	pop	xiz
 	lda	xsp, (xsp+136)
 	ret
+; FDemoText_ReadTaggedBlock: Reads the open file (FileIO_ReadByte) up to the opening tag XDE (e.g. "<PRESENTATION>"),
+;   then copies the text up to the closing tag on the stack (e.g. "</PRESENTATION>") into buffer XWA of XBC bytes,
+;   dropping CR/LF/TAB, NUL-terminated; HL = 0, or 0xFFFD no opening tag, 0xFFFC no closing tag, 0xFFFB buffer full;
+;   `retd 4` pops the tag pointer. Basis: callers + body -- Seq_LoadResource_Proceed passes
+;   <PRESENTATION>/</PRESENTATION> with a 256-byte buffer and Seq_FillBufferLoop <ACTION>/</ACTION>, each on a file it
+;   opened.
 FDemoText_ReadTaggedBlock:
 	lda xsp, (xsp - 0x16)
 	pushw iz
@@ -2447,6 +2462,12 @@ FDemoText_TextDispatch_Skip12:
 	pop	xiz
 	lda	xsp, (xsp+206)
 	ret
+; FDemoText_ResetLayoutState: Resets the feature-demo page layout: marks all 40 x 60 cells of the occupancy map at RAM
+;   0x251DA free (0x54), zeroes the cursor (0x25B3A x/y) and the depths of the <FONT> font stack (0x25B3E), colour
+;   stack (0x25B60) and <CENTER> stack (0x25B72), and refills their 8 entries with the defaults 5, 0x00FF and 1.
+;   Basis: callers + body -- the <ACT> tag handler calls it on an opening tag before showing PlainScreen and
+;   PresentationControl and drawing the wall; the FONT, /FONT, CENTER, /CENTER handlers push and pop those stacks and
+;   FDemoText_CalcTextExtent scans the 0x54 cells.
 FDemoText_ResetLayoutState:
 	lda	xbc, (0x0251da:24)
 	ld	xwa, xbc
@@ -3002,28 +3023,28 @@ Seq_LoadResource_SpecialCase:
 	ldw hl, 0xfff8				; error code -8
 	jr Seq_Epilogue32
 Seq_LoadResource_Proceed:
-	push	xiz
-	lda	xwa, (xsp+8)
+	push	xiz				; push resource arg
+	lda	xwa, (xsp+8)			; buffer (adjusted for push)
 	push	xwa
-	call	Strcat
-	pushw	Seq_LoadResource_Proceed_Str_PRE@hi16
-	pushw	Seq_LoadResource_Proceed_Str_PRE@lo16
-	lda	xwa, (xsp+16)
+	call	Strcat			; format/prepare
+	pushw	Seq_LoadResource_Proceed_Str_PRE@hi16				; resource ID high
+	pushw	Seq_LoadResource_Proceed_Str_PRE@lo16				; resource ID low
+	lda	xwa, (xsp+16)			; buffer
 	push	xwa
-	call	Strcat
-	lda	xsp, (xsp+16)
-	lda	xwa, (xsp+4)
-	ld	xbc, Seq_LoadResource_Proceed_Str_rt
-	call	FileIO_OpenWithMode
+	call	Strcat			; format/prepare
+	lda	xsp, (xsp+16)			; clean stack (16 bytes)
+	lda	xwa, (xsp+4)			; reload buffer
+	ld	xbc, Seq_LoadResource_Proceed_Str_rt			; resource descriptor
+	call	FileIO_OpenWithMode				; open display resource
 	cp	hl, 0:i3
-	jr	lt, Seq_Epilogue32
+	jr	lt, Seq_Epilogue32			; failed
 	pushw	Seq_LoadResource_Proceed_Str_PRESENTATION@hi16
 	pushw	Seq_LoadResource_Proceed_Str_PRESENTATION@lo16
-	ld	xwa, 149704
-	ld	xbc, 256
-	ld	xde, Presentation_TagStrTable
+	ld	xwa, 149704			; data source
+	ld	xbc, 256			; size 256
+	ld	xde, Presentation_TagStrTable			; destination descriptor
 	calr	FDemoText_ReadTaggedBlock
-	call	FileIO_CloseHandle
+	call	FileIO_CloseHandle			; finalize
 Seq_Epilogue32:
 	pop xiz
 	lda xsp, (xsp + 32)
@@ -3039,48 +3060,48 @@ Seq_LoadNamedResource:
 	lda xbc, (xbc + 32)			; XBC = end of buffer
 Seq_FillBufferLoop:
 	ld	(xwa+), 32
-	cp	xwa, xbc
-	jr	c, Seq_FillBufferLoop
-	push	xiz
-	call	Strlen
-	pushw	hl
-	push	xiz
-	lda	xwa, (xsp+14)
+	cp	xwa, xbc				; reached end?
+	jr	c, Seq_FillBufferLoop			; no, continue filling
+	push	xiz				; push name arg
+	call	Strlen				; name lookup (strlen?)
+	pushw	hl				; push length
+	push	xiz				; push name
+	lda	xwa, (xsp+14)			; buffer
 	push	xwa
-	call	Strncpy
-	lda	xwa, (xsp+18)
-	ld	(xwa+8), 0
+	call	Strncpy				; format string into buffer
+	lda	xwa, (xsp+18)			; buffer (adjusted)
+	ld	(xwa+8), 0			; null-terminate at offset 8
 	pushw	Seq_FillBufferLoop_Str_ACT@hi16
-	pushw	Seq_FillBufferLoop_Str_ACT@lo16
+	pushw	Seq_FillBufferLoop_Str_ACT@lo16				; resource ID
 	push	xwa
-	call	Strcat
-	lda	xsp, (xsp+22)
+	call	Strcat			; format/prepare
+	lda	xsp, (xsp+22)			; clean stack
 	lda	xwa, (xsp+4)
-	ld	xbc, Seq_FillBufferLoop_Str_rt
-	call	FileIO_OpenWithMode
+	ld	xbc, Seq_FillBufferLoop_Str_rt			; resource descriptor
+	call	FileIO_OpenWithMode				; open display resource
 	cp	hl, 0:i3
-	jr	lt, Seq_NamedResource_Epilogue
+	jr	lt, Seq_NamedResource_Epilogue			; failed
 	ld	xwa, 0:i3
 	ld	bc, 2:i3
-	call	FileIO_SeekAndReadBlock
-	call	FileIO_SeekWriteBlock_Impl
-	ld	xiz, xhl
-	call	FileIO_SeekRead_ExtReturn
+	call	FileIO_SeekAndReadBlock				; set region param
+	call	FileIO_SeekWriteBlock_Impl				; get display info
+	ld	xiz, xhl				; XIZ = info ptr
+	call	FileIO_SeekRead_ExtReturn				; additional setup
 	ld	xwa, xiz
 	calr	FDemo_AllocBuffer
 	ld	xwa, xhl
-	ld	(149968:24), xwa
+	ld	(149968:24), xwa	; store result
 	pushw	Seq_FillBufferLoop_Str_ACTION@hi16
 	pushw	Seq_FillBufferLoop_Str_ACTION@lo16
-	ld	xbc, xiz
-	ld	xde, Seq_FillBufferLoop_Str_ACTION_2
+	ld	xbc, xiz				; info ptr
+	ld	xde, Seq_FillBufferLoop_Str_ACTION_2			; destination descriptor
 	calr	FDemoText_ReadTaggedBlock
-	call	FileIO_CloseHandle
+	call	FileIO_CloseHandle			; finalize
 	cp	hl, 0:i3
-	jr	nz, Seq_NamedResource_Epilogue
-	calr	Seq_PostProcessDisplay
+	jr	nz, Seq_NamedResource_Epilogue			; finalize failed
+	calr	Seq_PostProcessDisplay			; post-processing
 	ld	wa, 1:i3
-	calr	FDemoText_ProcessMarkupLoop
+	calr	FDemoText_ProcessMarkupLoop			; additional display update
 Seq_NamedResource_Epilogue:
 	pop xiz
 	lda xsp, (xsp + 32)

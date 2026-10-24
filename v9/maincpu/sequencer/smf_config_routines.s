@@ -52,6 +52,10 @@ SMF_WriteLoop2_BufferEmpty:
 SMF_WriteLoop2_Continue:
 	jrl SMF_ProcessEventLoop
 
+; SMF_ControlChange_SkipEvent: Jump island of SMF_ControlChange_Handler (SMF export): a control event it does not
+;   write -- channel byte (4213) = 127 -- goes back to SMF_ProcessEventLoop for the next event. Basis: callers + body
+;   -- its only live referrer is SMF_ControlChange_Handler's `cp (4213:16), 127` test; the body is a single `jrl
+;   SMF_ProcessEventLoop`.
 SMF_ControlChange_SkipEvent:
 	jrl SMF_ProcessEventLoop
 
@@ -208,6 +212,10 @@ SMF_SetupActiveChannel_Str_MTrk:
 	; otherwise the offset is added to RAM 0xF460 (`lda xiy, (xrr+rr)`) to reach
 	; that part's record.  The offsets are 0x36 + 26*k (k = 0..15), so the
 	; records sit 26 bytes apart.  20 entries, pinned by the next piece at +0x42.
+; SMF_PartRecordOffsetByTrackAssign: 20 x u16, indexed by a track's TRACK ASSIGN code (RAM 0xF1A0[track], 0..19):
+;   offset of that part's 26-byte record from RAM 0xF460 (0x36 + 26 x part index); 0xFFFF for codes 13-16 (no part
+;   record: the SMF export skips the track). Basis: readers + bytes -- SMF_ScanAndProcessChannel and the SMF
+;   volume/pan, RPN fine-tune, coarse-tune and transpose writers.
 SMF_PartRecordOffsetByTrackAssign:
 	.short 0x0036, 0x006a, 0x0050, 0x00ec, 0x0106	; codes 0-4
 	.short 0x0120, 0x013a, 0x0154, 0x009e, 0x00b8	; codes 5-9
@@ -218,8 +226,12 @@ SMF_PartRecordOffsetByTrackAssign:
 	; with 09 02, "GM System Off".  SMF_Setup_WriteLoop (0xF2724E) writes 8 bytes
 	; of the first when RAM byte 0x10E4 is non-zero, of the second when it
 	; is zero.
+; SMF_GmSystemOnEvent: 8-byte SMF track event: delta 0, SysEx F0 05 7E 7F 09 01 F7 (General MIDI System On).
+;   SMF_Setup_WriteLoop writes it into the exported file when RAM byte 0x10E4 is non-zero. Basis: readers + bytes.
 SMF_GmSystemOnEvent:
 	.byte 0x00, 0xf0, 0x05, 0x7e, 0x7f, 0x09, 0x01, 0xf7
+; SMF_GmSystemOffEvent: 8-byte SMF track event: delta 0, SysEx F0 05 7E 7F 09 02 F7 (General MIDI System Off).
+;   SMF_Setup_WriteLoop writes it into the exported file when RAM byte 0x10E4 is zero. Basis: readers + bytes.
 SMF_GmSystemOffEvent:
 	.byte 0x00, 0xf0, 0x05, 0x7e, 0x7f, 0x09, 0x02, 0xf7
 	; +0x52 (SMF_PartIndexByTrackAssign): 20 bytes, indexed by the same
@@ -228,6 +240,11 @@ SMF_GmSystemOffEvent:
 	; stored at RAM 0x1A5C, the third byte of the 3-byte message built at
 	; 0x1A5A before SndParam_InitBufferConverge.  0x7F exactly where the
 	; offset table above holds 0xFFFF (codes 13-16).
+; SMF_PartIndexByTrackAssign: 20 x u8, indexed by a track's TRACK ASSIGN code (RAM 0xF1A0[channel]): the part index
+;   0..15 of that code (0x7F for codes 13-16, which have no part), the same index that
+;   SMF_PartRecordOffsetByTrackAssign encodes as 0x36 + 26 x index. SMF_ProgramChange_ProcessPatch puts it in byte
+;   0x1A5C of the record it converts with SndParam_InitBufferConverge before writing the bank/program events. Basis:
+;   readers + bytes.
 SMF_PartIndexByTrackAssign:
 	.byte 0x00, 0x02, 0x01, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x04, 0x05	; codes 0-9
 	.byte 0x06, 0x03, 0x0f, 0x7f, 0x7f, 0x7f, 0x7f, 0x0c, 0x0d, 0x0e	; codes 10-19

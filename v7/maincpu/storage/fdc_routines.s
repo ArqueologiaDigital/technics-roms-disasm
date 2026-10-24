@@ -37,6 +37,8 @@ FDC_Write_Data_Entry_Helper:
 	ldmm8 0x8a84, 0x8a86
 	ld (0x8a86:16), a
 	ret
+; FDC_WriteDataRegister: Writes A to the uPD72068 data register (0x11000A): command and parameter bytes. Basis:
+;   callers + body -- FDC_SendCommandByte, FDC_SendParameterByte, INT4_SendSpecifyCmd and FDC_CONFIG_VERIFY call it.
 FDC_WriteDataRegister:
 	ld (0x11000a:24), a
 	ret
@@ -85,6 +87,11 @@ FDC_WaitReady_Skip3:
 FDC_WaitReady_Epilogue:
 	pop XIZ
 	ret
+; FDC_WaitParamByteReady: Waits until the uPD72068 main status register (0x110008) shows RQM|CB (mask 0x90 = 0x90: a
+;   command is in progress and the FDC requests the next byte); after 500 ticks of SYSTEM_TIMESTAMP it gives up and
+;   records status 1 (FDC_Set_Status). Basis: callers + body + twin -- FDC_SendParameterByte calls it before writing
+;   each parameter byte to the data register; the bootloader twin is FDC_WaitComplete (table_data, header 'Wait for
+;   the FDC parameter phase'), called by the bootloader's FDC_SendParameterByte.
 FDC_WaitParamByteReady:
 	push XIZ
 	ld iz, (SYSTEM_TIMESTAMP:16)
@@ -300,6 +307,9 @@ FDC_CMD_DISPATCH_SUB:
 .Lc_f969a1:
 	ld hl, 0:i3
 	ret
+; FDC command dispatcher
+; Reads command from (89A4h), dispatches to 12 handlers (0-0xb)
+; Uses offset table at 0xea98b2
 FDC_COMMAND_DISPATCHER:
 	ld	(35214:16), 0
 	ld	wa, (FDC_COMMAND_INDEX:16)
@@ -310,6 +320,7 @@ FDC_COMMAND_DISPATCHER:
 	ld	wa, (xix+wa)
 	lda	xix, (FDC_CMD_HANDLER_BASE:24)
 	jp	t, (xix+wa)
+; FDC command handler base - entry point for command 0
 FDC_CMD_HANDLER_BASE:
 	calr	FDC_SetupFormatParams
 	ld	l, (FDC_ERROR_CODE:16)
@@ -769,6 +780,9 @@ FDC_ResultPhase_Read_Epilogue3:
 	pop	xiz
 	inc	2, xsp
 	ret
+; FDC_SendCommandByte: Drains any pending result phase (FDC_ResultPhase_Read) and writes A to the uPD72068 data
+;   register 0x11000A -- the first byte of a uPD765-style command. Basis: callers + body + twin -- FDC_CMD_SEND sends
+;   every non-auxiliary opcode through it before the parameter bytes; bootloader twin FDC_SendCommandByte.
 FDC_SendCommandByte:
 	dec 2,XSP
 	ld (XSP),A
@@ -778,6 +792,10 @@ FDC_SendCommandByte:
 	calr FDC_WriteDataRegister
 	inc 2,XSP
 	ret
+; FDC_SendParameterByte: Waits (500-tick timeout, status 1) until the main status register shows RQM|CB (0x90) and
+;   writes A to the data register 0x11000A -- one command parameter byte. Basis: callers + body + twin -- FDC_CMD_SEND
+;   sends the unit/head byte through it and the SPECIFY / SEEK / FORMAT / READ-WRITE parameter senders call it once
+;   per byte; bootloader twin FDC_SendParameterByte.
 FDC_SendParameterByte:
 	dec	2, xsp
 	ld	(xsp), a
@@ -1282,6 +1300,11 @@ FDC_SetStatus_AlreadySet:
 FDC_SetStatus_Return:
 	ld	l, (FDC_ERROR_CODE:16)
 	ret
+; --- FDC_ClearStatus_InitTimer: Clear FDC status and start timeout ---
+; Clears FDC status byte (35208) to 0, initializes result buffer (35268)
+; to 0xff, saves prevbank state, starts timer-based timeout loop.
+; Polls with cps bc, 0 for completion signal.
+; Uses prevbank (D7 FA) for timer state management.
 FDC_ClearStatus_InitTimer:
 	ld (FDC_ERROR_CODE:16), 0x00
 	ret
@@ -1409,6 +1432,19 @@ FDC_CMD_EXEC_Helper6:
 	cp	(FDC_ERROR_CODE:16), 0
 	ret	nz
 	jrl	FDC_POST_OP
+; --- FDC_CMD_EXEC: Main FDC command execution engine ---
+; Two nearly identical halves: READ path (command type 1) and
+; WRITE path (command type 8), set in state variable 35276.
+; Each path:
+;   1. Clears status, waits for FDC ready
+;   2. Sets up DMA: clear byte counter (35200), compute sector size
+;      (1024 or 512 based on format), configure DMA direction
+;   3. Sector loop: decrement sector count, advance track/head,
+;      check against max sectors (35440)
+;   4. Accumulates transferred sector count at 35246
+;   5. Error handling: sets error flag (35432=255) on failure
+; Tail calls format-specific routines and status verification.
+; Uses (R+d16) addressing for all FDC state variable access. 672 bytes.
 FDC_CMD_EXEC:
 ; [v10] --- FDC_CMD_EXEC: Main FDC command execution engine ---
 ; [v10] Two nearly identical halves: READ path (command type 1) and
@@ -1646,6 +1682,16 @@ FDC_CMD_EXEC_Helper7:
 	cp	(FDC_ERROR_CODE:16), 0
 	ret	nz
 	jrl	FDC_POST_OP
+; --- FDC_MODE_CONFIG: Configure FDC format parameters by disk type ---
+; Reads format type from state variable 35436.
+; Dispatch by type: 0=default, 2=MFM, 3/4/5 = other formats.
+; Sets per-format parameters:
+;   35218: sectors per track (2 or 3)
+;   35223: bytes per sector code (80/108/116 = 128/256/512 bytes)
+;   35226: head number, 35215: track number, 35224: gap length (0xe5)
+;   35216: side number, 35213: drive number
+; Then enters sector counting/validation loop.
+; Uses (R+d16) addressing for all state variables. 184 bytes.
 FDC_MODE_CONFIG:
 ; [v10] --- FDC_MODE_CONFIG: Configure FDC format parameters by disk type ---
 ; [v10] Reads format type from state variable 35436.
@@ -2257,6 +2303,7 @@ INT4_ExitRestore:
 	pop	xiz
 	reti
 Reset_Floppy_Disk_Controller:
+	; reset FDC by toggling Port D bit 0
 	set	0, (PD:8)
 	ldw	wa, 10
 	calr	SOME_DELAY

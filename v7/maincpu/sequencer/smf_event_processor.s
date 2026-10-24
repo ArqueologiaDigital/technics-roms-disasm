@@ -4555,6 +4555,7 @@ SeqStep_FileSectorDone:
 	add	(xde), xwa
 	ld	xwa, xhl
 	srl	xwa, 16
+	; Sprintf_FillToVectors (data pointer)
 	and	xwa, 255
 	ld	(xix), a
 	ld	xde, (xbc)
@@ -5049,6 +5050,12 @@ Fat_CountContiguousClusters_Return:
 	pop	xiz
 	inc	4, xsp
 	ret
+; Fat_AllocateClusters: Fat_AllocateClusters(file, zero, count): finds `count` free clusters (Fat_ReadEntry == 0),
+;   searching up from the file's cluster word +42 to the volume's cluster limit (vol +54) and then from 2; marks each
+;   end-of-chain (vol +36), links it after the previous one (or sets the first cluster +69), and when `zero` is set
+;   clears the sectors of the last one. HL = 0, 15 (no free cluster), or 10 / a buffer status on I/O failure. Basis:
+;   callers + body -- the directory walk adds one zeroed cluster when the chain ends, and the file-extend path asks
+;   for size / cluster-bytes minus the clusters held.
 Fat_AllocateClusters:
 	lda	xsp, (xsp-12)
 	push	xiz
@@ -5330,6 +5337,15 @@ FatPath_Next83Component_CheckDotEntry:
 FatPath_Next83Component_Return:
 	pop	xiz
 	ret
+; Fat_LookupPath: Fat_LookupPath(file, path): resolves the path to its directory entry and loads it into the handle.
+;   First asks the device (block op 7) whether the medium changed and, if so, drops its sectors from the 10-entry
+;   cache at 0x2121A (HL = 6 when one is dirty) and sets device +2 bit 1; then walks the 8.3 components
+;   (FatPath_Next83Component), comparing 11-byte names in the root directory and then in each subdirectory cluster
+;   chain, loading a match with SeqStep_FileSectorComplete (slot +51, first cluster +69 -> +42,
+;   Fat_CountContiguousClusters). HL = 0, 11 bad name, 12 component not a directory, 7 path not found, 5 file not
+;   found, 13 directory/file kind mismatch with handle +3 bit 6, 14 read-only entry opened writable (+3 bit 1), or a
+;   sector-cache error. Basis: callers + body -- the open slot SeqByteBlock_ChannelContainer calls it first and treats
+;   5 as "create" (Fat_CreateDirEntry).
 Fat_LookupPath:
 	lda	xsp, (xsp-32)
 	pushw	iz
@@ -5731,6 +5747,14 @@ Fat_LookupPath_Epilogue4:
 	popw	iz
 	lda	xsp, (xsp+32)
 	ret
+; Fat_CreateDirEntry: Fat_CreateDirEntry(file, path): creates the directory entry of a file being opened for writing:
+;   finds a free slot (first name byte 0x00 or 0xE5) in the root directory (single-component path; vol +28 start, +44
+;   entries; HL = 16 when full) or in the subdirectory the lookup left in +42, extending that directory with a zeroed
+;   cluster (Fat_AllocateClusters(file, 1, 1)) when its chain ends; it then fills the in-memory entry (slot +51, 8.3
+;   name +52, attribute +64 = 0, first cluster +69 = 0, size +71 = 0), lets the device stamp the time +65 (block op
+;   6), packs it into the sector (SeqStep_FileSectorReturn) and marks the sector dirty. Basis: callers + body -- the
+;   open slot SeqByteBlock_ChannelContainer calls it only when Fat_LookupPath returned 5 (not found) and handle +3 bit
+;   7 is set.
 Fat_CreateDirEntry:
 	lda	xsp, (xsp-30)
 	push	xiz
@@ -5968,6 +5992,14 @@ Fat_CreateDirEntry_Epilogue5:
 	pop	xiz
 	lda	xsp, (xsp+30)
 	ret
+; Fat_WriteDirEntry: Writes an open file's directory entry back: lets the device stamp the time word +65 (block op 6;
+;   drive A's FDC_ReturnZeroLong stores 0), fetches the directory sector (+26) through the sector cache
+;   (SeqStep_FileIoCheck flags 0x1A, which include the dirty bit 1) and packs the in-memory entry at +52 (name,
+;   attribute +64, time, date, first cluster +69, size +71) into slot +51 with SeqStep_FileSectorReturn, then releases
+;   the entry's bits 3/4. HL = 0, or 10 when no cache buffer was available. Basis: callers + body -- the close slot
+;   (SeqChan_ValidateAndDispatch, FileIO_DriveAFileOps[5]) calls it when the file is dirty (+3 bit 7),
+;   SeqChan_WritePatchData after setting the first name byte to 0xE5 (deleted), and Fat_AllocateClusters before
+;   failing with 15 (no free cluster).
 Fat_WriteDirEntry:
 	dec	4, xsp
 	push	xiz
@@ -6011,6 +6043,11 @@ Fat_WriteDirEntry_Epilogue:
 	pop	xiz
 	inc	4, xsp
 	ret
+; Fat_FreeFileClusters: Frees the cluster chain of the file handle on the stack: from its first cluster (+69) it reads
+;   each next link (Fat_ReadEntry) and writes 0 into the FAT entry, until a link is 0 or above (volume +36) - 8;
+;   unless handle +3 bit 5 is set it then zeroes +69, +42 and the file size +71. Basis: callers + body -- the file-op
+;   slot 9 handler (SeqChan_WriteExtendedPatch) calls it for request 21 before writing 0xE5 (deleted) into the entry;
+;   the open path calls it when the truncate flag (+3 bit 4) is set.
 Fat_FreeFileClusters:
 	push	xiz
 	ld	xwa, (xsp+8)
@@ -6056,6 +6093,15 @@ Fat_FreeFileClusters_Skip2:
 Fat_FreeFileClusters_Epilogue:
 	pop	xiz
 	ret
+; Fat_MountVolume: Mounts the FAT volume of the device record on the stack (volume = device +26): clears the mounted
+;   flag (+2 bit 0), reads the boot sector into a 538-byte (26 + 512) buffer -- on a partitioned device (+4 bit 7)
+;   first sector 0, checking 0x55AA at +510 and walking the partition table (+446) to entry device +5 -- parses the
+;   BPB into the volume (bytes/sector +38, sectors/cluster +32, reserved +42, FATs +58, root entries +44, total
+;   sectors +8, sectors/FAT +48, geometry +50/+52), derives the FAT, root and data starts and the cluster count +54 (>
+;   4087 -> FAT16 mask 0xFFFF, else 0xFFF, in +36), sets +2 bit 0 and returns HL = 0 or an error (3 no memory, 22 no
+;   0x55AA, 23 broken partition chain, 40 zero bytes/sector or sectors/cluster). Basis: callers + body -- the open
+;   slot FileIO_DriveAFileOps[0] (SeqByteBlock_ChannelContainer) calls it when +2 bit 0 is clear, and
+;   Fat_HandleDiskIoError calls it to re-mount after a disk error.
 Fat_MountVolume:
 	lda	xsp, (xsp-34)
 	push	xiz
@@ -6602,6 +6648,14 @@ SeqByteBlock_StyleBitmapRef_Code_Epilogue:
 	popw	iz
 	inc	8, xsp
 	ret
+; Fat_MapFilePosToSector: Fat_MapFilePosToSector(file, alloc_count, &sector, &count): maps the file's byte position
+;   (+22) to an absolute sector and the number of sectors that follow it contiguously. A file with no start cluster
+;   (+26 = 0) is the root directory: sector = volume +28 + pos / bytes-per-sector (+38). Otherwise it walks the FAT
+;   chain from the cached cluster (+42, index +46) to the cluster holding pos, extending the chain with
+;   Fat_AllocateClusters(alloc_count) when the file is writable (+3 bit 1), and measures the run
+;   (Fat_CountContiguousClusters); HL = 0, 39 (bad-cluster mark mask-8), 8 (end of chain on a read-only file) or the
+;   allocation error. Basis: callers + body -- Fat_GetSectorAtFilePos (alloc_count 1) and Fat_TransferSectorsDirect
+;   (alloc_count = sectors spanned) both describe their call as mapping the position (+22) to its sector / sector run.
 Fat_MapFilePosToSector:
 	dec	8, xsp
 	push	xiz
@@ -6785,6 +6839,11 @@ SeqByteBlock_StyleBitmapRef_Code_Epilogue2:
 	pop	xiz
 	inc	8, xsp
 	ret
+; Fat_GetSectorAtFilePos: Fat_GetSectorAtFilePos(file, flags): maps the file's byte position (+22) to its sector
+;   (Fat_MapFilePosToSector) and gets that sector's cache buffer with SeqStep_FileIoCheck(flags | 8) into
+;   the file's buffer pointer +34. HL = Helper7's error, 10 when no buffer, else the buffer's status word +20. Basis:
+;   callers + body -- the read/write loops and the directory-create path call it before touching sector data; the
+;   extend path first sets +22 = size (+71).
 Fat_GetSectorAtFilePos:
 	dec	6, xsp
 	push	xiz
@@ -6823,6 +6882,14 @@ SeqByteBlock_StyleBitmapRef_Code_Epilogue3:
 	pop	xiz
 	inc	6, xsp
 	ret
+; Fat_TransferSectorsDirect: Fat_TransferSectorsDirect(file, buffer, count, is_read): moves the whole-sector part of a
+;   file read or write straight between the caller's buffer and the disk -- maps the position (+22) to its contiguous
+;   sector run (Fat_MapFilePosToSector), takes a sector-cache entry (+34; SeqStep_FileIoCheck flags 0x28
+;   when the old one holds dirty data), points the entry's data pointer +12 at the caller's buffer, sets its sector
+;   count +16 = min(count / bytes-per-sector, run), calls block op +16 (read) or +20 (write), then restores +12 and
+;   invalidates the entry (+22 = 0). Returns HL = bytes moved; on error 0, with the status in file +6 and 0x1E53C.
+;   Basis: callers + body -- Fat_ReadFile (is_read 1) and Fat_WriteFile (is_read 0) call it with count rounded down to
+;   whole sectors (count & ~(volume +4), +4 = bytes/sector - 1) between their partial-sector copies through the cache.
 Fat_TransferSectorsDirect:
 	lda	xsp, (xsp-12)
 	push	xiz
@@ -8013,6 +8080,12 @@ SeqChan_ByteBlockD:
 	calr	SeqStep_ParseVariableHeader
 	lda	xsp, (xsp+16)
 	ret
+; Fat_HandleDiskIoError: After a floppy sector transfer, handles its error word (*arg1): 0 -> HL = 0. Otherwise counts
+;   the attempt (word 0x2271E) and maps the FDC code: 0x2F write-protect -> 31 (HL = 0 at once), 0x30/0x31 -> 32,
+;   0x33/0x35 -> 33, 6 (disk changed) -> 6, other -> 36; re-mounts the volume (Fat_MountVolume) and
+;   returns HL = 1 (retry) only if the re-mount succeeded on a 33/6/36 path and 0x2271E is then below 1. Basis:
+;   callers + body -- SeqChan_ByteBlockE (read loop, FDC command 3) and SeqChan_ByteBlockF (write loop, command 4)
+;   call it after every transfer and loop while it returns non-zero.
 Fat_HandleDiskIoError:
 	dec	2, xsp
 	push	xiz
@@ -8418,6 +8491,9 @@ FDC_ClearDiskChangeStatus:
 	ld	a, (0x3e3e4:24)
 	ld	(0x3e3e2:24), a
 	ret
+; FDC_ReadDiskChangeStatus: Returns HL = the DiskChanged word of FDC_DiskTypeState (0x3E3E6): 1 after
+;   FDC_StoreDiskType, 0 after FDC_ClearDiskChangeStatus. Basis: callers + body -- SeqChan_ByteBlockC calls it first
+;   and, when non-zero, acknowledges with FDC_ClearDiskChangeStatus and returns 6 (disk changed).
 FDC_ReadDiskChangeStatus:
 	ld	hl, (0x3e3e6:24)
 	ret
@@ -10074,6 +10150,11 @@ SndTable_ByteBlock_ReadOps_Skip3:
 SndTable_ByteBlock_ReadOps_Skip2:
 	ldw	hl, 0xffff
 	ret
+; DiskStream_ReaderTask: Task 2 entry (TaskSched_TaskTable group 2): the disk-stream reader. It posts the two
+;   1028-byte buffers at DiskStream BufferPtr (0x3E3EE) to queue 2, then loops: takes a free buffer from queue 2,
+;   fills 1024 bytes from the stream (SndTable_ByteBlock_ReadOps: FileRead of handle 0x2357A, or raw sector commands),
+;   and sends it to queue 3 for TaskBuf_ReadNextByte, until ByteLength (0x3E3E8) is read; flag 0x2357E = 1 while it
+;   runs. Basis: callers + body.
 DiskStream_ReaderTask:
 	dec	2, xsp
 	push	xiz
@@ -10479,9 +10560,9 @@ FDC_DetectSector_Return1B:
 	ret
 
 FDC_DetectSector_CheckPianoDisc:
-	pushw	11
+	pushw	11	; 11 bytes
 	pushw	FDC_DetectSector_CheckPianoDisc_Str_N1_PianoDisc@hi16
-	pushw	FDC_DetectSector_CheckPianoDisc_Str_N1_PianoDisc@lo16
+	pushw	FDC_DetectSector_CheckPianoDisc_Str_N1_PianoDisc@lo16	; "1 PianoDisc"
 	lda	xwa, (148302:24)
 	push	xwa
 	call	String_Compare
@@ -10601,6 +10682,9 @@ FileIO_ReadDir_Return:
 	pop xiz
 	ret
 
+; SeqDispatch_InitFuncTable: Init-phase handler table of this subsystem (4 x u32, slots = init phases 0-3). Basis:
+;   readers + bytes -- entry 13 of Subsys_HandlerTableList, which ScreenGroup_Dispatch walks calling slot WA (init
+;   phase 0-3) of every table; slot 0 is SeqDispatch_ResetAndValidate.
 SeqDispatch_InitFuncTable:
 ; Four handler pointers, one per init phase 0..3 (stride 4).
 ; Read by ScreenGroup_Dispatch / VoiceInit_Dispatch (0xFDD7A3,

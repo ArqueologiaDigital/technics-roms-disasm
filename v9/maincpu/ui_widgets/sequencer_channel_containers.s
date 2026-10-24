@@ -158,6 +158,11 @@ IvSdpart_PartRow:	.incbin "includes/generated/naka_sequencer_channels.bin", 0xCC
 ; [nakarest] Readers: work-RAM image: Boot_InitWorkRAM copies these bytes to RAM
 ; [nakarest] 0x3e9a0..0x3e9d4 (its ld xde/xhl/xbc + ldir blocks); no literal RAM reference into
 ; [nakarest] that copy was found.
+; Part_CaptionStrPtrs: Initial image (WorkRamInit_Image + 0x147C, copied to RAM 0x3E9A0 by Boot_InitWorkRAM) of 27 x
+;   u32 part-caption pointers indexed by part number -- "RIGHT 1:", "RIGHT 2:", "LEFT :", "PART 4 :" .. "PART 16:",
+;   "ACCOMP1:" .. "ACCOMP3:", "BASS :", "DRUM :", "CHORD :", "R.BASS :", "MSP :" x2, "CONTROL:", "METRO :" -- then 0;
+;   the accordion and drawbar part views draw entry [PART_SELECT]. Nothing about drawbar control. Basis: readers +
+;   bytes.
 Part_CaptionStrPtrs:
 	.incbin "includes/generated/naka_sequencer_channels.bin", 0xCCC, 0x34
 	.long NakaInst_PART_14
