@@ -3790,12 +3790,16 @@ HDAE5000_HDTitleMenuProc_OnParaDraw:
 	ret
 
 
-HDAE5000_HardTest_Print:	; 0x2827F4 (932 bytes)
-	; Print a line on the hardware-test page: XWA = string, sent as event
-	; 0x01C00025 to every object (XWA = 0xFFFFFFFF) through the main-CPU
-	; workspace 0x0E0A table +0x100 (tail call).  Callers: HDAE5000_HardTestPage
-	; and its tests HDAE5000_HardTest_PortTest / _HddIdRead.  (Was "Event
-	; handler ... registers callback via vtable": it registers nothing.)
+; ---------------------------------------------------------------------------
+; Print a line on the hardware-test page: tail-jumps to the main CPU's
+; RootFn_SendEvent with XWA = 0xFFFFFFFF (object id), XBC = EVT_MEMO_DRAW,
+; XDE = the string.  Callers: HDAE5000_HardTestPage and its tests
+; HDAE5000_HardTest_PortTest / _HddIdRead.
+; In:  XWA = string
+; Out: whatever RootFn_SendEvent returns.
+; RAM: HDAE5000_RAM_MainWorkspacePtr
+; ---------------------------------------------------------------------------
+HDAE5000_HardTest_Print:
 	ld xde, xwa					; e8 8a
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 a2 a1 23 20 — load context base
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20 — xwa = (xwa+0x0e0a) vtable ptr

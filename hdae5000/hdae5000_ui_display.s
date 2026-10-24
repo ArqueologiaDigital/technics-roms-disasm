@@ -14900,20 +14900,16 @@ HDAE5000_HD_WriteStream:	; 0x294301 (275 bytes)
 	lda xsp, (xsp + 14)
 	ret
 
-HDAE5000_DebugTrace:	; 0x294414 (3061 bytes)
-	; debug trace output, COMPILED OUT: the whole routine is this one `ret`.
-	; 60 call sites load XWA with a string and call it -- either a banner
-	; "---[ <FunctionName> ]---" (ROM 0x2F8F5E..0x2F9361, in the block under
-	; HDAE5000_Display_Params) or a line just formatted into a stack buffer
-	; with HDAE5000_SPrintf ("FGB wid : %d" ...).  The banners are the only
-	; surviving developer names of the PC-link services below, which is how
-	; HDAE5000_PPORT_Svc01..Svc25 are named.
-	; (The old header "Large display management routine" described nothing
-	; here: 0x294414 is a lone 0x0E.)
-; LDS: 0x294414 (3061 bytes)
-	; ^ region size: the stub plus the 26 PC-link service routines that
-	;   follow, up to HDAE5000_PPORT_Svc27 at 0x295009.
-
+; ---------------------------------------------------------------------------
+; Debug trace, compiled out: the routine is the lone `ret` below.  Its call
+; sites load XWA with either a banner "---[ <FunctionName> ]---" (the strings
+; in the block under HDAE5000_Display_Params) or a line just formatted into a
+; stack buffer with HDAE5000_SPrintf ("FGB wid : %d" ...).  The banners are
+; the only surviving developer names of the PC-link services, which is where
+; the HDAE5000_PPORT_Svc01..Svc25 names come from.
+; In:  XWA = string (ignored)
+; ---------------------------------------------------------------------------
+HDAE5000_DebugTrace:
 	ret
 
 	; a second one-byte `ret` (0x294415); nothing in this ROM calls or
@@ -16205,25 +16201,31 @@ HDAE5000_PPORT_GetResult:
 	ret
 	nop
 
-HDAE5000_PPORT_CallService:	; 0x2950F8
-	; link context: ask the main context to run service WA (0..30, see
-	; HDAE5000_PPORT_ServiceTable) with arguments XBC, XDE; returns when the
-	; service has run, with its result in WA or XIX (only XSP is swapped by
-	; the context switch, so the service stub's registers come back).  Named
-	; Display_String before: it displays nothing -- its 59 call sites pass
-	; service numbers (0 = yield, 1 = GetInfoBlockPointer, 0x1A = the
-	; PP_STATUS text of HDAE5000_PPORT_Svc26_ShowStatus, ...).
-	; Display string on screen via PPORT protocol
-	; Input: WA = position, XBC = string ptr, XDE = format params
-	ld (HDAE5000_RAM_PportService:24), wa; store position (0x23900A)
+; ---------------------------------------------------------------------------
+; Link context: post service WA (0..30, an index into
+; HDAE5000_PPORT_ServiceTable) with arguments XBC, XDE in the mailbox, raise
+; HDAE5000_RAM_PportServiceRequested and yield to the main context
+; (HDAE5000_PPORT_YieldToMain).  HDAE5000_PPORT_ServicePending runs the
+; service on the main context and switches back, so this returns once it
+; has run; the request flag is cleared again.  Service 0 is an empty `ret`:
+; CallService(0) is "yield until the next frame".
+; In:  WA = service number, XBC, XDE = its arguments
+; Out: the registers as the main context's service left them (only XSP is
+;      swapped by the context switch); its HL result is also in
+;      HDAE5000_RAM_PportService.
+; RAM: HDAE5000_RAM_PportService, _PportServiceArgBc, _PportServiceArgDe,
+;      _PportServiceRequested
+; ---------------------------------------------------------------------------
+HDAE5000_PPORT_CallService:
+	ld (HDAE5000_RAM_PportService:24), wa
 	nop
-	ld (HDAE5000_RAM_PportServiceArgBc:24), xbc; store string ptr (0x23900C)
+	ld (HDAE5000_RAM_PportServiceArgBc:24), xbc
 	nop
-	ld (HDAE5000_RAM_PportServiceArgDe:24), xde; store format (0x239010)
+	ld (HDAE5000_RAM_PportServiceArgDe:24), xde
 	nop
-	ld (HDAE5000_RAM_PportServiceRequested:24), 0x01; set command flag (0x239014)
-	call HDAE5000_PPORT_YieldToMain	; initialize PPORT transfer
-	ld (HDAE5000_RAM_PportServiceRequested:24), 0x00; clear command flag
+	ld (HDAE5000_RAM_PportServiceRequested:24), 0x01
+	call HDAE5000_PPORT_YieldToMain
+	ld (HDAE5000_RAM_PportServiceRequested:24), 0x00
 	ret
 	nop
 
@@ -20244,12 +20246,14 @@ HDAE5000_ATA_Identify_WaitDone:
 	ret
 
 
-HDAE5000_HD_Mul32:	; 0x297925 (37 bytes)
-	; 32x32 -> 32-bit multiply using partial products (the high products are
-	; added into the upper half only; nothing above bit 31 is kept)
-	; Computes XWA = BC * WA (full 32-bit result via 3 partial 16×16 multiplies)
-	; Input: WA = multiplicand, BC = multiplier (16-bit halves)
-	; Output: XWA = 32-bit product
+; ---------------------------------------------------------------------------
+; 32 x 32 -> 32-bit multiply, the HD driver's copy of HDAE5000_Multiply with
+; the result in XWA: BC*WA + (BC*QWA) << 16 + (QBC*WA) << 16, nothing above
+; bit 31 kept.
+; In:  XWA, XBC
+; Out: XWA = XWA * XBC (low 32 bits).  XHL and XIX preserved.
+; ---------------------------------------------------------------------------
+HDAE5000_HD_Mul32:
 	push xhl
 	push xix
 	ld hl, bc			; HL = low(BC)
@@ -25392,17 +25396,14 @@ HDAE5000_FormatFloat_Exp_Epilogue:
 	ret
 
 
-HDAE5000_SPrintf:	; 0x29ABD8 (237 bytes)
-	; sprintf(buf, fmt, ...): stores buf in the output cursor at RAM
-	; 0x239482, NUL-terminates it, and runs HDAE5000_DoPrintf(fmt, &ap,
-	; HDAE5000_SPrintf_PutChar) with ap = the address of the first variadic
-	; argument.  95 call sites in this ROM.
-	; Contains 4 sub-routines: 2 setup variants, 1 callback, 1 int-to-string converter.
-	; (sprintf, HDAE5000_VSPrintf, HDAE5000_SPrintf_PutChar, HDAE5000_IToA;
-	;  the 237 bytes above are all four -- sprintf itself is 40.)
-	;
-	; --- Sub 1: Setup variant 1 (with extra stack param) ---
-	; Stack: [+0x08] = buffer ptr, [+0x10] = params, [+0x14] = format data
+; ---------------------------------------------------------------------------
+; sprintf(buf, fmt, ...): points HDAE5000_RAM_SPrintfCursor at buf, stores a
+; NUL there, and runs HDAE5000_DoPrintf(fmt, &ap, HDAE5000_SPrintf_PutChar)
+; with ap = the address of the first variadic argument, (xsp+12) on entry.
+; In:  (xsp+4) = buf, (xsp+8) = fmt, (xsp+12)... = the arguments
+; Out: XHL as HDAE5000_DoPrintf returns it.
+; ---------------------------------------------------------------------------
+HDAE5000_SPrintf:
 	dec 4, xsp			; allocate 4 bytes
 	ld xwa, (xsp + 8)		; XWA = buffer ptr
 	ld (HDAE5000_RAM_SPrintfCursor:24), xwa; [0x239482] = buffer ptr
@@ -25789,10 +25790,14 @@ HDAE5000_MemCmp:	; 0x29AE24 (123 bytes)
 ; All routines take parameters on the stack (C calling convention).
 ; ----------------------------------------------------------------------------
 
-HDAE5000_MemCopy:	; 29AE9Fh
-	; Copy memory block using word operations where possible
-	; Stack: [+0x04] = dest (XHL), [+0x08] = src (XIY), [+0x0C] = count (BC)
-	; Uses LDIRW for word copies, handles odd byte at start/end
+; ---------------------------------------------------------------------------
+; memcpy(dest, src, n), n a 16-bit count: returns at once when n = 0 or
+; src = dest; otherwise copies one byte to word-align dest, then words with
+; LDIRW, then the odd last byte.  Forward copy only (no overlap check).
+; In:  (xsp+4) = dest, (xsp+8) = src, (xsp+12) = n (word)
+; Out: XHL = dest.  Clobbers XIX, XIY, BC.
+; ---------------------------------------------------------------------------
+HDAE5000_MemCopy:
 	ld bc, (xsp + 12)	; ld BC, (XSP+0x0C) - count
 	ld xhl, (xsp + 4)	; ld XHL, (XSP+0x04) - dest
 	cp bc, 0:i3
@@ -25814,10 +25819,14 @@ HDAE5000_MemCopy__check_odd:
 	ldi85	; ldi - copy final odd byte
 	ret
 
-HDAE5000_MemFill:	; 29AEC7h
-	; Fill memory with byte value, optimized for 32-bit writes
-	; Stack: [+0x04] = dest (XHL), [+0x08] = value (WA), [+0x0A] = count (BC)
-	; Aligns to 4-byte boundary, uses 32-bit writes for bulk fill
+; ---------------------------------------------------------------------------
+; memset(dest, c, n), n a 16-bit count: byte stores up to the next 4-byte
+; boundary of dest, then 32-bit stores of c replicated (via QWA), then the
+; 0-3 remaining bytes.  Returns at once when n = 0.
+; In:  (xsp+4) = dest, (xsp+8) = c (low byte of the word), (xsp+10) = n (word)
+; Out: XHL = dest.  Clobbers XIX, XWA, BC, DE.
+; ---------------------------------------------------------------------------
+HDAE5000_MemFill:
 	ld bc, (xsp + 10)	; ld BC, (XSP+0x0A) - count
 	ld xhl, (xsp + 4)	; ld XHL, (XSP+0x04) - dest
 	cp bc, 0:i3
@@ -25850,12 +25859,13 @@ HDAE5000_MemFill__fill_bytes:
 	djnz16 de, HDAE5000_MemFill__fill_bytes	; djnz DE, .fill_bytes
 	ret
 
-HDAE5000_StrCat:	; 29AF0Bh
-	; Copy null-terminated string including terminator
-	; strcat(dest, src); returns XHL = dest.  (Was named StrCopy: the first
-	; loop below walks to dest's terminator, so it appends, not copies.)
-	; Stack: [+0x04] = dest (XDE), [+0x08] = src (XBC)
-	; Finds end of dest string, then copies src to that position
+; ---------------------------------------------------------------------------
+; strcat(dest, src): walks to dest's terminator, then copies src after it and
+; terminates the result.
+; In:  (xsp+4) = dest, (xsp+8) = src
+; Out: XHL = dest.  Clobbers XBC, XDE, A.
+; ---------------------------------------------------------------------------
+HDAE5000_StrCat:
 	ld xde, (xsp + 4)	; ld XDE, (XSP+0x04) - dest
 	ld xhl, xde	; Save original dest
 	jr HDAE5000_StrCat__find_end

@@ -17,13 +17,14 @@ HDAE5000_StrPrefixCmp:	; 29AF2Dh
 	pop xiz
 	ret
 
-HDAE5000_StrCpy:	; 0x29AF45
-	; strcpy(dest, src) = HDAE5000_MemCCpy(dest, src, 0, 0xFFFE), then a
-	; forced terminator if no NUL was found.  328 call sites.
-	; Block memory copy with null-termination
-	; Stack: [+0x10] source ptr, [+0x0C] dest ptr (XIZ context)
-	; Calls String_Copy_N with limit 0xFFFE, null-terminates if successful
-	; Returns: XHL = dest pointer (XIZ)
+; ---------------------------------------------------------------------------
+; strcpy(dest, src): HDAE5000_MemCCpy(dest, src, 0, 0xFFFE) copies src up to
+; and including its NUL; when no NUL turned up (MemCCpy returned 0) a
+; terminator is forced at dest + 0xFFFF.
+; In:  (xsp+4) = dest, (xsp+8) = src (caller pops)
+; Out: XHL = dest.  XIZ preserved.
+; ---------------------------------------------------------------------------
+HDAE5000_StrCpy:
 	push xiz
 	pushw 0xFFFE			; max length
 	pushw 0x0000			; flags
@@ -43,11 +44,14 @@ HDAE5000_StrCpy:	; 0x29AF45
 	pop xiz
 	ret
 
-HDAE5000_StrLen:	; 0x29AF71
-	; strlen(s) = HDAE5000_MemChr(s, 0, 0xFFFF) - s, or 0xFFFF if no NUL.
-	; Validate display buffer - call String_Length, return offset or -1
-	; Stack: [+0x0C] = buffer pointer (XIZ)
-	; Returns: HL = offset from XIZ or -1 on failure
+; ---------------------------------------------------------------------------
+; strlen(s) = HDAE5000_MemChr(s, 0, 0xFFFF) - s; 0xFFFF when no NUL is found
+; in 0xFFFF bytes.
+; In:  (xsp+4) = s
+; Out: HL = length (XHL's high word is the high word of the pointer
+;      difference).  XIZ preserved.
+; ---------------------------------------------------------------------------
+HDAE5000_StrLen:
 	push xiz
 	pushw 0xFFFF			; sentinel
 	pushw 0x0000			; flags
@@ -1006,15 +1010,13 @@ HDAE5000_FltDec_DecimalExponent_Epilogue:
 	ret
 
 
-HDAE5000_Multiply:	; 0x29B72D
-	; 32-bit multiply routine
-	; XHL = low 32 bits of XWA * XBC, from three 16x16 MULs (hi*lo, lo*hi,
-	; lo*lo).  23 bytes.
-; LMUL: 0x29B72D (402 bytes)
-	; ^ region size, not routine size: soft-float Float_Unpack/Pack, Copy8,
-	;   Copy10, (U)LongToFloat, FloatDiv and the signed divide front end
-	;   follow, each under its own label below.
-
+; ---------------------------------------------------------------------------
+; 32 x 32 -> 32-bit multiply (signed and unsigned alike): WA*BC (32-bit)
+; + ((QWA*BC + QBC*WA) << 16), from three 16 x 16 MULs.
+; In:  XWA, XBC
+; Out: XHL = XWA * XBC (low 32 bits).  Clobbers XWA, XDE.
+; ---------------------------------------------------------------------------
+HDAE5000_Multiply:
 	ld	hl, qwa
 	mul	xhl, bc
 	ld	de, qbc
