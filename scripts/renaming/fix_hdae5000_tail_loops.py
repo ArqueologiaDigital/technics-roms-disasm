@@ -12,7 +12,8 @@ QUESTION IT ANSWERS
     (b) none of the backward branches to it can be reached from it by falling through and branching forward
         inside the span up to them (reaches) -- named `_Skip` when the statement above it is an unconditional
         transfer, else `_Join`, as in the first run.
-  N is the first free number.  The first run's classifier applies (a) itself now.
+  N is the first free number.  localize_hdae5000_address_locals.py now applies (a) and (b) itself, and
+  renumber_hdae5000_tail_fix.sed put the two families this run numbered out of address order back in order.
 
   Only labels on the right-hand side of scripts/renaming/localize_hdae5000_address_locals.sed are considered, so
   nothing named by hand is touched.  Applied through a generated sed script, like the first run.

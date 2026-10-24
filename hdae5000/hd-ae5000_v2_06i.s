@@ -1392,7 +1392,7 @@ HDAE5000_SelectListProc:
 	cp	xwa, EVT_SHOW
 	jr	z, HDAE5000_SelectListProc_OnShow
 	cp	xwa, EVT_DRAW
-	jrl	nz, HDAE5000_SelectListProc_Join12
+	jrl	nz, HDAE5000_SelectListProc_Join13
 	ld xwa, (xsp + 0x68)
 	ld xbc, (xsp + 0x64)
 	ld xde, (xsp + 0x60)
@@ -2006,7 +2006,7 @@ HDAE5000_SelectListProc_Skip10:
 	jrl	nz, HDAE5000_SelectListProc_Skip11
 HDAE5000_SelectListProc_Join9:
 	ldw	wa, 0xffff
-HDAE5000_SelectListProc_Join13:
+HDAE5000_SelectListProc_Join10:
 	ld	bc, wa
 	exts xbc
 	ld xwa, (xsp + 0x68)
@@ -2018,7 +2018,7 @@ HDAE5000_SelectListProc_Join13:
 	call	(xhl)
 	ld xwa, (xsp + 0x04)
 	cpw	(xwa+52), 0x0000
-	jr	z, HDAE5000_SelectListProc_Join10
+	jr	z, HDAE5000_SelectListProc_Join11
 	ld xwa, (xsp + 0x68)
 	ld xbc, (xsp + 0x64)
 	ld xde, (xsp + 0x60)
@@ -2026,10 +2026,10 @@ HDAE5000_SelectListProc_Join13:
 	ld	xhl, (xhl + WS_RootFnTable)
 	ld	xhl, (xhl + RootFn_SetAutoInc)
 	call	(xhl)
-HDAE5000_SelectListProc_Join10:
+HDAE5000_SelectListProc_Join11:
 	ld xwa, (xsp + 0x04)
 	cpw	(xwa+50), 0x0000
-	jr	z, HDAE5000_SelectListProc_Join11
+	jr	z, HDAE5000_SelectListProc_Join12
 	ld xwa, (xsp + 0x68)
 	ld	xde, xiz
 	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
@@ -2049,12 +2049,12 @@ HDAE5000_SelectListProc_Join10:
 	ld	xhl, (xwa + RootFn_SetDialEnable)
 	ld	wa, 1:i3
 	call	(xhl)
-HDAE5000_SelectListProc_Join11:
+HDAE5000_SelectListProc_Join12:
 	ld	xhl, 0:i3
 	jrl	t, HDAE5000_SelectListProc_Epilogue
 HDAE5000_SelectListProc_Skip11:
 	ld	wa, 1:i3
-	jrl	t, HDAE5000_SelectListProc_Join13
+	jrl	t, HDAE5000_SelectListProc_Join10
 HDAE5000_SelectListProc_Skip12:
 	ld	xwa, xiz
 	inc 1, xwa
@@ -2062,7 +2062,7 @@ HDAE5000_SelectListProc_Skip12:
 	jr	nz, HDAE5000_SelectListProc_Skip13
 	ld xwa, (xsp + 0x04)
 	ld	wa, (xwa+44)
-	jrl	t, HDAE5000_SelectListProc_Join13
+	jrl	t, HDAE5000_SelectListProc_Join10
 HDAE5000_SelectListProc_Skip13:
 	ld	xwa, xiz
 	inc 2, xwa
@@ -2071,7 +2071,7 @@ HDAE5000_SelectListProc_Skip13:
 	ld xwa, (xsp + 0x04)
 	ld	wa, (xwa+44)
 	neg	wa
-	jrl	t, HDAE5000_SelectListProc_Join13
+	jrl	t, HDAE5000_SelectListProc_Join10
 HDAE5000_SelectListProc_Skip14:
 	ld	xwa, xiz
 	inc	3, xwa
@@ -2198,7 +2198,7 @@ HDAE5000_SelectListProc_Skip21:
 	ld	xhl, (xhl + WS_RootFnTable)
 	ld	xhl, (xhl + RootFn_MainFuncCall)
 	call	(xhl)
-HDAE5000_SelectListProc_Join12:
+HDAE5000_SelectListProc_Join13:
 	ld xwa, (xsp + 0x68)
 	ld xbc, (xsp + 0x64)
 	ld xde, (xsp + 0x60)

@@ -1429,7 +1429,7 @@ HDAE5000_Double_Pack:
 	orb_erp h, 0xef		; or H,QH
 	or	hl, qix
 	ld	qix, hl
-HDAE5000_Double_Pack_Done2:
+HDAE5000_Double_Pack_Done:
 	ld (xwa), xiy
 	ld (xwa + 0x04), xix
 	ret
@@ -1437,7 +1437,7 @@ HDAE5000_Double_Pack_Done2:
 HDAE5000_Double_Pack_Skip:
 	ld	xix, 0:i3
 	ld	xiy, xix
-	jr	t, HDAE5000_Double_Pack_Done2
+	jr	t, HDAE5000_Double_Pack_Done
 HDAE5000_Double_Pack_Next:
 	bit_erpb 0xee, 0x00		; bit 0x00,QL
 	jr	nz, HDAE5000_Double_Pack_Skip
@@ -1451,8 +1451,8 @@ HDAE5000_Double_Pack_Join:
 	orb_erp c, 0xeb		; or C,QD
 	ldfr_berp c, 0xeb		; ld QD,C
 	ld (xwa + 0x04), xde
-	jr	t, HDAE5000_Double_Pack_Done
-HDAE5000_Double_Pack_Done:
+	jr	t, HDAE5000_Double_Pack_Done2
+HDAE5000_Double_Pack_Done2:
 	ld	xbc, (HDAE5000_RAM_MathErrorHook)
 	or xbc, xbc
 	call_cc_ri xbc, 14		; call NZ,XBC

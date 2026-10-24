@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""localize_hdae5000_address_locals.py -- give the HD-AE5000's address-named local labels (.LRF_0424,
+r"""localize_hdae5000_address_locals.py -- give the HD-AE5000's address-named local labels (.LRF_0424,
 .LFS_720d, .LUIH_babf ...) names derived from the routine they sit in and the shape of the branches that
 reach them.
 
@@ -39,6 +39,25 @@ QUESTION IT ANSWERS
   N is the first free number (none, then 2, 3 ...), counted in address order per OWNER+suffix.
 
   Labels move no bytes: `make -j3 gate` (byte-identical images) is the proof that nothing else changed.
+
+RECORD AND PLAN (2026-10-24, reviewer finding)
+  scripts/renaming/localize_hdae5000_address_locals.sed is the record of the FIRST run (commit fc17ceffe) and
+  is not rewritten.  Five of its _Loop names were shared tails, corrected afterwards by
+  fix_hdae5000_tail_loops.sed, and two families were then put back in address order by
+  renumber_hdae5000_tail_fix.sed.  This script now applies both tail rules itself (tail_shape, and reaches()
+  for a label whose backward branches cannot be reached from it), so run on the pre-rename tree
+  (`git archive fc17ceffe~1 hdae5000`) its --list prints the CORRECTED plan, which equals
+  localize_hdae5000_address_locals.sed, then fix_hdae5000_tail_loops.sed, then renumber_hdae5000_tail_fix.sed,
+  for all 1,165 labels -- not the first-run .sed by itself.  Checked 2026-10-24 with ($T a scratch directory):
+      git archive fc17ceffe~1 hdae5000 | tar -x -C $T; mkdir -p $T/scripts/renaming
+      cp scripts/renaming/localize_hdae5000_address_locals.py $T/scripts/renaming/
+      (cd $T && python3 scripts/renaming/localize_hdae5000_address_locals.py --list) \
+        | sed -nE 's/^\s+(\.L\S+)\s+->\s+(\S+).*/\1 \2/p' | sort > $T/plan.txt
+      grep '^s/' scripts/renaming/localize_hdae5000_address_locals.sed \
+        | sed -E 's#^s/(.*)\\b/(.*)/g$#\1 \2#; s#\\\.#.#' > $T/first.txt
+      cut -d' ' -f2 $T/first.txt | LC_ALL=C sed -f scripts/renaming/fix_hdae5000_tail_loops.sed \
+        | LC_ALL=C sed -f scripts/renaming/renumber_hdae5000_tail_fix.sed > $T/final.txt
+      paste -d' ' <(cut -d' ' -f1 $T/first.txt) $T/final.txt | sort | diff - $T/plan.txt   # no output
 
 RUN (repository root)
   python3 scripts/renaming/localize_hdae5000_address_locals.py            # plan: counts and a sample
@@ -173,7 +192,7 @@ def tail_shape(insns):
     return None
 
 
-def classify(n, p, i, stmts, refs, defs):
+def classify(n, p, i, stmts, refs, defs, src=None):
     S = stmts[p]
     k = next(j for j, s in enumerate(S) if s[0] == i and s[1] == "label" and s[2] == n)
     prev = S[k - 1] if k > 0 else None
@@ -188,9 +207,19 @@ def classify(n, p, i, stmts, refs, defs):
             m = LANGMSG.search(t)
             if m:
                 return "Lang" + m.group(1), None
-    if any(q == p and j > i for q, j, _ in rs):
+    back = [j for q, j, _ in rs if q == p and j > i]
+    if back:
         # a backward branch to a block that runs straight into a ret is a shared tail, not a loop
-        return tail_shape(insns) or "Loop", None
+        shape = tail_shape(insns)
+        if shape:
+            return shape, None
+        # nor is one whose backward branches cannot be reached from it (fix_hdae5000_tail_loops.py rule b)
+        if src is not None:
+            lines = src[p]
+            here = {m.group(1): k for k, x in enumerate(lines) for m in [DEF.match(x)] if m}
+            if not reaches(lines, i, set(back), here):
+                return ("Skip" if prev and prev[1] == "insn" and TRANSFER.match(prev[2]) else "Join"), None
+        return "Loop", None
     if prev and prev[1] == "insn" and TRANSFER.match(prev[2]) and rs:
         evts = set()
         for q, j, _ in rs:
@@ -256,7 +285,7 @@ def plan():
             fam = [g for g in reversed(above) if all(o == g or o.startswith(g + "_") for o in involved)]
             if fam:
                 owner = fam[0]
-        suf, other = classify(n, p, i, stmts, refs, defs)
+        suf, other = classify(n, p, i, stmts, refs, defs, src)
         if suf == "alias":
             alias_of[n] = other
             why["alias of the label above (definition dropped)"] += 1
