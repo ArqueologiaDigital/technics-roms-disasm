@@ -217,6 +217,9 @@ AccompSeq_EndMarkerAdvance:
 AccompSeq_EventDispatchDone:
 	ret
 
+; Peeks at the byte after the accompaniment-sequence read position (ResolveVRAMAddressForVoice);
+; when it is the page end 0x87, returns the first data byte of the next page instead
+; (AccompSeq_ReadBeatHeader, AccompSeq_BuildVRAMAddr with offset 6).  Out: A.  Preserves XIY.
 AccompSeq_CheckPatternEnd:
 	push xiy
 	calr ResolveVRAMAddressForVoice
@@ -295,7 +298,7 @@ AccompSeq_GetBlockBase:
 ; Returns the address of the accompaniment-sequence read position.
 ;   With (0x7e25) >= 0x80 and bit 0 of 0x7e6d clear: XIY = 0x1e8b00 + (page 0x7e42 & 0xfff) * 256
 ;   + (offset 0x7e44 & 0xff), in the MIDI sequence buffer pool.  Otherwise XIY = the offset word
-;   and the page is put in bank register 0xe2.
+;   and the page is put in QWA (upper word of XWA, code 0xe2).
 ResolveVRAMAddressForVoice:
 	cp (0x7e25:16), 128
 	jr c, AccompSeq_ResolveVRAMFallback
@@ -1186,7 +1189,7 @@ AccompSeq_ResetMidiState:
 	ret
 
 ; Resolves the address of a voice's style data into 0x7e2a (low word) / 0x7e28 (high word,
-; from bank register 0xe2): voices 0x80 and up from Voice_DecodeBankIndex(L & 15) + 0x1e8800,
+; from QWA (upper word of XWA, code 0xe2)): voices 0x80 and up from Voice_DecodeBankIndex(L & 15) + 0x1e8800,
 ; the others from AccompSeq_StyleDataTable + 32 * Voice_DecodeNoteChannel2().
 AccompSeq_LookupStyleData:
 	cp l, 0x80

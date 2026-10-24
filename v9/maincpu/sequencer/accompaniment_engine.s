@@ -28917,19 +28917,17 @@ DrumParam_LookupChannelBit:
 	push xwa
 	push xix
 	ld a, (0x39b8:16)
-	ld xix, PatIdx_Lookup_Return
+	ld xix, DrumParam_ChannelBitTable
 	ld	a, (xix+a)
 	ld (0x37c9:16), a
 	pop xix
 	pop xwa
 	ret
 
-PatIdx_Lookup_Return:
-	normal
-	push	sr
-	max
-	ld	(P4:8), 32:io
-	.byte 0x40
+DrumParam_ChannelBitTable:
+	; One-hot part bit per easy-composer channel index (0x39b8); DrumParam_LookupChannelBit stores
+	; entry (0x39b8) in 0x37c9.  Was spelled as normal / push sr / max / ld (P4:8),32:io.
+	.byte 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40
 
 ; DrumParam_StepChannelStyle: Steps the easy-composer style index of the selected channel (0x37AB +
 ;   Rhythm_MapChannelToDrumIndex) up to 9 (A bit 7 clear) or down to 0 (A bit 7 set), clamps that channel's variation

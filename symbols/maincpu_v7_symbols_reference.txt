@@ -34726,7 +34726,7 @@ VoiceSlot_Dispatch_Return_Join2 00F66BAA
 VoiceSlot_Dispatch_Return_Helper 00F66BB1
 DrumParam_ProcessChannel 00F66BE7
 DrumParam_LookupChannelBit 00F66BF1
-PatIdx_Lookup_Return 00F66C08
+DrumParam_ChannelBitTable 00F66C08
 DrumParam_StepChannelStyle 00F66C0F
 VoiceTable_InitEntry 00F66C32
 VoiceTable_InitEntry_Loop 00F66C37

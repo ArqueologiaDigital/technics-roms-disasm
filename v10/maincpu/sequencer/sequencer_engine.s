@@ -13060,8 +13060,7 @@ SeqPart_LoadDualPartData_Code_Epilogue:
 ;   In:  WA = part, C = value kept in 0x288d for the walk.
 ;   Validates the part (Part_ValidateVoiceChannel, SeqVoice_ValidateAndProcessState) and then,
 ;   one bar per pass, skips the bar's sections (SeqData_SkipSections, using 0x288e) and its
-;   control bytes (SeqTrack_ProcessControlBytes), keeping the running data offset in bank
-;   register 0xfa (zeroed on entry).
+;   control bytes (SeqTrack_ProcessControlBytes), keeping the running data offset in QIZ (upper word of XIZ, code 0xfa) (zeroed on entry).
 ;   Out: SEQ_ERROR_CODE = 0 on success; any non-zero code stops the walk.
 SeqVoice_SeekToBar:
 	push xiz
@@ -15502,8 +15501,7 @@ VoicePreset_LoadAndInitPan:
 	jp VoiceChannels_InitPanFromPreset
 
 ; Sets the free-list head of the song-data blocks: word WA at offset 0xaf of song slots
-; 0..10 (Part_WriteWord); for slot 0 that is 0xf22f, which the block allocators read.  Bank
-; register 0xfb is the loop counter.  Preserves XIZ.
+; 0..10 (Part_WriteWord); for slot 0 that is 0xf22f, which the block allocators read.  The top byte of XIZ (code 0xfb) is the loop counter.  Preserves XIZ.
 Part_WriteWordBlock_OffsetAF:
 	push xiz
 	ld iz, wa
@@ -15991,7 +15989,7 @@ Part_VoiceSearchBlock_Join:
 ; Part_ReadSubBlock32 with C = entry) equals the value given in C.
 ;   In:  A = song slot, C = value to find.
 ;   Out: L = first matching entry (1..16), or 0xff when none matches.
-;   Uses bank register 0xfb as the loop counter; bank register 0xfa is saved and restored.
+;   Uses the top byte of XIZ (code 0xfb) as the loop counter; QIZ (upper word of XIZ, code 0xfa) is saved and restored.
 Part_FindVoiceByByte:
 	dec 4, xsp
 	pushw_erp 0xfa
@@ -16206,7 +16204,7 @@ PartInit_WriteAndReturn:
 
 ; Initialises the two 16-entry tables of song slot A: entries 1..16 of the type table
 ; (Part_WriteSubBlock32) from PartSubBlkA_WriteLoop32_Table and of the second table
-; (Part_WriteSubBlock48) from PartSubBlkA_WriteLoop48_Table.  Bank register 0xfb counts.
+; (Part_WriteSubBlock48) from PartSubBlkA_WriteLoop48_Table.  The top byte of XIZ (code 0xfb) counts.
 Part_WriteAllVoiceSubBlocks_A:
 	dec 2, xsp
 	pushw_erp 0xfa

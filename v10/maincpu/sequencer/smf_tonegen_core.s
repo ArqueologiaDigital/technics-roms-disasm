@@ -2608,7 +2608,7 @@ FloppyIO_ReadVarLen_Done:
 
 ; Scales a value by 96 / (word at 0xf60): from a resolution of (0xf60) per unit to 96.
 ;   In:  WA = value.  Out: WA = WA * 96 / (0xf60), remainder in the upper word of XWA; nothing
-;   is done when the word at 0xf60 is 96.  DE is passed through bank register 0xe2.
+;   is done when the word at 0xf60 is 96.  DE is passed through QWA (upper word of XWA, code 0xe2).
 SoundGen_ScalePitchByTempo:
 	ld hl, (3936:16)
 	cp hl, 0x60
@@ -4136,8 +4136,7 @@ VoiceChannel_ClearRegisters:
 	ret
 
 ; Copies the 256-byte song-data block at (0x10fd) to XIX (LDIR (XIX+),(XIY+)), runs
-; DispatchHandler_JumpSub with WA = 1 and IY = block (0x28af), restores 0x10fd (kept in bank
-; register 0x38) and returns IY = 5, the first data offset.  Preserves BC, XHL.
+; DispatchHandler_JumpSub with WA = 1 and IY = block (0x28af), restores 0x10fd (kept in XDE3 (bank-3 register, code 0x38)) and returns IY = 5, the first data offset.  Preserves BC, XHL.
 VoiceChannel_CopyParamBlock:
 	pushw bc
 	push xhl
@@ -5493,7 +5492,7 @@ VoiceParam_ReadUpdate_11_Return:
 ; Steps the SMF reader offset IY (low byte) one byte forward; past 0xff it follows the block
 ; link at XIX+3: 0xffff sets error 2, a block above (0x286d) error 10, a block not in use error
 ; 11; otherwise 0x28af = the block and VoiceChannel_CopyParamBlock runs.  The page pointer at
-; 0x10fd is saved in bank register 0x38 and restored.
+; 0x10fd is saved in XDE3 (bank-3 register, code 0x38) and restored.
 ToneGen_ValidateAndSelectVoice:
 	push xiz
 	ld xiz, (4349:16)
