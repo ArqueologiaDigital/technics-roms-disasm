@@ -63,6 +63,9 @@ PAIRS = [
     ("kn5000_subcpu_boot", "kn5000_subcpu_boot.ic30", "kn5000_subcpu_boot.llvm.rom"),
     ("kn5000_custom_data", "kn5000_custom_data.ic19", "kn5000_custom_data.llvm.rom"),
     ("hd-ae5000_v2_06i", "hd-ae5000_v2_06i.ic4", "hd-ae5000_v2_06i.llvm.rom"),
+    # v2.01i: its own tree (hdae5000_v2_01i/); its original, like v8's, is an
+    # uncommitted copy whose SHA-1 the Makefile checks.
+    ("hd-ae5000_v2_01i", "hd-ae5000_v2_01i.ic4", "hd-ae5000_v2_01i.llvm.rom"),
 ]
 
 

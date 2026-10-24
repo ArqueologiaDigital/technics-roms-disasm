@@ -53,6 +53,7 @@ cruft_please_ignore/
 mame_driver/build_error.txt
 */maincpu/includes/generated/*.bin
 hdae5000/includes/generated/*.bin
+hdae5000_v2_01i/includes/generated/*.bin
 table_data/includes/generated/*.bin
 custom_data/includes/section_*.bin
 
@@ -96,3 +97,5 @@ code_shape_shortlist.json
 # git by choice (the older ones in original_ROMs/ are tracked). `make` copies it from the
 # private romset (KN5000_V8_REF) and checks its SHA-1 -- see the V8 rules in Makefile.
 original_ROMs/kn5000_v8_program.rom
+# HD-AE5000 v2.01i: same convention (HDAE5000_V201_REF in Makefile).
+original_ROMs/hd-ae5000_v2_01i.ic4

@@ -49,7 +49,7 @@ MC = os.environ.get("LLVM_MC") or os.path.join(
     "llvm-project", "build", "bin", "llvm-mc")
 
 # (include dir, root source[, extra llvm-mc arguments]) -- exactly the ten
-# `llvm-mc -filetype=obj` invocations in the Makefile.  v8 is the v9 root with
+# `llvm-mc -filetype=obj` invocations in the Makefile (eleven since HD-AE5000 v2.01i).  v8 is the v9 root with
 # the version byte preset, so it is assembled here with the same --defsym.
 IMAGES = [
     ("v10/maincpu",  "v10/maincpu/kn5000_v10_program.s"),
@@ -60,15 +60,20 @@ IMAGES = [
     ("v141/subcpu",  "v141/subcpu/kn5000_subprogram_v141.s"),
     ("subcpu/boot",  "subcpu/boot/kn5000_subcpu_boot.s"),
     ("hdae5000",     "hdae5000/hd-ae5000_v2_06i.s"),
+    # v2.01i takes what it does not hold itself from hdae5000/, through a second -I
+    # that must come AFTER its own (both trees have files of the same names).
+    ("hdae5000_v2_01i", "hdae5000_v2_01i/hd-ae5000_v2_01i.s", (), ("-I", "hdae5000")),
     ("table_data",   "table_data/kn5000_table_data.s"),
     ("custom_data",  "custom_data/kn5000_custom_data.s"),
 ]
 
 
-def assemble(incdir, root, out, extra=()):
-    """-> list of llvm-mc error lines (empty means clean)."""
+def assemble(incdir, root, out, extra=(), more_inc=()):
+    """-> list of llvm-mc error lines (empty means clean).  more_inc: further
+    ("-I", dir) pairs, searched after incdir."""
+    more = [os.path.join(ROOT, a) if k % 2 else a for k, a in enumerate(more_inc)]
     r = subprocess.run([MC, "-triple=tlcs900", "-filetype=obj", *extra,
-                        "-I", os.path.join(ROOT, incdir), "-o", out,
+                        "-I", os.path.join(ROOT, incdir), *more, "-o", out,
                         os.path.join(ROOT, root)],
                        capture_output=True, text=True)
     return [l for l in (r.stdout + r.stderr).splitlines() if ": error:" in l]
@@ -78,8 +83,9 @@ def run():
     bad = 0
     with tempfile.TemporaryDirectory() as td:
         for incdir, root, *extra in IMAGES:
+            more = extra[1] if len(extra) > 1 else ()
             extra = extra[0] if extra else ()
-            errs = assemble(incdir, root, os.path.join(td, "o.o"), extra)
+            errs = assemble(incdir, root, os.path.join(td, "o.o"), extra, more)
             label = root + (" " + " ".join(extra) if extra else "")
             print(f"  {label:42} {'clean' if not errs else str(len(errs)) + ' ERROR(S)'}")
             for e in errs[:4]:
@@ -101,7 +107,7 @@ def selftest():
         f += not cond
 
     ck("the pinned llvm-mc exists", os.path.exists(MC), MC)
-    ck("all ten roots and include dirs exist", all(
+    ck("all eleven roots and include dirs exist", all(
         os.path.exists(os.path.join(ROOT, r)) and os.path.isdir(os.path.join(ROOT, d))
         for d, r, *_ in IMAGES))
     with tempfile.TemporaryDirectory() as td:
