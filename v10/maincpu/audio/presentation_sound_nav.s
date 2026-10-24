@@ -369,6 +369,8 @@ SetDialFocus:
 	call SendEvent
 	ret
 
+; Returns in XHL the object the data dial is focused on (DIAL_FOCUS), or 0xffffffff while the dial
+; is disabled (DIAL_ENABLE = 0).
 GetDialFocus:
 	cpw (DIAL_ENABLE:24), 0
 	jr nz, GetDialFocus_Active

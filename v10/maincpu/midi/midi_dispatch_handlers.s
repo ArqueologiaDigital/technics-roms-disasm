@@ -1656,6 +1656,7 @@ PanelEvt_D11Slot11_SendCC83_Return:
 PanelEvt_D11Slot11_ValueMap:
 	.byte 0x00, 0x02, 0x01, 0x00
 
+; Calls handler (byte at 0x964d) of the u32 handler table at XIY when that index is at most A.
 PanelEvent_DispatchByIndex:
 	ld l, (0x964d:16)
 	cp l, a
@@ -8336,6 +8337,7 @@ MidiStream_JumpStubData:
 MidiStream_RetStub2:
 	ret
 
+; Returns HL = 0.
 AccWrap_ReturnZero:
 	ld hl, 0:i3
 	ret
@@ -8375,6 +8377,8 @@ MidiStream_PrevBankCheck_Epilogue:
 	pop qiz
 	ret
 
+; MidiSeq_SwapActiveBuffers, SeqBuf_WaitForEmpty, MidiChan_ParseVoiceData,
+; SeqData_InitPlaybackFromField, then SeqAlt_CheckInitBuffer (tail jump).
 SeqAlt_ProcessAndFinalize:
 	call MidiSeq_SwapActiveBuffers
 	calr SeqBuf_WaitForEmpty
@@ -8514,6 +8518,8 @@ VoiceQueue_IncrementCount:
 	incw 1, (xbc)
 	ret
 
+; Takes the next byte from a 0xff-terminated byte queue whose read pointer is the u32 at (XWA + 2).
+;   Out: L = the byte (the pointer advances), or 0xff at the end mark (the pointer stays).
 MidiChan_DequeueVoiceEntry:
 	ld l, 0xff:opc
 	lda xbc, (xwa + 2)

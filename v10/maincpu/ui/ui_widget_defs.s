@@ -9131,6 +9131,7 @@ RootObject_GetterBlock:
 	inc 4, xsp
 	ret
 
+; Returns in XHL the root object (ROOT_OBJECT).
 GetRootObject:
 	ld xhl, (ROOT_OBJECT:24)
 	ret
@@ -11097,6 +11098,8 @@ CheckNotDrawFlag:
 	scc16 z, hl
 	ret
 
+; Sets (WA non-zero) or clears (WA = 0) bit 3 of the title flag word through
+; TitleProc_SetResourceDirtyFlag / TitleProc_ClearResourceDirtyFlag.
 SetVariFlag:
 	cp wa, 0:i3
 	jr z, EnumList_Reset_CheckPart
@@ -12252,6 +12255,7 @@ GetViewInstance:
 	ld xhl, (xde)
 	ret
 
+; Copies view XWA's rectangle (instance +14, 8 bytes) to XBC.
 GetBox:
 	push xiz
 	ld xiz, xbc

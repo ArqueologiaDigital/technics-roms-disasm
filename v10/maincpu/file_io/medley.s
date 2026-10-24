@@ -4126,6 +4126,7 @@ ResetSlotsIfEmpty:
 	calr ClearAllSongSlots
 	ret
 
+; Returns HL = 1 when WA equals the first empty medley slot (FindFirstEmptySlot), else 0.
 CheckSlotIsSelected:
 	pushw iz
 	ld iz, wa
@@ -4149,6 +4150,7 @@ GetCurrentSlotIndex:
 	ld hl, (0x09480e:24)
 	ret
 
+; Returns HL = 1 when WA equals the current medley slot (GetCurrentSlotIndex), else 0.
 CheckIsCurrentSlot:
 	pushw iz
 	ld iz, wa

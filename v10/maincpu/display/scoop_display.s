@@ -374,6 +374,8 @@ UIRender_ConditionalDrawInit_Body:
 	pop xwa
 	ret
 
+; Calls Scoop_CurveUpdate_SegmentEnd with XWA = XIY when bit 0 of DISPLAY_ENABLE_FLAG is set;
+; XWA is preserved.
 Scoop_ConditionalCurveUpdate:
 	bit 0, (DISPLAY_ENABLE_FLAG:24)
 	jr nz, Scoop_ConditionalCurveUpdate_Body
@@ -2114,6 +2116,7 @@ UIState_UpdateAllRegions:
 	call UIState_UpdateMultiRegions
 UIState_Dispatch_Ret:
 	ret
+; Marks display regions 7, 8, 9, 1, 10 and 2 for redraw (Display_UpdateRegion*).
 UIState_UpdateMultiRegions:
 	; --- Multi-call teardown (25 bytes) ---
 	call Display_UpdateRegion7
@@ -3138,6 +3141,7 @@ SoundEvt_LongPacketHandler_DispatchTbl_Target1_Helper:
 	call	VoiceAlloc_ScoopDisplayProcess
 Timer_ModeHandler_0_Return2:
 	ret
+; VoiceSlot_FinalRetZ with XHL preserved.
 Timer_ModeHandler_0_Helper:
 	push	xhl
 	call	VoiceSlot_FinalRetZ
@@ -3579,6 +3583,7 @@ MemConfig_Handler_5_Helper2:
 MemConfig_Handler_5_Skip19:
 	call	ToneParam_Evt09_BytecodeHandler_Sub
 	jp	MemConfig_Handler_5_Return
+; VoiceSlot_RetZ with W = 1.
 MemConfig_Handler_5_Helper3:
 	ld	w, 1:opc
 	call	VoiceSlot_RetZ
@@ -3765,6 +3770,7 @@ MemConfig_Handler_5_Skip11:
 	xor	w, w
 	call	MemConfig_Handler_5_Helper9
 	jp	MemConfig_Handler_5_Skip7
+; Calls VoiceSlot_FinalRetZ with WA preserved, then VoiceSlot_WriteCurrentParam.
 MemConfig_Handler_5_Helper9:
 	pushw	wa
 	call	VoiceSlot_FinalRetZ
@@ -14563,6 +14569,8 @@ DisplayStr_BytecodeBlock_A_Skip7:
 	popw (0x28bf:16)	; popw (0x28bf)
 	ret
 
+; Points 0x10fd at 256-byte block HL (1-based) of the block area whose base is the u32 at 0x1d5a.
+;   Out: XHL = 0.
 DisplayStr_ComputeTableAddr:
 	dec 1, hl
 	extz xhl
@@ -15329,6 +15337,7 @@ DisplayStr_ShowMeasureNumber_B_Skip3:
 DisplayStr_ShowMeasureNumber_B_Return:
 	ret
 
+; Calls SNS_LoadKeyAndChord with XIX = 0xed4, then SNS_LoadDurationData.
 SNS_Init_Startup:
 	ld xix, 0xed4
 	call SNS_LoadKeyAndChord
@@ -17058,6 +17067,8 @@ Tbl_PedalNames_Join4:
 	ld	(4472:16), wa
 	pop	xix
 	ret
+; Returns in A the byte at index (word 0x1178) of 256-byte block (word 0x117a), addressed through
+; DisplayStr_ComputeTableAddr.
 Tbl_PedalNames_Helper6:
 	ld	hl, (4474:16)
 	call	DisplayStr_ComputeTableAddr

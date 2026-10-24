@@ -1941,6 +1941,7 @@ NoteEvent_CopyToSlot:
 	inc 2, xsp
 	ret
 
+; Returns HL = (BC << 12) | (WA & 0xfff), or 0xffff when WA is 0xffff.
 Pack12BitValueWithBank:
 	ld hl, wa
 	cp hl, 0xffff
@@ -2125,6 +2126,7 @@ Flash_EraseAndWriteFinal:
 	lda xsp, (xsp + 10)
 	ret
 
+; Copies the u32 at 0xc72 to 0x39ae and tail-jumps to AccPatch_InitSlotChain_Wrap.
 Flash_StoreBaseAndInitAccPatch:
 	ld xwa, (3186:16)
 	ld (0x39ae:16), xwa

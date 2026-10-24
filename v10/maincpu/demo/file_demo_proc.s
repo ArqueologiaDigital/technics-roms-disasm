@@ -7242,6 +7242,7 @@ ValidateRange_IsValid:
 	ld hl, 0:i3
 	ret
 
+; Returns in HL the word at 0x271ea, or -104 when ValidateFileRangeType5 rejects it.
 GetCurrentFileIndexAlt:
 	ld wa, (0x0271ea:24)
 	calr ValidateFileRangeType5

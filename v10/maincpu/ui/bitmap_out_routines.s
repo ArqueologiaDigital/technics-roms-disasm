@@ -270,6 +270,7 @@ BitMapOut_CheckDiskAndApply:
 	ld xbc, EVT_CHORD_SHOW
 	ld xde, 0:i3
 	jp ApPostEvent
+; Returns in L the byte at 0x8d3e (BitMapOut_StorePresetValue writes it).
 BitMapOut_ByteData_DiskCheck:
 	ld	l, (0x8d3e:16)
 	ret
@@ -3593,10 +3594,12 @@ BitMapOut_PrepareRender_CheckBit1:
 	ld l, (0x8d48:16)
 	ret
 
+; Stores A at 0x8d48 (BitMapOut_PrepareRender_CheckBit1 reads it back).
 BitMapOut_PrepareRender_CheckBit2:
 	ld (0x8d48:16), a
 	ret
 
+; Returns in L the flag byte at 0x8d4a.
 BitMapOut_GetRenderMode:
 	ld l, (0x8d4a:16)
 	ret

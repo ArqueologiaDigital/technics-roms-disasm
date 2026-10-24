@@ -1193,6 +1193,7 @@ PollLoop_BusyRetry:
 
 
 
+; Sets bit 2 of CPANEL_TX_RX_FLAGS and continues in CPanel_RX_DispatchLoop.
 CPanel_RX_ProcessWithFlag:
 	or (CPANEL_TX_RX_FLAGS:16), 4	; CP_Flags_A.2 = 1  ; UNUSED?
 	jr CPanel_RX_DispatchLoop
@@ -1564,6 +1565,7 @@ IncEvt_NoWrap:
 	ret
 
 
+; Steps the control-panel event index IX back by one, wrapping from 0 to 127.
 CPanel_DecEventPtr:
 	cp ix, 0:i3
 	jr nz, DecEvt_NoWrap

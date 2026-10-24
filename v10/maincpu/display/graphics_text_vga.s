@@ -201,6 +201,8 @@ GraphicsRender_ByteData_Loop3:
 	popw	iz
 	ret
 
+; Runs Display_DeferOrDrawWall_Direct on the draw task; from any other task queues a 4-byte
+; command {Display_DeferOrDrawWall_Code} for it (DrawQueue_Alloc, DrawRing_Post).
 Display_DeferOrDrawWall:
 	calr IS_XSP_INSIDE_4K_REGION_AT_1C032
 	cp hl, 0:i3
@@ -220,6 +222,8 @@ Display_DeferOrDrawWall_Direct:
 	calr SetNeedUpdate
 	jrl DrawWall
 
+; Runs Display_DeferOrUpdateScreen_Direct on the draw task; from any other task queues a 4-byte
+; command {Display_DeferOrUpdateScreen_Code} for it (DrawQueue_Alloc, DrawRing_Post).
 Display_DeferOrUpdateScreen:
 	calr IS_XSP_INSIDE_4K_REGION_AT_1C032
 	cp hl, 0:i3
@@ -2351,6 +2355,8 @@ SetPaletteRGB:
 	ld (xde), xbc
 	ret
 
+; Returns in XHL entry WA (signed index) of the u32 palette table at 0x324fc (SetPaletteRGB writes
+; it).
 Table_LookupDword:
 	exts xwa
 	sll xwa, 2

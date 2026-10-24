@@ -7185,6 +7185,7 @@ ToneGen_Dispatch_Return:
 	inc 6, xsp
 	ret
 
+; Empty routine (`ret`).
 SwbtWr_NullRet:
 	ret
 
@@ -8920,6 +8921,8 @@ TempoExpr_Done:
 	inc 2, xsp
 	ret
 
+; Clears the word at 0x90e0 and runs MidiStream_ProcessEventBuffer, MidiStream_ProcessSeqBuffer,
+; Mod_SelectExpressionSource and MidiStream_ProcessTempoRingBuf.
 Audio_ProcessAllMidiStreams:
 	ldw (0x90e0:16), 0
 	calr MidiStream_ProcessEventBuffer

@@ -3399,6 +3399,7 @@ Start_8bit_Timer_3:
 	set	3, (T8RUN:8)
 	ret
 
+; Stops 8-bit timer 3 (clears bit 3 of T8RUN).
 Stop_and_Clear_8bit_Timer_3:
 	res	3, (T8RUN:8)
 	ret
@@ -3460,6 +3461,8 @@ SeqBuf_InlineBytecode:
 SeqBuf_InlineBytecode_Return:
 	ret
 
+; Returns in HL the word at 0x1e547: the -2 word of the sequencer event buffer's descriptor (which
+; ends at 0x1e549), its free count.
 SeqBuf_GetWritePos:
 	ld hl, (0x01e547:24)
 	ret
@@ -3482,6 +3485,8 @@ SeqBuf_SaveReadPos:
 	popw hl
 	ret
 
+; RingBuf_CheckFull_256 (a read-ahead) on the sequencer event buffer (descriptor ending at
+; 0x1e549).  Preserves IX and XDE.
 SeqBuf_ReadAlternate:
 	pushw ix
 	push xde
@@ -3559,6 +3564,8 @@ TempoRingBuf_WriteBytes_Loop:
 	unlk	xiz
 	ret
 
+; Returns HL = 0 when the tempo event buffer's read and write indexes (words 0x1e74b and
+; 0x1e74f) are equal, else 0xffff.
 TempoRingBuf_CheckEmpty:
 	ld hl, (0x01e74f:24)
 	cp hl, (0x1e74b:24)
@@ -4061,6 +4068,8 @@ SeqBuf_MidiOut_CheckEmpty:
 SeqBuf_MidiOut_CheckEmpty_Return:
 	ret
 
+; Returns in HL the word at 0x1f783: the free count (-2 word) of the ring buffer whose descriptor
+; ends at 0x1f785.  SeqOut_WriteTimedBytes writes only when it is at least the byte count.
 SeqBuf_MidiOut_GetTimingValue:
 	ld hl, (0x01f783:24)
 	ret
@@ -4876,6 +4885,7 @@ SeqBuf_SoundEdit_AdvanceCheckpoint:
 	ret
 
 
+; Seq_RingBuf_ReadByte on the ring buffer whose descriptor ends at 0x204df.  Preserves IX and XDE.
 SeqBuf_SoundEdit_ReadByte:
 	pushw ix
 	push xde
@@ -4913,6 +4923,8 @@ SeqBuf_SoundEdit_BytecodeBlock:
 	unlk	xiz
 	ret
 
+; Returns HL = 0 when the words at 0x204d7 and 0x204db (a ring buffer's read and write indexes)
+; are equal, else 0xffff.
 SeqBuf_NoteEvent_CheckSongEnd:
 	ld hl, (0x0204db:24)
 	cp hl, (0x204d7:24)
@@ -5049,6 +5061,8 @@ RingBuf128_WriteByte_Store:
 	ret
 
 
+; Empties a 256-byte ring buffer: the descriptor words below XDE (-10, -8, -6, -4) become 0 and
+; the free count (-2) 0xff.
 Seq_RingBuf_Init_256:
 	ldw (xde - 10), 0x0
 	ldw (xde - 8), 0x0
@@ -6539,6 +6553,7 @@ FlashOp_Epilogue10:
 	lda xsp, (xsp + 10)
 	ret
 
+; Returns HL = 0 when the flash ready line (port 7 bit 5) is high, else 0xffff.
 Flash_CheckReady:
 	bit	5, (P7:8)
 	jr z, Flash_CheckReady_NotReady
@@ -7835,6 +7850,8 @@ FDC_WriteCompressed_Return:
 	lda xsp, (xsp + 18)
 	retd 0x2
 
+; Draws the "FD -> Flash Memory" bitmap (Bitmap_1bit_FD_to_Flash_Memory) with
+; Draw_FlashMemUpdate_message_bitmap at BC = 0x30, DE = 0xa0, stack words 2 and 8.
 SHOW_FD_TO_FLASH_MEMORY_MESSAGE:
 	pushw 0x8
 	pushw 0x2
@@ -8045,6 +8062,7 @@ SHOW_ILLEGAL_DISK_MESSAGE:
 IllegalDisk_HaltLoop:
 	jr IllegalDisk_HaltLoop
 
+; Busy-waits XWA loop iterations (none when XWA = 0).  Clobbers XBC.
 BusyWait_XWA_Cycles:
 	ld xbc, 0:i3
 	cp xbc, xwa

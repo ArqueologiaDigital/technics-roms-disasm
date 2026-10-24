@@ -1364,6 +1364,8 @@ SetWall_SlotResolve_FoundMatch:
 SetWall_SlotResolve_Return:
 	ret
 
+; Points 0x10fd at 256-byte block HL (1-based) of the block area whose base is the u32 at 0x1d5a.
+;   Out: XHL = 0.
 SetWall_StreamIndexResolve:
 	dec 1, hl
 	extz xhl
@@ -1982,6 +1984,8 @@ SqSngSel_LeaveTitle:
 	ret
 	ret
 
+; SetWall_LoadBankToToneGen with A = the byte at 0x1d4c, then copies the byte at 0x1d4e to 0xffe3
+; and runs SetWall_SyncToneGenToDRAM.
 SetWall_LoadToneGenData:
 	ld a, (7500:16)
 	pushw wa

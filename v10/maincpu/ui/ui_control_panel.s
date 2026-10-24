@@ -2118,6 +2118,8 @@ MainTaskCtrl_HandleB0:
 MainTaskCtrl_ReturnZero:
 	ld xhl, 0:i3
 	ret
+; Sends EVT_SLEEP_MAIN_TASK to ApFunction NAKA_APFUNC_ApTaskControl (a tail call into
+; ApTaskControl).
 SleepMainTask:
 	ld xwa, NAKA_APFUNC_ApTaskControl
 	ld xbc, EVT_SLEEP_MAIN_TASK
@@ -2962,6 +2964,7 @@ UI_PostRefreshEvent:
 	ld xde, 0:i3
 	jp ApPostEvent
 
+; Posts EVT_PARA_DRAW and then EVT_SELE_DRAW (parameter 0) to the current target (ApPostEvent).
 UI_PostTimerResetEvent:
 	ld xwa, 0xffffffff
 	ld xbc, EVT_PARA_DRAW

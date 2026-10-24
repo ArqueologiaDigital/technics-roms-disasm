@@ -7831,6 +7831,7 @@ SeGfx_DrawBoundList:
 	pop xbc
 	pop xwa
 	ret
+; Calls GraphicsRender_StartSingleRecord with XWA = XIY; XWA is preserved.
 SeGfx_DrawBoundRecord:
 	; --- Wrapper function 3: push xwa, ld xwa=xiy, call, pop, ret ---
 	push xwa
@@ -7888,6 +7889,8 @@ SeGfx_StaticOp07_Text:
 	call SeGfx_StaticOp07_CellTextFont1
 	pop xwa
 	ret
+; Calls SeGfx_StaticOp09_Box with XWA = 0x6ca (a RAM buffer) and COLORBLIT_MODE cleared; XWA is
+; preserved.
 SeGfx_StaticOp09_FromBuf:
 	; --- Wrapper function 10: set flag, push, ld xwa=imm, call, pop, ret ---
 	ld	(COLORBLIT_MODE:24), 0
@@ -8936,6 +8939,8 @@ SeCopy_DrawStaticScreen:
 	call SeGfx_DrawStaticList
 SeMenu_PresetManager_End:
 	ret
+; Draws the static list SeMenu_PresetManager_Save_Records .. SeMenuTitle_StaticRecords with
+; COLORBLIT_MODE cleared, then SeMenu_PresetManager_Save_Helper.
 SeMenu_PresetManager_Save:
 	; --- Wrapper 2: XIY/XIX setup + 2 calls (25 bytes) ---
 	ld	(COLORBLIT_MODE:24), 0
@@ -9400,6 +9405,8 @@ SeMenu_CompareAndApply_Data2:
 SeMenu_CompareAndApply_Data3:
 	call SeGfx_DrawStaticList
 	ret
+; Draws the static list SeScreenData_0x113B .. SeTouchCurve_AreaFill4Part with COLORBLIT_MODE
+; cleared.
 SeMenu_CompareAndApply_Data4:
 	; --- Tail helper: clear flag, setup XIY/XIX, call F0EC00 (21 bytes) ---
 	ld	(COLORBLIT_MODE:24), 0
@@ -9556,6 +9563,8 @@ SeFilLpq1_DrawStaticScreen_Loop:
 	call SeGfx_DrawBoundList
 	call SeFil_DrawModeCaption
 	ret
+; Draws the static list SeMenu_Utility_CompareBlock_Data .. SeMenu_Utility_CompareBlock_Data_2,
+; then SeMenu_PresetManager_Save.
 SeFilLpq1_DrawStaticScreen_End:
 	; --- Helper: XIY/XIX setup + call F0EC00, call F0F6F5 (19 bytes) ---
 	ld xiy, SeMenu_Utility_CompareBlock_Data

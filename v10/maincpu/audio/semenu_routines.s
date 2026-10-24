@@ -5987,6 +5987,7 @@ SeMenu_CopyWriteUpdate_Step3_Helper11_Join:
 	inc	2, xsp
 	ret
 
+; Stores A at 0x6af.
 SeMenu_SetSelectedRow:
 	ld (1711:16), a
 	ret
@@ -6470,6 +6471,7 @@ SeMenu_GetLastSwitch:
 	ld	(xwa), (0x65a)
 	ret
 
+; Stores C as byte WA of the block at 0x6be.
 SeMenu_StoreEffectParam:
 	extz wa
 	lda xde, (1726:16)

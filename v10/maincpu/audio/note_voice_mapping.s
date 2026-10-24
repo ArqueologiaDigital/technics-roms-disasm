@@ -2742,6 +2742,8 @@ MidiConfig_Return:
 	lda xsp, (xsp+336)
 	ret
 
+; When 0xce22 is non-zero and NoteMap_FindBestMatch finds a voice, allocates layer 2 of the voice
+; map at 0xc1fe (NoteMap_AllocateVoice).
 Voice_FindAndAllocBestMatch:
 	cpw (0xce22:16), 0
 	ret z
@@ -28003,6 +28005,8 @@ TmFlashWrite_ValidateParams_Join:
 	inc	2, xsp
 	ret
 
+; Calls InterCPU_E1_Bulk_Transfer with XWA = 0x3b0400 (0x300000 + 0xb0400, in the custom-data
+; flash), BC = 0xee1f and XDE = 0xa0000, then continues at TmFlash_Return.
 TmFlash_CopyToExtMem:
 	lda xwa, (0x300000:24)
 	add xwa, 0xb0400

@@ -1344,6 +1344,7 @@ FDC_SetStatus_Return:
 FDC_ClearStatus_InitTimer:
 	ld	(FDC_ERROR_CODE:16), 0
 	ret
+; Stores 0xff at 0x8a60, marking the FDC result buffer empty before a command.
 FDC_TIMING_DELAY:
 	ld	(0x8a60:16), 255
 	ret

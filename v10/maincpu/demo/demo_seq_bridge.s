@@ -569,6 +569,7 @@ SeqInit_PostDispatchEvent:
 	ld xde, 1:i3
 	jp ApDeliveryEvent
 
+; Posts EVT_INDEX_SELECT with parameter 0 to the current target (ApPostEvent).
 SeqInit_FinalEvent:
 	ld xwa, 0xffffffff
 	ld xbc, EVT_INDEX_SELECT
@@ -761,6 +762,7 @@ PlayMode_SwitchToModeAndNotify:
 DispatchHandler_ConditionalJump:
 	jr	t, DispatchHandler_SubJumpTable_Join
 
+; One-entry `jr` thunk: runs DispatchHandler_ResolveSlot (through DispatchHandler_CallResolve).
 DispatchHandler_JumpToSubHandler:
 	jr DispatchHandler_CallResolve
 

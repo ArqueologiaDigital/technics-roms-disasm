@@ -1036,6 +1036,7 @@ PlayMode_ResetAndSchedule:
 	call Audio_CheckSubsystemReady
 	ret
 
+; Stores A at 0xffe3, then SongBank_SaveAndReload and SeqTimer_PostTempoUpdate.
 SongBank_SwitchAndUpdateTempo:
 	ld (0x00ffe3:24), a
 	call SongBank_SaveAndReload
