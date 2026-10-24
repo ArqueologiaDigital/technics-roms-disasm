@@ -49,6 +49,7 @@ tools/disasm_functions.py Named, function-by-function disassembly.
 tools/dump_table_dir.py   Annotates the table directory.
 disasm/         Reference disassembly listings (see below).
 src/sp7001/     The SP7001 firmware (program 942 / table 83), GENERATED: see "SP7001".
+src/b80/table.s Table build 80: table 83's image with one byte changed, no plug-in.
 src/cnv/        The seven Style Convert Disk converters (.CNV), GENERATED, fully
                 disassembled: see "Style Convert Disk converters".
 cnv_manual.sym  Their names: one line per routine shared across converters.
@@ -68,6 +69,7 @@ make disasm     # (re)generate disassembly listings (raw + named) via MAME unida
 make verify-picture    # IC19 from src/picture.s + its 100 JPEGs: assert the instrument's SHA-1
 make verify-sp7001     # SP7001 firmware (942 / 83) + BASEEXT.XAP: assert 100% byte-match
 make verify-sp7001-floppy  # table 83 vs the SP7001 update's two table disks (+ SMCKTB*.INF)
+make verify-table80    # table build 80 from src/b80/table.s (+ table 83): assert 100% byte-match
 make symbols-sp7001    # port the 941/84 symbols to 942/83 (+ the plug-in's own names)
 make program-src-sp7001 table-src-sp7001   # regenerate src/sp7001/*.s (needs unidasm)
 make verify-cnv        # the 7 Style Convert Disk converters from src/cnv/: assert 100% byte-match
@@ -224,6 +226,16 @@ names; the activation gate named from the earlier reverse-engineering). That plu
 update, is disassembled too (`tools/gen_xap_s.py`), and the update's two table disks prove
 table 83 byte-for-byte. Full measurements and
 the edit-site catalogue: [`notes/sp7001-build-diff.md`](notes/sp7001-build-diff.md).
+
+### Table build 80
+
+Table 80 pairs with program 893 (v1.3): it is the table flash of Felipe's own instrument, read as two
+EPROM halves (private romset, de-interleaved like SP7001's into `baserom/kn7000_table_b80.rom`, which
+is not committed; SHA-1 `2e50a40b...`). It is table 83's first 0x3E0660 bytes (the 85-entry directory
+and its 84 segments) with one byte different, the second digit of segment 07's build marker (`"80\n"`
+against `"83\n"`, at 0x139EE9), and erased flash where table 83 has its plug-in.
+[`src/b80/table.s`](src/b80/table.s) therefore holds no copy of table 83: it takes the bytes of the
+table-83 build and spells out the one that differs. `make verify-table80`.
 
 ## Style Convert Disk converters (.CNV)
 

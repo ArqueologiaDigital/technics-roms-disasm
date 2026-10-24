@@ -454,6 +454,32 @@ cnv-src: tools/gen_cnv_s.py tools/gen_xap_s.py cnv_manual.sym $(CNV_REFS) \
 	    --fw-rom baserom/kn7000_program.rom --fw-r1-end 0x186000 --fw-lib-file 0x3B8FD1 \
 	    --fw-sym kn7000.sym kn7000_manual.sym kn7000_exports_from_942.sym
 
+# ---- Table build 80 (pairs with program 893, v1.3) -------------------------
+# The reference is the read of Felipe's own instrument: the two EPROM halves in
+# the private romset, de-interleaved like SP7001's. src/b80/table.s builds it
+# from table 83's image (build/kn7000_table_sp7001.rom, from src/sp7001/table.s)
+# with build 80's one different byte and no plug-in. See src/b80/table.s.
+TABLE80_SHA1 := 2e50a40b81c0caafd60d3487c13a3f988629d95f
+
+.PHONY: verify-table80
+baserom/kn7000_table_b80.rom: tools/rom_from_eproms.py
+	@mkdir -p baserom
+	$(PYTHON) tools/rom_from_eproms.py \
+	    "$(ROMSET_DIR)/kn7000_table_even_b80.ic17" \
+	    "$(ROMSET_DIR)/kn7000_table_odd_b80.ic16" $@.tmp
+	echo "$(TABLE80_SHA1)  $@.tmp" | sha1sum --quiet -c
+	mv $@.tmp $@
+
+build/kn7000_table_b80.rom: src/b80/table.s build/kn7000_table_sp7001.rom tools/kn7asm.py
+	@mkdir -p build
+	$(ASM) src/b80/table.s -I . -o $@
+
+verify-table80: build/kn7000_table_b80.rom baserom/kn7000_table_b80.rom
+	@if cmp -s build/kn7000_table_b80.rom baserom/kn7000_table_b80.rom; then \
+	    echo "OK    kn7000_table_b80.rom is 100% byte-identical to table build 80 (SHA-1 $(TABLE80_SHA1))"; \
+	 else echo "FAIL  kn7000_table_b80.rom differs from table build 80:"; \
+	    cmp build/kn7000_table_b80.rom baserom/kn7000_table_b80.rom || true; exit 1; fi
+
 clean:
 	rm -rf build
 
