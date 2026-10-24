@@ -1228,6 +1228,10 @@ AudioInit_MIDIDisabled:
 	orw (0xc59c:16), 32
 	ret
 
+; Runs the voice allocation passes again: Voice_UpdatePlayModeState and, when it returns a
+; voice (L != 0xff), VoiceEvent_AllocAllLayers; then NoteMap_FindBestMatch and, when it finds
+; one, VoiceEvent_DispatchTable.  Bit 4 of 0xc596 is clear during the passes and the word is
+; restored afterwards.
 AudioInit_RefreshToneBank:
 	pushw iz
 	ld iz, (0xc596:16)

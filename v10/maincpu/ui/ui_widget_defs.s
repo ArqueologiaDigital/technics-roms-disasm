@@ -293,6 +293,13 @@ GridCheck_Return:
 	lda xsp, (xsp + 18)
 	ret
 
+; Proc of the PsEditBox class: an edit field whose value the index switches and the data dial
+; step (the base of AcNumEditBoxProc, AcLswEditBoxProc, AcOnOffBoxProc ...).  The instance's +46
+; pointer leads to the edited value.
+;   Handles EVT_CHECK_SELECTED, EVT_INDEXSW_DOWN / _UP, EVT_INDEX_SELECT, EVT_SW_IN,
+;   EVT_GET_STRING, EVT_PARA_DRAW, EVT_SELE_DRAW, EVT_DRAW, EVT_SHOW and EVT_SET_SELECTED (store
+;   the new value, redraw with EVT_SELE_DRAW and EVT_PARA_DRAW, and point the dial at the box:
+;   SetDialUp / SetDialDown with EVT_INDEXSW_UP / _DOWN).  Other events go to VwBoxProc.
 PsEditBoxProc:
 	lda xsp, (xsp-540)
 	push xiz
@@ -1438,6 +1445,12 @@ LswEditCheck_Return:
 	pop xiz
 	ret
 
+; Posts an LSW_PUT request to the panel-memory manager.
+;   In:  XWA, BC, DE = the three request fields.
+;   Allocates a 12-byte block {XWA, BC, DE, 0} (Malloc) and calls MainFunction
+;   NAKA_MAINFUNC_MainPmanControl with EVT_LSW_PUT and the block, then
+;   NAKA_MAINFUNC_MainAutoFree with EVT_AUTO_FREE and the same block (both queued through
+;   MainFuncCall, so the block is freed after the request is served).  Out: HL = 0.
 MainLswPut:
 	dec 8, xsp
 	push xiz
@@ -1506,6 +1519,12 @@ MainLswPartPut:
 	inc 8, xsp
 	retd 0x2
 
+; Posts an LSW_ADD request to the panel-memory manager.
+;   In:  XWA, BC, DE = the three request fields.
+;   Allocates a 12-byte block {XWA, BC, DE, 0} (Malloc) and queues MainFunction
+;   NAKA_MAINFUNC_MainPmanControl with EVT_LSW_ADD and the block, then
+;   NAKA_MAINFUNC_MainAutoFree with EVT_AUTO_FREE and the same block (MainFuncCall).
+;   Out: HL = 0.  Same shape as MainLswPut.
 MainLswAdd:
 	dec 8, xsp
 	push xiz
@@ -4782,6 +4801,9 @@ PsWideToggle_Return:
 	lda xsp, (xsp + 20)
 	ret
 
+; Proc of the PsInvisibleBox class, a view that draws nothing: EVT_GET_STRING returns an empty
+; string, EVT_PARA_DRAW and EVT_DRAW return 0, everything else goes to ViewableProc.  The base
+; of the Iv* procs.
 PsInvisibleBoxProc:
 	cp xbc, EVT_GET_STRING
 	jr z, PsInvisibleBox_GetText
@@ -9995,6 +10017,7 @@ GetMode_Epilogue10:
 	lda xsp, (xsp + 10)
 	ret
 
+; Returns in XHL the current mode as an object id (MODE_NOW).
 GetModeNow:
 	ld xhl, (MODE_NOW:24)
 	ret
@@ -11145,6 +11168,15 @@ ViewableProc_VirtualDispatch:
 	ld xhl, (xwa)
 	ret
 
+; Proc of the Viewable class, the base of every view (registered by InitializeRoot for the view
+; object tables, and called by the derived procs for what they do not handle).
+;   In:  XWA = view id, XBC = event, XDE = parameter.  Out: XHL = result.
+;   Handles the rectangle setters EVT_SET_EDIT_SW_RECT / EVT_SET_MENU_RECT, EVT_SEARCH_LINK,
+;   EVT_SEARCH_CLASS, EVT_SET_VISIBLE, the view-tree queries EVT_GET_PREVVIEW / _NEXTVIEW /
+;   _SUBVIEW / _SUPERVIEW, EVT_GET_INSTANCE, the name events EVT_SET_NAME / EVT_GET_NAME (through
+;   the name table at object table entry + 0x300), EVT_DELIVERY_EVENT, EVT_HIDE, EVT_SHOW,
+;   EVT_GET_CLASS_SP and EVT_PAINT .. +6 (ViewableProc_CaseTable); the rest goes to
+;   Viewable_DefaultDispatch.
 ViewableProc:
 	lda xsp, (xsp - 20)
 	push xiz
@@ -18052,6 +18084,9 @@ GetEvent_Prologue:
 	lda xsp, (xsp + 10)
 	ret
 
+; Cancels queued events: every entry of the application event queue (ApPostEvent's) whose
+; object is XWA and whose event is XBC gets its event replaced by EVT_NONE, under kernel
+; semaphore 4.  The entries stay in the queue.
 DeleteEvent:
 	dec 4, xsp
 	push xiz
@@ -18427,6 +18462,13 @@ MainPostEvent_Return:
 	inc 8, xsp
 	ret
 
+; Queues {object, event, parameter} on the 256-entry main event queue (12-byte records at
+; 0x2ec38, write index 0x2f83a, read index 0x2f838, post counter 0x2f842), under kernel
+; semaphore 7.
+;   In:  XWA = object, XBC = event, XDE = parameter.
+;   While the queue is full the event is dropped when Boot_CheckConfigFlag7 returns 0;
+;   otherwise the task yields (queue 3) and retries.  Unlike ApPostEvent it does not signal
+;   semaphore 2.
 MainPostEvent:
 	dec 8, xsp
 	push xiz
@@ -19548,6 +19590,9 @@ DrawFunc_XspCheck_Epilogue:
 	jr	DrawFunc_StackEntry_Join
 
 
+; Returns XHL = 1 when the stack pointer lies in 0x1c032..0x1d032 (the draw task's stack), else
+; 0.  The drawing entry points use it to draw directly on the draw task and to queue a command
+; for it from any other task.
 IS_XSP_INSIDE_4K_REGION_AT_1C032:
 	xor xhl, xhl
 	cp xsp, 0x1c032

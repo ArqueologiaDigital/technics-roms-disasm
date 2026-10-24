@@ -2592,6 +2592,12 @@ TaskSched_WakeInline_Pending:
 	ld (xix + 10), 0x0
 	jrl TaskSched_ReturnToDispatch
 
+; Kernel: signals binary semaphore A.
+;   When no task waits on it (wait list at 0x4cd + 4*A empty) the semaphore's flag (bit 0 of
+;   0x4f8 + A) is set; otherwise the first waiting task is unlinked, marked ready (state 4 at
+;   +9) and appended to the ready queue of its priority (0x4c1 + 4 * byte +8), and the
+;   scheduler runs (TaskSched_Dispatch).  Runs with interrupts at level 6 and every register
+;   preserved.  Counterpart of TaskSched_WaitForEvent.
 TaskSched_SignalEvent:
 	push	sr
 	ei 6
@@ -3441,6 +3447,8 @@ SeqBuf_GetWritePos:
 	ld hl, (0x01e547:24)
 	ret
 
+; Resets the sequencer event buffer: Seq_RingBuf_Init_512 on the ring descriptor ending at
+; 0x1e549.  Preserves IX and XDE.
 SeqBuf_Init:
 	pushw ix
 	push xde

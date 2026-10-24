@@ -12860,6 +12860,9 @@ ResetPage_Epilogue:
 	inc 8, xsp
 	ret
 
+; Returns in XHL the address of 12-byte record WA (sign-extended) of the mixer record array
+; whose base is the u32 at 0x3ea30: base + 12 * WA.  (The name describes only the first
+; instruction.)
 Util_SignExtendAndDouble:
 	exts xwa
 	ld xhl, xwa
@@ -12873,6 +12876,7 @@ Util_StorePartArrayBase:
 	ld (0x03ea30:24), xwa
 	ret
 
+; Returns in HL word WA (signed index) of the mixer word array the u32 at 0x3ea34 points to.
 PsMixer_ReadWordArrayEntry:
 	exts xwa
 	add xwa, xwa

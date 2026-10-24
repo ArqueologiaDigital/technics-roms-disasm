@@ -2057,6 +2057,14 @@ FDC_INTERRUPT_HANDLER_Code_Epilogue:
 	pop qiz
 	ret
 
+; Runs one floppy-disk-controller command described by a 16-byte parameter block.
+;   In:  stack +4 = block pointer: {command (word), five parameter words, u32}.
+;   Out: L = status.  0xfb (FDC_Set_Status) when a command is already running: the busy byte
+;        0x8a16 holds 0xa5 for the duration (command 0 clears it first).
+;   The block is copied to FDC_COMMAND_INDEX.. and to 0x8a50..; 0x8a20 is cleared, the previous
+;   FDC_ERROR_CODE is moved to 0x8a26 and FDC_ERROR_CODE cleared.  After FDC_COMMAND_DISPATCHER
+;   succeeds, commands 0..11 run through FDC_CommandEntry_CopyParams_CaseTable
+;   (FDC_HANDLER_DISPATCH_BASE: init, recalibrate, seek, execute, sector transfer, mode ...).
 FDC_CommandEntry:
 	push xiz
 	ld xiz, (xsp + 8)

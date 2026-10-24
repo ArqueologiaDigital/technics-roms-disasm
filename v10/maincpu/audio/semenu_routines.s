@@ -49,6 +49,7 @@ SeMenu_LoadObjectPtr_Data:
 	ld	(xwa), (0x698)
 	ret
 
+; Copies the selected part (PART_SELECT) to (XWA).  Despite the name no pointer is loaded.
 SeMenu_LoadMasterPtr:
 	ld c, (PART_SELECT:24)
 	ld (xwa), c
@@ -69,6 +70,12 @@ SeMenu_FlushDisplayObj_CopyLoop:
 	ld bc, 6:i3
 	jp sendCOMM
 
+; Builds a sound-editor display element with an indirect value byte in a 9-byte local record
+; and registers it.
+;   In:  A = object flags (SeMenu_SetObjectFlags), C = record byte 2, XDE = pointer to the value
+;        byte (copied to +4), stack word = record byte 5 (popped on return, RETD 2).
+;   Record: {0x88, master byte (SeMenu_LoadMasterPtr), C, 1, (XDE), stack byte, ...}, flushed
+;   with SeMenu_FlushDisplayObj.  Out: HL = 0.
 SeMenu_RegisterElement_Extended:
 	lda xsp, (xsp - 20)
 	ld (xsp + 12), xde
@@ -108,6 +115,11 @@ SeMenu_RegisterElement_ClearLoop:
 	lda xsp, (xsp + 20)
 	retd 0x2
 
+; Builds a sound-editor display element of type 1 in a 9-byte local record and registers it.
+;   In:  A = object flags (SeMenu_SetObjectFlags), C and E = record bytes 2 and 3, stack word
+;        = record byte 5 (popped on return, RETD 2).
+;   Record: {0x80, master byte (SeMenu_LoadMasterPtr), C, E, 1, stack byte, ...}; it is
+;   flushed with SeMenu_FlushDisplayObj.  Out: HL = 0.
 SeMenu_RegisterElement_Type1:
 	lda xsp, (xsp - 18)
 	ld (xsp + 12), e
@@ -2046,6 +2058,8 @@ SeMenu_InitObjEntry:
 	inc 2, xsp
 	ret
 
+; Copies the sound editor's current-step byte at RAM 0x693 to (XWA) (spelled `ldmi16 (xwa),
+; 0x693`, the memory-to-memory move ld (xwa),(0x693)).
 SeMenu_ReadObjData:
 	ldmi16 (xwa), 0x693
 	ret
@@ -2055,6 +2069,7 @@ SeMenu_SetCurrentStep:
 	ld (1683:16), a
 	ret
 
+; Clears the sound editor's sub-index byte at 0x694 (SeMenu_AdvanceSubIndex counts it up).
 SeMenu_ResetSubIndex:
 	ld (1684:16), 0
 	ret
@@ -2070,6 +2085,8 @@ SeMenu_ReadObjParam_Data:
 	ld	(1684:16), a
 	ret
 
+; Copies the sound editor's sub-index byte at RAM 0x694 to (XWA) (spelled `ldmi16 (xwa),
+; 0x694`, the memory-to-memory move ld (xwa),(0x694)).
 SeMenu_ReadObjParam:
 	ldmi16 (xwa), 0x694
 	ret
@@ -2088,6 +2105,8 @@ SeMenu_CheckObjValid:
 	ld hl, 0:i3
 	ret
 
+; Copies the entries of the record the u32 at 0x20c33 points to into the array at XWA: byte +3
+; of the record is the count, and that many bytes from record+6 go to XWA[0..].
 SeMenu_FillEntryTable:
 	lda xhl, (0x020c33:24)
 	ld c, (xhl + 3)

@@ -1908,6 +1908,8 @@ SeGfx_BoundOp08_ColorBlit_Skip2:
 	inc	8, xsp
 	ret
 
+; Reads the size of frame pattern WA from the table at 0x934000 in the table-data ROM (8-byte
+; entries): word +0 to (XBC), word +2 to (XDE).
 GetFrameSPSize:
 	ld hl, wa
 	extz xhl

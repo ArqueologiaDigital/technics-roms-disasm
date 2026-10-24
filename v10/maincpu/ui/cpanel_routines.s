@@ -343,6 +343,8 @@ DELAY_2_TICKS__loop:
 	ret
 
 
+; Busy-waits until SYSTEM_TIMESTAMP has advanced by 6 from its value on entry (the start is
+; kept in TIMESTAMP_FOR_DELAY).
 DELAY_6_TICKS:
 	ld wa, (SYSTEM_TIMESTAMP:16)
 	ld (TIMESTAMP_FOR_DELAY:16), wa

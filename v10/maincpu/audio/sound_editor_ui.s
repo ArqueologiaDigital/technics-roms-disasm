@@ -8133,6 +8133,10 @@ SeMenu_DrawDottedLine:
 	pop	xiz
 	ret
 
+; Draws the static part of a sound-editor title's screen.
+;   In:  stack +4 = title id (0x20..0x4f).
+;   Wraps SeTitle_StaticScreenTable[title - 0x20] between SeTitle_DrawWall and
+;   SeTitle_UpdateScreen.  Every register is preserved.
 SeTitle_DrawStaticScreen:
 	push xiz
 	ld xiz, xsp

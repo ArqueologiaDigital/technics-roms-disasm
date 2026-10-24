@@ -8044,6 +8044,7 @@ MIDI_MapCCToIndex_Skip10:
 	ldw	hl, 100
 	ret
 
+; SwbtWr_FlushAndAppendParams with every register preserved.
 SwbtWr_WriteVoiceParam_PreserveRegs:
 	push xwa
 	push xbc
@@ -8114,6 +8115,9 @@ SndParam_ApplyProgramChange_Safe:
 	ld hl, (0x90ee:16)
 	ret
 
+; Stores HL in 0x90ea, copies the byte at 0x90f7 to 0x90ec and calls SndParam_FetchAndStore
+; with every register preserved.  Out: HL = the word at 0x90ee.
+;   Also handed out as a pointer by MidiStream_CheckPartProgramAllowed.
 PartCtrl_WriteProgramChange:
 	push xwa
 	push xbc
@@ -8169,6 +8173,8 @@ MIDI_LoadParamsAndDispatchCC:
 MIDI_ClearGuardAndDispatchCC:
 	ld (0x90e5:16), 0
 
+; MIDI_DispatchCC with every register preserved, skipped while bit 0 of 0xb7e7 or bit 4 of
+; 0xfd50 is set.
 MIDI_DispatchCC_Guarded:
 	bit 0, (0xb7e7:16)
 	jr nz, MidiGuarded_Return
@@ -8310,6 +8316,12 @@ BankSelect_Done:
 	popw de
 	ret
 
+; Programs timer 5 for the current tempo.
+;   Skipped while bit 2 of 0xfd50 is set.  The tempo is the low 9 bits of the word at 0xfc68
+;   (0xfc5a + 8); outside 40..300 it is reset to 120.  It is stored at 0xbd3a and TREG5 is set
+;   to 80,000,000 / (tempo * 64), rounded (60,000,000 when Boot_ReadFDCStatus returns 4).
+;   Unless bit 4 of 0xfd50 or of 0x90f9 is set SeqData_DispatchLoop_Done runs; bit 4 of
+;   0x90f9 is then cleared.  Registers are preserved.
 SeqTimer_UpdateTempoReg:
 	bit 2, (0xfd50:16)
 	jr nz, SeqTimer_Return

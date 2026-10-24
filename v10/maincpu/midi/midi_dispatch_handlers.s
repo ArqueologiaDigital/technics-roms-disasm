@@ -9836,6 +9836,9 @@ ArpQueue_Pack21BitValue:
 	inc	4, xsp
 	ret
 
+; Appends BC bytes from (XWA) to the queue whose descriptor pointer is at 0xbc5c.
+;   The descriptor's +10 u32 is the write pointer, advanced per byte, and its +0 word counts
+;   the bytes; a 0xff end mark is written after the last byte.  BC = 0 only writes the mark.
 ArpQueue_Enqueue:
 	ld de, bc
 	dec 1, bc

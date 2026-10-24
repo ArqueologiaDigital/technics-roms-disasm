@@ -414,6 +414,10 @@ SmfLoadAs_Return:
 	ld xhl, 0:i3
 	ret
 
+; Makes a fixed-width display name in place.
+;   In:  XWA = string, BC = width.
+;   Within the first BC characters: '~' becomes '_' and control characters become spaces; the
+;   string is padded with spaces to BC characters and terminated with a NUL at position BC.
 TrimAndPadSmfFilename:
 	ld ix, 0:i3
 	ld xhl, xwa

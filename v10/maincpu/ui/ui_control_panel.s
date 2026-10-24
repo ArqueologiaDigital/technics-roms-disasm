@@ -2880,6 +2880,7 @@ CtrlPanel_SelectionReturnZero:
 	ld hl, 0:i3
 	ret
 
+; Returns the selected part (PART_SELECT) zero-extended in HL.
 GetPartSelect:
 	ld l, (PART_SELECT:16)
 	extz hl
@@ -2889,6 +2890,10 @@ GetCurrentPartSelect:
 	ld l, (PART_SELECT:16)
 	ret
 
+; Requests a change to mode NAKA_MODE_MD_PS + A: removes any queued EVT_CHANGE_MODE
+; (DeleteEvent) and posts a new one to the current target (ApPostEvent).  Despite the name the
+; event is a mode change.
+;   In:  A = mode offset from NAKA_MODE_MD_PS.
 UI_PostPartChangeEvent:
 	dec 2, xsp
 	ld (xsp), a
@@ -2968,6 +2973,7 @@ SeqState_HasModeChanged:
 	scc16 nz, hl
 	ret
 
+; Posts EVT_VALEN_SET with parameter A (zero-extended) to the current target (ApPostEvent).
 UI_PostDialEnable:
 	ld e, a
 	ld d, 0x0:opc
@@ -2986,6 +2992,7 @@ UI_StoreA_Ram27495:
 	ld (0x027495:24), a
 	ret
 
+; Posts EVT_AICEN_SET with parameter A (zero-extended) to the current target (ApPostEvent).
 UI_PostEvent_0x6E:
 	ld e, a
 	ld d, 0x0:opc
@@ -3311,6 +3318,9 @@ CtrlPanel_FrameReturn:
 	inc 4, xsp
 	ret
 
+; Computes the centre point of a rectangle.
+;   In:  XWA = rectangle {x1, y1, x2, y2} (inclusive), XBC = 4-byte point to fill.
+;   x = x1 + (x2 - x1 + 1) / 2, y likewise (signed division).
 GetBoxCenter:
 	ld de, (xwa + 4)
 	sub de, (xwa)

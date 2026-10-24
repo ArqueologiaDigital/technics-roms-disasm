@@ -8159,6 +8159,8 @@ AudioTable_ReturnZero:
 	lda xsp, (xsp+264)
 	ret
 
+; Looks A up in the 30-byte table FswAssign_FunctionCodes.
+;   Out: L = its index, or 30 when it is not there.
 AudioTable_FindMatchIndex:
 	ld l, 0x0:opc
 	lda xde, (FswAssign_FunctionCodes:24)
@@ -13673,6 +13675,8 @@ VariScreen_Epilogue:
 	lda xsp, (xsp+566)
 	ret
 
+; Returns L = C + A/2 + 1 when A >= C + A/2 + 1, else L = 0.
+;   In:  A, C (bytes).  Clobbers E and C.
 VariScreen_CalcValidNoteRow:
 	ld e, a
 	srl e, 1

@@ -1432,6 +1432,13 @@ BitMapOut_MergeOutputFields:
 	lda xsp, (xsp + 34)
 	ret
 
+; Queues bytes for output on the selected port, with interrupts at level 6.
+;   In:  stack +4 = count (word), +6 = data pointer.  Out: HL = the write routine's result;
+;        on the MIDI path 0xffff when the buffer has no room.
+;   COM_SELECT = 0 (MIDI): SeqBuf_MidiOut_WriteBytes when SeqBuf_MidiOut_GetTimingValue
+;   reports room for the count, then MIDI_SC0_ENABLE_TX.  Otherwise the computer-interface type
+;   at 0xc1e4 selects the PC-2 path (2) or the serial path (0, 1: SeqBuf3_WriteBytes,
+;   CompIface_SerialEnableTx).
 SeqOut_WriteTimedBytes:
 	push xiz
 	ld iz, (xsp + 8)

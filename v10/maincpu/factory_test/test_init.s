@@ -117,6 +117,7 @@ InitializeHama:
 	lda xsp, (xsp + 14)
 	ret
 
+; Prints a diagnostic line of the floppy test screens: a tail jump to Debug_PrintString.
 FDTest_PrintDiag:
 	jp Debug_PrintString
 

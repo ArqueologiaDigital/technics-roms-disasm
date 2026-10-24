@@ -10345,6 +10345,7 @@ VoiceSlot_ReadParamsErrExit:
 VoiceSlot_DispatchDone:
 	ret
 
+; VoiceSlot_LoadAndDispatch with the word at 0xd58 saved and restored around it.
 VoiceSlot_DispatchRet:
 	push_sd16w 0x58, 0x0d
 	call VoiceSlot_LoadAndDispatch
@@ -10846,6 +10847,8 @@ VoiceSlot_FinalRetZ_Skip7:
 VoiceSlot_FinalRetZ_Return2:
 	ret
 
+; Points 0x10fd at 256-byte block IY (1-based) of the block area whose base is the u32 at
+; 0x1d5a: (IY - 1) * 256 + base.  Out: XHL = 0.
 VoiceSlot_UpdateCurrentPointer:
 	ld hl, iy
 	dec 1, hl
@@ -10856,6 +10859,8 @@ VoiceSlot_UpdateCurrentPointer:
 	xor xhl, xhl
 	ret
 
+; Returns IZ = 2 * (part - 1) for the part number byte at 0xeee: the word index into the
+; per-part tables at 0xc9e.  Preserves WA.
 VoiceSlot_ComputeWordIndex:
 	pushw wa
 	ld a, (3822:16)
@@ -14851,6 +14856,7 @@ DisplayStr_BytecodeBlock_D:
 	call	Display_UpdateRegion3
 	ret
 
+; Fills the 27-byte display string buffer at 0xecd with spaces.  Preserves WA, BC and XIX.
 DisplayStr_ClearRegion:
 	pushw wa
 	pushw bc

@@ -4302,6 +4302,9 @@ FileIO_CopyOpen_Return:
 	lda xsp, (xsp + 32)
 	ret
 
+; Reads one byte from the open file (handle at 0x7f44, SeqStep_FileReadReturn): the C-library
+; fgetc.  Out: HL = the byte, -2 on a read error, -100 when no file is open; an error is
+; recorded at 0x7f48 unless an earlier one is there.
 FileIO_ReadByte:
 	ld xwa, (0x7f44:16)
 	or xwa, xwa
@@ -4459,6 +4462,11 @@ FileIO_WriteByte:
 	lda xsp, (xsp + 18)
 	ret
 
+; Writes XBC bytes from XWA to the open file (handle at 0x7f44), in chunks of at most 0x7fff
+; (FileWrite).  The C-library fwrite goes through here.
+;   Out: XHL = XBC, or a negative code: -100 when no file is open, -11 when a chunk is short
+;        and the handle's +6 word (bit 15 masked) is 31, -3 for any other short write.  A new
+;        error is recorded at 0x7f48 unless an earlier one is there.
 FileIO_WriteByte_Impl:
 	lda xsp, (xsp - 18)
 	push xiz
@@ -4541,6 +4549,11 @@ FileIO_CheckHandle:
 	lda xsp, (xsp + 18)
 	ret
 
+; Seeks the open file (handle at 0x7f44) through SeqStep_FileSeekSetup.
+;   In:  XWA = offset, BC = origin (callers pass 0 = start, 2 = end); both go on the stack
+;        after the handle.
+;   Out: HL = 0, -5 when the seek fails, -100 when no file is open; a new error is recorded at
+;        0x7f48 unless an earlier one is there.
 FileIO_SeekAndReadBlock:
 	ld xde, (0x7f44:16)
 	or xde, xde
@@ -4897,6 +4910,8 @@ FileIO_Search_Return:
 	exts hl
 	ret
 
+; Writes the two-digit number C + 1 (01..29) at XWA and appends the string at XDE
+; (FileIO_CopyString).
 FileIO_FormatFileIndex:
 	inc 1, c
 	cp c, 0xa
@@ -5227,6 +5242,10 @@ FileIO_SetModeFlag_Reading:
 	ld (0x0272d0:24), 0x00
 	ret
 
+; Tests bit A of the selected file's attribute word.
+;   In:  A = bit (0..9).  Out: L = 1 when the selected file index (word at 0x25ea8, valid
+;        0..19) has that bit set in the word at 0x25db8 + 12 * index, else 0 (also for an
+;        invalid index or A >= 10).
 FileIO_CheckRecordValid:
 	ld bc, (0x025ea8:24)
 	cp bc, 0:i3
@@ -5389,6 +5408,9 @@ GetDiskSize_Return:
 	ld l, (0x025db6:24)
 	ret
 
+; Returns in XHL the disk-information record pointer stored at 0x25d6c, first refreshing the
+; free-space field (+4) with GetDiskFreeSpace when the record still holds FileIO_DiskInfoInit's
+; value.
 GetEncodedFreeSpaceData:
 	lda xwa, (0x025d6c:24)
 	ld xbc, (FileIO_DiskInfoInit:24)
@@ -5475,6 +5497,8 @@ ValidateSelection_Ok:
 	ld hl, 0:i3
 	ret
 
+; Returns in HL the selected file index (word at 0x25ea8), or -104 when
+; ValidateFileSelectionIndex rejects it.
 GetCurrentFileIndex:
 	ld wa, (0x025ea8:24)
 	calr ValidateFileSelectionIndex
@@ -5505,6 +5529,8 @@ NotifyUI_Return:
 	popw iz
 	ret
 
+; Returns in XHL the 12-byte directory entry of file WA (0x25dba + 12 * WA), or the empty name
+; FileIO_EmptyEntryName when ValidateFileSelectionIndex rejects WA.
 GetFileEntryPtr:
 	pushw iz
 	ld iz, wa
@@ -8862,6 +8888,12 @@ DiskCap_Return:
 	inc 2, xsp
 	ret
 
+; Turns a file-operation result into the code the disk screens show.
+;   In:  WA = result, C = code to use for an unmapped error.
+;   Out: L = 0x23 for a result >= 0; for a negative result whose low 15 bits are below 0xff, L =
+;        its low byte; otherwise the code of its FileIO_StatusToErrorCode entry (4-byte
+;        {status word, code byte} entries; the first entry with a non-negative status ends the
+;        table and supplies the code for unlisted results).  A code of 0xff or more becomes C.
 FileIO_ValidateSignedValue:
 	cp wa, 0:i3
 	jr ge, ValidateSigned_Positive

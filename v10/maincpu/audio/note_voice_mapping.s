@@ -19369,6 +19369,8 @@ SeqVoice_CheckAndRet_RestoreReg:
 	lda xsp, (xsp + 12)
 	retd 0x2
 
+; Sends the 5-byte command packet {4, 0xf0, A, C, E} (MIDI_SendCmdPacket, then
+; MIDI_PostSendStub).
 SeqVoice_CheckAndRet_Prologue:
 	dec 6, xsp
 	ld (xsp + 0:8), 0x4
@@ -19773,6 +19775,7 @@ SendCmdPacket_CheckCount:
 	ld wa, 0:i3
 	jp sendCOMM
 
+; Empty routine (`ret`) called after MIDI command packets are sent.
 MIDI_PostSendStub:
 	ret
 
@@ -28774,6 +28777,9 @@ Strncat_LoadReg2:
 	ld (xix), 0x0
 	ret
 
+; C strncmp(s1, s2, n).
+;   In:  stack +4 = s1, +8 = s2, +12 = n (u16).  Out: HL = 0 when the first n characters match
+;        (or both end), else the sign-extended difference s1[i] - s2[i] at the first mismatch.
 String_Compare:
 	ld bc, (xsp + 12)
 	ld xde, (xsp + 8)
