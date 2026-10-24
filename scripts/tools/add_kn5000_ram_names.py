@@ -13,7 +13,8 @@ JOB IT DOES
        routines (all votes must agree), the .equ is corrected to it, and their operands take the name;
     4. drops from v9's / v7's file every name this run added that the tree's code does not use after
        step 3 -- a name whose address could not be derived for that tree is left out rather than kept
-       with v10's value (the convention of shared/ram_variables.s);
+       with v10's value (the convention of shared/ram_variables.s); a name that lies inside a record the
+       tree has is kept at the same offset in that record instead (its operands there are RECORD+k already);
     5. for a name whose reason starts with `[N bytes]` -- a record or array the code shows to be N bytes
        long -- spells every numeric memory operand inside it that has no name of its own as NAME+offset
        (decimal), in each tree where the name exists, from that tree's own value of it.  A record that
@@ -76,6 +77,12 @@ def symbols(t):
             if m:
                 out.add(m.group(1))
     return out
+
+
+def N_names(t):
+    sys.path.insert(0, os.path.join(REPO, "scripts", "tools"))
+    import name_kn5000_ram as N
+    return N.ram_names(t)
 
 
 def named_addresses(t):
@@ -170,6 +177,18 @@ def spell_structs(t):
         return None
 
     count = 0
+    exact_name = {v: n for n, v in N_names(t).items()}
+    base_of = {n0: s0 for s0, e0, n0 in spans}
+    recref = re.compile(r'\b(%s)\+(\d+)\b' % "|".join(map(re.escape, base_of)))
+
+    def to_exact(m):
+        """a REC+k written earlier whose address has since got a name of its own takes that name"""
+        v = base_of[m.group(1)] + int(m.group(2))
+        if v in exact_name:
+            hit[0] += 1
+            return exact_name[v]
+        return m.group(0)
+
     for f in glob.glob(os.path.join(REPO, t, "maincpu", "**", "*.s"), recursive=True):
         L = read(f)
         ch = False
@@ -179,6 +198,7 @@ def spell_structs(t):
             if not st or st.startswith("."):
                 continue
             hit = [0]
+            code = recref.sub(to_exact, code)
 
             def mem(m):
                 x = spell(int(m.group(1), 0))
@@ -193,7 +213,7 @@ def spell_structs(t):
                 x, y = spell(int(q.group(2), 0)), spell(int(q.group(4), 0))
                 hit[0] += bool(x) + bool(y)
                 new = q.group(1) + (x or q.group(2)) + q.group(3) + (y or q.group(4)) + q.group(5)
-            if new != code:
+            if new != l.partition(";")[0]:
                 L[i] = new + sep + cmt
                 count += hit[0]
                 ch = True
@@ -259,6 +279,35 @@ def derive_records(t):
         head = [l for l in read(path(t)) if l.startswith(";")]
         write(path(t), head + aligned(sorted(rows + out, key=lambda r: r[1])) + [""])
     return out
+
+
+def place_record_fields(t, names):
+    """names of fields inside a v10 record that tree t also has: their address in t is t's record base plus
+    the same offset (a record's layout does not move inside it).  Rewrites their lines in t's file and
+    returns the names placed; spell_structs then respells t's RECORD+k operands with them."""
+    rows10 = {m.group(1): (int(m.group(2), 0), (m.group(3) or "").rstrip())
+              for m in map(EQU_FULL.match, read(path("v10"))) if m}
+    rowst = {m.group(1): int(m.group(2), 0) for m in map(EQU_FULL.match, read(path(t))) if m}
+    recs = [(v, v + int(SIZE.match(c).group(1), 0), n) for n, (v, c) in rows10.items()
+            if c and SIZE.match(c) and n in rowst]
+    placed = {}
+    for n in names:
+        v = rows10[n][0]
+        inner = sorted((e0 - s0, s0, n0) for s0, e0, n0 in recs if s0 < v < e0 and n0 != n)
+        if inner:
+            _, s0, n0 = inner[0]
+            placed[n] = rowst[n0] + (v - s0)
+    if placed:
+        L = read(path(t))
+        for i, l in enumerate(L):
+            m = EQU_FULL.match(l)
+            if m and m.group(1) in placed:
+                n, why = m.group(1), (m.group(3) or "").rstrip()
+                if placed[n] != rows10[n][0]:
+                    why += "\t; %s address: the same offset in its record (add_kn5000_ram_names.py); v10 has 0x%x" % (t, rows10[n][0])
+                L[i] = "\t.equ %s, 0x%04x\t; %s" % (n, placed[n], why)
+        write(path(t), L)
+    return set(placed)
 
 
 def used_names(t, names):
@@ -336,6 +385,8 @@ def main():
             continue
         used = used_names(t, added[t])
         drop = [n for n in added[t] if n not in used]
+        kept = place_record_fields(t, drop)
+        drop = [n for n in drop if n not in kept]
         if drop:
             L = [l for l in read(path(t)) if not (EQU.match(l) and EQU.match(l).group(1) in drop)]
             write(path(t), L)

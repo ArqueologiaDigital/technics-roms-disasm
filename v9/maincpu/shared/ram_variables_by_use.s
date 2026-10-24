@@ -67,6 +67,24 @@
 	.equ PART_PARAM_VALUE,			0x111d	; its value, shown under that label by DisplayStr_ShowPartParamLine
 	.equ PLAYBACK_COUNTDOWN,		0x1144	; ticks before an armed playback starts: 10 when armed (PlayMode_LoadStartCountdown), CDlikeSwitch_PlaybackTimer counts it down
 	.equ SEQ_BLOCK_POOL,			0x1d5a	; base of the sequencer's pool of 256-byte data blocks: SeqInit_SetBaseAddress sets 0xB0000; block n (1-based) is at this + (n - 1) * 0x100
+	.equ SQEDT_TRKCLR_MASK,			0x25e8	; word: TT_SQTRKCLR's track mask; EXECUTE clears every track whose bit is set and zeroes it
+	.equ SQEDT_VELOCNG_LAST,		0x25fa	; TT_SQVELOCNG: last measure (word)
+	.equ SQEDT_QTZ_LAST,			0x25fc	; TT_SQQTZ: last measure (word)
+	.equ SQEDT_ADVDLY_TRACK,		0x2604	; TT_SQADVDLY: track
+	.equ SQEDT_ADVDLY_FROM,			0x2606	; TT_SQADVDLY: first measure (word; also the default the FM string shows)
+	.equ SQEDT_ADVDLY_LAST,			0x2608	; TT_SQADVDLY: last measure (word)
+	.equ SQEDT_NOTECNG_TRACK,		0x260e	; TT_SQNOTECNG (note change): track
+	.equ SQEDT_NOTECNG_FROM,		0x2610	; TT_SQNOTECNG: first measure (word)
+	.equ SQEDT_NOTECNG_LAST,		0x2612	; TT_SQNOTECNG: last measure (word)
+	.equ SQEDT_TRNS_TRACK,			0x261c	; TT_SQTRNS (transpose): track
+	.equ SQEDT_TRNS_FROM,			0x261e	; TT_SQTRNS: first measure (word)
+	.equ SQEDT_TRNS_LAST,			0x2620	; TT_SQTRNS: last measure (word)
+	.equ SQEDT_MERS_LAST,			0x2626	; TT_SQMERS: last measure (word)
+	.equ SQEDT_MCP_LAST,			0x2628	; TT_SQMCP: last source measure (word)
+	.equ SQEDT_MCP_REPEAT,			0x262a	; TT_SQMCP: repeat count
+	.equ SQEDT_MDEL_LAST,			0x262c	; TT_SQMDEL: last measure (word)
+	.equ SQEDT_MINS_LAST,			0x262e	; TT_SQMINS: last measure of A (word)
+	.equ SQEDT_MINS_REPEAT,			0x2630	; TT_SQMINS: repeat count
 	.equ SEQ_DATA_OFFSET,			0x2666	; word: byte offset of the song-data cursor in SEQ_DATA_BLOCK, 5..255 (5 = first byte after the block header); at 255 ToneGen_AdvancePosition moves on to a new linked block
 	.equ SEQ_START_MEASURE,			0x2668	; word: the measure playback starts from, sign-magnitude (0x8002 = 2 measures before measure 1): punch-in minus SEQ_COUNT_IN (SeqPlay_UpdateStartFromPunchIn)
 	.equ SCOOP_DST_BLOCK_PTR,		0x267a	; address of the destination block of the scoop display's chained copy (SeqData_ChainNextDstBlock follows the +3 link and stores the next block here)
@@ -248,6 +266,28 @@
 	.equ SOUND_TABLE_BASE,			0xe14e	; the sound-table base every sound-data lookup goes through (SoundData_CategoryDescPtr is stored here; 14 loads)
 	.equ SEQ_SONG_RECORD,			0xf180	; [0x800 bytes] the current song's record: VoicePreset_LoadAndInitPan copies song SEQ_CURRENT_SONG's slot (SEQ_SONG_SLOTS + n * 0x800) in, SeqData_CopyBlockToBuffer copies it back
 	.equ SEQ_TRACK_ASSIGN,			0xf1a0	; [16 bytes] TRACK ASSIGN value of each of the 16 tracks (13 CHORD, 14 APC, 15 CONTROL, 16 RHYTHM ...), part of SEQ_SONG_RECORD
+	.equ SQEDT_TRKMRG_TRACK_A,		0xf1d3	; TT_SQTRKMRG: first source track (MrgTrA), a field of SEQ_SONG_RECORD
+	.equ SQEDT_TRKMRG_TRACK_B,		0xf1d4	; TT_SQTRKMRG: second source track (MrgTrB)
+	.equ SQEDT_TRKMRG_TRACK_C,		0xf1d5	; TT_SQTRKMRG: destination track (MrgTrC)
+	.equ SQEDT_MDEL_TRACK,			0xf1d6	; TT_SQMDEL (measure delete): track
+	.equ SQEDT_MDEL_FROM,			0xf1d7	; TT_SQMDEL: first measure (word)
+	.equ SQEDT_MERS_TRACK,			0xf1db	; TT_SQMERS (measure erase): track
+	.equ SQEDT_MERS_FROM,			0xf1dc	; TT_SQMERS: first measure (word)
+	.equ SQEDT_MERS_CHOICE,			0xf1e0	; TT_SQMERS: what to erase (EXECUTE copies it to 9808)
+	.equ SQEDT_MINS_TRACK_A,		0xf1e1	; TT_SQMINS (measure insert): track A
+	.equ SQEDT_MINS_FROM,			0xf1e2	; TT_SQMINS: first measure of A (word)
+	.equ SQEDT_MINS_TRACK_B,		0xf1e6	; TT_SQMINS: track B
+	.equ SQEDT_MINS_AT,			0xf1e7	; TT_SQMINS: measure of B to insert at (word)
+	.equ SQEDT_MCP_TRACK_A,			0xf1e9	; TT_SQMCP (measure copy): source track
+	.equ SQEDT_MCP_FROM,			0xf1ea	; TT_SQMCP: first source measure (word)
+	.equ SQEDT_MCP_TRACK_B,			0xf1ee	; TT_SQMCP: destination track
+	.equ SQEDT_MCP_AT,			0xf1ef	; TT_SQMCP: destination measure (word)
+	.equ SQEDT_QTZ_TRACK,			0xf1f1	; TT_SQQTZ (quantize): track (0x11 = all)
+	.equ SQEDT_QTZ_FROM,			0xf1f2	; TT_SQQTZ: first measure (word)
+	.equ SQEDT_QTZ_VALUE,			0xf1f6	; TT_SQQTZ: the quantize value (EXECUTE doubles it into 9726)
+	.equ SQEDT_VELOCNG_TRACK,		0xf228	; TT_SQVELOCNG (velocity change): track
+	.equ SQEDT_VELOCNG_FROM,		0xf229	; TT_SQVELOCNG: first measure (word)
+	.equ SQEDT_VELOCNG_AMOUNT,		0xf22e	; TT_SQVELOCNG: the velocity amount (EXECUTE copies it to 9812)
 	.equ SEQ_FREE_BLOCKS,			0xf231	; word: blocks still free; DispatchResolve_MarkCurrent takes one (sets bit 7 of its first byte, decrements); 0 makes ToneGen_AdvancePosition fail with SEQ_EVENT_ABORT = 255
 	.equ SEQ_PUNCH_IN_MEASURE,		0xf238	; word: the punch-in ("P" in) measure of the play screen (MT_GetPInMeasString)
 	.equ SEQ_PUNCH_OUT_MEASURE,		0xf23a	; word: the punch-out measure (SeqPlay_IncPunchOutMeasure keeps the punch-in below it)

@@ -11910,64 +11910,64 @@ Part_ClearAndStealSingleVoice:
 
 SeqParams_InitDefaults:
 	ld (SEQ_SONG_RECORD+82:16), 0
-	ldw (9704:16), 0
-	ld (SEQ_SONG_RECORD+83:16), 1
-	ld (SEQ_SONG_RECORD+84:16), 2
-	ld (SEQ_SONG_RECORD+85:16), 3
-	ld (SEQ_SONG_RECORD+86:16), 1
-	ldw (SEQ_SONG_RECORD+87:16), 1
+	ldw (SQEDT_TRKCLR_MASK:16), 0
+	ld (SQEDT_TRKMRG_TRACK_A:16), 1
+	ld (SQEDT_TRKMRG_TRACK_B:16), 2
+	ld (SQEDT_TRKMRG_TRACK_C:16), 3
+	ld (SQEDT_MDEL_TRACK:16), 1
+	ldw (SQEDT_MDEL_FROM:16), 1
 	ldw (SEQ_SONG_RECORD+89:16), 1
-	ldw (9772:16), 1
-	ld (SEQ_SONG_RECORD+91:16), 1
-	ldw (SEQ_SONG_RECORD+92:16), 1
+	ldw (SQEDT_MDEL_LAST:16), 1
+	ld (SQEDT_MERS_TRACK:16), 1
+	ldw (SQEDT_MERS_FROM:16), 1
 	ldw (SEQ_SONG_RECORD+94:16), 1
-	ldw (9766:16), 1
-	ld (SEQ_SONG_RECORD+96:16), 0
-	ld (SEQ_SONG_RECORD+97:16), 1
-	ldw (SEQ_SONG_RECORD+98:16), 1
+	ldw (SQEDT_MERS_LAST:16), 1
+	ld (SQEDT_MERS_CHOICE:16), 0
+	ld (SQEDT_MINS_TRACK_A:16), 1
+	ldw (SQEDT_MINS_FROM:16), 1
 	ldw (SEQ_SONG_RECORD+100:16), 1
-	ld (SEQ_SONG_RECORD+102:16), 1
-	ldw (SEQ_SONG_RECORD+103:16), 1
-	ldw (9774:16), 1
-	ld (9776:16), 0
-	ld (SEQ_SONG_RECORD+105:16), 1
-	ldw (SEQ_SONG_RECORD+106:16), 1
+	ld (SQEDT_MINS_TRACK_B:16), 1
+	ldw (SQEDT_MINS_AT:16), 1
+	ldw (SQEDT_MINS_LAST:16), 1
+	ld (SQEDT_MINS_REPEAT:16), 0
+	ld (SQEDT_MCP_TRACK_A:16), 1
+	ldw (SQEDT_MCP_FROM:16), 1
 	ldw (SEQ_SONG_RECORD+108:16), 1
-	ld (SEQ_SONG_RECORD+110:16), 1
-	ldw (SEQ_SONG_RECORD+111:16), 1
-	ld (9770:16), 0
-	ldw (9768:16), 1
-	ld (SEQ_SONG_RECORD+168:16), 1
-	ldw (SEQ_SONG_RECORD+169:16), 1
+	ld (SQEDT_MCP_TRACK_B:16), 1
+	ldw (SQEDT_MCP_AT:16), 1
+	ld (SQEDT_MCP_REPEAT:16), 0
+	ldw (SQEDT_MCP_LAST:16), 1
+	ld (SQEDT_VELOCNG_TRACK:16), 1
+	ldw (SQEDT_VELOCNG_FROM:16), 1
 	ldw (SEQ_SONG_RECORD+171:16), 1
-	ldw (9722:16), 1
+	ldw (SQEDT_VELOCNG_LAST:16), 1
 	ld (SEQ_SONG_RECORD+173:16), 0
-	ld (SEQ_SONG_RECORD+174:16), 0
+	ld (SQEDT_VELOCNG_AMOUNT:16), 0
 	ld (SEQ_SONG_RECORD+179:16), 0
 	ld (SEQ_SONG_RECORD+180:16), 0
-	ld (SEQ_SONG_RECORD+113:16), 1
-	ldw (SEQ_SONG_RECORD+114:16), 1
+	ld (SQEDT_QTZ_TRACK:16), 1
+	ldw (SQEDT_QTZ_FROM:16), 1
 	ldw (SEQ_SONG_RECORD+116:16), 1
-	ldw (9724:16), 1
-	ld (SEQ_SONG_RECORD+118:16), 3
+	ldw (SQEDT_QTZ_LAST:16), 1
+	ld (SQEDT_QTZ_VALUE:16), 3
 	ld (9702:16), 0
 	ld (9728:16), 100
 	ld (9730:16), 100
-	ld (9742:16), 1
-	ldw (9744:16), 1
-	ldw (9746:16), 1
+	ld (SQEDT_NOTECNG_TRACK:16), 1
+	ldw (SQEDT_NOTECNG_FROM:16), 1
+	ldw (SQEDT_NOTECNG_LAST:16), 1
 	ldw (9748:16), 1
 	ld (9750:16), 60
 	ld (9816:16), 60
 	ldw (9754:16), 1
-	ld (9756:16), 1
-	ldw (9758:16), 1
-	ldw (9760:16), 1
+	ld (SQEDT_TRNS_TRACK:16), 1
+	ldw (SQEDT_TRNS_FROM:16), 1
+	ldw (SQEDT_TRNS_LAST:16), 1
 	ld (9762:16), 0
 	ld (9764:16), 1
-	ld (9732:16), 1
-	ldw (9734:16), 1
-	ldw (9736:16), 1
+	ld (SQEDT_ADVDLY_TRACK:16), 1
+	ldw (SQEDT_ADVDLY_FROM:16), 1
+	ldw (SQEDT_ADVDLY_LAST:16), 1
 	ldw (9738:16), 1
 	ld (9740:16), 0
 	ret
@@ -12874,25 +12874,25 @@ SeqTrack_LookupChannelData_Skip3:
 
 SeqPart_LoadAndValidateData:
 	pushw_erp 0xfa
-	ld a, (9770:16)
+	ld a, (SQEDT_MCP_REPEAT:16)
 	cp a, 0:i3
 	jr z, Part_PopRetFA2
 	bit 3, (0x287b:16)
 	jr nz, Part_PopRetFA2
-	ld a, (SEQ_SONG_RECORD+110:16)
+	ld a, (SQEDT_MCP_TRACK_B:16)
 	cp a, 0x11
 	jr nz, SeqPart_StoreChannelParams
 	ld a, 0x7f:opc
 
 SeqPart_StoreChannelParams:
 	ld (SEQ_TRACK:16), a
-	ld wa, (SEQ_SONG_RECORD+111:16)
+	ld wa, (SQEDT_MCP_AT:16)
 	ld (9778:16), wa
-	ld wa, (SEQ_SONG_RECORD+111:16)
+	ld wa, (SQEDT_MCP_AT:16)
 	add wa, (9694:16)
 	ld (9862:16), wa
 	ldib_erp 0xfb, 0
-	ld a, (9770:16)
+	ld a, (SQEDT_MCP_REPEAT:16)
 	cp a, 0:i3
 	jr ule, Part_PopRetFA2
 
@@ -12909,7 +12909,7 @@ SeqPart_LoadDualPartLoop:
 	ld (9862:16), wa
 	inc1b_erp 0xfb
 	ldto_berp A, 0xfb
-	cp a, (9770:16)
+	cp a, (SQEDT_MCP_REPEAT:16)
 	jr c, SeqPart_LoadDualPartLoop
 
 Part_PopRetFA2:
@@ -12918,24 +12918,24 @@ Part_PopRetFA2:
 
 SeqPart_LoadDualPartData:
 	push	qiz
-	ld	a, (9776:16)
+	ld	a, (SQEDT_MINS_REPEAT:16)
 	cp	a, 0:i3
 	jr	z, SeqPart_LoadDualPartData_Code_Epilogue
 	bit	3, (10363:16)
 	jr	nz, SeqPart_LoadDualPartData_Code_Epilogue
-	ld	a, (SEQ_SONG_RECORD+102:16)
+	ld	a, (SQEDT_MINS_TRACK_B:16)
 	cp	a, 17
 	jr	nz, SeqPart_LoadDualPartData_Skip
 	ld	a, 127:opc
 SeqPart_LoadDualPartData_Skip:
 	ld	(SEQ_TRACK:16), a
-	ld	wa, (SEQ_SONG_RECORD+103:16)
+	ld	wa, (SQEDT_MINS_AT:16)
 	ld	(9778:16), wa
-	ld	wa, (SEQ_SONG_RECORD+103:16)
+	ld	wa, (SQEDT_MINS_AT:16)
 	add wa, (9694:16)
 	ld	(9862:16), wa
 	ldib_erp 251, 0
-	ld	a, (9776:16)
+	ld	a, (SQEDT_MINS_REPEAT:16)
 	cp	a, 0:i3
 	jr	ule, SeqPart_LoadDualPartData_Code_Epilogue
 SeqPart_LoadDualPartData_Code_Loop:
@@ -12951,7 +12951,7 @@ SeqPart_LoadDualPartData_Code_Loop:
 	ld	(9862:16), wa
 	inc1b_erp 251
 	ldto_berp a, 251
-	cp a, (9776:16)
+	cp a, (SQEDT_MINS_REPEAT:16)
 	jr	c, SeqPart_LoadDualPartData_Code_Loop
 SeqPart_LoadDualPartData_Code_Epilogue:
 	pop qiz
@@ -13576,12 +13576,12 @@ SeqPart_RestoreReturn:
 	ret
 
 SeqPart_DefaultRangeData:
-	ldw	(9722:16), 1
-	ldw	(9724:16), 1
-	ldw	(9766:16), 1
-	ldw	(9768:16), 1
-	ldw	(9772:16), 1
-	ldw	(9774:16), 1
+	ldw	(SQEDT_VELOCNG_LAST:16), 1
+	ldw	(SQEDT_QTZ_LAST:16), 1
+	ldw	(SQEDT_MERS_LAST:16), 1
+	ldw	(SQEDT_MCP_LAST:16), 1
+	ldw	(SQEDT_MDEL_LAST:16), 1
+	ldw	(SQEDT_MINS_LAST:16), 1
 	ret
 
 Part_WriteWordAndByte:
@@ -20198,10 +20198,10 @@ SeqEvent_MainHandler_OnTitleSqtrns:
 	ld xde, 4:i3
 	jrl AppEvent_PostEvent_Stub
 SeqEvent_MainHandler_OnTitleSqmdel:
-	ld wa, (SEQ_SONG_RECORD+87:16)
+	ld wa, (SQEDT_MDEL_FROM:16)
 	add wa, (SEQ_SONG_RECORD+89:16)
 	dec 1, wa
-	ld (9772:16), wa
+	ld (SQEDT_MDEL_LAST:16), wa
 	ld xwa, (SEQ_SCREEN_OBJECT:16)
 	ld xbc, EVT_PARA_DRAW
 	ld xde, 0:i3
@@ -20215,10 +20215,10 @@ SeqEvent_MainHandler_OnTitleSqmdel:
 	ld xde, 2:i3
 	jrl AppEvent_PostEvent_Stub
 SeqEvent_MainHandler_OnTitleSqmers:
-	ld wa, (SEQ_SONG_RECORD+92:16)
+	ld wa, (SQEDT_MERS_FROM:16)
 	add wa, (SEQ_SONG_RECORD+94:16)
 	dec 1, wa
-	ld (9766:16), wa
+	ld (SQEDT_MERS_LAST:16), wa
 	ld xwa, (SEQ_SCREEN_OBJECT:16)
 	ld xbc, EVT_PARA_DRAW
 	ld xde, 0:i3
@@ -20274,10 +20274,10 @@ SeqEvent_MainHandler_OnTitleSqtrkmrg:
 	ld xde, 0xe
 	jrl AppEvent_PostEvent_Stub
 SeqEvent_MainHandler_OnTitleSqmcp:
-	ld wa, (SEQ_SONG_RECORD+106:16)
+	ld wa, (SQEDT_MCP_FROM:16)
 	add wa, (SEQ_SONG_RECORD+108:16)
 	dec 1, wa
-	ld (9768:16), wa
+	ld (SQEDT_MCP_LAST:16), wa
 	ld xwa, (SEQ_SCREEN_OBJECT:16)
 	ld xbc, EVT_PARA_DRAW
 	ld xde, 0xf
@@ -20303,10 +20303,10 @@ SeqEvent_MainHandler_OnTitleSqmcp:
 	ld xde, 0x14
 	jrl AppEvent_PostEvent_Stub
 SeqEvent_MainHandler_OnTitleSqmins:
-	ld wa, (SEQ_SONG_RECORD+98:16)
+	ld wa, (SQEDT_MINS_FROM:16)
 	add wa, (SEQ_SONG_RECORD+100:16)
 	dec 1, wa
-	ld (9774:16), wa
+	ld (SQEDT_MINS_LAST:16), wa
 	ld xwa, (SEQ_SCREEN_OBJECT:16)
 	ld xbc, EVT_PARA_DRAW
 	ld xde, 0x15
@@ -20435,35 +20435,35 @@ AppEvent_ChainDispatch1_IncFromMeasure:
 ;   edit parameter 1: the from-measure word 9744 (last measure 9746) goes up by one (max 999), pushing the last
 ;   measure along. Basis: callers + body.
 AppEvent_ChainDispatch1_IncFromMeasure_OnTitleSqnotecng:
-	lda xiz, (9744:16)
-	lda xwa, (9746:16)
+	lda xiz, (SQEDT_NOTECNG_FROM:16)
+	lda xwa, (SQEDT_NOTECNG_LAST:16)
 	jr AppEvtHandler_Branch_004
 AppEvtHandler_Branch_002_OnTitleSqvelocng:
-	lda xiz, (SEQ_SONG_RECORD+169:16)
-	lda xwa, (9722:16)
+	lda xiz, (SQEDT_VELOCNG_FROM:16)
+	lda xwa, (SQEDT_VELOCNG_LAST:16)
 	jr AppEvtHandler_Branch_004
 AppEvtHandler_Branch_002_OnTitleSqtrns:
-	lda xiz, (9758:16)
-	lda xwa, (9760:16)
+	lda xiz, (SQEDT_TRNS_FROM:16)
+	lda xwa, (SQEDT_TRNS_LAST:16)
 	jr AppEvtHandler_Branch_004
 AppEvtHandler_Branch_002_OnTitleSqmdel:
-	lda xiz, (SEQ_SONG_RECORD+87:16)
-	lda xwa, (9772:16)
+	lda xiz, (SQEDT_MDEL_FROM:16)
+	lda xwa, (SQEDT_MDEL_LAST:16)
 	jr AppEvtHandler_Branch_004
 AppEvtHandler_Branch_002_OnTitleSqmers:
-	lda xiz, (SEQ_SONG_RECORD+92:16)
-	lda xwa, (9766:16)
+	lda xiz, (SQEDT_MERS_FROM:16)
+	lda xwa, (SQEDT_MERS_LAST:16)
 	jr AppEvtHandler_Branch_004
 AppEvtHandler_Branch_002_OnTitleSqqtz:
-	lda xiz, (SEQ_SONG_RECORD+114:16)
-	lda xwa, (9724:16)
+	lda xiz, (SQEDT_QTZ_FROM:16)
+	lda xwa, (SQEDT_QTZ_LAST:16)
 	jr AppEvtHandler_Branch_004
 ; AppEvent_ChainDispatch1_IncFromMeasure_OnTitleSqadvdly: TT_SQADVDLY (title 0xA0) case, also the default (titles
 ;   outside 0x9C..0xA3 and 0xA2), of EVT_INC_VAL on parameter 1: selects from-measure 9734 / last measure 9736 for the
 ;   shared increment. Basis: callers + body.
 AppEvent_ChainDispatch1_IncFromMeasure_OnTitleSqadvdly:
-	lda xiz, (9734:16)
-	lda xwa, (9736:16)
+	lda xiz, (SQEDT_ADVDLY_FROM:16)
+	lda xwa, (SQEDT_ADVDLY_LAST:16)
 AppEvtHandler_Branch_004:
 	ld (xsp + 4), xwa
 	cpw (xiz), 0x3e7
@@ -20508,35 +20508,35 @@ AppEvent_ChainDispatch1_IncLastMeasure:
 ;   edit parameter 2: the last-measure word 9746 goes up by one (max 999); the from measure 9744 is pulled down if it
 ;   is now larger. Basis: callers + body.
 AppEvent_ChainDispatch1_IncLastMeasure_OnTitleSqnotecng:
-	lda xiz, (9744:16)
-	lda xwa, (9746:16)
+	lda xiz, (SQEDT_NOTECNG_FROM:16)
+	lda xwa, (SQEDT_NOTECNG_LAST:16)
 	jr AppEvtHandler_Branch_008
 AppEvtHandler_Branch_006_OnTitleSqvelocng:
-	lda xiz, (SEQ_SONG_RECORD+169:16)
-	lda xwa, (9722:16)
+	lda xiz, (SQEDT_VELOCNG_FROM:16)
+	lda xwa, (SQEDT_VELOCNG_LAST:16)
 	jr AppEvtHandler_Branch_008
 AppEvtHandler_Branch_006_OnTitleSqtrns:
-	lda xiz, (9758:16)
-	lda xwa, (9760:16)
+	lda xiz, (SQEDT_TRNS_FROM:16)
+	lda xwa, (SQEDT_TRNS_LAST:16)
 	jr AppEvtHandler_Branch_008
 AppEvtHandler_Branch_006_OnTitleSqmdel:
-	lda xiz, (SEQ_SONG_RECORD+87:16)
-	lda xwa, (9772:16)
+	lda xiz, (SQEDT_MDEL_FROM:16)
+	lda xwa, (SQEDT_MDEL_LAST:16)
 	jr AppEvtHandler_Branch_008
 AppEvtHandler_Branch_006_OnTitleSqmers:
-	lda xiz, (SEQ_SONG_RECORD+92:16)
-	lda xwa, (9766:16)
+	lda xiz, (SQEDT_MERS_FROM:16)
+	lda xwa, (SQEDT_MERS_LAST:16)
 	jr AppEvtHandler_Branch_008
 AppEvtHandler_Branch_006_OnTitleSqqtz:
-	lda xiz, (SEQ_SONG_RECORD+114:16)
-	lda xwa, (9724:16)
+	lda xiz, (SQEDT_QTZ_FROM:16)
+	lda xwa, (SQEDT_QTZ_LAST:16)
 	jr AppEvtHandler_Branch_008
 ; AppEvent_ChainDispatch1_IncLastMeasure_OnTitleSqadvdly: TT_SQADVDLY (title 0xA0) case, also the default (titles
 ;   outside 0x9C..0xA3 and 0xA2), of EVT_INC_VAL on parameter 2: selects from-measure 9734 / last measure 9736 for the
 ;   shared increment. Basis: callers + body.
 AppEvent_ChainDispatch1_IncLastMeasure_OnTitleSqadvdly:
-	lda xiz, (9734:16)
-	lda xwa, (9736:16)
+	lda xiz, (SQEDT_ADVDLY_FROM:16)
+	lda xwa, (SQEDT_ADVDLY_LAST:16)
 AppEvtHandler_Branch_008:
 	ld (xsp + 4), xwa
 	cpw (xwa), 0x3e7
@@ -20563,8 +20563,8 @@ AppEvent_ChainDispatch1_IncLastMeasure_OnTitleSqadvdly_Join2:
 	cp a, 0xa3
 	jr nz, AppEvent_ChainDispatch1_IncLastMeasure_OnTitleSqadvdly_Skip
 AppEvtHandler_Branch_011:
-	ld wa, (9772:16)
-	sub wa, (SEQ_SONG_RECORD+87:16)
+	ld wa, (SQEDT_MDEL_LAST:16)
+	sub wa, (SQEDT_MDEL_FROM:16)
 	inc 1, wa
 	ld (SEQ_SONG_RECORD+89:16), wa
 	jrl AppEvent_Epilogue
@@ -20572,8 +20572,8 @@ AppEvent_ChainDispatch1_IncLastMeasure_OnTitleSqadvdly_Skip:
 	cp a, 0xa1
 	jrl nz, AppEvent_Epilogue
 AppEvtHandler_Branch_013:
-	ld wa, (9766:16)
-	sub wa, (SEQ_SONG_RECORD+92:16)
+	ld wa, (SQEDT_MERS_LAST:16)
+	sub wa, (SQEDT_MERS_FROM:16)
 	inc 1, wa
 	ld (SEQ_SONG_RECORD+94:16), wa
 	jrl AppEvent_Epilogue
@@ -20598,31 +20598,31 @@ AppEvent_ChainDispatch1_IncTranspose:
 	ld xde, 4:i3
 	jrl AppEvtHandler_Branch_033
 AppEvent_ChainDispatch1_IncVelocity:
-	ld a, (SEQ_SONG_RECORD+174:16)
+	ld a, (SQEDT_VELOCNG_AMOUNT:16)
 	cp a, 0x7f
 	jrl ge, AppEvent_Epilogue
 	inc 1, a
-	ld (SEQ_SONG_RECORD+174:16), a
+	ld (SQEDT_VELOCNG_AMOUNT:16), a
 	ld xwa, (SEQ_SCREEN_OBJECT:16)
 	ld xbc, EVT_PARA_DRAW
 	ld xde, 5:i3
 	jrl AppEvtHandler_Branch_033
 AppEvent_ChainDispatch1_IncMersEventType:
-	ld a, (SEQ_SONG_RECORD+96:16)
+	ld a, (SQEDT_MERS_CHOICE:16)
 	cp a, 2:i3
 	jrl nc, AppEvent_Epilogue
 	inc 1, a
-	ld (SEQ_SONG_RECORD+96:16), a
+	ld (SQEDT_MERS_CHOICE:16), a
 	ld xwa, (SEQ_SCREEN_OBJECT:16)
 	ld xbc, EVT_PARA_DRAW
 	ld xde, 6:i3
 	jrl AppEvtHandler_Branch_033
 AppEvent_ChainDispatch1_IncQtzValue:
-	ld a, (SEQ_SONG_RECORD+118:16)
+	ld a, (SQEDT_QTZ_VALUE:16)
 	cp a, 6:i3
 	jrl nc, AppEvent_Epilogue
 	inc 1, a
-	ld (SEQ_SONG_RECORD+118:16), a
+	ld (SQEDT_QTZ_VALUE:16), a
 	ld xwa, (SEQ_SCREEN_OBJECT:16)
 	ld xbc, EVT_PARA_DRAW
 	ld xde, 7:i3
@@ -20668,61 +20668,61 @@ AppEvent_ChainDispatch1_IncCnNote:
 	ld xde, 0xb
 	jrl AppEvtHandler_Branch_033
 AppEvent_ChainDispatch1_IncMrgTrackA:
-	ld a, (SEQ_SONG_RECORD+83:16)
+	ld a, (SQEDT_TRKMRG_TRACK_A:16)
 	cp a, 0x10
 	jr nc, AppEvent_ChainDispatch1_IncMrgTrackA_Skip
 	inc 1, a
-	ld (SEQ_SONG_RECORD+83:16), a
+	ld (SQEDT_TRKMRG_TRACK_A:16), a
 	jr AppEvent_ChainDispatch1_IncMrgTrackA_Join
 AppEvent_ChainDispatch1_IncMrgTrackA_Skip:
-	ld (SEQ_SONG_RECORD+83:16), 1
-	ld a, (SEQ_SONG_RECORD+83:16)
+	ld (SQEDT_TRKMRG_TRACK_A:16), 1
+	ld a, (SQEDT_TRKMRG_TRACK_A:16)
 AppEvent_ChainDispatch1_IncMrgTrackA_Join:
-	cp a, (SEQ_SONG_RECORD+84:16)
+	cp a, (SQEDT_TRKMRG_TRACK_B:16)
 	jr nz, AppEvent_ChainDispatch1_IncMrgTrackA_Join2
 	cp a, 0x10
 	jr nc, AppEvent_ChainDispatch1_IncMrgTrackA_Skip2
 	inc 1, a
-	ld (SEQ_SONG_RECORD+83:16), a
+	ld (SQEDT_TRKMRG_TRACK_A:16), a
 	jr AppEvent_ChainDispatch1_IncMrgTrackA_Join2
 AppEvent_ChainDispatch1_IncMrgTrackA_Skip2:
-	ld (SEQ_SONG_RECORD+83:16), 1
+	ld (SQEDT_TRKMRG_TRACK_A:16), 1
 AppEvent_ChainDispatch1_IncMrgTrackA_Join2:
 	ld xwa, (SEQ_SCREEN_OBJECT:16)
 	ld xbc, EVT_PARA_DRAW
 	ld xde, 0xc
 	jrl AppEvtHandler_Branch_033
 AppEvent_ChainDispatch1_IncMrgTrackB:
-	ld a, (SEQ_SONG_RECORD+84:16)
+	ld a, (SQEDT_TRKMRG_TRACK_B:16)
 	cp a, 0x10
 	jr nc, AppEvent_ChainDispatch1_IncMrgTrackB_Skip
 	inc 1, a
-	ld (SEQ_SONG_RECORD+84:16), a
+	ld (SQEDT_TRKMRG_TRACK_B:16), a
 	jr AppEvent_ChainDispatch1_IncMrgTrackB_Join
 AppEvent_ChainDispatch1_IncMrgTrackB_Skip:
-	ld (SEQ_SONG_RECORD+84:16), 1
-	ld a, (SEQ_SONG_RECORD+84:16)
+	ld (SQEDT_TRKMRG_TRACK_B:16), 1
+	ld a, (SQEDT_TRKMRG_TRACK_B:16)
 AppEvent_ChainDispatch1_IncMrgTrackB_Join:
-	cp a, (SEQ_SONG_RECORD+83:16)
+	cp a, (SQEDT_TRKMRG_TRACK_A:16)
 	jr nz, AppEvtHandler_Branch_021
 	cp a, 0x10
 	jr nc, AppEvent_ChainDispatch1_IncMrgTrackB_Skip2
 	inc 1, a
-	ld (SEQ_SONG_RECORD+84:16), a
+	ld (SQEDT_TRKMRG_TRACK_B:16), a
 	jr AppEvtHandler_Branch_021
 AppEvent_ChainDispatch1_IncMrgTrackB_Skip2:
-	ld (SEQ_SONG_RECORD+84:16), 1
+	ld (SQEDT_TRKMRG_TRACK_B:16), 1
 AppEvtHandler_Branch_021:
 	ld xwa, (SEQ_SCREEN_OBJECT:16)
 	ld xbc, EVT_PARA_DRAW
 	ld xde, 0xd
 	jrl AppEvtHandler_Branch_033
 AppEvent_ChainDispatch1_IncMrgTrackC:
-	ld a, (SEQ_SONG_RECORD+85:16)
+	ld a, (SQEDT_TRKMRG_TRACK_C:16)
 	cp a, 0x10
 	jrl nc, AppEvent_Epilogue
 	inc 1, a
-	ld (SEQ_SONG_RECORD+85:16), a
+	ld (SQEDT_TRKMRG_TRACK_C:16), a
 	ld xwa, (SEQ_SCREEN_OBJECT:16)
 	ld xbc, EVT_PARA_DRAW
 	ld xde, 0xe
@@ -20745,62 +20745,62 @@ AppEvent_ChainDispatch1_IncMcpParam:	; cases 15, 16, 17, 18, 19, 20
 ;   switch: up by one to at most 17 (all tracks); reaching 17 sets track B 0xF1EE to 17 too; then the six MCP fields
 ;   are redrawn. Basis: callers + body.
 AppEvent_ChainDispatch1_IncMcpTrackA:
-	ld a, (SEQ_SONG_RECORD+105:16)
+	ld a, (SQEDT_MCP_TRACK_A:16)
 	cp a, 0x11
 	jrl nc, AppEvtHandler_Branch_024
 	inc 1, a
-	ld (SEQ_SONG_RECORD+105:16), a
+	ld (SQEDT_MCP_TRACK_A:16), a
 	cp a, 0x11
 	jrl nz, AppEvtHandler_Branch_024
-	ld (SEQ_SONG_RECORD+110:16), 17
+	ld (SQEDT_MCP_TRACK_B:16), 17
 	jr AppEvtHandler_Branch_024
 AppEvtHandler_Branch_021_IncMcpFromMeasure:
-	ld wa, (SEQ_SONG_RECORD+106:16)
+	ld wa, (SQEDT_MCP_FROM:16)
 	cp wa, 0x3e7
 	jr nc, AppEvtHandler_Branch_021_IncMcpFromMeasure_Join
 	inc 1, wa
-	ld (SEQ_SONG_RECORD+106:16), wa
+	ld (SQEDT_MCP_FROM:16), wa
 AppEvtHandler_Branch_021_IncMcpFromMeasure_Join:
-	ld wa, (SEQ_SONG_RECORD+106:16)
-	cp wa, (9768:16)
+	ld wa, (SQEDT_MCP_FROM:16)
+	cp wa, (SQEDT_MCP_LAST:16)
 	jr ule, AppEvtHandler_Branch_023
-	ld (9768:16), wa
+	ld (SQEDT_MCP_LAST:16), wa
 	jr AppEvtHandler_Branch_023
 AppEvtHandler_Branch_021_IncMcpLastMeasure:
-	ld wa, (9768:16)
+	ld wa, (SQEDT_MCP_LAST:16)
 	cp wa, 0x3e7
 	jr nc, AppEvtHandler_Branch_023
 	inc 1, wa
-	ld (9768:16), wa
+	ld (SQEDT_MCP_LAST:16), wa
 AppEvtHandler_Branch_023:
-	ld wa, (9768:16)
-	sub wa, (SEQ_SONG_RECORD+106:16)
+	ld wa, (SQEDT_MCP_LAST:16)
+	sub wa, (SQEDT_MCP_FROM:16)
 	inc 1, wa
 	ld (SEQ_SONG_RECORD+108:16), wa
 	jr AppEvtHandler_Branch_024
 AppEvtHandler_Branch_021_IncMcpTrackB:
-	ld a, (SEQ_SONG_RECORD+110:16)
+	ld a, (SQEDT_MCP_TRACK_B:16)
 	cp a, 0x11
 	jr nc, AppEvtHandler_Branch_024
 	inc 1, a
-	ld (SEQ_SONG_RECORD+110:16), a
+	ld (SQEDT_MCP_TRACK_B:16), a
 	cp a, 0x11
 	jr nz, AppEvtHandler_Branch_024
-	ld (SEQ_SONG_RECORD+105:16), 17
+	ld (SQEDT_MCP_TRACK_A:16), 17
 	jr AppEvtHandler_Branch_024
 AppEvtHandler_Branch_021_IncMcpStartMeasure:
-	ld wa, (SEQ_SONG_RECORD+111:16)
+	ld wa, (SQEDT_MCP_AT:16)
 	cp wa, 0x3e7
 	jr nc, AppEvtHandler_Branch_024
 	inc 1, wa
-	ld (SEQ_SONG_RECORD+111:16), wa
+	ld (SQEDT_MCP_AT:16), wa
 	jr AppEvtHandler_Branch_024
 AppEvtHandler_Branch_021_IncMcpRepeat:
-	ld a, (9770:16)
+	ld a, (SQEDT_MCP_REPEAT:16)
 	cp a, 0x7f
 	jr nc, AppEvtHandler_Branch_024
 	inc 1, a
-	ld (9770:16), a
+	ld (SQEDT_MCP_REPEAT:16), a
 AppEvtHandler_Branch_024:
 	ld xwa, (SEQ_SCREEN_OBJECT:16)
 	ld xbc, EVT_PARA_DRAW
@@ -20844,62 +20844,62 @@ AppEvent_ChainDispatch1_IncMinsParam:	; cases 21, 22, 23, 24, 25, 26
 ;   switch: up by one to at most 17 (all tracks); reaching 17 sets track B 0xF1E6 to 17 too; then the six MINS fields
 ;   are redrawn. Basis: callers + body.
 AppEvent_ChainDispatch1_IncMinsTrackA:
-	ld a, (SEQ_SONG_RECORD+97:16)
+	ld a, (SQEDT_MINS_TRACK_A:16)
 	cp a, 0x11
 	jrl nc, AppEvtHandler_Branch_027
 	inc 1, a
-	ld (SEQ_SONG_RECORD+97:16), a
+	ld (SQEDT_MINS_TRACK_A:16), a
 	cp a, 0x11
 	jrl nz, AppEvtHandler_Branch_027
-	ld (SEQ_SONG_RECORD+102:16), 17
+	ld (SQEDT_MINS_TRACK_B:16), 17
 	jr AppEvtHandler_Branch_027
 AppEvtHandler_Branch_024_IncMinsFromMeasure:
-	ld wa, (SEQ_SONG_RECORD+98:16)
+	ld wa, (SQEDT_MINS_FROM:16)
 	cp wa, 0x3e7
 	jr nc, AppEvtHandler_Branch_024_IncMinsFromMeasure_Join
 	inc 1, wa
-	ld (SEQ_SONG_RECORD+98:16), wa
+	ld (SQEDT_MINS_FROM:16), wa
 AppEvtHandler_Branch_024_IncMinsFromMeasure_Join:
-	ld wa, (SEQ_SONG_RECORD+98:16)
-	cp wa, (9774:16)
+	ld wa, (SQEDT_MINS_FROM:16)
+	cp wa, (SQEDT_MINS_LAST:16)
 	jr ule, AppEvtHandler_Branch_026
-	ld (9774:16), wa
+	ld (SQEDT_MINS_LAST:16), wa
 	jr AppEvtHandler_Branch_026
 AppEvtHandler_Branch_024_IncMinsLastMeasure:
-	ld wa, (9774:16)
+	ld wa, (SQEDT_MINS_LAST:16)
 	cp wa, 0x3e7
 	jr nc, AppEvtHandler_Branch_026
 	inc 1, wa
-	ld (9774:16), wa
+	ld (SQEDT_MINS_LAST:16), wa
 AppEvtHandler_Branch_026:
-	ld wa, (9774:16)
-	sub wa, (SEQ_SONG_RECORD+98:16)
+	ld wa, (SQEDT_MINS_LAST:16)
+	sub wa, (SQEDT_MINS_FROM:16)
 	inc 1, wa
 	ld (SEQ_SONG_RECORD+100:16), wa
 	jr AppEvtHandler_Branch_027
 AppEvtHandler_Branch_024_IncMinsTrackB:
-	ld a, (SEQ_SONG_RECORD+102:16)
+	ld a, (SQEDT_MINS_TRACK_B:16)
 	cp a, 0x11
 	jr nc, AppEvtHandler_Branch_027
 	inc 1, a
-	ld (SEQ_SONG_RECORD+102:16), a
+	ld (SQEDT_MINS_TRACK_B:16), a
 	cp a, 0x11
 	jr nz, AppEvtHandler_Branch_027
-	ld (SEQ_SONG_RECORD+97:16), 17
+	ld (SQEDT_MINS_TRACK_A:16), 17
 	jr AppEvtHandler_Branch_027
 AppEvtHandler_Branch_024_IncMinsStartMeasure:
-	ld wa, (SEQ_SONG_RECORD+103:16)
+	ld wa, (SQEDT_MINS_AT:16)
 	cp wa, 0x3e7
 	jr nc, AppEvtHandler_Branch_027
 	inc 1, wa
-	ld (SEQ_SONG_RECORD+103:16), wa
+	ld (SQEDT_MINS_AT:16), wa
 	jr AppEvtHandler_Branch_027
 AppEvtHandler_Branch_024_IncMinsRepeat:
-	ld a, (9776:16)
+	ld a, (SQEDT_MINS_REPEAT:16)
 	cp a, 0x7f
 	jr nc, AppEvtHandler_Branch_027
 	inc 1, a
-	ld (9776:16), a
+	ld (SQEDT_MINS_REPEAT:16), a
 AppEvtHandler_Branch_027:
 	ld xwa, (SEQ_SCREEN_OBJECT:16)
 	ld xbc, EVT_PARA_DRAW
@@ -21080,32 +21080,32 @@ AppEvent_InlineHandler_DecFromMeasure:
 ; AppEvent_InlineHandler_DecFromMeasure_OnTitleSqnotecng: TT_SQNOTECNG (title 0x9F) case of EVT_DEC_VAL on sequencer-
 ;   edit parameter 1: the from-measure word 9744 (last measure 9746) goes down by one (min 1). Basis: callers + body.
 AppEvent_InlineHandler_DecFromMeasure_OnTitleSqnotecng:
-	lda_d16	xiz, (9744)
-	lda	xwa, (9746:16)
+	lda_d16	xiz, (SQEDT_NOTECNG_FROM)
+	lda	xwa, (SQEDT_NOTECNG_LAST:16)
 	jr	AppEvent_InlineHandler_Join9
 AppEvent_InlineHandler_Switch2_OnTitleSqvelocng:
-	lda	xiz, (SEQ_SONG_RECORD+169:16)
-	lda_d16	xwa, (9722)
+	lda	xiz, (SQEDT_VELOCNG_FROM:16)
+	lda_d16	xwa, (SQEDT_VELOCNG_LAST)
 	jr	AppEvent_InlineHandler_Join9
 AppEvent_InlineHandler_Switch2_OnTitleSqtrns:
-	lda	xiz, (9758:16)
-	lda_d16	xwa, (9760)
+	lda	xiz, (SQEDT_TRNS_FROM:16)
+	lda_d16	xwa, (SQEDT_TRNS_LAST)
 	jr	AppEvent_InlineHandler_Join9
 AppEvent_InlineHandler_Switch2_OnTitleSqmdel:
-	lda_d16	xiz, (SEQ_SONG_RECORD+87)
-	lda_d16	xwa, (9772)
+	lda_d16	xiz, (SQEDT_MDEL_FROM)
+	lda_d16	xwa, (SQEDT_MDEL_LAST)
 	jr	AppEvent_InlineHandler_Join9
 AppEvent_InlineHandler_Switch2_OnTitleSqmers:
-	lda	xiz, (SEQ_SONG_RECORD+92:16)
-	lda	xwa, (9766:16)
+	lda	xiz, (SQEDT_MERS_FROM:16)
+	lda	xwa, (SQEDT_MERS_LAST:16)
 	jr	AppEvent_InlineHandler_Join9
 AppEvent_InlineHandler_Switch2_OnTitleSqqtz:
-	lda	xiz, (SEQ_SONG_RECORD+114:16)
-	lda	xwa, (9724:16)
+	lda	xiz, (SQEDT_QTZ_FROM:16)
+	lda	xwa, (SQEDT_QTZ_LAST:16)
 	jr	AppEvent_InlineHandler_Join9
 AppEvent_InlineHandler_Skip17:
-	lda	xiz, (9734:16)
-	lda	xwa, (9736:16)
+	lda	xiz, (SQEDT_ADVDLY_FROM:16)
+	lda	xwa, (SQEDT_ADVDLY_LAST:16)
 AppEvent_InlineHandler_Join9:
 	ld	(xsp+4), xwa
 	cpw	(xiz), 1
@@ -21150,32 +21150,32 @@ AppEvent_InlineHandler_DecLastMeasure:
 ;   edit parameter 2: the last-measure word 9746 goes down by one (min 1); the from measure 9744 follows if it is now
 ;   larger. Basis: callers + body.
 AppEvent_InlineHandler_DecLastMeasure_OnTitleSqnotecng:
-	lda_d16	xiz, (9744)
-	lda_d16	xwa, (9746)
+	lda_d16	xiz, (SQEDT_NOTECNG_FROM)
+	lda_d16	xwa, (SQEDT_NOTECNG_LAST)
 	jr	AppEvent_InlineHandler_Join
 AppEvent_InlineHandler_Switch3_OnTitleSqvelocng:
-	lda_d16	xiz, (SEQ_SONG_RECORD+169)
-	lda_d16	xwa, (9722)
+	lda_d16	xiz, (SQEDT_VELOCNG_FROM)
+	lda_d16	xwa, (SQEDT_VELOCNG_LAST)
 	jr	AppEvent_InlineHandler_Join
 AppEvent_InlineHandler_Switch3_OnTitleSqtrns:
-	lda_d16	xiz, (9758)
-	lda	xwa, (9760:16)
+	lda_d16	xiz, (SQEDT_TRNS_FROM)
+	lda	xwa, (SQEDT_TRNS_LAST:16)
 	jr	AppEvent_InlineHandler_Join
 AppEvent_InlineHandler_Switch3_OnTitleSqmdel:
-	lda	xiz, (SEQ_SONG_RECORD+87:16)
-	lda_d16	xwa, (9772)
+	lda	xiz, (SQEDT_MDEL_FROM:16)
+	lda_d16	xwa, (SQEDT_MDEL_LAST)
 	jr	AppEvent_InlineHandler_Join
 AppEvent_InlineHandler_Switch3_OnTitleSqmers:
-	lda	xiz, (SEQ_SONG_RECORD+92:16)
-	lda_d16	xwa, (9766)
+	lda	xiz, (SQEDT_MERS_FROM:16)
+	lda_d16	xwa, (SQEDT_MERS_LAST)
 	jr	AppEvent_InlineHandler_Join
 AppEvent_InlineHandler_Switch3_OnTitleSqqtz:
-	lda	xiz, (SEQ_SONG_RECORD+114:16)
-	lda	xwa, (9724:16)
+	lda	xiz, (SQEDT_QTZ_FROM:16)
+	lda	xwa, (SQEDT_QTZ_LAST:16)
 	jr	AppEvent_InlineHandler_Join
 AppEvent_InlineHandler_Skip19:
-	lda	xiz, (9734:16)
-	lda	xwa, (9736:16)
+	lda	xiz, (SQEDT_ADVDLY_FROM:16)
+	lda	xwa, (SQEDT_ADVDLY_LAST:16)
 AppEvent_InlineHandler_Join:
 	ld	(xsp+4), xwa
 	cpw	(xwa), 1
@@ -21202,8 +21202,8 @@ AppEvent_InlineHandler_Skip3:
 	cp	a, 163
 	jr	nz, AppEvent_InlineHandler_Skip5
 AppEvent_InlineHandler_Skip4:
-	ld	wa, (9772:16)
-	sub wa, (SEQ_SONG_RECORD+87:16)
+	ld	wa, (SQEDT_MDEL_LAST:16)
+	sub wa, (SQEDT_MDEL_FROM:16)
 	inc 1, wa
 	ld	(SEQ_SONG_RECORD+89:16), wa
 	jrl	SeqState_DispatchEntry
@@ -21211,8 +21211,8 @@ AppEvent_InlineHandler_Skip5:
 	cp	a, 161
 	jrl	nz, SeqState_DispatchEntry
 AppEvent_InlineHandler_Skip20:
-	ld	wa, (9766:16)
-	sub wa, (SEQ_SONG_RECORD+92:16)
+	ld	wa, (SQEDT_MERS_LAST:16)
+	sub wa, (SQEDT_MERS_FROM:16)
 	inc 1, wa
 	ld (SEQ_SONG_RECORD+94:16), wa
 	jrl	SeqState_DispatchEntry
@@ -21237,31 +21237,31 @@ AppEvent_InlineHandler_DecTranspose:
 	ld	xde, 4:i3
 	jrl	AppEvent_InlineHandler_Join8
 AppEvent_InlineHandler_DecVelocity:
-	ld	a, (SEQ_SONG_RECORD+174:16)
+	ld	a, (SQEDT_VELOCNG_AMOUNT:16)
 	cp	a, 129
 	jrl	le, SeqState_DispatchEntry
 	dec	1, a
-	ld	(SEQ_SONG_RECORD+174:16), a
+	ld	(SQEDT_VELOCNG_AMOUNT:16), a
 	ld	xwa, (SEQ_SCREEN_OBJECT:16)
 	ld	xbc, EVT_PARA_DRAW
 	ld	xde, 5:i3
 	jrl	AppEvent_InlineHandler_Join8
 AppEvent_InlineHandler_DecMersEventType:
-	ld	a, (SEQ_SONG_RECORD+96:16)
+	ld	a, (SQEDT_MERS_CHOICE:16)
 	cp	a, 0:i3
 	jrl	z, SeqState_DispatchEntry
 	dec	1, a
-	ld	(SEQ_SONG_RECORD+96:16), a
+	ld	(SQEDT_MERS_CHOICE:16), a
 	ld	xwa, (SEQ_SCREEN_OBJECT:16)
 	ld	xbc, EVT_PARA_DRAW
 	ld	xde, 6:i3
 	jrl	AppEvent_InlineHandler_Join8
 AppEvent_InlineHandler_DecQtzValue:
-	ld	a, (SEQ_SONG_RECORD+118:16)
+	ld	a, (SQEDT_QTZ_VALUE:16)
 	cp	a, 0:i3
 	jrl	z, SeqState_DispatchEntry
 	dec	1, a
-	ld	(SEQ_SONG_RECORD+118:16), a
+	ld	(SQEDT_QTZ_VALUE:16), a
 	ld	xwa, (SEQ_SCREEN_OBJECT:16)
 	ld	xbc, EVT_PARA_DRAW
 	ld	xde, 7:i3
@@ -21307,61 +21307,61 @@ AppEvent_InlineHandler_DecCnNote:
 	ld	xde, 11
 	jrl	AppEvent_InlineHandler_Join8
 AppEvent_InlineHandler_DecMrgTrackA:
-	ld a, (SEQ_SONG_RECORD+83:16)
+	ld a, (SQEDT_TRKMRG_TRACK_A:16)
 	cp a, 1:i3
 	jr	ule, AppEvent_InlineHandler_Skip6
 	dec	1, a
-	ld	(SEQ_SONG_RECORD+83:16), a
+	ld	(SQEDT_TRKMRG_TRACK_A:16), a
 	jr	AppEvent_InlineHandler_Join2
 AppEvent_InlineHandler_Skip6:
-	ld (SEQ_SONG_RECORD+83:16), 16
-	ld a, (SEQ_SONG_RECORD+83:16)
+	ld (SQEDT_TRKMRG_TRACK_A:16), 16
+	ld a, (SQEDT_TRKMRG_TRACK_A:16)
 AppEvent_InlineHandler_Join2:
-	cp a, (SEQ_SONG_RECORD+84:16)
+	cp a, (SQEDT_TRKMRG_TRACK_B:16)
 	jr	nz, AppEvent_InlineHandler_DecMrgTrackA_Join
 	cp	a, 1:i3
 	jr	ule, AppEvent_InlineHandler_Skip7
 	dec	1, a
-	ld	(SEQ_SONG_RECORD+83:16), a
+	ld	(SQEDT_TRKMRG_TRACK_A:16), a
 	jr	AppEvent_InlineHandler_DecMrgTrackA_Join
 AppEvent_InlineHandler_Skip7:
-	ld	(SEQ_SONG_RECORD+83:16), 16
+	ld	(SQEDT_TRKMRG_TRACK_A:16), 16
 AppEvent_InlineHandler_DecMrgTrackA_Join:
 	ld	xwa, (SEQ_SCREEN_OBJECT:16)
 	ld	xbc, EVT_PARA_DRAW
 	ld	xde, 12
 	jrl	AppEvent_InlineHandler_Join8
 AppEvent_InlineHandler_DecMrgTrackB:
-	ld	a, (SEQ_SONG_RECORD+84:16)
+	ld	a, (SQEDT_TRKMRG_TRACK_B:16)
 	cp	a, 1:i3
 	jr	ule, AppEvent_InlineHandler_Skip8
 	dec	1, a
-	ld	(SEQ_SONG_RECORD+84:16), a
+	ld	(SQEDT_TRKMRG_TRACK_B:16), a
 	jr	AppEvent_InlineHandler_Join3
 AppEvent_InlineHandler_Skip8:
-	ld	(SEQ_SONG_RECORD+84:16), 16
-	ld	a, (SEQ_SONG_RECORD+84:16)
+	ld	(SQEDT_TRKMRG_TRACK_B:16), 16
+	ld	a, (SQEDT_TRKMRG_TRACK_B:16)
 AppEvent_InlineHandler_Join3:
-	cp a, (SEQ_SONG_RECORD+83:16)
+	cp a, (SQEDT_TRKMRG_TRACK_A:16)
 	jr	nz, AppEvent_InlineHandler_DecMrgTrackB_Join
 	cp	a, 1:i3
 	jr	ule, AppEvent_InlineHandler_Skip9
 	dec	1, a
-	ld	(SEQ_SONG_RECORD+84:16), a
+	ld	(SQEDT_TRKMRG_TRACK_B:16), a
 	jr	AppEvent_InlineHandler_DecMrgTrackB_Join
 AppEvent_InlineHandler_Skip9:
-	ld	(SEQ_SONG_RECORD+84:16), 16
+	ld	(SQEDT_TRKMRG_TRACK_B:16), 16
 AppEvent_InlineHandler_DecMrgTrackB_Join:
 	ld	xwa, (SEQ_SCREEN_OBJECT:16)
 	ld	xbc, EVT_PARA_DRAW
 	ld	xde, 13
 	jrl	AppEvent_InlineHandler_Join8
 AppEvent_InlineHandler_DecMrgTrackC:
-	ld	a, (SEQ_SONG_RECORD+85:16)
+	ld	a, (SQEDT_TRKMRG_TRACK_C:16)
 	cp	a, 1:i3
 	jrl	ule, SeqState_DispatchEntry
 	dec	1, a
-	ld	(SEQ_SONG_RECORD+85:16), a
+	ld	(SQEDT_TRKMRG_TRACK_C:16), a
 	ld	xwa, (SEQ_SCREEN_OBJECT:16)
 	ld	xbc, EVT_PARA_DRAW
 	ld	xde, 14
@@ -21384,62 +21384,62 @@ AppEvent_InlineHandler_DecMcpParam:	; cases 15, 16, 17, 18, 19, 20
 ;   switch: down by one to at least 1; stepping down from 17 (all) to 16 sets track B 0xF1EE to 16 too; then the six
 ;   MCP fields are redrawn. Basis: callers + body.
 AppEvent_InlineHandler_DecMcpTrackA:
-	ld a, (SEQ_SONG_RECORD+105:16)
+	ld a, (SQEDT_MCP_TRACK_A:16)
 	cp a, 1:i3
 	jrl ule, AppEvent_InlineHandler_Join5
 	dec	1, a
-	ld	(SEQ_SONG_RECORD+105:16), a
+	ld	(SQEDT_MCP_TRACK_A:16), a
 	cp	a, 16
 	jr	nz, AppEvent_InlineHandler_Join5
-	ld	(SEQ_SONG_RECORD+110:16), 16
+	ld	(SQEDT_MCP_TRACK_B:16), 16
 	jr	AppEvent_InlineHandler_Join5
 AppEvent_InlineHandler_DecMcpFromMeasure:
-	ld	wa, (SEQ_SONG_RECORD+106:16)
+	ld	wa, (SQEDT_MCP_FROM:16)
 	cp	wa, 1:i3
 	jr	ule, AppEvent_InlineHandler_Join4
 	dec	1, wa
-	ld	(SEQ_SONG_RECORD+106:16), wa
+	ld	(SQEDT_MCP_FROM:16), wa
 	jr	AppEvent_InlineHandler_Join4
 AppEvent_InlineHandler_DecMcpLastMeasure:
-	ld	wa, (9768:16)
+	ld	wa, (SQEDT_MCP_LAST:16)
 	cp	wa, 1:i3
 	jr	ule, AppEvent_InlineHandler_Skip10
 	dec	1, wa
-	ld	(9768:16), wa
+	ld	(SQEDT_MCP_LAST:16), wa
 AppEvent_InlineHandler_Skip10:
-	ld	wa, (9768:16)
-	cp (SEQ_SONG_RECORD+106:16), wa
+	ld	wa, (SQEDT_MCP_LAST:16)
+	cp (SQEDT_MCP_FROM:16), wa
 	jr	ule, AppEvent_InlineHandler_Join4
-	ld	(SEQ_SONG_RECORD+106:16), wa
+	ld	(SQEDT_MCP_FROM:16), wa
 AppEvent_InlineHandler_Join4:
-	ld	wa, (9768:16)
-	sub wa, (SEQ_SONG_RECORD+106:16)
+	ld	wa, (SQEDT_MCP_LAST:16)
+	sub wa, (SQEDT_MCP_FROM:16)
 	inc 1, wa
 	ld (SEQ_SONG_RECORD+108:16), wa
 	jr	AppEvent_InlineHandler_Join5
 AppEvent_InlineHandler_DecMcpTrackB:
-	ld	a, (SEQ_SONG_RECORD+110:16)
+	ld	a, (SQEDT_MCP_TRACK_B:16)
 	cp	a, 1:i3
 	jr	ule, AppEvent_InlineHandler_Join5
 	dec	1, a
-	ld	(SEQ_SONG_RECORD+110:16), a
+	ld	(SQEDT_MCP_TRACK_B:16), a
 	cp	a, 16
 	jr	nz, AppEvent_InlineHandler_Join5
-	ld	(SEQ_SONG_RECORD+105:16), 16
+	ld	(SQEDT_MCP_TRACK_A:16), 16
 	jr	AppEvent_InlineHandler_Join5
 AppEvent_InlineHandler_DecMcpStartMeasure:
-	ld	wa, (SEQ_SONG_RECORD+111:16)
+	ld	wa, (SQEDT_MCP_AT:16)
 	cp	wa, 1:i3
 	jr	ule, AppEvent_InlineHandler_Join5
 	dec	1, wa
-	ld	(SEQ_SONG_RECORD+111:16), wa
+	ld	(SQEDT_MCP_AT:16), wa
 	jr	AppEvent_InlineHandler_Join5
 AppEvent_InlineHandler_DecMcpRepeat:
-	ld	a, (9770:16)
+	ld	a, (SQEDT_MCP_REPEAT:16)
 	cp	a, 0:i3
 	jr	z, AppEvent_InlineHandler_Join5
 	dec	1, a
-	ld	(9770:16), a
+	ld	(SQEDT_MCP_REPEAT:16), a
 AppEvent_InlineHandler_Join5:
 	ld	xwa, (SEQ_SCREEN_OBJECT:16)
 	ld	xbc, EVT_PARA_DRAW
@@ -21483,62 +21483,62 @@ AppEvent_InlineHandler_DecMinsParam:	; cases 21, 22, 23, 24, 25, 26
 ;   switch: down by one to at least 1; stepping down from 17 (all) to 16 sets track B 0xF1E6 to 16 too; then the six
 ;   MINS fields are redrawn. Basis: callers + body.
 AppEvent_InlineHandler_DecMinsTrackA:
-	ld a, (SEQ_SONG_RECORD+97:16)
+	ld a, (SQEDT_MINS_TRACK_A:16)
 	cp a, 1:i3
 	jrl ule, AppEvent_InlineHandler_Entry3
 	dec	1, a
-	ld	(SEQ_SONG_RECORD+97:16), a
+	ld	(SQEDT_MINS_TRACK_A:16), a
 	cp	a, 16
 	jr	nz, AppEvent_InlineHandler_Entry3
-	ld	(SEQ_SONG_RECORD+102:16), 16
+	ld	(SQEDT_MINS_TRACK_B:16), 16
 	jr	AppEvent_InlineHandler_Entry3
 AppEvent_SubDispatch_DecMinsFromMeasure:
-	ld	wa, (SEQ_SONG_RECORD+98:16)
+	ld	wa, (SQEDT_MINS_FROM:16)
 	cp	wa, 1:i3
 	jr	ule, AppEvent_InlineHandler_Join6
 	dec	1, wa
-	ld	(SEQ_SONG_RECORD+98:16), wa
+	ld	(SQEDT_MINS_FROM:16), wa
 	jr	AppEvent_InlineHandler_Join6
 AppEvent_SubDispatch_DecMinsLastMeasure:
-	ld	wa, (9774:16)
+	ld	wa, (SQEDT_MINS_LAST:16)
 	cp	wa, 1:i3
 	jr	ule, AppEvent_SubDispatch_DecMinsLastMeasure_Skip11
 	dec	1, wa
-	ld	(9774:16), wa
+	ld	(SQEDT_MINS_LAST:16), wa
 AppEvent_SubDispatch_DecMinsLastMeasure_Skip11:
-	ld	wa, (9774:16)
-	cp (SEQ_SONG_RECORD+98:16), wa
+	ld	wa, (SQEDT_MINS_LAST:16)
+	cp (SQEDT_MINS_FROM:16), wa
 	jr	ule, AppEvent_InlineHandler_Join6
-	ld	(SEQ_SONG_RECORD+98:16), wa
+	ld	(SQEDT_MINS_FROM:16), wa
 AppEvent_InlineHandler_Join6:
-	ld	wa, (9774:16)
-	sub wa, (SEQ_SONG_RECORD+98:16)
+	ld	wa, (SQEDT_MINS_LAST:16)
+	sub wa, (SQEDT_MINS_FROM:16)
 	inc 1, wa
 	ld	(SEQ_SONG_RECORD+100:16), wa
 	jr	AppEvent_InlineHandler_Entry3
 AppEvent_SubDispatch_DecMinsTrackB:
-	ld	a, (SEQ_SONG_RECORD+102:16)
+	ld	a, (SQEDT_MINS_TRACK_B:16)
 	cp	a, 1:i3
 	jr	ule, AppEvent_InlineHandler_Entry3
 	dec	1, a
-	ld	(SEQ_SONG_RECORD+102:16), a
+	ld	(SQEDT_MINS_TRACK_B:16), a
 	cp	a, 16
 	jr	nz, AppEvent_InlineHandler_Entry3
-	ld	(SEQ_SONG_RECORD+97:16), 16
+	ld	(SQEDT_MINS_TRACK_A:16), 16
 	jr	AppEvent_InlineHandler_Entry3
 AppEvent_SubDispatch_DecMinsStartMeasure:
-	ld	wa, (SEQ_SONG_RECORD+103:16)
+	ld	wa, (SQEDT_MINS_AT:16)
 	cp	wa, 1:i3
 	jr	ule, AppEvent_InlineHandler_Entry3
 	dec	1, wa
-	ld	(SEQ_SONG_RECORD+103:16), wa
+	ld	(SQEDT_MINS_AT:16), wa
 	jr	AppEvent_InlineHandler_Entry3
 AppEvent_SubDispatch_DecMinsRepeat:
-	ld	a, (9776:16)
+	ld	a, (SQEDT_MINS_REPEAT:16)
 	cp	a, 0:i3
 	jr	z, AppEvent_InlineHandler_Entry3
 	dec	1, a
-	ld	(9776:16), a
+	ld	(SQEDT_MINS_REPEAT:16), a
 AppEvent_InlineHandler_Entry3:
 	ld	xwa, (SEQ_SCREEN_OBJECT:16)
 	ld	xbc, EVT_PARA_DRAW
@@ -21788,7 +21788,7 @@ SeqStatus_SetActiveFlag:
 	jr SeqVoice_PostStatus_Loop
 
 SeqStatus_Handle9AState:
-	and bc, (9704:16)
+	and bc, (SQEDT_TRKCLR_MASK:16)
 	jr z, SeqVoice_PostStatusEvent_Inactive
 	ld c, 0x4:opc
 	jr SeqVoice_PostStatus_Loop
@@ -22011,7 +22011,7 @@ AppEvent_Handle9AToggle:
 
 AppEvent_9AShiftDone:
 	ld wa, de
-	ld bc, (9704:16)
+	ld bc, (SQEDT_TRKCLR_MASK:16)
 	and wa, bc
 	jr z, AppEvent_9ASetOff
 	ld l, 0x0:opc
@@ -22024,7 +22024,7 @@ AppEvent_9ASetOff:
 	or bc, de
 
 AppEvent_9AStoreAndPost:
-	ld (9704:16), bc
+	ld (SQEDT_TRKCLR_MASK:16), bc
 	ld h, 0x0:opc
 	extz xhl
 	ld xwa, 0:i3
@@ -24577,7 +24577,7 @@ SqQtzTitleFunc:
 	jr z, SqQtzTtl_ReturnZero
 	cp xde, 0x2
 	jr nz, SqQtzTtl_ReturnZero
-	cp (SEQ_SONG_RECORD+113:16), 17
+	cp (SQEDT_QTZ_TRACK:16), 17
 	jr nz, SqQtz_ClearBit4
 	set 4, (9702:16)
 	jr SqQtzTtl_ReturnZero
@@ -24596,7 +24596,7 @@ SqMdelTitleFunc:
 	jr z, SqMdelTtl_ReturnZero
 	cp xde, 0x2
 	jr nz, SqMdelTtl_ReturnZero
-	cp (SEQ_SONG_RECORD+86:16), 17
+	cp (SQEDT_MDEL_TRACK:16), 17
 	jr nz, SqMdel_ClearBit0
 	set 0, (9702:16)
 	jr SqMdelTtl_ReturnZero
@@ -24615,7 +24615,7 @@ SqMersTitleFunc:
 	jr z, SqMersTtl_ReturnZero
 	cp xde, 0x2
 	jr nz, SqMersTtl_ReturnZero
-	cp (SEQ_SONG_RECORD+91:16), 17
+	cp (SQEDT_MERS_TRACK:16), 17
 	jr nz, SqMers_ClearBit1
 	set 1, (9702:16)
 	jr SqMersTtl_ReturnZero
@@ -24634,7 +24634,7 @@ SqVcngTitleFunc:
 	jr z, SqVcngTtl_ReturnZero
 	cp xde, 0x2
 	jr nz, SqVcngTtl_ReturnZero
-	cp (SEQ_SONG_RECORD+168:16), 17
+	cp (SQEDT_VELOCNG_TRACK:16), 17
 	jr nz, SqVcng_ClearBit5
 	set 5, (9702:16)
 	jr SqVcngTtl_ReturnZero
@@ -24674,7 +24674,7 @@ SqMcpyTitleFunc:
 	jr z, SqMcpy_HandleExitState
 	cp xde, 0x2
 	jr nz, SqMcpyTtl_ReturnZero
-	cp (SEQ_SONG_RECORD+105:16), 17
+	cp (SQEDT_MCP_TRACK_A:16), 17
 	jr nz, SqMcpy_ClearBit3
 	set 3, (9702:16)
 	jr SqMcpyTtl_ReturnZero
@@ -24698,7 +24698,7 @@ SqMinsTitleFunc:
 	jr z, SqMins_HandleExitState
 	cp xde, 0x2
 	jr nz, SqMinsTtl_ReturnZero
-	cp (SEQ_SONG_RECORD+97:16), 17
+	cp (SQEDT_MINS_TRACK_A:16), 17
 	jr nz, SqMins_ClearBit2
 	set 2, (9702:16)
 	jr SqMinsTtl_ReturnZero
@@ -24721,7 +24721,7 @@ SqTrclTitleFunc:
 	jr z, SqTrcl_HandleExitState
 	cp xde, 0x2
 	jr nz, SqSngcp_ReturnZero
-	ldw (9704:16), 0
+	ldw (SQEDT_TRKCLR_MASK:16), 0
 	jr SqSngcp_ReturnZero
 
 SqTrcl_HandleExitState:
@@ -25087,7 +25087,7 @@ MainExe_SongMemoryLoop:
 ; MainExeCall_OnTitleSqtrkclr: EXECUTE on TT_SQTRKCLR: calls SeqVoice_InitJmpNop for each track 1-16 whose bit is set
 ;   in mask word 9704, drops those bits from 0x2875 and zeroes 9704; with an empty mask it only re-posts the title.
 MainExeCall_OnTitleSqtrkclr:
-	cpw (9704:16), 0
+	cpw (SQEDT_TRKCLR_MASK:16), 0
 	jr nz, MainExe_SongMemStart
 	ldw wa, 0x9a
 	jrl MainExe_CallModeSwitch
@@ -25104,7 +25104,7 @@ MainExe_SongMemIterLoop:
 	slaa bc
 
 MainExe_SongMemShiftMask:
-	and bc, (9704:16)
+	and bc, (SQEDT_TRKCLR_MASK:16)
 	jr z, MainExe_SongMemNextPart
 	ld (GLOBAL_ERROR_CODE:16), 255
 	ld (SEQ_ERROR_CODE:16), 0
@@ -25116,14 +25116,14 @@ MainExe_SongMemNextPart:
 	ld (SEQ_TRACK:16), a
 	cp a, 0x10
 	jr ule, MainExe_SongMemIterLoop
-	ld wa, (9704:16)
+	ld wa, (SQEDT_TRKCLR_MASK:16)
 	ld bc, (0x2875:16)
 	and wa, bc
 	cpl wa
 	and bc, wa
 	ld (0x2875:16), bc
-	ldmm16 0x2738, 9704
-	ldw (9704:16), 0
+	ldmm16 0x2738, SQEDT_TRKCLR_MASK
+	ldw (SQEDT_TRKCLR_MASK:16), 0
 	ldw wa, 0x23
 
 MainExe_CallSongHandler:
@@ -25133,8 +25133,8 @@ MainExe_CallSongHandler:
 ;   through SeqPart_Compare and moves the tracks' bits in 0x2875 / 0xffec from A and B to C.
 MainExeCall_OnTitleSqtrkmrg:
 	ldmm8 SEQ_TRACK, 0xf1d3
-	ldmm8 9858, SEQ_SONG_RECORD+84
-	ldmm8 9860, SEQ_SONG_RECORD+85
+	ldmm8 9858, SQEDT_TRKMRG_TRACK_B
+	ldmm8 9860, SQEDT_TRKMRG_TRACK_C
 	ld (GLOBAL_ERROR_CODE:16), 255
 	ld (SEQ_ERROR_CODE:16), 0
 	call SeqPart_Compare
@@ -25242,7 +25242,7 @@ MainExe_MaskTertiary:
 ; MainExeCall_OnTitleSqqtz: EXECUTE on TT_SQQTZ: track 0xf1f1 (0x11 = all, passed as 127) from measure 0xf1f2, value
 ;   0xf1f6 doubled into 9726, then SeqPart_VelocityEditSetup.
 MainExeCall_OnTitleSqqtz:
-	ld a, (SEQ_SONG_RECORD+113:16)
+	ld a, (SQEDT_QTZ_TRACK:16)
 	cp a, 0x11
 	jr nz, MainExe_StorePartDirect
 	ld (SEQ_TRACK:16), 127
@@ -25252,13 +25252,13 @@ MainExe_StorePartDirect:
 	ld (SEQ_TRACK:16), a
 
 MainExe_PatternLoad:
-	ld wa, (SEQ_SONG_RECORD+114:16)
+	ld wa, (SQEDT_QTZ_FROM:16)
 	ld (9778:16), wa
-	ld wa, (9724:16)
-	sub wa, (SEQ_SONG_RECORD+114:16)
+	ld wa, (SQEDT_QTZ_LAST:16)
+	sub wa, (SQEDT_QTZ_FROM:16)
 	inc 1, wa
 	ld (9694:16), wa
-	ld a, (SEQ_SONG_RECORD+118:16)
+	ld a, (SQEDT_QTZ_VALUE:16)
 	sll a, 1
 	ld (9726:16), a
 	ld (GLOBAL_ERROR_CODE:16), 255
@@ -25271,10 +25271,10 @@ MainExe_PatternLoad:
 ; MainExeCall_OnTitleSqtrns: EXECUTE on TT_SQTRNS: track 9756 from measure 9758 to 9760, then SeqPart_PartSelect.
 MainExeCall_OnTitleSqtrns:
 	ldmm8 SEQ_TRACK, 9756
-	ld wa, (9758:16)
+	ld wa, (SQEDT_TRNS_FROM:16)
 	ld (9778:16), wa
-	ld wa, (9760:16)
-	sub wa, (9758:16)
+	ld wa, (SQEDT_TRNS_LAST:16)
+	sub wa, (SQEDT_TRNS_FROM:16)
 	inc 1, wa
 	ld (9694:16), wa
 	call SeqPart_PartSelect
@@ -25285,7 +25285,7 @@ MainExeCall_OnTitleSqtrns:
 ; MainExeCall_OnTitleSqvelocng: EXECUTE on TT_SQVELOCNG: track 0xf228 from measure 0xf229, velocity amount 0xf22e into
 ;   9812, then SeqPart_TransposeSetup (name does not fit).
 MainExeCall_OnTitleSqvelocng:
-	ld a, (SEQ_SONG_RECORD+168:16)
+	ld a, (SQEDT_VELOCNG_TRACK:16)
 	cp a, 0x11
 	jr nz, MainExe_RhythmStorePartDirect
 	ld (SEQ_TRACK:16), 127
@@ -25295,13 +25295,13 @@ MainExe_RhythmStorePartDirect:
 	ld (SEQ_TRACK:16), a
 
 MainExe_RhythmLoad:
-	ld wa, (SEQ_SONG_RECORD+169:16)
+	ld wa, (SQEDT_VELOCNG_FROM:16)
 	ld (9778:16), wa
-	ld wa, (9722:16)
-	sub wa, (SEQ_SONG_RECORD+169:16)
+	ld wa, (SQEDT_VELOCNG_LAST:16)
+	sub wa, (SQEDT_VELOCNG_FROM:16)
 	inc 1, wa
 	ld (9694:16), wa
-	ldmm8 9812, SEQ_SONG_RECORD+174
+	ldmm8 9812, SQEDT_VELOCNG_AMOUNT
 	ld (GLOBAL_ERROR_CODE:16), 255
 	ld (SEQ_ERROR_CODE:16), 0
 	call SeqPart_TransposeSetup
@@ -25313,10 +25313,10 @@ MainExe_RhythmLoad:
 ;   SeqPart_PartVoiceCheck.
 MainExeCall_OnTitleSqnotecng:
 	ldmm8 SEQ_TRACK, 9742
-	ld wa, (9744:16)
+	ld wa, (SQEDT_NOTECNG_FROM:16)
 	ld (9778:16), wa
-	ld wa, (9746:16)
-	sub wa, (9744:16)
+	ld wa, (SQEDT_NOTECNG_LAST:16)
+	sub wa, (SQEDT_NOTECNG_FROM:16)
 	inc 1, wa
 	ld (9694:16), wa
 	call SeqPart_PartVoiceCheck
@@ -25328,10 +25328,10 @@ MainExeCall_OnTitleSqnotecng:
 ;   SeqPart_VoiceCheckModeB.
 MainExeCall_OnTitleSqadvdly:
 	ldmm8 SEQ_TRACK, 9732
-	ld wa, (9734:16)
+	ld wa, (SQEDT_ADVDLY_FROM:16)
 	ld (9778:16), wa
-	ld wa, (9736:16)
-	sub wa, (9734:16)
+	ld wa, (SQEDT_ADVDLY_LAST:16)
+	sub wa, (SQEDT_ADVDLY_FROM:16)
 	inc 1, wa
 	ld (9694:16), wa
 	call SeqPart_VoiceCheckModeB
@@ -25342,7 +25342,7 @@ MainExeCall_OnTitleSqadvdly:
 ; MainExeCall_OnTitleSqmers: EXECUTE on TT_SQMERS: track 0xf1db from measure 0xf1dc, MERS choice 0xf1e0 into 9808,
 ;   then SeqPart_SinglePartLoad.
 MainExeCall_OnTitleSqmers:
-	ld a, (SEQ_SONG_RECORD+91:16)
+	ld a, (SQEDT_MERS_TRACK:16)
 	cp a, 0x11
 	jr nz, MainExe_AccompStorePartDirect
 	ld (SEQ_TRACK:16), 127
@@ -25352,13 +25352,13 @@ MainExe_AccompStorePartDirect:
 	ld (SEQ_TRACK:16), a
 
 MainExe_AccompLoad:
-	ld wa, (SEQ_SONG_RECORD+92:16)
+	ld wa, (SQEDT_MERS_FROM:16)
 	ld (9778:16), wa
-	ld wa, (9766:16)
-	sub wa, (SEQ_SONG_RECORD+92:16)
+	ld wa, (SQEDT_MERS_LAST:16)
+	sub wa, (SQEDT_MERS_FROM:16)
 	inc 1, wa
 	ld (9694:16), wa
-	ldmm8 9808, SEQ_SONG_RECORD+96
+	ldmm8 9808, SQEDT_MERS_CHOICE
 	ld (GLOBAL_ERROR_CODE:16), 255
 	ld (SEQ_ERROR_CODE:16), 0
 	call SeqPart_SinglePartLoad
@@ -25369,15 +25369,15 @@ MainExe_AccompLoad:
 ; MainExeCall_OnTitleSqmcp: EXECUTE on TT_SQMCP: source track 0xf1e9 from measure 0xf1ea, destination track 0xf1ee at
 ;   measure 0xf1ef, then SeqPart_DualPartLoad (SeqPart_LoadAndValidateData after error 0x23).
 MainExeCall_OnTitleSqmcp:
-	ld wa, (SEQ_SONG_RECORD+106:16)
+	ld wa, (SQEDT_MCP_FROM:16)
 	ld (9778:16), wa
-	ldmm16 9862, SEQ_SONG_RECORD+111
-	ld wa, (9768:16)
-	sub wa, (SEQ_SONG_RECORD+106:16)
+	ldmm16 9862, SQEDT_MCP_AT
+	ld wa, (SQEDT_MCP_LAST:16)
+	sub wa, (SQEDT_MCP_FROM:16)
 	inc 1, wa
 	ld (9694:16), wa
-	ldmm8 9858, SEQ_SONG_RECORD+110
-	ld a, (SEQ_SONG_RECORD+105:16)
+	ldmm8 9858, SQEDT_MCP_TRACK_B
+	ld a, (SQEDT_MCP_TRACK_A:16)
 	cp a, 0x11
 	jr nz, MainExe_SongLoadStorePartDirect
 	ld (SEQ_TRACK:16), 127
@@ -25428,7 +25428,7 @@ MainExe_ReturnZero:
 	ret
 
 MainExe_InlineByteData:
-	ld	a, (SEQ_SONG_RECORD+86:16)
+	ld	a, (SQEDT_MDEL_TRACK:16)
 	cp	a, 17
 	jr	nz, MainExe_InlineByteData_Skip
 	ld	(SEQ_TRACK:16), 127
@@ -25436,10 +25436,10 @@ MainExe_InlineByteData:
 MainExe_InlineByteData_Skip:
 	ld	(SEQ_TRACK:16), a
 MainExe_InlineByteData_Join:
-	ld	wa, (SEQ_SONG_RECORD+87:16)
+	ld	wa, (SQEDT_MDEL_FROM:16)
 	ld	(9778:16), wa
-	ld	wa, (9772:16)
-	sub	wa, (SEQ_SONG_RECORD+87:16)
+	ld	wa, (SQEDT_MDEL_LAST:16)
+	sub	wa, (SQEDT_MDEL_FROM:16)
 	inc	1, wa
 	ld	(9694:16), wa
 	ld	(GLOBAL_ERROR_CODE:16), 255
@@ -25452,15 +25452,15 @@ MainExe_InlineByteData_Join:
 ; MainExeCall_OnTitleSqmins: EXECUTE on TT_SQMINS: track 0xf1e1 from measure 0xf1e2, second track 0xf1e6 at measure
 ;   0xf1e7, then SeqPart_ByteBlockA95A (SeqPart_LoadDualPartData after error 0x23).
 MainExeCall_OnTitleSqmins:
-	ld	wa, (SEQ_SONG_RECORD+98:16)
+	ld	wa, (SQEDT_MINS_FROM:16)
 	ld	(9778:16), wa
-	ldmm16	9862, SEQ_SONG_RECORD+103
-	ld	wa, (9774:16)
-	sub	wa, (SEQ_SONG_RECORD+98:16)
+	ldmm16	9862, SQEDT_MINS_AT
+	ld	wa, (SQEDT_MINS_LAST:16)
+	sub	wa, (SQEDT_MINS_FROM:16)
 	inc	1, wa
 	ld	(9694:16), wa
-	ldmm8	9858, SEQ_SONG_RECORD+102
-	ld	a, (SEQ_SONG_RECORD+97:16)
+	ldmm8	9858, SQEDT_MINS_TRACK_B
+	ld	a, (SQEDT_MINS_TRACK_A:16)
 	cp	a, 17
 	jr	nz, MainExeCall_OnTitleSqmins_Skip2
 	ld	(SEQ_TRACK:16), 127

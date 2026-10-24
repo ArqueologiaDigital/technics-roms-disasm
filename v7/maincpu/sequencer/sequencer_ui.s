@@ -14329,25 +14329,25 @@ SqedtFunc_OnGetTrkString:
 ;   0x9F) of the title switch in SqedtFunc_OnGetTrkString; MainExeCall_OnTitleSqnotecng runs the edit on the same
 ;   track byte 9742.
 SqedtFunc_TrkString_OnTitleSqnotecng:
-	ld	a, (9742:16)
+	ld	a, (SQEDT_NOTECNG_TRACK:16)
 	jr	SqedtFunc_TrkString_OnTitleSqvelocng_Join
 SqedtFunc_TrkString_OnTitleSqtrns:
-	ld	a, (9756:16)
+	ld	a, (SQEDT_TRNS_TRACK:16)
 	jr	SqedtFunc_TrkString_OnTitleSqvelocng_Join
 SqedtFunc_TrkString_OnTitleSqmdel:
-	ld	a, (SEQ_SONG_RECORD+86:16)
+	ld	a, (SQEDT_MDEL_TRACK:16)
 	jr	SqedtFunc_TrkString_OnTitleSqvelocng_Join
 SqedtFunc_TrkString_OnTitleSqmers:
-	ld	a, (SEQ_SONG_RECORD+91:16)
+	ld	a, (SQEDT_MERS_TRACK:16)
 	jr	SqedtFunc_TrkString_OnTitleSqvelocng_Join
 SqedtFunc_TrkString_OnTitleSqqtz:
-	ld	a, (SEQ_SONG_RECORD+113:16)
+	ld	a, (SQEDT_QTZ_TRACK:16)
 	jr	SqedtFunc_TrkString_OnTitleSqvelocng_Join
 SqedtFunc_TrkString_OnTitleSqvelocng:
-	ld	a, (SEQ_SONG_RECORD+168:16)
+	ld	a, (SQEDT_VELOCNG_TRACK:16)
 	jr	SqedtFunc_TrkString_OnTitleSqvelocng_Join
 SqedtFunc_TrkString_OnTitleSqvelocng_Skip:
-	ld	a, (9732:16)
+	ld	a, (SQEDT_ADVDLY_TRACK:16)
 SqedtFunc_TrkString_OnTitleSqvelocng_Join:
 	jrl	SqedtFunc_OnGetMinsTrBString_Join8
 SqedtFunc_OnGetFmString:
@@ -14368,27 +14368,27 @@ SqedtFunc_OnGetFmString:
 ;   from-measure word 9744 (0x2610) with Sqedt_ParamDispatch_Str. Basis: callers + body -- entry 3 of the title switch
 ;   in SqedtFunc_OnGetFmString; MainExeCall_OnTitleSqnotecng reads the same word as the first measure.
 SqedtFunc_FmString_OnTitleSqnotecng:
-	pushm (0x2610:16)
+	pushm (SQEDT_NOTECNG_FROM:16)
 	ld	xwa, Sqedt_ParamDispatch_Str
 	jr	SqedtFunc_FmString_OnTitleSqadvdly_Join2
 SqedtFunc_FmString_OnTitleSqtrns:
-	pushm (0x261e:16)
+	pushm (SQEDT_TRNS_FROM:16)
 	ld	xwa, Sqedt_ParamDispatch_Str_2
 	jr	SqedtFunc_FmString_OnTitleSqadvdly_Join2
 SqedtFunc_FmString_OnTitleSqmdel:
-	pushm (SEQ_SONG_RECORD+87:16)
+	pushm (SQEDT_MDEL_FROM:16)
 	ld	xwa, Sqedt_ParamDispatch_Str_3
 	jr	SqedtFunc_FmString_OnTitleSqadvdly_Join2
 SqedtFunc_FmString_OnTitleSqmers:
-	pushm (SEQ_SONG_RECORD+92:16)
+	pushm (SQEDT_MERS_FROM:16)
 	ld xwa, FmtStr_pct3d_4B5E
 	jr	SqedtFunc_FmString_OnTitleSqadvdly_Join2
 SqedtFunc_FmString_OnTitleSqqtz:
-	pushm (SEQ_SONG_RECORD+114:16)
+	pushm (SQEDT_QTZ_FROM:16)
 	ld xwa, Sqedt_ParamDispatch_Str_Fmt3d
 	jr	SqedtFunc_FmString_OnTitleSqadvdly_Join2
 SqedtFunc_FmString_OnTitleSqvelocng:
-	pushm (SEQ_SONG_RECORD+169:16)
+	pushm (SQEDT_VELOCNG_FROM:16)
 	ld	xwa, Sqedt_ParamDispatch_Str_4
 	jr	SqedtFunc_FmString_OnTitleSqadvdly_Join2
 ; SqedtFunc_FmString_OnTitleSqadvdly: SqedtFunc's EVT_GET_FM_STRING case for TT_SQADVDLY (0xA0), also the switch
@@ -14396,7 +14396,7 @@ SqedtFunc_FmString_OnTitleSqvelocng:
 ;   callers + body -- entries 4 and 6 and the range checks of SqedtFunc_OnGetFmString's title switch;
 ;   MainExeCall_OnTitleSqadvdly reads 9734 as its first measure.
 SqedtFunc_FmString_OnTitleSqadvdly:
-	pushm (0x2606:16)
+	pushm (SQEDT_ADVDLY_FROM:16)
 	ld	xwa, Sqedt_ParamDispatch_Str_5
 SqedtFunc_FmString_OnTitleSqadvdly_Join2:
 	jrl	SqedtFunc_CheckMode_CopyParam_Join10
@@ -14418,27 +14418,27 @@ SqedtFunc_OnGetLmString:
 ;   last-measure word 9746 (0x2612) with Sqedt_ParamDispatch_Str_6. Basis: callers + body -- entry 3 of the title
 ;   switch in SqedtFunc_OnGetLmString; MainExeCall_OnTitleSqnotecng reads 9746 as the last measure.
 SqedtFunc_LmString_OnTitleSqnotecng:
-	pushm (0x2612:16)
+	pushm (SQEDT_NOTECNG_LAST:16)
 	ld	xwa, Sqedt_ParamDispatch_Str_6
 	jr	SqedtFunc_LmString_OnTitleSqadvdly_Join
 SqedtFunc_LmString_OnTitleSqtrns:
-	pushm (0x2620:16)
+	pushm (SQEDT_TRNS_LAST:16)
 	ld	xwa, Sqedt_ParamDispatch_Str_7
 	jr	SqedtFunc_LmString_OnTitleSqadvdly_Join
 SqedtFunc_LmString_OnTitleSqmdel:
-	pushm (0x262c:16)
+	pushm (SQEDT_MDEL_LAST:16)
 	ld	xwa, Sqedt_ParamDispatch_Str_8
 	jr	SqedtFunc_LmString_OnTitleSqadvdly_Join
 SqedtFunc_LmString_OnTitleSqmers:
-	pushm (0x2626:16)
+	pushm (SQEDT_MERS_LAST:16)
 	ld xwa, NakaInst_3d
 	jr	SqedtFunc_LmString_OnTitleSqadvdly_Join
 SqedtFunc_LmString_OnTitleSqqtz:
-	pushm (0x25fc:16)
+	pushm (SQEDT_QTZ_LAST:16)
 	ld	xwa, Sqedt_ParamDispatch_Str_9
 	jr	SqedtFunc_LmString_OnTitleSqadvdly_Join
 SqedtFunc_LmString_OnTitleSqvelocng:
-	pushm (0x25fa:16)
+	pushm (SQEDT_VELOCNG_LAST:16)
 	ld	xwa, Sqedt_ParamDispatch_Str_10
 	jr	SqedtFunc_LmString_OnTitleSqadvdly_Join
 ; SqedtFunc_LmString_OnTitleSqadvdly: SqedtFunc's EVT_GET_LM_STRING case for TT_SQADVDLY (0xA0), also the switch
@@ -14446,7 +14446,7 @@ SqedtFunc_LmString_OnTitleSqvelocng:
 ;   callers + body -- entries 4 and 6 and the range checks of SqedtFunc_OnGetLmString's title switch;
 ;   MainExeCall_OnTitleSqadvdly reads 9736 as its last measure.
 SqedtFunc_LmString_OnTitleSqadvdly:
-	pushm (0x2608:16)
+	pushm (SQEDT_ADVDLY_LAST:16)
 	ld	xwa, Sqedt_ParamDispatch_Str_11
 SqedtFunc_LmString_OnTitleSqadvdly_Join:
 	jrl	SqedtFunc_CheckMode_CopyParam_Join10
@@ -14510,7 +14510,7 @@ SqedtFunc_OnGetTrnsString_Join4:
 SqedtFunc_OnGetVeloString:
 	ld	xwa, (xsp+8)
 	ld	(xsp+4), xwa
-	ld	e, (SEQ_SONG_RECORD+174:16)
+	ld	e, (SQEDT_VELOCNG_AMOUNT:16)
 	cp	e, 0:i3
 	jr	le, SqedtFunc_OnGetVeloString_Skip5
 	exts	de
@@ -14538,7 +14538,7 @@ SqedtFunc_OnGetMersString:
 	ld	xwa, (xsp+8)
 	ld	(xsp+4), xwa
 	pushw	9
-	ld	a, (SEQ_SONG_RECORD+96:16)
+	ld	a, (SQEDT_MERS_CHOICE:16)
 	extz	wa
 	muls	wa, 9
 	ld	xbc, Sqedt_ParamDispatch_Table_3
@@ -14550,7 +14550,7 @@ SqedtFunc_OnGetQtzValString:
 	ld	xwa, (xsp+8)
 	ld	(xsp+4), xwa
 	pushw	15
-	ld	a, (SEQ_SONG_RECORD+118:16)
+	ld	a, (SQEDT_QTZ_VALUE:16)
 	extz	wa
 	muls	wa, 15
 	ld	xbc, Sqedt_ParamDispatch_Table_4
@@ -14650,7 +14650,7 @@ SqedtFunc_OnGetCnString_Join7:
 SqedtFunc_OnGetMrgTrAString:
 	ld	xwa, (xsp+8)
 	ld	(xsp+4), xwa
-	ld	a, (SEQ_SONG_RECORD+83:16)
+	ld	a, (SQEDT_TRKMRG_TRACK_A:16)
 	extz	wa
 	pushw	wa
 	ld	xwa, Sqedt_ParamDispatch_Str_22
@@ -14658,7 +14658,7 @@ SqedtFunc_OnGetMrgTrAString:
 SqedtFunc_OnGetMrgTrBString:
 	ld	xwa, (xsp+8)
 	ld	(xsp+4), xwa
-	ld	a, (SEQ_SONG_RECORD+84:16)
+	ld	a, (SQEDT_TRKMRG_TRACK_B:16)
 	extz	wa
 	pushw	wa
 	ld	xwa, Sqedt_ParamDispatch_Str_23
@@ -14669,7 +14669,7 @@ SqedtFunc_OnGetMrgTrBString:
 SqedtFunc_OnGetMrgTrCString:
 	ld	xwa, (xsp+8)
 	ld	(xsp+4), xwa
-	ld	a, (SEQ_SONG_RECORD+85:16)
+	ld	a, (SQEDT_TRKMRG_TRACK_C:16)
 	extz	wa
 	pushw	wa
 	ld	xwa, Sqedt_ParamDispatch_Str_24
@@ -14678,12 +14678,12 @@ SqedtFunc_OnGetMcpTrAString:
 	ld	xwa, (xsp+8)
 	ld	(xsp+4), xwa
 	pushw	5
-	ld	a, (SEQ_SONG_RECORD+105:16)
+	ld	a, (SQEDT_MCP_TRACK_A:16)
 	jrl	SqedtFunc_OnGetMinsTrBString_Join8
 SqedtFunc_OnGetMcpFmString:
 	ld	xwa, (xsp+8)
 	ld	(xsp+4), xwa
-	pushm (SEQ_SONG_RECORD+106:16)
+	pushm (SQEDT_MCP_FROM:16)
 	ld	xwa, Sqedt_ParamDispatch_Str_25
 	push	xwa
 	ld	xwa, (xsp+10)
@@ -14692,19 +14692,19 @@ SqedtFunc_OnGetMcpFmString:
 SqedtFunc_OnGetMcpLmString:
 	ld	xwa, (xsp+8)
 	ld	(xsp+4), xwa
-	pushm (0x2628:16)
+	pushm (SQEDT_MCP_LAST:16)
 	ld	xwa, Sqedt_ParamDispatch_Str_26
 	jrl	SqedtFunc_CheckMode_CopyParam_Join10
 SqedtFunc_OnGetMcpTrBString:
 	ld	xwa, (xsp+8)
 	ld	(xsp+4), xwa
 	pushw	5
-	ld	a, (SEQ_SONG_RECORD+110:16)
+	ld	a, (SQEDT_MCP_TRACK_B:16)
 	jr	SqedtFunc_OnGetMinsTrBString_Join8
 SqedtFunc_OnGetMcpSmString:
 	ld	xwa, (xsp+8)
 	ld	(xsp+4), xwa
-	pushm (SEQ_SONG_RECORD+111:16)
+	pushm (SQEDT_MCP_AT:16)
 	ld	xwa, Sqedt_ParamDispatch_Str_27
 	push	xwa
 	ld	xwa, (xsp+10)
@@ -14713,7 +14713,7 @@ SqedtFunc_OnGetMcpSmString:
 SqedtFunc_OnGetMcpRepString:
 	ld	xwa, (xsp+8)
 	ld	(xsp+4), xwa
-	ld	a, (9770:16)
+	ld	a, (SQEDT_MCP_REPEAT:16)
 	extz	wa
 	pushw	wa
 	ld	xwa, Sqedt_ParamDispatch_Str_28
@@ -14722,12 +14722,12 @@ SqedtFunc_OnGetMinsTrAString:
 	ld	xwa, (xsp+8)
 	ld	(xsp+4), xwa
 	pushw	5
-	ld	a, (SEQ_SONG_RECORD+97:16)
+	ld	a, (SQEDT_MINS_TRACK_A:16)
 	jr	SqedtFunc_OnGetMinsTrBString_Join8
 SqedtFunc_OnGetMinsFmString:
 	ld	xwa, (xsp+8)
 	ld	(xsp+4), xwa
-	pushm (SEQ_SONG_RECORD+98:16)
+	pushm (SQEDT_MINS_FROM:16)
 	ld	xwa, Sqedt_ParamDispatch_Str_29
 	push	xwa
 	ld	xwa, (xsp+10)
@@ -14736,14 +14736,14 @@ SqedtFunc_OnGetMinsFmString:
 SqedtFunc_OnGetMinsLmString:
 	ld	xwa, (xsp+8)
 	ld	(xsp+4), xwa
-	pushm (0x262e:16)
+	pushm (SQEDT_MINS_LAST:16)
 	ld	xwa, Sqedt_ParamDispatch_Str_30
 	jrl	SqedtFunc_CheckMode_CopyParam_Join10
 SqedtFunc_OnGetMinsTrBString:
 	ld	xwa, (xsp+8)
 	ld	(xsp+4), xwa
 	pushw	5
-	ld	a, (SEQ_SONG_RECORD+102:16)
+	ld	a, (SQEDT_MINS_TRACK_B:16)
 SqedtFunc_OnGetMinsTrBString_Join8:
 	extz	wa
 	muls	wa, 5
@@ -14755,7 +14755,7 @@ SqedtFunc_OnGetMinsTrBString_Join8:
 SqedtFunc_OnGetMinsSmString:
 	ld	xwa, (xsp+8)
 	ld	(xsp+4), xwa
-	pushm (SEQ_SONG_RECORD+103:16)
+	pushm (SQEDT_MINS_AT:16)
 	ld xwa, Sqedt_ParamDispatch_Entry2_Str_Fmt3d_2
 	push	xwa
 	ld	xwa, (xsp+10)
@@ -14764,7 +14764,7 @@ SqedtFunc_OnGetMinsSmString:
 SqedtFunc_OnGetMinsRepString:
 	ld	xwa, (xsp+8)
 	ld	(xsp+4), xwa
-	ld	a, (9776:16)
+	ld	a, (SQEDT_MINS_REPEAT:16)
 	extz	wa
 	pushw	wa
 	ld	xwa, Sqedt_ParamDispatch_Str_31
@@ -15276,11 +15276,11 @@ SqedtFunc_StateChainB_OnSqNoteCng:
 	jr z, SeqFmt_Field_LoadD
 	cp xiz, 0x1
 	jr nz, SeqFmt_Field_LoadG
-	lda xhl, (9744:16)
+	lda xhl, (SQEDT_NOTECNG_FROM:16)
 	jrl SqedtFunc_EpilogueJump
 
 SeqFmt_Field_LoadD:
-	lda xhl, (9746:16)
+	lda xhl, (SQEDT_NOTECNG_LAST:16)
 	jrl SqedtFunc_EpilogueJump
 
 SeqFmt_Field_LoadE:
@@ -15292,7 +15292,7 @@ SeqFmt_Field_LoadF:
 	jrl SqedtFunc_Epilogue
 
 SeqFmt_Field_LoadG:
-	lda xhl, (9742:16)
+	lda xhl, (SQEDT_NOTECNG_TRACK:16)
 	jrl SqedtFunc_Epilogue
 ; SqedtFunc_StateChainB_OnSqTrns: EVT_GET_RAM_ADDRESS on title 0x9D TT_SQTRNS: parameter 1 -> 0x261E, 2 -> 0x2620, 4
 ;   -> 0x2622, others -> 0x261C
@@ -15303,11 +15303,11 @@ SqedtFunc_StateChainB_OnSqTrns:
 	jr z, SeqFmt_Field_LoadH
 	cp xiz, 0x1
 	jr nz, SeqFmt_Field_LoadJ
-	lda xhl, (9758:16)
+	lda xhl, (SQEDT_TRNS_FROM:16)
 	jrl SqedtFunc_EpilogueJump
 
 SeqFmt_Field_LoadH:
-	lda xhl, (9760:16)
+	lda xhl, (SQEDT_TRNS_LAST:16)
 	jrl SqedtFunc_EpilogueJump
 
 SeqFmt_Field_LoadI:
@@ -15315,7 +15315,7 @@ SeqFmt_Field_LoadI:
 	jrl SqedtFunc_ReturnPath
 
 SeqFmt_Field_LoadJ:
-	lda xhl, (9756:16)
+	lda xhl, (SQEDT_TRNS_TRACK:16)
 	jrl SqedtFunc_Epilogue
 ; SqedtFunc_StateChainB_OnSqMdel: EVT_GET_RAM_ADDRESS on title 0xA3 TT_SQMDEL: parameter 1 -> 0xF1D7, 2 -> 0x262C,
 ;   others -> 0xF1D6
@@ -15324,15 +15324,15 @@ SqedtFunc_StateChainB_OnSqMdel:
 	jr z, SeqFmt_Field_LoadK
 	cp xiz, 0x1
 	jr nz, SeqFmt_Field_LoadL
-	lda xhl, (SEQ_SONG_RECORD+87:16)
+	lda xhl, (SQEDT_MDEL_FROM:16)
 	jrl SqedtFunc_EpilogueJump
 
 SeqFmt_Field_LoadK:
-	lda xhl, (9772:16)
+	lda xhl, (SQEDT_MDEL_LAST:16)
 	jrl SqedtFunc_EpilogueJump
 
 SeqFmt_Field_LoadL:
-	lda xhl, (SEQ_SONG_RECORD+86:16)
+	lda xhl, (SQEDT_MDEL_TRACK:16)
 	jrl SqedtFunc_Epilogue
 ; SqedtFunc_StateChainB_OnSqMers: EVT_GET_RAM_ADDRESS on title 0xA1 TT_SQMERS: parameter 1 -> 0xF1DC, 2 -> 0x2626, 6
 ;   -> 0xF1E0, others -> 0xF1DB
@@ -15343,19 +15343,19 @@ SqedtFunc_StateChainB_OnSqMers:
 	jr z, SeqFmt_Field_LoadM
 	cp xiz, 0x1
 	jr nz, SeqFmt_Field_LoadO
-	lda xhl, (SEQ_SONG_RECORD+92:16)
+	lda xhl, (SQEDT_MERS_FROM:16)
 	jrl SqedtFunc_EpilogueJump
 
 SeqFmt_Field_LoadM:
-	lda xhl, (9766:16)
+	lda xhl, (SQEDT_MERS_LAST:16)
 	jrl SqedtFunc_EpilogueJump
 
 SeqFmt_Field_LoadN:
-	lda xhl, (SEQ_SONG_RECORD+96:16)
+	lda xhl, (SQEDT_MERS_CHOICE:16)
 	jrl SqedtFunc_Epilogue
 
 SeqFmt_Field_LoadO:
-	lda xhl, (SEQ_SONG_RECORD+91:16)
+	lda xhl, (SQEDT_MERS_TRACK:16)
 	jrl SqedtFunc_Epilogue
 ; SqedtFunc_StateChainB_OnSqQtz: EVT_GET_RAM_ADDRESS on title 0x9C TT_SQQTZ: parameter 1 -> 0xF1F2, 2 -> 0x25FC, 7 ->
 ;   0xF1F6, 8 -> 0x2600, 9 -> 0x2602, others -> 0xF1F1
@@ -15370,15 +15370,15 @@ SqedtFunc_StateChainB_OnSqQtz:
 	jr z, SeqFmt_Field_LoadP
 	cp xiz, 0x1
 	jr nz, SeqFmt_Field_LoadT
-	lda xhl, (SEQ_SONG_RECORD+114:16)
+	lda xhl, (SQEDT_QTZ_FROM:16)
 	jrl SqedtFunc_EpilogueJump
 
 SeqFmt_Field_LoadP:
-	lda xhl, (9724:16)
+	lda xhl, (SQEDT_QTZ_LAST:16)
 	jrl SqedtFunc_EpilogueJump
 
 SeqFmt_Field_LoadQ:
-	lda xhl, (SEQ_SONG_RECORD+118:16)
+	lda xhl, (SQEDT_QTZ_VALUE:16)
 	jrl SqedtFunc_Epilogue
 
 SeqFmt_Field_LoadR:
@@ -15390,7 +15390,7 @@ SeqFmt_Field_LoadS:
 	jrl SqedtFunc_ReturnPath
 
 SeqFmt_Field_LoadT:
-	lda xhl, (SEQ_SONG_RECORD+113:16)
+	lda xhl, (SQEDT_QTZ_TRACK:16)
 	jrl SqedtFunc_Epilogue
 ; SqedtFunc_StateChainB_OnSqVeloCng: EVT_GET_RAM_ADDRESS on title 0x9E TT_SQVELOCNG: parameter 1 -> 0xF229, 2 ->
 ;   0x25FA, 5 -> 0xF22E, others -> 0xF228
@@ -15401,19 +15401,19 @@ SqedtFunc_StateChainB_OnSqVeloCng:
 	jr z, SeqFmt_Field_LoadU
 	cp xiz, 0x1
 	jr nz, SeqFmt_Field_LoadW
-	lda xhl, (SEQ_SONG_RECORD+169:16)
+	lda xhl, (SQEDT_VELOCNG_FROM:16)
 	jrl SqedtFunc_EpilogueJump
 
 SeqFmt_Field_LoadU:
-	lda xhl, (9722:16)
+	lda xhl, (SQEDT_VELOCNG_LAST:16)
 	jrl SqedtFunc_EpilogueJump
 
 SeqFmt_Field_LoadV:
-	lda xhl, (SEQ_SONG_RECORD+174:16)
+	lda xhl, (SQEDT_VELOCNG_AMOUNT:16)
 	jrl SqedtFunc_ReturnPath
 
 SeqFmt_Field_LoadW:
-	lda xhl, (SEQ_SONG_RECORD+168:16)
+	lda xhl, (SQEDT_VELOCNG_TRACK:16)
 	jrl SqedtFunc_Epilogue
 ; SqedtFunc_StateChainB_OnSqTrkMrg: EVT_GET_RAM_ADDRESS on title 0x9B TT_SQTRKMRG: parameter 13 -> 0xF1D4, 14 ->
 ;   0xF1D5, others -> 0xF1D3
@@ -15422,15 +15422,15 @@ SqedtFunc_StateChainB_OnSqTrkMrg:
 	jr z, SeqFmt_Field_LoadX
 	cp xiz, 0xd
 	jr nz, SeqFmt_Field_LoadY
-	lda xhl, (SEQ_SONG_RECORD+84:16)
+	lda xhl, (SQEDT_TRKMRG_TRACK_B:16)
 	jrl SqedtFunc_Epilogue
 
 SeqFmt_Field_LoadX:
-	lda xhl, (SEQ_SONG_RECORD+85:16)
+	lda xhl, (SQEDT_TRKMRG_TRACK_C:16)
 	jrl SqedtFunc_Epilogue
 
 SeqFmt_Field_LoadY:
-	lda xhl, (SEQ_SONG_RECORD+83:16)
+	lda xhl, (SQEDT_TRKMRG_TRACK_A:16)
 	jrl SqedtFunc_Epilogue
 ; SqedtFunc_StateChainB_OnSqMcp: EVT_GET_RAM_ADDRESS on title 0xA2 TT_SQMCP: parameter 16 -> 0xF1EA, 17 -> 0x2628, 18
 ;   -> 0xF1EE, 19 -> 0xF1EF, 20 -> 0x262A, others -> 0xF1E9
@@ -15445,27 +15445,27 @@ SqedtFunc_StateChainB_OnSqMcp:
 	jr z, SeqFmt_Field_LoadZ
 	cp xiz, 0x10
 	jr nz, SeqFmt_Field_LoadAD
-	lda xhl, (SEQ_SONG_RECORD+106:16)
+	lda xhl, (SQEDT_MCP_FROM:16)
 	jrl SqedtFunc_EpilogueJump
 
 SeqFmt_Field_LoadZ:
-	lda xhl, (9768:16)
+	lda xhl, (SQEDT_MCP_LAST:16)
 	jrl SqedtFunc_EpilogueJump
 
 SeqFmt_Field_LoadAA:
-	lda xhl, (SEQ_SONG_RECORD+110:16)
+	lda xhl, (SQEDT_MCP_TRACK_B:16)
 	jrl SqedtFunc_Epilogue
 
 SeqFmt_Field_LoadAB:
-	lda xhl, (SEQ_SONG_RECORD+111:16)
+	lda xhl, (SQEDT_MCP_AT:16)
 	jrl SqedtFunc_EpilogueJump
 
 SeqFmt_Field_LoadAC:
-	lda xhl, (9770:16)
+	lda xhl, (SQEDT_MCP_REPEAT:16)
 	jrl SqedtFunc_Epilogue
 
 SeqFmt_Field_LoadAD:
-	lda xhl, (SEQ_SONG_RECORD+105:16)
+	lda xhl, (SQEDT_MCP_TRACK_A:16)
 	jrl SqedtFunc_Epilogue
 ; SqedtFunc_StateChainB_OnSqMins: EVT_GET_RAM_ADDRESS on title 0xA4 TT_SQMINS: parameter 22 -> 0xF1E2, 23 -> 0x262E,
 ;   24 -> 0xF1E6, 25 -> 0xF1E7, 26 -> 0x2630, others -> 0xF1E1
@@ -15480,27 +15480,27 @@ SqedtFunc_StateChainB_OnSqMins:
 	jr z, SeqFmt_Field_LoadAE
 	cp xiz, 0x16
 	jr nz, SeqFmt_Field_LoadAI
-	lda xhl, (SEQ_SONG_RECORD+98:16)
+	lda xhl, (SQEDT_MINS_FROM:16)
 	jr SqedtFunc_EpilogueJump
 
 SeqFmt_Field_LoadAE:
-	lda xhl, (9774:16)
+	lda xhl, (SQEDT_MINS_LAST:16)
 	jr SqedtFunc_EpilogueJump
 
 SeqFmt_Field_LoadAF:
-	lda xhl, (SEQ_SONG_RECORD+102:16)
+	lda xhl, (SQEDT_MINS_TRACK_B:16)
 	jr SqedtFunc_Epilogue
 
 SeqFmt_Field_LoadAG:
-	lda xhl, (SEQ_SONG_RECORD+103:16)
+	lda xhl, (SQEDT_MINS_AT:16)
 	jr SqedtFunc_EpilogueJump
 
 SeqFmt_Field_LoadAH:
-	lda xhl, (9776:16)
+	lda xhl, (SQEDT_MINS_REPEAT:16)
 	jr SqedtFunc_Epilogue
 
 SeqFmt_Field_LoadAI:
-	lda xhl, (SEQ_SONG_RECORD+97:16)
+	lda xhl, (SQEDT_MINS_TRACK_A:16)
 	jr SqedtFunc_Epilogue
 
 ; DspItem0CngFunc dispatch
@@ -15533,11 +15533,11 @@ SqedtFunc_GetFieldAddr_BySelector:
 	jr z, SqedtFunc_FieldSel_LoadA
 	cp xiz, 0x1
 	jr nz, SqedtFunc_FieldSel_LoadC
-	lda xhl, (9734:16)
+	lda xhl, (SQEDT_ADVDLY_FROM:16)
 	jr SqedtFunc_EpilogueJump
 
 SqedtFunc_FieldSel_LoadA:
-	lda xhl, (9736:16)
+	lda xhl, (SQEDT_ADVDLY_LAST:16)
 
 SqedtFunc_EpilogueJump:
 	jr SqedtFunc_Epilogue
@@ -15549,7 +15549,7 @@ SqedtFunc_ReturnPath:
 	jr SqedtFunc_Epilogue
 
 SqedtFunc_FieldSel_LoadC:
-	lda xhl, (9732:16)
+	lda xhl, (SQEDT_ADVDLY_TRACK:16)
 
 SqedtFunc_Epilogue:
 	pop xiz
