@@ -89,9 +89,14 @@ class Assembler:
     def __init__(self, base_dir):
         self.base_dir = base_dir
         self.known = {}    # symbol -> value, as found by the previous pass
+        self.parsed = {}   # path -> its lines, parsed once for every pass
+        self.enc_cache = {}  # (mnemonic, resolved operands, pc) -> bytes, this pass
         self.start_pass()
 
     def start_pass(self):
+        # encodings of the previous pass, looked up by this one (most lines
+        # encode the same operands at the same pc again)
+        self.enc_prev, self.enc_cache = getattr(self, "enc_cache", {}), {}
         self.out = bytearray()
         self.symbols = {}
         self.labels = {}
@@ -295,29 +300,40 @@ class Assembler:
 
     # -- top-level assembly ---------------------------------------------------
 
+    def parse_file(self, path):
+        """(line number, label or None, op or None, rest, args) per source line
+        that holds anything; the same in every pass, so done once."""
+        if path not in self.parsed:
+            out = []
+            with open(path, "r") as f:
+                for i, raw in enumerate(f, 1):
+                    line = strip_comment(raw).strip()
+                    if not line:
+                        continue
+                    label = None
+                    m = re.match(r"([A-Za-z_.][\w.]*):(.*)$", line)
+                    if m and not line.startswith("."):
+                        label, line = m.group(1), m.group(2).strip()
+                    if not line:
+                        out.append((i, label, None, "", []))
+                        continue
+                    parts = line.split(None, 1)
+                    rest = parts[1] if len(parts) > 1 else ""
+                    out.append((i, label, parts[0], rest,
+                                self.split_args(rest) if parts[0].startswith(".") else None))
+            self.parsed[path] = out
+        return self.parsed[path]
+
     def assemble_file(self, path):
         prev_file, prev_line = self.cur_file, self.cur_line
         self.cur_file = path
-        with open(path, "r") as f:
-            lines = f.readlines()
-        for i, raw in enumerate(lines, 1):
+        for i, label, op, rest, args in self.parse_file(path):
             self.cur_line = i
             self.line_off[(path, i)] = len(self.out)
-            line = strip_comment(raw).strip()
-            if not line:
+            if label is not None:
+                self.define_label(label)
+            if op is None:
                 continue
-
-            m = re.match(r"([A-Za-z_.][\w.]*):(.*)$", line)
-            if m and not line.startswith("."):
-                self.define_label(m.group(1))
-                line = m.group(2).strip()
-                if not line:
-                    continue
-
-            parts = line.split(None, 1)
-            op = parts[0]
-            rest = parts[1] if len(parts) > 1 else ""
-            args = self.split_args(rest)
 
             if op == ".equ":
                 name, expr = args[0], ",".join(args[1:])
@@ -353,11 +369,19 @@ class Assembler:
                 if mn10300_asm is None:
                     raise AsmError("MN10300 encoder (mn10300_asm.py) not available")
                 pc = self.mn_base + len(self.out)
-                try:
-                    self.out += mn10300_asm.encode(op, self.resolve_operands(rest), pc)
-                except mn10300_asm.EncError as e:
-                    self.fail(f"cannot encode '{op} {rest}': {e}")
+                key = (op, self.resolve_operands(rest), pc)
+                enc = self.enc_prev.get(key)
+                if enc is None:
+                    try:
+                        enc = mn10300_asm.encode(*key)
+                    except mn10300_asm.EncError as e:
+                        enc = e
+                self.enc_cache[key] = enc
+                if isinstance(enc, Exception):
+                    self.fail(f"cannot encode '{op} {rest}': {enc}")
                     self.out += b"\0\0"   # e.g. a branch whose target has not settled
+                else:
+                    self.out += enc
             else:
                 raise AsmError(f"unknown directive {op!r}")
         self.cur_file, self.cur_line = prev_file, prev_line
@@ -372,6 +396,22 @@ class Assembler:
             self.fail(f"label {name!r} is at {addr:#x} but was "
                       f".equ'd to {self.symbols[name]:#x}")
         self.labels[name] = self.symbols[name] = addr
+
+    def seed(self, path):
+        """Take a previous build's label addresses (write_labels) as the first
+        pass's estimates of forward labels. Only a guess: the passes still run
+        until one is exact, so a stale file costs time, never correctness."""
+        try:
+            for line in open(path):
+                name, value = line.split()
+                self.known[name] = int(value, 16)
+        except (OSError, ValueError):
+            self.known = {}
+
+    def write_labels(self, path):
+        with open(path, "w") as f:
+            for name, value in sorted(self.labels.items()):
+                f.write(f"{name} {value:x}\n")
 
     def assemble(self, path):
         """Assemble `path`, repeating the pass until it is exact: no placeholder
@@ -399,6 +439,9 @@ def main():
     parser = argparse.ArgumentParser(description="KN7000 byte-exact reassembler")
     parser.add_argument("source", help="top-level .s source file")
     parser.add_argument("-o", "--output", required=True, help="output binary")
+    parser.add_argument("--labels", metavar="FILE",
+                        help="label addresses of the previous build: read as the first pass's"
+                             " estimates (saves passes), rewritten after a good build")
     parser.add_argument("-I", "--include-dir", default=None,
                         help="base directory for relative paths"
                              " (default: the source file's directory)")
@@ -406,6 +449,8 @@ def main():
 
     base = args.include_dir or os.path.dirname(os.path.abspath(args.source)) or "."
     asm = Assembler(base)
+    if args.labels:
+        asm.seed(args.labels)
     try:
         asm.assemble(args.source)
     except AsmError as e:
@@ -414,6 +459,8 @@ def main():
 
     with open(args.output, "wb") as f:
         f.write(asm.out)
+    if args.labels:
+        asm.write_labels(args.labels)
     print(f"kn7asm: wrote {args.output} ({len(asm.out):#x} bytes)")
     return 0
 

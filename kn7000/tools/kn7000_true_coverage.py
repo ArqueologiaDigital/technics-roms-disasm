@@ -37,8 +37,18 @@ LOOSE = re.compile(r'\.incbin_range\s+"([^"]+)"\s*,\s*([^\n#]+)')
 STRICT = re.compile(r'\.incbin_range\s+"([^"]+)",\s*(0x[0-9A-Fa-f]+),\s*(0x[0-9A-Fa-f]+)')
 
 
+def read_source(path):
+    """path with its `.include`d .s files inlined (src/program.s includes its
+    code-region parts from src/program/ since the full conversion)."""
+    out = []
+    for line in open(path).read().split("\n"):
+        m = re.match(r'\s*\.include\s+"([^"]+\.s)"', line)
+        out.append(read_source(os.path.join(REPO, m.group(1))) if m else line)
+    return "\n".join(out)
+
+
 def measure(path, total):
-    src = open(path).read()
+    src = read_source(path)
     loose = LOOSE.findall(src)
     strict = STRICT.findall(src)
     raw = 0

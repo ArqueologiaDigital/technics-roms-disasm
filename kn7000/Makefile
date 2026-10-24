@@ -56,9 +56,12 @@ baserom/kn7000_program.rom baserom/kn7000_table.rom &:
 	@cp "$(EXTRACT_DIR)/output/kn7000_table.rom"   baserom/kn7000_table.rom
 
 # ---- build -----------------------------------------------------------------
-build/kn7000_program.rom: src/program.s src/symbols.inc tools/kn7asm.py baserom/kn7000_program.rom
+# --labels: the previous build's label addresses seed kn7asm's first pass (only
+# an estimate -- the passes still run until one is exact -- so a fully
+# converted program assembles in about one pass instead of five).
+build/kn7000_program.rom: src/program.s $(wildcard src/program/*.s) src/symbols.inc tools/kn7asm.py baserom/kn7000_program.rom
 	@mkdir -p build
-	$(ASM) src/program.s -I . -o $@
+	$(ASM) src/program.s -I . -o $@ --labels build/kn7000_program.labels
 
 # ---- recover symbols from the firmware's MILK-toolkit reflection tables -----
 # Names 444 functions (shared with the KN5000). Regenerates kn7000.sym and the
@@ -213,9 +216,9 @@ baserom/kn7000_table_sp7001.rom: tools/rom_from_eproms.py
 	    "$(ROMSET_DIR)/kn7000_table_even_sp7001_b83.ic17" \
 	    "$(ROMSET_DIR)/kn7000_table_odd_sp7001_b83.ic16" $@
 
-build/kn7000_program_sp7001.rom: src/sp7001/program.s src/sp7001/symbols.inc tools/kn7asm.py baserom/kn7000_program_sp7001.rom
+build/kn7000_program_sp7001.rom: src/sp7001/program.s $(wildcard src/sp7001/program/*.s) src/sp7001/symbols.inc tools/kn7asm.py baserom/kn7000_program_sp7001.rom
 	@mkdir -p build
-	$(ASM) src/sp7001/program.s -I . -o $@
+	$(ASM) src/sp7001/program.s -I . -o $@ --labels build/kn7000_program_sp7001.labels
 
 build/kn7000_table_sp7001.rom: src/sp7001/table.s tools/kn7asm.py baserom/kn7000_table_sp7001.rom
 	@mkdir -p build

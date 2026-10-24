@@ -10,6 +10,9 @@
 ; function entry. Merged into the annotated disassembly by `make disasm`.
 ; Cross-references: see kn7000_mame/notes/*.md.
 ;
+; ---- the reset path ---------------------------------------------------------
+0x4840FF7E  ResetEntry             ; target of the boot header's reset jmp (image offset 0): sets the port/bus registers 0x360080xx/0x320000xx, sp := 0x50021CF8, then clears work RAM from 0x50007F44 (hand-written: it stores imm32 constants a compiler would shorten)
+;
 ; ---- Control-panel serial protocol (SIO ch0 @ 0x34000800) ------------------
 ; The main CPU <-> panel sub-CPU handshake. Full protocol in
 ; kn7000_mame/notes/panel-serial-protocol.md. These sit in the large unnamed

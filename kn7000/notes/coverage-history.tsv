@@ -10,3 +10,8 @@ date	commit	src_bytes	prog_bytes	pct	insn_lines	escapes	funcs
 2026-08-14	3644616	151372	4157185	3.64	59008	71	942
 2026-10-17	ebf860e	159086	4157185	3.83	62437	71	990
 2026-10-18	9d7afdd	161369	4157185	3.88	63423	71	999
+# 2026-10-24: from the next row, `escapes` counts only instructions kept as .byte because the encoder
+# cannot reproduce them (gen_program_s marks them `# not encodable:`); before, it counted every
+# .byte/.word/.long line, the palette included. `funcs` counts the converted function blocks in
+# the source (named + unnamed, region 1 + library), no longer the names in CONVERT/LIB_CONVERT.
+2026-10-24	d87382628	1853232	4157185	44.58	670646	0	3666
