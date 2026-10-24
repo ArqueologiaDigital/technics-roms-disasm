@@ -86,7 +86,7 @@ still matches byte for byte.
     python3 scripts/generators/create_v141_subcpu_source.py --check
     make -j3 gate        # kn5000_subprogram_v141 / _compressed: IDENTICAL
 
-## Next: v1.40
+## v1.40 (done 2026-10-24: `v140/subcpu/`, see `notes/v140-subcpu-port/README.md`)
 
 The same aligner, run on v1.41 against v1.40, finds real code changes, not only a shift.
 To reproduce it:
@@ -96,4 +96,5 @@ To reproduce it:
 
 The raw diff is 56,018 B in 2,508 runs. The shifts are -0x34 and -0x86. Length-changing
 gaps sit around 0x031103-0x03121b (net about -134 B) and 0x035cc1-0x03602c (net about
-+82 B). A v140 tree should be derived from v141 the same way. Its tail is 52 bytes longer.
++82 B). The v140 tree is derived from v141 the same way
+(`scripts/generators/create_v140_subcpu_source.py`). Its tail is 52 bytes longer.
