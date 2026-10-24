@@ -29,32 +29,52 @@ temporary names.
 | What would be renamed / inserted, and what is refused?    | `python3 scripts/renaming/harmonize_by_caller_alignment.py --to v7 --cache DIR --report OUT.tsv` |
 | Apply (then `make all` and run again until `rename` is 0) | the same with `--apply`                                                                          |
 | How many v7 labels are v10 names?                         | `python3 scripts/analysis/version_shared_names.py [--rev REV]`                                   |
-| How many review-list names does v7 define now?            | `python3 scripts/analysis/v7_review_names_resolved.py [--list]`                                  |
+| How many review-list names does v7 define now?            | `python3 scripts/analysis/v7_review_names_resolved.py [--tsv-rev REV] [--list]`                  |
 | Is v10 routine X the same code as v7 routine Y?           | `python3 scripts/analysis/v7_routine_equivalence.py X=Y=NBYTES`                                  |
 
 `DIR` is a scratch directory for the two `llvm-objdump` listings (about a minute each to make).
 
 ### Measured 2026-10-24
 
-The tool was applied 19 times, rebuilding v7 between runs, until a run proposed nothing.  Its rename
-rules are recorded in `scripts/renaming/harmonize_v7_by_caller_alignment.sed` (1,814 `s///` lines,
-of which 48 are the two halves of 24 swaps through a temporary name).  One swap was made by hand:
+The tool was applied 19 times, rebuilding v7 between runs, until a run proposed nothing, plus one
+`--rename-named --only ...` run (below) and one more run after the re-framing (step 7 of the next
+section).  Its rename rules are recorded in `scripts/renaming/harmonize_v7_by_caller_alignment.sed`:
+18 run blocks, 1,858 `s///` lines, 1,788 renames (1,766 at a986ccd51, 22 in step 7).  The first 14
+blocks write one direct rule per rename (none of them holds a swap or chain); from the 15th block on
+the generator sends every rename of a run through a temporary name, two lines each (140
+`HARMONIZE_TMP` lines, 70 temporaries; in the 15th block 40 of its 43 renames are members of swaps
+or chains).  The runs also inserted three labels where v7 had none:
+`CmpStep_DrawScreen` (first run), `AccTone_JumpTableData_Data` and `AccTone_JumpTableData_Helper`
+(seventh run).  Inserts change no name, so sed cannot replay them; they are listed as
+`# insert NAME at ADDR before FILE:LINE` comments in their run blocks (backfilled from the run
+reports; the tool now writes these comments itself).  One swap was made by hand:
 `scripts/renaming/rename_v7_perfmode_note_map_swap.sed` (v7 had `PerfMode_MapEventNoteToDisplay` on
 the inverse routine; `v7_routine_equivalence.py` shows both routines equal to v10's under the
 swapped names, 36 bytes each).
 
-| measure                                                   | before (79e035417) | after  | command                          |
-|-----------------------------------------------------------|--------------------|--------|----------------------------------|
-| v7 labels (linked ELF)                                    | 53,559             | 53,693 | `version_shared_names.py`        |
-| v7 labels that are also v10 names                         | 51,374             | 52,845 | `version_shared_names.py`        |
-| v7 labels that are not v10 names                          | 2,185              | 848    | `version_shared_names.py`        |
-| v7 `.Lc_<addr>` locals                                    | 638                | 507    | `doc_quality_census.py`, row (c) |
-| review `label-absent` labels v7 defines                   | 0 of 356           | 219    | `v7_review_names_resolved.py`    |
-| review `names-absent-symbol` names v7 defines             | 0 of 138           | 78     | `v7_review_names_resolved.py`    |
-| review `names-absent-symbol` rows with every name defined | 0 of 189           | 107    | `v7_review_names_resolved.py`    |
+| measure                           | before (79e035417) | after (a986ccd51) | command                          |
+|-----------------------------------|--------------------|-------------------|----------------------------------|
+| v7 labels (linked ELF)            | 53,559             | 53,693            | `version_shared_names.py`        |
+| v7 labels that are also v10 names | 51,374             | 52,845            | `version_shared_names.py`        |
+| v7 labels that are not v10 names  | 2,185              | 848               | `version_shared_names.py`        |
+| v7 `.Lc_<addr>` locals            | 638                | 507               | `doc_quality_census.py`, row (c) |
 
 The label count grew because `.Lc_` assembler-local labels renamed to v10 names became symbols, and
-one label (`CmpStep_DrawScreen`) was inserted.
+because of the three inserted labels.
+
+The review list (`analysis/header-propagation/review-2026-10-24.tsv`) was regenerated later in this
+lane (see "Headers" below), and a regenerated list holds only what is still missing, so the names it
+listed before the lane are read from git.  Measured at the branch head (after every step of this
+lane) against the list as it stood at 79e035417:
+
+    $ python3 scripts/analysis/v7_review_names_resolved.py --tsv-rev 79e035417
+    review list: analysis/header-propagation/review-2026-10-24.tsv at 79e035417
+    v7 label-absent labels:             356, defined now  220
+    v7 names-absent-symbol names:       138, defined now   79
+    v7 names-absent-symbol rows:        189, every name defined now  108
+
+(79e035417 is the default of `--tsv-rev`.  Before the lane every one of these was 0, by the list's
+definition.  a986ccd51's commit message quotes 219 / 78 / 107, measured before the later steps.)
 
 ### What the final run refused: `caller-alignment-v7-final.tsv`
 
@@ -130,7 +150,12 @@ data runs next to code.
 (rules unchanged, see `analysis/header-propagation/README.md`); `--verify HEAD` passed (25 files: code
 unchanged, comment insertions only) and `--check-ram HEAD` flagged 0 of the 223 headers it touched.  The
 review list `analysis/header-propagation/review-2026-10-24.tsv` was regenerated by that run (its 183
-hand-port rows kept).
+hand-port rows kept).  **Merge note:** the list is a generated file that any lane re-running
+`propagate_v10_headers.py --apply` rewrites as a whole (926 lines changed here), so a merge with another
+such lane will conflict on it.  Take either side, then regenerate it once both lanes are in, with
+`python3 scripts/tools/propagate_v10_headers.py --apply --review analysis/header-propagation/review-2026-10-24.tsv`
+(only `--apply` rewrites an existing list; `--count` changes nothing, and without `--review` the list is
+named after the day of the run).
 
 | measure                                         | before (79e035417) | after | command                                  |
 |-------------------------------------------------|--------------------|-------|------------------------------------------|

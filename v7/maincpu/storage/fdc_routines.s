@@ -2025,13 +2025,6 @@ FDC_OUTPUT_CTRL_Join:
 ;   bit 6 -> status 0x2f (bad cylinder).
 ; Disables interrupts (D7 FA 05 = di 4) before return.
 FDC_INTERRUPT_HANDLER:
-; [v10] --- FDC_INTERRUPT_HANDLER: FDC interrupt service routine ---
-; [v10] Enables interrupts via prevbank (D7 FA 04 = ei 4).
-; [v10] Checks FDC status register, reads result data.
-; [v10] Tests status bits to determine result type:
-; [v10] bit 7 -> status 0x32 (overrun), bit 5 -> status 0x31 (no data),
-; [v10] bit 6 -> status 0x2f (bad cylinder).
-; [v10] Disables interrupts (D7 FA 05 = di 4) before return.
 	push	qiz
 	cp	(FDC_ERROR_CODE:16), 0
 	jr	nz, FDC_INTERRUPT_HANDLER_Code_Epilogue
