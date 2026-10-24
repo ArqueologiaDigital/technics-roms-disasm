@@ -47,6 +47,7 @@
 #                 --fw-lib-file N --fw-sym S.sym ...] [--report]
 import argparse
 import collections
+import difflib
 import hashlib
 import os
 import re
@@ -202,6 +203,7 @@ INDIRECT = {
 }
 
 ENTRY_RESET = 0x40000000
+FW_MIN = 5          # instructions a routine needs before its body is compared with the firmware's
 ENTRY_NMI = 0x40000008
 
 # The bytes of an older link that the new one did not overwrite (file offsets):
@@ -234,6 +236,7 @@ class Program:
 
     def layout(self):
         self.expect(0x40000000, "jmp", "0x40000594")
+        self.reset = 0x40000594
         self.expect(0x40000728, "mov", "0x4000fa0c, a2")      # the copy descriptor
         self.expect(0x4000086A, "mov", "0x194, d1")            # .data: size, source, run address
         self.expect(0x40000871, "mov", "0x40000400, a0")
@@ -361,7 +364,7 @@ class Program:
 
     def find_code(self):
         im = self.im
-        self.entries = [ENTRY_RESET, ENTRY_NMI, self.irq_handler, self.nmi_handler, self.main]
+        self.entries = [ENTRY_RESET, self.reset, ENTRY_NMI, self.irq_handler, self.nmi_handler, self.main]
         code, _c, _b = self.discover(self.entries)
         # the program image's code ends where its constant data starts: the
         # lowest image address that the code, or a pointer word after the code,
@@ -445,6 +448,14 @@ HW = {
     0x34001090: ("TM4BR", "timer 4 base (reload) value"), 0x34001092: ("TM5BR", "timer 5 base value"),
     0x340010A0: ("TM4BC", "timer 4 count"), 0x340010A2: ("TM5BC", "timer 5 count"),
     0x98070000: ("BOARD_STRAP", "board-revision strap, read only"),
+    0x36008004: ("P04", "I/O port at 0x36008004: bit 5 strobed all through the boot, bit 1 SD card select"),
+    0x36008005: ("P05", "I/O port at 0x36008005"),
+    0x36008024: ("P24", "I/O port at 0x36008024"),
+    0x36008025: ("P25", "I/O port at 0x36008025"),
+    0x36008044: ("P44", "I/O port at 0x36008044"),
+    0x36008064: ("P64", "I/O port at 0x36008064"),
+    0x36008065: ("P65", "I/O port at 0x36008065"),
+    0x36008084: ("P84", "I/O port at 0x36008084"),
     0x48400000: ("FirmwareReset", "the program flash's reset entry: the KN7000 firmware"),
     # the two interrupt thunks Reset writes in work RAM (nop; jmp d32), through the
     # uncached view; a jmp's d32 counts from the jmp, one byte into its thunk
@@ -459,6 +470,44 @@ HW = {
 LOAD_NAMES = {0x40000400: "__data_load", 0x40000B00: "__image_load", 0x4000FA0C: "ImageCopyDescriptor"}
 for _g in range(2, 31):
     HW.setdefault(0x34000100 + 4 * _g, (f"G{_g}ICR", f"interrupt group {_g} control" if _g == 2 else ""))
+
+
+def norm_body(insns, start, callee=lambda t: "C"):
+    """The instructions of a routine from `start` to its first return, with the
+    addresses masked: absolute operands become A, a branch inside the body its
+    offset from the start, a call the callee's name if `callee` knows it, else C
+    (with its register list and frame). Two routines with the same normalised
+    body are the same source code linked at different addresses."""
+    seq, pc, n = [], start, 0
+    while pc in insns and n < 0x400:
+        b, mn, ops = insns[pc]
+        t = first_target(ops) if mn in XFER else None
+        if mn in ("call", "calls"):
+            seq.append((mn, callee(t) if t is not None else "C",
+                        ops.split(",", 1)[1].strip() if "," in ops else ""))
+        elif t is not None:
+            seq.append((mn, "B", t - start))
+        else:
+            seq.append((mn, re.sub(r"0x[0-9a-f]{5,8}", "A", ops)))
+        pc += len(b)
+        n += len(b)
+        if mn in RETS:
+            break
+    else:
+        return None
+    return tuple(seq)
+
+
+def fw_index(unidasm, rom, base_pc, skip, count):
+    """{pc: (bytes, mnemonic, operands)} from one linear unidasm pass of the firmware."""
+    out = subprocess.run([unidasm, rom, "-arch", "mn10300", "-basepc", hex(base_pc),
+                          "-skip", hex(skip), "-count", str(count)],
+                         capture_output=True, text=True, check=True).stdout
+    ix = {}
+    for m in map(INSN.match, out.splitlines()):
+        if m:
+            ix[int(m.group(1), 16)] = (bytes.fromhex(m.group(2).replace(" ", "")), m.group(3), m.group(4).strip())
+    return ix
 
 
 def load_names(path):
@@ -557,8 +606,11 @@ class Data:
         """An address a pointer word may name: a live instruction start, or a
         place in the live data areas."""
         p = self.p
-        if v in p.starts and v not in p.stale:
-            return True
+        if v in p.starts:
+            # code: a routine, a place `call` enters, or a branch target -- not
+            # any instruction start, which a constant can hit by chance
+            return v not in p.stale and (v in p.calls or v in p.branches or v in p.entry_of
+                                         or v in p.dead or v in p.entries)
         o = p.im.file(v)
         return o is not None and self.in_area(o) and o < p.im.img1
 
@@ -668,6 +720,8 @@ OPERAND_NAMES = {
     (0x400007E3, 0x1BC0C): "BSS_SIZE",
     (0x4000093F, 0xDCCB): "THUNK_NOP_JMP",
     (0x40000967, 0xDCCB): "THUNK_NOP_JMP",
+    (0x4000076A, 0x40000000): "UNCACHED_VIEW",
+    (0x400001E9, 0x40000000): "UNCACHED_VIEW",
 }
 
 BSS_END = 0x50010194 + 0x1BC0C
@@ -695,6 +749,8 @@ class Emitter:
         self.T = T
         manual = load_names(a.names)
         names, notes = {}, {}
+        self.names, self.notes = names, notes
+        self.fwcall = {}
         for v, (nm, note) in manual.items():
             names[v] = nm
             if note:
@@ -711,7 +767,7 @@ class Emitter:
             if note:
                 notes.setdefault(v, note)
         # routines byte-identical (to their first return) to named firmware routines
-        self.fwcopy = {}
+        self.fwcopy, self.fwsame = {}, {}
         if a.fw_rom:
             import gen_xap_s
             fw = gen_xap_s.firmware_routines(a.fw_rom, a.fw_r1_end, a.fw_lib_file, a.fw_sym, a.unidasm)
@@ -722,6 +778,11 @@ class Emitter:
                 if b and b in fw:
                     self.fwcopy[f] = fw[b]
                     names.setdefault(f, fw[b])
+            self.fwsame = self.firmware_same(a)
+            for f, (nm, cpu) in self.fwsame.items():
+                names.setdefault(f, nm)
+            for f, (nm, cpu, parent) in self.fwcall.items():
+                names.setdefault(f, nm)
         for f in self.funcs:
             names.setdefault(f, (f"Old_func_{f:08X}" if f in p.stale else f"func_{f:08X}"))
         for t, pp in ((t, pp) for pp, t in p.entry_of.items()):
@@ -753,6 +814,142 @@ class Emitter:
             names[v] = nm
         self.names, self.notes = names, notes
         self.ext = {}            # externals: value -> (name, note)
+
+    def firmware_same(self, a):
+        """{routine: (firmware name, firmware address)} for the routines whose
+        normalised body (norm_body) equals that of exactly one named routine of
+        the firmware, and of no other routine here; at least 8 instructions."""
+        import gen_table_s
+        p = self.p
+        rom = a.fw_rom
+        d = open(rom, "rb").read()
+        end = len(d.rstrip(b"\xff"))
+        ix = fw_index(a.unidasm, rom, 0x48400080, 0x80, a.fw_r1_end - 0x80)
+        ix.update(fw_index(a.unidasm, rom, 0x4C000000, a.fw_lib_file, end - a.fw_lib_file))
+        fsyms = gen_table_s.load_syms(a.fw_sym)
+        fwname = {}
+        for cpu, (nm, _n) in fsyms.items():
+            fwname[cpu] = nm[:-6] if nm.endswith("_entry") else nm
+        named = {f: n for f, n in self.fwcopy.items()}         # mine -> firmware name
+        live = {pc: v for pc, v in p.code.items() if pc not in p.stale}
+        prologue = {t: pp for pp, t in p.entry_of.items()}
+        out = {}
+        # Callees are compared by name once both sides have one; each round may
+        # name more routines, which may make more bodies comparable.
+        for _round in range(10):
+            new = 0
+            for by_name in (True, False):
+                fw = collections.defaultdict(set)
+                for cpu, (nm, _n) in fsyms.items():
+                    if nm.endswith("_entry"):
+                        continue
+                    s = norm_body(ix, cpu, (lambda t: fwname.get(t, "C")) if by_name else (lambda t: "C"))
+                    if s and len(s) >= FW_MIN:
+                        fw[s].add((nm, cpu))
+                mine = collections.defaultdict(list)
+                for f in self.funcs:
+                    if f in p.stale or f in named:
+                        continue
+                    s = norm_body(live, f, (lambda t: named.get(prologue.get(t, t), "C"))
+                                  if by_name else (lambda t: "C"))
+                    if s and len(s) >= FW_MIN:
+                        mine[s].append(f)
+                taken = set(named.values())
+                for s, fs in mine.items():
+                    if len(fs) == 1 and len(fw.get(s, ())) == 1:
+                        nm, cpu = next(iter(fw[s]))
+                        if nm not in taken and fs[0] not in named:
+                            out[fs[0]] = (nm, cpu)
+                            named[fs[0]] = nm
+                            taken.add(nm)
+                            new += 1
+            if not new:
+                break
+        self.fwcall = self.firmware_callees(ix, fsyms, fwname, named, out)
+        return out
+
+    def firmware_callees(self, ix, fsyms, fwname, named, same):
+        """{routine: (firmware name, firmware address, caller)}: a routine called
+        at the same place of a routine both programs have (same name) as a named
+        firmware routine is called there. Only where the two callers make the same
+        number of calls and every pair already named agrees; repeated until no
+        new name appears."""
+        p = self.p
+        base_of = {}
+        byname = {}
+        for cpu, (nm, _n) in fsyms.items():
+            if not nm.endswith("_entry"):
+                byname[nm] = cpu
+        for cpu, (nm, _n) in fsyms.items():
+            base_of[cpu] = byname.get(fwname[cpu], cpu)
+        fstarts = sorted(byname.values())
+        prologue = {t: pp for pp, t in p.entry_of.items()}
+        funcs = sorted(f for f in self.funcs if f not in p.stale)
+        nxt = {f: (funcs[i + 1] if i + 1 < len(funcs) else f + 0x10000) for i, f in enumerate(funcs)}
+
+        def my_calls(f):
+            out, pc = [], f
+            while pc in p.code and pc < nxt[f]:
+                b, mn, ops = p.code[pc]
+                if mn in ("call", "calls") and first_target(ops) is not None:
+                    t = first_target(ops)
+                    out.append(prologue.get(t, t))
+                pc += len(b)
+            return out
+
+        def fw_calls(cpu):
+            import bisect
+            i = bisect.bisect_right(fstarts, cpu)
+            stop = fstarts[i] if i < len(fstarts) else cpu + 0x4000
+            out, pc = [], cpu
+            while pc in ix and pc < stop:
+                b, mn, ops = ix[pc]
+                if mn in ("call", "calls") and first_target(ops) is not None:
+                    t = first_target(ops)
+                    out.append(base_of.get(t, t))
+                pc += len(b)
+            return out
+
+        mine = dict(named)                          # routine -> firmware name
+        for f, nm in self.names.items():
+            if f in self.funcs and nm in byname:
+                mine.setdefault(f, nm)
+        result = {}
+        for _round in range(10):
+            cand = collections.defaultdict(set)
+            for f, nm in list(mine.items()):
+                if nm not in byname:
+                    continue
+                a, b = my_calls(f), fw_calls(byname[nm])
+                if not a or not b:
+                    continue
+                # align the two call lists on the callees both sides have named;
+                # an unnamed callee of ours facing a named one of the firmware's,
+                # in a stretch of equal length (at most 3) between two agreeing
+                # calls, takes its name
+                ta = [mine.get(x, "?") for x in a]
+                tb = [fwname.get(y, "?") for y in b]
+                sm = difflib.SequenceMatcher(None, ta, tb, autojunk=False)
+                for op, i1, i2, j1, j2 in sm.get_opcodes():
+                    if op != "replace" or i2 - i1 != j2 - j1 or i2 - i1 > 3:
+                        continue
+                    for x, y, xn, yn in zip(a[i1:i2], b[j1:j2], ta[i1:i2], tb[j1:j2]):
+                        if xn == "?" and yn != "?" and x in self.funcs:
+                            cand[x].add((yn, y, nm))
+            taken = set(mine.values())
+            new = 0
+            for x, cs in cand.items():
+                names = {c[0] for c in cs}
+                if len(names) == 1:
+                    yn, y, parent = sorted(cs)[0]
+                    if yn not in taken:
+                        mine[x] = yn
+                        result[x] = (yn, byname.get(yn, y), parent)
+                        taken.add(yn)
+                        new += 1
+            if not new:
+                break
+        return result
 
     def body(self, f):
         """bytes of the routine at f up to and including its first return."""
@@ -875,7 +1072,7 @@ class Emitter:
             v.setdefault(nm, a)
         for a, (nm, _n) in self.ext.items():
             v.setdefault(nm, a)
-        v.update({"DATA_SIZE": 0x194, "BSS_SIZE": 0x1BC0C, "THUNK_NOP_JMP": 0xDCCB})
+        v.update({"DATA_SIZE": 0x194, "BSS_SIZE": 0x1BC0C, "THUNK_NOP_JMP": 0xDCCB, "UNCACHED_VIEW": 0x40000000})
         v.update({nm: a for a, nm in LOAD_NAMES.items()})
         self.values = v
 
@@ -899,10 +1096,21 @@ class Emitter:
                     fwn = self.fwcopy[pc]
                     L.append("# byte-identical (to its first return) to the firmware's "
                              + (fwn if fwn != names[pc] else "routine of this name"))
+                if pc in self.fwsame:
+                    fwn, fcpu = self.fwsame[pc]
+                    L.append(f"# the same code as the firmware's {fwn} (941 0x{fcpu:08X}), linked elsewhere"
+                             if fwn != names[pc] else
+                             f"# the same code as the firmware's routine of this name (941 0x{fcpu:08X}),"
+                             " linked elsewhere")
+                if pc in self.fwcall and pc not in self.fwsame and pc not in self.fwcopy:
+                    fwn, fcpu, parent = self.fwcall[pc]
+                    L.append(f"# called where the firmware's {parent} calls its {fwn} (941 0x{fcpu:08X})")
                 if stale and pc in self.dead:
                     L.append("# older link: not reachable from what survives of it")
                 elif stale:
                     L.append("# older link: not reachable from this ROM's code")
+                elif pc in self.dead and (pc in self.dat.refs or pc in self.dat.pointers.values()):
+                    L.append("# nothing calls it directly: its address is taken (a handler or a method)")
                 elif pc in self.dead:
                     L.append("# no caller: unreferenced code")
                 if pc in p.entry_of:
@@ -1063,7 +1271,8 @@ class Emitter:
               ".equ DATA_SIZE, __data_end - __data_start",
               ".equ BSS_SIZE, 0x1BC0C                # .bss: from __bss_start, past the image",
               ".equ IMAGE_SIZE, __image_end - __image_start",
-              ".equ THUNK_NOP_JMP, 0xDCCB            # the bytes cb dc: nop, then jmp d32's opcode"]
+              ".equ THUNK_NOP_JMP, 0xDCCB            # the bytes cb dc: nop, then jmp d32's opcode",
+              ".equ UNCACHED_VIEW, 0x40000000        # 0x8xxxxxxx-0xBxxxxxxx: memory again, uncached"]
         return "\n".join(H + B) + "\n"
 
 

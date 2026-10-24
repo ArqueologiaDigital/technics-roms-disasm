@@ -10,9 +10,9 @@
 # caches, copies the program image to work RAM at 0x50000010 and the .data
 # image to 0x50010000, clears .bss, builds the two interrupt thunks at
 # 0x50000000 and jumps to BootMain in RAM.
-#   18975 instructions in 407 routines (79 with no caller, 277 instructions of an older link),
+#   18975 instructions in 408 routines (79 with no caller, 277 instructions of an older link),
 #   33 byte-identical to named firmware routines;
-#   data: 266 strings, 222 pointer words
+#   data: 267 strings, 219 pointer words
 
 # addresses outside this image: RAM past it, the older link's, the hardware
 .equ IVAR0, 0x20000000                         # low 16 bits of the level-0 interrupt entry
@@ -73,7 +73,14 @@
 .equ SC0STR, 0x3400080C                        # serial 0: status
 .equ TM4MD, 0x34001080                         # timer 4 mode
 .equ TM4BR, 0x34001090                         # timer 4 base (reload) value
-.equ OldLink_40000000, 0x40000000              # an address of the older link
+.equ P04, 0x36008004                           # I/O port at 0x36008004: bit 5 strobed all through the boot, bit 1 SD card select
+.equ P05, 0x36008005                           # I/O port at 0x36008005
+.equ P24, 0x36008024                           # I/O port at 0x36008024
+.equ P25, 0x36008025                           # I/O port at 0x36008025
+.equ P44, 0x36008044                           # I/O port at 0x36008044
+.equ P64, 0x36008064                           # I/O port at 0x36008064
+.equ P65, 0x36008065                           # I/O port at 0x36008065
+.equ P84, 0x36008084                           # I/O port at 0x36008084
 .equ OldLink_40000404, 0x40000404              # an address of the older link
 .equ OldLink_4000041C, 0x4000041C              # an address of the older link
 .equ OldLink_4000BBB4, 0x4000BBB4              # an address of the older link
@@ -103,114 +110,114 @@
 .equ bss_500101C1, 0x500101C1
 .equ bss_500101C2, 0x500101C2
 .equ bss_500101C3, 0x500101C3
-.equ bss_50010244, 0x50010244
-.equ bss_500102D8, 0x500102D8
-.equ bss_500102EC, 0x500102EC
-.equ bss_500102ED, 0x500102ED
-.equ bss_500102EE, 0x500102EE
-.equ bss_500102EF, 0x500102EF
-.equ bss_500102F0, 0x500102F0
-.equ bss_500102F1, 0x500102F1
+.equ PanelEventFifo, 0x50010244                # FIFO descriptor (PanelFifoPushByte and friends)
+.equ PanelTxFifo, 0x500102D8                   # FIFO descriptor
+.equ PanelLinkState, 0x500102EC                # the PanelXferStateTable index: 1-6 transmit, 8-9 receive
+.equ PanelReplyCountdown, 0x500102ED           # reply bytes still expected
+.equ PanelLinkFlags, 0x500102EE                # bit 0 ATN pass, bit 1 receiving, bit 2 reply expected, bits 6-7 the pump's phase
+.equ PanelLinkConst7D, 0x500102EF              # PanelLinkInit sets it to 0x7D; TODO: nothing in this ROM reads it
+.equ PanelLinkStatus, 0x500102F0               # bit 0 rings reset, bit 7 an error
+.equ PanelPingResult, 0x500102F1               # PanelTransaction: bit 0 left panel, bit 3 right panel answered
 .equ bss_500102F2, 0x500102F2
 .equ bss_500102F3, 0x500102F3
 .equ bss_500102F4, 0x500102F4
-.equ bss_500102F5, 0x500102F5
+.equ PanelIdleRetries, 0x500102F5              # PanelWaitLinkIdle's countdown
 .equ bss_500102F6, 0x500102F6
-.equ bss_500102F8, 0x500102F8
-.equ bss_500102FC, 0x500102FC
-.equ bss_500102FE, 0x500102FE
-.equ bss_50010300, 0x50010300
-.equ bss_5001035C, 0x5001035C
-.equ bss_5001035E, 0x5001035E
-.equ bss_50010360, 0x50010360
-.equ bss_50010361, 0x50010361
+.equ PanelTickMark, 0x500102F8                 # the tick count a PanelTickWait* started at
+.equ PanelRxRingTail, 0x500102FC
+.equ PanelRxRingHead, 0x500102FE
+.equ PanelRxRing, 0x50010300
+.equ PanelTxRingRead, 0x5001035C
+.equ PanelTxRingWrite, 0x5001035E
+.equ PanelTxRing, 0x50010360
+.equ PanelTxRingArg, 0x50010361                # the second byte of the first slot: PanelSendPairPolled's argument
 .equ bss_5001039C, 0x5001039C
 .equ bss_5001039E, 0x5001039E
 .equ bss_500103A0, 0x500103A0
 .equ bss_500103A6, 0x500103A6
 .equ bss_500103CC, 0x500103CC
 .equ bss_500103CE, 0x500103CE
-.equ bss_500103DD, 0x500103DD
-.equ bss_500103DE, 0x500103DE
-.equ bss_500103DF, 0x500103DF
-.equ bss_500103E0, 0x500103E0
-.equ bss_500103E2, 0x500103E2
+.equ PanelErrorCode, 0x500103DD                # PanelErrorRecovery's countdown and error nibble
+.equ PanelAtnPass, 0x500103DE                  # PanelAtnIsr: 0 for the first edge of a pulse
+.equ PanelModeFlag, 0x500103DF                 # PanelModeFlagSet / Get
+.equ FdcMotorCountdown, 0x500103E0
+.equ FdcSavedDor, 0x500103E2
 .equ bss_50010464, 0x50010464
 .equ bss_50010466, 0x50010466
-.equ bss_50012468, 0x50012468
+.equ StackTop, 0x50012468                      # Reset sets SP 12 bytes below it
 .equ bss_50012568, 0x50012568
 .equ bss_5001256C, 0x5001256C
 .equ bss_50012570, 0x50012570
-.equ bss_50012574, 0x50012574
-.equ bss_5001257C, 0x5001257C
+.equ errno, 0x50012574
+.equ CurrentLconv, 0x5001257C                  # vsprintf_core keeps localeconv's result here
 .equ bss_50012580, 0x50012580
-.equ bss_50012584, 0x50012584
+.equ FdcProbeMarker, 0x50012584                # -1 while the media is being identified
 .equ bss_50012586, 0x50012586
-.equ bss_50012587, 0x50012587
-.equ bss_50012588, 0x50012588
-.equ bss_5001258C, 0x5001258C
-.equ bss_50012590, 0x50012590
+.equ FdcBusy, 0x50012587                       # 0xA5 during a request, 0x5A after
+.equ FdcByteCount, 0x50012588                  # the transfer's bytes
+.equ FdcSectorSize, 0x5001258C                 # 0x200, or 0x400 for media type 2
+.equ FdcInitBusy, 0x50012590
 .equ bss_50012594, 0x50012594
-.equ bss_50012598, 0x50012598
-.equ bss_50012599, 0x50012599
-.equ bss_5001259A, 0x5001259A
-.equ bss_5001259B, 0x5001259B
-.equ bss_5001259C, 0x5001259C
-.equ bss_5001259D, 0x5001259D
-.equ bss_5001259E, 0x5001259E
-.equ bss_5001259F, 0x5001259F
-.equ bss_500125A0, 0x500125A0
-.equ bss_500125A1, 0x500125A1
-.equ bss_500125A2, 0x500125A2
-.equ bss_500125A3, 0x500125A3
-.equ bss_500125A4, 0x500125A4
-.equ bss_500125A5, 0x500125A5
-.equ bss_500125A6, 0x500125A6
-.equ bss_500125A7, 0x500125A7
-.equ bss_500125A8, 0x500125A8
-.equ bss_500125A9, 0x500125A9
-.equ bss_500125AA, 0x500125AA
-.equ bss_500125AB, 0x500125AB
-.equ bss_500125AC, 0x500125AC
+.equ FdcError, 0x50012598
+.equ FdcPrevError, 0x50012599
+.equ FdcOpcode, 0x5001259A
+.equ FdcHeadSel, 0x5001259B
+.equ FdcDrive, 0x5001259C
+.equ FdcCylinder, 0x5001259D
+.equ FdcHead, 0x5001259E
+.equ FdcSector, 0x5001259F
+.equ FdcSizeCode, 0x500125A0
+.equ FdcEot, 0x500125A1
+.equ FdcGapRw, 0x500125A2
+.equ FdcDtl, 0x500125A3
+.equ FdcFmtSectors, 0x500125A4
+.equ FdcGapFmt, 0x500125A5
+.equ FdcFillByte, 0x500125A6
+.equ FdcStp, 0x500125A7
+.equ FdcSeekCyl, 0x500125A8
+.equ FdcSrt, 0x500125A9
+.equ FdcHut, 0x500125AA
+.equ FdcHlt, 0x500125AB
+.equ FdcNonDma, 0x500125AC
 .equ bss_500125AD, 0x500125AD
 .equ bss_500125AE, 0x500125AE
 .equ bss_500125AF, 0x500125AF
 .equ bss_500125B0, 0x500125B0
 .equ bss_500125B1, 0x500125B1
-.equ bss_500125B4, 0x500125B4
-.equ bss_500125B8, 0x500125B8
-.equ bss_500125BC, 0x500125BC
-.equ bss_500125C0, 0x500125C0
-.equ bss_500125C4, 0x500125C4
-.equ bss_500125C8, 0x500125C8
-.equ bss_500125CC, 0x500125CC
-.equ bss_500125D0, 0x500125D0
-.equ bss_500125EC, 0x500125EC
-.equ bss_500125ED, 0x500125ED
-.equ bss_500125F4, 0x500125F4
-.equ bss_500125F5, 0x500125F5
-.equ bss_500125F6, 0x500125F6
-.equ bss_500125F7, 0x500125F7
-.equ bss_500125F8, 0x500125F8
-.equ bss_50012640, 0x50012640
-.equ bss_50012641, 0x50012641
-.equ bss_50012644, 0x50012644
-.equ bss_50012648, 0x50012648
-.equ bss_5001264C, 0x5001264C
-.equ bss_50012650, 0x50012650
-.equ bss_50012654, 0x50012654
-.equ bss_50012658, 0x50012658
-.equ bss_5001265C, 0x5001265C
-.equ bss_5001265D, 0x5001265D
-.equ bss_5001265E, 0x5001265E
-.equ bss_50012660, 0x50012660
+.equ FdcRequestBlock, 0x500125B4               # the request being served: command
+.equ FdcReqDrive, 0x500125B8
+.equ FdcReqHead, 0x500125BC
+.equ FdcReqCylinder, 0x500125C0                # the media type for command 0
+.equ FdcReqSector, 0x500125C4
+.equ FdcReqCount, 0x500125C8
+.equ FdcReqBuffer, 0x500125CC
+.equ FdcRequestCopy, 0x500125D0                # the request as it came in
+.equ FdcIrqFlag, 0x500125EC                    # 0xFF while a command waits for its interrupt; FdcIrq clears it
+.equ FdcResult, 0x500125ED                     # the result bytes, ST0 first (FdcInit drains interrupts until ST0 reads 0x80)
+.equ FdcRetryCount, 0x500125F4
+.equ FdcHeadSelect, 0x500125F5
+.equ FdcDensity, 0x500125F6
+.equ FdcMediaType, 0x500125F7
+.equ FdcFormatIds, 0x500125F8
+.equ FdcAbnormalEnd, 0x50012640
+.equ FdcCurrentCyl, 0x50012641                 # 0xFF when not known
+.equ FdcLastCyl, 0x50012644
+.equ FdcCylCount, 0x50012648
+.equ FdcSectorsPerTrack, 0x5001264C
+.equ FdcLastSector, 0x50012650
+.equ FdcSavedSector, 0x50012654
+.equ FdcSavedCount, 0x50012658
+.equ FdcDsrPrev, 0x5001265C
+.equ FdcDsr, 0x5001265D
+.equ FdcIcrReadback, 0x5001265E                # the ISRs read their GxICR back into it
+.equ FdcTestRequest, 0x50012660                # FdcSeekTestLoop's and FdcIndexDetectInit's request block
 .equ bss_50012664, 0x50012664
 .equ bss_50012668, 0x50012668
 .equ bss_5001266C, 0x5001266C
 .equ bss_50012670, 0x50012670
 .equ bss_50012674, 0x50012674
 .equ bss_50012678, 0x50012678
-.equ bss_5001267C, 0x5001267C
+.equ FdcTestBuffer, 0x5001267C
 .equ bss_5001287C, 0x5001287C
 .equ bss_5001287E, 0x5001287E
 .equ bss_50012880, 0x50012880
@@ -242,7 +249,7 @@
 .equ bss_5001812C, 0x5001812C
 .equ bss_50018130, 0x50018130
 .equ bss_50018330, 0x50018330
-.equ bss_50019730, 0x50019730
+.equ TickCount, 0x50019730                     # counted up by TickIsr
 .equ bss_50019734, 0x50019734
 .equ bss_50019735, 0x50019735
 .equ bss_50019738, 0x50019738
@@ -250,7 +257,7 @@
 .equ bss_50019740, 0x50019740
 .equ bss_50019744, 0x50019744
 .equ bss_50019748, 0x50019748
-.equ bss_5001974C, 0x5001974C
+.equ IrqSlots, 0x5001974C                      # IrqRegister's copies of the 20-byte descriptors, one per slot
 .equ bss_5001975A, 0x5001975A
 .equ bss_500199CC, 0x500199CC
 .equ bss_500199D0, 0x500199D0
@@ -291,6 +298,7 @@
 .equ BSS_SIZE, 0x1BC0C                # .bss: from __bss_start, past the image
 .equ IMAGE_SIZE, __image_end - __image_start
 .equ THUNK_NOP_JMP, 0xDCCB            # the bytes cb dc: nop, then jmp d32's opcode
+.equ UNCACHED_VIEW, 0x40000000        # 0x8xxxxxxx-0xBxxxxxxx: memory again, uncached
 
 # ============================== ROM at 0x40000000: the vectors ==============================
 .mnbase 0x40000000            # CPU address of file offset 0
@@ -324,11 +332,11 @@ NmiVector:
 # older link: not reachable from this ROM's code
 Old_func_40000011:
     mov     2, d0
-    movbu   d0, (0x36008044)
+    movbu   d0, (P44)
     mov     2, d0
-    movbu   d0, (0x36008004)
+    movbu   d0, (P04)
     mov     0xff, d0
-    movbu   d0, (0x36008064)
+    movbu   d0, (P64)
     jmp     OldLink_500023CD
     .space  17, 0xFF
 old_data_40000040:
@@ -340,29 +348,29 @@ old_data_40000040:
 # older link: not reachable from this ROM's code
 Old_func_40000064:
     mov     0xfe, d0
-    movbu   d0, (0x36008024)
+    movbu   d0, (P24)
     mov     2, d0
-    movbu   d0, (0x36008044)
+    movbu   d0, (P44)
     mov     2, d0
-    movbu   d0, (0x36008004)
+    movbu   d0, (P04)
     mov     0xff, d0
-    movbu   d0, (0x36008064)
+    movbu   d0, (P64)
     mov     CHCTR, a0
     mov     0x00000030:32, d0
     mov     d0, (a0)
     mov     0x00000003:32, d0
     mov     d0, (a0)
     nop
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
     mov     0x497, d0
     movhu   d0, (0x32000040)
     mov     0xea6, d0
     movhu   d0, (0x32000042)
     mov     0x945, d0
     movhu   d0, (MEMCTR4)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
     mov     0, d1
 old_loc_400000D4:
     mov     0x493, d0
@@ -384,31 +392,31 @@ old_loc_400000D4:
     cmp     d1, d2
     beq     old_loc_40000127
 old_loc_40000109:
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
     bra     old_loc_40000109
 old_loc_40000127:
     mov     0x965, d0
     movhu   d0, (MEMCTR4)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
 old_loc_4000015A:
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
     movhu   (MEMCTR0), d0
     and     0x8000, d0
     or      0x0f04, d0
     movhu   d0, (MEMCTR0)
     mov     0xf04, d0
     movhu   d0, (MEMCTR3)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
     clr     d1
     movbu   d1, (0x34004002)
     mov     OldLink_50180824, a0
@@ -441,7 +449,7 @@ old_loc_4000015A:
     asl     d3, d1
     movbu   (8, a2), d0
     or      d0, d1
-    mov     OldLink_40000000, d0
+    mov     UNCACHED_VIEW, d0
     add     d0, d1
     mov     d1, a1
     cmp     0, d2
@@ -454,11 +462,11 @@ old_loc_400001F6:
     add     -1, d2
     bgt     old_loc_400001F6
 old_loc_40000200:
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
     call    OldLink_500022B1, 0, 0
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
     mov     0x000413a4, d1
     cmp     0, d1
     ble     old_loc_4000023A
@@ -470,8 +478,8 @@ old_loc_40000234:
     add     -4, d1
     bgt     old_loc_40000234
 old_loc_4000023A:
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
     mov     0x24, d1
     cmp     0, d1
     ble     old_loc_40000262
@@ -485,8 +493,8 @@ old_loc_4000025A:
     add     -4, d1
     bgt     old_loc_4000025A
 old_loc_40000262:
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
     mov     0x00040000, d1
     cmp     0, d1
     ble     old_loc_40000287
@@ -498,8 +506,8 @@ old_loc_40000281:
     add     -4, d1
     bgt     old_loc_40000281
 old_loc_40000287:
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
     mov     IRQ_THUNK_UNCACHED, a0
     mov     0x0000dccb, d0
     movhu   d0, (a0)
@@ -536,19 +544,19 @@ old_loc_40000287:
     mov     0x10, d1
     lsr     d1, d0
     movhu   d0, (a0)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
     jmp     OldLink_5000C5F1
 
 # ---- Old_func_4000034A -------------------------------------------------------
 # older link: not reachable from what survives of it
 Old_func_4000034A:
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
     jmp     OldLink_5000C0BA
 
 # ---- Old_func_4000035D -------------------------------------------------------
@@ -649,15 +657,15 @@ Old_func_400003CB:
 __data_load:
 .mnbase 0x5000FC00            # __data_start - 0x00400
 __data_start:
-data_50010000:
+FdcMotorState:                   # 0 off, 1 on, 2 counting down
     .byte   0x00, 0xFF, 0xCB, 0xD9
-data_50010004:
+FdcSeekTestCount:
     .long   0x00000000
-data_50010008:
+FdcLastDir:                      # the DIR as FdcDiskPresent last read it
     .byte   0x00
-data_50010009:
+FdcIndexInitDone:
     .byte   0x00, 0xFC, 0xDC
-data_5001000C:
+FdcMediaState:                   # FdcMediaChangePoll: 0xFF unknown, 0 empty, 1 a disk
     .byte   0xFF, 0x10, 0x40, 0x28
 data_50010010:
     .word   0x0000
@@ -691,12 +699,12 @@ data_50010064:
 data_50010065:
     .byte   0x00, 0x00, 0x50
 data_50010068:
-    .long   rodata_50009100
+    .byte   0x00, 0x91, 0x00, 0x50
 data_5001006C:
     .long   0xFFFFFFFF
-data_50010070:
-    .long   rodata_50009100
-data_50010074:
+FdcIndexSeen:
+    .byte   0x00, 0x91, 0x00, 0x50
+FdcIndexTick:
     .byte   0x00, 0x00, 0x00, 0x00, 0x02, 0x00, 0x01, 0x00, 0x41, 0x00, 0x00, 0x00, 0x00, 0xFF
 data_50010082:
     .byte   0x02, 0x00, 0x01, 0x00
@@ -726,15 +734,15 @@ str_500100E0:
     .byte   0x00, 0x00, 0x00, 0xFF, 0x00, 0x32, 0x00, 0x00, 0x00, 0x00
 data_500100EC:
     .byte   0x0A, 0x20, 0xFC, 0xCC
-data_500100F0:
-    .long   func_5000965C, func_5000965C, func_5000965C, func_5000965C
-    .long   func_5000965C, func_5000965C, func_5000965C, func_5000965C
-    .long   func_5000965C, func_5000965C, func_5000965C, func_5000965C
-    .long   func_5000965C, func_5000965C, func_5000965C, func_5000965C
-    .long   func_5000965C, func_5000965C, func_5000965C, func_5000965C
-    .long   func_5000965C, func_5000965C, func_5000965C, func_5000965C
-    .long   func_5000965C, func_5000965C, func_5000965C, func_5000965C
-    .long   func_5000965C, func_5000965C, func_5000965C, func_5000965C
+IrqHandlerTable:                 # one handler per interrupt group, all IrqDefaultHandler in the image
+    .long   IrqDefaultHandler, IrqDefaultHandler, IrqDefaultHandler, IrqDefaultHandler
+    .long   IrqDefaultHandler, IrqDefaultHandler, IrqDefaultHandler, IrqDefaultHandler
+    .long   IrqDefaultHandler, IrqDefaultHandler, IrqDefaultHandler, IrqDefaultHandler
+    .long   IrqDefaultHandler, IrqDefaultHandler, IrqDefaultHandler, IrqDefaultHandler
+    .long   IrqDefaultHandler, IrqDefaultHandler, IrqDefaultHandler, IrqDefaultHandler
+    .long   IrqDefaultHandler, IrqDefaultHandler, IrqDefaultHandler, IrqDefaultHandler
+    .long   IrqDefaultHandler, IrqDefaultHandler, IrqDefaultHandler, IrqDefaultHandler
+    .long   IrqDefaultHandler, IrqDefaultHandler, IrqDefaultHandler, IrqDefaultHandler
 data_50010170:
     .word   0xFFFF, 0x8004
 data_50010174:
@@ -748,6 +756,10 @@ __data_end:
 .mnbase 0x40000000
 
 # ============================== ROM: the reset code and the NMI handler, run in place =======
+
+# ---- Reset -------------------------------------------------------------------
+# bus and SDRAM set-up (MEMCTR, eight refresh cycles), caches on, the program image to work RAM,
+# .bss cleared, .data copied, the interrupt thunks built, the stack set; then BootMain
 Reset:
     movhu   (MEMCTR0), d0
     and     0x8000, d0
@@ -762,35 +774,35 @@ Reset:
     mov     d0, (a0)
     nop
     mov     0xfe, d0
-    movbu   d0, (0x36008024)
+    movbu   d0, (P24)
     mov     2, d0
-    movbu   d0, (0x36008044)
+    movbu   d0, (P44)
     mov     2, d0
-    movbu   d0, (0x36008004)
+    movbu   d0, (P04)
     mov     7, d1
 loc_400005E0:
     cmp     6, d1
     bne     loc_400005ED
     mov     0xbf, d0
-    movbu   d0, (0x36008064)
+    movbu   d0, (P64)
 loc_400005ED:
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
     add     -1, d1
     cmp     0, d1
     bne     loc_400005E0
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
     mov     0x297, d0
     movhu   d0, (0x32000040)
     mov     0xea6, d0
     movhu   d0, (0x32000042)
     mov     0x965, d0
     movhu   d0, (MEMCTR4)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
     mov     0, d1
 loc_40000648:
     mov     0x293, d0
@@ -800,36 +812,36 @@ loc_40000648:
     inc     d1
     cmp     8, d1
     bne     loc_40000648
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
     jmp     loc_40000A25
 loc_400006D2:
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
     mov     8, d3
     mov     ImageCopyDescriptor, a2
     movbu   (3, a2), d2
@@ -857,7 +869,7 @@ loc_400006D2:
     asl     d3, d1
     movbu   (8, a2), d0
     or      d0, d1
-    mov     ResetVector, d0
+    mov     UNCACHED_VIEW, d0
     add     d0, d1
     mov     d1, a1
     cmp     0, d2
@@ -870,20 +882,20 @@ loc_40000777:
     add     -1, d2
     bgt     loc_40000777
 loc_40000781:
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
     mov     BSS_SIZE, d1
     cmp     0, d1
     ble     loc_400007FA
@@ -895,27 +907,27 @@ loc_400007F4:
     add     -4, d1
     bgt     loc_400007F4
 loc_400007FA:
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
     mov     DATA_SIZE, d1
     cmp     0, d1
     ble     loc_40000885
     mov     __data_load, a0
-    mov     data_50010000, a1
+    mov     FdcMotorState, a1
 loc_4000087D:
     mov     (a0), d0
     inc4    a0
@@ -924,24 +936,24 @@ loc_4000087D:
     add     -4, d1
     bgt     loc_4000087D
 loc_40000885:
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
     mov     CHCTR, a0
     mov     (a0), d0
     or      0x80, d0
@@ -958,7 +970,7 @@ loc_40000885:
     mov     THUNK_NOP_JMP, d0
     movhu   d0, (a0)
     add     2, a0
-    mov     func_5000841F, d0
+    mov     IrqDispatch, d0
     mov     IRQ_THUNK_JMP, d1
     sub     d1, d0
     movhu   d0, (a0)
@@ -970,7 +982,7 @@ loc_40000885:
     mov     THUNK_NOP_JMP, d0
     movhu   d0, (a0)
     add     2, a0
-    mov     func_40000AE2, d0
+    mov     NmiHandler, d0
     mov     NMI_THUNK_JMP, d1
     sub     d1, d0
     movhu   d0, (a0)
@@ -978,29 +990,29 @@ loc_40000885:
     mov     0x10, d1
     lsr     d1, d0
     movhu   d0, (a0)
-    mov     bss_50012468, a0
+    mov     StackTop, a0
     mov     a0, sp
     add     -0xc, sp
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
     jmp     BootMain
 loc_40000A25:
     mov     0x400, d0
@@ -1035,30 +1047,33 @@ loc_40000A86:
     mov     2, d0
     movhu   d0, (MEMCTR7)
     mov     0xfe, d0
-    movbu   d0, (0x36008024)
+    movbu   d0, (P24)
     mov     2, d0
-    movbu   d0, (0x36008044)
+    movbu   d0, (P44)
     mov     2, d0
-    mov     d0, (0x36008004)
+    mov     d0, (P04)
     mov     0xbf, d0
-    movbu   d0, (0x36008064)
+    movbu   d0, (P64)
     clr     d0
-    movbu   d0, (0x36008025)
+    movbu   d0, (P25)
     mov     3, d0
-    movbu   d0, (0x36008065)
+    movbu   d0, (P65)
     mov     0x0000ffff, d0
     movhu   d0, (EXTMD)
     jmp     loc_400006D2
 
-# ---- func_40000ADF -----------------------------------------------------------
+# ---- ResetTail ---------------------------------------------------------------
+# a `ret` after Reset's last jmp: the compiler's epilogue, never reached
 # no caller: unreferenced code
-func_40000ADF:
+ResetTail:
     ret     0, 0
 
-# ---- func_40000AE2 -----------------------------------------------------------
-func_40000AE2:
+# ---- NmiHandler --------------------------------------------------------------
+# sets P04 bit 3, then sets bit 4 of 0x20000040 over and over: never returns (TODO: 0x20000040
+# is not identified)
+NmiHandler:
     add     -4, sp
-    bset    0x08, (0x36008004)
+    bset    0x08, (P04)
     setlb
     movhu   (0x20000040), d0
     or      0x10, d0
@@ -1073,35 +1088,38 @@ __image_load:
 .mnbase 0x4FFFF510            # __image_start - 0x00B00
 __image_start:
 
-# ---- func_50000010 -----------------------------------------------------------
-# `call` enters at func_50000010_entry, past the prologue
-func_50000010:
+# ---- strtoul -----------------------------------------------------------------
+# wraps StrToULongCore; sets errno (2) on overflow
+# `call` enters at strtoul_entry, past the prologue
+strtoul:
     movm    [a2], (sp)
     add     -0x1c, sp
-func_50000010_entry:
+strtoul_entry:
     mov     sp, a2
     clr     d1
     mov     d1, (0x18, sp)
     mov     a2, d1
     add     0x18, d1
     nop
-    call    func_50000036_entry, [d2,d3,a2,a3], 0x38
+    call    StrToULongCore_entry, [d2,d3,a2,a3], 0x38
     mov     (0x18, sp), d1
     nop
     cmp     0, d1
     nop
     beq     loc_50000033
     mov     2, d1
-    mov     d1, (bss_50012574)
+    mov     d1, (errno)
 loc_50000033:
     ret     [a2], 0x20
 
-# ---- func_50000036 -----------------------------------------------------------
-# `call` enters at func_50000036_entry, past the prologue
-func_50000036:
+# ---- StrToULongCore ----------------------------------------------------------
+# base 0 or 2..36, optional "0x"/"0X", an unsigned overflow check; the overflow flag goes back
+# through a pointer
+# `call` enters at StrToULongCore_entry, past the prologue
+StrToULongCore:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x28, sp
-func_50000036_entry:
+StrToULongCore_entry:
     mov     a1, (0x44, sp)
     mov     d1, (0x4c, sp)
     mov     a0, a2
@@ -1134,7 +1152,6 @@ loc_50000055:
     inc     a2
     movbu   (a2), d0
     extb    d0
-rodata_5000006F:
     movbu   (d0, a0), d0
     nop
     btst    0x20, d0
@@ -1251,7 +1268,7 @@ loc_50000101:
     movbu   (a2), d0
     mov     0x57, a3
     extb    d0
-    call    func_5000018C_entry, [d2], 4
+    call    tolower_entry, [d2], 4
     extb    d0
     mov     d0, a1
     cmp     0x39, a1
@@ -1323,11 +1340,12 @@ loc_50000188:
 loc_50000189:
     ret     [d2,d3,a2,a3], 0x38
 
-# ---- func_5000018C -----------------------------------------------------------
-# `call` enters at func_5000018C_entry, past the prologue
-func_5000018C:
+# ---- tolower -----------------------------------------------------------------
+# d0 + 0x20 when the ctype table marks it upper case (bit 0x01)
+# `call` enters at tolower_entry, past the prologue
+tolower:
     movm    [d2], (sp)
-func_5000018C_entry:
+tolower_entry:
     mov     (rodata_5000D53C), a0
     mov     d0, d2
     inc     a0
@@ -1360,20 +1378,22 @@ sprintf_entry:
     mov     a2, (a0)
     mov     (0x2c, sp), a0
     mov     1, d0
-    call    func_500001C7_entry, [d2,d3,a2,a3], 0x98
+    call    vsprintf_core_entry, [d2,d3,a2,a3], 0x98
     ret     [a2], 0x20
 
-# ---- func_500001C7 -----------------------------------------------------------
-# `call` enters at func_500001C7_entry, past the prologue
-func_500001C7:
+# ---- vsprintf_core -----------------------------------------------------------
+# the printf engine sprintf calls: walks the format, parses each spec (PfParseSpec) and switches
+# on the conversion letter 'E'..'x'
+# `call` enters at vsprintf_core_entry, past the prologue
+vsprintf_core:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x88, sp
-func_500001C7_entry:
+vsprintf_core_entry:
     mov     a1, (0xa8, sp)
     mov     d0, (0xac, sp)
     mov     a0, (0xa4, sp)
-    call    func_500007CC, 0, 0
-    mov     a0, (bss_5001257C)
+    call    localeconv, 0, 0
+    mov     a0, (CurrentLconv)
     nop
     clr     d3
     mov     d3, (0x38, sp)
@@ -1423,7 +1443,7 @@ loc_50000214:
     mov     (0x2c, sp), a0
     inc     a2
     mov     1, d1
-    call    func_500005D7_entry, [d2,a2,a3], 0x1c
+    call    PfOutPad_entry, [d2,a2,a3], 0x1c
     jmp     loc_50000467
 loc_5000023C:
     mov     (0xa4, sp), d0
@@ -1444,7 +1464,7 @@ loc_5000023C:
     mov     (0x2c, sp), a0
     inc     a2
     mov     1, d1
-    call    func_500005D7_entry, [d2,a2,a3], 0x1c
+    call    PfOutPad_entry, [d2,a2,a3], 0x1c
     jmp     loc_50000467
 loc_50000262:
     mov     (0x28, sp), d0
@@ -1453,7 +1473,7 @@ loc_50000262:
     mov     (0xa4, sp), a0
     mov     (0x34, sp), a1
     mov     (0x30, sp), d0
-    call    func_5000061D_entry, [d2,d3,a2,a3], 0x2c
+    call    PfParseSpec_entry, [d2,d3,a2,a3], 0x2c
     mov     a0, (0xa4, sp)
     nop
     cmp     0, a0
@@ -1546,7 +1566,7 @@ loc_500002F7:
     mov     (0x24, sp), a0
     mov     (0x28, sp), a1
     mov     -0xa, d0
-    call    func_5000089C_entry, [d2,d3,a2,a3], 0x2c
+    call    PfFormatInteger_entry, [d2,d3,a2,a3], 0x2c
     mov     d0, d3
     mov     (0x40, sp), d0
     nop
@@ -1566,7 +1586,7 @@ loc_5000031D:
     mov     (0x24, sp), a0
     mov     (0x28, sp), a1
     mov     0xa, d0
-    call    func_5000089C_entry, [d2,d3,a2,a3], 0x2c
+    call    PfFormatInteger_entry, [d2,d3,a2,a3], 0x2c
     mov     d0, d3
     mov     (0x40, sp), d0
     nop
@@ -1587,7 +1607,7 @@ loc_50000343:
     mov     (0x24, sp), a0
     mov     (0x28, sp), a1
     mov     8, d0
-    call    func_5000089C_entry, [d2,d3,a2,a3], 0x2c
+    call    PfFormatInteger_entry, [d2,d3,a2,a3], 0x2c
     mov     d0, d3
     jmp     loc_5000042F
 loc_50000363:
@@ -1604,7 +1624,7 @@ loc_50000363:
     mov     (0x24, sp), a0
     mov     (0x28, sp), a1
     mov     0x10, d0
-    call    func_5000089C_entry, [d2,d3,a2,a3], 0x2c
+    call    PfFormatInteger_entry, [d2,d3,a2,a3], 0x2c
     mov     d0, d3
     jmp     loc_5000042F
 loc_50000383:
@@ -1622,7 +1642,7 @@ loc_50000383:
     mov     (0x24, sp), a0
     mov     (0x28, sp), a1
     mov     0x10, d0
-    call    func_5000089C_entry, [d2,d3,a2,a3], 0x2c
+    call    PfFormatInteger_entry, [d2,d3,a2,a3], 0x2c
     mov     d0, d3
     jmp     loc_5000042F
 loc_500003A7:
@@ -1634,7 +1654,7 @@ loc_500003A7:
     nop
     clr     d1
     nop
-    call    func_50000B8A_entry, [d2,a2,a3], 0x7c
+    call    PfFormatF_entry, [d2,a2,a3], 0x7c
     mov     d0, d3
     bra     loc_5000042F
 loc_500003BB:
@@ -1649,7 +1669,7 @@ loc_500003BB:
     mov     (0x24, sp), a0
     mov     a3, a1
     mov     (0x3c, sp), d0
-    call    func_50000C0F_entry, [d2,d3,a2,a3], 0x80
+    call    PfFormatE_entry, [d2,d3,a2,a3], 0x80
     mov     d0, d3
     bra     loc_5000042F
 loc_500003D5:
@@ -1661,7 +1681,7 @@ loc_500003D5:
     mov     (0x24, sp), a0
     mov     a3, a1
     mov     (0x3c, sp), d0
-    call    func_50000D6F_entry, [d2,d3,a2,a3], 0x84
+    call    PfFormatG_entry, [d2,d3,a2,a3], 0x84
     mov     d0, d3
     bra     loc_5000042F
 loc_500003EB:
@@ -1716,7 +1736,7 @@ loc_5000042F:
     mov     (0x24, sp), a1
     mov     d3, d0
     mov     (0x38, sp), d1
-    call    func_50000497_entry, [d2,d3,a2,a3], 0x30
+    call    PfOutField_entry, [d2,d3,a2,a3], 0x30
     mov     (0xac, sp), d0
     nop
     cmp     0, d0
@@ -1770,12 +1790,14 @@ loc_50000492:
     mov     a2, d0
     ret     [d2,d3,a2,a3], 0x98
 
-# ---- func_50000497 -----------------------------------------------------------
-# `call` enters at func_50000497_entry, past the prologue
-func_50000497:
+# ---- PfOutField --------------------------------------------------------------
+# one converted field with its padding: left-justified ('-'), or zeros after a sign or a
+# "0x"/"0X" prefix ('0'), else spaces first
+# `call` enters at PfOutField_entry, past the prologue
+PfOutField:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x20, sp
-func_50000497_entry:
+PfOutField_entry:
     mov     (0x50, sp), a2
     mov     d1, (0x44, sp)
     mov     a0, (0x38, sp)
@@ -1797,7 +1819,7 @@ func_50000497_entry:
     mov     a0, (0x14, sp)
     mov     (0x38, sp), a0
     mov     1, d1
-    call    func_500005D7_entry, [d2,a2,a3], 0x1c
+    call    PfOutPad_entry, [d2,a2,a3], 0x1c
     mov     (0x44, sp), d0
     nop
     add     -1, d0
@@ -1864,7 +1886,7 @@ loc_5000053E:
     mov     2, d0
     mov     (0x4c, sp), d1
     mov     d2, a1
-    call    func_500005AF_entry, [d2,a2,a3], 0x24
+    call    PfOutString_entry, [d2,a2,a3], 0x24
     nop
     add     2, d2
     add     -2, d3
@@ -1878,7 +1900,7 @@ loc_50000553:
     mov     a0, (0x14, sp)
     mov     (0x38, sp), a0
     mov     1, d1
-    call    func_500005D7_entry, [d2,a2,a3], 0x1c
+    call    PfOutPad_entry, [d2,a2,a3], 0x1c
     mov     (0x44, sp), d0
     nop
     inc     d2
@@ -1902,7 +1924,7 @@ loc_5000057D:
     mov     d2, a1
     mov     d3, d0
     mov     (0x4c, sp), d1
-    call    func_500005AF_entry, [d2,a2,a3], 0x24
+    call    PfOutString_entry, [d2,a2,a3], 0x24
     mov     0, a3
     bra     loc_500005A4
 loc_50000593:
@@ -1912,7 +1934,7 @@ loc_50000593:
     mov     (0x38, sp), a0
     mov     (0x18, sp), d0
     mov     (0x44, sp), d1
-    call    func_500005D7_entry, [d2,a2,a3], 0x1c
+    call    PfOutPad_entry, [d2,a2,a3], 0x1c
 loc_500005A4:
     mov     a2, a0
     add     -1, a2
@@ -1921,12 +1943,14 @@ loc_500005A4:
     bne     loc_5000057D
     ret     [d2,d3,a2,a3], 0x30
 
-# ---- func_500005AF -----------------------------------------------------------
-# `call` enters at func_500005AF_entry, past the prologue
-func_500005AF:
+# ---- PfOutString -------------------------------------------------------------
+# append d0 bytes: memcpy into the output buffer when writing to a string, else fwrite to the
+# stream
+# `call` enters at PfOutString_entry, past the prologue
+PfOutString:
     movm    [d2,a2,a3], (sp)
     add     -0x18, sp
-func_500005AF_entry:
+PfOutString_entry:
     mov     a1, a2
     mov     d0, d2
     mov     a0, a3
@@ -1945,16 +1969,17 @@ loc_500005CA:
     mov     (a3), a1
     mov     1, d1
     mov     a2, a0
-    call    func_5000227F_entry, [d2,d3,a2,a3], 0x20
+    call    fwrite_entry, [d2,d3,a2,a3], 0x20
 loc_500005D4:
     ret     [d2,a2,a3], 0x24
 
-# ---- func_500005D7 -----------------------------------------------------------
-# `call` enters at func_500005D7_entry, past the prologue
-func_500005D7:
+# ---- PfOutPad ----------------------------------------------------------------
+# append d1 copies of the character d0 (field padding)
+# `call` enters at PfOutPad_entry, past the prologue
+PfOutPad:
     movm    [d2,a2,a3], (sp)
     add     -0x10, sp
-func_500005D7_entry:
+PfOutPad_entry:
     mov     d0, d2
     mov     a0, a3
     mov     (0x30, sp), a0
@@ -1990,7 +2015,7 @@ loc_50000601:
 loc_5000060A:
     mov     (a3), a0
     mov     d2, d0
-    call    func_50002271_entry, 0, 0x10
+    call    fputc_entry, 0, 0x10
     mov     a2, a0
     add     -1, a2
     cmp     0, a0
@@ -1999,12 +2024,14 @@ loc_5000060A:
 loc_5000061A:
     ret     [d2,a2,a3], 0x1c
 
-# ---- func_5000061D -----------------------------------------------------------
-# `call` enters at func_5000061D_entry, past the prologue
-func_5000061D:
+# ---- PfParseSpec -------------------------------------------------------------
+# the flag characters of one conversion, through a hashed switch on the character, then
+# PfParseWidthPrecSize
+# `call` enters at PfParseSpec_entry, past the prologue
+PfParseSpec:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x1c, sp
-func_5000061D_entry:
+PfParseSpec_entry:
     mov     d1, d3
     mov     d0, d2
     mov     a1, (0x38, sp)
@@ -2109,7 +2136,7 @@ loc_500006B1:
     mov     d3, d1
     mov     d2, d0
     mov     a2, a0
-    call    func_500006C6_entry, [d2,d3,a2,a3], 0x24
+    call    PfParseWidthPrecSize_entry, [d2,d3,a2,a3], 0x24
     bra     loc_500006C3
 loc_500006BF:
     inc     a2
@@ -2117,12 +2144,14 @@ loc_500006BF:
 loc_500006C3:
     ret     [d2,d3,a2,a3], 0x2c
 
-# ---- func_500006C6 -----------------------------------------------------------
-# `call` enters at func_500006C6_entry, past the prologue
-func_500006C6:
+# ---- PfParseWidthPrecSize ----------------------------------------------------
+# width ('*' or digits), '.' precision ('*' or digits), and the size letters h (0x10), l (0x20),
+# L (0x80)
+# `call` enters at PfParseWidthPrecSize_entry, past the prologue
+PfParseWidthPrecSize:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x14, sp
-func_500006C6_entry:
+PfParseWidthPrecSize_entry:
     mov     a0, (0x2c, sp)
     mov     d0, d3
     movbu   (a0), d0
@@ -2162,7 +2191,7 @@ loc_500006FF:
     mov     sp, a1
     add     0x2c, a1
     mov     0xa, d0
-    call    func_500022C5_entry, [a2], 0x20
+    call    strtol_entry, [a2], 0x20
     mov     d0, (a2)
 loc_5000070A:
     mov     (0x2c, sp), a0
@@ -2202,7 +2231,7 @@ loc_50000730:
     mov     sp, a1
     add     0x2c, a1
     mov     0xa, d0
-    call    func_500022C5_entry, [a2], 0x20
+    call    strtol_entry, [a2], 0x20
     mov     d3, a0
     mov     d0, (a0)
     bra     loc_50000758
@@ -2298,8 +2327,10 @@ loc_500007C8:
     nop
     retf    [a2], 4
 
-# ---- func_500007CC -----------------------------------------------------------
-func_500007CC:
+# ---- localeconv --------------------------------------------------------------
+# fills the struct lconv in .bss from the current locale's numeric and monetary tables; returns
+# it in a0
+localeconv:
     mov     (rodata_5000D588), d0
     mov     0x28, d1
     asl     4, d0
@@ -2351,12 +2382,14 @@ func_500007CC:
     movbu   d0, (bss_500101C3)
     rets
 
-# ---- func_5000089C -----------------------------------------------------------
-# `call` enters at func_5000089C_entry, past the prologue
-func_5000089C:
+# ---- PfFormatInteger ---------------------------------------------------------
+# one %d/%i/%u/%o/%x/%X/%p: fetch the argument by size, sign or prefix, digits by base,
+# precision
+# `call` enters at PfFormatInteger_entry, past the prologue
+PfFormatInteger:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x1c, sp
-func_5000089C_entry:
+PfFormatInteger_entry:
     mov     a1, (0x48, sp)
     movbu   d1, (0x40, sp)
     mov     a0, a2
@@ -2575,7 +2608,7 @@ loc_500009EB:
     mov     d0, (0x14, sp)
     exthu   d3
     mov     d3, d0
-    call    func_5000113B_entry, [d2,d3,a2,a3], 0x28
+    call    PfShortToDigits_entry, [d2,d3,a2,a3], 0x28
     mov     d0, d2
     bra     loc_50000A2D
 loc_50000A06:
@@ -2589,7 +2622,7 @@ loc_50000A06:
     extb    d0
     mov     d0, (0x14, sp)
     mov     d2, d0
-    call    func_50001190_entry, [d2,d3,a2], 0x10
+    call    PfLongToDigits_entry, [d2,d3,a2], 0x10
     mov     d0, d2
     bra     loc_50000A2D
 loc_50000A1E:
@@ -2598,7 +2631,7 @@ loc_50000A1E:
     extb    d0
     mov     d0, (0x14, sp)
     mov     a1, d0
-    call    func_500010ED_entry, [d2,d3,a2], 0x10
+    call    PfIntToDigits_entry, [d2,d3,a2], 0x10
     mov     d0, d2
 loc_50000A2D:
     mov     (0x44, sp), a0
@@ -2623,18 +2656,19 @@ loc_50000A3F:
 loc_50000A4C:
     mov     d2, d0
     mov     a2, a0
-    call    func_500011DE_entry, [d2], 4
+    call    StrReverse_entry, [d2], 4
     mov     a3, d0
     add     d2, d0
     nop
     ret     [d2,d3,a2,a3], 0x2c
 
-# ---- func_50000A5A -----------------------------------------------------------
-# `call` enters at func_50000A5A_entry, past the prologue
-func_50000A5A:
+# ---- PfFloatToDigits ---------------------------------------------------------
+# the digits and decimal exponent of a double for the %f/%e/%g formatters (sign split off first)
+# `call` enters at PfFloatToDigits_entry, past the prologue
+PfFloatToDigits:
     movm    [d2,a2,a3], (sp)
     add     -0x5c, sp
-func_50000A5A_entry:
+PfFloatToDigits_entry:
     mov     sp, a2
     add     0x48, a2
     mov     a2, (4, sp)
@@ -2683,7 +2717,7 @@ loc_50000A82:
     mov     (0x1c, sp), d1
     mov     d0, (8, sp)
     mov     d1, (0xc, sp)
-    call    func_500012BE, 0, 0
+    call    LibF64Neg, 0, 0
     mov     d0, (0x18, sp)
     mov     d1, (0x1c, sp)
     mov     (0x70, sp), a0
@@ -2712,7 +2746,7 @@ loc_50000AD8:
     mov     (0x1c, sp), d1
     mov     d0, (8, sp)
     mov     d1, (0xc, sp)
-    call    func_500012EF_entry, [d2,d3,a2,a3], 0x80
+    call    PfDoubleToDecimal_entry, [d2,d3,a2,a3], 0x80
     mov     (4, sp), a0
     mov     sp, a1
     add     0x20, a1
@@ -2763,7 +2797,7 @@ loc_50000B06:
     mov     (0x1c, sp), d1
     mov     d0, (8, sp)
     mov     d1, (0xc, sp)
-    call    func_500012BE, 0, 0
+    call    LibF64Neg, 0, 0
     mov     d0, (0x18, sp)
     mov     d1, (0x1c, sp)
     mov     (0x70, sp), a0
@@ -2792,7 +2826,7 @@ loc_50000B5C:
     mov     (0x1c, sp), d1
     mov     d0, (8, sp)
     mov     d1, (0xc, sp)
-    call    func_500012EF_entry, [d2,d3,a2,a3], 0x80
+    call    PfDoubleToDecimal_entry, [d2,d3,a2,a3], 0x80
     mov     (4, sp), a0
     mov     sp, a1
     add     0x34, a1
@@ -2819,12 +2853,13 @@ loc_50000B5C:
     lne
     ret     [d2,a2,a3], 0x68
 
-# ---- func_50000B8A -----------------------------------------------------------
-# `call` enters at func_50000B8A_entry, past the prologue
-func_50000B8A:
+# ---- PfFormatF ---------------------------------------------------------------
+# %f; "Infinity" for an infinite value
+# `call` enters at PfFormatF_entry, past the prologue
+PfFormatF:
     movm    [d2,a2,a3], (sp)
     add     -0x70, sp
-func_50000B8A_entry:
+PfFormatF_entry:
     mov     sp, a2
     add     0x5c, a2
     mov     a2, (4, sp)
@@ -2839,7 +2874,7 @@ func_50000B8A_entry:
     mov     a2, d1
     add     0x2c, d1
     mov     a0, a2
-    call    func_50000A5A_entry, [d2,a2,a3], 0x68
+    call    PfFloatToDigits_entry, [d2,a2,a3], 0x68
     mov     (4, sp), a0
     mov     sp, a1
     add     0x34, a1
@@ -2895,7 +2930,7 @@ loc_50000BE8:
     mov     a3, a1
     mov     (0x8c, sp), d0
     mov     d2, d1
-    call    func_50000F3A_entry, [d2,d3,a2,a3], 0x2c
+    call    PfAssembleFloat_entry, [d2,d3,a2,a3], 0x2c
     mov     d0, d1
     mov     (0x2c, sp), d0
     nop
@@ -2904,12 +2939,13 @@ loc_50000C0B:
     nop
     ret     [d2,a2,a3], 0x7c
 
-# ---- func_50000C0F -----------------------------------------------------------
-# `call` enters at func_50000C0F_entry, past the prologue
-func_50000C0F:
+# ---- PfFormatE ---------------------------------------------------------------
+# %e / %E; "Infinity" for an infinite value
+# `call` enters at PfFormatE_entry, past the prologue
+PfFormatE:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x70, sp
-func_50000C0F_entry:
+PfFormatE_entry:
     mov     sp, a2
     add     0x5c, a2
     mov     a2, (4, sp)
@@ -2924,7 +2960,7 @@ func_50000C0F_entry:
     mov     a2, d1
     add     0x2c, d1
     nop
-    call    func_50000A5A_entry, [d2,a2,a3], 0x68
+    call    PfFloatToDigits_entry, [d2,a2,a3], 0x68
     mov     (4, sp), a0
     mov     sp, a1
     add     0x30, a1
@@ -3021,7 +3057,7 @@ loc_50000CAD:
     mov     (0x98, sp), d1
     mov     (0x90, sp), d0
     mov     d2, a0
-    call    func_50000F3A_entry, [d2,d3,a2,a3], 0x2c
+    call    PfAssembleFloat_entry, [d2,d3,a2,a3], 0x2c
     mov     (0x2c, sp), d3
     nop
     add     d0, d3
@@ -3076,7 +3112,7 @@ loc_50000D13:
     nop
     add     -1, d3
     movbu   d0, (a0)
-    mov     (bss_5001257C), a0
+    mov     (CurrentLconv), a0
     mov     (a0), a0
     movbu   (a0), d0
     movbu   d0, (a1)
@@ -3111,7 +3147,7 @@ loc_50000D34:
     mov     2, d0
     mov     d0, (0x18, sp)
     mov     -0xa, d0
-    call    func_5000089C_entry, [d2,d3,a2,a3], 0x2c
+    call    PfFormatInteger_entry, [d2,d3,a2,a3], 0x2c
     mov     d0, d1
     mov     (0x2c, sp), d0
     nop
@@ -3120,12 +3156,13 @@ loc_50000D34:
     mov     d2, (a3)
     ret     [d2,d3,a2,a3], 0x80
 
-# ---- func_50000D6F -----------------------------------------------------------
-# `call` enters at func_50000D6F_entry, past the prologue
-func_50000D6F:
+# ---- PfFormatG ---------------------------------------------------------------
+# %g / %G: picks %e or %f style by the exponent
+# `call` enters at PfFormatG_entry, past the prologue
+PfFormatG:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x74, sp
-func_50000D6F_entry:
+PfFormatG_entry:
     mov     sp, a2
     add     0x60, a2
     mov     a2, (4, sp)
@@ -3148,7 +3185,7 @@ func_50000D6F_entry:
     mov     a2, d1
     add     0x30, d1
     mov     (0x34, sp), a2
-    call    func_50000A5A_entry, [d2,a2,a3], 0x68
+    call    PfFloatToDigits_entry, [d2,a2,a3], 0x68
     mov     (4, sp), a0
     mov     sp, a1
     add     0x38, a1
@@ -3222,7 +3259,7 @@ loc_50000E0A:
     mov     a3, (0x1c, sp)
     mov     (0x8c, sp), a0
     mov     d3, d1
-    call    func_50000C0F_entry, [d2,d3,a2,a3], 0x80
+    call    PfFormatE_entry, [d2,d3,a2,a3], 0x80
     mov     d0, a1
     mov     a1, (0x30, sp)
     mov     (a3), d0
@@ -3262,7 +3299,7 @@ loc_50000E2B:
     nop
     lne
 loc_50000E5C:
-    mov     (bss_5001257C), a3
+    mov     (CurrentLconv), a3
     mov     d1, a2
     mov     (a3), a0
     nop
@@ -3344,7 +3381,7 @@ loc_50000EBD:
     mov     a3, a1
     mov     d2, d0
     mov     1, d1
-    call    func_50000F3A_entry, [d2,d3,a2,a3], 0x2c
+    call    PfAssembleFloat_entry, [d2,d3,a2,a3], 0x2c
     mov     (0x30, sp), d3
     nop
     add     d0, d3
@@ -3402,12 +3439,14 @@ loc_50000F35:
 loc_50000F37:
     ret     [d2,d3,a2,a3], 0x84
 
-# ---- func_50000F3A -----------------------------------------------------------
-# `call` enters at func_50000F3A_entry, past the prologue
-func_50000F3A:
+# ---- PfAssembleFloat ---------------------------------------------------------
+# builds the text of a formatted double from its digits: rounding, the decimal point, the
+# exponent
+# `call` enters at PfAssembleFloat_entry, past the prologue
+PfAssembleFloat:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x1c, sp
-func_50000F3A_entry:
+PfAssembleFloat_entry:
     mov     a1, (0x54, sp)
     mov     d0, (0x4c, sp)
     mov     a0, (0x34, sp)
@@ -3424,7 +3463,7 @@ func_50000F3A_entry:
     mov     (0x34, sp), a0
     mov     0x30, d0
     movbu   d0, (a0)
-    mov     (bss_5001257C), a0
+    mov     (CurrentLconv), a0
     mov     (a0), a0
     movbu   (a0), d0
     mov     (0x34, sp), a0
@@ -3498,7 +3537,7 @@ loc_50000FBA:
     cmp     d0, d3
     nop
     bne     loc_50000FE6
-    mov     (bss_5001257C), a0
+    mov     (CurrentLconv), a0
     mov     (a0), a0
     movbu   (a0), d0
     movbu   d0, (a3)
@@ -3532,7 +3571,7 @@ loc_50000FED:
     add     -0x10, d1
     mov     0x30, d0
     call    memset_entry, [a2], 4
-    mov     (bss_5001257C), a0
+    mov     (CurrentLconv), a0
     mov     (a0), a0
     movbu   (a0), d1
     mov     sp, a0
@@ -3621,20 +3660,20 @@ loc_5000108F:
 loc_500010B3:
     mov     d3, d0
     mov     (0x34, sp), a0
-    call    func_500011DE_entry, [d2], 4
+    call    StrReverse_entry, [d2], 4
     mov     (0x18, sp), d1
     mov     (0x34, sp), a0
     mov     d3, d0
     sub     d1, d0
     mov     d3, d1
-    call    func_50001200_entry, [d2,d3,a2,a3], 0x28
+    call    PfRoundDigits_entry, [d2,d3,a2,a3], 0x28
     mov     d0, d2
     mov     (0x18, sp), d0
     mov     (0x34, sp), a0
     nop
     add     d0, d2
     mov     d2, d0
-    call    func_500011DE_entry, [d2], 4
+    call    StrReverse_entry, [d2], 4
     mov     (0x4c, sp), d0
     nop
     cmp     0, d0
@@ -3651,12 +3690,14 @@ loc_500010E9:
     mov     d2, d0
     ret     [d2,d3,a2,a3], 0x2c
 
-# ---- func_500010ED -----------------------------------------------------------
-# `call` enters at func_500010ED_entry, past the prologue
-func_500010ED:
+# ---- PfIntToDigits -----------------------------------------------------------
+# unsigned int to digits in base a1, least significant first; letters from the case of the
+# conversion
+# `call` enters at PfIntToDigits_entry, past the prologue
+PfIntToDigits:
     movm    [d2,d3,a2], (sp)
     add     -4, sp
-func_500010ED_entry:
+PfIntToDigits_entry:
     mov     d0, d2
     mov     d1, a1
     movbu   (0x24, sp), d1
@@ -3706,12 +3747,13 @@ loc_50001127:
     leq
     ret     [d2,d3,a2], 0x10
 
-# ---- func_5000113B -----------------------------------------------------------
-# `call` enters at func_5000113B_entry, past the prologue
-func_5000113B:
+# ---- PfShortToDigits ---------------------------------------------------------
+# the same for an h-size (16-bit) argument
+# `call` enters at PfShortToDigits_entry, past the prologue
+PfShortToDigits:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x18, sp
-func_5000113B_entry:
+PfShortToDigits_entry:
     mov     a0, a2
     mov     d1, a3
     movbu   (0x3c, sp), d1
@@ -3764,12 +3806,13 @@ loc_50001176:
     mov     d3, d0
     ret     [d2,d3,a2,a3], 0x28
 
-# ---- func_50001190 -----------------------------------------------------------
-# `call` enters at func_50001190_entry, past the prologue
-func_50001190:
+# ---- PfLongToDigits ----------------------------------------------------------
+# the same for an l-size argument
+# `call` enters at PfLongToDigits_entry, past the prologue
+PfLongToDigits:
     movm    [d2,d3,a2], (sp)
     add     -4, sp
-func_50001190_entry:
+PfLongToDigits_entry:
     mov     d0, d2
     mov     d1, a1
     movbu   (0x24, sp), d1
@@ -3819,11 +3862,12 @@ loc_500011CA:
     leq
     ret     [d2,d3,a2], 0x10
 
-# ---- func_500011DE -----------------------------------------------------------
-# `call` enters at func_500011DE_entry, past the prologue
-func_500011DE:
+# ---- StrReverse --------------------------------------------------------------
+# reverse d0 bytes at a0 in place
+# `call` enters at StrReverse_entry, past the prologue
+StrReverse:
     movm    [d2], (sp)
-func_500011DE_entry:
+StrReverse_entry:
     mov     d0, d1
     add     -1, d1
     cmp     0, d1
@@ -3846,12 +3890,13 @@ func_500011DE_entry:
 loc_500011FD:
     retf    [d2], 4
 
-# ---- func_50001200 -----------------------------------------------------------
-# `call` enters at func_50001200_entry, past the prologue
-func_50001200:
+# ---- PfRoundDigits -----------------------------------------------------------
+# round a decimal digit string at a given length, carrying '9's up; may add a leading '1'
+# `call` enters at PfRoundDigits_entry, past the prologue
+PfRoundDigits:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x18, sp
-func_50001200_entry:
+PfRoundDigits_entry:
     mov     d0, (0x34, sp)
     mov     d1, (0x38, sp)
     nop
@@ -3904,7 +3949,7 @@ loc_50001241:
     nop
     bge     loc_50001287
     setlb
-    mov     (bss_5001257C), a1
+    mov     (CurrentLconv), a1
     movbu   (a2), d0
     mov     (a1), a0
     movbu   (a2), d2
@@ -3979,8 +4024,9 @@ loc_500012BA:
     nop
     retf    0, 0
 
-# ---- func_500012BE -----------------------------------------------------------
-func_500012BE:
+# ---- LibF64Neg ---------------------------------------------------------------
+# returns -x
+LibF64Neg:
     mov     (0xc, sp), d1
     mov     (8, sp), d0
     xor     0x80000000, d1
@@ -4012,12 +4058,13 @@ loc_500012E8:
     nop
     retf    0, 0
 
-# ---- func_500012EF -----------------------------------------------------------
-# `call` enters at func_500012EF_entry, past the prologue
-func_500012EF:
+# ---- PfDoubleToDecimal -------------------------------------------------------
+# the decimal digits and exponent of a double, by scaling with the powers-of-ten table
+# `call` enters at PfDoubleToDecimal_entry, past the prologue
+PfDoubleToDecimal:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x70, sp
-func_500012EF_entry:
+PfDoubleToDecimal_entry:
     mov     sp, a2
     add     0x68, a2
     mov     a2, (4, sp)
@@ -4117,7 +4164,7 @@ loc_50001389:
     mov     (4, a0), d0
     mov     d1, (a1)
     mov     d0, (4, a1)
-    call    func_5000186E, 0, 0
+    call    LibF64NegTo, 0, 0
     mov     (4, sp), a0
     mov     sp, a1
     add     0x60, a1
@@ -4154,7 +4201,7 @@ loc_500013E4:
     mov     (0x5c, sp), d1
     mov     d0, (8, sp)
     mov     d1, (0xc, sp)
-    call    func_5000188E_entry, 0, 0x1c
+    call    LibF64Trunc_entry, 0, 0x1c
     mov     d0, (0x2c, sp)
     mov     d1, (0x30, sp)
     mov     (0x58, sp), d0
@@ -4187,7 +4234,7 @@ loc_500013E4:
     mov     (0x20, sp), d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    func_50001C67_entry, [d2,d3], 0x10
+    call    LibF64Cmp_entry, [d2,d3], 0x10
     blt     loc_50001474
 loc_5000143E:
     mov     (0x58, sp), d0
@@ -4212,7 +4259,7 @@ loc_5000143E:
     mov     (0x20, sp), d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    func_50001C67_entry, [d2,d3], 0x10
+    call    LibF64Cmp_entry, [d2,d3], 0x10
     bge     loc_5000143E
 loc_50001474:
     movhu   (0x46, sp), d3
@@ -4241,7 +4288,7 @@ loc_50001491:
     mov     (0x28, sp), d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    func_50001CD6_entry, 0, 0x28
+    call    fmod_entry, 0, 0x28
     mov     d0, (8, sp)
     mov     d1, (0xc, sp)
     call    LibF64ToI32_entry, [d3,a3], 0x10
@@ -4300,7 +4347,7 @@ loc_500014D5:
     call    LibF64Div_entry, [d2,d3,a2,a3], 0x18
     mov     d0, (8, sp)
     mov     d1, (0xc, sp)
-    call    func_50001BB3_entry, [d2,a2], 0x18
+    call    ceil_entry, [d2,a2], 0x18
     mov     d0, (8, sp)
     mov     d1, (0xc, sp)
     call    LibF64ToI32_entry, [d3,a3], 0x10
@@ -4318,7 +4365,7 @@ loc_5000153F:
     call    LibF64Div_entry, [d2,d3,a2,a3], 0x18
     mov     d0, (8, sp)
     mov     d1, (0xc, sp)
-    call    func_50001BE9_entry, 0, 0x18
+    call    floor_entry, 0, 0x18
     mov     d0, (8, sp)
     mov     d1, (0xc, sp)
     call    LibF64ToI32_entry, [d3,a3], 0x10
@@ -4393,7 +4440,7 @@ loc_500015EE:
     mov     (0x20, sp), d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    func_50001C67_entry, [d2,d3], 0x10
+    call    LibF64Cmp_entry, [d2,d3], 0x10
     bge     loc_5000160D
     movhu   (0x46, sp), d0
     exth    d0
@@ -4409,7 +4456,7 @@ loc_5000160D:
     mov     (0x28, sp), d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    func_50001C67_entry, [d2,d3], 0x10
+    call    LibF64Cmp_entry, [d2,d3], 0x10
     blt     loc_5000162F
     movhu   (0x46, sp), d0
     exth    d0
@@ -4439,7 +4486,7 @@ loc_5000163F:
     mov     (0x38, sp), d1
     mov     d0, (8, sp)
     mov     d1, (0xc, sp)
-    call    func_5000188E_entry, 0, 0x1c
+    call    LibF64Trunc_entry, 0, 0x1c
     mov     d0, (0x1c, sp)
     mov     d1, (0x20, sp)
     mov     (0x34, sp), d0
@@ -4482,7 +4529,7 @@ loc_50001697:
     mov     (0x20, sp), d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    func_50001C67_entry, [d2,d3], 0x10
+    call    LibF64Cmp_entry, [d2,d3], 0x10
     bgt     loc_500016ED
     mov     rodata_5000D598, a0
     mov     (a0), d0
@@ -4497,7 +4544,7 @@ loc_50001697:
     mov     (0x20, sp), d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    func_50001C67_entry, [d2,d3], 0x10
+    call    LibF64Cmp_entry, [d2,d3], 0x10
     bne     loc_50001725
     mov     (0x18, sp), a0
     movbu   (0x13, a0), d0
@@ -4688,9 +4735,10 @@ loc_5000183A:
     mov     a0, d2
     retf    0, 0
 
-# ---- func_5000183F -----------------------------------------------------------
+# ---- LibF64Zero --------------------------------------------------------------
+# returns 0.0 (from the constant table)
 # no caller: unreferenced code
-func_5000183F:
+LibF64Zero:
     add     -8, sp
     mov     rodata_5000C6D4, a0
     mov     sp, a1
@@ -4702,9 +4750,10 @@ func_5000183F:
     mov     (4, sp), d1
     retf    0, 8
 
-# ---- func_50001858 -----------------------------------------------------------
+# ---- LibF64Max ---------------------------------------------------------------
+# returns DBL_MAX (0x7FEFFFFF FFFFFFFF), twice
 # no caller: unreferenced code
-func_50001858:
+LibF64Max:
     add     -0x10, sp
     mov     -1, d0
     mov     0x7fefffff, d1
@@ -4714,8 +4763,9 @@ func_50001858:
     mov     d1, (0xc, sp)
     retf    0, 0x10
 
-# ---- func_5000186E -----------------------------------------------------------
-func_5000186E:
+# ---- LibF64NegTo -------------------------------------------------------------
+# stores -x through the result pointer
+LibF64NegTo:
     mov     sp, a0
     add     8, a0
     movhu   (6, a0), d0
@@ -4732,11 +4782,12 @@ func_5000186E:
     mov     d1, (4, a1)
     retf    0, 0
 
-# ---- func_5000188E -----------------------------------------------------------
-# `call` enters at func_5000188E_entry, past the prologue
-func_5000188E:
+# ---- LibF64Trunc -------------------------------------------------------------
+# the integer part of x (LibF64Modf)
+# `call` enters at LibF64Trunc_entry, past the prologue
+LibF64Trunc:
     add     -0x1c, sp
-func_5000188E_entry:
+LibF64Trunc_entry:
     mov     (0x24, sp), d0
     mov     (0x28, sp), d1
     mov     d0, (8, sp)
@@ -5176,12 +5227,13 @@ loc_50001BAB:
     nop
     ret     [d2,d3,a2,a3], 0x18
 
-# ---- func_50001BB3 -----------------------------------------------------------
-# `call` enters at func_50001BB3_entry, past the prologue
-func_50001BB3:
+# ---- ceil --------------------------------------------------------------------
+# -floor(-x)
+# `call` enters at ceil_entry, past the prologue
+ceil:
     movm    [d2,a2], (sp)
     add     -0x10, sp
-func_50001BB3_entry:
+ceil_entry:
     mov     sp, a0
     mov     a0, d0
     add     0x20, d0
@@ -5195,7 +5247,7 @@ func_50001BB3_entry:
     mov     (0x24, sp), d1
     mov     d0, (8, sp)
     mov     d1, (0xc, sp)
-    call    func_50001BE9_entry, 0, 0x18
+    call    floor_entry, 0, 0x18
     mov     d0, (0x20, sp)
     mov     d1, (0x24, sp)
     movbu   (a2), d0
@@ -5206,11 +5258,12 @@ func_50001BB3_entry:
     mov     (0x24, sp), d1
     ret     [d2,a2], 0x18
 
-# ---- func_50001BE9 -----------------------------------------------------------
-# `call` enters at func_50001BE9_entry, past the prologue
-func_50001BE9:
+# ---- floor -------------------------------------------------------------------
+# LibF64Modf, then one less for a negative x with a fraction
+# `call` enters at floor_entry, past the prologue
+floor:
     add     -0x18, sp
-func_50001BE9_entry:
+floor_entry:
     mov     sp, a0
     add     0x20, a0
     movbu   (7, a0), d0
@@ -5275,12 +5328,13 @@ loc_50001C5C:
 loc_50001C64:
     retf    [d2,d3], 0x10
 
-# ---- func_50001C67 -----------------------------------------------------------
-# `call` enters at func_50001C67_entry, past the prologue
-func_50001C67:
+# ---- LibF64Cmp ---------------------------------------------------------------
+# compares two doubles; the result is in the flags (psw)
+# `call` enters at LibF64Cmp_entry, past the prologue
+LibF64Cmp:
     movm    [d2,d3], (sp)
     add     -8, sp
-func_50001C67_entry:
+LibF64Cmp_entry:
     mov     (0x24, sp), d3
     mov     (0x20, sp), d0
     mov     d3, d2
@@ -5341,11 +5395,12 @@ loc_50001CD0:
 loc_50001CD3:
     retf    [d2,d3], 0x10
 
-# ---- func_50001CD6 -----------------------------------------------------------
-# `call` enters at func_50001CD6_entry, past the prologue
-func_50001CD6:
+# ---- fmod --------------------------------------------------------------------
+# x - trunc(x / y) * y; y = 0 sets errno 1 and returns 0
+# `call` enters at fmod_entry, past the prologue
+fmod:
     add     -0x28, sp
-func_50001CD6_entry:
+fmod_entry:
     mov     sp, a0
     mov     a0, d1
     add     0x38, d1
@@ -5366,7 +5421,7 @@ func_50001CD6_entry:
     mov     (0x3c, sp), d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    func_50001C67_entry, [d2,d3], 0x10
+    call    LibF64Cmp_entry, [d2,d3], 0x10
     bge     loc_50001D11
     mov     (0x30, sp), d0
     mov     (0x34, sp), d1
@@ -5397,11 +5452,11 @@ loc_50001D11:
     mov     (0x1c, sp), d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    func_50001C67_entry, [d2,d3], 0x10
+    call    LibF64Cmp_entry, [d2,d3], 0x10
     bne     loc_50001D5D
 loc_50001D50:
     mov     1, d0
-    mov     d0, (bss_50012574)
+    mov     d0, (errno)
     nop
     clr     d0
     mov     d0, d1
@@ -6128,24 +6183,27 @@ loc_5000226D:
     mov     a2, a0
     retf    [a2], 4
 
-# ---- func_50002271 -----------------------------------------------------------
-# `call` enters at func_50002271_entry, past the prologue
-func_50002271:
+# ---- fputc -------------------------------------------------------------------
+# through StreamPutByte
+# `call` enters at fputc_entry, past the prologue
+fputc:
     add     -0x10, sp
-func_50002271_entry:
-    call    func_5000227C, 0, 0
+fputc_entry:
+    call    StreamPutByte, 0, 0
     ret     0, 0x10
 
-# ---- func_5000227C -----------------------------------------------------------
-func_5000227C:
+# ---- StreamPutByte -----------------------------------------------------------
+# a stub: this ROM's printf never writes to a stream, only to strings
+StreamPutByte:
     retf    0, 0
 
-# ---- func_5000227F -----------------------------------------------------------
-# `call` enters at func_5000227F_entry, past the prologue
-func_5000227F:
+# ---- fwrite ------------------------------------------------------------------
+# d1 items of d0 bytes, one StreamPutByte each
+# `call` enters at fwrite_entry, past the prologue
+fwrite:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x10, sp
-func_5000227F_entry:
+fwrite_entry:
     mov     a1, (0x34, sp)
     mov     d0, (0x2c, sp)
     mov     d1, d2
@@ -6166,7 +6224,7 @@ loc_5000229D:
     movbu   (a3), d0
     inc     a3
     mov     (0x34, sp), a0
-    call    func_5000227C, 0, 0
+    call    StreamPutByte, 0, 0
     nop
     cmp     -1, d0
     nop
@@ -6188,35 +6246,37 @@ loc_500022C1:
     mov     d3, d0
     ret     [d2,d3,a2,a3], 0x20
 
-# ---- func_500022C5 -----------------------------------------------------------
-# `call` enters at func_500022C5_entry, past the prologue
-func_500022C5:
+# ---- strtol ------------------------------------------------------------------
+# wraps StrToLongCore; sets errno (2) on overflow
+# `call` enters at strtol_entry, past the prologue
+strtol:
     movm    [a2], (sp)
     add     -0x1c, sp
-func_500022C5_entry:
+strtol_entry:
     mov     sp, a2
     clr     d1
     mov     d1, (0x18, sp)
     mov     a2, d1
     add     0x18, d1
     nop
-    call    func_500022EB_entry, [d2,d3,a2,a3], 0x4c
+    call    StrToLongCore_entry, [d2,d3,a2,a3], 0x4c
     mov     (0x18, sp), d1
     nop
     cmp     0, d1
     nop
     beq     loc_500022E8
     mov     2, d1
-    mov     d1, (bss_50012574)
+    mov     d1, (errno)
 loc_500022E8:
     ret     [a2], 0x20
 
-# ---- func_500022EB -----------------------------------------------------------
-# `call` enters at func_500022EB_entry, past the prologue
-func_500022EB:
+# ---- StrToLongCore -----------------------------------------------------------
+# the signed counterpart of StrToULongCore (LibDiv32)
+# `call` enters at StrToLongCore_entry, past the prologue
+StrToLongCore:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x3c, sp
-func_500022EB_entry:
+StrToLongCore_entry:
     mov     a1, (0x58, sp)
     mov     d1, (0x60, sp)
     mov     a0, a2
@@ -6418,7 +6478,7 @@ loc_50002452:
     movbu   (a2), d0
     mov     0x57, d3
     extb    d0
-    call    func_5000018C_entry, [d2], 4
+    call    tolower_entry, [d2], 4
     extb    d0
     cmp     0x39, d0
     nop
@@ -6681,27 +6741,30 @@ loc_500025C2:
     mov     a3, a0
     retf    [a2,a3], 8
 
-# ---- func_500025C6 -----------------------------------------------------------
+# ---- PanelDisableIrqGroups ---------------------------------------------------
+# disables the four interrupt groups whose numbers are kept at 0x50019738..44 (IrqGroupSetup);
+# nothing calls it
 # no caller: unreferenced code
-func_500025C6:
+PanelDisableIrqGroups:
     add     -0x10, sp
     mov     (bss_50019738), a0
     clr     d0
-    call    func_50009758, 0, 0
+    call    KernelStubSlot, 0, 0
     mov     (bss_5001973C), a0
     mov     1, d0
-    call    func_50009758, 0, 0
+    call    KernelStubSlot, 0, 0
     mov     (bss_50019740), a0
     mov     2, d0
-    call    func_50009758, 0, 0
+    call    KernelStubSlot, 0, 0
     mov     (bss_50019744), a0
     mov     3, d0
-    call    func_50009758, 0, 0
+    call    KernelStubSlot, 0, 0
     ret     0, 0x10
 
-# ---- func_500025FF -----------------------------------------------------------
+# ---- PanelSendCmd1C ----------------------------------------------------------
+# sends command 0x1C with its argument clamped to 3..100; nothing calls it
 # no caller: unreferenced code
-func_500025FF:
+PanelSendCmd1C:
     movm    [d2], (sp)
     add     -0x10, sp
     mov     d0, d1
@@ -6718,129 +6781,144 @@ loc_5000260F:
 loc_50002615:
     mov     0x1c, d0
     extbu   d1
-    call    func_50002FB7_entry, [d2,d3], 0x14
+    call    PanelTxKick_entry, [d2,d3], 0x14
     ret     [d2], 0x14
 
-# ---- func_50002620 -----------------------------------------------------------
-func_50002620:
-    movbu   d0, (bss_500103DF)
+# ---- PanelModeFlagSet --------------------------------------------------------
+# the panel wiring-mode flag: 0 = mode A, else mode B
+PanelModeFlagSet:
+    movbu   d0, (PanelModeFlag)
     retf    0, 0
 
-# ---- func_50002629 -----------------------------------------------------------
-func_50002629:
-    movbu   (bss_500103DF), d0
+# ---- PanelModeFlagGet --------------------------------------------------------
+PanelModeFlagGet:
+    movbu   (PanelModeFlag), d0
     retf    0, 0
 
-# ---- func_50002632 -----------------------------------------------------------
-func_50002632:
+# ---- PanelInit ---------------------------------------------------------------
+# the panel driver's init method (PanelDriverOps[0], called by BootMain's PanelStart): mode B on
+# a class-3 board, the link, its sign-on commands
+PanelInit:
     add     -0xc, sp
-    call    func_5000974C, 0, 0
+    call    BoardClass, 0, 0
     extbu   d0
     cmp     3, d0
     bne     loc_50002648
     mov     1, d0
-    call    func_50002620, 0, 0
+    call    PanelModeFlagSet, 0, 0
     bra     loc_5000264E
 loc_50002648:
     clr     d0
-    call    func_50002620, 0, 0
+    call    PanelModeFlagSet, 0, 0
 loc_5000264E:
-    call    func_50002BC4, 0, 0
-    call    func_50002BC4, 0, 0
-    call    func_50002BC4, 0, 0
-    call    func_500026F6_entry, [d2,a2,a3], 0x58
-    call    func_50002BDF, 0, 0
-    call    func_50002BDF, 0, 0
-    call    func_50002BDF, 0, 0
-    call    func_50002E98, 0, 0
+    call    PanelTickWait6, 0, 0
+    call    PanelTickWait6, 0, 0
+    call    PanelTickWait6, 0, 0
+    call    PanelLinkInit_entry, [d2,a2,a3], 0x58
+    call    PanelTickWait51, 0, 0
+    call    PanelTickWait51, 0, 0
+    call    PanelTickWait51, 0, 0
+    call    PanelInitHookNop, 0, 0
     ret     0, 0xc
 
-# ---- func_50002679 -----------------------------------------------------------
-# no caller: unreferenced code
-func_50002679:
+# ---- PanelDriverOp3 ----------------------------------------------------------
+# an empty method of PanelDriverOps
+# nothing calls it directly: its address is taken (a handler or a method)
+PanelDriverOp3:
     retf    0, 0
 
-# ---- func_5000267C -----------------------------------------------------------
-# no caller: unreferenced code
-func_5000267C:
+# ---- PanelDriverOp1 ----------------------------------------------------------
+# an empty method of PanelDriverOps
+# nothing calls it directly: its address is taken (a handler or a method)
+PanelDriverOp1:
     retf    0, 0
 
-# ---- func_5000267F -----------------------------------------------------------
-# no caller: unreferenced code
-func_5000267F:
+# ---- PanelDriverOp2 ----------------------------------------------------------
+# an empty method of PanelDriverOps
+# nothing calls it directly: its address is taken (a handler or a method)
+PanelDriverOp2:
     retf    0, 0
 
-# ---- func_50002682 -----------------------------------------------------------
-# `call` enters at func_50002682_entry, past the prologue
-func_50002682:
+# ---- PanelService ------------------------------------------------------------
+# during a status poll (flags bits 6-7) resets the FIFOs and the RX ring; else decodes what came
+# in (PanelRxDecodeQuiet)
+# `call` enters at PanelService_entry, past the prologue
+PanelService:
     add     -8, sp
-func_50002682_entry:
-    btst    0xc0, (bss_500102EE)
+PanelService_entry:
+    btst    0xc0, (PanelLinkFlags)
     beq     loc_500026B3
-    call    func_50003FB0, 0, 0
-    call    func_5000973E, 0, 0
+    call    PanelEventFifoInit, 0, 0
+    call    loc_cpu, 0, 0
     clr     d0
-    movhu   d0, (bss_500102FC)
-    movhu   d0, (bss_500102FE)
-    bset    0x01, (bss_500102F0)
-    call    func_50009745, 0, 0
+    movhu   d0, (PanelRxRingTail)
+    movhu   d0, (PanelRxRingHead)
+    bset    0x01, (PanelLinkStatus)
+    call    unl_cpu, 0, 0
     bra     loc_500026B8
 loc_500026B3:
-    call    func_50003B39_entry, 0, 8
+    call    PanelRxDecodeQuiet_entry, 0, 8
 loc_500026B8:
     ret     0, 8
 
-# ---- func_500026BB -----------------------------------------------------------
-# `call` enters at func_500026BB_entry, past the prologue
-func_500026BB:
+# ---- PanelPump ---------------------------------------------------------------
+# PanelTxPump, then PanelErrorRecovery
+# `call` enters at PanelPump_entry, past the prologue
+PanelPump:
     add     -8, sp
-func_500026BB_entry:
-    call    func_500038ED_entry, [d2], 0x10
-    call    func_50003A4A_entry, [d2,d3], 0x10
+PanelPump_entry:
+    call    PanelTxPump_entry, [d2], 0x10
+    call    PanelErrorRecovery_entry, [d2,d3], 0x10
     ret     0, 8
 
-# ---- func_500026CB -----------------------------------------------------------
+# ---- PanelStatusPollWrap -----------------------------------------------------
+# nothing calls it
 # no caller: unreferenced code
-func_500026CB:
+PanelStatusPollWrap:
     add     -8, sp
-    call    func_50002E9B_entry, 0, 0x10
+    call    PanelStatusPoll_entry, 0, 0x10
     ret     0, 8
 
-# ---- func_500026D6 -----------------------------------------------------------
+# ---- PanelTransactionWrap ----------------------------------------------------
+# nothing calls it
 # no caller: unreferenced code
-func_500026D6:
+PanelTransactionWrap:
     add     -8, sp
-    call    func_50002D6E_entry, 0, 0x10
+    call    PanelTransaction_entry, 0, 0x10
     extbu   d0
     ret     0, 8
 
-# ---- func_500026E2 -----------------------------------------------------------
+# ---- PanelHookNop ------------------------------------------------------------
+# nothing calls it
 # no caller: unreferenced code
-func_500026E2:
+PanelHookNop:
     retf    0, 0
 
-# ---- func_500026E5 -----------------------------------------------------------
-# `call` enters at func_500026E5_entry, past the prologue
-func_500026E5:
+# ---- PanelSignOnAndDetect ----------------------------------------------------
+# PanelSignOnRequest, then PanelTypeDetect: returns the panel type
+# `call` enters at PanelSignOnAndDetect_entry, past the prologue
+PanelSignOnAndDetect:
     add     -8, sp
-func_500026E5_entry:
-    call    func_50002E04_entry, 0, 0x10
-    call    func_50002D52_entry, 0, 8
+PanelSignOnAndDetect_entry:
+    call    PanelSignOnRequest_entry, 0, 0x10
+    call    PanelTypeDetect_entry, 0, 8
     extbu   d0
     ret     0, 8
 
-# ---- func_500026F6 -----------------------------------------------------------
-# `call` enters at func_500026F6_entry, past the prologue
-func_500026F6:
+# ---- PanelLinkInit -----------------------------------------------------------
+# registers the three link interrupts (ATN group 26, RX 16, TX done 17), sets the board strobes,
+# serial 0 (0xC84) and its baud timer, then the init commands
+# `call` enters at PanelLinkInit_entry, past the prologue
+PanelLinkInit:
     movm    [d2,a2,a3], (sp)
     add     -0x4c, sp
-func_500026F6_entry:
+PanelLinkInit_entry:
     mov     sp, a0
     mov     a0, d2
     add     0x10, d2
     mov     1, d0
     movhu   d0, (0x10, sp)
-    mov     func_50003080, d1
+    mov     PanelAtnIsr, d1
     mov     d1, (0x14, sp)
     mov     0x1a, d1
     movhu   d1, (0x18, sp)
@@ -6852,7 +6930,7 @@ func_500026F6_entry:
     mov     sp, a2
     add     0x24, a2
     movhu   d0, (0x24, sp)
-    mov     func_500031D5, d1
+    mov     PanelRxIsr, d1
     mov     d1, (0x28, sp)
     mov     0x10, d1
     movhu   d1, (0x2c, sp)
@@ -6864,7 +6942,7 @@ func_500026F6_entry:
     mov     sp, a3
     add     0x38, a3
     movhu   d0, (0x38, sp)
-    mov     func_50003199, d0
+    mov     PanelTxDoneIsr, d0
     mov     d0, (0x3c, sp)
     mov     0x11, d0
     movhu   d0, (0x40, sp)
@@ -6872,29 +6950,29 @@ func_500026F6_entry:
     mov     d0, (0x44, sp)
     movhu   d1, (0x48, sp)
     movhu   d1, (0x42, sp)
-    call    func_50003FB0, 0, 0
-    call    func_50003FC8, 0, 0
-    bset    0x01, (0x36008004)
-    bset    0x01, (0x36008024)
-    bclr    0x01, (0x36008044)
-    bclr    0x01, (0x36008064)
-    call    func_50002629, 0, 0
+    call    PanelEventFifoInit, 0, 0
+    call    PanelTxFifoInit, 0, 0
+    bset    0x01, (P04)
+    bset    0x01, (P24)
+    bclr    0x01, (P44)
+    bclr    0x01, (P64)
+    call    PanelModeFlagGet, 0, 0
     extbu   d0
     cmp     0, d0
     beq     loc_500027A2
-    bset    0x40, (0x36008024)
-    bset    0x40, (0x36008064)
+    bset    0x40, (P24)
+    bset    0x40, (P64)
 loc_500027A2:
-    call    func_50002629, 0, 0
+    call    PanelModeFlagGet, 0, 0
     extbu   d0
     cmp     0, d0
     beq     loc_500027B3
-    bclr    0x40, (0x36008004)
+    bclr    0x40, (P04)
 loc_500027B3:
     clr     d0
-    bset    0x01, (0x36008005)
-    bset    0x01, (0x36008025)
-    bclr    0x01, (0x36008065)
+    bset    0x01, (P05)
+    bset    0x01, (P25)
+    bclr    0x01, (P65)
     movbu   d0, (SC0ICR)
     mov     0xc84, d0
     movhu   d0, (SC0CTR)
@@ -6903,58 +6981,61 @@ loc_500027B3:
     mov     0x80, d0
     movbu   d0, (0x34001000)
     clr     d0
-    movbu   d0, (bss_500103DE)
+    movbu   d0, (PanelAtnPass)
     movhu   (EXTMD), d0
     mov     d2, a0
     or      0xc0, d0
     movhu   d0, (EXTMD)
     mov     4, d0
-    call    func_5000967C_entry, [d2,a2], 8
+    call    IrqRegister_entry, [d2,a2], 8
     mov     a2, a0
     mov     6, d0
-    call    func_5000967C_entry, [d2,a2], 8
+    call    IrqRegister_entry, [d2,a2], 8
     mov     a3, a0
     mov     5, d0
-    call    func_5000967C_entry, [d2,a2], 8
+    call    IrqRegister_entry, [d2,a2], 8
     mov     0x7d, d0
-    movbu   d0, (bss_500102EF)
-    bset    0x40, (bss_500102EE)
+    movbu   d0, (PanelLinkConst7D)
+    bset    0x40, (PanelLinkFlags)
     clr     d0
-    movbu   d0, (bss_500102ED)
-    bclr    0x03, (bss_500102EE)
-    movhu   d0, (bss_5001035C)
-    movhu   d0, (bss_5001035E)
-    movhu   d0, (bss_500102FC)
-    movhu   d0, (bss_500102FE)
-    call    func_5000285A_entry, 0, 0x10
-    call    func_50002879_entry, 0, 0x10
+    movbu   d0, (PanelReplyCountdown)
+    bclr    0x03, (PanelLinkFlags)
+    movhu   d0, (PanelTxRingRead)
+    movhu   d0, (PanelTxRingWrite)
+    movhu   d0, (PanelRxRingTail)
+    movhu   d0, (PanelRxRingHead)
+    call    PanelSendWake_entry, 0, 0x10
+    call    PanelSendInitCmds_entry, 0, 0x10
     ret     [d2,a2,a3], 0x58
 
-# ---- func_5000285A -----------------------------------------------------------
-# `call` enters at func_5000285A_entry, past the prologue
-func_5000285A:
+# ---- PanelSendWake -----------------------------------------------------------
+# command 0x1F, 0xDA
+# `call` enters at PanelSendWake_entry, past the prologue
+PanelSendWake:
     add     -0x10, sp
-func_5000285A_entry:
-    call    func_50002BC4, 0, 0
+PanelSendWake_entry:
+    call    PanelTickWait6, 0, 0
     mov     0x1f, d0
     mov     0xda, d1
-    call    func_50002FB7_entry, [d2,d3], 0x14
+    call    PanelTxKick_entry, [d2,d3], 0x14
     call    PanelBusyWait6000_entry, 0, 8
     call    PanelBusyWait6000_entry, 0, 8
     ret     0, 0x10
 
-# ---- func_50002879 -----------------------------------------------------------
-# `call` enters at func_50002879_entry, past the prologue
-func_50002879:
+# ---- PanelSendInitCmds -------------------------------------------------------
+# commands 0x1F/0x1A, 0x1D, 0xDD, 0x1E/0x80 (mode A also 0x18, 0x19, 0x1B/100), then the link
+# back to receive
+# `call` enters at PanelSendInitCmds_entry, past the prologue
+PanelSendInitCmds:
     add     -0x10, sp
-func_50002879_entry:
+PanelSendInitCmds_entry:
     mov     0x1f, d0
     mov     0x1a, d1
-    call    func_50002FB7_entry, [d2,d3], 0x14
+    call    PanelTxKick_entry, [d2,d3], 0x14
     call    PanelBusyWait6000_entry, 0, 8
     call    PanelBusyWait6000_entry, 0, 8
     call    PanelBusyWait6000_entry, 0, 8
-    call    func_50002629, 0, 0
+    call    PanelModeFlagGet, 0, 0
     mov     1, d1
     extbu   d0
     cmp     0, d0
@@ -6963,11 +7044,11 @@ func_50002879_entry:
 loc_500028A2:
     mov     0x1d, d0
     extbu   d1
-    call    func_50002FB7_entry, [d2,d3], 0x14
+    call    PanelTxKick_entry, [d2,d3], 0x14
     call    PanelBusyWait6000_entry, 0, 8
     call    PanelBusyWait6000_entry, 0, 8
     call    PanelBusyWait6000_entry, 0, 8
-    call    func_50002629, 0, 0
+    call    PanelModeFlagGet, 0, 0
     mov     5, d1
     extbu   d0
     cmp     0, d0
@@ -6976,17 +7057,17 @@ loc_500028A2:
 loc_500028C7:
     mov     0xdd, d0
     extbu   d1
-    call    func_50002FB7_entry, [d2,d3], 0x14
+    call    PanelTxKick_entry, [d2,d3], 0x14
     call    PanelBusyWait6000_entry, 0, 8
     call    PanelBusyWait6000_entry, 0, 8
     call    PanelBusyWait6000_entry, 0, 8
     mov     0x1e, d0
     mov     0x80, d1
-    call    func_50002FB7_entry, [d2,d3], 0x14
+    call    PanelTxKick_entry, [d2,d3], 0x14
     call    PanelBusyWait6000_entry, 0, 8
     call    PanelBusyWait6000_entry, 0, 8
     call    PanelBusyWait6000_entry, 0, 8
-    call    func_50002629, 0, 0
+    call    PanelModeFlagGet, 0, 0
     extbu   d0
     cmp     0, d0
     bne     loc_50002943
@@ -6994,21 +7075,21 @@ loc_500028C7:
     call    PanelBusyWait6000_entry, 0, 8
     mov     0x18, d0
     clr     d1
-    call    func_50002FB7_entry, [d2,d3], 0x14
+    call    PanelTxKick_entry, [d2,d3], 0x14
     call    PanelBusyWait6000_entry, 0, 8
     call    PanelBusyWait6000_entry, 0, 8
     mov     0x19, d0
     clr     d1
-    call    func_50002FB7_entry, [d2,d3], 0x14
+    call    PanelTxKick_entry, [d2,d3], 0x14
     call    PanelBusyWait6000_entry, 0, 8
     call    PanelBusyWait6000_entry, 0, 8
     mov     0x1b, d0
     mov     0x64, d1
-    call    func_50002FB7_entry, [d2,d3], 0x14
+    call    PanelTxKick_entry, [d2,d3], 0x14
     call    PanelBusyWait6000_entry, 0, 8
     call    PanelBusyWait6000_entry, 0, 8
 loc_50002943:
-    call    func_5000973E, 0, 0
+    call    loc_cpu, 0, 0
     movhu   (SC0CTR), d0
     and     0xbfff, d0
     movhu   d0, (SC0CTR)
@@ -7016,57 +7097,59 @@ loc_50002943:
     and     0x7fff, d0
     movhu   d0, (SC0CTR)
     clr     d0
-    movhu   d0, (bss_500102FC)
-    movhu   d0, (bss_500102FE)
-    bset    0x01, (bss_500102F0)
-    call    func_50009745, 0, 0
+    movhu   d0, (PanelRxRingTail)
+    movhu   d0, (PanelRxRingHead)
+    bset    0x01, (PanelLinkStatus)
+    call    unl_cpu, 0, 0
     mov     4, d0
-    call    func_5000970F_entry, 0, 8
+    call    LibIntcEnable_entry, 0, 8
     ret     0, 0x10
 
-# ---- func_5000298B -----------------------------------------------------------
+# ---- PanelSendPairPolled -----------------------------------------------------
+# sends a [command, argument] pair by polling serial 0 with the strobes by hand; nothing calls
+# it
 # no caller: unreferenced code
-func_5000298B:
+PanelSendPairPolled:
     add     -0xc, sp
-    movbu   d0, (bss_50010360)
-    movbu   d1, (bss_50010361)
-    bset    0x01, (0x36008024)
-    bset    0x01, (0x36008025)
+    movbu   d0, (PanelTxRing)
+    movbu   d1, (PanelTxRingArg)
+    bset    0x01, (P24)
+    bset    0x01, (P25)
     mov     6, d0
-    call    func_500096E0_entry, 0, 8
+    call    LibIntcDisable_entry, 0, 8
     mov     5, d0
-    call    func_500096E0_entry, 0, 8
+    call    LibIntcDisable_entry, 0, 8
     mov     4, d0
-    call    func_500096E0_entry, 0, 8
-    call    func_50002629, 0, 0
+    call    LibIntcDisable_entry, 0, 8
+    call    PanelModeFlagGet, 0, 0
     extbu   d0
     cmp     0, d0
     beq     loc_500029CE
-    bset    0x40, (0x36008004)
+    bset    0x40, (P04)
 loc_500029CE:
-    bclr    0x01, (0x36008004)
-    bset    0x01, (0x36008064)
-    bset    0x01, (0x36008024)
-    call    func_50002B4C_entry, 0, 8
-    call    func_50002B4C_entry, 0, 8
-    call    func_50002629, 0, 0
+    bclr    0x01, (P04)
+    bset    0x01, (P64)
+    bset    0x01, (P24)
+    call    PanelBusyWait600_entry, 0, 8
+    call    PanelBusyWait600_entry, 0, 8
+    call    PanelModeFlagGet, 0, 0
     extbu   d0
     cmp     0, d0
     beq     loc_500029FE
-    bclr    0x40, (0x36008004)
+    bclr    0x40, (P04)
 loc_500029FE:
-    bset    0x01, (0x36008004)
-    bclr    0x01, (0x36008064)
-    call    func_50002B4C_entry, 0, 8
-    call    func_50002B4C_entry, 0, 8
-    call    func_50002629, 0, 0
+    bset    0x01, (P04)
+    bclr    0x01, (P64)
+    call    PanelBusyWait600_entry, 0, 8
+    call    PanelBusyWait600_entry, 0, 8
+    call    PanelModeFlagGet, 0, 0
     extbu   d0
     cmp     0, d0
     beq     loc_50002A27
-    bset    0x40, (0x36008004)
+    bset    0x40, (P04)
 loc_50002A27:
-    bclr    0x01, (0x36008024)
-    bclr    0x01, (0x36008025)
+    bclr    0x01, (P24)
+    bclr    0x01, (P25)
     movhu   (SC0CTR), d0
     and     0xfff8, d0
     or      0x04, d0
@@ -7074,48 +7157,49 @@ loc_50002A27:
     movhu   (SC0CTR), d0
     or      0x8000, d0
     movhu   d0, (SC0CTR)
-    movbu   (bss_50010360), d0
+    movbu   (PanelTxRing), d0
     movbu   d0, (SC0TXB)
-    call    func_50002B4C_entry, 0, 8
-    call    func_50002629, 0, 0
+    call    PanelBusyWait600_entry, 0, 8
+    call    PanelModeFlagGet, 0, 0
     extbu   d0
     cmp     0, d0
     beq     loc_50002A7A
-    bclr    0x40, (0x36008004)
+    bclr    0x40, (P04)
 loc_50002A7A:
-    call    func_50002B4C_entry, 0, 8
-    call    func_50002629, 0, 0
+    call    PanelBusyWait600_entry, 0, 8
+    call    PanelModeFlagGet, 0, 0
     extbu   d0
     cmp     0, d0
     beq     loc_50002A90
-    bset    0x40, (0x36008004)
+    bset    0x40, (P04)
 loc_50002A90:
-    movbu   (bss_50010361), d0
+    movbu   (PanelTxRingArg), d0
     movbu   d0, (SC0TXB)
-    call    func_50002B4C_entry, 0, 8
-    call    func_50002B4C_entry, 0, 8
-    call    func_50002629, 0, 0
+    call    PanelBusyWait600_entry, 0, 8
+    call    PanelBusyWait600_entry, 0, 8
+    call    PanelModeFlagGet, 0, 0
     extbu   d0
     cmp     0, d0
     beq     loc_50002AB7
-    bclr    0x40, (0x36008004)
+    bclr    0x40, (P04)
 loc_50002AB7:
     mov     6, d0
-    call    func_500096E0_entry, 0, 8
+    call    LibIntcDisable_entry, 0, 8
     mov     5, d0
-    call    func_500096E0_entry, 0, 8
+    call    LibIntcDisable_entry, 0, 8
     movhu   (SC0CTR), d0
     or      0x07, d0
     movhu   d0, (SC0CTR)
-    bset    0x01, (0x36008024)
-    bset    0x01, (0x36008025)
-    bclr    0x01, (0x36008064)
-    bclr    0x01, (0x36008065)
+    bset    0x01, (P24)
+    bset    0x01, (P25)
+    bclr    0x01, (P64)
+    bclr    0x01, (P65)
     ret     0, 0xc
 
-# ---- func_50002AF3 -----------------------------------------------------------
+# ---- PanelBusyWait30 ---------------------------------------------------------
+# counted busy loop (0x1E iterations); nothing calls it
 # no caller: unreferenced code
-func_50002AF3:
+PanelBusyWait30:
     add     -8, sp
     mov     0x1e, d0
     mov     d0, (0, sp)
@@ -7132,9 +7216,10 @@ func_50002AF3:
     lne
     retf    0, 8
 
-# ---- func_50002B10 -----------------------------------------------------------
+# ---- PanelBusyWait60 ---------------------------------------------------------
+# counted busy loop (0x3C iterations); nothing calls it
 # no caller: unreferenced code
-func_50002B10:
+PanelBusyWait60:
     add     -8, sp
     mov     0x3c, d0
     mov     d0, (0, sp)
@@ -7151,11 +7236,12 @@ func_50002B10:
     lne
     retf    0, 8
 
-# ---- func_50002B2D -----------------------------------------------------------
-# `call` enters at func_50002B2D_entry, past the prologue
-func_50002B2D:
+# ---- PanelBusyWait150 --------------------------------------------------------
+# counted busy loop (0x96 iterations)
+# `call` enters at PanelBusyWait150_entry, past the prologue
+PanelBusyWait150:
     add     -8, sp
-func_50002B2D_entry:
+PanelBusyWait150_entry:
     mov     0x96, d0
     mov     d0, (0, sp)
     mov     (0, sp), d0
@@ -7171,11 +7257,12 @@ func_50002B2D_entry:
     lne
     retf    0, 8
 
-# ---- func_50002B4C -----------------------------------------------------------
-# `call` enters at func_50002B4C_entry, past the prologue
-func_50002B4C:
+# ---- PanelBusyWait600 --------------------------------------------------------
+# counted busy loop (0x258 iterations)
+# `call` enters at PanelBusyWait600_entry, past the prologue
+PanelBusyWait600:
     add     -8, sp
-func_50002B4C_entry:
+PanelBusyWait600_entry:
     mov     0x258, d0
     mov     d0, (0, sp)
     mov     (0, sp), d0
@@ -7191,11 +7278,12 @@ func_50002B4C_entry:
     lne
     retf    0, 8
 
-# ---- func_50002B6B -----------------------------------------------------------
-# `call` enters at func_50002B6B_entry, past the prologue
-func_50002B6B:
+# ---- PanelBusyWait3000 -------------------------------------------------------
+# counted busy loop (0xBB8 iterations)
+# `call` enters at PanelBusyWait3000_entry, past the prologue
+PanelBusyWait3000:
     add     -8, sp
-func_50002B6B_entry:
+PanelBusyWait3000_entry:
     mov     0xbb8, d0
     mov     d0, (0, sp)
     mov     (0, sp), d0
@@ -7232,45 +7320,53 @@ PanelBusyWait6000_entry:
     lne
     retf    0, 8
 
-# ---- func_50002BA9 -----------------------------------------------------------
+# ---- PanelTickWait2 ----------------------------------------------------------
+# waits until the tick counter has moved on by more than 2
+# the same code as the firmware's routine of this name (941 0x484AC0E7), linked elsewhere
 # no caller: unreferenced code
-func_50002BA9:
-    mov     (bss_50019730), d1
-    mov     d1, (bss_500102F8)
+PanelTickWait2:
+    mov     (TickCount), d1
+    mov     d1, (PanelTickMark)
 loc_50002BB5:
-    mov     (bss_50019730), d0
+    mov     (TickCount), d0
     sub     d1, d0
     cmp     2, d0
     bls     loc_50002BB5
     retf    0, 0
 
-# ---- func_50002BC4 -----------------------------------------------------------
-func_50002BC4:
-    mov     (bss_50019730), d1
-    mov     d1, (bss_500102F8)
+# ---- PanelTickWait6 ----------------------------------------------------------
+# the same, 6 ticks
+# the same code as the firmware's routine of this name (941 0x484AC102), linked elsewhere
+PanelTickWait6:
+    mov     (TickCount), d1
+    mov     d1, (PanelTickMark)
 loc_50002BD0:
-    mov     (bss_50019730), d0
+    mov     (TickCount), d0
     sub     d1, d0
     cmp     6, d0
     bls     loc_50002BD0
     retf    0, 0
 
-# ---- func_50002BDF -----------------------------------------------------------
-func_50002BDF:
-    mov     (bss_50019730), d1
-    mov     d1, (bss_500102F8)
+# ---- PanelTickWait51 ---------------------------------------------------------
+# the same, 0x33 ticks
+# the same code as the firmware's routine of this name (941 0x484AC11D), linked elsewhere
+PanelTickWait51:
+    mov     (TickCount), d1
+    mov     d1, (PanelTickMark)
 loc_50002BEB:
-    mov     (bss_50019730), d0
+    mov     (TickCount), d0
     sub     d1, d0
     cmp     0x33, d0
     bls     loc_50002BEB
     retf    0, 0
 
-# ---- func_50002BFA -----------------------------------------------------------
-# `call` enters at func_50002BFA_entry, past the prologue
-func_50002BFA:
+# ---- PanelTypeMatchPairs -----------------------------------------------------
+# the panel type from three tables of {byte pointer, expected value} pairs: 3, 2 or 1 for the
+# first table that matches, else 0
+# `call` enters at PanelTypeMatchPairs_entry, past the prologue
+PanelTypeMatchPairs:
     movm    [a2], (sp)
-func_50002BFA_entry:
+PanelTypeMatchPairs_entry:
     mov     0, a2
     mov     rodata_5000C6DC, a1
     setlb
@@ -7401,8 +7497,10 @@ loc_50002CE7:
 loc_50002CE8:
     retf    [a2], 4
 
-# ---- func_50002CEB -----------------------------------------------------------
-func_50002CEB:
+# ---- PanelTypeProbeShadow ----------------------------------------------------
+# mode B: the panel type 1..7 from the sign-on bytes left in the RX shadows
+# the same code as the firmware's routine of this name (941 0x484AC138), linked elsewhere
+PanelTypeProbeShadow:
     movbu   (bss_500103A0), d0
     cmp     0xf, d0
     bne     loc_50002CFA
@@ -7449,225 +7547,235 @@ loc_50002D4E:
 loc_50002D4F:
     retf    0, 0
 
-# ---- func_50002D52 -----------------------------------------------------------
-# `call` enters at func_50002D52_entry, past the prologue
-func_50002D52:
+# ---- PanelTypeDetect ---------------------------------------------------------
+# mode B: PanelTypeProbeShadow; mode A: PanelTypeMatchPairs
+# `call` enters at PanelTypeDetect_entry, past the prologue
+PanelTypeDetect:
     add     -8, sp
-func_50002D52_entry:
-    call    func_50002629, 0, 0
+PanelTypeDetect_entry:
+    call    PanelModeFlagGet, 0, 0
     extbu   d0
     cmp     0, d0
     bne     loc_50002D66
-    call    func_50002BFA_entry, [a2], 4
+    call    PanelTypeMatchPairs_entry, [a2], 4
     bra     loc_50002D6B
 loc_50002D66:
-    call    func_50002CEB, 0, 0
+    call    PanelTypeProbeShadow, 0, 0
 loc_50002D6B:
     ret     0, 8
 
-# ---- func_50002D6E -----------------------------------------------------------
-# `call` enters at func_50002D6E_entry, past the prologue
-func_50002D6E:
+# ---- PanelTransaction --------------------------------------------------------
+# pings the left panel (0x20) and the right one (0xE0); result bit 0 / bit 3 set for each that
+# answered
+# `call` enters at PanelTransaction_entry, past the prologue
+PanelTransaction:
     add     -0x10, sp
-func_50002D6E_entry:
+PanelTransaction_entry:
     clr     d0
-    movbu   d0, (bss_500102F1)
-    call    func_50002F42_entry, 0, 8
-    call    func_5000973E, 0, 0
+    movbu   d0, (PanelPingResult)
+    call    PanelWaitLinkIdle_entry, 0, 8
+    call    loc_cpu, 0, 0
     clr     d0
-    movhu   d0, (bss_500102FC)
-    movhu   d0, (bss_500102FE)
-    bset    0x01, (bss_500102F0)
-    call    func_50009745, 0, 0
+    movhu   d0, (PanelRxRingTail)
+    movhu   d0, (PanelRxRingHead)
+    bset    0x01, (PanelLinkStatus)
+    call    unl_cpu, 0, 0
     mov     0x20, d0
     clr     d1
-    call    func_50002FB7_entry, [d2,d3], 0x14
-    call    func_50002BC4, 0, 0
-    movhu   (bss_500102FE), d0
+    call    PanelTxKick_entry, [d2,d3], 0x14
+    call    PanelTickWait6, 0, 0
+    movhu   (PanelRxRingHead), d0
     cmp     0, d0
     beq     loc_50002DB9
-    bset    0x01, (bss_500102F1)
+    bset    0x01, (PanelPingResult)
 loc_50002DB9:
-    call    func_50002F42_entry, 0, 8
-    call    func_5000973E, 0, 0
+    call    PanelWaitLinkIdle_entry, 0, 8
+    call    loc_cpu, 0, 0
     clr     d0
-    movhu   d0, (bss_500102FC)
-    movhu   d0, (bss_500102FE)
-    bset    0x01, (bss_500102F0)
-    call    func_50009745, 0, 0
+    movhu   d0, (PanelRxRingTail)
+    movhu   d0, (PanelRxRingHead)
+    bset    0x01, (PanelLinkStatus)
+    call    unl_cpu, 0, 0
     mov     0xe0, d0
     clr     d1
-    call    func_50002FB7_entry, [d2,d3], 0x14
-    call    func_50002BC4, 0, 0
-    movhu   (bss_500102FE), d0
+    call    PanelTxKick_entry, [d2,d3], 0x14
+    call    PanelTickWait6, 0, 0
+    movhu   (PanelRxRingHead), d0
     cmp     0, d0
     beq     loc_50002DFB
-    bset    0x08, (bss_500102F1)
+    bset    0x08, (PanelPingResult)
 loc_50002DFB:
-    movbu   (bss_500102F1), d0
+    movbu   (PanelPingResult), d0
     ret     0, 0x10
 
-# ---- func_50002E04 -----------------------------------------------------------
-# `call` enters at func_50002E04_entry, past the prologue
-func_50002E04:
+# ---- PanelSignOnRequest ------------------------------------------------------
+# the sign-on sequence 0x29, 0xEA, 0xE6/0x10, then PanelRxDecodeQuiet
+# `call` enters at PanelSignOnRequest_entry, past the prologue
+PanelSignOnRequest:
     add     -0x10, sp
-func_50002E04_entry:
-    call    func_50003FB0, 0, 0
-    call    func_5000973E, 0, 0
+PanelSignOnRequest_entry:
+    call    PanelEventFifoInit, 0, 0
+    call    loc_cpu, 0, 0
     clr     d0
-    movhu   d0, (bss_500102FC)
-    movhu   d0, (bss_500102FE)
-    bset    0x01, (bss_500102F0)
-    call    func_50009745, 0, 0
-    call    func_50002F42_entry, 0, 8
+    movhu   d0, (PanelRxRingTail)
+    movhu   d0, (PanelRxRingHead)
+    bset    0x01, (PanelLinkStatus)
+    call    unl_cpu, 0, 0
+    call    PanelWaitLinkIdle_entry, 0, 8
     mov     0x29, d0
     clr     d1
-    call    func_50002FB7_entry, [d2,d3], 0x14
-    call    func_50002BC4, 0, 0
-    call    func_50002BC4, 0, 0
-    call    func_50002BC4, 0, 0
-    call    func_50002BC4, 0, 0
-    call    func_50002BC4, 0, 0
-    call    func_50002F42_entry, 0, 8
+    call    PanelTxKick_entry, [d2,d3], 0x14
+    call    PanelTickWait6, 0, 0
+    call    PanelTickWait6, 0, 0
+    call    PanelTickWait6, 0, 0
+    call    PanelTickWait6, 0, 0
+    call    PanelTickWait6, 0, 0
+    call    PanelWaitLinkIdle_entry, 0, 8
     mov     0xea, d0
     clr     d1
-    call    func_50002FB7_entry, [d2,d3], 0x14
-    call    func_50002BC4, 0, 0
-    call    func_50002BC4, 0, 0
-    call    func_50002BC4, 0, 0
-    call    func_50002BC4, 0, 0
-    call    func_50002BC4, 0, 0
-    call    func_50002F42_entry, 0, 8
+    call    PanelTxKick_entry, [d2,d3], 0x14
+    call    PanelTickWait6, 0, 0
+    call    PanelTickWait6, 0, 0
+    call    PanelTickWait6, 0, 0
+    call    PanelTickWait6, 0, 0
+    call    PanelTickWait6, 0, 0
+    call    PanelWaitLinkIdle_entry, 0, 8
     mov     0xe6, d0
     mov     0x10, d1
-    call    func_50002FB7_entry, [d2,d3], 0x14
-    call    func_50002BC4, 0, 0
-    call    func_50002BC4, 0, 0
-    call    func_50003B39_entry, 0, 8
+    call    PanelTxKick_entry, [d2,d3], 0x14
+    call    PanelTickWait6, 0, 0
+    call    PanelTickWait6, 0, 0
+    call    PanelRxDecodeQuiet_entry, 0, 8
     ret     0, 0x10
 
-# ---- func_50002E98 -----------------------------------------------------------
-func_50002E98:
+# ---- PanelInitHookNop --------------------------------------------------------
+# called at the end of PanelInit; does nothing
+PanelInitHookNop:
     retf    0, 0
 
-# ---- func_50002E9B -----------------------------------------------------------
-# `call` enters at func_50002E9B_entry, past the prologue
-func_50002E9B:
+# ---- PanelStatusPoll ---------------------------------------------------------
+# 0x29, 0xEB, 0x20/0x10, 0xE6/0x10, each followed by PanelRxDecodeExpect
+# `call` enters at PanelStatusPoll_entry, past the prologue
+PanelStatusPoll:
     add     -0x10, sp
-func_50002E9B_entry:
-    call    func_50003FB0, 0, 0
-    call    func_5000973E, 0, 0
+PanelStatusPoll_entry:
+    call    PanelEventFifoInit, 0, 0
+    call    loc_cpu, 0, 0
     clr     d0
-    movhu   d0, (bss_500102FC)
-    movhu   d0, (bss_500102FE)
-    bset    0x01, (bss_500102F0)
-    call    func_50009745, 0, 0
-    call    func_50002F42_entry, 0, 8
+    movhu   d0, (PanelRxRingTail)
+    movhu   d0, (PanelRxRingHead)
+    bset    0x01, (PanelLinkStatus)
+    call    unl_cpu, 0, 0
+    call    PanelWaitLinkIdle_entry, 0, 8
     mov     0x29, d0
     clr     d1
-    call    func_50002FB7_entry, [d2,d3], 0x14
-    call    func_50002BC4, 0, 0
-    call    func_50002BC4, 0, 0
-    call    func_50002BC4, 0, 0
-    call    func_50003B27_entry, 0, 8
-    call    func_50002F42_entry, 0, 8
+    call    PanelTxKick_entry, [d2,d3], 0x14
+    call    PanelTickWait6, 0, 0
+    call    PanelTickWait6, 0, 0
+    call    PanelTickWait6, 0, 0
+    call    PanelRxDecodeExpect_entry, 0, 8
+    call    PanelWaitLinkIdle_entry, 0, 8
     mov     0xeb, d0
     clr     d1
-    call    func_50002FB7_entry, [d2,d3], 0x14
-    call    func_50002BC4, 0, 0
-    call    func_50002BC4, 0, 0
-    call    func_50002BC4, 0, 0
-    call    func_50003B27_entry, 0, 8
-    call    func_50002F42_entry, 0, 8
+    call    PanelTxKick_entry, [d2,d3], 0x14
+    call    PanelTickWait6, 0, 0
+    call    PanelTickWait6, 0, 0
+    call    PanelTickWait6, 0, 0
+    call    PanelRxDecodeExpect_entry, 0, 8
+    call    PanelWaitLinkIdle_entry, 0, 8
     mov     0x20, d0
     mov     0x10, d1
-    call    func_50002FB7_entry, [d2,d3], 0x14
-    call    func_50002BC4, 0, 0
-    call    func_50002BC4, 0, 0
-    call    func_50003B27_entry, 0, 8
-    call    func_50002F42_entry, 0, 8
+    call    PanelTxKick_entry, [d2,d3], 0x14
+    call    PanelTickWait6, 0, 0
+    call    PanelTickWait6, 0, 0
+    call    PanelRxDecodeExpect_entry, 0, 8
+    call    PanelWaitLinkIdle_entry, 0, 8
     mov     0xe6, d0
     mov     0x10, d1
-    call    func_50002FB7_entry, [d2,d3], 0x14
-    call    func_50002BC4, 0, 0
-    call    func_50002BC4, 0, 0
-    call    func_50003B27_entry, 0, 8
+    call    PanelTxKick_entry, [d2,d3], 0x14
+    call    PanelTickWait6, 0, 0
+    call    PanelTickWait6, 0, 0
+    call    PanelRxDecodeExpect_entry, 0, 8
     ret     0, 0x10
 
-# ---- func_50002F42 -----------------------------------------------------------
-# `call` enters at func_50002F42_entry, past the prologue
-func_50002F42:
+# ---- PanelWaitLinkIdle -------------------------------------------------------
+# up to 200 tries (PanelBusyWait3000 apart) for the panel present (P84 bit 0), the link not busy
+# and the TX ring empty; status bit 7 on time-out
+# `call` enters at PanelWaitLinkIdle_entry, past the prologue
+PanelWaitLinkIdle:
     add     -8, sp
-func_50002F42_entry:
+PanelWaitLinkIdle_entry:
     mov     0xc8, d0
-    movbu   d0, (bss_500102F5)
+    movbu   d0, (PanelIdleRetries)
 loc_50002F4E:
-    call    func_5000973E, 0, 0
-    btst    0x01, (0x36008084)
+    call    loc_cpu, 0, 0
+    btst    0x01, (P84)
     beq     loc_50002F82
-    movbu   (bss_500102EE), d0
+    movbu   (PanelLinkFlags), d0
     btst    0x02, d0
     bne     loc_50002F82
     btst    0x01, d0
     bne     loc_50002F82
-    movhu   (bss_5001035E), d1
-    movhu   (bss_5001035C), d0
+    movhu   (PanelTxRingWrite), d1
+    movhu   (PanelTxRingRead), d0
     cmp     d0, d1
     bne     loc_50002F82
-    call    func_50009745, 0, 0
+    call    unl_cpu, 0, 0
     bra     loc_50002FB4
 loc_50002F82:
-    movbu   (bss_500102F5), d0
+    movbu   (PanelIdleRetries), d0
     add     -1, d0
-    movbu   d0, (bss_500102F5)
-    movbu   (bss_500102F5), d0
+    movbu   d0, (PanelIdleRetries)
+    movbu   (PanelIdleRetries), d0
     cmp     0, d0
     bne     loc_50002FA1
-    call    func_50009745, 0, 0
+    call    unl_cpu, 0, 0
     bra     loc_50002FAD
 loc_50002FA1:
-    call    func_50009745, 0, 0
-    call    func_50002B6B_entry, 0, 8
+    call    unl_cpu, 0, 0
+    call    PanelBusyWait3000_entry, 0, 8
     bra     loc_50002F4E
 loc_50002FAD:
-    bset    0x80, (bss_500102F0)
+    bset    0x80, (PanelLinkStatus)
 loc_50002FB4:
     ret     0, 8
 
-# ---- func_50002FB7 -----------------------------------------------------------
-# `call` enters at func_50002FB7_entry, past the prologue
-func_50002FB7:
+# ---- PanelTxKick -------------------------------------------------------------
+# queues [command, argument] in the TX ring, state 1, and starts the first byte (P24/P25/P04/P64
+# strobes, serial 0 to transmit)
+# `call` enters at PanelTxKick_entry, past the prologue
+PanelTxKick:
     movm    [d2,d3], (sp)
     add     -0xc, sp
-func_50002FB7_entry:
+PanelTxKick_entry:
     mov     d1, d3
     mov     d0, d2
-    call    func_5000973E, 0, 0
+    call    loc_cpu, 0, 0
     clr     d0
-    movhu   d0, (bss_5001035C)
-    movbu   d2, (bss_50010360)
-    movbu   d3, (bss_50010361)
+    movhu   d0, (PanelTxRingRead)
+    movbu   d2, (PanelTxRing)
+    movbu   d3, (PanelTxRingArg)
     mov     2, d0
-    movhu   d0, (bss_5001035E)
-    bset    0x02, (bss_500102EE)
-    bclr    0x01, (bss_500102EE)
+    movhu   d0, (PanelTxRingWrite)
+    bset    0x02, (PanelLinkFlags)
+    bclr    0x01, (PanelLinkFlags)
     mov     1, d0
-    movbu   d0, (bss_500102EC)
+    movbu   d0, (PanelLinkState)
     mov     0x78, d0
     movbu   d0, (0x34001010)
-    bset    0x01, (0x36008024)
-    bset    0x01, (0x36008025)
-    call    func_50002629, 0, 0
+    bset    0x01, (P24)
+    bset    0x01, (P25)
+    call    PanelModeFlagGet, 0, 0
     extbu   d0
     cmp     0, d0
     beq     loc_5000301B
-    bset    0x40, (0x36008004)
+    bset    0x40, (P04)
 loc_5000301B:
-    bclr    0x01, (0x36008004)
-    bset    0x01, (0x36008064)
-    call    func_50009745, 0, 0
+    bclr    0x01, (P04)
+    bset    0x01, (P64)
+    call    unl_cpu, 0, 0
     mov     4, d0
-    call    func_500096E0_entry, 0, 8
+    call    LibIntcDisable_entry, 0, 8
     movhu   (SC0CTR), d0
     and     0xbfff, d0
     movhu   d0, (SC0CTR)
@@ -7676,9 +7784,9 @@ loc_5000301B:
     or      0x04, d0
     movhu   d0, (SC0CTR)
     mov     6, d0
-    call    func_500096E0_entry, 0, 8
+    call    LibIntcDisable_entry, 0, 8
     mov     5, d0
-    call    func_5000970F_entry, 0, 8
+    call    LibIntcEnable_entry, 0, 8
     movhu   (SC0CTR), d0
     or      0x8000, d0
     movhu   d0, (SC0CTR)
@@ -7686,11 +7794,13 @@ loc_5000301B:
     movbu   d0, (SC0TXB)
     ret     [d2,d3], 0x14
 
-# ---- func_50003080 -----------------------------------------------------------
-# no caller: unreferenced code
-func_50003080:
+# ---- PanelAtnIsr -------------------------------------------------------------
+# interrupt group 26, the panel's ATN pulse: first edge re-arms EXTMD for the other edge, the
+# second turns the link round to receive
+# nothing calls it directly: its address is taken (a handler or a method)
+PanelAtnIsr:
     add     -0xc, sp
-    movbu   (bss_500103DE), d0
+    movbu   (PanelAtnPass), d0
     cmp     0, d0
     bne     loc_500030D1
     movhu   (EXTMD), d0
@@ -7698,8 +7808,8 @@ func_50003080:
     or      0x80, d0
     movhu   d0, (EXTMD)
     mov     1, d0
-    movbu   d0, (bss_500103DE)
-    bset    0x01, (bss_500102EE)
+    movbu   d0, (PanelAtnPass)
+    bset    0x01, (PanelLinkFlags)
     and     0xf7ff, psw
     nop
     nop
@@ -7714,18 +7824,18 @@ func_50003080:
 loc_500030D1:
     clr     d0
     movbu   d0, (bss_500102F6)
-    movbu   (bss_500102ED), d0
+    movbu   (PanelReplyCountdown), d0
     cmp     0, d0
     bne     loc_5000314D
-    bset    0x01, (0x36008024)
-    bclr    0x01, (0x36008064)
+    bset    0x01, (P24)
+    bclr    0x01, (P64)
     movhu   (SC0CTR), d0
     or      0x07, d0
     movhu   d0, (SC0CTR)
     mov     6, d0
-    call    func_5000970F_entry, 0, 8
+    call    LibIntcEnable_entry, 0, 8
     mov     5, d0
-    call    func_500096E0_entry, 0, 8
+    call    LibIntcDisable_entry, 0, 8
     movhu   (SC0CTR), d0
     or      0x4000, d0
     movhu   d0, (SC0CTR)
@@ -7740,12 +7850,12 @@ loc_500030D1:
     nop
     nop
     mov     8, d0
-    movbu   d0, (bss_500102EC)
-    bset    0x01, (bss_500102EE)
+    movbu   d0, (PanelLinkState)
+    bset    0x01, (PanelLinkFlags)
     bra     loc_5000317A
 loc_5000314D:
-    bset    0x40, (bss_500102F0)
-    bclr    0x02, (bss_500102EE)
+    bset    0x40, (PanelLinkStatus)
+    bclr    0x02, (PanelLinkFlags)
     and     0xf7ff, psw
     nop
     nop
@@ -7761,18 +7871,20 @@ loc_5000317A:
     or      0xc0, d0
     movhu   d0, (EXTMD)
     clr     d0
-    movbu   d0, (bss_500103DE)
+    movbu   d0, (PanelAtnPass)
 loc_50003190:
     movhu   (G26ICR), d0
     ret     0, 0xc
 
-# ---- func_50003199 -----------------------------------------------------------
-# no caller: unreferenced code
-func_50003199:
+# ---- PanelTxDoneIsr ----------------------------------------------------------
+# interrupt group 17: runs PanelXferStateTable[state] and acknowledges the group
+# the same code as the firmware's routine of this name (941 0x484AC70E), linked elsewhere
+# nothing calls it directly: its address is taken (a handler or a method)
+PanelTxDoneIsr:
     add     -8, sp
-    movbu   (bss_500102EC), d0
+    movbu   (PanelLinkState), d0
     asl2    d0
-    mov     rodata_5000C794, a0
+    mov     PanelXferStateTable, a0
     mov     (d0, a0), a0
     calls   (a0)
     and     0xf7ff, psw
@@ -7788,9 +7900,11 @@ func_50003199:
     movhu   (G17ICR), d0
     ret     0, 8
 
-# ---- func_500031D5 -----------------------------------------------------------
-# no caller: unreferenced code
-func_500031D5:
+# ---- PanelRxIsr --------------------------------------------------------------
+# interrupt group 16: notes a serial error, runs PanelXferStateTable[state]
+# the same code as the firmware's routine of this name (941 0x484AC74A), linked elsewhere
+# nothing calls it directly: its address is taken (a handler or a method)
+PanelRxIsr:
     add     -8, sp
     movhu   (SC0STR), d0
     btst    0x07, d0
@@ -7798,9 +7912,9 @@ func_500031D5:
     mov     1, d0
     movbu   d0, (bss_50012580)
 loc_500031EB:
-    movbu   (bss_500102EC), d0
+    movbu   (PanelLinkState), d0
     asl2    d0
-    mov     rodata_5000C794, a0
+    mov     PanelXferStateTable, a0
     mov     (d0, a0), a0
     calls   (a0)
     and     0xf7ff, psw
@@ -7816,23 +7930,24 @@ loc_500031EB:
     movhu   (G16ICR), d0
     ret     0, 8
 
-# ---- func_50003224 -----------------------------------------------------------
-func_50003224:
+# ---- PanelTxState1 -----------------------------------------------------------
+# strobes; aborts the transaction when the panel is absent (P84 bit 0)
+PanelTxState1:
     add     -0xc, sp
-    bclr    0x01, (0x36008064)
-    bset    0x01, (0x36008025)
-    call    func_50002629, 0, 0
+    bclr    0x01, (P64)
+    bset    0x01, (P25)
+    call    PanelModeFlagGet, 0, 0
     extbu   d0
     cmp     0, d0
     beq     loc_50003246
-    bclr    0x40, (0x36008004)
+    bclr    0x40, (P04)
 loc_50003246:
     mov     0x3c, d0
     movbu   d0, (0x34001010)
     mov     4, d0
-    call    func_500096E0_entry, 0, 8
+    call    LibIntcDisable_entry, 0, 8
     mov     5, d0
-    call    func_5000970F_entry, 0, 8
+    call    LibIntcEnable_entry, 0, 8
     movhu   (SC0CTR), d0
     and     0xfff8, d0
     or      0x04, d0
@@ -7842,38 +7957,39 @@ loc_50003246:
     movhu   d0, (SC0CTR)
     clr     d0
     movbu   d0, (SC0TXB)
-    movbu   (bss_500102EC), d0
+    movbu   (PanelLinkState), d0
     inc     d0
-    movbu   d0, (bss_500102EC)
-    btst    0x01, (0x36008084)
+    movbu   d0, (PanelLinkState)
+    btst    0x01, (P84)
     bne     loc_500032CD
     clr     d0
-    movbu   d0, (bss_500102ED)
-    movbu   d0, (bss_500102EC)
-    bset    0x02, (bss_500102F0)
+    movbu   d0, (PanelReplyCountdown)
+    movbu   d0, (PanelLinkState)
+    bset    0x02, (PanelLinkStatus)
     mov     6, d0
-    call    func_500096E0_entry, 0, 8
+    call    LibIntcDisable_entry, 0, 8
     mov     5, d0
-    call    func_500096E0_entry, 0, 8
+    call    LibIntcDisable_entry, 0, 8
     mov     0x3c, d0
     movbu   d0, (0x34001010)
-    bclr    0x02, (bss_500102EE)
+    bclr    0x02, (PanelLinkFlags)
 loc_500032CD:
     ret     0, 0xc
 
-# ---- func_500032D0 -----------------------------------------------------------
-func_500032D0:
+# ---- PanelTxState2 -----------------------------------------------------------
+# sends the command byte; a command that wants a reply sets the reply countdown
+PanelTxState2:
     add     -0xc, sp
     mov     0xa, d0
     movbu   d0, (0x34001010)
-    call    func_50002629, 0, 0
+    call    PanelModeFlagGet, 0, 0
     extbu   d0
     cmp     0, d0
     beq     loc_500032EC
-    bset    0x40, (0x36008004)
+    bset    0x40, (P04)
 loc_500032EC:
-    bclr    0x01, (0x36008024)
-    bclr    0x01, (0x36008025)
+    bclr    0x01, (P24)
+    bclr    0x01, (P25)
     movhu   (SC0CTR), d0
     and     0xfff8, d0
     or      0x04, d0
@@ -7889,26 +8005,26 @@ loc_500032EC:
     nop
     nop
     mov     4, d0
-    call    func_5000970F_entry, 0, 8
+    call    LibIntcEnable_entry, 0, 8
     mov     6, d0
-    call    func_500096E0_entry, 0, 8
+    call    LibIntcDisable_entry, 0, 8
     mov     5, d0
-    call    func_5000970F_entry, 0, 8
-    movhu   (bss_5001035C), d0
-    mov     bss_50010360, a0
+    call    LibIntcEnable_entry, 0, 8
+    movhu   (PanelTxRingRead), d0
+    mov     PanelTxRing, a0
     movbu   (d0, a0), d1
     movbu   d1, (SC0TXB)
-    movhu   (bss_5001035C), d0
+    movhu   (PanelTxRingRead), d0
     inc     d0
-    movhu   d0, (bss_5001035C)
-    movhu   (bss_5001035C), d0
+    movhu   d0, (PanelTxRingRead)
+    movhu   (PanelTxRingRead), d0
     cmp     0x3c, d0
     blt     loc_50003373
     clr     d0
-    movhu   d0, (bss_5001035C)
+    movhu   d0, (PanelTxRingRead)
 loc_50003373:
     mov     2, d0
-    movbu   d0, (bss_500102ED)
+    movbu   d0, (PanelReplyCountdown)
     extbu   d1
     and     0x3f, d1
     extbu   d1
@@ -7917,54 +8033,56 @@ loc_50003373:
     and     0x0f, d1
     extbu   d1
     add     3, d1
-    movbu   d1, (bss_500102ED)
+    movbu   d1, (PanelReplyCountdown)
 loc_50003390:
-    movbu   (bss_500102EC), d0
+    movbu   (PanelLinkState), d0
     inc     d0
-    movbu   d0, (bss_500102EC)
+    movbu   d0, (PanelLinkState)
     ret     0, 0xc
 
-# ---- func_500033A0 -----------------------------------------------------------
-func_500033A0:
+# ---- PanelTxState3 -----------------------------------------------------------
+# sends a 0x00 sync byte
+PanelTxState3:
     add     -0xc, sp
-    call    func_50002B2D_entry, 0, 8
-    call    func_50002629, 0, 0
+    call    PanelBusyWait150_entry, 0, 8
+    call    PanelModeFlagGet, 0, 0
     extbu   d0
     cmp     0, d0
     beq     loc_500033B9
-    bclr    0x40, (0x36008004)
+    bclr    0x40, (P04)
 loc_500033B9:
     mov     0x3c, d0
-    bclr    0x01, (0x36008064)
-    bset    0x01, (0x36008024)
-    bset    0x01, (0x36008025)
+    bclr    0x01, (P64)
+    bset    0x01, (P24)
+    bset    0x01, (P25)
     movbu   d0, (0x34001010)
     mov     5, d0
-    call    func_5000970F_entry, 0, 8
+    call    LibIntcEnable_entry, 0, 8
     movhu   (SC0CTR), d0
     and     0xfff8, d0
     or      0x04, d0
     movhu   d0, (SC0CTR)
     clr     d0
     movbu   d0, (SC0TXB)
-    movbu   (bss_500102EC), d0
+    movbu   (PanelLinkState), d0
     inc     d0
-    movbu   d0, (bss_500102EC)
+    movbu   d0, (PanelLinkState)
     ret     0, 0xc
 
-# ---- func_50003407 -----------------------------------------------------------
-func_50003407:
+# ---- PanelTxState4 -----------------------------------------------------------
+# sends the argument byte
+PanelTxState4:
     add     -0xc, sp
     mov     0xa, d0
     movbu   d0, (0x34001010)
-    call    func_50002629, 0, 0
+    call    PanelModeFlagGet, 0, 0
     extbu   d0
     cmp     0, d0
     beq     loc_50003423
-    bset    0x40, (0x36008004)
+    bset    0x40, (P04)
 loc_50003423:
-    bclr    0x01, (0x36008024)
-    bclr    0x01, (0x36008025)
+    bclr    0x01, (P24)
+    bclr    0x01, (P25)
     and     0xf7ff, psw
     nop
     nop
@@ -7976,56 +8094,57 @@ loc_50003423:
     nop
     nop
     mov     4, d0
-    call    func_5000970F_entry, 0, 8
+    call    LibIntcEnable_entry, 0, 8
     mov     5, d0
-    call    func_5000970F_entry, 0, 8
+    call    LibIntcEnable_entry, 0, 8
     mov     6, d0
-    call    func_500096E0_entry, 0, 8
-    movhu   (bss_5001035C), d0
-    mov     bss_50010360, a0
+    call    LibIntcDisable_entry, 0, 8
+    movhu   (PanelTxRingRead), d0
+    mov     PanelTxRing, a0
     movbu   (d0, a0), d0
     movbu   d0, (SC0TXB)
-    movhu   (bss_5001035C), d0
+    movhu   (PanelTxRingRead), d0
     inc     d0
-    movhu   d0, (bss_5001035C)
-    movhu   (bss_5001035C), d0
+    movhu   d0, (PanelTxRingRead)
+    movhu   (PanelTxRingRead), d0
     cmp     0x3c, d0
     blt     loc_50003497
     clr     d0
-    movhu   d0, (bss_5001035C)
+    movhu   d0, (PanelTxRingRead)
 loc_50003497:
-    movbu   (bss_500102ED), d0
+    movbu   (PanelReplyCountdown), d0
     add     -1, d0
-    movbu   d0, (bss_500102ED)
-    movbu   (bss_500102ED), d0
+    movbu   d0, (PanelReplyCountdown)
+    movbu   (PanelReplyCountdown), d0
     cmp     1, d0
     beq     loc_500034C3
     cmp     0, d0
     beq     loc_500034C3
-    movbu   (bss_500102EC), d0
+    movbu   (PanelLinkState), d0
     add     -1, d0
-    movbu   d0, (bss_500102EC)
+    movbu   d0, (PanelLinkState)
     bra     loc_500034D0
 loc_500034C3:
-    movbu   (bss_500102EC), d0
+    movbu   (PanelLinkState), d0
     inc     d0
-    movbu   d0, (bss_500102EC)
+    movbu   d0, (PanelLinkState)
 loc_500034D0:
     ret     0, 0xc
 
-# ---- func_500034D3 -----------------------------------------------------------
-func_500034D3:
+# ---- PanelTxState5 -----------------------------------------------------------
+# strobes, a sync byte, ATN re-armed, the link to transmit
+PanelTxState5:
     add     -0xc, sp
-    call    func_50002B2D_entry, 0, 8
-    call    func_50002629, 0, 0
+    call    PanelBusyWait150_entry, 0, 8
+    call    PanelModeFlagGet, 0, 0
     extbu   d0
     cmp     0, d0
     beq     loc_500034EC
-    bclr    0x40, (0x36008004)
+    bclr    0x40, (P04)
 loc_500034EC:
-    bclr    0x01, (0x36008064)
-    bset    0x01, (0x36008024)
-    bset    0x01, (0x36008025)
+    bclr    0x01, (P64)
+    bset    0x01, (P24)
+    bset    0x01, (P25)
     mov     0x3c, d0
     movbu   d0, (0x34001010)
     clr     d0
@@ -8041,31 +8160,32 @@ loc_500034EC:
     nop
     nop
     mov     4, d0
-    call    func_5000970F_entry, 0, 8
+    call    LibIntcEnable_entry, 0, 8
     mov     5, d0
-    call    func_5000970F_entry, 0, 8
+    call    LibIntcEnable_entry, 0, 8
     mov     6, d0
-    call    func_500096E0_entry, 0, 8
+    call    LibIntcDisable_entry, 0, 8
     movhu   (SC0CTR), d0
     and     0xfff8, d0
     or      0x04, d0
     movhu   d0, (SC0CTR)
     clr     d0
     movbu   d0, (SC0TXB)
-    movbu   (bss_500102EC), d0
+    movbu   (PanelLinkState), d0
     inc     d0
-    movbu   d0, (bss_500102EC)
+    movbu   d0, (PanelLinkState)
     ret     0, 0xc
 
-# ---- func_5000356E -----------------------------------------------------------
-func_5000356E:
+# ---- PanelTxState6 -----------------------------------------------------------
+# frame done: the next frame if the TX ring holds one, else back to waiting for ATN
+PanelTxState6:
     movm    [d2], (sp)
     add     -0xc, sp
     clr     d0
-    movbu   d0, (bss_500102ED)
-    movbu   d0, (bss_500102EC)
-    movhu   (bss_5001035E), d2
-    movhu   (bss_5001035C), d1
+    movbu   d0, (PanelReplyCountdown)
+    movbu   d0, (PanelLinkState)
+    movhu   (PanelTxRingWrite), d2
+    movhu   (PanelTxRingRead), d1
     mov     0x3c, d0
     add     d2, d0
     sub     d1, d0
@@ -8078,41 +8198,41 @@ loc_50003597:
     cmp     2, d0
     blt     loc_5000360A
     mov     1, d0
-    movbu   d0, (bss_500102EC)
-    bset    0x01, (0x36008024)
-    call    func_50002629, 0, 0
+    movbu   d0, (PanelLinkState)
+    bset    0x01, (P24)
+    call    PanelModeFlagGet, 0, 0
     extbu   d0
     cmp     0, d0
     beq     loc_500035BC
-    bset    0x40, (0x36008004)
+    bset    0x40, (P04)
 loc_500035BC:
     mov     0x78, d0
-    bclr    0x01, (0x36008004)
-    bset    0x01, (0x36008064)
+    bclr    0x01, (P04)
+    bset    0x01, (P64)
     movbu   d0, (0x34001010)
     mov     4, d0
-    call    func_500096E0_entry, 0, 8
+    call    LibIntcDisable_entry, 0, 8
     movhu   (SC0CTR), d0
     and     0xfff8, d0
     or      0x04, d0
     movhu   d0, (SC0CTR)
     mov     6, d0
-    call    func_500096E0_entry, 0, 8
+    call    LibIntcDisable_entry, 0, 8
     mov     5, d0
-    call    func_5000970F_entry, 0, 8
+    call    LibIntcEnable_entry, 0, 8
     clr     d0
     movbu   d0, (SC0TXB)
-    bset    0x02, (bss_500102EE)
+    bset    0x02, (PanelLinkFlags)
     bra     loc_50003673
 loc_5000360A:
-    bclr    0x01, (0x36008064)
-    bset    0x01, (0x36008024)
-    bset    0x01, (0x36008025)
-    call    func_50002629, 0, 0
+    bclr    0x01, (P64)
+    bset    0x01, (P24)
+    bset    0x01, (P25)
+    call    PanelModeFlagGet, 0, 0
     extbu   d0
     cmp     0, d0
     beq     loc_50003630
-    bclr    0x40, (0x36008004)
+    bclr    0x40, (P04)
 loc_50003630:
     and     0xf7ff, psw
     nop
@@ -8125,24 +8245,25 @@ loc_50003630:
     nop
     nop
     mov     4, d0
-    call    func_5000970F_entry, 0, 8
+    call    LibIntcEnable_entry, 0, 8
     mov     6, d0
-    call    func_500096E0_entry, 0, 8
+    call    LibIntcDisable_entry, 0, 8
     mov     5, d0
-    call    func_500096E0_entry, 0, 8
+    call    LibIntcDisable_entry, 0, 8
     mov     0x3c, d0
     movbu   d0, (0x34001010)
-    bclr    0x02, (bss_500102EE)
+    bclr    0x02, (PanelLinkFlags)
 loc_50003673:
     ret     [d2], 0x10
 
-# ---- func_50003676 -----------------------------------------------------------
-func_50003676:
+# ---- PanelRxState8 -----------------------------------------------------------
+# the first reply byte into the RX ring
+PanelRxState8:
     movm    [d2,d3], (sp)
     add     -0xc, sp
-    bclr    0x01, (0x36008064)
-    bset    0x01, (0x36008024)
-    bset    0x01, (0x36008025)
+    bclr    0x01, (P64)
+    bset    0x01, (P24)
+    bset    0x01, (P25)
     movhu   (SC0CTR), d0
     or      0x07, d0
     movhu   d0, (SC0CTR)
@@ -8157,15 +8278,15 @@ func_50003676:
     nop
     nop
     mov     4, d0
-    call    func_5000970F_entry, 0, 8
+    call    LibIntcEnable_entry, 0, 8
     mov     6, d0
-    call    func_5000970F_entry, 0, 8
+    call    LibIntcEnable_entry, 0, 8
     movbu   (SC0RXB), d3
-    movhu   (bss_500102FE), d0
-    mov     bss_50010300, a0
+    movhu   (PanelRxRingHead), d0
+    mov     PanelRxRing, a0
     movbu   d3, (d0, a0)
-    movhu   (bss_500102FE), d2
-    movhu   (bss_500102FC), d1
+    movhu   (PanelRxRingHead), d2
+    movhu   (PanelRxRingTail), d1
     mov     d1, d0
     sub     d2, d0
     cmp     d1, d2
@@ -8179,20 +8300,20 @@ loc_500036FA:
     exthu   d0
     cmp     3, d0
     bge     loc_50003708
-    bset    0x01, (bss_500102F0)
+    bset    0x01, (PanelLinkStatus)
     bra     loc_50003727
 loc_50003708:
     inc     d2
-    movhu   d2, (bss_500102FE)
-    movhu   (bss_500102FE), d0
-    bclr    0x01, (bss_500102F0)
+    movhu   d2, (PanelRxRingHead)
+    movhu   (PanelRxRingHead), d0
+    bclr    0x01, (PanelLinkStatus)
     cmp     0x5c, d0
     blt     loc_50003727
     clr     d0
-    movhu   d0, (bss_500102FE)
+    movhu   d0, (PanelRxRingHead)
 loc_50003727:
     mov     2, d0
-    movbu   d0, (bss_500102ED)
+    movbu   d0, (PanelReplyCountdown)
     extbu   d3
     and     0x3f, d3
     extbu   d3
@@ -8202,46 +8323,47 @@ loc_50003727:
     and     d3, d0
     extbu   d0
     add     3, d0
-    movbu   d0, (bss_500102ED)
+    movbu   d0, (PanelReplyCountdown)
 loc_50003745:
-    movbu   (bss_500102EC), d0
+    movbu   (PanelLinkState), d0
     inc     d0
-    movbu   d0, (bss_500102EC)
+    movbu   d0, (PanelLinkState)
     ret     [d2,d3], 0x14
 
-# ---- func_50003755 -----------------------------------------------------------
-func_50003755:
+# ---- PanelRxState9 -----------------------------------------------------------
+# further reply bytes; the transaction ends when the countdown runs out
+PanelRxState9:
     add     -0xc, sp
-    movhu   (bss_500102FE), d0
+    movhu   (PanelRxRingHead), d0
     movbu   (SC0RXB), d1
-    mov     bss_50010300, a0
+    mov     PanelRxRing, a0
     movbu   d1, (d0, a0)
-    btst    0x01, (bss_500102F0)
+    btst    0x01, (PanelLinkStatus)
     bne     loc_50003793
-    movhu   (bss_500102FE), d0
+    movhu   (PanelRxRingHead), d0
     inc     d0
-    movhu   d0, (bss_500102FE)
-    movhu   (bss_500102FE), d0
+    movhu   d0, (PanelRxRingHead)
+    movhu   (PanelRxRingHead), d0
     cmp     0x5c, d0
     blt     loc_50003793
     clr     d0
-    movhu   d0, (bss_500102FE)
+    movhu   d0, (PanelRxRingHead)
 loc_50003793:
-    movbu   (bss_500102ED), d0
+    movbu   (PanelReplyCountdown), d0
     add     -1, d0
-    movbu   d0, (bss_500102ED)
-    movbu   (bss_500102ED), d0
+    movbu   d0, (PanelReplyCountdown)
+    movbu   (PanelReplyCountdown), d0
     cmp     1, d0
     beq     loc_500037AE
     jmp     loc_50003830
 loc_500037AE:
     clr     d0
-    movbu   d0, (bss_500102ED)
-    bclr    0x01, (bss_500102EE)
-    movbu   d0, (bss_500102EC)
-    bclr    0x01, (0x36008064)
-    bset    0x01, (0x36008024)
-    bset    0x01, (0x36008025)
+    movbu   d0, (PanelReplyCountdown)
+    bclr    0x01, (PanelLinkFlags)
+    movbu   d0, (PanelLinkState)
+    bclr    0x01, (P64)
+    bset    0x01, (P24)
+    bset    0x01, (P25)
     movhu   (SC0CTR), d0
     and     0xfff8, d0
     or      0x04, d0
@@ -8257,19 +8379,19 @@ loc_500037AE:
     nop
     nop
     mov     4, d0
-    call    func_5000970F_entry, 0, 8
+    call    LibIntcEnable_entry, 0, 8
     mov     6, d0
-    call    func_5000970F_entry, 0, 8
+    call    LibIntcEnable_entry, 0, 8
     mov     5, d0
-    call    func_500096E0_entry, 0, 8
+    call    LibIntcDisable_entry, 0, 8
     movhu   (SC0CTR), d0
     and     0xbfff, d0
     movhu   d0, (SC0CTR)
     bra     loc_50003888
 loc_50003830:
-    bclr    0x01, (0x36008064)
-    bset    0x01, (0x36008024)
-    bset    0x01, (0x36008025)
+    bclr    0x01, (P64)
+    bset    0x01, (P24)
+    bset    0x01, (P25)
     movhu   (SC0CTR), d0
     or      0x07, d0
     movhu   d0, (SC0CTR)
@@ -8284,32 +8406,35 @@ loc_50003830:
     nop
     nop
     mov     4, d0
-    call    func_5000970F_entry, 0, 8
+    call    LibIntcEnable_entry, 0, 8
     mov     6, d0
-    call    func_5000970F_entry, 0, 8
+    call    LibIntcEnable_entry, 0, 8
     mov     5, d0
-    call    func_500096E0_entry, 0, 8
+    call    LibIntcDisable_entry, 0, 8
 loc_50003888:
     ret     0, 0xc
 
-# ---- func_5000388B -----------------------------------------------------------
-func_5000388B:
-    bset    0x80, (bss_500102F0)
+# ---- PanelXferIdleState ------------------------------------------------------
+# table slots 0, 7, 10: a transfer interrupt with no transfer: status bit 7
+PanelXferIdleState:
+    bset    0x80, (PanelLinkStatus)
     retf    0, 0
 
-# ---- func_50003895 -----------------------------------------------------------
+# ---- PanelLinkRxRearm --------------------------------------------------------
+# back to ATN-armed idle: serial 0 to receive, groups 5/6 off, group 26 acknowledged, 4 on;
+# nothing calls it
 # no caller: unreferenced code
-func_50003895:
+PanelLinkRxRearm:
     add     -0xc, sp
-    bclr    0x03, (bss_500102EE)
-    bset    0x04, (bss_500102F0)
+    bclr    0x03, (PanelLinkFlags)
+    bset    0x04, (PanelLinkStatus)
     movhu   (SC0CTR), d0
     and     0xbfff, d0
     movhu   d0, (SC0CTR)
     mov     6, d0
-    call    func_500096E0_entry, 0, 8
+    call    LibIntcDisable_entry, 0, 8
     mov     5, d0
-    call    func_500096E0_entry, 0, 8
+    call    LibIntcDisable_entry, 0, 8
     and     0xf7ff, psw
     nop
     nop
@@ -8321,16 +8446,18 @@ func_50003895:
     nop
     nop
     mov     4, d0
-    call    func_5000970F_entry, 0, 8
+    call    LibIntcEnable_entry, 0, 8
     ret     0, 0xc
 
-# ---- func_500038ED -----------------------------------------------------------
-# `call` enters at func_500038ED_entry, past the prologue
-func_500038ED:
+# ---- PanelTxPump -------------------------------------------------------------
+# every fourth call a status poll, else the TX FIFO into the ring; then starts a frame if the
+# link is idle
+# `call` enters at PanelTxPump_entry, past the prologue
+PanelTxPump:
     movm    [d2], (sp)
     add     -0xc, sp
-func_500038ED_entry:
-    movbu   (bss_500102EE), d1
+PanelTxPump_entry:
+    movbu   (PanelLinkFlags), d1
     mov     0xc0, d2
     mov     d1, d0
     and     d2, d0
@@ -8338,23 +8465,23 @@ func_500038ED_entry:
     cmp     0, d0
     beq     loc_5000391C
     add     0x40, d1
-    movbu   d1, (bss_500102EE)
+    movbu   d1, (PanelLinkFlags)
     cmp     d2, d0
     bne     loc_50003915
-    call    func_50002E9B_entry, 0, 0x10
+    call    PanelStatusPoll_entry, 0, 0x10
     bra     loc_50003921
 loc_50003915:
-    call    func_50003E95_entry, [d2,a2], 0x10
+    call    PanelTxFifoToRing_entry, [d2,a2], 0x10
     bra     loc_50003921
 loc_5000391C:
-    call    func_50003E95_entry, [d2,a2], 0x10
+    call    PanelTxFifoToRing_entry, [d2,a2], 0x10
 loc_50003921:
-    call    func_5000973E, 0, 0
-    btst    0x01, (0x36008084)
+    call    loc_cpu, 0, 0
+    btst    0x01, (P84)
     bne     loc_50003932
     jmp     loc_500039FC
 loc_50003932:
-    movbu   (bss_500102EE), d0
+    movbu   (PanelLinkFlags), d0
     btst    0x02, d0
     beq     loc_50003940
     jmp     loc_500039FC
@@ -8363,8 +8490,8 @@ loc_50003940:
     beq     loc_50003948
     jmp     loc_500039FC
 loc_50003948:
-    movhu   (bss_5001035E), d2
-    movhu   (bss_5001035C), d1
+    movhu   (PanelTxRingWrite), d2
+    movhu   (PanelTxRingRead), d1
     mov     0x3c, d0
     add     d2, d0
     sub     d1, d0
@@ -8379,22 +8506,22 @@ loc_5000395F:
     jmp     loc_50003A1A
 loc_50003967:
     mov     4, d0
-    call    func_500096E0_entry, 0, 8
-    bset    0x02, (bss_500102EE)
+    call    LibIntcDisable_entry, 0, 8
+    bset    0x02, (PanelLinkFlags)
     mov     1, d0
-    movbu   d0, (bss_500102EC)
+    movbu   d0, (PanelLinkState)
     mov     0x78, d0
     movbu   d0, (0x34001010)
-    bset    0x01, (0x36008024)
-    bset    0x01, (0x36008025)
-    call    func_50002629, 0, 0
+    bset    0x01, (P24)
+    bset    0x01, (P25)
+    call    PanelModeFlagGet, 0, 0
     extbu   d0
     cmp     0, d0
     beq     loc_500039A4
-    bset    0x40, (0x36008004)
+    bset    0x40, (P04)
 loc_500039A4:
-    bclr    0x01, (0x36008004)
-    bset    0x01, (0x36008064)
+    bclr    0x01, (P04)
+    bset    0x01, (P64)
     movhu   (SC0CTR), d0
     and     0xbfff, d0
     movhu   d0, (SC0CTR)
@@ -8403,9 +8530,9 @@ loc_500039A4:
     or      0x04, d0
     movhu   d0, (SC0CTR)
     mov     6, d0
-    call    func_500096E0_entry, 0, 8
+    call    LibIntcDisable_entry, 0, 8
     mov     5, d0
-    call    func_5000970F_entry, 0, 8
+    call    LibIntcEnable_entry, 0, 8
     movhu   (SC0CTR), d0
     or      0x8000, d0
     movhu   d0, (SC0CTR)
@@ -8419,13 +8546,14 @@ loc_500039FC:
     movbu   (bss_500102F6), d0
     cmp     0x14, d0
     blt     loc_50003A1A
-    bset    0x80, (bss_500102F0)
+    bset    0x80, (PanelLinkStatus)
 loc_50003A1A:
-    call    func_50009745, 0, 0
+    call    unl_cpu, 0, 0
     ret     [d2], 0x10
 
-# ---- func_50003A22 -----------------------------------------------------------
-func_50003A22:
+# ---- PanelLedMirrorResetA ----------------------------------------------------
+# the same code as the firmware's routine of this name (941 0x484ACFE4), linked elsewhere
+PanelLedMirrorResetA:
     mov     bss_50019748, a0
     setlb
     clr     d0
@@ -8452,18 +8580,20 @@ loc_50003A45:
 loc_50003A47:
     retf    0, 0
 
-# ---- func_50003A4A -----------------------------------------------------------
-# `call` enters at func_50003A4A_entry, past the prologue
-func_50003A4A:
+# ---- PanelErrorRecovery ------------------------------------------------------
+# on an error code counts down, then resets the link, the rings and the FIFOs and sends the init
+# commands again
+# `call` enters at PanelErrorRecovery_entry, past the prologue
+PanelErrorRecovery:
     movm    [d2,d3], (sp)
     add     -8, sp
-func_50003A4A_entry:
-    btst    0xf0, (bss_500103DD)
+PanelErrorRecovery_entry:
+    btst    0xf0, (PanelErrorCode)
     bne     loc_50003A5B
     jmp     loc_50003AE9
 loc_50003A5B:
-    movbu   (bss_500103DD), d0
-    movbu   (bss_500103DD), d2
+    movbu   (PanelErrorCode), d0
+    movbu   (PanelErrorCode), d2
     lsr     4, d0
     and     0x0f, d0
     mov     1, d3
@@ -8474,34 +8604,34 @@ loc_50003A5B:
     mov     d0, d1
     and     0xffffff0f, d2
     or      d2, d1
-    movbu   d1, (bss_500103DD)
+    movbu   d1, (PanelErrorCode)
     mov     d1, d0
     extbu   d0
     btst    0xf0, d0
     bne     loc_50003AE9
-    call    func_50003FB0, 0, 0
-    call    func_50003FC8, 0, 0
-    call    func_5000973E, 0, 0
+    call    PanelEventFifoInit, 0, 0
+    call    PanelTxFifoInit, 0, 0
+    call    loc_cpu, 0, 0
     clr     d0
-    movbu   d0, (bss_500102ED)
-    bclr    0x03, (bss_500102EE)
-    movhu   d0, (bss_5001035C)
-    movhu   d0, (bss_5001035E)
-    movhu   d0, (bss_500102FC)
-    movhu   d0, (bss_500102FE)
-    call    func_50009745, 0, 0
-    call    func_5000285A_entry, 0, 0x10
-    call    func_50002879_entry, 0, 0x10
-    movbu   (bss_500103DD), d0
+    movbu   d0, (PanelReplyCountdown)
+    bclr    0x03, (PanelLinkFlags)
+    movhu   d0, (PanelTxRingRead)
+    movhu   d0, (PanelTxRingWrite)
+    movhu   d0, (PanelRxRingTail)
+    movhu   d0, (PanelRxRingHead)
+    call    unl_cpu, 0, 0
+    call    PanelSendWake_entry, 0, 0x10
+    call    PanelSendInitCmds_entry, 0, 0x10
+    movbu   (PanelErrorCode), d0
     and     0xfffffff0, d0
     or      0x0a, d0
-    movbu   d0, (bss_500103DD)
+    movbu   d0, (PanelErrorCode)
     bra     loc_50003B24
 loc_50003AE9:
-    btst    0x0f, (bss_500103DD)
+    btst    0x0f, (PanelErrorCode)
     beq     loc_50003B24
-    movbu   (bss_500103DD), d0
-    movbu   (bss_500103DD), d2
+    movbu   (PanelErrorCode), d0
+    movbu   (PanelErrorCode), d2
     and     0x0f, d0
     mov     1, d1
     sub     d1, d0
@@ -8510,54 +8640,57 @@ loc_50003AE9:
     and     0x0f, d1
     and     0xfffffff0, d2
     or      d2, d1
-    movbu   d1, (bss_500103DD)
+    movbu   d1, (PanelErrorCode)
     mov     d1, d0
     extbu   d0
     btst    0x0f, d0
     bne     loc_50003B24
-    call    func_50003A22, 0, 0
+    call    PanelLedMirrorResetA, 0, 0
 loc_50003B24:
     ret     [d2,d3], 0x10
 
-# ---- func_50003B27 -----------------------------------------------------------
-# `call` enters at func_50003B27_entry, past the prologue
-func_50003B27:
+# ---- PanelRxDecodeExpect -----------------------------------------------------
+# PanelFrameDecode with flags bit 2 set (a reply is expected)
+# `call` enters at PanelRxDecodeExpect_entry, past the prologue
+PanelRxDecodeExpect:
     add     -8, sp
-func_50003B27_entry:
-    bset    0x04, (bss_500102EE)
-    call    func_50003B4B_entry, [d2,d3,a2,a3], 0x24
+PanelRxDecodeExpect_entry:
+    bset    0x04, (PanelLinkFlags)
+    call    PanelFrameDecode_entry, [d2,d3,a2,a3], 0x24
     ret     0, 8
 
-# ---- func_50003B39 -----------------------------------------------------------
-# `call` enters at func_50003B39_entry, past the prologue
-func_50003B39:
+# ---- PanelRxDecodeQuiet ------------------------------------------------------
+# PanelFrameDecode with flags bit 2 clear
+# `call` enters at PanelRxDecodeQuiet_entry, past the prologue
+PanelRxDecodeQuiet:
     add     -8, sp
-func_50003B39_entry:
-    bclr    0x04, (bss_500102EE)
-    call    func_50003B4B_entry, [d2,d3,a2,a3], 0x24
+PanelRxDecodeQuiet_entry:
+    bclr    0x04, (PanelLinkFlags)
+    call    PanelFrameDecode_entry, [d2,d3,a2,a3], 0x24
     ret     0, 8
 
-# ---- func_50003B4B -----------------------------------------------------------
-# `call` enters at func_50003B4B_entry, past the prologue
-func_50003B4B:
+# ---- PanelFrameDecode --------------------------------------------------------
+# the same code as the firmware's routine of this name (941 0x484AD111), linked elsewhere
+# `call` enters at PanelFrameDecode_entry, past the prologue
+PanelFrameDecode:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x14, sp
-func_50003B4B_entry:
-    mov     bss_50010300, a3
+PanelFrameDecode_entry:
+    mov     PanelRxRing, a3
 loc_50003B56:
-    call    func_50003F8E_entry, 0, 0xc
+    call    PanelEventFifoFree_entry, 0, 0xc
     exth    d0
     cmp     0, d0
     blt     loc_50003B6D
-    call    func_50003F8E_entry, 0, 0xc
+    call    PanelEventFifoFree_entry, 0, 0xc
     exth    d0
     cmp     4, d0
     bge     loc_50003B6D
     ret     [d2,d3,a2,a3], 0x24
 loc_50003B6D:
-    call    func_5000973E, 0, 0
-    movhu   (bss_500102FE), d1
-    movhu   (bss_500102FC), d0
+    call    loc_cpu, 0, 0
+    movhu   (PanelRxRingHead), d1
+    movhu   (PanelRxRingTail), d0
     mov     0x5c, d2
     add     d1, d2
     mov     d2, d3
@@ -8567,13 +8700,13 @@ loc_50003B6D:
     mov     d1, d3
     sub     d0, d3
 loc_50003B8A:
-    call    func_50009745, 0, 0
+    call    unl_cpu, 0, 0
     exthu   d3
     cmp     2, d3
     bge     loc_50003B97
     ret     [d2,d3,a2,a3], 0x24
 loc_50003B97:
-    movhu   (bss_500102FC), d0
+    movhu   (PanelRxRingTail), d0
     movbu   (d0, a3), d2
     extbu   d2
     mov     d2, d0
@@ -8581,10 +8714,10 @@ loc_50003B97:
     exth    d0
     cmp     0, d0
     beq     loc_50003BC3
-    movbu   (bss_500103DD), d0
+    movbu   (PanelErrorCode), d0
     and     0xffffff0f, d0
     or      0x10, d0
-    movbu   d0, (bss_500103DD)
+    movbu   d0, (PanelErrorCode)
     ret     [d2,d3,a2,a3], 0x24
 loc_50003BC3:
     and     0x38, d2
@@ -8618,37 +8751,37 @@ loc_50003BF2:
 loc_50003BF9:
     jmp     loc_50003B56
 loc_50003BFC:
-    movhu   (bss_500102FC), d0
+    movhu   (PanelRxRingTail), d0
     movbu   (d0, a3), d2
-    movhu   (bss_500102FC), d0
+    movhu   (PanelRxRingTail), d0
     inc     d0
-    movhu   d0, (bss_500102FC)
-    movhu   (bss_500102FC), d0
+    movhu   d0, (PanelRxRingTail)
+    movhu   (PanelRxRingTail), d0
     cmp     0x5c, d0
     blt     loc_50003C22
     clr     d0
-    movhu   d0, (bss_500102FC)
+    movhu   d0, (PanelRxRingTail)
 loc_50003C22:
     extbu   d2
     mov     d2, d0
-    call    func_50003F48_entry, 0, 0x10
+    call    PanelEventFifoPush_entry, 0, 0x10
     movbu   d2, (bss_500102F2)
-    movhu   (bss_500102FC), d0
+    movhu   (PanelRxRingTail), d0
     mov     d2, a2
     movbu   (d0, a3), d3
-    movhu   (bss_500102FC), d0
+    movhu   (PanelRxRingTail), d0
     inc     d0
-    movhu   d0, (bss_500102FC)
-    movhu   (bss_500102FC), d0
+    movhu   d0, (PanelRxRingTail)
+    movhu   (PanelRxRingTail), d0
     cmp     0x5c, d0
     blt     loc_50003C57
     clr     d0
-    movhu   d0, (bss_500102FC)
+    movhu   d0, (PanelRxRingTail)
 loc_50003C57:
     mov     d3, d2
     extbu   d2
     mov     d2, d0
-    call    func_50003F48_entry, 0, 0x10
+    call    PanelEventFifoPush_entry, 0, 0x10
     movbu   d3, (bss_500102F3)
     mov     bss_5001039C, a0
     mov     a2, d0
@@ -8664,38 +8797,38 @@ loc_50003C78:
     xor     d0, d2
     mov     d2, d0
     extbu   d0
-    call    func_50003F48_entry, 0, 0x10
+    call    PanelEventFifoPush_entry, 0, 0x10
     movbu   d2, (bss_500102F4)
     jmp     loc_50003B56
 loc_50003C95:
-    movhu   (bss_500102FC), d0
+    movhu   (PanelRxRingTail), d0
     movbu   (d0, a3), d3
-    movhu   (bss_500102FC), d0
+    movhu   (PanelRxRingTail), d0
     inc     d0
-    movhu   d0, (bss_500102FC)
-    movhu   (bss_500102FC), d0
+    movhu   d0, (PanelRxRingTail)
+    movhu   (PanelRxRingTail), d0
     cmp     0x5c, d0
     blt     loc_50003CBB
     clr     d0
-    movhu   d0, (bss_500102FC)
+    movhu   d0, (PanelRxRingTail)
 loc_50003CBB:
-    movhu   (bss_500102FC), d1
-    movhu   (bss_500102FC), d0
+    movhu   (PanelRxRingTail), d1
+    movhu   (PanelRxRingTail), d0
     inc     d1
     movbu   d3, (bss_500102F2)
     movbu   (d0, a3), d0
-    movhu   d1, (bss_500102FC)
-    movhu   (bss_500102FC), d1
+    movhu   d1, (PanelRxRingTail)
+    movhu   (PanelRxRingTail), d1
     cmp     0x5c, d1
     blt     loc_50003CE7
     clr     d1
-    movhu   d1, (bss_500102FC)
+    movhu   d1, (PanelRxRingTail)
 loc_50003CE7:
     movbu   d0, (bss_500102F3)
     extbu   d3
     extbu   d0
     mov     d3, d1
-    call    func_50009755, 0, 0
+    call    PanelCtrlDispatch, 0, 0
     mov     d0, d2
     mov     d2, d1
     exthu   d1
@@ -8705,36 +8838,36 @@ loc_50003CE7:
 loc_50003D03:
     movbu   d0, (bss_500102F4)
     mov     d3, d0
-    call    func_50003F48_entry, 0, 0x10
+    call    PanelEventFifoPush_entry, 0, 0x10
     extbu   d2
     mov     d2, d0
-    call    func_50003F48_entry, 0, 0x10
+    call    PanelEventFifoPush_entry, 0, 0x10
     mov     0xff, d0
-    call    func_50003F48_entry, 0, 0x10
+    call    PanelEventFifoPush_entry, 0, 0x10
     jmp     loc_50003B56
 loc_50003D21:
-    movhu   (bss_500102FC), d0
+    movhu   (PanelRxRingTail), d0
     inc     d0
-    movhu   d0, (bss_500102FC)
-    movhu   (bss_500102FC), d0
+    movhu   d0, (PanelRxRingTail)
+    movhu   (PanelRxRingTail), d0
     cmp     0x5c, d0
     blt     loc_50003D3F
     clr     d0
-    movhu   d0, (bss_500102FC)
+    movhu   d0, (PanelRxRingTail)
 loc_50003D3F:
-    movhu   (bss_500102FC), d0
+    movhu   (PanelRxRingTail), d0
     inc     d0
-    movhu   d0, (bss_500102FC)
-    movhu   (bss_500102FC), d0
+    movhu   d0, (PanelRxRingTail)
+    movhu   (PanelRxRingTail), d0
     cmp     0x5c, d0
     blt     loc_50003D5D
     clr     d0
-    movhu   d0, (bss_500102FC)
+    movhu   d0, (PanelRxRingTail)
 loc_50003D5D:
-    bset    0x08, (bss_500102F0)
+    bset    0x08, (PanelLinkStatus)
     jmp     loc_50003B56
 loc_50003D67:
-    movhu   (bss_500102FC), d0
+    movhu   (PanelRxRingTail), d0
     movbu   (d0, a3), d2
     mov     0xf, d0
     extbu   d2
@@ -8748,25 +8881,25 @@ loc_50003D67:
     bge     loc_50003D84
     ret     [d2,d3,a2,a3], 0x24
 loc_50003D84:
-    movhu   (bss_500102FC), d0
+    movhu   (PanelRxRingTail), d0
     inc     d0
-    movhu   d0, (bss_500102FC)
-    movhu   (bss_500102FC), d0
+    movhu   d0, (PanelRxRingTail)
+    movhu   (PanelRxRingTail), d0
     cmp     0x5c, d0
     blt     loc_50003DA2
     clr     d0
-    movhu   d0, (bss_500102FC)
+    movhu   d0, (PanelRxRingTail)
 loc_50003DA2:
-    movhu   (bss_500102FC), d0
+    movhu   (PanelRxRingTail), d0
     movbu   (d0, a3), d3
-    movhu   (bss_500102FC), d0
+    movhu   (PanelRxRingTail), d0
     inc     d0
-    movhu   d0, (bss_500102FC)
-    movhu   (bss_500102FC), d0
+    movhu   d0, (PanelRxRingTail)
+    movhu   (PanelRxRingTail), d0
     cmp     0x5c, d0
     blt     loc_50003DC8
     clr     d0
-    movhu   d0, (bss_500102FC)
+    movhu   d0, (PanelRxRingTail)
 loc_50003DC8:
     and     0xc0, d2
     extbu   d3
@@ -8783,17 +8916,17 @@ loc_50003DC8:
     bne     loc_50003DE4
     jmp     loc_50003B56
 loc_50003DE4:
-    movhu   (bss_500102FC), d0
+    movhu   (PanelRxRingTail), d0
     movbu   (d0, a3), d1
-    movhu   (bss_500102FC), d0
+    movhu   (PanelRxRingTail), d0
     movbu   d1, (0x10, sp)
     inc     d0
-    movhu   d0, (bss_500102FC)
-    movhu   (bss_500102FC), d0
+    movhu   d0, (PanelRxRingTail)
+    movhu   (PanelRxRingTail), d0
     cmp     0x5c, d0
     blt     loc_50003E0D
     clr     d0
-    movhu   d0, (bss_500102FC)
+    movhu   d0, (PanelRxRingTail)
 loc_50003E0D:
     extbu   d3
     btst    0x10, d3
@@ -8815,7 +8948,7 @@ loc_50003E24:
 loc_50003E38:
     movbu   (0x10, sp), d0
     mov     d3, d1
-    call    func_50009755, 0, 0
+    call    PanelCtrlDispatch, 0, 0
     mov     d0, d2
     clr     d0
     mov     d2, d1
@@ -8831,15 +8964,15 @@ loc_50003E53:
     bne     loc_50003E67
     btst    0x10, d3
     bne     loc_50003E7B
-    btst    0x04, (bss_500102EE)
+    btst    0x04, (PanelLinkFlags)
     bne     loc_50003E7B
 loc_50003E67:
     mov     d3, d0
-    call    func_50003F48_entry, 0, 0x10
+    call    PanelEventFifoPush_entry, 0, 0x10
     movbu   (0x10, sp), d0
-    call    func_50003F48_entry, 0, 0x10
+    call    PanelEventFifoPush_entry, 0, 0x10
     mov     d2, d0
-    call    func_50003F48_entry, 0, 0x10
+    call    PanelEventFifoPush_entry, 0, 0x10
 loc_50003E7B:
     movbu   (0x11, sp), d1
     movbu   (0x11, sp), d0
@@ -8853,28 +8986,30 @@ loc_50003E7B:
 loc_50003E8F:
     jmp     loc_50003B56
 
-# ---- func_50003E92 -----------------------------------------------------------
+# ---- PanelFrameDecode_UnusedRet ----------------------------------------------
+# a second epilogue the compiler left after PanelFrameDecode; unreachable
 # no caller: unreferenced code
-func_50003E92:
+PanelFrameDecode_UnusedRet:
     ret     [d2,d3,a2,a3], 0x24
 
-# ---- func_50003E95 -----------------------------------------------------------
-# `call` enters at func_50003E95_entry, past the prologue
-func_50003E95:
+# ---- PanelTxFifoToRing -------------------------------------------------------
+# the same code as the firmware's routine of this name (941 0x484AD45F), linked elsewhere
+# `call` enters at PanelTxFifoToRing_entry, past the prologue
+PanelTxFifoToRing:
     movm    [d2,a2], (sp)
     add     -8, sp
-func_50003E95_entry:
-    mov     bss_50010360, a2
+PanelTxFifoToRing_entry:
+    mov     PanelTxRing, a2
 loc_50003EA0:
-    call    func_50003F9F_entry, 0, 0xc
+    call    PanelTxFifoFree_entry, 0, 0xc
     exth    d0
     cmp     -1, d0
     bne     loc_50003EAD
     ret     [d2,a2], 0x10
 loc_50003EAD:
-    call    func_5000973E, 0, 0
-    movhu   (bss_5001035E), d0
-    movhu   (bss_5001035C), d1
+    call    loc_cpu, 0, 0
+    movhu   (PanelTxRingWrite), d0
+    movhu   (PanelTxRingRead), d1
     mov     d1, d2
     sub     d0, d2
     cmp     d1, d0
@@ -8883,13 +9018,13 @@ loc_50003EAD:
     mov     0x3c, d2
     sub     d0, d2
 loc_50003ECA:
-    call    func_50009745, 0, 0
+    call    unl_cpu, 0, 0
     exthu   d2
     cmp     3, d2
     bge     loc_50003ED7
     ret     [d2,a2], 0x10
 loc_50003ED7:
-    call    func_50003F7D_entry, 0, 0xc
+    call    PanelTxFifoPop_entry, 0, 0xc
     mov     d0, d1
     extbu   d0
     and     0x30, d0
@@ -8900,97 +9035,105 @@ loc_50003ED7:
     cmp     2, d0
     bne     loc_50003EA0
 loc_50003EEE:
-    movhu   (bss_5001035E), d0
+    movhu   (PanelTxRingWrite), d0
     movbu   d1, (d0, a2)
-    movhu   (bss_5001035E), d0
+    movhu   (PanelTxRingWrite), d0
     inc     d0
-    movhu   d0, (bss_5001035E)
-    movhu   (bss_5001035E), d0
+    movhu   d0, (PanelTxRingWrite)
+    movhu   (PanelTxRingWrite), d0
     cmp     0x3c, d0
     blt     loc_50003F14
     clr     d0
-    movhu   d0, (bss_5001035E)
+    movhu   d0, (PanelTxRingWrite)
 loc_50003F14:
-    call    func_50003F7D_entry, 0, 0xc
-    movhu   (bss_5001035E), d1
+    call    PanelTxFifoPop_entry, 0, 0xc
+    movhu   (PanelTxRingWrite), d1
     movbu   d0, (d1, a2)
-    movhu   (bss_5001035E), d0
+    movhu   (PanelTxRingWrite), d0
     inc     d0
-    movhu   d0, (bss_5001035E)
-    movhu   (bss_5001035E), d0
+    movhu   d0, (PanelTxRingWrite)
+    movhu   (PanelTxRingWrite), d0
     cmp     0x3c, d0
     bge     loc_50003F3B
     jmp     loc_50003EA0
 loc_50003F3B:
     clr     d0
-    movhu   d0, (bss_5001035E)
+    movhu   d0, (PanelTxRingWrite)
     jmp     loc_50003EA0
 
-# ---- func_50003F45 -----------------------------------------------------------
+# ---- PanelTxFifoToRing_UnusedRet ---------------------------------------------
+# a second epilogue left after PanelTxFifoToRing; unreachable
 # no caller: unreferenced code
-func_50003F45:
+PanelTxFifoToRing_UnusedRet:
     ret     [d2,a2], 0x10
 
-# ---- func_50003F48 -----------------------------------------------------------
-# `call` enters at func_50003F48_entry, past the prologue
-func_50003F48:
+# ---- PanelEventFifoPush ------------------------------------------------------
+# one byte into the event FIFO
+# `call` enters at PanelEventFifoPush_entry, past the prologue
+PanelEventFifoPush:
     add     -0x10, sp
-func_50003F48_entry:
-    mov     bss_50010244, a0
+PanelEventFifoPush_entry:
+    mov     PanelEventFifo, a0
     extbu   d0
     call    PanelFifoPushByte_entry, [a2,a3], 8
     ret     0, 0x10
 
-# ---- func_50003F5A -----------------------------------------------------------
-# `call` enters at func_50003F5A_entry, past the prologue
-func_50003F5A:
+# ---- PanelTxFifoPush ---------------------------------------------------------
+# one byte into the TX FIFO (commands and LED data for the panel)
+# `call` enters at PanelTxFifoPush_entry, past the prologue
+PanelTxFifoPush:
     add     -0x10, sp
-func_50003F5A_entry:
-    mov     bss_500102D8, a0
+PanelTxFifoPush_entry:
+    mov     PanelTxFifo, a0
     extbu   d0
     call    PanelFifoPushByte_entry, [a2,a3], 8
     ret     0, 0x10
 
-# ---- func_50003F6C -----------------------------------------------------------
-# `call` enters at func_50003F6C_entry, past the prologue
-func_50003F6C:
+# ---- PanelEventFifoPop -------------------------------------------------------
+# -1 when empty
+# `call` enters at PanelEventFifoPop_entry, past the prologue
+PanelEventFifoPop:
     add     -0xc, sp
-func_50003F6C_entry:
-    mov     bss_50010244, a0
+PanelEventFifoPop_entry:
+    mov     PanelEventFifo, a0
     call    PanelFifoPopByte_entry, [d2,a2], 8
     ret     0, 0xc
 
-# ---- func_50003F7D -----------------------------------------------------------
-# `call` enters at func_50003F7D_entry, past the prologue
-func_50003F7D:
+# ---- PanelTxFifoPop ----------------------------------------------------------
+# -1 when empty
+# `call` enters at PanelTxFifoPop_entry, past the prologue
+PanelTxFifoPop:
     add     -0xc, sp
-func_50003F7D_entry:
-    mov     bss_500102D8, a0
+PanelTxFifoPop_entry:
+    mov     PanelTxFifo, a0
     call    PanelFifoPopByte_entry, [d2,a2], 8
     ret     0, 0xc
 
-# ---- func_50003F8E -----------------------------------------------------------
-# `call` enters at func_50003F8E_entry, past the prologue
-func_50003F8E:
+# ---- PanelEventFifoFree ------------------------------------------------------
+# free space, -1 when empty
+# `call` enters at PanelEventFifoFree_entry, past the prologue
+PanelEventFifoFree:
     add     -0xc, sp
-func_50003F8E_entry:
-    mov     bss_50010244, a0
+PanelEventFifoFree_entry:
+    mov     PanelEventFifo, a0
     call    PanelFifoFreeCount_entry, [a2], 4
     ret     0, 0xc
 
-# ---- func_50003F9F -----------------------------------------------------------
-# `call` enters at func_50003F9F_entry, past the prologue
-func_50003F9F:
+# ---- PanelTxFifoFree ---------------------------------------------------------
+# free space, -1 when empty
+# `call` enters at PanelTxFifoFree_entry, past the prologue
+PanelTxFifoFree:
     add     -0xc, sp
-func_50003F9F_entry:
-    mov     bss_500102D8, a0
+PanelTxFifoFree_entry:
+    mov     PanelTxFifo, a0
     call    PanelFifoFreeCount_entry, [a2], 4
     ret     0, 0xc
 
-# ---- func_50003FB0 -----------------------------------------------------------
-func_50003FB0:
-    mov     rodata_5000C7C0, a1
-    mov     bss_50010244, a0
+# ---- PanelEventFifoInit ------------------------------------------------------
+# the FIFO's descriptor from its ROM image (PanelEventFifoInitImage)
+PanelEventFifoInit:
+    mov     PanelEventFifoInitImage, a1
+    mov     PanelEventFifo, a0
     mov     -5, d1
     setlb
     mov     (a1), d0
@@ -9001,10 +9144,11 @@ func_50003FB0:
     lne
     retf    0, 0
 
-# ---- func_50003FC8 -----------------------------------------------------------
-func_50003FC8:
-    mov     rodata_5000C7D4, a1
-    mov     bss_500102D8, a0
+# ---- PanelTxFifoInit ---------------------------------------------------------
+# the same for the TX FIFO
+PanelTxFifoInit:
+    mov     PanelTxFifoInitImage, a1
+    mov     PanelTxFifo, a0
     mov     -5, d1
     setlb
     mov     (a1), d0
@@ -9105,8 +9249,10 @@ PanelFifoFreeCount_entry:
 loc_50004050:
     retf    [a2], 4
 
-# ---- func_50004053 -----------------------------------------------------------
-func_50004053:
+# ---- FdcMotorCtl -------------------------------------------------------------
+# d0 0x81 motor on; 0x80 start the off countdown; 0x82 one tick of it, motor off at 0; 0x83 save
+# the DOR and turn the motor on to read the DIR; 0x84 restore the DOR
+FdcMotorCtl:
     movbu   d0, (8, sp)
     movbu   (8, sp), d0
     cmp     0x83, d0
@@ -9132,97 +9278,100 @@ loc_50004081:
     jmp     loc_5000410E
 loc_50004084:
     movbu   (0x98020004), d0
-    movbu   d0, (bss_500103E2)
+    movbu   d0, (FdcSavedDor)
     mov     0x1c, d0
     movbu   d0, (0x98020004)
     bra     loc_5000410E
 loc_5000409A:
-    movbu   (bss_500103E2), d0
+    movbu   (FdcSavedDor), d0
     movbu   d0, (0x98020004)
     bra     loc_5000410E
 loc_500040A8:
     mov     0x1c, d0
     movbu   d0, (0x98020004)
     mov     1, d0
-    movbu   d0, (data_50010000)
+    movbu   d0, (FdcMotorState)
     bra     loc_5000410E
 loc_500040BA:
-    movbu   (data_50010000), d0
+    movbu   (FdcMotorState), d0
     cmp     1, d0
     beq     loc_500040C6
     bra     loc_5000410E
 loc_500040C6:
     mov     2, d0
-    movbu   d0, (data_50010000)
+    movbu   d0, (FdcMotorState)
     mov     0xfa, d0
-    movhu   d0, (bss_500103E0)
+    movhu   d0, (FdcMotorCountdown)
     bra     loc_5000410E
 loc_500040D9:
-    movbu   (data_50010000), d0
+    movbu   (FdcMotorState), d0
     cmp     2, d0
     beq     loc_500040E5
     bra     loc_5000410E
 loc_500040E5:
-    movhu   (bss_500103E0), d0
+    movhu   (FdcMotorCountdown), d0
     add     -1, d0
-    movhu   d0, (bss_500103E0)
-    movhu   (bss_500103E0), d0
+    movhu   d0, (FdcMotorCountdown)
+    movhu   (FdcMotorCountdown), d0
     cmp     0, d0
     beq     loc_500040FF
     bra     loc_5000410E
 loc_500040FF:
     clr     d0
-    movbu   d0, (data_50010000)
+    movbu   d0, (FdcMotorState)
     mov     0xc, d0
     movbu   d0, (0x98020004)
 loc_5000410E:
     ret     0, 0
 
-# ---- func_50004111 -----------------------------------------------------------
-# `call` enters at func_50004111_entry, past the prologue
-func_50004111:
+# ---- FdcReadMsr --------------------------------------------------------------
+# the main status register, then a short delay
+# `call` enters at FdcReadMsr_entry, past the prologue
+FdcReadMsr:
     add     -0x10, sp
-func_50004111_entry:
+FdcReadMsr_entry:
     movbu   (0x98020008), d0
     movbu   d0, (0xc, sp)
     mov     2, d0
-    call    func_500048F8, 0, 0
+    call    FdcDelay, 0, 0
     movbu   (0xc, sp), d0
     ret     0, 0x10
 
-# ---- func_5000412A -----------------------------------------------------------
-func_5000412A:
+# ---- FdcReadData -------------------------------------------------------------
+FdcReadData:
     movbu   (0x9802000a), d0
     ret     0, 0
 
-# ---- func_50004133 -----------------------------------------------------------
-func_50004133:
+# ---- FdcWriteDsr -------------------------------------------------------------
+# keeps the previous value in FdcDsrPrev
+FdcWriteDsr:
     movbu   d0, (8, sp)
-    movbu   (bss_5001265D), d0
-    movbu   d0, (bss_5001265C)
+    movbu   (FdcDsr), d0
+    movbu   d0, (FdcDsrPrev)
     movbu   (8, sp), d0
-    movbu   d0, (bss_5001265D)
+    movbu   d0, (FdcDsr)
     movbu   d0, (0x98020008)
     ret     0, 0
 
-# ---- func_50004154 -----------------------------------------------------------
-func_50004154:
+# ---- FdcWriteData ------------------------------------------------------------
+FdcWriteData:
     movbu   d0, (8, sp)
     movbu   d0, (0x9802000a)
     ret     0, 0
 
-# ---- func_50004160 -----------------------------------------------------------
-# `call` enters at func_50004160_entry, past the prologue
-func_50004160:
+# ---- FdcWaitIdle -------------------------------------------------------------
+# until MSR bits 0-4 are clear (no drive seeking, no command); error 1 after 500 ticks
+# `call` enters at FdcWaitIdle_entry, past the prologue
+FdcWaitIdle:
     add     -0x20, sp
-func_50004160_entry:
-    mov     (bss_50019730), d0
+FdcWaitIdle_entry:
+    mov     (TickCount), d0
     mov     d0, (0xc, sp)
     mov     0x80, d0
     mov     d0, (0x10, sp)
     bra     loc_500041A4
 loc_50004172:
-    call    func_50004111_entry, 0, 0x10
+    call    FdcReadMsr_entry, 0, 0x10
     extbu   d0
     and     0x1f, d0
     mov     d0, (0x14, sp)
@@ -9234,7 +9383,7 @@ loc_50004185:
     clr     d0
     mov     d0, (0x10, sp)
 loc_50004188:
-    mov     (bss_50019730), d0
+    mov     (TickCount), d0
     mov     d0, (0x18, sp)
     mov     (0x18, sp), d0
     mov     (0xc, sp), d1
@@ -9258,22 +9407,24 @@ loc_500041AE:
     bra     loc_500041BD
 loc_500041B6:
     mov     1, d0
-    call    func_500051A9, 0, 0
+    call    FdcSetError, 0, 0
 loc_500041BD:
     ret     0, 0x20
 
-# ---- func_500041C0 -----------------------------------------------------------
-# `call` enters at func_500041C0_entry, past the prologue
-func_500041C0:
+# ---- FdcWaitParamReady -------------------------------------------------------
+# until MSR has RQM and CB (0x90): the controller takes the next command byte; error 1 after 500
+# ticks
+# `call` enters at FdcWaitParamReady_entry, past the prologue
+FdcWaitParamReady:
     add     -0x1c, sp
-func_500041C0_entry:
-    mov     (bss_50019730), d0
+FdcWaitParamReady_entry:
+    mov     (TickCount), d0
     mov     d0, (0xc, sp)
     mov     0x80, d0
     mov     d0, (0x10, sp)
     bra     loc_50004202
 loc_500041D2:
-    call    func_50004111_entry, 0, 0x10
+    call    FdcReadMsr_entry, 0, 0x10
     extbu   d0
     and     0x90, d0
     cmp     0x90, d0
@@ -9283,7 +9434,7 @@ loc_500041E3:
     clr     d0
     mov     d0, (0x10, sp)
 loc_500041E6:
-    mov     (bss_50019730), d0
+    mov     (TickCount), d0
     mov     d0, (0x14, sp)
     mov     (0x14, sp), d0
     mov     (0xc, sp), d1
@@ -9307,22 +9458,23 @@ loc_5000420C:
     bra     loc_5000421B
 loc_50004214:
     mov     1, d0
-    call    func_500051A9, 0, 0
+    call    FdcSetError, 0, 0
 loc_5000421B:
     ret     0, 0x1c
 
-# ---- func_5000421E -----------------------------------------------------------
-# `call` enters at func_5000421E_entry, past the prologue
-func_5000421E:
+# ---- FdcWaitRqm --------------------------------------------------------------
+# until MSR has RQM; error 1 after 500 ticks
+# `call` enters at FdcWaitRqm_entry, past the prologue
+FdcWaitRqm:
     add     -0x1c, sp
-func_5000421E_entry:
-    mov     (bss_50019730), d0
+FdcWaitRqm_entry:
+    mov     (TickCount), d0
     mov     d0, (0xc, sp)
     mov     0x80, d0
     mov     d0, (0x10, sp)
     bra     loc_50004260
 loc_50004230:
-    call    func_50004111_entry, 0, 0x10
+    call    FdcReadMsr_entry, 0, 0x10
     extbu   d0
     and     0x80, d0
     cmp     0x80, d0
@@ -9332,7 +9484,7 @@ loc_50004241:
     clr     d0
     mov     d0, (0x10, sp)
 loc_50004244:
-    mov     (bss_50019730), d0
+    mov     (TickCount), d0
     mov     d0, (0x14, sp)
     mov     (0x14, sp), d0
     mov     (0xc, sp), d1
@@ -9356,92 +9508,95 @@ loc_5000426A:
     bra     loc_50004279
 loc_50004272:
     mov     1, d0
-    call    func_500051A9, 0, 0
+    call    FdcSetError, 0, 0
 loc_50004279:
     ret     0, 0x1c
 
-# ---- func_5000427C -----------------------------------------------------------
-# `call` enters at func_5000427C_entry, past the prologue
-func_5000427C:
+# ---- FdcSoftReset ------------------------------------------------------------
+# data-rate register 0x80 (software reset), a short wait; the head position unknown again
+# `call` enters at FdcSoftReset_entry, past the prologue
+FdcSoftReset:
     add     -0xc, sp
-func_5000427C_entry:
+FdcSoftReset_entry:
     mov     0x80, d0
-    call    func_50004133, 0, 0
+    call    FdcWriteDsr, 0, 0
     mov     2, d0
-    call    func_5000525A_entry, 0, 0x10
+    call    FdcTickWait_entry, 0, 0x10
     mov     0xff, d0
-    movbu   d0, (bss_50012641)
+    movbu   d0, (FdcCurrentCyl)
     ret     0, 0xc
 
-# ---- func_5000429A -----------------------------------------------------------
-# `call` enters at func_5000429A_entry, past the prologue
-func_5000429A:
+# ---- FdcInit -----------------------------------------------------------------
+# reset, sense the interrupts the reset raised, then the data rate and density for the media
+# type (configuration control register), motor, recalibrate
+# `call` enters at FdcInit_entry, past the prologue
+FdcInit:
     add     -0x14, sp
-func_5000429A_entry:
-    call    func_500051ED, 0, 0
-    call    func_50005115, 0, 0
+FdcInit_entry:
+    call    FdcClearError, 0, 0
+    call    FdcIsSector2Probe, 0, 0
     exth    d0
     cmp     -1, d0
     bne     loc_500042AE
     bra     loc_500042C3
 loc_500042AE:
-    call    func_50005183, 0, 0
+    call    FdcIsInitAll, 0, 0
     exth    d0
     cmp     -1, d0
     bne     loc_500042BA
     bra     loc_500042C3
 loc_500042BA:
     mov     0xff, d0
-    movbu   d0, (bss_50012641)
+    movbu   d0, (FdcCurrentCyl)
 loc_500042C3:
-    movbu   (bss_50012590), d0
+    movbu   (FdcInitBusy), d0
     extb    d0
     cmp     1, d0
     bne     loc_500042D1
     jmp     loc_500044FD
 loc_500042D1:
     mov     1, d0
-    movbu   d0, (bss_50012590)
+    movbu   d0, (FdcInitBusy)
     mov     0x80, d0
-    call    func_50004133, 0, 0
+    call    FdcWriteDsr, 0, 0
     mov     2, d0
-    call    func_5000525A_entry, 0, 0x10
-    call    func_50005115, 0, 0
+    call    FdcTickWait_entry, 0, 0x10
+    call    FdcIsSector2Probe, 0, 0
     exth    d0
     cmp     -1, d0
     bne     loc_500042F5
     jmp     loc_500043BC
 loc_500042F5:
-    call    func_50005183, 0, 0
+    call    FdcIsInitAll, 0, 0
     exth    d0
     cmp     -1, d0
     bne     loc_50004302
     jmp     loc_500043BC
 loc_50004302:
-    call    func_500051ED, 0, 0
-    call    func_50004500_entry, 0, 0xc
-    movbu   (bss_50012598), d0
+    call    FdcClearError, 0, 0
+    call    FdcResetProbe_entry, 0, 0xc
+    movbu   (FdcError), d0
     extb    d0
     cmp     0, d0
     bne     loc_50004319
     bra     loc_50004323
 loc_50004319:
     clr     d0
-    movbu   d0, (bss_50012590)
+    movbu   d0, (FdcInitBusy)
     jmp     loc_500044FD
 loc_50004323:
-    call    func_5000421E_entry, 0, 0x1c
-    movbu   (bss_50012598), d0
+    call    FdcWaitRqm_entry, 0, 0x1c
+    movbu   (FdcError), d0
     extb    d0
     cmp     0, d0
     bne     loc_50004335
     bra     loc_5000433F
 loc_50004335:
     clr     d0
-    movbu   d0, (bss_50012590)
+    movbu   d0, (FdcInitBusy)
     jmp     loc_500044FD
 loc_5000433F:
-    call    func_50004111_entry, 0, 0x10
+    call    FdcReadMsr_entry, 0, 0x10
     extbu   d0
     btst    0x40, d0
     beq     loc_5000434C
@@ -9451,7 +9606,7 @@ loc_5000434C:
     movbu   d0, (0x10, sp)
     bra     loc_5000435E
 loc_50004352:
-    call    func_50004111_entry, 0, 0x10
+    call    FdcReadMsr_entry, 0, 0x10
     extbu   d0
     and     0xf0, d0
     movbu   d0, (0x10, sp)
@@ -9462,52 +9617,52 @@ loc_5000435E:
     bra     loc_50004352
 loc_50004369:
     mov     8, d0
-    call    func_50004154, 0, 0
+    call    FdcWriteData, 0, 0
 loc_50004370:
-    mov     bss_500125EC, d0
+    mov     FdcIrqFlag, d0
     mov     d0, (0xc, sp)
     inc     d0
     mov     d0, (0xc, sp)
 loc_5000437B:
-    call    func_50004B66_entry, 0, 0x20
-    call    func_5000412A, 0, 0
+    call    FdcWaitResultByte_entry, 0, 0x20
+    call    FdcReadData, 0, 0
     mov     (0xc, sp), a0
     movbu   d0, (a0)
     mov     (0xc, sp), d0
     inc     d0
     mov     d0, (0xc, sp)
 loc_5000438E:
-    call    func_50004111_entry, 0, 0x10
+    call    FdcReadMsr_entry, 0, 0x10
     extbu   d0
     btst    0x80, d0
     bne     loc_5000439B
     bra     loc_5000438E
 loc_5000439B:
-    call    func_50004111_entry, 0, 0x10
+    call    FdcReadMsr_entry, 0, 0x10
     extbu   d0
     btst    0x40, d0
     beq     loc_500043A8
     bra     loc_5000437B
 loc_500043A8:
-    call    func_50004D05_entry, 0, 0x14
-    movbu   (bss_500125ED), d0
+    call    FdcCheckResult_entry, 0, 0x14
+    movbu   (FdcResult), d0
     cmp     0x80, d0
     beq     loc_500043BC
     jmp     loc_50004323
 loc_500043BC:
     mov     3, d0
-    call    func_50004E24_entry, 0, 0x10
-    movbu   (bss_50012598), d0
+    call    FdcIssueCommand_entry, 0, 0x10
+    movbu   (FdcError), d0
     extb    d0
     cmp     0, d0
     bne     loc_500043D0
     bra     loc_500043DA
 loc_500043D0:
     clr     d0
-    movbu   d0, (bss_50012590)
+    movbu   d0, (FdcInitBusy)
     jmp     loc_500044FD
 loc_500043DA:
-    movbu   (bss_500125F7), d0
+    movbu   (FdcMediaType), d0
     and     0x0f, d0
     cmp     0, d0
     bne     loc_500043E9
@@ -9536,7 +9691,7 @@ loc_50004409:
     jmp     loc_500044BC
 loc_5000440C:
     clr     d0
-    movbu   d0, (bss_500125F6)
+    movbu   d0, (FdcDensity)
     clr     d0
     mov     d0, (bss_50012594)
     clr     d0
@@ -9546,7 +9701,7 @@ loc_5000440C:
     jmp     loc_500044D6
 loc_50004429:
     clr     d0
-    movbu   d0, (bss_500125F6)
+    movbu   d0, (FdcDensity)
     clr     d0
     mov     d0, (bss_50012594)
     mov     0xc0, d0
@@ -9556,7 +9711,7 @@ loc_50004429:
     jmp     loc_500044D6
 loc_50004448:
     mov     2, d0
-    movbu   d0, (bss_500125F6)
+    movbu   d0, (FdcDensity)
     clr     d0
     mov     d0, (bss_50012594)
     mov     0x40, d0
@@ -9566,7 +9721,7 @@ loc_50004448:
     bra     loc_500044D6
 loc_50004465:
     mov     3, d0
-    movbu   d0, (bss_500125F6)
+    movbu   d0, (FdcDensity)
     clr     d0
     mov     d0, (bss_50012594)
     mov     0x40, d0
@@ -9576,7 +9731,7 @@ loc_50004465:
     bra     loc_500044D6
 loc_50004482:
     mov     4, d0
-    movbu   d0, (bss_500125F6)
+    movbu   d0, (FdcDensity)
     clr     d0
     mov     d0, (bss_50012594)
     clr     d0
@@ -9586,7 +9741,7 @@ loc_50004482:
     bra     loc_500044D6
 loc_5000449F:
     mov     5, d0
-    movbu   d0, (bss_500125F6)
+    movbu   d0, (FdcDensity)
     clr     d0
     mov     d0, (bss_50012594)
     clr     d0
@@ -9596,7 +9751,7 @@ loc_5000449F:
     bra     loc_500044D6
 loc_500044BC:
     clr     d0
-    movbu   d0, (bss_500125F6)
+    movbu   d0, (FdcDensity)
     clr     d0
     mov     d0, (bss_50012594)
     clr     d0
@@ -9604,52 +9759,54 @@ loc_500044BC:
     mov     2, d0
     movbu   d0, (0x9802000e)
 loc_500044D6:
-    call    func_50005C86_entry, 0, 0xc
-    movbu   (bss_50012598), d0
+    call    FdcMotorOnWait_entry, 0, 0xc
+    movbu   (FdcError), d0
     extb    d0
     cmp     0, d0
     bne     loc_500044E8
     bra     loc_500044F1
 loc_500044E8:
     clr     d0
-    movbu   d0, (bss_50012590)
+    movbu   d0, (FdcInitBusy)
     bra     loc_500044FD
 loc_500044F1:
-    call    func_500052D0_entry, 0, 0x10
+    call    FdcRecalibrate_entry, 0, 0x10
     clr     d0
-    movbu   d0, (bss_50012590)
+    movbu   d0, (FdcInitBusy)
 loc_500044FD:
     ret     0, 0x14
 
-# ---- func_50004500 -----------------------------------------------------------
-# `call` enters at func_50004500_entry, past the prologue
-func_50004500:
+# ---- FdcResetProbe -----------------------------------------------------------
+# a software reset; error 0xFC when the status register then reads 0xFF (no controller)
+# `call` enters at FdcResetProbe_entry, past the prologue
+FdcResetProbe:
     add     -0xc, sp
-func_50004500_entry:
+FdcResetProbe_entry:
     mov     0x80, d0
-    call    func_50004133, 0, 0
+    call    FdcWriteDsr, 0, 0
     mov     2, d0
-    call    func_5000525A_entry, 0, 0x10
-    call    func_50004111_entry, 0, 0x10
+    call    FdcTickWait_entry, 0, 0x10
+    call    FdcReadMsr_entry, 0, 0x10
     extbu   d0
     cmp     0xff, d0
     beq     loc_50004520
     bra     loc_50004528
 loc_50004520:
     mov     0xfc, d0
-    call    func_500051A9, 0, 0
+    call    FdcSetError, 0, 0
 loc_50004528:
     clr     d0
     ret     0, 0xc
 
-# ---- func_5000452C -----------------------------------------------------------
-# `call` enters at func_5000452C_entry, past the prologue
-func_5000452C:
+# ---- FdcRequestCheck ---------------------------------------------------------
+# validates the request against the media geometry; error 0xFE when it does not fit
+# `call` enters at FdcRequestCheck_entry, past the prologue
+FdcRequestCheck:
     add     -0xc, sp
-func_5000452C_entry:
+FdcRequestCheck_entry:
     clr     d0
-    movbu   d0, (bss_5001259C)
-    mov     (bss_500125B4), d0
+    movbu   d0, (FdcDrive)
+    mov     (FdcRequestBlock), d0
     cmp     0, d0
     bne     loc_50004542
     bra     loc_50004562
@@ -9676,29 +9833,29 @@ loc_5000455A:
 loc_50004560:
     bra     loc_5000457A
 loc_50004562:
-    call    func_5000470A_entry, 0, 0xc
-    movbu   (bss_50012598), d0
+    call    FdcMediaParams_entry, 0, 0xc
+    movbu   (FdcError), d0
     extbu   d0
     jmp     loc_50004707
 loc_50004571:
     clr     d0
     jmp     loc_50004707
 loc_50004575:
-    call    func_500048D2_entry, 0, 0xc
+    call    FdcCheckHead2_entry, 0, 0xc
 loc_5000457A:
-    mov     (bss_500125B8), d0
-    movbu   d0, (bss_5001259C)
-    movbu   (bss_5001259C), d0
+    mov     (FdcReqDrive), d0
+    movbu   d0, (FdcDrive)
+    movbu   (FdcDrive), d0
     cmp     1, d0
     bgt     loc_50004592
     bra     loc_5000459E
 loc_50004592:
     mov     0xfe, d0
-    call    func_500051A9, 0, 0
+    call    FdcSetError, 0, 0
     extbu   d0
     jmp     loc_50004707
 loc_5000459E:
-    mov     (bss_500125B4), d0
+    mov     (FdcRequestBlock), d0
     cmp     1, d0
     bne     loc_500045AA
     bra     loc_500045B8
@@ -9716,58 +9873,58 @@ loc_500045B8:
     clr     d0
     jmp     loc_50004707
 loc_500045BC:
-    call    func_500048CF, 0, 0
-    movbu   (bss_50012598), d0
+    call    FdcHookNop, 0, 0
+    movbu   (FdcError), d0
     extbu   d0
     jmp     loc_50004707
 loc_500045CB:
-    mov     (bss_500125C0), d0
-    movbu   d0, (bss_5001259D)
-    movbu   d0, (bss_500125A8)
-    movbu   (bss_500125A8), d0
-    mov     (bss_50012648), d1
+    mov     (FdcReqCylinder), d0
+    movbu   d0, (FdcCylinder)
+    movbu   d0, (FdcSeekCyl)
+    movbu   (FdcSeekCyl), d0
+    mov     (FdcCylCount), d1
     cmp     d1, d0
     bcc     loc_500045EE
     bra     loc_500045FA
 loc_500045EE:
     mov     0xfe, d0
-    call    func_500051A9, 0, 0
+    call    FdcSetError, 0, 0
     extbu   d0
     jmp     loc_50004707
 loc_500045FA:
-    mov     (bss_500125B4), d0
+    mov     (FdcRequestBlock), d0
     cmp     2, d0
     beq     loc_50004606
     bra     loc_50004615
 loc_50004606:
-    call    func_50004897_entry, 0, 0xc
-    movbu   (bss_50012598), d0
+    call    FdcCheckHead_entry, 0, 0xc
+    movbu   (FdcError), d0
     extbu   d0
     jmp     loc_50004707
 loc_50004615:
-    mov     (bss_500125C8), d0
+    mov     (FdcReqCount), d0
     cmp     0, d0
     beq     loc_50004621
     bra     loc_5000462D
 loc_50004621:
     mov     0xfe, d0
-    call    func_500051A9, 0, 0
+    call    FdcSetError, 0, 0
     extbu   d0
     jmp     loc_50004707
 loc_5000462D:
-    mov     (bss_500125C4), d0
-    movbu   d0, (bss_5001259F)
-    movbu   (bss_5001259F), d0
+    mov     (FdcReqSector), d0
+    movbu   d0, (FdcSector)
+    movbu   (FdcSector), d0
     cmp     0, d0
     beq     loc_50004645
     bra     loc_50004651
 loc_50004645:
     mov     0xfe, d0
-    call    func_500051A9, 0, 0
+    call    FdcSetError, 0, 0
     extbu   d0
     jmp     loc_50004707
 loc_50004651:
-    movbu   (bss_500125F6), d0
+    movbu   (FdcDensity), d0
     extb    d0
     cmp     2, d0
     bne     loc_5000465E
@@ -9791,75 +9948,77 @@ loc_50004670:
 loc_50004676:
     bra     loc_500046F0
 loc_50004678:
-    movbu   (bss_5001259F), d0
+    movbu   (FdcSector), d0
     cmp     8, d0
     bgt     loc_50004684
     bra     loc_500046FB
 loc_50004684:
     mov     0xfe, d0
-    call    func_500051A9, 0, 0
+    call    FdcSetError, 0, 0
     extbu   d0
     bra     loc_50004707
 loc_5000468F:
-    movbu   (bss_5001259F), d0
+    movbu   (FdcSector), d0
     cmp     0x12, d0
     bgt     loc_5000469B
     bra     loc_500046FB
 loc_5000469B:
     mov     0xfe, d0
-    call    func_500051A9, 0, 0
+    call    FdcSetError, 0, 0
     extbu   d0
     bra     loc_50004707
 loc_500046A6:
-    movbu   (bss_5001259F), d0
+    movbu   (FdcSector), d0
     cmp     0xff, d0
     beq     loc_500046B4
     bra     loc_500046C2
 loc_500046B4:
-    call    func_50004897_entry, 0, 0xc
-    movbu   (bss_50012598), d0
+    call    FdcCheckHead_entry, 0, 0xc
+    movbu   (FdcError), d0
     extbu   d0
     bra     loc_50004707
 loc_500046C2:
-    movbu   (bss_5001259F), d0
+    movbu   (FdcSector), d0
     cmp     9, d0
     bgt     loc_500046CE
     bra     loc_500046FB
 loc_500046CE:
     mov     0xfe, d0
-    call    func_500051A9, 0, 0
+    call    FdcSetError, 0, 0
     extbu   d0
     bra     loc_50004707
 loc_500046D9:
-    movbu   (bss_5001259F), d0
+    movbu   (FdcSector), d0
     cmp     9, d0
     bgt     loc_500046E5
     bra     loc_500046FB
 loc_500046E5:
     mov     0xfe, d0
-    call    func_500051A9, 0, 0
+    call    FdcSetError, 0, 0
     extbu   d0
     bra     loc_50004707
 loc_500046F0:
     mov     0xfe, d0
-    call    func_500051A9, 0, 0
+    call    FdcSetError, 0, 0
     extbu   d0
     bra     loc_50004707
 loc_500046FB:
-    call    func_50004897_entry, 0, 0xc
-    movbu   (bss_50012598), d0
+    call    FdcCheckHead_entry, 0, 0xc
+    movbu   (FdcError), d0
     extbu   d0
 loc_50004707:
     ret     0, 0xc
 
-# ---- func_5000470A -----------------------------------------------------------
-# `call` enters at func_5000470A_entry, past the prologue
-func_5000470A:
+# ---- FdcMediaParams ----------------------------------------------------------
+# the geometry of a media type (low nibble): 0/4/5 nine 512-byte sectors, 80 cylinders; 2 eight
+# 1024-byte sectors, 77; 3 eighteen 512-byte sectors, 80; the high nibble is the step rate
+# `call` enters at FdcMediaParams_entry, past the prologue
+FdcMediaParams:
     add     -0xc, sp
-func_5000470A_entry:
-    mov     (bss_500125C0), d0
-    movbu   d0, (bss_500125F7)
-    movbu   (bss_500125F7), d0
+FdcMediaParams_entry:
+    mov     (FdcReqCylinder), d0
+    movbu   d0, (FdcMediaType)
+    movbu   (FdcMediaType), d0
     and     0x0f, d0
     cmp     0, d0
     bne     loc_50004728
@@ -9884,141 +10043,144 @@ loc_50004741:
     jmp     loc_50004835
 loc_50004744:
     mov     2, d0
-    movbu   d0, (bss_500125A0)
+    movbu   d0, (FdcSizeCode)
     mov     1, d0
-    movbu   d0, (bss_500125A7)
+    movbu   d0, (FdcStp)
     mov     9, d0
-    movbu   d0, (bss_500125A1)
-    movbu   d0, (bss_500125A4)
+    movbu   d0, (FdcEot)
+    movbu   d0, (FdcFmtSectors)
     mov     0x1b, d0
-    movbu   d0, (bss_500125A2)
+    movbu   d0, (FdcGapRw)
     mov     0x54, d0
-    movbu   d0, (bss_500125A5)
+    movbu   d0, (FdcGapFmt)
     mov     0x4f, d0
-    mov     d0, (bss_50012644)
+    mov     d0, (FdcLastCyl)
     mov     0x50, d0
-    mov     d0, (bss_50012648)
+    mov     d0, (FdcCylCount)
     mov     9, d0
-    mov     d0, (bss_5001264C)
+    mov     d0, (FdcSectorsPerTrack)
     mov     0xa, d0
-    mov     d0, (bss_50012650)
+    mov     d0, (FdcLastSector)
     jmp     loc_5000483D
 loc_50004795:
     mov     3, d0
-    movbu   d0, (bss_500125A0)
+    movbu   d0, (FdcSizeCode)
     mov     1, d0
-    movbu   d0, (bss_500125A7)
+    movbu   d0, (FdcStp)
     mov     8, d0
-    movbu   d0, (bss_500125A1)
-    movbu   d0, (bss_500125A4)
+    movbu   d0, (FdcEot)
+    movbu   d0, (FdcFmtSectors)
     mov     0x53, d0
-    movbu   d0, (bss_500125A2)
+    movbu   d0, (FdcGapRw)
     mov     0x74, d0
-    movbu   d0, (bss_500125A5)
+    movbu   d0, (FdcGapFmt)
     mov     0x4c, d0
-    mov     d0, (bss_50012644)
+    mov     d0, (FdcLastCyl)
     mov     0x4d, d0
-    mov     d0, (bss_50012648)
+    mov     d0, (FdcCylCount)
     mov     8, d0
-    mov     d0, (bss_5001264C)
+    mov     d0, (FdcSectorsPerTrack)
     mov     9, d0
-    mov     d0, (bss_50012650)
+    mov     d0, (FdcLastSector)
     bra     loc_5000483D
 loc_500047E5:
     mov     2, d0
-    movbu   d0, (bss_500125A0)
+    movbu   d0, (FdcSizeCode)
     mov     1, d0
-    movbu   d0, (bss_500125A7)
+    movbu   d0, (FdcStp)
     mov     0x12, d0
-    movbu   d0, (bss_500125A1)
-    movbu   d0, (bss_500125A4)
+    movbu   d0, (FdcEot)
+    movbu   d0, (FdcFmtSectors)
     mov     0x1b, d0
-    movbu   d0, (bss_500125A2)
+    movbu   d0, (FdcGapRw)
     mov     0x6c, d0
-    movbu   d0, (bss_500125A5)
+    movbu   d0, (FdcGapFmt)
     mov     0x4f, d0
-    mov     d0, (bss_50012644)
+    mov     d0, (FdcLastCyl)
     mov     0x50, d0
-    mov     d0, (bss_50012648)
+    mov     d0, (FdcCylCount)
     mov     0x12, d0
-    mov     d0, (bss_5001264C)
+    mov     d0, (FdcSectorsPerTrack)
     mov     0x13, d0
-    mov     d0, (bss_50012650)
+    mov     d0, (FdcLastSector)
     bra     loc_5000483D
 loc_50004835:
     mov     0xfe, d0
-    call    func_500051A9, 0, 0
+    call    FdcSetError, 0, 0
 loc_5000483D:
-    movbu   (bss_500125F7), d0
+    movbu   (FdcMediaType), d0
     asr     4, d0
     and     0x0f, d0
-    movbu   d0, (bss_500125A9)
+    movbu   d0, (FdcSrt)
     mov     0xff, d0
-    movbu   d0, (bss_500125A3)
+    movbu   d0, (FdcDtl)
     clr     d0
-    movbu   d0, (bss_500125A6)
+    movbu   d0, (FdcFillByte)
     mov     0xf, d0
-    movbu   d0, (bss_500125AA)
+    movbu   d0, (FdcHut)
     mov     1, d0
-    movbu   d0, (bss_500125AB)
+    movbu   d0, (FdcHlt)
     clr     d0
     movbu   d0, (bss_500125AE)
     movbu   d0, (bss_500125AD)
     movbu   d0, (bss_500125AF)
     movbu   d0, (bss_500125B0)
     movbu   d0, (bss_500125B1)
-    movbu   d0, (bss_500125AC)
+    movbu   d0, (FdcNonDma)
     ret     0, 0xc
 
-# ---- func_50004897 -----------------------------------------------------------
-# `call` enters at func_50004897_entry, past the prologue
-func_50004897:
+# ---- FdcCheckHead ------------------------------------------------------------
+# head 0 or 1, else error 0xFE
+# `call` enters at FdcCheckHead_entry, past the prologue
+FdcCheckHead:
     add     -0xc, sp
-func_50004897_entry:
-    mov     (bss_500125BC), d0
-    movbu   d0, (bss_5001259E)
-    movbu   d0, (bss_5001259B)
-    movbu   (bss_5001259B), d0
+FdcCheckHead_entry:
+    mov     (FdcReqHead), d0
+    movbu   d0, (FdcHead)
+    movbu   d0, (FdcHeadSel)
+    movbu   (FdcHeadSel), d0
     cmp     0, d0
     bne     loc_500048B8
     bra     loc_500048CC
 loc_500048B8:
-    movbu   (bss_5001259B), d0
+    movbu   (FdcHeadSel), d0
     cmp     1, d0
     bne     loc_500048C4
     bra     loc_500048CC
 loc_500048C4:
     mov     0xfe, d0
-    call    func_500051A9, 0, 0
+    call    FdcSetError, 0, 0
 loc_500048CC:
     ret     0, 0xc
 
-# ---- func_500048CF -----------------------------------------------------------
-func_500048CF:
+# ---- FdcHookNop --------------------------------------------------------------
+FdcHookNop:
     ret     0, 0
 
-# ---- func_500048D2 -----------------------------------------------------------
-# `call` enters at func_500048D2_entry, past the prologue
-func_500048D2:
+# ---- FdcCheckHead2 -----------------------------------------------------------
+# the same check, for the other commands
+# `call` enters at FdcCheckHead2_entry, past the prologue
+FdcCheckHead2:
     add     -0xc, sp
-func_500048D2_entry:
-    mov     (bss_500125BC), d0
+FdcCheckHead2_entry:
+    mov     (FdcReqHead), d0
     cmp     0, d0
     bne     loc_500048E1
     bra     loc_500048F5
 loc_500048E1:
-    mov     (bss_500125BC), d0
+    mov     (FdcReqHead), d0
     cmp     1, d0
     bne     loc_500048ED
     bra     loc_500048F5
 loc_500048ED:
     mov     0xfe, d0
-    call    func_500051A9, 0, 0
+    call    FdcSetError, 0, 0
 loc_500048F5:
     ret     0, 0xc
 
-# ---- func_500048F8 -----------------------------------------------------------
-func_500048F8:
+# ---- FdcDelay ----------------------------------------------------------------
+# counts d0 down
+FdcDelay:
     movbu   d0, (8, sp)
     bra     loc_50004907
 loc_500048FD:
@@ -10044,16 +10206,18 @@ loc_50004907:
 loc_50004919:
     ret     0, 0
 
-# ---- func_5000491C -----------------------------------------------------------
-func_5000491C:
+# ---- FdcHookNop2 -------------------------------------------------------------
+FdcHookNop2:
     ret     0, 0
 
-# ---- func_5000491F -----------------------------------------------------------
-# `call` enters at func_5000491F_entry, past the prologue
-func_5000491F:
+# ---- FdcDmaStart -------------------------------------------------------------
+# the D-cache flushed, then DMA channel 0 one way or the other by the command: reads (0xC6,
+# 0xCC, 0x42, 0x4A, 0xD1, 0xD9, 0xDD) or writes
+# `call` enters at FdcDmaStart_entry, past the prologue
+FdcDmaStart:
     add     -8, sp
-func_5000491F_entry:
-    movbu   (bss_5001259A), d0
+FdcDmaStart_entry:
+    movbu   (FdcOpcode), d0
     cmp     0xc6, d0
     bne     loc_50004930
     bra     loc_50004974
@@ -10096,17 +10260,18 @@ loc_5000496C:
 loc_50004972:
     bra     loc_5000498A
 loc_50004974:
-    call    func_50006185_entry, 0, 8
-    call    func_5000498D, 0, 0
+    call    DCacheFlush_entry, 0, 8
+    call    FdcDmaSetupRead, 0, 0
     bra     loc_5000498A
 loc_50004980:
-    call    func_50006185_entry, 0, 8
-    call    func_50004A7A, 0, 0
+    call    DCacheFlush_entry, 0, 8
+    call    FdcDmaSetupWrite, 0, 0
 loc_5000498A:
     ret     0, 8
 
-# ---- func_5000498D -----------------------------------------------------------
-func_5000498D:
+# ---- FdcDmaSetupRead ---------------------------------------------------------
+# DMA channel 0 from the FDC data port to the buffer
+FdcDmaSetupRead:
     bra     loc_50004990
 loc_5000498F:
     nop
@@ -10121,9 +10286,9 @@ loc_500049A0:
     mov     d0, (DMAC0_CTR)
     mov     0x98010000, d0
     mov     d0, (DMAC0_SRC)
-    mov     (bss_500125CC), d0
+    mov     (FdcReqBuffer), d0
     mov     d0, (DMAC0_DST)
-    mov     (bss_50012588), d0
+    mov     (FdcByteCount), d0
     mov     2, d1
     sub     d1, d0
     movhu   d0, (DMAC0_CNT)
@@ -10157,8 +10322,9 @@ loc_500049A0:
     mov     d0, (DMAC0_CTR)
     ret     0, 0
 
-# ---- func_50004A7A -----------------------------------------------------------
-func_50004A7A:
+# ---- FdcDmaSetupWrite --------------------------------------------------------
+# DMA channel 0 from the buffer to the FDC data port
+FdcDmaSetupWrite:
     bra     loc_50004A7D
 loc_50004A7C:
     nop
@@ -10171,11 +10337,11 @@ loc_50004A8D:
     mov     (DMAC0_CTR), d0
     and     0xfffeffff, d0
     mov     d0, (DMAC0_CTR)
-    mov     (bss_500125CC), d0
+    mov     (FdcReqBuffer), d0
     mov     d0, (DMAC0_SRC)
     mov     0x98010000, d0
     mov     d0, (DMAC0_DST)
-    mov     (bss_50012588), d0
+    mov     (FdcByteCount), d0
     mov     2, d1
     sub     d1, d0
     movhu   d0, (DMAC0_CNT)
@@ -10209,18 +10375,19 @@ loc_50004A8D:
     mov     d0, (DMAC0_CTR)
     ret     0, 0
 
-# ---- func_50004B66 -----------------------------------------------------------
-# `call` enters at func_50004B66_entry, past the prologue
-func_50004B66:
+# ---- FdcWaitResultByte -------------------------------------------------------
+# until MSR reads RQM+DIO (a result byte waiting); error 2 after 500 ticks
+# `call` enters at FdcWaitResultByte_entry, past the prologue
+FdcWaitResultByte:
     add     -0x20, sp
-func_50004B66_entry:
-    mov     (bss_50019730), d0
+FdcWaitResultByte_entry:
+    mov     (TickCount), d0
     mov     d0, (0xc, sp)
     mov     0x80, d0
     mov     d0, (0x10, sp)
     bra     loc_50004BAE
 loc_50004B78:
-    call    func_50004111_entry, 0, 0x10
+    call    FdcReadMsr_entry, 0, 0x10
     extbu   d0
     and     0xef, d0
     movbu   d0, (0x1c, sp)
@@ -10232,7 +10399,7 @@ loc_50004B8F:
     clr     d0
     mov     d0, (0x10, sp)
 loc_50004B92:
-    mov     (bss_50019730), d0
+    mov     (TickCount), d0
     mov     d0, (0x14, sp)
     mov     (0x14, sp), d0
     mov     (0xc, sp), d1
@@ -10256,22 +10423,23 @@ loc_50004BB8:
     bra     loc_50004BC7
 loc_50004BC0:
     mov     2, d0
-    call    func_500051A9, 0, 0
+    call    FdcSetError, 0, 0
 loc_50004BC7:
     ret     0, 0x20
 
-# ---- func_50004BCA -----------------------------------------------------------
-# `call` enters at func_50004BCA_entry, past the prologue
-func_50004BCA:
+# ---- FdcWaitResultPhase ------------------------------------------------------
+# the same wait with CB as don't-care; error 2
+# `call` enters at FdcWaitResultPhase_entry, past the prologue
+FdcWaitResultPhase:
     add     -0x20, sp
-func_50004BCA_entry:
-    mov     (bss_50019730), d0
+FdcWaitResultPhase_entry:
+    mov     (TickCount), d0
     mov     d0, (0xc, sp)
     mov     0x80, d0
     mov     d0, (0x10, sp)
     bra     loc_50004C12
 loc_50004BDC:
-    call    func_50004111_entry, 0, 0x10
+    call    FdcReadMsr_entry, 0, 0x10
     extbu   d0
     and     0xe0, d0
     movbu   d0, (0x1c, sp)
@@ -10283,7 +10451,7 @@ loc_50004BF3:
     clr     d0
     mov     d0, (0x10, sp)
 loc_50004BF6:
-    mov     (bss_50019730), d0
+    mov     (TickCount), d0
     mov     d0, (0x14, sp)
     mov     (0x14, sp), d0
     mov     (0xc, sp), d1
@@ -10307,22 +10475,23 @@ loc_50004C1C:
     bra     loc_50004C2B
 loc_50004C24:
     mov     2, d0
-    call    func_500051A9, 0, 0
+    call    FdcSetError, 0, 0
 loc_50004C2B:
     ret     0, 0x20
 
-# ---- func_50004C2E -----------------------------------------------------------
-# `call` enters at func_50004C2E_entry, past the prologue
-func_50004C2E:
+# ---- FdcDrainResult ----------------------------------------------------------
+# reads any pending result bytes (into FdcResult) before a new command; error 3 on time-out
+# `call` enters at FdcDrainResult_entry, past the prologue
+FdcDrainResult:
     add     -0x24, sp
-func_50004C2E_entry:
-    mov     (bss_50019730), d0
+FdcDrainResult_entry:
+    mov     (TickCount), d0
     mov     d0, (0xc, sp)
     mov     0x80, d0
     mov     d0, (0x10, sp)
     bra     loc_50004CBC
 loc_50004C40:
-    call    func_50004111_entry, 0, 0x10
+    call    FdcReadMsr_entry, 0, 0x10
     extbu   d0
     and     0xef, d0
     movbu   d0, (0x20, sp)
@@ -10347,11 +10516,11 @@ loc_50004C66:
     mov     d0, (0x10, sp)
     bra     loc_50004C98
 loc_50004C6F:
-    call    func_5000412A, 0, 0
-    mov     bss_500125EC, a0
+    call    FdcReadData, 0, 0
+    mov     FdcIrqFlag, a0
     mov     (0x14, sp), d1
     movbu   d0, (d1, a0)
-    call    func_50004111_entry, 0, 0x10
+    call    FdcReadMsr_entry, 0, 0x10
     extbu   d0
     and     0xdf, d0
     cmp     0xc0, d0
@@ -10370,7 +10539,7 @@ loc_50004C98:
     bne     loc_50004CA0
     bra     loc_50004C6F
 loc_50004CA0:
-    mov     (bss_50019730), d0
+    mov     (TickCount), d0
     mov     d0, (0x18, sp)
     mov     (0x18, sp), d0
     mov     (0xc, sp), d1
@@ -10394,38 +10563,42 @@ loc_50004CC7:
     bra     loc_50004CD6
 loc_50004CCF:
     mov     3, d0
-    call    func_500051A9, 0, 0
+    call    FdcSetError, 0, 0
 loc_50004CD6:
     ret     0, 0x24
 
-# ---- func_50004CD9 -----------------------------------------------------------
-# `call` enters at func_50004CD9_entry, past the prologue
-func_50004CD9:
+# ---- FdcSendCmdByte ----------------------------------------------------------
+# FdcDrainResult, then the command byte
+# `call` enters at FdcSendCmdByte_entry, past the prologue
+FdcSendCmdByte:
     add     -0xc, sp
-func_50004CD9_entry:
+FdcSendCmdByte_entry:
     movbu   d0, (0x14, sp)
-    call    func_50004C2E_entry, 0, 0x24
+    call    FdcDrainResult_entry, 0, 0x24
     movbu   (0x14, sp), d0
-    call    func_50004154, 0, 0
+    call    FdcWriteData, 0, 0
     ret     0, 0xc
 
-# ---- func_50004CEF -----------------------------------------------------------
-# `call` enters at func_50004CEF_entry, past the prologue
-func_50004CEF:
+# ---- FdcSendParamByte --------------------------------------------------------
+# FdcWaitParamReady, then one parameter byte
+# `call` enters at FdcSendParamByte_entry, past the prologue
+FdcSendParamByte:
     add     -0xc, sp
-func_50004CEF_entry:
+FdcSendParamByte_entry:
     movbu   d0, (0x14, sp)
-    call    func_500041C0_entry, 0, 0x1c
+    call    FdcWaitParamReady_entry, 0, 0x1c
     movbu   (0x14, sp), d0
-    call    func_50004154, 0, 0
+    call    FdcWriteData, 0, 0
     ret     0, 0xc
 
-# ---- func_50004D05 -----------------------------------------------------------
-# `call` enters at func_50004D05_entry, past the prologue
-func_50004D05:
+# ---- FdcCheckResult ----------------------------------------------------------
+# ST0's interrupt code and ST1/ST2's error bits to an error code (0x2F..0x37); stops the DMA on
+# an abnormal end
+# `call` enters at FdcCheckResult_entry, past the prologue
+FdcCheckResult:
     add     -0x14, sp
-func_50004D05_entry:
-    mov     bss_500125EC, d0
+FdcCheckResult_entry:
+    mov     FdcIrqFlag, d0
     mov     d0, (0xc, sp)
     mov     d0, a0
     movbu   (1, a0), d0
@@ -10454,7 +10627,7 @@ loc_50004D3D:
     jmp     loc_50004E0D
 loc_50004D41:
     mov     1, d0
-    movbu   d0, (bss_50012640)
+    movbu   d0, (FdcAbnormalEnd)
     clr     d0
     jmp     loc_50004E0D
 loc_50004D4D:
@@ -10489,7 +10662,7 @@ loc_50004D81:
     bra     loc_50004D9D
 loc_50004D93:
     mov     0x35, d0
-    call    func_500051A9, 0, 0
+    call    FdcSetError, 0, 0
     extb    d0
     bra     loc_50004E0D
 loc_50004D9D:
@@ -10499,7 +10672,7 @@ loc_50004D9D:
     bra     loc_50004DB1
 loc_50004DA7:
     mov     0x2f, d0
-    call    func_500051A9, 0, 0
+    call    FdcSetError, 0, 0
     extb    d0
     bra     loc_50004E0D
 loc_50004DB1:
@@ -10509,7 +10682,7 @@ loc_50004DB1:
     bra     loc_50004DC5
 loc_50004DBB:
     mov     0x33, d0
-    call    func_500051A9, 0, 0
+    call    FdcSetError, 0, 0
     extb    d0
     bra     loc_50004E0D
 loc_50004DC5:
@@ -10519,7 +10692,7 @@ loc_50004DC5:
     bra     loc_50004DD9
 loc_50004DCF:
     mov     0x34, d0
-    call    func_500051A9, 0, 0
+    call    FdcSetError, 0, 0
     extb    d0
     bra     loc_50004E0D
 loc_50004DD9:
@@ -10529,7 +10702,7 @@ loc_50004DD9:
     bra     loc_50004DED
 loc_50004DE3:
     mov     0x36, d0
-    call    func_500051A9, 0, 0
+    call    FdcSetError, 0, 0
     extb    d0
     bra     loc_50004E0D
 loc_50004DED:
@@ -10539,12 +10712,12 @@ loc_50004DED:
     bra     loc_50004E01
 loc_50004DF7:
     mov     0x37, d0
-    call    func_500051A9, 0, 0
+    call    FdcSetError, 0, 0
     extb    d0
     bra     loc_50004E0D
 loc_50004E01:
     mov     8, d0
-    call    func_500051A9, 0, 0
+    call    FdcSetError, 0, 0
     extb    d0
     bra     loc_50004E0D
 loc_50004E0B:
@@ -10552,33 +10725,36 @@ loc_50004E0B:
 loc_50004E0D:
     ret     0, 0x14
 
-# ---- func_50004E10 -----------------------------------------------------------
-# `call` enters at func_50004E10_entry, past the prologue
-func_50004E10:
+# ---- FdcIrqEnable ------------------------------------------------------------
+# interrupt slots 0xC and 0xB on
+# `call` enters at FdcIrqEnable_entry, past the prologue
+FdcIrqEnable:
     add     -0xc, sp
-func_50004E10_entry:
+FdcIrqEnable_entry:
     mov     0xc, d0
-    call    func_5000970F_entry, 0, 8
+    call    LibIntcEnable_entry, 0, 8
     mov     0xb, d0
-    call    func_5000970F_entry, 0, 8
+    call    LibIntcEnable_entry, 0, 8
     ret     0, 0xc
 
-# ---- func_50004E24 -----------------------------------------------------------
-# `call` enters at func_50004E24_entry, past the prologue
-func_50004E24:
+# ---- FdcIssueCommand ---------------------------------------------------------
+# one command with its parameters: CONFIGURE (0x13), SENSE INTERRUPT (8), SPECIFY (3), SENSE
+# DRIVE (4), RECALIBRATE (7), READ ID (0x4A), FORMAT (0x4D), SEEK (0xF), else the read/write set
+# `call` enters at FdcIssueCommand_entry, past the prologue
+FdcIssueCommand:
     add     -0x10, sp
-func_50004E24_entry:
+FdcIssueCommand_entry:
     movbu   d0, (0x18, sp)
-    call    func_50004160_entry, 0, 0x20
-    movbu   (bss_50012598), d0
+    call    FdcWaitIdle_entry, 0, 0x20
+    movbu   (FdcError), d0
     extb    d0
     cmp     0, d0
     beq     loc_50004E3D
     jmp     loc_50004F0B
 loc_50004E3D:
     movbu   (0x18, sp), d0
-    movbu   d0, (bss_5001259A)
-    call    func_50004F0E, 0, 0
+    movbu   d0, (FdcOpcode)
+    call    FdcOpcodeInvalid, 0, 0
     extb    d0
     cmp     0, d0
     beq     loc_50004E53
@@ -10590,18 +10766,18 @@ loc_50004E53:
     bra     loc_50004E7A
 loc_50004E5C:
     movbu   (0x18, sp), d0
-    call    func_50004CD9_entry, 0, 0xc
+    call    FdcSendCmdByte_entry, 0, 0xc
     clr     d0
-    call    func_50004CEF_entry, 0, 0xc
+    call    FdcSendParamByte_entry, 0, 0xc
     mov     0x20, d0
-    call    func_50004CEF_entry, 0, 0xc
+    call    FdcSendParamByte_entry, 0, 0xc
     clr     d0
-    call    func_50004CEF_entry, 0, 0xc
+    call    FdcSendParamByte_entry, 0, 0xc
     jmp     loc_50004F0B
 loc_50004E7A:
     movbu   (0x18, sp), d0
-    call    func_50004CD9_entry, 0, 0xc
-    movbu   (bss_50012598), d0
+    call    FdcSendCmdByte_entry, 0, 0xc
+    movbu   (FdcError), d0
     extb    d0
     cmp     0, d0
     beq     loc_50004E90
@@ -10617,14 +10793,14 @@ loc_50004E99:
     beq     loc_50004EA2
     bra     loc_50004EA9
 loc_50004EA2:
-    call    func_50004F94_entry, 0, 0x10
+    call    FdcSendSpecifyParams_entry, 0, 0x10
     bra     loc_50004F0B
 loc_50004EA9:
-    movbu   (bss_5001259B), d0
+    movbu   (FdcHeadSel), d0
     and     0x01, d0
     asl2    d0
     movbu   d0, (0xc, sp)
-    movbu   (bss_5001259C), d0
+    movbu   (FdcDrive), d0
     and     0x03, d0
     movbu   d0, (0xd, sp)
     movbu   (0xc, sp), d1
@@ -10632,7 +10808,7 @@ loc_50004EA9:
     or      d0, d1
     movbu   d1, (0xe, sp)
     movbu   (0xe, sp), d0
-    call    func_50004CEF_entry, 0, 0xc
+    call    FdcSendParamByte_entry, 0, 0xc
     movbu   (0x18, sp), d0
     cmp     0x4a, d0
     bne     loc_50004EDE
@@ -10656,19 +10832,20 @@ loc_50004EF0:
 loc_50004EF6:
     bra     loc_50004F06
 loc_50004EF8:
-    call    func_50004FEE_entry, 0, 0xc
+    call    FdcSendFormatParams_entry, 0, 0xc
     bra     loc_50004F0B
 loc_50004EFF:
-    call    func_50005024_entry, 0, 0xc
+    call    FdcSendSeekCylinder_entry, 0, 0xc
     bra     loc_50004F0B
 loc_50004F06:
-    call    func_50005035_entry, 0, 0xc
+    call    FdcSendRwParams_entry, 0, 0xc
 loc_50004F0B:
     ret     0, 0x10
 
-# ---- func_50004F0E -----------------------------------------------------------
-func_50004F0E:
-    movbu   (bss_5001259A), d0
+# ---- FdcOpcodeInvalid --------------------------------------------------------
+# 0 for a command code (low 5 bits) the controller knows, else 1
+FdcOpcodeInvalid:
+    movbu   (FdcOpcode), d0
     and     0x1f, d0
     cmp     6, d0
     bne     loc_50004F1D
@@ -10741,26 +10918,28 @@ loc_50004F7A:
 loc_50004F7C:
     ret     0, 0
 
-# ---- func_50004F7F -----------------------------------------------------------
-# `call` enters at func_50004F7F_entry, past the prologue
-func_50004F7F:
+# ---- FdcSendStp --------------------------------------------------------------
+# the scan commands' last byte
+# `call` enters at FdcSendStp_entry, past the prologue
+FdcSendStp:
     add     -0xc, sp
-func_50004F7F_entry:
-    movbu   (bss_500125A7), d0
+FdcSendStp_entry:
+    movbu   (FdcStp), d0
     and     0x03, d0
     extbu   d0
-    call    func_50004CEF_entry, 0, 0xc
+    call    FdcSendParamByte_entry, 0, 0xc
     ret     0, 0xc
 
-# ---- func_50004F94 -----------------------------------------------------------
-# `call` enters at func_50004F94_entry, past the prologue
-func_50004F94:
+# ---- FdcSendSpecifyParams ----------------------------------------------------
+# step rate / head unload, head load / non-DMA
+# `call` enters at FdcSendSpecifyParams_entry, past the prologue
+FdcSendSpecifyParams:
     add     -0x10, sp
-func_50004F94_entry:
-    movbu   (bss_500125A9), d0
+FdcSendSpecifyParams_entry:
+    movbu   (FdcSrt), d0
     asl     4, d0
     movbu   d0, (0xc, sp)
-    movbu   (bss_500125AA), d0
+    movbu   (FdcHut), d0
     and     0x0f, d0
     movbu   d0, (0xd, sp)
     movbu   (0xc, sp), d1
@@ -10768,11 +10947,11 @@ func_50004F94_entry:
     or      d0, d1
     movbu   d1, (0xe, sp)
     movbu   (0xe, sp), d0
-    call    func_50004CEF_entry, 0, 0xc
-    movbu   (bss_500125AB), d0
+    call    FdcSendParamByte_entry, 0, 0xc
+    movbu   (FdcHlt), d0
     add     d0, d0
     movbu   d0, (0xc, sp)
-    movbu   (bss_500125AC), d0
+    movbu   (FdcNonDma), d0
     and     0x01, d0
     movbu   d0, (0xd, sp)
     movbu   (0xc, sp), d1
@@ -10780,57 +10959,59 @@ func_50004F94_entry:
     or      d0, d1
     movbu   d1, (0xe, sp)
     movbu   (0xe, sp), d0
-    call    func_50004CEF_entry, 0, 0xc
+    call    FdcSendParamByte_entry, 0, 0xc
     ret     0, 0x10
 
-# ---- func_50004FEE -----------------------------------------------------------
-# `call` enters at func_50004FEE_entry, past the prologue
-func_50004FEE:
+# ---- FdcSendFormatParams -----------------------------------------------------
+# size code, sectors, gap, fill byte
+# `call` enters at FdcSendFormatParams_entry, past the prologue
+FdcSendFormatParams:
     add     -0xc, sp
-func_50004FEE_entry:
-    movbu   (bss_500125A0), d0
+FdcSendFormatParams_entry:
+    movbu   (FdcSizeCode), d0
     and     0x07, d0
     extbu   d0
-    call    func_50004CEF_entry, 0, 0xc
-    movbu   (bss_500125A4), d0
-    call    func_50004CEF_entry, 0, 0xc
-    movbu   (bss_500125A5), d0
-    call    func_50004CEF_entry, 0, 0xc
-    movbu   (bss_500125A6), d0
-    call    func_50004CEF_entry, 0, 0xc
+    call    FdcSendParamByte_entry, 0, 0xc
+    movbu   (FdcFmtSectors), d0
+    call    FdcSendParamByte_entry, 0, 0xc
+    movbu   (FdcGapFmt), d0
+    call    FdcSendParamByte_entry, 0, 0xc
+    movbu   (FdcFillByte), d0
+    call    FdcSendParamByte_entry, 0, 0xc
     ret     0, 0xc
 
-# ---- func_50005024 -----------------------------------------------------------
-# `call` enters at func_50005024_entry, past the prologue
-func_50005024:
+# ---- FdcSendSeekCylinder -----------------------------------------------------
+# `call` enters at FdcSendSeekCylinder_entry, past the prologue
+FdcSendSeekCylinder:
     add     -0xc, sp
-func_50005024_entry:
-    movbu   (bss_500125A8), d0
-    call    func_50004CEF_entry, 0, 0xc
+FdcSendSeekCylinder_entry:
+    movbu   (FdcSeekCyl), d0
+    call    FdcSendParamByte_entry, 0, 0xc
     ret     0, 0xc
 
-# ---- func_50005035 -----------------------------------------------------------
-# `call` enters at func_50005035_entry, past the prologue
-func_50005035:
+# ---- FdcSendRwParams ---------------------------------------------------------
+# cylinder, head, sector, size code, end of track, gap, data length (or STP)
+# `call` enters at FdcSendRwParams_entry, past the prologue
+FdcSendRwParams:
     add     -0xc, sp
-func_50005035_entry:
-    movbu   (bss_5001259D), d0
-    call    func_50004CEF_entry, 0, 0xc
-    movbu   (bss_5001259E), d0
+FdcSendRwParams_entry:
+    movbu   (FdcCylinder), d0
+    call    FdcSendParamByte_entry, 0, 0xc
+    movbu   (FdcHead), d0
     and     0x01, d0
     extbu   d0
-    call    func_50004CEF_entry, 0, 0xc
-    movbu   (bss_5001259F), d0
-    call    func_50004CEF_entry, 0, 0xc
-    movbu   (bss_500125A0), d0
+    call    FdcSendParamByte_entry, 0, 0xc
+    movbu   (FdcSector), d0
+    call    FdcSendParamByte_entry, 0, 0xc
+    movbu   (FdcSizeCode), d0
     and     0x07, d0
     extbu   d0
-    call    func_50004CEF_entry, 0, 0xc
-    movbu   (bss_500125A1), d0
-    call    func_50004CEF_entry, 0, 0xc
-    movbu   (bss_500125A2), d0
-    call    func_50004CEF_entry, 0, 0xc
-    movbu   (bss_5001259A), d0
+    call    FdcSendParamByte_entry, 0, 0xc
+    movbu   (FdcEot), d0
+    call    FdcSendParamByte_entry, 0, 0xc
+    movbu   (FdcGapRw), d0
+    call    FdcSendParamByte_entry, 0, 0xc
+    movbu   (FdcOpcode), d0
     cmp     0xd1, d0
     bne     loc_50005090
     bra     loc_500050A0
@@ -10843,17 +11024,18 @@ loc_50005098:
     beq     loc_500050A0
     bra     loc_500050A7
 loc_500050A0:
-    call    func_50004F7F_entry, 0, 0xc
+    call    FdcSendStp_entry, 0, 0xc
     bra     loc_500050B2
 loc_500050A7:
-    movbu   (bss_500125A3), d0
-    call    func_50004CEF_entry, 0, 0xc
+    movbu   (FdcDtl), d0
+    call    FdcSendParamByte_entry, 0, 0xc
 loc_500050B2:
     ret     0, 0xc
 
-# ---- func_500050B5 -----------------------------------------------------------
-func_500050B5:
-    mov     (bss_500125C0), d0
+# ---- FdcIsSector1Probe -------------------------------------------------------
+# -1 for a one-sector read of sector 1, head 0, cylinder 0 before the media is known
+FdcIsSector1Probe:
+    mov     (FdcReqCylinder), d0
     cmp     0, d0
     bne     loc_500050C1
     bra     loc_500050C4
@@ -10861,7 +11043,7 @@ loc_500050C1:
     clr     d0
     bra     loc_50005112
 loc_500050C4:
-    mov     (bss_500125BC), d0
+    mov     (FdcReqHead), d0
     cmp     0, d0
     bne     loc_500050D0
     bra     loc_500050D3
@@ -10869,7 +11051,7 @@ loc_500050D0:
     clr     d0
     bra     loc_50005112
 loc_500050D3:
-    mov     (bss_500125B4), d0
+    mov     (FdcRequestBlock), d0
     cmp     3, d0
     bne     loc_500050DF
     bra     loc_500050E2
@@ -10877,7 +11059,7 @@ loc_500050DF:
     clr     d0
     bra     loc_50005112
 loc_500050E2:
-    mov     (bss_500125C8), d0
+    mov     (FdcReqCount), d0
     cmp     1, d0
     bne     loc_500050EE
     bra     loc_500050F1
@@ -10885,7 +11067,7 @@ loc_500050EE:
     clr     d0
     bra     loc_50005112
 loc_500050F1:
-    movhu   (bss_50012584), d0
+    movhu   (FdcProbeMarker), d0
     exth    d0
     cmp     -1, d0
     bne     loc_500050FE
@@ -10894,7 +11076,7 @@ loc_500050FE:
     clr     d0
     bra     loc_50005112
 loc_50005101:
-    mov     (bss_500125C4), d0
+    mov     (FdcReqSector), d0
     cmp     1, d0
     bne     loc_5000510D
     bra     loc_50005110
@@ -10906,9 +11088,10 @@ loc_50005110:
 loc_50005112:
     ret     0, 0
 
-# ---- func_50005115 -----------------------------------------------------------
-func_50005115:
-    mov     (bss_500125C0), d0
+# ---- FdcIsSector2Probe -------------------------------------------------------
+# the same for sector 2 (or 0xFF)
+FdcIsSector2Probe:
+    mov     (FdcReqCylinder), d0
     cmp     0, d0
     bne     loc_50005121
     bra     loc_50005124
@@ -10916,7 +11099,7 @@ loc_50005121:
     clr     d0
     bra     loc_50005180
 loc_50005124:
-    mov     (bss_500125BC), d0
+    mov     (FdcReqHead), d0
     cmp     0, d0
     bne     loc_50005130
     bra     loc_50005133
@@ -10924,7 +11107,7 @@ loc_50005130:
     clr     d0
     bra     loc_50005180
 loc_50005133:
-    mov     (bss_500125B4), d0
+    mov     (FdcRequestBlock), d0
     cmp     3, d0
     bne     loc_5000513F
     bra     loc_50005142
@@ -10932,7 +11115,7 @@ loc_5000513F:
     clr     d0
     bra     loc_50005180
 loc_50005142:
-    mov     (bss_500125C8), d0
+    mov     (FdcReqCount), d0
     cmp     1, d0
     bne     loc_5000514E
     bra     loc_50005151
@@ -10940,7 +11123,7 @@ loc_5000514E:
     clr     d0
     bra     loc_50005180
 loc_50005151:
-    movhu   (bss_50012584), d0
+    movhu   (FdcProbeMarker), d0
     exth    d0
     cmp     -1, d0
     bne     loc_5000515E
@@ -10949,12 +11132,12 @@ loc_5000515E:
     clr     d0
     bra     loc_50005180
 loc_50005161:
-    mov     (bss_500125C4), d0
+    mov     (FdcReqSector), d0
     cmp     2, d0
     bne     loc_5000516D
     bra     loc_5000517B
 loc_5000516D:
-    mov     (bss_500125C4), d0
+    mov     (FdcReqSector), d0
     cmp     0xff, d0
     beq     loc_5000517B
     bra     loc_5000517F
@@ -10966,9 +11149,10 @@ loc_5000517F:
 loc_50005180:
     ret     0, 0
 
-# ---- func_50005183 -----------------------------------------------------------
-func_50005183:
-    mov     (bss_500125C8), d0
+# ---- FdcIsInitAll ------------------------------------------------------------
+# -1 for command 0 with a count of -1
+FdcIsInitAll:
+    mov     (FdcReqCount), d0
     cmp     -1, d0
     bne     loc_5000518F
     bra     loc_50005192
@@ -10976,7 +11160,7 @@ loc_5000518F:
     clr     d0
     bra     loc_500051A3
 loc_50005192:
-    mov     (bss_500125B4), d0
+    mov     (FdcRequestBlock), d0
     cmp     0, d0
     bne     loc_5000519E
     bra     loc_500051A1
@@ -10988,21 +11172,22 @@ loc_500051A1:
 loc_500051A3:
     ret     0, 0
 
-# ---- func_500051A6 -----------------------------------------------------------
-func_500051A6:
+# ---- FdcHookNop3 -------------------------------------------------------------
+FdcHookNop3:
     ret     0, 0
 
-# ---- func_500051A9 -----------------------------------------------------------
-func_500051A9:
+# ---- FdcSetError -------------------------------------------------------------
+# the first error of a request sticks; returns it
+FdcSetError:
     movbu   d0, (8, sp)
-    movbu   (bss_50012598), d0
+    movbu   (FdcError), d0
     extb    d0
     cmp     0, d0
     beq     loc_500051B9
     bra     loc_500051E2
 loc_500051B9:
     movbu   (8, sp), d0
-    movbu   d0, (bss_50012598)
+    movbu   d0, (FdcError)
     movbu   (8, sp), d0
     cmp     0x33, d0
     bne     loc_500051CB
@@ -11029,37 +11214,39 @@ loc_500051DF:
 loc_500051E2:
     nop
 loc_500051E3:
-    movbu   (bss_50012598), d0
+    movbu   (FdcError), d0
     extbu   d0
     ret     0, 0
 
-# ---- func_500051ED -----------------------------------------------------------
-func_500051ED:
+# ---- FdcClearError -----------------------------------------------------------
+FdcClearError:
     clr     d0
-    movbu   d0, (bss_50012598)
+    movbu   d0, (FdcError)
     ret     0, 0
 
-# ---- func_500051F7 -----------------------------------------------------------
-func_500051F7:
+# ---- FdcArmIrqFlag -----------------------------------------------------------
+# FdcIrqFlag := 0xFF before a command that ends with an interrupt
+FdcArmIrqFlag:
     mov     0xff, d0
-    movbu   d0, (bss_500125EC)
+    movbu   d0, (FdcIrqFlag)
     ret     0, 0
 
-# ---- func_50005203 -----------------------------------------------------------
-# `call` enters at func_50005203_entry, past the prologue
-func_50005203:
+# ---- FdcWaitIrq --------------------------------------------------------------
+# until FdcIrq has cleared FdcIrqFlag; error 9 after 500 ticks
+# `call` enters at FdcWaitIrq_entry, past the prologue
+FdcWaitIrq:
     add     -0x1c, sp
-func_50005203_entry:
+FdcWaitIrq_entry:
     mov     0x1f4, d0
     mov     d0, (0xc, sp)
-    mov     (bss_50019730), d0
+    mov     (TickCount), d0
     mov     d0, (0x10, sp)
     clr     d0
     mov     d0, (0x14, sp)
 loc_50005216:
     mov     2, d0
-    call    func_500048F8, 0, 0
-    movbu   (bss_500125EC), d0
+    call    FdcDelay, 0, 0
+    movbu   (FdcIrqFlag), d0
     cmp     0xff, d0
     bne     loc_5000522B
     bra     loc_5000522F
@@ -11067,7 +11254,7 @@ loc_5000522B:
     mov     1, d0
     mov     d0, (0x14, sp)
 loc_5000522F:
-    mov     (bss_50019730), d0
+    mov     (TickCount), d0
     mov     d0, (0x18, sp)
     mov     (0x18, sp), d0
     mov     (0x10, sp), d1
@@ -11078,7 +11265,7 @@ loc_5000522F:
     bra     loc_5000524F
 loc_50005244:
     mov     9, d0
-    call    func_500051A9, 0, 0
+    call    FdcSetError, 0, 0
     mov     1, d0
     mov     d0, (0x14, sp)
 loc_5000524F:
@@ -11089,21 +11276,22 @@ loc_5000524F:
 loc_50005257:
     ret     0, 0x1c
 
-# ---- func_5000525A -----------------------------------------------------------
-# `call` enters at func_5000525A_entry, past the prologue
-func_5000525A:
+# ---- FdcTickWait -------------------------------------------------------------
+# d0/2 ticks
+# `call` enters at FdcTickWait_entry, past the prologue
+FdcTickWait:
     add     -0x10, sp
-func_5000525A_entry:
+FdcTickWait_entry:
     mov     d0, (0x18, sp)
     lsr     1, d0
     mov     d0, (0x18, sp)
-    mov     (bss_50019730), d0
+    mov     (TickCount), d0
     mov     d0, (0, sp)
     clr     d0
     mov     d0, (4, sp)
     bra     loc_5000528D
 loc_50005271:
-    mov     (bss_50019730), d0
+    mov     (TickCount), d0
     mov     d0, (8, sp)
     mov     (8, sp), d0
     mov     (0, sp), d1
@@ -11125,218 +11313,224 @@ loc_5000528D:
 loc_50005299:
     ret     0, 0x10
 
-# ---- func_5000529C -----------------------------------------------------------
+# ---- FdcTickWait40 -----------------------------------------------------------
+# nothing calls it
 # no caller: unreferenced code
-func_5000529C:
+FdcTickWait40:
     add     -0xc, sp
     mov     0x28, d0
-    call    func_5000525A_entry, 0, 0x10
+    call    FdcTickWait_entry, 0, 0x10
     ret     0, 0xc
 
-# ---- func_500052A9 -----------------------------------------------------------
-# `call` enters at func_500052A9_entry, past the prologue
-func_500052A9:
+# ---- FdcOpen -----------------------------------------------------------------
+# interrupts on, FdcSoftReset, FdcInit
+# `call` enters at FdcOpen_entry, past the prologue
+FdcOpen:
     add     -8, sp
-func_500052A9_entry:
-    call    func_5000491C, 0, 0
+FdcOpen_entry:
+    call    FdcHookNop2, 0, 0
     clr     d0
-    movbu   d0, (bss_500125F5)
-    movbu   d0, (bss_50012640)
-    call    func_50004E10_entry, 0, 0xc
-    call    func_5000427C_entry, 0, 0xc
-    call    func_5000429A_entry, 0, 0x14
+    movbu   d0, (FdcHeadSelect)
+    movbu   d0, (FdcAbnormalEnd)
+    call    FdcIrqEnable_entry, 0, 0xc
+    call    FdcSoftReset_entry, 0, 0xc
+    call    FdcInit_entry, 0, 0x14
     ret     0, 8
 
-# ---- func_500052D0 -----------------------------------------------------------
-# `call` enters at func_500052D0_entry, past the prologue
-func_500052D0:
+# ---- FdcRecalibrate ----------------------------------------------------------
+# RECALIBRATE, wait for its interrupt; the head at cylinder 0
+# `call` enters at FdcRecalibrate_entry, past the prologue
+FdcRecalibrate:
     add     -0x10, sp
-func_500052D0_entry:
-    movbu   (bss_500125A8), d0
+FdcRecalibrate_entry:
+    movbu   (FdcSeekCyl), d0
     movbu   d0, (0xc, sp)
     mov     5, d0
-    movbu   d0, (bss_500125A8)
+    movbu   d0, (FdcSeekCyl)
     mov     0xff, d0
-    movbu   d0, (bss_50012641)
-    call    func_50005333_entry, 0, 0xc
+    movbu   d0, (FdcCurrentCyl)
+    call    FdcSeek_entry, 0, 0xc
     clr     d0
-    movbu   d0, (bss_50012641)
-    call    func_500051F7, 0, 0
+    movbu   d0, (FdcCurrentCyl)
+    call    FdcArmIrqFlag, 0, 0
     mov     7, d0
-    call    func_50004E24_entry, 0, 0x10
-    call    func_50005203_entry, 0, 0x1c
-    movbu   (bss_50012598), d0
+    call    FdcIssueCommand_entry, 0, 0x10
+    call    FdcWaitIrq_entry, 0, 0x1c
+    movbu   (FdcError), d0
     extb    d0
     cmp     0, d0
     bne     loc_50005317
     bra     loc_50005320
 loc_50005317:
     mov     0xff, d0
-    movbu   d0, (bss_50012641)
+    movbu   d0, (FdcCurrentCyl)
 loc_50005320:
     movbu   (0xc, sp), d0
-    movbu   d0, (bss_500125A8)
+    movbu   d0, (FdcSeekCyl)
     mov     0x10, d0
-    call    func_5000525A_entry, 0, 0x10
+    call    FdcTickWait_entry, 0, 0x10
     ret     0, 0x10
 
-# ---- func_50005333 -----------------------------------------------------------
-# `call` enters at func_50005333_entry, past the prologue
-func_50005333:
+# ---- FdcSeek -----------------------------------------------------------------
+# SEEK to FdcSeekCyl unless the head is there already
+# `call` enters at FdcSeek_entry, past the prologue
+FdcSeek:
     add     -0xc, sp
-func_50005333_entry:
-    movbu   (bss_500125A8), d1
-    movbu   (bss_50012641), d0
+FdcSeek_entry:
+    movbu   (FdcSeekCyl), d1
+    movbu   (FdcCurrentCyl), d0
     cmp     d0, d1
     bne     loc_50005347
     bra     loc_50005388
 loc_50005347:
-    movbu   (bss_500125A8), d0
-    movbu   d0, (bss_50012641)
+    movbu   (FdcSeekCyl), d0
+    movbu   d0, (FdcCurrentCyl)
     mov     2, d0
-    call    func_5000525A_entry, 0, 0x10
-    call    func_500051F7, 0, 0
+    call    FdcTickWait_entry, 0, 0x10
+    call    FdcArmIrqFlag, 0, 0
     mov     0xf, d0
-    call    func_50004E24_entry, 0, 0x10
-    call    func_50005203_entry, 0, 0x1c
-    movbu   (bss_50012598), d0
+    call    FdcIssueCommand_entry, 0, 0x10
+    call    FdcWaitIrq_entry, 0, 0x1c
+    movbu   (FdcError), d0
     extb    d0
     cmp     0, d0
     bne     loc_50005378
     bra     loc_50005381
 loc_50005378:
     mov     0xff, d0
-    movbu   d0, (bss_50012641)
+    movbu   d0, (FdcCurrentCyl)
 loc_50005381:
     mov     0x10, d0
-    call    func_5000525A_entry, 0, 0x10
+    call    FdcTickWait_entry, 0, 0x10
 loc_50005388:
     ret     0, 0xc
 
-# ---- func_5000538B -----------------------------------------------------------
-# `call` enters at func_5000538B_entry, past the prologue
-func_5000538B:
+# ---- FdcReadDataCmd ----------------------------------------------------------
+# CONFIGURE, DMA in, READ DATA (0xC6), wait for its interrupt
+# `call` enters at FdcReadDataCmd_entry, past the prologue
+FdcReadDataCmd:
     add     -0xc, sp
-func_5000538B_entry:
+FdcReadDataCmd_entry:
     mov     0x13, d0
-    call    func_50004CD9_entry, 0, 0xc
+    call    FdcSendCmdByte_entry, 0, 0xc
     clr     d0
-    call    func_50004CEF_entry, 0, 0xc
+    call    FdcSendParamByte_entry, 0, 0xc
     mov     0xe, d0
-    call    func_50004CEF_entry, 0, 0xc
+    call    FdcSendParamByte_entry, 0, 0xc
     clr     d0
-    call    func_50004CEF_entry, 0, 0xc
+    call    FdcSendParamByte_entry, 0, 0xc
     mov     0xc6, d0
-    movbu   d0, (bss_5001259A)
-    call    func_5000491F_entry, 0, 8
-    call    func_500051F7, 0, 0
+    movbu   d0, (FdcOpcode)
+    call    FdcDmaStart_entry, 0, 8
+    call    FdcArmIrqFlag, 0, 0
     mov     0xc6, d0
-    call    func_50004E24_entry, 0, 0x10
-    movbu   (bss_50012598), d0
+    call    FdcIssueCommand_entry, 0, 0x10
+    movbu   (FdcError), d0
     extb    d0
     cmp     0, d0
     beq     loc_500053D0
     bra     loc_500053D5
 loc_500053D0:
-    call    func_50005203_entry, 0, 0x1c
+    call    FdcWaitIrq_entry, 0, 0x1c
 loc_500053D5:
     ret     0, 0xc
 
-# ---- func_500053D8 -----------------------------------------------------------
-# `call` enters at func_500053D8_entry, past the prologue
-func_500053D8:
+# ---- FdcReadSectors ----------------------------------------------------------
+# the request's sectors, track by track, with retries and FdcInit after an error
+# `call` enters at FdcReadSectors_entry, past the prologue
+FdcReadSectors:
     add     -0x10, sp
-func_500053D8_entry:
-    call    func_500050B5, 0, 0
+FdcReadSectors_entry:
+    call    FdcIsSector1Probe, 0, 0
     exth    d0
     cmp     0, d0
     bne     loc_500053E7
     bra     loc_500053F2
 loc_500053E7:
     mov     1, d0
-    movbu   d0, (bss_500125F4)
+    movbu   d0, (FdcRetryCount)
     jmp     loc_50005605
 loc_500053F2:
-    call    func_50005115, 0, 0
+    call    FdcIsSector2Probe, 0, 0
     exth    d0
     cmp     0, d0
     beq     loc_500053FE
     bra     loc_50005409
 loc_500053FE:
     mov     8, d0
-    movbu   d0, (bss_500125F4)
+    movbu   d0, (FdcRetryCount)
     jmp     loc_50005605
 loc_50005409:
     mov     1, d0
-    movbu   d0, (bss_500125F4)
+    movbu   d0, (FdcRetryCount)
     jmp     loc_50005605
 loc_50005414:
     clr     d0
-    movbu   d0, (bss_50012598)
-    call    func_50005333_entry, 0, 0xc
-    movbu   (bss_50012598), d0
+    movbu   d0, (FdcError)
+    call    FdcSeek_entry, 0, 0xc
+    movbu   (FdcError), d0
     extb    d0
     cmp     0, d0
     bne     loc_5000542D
     bra     loc_50005448
 loc_5000542D:
-    movbu   (bss_50012598), d0
+    movbu   (FdcError), d0
     extb    d0
     movhu   d0, (0xc, sp)
-    call    func_5000429A_entry, 0, 0x14
+    call    FdcInit_entry, 0, 0x14
     movhu   (0xc, sp), d0
-    movbu   d0, (bss_50012598)
+    movbu   d0, (FdcError)
     jmp     loc_50005612
 loc_50005448:
-    mov     (bss_500125C4), d0
-    mov     (bss_50012650), d1
+    mov     (FdcReqSector), d0
+    mov     (FdcLastSector), d1
     cmp     d1, d0
     bhi     loc_50005459
     bra     loc_50005461
 loc_50005459:
     mov     1, d0
-    mov     d0, (bss_500125C4)
+    mov     d0, (FdcReqSector)
 loc_50005461:
-    mov     (bss_500125C4), d0
-    mov     d0, (bss_50012654)
+    mov     (FdcReqSector), d0
+    mov     d0, (FdcSavedSector)
     clr     d0
-    mov     d0, (bss_50012588)
-    movbu   (bss_500125F6), d0
+    mov     d0, (FdcByteCount)
+    movbu   (FdcDensity), d0
     extb    d0
     cmp     2, d0
     beq     loc_50005481
     bra     loc_5000548C
 loc_50005481:
     mov     0x400, d0
-    mov     d0, (bss_5001258C)
+    mov     d0, (FdcSectorSize)
     bra     loc_50005495
 loc_5000548C:
     mov     0x200, d0
-    mov     d0, (bss_5001258C)
+    mov     d0, (FdcSectorSize)
 loc_50005495:
-    mov     (bss_500125C8), d0
-    mov     d0, (bss_50012658)
+    mov     (FdcReqCount), d0
+    mov     d0, (FdcSavedCount)
     mov     1, d0
     mov     d0, (8, sp)
 loc_500054A5:
-    mov     (bss_50012588), d0
-    mov     (bss_5001258C), d1
+    mov     (FdcByteCount), d0
+    mov     (FdcSectorSize), d1
     add     d1, d0
-    mov     d0, (bss_50012588)
-    mov     (bss_500125C8), d0
+    mov     d0, (FdcByteCount)
+    mov     (FdcReqCount), d0
     mov     1, d1
     sub     d1, d0
-    mov     d0, (bss_500125C8)
-    mov     (bss_500125C8), d0
+    mov     d0, (FdcReqCount)
+    mov     (FdcReqCount), d0
     cmp     0, d0
     bne     loc_500054D4
     bra     loc_500054F9
 loc_500054D4:
-    mov     (bss_500125C4), d0
+    mov     (FdcReqSector), d0
     inc     d0
-    mov     d0, (bss_500125C4)
-    mov     (bss_500125C4), d0
-    mov     (bss_50012650), d1
+    mov     d0, (FdcReqSector)
+    mov     (FdcReqSector), d0
+    mov     (FdcLastSector), d1
     cmp     d1, d0
     bls     loc_500054F2
     bra     loc_500054F9
@@ -11347,165 +11541,166 @@ loc_500054F2:
     bra     loc_500054A5
 loc_500054F9:
     mov     (8, sp), d0
-    mov     d0, (bss_500125C8)
-    mov     (bss_50012654), d0
-    mov     d0, (bss_500125C4)
-    call    func_5000538B_entry, 0, 0xc
-    movbu   (bss_50012598), d0
+    mov     d0, (FdcReqCount)
+    mov     (FdcSavedSector), d0
+    mov     d0, (FdcReqSector)
+    call    FdcReadDataCmd_entry, 0, 0xc
+    movbu   (FdcError), d0
     extb    d0
     cmp     0, d0
     bne     loc_5000551F
     bra     loc_50005585
 loc_5000551F:
-    movbu   (bss_50012598), d0
+    movbu   (FdcError), d0
     extb    d0
     cmp     9, d0
     beq     loc_5000552C
     bra     loc_50005534
 loc_5000552C:
-    call    func_5000427C_entry, 0, 0xc
+    call    FdcSoftReset_entry, 0, 0xc
     jmp     loc_50005612
 loc_50005534:
-    call    func_50005115, 0, 0
+    call    FdcIsSector2Probe, 0, 0
     exth    d0
     cmp     -1, d0
     bne     loc_50005540
     bra     loc_50005553
 loc_50005540:
-    call    func_5000429A_entry, 0, 0x14
+    call    FdcInit_entry, 0, 0x14
     mov     0xff, d0
-    movbu   d0, (bss_50012641)
-    call    func_50005333_entry, 0, 0xc
+    movbu   d0, (FdcCurrentCyl)
+    call    FdcSeek_entry, 0, 0xc
 loc_50005553:
-    mov     (bss_50012658), d0
-    mov     d0, (bss_500125C8)
-    movbu   (bss_500125F4), d0
+    mov     (FdcSavedCount), d0
+    mov     d0, (FdcReqCount)
+    movbu   (FdcRetryCount), d0
     add     -1, d0
-    movbu   d0, (bss_500125F4)
-    movbu   (bss_500125F4), d0
+    movbu   d0, (FdcRetryCount)
+    movbu   (FdcRetryCount), d0
     cmp     0, d0
     beq     loc_5000557A
     jmp     loc_50005605
 loc_5000557A:
     mov     0x10, d0
-    movbu   d0, (bss_50012598)
+    movbu   d0, (FdcError)
     jmp     loc_50005612
 loc_50005585:
-    mov     (bss_50012658), d0
+    mov     (FdcSavedCount), d0
     mov     (8, sp), d1
     sub     d1, d0
-    mov     d0, (bss_500125C8)
-    mov     (bss_500125C8), d0
+    mov     d0, (FdcReqCount)
+    mov     (FdcReqCount), d0
     cmp     0, d0
     bne     loc_500055A1
     bra     loc_50005605
 loc_500055A1:
-    mov     (bss_500125CC), d0
-    mov     (bss_50012588), d1
+    mov     (FdcReqBuffer), d0
+    mov     (FdcByteCount), d1
     add     d1, d0
-    mov     d0, (bss_500125CC)
+    mov     d0, (FdcReqBuffer)
     mov     1, d0
-    mov     d0, (bss_500125C4)
+    mov     d0, (FdcReqSector)
     mov     1, d0
-    movbu   d0, (bss_5001259F)
-    movbu   (bss_5001259B), d0
+    movbu   d0, (FdcSector)
+    movbu   (FdcHeadSel), d0
     xor     0x0001, d0
-    movbu   d0, (bss_5001259B)
-    movbu   (bss_5001259B), d0
-    movbu   d0, (bss_5001259E)
-    movbu   (bss_5001259E), d0
+    movbu   d0, (FdcHeadSel)
+    movbu   (FdcHeadSel), d0
+    movbu   d0, (FdcHead)
+    movbu   (FdcHead), d0
     cmp     0, d0
     beq     loc_500055EC
     bra     loc_50005605
 loc_500055EC:
-    movbu   (bss_5001259D), d0
+    movbu   (FdcCylinder), d0
     inc     d0
-    movbu   d0, (bss_5001259D)
-    movbu   (bss_5001259D), d0
-    movbu   d0, (bss_500125A8)
+    movbu   d0, (FdcCylinder)
+    movbu   (FdcCylinder), d0
+    movbu   d0, (FdcSeekCyl)
 loc_50005605:
-    mov     (bss_500125C8), d0
+    mov     (FdcReqCount), d0
     cmp     0, d0
     beq     loc_50005612
     jmp     loc_50005414
 loc_50005612:
     ret     0, 0x10
 
-# ---- func_50005615 -----------------------------------------------------------
-# `call` enters at func_50005615_entry, past the prologue
-func_50005615:
+# ---- FdcWriteSectors ---------------------------------------------------------
+# the same for writing
+# `call` enters at FdcWriteSectors_entry, past the prologue
+FdcWriteSectors:
     add     -0x10, sp
-func_50005615_entry:
+FdcWriteSectors_entry:
     mov     8, d0
-    movbu   d0, (bss_500125F4)
+    movbu   d0, (FdcRetryCount)
     jmp     loc_5000581B
 loc_50005623:
     clr     d0
-    movbu   d0, (bss_50012598)
-    call    func_50005333_entry, 0, 0xc
-    movbu   (bss_50012598), d0
+    movbu   d0, (FdcError)
+    call    FdcSeek_entry, 0, 0xc
+    movbu   (FdcError), d0
     extb    d0
     cmp     0, d0
     bne     loc_5000563C
     bra     loc_50005657
 loc_5000563C:
-    movbu   (bss_50012598), d0
+    movbu   (FdcError), d0
     extb    d0
     movhu   d0, (0xc, sp)
-    call    func_5000429A_entry, 0, 0x14
+    call    FdcInit_entry, 0, 0x14
     movhu   (0xc, sp), d0
-    movbu   d0, (bss_50012598)
+    movbu   d0, (FdcError)
     jmp     loc_50005828
 loc_50005657:
-    mov     (bss_500125C4), d0
-    mov     (bss_50012650), d1
+    mov     (FdcReqSector), d0
+    mov     (FdcLastSector), d1
     cmp     d1, d0
     bhi     loc_50005668
     bra     loc_50005670
 loc_50005668:
     mov     1, d0
-    mov     d0, (bss_500125C4)
+    mov     d0, (FdcReqSector)
 loc_50005670:
-    mov     (bss_500125C4), d0
-    mov     d0, (bss_50012654)
+    mov     (FdcReqSector), d0
+    mov     d0, (FdcSavedSector)
     clr     d0
-    mov     d0, (bss_50012588)
-    movbu   (bss_500125F6), d0
+    mov     d0, (FdcByteCount)
+    movbu   (FdcDensity), d0
     extb    d0
     cmp     2, d0
     beq     loc_50005690
     bra     loc_5000569B
 loc_50005690:
     mov     0x400, d0
-    mov     d0, (bss_5001258C)
+    mov     d0, (FdcSectorSize)
     bra     loc_500056A4
 loc_5000569B:
     mov     0x200, d0
-    mov     d0, (bss_5001258C)
+    mov     d0, (FdcSectorSize)
 loc_500056A4:
-    mov     (bss_500125C8), d0
-    mov     d0, (bss_50012658)
+    mov     (FdcReqCount), d0
+    mov     d0, (FdcSavedCount)
     mov     1, d0
     mov     d0, (8, sp)
 loc_500056B4:
-    mov     (bss_50012588), d0
-    mov     (bss_5001258C), d1
+    mov     (FdcByteCount), d0
+    mov     (FdcSectorSize), d1
     add     d1, d0
-    mov     d0, (bss_50012588)
-    mov     (bss_500125C8), d0
+    mov     d0, (FdcByteCount)
+    mov     (FdcReqCount), d0
     mov     1, d1
     sub     d1, d0
-    mov     d0, (bss_500125C8)
-    mov     (bss_500125C8), d0
+    mov     d0, (FdcReqCount)
+    mov     (FdcReqCount), d0
     cmp     0, d0
     bne     loc_500056E3
     bra     loc_50005708
 loc_500056E3:
-    mov     (bss_500125C4), d0
+    mov     (FdcReqSector), d0
     inc     d0
-    mov     d0, (bss_500125C4)
-    mov     (bss_500125C4), d0
-    mov     (bss_50012650), d1
+    mov     d0, (FdcReqSector)
+    mov     (FdcReqSector), d0
+    mov     (FdcLastSector), d1
     cmp     d1, d0
     bls     loc_50005701
     bra     loc_50005708
@@ -11516,146 +11711,148 @@ loc_50005701:
     bra     loc_500056B4
 loc_50005708:
     mov     (8, sp), d0
-    mov     d0, (bss_500125C8)
-    mov     (bss_50012654), d0
-    mov     d0, (bss_500125C4)
-    call    func_5000582B_entry, 0, 0xc
-    movbu   (bss_50012598), d0
+    mov     d0, (FdcReqCount)
+    mov     (FdcSavedSector), d0
+    mov     d0, (FdcReqSector)
+    call    FdcWriteDataCmd_entry, 0, 0xc
+    movbu   (FdcError), d0
     extb    d0
     cmp     0, d0
     bne     loc_5000572E
     bra     loc_5000579B
 loc_5000572E:
-    movbu   (bss_50012598), d0
+    movbu   (FdcError), d0
     extb    d0
     cmp     9, d0
     beq     loc_5000573B
     bra     loc_50005748
 loc_5000573B:
-    call    func_5000427C_entry, 0, 0xc
-    call    func_5000429A_entry, 0, 0x14
+    call    FdcSoftReset_entry, 0, 0xc
+    call    FdcInit_entry, 0, 0x14
     jmp     loc_50005828
 loc_50005748:
-    movbu   (bss_50012598), d0
+    movbu   (FdcError), d0
     extb    d0
     cmp     0x2f, d0
     bne     loc_50005756
     jmp     loc_50005828
 loc_50005756:
-    call    func_5000429A_entry, 0, 0x14
+    call    FdcInit_entry, 0, 0x14
     mov     0xff, d0
-    movbu   d0, (bss_50012641)
-    call    func_50005333_entry, 0, 0xc
-    mov     (bss_50012658), d0
-    mov     d0, (bss_500125C8)
-    movbu   (bss_500125F4), d0
+    movbu   d0, (FdcCurrentCyl)
+    call    FdcSeek_entry, 0, 0xc
+    mov     (FdcSavedCount), d0
+    mov     d0, (FdcReqCount)
+    movbu   (FdcRetryCount), d0
     add     -1, d0
-    movbu   d0, (bss_500125F4)
-    movbu   (bss_500125F4), d0
+    movbu   d0, (FdcRetryCount)
+    movbu   (FdcRetryCount), d0
     cmp     0, d0
     beq     loc_50005790
     jmp     loc_5000581B
 loc_50005790:
     mov     0x20, d0
-    movbu   d0, (bss_50012598)
+    movbu   d0, (FdcError)
     jmp     loc_50005828
 loc_5000579B:
-    mov     (bss_50012658), d0
+    mov     (FdcSavedCount), d0
     mov     (8, sp), d1
     sub     d1, d0
-    mov     d0, (bss_500125C8)
-    mov     (bss_500125C8), d0
+    mov     d0, (FdcReqCount)
+    mov     (FdcReqCount), d0
     cmp     0, d0
     bne     loc_500057B7
     bra     loc_5000581B
 loc_500057B7:
-    mov     (bss_500125CC), d0
-    mov     (bss_50012588), d1
+    mov     (FdcReqBuffer), d0
+    mov     (FdcByteCount), d1
     add     d1, d0
-    mov     d0, (bss_500125CC)
+    mov     d0, (FdcReqBuffer)
     mov     1, d0
-    mov     d0, (bss_500125C4)
+    mov     d0, (FdcReqSector)
     mov     1, d0
-    movbu   d0, (bss_5001259F)
-    movbu   (bss_5001259B), d0
+    movbu   d0, (FdcSector)
+    movbu   (FdcHeadSel), d0
     xor     0x0001, d0
-    movbu   d0, (bss_5001259B)
-    movbu   (bss_5001259B), d0
-    movbu   d0, (bss_5001259E)
-    movbu   (bss_5001259E), d0
+    movbu   d0, (FdcHeadSel)
+    movbu   (FdcHeadSel), d0
+    movbu   d0, (FdcHead)
+    movbu   (FdcHead), d0
     cmp     0, d0
     beq     loc_50005802
     bra     loc_5000581B
 loc_50005802:
-    movbu   (bss_5001259D), d0
+    movbu   (FdcCylinder), d0
     inc     d0
-    movbu   d0, (bss_5001259D)
-    movbu   (bss_5001259D), d0
-    movbu   d0, (bss_500125A8)
+    movbu   d0, (FdcCylinder)
+    movbu   (FdcCylinder), d0
+    movbu   d0, (FdcSeekCyl)
 loc_5000581B:
-    mov     (bss_500125C8), d0
+    mov     (FdcReqCount), d0
     cmp     0, d0
     beq     loc_50005828
     jmp     loc_50005623
 loc_50005828:
     ret     0, 0x10
 
-# ---- func_5000582B -----------------------------------------------------------
-# `call` enters at func_5000582B_entry, past the prologue
-func_5000582B:
+# ---- FdcWriteDataCmd ---------------------------------------------------------
+# CONFIGURE, DMA out, WRITE DATA (0xC5), wait for its interrupt
+# `call` enters at FdcWriteDataCmd_entry, past the prologue
+FdcWriteDataCmd:
     add     -0xc, sp
-func_5000582B_entry:
+FdcWriteDataCmd_entry:
     mov     0x13, d0
-    call    func_50004CD9_entry, 0, 0xc
+    call    FdcSendCmdByte_entry, 0, 0xc
     clr     d0
-    call    func_50004CEF_entry, 0, 0xc
+    call    FdcSendParamByte_entry, 0, 0xc
     mov     0x20, d0
-    call    func_50004CEF_entry, 0, 0xc
+    call    FdcSendParamByte_entry, 0, 0xc
     clr     d0
-    call    func_50004CEF_entry, 0, 0xc
+    call    FdcSendParamByte_entry, 0, 0xc
     mov     0xc5, d0
-    movbu   d0, (bss_5001259A)
-    call    func_5000491F_entry, 0, 8
-    call    func_500051F7, 0, 0
+    movbu   d0, (FdcOpcode)
+    call    FdcDmaStart_entry, 0, 8
+    call    FdcArmIrqFlag, 0, 0
     mov     0xc5, d0
-    call    func_50004E24_entry, 0, 0x10
-    movbu   (bss_50012598), d0
+    call    FdcIssueCommand_entry, 0, 0x10
+    movbu   (FdcError), d0
     extb    d0
     cmp     0, d0
     beq     loc_50005870
     bra     loc_50005875
 loc_50005870:
-    call    func_50005203_entry, 0, 0x1c
+    call    FdcWaitIrq_entry, 0, 0x1c
 loc_50005875:
     ret     0, 0xc
 
-# ---- func_50005878 -----------------------------------------------------------
-# `call` enters at func_50005878_entry, past the prologue
-func_50005878:
+# ---- FdcFormatDisk -----------------------------------------------------------
+# recalibrate, then FdcFormatTrack for every cylinder and head
+# `call` enters at FdcFormatDisk_entry, past the prologue
+FdcFormatDisk:
     add     -8, sp
-func_50005878_entry:
-    call    func_500051A6, 0, 0
-    movbu   (bss_50012598), d0
+FdcFormatDisk_entry:
+    call    FdcHookNop3, 0, 0
+    movbu   (FdcError), d0
     extb    d0
     cmp     0, d0
     beq     loc_5000588E
     jmp     loc_500059B3
 loc_5000588E:
-    call    func_50005CFD_entry, 0, 0x10
-    movbu   (bss_50012598), d0
+    call    FdcSenseDrive_entry, 0, 0x10
+    movbu   (FdcError), d0
     extb    d0
     cmp     0, d0
     beq     loc_500058A1
     jmp     loc_500059B3
 loc_500058A1:
-    call    func_500052D0_entry, 0, 0x10
-    movbu   (bss_50012598), d0
+    call    FdcRecalibrate_entry, 0, 0x10
+    movbu   (FdcError), d0
     extb    d0
     cmp     0, d0
     beq     loc_500058B4
     jmp     loc_500059B3
 loc_500058B4:
-    movbu   (bss_500125F6), d0
+    movbu   (FdcDensity), d0
     extb    d0
     cmp     0, d0
     bne     loc_500058C1
@@ -11680,117 +11877,119 @@ loc_500058D9:
     bra     loc_5000590F
 loc_500058DB:
     mov     2, d0
-    movbu   d0, (bss_500125A0)
+    movbu   d0, (FdcSizeCode)
     mov     0x50, d0
-    movbu   d0, (bss_500125A5)
+    movbu   d0, (FdcGapFmt)
     bra     loc_5000590F
 loc_500058ED:
     mov     2, d0
-    movbu   d0, (bss_500125A0)
+    movbu   d0, (FdcSizeCode)
     mov     0x6c, d0
-    movbu   d0, (bss_500125A5)
+    movbu   d0, (FdcGapFmt)
     bra     loc_5000590F
 loc_500058FF:
     mov     3, d0
-    movbu   d0, (bss_500125A0)
+    movbu   d0, (FdcSizeCode)
     mov     0x74, d0
-    movbu   d0, (bss_500125A5)
+    movbu   d0, (FdcGapFmt)
 loc_5000590F:
     clr     d0
-    movbu   d0, (bss_500125A8)
-    movbu   d0, (bss_5001259D)
+    movbu   d0, (FdcSeekCyl)
+    movbu   d0, (FdcCylinder)
     mov     0xe5, d0
-    movbu   d0, (bss_500125A6)
+    movbu   d0, (FdcFillByte)
     clr     d0
-    movbu   d0, (bss_5001259E)
-    movbu   d0, (bss_5001259B)
+    movbu   d0, (FdcHead)
+    movbu   d0, (FdcHeadSel)
     bra     loc_5000599F
 loc_50005934:
-    movbu   (bss_500125A8), d0
+    movbu   (FdcSeekCyl), d0
     movbu   d0, (bss_50012586)
-    call    func_500059D6_entry, 0, 0xc
-    movbu   (bss_50012598), d0
+    call    FdcFormatTrack_entry, 0, 0xc
+    movbu   (FdcError), d0
     extb    d0
     cmp     0, d0
     beq     loc_50005952
     bra     loc_500059B3
 loc_50005952:
-    movbu   (bss_5001259B), d0
+    movbu   (FdcHeadSel), d0
     xor     0x0001, d0
-    movbu   d0, (bss_5001259B)
-    movbu   (bss_5001259B), d0
-    movbu   d0, (bss_5001259E)
-    movbu   (bss_5001259E), d0
+    movbu   d0, (FdcHeadSel)
+    movbu   (FdcHeadSel), d0
+    movbu   d0, (FdcHead)
+    movbu   (FdcHead), d0
     cmp     0, d0
     beq     loc_5000597A
     bra     loc_5000599F
 loc_5000597A:
-    movbu   (bss_5001259D), d0
+    movbu   (FdcCylinder), d0
     inc     d0
-    movbu   d0, (bss_5001259D)
-    movbu   (bss_5001259D), d0
-    movbu   d0, (bss_500125A8)
-    movbu   (bss_500125A8), d0
+    movbu   d0, (FdcCylinder)
+    movbu   (FdcCylinder), d0
+    movbu   d0, (FdcSeekCyl)
+    movbu   (FdcSeekCyl), d0
     movbu   d0, (bss_50012586)
 loc_5000599F:
-    movbu   (bss_500125A8), d0
+    movbu   (FdcSeekCyl), d0
     mov     d0, a0
-    mov     (bss_50012648), d0
+    mov     (FdcCylCount), d0
     cmp     d0, a0
     bhi     loc_500059B3
     bra     loc_50005934
 loc_500059B3:
-    movbu   (bss_50012598), d0
+    movbu   (FdcError), d0
     extb    d0
     cmp     0, d0
     bne     loc_500059C0
     bra     loc_500059C5
 loc_500059C0:
-    call    func_5000429A_entry, 0, 0x14
+    call    FdcInit_entry, 0, 0x14
 loc_500059C5:
-    call    func_500052D0_entry, 0, 0x10
+    call    FdcRecalibrate_entry, 0, 0x10
     mov     0xff, d0
-    movbu   d0, (bss_50012641)
+    movbu   d0, (FdcCurrentCyl)
     ret     0, 8
 
-# ---- func_500059D6 -----------------------------------------------------------
-# `call` enters at func_500059D6_entry, past the prologue
-func_500059D6:
+# ---- FdcFormatTrack ----------------------------------------------------------
+# seek, the sector ID list, FORMAT TRACK (0x4D)
+# `call` enters at FdcFormatTrack_entry, past the prologue
+FdcFormatTrack:
     add     -0xc, sp
-func_500059D6_entry:
-    call    func_50005333_entry, 0, 0xc
-    movbu   (bss_50012598), d0
+FdcFormatTrack_entry:
+    call    FdcSeek_entry, 0, 0xc
+    movbu   (FdcError), d0
     extb    d0
     cmp     0, d0
     bne     loc_500059EB
     bra     loc_500059F2
 loc_500059EB:
-    call    func_5000429A_entry, 0, 0x14
+    call    FdcInit_entry, 0, 0x14
     bra     loc_50005A19
 loc_500059F2:
-    call    func_50005A1C_entry, [d2], 0x10
+    call    FdcBuildFormatIds_entry, [d2], 0x10
     mov     0x4d, d0
-    movbu   d0, (bss_5001259A)
-    mov     bss_500125F8, d0
-    mov     d0, (bss_500125CC)
-    call    func_50005C3B_entry, 0, 0xc
-    movbu   (bss_50012598), d0
+    movbu   d0, (FdcOpcode)
+    mov     FdcFormatIds, d0
+    mov     d0, (FdcReqBuffer)
+    call    FdcFormatTrackCmd_entry, 0, 0xc
+    movbu   (FdcError), d0
     extb    d0
     mov     d0, (8, sp)
 loc_50005A19:
     ret     0, 0xc
 
-# ---- func_50005A1C -----------------------------------------------------------
-# `call` enters at func_50005A1C_entry, past the prologue
-func_50005A1C:
+# ---- FdcBuildFormatIds -------------------------------------------------------
+# {cylinder, head, sector, size} for each sector of the track
+# `call` enters at FdcBuildFormatIds_entry, past the prologue
+FdcBuildFormatIds:
     movm    [d2], (sp)
     add     -0xc, sp
-func_50005A1C_entry:
+FdcBuildFormatIds_entry:
     mov     1, d0
-    movbu   d0, (bss_5001259F)
+    movbu   d0, (FdcSector)
     clr     d0
-    mov     d0, (bss_50012588)
-    mov     (bss_5001264C), d0
+    mov     d0, (FdcByteCount)
+    mov     (FdcSectorsPerTrack), d0
     lsr     1, d0
     mov     d0, (0, sp)
     clr     d0
@@ -11799,105 +11998,105 @@ func_50005A1C_entry:
     mov     d0, (4, sp)
     jmp     loc_50005B9E
 loc_50005A45:
-    movbu   (bss_5001259D), d1
+    movbu   (FdcCylinder), d1
     movbu   (8, sp), d0
-    mov     bss_500125F8, a0
+    mov     FdcFormatIds, a0
     movbu   d1, (d0, a0)
     movbu   (8, sp), d0
     inc     d0
     movbu   d0, (8, sp)
-    mov     (bss_50012588), d0
+    mov     (FdcByteCount), d0
     inc     d0
-    mov     d0, (bss_50012588)
-    movbu   (bss_5001259E), d1
-    movbu   (8, sp), d0
-    movbu   d1, (d0, a0)
-    movbu   (8, sp), d0
-    inc     d0
-    movbu   d0, (8, sp)
-    mov     (bss_50012588), d0
-    inc     d0
-    mov     d0, (bss_50012588)
-    movbu   (bss_5001259F), d1
+    mov     d0, (FdcByteCount)
+    movbu   (FdcHead), d1
     movbu   (8, sp), d0
     movbu   d1, (d0, a0)
     movbu   (8, sp), d0
     inc     d0
     movbu   d0, (8, sp)
-    mov     (bss_50012588), d0
+    mov     (FdcByteCount), d0
     inc     d0
-    mov     d0, (bss_50012588)
-    movbu   (bss_500125A0), d1
+    mov     d0, (FdcByteCount)
+    movbu   (FdcSector), d1
     movbu   (8, sp), d0
     movbu   d1, (d0, a0)
     movbu   (8, sp), d0
     inc     d0
     movbu   d0, (8, sp)
-    mov     (bss_50012588), d0
+    mov     (FdcByteCount), d0
     inc     d0
-    mov     d0, (bss_50012588)
-    movbu   (bss_5001259D), d1
+    mov     d0, (FdcByteCount)
+    movbu   (FdcSizeCode), d1
     movbu   (8, sp), d0
     movbu   d1, (d0, a0)
     movbu   (8, sp), d0
     inc     d0
     movbu   d0, (8, sp)
-    mov     (bss_50012588), d0
+    mov     (FdcByteCount), d0
     inc     d0
-    mov     d0, (bss_50012588)
-    movbu   (bss_5001259E), d1
+    mov     d0, (FdcByteCount)
+    movbu   (FdcCylinder), d1
     movbu   (8, sp), d0
     movbu   d1, (d0, a0)
     movbu   (8, sp), d0
     inc     d0
     movbu   d0, (8, sp)
-    mov     (bss_50012588), d0
+    mov     (FdcByteCount), d0
     inc     d0
-    mov     d0, (bss_50012588)
-    mov     (bss_500125C0), d0
+    mov     d0, (FdcByteCount)
+    movbu   (FdcHead), d1
+    movbu   (8, sp), d0
+    movbu   d1, (d0, a0)
+    movbu   (8, sp), d0
+    inc     d0
+    movbu   d0, (8, sp)
+    mov     (FdcByteCount), d0
+    inc     d0
+    mov     d0, (FdcByteCount)
+    mov     (FdcReqCylinder), d0
     cmp     0, d0
     beq     loc_50005B11
     bra     loc_50005B38
 loc_50005B11:
-    movbu   (bss_5001259F), d0
+    movbu   (FdcSector), d0
     inc     d0
-    movbu   d0, (bss_5001259F)
-    movbu   (bss_5001259F), d1
+    movbu   d0, (FdcSector)
+    movbu   (FdcSector), d1
     movbu   (8, sp), d0
-    mov     bss_500125F8, a0
+    mov     FdcFormatIds, a0
     movbu   d1, (d0, a0)
     movbu   (8, sp), d0
     inc     d0
     movbu   d0, (8, sp)
     bra     loc_50005B5A
 loc_50005B38:
-    movbu   (bss_5001259F), d2
-    mov     (bss_5001264C), d0
+    movbu   (FdcSector), d2
+    mov     (FdcSectorsPerTrack), d0
     lsr     1, d0
     add     d0, d2
     movbu   (8, sp), d1
-    mov     bss_500125F8, a0
+    mov     FdcFormatIds, a0
     movbu   d2, (d1, a0)
     movbu   (8, sp), d0
     inc     d0
     movbu   d0, (8, sp)
 loc_50005B5A:
-    mov     (bss_50012588), d0
+    mov     (FdcByteCount), d0
     inc     d0
-    mov     d0, (bss_50012588)
-    movbu   (bss_500125A0), d1
+    mov     d0, (FdcByteCount)
+    movbu   (FdcSizeCode), d1
     movbu   (8, sp), d0
-    mov     bss_500125F8, a0
+    mov     FdcFormatIds, a0
     movbu   d1, (d0, a0)
     movbu   (8, sp), d0
     inc     d0
     movbu   d0, (8, sp)
-    mov     (bss_50012588), d0
+    mov     (FdcByteCount), d0
     inc     d0
-    mov     d0, (bss_50012588)
-    movbu   (bss_5001259F), d0
+    mov     d0, (FdcByteCount)
+    movbu   (FdcSector), d0
     inc     d0
-    movbu   d0, (bss_5001259F)
+    movbu   d0, (FdcSector)
     mov     (4, sp), d0
     inc     d0
     mov     d0, (4, sp)
@@ -11908,112 +12107,117 @@ loc_50005B9E:
     bcc     loc_50005BA8
     jmp     loc_50005A45
 loc_50005BA8:
-    mov     (bss_5001264C), d0
+    mov     (FdcSectorsPerTrack), d0
     btst    0x01, d0
     bne     loc_50005BB6
     jmp     loc_50005C38
 loc_50005BB6:
-    movbu   (bss_5001259D), d1
+    movbu   (FdcCylinder), d1
     movbu   (8, sp), d0
-    mov     bss_500125F8, a0
+    mov     FdcFormatIds, a0
     movbu   d1, (d0, a0)
     movbu   (8, sp), d0
     inc     d0
     movbu   d0, (8, sp)
-    mov     (bss_50012588), d0
+    mov     (FdcByteCount), d0
     inc     d0
-    mov     d0, (bss_50012588)
-    movbu   (bss_5001259E), d1
-    movbu   (8, sp), d0
-    movbu   d1, (d0, a0)
-    movbu   (8, sp), d0
-    inc     d0
-    movbu   d0, (8, sp)
-    mov     (bss_50012588), d0
-    inc     d0
-    mov     d0, (bss_50012588)
-    movbu   (8, sp), d0
-    mov     (bss_5001264C), d1
-    movbu   d1, (d0, a0)
-    movbu   (8, sp), d0
-    inc     d0
-    movbu   d0, (8, sp)
-    mov     (bss_50012588), d0
-    inc     d0
-    mov     d0, (bss_50012588)
-    movbu   (bss_500125A0), d1
+    mov     d0, (FdcByteCount)
+    movbu   (FdcHead), d1
     movbu   (8, sp), d0
     movbu   d1, (d0, a0)
     movbu   (8, sp), d0
     inc     d0
     movbu   d0, (8, sp)
-    mov     (bss_50012588), d0
+    mov     (FdcByteCount), d0
     inc     d0
-    mov     d0, (bss_50012588)
+    mov     d0, (FdcByteCount)
+    movbu   (8, sp), d0
+    mov     (FdcSectorsPerTrack), d1
+    movbu   d1, (d0, a0)
+    movbu   (8, sp), d0
+    inc     d0
+    movbu   d0, (8, sp)
+    mov     (FdcByteCount), d0
+    inc     d0
+    mov     d0, (FdcByteCount)
+    movbu   (FdcSizeCode), d1
+    movbu   (8, sp), d0
+    movbu   d1, (d0, a0)
+    movbu   (8, sp), d0
+    inc     d0
+    movbu   d0, (8, sp)
+    mov     (FdcByteCount), d0
+    inc     d0
+    mov     d0, (FdcByteCount)
 loc_50005C38:
     ret     [d2], 0x10
 
-# ---- func_50005C3B -----------------------------------------------------------
-# `call` enters at func_50005C3B_entry, past the prologue
-func_50005C3B:
+# ---- FdcFormatTrackCmd -------------------------------------------------------
+# CONFIGURE, DMA out, FORMAT, wait for its interrupt
+# `call` enters at FdcFormatTrackCmd_entry, past the prologue
+FdcFormatTrackCmd:
     add     -0xc, sp
-func_50005C3B_entry:
+FdcFormatTrackCmd_entry:
     mov     0x13, d0
-    call    func_50004CD9_entry, 0, 0xc
+    call    FdcSendCmdByte_entry, 0, 0xc
     clr     d0
-    call    func_50004CEF_entry, 0, 0xc
+    call    FdcSendParamByte_entry, 0, 0xc
     mov     0x20, d0
-    call    func_50004CEF_entry, 0, 0xc
+    call    FdcSendParamByte_entry, 0, 0xc
     clr     d0
-    call    func_50004CEF_entry, 0, 0xc
+    call    FdcSendParamByte_entry, 0, 0xc
     mov     0x4d, d0
-    movbu   d0, (bss_5001259A)
-    call    func_5000491F_entry, 0, 8
-    call    func_500051F7, 0, 0
+    movbu   d0, (FdcOpcode)
+    call    FdcDmaStart_entry, 0, 8
+    call    FdcArmIrqFlag, 0, 0
     mov     0x4d, d0
-    call    func_50004E24_entry, 0, 0x10
-    movbu   (bss_50012598), d0
+    call    FdcIssueCommand_entry, 0, 0x10
+    movbu   (FdcError), d0
     extb    d0
     cmp     0, d0
     beq     loc_50005C7E
     bra     loc_50005C83
 loc_50005C7E:
-    call    func_50005203_entry, 0, 0x1c
+    call    FdcWaitIrq_entry, 0, 0x1c
 loc_50005C83:
     ret     0, 0xc
 
-# ---- func_50005C86 -----------------------------------------------------------
-# `call` enters at func_50005C86_entry, past the prologue
-func_50005C86:
+# ---- FdcMotorOnWait ----------------------------------------------------------
+# motor on and a settling wait
+# `call` enters at FdcMotorOnWait_entry, past the prologue
+FdcMotorOnWait:
     add     -0xc, sp
-func_50005C86_entry:
+FdcMotorOnWait_entry:
     mov     0x81, d0
-    call    func_50004053, 0, 0
+    call    FdcMotorCtl, 0, 0
     mov     0xa, d0
-    call    func_5000525A_entry, 0, 0x10
+    call    FdcTickWait_entry, 0, 0x10
     ret     0, 0xc
 
-# ---- func_50005C9B -----------------------------------------------------------
-# `call` enters at func_50005C9B_entry, past the prologue
-func_50005C9B:
+# ---- FdcMotorOffLater --------------------------------------------------------
+# starts the motor-off countdown
+# `call` enters at FdcMotorOffLater_entry, past the prologue
+FdcMotorOffLater:
     add     -0xc, sp
-func_50005C9B_entry:
+FdcMotorOffLater_entry:
     mov     0x80, d0
-    call    func_50004053, 0, 0
+    call    FdcMotorCtl, 0, 0
     ret     0, 0xc
 
-# ---- func_50005CA9 -----------------------------------------------------------
-func_50005CA9:
-    movbu   (bss_50012599), d0
-    movbu   d0, (bss_50012598)
+# ---- FdcGetLastError ---------------------------------------------------------
+# the error of the previous request
+FdcGetLastError:
+    movbu   (FdcPrevError), d0
+    movbu   d0, (FdcError)
     ret     0, 0
 
-# ---- func_50005CB8 -----------------------------------------------------------
-# `call` enters at func_50005CB8_entry, past the prologue
-func_50005CB8:
+# ---- FdcSelectHead -----------------------------------------------------------
+# request head 0 or 1
+# `call` enters at FdcSelectHead_entry, past the prologue
+FdcSelectHead:
     add     -0xc, sp
-func_50005CB8_entry:
-    mov     (bss_500125BC), d0
+FdcSelectHead_entry:
+    mov     (FdcReqHead), d0
     cmp     0, d0
     bne     loc_50005CC7
     bra     loc_50005CCF
@@ -12024,56 +12228,57 @@ loc_50005CC7:
 loc_50005CCD:
     bra     loc_50005CDD
 loc_50005CCF:
-    call    func_50005CF3, 0, 0
+    call    FdcHeadSet0, 0, 0
     bra     loc_50005CE5
 loc_50005CD6:
-    call    func_50005CE8, 0, 0
+    call    FdcHeadSet1, 0, 0
     bra     loc_50005CE5
 loc_50005CDD:
     mov     0xfe, d0
-    call    func_500051A9, 0, 0
+    call    FdcSetError, 0, 0
 loc_50005CE5:
     ret     0, 0xc
 
-# ---- func_50005CE8 -----------------------------------------------------------
-func_50005CE8:
+# ---- FdcHeadSet1 -------------------------------------------------------------
+FdcHeadSet1:
     mov     1, d0
-    movbu   d0, (bss_500125F5)
+    movbu   d0, (FdcHeadSelect)
     ret     0, 0
 
-# ---- func_50005CF3 -----------------------------------------------------------
-func_50005CF3:
+# ---- FdcHeadSet0 -------------------------------------------------------------
+FdcHeadSet0:
     clr     d0
-    movbu   d0, (bss_500125F5)
+    movbu   d0, (FdcHeadSelect)
     ret     0, 0
 
-# ---- func_50005CFD -----------------------------------------------------------
-# `call` enters at func_50005CFD_entry, past the prologue
-func_50005CFD:
+# ---- FdcSenseDrive -----------------------------------------------------------
+# SENSE DRIVE STATUS: write protect (0x32), not ready (0x31), fault (0x2F)
+# `call` enters at FdcSenseDrive_entry, past the prologue
+FdcSenseDrive:
     add     -0x10, sp
-func_50005CFD_entry:
-    movbu   (bss_50012598), d0
+FdcSenseDrive_entry:
+    movbu   (FdcError), d0
     extb    d0
     cmp     0, d0
     beq     loc_50005D0D
     bra     loc_50005D6E
 loc_50005D0D:
     mov     4, d0
-    call    func_50004E24_entry, 0, 0x10
-    movbu   (bss_50012598), d0
+    call    FdcIssueCommand_entry, 0, 0x10
+    movbu   (FdcError), d0
     extb    d0
     cmp     0, d0
     beq     loc_50005D21
     bra     loc_50005D6E
 loc_50005D21:
-    call    func_50004B66_entry, 0, 0x20
-    movbu   (bss_50012598), d0
+    call    FdcWaitResultByte_entry, 0, 0x20
+    movbu   (FdcError), d0
     extb    d0
     cmp     0, d0
     beq     loc_50005D33
     bra     loc_50005D6E
 loc_50005D33:
-    call    func_5000412A, 0, 0
+    call    FdcReadData, 0, 0
     movbu   d0, (0xc, sp)
     movbu   (0xc, sp), d0
     btst    0x80, d0
@@ -12081,7 +12286,7 @@ loc_50005D33:
     bra     loc_50005D4C
 loc_50005D45:
     mov     0x32, d0
-    call    func_500051A9, 0, 0
+    call    FdcSetError, 0, 0
 loc_50005D4C:
     movbu   (0xc, sp), d0
     btst    0x20, d0
@@ -12089,7 +12294,7 @@ loc_50005D4C:
     bra     loc_50005D5D
 loc_50005D56:
     mov     0x31, d0
-    call    func_500051A9, 0, 0
+    call    FdcSetError, 0, 0
 loc_50005D5D:
     movbu   (0xc, sp), d0
     btst    0x40, d0
@@ -12097,22 +12302,23 @@ loc_50005D5D:
     bra     loc_50005D6E
 loc_50005D67:
     mov     0x2f, d0
-    call    func_500051A9, 0, 0
+    call    FdcSetError, 0, 0
 loc_50005D6E:
     ret     0, 0x10
 
-# ---- func_50005D71 -----------------------------------------------------------
-# `call` enters at func_50005D71_entry, past the prologue
-func_50005D71:
+# ---- FdcHwInit ---------------------------------------------------------------
+# the FDC interrupts: data request (group 24), FDC (25), DMA done (15)
+# `call` enters at FdcHwInit_entry, past the prologue
+FdcHwInit:
     add     -0x58, sp
-func_50005D71_entry:
-    bset    0x10, (0x36008024)
-    bset    0x10, (0x36008064)
+FdcHwInit_entry:
+    bset    0x10, (P24)
+    bset    0x10, (P64)
     mov     0xe, d0
-    call    func_500096E0_entry, 0, 8
+    call    LibIntcDisable_entry, 0, 8
     mov     1, d0
     movhu   d0, (0x1c, sp)
-    mov     func_50005FDF, d0
+    mov     FdcDreqIsr, d0
     mov     d0, (0x20, sp)
     mov     0x18, d0
     movhu   d0, (0x24, sp)
@@ -12126,13 +12332,13 @@ func_50005D71_entry:
     mov     d0, (0x10, sp)
     mov     sp, a0
     add     0x1c, a0
-    call    func_5000967C_entry, [d2,a2], 8
+    call    IrqRegister_entry, [d2,a2], 8
     movhu   (EXTMD), d0
     and     0xfff3, d0
     movhu   d0, (EXTMD)
     mov     1, d0
     movhu   d0, (0x30, sp)
-    mov     func_500060CE, d0
+    mov     FdcIrq, d0
     mov     d0, (0x34, sp)
     mov     0x19, d0
     movhu   d0, (0x38, sp)
@@ -12146,12 +12352,12 @@ func_50005D71_entry:
     mov     d0, (0x14, sp)
     mov     sp, a0
     add     0x30, a0
-    call    func_5000967C_entry, [d2,a2], 8
+    call    IrqRegister_entry, [d2,a2], 8
     mov     (0x14, sp), d0
-    call    func_5000970F_entry, 0, 8
+    call    LibIntcEnable_entry, 0, 8
     mov     1, d0
     movhu   d0, (0x44, sp)
-    mov     func_50006070, d0
+    mov     FdcDmaDoneIsr, d0
     mov     d0, (0x48, sp)
     mov     0xf, d0
     movhu   d0, (0x4c, sp)
@@ -12164,16 +12370,18 @@ func_50005D71_entry:
     mov     d0, (0x18, sp)
     mov     sp, a0
     add     0x44, a0
-    call    func_5000967C_entry, [d2,a2], 8
+    call    IrqRegister_entry, [d2,a2], 8
     mov     (0x18, sp), d0
-    call    func_5000970F_entry, 0, 8
+    call    LibIntcEnable_entry, 0, 8
     ret     0, 0x58
 
-# ---- func_50005E35 -----------------------------------------------------------
-# `call` enters at func_50005E35_entry, past the prologue
-func_50005E35:
+# ---- FdcRequest --------------------------------------------------------------
+# runs one request: 0 init, 1 recalibrate, 2 seek, 3 read, 4 write, 5 format, 6 motor on, 7
+# motor off, 8 last error, 9 head, 0xA probe, 0xB sense drive; busy guard 0xA5 (error 0xFB)
+# `call` enters at FdcRequest_entry, past the prologue
+FdcRequest:
     add     -0xc, sp
-func_50005E35_entry:
+FdcRequest_entry:
     mov     a0, (0x14, sp)
     mov     (a0), d1
     cmp     0, d1
@@ -12181,25 +12389,25 @@ func_50005E35_entry:
     bra     loc_50005E48
 loc_50005E41:
     clr     d0
-    movbu   d0, (bss_50012587)
+    movbu   d0, (FdcBusy)
 loc_50005E48:
-    call    func_5000973E, 0, 0
-    movbu   (bss_50012587), d0
+    call    loc_cpu, 0, 0
+    movbu   (FdcBusy), d0
     cmp     0xa5, d0
     beq     loc_50005E5B
     bra     loc_50005E6C
 loc_50005E5B:
-    call    func_50009745, 0, 0
+    call    unl_cpu, 0, 0
     mov     0xfb, d0
-    call    func_500051A9, 0, 0
+    call    FdcSetError, 0, 0
     extbu   d0
     jmp     loc_50005FDC
 loc_50005E6C:
     mov     0xa5, d0
-    movbu   d0, (bss_50012587)
-    call    func_50009745, 0, 0
+    movbu   d0, (FdcBusy)
+    call    unl_cpu, 0, 0
     mov     (0x14, sp), a1
-    mov     bss_500125B4, a0
+    mov     FdcRequestBlock, a0
     mov     -7, d1
 loc_50005E84:
     mov     (a1), d0
@@ -12211,7 +12419,7 @@ loc_50005E84:
     bra     loc_50005E84
 loc_50005E8D:
     mov     (0x14, sp), a1
-    mov     bss_500125D0, a0
+    mov     FdcRequestCopy, a0
     mov     -7, d1
 loc_50005E97:
     mov     (a1), d0
@@ -12223,18 +12431,18 @@ loc_50005E97:
     bra     loc_50005E97
 loc_50005EA0:
     clr     d0
-    movbu   d0, (bss_50012590)
-    movbu   (bss_50012598), d0
-    movbu   d0, (bss_50012599)
+    movbu   d0, (FdcInitBusy)
+    movbu   (FdcError), d0
+    movbu   d0, (FdcPrevError)
     clr     d0
-    movbu   d0, (bss_50012598)
-    call    func_5000452C_entry, 0, 0xc
+    movbu   d0, (FdcError)
+    call    FdcRequestCheck_entry, 0, 0xc
     extbu   d0
     cmp     0, d0
     beq     loc_50005EC7
     jmp     loc_50005FCD
 loc_50005EC7:
-    mov     (bss_500125B4), d0
+    mov     (FdcRequestBlock), d0
     cmp     0, d0
     bne     loc_50005ED3
     bra     loc_50005F1F
@@ -12285,75 +12493,76 @@ loc_50005F15:
 loc_50005F1C:
     jmp     loc_50005FC5
 loc_50005F1F:
-    call    func_50005C86_entry, 0, 0xc
-    call    func_500052A9_entry, 0, 8
-    call    func_50005C9B_entry, 0, 0xc
+    call    FdcMotorOnWait_entry, 0, 0xc
+    call    FdcOpen_entry, 0, 8
+    call    FdcMotorOffLater_entry, 0, 0xc
     jmp     loc_50005FCD
 loc_50005F31:
-    call    func_50005C86_entry, 0, 0xc
-    call    func_500052D0_entry, 0, 0x10
+    call    FdcMotorOnWait_entry, 0, 0xc
+    call    FdcRecalibrate_entry, 0, 0x10
     jmp     loc_50005FCD
 loc_50005F3E:
-    call    func_50005C86_entry, 0, 0xc
-    call    func_50005333_entry, 0, 0xc
+    call    FdcMotorOnWait_entry, 0, 0xc
+    call    FdcSeek_entry, 0, 0xc
     jmp     loc_50005FCD
 loc_50005F4B:
     mov     1, d0
     call    func_5000C216_entry, [d2], 0x10
-    call    func_50005C86_entry, 0, 0xc
-    call    func_500053D8_entry, 0, 0x10
+    call    FdcMotorOnWait_entry, 0, 0xc
+    call    FdcReadSectors_entry, 0, 0x10
     clr     d0
     call    func_5000C216_entry, [d2], 0x10
     bra     loc_50005FCD
 loc_50005F64:
     mov     1, d0
     call    func_5000C216_entry, [d2], 0x10
-    call    func_50005C86_entry, 0, 0xc
-    call    func_50005615_entry, 0, 0x10
+    call    FdcMotorOnWait_entry, 0, 0xc
+    call    FdcWriteSectors_entry, 0, 0x10
     clr     d0
     call    func_5000C216_entry, [d2], 0x10
     bra     loc_50005FCD
 loc_50005F7D:
     mov     1, d0
     call    func_5000C216_entry, [d2], 0x10
-    call    func_50005C86_entry, 0, 0xc
-    call    func_50005878_entry, 0, 8
+    call    FdcMotorOnWait_entry, 0, 0xc
+    call    FdcFormatDisk_entry, 0, 8
     clr     d0
     call    func_5000C216_entry, [d2], 0x10
     bra     loc_50005FCD
 loc_50005F96:
-    call    func_50005C86_entry, 0, 0xc
+    call    FdcMotorOnWait_entry, 0, 0xc
     bra     loc_50005FCD
 loc_50005F9D:
-    call    func_50005C9B_entry, 0, 0xc
+    call    FdcMotorOffLater_entry, 0, 0xc
     bra     loc_50005FCD
 loc_50005FA4:
-    call    func_50005CA9, 0, 0
+    call    FdcGetLastError, 0, 0
     bra     loc_50005FCD
 loc_50005FAB:
-    call    func_50005CB8_entry, 0, 0xc
+    call    FdcSelectHead_entry, 0, 0xc
     bra     loc_50005FCD
 loc_50005FB2:
-    call    func_50004500_entry, 0, 0xc
+    call    FdcResetProbe_entry, 0, 0xc
     bra     loc_50005FCD
 loc_50005FB9:
-    call    func_50005C86_entry, 0, 0xc
-    call    func_50005CFD_entry, 0, 0x10
+    call    FdcMotorOnWait_entry, 0, 0xc
+    call    FdcSenseDrive_entry, 0, 0x10
     bra     loc_50005FCD
 loc_50005FC5:
     mov     0xff, d0
-    call    func_500051A9, 0, 0
+    call    FdcSetError, 0, 0
 loc_50005FCD:
     mov     0x5a, d0
-    movbu   d0, (bss_50012587)
-    movbu   (bss_50012598), d0
+    movbu   d0, (FdcBusy)
+    movbu   (FdcError), d0
     extb    d0
 loc_50005FDC:
     ret     0, 0xc
 
-# ---- func_50005FDF -----------------------------------------------------------
-# no caller: unreferenced code
-func_50005FDF:
+# ---- FdcDreqIsr --------------------------------------------------------------
+# group 24: moves the transfer's last byte through the data port by hand, P04 bit 4 off
+# nothing calls it directly: its address is taken (a handler or a method)
+FdcDreqIsr:
     add     -0xc, sp
     and     0xf7ff, psw
     nop
@@ -12363,8 +12572,8 @@ func_50005FDF:
     or      0x01, d0
     movhu   d0, (G24ICR)
     movhu   (G24ICR), d0
-    movhu   d0, (bss_5001265E)
-    movbu   (bss_5001259A), d0
+    movhu   d0, (FdcIcrReadback)
+    movbu   (FdcOpcode), d0
     and     0x1f, d0
     cmp     6, d0
     bne     loc_50006016
@@ -12380,16 +12589,16 @@ loc_5000601C:
 loc_50006022:
     bra     loc_50006058
 loc_50006024:
-    mov     (bss_500125CC), a0
-    mov     (bss_50012588), d0
+    mov     (FdcReqBuffer), a0
+    mov     (FdcByteCount), d0
     mov     1, d1
     sub     d1, d0
     movbu   (0x98010000), d1
     movbu   d1, (d0, a0)
     bra     loc_50006059
 loc_5000603E:
-    mov     (bss_500125CC), a0
-    mov     (bss_50012588), d0
+    mov     (FdcReqBuffer), a0
+    mov     (FdcByteCount), d0
     mov     1, d1
     sub     d1, d0
     movbu   (d0, a0), d1
@@ -12398,15 +12607,16 @@ loc_5000603E:
 loc_50006058:
     nop
 loc_50006059:
-    bclr    0x10, (0x36008004)
+    bclr    0x10, (P04)
     mov     0xe, d0
-    call    func_500096E0_entry, 0, 8
+    call    LibIntcDisable_entry, 0, 8
     movhu   (G24ICR), d0
     ret     0, 0xc
 
-# ---- func_50006070 -----------------------------------------------------------
-# no caller: unreferenced code
-func_50006070:
+# ---- FdcDmaDoneIsr -----------------------------------------------------------
+# group 15: P04 bit 4 on, arms the group 24 interrupt for the last byte
+# nothing calls it directly: its address is taken (a handler or a method)
+FdcDmaDoneIsr:
     add     -0xc, sp
     and     0xf7ff, psw
     nop
@@ -12416,22 +12626,23 @@ func_50006070:
     or      0x01, d0
     movhu   d0, (G15ICR)
     movhu   (G15ICR), d0
-    movhu   d0, (bss_5001265E)
-    bset    0x10, (0x36008004)
+    movhu   d0, (FdcIcrReadback)
+    bset    0x10, (P04)
     movhu   (G24ICR), d0
     and     0xff00, d0
     or      0x01, d0
     movhu   d0, (G24ICR)
     movhu   (G24ICR), d0
-    movhu   d0, (bss_5001265E)
+    movhu   d0, (FdcIcrReadback)
     mov     0xe, d0
-    call    func_5000970F_entry, 0, 8
+    call    LibIntcEnable_entry, 0, 8
     movhu   (G15ICR), d0
     ret     0, 0xc
 
-# ---- func_500060CE -----------------------------------------------------------
-# no caller: unreferenced code
-func_500060CE:
+# ---- FdcIrq ------------------------------------------------------------------
+# group 25: reads the result phase into FdcResult (or a SENSE INTERRUPT), FdcCheckResult
+# nothing calls it directly: its address is taken (a handler or a method)
+FdcIrq:
     add     -0x18, sp
     and     0xf7ff, psw
     nop
@@ -12441,7 +12652,7 @@ func_500060CE:
     or      0x01, d0
     movhu   d0, (G25ICR)
     movhu   (G25ICR), d0
-    movhu   d0, (bss_5001265E)
+    movhu   d0, (FdcIcrReadback)
     or      0x0800, psw
     nop
     nop
@@ -12458,7 +12669,7 @@ loc_50006100:
     ble     loc_50006112
     bra     loc_50006172
 loc_50006112:
-    call    func_50004111_entry, 0, 0x10
+    call    FdcReadMsr_entry, 0, 0x10
     movbu   d0, (0x10, sp)
     movbu   (0x10, sp), d0
     btst    0x80, d0
@@ -12471,50 +12682,52 @@ loc_50006124:
     bra     loc_50006135
 loc_5000612E:
     mov     8, d0
-    call    func_50004154, 0, 0
+    call    FdcWriteData, 0, 0
 loc_50006135:
-    mov     bss_500125EC, d0
+    mov     FdcIrqFlag, d0
     mov     d0, (0xc, sp)
     inc     d0
     mov     d0, (0xc, sp)
 loc_50006140:
-    call    func_50004BCA_entry, 0, 0x20
-    call    func_5000412A, 0, 0
+    call    FdcWaitResultPhase_entry, 0, 0x20
+    call    FdcReadData, 0, 0
     mov     (0xc, sp), a0
     movbu   d0, (a0)
     mov     (0xc, sp), d0
     inc     d0
     mov     d0, (0xc, sp)
 loc_50006153:
-    call    func_50004111_entry, 0, 0x10
+    call    FdcReadMsr_entry, 0, 0x10
     extbu   d0
     btst    0x80, d0
     bne     loc_50006160
     bra     loc_50006153
 loc_50006160:
-    call    func_50004111_entry, 0, 0x10
+    call    FdcReadMsr_entry, 0, 0x10
     extbu   d0
     btst    0x40, d0
     beq     loc_5000616D
     bra     loc_50006140
 loc_5000616D:
-    call    func_50004D05_entry, 0, 0x14
+    call    FdcCheckResult_entry, 0, 0x14
 loc_50006172:
     clr     d0
-    movbu   d0, (bss_500125EC)
+    movbu   d0, (FdcIrqFlag)
     movhu   (G25ICR), d0
     ret     0, 0x18
 
-# ---- func_50006182 -----------------------------------------------------------
-func_50006182:
+# ---- FdcHookNop4 -------------------------------------------------------------
+FdcHookNop4:
     ret     0, 0
 
-# ---- func_50006185 -----------------------------------------------------------
-# `call` enters at func_50006185_entry, past the prologue
-func_50006185:
+# ---- DCacheFlush -------------------------------------------------------------
+# with interrupts off: data cache off, written back way by way (DCACHE_WAY0/1) unless
+# write-through, invalidated, on again
+# `call` enters at DCacheFlush_entry, past the prologue
+DCacheFlush:
     add     -8, sp
-func_50006185_entry:
-    call    func_5000973E, 0, 0
+DCacheFlush_entry:
+    call    loc_cpu, 0, 0
     mov     d3, a1
     mov     CHCTR, a0
     movhu   (a0), d0
@@ -12564,14 +12777,15 @@ loc_500061E0:
     nop
 loc_500061F7:
     mov     a1, d3
-    call    func_50009745, 0, 0
+    call    unl_cpu, 0, 0
     ret     0, 8
 
-# ---- func_50006201 -----------------------------------------------------------
+# ---- FdcSeekTestLoop ---------------------------------------------------------
+# repeats reads at cylinders 0, 0x4E, 0x0A, 0x28 forever, 3000 ticks apart; nothing calls it
 # no caller: unreferenced code
-func_50006201:
+FdcSeekTestLoop:
     add     -0x10, sp
-    call    func_5000647E_entry, 0, 0x10
+    call    FdcDiskPresent_entry, 0, 0x10
     extbu   d0
     cmp     0, d0
     bne     loc_50006211
@@ -12582,7 +12796,7 @@ loc_50006211:
     mov     3, d0
     movbu   d0, (0xc, sp)
     clr     d0
-    mov     d0, (bss_50012660)
+    mov     d0, (FdcTestRequest)
     mov     d0, (bss_50012664)
     mov     d0, (bss_50012668)
     movbu   (0xc, sp), d0
@@ -12602,11 +12816,11 @@ loc_5000624A:
     mov     d0, (bss_50012674)
     clr     d0
     mov     d0, (bss_50012678)
-    mov     bss_50012660, a0
-    call    func_50005E35_entry, 0, 0xc
+    mov     FdcTestRequest, a0
+    call    FdcRequest_entry, 0, 0xc
 loc_50006269:
     mov     3, d0
-    mov     d0, (bss_50012660)
+    mov     d0, (FdcTestRequest)
     clr     d0
     mov     d0, (bss_50012664)
     mov     d0, (bss_50012668)
@@ -12614,12 +12828,12 @@ loc_50006269:
     mov     1, d0
     mov     d0, (bss_50012670)
     mov     d0, (bss_50012674)
-    mov     bss_5001267C, d0
+    mov     FdcTestBuffer, d0
     mov     d0, (bss_50012678)
-    mov     bss_50012660, a0
-    call    func_50005E35_entry, 0, 0xc
+    mov     FdcTestRequest, a0
+    call    FdcRequest_entry, 0, 0xc
     mov     3, d0
-    mov     d0, (bss_50012660)
+    mov     d0, (FdcTestRequest)
     clr     d0
     mov     d0, (bss_50012664)
     mov     d0, (bss_50012668)
@@ -12628,12 +12842,12 @@ loc_50006269:
     mov     1, d0
     mov     d0, (bss_50012670)
     mov     d0, (bss_50012674)
-    mov     bss_5001267C, d0
+    mov     FdcTestBuffer, d0
     mov     d0, (bss_50012678)
-    mov     bss_50012660, a0
-    call    func_50005E35_entry, 0, 0xc
+    mov     FdcTestRequest, a0
+    call    FdcRequest_entry, 0, 0xc
     mov     3, d0
-    mov     d0, (bss_50012660)
+    mov     d0, (FdcTestRequest)
     clr     d0
     mov     d0, (bss_50012664)
     mov     d0, (bss_50012668)
@@ -12642,12 +12856,12 @@ loc_50006269:
     mov     1, d0
     mov     d0, (bss_50012670)
     mov     d0, (bss_50012674)
-    mov     bss_5001267C, d0
+    mov     FdcTestBuffer, d0
     mov     d0, (bss_50012678)
-    mov     bss_50012660, a0
-    call    func_50005E35_entry, 0, 0xc
+    mov     FdcTestRequest, a0
+    call    FdcRequest_entry, 0, 0xc
     mov     3, d0
-    mov     d0, (bss_50012660)
+    mov     d0, (FdcTestRequest)
     clr     d0
     mov     d0, (bss_50012664)
     mov     d0, (bss_50012668)
@@ -12656,29 +12870,30 @@ loc_50006269:
     mov     1, d0
     mov     d0, (bss_50012670)
     mov     d0, (bss_50012674)
-    mov     bss_5001267C, d0
+    mov     FdcTestBuffer, d0
     mov     d0, (bss_50012678)
-    mov     bss_50012660, a0
-    call    func_50005E35_entry, 0, 0xc
+    mov     FdcTestRequest, a0
+    call    FdcRequest_entry, 0, 0xc
     mov     0xbb8, d0
-    call    func_5000965F, 0, 0
-    mov     (data_50010004), d0
+    call    LibTickSleep, 0, 0
+    mov     (FdcSeekTestCount), d0
     inc     d0
-    mov     d0, (data_50010004)
+    mov     d0, (FdcSeekTestCount)
     jmp     loc_50006269
 loc_50006387:
     ret     0, 0x10
 
-# ---- func_5000638A -----------------------------------------------------------
-# `call` enters at func_5000638A_entry, past the prologue
-func_5000638A:
+# ---- FdcIndexDetectInit ------------------------------------------------------
+# registers FdcIndexIsr (group 30), runs request 0 for media 0xD3
+# `call` enters at FdcIndexDetectInit_entry, past the prologue
+FdcIndexDetectInit:
     add     -0x28, sp
-func_5000638A_entry:
+FdcIndexDetectInit_entry:
     mov     0xd, d0
-    call    func_500096E0_entry, 0, 8
+    call    LibIntcDisable_entry, 0, 8
     mov     1, d0
     movhu   d0, (0x14, sp)
-    mov     func_5000643C, d0
+    mov     FdcIndexIsr, d0
     mov     d0, (0x18, sp)
     mov     0x1e, d0
     movhu   d0, (0x1c, sp)
@@ -12692,9 +12907,9 @@ func_5000638A_entry:
     mov     d0, (0x10, sp)
     mov     sp, a0
     add     0x14, a0
-    call    func_5000967C_entry, [d2,a2], 8
+    call    IrqRegister_entry, [d2,a2], 8
     clr     d0
-    mov     d0, (bss_50012660)
+    mov     d0, (FdcTestRequest)
     mov     d0, (bss_50012664)
     mov     d0, (bss_50012668)
     mov     0xd3, d0
@@ -12704,20 +12919,21 @@ func_5000638A_entry:
     mov     d0, (bss_50012674)
     clr     d0
     mov     d0, (bss_50012678)
-    mov     bss_50012660, a0
-    call    func_50005E35_entry, 0, 0xc
+    mov     FdcTestRequest, a0
+    call    FdcRequest_entry, 0, 0xc
     mov     0xd, d0
-    call    func_5000970F_entry, 0, 8
+    call    LibIntcEnable_entry, 0, 8
     ret     0, 0x28
 
-# ---- func_50006408 -----------------------------------------------------------
-# `call` enters at func_50006408_entry, past the prologue
-func_50006408:
+# ---- FdcDiskSpinning ---------------------------------------------------------
+# 1 if an index pulse came in the last 0x6E ticks
+# `call` enters at FdcDiskSpinning_entry, past the prologue
+FdcDiskSpinning:
     add     -0xc, sp
-func_50006408_entry:
-    call    func_5000973E, 0, 0
-    mov     (bss_50019730), d0
-    mov     (data_50010074), d1
+FdcDiskSpinning_entry:
+    call    loc_cpu, 0, 0
+    mov     (TickCount), d0
+    mov     (FdcIndexTick), d1
     sub     d1, d0
     mov     d0, (8, sp)
     cmp     0x6e, d0
@@ -12725,16 +12941,17 @@ func_50006408_entry:
     bra     loc_5000642D
 loc_50006426:
     clr     d0
-    movbu   d0, (data_50010070)
+    movbu   d0, (FdcIndexSeen)
 loc_5000642D:
-    call    func_50009745, 0, 0
-    movbu   (data_50010070), d0
+    call    unl_cpu, 0, 0
+    movbu   (FdcIndexSeen), d0
     extb    d0
     ret     0, 0xc
 
-# ---- func_5000643C -----------------------------------------------------------
-# no caller: unreferenced code
-func_5000643C:
+# ---- FdcIndexIsr -------------------------------------------------------------
+# group 30, the index pulse: notes its tick, sets FdcIndexSeen
+# nothing calls it directly: its address is taken (a handler or a method)
+FdcIndexIsr:
     and     0xf7ff, psw
     nop
     nop
@@ -12743,46 +12960,47 @@ func_5000643C:
     or      0x01, d0
     movhu   d0, (G30ICR)
     movhu   (G30ICR), d0
-    movhu   d0, (bss_5001265E)
-    mov     (bss_50019730), d0
-    mov     d0, (data_50010074)
+    movhu   d0, (FdcIcrReadback)
+    mov     (TickCount), d0
+    mov     d0, (FdcIndexTick)
     mov     1, d0
-    movbu   d0, (data_50010070)
+    movbu   d0, (FdcIndexSeen)
     movhu   (G30ICR), d0
     ret     0, 0
 
-# ---- func_5000647E -----------------------------------------------------------
-# `call` enters at func_5000647E_entry, past the prologue
-func_5000647E:
+# ---- FdcDiskPresent ----------------------------------------------------------
+# reads the DIR with the motor on: no disk-change flag, or the disk turning (index pulses) -> 1
+# `call` enters at FdcDiskPresent_entry, past the prologue
+FdcDiskPresent:
     add     -0x10, sp
-func_5000647E_entry:
+FdcDiskPresent_entry:
     clr     d0
     movbu   d0, (0xc, sp)
-    movbu   (data_50010009), d0
+    movbu   (FdcIndexInitDone), d0
     cmp     0, d0
     beq     loc_50006491
     bra     loc_5000649E
 loc_50006491:
-    call    func_5000638A_entry, 0, 0x28
+    call    FdcIndexDetectInit_entry, 0, 0x28
     mov     1, d0
-    movbu   d0, (data_50010009)
+    movbu   d0, (FdcIndexInitDone)
 loc_5000649E:
     mov     0x82, d0
-    call    func_50004053, 0, 0
+    call    FdcMotorCtl, 0, 0
     mov     0x83, d0
-    call    func_50004053, 0, 0
+    call    FdcMotorCtl, 0, 0
     movbu   (0x9802000e), d0
     movbu   d0, (0xd, sp)
     mov     0x84, d0
-    call    func_50004053, 0, 0
+    call    FdcMotorCtl, 0, 0
     movbu   (0xd, sp), d0
     btst    0x80, d0
     bne     loc_500064C9
     bra     loc_500064EA
 loc_500064C9:
     mov     0x81, d0
-    call    func_50004053, 0, 0
-    call    func_50006408_entry, 0, 0xc
+    call    FdcMotorCtl, 0, 0
+    call    FdcDiskSpinning_entry, 0, 0xc
     extb    d0
     cmp     0, d0
     bne     loc_500064DD
@@ -12800,22 +13018,23 @@ loc_500064EA:
     movbu   d0, (0xc, sp)
 loc_500064EF:
     movbu   (0xd, sp), d0
-    movbu   d0, (data_50010008)
+    movbu   d0, (FdcLastDir)
     movbu   (0xc, sp), d0
     ret     0, 0x10
 
-# ---- func_500064FE -----------------------------------------------------------
+# ---- FdcDiskChangedClear -----------------------------------------------------
+# an init request clears the change flag, then reads it again; nothing calls it
 # no caller: unreferenced code
-func_500064FE:
+FdcDiskChangedClear:
     add     -0x2c, sp
     clr     d0
     movbu   d0, (0xc, sp)
     mov     0x83, d0
-    call    func_50004053, 0, 0
+    call    FdcMotorCtl, 0, 0
     movbu   (0x9802000e), d0
     movbu   d0, (0xd, sp)
     mov     0x84, d0
-    call    func_50004053, 0, 0
+    call    FdcMotorCtl, 0, 0
     movbu   (0xd, sp), d0
     btst    0x80, d0
     bne     loc_50006528
@@ -12834,14 +13053,14 @@ loc_50006528:
     mov     d0, (0x28, sp)
     mov     sp, a0
     add     0x10, a0
-    call    func_50005E35_entry, 0, 0xc
+    call    FdcRequest_entry, 0, 0xc
 loc_50006544:
     mov     0x83, d0
-    call    func_50004053, 0, 0
+    call    FdcMotorCtl, 0, 0
     movbu   (0x9802000e), d0
     movbu   d0, (0xd, sp)
     mov     0x84, d0
-    call    func_50004053, 0, 0
+    call    FdcMotorCtl, 0, 0
     movbu   (0xd, sp), d0
     btst    0x80, d0
     bne     loc_50006567
@@ -12857,11 +13076,12 @@ loc_50006572:
     movbu   (0xc, sp), d0
     ret     0, 0x2c
 
-# ---- func_50006578 -----------------------------------------------------------
+# ---- FdcMediaChangePoll ------------------------------------------------------
+# posts event 0x10708000 (KernelStubZero) on insert and removal; nothing calls it
 # no caller: unreferenced code
-func_50006578:
+FdcMediaChangePoll:
     add     -0x10, sp
-    movbu   (data_5001000C), d0
+    movbu   (FdcMediaState), d0
     cmp     0xff, d0
     bne     loc_50006589
     bra     loc_50006597
@@ -12876,70 +13096,75 @@ loc_5000658F:
 loc_50006595:
     bra     loc_500065E6
 loc_50006597:
-    call    func_5000647E_entry, 0, 0x10
-    movbu   d0, (data_5001000C)
+    call    FdcDiskPresent_entry, 0, 0x10
+    movbu   d0, (FdcMediaState)
     bra     loc_500065E6
 loc_500065A4:
-    call    func_5000647E_entry, 0, 0x10
+    call    FdcDiskPresent_entry, 0, 0x10
     extbu   d0
     cmp     0, d0
     bne     loc_500065B0
     bra     loc_500065E6
 loc_500065B0:
     mov     1, d0
-    movbu   d0, (data_5001000C)
+    movbu   d0, (FdcMediaState)
     mov     0x10708000, d0
     mov     1, d1
-    call    func_50009751, 0, 0
+    call    KernelStubZero, 0, 0
     bra     loc_500065E6
 loc_500065C7:
-    call    func_5000647E_entry, 0, 0x10
+    call    FdcDiskPresent_entry, 0, 0x10
     extbu   d0
     cmp     0, d0
     beq     loc_500065D3
     bra     loc_500065E6
 loc_500065D3:
     clr     d0
-    movbu   d0, (data_5001000C)
+    movbu   d0, (FdcMediaState)
     mov     0x10708000, d0
     clr     d1
-    call    func_50009751, 0, 0
+    call    KernelStubZero, 0, 0
 loc_500065E6:
     ret     0, 0x10
 
-# ---- func_500065E9 -----------------------------------------------------------
-# `call` enters at func_500065E9_entry, past the prologue
-func_500065E9:
+# ---- DiskInit ----------------------------------------------------------------
+# DiskDriverOps[0]: SdHwInit, the card records reset, slot power off, SdSlotDischarge
+# `call` enters at DiskInit_entry, past the prologue
+DiskInit:
     add     -0xc, sp
-func_500065E9_entry:
-    call    func_500076BF_entry, 0, 8
+DiskInit_entry:
+    call    SdHwInit_entry, 0, 8
     mov     bss_5001287C, a0
-    call    func_50006CBE_entry, [d2], 0x10
+    call    SdDrvRecordsReset_entry, [d2], 0x10
     mov     1, d0
     movhu   d0, (bss_50012880)
-    call    func_5000786F_entry, 0, 8
-    call    func_50007893_entry, 0, 0xc
-    call    func_50007943_entry, [d2], 0x10
+    call    SdPowerLineClear_entry, 0, 8
+    call    SdPowerRailClear_entry, 0, 0xc
+    call    SdSlotDischarge_entry, [d2], 0x10
     ret     0, 0xc
 
-# ---- func_50006616 -----------------------------------------------------------
-# no caller: unreferenced code
-func_50006616:
+# ---- DiskHookNop1 ------------------------------------------------------------
+# an empty method of DiskDriverOps
+# nothing calls it directly: its address is taken (a handler or a method)
+DiskHookNop1:
     retf    0, 0
 
-# ---- func_50006619 -----------------------------------------------------------
-# no caller: unreferenced code
-func_50006619:
+# ---- DiskHookNop2 ------------------------------------------------------------
+# an empty method of DiskDriverOps
+# nothing calls it directly: its address is taken (a handler or a method)
+DiskHookNop2:
     retf    0, 0
 
-# ---- func_5000661C -----------------------------------------------------------
-# no caller: unreferenced code
-func_5000661C:
+# ---- DiskHookNop3 ------------------------------------------------------------
+# an empty method of DiskDriverOps
+# nothing calls it directly: its address is taken (a handler or a method)
+DiskHookNop3:
     retf    0, 0
 
-# ---- func_5000661F -----------------------------------------------------------
+# ---- DiskCmdReplyCopy --------------------------------------------------------
+# the same code as the firmware's routine of this name (941 0x4854AE0B), linked elsewhere
 # no caller: unreferenced code
-func_5000661F:
+DiskCmdReplyCopy:
     movm    [d2], (sp)
     mov     d0, d2
     movhu   (data_50010010), d0
@@ -12983,16 +13208,18 @@ loc_50006675:
     mov     d1, d0
     retf    [d2], 4
 
-# ---- func_50006679 -----------------------------------------------------------
-# `call` enters at func_50006679_entry, past the prologue
-func_50006679:
+# ---- DiskCmdTransact ---------------------------------------------------------
+# runs one disk message to completion: no worker task here, it calls the handler
+# (SdWorkerCmdHandler) directly
+# `call` enters at DiskCmdTransact_entry, past the prologue
+DiskCmdTransact:
     add     -0xc, sp
-func_50006679_entry:
+DiskCmdTransact_entry:
     movhu   (a0), d0
     cmp     0x14, d0
     bne     loc_5000668C
     mov     3, d0
-    call    func_50006C98_entry, [d2], 4
+    call    SdDrvPhaseSet_entry, [d2], 4
     clr     d0
     bra     loc_500066CC
 loc_5000668C:
@@ -13000,7 +13227,7 @@ loc_5000668C:
     cmp     0x15, d0
     bne     loc_5000669C
     mov     1, d0
-    call    func_50006C98_entry, [d2], 4
+    call    SdDrvPhaseSet_entry, [d2], 4
     clr     d0
     bra     loc_500066CC
 loc_5000669C:
@@ -13018,25 +13245,28 @@ loc_500066A9:
 loc_500066B8:
     mov     1, d0
     movbu   d0, (data_50010014)
-    call    func_500066DA_entry, [d2,d3,a2,a3], 0x44
+    call    SdWorkerCmdHandler_entry, [d2,d3,a2,a3], 0x44
     clr     d1
     movbu   d1, (data_50010014)
 loc_500066CC:
     ret     0, 0xc
 
-# ---- func_500066CF -----------------------------------------------------------
+# ---- DiskDriveCtrlWrap -------------------------------------------------------
+# DiskDriveCtrlHandler on a canned message; nothing calls it
 # no caller: unreferenced code
-func_500066CF:
+DiskDriveCtrlWrap:
     add     -0xc, sp
-    call    func_50006A60_entry, [d2,d3,a2,a3], 0x44
+    call    DiskDriveCtrlHandler_entry, [d2,d3,a2,a3], 0x44
     ret     0, 0xc
 
-# ---- func_500066DA -----------------------------------------------------------
-# `call` enters at func_500066DA_entry, past the prologue
-func_500066DA:
+# ---- SdWorkerCmdHandler ------------------------------------------------------
+# message type 3, the SD media commands: 0 mount (power on, SdCardInitFull), 3 read, 4 write,
+# and the status queries
+# `call` enters at SdWorkerCmdHandler_entry, past the prologue
+SdWorkerCmdHandler:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x34, sp
-func_500066DA_entry:
+SdWorkerCmdHandler_entry:
     clr     d0
     movhu   d0, (0x20, sp)
     movhu   d0, (0x22, sp)
@@ -13050,7 +13280,7 @@ func_500066DA_entry:
     inc4    a1
     inc     d1
     lne
-    call    func_50006C6E, 0, 0
+    call    SdMediaStateGet, 0, 0
     exthu   d0
     cmp     3, d0
     beq     loc_50006708
@@ -13060,7 +13290,7 @@ func_500066DA_entry:
     mov     0x40, d0
     ret     [d2,d3,a2,a3], 0x44
 loc_50006708:
-    call    func_5000975B, 0, 0
+    call    PanelSubTypeGet, 0, 0
     extbu   d0
     cmp     4, d0
     beq     loc_50006719
@@ -13096,7 +13326,7 @@ loc_50006743:
 loc_5000674A:
     jmp     loc_50006A35
 loc_5000674D:
-    call    func_50006C6E, 0, 0
+    call    SdMediaStateGet, 0, 0
     exthu   d0
     cmp     2, d0
     beq     loc_5000676F
@@ -13115,42 +13345,42 @@ loc_5000676C:
     jmp     loc_50006A3A
 loc_5000676F:
     mov     1, d0
-    call    func_50006C77_entry, [d2], 4
+    call    SdMediaStateSet_entry, [d2], 4
     mov     str_50010086, a0
     mov     5, d0
-    call    func_500082A1_entry, [d2,d3], 8
+    call    SdCmdCrc7_entry, [d2,d3], 8
     extbu   d0
     add     d0, d0
     inc     d0
     movbu   d0, (data_5001008B)
     mov     data_50010082, a0
-    call    func_50007D14_entry, [d2,d3,a2], 0x20
+    call    SdCommandSend_entry, [d2,d3,a2], 0x20
     mov     0x64, d0
-    call    func_5000965F, 0, 0
-    call    func_50007858_entry, 0, 8
-    call    func_50007886_entry, 0, 0xc
+    call    LibTickSleep, 0, 0
+    call    SdPowerLineSet_entry, 0, 8
+    call    SdPowerRailSet_entry, 0, 0xc
     mov     1, d0
-    call    func_5000965F, 0, 0
+    call    LibTickSleep, 0, 0
     mov     bss_50012884, a0
-    call    func_50006DDC_entry, [d2,d3,a2], 0x18
+    call    SdCardInitFull_entry, [d2,d3,a2], 0x18
     exth    d0
     cmp     0, d0
     blt     loc_500067C9
     mov     3, d0
-    call    func_50006C77_entry, [d2], 4
+    call    SdMediaStateSet_entry, [d2], 4
     jmp     loc_50006A3A
 loc_500067C9:
     mov     1, d0
-    call    func_50006C77_entry, [d2], 4
+    call    SdMediaStateSet_entry, [d2], 4
     mov     0xfd, d0
     movhu   d0, (0x20, sp)
     jmp     loc_50006A3A
 loc_500067D9:
     mov     1, d0
-    call    func_50006C77_entry, [d2], 4
-    call    func_5000786F_entry, 0, 8
-    call    func_50007893_entry, 0, 0xc
-    call    func_500078A0_entry, [d2], 0x14
+    call    SdMediaStateSet_entry, [d2], 4
+    call    SdPowerLineClear_entry, 0, 8
+    call    SdPowerRailClear_entry, 0, 0xc
+    call    SdSlotDrainWait_entry, [d2], 0x14
     exth    d0
     cmp     0, d0
     blt     loc_500067FE
@@ -13162,28 +13392,28 @@ loc_500067FE:
     movhu   d0, (bss_5001287C)
 loc_50006805:
     mov     1, d0
-    call    func_50006C77_entry, [d2], 4
-    call    func_50007858_entry, 0, 8
-    call    func_50007886_entry, 0, 0xc
+    call    SdMediaStateSet_entry, [d2], 4
+    call    SdPowerLineSet_entry, 0, 8
+    call    SdPowerRailSet_entry, 0, 0xc
     mov     1, d0
-    call    func_5000965F, 0, 0
+    call    LibTickSleep, 0, 0
     mov     bss_50012884, a0
-    call    func_50006DDC_entry, [d2,d3,a2], 0x18
+    call    SdCardInitFull_entry, [d2,d3,a2], 0x18
     exth    d0
     cmp     0, d0
     blt     loc_50006837
     mov     3, d0
-    call    func_50006C77_entry, [d2], 4
+    call    SdMediaStateSet_entry, [d2], 4
     jmp     loc_50006A3A
 loc_50006837:
     mov     1, d0
-    call    func_50006C77_entry, [d2], 4
+    call    SdMediaStateSet_entry, [d2], 4
     mov     0xfd, d0
     movhu   d0, (0x20, sp)
     jmp     loc_50006A3A
 loc_50006847:
     mov     bss_50012884, a0
-    call    func_50006DDC_entry, [d2,d3,a2], 0x18
+    call    SdCardInitFull_entry, [d2,d3,a2], 0x18
     jmp     loc_50006A3A
 loc_50006855:
     movhu   (bss_50012884), d0
@@ -13236,7 +13466,7 @@ loc_50006894:
     mov     data_500100D2, a0
     mov     0x200, d0
     mov     a3, a1
-    call    func_50007D9C_entry, [d2,d3,a2,a3], 0x28
+    call    SdReadBlockCmd_entry, [d2,d3,a2,a3], 0x28
     movhu   d0, (0x22, sp)
     exth    d0
     cmp     0, d0
@@ -13278,7 +13508,7 @@ loc_50006905:
     movhu   d0, (0x20, sp)
     jmp     loc_50006A3A
 loc_50006917:
-    call    func_500079A5_entry, 0, 8
+    call    SdWriteProtectGet_entry, 0, 8
     extbu   d0
     cmp     0, d0
     beq     loc_50006929
@@ -13329,7 +13559,7 @@ loc_50006956:
     mov     data_500100DC, a0
     mov     0x200, d0
     mov     a3, a1
-    call    func_50007F60_entry, [d2,d3,a2,a3], 0x28
+    call    SdWriteBlockCmd_entry, [d2,d3,a2,a3], 0x28
     movhu   d0, (0x22, sp)
     exth    d0
     cmp     0, d0
@@ -13412,7 +13642,7 @@ loc_50006A3A:
     movhu   (0x20, sp), d0
     movhu   d0, (bss_50012886)
 loc_50006A4A:
-    call    func_5000975B, 0, 0
+    call    PanelSubTypeGet, 0, 0
     extbu   d0
     cmp     4, d0
     beq     loc_50006A5A
@@ -13422,12 +13652,13 @@ loc_50006A5A:
     movhu   (0x20, sp), d0
     ret     [d2,d3,a2,a3], 0x44
 
-# ---- func_50006A60 -----------------------------------------------------------
-# `call` enters at func_50006A60_entry, past the prologue
-func_50006A60:
+# ---- DiskDriveCtrlHandler ----------------------------------------------------
+# message type 2, drive control, switched on the drive letter '@'..'N' (DiskDriveCtrlCases)
+# `call` enters at DiskDriveCtrlHandler_entry, past the prologue
+DiskDriveCtrlHandler:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x34, sp
-func_50006A60_entry:
+DiskDriveCtrlHandler_entry:
     mov     sp, a1
     add     0x14, a1
     mov     -5, d1
@@ -13438,7 +13669,7 @@ func_50006A60_entry:
     inc4    a1
     inc     d1
     lne
-    call    func_50006C6E, 0, 0
+    call    SdMediaStateGet, 0, 0
     exthu   d0
     cmp     2, d0
     beq     loc_50006A8B
@@ -13457,14 +13688,14 @@ loc_50006A8B:
     mov     0x00008004, d0
     ret     [d2,d3,a2,a3], 0x44
 loc_50006AA5:
-    call    func_50006CB5, 0, 0
+    call    SdDrvPhaseGet, 0, 0
     exthu   d0
     cmp     3, d0
     bne     loc_50006AB8
     mov     0x00008002, d0
     ret     [d2,d3,a2,a3], 0x44
 loc_50006AB8:
-    call    func_5000975B, 0, 0
+    call    PanelSubTypeGet, 0, 0
     extbu   d0
     cmp     4, d0
     beq     loc_50006AC9
@@ -13486,7 +13717,7 @@ loc_50006AC9:
     call    memcpy_entry, [a2,a3], 8
     mov     a2, a0
     mov     5, d0
-    call    func_500082A1_entry, [d2,d3], 8
+    call    SdCmdCrc7_entry, [d2,d3], 8
     extbu   d0
     mov     d0, a0
     add     a0, a0
@@ -13494,7 +13725,7 @@ loc_50006AC9:
     mov     a0, d0
     movbu   d0, (5, a2)
     movbu   (0x14, sp), d0
-    call    func_5000711B, 0, 0
+    call    DriveLetterClass, 0, 0
     extbu   d0
     movhu   d0, (0x2a, sp)
     movbu   (0x14, sp), d0
@@ -13508,11 +13739,11 @@ loc_50006B0C:
 loc_50006B13:
     add     -0x40, d0
     asl2    d0
-    mov     rodata_5000C890, a0
+    mov     DiskDriveCtrlCases, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_50006B20:
-    call    func_50006C6E, 0, 0
+    call    SdMediaStateGet, 0, 0
     exthu   d0
     cmp     1, d0
     beq     loc_50006B35
@@ -13523,24 +13754,24 @@ loc_50006B20:
     jmp     loc_50006BC7
 loc_50006B35:
     mov     1, d0
-    call    func_50006C77_entry, [d2], 4
+    call    SdMediaStateSet_entry, [d2], 4
     mov     str_50010086, a0
     mov     5, d0
-    call    func_500082A1_entry, [d2,d3], 8
+    call    SdCmdCrc7_entry, [d2,d3], 8
     extbu   d0
     add     d0, d0
     inc     d0
     movbu   d0, (data_5001008B)
     mov     data_50010082, a0
-    call    func_50007D14_entry, [d2,d3,a2], 0x20
+    call    SdCommandSend_entry, [d2,d3,a2], 0x20
     mov     0x64, d0
-    call    func_5000965F, 0, 0
-    call    func_50007943_entry, [d2], 0x10
+    call    LibTickSleep, 0, 0
+    call    SdSlotDischarge_entry, [d2], 0x10
 loc_50006B69:
     mov     1, d0
-    call    func_50006C77_entry, [d2], 4
+    call    SdMediaStateSet_entry, [d2], 4
     call    SdCsRelease, 0, 0
-    call    func_500078A0_entry, [d2], 0x14
+    call    SdSlotDrainWait_entry, [d2], 0x14
     exth    d0
     cmp     0, d0
     blt     loc_50006BB0
@@ -13548,23 +13779,23 @@ loc_50006B69:
     movhu   d0, (bss_5001287C)
     mov     bss_500128A4, a0
     mov     data_5001008C, a1
-    call    func_50006D29_entry, [d2,d3,a2,a3], 0x24
+    call    SdCardRegRead_entry, [d2,d3,a2,a3], 0x24
     mov     d0, d2
     exthu   d0
     cmp     0, d0
     blt     loc_50006BA7
     mov     2, d0
-    call    func_50006C77_entry, [d2], 4
+    call    SdMediaStateSet_entry, [d2], 4
     bra     loc_50006BCA
 loc_50006BA7:
     mov     1, d0
-    call    func_50006C77_entry, [d2], 4
+    call    SdMediaStateSet_entry, [d2], 4
     bra     loc_50006BCA
 loc_50006BB0:
     clr     d0
     movhu   d0, (bss_5001287C)
     mov     1, d0
-    call    func_50006C77_entry, [d2], 4
+    call    SdMediaStateSet_entry, [d2], 4
     mov     0x00008004, d0
     ret     [d2,d3,a2,a3], 0x44
 loc_50006BC7:
@@ -13577,59 +13808,59 @@ loc_50006BCA:
     jmp     loc_50006C5A
 loc_50006BDD:
     mov     a3, a0
-    call    func_50007D14_entry, [d2,d3,a2], 0x20
+    call    SdCommandSend_entry, [d2,d3,a2], 0x20
     mov     d0, d2
     exthu   d0
     btst    0x0400, d0
     bne     loc_50006BED
     bra     loc_50006C5A
 loc_50006BED:
-    call    func_50008380_entry, [d2,a2], 0x28
+    call    SdStatusProbeCmdB_entry, [d2,a2], 0x28
     bra     loc_50006C5A
 loc_50006BF4:
     movhu   (0x1c, sp), d0
     mov     (0x20, sp), a1
     mov     a3, a0
-    call    func_50007D9C_entry, [d2,d3,a2,a3], 0x28
+    call    SdReadBlockCmd_entry, [d2,d3,a2,a3], 0x28
     mov     d0, d2
     mov     d2, d3
     exthu   d3
     btst    0x1200, d3
     beq     loc_50006C15
     mov     bss_500128A4, a0
-    call    func_50006DAB_entry, 0, 0x14
+    call    SdCardRegInvalidate_entry, 0, 0x14
     bra     loc_50006C22
 loc_50006C15:
     mov     (0x20, sp), a1
     mov     bss_500128A4, a0
-    call    func_50006DC6_entry, 0, 0x14
+    call    SdCardRegSetValid_entry, 0, 0x14
 loc_50006C22:
     btst    0x0400, d3
     beq     loc_50006C5A
-    call    func_50008380_entry, [d2,a2], 0x28
+    call    SdStatusProbeCmdB_entry, [d2,a2], 0x28
     bra     loc_50006C5A
 loc_50006C2F:
     movhu   (0x1c, sp), d0
     mov     (0x20, sp), a1
     mov     a3, a0
-    call    func_50007E86_entry, [d2,d3,a2,a3], 0x28
+    call    SdReadChainCmd_entry, [d2,d3,a2,a3], 0x28
     mov     d0, d2
     exthu   d0
     btst    0x0400, d0
     beq     loc_50006C5A
-    call    func_50008380_entry, [d2,a2], 0x28
+    call    SdStatusProbeCmdB_entry, [d2,a2], 0x28
     bra     loc_50006C5A
 loc_50006C49:
     movhu   (0x1c, sp), d0
     mov     (0x20, sp), a1
     mov     a3, a0
-    call    func_50007F60_entry, [d2,d3,a2,a3], 0x28
+    call    SdWriteBlockCmd_entry, [d2,d3,a2,a3], 0x28
     mov     d0, d2
     bra     loc_50006C5A
 loc_50006C57:
     mov     0x2000, d2
 loc_50006C5A:
-    call    func_5000975B, 0, 0
+    call    PanelSubTypeGet, 0, 0
     extbu   d0
     cmp     4, d0
     beq     loc_50006C6A
@@ -13639,16 +13870,18 @@ loc_50006C6A:
     mov     d2, d0
     ret     [d2,d3,a2,a3], 0x44
 
-# ---- func_50006C6E -----------------------------------------------------------
-func_50006C6E:
+# ---- SdMediaStateGet ---------------------------------------------------------
+# 0..3, 3 = ready
+SdMediaStateGet:
     movhu   (bss_5001287E), d0
     retf    0, 0
 
-# ---- func_50006C77 -----------------------------------------------------------
-# `call` enters at func_50006C77_entry, past the prologue
-func_50006C77:
+# ---- SdMediaStateSet ---------------------------------------------------------
+# the same code as the firmware's routine of this name (941 0x4854B528), linked elsewhere
+# `call` enters at SdMediaStateSet_entry, past the prologue
+SdMediaStateSet:
     movm    [d2], (sp)
-func_50006C77_entry:
+SdMediaStateSet_entry:
     mov     d0, d2
     mov     d2, d1
     exthu   d1
@@ -13667,11 +13900,12 @@ loc_50006C8E:
 loc_50006C95:
     retf    [d2], 4
 
-# ---- func_50006C98 -----------------------------------------------------------
-# `call` enters at func_50006C98_entry, past the prologue
-func_50006C98:
+# ---- SdDrvPhaseSet -----------------------------------------------------------
+# the same code as the firmware's routine of this name (941 0x4854B549), linked elsewhere
+# `call` enters at SdDrvPhaseSet_entry, past the prologue
+SdDrvPhaseSet:
     movm    [d2], (sp)
-func_50006C98_entry:
+SdDrvPhaseSet_entry:
     mov     d0, d2
     mov     d2, d1
     exthu   d1
@@ -13688,38 +13922,40 @@ loc_50006CAB:
 loc_50006CB2:
     retf    [d2], 4
 
-# ---- func_50006CB5 -----------------------------------------------------------
+# ---- SdDrvPhaseGet -----------------------------------------------------------
 # no caller: unreferenced code
-func_50006CB5:
+SdDrvPhaseGet:
     movhu   (bss_50012880), d0
     retf    0, 0
 
-# ---- func_50006CBE -----------------------------------------------------------
-# `call` enters at func_50006CBE_entry, past the prologue
-func_50006CBE:
+# ---- SdDrvRecordsReset -------------------------------------------------------
+# the CSD record invalidated, the card-info record reset
+# `call` enters at SdDrvRecordsReset_entry, past the prologue
+SdDrvRecordsReset:
     movm    [d2], (sp)
     add     -0xc, sp
-func_50006CBE_entry:
+SdDrvRecordsReset_entry:
     mov     a0, d2
     mov     0x28, a0
     add     d2, a0
-    call    func_50006DAB_entry, 0, 0x14
+    call    SdCardRegInvalidate_entry, 0, 0x14
     mov     8, a0
     add     d2, a0
-    call    func_50006EAB, 0, 0
+    call    SdCardInfoReset, 0, 0
     ret     [d2], 0x10
 
-# ---- func_50006CDA -----------------------------------------------------------
+# ---- SdProbeFlagGet ----------------------------------------------------------
 # no caller: unreferenced code
-func_50006CDA:
+SdProbeFlagGet:
     movhu   (bss_5001287C), d0
     retf    0, 0
 
-# ---- func_50006CE3 -----------------------------------------------------------
+# ---- SdCardReadyCheck --------------------------------------------------------
+# card present and initialised
 # no caller: unreferenced code
-func_50006CE3:
+SdCardReadyCheck:
     add     -8, sp
-    call    func_50007817_entry, 0, 0xc
+    call    SdCardDetectRaw_entry, 0, 0xc
     extbu   d0
     cmp     0, d0
     beq     loc_50006D01
@@ -13736,43 +13972,47 @@ loc_50006D01:
 loc_50006D02:
     ret     0, 8
 
-# ---- func_50006D05 -----------------------------------------------------------
+# ---- SdCardDetectPoll --------------------------------------------------------
+# SdCardDetectRaw
 # no caller: unreferenced code
-func_50006D05:
+SdCardDetectPoll:
     add     -8, sp
-    call    func_50007817_entry, 0, 0xc
+    call    SdCardDetectRaw_entry, 0, 0xc
     extbu   d0
     ret     0, 8
 
-# ---- func_50006D11 -----------------------------------------------------------
+# ---- SdCardDetectPoll2 -------------------------------------------------------
+# the same
 # no caller: unreferenced code
-func_50006D11:
+SdCardDetectPoll2:
     add     -8, sp
-    call    func_50007817_entry, 0, 0xc
+    call    SdCardDetectRaw_entry, 0, 0xc
     extbu   d0
     ret     0, 8
 
-# ---- func_50006D1D -----------------------------------------------------------
+# ---- SdWriteProtectPoll ------------------------------------------------------
+# SdWriteProtectGet
 # no caller: unreferenced code
-func_50006D1D:
+SdWriteProtectPoll:
     add     -8, sp
-    call    func_500079A5_entry, 0, 8
+    call    SdWriteProtectGet_entry, 0, 8
     extbu   d0
     ret     0, 8
 
-# ---- func_50006D29 -----------------------------------------------------------
-# `call` enters at func_50006D29_entry, past the prologue
-func_50006D29:
+# ---- SdCardRegRead -----------------------------------------------------------
+# re-reads a card register into its record
+# `call` enters at SdCardRegRead_entry, past the prologue
+SdCardRegRead:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x14, sp
-func_50006D29_entry:
+SdCardRegRead_entry:
     mov     a0, a3
     mov     a1, (0x30, sp)
     mov     a1, a2
     inc4    a2
     mov     a2, a0
     mov     5, d0
-    call    func_500082A1_entry, [d2,d3], 8
+    call    SdCmdCrc7_entry, [d2,d3], 8
     extbu   d0
     add     d0, d0
     inc     d0
@@ -13785,7 +14025,7 @@ loc_50006D49:
     mov     (0x30, sp), a0
     mov     0xf, d0
     mov     a2, a1
-    call    func_50007D9C_entry, [d2,d3,a2,a3], 0x28
+    call    SdReadBlockCmd_entry, [d2,d3,a2,a3], 0x28
     mov     d0, d2
     exth    d0
     cmp     0, d0
@@ -13803,18 +14043,18 @@ loc_50006D6D:
     btst    0x0400, d1
     beq     loc_50006D7D
     mov     a3, a0
-    call    func_50006DAB_entry, 0, 0x14
+    call    SdCardRegInvalidate_entry, 0, 0x14
     mov     -1, d2
     bra     loc_50006D99
 loc_50006D7D:
     btst    0x1200, d1
     beq     loc_50006D8B
     mov     a3, a0
-    call    func_50006DAB_entry, 0, 0x14
+    call    SdCardRegInvalidate_entry, 0, 0x14
     bra     loc_50006D99
 loc_50006D8B:
     mov     0xfa, d0
-    call    func_5000965F, 0, 0
+    call    LibTickSleep, 0, 0
     inc     d3
     exth    d3
     cmp     0x14, d3
@@ -13823,7 +14063,7 @@ loc_50006D99:
     cmp     0x14, d3
     blt     loc_50006DA7
     mov     a3, a0
-    call    func_50006DAB_entry, 0, 0x14
+    call    SdCardRegInvalidate_entry, 0, 0x14
     mov     -1, d0
     bra     loc_50006DA8
 loc_50006DA7:
@@ -13831,11 +14071,12 @@ loc_50006DA7:
 loc_50006DA8:
     ret     [d2,d3,a2,a3], 0x24
 
-# ---- func_50006DAB -----------------------------------------------------------
-# `call` enters at func_50006DAB_entry, past the prologue
-func_50006DAB:
+# ---- SdCardRegInvalidate -----------------------------------------------------
+# the same code as the firmware's routine of this name (941 0x4854B657), linked elsewhere
+# `call` enters at SdCardRegInvalidate_entry, past the prologue
+SdCardRegInvalidate:
     add     -0x14, sp
-func_50006DAB_entry:
+SdCardRegInvalidate_entry:
     clr     d0
     movhu   d0, (a0)
     movhu   d0, (2, a0)
@@ -13846,11 +14087,12 @@ func_50006DAB_entry:
     clr     d0
     ret     0, 0x14
 
-# ---- func_50006DC6 -----------------------------------------------------------
-# `call` enters at func_50006DC6_entry, past the prologue
-func_50006DC6:
+# ---- SdCardRegSetValid -------------------------------------------------------
+# the same code as the firmware's routine of this name (941 0x4854B674), linked elsewhere
+# `call` enters at SdCardRegSetValid_entry, past the prologue
+SdCardRegSetValid:
     add     -0x14, sp
-func_50006DC6_entry:
+SdCardRegSetValid_entry:
     mov     1, d0
     movhu   d0, (a0)
     mov     0xf, d0
@@ -13860,32 +14102,34 @@ func_50006DC6_entry:
     clr     d0
     ret     0, 0x14
 
-# ---- func_50006DDC -----------------------------------------------------------
-# `call` enters at func_50006DDC_entry, past the prologue
-func_50006DDC:
+# ---- SdCardInitFull ----------------------------------------------------------
+# the SPI card init: wake clocks, CMD0 and the rest of the ladder; prints "spiStart : Error n"
+# on each failure
+# `call` enters at SdCardInitFull_entry, past the prologue
+SdCardInitFull:
     movm    [d2,d3,a2], (sp)
     add     -0xc, sp
-func_50006DDC_entry:
+SdCardInitFull_entry:
     mov     a0, a2
     call    SdCsRelease, 0, 0
     mov     3, d0
-    call    func_50007725_entry, [d2], 0x10
+    call    SdSpiClockSet_entry, [d2], 0x10
     mov     0xa, d0
-    call    func_50007B91_entry, [d2], 0x14
+    call    SdSpiClockBurst_entry, [d2], 0x14
     mov     1, d0
-    call    func_5000965F, 0, 0
+    call    LibTickSleep, 0, 0
     clr     d2
     mov     0x100, d3
 loc_50006E00:
     mov     data_500100BE, a0
-    call    func_50007D14_entry, [d2,d3,a2], 0x20
+    call    SdCommandSend_entry, [d2,d3,a2], 0x20
     exth    d0
     cmp     d3, d0
     beq     loc_50006E1F
     cmp     0, d0
     beq     loc_50006E1F
     mov     1, d0
-    call    func_5000965F, 0, 0
+    call    LibTickSleep, 0, 0
     inc     d2
     exth    d2
     cmp     d3, d2
@@ -13894,7 +14138,7 @@ loc_50006E1F:
     cmp     d3, d2
     blt     loc_50006E38
     mov     a2, a0
-    call    func_50006EAB, 0, 0
+    call    SdCardInfoReset, 0, 0
     mov     Str_SpiStartError1, a0
     call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
     mov     -1, d0
@@ -13903,18 +14147,18 @@ loc_50006E38:
     clr     d2
 loc_50006E39:
     mov     data_500100C8, a0
-    call    func_50007D14_entry, [d2,d3,a2], 0x20
+    call    SdCommandSend_entry, [d2,d3,a2], 0x20
     exth    d0
     cmp     0, d0
     beq     loc_50006E6F
     cmp     d3, d0
     bne     loc_50006E55
     mov     0x14, d0
-    call    func_5000965F, 0, 0
+    call    LibTickSleep, 0, 0
     bra     loc_50006E6A
 loc_50006E55:
     mov     a2, a0
-    call    func_50006EAB, 0, 0
+    call    SdCardInfoReset, 0, 0
     mov     Str_SpiStartError2, a0
     call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
     mov     -2, d0
@@ -13928,19 +14172,19 @@ loc_50006E6F:
     cmp     d3, d2
     blt     loc_50006E87
     mov     a2, a0
-    call    func_50006EAB, 0, 0
+    call    SdCardInfoReset, 0, 0
     mov     Str_SpiStartError3, a0
     call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
     mov     -2, d0
     bra     loc_50006EA8
 loc_50006E87:
     mov     a2, a0
-    call    func_50006ED1, [d2,d3,a2,a3], 0x10
+    call    SdCardIdentify, [d2,d3,a2,a3], 0x10
     exth    d0
     cmp     0, d0
     beq     loc_50006EA7
     mov     a2, a0
-    call    func_50006EAB, 0, 0
+    call    SdCardInfoReset, 0, 0
     mov     Str_SpiStartError4, a0
     call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
     mov     -3, d0
@@ -13950,8 +14194,9 @@ loc_50006EA7:
 loc_50006EA8:
     ret     [d2,d3,a2], 0x18
 
-# ---- func_50006EAB -----------------------------------------------------------
-func_50006EAB:
+# ---- SdCardInfoReset ---------------------------------------------------------
+# block length 0x200, capacity 0, not initialised
+SdCardInfoReset:
     mov     2, a1
     add     a0, a1
     movhu   (a1), d0
@@ -13968,13 +14213,16 @@ func_50006EAB:
     movhu   d0, (a0)
     retf    0, 0
 
-# ---- func_50006ECF -----------------------------------------------------------
+# ---- SdCardInfoReset_UnusedRet -----------------------------------------------
+# a second epilogue left after SdCardInfoReset; unreachable
 # no caller: unreferenced code
-func_50006ECF:
+SdCardInfoReset_UnusedRet:
     movm    [d2,d3,a2,a3], (sp)
 
-# ---- func_50006ED1 -----------------------------------------------------------
-func_50006ED1:
+# ---- SdCardIdentify ----------------------------------------------------------
+# CMD9: the CSD, the block length and capacity from its fields; prints "spiGetInfo : %d =
+# sendReadCOM(CSD);" on failure
+SdCardIdentify:
     add     -0x13c, sp
     mov     a0, d3
     mov     rodata_5000C844, a1
@@ -14016,7 +14264,7 @@ func_50006ED1:
     add     0x24, a0
     mov     a3, a1
     mov     0x10, d0
-    call    func_50007D9C_entry, [d2,d3,a2,a3], 0x28
+    call    SdReadBlockCmd_entry, [d2,d3,a2,a3], 0x28
     movhu   d0, (0x14, sp)
     movhu   (0x14, sp), d0
     exth    d0
@@ -14038,7 +14286,7 @@ func_50006ED1:
 loc_50006F57:
     mov     sp, a0
     add     0x30, a0
-    call    func_50007D14_entry, [d2,d3,a2], 0x20
+    call    SdCommandSend_entry, [d2,d3,a2], 0x20
     exth    d0
     cmp     0, d0
     beq     loc_50006F69
@@ -14054,19 +14302,19 @@ loc_50006F69:
     mov     a3, a0
     mov     0x36, d0
     mov     0x41, d1
-    call    func_5000805C_entry, [d2,d3,a2,a3], 0x38
+    call    SdCsdBitfield_entry, [d2,d3,a2,a3], 0x38
     mov     d0, d2
     mov     a3, a0
     mov     0x4e, d0
     mov     0x50, d1
-    call    func_5000805C_entry, [d2,d3,a2,a3], 0x38
+    call    SdCsdBitfield_entry, [d2,d3,a2,a3], 0x38
     inc     d2
     add     2, d0
     asl     d0, d2
     mov     a3, a0
     mov     0x2c, d0
     mov     0x2f, d1
-    call    func_5000805C_entry, [d2,d3,a2,a3], 0x38
+    call    SdCsdBitfield_entry, [d2,d3,a2,a3], 0x38
     mov     1, d1
     asl     d0, d1
     mov     d1, d0
@@ -14093,7 +14341,7 @@ loc_50006FBB:
     mov     d2, (0x10, a0)
     mov     a3, a0
     mov     8, d0
-    call    func_5000805C_entry, [d2,d3,a2,a3], 0x38
+    call    SdCsdBitfield_entry, [d2,d3,a2,a3], 0x38
     mov     0x78, d2
     and     d0, d2
     lsr     3, d2
@@ -14112,7 +14360,7 @@ loc_50006FE9:
     mov     a3, a0
     mov     0x18, d0
     mov     0x1f, d1
-    call    func_5000805C_entry, [d2,d3,a2,a3], 0x38
+    call    SdCsdBitfield_entry, [d2,d3,a2,a3], 0x38
     mov     7, d1
     and     d0, d1
     cmp     2, d1
@@ -14143,7 +14391,7 @@ loc_50007022:
     mov     a3, a0
     mov     0x10, d0
     mov     0x17, d1
-    call    func_5000805C_entry, [d2,d3,a2,a3], 0x38
+    call    SdCsdBitfield_entry, [d2,d3,a2,a3], 0x38
     movhu   (a2), d1
     lsr     3, d0
     cmp     8, d1
@@ -14172,15 +14420,16 @@ loc_50007059:
     add     0x13c, sp
     ret     [d2,d3,a2,a3], 0x10
 
-# ---- func_50007060 -----------------------------------------------------------
-# `call` enters at func_50007060_entry, past the prologue
-func_50007060:
+# ---- SpiSendByteThenStrobeCs -------------------------------------------------
+# sends d0 & 0x7F, then pulses the SD select line (TODO: which device latches it)
+# `call` enters at SpiSendByteThenStrobeCs_entry, past the prologue
+SpiSendByteThenStrobeCs:
     add     -0x10, sp
-func_50007060_entry:
+SpiSendByteThenStrobeCs_entry:
     extbu   d0
     and     0x7f, d0
     extbu   d0
-    call    func_500079C2_entry, 0, 8
+    call    SdSpiSendByte_entry, 0, 8
     clr     d0
     mov     d0, (0xc, sp)
     mov     (0xc, sp), d0
@@ -14227,47 +14476,50 @@ loc_500070AA:
 loc_500070B6:
     ret     0, 0x10
 
-# ---- func_500070B9 -----------------------------------------------------------
+# ---- SdMediaChangeService ----------------------------------------------------
+# on a card: the canned drive-control messages '@' and 'C', state 2; nothing calls it
 # no caller: unreferenced code
-func_500070B9:
+SdMediaChangeService:
     movm    [d2,a2], (sp)
     add     -0x10, sp
     mov     str_50010020, a0
-    call    func_50006A60_entry, [d2,d3,a2,a3], 0x44
+    call    DiskDriveCtrlHandler_entry, [d2,d3,a2,a3], 0x44
     mov     str_50010034, a2
     mov     2, d0
-    call    func_50006C77_entry, [d2], 4
+    call    SdMediaStateSet_entry, [d2], 4
     mov     a2, a0
-    call    func_50006A60_entry, [d2,d3,a2,a3], 0x44
-    mov     (bss_50019730), d0
+    call    DiskDriveCtrlHandler_entry, [d2,d3,a2,a3], 0x44
+    mov     (TickCount), d0
     mov     0x3e8, d1
     mov     d0, (0xc, sp)
     mov     (0xc, sp), d2
-    mov     (bss_50019730), d0
+    mov     (TickCount), d0
     sub     d2, d0
     cmp     d1, d0
     bcc     loc_50007101
 loc_500070F4:
     mov     (0xc, sp), d2
-    mov     (bss_50019730), d0
+    mov     (TickCount), d0
     sub     d2, d0
     cmp     d1, d0
     bcs     loc_500070F4
 loc_50007101:
     mov     a2, a0
-    call    func_50006A60_entry, [d2,d3,a2,a3], 0x44
+    call    DiskDriveCtrlHandler_entry, [d2,d3,a2,a3], 0x44
     ret     [d2,a2], 0x18
 
-# ---- func_5000710A -----------------------------------------------------------
+# ---- SdPowerDownNotify -------------------------------------------------------
+# the canned 'F' drive-control message; nothing calls it
 # no caller: unreferenced code
-func_5000710A:
+SdPowerDownNotify:
     add     -0xc, sp
     mov     str_50010048, a0
-    call    func_50006A60_entry, [d2,d3,a2,a3], 0x44
+    call    DiskDriveCtrlHandler_entry, [d2,d3,a2,a3], 0x44
     ret     0, 0xc
 
-# ---- func_5000711B -----------------------------------------------------------
-func_5000711B:
+# ---- DriveLetterClass --------------------------------------------------------
+# the same code as the firmware's routine of this name (941 0x4854BB14), linked elsewhere
+DriveLetterClass:
     mov     1, d1
     extbu   d0
     cmp     0x41, d0
@@ -14288,9 +14540,10 @@ loc_50007137:
     extbu   d0
     retf    0, 0
 
-# ---- func_5000713C -----------------------------------------------------------
+# ---- StubMinusOne ------------------------------------------------------------
+# returns -1; nothing calls it
 # no caller: unreferenced code
-func_5000713C:
+StubMinusOne:
     mov     -1, d0
     retf    0, 0
 
@@ -14307,7 +14560,7 @@ func_50007141_entry:
     mov     a0, (0x18, sp)
     mov     sp, a0
     add     0xc, a0
-    call    func_50006679_entry, 0, 0xc
+    call    DiskCmdTransact_entry, 0, 0xc
     exthu   d0
     cmp     0, d0
     beq     loc_50007162
@@ -14701,7 +14954,7 @@ func_50007469_entry:
     mov     d0, (0x18, sp)
     mov     sp, a0
     add     0xc, a0
-    call    func_50006679_entry, 0, 0xc
+    call    DiskCmdTransact_entry, 0, 0xc
     exthu   d0
     cmp     0, d0
     bne     loc_5000749E
@@ -14994,22 +15247,24 @@ loc_500076BA:
 loc_500076BC:
     ret     [d2,a2], 0x2c
 
-# ---- func_500076BF -----------------------------------------------------------
-# `call` enters at func_500076BF_entry, past the prologue
-func_500076BF:
+# ---- SdHwInit ----------------------------------------------------------------
+# select pulse, SdSpiPortSetup, SdDetectPortInit
+# `call` enters at SdHwInit_entry, past the prologue
+SdHwInit:
     add     -8, sp
-func_500076BF_entry:
+SdHwInit_entry:
     call    SdCsAssertWrap_entry, 0, 8
-    call    func_500076D4_entry, [d2], 0x10
-    call    func_500077D5_entry, 0, 8
+    call    SdSpiPortSetup_entry, [d2], 0x10
+    call    SdDetectPortInit_entry, 0, 8
     ret     0, 8
 
-# ---- func_500076D4 -----------------------------------------------------------
-# `call` enters at func_500076D4_entry, past the prologue
-func_500076D4:
+# ---- SdSpiPortSetup ----------------------------------------------------------
+# EXTMD bits 10-11 for the SPI handshake group, the slow clock
+# `call` enters at SdSpiPortSetup_entry, past the prologue
+SdSpiPortSetup:
     movm    [d2], (sp)
     add     -0xc, sp
-func_500076D4_entry:
+SdSpiPortSetup_entry:
     mov     1, d0
     movhu   d0, (0x98050010)
     mov     0x64, d0
@@ -15018,7 +15273,7 @@ func_500076D4_entry:
     movhu   d2, (0x98050004)
     mov     0x64, d0
     call    SdSpinDelay_entry, 0, 4
-    call    func_5000975B, 0, 0
+    call    PanelSubTypeGet, 0, 0
     extbu   d0
     cmp     4, d0
     bne     loc_5000770B
@@ -15028,15 +15283,16 @@ loc_5000770B:
     or      0x0c00, d0
     movhu   d0, (EXTMD)
     mov     2, d0
-    call    func_50007725_entry, [d2], 0x10
+    call    SdSpiClockSet_entry, [d2], 0x10
     ret     [d2], 0x10
 
-# ---- func_50007725 -----------------------------------------------------------
-# `call` enters at func_50007725_entry, past the prologue
-func_50007725:
+# ---- SdSpiClockSet -----------------------------------------------------------
+# d0 2: the slow clock; 3: the stored working pair
+# `call` enters at SdSpiClockSet_entry, past the prologue
+SdSpiClockSet:
     movm    [d2], (sp)
     add     -0xc, sp
-func_50007725_entry:
+SdSpiClockSet_entry:
     mov     d0, d1
     extbu   d1
     cmp     2, d1
@@ -15054,11 +15310,11 @@ loc_50007736:
 loc_50007749:
     extbu   d0
     mov     d0, (data_5001005C)
-    call    func_5000975B, 0, 0
+    call    PanelSubTypeGet, 0, 0
     extbu   d0
     cmp     5, d0
     beq     loc_50007764
-    call    func_5000975B, 0, 0
+    call    PanelSubTypeGet, 0, 0
     extbu   d0
     cmp     3, d0
     bne     loc_50007770
@@ -15076,7 +15332,7 @@ loc_5000777C:
     mov     -1, d0
     bra     loc_500077B3
 loc_50007780:
-    mov     (bss_50019730), d0
+    mov     (TickCount), d0
     extbu   d1
     mov     d0, (8, sp)
     movhu   (0x9805000e), d0
@@ -15086,7 +15342,7 @@ loc_50007780:
     setlb
     movhu   d1, (0x9805000e)
     mov     (8, sp), d2
-    mov     (bss_50019730), d0
+    mov     (TickCount), d0
     sub     d2, d0
     cmp     2, d0
     bhi     loc_500077B2
@@ -15110,29 +15366,30 @@ SdCsAssertWrap_entry:
 # ---- SdCsRelease -------------------------------------------------------------
 # byte-identical (to its first return) to the firmware's routine of this name
 SdCsRelease:
-    bset    0x02, (0x36008004)
+    bset    0x02, (P04)
     retf    0, 0
 
 # ---- SdCsAssert --------------------------------------------------------------
 # byte-identical (to its first return) to the firmware's routine of this name
 SdCsAssert:
-    bclr    0x02, (0x36008004)
+    bclr    0x02, (P04)
     retf    0, 0
 
-# ---- func_500077D5 -----------------------------------------------------------
-# `call` enters at func_500077D5_entry, past the prologue
-func_500077D5:
+# ---- SdDetectPortInit --------------------------------------------------------
+# the detect lines, SdSlotDischarge, the slot powered off, EXTMD for the detect edge
+# `call` enters at SdDetectPortInit_entry, past the prologue
+SdDetectPortInit:
     add     -8, sp
-func_500077D5_entry:
-    call    func_5000975B, 0, 0
+SdDetectPortInit_entry:
+    call    PanelSubTypeGet, 0, 0
     extbu   d0
     cmp     4, d0
     beq     loc_500077E9
     bset    0x06, (0x9cc00005)
 loc_500077E9:
-    call    func_50007943_entry, [d2], 0x10
-    call    func_5000786F_entry, 0, 8
-    call    func_50007893_entry, 0, 0xc
+    call    SdSlotDischarge_entry, [d2], 0x10
+    call    SdPowerLineClear_entry, 0, 8
+    call    SdPowerRailClear_entry, 0, 0xc
     movhu   (EXTMD), d0
     and     0xfcff, d0
     or      0x0100, d0
@@ -15141,12 +15398,13 @@ loc_500077E9:
     movhu   d0, (G27ICR)
     ret     0, 8
 
-# ---- func_50007817 -----------------------------------------------------------
-# `call` enters at func_50007817_entry, past the prologue
-func_50007817:
+# ---- SdCardDetectRaw ---------------------------------------------------------
+# the raw card-detect line (through G27ICR)
+# `call` enters at SdCardDetectRaw_entry, past the prologue
+SdCardDetectRaw:
     add     -0xc, sp
-func_50007817_entry:
-    call    func_5000975B, 0, 0
+SdCardDetectRaw_entry:
+    call    PanelSubTypeGet, 0, 0
     extbu   d0
     cmp     4, d0
     beq     loc_50007853
@@ -15173,12 +15431,13 @@ loc_50007853:
 loc_50007855:
     ret     0, 0xc
 
-# ---- func_50007858 -----------------------------------------------------------
-# `call` enters at func_50007858_entry, past the prologue
-func_50007858:
+# ---- SdPowerLineSet ----------------------------------------------------------
+# 0x9CC00009 bit 2
+# `call` enters at SdPowerLineSet_entry, past the prologue
+SdPowerLineSet:
     add     -8, sp
-func_50007858_entry:
-    call    func_5000975B, 0, 0
+SdPowerLineSet_entry:
+    call    PanelSubTypeGet, 0, 0
     extbu   d0
     cmp     4, d0
     beq     loc_5000786C
@@ -15186,12 +15445,12 @@ func_50007858_entry:
 loc_5000786C:
     ret     0, 8
 
-# ---- func_5000786F -----------------------------------------------------------
-# `call` enters at func_5000786F_entry, past the prologue
-func_5000786F:
+# ---- SdPowerLineClear --------------------------------------------------------
+# `call` enters at SdPowerLineClear_entry, past the prologue
+SdPowerLineClear:
     add     -8, sp
-func_5000786F_entry:
-    call    func_5000975B, 0, 0
+SdPowerLineClear_entry:
+    call    PanelSubTypeGet, 0, 0
     extbu   d0
     cmp     4, d0
     beq     loc_50007883
@@ -15199,48 +15458,51 @@ func_5000786F_entry:
 loc_50007883:
     ret     0, 8
 
-# ---- func_50007886 -----------------------------------------------------------
-# `call` enters at func_50007886_entry, past the prologue
-func_50007886:
+# ---- SdPowerRailSet ----------------------------------------------------------
+# SdPowerCtrlSetRaw(4)
+# `call` enters at SdPowerRailSet_entry, past the prologue
+SdPowerRailSet:
     add     -0xc, sp
-func_50007886_entry:
+SdPowerRailSet_entry:
     mov     4, d0
-    call    func_50009760, 0, 0
+    call    SdPowerCtrlSetRaw, 0, 0
     ret     0, 0xc
 
-# ---- func_50007893 -----------------------------------------------------------
-# `call` enters at func_50007893_entry, past the prologue
-func_50007893:
+# ---- SdPowerRailClear --------------------------------------------------------
+# SdPowerCtrlClearRaw(4)
+# `call` enters at SdPowerRailClear_entry, past the prologue
+SdPowerRailClear:
     add     -0xc, sp
-func_50007893_entry:
+SdPowerRailClear_entry:
     mov     4, d0
-    call    func_50009787, 0, 0
+    call    SdPowerCtrlClearRaw, 0, 0
     ret     0, 0xc
 
-# ---- func_500078A0 -----------------------------------------------------------
-# `call` enters at func_500078A0_entry, past the prologue
-func_500078A0:
+# ---- SdSlotDrainWait ---------------------------------------------------------
+# powers the slot down, then watches the sense line until it drains
+# `call` enters at SdSlotDrainWait_entry, past the prologue
+SdSlotDrainWait:
     movm    [d2], (sp)
     add     -0x10, sp
-func_500078A0_entry:
+SdSlotDrainWait_entry:
     mov     0xff, d2
-    call    func_5000786F_entry, 0, 8
-    call    func_50007893_entry, 0, 0xc
-    call    func_5000975B, 0, 0
+    call    SdPowerLineClear_entry, 0, 8
+    call    SdPowerRailClear_entry, 0, 0xc
+    call    PanelSubTypeGet, 0, 0
     extbu   d0
     cmp     4, d0
     beq     loc_500078C3
     bclr    0x02, (0x9cc00009)
 loc_500078C3:
     mov     0x1e, d0
-    call    func_5000965F, 0, 0
-    mov     (bss_50019730), d0
+    call    LibTickSleep, 0, 0
+    mov     (TickCount), d0
     mov     d0, (0xc, sp)
     clr     d0
     movbu   d0, (data_500100EC)
 loc_500078D9:
     mov     (0xc, sp), d1
-    mov     (bss_50019730), d0
+    mov     (TickCount), d0
     sub     d1, d0
     cmp     0x7d0, d0
     bls     loc_500078F4
@@ -15248,7 +15510,7 @@ loc_500078D9:
     movbu   d0, (data_500100EC)
     bra     loc_5000793F
 loc_500078F4:
-    call    func_50007988_entry, 0, 8
+    call    SdSlotSenseGet_entry, 0, 8
     extbu   d0
     cmp     0, d0
     beq     loc_5000790A
@@ -15267,7 +15529,7 @@ loc_5000790A:
     movbu   d2, (data_500100EC)
 loc_50007917:
     mov     (0xc, sp), d1
-    mov     (bss_50019730), d0
+    mov     (TickCount), d0
     sub     d1, d0
     cmp     0x64, d0
     bls     loc_5000792C
@@ -15279,7 +15541,7 @@ loc_5000792C:
     cmp     1, d0
     bne     loc_50007939
     mov     0xa, d0
-    call    func_5000965F, 0, 0
+    call    LibTickSleep, 0, 0
 loc_50007939:
     mov     d2, d0
     extbu   d0
@@ -15289,16 +15551,17 @@ loc_5000793F:
     clr     d0
     ret     [d2], 0x14
 
-# ---- func_50007943 -----------------------------------------------------------
-# `call` enters at func_50007943_entry, past the prologue
-func_50007943:
+# ---- SdSlotDischarge ---------------------------------------------------------
+# line and rail off, select, the presence latched
+# `call` enters at SdSlotDischarge_entry, past the prologue
+SdSlotDischarge:
     movm    [d2], (sp)
     add     -0xc, sp
-func_50007943_entry:
-    call    func_5000786F_entry, 0, 8
-    call    func_50007893_entry, 0, 0xc
+SdSlotDischarge_entry:
+    call    SdPowerLineClear_entry, 0, 8
+    call    SdPowerRailClear_entry, 0, 0xc
     call    SdCsAssert, 0, 0
-    call    func_5000975B, 0, 0
+    call    PanelSubTypeGet, 0, 0
     extbu   d0
     cmp     4, d0
     beq     loc_50007968
@@ -15307,22 +15570,23 @@ loc_50007968:
     mov     0xa, d0
     movbu   d0, (data_500100EC)
     mov     2, d0
-    call    func_50007725_entry, [d2], 0x10
+    call    SdSpiClockSet_entry, [d2], 0x10
     clr     d2
 loc_50007978:
     clr     d0
-    call    func_500079C2_entry, 0, 8
+    call    SdSpiSendByte_entry, 0, 8
     inc     d2
     cmp     0x4e20, d2
     bcs     loc_50007978
     ret     [d2], 0x10
 
-# ---- func_50007988 -----------------------------------------------------------
-# `call` enters at func_50007988_entry, past the prologue
-func_50007988:
+# ---- SdSlotSenseGet ----------------------------------------------------------
+# 0x9CC00009 bit 0
+# `call` enters at SdSlotSenseGet_entry, past the prologue
+SdSlotSenseGet:
     add     -8, sp
-func_50007988_entry:
-    call    func_5000975B, 0, 0
+SdSlotSenseGet_entry:
+    call    PanelSubTypeGet, 0, 0
     extbu   d0
     cmp     4, d0
     beq     loc_500079A1
@@ -15335,12 +15599,13 @@ loc_500079A1:
 loc_500079A2:
     ret     0, 8
 
-# ---- func_500079A5 -----------------------------------------------------------
-# `call` enters at func_500079A5_entry, past the prologue
-func_500079A5:
+# ---- SdWriteProtectGet -------------------------------------------------------
+# 0x9CC00009 bit 4
+# `call` enters at SdWriteProtectGet_entry, past the prologue
+SdWriteProtectGet:
     add     -8, sp
-func_500079A5_entry:
-    call    func_5000975B, 0, 0
+SdWriteProtectGet_entry:
+    call    PanelSubTypeGet, 0, 0
     extbu   d0
     cmp     4, d0
     beq     loc_500079BE
@@ -15353,11 +15618,12 @@ loc_500079BE:
 loc_500079BF:
     ret     0, 8
 
-# ---- func_500079C2 -----------------------------------------------------------
-# `call` enters at func_500079C2_entry, past the prologue
-func_500079C2:
+# ---- SdSpiSendByte -----------------------------------------------------------
+# the same code as the firmware's routine of this name (941 0x4854BF4A), linked elsewhere
+# `call` enters at SdSpiSendByte_entry, past the prologue
+SdSpiSendByte:
     add     -8, sp
-func_500079C2_entry:
+SdSpiSendByte_entry:
     and     0xf7ff, psw
     nop
     nop
@@ -15391,12 +15657,13 @@ func_500079C2_entry:
 loc_50007A12:
     ret     0, 8
 
-# ---- func_50007A15 -----------------------------------------------------------
-# `call` enters at func_50007A15_entry, past the prologue
-func_50007A15:
+# ---- SdSpiSendBuf ------------------------------------------------------------
+# d0 bytes from a0
+# `call` enters at SdSpiSendBuf_entry, past the prologue
+SdSpiSendBuf:
     movm    [d2,a2], (sp)
     add     -0x18, sp
-func_50007A15_entry:
+SdSpiSendBuf_entry:
     mov     a0, a2
     mov     d0, d2
     mov     d2, d1
@@ -15457,11 +15724,12 @@ loc_50007A90:
     clr     d0
     ret     [d2,a2], 0x20
 
-# ---- func_50007A94 -----------------------------------------------------------
-# `call` enters at func_50007A94_entry, past the prologue
-func_50007A94:
+# ---- SdSpiRecvByte -----------------------------------------------------------
+# the same code as the firmware's routine of this name (941 0x4854C013), linked elsewhere
+# `call` enters at SdSpiRecvByte_entry, past the prologue
+SdSpiRecvByte:
     add     -8, sp
-func_50007A94_entry:
+SdSpiRecvByte_entry:
     and     0xf7ff, psw
     nop
     nop
@@ -15497,12 +15765,13 @@ loc_50007AE6:
     extbu   d0
     ret     0, 8
 
-# ---- func_50007AF0 -----------------------------------------------------------
-# `call` enters at func_50007AF0_entry, past the prologue
-func_50007AF0:
+# ---- SdSpiRecvBuf ------------------------------------------------------------
+# d0 bytes to a0
+# `call` enters at SdSpiRecvBuf_entry, past the prologue
+SdSpiRecvBuf:
     movm    [d2,a2], (sp)
     add     -0x18, sp
-func_50007AF0_entry:
+SdSpiRecvBuf_entry:
     mov     a0, a2
     mov     d0, d2
     mov     d2, d1
@@ -15587,12 +15856,13 @@ loc_50007B83:
 loc_50007B8E:
     ret     0, 4
 
-# ---- func_50007B91 -----------------------------------------------------------
-# `call` enters at func_50007B91_entry, past the prologue
-func_50007B91:
+# ---- SdSpiClockBurst ---------------------------------------------------------
+# the same code as the firmware's routine of this name (941 0x4854C108), linked elsewhere
+# `call` enters at SdSpiClockBurst_entry, past the prologue
+SdSpiClockBurst:
     movm    [d2], (sp)
     add     -0x10, sp
-func_50007B91_entry:
+SdSpiClockBurst_entry:
     mov     d0, d2
     clr     d0
     movhu   d0, (0xc, sp)
@@ -15602,7 +15872,7 @@ func_50007B91_entry:
     bge     loc_50007BB7
 loc_50007BA2:
     mov     0xff, d0
-    call    func_500079C2_entry, 0, 8
+    call    SdSpiSendByte_entry, 0, 8
     movhu   (0xc, sp), d0
     inc     d0
     movhu   d0, (0xc, sp)
@@ -15612,18 +15882,19 @@ loc_50007BA2:
 loc_50007BB7:
     ret     [d2], 0x14
 
-# ---- func_50007BBA -----------------------------------------------------------
-# `call` enters at func_50007BBA_entry, past the prologue
-func_50007BBA:
+# ---- SdResponseScan ----------------------------------------------------------
+# the same code as the firmware's routine of this name (941 0x4854C131), linked elsewhere
+# `call` enters at SdResponseScan_entry, past the prologue
+SdResponseScan:
     movm    [d2,d3,a2], (sp)
     add     -0xc, sp
-func_50007BBA_entry:
+SdResponseScan_entry:
     movbu   d0, (0x24, sp)
     mov     a0, a2
     clr     d2
     mov     0x200, d3
 loc_50007BC7:
-    call    func_50007A94_entry, 0, 8
+    call    SdSpiRecvByte_entry, 0, 8
     mov     d0, d1
     extbu   d1
     btst    0x80, d1
@@ -15634,7 +15905,7 @@ loc_50007BC7:
     movbu   (0x24, sp), d0
     cmp     2, d0
     bne     loc_50007BF9
-    call    func_50007A94_entry, 0, 8
+    call    SdSpiRecvByte_entry, 0, 8
     movhu   (a2), d1
     extbu   d0
     or      d1, d0
@@ -15656,7 +15927,7 @@ loc_50007C00:
     cmp     3, d0
     bne     loc_50007C18
     mov     0x1f4, d0
-    call    func_50007C1C_entry, [d2], 0x14
+    call    SdWaitNotBusy_entry, [d2], 0x14
     exth    d0
     cmp     0, d0
     bge     loc_50007C18
@@ -15667,23 +15938,24 @@ loc_50007C18:
 loc_50007C19:
     ret     [d2,d3,a2], 0x18
 
-# ---- func_50007C1C -----------------------------------------------------------
-# `call` enters at func_50007C1C_entry, past the prologue
-func_50007C1C:
+# ---- SdWaitNotBusy -----------------------------------------------------------
+# called where the firmware's SdResponseScan calls its SdWaitNotBusy (941 0x4854C193)
+# `call` enters at SdWaitNotBusy_entry, past the prologue
+SdWaitNotBusy:
     movm    [d2], (sp)
     add     -0x10, sp
-func_50007C1C_entry:
+SdWaitNotBusy_entry:
     mov     d0, d2
-    mov     (bss_50019730), d0
+    mov     (TickCount), d0
     lsr     1, d2
     mov     d0, (0xc, sp)
 loc_50007C2D:
     mov     (0xc, sp), d0
-    mov     (bss_50019730), d1
+    mov     (TickCount), d1
     sub     d0, d1
     cmp     d2, d1
     bhi     loc_50007C52
-    call    func_50007A94_entry, 0, 8
+    call    SdSpiRecvByte_entry, 0, 8
     extbu   d0
     cmp     0xff, d0
     bne     loc_50007C49
@@ -15691,36 +15963,37 @@ loc_50007C2D:
     bra     loc_50007C54
 loc_50007C49:
     mov     2, d0
-    call    func_5000965F, 0, 0
+    call    LibTickSleep, 0, 0
     bra     loc_50007C2D
 loc_50007C52:
     mov     -1, d0
 loc_50007C54:
     ret     [d2], 0x14
 
-# ---- func_50007C57 -----------------------------------------------------------
-# `call` enters at func_50007C57_entry, past the prologue
-func_50007C57:
+# ---- SdSenseBusyWait ---------------------------------------------------------
+# waits for the sense line to clear (d0/2-tick time-out)
+# `call` enters at SdSenseBusyWait_entry, past the prologue
+SdSenseBusyWait:
     movm    [d2], (sp)
     add     -0x10, sp
-func_50007C57_entry:
+SdSenseBusyWait_entry:
     mov     d0, d2
-    mov     (bss_50019730), d0
+    mov     (TickCount), d0
     mov     d0, (0xc, sp)
     mov     1, d0
-    call    func_5000965F, 0, 0
-    call    func_50007988_entry, 0, 8
+    call    LibTickSleep, 0, 0
+    call    SdSlotSenseGet_entry, 0, 8
     extbu   d0
     cmp     0, d0
     beq     loc_50007CA7
     mov     (0xc, sp), d1
-    mov     (bss_50019730), d0
+    mov     (TickCount), d0
     lsr     1, d2
     sub     d1, d0
     cmp     d2, d0
     bcc     loc_50007CA0
 loc_50007C86:
-    call    func_50007988_entry, 0, 8
+    call    SdSlotSenseGet_entry, 0, 8
     extbu   d0
     cmp     0, d0
     bne     loc_50007C93
@@ -15728,27 +16001,28 @@ loc_50007C86:
     bra     loc_50007CA9
 loc_50007C93:
     mov     (0xc, sp), d1
-    mov     (bss_50019730), d0
+    mov     (TickCount), d0
     sub     d1, d0
     cmp     d2, d0
     bcs     loc_50007C86
 loc_50007CA0:
     mov     2, d0
-    call    func_5000965F, 0, 0
+    call    LibTickSleep, 0, 0
 loc_50007CA7:
     mov     -1, d0
 loc_50007CA9:
     ret     [d2], 0x14
 
-# ---- func_50007CAC -----------------------------------------------------------
-# `call` enters at func_50007CAC_entry, past the prologue
-func_50007CAC:
+# ---- SdDataRespWait ----------------------------------------------------------
+# the same code as the firmware's routine of this name (941 0x4854C229), linked elsewhere
+# `call` enters at SdDataRespWait_entry, past the prologue
+SdDataRespWait:
     movm    [d2], (sp)
     add     -0xc, sp
-func_50007CAC_entry:
+SdDataRespWait_entry:
     clr     d2
 loc_50007CB2:
-    call    func_50007A94_entry, 0, 8
+    call    SdSpiRecvByte_entry, 0, 8
     extbu   d0
     mov     0x11, d1
     and     d0, d1
@@ -15773,23 +16047,24 @@ loc_50007CCE:
 loc_50007CDF:
     ret     [d2], 0x10
 
-# ---- func_50007CE2 -----------------------------------------------------------
-# `call` enters at func_50007CE2_entry, past the prologue
-func_50007CE2:
+# ---- SdTokenWait -------------------------------------------------------------
+# the same code as the firmware's routine of this name (941 0x4854C25F), linked elsewhere
+# `call` enters at SdTokenWait_entry, past the prologue
+SdTokenWait:
     movm    [d2], (sp)
     add     -0xc, sp
-func_50007CE2_entry:
+SdTokenWait_entry:
     mov     d0, d2
-    mov     (bss_50019730), d0
+    mov     (TickCount), d0
     lsr     1, d2
     mov     d0, (8, sp)
 loc_50007CF3:
     mov     (8, sp), d0
-    mov     (bss_50019730), d1
+    mov     (TickCount), d1
     sub     d0, d1
     cmp     d2, d1
     bhi     loc_50007D0F
-    call    func_50007A94_entry, 0, 8
+    call    SdSpiRecvByte_entry, 0, 8
     extbu   d0
     cmp     0xfe, d0
     bne     loc_50007CF3
@@ -15800,12 +16075,13 @@ loc_50007D0F:
 loc_50007D11:
     ret     [d2], 0x10
 
-# ---- func_50007D14 -----------------------------------------------------------
-# `call` enters at func_50007D14_entry, past the prologue
-func_50007D14:
+# ---- SdCommandSend -----------------------------------------------------------
+# one command frame: select, clock, CRC7, six bytes, the response
+# `call` enters at SdCommandSend_entry, past the prologue
+SdCommandSend:
     movm    [d2,d3,a2], (sp)
     add     -0x14, sp
-func_50007D14_entry:
+SdCommandSend_entry:
     mov     a0, a2
     clr     d0
     movhu   d0, (0x10, sp)
@@ -15813,23 +16089,23 @@ func_50007D14_entry:
     movhu   (a2), d0
     clr     d3
     extbu   d0
-    call    func_50007725_entry, [d2], 0x10
+    call    SdSpiClockSet_entry, [d2], 0x10
     movhu   (a2), d0
     mov     d3, d2
     cmp     2, d0
     bne     loc_50007D3A
     mov     5, d0
-    call    func_5000965F, 0, 0
+    call    LibTickSleep, 0, 0
 loc_50007D3A:
     mov     a2, a0
     inc4    a0
     mov     6, d0
-    call    func_50007A15_entry, [d2,a2], 0x20
+    call    SdSpiSendBuf_entry, [d2,a2], 0x20
     movhu   (a2), d0
     cmp     2, d0
     bne     loc_50007D56
     mov     0x258, d0
-    call    func_50007C57_entry, [d2], 0x14
+    call    SdSenseBusyWait_entry, [d2], 0x14
     mov     d0, d3
     exth    d0
     cmp     d2, d0
@@ -15839,7 +16115,7 @@ loc_50007D56:
     mov     sp, a0
     add     0x10, a0
     extbu   d0
-    call    func_50007BBA_entry, [d2,d3,a2], 0x18
+    call    SdResponseScan_entry, [d2,d3,a2], 0x18
     mov     d0, d2
 loc_50007D63:
     movhu   (a2), d0
@@ -15853,7 +16129,7 @@ loc_50007D71:
     cmp     3, d0
     bne     loc_50007D84
     mov     0xff, d0
-    call    func_500079C2_entry, 0, 8
+    call    SdSpiSendByte_entry, 0, 8
 loc_50007D84:
     exth    d3
     cmp     0, d3
@@ -15871,12 +16147,13 @@ loc_50007D96:
 loc_50007D99:
     ret     [d2,d3,a2], 0x20
 
-# ---- func_50007D9C -----------------------------------------------------------
-# `call` enters at func_50007D9C_entry, past the prologue
-func_50007D9C:
+# ---- SdReadBlockCmd ----------------------------------------------------------
+# command, start token, the block, the CRC bytes
+# `call` enters at SdReadBlockCmd_entry, past the prologue
+SdReadBlockCmd:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x18, sp
-func_50007D9C_entry:
+SdReadBlockCmd_entry:
     mov     a0, a2
     mov     a1, (0x38, sp)
     mov     d0, d3
@@ -15888,22 +16165,22 @@ func_50007D9C_entry:
     movhu   (a2), d0
     mov     0, a3
     extbu   d0
-    call    func_50007725_entry, [d2], 0x10
+    call    SdSpiClockSet_entry, [d2], 0x10
     movhu   (a2), d0
     cmp     2, d0
     bne     loc_50007DC9
     mov     5, d0
-    call    func_5000965F, 0, 0
+    call    LibTickSleep, 0, 0
 loc_50007DC9:
     mov     a2, a0
     inc4    a0
     mov     6, d0
-    call    func_50007A15_entry, [d2,a2], 0x20
+    call    SdSpiSendBuf_entry, [d2,a2], 0x20
     movhu   (a2), d0
     cmp     2, d0
     bne     loc_50007DE7
     mov     0x258, d0
-    call    func_50007C57_entry, [d2], 0x14
+    call    SdSenseBusyWait_entry, [d2], 0x14
     movhu   d0, (0x10, sp)
     exth    d0
     cmp     d2, d0
@@ -15913,7 +16190,7 @@ loc_50007DE7:
     mov     sp, a0
     add     0x14, a0
     extbu   d0
-    call    func_50007BBA_entry, [d2,d3,a2], 0x18
+    call    SdResponseScan_entry, [d2,d3,a2], 0x18
     mov     d0, d2
     movhu   (a2), d0
     cmp     3, d0
@@ -15934,7 +16211,7 @@ loc_50007E12:
     cmp     0, d0
     blt     loc_50007E3F
     mov     0x64, d0
-    call    func_50007CE2_entry, [d2], 0x10
+    call    SdTokenWait_entry, [d2], 0x10
     mov     d0, a3
     exth    d0
     cmp     0, d0
@@ -15946,10 +16223,10 @@ loc_50007E12:
     exthu   d3
     mov     (0x38, sp), a0
     mov     d3, d0
-    call    func_50007AF0_entry, [d2,a2], 0x20
+    call    SdSpiRecvBuf_entry, [d2,a2], 0x20
 loc_50007E35:
-    call    func_50007A94_entry, 0, 8
-    call    func_50007A94_entry, 0, 8
+    call    SdSpiRecvByte_entry, 0, 8
+    call    SdSpiRecvByte_entry, 0, 8
 loc_50007E3F:
     movhu   (a2), d0
     cmp     2, d0
@@ -15962,7 +16239,7 @@ loc_50007E4D:
     cmp     3, d0
     bne     loc_50007E60
     mov     0xff, d0
-    call    func_500079C2_entry, 0, 8
+    call    SdSpiSendByte_entry, 0, 8
 loc_50007E60:
     movhu   (0x10, sp), d0
     exth    d0
@@ -15988,12 +16265,13 @@ loc_50007E80:
 loc_50007E83:
     ret     [d2,d3,a2,a3], 0x28
 
-# ---- func_50007E86 -----------------------------------------------------------
-# `call` enters at func_50007E86_entry, past the prologue
-func_50007E86:
+# ---- SdReadChainCmd ----------------------------------------------------------
+# a block read whose last byte gives the length of a second part
+# `call` enters at SdReadChainCmd_entry, past the prologue
+SdReadChainCmd:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x18, sp
-func_50007E86_entry:
+SdReadChainCmd_entry:
     mov     a0, a2
     movhu   d0, (0x34, sp)
     clr     d0
@@ -16005,22 +16283,22 @@ func_50007E86_entry:
     call    SdCsAssert, 0, 0
     movhu   (a2), d0
     extbu   d0
-    call    func_50007725_entry, [d2], 0x10
+    call    SdSpiClockSet_entry, [d2], 0x10
     movhu   (a2), d0
     cmp     2, d0
     bne     loc_50007EB5
     mov     5, d0
-    call    func_5000965F, 0, 0
+    call    LibTickSleep, 0, 0
 loc_50007EB5:
     mov     a2, a0
     inc4    a0
     mov     6, d0
-    call    func_50007A15_entry, [d2,a2], 0x20
+    call    SdSpiSendBuf_entry, [d2,a2], 0x20
     movhu   (a2), d0
     cmp     2, d0
     bne     loc_50007ED3
     mov     0x258, d0
-    call    func_50007C57_entry, [d2], 0x14
+    call    SdSenseBusyWait_entry, [d2], 0x14
     movhu   d0, (0x12, sp)
     exth    d0
     cmp     d3, d0
@@ -16030,13 +16308,13 @@ loc_50007ED3:
     mov     sp, a0
     add     0x14, a0
     extbu   d0
-    call    func_50007BBA_entry, [d2,d3,a2], 0x18
+    call    SdResponseScan_entry, [d2,d3,a2], 0x18
     mov     d0, d3
     exth    d0
     cmp     0, d0
     bne     loc_50007F18
     mov     0x64, d0
-    call    func_50007CE2_entry, [d2], 0x10
+    call    SdTokenWait_entry, [d2], 0x10
     movhu   d0, (0x10, sp)
     exth    d0
     cmp     0, d0
@@ -16044,16 +16322,16 @@ loc_50007ED3:
     movhu   (0x34, sp), d2
     mov     a3, a0
     mov     d2, d0
-    call    func_50007AF0_entry, [d2,a2], 0x20
+    call    SdSpiRecvBuf_entry, [d2,a2], 0x20
     add     -1, d2
     movbu   (d2, a3), d0
     movhu   (0x34, sp), d1
     exthu   d0
     add     d1, a3
     mov     a3, a0
-    call    func_50007AF0_entry, [d2,a2], 0x20
-    call    func_50007A94_entry, 0, 8
-    call    func_50007A94_entry, 0, 8
+    call    SdSpiRecvBuf_entry, [d2,a2], 0x20
+    call    SdSpiRecvByte_entry, 0, 8
+    call    SdSpiRecvByte_entry, 0, 8
 loc_50007F18:
     movhu   (a2), d0
     cmp     2, d0
@@ -16066,7 +16344,7 @@ loc_50007F26:
     cmp     3, d0
     bne     loc_50007F39
     mov     0xff, d0
-    call    func_500079C2_entry, 0, 8
+    call    SdSpiSendByte_entry, 0, 8
 loc_50007F39:
     movhu   (0x12, sp), d0
     exth    d0
@@ -16092,12 +16370,13 @@ loc_50007F5A:
 loc_50007F5D:
     ret     [d2,d3,a2,a3], 0x28
 
-# ---- func_50007F60 -----------------------------------------------------------
-# `call` enters at func_50007F60_entry, past the prologue
-func_50007F60:
+# ---- SdWriteBlockCmd ---------------------------------------------------------
+# command, start token, data, CRC16, the data response, busy wait
+# `call` enters at SdWriteBlockCmd_entry, past the prologue
+SdWriteBlockCmd:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x18, sp
-func_50007F60_entry:
+SdWriteBlockCmd_entry:
     mov     a0, a2
     movhu   d0, (0x34, sp)
     clr     d0
@@ -16110,22 +16389,22 @@ func_50007F60_entry:
     call    SdCsAssert, 0, 0
     movhu   (a2), d0
     extbu   d0
-    call    func_50007725_entry, [d2], 0x10
+    call    SdSpiClockSet_entry, [d2], 0x10
     movhu   (a2), d0
     cmp     2, d0
     bne     loc_50007F90
     mov     5, d0
-    call    func_5000965F, 0, 0
+    call    LibTickSleep, 0, 0
 loc_50007F90:
     mov     a2, a0
     inc4    a0
     mov     6, d0
-    call    func_50007A15_entry, [d2,a2], 0x20
+    call    SdSpiSendBuf_entry, [d2,a2], 0x20
     movhu   (a2), d0
     cmp     2, d0
     bne     loc_50007FAC
     mov     0x258, d0
-    call    func_50007C57_entry, [d2], 0x14
+    call    SdSenseBusyWait_entry, [d2], 0x14
     mov     d0, d2
     exth    d0
     cmp     d3, d0
@@ -16135,37 +16414,37 @@ loc_50007FAC:
     mov     sp, a0
     add     0x14, a0
     extbu   d0
-    call    func_50007BBA_entry, [d2,d3,a2], 0x18
+    call    SdResponseScan_entry, [d2,d3,a2], 0x18
     mov     d0, d3
     exth    d0
     cmp     0, d0
     bne     loc_5000800B
     mov     0xfe, d0
-    call    func_500079C2_entry, 0, 8
+    call    SdSpiSendByte_entry, 0, 8
     movhu   (0x34, sp), d0
     mov     a3, a0
-    call    func_50007A15_entry, [d2,a2], 0x20
+    call    SdSpiSendBuf_entry, [d2,a2], 0x20
     mov     0xff, d0
-    call    func_500079C2_entry, 0, 8
+    call    SdSpiSendByte_entry, 0, 8
     mov     0xff, d0
-    call    func_500079C2_entry, 0, 8
+    call    SdSpiSendByte_entry, 0, 8
     movhu   (a2), d0
     cmp     2, d0
     bne     loc_50007FF3
     mov     0x258, d0
-    call    func_50007C57_entry, [d2], 0x14
+    call    SdSenseBusyWait_entry, [d2], 0x14
     mov     d0, d2
     exth    d0
     cmp     0, d0
     blt     loc_5000800B
 loc_50007FF3:
-    call    func_50007CAC_entry, [d2], 0x10
+    call    SdDataRespWait_entry, [d2], 0x10
     movhu   d0, (0x12, sp)
     exth    d0
     cmp     0, d0
     bne     loc_5000800B
     mov     0x1f4, d0
-    call    func_50007C1C_entry, [d2], 0x14
+    call    SdWaitNotBusy_entry, [d2], 0x14
     movhu   d0, (0x10, sp)
 loc_5000800B:
     movhu   (a2), d0
@@ -16179,7 +16458,7 @@ loc_50008019:
     cmp     3, d0
     bne     loc_5000802C
     mov     0xff, d0
-    call    func_500079C2_entry, 0, 8
+    call    SdSpiSendByte_entry, 0, 8
 loc_5000802C:
     exth    d2
     cmp     0, d2
@@ -16211,12 +16490,13 @@ loc_50008056:
 loc_50008059:
     ret     [d2,d3,a2,a3], 0x28
 
-# ---- func_5000805C -----------------------------------------------------------
-# `call` enters at func_5000805C_entry, past the prologue
-func_5000805C:
+# ---- SdCsdBitfield -----------------------------------------------------------
+# the same code as the firmware's routine of this name (941 0x4854C6EE), linked elsewhere
+# `call` enters at SdCsdBitfield_entry, past the prologue
+SdCsdBitfield:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x28, sp
-func_5000805C_entry:
+SdCsdBitfield_entry:
     mov     a0, (0x40, sp)
     mov     d0, d3
     mov     rodata_5000C93C, a1
@@ -16516,11 +16796,12 @@ loc_5000829D:
     mov     d1, d0
     retf    [d2,d3], 8
 
-# ---- func_500082A1 -----------------------------------------------------------
-# `call` enters at func_500082A1_entry, past the prologue
-func_500082A1:
+# ---- SdCmdCrc7 ---------------------------------------------------------------
+# table-driven CRC7 over a0, d0 bytes (SdCrc7Table)
+# `call` enters at SdCmdCrc7_entry, past the prologue
+SdCmdCrc7:
     movm    [d2,d3], (sp)
-func_500082A1_entry:
+SdCmdCrc7_entry:
     mov     d0, d3
     clr     d1
     clr     d0
@@ -16548,9 +16829,10 @@ loc_500082C2:
     extbu   d0
     retf    [d2,d3], 8
 
-# ---- func_500082CB -----------------------------------------------------------
+# ---- SdStatusProbeCmdA -------------------------------------------------------
+# a fixed command frame with two extra reply bytes; nothing calls it
 # no caller: unreferenced code
-func_500082CB:
+SdStatusProbeCmdA:
     movm    [d2,a2,a3], (sp)
     add     -0x20, sp
     mov     a0, a3
@@ -16574,22 +16856,22 @@ func_500082CB:
     inc4    a2
     mov     a2, a0
     mov     5, d0
-    call    func_500082A1_entry, [d2,d3], 8
+    call    SdCmdCrc7_entry, [d2,d3], 8
     extbu   d0
     add     d0, d0
     inc     d0
     movbu   d0, (0x1d, sp)
     mov     2, d0
-    call    func_50007725_entry, [d2], 0x10
+    call    SdSpiClockSet_entry, [d2], 0x10
     call    SdCsAssert, 0, 0
     mov     a2, a0
     mov     6, d0
-    call    func_50007A15_entry, [d2,a2], 0x20
+    call    SdSpiSendBuf_entry, [d2,a2], 0x20
     movhu   (a3), d0
     cmp     2, d0
     bne     loc_50008328
     mov     0x258, d0
-    call    func_50007C57_entry, [d2], 0x14
+    call    SdSenseBusyWait_entry, [d2], 0x14
     exth    d0
     cmp     0, d0
     blt     loc_50008350
@@ -16598,14 +16880,14 @@ loc_50008328:
     mov     sp, a0
     add     0x10, a0
     extbu   d0
-    call    func_50007BBA_entry, [d2,d3,a2], 0x18
+    call    SdResponseScan_entry, [d2,d3,a2], 0x18
     mov     d0, d2
     exth    d0
     cmp     0, d0
     bne     loc_50008350
-    call    func_50007A94_entry, 0, 8
+    call    SdSpiRecvByte_entry, 0, 8
     movhu   d0, (bss_50010464)
-    call    func_50007A94_entry, 0, 8
+    call    SdSpiRecvByte_entry, 0, 8
     movhu   d0, (bss_50010466)
 loc_50008350:
     movhu   (a3), d1
@@ -16619,7 +16901,7 @@ loc_5000835E:
     cmp     3, d0
     bne     loc_50008371
     mov     0xff, d0
-    call    func_500079C2_entry, 0, 8
+    call    SdSpiSendByte_entry, 0, 8
 loc_50008371:
     exth    d2
     cmp     0, d2
@@ -16631,12 +16913,13 @@ loc_5000837A:
 loc_5000837D:
     ret     [d2,a2,a3], 0x2c
 
-# ---- func_50008380 -----------------------------------------------------------
-# `call` enters at func_50008380_entry, past the prologue
-func_50008380:
+# ---- SdStatusProbeCmdB -------------------------------------------------------
+# its twin, used by DiskDriveCtrlHandler
+# `call` enters at SdStatusProbeCmdB_entry, past the prologue
+SdStatusProbeCmdB:
     movm    [d2,a2], (sp)
     add     -0x20, sp
-func_50008380_entry:
+SdStatusProbeCmdB_entry:
     clr     d0
     movhu   d0, (0x10, sp)
     mov     rodata_5000C958, a1
@@ -16657,7 +16940,7 @@ func_50008380_entry:
     inc4    a2
     mov     a2, a0
     mov     5, d0
-    call    func_500082A1_entry, [d2,d3], 8
+    call    SdCmdCrc7_entry, [d2,d3], 8
     extbu   d0
     mov     d0, a1
     add     a1, a1
@@ -16665,13 +16948,13 @@ func_50008380_entry:
     mov     a1, d0
     movbu   d0, (0x1d, sp)
     mov     2, d0
-    call    func_50007725_entry, [d2], 0x10
+    call    SdSpiClockSet_entry, [d2], 0x10
     call    SdCsAssert, 0, 0
     mov     6, d0
     mov     a2, a0
-    call    func_50007A15_entry, [d2,a2], 0x20
+    call    SdSpiSendBuf_entry, [d2,a2], 0x20
     mov     0x258, d0
-    call    func_50007C57_entry, [d2], 0x14
+    call    SdSenseBusyWait_entry, [d2], 0x14
     exth    d0
     cmp     0, d0
     blt     loc_50008403
@@ -16679,14 +16962,14 @@ func_50008380_entry:
     mov     sp, a0
     add     0x10, a0
     extbu   d0
-    call    func_50007BBA_entry, [d2,d3,a2], 0x18
+    call    SdResponseScan_entry, [d2,d3,a2], 0x18
     mov     d0, d2
     exth    d0
     cmp     0, d0
     bne     loc_50008403
-    call    func_50007A94_entry, 0, 8
+    call    SdSpiRecvByte_entry, 0, 8
     movhu   d0, (bss_50010464)
-    call    func_50007A94_entry, 0, 8
+    call    SdSpiRecvByte_entry, 0, 8
     movhu   d0, (bss_50010466)
 loc_50008403:
     mov     0xc8, d0
@@ -16702,11 +16985,13 @@ loc_50008419:
 loc_5000841C:
     ret     [d2,a2], 0x28
 
-# ---- func_5000841F -----------------------------------------------------------
-func_5000841F:
+# ---- IrqDispatch -------------------------------------------------------------
+# the maskable interrupt (IrqThunk): saves the scratch registers, calls
+# IrqHandlerTable[INTC_GROUP_VECTOR], rti
+IrqDispatch:
     movm    [other3], (sp)
     movhu   (INTC_GROUP_VECTOR), d0
-    mov     data_500100F0, a0
+    mov     IrqHandlerTable, a0
     mov     (d0, a0), a0
     calls   (a0)
     movm    (sp), [other3]
@@ -16835,12 +17120,12 @@ loc_500084F4:
     ret     0, 0
 
 # ---- func_50008515 -----------------------------------------------------------
-# no caller: unreferenced code
+# nothing calls it directly: its address is taken (a handler or a method)
 func_50008515:
     movbu   (data_50010064), d1
-    mov     (bss_50019730), d0
+    mov     (TickCount), d0
     inc     d0
-    mov     d0, (bss_50019730)
+    mov     d0, (TickCount)
     mov     d1, d0
     inc     d0
     movbu   d0, (data_50010064)
@@ -16994,32 +17279,32 @@ loc_50008629:
 BootMain:
     movm    [d2], (sp)
     add     -8, sp
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
     call    func_50008BEE_entry, 0, 0x24
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
     call    func_50008C4C_entry, [d2], 0x10
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
     movhu   (BOARD_STRAP), d0
     btst    0x4000, d0
     beq     loc_5000878B
@@ -17031,34 +17316,34 @@ loc_5000878B:
     call    func_5000B4CA_entry, [d2,d3,a2,a3], 0xcc
 loc_5000879F:
     call    func_50008C6A_entry, 0, 8
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    call    func_500026E5_entry, 0, 8
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
+    call    PanelSignOnAndDetect_entry, 0, 8
     mov     d0, d2
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
     extbu   d2
     cmp     4, d2
     bne     loc_50008867
@@ -17073,84 +17358,84 @@ loc_5000886D:
     jmp     loc_50008B34
 loc_50008874:
     call    func_50008C82_entry, 0, 8
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    call    func_5000647E_entry, 0, 0x10
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
+    call    FdcDiskPresent_entry, 0, 0x10
     extbu   d0
     cmp     0, d0
     bne     loc_500088F6
     jmp     loc_50008B13
 loc_500088F6:
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
     call    func_5000A7A2_entry, 0, 0x28
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
     call    func_5000A85A, [d2,a2], 8
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
     extbu   d0
     cmp     0xc, d0
     ble     loc_500089DA
     jmp     loc_50008B13
 loc_500089DA:
     call    func_50008C92_entry, 0, 0xc
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
     cmp     4, d2
     bne     loc_50008A63
     bra     loc_50008A74
@@ -17165,26 +17450,26 @@ loc_50008A6A:
 loc_50008A71:
     jmp     loc_50008B13
 loc_50008A74:
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
     call    func_50008D43_entry, 0, 0x18
     bra     loc_50008B13
 loc_50008B07:
@@ -17207,28 +17492,28 @@ loc_50008B19:
 loc_50008B2F:
     call    func_50008FDA_entry, 0, 0x18
 loc_50008B34:
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
+    bset    0x20, (P04)
     and     0xf7ff, psw
     nop
     nop
@@ -17249,7 +17534,7 @@ func_50008BEE:
     add     -0x24, sp
 func_50008BEE_entry:
     clr     d0
-    mov     d0, (bss_50019730)
+    mov     d0, (TickCount)
     mov     1, d0
     movhu   d0, (0x10, sp)
     mov     func_50008515, d0
@@ -17264,9 +17549,9 @@ func_50008BEE_entry:
     mov     1, d0
     mov     sp, a0
     add     0x10, a0
-    call    func_5000967C_entry, [d2,a2], 8
+    call    IrqRegister_entry, [d2,a2], 8
     mov     1, d0
-    call    func_5000970F_entry, 0, 8
+    call    LibIntcEnable_entry, 0, 8
     mov     0xfa0, d0
     movhu   d0, (TM4BR)
     mov     0x81, d0
@@ -17302,7 +17587,7 @@ func_50008C6A:
     add     -8, sp
 func_50008C6A_entry:
     call    func_500084A3, 0, 0
-    mov     (rodata_5000DF50), a0
+    mov     (PanelDriverOps), a0
     calls   (a0)
     call    func_5000845C, 0, 0
     ret     0, 8
@@ -17312,8 +17597,8 @@ func_50008C6A_entry:
 func_50008C82:
     add     -8, sp
 func_50008C82_entry:
-    call    func_50006182, 0, 0
-    call    func_50005D71_entry, 0, 0x58
+    call    FdcHookNop4, 0, 0
+    call    FdcHwInit_entry, 0, 0x58
     ret     0, 8
 
 # ---- func_50008C92 -----------------------------------------------------------
@@ -17323,34 +17608,34 @@ func_50008C92:
 func_50008C92_entry:
     call    func_50009301_entry, [a2], 4
     mov     0x1c, d0
-    call    func_50003F5A_entry, 0, 0x10
+    call    PanelTxFifoPush_entry, 0, 0x10
     mov     0x32, d0
-    call    func_50003F5A_entry, 0, 0x10
+    call    PanelTxFifoPush_entry, 0, 0x10
     mov     8, d0
-    call    func_50003F5A_entry, 0, 0x10
+    call    PanelTxFifoPush_entry, 0, 0x10
     mov     4, d0
-    call    func_50003F5A_entry, 0, 0x10
+    call    PanelTxFifoPush_entry, 0, 0x10
     mov     9, d0
-    call    func_50003F5A_entry, 0, 0x10
+    call    PanelTxFifoPush_entry, 0, 0x10
     mov     4, d0
-    call    func_50003F5A_entry, 0, 0x10
+    call    PanelTxFifoPush_entry, 0, 0x10
     mov     0xa, d0
-    call    func_50003F5A_entry, 0, 0x10
+    call    PanelTxFifoPush_entry, 0, 0x10
     mov     4, d0
-    call    func_50003F5A_entry, 0, 0x10
+    call    PanelTxFifoPush_entry, 0, 0x10
     mov     0xb, d0
-    call    func_50003F5A_entry, 0, 0x10
+    call    PanelTxFifoPush_entry, 0, 0x10
     mov     4, d0
-    call    func_50003F5A_entry, 0, 0x10
+    call    PanelTxFifoPush_entry, 0, 0x10
     mov     0xc, d0
-    call    func_50003F5A_entry, 0, 0x10
+    call    PanelTxFifoPush_entry, 0, 0x10
     mov     4, d0
-    call    func_50003F5A_entry, 0, 0x10
+    call    PanelTxFifoPush_entry, 0, 0x10
     mov     0xd, d0
-    call    func_50003F5A_entry, 0, 0x10
+    call    PanelTxFifoPush_entry, 0, 0x10
     mov     4, d0
-    call    func_50003F5A_entry, 0, 0x10
-    call    func_500026BB_entry, 0, 8
+    call    PanelTxFifoPush_entry, 0, 0x10
+    call    PanelPump_entry, 0, 8
     ret     0, 0xc
 
 # ---- func_50008D04 -----------------------------------------------------------
@@ -17468,7 +17753,7 @@ func_50008DF1_entry:
     exthu   d0
     cmp     0, d0
     bne     loc_50008E7A
-    call    func_5000647E_entry, 0, 0x10
+    call    FdcDiskPresent_entry, 0, 0x10
     extbu   d0
     cmp     0, d0
     beq     loc_50008E6D
@@ -17519,7 +17804,7 @@ func_50008E7D_entry:
     beq     loc_50008ECD
     ret     [d2,d3,a2], 0x64
 loc_50008ECD:
-    call    func_5000647E_entry, 0, 0x10
+    call    FdcDiskPresent_entry, 0, 0x10
     extbu   d0
     cmp     0, d0
     bne     loc_50008EDA
@@ -17681,7 +17966,6 @@ func_50009095:
     movbu   d0, (0x9cc0000e)
     mov     3, d0
     movbu   d0, (0x9cc0000f)
-rodata_50009100:
     clr     d0
     movbu   d0, (0x9cc00010)
     movbu   d0, (0x9cc00011)
@@ -18017,30 +18301,34 @@ loc_50009649:
     add     0x114, sp
     ret     [d2,d3,a2,a3], 0x10
 
-# ---- func_5000965C -----------------------------------------------------------
-func_5000965C:
+# ---- IrqDefaultHandler -------------------------------------------------------
+# every IrqHandlerTable slot until IrqRegister fills it: returns
+IrqDefaultHandler:
     retf    0, 0
 
-# ---- func_5000965F -----------------------------------------------------------
-func_5000965F:
-    mov     (bss_50019730), d1
+# ---- LibTickSleep ------------------------------------------------------------
+# waits until the tick counter (TickCount) has moved on by d0
+LibTickSleep:
+    mov     (TickCount), d1
     add     d1, d0
-    mov     (bss_50019730), d1
+    mov     (TickCount), d1
     cmp     d1, d0
     bls     loc_50009678
 loc_5000966F:
-    mov     (bss_50019730), d1
+    mov     (TickCount), d1
     cmp     d1, d0
     bhi     loc_5000966F
 loc_50009678:
     clr     d0
     retf    0, 0
 
-# ---- func_5000967C -----------------------------------------------------------
-# `call` enters at func_5000967C_entry, past the prologue
-func_5000967C:
+# ---- IrqRegister -------------------------------------------------------------
+# slot d0 := the 20-byte descriptor at a0 {.., handler, group, GxICR address, level, ..}; the
+# group's ICR gets the level, its handler goes in IrqHandlerTable
+# `call` enters at IrqRegister_entry, past the prologue
+IrqRegister:
     movm    [d2,a2], (sp)
-func_5000967C_entry:
+IrqRegister_entry:
     mov     a0, a2
     mov     a2, a1
     mov     0x14, d1
@@ -18048,7 +18336,7 @@ func_5000967C_entry:
     nop
     mulu    d1, d0
     mov     d0, a0
-    add     bss_5001974C, a0
+    add     IrqSlots, a0
     mov     -5, d0
     setlb
     mov     (a1), d1
@@ -18082,17 +18370,18 @@ loc_500096BC:
     movhu   d1, (a1)
     mov     (4, a2), a0
     movhu   (8, a2), d0
-    mov     data_500100F0, a1
+    mov     IrqHandlerTable, a1
     asl2    d0
     mov     a0, (d0, a1)
     clr     d0
     ret     [d2,a2], 8
 
-# ---- func_500096E0 -----------------------------------------------------------
-# `call` enters at func_500096E0_entry, past the prologue
-func_500096E0:
+# ---- LibIntcDisable ----------------------------------------------------------
+# slot d0's GxICR enable bit (8) off; slot 0: all interrupts off (loc_cpu)
+# `call` enters at LibIntcDisable_entry, past the prologue
+LibIntcDisable:
     add     -8, sp
-func_500096E0_entry:
+LibIntcDisable_entry:
     cmp     0, d0
     beq     loc_50009706
     mov     0x14, d1
@@ -18100,7 +18389,7 @@ func_500096E0_entry:
     nop
     mulu    d0, d1
     mov     d1, a0
-    add     bss_5001974C, a0
+    add     IrqSlots, a0
     mov     (0xc, a0), a0
     cmp     0, a0
     beq     loc_5000970B
@@ -18109,16 +18398,17 @@ func_500096E0_entry:
     movhu   d0, (a0)
     bra     loc_5000970B
 loc_50009706:
-    call    func_5000973E, 0, 0
+    call    loc_cpu, 0, 0
 loc_5000970B:
     clr     d0
     ret     0, 8
 
-# ---- func_5000970F -----------------------------------------------------------
-# `call` enters at func_5000970F_entry, past the prologue
-func_5000970F:
+# ---- LibIntcEnable -----------------------------------------------------------
+# slot d0's GxICR enable bit on; slot 0: interrupts on (unl_cpu)
+# `call` enters at LibIntcEnable_entry, past the prologue
+LibIntcEnable:
     add     -8, sp
-func_5000970F_entry:
+LibIntcEnable_entry:
     cmp     0, d0
     beq     loc_50009735
     mov     0x14, d1
@@ -18126,7 +18416,7 @@ func_5000970F_entry:
     nop
     mulu    d0, d1
     mov     d1, a0
-    add     bss_5001974C, a0
+    add     IrqSlots, a0
     mov     (0xc, a0), a0
     cmp     0, a0
     beq     loc_5000973A
@@ -18135,50 +18425,60 @@ func_5000970F_entry:
     movhu   d0, (a0)
     bra     loc_5000973A
 loc_50009735:
-    call    func_50009745, 0, 0
+    call    unl_cpu, 0, 0
 loc_5000973A:
     clr     d0
     ret     0, 8
 
-# ---- func_5000973E -----------------------------------------------------------
-func_5000973E:
+# ---- loc_cpu -----------------------------------------------------------------
+# PSW IE off (the firmware's kernel call of this name does the same job)
+loc_cpu:
     and     0xf7ff, psw
     clr     d0
     rets
 
-# ---- func_50009745 -----------------------------------------------------------
-func_50009745:
+# ---- unl_cpu -----------------------------------------------------------------
+# PSW IE on
+unl_cpu:
     or      0x0800, psw
     clr     d0
     rets
 
-# ---- func_5000974C -----------------------------------------------------------
-func_5000974C:
+# ---- BoardClass --------------------------------------------------------------
+# returns 1: a stand-in for the firmware's strap probe, so PanelInit always picks wiring mode A
+BoardClass:
     mov     1, d0
     retf    0, 0
 
-# ---- func_50009751 -----------------------------------------------------------
+# ---- KernelStubZero ----------------------------------------------------------
+# returns 0; only unreferenced code calls it
 # no caller: unreferenced code
-func_50009751:
+KernelStubZero:
     clr     d0
     retf    0, 0
 
-# ---- func_50009755 -----------------------------------------------------------
-func_50009755:
+# ---- PanelCtrlDispatch -------------------------------------------------------
+# a stand-in for the firmware's latched-control dispatch: PanelFrameDecode calls it where the
+# firmware calls its PanelCtrlDispatch
+PanelCtrlDispatch:
     retf    0, 0
 
-# ---- func_50009758 -----------------------------------------------------------
+# ---- KernelStubSlot ----------------------------------------------------------
+# does nothing; PanelDisableIrqGroups calls it with four interrupt slots
 # no caller: unreferenced code
-func_50009758:
+KernelStubSlot:
     retf    0, 0
 
-# ---- func_5000975B -----------------------------------------------------------
-func_5000975B:
+# ---- PanelSubTypeGet ---------------------------------------------------------
+# returns 1: a stand-in for the firmware's board sub-type probe (5, 1, 2 or 3 from the strap),
+# so the SD code always takes the class-1 paths
+PanelSubTypeGet:
     mov     1, d0
     retf    0, 0
 
-# ---- func_50009760 -----------------------------------------------------------
-func_50009760:
+# ---- SdPowerCtrlSetRaw -------------------------------------------------------
+# the same code as the firmware's routine of this name (941 0x4854D168), linked elsewhere
+SdPowerCtrlSetRaw:
     movbu   (data_50010068), d1
     extbu   d0
     or      d0, d1
@@ -18195,8 +18495,9 @@ func_50009760:
     llt
     retf    0, 0
 
-# ---- func_50009787 -----------------------------------------------------------
-func_50009787:
+# ---- SdPowerCtrlClearRaw -----------------------------------------------------
+# the same code as the firmware's routine of this name (941 0x4854D18F), linked elsewhere
+SdPowerCtrlClearRaw:
     movbu   (data_50010068), d1
     extbu   d0
     not     d0
@@ -18222,7 +18523,7 @@ func_500097B0_entry:
     mov     0x1770, d0
     mov     d0, (0, sp)
     mov     (0, sp), d0
-    bclr    0x20, (0x36008004)
+    bclr    0x20, (P04)
     mov     d0, (4, sp)
     mov     0x176f, d0
     mov     d0, (0, sp)
@@ -18233,7 +18534,7 @@ func_500097B0_entry:
     mov     d1, (0, sp)
     cmp     0, d0
     lne
-    bset    0x20, (0x36008004)
+    bset    0x20, (P04)
     retf    0, 8
 
 # ---- func_500097DD -----------------------------------------------------------
@@ -18244,7 +18545,7 @@ func_500097DD_entry:
     mov     0x21, d0
     mov     d0, (0, sp)
     mov     (0, sp), d0
-    bclr    0x20, (0x36008004)
+    bclr    0x20, (P04)
     mov     d0, (4, sp)
     mov     0x20, d0
     mov     d0, (0, sp)
@@ -18255,7 +18556,7 @@ func_500097DD_entry:
     mov     d1, (0, sp)
     cmp     0, d0
     lne
-    bset    0x20, (0x36008004)
+    bset    0x20, (P04)
     retf    0, 8
 
 # ---- func_50009808 -----------------------------------------------------------
@@ -18531,7 +18832,7 @@ func_50009A6A_entry:
     lsr     1, d0
     movbu   d0, (bss_50012568)
     movbu   (bss_50012568), d0
-    mov     bss_50012468, a0
+    mov     StackTop, a0
     add     d0, d0
     movhu   d2, (d0, a0)
     movbu   (bss_50012568), d0
@@ -18560,7 +18861,7 @@ loc_50009AA4:
     mov     0x80, d3
     clr     d2
 loc_50009ADE:
-    mov     bss_50012468, a0
+    mov     StackTop, a0
     movhu   (d2, a0), d0
     mov     (0xc, sp), a0
     movhu   d0, (d2, a0)
@@ -18786,7 +19087,7 @@ func_50009CDE:
 func_50009CDE_entry:
     mov     d0, d2
     clr     d0
-    mov     d0, (bss_50019730)
+    mov     d0, (TickCount)
     extbu   d2
     mov     d2, d0
     call    func_50009E06_entry, 0, 0xc
@@ -18794,13 +19095,13 @@ func_50009CDE_entry:
     cmp     0xffff, d0
     bne     loc_50009D26
 loc_50009CFB:
-    mov     (bss_50019730), d0
+    mov     (TickCount), d0
     cmp     0x32, d0
     bls     loc_50009D17
     mov     str_5000CD6C, a0
     call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
     clr     d0
-    mov     d0, (bss_50019730)
+    mov     d0, (TickCount)
 loc_50009D17:
     mov     d2, d0
     call    func_50009E06_entry, 0, 0xc
@@ -19865,7 +20166,7 @@ func_5000A7A2_entry:
     mov     d0, (0x24, sp)
     mov     sp, a0
     add     0xc, a0
-    call    func_50005E35_entry, 0, 0xc
+    call    FdcRequest_entry, 0, 0xc
     ret     0, 0x28
 
 # ---- func_5000A7C5 -----------------------------------------------------------
@@ -19927,7 +20228,7 @@ loc_5000A82F:
     mov     3, d0
     mov     d0, (bss_5002BA18)
     mov     bss_5002BA18, a0
-    call    func_50005E35_entry, 0, 0xc
+    call    FdcRequest_entry, 0, 0xc
     cmp     0, d0
     beq     loc_5000A855
     call    func_5000A7A2_entry, 0, 0x28
@@ -20122,7 +20423,7 @@ loc_5000A9FB:
     mov     a2, a0
     mov     0, a1
     mov     0x10, d0
-    call    func_50000010_entry, [a2], 0x20
+    call    strtoul_entry, [a2], 0x20
     mov     d0, (bss_5002BA14)
     mov     bss_5002B9F4, a0
     setlb
@@ -20153,7 +20454,7 @@ loc_5000AA3E:
     mov     a2, a0
     mov     0, a1
     mov     0x10, d0
-    call    func_50000010_entry, [a2], 0x20
+    call    strtoul_entry, [a2], 0x20
     movhu   d0, (a3)
     add     2, a3
     cmp     bss_5002BA14, a3
@@ -20171,12 +20472,12 @@ func_5000AA5D_entry:
     mov     d0, d2
     extbu   d2
 loc_5000AA64:
-    call    func_5000647E_entry, 0, 0x10
+    call    FdcDiskPresent_entry, 0, 0x10
     extbu   d0
     cmp     0, d0
     beq     loc_5000AA78
 loc_5000AA6E:
-    call    func_5000647E_entry, 0, 0x10
+    call    FdcDiskPresent_entry, 0, 0x10
     extbu   d0
     cmp     0, d0
     bne     loc_5000AA6E
@@ -20186,12 +20487,12 @@ loc_5000AA78:
     inc     d0
     cmp     0x40000, d0
     lcs
-    call    func_5000647E_entry, 0, 0x10
+    call    FdcDiskPresent_entry, 0, 0x10
     extbu   d0
     cmp     0, d0
     bne     loc_5000AA96
 loc_5000AA8C:
-    call    func_5000647E_entry, 0, 0x10
+    call    FdcDiskPresent_entry, 0, 0x10
     extbu   d0
     cmp     0, d0
     beq     loc_5000AA8C
@@ -20215,7 +20516,7 @@ func_5000AAAC:
 func_5000AAAC_entry:
     mov     d0, d2
     clr     d0
-    mov     d0, (bss_50019730)
+    mov     d0, (TickCount)
     extbu   d2
     cmp     3, d2
     bgt     loc_5000AADF
@@ -20245,13 +20546,13 @@ loc_5000AADF:
     cmp     0xffff, d0
     bne     loc_5000AB21
 loc_5000AAF4:
-    mov     (bss_50019730), d0
+    mov     (TickCount), d0
     cmp     0x1f4, d0
     bls     loc_5000AB12
     mov     str_5000CEA8, a0
     call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
     clr     d0
-    mov     d0, (bss_50019730)
+    mov     d0, (TickCount)
 loc_5000AB12:
     mov     d2, d0
     call    func_50009E06_entry, 0, 0xc
@@ -21080,7 +21381,7 @@ loc_5000B2E1:
     clr     d2
 loc_5000B319:
     call    func_5000AC81_entry, [d2,d3,a2], 0x20
-    mov     rodata_5000D088, a0
+    mov     str_5000D088, a0
     call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
     inc     d2
     exthu   d2
@@ -21301,12 +21602,12 @@ func_5000B4CA_entry:
     clr     d3
     clr     d0
     movbu   d0, (bss_50012570)
-    call    func_50007060_entry, 0, 0x10
+    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
     mov     0x12c, d0
-    call    func_5000965F, 0, 0
+    call    LibTickSleep, 0, 0
     mov     0x3f, d0
     movbu   d0, (bss_50012570)
-    call    func_50007060_entry, 0, 0x10
+    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
     call    func_50007469_entry, 0, 0x1c
     mov     d0, d2
     mov     d2, d1
@@ -21344,32 +21645,32 @@ loc_5000B541:
 loc_5000B54C:
     bclr    0x04, (bss_50012570)
     movbu   (bss_50012570), d0
-    call    func_50007060_entry, 0, 0x10
+    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
     bclr    0x08, (bss_50012570)
     movbu   (bss_50012570), d0
-    call    func_50007060_entry, 0, 0x10
+    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
     bclr    0x10, (bss_50012570)
     movbu   (bss_50012570), d0
-    call    func_50007060_entry, 0, 0x10
+    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
     bclr    0x20, (bss_50012570)
     movbu   (bss_50012570), d0
-    call    func_50007060_entry, 0, 0x10
+    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
     mov     0x50, d0
-    call    func_5000965F, 0, 0
+    call    LibTickSleep, 0, 0
     bset    0x04, (bss_50012570)
     movbu   (bss_50012570), d0
-    call    func_50007060_entry, 0, 0x10
+    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
     bset    0x08, (bss_50012570)
     movbu   (bss_50012570), d0
-    call    func_50007060_entry, 0, 0x10
+    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
     bset    0x10, (bss_50012570)
     movbu   (bss_50012570), d0
-    call    func_50007060_entry, 0, 0x10
+    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
     bset    0x20, (bss_50012570)
     movbu   (bss_50012570), d0
-    call    func_50007060_entry, 0, 0x10
+    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
     mov     0x50, d0
-    call    func_5000965F, 0, 0
+    call    LibTickSleep, 0, 0
     jmp     loc_5000B54C
 loc_5000B5ED:
     mov     0xc0, d0
@@ -21462,7 +21763,7 @@ loc_5000B6C3:
     call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
     bclr    0x01, (bss_50012570)
     movbu   (bss_50012570), d0
-    call    func_50007060_entry, 0, 0x10
+    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
     mov     d3, d0
     exthu   d0
     call    func_5000BD39_entry, 0, 0xc
@@ -21470,7 +21771,7 @@ loc_5000B6C3:
     call    func_5000AAAC_entry, [d2], 0x10
     mov     0x3f, d0
     movbu   d0, (bss_50012570)
-    call    func_50007060_entry, 0, 0x10
+    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
     bra     loc_5000B71E
 loc_5000B713:
     mov     Str_BlankFlashMemory, a0
@@ -21540,12 +21841,12 @@ loc_5000B776:
     bcc     loc_5000B7C7
     bclr    0x01, (bss_50012570)
     movbu   (bss_50012570), d0
-    call    func_50007060_entry, 0, 0x10
+    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
     bra     loc_5000B7D9
 loc_5000B7C7:
     bset    0x01, (bss_50012570)
     movbu   (bss_50012570), d0
-    call    func_50007060_entry, 0, 0x10
+    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
 loc_5000B7D9:
     cmp     0x8000, a2
     bls     loc_5000B7EC
@@ -21563,7 +21864,7 @@ loc_5000B7EC:
 loc_5000B7FD:
     mov     0x3f, d0
     movbu   d0, (bss_50012570)
-    call    func_50007060_entry, 0, 0x10
+    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
     mov     (0x3c, sp), d0
     mov     data_5001018C, a0
     movbu   (d0, a0), d0
@@ -21602,7 +21903,7 @@ loc_5000B855:
     call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
     bclr    0x01, (bss_50012570)
     movbu   (bss_50012570), d0
-    call    func_50007060_entry, 0, 0x10
+    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
     mov     d3, d0
     exthu   d0
     call    func_5000BD39_entry, 0, 0xc
@@ -21610,7 +21911,7 @@ loc_5000B855:
     call    func_5000AAAC_entry, [d2], 0x10
     mov     0x3f, d0
     movbu   d0, (bss_50012570)
-    call    func_50007060_entry, 0, 0x10
+    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
     bra     loc_5000B8AE
 loc_5000B8A3:
     mov     Str_BlankFlashMemory_2, a0
@@ -21680,12 +21981,12 @@ loc_5000B929:
     bcc     loc_5000B95F
     bclr    0x01, (bss_50012570)
     movbu   (bss_50012570), d0
-    call    func_50007060_entry, 0, 0x10
+    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
     bra     loc_5000B971
 loc_5000B95F:
     bset    0x01, (bss_50012570)
     movbu   (bss_50012570), d0
-    call    func_50007060_entry, 0, 0x10
+    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
 loc_5000B971:
     cmp     0x8000, d3
     bls     loc_5000B985
@@ -21704,7 +22005,7 @@ loc_5000B985:
 loc_5000B998:
     mov     0x3f, d0
     movbu   d0, (bss_50012570)
-    call    func_50007060_entry, 0, 0x10
+    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
     mov     (0x3c, sp), d0
     mov     (0x34, sp), d1
     mov     data_5001018C, a0
@@ -21728,7 +22029,7 @@ loc_5000B9D8:
     mov     (0x54, sp), d0
     call    func_5000BD39_entry, 0, 0xc
     mov     0xa, d0
-    call    func_5000965F, 0, 0
+    call    LibTickSleep, 0, 0
     mov     (0x3c, sp), d0
     mov     data_50010174, a0
     asl2    d0
@@ -21825,12 +22126,12 @@ loc_5000BAA4:
     bcc     loc_5000BAC5
     bclr    0x01, (bss_50012570)
     movbu   (bss_50012570), d0
-    call    func_50007060_entry, 0, 0x10
+    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
     bra     loc_5000BAD7
 loc_5000BAC5:
     bset    0x01, (bss_50012570)
     movbu   (bss_50012570), d0
-    call    func_50007060_entry, 0, 0x10
+    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
 loc_5000BAD7:
     cmp     0x8000, d2
     bls     loc_5000BAEB
@@ -21906,7 +22207,7 @@ loc_5000BB7F:
 loc_5000BB97:
     mov     0x3f, d0
     movbu   d0, (bss_50012570)
-    call    func_50007060_entry, 0, 0x10
+    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
     mov     (0x54, sp), d3
     inc     d3
 loc_5000BBA7:
@@ -21993,10 +22294,10 @@ loc_5000BC61:
     call    func_5000C068_entry, [d2,d3,a2,a3], 0x7c
     mov     0x3f, d0
     movbu   d0, (bss_50012570)
-    call    func_50007060_entry, 0, 0x10
+    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
     bclr    0x02, (bss_50012570)
     movbu   (bss_50012570), d0
-    call    func_50007060_entry, 0, 0x10
+    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
 loc_5000BC9B:
     bra     loc_5000BC9B
 loc_5000BC9D:
@@ -22039,12 +22340,12 @@ loc_5000BCD6:
     bne     loc_5000BCBB
 loc_5000BCEA:
     mov     0x50, d0
-    call    func_5000965F, 0, 0
+    call    LibTickSleep, 0, 0
     mov     0x3f, d0
     movbu   d0, (bss_50012570)
-    call    func_50007060_entry, 0, 0x10
+    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
     mov     0x50, d0
-    call    func_5000965F, 0, 0
+    call    LibTickSleep, 0, 0
     bra     loc_5000BCAE
 
 # ---- func_5000BD07 -----------------------------------------------------------
@@ -22103,22 +22404,22 @@ func_5000BD39_entry:
 loc_5000BD4F:
     bclr    0x04, (bss_50012570)
     movbu   (bss_50012570), d0
-    call    func_50007060_entry, 0, 0x10
+    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
     bra     loc_5000BD9D
 loc_5000BD63:
     bclr    0x08, (bss_50012570)
     movbu   (bss_50012570), d0
-    call    func_50007060_entry, 0, 0x10
+    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
     bra     loc_5000BD9D
 loc_5000BD77:
     bclr    0x10, (bss_50012570)
     movbu   (bss_50012570), d0
-    call    func_50007060_entry, 0, 0x10
+    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
     bra     loc_5000BD9D
 loc_5000BD8B:
     bclr    0x20, (bss_50012570)
     movbu   (bss_50012570), d0
-    call    func_50007060_entry, 0, 0x10
+    call    SpiSendByteThenStrobeCs_entry, 0, 0x10
 loc_5000BD9D:
     ret     0, 0xc
 
@@ -22181,7 +22482,7 @@ func_5000BDFA:
 func_5000BDFA_entry:
     mov     0xe, d0
     movbu   d0, (0x9cc00005)
-    call    func_500065E9_entry, 0, 0xc
+    call    DiskInit_entry, 0, 0xc
     ret     0, 8
 
 # ---- func_5000BE0D -----------------------------------------------------------
@@ -22637,21 +22938,21 @@ func_5000C1C9_entry:
     mov     a1, a2
     mov     a0, a3
 loc_5000C1D1:
-    call    func_500026BB_entry, 0, 8
-    call    func_50002682_entry, 0, 8
-    call    func_50003F6C_entry, 0, 0xc
+    call    PanelPump_entry, 0, 8
+    call    PanelService_entry, 0, 8
+    call    PanelEventFifoPop_entry, 0, 0xc
     mov     d0, d1
     exth    d1
     cmp     -1, d1
     beq     loc_5000C20E
     movbu   d0, (a3)
-    call    func_50003F6C_entry, 0, 0xc
+    call    PanelEventFifoPop_entry, 0, 0xc
     mov     d0, d1
     exth    d1
     cmp     -1, d1
     beq     loc_5000C20E
     movbu   d0, (a2)
-    call    func_50003F6C_entry, 0, 0xc
+    call    PanelEventFifoPop_entry, 0, 0xc
     mov     d0, d1
     exth    d1
     cmp     -1, d1
@@ -22677,11 +22978,11 @@ func_5000C216_entry:
     clr     d2
 loc_5000C223:
     mov     9, d0
-    call    func_50003F5A_entry, 0, 0x10
+    call    PanelTxFifoPush_entry, 0, 0x10
     extbu   d2
     mov     d2, d0
-    call    func_50003F5A_entry, 0, 0x10
-    call    func_500026BB_entry, 0, 8
+    call    PanelTxFifoPush_entry, 0, 0x10
+    call    PanelPump_entry, 0, 8
     ret     [d2], 0x10
 
 # ---- func_5000C23F -----------------------------------------------------------
@@ -23092,14 +23393,14 @@ rodata_5000C764:
 rodata_5000C774:
     .long   0x500103A2, 0x00000040, 0x500103A1, 0x00000040
     .long   0x500103A0, 0x00000040, 0x00000000, 0x00000000
-rodata_5000C794:
-    .long   func_5000388B, func_50003224, func_500032D0, func_500033A0
-    .long   func_50003407, func_500034D3, func_5000356E, func_5000388B
-    .long   func_50003676, func_50003755, func_5000388B
-rodata_5000C7C0:
+PanelXferStateTable:             # the link's state handlers, indexed by PanelLinkState (0..10)
+    .long   PanelXferIdleState, PanelTxState1, PanelTxState2, PanelTxState3
+    .long   PanelTxState4, PanelTxState5, PanelTxState6, PanelXferIdleState
+    .long   PanelRxState8, PanelRxState9, PanelXferIdleState
+PanelEventFifoInitImage:         # {base, end, read, write, free} of the event FIFO
     .long   0x500101C4, 0x50010243, 0x500101C4, 0x500101C4
     .long   0x0000007F
-rodata_5000C7D4:
+PanelTxFifoInitImage:            # the same for the TX FIFO
     .long   0x50010258, 0x500102D7, 0x50010258, 0x50010258
     .long   0x0000007F
 str_5000C7E8:
@@ -23122,7 +23423,7 @@ rodata_5000C85C:
 Str_SpiGetInfoDSendReadCOMCSD:
     .asciz  "spiGetInfo : %d = sendReadCOM(CSD);\n"
     .byte   0xE9, 0x63, 0x4C
-rodata_5000C890:
+DiskDriveCtrlCases:              # DiskDriveCtrlHandler's switch, drive letters '@'..'N'
     .long   loc_50006B20, loc_50006BF4, loc_50006C57, loc_50006BDD
     .long   loc_50006C49, loc_50006C2F, loc_50006BDD, loc_50006BDD
     .long   loc_50006C2F, loc_50006C2F, loc_50006BDD, loc_50006BDD
@@ -23443,8 +23744,9 @@ str_5000D080:
 str_5000D084:
     .asciz  "o"
     .byte   0x00, 0x00
-rodata_5000D088:
-    .long   rodata_5000006F
+str_5000D088:
+    .asciz  "o"
+    .byte   0x00, 0x50
 str_5000D08C:
     .asciz  "\n"
     .byte   0x00, 0x50
@@ -23781,9 +24083,9 @@ rodata_5000D5B0:
     .byte   0x8F, 0x04, 0xE4, 0x1B, 0x2A, 0x0D, 0x7F, 0xBE, 0xD9, 0x82, 0x6E, 0x51, 0x3A, 0x42, 0x7F, 0x28
     .byte   0x90, 0x23, 0xCA, 0xE5, 0xC8, 0x76, 0x7F, 0x36, 0x74, 0xAC, 0x3C, 0x1F, 0x7B, 0xAC, 0x7F, 0xA2
     .byte   0xC8, 0xEB, 0x85, 0xF3, 0xCC, 0xE1, 0x7F
-rodata_5000DF50:
-    .long   func_50002632, func_5000267C, func_5000267F, func_50002679
-    .long   func_500065E9, func_50006616, func_50006619, func_5000661C
+PanelDriverOps:                  # {init, three empty methods}; BootMain's PanelStart calls the first
+    .long   PanelInit, PanelDriverOp1, PanelDriverOp2, PanelDriverOp3
+    .long   DiskInit, DiskHookNop1, DiskHookNop2, DiskHookNop3
 Str_12345678:
     .asciz  "12345678"
     .byte   0x00, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x20, 0x00, 0x02, 0x00, 0x00, 0x00, 0x0C, 0x00, 0xF6
