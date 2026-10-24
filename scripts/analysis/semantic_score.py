@@ -52,7 +52,9 @@ QUESTION IT ANSWERS
   fields  absent: no C.
 
   score = the mean of the components a model has.  "all" pools the models component by component, then
-  averages.  A number goes up only when the disassembly gets more meaningful.  The score is a summary for a
+  averages.  So "all" bytes adds the strict L1 count of KN5000 and WSA1 to kn7000's source-share upper bound
+  (kn7000 is about 42% of the pooled denominator): the pooled bytes badge mixes the two definitions, and the
+  per-model components in the JSON are the ones to compare.  A number goes up only when the disassembly gets more meaningful.  The score is a summary for a
   badge, not a substitute for the components, which the JSON and the README badges also show.
 
 OUTPUT (docs/badges/)

@@ -29,7 +29,11 @@ badges above measure understanding instead, over every rated image of all three 
 `make semantic-score`, i.e. `scripts/analysis/semantic_score.py`, whose docstring defines each part:
 
 - **bytes understood**: bytes whose purpose the source states with evidence: code, documented data and
-  verified filler (`scripts/analysis/data_range_census.py`).
+  verified filler (`scripts/analysis/data_range_census.py`). That strict measure exists for the KN5000 and
+  the SX-WSA1R only. The pooled badge also adds the SX-KN7000's bytes, which use a weaker measure: the share
+  of bytes emitted as source rather than passthrough, an upper bound (see below). The KN7000 is about 42% of
+  the pooled bytes, so the badge mixes two definitions. The per-model figures in
+  `docs/badges/semantic-score.json` keep them apart.
 - **semantic names**: linked symbols whose name says what the thing is. Names that only restate an
   address (`sub_F4A2B0`) or a position (`Foo_Helper7`, `Foo_Case5`) do not count. Local branch labels
   (`Foo_Skip2`, prom_c's `Foo__F9A123`) are not rated, so each routine counts once.
