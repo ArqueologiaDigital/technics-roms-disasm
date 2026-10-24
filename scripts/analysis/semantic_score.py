@@ -39,7 +39,7 @@ QUESTION IT ANSWERS
   bytes   the share of each image emitted by source rather than `.incbin_range` passthrough: kn7000/tools/
           coverage_score.py's "source coverage" for program (its figure is cross-checked and the run stops on a
           mismatch), and the same parse for the other images.  Image sizes are the built images'
-          (kn7000/build/, `make kn7000`).  WEAKER than the L1 figure above: a byte spelled as `.byte` or as
+          (kn7000/build/, `make kn7000`; program942's needs more, see RUN).  WEAKER than the L1 figure above: a byte spelled as `.byte` or as
           an instruction counts whether or not its purpose is stated, so this is an upper bound on L1.
   names   named routines / all rated routines.  program and program942 follow THE GENERATED-SOURCE ROUTINE RULE
           below.  cnv: the label under each generator banner `# ---- Name ----`, in each converter (a routine
@@ -64,7 +64,20 @@ QUESTION IT ANSWERS
     - a column-0 label whose next statement is an instruction, except: `loc_<hex>` (gen_program_s.py's branch
       targets and code addresses inside a function), `<name>_L<hex>` (gen_image_s.py's local branch targets),
       `<name>_entry` (the register-save entry a few bytes into its function, not a second routine) and the
-      CONTINUATION names above; or
+      CONTINUATION names above, and except a LOCAL LABEL: a label that no call / calls names and no other
+      operand uses as an address (mov, .long, .equ ...), and that either follows an instruction that falls
+      through into it (anything but bra, jmp, ret, retf, rets, rti and nop, which is alignment fill before an
+      entry) or is named only by conditional branches (b<cc>).  That is a branch target inside a function,
+      however it is spelled (GetJpegSize_NotApp, BmpUnpackRow_4bppDone, GetBitmapInfo_DepthOk), so it is not
+      rated, as the KN5000/WSA1 rule does not rate local branch labels.  A banner name and a generator `func_<hex>`
+      are always rated.  The left-out count is the image's "local" entry in semantic-score.json (program and
+      program942: 197 each; the siblings: 0, gen_image_s.py spells theirs `_L<hex>`).  LIMIT: a branch target
+      that follows an unconditional jump and is reached only by bra / jmp looks exactly like a tail-called
+      routine and is still rated: 16 semantic names in program and in program942 (two real routines, ResetEntry
+      and DspApplyUnits; two banner names, RhyPatternScan and StyleNameDefaultFill, that the annotations call
+      functions although they look like blocks of their caller; and 12 _Dirty / _NextChar style labels inside a
+      function), and 1 (crt0_start, a real entry) in each of kn2400, kn6000 and kn6500.
+      scripts/analysis/semantic_score_jump_only_labels.py lists them; or
     - a generator banner `# Name  (CPU 0x...)` or `# Name  (lib CPU 0x...)`, which also covers a recovered
       function that is still passthrough.
   Rules 3 rated program by its `(CPU 0x...)` banners and a block of `.equ` names for internal helpers.  After
@@ -73,7 +86,8 @@ QUESTION IT ANSWERS
   code labels `func_<hex>` (`cat kn7000/src/program/*.s | command grep -cE '^func_[0-9A-Fa-f]+:'`) had no
   banner, so program rated 3,076 names, all semantic (semantic-score.json at cdc6226f).  Rules 4 rates every
   routine label of the converted code, which is what the KN5000/WSA1 definition does with the ELF, and the
-  KN7000 names figure falls accordingly.
+  KN7000 names figure falls accordingly.  The local-label test was added in review of wave2/metrics-2, before
+  any rules-4 figure reached a snapshot; without it program and program942 each rated 197 more semantic names.
 
   score = the mean of the components a model has.  "all" pools the models component by component, then
   averages.  So "all" bytes adds the strict L1 count of KN5000 and WSA1 to the MN10300 models' source-share upper
@@ -91,7 +105,11 @@ OUTPUT (docs/badges/)
                                kn7000 column is empty in the rows from before rules 3, the last one,
                                mn10300-siblings, in the rows from before rules 4
 
-RUN (repository root; needs a built tree: `make everything`, which builds kn7000/build/ and the siblings' build/)
+RUN (repository root; needs a built tree: `make everything`, which builds kn7000/build/ and the siblings' build/,
+     plus kn7000/build/kn7000_program_sp7001.rom, which `make everything` does not build: `make gate-kn7000`, or
+     `make -C kn7000 build/kn7000_program_sp7001.rom ROMSET_DIR=... UNIDASM=...`.  Its reference image, which the source
+     passes through with .incbin_range, is de-interleaved from the build-942 EPROM dumps in the PRIVATE kn7000
+     romset (kn7000/Makefile ROMSET_DIR); without it the run stops and says so)
   python3 scripts/analysis/semantic_score.py                       # runs the data census (a few minutes) into
                                                                    # $TMPDIR/semantic-score-<checkout>/, one
                                                                    # directory per checkout
@@ -129,6 +147,11 @@ MN = {      # key: (tree, sources, built images, name rule) -- glob patterns rel
     "kn6000": ("kn6000", "src/program.s", "build/kn6000_program.rom", "generated"),
     "kn6500": ("kn6500", "src/program.s", "build/kn6500_program.rom", "generated"),
     "hdsx3": ("hdsx3", "src/program.s", "build/hdsx3_extapr.rom", "generated"),
+}
+MN_BUILD = {   # how to build an image that the top-level `make <tree>` (and so `make everything`) does not build
+    "program942": "make -C kn7000 build/kn7000_program_sp7001.rom ROMSET_DIR=<the private kn7000 romset with the "
+                  "SP7001 build-942 EPROM dumps> UNIDASM=<MAME unidasm, in case the SP7001 symbol files are "
+                  "regenerated>, or make gate-kn7000",
 }
 ELF = {
     "v10": "rebuilt_ROMs/kn5000_v10_program.llvm.elf", "v9": "rebuilt_ROMs/kn5000_v9_program.llvm.elf",
@@ -234,8 +257,8 @@ def mn_bytes(key):
     tree = MN[key][0]
     srcs, imgs = mn_files(key, 1), mn_files(key, 2)
     if not srcs or len(imgs) != len(srcs):
-        sys.exit("%s: %d sources but %d built images under %s/%s (build them: make %s)"
-                 % (key, len(srcs), len(imgs), tree, MN[key][2], tree))
+        sys.exit("%s: %d sources but %d built images under %s/%s (build them: %s)"
+                 % (key, len(srcs), len(imgs), tree, MN[key][2], MN_BUILD.get(key, "make " + tree)))
     raw = 0
     for p in srcs:
         text = mn_text(p, tree)
@@ -285,9 +308,55 @@ def mn_statement(line):
     return s.strip()
 
 
-def generated_routines(lines):
+MN_COND_BRANCH = re.compile(r'^b(eq|ne|lt|gt|ge|le|cs|cc|hi|ls|vc|vs|nc|ns)$')
+MN_NO_FALL = {"bra", "jmp", "ret", "retf", "rets", "rti", "nop"}     # nop: alignment fill before an entry
+MN_IDENT = re.compile(r'(?<![\w.$])[A-Za-z_.$][\w.$]*')
+
+
+def mn_label_context(lines):
+    """For THE GENERATED-SOURCE ROUTINE RULE's local-label test: ({name: Counter of reference kinds},
+    {label: mnemonic of the statement before it}).  A reference is 'cond' (b<cc>), 'jump' (bra / jmp), 'call'
+    (call / calls) or 'addr' (any other operand: mov, .long, .equ ...).  The statement before a label is None
+    at the start of the text, '.' after a directive."""
+    refs = collections.defaultdict(collections.Counter)
+    before, prev = {}, None
+    for ln in lines:
+        m = MN_LABEL.match(ln)
+        if m:
+            before[m.group(1)] = prev
+        st = mn_statement(ln)
+        if not st:
+            continue
+        mn = st.split()[0].lower()
+        if mn.startswith("."):
+            kind, prev = "addr", "."
+        else:
+            prev = mn
+            kind = ("cond" if MN_COND_BRANCH.match(mn) else "jump" if mn in ("bra", "jmp")
+                    else "call" if mn in ("call", "calls") else "addr")
+        for t in MN_IDENT.findall(st[len(mn):]):
+            refs[t][kind] += 1
+    return refs, before
+
+
+def mn_local_label(name, refs, before):
+    """True for a label that THE GENERATED-SOURCE ROUTINE RULE treats as a branch target inside a function: never
+    called nor used as an address, and either reached by falling through from an instruction or referenced
+    only by conditional branches."""
+    r = refs.get(name, {})
+    if r.get("call") or r.get("addr"):
+        return False
+    p = before.get(name)
+    falls_in = p is not None and p != "." and p not in MN_NO_FALL
+    return falls_in or bool(r.get("cond")) and not r.get("jump")
+
+
+def generated_routines(lines, stats=None):
     """THE GENERATED-SOURCE ROUTINE RULE (docstring): distinct routine names of a gen_program_s.py /
-    gen_image_s.py source, as {name: 'label' | 'banner'} (a banner name that is also a routine label is 'label')."""
+    gen_image_s.py source, as {name: 'label' | 'banner'} (a banner name that is also a routine label is 'label').
+    stats, when given, counts the local labels left out ('local')."""
+    banners = {b.group(1) for b in map(MN_BANNER.match, lines) if b}
+    refs, before = mn_label_context(lines)
     got = {}
     for i, ln in enumerate(lines):
         b = MN_BANNER.match(ln)
@@ -303,8 +372,13 @@ def generated_routines(lines):
         st, j = mn_statement(ln), i + 1
         while not st and j < len(lines):
             st, j = mn_statement(lines[j]), j + 1
-        if st and not st.startswith("."):
-            got[n] = "label"
+        if not st or st.startswith("."):
+            continue
+        if n not in banners and not n.startswith("func_") and mn_local_label(n, refs, before):
+            if stats is not None:
+                stats["local"] += 1
+            continue
+        got[n] = "label"
     return got
 
 
@@ -317,7 +391,7 @@ def mn_names(key):
     for p in mn_files(key, 1):
         lines = mn_text(p, tree).split("\n")
         if rule == "generated":
-            got = generated_routines(lines)
+            got = generated_routines(lines, extra)
             extra["banner_only"] += sum(1 for v in got.values() if v == "banner")
             rated += sorted(got)
         elif rule == "cnv":
@@ -338,7 +412,8 @@ def mn_names(key):
             c["generic"] += 1
         else:
             c["semantic"] += 1
-    c.update(extra)                 # banner_only: rated names with a banner but no routine label (passthrough)
+    c.update(extra)                 # banner_only: rated names with a banner but no routine label (passthrough);
+                                    # local: unrated branch-target labels (THE GENERATED-SOURCE ROUTINE RULE)
     return c["semantic"], c["semantic"] + c["generic"] + c["positional"], dict(c)
 
 

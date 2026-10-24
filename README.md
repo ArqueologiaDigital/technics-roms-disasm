@@ -46,7 +46,8 @@ badges above measure understanding instead, over every rated image of every mode
 The SX-KN7000 has no ELF, no dispatch census and no C. Its score is the mean of two parts, both read from the
 sources: **bytes** is the share emitted as source rather than `.incbin_range` passthrough
 (`kn7000/tools/coverage_score.py`'s source coverage), and **names** is named routines among all the routines
-of the converted code and the converter routines (a `func_<address>` name counts as unnamed). Its images are
+of the converted code and the converter routines (a `func_<address>` name counts as unnamed; a branch target
+inside a function is not a routine, so it is not rated). Its images are
 program 941, table 84, the seven Style Convert converters and the SP7001 program 942.
 
 The **MN10300 siblings** (SX-KN2400/2600, SX-KN6000, SX-KN6500 and the HD-SX3 plug-in, in `kn2400/`,

@@ -539,9 +539,11 @@ CLAUDE.md, "Code-Coverage Evidence Ledger", point 7.
 
 ## Added 2026-10-24 (wave2/metrics-2)
 
-| script                           | question it answers                                                                                                                                                                                                                     |
-|----------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `comment_check_difflib_probe.py` | On a real commit, how many comments does `assert_comments_preserved.py`'s greedy subsequence test report as lost, and how many did the difflib alignment it used before 2026-10-24 report? On 1b6fe98c7: difflib 3 in 1 file, greedy 0. |
+| script                               | question it answers                                                                                                                                                                                                                                                                |
+|--------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `comment_check_difflib_probe.py`     | On a real commit, how many comments does `assert_comments_preserved.py`'s greedy subsequence test report as lost, and how many did the difflib alignment it used before 2026-10-24 report? On 1b6fe98c7: difflib 3 in 1 file, greedy 0.                                            |
+| `semantic_score_jump_only_labels.py` | Which rated routine names of the MN10300 images are reached only by bra / jmp, the branch targets that `semantic_score.py`'s local-label test cannot tell from a tail-called routine? On 2026-10-24: 16 in program and in program942, 1 (crt0_start) in kn2400, kn6000 and kn6500. |
 
     python3 scripts/analysis/comment_check_difflib_probe.py 1b6fe98c7
     python3 scripts/analysis/assert_comments_preserved.py --selftest   # now includes the repeated-comment case
+    python3 scripts/analysis/semantic_score_jump_only_labels.py        # every generated MN10300 image
