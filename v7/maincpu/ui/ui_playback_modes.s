@@ -5,14 +5,14 @@ UIStateEvt_VoiceParamHandler:
 	cp	a, 100
 	jr	z, UIStateEvt_VoiceParamHandler_Skip
 	cp	a, 108
-	jr	lt, UIStateEvt_VoiceParamHandler_Join
+	jr	lt, UIStateEvt_VoiceParamHandler_Skip2
 	cp	a, 122
 	jr	le, UIStateEvt_VoiceParamHandler_Skip
-	jp	UIStateEvt_VoiceParamHandler_Join
+	jp	UIStateEvt_VoiceParamHandler_Skip2
 UIStateEvt_VoiceParamHandler_Skip:
 	ld	(4330:16), 0
 	jrl	UIStateEvt_VoiceParamHandler_Return
-UIStateEvt_VoiceParamHandler_Join:
+UIStateEvt_VoiceParamHandler_Skip2:
 	ld	a, (SWBTWR_PAYLOAD_1:16)
 	cp	a, 3:i3
 	.byte 0xf2, 0x8a, 0x03, 0xf2, 0xde
@@ -753,11 +753,11 @@ PlayModeStop_InitFlagBlock:
 	ret
 	ret
 	ret
-DpMdlySmfLyrTtlFunc_Helper:
+DpMdlySmfTtl_Dispatch_Helper:
 	cp (PREVIOUS_TITLE:16), 0x76
-	jr z, .Lc_f2093f
+	jr z, PartFormat_StartPlayback_Return
 	call PlayModeStop_InitFlagBlock_Helper
-.Lc_f2093f:
+PartFormat_StartPlayback_Return:
 	ret
 PlayModeStop_InitFlagBlock_Helper:
 	cp	(3380:16), 0
@@ -770,11 +770,11 @@ PlayModeStop_InitFlagBlock_Helper2:
 	or	(10412:16), 4
 	ld	(4420:16), 10
 	ret
-DpMdlySmfTtl_Dispatch_Data:
+DpMdlySmf_DisarmStartCountdown:
 	cp	(CURRENT_TITLE:16), 108
-	jr	nz, DpMdlySmfTtl_Dispatch_Data_Entry
+	jr	nz, PartFormat_StartPlayback_Return3
 	ld	(3380:16), 0
-DpMdlySmfTtl_Dispatch_Data_Entry:
+PartFormat_StartPlayback_Return3:
 	.byte 0x0e
 PlayMode_StopAbortRetZero:
 	cp (3380:16), 1
@@ -823,13 +823,13 @@ PlayModeStop_ClearFlagBlock:
 	ret
 	ret
 	ret
-DpMdlySmfLyrTtlFunc_Helper2:
+DpMdlySmfLyrTtl_NullRet:
 	ret
-DpMdlySmfLyrTtlFunc_Helper3:
+DpMdlySmfLyr_DisarmStartCountdown:
 	cp (CURRENT_TITLE:16), 0x6c
-	jr nz, .Lc_f209d5
+	jr nz, PlayMode_SendCommand6C_Return
 	ld (0x0d34:16), 0x00
-.Lc_f209d5:
+PlayMode_SendCommand6C_Return:
 	ret
 ; SqSngNameTtlFunc title dispatch
 SqSngNameTtl_Dispatch:
@@ -1139,7 +1139,7 @@ SqSngSelTtlFunc_OnTitleOld:
 	push	xhl
 	push	xix
 	push	xiz
-	call	SqTrAs_CondCheck_Helper2
+	call	SqSngSel_LeaveTitle
 	pop	xiz
 	pop	xix
 	pop	xhl
@@ -1980,7 +1980,7 @@ DpMdlySmfTtl_Dispatch_Skip:
 	push xhl
 	push xix
 	push xiz
-	call DpMdlySmfLyrTtlFunc_Helper
+	call DpMdlySmfTtl_Dispatch_Helper
 	pop xiz
 	pop xix
 	pop xhl
@@ -1991,7 +1991,7 @@ DpMdlySmfTtlFunc_OnTitleOld:
 	push xhl
 	push xix
 	push xiz
-	call DpMdlySmfTtl_Dispatch_Data
+	call DpMdlySmf_DisarmStartCountdown
 	pop xiz
 	pop xix
 	pop xhl
@@ -2080,7 +2080,7 @@ DpMdlySmfLyrTtl_Dispatch_Skip:
 	push	xhl
 	push	xix
 	push	xiz
-	call	DpMdlySmfLyrTtlFunc_Helper
+	call	DpMdlySmfTtl_Dispatch_Helper
 	pop	xiz
 	pop	xix
 	pop	xhl
@@ -2091,7 +2091,7 @@ DpMdlySmfLyrTtl_Dispatch_Skip2:
 	push	xhl
 	push	xix
 	push	xiz
-	call	DpMdlySmfLyrTtlFunc_Helper2
+	call	DpMdlySmfLyrTtl_NullRet
 	pop	xiz
 	pop	xix
 	pop	xhl
@@ -2106,7 +2106,7 @@ DpMdlySmfLyrTtlFunc_OnTitleOld:
 	push	xhl
 	push	xix
 	push	xiz
-	call	DpMdlySmfLyrTtlFunc_Helper3
+	call	DpMdlySmfLyr_DisarmStartCountdown
 	pop	xiz
 	pop	xix
 	pop	xhl

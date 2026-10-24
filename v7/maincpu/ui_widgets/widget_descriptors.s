@@ -4177,39 +4177,39 @@ AppEvent_ChainDispatch1_CaseTable:
 ; AppEvent_SubDispatch_CaseTable -- jump table of a compiled `switch` in
 ; AppEvent_SubDispatch (v10/v9 0xf448a4, v7 0xf44896) (`add xwa,
 ; AppEvent_SubDispatch_CaseTable`): case k jumps to
-; AppEvent_SubDispatch_Code_2_Code2 + entry[k] (`lda
-; xix,(AppEvent_SubDispatch_Code_2_Code2); jp t, (xrr+rr)`). 6 u16 offsets; the
+; AppEvent_InlineHandler_DecMinsTrackA + entry[k] (`lda
+; xix,(AppEvent_InlineHandler_DecMinsTrackA); jp t, (xrr+rr)`). 6 u16 offsets; the
 ; reader's bound `cp ..., 5` pins 6 cases.
 ;
 ; Typed in naka_widget_descriptors.c as uint16_t
 ; AppEvent_SubDispatch_CaseTable[6].
 ; -----------------------------------------------------------------------------
 AppEvent_SubDispatch_CaseTable:
-	.short	AppEvent_SubDispatch_Code_2_Code2 - AppEvent_SubDispatch_Code_2_Code2
-	.short	AppEvent_SubDispatch_Case22 - AppEvent_SubDispatch_Code_2_Code2
-	.short	AppEvent_SubDispatch_Case23 - AppEvent_SubDispatch_Code_2_Code2
-	.short	AppEvent_SubDispatch_Case24 - AppEvent_SubDispatch_Code_2_Code2
-	.short	AppEvent_SubDispatch_Case25 - AppEvent_SubDispatch_Code_2_Code2
-	.short	AppEvent_SubDispatch_Case26 - AppEvent_SubDispatch_Code_2_Code2
+	.short	AppEvent_InlineHandler_DecMinsTrackA - AppEvent_InlineHandler_DecMinsTrackA
+	.short	AppEvent_SubDispatch_Case22 - AppEvent_InlineHandler_DecMinsTrackA
+	.short	AppEvent_SubDispatch_Case23 - AppEvent_InlineHandler_DecMinsTrackA
+	.short	AppEvent_SubDispatch_Case24 - AppEvent_InlineHandler_DecMinsTrackA
+	.short	AppEvent_SubDispatch_Case25 - AppEvent_InlineHandler_DecMinsTrackA
+	.short	AppEvent_SubDispatch_Case26 - AppEvent_InlineHandler_DecMinsTrackA
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] AppEvent_SubDispatch_CaseTable_2
 ; AppEvent_SubDispatch_CaseTable_2 -- jump table of a compiled `switch`
 ; in AppEvent_SubDispatch (v10/v9 0xf448a4, v7 0xf44896) (`add xwa,
 ; AppEvent_SubDispatch_CaseTable_2`): case k jumps to
-; AppEvent_SubDispatch_Code_2_Code + entry[k] (`lda
-; xix,(AppEvent_SubDispatch_Code_2_Code); jp t, (xrr+rr)`). 6 u16 offsets; the
+; AppEvent_InlineHandler_DecMcpTrackA + entry[k] (`lda
+; xix,(AppEvent_InlineHandler_DecMcpTrackA); jp t, (xrr+rr)`). 6 u16 offsets; the
 ; reader's bound `cp ..., 5` pins 6 cases.
 ;
 ; Typed in naka_widget_descriptors.c as uint16_t
 ; AppEvent_SubDispatch_CaseTable_2[6].
 ; -----------------------------------------------------------------------------
 AppEvent_SubDispatch_CaseTable_2:
-	.short	AppEvent_SubDispatch_Code_2_Code - AppEvent_SubDispatch_Code_2_Code
-	.short	AppEvent_InlineHandler_Switch4_Case16 - AppEvent_SubDispatch_Code_2_Code
-	.short	AppEvent_InlineHandler_Switch4_Case17 - AppEvent_SubDispatch_Code_2_Code
-	.short	AppEvent_InlineHandler_Switch4_Case18 - AppEvent_SubDispatch_Code_2_Code
-	.short	AppEvent_InlineHandler_Switch4_Case19 - AppEvent_SubDispatch_Code_2_Code
-	.short	AppEvent_InlineHandler_Switch4_Case20 - AppEvent_SubDispatch_Code_2_Code
+	.short	AppEvent_InlineHandler_DecMcpTrackA - AppEvent_InlineHandler_DecMcpTrackA
+	.short	AppEvent_InlineHandler_Switch4_Case16 - AppEvent_InlineHandler_DecMcpTrackA
+	.short	AppEvent_InlineHandler_Switch4_Case17 - AppEvent_InlineHandler_DecMcpTrackA
+	.short	AppEvent_InlineHandler_Switch4_Case18 - AppEvent_InlineHandler_DecMcpTrackA
+	.short	AppEvent_InlineHandler_Switch4_Case19 - AppEvent_InlineHandler_DecMcpTrackA
+	.short	AppEvent_InlineHandler_Switch4_Case20 - AppEvent_InlineHandler_DecMcpTrackA
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] AppEvent_SubDispatch_Table
 ; AppEvent_SubDispatch_Table -- read by AppEvent_SubDispatch (v10/v9
@@ -4221,14 +4221,14 @@ AppEvent_SubDispatch_CaseTable_2:
 ; AppEvent_SubDispatch_Table[16].
 ; -----------------------------------------------------------------------------
 AppEvent_SubDispatch_Table:
-	.short	AppEvent_InlineHandler_Switch3_OnTitleSqqtz - AppEvent_SubDispatch_Code_2
-	.short	AppEvent_InlineHandler_Switch3_OnTitleSqtrns - AppEvent_SubDispatch_Code_2
-	.short	AppEvent_InlineHandler_Switch3_OnTitleSqvelocng - AppEvent_SubDispatch_Code_2
-	.short	AppEvent_SubDispatch_Code_2 - AppEvent_SubDispatch_Code_2
-	.short	AppEvent_InlineHandler_Skip6 - AppEvent_SubDispatch_Code_2
-	.short	AppEvent_InlineHandler_Switch3_OnTitleSqmers - AppEvent_SubDispatch_Code_2
-	.short	AppEvent_InlineHandler_Skip6 - AppEvent_SubDispatch_Code_2
-	.short	AppEvent_InlineHandler_Switch3_OnTitleSqmdel - AppEvent_SubDispatch_Code_2
+	.short	AppEvent_InlineHandler_Switch3_OnTitleSqqtz - AppEvent_InlineHandler_DecLastMeasure_OnTitleSqnotecng
+	.short	AppEvent_InlineHandler_Switch3_OnTitleSqtrns - AppEvent_InlineHandler_DecLastMeasure_OnTitleSqnotecng
+	.short	AppEvent_InlineHandler_Switch3_OnTitleSqvelocng - AppEvent_InlineHandler_DecLastMeasure_OnTitleSqnotecng
+	.short	AppEvent_InlineHandler_DecLastMeasure_OnTitleSqnotecng - AppEvent_InlineHandler_DecLastMeasure_OnTitleSqnotecng
+	.short	AppEvent_InlineHandler_Skip6 - AppEvent_InlineHandler_DecLastMeasure_OnTitleSqnotecng
+	.short	AppEvent_InlineHandler_Switch3_OnTitleSqmers - AppEvent_InlineHandler_DecLastMeasure_OnTitleSqnotecng
+	.short	AppEvent_InlineHandler_Skip6 - AppEvent_InlineHandler_DecLastMeasure_OnTitleSqnotecng
+	.short	AppEvent_InlineHandler_Switch3_OnTitleSqmdel - AppEvent_InlineHandler_DecLastMeasure_OnTitleSqnotecng
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] AppEvent_SubDispatch_Table_2
 ; AppEvent_SubDispatch_Table_2 -- read by AppEvent_SubDispatch (v10/v9
@@ -5169,7 +5169,7 @@ RhythmROM_BankProgramLocators:	.incbin "includes/generated/naka_widget_descripto
 ; (v10/v9 0xf61f6e, v7 0xf61b6a) (`ld xix,
 ; Note_PitchClassTable`), ToneGen_WriteMultiChanParam
 ; (v10/v9 0xf62986, v7 0xf62582) (`ld xix,
-; Note_PitchClassTable`), ToneGen_CompareVoiceBlocks_Helper3 (v10/v9 0xf62b29, v7
+; Note_PitchClassTable`), ToneGen_BuildConvertedNoteEvent (v10/v9 0xf62b29, v7
 ; 0xf62725) (`ld xix, Note_PitchClassTable`),
 ; Rhythm_CrossVoice_Apply (v10/v9 0xf54ffe, v7 0xf54bfa) (`ld xiy,
 ; Note_PitchClassTable`), Rhythm_NoteRangeCheck (v10/v9
@@ -5606,7 +5606,7 @@ RhythmParam_Dispatch_CaseTable:
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] AccRhythm_Ram3888_Records
 ; AccRhythm_Ram3888_Records -- 10 records x 16 bytes. The code after the
-; label RhythmVoice_LoadParams_Helper (sequencer/accompaniment_engine.s): `ld xiy,<this>;
+; label DrumParam_CopyStyleNameAndReload (sequencer/accompaniment_engine.s): `ld xiy,<this>;
 ; add xiy,xwa; ld xix,0x3888; ld xbc,0x10; ldir` -- one record is copied
 ; to RAM 0x3888. 160 = 10 x 16 is the extent to the next referenced
 ; object.
@@ -6376,7 +6376,7 @@ StylCnv_ModeRb_LSW:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x
 ; AccStyle_SlotOrderA (+0x98, ROM 0xe4c16a): Byte-identical to
 ; AccBankData_SlotOrder. The code after AccStyle_TableDataEntry_Skip12
 ; (v10 0xf6d9ca, v9 0xf6d9ca, not labelled in v7) adds <this> to (a -
-; 30) and AccStyle_TableDataEntry_Skip15 (v10 0xf6dab3, v9 0xf6dab3, not
+; 30) and AccStyle_TableDataEntry_Skip16 (v10 0xf6dab3, v9 0xf6dab3, not
 ; labelled in v7) loads it with lda.
 ;
 ; Typed in naka_widget_descriptors.c as uint8_t AccStyle_SlotOrderA[30].

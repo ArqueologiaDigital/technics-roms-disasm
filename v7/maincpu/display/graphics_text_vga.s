@@ -1413,9 +1413,9 @@ DrawFunc_Init_Variant1:
 	ld	e, a
 	ld	a, c
 	and	a, 15
-	jr	z, DrawFunc_Init_Skip
+	jr	z, DrawFunc_Init_Skip12
 	srla e	; srl A,E
-DrawFunc_Init_Skip:
+DrawFunc_Init_Skip12:
 	ld	ix, (xiz+7)
 	ld	l, (xiz+9)
 	extz	hl
@@ -1506,7 +1506,7 @@ DrawFunc_Init_Join4:
 	pop	xiz
 	lda	xsp, (xsp+268)
 	ret
-AccDraw_Secondary_Helper20:
+SeGfx_BoundOp06_PrintWord:
 	lda xsp, (xsp - 0x010c)
 	push XIZ
 	ld XIZ,XWA
@@ -1530,17 +1530,17 @@ AccDraw_Secondary_Helper20:
 	ld (XBC),DE
 	lda xbc, (xsp + 0x04)
 	cp hl, 2:i3
-	jr z, .Lc_fb1e46
+	jr z, SeGfx_BoundOp06_PrintWord_Skip
 	cp hl, 1:i3
-	jr nz, .Lc_fb1e4f
+	jr nz, SeGfx_BoundOp06_PrintWord_Skip2
 	pushm (xix)
 	ld XWA,DrawFunc_Init_Entry_Str_Fmt1d
 	jr t, .Lc_fb1e56
-.Lc_fb1e46:
+SeGfx_BoundOp06_PrintWord_Skip:
 	pushm (xix)
 	ld XWA,DrawFunc_Init_Entry2_Str_Fmt2d
 	jr t, .Lc_fb1e56
-.Lc_fb1e4f:
+SeGfx_BoundOp06_PrintWord_Skip2:
 	pushm (xix)
 	ld XWA,DrawFunc_Init_Entry3_Str_Fmt3d
 .Lc_fb1e56:
@@ -1653,7 +1653,7 @@ SeGfx_BoundOp0B_FormatNumber_Skip17:
 	ld	(xbc+2), wa
 	ld	a, (xiz+12)
 	cp	a, e
-	jr	z, AccDraw_Secondary_Helper20_Skip9
+	jr	z, DrawFunc_Init_Skip18
 	cp	a, 128
 	jr	nc, SeGfx_BoundOp0B_FormatNumber_Skip7
 	cp	e, 128
@@ -1677,36 +1677,36 @@ SeGfx_BoundOp0B_FormatNumber_Join5:
 	cp	l, 2:i3
 	jr	z, SeGfx_BoundOp0B_FormatNumber_Skip
 	cp	l, 1:i3
-	jr	nz, AccDraw_Secondary_Helper20_Skip8
+	jr	nz, DrawFunc_Init_Skip9
 	ld	xwa, DrawFunc_Init_Entry3_Str_Fmt1d_2
 	jr	SeGfx_BoundOp0B_FormatNumber_Join
 SeGfx_BoundOp0B_FormatNumber_Skip:
 	ld	xwa, FmtStr_pct2d
 	jr	SeGfx_BoundOp0B_FormatNumber_Join
-AccDraw_Secondary_Helper20_Skip8:
+DrawFunc_Init_Skip9:
 	ld	xwa, DrawFunc_Init_Entry4_Str_Fmt3d
 SeGfx_BoundOp0B_FormatNumber_Join:
 	push	xwa
 	push	xbc
-	jr	AccDraw_Secondary_Helper20_Join5
-AccDraw_Secondary_Helper20_Skip9:
+	jr	DrawFunc_Init_Join9
+DrawFunc_Init_Skip18:
 	lda	xbc, (xsp+4)
 	pushw	0
 	cp	l, 2:i3
-	jr	z, AccDraw_Secondary_Helper20_Skip10
+	jr	z, DrawFunc_Init_Skip10
 	cp	l, 1:i3
-	jr	nz, AccDraw_Secondary_Helper20_Skip11
+	jr	nz, DrawFunc_Init_Skip11
 	ld	xwa, DrawFunc_Init_Entry5_Str_Fmt2d
-	jr	AccDraw_Secondary_Helper20_Join4
-AccDraw_Secondary_Helper20_Skip10:
+	jr	DrawFunc_Init_Join6
+DrawFunc_Init_Skip10:
 	ld	xwa, DrawFunc_Init_Entry5_Str_Fmt3d
-	jr	AccDraw_Secondary_Helper20_Join4
-AccDraw_Secondary_Helper20_Skip11:
+	jr	DrawFunc_Init_Join6
+DrawFunc_Init_Skip11:
 	ld	xwa, DrawFunc_Init_Entry5_Str_Fmt4d
-AccDraw_Secondary_Helper20_Join4:
+DrawFunc_Init_Join6:
 	push	xwa
 	push	xbc
-AccDraw_Secondary_Helper20_Join5:
+DrawFunc_Init_Join9:
 	call	Sprintf_Locked
 	lda	xsp, (xsp+10)
 	ld	a, (xiz+6)
@@ -1745,7 +1745,7 @@ SeGfx_BoundOp0A_FormatNumber:
 	cp	l, 2:i3
 	jr	z, SeGfx_BoundOp0A_FormatNumber_Skip19
 	cp	l, 1:i3
-	jr	nz, AccDraw_Secondary_Helper20_Skip13
+	jr	nz, SeGfx_BoundOp0A_FormatNumber_Skip20
 	pushm	(xde)
 	ld	xwa, DrawFunc_Init_Entry5_Str_Fmt1d
 	jr	SeGfx_BoundOp0A_FormatNumber_Join10
@@ -1755,7 +1755,7 @@ SeGfx_BoundOp0A_FormatNumber_Skip19:
 	pushw	DrawFunc_Init_Entry5_Str_Fmt2d_2@lo16
 	push	xbc
 	jr	SeGfx_BoundOp0A_FormatNumber_Join7
-AccDraw_Secondary_Helper20_Skip13:
+SeGfx_BoundOp0A_FormatNumber_Skip20:
 	pushm	(xde)
 	ld	xwa, DrawFunc_Init_Entry5_Str_Fmt3d_2
 SeGfx_BoundOp0A_FormatNumber_Join10:
@@ -4586,19 +4586,19 @@ WallMenuEdit_EventDispatch_Join2:
 	call	Sprintf_Locked
 	inc	8, xsp
 	ld	xhl, xiz
-	jr	WallMenuEditCheck_Epilogue
+	jr	ToneGen_WriteParamByIndex_Epilogue
 WallMenuEditCheck_OnGetLargeStep:	; cases 31457342, 31457343, 31457347
 	ld	xhl, 1:i3
-	jr	WallMenuEditCheck_Epilogue
+	jr	ToneGen_WriteParamByIndex_Epilogue
 WallMenuEditCheck_OnGetRamAddress:
 	lda	xhl, (213244:24)
-	jr	WallMenuEditCheck_Epilogue
+	jr	ToneGen_WriteParamByIndex_Epilogue
 WallMenuEditCheck_OnGetRamSize:
 	ld	xhl, 2:i3
-	jr	WallMenuEditCheck_Epilogue
+	jr	ToneGen_WriteParamByIndex_Epilogue
 WallOthEditCheck_RetZero:
 	ld xhl, 0:i3
-WallMenuEditCheck_Epilogue:
+ToneGen_WriteParamByIndex_Epilogue:
 	pop xiz
 	ret
 
@@ -4640,19 +4640,19 @@ WallOthEdit_EventDispatch_Join3:
 	call	Sprintf_Locked
 	inc	8, xsp
 	ld	xhl, xiz
-	jr	WallOthEditCheck_Epilogue
+	jr	ToneGen_WriteParamByIndex_Epilogue2
 WallOthEditCheck_OnGetLargeStep:	; cases 31457342, 31457343, 31457347
 	ld	xhl, 1:i3
-	jr	WallOthEditCheck_Epilogue
+	jr	ToneGen_WriteParamByIndex_Epilogue2
 WallOthEditCheck_OnGetRamAddress:
 	lda	xhl, (213246:24)
-	jr	WallOthEditCheck_Epilogue
+	jr	ToneGen_WriteParamByIndex_Epilogue2
 WallOthEditCheck_OnGetRamSize:
 	ld	xhl, 2:i3
-	jr	WallOthEditCheck_Epilogue
+	jr	ToneGen_WriteParamByIndex_Epilogue2
 WallOthCheckLoop_RetZero:
 	ld xhl, 0:i3
-WallOthEditCheck_Epilogue:
+ToneGen_WriteParamByIndex_Epilogue2:
 	pop xiz
 	ret
 

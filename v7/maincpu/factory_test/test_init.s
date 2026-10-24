@@ -332,7 +332,7 @@ TitleFunc_LifecycleDispatch:
 TitleFunc_LifecycleTable:
 	lda xwa, (TitleFunc_LifecycleTable_Str_TBIOS_Test:24)
 	calr FDTest_PrintDiag
-	call TitleFunc_LifecycleTable_Helper
+	call FDTest_ProbeDiskFormat
 	jr TitleFunc_Return
 ; TitleFunc_LifecycleDispatch_OnStopFddTest: Switch 1 on the FDD test title: stops the switch-2 test loop timer and
 ;   prints STOP FDD TEST.

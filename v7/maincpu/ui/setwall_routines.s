@@ -135,7 +135,7 @@ SqTrAs_UpdateOkSwVisibility_Skip:
 	call	CDlikeSwTtl_SendStartEvtArg1
 SqTrAs_UpdateOkSwVisibility_Return:
 	ret
-MiddleFuncCall_DispatchData_Code_Helper3:
+MiddleFuncCall_DispatchData_Helper:
 	call	SqTrAs_UpdateOkSwVisibility
 	ret
 ; 20 x u8 mask per SetWall slot number 0..0x13 (0xFF, or 0 for slots 13-16):
@@ -2019,7 +2019,7 @@ SqSngSel_CalcSongUsageOnEnter_Loop2:
 	popw	bc
 	pop	xix
 	ret
-SqTrAs_CondCheck_Helper2:
+SqSngSel_LeaveTitle:
 	and (10407:16), 251
 	xor	wa, wa
 	ld	a, 76:opc

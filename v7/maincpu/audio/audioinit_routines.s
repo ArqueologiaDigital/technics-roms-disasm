@@ -290,7 +290,7 @@ AudioInit_MixFallbackConfig:
 AudioInit_MixFallbackDefault:
 	extz	wa
 	jrl	AudioInit_ConfigStereoVoice
-AudioInit_MixFallbackDefault_Code:
+AudioVoiceHandler_NoneSentinel:
 	extz	wa
 	jrl	AudioInit_ConfigStereoVoice
 AudioInit_DrumSaveReturn:
@@ -1164,7 +1164,7 @@ AudioInit_VoiceRoutingTable:
 	ld	de, 0:i3
 	cp	de, 32
 	ret	nc
-AudioInit_RefreshToneBank_Loop:
+AudioInit_VoiceRoutingTable_Loop:
 	ld	wa, de
 	add	wa, wa
 	lda	xbc, (0xc246:16)
@@ -1216,7 +1216,7 @@ AudioInit_RefreshToneBank_Loop:
 	and	(xwa), 0xf
 	inc	1, de
 	cp	de, 32
-	jr	c, AudioInit_RefreshToneBank_Loop
+	jr	c, AudioInit_VoiceRoutingTable_Loop
 	ret
 AudioInit_ConfigureVoiceRouting:
 	andw	(0xc4fa:16), 0xfeff
@@ -2330,8 +2330,8 @@ AudioInit_Volume_Return:
 AudioInit_InitPartSendLevels:
 	ld	de, 0:i3
 	cp	de, 161
-	jr	nc, AudioInit_PartConfig_CheckCarry_Skip
-AudioInit_PartConfig_CheckCarry_Loop:
+	jr	nc, AudioInit_InitPartSendLevels_Skip
+AudioInit_InitPartSendLevels_Loop:
 	ld	wa, de
 	add	wa, wa
 	lda	xbc, (0xc58e:16)
@@ -2346,8 +2346,8 @@ AudioInit_PartConfig_CheckCarry_Loop:
 	ld	(xwa), 0
 	inc	1, de
 	cp	de, 161
-	jr	c, AudioInit_PartConfig_CheckCarry_Loop
-AudioInit_PartConfig_CheckCarry_Skip:
+	jr	c, AudioInit_InitPartSendLevels_Loop
+AudioInit_InitPartSendLevels_Skip:
 	ld	(0xc9ce:16), 8
 	ld	(0xc9cf:16), 0
 	ld	(0xc9d0:16), 8

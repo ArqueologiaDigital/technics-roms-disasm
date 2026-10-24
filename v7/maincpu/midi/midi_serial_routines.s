@@ -1240,7 +1240,7 @@ MidiCC_Handler_BitManipulation_Skip:
 	ld	(0x95ac:16), a
 	ld	(0x95a8:16), bc
 	ld	(0x95aa:16), de
-	call	MidiCC_NullHandlerBlock_Helper
+	call	MidiCC_RxCC83_SetParamBitsAndQueue
 MidiCC_Handler_BitManipulation_Return:
 	ret
 ; (pre-port v7 note about the bytes at 0xFCF4E7:)
@@ -1251,7 +1251,7 @@ MidiCC_Handler_BitManipulation_Return:
 ; MidiCC_RxCC91_Reverb + 60 (0xFCF8BD), CC function 18 <- CC83
 ; (MidiCC_ChannelMappingData): only for part 25, with `bit 2, (0xfd51)` set;
 ; `ld a, (0x9636) / cp a, 2 / jr ugt` (E stays 0 above 2) / `ld e, (xix+a)`,
-; then BC = 0x0B98, D = 0xC0 -> MidiCC_NullHandlerBlock_Helper.
+; then BC = 0x0B98, D = 0xC0 -> MidiCC_RxCC83_SetParamBitsAndQueue.
 ; Previously spelled `.byte 0x80, 0x40` behind a `nop`.
 MidiCC_CC83_ValueMap:
 	.byte	0x00, 0x80, 0x40

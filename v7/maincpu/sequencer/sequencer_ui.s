@@ -3266,12 +3266,12 @@ TrAsGridCheck_OnIndexswDown_Skip5:
 	dec	2, e
 	extz	de
 	ld	wa, de
-	jr	TrAsGrid_CheckTrackType_Join3
+	jr	TrAsGridCheck_OnIndexswDown_Join3
 TrAsGridCheck_OnIndexswDown_Skip6:
 	inc	6, e
 	extz	de
 	ld	wa, de
-TrAsGrid_CheckTrackType_Join3:
+TrAsGridCheck_OnIndexswDown_Join3:
 	calr	TrAsGrid_LookupTable
 	cpl	hl
 	and (61904:16), hl
@@ -13378,31 +13378,31 @@ EffectBox_StateDispatch:
 ; SeqAccomp editor load dispatch
 SeqAccomp_Dispatch:
 	ld	xbc, EVT_GET_EQ1_STR
-	jr	EffectBoxProc_CopyNameAndSetup_Code_Join
+	jr	SeqAccomp_Dispatch_Join
 EffectBox_StateDispatch_DrawEqBand2:
 	ld	xbc, EVT_GET_EQ2_STR
-	jr EffectBoxProc_CopyNameAndSetup_Code_Join
+	jr SeqAccomp_Dispatch_Join
 EffectBox_StateDispatch_DrawEqBand3:
 	ld xbc, EVT_GET_EQ3_STR
-	jr EffectBoxProc_CopyNameAndSetup_Code_Join
+	jr SeqAccomp_Dispatch_Join
 EffectBox_StateDispatch_DrawEqBand4:
 	ld xbc, EVT_GET_EQ4_STR
-	jr	EffectBoxProc_CopyNameAndSetup_Code_Join
+	jr	SeqAccomp_Dispatch_Join
 EffectBox_StateDispatch_DrawEqBand5:
 	ld	xbc, EVT_GET_EQ5_STR
-	jr	EffectBoxProc_CopyNameAndSetup_Code_Join
+	jr	SeqAccomp_Dispatch_Join
 EffectBox_StateDispatch_DrawEqBand6:
 	ld	xbc, EVT_GET_EQ6_STR
-	jr	EffectBoxProc_CopyNameAndSetup_Code_Join
+	jr	SeqAccomp_Dispatch_Join
 EffectBox_StateDispatch_DrawEqBand7:
 	ld	xbc, EVT_GET_EQ7_STR
-	jr	EffectBoxProc_CopyNameAndSetup_Code_Join
+	jr	SeqAccomp_Dispatch_Join
 
 ; EffectBox state 1
 EffectBox_State1:
 	ld xwa, (xhl)
 	ld xbc, EVT_GET_EQ0_STR
-EffectBoxProc_CopyNameAndSetup_Code_Join:
+SeqAccomp_Dispatch_Join:
 	call ApFuncCall
 	lda xwa, (xsp + 80)
 	lda xbc, (xsp + 76)

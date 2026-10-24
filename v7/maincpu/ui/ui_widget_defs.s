@@ -6879,20 +6879,20 @@ ScrollDelta_ComputeDirection:
 	cp	xwa, EVT_SW_IN_AIC
 	jr	z, ScrollDelta_ComputeDirection_OnSwInAic
 	cp	xwa, EVT_SW_IN
-	jr	nz, AcPmemName_Confirm_Code_Skip3
+	jr	nz, IvInterruptProc_Skip3
 	ld	hl, (xsp+4)
 	bit	7, bc
-	jr	nz, AcPmemName_Confirm_Code_Skip2
-	jr	AcPmemName_Confirm_Code_Return
+	jr	nz, IvInterruptProc_Skip2
+	jr	IvInterruptProc_Return
 ScrollDelta_ComputeDirection_OnSwInAic:
 	bit	7, bc
-	jr	z, AcPmemName_Confirm_Code_Return
-AcPmemName_Confirm_Code_Skip2:
+	jr	z, IvInterruptProc_Return
+IvInterruptProc_Skip2:
 	mul	hl, 0xffff
-	jr	AcPmemName_Confirm_Code_Return
-AcPmemName_Confirm_Code_Skip3:
+	jr	IvInterruptProc_Return
+IvInterruptProc_Skip3:
 	ld	hl, 0:i3
-AcPmemName_Confirm_Code_Return:
+IvInterruptProc_Return:
 	retd	2
 
 DbMemoProc:
@@ -8574,14 +8574,14 @@ ObjectProc_OnGetPropString:
 	ld	xde, NAKA_CLASS_Viewable
 	call	SendEvent
 	or	xhl, xhl
-	jr	z, ObjectProc_Skip
+	jr	z, ObjectProc_Skip3
 	pushw ObjectProc_OnGetPropString_Str_YZ@hi16
 	pushw ObjectProc_OnGetPropString_Str_YZ@lo16
 	ld	xwa, (xsp+140)
 	push	xwa
 	call	Strcat
 	inc	8, xsp
-ObjectProc_Skip:
+ObjectProc_Skip3:
 	ld	xhl, (xsp+4)
 	jrl	ObjectProc_Join5
 ObjectProc_OnGetPropCount:
@@ -8600,18 +8600,18 @@ ObjectProc_OnGetPropName:
 	add	xhl, (xwa)
 	lda	xde, (xwa+4)
 	cp	(xhl), 89
-	jr	nz, ObjectProc_Skip2
+	jr	nz, ObjectProc_Skip
 	pushw ObjectProc_OnGetPropName_Str_name@hi16
 	pushw ObjectProc_OnGetPropName_Str_name@lo16
 	ld	xwa, (xde)
 	push	xwa
 	jr	ObjectProc_Join
-ObjectProc_Skip2:
+ObjectProc_Skip:
 	ld	xwa, (xsp+136)
 	add	xbc, (xwa)
 	ld	xwa, (xde)
 	cp	(xbc), 90
-	jr	nz, ObjectProc_Skip3
+	jr	nz, ObjectProc_Skip2
 	pushw ObjectProc_OnGetPropName_Str_romram@hi16
 	pushw ObjectProc_OnGetPropName_Str_romram@lo16
 	push	xwa
@@ -8619,7 +8619,7 @@ ObjectProc_Join:
 	call	Strcpy
 	inc	8, xsp
 	jrl	ObjectProc_Join4
-ObjectProc_Skip3:
+ObjectProc_Skip2:
 	pushw ObjectProc_OnGetPropName_Str_Empty@hi16
 	pushw ObjectProc_OnGetPropName_Str_Empty@lo16
 	push	xwa
@@ -19654,12 +19654,12 @@ DrawFunc_XspCheck_Epilogue:
 IS_XSP_INSIDE_4K_REGION_AT_1C032:
 	xor xhl, xhl
 	cp xsp, 0x1c032
-	jr lt, DrawFunc_XspCheck_Loop
+	jr lt, IS_XSP_INSIDE_4K_REGION_AT_1C032_Loop
 	cp xsp, 0x1d032
-	jr gt, DrawFunc_XspCheck_Loop
+	jr gt, IS_XSP_INSIDE_4K_REGION_AT_1C032_Loop
 	inc 1, xhl
 
-DrawFunc_XspCheck_Loop:
+IS_XSP_INSIDE_4K_REGION_AT_1C032_Loop:
 	ret
 
 InitializeGraphics:

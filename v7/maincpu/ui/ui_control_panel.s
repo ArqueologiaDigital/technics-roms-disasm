@@ -2694,7 +2694,7 @@ MainPmanCtrl_OnLswGet:
 	ld xwa, 4294967295
 	ld xbc, EVT_AUTO_FREE
 	ld xde, (xsp+4)
-	jr MainBitControl_Code_Join
+	jr KeyScan_Disable_Join
 MainPmanCtrl_OnLswPartPut:
 	ld xiz, xde
 	ld xwa, (xiz)
@@ -2741,7 +2741,7 @@ MainPmanCtrl_OnLswPartGet:
 	ld xwa, 4294967295
 	ld xbc, EVT_AUTO_FREE
 	ld xde, (xsp+4)
-MainBitControl_Code_Join:
+KeyScan_Disable_Join:
 	call ApPostEvent
 	jr MainTitle_SendEventDone
 
@@ -3240,7 +3240,7 @@ GetClientBox2_RightOnOffTab32:
 	lda xde, (xsp + 4)
 	ldw wa, 0x24
 	jr CtrlFrame_SubRightMargin
-GetClientBox2_Case52:
+GetClientBox2_RightOnOffTab48:
 	lda xbc, (xsp + 6)
 	lda xde, (xsp + 4)
 	ldw wa, 0x25

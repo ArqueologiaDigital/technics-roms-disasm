@@ -349,24 +349,24 @@ BitMapOut_ByteData_TransitionSeq_Join:
 BitMapOut_ByteData_PresetCopy:
 	push qiz
 	cp (CURRENT_MODE:16), 14
-	jr z, BitMapOut_ByteData_PresetCopy_Skip2
+	jr z, BitMapOut_ByteData_PresetCopy_Skip
 	bit 3, (36010:16)
-	jr nz, BitMapOut_ByteData_PresetCopy_Skip2
+	jr nz, BitMapOut_ByteData_PresetCopy_Skip
 	cp (SWBTWR_PAYLOAD_1:16), 1
-	jr nz, BitMapOut_ByteData_PresetCopy_Skip2
+	jr nz, BitMapOut_ByteData_PresetCopy_Skip
 	calr BitMapOut_GetRenderMode
 	bit 1, l
-	jr nz, BitMapOut_ByteData_PresetCopy_Join
+	jr nz, BitMapOut_ByteData_PresetCopy_Code_Skip
 	ldb_d8 a, (SWBTWR_PAYLOAD_2)
 	res 7, a
 	ldfr_berp a, 251
 	cpib_erp 251, 0
-	jr z, BitMapOut_ByteData_PresetCopy_Join
+	jr z, BitMapOut_ByteData_PresetCopy_Code_Skip
 	dec1b_erp 251
 	ldb_d8 a, (SWBTWR_PAYLOAD_3)
 	res 7, a
 	cp a, 0:i3
-	jr z, BitMapOut_ByteData_PresetCopy_Join
+	jr z, BitMapOut_ByteData_PresetCopy_Code_Skip
 	ld xwa, 769
 	call SndParam_LookupReadOnly
 	ldto_berp a, 251
@@ -374,14 +374,14 @@ BitMapOut_ByteData_PresetCopy:
 	cp hl, 0:i3
 	jr nz, BitMapOut_ByteData_PresetCopy_Code_Skip2
 	calr PanelMemory_Recall
-	jr BitMapOut_ByteData_PresetCopy_Join
+	jr BitMapOut_ByteData_PresetCopy_Code_Skip
 BitMapOut_ByteData_PresetCopy_Code_Skip2:
 	ld xbc, 63904
 	calr BitMapOut_CopyVoicePreset9
-BitMapOut_ByteData_PresetCopy_Join:
+BitMapOut_ByteData_PresetCopy_Code_Skip:
 	ldw wa, 130
 	calr BitMapOut_GetRenderMode_Return
-BitMapOut_ByteData_PresetCopy_Skip2:
+BitMapOut_ByteData_PresetCopy_Skip:
 	res 3, (36010:16)
 	pop qiz
 	ret
@@ -3395,16 +3395,16 @@ BitMapOut_UpdateWidget_Finalize:
 BitMapOut_UpdateWidget_Done:
 	call	GetTitleNow
 	cp	xhl, TITLE_PMBKSEL
-	jr	z, BitMapOut_UpdateWidget_Done_Skip
+	jr	z, BitMapOut_UpdateWidget_Finalize_Skip
 	call	GetTitleNow
 	cp	xhl, TITLE_PMVIEW
-	jr	z, BitMapOut_UpdateWidget_Done_Skip
+	jr	z, BitMapOut_UpdateWidget_Finalize_Skip
 	call	GetTitleNow
 	cp	xhl, TITLE_PMBKNAME
-	jr	z, BitMapOut_UpdateWidget_Done_Skip
+	jr	z, BitMapOut_UpdateWidget_Finalize_Skip
 	call	GetTitleNow
 	cp	xhl, TITLE_PMNAME
-	jr	z, BitMapOut_UpdateWidget_Done_Skip
+	jr	z, BitMapOut_UpdateWidget_Finalize_Skip
 	cp	(SWBTWR_PAYLOAD_1:16), 5
 	ret	nz
 	ld	a, (SWBTWR_PAYLOAD_2:16)
@@ -3418,8 +3418,8 @@ BitMapOut_UpdateWidget_Done:
 	ld	xwa, 0xffffffff
 	ld	xbc, EVT_SET_HOLD
 	ld	xde, 1:i3
-	jr	BitMapOut_UpdateWidget_Done_Join
-BitMapOut_UpdateWidget_Done_Skip:
+	jr	BitMapOut_UpdateWidget_Finalize_Join
+BitMapOut_UpdateWidget_Finalize_Skip:
 	cp	(SWBTWR_PAYLOAD_1:16), 5
 	ret	nz
 	ld	a, (SWBTWR_PAYLOAD_2:16)
@@ -3429,12 +3429,12 @@ BitMapOut_UpdateWidget_Done_Skip:
 	ld	xwa, 0xffffffff
 	ld	xbc, EVT_SET_HOLD
 	ld	xde, 0:i3
-BitMapOut_UpdateWidget_Done_Join:
+BitMapOut_UpdateWidget_Finalize_Join:
 	call	ApPostEvent
 	ret
-FileIO_ByteBlock_DemoProc1_Helper4:
+PanelMemory_PreSlotLoad:
 	ret
-FileIO_ByteBlock_DemoProc1_Helper5:
+PanelMemory_PostSlotLoad:
 	extz	wa
 	cp	bc, 0:i3
 	jp	lt, (VoiceData_InitAndCopyParams:24)
