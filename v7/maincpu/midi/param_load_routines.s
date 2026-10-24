@@ -75,54 +75,72 @@ ParaLoadOpt_DispatchTable_A:
 	ld	xbc, EVT_PAINT
 	ld	xde, 0:i3
 	jrl	ParaLoadOpt_DispatchTable_A_Join
+; ParaLoadOpt_AudioFlagCheck_PmemSending: data-exchange stage 1: Pmem (ExcPmemFunc) status := 1 " SENDING ", repaint
+;   0x57000A
 ParaLoadOpt_AudioFlagCheck_PmemSending:
 	ld	(0x024760:24), 1
 	ld	xwa, 0x57000a
 	ld	xbc, EVT_PAINT
 	ld	xde, 0:i3
 	jrl	ParaLoadOpt_DispatchTable_A_Join
+; ParaLoadOpt_AudioFlagCheck_PmemCompleted: data-exchange stage 2: Pmem (ExcPmemFunc) status := 3 "COMPLETED", repaint
+;   0x57000A
 ParaLoadOpt_AudioFlagCheck_PmemCompleted:
 	ld	(0x024760:24), 3
 	ld	xwa, 0x57000a
 	ld	xbc, EVT_PAINT
 	ld	xde, 0:i3
 	jrl	ParaLoadOpt_DispatchTable_A_Join
+; ParaLoadOpt_AudioFlagCheck_SmemSending: data-exchange stage 3: Smem (ExcSmemFunc) status := 1 " SENDING ", repaint
+;   0x57000A
 ParaLoadOpt_AudioFlagCheck_SmemSending:
 	ld	(0x024762:24), 1
 	ld	xwa, 0x57000a
 	ld	xbc, EVT_PAINT
 	ld	xde, 0:i3
 	jrl	ParaLoadOpt_DispatchTable_A_Join
+; ParaLoadOpt_AudioFlagCheck_SmemCompleted: data-exchange stage 4: Smem (ExcSmemFunc) status := 3 "COMPLETED", repaint
+;   0x57000A
 ParaLoadOpt_AudioFlagCheck_SmemCompleted:
 	ld	(0x024762:24), 3
 	ld	xwa, 0x57000a
 	ld	xbc, EVT_PAINT
 	ld	xde, 0:i3
 	jr	ParaLoadOpt_DispatchTable_A_Join
+; ParaLoadOpt_AudioFlagCheck_CompSending: data-exchange stage 5: Comp (ExcCompFunc) status := 1 " SENDING ", repaint
+;   0x57000A
 ParaLoadOpt_AudioFlagCheck_CompSending:
 	ld	(0x024764:24), 1
 	ld	xwa, 0x57000a
 	ld	xbc, EVT_PAINT
 	ld	xde, 0:i3
 	jr	ParaLoadOpt_DispatchTable_A_Join
+; ParaLoadOpt_AudioFlagCheck_CompCompleted: data-exchange stage 6: Comp (ExcCompFunc) status := 3 "COMPLETED", repaint
+;   0x57000A
 ParaLoadOpt_AudioFlagCheck_CompCompleted:
 	ld	(0x024764:24), 3
 	ld	xwa, 0x57000a
 	ld	xbc, EVT_PAINT
 	ld	xde, 0:i3
 	jr	ParaLoadOpt_DispatchTable_A_Join
+; ParaLoadOpt_AudioFlagCheck_SeqSending: data-exchange stage 7: Seq (ExcSeqFunc) status := 1 " SENDING ", repaint
+;   0x57000A
 ParaLoadOpt_AudioFlagCheck_SeqSending:
 	ld	(0x024766:24), 1
 	ld	xwa, 0x57000a
 	ld	xbc, EVT_PAINT
 	ld	xde, 0:i3
 	jr	ParaLoadOpt_DispatchTable_A_Join
+; ParaLoadOpt_AudioFlagCheck_SeqCompleted: data-exchange stage 8: Seq (ExcSeqFunc) status := 3 "COMPLETED", repaint
+;   0x57000A
 ParaLoadOpt_AudioFlagCheck_SeqCompleted:
 	ld	(0x024766:24), 3
 	ld	xwa, 0x57000a
 	ld	xbc, EVT_PAINT
 	ld	xde, 0:i3
 	jr	ParaLoadOpt_DispatchTable_A_Join
+; ParaLoadOpt_AudioFlagCheck_MspSending: data-exchange stage 11: Msp (ExcMspFunc) status := 1 " SENDING ", repaint
+;   0x57000A
 ParaLoadOpt_AudioFlagCheck_MspSending:
 	ld	(0x024768:24), 1
 	ld	xwa, 0x57000a
@@ -208,6 +226,8 @@ ParaLoadOpt_DispatchTable_B:
 	ld	xbc, EVT_PAINT
 	ld	xde, 0:i3
 	jrl	ParaLoadOpt_DispatchTable_B_Join
+; ParaLoadOpt_AudioFlagCheck_B_PmemReceiving: data-exchange stage 1 (receive side): Pmem (ExcPmemFunc) status := 2
+;   "RECIEVING", repaint 0x570015
 ParaLoadOpt_AudioFlagCheck_B_PmemReceiving:
 	ld	(0x024760:24), 2
 	ld	xwa, 0x570015
@@ -220,6 +240,8 @@ ParaLoadOpt_AudioFlagCheck_B_PmemCompleted:
 	ld	xbc, EVT_PAINT
 	ld	xde, 0:i3
 	jrl	ParaLoadOpt_DispatchTable_B_Join
+; ParaLoadOpt_AudioFlagCheck_B_SmemReceiving: data-exchange stage 3 (receive side): Smem (ExcSmemFunc) status := 2
+;   "RECIEVING", repaint 0x570015
 ParaLoadOpt_AudioFlagCheck_B_SmemReceiving:
 	ld	(0x024762:24), 2
 	ld	xwa, 0x570015
@@ -232,6 +254,8 @@ ParaLoadOpt_AudioFlagCheck_B_SmemCompleted:
 	ld	xbc, EVT_PAINT
 	ld	xde, 0:i3
 	jr	ParaLoadOpt_DispatchTable_B_Join
+; ParaLoadOpt_AudioFlagCheck_B_CompReceiving: data-exchange stage 5 (receive side): Comp (ExcCompFunc) status := 2
+;   "RECIEVING", repaint 0x570015
 ParaLoadOpt_AudioFlagCheck_B_CompReceiving:
 	ld	(0x024764:24), 2
 	ld	xwa, 0x570015
@@ -244,6 +268,8 @@ ParaLoadOpt_AudioFlagCheck_B_CompCompleted:
 	ld	xbc, EVT_PAINT
 	ld	xde, 0:i3
 	jr	ParaLoadOpt_DispatchTable_B_Join
+; ParaLoadOpt_AudioFlagCheck_B_SeqReceiving: data-exchange stage 7 (receive side): Seq (ExcSeqFunc) status := 2
+;   "RECIEVING", repaint 0x570015
 ParaLoadOpt_AudioFlagCheck_B_SeqReceiving:
 	ld	(0x024766:24), 2
 	ld	xwa, 0x570015
@@ -256,6 +282,8 @@ ParaLoadOpt_AudioFlagCheck_B_SeqCompleted:
 	ld	xbc, EVT_PAINT
 	ld	xde, 0:i3
 	jr	ParaLoadOpt_DispatchTable_B_Join
+; ParaLoadOpt_AudioFlagCheck_B_MspReceiving: data-exchange stage 11 (receive side): Msp (ExcMspFunc) status := 2
+;   "RECIEVING", repaint 0x570015
 ParaLoadOpt_AudioFlagCheck_B_MspReceiving:
 	ld	(0x024768:24), 2
 	ld	xwa, 0x570015
@@ -621,6 +649,7 @@ ParaLoadOptGridCheck:
 	ld de, (xde)
 	lda xix, (ParaLoadOpt_GridDispatch:24)
 	jp	t, (xix+de)
+; ParaLoadOptGridCheck dispatch
 ParaLoadOpt_GridDispatch:
 	call	GetFocusObject
 	ld	xwa, xhl

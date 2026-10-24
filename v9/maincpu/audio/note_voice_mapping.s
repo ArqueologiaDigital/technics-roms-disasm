@@ -27580,6 +27580,8 @@ HdaeRom_DataDispatch_Loop2:
 	subw	(xsp+4), 1
 	jr	nz, HdaeRom_DataDispatch_Loop2
 	jrl	HdaeRom_DataHandler_Skip
+; HdaeRom_DataHandler_ConvertKn2000MkaMkb: Image ids 1-3 (KN2000, MKA, MKB): converts the image's 144-byte records
+;   (base +80) to 470-byte KN5000 records (base +16).
 HdaeRom_DataHandler_ConvertKn2000MkaMkb:	; cases 1, 2, 3
 	ld	(xsp+6), xbc
 	cp	(xsp+442), 255

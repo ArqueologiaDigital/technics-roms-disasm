@@ -2652,7 +2652,7 @@ VGA_ClearVRAM:
 	call	Memset
 	pushw	38400
 	pushw	0
-	lda	xwa, (1742336:24)
+	lda	xwa, (1742336:24)	; Is this a second video page?
 	push	xwa
 	call	Memset
 	lda	xsp, (xsp+16)
@@ -2687,7 +2687,7 @@ AllBOut:
 	pushw	38400
 	lda	xwa, (315904:24)
 	push	xwa
-	lda	xwa, (1742336:24)
+	lda	xwa, (1742336:24)	; Is this a second video page?
 	push	xwa
 	call	Mem_Copy
 	lda	xsp, (xsp+20)
@@ -5213,6 +5213,7 @@ MainSysControl:
 	ld	wa, (xix+wa)
 	lda	xix, (MainSysCtrl_DispatchTable:24)
 	jp	t, (xix+wa)
+; MainSysControl dispatch table
 MainSysCtrl_DispatchTable:
 	ld	wa, 2:i3
 	call	ScreenGroup_Dispatch

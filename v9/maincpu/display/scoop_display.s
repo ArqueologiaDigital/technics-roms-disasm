@@ -18731,7 +18731,7 @@ Scoop_CurveUpdate_SegmentEnd_Skip2:
 	ld	xde, xwa
 	ld	xwa, (xsp+4)
 	push	xwa
-	pushw	255
+	pushw	255	; colour pair for DrawString, not a pointer
 	pushw	245
 	ld	xwa, xhl
 	call	DrawString
@@ -18895,7 +18895,7 @@ Scoop_EnvCalc_Handler1_Skip5:
 	ld	xde, xwa
 	ld	xwa, 6:i3
 	push	xwa
-	pushw	255
+	pushw	255	; colour pair for DrawString, not a pointer
 	pushw	245
 	ld	xwa, xhl
 	call	DrawString
@@ -19099,7 +19099,7 @@ Scoop_GlideParam_Setup_Skip:
 	ld	xde, xwa
 	ld	xwa, 1:i3
 	push	xwa
-	pushw	255
+	pushw	255	; colour pair for DrawString, not a pointer
 	pushw	245
 	ld	xwa, xhl
 	call	DrawString
@@ -19156,7 +19156,7 @@ Scoop_GlideCalc_Handler0_Skip2:
 	ld	xde, xwa
 	ld	xwa, 2:i3
 	push	xwa
-	pushw	255
+	pushw	255	; colour pair for DrawString, not a pointer
 	pushw	245
 	ld	xwa, xhl
 	call	DrawString
@@ -19433,7 +19433,7 @@ Scoop_EventLoop_12Entry_Join:
 	lda	xwa, (xsp+4)
 	ld	xde, xwa
 	push	xix
-	pushw 255
+	pushw 255	; colour pair for DrawString, not a pointer
 	pushw 245
 	ld	xwa, xhl
 	call	DrawString
@@ -19582,7 +19582,7 @@ Scoop_EventLoop_12Entry_Join3:
 	lda	xwa, (xsp+4)
 	ld	xde, xwa
 	push	xix
-	pushw 255
+	pushw 255	; colour pair for DrawString, not a pointer
 	pushw 245
 	ld	xwa, xhl
 	call	DrawString
@@ -19770,7 +19770,7 @@ Scoop_EventLoop_36Entry_Join:
 	lda	xwa, (xsp+4)
 	ld	xde, xwa
 	push	xix
-	pushw	255
+	pushw	255	; colour pair for DrawString, not a pointer
 	pushw	245
 	ld	xwa, xhl
 	call	DrawString
@@ -19911,7 +19911,7 @@ Scoop_EventLoop_36Entry_Join3:
 	lda	xwa, (xsp+4)
 	ld	xde, xwa
 	push	xix
-	pushw	255
+	pushw	255	; colour pair for DrawString, not a pointer
 	pushw	245
 	ld	xwa, xhl
 	call	DrawString
@@ -19977,7 +19977,7 @@ Scoop_EventLoop_36Entry_Join4:
 	lda	xwa, (xsp+4)
 	ld	xde, xwa
 	push	xix
-	pushw	255
+	pushw	255	; colour pair for DrawString, not a pointer
 	pushw	245
 	ld	xwa, xhl
 	call	DrawString
@@ -20051,7 +20051,7 @@ Scoop_EventLoop_36Entry_Skip15:
 	lda	xwa, (xsp+6)
 	ld	xde, xwa
 	push	xix
-	pushw	255
+	pushw	255	; colour pair for DrawString, not a pointer
 	pushw	245
 	ld	xwa, xhl
 	call	DrawString

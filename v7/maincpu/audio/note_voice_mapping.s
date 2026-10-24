@@ -16429,6 +16429,8 @@ HdaeRom_TableEntry2:
 	ld	wa, (xix+wa)
 	lda	xix, (PanelTag72_ApplyPartMix_Volume:24)
 	jp	t, (xix+wa)
+; PanelTag72_ApplyPartMix_Volume: Payload +3 of record 0x72 (also the switch base): sent to parts 0x17 and 0x18 as CC
+;   7 (volume), 0 when the value's bit 7 is set. Basis: switch value + body.
 PanelTag72_ApplyPartMix_Volume:
 	ld	a, (xsp+0x3)
 	and	a, 255
@@ -16905,6 +16907,10 @@ HdaeRom_AltTableEntry9_Join:
 HdaeRom_AltTableEntry9_Epilogue:
 	inc	4, xsp
 	ret
+; SndParam_ApplyEventField: Applies the 4-byte event at XWA with its byte 3 temporarily set to C:
+;   SndParam_ResolveWidget looks it up; if SndParam_KeyToLswPartNumber decodes the result, SndPart_SetParam, else
+;   SndParam_ApplySystemParam; byte 3 is restored. Basis: callers + body -- the UIState_ProcessKeyEvent cases copy the SwbtWr
+;   event to the stack and call this once per masked field of byte 3.
 SndParam_ApplyEventField:
 	lda	xsp, (xsp-12)
 	push	xiz

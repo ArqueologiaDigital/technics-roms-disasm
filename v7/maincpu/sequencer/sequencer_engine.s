@@ -20462,6 +20462,9 @@ AppEvent_ChainDispatch1_Case1:
 	ld	wa, (xix+wa)
 	lda	xix, (AppEvent_ChainDispatch1_IncFromMeasure_OnTitleSqnotecng:24)
 	jp	t, (xix+wa)
+; AppEvent_ChainDispatch1_IncFromMeasure_OnTitleSqnotecng: TT_SQNOTECNG (title 0x9F) case of EVT_INC_VAL on sequencer-
+;   edit parameter 1: the from-measure word 9744 (last measure 9746) goes up by one (max 999), pushing the last
+;   measure along. Basis: callers + body.
 AppEvent_ChainDispatch1_IncFromMeasure_OnTitleSqnotecng:
 	lda_d16	xiz, (9744)
 	lda_d16	xwa, (9746)
@@ -21101,6 +21104,8 @@ AppEvent_InlineHandler_Case1:
 	ld	wa, (xix+wa)
 	lda	xix, (AppEvent_InlineHandler_DecFromMeasure_OnTitleSqnotecng:24)
 	jp	t, (xix+wa)
+; AppEvent_InlineHandler_DecFromMeasure_OnTitleSqnotecng: TT_SQNOTECNG (title 0x9F) case of EVT_DEC_VAL on sequencer-
+;   edit parameter 1: the from-measure word 9744 (last measure 9746) goes down by one (min 1). Basis: callers + body.
 AppEvent_InlineHandler_DecFromMeasure_OnTitleSqnotecng:
 	lda	xiz, (9744:16)
 	lda	xwa, (9746:16)
@@ -23112,6 +23117,8 @@ SeqAccomp_SubHandlerA:
 	ld	xbc, EVT_PARA_DRAW
 	ld	xde, 0:i3
 	jrl	ApPlaySyori_Join9
+; SeqAccomp_ParamDelivery_IncCycleEnable: Cycle on: TT_SQCYCPLY sets 0x28B1 bit 0; TT_SQCYCREC assigns the parts, sets
+;   bit 1 and moves the measure to the cycle start.
 SeqAccomp_ParamDelivery_IncCycleEnable:
 	bit	2, (SEQ_TRANSPORT_STATE:16)
 	jrl	nz, AppEvent_ReturnZero
@@ -23207,6 +23214,8 @@ ApPlaySyori_Join3:
 	ld	xbc, EVT_PARA_DRAW
 	ld	xde, 6:i3
 	jrl	ApPlaySyori_Join9
+; SeqAccomp_ParamDelivery_IncPInPOutPCntIn: Parameters 8, 9 and 10 (P in-measure 0xF238, P out-measure 0xF23A, P
+;   count-in 0xF23F) share this body; an inner compare picks the field.
 SeqAccomp_ParamDelivery_IncPInPOutPCntIn:	; cases 8, 9, 10
 	bit	2, (SEQ_TRANSPORT_STATE:16)
 	jrl	nz, AppEvent_ReturnZero
@@ -25268,6 +25277,8 @@ MainExeCall_OnTitleSqtrns:
 	jrl	nz, MainExe_SongMemoryLoop
 	ldw	wa, 157
 	jrl	MainExe_CallModeSwitch
+; MainExeCall_OnTitleSqvelocng: EXECUTE on TT_SQVELOCNG: track 0xf228 from measure 0xf229, velocity amount 0xf22e into
+;   9812, then SeqPart_TransposeSetup (name does not fit).
 MainExeCall_OnTitleSqvelocng:
 	ld	a, (61992:16)
 	cp	a, 17
@@ -25317,6 +25328,8 @@ MainExeCall_OnTitleSqadvdly:
 	jrl	nz, MainExe_SongMemoryLoop
 	ldw	wa, 160
 	jrl	MainExe_CallModeSwitch
+; MainExeCall_OnTitleSqmers: EXECUTE on TT_SQMERS: track 0xf1db from measure 0xf1dc, MERS choice 0xf1e0 into 9808,
+;   then SeqPart_SinglePartLoad.
 MainExeCall_OnTitleSqmers:
 	ld	a, (61915:16)
 	cp	a, 17
@@ -25340,6 +25353,8 @@ MainExe_AccompLoad:
 	jrl	nz, MainExe_SongMemoryLoop
 	ldw	wa, 161
 	jrl	MainExe_CallModeSwitch
+; MainExeCall_OnTitleSqmcp: EXECUTE on TT_SQMCP: source track 0xf1e9 from measure 0xf1ea, destination track 0xf1ee at
+;   measure 0xf1ef, then SeqPart_DualPartLoad (SeqPart_LoadAndValidateData after error 0x23).
 MainExeCall_OnTitleSqmcp:
 	ld	wa, (61930:16)
 	ld	(9778:16), wa
@@ -25847,6 +25862,7 @@ SingleLoad_PrepareSongSlot:
 	dec	2, xsp
 	pushw	iz
 	ld	(xsp+2), a
+	; ldw (0xf19e),(0x00ffec)
 	ldw	(0xf19e:16), (0xffec:24)
 	call	Audio_CheckSubsystemReady
 	ld	a, (65507:24)

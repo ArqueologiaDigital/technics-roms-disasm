@@ -25,27 +25,36 @@ The dry run and `--apply` read the linked ELFs in `rebuilt_ROMs/`, so run `make 
 
 `--count`. A label is counted when the line directly above it is a `;` comment line.
 
-| tree | v10 labels with a header | label present | with header, before | with header, after | without, after |
-|------|--------------------------|---------------|---------------------|--------------------|----------------|
-| v9   | 9,610                    | 9,607         | 8,381               | 9,585              | 22             |
-| v7   | 9,610                    | 9,254         | 8,101               | 8,765              | 489            |
+| tree | v10 labels with a header | label present | with header, before | after pass 1 | after pass 2 | without, now |
+|------|--------------------------|---------------|---------------------|--------------|--------------|--------------|
+| v9   | 9,610                    | 9,607         | 8,381               | 9,585        | 9,599        | 8            |
+| v7   | 9,610                    | 9,254         | 8,101               | 8,765        | 8,929        | 325          |
 
-The automatic pass (`--apply`) made these changes:
+Two automatic passes were made with `--apply`. Pass 1 compared bodies with whitespace and hex case
+normalized. Pass 2 also normalized number bases and register case, split `Label: insn` lines, and
+added the byte proof for spans the trees spell differently.
 
-| tree | headers inserted | headers extended | addresses translated | trailing comments | in-body comment runs |
-|------|------------------|------------------|----------------------|-------------------|----------------------|
-| v9   | 1,204            | 85               | 0                    | 10                | 4                    |
-| v7   | 664              | 62               | 17                   | 25                | 20                   |
+| pass | tree | headers inserted | of them byte-proven | headers extended | addresses translated | trailing comments | in-body comment runs |
+|------|------|------------------|---------------------|------------------|----------------------|-------------------|----------------------|
+| 1    | v9   | 1,204            | 0                   | 85               | 0                    | 10                | 4                    |
+| 1    | v7   | 664              | 0                   | 62               | 17                   | 25                | 20                   |
+| 2    | v9   | 14               | 8                   | 0                | 0                    | 12                | 0                    |
+| 2    | v7   | 164              | 108                 | 1                | 7                    | 161               | 9                    |
 
 - **Headers extended** means the target's header was a subsequence of v10's (v10 had added to it)
   and was replaced by v10's. Nothing was removed.
 - **Addresses translated** counts headers that quote a v10 ROM address and were copied with the
   target build's address. A translation is accepted only when the bytes from the nearest label
   the two builds share up to that address are the same code.
-- **Calibration of the translation rule.** Before this pass, 299 v7 headers that an earlier hand
-  port had adapted to v7 addresses came out identical to what the rule produces. To reproduce on
-  the committed tree, run the v7 dry run with and without `--no-translate` and subtract the
-  `header-already` figures: 7,812 - 7,496 = 316, which is those 299 plus this pass's 17.
+- **Byte-proven** headers sit on spans that the two trees spell differently, for example
+  `.incbin` against record macros, `.long Sym` against `.byte`, or `pushw 0xff` against
+  `pushw 255`. Each such span has the same length and the same bytes, and every differing pointer
+  is the target's translation of v10's. Headers that talk about the source text (`.byte`,
+  "spelled", "below") are refused there.
+- **Calibration of the translation rule.** 336 v7 headers match v10's only after address
+  translation. This lane wrote 24 of them (17 + 7). The other 312 were adapted by earlier hand
+  ports, and the rule reproduces each of them exactly. To reproduce the count, run the v7 dry run
+  with and without `--no-translate` and subtract the `header-already` figures: 8,134 - 7,798.
 
 ## review-2026-10-24.tsv
 
@@ -74,4 +83,5 @@ These are the labels the tool would not copy. There is one row per (target, labe
 | `names-absent-symbol`     | names a symbol that v10 defines and the target does not                                  |
 | `header-text-elsewhere`   | a long header line already occurs elsewhere in the target file                           |
 | `dump-of-differing-bytes` | contains a `; \|....\|` byte dump, and the bytes differ                                  |
+| `spelling-differs`        | a byte-proven span whose header talks about the source text, which is what differs       |
 | `label-absent`            | the target has no label of that name; a job for `harmonize_version_labels.py`            |

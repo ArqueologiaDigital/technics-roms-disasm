@@ -1838,6 +1838,8 @@ InOutGridCheck_Skip15:
 	lda	xde, (xsp+4)
 	ld	xbc, EVT_GRID_DRAW
 	jrl	InOutGridCheck_Join4	; -> 0xF75DF0
+; Data_InOutGridDispatch_VelocityOffsetOrFix: row under VELOCITY INPUT: blank for DIRECT, else the offset (0x5001) or
+;   fixed velocity (0x5002) as %3d
 Data_InOutGridDispatch_VelocityOffsetOrFix:
 	ld	xwa, 20480
 	call	SndParam_LookupReadOnly

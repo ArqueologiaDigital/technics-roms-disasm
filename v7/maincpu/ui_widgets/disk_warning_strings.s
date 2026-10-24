@@ -577,6 +577,8 @@ AcGridBoxProc_CaseTable:
 	.short	AcGridBox_Default - AcGridBox_Init
 	.short	AcGridBox_CellSelect - AcGridBox_Init
 	.short	AcGridBox_CellSelect - AcGridBox_Init
+; GridCheck_Str_CellColRow: "%d-%d": format GridCheck_CellSelect fills with the selected cell's column (high word of
+;   the event parameter) and row (low word) before sending EVT_GRID_DRAW to the focus object. Basis: readers + bytes.
 GridCheck_Str_CellColRow:
 	.incbin "includes/generated/naka_disk_warning.bin", 0x15ba, 0x6
 ; GridCheck_CaseTable -- 7 x int16: the case offsets of GridCheck's compiled switch, relative to GridCheck_JumpEnd

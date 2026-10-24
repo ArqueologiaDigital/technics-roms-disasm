@@ -3188,6 +3188,13 @@ FileIO_ByteBlock_DemoProc1_Epilogue:
 	pop	xiz
 	lda	xsp, (xsp+36)
 	ret
+; SingleLoad_LoadPanelMemBank: Single-loads panel-memory bank WA of the selected .PMT file into bank BC: checks the
+;   file signature, reads the 16-byte bank name (file 16 + 16 * WA -> RAM 0x1ED350 + 16 + 16 * BC) and the bank's 8
+;   memories (8 * entry size from file 176 + WA * 8 * size -> 0x1ED350 + 176 + BC * 8 * size) between
+;   PanelMemory_PreBankLoad and PanelMemory_PostBankLoad; returns HL = read result, 0xFF98 with no file selected,
+;   0xFF9A on a wrong signature. Basis: callers + body -- SingleLoadDst_PanelMemListProc runs it for parameter 10 (the
+;   execute SingleLoadDstFunc sends) in ALL mode with WA = source bank (0x89FC / 8) and BC = destination bank (0x8A02
+;   / 8); FileIO_ByteBlock_DemoProc1 is the one-memory load.
 SingleLoad_LoadPanelMemBank:
 	lda	xsp, (xsp-36)
 	push	xiz
@@ -6726,6 +6733,10 @@ GetFileEntryByIndex_Skip:
 GetFileEntryByIndex_Epilogue:
 	popw	iz
 	ret
+; SingleLoadSrc_ReadPmtBankName: Returns XHL = the 16-character name of bank WA in the selected .PMT file: opens it
+;   (type 1), reads 16 bytes at offset 16 + 16 * WA into 0x25BD2 and NUL-terminates them; FileIO_EmptyEntryName when
+;   no file is selected or it does not open. Basis: callers + body -- SingleLoadSrc_PanelMemDrawBankName puts its
+;   result in row 1 of the PANEL MEMORY source list; same shape as SingleLoadSrc_ReadSqtSongName.
 SingleLoadSrc_ReadPmtBankName:
 	lda	xsp, (xsp-26)
 	pushw	iz

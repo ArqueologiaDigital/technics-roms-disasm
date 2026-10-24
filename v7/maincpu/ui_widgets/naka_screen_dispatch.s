@@ -1374,10 +1374,17 @@ NumStr_1:
 NumStr_0:
 	aligned_string "  0"
 CmpBndRng_DefaultString_Str_ERR:	aligned_string "ERR"
+; AcCmpSetGridBox_RowUpSteps: 9 x u16 {1, 1, 1, 1, 2, 3, 1, 1, 1}: how many rows INDEX UP moves the selection of the
+;   Composer SET grid (AcCmpSetGridBoxProc) from each row; the new row is row - step[row]. Basis: readers + bytes --
+;   AcCmpSetGridBoxProc's EVT_INDEXSW_UP case indexes it with the selected row and sends EVT_SELE_DRAW with the
+;   result.
 AcCmpSetGridBox_RowUpSteps:
 	.byte 0x01, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00
 	.byte 0x02, 0x00, 0x03, 0x00, 0x01, 0x00, 0x01, 0x00
 	.byte	0x01, 0x00
+; AcCmpSetGridBox_RowDownSteps: 9 x u16 {1, 1, 3, 2, 1, 1, 1, 1, 1}: how many rows INDEX DOWN moves the selection of
+;   the Composer SET grid from each row; the new row is row + step[row] (rows 3 and 4 are skipped from row 2, as INDEX
+;   UP skips them from 5). Basis: readers + bytes -- AcCmpSetGridBoxProc's EVT_INDEXSW_DOWN case.
 AcCmpSetGridBox_RowDownSteps:	.byte	0x01, 0x00, 0x01, 0x00, 0x03, 0x00
 	.byte 0x02, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00
 	.byte	0x01, 0x00, 0x01, 0x00
@@ -2003,6 +2010,9 @@ PsCstmCpSwBox_ReadParam2_Str_CUSTOM:
 	.byte 0x43, 0x55, 0x53, 0x54, 0x4f, 0x4d
 	.byte 0x00			; padding
 	.byte 0xff			; padding
+; AcMemNoBox_SectionNameStrPtrs: 33 x u32 string pointers, the style-section names "A-vari1" .. "C-END2" plus "A-ALL",
+;   "B-ALL", "C-ALL": AcMemNoBoxProc Sprintf's entry [(0x34D6)] on EVT_PAINT / EVT_REPAINT. Entry 0 is the label;
+;   PtrTbl_StyleSectShortNames2 (entry 1) has no reader. Basis: readers + bytes.
 AcMemNoBox_SectionNameStrPtrs:
 	.byte 0x00			; padding
 	.byte 0xdd, 0xe1

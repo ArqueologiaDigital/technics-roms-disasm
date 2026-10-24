@@ -342,6 +342,8 @@ WndEvt_EventCodeDispatch:
 	; v10 does not spell this byte either
 	; v10 does not spell this byte either
 	jrl	WndEvt_EventCodeDispatch_Join3
+; WndEvt_DispatchByEventCode_CursorRight: button 2: cursor (0x274D8) + 1 while below the name length (0x274D6),
+;   EVT_SET_CURSOR
 WndEvt_DispatchByEventCode_CursorRight:
 	ld	wa, (160984:24)
 	ld	bc, wa
@@ -359,6 +361,8 @@ WndEvt_DispatchByEventCode_CursorRight:
 	ld	xbc, (xsp+46)
 	ld	xde, (xsp+42)
 	jrl	WndEvt_EventCodeDispatch_Join3
+; WndEvt_DispatchByEventCode_PrevChar: button 3 (dial down): previous character of the page (0x274DE - 1) written at
+;   the cursor
 WndEvt_DispatchByEventCode_PrevChar:
 	ld	bc, (160990:24)
 	cp	bc, 0:i3
@@ -570,6 +574,8 @@ WndEvt_EventCodeDispatch_Join:
 	ld	xbc, (xsp+46)
 	ld	xde, (xsp+42)
 	jrl	WndEvt_EventCodeDispatch_Join3
+; WndEvt_DispatchByEventCode_NextChar: button 5 (dial up): next character of the page (0x274DE + 1) written at the
+;   cursor
 WndEvt_DispatchByEventCode_NextChar:
 	ld	bc, (160986:24)
 	ld	wa, bc
@@ -641,6 +647,8 @@ WndEvt_DispatchByEventCode_NextChar_Join2:
 WndEvt_EventCodeDispatch_Join3:
 	calr	SetAutoInc
 	jrl	UIDialog_ReturnZeroJmp
+; WndEvt_DispatchByEventCode_InsertBlank: button 6: shift the name right from the cursor and put the fill character at
+;   the cursor
 WndEvt_DispatchByEventCode_InsertBlank:
 	ld	iz, (160982:24)
 	dec	1, iz
@@ -683,6 +691,8 @@ WndEvt_DispatchByEventCode_InsertBlank_Skip7:
 	ld	xwa, (xsp+50)
 	ld	xbc, EVT_SET_CURSOR
 	jrl	WndScroll_SendAndReturn
+; WndEvt_DispatchByEventCode_DeleteChar: button 7: delete at the cursor, shift the rest left and put the fill
+;   character at the end
 WndEvt_DispatchByEventCode_DeleteChar:
 	ld	iz, (160984:24)
 	cp	iz, (160982:24)
@@ -725,6 +735,8 @@ WndEvt_DispatchByEventCode_DeleteChar_Skip8:
 	ld	xwa, (xsp+50)
 	ld	xbc, EVT_SET_CURSOR
 	jrl	WndScroll_SendAndReturn
+; WndEvt_DispatchByEventCode_CenterName: button 8: re-pad the name so the leading and trailing fill characters are
+;   split evenly
 WndEvt_DispatchByEventCode_CenterName:
 	ld	qiz, 0
 	ld	iz, 0:i3
@@ -878,6 +890,7 @@ WndEvt_DispatchByEventCode_CenterName_Skip2:
 	ld	xwa, (xsp+50)
 	ld	xbc, EVT_SET_CURSOR
 	jrl	WndScroll_SendAndReturn
+; WndEvt_DispatchByEventCode_ClearName: button 9: fill the whole name with the fill character and move the cursor to 0
 WndEvt_DispatchByEventCode_ClearName:
 	ld	iz, 0:i3
 	; v10 does not spell this byte either

@@ -3445,6 +3445,10 @@ FileIO_ByteBlock_DemoProc1_Helper5:
 ;   PrePmLoad.
 PanelMemory_PreBankLoad:
 	ret
+; PanelMemory_PostBankLoad: Hook run after a panel-memory bank was read: BC < 0 (read failed) restores bank WA's ROM
+;   default name (VoiceData_ExtendedParamSetup), otherwise validates its 8 memories WA*8+0..7
+;   (PanelTlv_ValidatePanelMemory). Basis: callers + body -- FileIO_LoadRegion1_VRAM and the bank loader pass WA =
+;   bank and BC = the read result, where the whole-file path calls PostPmLoad.
 PanelMemory_PostBankLoad:
 	dec 2,XSP
 	push QIZ

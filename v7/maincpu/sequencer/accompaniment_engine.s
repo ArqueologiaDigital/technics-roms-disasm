@@ -29719,6 +29719,7 @@ CmpRealTtl_RhythmVar4:
 CmpRealTtl_MajorDispatch_Case8:
 	set	1, (0x3433:16)
 	jr	CmpBk_ReturnZero
+; CmpRealTtl_MajorDispatch_OnRightRow4Mute: Switch 11 (right side row 4): CmpRealTtl_CycleQuantize, then repaints 0xB5001D.
 CmpRealTtl_MajorDispatch_OnRightRow4Mute:
 	push	xde
 	push	xhl
@@ -32086,6 +32087,7 @@ MainCmpSetFunc:
 	ld	hl, (xhl)
 	lda	xix, (MainCmpSet_Dispatch:24)
 	jp	t, (xix+hl)
+; MainCmpSetFunc dispatch
 MainCmpSet_Dispatch:
 	ld	xwa, (xsp)
 	sll	xwa, 3
@@ -33135,8 +33137,13 @@ CmpStepTitleFunc:
 
 CmpStep_DataBlock:		.incbin "includes/romslices/v7_transplant_CmpStep_DataBlock.bin", 0x0, 0x20
 CmpStepTitle_OnPaint_Draw:	.incbin "includes/romslices/v7_transplant_CmpStep_DataBlock.bin", 0x20, 0xD
+; CmpStepTitle_OnHide: CmpStepTitleFunc_ProcTable[1], which DirmdEmulator calls on EVT_HIDE: CmpStep_OnHide with
+;   XDE/XHL/XIX/XIZ preserved.
 CmpStepTitle_OnHide:		.incbin "includes/romslices/v7_transplant_CmpStep_DataBlock.bin", 0x2D, 0xD
+; CmpStepTitle_OnSwitchIn: CmpStepTitleFunc_ProcTable[2], which DirmdEmulator calls on EVT_SW_IN: CmpStep_DispatchSwitch
+;   with XDE/XHL/XIX/XIZ preserved.
 CmpStepTitle_OnSwitchIn:	.incbin "includes/romslices/v7_transplant_CmpStep_DataBlock.bin", 0x3A, 0xD
+; CmpStepTitle_Method3Nop: CmpStepTitleFunc_ProcTable[3], a lone `ret`; DirmdEmulator calls only methods 0-2.
 CmpStepTitle_Method3Nop:	.incbin "includes/romslices/v7_transplant_CmpStep_DataBlock.bin", 0x47, 0x1
 AccAudio_LockAcquire:
 	ldw wa, 0x8
@@ -33919,6 +33926,11 @@ CmpStep_ValueFieldRecords:	.byte	0x02, 0x0f, 0x1f, 0x39, 0xff, 0x00, 0x20, 0x05,
 	.byte 0x81, 0x11, 0x02, 0x0f, 0x23, 0x39, 0x0f, 0x00, 0x06, 0x80, 0xaa, 0xf6, 0x00, 0x01, 0x00, 0x31	; |....#9.........1|
 	.byte 0x16, 0x04, 0x0b, 0x00, 0x00, 0x00, 0x00, 0x0e, 0x87, 0xa8, 0xf6, 0x00, 0x00, 0x0a, 0x24, 0x39	; |..............$9|
 	.byte	0x0f, 0x00, 0x06, 0x83, 0x1b, 0x01	; |.............4..|
+; CmpStep_NoteEntryAreaBand: One bound op-04 display record of the Composer STEP screen with RAM word 0, mask 0 and
+;   shift 0, so it always takes entry 0 of its rectangle list at 0xF6A834: text cell 0x1F1D, 20 characters by 40
+;   pixels -- the note-entry row's area (its caption starts at cell 0x1F1E). AccDraw_Secondary_Helper5 colour-blits it
+;   (COLORBLIT_MODE 2, AccGraphics_BoundOp04) instead of drawing CmpStep_NoteEntryFrameRecords when the step mode
+;   (0x3712) is not 4. It is also the end of CmpStep_ValueFieldRecords. Basis: readers + bytes.
 CmpStep_NoteEntryAreaBand:	.byte	0x04, 0x0b, 0x00, 0x00, 0x00, 0x00, 0x0e, 0x34, 0xa8, 0xf6
 	.byte	0x00, 0x1d, 0x1f, 0x14, 0x00, 0x28, 0x00	; |.....(....9...I.|
 AccScreen_DataBlock_Data_7:	.byte	0x02, 0x0f, 0x1f, 0x39, 0x01, 0x00, 0x06, 0x49, 0xa8

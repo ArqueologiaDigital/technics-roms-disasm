@@ -3012,28 +3012,28 @@ Seq_LoadResource_SpecialCase:
 	ldw hl, 0xfff8				; error code -8
 	jr Seq_Epilogue32
 Seq_LoadResource_Proceed:
-	push	xiz
-	lda	xwa, (xsp+8)
+	push	xiz				; push resource arg
+	lda	xwa, (xsp+8)			; buffer (adjusted for push)
 	push	xwa
-	call	Strcat
-	pushw	Seq_LoadResource_Proceed_Str_PRE@hi16
-	pushw	Seq_LoadResource_Proceed_Str_PRE@lo16
-	lda	xwa, (xsp+16)
+	call	Strcat			; format/prepare
+	pushw	Seq_LoadResource_Proceed_Str_PRE@hi16				; resource ID high
+	pushw	Seq_LoadResource_Proceed_Str_PRE@lo16				; resource ID low
+	lda	xwa, (xsp+16)			; buffer
 	push	xwa
-	call	Strcat
-	lda	xsp, (xsp+16)
-	lda	xwa, (xsp+4)
-	ld	xbc, Seq_LoadResource_Proceed_Str_rt
-	call	FileIO_OpenWithMode
+	call	Strcat			; format/prepare
+	lda	xsp, (xsp+16)			; clean stack (16 bytes)
+	lda	xwa, (xsp+4)			; reload buffer
+	ld	xbc, Seq_LoadResource_Proceed_Str_rt			; resource descriptor
+	call	FileIO_OpenWithMode				; open display resource
 	cp	hl, 0:i3
-	jr	lt, Seq_Epilogue32
+	jr	lt, Seq_Epilogue32			; failed
 	pushw	Seq_LoadResource_Proceed_Str_PRESENTATION@hi16
 	pushw	Seq_LoadResource_Proceed_Str_PRESENTATION@lo16
-	ld	xwa, 149704
-	ld	xbc, 256
-	ld	xde, Presentation_TagStrTable
+	ld	xwa, 149704			; data source
+	ld	xbc, 256			; size 256
+	ld	xde, Presentation_TagStrTable			; destination descriptor
 	calr	FDemoText_ReadTaggedBlock
-	call	FileIO_CloseHandle
+	call	FileIO_CloseHandle			; finalize
 Seq_Epilogue32:
 	pop xiz
 	lda xsp, (xsp + 32)
@@ -3049,48 +3049,48 @@ Seq_LoadNamedResource:
 	lda xbc, (xbc + 32)			; XBC = end of buffer
 Seq_FillBufferLoop:
 	ld	(xwa+), 32
-	cp	xwa, xbc
-	jr	c, Seq_FillBufferLoop
-	push	xiz
-	call	Strlen
-	pushw	hl
-	push	xiz
-	lda	xwa, (xsp+14)
+	cp	xwa, xbc				; reached end?
+	jr	c, Seq_FillBufferLoop			; no, continue filling
+	push	xiz				; push name arg
+	call	Strlen				; name lookup (strlen?)
+	pushw	hl				; push length
+	push	xiz				; push name
+	lda	xwa, (xsp+14)			; buffer
 	push	xwa
-	call	Strncpy
-	lda	xwa, (xsp+18)
-	ld	(xwa+8), 0
+	call	Strncpy				; format string into buffer
+	lda	xwa, (xsp+18)			; buffer (adjusted)
+	ld	(xwa+8), 0			; null-terminate at offset 8
 	pushw	Seq_FillBufferLoop_Str_ACT@hi16
-	pushw	Seq_FillBufferLoop_Str_ACT@lo16
+	pushw	Seq_FillBufferLoop_Str_ACT@lo16				; resource ID
 	push	xwa
-	call	Strcat
-	lda	xsp, (xsp+22)
+	call	Strcat			; format/prepare
+	lda	xsp, (xsp+22)			; clean stack
 	lda	xwa, (xsp+4)
-	ld	xbc, Seq_FillBufferLoop_Str_rt
-	call	FileIO_OpenWithMode
+	ld	xbc, Seq_FillBufferLoop_Str_rt			; resource descriptor
+	call	FileIO_OpenWithMode				; open display resource
 	cp	hl, 0:i3
-	jr	lt, Seq_NamedResource_Epilogue
+	jr	lt, Seq_NamedResource_Epilogue			; failed
 	ld	xwa, 0:i3
 	ld	bc, 2:i3
-	call	FileIO_SeekAndReadBlock
-	call	FileIO_SeekWriteBlock_Impl
-	ld	xiz, xhl
-	call	FileIO_SeekRead_ExtReturn
+	call	FileIO_SeekAndReadBlock				; set region param
+	call	FileIO_SeekWriteBlock_Impl				; get display info
+	ld	xiz, xhl				; XIZ = info ptr
+	call	FileIO_SeekRead_ExtReturn				; additional setup
 	ld	xwa, xiz
 	calr	FDemo_AllocBuffer
 	ld	xwa, xhl
-	ld	(149968:24), xwa
+	ld	(149968:24), xwa	; store result
 	pushw	Seq_FillBufferLoop_Str_ACTION@hi16
 	pushw	Seq_FillBufferLoop_Str_ACTION@lo16
-	ld	xbc, xiz
-	ld	xde, Seq_FillBufferLoop_Str_ACTION_2
+	ld	xbc, xiz				; info ptr
+	ld	xde, Seq_FillBufferLoop_Str_ACTION_2			; destination descriptor
 	calr	FDemoText_ReadTaggedBlock
-	call	FileIO_CloseHandle
+	call	FileIO_CloseHandle			; finalize
 	cp	hl, 0:i3
-	jr	nz, Seq_NamedResource_Epilogue
-	calr	Seq_PostProcessDisplay
+	jr	nz, Seq_NamedResource_Epilogue			; finalize failed
+	calr	Seq_PostProcessDisplay			; post-processing
 	ld	wa, 1:i3
-	calr	FDemoText_ProcessMarkupLoop
+	calr	FDemoText_ProcessMarkupLoop			; additional display update
 Seq_NamedResource_Epilogue:
 	pop xiz
 	lda xsp, (xsp + 32)

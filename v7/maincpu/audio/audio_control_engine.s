@@ -3048,18 +3048,25 @@ ExtData_VoiceParam_DispatchBytecode:
 	ld	wa, (xix+wa)
 	lda	xix, (ExtData_VoiceParam_DispatchBytecode_ModeMsp:24)
 	jp	t, (xix+wa)
+; ExtData_VoiceParam_DispatchBytecode_ModeMsp: MD_MSP (CURRENT_MODE 15; also the switch base): sets bit 7 of LED row 2
+;   (0x8F1A). Basis: switch value (CURRENT_MODE - 2) + body.
 ExtData_VoiceParam_DispatchBytecode_ModeMsp:
 	setm	7, (xbc)
 	jr	SndParamF9A541_ResBit7_Code_Epilogue
+; ExtData_VoiceParam_DispatchBytecode_ModeCmp: MD_CMP: sets bit 1 of LED row 0 (0x8F18)
 ExtData_VoiceParam_DispatchBytecode_ModeCmp:
 	ld	a, 1:opc
 	jr	SndParamF9A541_ResBit7_Code_Join
+; ExtData_VoiceParam_DispatchBytecode_ModeSndArg: MD_SND_ARG: sets bit 2 of LED row 0 (0x8F18)
 ExtData_VoiceParam_DispatchBytecode_ModeSndArg:
 	ld	a, 2:opc
 	jr	SndParamF9A541_ResBit7_Code_Join
+; ExtData_VoiceParam_DispatchBytecode_ModeSeq: MD_SEQ / MD_SEQ_EDIT / MD_SEQ_STEP: sets bit 7 of LED row 6 (0x8F1E)
 ExtData_VoiceParam_DispatchBytecode_ModeSeq:	; cases 8, 12, 13
 	setm	7, (xde)
 	jr	SndParamF9A541_ResBit7_Code_Epilogue
+; ExtData_VoiceParam_DispatchBytecode_ModeSeqReal: MD_SEQ_REAL: sets bit 7 of LED row 6, and bit 6 too when (0x26FC) =
+;   1
 ExtData_VoiceParam_DispatchBytecode_ModeSeqReal:
 	ld	xwa, xde
 	setm	7, (xde)
@@ -3067,21 +3074,27 @@ ExtData_VoiceParam_DispatchBytecode_ModeSeqReal:
 	jr	nz, SndParamF9A541_ResBit7_Code_Epilogue
 	setm	6, (xwa)
 	jr	SndParamF9A541_ResBit7_Code_Epilogue
+; ExtData_VoiceParam_DispatchBytecode_ModeSeqErec: MD_SEQ_EREC: sets bit 6 of LED row 6 (0x8F1E)
 ExtData_VoiceParam_DispatchBytecode_ModeSeqErec:
 	setm	6, (xde)
 	jr	SndParamF9A541_ResBit7_Code_Epilogue
+; ExtData_VoiceParam_DispatchBytecode_ModeSound: MD_SOUND / MD_SOUNDEDIT: sets bit 0 of LED row 11 (0x8F23)
 ExtData_VoiceParam_DispatchBytecode_ModeSound:	; cases 2, 3
 	setm	0, (xiy)
 	jr	SndParamF9A541_ResBit7_Code_Epilogue
+; ExtData_VoiceParam_DispatchBytecode_ModeMidi: MD_MIDI: sets bit 2 of LED row 11 (0x8F23)
 ExtData_VoiceParam_DispatchBytecode_ModeMidi:
 	setm	2, (xiy)
 	jr	SndParamF9A541_ResBit7_Code_Epilogue
+; ExtData_VoiceParam_DispatchBytecode_ModeControl: MD_CONTROL: sets bit 1 of LED row 11 (0x8F23)
 ExtData_VoiceParam_DispatchBytecode_ModeControl:
 	setm	1, (xiy)
 	jr	SndParamF9A541_ResBit7_Code_Epilogue
+; ExtData_VoiceParam_DispatchBytecode_ModeDisk: MD_DISK: sets bit 3 of LED row 11 (0x8F23)
 ExtData_VoiceParam_DispatchBytecode_ModeDisk:
 	setm	3, (xiy)
 	jr	SndParamF9A541_ResBit7_Code_Epilogue
+; ExtData_VoiceParam_DispatchBytecode_ModeEntertainer: MD_ENTERTAINER: sets bit 3 of LED row 10 (0x8F22)
 ExtData_VoiceParam_DispatchBytecode_ModeEntertainer:
 	setm	3, (xhl)
 	jr	SndParamF9A541_ResBit7_Code_Epilogue
@@ -10099,6 +10112,9 @@ MidiVoiceNote_LookupMode0_Data:	.byte	0x00
 MidiVoiceNote_LookupMode3_Data:	.byte	0x00, 0x02
 	.byte	0x01, 0x08, 0x09, 0x0a, 0x0b, 0x03, 0x04, 0x05
 	.byte	0x06, 0x07, 0x11, 0x12, 0x13, 0x0c, 0x0f, 0xff
+; SeqTrackAssign_RecordMapTable: 20 pointers by TRACK ASSIGN value: the panel events a track of that type records --
+;   4-byte entries (tag, payload offset, value mask, emitter index into MidiStream_ProcessorDispatchC_Data), 0xFF-
+;   terminated. Basis: readers + bytes.
 SeqTrackAssign_RecordMapTable:
 	.byte 0xcc, 0xb2, 0xfc, 0x00, 0x7c, 0xb3, 0xfc, 0x00
 	.byte 0x24, 0xb3, 0xfc, 0x00, 0xe4, 0xb4, 0xfc, 0x00
@@ -10272,6 +10288,9 @@ SeqTrackAssign_RecordMapTable:
 	.byte	0x72, 0x07, 0x7f, 0x06, 0xff, 0xff, 0xff, 0xff
 	.fill	8, 1, 0xff
 	.byte	0xff, 0xff, 0xff, 0xff
+; SeqTrackAssign_PlaybackMapTable: 20 pointers by TRACK ASSIGN value: the playback-side lists (tag, payload offset,
+;   mask, handler index into VoiceMode_ParamHandler_3_Data), 0xFF-terminated, matched against a played track event.
+;   Basis: readers + bytes.
 SeqTrackAssign_PlaybackMapTable:
 	.byte 0x28, 0xb8, 0xfc, 0x00, 0x30, 0xb9, 0xfc, 0x00
 	.byte 0xac, 0xb8, 0xfc, 0x00, 0x74, 0xba, 0xfc, 0x00
@@ -10432,6 +10451,9 @@ SeqTrackAssign_PlaybackMapTable:
 	.byte	0x72, 0x03, 0xff, 0x06, 0x72, 0x07, 0x7f, 0x06
 	.fill	8, 1, 0xff
 	.fill	8, 1, 0xff
+; MidiStream_PartEventMapTable: 16 pointers by (0x379B) & 15 (0xFFFFFFFF = none; set for 1, 2, 4, 8): panel-event maps
+;   of part records 0x10-0x13 (ACP1-3, BASS) in the same 4-byte format, used by MidiStream_ProcessEventBuffer. Basis:
+;   readers + bytes.
 MidiStream_PartEventMapTable:
 	.byte	0xff, 0xff, 0xff, 0xff, 0xc, 0xbd, 0xfc, 0x00
 	.byte	0x28, 0xbd, 0xfc, 0x00, 0xff, 0xff, 0xff, 0xff

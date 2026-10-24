@@ -1783,6 +1783,7 @@ PmemOutLGridCheck_OnRamData_Join10:
 	ld	xwa, 0x5b0009
 	ld	xbc, EVT_GRID_DRAW
 	jrl	PmemOutL_GridCheck_Return
+; PmemOutLGridCheck dispatch
 PmemOutL_GridCheck:
 	ld XWA,XHL
 	srl XWA, 16
@@ -1942,6 +1943,10 @@ PmemOutRGridCheck:
 ;   0x1c0001c -> TtMdCtlMsg_ReturnZero2
 ;   0x1c0001d -> PmemOutRGridCheck_OnRamData
 	jp	t, (xix+hl)
+; PmemOutRGridCheck_OnIndexswUp: PmemOutRGridCheck's INDEX UP case (events EVT_INDEXSW_UP and EVT_INDEXSW_UP_AIC; also
+;   the base of its 7-entry case table), the twin of PmemOutRGridCheck_OnIndexswDown: for grid rows 0-2 it fills a
+;   RAM-edit request (PmemOutRGridCheck_RamRequestInit) for the panel-memory part byte and sends it with MainRamPut /
+;   MainRamAdd. Nothing to do with a TT_MDCTLMSG title. Basis: callers + body.
 PmemOutRGridCheck_OnIndexswUp:
 	call	GetFocusObject
 	ld	xwa, xhl
@@ -2559,6 +2564,7 @@ PmemOutRGridCheck_OnRamData_Join8:
 	lda	xde, (xsp+32)
 	ld	xbc, EVT_GRID_DRAW
 	jrl	CtlMsg_SendEventReturn
+; CtlMsgGridCheck event handler dispatch
 CtlMsgGrid_EventHandler:
 	ld XWA,XIZ
 	srl XWA, 16
@@ -3297,6 +3303,7 @@ CtlMsgGridCheck_Join2:
 	cp	bc, 9
 	jr	lt, CtlMsgGridCheck_Loop
 	jr	CtlMsgGrid_ReturnZero
+; MidiSetup title dispatch
 MidiSetup_TtlDispatch:
 	ld XWA,(XSP+0x1e)
 	srl XWA, 16
@@ -4330,6 +4337,7 @@ MidiPartGridCheck_Join5:
 	cp	bc, 10
 	jrl	lt, MidiPartGridCheck_Loop
 	jrl	MidiSetup_ReturnZero
+; MidiSetup event handler dispatch (6-entry, table 0xe806fc)
 MidiSetup_EventHandler:
 	ld XWA,(XSP+0x22)
 	srl XWA, 16
@@ -11647,6 +11655,8 @@ AcWelcomScreen_Select_OpDrawGlyphsIn:
 AcWelcomScreen_RenderBytecode_Join:
 	call	DrawBitmapSP2
 	jrl	AcWelcomScreen_Select_NextStep
+; AcWelcomScreen_Select_OpDrawColorWord: Welcome-script ops 9 and 12: erase the word's previous box (slot 0x03ea24)
+;   and draw COLOR (op 9) or COLOUR (op 12) at the step's x,y in colour arg.
 AcWelcomScreen_Select_OpDrawColorWord:	; cases 9, 12
 	lda	xhl, (0x03ea24:24)
 	cpw	(xhl+10), 65535
@@ -13596,7 +13606,7 @@ PsMixer_CtlTypeProc5_OnParaDraw:
 	jr	nz, PsMixer_CtlTypeProc5_Skip2
 	ld	xhl, 3:i3
 	push	xhl
-	pushw	255
+	pushw	255	; colour pair for DrawString (by value), not a pointer
 	pushw	242
 	pushw	0
 	pushw	0
@@ -13752,7 +13762,7 @@ PsMixer_CtlTypeProc6_OnParaDraw:
 	jr	nz, PsMixer_CtlTypeProc6_Skip2
 	ld	xhl, 3:i3
 	push	xhl
-	pushw	255
+	pushw	255	; colour pair for DrawString (by value), not a pointer
 	pushw	242
 	pushw	0
 	pushw	0
@@ -15047,7 +15057,7 @@ PsMixer_CtlTypeProc2_Join2:
 	addw	(xwa+6), 0x12
 	ld	xde, 3:i3
 	push	xde
-	pushw	251
+	pushw	251	; colour pair for DrawStringReverse, not a pointer
 	pushw	0
 	pushw	0
 	pushw	1

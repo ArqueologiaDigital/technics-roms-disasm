@@ -86,6 +86,12 @@
 	.endif
 	call RegisterTitle
 .endm
+; InitializeHama - Register HAMA (file/disk) subsystem object tables and titles
+; Registers widget tables, view handlers, and two diagnostic titles:
+;   "TT_HDDEXT" (0xe1fd18) - FDD/HD extension test, widget table 0x7f
+;   "TT_EXTAPR" (0xe1fd22) - Extension APR test, widget table 0xfc
+; Both titles use TestTitleFunc (0xf1e370) as their lifecycle callback.
+; Title handler (TestTitleFunc) pointer is stored at 0xe1fd2c in fd_test_data.s.
 InitializeHama:
 	lda	xsp, (xsp-14)
 	ld	xwa, NAKA_CLASS_Class
@@ -656,10 +662,13 @@ Xapr_CallFrameHandler:
 	call (xhl)
 	ret
 
+; Xapr_DetectAndCallBootInit: Re-detects the extension ROM ("XAPR" at 0x280000 -> XAPR_PRESENT_FLAG 1, else 0) and, if
+;   present, calls its boot vector 0x280008 with XWA = 0x027ED2 (the object table). Basis: callers + body --
+;   ScreenGroup_ReInit tail-jumps here at the end of init phase 0.
 Xapr_DetectAndCallBootInit:
-	pushw	4
+	pushw	4	; 4 bytes
 	pushw	LoadExtROM_JumpEntry_Data@hi16
-	pushw	LoadExtROM_JumpEntry_Data@lo16
+	pushw	LoadExtROM_JumpEntry_Data@lo16	; "XAPR"
 	ld	xwa, 2621440
 	push	xwa
 	call	String_Compare

@@ -5585,6 +5585,11 @@ SeWrtMemTitleFunc_DispatchSwitch:
 SeWrtMemTitleFunc_DispatchSwitch_Epilogue28:
 	inc 4,XSP
 	ret
+; SeWrtSndTitleFunc_DispatchSwitch: Switch dispatcher of the sound editor's WRITE SOUND title (SeWrtSnd): decodes the
+;   switch event (SeTitle_DecodeSwitch) and calls entry C of the 18-entry handler table SeWrtSndTitleFunc_SwitchHandlers with
+;   the bank byte in A. Basis: callers + body -- SeWrtSndTitleFunc_OnSwitchIn is its only caller, and the body is the
+;   same code as SeWrtMemTitleFunc_DispatchSwitch and the other SeXxxTitleFunc_DispatchSwitch routines, differing only
+;   in the table.
 SeWrtSndTitleFunc_DispatchSwitch:
 	dec	4, xsp
 	lda	xde, (xsp+2)
@@ -6118,14 +6123,18 @@ SeDigEff_OnColumn3_CelesteChorusDetune_Join11:
 	ld	wa, 3:i3
 	call	SeMenu_BindDialToColumn
 	jr	SeDigEff_OnColumn3_RepeatDelaySustain_Epilogue9
+; SeDigEff_OnColumn3_Depth: Types 4/5 ENSEMBLE and 7 ORGAN TREMOLO (DEPTH2), 10/11 SOLO EFFECT (DEPTH): column limits
+;   50 and 0.
 SeDigEff_OnColumn3_Depth:	; cases 4, 5, 7, 10, 11
 	lda	xwa, (xsp)
 	ld	(xwa+8), 50
 	jr	SeDigEff_OnColumn3_RepeatDelaySustain_Join12
+; SeDigEff_OnColumn3_TremoloWave: Type 6 TREMOLO: column 3 is WAVE, limits 3 and 0.
 SeDigEff_OnColumn3_TremoloWave:
 	lda	xwa, (xsp)
 	ld	(xwa+8), 3
 	jr	SeDigEff_OnColumn3_RepeatDelaySustain_Join12
+; SeDigEff_OnColumn3_SingleDelayKey: Type 8 SINGLE DELAY: column 3 is KEY, limits +24 and -24.
 SeDigEff_OnColumn3_SingleDelayKey:
 	lda	xwa, (xsp)
 	ld	(xwa+8), 24
@@ -6186,6 +6195,7 @@ SeDigEff_OnColumn4_DelaySpeed2_Join13:
 	ld	wa, 4:i3
 	call	SeMenu_BindDialToColumn
 	jr	SeDigEff_OnColumn4_RepeatDelayRelease_Epilogue10
+; SeDigEff_OnColumn4_Balance: Types 6 TREMOLO and 8 SINGLE DELAY: column 4 is BALANCE, limits 100 and 0.
 SeDigEff_OnColumn4_Balance:	; cases 6, 8
 	lda	xwa, (xsp)
 	ld	(xwa+8), 100
@@ -7187,6 +7197,13 @@ SeWrtSnd_SetupNamingPage_Join5:
 SeWrtSnd_SetupNamingPage_Epilogue:
 	inc	6, xsp
 	ret
+; SeWrtSnd_ClearName: Name-entry screen (0x3F) of the WRITE SOUND title: fills the 16-character name buffer at 0x20BF3
+;   with spaces (SeMenu_SetNameBufferChar, C = 32, positions 0..15), sets page params 0 (cursor
+;   position) and 1 (character) to 0 and redraws fields 0 and 1 of screen 0x3F (SeTitle_DrawField). Basis:
+;   callers + body -- its only caller is the A = 0 branch of entry 8 (side row 1) of SeWrtSndTitleFunc_SwitchHandlers, the
+;   switch-handler table SeWrtSndTitleFunc_DispatchSwitch indexes; that handler has no label and follows
+;   SeWrtMem_OnSwitch15, which is why the caller list names SeWrtMem_OnSwitch15. The other branch sends the 16 name
+;   characters and moves on to screen 62.
 SeWrtSnd_ClearName:
 	push	qiz
 	ldib_erp	251, 0
@@ -8061,6 +8078,10 @@ SeGfx_DrawLine:
 	pop	xwa
 	pop	xiz
 	ret
+; SeMenu_DrawDottedLine: Draws a dotted line from (x0,y0) to (x1,y1), passed as four stacked words, in the foreground
+;   colour (word 0x3EFA4): stores them at 0x6CC..0x6D2 and runs bound op 15 (SeGfx_StaticOp15_DottedLine) on the 0x6CA
+;   block. Basis: callers + body -- the key-scale, filter and band-pass graph routines use it for their guide lines
+;   next to SeGfx_DrawLine (solid line, op 00).
 SeMenu_DrawDottedLine:
 	push	xiz
 	ld	xiz, xsp
@@ -8260,6 +8281,9 @@ SeTitle_FieldDrawTable:
 	.long SeTitle_UnusedSlot
 	.long SeTitle_UnusedSlot
 	.long SeTitle_UnusedSlot
+; SeMenu_DrawSoloButton: Draws the sound editor's SOLO button (label and frame from SeMenu_DrawSoloButton_Records) lit when the
+;   SOLO flag (0x65C) is set, unlit otherwise. Basis: callers + body -- called by SeMenu_ToggleSolo and by the page-
+;   draw routines after their static lists.
 SeMenu_DrawSoloButton:
 	push XWA
 	push XBC
@@ -8293,6 +8317,9 @@ SeMenu_ShowConfirmDialog_Data_Code_Join4:
 	pop XBC
 	pop XWA
 	ret
+; SeMenu_DrawPartSelector: Draws the part selector on the side rows: for each part (2 or 4, by (0x6AE)) its
+;   "1ST".."4TH" label if enabled in mask (0x65E), a hatch pattern if not, then the highlight box around the selected
+;   part (0x65D). Basis: callers + body -- page-draw routines call it right after SeMenu_DrawSoloButton.
 SeMenu_DrawPartSelector:
 	push XWA
 	push XBC
@@ -8359,6 +8386,10 @@ SeMenu_DrawPartSelector_Join:
 	pop	xbc
 	pop	xwa
 	ret
+; SeMenu_ClearRect: Fills the rectangle (x0,y0)-(x1,y1), passed as four stacked words x0,y0,x1,y1, with the background
+;   colour (word 0x3EFA2): stores them at 0x6CC..0x6D2 and runs bound op 1B (ColorBlit_ByteData) on the 0x6CA block.
+;   Basis: callers + body -- the sound-editor graph routines call it first with their graph box, which their headers
+;   describe as 'clears the box'.
 SeMenu_ClearRect:
 	push	xiz
 	ld	xiz, xsp
@@ -8550,6 +8581,9 @@ SeMenu_ShowConfirmDialog_Code:
 	ldf	0
 	pop_f
 	nop
+; SeMenu_DrawSelectedPartEnvCurve: Draws the current part's (0x65D) envelope-curve picture: its frame, then by bits
+;   7-5 of the part's curve-type byte (0x662+part, 0x668+part in 4-part mode) a SeEnvCurve_BitmapTable bitmap or (type
+;   3) a framed box, at that part's cell. Basis: callers + body.
 SeMenu_DrawSelectedPartEnvCurve:
 	cp	(0x6ae:16), 1
 	jr	nz, SeMenu_DrawSelectedPartEnvCurve_Skip
@@ -8605,6 +8639,11 @@ SeMenu_ShowConfirmDialog_Data_Code_Join3:
 	add	xix, 42
 	call	SeGfx_DrawStaticList
 	ret
+; SeMenu_DrawEnvCurvePicture: Draws the envelope-curve picture of the curve-type byte at (XIZ) at the cell (0x6C6,
+;   0x6C8): type = bits 7-5; type 3 draws a framed box (SeGfx_StaticOp1B_FromBuf, then SeGfx_StaticOp00_FromBuf), the
+;   others blit SeEnvCurve_BitmapTable[type] (SeGfx_StaticOp03_BlitAtCell). Basis: callers + body --
+;   SeMenu_DrawSelectedPartEnvCurve calls it with XIZ = the selected part's curve byte (0x662/0x668 + part) after
+;   setting the cell; its header describes this choice.
 SeMenu_DrawEnvCurvePicture:
 	ld	a, (xiz)
 	and	a, 224
@@ -8730,6 +8769,10 @@ SeMenuTitle_DrawStaticScreen_Skip2:
 	ld	(COLORBLIT_MODE:24), 0
 SeMenuTitle_DrawStaticScreen_Return:
 	ret
+; SeMenu_DrawOriginalEditedBadge: Draws the "ORIGINAL" badge (SeMenu_DrawOriginalEditedBadge_Records2) at (236,31)-(308,50), or "EDITED"
+;   (SeMenu_DrawOriginalEditedBadge_Records) when page param 1 (0x661) is 1. Basis: callers + body -- the screen-0x20 draw
+;   SeMenuTitle_DrawStaticScreen (entry 0 of SeTitle_StaticScreenTable) and its field redraw SeMenuTitle_DrawField
+;   (entry 0 of SeTitle_FieldDrawTable) call it in the layout used when (0x6AE) != 1.
 SeMenu_DrawOriginalEditedBadge:
 	ld (COLORBLIT_MODE:24), 0x00
 	cp (0x0661:16), 0x01
@@ -8840,6 +8883,7 @@ SeMenu_PresetManager_Init_Code_Return:
 ;  SeTitle_StaticScreenTable, indexed by title id - 0x20): draws the page's fixed captions and frames. Basis: the
 ;  table index and RegTitle (scripts/renaming/name_se_title_methods.py).
 SeCopy_DrawStaticScreen:
+	; --- Wrapper 1: conditional XIY/XIX setup + call (28 bytes) ---
 	ld	(COLORBLIT_MODE:24), 0
 	cp	(0x6ae:16), 1
 	jr	nz, SeMenu_PresetManager_End
@@ -8901,6 +8945,9 @@ SeTonHyb1_DrawStaticScreen_Join:
 	call	SeMenu_BankEdit_LoopHelper
 	call	SeMenu_DrawTitleIcon
 	ret
+; SeMenu_DrawPartLabels: Draws the part labels in the alternate side-row layout (y 79/111/143/175): "1ST".."4TH" for
+;   parts enabled in (0x65E), a hatch pattern for disabled ones, 2 or 4 parts by (0x6AE); no selection box (unlike
+;   SeMenu_DrawPartSelector). Basis: callers + body -- page-draw routines call it after SeMenu_DrawSoloButton.
 SeMenu_DrawPartLabels:
 	cp (0x06ae:16), 0x01
 	jr nz, .Lc_f0f79a
@@ -8948,6 +8995,10 @@ SeMenu_DrawPartLabels_Skip:
 SeMenu_DrawPartLabels_Join2:
 	djnz8	c, -84
 	ret
+; SeMenu_DrawPartRadioButtons: Draws, for each part 1..N (N = 2 when mode byte 0x6AE = 1, else 4), a RadioOn button
+;   with its "1ST".."4TH" label when the part is enabled in 0x65E, or a RadioOff button with a hatch pattern when not
+;   (rows y 82/114/146/178). Basis: callers + body -- SeTonTon1_DrawStaticScreen calls it after
+;   SeMenu_DrawSoloButton, where other pages draw SeMenu_DrawPartSelector / SeMenu_DrawPartLabels from the same mask.
 SeMenu_DrawPartRadioButtons:
 	ld (COLORBLIT_MODE:24), 0x00
 	cp (0x06ae:16), 0x01
@@ -8988,6 +9039,11 @@ SeMenu_DrawPartRadioButtons_Skip2:
 SeMenu_DrawPartRadioButtons_Join2:
 	djnz8	c, -84
 	ret
+; SeMenu_DrawTwoPartRadioButtons: Two-part variant of SeMenu_DrawPartRadioButtons: for parts 2 and 1 (C = 2 down to 1)
+;   tests the part bit in the mask 0x65E and draws a RadioOn button (SeMenu_DrawTwoPartRadioButtons_Records) or a RadioOff button
+;   (SeMenu_DrawTwoPartRadioButtons_Records2), each labelled "1ST"/"2ND" at rows y 119/149. Basis: callers + body --
+;   SeMenuTitle_DrawField and SeMenuTitle_DrawStaticScreen call it only when the mode byte 0x6AE is 1, the case in
+;   which SeMenu_DrawPartRadioButtons limits itself to 2 parts; the bit test and loop are byte-for-byte the same.
 SeMenu_DrawTwoPartRadioButtons:
 	ld (COLORBLIT_MODE:24), 0x00
 	ld C, 0x02:opc
@@ -9020,18 +9076,30 @@ SeMenu_DrawTwoPartRadioButtons_Skip:
 SeMenu_DrawTwoPartRadioButtons_Join4:
 	djnz8	c, -84
 	ret
+; SeMenu_DrawToneSelectTitle: Draws the title block of the sound editor's TONE SELECT pages (static records
+;   SeMenu_DrawToneSelectTitle_Records..0x09D5: "TONE SELECT", "SOUND EDIT" and the title box). Basis: callers + body -- the TONE
+;   SELECT page draws (SeTonTon1_DrawStaticScreen = page 1/3, SeTonHyb1_DrawStaticScreen, SeTonTon2_DrawStaticScreen)
+;   call it first.
 SeMenu_DrawToneSelectTitle:
 	ld (COLORBLIT_MODE:24), 0x00
 	ld XIY,SeMenu_DrawToneSelectTitle_Records
 	ld XIX,SeMenu_DrawTitleIcon_Records
 	call SeGfx_DrawStaticList
 	ret
+; SeMenu_DrawTitleIcon: Draws the title-bar icon of the TONE SELECT pages: the static record SeMenu_DrawTitleIcon_Records (op
+;   23, style 0x61 -> UI icon 99 in a design box at x 88, y 3). Basis: callers + body --
+;   SeTonTon1_DrawStaticScreen (PAGE1/3), SeTonHyb1_DrawStaticScreen (PAGE2/3) and SeTonTon2_DrawStaticScreen call it
+;   as their last draw step.
 SeMenu_DrawTitleIcon:
 	ld (COLORBLIT_MODE:24), 0x00
 	ld XIY,SeMenu_DrawTitleIcon_Records
 	ld XIX,SeTonTon1_Records
 	call SeGfx_DrawStaticList
 	ret
+; SeMenu_DrawToneLayerFrame: Draws the static frame of the sound editor's TONE LAYER page (static records
+;   SeMenu_DrawToneLayerFrame_Records..0x09AA: title "TONE LAYER", "SOUND EDIT", the KEY LAYER / VEL LAYER labels and the fade bar).
+;   Basis: callers + body -- the two TONE LAYER page draws (title-table entries SeTonRan1_DrawStaticScreen and
+;   SeTonRan2_DrawStaticScreen) call it first.
 SeMenu_DrawToneLayerFrame:
 	ld (COLORBLIT_MODE:24), 0x00
 	ld XIY,SeMenu_DrawToneLayerFrame_Records
@@ -9247,7 +9315,11 @@ SeMenu_CompareAndApply_Apply:
 SeMenu_CompareAndApply_End:
 	call SeMenu_CompareAndApply_Data4
 	ret
+; SeAmp_DrawSectionFrame: Draws the AMPLITUDE section frame common to its five titles: 'AMPLITUDE', 'SOUND EDIT', the
+;   ENV / AMP / LFO tabs and boxes (all 17 records, or fewer in 2-part mode, (0x6AE) = 1). Basis: callers + body
+;   (records).
 SeAmp_DrawSectionFrame:
+	; --- Init helper: language-conditional XIX setup (35 bytes) ---
 	ld (COLORBLIT_MODE:24), 0x00
 	ld XIY,SeScreenData_0x1089
 	cp (0x06ae:16), 0x01
@@ -9768,6 +9840,7 @@ SeTonHyb1_DrawField_SetupPath:
 SeTonHyb1_DrawField_Return:
 	ret
 SeMenu_BankEdit_LoopHelper:
+	; --- Loop over 3 entries: indexed XIY/XIX pointer table lookups ---
 	ld	(COLORBLIT_MODE:24), 0
 	ld	xiy, SeTonHyb1_Row1VelZeroText
 	ld	xix, SeTonHyb1_Row2VelDash
@@ -10318,6 +10391,7 @@ SeMenu_PresetInit_Loop1Body:
 	jr c, SeMenu_PresetInit_Loop1Body
 	ret
 SeMenu_PresetInit_TableLookup1:
+	; --- Table lookup 1: index into 0x660, test bit 7 of D (36 bytes) ---
 	xor	xbc, xbc
 	xor	w, w
 	extz	xwa
@@ -10343,6 +10417,7 @@ SeMenu_PresetInit_Loop2Body:
 	jr c, SeMenu_PresetInit_Loop2Body
 	ret
 SeMenu_PresetInit_TableLookup2:
+	; --- Table lookup 2: index into 0x660, test D != 0 (35 bytes) ---
 	xor	xbc, xbc
 	xor	w, w
 	extz	xwa
@@ -10615,6 +10690,7 @@ SeMenu_EqEdit_SetupHelper2:
 ;  indexed by title id - 0x20): redraws one parameter field, A = the field index. Basis: the table index and RegTitle
 ;  (scripts/renaming/name_se_title_methods.py).
 SeCtr2_DrawField:
+	; --- Dispatch on A: 4 paths with language branching (99 bytes) ---
 	cp	a, 0:i3
 	jr	z, SeCtr2_DrawField_SetupPath
 	cp	a, 11
@@ -17357,6 +17433,8 @@ AcEasyCmpGridBoxProc_OnGetFixedRowStr:
 	ld xiz, 0x42
 
 ; EasyCmpGridCheck case 2
+; AcEasyCmpGridBoxProc_CopyFixedHeaderStr: Copies the header string at view +0x3E (column) or +0x42 (row) into the
+;   caller's buffer.
 AcEasyCmpGridBoxProc_CopyFixedHeaderStr:
 	call	GetViewInstance
 	add	xhl, xiz
@@ -17510,6 +17588,7 @@ EasyCmp_GridCheck_EventCase1:
 	call	Sprintf_Locked
 	inc	8, xsp
 	jr	EasyCmp_GridCheck_EventCase3
+; EasyCmpGridCheck event case 2
 EasyCmp_GridCheck_EventCase2:
 	extz	wa
 	pushw	wa
@@ -18385,6 +18464,9 @@ PsMspBnkNameBoxProc_OnMspRgp1NmDisp:
 	ld	xwa, xiz
 	ld	xbc, EVT_PARA_DRAW
 	jr	MspBnk_SendEventJoin
+; RgpSetBnkCheck dispatch
+; PsMspBnkNameBoxProc_OnMspRgp2NmDisp: PsMspBnkNameBoxProc's MT_MspRgp2NmDisp arm: formats the rhythm-group bank 2
+;   name and redraws the box (EVT_PARA_DRAW). Basis: event code + body.
 PsMspBnkNameBoxProc_OnMspRgp2NmDisp:
 	ld	xwa, xiz
 	call	GetViewInstance
@@ -18922,6 +19004,7 @@ PsMspRecPadBoxProc_OnPaintOrRepaint:
 	cp	a, 5:i3
 	jr	ule, AcSndArgGrid_BnkDispatch
 	dec	6, a
+; AcSndArgGridBnkFunc dispatch
 AcSndArgGrid_BnkDispatch:
 	inc	1, a
 	extz	wa

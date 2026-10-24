@@ -87,6 +87,11 @@ FDC_WaitReady_Skip3:
 FDC_WaitReady_Epilogue:
 	pop XIZ
 	ret
+; FDC_WaitParamByteReady: Waits until the uPD72068 main status register (0x110008) shows RQM|CB (mask 0x90 = 0x90: a
+;   command is in progress and the FDC requests the next byte); after 500 ticks of SYSTEM_TIMESTAMP it gives up and
+;   records status 1 (FDC_Set_Status). Basis: callers + body + twin -- FDC_SendParameterByte calls it before writing
+;   each parameter byte to the data register; the bootloader twin is FDC_WaitComplete (table_data, header 'Wait for
+;   the FDC parameter phase'), called by the bootloader's FDC_SendParameterByte.
 FDC_WaitParamByteReady:
 	push XIZ
 	ld iz, (SYSTEM_TIMESTAMP:16)
@@ -771,6 +776,9 @@ FDC_ResultPhase_Read_Epilogue3:
 	pop	xiz
 	inc	2, xsp
 	ret
+; FDC_SendCommandByte: Drains any pending result phase (FDC_ResultPhase_Read) and writes A to the uPD72068 data
+;   register 0x11000A -- the first byte of a uPD765-style command. Basis: callers + body + twin -- FDC_CMD_SEND sends
+;   every non-auxiliary opcode through it before the parameter bytes; bootloader twin FDC_SendCommandByte.
 FDC_SendCommandByte:
 	dec 2,XSP
 	ld (XSP),A
@@ -2263,6 +2271,7 @@ INT4_ExitRestore:
 	pop	xiz
 	reti
 Reset_Floppy_Disk_Controller:
+	; reset FDC by toggling Port D bit 0
 	set	0, (PD:8)
 	ldw	wa, 10
 	calr	SOME_DELAY

@@ -1397,40 +1397,40 @@ Boot_MainSequence_Trampoline:
 ;   - ErrorDialog_CPUTransmissionError - Error dialog widget
 ; ===========================================================================
 User_didnt_request_flash_mem_update:
-	ld	a, (1026:16)
+	ld	a, (1026:16)	; Load boot combo code
 	extz	wa
-	calr	Boot_HandleFactoryReset
+	calr	Boot_HandleFactoryReset	; Reset if combo 1 + invalid checksums
 	ldw	(65482:24), 0
-	set	0, (PA:8)
-	call	SubCPU_Init_DMA_Channels
+	set	0, (PA:8)	; Release Sub-CPU from reset
+	call	SubCPU_Init_DMA_Channels	; Initialize DMA for inter-CPU comm
 	ei	0
-	calr	SubCPU_Send_Payload
-	calr	SubCPU_Payload_Verify
+	calr	SubCPU_Send_Payload	; Transfer 192KB Sub-CPU firmware
+	calr	SubCPU_Payload_Verify	; Verify payload checksum
 	ld	wa, 0:i3
-	call	ScreenGroup_Dispatch
+	call	ScreenGroup_Dispatch	; Display initial boot screen (group 0)
 	ei	0
 	call	SelfTest_FirmwareVersionCheck
-	calr	SubCPU_Payload_GetErrorFlag
-	cp	hl, 0:i3
-	jr	nz, Boot_PayloadError
-	ld	wa, 1:i3
+	calr	SubCPU_Payload_GetErrorFlag	; Check if payload transfer failed
+	cp	hl, 0:i3	; HL=0: success, HL!=0: error
+	jr	nz, Boot_PayloadError	; Branch if error occurred
+	ld	wa, 1:i3	; Success: use screen group 1
 	jr	Boot_DisplayScreen
 ; Sub-CPU payload transfer or verification failed
 Boot_PayloadError:
 	ld wa, 2:i3	; Error: use screen group 2
 
 Boot_DisplayScreen:
-	call	ScreenGroup_Dispatch
+	call	ScreenGroup_Dispatch	; Display appropriate screen group
 	ld	(1024:16), 6
 	ld	wa, 3:i3
 	call	ScreenGroup_Dispatch
 	ld	(1024:16), 128
 	ldw	(65492:24), 0
-	ld	a, (1026:16)
+	ld	a, (1026:16)	; Load boot combo code
 	extz	wa
 	calr	Boot_HandleComboDisplay
 	ld	wa, 4:i3
-	call	TaskSched_SpawnTask
+	call	TaskSched_SpawnTask	; start task 4, MainTitle_TeardownAndLoop
 	calr	Boot_SetConfigFlag7
 	jp	MainLoop
 Boot_GetButtonComboCode:

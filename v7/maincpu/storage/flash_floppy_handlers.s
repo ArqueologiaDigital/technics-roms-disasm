@@ -2346,6 +2346,11 @@ Flash_ExtendedOpsBlock_Skip2:
 	ld	a, (xbc)
 	ld	(xhl), a
 	ret
+; Flash_AssignSlotsToBlocks: For owner A, builds the slot assignment list at RAM 0x7A0 from the block list at RAM
+;   0x6D4: the large block (entry 0) gets the first of the 4 large slots whose owner byte is 0 or A, each following
+;   block the next such small slot (of 40); records are {block, 0x500 | slot} with bit 7 set for small slots. Basis:
+;   callers + body -- Flash_InitBytecodeBlock runs it first on its write path (no shortfall), with A = its owner
+;   argument (CstmCp's 0x39B7); Flash_WriteSlotOwnerMap and Flash_CopyBlocksToSlots consume the list.
 Flash_AssignSlotsToBlocks:
 	dec 2,XSP
 	pushw iz
@@ -3578,6 +3583,10 @@ Flash_ExtendedOpsBlock_Code_Join:
 	ld xde, (FLASH_SECTION_PTR_7:16)
 	ld wa, 1:i3
 	jp Flash_EraseSectorAndWrite
+; Flash_CountFreeOrOwnedSlots: Counts the owner bytes in the section-7 sector (FLASH_SECTION_PTR_7) that are 0 or
+;   equal C: A = 0 scans the 40 small-slot bytes at +0x10, otherwise the 4 large-slot bytes at +0x50; L = the count.
+;   Basis: callers + body -- Flash_SlotUpdateOpsBlock compares it with the blocks listed at RAM 0x6D4 to report the
+;   large- and small-slot shortfall that Flash_InitBytecodeBlock tests before writing.
 Flash_CountFreeOrOwnedSlots:
 	ld L, 0x00:opc
 	ld xde, (FLASH_SECTION_PTR_7:16)
@@ -4684,6 +4693,7 @@ FileIO_SaveRcmFromFlash_Join:
 	pop	xiz
 	lda	xsp, (xsp+1036)
 	ret
+; Floppy disk load and store note events via dispatch
 FloppyDisk_LoadNoteEvents:
 	lda xsp, (xsp - 0x0408)
 	pushw iz
@@ -5371,6 +5381,13 @@ ToneParam_ExtendedOpsBlock_Epilogue:
 	ld HL,IZ
 	popw iz
 	ret
+; AccPatch_ResetSectionPartByte2Defaults: Writes byte 2 of the four 8-byte accompaniment-part entries
+;   (+32/+40/+48/+56) of all 30 section records of the style image at (RHYTHM_PATTERN_BUF_PTR) to 64, 12, 116, 64 --
+;   the values the 'clear' section template AccPatch_DefaultSlotData holds there; what byte 2 means is not
+;   established. Basis: callers + body -- AccPatch_ConvertLegacyStyleImage runs it last on every path (relabelled,
+;   converted or rebuilt default image) when an older-format style image is loaded; the composer single-load path
+;   (SingleLoad_CopyComposerPatternFromFile) writes the same four values into sections taken from a file whose header is
+;   not 'H',0,'K'.
 AccPatch_ResetSectionPartByte2Defaults:
 	ld L, 0x00:opc
 	ld de, 0:i3

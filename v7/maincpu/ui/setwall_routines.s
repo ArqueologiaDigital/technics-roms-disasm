@@ -138,6 +138,10 @@ SqTrAs_UpdateOkSwVisibility_Return:
 MiddleFuncCall_DispatchData_Code_Helper3:
 	call	SqTrAs_UpdateOkSwVisibility
 	ret
+; 20 x u8 mask per SetWall slot number 0..0x13 (0xFF, or 0 for slots 13-16):
+; SetWall_CompareAndSwap (0xF1EFCD) and SetWall_InlineCodeBlock2_Skip read it with
+; `ld xde,<this>; ld c, (xde+iy)`, iy = a slot number from the RAM slot table
+; at 0xF1A0 -- two such masks are then ANDed (`and a,c`) to test a pair of slots.
 SetWall_SlotMaskTable:
 	swi	7
 	swi	7
@@ -2068,6 +2072,11 @@ SqSngName_ApplyNameAndExit_Skip2:
 	call	UI_PostModeChangeEvent
 SqSngName_ApplyNameAndExit_Return:
 	ret
+; SqSngSel_CalcSongUsagePercent: Computes the memory use of song (0x286B) in percent into 0x286C: walks its 16 three-
+;   byte track entries (the current song from 0xF250, another from SEQ_SONG_SLOTS + 0x800 * n + 0xD0), sums the blocks
+;   of every used track (bit 7 set), then blocks * 100 / (0x286D) + 1, capped at 99; 0 for an empty song. Saves and
+;   restores the block pointer 0x10FD. Basis: callers + body -- SqSngSel_CalcSongUsageOnEnter calls it for songs 0..9
+;   and copies 0x286C to the table 0x1145; its header describes this computation.
 SqSngSel_CalcSongUsagePercent:
 	ld	xwa, (4349:16)
 	push	xwa

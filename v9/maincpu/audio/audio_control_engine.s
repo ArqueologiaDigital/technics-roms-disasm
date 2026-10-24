@@ -6872,6 +6872,9 @@ VoiceParam_CompareAndUpdate:
 VoiceParam_CompareAndUpdate_Epilogue:
 	inc	2, xsp
 	ret
+; ExtData_SetTlvField: If mask A is enabled in (0x9131), replaces the field A of the panel TLV byte (tag
+;   MIDI_MSG_STATUS, offset (0x912F)) with (0x9130); if the byte changed, stores it in (0x9132) and MIDI_MSG_DATA2 and
+;   ORs A into MIDI_MSG_DATA3. Basis: callers + body -- ExtData_* handlers call it per field mask and then flush.
 ExtData_SetTlvField:
 	dec	2, xsp
 	ld	(xsp), a
@@ -6936,6 +6939,12 @@ ExtData_SetTlvField_Skip:
 ExtData_SetTlvField_Epilogue2:
 	inc	2, xsp
 	ret
+; ExtData_SetOrClearTlvField: If mask A is enabled in (0x9131), sets field A of the panel TLV byte (tag
+;   MIDI_MSG_STATUS, offset (0x912F)) to the received bits (0x9130), but clears the field instead when that leaves the
+;   byte equal to its value before the event (0x9132) -- re-sending the current selection turns it off; always stores
+;   the result in the byte, (0x9132) and MIDI_MSG_DATA2 and ORs A into MIDI_MSG_DATA3. Basis: callers + body -- the
+;   offset-3 arm of the record-0x48 handler ExtData_ToneParam_AltBody calls it for field mask 7 before toggling bit 3
+;   (ExtData_ToggleTlvBits 8) and flushing; it is ExtData_SetTlvField with the equal case turned into a clear.
 ExtData_SetOrClearTlvField:
 	dec	2, xsp
 	ld	(xsp), a
@@ -10682,6 +10691,9 @@ MidiVoiceNote_LookupMode0_Data:	.byte	0x00
 MidiVoiceNote_LookupMode3_Data:	.byte	0x00, 0x02
 	.byte 0x01, 0x08, 0x09, 0x0a, 0x0b, 0x03, 0x04, 0x05
 	.byte 0x06, 0x07, 0x11, 0x12, 0x13, 0x0c, 0x0f, 0xff
+; SeqTrackAssign_RecordMapTable: 20 pointers by TRACK ASSIGN value: the panel events a track of that type records --
+;   4-byte entries (tag, payload offset, value mask, emitter index into MidiStream_ProcessorDispatchC_Data), 0xFF-
+;   terminated. Basis: readers + bytes.
 SeqTrackAssign_RecordMapTable:
 	.byte 0x97, 0xba, 0xfc, 0x00, 0x47, 0xbb, 0xfc, 0x00
 	.byte 0xef, 0xba, 0xfc, 0x00, 0xaf, 0xbc, 0xfc, 0x00
@@ -10855,6 +10867,9 @@ SeqTrackAssign_RecordMapTable:
 	.byte 0x72, 0x07, 0x7f, 0x06, 0xff, 0xff, 0xff, 0xff
 	.fill 8, 1, 0xff
 	.byte	0xff, 0xff, 0xff, 0xff
+; SeqTrackAssign_PlaybackMapTable: 20 pointers by TRACK ASSIGN value: the playback-side lists (tag, payload offset,
+;   mask, handler index into VoiceMode_ParamHandler_3_Data), 0xFF-terminated, matched against a played track event.
+;   Basis: readers + bytes.
 SeqTrackAssign_PlaybackMapTable:	.byte	0xf3, 0xbf, 0xfc, 0x00
 	.byte 0xfb, 0xc0, 0xfc, 0x00, 0x77, 0xc0, 0xfc, 0x00
 	.byte 0x3f, 0xc2, 0xfc, 0x00, 0x6f, 0xc2, 0xfc, 0x00

@@ -336,38 +336,60 @@ FDTest_String_TestTitleFunc:
 ; (was .incbin "includes/romslices/v7_data_fdtest_string_testtitlefunc_head.bin")
 	.byte	0x54, 0x65, 0x73, 0x74, 0x54, 0x69, 0x74, 0x6c
 	.byte	0x65, 0x46, 0x75, 0x6e, 0x63, 0x00
+; TitleFunc_ActionDispatch_Str_TitleNew: Factory-test diagnostic message "\nTitle new" (leading LF), the text its
+;   owner prints (FDTest_PrintDiag or the console printer). Basis: readers + bytes.
 TitleFunc_ActionDispatch_Str_TitleNew:	.byte	0x0a, 0x54
 	.byte	0x69, 0x74, 0x6c, 0x65, 0x20, 0x6e, 0x65, 0x77
 	.byte	0x00, 0xff
+; TestTitleFunc_OnTitleOld_Str_TitleOld: Factory-test diagnostic message "\nTitle old" (leading LF), the text its
+;   owner prints (FDTest_PrintDiag or the console printer). Basis: readers + bytes.
 TestTitleFunc_OnTitleOld_Str_TitleOld:	.byte	0x0a
 	.asciz	"Title old"
 	.byte	0xff
+; TestTitleFunc_OnTitleActivate_Str_TitleActivate: Factory-test diagnostic message "\nTitle Activate" (leading LF),
+;   the text its owner prints (FDTest_PrintDiag or the console printer). Basis: readers + bytes.
 TestTitleFunc_OnTitleActivate_Str_TitleActivate:	.byte	0x0a, 0x54, 0x69, 0x74, 0x6c, 0x65, 0x20
 	.byte	0x41, 0x63, 0x74, 0x69, 0x76, 0x61, 0x74, 0x65
 	.byte	0x00
 TestTitleFunc_OnTitleInactivate_Str_TitleInactivate:	.byte	0x0a, 0x54, 0x69, 0x74, 0x6c, 0x65, 0x20
 	.byte	0x49, 0x6e, 0x61, 0x63, 0x74, 0x69, 0x76, 0x61
 	.byte	0x74, 0x65, 0x00
+; TestTitleFunc_OnTitleInterrupt_Str_TitleINTERUPT: Factory-test diagnostic message "\nTitle INTERUPT" (leading LF),
+;   the text its owner prints (FDTest_PrintDiag or the console printer). Basis: readers + bytes.
 TestTitleFunc_OnTitleInterrupt_Str_TitleINTERUPT:	.byte	0x0a, 0x54, 0x69, 0x74, 0x6c
 	.byte	0x65, 0x20, 0x49, 0x4e, 0x54, 0x45, 0x52, 0x55
 	.byte	0x50, 0x54, 0x00
+; TestTitleFunc_OnTitleInterruptReturn_Str_TitleINTERUPT_RETURN: Factory-test diagnostic message "\nTitle INTERUPT
+;   RETURN" (leading LF), the text its owner prints (FDTest_PrintDiag or the console printer). Basis: readers + bytes.
 TestTitleFunc_OnTitleInterruptReturn_Str_TitleINTERUPT_RETURN:	.byte	0x0a, 0x54, 0x69, 0x74, 0x6c
 	.byte	0x65, 0x20, 0x49, 0x4e, 0x54, 0x45, 0x52, 0x55
 	.byte	0x50, 0x54, 0x20, 0x52, 0x45, 0x54, 0x55, 0x52
 	.byte	0x4e, 0x00, 0xff
+; TitleFunc_LifecycleTable_Str_TBIOS_Test: Factory-test diagnostic message "\nTBIOS Test" (leading LF), the text its
+;   owner prints (FDTest_PrintDiag or the console printer). Basis: readers + bytes.
 TitleFunc_LifecycleTable_Str_TBIOS_Test:	.byte	0x0a, 0x54, 0x42, 0x49, 0x4f
 	.byte	0x53, 0x20, 0x54, 0x65, 0x73, 0x74, 0x00
+; TitleFunc_LifecycleDispatch_OnStopFddTest_Str_STOP_FDD_TEST: Factory-test diagnostic message "\nSTOP FDD TEST"
+;   (leading LF), the text its owner prints (FDTest_PrintDiag or the console printer). Basis: readers + bytes.
 TitleFunc_LifecycleDispatch_OnStopFddTest_Str_STOP_FDD_TEST:	.byte	0x0a
 	.byte	0x53, 0x54, 0x4f, 0x50, 0x20, 0x46, 0x44, 0x44
 	.byte	0x20, 0x54, 0x45, 0x53, 0x54, 0x00, 0xff
+; TitleFunc_LifecycleDispatch_OnFddTestLoop_Str_START_FDD_TEST_LOOP: Factory-test diagnostic message "\nSTART FDD TEST
+;   LOOP" (leading LF), the text its owner prints (FDTest_PrintDiag or the console printer). Basis: readers + bytes.
 TitleFunc_LifecycleDispatch_OnFddTestLoop_Str_START_FDD_TEST_LOOP:	.byte	0x0a
 	.byte	0x53, 0x54, 0x41, 0x52, 0x54, 0x20, 0x46, 0x44
 	.byte	0x44, 0x20, 0x54, 0x45, 0x53, 0x54, 0x20, 0x4c
 	.byte	0x4f, 0x4f, 0x50, 0x00, 0xff
+; TitleFunc_LifecycleDispatch_OnListDirectory_Str_DIR: Factory-test diagnostic message "\nDIR" (leading LF), the text
+;   its owner prints (FDTest_PrintDiag or the console printer). Basis: readers + bytes.
 TitleFunc_LifecycleDispatch_OnListDirectory_Str_DIR:	.byte	0x0a, 0x44, 0x49
 	.byte	0x52, 0x00, 0xff
+; TitleFunc_LifecycleDispatch_OnFormat2dd_Str_Debug_Test: Factory-test diagnostic message "\nDebug Test" (leading LF),
+;   the text its owner prints (FDTest_PrintDiag or the console printer). Basis: readers + bytes.
 TitleFunc_LifecycleDispatch_OnFormat2dd_Str_Debug_Test:	.byte	0x0a, 0x44, 0x65, 0x62, 0x75
 	.byte	0x67, 0x20, 0x54, 0x65, 0x73, 0x74, 0x00
+; TitleFunc_LifecycleDispatch_OnFormat2hd_Str_Debug_Test: Factory-test diagnostic message "\nDebug Test" (leading LF),
+;   the text its owner prints (FDTest_PrintDiag or the console printer). Basis: readers + bytes.
 TitleFunc_LifecycleDispatch_OnFormat2hd_Str_Debug_Test:	.byte	0x0a
 	.asciz	"Debug Test"
 TitleFunc_LifecycleDispatch_CaseTable:
@@ -389,6 +411,8 @@ TestTitleFunc_CaseTable:
 ListDir2_Entry_Str_A_HAMA_LSW:	.byte	0x41, 0x3a, 0x5c, 0x48
 	.byte	0x41, 0x4d, 0x41, 0x5c, 0x2a, 0x2e, 0x4c, 0x53
 	.byte	0x57, 0x00
+; RunTestCounters_Display_Str_TEST_Finishd: Factory-test diagnostic message "\nTEST Finishd!!" (leading LF), the text
+;   its owner prints (FDTest_PrintDiag or the console printer). Basis: readers + bytes.
 RunTestCounters_Display_Str_TEST_Finishd:	.byte	0x0a
 	.asciz	"TEST Finishd!!"
 CreateRunFDOp_Entry_Str_init:
@@ -399,6 +423,8 @@ CreateRunFDOp_Fail_Str_NG:	.byte	0x4e, 0x47, 0x00, 0xff
 FDLoadSaveTest_Str_A_IMMUNITY_TST:	.byte	0x41, 0x3a
 	.byte	0x49, 0x4d, 0x4d, 0x55, 0x4e, 0x49, 0x54, 0x59
 	.byte	0x2e, 0x54, 0x53, 0x54, 0x00, 0xff
+; FDLoadSaveTest_Str_File_remove: Factory-test diagnostic message "\nFile remove =>" (leading LF), the text its owner
+;   prints (FDTest_PrintDiag or the console printer). Basis: readers + bytes.
 FDLoadSaveTest_Str_File_remove:	.byte	0x0a, 0x46
 	.byte	0x69, 0x6c, 0x65, 0x20, 0x72, 0x65, 0x6d, 0x6f
 	.byte	0x76, 0x65, 0x20, 0x3d, 0x3e, 0x00
@@ -416,6 +442,8 @@ FDTest_OpenForWrite_Str_wb:
 ;   LF), the text its owner prints (FDTest_PrintDiag or the console printer). Basis: readers + bytes.
 FDTest_OpenForWrite_Str_cannot_open_write_file:	.byte	0x0a
 	.asciz	"cannot open write file"
+; FDTest_WriteBuffer_Str_File_Write: Factory-test diagnostic message "\nFile Write =>" (leading LF), the text its
+;   owner prints (FDTest_PrintDiag or the console printer). Basis: readers + bytes.
 FDTest_WriteBuffer_Str_File_Write:
 	.byte	0x0a, 0x46, 0x69, 0x6c, 0x65, 0x20, 0x57, 0x72
 	.byte	0x69, 0x74, 0x65, 0x20, 0x3d, 0x3e, 0x00, 0xff
@@ -423,6 +451,8 @@ FDTest_WriteBuffer_Str_Error:
 	.byte	0x20, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x00, 0xff
 FDTest_CloseAndReopen_Str_OK:
 	.byte	0x20, 0x4f, 0x4b, 0x00
+; FDTest_CloseAndReopen_Str_File_Read: Factory-test diagnostic message "\nFile Read =>" (leading LF), the text its
+;   owner prints (FDTest_PrintDiag or the console printer). Basis: readers + bytes.
 FDTest_CloseAndReopen_Str_File_Read:	.byte	0x0a, 0x46, 0x69, 0x6c
 	.byte	0x65, 0x20, 0x52, 0x65, 0x61, 0x64, 0x20, 0x3d
 	.byte	0x3e, 0x00

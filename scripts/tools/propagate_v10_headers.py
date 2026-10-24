@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-r"""Carry v10's routine header comments (and in-body comments) to v9 and v7 where the code is the same.
+r"""Carry v10's routine headers (and in-body comments) to v9 / v7 where the code is the same.
 
 QUESTION ANSWERED / JOB IT DOES
     CLAUDE.md's multi-version sync policy wants an edit made in one KN5000 maincpu tree to reach
@@ -12,10 +12,11 @@ QUESTION ANSWERED / JOB IT DOES
     The comment is copied only when it is provably about the same code:
       * BODY.  The source from the label to the next column-0 label that does not extend the
         label's name (`Foo` runs through `Foo_Skip3`, `Foo_Return`, ...) must be textually equal
-        in both trees after dropping comments, collapsing whitespace and lower-casing hex
-        literals.  A `.set NAME, VALUE` line is compared by NAME only: the value is a
-        version-specific position, and spelling it in a `.set` is what keeps the code lines
-        symbolic.  A raw number that differs in an instruction is NOT tolerated.
+        in both trees after dropping comments, writing every number in decimal, lower-casing
+        register names and dropping insignificant whitespace (norm_code).  A `.set NAME,
+        VALUE` line is compared by NAME only: the value is a version-specific position, and
+        spelling it in a `.set` is what keeps the code lines symbolic.  A raw number that
+        differs in an instruction is NOT tolerated.
       * BYTES.  The ROM bytes of that span, located through each tree's linked ELF, must be
         equal except where a 3-byte run is a ROM address (0xE00000-0xFFFFFF) in both images
         (the same `same_code` rule as scripts/renaming/harmonize_version_labels.py).  Equal
@@ -27,6 +28,14 @@ QUESTION ANSWERED / JOB IT DOES
         header is a subsequence of v10's (v10 extended it), it is replaced by v10's -- an
         insertion-only change.  A longer header line that already occurs elsewhere in the
         target file sends the label to review instead of being written a second time.
+    BODY may also be proved by bytes alone when the two trees SPELL the same span differently
+    (`.incbin` vs record macros, `.long Sym` vs `.byte`, `pushw 0xff` vs `pushw 255`): the
+    spans must have the same length and the same bytes, and every 3-byte ROM address that
+    differs must be the target's translation of v10's (pointers_correspond).  Only the header
+    travels then, and only when it does not talk about the source text (`.byte`, `.incbin`,
+    "spelled", "below", ...), which is exactly what differs; in-body lines do not pair up
+    across different spellings.
+
     Labels failing any test go to the review list (analysis/header-propagation/review-<date>.tsv)
     with the reason.  Rows whose `handport` column is filled in (a hand port, or a decision not
     to port) are kept verbatim when the list is regenerated.
@@ -72,11 +81,14 @@ LABEL = re.compile(r'^([A-Za-z_][\w.$]*):')
 HEX = re.compile(r'\b0[xX][0-9A-Fa-f]+\b')
 ROM_ADDR = re.compile(r'\b0[xX](?:00)?[eEfF][0-9A-Fa-f]{5}\b|\b(?=[A-Fa-f]*\d)[eEfF][0-9A-Fa-f]{5}\b')
 VERSION = re.compile(r'\bv(?:7|9|10)\b|_v(?:7|9|10)_|\bversion', re.I)
+SPELLING = re.compile(r'\.(?:byte|incbin|long|short|hword|word|ascii|asciz)\b|spell|\bbelow\b|'
+                      r'\babove\b|\bline', re.I)   # talks about the source text, not the bytes
 DUMP = re.compile(r'^\s*;\s*\|.*\|\s*$', re.M)      # `; |..I.3.e.|` byte dumps
 WAS = re.compile(r'^;\s*was\b')                      # `; was .ascii "..."`: that tree's history
 LINEREF = re.compile(r'\b((?:[\w.-]+/)*[\w.-]+\.s):(\d+)\b')
 IDENT = re.compile(r'\b[A-Za-z_][A-Za-z0-9_]{3,}\b')
-TRANSLATE = True       # --no-translate: calibration run, every quoted ROM address refused
+TRANSLATE = True       # --no-translate: calibration run, every ROM address QUOTED in a comment
+                       # is refused (pointers_correspond still translates the bytes)
 REVIEW_COLS = ["target", "label", "reason", "detail", "src_line", "dst_line", "ndiff",
                "nlines", "handport"]
 
@@ -96,17 +108,29 @@ def is_comment_line(line):
     return line.lstrip().startswith(";")
 
 
+REG = re.compile(r'\b(?:Q?X?(?:WA|BC|DE|HL|IX|IY|IZ|SP)|Q?[AWBCDEHL]|SR)\b', re.I)
+NUM = re.compile(r'\b0[xX][0-9A-Fa-f]+\b|\b\d+\b')
+CODE_LABEL = re.compile(r'^([A-Za-z_.][\w.$]*):')
+
+
 def norm_code(code):
-    """Comparable form of one code line (comment already removed); '' for nothing."""
+    """Comparable form of one code line (comment already removed); '' for nothing.  Outside
+    "strings": numbers become decimal (0x04 = 4 = 0x0004), register names lower case, and
+    whitespace goes (around , + - * ( ) entirely, elsewhere it collapses to one space).
+    Symbol names keep their case: the trees hold case twins that are different symbols."""
     s = code.strip()
     if not s:
         return ""
     m = re.match(r'^\.set\s+([^,\s]+)\s*,', s)
     if m:
         return ".set " + m.group(1)
-    s = HEX.sub(lambda h: h.group(0).lower(), s)
-    s = re.sub(r'\s*,\s*', ',', s)
-    return re.sub(r'\s+', ' ', s)
+    parts = s.split('"')
+    for n in range(0, len(parts), 2):          # even pieces are outside quotes
+        t = NUM.sub(lambda h: str(int(h.group(0), 0)), parts[n])
+        t = REG.sub(lambda h: h.group(0).lower(), t)
+        t = re.sub(r'\s*([,+\-*()])\s*', r'\1', t)
+        parts[n] = re.sub(r'\s+', ' ', t)
+    return '"'.join(parts)
 
 
 class Tree:
@@ -190,23 +214,27 @@ class Tree:
         code, before, pending = [], {}, []
         for j in range(i, k):
             text = lines[j]
-            if j == i:
-                text = text[LABEL.match(text).end():]
-                c, com = split_comment(text)
-                code.append((j, "%s: %s" % (name, norm_code(c)), com, c))
-                continue
             if is_comment_line(text):
                 pending.append(j)
                 continue
             c, com = split_comment(text)
-            n = norm_code(c)
-            if not n:
+            entries = []
+            m = CODE_LABEL.match(c)
+            if m:                     # `Label:` and `Label: .byte 1` compare alike
+                rest = c[m.end():]
+                if norm_code(rest):
+                    entries = [(j, m.group(0), "", ""), (j, norm_code(rest), com, c)]
+                else:
+                    entries = [(j, m.group(0), com, c)]
+            elif norm_code(c):
+                entries = [(j, norm_code(c), com, c)]
+            if not entries:
                 pending = []          # a blank line ends a comment run
                 continue
             if pending:
                 before[len(code)] = pending
                 pending = []
-            code.append((j, n, com, c))
+            code.extend(entries)
         return code, before, end_label
 
 
@@ -223,6 +251,28 @@ def same_code(a, b):
             if 0 <= j and j + 3 <= len(a):
                 x, y = int.from_bytes(a[j:j + 3], "little"), int.from_bytes(b[j:j + 3], "little")
                 if 0xE00000 <= x <= 0xFFFFFF and 0xE00000 <= y <= 0xFFFFFF:
+                    i = j + 3
+                    break
+        else:
+            return False
+    return True
+
+
+def pointers_correspond(a, b, src, dst):
+    """Same bytes, except 3-byte ROM addresses that translate_addr maps onto each other: the
+    proof for a body the two trees spell differently (`.incbin` vs records, `.long Sym` vs
+    `.byte`, `0xff` vs `255`).  Stricter than same_code, which accepts any two addresses."""
+    if len(a) != len(b):
+        return False
+    i = 0
+    while i < len(a):
+        if a[i] == b[i]:
+            i += 1
+            continue
+        for j in (i - 2, i - 1, i):
+            if 0 <= j and j + 3 <= len(a):
+                x, y = int.from_bytes(a[j:j + 3], "little"), int.from_bytes(b[j:j + 3], "little")
+                if 0xE00000 <= x <= 0xFFFFFF and translate_addr(x, src, dst) == y:
                     i = j + 3
                     break
         else:
@@ -253,8 +303,6 @@ def translate_addr(x, src, dst):
     """The target-image address of v10 ROM address x, or None.  x is taken relative to the
     nearest preceding v10 label that the target defines too, and accepted only when the bytes
     from that label to x + 4 are the same code in both images (same_code)."""
-    if not TRANSLATE:
-        return None
     for a, name in reversed(src.sorted_addr[:bisect.bisect_right(src.sorted_keys, x)][-8:]):
         b = dst.addr.get(name)
         if b is None or x - a > 0x800:
@@ -283,7 +331,7 @@ def adapt(text, src, dst, translate=True, exact=True):
 
     def sub_addr(m):
         tok = m.group(0)
-        if not translate:
+        if not translate or not TRANSLATE:
             notes.append(tok)
             return tok
         x = int(tok[2:] if tok[:2] in ("0x", "0X") else tok, 16)
@@ -353,7 +401,11 @@ def plan(src, dst):
         sn, dn = [x[1] for x in sb], [x[1] for x in db]
         row = [dst.ver, name, "", "", "%s:%d" % (rel, i + 1), "%s:%d" % (r2, i2 + 1), "", "",
                ""]
+        byte_proven = False
         if sn != dn:
+            a, b = rom_span(src, name, send), rom_span(dst, name, dend)
+            byte_proven = bool(a) and b is not None and pointers_correspond(a, b, src, dst)
+        if sn != dn and not byte_proven:
             if hdr and dhdr != hdr:
                 sm = difflib.SequenceMatcher(None, sn, dn, autojunk=False)
                 nd = sum(max(i2_ - i1, j2 - j1) for t, i1, i2_, j1, j2 in sm.get_opcodes()
@@ -368,7 +420,9 @@ def plan(src, dst):
                 st["body-differs"] += 1
             continue
         a, b = rom_span(src, name, send), rom_span(dst, name, dend)
-        if a is None or b is None:
+        if byte_proven:
+            bytes_ok = True
+        elif a is None or b is None:
             bytes_ok = None
         else:
             bytes_ok = same_code(a, b)
@@ -397,6 +451,8 @@ def plan(src, dst):
                        and l not in dhdr]
                 if dup:
                     why, what = "header-text-elsewhere", dup[0].strip()[:100]
+            if not why and byte_proven and SPELLING.search(text):
+                why, what = "spelling-differs", SPELLING.search(text).group(0)
             if why == "done":
                 pass
             elif why:
@@ -406,11 +462,16 @@ def plan(src, dst):
             else:
                 edits[r2][(d0, i2 - d0)] = new_hdr
                 st["header-replaced" if dhdr else "header-inserted"] += 1
+                if byte_proven:
+                    st["header-by-bytes"] += 1
                 if new_hdr != hdr:
                     st["header-addresses-translated"] += 1
         elif hdr:
             st["header-already"] += 1
-        # ---- in-body comments (same proof: body text + bytes)
+        # ---- in-body comments (same proof: body text + bytes; a byte-proven body is spelled
+        # differently, so its lines do not pair up)
+        if byte_proven:
+            continue
         for k, (sj, _, scom, scode) in enumerate(sb):
             dj, _, dcom, dcode = db[k]
             com, why, _ = (adapt(scom, src, dst, False, exact)

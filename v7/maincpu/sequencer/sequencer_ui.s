@@ -6211,6 +6211,7 @@ NoteEditBox_GridDispatch2:
 	ld wa, (xwa)
 	lda xix, (NoteEditBox_EventDispatch2:24)
 	jp	t, (xix+wa)
+; NoteEditBoxProc event dispatch 2
 NoteEditBox_EventDispatch2:
 	call	GetTitleNow
 	ld	(xsp+10), 3
@@ -6295,7 +6296,7 @@ NoteEditBox_EventDispatch2_Skip2:
 	lda	xde, (xsp+36)
 	ld	xhl, 0:i3
 	push	xhl
-	pushw 251
+	pushw 251	; colour pair for DrawStringLeftJustify, not a pointer
 	pushw 245
 	call	DrawStringLeftJustify
 NoteEditBox_EventDispatch2_Skip3:
@@ -6348,7 +6349,7 @@ NoteEditBox_EventDispatch2_Skip3:
 	lda	xde, (xsp+36)
 	ld	xhl, 0:i3
 	push	xhl
-	pushw 251
+	pushw 251	; colour pair for DrawString (by value), not a pointer
 	pushw 245
 	jrl	NoteEditBox_EventDispatch2_Join7
 ; NoteEditBox_GridDispatch2_DrawLineAtLinePos: part 7 (note edit only): DrawLine (colour 242) at the x from
@@ -6374,11 +6375,15 @@ NoteEditBox_GridDispatch2_DrawLineAtLinePos:
 	ldw	de, 242
 	call	DrawLine
 	jrl	NoteEdit_ReturnZero
+; NoteEditBox_GridDispatch2_DrawNtBitmap: part 3 (note edit): EVT_DRAW to object 0x950014 = TT_SQNOTEEDT viewable 20,
+;   NakaWidget_NTBitmap
 NoteEditBox_GridDispatch2_DrawNtBitmap:
 	ld	xwa, 9764884
 	ld	xbc, EVT_DRAW
 	ld	xde, (xsp+90)
 	jr	NoteEditBox_EventDispatch2_Join
+; NoteEditBox_GridDispatch2_DrawDrBitmap: part 4 (drum edit): EVT_DRAW to object 0x980011 = TT_SQDRMEDT viewable 17,
+;   NakaWidget_DRBitmap
 NoteEditBox_GridDispatch2_DrawDrBitmap:
 	ld	xwa, 9961489
 	ld	xbc, EVT_DRAW
@@ -6386,6 +6391,8 @@ NoteEditBox_GridDispatch2_DrawDrBitmap:
 NoteEditBox_EventDispatch2_Join:
 	call	SendEvent
 	jrl	NoteEdit_ReturnZero
+; NoteEditBox_GridDispatch2_DrawNoteMeasureRuler: part 8 (note edit): 11-column measure/beat ruler -- measure number
+;   where EVT_GET_MEAS_CNG_SV is set, else the beat count
 NoteEditBox_GridDispatch2_DrawNoteMeasureRuler:
 	ld	xwa, (xsp+12)
 	ld	xwa, (xwa+26)
@@ -6473,13 +6480,15 @@ NoteEditBox_GridDispatch2_DrawNoteMeasureRuler_Join3:
 	lda	xde, (xsp+36)
 	ld	xhl, (xsp+4)
 	push	xhl
-	pushw 255
+	pushw 255	; colour pair for DrawStringLeftJustify, not a pointer
 	pushw 245
 	call	DrawStringLeftJustify
 	inc1b_erp	251
 	cp_erpb	251, 11
 	jrl	c, NoteEditBox_GridDispatch2_DrawNoteMeasureRuler_Loop
 	jrl	NoteEdit_ReturnZero
+; NoteEditBox_GridDispatch2_DrawDrumMeasureRuler: part 13 (drum edit): 8-column measure/beat ruler, same scheme as
+;   part 8
 NoteEditBox_GridDispatch2_DrawDrumMeasureRuler:
 	ld	xwa, (xsp+12)
 	ld	xwa, (xwa+26)
@@ -6567,7 +6576,7 @@ NoteEditBox_GridDispatch2_DrawDrumMeasureRuler_Join5:
 	lda	xde, (xsp+36)
 	ld	xhl, (xsp+4)
 	push	xhl
-	pushw 255
+	pushw 255	; colour pair for DrawStringLeftJustify, not a pointer
 	pushw 245
 	call	DrawStringLeftJustify
 	inc1b_erp	251
@@ -6694,6 +6703,8 @@ NoteEditBox_GridDispatch2_DrawKeyNames_Loop3:
 NoteEditBox_EventDispatch2_Join7:
 	call	DrawStringLeftJustify
 	jrl	NoteEdit_ReturnZero
+; NoteEditBox_GridDispatch2_DrawDrumRowNames: part 14 (drum edit): 12 rows of drum note number + instrument name, the
+;   row equal to RAM 0x27A0 highlighted
 NoteEditBox_GridDispatch2_DrawDrumRowNames:
 	ld	xwa, (xsp+12)
 	ld	xwa, (xwa+26)
@@ -6755,7 +6766,7 @@ NoteEditBox_GridDispatch2_DrawDrumRowNames_Loop5:
 	lda	xde, (xsp+36)
 	ld	xhl, 3:i3
 	push	xhl
-	pushw 255
+	pushw 255	; colour pair for DrawString (by value), not a pointer
 	pushw 242
 	jr	NoteEditBox_GridDispatch2_DrawDrumRowNames_Join8
 NoteEditBox_GridDispatch2_DrawDrumRowNames_Skip8:
@@ -7965,6 +7976,10 @@ EntertainerGridCheck_OnIndexswDown:	; cases 29360152, 29360154
 	ld	wa, (xix+wa)
 	lda	xix, (EntertainerGridCheck_LswRowDown:24)
 	jp	t, (xix+wa)
+; EntertainerGridCheck_LswRowDown: EntertainerGridCheck index-down case for grid rows 0-3:
+;   MainLswAdd(SndParam_Dispatch_Table[row], -1, or -4 on EVT_INDEXSW_DOWN_AIC) -- the down twin of
+;   EntertainerGridCheck_LswRowUp (row 0 MIC BALANCE = LSW 0x4141, row 3 ON/OFF = 0x4140). Basis: callers + body --
+;   rows 0-3 of the row switch in EntertainerGridCheck_OnIndexswDown (SndParam_Dispatch_PtrTable).
 EntertainerGridCheck_LswRowDown:
 	ld	xde, (xsp+62)
 	sla	hl, 2
@@ -8052,6 +8067,7 @@ EntertainerGridCheck_OnLswData_Skip5:
 	lda	xde, (xsp+40)
 	ld	xbc, EVT_GRID_DRAW
 	jrl	SndParam_SendEventReturnZero
+; EntertainerGridCheck handler
 EntGridCheck_Handler:
 	ld XWA,(XSP+0x3a)
 	srl XWA, 16
@@ -8303,6 +8319,7 @@ EntertainerGridCheck_OnRetEffFix:
 
 ; EntertainerGridCheck default
 
+; EntertainerGridCheck default
 EntertainerGridCheck_OnRetEffPara:
 	ldw (XBC), 0x0001
 	ld XDE,(XSP+0x3a)

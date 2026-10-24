@@ -610,6 +610,7 @@ SqTrSel_CaseD:
 	call	Song_AbortPlayback
 	ld	(7498:16), 0
 	ret
+; SqTrSelTtl case E
 SqTrSel_CaseE:
 	calr	SeqRecPlay_DisableBoth
 	call	Song_AbortPlayback

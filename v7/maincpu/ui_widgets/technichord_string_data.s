@@ -5321,6 +5321,7 @@ Str_SmfConvert_GmToGm:			.incbin "includes/generated/naka_technichord_strings.bi
 ; [nakarest] points into it; reached through source references SmfFN_UpdateFilenameField
 ; [nakarest] (file_io/smf_operations.s: `ld xbc, SmfFN_UpdateFilenameField_Str_MID`).
 SmfFN_UpdateFilenameField_Str_MID:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A842, 0xE	; "________.MID"
+; FmmSmfFileNameFunc_CaseTable -- 6 x int16: the case offsets of FmmSmfFileNameFunc's compiled switch, relative to SmfFN_JumpTable
 FmmSmfFileNameFunc_CaseTable:
 	.short	FmmSmfFileNameFunc_OnSetSelectedFileNumber - FmmSmfFileNameFunc_Code
 	.short	FmmSmfFileNameFunc_OnGetSelectedFileNumber - FmmSmfFileNameFunc_Code

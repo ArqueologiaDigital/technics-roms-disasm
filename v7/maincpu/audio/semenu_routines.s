@@ -719,6 +719,9 @@ SeMenu_SetDisplayValue_Loop:
 	calr SeMenu_FlushDisplayObj
 	lda xsp, (xsp + 14)
 	ret
+; SeWrtMem_SelectMemorySlotSound: Selects SOUND MEMORY slot A (0-39: bank code 16 = A for 0-19, 17 = B for 20-39,
+;   number A mod 20) on the current part: resolves it (SndParam_ApplyProgramChange), writes the result to +0/+1 of
+;   part record 0x00/0x01/0x02 and shows it. Basis: callers + body.
 SeWrtMem_SelectMemorySlotSound:
 	lda	xsp, (xsp-10)
 	ld	(xsp+8), a
@@ -1427,6 +1430,9 @@ SeMenu_ToggleSolo_Join5:
 	call	SeMenu_DrawSoloButton
 	inc	2, xsp
 	ret
+; SeMenu_SetFilterType: Sets the filter type: sends the low-3-bit field (code 54, mask 7) of A for the selected part
+;   to the tone generator and keeps A in RAM 0x68C; returns HL = 0. Basis: callers + body -- each
+;   SeFil<type>1_OnSideRow4 passes edit byte 0 with its own type number in bits 0-2.
 SeMenu_SetFilterType:
 	dec	6, xsp
 	ld	(xsp+4), a
@@ -1723,6 +1729,10 @@ SeMenu_TransferPartValues_EndData_Epilogue:
 	pop qiz
 	lda	xsp, (xsp+22)
 	ret
+; SeMenu_StepParamFieldAndSend: Steps the bit field described by the edit record on the stack (+0 value, +6 mask, +7
+;   shift, +8 max, +9 min, +10 step) with clamping; if it changed, sends it to the tone generator, stores it at edit-
+;   buffer index C and redraws via screen code WA. L = 1 changed, 0 not. Basis: callers + body -- the SeXxx_OnColumnN
+;   handlers build the record, call this, then test L.
 SeMenu_StepParamFieldAndSend:
 	dec	8, xsp
 	push	xiz
@@ -2362,9 +2372,16 @@ SeMenu_SetupPartDisplay_End_Epilogue:
 SeMenu_GetWriteMemSlot:
 	ld	(xwa), (0x6ad)
 	ret
+; SeMenu_SetWriteMemSlot: Stores A as the WRITE TO MEMORY page's selected destination slot (RAM 0x6AD, 0..39): the
+;   setter of SeMenu_GetWriteMemSlot. Basis: callers + body -- SeWrtMem_OnSideRow3/4 read the slot with
+;   SeMenu_GetWriteMemSlot, step it up (max 39) or down (min 0) and store it back with this routine.
 SeMenu_SetWriteMemSlot:
 	stb_d8	(0x6ad), a
 	ret
+; SeMenu_SetNameBufferChar: Writes character C at position A (0..15) of the 16-byte name buffer at 0x20BF3; A > 15
+;   does nothing. Setter twin of SeMenu_GetNameBufferChar. Basis: callers + body -- SeWrtSnd_ClearName fills positions
+;   0..15 with C = 32 through it (its header says so), and the WRITE SOUND character-edit handlers store the edited
+;   character with it.
 SeMenu_SetNameBufferChar:
 	cp	a, 15
 	ret	ugt
@@ -2419,6 +2436,10 @@ SeMenu_BindDialToColumn:
 	calr	SeMenu_PostEditUpDownSet
 	inc	2, xsp
 	ret
+; SeMenu_SwitchToValueStep: Writes the signed value step for a column switch to (XBC) (edit-descriptor byte +10): +1
+;   when A's bits 0-6 are 0 (first bank), -1 otherwise, tripled when A bit 7 is set (switches 17..24). Basis: callers
+;   + body -- the OnColumn handlers fill the descriptor's mask/shift/max/min (+6..+9) and pass their bank byte A from
+;   SeTitle_DecodeSwitch.
 SeMenu_SwitchToValueStep:
 	ld L,A
 	res 0x07,L
@@ -2625,6 +2646,9 @@ SeMenu_ApplyPartEdit_End:
 	popw_erp 0xfa
 	lda xsp, (xsp + 14)
 	ret
+; SeLfo1_StepSelectorAndReload: LFO1 pages, column 2: steps the page's 1..4 selector (RAM 0x68D AMP / 0x68E PITCH /
+;   0x68F FILTER; up for a first-bank switch, down otherwise, wrapping) and re-enters the title TT_SEAMPLFO1 /
+;   TT_SEPITLFO1 / TT_SEFILLFO1. Basis: callers + body.
 SeLfo1_StepSelectorAndReload:
 	dec	2, xsp
 	ld	(xsp), c
@@ -6066,6 +6090,8 @@ SeMenu_SetPatchBank:
 	ld (1720:16), a
 	ret
 
+; SeMenu_SetPartRecordBits: Sets (E = 1) or clears (E = 0) the bits C of byte A of the current part's panel record
+;   (part 0/1/2 -> tag 0 at 0xF9B6, tag 1 at 0xF9D0, tag 2 at 0xF9EA). Basis: callers + body.
 SeMenu_SetPartRecordBits:
 	dec	8, xsp
 	ld	(xsp+2), e
@@ -6123,6 +6149,10 @@ SeMenu_SetPartRecordBits_Skip7:
 SeMenu_SetPartRecordBits_Epilogue2:
 	inc	8, xsp
 	ret
+; SeMenu_StepNoteParamInRange: Steps edit-buffer byte C (bit 7 kept) by the dial step in A, where 0 means off and
+;   1..11 are skipped (12..127), bounded by the neighbour limits E (low) and the pushed word (high); stores it and
+;   returns L = 1, or L = 0 if no move. Basis: callers + body -- the key-range page and the three ordered breakpoints
+;   of AmpAmp2/AmpEnv2/FilFil2.
 SeMenu_StepNoteParamInRange:
 	lda	xsp, (xsp-12)
 	ld	(xsp+6), e

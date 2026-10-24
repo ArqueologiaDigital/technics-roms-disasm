@@ -1857,6 +1857,10 @@ PerfMode_VoiceAddressTable:
 	.long	0x0000faf1
 	.long	0x0000fb0b
 	.long	0x0000fb25
+	; PerfMode_StepValueInRange: called from six sites.
+; PerfMode_StepValueInRange: Steps A by one within [L, H]: W bit 7 clear = increment unless A == H, set = decrement
+;   unless A == L (equality test only). Basis: callers + body -- volume (0..127), key shift (0x34..0x4C), tuning
+;   (0..255), bend sense (0..12) dial handlers.
 PerfMode_StepValueInRange:
 	bit 0x07,W
 	jrl nz, .Lc_ef6c1e
@@ -6186,10 +6190,17 @@ SqStep_ParkParamEvent_Return3:
 VoiceCtrl_ParamSetupBytecode_Tbl:
 	.byte	0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f
 	.byte	0x00, 0x00
+	; Byte data, 20 B.  Read by VoiceCtrl_ParamSetupBytecode (0xEF97B6): `ld xix, VoiceCtrl_ParamSetupBytecode_Tbl2`
+	; index bounded to 0..22 (`cp a, 22` / `jrl ugt` skips larger values)
 VoiceCtrl_ParamSetupBytecode_Tbl2:	.byte	0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
 	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff
 VoiceCtrl_ParamSetupBytecode_Data_2:	.byte	0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0xff, 0xff, 0xff
 	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
+; SqStep_ShowRhythmVariationEvent: If the event record at 0x0D8F is the rhythm part's (tag 0x48) offset-7 parameter,
+;   shows its variation (value byte +4, bits 4-5): with DisplayStr_ShowRhythmVariationLine on the CONTROL track
+;   (display mode 2) or DisplayStr_ShowMeasureAndVariation on the RHYTHM track (mode 3); all registers kept. Basis:
+;   callers + body -- VoiceCtrl_ParamSetupBytecode (the 0xBn handler of TempoRingBuf_DispatchEvents) calls it last;
+;   VoiceSlot_StatusRet shows a stored tag-72 offset-7 event with the same two routines per mode.
 SqStep_ShowRhythmVariationEvent:
 	push	xwa
 	push	xhl
@@ -8243,6 +8254,12 @@ ScoopDisp_StepMeasureForward_Skip5:
 	ldb_d8	a, (0x0d5c)
 	stb_d8	(0x367d), a
 	ret
+; ScoopDisp_SkipForwardWrapMarkers: Steps the song-data cursor forward until it has passed A 0x81 events (count kept
+;   in 0x0DFE), adding 1 to the marker counter 0x0D58 for each; the steps go through VoiceSlot_DispatchRet, which
+;   preserves 0x0D58 and returns W = 255 at an end marker (0x82/0x84), which ends the walk early. Basis: callers +
+;   body -- ScoopDisp_StepMeasureForward calls it with A = (0x0D5D) - (0x0D5C) to reach the next measure; its header
+;   calls this walking forward over that many 0x81 events. 0x81 is the 96-clock unit marker
+;   SqStep_WriteClockWrapMarkers writes.
 ScoopDisp_SkipForwardWrapMarkers:
 	stb_d8	(0x0dfe), a
 ScoopDisp_SkipForwardWrapMarkers_Loop2:
@@ -9168,6 +9185,8 @@ SystemInit_StepHandler_0_Return:
 SystemInit_StepHandler_0_Tbl:
 	.byte	0x00, 0x04, 0x60, 0x04, 0x00, 0x03, 0x60, 0x03, 0x00, 0x02, 0x60, 0x02, 0x30, 0x01, 0x90, 0x01
 	.byte	0x00, 0x01, 0x60, 0x01, 0x30, 0x00, 0x30, 0x01
+	; Byte data, 6 B.  Read by SysEx_BytecodeDispatcher (0xEFAAB1): `ld xix, SysInit_BytecodeBlock`
+	; reader SysEx_BytecodeDispatcher: `ld xix, SysInit_BytecodeBlock` then `ld w, (xix+hl)`
 SysInit_BytecodeBlock:
 	.byte	0x50, 0x40, 0x30, 0x20, 0x10, 0x00
 SysEx_BytecodeDispatcher_Data:	.byte	0x01, 0x02, 0x03, 0x05, 0x04, 0x06
@@ -12396,6 +12415,11 @@ SubCPU_ToneParamDisplay_Skip2:
 	pop	xiy
 	pop	xix
 	ret
+; PartParam_LoadSelectedValue: Loads the value of the part parameter selected by 0x111C (0 PAN, 1 KEY SHIFT, 2 TUNING,
+;   3 BEND SENS) into 0x111D: byte 8 + selector of the parameter block of the part chosen by (0x0D60) through the
+;   index table at 0xF1A0 and SubCPU_ToneDispatch (skipped for an absent part, pointer 0xFFFFFFFF). Basis: callers +
+;   body -- both callers set or step the selector 0x111C and then call it before DisplayStr_ShowPartParamLine, which
+;   prints 0x111D under that label.
 PartParam_LoadSelectedValue:
 	push XIX
 	xor HL,HL
@@ -14201,6 +14225,11 @@ DisplayStr_RhythmLabel:
 	; copies 6 byte(s) per use (`ld bc, 6` + ldir) into the LCD text buffer
 Str_Rhythm:
 	.ascii	"RHYTHM   "
+; DisplayStr_ShowRhythmVariationLine: Builds the rhythm-variation line of the CONTROL-track display: blanks the text
+;   line, looks up the M.S.A. state at the cursor (SqStep_FindMsaStateAtCursor -> 0x10F6 bit 0) and writes " RHYTHM " or
+;   "M.S.A. " at 0x0ECF, then "VARI" and the variation number ((C & 0x30) >> 4) + 1 at 0x0ED9 (DisplayStr_WriteVariationNumber);
+;   marks regions 5 and 3. Basis: callers + body -- VoiceSlot_StatusRet (pop-up 4) and SqStep_ShowRhythmVariationEvent
+;   call it in display mode 2 with C = the value byte of a tag-0x48 offset-7 event.
 DisplayStr_ShowRhythmVariationLine:
 	pushw	bc
 	call	DisplayStr_BlankLineBuffer
@@ -14234,6 +14263,11 @@ DisplayStr_ShowMeasureAndVariation:
 	call	DisplayStr_WriteVariationNumber
 	call	Display_UpdateRegion3
 	ret
+; DisplayStr_WriteVariationNumber: Writes 'VARI' and the variation number ((C & 0x30) >> 4) + 1 (1-4) at XIX: formats
+;   the number (ParamDigit_ExtractAndFormat), copies the 4 characters of Str_VarivariOff and puts the ones digit
+;   (0x1183) after them. Basis: callers + body -- DisplayStr_ShowRhythmVariationLine (XIX = 0x0ED9) and
+;   DisplayStr_ShowMeasureAndVariation (XIX = 0x0ED4) call it with C = the value byte of a tag-0x48 offset-7 event;
+;   their headers name this field.
 DisplayStr_WriteVariationNumber:
 	xor	wa, wa
 	ld	a, c
@@ -14338,6 +14372,8 @@ DisplayStr_BytecodeBlock_C_Tbl2:
 ;   DMA_ChannelHandler_2 reuses the tail without region 0 when already in that pop-up.
 DisplayMode_RedrawWithBlankLine:
 	call	Display_UpdateRegion0
+; DisplayStr_ShowBlankLine: Blanks the TT_SQSTEP pop-up text line 0x0ECA (30 bytes, then 25 spaces) and marks regions
+;   5, 3 and 4; second entry of DisplayMode_RedrawWithBlankLine without the status-bar redraw. Basis: callers + body.
 DisplayStr_ShowBlankLine:
 	call DisplayStr_BlankLineBuffer
 	ld XIY,DisplayStr_BytecodeBlock_C_Text
@@ -14482,6 +14518,9 @@ Display_RedrawMenu_Update:
 
 Display_BytecodeBlock_F:
 	call Display_UpdateRegion0
+; DisplayStr_WriteNoteLine: TT_SQSTEP pop-up line for a note event: blanks the text line, writes " V" at 0x0ED3, the
+;   note name and velocity (Disp_ShowNoteNameAndVelocity) and the note-value fields (Disp_ShowNoteValueFields), marks
+;   regions 5, 3, 4; second entry of Display_BytecodeBlock_F without the status bar. Basis: callers + body.
 DisplayStr_WriteNoteLine:
 	call DisplayStr_BlankLineBuffer
 	ld XIX,0x00000eca
@@ -14663,6 +14702,11 @@ Display_BytecodeBlock_F_Sub_Helper2:
 	ld	bc, 3:i3
 	ldir85
 	ret
+; DisplayStr_WriteTempoValue: Writes the tempo (word 0x0EF2) as three digits at 0x0EDA, the value field of the TEMPO
+;   line; when (0xFC5A) = 7 and (0xFC5B) = 2 -- the case where the line shows the 0x93 note glyph instead of 0x15 --
+;   it writes tempo * 2 / 3. Basis: callers + body -- DisplayStr_ShowTempoLine calls it after copying the 'TEMPO
+;   <glyph>=' template (choosing the template on the same (0xFC5A, 0xFC5B) test), as do VoiceSlot_StatusRet_Helper2/3;
+;   TempoRingBuf_OnTempoEvent stores the tempo in 0x0EF2.
 DisplayStr_WriteTempoValue:
 	ld	wa, (3826:16)
 	cp	(64602:16), 7
@@ -14706,11 +14750,16 @@ Display_BytecodeBlock_F_Tbl2:
 	.ascii	"="
 	.byte	0x09
 	.ascii	"       "
+	; Byte data, 19 B.  Read by Display_BytecodeBlock_F (0xEFF11A): `ld xiy, Display_BytecodeBlock_F_Tbl4`
+	; copies 26 byte(s) per use (`ld bc, 26` + ldir) into the LCD text buffer
 Display_BytecodeBlock_F_Tbl4:	.ascii	" TEMPO   "
 	.byte	0x93
 	.ascii	"="
 	.byte	0x09
 	.ascii	"       "
+; DisplayStr_BlankLineBuffer: Fills the 30-byte text line buffer at 0x0ECA with spaces (15 words of 0x2020). Basis:
+;   callers + body -- every DisplayStr_*/VoiceCtrl_* line builder calls it first and then copies its text into
+;   0x0ECA+n (3786/3791/3798 = 0x0ECA/0x0ECF/0x0ED6).
 DisplayStr_BlankLineBuffer:
 	ldw	bc, 15
 	ld	xix, 3786
@@ -16070,6 +16119,11 @@ SqStep_FindMsaStateAtCursor_Skip5:
 	ld	(0x10fd:16), xiz
 	pop	xiz
 	ret
+; SqStep_UpdateMsaStateFromEvent: For the 0xBn event at the song-data scan position: records the position (0x28BF /
+;   0x28C1), reads the event (VoiceBank_ProcessCommand) and, when it is the M.S.A. event -- tag 0x98 from the bytes at
+;   0x0EB5/0x0EB7, offset (0x0EB8) = 3 and flag (0x0EBA) bit 0 set -- stores its value bit 0 ((0x0EB9) & 1) in 0x10F6;
+;   it returns through ParamPopup_PartPedal's leading `ret`. Basis: callers + body -- SqStep_FindMsaStateAtCursor
+;   calls it for each 0xBn event up to the cursor; its header describes this test.
 SqStep_UpdateMsaStateFromEvent:
 	call	VoiceSlot_ComputeWordIndex
 	push	xhl
@@ -18203,7 +18257,7 @@ Scoop_CurveUpdate_SegmentEnd_Skip2:
 	ld	xde, xwa
 	ld	xwa, (xsp+4)
 	push	xwa
-	pushw	255
+	pushw	255	; colour pair for DrawString, not a pointer
 	pushw	245
 	ld	xwa, xhl
 	call	DrawString
@@ -18367,7 +18421,7 @@ Scoop_EnvCalc_Handler1_Skip5:
 	ld	xde, xwa
 	ld	xwa, 6:i3
 	push	xwa
-	pushw	255
+	pushw	255	; colour pair for DrawString, not a pointer
 	pushw	245
 	ld	xwa, xhl
 	call	DrawString
@@ -18571,7 +18625,7 @@ Scoop_GlideParam_Setup_Skip:
 	ld	xde, xwa
 	ld	xwa, 1:i3
 	push	xwa
-	pushw	255
+	pushw	255	; colour pair for DrawString, not a pointer
 	pushw	245
 	ld	xwa, xhl
 	call	DrawString
@@ -18628,7 +18682,7 @@ Scoop_GlideCalc_Handler0_Skip2:
 	ld	xde, xwa
 	ld	xwa, 2:i3
 	push	xwa
-	pushw	255
+	pushw	255	; colour pair for DrawString, not a pointer
 	pushw	245
 	ld	xwa, xhl
 	call	DrawString
@@ -18907,7 +18961,7 @@ Scoop_EventLoop_12Entry_Join:
 	lda	xwa, (xsp+4)
 	ld	xde, xwa
 	push	xix
-	pushw	255
+	pushw	255	; colour pair for DrawString, not a pointer
 	pushw	245
 	ld	xwa, xhl
 	call	DrawString
@@ -19058,7 +19112,7 @@ Scoop_EventLoop_12Entry_Join3:
 	lda	xwa, (xsp+4)
 	ld	xde, xwa
 	push	xix
-	pushw	255
+	pushw	255	; colour pair for DrawString, not a pointer
 	pushw	245
 	ld	xwa, xhl
 	call	DrawString

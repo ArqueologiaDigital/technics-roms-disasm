@@ -6112,6 +6112,8 @@ NoteEditBox_GridDispatch2_DrawDrBitmap:
 NoteEditBox_EventDispatch2_Join:
 	call	SendEvent
 	jrl	NoteEdit_ReturnZero
+; NoteEditBox_GridDispatch2_DrawNoteMeasureRuler: part 8 (note edit): 11-column measure/beat ruler -- measure number
+;   where EVT_GET_MEAS_CNG_SV is set, else the beat count
 NoteEditBox_GridDispatch2_DrawNoteMeasureRuler:
 	ld	xwa, (xsp+12)
 	ld	xwa, (xwa+26)
@@ -6199,13 +6201,15 @@ NoteEditBox_GridDispatch2_DrawNoteMeasureRuler_Join3:
 	lda	xde, (xsp+36)
 	ld	xhl, (xsp+4)
 	push	xhl
-	pushw	255
+	pushw	255	; colour pair for DrawStringLeftJustify, not a pointer
 	pushw	245
 	call	DrawStringLeftJustify
 	inc1b_erp 251
 	cp_erpb 251, 11
 	jrl c, NoteEditBox_GridDispatch2_DrawNoteMeasureRuler_Loop
 	jrl	NoteEdit_ReturnZero
+; NoteEditBox_GridDispatch2_DrawDrumMeasureRuler: part 13 (drum edit): 8-column measure/beat ruler, same scheme as
+;   part 8
 NoteEditBox_GridDispatch2_DrawDrumMeasureRuler:
 	ld	xwa, (xsp+12)
 	ld	xwa, (xwa+26)
@@ -6293,7 +6297,7 @@ NoteEditBox_GridDispatch2_DrawDrumMeasureRuler_Join5:
 	lda	xde, (xsp+36)
 	ld	xhl, (xsp+4)
 	push	xhl
-	pushw	255
+	pushw	255	; colour pair for DrawStringLeftJustify, not a pointer
 	pushw	245
 	call	DrawStringLeftJustify
 	inc1b_erp 251

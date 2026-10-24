@@ -2671,6 +2671,8 @@ MainPmanCtrl_Case1:
 	ld de, (xiz+6)
 	call SndParam_LookupByKey
 	jrl MainTitle_SendEventDone
+; MainPmanCtrl_OnLswGet: Reads the parameter into block +4, then posts a 12-byte Malloc copy as EVT_LSW_DATA (and
+;   EVT_AUTO_FREE).
 MainPmanCtrl_OnLswGet:
 	ld xiz, xde
 	ld xwa, (xiz)

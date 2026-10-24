@@ -54,6 +54,9 @@ GroupBoxProc_StartSSFPresentation:
 	call	SndParam_ResolveWidget
 	cp	hl, 65535
 	jrl	z, GroupBox_ReturnZero
+; Loop body: iterates over SSF items via FCCC66, builds workspace fields,
+; and sends event 0x1c0001c for each item via direct SendEvent.
+; Loops until FCCD2E reports no more items (HL == 0xffff).
 GroupBoxProc_SSFItemLoop:
 	ld	xwa, (xsp+10)
 	ld	(xsp+18), xwa
@@ -1312,6 +1315,9 @@ DirmdTitle_Old:
 	ld	xwa, DirmdTitleFunc_Str_DirmdTitleOld
 	call	DbMemo_PostString
 	jp	PsMixer_CtlTypeProc8_Return2
+; DirmdTitle_ESw: DirmdTitle emulator method [2] (ESw), called by DirmdEmulator on EVT_SW_IN with the switch number (&
+;   31) and its bit-7 flag: formats and posts the trace memo "DirmdTitleESw(%d, %d);" then calls
+;   DirmdTitle_SwitchInNullRet(WA = switch, BC = flag), an empty routine
 DirmdTitle_ESw:
 	lda	xsp, (xsp-256)
 	pushw	iz

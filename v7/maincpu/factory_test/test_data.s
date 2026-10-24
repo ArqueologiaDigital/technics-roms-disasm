@@ -14,6 +14,8 @@ Hama_ModeInit_Table:
 	.long NakaInst_SelectSoundForPart_D
 InitializeHama_PtrTable:	.byte 0xce, 0xe7, 0xf1, 0x00, 0xa4, 0xe8
 	.byte	0xf1, 0x00, 0x00, 0x00, 0x00, 0x00
+; table of 3 pointers to the NAME strings of the functions in object 0x129's table
+; evidence: InitializeHama `RegObjTablHama 0x1600002, ApFunctionProc, 0x2, <this>, 0x429` -> RegisterObjectTable (descriptor +10 = this; registry 0x27ED2 + 14*index)
 Hama_ApFuncTable_429:	.byte	0x6c, 0xf0
 	.byte 0xe1, 0x00
 	.long HamaStr_hamadeb
@@ -41,12 +43,16 @@ HamaStr_HamaList:
 	aligned_string	"HamaList"
 InitializeHama_Data_3:
 	.byte	0x01, 0x00
+; parameter block of object 0x1C9 (class 0x0160000C, proc ResEventProc); its descriptor's +8 word is read from HamaStr_EV_INDEX_PUTS + 0xe
+; evidence: InitializeHama `RegObjTableHama 0x160000c, ResEventProc, HamaStr_EV_INDEX_PUTS + 0xe, <this>, 0x1c9` -> RegisterObjectTable (descriptor +10 = this; registry 0x27ED2 + 14*index)
 Hama_ResEventTable_1C9:	.byte	0xc6, 0xf0, 0xe1, 0x00, 0x00, 0x00
 	.byte	0x00, 0x00
 HamaStr_EV_INDEX_PUTS:
 	aligned_string	"EV_INDEX_PUTS"
 InitializeHama_Data_5:
 	.byte	0x01, 0x00
+; parameter block of object 0x1E9 (class 0x0160000D, proc ResMethodProc); its descriptor's +8 word is read from HamaStr_MT_CONTINUE + 0xc
+; evidence: InitializeHama `RegObjTableHama 0x160000d, ResMethodProc, HamaStr_MT_CONTINUE + 0xc, <this>, 0x1e9` -> RegisterObjectTable (descriptor +10 = this; registry 0x27ED2 + 14*index)
 Hama_ResMethodTable_1E9:	.byte	0xde, 0xf0, 0xe1, 0x00, 0x00, 0x00
 	.byte	0x00, 0x00
 HamaStr_MT_CONTINUE:
