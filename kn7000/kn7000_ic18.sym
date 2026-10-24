@@ -1,0 +1,10 @@
+; KN7000 boot ROM (IC18's first 64 KB): names for tools/gen_ic18_s.py (`make ic18-src`).
+;
+; One line per name:  0xADDR  NAME  ; header comment
+; ADDR is the CPU address the code uses: 0x400xxxxx for what runs in ROM, the run
+; address in work RAM (0x50000010 + file offset - 0xB00) for the program image,
+; 0x50010000.. for the .data image, and any address outside the image (.bss, the
+; stack) for a variable. A routine is named at its first byte (the prologue, where
+; it has one); the generator names the place `call` enters it NAME_entry.
+; Every name and comment here comes from reading the code that uses the thing:
+; notes/ic18-boot-rom.md says how each group was worked out.

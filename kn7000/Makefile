@@ -454,6 +454,45 @@ cnv-src: tools/gen_cnv_s.py tools/gen_xap_s.py cnv_manual.sym $(CNV_REFS) \
 	    --fw-rom baserom/kn7000_program.rom --fw-r1-end 0x186000 --fw-lib-file 0x3B8FD1 \
 	    --fw-sym kn7000.sym kn7000_manual.sym kn7000_exports_from_942.sym
 
+# ---- IC18's first 64 KB: the boot ROM ---------------------------------------
+# The CPU starts at 0x40000000, where IC18 (the 4 MB rhythm ROM C3CBND000046)
+# answers; its first 64 KB is MN10300 code: reset, the flash-update system menu,
+# and the jump to the program flash. src/ic18/boot.s is all of it, fully
+# disassembled (tools/gen_ic18_s.py), and carries every byte, so it builds
+# without the reference. The reference is cut from the chip image in the private
+# romset (a read of Felipe's own instrument, pass 4 of the dumper), which is
+# checked first. See notes/ic18-boot-rom.md.
+IC18_ROM       ?= $(ROMSET_DIR)/c3cbnd000046.ic18
+IC18_SHA1      := 2dc71f5082063cd6b21e4ed16acd67e9d326a79f
+IC18_BOOT_SHA1 := 00db930227efcac3b329edbb210db5ec26dfa25e
+
+.PHONY: verify-ic18 ic18-src
+baserom/kn7000_ic18_boot.bin:
+	@mkdir -p baserom
+	echo "$(IC18_SHA1)  $(IC18_ROM)" | sha1sum --quiet -c
+	head -c 65536 "$(IC18_ROM)" > $@.tmp
+	echo "$(IC18_BOOT_SHA1)  $@.tmp" | sha1sum --quiet -c
+	mv $@.tmp $@
+
+build/kn7000_ic18_boot.bin: src/ic18/boot.s tools/kn7asm.py tools/mn10300_asm.py
+	@mkdir -p build
+	$(ASM) src/ic18/boot.s -I . -o $@
+
+verify-ic18: build/kn7000_ic18_boot.bin baserom/kn7000_ic18_boot.bin
+	@if [ "$$(sha1sum < $< | cut -d' ' -f1)" = "$(IC18_BOOT_SHA1)" ] && cmp -s $< baserom/kn7000_ic18_boot.bin; then \
+	    echo "OK    kn7000_ic18_boot.bin is 100% byte-identical to IC18's first 64 KB (SHA-1 $(IC18_BOOT_SHA1))"; \
+	 else echo "FAIL  kn7000_ic18_boot.bin differs from IC18's first 64 KB:"; \
+	    cmp $< baserom/kn7000_ic18_boot.bin || true; exit 1; fi
+
+# Regenerate src/ic18/boot.s (needs unidasm, and PROGRAM 941 for the names of the
+# routines this ROM shares with the firmware). The committed file is the result.
+ic18-src: tools/gen_ic18_s.py tools/gen_xap_s.py kn7000_ic18.sym baserom/kn7000_ic18_boot.bin \
+		baserom/kn7000_program.rom kn7000.sym kn7000_manual.sym kn7000_exports_from_942.sym
+	UNIDASM=$(UNIDASM) $(PYTHON) tools/gen_ic18_s.py --rom baserom/kn7000_ic18_boot.bin \
+	    --out src/ic18/boot.s --names kn7000_ic18.sym \
+	    --fw-rom baserom/kn7000_program.rom --fw-r1-end 0x186000 --fw-lib-file 0x3B8FD1 \
+	    --fw-sym kn7000.sym kn7000_manual.sym kn7000_exports_from_942.sym
+
 # ---- Table build 80 (pairs with program 893, v1.3) -------------------------
 # The reference is the read of Felipe's own instrument: the two EPROM halves in
 # the private romset, de-interleaved like SP7001's. src/b80/table.s builds it

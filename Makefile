@@ -72,8 +72,9 @@ wsa1-clean:
 #
 #   make kn7000        build the KN7000 images: program + table 941/84, IC19
 #   make gate-kn7000   their byte-identity gates, plus the SP7001 set (942/83),
-#                      the seven Style Convert Disk converters (src/cnv/*.s) and
-#                      table build 80 (src/b80/table.s)
+#                      the seven Style Convert Disk converters (src/cnv/*.s),
+#                      table build 80 (src/b80/table.s) and the IC18 boot ROM
+#                      (src/ic18/boot.s)
 kn7000:
 	$(MAKE) -C kn7000 build/kn7000_program.rom build/kn7000_table.rom build/kn7000_picture.rom
 
@@ -81,7 +82,7 @@ kn7000-clean:
 	$(MAKE) -C kn7000 clean
 
 gate-kn7000:
-	$(MAKE) -C kn7000 verify verify-sp7001 verify-picture verify-cnv verify-table80
+	$(MAKE) -C kn7000 verify verify-sp7001 verify-picture verify-cnv verify-table80 verify-ic18
 
 everything: all wsa1 kn7000
 

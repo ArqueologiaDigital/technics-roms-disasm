@@ -115,7 +115,8 @@ class Assembler:
 
     # Registers must never be treated as symbols even if something .equ's the name.
     _REGS = frozenset(("d0", "d1", "d2", "d3", "a0", "a1", "a2", "a3",
-                       "sp", "pc", "mdr", "psw", "lir", "lar"))
+                       "sp", "pc", "mdr", "psw", "lir", "lar",
+                       "other", "other0", "other2", "other3"))   # movm register-list groups
 
     def resolve_operands(self, operands):
         """Substitute known symbol names in an instruction's operand string with
@@ -140,9 +141,12 @@ class Assembler:
         """The estimated address of forward label `tok`: where the previous pass
         put it, moved by the drift this line has had since. Without the drift a
         pass mixes two layouts (backward labels from this one, forward ones from
-        the last), and the branches that span the difference relax and grow."""
-        here = len(self.out)
-        v = self.known[tok] + here - self.prev_off.get((self.cur_file, self.cur_line), here)
+        the last), and the branches that span the difference relax and grow.
+        The drift is the line's own (where it starts now against where it started
+        then): in `.long A, B, C` the output has moved on by the time B is read."""
+        key = (self.cur_file, self.cur_line)
+        here = self.line_off.get(key, len(self.out))
+        v = self.known[tok] + here - self.prev_off.get(key, here)
         self.assumed[tok] = v
         return v
 

@@ -58,6 +58,17 @@ def target_op(tok):
     return imm(tok), False
 
 
+def imm_width(tok):
+    """An immediate operand, optionally suffixed `:16` or `:32` to force that
+    width where a shorter form would hold the value (hand-written start-up code
+    spells `mov 0x00000030, d0` with a 32-bit immediate). -> (value, width)."""
+    tok = tok.strip()
+    m = re.fullmatch(r"(.+):(16|32)", tok)
+    if m:
+        return imm(m.group(1)), int(m.group(2))
+    return imm(tok), None
+
+
 def split_ops(s):
     """Split operands on commas not inside [] or ()."""
     out, buf, depth = [], "", 0
@@ -251,6 +262,8 @@ def encode_reglist(tok):
             mask |= REGLIST_BITS[r]
         elif r == "other":
             mask |= 0x02
+        elif r in ("other0", "other2", "other3"):    # unidasm's names for bits 0, 2, 3
+            mask |= 1 << int(r[-1])
         else:
             raise EncError(f"unhandled reg-list member {r!r}")
     return mask
@@ -288,14 +301,14 @@ def enc_move(mnem, ops, pc):
 
     # imm -> reg
     if mnem == "mov" and not is_reg_tok(src):
-        v = imm(src); dc, di = reg(dst)
+        v, w = imm_width(src); dc, di = reg(dst)
         if dc == "d":
-            if fits_s8(v):  return u8(0x80 | (di << 2) | di) + u8(v)
-            if fits_s16(v): return u8(0x2C | di) + le16(v)
+            if fits_s8(v) and not w:  return u8(0x80 | (di << 2) | di) + u8(v)
+            if fits_s16(v) and w != 32: return u8(0x2C | di) + le16(v)
             return b"\xfc" + u8(0xCC | di) + le32(v)
         else:  # a-reg, zero-extended small forms
-            if fits_u8(v):  return u8(0x90 | (di << 2) | di) + u8(v)
-            if fits_u16(v): return u8(0x24 | di) + le16(v)
+            if fits_u8(v) and not w:  return u8(0x90 | (di << 2) | di) + u8(v)
+            if fits_u16(v) and w != 32: return u8(0x24 | di) + le16(v)
             return b"\xfc" + u8(0xDC | di) + le32(v)
     raise EncError(f"unhandled {mnem} {ops}")
 
@@ -403,11 +416,11 @@ def enc_alu(mnem, ops):
             return b"\xf1" + u8(F1[k] | (si << 2) | di)
         raise EncError(f"unhandled reg-reg {mnem} {ops}")
 
-    v = imm(src)
+    v, w = imm_width(src)
 
     if mnem == "add" and dc == "sp":                       # add imm,sp
-        if fits_s8(v):  return b"\xf8\xfe" + u8(v)
-        if fits_s16(v): return b"\xfa\xfe" + le16(v)
+        if fits_s8(v) and not w:  return b"\xf8\xfe" + u8(v)
+        if fits_s16(v) and w != 32: return b"\xfa\xfe" + le16(v)
         return b"\xfc\xfe" + le32(v)
 
     # per-op opcode nibbles for the FA (imm16) / FC (imm32) prefixed forms
@@ -420,8 +433,8 @@ def enc_alu(mnem, ops):
           ("btst", "d"): 0xEC}
     key = (mnem, dc)
     signed = mnem in ("add", "sub") or (mnem == "cmp" and dc == "d")
-    small = fits_s8(v) if signed else fits_u8(v)
-    mid = fits_s16(v) if signed else fits_u16(v)
+    small = (fits_s8(v) if signed else fits_u8(v)) and not w
+    mid = (fits_s16(v) if signed else fits_u16(v)) and w != 32
 
     # imm8 short forms (each op has a distinct encoding)
     if small:
