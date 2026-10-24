@@ -795,20 +795,20 @@ HDAE5000_ErrMsgTimerCatch:
 	ld	xiz, xwa
 	ld	xwa, xbc
 	cp	xwa, EVT_HDAE_TIMER_BACK
-	jr z, HDAE5000_ErrMsgTimerCatch_OnHdaeTimerBack                       ; [66 61] jr Z,0x28b471
+	jr	z, HDAE5000_ErrMsgTimerCatch_OnHdaeTimerBack
 	cp	xwa, EVT_DRAW
-	jr z, HDAE5000_ErrMsgTimerCatch_OnDraw                       ; [66 21] jr Z,0x28b439
+	jr	z, HDAE5000_ErrMsgTimerCatch_OnDraw
 	cp	xwa, EVT_ARE_YOU_CLASS_PROC
-	jr z, HDAE5000_ErrMsgTimerCatch_OnAreYouClassProc                       ; [66 15] jr Z,0x28b435
+	jr	z, HDAE5000_ErrMsgTimerCatch_OnAreYouClassProc
 	ld	xwa, xiz
 	ld	xhl, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xhl, (xhl + WS_RootFnTable)
 	ld_sril	xix, (xhl + RootFn_InheritedProc)
 	call	(xix)
-	jr t, HDAE5000_ErrMsgTimerCatch_Epilogue                       ; [68 58] jr T,0x28b48d
+	jr	t, HDAE5000_ErrMsgTimerCatch_Epilogue
 HDAE5000_ErrMsgTimerCatch_OnAreYouClassProc:
 	ld	xhl, 1:i3
-	jr t, HDAE5000_ErrMsgTimerCatch_Epilogue                       ; [68 54] jr T,0x28b48d
+	jr	t, HDAE5000_ErrMsgTimerCatch_Epilogue
 HDAE5000_ErrMsgTimerCatch_OnDraw:
 	ld	xwa, xiz
 	ld	xhl, (HDAE5000_RAM_MainWorkspacePtr)
@@ -825,7 +825,7 @@ HDAE5000_ErrMsgTimerCatch_OnDraw:
 	ld	xbc, EVT_PARA_DRAW
 	call	(xhl)
 	ld	xhl, 0:i3
-	jr t, HDAE5000_ErrMsgTimerCatch_Epilogue                       ; [68 1c] jr T,0x28b48d
+	jr	t, HDAE5000_ErrMsgTimerCatch_Epilogue
 HDAE5000_ErrMsgTimerCatch_OnHdaeTimerBack:
 	ld	xwa, xde
 	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
@@ -845,20 +845,20 @@ HDAE5000_ErrMsgTimerCatchLBN:
 	ld	xiz, xwa
 	ld	xwa, xbc
 	cp	xwa, EVT_HDAE_TIMER_BACK
-	jr z, HDAE5000_ErrMsgTimerCatchLBN_OnHdaeTimerBack                       ; [66 61] jr Z,0x28b4fd
+	jr	z, HDAE5000_ErrMsgTimerCatchLBN_OnHdaeTimerBack
 	cp	xwa, EVT_DRAW
-	jr z, HDAE5000_ErrMsgTimerCatchLBN_OnDraw                       ; [66 21] jr Z,0x28b4c5
+	jr	z, HDAE5000_ErrMsgTimerCatchLBN_OnDraw
 	cp	xwa, EVT_ARE_YOU_CLASS_PROC
-	jr z, HDAE5000_ErrMsgTimerCatchLBN_OnAreYouClassProc                       ; [66 15] jr Z,0x28b4c1
+	jr	z, HDAE5000_ErrMsgTimerCatchLBN_OnAreYouClassProc
 	ld	xwa, xiz
 	ld	xhl, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xhl, (xhl + WS_RootFnTable)
 	ld_sril	xix, (xhl + RootFn_InheritedProc)
 	call	(xix)
-	jr t, HDAE5000_ErrMsgTimerCatchLBN_Epilogue                       ; [68 64] jr T,0x28b525
+	jr	t, HDAE5000_ErrMsgTimerCatchLBN_Epilogue
 HDAE5000_ErrMsgTimerCatchLBN_OnAreYouClassProc:
 	ld	xhl, 1:i3
-	jr t, HDAE5000_ErrMsgTimerCatchLBN_Epilogue                       ; [68 60] jr T,0x28b525
+	jr	t, HDAE5000_ErrMsgTimerCatchLBN_Epilogue
 HDAE5000_ErrMsgTimerCatchLBN_OnDraw:
 	ld	xwa, xiz
 	ld	xhl, (HDAE5000_RAM_MainWorkspacePtr)
@@ -875,7 +875,7 @@ HDAE5000_ErrMsgTimerCatchLBN_OnDraw:
 	ld	xbc, EVT_PARA_DRAW
 	call	(xhl)
 	ld	xhl, 0:i3
-	jr t, HDAE5000_ErrMsgTimerCatchLBN_Epilogue                       ; [68 28] jr T,0x28b525
+	jr	t, HDAE5000_ErrMsgTimerCatchLBN_Epilogue
 HDAE5000_ErrMsgTimerCatchLBN_OnHdaeTimerBack:
 	ld	xwa, xde
 	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
@@ -897,11 +897,11 @@ HDAE5000_ErrMsgTimerCatchLBN_Epilogue:
 HDAE5000_BitmapButt01:
 	; registered as "BitmapButt01" in HDAE5000_ObjHandler_Table
 	cp	xbc, EVT_GET_BITMAP_HEIGHT
-	jr z, HDAE5000_BitmapButt01_OnGetBitmapHeight                       ; [66 1f] jr Z,0x28b54e
+	jr	z, HDAE5000_BitmapButt01_OnGetBitmapHeight
 	cp	xbc, EVT_GET_BITMAP_WIDTH
-	jr z, HDAE5000_BitmapButt01_OnGetBitmapWidth                       ; [66 11] jr Z,0x28b548
+	jr	z, HDAE5000_BitmapButt01_OnGetBitmapWidth
 	cp	xbc, EVT_GET_BITMAP_DATA
-	jr z, HDAE5000_BitmapButt01_OnGetBitmapData                       ; [66 03] jr Z,0x28b542
+	jr	z, HDAE5000_BitmapButt01_OnGetBitmapData
 	ld	xhl, 0:i3
 	ret
 
@@ -926,9 +926,9 @@ HDAE5000_AcLanguageText1Proc:
 	ld	(xsp+214), xwa	; ld (XSP+0x00d6),XWA
 	ld	xwa, (xsp+210)
 	cp	xwa, EVT_PARA_DRAW
-	jr z, HDAE5000_AcLanguageText1Proc_OnParaDraw                       ; [66 33] jr Z,0x28b5a9
+	jr	z, HDAE5000_AcLanguageText1Proc_OnParaDraw
 	cp	xwa, EVT_GET_STR_PTR
-	jr z, HDAE5000_AcLanguageText1Proc_OnGetStrPtr                       ; [66 23] jr Z,0x28b5a1
+	jr	z, HDAE5000_AcLanguageText1Proc_OnGetStrPtr
 	ld	xwa, (xsp+214)
 	ld	xbc, (xsp+210)
 	ld	xde, (xsp+206)
@@ -936,14 +936,14 @@ HDAE5000_AcLanguageText1Proc:
 	ld	xhl, (xhl + WS_RootFnTable)
 	ld_sril	xix, (xhl + RootFn_InheritedProc)
 	call	(xix)
-	jrl t, HDAE5000_AcLanguageText1Proc_Epilogue                      ; [78 60 17] jrl T,0x28cd01
+	jrl	t, HDAE5000_AcLanguageText1Proc_Epilogue
 HDAE5000_AcLanguageText1Proc_OnGetStrPtr:
 	lda xhl, (HDAE5000_Str_Aclanguage1:24)
-	jrl t, HDAE5000_AcLanguageText1Proc_Epilogue                      ; [78 58 17] jrl T,0x28cd01
+	jrl	t, HDAE5000_AcLanguageText1Proc_Epilogue
 HDAE5000_AcLanguageText1Proc_OnParaDraw:
 	ld	xwa, (xsp+206)
 	or xwa, xwa
-	jr nz, HDAE5000_AcLanguageText1Proc_Skip                      ; [6e 49] jr NZ,0x28b5fb
+	jr	nz, HDAE5000_AcLanguageText1Proc_Skip
 	ld	xwa, (xsp+214)
 	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xbc, (xbc + WS_RootFnTable)
@@ -953,7 +953,7 @@ HDAE5000_AcLanguageText1Proc_OnParaDraw:
 	call	(xix)
 	ld	xiz, xhl
 	cp	(xiz), 0x00
-	jr nz, HDAE5000_AcLanguageText1Proc_Join                      ; [6e 2a] jr NZ,0x28b600
+	jr	nz, HDAE5000_AcLanguageText1Proc_Join
 	ld	xwa, (xsp+214)
 	ld	xbc, (xsp+210)
 	ld	xde, (xsp+206)
@@ -962,7 +962,7 @@ HDAE5000_AcLanguageText1Proc_OnParaDraw:
 	ld_sril	xhl, (xhl + RootFn_InheritedProc)
 	call	(xhl)
 	ld	xhl, 0:i3
-	jrl t, HDAE5000_AcLanguageText1Proc_Epilogue                      ; [78 06 17] jrl T,0x28cd01
+	jrl	t, HDAE5000_AcLanguageText1Proc_Epilogue
 HDAE5000_AcLanguageText1Proc_Skip:
 	ld	xiz, (xsp+206)
 HDAE5000_AcLanguageText1Proc_Join:
@@ -975,7 +975,7 @@ HDAE5000_AcLanguageText1Proc_Join:
 	call HDAE5000_StrNCmp
 	add	xsp, 0x0000000a
 	cp	hl, 0:i3
-	jr nz, HDAE5000_AcLanguageText1Proc_Join2                      ; [6e 05] jr NZ,0x28b624
+	jr	nz, HDAE5000_AcLanguageText1Proc_Join2
 	ldw (xsp + 0x04), 1
 HDAE5000_AcLanguageText1Proc_Join2:
 	pushw 0x0008
@@ -986,7 +986,7 @@ HDAE5000_AcLanguageText1Proc_Join2:
 	call HDAE5000_StrNCmp
 	add	xsp, 0x0000000a
 	cp	hl, 0:i3
-	jr nz, HDAE5000_AcLanguageText1Proc_Join3                      ; [6e 05] jr NZ,0x28b643
+	jr	nz, HDAE5000_AcLanguageText1Proc_Join3
 	ldw (xsp + 0x04), 2
 HDAE5000_AcLanguageText1Proc_Join3:
 	pushw 0x0008
@@ -997,11 +997,11 @@ HDAE5000_AcLanguageText1Proc_Join3:
 	call HDAE5000_StrNCmp
 	add	xsp, 0x0000000a
 	cp	hl, 0:i3
-	jr nz, HDAE5000_AcLanguageText1Proc_Join4                      ; [6e 05] jr NZ,0x28b662
+	jr	nz, HDAE5000_AcLanguageText1Proc_Join4
 	ldw (xsp + 0x04), 3
 HDAE5000_AcLanguageText1Proc_Join4:
 	cpw	(xsp+4), 0x0000
-	jr ge, HDAE5000_AcLanguageText1Proc_Skip2                      ; [69 25] jr GE,0x28b68e
+	jr	ge, HDAE5000_AcLanguageText1Proc_Skip2
 	ld	xwa, (xsp+214)
 	ld	xbc, (xsp+210)
 	ld	xde, (xsp+206)
@@ -1010,7 +1010,7 @@ HDAE5000_AcLanguageText1Proc_Join4:
 	ld_sril	xhl, (xhl + RootFn_InheritedProc)
 	call	(xhl)
 	ld	xhl, 0:i3
-	jrl t, HDAE5000_AcLanguageText1Proc_Epilogue                      ; [78 73 16] jrl T,0x28cd01
+	jrl	t, HDAE5000_AcLanguageText1Proc_Epilogue
 HDAE5000_AcLanguageText1Proc_Skip2:
 	ld	xwa, (xsp+214)
 	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
@@ -1020,14 +1020,14 @@ HDAE5000_AcLanguageText1Proc_Skip2:
 	ld	wa, (xhl+26)
 	dec	1, wa
 	cp	wa, 0:i3
-	jrl lt, HDAE5000_AcLanguageText1Proc_NoMessage                     ; [71 1f 16] jrl LT,0x28cccd
+	jrl	lt, HDAE5000_AcLanguageText1Proc_NoMessage
 	cp	wa, 0x0042
-	jr le, HDAE5000_AcLanguageText1Proc_Join5                      ; [62 12] jr LE,0x28b6c6
+	jr	le, HDAE5000_AcLanguageText1Proc_Join5
 	sub	wa, 0x0084
 	cp	wa, 0x0043
-	jrl lt, HDAE5000_AcLanguageText1Proc_NoMessage                     ; [71 0e 16] jrl LT,0x28cccd
+	jrl	lt, HDAE5000_AcLanguageText1Proc_NoMessage
 	cp	wa, 0x004f
-	jrl gt, HDAE5000_AcLanguageText1Proc_NoMessage                     ; [7a 07 16] jrl GT,0x28cccd
+	jrl	gt, HDAE5000_AcLanguageText1Proc_NoMessage
 HDAE5000_AcLanguageText1Proc_Join5:
 	add	wa, wa
 	lda xix, (HDAE5000_LangText_CaseTable:24)
@@ -1036,7 +1036,7 @@ HDAE5000_AcLanguageText1Proc_Join5:
 	jp	t, (xix+wa)	; jp T,XIX+WA
 HDAE5000_AcLanguageText1Proc_Msg001:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg001_LangDE                      ; [6e 10] jr NZ,0x28b6f3
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg001_LangDE
 	pushw HDAE5000_LangMsg_001_EN@hi16
 	pushw HDAE5000_LangMsg_001_EN@lo16		; low half of HDAE5000_LangMsg_001_EN
 	lda	xwa, (xsp+10)
@@ -1045,7 +1045,7 @@ HDAE5000_AcLanguageText1Proc_Msg001:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg001_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg001_LangFR                      ; [6e 10] jr NZ,0x28b70a
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg001_LangFR
 	pushw HDAE5000_LangMsg_001_DE@hi16
 	pushw HDAE5000_LangMsg_001_DE@lo16		; low half of HDAE5000_LangMsg_001_DE
 	lda	xwa, (xsp+10)
@@ -1054,17 +1054,17 @@ HDAE5000_AcLanguageText1Proc_Msg001_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg001_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e cb 15] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_001_FR@hi16
 	pushw HDAE5000_LangMsg_001_FR@lo16		; low half of HDAE5000_LangMsg_001_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 b8 15] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg002:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg002_LangDE                      ; [6e 10] jr NZ,0x28b73c
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg002_LangDE
 	pushw HDAE5000_LangMsg_002_EN@hi16
 	pushw HDAE5000_LangMsg_002_EN@lo16		; low half of HDAE5000_LangMsg_002_EN
 	lda	xwa, (xsp+10)
@@ -1073,7 +1073,7 @@ HDAE5000_AcLanguageText1Proc_Msg002:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg002_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg002_LangFR                      ; [6e 10] jr NZ,0x28b753
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg002_LangFR
 	pushw HDAE5000_LangMsg_002_DE@hi16
 	pushw HDAE5000_LangMsg_002_DE@lo16		; low half of HDAE5000_LangMsg_002_DE
 	lda	xwa, (xsp+10)
@@ -1082,17 +1082,17 @@ HDAE5000_AcLanguageText1Proc_Msg002_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg002_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e 82 15] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_002_FR@hi16
 	pushw HDAE5000_LangMsg_002_FR@lo16		; low half of HDAE5000_LangMsg_002_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 6f 15] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg003:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg003_LangDE                      ; [6e 10] jr NZ,0x28b785
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg003_LangDE
 	pushw HDAE5000_LangMsg_003_EN@hi16
 	pushw HDAE5000_LangMsg_003_EN@lo16		; low half of HDAE5000_LangMsg_003_EN
 	lda	xwa, (xsp+10)
@@ -1101,7 +1101,7 @@ HDAE5000_AcLanguageText1Proc_Msg003:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg003_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg003_LangFR                      ; [6e 10] jr NZ,0x28b79c
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg003_LangFR
 	pushw HDAE5000_LangMsg_003_DE@hi16
 	pushw HDAE5000_LangMsg_003_DE@lo16		; low half of HDAE5000_LangMsg_003_DE
 	lda	xwa, (xsp+10)
@@ -1110,17 +1110,17 @@ HDAE5000_AcLanguageText1Proc_Msg003_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg003_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e 39 15] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_003_FR@hi16
 	pushw HDAE5000_LangMsg_003_FR@lo16		; low half of HDAE5000_LangMsg_003_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 26 15] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg004:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg004_LangDE                      ; [6e 10] jr NZ,0x28b7ce
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg004_LangDE
 	pushw HDAE5000_LangMsg_004_EN@hi16
 	pushw HDAE5000_LangMsg_004_EN@lo16		; low half of HDAE5000_LangMsg_004_EN
 	lda	xwa, (xsp+10)
@@ -1129,7 +1129,7 @@ HDAE5000_AcLanguageText1Proc_Msg004:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg004_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg004_LangFR                      ; [6e 10] jr NZ,0x28b7e5
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg004_LangFR
 	pushw HDAE5000_LangMsg_004_DE@hi16
 	pushw HDAE5000_LangMsg_004_DE@lo16		; low half of HDAE5000_LangMsg_004_DE
 	lda	xwa, (xsp+10)
@@ -1138,17 +1138,17 @@ HDAE5000_AcLanguageText1Proc_Msg004_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg004_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e f0 14] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_004_FR@hi16
 	pushw HDAE5000_LangMsg_004_FR@lo16		; low half of HDAE5000_LangMsg_004_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 dd 14] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg005:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg005_LangDE                      ; [6e 10] jr NZ,0x28b817
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg005_LangDE
 	pushw HDAE5000_LangMsg_005_EN@hi16
 	pushw HDAE5000_LangMsg_005_EN@lo16		; low half of HDAE5000_LangMsg_005_EN
 	lda	xwa, (xsp+10)
@@ -1157,7 +1157,7 @@ HDAE5000_AcLanguageText1Proc_Msg005:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg005_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg005_LangFR                      ; [6e 10] jr NZ,0x28b82e
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg005_LangFR
 	pushw HDAE5000_LangMsg_005_DE@hi16
 	pushw HDAE5000_LangMsg_005_DE@lo16		; low half of HDAE5000_LangMsg_005_DE
 	lda	xwa, (xsp+10)
@@ -1166,17 +1166,17 @@ HDAE5000_AcLanguageText1Proc_Msg005_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg005_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e a7 14] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_005_FR@hi16
 	pushw HDAE5000_LangMsg_005_FR@lo16		; low half of HDAE5000_LangMsg_005_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 94 14] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg006:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg006_LangDE                      ; [6e 10] jr NZ,0x28b860
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg006_LangDE
 	pushw HDAE5000_LangMsg_006_EN@hi16
 	pushw HDAE5000_LangMsg_006_EN@lo16		; low half of HDAE5000_LangMsg_006_EN
 	lda	xwa, (xsp+10)
@@ -1185,7 +1185,7 @@ HDAE5000_AcLanguageText1Proc_Msg006:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg006_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg006_LangFR                      ; [6e 10] jr NZ,0x28b877
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg006_LangFR
 	pushw HDAE5000_LangMsg_006_DE@hi16
 	pushw HDAE5000_LangMsg_006_DE@lo16		; low half of HDAE5000_LangMsg_006_DE
 	lda	xwa, (xsp+10)
@@ -1194,17 +1194,17 @@ HDAE5000_AcLanguageText1Proc_Msg006_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg006_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e 5e 14] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_006_FR@hi16
 	pushw HDAE5000_LangMsg_006_FR@lo16		; low half of HDAE5000_LangMsg_006_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 4b 14] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg007:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg007_LangDE                      ; [6e 10] jr NZ,0x28b8a9
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg007_LangDE
 	pushw HDAE5000_LangMsg_007_EN@hi16
 	pushw HDAE5000_LangMsg_007_EN@lo16		; low half of HDAE5000_LangMsg_007_EN
 	lda	xwa, (xsp+10)
@@ -1213,7 +1213,7 @@ HDAE5000_AcLanguageText1Proc_Msg007:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg007_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg007_LangFR                      ; [6e 10] jr NZ,0x28b8c0
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg007_LangFR
 	pushw HDAE5000_LangMsg_007_DE@hi16
 	pushw HDAE5000_LangMsg_007_DE@lo16		; low half of HDAE5000_LangMsg_007_DE
 	lda	xwa, (xsp+10)
@@ -1222,17 +1222,17 @@ HDAE5000_AcLanguageText1Proc_Msg007_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg007_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e 15 14] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_007_FR@hi16
 	pushw HDAE5000_LangMsg_007_FR@lo16		; low half of HDAE5000_LangMsg_007_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 02 14] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg008:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg008_LangDE                      ; [6e 10] jr NZ,0x28b8f2
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg008_LangDE
 	pushw HDAE5000_LangMsg_008_EN@hi16
 	pushw HDAE5000_LangMsg_008_EN@lo16		; low half of HDAE5000_LangMsg_008_EN
 	lda	xwa, (xsp+10)
@@ -1241,7 +1241,7 @@ HDAE5000_AcLanguageText1Proc_Msg008:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg008_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg008_LangFR                      ; [6e 10] jr NZ,0x28b909
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg008_LangFR
 	pushw HDAE5000_LangMsg_008_DE@hi16
 	pushw HDAE5000_LangMsg_008_DE@lo16		; low half of HDAE5000_LangMsg_008_DE
 	lda	xwa, (xsp+10)
@@ -1250,17 +1250,17 @@ HDAE5000_AcLanguageText1Proc_Msg008_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg008_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e cc 13] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_008_FR@hi16
 	pushw HDAE5000_LangMsg_008_FR@lo16		; low half of HDAE5000_LangMsg_008_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 b9 13] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg009:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg009_LangDE                      ; [6e 10] jr NZ,0x28b93b
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg009_LangDE
 	pushw HDAE5000_LangMsg_009_EN@hi16
 	pushw HDAE5000_LangMsg_009_EN@lo16		; low half of HDAE5000_LangMsg_009_EN
 	lda	xwa, (xsp+10)
@@ -1269,7 +1269,7 @@ HDAE5000_AcLanguageText1Proc_Msg009:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg009_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg009_LangFR                      ; [6e 10] jr NZ,0x28b952
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg009_LangFR
 	pushw HDAE5000_LangMsg_009_DE@hi16
 	pushw HDAE5000_LangMsg_009_DE@lo16		; low half of HDAE5000_LangMsg_009_DE
 	lda	xwa, (xsp+10)
@@ -1278,17 +1278,17 @@ HDAE5000_AcLanguageText1Proc_Msg009_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg009_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e 83 13] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_009_FR@hi16
 	pushw HDAE5000_LangMsg_009_FR@lo16		; low half of HDAE5000_LangMsg_009_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 70 13] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg010:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg010_LangDE                      ; [6e 10] jr NZ,0x28b984
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg010_LangDE
 	pushw HDAE5000_LangMsg_010_EN@hi16
 	pushw HDAE5000_LangMsg_010_EN@lo16		; low half of HDAE5000_LangMsg_010_EN
 	lda	xwa, (xsp+10)
@@ -1297,7 +1297,7 @@ HDAE5000_AcLanguageText1Proc_Msg010:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg010_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg010_LangFR                      ; [6e 10] jr NZ,0x28b99b
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg010_LangFR
 	pushw HDAE5000_LangMsg_010_DE@hi16
 	pushw HDAE5000_LangMsg_010_DE@lo16		; low half of HDAE5000_LangMsg_010_DE
 	lda	xwa, (xsp+10)
@@ -1306,17 +1306,17 @@ HDAE5000_AcLanguageText1Proc_Msg010_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg010_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e 3a 13] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_010_FR@hi16
 	pushw HDAE5000_LangMsg_010_FR@lo16		; low half of HDAE5000_LangMsg_010_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 27 13] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg011:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg011_LangDE                      ; [6e 10] jr NZ,0x28b9cd
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg011_LangDE
 	pushw HDAE5000_LangMsg_011_EN@hi16
 	pushw HDAE5000_LangMsg_011_EN@lo16		; low half of HDAE5000_LangMsg_011_EN
 	lda	xwa, (xsp+10)
@@ -1325,7 +1325,7 @@ HDAE5000_AcLanguageText1Proc_Msg011:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg011_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg011_LangFR                      ; [6e 10] jr NZ,0x28b9e4
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg011_LangFR
 	pushw HDAE5000_LangMsg_011_DE@hi16
 	pushw HDAE5000_LangMsg_011_DE@lo16		; low half of HDAE5000_LangMsg_011_DE
 	lda	xwa, (xsp+10)
@@ -1334,17 +1334,17 @@ HDAE5000_AcLanguageText1Proc_Msg011_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg011_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e f1 12] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_011_FR@hi16
 	pushw HDAE5000_LangMsg_011_FR@lo16		; low half of HDAE5000_LangMsg_011_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 de 12] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg012:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg012_LangDE                      ; [6e 10] jr NZ,0x28ba16
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg012_LangDE
 	pushw HDAE5000_LangMsg_012_EN@hi16
 	pushw HDAE5000_LangMsg_012_EN@lo16		; low half of HDAE5000_LangMsg_012_EN
 	lda	xwa, (xsp+10)
@@ -1353,7 +1353,7 @@ HDAE5000_AcLanguageText1Proc_Msg012:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg012_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg012_LangFR                      ; [6e 10] jr NZ,0x28ba2d
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg012_LangFR
 	pushw HDAE5000_LangMsg_012_DE@hi16
 	pushw HDAE5000_LangMsg_012_DE@lo16		; low half of HDAE5000_LangMsg_012_DE
 	lda	xwa, (xsp+10)
@@ -1362,17 +1362,17 @@ HDAE5000_AcLanguageText1Proc_Msg012_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg012_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e a8 12] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_012_FR@hi16
 	pushw HDAE5000_LangMsg_012_FR@lo16		; low half of HDAE5000_LangMsg_012_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 95 12] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg013:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg013_LangDE                      ; [6e 10] jr NZ,0x28ba5f
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg013_LangDE
 	pushw HDAE5000_LangMsg_013_EN@hi16
 	pushw HDAE5000_LangMsg_013_EN@lo16		; low half of HDAE5000_LangMsg_013_EN
 	lda	xwa, (xsp+10)
@@ -1381,7 +1381,7 @@ HDAE5000_AcLanguageText1Proc_Msg013:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg013_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg013_LangFR                      ; [6e 10] jr NZ,0x28ba76
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg013_LangFR
 	pushw HDAE5000_LangMsg_013_DE@hi16
 	pushw HDAE5000_LangMsg_013_DE@lo16		; low half of HDAE5000_LangMsg_013_DE
 	lda	xwa, (xsp+10)
@@ -1390,17 +1390,17 @@ HDAE5000_AcLanguageText1Proc_Msg013_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg013_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e 5f 12] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_013_FR@hi16
 	pushw HDAE5000_LangMsg_013_FR@lo16		; low half of HDAE5000_LangMsg_013_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 4c 12] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg014:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg014_LangDE                      ; [6e 10] jr NZ,0x28baa8
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg014_LangDE
 	pushw HDAE5000_LangMsg_014_EN@hi16
 	pushw HDAE5000_LangMsg_014_EN@lo16		; low half of HDAE5000_LangMsg_014_EN
 	lda	xwa, (xsp+10)
@@ -1409,7 +1409,7 @@ HDAE5000_AcLanguageText1Proc_Msg014:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg014_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg014_LangFR                      ; [6e 10] jr NZ,0x28babf
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg014_LangFR
 	pushw HDAE5000_LangMsg_014_DE@hi16
 	pushw HDAE5000_LangMsg_014_DE@lo16		; low half of HDAE5000_LangMsg_014_DE
 	lda	xwa, (xsp+10)
@@ -1418,17 +1418,17 @@ HDAE5000_AcLanguageText1Proc_Msg014_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg014_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e 16 12] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_014_FR@hi16
 	pushw HDAE5000_LangMsg_014_FR@lo16		; low half of HDAE5000_LangMsg_014_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 03 12] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg015:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg015_LangDE                      ; [6e 10] jr NZ,0x28baf1
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg015_LangDE
 	pushw HDAE5000_LangMsg_015_EN@hi16
 	pushw HDAE5000_LangMsg_015_EN@lo16		; low half of HDAE5000_LangMsg_015_EN
 	lda	xwa, (xsp+10)
@@ -1437,7 +1437,7 @@ HDAE5000_AcLanguageText1Proc_Msg015:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg015_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg015_LangFR                      ; [6e 10] jr NZ,0x28bb08
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg015_LangFR
 	pushw HDAE5000_LangMsg_015_DE@hi16
 	pushw HDAE5000_LangMsg_015_DE@lo16		; low half of HDAE5000_LangMsg_015_DE
 	lda	xwa, (xsp+10)
@@ -1446,17 +1446,17 @@ HDAE5000_AcLanguageText1Proc_Msg015_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg015_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e cd 11] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_015_FR@hi16
 	pushw HDAE5000_LangMsg_015_FR@lo16		; low half of HDAE5000_LangMsg_015_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 ba 11] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg016:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg016_LangDE                      ; [6e 10] jr NZ,0x28bb3a
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg016_LangDE
 	pushw HDAE5000_LangMsg_016_EN@hi16
 	pushw HDAE5000_LangMsg_016_EN@lo16		; low half of HDAE5000_LangMsg_016_EN
 	lda	xwa, (xsp+10)
@@ -1465,7 +1465,7 @@ HDAE5000_AcLanguageText1Proc_Msg016:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg016_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg016_LangFR                      ; [6e 10] jr NZ,0x28bb51
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg016_LangFR
 	pushw HDAE5000_LangMsg_016_DE@hi16
 	pushw HDAE5000_LangMsg_016_DE@lo16		; low half of HDAE5000_LangMsg_016_DE
 	lda	xwa, (xsp+10)
@@ -1474,17 +1474,17 @@ HDAE5000_AcLanguageText1Proc_Msg016_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg016_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e 84 11] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_016_FR@hi16
 	pushw HDAE5000_LangMsg_016_FR@lo16		; low half of HDAE5000_LangMsg_016_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 71 11] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg017:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg017_LangDE                      ; [6e 10] jr NZ,0x28bb83
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg017_LangDE
 	pushw HDAE5000_LangMsg_017_EN@hi16
 	pushw HDAE5000_LangMsg_017_EN@lo16		; low half of HDAE5000_LangMsg_017_EN
 	lda	xwa, (xsp+10)
@@ -1493,7 +1493,7 @@ HDAE5000_AcLanguageText1Proc_Msg017:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg017_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg017_LangFR                      ; [6e 10] jr NZ,0x28bb9a
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg017_LangFR
 	pushw HDAE5000_LangMsg_017_DE@hi16
 	pushw HDAE5000_LangMsg_017_DE@lo16		; low half of HDAE5000_LangMsg_017_DE
 	lda	xwa, (xsp+10)
@@ -1502,17 +1502,17 @@ HDAE5000_AcLanguageText1Proc_Msg017_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg017_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e 3b 11] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_017_FR@hi16
 	pushw HDAE5000_LangMsg_017_FR@lo16		; low half of HDAE5000_LangMsg_017_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 28 11] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg018:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg018_LangDE                      ; [6e 10] jr NZ,0x28bbcc
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg018_LangDE
 	pushw HDAE5000_LangMsg_018_EN@hi16
 	pushw HDAE5000_LangMsg_018_EN@lo16		; low half of HDAE5000_LangMsg_018_EN
 	lda	xwa, (xsp+10)
@@ -1521,7 +1521,7 @@ HDAE5000_AcLanguageText1Proc_Msg018:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg018_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg018_LangFR                      ; [6e 10] jr NZ,0x28bbe3
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg018_LangFR
 	pushw HDAE5000_LangMsg_018_DE@hi16
 	pushw HDAE5000_LangMsg_018_DE@lo16		; low half of HDAE5000_LangMsg_018_DE
 	lda	xwa, (xsp+10)
@@ -1530,17 +1530,17 @@ HDAE5000_AcLanguageText1Proc_Msg018_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg018_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e f2 10] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_018_FR@hi16
 	pushw HDAE5000_LangMsg_018_FR@lo16		; low half of HDAE5000_LangMsg_018_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 df 10] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg019:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg019_LangDE                      ; [6e 10] jr NZ,0x28bc15
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg019_LangDE
 	pushw HDAE5000_LangMsg_019_EN@hi16
 	pushw HDAE5000_LangMsg_019_EN@lo16		; low half of HDAE5000_LangMsg_019_EN
 	lda	xwa, (xsp+10)
@@ -1549,7 +1549,7 @@ HDAE5000_AcLanguageText1Proc_Msg019:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg019_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg019_LangFR                      ; [6e 10] jr NZ,0x28bc2c
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg019_LangFR
 	pushw HDAE5000_LangMsg_019_DE@hi16
 	pushw HDAE5000_LangMsg_019_DE@lo16		; low half of HDAE5000_LangMsg_019_DE
 	lda	xwa, (xsp+10)
@@ -1558,17 +1558,17 @@ HDAE5000_AcLanguageText1Proc_Msg019_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg019_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e a9 10] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_019_FR@hi16
 	pushw HDAE5000_LangMsg_019_FR@lo16		; low half of HDAE5000_LangMsg_019_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 96 10] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg020:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg020_LangDE                      ; [6e 10] jr NZ,0x28bc5e
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg020_LangDE
 	pushw HDAE5000_LangMsg_020_EN@hi16
 	pushw HDAE5000_LangMsg_020_EN@lo16		; low half of HDAE5000_LangMsg_020_EN
 	lda	xwa, (xsp+10)
@@ -1577,7 +1577,7 @@ HDAE5000_AcLanguageText1Proc_Msg020:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg020_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg020_LangFR                      ; [6e 10] jr NZ,0x28bc75
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg020_LangFR
 	pushw HDAE5000_LangMsg_020_DE@hi16
 	pushw HDAE5000_LangMsg_020_DE@lo16		; low half of HDAE5000_LangMsg_020_DE
 	lda	xwa, (xsp+10)
@@ -1586,17 +1586,17 @@ HDAE5000_AcLanguageText1Proc_Msg020_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg020_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e 60 10] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_020_FR@hi16
 	pushw HDAE5000_LangMsg_020_FR@lo16		; low half of HDAE5000_LangMsg_020_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 4d 10] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg021:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg021_LangDE                      ; [6e 10] jr NZ,0x28bca7
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg021_LangDE
 	pushw HDAE5000_LangMsg_021_EN@hi16
 	pushw HDAE5000_LangMsg_021_EN@lo16		; low half of HDAE5000_LangMsg_021_EN
 	lda	xwa, (xsp+10)
@@ -1605,7 +1605,7 @@ HDAE5000_AcLanguageText1Proc_Msg021:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg021_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg021_LangFR                      ; [6e 10] jr NZ,0x28bcbe
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg021_LangFR
 	pushw HDAE5000_LangMsg_021_DE@hi16
 	pushw HDAE5000_LangMsg_021_DE@lo16		; low half of HDAE5000_LangMsg_021_DE
 	lda	xwa, (xsp+10)
@@ -1614,17 +1614,17 @@ HDAE5000_AcLanguageText1Proc_Msg021_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg021_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e 17 10] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_021_FR@hi16
 	pushw HDAE5000_LangMsg_021_FR@lo16		; low half of HDAE5000_LangMsg_021_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 04 10] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg022:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg022_LangDE                      ; [6e 10] jr NZ,0x28bcf0
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg022_LangDE
 	pushw HDAE5000_LangMsg_022_EN@hi16
 	pushw HDAE5000_LangMsg_022_EN@lo16		; low half of HDAE5000_LangMsg_022_EN
 	lda	xwa, (xsp+10)
@@ -1633,7 +1633,7 @@ HDAE5000_AcLanguageText1Proc_Msg022:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg022_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg022_LangFR                      ; [6e 10] jr NZ,0x28bd07
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg022_LangFR
 	pushw HDAE5000_LangMsg_022_DE@hi16
 	pushw HDAE5000_LangMsg_022_DE@lo16		; low half of HDAE5000_LangMsg_022_DE
 	lda	xwa, (xsp+10)
@@ -1642,17 +1642,17 @@ HDAE5000_AcLanguageText1Proc_Msg022_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg022_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e ce 0f] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_022_FR@hi16
 	pushw HDAE5000_LangMsg_022_FR@lo16		; low half of HDAE5000_LangMsg_022_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 bb 0f] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg023:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg023_LangDE                      ; [6e 10] jr NZ,0x28bd39
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg023_LangDE
 	pushw HDAE5000_LangMsg_023_EN@hi16
 	pushw HDAE5000_LangMsg_023_EN@lo16		; low half of HDAE5000_LangMsg_023_EN
 	lda	xwa, (xsp+10)
@@ -1661,7 +1661,7 @@ HDAE5000_AcLanguageText1Proc_Msg023:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg023_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg023_LangFR                      ; [6e 10] jr NZ,0x28bd50
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg023_LangFR
 	pushw HDAE5000_LangMsg_023_DE@hi16
 	pushw HDAE5000_LangMsg_023_DE@lo16		; low half of HDAE5000_LangMsg_023_DE
 	lda	xwa, (xsp+10)
@@ -1670,17 +1670,17 @@ HDAE5000_AcLanguageText1Proc_Msg023_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg023_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e 85 0f] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_023_FR@hi16
 	pushw HDAE5000_LangMsg_023_FR@lo16		; low half of HDAE5000_LangMsg_023_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 72 0f] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg024:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg024_LangDE                      ; [6e 10] jr NZ,0x28bd82
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg024_LangDE
 	pushw HDAE5000_LangMsg_024_EN@hi16
 	pushw HDAE5000_LangMsg_024_EN@lo16		; low half of HDAE5000_LangMsg_024_EN
 	lda	xwa, (xsp+10)
@@ -1689,7 +1689,7 @@ HDAE5000_AcLanguageText1Proc_Msg024:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg024_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg024_LangFR                      ; [6e 10] jr NZ,0x28bd99
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg024_LangFR
 	pushw HDAE5000_LangMsg_024_DE@hi16
 	pushw HDAE5000_LangMsg_024_DE@lo16		; low half of HDAE5000_LangMsg_024_DE
 	lda	xwa, (xsp+10)
@@ -1698,17 +1698,17 @@ HDAE5000_AcLanguageText1Proc_Msg024_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg024_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e 3c 0f] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_024_FR@hi16
 	pushw HDAE5000_LangMsg_024_FR@lo16		; low half of HDAE5000_LangMsg_024_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 29 0f] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg025:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg025_LangDE                      ; [6e 10] jr NZ,0x28bdcb
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg025_LangDE
 	pushw HDAE5000_LangMsg_025_EN@hi16
 	pushw HDAE5000_LangMsg_025_EN@lo16		; low half of HDAE5000_LangMsg_025_EN
 	lda	xwa, (xsp+10)
@@ -1717,7 +1717,7 @@ HDAE5000_AcLanguageText1Proc_Msg025:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg025_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg025_LangFR                      ; [6e 10] jr NZ,0x28bde2
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg025_LangFR
 	pushw HDAE5000_LangMsg_025_DE@hi16
 	pushw HDAE5000_LangMsg_025_DE@lo16		; low half of HDAE5000_LangMsg_025_DE
 	lda	xwa, (xsp+10)
@@ -1726,17 +1726,17 @@ HDAE5000_AcLanguageText1Proc_Msg025_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg025_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e f3 0e] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_025_FR@hi16
 	pushw HDAE5000_LangMsg_025_FR@lo16		; low half of HDAE5000_LangMsg_025_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 e0 0e] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg026:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg026_LangDE                      ; [6e 10] jr NZ,0x28be14
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg026_LangDE
 	pushw HDAE5000_LangMsg_026_EN@hi16
 	pushw HDAE5000_LangMsg_026_EN@lo16		; low half of HDAE5000_LangMsg_026_EN
 	lda	xwa, (xsp+10)
@@ -1745,7 +1745,7 @@ HDAE5000_AcLanguageText1Proc_Msg026:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg026_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg026_LangFR                      ; [6e 10] jr NZ,0x28be2b
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg026_LangFR
 	pushw HDAE5000_LangMsg_026_DE@hi16
 	pushw HDAE5000_LangMsg_026_DE@lo16		; low half of HDAE5000_LangMsg_026_DE
 	lda	xwa, (xsp+10)
@@ -1754,17 +1754,17 @@ HDAE5000_AcLanguageText1Proc_Msg026_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg026_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e aa 0e] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_026_FR@hi16
 	pushw HDAE5000_LangMsg_026_FR@lo16		; low half of HDAE5000_LangMsg_026_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 97 0e] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg027:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg027_LangDE                      ; [6e 10] jr NZ,0x28be5d
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg027_LangDE
 	pushw HDAE5000_LangMsg_027_EN@hi16
 	pushw HDAE5000_LangMsg_027_EN@lo16		; low half of HDAE5000_LangMsg_027_EN
 	lda	xwa, (xsp+10)
@@ -1773,7 +1773,7 @@ HDAE5000_AcLanguageText1Proc_Msg027:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg027_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg027_LangFR                      ; [6e 10] jr NZ,0x28be74
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg027_LangFR
 	pushw HDAE5000_LangMsg_027_DE@hi16
 	pushw HDAE5000_LangMsg_027_DE@lo16		; low half of HDAE5000_LangMsg_027_DE
 	lda	xwa, (xsp+10)
@@ -1782,17 +1782,17 @@ HDAE5000_AcLanguageText1Proc_Msg027_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg027_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e 61 0e] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_027_FR@hi16
 	pushw HDAE5000_LangMsg_027_FR@lo16		; low half of HDAE5000_LangMsg_027_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 4e 0e] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg028:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg028_LangDE                      ; [6e 10] jr NZ,0x28bea6
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg028_LangDE
 	pushw HDAE5000_LangMsg_028_EN@hi16
 	pushw HDAE5000_LangMsg_028_EN@lo16		; low half of HDAE5000_LangMsg_028_EN
 	lda	xwa, (xsp+10)
@@ -1801,7 +1801,7 @@ HDAE5000_AcLanguageText1Proc_Msg028:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg028_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg028_LangFR                      ; [6e 10] jr NZ,0x28bebd
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg028_LangFR
 	pushw HDAE5000_LangMsg_028_DE@hi16
 	pushw HDAE5000_LangMsg_028_DE@lo16		; low half of HDAE5000_LangMsg_028_DE
 	lda	xwa, (xsp+10)
@@ -1810,17 +1810,17 @@ HDAE5000_AcLanguageText1Proc_Msg028_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg028_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e 18 0e] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_028_FR@hi16
 	pushw HDAE5000_LangMsg_028_FR@lo16		; low half of HDAE5000_LangMsg_028_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 05 0e] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg029:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg029_LangDE                      ; [6e 10] jr NZ,0x28beef
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg029_LangDE
 	pushw HDAE5000_LangMsg_029_EN@hi16
 	pushw HDAE5000_LangMsg_029_EN@lo16		; low half of HDAE5000_LangMsg_029_EN
 	lda	xwa, (xsp+10)
@@ -1829,7 +1829,7 @@ HDAE5000_AcLanguageText1Proc_Msg029:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg029_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg029_LangFR                      ; [6e 10] jr NZ,0x28bf06
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg029_LangFR
 	pushw HDAE5000_LangMsg_029_DE@hi16
 	pushw HDAE5000_LangMsg_029_DE@lo16		; low half of HDAE5000_LangMsg_029_DE
 	lda	xwa, (xsp+10)
@@ -1838,17 +1838,17 @@ HDAE5000_AcLanguageText1Proc_Msg029_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg029_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e cf 0d] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_029_FR@hi16
 	pushw HDAE5000_LangMsg_029_FR@lo16		; low half of HDAE5000_LangMsg_029_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 bc 0d] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg030:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg030_LangDE                      ; [6e 10] jr NZ,0x28bf38
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg030_LangDE
 	pushw HDAE5000_LangMsg_030_EN@hi16
 	pushw HDAE5000_LangMsg_030_EN@lo16		; low half of HDAE5000_LangMsg_030_EN
 	lda	xwa, (xsp+10)
@@ -1857,7 +1857,7 @@ HDAE5000_AcLanguageText1Proc_Msg030:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg030_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg030_LangFR                      ; [6e 10] jr NZ,0x28bf4f
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg030_LangFR
 	pushw HDAE5000_LangMsg_030_DE@hi16
 	pushw HDAE5000_LangMsg_030_DE@lo16		; low half of HDAE5000_LangMsg_030_DE
 	lda	xwa, (xsp+10)
@@ -1866,17 +1866,17 @@ HDAE5000_AcLanguageText1Proc_Msg030_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg030_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e 86 0d] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_030_FR@hi16
 	pushw HDAE5000_LangMsg_030_FR@lo16		; low half of HDAE5000_LangMsg_030_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 73 0d] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg031:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg031_LangDE                      ; [6e 10] jr NZ,0x28bf81
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg031_LangDE
 	pushw HDAE5000_LangMsg_031_EN@hi16
 	pushw HDAE5000_LangMsg_031_EN@lo16		; low half of HDAE5000_LangMsg_031_EN
 	lda	xwa, (xsp+10)
@@ -1885,7 +1885,7 @@ HDAE5000_AcLanguageText1Proc_Msg031:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg031_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg031_LangFR                      ; [6e 10] jr NZ,0x28bf98
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg031_LangFR
 	pushw HDAE5000_LangMsg_031_DE@hi16
 	pushw HDAE5000_LangMsg_031_DE@lo16		; low half of HDAE5000_LangMsg_031_DE
 	lda	xwa, (xsp+10)
@@ -1894,17 +1894,17 @@ HDAE5000_AcLanguageText1Proc_Msg031_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg031_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e 3d 0d] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_031_FR@hi16
 	pushw HDAE5000_LangMsg_031_FR@lo16		; low half of HDAE5000_LangMsg_031_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 2a 0d] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg032:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg032_LangDE                      ; [6e 10] jr NZ,0x28bfca
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg032_LangDE
 	pushw HDAE5000_LangMsg_032_EN@hi16
 	pushw HDAE5000_LangMsg_032_EN@lo16		; low half of HDAE5000_LangMsg_032_EN
 	lda	xwa, (xsp+10)
@@ -1913,7 +1913,7 @@ HDAE5000_AcLanguageText1Proc_Msg032:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg032_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg032_LangFR                      ; [6e 10] jr NZ,0x28bfe1
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg032_LangFR
 	pushw HDAE5000_LangMsg_032_DE@hi16
 	pushw HDAE5000_LangMsg_032_DE@lo16		; low half of HDAE5000_LangMsg_032_DE
 	lda	xwa, (xsp+10)
@@ -1922,17 +1922,17 @@ HDAE5000_AcLanguageText1Proc_Msg032_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg032_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e f4 0c] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_032_FR@hi16
 	pushw HDAE5000_LangMsg_032_FR@lo16		; low half of HDAE5000_LangMsg_032_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 e1 0c] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg033:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg033_LangDE                      ; [6e 10] jr NZ,0x28c013
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg033_LangDE
 	pushw HDAE5000_LangMsg_033_EN@hi16
 	pushw HDAE5000_LangMsg_033_EN@lo16		; low half of HDAE5000_LangMsg_033_EN
 	lda	xwa, (xsp+10)
@@ -1941,7 +1941,7 @@ HDAE5000_AcLanguageText1Proc_Msg033:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg033_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg033_LangFR                      ; [6e 10] jr NZ,0x28c02a
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg033_LangFR
 	pushw HDAE5000_LangMsg_033_DE@hi16
 	pushw HDAE5000_LangMsg_033_DE@lo16		; low half of HDAE5000_LangMsg_033_DE
 	lda	xwa, (xsp+10)
@@ -1950,17 +1950,17 @@ HDAE5000_AcLanguageText1Proc_Msg033_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg033_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e ab 0c] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_033_FR@hi16
 	pushw HDAE5000_LangMsg_033_FR@lo16		; low half of HDAE5000_LangMsg_033_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 98 0c] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg034:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg034_LangDE                      ; [6e 10] jr NZ,0x28c05c
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg034_LangDE
 	pushw HDAE5000_LangMsg_034_EN@hi16
 	pushw HDAE5000_LangMsg_034_EN@lo16		; low half of HDAE5000_LangMsg_034_EN
 	lda	xwa, (xsp+10)
@@ -1969,7 +1969,7 @@ HDAE5000_AcLanguageText1Proc_Msg034:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg034_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg034_LangFR                      ; [6e 10] jr NZ,0x28c073
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg034_LangFR
 	pushw HDAE5000_LangMsg_034_DE@hi16
 	pushw HDAE5000_LangMsg_034_DE@lo16		; low half of HDAE5000_LangMsg_034_DE
 	lda	xwa, (xsp+10)
@@ -1978,17 +1978,17 @@ HDAE5000_AcLanguageText1Proc_Msg034_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg034_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e 62 0c] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_034_FR@hi16
 	pushw HDAE5000_LangMsg_034_FR@lo16		; low half of HDAE5000_LangMsg_034_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 4f 0c] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg035:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg035_LangDE                      ; [6e 10] jr NZ,0x28c0a5
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg035_LangDE
 	pushw HDAE5000_LangMsg_035_EN@hi16
 	pushw HDAE5000_LangMsg_035_EN@lo16		; low half of HDAE5000_LangMsg_035_EN
 	lda	xwa, (xsp+10)
@@ -1997,7 +1997,7 @@ HDAE5000_AcLanguageText1Proc_Msg035:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg035_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg035_LangFR                      ; [6e 10] jr NZ,0x28c0bc
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg035_LangFR
 	pushw HDAE5000_LangMsg_035_DE@hi16
 	pushw HDAE5000_LangMsg_035_DE@lo16		; low half of HDAE5000_LangMsg_035_DE
 	lda	xwa, (xsp+10)
@@ -2006,17 +2006,17 @@ HDAE5000_AcLanguageText1Proc_Msg035_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg035_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e 19 0c] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_035_FR@hi16
 	pushw HDAE5000_LangMsg_035_FR@lo16		; low half of HDAE5000_LangMsg_035_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 06 0c] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg036:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg036_LangDE                      ; [6e 10] jr NZ,0x28c0ee
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg036_LangDE
 	pushw HDAE5000_LangMsg_036_EN@hi16
 	pushw HDAE5000_LangMsg_036_EN@lo16		; low half of HDAE5000_LangMsg_036_EN
 	lda	xwa, (xsp+10)
@@ -2025,7 +2025,7 @@ HDAE5000_AcLanguageText1Proc_Msg036:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg036_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg036_LangFR                      ; [6e 10] jr NZ,0x28c105
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg036_LangFR
 	pushw HDAE5000_LangMsg_036_DE@hi16
 	pushw HDAE5000_LangMsg_036_DE@lo16		; low half of HDAE5000_LangMsg_036_DE
 	lda	xwa, (xsp+10)
@@ -2034,17 +2034,17 @@ HDAE5000_AcLanguageText1Proc_Msg036_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg036_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e d0 0b] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_036_FR@hi16
 	pushw HDAE5000_LangMsg_036_FR@lo16		; low half of HDAE5000_LangMsg_036_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 bd 0b] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg037:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg037_LangDE                      ; [6e 10] jr NZ,0x28c137
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg037_LangDE
 	pushw HDAE5000_LangMsg_037_EN@hi16
 	pushw HDAE5000_LangMsg_037_EN@lo16		; low half of HDAE5000_LangMsg_037_EN
 	lda	xwa, (xsp+10)
@@ -2053,7 +2053,7 @@ HDAE5000_AcLanguageText1Proc_Msg037:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg037_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg037_LangFR                      ; [6e 10] jr NZ,0x28c14e
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg037_LangFR
 	pushw HDAE5000_LangMsg_037_DE@hi16
 	pushw HDAE5000_LangMsg_037_DE@lo16		; low half of HDAE5000_LangMsg_037_DE
 	lda	xwa, (xsp+10)
@@ -2062,17 +2062,17 @@ HDAE5000_AcLanguageText1Proc_Msg037_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg037_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e 87 0b] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_037_FR@hi16
 	pushw HDAE5000_LangMsg_037_FR@lo16		; low half of HDAE5000_LangMsg_037_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 74 0b] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg038:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg038_LangDE                      ; [6e 10] jr NZ,0x28c180
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg038_LangDE
 	pushw HDAE5000_LangMsg_038_EN@hi16
 	pushw HDAE5000_LangMsg_038_EN@lo16		; low half of HDAE5000_LangMsg_038_EN
 	lda	xwa, (xsp+10)
@@ -2081,7 +2081,7 @@ HDAE5000_AcLanguageText1Proc_Msg038:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg038_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg038_LangFR                      ; [6e 10] jr NZ,0x28c197
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg038_LangFR
 	pushw HDAE5000_LangMsg_038_DE@hi16
 	pushw HDAE5000_LangMsg_038_DE@lo16		; low half of HDAE5000_LangMsg_038_DE
 	lda	xwa, (xsp+10)
@@ -2090,17 +2090,17 @@ HDAE5000_AcLanguageText1Proc_Msg038_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg038_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e 3e 0b] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_038_FR@hi16
 	pushw HDAE5000_LangMsg_038_FR@lo16		; low half of HDAE5000_LangMsg_038_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 2b 0b] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg039:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg039_LangDE                      ; [6e 10] jr NZ,0x28c1c9
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg039_LangDE
 	pushw HDAE5000_LangMsg_039_EN@hi16
 	pushw HDAE5000_LangMsg_039_EN@lo16		; low half of HDAE5000_LangMsg_039_EN
 	lda	xwa, (xsp+10)
@@ -2109,7 +2109,7 @@ HDAE5000_AcLanguageText1Proc_Msg039:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg039_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg039_LangFR                      ; [6e 10] jr NZ,0x28c1e0
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg039_LangFR
 	pushw HDAE5000_LangMsg_039_DE@hi16
 	pushw HDAE5000_LangMsg_039_DE@lo16		; low half of HDAE5000_LangMsg_039_DE
 	lda	xwa, (xsp+10)
@@ -2118,17 +2118,17 @@ HDAE5000_AcLanguageText1Proc_Msg039_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg039_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e f5 0a] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_039_FR@hi16
 	pushw HDAE5000_LangMsg_039_FR@lo16		; low half of HDAE5000_LangMsg_039_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 e2 0a] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg040:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg040_LangDE                      ; [6e 10] jr NZ,0x28c212
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg040_LangDE
 	pushw HDAE5000_LangMsg_040_EN@hi16
 	pushw HDAE5000_LangMsg_040_EN@lo16		; low half of HDAE5000_LangMsg_040_EN
 	lda	xwa, (xsp+10)
@@ -2137,7 +2137,7 @@ HDAE5000_AcLanguageText1Proc_Msg040:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg040_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg040_LangFR                      ; [6e 10] jr NZ,0x28c229
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg040_LangFR
 	pushw HDAE5000_LangMsg_040_DE@hi16
 	pushw HDAE5000_LangMsg_040_DE@lo16		; low half of HDAE5000_LangMsg_040_DE
 	lda	xwa, (xsp+10)
@@ -2146,17 +2146,17 @@ HDAE5000_AcLanguageText1Proc_Msg040_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg040_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e ac 0a] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_040_FR@hi16
 	pushw HDAE5000_LangMsg_040_FR@lo16		; low half of HDAE5000_LangMsg_040_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 99 0a] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg041:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg041_LangDE                      ; [6e 10] jr NZ,0x28c25b
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg041_LangDE
 	pushw HDAE5000_LangMsg_041_EN@hi16
 	pushw HDAE5000_LangMsg_041_EN@lo16		; low half of HDAE5000_LangMsg_041_EN
 	lda	xwa, (xsp+10)
@@ -2165,7 +2165,7 @@ HDAE5000_AcLanguageText1Proc_Msg041:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg041_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg041_LangFR                      ; [6e 10] jr NZ,0x28c272
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg041_LangFR
 	pushw HDAE5000_LangMsg_041_DE@hi16
 	pushw HDAE5000_LangMsg_041_DE@lo16		; low half of HDAE5000_LangMsg_041_DE
 	lda	xwa, (xsp+10)
@@ -2174,17 +2174,17 @@ HDAE5000_AcLanguageText1Proc_Msg041_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg041_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e 63 0a] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_041_FR@hi16
 	pushw HDAE5000_LangMsg_041_FR@lo16		; low half of HDAE5000_LangMsg_041_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 50 0a] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg042:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg042_LangDE                      ; [6e 10] jr NZ,0x28c2a4
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg042_LangDE
 	pushw HDAE5000_LangMsg_042_EN@hi16
 	pushw HDAE5000_LangMsg_042_EN@lo16		; low half of HDAE5000_LangMsg_042_EN
 	lda	xwa, (xsp+10)
@@ -2193,7 +2193,7 @@ HDAE5000_AcLanguageText1Proc_Msg042:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg042_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg042_LangFR                      ; [6e 10] jr NZ,0x28c2bb
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg042_LangFR
 	pushw HDAE5000_LangMsg_042_DE@hi16
 	pushw HDAE5000_LangMsg_042_DE@lo16		; low half of HDAE5000_LangMsg_042_DE
 	lda	xwa, (xsp+10)
@@ -2202,17 +2202,17 @@ HDAE5000_AcLanguageText1Proc_Msg042_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg042_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e 1a 0a] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_042_FR@hi16
 	pushw HDAE5000_LangMsg_042_FR@lo16		; low half of HDAE5000_LangMsg_042_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 07 0a] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg043:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg043_LangDE                      ; [6e 10] jr NZ,0x28c2ed
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg043_LangDE
 	pushw HDAE5000_LangMsg_043_EN@hi16
 	pushw HDAE5000_LangMsg_043_EN@lo16		; low half of HDAE5000_LangMsg_043_EN
 	lda	xwa, (xsp+10)
@@ -2221,7 +2221,7 @@ HDAE5000_AcLanguageText1Proc_Msg043:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg043_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg043_LangFR                      ; [6e 10] jr NZ,0x28c304
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg043_LangFR
 	pushw HDAE5000_LangMsg_043_DE@hi16
 	pushw HDAE5000_LangMsg_043_DE@lo16		; low half of HDAE5000_LangMsg_043_DE
 	lda	xwa, (xsp+10)
@@ -2230,17 +2230,17 @@ HDAE5000_AcLanguageText1Proc_Msg043_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg043_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e d1 09] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_043_FR@hi16
 	pushw HDAE5000_LangMsg_043_FR@lo16		; low half of HDAE5000_LangMsg_043_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 be 09] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg044:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg044_LangDE                      ; [6e 10] jr NZ,0x28c336
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg044_LangDE
 	pushw HDAE5000_LangMsg_044_EN@hi16
 	pushw HDAE5000_LangMsg_044_EN@lo16		; low half of HDAE5000_LangMsg_044_EN
 	lda	xwa, (xsp+10)
@@ -2249,7 +2249,7 @@ HDAE5000_AcLanguageText1Proc_Msg044:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg044_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg044_LangFR                      ; [6e 10] jr NZ,0x28c34d
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg044_LangFR
 	pushw HDAE5000_LangMsg_044_DE@hi16
 	pushw HDAE5000_LangMsg_044_DE@lo16		; low half of HDAE5000_LangMsg_044_DE
 	lda	xwa, (xsp+10)
@@ -2258,17 +2258,17 @@ HDAE5000_AcLanguageText1Proc_Msg044_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg044_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e 88 09] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_044_FR@hi16
 	pushw HDAE5000_LangMsg_044_FR@lo16		; low half of HDAE5000_LangMsg_044_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 75 09] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg045:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg045_LangDE                      ; [6e 10] jr NZ,0x28c37f
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg045_LangDE
 	pushw HDAE5000_LangMsg_045_EN@hi16
 	pushw HDAE5000_LangMsg_045_EN@lo16		; low half of HDAE5000_LangMsg_045_EN
 	lda	xwa, (xsp+10)
@@ -2277,7 +2277,7 @@ HDAE5000_AcLanguageText1Proc_Msg045:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg045_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg045_LangFR                      ; [6e 10] jr NZ,0x28c396
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg045_LangFR
 	pushw HDAE5000_LangMsg_045_DE@hi16
 	pushw HDAE5000_LangMsg_045_DE@lo16		; low half of HDAE5000_LangMsg_045_DE
 	lda	xwa, (xsp+10)
@@ -2286,17 +2286,17 @@ HDAE5000_AcLanguageText1Proc_Msg045_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg045_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e 3f 09] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_045_FR@hi16
 	pushw HDAE5000_LangMsg_045_FR@lo16		; low half of HDAE5000_LangMsg_045_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 2c 09] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg046:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg046_LangDE                      ; [6e 10] jr NZ,0x28c3c8
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg046_LangDE
 	pushw HDAE5000_LangMsg_046_EN@hi16
 	pushw HDAE5000_LangMsg_046_EN@lo16		; low half of HDAE5000_LangMsg_046_EN
 	lda	xwa, (xsp+10)
@@ -2305,7 +2305,7 @@ HDAE5000_AcLanguageText1Proc_Msg046:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg046_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg046_LangFR                      ; [6e 10] jr NZ,0x28c3df
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg046_LangFR
 	pushw HDAE5000_LangMsg_046_DE@hi16
 	pushw HDAE5000_LangMsg_046_DE@lo16		; low half of HDAE5000_LangMsg_046_DE
 	lda	xwa, (xsp+10)
@@ -2314,17 +2314,17 @@ HDAE5000_AcLanguageText1Proc_Msg046_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg046_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e f6 08] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_046_FR@hi16
 	pushw HDAE5000_LangMsg_046_FR@lo16		; low half of HDAE5000_LangMsg_046_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 e3 08] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg047:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg047_LangDE                      ; [6e 10] jr NZ,0x28c411
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg047_LangDE
 	pushw HDAE5000_LangMsg_047_EN@hi16
 	pushw HDAE5000_LangMsg_047_EN@lo16		; low half of HDAE5000_LangMsg_047_EN
 	lda	xwa, (xsp+10)
@@ -2333,7 +2333,7 @@ HDAE5000_AcLanguageText1Proc_Msg047:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg047_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg047_LangFR                      ; [6e 10] jr NZ,0x28c428
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg047_LangFR
 	pushw HDAE5000_LangMsg_047_DE@hi16
 	pushw HDAE5000_LangMsg_047_DE@lo16		; low half of HDAE5000_LangMsg_047_DE
 	lda	xwa, (xsp+10)
@@ -2342,17 +2342,17 @@ HDAE5000_AcLanguageText1Proc_Msg047_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg047_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e ad 08] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_047_FR@hi16
 	pushw HDAE5000_LangMsg_047_FR@lo16		; low half of HDAE5000_LangMsg_047_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 9a 08] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg048:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg048_LangDE                      ; [6e 10] jr NZ,0x28c45a
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg048_LangDE
 	pushw HDAE5000_LangMsg_048_EN@hi16
 	pushw HDAE5000_LangMsg_048_EN@lo16		; low half of HDAE5000_LangMsg_048_EN
 	lda	xwa, (xsp+10)
@@ -2361,7 +2361,7 @@ HDAE5000_AcLanguageText1Proc_Msg048:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg048_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg048_LangFR                      ; [6e 10] jr NZ,0x28c471
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg048_LangFR
 	pushw HDAE5000_LangMsg_048_DE@hi16
 	pushw HDAE5000_LangMsg_048_DE@lo16		; low half of HDAE5000_LangMsg_048_DE
 	lda	xwa, (xsp+10)
@@ -2370,17 +2370,17 @@ HDAE5000_AcLanguageText1Proc_Msg048_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg048_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e 64 08] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_048_FR@hi16
 	pushw HDAE5000_LangMsg_048_FR@lo16		; low half of HDAE5000_LangMsg_048_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 51 08] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg049:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg049_LangDE                      ; [6e 10] jr NZ,0x28c4a3
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg049_LangDE
 	pushw HDAE5000_LangMsg_049_EN@hi16
 	pushw HDAE5000_LangMsg_049_EN@lo16		; low half of HDAE5000_LangMsg_049_EN
 	lda	xwa, (xsp+10)
@@ -2389,7 +2389,7 @@ HDAE5000_AcLanguageText1Proc_Msg049:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg049_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg049_LangFR                      ; [6e 10] jr NZ,0x28c4ba
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg049_LangFR
 	pushw HDAE5000_LangMsg_049_DE@hi16
 	pushw HDAE5000_LangMsg_049_DE@lo16		; low half of HDAE5000_LangMsg_049_DE
 	lda	xwa, (xsp+10)
@@ -2398,17 +2398,17 @@ HDAE5000_AcLanguageText1Proc_Msg049_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg049_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e 1b 08] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_049_FR@hi16
 	pushw HDAE5000_LangMsg_049_FR@lo16		; low half of HDAE5000_LangMsg_049_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 08 08] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg050:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg050_LangDE                      ; [6e 10] jr NZ,0x28c4ec
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg050_LangDE
 	pushw HDAE5000_LangMsg_050_EN@hi16
 	pushw HDAE5000_LangMsg_050_EN@lo16		; low half of HDAE5000_LangMsg_050_EN
 	lda	xwa, (xsp+10)
@@ -2417,7 +2417,7 @@ HDAE5000_AcLanguageText1Proc_Msg050:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg050_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg050_LangFR                      ; [6e 10] jr NZ,0x28c503
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg050_LangFR
 	pushw HDAE5000_LangMsg_050_DE@hi16
 	pushw HDAE5000_LangMsg_050_DE@lo16		; low half of HDAE5000_LangMsg_050_DE
 	lda	xwa, (xsp+10)
@@ -2426,17 +2426,17 @@ HDAE5000_AcLanguageText1Proc_Msg050_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg050_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e d2 07] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_050_FR@hi16
 	pushw HDAE5000_LangMsg_050_FR@lo16		; low half of HDAE5000_LangMsg_050_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 bf 07] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg051:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg051_LangDE                      ; [6e 10] jr NZ,0x28c535
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg051_LangDE
 	pushw HDAE5000_LangMsg_051_EN@hi16
 	pushw HDAE5000_LangMsg_051_EN@lo16		; low half of HDAE5000_LangMsg_051_EN
 	lda	xwa, (xsp+10)
@@ -2445,7 +2445,7 @@ HDAE5000_AcLanguageText1Proc_Msg051:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg051_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg051_LangFR                      ; [6e 10] jr NZ,0x28c54c
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg051_LangFR
 	pushw HDAE5000_LangMsg_051_DE@hi16
 	pushw HDAE5000_LangMsg_051_DE@lo16		; low half of HDAE5000_LangMsg_051_DE
 	lda	xwa, (xsp+10)
@@ -2454,17 +2454,17 @@ HDAE5000_AcLanguageText1Proc_Msg051_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg051_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e 89 07] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_051_FR@hi16
 	pushw HDAE5000_LangMsg_051_FR@lo16		; low half of HDAE5000_LangMsg_051_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 76 07] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg052:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg052_LangDE                      ; [6e 10] jr NZ,0x28c57e
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg052_LangDE
 	pushw HDAE5000_LangMsg_052_EN@hi16
 	pushw HDAE5000_LangMsg_052_EN@lo16		; low half of HDAE5000_LangMsg_052_EN
 	lda	xwa, (xsp+10)
@@ -2473,7 +2473,7 @@ HDAE5000_AcLanguageText1Proc_Msg052:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg052_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg052_LangFR                      ; [6e 10] jr NZ,0x28c595
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg052_LangFR
 	pushw HDAE5000_LangMsg_052_DE@hi16
 	pushw HDAE5000_LangMsg_052_DE@lo16		; low half of HDAE5000_LangMsg_052_DE
 	lda	xwa, (xsp+10)
@@ -2482,17 +2482,17 @@ HDAE5000_AcLanguageText1Proc_Msg052_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg052_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e 40 07] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_052_FR@hi16
 	pushw HDAE5000_LangMsg_052_FR@lo16		; low half of HDAE5000_LangMsg_052_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 2d 07] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg053:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg053_LangDE                      ; [6e 10] jr NZ,0x28c5c7
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg053_LangDE
 	pushw HDAE5000_LangMsg_053_EN@hi16
 	pushw HDAE5000_LangMsg_053_EN@lo16		; low half of HDAE5000_LangMsg_053_EN
 	lda	xwa, (xsp+10)
@@ -2501,7 +2501,7 @@ HDAE5000_AcLanguageText1Proc_Msg053:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg053_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg053_LangFR                      ; [6e 10] jr NZ,0x28c5de
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg053_LangFR
 	pushw HDAE5000_LangMsg_053_DE@hi16
 	pushw HDAE5000_LangMsg_053_DE@lo16		; low half of HDAE5000_LangMsg_053_DE
 	lda	xwa, (xsp+10)
@@ -2510,17 +2510,17 @@ HDAE5000_AcLanguageText1Proc_Msg053_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg053_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e f7 06] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_053_FR@hi16
 	pushw HDAE5000_LangMsg_053_FR@lo16		; low half of HDAE5000_LangMsg_053_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 e4 06] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg054:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg054_LangDE                      ; [6e 10] jr NZ,0x28c610
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg054_LangDE
 	pushw HDAE5000_LangMsg_054_EN@hi16
 	pushw HDAE5000_LangMsg_054_EN@lo16		; low half of HDAE5000_LangMsg_054_EN
 	lda	xwa, (xsp+10)
@@ -2529,7 +2529,7 @@ HDAE5000_AcLanguageText1Proc_Msg054:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg054_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg054_LangFR                      ; [6e 10] jr NZ,0x28c627
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg054_LangFR
 	pushw HDAE5000_LangMsg_054_DE@hi16
 	pushw HDAE5000_LangMsg_054_DE@lo16		; low half of HDAE5000_LangMsg_054_DE
 	lda	xwa, (xsp+10)
@@ -2538,17 +2538,17 @@ HDAE5000_AcLanguageText1Proc_Msg054_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg054_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e ae 06] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_054_FR@hi16
 	pushw HDAE5000_LangMsg_054_FR@lo16		; low half of HDAE5000_LangMsg_054_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 9b 06] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg055:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg055_LangDE                      ; [6e 10] jr NZ,0x28c659
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg055_LangDE
 	pushw HDAE5000_LangMsg_055_EN@hi16
 	pushw HDAE5000_LangMsg_055_EN@lo16		; low half of HDAE5000_LangMsg_055_EN
 	lda	xwa, (xsp+10)
@@ -2557,7 +2557,7 @@ HDAE5000_AcLanguageText1Proc_Msg055:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg055_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg055_LangFR                      ; [6e 10] jr NZ,0x28c670
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg055_LangFR
 	pushw HDAE5000_LangMsg_055_DE@hi16
 	pushw HDAE5000_LangMsg_055_DE@lo16		; low half of HDAE5000_LangMsg_055_DE
 	lda	xwa, (xsp+10)
@@ -2566,17 +2566,17 @@ HDAE5000_AcLanguageText1Proc_Msg055_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg055_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e 65 06] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_055_FR@hi16
 	pushw HDAE5000_LangMsg_055_FR@lo16		; low half of HDAE5000_LangMsg_055_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 52 06] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg056:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg056_LangDE                      ; [6e 10] jr NZ,0x28c6a2
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg056_LangDE
 	pushw HDAE5000_LangMsg_056_EN@hi16
 	pushw HDAE5000_LangMsg_056_EN@lo16		; low half of HDAE5000_LangMsg_056_EN
 	lda	xwa, (xsp+10)
@@ -2585,7 +2585,7 @@ HDAE5000_AcLanguageText1Proc_Msg056:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg056_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg056_LangFR                      ; [6e 10] jr NZ,0x28c6b9
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg056_LangFR
 	pushw HDAE5000_LangMsg_056_DE@hi16
 	pushw HDAE5000_LangMsg_056_DE@lo16		; low half of HDAE5000_LangMsg_056_DE
 	lda	xwa, (xsp+10)
@@ -2594,17 +2594,17 @@ HDAE5000_AcLanguageText1Proc_Msg056_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg056_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e 1c 06] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_056_FR@hi16
 	pushw HDAE5000_LangMsg_056_FR@lo16		; low half of HDAE5000_LangMsg_056_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 09 06] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg057:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg057_LangDE                      ; [6e 10] jr NZ,0x28c6eb
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg057_LangDE
 	pushw HDAE5000_LangMsg_057_EN@hi16
 	pushw HDAE5000_LangMsg_057_EN@lo16		; low half of HDAE5000_LangMsg_057_EN
 	lda	xwa, (xsp+10)
@@ -2613,7 +2613,7 @@ HDAE5000_AcLanguageText1Proc_Msg057:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg057_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg057_LangFR                      ; [6e 10] jr NZ,0x28c702
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg057_LangFR
 	pushw HDAE5000_LangMsg_057_DE@hi16
 	pushw HDAE5000_LangMsg_057_DE@lo16		; low half of HDAE5000_LangMsg_057_DE
 	lda	xwa, (xsp+10)
@@ -2622,17 +2622,17 @@ HDAE5000_AcLanguageText1Proc_Msg057_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg057_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e d3 05] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_057_FR@hi16
 	pushw HDAE5000_LangMsg_057_FR@lo16		; low half of HDAE5000_LangMsg_057_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 c0 05] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg058:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg058_LangDE                      ; [6e 10] jr NZ,0x28c734
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg058_LangDE
 	pushw HDAE5000_LangMsg_058_EN@hi16
 	pushw HDAE5000_LangMsg_058_EN@lo16		; low half of HDAE5000_LangMsg_058_EN
 	lda	xwa, (xsp+10)
@@ -2641,7 +2641,7 @@ HDAE5000_AcLanguageText1Proc_Msg058:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg058_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg058_LangFR                      ; [6e 10] jr NZ,0x28c74b
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg058_LangFR
 	pushw HDAE5000_LangMsg_058_DE@hi16
 	pushw HDAE5000_LangMsg_058_DE@lo16		; low half of HDAE5000_LangMsg_058_DE
 	lda	xwa, (xsp+10)
@@ -2650,17 +2650,17 @@ HDAE5000_AcLanguageText1Proc_Msg058_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg058_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e 8a 05] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_058_FR@hi16
 	pushw HDAE5000_LangMsg_058_FR@lo16		; low half of HDAE5000_LangMsg_058_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 77 05] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg059:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg059_LangDE                      ; [6e 10] jr NZ,0x28c77d
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg059_LangDE
 	pushw HDAE5000_LangMsg_059_EN@hi16
 	pushw HDAE5000_LangMsg_059_EN@lo16		; low half of HDAE5000_LangMsg_059_EN
 	lda	xwa, (xsp+10)
@@ -2669,7 +2669,7 @@ HDAE5000_AcLanguageText1Proc_Msg059:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg059_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg059_LangFR                      ; [6e 10] jr NZ,0x28c794
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg059_LangFR
 	pushw HDAE5000_LangMsg_059_DE@hi16
 	pushw HDAE5000_LangMsg_059_DE@lo16		; low half of HDAE5000_LangMsg_059_DE
 	lda	xwa, (xsp+10)
@@ -2678,17 +2678,17 @@ HDAE5000_AcLanguageText1Proc_Msg059_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg059_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e 41 05] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_059_FR@hi16
 	pushw HDAE5000_LangMsg_059_FR@lo16		; low half of HDAE5000_LangMsg_059_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 2e 05] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg060:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg060_LangDE                      ; [6e 10] jr NZ,0x28c7c6
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg060_LangDE
 	pushw HDAE5000_LangMsg_060_EN@hi16
 	pushw HDAE5000_LangMsg_060_EN@lo16		; low half of HDAE5000_LangMsg_060_EN
 	lda	xwa, (xsp+10)
@@ -2697,7 +2697,7 @@ HDAE5000_AcLanguageText1Proc_Msg060:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg060_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg060_LangFR                      ; [6e 10] jr NZ,0x28c7dd
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg060_LangFR
 	pushw HDAE5000_LangMsg_060_DE@hi16
 	pushw HDAE5000_LangMsg_060_DE@lo16		; low half of HDAE5000_LangMsg_060_DE
 	lda	xwa, (xsp+10)
@@ -2706,17 +2706,17 @@ HDAE5000_AcLanguageText1Proc_Msg060_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg060_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e f8 04] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_060_FR@hi16
 	pushw HDAE5000_LangMsg_060_FR@lo16		; low half of HDAE5000_LangMsg_060_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 e5 04] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg061:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg061_LangDE                      ; [6e 10] jr NZ,0x28c80f
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg061_LangDE
 	pushw HDAE5000_LangMsg_061_EN@hi16
 	pushw HDAE5000_LangMsg_061_EN@lo16		; low half of HDAE5000_LangMsg_061_EN
 	lda	xwa, (xsp+10)
@@ -2725,7 +2725,7 @@ HDAE5000_AcLanguageText1Proc_Msg061:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg061_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg061_LangFR                      ; [6e 10] jr NZ,0x28c826
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg061_LangFR
 	pushw HDAE5000_LangMsg_061_DE@hi16
 	pushw HDAE5000_LangMsg_061_DE@lo16		; low half of HDAE5000_LangMsg_061_DE
 	lda	xwa, (xsp+10)
@@ -2734,17 +2734,17 @@ HDAE5000_AcLanguageText1Proc_Msg061_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg061_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e af 04] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_061_FR@hi16
 	pushw HDAE5000_LangMsg_061_FR@lo16		; low half of HDAE5000_LangMsg_061_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 9c 04] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg062:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg062_LangDE                      ; [6e 10] jr NZ,0x28c858
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg062_LangDE
 	pushw HDAE5000_LangMsg_062_EN@hi16
 	pushw HDAE5000_LangMsg_062_EN@lo16		; low half of HDAE5000_LangMsg_062_EN
 	lda	xwa, (xsp+10)
@@ -2753,7 +2753,7 @@ HDAE5000_AcLanguageText1Proc_Msg062:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg062_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg062_LangFR                      ; [6e 10] jr NZ,0x28c86f
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg062_LangFR
 	pushw HDAE5000_LangMsg_062_DE@hi16
 	pushw HDAE5000_LangMsg_062_DE@lo16		; low half of HDAE5000_LangMsg_062_DE
 	lda	xwa, (xsp+10)
@@ -2762,17 +2762,17 @@ HDAE5000_AcLanguageText1Proc_Msg062_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg062_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e 66 04] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_062_FR@hi16
 	pushw HDAE5000_LangMsg_062_FR@lo16		; low half of HDAE5000_LangMsg_062_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 53 04] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg064:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg064_LangDE                      ; [6e 10] jr NZ,0x28c8a1
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg064_LangDE
 	pushw HDAE5000_LangMsg_064_EN@hi16
 	pushw HDAE5000_LangMsg_064_EN@lo16		; low half of HDAE5000_LangMsg_064_EN
 	lda	xwa, (xsp+10)
@@ -2781,7 +2781,7 @@ HDAE5000_AcLanguageText1Proc_Msg064:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg064_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg064_LangFR                      ; [6e 10] jr NZ,0x28c8b8
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg064_LangFR
 	pushw HDAE5000_LangMsg_064_DE@hi16
 	pushw HDAE5000_LangMsg_064_DE@lo16		; low half of HDAE5000_LangMsg_064_DE
 	lda	xwa, (xsp+10)
@@ -2790,17 +2790,17 @@ HDAE5000_AcLanguageText1Proc_Msg064_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg064_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e 1d 04] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_064_FR@hi16
 	pushw HDAE5000_LangMsg_064_FR@lo16		; low half of HDAE5000_LangMsg_064_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 0a 04] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg065:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg065_LangDE                      ; [6e 10] jr NZ,0x28c8ea
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg065_LangDE
 	pushw HDAE5000_LangMsg_065_EN@hi16
 	pushw HDAE5000_LangMsg_065_EN@lo16		; low half of HDAE5000_LangMsg_065_EN
 	lda	xwa, (xsp+10)
@@ -2809,7 +2809,7 @@ HDAE5000_AcLanguageText1Proc_Msg065:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg065_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg065_LangFR                      ; [6e 10] jr NZ,0x28c901
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg065_LangFR
 	pushw HDAE5000_LangMsg_065_DE@hi16
 	pushw HDAE5000_LangMsg_065_DE@lo16		; low half of HDAE5000_LangMsg_065_DE
 	lda	xwa, (xsp+10)
@@ -2818,17 +2818,17 @@ HDAE5000_AcLanguageText1Proc_Msg065_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg065_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e d4 03] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_065_FR@hi16
 	pushw HDAE5000_LangMsg_065_FR@lo16		; low half of HDAE5000_LangMsg_065_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 c1 03] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg066:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg066_LangDE                      ; [6e 10] jr NZ,0x28c933
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg066_LangDE
 	pushw HDAE5000_LangMsg_066_EN@hi16
 	pushw HDAE5000_LangMsg_066_EN@lo16		; low half of HDAE5000_LangMsg_066_EN
 	lda	xwa, (xsp+10)
@@ -2837,7 +2837,7 @@ HDAE5000_AcLanguageText1Proc_Msg066:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg066_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg066_LangFR                      ; [6e 10] jr NZ,0x28c94a
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg066_LangFR
 	pushw HDAE5000_LangMsg_066_DE@hi16
 	pushw HDAE5000_LangMsg_066_DE@lo16		; low half of HDAE5000_LangMsg_066_DE
 	lda	xwa, (xsp+10)
@@ -2846,17 +2846,17 @@ HDAE5000_AcLanguageText1Proc_Msg066_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg066_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e 8b 03] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_066_FR@hi16
 	pushw HDAE5000_LangMsg_066_FR@lo16		; low half of HDAE5000_LangMsg_066_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 78 03] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg067:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg067_LangDE                      ; [6e 10] jr NZ,0x28c97c
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg067_LangDE
 	pushw HDAE5000_LangMsg_067_EN@hi16
 	pushw HDAE5000_LangMsg_067_EN@lo16		; low half of HDAE5000_LangMsg_067_EN
 	lda	xwa, (xsp+10)
@@ -2865,7 +2865,7 @@ HDAE5000_AcLanguageText1Proc_Msg067:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg067_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg067_LangFR                      ; [6e 10] jr NZ,0x28c993
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg067_LangFR
 	pushw HDAE5000_LangMsg_067_DE@hi16
 	pushw HDAE5000_LangMsg_067_DE@lo16		; low half of HDAE5000_LangMsg_067_DE
 	lda	xwa, (xsp+10)
@@ -2874,17 +2874,17 @@ HDAE5000_AcLanguageText1Proc_Msg067_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg067_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e 42 03] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_067_FR@hi16
 	pushw HDAE5000_LangMsg_067_FR@lo16		; low half of HDAE5000_LangMsg_067_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 2f 03] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg200:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg200_LangDE                      ; [6e 10] jr NZ,0x28c9c5
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg200_LangDE
 	pushw HDAE5000_LangMsg_200_EN@hi16
 	pushw HDAE5000_LangMsg_200_EN@lo16		; low half of HDAE5000_LangMsg_200_EN
 	lda	xwa, (xsp+10)
@@ -2893,7 +2893,7 @@ HDAE5000_AcLanguageText1Proc_Msg200:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg200_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg200_LangFR                      ; [6e 10] jr NZ,0x28c9dc
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg200_LangFR
 	pushw HDAE5000_LangMsg_200_DE@hi16
 	pushw HDAE5000_LangMsg_200_DE@lo16		; low half of HDAE5000_LangMsg_200_DE
 	lda	xwa, (xsp+10)
@@ -2902,17 +2902,17 @@ HDAE5000_AcLanguageText1Proc_Msg200_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg200_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e f9 02] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_200_FR@hi16
 	pushw HDAE5000_LangMsg_200_FR@lo16		; low half of HDAE5000_LangMsg_200_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 e6 02] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg201:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg201_LangDE                      ; [6e 10] jr NZ,0x28ca0e
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg201_LangDE
 	pushw HDAE5000_LangMsg_201_EN@hi16
 	pushw HDAE5000_LangMsg_201_EN@lo16		; low half of HDAE5000_LangMsg_201_EN
 	lda	xwa, (xsp+10)
@@ -2921,7 +2921,7 @@ HDAE5000_AcLanguageText1Proc_Msg201:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg201_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg201_LangFR                      ; [6e 10] jr NZ,0x28ca25
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg201_LangFR
 	pushw HDAE5000_LangMsg_201_DE@hi16
 	pushw HDAE5000_LangMsg_201_DE@lo16		; low half of HDAE5000_LangMsg_201_DE
 	lda	xwa, (xsp+10)
@@ -2930,17 +2930,17 @@ HDAE5000_AcLanguageText1Proc_Msg201_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg201_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e b0 02] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_201_FR@hi16
 	pushw HDAE5000_LangMsg_201_FR@lo16		; low half of HDAE5000_LangMsg_201_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 9d 02] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg202:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg202_LangDE                      ; [6e 10] jr NZ,0x28ca57
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg202_LangDE
 	pushw HDAE5000_LangMsg_202_EN@hi16
 	pushw HDAE5000_LangMsg_202_EN@lo16		; low half of HDAE5000_LangMsg_202_EN
 	lda	xwa, (xsp+10)
@@ -2949,7 +2949,7 @@ HDAE5000_AcLanguageText1Proc_Msg202:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg202_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg202_LangFR                      ; [6e 10] jr NZ,0x28ca6e
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg202_LangFR
 	pushw HDAE5000_LangMsg_202_DE@hi16
 	pushw HDAE5000_LangMsg_202_DE@lo16		; low half of HDAE5000_LangMsg_202_DE
 	lda	xwa, (xsp+10)
@@ -2958,17 +2958,17 @@ HDAE5000_AcLanguageText1Proc_Msg202_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg202_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e 67 02] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_202_FR@hi16
 	pushw HDAE5000_LangMsg_202_FR@lo16		; low half of HDAE5000_LangMsg_202_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 54 02] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg203:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg203_LangDE                      ; [6e 10] jr NZ,0x28caa0
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg203_LangDE
 	pushw HDAE5000_LangMsg_203_EN@hi16
 	pushw HDAE5000_LangMsg_203_EN@lo16		; low half of HDAE5000_LangMsg_203_EN
 	lda	xwa, (xsp+10)
@@ -2977,7 +2977,7 @@ HDAE5000_AcLanguageText1Proc_Msg203:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg203_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg203_LangFR                      ; [6e 10] jr NZ,0x28cab7
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg203_LangFR
 	pushw HDAE5000_LangMsg_203_DE@hi16
 	pushw HDAE5000_LangMsg_203_DE@lo16		; low half of HDAE5000_LangMsg_203_DE
 	lda	xwa, (xsp+10)
@@ -2986,17 +2986,17 @@ HDAE5000_AcLanguageText1Proc_Msg203_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg203_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e 1e 02] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_203_FR@hi16
 	pushw HDAE5000_LangMsg_203_FR@lo16		; low half of HDAE5000_LangMsg_203_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 0b 02] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg206:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg206_LangDE                      ; [6e 10] jr NZ,0x28cae9
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg206_LangDE
 	pushw HDAE5000_LangMsg_206_EN@hi16
 	pushw HDAE5000_LangMsg_206_EN@lo16		; low half of HDAE5000_LangMsg_206_EN
 	lda	xwa, (xsp+10)
@@ -3005,7 +3005,7 @@ HDAE5000_AcLanguageText1Proc_Msg206:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg206_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg206_LangFR                      ; [6e 10] jr NZ,0x28cb00
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg206_LangFR
 	pushw HDAE5000_LangMsg_206_DE@hi16
 	pushw HDAE5000_LangMsg_206_DE@lo16		; low half of HDAE5000_LangMsg_206_DE
 	lda	xwa, (xsp+10)
@@ -3014,17 +3014,17 @@ HDAE5000_AcLanguageText1Proc_Msg206_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg206_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e d5 01] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_206_FR@hi16
 	pushw HDAE5000_LangMsg_206_FR@lo16		; low half of HDAE5000_LangMsg_206_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 c2 01] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg207:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg207_LangDE                      ; [6e 10] jr NZ,0x28cb32
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg207_LangDE
 	pushw HDAE5000_LangMsg_207_EN@hi16
 	pushw HDAE5000_LangMsg_207_EN@lo16		; low half of HDAE5000_LangMsg_207_EN
 	lda	xwa, (xsp+10)
@@ -3033,7 +3033,7 @@ HDAE5000_AcLanguageText1Proc_Msg207:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg207_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg207_LangFR                      ; [6e 10] jr NZ,0x28cb49
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg207_LangFR
 	pushw HDAE5000_LangMsg_207_DE@hi16
 	pushw HDAE5000_LangMsg_207_DE@lo16		; low half of HDAE5000_LangMsg_207_DE
 	lda	xwa, (xsp+10)
@@ -3042,17 +3042,17 @@ HDAE5000_AcLanguageText1Proc_Msg207_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg207_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e 8c 01] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_207_FR@hi16
 	pushw HDAE5000_LangMsg_207_FR@lo16		; low half of HDAE5000_LangMsg_207_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 79 01] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg208:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg208_LangDE                      ; [6e 10] jr NZ,0x28cb7b
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg208_LangDE
 	pushw HDAE5000_LangMsg_208_EN@hi16
 	pushw HDAE5000_LangMsg_208_EN@lo16		; low half of HDAE5000_LangMsg_208_EN
 	lda	xwa, (xsp+10)
@@ -3061,7 +3061,7 @@ HDAE5000_AcLanguageText1Proc_Msg208:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg208_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg208_LangFR                      ; [6e 10] jr NZ,0x28cb92
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg208_LangFR
 	pushw HDAE5000_LangMsg_208_DE@hi16
 	pushw HDAE5000_LangMsg_208_DE@lo16		; low half of HDAE5000_LangMsg_208_DE
 	lda	xwa, (xsp+10)
@@ -3070,17 +3070,17 @@ HDAE5000_AcLanguageText1Proc_Msg208_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg208_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e 43 01] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_208_FR@hi16
 	pushw HDAE5000_LangMsg_208_FR@lo16		; low half of HDAE5000_LangMsg_208_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 30 01] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg209:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg209_LangDE                      ; [6e 10] jr NZ,0x28cbc4
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg209_LangDE
 	pushw HDAE5000_LangMsg_209_EN@hi16
 	pushw HDAE5000_LangMsg_209_EN@lo16		; low half of HDAE5000_LangMsg_209_EN
 	lda	xwa, (xsp+10)
@@ -3089,7 +3089,7 @@ HDAE5000_AcLanguageText1Proc_Msg209:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg209_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg209_LangFR                      ; [6e 10] jr NZ,0x28cbdb
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg209_LangFR
 	pushw HDAE5000_LangMsg_209_DE@hi16
 	pushw HDAE5000_LangMsg_209_DE@lo16		; low half of HDAE5000_LangMsg_209_DE
 	lda	xwa, (xsp+10)
@@ -3098,17 +3098,17 @@ HDAE5000_AcLanguageText1Proc_Msg209_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg209_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e fa 00] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_209_FR@hi16
 	pushw HDAE5000_LangMsg_209_FR@lo16		; low half of HDAE5000_LangMsg_209_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 e7 00] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg210:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg210_LangDE                      ; [6e 10] jr NZ,0x28cc0d
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg210_LangDE
 	pushw HDAE5000_LangMsg_210_EN@hi16
 	pushw HDAE5000_LangMsg_210_EN@lo16		; low half of HDAE5000_LangMsg_210_EN
 	lda	xwa, (xsp+10)
@@ -3117,7 +3117,7 @@ HDAE5000_AcLanguageText1Proc_Msg210:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg210_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg210_LangFR                      ; [6e 10] jr NZ,0x28cc24
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg210_LangFR
 	pushw HDAE5000_LangMsg_210_DE@hi16
 	pushw HDAE5000_LangMsg_210_DE@lo16		; low half of HDAE5000_LangMsg_210_DE
 	lda	xwa, (xsp+10)
@@ -3126,17 +3126,17 @@ HDAE5000_AcLanguageText1Proc_Msg210_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg210_LangFR:
 	cpw	(xsp+4), 0x0003
-	jrl nz, HDAE5000_AcLanguageText1Proc_Join6                     ; [7e b1 00] jrl NZ,0x28ccdd
+	jrl	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_210_FR@hi16
 	pushw HDAE5000_LangMsg_210_FR@lo16		; low half of HDAE5000_LangMsg_210_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jrl t, HDAE5000_AcLanguageText1Proc_Join6                      ; [78 9e 00] jrl T,0x28ccdd
+	jrl	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg211:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg211_LangDE                      ; [6e 10] jr NZ,0x28cc56
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg211_LangDE
 	pushw HDAE5000_LangMsg_211_EN@hi16
 	pushw HDAE5000_LangMsg_211_EN@lo16		; low half of HDAE5000_LangMsg_211_EN
 	lda	xwa, (xsp+10)
@@ -3145,7 +3145,7 @@ HDAE5000_AcLanguageText1Proc_Msg211:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg211_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg211_LangFR                      ; [6e 10] jr NZ,0x28cc6d
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg211_LangFR
 	pushw HDAE5000_LangMsg_211_DE@hi16
 	pushw HDAE5000_LangMsg_211_DE@lo16		; low half of HDAE5000_LangMsg_211_DE
 	lda	xwa, (xsp+10)
@@ -3154,17 +3154,17 @@ HDAE5000_AcLanguageText1Proc_Msg211_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg211_LangFR:
 	cpw	(xsp+4), 0x0003
-	jr nz, HDAE5000_AcLanguageText1Proc_Join6                      ; [6e 69] jr NZ,0x28ccdd
+	jr	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_211_FR@hi16
 	pushw HDAE5000_LangMsg_211_FR@lo16		; low half of HDAE5000_LangMsg_211_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jr t, HDAE5000_AcLanguageText1Proc_Join6                       ; [68 57] jr T,0x28ccdd
+	jr	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_Msg212:
 	cpw	(xsp+4), 0x0001
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg212_LangDE                      ; [6e 10] jr NZ,0x28cc9d
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg212_LangDE
 	pushw HDAE5000_LangMsg_212_EN@hi16
 	pushw HDAE5000_LangMsg_212_EN@lo16		; low half of HDAE5000_LangMsg_212_EN
 	lda	xwa, (xsp+10)
@@ -3173,7 +3173,7 @@ HDAE5000_AcLanguageText1Proc_Msg212:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg212_LangDE:
 	cpw	(xsp+4), 0x0002
-	jr nz, HDAE5000_AcLanguageText1Proc_Msg212_LangFR                      ; [6e 10] jr NZ,0x28ccb4
+	jr	nz, HDAE5000_AcLanguageText1Proc_Msg212_LangFR
 	pushw HDAE5000_LangMsg_212_DE@hi16
 	pushw HDAE5000_LangMsg_212_DE@lo16		; low half of HDAE5000_LangMsg_212_DE
 	lda	xwa, (xsp+10)
@@ -3182,14 +3182,14 @@ HDAE5000_AcLanguageText1Proc_Msg212_LangDE:
 	inc 8, xsp                              ; inc 0,XSP
 HDAE5000_AcLanguageText1Proc_Msg212_LangFR:
 	cpw	(xsp+4), 0x0003
-	jr nz, HDAE5000_AcLanguageText1Proc_Join6                      ; [6e 22] jr NZ,0x28ccdd
+	jr	nz, HDAE5000_AcLanguageText1Proc_Join6
 	pushw HDAE5000_LangMsg_212_FR@hi16
 	pushw HDAE5000_LangMsg_212_FR@lo16		; low half of HDAE5000_LangMsg_212_FR
 	lda	xwa, (xsp+10)
 	push xwa
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
-	jr t, HDAE5000_AcLanguageText1Proc_Join6                       ; [68 10] jr T,0x28ccdd
+	jr	t, HDAE5000_AcLanguageText1Proc_Join6
 HDAE5000_AcLanguageText1Proc_NoMessage:
 	pushw HDAE5000_LangMsg_NoMessage@hi16
 	pushw HDAE5000_LangMsg_NoMessage@lo16		; low half of HDAE5000_LangMsg_NoMessage
@@ -3222,20 +3222,20 @@ HDAE5000_LyricBoxProc:
 	ld (xsp + 0x0e), xwa
 	ld xwa, (xsp + 0x0a)
 	cp	xwa, EVT_SW_IN
-	jrl z, HDAE5000_LyricBoxProc_OnSwIn                      ; [76 23 08] jrl Z,0x28d544
+	jrl	z, HDAE5000_LyricBoxProc_OnSwIn
 	cp	xwa, EVT_HIDE
-	jrl z, HDAE5000_LyricBoxProc_OnHide                      ; [76 ed 07] jrl Z,0x28d517
+	jrl	z, HDAE5000_LyricBoxProc_OnHide
 	cp	xwa, EVT_SHOW
-	jrl z, HDAE5000_LyricBoxProc_OnShow                      ; [76 b2 07] jrl Z,0x28d4e5
+	jrl	z, HDAE5000_LyricBoxProc_OnShow
 	cp	xwa, EVT_PAINT
-	jr z, HDAE5000_LyricBoxProc_OnPaint                       ; [66 6e] jr Z,0x28cda9
+	jr	z, HDAE5000_LyricBoxProc_OnPaint
 	cp	xwa, EVT_DRAW
-	jr z, HDAE5000_LyricBoxProc_Ev01C0000D                       ; [66 2c] jr Z,0x28cd6f
+	jr	z, HDAE5000_LyricBoxProc_Ev01C0000D
 	sub	xwa, EVT_HDAE_INIT_LYRIC_PARAM
 	cp	xwa, 0x00000000
-	jrl lt, HDAE5000_LyricBoxProc_Default1                     ; [71 bf 05] jrl LT,0x28d311
+	jrl	lt, HDAE5000_LyricBoxProc_Default1
 	cp	xwa, 0x00000006
-	jrl gt, HDAE5000_LyricBoxProc_Default1                     ; [7a b6 05] jrl GT,0x28d311
+	jrl	gt, HDAE5000_LyricBoxProc_Default1
 	add	xwa, xwa
 	add	xwa, HDAE5000_LyricBoxProc_CaseTable1
 	ld	wa, (xwa)
@@ -3257,7 +3257,7 @@ HDAE5000_LyricBoxProc_Ev01C0000D:
 	ld	xde, 0:i3
 	call	(xhl)
 	ld	xhl, 0:i3
-	jrl t, HDAE5000_LyricBoxProc_Epilogue                      ; [78 57 08] jrl T,0x28d600
+	jrl	t, HDAE5000_LyricBoxProc_Epilogue
 HDAE5000_LyricBoxProc_OnPaint:
 	ld xwa, (xsp + 0x0e)
 	ld xbc, (xsp + 0x0a)
@@ -3288,10 +3288,10 @@ HDAE5000_LyricBoxProc_OnPaint:
 	ld	xde, 1:i3
 	call	(xhl)
 	ld	xhl, 0:i3
-	jrl t, HDAE5000_LyricBoxProc_Epilogue                      ; [78 e7 07] jrl T,0x28d600
+	jrl	t, HDAE5000_LyricBoxProc_Epilogue
 HDAE5000_LyricBoxProc_Ev01CA0003:
 	cp	(0x23A19A:24), 0
-	jrl nz, HDAE5000_LyricBoxProc_Ev01CA0003_Join3                     ; [7e 71 01] jrl NZ,0x28cf93
+	jrl	nz, HDAE5000_LyricBoxProc_Ev01CA0003_Join3
 	ld	(0x23A19A:24), 1
 	lda xwa, (0x22a08c:24)
 	ld	xbc, xwa
@@ -3351,7 +3351,7 @@ HDAE5000_LyricBoxProc_Ev01CA0003:
 	ldw	(0x2307B8:24), 0
 	ld	hl, 0:i3
 	cp	hl, 0x0027
-	jr ge, HDAE5000_LyricBoxProc_Ev01CA0003_Join                      ; [69 2c] jr GE,0x28cf4a
+	jr	ge, HDAE5000_LyricBoxProc_Ev01CA0003_Join
 HDAE5000_LyricBoxProc_Ev01CA0003_Loop:
 	ld	wa, hl
 	sla	wa, 0x02
@@ -3367,11 +3367,11 @@ HDAE5000_LyricBoxProc_Ev01CA0003_Loop:
 	ld	(xbc+wa), de
 	inc	1, hl
 	cp	hl, 0x0027
-	jr lt, HDAE5000_LyricBoxProc_Ev01CA0003_Loop                      ; [61 d4] jr LT,0x28cf1e
+	jr	lt, HDAE5000_LyricBoxProc_Ev01CA0003_Loop
 HDAE5000_LyricBoxProc_Ev01CA0003_Join:
 	ld	hl, 0:i3
 	cp	hl, 0x0027
-	jr ge, HDAE5000_LyricBoxProc_Ev01CA0003_Join2                      ; [69 1b] jr GE,0x28cf6d
+	jr	ge, HDAE5000_LyricBoxProc_Ev01CA0003_Join2
 HDAE5000_LyricBoxProc_Ev01CA0003_Loop2:
 	ld	wa, hl
 	add	wa, wa
@@ -3381,11 +3381,11 @@ HDAE5000_LyricBoxProc_Ev01CA0003_Loop2:
 	ld	(xbc+wa), de
 	inc	1, hl
 	cp	hl, 0x0027
-	jr lt, HDAE5000_LyricBoxProc_Ev01CA0003_Loop2                      ; [61 e5] jr LT,0x28cf52
+	jr	lt, HDAE5000_LyricBoxProc_Ev01CA0003_Loop2
 HDAE5000_LyricBoxProc_Ev01CA0003_Join2:
 	ld	hl, 0:i3
 	cp	hl, 6:i3
-	jr ge, HDAE5000_LyricBoxProc_Ev01CA0003_Join3                      ; [69 20] jr GE,0x28cf93
+	jr	ge, HDAE5000_LyricBoxProc_Ev01CA0003_Join3
 HDAE5000_LyricBoxProc_Ev01CA0003_Loop3:
 	ld	wa, hl
 	muls	wa, 0x0012
@@ -3396,21 +3396,21 @@ HDAE5000_LyricBoxProc_Ev01CA0003_Loop3:
 	ld	(xwa+hl), c
 	inc	1, hl
 	cp	hl, 6:i3
-	jr lt, HDAE5000_LyricBoxProc_Ev01CA0003_Loop3                      ; [61 e0] jr LT,0x28cf73
+	jr	lt, HDAE5000_LyricBoxProc_Ev01CA0003_Loop3
 HDAE5000_LyricBoxProc_Ev01CA0003_Join3:
 	ld	xhl, 0:i3
-	jrl t, HDAE5000_LyricBoxProc_Epilogue                      ; [78 68 06] jrl T,0x28d600
+	jrl	t, HDAE5000_LyricBoxProc_Epilogue
 HDAE5000_LyricBoxProc_Ev01CA0007:
 	ld xwa, (xsp + 0x06)
 	cp	xwa, 0x00000001
-	jr z, HDAE5000_LyricBoxProc_Ev01CA0007_Skip2                       ; [66 62] jr Z,0x28d005
+	jr	z, HDAE5000_LyricBoxProc_Ev01CA0007_Skip2
 	or xwa, xwa
-	jr z, HDAE5000_LyricBoxProc_Ev01CA0007_Skip                       ; [66 05] jr Z,0x28cfac
+	jr	z, HDAE5000_LyricBoxProc_Ev01CA0007_Skip
 	ld	xhl, 0:i3
-	jrl t, HDAE5000_LyricBoxProc_Epilogue                      ; [78 54 06] jrl T,0x28d600
+	jrl	t, HDAE5000_LyricBoxProc_Epilogue
 HDAE5000_LyricBoxProc_Ev01CA0007_Skip:
 	cpw	(0x2307B2:24), 0
-	jr z, HDAE5000_LyricBoxProc_Ev01CA0007_Join                       ; [66 4b] jr Z,0x28d000
+	jr	z, HDAE5000_LyricBoxProc_Ev01CA0007_Join
 	ldw	(0x2307B2:24), 0
 	ldw	(0x2307B4:24), 1
 	calr	HDAE5000_Lyrics_ResetState
@@ -3431,7 +3431,7 @@ HDAE5000_LyricBoxProc_Ev01CA0007_Skip:
 	ldw	(0x2307B4:24), 0
 HDAE5000_LyricBoxProc_Ev01CA0007_Join:
 	ld	xhl, 0:i3
-	jrl t, HDAE5000_LyricBoxProc_Epilogue                      ; [78 fb 05] jrl T,0x28d600
+	jrl	t, HDAE5000_LyricBoxProc_Epilogue
 HDAE5000_LyricBoxProc_Ev01CA0007_Skip2:
 	calr	HDAE5000_Lyrics_ResetState
 	ld	xwa, 0:i3
@@ -3445,7 +3445,7 @@ HDAE5000_LyricBoxProc_Ev01CA0007_Skip2:
 	ld	xde, 0:i3
 	call	(xhl)
 	ld	xhl, 0:i3
-	jrl t, HDAE5000_LyricBoxProc_Epilogue                      ; [78 cc 05] jrl T,0x28d600
+	jrl	t, HDAE5000_LyricBoxProc_Epilogue
 HDAE5000_LyricBoxProc_Ev01CA0008:
 	ld xwa, (xsp + 0x0e)
 	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
@@ -3455,7 +3455,7 @@ HDAE5000_LyricBoxProc_Ev01CA0008:
 	ld	(0x22a088), xhl
 	ld	iz, 0:i3
 	cp	iz, 6:i3
-	jrl nc, HDAE5000_LyricBoxProc_Ev01CA0008_Join                     ; [7f 4e 01] jrl NC,0x28d1a2
+	jrl	nc, HDAE5000_LyricBoxProc_Ev01CA0008_Join
 HDAE5000_LyricBoxProc_Ev01CA0008_Loop:
 	ld	wa, iz
 	extz xwa
@@ -3514,7 +3514,7 @@ HDAE5000_LyricBoxProc_Ev01CA0008_Loop:
 	ld	a, (0x2304EE:24)
 	extz wa
 	cp	wa, iz
-	jr ule, HDAE5000_LyricBoxProc_Ev01CA0008_Skip                     ; [63 4b] jr ULE,0x28d152
+	jr	ule, HDAE5000_LyricBoxProc_Ev01CA0008_Skip
 	lda xhl, (0x22a08c:24)
 	lda	xbc, (xsp+2)
 	ld	wa, iz
@@ -3538,7 +3538,7 @@ HDAE5000_LyricBoxProc_Ev01CA0008_Loop:
 	ld	xhl, (xhl + WS_RootFnTable)
 	ld_sril	xhl, (xhl + RootFn_DrawString)
 	call	(xhl)
-	jr t, HDAE5000_LyricBoxProc_Ev01CA0008_Next                       ; [68 49] jr T,0x28d19b
+	jr	t, HDAE5000_LyricBoxProc_Ev01CA0008_Next
 HDAE5000_LyricBoxProc_Ev01CA0008_Skip:
 	lda xhl, (0x22a08c:24)
 	lda	xbc, (xsp+2)
@@ -3566,7 +3566,7 @@ HDAE5000_LyricBoxProc_Ev01CA0008_Skip:
 HDAE5000_LyricBoxProc_Ev01CA0008_Next:
 	inc	1, iz
 	cp	iz, 6:i3
-	jrl c, HDAE5000_LyricBoxProc_Ev01CA0008_Loop                      ; [77 b2 fe] jrl C,0x28d054
+	jrl	c, HDAE5000_LyricBoxProc_Ev01CA0008_Loop
 HDAE5000_LyricBoxProc_Ev01CA0008_Join:
 	lda xwa, (0x22a094:24)
 	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
@@ -3591,7 +3591,7 @@ HDAE5000_LyricBoxProc_Ev01CA0008_Join:
 	call	(xhl)
 	ld xwa, (xsp + 0x06)
 	cp	xwa, 0x00000001
-	jrl nz, HDAE5000_LyricBoxProc_Ev01CA0008_Join2                     ; [7e a3 00] jrl NZ,0x28d2a5
+	jrl	nz, HDAE5000_LyricBoxProc_Ev01CA0008_Join2
 	lda xwa, (0x230736:24)
 	ld	xde, xwa
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
@@ -3633,19 +3633,19 @@ HDAE5000_LyricBoxProc_Ev01CA0008_Join:
 	call	(xhl)
 HDAE5000_LyricBoxProc_Ev01CA0008_Join2:
 	ld	xhl, 0:i3
-	jrl t, HDAE5000_LyricBoxProc_Epilogue                      ; [78 56 03] jrl T,0x28d600
+	jrl	t, HDAE5000_LyricBoxProc_Epilogue
 HDAE5000_LyricBoxProc_Ev01CA0009:
 	ld xwa, (xsp + 0x06)
 	cp	xwa, 0x00000004
-	jrl z, HDAE5000_LyricBoxProc_Skip4                      ; [76 2f 01] jrl Z,0x28d3e5
+	jrl	z, HDAE5000_LyricBoxProc_Skip4
 	cp	xwa, 0x00000003
-	jrl z, HDAE5000_LyricBoxProc_Skip3                      ; [76 ec 00] jrl Z,0x28d3ab
+	jrl	z, HDAE5000_LyricBoxProc_Skip3
 	cp	xwa, 0x00000002
-	jrl z, HDAE5000_LyricBoxProc_Skip2                      ; [76 a5 00] jrl Z,0x28d36d
+	jrl	z, HDAE5000_LyricBoxProc_Skip2
 	cp	xwa, 0x00000001
-	jr z, HDAE5000_LyricBoxProc_Skip                       ; [66 5e] jr Z,0x28d32e
+	jr	z, HDAE5000_LyricBoxProc_Skip
 	or xwa, xwa
-	jr nz, HDAE5000_LyricBoxProc_Default1                      ; [6e 3d] jr NZ,0x28d311
+	jr	nz, HDAE5000_LyricBoxProc_Default1
 	lda xhl, (0x22a08c:24)
 	lda xbc, (0x23087a:24)
 	lda xwa, (0x23051e:24)
@@ -3671,7 +3671,7 @@ HDAE5000_LyricBoxProc_Default1:
 	ld	xhl, (xhl + WS_RootFnTable)
 	ld_sril	xix, (xhl + RootFn_InheritedProc)
 	call	(xix)
-	jrl t, HDAE5000_LyricBoxProc_Epilogue                      ; [78 d2 02] jrl T,0x28d600
+	jrl	t, HDAE5000_LyricBoxProc_Epilogue
 HDAE5000_LyricBoxProc_Skip:
 	lda xhl, (0x22a08c:24)
 	lda xbc, (0x23087a:24)
@@ -3690,7 +3690,7 @@ HDAE5000_LyricBoxProc_Skip:
 	ld	xhl, (xhl + WS_RootFnTable)
 	ld_sril	xhl, (xhl + RootFn_DrawString)
 	call	(xhl)
-	jr t, HDAE5000_LyricBoxProc_Default1                       ; [68 a4] jr T,0x28d311
+	jr	t, HDAE5000_LyricBoxProc_Default1
 HDAE5000_LyricBoxProc_Skip2:
 	lda xhl, (0x22a08c:24)
 	lda xbc, (0x22a09c:24)
@@ -3707,7 +3707,7 @@ HDAE5000_LyricBoxProc_Skip2:
 	ld	xhl, (xhl + WS_RootFnTable)
 	ld_sril	xhl, (xhl + RootFn_DrawString)
 	call	(xhl)
-	jrl t, HDAE5000_LyricBoxProc_Default1                      ; [78 66 ff] jrl T,0x28d311
+	jrl	t, HDAE5000_LyricBoxProc_Default1
 HDAE5000_LyricBoxProc_Skip3:
 	lda xwa, (0x22a0a0:24)
 	ld	xhl, xwa
@@ -3725,7 +3725,7 @@ HDAE5000_LyricBoxProc_Skip3:
 	ld	xhl, (xhl + WS_RootFnTable)
 	ld_sril	xhl, (xhl + RootFn_DrawString)
 	call	(xhl)
-	jrl t, HDAE5000_LyricBoxProc_Default1                      ; [78 2c ff] jrl T,0x28d311
+	jrl	t, HDAE5000_LyricBoxProc_Default1
 HDAE5000_LyricBoxProc_Skip4:
 	lda xwa, (0x22a0ac:24)
 	ld	xhl, xwa
@@ -3743,16 +3743,16 @@ HDAE5000_LyricBoxProc_Skip4:
 	ld	xhl, (xhl + WS_RootFnTable)
 	ld_sril	xhl, (xhl + RootFn_DrawString)
 	call	(xhl)
-	jrl t, HDAE5000_LyricBoxProc_Default1                      ; [78 f2 fe] jrl T,0x28d311
+	jrl	t, HDAE5000_LyricBoxProc_Default1
 HDAE5000_LyricBoxProc_Ev01CA0004:
 	cpw	(0x2307B4:24), 0
-	jrl nz, HDAE5000_LyricBoxProc_Default1                     ; [7e e8 fe] jrl NZ,0x28d311
+	jrl	nz, HDAE5000_LyricBoxProc_Default1
 	ld xwa, (xsp + 0x06)
 	ld	bc, 1:i3
 	calr	HDAE5000_Lyrics_PlayToPosition
 	ld	wa, (0x230874:24)
 	cp	wa, (0x2307B0:24)
-	jr c, HDAE5000_LyricBoxProc_Ev01CA0004_Join                       ; [67 33] jr C,0x28d470
+	jr	c, HDAE5000_LyricBoxProc_Ev01CA0004_Join
 	ld	wa, (0x2307AE:24)
 	ld	(0x2307b0), wa
 	incw	1, (0x230872:24)
@@ -3768,13 +3768,13 @@ HDAE5000_LyricBoxProc_Ev01CA0004_Join:
 	incw	1, (0x230874:24)
 	ld	xwa, 1:i3
 	add	(0x230876:24), xwa
-	jrl t, HDAE5000_LyricBoxProc_Default1                      ; [78 92 fe] jrl T,0x28d311
+	jrl	t, HDAE5000_LyricBoxProc_Default1
 HDAE5000_LyricBoxProc_Ev01CA0005:
 	incw	1, (0x2307AC:24)
 	ld	a, (0x2307A6:24)
 	extz wa
 	cp	(0x2307AC:24), wa
-	jr ule, HDAE5000_LyricBoxProc_Ev01CA0005_Join                     ; [63 16] jr ULE,0x28d4a8
+	jr	ule, HDAE5000_LyricBoxProc_Ev01CA0005_Join
 	ld	a, (0x2307A4:24)
 	ld	(0x2307A6:24), a
 	incw	1, (0x2307AA:24)
@@ -3797,7 +3797,7 @@ HDAE5000_LyricBoxProc_Ev01CA0005_Join:
 	ld	xbc, EVT_HDAE_DRAW_SYLLABLE
 	ld	xde, 3:i3
 	call	(xhl)
-	jrl t, HDAE5000_LyricBoxProc_Default1                      ; [78 2c fe] jrl T,0x28d311
+	jrl	t, HDAE5000_LyricBoxProc_Default1
 HDAE5000_LyricBoxProc_OnShow:
 	ld xwa, (xsp + 0x0e)
 	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
@@ -3810,7 +3810,7 @@ HDAE5000_LyricBoxProc_OnShow:
 	ld xwa, (xsp + 0x0e)
 	ld	(HDAE5000_RAM_LyricBoxObj), xwa
 	ldw	(0x2307B2:24), 1
-	jrl t, HDAE5000_LyricBoxProc_Default1                      ; [78 fa fd] jrl T,0x28d311
+	jrl	t, HDAE5000_LyricBoxProc_Default1
 HDAE5000_LyricBoxProc_OnHide:
 	ld xwa, (xsp + 0x0e)
 	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
@@ -3822,7 +3822,7 @@ HDAE5000_LyricBoxProc_OnHide:
 	ldw	(xwa), 0x0000
 	ld	xwa, 0xffffffff
 	ld	(HDAE5000_RAM_LyricBoxObj), xwa
-	jrl t, HDAE5000_LyricBoxProc_Default1                      ; [78 cd fd] jrl T,0x28d311
+	jrl	t, HDAE5000_LyricBoxProc_Default1
 HDAE5000_LyricBoxProc_OnSwIn:
 	ld xde, (xsp + 0x06)
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
@@ -3833,7 +3833,7 @@ HDAE5000_LyricBoxProc_OnSwIn:
 	call	(xix)
 	ld	xwa, xhl
 	cp	xwa, 0x00000007
-	jrl ugt, HDAE5000_LyricBoxProc_Default2                    ; [7b 91 00] jrl UGT,0x28d5fe
+	jrl	ugt, HDAE5000_LyricBoxProc_Default2
 	add	xwa, xwa
 	add	xwa, HDAE5000_LyricBoxProc_CaseTable2
 	ld	wa, (xwa)
@@ -3861,7 +3861,7 @@ HDAE5000_LyricBoxProc_OnReset:
 	ld	xbc, EVT_DRAW
 	ld	xde, 0:i3
 	call	(xhl)
-	jr t, HDAE5000_LyricBoxProc_Default2                       ; [68 39] jr T,0x28d5fe
+	jr	t, HDAE5000_LyricBoxProc_Default2
 ; HDAE5000_LyricBoxProc_OnLoad: EVT_SW_IN on the lyric box, edit switch 7 = the bottom08 button captioned "Load":
 ;   clear the lyric buffer and post EVT_SHOW to the LoadLyricFD screen. Basis: case 7 of
 ;   HDAE5000_LyricBoxProc_CaseTable2 + the caption drawn on bottom08.
@@ -8113,7 +8113,7 @@ HDAE5000_FlsItem_IsSet:	; 0x28FBB1 (1497 bytes)
 	lda xde, (0x2257c2:24)
 	add	xde, xiy
 	cp	(xde), 0x00
-	jr z, HDAE5000_FlsItem_IsSet_Done                       ; [66 1c] jr Z,0x28fbef
+	jr	z, HDAE5000_FlsItem_IsSet_Done
 	extz xbc
 	extz xwa
 	ld	xde, xwa
@@ -8144,7 +8144,7 @@ HDAE5000_FlsItem_Get:
 	calr	HDAE5000_FlsItem_IsSet
 	ld	wa, hl
 	cp	wa, 0xffff
-	jrl z, HDAE5000_FlsItem_Get_Epilogue                      ; [76 9f 00] jrl Z,0x28fcae
+	jrl	z, HDAE5000_FlsItem_Get_Epilogue
 	ld	bc, iz
 	extz xbc
 	ld	wa, (xsp+6)
@@ -8271,7 +8271,7 @@ HDAE5000_FlsItem_Remove:
 	ld	ix, bc
 	inc	1, ix
 	cp	ix, 0x0020
-	jrl nc, HDAE5000_FlsItem_Remove_Join                     ; [7f 01 01] jrl NC,0x28fe35
+	jrl	nc, HDAE5000_FlsItem_Remove_Join
 HDAE5000_FlsItem_Remove_Loop:
 	ld	bc, ix
 	dec	1, bc
@@ -8379,7 +8379,7 @@ HDAE5000_FlsItem_Remove_Loop:
 	ld	(xiy), c
 	inc	1, ix
 	cp	ix, 0x0020
-	jrl c, HDAE5000_FlsItem_Remove_Loop                      ; [77 ff fe] jrl C,0x28fd34
+	jrl	c, HDAE5000_FlsItem_Remove_Loop
 HDAE5000_FlsItem_Remove_Join:
 	ld	bc, wa
 	extz xbc
@@ -8429,7 +8429,7 @@ HDAE5000_FlsItem_Insert:
 	push xiz
 	ldw	iy, 0x001f
 	cp	iy, bc
-	jrl ule, HDAE5000_FlsItem_Insert_Join                    ; [73 ff 00] jrl ULE,0x28ffb6
+	jrl	ule, HDAE5000_FlsItem_Insert_Join
 HDAE5000_FlsItem_Insert_Loop:
 	ld	hl, iy
 	extz xhl
@@ -8537,7 +8537,7 @@ HDAE5000_FlsItem_Insert_Loop:
 	ld	(xiz), e
 	dec	1, iy
 	cp	iy, bc
-	jrl ugt, HDAE5000_FlsItem_Insert_Loop                    ; [7b 01 ff] jrl UGT,0x28feb7
+	jrl	ugt, HDAE5000_FlsItem_Insert_Loop
 HDAE5000_FlsItem_Insert_Join:
 	ld	hl, bc
 	extz xhl
@@ -8705,7 +8705,7 @@ HDAE5000_FlsItem_SetByte80:
 	calr	HDAE5000_FlsItem_IsSet
 	ld	wa, hl
 	cp	wa, 0xffff
-	jr z, HDAE5000_FlsItem_SetByte80_Epilogue                       ; [66 23] jr Z,0x290144
+	jr	z, HDAE5000_FlsItem_SetByte80_Epilogue
 	ld	bc, iz
 	extz xbc
 	ld	wa, (xsp+4)
@@ -8737,7 +8737,7 @@ HDAE5000_FlsItem_SetByte112:
 	calr	HDAE5000_FlsItem_IsSet
 	ld	wa, hl
 	cp	wa, 0xffff
-	jr z, HDAE5000_FlsItem_SetByte112_Epilogue                       ; [66 23] jr Z,0x290186
+	jr	z, HDAE5000_FlsItem_SetByte112_Epilogue
 	ld	bc, iz
 	extz xbc
 	ld	wa, (xsp+4)
@@ -10164,7 +10164,7 @@ HDAE5000_LoadSong_Tlx:	; 0x29103D (1023 bytes)
 	add	xwa, xhl
 	ld xwa, (xwa)
 	cp	xwa, 0xffffffff
-	jrl z, HDAE5000_LoadSong_Tlx_Done                       ; [76 b6 00] jrl Z,0x291139
+	jrl	z, HDAE5000_LoadSong_Tlx_Done
 	call HDAE5000_Lyrics_ClearBuffer
 	lda	xwa, (xsp+14)
 	ld	xbc, xwa
@@ -10193,7 +10193,7 @@ HDAE5000_LoadSong_Tlx:	; 0x29103D (1023 bytes)
 	call HDAE5000_HD_ReadFile
 	ld	iz, hl
 	cp	iz, 0xffff
-	jr z, HDAE5000_LoadSong_Tlx_Done                        ; [66 58] jr Z,0x291139
+	jr	z, HDAE5000_LoadSong_Tlx_Done
 	lda	xwa, (xsp+14)
 	ld	xbc, xwa
 	ldw	wa, 0x000a
@@ -10244,21 +10244,21 @@ HDAE5000_SaveSong:
 	ld (xsp + 0x0c), wa
 	ldw (xsp + 0x04), 0
 	cpw	(xsp+22), 0x0000
-	jr nz, HDAE5000_SaveSong_Skip                       ; [6e 06] jr NZ,0x29115f
+	jr	nz, HDAE5000_SaveSong_Skip
 	ld	hl, (xsp+4)
-	jrl t, HDAE5000_SaveSong_Epilogue                       ; [78 d6 02] jrl T,0x291435
+	jrl	t, HDAE5000_SaveSong_Epilogue
 HDAE5000_SaveSong_Skip:
 	ld	wa, (xsp+22)
 	calr	HDAE5000_Song_CheckFreeSpace
 	cp	hl, 0xffff
-	jrl z, HDAE5000_SaveSong_Skip12                       ; [76 c1 02] jrl Z,0x29142d
+	jrl	z, HDAE5000_SaveSong_Skip12
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_HamaFnTable)
 	ld_sril	xhl, (xwa + HamaFn_PlayHalt)
 	ld	wa, 1:i3
 	call	(xhl)
 	cpw	(xsp+20), 0x0001
-	jr nz, HDAE5000_SaveSong_Join                       ; [6e 11] jr NZ,0x291197
+	jr	nz, HDAE5000_SaveSong_Join
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_RootFnTable)
 	ld	xhl, (xwa + RootFn_SleepMainTask)
@@ -10267,193 +10267,193 @@ HDAE5000_SaveSong_Join:
 	call HDAE5000_ATA_SoftReset_Status
 	ld	wa, (xsp+22)
 	bit	0x00, wa
-	jr z, HDAE5000_SaveSong_Skip2                        ; [66 20] jr Z,0x2911c3
+	jr	z, HDAE5000_SaveSong_Skip2
 	ld	wa, (xsp+12)
 	ld	bc, (xsp+10)
 	calr	HDAE5000_SaveSong_Lsw
 	ld (xsp + 0x04), hl
 	ld	wa, (xsp+4)
 	cp	wa, 0xffff
-	jr nz, HDAE5000_SaveSong_Join2                       ; [6e 14] jr NZ,0x2911cc
+	jr	nz, HDAE5000_SaveSong_Join2
 	ld	wa, (xsp+12)
 	ld	bc, (xsp+10)
 	calr	HDAE5000_DeleteSongPart_Lsw
-	jr t, HDAE5000_SaveSong_Join2                        ; [68 09] jr T,0x2911cc
+	jr	t, HDAE5000_SaveSong_Join2
 HDAE5000_SaveSong_Skip2:
 	ld	wa, (xsp+12)
 	ld	bc, (xsp+10)
 	calr	HDAE5000_DeleteSongPart_Lsw
 HDAE5000_SaveSong_Join2:
 	cpw	(xsp+4), 0xffff
-	jr z, HDAE5000_SaveSong_Skip3                        ; [66 28] jr Z,0x2911fb
+	jr	z, HDAE5000_SaveSong_Skip3
 	ld	wa, (xsp+22)
 	bit	0x01, wa
-	jr z, HDAE5000_SaveSong_Skip3                        ; [66 20] jr Z,0x2911fb
+	jr	z, HDAE5000_SaveSong_Skip3
 	ld	wa, (xsp+12)
 	ld	bc, (xsp+10)
 	calr	HDAE5000_SaveSong_Pmt
 	ld (xsp + 0x04), hl
 	ld	wa, (xsp+4)
 	cp	wa, 0xffff
-	jr nz, HDAE5000_SaveSong_Join3                       ; [6e 14] jr NZ,0x291204
+	jr	nz, HDAE5000_SaveSong_Join3
 	ld	wa, (xsp+12)
 	ld	bc, (xsp+10)
 	calr	HDAE5000_DeleteSongPart_Pmt
-	jr t, HDAE5000_SaveSong_Join3                        ; [68 09] jr T,0x291204
+	jr	t, HDAE5000_SaveSong_Join3
 HDAE5000_SaveSong_Skip3:
 	ld	wa, (xsp+12)
 	ld	bc, (xsp+10)
 	calr	HDAE5000_DeleteSongPart_Pmt
 HDAE5000_SaveSong_Join3:
 	cpw	(xsp+4), 0xffff
-	jr z, HDAE5000_SaveSong_Skip4                        ; [66 28] jr Z,0x291233
+	jr	z, HDAE5000_SaveSong_Skip4
 	ld	wa, (xsp+22)
 	bit	0x02, wa
-	jr z, HDAE5000_SaveSong_Skip4                        ; [66 20] jr Z,0x291233
+	jr	z, HDAE5000_SaveSong_Skip4
 	ld	wa, (xsp+12)
 	ld	bc, (xsp+10)
 	calr	HDAE5000_SaveSong_Sqt
 	ld (xsp + 0x04), hl
 	ld	wa, (xsp+4)
 	cp	wa, 0xffff
-	jr nz, HDAE5000_SaveSong_Join4                       ; [6e 14] jr NZ,0x29123c
+	jr	nz, HDAE5000_SaveSong_Join4
 	ld	wa, (xsp+12)
 	ld	bc, (xsp+10)
 	calr	HDAE5000_DeleteSongPart_Sqt
-	jr t, HDAE5000_SaveSong_Join4                        ; [68 09] jr T,0x29123c
+	jr	t, HDAE5000_SaveSong_Join4
 HDAE5000_SaveSong_Skip4:
 	ld	wa, (xsp+12)
 	ld	bc, (xsp+10)
 	calr	HDAE5000_DeleteSongPart_Sqt
 HDAE5000_SaveSong_Join4:
 	cpw	(xsp+4), 0xffff
-	jr z, HDAE5000_SaveSong_Skip5                        ; [66 28] jr Z,0x29126b
+	jr	z, HDAE5000_SaveSong_Skip5
 	ld	wa, (xsp+22)
 	bit	0x03, wa
-	jr z, HDAE5000_SaveSong_Skip5                        ; [66 20] jr Z,0x29126b
+	jr	z, HDAE5000_SaveSong_Skip5
 	ld	wa, (xsp+12)
 	ld	bc, (xsp+10)
 	calr	HDAE5000_SaveSong_Cmp
 	ld (xsp + 0x04), hl
 	ld	wa, (xsp+4)
 	cp	wa, 0xffff
-	jr nz, HDAE5000_SaveSong_Join5                       ; [6e 14] jr NZ,0x291274
+	jr	nz, HDAE5000_SaveSong_Join5
 	ld	wa, (xsp+12)
 	ld	bc, (xsp+10)
 	calr	HDAE5000_DeleteSongPart_Cmp
-	jr t, HDAE5000_SaveSong_Join5                        ; [68 09] jr T,0x291274
+	jr	t, HDAE5000_SaveSong_Join5
 HDAE5000_SaveSong_Skip5:
 	ld	wa, (xsp+12)
 	ld	bc, (xsp+10)
 	calr	HDAE5000_DeleteSongPart_Cmp
 HDAE5000_SaveSong_Join5:
 	cpw	(xsp+4), 0xffff
-	jr z, HDAE5000_SaveSong_Skip6                        ; [66 28] jr Z,0x2912a3
+	jr	z, HDAE5000_SaveSong_Skip6
 	ld	wa, (xsp+22)
 	bit	0x04, wa
-	jr z, HDAE5000_SaveSong_Skip6                        ; [66 20] jr Z,0x2912a3
+	jr	z, HDAE5000_SaveSong_Skip6
 	ld	wa, (xsp+12)
 	ld	bc, (xsp+10)
 	calr	HDAE5000_SaveSong_Tm
 	ld (xsp + 0x04), hl
 	ld	wa, (xsp+4)
 	cp	wa, 0xffff
-	jr nz, HDAE5000_SaveSong_Join6                       ; [6e 14] jr NZ,0x2912ac
+	jr	nz, HDAE5000_SaveSong_Join6
 	ld	wa, (xsp+12)
 	ld	bc, (xsp+10)
 	calr	HDAE5000_DeleteSongPart_Tm
-	jr t, HDAE5000_SaveSong_Join6                        ; [68 09] jr T,0x2912ac
+	jr	t, HDAE5000_SaveSong_Join6
 HDAE5000_SaveSong_Skip6:
 	ld	wa, (xsp+12)
 	ld	bc, (xsp+10)
 	calr	HDAE5000_DeleteSongPart_Tm
 HDAE5000_SaveSong_Join6:
 	cpw	(xsp+4), 0xffff
-	jr z, HDAE5000_SaveSong_Skip7                        ; [66 28] jr Z,0x2912db
+	jr	z, HDAE5000_SaveSong_Skip7
 	ld	wa, (xsp+22)
 	bit	0x05, wa
-	jr z, HDAE5000_SaveSong_Skip7                        ; [66 20] jr Z,0x2912db
+	jr	z, HDAE5000_SaveSong_Skip7
 	ld	wa, (xsp+12)
 	ld	bc, (xsp+10)
 	calr	HDAE5000_SaveSong_Msp
 	ld (xsp + 0x04), hl
 	ld	wa, (xsp+4)
 	cp	wa, 0xffff
-	jr nz, HDAE5000_SaveSong_Join7                       ; [6e 14] jr NZ,0x2912e4
+	jr	nz, HDAE5000_SaveSong_Join7
 	ld	wa, (xsp+12)
 	ld	bc, (xsp+10)
 	calr	HDAE5000_DeleteSongPart_Msp
-	jr t, HDAE5000_SaveSong_Join7                        ; [68 09] jr T,0x2912e4
+	jr	t, HDAE5000_SaveSong_Join7
 HDAE5000_SaveSong_Skip7:
 	ld	wa, (xsp+12)
 	ld	bc, (xsp+10)
 	calr	HDAE5000_DeleteSongPart_Msp
 HDAE5000_SaveSong_Join7:
 	cpw	(xsp+4), 0xffff
-	jr z, HDAE5000_SaveSong_Skip8                        ; [66 28] jr Z,0x291313
+	jr	z, HDAE5000_SaveSong_Skip8
 	ld	wa, (xsp+22)
 	bit	0x06, wa
-	jr z, HDAE5000_SaveSong_Skip8                        ; [66 20] jr Z,0x291313
+	jr	z, HDAE5000_SaveSong_Skip8
 	ld	wa, (xsp+12)
 	ld	bc, (xsp+10)
 	calr	HDAE5000_SaveSong_Rcm
 	ld (xsp + 0x04), hl
 	ld	wa, (xsp+4)
 	cp	wa, 0xffff
-	jr nz, HDAE5000_SaveSong_Join8                       ; [6e 14] jr NZ,0x29131c
+	jr	nz, HDAE5000_SaveSong_Join8
 	ld	wa, (xsp+12)
 	ld	bc, (xsp+10)
 	calr	HDAE5000_DeleteSongPart_Rcm
-	jr t, HDAE5000_SaveSong_Join8                        ; [68 09] jr T,0x29131c
+	jr	t, HDAE5000_SaveSong_Join8
 HDAE5000_SaveSong_Skip8:
 	ld	wa, (xsp+12)
 	ld	bc, (xsp+10)
 	calr	HDAE5000_DeleteSongPart_Rcm
 HDAE5000_SaveSong_Join8:
 	cpw	(xsp+4), 0xffff
-	jr z, HDAE5000_SaveSong_Skip9                        ; [66 28] jr Z,0x29134b
+	jr	z, HDAE5000_SaveSong_Skip9
 	ld	wa, (xsp+22)
 	bit	0x07, wa
-	jr z, HDAE5000_SaveSong_Skip9                        ; [66 20] jr Z,0x29134b
+	jr	z, HDAE5000_SaveSong_Skip9
 	ld	wa, (xsp+12)
 	ld	bc, (xsp+10)
 	calr	HDAE5000_SaveSong_Md
 	ld (xsp + 0x04), hl
 	ld	wa, (xsp+4)
 	cp	wa, 0xffff
-	jr nz, HDAE5000_SaveSong_Join9                       ; [6e 14] jr NZ,0x291354
+	jr	nz, HDAE5000_SaveSong_Join9
 	ld	wa, (xsp+12)
 	ld	bc, (xsp+10)
 	calr	HDAE5000_DeleteSongPart_Md
-	jr t, HDAE5000_SaveSong_Join9                        ; [68 09] jr T,0x291354
+	jr	t, HDAE5000_SaveSong_Join9
 HDAE5000_SaveSong_Skip9:
 	ld	wa, (xsp+12)
 	ld	bc, (xsp+10)
 	calr	HDAE5000_DeleteSongPart_Md
 HDAE5000_SaveSong_Join9:
 	cpw	(xsp+4), 0xffff
-	jr z, HDAE5000_SaveSong_Skip10                        ; [66 28] jr Z,0x291383
+	jr	z, HDAE5000_SaveSong_Skip10
 	ld	wa, (xsp+22)
 	bit	0x08, wa
-	jr z, HDAE5000_SaveSong_Skip10                        ; [66 20] jr Z,0x291383
+	jr	z, HDAE5000_SaveSong_Skip10
 	ld	wa, (xsp+12)
 	ld	bc, (xsp+10)
 	calr	HDAE5000_SaveSong_Tlx
 	ld (xsp + 0x04), hl
 	ld	wa, (xsp+4)
 	cp	wa, 0xffff
-	jr nz, HDAE5000_SaveSong_Join10                       ; [6e 14] jr NZ,0x29138c
+	jr	nz, HDAE5000_SaveSong_Join10
 	ld	wa, (xsp+12)
 	ld	bc, (xsp+10)
 	calr	HDAE5000_DeleteSongPart_Tlx
-	jr t, HDAE5000_SaveSong_Join10                        ; [68 09] jr T,0x29138c
+	jr	t, HDAE5000_SaveSong_Join10
 HDAE5000_SaveSong_Skip10:
 	ld	wa, (xsp+12)
 	ld	bc, (xsp+10)
 	calr	HDAE5000_DeleteSongPart_Tlx
 HDAE5000_SaveSong_Join10:
 	cpw	(xsp+4), 0xffff
-	jr z, HDAE5000_SaveSong_Skip11                        ; [66 42] jr Z,0x2913d5
+	jr	z, HDAE5000_SaveSong_Skip11
 	pushw 0x001a
 	ld xwa, (xsp + 0x08)
 	push xwa
@@ -10474,7 +10474,7 @@ HDAE5000_SaveSong_Join10:
 	call HDAE5000_StrNCpy
 	lda	xsp, (xsp+10)
 	call HDAE5000_HD_WriteTables_Status
-	jr t, HDAE5000_SaveSong_Join11                        ; [68 12] jr T,0x2913e7
+	jr	t, HDAE5000_SaveSong_Join11
 HDAE5000_SaveSong_Skip11:
 	pushw 0x0000
 	pushm	(xsp+20)
@@ -10486,7 +10486,7 @@ HDAE5000_SaveSong_Join11:
 	cpw	(xsp+18), 0x0001
 	call	nz, (HDAE5000_ATA_Standby_Status:24)
 	cpw	(xsp+20), 0x0001
-	jr nz, HDAE5000_SaveSong_Join12                       ; [6e 11] jr NZ,0x291409
+	jr	nz, HDAE5000_SaveSong_Join12
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_RootFnTable)
 	ld	xhl, (xwa + RootFn_WakeUpMainTask)
@@ -10500,7 +10500,7 @@ HDAE5000_SaveSong_Join12:
 	ld	xwa, (xwa + WS_HamaFnTable)
 	ld_sril	xhl, (xwa + HamaFn_PlayStandBy)
 	call	(xhl)
-	jr t, HDAE5000_SaveSong_Done                        ; [68 05] jr T,0x291432
+	jr	t, HDAE5000_SaveSong_Done
 HDAE5000_SaveSong_Skip12:
 	ldw (xsp + 0x04), 65535
 HDAE5000_SaveSong_Done:
@@ -11280,9 +11280,9 @@ HDAE5000_CheckFileSignature:	; 0x291C0D (2171 bytes)
 	call HDAE5000_StrNCmp
 	add	xsp, 0x0000000a
 	cp	hl, 0:i3
-	jr nz, HDAE5000_CheckFileSignature_Done                      ; [6e 04] jr NZ,0x291c54
+	jr	nz, HDAE5000_CheckFileSignature_Done
 	ld	hl, 0:i3
-	jr t, HDAE5000_CheckFileSignature_Return                       ; [68 03] jr T,0x291c57
+	jr	t, HDAE5000_CheckFileSignature_Return
 HDAE5000_CheckFileSignature_Done:
 	ldw	hl, 0xffff
 HDAE5000_CheckFileSignature_Return:
@@ -11325,14 +11325,14 @@ HDAE5000_FdSong_CheckFiles:
 	call	(xix)
 	ld	xwa, xhl
 	cp	xwa, 0xffffffff
-	jr z, HDAE5000_FdSong_CheckFiles_Skip                       ; [66 19] jr Z,0x291cce
+	jr	z, HDAE5000_FdSong_CheckFiles_Skip
 	ld	xwa, xhl
 	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xbc, (xbc + WS_HamaFnTable)
 	ld_sril	xhl, (xbc + HamaFn__findclose)
 	call	(xhl)
 	ldw	hl, 0xffff
-	jrl t, HDAE5000_FdSong_CheckFiles_Epilogue                      ; [78 7c 04] jrl T,0x29214a
+	jrl	t, HDAE5000_FdSong_CheckFiles_Epilogue
 HDAE5000_FdSong_CheckFiles_Skip:
 	pushw HDAE5000_FdSong_CheckFiles_Str_SQF@hi16
 	pushw HDAE5000_FdSong_CheckFiles_Str_SQF@lo16
@@ -11349,18 +11349,18 @@ HDAE5000_FdSong_CheckFiles_Skip:
 	call	(xix)
 	ld	xwa, xhl
 	cp	xwa, 0xffffffff
-	jr z, HDAE5000_FdSong_CheckFiles_Skip2                       ; [66 19] jr Z,0x291d1a
+	jr	z, HDAE5000_FdSong_CheckFiles_Skip2
 	ld	xwa, xhl
 	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xbc, (xbc + WS_HamaFnTable)
 	ld_sril	xhl, (xbc + HamaFn__findclose)
 	call	(xhl)
 	ldw	hl, 0xffff
-	jrl t, HDAE5000_FdSong_CheckFiles_Epilogue                      ; [78 30 04] jrl T,0x29214a
+	jrl	t, HDAE5000_FdSong_CheckFiles_Epilogue
 HDAE5000_FdSong_CheckFiles_Skip2:
 	ld	wa, (xsp+284)
 	bit	0x00, wa
-	jr z, HDAE5000_FdSong_CheckFiles_Skip3                       ; [66 6d] jr Z,0x291d91
+	jr	z, HDAE5000_FdSong_CheckFiles_Skip3
 	pushw HDAE5000_FdSong_CheckFiles_Str_LSW@hi16
 	pushw HDAE5000_FdSong_CheckFiles_Str_LSW@lo16
 	lda	xwa, (xsp+16)
@@ -11388,13 +11388,13 @@ HDAE5000_FdSong_CheckFiles_Skip2:
 	ld	wa, 0:i3
 	calr	HDAE5000_CheckFileSignature
 	cp	hl, 0xffff
-	jr nz, HDAE5000_FdSong_CheckFiles_Skip3                      ; [6e 06] jr NZ,0x291d91
+	jr	nz, HDAE5000_FdSong_CheckFiles_Skip3
 	ldw	hl, 0xffff
-	jrl t, HDAE5000_FdSong_CheckFiles_Epilogue                      ; [78 b9 03] jrl T,0x29214a
+	jrl	t, HDAE5000_FdSong_CheckFiles_Epilogue
 HDAE5000_FdSong_CheckFiles_Skip3:
 	ld	wa, (xsp+284)
 	bit	0x01, wa
-	jr z, HDAE5000_FdSong_CheckFiles_Skip4                       ; [66 6d] jr Z,0x291e08
+	jr	z, HDAE5000_FdSong_CheckFiles_Skip4
 	pushw HDAE5000_FdSong_CheckFiles_Str_PMT@hi16
 	pushw HDAE5000_FdSong_CheckFiles_Str_PMT@lo16
 	lda	xwa, (xsp+16)
@@ -11422,13 +11422,13 @@ HDAE5000_FdSong_CheckFiles_Skip3:
 	ld	wa, 1:i3
 	calr	HDAE5000_CheckFileSignature
 	cp	hl, 0xffff
-	jr nz, HDAE5000_FdSong_CheckFiles_Skip4                      ; [6e 06] jr NZ,0x291e08
+	jr	nz, HDAE5000_FdSong_CheckFiles_Skip4
 	ldw	hl, 0xffff
-	jrl t, HDAE5000_FdSong_CheckFiles_Epilogue                      ; [78 42 03] jrl T,0x29214a
+	jrl	t, HDAE5000_FdSong_CheckFiles_Epilogue
 HDAE5000_FdSong_CheckFiles_Skip4:
 	ld	wa, (xsp+284)
 	bit	0x02, wa
-	jr z, HDAE5000_FdSong_CheckFiles_Skip5                       ; [66 6d] jr Z,0x291e7f
+	jr	z, HDAE5000_FdSong_CheckFiles_Skip5
 	pushw HDAE5000_FdSong_CheckFiles_Str_SQT@hi16
 	pushw HDAE5000_FdSong_CheckFiles_Str_SQT@lo16
 	lda	xwa, (xsp+16)
@@ -11456,13 +11456,13 @@ HDAE5000_FdSong_CheckFiles_Skip4:
 	ld	wa, 2:i3
 	calr	HDAE5000_CheckFileSignature
 	cp	hl, 0xffff
-	jr nz, HDAE5000_FdSong_CheckFiles_Skip5                      ; [6e 06] jr NZ,0x291e7f
+	jr	nz, HDAE5000_FdSong_CheckFiles_Skip5
 	ldw	hl, 0xffff
-	jrl t, HDAE5000_FdSong_CheckFiles_Epilogue                      ; [78 cb 02] jrl T,0x29214a
+	jrl	t, HDAE5000_FdSong_CheckFiles_Epilogue
 HDAE5000_FdSong_CheckFiles_Skip5:
 	ld	wa, (xsp+284)
 	bit	0x03, wa
-	jr z, HDAE5000_FdSong_CheckFiles_Skip6                       ; [66 6d] jr Z,0x291ef6
+	jr	z, HDAE5000_FdSong_CheckFiles_Skip6
 	pushw HDAE5000_FdSong_CheckFiles_Str_CMP@hi16
 	pushw HDAE5000_FdSong_CheckFiles_Str_CMP@lo16
 	lda	xwa, (xsp+16)
@@ -11490,13 +11490,13 @@ HDAE5000_FdSong_CheckFiles_Skip5:
 	ld	wa, 3:i3
 	calr	HDAE5000_CheckFileSignature
 	cp	hl, 0xffff
-	jr nz, HDAE5000_FdSong_CheckFiles_Skip6                      ; [6e 06] jr NZ,0x291ef6
+	jr	nz, HDAE5000_FdSong_CheckFiles_Skip6
 	ldw	hl, 0xffff
-	jrl t, HDAE5000_FdSong_CheckFiles_Epilogue                      ; [78 54 02] jrl T,0x29214a
+	jrl	t, HDAE5000_FdSong_CheckFiles_Epilogue
 HDAE5000_FdSong_CheckFiles_Skip6:
 	ld	wa, (xsp+284)
 	bit	0x04, wa
-	jr z, HDAE5000_FdSong_CheckFiles_Skip7                       ; [66 6d] jr Z,0x291f6d
+	jr	z, HDAE5000_FdSong_CheckFiles_Skip7
 	pushw HDAE5000_FdSong_CheckFiles_Str_TM@hi16
 	pushw HDAE5000_FdSong_CheckFiles_Str_TM@lo16
 	lda	xwa, (xsp+16)
@@ -11524,13 +11524,13 @@ HDAE5000_FdSong_CheckFiles_Skip6:
 	ld	wa, 4:i3
 	calr	HDAE5000_CheckFileSignature
 	cp	hl, 0xffff
-	jr nz, HDAE5000_FdSong_CheckFiles_Skip7                      ; [6e 06] jr NZ,0x291f6d
+	jr	nz, HDAE5000_FdSong_CheckFiles_Skip7
 	ldw	hl, 0xffff
-	jrl t, HDAE5000_FdSong_CheckFiles_Epilogue                      ; [78 dd 01] jrl T,0x29214a
+	jrl	t, HDAE5000_FdSong_CheckFiles_Epilogue
 HDAE5000_FdSong_CheckFiles_Skip7:
 	ld	wa, (xsp+284)
 	bit	0x05, wa
-	jr z, HDAE5000_FdSong_CheckFiles_Skip8                       ; [66 6d] jr Z,0x291fe4
+	jr	z, HDAE5000_FdSong_CheckFiles_Skip8
 	pushw HDAE5000_FdSong_CheckFiles_Str_MSP@hi16
 	pushw HDAE5000_FdSong_CheckFiles_Str_MSP@lo16
 	lda	xwa, (xsp+16)
@@ -11558,13 +11558,13 @@ HDAE5000_FdSong_CheckFiles_Skip7:
 	ld	wa, 5:i3
 	calr	HDAE5000_CheckFileSignature
 	cp	hl, 0xffff
-	jr nz, HDAE5000_FdSong_CheckFiles_Skip8                      ; [6e 06] jr NZ,0x291fe4
+	jr	nz, HDAE5000_FdSong_CheckFiles_Skip8
 	ldw	hl, 0xffff
-	jrl t, HDAE5000_FdSong_CheckFiles_Epilogue                      ; [78 66 01] jrl T,0x29214a
+	jrl	t, HDAE5000_FdSong_CheckFiles_Epilogue
 HDAE5000_FdSong_CheckFiles_Skip8:
 	ld	wa, (xsp+284)
 	bit	0x06, wa
-	jr z, HDAE5000_FdSong_CheckFiles_Skip9                       ; [66 6d] jr Z,0x29205b
+	jr	z, HDAE5000_FdSong_CheckFiles_Skip9
 	pushw HDAE5000_FdSong_CheckFiles_Str_RCM@hi16
 	pushw HDAE5000_FdSong_CheckFiles_Str_RCM@lo16
 	lda	xwa, (xsp+16)
@@ -11592,13 +11592,13 @@ HDAE5000_FdSong_CheckFiles_Skip8:
 	ld	wa, 6:i3
 	calr	HDAE5000_CheckFileSignature
 	cp	hl, 0xffff
-	jr nz, HDAE5000_FdSong_CheckFiles_Skip9                      ; [6e 06] jr NZ,0x29205b
+	jr	nz, HDAE5000_FdSong_CheckFiles_Skip9
 	ldw	hl, 0xffff
-	jrl t, HDAE5000_FdSong_CheckFiles_Epilogue                      ; [78 ef 00] jrl T,0x29214a
+	jrl	t, HDAE5000_FdSong_CheckFiles_Epilogue
 HDAE5000_FdSong_CheckFiles_Skip9:
 	ld	wa, (xsp+284)
 	bit	0x07, wa
-	jr z, HDAE5000_FdSong_CheckFiles_Skip10                       ; [66 6c] jr Z,0x2920d1
+	jr	z, HDAE5000_FdSong_CheckFiles_Skip10
 	pushw HDAE5000_FdSong_CheckFiles_Str_MD@hi16
 	pushw HDAE5000_FdSong_CheckFiles_Str_MD@lo16
 	lda	xwa, (xsp+16)
@@ -11626,13 +11626,13 @@ HDAE5000_FdSong_CheckFiles_Skip9:
 	ld	wa, 7:i3
 	calr	HDAE5000_CheckFileSignature
 	cp	hl, 0xffff
-	jr nz, HDAE5000_FdSong_CheckFiles_Skip10                      ; [6e 05] jr NZ,0x2920d1
+	jr	nz, HDAE5000_FdSong_CheckFiles_Skip10
 	ldw	hl, 0xffff
-	jr t, HDAE5000_FdSong_CheckFiles_Epilogue                       ; [68 79] jr T,0x29214a
+	jr	t, HDAE5000_FdSong_CheckFiles_Epilogue
 HDAE5000_FdSong_CheckFiles_Skip10:
 	ld	wa, (xsp+284)
 	bit	0x08, wa
-	jr z, HDAE5000_FdSong_CheckFiles_Done                       ; [66 6d] jr Z,0x292148
+	jr	z, HDAE5000_FdSong_CheckFiles_Done
 	pushw HDAE5000_FdSong_CheckFiles_Str_TLX@hi16
 	pushw HDAE5000_FdSong_CheckFiles_Str_TLX@lo16
 	lda	xwa, (xsp+16)
@@ -11660,9 +11660,9 @@ HDAE5000_FdSong_CheckFiles_Skip10:
 	ldw	wa, 0x0008
 	calr	HDAE5000_CheckFileSignature
 	cp	hl, 0xffff
-	jr nz, HDAE5000_FdSong_CheckFiles_Done                      ; [6e 05] jr NZ,0x292148
+	jr	nz, HDAE5000_FdSong_CheckFiles_Done
 	ldw	hl, 0xffff
-	jr t, HDAE5000_FdSong_CheckFiles_Epilogue                       ; [68 02] jr T,0x29214a
+	jr	t, HDAE5000_FdSong_CheckFiles_Epilogue
 HDAE5000_FdSong_CheckFiles_Done:
 	ld	hl, 0:i3
 HDAE5000_FdSong_CheckFiles_Epilogue:
@@ -11685,14 +11685,14 @@ HDAE5000_CopyFdSongToHd:
 	ld	wa, (xsp+64)
 	calr	HDAE5000_Song_CheckFreeSpace
 	cp	hl, 0xffff
-	jrl z, HDAE5000_CopyFdSongToHd_Skip3                      ; [76 09 03] jrl Z,0x292479
+	jrl	z, HDAE5000_CopyFdSongToHd_Skip3
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_HamaFnTable)
 	ld_sril	xhl, (xwa + HamaFn_PlayHalt)
 	ld	wa, 1:i3
 	call	(xhl)
 	cpw	(xsp+62), 0x0001
-	jr nz, HDAE5000_CopyFdSongToHd_Join                      ; [6e 11] jr NZ,0x29219b
+	jr	nz, HDAE5000_CopyFdSongToHd_Join
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_RootFnTable)
 	ld	xhl, (xwa + RootFn_SleepMainTask)
@@ -11701,7 +11701,7 @@ HDAE5000_CopyFdSongToHd_Join:
 	call HDAE5000_ATA_SoftReset_Status
 	ld	wa, (xsp+64)
 	bit	0x00, wa
-	jr z, HDAE5000_CopyFdSongToHd_Join2                       ; [66 21] jr Z,0x2921c8
+	jr	z, HDAE5000_CopyFdSongToHd_Join2
 	ld	wa, (xsp+54)
 	ld	bc, (xsp+52)
 	ld xde, (xsp + 0x30)
@@ -11709,16 +11709,16 @@ HDAE5000_CopyFdSongToHd_Join:
 	ld (xsp + 0x04), hl
 	ld	wa, (xsp+4)
 	cp	wa, 0xffff
-	jr nz, HDAE5000_CopyFdSongToHd_Join2                      ; [6e 09] jr NZ,0x2921c8
+	jr	nz, HDAE5000_CopyFdSongToHd_Join2
 	ld	wa, (xsp+54)
 	ld	bc, (xsp+52)
 	calr	HDAE5000_DeleteSongPart_Lsw
 HDAE5000_CopyFdSongToHd_Join2:
 	cpw	(xsp+4), 0xffff
-	jr z, HDAE5000_CopyFdSongToHd_Join3                       ; [66 29] jr Z,0x2921f8
+	jr	z, HDAE5000_CopyFdSongToHd_Join3
 	ld	wa, (xsp+64)
 	bit	0x01, wa
-	jr z, HDAE5000_CopyFdSongToHd_Join3                       ; [66 21] jr Z,0x2921f8
+	jr	z, HDAE5000_CopyFdSongToHd_Join3
 	ld	wa, (xsp+54)
 	ld	bc, (xsp+52)
 	ld xde, (xsp + 0x30)
@@ -11726,16 +11726,16 @@ HDAE5000_CopyFdSongToHd_Join2:
 	ld (xsp + 0x04), hl
 	ld	wa, (xsp+4)
 	cp	wa, 0xffff
-	jr nz, HDAE5000_CopyFdSongToHd_Join3                      ; [6e 09] jr NZ,0x2921f8
+	jr	nz, HDAE5000_CopyFdSongToHd_Join3
 	ld	wa, (xsp+54)
 	ld	bc, (xsp+52)
 	calr	HDAE5000_DeleteSongPart_Pmt
 HDAE5000_CopyFdSongToHd_Join3:
 	cpw	(xsp+4), 0xffff
-	jr z, HDAE5000_CopyFdSongToHd_Join4                       ; [66 29] jr Z,0x292228
+	jr	z, HDAE5000_CopyFdSongToHd_Join4
 	ld	wa, (xsp+64)
 	bit	0x02, wa
-	jr z, HDAE5000_CopyFdSongToHd_Join4                       ; [66 21] jr Z,0x292228
+	jr	z, HDAE5000_CopyFdSongToHd_Join4
 	ld	wa, (xsp+54)
 	ld	bc, (xsp+52)
 	ld xde, (xsp + 0x30)
@@ -11743,16 +11743,16 @@ HDAE5000_CopyFdSongToHd_Join3:
 	ld (xsp + 0x04), hl
 	ld	wa, (xsp+4)
 	cp	wa, 0xffff
-	jr nz, HDAE5000_CopyFdSongToHd_Join4                      ; [6e 09] jr NZ,0x292228
+	jr	nz, HDAE5000_CopyFdSongToHd_Join4
 	ld	wa, (xsp+54)
 	ld	bc, (xsp+52)
 	calr	HDAE5000_DeleteSongPart_Sqt
 HDAE5000_CopyFdSongToHd_Join4:
 	cpw	(xsp+4), 0xffff
-	jr z, HDAE5000_CopyFdSongToHd_Join5                       ; [66 29] jr Z,0x292258
+	jr	z, HDAE5000_CopyFdSongToHd_Join5
 	ld	wa, (xsp+64)
 	bit	0x03, wa
-	jr z, HDAE5000_CopyFdSongToHd_Join5                       ; [66 21] jr Z,0x292258
+	jr	z, HDAE5000_CopyFdSongToHd_Join5
 	ld	wa, (xsp+54)
 	ld	bc, (xsp+52)
 	ld xde, (xsp + 0x30)
@@ -11760,16 +11760,16 @@ HDAE5000_CopyFdSongToHd_Join4:
 	ld (xsp + 0x04), hl
 	ld	wa, (xsp+4)
 	cp	wa, 0xffff
-	jr nz, HDAE5000_CopyFdSongToHd_Join5                      ; [6e 09] jr NZ,0x292258
+	jr	nz, HDAE5000_CopyFdSongToHd_Join5
 	ld	wa, (xsp+54)
 	ld	bc, (xsp+52)
 	calr	HDAE5000_DeleteSongPart_Cmp
 HDAE5000_CopyFdSongToHd_Join5:
 	cpw	(xsp+4), 0xffff
-	jr z, HDAE5000_CopyFdSongToHd_Join6                       ; [66 29] jr Z,0x292288
+	jr	z, HDAE5000_CopyFdSongToHd_Join6
 	ld	wa, (xsp+64)
 	bit	0x04, wa
-	jr z, HDAE5000_CopyFdSongToHd_Join6                       ; [66 21] jr Z,0x292288
+	jr	z, HDAE5000_CopyFdSongToHd_Join6
 	ld	wa, (xsp+54)
 	ld	bc, (xsp+52)
 	ld xde, (xsp + 0x30)
@@ -11777,16 +11777,16 @@ HDAE5000_CopyFdSongToHd_Join5:
 	ld (xsp + 0x04), hl
 	ld	wa, (xsp+4)
 	cp	wa, 0xffff
-	jr nz, HDAE5000_CopyFdSongToHd_Join6                      ; [6e 09] jr NZ,0x292288
+	jr	nz, HDAE5000_CopyFdSongToHd_Join6
 	ld	wa, (xsp+54)
 	ld	bc, (xsp+52)
 	calr	HDAE5000_DeleteSongPart_Tm
 HDAE5000_CopyFdSongToHd_Join6:
 	cpw	(xsp+4), 0xffff
-	jr z, HDAE5000_CopyFdSongToHd_Join7                       ; [66 29] jr Z,0x2922b8
+	jr	z, HDAE5000_CopyFdSongToHd_Join7
 	ld	wa, (xsp+64)
 	bit	0x05, wa
-	jr z, HDAE5000_CopyFdSongToHd_Join7                       ; [66 21] jr Z,0x2922b8
+	jr	z, HDAE5000_CopyFdSongToHd_Join7
 	ld	wa, (xsp+54)
 	ld	bc, (xsp+52)
 	ld xde, (xsp + 0x30)
@@ -11794,16 +11794,16 @@ HDAE5000_CopyFdSongToHd_Join6:
 	ld (xsp + 0x04), hl
 	ld	wa, (xsp+4)
 	cp	wa, 0xffff
-	jr nz, HDAE5000_CopyFdSongToHd_Join7                      ; [6e 09] jr NZ,0x2922b8
+	jr	nz, HDAE5000_CopyFdSongToHd_Join7
 	ld	wa, (xsp+54)
 	ld	bc, (xsp+52)
 	calr	HDAE5000_DeleteSongPart_Msp
 HDAE5000_CopyFdSongToHd_Join7:
 	cpw	(xsp+4), 0xffff
-	jr z, HDAE5000_CopyFdSongToHd_Join8                       ; [66 29] jr Z,0x2922e8
+	jr	z, HDAE5000_CopyFdSongToHd_Join8
 	ld	wa, (xsp+64)
 	bit	0x06, wa
-	jr z, HDAE5000_CopyFdSongToHd_Join8                       ; [66 21] jr Z,0x2922e8
+	jr	z, HDAE5000_CopyFdSongToHd_Join8
 	ld	wa, (xsp+54)
 	ld	bc, (xsp+52)
 	ld xde, (xsp + 0x30)
@@ -11811,16 +11811,16 @@ HDAE5000_CopyFdSongToHd_Join7:
 	ld (xsp + 0x04), hl
 	ld	wa, (xsp+4)
 	cp	wa, 0xffff
-	jr nz, HDAE5000_CopyFdSongToHd_Join8                      ; [6e 09] jr NZ,0x2922e8
+	jr	nz, HDAE5000_CopyFdSongToHd_Join8
 	ld	wa, (xsp+54)
 	ld	bc, (xsp+52)
 	calr	HDAE5000_DeleteSongPart_Rcm
 HDAE5000_CopyFdSongToHd_Join8:
 	cpw	(xsp+4), 0xffff
-	jr z, HDAE5000_CopyFdSongToHd_Join9                       ; [66 29] jr Z,0x292318
+	jr	z, HDAE5000_CopyFdSongToHd_Join9
 	ld	wa, (xsp+64)
 	bit	0x07, wa
-	jr z, HDAE5000_CopyFdSongToHd_Join9                       ; [66 21] jr Z,0x292318
+	jr	z, HDAE5000_CopyFdSongToHd_Join9
 	ld	wa, (xsp+54)
 	ld	bc, (xsp+52)
 	ld xde, (xsp + 0x30)
@@ -11828,16 +11828,16 @@ HDAE5000_CopyFdSongToHd_Join8:
 	ld (xsp + 0x04), hl
 	ld	wa, (xsp+4)
 	cp	wa, 0xffff
-	jr nz, HDAE5000_CopyFdSongToHd_Join9                      ; [6e 09] jr NZ,0x292318
+	jr	nz, HDAE5000_CopyFdSongToHd_Join9
 	ld	wa, (xsp+54)
 	ld	bc, (xsp+52)
 	calr	HDAE5000_DeleteSongPart_Md
 HDAE5000_CopyFdSongToHd_Join9:
 	cpw	(xsp+4), 0xffff
-	jr z, HDAE5000_CopyFdSongToHd_Join10                       ; [66 29] jr Z,0x292348
+	jr	z, HDAE5000_CopyFdSongToHd_Join10
 	ld	wa, (xsp+64)
 	bit	0x08, wa
-	jr z, HDAE5000_CopyFdSongToHd_Join10                       ; [66 21] jr Z,0x292348
+	jr	z, HDAE5000_CopyFdSongToHd_Join10
 	ld	wa, (xsp+54)
 	ld	bc, (xsp+52)
 	ld xde, (xsp + 0x30)
@@ -11845,13 +11845,13 @@ HDAE5000_CopyFdSongToHd_Join9:
 	ld (xsp + 0x04), hl
 	ld	wa, (xsp+4)
 	cp	wa, 0xffff
-	jr nz, HDAE5000_CopyFdSongToHd_Join10                      ; [6e 09] jr NZ,0x292348
+	jr	nz, HDAE5000_CopyFdSongToHd_Join10
 	ld	wa, (xsp+54)
 	ld	bc, (xsp+52)
 	calr	HDAE5000_DeleteSongPart_Tlx
 HDAE5000_CopyFdSongToHd_Join10:
 	cpw	(xsp+4), 0xffff
-	jrl z, HDAE5000_CopyFdSongToHd_Skip2                      ; [76 d1 00] jrl Z,0x292421
+	jrl	z, HDAE5000_CopyFdSongToHd_Skip2
 	pushw 0x001a
 	pushw 0x0020
 	lda	xwa, (xsp+24)
@@ -11877,14 +11877,14 @@ HDAE5000_CopyFdSongToHd_Join10:
 	ld_sril	xix, (xde + HamaFn_fopen_ext)
 	call	(xix)
 	cp	hl, 0:i3
-	jr lt, HDAE5000_CopyFdSongToHd_Skip                      ; [61 1b] jr LT,0x2923ba
+	jr	lt, HDAE5000_CopyFdSongToHd_Skip
 	lda	xwa, (xsp+20)
 	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xbc, (xbc + WS_HamaFnTable)
 	ld_sril	xhl, (xbc + HamaFn_fread_ext)
 	ld	xbc, 0x0000001a
 	call	(xhl)
-	jr t, HDAE5000_CopyFdSongToHd_Join11                       ; [68 14] jr T,0x2923ce
+	jr	t, HDAE5000_CopyFdSongToHd_Join11
 HDAE5000_CopyFdSongToHd_Skip:
 	pushw 0x0006
 	ld xwa, (xsp + 0x32)
@@ -11919,7 +11919,7 @@ HDAE5000_CopyFdSongToHd_Join11:
 	call HDAE5000_StrNCpy
 	lda	xsp, (xsp+10)
 	call HDAE5000_HD_WriteTables_Status
-	jr t, HDAE5000_CopyFdSongToHd_Join12                       ; [68 12] jr T,0x292433
+	jr	t, HDAE5000_CopyFdSongToHd_Join12
 HDAE5000_CopyFdSongToHd_Skip2:
 	pushw 0x0000
 	pushm	(xsp+62)
@@ -11931,7 +11931,7 @@ HDAE5000_CopyFdSongToHd_Join12:
 	cpw	(xsp+60), 0x0001
 	call	nz, (HDAE5000_ATA_Standby_Status:24)
 	cpw	(xsp+62), 0x0001
-	jr nz, HDAE5000_CopyFdSongToHd_Join13                      ; [6e 11] jr NZ,0x292455
+	jr	nz, HDAE5000_CopyFdSongToHd_Join13
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_RootFnTable)
 	ld	xhl, (xwa + RootFn_WakeUpMainTask)
@@ -11945,7 +11945,7 @@ HDAE5000_CopyFdSongToHd_Join13:
 	ld	xwa, (xwa + WS_HamaFnTable)
 	ld_sril	xhl, (xwa + HamaFn_EditSwRefresh)
 	call	(xhl)
-	jr t, HDAE5000_CopyFdSongToHd_Done                       ; [68 05] jr T,0x29247e
+	jr	t, HDAE5000_CopyFdSongToHd_Done
 HDAE5000_CopyFdSongToHd_Skip3:
 	ldw (xsp + 0x04), 65535
 HDAE5000_CopyFdSongToHd_Done:
@@ -14330,7 +14330,7 @@ HDAE5000_HD_StoreTables:	; 0x293E2E (1093 bytes)
 	call HDAE5000_HD_WriteTables_Status
 	or	iz, hl
 	cpw	(xsp+2), 0x0001
-	jr z, HDAE5000_HD_StoreTables_Join                        ; [66 06] jr Z,0x293e60
+	jr	z, HDAE5000_HD_StoreTables_Join
 	call HDAE5000_ATA_Standby_Status
 	or	iz, hl
 HDAE5000_HD_StoreTables_Join:
@@ -14364,7 +14364,7 @@ HDAE5000_HD_LoadTables:
 	call HDAE5000_HD_ReadTables_Status
 	or	iz, hl
 	cpw	(xsp+2), 0x0001
-	jr z, HDAE5000_HD_LoadTables_Join                        ; [66 06] jr Z,0x293eba
+	jr	z, HDAE5000_HD_LoadTables_Join
 	call HDAE5000_ATA_Standby_Status
 	or	iz, hl
 HDAE5000_HD_LoadTables_Join:
@@ -14398,7 +14398,7 @@ HDAE5000_HD_RestoreSettings:
 	call HDAE5000_HD_LoadSettings
 	or	iz, hl
 	cpw	(xsp+2), 0x0001
-	jr z, HDAE5000_HD_RestoreSettings_Join                        ; [66 06] jr Z,0x293f14
+	jr	z, HDAE5000_HD_RestoreSettings_Join
 	call HDAE5000_ATA_Standby_Status
 	or	iz, hl
 HDAE5000_HD_RestoreSettings_Join:
@@ -14432,7 +14432,7 @@ HDAE5000_HD_StoreSettings:
 	call HDAE5000_HD_SaveSettings
 	or	iz, hl
 	cpw	(xsp+2), 0x0001
-	jr z, HDAE5000_HD_StoreSettings_Join                        ; [66 06] jr Z,0x293f6e
+	jr	z, HDAE5000_HD_StoreSettings_Join
 	call HDAE5000_ATA_Standby_Status
 	or	iz, hl
 HDAE5000_HD_StoreSettings_Join:
@@ -14461,9 +14461,9 @@ HDAE5000_RcmStream_Read:
 	ld (xsp + 0x0c), xbc
 	ld	bc, (HDAE5000_RAM_HdStreamBufferEnd:24)
 	cp	bc, 1:i3
-	jr z, HDAE5000_RcmStream_Read_Skip                        ; [66 59] jr Z,0x293fff
+	jr	z, HDAE5000_RcmStream_Read_Skip
 	cp	bc, 0:i3
-	jrl nz, HDAE5000_RcmStream_Read_Skip2                      ; [7e a8 00] jrl NZ,0x294053
+	jrl	nz, HDAE5000_RcmStream_Read_Skip2
 	ld (xsp + 0x04), xwa
 	ld xwa, (xsp + 0x0c)
 	ld (xsp + 0x08), xwa
@@ -14486,7 +14486,7 @@ HDAE5000_RcmStream_Read:
 	call HDAE5000_HD_ReadFile
 	ld	(0x238f22), hl
 	ldw	(HDAE5000_RAM_HdStreamBufferEnd:24), 1
-	jr t, HDAE5000_RcmStream_Read_Done                        ; [68 62] jr T,0x294061
+	jr	t, HDAE5000_RcmStream_Read_Done
 HDAE5000_RcmStream_Read_Skip:
 	ld (xsp + 0x04), xwa
 	ld xwa, (xsp + 0x0c)
@@ -14510,7 +14510,7 @@ HDAE5000_RcmStream_Read_Skip:
 	call HDAE5000_HD_ReadFileNext
 	ld	(0x238f22), hl
 	ldw	(HDAE5000_RAM_HdStreamBufferEnd:24), 1
-	jr t, HDAE5000_RcmStream_Read_Done                        ; [68 0e] jr T,0x294061
+	jr	t, HDAE5000_RcmStream_Read_Done
 HDAE5000_RcmStream_Read_Skip2:
 	ldw	(0x238F22:24), 65535
 	ldw	(HDAE5000_RAM_HdStreamBufferEnd:24), 0
@@ -14531,13 +14531,13 @@ HDAE5000_RcmStream_Write:
 	ld (xsp + 0x06), xbc
 	ld	bc, (HDAE5000_RAM_HdStreamBufferEnd:24)
 	cp	bc, 2:i3
-	jr z, HDAE5000_RcmStream_Write_Skip2                        ; [66 62] jr Z,0x2940da
+	jr	z, HDAE5000_RcmStream_Write_Skip2
 	cp	bc, 0:i3
-	jrl nz, HDAE5000_RcmStream_Write_Skip4                      ; [7e ba 00] jrl NZ,0x294137
+	jrl	nz, HDAE5000_RcmStream_Write_Skip4
 	ld xbc, (xsp + 0x06)
 	calr	HDAE5000_HD_WriteStream
 	cp	hl, 0xffff
-	jr z, HDAE5000_RcmStream_Write_Skip                        ; [66 42] jr Z,0x2940cb
+	jr	z, HDAE5000_RcmStream_Write_Skip
 	ldw (xsp + 0x04), 0
 	ld	wa, (0x238F20:24)
 	extz xwa
@@ -14554,18 +14554,18 @@ HDAE5000_RcmStream_Write:
 	add	xwa, xhl
 	ld	(xwa), 0x01
 	ldw	(HDAE5000_RAM_HdStreamBufferEnd:24), 2
-	jr t, HDAE5000_RcmStream_Write_Join                        ; [68 05] jr T,0x2940d0
+	jr	t, HDAE5000_RcmStream_Write_Join
 HDAE5000_RcmStream_Write_Skip:
 	ldw (xsp + 0x04), 65535
 HDAE5000_RcmStream_Write_Join:
 	ld	wa, (xsp+4)
 	ld	(0x238f22), wa
-	jr t, HDAE5000_RcmStream_Write_Done                        ; [68 6b] jr T,0x294145
+	jr	t, HDAE5000_RcmStream_Write_Done
 HDAE5000_RcmStream_Write_Skip2:
 	ld xbc, (xsp + 0x06)
 	calr	HDAE5000_HD_WriteStream
 	cp	hl, 0xffff
-	jr z, HDAE5000_RcmStream_Write_Skip3                        ; [66 42] jr Z,0x294128
+	jr	z, HDAE5000_RcmStream_Write_Skip3
 	ldw (xsp + 0x04), 0
 	ld	wa, (0x238F20:24)
 	extz xwa
@@ -14582,13 +14582,13 @@ HDAE5000_RcmStream_Write_Skip2:
 	add	xwa, xhl
 	ld	(xwa), 0x01
 	ldw	(HDAE5000_RAM_HdStreamBufferEnd:24), 2
-	jr t, HDAE5000_RcmStream_Write_Join2                        ; [68 05] jr T,0x29412d
+	jr	t, HDAE5000_RcmStream_Write_Join2
 HDAE5000_RcmStream_Write_Skip3:
 	ldw (xsp + 0x04), 65535
 HDAE5000_RcmStream_Write_Join2:
 	ld	wa, (xsp+4)
 	ld	(0x238f22), wa
-	jr t, HDAE5000_RcmStream_Write_Done                        ; [68 0e] jr T,0x294145
+	jr	t, HDAE5000_RcmStream_Write_Done
 HDAE5000_RcmStream_Write_Skip4:
 	ldw	(0x238F22:24), 65535
 	ldw	(HDAE5000_RAM_HdStreamBufferEnd:24), 0
@@ -14624,9 +14624,9 @@ HDAE5000_HD_GetBlockInfo:
 	; records, "FEB"); 2: 0x2257B2, 144, 120, 32 ("FLS").  Callers: PC-link
 	; services 4-6 (SendInfosAbout{Dir,FileSystem,Fls}Block).
 	cp	wa, 2:i3
-	jr z, HDAE5000_HD_GetBlockInfo_Skip2                        ; [66 2c] jr Z,0x294195
+	jr	z, HDAE5000_HD_GetBlockInfo_Skip2
 	cp	wa, 1:i3
-	jr z, HDAE5000_HD_GetBlockInfo_Skip                        ; [66 16] jr Z,0x294183
+	jr	z, HDAE5000_HD_GetBlockInfo_Skip
 	cp	wa, 0:i3
 	ret nz
 
@@ -14667,7 +14667,7 @@ HDAE5000_HD_GetSongInfo:
 	calr	HDAE5000_Song_PartMask
 	ld	wa, hl
 	cp	wa, 0xffff
-	jrl z, HDAE5000_HD_GetSongInfo_Epilogue                       ; [76 a5 00] jrl Z,0x29426f
+	jrl	z, HDAE5000_HD_GetSongInfo_Epilogue
 	ld xwa, (xsp + 0x04)
 	ld (xwa), hl
 	pushw 0x0010
@@ -14953,7 +14953,7 @@ HDAE5000_PPORT_Svc02_TurnHdMotorOff:
 	ld	iz, 0:i3
 	call HDAE5000_ATA_Standby_Status
 	cp	hl, 0xffff
-	jr nz, HDAE5000_PPORT_Svc02_TurnHdMotorOff_Join                       ; [6e 02] jr NZ,0x29445d
+	jr	nz, HDAE5000_PPORT_Svc02_TurnHdMotorOff_Join
 	ld	iz, 1:i3
 HDAE5000_PPORT_Svc02_TurnHdMotorOff_Join:
 	lda xwa, (HDAE5000_PPORT_Svc02_TurnHdMotorOff_Str_TurnHdMotorOff:24)
@@ -15224,7 +15224,7 @@ HDAE5000_PPORT_Svc07_ReadDirBlockFromHd:
 	ld	wa, 1:i3
 	call HDAE5000_HD_LoadTables
 	cp	hl, 0xffff
-	jr nz, HDAE5000_PPORT_Svc07_ReadDirBlockFromHd_Join                       ; [6e 02] jr NZ,0x294746
+	jr	nz, HDAE5000_PPORT_Svc07_ReadDirBlockFromHd_Join
 	ld	iz, 1:i3
 HDAE5000_PPORT_Svc07_ReadDirBlockFromHd_Join:
 	lda xwa, (HDAE5000_PPORT_Svc07_ReadDirBlockFromHd_Str_ReadDirBlockFromHd:24)
@@ -15245,7 +15245,7 @@ HDAE5000_PPORT_Svc08_ReadFileBlockFromHd:
 	ld	wa, 1:i3
 	call HDAE5000_HD_LoadTables
 	cp	hl, 0xffff
-	jr nz, HDAE5000_PPORT_Svc08_ReadFileBlockFromHd_Join                       ; [6e 02] jr NZ,0x29476b
+	jr	nz, HDAE5000_PPORT_Svc08_ReadFileBlockFromHd_Join
 	ld	iz, 1:i3
 HDAE5000_PPORT_Svc08_ReadFileBlockFromHd_Join:
 	lda xwa, (HDAE5000_PPORT_Svc08_ReadFileBlockFromHd_Str_ReadFileBlockFromHd:24)
@@ -15266,7 +15266,7 @@ HDAE5000_PPORT_Svc09_ReadFlsBlockFromHd:
 	ld	wa, 1:i3
 	call HDAE5000_HD_LoadTables
 	cp	hl, 0xffff
-	jr nz, HDAE5000_PPORT_Svc09_ReadFlsBlockFromHd_Join                       ; [6e 02] jr NZ,0x294790
+	jr	nz, HDAE5000_PPORT_Svc09_ReadFlsBlockFromHd_Join
 	ld	iz, 1:i3
 HDAE5000_PPORT_Svc09_ReadFlsBlockFromHd_Join:
 	lda xwa, (HDAE5000_PPORT_Svc09_ReadFlsBlockFromHd_Str_ReadFlsBlockFromHd:24)
@@ -15287,7 +15287,7 @@ HDAE5000_PPORT_Svc10_WriteDirBlockToHd:
 	ld	wa, 1:i3
 	call HDAE5000_HD_StoreTables
 	cp	hl, 0xffff
-	jr nz, HDAE5000_PPORT_Svc10_WriteDirBlockToHd_Join                       ; [6e 02] jr NZ,0x2947b5
+	jr	nz, HDAE5000_PPORT_Svc10_WriteDirBlockToHd_Join
 	ld	iz, 1:i3
 HDAE5000_PPORT_Svc10_WriteDirBlockToHd_Join:
 	lda xwa, (HDAE5000_PPORT_Svc10_WriteDirBlockToHd_Str_WriteDirBlockToHd:24)
@@ -15308,7 +15308,7 @@ HDAE5000_PPORT_Svc11_WriteFileSystemBlockToHd:
 	ld	wa, 1:i3
 	call HDAE5000_HD_StoreTables
 	cp	hl, 0xffff
-	jr nz, HDAE5000_PPORT_Svc11_WriteFileSystemBlockToHd_Join                       ; [6e 02] jr NZ,0x2947da
+	jr	nz, HDAE5000_PPORT_Svc11_WriteFileSystemBlockToHd_Join
 	ld	iz, 1:i3
 HDAE5000_PPORT_Svc11_WriteFileSystemBlockToHd_Join:
 	lda xwa, (HDAE5000_PPORT_Svc11_WriteFileSystemBlockToHd_Str_WriteFileSystemBlockToHd:24)
@@ -15329,7 +15329,7 @@ HDAE5000_PPORT_Svc12_WriteFlsBlockToHd:
 	ld	wa, 1:i3
 	call HDAE5000_HD_StoreTables
 	cp	hl, 0xffff
-	jr nz, HDAE5000_PPORT_Svc12_WriteFlsBlockToHd_Join                       ; [6e 02] jr NZ,0x2947ff
+	jr	nz, HDAE5000_PPORT_Svc12_WriteFlsBlockToHd_Join
 	ld	iz, 1:i3
 HDAE5000_PPORT_Svc12_WriteFlsBlockToHd_Join:
 	lda xwa, (HDAE5000_PPORT_Svc12_WriteFlsBlockToHd_Str_WriteFlsBlockToHd:24)
@@ -15496,7 +15496,7 @@ HDAE5000_PPORT_Svc13_SendInfosAboutSong:
 	ld	bc, (xsp+130)
 	call HDAE5000_HD_GetSongInfo
 	cp	hl, 0xffff
-	jr z, HDAE5000_PPORT_Svc13_SendInfosAboutSong_Join                        ; [66 7a] jr Z,0x294acd
+	jr	z, HDAE5000_PPORT_Svc13_SendInfosAboutSong_Join
 	ld	wa, (xsp+76)
 	ld	(0x238f2e), wa
 	pushw 0x0010
@@ -15573,7 +15573,7 @@ HDAE5000_PPORT_Svc14_LoadSongFromHdToMemory:
 	ld	de, (0x238F2E:24)
 	call HDAE5000_LoadSong
 	cp	hl, 0xffff
-	jr nz, HDAE5000_PPORT_Svc14_LoadSongFromHdToMemory_Join                       ; [6e 02] jr NZ,0x294b3b
+	jr	nz, HDAE5000_PPORT_Svc14_LoadSongFromHdToMemory_Join
 	ld	iz, 1:i3
 HDAE5000_PPORT_Svc14_LoadSongFromHdToMemory_Join:
 	lda xwa, (HDAE5000_PPORT_Svc14_LoadSongFromHdToMemory_Str_LoadSongFromHdToMemory:24)
@@ -15597,7 +15597,7 @@ HDAE5000_PPORT_Svc15_SaveSongInMemoryToHd:
 	pushw 0x0001
 	call HDAE5000_SaveSong
 	cp	hl, 0xffff
-	jr nz, HDAE5000_PPORT_Svc15_SaveSongInMemoryToHd_Join                       ; [6e 02] jr NZ,0x294b6e
+	jr	nz, HDAE5000_PPORT_Svc15_SaveSongInMemoryToHd_Join
 	ld	iz, 1:i3
 HDAE5000_PPORT_Svc15_SaveSongInMemoryToHd_Join:
 	lda xwa, (HDAE5000_PPORT_Svc15_SaveSongInMemoryToHd_Str_SaveSongInMemoryToHd:24)
@@ -15615,7 +15615,7 @@ HDAE5000_PPORT_Svc16_InitWholeSongInMemory:
 	; "InitWholeSongInMemory".
 	ld	wa, (0x238F2E:24)
 	bit	0x00, wa
-	jr z, HDAE5000_PPORT_Svc16_InitWholeSongInMemory_Join                        ; [66 11] jr Z,0x294b9d
+	jr	z, HDAE5000_PPORT_Svc16_InitWholeSongInMemory_Join
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_HamaFnTable)
 	ld xhl, (xwa + HamaFn_PostLswLoad)                    ; ld XHL,(XWA+0x10)
@@ -15624,7 +15624,7 @@ HDAE5000_PPORT_Svc16_InitWholeSongInMemory:
 HDAE5000_PPORT_Svc16_InitWholeSongInMemory_Join:
 	ld	wa, (0x238F2E:24)
 	bit	0x01, wa
-	jr z, HDAE5000_PPORT_Svc16_InitWholeSongInMemory_Join2                        ; [66 11] jr Z,0x294bb8
+	jr	z, HDAE5000_PPORT_Svc16_InitWholeSongInMemory_Join2
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_HamaFnTable)
 	ld xhl, (xwa + HamaFn_PostPmLoad)                    ; ld XHL,(XWA+0x20)
@@ -15633,7 +15633,7 @@ HDAE5000_PPORT_Svc16_InitWholeSongInMemory_Join:
 HDAE5000_PPORT_Svc16_InitWholeSongInMemory_Join2:
 	ld	wa, (0x238F2E:24)
 	bit	0x02, wa
-	jr z, HDAE5000_PPORT_Svc16_InitWholeSongInMemory_Join3                        ; [66 2c] jr Z,0x294bee
+	jr	z, HDAE5000_PPORT_Svc16_InitWholeSongInMemory_Join3
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_HamaFnTable)
 	ld xhl, (xwa + HamaFn_SeqLoadPost)                    ; ld XHL,(XWA+0x30)
@@ -15649,7 +15649,7 @@ HDAE5000_PPORT_Svc16_InitWholeSongInMemory_Join2:
 HDAE5000_PPORT_Svc16_InitWholeSongInMemory_Join3:
 	ld	wa, (0x238F2E:24)
 	bit	0x03, wa
-	jr z, HDAE5000_PPORT_Svc16_InitWholeSongInMemory_Join4                        ; [66 11] jr Z,0x294c09
+	jr	z, HDAE5000_PPORT_Svc16_InitWholeSongInMemory_Join4
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_HamaFnTable)
 	ld xhl, (xwa + HamaFn_cmp_ld_ato)                    ; ld XHL,(XWA+0x40)
@@ -15658,7 +15658,7 @@ HDAE5000_PPORT_Svc16_InitWholeSongInMemory_Join3:
 HDAE5000_PPORT_Svc16_InitWholeSongInMemory_Join4:
 	ld	wa, (0x238F2E:24)
 	bit	0x04, wa
-	jr z, HDAE5000_PPORT_Svc16_InitWholeSongInMemory_Join5                        ; [66 11] jr Z,0x294c24
+	jr	z, HDAE5000_PPORT_Svc16_InitWholeSongInMemory_Join5
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_HamaFnTable)
 	ld xhl, (xwa + HamaFn_PostTmLoad)                    ; ld XHL,(XWA+0x50)
@@ -15667,7 +15667,7 @@ HDAE5000_PPORT_Svc16_InitWholeSongInMemory_Join4:
 HDAE5000_PPORT_Svc16_InitWholeSongInMemory_Join5:
 	ld	wa, (0x238F2E:24)
 	bit	0x05, wa
-	jr z, HDAE5000_PPORT_Svc16_InitWholeSongInMemory_Join6                        ; [66 11] jr Z,0x294c3f
+	jr	z, HDAE5000_PPORT_Svc16_InitWholeSongInMemory_Join6
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_HamaFnTable)
 	ld xhl, (xwa + HamaFn_msp_ld_ato)                    ; ld XHL,(XWA+0x60)
@@ -15676,7 +15676,7 @@ HDAE5000_PPORT_Svc16_InitWholeSongInMemory_Join5:
 HDAE5000_PPORT_Svc16_InitWholeSongInMemory_Join6:
 	ld	wa, (0x238F2E:24)
 	bit	0x07, wa
-	jr z, HDAE5000_PPORT_Svc16_InitWholeSongInMemory_Join7                        ; [66 11] jr Z,0x294c5a
+	jr	z, HDAE5000_PPORT_Svc16_InitWholeSongInMemory_Join7
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_HamaFnTable)
 	ld xhl, (xwa + HamaFn_PostMidiLoad)                    ; ld XHL,(XWA+0x70)
@@ -15697,7 +15697,7 @@ HDAE5000_PPORT_Svc17_FormatHd:
 	ld	wa, 0:i3
 	call HDAE5000_HD_FormatDrive
 	cp	hl, 0:i3
-	jr z, HDAE5000_PPORT_Svc17_FormatHd_Join                        ; [66 02] jr Z,0x294c79
+	jr	z, HDAE5000_PPORT_Svc17_FormatHd_Join
 	ld	iz, 1:i3
 HDAE5000_PPORT_Svc17_FormatHd_Join:
 	lda xwa, (HDAE5000_PPORT_Svc17_FormatHd_Str_FormatHd:24)
@@ -15752,7 +15752,7 @@ HDAE5000_PPORT_Svc20_PreWholeSongInMemory:
 	; "PreWholeSongInMemory".
 	ld	wa, (0x238F2E:24)
 	bit	0x00, wa
-	jr z, HDAE5000_PPORT_Svc20_PreWholeSongInMemory_Join                        ; [66 0f] jr Z,0x294cfb
+	jr	z, HDAE5000_PPORT_Svc20_PreWholeSongInMemory_Join
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_HamaFnTable)
 	ld xhl, (xwa + HamaFn_PreLswLoad)                    ; ld XHL,(XWA+0x0c)
@@ -15760,7 +15760,7 @@ HDAE5000_PPORT_Svc20_PreWholeSongInMemory:
 HDAE5000_PPORT_Svc20_PreWholeSongInMemory_Join:
 	ld	wa, (0x238F2E:24)
 	bit	0x01, wa
-	jr z, HDAE5000_PPORT_Svc20_PreWholeSongInMemory_Join2                        ; [66 0f] jr Z,0x294d14
+	jr	z, HDAE5000_PPORT_Svc20_PreWholeSongInMemory_Join2
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_HamaFnTable)
 	ld xhl, (xwa + HamaFn_PrePmLoad)                    ; ld XHL,(XWA+0x1c)
@@ -15768,7 +15768,7 @@ HDAE5000_PPORT_Svc20_PreWholeSongInMemory_Join:
 HDAE5000_PPORT_Svc20_PreWholeSongInMemory_Join2:
 	ld	wa, (0x238F2E:24)
 	bit	0x02, wa
-	jr z, HDAE5000_PPORT_Svc20_PreWholeSongInMemory_Join3                        ; [66 0f] jr Z,0x294d2d
+	jr	z, HDAE5000_PPORT_Svc20_PreWholeSongInMemory_Join3
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_HamaFnTable)
 	ld xhl, (xwa + HamaFn_SeqLoadPre)                    ; ld XHL,(XWA+0x2c)
@@ -15776,7 +15776,7 @@ HDAE5000_PPORT_Svc20_PreWholeSongInMemory_Join2:
 HDAE5000_PPORT_Svc20_PreWholeSongInMemory_Join3:
 	ld	wa, (0x238F2E:24)
 	bit	0x03, wa
-	jr z, HDAE5000_PPORT_Svc20_PreWholeSongInMemory_Join4                        ; [66 0f] jr Z,0x294d46
+	jr	z, HDAE5000_PPORT_Svc20_PreWholeSongInMemory_Join4
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_HamaFnTable)
 	ld xhl, (xwa + HamaFn_cmp_ld_mae)                    ; ld XHL,(XWA+0x3c)
@@ -15784,7 +15784,7 @@ HDAE5000_PPORT_Svc20_PreWholeSongInMemory_Join3:
 HDAE5000_PPORT_Svc20_PreWholeSongInMemory_Join4:
 	ld	wa, (0x238F2E:24)
 	bit	0x04, wa
-	jr z, HDAE5000_PPORT_Svc20_PreWholeSongInMemory_Join5                        ; [66 0f] jr Z,0x294d5f
+	jr	z, HDAE5000_PPORT_Svc20_PreWholeSongInMemory_Join5
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_HamaFnTable)
 	ld xhl, (xwa + HamaFn_PreTmLoad)                    ; ld XHL,(XWA+0x4c)
@@ -15792,7 +15792,7 @@ HDAE5000_PPORT_Svc20_PreWholeSongInMemory_Join4:
 HDAE5000_PPORT_Svc20_PreWholeSongInMemory_Join5:
 	ld	wa, (0x238F2E:24)
 	bit	0x05, wa
-	jr z, HDAE5000_PPORT_Svc20_PreWholeSongInMemory_Join6                        ; [66 0f] jr Z,0x294d78
+	jr	z, HDAE5000_PPORT_Svc20_PreWholeSongInMemory_Join6
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_HamaFnTable)
 	ld xhl, (xwa + HamaFn_msp_ld_mae)                    ; ld XHL,(XWA+0x5c)
@@ -15800,7 +15800,7 @@ HDAE5000_PPORT_Svc20_PreWholeSongInMemory_Join5:
 HDAE5000_PPORT_Svc20_PreWholeSongInMemory_Join6:
 	ld	wa, (0x238F2E:24)
 	bit	0x07, wa
-	jr z, HDAE5000_PPORT_Svc20_PreWholeSongInMemory_Join7                        ; [66 0f] jr Z,0x294d91
+	jr	z, HDAE5000_PPORT_Svc20_PreWholeSongInMemory_Join7
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_HamaFnTable)
 	ld xhl, (xwa + HamaFn_PreMidiLoad)                    ; ld XHL,(XWA+0x6c)
@@ -15825,10 +15825,10 @@ HDAE5000_PPORT_Svc21_WriteOpenHD:
 	ld	wa, (0x238F2E:24)
 	ld	(xsp+6), 0x00
 	cp	(xsp+6), 0x09
-	jrl nc, HDAE5000_PPORT_Svc21_WriteOpenHD_Done                      ; [7f f8 00] jrl NC,0x294ec0
+	jrl	nc, HDAE5000_PPORT_Svc21_WriteOpenHD_Done
 HDAE5000_PPORT_Svc21_WriteOpenHD_Loop:
 	bit	0x00, wa
-	jrl z, HDAE5000_PPORT_Svc21_WriteOpenHD_Next                       ; [76 e5 00] jrl Z,0x294eb3
+	jrl	z, HDAE5000_PPORT_Svc21_WriteOpenHD_Next
 	ld	wa, (xsp+28)
 	extz xwa
 	ld	xbc, 0x0000004c
@@ -15850,7 +15850,7 @@ HDAE5000_PPORT_Svc21_WriteOpenHD_Loop:
 	add	xwa, xbc
 	call HDAE5000_HD_WriteOpen
 	cp	hl, 0xffff
-	jr z, HDAE5000_PPORT_Svc21_WriteOpenHD_Join                        ; [66 7f] jr Z,0x294e94
+	jr	z, HDAE5000_PPORT_Svc21_WriteOpenHD_Join
 	pushw 0x001a
 	lda xwa, (0x238f30:24)
 	push xwa
@@ -15900,12 +15900,12 @@ HDAE5000_PPORT_Svc21_WriteOpenHD_Join:
 	lda	xsp, (xsp+10)
 	lda	xwa, (xsp+8)
 	calr	HDAE5000_DebugTrace
-	jr t, HDAE5000_PPORT_Svc21_WriteOpenHD_Done                        ; [68 0d] jr T,0x294ec0
+	jr	t, HDAE5000_PPORT_Svc21_WriteOpenHD_Done
 HDAE5000_PPORT_Svc21_WriteOpenHD_Next:
 	srl	wa, 0x01
 	incm8	1, (xsp+6)
 	cp	(xsp+6), 0x09
-	jrl c, HDAE5000_PPORT_Svc21_WriteOpenHD_Loop                       ; [77 08 ff] jrl C,0x294dc8
+	jrl	c, HDAE5000_PPORT_Svc21_WriteOpenHD_Loop
 HDAE5000_PPORT_Svc21_WriteOpenHD_Done:
 	ld	hl, (xsp+4)
 	pop xiz
@@ -15921,11 +15921,11 @@ HDAE5000_PPORT_Svc22_WriteCloseHD:
 	ld	iz, 1:i3
 	call HDAE5000_HD_WriteClose
 	cp	hl, 0xffff
-	jr z, HDAE5000_PPORT_Svc22_WriteCloseHD_Join                        ; [66 0e] jr Z,0x294ee3
+	jr	z, HDAE5000_PPORT_Svc22_WriteCloseHD_Join
 	ld	wa, 1:i3
 	call HDAE5000_HD_StoreTables
 	cp	hl, 0xffff
-	jr z, HDAE5000_PPORT_Svc22_WriteCloseHD_Join                        ; [66 02] jr Z,0x294ee3
+	jr	z, HDAE5000_PPORT_Svc22_WriteCloseHD_Join
 	ld	iz, 0:i3
 HDAE5000_PPORT_Svc22_WriteCloseHD_Join:
 	lda xwa, (HDAE5000_PPORT_Svc22_WriteCloseHD_Str_WriteCloseHD:24)
@@ -15943,7 +15943,7 @@ HDAE5000_PPORT_Svc23_WriteFileHD:
 	ld	iz, 1:i3
 	call HDAE5000_HD_WriteStream
 	cp	hl, 0xffff
-	jr z, HDAE5000_PPORT_Svc23_WriteFileHD_Join                        ; [66 02] jr Z,0x294efe
+	jr	z, HDAE5000_PPORT_Svc23_WriteFileHD_Join
 	ld	iz, 0:i3
 HDAE5000_PPORT_Svc23_WriteFileHD_Join:
 	lda xwa, (HDAE5000_PPORT_Svc23_WriteFileHD_Str_WriteFileHD:24)
@@ -15967,10 +15967,10 @@ HDAE5000_PPORT_Svc24_ReadOpenHD:
 	ld	wa, (0x238F2E:24)
 	ldib_erp 0xfb, 0		; ld QIZH,0
 	cp_erpb 0xfb, 0x09		; cp QIZH,0x09
-	jr nc, HDAE5000_PPORT_Svc24_ReadOpenHD_Done                       ; [6f 62] jr NC,0x294f92
+	jr	nc, HDAE5000_PPORT_Svc24_ReadOpenHD_Done
 HDAE5000_PPORT_Svc24_ReadOpenHD_Loop:
 	bit	0x00, wa
-	jr z, HDAE5000_PPORT_Svc24_ReadOpenHD_Next                        ; [66 51] jr Z,0x294f86
+	jr	z, HDAE5000_PPORT_Svc24_ReadOpenHD_Next
 	ld	wa, (xsp+6)
 	extz xwa
 	ld	xbc, 0x0000004c
@@ -15993,12 +15993,12 @@ HDAE5000_PPORT_Svc24_ReadOpenHD_Loop:
 	ld	(0x238ffc), xwa
 	ld	(0x23A1A6:24), 1
 	ldw (xsp + 0x04), 0
-	jr t, HDAE5000_PPORT_Svc24_ReadOpenHD_Done                        ; [68 0c] jr T,0x294f92
+	jr	t, HDAE5000_PPORT_Svc24_ReadOpenHD_Done
 HDAE5000_PPORT_Svc24_ReadOpenHD_Next:
 	srl	wa, 0x01
 	incb_erp 0xfb, 1		; inc 1,QIZH
 	cp_erpb 0xfb, 0x09		; cp QIZH,0x09
-	jr c, HDAE5000_PPORT_Svc24_ReadOpenHD_Loop                        ; [67 9e] jr C,0x294f30
+	jr	c, HDAE5000_PPORT_Svc24_ReadOpenHD_Loop
 HDAE5000_PPORT_Svc24_ReadOpenHD_Done:
 	ld	hl, (xsp+4)
 	pop	qiz
@@ -16018,27 +16018,27 @@ HDAE5000_PPORT_Svc25_ReadFileHD:
 	lda xwa, (HDAE5000_PPORT_Svc25_ReadFileHD_Str_ReadFileHD:24)
 	calr	HDAE5000_DebugTrace
 	cp	(0x23A1A6:24), 1
-	jr nz, HDAE5000_PPORT_Svc25_ReadFileHD_Skip                       ; [6e 21] jr NZ,0x294fd9
+	jr	nz, HDAE5000_PPORT_Svc25_ReadFileHD_Skip
 	ld	(0x23A1A6:24), 2
 	ld	xwa, xiz
 	ld xbc, (xsp + 0x06)
 	ld	xde, (0x238ffc)
 	call HDAE5000_HD_ReadFile
 	cp	hl, 0xffff
-	jr z, HDAE5000_PPORT_Svc25_ReadFileHD_Done                        ; [66 30] jr Z,0x295002
+	jr	z, HDAE5000_PPORT_Svc25_ReadFileHD_Done
 	ldw (xsp + 0x04), 0
-	jr t, HDAE5000_PPORT_Svc25_ReadFileHD_Done                        ; [68 29] jr T,0x295002
+	jr	t, HDAE5000_PPORT_Svc25_ReadFileHD_Done
 HDAE5000_PPORT_Svc25_ReadFileHD_Skip:
 	cp	(0x23A1A6:24), 2
-	jr nz, HDAE5000_PPORT_Svc25_ReadFileHD_Skip2                       ; [6e 1b] jr NZ,0x294ffc
+	jr	nz, HDAE5000_PPORT_Svc25_ReadFileHD_Skip2
 	ld	xwa, xiz
 	ld xbc, (xsp + 0x06)
 	ld	xde, (0x238ffc)
 	call HDAE5000_HD_ReadFileNext
 	cp	hl, 0xffff
-	jr z, HDAE5000_PPORT_Svc25_ReadFileHD_Done                        ; [66 0d] jr Z,0x295002
+	jr	z, HDAE5000_PPORT_Svc25_ReadFileHD_Done
 	ldw (xsp + 0x04), 0
-	jr t, HDAE5000_PPORT_Svc25_ReadFileHD_Done                        ; [68 06] jr T,0x295002
+	jr	t, HDAE5000_PPORT_Svc25_ReadFileHD_Done
 HDAE5000_PPORT_Svc25_ReadFileHD_Skip2:
 	ld	(0x23A1A6:24), 0
 HDAE5000_PPORT_Svc25_ReadFileHD_Done:
@@ -19808,7 +19808,7 @@ HDAE5000_ATA_SoftReset_Status:
 	call HDAE5000_ATA_SoftReset
 	xor	hl, hl
 	cp	(HDAE5000_RAM_AtaError:24), 0
-	jr z, HDAE5000_ATA_SoftReset_Status_Epilogue                        ; [66 03] jr Z,0x297478
+	jr	z, HDAE5000_ATA_SoftReset_Status_Epilogue
 	ldw	hl, 0xffff
 HDAE5000_ATA_SoftReset_Status_Epilogue:
 	pop xiz
@@ -19838,7 +19838,7 @@ HDAE5000_ATA_Standby_Status:
 	call HDAE5000_ATA_Standby
 	xor	hl, hl
 	cp	(HDAE5000_RAM_AtaError:24), 0
-	jr z, HDAE5000_ATA_Standby_Status_Return                        ; [66 03] jr Z,0x2974c6
+	jr	z, HDAE5000_ATA_Standby_Status_Return
 	ldw	hl, 0xffff
 HDAE5000_ATA_Standby_Status_Return:
 	ret
@@ -21577,7 +21577,7 @@ HDAE5000_HD_Format_CompareLoop:
 	jp	z, (.LHD_Format_CompareLoop_Skip1:24)
 	ld	xwa, (xix+bc)
 	cp	xwa, (xiy+bc)
-	jr z, HDAE5000_HD_Format_CompareLoop_Skip                       ; [66 0a] jr Z,0x29875a
+	jr	z, HDAE5000_HD_Format_CompareLoop_Skip
 	ld	(HDAE5000_RAM_AtaError:24), 4
 	jp HDAE5000_HD_Format_Exit                             ; jp 0x29888a
 HDAE5000_HD_Format_CompareLoop_Skip:
@@ -21619,7 +21619,7 @@ HDAE5000_HD_Format_CompareLoop_Skip:
 	ld	xde, 0x00000200
 	call HDAE5000_ATA_ReadSector
 	cp	(HDAE5000_RAM_AtaError:24), 0
-	jr z, HDAE5000_HD_Format_CompareLoop_Skip2                       ; [66 0a] jr Z,0x298800
+	jr	z, HDAE5000_HD_Format_CompareLoop_Skip2
 	ld	(HDAE5000_RAM_AtaError:24), 7
 	jp HDAE5000_HD_Format_Exit                             ; jp 0x29888a
 HDAE5000_HD_Format_CompareLoop_Skip2:
@@ -23509,16 +23509,16 @@ HDAE5000_DoPrintf:
 	lda xsp, (xsp - 74)
 	push xiz
 	ldw (xsp + 0x04), 0
-	jrl t, HDAE5000_DoPrintf_NextChar                      ; [78 c4 08] jrl T,0x29a3b7
+	jrl	t, HDAE5000_DoPrintf_NextChar
 HDAE5000_DoPrintf_Loop:
 	cp	iz, 0x0025
-	jr z, HDAE5000_DoPrintf_Skip                       ; [66 0e] jr Z,0x299b07
+	jr	z, HDAE5000_DoPrintf_Skip
 	pushw iz                                ; push IZ
 	ld xwa, (xsp + 0x5c)
 	call	(xwa)
 	inc 2, xsp
 	incw	1, (xsp+4)
-	jrl t, HDAE5000_DoPrintf_NextChar                      ; [78 b0 08] jrl T,0x29a3b7
+	jrl	t, HDAE5000_DoPrintf_NextChar
 HDAE5000_DoPrintf_Skip:
 	ldw (xsp + 0x08), 0
 	ldw (xsp + 0x0a), 0
@@ -23532,17 +23532,17 @@ HDAE5000_DoPrintf_Loop2:
 	exts	iz
 	ld	wa, iz
 	cp	iz, 0x0030
-	jr z, HDAE5000_DoPrintf_Skip6                       ; [66 63] jr Z,0x299b96
+	jr	z, HDAE5000_DoPrintf_Skip6
 	cp	wa, 0x002d
-	jr z, HDAE5000_DoPrintf_Skip5                       ; [66 58] jr Z,0x299b91
+	jr	z, HDAE5000_DoPrintf_Skip5
 	cp	wa, 0x002b
-	jr z, HDAE5000_DoPrintf_Skip4                       ; [66 4d] jr Z,0x299b8c
+	jr	z, HDAE5000_DoPrintf_Skip4
 	cp	wa, 0x0023
-	jr z, HDAE5000_DoPrintf_Skip3                       ; [66 42] jr Z,0x299b87
+	jr	z, HDAE5000_DoPrintf_Skip3
 	cp	wa, 0x0020
-	jr z, HDAE5000_DoPrintf_Skip2                       ; [66 37] jr Z,0x299b82
+	jr	z, HDAE5000_DoPrintf_Skip2
 	cp	iz, 0x002a
-	jr nz, HDAE5000_DoPrintf_Next                      ; [6e 70] jr NZ,0x299bc1
+	jr	nz, HDAE5000_DoPrintf_Next
 	ld xbc, (xsp + 0x56)
 	ld	xwa, 2:i3
 	add	(xbc), xwa
@@ -23550,7 +23550,7 @@ HDAE5000_DoPrintf_Loop2:
 	ld	wa, (xwa-2)
 	ld (xsp + 0x08), wa
 	cpw	(xsp+8), 0x0000
-	jr ge, HDAE5000_DoPrintf_Join                      ; [69 0b] jr GE,0x299b72
+	jr	ge, HDAE5000_DoPrintf_Join
 	ld	wa, (xsp+8)
 	neg	wa
 	ld (xsp + 0x08), wa
@@ -23561,22 +23561,22 @@ HDAE5000_DoPrintf_Join:
 	ld (xsp + 0x52), xwa
 	ldfr_berp c, 0xf8		; ld IZL,C
 	exts	iz
-	jr t, HDAE5000_DoPrintf_Join2                       ; [68 50] jr T,0x299bd2
+	jr	t, HDAE5000_DoPrintf_Join2
 HDAE5000_DoPrintf_Skip2:
 	setm	2, (xsp+6)
-	jr t, HDAE5000_DoPrintf_Loop2                       ; [68 96] jr T,0x299b1d
+	jr	t, HDAE5000_DoPrintf_Loop2
 HDAE5000_DoPrintf_Skip3:
 	setm	3, (xsp+6)
-	jr t, HDAE5000_DoPrintf_Loop2                       ; [68 91] jr T,0x299b1d
+	jr	t, HDAE5000_DoPrintf_Loop2
 HDAE5000_DoPrintf_Skip4:
 	setm	0, (xsp+6)
-	jr t, HDAE5000_DoPrintf_Loop2                       ; [68 8c] jr T,0x299b1d
+	jr	t, HDAE5000_DoPrintf_Loop2
 HDAE5000_DoPrintf_Skip5:
 	setm	1, (xsp+6)
-	jr t, HDAE5000_DoPrintf_Loop2                       ; [68 87] jr T,0x299b1d
+	jr	t, HDAE5000_DoPrintf_Loop2
 HDAE5000_DoPrintf_Skip6:
 	ldw	(0x239486:24), 48
-	jrl t, HDAE5000_DoPrintf_Loop2                      ; [78 7d ff] jrl T,0x299b1d
+	jrl	t, HDAE5000_DoPrintf_Loop2
 HDAE5000_DoPrintf_Loop3:
 	ld	bc, iz
 	sub	bc, 0x0030
@@ -23594,10 +23594,10 @@ HDAE5000_DoPrintf_Next:
 	extz wa
 	lda xbc, (HDAE5000_CType_Table:24)
 	bit	2, (xbc+wa)
-	jr nz, HDAE5000_DoPrintf_Loop3                      ; [6e ce] jr NZ,0x299ba0
+	jr	nz, HDAE5000_DoPrintf_Loop3
 HDAE5000_DoPrintf_Join2:
 	cp	iz, 0x002e
-	jr nz, HDAE5000_DoPrintf_Join4                      ; [6e 72] jr NZ,0x299c4a
+	jr	nz, HDAE5000_DoPrintf_Join4
 	setm	4, (xsp+6)
 	ld xwa, (xsp + 0x52)
 	ld c, (xwa+)
@@ -23605,7 +23605,7 @@ HDAE5000_DoPrintf_Join2:
 	ldfr_berp c, 0xf8		; ld IZL,C
 	exts	iz
 	cp	iz, 0x002a
-	jr nz, HDAE5000_DoPrintf_Next2                      ; [6e 4a] jr NZ,0x299c39
+	jr	nz, HDAE5000_DoPrintf_Next2
 	ld xbc, (xsp + 0x56)
 	ld	xwa, 2:i3
 	add	(xbc), xwa
@@ -23613,7 +23613,7 @@ HDAE5000_DoPrintf_Join2:
 	ld	wa, (xwa-2)
 	ld (xsp + 0x0a), wa
 	cpw	(xsp+10), 0x0000
-	jr ge, HDAE5000_DoPrintf_Join3                      ; [69 03] jr GE,0x299c08
+	jr	ge, HDAE5000_DoPrintf_Join3
 	resm	4, (xsp+6)
 HDAE5000_DoPrintf_Join3:
 	ld xwa, (xsp + 0x52)
@@ -23621,7 +23621,7 @@ HDAE5000_DoPrintf_Join3:
 	ld (xsp + 0x52), xwa
 	ldfr_berp c, 0xf8		; ld IZL,C
 	exts	iz
-	jr t, HDAE5000_DoPrintf_Join4                       ; [68 32] jr T,0x299c4a
+	jr	t, HDAE5000_DoPrintf_Join4
 HDAE5000_DoPrintf_Loop4:
 	ld	bc, iz
 	sub	bc, 0x0030
@@ -23639,30 +23639,30 @@ HDAE5000_DoPrintf_Next2:
 	extz wa
 	lda xbc, (HDAE5000_CType_Table:24)
 	bit	2, (xbc+wa)
-	jr nz, HDAE5000_DoPrintf_Loop4                      ; [6e ce] jr NZ,0x299c18
+	jr	nz, HDAE5000_DoPrintf_Loop4
 HDAE5000_DoPrintf_Join4:
 	cp	iz, 0x0068
-	jr nz, HDAE5000_DoPrintf_Skip7                      ; [6e 13] jr NZ,0x299c63
+	jr	nz, HDAE5000_DoPrintf_Skip7
 	setm	5, (xsp+6)
 	ld xwa, (xsp + 0x52)
 	ld c, (xwa+)
 	ld (xsp + 0x52), xwa
 	ldfr_berp c, 0xf8		; ld IZL,C
 	exts	iz
-	jr t, HDAE5000_DoPrintf_Join5                       ; [68 30] jr T,0x299c93
+	jr	t, HDAE5000_DoPrintf_Join5
 HDAE5000_DoPrintf_Skip7:
 	cp	iz, 0x006c
-	jr nz, HDAE5000_DoPrintf_Skip8                      ; [6e 13] jr NZ,0x299c7c
+	jr	nz, HDAE5000_DoPrintf_Skip8
 	setm	6, (xsp+6)
 	ld xwa, (xsp + 0x52)
 	ld c, (xwa+)
 	ld (xsp + 0x52), xwa
 	ldfr_berp c, 0xf8		; ld IZL,C
 	exts	iz
-	jr t, HDAE5000_DoPrintf_Join5                       ; [68 17] jr T,0x299c93
+	jr	t, HDAE5000_DoPrintf_Join5
 HDAE5000_DoPrintf_Skip8:
 	cp	iz, 0x004c
-	jr nz, HDAE5000_DoPrintf_Join5                      ; [6e 11] jr NZ,0x299c93
+	jr	nz, HDAE5000_DoPrintf_Join5
 	setm	7, (xsp+6)
 	ld xwa, (xsp + 0x52)
 	ld c, (xwa+)
@@ -23672,18 +23672,18 @@ HDAE5000_DoPrintf_Skip8:
 HDAE5000_DoPrintf_Join5:
 	ld	wa, iz
 	cp	iz, 0x0047
-	jrl z, HDAE5000_DoPrintf_Case_Float                      ; [76 c4 06] jrl Z,0x29a360
+	jrl	z, HDAE5000_DoPrintf_Case_Float
 	cp	wa, 0x0045
-	jrl z, HDAE5000_DoPrintf_Case_Float                      ; [76 bd 06] jrl Z,0x29a360
+	jrl	z, HDAE5000_DoPrintf_Case_Float
 	cp	wa, 0x0058
-	jrl z, HDAE5000_DoPrintf_Case_Hex                      ; [76 de 03] jrl Z,0x29a088
+	jrl	z, HDAE5000_DoPrintf_Case_Hex
 	cp	wa, 0x0025
-	jr z, HDAE5000_DoPrintf_Case_Char                       ; [66 26] jr Z,0x299cd6
+	jr	z, HDAE5000_DoPrintf_Case_Char
 	sub	wa, 0x0063
 	cp	wa, 0:i3
-	jrl lt, HDAE5000_DoPrintf_NextChar                     ; [71 fe 06] jrl LT,0x29a3b7
+	jrl	lt, HDAE5000_DoPrintf_NextChar
 	cp	wa, 0x0015
-	jrl gt, HDAE5000_DoPrintf_NextChar                     ; [7a f7 06] jrl GT,0x29a3b7
+	jrl	gt, HDAE5000_DoPrintf_NextChar
 	add	wa, wa
 	lda xix, (HDAE5000_DoPrintf_ConvTable:24)
 	ld	wa, (xix+wa)
@@ -23692,8 +23692,8 @@ HDAE5000_DoPrintf_Join5:
 HDAE5000_DoPrintf_Case_Char:
 	ld	wa, (xsp+6)
 	bit	0x01, wa
-	jr z, HDAE5000_DoPrintf_Case_Char_Next                       ; [66 11] jr Z,0x299cef
-	jr t, HDAE5000_DoPrintf_Case_Char_Join                       ; [68 19] jr T,0x299cf9
+	jr	z, HDAE5000_DoPrintf_Case_Char_Next
+	jr	t, HDAE5000_DoPrintf_Case_Char_Join
 HDAE5000_DoPrintf_Case_Char_Loop:
 	incw	1, (xsp+4)
 	pushw	(0x239486:24)
@@ -23703,17 +23703,17 @@ HDAE5000_DoPrintf_Case_Char_Loop:
 HDAE5000_DoPrintf_Case_Char_Next:
 	decm	1, (xsp+8)
 	cpw	(xsp+8), 0x0000
-	jr gt, HDAE5000_DoPrintf_Case_Char_Loop                      ; [6a e7] jr GT,0x299ce0
+	jr	gt, HDAE5000_DoPrintf_Case_Char_Loop
 HDAE5000_DoPrintf_Case_Char_Join:
 	incw	1, (xsp+4)
 	cp	iz, 0x0063
-	jr nz, HDAE5000_DoPrintf_Case_Char_Skip                      ; [6e 0e] jr NZ,0x299d10
+	jr	nz, HDAE5000_DoPrintf_Case_Char_Skip
 	ld xbc, (xsp + 0x56)
 	ld	xwa, 2:i3
 	add	(xbc), xwa
 	ld xwa, (xbc)
 	pushm	(xwa-2)
-	jr t, HDAE5000_DoPrintf_Case_Char_Join2                       ; [68 03] jr T,0x299d13
+	jr	t, HDAE5000_DoPrintf_Case_Char_Join2
 HDAE5000_DoPrintf_Case_Char_Skip:
 	pushw 0x0025
 HDAE5000_DoPrintf_Case_Char_Join2:
@@ -23722,8 +23722,8 @@ HDAE5000_DoPrintf_Case_Char_Join2:
 	inc 2, xsp
 	ld	wa, (xsp+6)
 	bit	0x01, wa
-	jr nz, HDAE5000_DoPrintf_Case_Char_Next2                      ; [6e 10] jr NZ,0x299d32
-	jrl t, HDAE5000_DoPrintf_NextChar                      ; [78 92 06] jrl T,0x29a3b7
+	jr	nz, HDAE5000_DoPrintf_Case_Char_Next2
+	jrl	t, HDAE5000_DoPrintf_NextChar
 HDAE5000_DoPrintf_Case_Char_Loop2:
 	incw	1, (xsp+4)
 	pushw 0x0020
@@ -23733,8 +23733,8 @@ HDAE5000_DoPrintf_Case_Char_Loop2:
 HDAE5000_DoPrintf_Case_Char_Next2:
 	decm	1, (xsp+8)
 	cpw	(xsp+8), 0x0000
-	jr gt, HDAE5000_DoPrintf_Case_Char_Loop2                      ; [6a e9] jr GT,0x299d25
-	jrl t, HDAE5000_DoPrintf_NextChar                      ; [78 78 06] jrl T,0x29a3b7
+	jr	gt, HDAE5000_DoPrintf_Case_Char_Loop2
+	jrl	t, HDAE5000_DoPrintf_NextChar
 HDAE5000_DoPrintf_Case_String:
 	ld xbc, (xsp + 0x56)
 	ld	xwa, 4:i3
@@ -23747,20 +23747,20 @@ HDAE5000_DoPrintf_Case_String:
 	inc 4, xsp
 	ld	wa, (xsp+6)
 	bit	0x04, wa
-	jr z, HDAE5000_DoPrintf_Case_String_Join                       ; [66 05] jr Z,0x299d62
+	jr	z, HDAE5000_DoPrintf_Case_String_Join
 	cp	(xsp+10), hl
-	jr lt, HDAE5000_DoPrintf_Case_String_Skip                      ; [61 05] jr LT,0x299d67
+	jr	lt, HDAE5000_DoPrintf_Case_String_Skip
 HDAE5000_DoPrintf_Case_String_Join:
 	ld (xsp + 0x0a), hl
-	jr t, HDAE5000_DoPrintf_Case_String_Join2                       ; [68 03] jr T,0x299d6a
+	jr	t, HDAE5000_DoPrintf_Case_String_Join2
 HDAE5000_DoPrintf_Case_String_Skip:
 	ld	hl, (xsp+10)
 HDAE5000_DoPrintf_Case_String_Join2:
 	cp	hl, (xsp+8)
-	jr le, HDAE5000_DoPrintf_Case_String_Skip2                      ; [62 0a] jr LE,0x299d79
+	jr	le, HDAE5000_DoPrintf_Case_String_Skip2
 	ldw (xsp + 0x08), 0
 	add	(xsp+4), hl
-	jr t, HDAE5000_DoPrintf_Case_String_Join3                       ; [68 09] jr T,0x299d82
+	jr	t, HDAE5000_DoPrintf_Case_String_Join3
 HDAE5000_DoPrintf_Case_String_Skip2:
 	ld	wa, (xsp+8)
 	add	(xsp+4), wa
@@ -23768,8 +23768,8 @@ HDAE5000_DoPrintf_Case_String_Skip2:
 HDAE5000_DoPrintf_Case_String_Join3:
 	ld	wa, (xsp+6)
 	bit	0x01, wa
-	jr z, HDAE5000_DoPrintf_Case_String_Next                       ; [66 0e] jr Z,0x299d98
-	jr t, HDAE5000_DoPrintf_Case_String_Next2                       ; [68 2b] jr T,0x299db7
+	jr	z, HDAE5000_DoPrintf_Case_String_Next
+	jr	t, HDAE5000_DoPrintf_Case_String_Next2
 HDAE5000_DoPrintf_Case_String_Loop:
 	pushw	(0x239486:24)
 	ld xwa, (xsp + 0x5c)
@@ -23779,8 +23779,8 @@ HDAE5000_DoPrintf_Case_String_Next:
 	ld	wa, (xsp+8)
 	decm	1, (xsp+8)
 	cp	wa, 0:i3
-	jr nz, HDAE5000_DoPrintf_Case_String_Loop                      ; [6e ea] jr NZ,0x299d8c
-	jr t, HDAE5000_DoPrintf_Case_String_Next2                       ; [68 13] jr T,0x299db7
+	jr	nz, HDAE5000_DoPrintf_Case_String_Loop
+	jr	t, HDAE5000_DoPrintf_Case_String_Next2
 HDAE5000_DoPrintf_Case_String_Loop2:
 	ld xwa, (xsp + 0x10)
 	ld c, (xwa+)
@@ -23794,11 +23794,11 @@ HDAE5000_DoPrintf_Case_String_Next2:
 	ld	wa, (xsp+10)
 	decm	1, (xsp+10)
 	cp	wa, 0:i3
-	jr nz, HDAE5000_DoPrintf_Case_String_Loop2                      ; [6e e3] jr NZ,0x299da4
+	jr	nz, HDAE5000_DoPrintf_Case_String_Loop2
 	ld	wa, (xsp+6)
 	bit	0x01, wa
-	jr nz, HDAE5000_DoPrintf_Case_String_Next3                      ; [6e 0d] jr NZ,0x299dd6
-	jrl t, HDAE5000_DoPrintf_NextChar                      ; [78 eb 05] jrl T,0x29a3b7
+	jr	nz, HDAE5000_DoPrintf_Case_String_Next3
+	jrl	t, HDAE5000_DoPrintf_NextChar
 HDAE5000_DoPrintf_Case_String_Loop3:
 	pushw 0x0020
 	ld xwa, (xsp + 0x5c)
@@ -23808,19 +23808,19 @@ HDAE5000_DoPrintf_Case_String_Next3:
 	ld	wa, (xsp+8)
 	decm	1, (xsp+8)
 	cp	wa, 0:i3
-	jr nz, HDAE5000_DoPrintf_Case_String_Loop3                      ; [6e ec] jr NZ,0x299dcc
-	jrl t, HDAE5000_DoPrintf_NextChar                      ; [78 d4 05] jrl T,0x29a3b7
+	jr	nz, HDAE5000_DoPrintf_Case_String_Loop3
+	jrl	t, HDAE5000_DoPrintf_NextChar
 HDAE5000_DoPrintf_Case_Int:
 	ld	wa, (xsp+6)
 	bit	0x06, wa
-	jr z, HDAE5000_DoPrintf_Case_Int_Skip                       ; [66 11] jr Z,0x299dfc
+	jr	z, HDAE5000_DoPrintf_Case_Int_Skip
 	ld xbc, (xsp + 0x56)
 	ld	xwa, 4:i3
 	add	(xbc), xwa
 	ld xwa, (xbc)
 	ld	xwa, (xwa-4)
 	ld (xsp + 0x10), xwa
-	jr t, HDAE5000_DoPrintf_Case_Int_Join                       ; [68 11] jr T,0x299e0d
+	jr	t, HDAE5000_DoPrintf_Case_Int_Join
 HDAE5000_DoPrintf_Case_Int_Skip:
 	ld xbc, (xsp + 0x56)
 	ld	xwa, 2:i3
@@ -23834,15 +23834,15 @@ HDAE5000_DoPrintf_Case_Int_Join:
 	lda	xbc, (xsp+56)
 	ld	wa, (xsp+6)
 	bit	0x04, wa
-	jr z, HDAE5000_DoPrintf_Case_Int_Skip2                       ; [66 18] jr Z,0x299e35
+	jr	z, HDAE5000_DoPrintf_Case_Int_Skip2
 	cpw	(xsp+10), 0x0000
-	jr nz, HDAE5000_DoPrintf_Case_Int_Skip2                      ; [6e 11] jr NZ,0x299e35
+	jr	nz, HDAE5000_DoPrintf_Case_Int_Skip2
 	ld xwa, (xsp + 0x10)
 	or xwa, xwa
-	jr nz, HDAE5000_DoPrintf_Case_Int_Skip2                      ; [6e 0a] jr NZ,0x299e35
+	jr	nz, HDAE5000_DoPrintf_Case_Int_Skip2
 	ld	(xbc), 0x00
 	ldw (xsp + 0x0c), 0
-	jr t, HDAE5000_DoPrintf_Case_Int_Join2                       ; [68 26] jr T,0x299e5b
+	jr	t, HDAE5000_DoPrintf_Case_Int_Join2
 HDAE5000_DoPrintf_Case_Int_Skip2:
 	ld xwa, (xsp + 0x10)
 	push xwa
@@ -23855,32 +23855,32 @@ HDAE5000_DoPrintf_Case_Int_Skip2:
 	ld (xsp + 0x0c), hl
 	ld xwa, (xsp + 0x10)
 	cp	xwa, 0x00000000
-	jr ge, HDAE5000_DoPrintf_Case_Int_Join2                      ; [69 05] jr GE,0x299e5b
+	jr	ge, HDAE5000_DoPrintf_Case_Int_Join2
 	ldw (xsp + 0x0e), 1
 HDAE5000_DoPrintf_Case_Int_Join2:
 	ld	wa, (xsp+6)
 	bit	0x04, wa
-	jr z, HDAE5000_DoPrintf_Case_Int_Join3                       ; [66 08] jr Z,0x299e6b
+	jr	z, HDAE5000_DoPrintf_Case_Int_Join3
 	ld	wa, (xsp+10)
 	cp	wa, (xsp+12)
-	jr ge, HDAE5000_DoPrintf_Case_Int_Skip3                      ; [69 07] jr GE,0x299e72
+	jr	ge, HDAE5000_DoPrintf_Case_Int_Skip3
 HDAE5000_DoPrintf_Case_Int_Join3:
 	ldw (xsp + 0x0a), 0
-	jr t, HDAE5000_DoPrintf_Case_Int_Join4                       ; [68 06] jr T,0x299e78
+	jr	t, HDAE5000_DoPrintf_Case_Int_Join4
 HDAE5000_DoPrintf_Case_Int_Skip3:
 	ld	wa, (xsp+12)
 	sub	(xsp+10), wa
 HDAE5000_DoPrintf_Case_Int_Join4:
 	ld	wa, (xsp+6)
 	and	wa, 0x0005
-	jr z, HDAE5000_DoPrintf_Case_Int_Join5                       ; [66 05] jr Z,0x299e86
+	jr	z, HDAE5000_DoPrintf_Case_Int_Join5
 	ldw (xsp + 0x0e), 1
 HDAE5000_DoPrintf_Case_Int_Join5:
 	ld	wa, (xsp+12)
 	add	wa, (xsp+10)
 	add	wa, (xsp+14)
 	sub	(xsp+8), wa
-	jr ge, HDAE5000_DoPrintf_Case_Int_Join6                      ; [69 05] jr GE,0x299e99
+	jr	ge, HDAE5000_DoPrintf_Case_Int_Join6
 	ldw (xsp + 0x08), 0
 HDAE5000_DoPrintf_Case_Int_Join6:
 	ld	wa, (xsp+8)
@@ -23889,15 +23889,15 @@ HDAE5000_DoPrintf_Case_Int_Join6:
 	add	wa, (xsp+14)
 	add	(xsp+4), wa
 	cpw	(xsp+8), 0x0000
-	jr z, HDAE5000_DoPrintf_Case_Int_Join7                       ; [66 31] jr Z,0x299ee0
+	jr	z, HDAE5000_DoPrintf_Case_Int_Join7
 	ld	wa, (xsp+6)
 	bit	0x01, wa
-	jr nz, HDAE5000_DoPrintf_Case_Int_Join7                      ; [6e 29] jr NZ,0x299ee0
+	jr	nz, HDAE5000_DoPrintf_Case_Int_Join7
 	cpw	(0x239486:24), 32
-	jr z, HDAE5000_DoPrintf_Case_Int_Next                       ; [66 11] jr Z,0x299ed1
+	jr	z, HDAE5000_DoPrintf_Case_Int_Next
 	bit	0x04, wa
-	jr nz, HDAE5000_DoPrintf_Case_Int_Next                      ; [6e 0c] jr NZ,0x299ed1
-	jr t, HDAE5000_DoPrintf_Case_Int_Join7                       ; [68 19] jr T,0x299ee0
+	jr	nz, HDAE5000_DoPrintf_Case_Int_Next
+	jr	t, HDAE5000_DoPrintf_Case_Int_Join7
 HDAE5000_DoPrintf_Case_Int_Loop:
 	pushw 0x0020
 	ld xwa, (xsp + 0x5c)
@@ -23907,24 +23907,24 @@ HDAE5000_DoPrintf_Case_Int_Next:
 	ld	wa, (xsp+8)
 	decm	1, (xsp+8)
 	cp	wa, 0:i3
-	jr nz, HDAE5000_DoPrintf_Case_Int_Loop                      ; [6e ec] jr NZ,0x299ec7
+	jr	nz, HDAE5000_DoPrintf_Case_Int_Loop
 	ldw (xsp + 0x08), 0
 HDAE5000_DoPrintf_Case_Int_Join7:
 	ld xwa, (xsp + 0x10)
 	cp	xwa, 0x00000000
-	jr ge, HDAE5000_DoPrintf_Case_Int_Skip4                      ; [69 05] jr GE,0x299ef0
+	jr	ge, HDAE5000_DoPrintf_Case_Int_Skip4
 	pushw 0x002d
-	jr t, HDAE5000_DoPrintf_Case_Int_Join8                       ; [68 18] jr T,0x299f08
+	jr	t, HDAE5000_DoPrintf_Case_Int_Join8
 HDAE5000_DoPrintf_Case_Int_Skip4:
 	ld	wa, (xsp+6)
 	bit	0x00, wa
-	jr z, HDAE5000_DoPrintf_Case_Int_Skip5                       ; [66 05] jr Z,0x299efd
+	jr	z, HDAE5000_DoPrintf_Case_Int_Skip5
 	pushw 0x002b
-	jr t, HDAE5000_DoPrintf_Case_Int_Join8                       ; [68 0b] jr T,0x299f08
+	jr	t, HDAE5000_DoPrintf_Case_Int_Join8
 HDAE5000_DoPrintf_Case_Int_Skip5:
 	ld	wa, (xsp+6)
 	bit	0x02, wa
-	jr z, HDAE5000_DoPrintf_Case_Int_Join9                       ; [66 0a] jr Z,0x299f0f
+	jr	z, HDAE5000_DoPrintf_Case_Int_Join9
 	pushw 0x0020
 HDAE5000_DoPrintf_Case_Int_Join8:
 	ld xwa, (xsp + 0x5c)
@@ -23933,10 +23933,10 @@ HDAE5000_DoPrintf_Case_Int_Join8:
 HDAE5000_DoPrintf_Case_Int_Join9:
 	ld	wa, (xsp+6)
 	bit	0x01, wa
-	jr nz, HDAE5000_DoPrintf_Case_Int_Next3                      ; [6e 2b] jr NZ,0x299f42
+	jr	nz, HDAE5000_DoPrintf_Case_Int_Next3
 	cpw	(0x239486:24), 48
-	jr z, HDAE5000_DoPrintf_Case_Int_Next2                       ; [66 0c] jr Z,0x299f2c
-	jr t, HDAE5000_DoPrintf_Case_Int_Next3                       ; [68 20] jr T,0x299f42
+	jr	z, HDAE5000_DoPrintf_Case_Int_Next2
+	jr	t, HDAE5000_DoPrintf_Case_Int_Next3
 HDAE5000_DoPrintf_Case_Int_Loop2:
 	pushw 0x0030
 	ld xwa, (xsp + 0x5c)
@@ -23946,8 +23946,8 @@ HDAE5000_DoPrintf_Case_Int_Next2:
 	ld	wa, (xsp+8)
 	decm	1, (xsp+8)
 	cp	wa, 0:i3
-	jr nz, HDAE5000_DoPrintf_Case_Int_Loop2                      ; [6e ec] jr NZ,0x299f22
-	jr t, HDAE5000_DoPrintf_Case_Int_Next3                       ; [68 0a] jr T,0x299f42
+	jr	nz, HDAE5000_DoPrintf_Case_Int_Loop2
+	jr	t, HDAE5000_DoPrintf_Case_Int_Next3
 HDAE5000_DoPrintf_Case_Int_Loop3:
 	pushw 0x0030
 	ld xwa, (xsp + 0x5c)
@@ -23957,8 +23957,8 @@ HDAE5000_DoPrintf_Case_Int_Next3:
 	ld	wa, (xsp+10)
 	decm	1, (xsp+10)
 	cp	wa, 0:i3
-	jr nz, HDAE5000_DoPrintf_Case_Int_Loop3                      ; [6e ec] jr NZ,0x299f38
-	jr t, HDAE5000_DoPrintf_Case_Int_Next4                       ; [68 18] jr T,0x299f66
+	jr	nz, HDAE5000_DoPrintf_Case_Int_Loop3
+	jr	t, HDAE5000_DoPrintf_Case_Int_Next4
 HDAE5000_DoPrintf_Case_Int_Loop4:
 	decm	1, (xsp+12)
 	lda	xbc, (xsp+56)
@@ -23971,11 +23971,11 @@ HDAE5000_DoPrintf_Case_Int_Loop4:
 	inc 2, xsp
 HDAE5000_DoPrintf_Case_Int_Next4:
 	cpw	(xsp+12), 0x0000
-	jr nz, HDAE5000_DoPrintf_Case_Int_Loop4                      ; [6e e1] jr NZ,0x299f4e
+	jr	nz, HDAE5000_DoPrintf_Case_Int_Loop4
 	ld	wa, (xsp+6)
 	bit	0x01, wa
-	jr nz, HDAE5000_DoPrintf_Case_Int_Next5                      ; [6e 0d] jr NZ,0x299f82
-	jrl t, HDAE5000_DoPrintf_NextChar                      ; [78 3f 04] jrl T,0x29a3b7
+	jr	nz, HDAE5000_DoPrintf_Case_Int_Next5
+	jrl	t, HDAE5000_DoPrintf_NextChar
 HDAE5000_DoPrintf_Case_Int_Loop5:
 	pushw 0x0020
 	ld xwa, (xsp + 0x5c)
@@ -23985,18 +23985,18 @@ HDAE5000_DoPrintf_Case_Int_Next5:
 	ld	wa, (xsp+8)
 	decm	1, (xsp+8)
 	cp	wa, 0:i3
-	jr nz, HDAE5000_DoPrintf_Case_Int_Loop5                      ; [6e ec] jr NZ,0x299f78
-	jrl t, HDAE5000_DoPrintf_NextChar                      ; [78 28 04] jrl T,0x29a3b7
+	jr	nz, HDAE5000_DoPrintf_Case_Int_Loop5
+	jrl	t, HDAE5000_DoPrintf_NextChar
 HDAE5000_DoPrintf_Case_Unsigned:
 	ld	wa, (xsp+6)
 	bit	0x06, wa
-	jr z, HDAE5000_DoPrintf_Case_Unsigned_Skip                       ; [66 0e] jr Z,0x299fa5
+	jr	z, HDAE5000_DoPrintf_Case_Unsigned_Skip
 	ld xbc, (xsp + 0x56)
 	ld	xwa, 4:i3
 	add	(xbc), xwa
 	ld xwa, (xbc)
 	ld	xde, (xwa-4)
-	jr t, HDAE5000_DoPrintf_Case_Unsigned_Join                       ; [68 0e] jr T,0x299fb3
+	jr	t, HDAE5000_DoPrintf_Case_Unsigned_Join
 HDAE5000_DoPrintf_Case_Unsigned_Skip:
 	ld xbc, (xsp + 0x56)
 	ld	xwa, 2:i3
@@ -24008,14 +24008,14 @@ HDAE5000_DoPrintf_Case_Unsigned_Join:
 	lda	xbc, (xsp+44)
 	ld	wa, (xsp+6)
 	bit	0x04, wa
-	jr z, HDAE5000_DoPrintf_Case_Unsigned_Skip2                       ; [66 12] jr Z,0x299fd0
+	jr	z, HDAE5000_DoPrintf_Case_Unsigned_Skip2
 	cpw	(xsp+10), 0x0000
-	jr nz, HDAE5000_DoPrintf_Case_Unsigned_Skip2                      ; [6e 0b] jr NZ,0x299fd0
+	jr	nz, HDAE5000_DoPrintf_Case_Unsigned_Skip2
 	or xde, xde
-	jr nz, HDAE5000_DoPrintf_Case_Unsigned_Skip2                      ; [6e 07] jr NZ,0x299fd0
+	jr	nz, HDAE5000_DoPrintf_Case_Unsigned_Skip2
 	ld	(xbc), 0x00
 	ld	iz, 0:i3
-	jr t, HDAE5000_DoPrintf_Case_Unsigned_Join2                       ; [68 12] jr T,0x299fe2
+	jr	t, HDAE5000_DoPrintf_Case_Unsigned_Join2
 HDAE5000_DoPrintf_Case_Unsigned_Skip2:
 	push xde
 	push xbc
@@ -24028,19 +24028,19 @@ HDAE5000_DoPrintf_Case_Unsigned_Skip2:
 HDAE5000_DoPrintf_Case_Unsigned_Join2:
 	ld	wa, (xsp+6)
 	bit	0x04, wa
-	jr z, HDAE5000_DoPrintf_Case_Unsigned_Join3                       ; [66 05] jr Z,0x299fef
+	jr	z, HDAE5000_DoPrintf_Case_Unsigned_Join3
 	cp	(xsp+10), iz
-	jr ge, HDAE5000_DoPrintf_Case_Unsigned_Skip3                      ; [69 07] jr GE,0x299ff6
+	jr	ge, HDAE5000_DoPrintf_Case_Unsigned_Skip3
 HDAE5000_DoPrintf_Case_Unsigned_Join3:
 	ldw (xsp + 0x0a), 0
-	jr t, HDAE5000_DoPrintf_Case_Unsigned_Join4                       ; [68 03] jr T,0x299ff9
+	jr	t, HDAE5000_DoPrintf_Case_Unsigned_Join4
 HDAE5000_DoPrintf_Case_Unsigned_Skip3:
 	sub	(xsp+10), iz
 HDAE5000_DoPrintf_Case_Unsigned_Join4:
 	ld	wa, iz
 	add	wa, (xsp+10)
 	sub	(xsp+8), wa
-	jr ge, HDAE5000_DoPrintf_Case_Unsigned_Join5                      ; [69 05] jr GE,0x29a008
+	jr	ge, HDAE5000_DoPrintf_Case_Unsigned_Join5
 	ldw (xsp + 0x08), 0
 HDAE5000_DoPrintf_Case_Unsigned_Join5:
 	ld	wa, (xsp+8)
@@ -24049,8 +24049,8 @@ HDAE5000_DoPrintf_Case_Unsigned_Join5:
 	add	(xsp+4), wa
 	ld	wa, (xsp+6)
 	bit	0x01, wa
-	jr z, HDAE5000_DoPrintf_Case_Unsigned_Next                       ; [66 0e] jr Z,0x29a029
-	jr t, HDAE5000_DoPrintf_Case_Unsigned_Next2                       ; [68 22] jr T,0x29a03f
+	jr	z, HDAE5000_DoPrintf_Case_Unsigned_Next
+	jr	t, HDAE5000_DoPrintf_Case_Unsigned_Next2
 HDAE5000_DoPrintf_Case_Unsigned_Loop:
 	pushw	(0x239486:24)
 	ld xwa, (xsp + 0x5c)
@@ -24060,8 +24060,8 @@ HDAE5000_DoPrintf_Case_Unsigned_Next:
 	ld	wa, (xsp+8)
 	decm	1, (xsp+8)
 	cp	wa, 0:i3
-	jr nz, HDAE5000_DoPrintf_Case_Unsigned_Loop                      ; [6e ea] jr NZ,0x29a01d
-	jr t, HDAE5000_DoPrintf_Case_Unsigned_Next2                       ; [68 0a] jr T,0x29a03f
+	jr	nz, HDAE5000_DoPrintf_Case_Unsigned_Loop
+	jr	t, HDAE5000_DoPrintf_Case_Unsigned_Next2
 HDAE5000_DoPrintf_Case_Unsigned_Loop2:
 	pushw 0x0030
 	ld xwa, (xsp + 0x5c)
@@ -24071,8 +24071,8 @@ HDAE5000_DoPrintf_Case_Unsigned_Next2:
 	ld	wa, (xsp+10)
 	decm	1, (xsp+10)
 	cp	wa, 0:i3
-	jr nz, HDAE5000_DoPrintf_Case_Unsigned_Loop2                      ; [6e ec] jr NZ,0x29a035
-	jr t, HDAE5000_DoPrintf_Case_Unsigned_Next3                       ; [68 14] jr T,0x29a05f
+	jr	nz, HDAE5000_DoPrintf_Case_Unsigned_Loop2
+	jr	t, HDAE5000_DoPrintf_Case_Unsigned_Next3
 HDAE5000_DoPrintf_Case_Unsigned_Loop3:
 	dec	1, iz
 	lda	xwa, (xsp+44)
@@ -24084,11 +24084,11 @@ HDAE5000_DoPrintf_Case_Unsigned_Loop3:
 	inc 2, xsp
 HDAE5000_DoPrintf_Case_Unsigned_Next3:
 	cp	iz, 0:i3
-	jr nz, HDAE5000_DoPrintf_Case_Unsigned_Loop3                      ; [6e e8] jr NZ,0x29a04b
+	jr	nz, HDAE5000_DoPrintf_Case_Unsigned_Loop3
 	ld	wa, (xsp+6)
 	bit	0x01, wa
-	jr nz, HDAE5000_DoPrintf_Case_Unsigned_Next4                      ; [6e 0d] jr NZ,0x29a078
-	jrl t, HDAE5000_DoPrintf_NextChar                      ; [78 49 03] jrl T,0x29a3b7
+	jr	nz, HDAE5000_DoPrintf_Case_Unsigned_Next4
+	jrl	t, HDAE5000_DoPrintf_NextChar
 HDAE5000_DoPrintf_Case_Unsigned_Loop4:
 	pushw 0x0020
 	ld xwa, (xsp + 0x5c)
@@ -24098,20 +24098,20 @@ HDAE5000_DoPrintf_Case_Unsigned_Next4:
 	ld	wa, (xsp+8)
 	decm	1, (xsp+8)
 	cp	wa, 0:i3
-	jr nz, HDAE5000_DoPrintf_Case_Unsigned_Loop4                      ; [6e ec] jr NZ,0x29a06e
-	jrl t, HDAE5000_DoPrintf_NextChar                      ; [78 32 03] jrl T,0x29a3b7
+	jr	nz, HDAE5000_DoPrintf_Case_Unsigned_Loop4
+	jrl	t, HDAE5000_DoPrintf_NextChar
 HDAE5000_DoPrintf_Case_Pointer:
 	setm	6, (xsp+6)
 HDAE5000_DoPrintf_Case_Hex:
 	ld	wa, (xsp+6)
 	bit	0x06, wa
-	jr z, HDAE5000_DoPrintf_Case_Hex_Skip                       ; [66 0e] jr Z,0x29a09e
+	jr	z, HDAE5000_DoPrintf_Case_Hex_Skip
 	ld xbc, (xsp + 0x56)
 	ld	xwa, 4:i3
 	add	(xbc), xwa
 	ld xwa, (xbc)
 	ld	xde, (xwa-4)
-	jr t, HDAE5000_DoPrintf_Case_Hex_Join                       ; [68 0e] jr T,0x29a0ac
+	jr	t, HDAE5000_DoPrintf_Case_Hex_Join
 HDAE5000_DoPrintf_Case_Hex_Skip:
 	ld xbc, (xsp + 0x56)
 	ld	xwa, 2:i3
@@ -24123,14 +24123,14 @@ HDAE5000_DoPrintf_Case_Hex_Join:
 	lda	xbc, (xsp+32)
 	ld	wa, (xsp+6)
 	bit	0x04, wa
-	jr z, HDAE5000_DoPrintf_Case_Hex_Skip2                       ; [66 15] jr Z,0x29a0cc
+	jr	z, HDAE5000_DoPrintf_Case_Hex_Skip2
 	cpw	(xsp+10), 0x0000
-	jr nz, HDAE5000_DoPrintf_Case_Hex_Skip2                      ; [6e 0e] jr NZ,0x29a0cc
+	jr	nz, HDAE5000_DoPrintf_Case_Hex_Skip2
 	or xde, xde
-	jr nz, HDAE5000_DoPrintf_Case_Hex_Skip2                      ; [6e 0a] jr NZ,0x29a0cc
+	jr	nz, HDAE5000_DoPrintf_Case_Hex_Skip2
 	ld	(xbc), 0x00
 	ldw (xsp + 0x12), 0
-	jr t, HDAE5000_DoPrintf_Case_Hex_Join2                       ; [68 14] jr T,0x29a0e0
+	jr	t, HDAE5000_DoPrintf_Case_Hex_Join2
 HDAE5000_DoPrintf_Case_Hex_Skip2:
 	pushw iz                                ; push IZ
 	push xde
@@ -24144,13 +24144,13 @@ HDAE5000_DoPrintf_Case_Hex_Skip2:
 HDAE5000_DoPrintf_Case_Hex_Join2:
 	ld	wa, (xsp+6)
 	bit	0x04, wa
-	jr z, HDAE5000_DoPrintf_Case_Hex_Join3                       ; [66 08] jr Z,0x29a0f0
+	jr	z, HDAE5000_DoPrintf_Case_Hex_Join3
 	ld	wa, (xsp+10)
 	cp	wa, (xsp+18)
-	jr ge, HDAE5000_DoPrintf_Case_Hex_Skip3                      ; [69 07] jr GE,0x29a0f7
+	jr	ge, HDAE5000_DoPrintf_Case_Hex_Skip3
 HDAE5000_DoPrintf_Case_Hex_Join3:
 	ldw (xsp + 0x0a), 0
-	jr t, HDAE5000_DoPrintf_Case_Hex_Join4                       ; [68 06] jr T,0x29a0fd
+	jr	t, HDAE5000_DoPrintf_Case_Hex_Join4
 HDAE5000_DoPrintf_Case_Hex_Skip3:
 	ld	wa, (xsp+18)
 	sub	(xsp+10), wa
@@ -24158,14 +24158,14 @@ HDAE5000_DoPrintf_Case_Hex_Join4:
 	ld	qiz, 0
 	ld	wa, (xsp+6)
 	bit	0x03, wa
-	jr z, HDAE5000_DoPrintf_Case_Hex_Join5                       ; [66 03] jr Z,0x29a10b
+	jr	z, HDAE5000_DoPrintf_Case_Hex_Join5
 	ld	qiz, 2
 HDAE5000_DoPrintf_Case_Hex_Join5:
 	ld	wa, (xsp+18)
 	add	wa, (xsp+10)
 	add	wa, qiz
 	sub	(xsp+8), wa
-	jr ge, HDAE5000_DoPrintf_Case_Hex_Join6                      ; [69 05] jr GE,0x29a11e
+	jr	ge, HDAE5000_DoPrintf_Case_Hex_Join6
 	ldw (xsp + 0x08), 0
 HDAE5000_DoPrintf_Case_Hex_Join6:
 	ld	wa, (xsp+8)
@@ -24175,10 +24175,10 @@ HDAE5000_DoPrintf_Case_Hex_Join6:
 	add	(xsp+4), wa
 	ld	wa, (xsp+6)
 	bit	0x01, wa
-	jr nz, HDAE5000_DoPrintf_Case_Hex_Join7                      ; [6e 1f] jr NZ,0x29a154
+	jr	nz, HDAE5000_DoPrintf_Case_Hex_Join7
 	cpw	(0x239486:24), 32
-	jr z, HDAE5000_DoPrintf_Case_Hex_Next                       ; [66 0c] jr Z,0x29a14a
-	jr t, HDAE5000_DoPrintf_Case_Hex_Join7                       ; [68 14] jr T,0x29a154
+	jr	z, HDAE5000_DoPrintf_Case_Hex_Next
+	jr	t, HDAE5000_DoPrintf_Case_Hex_Join7
 HDAE5000_DoPrintf_Case_Hex_Loop:
 	pushw 0x0020
 	ld xwa, (xsp + 0x5c)
@@ -24188,12 +24188,12 @@ HDAE5000_DoPrintf_Case_Hex_Next:
 	ld	wa, (xsp+8)
 	decm	1, (xsp+8)
 	cp	wa, 0:i3
-	jr nz, HDAE5000_DoPrintf_Case_Hex_Loop                      ; [6e ec] jr NZ,0x29a140
+	jr	nz, HDAE5000_DoPrintf_Case_Hex_Loop
 HDAE5000_DoPrintf_Case_Hex_Join7:
 	cp	qiz, 0
-	jr z, HDAE5000_DoPrintf_Case_Hex_Join8                       ; [66 17] jr Z,0x29a170
+	jr	z, HDAE5000_DoPrintf_Case_Hex_Join8
 	cpw	(xsp+18), 0x0000
-	jr z, HDAE5000_DoPrintf_Case_Hex_Join8                       ; [66 10] jr Z,0x29a170
+	jr	z, HDAE5000_DoPrintf_Case_Hex_Join8
 	pushw 0x0030
 	ld xwa, (xsp + 0x5c)
 	call	(xwa)
@@ -24204,10 +24204,10 @@ HDAE5000_DoPrintf_Case_Hex_Join7:
 HDAE5000_DoPrintf_Case_Hex_Join8:
 	ld	wa, (xsp+6)
 	bit	0x01, wa
-	jr nz, HDAE5000_DoPrintf_Case_Hex_Next3                      ; [6e 2b] jr NZ,0x29a1a3
+	jr	nz, HDAE5000_DoPrintf_Case_Hex_Next3
 	cpw	(0x239486:24), 48
-	jr z, HDAE5000_DoPrintf_Case_Hex_Next2                       ; [66 0c] jr Z,0x29a18d
-	jr t, HDAE5000_DoPrintf_Case_Hex_Next3                       ; [68 20] jr T,0x29a1a3
+	jr	z, HDAE5000_DoPrintf_Case_Hex_Next2
+	jr	t, HDAE5000_DoPrintf_Case_Hex_Next3
 HDAE5000_DoPrintf_Case_Hex_Loop2:
 	pushw 0x0030
 	ld xwa, (xsp + 0x5c)
@@ -24217,8 +24217,8 @@ HDAE5000_DoPrintf_Case_Hex_Next2:
 	ld	wa, (xsp+8)
 	decm	1, (xsp+8)
 	cp	wa, 0:i3
-	jr nz, HDAE5000_DoPrintf_Case_Hex_Loop2                      ; [6e ec] jr NZ,0x29a183
-	jr t, HDAE5000_DoPrintf_Case_Hex_Next3                       ; [68 0a] jr T,0x29a1a3
+	jr	nz, HDAE5000_DoPrintf_Case_Hex_Loop2
+	jr	t, HDAE5000_DoPrintf_Case_Hex_Next3
 HDAE5000_DoPrintf_Case_Hex_Loop3:
 	pushw 0x0030
 	ld xwa, (xsp + 0x5c)
@@ -24228,8 +24228,8 @@ HDAE5000_DoPrintf_Case_Hex_Next3:
 	ld	wa, (xsp+10)
 	decm	1, (xsp+10)
 	cp	wa, 0:i3
-	jr nz, HDAE5000_DoPrintf_Case_Hex_Loop3                      ; [6e ec] jr NZ,0x29a199
-	jr t, HDAE5000_DoPrintf_Case_Hex_Next4                       ; [68 18] jr T,0x29a1c7
+	jr	nz, HDAE5000_DoPrintf_Case_Hex_Loop3
+	jr	t, HDAE5000_DoPrintf_Case_Hex_Next4
 HDAE5000_DoPrintf_Case_Hex_Loop4:
 	decm	1, (xsp+18)
 	lda	xbc, (xsp+32)
@@ -24242,11 +24242,11 @@ HDAE5000_DoPrintf_Case_Hex_Loop4:
 	inc 2, xsp
 HDAE5000_DoPrintf_Case_Hex_Next4:
 	cpw	(xsp+18), 0x0000
-	jr nz, HDAE5000_DoPrintf_Case_Hex_Loop4                      ; [6e e1] jr NZ,0x29a1af
+	jr	nz, HDAE5000_DoPrintf_Case_Hex_Loop4
 	ld	wa, (xsp+6)
 	bit	0x01, wa
-	jr nz, HDAE5000_DoPrintf_Case_Hex_Next5                      ; [6e 0d] jr NZ,0x29a1e3
-	jrl t, HDAE5000_DoPrintf_NextChar                      ; [78 de 01] jrl T,0x29a3b7
+	jr	nz, HDAE5000_DoPrintf_Case_Hex_Next5
+	jrl	t, HDAE5000_DoPrintf_NextChar
 HDAE5000_DoPrintf_Case_Hex_Loop5:
 	pushw 0x0020
 	ld xwa, (xsp + 0x5c)
@@ -24256,18 +24256,18 @@ HDAE5000_DoPrintf_Case_Hex_Next5:
 	ld	wa, (xsp+8)
 	decm	1, (xsp+8)
 	cp	wa, 0:i3
-	jr nz, HDAE5000_DoPrintf_Case_Hex_Loop5                      ; [6e ec] jr NZ,0x29a1d9
-	jrl t, HDAE5000_DoPrintf_NextChar                      ; [78 c7 01] jrl T,0x29a3b7
+	jr	nz, HDAE5000_DoPrintf_Case_Hex_Loop5
+	jrl	t, HDAE5000_DoPrintf_NextChar
 HDAE5000_DoPrintf_Case_Octal:
 	ld	wa, (xsp+6)
 	bit	0x06, wa
-	jr z, HDAE5000_DoPrintf_Case_Octal_Skip                       ; [66 0e] jr Z,0x29a206
+	jr	z, HDAE5000_DoPrintf_Case_Octal_Skip
 	ld xbc, (xsp + 0x56)
 	ld	xwa, 4:i3
 	add	(xbc), xwa
 	ld xwa, (xbc)
 	ld	xde, (xwa-4)
-	jr t, HDAE5000_DoPrintf_Case_Octal_Join                       ; [68 0e] jr T,0x29a214
+	jr	t, HDAE5000_DoPrintf_Case_Octal_Join
 HDAE5000_DoPrintf_Case_Octal_Skip:
 	ld xbc, (xsp + 0x56)
 	ld	xwa, 2:i3
@@ -24279,14 +24279,14 @@ HDAE5000_DoPrintf_Case_Octal_Join:
 	lda	xbc, (xsp+20)
 	ld	wa, (xsp+6)
 	bit	0x04, wa
-	jr z, HDAE5000_DoPrintf_Case_Octal_Skip2                       ; [66 12] jr Z,0x29a231
+	jr	z, HDAE5000_DoPrintf_Case_Octal_Skip2
 	cpw	(xsp+10), 0x0000
-	jr nz, HDAE5000_DoPrintf_Case_Octal_Skip2                      ; [6e 0b] jr NZ,0x29a231
+	jr	nz, HDAE5000_DoPrintf_Case_Octal_Skip2
 	or xde, xde
-	jr nz, HDAE5000_DoPrintf_Case_Octal_Skip2                      ; [6e 07] jr NZ,0x29a231
+	jr	nz, HDAE5000_DoPrintf_Case_Octal_Skip2
 	ld	(xbc), 0x00
 	ld	iz, 0:i3
-	jr t, HDAE5000_DoPrintf_Case_Octal_Join2                       ; [68 12] jr T,0x29a243
+	jr	t, HDAE5000_DoPrintf_Case_Octal_Join2
 HDAE5000_DoPrintf_Case_Octal_Skip2:
 	push xde
 	push xbc
@@ -24299,12 +24299,12 @@ HDAE5000_DoPrintf_Case_Octal_Skip2:
 HDAE5000_DoPrintf_Case_Octal_Join2:
 	ld	wa, (xsp+6)
 	bit	0x04, wa
-	jr z, HDAE5000_DoPrintf_Case_Octal_Join3                       ; [66 05] jr Z,0x29a250
+	jr	z, HDAE5000_DoPrintf_Case_Octal_Join3
 	cp	(xsp+10), iz
-	jr ge, HDAE5000_DoPrintf_Case_Octal_Skip3                      ; [69 07] jr GE,0x29a257
+	jr	ge, HDAE5000_DoPrintf_Case_Octal_Skip3
 HDAE5000_DoPrintf_Case_Octal_Join3:
 	ldw (xsp + 0x0a), 0
-	jr t, HDAE5000_DoPrintf_Case_Octal_Join4                       ; [68 03] jr T,0x29a25a
+	jr	t, HDAE5000_DoPrintf_Case_Octal_Join4
 HDAE5000_DoPrintf_Case_Octal_Skip3:
 	sub	(xsp+10), iz
 HDAE5000_DoPrintf_Case_Octal_Join4:
@@ -24317,7 +24317,7 @@ HDAE5000_DoPrintf_Case_Octal_Join4:
 	add	wa, (xsp+10)
 	add	wa, (xsp+18)
 	sub	(xsp+8), wa
-	jr ge, HDAE5000_DoPrintf_Case_Octal_Join5                      ; [69 05] jr GE,0x29a27a
+	jr	ge, HDAE5000_DoPrintf_Case_Octal_Join5
 	ldw (xsp + 0x08), 0
 HDAE5000_DoPrintf_Case_Octal_Join5:
 	ld	wa, (xsp+8)
@@ -24327,10 +24327,10 @@ HDAE5000_DoPrintf_Case_Octal_Join5:
 	add	(xsp+4), wa
 	ld	wa, (xsp+6)
 	bit	0x01, wa
-	jr nz, HDAE5000_DoPrintf_Case_Octal_Join6                      ; [6e 1f] jr NZ,0x29a2af
+	jr	nz, HDAE5000_DoPrintf_Case_Octal_Join6
 	cpw	(0x239486:24), 32
-	jr z, HDAE5000_DoPrintf_Case_Octal_Next                       ; [66 0c] jr Z,0x29a2a5
-	jr t, HDAE5000_DoPrintf_Case_Octal_Join6                       ; [68 14] jr T,0x29a2af
+	jr	z, HDAE5000_DoPrintf_Case_Octal_Next
+	jr	t, HDAE5000_DoPrintf_Case_Octal_Join6
 HDAE5000_DoPrintf_Case_Octal_Loop:
 	pushw 0x0020
 	ld xwa, (xsp + 0x5c)
@@ -24340,12 +24340,12 @@ HDAE5000_DoPrintf_Case_Octal_Next:
 	ld	wa, (xsp+8)
 	decm	1, (xsp+8)
 	cp	wa, 0:i3
-	jr nz, HDAE5000_DoPrintf_Case_Octal_Loop                      ; [6e ec] jr NZ,0x29a29b
+	jr	nz, HDAE5000_DoPrintf_Case_Octal_Loop
 HDAE5000_DoPrintf_Case_Octal_Join6:
 	cpw	(xsp+18), 0x0000
-	jr z, HDAE5000_DoPrintf_Case_Octal_Join7                       ; [66 0e] jr Z,0x29a2c4
+	jr	z, HDAE5000_DoPrintf_Case_Octal_Join7
 	cp	iz, 0:i3
-	jr z, HDAE5000_DoPrintf_Case_Octal_Join7                       ; [66 0a] jr Z,0x29a2c4
+	jr	z, HDAE5000_DoPrintf_Case_Octal_Join7
 	pushw 0x0030
 	ld xwa, (xsp + 0x5c)
 	call	(xwa)
@@ -24353,10 +24353,10 @@ HDAE5000_DoPrintf_Case_Octal_Join6:
 HDAE5000_DoPrintf_Case_Octal_Join7:
 	ld	wa, (xsp+6)
 	bit	0x01, wa
-	jr nz, HDAE5000_DoPrintf_Case_Octal_Next3                      ; [6e 2b] jr NZ,0x29a2f7
+	jr	nz, HDAE5000_DoPrintf_Case_Octal_Next3
 	cpw	(0x239486:24), 48
-	jr z, HDAE5000_DoPrintf_Case_Octal_Next2                       ; [66 0c] jr Z,0x29a2e1
-	jr t, HDAE5000_DoPrintf_Case_Octal_Next3                       ; [68 20] jr T,0x29a2f7
+	jr	z, HDAE5000_DoPrintf_Case_Octal_Next2
+	jr	t, HDAE5000_DoPrintf_Case_Octal_Next3
 HDAE5000_DoPrintf_Case_Octal_Loop2:
 	pushw 0x0030
 	ld xwa, (xsp + 0x5c)
@@ -24366,8 +24366,8 @@ HDAE5000_DoPrintf_Case_Octal_Next2:
 	ld	wa, (xsp+8)
 	decm	1, (xsp+8)
 	cp	wa, 0:i3
-	jr nz, HDAE5000_DoPrintf_Case_Octal_Loop2                      ; [6e ec] jr NZ,0x29a2d7
-	jr t, HDAE5000_DoPrintf_Case_Octal_Next3                       ; [68 0a] jr T,0x29a2f7
+	jr	nz, HDAE5000_DoPrintf_Case_Octal_Loop2
+	jr	t, HDAE5000_DoPrintf_Case_Octal_Next3
 HDAE5000_DoPrintf_Case_Octal_Loop3:
 	pushw 0x0030
 	ld xwa, (xsp + 0x5c)
@@ -24377,8 +24377,8 @@ HDAE5000_DoPrintf_Case_Octal_Next3:
 	ld	wa, (xsp+10)
 	decm	1, (xsp+10)
 	cp	wa, 0:i3
-	jr nz, HDAE5000_DoPrintf_Case_Octal_Loop3                      ; [6e ec] jr NZ,0x29a2ed
-	jr t, HDAE5000_DoPrintf_Case_Octal_Next4                       ; [68 14] jr T,0x29a317
+	jr	nz, HDAE5000_DoPrintf_Case_Octal_Loop3
+	jr	t, HDAE5000_DoPrintf_Case_Octal_Next4
 HDAE5000_DoPrintf_Case_Octal_Loop4:
 	dec	1, iz
 	lda	xwa, (xsp+20)
@@ -24390,11 +24390,11 @@ HDAE5000_DoPrintf_Case_Octal_Loop4:
 	inc 2, xsp
 HDAE5000_DoPrintf_Case_Octal_Next4:
 	cp	iz, 0:i3
-	jr nz, HDAE5000_DoPrintf_Case_Octal_Loop4                      ; [6e e8] jr NZ,0x29a303
+	jr	nz, HDAE5000_DoPrintf_Case_Octal_Loop4
 	ld	wa, (xsp+6)
 	bit	0x01, wa
-	jr nz, HDAE5000_DoPrintf_Case_Octal_Next5                      ; [6e 0d] jr NZ,0x29a330
-	jrl t, HDAE5000_DoPrintf_NextChar                      ; [78 91 00] jrl T,0x29a3b7
+	jr	nz, HDAE5000_DoPrintf_Case_Octal_Next5
+	jrl	t, HDAE5000_DoPrintf_NextChar
 HDAE5000_DoPrintf_Case_Octal_Loop5:
 	pushw 0x0020
 	ld xwa, (xsp + 0x5c)
@@ -24404,8 +24404,8 @@ HDAE5000_DoPrintf_Case_Octal_Next5:
 	ld	wa, (xsp+8)
 	decm	1, (xsp+8)
 	cp	wa, 0:i3
-	jr nz, HDAE5000_DoPrintf_Case_Octal_Loop5                      ; [6e ec] jr NZ,0x29a326
-	jr t, HDAE5000_DoPrintf_NextChar                       ; [68 7b] jr T,0x29a3b7
+	jr	nz, HDAE5000_DoPrintf_Case_Octal_Loop5
+	jr	t, HDAE5000_DoPrintf_NextChar
 HDAE5000_DoPrintf_Case_Count:
 	ld xbc, (xsp + 0x56)
 	ld	xwa, 4:i3
@@ -24414,20 +24414,20 @@ HDAE5000_DoPrintf_Case_Count:
 	ld	xbc, (xwa-4)
 	ld	wa, (xsp+6)
 	bit	0x06, wa
-	jr z, HDAE5000_DoPrintf_Case_Count_Skip                       ; [66 09] jr Z,0x29a359
+	jr	z, HDAE5000_DoPrintf_Case_Count_Skip
 	ld	wa, (xsp+4)
 	exts xwa
 	ld (xbc), xwa
-	jr t, HDAE5000_DoPrintf_NextChar                       ; [68 5e] jr T,0x29a3b7
+	jr	t, HDAE5000_DoPrintf_NextChar
 HDAE5000_DoPrintf_Case_Count_Skip:
 	ld	wa, (xsp+4)
 	ld (xbc), wa
-	jr t, HDAE5000_DoPrintf_NextChar                       ; [68 57] jr T,0x29a3b7
+	jr	t, HDAE5000_DoPrintf_NextChar
 HDAE5000_DoPrintf_Case_Float:
 	lda	xbc, (xsp+68)
 	ld	wa, (xsp+6)
 	bit	0x07, wa
-	jr z, HDAE5000_DoPrintf_Case_Float_Skip                       ; [66 15] jr Z,0x29a380
+	jr	z, HDAE5000_DoPrintf_Case_Float_Skip
 	ld	xwa, xbc
 	ld xde, (xsp + 0x56)
 	lda_dd8l	xbc, (10); lda XBC,0x0a (F0 8-bit direct)
@@ -24435,7 +24435,7 @@ HDAE5000_DoPrintf_Case_Float:
 	ld xbc, (xde)
 	lda	xbc, (xbc-10)
 	call HDAE5000_Copy10
-	jr t, HDAE5000_DoPrintf_Case_Float_Join                       ; [68 12] jr T,0x29a392
+	jr	t, HDAE5000_DoPrintf_Case_Float_Join
 HDAE5000_DoPrintf_Case_Float_Skip:
 	ld	xwa, xbc
 	ld xde, (xsp + 0x56)
@@ -24466,7 +24466,7 @@ HDAE5000_DoPrintf_NextChar:
 	ldfr_berp c, 0xf8		; ld IZL,C
 	exts	iz
 	cp	iz, 0:i3
-	jrl nz, HDAE5000_DoPrintf_Loop                     ; [7e 29 f7] jrl NZ,0x299af3
+	jrl	nz, HDAE5000_DoPrintf_Loop
 	ld	hl, (xsp+4)
 	pop xiz
 	lda	xsp, (xsp+74)
@@ -24682,21 +24682,21 @@ HDAE5000_FormatFloat_Fixed:	; 0x29A563 (805 bytes)
 	pushw iz                                ; push IZ
 	ldw (xsp + 0x04), 15
 	cpw	(xsp+26), 0x0001
-	jr ge, HDAE5000_FormatFloat_Fixed_Skip                      ; [69 07] jr GE,0x29a579
+	jr	ge, HDAE5000_FormatFloat_Fixed_Skip
 	ldw (xsp + 0x02), 0
-	jr t, HDAE5000_FormatFloat_Fixed_Join                       ; [68 06] jr T,0x29a57f
+	jr	t, HDAE5000_FormatFloat_Fixed_Join
 HDAE5000_FormatFloat_Fixed_Skip:
 	ld	wa, (xsp+26)
 	ld (xsp + 0x02), wa
 HDAE5000_FormatFloat_Fixed_Join:
 	ld	wa, (xsp+16)
 	bit	0x04, wa
-	jr nz, HDAE5000_FormatFloat_Fixed_Join2                      ; [6e 05] jr NZ,0x29a58c
+	jr	nz, HDAE5000_FormatFloat_Fixed_Join2
 	ldw (xsp + 0x14), 6
 HDAE5000_FormatFloat_Fixed_Join2:
 	ld	wa, (xsp+16)
 	bit	0x07, wa
-	jr z, HDAE5000_FormatFloat_Fixed_Join3                       ; [66 05] jr Z,0x29a599
+	jr	z, HDAE5000_FormatFloat_Fixed_Join3
 	ldw (xsp + 0x04), 18
 HDAE5000_FormatFloat_Fixed_Join3:
 	ld	c, (xsp+10)
@@ -24705,17 +24705,17 @@ HDAE5000_FormatFloat_Fixed_Join3:
 	lda xde, (HDAE5000_CType_Table:24)
 	lda	xde, (xde+wa)	; lda XDE,XDE+WA
 	bitm	1, (xde)
-	jr z, HDAE5000_FormatFloat_Fixed_Skip2                       ; [66 07] jr Z,0x29a5b5
+	jr	z, HDAE5000_FormatFloat_Fixed_Skip2
 	ld	a, c
 	sub	a, 0x20
-	jr t, HDAE5000_FormatFloat_Fixed_Join4                       ; [68 02] jr T,0x29a5b7
+	jr	t, HDAE5000_FormatFloat_Fixed_Join4
 HDAE5000_FormatFloat_Fixed_Skip2:
 	ld	a, c
 HDAE5000_FormatFloat_Fixed_Join4:
 	cp	a, 0x47
-	jr nz, HDAE5000_FormatFloat_Fixed_Skip3                      ; [6e 05] jr NZ,0x29a5c1
+	jr	nz, HDAE5000_FormatFloat_Fixed_Skip3
 	ld	iz, (xsp+20)
-	jr t, HDAE5000_FormatFloat_Fixed_Join5                       ; [68 06] jr T,0x29a5c7
+	jr	t, HDAE5000_FormatFloat_Fixed_Join5
 HDAE5000_FormatFloat_Fixed_Skip3:
 	ld	iz, (xsp+20)
 	add	iz, (xsp+26)
@@ -24723,13 +24723,13 @@ HDAE5000_FormatFloat_Fixed_Join5:
 	ld	wa, (xsp+4)
 	inc	1, wa
 	cp	iz, wa
-	jr ge, HDAE5000_FormatFloat_Fixed_Join6                      ; [69 30] jr GE,0x29a600
+	jr	ge, HDAE5000_FormatFloat_Fixed_Join6
 	ld xwa, (xsp + 0x16)
 	cp	(xwa+iz), 0x34
-	jr le, HDAE5000_FormatFloat_Fixed_Join6                      ; [62 25] jr LE,0x29a600
+	jr	le, HDAE5000_FormatFloat_Fixed_Join6
 	cp	iz, 0:i3
-	jr ge, HDAE5000_FormatFloat_Fixed_Next                      ; [69 0b] jr GE,0x29a5ea
-	jr t, HDAE5000_FormatFloat_Fixed_Join6                       ; [68 1f] jr T,0x29a600
+	jr	ge, HDAE5000_FormatFloat_Fixed_Next
+	jr	t, HDAE5000_FormatFloat_Fixed_Join6
 HDAE5000_FormatFloat_Fixed_Loop:
 	ld xwa, (xsp + 0x16)
 	ld	(xwa+iz), 0x30
@@ -24738,21 +24738,21 @@ HDAE5000_FormatFloat_Fixed_Next:
 	ld xwa, (xsp + 0x16)
 	inc	1, (xwa+iz)
 	cp	iz, 0:i3
-	jr le, HDAE5000_FormatFloat_Fixed_Join6                      ; [62 08] jr LE,0x29a600
+	jr	le, HDAE5000_FormatFloat_Fixed_Join6
 	cp	(xwa+iz), 0x39
-	jr gt, HDAE5000_FormatFloat_Fixed_Loop                      ; [6a e1] jr GT,0x29a5e1
+	jr	gt, HDAE5000_FormatFloat_Fixed_Loop
 HDAE5000_FormatFloat_Fixed_Join6:
 	ld	e, (xde)
 	bit	0x01, e
-	jr z, HDAE5000_FormatFloat_Fixed_Skip4                       ; [66 07] jr Z,0x29a60e
+	jr	z, HDAE5000_FormatFloat_Fixed_Skip4
 	ld	a, c
 	sub	a, 0x20
-	jr t, HDAE5000_FormatFloat_Fixed_Join7                       ; [68 02] jr T,0x29a610
+	jr	t, HDAE5000_FormatFloat_Fixed_Join7
 HDAE5000_FormatFloat_Fixed_Skip4:
 	ld	a, c
 HDAE5000_FormatFloat_Fixed_Join7:
 	cp	a, 0x47
-	jr nz, HDAE5000_FormatFloat_Fixed_Join8                      ; [6e 0d] jr NZ,0x29a622
+	jr	nz, HDAE5000_FormatFloat_Fixed_Join8
 	ld	iz, (xsp+20)
 	dec	1, iz
 	ld	wa, (xsp+26)
@@ -24760,37 +24760,37 @@ HDAE5000_FormatFloat_Fixed_Join7:
 	add	(xsp+20), wa
 HDAE5000_FormatFloat_Fixed_Join8:
 	bit	0x01, e
-	jr z, HDAE5000_FormatFloat_Fixed_Join9                       ; [66 03] jr Z,0x29a62a
+	jr	z, HDAE5000_FormatFloat_Fixed_Join9
 	sub	c, 0x20
 HDAE5000_FormatFloat_Fixed_Join9:
 	cp	c, 0x47
-	jr nz, HDAE5000_FormatFloat_Fixed_Join10                      ; [6e 1a] jr NZ,0x29a649
+	jr	nz, HDAE5000_FormatFloat_Fixed_Join10
 	ld	wa, (xsp+16)
 	bit	0x03, wa
-	jr z, HDAE5000_FormatFloat_Fixed_Next2                       ; [66 07] jr Z,0x29a63e
-	jr t, HDAE5000_FormatFloat_Fixed_Join10                       ; [68 10] jr T,0x29a649
+	jr	z, HDAE5000_FormatFloat_Fixed_Next2
+	jr	t, HDAE5000_FormatFloat_Fixed_Join10
 HDAE5000_FormatFloat_Fixed_Loop2:
 	dec	1, iz
 	decm	1, (xsp+20)
 HDAE5000_FormatFloat_Fixed_Next2:
 	ld xwa, (xsp + 0x16)
 	cp	(xwa+iz), 0x30
-	jr z, HDAE5000_FormatFloat_Fixed_Loop2                       ; [66 f0] jr Z,0x29a639
+	jr	z, HDAE5000_FormatFloat_Fixed_Loop2
 HDAE5000_FormatFloat_Fixed_Join10:
 	ld	wa, (xsp+16)
 	bit	0x04, wa
-	jr z, HDAE5000_FormatFloat_Fixed_Join11                       ; [66 07] jr Z,0x29a658
+	jr	z, HDAE5000_FormatFloat_Fixed_Join11
 	cpw	(xsp+20), 0x0000
-	jr z, HDAE5000_FormatFloat_Fixed_Join12                       ; [66 03] jr Z,0x29a65b
+	jr	z, HDAE5000_FormatFloat_Fixed_Join12
 HDAE5000_FormatFloat_Fixed_Join11:
 	decm	1, (xsp+18)
 HDAE5000_FormatFloat_Fixed_Join12:
 	ld	iz, (xsp+28)
 	cp	iz, 0:i3
-	jr nz, HDAE5000_FormatFloat_Fixed_Join13                      ; [6e 09] jr NZ,0x29a66b
+	jr	nz, HDAE5000_FormatFloat_Fixed_Join13
 	ld	wa, (xsp+16)
 	and	wa, 0x0005
-	jr z, HDAE5000_FormatFloat_Fixed_Join14                       ; [66 03] jr Z,0x29a66e
+	jr	z, HDAE5000_FormatFloat_Fixed_Join14
 HDAE5000_FormatFloat_Fixed_Join13:
 	decm	1, (xsp+18)
 HDAE5000_FormatFloat_Fixed_Join14:
@@ -24799,19 +24799,19 @@ HDAE5000_FormatFloat_Fixed_Join14:
 	sub	(xsp+18), wa
 	ld xwa, (xsp + 0x16)
 	cp	(xwa), 0x39
-	jr le, HDAE5000_FormatFloat_Fixed_Join15                      ; [62 03] jr LE,0x29a682
+	jr	le, HDAE5000_FormatFloat_Fixed_Join15
 	decm	1, (xsp+18)
 HDAE5000_FormatFloat_Fixed_Join15:
 	cpw	(xsp+18), 0x0000
-	jr ge, HDAE5000_FormatFloat_Fixed_Join16                      ; [69 05] jr GE,0x29a68e
+	jr	ge, HDAE5000_FormatFloat_Fixed_Join16
 	ldw (xsp + 0x12), 0
 HDAE5000_FormatFloat_Fixed_Join16:
 	ld	wa, (xsp+16)
 	bit	0x01, wa
-	jr nz, HDAE5000_FormatFloat_Fixed_Join17                      ; [6e 24] jr NZ,0x29a6ba
+	jr	nz, HDAE5000_FormatFloat_Fixed_Join17
 	cpw	(0x239486:24), 32
-	jr z, HDAE5000_FormatFloat_Fixed_Next3                       ; [66 11] jr Z,0x29a6b0
-	jr t, HDAE5000_FormatFloat_Fixed_Join17                       ; [68 19] jr T,0x29a6ba
+	jr	z, HDAE5000_FormatFloat_Fixed_Next3
+	jr	t, HDAE5000_FormatFloat_Fixed_Join17
 HDAE5000_FormatFloat_Fixed_Loop3:
 	pushw 0x0020
 	ld xwa, (xsp + 0x0e)
@@ -24822,22 +24822,22 @@ HDAE5000_FormatFloat_Fixed_Next3:
 	ld	wa, (xsp+18)
 	decm	1, (xsp+18)
 	cp	wa, 0:i3
-	jr gt, HDAE5000_FormatFloat_Fixed_Loop3                      ; [6a e7] jr GT,0x29a6a1
+	jr	gt, HDAE5000_FormatFloat_Fixed_Loop3
 HDAE5000_FormatFloat_Fixed_Join17:
 	cp	iz, 0:i3
-	jr z, HDAE5000_FormatFloat_Fixed_Skip5                       ; [66 05] jr Z,0x29a6c3
+	jr	z, HDAE5000_FormatFloat_Fixed_Skip5
 	pushw 0x002d
-	jr t, HDAE5000_FormatFloat_Fixed_Join18                       ; [68 18] jr T,0x29a6db
+	jr	t, HDAE5000_FormatFloat_Fixed_Join18
 HDAE5000_FormatFloat_Fixed_Skip5:
 	ld	wa, (xsp+16)
 	bit	0x00, wa
-	jr z, HDAE5000_FormatFloat_Fixed_Skip6                       ; [66 05] jr Z,0x29a6d0
+	jr	z, HDAE5000_FormatFloat_Fixed_Skip6
 	pushw 0x002b
-	jr t, HDAE5000_FormatFloat_Fixed_Join18                       ; [68 0b] jr T,0x29a6db
+	jr	t, HDAE5000_FormatFloat_Fixed_Join18
 HDAE5000_FormatFloat_Fixed_Skip6:
 	ld	wa, (xsp+16)
 	bit	0x02, wa
-	jr z, HDAE5000_FormatFloat_Fixed_Join19                       ; [66 0f] jr Z,0x29a6e7
+	jr	z, HDAE5000_FormatFloat_Fixed_Join19
 	pushw 0x0020
 HDAE5000_FormatFloat_Fixed_Join18:
 	ld xwa, (xsp + 0x0e)
@@ -24847,10 +24847,10 @@ HDAE5000_FormatFloat_Fixed_Join18:
 HDAE5000_FormatFloat_Fixed_Join19:
 	ld	wa, (xsp+16)
 	bit	0x01, wa
-	jr nz, HDAE5000_FormatFloat_Fixed_Join20                      ; [6e 24] jr NZ,0x29a713
+	jr	nz, HDAE5000_FormatFloat_Fixed_Join20
 	cpw	(0x239486:24), 48
-	jr z, HDAE5000_FormatFloat_Fixed_Next4                       ; [66 11] jr Z,0x29a709
-	jr t, HDAE5000_FormatFloat_Fixed_Join20                       ; [68 19] jr T,0x29a713
+	jr	z, HDAE5000_FormatFloat_Fixed_Next4
+	jr	t, HDAE5000_FormatFloat_Fixed_Join20
 HDAE5000_FormatFloat_Fixed_Loop4:
 	pushw 0x0030
 	ld xwa, (xsp + 0x0e)
@@ -24861,23 +24861,23 @@ HDAE5000_FormatFloat_Fixed_Next4:
 	ld	wa, (xsp+18)
 	decm	1, (xsp+18)
 	cp	wa, 0:i3
-	jr gt, HDAE5000_FormatFloat_Fixed_Loop4                      ; [6a e7] jr GT,0x29a6fa
+	jr	gt, HDAE5000_FormatFloat_Fixed_Loop4
 HDAE5000_FormatFloat_Fixed_Join20:
 	ld xwa, (xsp + 0x16)
 	cp	(xwa), 0x39
-	jr le, HDAE5000_FormatFloat_Fixed_Skip7                      ; [62 19] jr LE,0x29a734
+	jr	le, HDAE5000_FormatFloat_Fixed_Skip7
 	cpw	(xsp+26), 0x0000
-	jr lt, HDAE5000_FormatFloat_Fixed_Skip7                      ; [61 12] jr LT,0x29a734
+	jr	lt, HDAE5000_FormatFloat_Fixed_Skip7
 	pushw 0x0031
 	ld xwa, (xsp + 0x0e)
 	call	(xwa)
 	inc 2, xsp
 	ld xwa, (xsp + 0x16)
 	ld	(xwa), 0x30
-	jr t, HDAE5000_FormatFloat_Fixed_Join21                       ; [68 11] jr T,0x29a745
+	jr	t, HDAE5000_FormatFloat_Fixed_Join21
 HDAE5000_FormatFloat_Fixed_Skip7:
 	cpw	(xsp+26), 0x0000
-	jr gt, HDAE5000_FormatFloat_Fixed_Join22                      ; [6a 0f] jr GT,0x29a74a
+	jr	gt, HDAE5000_FormatFloat_Fixed_Join22
 	pushw 0x0030
 	ld xwa, (xsp + 0x0e)
 	call	(xwa)
@@ -24886,7 +24886,7 @@ HDAE5000_FormatFloat_Fixed_Join21:
 	incw	1, (0x239488:24)
 HDAE5000_FormatFloat_Fixed_Join22:
 	ld	iz, 0:i3
-	jr t, HDAE5000_FormatFloat_Fixed_Next5                       ; [68 19] jr T,0x29a767
+	jr	t, HDAE5000_FormatFloat_Fixed_Next5
 HDAE5000_FormatFloat_Fixed_Loop5:
 	ld xwa, (xsp + 0x16)
 	ld	a, (xwa+iz)
@@ -24901,12 +24901,12 @@ HDAE5000_FormatFloat_Fixed_Next5:
 	ld	wa, (xsp+4)
 	inc	1, wa
 	cp	iz, wa
-	jr ge, HDAE5000_FormatFloat_Fixed_Next6                      ; [69 1b] jr GE,0x29a78b
+	jr	ge, HDAE5000_FormatFloat_Fixed_Next6
 	ld	wa, (xsp+2)
 	decm	1, (xsp+2)
 	cp	wa, 0:i3
-	jr gt, HDAE5000_FormatFloat_Fixed_Loop5                      ; [6a d4] jr GT,0x29a74e
-	jr t, HDAE5000_FormatFloat_Fixed_Next6                       ; [68 0f] jr T,0x29a78b
+	jr	gt, HDAE5000_FormatFloat_Fixed_Loop5
+	jr	t, HDAE5000_FormatFloat_Fixed_Next6
 HDAE5000_FormatFloat_Fixed_Loop6:
 	pushw 0x0030
 	ld xwa, (xsp + 0x0e)
@@ -24917,33 +24917,33 @@ HDAE5000_FormatFloat_Fixed_Next6:
 	ld	wa, (xsp+2)
 	decm	1, (xsp+2)
 	cp	wa, 0:i3
-	jr gt, HDAE5000_FormatFloat_Fixed_Loop6                      ; [6a e7] jr GT,0x29a77c
+	jr	gt, HDAE5000_FormatFloat_Fixed_Loop6
 	ld	wa, (xsp+16)
 	bit	0x03, wa
-	jr nz, HDAE5000_FormatFloat_Fixed_Join23                      ; [6e 07] jr NZ,0x29a7a4
+	jr	nz, HDAE5000_FormatFloat_Fixed_Join23
 	cpw	(xsp+20), 0x0000
-	jr z, HDAE5000_FormatFloat_Fixed_Next7                       ; [66 46] jr Z,0x29a7ea
+	jr	z, HDAE5000_FormatFloat_Fixed_Next7
 HDAE5000_FormatFloat_Fixed_Join23:
 	pushw 0x002e
 	ld xwa, (xsp + 0x0e)
 	call	(xwa)
 	inc 2, xsp
 	incw	1, (0x239488:24)
-	jr t, HDAE5000_FormatFloat_Fixed_Next7                       ; [68 35] jr T,0x29a7ea
+	jr	t, HDAE5000_FormatFloat_Fixed_Next7
 HDAE5000_FormatFloat_Fixed_Loop7:
 	ld	wa, (xsp+26)
 	add	wa, 0x0001
-	jr nz, HDAE5000_FormatFloat_Fixed_Skip8                      ; [6e 1a] jr NZ,0x29a7d8
+	jr	nz, HDAE5000_FormatFloat_Fixed_Skip8
 	ld xwa, (xsp + 0x16)
 	cp	(xwa), 0x39
-	jr le, HDAE5000_FormatFloat_Fixed_Skip8                      ; [62 12] jr LE,0x29a7d8
+	jr	le, HDAE5000_FormatFloat_Fixed_Skip8
 	pushw 0x0031
 	ld xwa, (xsp + 0x0e)
 	call	(xwa)
 	inc 2, xsp
 	ld xwa, (xsp + 0x16)
 	ld	(xwa), 0x30
-	jr t, HDAE5000_FormatFloat_Fixed_Join24                       ; [68 0a] jr T,0x29a7e2
+	jr	t, HDAE5000_FormatFloat_Fixed_Join24
 HDAE5000_FormatFloat_Fixed_Skip8:
 	pushw 0x0030
 	ld xwa, (xsp + 0x0e)
@@ -24954,17 +24954,17 @@ HDAE5000_FormatFloat_Fixed_Join24:
 	incw	1, (xsp+26)
 HDAE5000_FormatFloat_Fixed_Next7:
 	cpw	(xsp+26), 0x0000
-	jr ge, HDAE5000_FormatFloat_Fixed_Join25                      ; [69 0a] jr GE,0x29a7fb
+	jr	ge, HDAE5000_FormatFloat_Fixed_Join25
 	ld	wa, (xsp+20)
 	decm	1, (xsp+20)
 	cp	wa, 0:i3
-	jr nz, HDAE5000_FormatFloat_Fixed_Loop7                      ; [6e ba] jr NZ,0x29a7b5
+	jr	nz, HDAE5000_FormatFloat_Fixed_Loop7
 HDAE5000_FormatFloat_Fixed_Join25:
 	ld	wa, (xsp+4)
 	inc	1, wa
 	cp	iz, wa
-	jr lt, HDAE5000_FormatFloat_Fixed_Next8                      ; [61 1b] jr LT,0x29a81f
-	jr t, HDAE5000_FormatFloat_Fixed_Next9                       ; [68 3d] jr T,0x29a843
+	jr	lt, HDAE5000_FormatFloat_Fixed_Next8
+	jr	t, HDAE5000_FormatFloat_Fixed_Next9
 HDAE5000_FormatFloat_Fixed_Loop8:
 	ld xwa, (xsp + 0x16)
 	ld	a, (xwa+iz)
@@ -24979,12 +24979,12 @@ HDAE5000_FormatFloat_Fixed_Next8:
 	ld	wa, (xsp+4)
 	inc	1, wa
 	cp	iz, wa
-	jr ge, HDAE5000_FormatFloat_Fixed_Next9                      ; [69 1b] jr GE,0x29a843
+	jr	ge, HDAE5000_FormatFloat_Fixed_Next9
 	ld	wa, (xsp+20)
 	decm	1, (xsp+20)
 	cp	wa, 0:i3
-	jr gt, HDAE5000_FormatFloat_Fixed_Loop8                      ; [6a d4] jr GT,0x29a806
-	jr t, HDAE5000_FormatFloat_Fixed_Next9                       ; [68 0f] jr T,0x29a843
+	jr	gt, HDAE5000_FormatFloat_Fixed_Loop8
+	jr	t, HDAE5000_FormatFloat_Fixed_Next9
 HDAE5000_FormatFloat_Fixed_Loop9:
 	pushw 0x0030
 	ld xwa, (xsp + 0x0e)
@@ -24995,11 +24995,11 @@ HDAE5000_FormatFloat_Fixed_Next9:
 	ld	wa, (xsp+20)
 	decm	1, (xsp+20)
 	cp	wa, 0:i3
-	jr gt, HDAE5000_FormatFloat_Fixed_Loop9                      ; [6a e7] jr GT,0x29a834
+	jr	gt, HDAE5000_FormatFloat_Fixed_Loop9
 	ld	wa, (xsp+16)
 	bit	0x01, wa
-	jr nz, HDAE5000_FormatFloat_Fixed_Next10                      ; [6e 11] jr NZ,0x29a866
-	jr t, HDAE5000_FormatFloat_Fixed_Epilogue                       ; [68 19] jr T,0x29a870
+	jr	nz, HDAE5000_FormatFloat_Fixed_Next10
+	jr	t, HDAE5000_FormatFloat_Fixed_Epilogue
 HDAE5000_FormatFloat_Fixed_Loop10:
 	pushw 0x0020
 	ld xwa, (xsp + 0x0e)
@@ -25010,7 +25010,7 @@ HDAE5000_FormatFloat_Fixed_Next10:
 	ld	wa, (xsp+18)
 	decm	1, (xsp+18)
 	cp	wa, 0:i3
-	jr gt, HDAE5000_FormatFloat_Fixed_Loop10                      ; [6a e7] jr GT,0x29a857
+	jr	gt, HDAE5000_FormatFloat_Fixed_Loop10
 HDAE5000_FormatFloat_Fixed_Epilogue:
 	popw iz                                 ; pop IZ
 	inc 4, xsp
@@ -25019,13 +25019,13 @@ HDAE5000_FormatFloat_Fixed_Epilogue:
 	ld xwa, (xsp + 0x04)
 HDAE5000_FormatFloat_Fixed_Loop11:
 	cp	(xwa), 0x00
-	jr nz, HDAE5000_FormatFloat_Fixed_Next11                      ; [6e 03] jr NZ,0x29a87f
+	jr	nz, HDAE5000_FormatFloat_Fixed_Next11
 	ld	hl, 1:i3
 	ret
 
 HDAE5000_FormatFloat_Fixed_Next11:
 	cp	(xwa+), 48                 ; cp (XWA+), 0x30
-	jr z, HDAE5000_FormatFloat_Fixed_Loop11                       ; [66 f2] jr Z,0x29a877
+	jr	z, HDAE5000_FormatFloat_Fixed_Loop11
 	ld	hl, 0:i3
 	ret
 
@@ -25044,7 +25044,7 @@ HDAE5000_FormatFloat_Exp:	; 0x29A888 (848 bytes)
 	ldw (xsp + 0x04), 15
 	ld	wa, (xsp+16)
 	bit	0x04, wa
-	jr nz, HDAE5000_FormatFloat_Exp_Join                      ; [6e 05] jr NZ,0x29a89d
+	jr	nz, HDAE5000_FormatFloat_Exp_Join
 	ldw (xsp + 0x14), 6
 HDAE5000_FormatFloat_Exp_Join:
 	ld	a, (xsp+10)
@@ -25052,17 +25052,17 @@ HDAE5000_FormatFloat_Exp_Join:
 	lda xbc, (HDAE5000_CType_Table:24)
 	lda	xbc, (xbc+wa)	; lda XBC,XBC+WA
 	bitm	1, (xbc)
-	jr z, HDAE5000_FormatFloat_Exp_Skip                       ; [66 08] jr Z,0x29a8b8
+	jr	z, HDAE5000_FormatFloat_Exp_Skip
 	ld	a, (xsp+10)
 	sub	a, 0x20
-	jr t, HDAE5000_FormatFloat_Exp_Join2                       ; [68 03] jr T,0x29a8bb
+	jr	t, HDAE5000_FormatFloat_Exp_Join2
 HDAE5000_FormatFloat_Exp_Skip:
 	ld	a, (xsp+10)
 HDAE5000_FormatFloat_Exp_Join2:
 	cp	a, 0x47
-	jr nz, HDAE5000_FormatFloat_Exp_Join3                      ; [6e 0a] jr NZ,0x29a8ca
+	jr	nz, HDAE5000_FormatFloat_Exp_Join3
 	cpw	(xsp+20), 0x0000
-	jr z, HDAE5000_FormatFloat_Exp_Join3                       ; [66 03] jr Z,0x29a8ca
+	jr	z, HDAE5000_FormatFloat_Exp_Join3
 	decm	1, (xsp+20)
 HDAE5000_FormatFloat_Exp_Join3:
 	ld	wa, (xsp+20)
@@ -25070,20 +25070,20 @@ HDAE5000_FormatFloat_Exp_Join3:
 	ld	qiz, wa
 	ld	wa, (xsp+16)
 	bit	0x07, wa
-	jr z, HDAE5000_FormatFloat_Exp_Join4                       ; [66 05] jr Z,0x29a8df
+	jr	z, HDAE5000_FormatFloat_Exp_Join4
 	ldw (xsp + 0x04), 18
 HDAE5000_FormatFloat_Exp_Join4:
 	ld	de, (xsp+4)
 	inc	1, de
 	ld	wa, qiz
 	cp	wa, de
-	jr ge, HDAE5000_FormatFloat_Exp_Join5                      ; [69 34] jr GE,0x29a91f
+	jr	ge, HDAE5000_FormatFloat_Exp_Join5
 	ld	de, qiz
 	dec	1, qiz
 	ld xwa, (xsp + 0x16)
 	cp	(xwa+de), 0x34
-	jr gt, HDAE5000_FormatFloat_Exp_Next                      ; [6a 0e] jr GT,0x29a90a
-	jr t, HDAE5000_FormatFloat_Exp_Join5                       ; [68 21] jr T,0x29a91f
+	jr	gt, HDAE5000_FormatFloat_Exp_Next
+	jr	t, HDAE5000_FormatFloat_Exp_Join5
 HDAE5000_FormatFloat_Exp_Loop:
 	ld xwa, (xsp + 0x16)
 	stib_ind 0x07, 0xE0, 0xFA, 0x30	; ld (XWA+QIZ),0x30
@@ -25092,65 +25092,65 @@ HDAE5000_FormatFloat_Exp_Next:
 	ld xwa, (xsp + 0x16)
 	inc_srib 1, 0x07, 0xE0, 0xFA	; inc 1,(XWA+QIZ)
 	cp	qiz, 0
-	jr le, HDAE5000_FormatFloat_Exp_Join5                      ; [62 08] jr LE,0x29a91f
+	jr	le, HDAE5000_FormatFloat_Exp_Join5
 	cpib_sri 0x07, 0xE0, 0xFA, 0x39	; cp (XWA+QIZ),0x39
-	jr gt, HDAE5000_FormatFloat_Exp_Loop                      ; [6a df] jr GT,0x29a8fe
+	jr	gt, HDAE5000_FormatFloat_Exp_Loop
 HDAE5000_FormatFloat_Exp_Join5:
 	bitm	1, (xbc)
-	jr z, HDAE5000_FormatFloat_Exp_Skip2                       ; [66 08] jr Z,0x29a92b
+	jr	z, HDAE5000_FormatFloat_Exp_Skip2
 	ld	a, (xsp+10)
 	sub	a, 0x20
-	jr t, HDAE5000_FormatFloat_Exp_Join6                       ; [68 03] jr T,0x29a92e
+	jr	t, HDAE5000_FormatFloat_Exp_Join6
 HDAE5000_FormatFloat_Exp_Skip2:
 	ld	a, (xsp+10)
 HDAE5000_FormatFloat_Exp_Join6:
 	cp	a, 0x47
-	jr nz, HDAE5000_FormatFloat_Exp_Join7                      ; [6e 26] jr NZ,0x29a959
+	jr	nz, HDAE5000_FormatFloat_Exp_Join7
 	ld	wa, (xsp+16)
 	bit	0x03, wa
-	jr nz, HDAE5000_FormatFloat_Exp_Join7                      ; [6e 1e] jr NZ,0x29a959
+	jr	nz, HDAE5000_FormatFloat_Exp_Join7
 	ld	wa, (xsp+20)
 	ld	qiz, wa
-	jr t, HDAE5000_FormatFloat_Exp_Next2                       ; [68 06] jr T,0x29a949
+	jr	t, HDAE5000_FormatFloat_Exp_Next2
 HDAE5000_FormatFloat_Exp_Loop2:
 	dec	1, qiz
 	decm	1, (xsp+20)
 HDAE5000_FormatFloat_Exp_Next2:
 	cp	qiz, 0
-	jr le, HDAE5000_FormatFloat_Exp_Join7                      ; [62 0b] jr LE,0x29a959
+	jr	le, HDAE5000_FormatFloat_Exp_Join7
 	ld xwa, (xsp + 0x16)
 	cpib_sri 0x07, 0xE0, 0xFA, 0x30	; cp (XWA+QIZ),0x30
-	jr z, HDAE5000_FormatFloat_Exp_Loop2                       ; [66 ea] jr Z,0x29a943
+	jr	z, HDAE5000_FormatFloat_Exp_Loop2
 HDAE5000_FormatFloat_Exp_Join7:
 	decm	5, (xsp+18)
 	ld	wa, (xsp+16)
 	bit	0x04, wa
-	jr z, HDAE5000_FormatFloat_Exp_Join8                       ; [66 07] jr Z,0x29a96b
+	jr	z, HDAE5000_FormatFloat_Exp_Join8
 	cpw	(xsp+20), 0x0000
-	jr z, HDAE5000_FormatFloat_Exp_Join9                       ; [66 03] jr Z,0x29a96e
+	jr	z, HDAE5000_FormatFloat_Exp_Join9
 HDAE5000_FormatFloat_Exp_Join8:
 	decm	1, (xsp+18)
 HDAE5000_FormatFloat_Exp_Join9:
 	ld	iz, (xsp+28)
 	cp	iz, 0:i3
-	jr nz, HDAE5000_FormatFloat_Exp_Join10                      ; [6e 09] jr NZ,0x29a97e
+	jr	nz, HDAE5000_FormatFloat_Exp_Join10
 	ld	wa, (xsp+16)
 	and	wa, 0x0005
-	jr z, HDAE5000_FormatFloat_Exp_Join11                       ; [66 03] jr Z,0x29a981
+	jr	z, HDAE5000_FormatFloat_Exp_Join11
 HDAE5000_FormatFloat_Exp_Join10:
 	decm	1, (xsp+18)
 HDAE5000_FormatFloat_Exp_Join11:
 	ld	wa, (xsp+20)
 	sub	(xsp+18), wa
-	jr ge, HDAE5000_FormatFloat_Exp_Join12                      ; [69 05] jr GE,0x29a98e
+	jr	ge, HDAE5000_FormatFloat_Exp_Join12
 	ldw (xsp + 0x12), 0
 HDAE5000_FormatFloat_Exp_Join12:
 	ld	wa, (xsp+16)
 	bit	0x01, wa
-	jr nz, HDAE5000_FormatFloat_Exp_Join13                      ; [6e 24] jr NZ,0x29a9ba
+	jr	nz, HDAE5000_FormatFloat_Exp_Join13
 	cpw	(0x239486:24), 32
-	jr z, HDAE5000_FormatFloat_Exp_Next3                       ; [66 11] jr Z,0x29a9b0
-	jr t, HDAE5000_FormatFloat_Exp_Join13                       ; [68 19] jr T,0x29a9ba
+	jr	z, HDAE5000_FormatFloat_Exp_Next3
+	jr	t, HDAE5000_FormatFloat_Exp_Join13
 HDAE5000_FormatFloat_Exp_Loop3:
 	pushw 0x0020
 	ld xwa, (xsp + 0x0e)
@@ -25160,22 +25160,22 @@ HDAE5000_FormatFloat_Exp_Loop3:
 HDAE5000_FormatFloat_Exp_Next3:
 	decm	1, (xsp+18)
 	cpw	(xsp+18), 0x0000
-	jr gt, HDAE5000_FormatFloat_Exp_Loop3                      ; [6a e7] jr GT,0x29a9a1
+	jr	gt, HDAE5000_FormatFloat_Exp_Loop3
 HDAE5000_FormatFloat_Exp_Join13:
 	cp	iz, 0:i3
-	jr z, HDAE5000_FormatFloat_Exp_Skip3                       ; [66 05] jr Z,0x29a9c3
+	jr	z, HDAE5000_FormatFloat_Exp_Skip3
 	pushw 0x002d
-	jr t, HDAE5000_FormatFloat_Exp_Join14                       ; [68 18] jr T,0x29a9db
+	jr	t, HDAE5000_FormatFloat_Exp_Join14
 HDAE5000_FormatFloat_Exp_Skip3:
 	ld	wa, (xsp+16)
 	bit	0x00, wa
-	jr z, HDAE5000_FormatFloat_Exp_Skip4                       ; [66 05] jr Z,0x29a9d0
+	jr	z, HDAE5000_FormatFloat_Exp_Skip4
 	pushw 0x002b
-	jr t, HDAE5000_FormatFloat_Exp_Join14                       ; [68 0b] jr T,0x29a9db
+	jr	t, HDAE5000_FormatFloat_Exp_Join14
 HDAE5000_FormatFloat_Exp_Skip4:
 	ld	wa, (xsp+16)
 	bit	0x02, wa
-	jr z, HDAE5000_FormatFloat_Exp_Join15                       ; [66 0f] jr Z,0x29a9e7
+	jr	z, HDAE5000_FormatFloat_Exp_Join15
 	pushw 0x0020
 HDAE5000_FormatFloat_Exp_Join14:
 	ld xwa, (xsp + 0x0e)
@@ -25185,10 +25185,10 @@ HDAE5000_FormatFloat_Exp_Join14:
 HDAE5000_FormatFloat_Exp_Join15:
 	ld	wa, (xsp+16)
 	bit	0x01, wa
-	jr nz, HDAE5000_FormatFloat_Exp_Join16                      ; [6e 24] jr NZ,0x29aa13
+	jr	nz, HDAE5000_FormatFloat_Exp_Join16
 	cpw	(0x239486:24), 48
-	jr z, HDAE5000_FormatFloat_Exp_Next4                       ; [66 11] jr Z,0x29aa09
-	jr t, HDAE5000_FormatFloat_Exp_Join16                       ; [68 19] jr T,0x29aa13
+	jr	z, HDAE5000_FormatFloat_Exp_Next4
+	jr	t, HDAE5000_FormatFloat_Exp_Join16
 HDAE5000_FormatFloat_Exp_Loop4:
 	pushw 0x0030
 	ld xwa, (xsp + 0x0e)
@@ -25198,11 +25198,11 @@ HDAE5000_FormatFloat_Exp_Loop4:
 HDAE5000_FormatFloat_Exp_Next4:
 	decm	1, (xsp+18)
 	cpw	(xsp+18), 0x0000
-	jr gt, HDAE5000_FormatFloat_Exp_Loop4                      ; [6a e7] jr GT,0x29a9fa
+	jr	gt, HDAE5000_FormatFloat_Exp_Loop4
 HDAE5000_FormatFloat_Exp_Join16:
 	ld xwa, (xsp + 0x16)
 	cp	(xwa), 0x39
-	jr le, HDAE5000_FormatFloat_Exp_Skip6                      ; [62 29] jr LE,0x29aa44
+	jr	le, HDAE5000_FormatFloat_Exp_Skip6
 	pushw 0x0031
 	ld xwa, (xsp + 0x0e)
 	call	(xwa)
@@ -25212,12 +25212,12 @@ HDAE5000_FormatFloat_Exp_Join16:
 	ld	qiz, 0
 	incw	1, (0x239488:24)
 	cpw	(xsp+26), 0x0000
-	jr ge, HDAE5000_FormatFloat_Exp_Skip5                      ; [69 05] jr GE,0x29aa3f
+	jr	ge, HDAE5000_FormatFloat_Exp_Skip5
 	incw	1, (xsp+26)
-	jr t, HDAE5000_FormatFloat_Exp_Join17                       ; [68 1c] jr T,0x29aa5b
+	jr	t, HDAE5000_FormatFloat_Exp_Join17
 HDAE5000_FormatFloat_Exp_Skip5:
 	decm	1, (xsp+26)
-	jr t, HDAE5000_FormatFloat_Exp_Join17                       ; [68 17] jr T,0x29aa5b
+	jr	t, HDAE5000_FormatFloat_Exp_Join17
 HDAE5000_FormatFloat_Exp_Skip6:
 	ld xwa, (xsp + 0x16)
 	ld	a, (xwa)
@@ -25230,10 +25230,10 @@ HDAE5000_FormatFloat_Exp_Skip6:
 	ld	qiz, 1
 HDAE5000_FormatFloat_Exp_Join17:
 	cpw	(xsp+20), 0x0000
-	jr nz, HDAE5000_FormatFloat_Exp_Join18                      ; [6e 08] jr NZ,0x29aa6a
+	jr	nz, HDAE5000_FormatFloat_Exp_Join18
 	ld	wa, (xsp+16)
 	bit	0x03, wa
-	jr z, HDAE5000_FormatFloat_Exp_Join19                       ; [66 0f] jr Z,0x29aa79
+	jr	z, HDAE5000_FormatFloat_Exp_Join19
 HDAE5000_FormatFloat_Exp_Join18:
 	pushw 0x002e
 	ld xwa, (xsp + 0x0e)
@@ -25245,26 +25245,26 @@ HDAE5000_FormatFloat_Exp_Join19:
 	extz bc
 	lda xwa, (HDAE5000_CType_Table:24)
 	bit	1, (xwa+bc)
-	jr z, HDAE5000_FormatFloat_Exp_Skip7                       ; [66 08] jr Z,0x29aa92
+	jr	z, HDAE5000_FormatFloat_Exp_Skip7
 	ld	a, (xsp+10)
 	sub	a, 0x20
-	jr t, HDAE5000_FormatFloat_Exp_Join20                       ; [68 03] jr T,0x29aa95
+	jr	t, HDAE5000_FormatFloat_Exp_Join20
 HDAE5000_FormatFloat_Exp_Skip7:
 	ld	a, (xsp+10)
 HDAE5000_FormatFloat_Exp_Join20:
 	cp	a, 0x47
-	jr nz, HDAE5000_FormatFloat_Exp_Join21                      ; [6e 0f] jr NZ,0x29aaa9
+	jr	nz, HDAE5000_FormatFloat_Exp_Join21
 	cpw	(xsp+20), 0x0000
-	jr nz, HDAE5000_FormatFloat_Exp_Join21                      ; [6e 08] jr NZ,0x29aaa9
+	jr	nz, HDAE5000_FormatFloat_Exp_Join21
 	cpw	(xsp+26), 0x0001
-	jrl z, HDAE5000_FormatFloat_Exp_Epilogue                      ; [76 2b 01] jrl Z,0x29abd4
+	jrl	z, HDAE5000_FormatFloat_Exp_Epilogue
 HDAE5000_FormatFloat_Exp_Join21:
 	ld	bc, (xsp+4)
 	inc	1, bc
 	ld	wa, qiz
 	cp	wa, bc
-	jr lt, HDAE5000_FormatFloat_Exp_Next5                      ; [61 1c] jr LT,0x29aad1
-	jr t, HDAE5000_FormatFloat_Exp_Next6                       ; [68 41] jr T,0x29aaf8
+	jr	lt, HDAE5000_FormatFloat_Exp_Next5
+	jr	t, HDAE5000_FormatFloat_Exp_Next6
 HDAE5000_FormatFloat_Exp_Loop5:
 	ld xwa, (xsp + 0x16)
 	ld	a, (xwa+qiz)
@@ -25280,12 +25280,12 @@ HDAE5000_FormatFloat_Exp_Next5:
 	inc	1, bc
 	ld	wa, qiz
 	cp	wa, bc
-	jr ge, HDAE5000_FormatFloat_Exp_Next6                      ; [69 1b] jr GE,0x29aaf8
+	jr	ge, HDAE5000_FormatFloat_Exp_Next6
 	ld	wa, (xsp+20)
 	decm	1, (xsp+20)
 	cp	wa, 0:i3
-	jr gt, HDAE5000_FormatFloat_Exp_Loop5                      ; [6a d0] jr GT,0x29aab7
-	jr t, HDAE5000_FormatFloat_Exp_Next6                       ; [68 0f] jr T,0x29aaf8
+	jr	gt, HDAE5000_FormatFloat_Exp_Loop5
+	jr	t, HDAE5000_FormatFloat_Exp_Next6
 HDAE5000_FormatFloat_Exp_Loop6:
 	pushw 0x0030
 	ld xwa, (xsp + 0x0e)
@@ -25296,7 +25296,7 @@ HDAE5000_FormatFloat_Exp_Next6:
 	ld	wa, (xsp+20)
 	decm	1, (xsp+20)
 	cp	wa, 0:i3
-	jr gt, HDAE5000_FormatFloat_Exp_Loop6                      ; [6a e7] jr GT,0x29aae9
+	jr	gt, HDAE5000_FormatFloat_Exp_Loop6
 	decm	1, (xsp+26)
 	ld	wa, (xsp+26)
 	exts xwa
@@ -25313,18 +25313,18 @@ HDAE5000_FormatFloat_Exp_Next6:
 	extz bc
 	lda xwa, (HDAE5000_CType_Table:24)
 	bit	1, (xwa+bc)
-	jr z, HDAE5000_FormatFloat_Exp_Skip8                       ; [66 08] jr Z,0x29ab38
+	jr	z, HDAE5000_FormatFloat_Exp_Skip8
 	ld	a, (xsp+10)
 	sub	a, 0x20
-	jr t, HDAE5000_FormatFloat_Exp_Join22                       ; [68 03] jr T,0x29ab3b
+	jr	t, HDAE5000_FormatFloat_Exp_Join22
 HDAE5000_FormatFloat_Exp_Skip8:
 	ld	a, (xsp+10)
 HDAE5000_FormatFloat_Exp_Join22:
 	cp	a, 0x47
-	jr nz, HDAE5000_FormatFloat_Exp_Skip9                      ; [6e 07] jr NZ,0x29ab47
+	jr	nz, HDAE5000_FormatFloat_Exp_Skip9
 	ld	a, (xsp+10)
 	dec	2, a
-	jr t, HDAE5000_FormatFloat_Exp_Join23                       ; [68 03] jr T,0x29ab4a
+	jr	t, HDAE5000_FormatFloat_Exp_Join23
 HDAE5000_FormatFloat_Exp_Skip9:
 	ld	a, (xsp+10)
 HDAE5000_FormatFloat_Exp_Join23:
@@ -25335,9 +25335,9 @@ HDAE5000_FormatFloat_Exp_Join23:
 	inc 2, xsp
 	incw	1, (0x239488:24)
 	cpw	(xsp+26), 0x0000
-	jr ge, HDAE5000_FormatFloat_Exp_Skip10                      ; [69 05] jr GE,0x29ab65
+	jr	ge, HDAE5000_FormatFloat_Exp_Skip10
 	pushw 0x002d
-	jr t, HDAE5000_FormatFloat_Exp_Join24                       ; [68 03] jr T,0x29ab68
+	jr	t, HDAE5000_FormatFloat_Exp_Join24
 HDAE5000_FormatFloat_Exp_Skip10:
 	pushw 0x002b
 HDAE5000_FormatFloat_Exp_Join24:
@@ -25346,7 +25346,7 @@ HDAE5000_FormatFloat_Exp_Join24:
 	inc 2, xsp
 	incw	1, (0x239488:24)
 	ld	qiz, iz
-	jr t, HDAE5000_FormatFloat_Exp_Next7                       ; [68 0f] jr T,0x29ab88
+	jr	t, HDAE5000_FormatFloat_Exp_Next7
 HDAE5000_FormatFloat_Exp_Loop7:
 	pushw 0x0030
 	ld xwa, (xsp + 0x0e)
@@ -25357,8 +25357,8 @@ HDAE5000_FormatFloat_Exp_Next7:
 	ld	wa, qiz
 	inc	1, qiz
 	cp	wa, 3:i3
-	jr lt, HDAE5000_FormatFloat_Exp_Loop7                      ; [61 e7] jr LT,0x29ab79
-	jr t, HDAE5000_FormatFloat_Exp_Next8                       ; [68 19] jr T,0x29abad
+	jr	lt, HDAE5000_FormatFloat_Exp_Loop7
+	jr	t, HDAE5000_FormatFloat_Exp_Next8
 HDAE5000_FormatFloat_Exp_Loop8:
 	dec	1, iz
 	ld xwa, (xsp + 0x16)
@@ -25371,11 +25371,11 @@ HDAE5000_FormatFloat_Exp_Loop8:
 	incw	1, (0x239488:24)
 HDAE5000_FormatFloat_Exp_Next8:
 	cp	iz, 0:i3
-	jr nz, HDAE5000_FormatFloat_Exp_Loop8                      ; [6e e3] jr NZ,0x29ab94
+	jr	nz, HDAE5000_FormatFloat_Exp_Loop8
 	ld	wa, (xsp+16)
 	bit	0x01, wa
-	jr nz, HDAE5000_FormatFloat_Exp_Next9                      ; [6e 11] jr NZ,0x29abca
-	jr t, HDAE5000_FormatFloat_Exp_Epilogue                       ; [68 19] jr T,0x29abd4
+	jr	nz, HDAE5000_FormatFloat_Exp_Next9
+	jr	t, HDAE5000_FormatFloat_Exp_Epilogue
 HDAE5000_FormatFloat_Exp_Loop9:
 	pushw 0x0020
 	ld xwa, (xsp + 0x0e)
@@ -25385,7 +25385,7 @@ HDAE5000_FormatFloat_Exp_Loop9:
 HDAE5000_FormatFloat_Exp_Next9:
 	decm	1, (xsp+18)
 	cpw	(xsp+18), 0x0000
-	jr gt, HDAE5000_FormatFloat_Exp_Loop9                      ; [6a e7] jr GT,0x29abbb
+	jr	gt, HDAE5000_FormatFloat_Exp_Loop9
 HDAE5000_FormatFloat_Exp_Epilogue:
 	pop xiz
 	inc 2, xsp

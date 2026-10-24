@@ -143,24 +143,24 @@ HDAE5000_StrNCpy:	; 0x29AFF0
 	ld xde, (xsp + 0x08)
 	ld xix, (xsp + 0x04)
 	ld	xhl, xix
-	jr t, HDAE5000_StrNCpy_Next                       ; [68 08] jr T,0x29b005
+	jr	t, HDAE5000_StrNCpy_Next
 HDAE5000_StrNCpy_Loop:
 	ld a, (xde+)
 	ld (xix+), a
 	dec	1, bc
 HDAE5000_StrNCpy_Next:
 	cp	bc, 0:i3
-	jr z, HDAE5000_StrNCpy_Join                       ; [66 05] jr Z,0x29b00e
+	jr	z, HDAE5000_StrNCpy_Join
 	cp	(xde), 0x00
-	jr nz, HDAE5000_StrNCpy_Loop                      ; [6e ef] jr NZ,0x29affd
+	jr	nz, HDAE5000_StrNCpy_Loop
 HDAE5000_StrNCpy_Join:
-	jr t, HDAE5000_StrNCpy_Next2                       ; [68 06] jr T,0x29b016
+	jr	t, HDAE5000_StrNCpy_Next2
 HDAE5000_StrNCpy_Loop2:
 	ld (xix+), 0x00
 	dec	1, bc
 HDAE5000_StrNCpy_Next2:
 	cp	bc, 0:i3
-	jr nz, HDAE5000_StrNCpy_Loop2                      ; [6e f6] jr NZ,0x29b010
+	jr	nz, HDAE5000_StrNCpy_Loop2
 	ret
 
 HDAE5000_StrRev:
@@ -175,7 +175,7 @@ HDAE5000_StrRev:
 	add	xix, xiz
 	dec	1, xix
 	cp	xiz, xix
-	jr nc, HDAE5000_StrRev_Done                      ; [6f 17] jr NC,0x29b049
+	jr	nc, HDAE5000_StrRev_Done
 	ld	xbc, xiz
 	ld	xde, xix
 HDAE5000_StrRev_Loop:
@@ -187,7 +187,7 @@ HDAE5000_StrRev_Loop:
 	dec	1, xde
 	dec	1, xix
 	cp	xiz, xix
-	jr c, HDAE5000_StrRev_Loop                       ; [67 ed] jr C,0x29b036
+	jr	c, HDAE5000_StrRev_Loop
 HDAE5000_StrRev_Done:
 	ld xhl, (xsp + 0x08)
 	pop xiz
@@ -198,17 +198,17 @@ HDAE5000_StrUpr:
 	; entry has bit 1 (lower case) set; returns XHL = s.
 	ld xix, (xsp + 0x04)
 	ld	xhl, xix
-	jr t, HDAE5000_StrUpr_Next                       ; [68 1f] jr T,0x29b074
+	jr	t, HDAE5000_StrUpr_Next
 HDAE5000_StrUpr_Loop:
 	ld	xde, xix
 	ld	a, (xix)
 	extz wa
 	lda xbc, (HDAE5000_CType_Table:24)
 	bit	1, (xbc+wa)
-	jr z, HDAE5000_StrUpr_Skip                       ; [66 07] jr Z,0x29b06e
+	jr	z, HDAE5000_StrUpr_Skip
 	ld	a, (xix)
 	sub	a, 0x20
-	jr t, HDAE5000_StrUpr_Join                       ; [68 02] jr T,0x29b070
+	jr	t, HDAE5000_StrUpr_Join
 HDAE5000_StrUpr_Skip:
 	ld	a, (xix)
 HDAE5000_StrUpr_Join:
@@ -216,7 +216,7 @@ HDAE5000_StrUpr_Join:
 	inc 1, xix
 HDAE5000_StrUpr_Next:
 	cp	(xix), 0x00
-	jr nz, HDAE5000_StrUpr_Loop                      ; [6e dc] jr NZ,0x29b055
+	jr	nz, HDAE5000_StrUpr_Loop
 	ret
 
 ; ----------------------------------------------------------------------------
@@ -258,16 +258,16 @@ HDAE5000_FltDec_Convert_Loop:
 	ldw	(xde+bc), 0x0000	; ld (XDE+BC),0x0000
 	inc	1, qiz
 	cpw	qiz, 0x0020
-	jr lt, HDAE5000_FltDec_Convert_Loop                      ; [61 d9] jr LT,0x29b09f
+	jr	lt, HDAE5000_FltDec_Convert_Loop
 	ld	wa, (xsp+32)
 	bit	0x07, wa
-	jr z, HDAE5000_FltDec_Convert_Join                       ; [66 0a] jr Z,0x29b0d8
+	jr	z, HDAE5000_FltDec_Convert_Join
 	ldw (xsp + 0x06), 18
 	ldw (xsp + 0x08), 10
 HDAE5000_FltDec_Convert_Join:
 	ld	qiz, 0
 	cpw	(xsp+8), 0x0000
-	jr le, HDAE5000_FltDec_Convert_Join2                      ; [62 22] jr LE,0x29b104
+	jr	le, HDAE5000_FltDec_Convert_Join2
 HDAE5000_FltDec_Convert_Loop2:
 	lda	xwa, (xsp+10)
 	ld	bc, (xsp+8)
@@ -280,13 +280,13 @@ HDAE5000_FltDec_Convert_Loop2:
 	inc	1, qiz
 	ld	wa, qiz
 	cp	wa, (xsp+8)
-	jr lt, HDAE5000_FltDec_Convert_Loop2                      ; [61 de] jr LT,0x29b0e2
+	jr	lt, HDAE5000_FltDec_Convert_Loop2
 HDAE5000_FltDec_Convert_Join2:
 	lda	xde, (xsp+10)
 	bitm	7, (xde)
-	jr z, HDAE5000_FltDec_Convert_Skip                       ; [66 04] jr Z,0x29b10f
+	jr	z, HDAE5000_FltDec_Convert_Skip
 	ld	wa, 1:i3
-	jr t, HDAE5000_FltDec_Convert_Join3                       ; [68 02] jr T,0x29b111
+	jr	t, HDAE5000_FltDec_Convert_Join3
 HDAE5000_FltDec_Convert_Skip:
 	ld	wa, 0:i3
 HDAE5000_FltDec_Convert_Join3:
@@ -295,22 +295,22 @@ HDAE5000_FltDec_Convert_Join3:
 	lda	xbc, (xde+1)
 	ld	wa, (xsp+32)
 	bit	0x07, wa
-	jr z, HDAE5000_FltDec_Convert_Skip2                       ; [66 16] jr Z,0x29b137
+	jr	z, HDAE5000_FltDec_Convert_Skip2
 	cp	(xde), 0x00
-	jr nz, HDAE5000_FltDec_Convert_Join4                      ; [6e 05] jr NZ,0x29b12b
+	jr	nz, HDAE5000_FltDec_Convert_Join4
 	cp	(xbc), 0x00
-	jr z, HDAE5000_FltDec_Convert_Skip2                       ; [66 0c] jr Z,0x29b137
+	jr	z, HDAE5000_FltDec_Convert_Skip2
 HDAE5000_FltDec_Convert_Join4:
 	ld8_src_ri xbc, l		; ld L,(XBC)
 	extz hl
 	ldw	wa, 0x0008
 	ldw	bc, 0x4000
-	jr t, HDAE5000_FltDec_Convert_Join6                       ; [68 19] jr T,0x29b150
+	jr	t, HDAE5000_FltDec_Convert_Join6
 HDAE5000_FltDec_Convert_Skip2:
 	cp	(xde), 0x00
-	jr nz, HDAE5000_FltDec_Convert_Join5                      ; [6e 05] jr NZ,0x29b141
+	jr	nz, HDAE5000_FltDec_Convert_Join5
 	cp	(xbc), 0x00
-	jr z, HDAE5000_FltDec_Convert_Join8                       ; [66 23] jr Z,0x29b164
+	jr	z, HDAE5000_FltDec_Convert_Join8
 HDAE5000_FltDec_Convert_Join5:
 	ld8_src_ri xbc, l		; ld L,(XBC)
 	and l, 0xf0
@@ -323,7 +323,7 @@ HDAE5000_FltDec_Convert_Join6:
 	res	0x07, e
 	extz de
 	and	a, 0x0f
-	jr z, HDAE5000_FltDec_Convert_Join7                       ; [66 02] jr Z,0x29b15e
+	jr	z, HDAE5000_FltDec_Convert_Join7
 	slaa	de
 HDAE5000_FltDec_Convert_Join7:
 	ld	iz, de
@@ -335,12 +335,12 @@ HDAE5000_FltDec_Convert_Join8:
 	inc 2, xsp
 	ld (xsp + 0x04), hl
 	cp	iz, 0:i3
-	jr ge, HDAE5000_FltDec_Convert_Join9                      ; [69 03] jr GE,0x29b174
+	jr	ge, HDAE5000_FltDec_Convert_Join9
 	decm	1, (xsp+4)
 HDAE5000_FltDec_Convert_Join9:
 	ld	wa, (xsp+32)
 	bit	0x07, wa
-	jr z, HDAE5000_FltDec_Convert_Skip3                       ; [66 2b] jr Z,0x29b1a7
+	jr	z, HDAE5000_FltDec_Convert_Skip3
 	ld	qiz, 2
 HDAE5000_FltDec_Convert_Loop3:
 	lda	xwa, (xsp+10)
@@ -353,21 +353,21 @@ HDAE5000_FltDec_Convert_Loop3:
 	ld	(xbc+de), wa
 	inc	1, qiz
 	cpw	qiz, 0x000a
-	jr lt, HDAE5000_FltDec_Convert_Loop3                      ; [61 da] jr LT,0x29b17f
-	jr t, HDAE5000_FltDec_Convert_Join11                       ; [68 52] jr T,0x29b1f9
+	jr	lt, HDAE5000_FltDec_Convert_Loop3
+	jr	t, HDAE5000_FltDec_Convert_Join11
 HDAE5000_FltDec_Convert_Skip3:
 	ld	ix, 0:i3
 	ld	qiz, 0
 HDAE5000_FltDec_Convert_Loop4:
 	lda	xbc, (xsp+10)
 	cpib_sri 0x07, 0xE4, 0xFA, 0x00	; cp (XBC+QIZ),0x00
-	jr z, HDAE5000_FltDec_Convert_Next                       ; [66 04] jr Z,0x29b1bb
+	jr	z, HDAE5000_FltDec_Convert_Next
 	ld	ix, 1:i3
-	jr t, HDAE5000_FltDec_Convert_Join10                       ; [68 0a] jr T,0x29b1c5
+	jr	t, HDAE5000_FltDec_Convert_Join10
 HDAE5000_FltDec_Convert_Next:
 	inc	1, qiz
 	cpw	qiz, 0x0008
-	jr lt, HDAE5000_FltDec_Convert_Loop4                      ; [61 e7] jr LT,0x29b1ac
+	jr	lt, HDAE5000_FltDec_Convert_Loop4
 HDAE5000_FltDec_Convert_Join10:
 	and8_imm_rid8 xbc, 0x01, 0x0f		; and (XBC+0x01),0x0f
 	ld	qiz, 1
@@ -382,9 +382,9 @@ HDAE5000_FltDec_Convert_Loop5:
 	ld	(xde+hl), wa
 	inc	1, qiz
 	cpw	qiz, 0x0008
-	jr lt, HDAE5000_FltDec_Convert_Loop5                      ; [61 db] jr LT,0x29b1cc
+	jr	lt, HDAE5000_FltDec_Convert_Loop5
 	cp	ix, 0:i3
-	jr z, HDAE5000_FltDec_Convert_Join11                       ; [66 04] jr Z,0x29b1f9
+	jr	z, HDAE5000_FltDec_Convert_Join11
 	or16_imm_ri xde, 0x10, 0x00		; or (XDE),0x0010
 HDAE5000_FltDec_Convert_Join11:
 	pushm	(xsp+8)
@@ -394,9 +394,9 @@ HDAE5000_FltDec_Convert_Join11:
 	inc	6, xsp
 	ld	qiz, 0
 	cp	iz, 0:i3
-	jr le, HDAE5000_FltDec_Convert_Next2                      ; [62 54] jr LE,0x29b262
+	jr	le, HDAE5000_FltDec_Convert_Next2
 	cpw	(xsp+4), 0x0000
-	jr le, HDAE5000_FltDec_Convert_Join12                      ; [62 25] jr LE,0x29b23a
+	jr	le, HDAE5000_FltDec_Convert_Join12
 HDAE5000_FltDec_Convert_Loop6:
 	pushw 0x0023
 	pushw 0x94aa
@@ -410,7 +410,7 @@ HDAE5000_FltDec_Convert_Loop6:
 	inc	1, qiz
 	ld	wa, qiz
 	cp	wa, (xsp+4)
-	jr lt, HDAE5000_FltDec_Convert_Loop6                      ; [61 db] jr LT,0x29b215
+	jr	lt, HDAE5000_FltDec_Convert_Loop6
 HDAE5000_FltDec_Convert_Join12:
 	pushm	(xsp+6)
 	ld	wa, 6:i3
@@ -418,7 +418,7 @@ HDAE5000_FltDec_Convert_Join12:
 	pushw wa                                ; push WA
 	pushw 0x0023
 	pushw 0x94aa
-	jr t, HDAE5000_FltDec_Convert_Join13                       ; [68 32] jr T,0x29b27c
+	jr	t, HDAE5000_FltDec_Convert_Join13
 HDAE5000_FltDec_Convert_Loop7:
 	push xbc
 	calr	HDAE5000_FltDec_MulBy10
@@ -435,7 +435,7 @@ HDAE5000_FltDec_Convert_Next2:
 	lda xbc, (0x2394aa:24)
 	ld	wa, qiz
 	cp	wa, de
-	jr lt, HDAE5000_FltDec_Convert_Loop7                      ; [61 d7] jr LT,0x29b24a
+	jr	lt, HDAE5000_FltDec_Convert_Loop7
 	pushm	(xsp+6)
 	ld	wa, 6:i3
 	sub	wa, iz
@@ -455,13 +455,13 @@ HDAE5000_FltDec_Convert_Loop8:
 	inc 4, xsp
 	inc	1, qiz
 	cpw	qiz, 0x0009
-	jr lt, HDAE5000_FltDec_Convert_Loop8                      ; [61 df] jr LT,0x29b284
+	jr	lt, HDAE5000_FltDec_Convert_Loop8
 	ld	de, 0:i3
 	lda xbc, (0x2394aa:24)
 	ld xhl, (xsp + 0x1c)
 	ld	wa, (xbc)
 	cp	wa, 0x0009
-	jr ule, HDAE5000_FltDec_Convert_Join14                     ; [63 0d] jr ULE,0x29b2c4
+	jr	ule, HDAE5000_FltDec_Convert_Join14
 	ld	de, 1:i3
 	extz xwa
 	div wa, 0x000a
@@ -477,7 +477,7 @@ HDAE5000_FltDec_Convert_Join14:
 	ld	(xhl+ix), a
 	incw	1, (xsp+4)
 	ld	qiz, 1
-	jr t, HDAE5000_FltDec_Convert_Next3                       ; [68 16] jr T,0x29b2f6
+	jr	t, HDAE5000_FltDec_Convert_Next3
 HDAE5000_FltDec_Convert_Loop9:
 	ld	bc, de
 	inc	1, de
@@ -490,19 +490,19 @@ HDAE5000_FltDec_Convert_Next3:
 	inc	2, bc
 	ld	wa, qiz
 	cp	wa, bc
-	jr lt, HDAE5000_FltDec_Convert_Loop9                      ; [61 de] jr LT,0x29b2e0
+	jr	lt, HDAE5000_FltDec_Convert_Loop9
 	ld	de, (xsp+6)
 	inc	1, de
 	lda	xbc, (xhl+de)	; lda XBC,XHL+DE
 	cp	(xbc), 0x05
-	jr c, HDAE5000_FltDec_Convert_Join15                       ; [67 08] jr C,0x29b319
+	jr	c, HDAE5000_FltDec_Convert_Join15
 	ld	wa, (xsp+6)
 	inc	1, (xhl+wa)
 HDAE5000_FltDec_Convert_Join15:
 	ld	(xbc), 0x00
 	ld	wa, (xsp+6)
 	ld	qiz, wa
-	jr t, HDAE5000_FltDec_Convert_Next4                       ; [68 10] jr T,0x29b334
+	jr	t, HDAE5000_FltDec_Convert_Next4
 HDAE5000_FltDec_Convert_Loop10:
 	ld	bc, qiz
 	dec	1, bc
@@ -511,20 +511,20 @@ HDAE5000_FltDec_Convert_Loop10:
 	dec	1, qiz
 HDAE5000_FltDec_Convert_Next4:
 	cp	qiz, 0
-	jr z, HDAE5000_FltDec_Convert_Join16                       ; [66 0a] jr Z,0x29b343
+	jr	z, HDAE5000_FltDec_Convert_Join16
 	lda	xwa, (xhl+qiz)	; lda XWA,XHL+QIZ
 	cp	(xwa), 0x09
-	jr ugt, HDAE5000_FltDec_Convert_Loop10                     ; [6b e1] jr UGT,0x29b324
+	jr	ugt, HDAE5000_FltDec_Convert_Loop10
 HDAE5000_FltDec_Convert_Join16:
 	ld	qiz, 0
-	jr t, HDAE5000_FltDec_Convert_Next5                       ; [68 09] jr T,0x29b351
+	jr	t, HDAE5000_FltDec_Convert_Next5
 HDAE5000_FltDec_Convert_Loop11:
 	or_srib_im 0x07, 0xEC, 0xFA, 0x30	; or (XHL+QIZ),0x30
 	inc	1, qiz
 HDAE5000_FltDec_Convert_Next5:
 	ld	wa, qiz
 	cp	wa, de
-	jr lt, HDAE5000_FltDec_Convert_Loop11                      ; [61 f0] jr LT,0x29b348
+	jr	lt, HDAE5000_FltDec_Convert_Loop11
 	ld xbc, (xsp + 0x22)
 	ld	wa, (xsp+4)
 	ld (xbc), wa
@@ -540,19 +540,19 @@ HDAE5000_FltDec_ShiftRightBits:
 	ld	wa, 0:i3
 	ld	hl, (xsp+18)
 	cp	hl, 0:i3
-	jr le, HDAE5000_FltDec_ShiftRightBits_Join                      ; [62 0b] jr LE,0x29b37e
+	jr	le, HDAE5000_FltDec_ShiftRightBits_Join
 HDAE5000_FltDec_ShiftRightBits_Loop:
 	add	wa, wa
 	set	0x00, wa
 	inc	1, iz
 	cp	iz, hl
-	jr lt, HDAE5000_FltDec_ShiftRightBits_Loop                      ; [61 f5] jr LT,0x29b373
+	jr	lt, HDAE5000_FltDec_ShiftRightBits_Loop
 HDAE5000_FltDec_ShiftRightBits_Join:
 	ld	iz, (xsp+20)
 	dec	1, iz
 	ld xiy, (xsp + 0x0e)
 	cp	iz, 0:i3
-	jr le, HDAE5000_FltDec_ShiftRightBits_Join3                      ; [62 4f] jr LE,0x29b3d9
+	jr	le, HDAE5000_FltDec_ShiftRightBits_Join3
 	ld (xsp + 0x04), wa
 	ldw (xsp + 0x02), 8
 	sub	(xsp+2), hl
@@ -567,7 +567,7 @@ HDAE5000_FltDec_ShiftRightBits_Loop2:
 	ld	de, (xbc)
 	ld	wa, hl
 	and	a, 0x0f
-	jr z, HDAE5000_FltDec_ShiftRightBits_Join2                       ; [66 02] jr Z,0x29b3b1
+	jr	z, HDAE5000_FltDec_ShiftRightBits_Join2
 	srla	de
 HDAE5000_FltDec_ShiftRightBits_Join2:
 	ld (xbc), de
@@ -580,7 +580,7 @@ HDAE5000_FltDec_ShiftRightBits_Join2:
 	ld	bc, wa
 	ld	wa, (xsp+2)
 	and	a, 0x0f
-	jr z, HDAE5000_FltDec_ShiftRightBits_Next                       ; [66 02] jr Z,0x29b3cc
+	jr	z, HDAE5000_FltDec_ShiftRightBits_Next
 	slla	bc
 HDAE5000_FltDec_ShiftRightBits_Next:
 	ld xwa, (xsp + 0x06)
@@ -588,12 +588,12 @@ HDAE5000_FltDec_ShiftRightBits_Next:
 	dec	1, iz
 	dec	2, xix
 	cp	iz, 0:i3
-	jr gt, HDAE5000_FltDec_ShiftRightBits_Loop2                      ; [6a c4] jr GT,0x29b39d
+	jr	gt, HDAE5000_FltDec_ShiftRightBits_Loop2
 HDAE5000_FltDec_ShiftRightBits_Join3:
 	ld	bc, (xiy)
 	ld	wa, hl
 	and	a, 0x0f
-	jr z, HDAE5000_FltDec_ShiftRightBits_Join4                       ; [66 02] jr Z,0x29b3e4
+	jr	z, HDAE5000_FltDec_ShiftRightBits_Join4
 	srla	bc
 HDAE5000_FltDec_ShiftRightBits_Join4:
 	ld (xiy), bc
@@ -608,7 +608,7 @@ HDAE5000_FltDec_ShiftLeftBits:
 	ld	ix, 1:i3
 	ld	hl, (xsp+8)
 	add	hl, hl
-	jr t, HDAE5000_FltDec_ShiftLeftBits_Next                       ; [68 2f] jr T,0x29b429
+	jr	t, HDAE5000_FltDec_ShiftLeftBits_Next
 HDAE5000_FltDec_ShiftLeftBits_Loop:
 	ld	de, ix
 	exts xde
@@ -617,7 +617,7 @@ HDAE5000_FltDec_ShiftLeftBits_Loop:
 	ld	wa, (xsp+10)
 	ld	bc, (xde)
 	and	a, 0x0f
-	jr z, HDAE5000_FltDec_ShiftLeftBits_Join                       ; [66 02] jr Z,0x29b40e
+	jr	z, HDAE5000_FltDec_ShiftLeftBits_Join
 	slla	bc
 HDAE5000_FltDec_ShiftLeftBits_Join:
 	ld (xde), bc
@@ -634,7 +634,7 @@ HDAE5000_FltDec_ShiftLeftBits_Join:
 	inc	1, ix
 HDAE5000_FltDec_ShiftLeftBits_Next:
 	cp	ix, hl
-	jr lt, HDAE5000_FltDec_ShiftLeftBits_Loop                      ; [61 cd] jr LT,0x29b3fa
+	jr	lt, HDAE5000_FltDec_ShiftLeftBits_Loop
 	ret
 
 HDAE5000_FltDec_FractionDigits:
@@ -647,31 +647,31 @@ HDAE5000_FltDec_FractionDigits:
 HDAE5000_FltDec_FractionDigits_Loop:
 	ldw (xwa+), 0x0000		; ld (XWA+),0x0000
 	cp	xwa, xbc
-	jr c, HDAE5000_FltDec_FractionDigits_Loop                       ; [67 f7] jr C,0x29b439
+	jr	c, HDAE5000_FltDec_FractionDigits_Loop
 	ld	wa, (xsp+6)
 	ld (xde + 0x10), wa
 	ld	iz, 0:i3
 HDAE5000_FltDec_FractionDigits_Loop2:
 	lda xwa, (0x2394ea:24)
 	cpw	(xwa), 0x0000
-	jr nz, HDAE5000_FltDec_FractionDigits_Next                      ; [6e 3f] jr NZ,0x29b494
+	jr	nz, HDAE5000_FltDec_FractionDigits_Next
 	cpw	(xwa+2), 0x0000
-	jr nz, HDAE5000_FltDec_FractionDigits_Next                      ; [6e 38] jr NZ,0x29b494
+	jr	nz, HDAE5000_FltDec_FractionDigits_Next
 	cpw	(xwa+4), 0x0000
-	jr nz, HDAE5000_FltDec_FractionDigits_Next                      ; [6e 31] jr NZ,0x29b494
+	jr	nz, HDAE5000_FltDec_FractionDigits_Next
 	cpw	(xwa+6), 0x0000
-	jr nz, HDAE5000_FltDec_FractionDigits_Next                      ; [6e 2a] jr NZ,0x29b494
+	jr	nz, HDAE5000_FltDec_FractionDigits_Next
 	cpw	(xwa+8), 0x0000
-	jr nz, HDAE5000_FltDec_FractionDigits_Next                      ; [6e 23] jr NZ,0x29b494
+	jr	nz, HDAE5000_FltDec_FractionDigits_Next
 	cpw	(xwa+10), 0x0000
-	jr nz, HDAE5000_FltDec_FractionDigits_Next                      ; [6e 1c] jr NZ,0x29b494
+	jr	nz, HDAE5000_FltDec_FractionDigits_Next
 	cpw	(xwa+12), 0x0000
-	jr nz, HDAE5000_FltDec_FractionDigits_Next                      ; [6e 15] jr NZ,0x29b494
+	jr	nz, HDAE5000_FltDec_FractionDigits_Next
 	cpw	(xwa+14), 0x0000
-	jr nz, HDAE5000_FltDec_FractionDigits_Next                      ; [6e 0e] jr NZ,0x29b494
+	jr	nz, HDAE5000_FltDec_FractionDigits_Next
 	cpw	(xwa+16), 0x0000
-	jr nz, HDAE5000_FltDec_FractionDigits_Next                      ; [6e 07] jr NZ,0x29b494
-	jr t, HDAE5000_FltDec_FractionDigits_Epilogue                       ; [68 3d] jr T,0x29b4cc
+	jr	nz, HDAE5000_FltDec_FractionDigits_Next
+	jr	t, HDAE5000_FltDec_FractionDigits_Epilogue
 HDAE5000_FltDec_FractionDigits_Loop3:
 	inc	1, iz
 	calr	HDAE5000_FltDec_FracMulBy10
@@ -682,7 +682,7 @@ HDAE5000_FltDec_FractionDigits_Next:
 	lda xbc, (0x2394ea:24)
 	ld	wa, (xbc+wa)
 	cp	wa, 0:i3
-	jr z, HDAE5000_FltDec_FractionDigits_Loop3                       ; [66 e5] jr Z,0x29b48f
+	jr	z, HDAE5000_FltDec_FractionDigits_Loop3
 	pushw iz                                ; push IZ
 	pushw wa                                ; push WA
 	calr	HDAE5000_FltDec_AddDigit
@@ -693,7 +693,7 @@ HDAE5000_FltDec_FractionDigits_Next:
 	lda xwa, (0x2394ea:24)
 	ldw	(xwa+bc), 0x0000	; ld (XWA+BC),0x0000
 	cp	iz, 0x0020
-	jrl le, HDAE5000_FltDec_FractionDigits_Loop2                     ; [72 7e ff] jrl LE,0x29b44a
+	jrl	le, HDAE5000_FltDec_FractionDigits_Loop2
 HDAE5000_FltDec_FractionDigits_Epilogue:
 	popw iz                                 ; pop IZ
 	ret
@@ -703,19 +703,19 @@ HDAE5000_FltDec_AddDigit:
 	; decimal carry (subtract 10, increment the digit to the left)
 	ld	de, (xsp+6)
 	cp	de, 0x0020
-	jr ge, HDAE5000_FltDec_AddDigit_Join                      ; [69 0d] jr GE,0x29b4e4
+	jr	ge, HDAE5000_FltDec_AddDigit_Join
 	lda xbc, (0x23948a:24)
 	ld	wa, (xsp+4)
 	add	(xbc+de), a
 HDAE5000_FltDec_AddDigit_Join:
-	jr t, HDAE5000_FltDec_AddDigit_Next                       ; [68 02] jr T,0x29b4e8
+	jr	t, HDAE5000_FltDec_AddDigit_Next
 HDAE5000_FltDec_AddDigit_Loop:
 	dec	1, de
 HDAE5000_FltDec_AddDigit_Next:
 	cp	de, 0x0020
-	jr ge, HDAE5000_FltDec_AddDigit_Loop                      ; [69 f8] jr GE,0x29b4e6
+	jr	ge, HDAE5000_FltDec_AddDigit_Loop
 	lda xwa, (0x23948a:24)
-	jr t, HDAE5000_FltDec_AddDigit_Next2                       ; [68 13] jr T,0x29b508
+	jr	t, HDAE5000_FltDec_AddDigit_Next2
 HDAE5000_FltDec_AddDigit_Loop2:
 	ld	bc, de
 	dec	1, bc
@@ -728,7 +728,7 @@ HDAE5000_FltDec_AddDigit_Next2:
 	ret lt
 
 	cp	de, 0:i3
-	jr gt, HDAE5000_FltDec_AddDigit_Loop2                      ; [6a e1] jr GT,0x29b4f5
+	jr	gt, HDAE5000_FltDec_AddDigit_Loop2
 	ret
 
 HDAE5000_FltDec_DivBy10:
@@ -748,7 +748,7 @@ HDAE5000_FltDec_DivBy10_Loop:
 	div wa, 0x000a
 	ld (xbc+), wa
 	cp	xbc, xde
-	jr c, HDAE5000_FltDec_DivBy10_Loop                       ; [67 e0] jr C,0x29b51d
+	jr	c, HDAE5000_FltDec_DivBy10_Loop
 	ret
 
 HDAE5000_FltDec_MulBy10:
@@ -764,9 +764,9 @@ HDAE5000_FltDec_MulBy10_Loop:
 	mul	wa, 0x000a
 	ld (xde), wa
 	cp	ix, 0:i3
-	jr z, HDAE5000_FltDec_MulBy10_Next2                       ; [66 2d] jr Z,0x29b583
+	jr	z, HDAE5000_FltDec_MulBy10_Next2
 	ld	iz, ix
-	jr t, HDAE5000_FltDec_MulBy10_Next                       ; [68 15] jr T,0x29b56f
+	jr	t, HDAE5000_FltDec_MulBy10_Next
 HDAE5000_FltDec_MulBy10_Loop2:
 	ld	iy, iz
 	dec	1, iy
@@ -779,23 +779,23 @@ HDAE5000_FltDec_MulBy10_Loop2:
 	dec	1, iz
 HDAE5000_FltDec_MulBy10_Next:
 	cp	iz, 0:i3
-	jr le, HDAE5000_FltDec_MulBy10_Next2                      ; [62 10] jr LE,0x29b583
+	jr	le, HDAE5000_FltDec_MulBy10_Next2
 	ld	de, iz
 	exts xde
 	add	xde, xde
 	add	xde, xhl
 	ld	wa, (xde)
 	cp	wa, 0x00ff
-	jr ugt, HDAE5000_FltDec_MulBy10_Loop2                     ; [6b d7] jr UGT,0x29b55a
+	jr	ugt, HDAE5000_FltDec_MulBy10_Loop2
 HDAE5000_FltDec_MulBy10_Next2:
 	inc	1, ix
 	inc 2, xbc
 	cp	ix, 0x0010
-	jr lt, HDAE5000_FltDec_MulBy10_Loop                      ; [61 b6] jr LT,0x29b543
+	jr	lt, HDAE5000_FltDec_MulBy10_Loop
 	lda	xbc, (xhl+30)
 	ld	wa, (xbc)
 	bit	0x07, wa
-	jr z, HDAE5000_FltDec_MulBy10_Join                       ; [66 03] jr Z,0x29b59a
+	jr	z, HDAE5000_FltDec_MulBy10_Join
 	incw	1, (xhl+28)
 HDAE5000_FltDec_MulBy10_Join:
 	ldw	(xbc), 0x0000
@@ -809,20 +809,20 @@ HDAE5000_FltDec_FracMulBy10:
 	lda	xde, (xhl+20)
 HDAE5000_FltDec_FracMulBy10_Loop:
 	cpw	(xbc), 0x0000
-	jr z, HDAE5000_FltDec_FracMulBy10_Next                       ; [66 08] jr Z,0x29b5b8
+	jr	z, HDAE5000_FltDec_FracMulBy10_Next
 	ld	wa, (xbc)
 	mul	wa, 0x000a
 	ld (xbc), wa
 HDAE5000_FltDec_FracMulBy10_Next:
 	inc 2, xbc
 	cp	xbc, xde
-	jr c, HDAE5000_FltDec_FracMulBy10_Loop                       ; [67 ec] jr C,0x29b5aa
+	jr	c, HDAE5000_FltDec_FracMulBy10_Loop
 	lda	xbc, (xhl+18)
 	ldw	de, 0x0012
 HDAE5000_FltDec_FracMulBy10_Loop2:
 	ld	wa, (xbc)
 	cp	wa, 0x0100
-	jr c, HDAE5000_FltDec_FracMulBy10_Next2                       ; [67 10] jr C,0x29b5dc
+	jr	c, HDAE5000_FltDec_FracMulBy10_Next2
 	ld	ix, de
 	dec	2, ix
 	srl	wa, 0x08
@@ -832,7 +832,7 @@ HDAE5000_FltDec_FracMulBy10_Next2:
 	dec	2, de
 	dec	2, xbc
 	cp	de, 0:i3
-	jr gt, HDAE5000_FltDec_FracMulBy10_Loop2                      ; [6a e0] jr GT,0x29b5c4
+	jr	gt, HDAE5000_FltDec_FracMulBy10_Loop2
 	ret
 
 HDAE5000_FltDec_NormalizeLeft:
@@ -841,29 +841,29 @@ HDAE5000_FltDec_NormalizeLeft:
 	pushw iz                                ; push IZ
 	ld	iz, 0:i3
 	cpw	(xsp+12), 0x0000
-	jr le, HDAE5000_FltDec_NormalizeLeft_Join                      ; [62 16] jr LE,0x29b607
+	jr	le, HDAE5000_FltDec_NormalizeLeft_Join
 HDAE5000_FltDec_NormalizeLeft_Loop:
 	ld	wa, iz
 	exts xwa
 	add	xwa, xwa
 	add	xwa, (xsp+8)
 	cpw	(xwa), 0x0000
-	jr nz, HDAE5000_FltDec_NormalizeLeft_Join                      ; [6e 07] jr NZ,0x29b607
+	jr	nz, HDAE5000_FltDec_NormalizeLeft_Join
 	inc	1, iz
 	cp	iz, (xsp+12)
-	jr lt, HDAE5000_FltDec_NormalizeLeft_Loop                      ; [61 ea] jr LT,0x29b5f1
+	jr	lt, HDAE5000_FltDec_NormalizeLeft_Loop
 HDAE5000_FltDec_NormalizeLeft_Join:
 	cp	iz, (xsp+12)
-	jr nz, HDAE5000_FltDec_NormalizeLeft_Skip                      ; [6e 04] jr NZ,0x29b610
+	jr	nz, HDAE5000_FltDec_NormalizeLeft_Skip
 	ld	hl, 0:i3
-	jr t, HDAE5000_FltDec_NormalizeLeft_Epilogue                       ; [68 43] jr T,0x29b653
+	jr	t, HDAE5000_FltDec_NormalizeLeft_Epilogue
 HDAE5000_FltDec_NormalizeLeft_Skip:
 	ldw (xsp + 0x02), 0
-	jr t, HDAE5000_FltDec_NormalizeLeft_Next2                       ; [68 2f] jr T,0x29b646
+	jr	t, HDAE5000_FltDec_NormalizeLeft_Next2
 HDAE5000_FltDec_NormalizeLeft_Loop2:
 	ld	iz, 0:i3
 	ld xbc, (xsp + 0x08)
-	jr t, HDAE5000_FltDec_NormalizeLeft_Next                       ; [68 07] jr T,0x29b625
+	jr	t, HDAE5000_FltDec_NormalizeLeft_Next
 HDAE5000_FltDec_NormalizeLeft_Loop3:
 	ld xwa, (xsp + 0x08)
 	sllw_ri xwa		; sllw (XWA)
@@ -871,12 +871,12 @@ HDAE5000_FltDec_NormalizeLeft_Loop3:
 HDAE5000_FltDec_NormalizeLeft_Next:
 	ld	wa, (xbc)
 	bit	0x07, wa
-	jr nz, HDAE5000_FltDec_NormalizeLeft_Join2                      ; [6e 06] jr NZ,0x29b632
+	jr	nz, HDAE5000_FltDec_NormalizeLeft_Join2
 	cp	iz, 0x0008
-	jr lt, HDAE5000_FltDec_NormalizeLeft_Loop3                      ; [61 ec] jr LT,0x29b61e
+	jr	lt, HDAE5000_FltDec_NormalizeLeft_Loop3
 HDAE5000_FltDec_NormalizeLeft_Join2:
 	cp	iz, 0:i3
-	jr z, HDAE5000_FltDec_NormalizeLeft_Join3                       ; [66 0d] jr Z,0x29b643
+	jr	z, HDAE5000_FltDec_NormalizeLeft_Join3
 	pushw iz                                ; push IZ
 	pushm	(xsp+14)
 	ld xwa, (xsp + 0x0c)
@@ -889,7 +889,7 @@ HDAE5000_FltDec_NormalizeLeft_Next2:
 	ld xwa, (xsp + 0x08)
 	ld	wa, (xwa)
 	bit	0x07, wa
-	jr z, HDAE5000_FltDec_NormalizeLeft_Loop2                       ; [66 c7] jr Z,0x29b617
+	jr	z, HDAE5000_FltDec_NormalizeLeft_Loop2
 	ld	hl, (xsp+2)
 HDAE5000_FltDec_NormalizeLeft_Epilogue:
 	popw iz                                 ; pop IZ
@@ -903,38 +903,38 @@ HDAE5000_FltDec_NormalizeRight:
 	ld	iz, 0:i3
 	ld	bc, (xsp+10)
 	cp	bc, 0:i3
-	jr le, HDAE5000_FltDec_NormalizeRight_Join                      ; [62 14] jr LE,0x29b678
+	jr	le, HDAE5000_FltDec_NormalizeRight_Join
 HDAE5000_FltDec_NormalizeRight_Loop:
 	ld	wa, iz
 	exts xwa
 	add	xwa, xwa
 	add	xwa, xde
 	cpw	(xwa), 0x0000
-	jr nz, HDAE5000_FltDec_NormalizeRight_Join                      ; [6e 06] jr NZ,0x29b678
+	jr	nz, HDAE5000_FltDec_NormalizeRight_Join
 	inc	1, iz
 	cp	iz, bc
-	jr lt, HDAE5000_FltDec_NormalizeRight_Loop                      ; [61 ec] jr LT,0x29b664
+	jr	lt, HDAE5000_FltDec_NormalizeRight_Loop
 HDAE5000_FltDec_NormalizeRight_Join:
 	cp	iz, bc
-	jr nz, HDAE5000_FltDec_NormalizeRight_Skip                      ; [6e 04] jr NZ,0x29b680
+	jr	nz, HDAE5000_FltDec_NormalizeRight_Skip
 	ld	hl, 0:i3
-	jr t, HDAE5000_FltDec_NormalizeRight_Epilogue                       ; [68 27] jr T,0x29b6a7
+	jr	t, HDAE5000_FltDec_NormalizeRight_Epilogue
 HDAE5000_FltDec_NormalizeRight_Skip:
 	ld	hl, (xde)
 	ld	iz, 0:i3
-	jr t, HDAE5000_FltDec_NormalizeRight_Next                       ; [68 05] jr T,0x29b68b
+	jr	t, HDAE5000_FltDec_NormalizeRight_Next
 HDAE5000_FltDec_NormalizeRight_Loop2:
 	srl	hl, 0x01
 	inc	1, iz
 HDAE5000_FltDec_NormalizeRight_Next:
 	ld	wa, hl
 	and	wa, 0xff00
-	jr z, HDAE5000_FltDec_NormalizeRight_Join2                       ; [66 06] jr Z,0x29b699
+	jr	z, HDAE5000_FltDec_NormalizeRight_Join2
 	cp	iz, 0x0008
-	jr lt, HDAE5000_FltDec_NormalizeRight_Loop2                      ; [61 ed] jr LT,0x29b686
+	jr	lt, HDAE5000_FltDec_NormalizeRight_Loop2
 HDAE5000_FltDec_NormalizeRight_Join2:
 	cp	iz, 0:i3
-	jr z, HDAE5000_FltDec_NormalizeRight_Done                       ; [66 08] jr Z,0x29b6a5
+	jr	z, HDAE5000_FltDec_NormalizeRight_Done
 	pushw bc                                ; push BC
 	pushw iz                                ; push IZ
 	push xde
@@ -957,13 +957,13 @@ HDAE5000_FltDec_DecimalExponent:
 	call HDAE5000_Multiply
 	ld	xiz, xhl
 	cp	xiz, 0x00000000
-	jr ge, HDAE5000_FltDec_DecimalExponent_Skip                      ; [69 0e] jr GE,0x29b6d1
+	jr	ge, HDAE5000_FltDec_DecimalExponent_Skip
 	ld	xwa, xiz
 	cpl	wa
 	cpl	qwa
 	inc 1, xwa
 	ld (xsp + 0x04), xwa
-	jr t, HDAE5000_FltDec_DecimalExponent_Join                       ; [68 03] jr T,0x29b6d4
+	jr	t, HDAE5000_FltDec_DecimalExponent_Join
 HDAE5000_FltDec_DecimalExponent_Skip:
 	ld (xsp + 0x04), xiz
 HDAE5000_FltDec_DecimalExponent_Join:
@@ -978,26 +978,26 @@ HDAE5000_FltDec_DecimalExponent_Join:
 	ld	xiz, xhl
 	ld xwa, (xsp + 0x08)
 	cp	xwa, 0x000003d4
-	jr le, HDAE5000_FltDec_DecimalExponent_Skip2                      ; [62 04] jr LE,0x29b6ff
+	jr	le, HDAE5000_FltDec_DecimalExponent_Skip2
 	inc 1, xiz
-	jr t, HDAE5000_FltDec_DecimalExponent_Join2                       ; [68 14] jr T,0x29b713
+	jr	t, HDAE5000_FltDec_DecimalExponent_Join2
 HDAE5000_FltDec_DecimalExponent_Skip2:
 	ld xwa, (xsp + 0x04)
 	or xwa, xwa
-	jr z, HDAE5000_FltDec_DecimalExponent_Join2                       ; [66 0d] jr Z,0x29b713
+	jr	z, HDAE5000_FltDec_DecimalExponent_Join2
 	ld xwa, (xsp + 0x08)
 	cp	xwa, 0x00000014
-	jr ge, HDAE5000_FltDec_DecimalExponent_Join2                      ; [69 02] jr GE,0x29b713
+	jr	ge, HDAE5000_FltDec_DecimalExponent_Join2
 	dec	1, xiz
 HDAE5000_FltDec_DecimalExponent_Join2:
 	cpw	(xsp+16), 0x0000
-	jr ge, HDAE5000_FltDec_DecimalExponent_Done                      ; [69 0d] jr GE,0x29b727
+	jr	ge, HDAE5000_FltDec_DecimalExponent_Done
 	ld	xwa, xiz
 	cpl	wa
 	cpl	qwa
 	inc 1, xwa
 	ld	xhl, xwa
-	jr t, HDAE5000_FltDec_DecimalExponent_Epilogue                       ; [68 02] jr T,0x29b729
+	jr	t, HDAE5000_FltDec_DecimalExponent_Epilogue
 HDAE5000_FltDec_DecimalExponent_Done:
 	ld	xhl, xiz
 HDAE5000_FltDec_DecimalExponent_Epilogue:
@@ -1042,7 +1042,7 @@ HDAE5000_Float_Unpack:
 	ld	l, 0x00:opc
 	ex8 h, l		; ex H,L
 	cp	hl, 0:i3
-	jr z, HDAE5000_Float_Unpack_Skip                       ; [66 17] jr Z,0x29b776
+	jr	z, HDAE5000_Float_Unpack_Skip
 	and	de, 0x007f
 	set	0x07, de
 	ld	qix, de
@@ -1056,7 +1056,7 @@ HDAE5000_Float_Unpack_Loop:
 HDAE5000_Float_Unpack_Skip:
 	ld	xix, 0:i3
 	ldib_erp 0xee, 1		; ld QL,1
-	jr t, HDAE5000_Float_Unpack_Loop                       ; [68 f0] jr T,0x29b76d
+	jr	t, HDAE5000_Float_Unpack_Loop
 	nop
 HDAE5000_Float_Pack:
 	; pack the internal form at (XBC) into an IEEE single at (XWA).  Exponent
@@ -1066,12 +1066,12 @@ HDAE5000_Float_Pack:
 	; underflow store 0 silently.
 	ld xhl, (xbc)
 	cpib_erp 0xee, 0		; cp QL,0
-	jr nz, HDAE5000_Float_Pack_Skip                      ; [6e 27] jr NZ,0x29b7ac
+	jr	nz, HDAE5000_Float_Pack_Skip
 	ld xde, (xbc + 0x04)
 	cp	hl, 0x007f
-	jr gt, HDAE5000_Float_Pack_Skip3                      ; [6a 2f] jr GT,0x29b7bd
+	jr	gt, HDAE5000_Float_Pack_Skip3
 	cp	hl, 0xff82
-	jr lt, HDAE5000_Float_Pack_Skip2                      ; [61 24] jr LT,0x29b7b8
+	jr	lt, HDAE5000_Float_Pack_Skip2
 	add	hl, 0x007f
 	ld	bc, qde
 	res	0x07, bc
@@ -1085,9 +1085,9 @@ HDAE5000_Float_Pack:
 HDAE5000_Float_Pack_Skip:
 	ldto_berp e, 0xee		; ld E,QL
 	cp	e, 0x08
-	jr nz, HDAE5000_Float_Pack_Skip2                      ; [6e 04] jr NZ,0x29b7b8
+	jr	nz, HDAE5000_Float_Pack_Skip2
 	ld	xde, 0:i3
-	jr t, HDAE5000_Float_Pack_Join                       ; [68 11] jr T,0x29b7c9
+	jr	t, HDAE5000_Float_Pack_Join
 HDAE5000_Float_Pack_Skip2:
 	ld	xde, 0:i3
 	ld (xwa), xde
@@ -1203,14 +1203,14 @@ HDAE5000_SDivMod32_Common:
 	; divisor) before both are made positive.
 	ld	e, 0x00:opc
 	bit	0x0f, qwa
-	jr z, HDAE5000_SDivMod32_Common_Join                       ; [66 09] jr Z,0x29b881
+	jr	z, HDAE5000_SDivMod32_Common_Join
 	ld	e, 0x01:opc
 	cpl	qwa
 	cpl	wa
 	inc 1, xwa
 HDAE5000_SDivMod32_Common_Join:
 	bit	0x0f, qbc
-	jr z, HDAE5000_SDivMod32_Common_Join2                       ; [66 0a] jr Z,0x29b891
+	jr	z, HDAE5000_SDivMod32_Common_Join2
 	or	e, 0x02
 	cpl	qbc
 	cpl	bc
@@ -1220,11 +1220,11 @@ HDAE5000_SDivMod32_Common_Join2:
 	calr	HDAE5000_UDivMod32
 	popw wa                                 ; pop WA
 	cp	w, 1:i3
-	jr z, HDAE5000_SDivMod32_Common_Skip                       ; [66 09] jr Z,0x29b8a3
+	jr	z, HDAE5000_SDivMod32_Common_Skip
 	ld	xhl, xde
 	bit	0x00, a
 	scc8	nz, a
-	jr t, HDAE5000_SDivMod32_Common_Join3                       ; [68 04] jr T,0x29b8a7
+	jr	t, HDAE5000_SDivMod32_Common_Join3
 HDAE5000_SDivMod32_Common_Skip:
 	cp	a, 3:i3
 	ret z
@@ -1244,11 +1244,11 @@ HDAE5000_SDivMod32_Common_Join3:
 HDAE5000_SMod32:
 	; XHL = XWA % XBC, signed (D = 0 into HDAE5000_SDivMod32_Common)
 	ld	d, 0x00:opc
-	jr t, HDAE5000_SDivMod32_Common                       ; [68 b5] jr T,0x29b870
+	jr	t, HDAE5000_SDivMod32_Common
 HDAE5000_SDiv32:
 	; XHL = XWA / XBC, signed (D = 1 into HDAE5000_SDivMod32_Common)
 	ld	d, 0x01:opc
-	jr t, HDAE5000_SDivMod32_Common                       ; [68 b1] jr T,0x29b870
+	jr	t, HDAE5000_SDivMod32_Common
 
 
 HDAE5000_UMod32:	; 0x29B8BF (6 bytes)
@@ -1270,12 +1270,12 @@ HDAE5000_UDivMod32:	; 0x29B8C5
 	;   float->double routines below share it; this routine is 125 bytes.
 
 	cp	xbc, 0x00000001
-	jr z, HDAE5000_UDivMod32_Done                       ; [66 31] jr Z,0x29b8fe
-	jr c, HDAE5000_UDivMod32_Done2                       ; [67 34] jr C,0x29b903
+	jr	z, HDAE5000_UDivMod32_Done
+	jr	c, HDAE5000_UDivMod32_Done2
 	cp	xwa, xbc
-	jr ule, HDAE5000_UDivMod32_Skip2                     ; [63 37] jr ULE,0x29b90a
+	jr	ule, HDAE5000_UDivMod32_Skip2
 	cp	qbc, 0
-	jr nz, HDAE5000_UDivMod32_Skip3                      ; [6e 3d] jr NZ,0x29b915
+	jr	nz, HDAE5000_UDivMod32_Skip3
 	ld	xde, xwa
 	div	xwa, bc
 	jr	ov, HDAE5000_UDivMod32_Skip
@@ -1321,20 +1321,20 @@ HDAE5000_UDivMod32_Skip3:
 	ld	d, 0x00:opc
 HDAE5000_UDivMod32_Loop:
 	cp	xwa, xbc
-	jr c, HDAE5000_UDivMod32_Skip4                       ; [67 0e] jr C,0x29b929
+	jr	c, HDAE5000_UDivMod32_Skip4
 	inc	1, d
 	add	xbc, xbc
-	jr nc, HDAE5000_UDivMod32_Loop                      ; [6f f6] jr NC,0x29b917
+	jr	nc, HDAE5000_UDivMod32_Loop
 	stcf16ri 0, bc		; stcf 0x00,BC
 	rrc	xbc
-	jr t, HDAE5000_UDivMod32_Join                       ; [68 03] jr T,0x29b92c
+	jr	t, HDAE5000_UDivMod32_Join
 HDAE5000_UDivMod32_Skip4:
 	srl	xbc, 0x01
 HDAE5000_UDivMod32_Join:
 	ld	xhl, 0:i3
 	add	xhl, xhl
 	cp	xwa, xbc
-	jr c, HDAE5000_UDivMod32_Done3                       ; [67 05] jr C,0x29b939
+	jr	c, HDAE5000_UDivMod32_Done3
 	set 0x00, l
 	sub	xwa, xbc
 HDAE5000_UDivMod32_Done3:
@@ -1351,13 +1351,13 @@ HDAE5000_Double_Pack:
 	; the RAM 0x23A1A8 hook; class 1 (zero) and underflow store 0.
 	ld xhl, (xbc)
 	cpib_erp 0xee, 0		; cp QL,0
-	jr nz, HDAE5000_Double_Pack_Next                      ; [6e 32] jr NZ,0x29b97b
+	jr	nz, HDAE5000_Double_Pack_Next
 	ld xix, (xbc + 0x08)
 	ld xiy, (xbc + 0x04)
 	cp	hl, 0x03ff
-	jr gt, HDAE5000_Double_Pack_Join                      ; [6a 2c] jr GT,0x29b981
+	jr	gt, HDAE5000_Double_Pack_Join
 	cp	hl, 0xfc02
-	jr lt, HDAE5000_Double_Pack_Loop2                      ; [61 1a] jr LT,0x29b975
+	jr	lt, HDAE5000_Double_Pack_Loop2
 	add	hl, 0x03ff
 	res	0x04, qix
 	sll	hl, 0x04
@@ -1372,10 +1372,10 @@ HDAE5000_Double_Pack_Loop:
 HDAE5000_Double_Pack_Loop2:
 	ld	xix, 0:i3
 	ld	xiy, xix
-	jr t, HDAE5000_Double_Pack_Loop                       ; [68 f4] jr T,0x29b96f
+	jr	t, HDAE5000_Double_Pack_Loop
 HDAE5000_Double_Pack_Next:
 	bit_erpb 0xee, 0x00		; bit 0x00,QL
-	jr nz, HDAE5000_Double_Pack_Loop2                      ; [6e f4] jr NZ,0x29b975
+	jr	nz, HDAE5000_Double_Pack_Loop2
 HDAE5000_Double_Pack_Join:
 	ldw	(0x230ECA:24), 34
 	ld	xde, 0:i3
@@ -1386,7 +1386,7 @@ HDAE5000_Double_Pack_Join:
 	orb_erp c, 0xeb		; or C,QD
 	ldfr_berp c, 0xeb		; ld QD,C
 	ld (xwa + 0x04), xde
-	jr t, HDAE5000_Double_Pack_Done                       ; [68 00] jr T,0x29b9a1
+	jr	t, HDAE5000_Double_Pack_Done
 HDAE5000_Double_Pack_Done:
 	ld	xbc, (0x23a1a8)
 	or xbc, xbc
@@ -1400,7 +1400,7 @@ HDAE5000_Long_To_Unpacked:
 	ld	e, 0x00:opc
 	ldcf	0x0f, qbc
 	stcf8ri 7, e		; stcf 0x07,E
-	jr nc, HDAE5000_Long_To_Unpacked_Join                      ; [6f 07] jr NC,0x29b9be
+	jr	nc, HDAE5000_Long_To_Unpacked_Join
 	cpl	qbc
 	cpl	bc
 	inc 1, xbc
@@ -1415,11 +1415,11 @@ HDAE5000_ULong_To_Unpacked:
 	; stored; XBC = 0 sets class flag 1 (zero).
 	ld	xiy, xwa
 	or xbc, xbc
-	jr z, HDAE5000_ULong_To_Unpacked_Skip3                       ; [66 4f] jr Z,0x29ba1a
+	jr	z, HDAE5000_ULong_To_Unpacked_Skip3
 	bs1b	qbc
 	jr	ov, HDAE5000_ULong_To_Unpacked_Skip
 	add	a, 0x10
-	jr t, HDAE5000_ULong_To_Unpacked_Join                       ; [68 02] jr T,0x29b9d7
+	jr	t, HDAE5000_ULong_To_Unpacked_Join
 HDAE5000_ULong_To_Unpacked_Skip:
 	bs1b16 bc		; bs1b A,BC
 HDAE5000_ULong_To_Unpacked_Join:
@@ -1428,27 +1428,27 @@ HDAE5000_ULong_To_Unpacked_Join:
 	ld l, a
 	ld_dst16_rid8 xiy, 0x00, hl		; ld (XIY+0x00),HL
 	cp l, 0x17
-	jr z, HDAE5000_ULong_To_Unpacked_Join3                       ; [66 30] jr Z,0x29ba16
-	jr lt, HDAE5000_ULong_To_Unpacked_Skip2                      ; [61 19] jr LT,0x29ba01
+	jr	z, HDAE5000_ULong_To_Unpacked_Join3
+	jr	lt, HDAE5000_ULong_To_Unpacked_Skip2
 	sub l, 0x17
 	ld a, l
 	srla	xbc
-	jr nc, HDAE5000_ULong_To_Unpacked_Join3                      ; [6f 25] jr NC,0x29ba16
+	jr	nc, HDAE5000_ULong_To_Unpacked_Join3
 	inc 1, xbc
 	bit_erpb 0xe7, 0x00		; bit 0x00,QB
-	jr z, HDAE5000_ULong_To_Unpacked_Join3                       ; [66 1d] jr Z,0x29ba16
+	jr	z, HDAE5000_ULong_To_Unpacked_Join3
 	srl	xbc, 0x01
 	inc1_8_rid8 xiy, 0x00		; inc 1,(XIY+0x00)
-	jr t, HDAE5000_ULong_To_Unpacked_Join3                       ; [68 15] jr T,0x29ba16
+	jr	t, HDAE5000_ULong_To_Unpacked_Join3
 HDAE5000_ULong_To_Unpacked_Skip2:
 	ld	a, 0x17:opc
 	sub a, l
 	cp	a, 0x10
-	jr lt, HDAE5000_ULong_To_Unpacked_Join2                      ; [61 0a] jr LT,0x29ba14
+	jr	lt, HDAE5000_ULong_To_Unpacked_Join2
 	ld	qbc, bc
 	ld	bc, 0:i3
 	sub	a, 0x10
-	jr z, HDAE5000_ULong_To_Unpacked_Join3                       ; [66 02] jr Z,0x29ba16
+	jr	z, HDAE5000_ULong_To_Unpacked_Join3
 HDAE5000_ULong_To_Unpacked_Join2:
 	slla	xbc
 HDAE5000_ULong_To_Unpacked_Join3:
@@ -1469,7 +1469,7 @@ HDAE5000_FloatToDouble:
 	ld	xwa, xsp
 	call HDAE5000_Float_Unpack
 	cp	l, 0:i3
-	jr nz, HDAE5000_FloatToDouble_Join                      ; [6e 26] jr NZ,0x29ba56
+	jr	nz, HDAE5000_FloatToDouble_Join
 	ld xhl, (xsp + 0x04)
 	ld	xde, 0:i3
 	srl	xhl, 0x01
@@ -1508,7 +1508,7 @@ HDAE5000_Unpacked_Div:
 	ld xwa, (xwa + 0x04)
 	ld xbc, (xbc + 0x04)
 	cp	xbc, 0x00800000
-	jr z, HDAE5000_Unpacked_Div_Skip2                       ; [66 6c] jr Z,0x29baf7
+	jr	z, HDAE5000_Unpacked_Div_Skip2
 	ld	xhl, 0:i3
 	ld	xix, xbc
 	add	xix, xix
@@ -1520,41 +1520,41 @@ HDAE5000_Unpacked_Div:
 	sll	xwa, 0x03
 HDAE5000_Unpacked_Div_Loop:
 	cp	xwa, xiz
-	jr c, HDAE5000_Unpacked_Div_Join                       ; [67 05] jr C,0x29baa8
+	jr	c, HDAE5000_Unpacked_Div_Join
 	sub	xwa, xiz
 	set 0x03, l
 HDAE5000_Unpacked_Div_Join:
 	cp	xwa, xiy
-	jr c, HDAE5000_Unpacked_Div_Join2                       ; [67 05] jr C,0x29bab1
+	jr	c, HDAE5000_Unpacked_Div_Join2
 	sub	xwa, xiy
 	set 0x02, l
 HDAE5000_Unpacked_Div_Join2:
 	cp	xwa, xix
-	jr c, HDAE5000_Unpacked_Div_Join3                       ; [67 05] jr C,0x29baba
+	jr	c, HDAE5000_Unpacked_Div_Join3
 	sub	xwa, xix
 	set 0x01, l
 HDAE5000_Unpacked_Div_Join3:
 	cp	xwa, xbc
-	jr c, HDAE5000_Unpacked_Div_Join4                       ; [67 05] jr C,0x29bac3
+	jr	c, HDAE5000_Unpacked_Div_Join4
 	sub	xwa, xbc
 	set 0x00, l
 HDAE5000_Unpacked_Div_Join4:
 	dec	1, e
-	jr z, HDAE5000_Unpacked_Div_Skip                       ; [66 08] jr Z,0x29bacf
+	jr	z, HDAE5000_Unpacked_Div_Skip
 	sll	xhl, 0x04
 	sll	xwa, 0x04
-	jr t, HDAE5000_Unpacked_Div_Loop                       ; [68 d0] jr T,0x29ba9f
+	jr	t, HDAE5000_Unpacked_Div_Loop
 HDAE5000_Unpacked_Div_Skip:
 	pop xwa
 	bit	0x0f, qhl
-	jr nz, HDAE5000_Unpacked_Div_Join5                      ; [6e 06] jr NZ,0x29badc
+	jr	nz, HDAE5000_Unpacked_Div_Join5
 	sll	xhl, 0x01
 	dec1_16_rid8 xwa, 0x00		; decw 1,(XWA+0x00)
 HDAE5000_Unpacked_Div_Join5:
 	cp l, 0x80
-	jr c, HDAE5000_Unpacked_Div_Join6                       ; [67 0e] jr C,0x29baef
+	jr	c, HDAE5000_Unpacked_Div_Join6
 	add	xhl, 0x00000100
-	jr nc, HDAE5000_Unpacked_Div_Join6                      ; [6f 06] jr NC,0x29baef
+	jr	nc, HDAE5000_Unpacked_Div_Join6
 	stcf16ri 0, hl		; stcf 0x00,HL
 	rrc	xhl
 HDAE5000_Unpacked_Div_Join6:
@@ -1567,7 +1567,7 @@ HDAE5000_Unpacked_Div_Loop2:
 HDAE5000_Unpacked_Div_Skip2:
 	ld	xhl, xwa
 	pop xwa
-	jr t, HDAE5000_Unpacked_Div_Loop2                       ; [68 f6] jr T,0x29baf2
+	jr	t, HDAE5000_Unpacked_Div_Loop2
 
 ; ----------------------------------------------------------------------------
 ; Registered-object name pool  (0x29bafc - 0x29bfdf)

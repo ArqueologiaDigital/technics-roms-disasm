@@ -857,13 +857,13 @@ HDAE5000_UiState_Reset:	; 0x2803C2
 	call HDAE5000_Song_PartMask
 	ld	wa, hl
 	cp	wa, 0xffff
-	jr z, HDAE5000_UiState_Reset_Skip                        ; [66 14] jr Z,0x280424
+	jr	z, HDAE5000_UiState_Reset_Skip
 	lda xwa, (HDAE5000_RAM_SaveOptions:24)
 	pushw 0x0002
 	ld	bc, hl
 	lda xde, (HDAE5000_TypeSel_TemplateBlank:24)
 	calr	HDAE5000_TypeSel_Init
-	jr t, HDAE5000_UiState_Reset_Join                        ; [68 12] jr T,0x280436
+	jr	t, HDAE5000_UiState_Reset_Join
 HDAE5000_UiState_Reset_Skip:
 	lda xwa, (HDAE5000_RAM_SaveOptions:24)
 	pushw 0x0002
@@ -883,7 +883,7 @@ HDAE5000_AcWindowPage1Proc:
 	ld	xiz, xwa
 	ld xwa, (xsp + 0x08)
 	cp	xwa, EVT_SHOW
-	jr nz, HDAE5000_AcWindowPage1Proc_Join                       ; [6e 1a] jr NZ,0x28046c
+	jr	nz, HDAE5000_AcWindowPage1Proc_Join
 	ld	xwa, xiz
 	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xbc, (xbc + WS_RootFnTable)
@@ -912,15 +912,15 @@ HDAE5000_TtlScreenRProc:
 	ld (xsp + 0x08), xwa
 	ld	xwa, xiz
 	cp	xwa, EVT_HIDE
-	jrl z, HDAE5000_TtlScreenRProc_OnHide                       ; [76 98 00] jrl Z,0x280537
+	jrl	z, HDAE5000_TtlScreenRProc_OnHide
 	cp	xwa, EVT_DRAW
-	jrl nz, HDAE5000_TtlScreenRProc_Join2                      ; [7e a2 00] jrl NZ,0x28054a
+	jrl	nz, HDAE5000_TtlScreenRProc_Join2
 	ld	xwa, 0:i3
 	ld	xbc, EVT_GET_BITMAP_DATA
 	ld	xde, 0:i3
 	calr	HDAE5000_Alloc_Memory_1
 	or xhl, xhl
-	jr z, HDAE5000_TtlScreenRProc_Join                        ; [66 62] jr Z,0x28051a
+	jr	z, HDAE5000_TtlScreenRProc_Join
 	pushw 0x9600
 	lda xwa, (HDAE5000_Bitmap_TitleLogo:24)
 	push xwa
@@ -959,7 +959,7 @@ HDAE5000_TtlScreenRProc_Join:
 	ld_sril	xhl, (xhl + RootFn_InheritedProc)
 	call	(xhl)
 	ld	xhl, 0:i3
-	jr t, HDAE5000_TtlScreenRProc_Epilogue                        ; [68 2c] jr T,0x280563
+	jr	t, HDAE5000_TtlScreenRProc_Epilogue
 HDAE5000_TtlScreenRProc_OnHide:
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_HamaFnTable)
@@ -988,15 +988,15 @@ HDAE5000_TtlScreenR2Proc:
 	ld (xsp + 0x08), xwa
 	ld	xwa, xiz
 	cp	xwa, EVT_HIDE
-	jrl z, HDAE5000_TtlScreenR2Proc_OnHide                       ; [76 98 00] jrl Z,0x280615
+	jrl	z, HDAE5000_TtlScreenR2Proc_OnHide
 	cp	xwa, EVT_DRAW
-	jrl nz, HDAE5000_TtlScreenR2Proc_Join2                      ; [7e a2 00] jrl NZ,0x280628
+	jrl	nz, HDAE5000_TtlScreenR2Proc_Join2
 	ld	xwa, 0:i3
 	ld	xbc, EVT_GET_BITMAP_DATA
 	ld	xde, 0:i3
 	calr	HDAE5000_Alloc_Memory_2
 	or xhl, xhl
-	jr z, HDAE5000_TtlScreenR2Proc_Join                        ; [66 62] jr Z,0x2805f8
+	jr	z, HDAE5000_TtlScreenR2Proc_Join
 	pushw 0x9600
 	lda xwa, (HDAE5000_Bitmap_DriveMech:24)
 	push xwa
@@ -1035,7 +1035,7 @@ HDAE5000_TtlScreenR2Proc_Join:
 	ld_sril	xhl, (xhl + RootFn_InheritedProc)
 	call	(xhl)
 	ld	xhl, 0:i3
-	jr t, HDAE5000_TtlScreenR2Proc_Epilogue                        ; [68 2c] jr T,0x280641
+	jr	t, HDAE5000_TtlScreenR2Proc_Epilogue
 HDAE5000_TtlScreenR2Proc_OnHide:
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_HamaFnTable)
@@ -1064,15 +1064,15 @@ HDAE5000_TtlScreenR3Proc:
 	ld (xsp + 0x08), xwa
 	ld	xwa, xiz
 	cp	xwa, EVT_HIDE
-	jrl z, HDAE5000_TtlScreenR3Proc_OnHide                       ; [76 98 00] jrl Z,0x2806f3
+	jrl	z, HDAE5000_TtlScreenR3Proc_OnHide
 	cp	xwa, EVT_DRAW
-	jrl nz, HDAE5000_TtlScreenR3Proc_Join2                      ; [7e a2 00] jrl NZ,0x280706
+	jrl	nz, HDAE5000_TtlScreenR3Proc_Join2
 	ld	xwa, 0:i3
 	ld	xbc, EVT_GET_BITMAP_DATA
 	ld	xde, 0:i3
 	calr	HDAE5000_Alloc_Memory_3
 	or xhl, xhl
-	jr z, HDAE5000_TtlScreenR3Proc_Join                        ; [66 62] jr Z,0x2806d6
+	jr	z, HDAE5000_TtlScreenR3Proc_Join
 	pushw 0x9600
 	lda xwa, (HDAE5000_Bitmap_FilePanel:24)
 	push xwa
@@ -1111,7 +1111,7 @@ HDAE5000_TtlScreenR3Proc_Join:
 	ld_sril	xhl, (xhl + RootFn_InheritedProc)
 	call	(xhl)
 	ld	xhl, 0:i3
-	jr t, HDAE5000_TtlScreenR3Proc_Epilogue                        ; [68 2c] jr T,0x28071f
+	jr	t, HDAE5000_TtlScreenR3Proc_Epilogue
 HDAE5000_TtlScreenR3Proc_OnHide:
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_HamaFnTable)
@@ -1140,15 +1140,15 @@ HDAE5000_IvScreenR2Proc:
 	ld (xsp + 0x08), xwa
 	ld	xwa, xiz
 	cp	xwa, EVT_HIDE
-	jr z, HDAE5000_IvScreenR2Proc_OnHide                        ; [66 71] jr Z,0x2807a9
+	jr	z, HDAE5000_IvScreenR2Proc_OnHide
 	cp	xwa, EVT_DRAW
-	jr nz, HDAE5000_IvScreenR2Proc_Join2                       ; [6e 7c] jr NZ,0x2807bc
+	jr	nz, HDAE5000_IvScreenR2Proc_Join2
 	ld	xwa, 0:i3
 	ld	xbc, EVT_GET_BITMAP_DATA
 	ld	xde, 0:i3
 	calr	HDAE5000_Alloc_Memory_2
 	or xhl, xhl
-	jr z, HDAE5000_IvScreenR2Proc_Join                        ; [66 3c] jr Z,0x28078c
+	jr	z, HDAE5000_IvScreenR2Proc_Join
 	pushw 0x0400
 	lda xwa, (HDAE5000_Palette_DriveMech:24)
 	push xwa
@@ -1175,7 +1175,7 @@ HDAE5000_IvScreenR2Proc_Join:
 	ld_sril	xhl, (xhl + RootFn_InheritedProc)
 	call	(xhl)
 	ld	xhl, 0:i3
-	jr t, HDAE5000_IvScreenR2Proc_Epilogue                        ; [68 2c] jr T,0x2807d5
+	jr	t, HDAE5000_IvScreenR2Proc_Epilogue
 HDAE5000_IvScreenR2Proc_OnHide:
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_HamaFnTable)
@@ -1204,37 +1204,37 @@ HDAE5000_SelectListProc:
 	ld (xsp + 0x68), xwa
 	ld xwa, (xsp + 0x64)
 	cp	xwa, EVT_HDAE_TIMER_BACK
-	jrl z, HDAE5000_SelectListProc_Skip21                       ; [76 e6 09] jrl Z,0x2811d8
+	jrl	z, HDAE5000_SelectListProc_Skip21
 	cp	xwa, EVT_HDAE_AFTER_LOAD
-	jrl z, HDAE5000_SelectListProc_Skip21                       ; [76 dd 09] jrl Z,0x2811d8
+	jrl	z, HDAE5000_SelectListProc_Skip21
 	cp	xwa, EVT_HDAE_SEQ_STOP
-	jrl z, HDAE5000_SelectListProc_Skip21                       ; [76 d4 09] jrl Z,0x2811d8
+	jrl	z, HDAE5000_SelectListProc_Skip21
 	cp	xwa, EVT_INDEXSW_DOWN
-	jrl z, HDAE5000_SelectListProc_Skip10                       ; [76 5d 07] jrl Z,0x280f6a
+	jrl	z, HDAE5000_SelectListProc_Skip10
 	cp	xwa, EVT_INDEXSW_DOWN_AIC
-	jrl z, HDAE5000_SelectListProc_Skip10                       ; [76 54 07] jrl Z,0x280f6a
+	jrl	z, HDAE5000_SelectListProc_Skip10
 	cp	xwa, EVT_INDEXSW_UP
-	jrl z, HDAE5000_SelectListProc_Skip10                       ; [76 4b 07] jrl Z,0x280f6a
+	jrl	z, HDAE5000_SelectListProc_Skip10
 	cp	xwa, EVT_INDEXSW_UP_AIC
-	jrl z, HDAE5000_SelectListProc_Skip10                       ; [76 42 07] jrl Z,0x280f6a
+	jrl	z, HDAE5000_SelectListProc_Skip10
 	cp	xwa, EVT_HDAE_SET_STR_ADR
-	jrl z, HDAE5000_SelectListProc_OnHdaeSetStrAdr                       ; [76 13 07] jrl Z,0x280f44
+	jrl	z, HDAE5000_SelectListProc_OnHdaeSetStrAdr
 	cp	xwa, EVT_HDAE_REQ_SEL_NUM
-	jrl z, HDAE5000_SelectListProc_OnHdaeReqSelNum                       ; [76 c9 06] jrl Z,0x280f03
+	jrl	z, HDAE5000_SelectListProc_OnHdaeReqSelNum
 	cp	xwa, EVT_HDAE_SET_SEL_NUM
-	jrl z, HDAE5000_SelectListProc_OnHdaeSetSelNum                       ; [76 2a 06] jrl Z,0x280e6d
+	jrl	z, HDAE5000_SelectListProc_OnHdaeSetSelNum
 	cp	xwa, EVT_HDAE_CHANGE_SEL_NUM
-	jrl z, HDAE5000_SelectListProc_OnHdaeChangeSelNum                       ; [76 80 05] jrl Z,0x280dcc
+	jrl	z, HDAE5000_SelectListProc_OnHdaeChangeSelNum
 	cp	xwa, EVT_PARA_DRAW
-	jrl z, HDAE5000_SelectListProc_OnParaDraw                       ; [76 3c 02] jrl Z,0x280a91
+	jrl	z, HDAE5000_SelectListProc_OnParaDraw
 	cp	xwa, EVT_PAINT
-	jrl z, HDAE5000_SelectListProc_OnPaint                       ; [76 46 01] jrl Z,0x2809a4
+	jrl	z, HDAE5000_SelectListProc_OnPaint
 	cp	xwa, EVT_HIDE
-	jrl z, HDAE5000_SelectListProc_OnHide                       ; [76 fe 00] jrl Z,0x280965
+	jrl	z, HDAE5000_SelectListProc_OnHide
 	cp	xwa, EVT_SHOW
-	jr z, HDAE5000_SelectListProc_OnShow                        ; [66 46] jr Z,0x2808b5
+	jr	z, HDAE5000_SelectListProc_OnShow
 	cp	xwa, EVT_DRAW
-	jrl nz, HDAE5000_SelectListProc_Join12                      ; [7e 93 09] jrl NZ,0x28120b
+	jrl	nz, HDAE5000_SelectListProc_Join12
 	ld xwa, (xsp + 0x68)
 	ld xbc, (xsp + 0x64)
 	ld xde, (xsp + 0x60)
@@ -1250,7 +1250,7 @@ HDAE5000_SelectListProc:
 	ld	xde, 0xffffffff
 	call	(xhl)
 	ld	xhl, 0:i3
-	jrl t, HDAE5000_SelectListProc_Epilogue                       ; [78 70 09] jrl T,0x281225
+	jrl	t, HDAE5000_SelectListProc_Epilogue
 HDAE5000_SelectListProc_OnShow:
 	ld xwa, (xsp + 0x68)
 	ld xbc, (xsp + 0x64)
@@ -1270,7 +1270,7 @@ HDAE5000_SelectListProc_OnShow:
 	ldw	(xwa), 0x0001
 	ld xwa, (xsp + 0x04)
 	cpw	(xwa+50), 0x0000
-	jr z, HDAE5000_SelectListProc_Join                        ; [66 49] jr Z,0x280942
+	jr	z, HDAE5000_SelectListProc_Join
 	ld xwa, (xsp + 0x68)
 	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xbc, (xbc + WS_RootFnTable)
@@ -1300,7 +1300,7 @@ HDAE5000_SelectListProc_Join:
 	ld	xde, 0:i3
 	call	(xhl)
 	ld	xhl, 0:i3
-	jrl t, HDAE5000_SelectListProc_Epilogue                       ; [78 c0 08] jrl T,0x281225
+	jrl	t, HDAE5000_SelectListProc_Epilogue
 HDAE5000_SelectListProc_OnHide:
 	ld xwa, (xsp + 0x68)
 	ld xbc, (xsp + 0x64)
@@ -1319,7 +1319,7 @@ HDAE5000_SelectListProc_OnHide:
 	ld xwa, (xwa + 0x36)
 	ldw	(xwa), 0x0000
 	ld	xhl, 0:i3
-	jrl t, HDAE5000_SelectListProc_Epilogue                       ; [78 81 08] jrl T,0x281225
+	jrl	t, HDAE5000_SelectListProc_Epilogue
 HDAE5000_SelectListProc_OnPaint:
 	ld xwa, (xsp + 0x68)
 	ld xbc, (xsp + 0x64)
@@ -1336,7 +1336,7 @@ HDAE5000_SelectListProc_OnPaint:
 	ld (xsp + 0x04), xhl
 	ld	xwa, xhl
 	cpw	(xwa+42), 0x0002
-	jrl lt, HDAE5000_SelectListProc_Join3                      ; [71 ad 00] jrl LT,0x280a8c
+	jrl	lt, HDAE5000_SelectListProc_Join3
 	lda	xwa, (xsp+80)
 	ld	xbc, xwa
 	ld xwa, (xsp + 0x68)
@@ -1357,7 +1357,7 @@ HDAE5000_SelectListProc_OnPaint:
 	dec	1, wa
 	ld (xsp + 0x5a), wa
 	ldw (xsp + 0x08), 1
-	jr t, HDAE5000_SelectListProc_Next                        ; [68 61] jr T,0x280a81
+	jr	t, HDAE5000_SelectListProc_Next
 HDAE5000_SelectListProc_Loop:
 	ld	wa, (xsp+12)
 	mul xwa, (xsp+8)		; mul XWA,(XSP+0x08)
@@ -1368,7 +1368,7 @@ HDAE5000_SelectListProc_Loop:
 	ld (xsp + 0x58), bc
 	ld xwa, (xsp + 0x04)
 	cpw	(xwa+22), 0x0007
-	jr nz, HDAE5000_SelectListProc_Skip                       ; [6e 22] jr NZ,0x280a5f
+	jr	nz, HDAE5000_SelectListProc_Skip
 	lda	xwa, (xsp+92)
 	ld	xde, xwa
 	lda	xwa, (xsp+88)
@@ -1379,7 +1379,7 @@ HDAE5000_SelectListProc_Loop:
 	ld_sril	xhl, (xde + RootFn_DrawLine)
 	ldw	de, 0x00ff
 	call	(xhl)
-	jr t, HDAE5000_SelectListProc_Join2                        ; [68 1f] jr T,0x280a7e
+	jr	t, HDAE5000_SelectListProc_Join2
 HDAE5000_SelectListProc_Skip:
 	lda	xwa, (xsp+92)
 	ld	xde, xwa
@@ -1397,10 +1397,10 @@ HDAE5000_SelectListProc_Next:
 	ld xwa, (xsp + 0x04)
 	ld	wa, (xwa+42)
 	cp	(xsp+8), wa
-	jr c, HDAE5000_SelectListProc_Loop                        ; [67 94] jr C,0x280a20
+	jr	c, HDAE5000_SelectListProc_Loop
 HDAE5000_SelectListProc_Join3:
 	ld	xhl, 0:i3
-	jrl t, HDAE5000_SelectListProc_Epilogue                       ; [78 94 07] jrl T,0x281225
+	jrl	t, HDAE5000_SelectListProc_Epilogue
 HDAE5000_SelectListProc_OnParaDraw:
 	ld xwa, (xsp + 0x68)
 	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
@@ -1412,10 +1412,10 @@ HDAE5000_SelectListProc_OnParaDraw:
 	ld xwa, (xwa + 0x26)
 	ld xwa, (xwa)
 	or xwa, xwa
-	jr nz, HDAE5000_SelectListProc_Skip2                       ; [6e 0a] jr NZ,0x280abd
+	jr	nz, HDAE5000_SelectListProc_Skip2
 	ld	xwa, (HDAE5000_TextPtrs_01Selectlist0203040506070809)
 	ld (xsp + 0x10), xwa
-	jr t, HDAE5000_SelectListProc_Join4                        ; [68 0b] jr T,0x280ac8
+	jr	t, HDAE5000_SelectListProc_Join4
 HDAE5000_SelectListProc_Skip2:
 	ld xwa, (xsp + 0x04)
 	ld xwa, (xwa + 0x26)
@@ -1425,9 +1425,9 @@ HDAE5000_SelectListProc_Join4:
 	ld xwa, (xsp + 0x04)
 	ld xwa, (xwa + 0x36)
 	cpw	(xwa), 0x0001
-	jr z, HDAE5000_SelectListProc_Skip3                        ; [66 05] jr Z,0x280ad9
+	jr	z, HDAE5000_SelectListProc_Skip3
 	ld	xhl, 0:i3
-	jrl t, HDAE5000_SelectListProc_Epilogue                       ; [78 4c 07] jrl T,0x281225
+	jrl	t, HDAE5000_SelectListProc_Epilogue
 HDAE5000_SelectListProc_Skip3:
 	lda	xwa, (xsp+80)
 	ld	xbc, xwa
@@ -1451,22 +1451,22 @@ HDAE5000_SelectListProc_Skip3:
 	ldw (xsp + 0x08), 0
 	ldw (xsp + 0x0a), 0
 	ldw (xsp + 0x14), 0
-	jrl t, HDAE5000_SelectListProc_Next3                       ; [78 8f 02] jrl T,0x280db5
+	jrl	t, HDAE5000_SelectListProc_Next3
 HDAE5000_SelectListProc_Loop2:
 	ld	(xsp+22), 0x00
-	jr t, HDAE5000_SelectListProc_Next2                        ; [68 40] jr T,0x280b6c
+	jr	t, HDAE5000_SelectListProc_Next2
 HDAE5000_SelectListProc_Loop3:
 	ld	wa, (xsp+10)
 	extz xwa
 	add	xwa, (xsp+16)
 	cp	(xwa), 0x09
-	jr nz, HDAE5000_SelectListProc_Skip4                       ; [6e 16] jr NZ,0x280b4f
+	jr	nz, HDAE5000_SelectListProc_Skip4
 	lda	xbc, (xsp+22)
 	ld	wa, (xsp+20)
 	ld	(xbc+wa), 0x00
 	incw	1, (xsp+10)
 	ldw (xsp + 0x14), 0
-	jr t, HDAE5000_SelectListProc_Join5                        ; [68 2a] jr T,0x280b79
+	jr	t, HDAE5000_SelectListProc_Join5
 HDAE5000_SelectListProc_Skip4:
 	lda	xde, (xsp+22)
 	ld	wa, (xsp+10)
@@ -1483,16 +1483,16 @@ HDAE5000_SelectListProc_Next2:
 	extz xwa
 	add	xwa, (xsp+16)
 	cp	(xwa), 0x00
-	jr nz, HDAE5000_SelectListProc_Loop3                       ; [6e b3] jr NZ,0x280b2c
+	jr	nz, HDAE5000_SelectListProc_Loop3
 HDAE5000_SelectListProc_Join5:
 	ld xwa, (xsp + 0x60)
 	cp	xwa, 0xffffffff
-	jr z, HDAE5000_SelectListProc_Join6                        ; [66 0d] jr Z,0x280b91
+	jr	z, HDAE5000_SelectListProc_Join6
 	ld	wa, (xsp+8)
 	extz xwa
 	ld xbc, (xsp + 0x60)
 	cp	xbc, xwa
-	jrl nz, HDAE5000_SelectListProc_Join7                      ; [7e 21 02] jrl NZ,0x280db2
+	jrl	nz, HDAE5000_SelectListProc_Join7
 HDAE5000_SelectListProc_Join6:
 	ld xwa, (xsp + 0x04)
 	ld	bc, (xwa+44)
@@ -1564,10 +1564,10 @@ HDAE5000_SelectListProc_Join6:
 	ld xwa, (xwa + 0x2e)
 	ld	wa, (xwa)
 	cp	wa, (xsp+8)
-	jrl nz, HDAE5000_SelectListProc_Skip6                      ; [7e b6 00] jrl NZ,0x280d14
+	jrl	nz, HDAE5000_SelectListProc_Skip6
 	ld xwa, (xsp + 0x04)
 	cpw	(xwa+58), 0x0000
-	jr nz, HDAE5000_SelectListProc_Skip5                       ; [6e 49] jr NZ,0x280cb1
+	jr	nz, HDAE5000_SelectListProc_Skip5
 	lda	xwa, (xsp+72)
 	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xbc, (xbc + WS_RootFnTable)
@@ -1590,7 +1590,7 @@ HDAE5000_SelectListProc_Join6:
 	ld	xhl, (xhl + WS_RootFnTable)
 	ld_sril	xhl, (xhl + RootFn_DrawString)
 	call	(xhl)
-	jrl t, HDAE5000_SelectListProc_Join7                       ; [78 01 01] jrl T,0x280db2
+	jrl	t, HDAE5000_SelectListProc_Join7
 HDAE5000_SelectListProc_Skip5:
 	lda	xwa, (xsp+72)
 	ld xbc, (xsp + 0x04)
@@ -1620,11 +1620,11 @@ HDAE5000_SelectListProc_Skip5:
 	ld_sril	xhl, (xbc + RootFn_DrawFrame)
 	ldw	bc, 0x00f2
 	call	(xhl)
-	jrl t, HDAE5000_SelectListProc_Join7                       ; [78 9e 00] jrl T,0x280db2
+	jrl	t, HDAE5000_SelectListProc_Join7
 HDAE5000_SelectListProc_Skip6:
 	ld xwa, (xsp + 0x04)
 	cpw	(xwa+58), 0x0000
-	jr nz, HDAE5000_SelectListProc_Skip7                       ; [6e 4b] jr NZ,0x280d69
+	jr	nz, HDAE5000_SelectListProc_Skip7
 	lda	xwa, (xsp+72)
 	ld xbc, (xsp + 0x04)
 	ld	bc, (xbc+22)
@@ -1647,7 +1647,7 @@ HDAE5000_SelectListProc_Skip6:
 	ld	xhl, (xhl + WS_RootFnTable)
 	ld_sril	xhl, (xhl + RootFn_DrawString)
 	call	(xhl)
-	jr t, HDAE5000_SelectListProc_Join7                        ; [68 49] jr T,0x280db2
+	jr	t, HDAE5000_SelectListProc_Join7
 HDAE5000_SelectListProc_Skip7:
 	lda	xwa, (xsp+72)
 	ld xbc, (xsp + 0x04)
@@ -1679,9 +1679,9 @@ HDAE5000_SelectListProc_Next3:
 	ld xwa, (xsp + 0x04)
 	muls xbc, (xwa+44)		; muls XBC,(XWA+0x2c)
 	cp	(xsp+8), bc
-	jrl c, HDAE5000_SelectListProc_Loop2                       ; [77 5f fd] jrl C,0x280b26
+	jrl	c, HDAE5000_SelectListProc_Loop2
 	ld	xhl, 0:i3
-	jrl t, HDAE5000_SelectListProc_Epilogue                       ; [78 59 04] jrl T,0x281225
+	jrl	t, HDAE5000_SelectListProc_Epilogue
 HDAE5000_SelectListProc_OnHdaeChangeSelNum:
 	ld xwa, (xsp + 0x68)
 	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
@@ -1694,7 +1694,7 @@ HDAE5000_SelectListProc_OnHdaeChangeSelNum:
 	ld	de, (xwa)
 	ld xwa, (xsp + 0x60)
 	add	de, wa
-	jr ge, HDAE5000_SelectListProc_Skip8                       ; [69 24] jr GE,0x280e15
+	jr	ge, HDAE5000_SelectListProc_Skip8
 	ld	bc, de
 	exts xbc
 	ld xwa, (xsp + 0x04)
@@ -1705,14 +1705,14 @@ HDAE5000_SelectListProc_OnHdaeChangeSelNum:
 	ld	xhl, (xbc + RootFn_MainFuncCall)
 	ld	xbc, EVT_HDAE_UNDER_FLOW
 	call	(xhl)
-	jr t, HDAE5000_SelectListProc_Join8                        ; [68 53] jr T,0x280e68
+	jr	t, HDAE5000_SelectListProc_Join8
 HDAE5000_SelectListProc_Skip8:
 	ld xwa, (xsp + 0x04)
 	ld	bc, (xwa+44)
 	ld xwa, (xsp + 0x04)
 	muls xbc, (xwa+42)		; muls XBC,(XWA+0x2a)
 	cp	de, bc
-	jr lt, HDAE5000_SelectListProc_Skip9                       ; [61 24] jr LT,0x280e49
+	jr	lt, HDAE5000_SelectListProc_Skip9
 	ld	bc, de
 	exts xbc
 	ld xwa, (xsp + 0x04)
@@ -1723,7 +1723,7 @@ HDAE5000_SelectListProc_Skip8:
 	ld	xhl, (xbc + RootFn_MainFuncCall)
 	ld	xbc, EVT_HDAE_OVER_FLOW
 	call	(xhl)
-	jr t, HDAE5000_SelectListProc_Join8                        ; [68 1f] jr T,0x280e68
+	jr	t, HDAE5000_SelectListProc_Join8
 HDAE5000_SelectListProc_Skip9:
 	ld	bc, de
 	exts xbc
@@ -1736,7 +1736,7 @@ HDAE5000_SelectListProc_Skip9:
 	call	(xhl)
 HDAE5000_SelectListProc_Join8:
 	ld	xhl, 0:i3
-	jrl t, HDAE5000_SelectListProc_Epilogue                       ; [78 b8 03] jrl T,0x281225
+	jrl	t, HDAE5000_SelectListProc_Epilogue
 HDAE5000_SelectListProc_OnHdaeSetSelNum:
 	ld xwa, (xsp + 0x68)
 	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
@@ -1782,7 +1782,7 @@ HDAE5000_SelectListProc_OnHdaeSetSelNum:
 	ld	xbc, EVT_HDAE_CHANGE_SEL_NUM
 	call	(xhl)
 	ld	xhl, 0:i3
-	jrl t, HDAE5000_SelectListProc_Epilogue                       ; [78 22 03] jrl T,0x281225
+	jrl	t, HDAE5000_SelectListProc_Epilogue
 HDAE5000_SelectListProc_OnHdaeReqSelNum:
 	ld xwa, (xsp + 0x68)
 	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
@@ -1802,7 +1802,7 @@ HDAE5000_SelectListProc_OnHdaeReqSelNum:
 	ld	xbc, EVT_HDAE_ACK_SEL_NUM
 	call	(xhl)
 	ld	xhl, 0:i3
-	jrl t, HDAE5000_SelectListProc_Epilogue                       ; [78 e1 02] jrl T,0x281225
+	jrl	t, HDAE5000_SelectListProc_Epilogue
 HDAE5000_SelectListProc_OnHdaeSetStrAdr:
 	ld xwa, (xsp + 0x68)
 	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
@@ -1815,7 +1815,7 @@ HDAE5000_SelectListProc_OnHdaeSetStrAdr:
 	ld xwa, (xsp + 0x60)
 	ld (xbc), xwa
 	ld	xhl, 0:i3
-	jrl t, HDAE5000_SelectListProc_Epilogue                       ; [78 bb 02] jrl T,0x281225
+	jrl	t, HDAE5000_SelectListProc_Epilogue
 HDAE5000_SelectListProc_Skip10:
 	ld xwa, (xsp + 0x68)
 	ld xbc, (xsp + 0x64)
@@ -1840,12 +1840,12 @@ HDAE5000_SelectListProc_Skip10:
 	call	(xix)
 	ld (xsp + 0x04), xhl
 	cp	(xsp+96), xiz
-	jrl nz, HDAE5000_SelectListProc_Skip12                      ; [7e b7 00] jrl NZ,0x281077
+	jrl	nz, HDAE5000_SelectListProc_Skip12
 	ld xwa, (xsp + 0x64)
 	cp	xwa, EVT_INDEXSW_UP
-	jr z, HDAE5000_SelectListProc_Join9                        ; [66 09] jr Z,0x280fd4
+	jr	z, HDAE5000_SelectListProc_Join9
 	cp	xwa, EVT_INDEXSW_UP_AIC
-	jrl nz, HDAE5000_SelectListProc_Skip11                      ; [7e 9e 00] jrl NZ,0x281072
+	jrl	nz, HDAE5000_SelectListProc_Skip11
 HDAE5000_SelectListProc_Join9:
 	ldw	wa, 0xffff
 HDAE5000_SelectListProc_Loop4:
@@ -1860,7 +1860,7 @@ HDAE5000_SelectListProc_Loop4:
 	call	(xhl)
 	ld xwa, (xsp + 0x04)
 	cpw	(xwa+52), 0x0000
-	jr z, HDAE5000_SelectListProc_Join10                        ; [66 1a] jr Z,0x28101a
+	jr	z, HDAE5000_SelectListProc_Join10
 	ld xwa, (xsp + 0x68)
 	ld xbc, (xsp + 0x64)
 	ld xde, (xsp + 0x60)
@@ -1871,7 +1871,7 @@ HDAE5000_SelectListProc_Loop4:
 HDAE5000_SelectListProc_Join10:
 	ld xwa, (xsp + 0x04)
 	cpw	(xwa+50), 0x0000
-	jr z, HDAE5000_SelectListProc_Join11                        ; [66 49] jr Z,0x28106d
+	jr	z, HDAE5000_SelectListProc_Join11
 	ld xwa, (xsp + 0x68)
 	ld	xde, xiz
 	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
@@ -1893,32 +1893,32 @@ HDAE5000_SelectListProc_Join10:
 	call	(xhl)
 HDAE5000_SelectListProc_Join11:
 	ld	xhl, 0:i3
-	jrl t, HDAE5000_SelectListProc_Epilogue                       ; [78 b3 01] jrl T,0x281225
+	jrl	t, HDAE5000_SelectListProc_Epilogue
 HDAE5000_SelectListProc_Skip11:
 	ld	wa, 1:i3
-	jrl t, HDAE5000_SelectListProc_Loop4                       ; [78 60 ff] jrl T,0x280fd7
+	jrl	t, HDAE5000_SelectListProc_Loop4
 HDAE5000_SelectListProc_Skip12:
 	ld	xwa, xiz
 	inc 1, xwa
 	cp	xwa, (xsp+96)
-	jr nz, HDAE5000_SelectListProc_Skip13                       ; [6e 09] jr NZ,0x281089
+	jr	nz, HDAE5000_SelectListProc_Skip13
 	ld xwa, (xsp + 0x04)
 	ld	wa, (xwa+44)
-	jrl t, HDAE5000_SelectListProc_Loop4                       ; [78 4e ff] jrl T,0x280fd7
+	jrl	t, HDAE5000_SelectListProc_Loop4
 HDAE5000_SelectListProc_Skip13:
 	ld	xwa, xiz
 	inc 2, xwa
 	cp	xwa, (xsp+96)
-	jr nz, HDAE5000_SelectListProc_Skip14                       ; [6e 0b] jr NZ,0x28109d
+	jr	nz, HDAE5000_SelectListProc_Skip14
 	ld xwa, (xsp + 0x04)
 	ld	wa, (xwa+44)
 	neg	wa
-	jrl t, HDAE5000_SelectListProc_Loop4                       ; [78 3a ff] jrl T,0x280fd7
+	jrl	t, HDAE5000_SelectListProc_Loop4
 HDAE5000_SelectListProc_Skip14:
 	ld	xwa, xiz
 	inc	3, xwa
 	cp	xwa, (xsp+96)
-	jr nz, HDAE5000_SelectListProc_Skip15                       ; [6e 2b] jr NZ,0x2810d1
+	jr	nz, HDAE5000_SelectListProc_Skip15
 	ld xwa, (xsp + 0x04)
 	ld xwa, (xwa + 0x2e)
 	ld	de, (xwa)
@@ -1931,12 +1931,12 @@ HDAE5000_SelectListProc_Skip14:
 	ld	xbc, EVT_HDAE_SELECT_OK
 	call	(xhl)
 	ld	xhl, 0:i3
-	jrl t, HDAE5000_SelectListProc_Epilogue                       ; [78 54 01] jrl T,0x281225
+	jrl	t, HDAE5000_SelectListProc_Epilogue
 HDAE5000_SelectListProc_Skip15:
 	ld	xwa, xiz
 	inc 4, xwa
 	cp	xwa, (xsp+96)
-	jr nz, HDAE5000_SelectListProc_Skip16                       ; [6e 2b] jr NZ,0x281105
+	jr	nz, HDAE5000_SelectListProc_Skip16
 	ld xwa, (xsp + 0x04)
 	ld xwa, (xwa + 0x2e)
 	ld	de, (xwa)
@@ -1949,12 +1949,12 @@ HDAE5000_SelectListProc_Skip15:
 	ld	xbc, EVT_HDAE_SELECT_SAVE
 	call	(xhl)
 	ld	xhl, 0:i3
-	jrl t, HDAE5000_SelectListProc_Epilogue                       ; [78 20 01] jrl T,0x281225
+	jrl	t, HDAE5000_SelectListProc_Epilogue
 HDAE5000_SelectListProc_Skip16:
 	ld	xwa, xiz
 	inc	5, xwa
 	cp	xwa, (xsp+96)
-	jr nz, HDAE5000_SelectListProc_Skip17                       ; [6e 2b] jr NZ,0x281139
+	jr	nz, HDAE5000_SelectListProc_Skip17
 	ld xwa, (xsp + 0x04)
 	ld xwa, (xwa + 0x2e)
 	ld	de, (xwa)
@@ -1967,12 +1967,12 @@ HDAE5000_SelectListProc_Skip16:
 	ld	xbc, EVT_HDAE_SELECT_DEL_FILE
 	call	(xhl)
 	ld	xhl, 0:i3
-	jrl t, HDAE5000_SelectListProc_Epilogue                       ; [78 ec 00] jrl T,0x281225
+	jrl	t, HDAE5000_SelectListProc_Epilogue
 HDAE5000_SelectListProc_Skip17:
 	ld	xwa, xiz
 	inc	6, xwa
 	cp	xwa, (xsp+96)
-	jr nz, HDAE5000_SelectListProc_Skip18                       ; [6e 2b] jr NZ,0x28116d
+	jr	nz, HDAE5000_SelectListProc_Skip18
 	ld xwa, (xsp + 0x04)
 	ld xwa, (xwa + 0x2e)
 	ld	de, (xwa)
@@ -1985,12 +1985,12 @@ HDAE5000_SelectListProc_Skip17:
 	ld	xbc, EVT_HDAE_SELECT_OK2
 	call	(xhl)
 	ld	xhl, 0:i3
-	jrl t, HDAE5000_SelectListProc_Epilogue                       ; [78 b8 00] jrl T,0x281225
+	jrl	t, HDAE5000_SelectListProc_Epilogue
 HDAE5000_SelectListProc_Skip18:
 	ld	xwa, xiz
 	inc	7, xwa
 	cp	xwa, (xsp+96)
-	jr nz, HDAE5000_SelectListProc_Skip19                       ; [6e 2b] jr NZ,0x2811a1
+	jr	nz, HDAE5000_SelectListProc_Skip19
 	ld xwa, (xsp + 0x04)
 	ld xwa, (xwa + 0x2e)
 	ld	de, (xwa)
@@ -2003,12 +2003,12 @@ HDAE5000_SelectListProc_Skip18:
 	ld	xbc, EVT_HDAE_SELECT_DEL
 	call	(xhl)
 	ld	xhl, 0:i3
-	jrl t, HDAE5000_SelectListProc_Epilogue                       ; [78 84 00] jrl T,0x281225
+	jrl	t, HDAE5000_SelectListProc_Epilogue
 HDAE5000_SelectListProc_Skip19:
 	ld	xwa, xiz
 	inc 8, xwa		; inc 0,XWA
 	cp	xwa, (xsp+96)
-	jr nz, HDAE5000_SelectListProc_Skip20                       ; [6e 2a] jr NZ,0x2811d4
+	jr	nz, HDAE5000_SelectListProc_Skip20
 	ld xwa, (xsp + 0x04)
 	ld xwa, (xwa + 0x2e)
 	ld	de, (xwa)
@@ -2021,10 +2021,10 @@ HDAE5000_SelectListProc_Skip19:
 	ld	xbc, EVT_HDAE_SELECT_ALL
 	call	(xhl)
 	ld	xhl, 0:i3
-	jr t, HDAE5000_SelectListProc_Epilogue                        ; [68 51] jr T,0x281225
+	jr	t, HDAE5000_SelectListProc_Epilogue
 HDAE5000_SelectListProc_Skip20:
 	ld	xhl, 0:i3
-	jr t, HDAE5000_SelectListProc_Epilogue                        ; [68 4d] jr T,0x281225
+	jr	t, HDAE5000_SelectListProc_Epilogue
 HDAE5000_SelectListProc_Skip21:
 	ld xwa, (xsp + 0x68)
 	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
@@ -2061,16 +2061,16 @@ HDAE5000_DbMemoClProc:
 	ld	xiz, xwa
 	ld	xwa, xbc
 	cp	xwa, EVT_MEMO_DRAW
-	jrl z, HDAE5000_DbMemoClProc_OnMemoDraw                       ; [76 b2 00] jrl Z,0x2812f0
+	jrl	z, HDAE5000_DbMemoClProc_OnMemoDraw
 	cp	xwa, EVT_DRAW
-	jr z, HDAE5000_DbMemoClProc_OnDraw                        ; [66 19] jr Z,0x28125f
+	jr	z, HDAE5000_DbMemoClProc_OnDraw
 	ld	xwa, xiz
 	ld xde, (xsp + 0x6a)
 	ld	xhl, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xhl, (xhl + WS_RootFnTable)
 	ld_sril	xix, (xhl + RootFn_InheritedProc)
 	call	(xix)
-	jrl t, HDAE5000_DbMemoClProc_Epilogue                       ; [78 ad 01] jrl T,0x28140c
+	jrl	t, HDAE5000_DbMemoClProc_Epilogue
 HDAE5000_DbMemoClProc_OnDraw:
 	ld	xwa, xiz
 	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
@@ -2114,7 +2114,7 @@ HDAE5000_DbMemoClProc_OnDraw:
 	ld	xbc, EVT_MEMO_DRAW
 	call	(xhl)
 	ld	xhl, 0:i3
-	jrl t, HDAE5000_DbMemoClProc_Epilogue                       ; [78 1c 01] jrl T,0x28140c
+	jrl	t, HDAE5000_DbMemoClProc_Epilogue
 HDAE5000_DbMemoClProc_OnMemoDraw:
 	ld	xwa, xiz
 	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
@@ -2209,11 +2209,11 @@ HDAE5000_DbMemoClProc_Loop:
 	call HDAE5000_StrLen
 	inc 4, xsp
 	cp	hl, (xsp+8)
-	jr nz, HDAE5000_DbMemoClProc_Done                       ; [6e 0b] jr NZ,0x28140a
+	jr	nz, HDAE5000_DbMemoClProc_Done
 	ld	wa, (xsp+8)
 	extz xwa
 	add	(xsp+10), xwa
-	jrl t, HDAE5000_DbMemoClProc_Loop                       ; [78 62 ff] jrl T,0x28136c
+	jrl	t, HDAE5000_DbMemoClProc_Loop
 HDAE5000_DbMemoClProc_Done:
 	ld	xhl, 0:i3
 HDAE5000_DbMemoClProc_Epilogue:
@@ -2230,52 +2230,52 @@ HDAE5000_AcHddNamingWindowProc:
 	ld (xsp + 0x30), xwa
 	ld xwa, (xsp + 0x2c)
 	cp	xwa, EVT_I_AM_SELECTED
-	jrl z, HDAE5000_AcHddNamingWindowProc_OnIAmSelected                       ; [76 f5 10] jrl Z,0x28251f
+	jrl	z, HDAE5000_AcHddNamingWindowProc_OnIAmSelected
 	cp	xwa, EVT_SET_CHARA
-	jrl z, HDAE5000_AcHddNamingWindowProc_OnSetChara                       ; [76 b4 10] jrl Z,0x2824e7
+	jrl	z, HDAE5000_AcHddNamingWindowProc_OnSetChara
 	cp	xwa, EVT_SET_CURSOR
-	jrl z, HDAE5000_AcHddNamingWindowProc_OnSetCursor                       ; [76 7b 0e] jrl Z,0x2822b7
+	jrl	z, HDAE5000_AcHddNamingWindowProc_OnSetCursor
 	cp	xwa, EVT_SET_PAGE
-	jrl z, HDAE5000_AcHddNamingWindowProc_OnSetPage                       ; [76 ec 0d] jrl Z,0x282231
+	jrl	z, HDAE5000_AcHddNamingWindowProc_OnSetPage
 	cp	xwa, EVT_SET_AP_FUNCTION
-	jrl z, HDAE5000_AcHddNamingWindowProc_OnSetApFunction                       ; [76 d6 0d] jrl Z,0x282224
+	jrl	z, HDAE5000_AcHddNamingWindowProc_OnSetApFunction
 	cp	xwa, EVT_GET_STRING
-	jrl z, HDAE5000_AcHddNamingWindowProc_OnGetString                       ; [76 b8 0d] jrl Z,0x28220f
+	jrl	z, HDAE5000_AcHddNamingWindowProc_OnGetString
 	cp	xwa, EVT_SET_STRING
-	jrl z, HDAE5000_AcHddNamingWindowProc_OnSetString                       ; [76 7f 0d] jrl Z,0x2821df
+	jrl	z, HDAE5000_AcHddNamingWindowProc_OnSetString
 	cp	xwa, EVT_INDEXSW_DOWN
-	jrl z, HDAE5000_AcHddNamingWindowProc_Skip3                       ; [76 51 05] jrl Z,0x2819ba
+	jrl	z, HDAE5000_AcHddNamingWindowProc_Skip3
 	cp	xwa, EVT_INDEXSW_DOWN_AIC
-	jrl z, HDAE5000_AcHddNamingWindowProc_Skip3                       ; [76 48 05] jrl Z,0x2819ba
+	jrl	z, HDAE5000_AcHddNamingWindowProc_Skip3
 	cp	xwa, EVT_INDEXSW_UP
-	jrl z, HDAE5000_AcHddNamingWindowProc_Skip3                       ; [76 3f 05] jrl Z,0x2819ba
+	jrl	z, HDAE5000_AcHddNamingWindowProc_Skip3
 	cp	xwa, EVT_INDEXSW_UP_AIC
-	jrl z, HDAE5000_AcHddNamingWindowProc_Skip3                       ; [76 36 05] jrl Z,0x2819ba
+	jrl	z, HDAE5000_AcHddNamingWindowProc_Skip3
 	cp	xwa, EVT_PARA_DRAW
-	jrl z, HDAE5000_AcHddNamingWindowProc_OnParaDraw                       ; [76 36 04] jrl Z,0x2818c3
+	jrl	z, HDAE5000_AcHddNamingWindowProc_OnParaDraw
 	cp	xwa, EVT_SELE_DRAW
-	jrl z, HDAE5000_AcHddNamingWindowProc_OnSeleDraw                       ; [76 96 02] jrl Z,0x28172c
+	jrl	z, HDAE5000_AcHddNamingWindowProc_OnSeleDraw
 	cp	xwa, EVT_HIDE
-	jrl z, HDAE5000_AcHddNamingWindowProc_OnHide                       ; [76 6e 02] jrl Z,0x28170d
+	jrl	z, HDAE5000_AcHddNamingWindowProc_OnHide
 	cp	xwa, EVT_REPAINT
-	jrl z, HDAE5000_AcHddNamingWindowProc_Skip2                       ; [76 18 02] jrl Z,0x2816c0
+	jrl	z, HDAE5000_AcHddNamingWindowProc_Skip2
 	cp	xwa, EVT_PAINT
-	jrl z, HDAE5000_AcHddNamingWindowProc_Skip2                       ; [76 0f 02] jrl Z,0x2816c0
+	jrl	z, HDAE5000_AcHddNamingWindowProc_Skip2
 	cp	xwa, EVT_SHOW
-	jrl nz, HDAE5000_AcHddNamingWindowProc_Skip4                      ; [7e a8 11] jrl NZ,0x282662
+	jrl	nz, HDAE5000_AcHddNamingWindowProc_Skip4
 	ld xwa, (xsp + 0x28)
 	or xwa, xwa
-	jr z, HDAE5000_AcHddNamingWindowProc_Join                        ; [66 17] jr Z,0x2814d8
+	jr	z, HDAE5000_AcHddNamingWindowProc_Join
 	ld xwa, (xsp + 0x28)
 	cp	xwa, 0x00000003
-	jr z, HDAE5000_AcHddNamingWindowProc_Join                        ; [66 0c] jr Z,0x2814d8
+	jr	z, HDAE5000_AcHddNamingWindowProc_Join
 	ld xwa, (xsp + 0x28)
 	cp	xwa, 0x00000005
-	jrl nz, HDAE5000_AcHddNamingWindowProc_Join6                      ; [7e 80 01] jrl NZ,0x281658
+	jrl	nz, HDAE5000_AcHddNamingWindowProc_Join6
 HDAE5000_AcHddNamingWindowProc_Join:
 	ld	xwa, (0x22a022)
 	or xwa, xwa
-	jr nz, HDAE5000_AcHddNamingWindowProc_Join2                       ; [6e 0a] jr NZ,0x2814eb
+	jr	nz, HDAE5000_AcHddNamingWindowProc_Join2
 	ld	xwa, NAKA_APFUNC_NamingCheck
 	ld	(0x22a022), xwa
 HDAE5000_AcHddNamingWindowProc_Join2:
@@ -2290,7 +2290,7 @@ HDAE5000_AcHddNamingWindowProc_Join2:
 	call	(xix)
 	ld	(0x22a026), hl
 	cpw	(0x22A026:24), 32
-	jr ule, HDAE5000_AcHddNamingWindowProc_Join3                      ; [63 07] jr ULE,0x28152b
+	jr	ule, HDAE5000_AcHddNamingWindowProc_Join3
 	ldw	(0x22A026:24), 32
 HDAE5000_AcHddNamingWindowProc_Join3:
 	ld	xwa, (0x22a022)
@@ -2309,7 +2309,7 @@ HDAE5000_AcHddNamingWindowProc_Join3:
 	ld xwa, (xbc)
 	ld	(0x22a034), xwa
 	cpw	(0x22A032:24), 0
-	jr z, HDAE5000_AcHddNamingWindowProc_Skip                        ; [66 4a] jr Z,0x2815b8
+	jr	z, HDAE5000_AcHddNamingWindowProc_Skip
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_RootFnTable)
 	ld	xhl, (xwa + RootFn_SetVisible)
@@ -2328,7 +2328,7 @@ HDAE5000_AcHddNamingWindowProc_Join3:
 	ld	xwa, HDAE5000_OBJ_HddNamingSymbol
 	ld	bc, 0:i3
 	call	(xhl)
-	jr t, HDAE5000_AcHddNamingWindowProc_Join4                        ; [68 48] jr T,0x281600
+	jr	t, HDAE5000_AcHddNamingWindowProc_Join4
 HDAE5000_AcHddNamingWindowProc_Skip:
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_RootFnTable)
@@ -2351,7 +2351,7 @@ HDAE5000_AcHddNamingWindowProc_Skip:
 HDAE5000_AcHddNamingWindowProc_Join4:
 	ld	iz, 0:i3
 	cp	iz, (0x22A026:24)
-	jr nc, HDAE5000_AcHddNamingWindowProc_Join5                       ; [6f 1d] jr NC,0x281626
+	jr	nc, HDAE5000_AcHddNamingWindowProc_Join5
 HDAE5000_AcHddNamingWindowProc_Loop:
 	ld	wa, iz
 	extz xwa
@@ -2362,7 +2362,7 @@ HDAE5000_AcHddNamingWindowProc_Loop:
 	ld	(xbc), a
 	inc	1, iz
 	cp	iz, (0x22A026:24)
-	jr c, HDAE5000_AcHddNamingWindowProc_Loop                        ; [67 e3] jr C,0x281609
+	jr	c, HDAE5000_AcHddNamingWindowProc_Loop
 HDAE5000_AcHddNamingWindowProc_Join5:
 	ld	wa, iz
 	extz xwa
@@ -2406,7 +2406,7 @@ HDAE5000_AcHddNamingWindowProc_Join6:
 	ld	wa, 1:i3
 	call	(xhl)
 	ld	xhl, 0:i3
-	jrl t, HDAE5000_AcHddNamingWindowProc_Epilogue                       ; [78 bc 0f] jrl T,0x28267c
+	jrl	t, HDAE5000_AcHddNamingWindowProc_Epilogue
 HDAE5000_AcHddNamingWindowProc_Skip2:
 	ld xwa, (xsp + 0x30)
 	ld xbc, (xsp + 0x2c)
@@ -2426,7 +2426,7 @@ HDAE5000_AcHddNamingWindowProc_Skip2:
 	ld	xbc, EVT_SET_CURSOR
 	call	(xhl)
 	ld	xhl, 0:i3
-	jrl t, HDAE5000_AcHddNamingWindowProc_Epilogue                       ; [78 6f 0f] jrl T,0x28267c
+	jrl	t, HDAE5000_AcHddNamingWindowProc_Epilogue
 HDAE5000_AcHddNamingWindowProc_OnHide:
 	ld xwa, (xsp + 0x30)
 	ld xbc, (xsp + 0x2c)
@@ -2436,13 +2436,13 @@ HDAE5000_AcHddNamingWindowProc_OnHide:
 	ld_sril	xhl, (xhl + RootFn_InheritedProc)
 	call	(xhl)
 	ld	xhl, 0:i3
-	jrl t, HDAE5000_AcHddNamingWindowProc_Epilogue                       ; [78 50 0f] jrl T,0x28267c
+	jrl	t, HDAE5000_AcHddNamingWindowProc_Epilogue
 HDAE5000_AcHddNamingWindowProc_OnSeleDraw:
 	ld xwa, (xsp + 0x28)
 	ld	(0x22a02e), wa
 	ld	wa, (0x22A030:24)
 	cp	wa, (0x22A02E:24)
-	jrl z, HDAE5000_AcHddNamingWindowProc_Join8                       ; [76 7d 01] jrl Z,0x2818be
+	jrl	z, HDAE5000_AcHddNamingWindowProc_Join8
 	lda	xwa, (xsp+32)
 	ld	xbc, xwa
 	ld xwa, (xsp + 0x30)
@@ -2458,7 +2458,7 @@ HDAE5000_AcHddNamingWindowProc_OnSeleDraw:
 	ld xwa, (xbc)
 	ld (xsp + 0x06), xwa
 	cpw	(0x22A030:24), 65535
-	jrl z, HDAE5000_AcHddNamingWindowProc_Join7                       ; [76 9d 00] jrl Z,0x281817
+	jrl	z, HDAE5000_AcHddNamingWindowProc_Join7
 	ld	wa, (0x22A030:24)
 	extz xwa
 	sll	xwa, 0x02
@@ -2564,11 +2564,11 @@ HDAE5000_AcHddNamingWindowProc_Join7:
 	ld	(0x22a030), wa
 HDAE5000_AcHddNamingWindowProc_Join8:
 	ld	xhl, 0:i3
-	jrl t, HDAE5000_AcHddNamingWindowProc_Epilogue                       ; [78 b9 0d] jrl T,0x28267c
+	jrl	t, HDAE5000_AcHddNamingWindowProc_Epilogue
 HDAE5000_AcHddNamingWindowProc_OnParaDraw:
 	ld	wa, (0x22A02C:24)
 	cp	wa, (0x22A02A:24)
-	jrl z, HDAE5000_AcHddNamingWindowProc_Join9                       ; [76 e5 00] jrl Z,0x2819b5
+	jrl	z, HDAE5000_AcHddNamingWindowProc_Join9
 	ldw	(0x22A030:24), 65535
 	lda	xwa, (xsp+32)
 	ld	xbc, xwa
@@ -2591,7 +2591,7 @@ HDAE5000_AcHddNamingWindowProc_OnParaDraw:
 	ld xwa, (xbc)
 	ld (xsp + 0x06), xwa
 	ld	iz, 0:i3
-	jr t, HDAE5000_AcHddNamingWindowProc_Next                        ; [68 6c] jr T,0x28198d
+	jr	t, HDAE5000_AcHddNamingWindowProc_Next
 HDAE5000_AcHddNamingWindowProc_Loop2:
 	ld	wa, iz
 	extz xwa
@@ -2641,12 +2641,12 @@ HDAE5000_AcHddNamingWindowProc_Next:
 	ld	xbc, HDAE5000_Str_Chr25_AcHddNamingWindowProc
 	add	xbc, xwa
 	cp	iz, (xbc)
-	jrl ule, HDAE5000_AcHddNamingWindowProc_Loop2                     ; [73 76 ff] jrl ULE,0x281921
+	jrl	ule, HDAE5000_AcHddNamingWindowProc_Loop2
 	ld	wa, (0x22A02A:24)
 	ld	(0x22a02c), wa
 HDAE5000_AcHddNamingWindowProc_Join9:
 	ld	xhl, 0:i3
-	jrl t, HDAE5000_AcHddNamingWindowProc_Epilogue                       ; [78 c2 0c] jrl T,0x28267c
+	jrl	t, HDAE5000_AcHddNamingWindowProc_Epilogue
 HDAE5000_AcHddNamingWindowProc_Skip3:
 	ld xwa, (xsp + 0x30)
 	ld xbc, (xsp + 0x2c)
@@ -2658,9 +2658,9 @@ HDAE5000_AcHddNamingWindowProc_Skip3:
 	ld xwa, (xsp + 0x28)
 	dec	1, xwa
 	cp	xwa, 0x00000000
-	jrl c, HDAE5000_AcHddNamingWindowProc_Join10                       ; [77 f8 07] jrl C,0x2821da
+	jrl	c, HDAE5000_AcHddNamingWindowProc_Join10
 	cp	xwa, 0x00000008
-	jrl ugt, HDAE5000_AcHddNamingWindowProc_Join10                     ; [7b ef 07] jrl UGT,0x2821da
+	jrl	ugt, HDAE5000_AcHddNamingWindowProc_Join10
 	add	xwa, xwa
 	add	xwa, HDAE5000_AcHddNamingWindowProc_CaseTable
 	ld	wa, (xwa)
@@ -2670,7 +2670,7 @@ HDAE5000_AcHddNamingWindowProc_Skip3:
 ;   place left (auto-repeats)
 HDAE5000_AcHddNamingWindowProc_OnPositionLeft:
 	cpw	(0x22A028:24), 0
-	jrl z, HDAE5000_AcHddNamingWindowProc_Join10                       ; [76 d1 07] jrl Z,0x2821da
+	jrl	z, HDAE5000_AcHddNamingWindowProc_Join10
 	decw	1, (0x22A028:24)
 	ld	de, (0x22A028:24)
 	extz xde
@@ -2687,14 +2687,14 @@ HDAE5000_AcHddNamingWindowProc_OnPositionLeft:
 	ld	xhl, (xhl + WS_RootFnTable)
 	ld	xhl, (xhl + RootFn_SetAutoInc)
 	call	(xhl)
-	jrl t, HDAE5000_AcHddNamingWindowProc_Join10                       ; [78 8f 07] jrl T,0x2821da
+	jrl	t, HDAE5000_AcHddNamingWindowProc_Join10
 ; HDAE5000_AcHddNamingWindowProc_OnPositionRight: index switch 2, the right key under POSITION: move the name cursor
 ;   one place right, below the name length 0x22A026 (auto-repeats)
 HDAE5000_AcHddNamingWindowProc_OnPositionRight:
 	ld	wa, (0x22A028:24)
 	inc	1, wa
 	cp	wa, (0x22A026:24)
-	jrl nc, HDAE5000_AcHddNamingWindowProc_Join10                      ; [7f 80 07] jrl NC,0x2821da
+	jrl	nc, HDAE5000_AcHddNamingWindowProc_Join10
 	incw	1, (0x22A028:24)
 	ld	de, (0x22A028:24)
 	extz xde
@@ -2711,12 +2711,12 @@ HDAE5000_AcHddNamingWindowProc_OnPositionRight:
 	ld	xhl, (xhl + WS_RootFnTable)
 	ld	xhl, (xhl + RootFn_SetAutoInc)
 	call	(xhl)
-	jrl t, HDAE5000_AcHddNamingWindowProc_Join10                       ; [78 3e 07] jrl T,0x2821da
+	jrl	t, HDAE5000_AcHddNamingWindowProc_Join10
 ; HDAE5000_AcHddNamingWindowProc_OnPrevCharacter: index switch 3 (also the dial-down binding): select the previous
 ;   character of the page and write it at the cursor
 HDAE5000_AcHddNamingWindowProc_OnPrevCharacter:
 	cpw	(0x22A02E:24), 0
-	jrl z, HDAE5000_AcHddNamingWindowProc_Join10                       ; [76 34 07] jrl Z,0x2821da
+	jrl	z, HDAE5000_AcHddNamingWindowProc_Join10
 	ld	wa, (0x22A02A:24)
 	extz xwa
 	sll	xwa, 0x02
@@ -2766,22 +2766,22 @@ HDAE5000_AcHddNamingWindowProc_OnPrevCharacter:
 	ld	xhl, (xhl + WS_RootFnTable)
 	ld	xhl, (xhl + RootFn_SetAutoInc)
 	call	(xhl)
-	jrl t, HDAE5000_AcHddNamingWindowProc_Join10                       ; [78 80 06] jrl T,0x2821da
+	jrl	t, HDAE5000_AcHddNamingWindowProc_Join10
 ; HDAE5000_AcHddNamingWindowProc_OnCharacterRowUpDown: index switch 4: UP moves the character selection one row (13
 ;   characters) back, DOWN one row forward, and writes it at the cursor
 HDAE5000_AcHddNamingWindowProc_OnCharacterRowUpDown:
 	ld xwa, (xsp + 0x2c)
 	cp	xwa, EVT_INDEXSW_DOWN
-	jrl z, HDAE5000_AcHddNamingWindowProc_OnCharacterRowUpDown_Skip                       ; [76 da 00] jrl Z,0x281c40
+	jrl	z, HDAE5000_AcHddNamingWindowProc_OnCharacterRowUpDown_Skip
 	cp	xwa, EVT_INDEXSW_DOWN_AIC
-	jrl z, HDAE5000_AcHddNamingWindowProc_OnCharacterRowUpDown_Skip                       ; [76 d1 00] jrl Z,0x281c40
+	jrl	z, HDAE5000_AcHddNamingWindowProc_OnCharacterRowUpDown_Skip
 	cp	xwa, EVT_INDEXSW_UP
-	jr z, HDAE5000_AcHddNamingWindowProc_OnCharacterRowUpDown_Join                        ; [66 09] jr Z,0x281b80
+	jr	z, HDAE5000_AcHddNamingWindowProc_OnCharacterRowUpDown_Join
 	cp	xwa, EVT_INDEXSW_UP_AIC
-	jrl nz, HDAE5000_AcHddNamingWindowProc_Join10                      ; [7e 5a 06] jrl NZ,0x2821da
+	jrl	nz, HDAE5000_AcHddNamingWindowProc_Join10
 HDAE5000_AcHddNamingWindowProc_OnCharacterRowUpDown_Join:
 	cpw	(0x22A02E:24), 13
-	jrl c, HDAE5000_AcHddNamingWindowProc_Join10                       ; [77 50 06] jrl C,0x2821da
+	jrl	c, HDAE5000_AcHddNamingWindowProc_Join10
 	subw	(0x22A02E:24), 13
 	ld	wa, (0x22A02A:24)
 	extz xwa
@@ -2831,7 +2831,7 @@ HDAE5000_AcHddNamingWindowProc_OnCharacterRowUpDown_Join:
 	ld	xhl, (xhl + WS_RootFnTable)
 	ld	xhl, (xhl + RootFn_SetAutoInc)
 	call	(xhl)
-	jrl t, HDAE5000_AcHddNamingWindowProc_Join10                       ; [78 9a 05] jrl T,0x2821da
+	jrl	t, HDAE5000_AcHddNamingWindowProc_Join10
 HDAE5000_AcHddNamingWindowProc_OnCharacterRowUpDown_Skip:
 	ld	wa, (0x22A02A:24)
 	extz xwa
@@ -2862,11 +2862,11 @@ HDAE5000_AcHddNamingWindowProc_OnCharacterRowUpDown_Skip:
 	ld	wa, (0x22A02E:24)
 	add	wa, 0x000c
 	cp	wa, (xbc)
-	jr ugt, HDAE5000_AcHddNamingWindowProc_OnCharacterRowUpDown_Join3                      ; [6b 11] jr UGT,0x281cb4
+	jr	ugt, HDAE5000_AcHddNamingWindowProc_OnCharacterRowUpDown_Join3
 	cp	(xsp+10), 0x5a
-	jr z, HDAE5000_AcHddNamingWindowProc_OnCharacterRowUpDown_Join2                        ; [66 06] jr Z,0x281caf
+	jr	z, HDAE5000_AcHddNamingWindowProc_OnCharacterRowUpDown_Join2
 	cp	(xsp+10), 0x7a
-	jr nz, HDAE5000_AcHddNamingWindowProc_OnCharacterRowUpDown_Join3                       ; [6e 05] jr NZ,0x281cb4
+	jr	nz, HDAE5000_AcHddNamingWindowProc_OnCharacterRowUpDown_Join3
 HDAE5000_AcHddNamingWindowProc_OnCharacterRowUpDown_Join2:
 	decw	1, (0x22A02E:24)
 HDAE5000_AcHddNamingWindowProc_OnCharacterRowUpDown_Join3:
@@ -2880,7 +2880,7 @@ HDAE5000_AcHddNamingWindowProc_OnCharacterRowUpDown_Join3:
 	ld	wa, (0x22A02E:24)
 	add	wa, 0x000d
 	cp	wa, (xbc)
-	jrl ugt, HDAE5000_AcHddNamingWindowProc_Join10                     ; [7b ff 04] jrl UGT,0x2821da
+	jrl	ugt, HDAE5000_AcHddNamingWindowProc_Join10
 	addw	(0x22A02E:24), 13
 	ld	wa, (0x22A02A:24)
 	extz xwa
@@ -2902,9 +2902,9 @@ HDAE5000_AcHddNamingWindowProc_OnCharacterRowUpDown_Join3:
 	ld	xhl, (xde + RootFn_ConvertStrings)
 	call	(xhl)
 	cp	(xsp+10), 0x53
-	jr nz, HDAE5000_AcHddNamingWindowProc_OnCharacterRowUpDown_Skip2                       ; [6e 1f] jr NZ,0x281d44
+	jr	nz, HDAE5000_AcHddNamingWindowProc_OnCharacterRowUpDown_Skip2
 	cp	(xsp+11), 0x50
-	jr nz, HDAE5000_AcHddNamingWindowProc_OnCharacterRowUpDown_Skip2                       ; [6e 19] jr NZ,0x281d44
+	jr	nz, HDAE5000_AcHddNamingWindowProc_OnCharacterRowUpDown_Skip2
 	ld	wa, (0x22A028:24)
 	extz xwa
 	ld	xbc, 0x0022a000
@@ -2912,7 +2912,7 @@ HDAE5000_AcHddNamingWindowProc_OnCharacterRowUpDown_Join3:
 	ld	xwa, (0x22a034)
 	ld	a, (xwa)
 	ld	(xbc), a
-	jr t, HDAE5000_AcHddNamingWindowProc_OnCharacterRowUpDown_Join4                        ; [68 13] jr T,0x281d57
+	jr	t, HDAE5000_AcHddNamingWindowProc_OnCharacterRowUpDown_Join4
 HDAE5000_AcHddNamingWindowProc_OnCharacterRowUpDown_Skip2:
 	ld	wa, (0x22A028:24)
 	extz xwa
@@ -2944,7 +2944,7 @@ HDAE5000_AcHddNamingWindowProc_OnCharacterRowUpDown_Join4:
 	ld	xhl, (xhl + WS_RootFnTable)
 	ld	xhl, (xhl + RootFn_SetAutoInc)
 	call	(xhl)
-	jrl t, HDAE5000_AcHddNamingWindowProc_Join10                       ; [78 24 04] jrl T,0x2821da
+	jrl	t, HDAE5000_AcHddNamingWindowProc_Join10
 ; HDAE5000_AcHddNamingWindowProc_OnNextCharacter: index switch 5 (also the dial-up binding): select the next character
 ;   of the page and write it at the cursor
 HDAE5000_AcHddNamingWindowProc_OnNextCharacter:
@@ -2965,7 +2965,7 @@ HDAE5000_AcHddNamingWindowProc_OnNextCharacter:
 	ld	wa, (0x22A02E:24)
 	inc	1, wa
 	cp	wa, (xbc)
-	jrl ugt, HDAE5000_AcHddNamingWindowProc_Join10                     ; [7b e9 03] jrl UGT,0x2821da
+	jrl	ugt, HDAE5000_AcHddNamingWindowProc_Join10
 	incw	1, (0x22A02E:24)
 	ld	wa, (0x22A02E:24)
 	extz xwa
@@ -2980,9 +2980,9 @@ HDAE5000_AcHddNamingWindowProc_OnNextCharacter:
 	ld	xhl, (xde + RootFn_ConvertStrings)
 	call	(xhl)
 	cp	(xsp+10), 0x53
-	jr nz, HDAE5000_AcHddNamingWindowProc_OnNextCharacter_Skip                       ; [6e 1f] jr NZ,0x281e42
+	jr	nz, HDAE5000_AcHddNamingWindowProc_OnNextCharacter_Skip
 	cp	(xsp+11), 0x50
-	jr nz, HDAE5000_AcHddNamingWindowProc_OnNextCharacter_Skip                       ; [6e 19] jr NZ,0x281e42
+	jr	nz, HDAE5000_AcHddNamingWindowProc_OnNextCharacter_Skip
 	ld	wa, (0x22A028:24)
 	extz xwa
 	ld	xbc, 0x0022a000
@@ -2990,7 +2990,7 @@ HDAE5000_AcHddNamingWindowProc_OnNextCharacter:
 	ld	xwa, (0x22a034)
 	ld	a, (xwa)
 	ld	(xbc), a
-	jr t, HDAE5000_AcHddNamingWindowProc_OnNextCharacter_Join                        ; [68 13] jr T,0x281e55
+	jr	t, HDAE5000_AcHddNamingWindowProc_OnNextCharacter_Join
 HDAE5000_AcHddNamingWindowProc_OnNextCharacter_Skip:
 	ld	wa, (0x22A028:24)
 	extz xwa
@@ -3022,14 +3022,14 @@ HDAE5000_AcHddNamingWindowProc_OnNextCharacter_Join:
 	ld	xhl, (xhl + WS_RootFnTable)
 	ld	xhl, (xhl + RootFn_SetAutoInc)
 	call	(xhl)
-	jrl t, HDAE5000_AcHddNamingWindowProc_Join10                       ; [78 26 03] jrl T,0x2821da
+	jrl	t, HDAE5000_AcHddNamingWindowProc_Join10
 ; HDAE5000_AcHddNamingWindowProc_OnInsert: INS: shift the name right from the cursor and put the fill character
 ;   (0x22A034) at the cursor
 HDAE5000_AcHddNamingWindowProc_OnInsert:
 	ld	iz, (0x22A026:24)
 	dec	1, iz
 	cp	iz, (0x22A028:24)
-	jr ule, HDAE5000_AcHddNamingWindowProc_OnInsert_Join                      ; [63 25] jr ULE,0x281ee7
+	jr	ule, HDAE5000_AcHddNamingWindowProc_OnInsert_Join
 HDAE5000_AcHddNamingWindowProc_OnInsert_Loop:
 	ld	wa, iz
 	extz xwa
@@ -3044,7 +3044,7 @@ HDAE5000_AcHddNamingWindowProc_OnInsert_Loop:
 	ld	(xde), a
 	dec	1, iz
 	cp	iz, (0x22A028:24)
-	jr ugt, HDAE5000_AcHddNamingWindowProc_OnInsert_Loop                      ; [6b db] jr UGT,0x281ec2
+	jr	ugt, HDAE5000_AcHddNamingWindowProc_OnInsert_Loop
 HDAE5000_AcHddNamingWindowProc_OnInsert_Join:
 	ld	wa, (0x22A028:24)
 	extz xwa
@@ -3069,13 +3069,13 @@ HDAE5000_AcHddNamingWindowProc_OnInsert_Join:
 	ld_sril	xhl, (xbc + RootFn_SendEvent)
 	ld	xbc, EVT_SET_CURSOR
 	call	(xhl)
-	jrl t, HDAE5000_AcHddNamingWindowProc_Join10                       ; [78 97 02] jrl T,0x2821da
+	jrl	t, HDAE5000_AcHddNamingWindowProc_Join10
 ; HDAE5000_AcHddNamingWindowProc_OnDelete: DEL: shift the name left over the cursor and put the fill character at the
 ;   end
 HDAE5000_AcHddNamingWindowProc_OnDelete:
 	ld	iz, (0x22A028:24)
 	cp	iz, (0x22A026:24)
-	jr nc, HDAE5000_AcHddNamingWindowProc_OnDelete_Join                       ; [6f 25] jr NC,0x281f74
+	jr	nc, HDAE5000_AcHddNamingWindowProc_OnDelete_Join
 HDAE5000_AcHddNamingWindowProc_OnDelete_Loop:
 	ld	wa, iz
 	extz xwa
@@ -3090,7 +3090,7 @@ HDAE5000_AcHddNamingWindowProc_OnDelete_Loop:
 	ld	(xde), a
 	inc	1, iz
 	cp	iz, (0x22A026:24)
-	jr c, HDAE5000_AcHddNamingWindowProc_OnDelete_Loop                        ; [67 db] jr C,0x281f4f
+	jr	c, HDAE5000_AcHddNamingWindowProc_OnDelete_Loop
 HDAE5000_AcHddNamingWindowProc_OnDelete_Join:
 	ld	wa, (0x22A026:24)
 	dec	1, wa
@@ -3116,14 +3116,14 @@ HDAE5000_AcHddNamingWindowProc_OnDelete_Join:
 	ld_sril	xhl, (xbc + RootFn_SendEvent)
 	ld	xbc, EVT_SET_CURSOR
 	call	(xhl)
-	jrl t, HDAE5000_AcHddNamingWindowProc_Join10                       ; [78 08 02] jrl T,0x2821da
+	jrl	t, HDAE5000_AcHddNamingWindowProc_Join10
 ; HDAE5000_AcHddNamingWindowProc_OnCenterName: centre the name: count leading and trailing fill characters and re-pad
 ;   the trimmed text with half of them on each side
 HDAE5000_AcHddNamingWindowProc_OnCenterName:
 	ldw (xsp + 0x04), 0
 	ld	iz, 0:i3
 	cp	iz, (0x22A026:24)
-	jr nc, HDAE5000_AcHddNamingWindowProc_OnCenterName_Join                       ; [6f 22] jr NC,0x282002
+	jr	nc, HDAE5000_AcHddNamingWindowProc_OnCenterName_Join
 HDAE5000_AcHddNamingWindowProc_OnCenterName_Loop:
 	ld	wa, iz
 	extz xwa
@@ -3132,19 +3132,19 @@ HDAE5000_AcHddNamingWindowProc_OnCenterName_Loop:
 	ld	xwa, (0x22a034)
 	ld	a, (xwa)
 	cp	a, (xbc)
-	jr nz, HDAE5000_AcHddNamingWindowProc_OnCenterName_Join                       ; [6e 0c] jr NZ,0x282002
+	jr	nz, HDAE5000_AcHddNamingWindowProc_OnCenterName_Join
 	incw	1, (xsp+4)
 	inc	1, iz
 	cp	iz, (0x22A026:24)
-	jr c, HDAE5000_AcHddNamingWindowProc_OnCenterName_Loop                        ; [67 de] jr C,0x281fe0
+	jr	c, HDAE5000_AcHddNamingWindowProc_OnCenterName_Loop
 HDAE5000_AcHddNamingWindowProc_OnCenterName_Join:
 	ld	wa, (xsp+4)
 	cp	wa, (0x22A026:24)
-	jrl z, HDAE5000_AcHddNamingWindowProc_Join10                       ; [76 cd 01] jrl Z,0x2821da
+	jrl	z, HDAE5000_AcHddNamingWindowProc_Join10
 	ldw (xsp + 0x06), 0
 	ld	iz, 0:i3
 	cp	iz, (0x22A026:24)
-	jr nc, HDAE5000_AcHddNamingWindowProc_OnCenterName_Join2                       ; [6f 29] jr NC,0x282044
+	jr	nc, HDAE5000_AcHddNamingWindowProc_OnCenterName_Join2
 HDAE5000_AcHddNamingWindowProc_OnCenterName_Loop2:
 	ld	wa, (0x22A026:24)
 	sub	wa, iz
@@ -3155,11 +3155,11 @@ HDAE5000_AcHddNamingWindowProc_OnCenterName_Loop2:
 	ld	xwa, (0x22a034)
 	ld	a, (xwa)
 	cp	a, (xbc)
-	jr nz, HDAE5000_AcHddNamingWindowProc_OnCenterName_Join2                       ; [6e 0c] jr NZ,0x282044
+	jr	nz, HDAE5000_AcHddNamingWindowProc_OnCenterName_Join2
 	incw	1, (xsp+6)
 	inc	1, iz
 	cp	iz, (0x22A026:24)
-	jr c, HDAE5000_AcHddNamingWindowProc_OnCenterName_Loop2                        ; [67 d7] jr C,0x28201b
+	jr	c, HDAE5000_AcHddNamingWindowProc_OnCenterName_Loop2
 HDAE5000_AcHddNamingWindowProc_OnCenterName_Join2:
 	ld	wa, (xsp+4)
 	ld (xsp + 0x08), wa
@@ -3204,7 +3204,7 @@ HDAE5000_AcHddNamingWindowProc_OnCenterName_Join2:
 	call	(xhl)
 	ld	iz, 0:i3
 	cp	iz, (xsp+8)
-	jr nc, HDAE5000_AcHddNamingWindowProc_OnCenterName_Join3                       ; [6f 1b] jr NC,0x2820e1
+	jr	nc, HDAE5000_AcHddNamingWindowProc_OnCenterName_Join3
 HDAE5000_AcHddNamingWindowProc_OnCenterName_Loop3:
 	ld	wa, iz
 	extz xwa
@@ -3215,7 +3215,7 @@ HDAE5000_AcHddNamingWindowProc_OnCenterName_Loop3:
 	ld	(xbc), a
 	inc	1, iz
 	cp	iz, (xsp+8)
-	jr c, HDAE5000_AcHddNamingWindowProc_OnCenterName_Loop3                        ; [67 e5] jr C,0x2820c6
+	jr	c, HDAE5000_AcHddNamingWindowProc_OnCenterName_Loop3
 HDAE5000_AcHddNamingWindowProc_OnCenterName_Join3:
 	ld	wa, (xsp+4)
 	add	wa, (xsp+6)
@@ -3223,7 +3223,7 @@ HDAE5000_AcHddNamingWindowProc_OnCenterName_Join3:
 	ld	iz, (0x22A026:24)
 	sub	iz, wa
 	cp	iz, (0x22A026:24)
-	jr nc, HDAE5000_AcHddNamingWindowProc_OnCenterName_Join4                       ; [6f 1d] jr NC,0x282115
+	jr	nc, HDAE5000_AcHddNamingWindowProc_OnCenterName_Join4
 HDAE5000_AcHddNamingWindowProc_OnCenterName_Loop4:
 	ld	wa, iz
 	extz xwa
@@ -3234,7 +3234,7 @@ HDAE5000_AcHddNamingWindowProc_OnCenterName_Loop4:
 	ld	(xbc), a
 	inc	1, iz
 	cp	iz, (0x22A026:24)
-	jr c, HDAE5000_AcHddNamingWindowProc_OnCenterName_Loop4                        ; [67 e3] jr C,0x2820f8
+	jr	c, HDAE5000_AcHddNamingWindowProc_OnCenterName_Loop4
 HDAE5000_AcHddNamingWindowProc_OnCenterName_Join4:
 	lda xwa, (0x22a000:24)
 	ld	xde, xwa
@@ -3252,12 +3252,12 @@ HDAE5000_AcHddNamingWindowProc_OnCenterName_Join4:
 	ld_sril	xhl, (xbc + RootFn_SendEvent)
 	ld	xbc, EVT_SET_CURSOR
 	call	(xhl)
-	jrl t, HDAE5000_AcHddNamingWindowProc_Join10                       ; [78 80 00] jrl T,0x2821da
+	jrl	t, HDAE5000_AcHddNamingWindowProc_Join10
 ; HDAE5000_AcHddNamingWindowProc_OnClear: CLR: fill the whole name with the fill character and put the cursor at 0
 HDAE5000_AcHddNamingWindowProc_OnClear:
 	ld	iz, 0:i3
 	cp	iz, (0x22A026:24)
-	jr nc, HDAE5000_AcHddNamingWindowProc_OnClear_Join                       ; [6f 1d] jr NC,0x282180
+	jr	nc, HDAE5000_AcHddNamingWindowProc_OnClear_Join
 HDAE5000_AcHddNamingWindowProc_OnClear_Loop:
 	ld	wa, iz
 	extz xwa
@@ -3268,7 +3268,7 @@ HDAE5000_AcHddNamingWindowProc_OnClear_Loop:
 	ld	(xbc), a
 	inc	1, iz
 	cp	iz, (0x22A026:24)
-	jr c, HDAE5000_AcHddNamingWindowProc_OnClear_Loop                        ; [67 e3] jr C,0x282163
+	jr	c, HDAE5000_AcHddNamingWindowProc_OnClear_Loop
 HDAE5000_AcHddNamingWindowProc_OnClear_Join:
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_RootFnTable)
@@ -3294,7 +3294,7 @@ HDAE5000_AcHddNamingWindowProc_OnClear_Join:
 	call	(xhl)
 HDAE5000_AcHddNamingWindowProc_Join10:
 	ld	xhl, 0:i3
-	jrl t, HDAE5000_AcHddNamingWindowProc_Epilogue                       ; [78 9d 04] jrl T,0x28267c
+	jrl	t, HDAE5000_AcHddNamingWindowProc_Epilogue
 HDAE5000_AcHddNamingWindowProc_OnSetString:
 	ld xwa, (xsp + 0x28)
 	push xwa
@@ -3310,7 +3310,7 @@ HDAE5000_AcHddNamingWindowProc_OnSetString:
 	ld	xde, 0:i3
 	call	(xhl)
 	ld	xhl, 0:i3
-	jrl t, HDAE5000_AcHddNamingWindowProc_Epilogue                       ; [78 6d 04] jrl T,0x28267c
+	jrl	t, HDAE5000_AcHddNamingWindowProc_Epilogue
 HDAE5000_AcHddNamingWindowProc_OnGetString:
 	lda xwa, (0x22a000:24)
 	push xwa
@@ -3319,17 +3319,17 @@ HDAE5000_AcHddNamingWindowProc_OnGetString:
 	call HDAE5000_StrCpy
 	inc 8, xsp                              ; inc 0,XSP
 	ld	xhl, 0:i3
-	jrl t, HDAE5000_AcHddNamingWindowProc_Epilogue                       ; [78 58 04] jrl T,0x28267c
+	jrl	t, HDAE5000_AcHddNamingWindowProc_Epilogue
 HDAE5000_AcHddNamingWindowProc_OnSetApFunction:
 	ld xwa, (xsp + 0x28)
 	ld	(0x22a022), xwa
 	ld	xhl, 0:i3
-	jrl t, HDAE5000_AcHddNamingWindowProc_Epilogue                       ; [78 4b 04] jrl T,0x28267c
+	jrl	t, HDAE5000_AcHddNamingWindowProc_Epilogue
 HDAE5000_AcHddNamingWindowProc_OnSetPage:
 	ld xwa, (xsp + 0x28)
 	ld	(0x22a02a), wa
 	cpw	(0x22A032:24), 0
-	jr nz, HDAE5000_AcHddNamingWindowProc_OnClear_Join2                       ; [6e 22] jr NZ,0x282264
+	jr	nz, HDAE5000_AcHddNamingWindowProc_OnClear_Join2
 	ld xwa, (xsp + 0x28)
 	extz xwa
 	ld	xde, xwa
@@ -3361,7 +3361,7 @@ HDAE5000_AcHddNamingWindowProc_OnClear_Join2:
 	ld	xbc, EVT_PARA_DRAW
 	call	(xhl)
 	ld	xhl, 0:i3
-	jrl t, HDAE5000_AcHddNamingWindowProc_Epilogue                       ; [78 c5 03] jrl T,0x28267c
+	jrl	t, HDAE5000_AcHddNamingWindowProc_Epilogue
 HDAE5000_AcHddNamingWindowProc_OnSetCursor:
 	ld xwa, (xsp + 0x28)
 	ld	(0x22a028), wa
@@ -3389,7 +3389,7 @@ HDAE5000_AcHddNamingWindowProc_OnSetCursor:
 	extz wa
 	lda xbc, (HDAE5000_CType_Table:24)
 	bit	0, (xbc+wa)
-	jr z, HDAE5000_AcHddNamingWindowProc_OnClear_Skip                        ; [66 24] jr Z,0x282345
+	jr	z, HDAE5000_AcHddNamingWindowProc_OnClear_Skip
 	ldw	(0x22A02A:24), 0
 	ld	wa, (0x22A028:24)
 	extz xwa
@@ -3399,7 +3399,7 @@ HDAE5000_AcHddNamingWindowProc_OnSetCursor:
 	sub	a, 0x41
 	extz wa
 	ld	(0x22a02e), wa
-	jrl t, HDAE5000_AcHddNamingWindowProc_OnClear_Join7                       ; [78 5d 01] jrl T,0x2824a2
+	jrl	t, HDAE5000_AcHddNamingWindowProc_OnClear_Join7
 HDAE5000_AcHddNamingWindowProc_OnClear_Skip:
 	ld	wa, (0x22A028:24)
 	extz xwa
@@ -3409,7 +3409,7 @@ HDAE5000_AcHddNamingWindowProc_OnClear_Skip:
 	extz wa
 	lda xbc, (HDAE5000_CType_Table:24)
 	bit	1, (xbc+wa)
-	jr z, HDAE5000_AcHddNamingWindowProc_OnClear_Skip2                        ; [66 24] jr Z,0x282387
+	jr	z, HDAE5000_AcHddNamingWindowProc_OnClear_Skip2
 	ldw	(0x22A02A:24), 1
 	ld	wa, (0x22A028:24)
 	extz xwa
@@ -3419,7 +3419,7 @@ HDAE5000_AcHddNamingWindowProc_OnClear_Skip:
 	sub	a, 0x61
 	extz wa
 	ld	(0x22a02e), wa
-	jrl t, HDAE5000_AcHddNamingWindowProc_OnClear_Join7                       ; [78 1b 01] jrl T,0x2824a2
+	jrl	t, HDAE5000_AcHddNamingWindowProc_OnClear_Join7
 HDAE5000_AcHddNamingWindowProc_OnClear_Skip2:
 	ld	wa, (0x22A028:24)
 	extz xwa
@@ -3429,9 +3429,9 @@ HDAE5000_AcHddNamingWindowProc_OnClear_Skip2:
 	extz wa
 	lda xbc, (HDAE5000_CType_Table:24)
 	bit	2, (xbc+wa)
-	jr z, HDAE5000_AcHddNamingWindowProc_OnClear_Skip3                        ; [66 2d] jr Z,0x2823d2
+	jr	z, HDAE5000_AcHddNamingWindowProc_OnClear_Skip3
 	cpw	(0x22A02A:24), 2
-	jr nz, HDAE5000_AcHddNamingWindowProc_OnClear_Join3                       ; [6e 07] jr NZ,0x2823b5
+	jr	nz, HDAE5000_AcHddNamingWindowProc_OnClear_Join3
 	ldw	(0x22A02A:24), 0
 HDAE5000_AcHddNamingWindowProc_OnClear_Join3:
 	ld	wa, (0x22A028:24)
@@ -3442,40 +3442,40 @@ HDAE5000_AcHddNamingWindowProc_OnClear_Join3:
 	sub	a, 0x15
 	extz wa
 	ld	(0x22a02e), wa
-	jrl t, HDAE5000_AcHddNamingWindowProc_OnClear_Join7                       ; [78 d0 00] jrl T,0x2824a2
+	jrl	t, HDAE5000_AcHddNamingWindowProc_OnClear_Join7
 HDAE5000_AcHddNamingWindowProc_OnClear_Skip3:
 	ld	wa, (0x22A028:24)
 	extz xwa
 	ld	xbc, 0x0022a000
 	add	xbc, xwa
 	cp	(xbc), 0x20
-	jr nz, HDAE5000_AcHddNamingWindowProc_OnClear_Skip4                       ; [6e 24] jr NZ,0x282409
+	jr	nz, HDAE5000_AcHddNamingWindowProc_OnClear_Skip4
 	cpw	(0x22A032:24), 0
-	jrl nz, HDAE5000_AcHddNamingWindowProc_OnClear_Join7                      ; [7e b3 00] jrl NZ,0x2824a2
+	jrl	nz, HDAE5000_AcHddNamingWindowProc_OnClear_Join7
 	cpw	(0x22A02A:24), 2
-	jr nz, HDAE5000_AcHddNamingWindowProc_OnClear_Join4                       ; [6e 07] jr NZ,0x2823ff
+	jr	nz, HDAE5000_AcHddNamingWindowProc_OnClear_Join4
 	ldw	(0x22A02A:24), 0
 HDAE5000_AcHddNamingWindowProc_OnClear_Join4:
 	ldw	(0x22A02E:24), 37
-	jrl t, HDAE5000_AcHddNamingWindowProc_OnClear_Join7                       ; [78 99 00] jrl T,0x2824a2
+	jrl	t, HDAE5000_AcHddNamingWindowProc_OnClear_Join7
 HDAE5000_AcHddNamingWindowProc_OnClear_Skip4:
 	ld	wa, (0x22A028:24)
 	extz xwa
 	ld	xbc, 0x0022a000
 	add	xbc, xwa
 	cp	(xbc), 0x5f
-	jr nz, HDAE5000_AcHddNamingWindowProc_OnClear_Skip5                       ; [6e 19] jr NZ,0x282435
+	jr	nz, HDAE5000_AcHddNamingWindowProc_OnClear_Skip5
 	cpw	(0x22A02A:24), 2
-	jr nz, HDAE5000_AcHddNamingWindowProc_OnClear_Join5                       ; [6e 07] jr NZ,0x28242c
+	jr	nz, HDAE5000_AcHddNamingWindowProc_OnClear_Join5
 	ldw	(0x22A02A:24), 0
 HDAE5000_AcHddNamingWindowProc_OnClear_Join5:
 	ldw	(0x22A02E:24), 26
-	jr t, HDAE5000_AcHddNamingWindowProc_OnClear_Join7                        ; [68 6d] jr T,0x2824a2
+	jr	t, HDAE5000_AcHddNamingWindowProc_OnClear_Join7
 HDAE5000_AcHddNamingWindowProc_OnClear_Skip5:
 	lda xwa, (HDAE5000_TextPtrs_Chr21_to_Chr7D:24)
 	ld (xsp + 0x06), xwa
 	ld	iz, 0:i3
-	jr t, HDAE5000_AcHddNamingWindowProc_OnClear_Next                        ; [68 47] jr T,0x282488
+	jr	t, HDAE5000_AcHddNamingWindowProc_OnClear_Next
 HDAE5000_AcHddNamingWindowProc_OnClear_Loop2:
 	ld	wa, iz
 	extz xwa
@@ -3495,7 +3495,7 @@ HDAE5000_AcHddNamingWindowProc_OnClear_Loop2:
 	add	xbc, xwa
 	ld	a, (xbc)
 	cp	a, (xsp+10)
-	jr nz, HDAE5000_AcHddNamingWindowProc_OnClear_Join6                       ; [6e 0c] jr NZ,0x282486
+	jr	nz, HDAE5000_AcHddNamingWindowProc_OnClear_Join6
 	ldw	(0x22A02A:24), 2
 	ld	(0x22a02e), iz
 HDAE5000_AcHddNamingWindowProc_OnClear_Join6:
@@ -3509,7 +3509,7 @@ HDAE5000_AcHddNamingWindowProc_OnClear_Next:
 	ld	xbc, HDAE5000_Str_Chr25_AcHddNamingWindowProc
 	add	xbc, xwa
 	cp	iz, (xbc)
-	jr ule, HDAE5000_AcHddNamingWindowProc_OnClear_Loop2                      ; [63 9f] jr ULE,0x282441
+	jr	ule, HDAE5000_AcHddNamingWindowProc_OnClear_Loop2
 HDAE5000_AcHddNamingWindowProc_OnClear_Join7:
 	ld	de, (0x22A02A:24)
 	extz xde
@@ -3528,7 +3528,7 @@ HDAE5000_AcHddNamingWindowProc_OnClear_Join7:
 	ld	xbc, EVT_SELE_DRAW
 	call	(xhl)
 	ld	xhl, 0:i3
-	jrl t, HDAE5000_AcHddNamingWindowProc_Epilogue                       ; [78 95 01] jrl T,0x28267c
+	jrl	t, HDAE5000_AcHddNamingWindowProc_Epilogue
 HDAE5000_AcHddNamingWindowProc_OnSetChara:
 	ld	wa, (0x22A028:24)
 	extz xwa
@@ -3545,7 +3545,7 @@ HDAE5000_AcHddNamingWindowProc_OnSetChara:
 	ld	xbc, EVT_SET_CURSOR
 	call	(xhl)
 	ld	xhl, 0:i3
-	jrl t, HDAE5000_AcHddNamingWindowProc_Epilogue                       ; [78 5d 01] jrl T,0x28267c
+	jrl	t, HDAE5000_AcHddNamingWindowProc_Epilogue
 HDAE5000_AcHddNamingWindowProc_OnIAmSelected:
 	ld xwa, (xsp + 0x30)
 	ld xbc, (xsp + 0x2c)
@@ -3558,7 +3558,7 @@ HDAE5000_AcHddNamingWindowProc_OnIAmSelected:
 	srl	xwa, 16
 	ld	qwa, 0
 	cp	wa, 0:i3
-	jrl nz, HDAE5000_AcHddNamingWindowProc_OnClear_Join10                      ; [7e 17 01] jrl NZ,0x28265e
+	jrl	nz, HDAE5000_AcHddNamingWindowProc_OnClear_Join10
 	ld xwa, (xsp + 0x28)
 	ld	bc, wa
 	extz xbc
@@ -3578,7 +3578,7 @@ HDAE5000_AcHddNamingWindowProc_OnIAmSelected:
 	add	xbc, xwa
 	ld	wa, (0x22A02E:24)
 	cp	wa, (xbc)
-	jr ule, HDAE5000_AcHddNamingWindowProc_OnClear_Join8                      ; [63 20] jr ULE,0x2825ab
+	jr	ule, HDAE5000_AcHddNamingWindowProc_OnClear_Join8
 	ld	wa, (0x22A032:24)
 	mul	wa, 0x0003
 	add	wa, (0x22A02A:24)
@@ -3609,9 +3609,9 @@ HDAE5000_AcHddNamingWindowProc_OnClear_Join8:
 	ld	xhl, (xde + RootFn_ConvertStrings)
 	call	(xhl)
 	cp	(xsp+10), 0x53
-	jr nz, HDAE5000_AcHddNamingWindowProc_OnClear_Skip6                       ; [6e 2e] jr NZ,0x28261c
+	jr	nz, HDAE5000_AcHddNamingWindowProc_OnClear_Skip6
 	cp	(xsp+11), 0x50
-	jr nz, HDAE5000_AcHddNamingWindowProc_OnClear_Skip6                       ; [6e 28] jr NZ,0x28261c
+	jr	nz, HDAE5000_AcHddNamingWindowProc_OnClear_Skip6
 	ld	xwa, (0x22a034)
 	ld	a, (xwa)
 	ld	xbc, 0:i3
@@ -3623,7 +3623,7 @@ HDAE5000_AcHddNamingWindowProc_OnClear_Join8:
 	ld_sril	xhl, (xbc + RootFn_SendEvent)
 	ld	xbc, EVT_SET_CHARA
 	call	(xhl)
-	jr t, HDAE5000_AcHddNamingWindowProc_OnClear_Join9                        ; [68 22] jr T,0x28263e
+	jr	t, HDAE5000_AcHddNamingWindowProc_OnClear_Join9
 HDAE5000_AcHddNamingWindowProc_OnClear_Skip6:
 	ld	a, (xsp+10)
 	ld	xbc, 0:i3
@@ -3646,7 +3646,7 @@ HDAE5000_AcHddNamingWindowProc_OnClear_Join9:
 	call	(xhl)
 HDAE5000_AcHddNamingWindowProc_OnClear_Join10:
 	ld	xhl, 0:i3
-	jr t, HDAE5000_AcHddNamingWindowProc_Epilogue                        ; [68 1a] jr T,0x28267c
+	jr	t, HDAE5000_AcHddNamingWindowProc_Epilogue
 HDAE5000_AcHddNamingWindowProc_Skip4:
 	ld xwa, (xsp + 0x30)
 	ld xbc, (xsp + 0x2c)
@@ -3669,11 +3669,11 @@ HDAE5000_IvHddNamingProc:
 	ld (xsp + 0x08), xwa
 	ld xwa, (xsp + 0x04)
 	cp	xwa, EVT_HIDE
-	jrl z, HDAE5000_IvHddNamingProc_OnHide                       ; [76 d6 00] jrl Z,0x28276e
+	jrl	z, HDAE5000_IvHddNamingProc_OnHide
 	cp	xwa, EVT_SHOW
-	jr z, HDAE5000_IvHddNamingProc_OnShow                        ; [66 64] jr Z,0x282704
+	jr	z, HDAE5000_IvHddNamingProc_OnShow
 	cp	xwa, EVT_DRAW
-	jr z, HDAE5000_IvHddNamingProc_OnDraw                        ; [66 1c] jr Z,0x2826c4
+	jr	z, HDAE5000_IvHddNamingProc_OnDraw
 	ld xwa, (xsp + 0x08)
 	ld xbc, (xsp + 0x04)
 	ld	xde, xiz
@@ -3681,7 +3681,7 @@ HDAE5000_IvHddNamingProc:
 	ld	xhl, (xhl + WS_RootFnTable)
 	ld_sril	xix, (xhl + RootFn_InheritedProc)
 	call	(xix)
-	jrl t, HDAE5000_IvHddNamingProc_Epilogue                       ; [78 e0 00] jrl T,0x2827a4
+	jrl	t, HDAE5000_IvHddNamingProc_Epilogue
 HDAE5000_IvHddNamingProc_OnDraw:
 	ld xwa, (xsp + 0x08)
 	ld xbc, (xsp + 0x04)
@@ -3700,7 +3700,7 @@ HDAE5000_IvHddNamingProc_OnDraw:
 	ld	xbc, EVT_PARA_DRAW
 	call	(xhl)
 	ld	xhl, 0:i3
-	jrl t, HDAE5000_IvHddNamingProc_Epilogue                       ; [78 a0 00] jrl T,0x2827a4
+	jrl	t, HDAE5000_IvHddNamingProc_Epilogue
 HDAE5000_IvHddNamingProc_OnShow:
 	ld xwa, (xsp + 0x08)
 	ld xbc, (xsp + 0x04)
@@ -3729,7 +3729,7 @@ HDAE5000_IvHddNamingProc_OnShow:
 	ld	xde, 0:i3
 	call	(xhl)
 	ld	xhl, 0:i3
-	jr t, HDAE5000_IvHddNamingProc_Epilogue                        ; [68 36] jr T,0x2827a4
+	jr	t, HDAE5000_IvHddNamingProc_Epilogue
 HDAE5000_IvHddNamingProc_OnHide:
 	ld xbc, (xsp + 0x04)
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
@@ -3755,7 +3755,7 @@ HDAE5000_HDTitleMenuProc:
 	; registered as "HDTitleMenuProc" in HDAE5000_ClassProc_Table
 	ld	xhl, xbc
 	cp	xhl, EVT_PARA_DRAW
-	jr z, HDAE5000_HDTitleMenuProc_OnParaDraw                        ; [66 11] jr Z,0x2827c3
+	jr	z, HDAE5000_HDTitleMenuProc_OnParaDraw
 	ld	xhl, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xhl, (xhl + WS_RootFnTable)
 	ld_sril	xix, (xhl + RootFn_InheritedProc)
