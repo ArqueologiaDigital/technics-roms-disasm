@@ -48,7 +48,7 @@ MC = os.environ.get("LLVM_MC") or os.path.join(
     os.environ.get("PROJECTS_ROOT", os.path.expanduser("~/compartilhado")),
     "llvm-project", "build", "bin", "llvm-mc")
 
-# (include dir, root source[, extra llvm-mc arguments]) -- exactly the nine
+# (include dir, root source[, extra llvm-mc arguments]) -- exactly the ten
 # `llvm-mc -filetype=obj` invocations in the Makefile.  v8 is the v9 root with
 # the version byte preset, so it is assembled here with the same --defsym.
 IMAGES = [
@@ -57,6 +57,7 @@ IMAGES = [
     ("v9/maincpu",   "v9/maincpu/kn5000_v9_program.s", ("--defsym", "FW_VERSION_BYTE=0x08")),
     ("v7/maincpu",   "v7/maincpu/kn5000_v7_program.s"),
     ("v142/subcpu",  "v142/subcpu/kn5000_subprogram_v142.s"),
+    ("v141/subcpu",  "v141/subcpu/kn5000_subprogram_v141.s"),
     ("subcpu/boot",  "subcpu/boot/kn5000_subcpu_boot.s"),
     ("hdae5000",     "hdae5000/hd-ae5000_v2_06i.s"),
     ("table_data",   "table_data/kn5000_table_data.s"),
@@ -100,7 +101,7 @@ def selftest():
         f += not cond
 
     ck("the pinned llvm-mc exists", os.path.exists(MC), MC)
-    ck("all nine roots and include dirs exist", all(
+    ck("all ten roots and include dirs exist", all(
         os.path.exists(os.path.join(ROOT, r)) and os.path.isdir(os.path.join(ROOT, d))
         for d, r, *_ in IMAGES))
     with tempfile.TemporaryDirectory() as td:

@@ -168,7 +168,7 @@ FP_tan:
 	and wa, 0x7FF0
 	cp wa, 0x41E0
 	jr c, FP_tan_InRange
-	ldw (0x040c22:24), 0x0022
+	ldw (FP_Errno:24), ERRNO_ERANGE
 	ld xwa, xiz
 	lda xbc, (FPConst_tan_Zero:24)
 	call FP_DP_Raw8Copy
@@ -265,7 +265,7 @@ FP_pow_AfterRange:
 	call FP_dcmp
 	cp hl, 0:i3
 	jr nz, FP_pow_AltPath
-	ldw (0x040c22:24), 0x0021
+	ldw (FP_Errno:24), ERRNO_EDOM
 	ld xwa, (xsp + 62)
 	lda xbc, (FPConst_pow_AfterRange_One:24)
 	call FP_DP_Raw8Copy
@@ -283,7 +283,7 @@ FP_pow_AltPath:
 	call FP_DP_CmpZero64
 	cp hl, 0:i3
 	jr nz, FP_pow_AltPath2
-	ldw (0x040c22:24), 0x0021
+	ldw (FP_Errno:24), ERRNO_EDOM
 	ld xwa, (xsp + 62)
 	lda xbc, (FPConst_pow_AltPath_One:24)
 	call FP_DP_Raw8Copy
@@ -348,7 +348,7 @@ FP_pow_IntPower:
 	call FP_DP_CmpZero64
 	cp hl, 0:i3
 	jr nz, FP_pow_IntPower_LessPath
-	ldw (0x040c22:24), 0x0022
+	ldw (FP_Errno:24), ERRNO_ERANGE
 	lda xwa, (xsp + 66)
 	ld bc, 2:i3
 	call FP_DP_CmpZero64
@@ -383,7 +383,7 @@ FP_pow_IntPower_LargeStep:
 	lda xde, (xsp + 66)
 	cp wa, 0x400
 	jr le, FP_pow_IntPower_SmallStep
-	ldw (0x040c22:24), 0x0022
+	ldw (FP_Errno:24), ERRNO_ERANGE
 	ld xwa, xde
 	ld bc, 2:i3
 	call FP_DP_CmpZero64
@@ -461,8 +461,8 @@ FP_pow_IntPower_DifferentPath:
 ; RENAMED 2026-09-25: was VoiceFloat_ConvergenceLoop (scripts/renaming/rename_v142_fp_libm.sed); the name now says
 ; what the header above established.
 FP_pow_ExpLog:
-	ld iz, (0x040c22:24)
-	ldw (0x040c22:24), 0x0000
+	ld iz, (FP_Errno:24)
+	ldw (FP_Errno:24), 0x0000
 	lda xiy, (xsp + 66)
 	ld xix, (xiy + 4)
 	push xix
@@ -472,7 +472,7 @@ FP_pow_ExpLog:
 	push xwa
 	call FP_log
 	lda xsp, (xsp + 12)
-	cpw (265250:24), 33
+	cpw (FP_Errno:24), ERRNO_EDOM
 	jr nz, FP_pow_ExpLog_FrexpOperands
 	ld xwa, (xsp + 62)
 	lda xbc, (FPConst_pow_ExpLog_Zero:24)
@@ -481,7 +481,7 @@ FP_pow_ExpLog:
 
 ; Restore errno and frexp both operands into (XSP+0x24) and (XSP+0x22).
 FP_pow_ExpLog_FrexpOperands:
-	ld (0x040c22:24), iz
+	ld (FP_Errno:24), iz
 	lda xwa, (xsp + 36)
 	push xwa
 	lda xiy, (xsp + 70)
@@ -528,7 +528,7 @@ FP_pow_ExpLog_SumCheck:
 FP_pow_ExpLog_RangeCheck:
 	cp iz, 0x400
 	jr le, FP_pow_ExpLog_Clamp
-	ldw (0x040c22:24), 0x0022
+	ldw (FP_Errno:24), ERRNO_ERANGE
 	lda xwa, (xsp + 66)
 	ld bc, 2:i3
 	call FP_DP_CmpZero64
@@ -554,7 +554,7 @@ FP_pow_ExpLog_StoreResult:
 FP_pow_ExpLog_Clamp:
 	cp iz, 0xFC03
 	jr ge, FP_pow_ExpLog_CrossZero
-	ldw (0x040c22:24), 0x0022
+	ldw (FP_Errno:24), ERRNO_ERANGE
 	ld xwa, (xsp + 62)
 	lda xbc, (FPConst_pow_ExpLog_Clamp_Zero:24)
 	call FP_DP_Raw8Copy
@@ -821,7 +821,7 @@ FP_SinCos_Kernel:
 	and wa, 0x7FF0
 	cp wa, 0x41E0
 	jr c, FP_SinCos_Kernel_InRange
-	ldw (0x040c22:24), 0x0022
+	ldw (FP_Errno:24), ERRNO_ERANGE
 	ld	xwa, (xsp+136)
 	lda xbc, (FPConst_SinCos_Kernel_Zero:24)
 	call FP_DP_Raw8Copy
@@ -1589,7 +1589,7 @@ FP_DP_ShiftDecode_Overflow:
 
 ; errno (0x040C22) = 0x22 (ERANGE).
 FP_DP_ShiftDecode_SetError:
-	ldw (0x040c22:24), 0x0022
+	ldw (FP_Errno:24), ERRNO_ERANGE
 	ret
 
 ; NaN/overflow marker in the record: return 0 without touching errno.
@@ -1844,7 +1844,7 @@ FP_DP_Encode_NaN:
 ; Double overflow: errno = ERANGE (0x22) and the result is set to 0x7FEFFFFFFFFFFFFF
 ; (DBL_MAX) with the operand's sign ORed back in.
 FP_DP_Encode_Overflow:
-	ldw (0x040c22:24), 0x0022
+	ldw (FP_Errno:24), ERRNO_ERANGE
 	ld xde, 0:i3
 	dec 1, xde
 	ld (xwa), xde
@@ -1917,7 +1917,7 @@ FP_SP_Encode_Overflow:
 ; errno = ERANGE, store the saturated value, then the same indirect hook call through
 ; the pointer at 0x00F428.
 FP_SP_Encode_Overflow_Store:
-	ldw (0x040c22:24), 0x0022
+	ldw (FP_Errno:24), ERRNO_ERANGE
 	ld (xwa), xde
 	ld xbc, (FPConst_Zero:24)
 	or xbc, xbc
@@ -2768,7 +2768,7 @@ FP_exp_NonZero:
 	call FP_dcmp
 	cp hl, 0:i3
 	jr nz, FP_exp_LessPath
-	ldw (0x040c22:24), 0x0022
+	ldw (FP_Errno:24), ERRNO_ERANGE
 	ld xwa, (xsp + 54)
 	lda xbc, (FPConst_MaxNorm:24)
 	call FP_DP_Raw8Copy
@@ -2863,7 +2863,7 @@ FP_log:
 	call FP_DP_CmpZero64
 	cp hl, 0:i3
 	jr nz, FP_log_InRange
-	ldw (0x040c22:24), 0x0021
+	ldw (FP_Errno:24), ERRNO_EDOM
 	ld xwa, (xsp + 110)
 	lda xbc, (FPConst_log_Zero:24)
 	call FP_DP_Raw8Copy
@@ -3309,7 +3309,7 @@ FP_SP_DecodeToInt_Overflow:
 
 ; errno (0x040C22) = 0x22 (ERANGE).
 FP_SP_DecodeToInt_SetError:
-	ldw (0x040c22:24), 0x0022
+	ldw (FP_Errno:24), ERRNO_ERANGE
 	ret
 
 ; NaN marker: return 0, errno untouched.
@@ -3353,7 +3353,7 @@ FP_ldexp_InRange:
 	lda xhl, (xwa + 7)
 	cp bc, 0x7FF
 	jr le, FP_ldexp_ClampLow
-	ldw (0x040c22:24), 0x0022
+	ldw (FP_Errno:24), ERRNO_ERANGE
 	lda xbc, (FPConst_MaxNorm:24)
 	bitm 7, (xhl)
 	jr z, FP_ldexp_ClampHigh
@@ -3408,7 +3408,7 @@ FP_ldexp_IncLoop:
 	inc 1, wa
 	cp wa, 0x7FF
 	jr c, FP_ldexp_IncStep
-	ldw (0x040c22:24), 0x0022
+	ldw (FP_Errno:24), ERRNO_ERANGE
 	lda xbc, (FPConst_MaxNorm:24)
 	ld a, (xix)
 	bit 7, a
@@ -3441,7 +3441,7 @@ FP_ldexp_DecLoop:
 	ld wa, iy
 	sub wa, 0x1
 	jr nz, FP_ldexp_DecStep
-	ldw (0x040c22:24), 0x0022
+	ldw (FP_Errno:24), ERRNO_ERANGE
 	lda xbc, (FPConst_ldexp_DecLoop_Zero:24)
 	ld xwa, xde
 	call FP_DP_Raw8Copy
@@ -3851,28 +3851,17 @@ FP_Overflow_Handler:
 	ld (xwa + 2), 0x1
 	ret
 
-; --- 0x03EE75-0x03EEFF  FP_Library_End_Pad - end-of-library 0xFF fill
-; 139 bytes of 0xFF. No code, no data; this is the tail padding of the sub-CPU program
-; image and the end of the region.
+; FP_Library_End_Pad: the end of the program image.  `.balign` adds the one 0xFF byte
+; that brings the next address to an even boundary (needed in v1.42 and v1.41 alike).
+; That address is Payload_Bss_Start, where the payload's zero-initialised RAM begins:
+; MemClear_DRAM_And_ExtRAM clears Payload_Bss_Size bytes from it at reset, and the
+; absolute DRAM operands into that window are spelled Payload_Bss_Start+offset
+; (scripts/converters/subcpu_bss_relative_refs.py says why).  The image file still
+; runs on to 0x03eeff in 0xff fill, which that RAM overlays at run time.
 FP_Library_End_Pad:
-	.fill 8, 1, 0xff
-	.fill 8, 1, 0xff
-	.fill 8, 1, 0xff
-	.fill 8, 1, 0xff
-	.fill 8, 1, 0xff
-	.fill 8, 1, 0xff
-	.fill 8, 1, 0xff
-	.fill 8, 1, 0xff
-	.fill 8, 1, 0xff
-	.fill 8, 1, 0xff
-	.fill 8, 1, 0xff
-	.fill 8, 1, 0xff
-	.fill 8, 1, 0xff
-	.fill 8, 1, 0xff
-	.fill 8, 1, 0xff
-	.fill 8, 1, 0xff
-	.fill 8, 1, 0xff
-	.byte 0xff, 0xff, 0xff
+	.balign	2, 0xff
+Payload_Bss_Start:
+	.org	0x3ef00 - 0x400, 0xff
 
 ; Labels emitted as .set (exact addresses from ORG/name)
 	.set PAYLOAD_LOADED_FLAG, 0x0004FE
