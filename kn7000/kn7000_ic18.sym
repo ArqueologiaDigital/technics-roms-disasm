@@ -1,0 +1,701 @@
+; KN7000 boot ROM (IC18's first 64 KB): names for tools/gen_ic18_s.py (`make ic18-src`).
+;
+; One line per name:  0xADDR  NAME  ; header comment
+; ADDR is the CPU address the code uses: 0x400xxxxx for what runs in ROM, the run
+; address in work RAM (0x50000010 + file offset - 0xB00) for the program image,
+; 0x50010000.. for the .data image, and any address outside the image (.bss, the
+; stack) for a variable. A routine is named at its first byte (the prologue, where
+; it has one); the generator names the place `call` enters it NAME_entry.
+; Every name and comment here comes from reading the code that uses the thing:
+; notes/ic18-boot-rom.md says how each group was worked out.
+
+; ---- ROM: what survives of the older link ---------------------------------------
+; Not reached by anything in this ROM. They read like this ROM's own Reset and cache
+; routines, linked for a program image at another address (OldLink_*).
+0x40000011  OldNmiTail              ; the end of the older link's NMI handler: port defaults (P44, P04, P64), then on to its handler
+0x40000064  OldReset                ; the older link's reset code: the same bus and SDRAM set-up, its image copied by the descriptor at 0x4000BBB4, .bss at 0x50180024
+0x4000034A  OldResetAltTail         ; strobes, then the older link's other start address
+0x4000035D  OldICacheInvalidate     ; as ICacheInvalidate
+0x40000384  OldDCacheInvalidate     ; as DCacheInvalidate
+0x400003AA  OldICacheDisable        ; as ICacheDisable
+0x400003CB  OldDCacheFlushDisable   ; as DCacheFlushDisable; cut off where the new .data image begins
+0x40000040  OldDataImage            ; the older link's .data image (0x24 bytes)
+
+; ---- ROM: reset and NMI -------------------------------------------------------
+0x40000594  Reset                   ; bus and SDRAM set-up (MEMCTR, eight refresh cycles), caches on, the program image to work RAM, .bss cleared, .data copied, the interrupt thunks built, the stack set; then BootMain
+0x500086C6  BootMain                ; tick, flash to read mode; strap bit 14 clear: the SD update at once. Then the panel and the key combination held at power-on: 4 UPDATE SYSTEM MENU, 5 DEVICE INFO, 7 UPDATE DISK CHECK (with an update floppy in), and on 4 the SD update screen if the card holds update files; finally interrupts and caches off and on to the firmware (FirmwareReset)
+0x40000ADF  ResetTail               ; a `ret` after Reset's last jmp: the compiler's epilogue, never reached
+0x40000AE2  NmiHandler              ; sets P04 bit 3, then CPUM bit 4 over and over ([INFERENCE] STOP mode): never returns
+
+; ---- the C library (printf, strtol, the double helpers) ---------------------
+0x50000010  strtoul                 ; wraps StrToULongCore; sets errno (2) on overflow
+0x50000036  StrToULongCore          ; base 0 or 2..36, optional "0x"/"0X", an unsigned overflow check; the overflow flag goes back through a pointer
+0x5000018C  tolower                 ; d0 + 0x20 when the ctype table marks it upper case (bit 0x01)
+0x500001C7  vsprintf_core           ; the printf engine sprintf calls: walks the format, parses each spec (PfParseSpec) and switches on the conversion letter 'E'..'x'
+0x50000497  PfOutField              ; one converted field with its padding: left-justified ('-'), or zeros after a sign or a "0x"/"0X" prefix ('0'), else spaces first
+0x500005AF  PfOutString             ; append d0 bytes: memcpy into the output buffer when writing to a string, else fwrite to the stream
+0x500005D7  PfOutPad                ; append d1 copies of the character d0 (field padding)
+0x5000061D  PfParseSpec             ; the flag characters of one conversion, through a hashed switch on the character, then PfParseWidthPrecSize
+0x500006C6  PfParseWidthPrecSize    ; width ('*' or digits), '.' precision ('*' or digits), and the size letters h (0x10), l (0x20), L (0x80)
+0x500007CC  localeconv              ; fills the struct lconv in .bss from the current locale's numeric and monetary tables; returns it in a0
+0x5000089C  PfFormatInteger         ; one %d/%i/%u/%o/%x/%X/%p: fetch the argument by size, sign or prefix, digits by base, precision
+0x50000A5A  PfFloatToDigits         ; the digits and decimal exponent of a double for the %f/%e/%g formatters (sign split off first)
+0x50000B8A  PfFormatF               ; %f; "Infinity" for an infinite value
+0x50000C0F  PfFormatE               ; %e / %E; "Infinity" for an infinite value
+0x50000D6F  PfFormatG               ; %g / %G: picks %e or %f style by the exponent
+0x50000F3A  PfAssembleFloat         ; builds the text of a formatted double from its digits: rounding, the decimal point, the exponent
+0x500010ED  PfIntToDigits           ; unsigned int to digits in base a1, least significant first; letters from the case of the conversion
+0x5000113B  PfShortToDigits         ; the same for an h-size (16-bit) argument
+0x50001190  PfLongToDigits          ; the same for an l-size argument
+0x500011DE  StrReverse              ; reverse d0 bytes at a0 in place
+0x50001200  PfRoundDigits           ; round a decimal digit string at a given length, carrying '9's up; may add a leading '1'
+0x500012BE  LibF64Neg               ; returns -x
+0x500012EF  PfDoubleToDecimal       ; the decimal digits and exponent of a double, by scaling with the powers-of-ten table
+0x5000183F  LibF64Zero              ; returns 0.0 (from the constant table)
+0x50001858  LibF64Max               ; returns DBL_MAX (0x7FEFFFFF FFFFFFFF), twice
+0x5000186E  LibF64NegTo             ; stores -x through the result pointer
+0x5000188E  LibF64Trunc             ; the integer part of x (LibF64Modf)
+0x50001BB3  ceil                    ; -floor(-x)
+0x50001BE9  floor                   ; LibF64Modf, then one less for a negative x with a fraction
+0x50001C67  LibF64Cmp               ; compares two doubles; the result is in the flags (psw)
+0x50001CD6  fmod                    ; x - trunc(x / y) * y; y = 0 sets errno 1 and returns 0
+0x50002271  fputc                   ; through StreamPutByte
+0x5000227C  StreamPutByte           ; a stub: this ROM's printf never writes to a stream, only to strings
+0x5000227F  fwrite                  ; d1 items of d0 bytes, one StreamPutByte each
+0x500022C5  strtol                  ; wraps StrToLongCore; sets errno (2) on overflow
+0x500022EB  StrToLongCore           ; the signed counterpart of StrToULongCore (LibDiv32)
+0x50012574  errno
+0x5001257C  CurrentLconv            ; vsprintf_core keeps localeconv's result here
+
+; ---- the control-panel link (serial 0), a copy of the firmware's driver -------
+; Same source as the firmware's Panel* routines (kn7000_manual.sym, 0x484ABAF4..), so
+; the names follow them; the generator names the ones whose code is the same.
+0x500025C6  PanelDisableIrqGroups   ; disables the four interrupt groups whose numbers are kept at 0x50019738..44 (IrqGroupSetup)
+0x500025FF  PanelSendCmd1C          ; sends command 0x1C with its argument clamped to 3..100
+0x50002620  PanelModeFlagSet        ; the panel wiring-mode flag: 0 = mode A, else mode B
+0x50002629  PanelModeFlagGet
+0x50002632  PanelInit               ; the panel driver's init method (PanelDriverOps[0], called by BootMain's PanelStart): mode B on a class-3 board, the link, its sign-on commands
+0x50002679  PanelDriverOp3          ; an empty method of PanelDriverOps
+0x5000267C  PanelDriverOp1          ; an empty method of PanelDriverOps
+0x5000267F  PanelDriverOp2          ; an empty method of PanelDriverOps
+0x50002682  PanelService            ; with the pump in a status-poll phase (PanelLinkFlags 0xC0): the event FIFO re-initialised and the RX ring emptied; else PanelRxDecodeQuiet
+0x500026BB  PanelPump               ; PanelTxPump, then PanelErrorRecovery
+0x500026CB  PanelStatusPollWrap
+0x500026D6  PanelTransactionWrap
+0x500026E2  PanelHookNop
+0x500026E5  PanelSignOnAndKeyCombo  ; PanelSignOnRequest, then BootKeyComboDetect: the key combination held at power-on
+0x500026F6  PanelLinkInit           ; registers the three link interrupts (ATN group 26, RX 16, TX done 17), sets the board strobes, serial 0 (0xC84) and its baud timer, then the init commands
+0x5000285A  PanelSendWake           ; command 0x1F, 0xDA
+0x50002879  PanelSendInitCmds       ; commands 0x1F/0x1A, 0x1D, 0xDD, 0x1E/0x80 (mode A also 0x18, 0x19, 0x1B/100), then the link back to receive
+0x5000298B  PanelSendPairPolled     ; sends a [command, argument] pair by polling serial 0 with the strobes by hand
+0x50002AF3  PanelBusyWait30         ; counted busy loop (0x1E iterations)
+0x50002B10  PanelBusyWait60         ; counted busy loop (0x3C iterations)
+0x50002B2D  PanelBusyWait150        ; counted busy loop (0x96 iterations)
+0x50002B4C  PanelBusyWait600        ; counted busy loop (0x258 iterations)
+0x50002B6B  PanelBusyWait3000       ; counted busy loop (0xBB8 iterations)
+0x50002BA9  PanelTickWait2          ; waits until the tick counter has moved on by more than 2
+0x50002BC4  PanelTickWait6          ; the same, 6 ticks
+0x50002BDF  PanelTickWait51         ; the same, 0x33 ticks
+0x50002BFA  BootKeyComboMatch       ; which of seven key combinations is held: seven tables of {RX shadow byte, the value it must hold}, tried in turn; the first that matches gives 3, 2, 1, 4, 5, 6 or 7, none 0
+0x50002CEB  BootKeyComboProbeShadow ; mode B: the same 1..7 from fixed RX shadow bytes (the firmware calls its copy PanelTypeProbeShadow)
+0x50002D52  BootKeyComboDetect      ; mode B: BootKeyComboProbeShadow; mode A: BootKeyComboMatch. The firmware has the same code as PanelTypeDetect; here BootMain opens the update menus on 4, 5 and 7
+0x50002D6E  PanelTransaction        ; pings the left panel (0x20) and the right one (0xE0); result bit 0 / bit 3 set for each that answered
+0x50002E04  PanelSignOnRequest      ; the sign-on sequence 0x29, 0xEA, 0xE6/0x10, then PanelRxDecodeQuiet
+0x50002E98  PanelInitHookNop        ; called at the end of PanelInit; does nothing
+0x50002E9B  PanelStatusPoll         ; 0x29, 0xEB, 0x20/0x10, 0xE6/0x10, each followed by PanelRxDecodeExpect
+0x50002F42  PanelWaitLinkIdle       ; up to 200 tries (PanelBusyWait3000 apart) for the panel present (P84 bit 0), the link not busy and the TX ring empty; status bit 7 on time-out
+0x50002FB7  PanelTxKick             ; queues [command, argument] in the TX ring, state 1, and starts the first byte (P24/P25/P04/P64 strobes, serial 0 to transmit)
+0x50003080  PanelAtnIsr             ; interrupt group 26, the panel's ATN pulse: first edge re-arms EXTMD for the other edge, the second turns the link round to receive
+0x50003199  PanelTxDoneIsr          ; interrupt group 17: runs PanelXferStateTable[state] and acknowledges the group
+0x500031D5  PanelRxIsr              ; interrupt group 16: notes a serial error, runs PanelXferStateTable[state]
+0x50003224  PanelTxState1           ; strobes; aborts the transaction when the panel is absent (P84 bit 0)
+0x500032D0  PanelTxState2           ; sends the command byte; a command that wants a reply sets the reply countdown
+0x500033A0  PanelTxState3           ; sends a 0x00 sync byte
+0x50003407  PanelTxState4           ; sends the argument byte
+0x500034D3  PanelTxState5           ; strobes, a sync byte, ATN re-armed, the link to transmit
+0x5000356E  PanelTxState6           ; frame done: the next frame if the TX ring holds one, else back to waiting for ATN
+0x50003676  PanelRxState8           ; the first reply byte into the RX ring
+0x50003755  PanelRxState9           ; further reply bytes; the transaction ends when the countdown runs out
+0x5000388B  PanelXferIdleState      ; table slots 0, 7, 10: a transfer interrupt with no transfer: status bit 7
+0x50003895  PanelLinkRxRearm        ; back to ATN-armed idle: serial 0 to receive, groups 5/6 off, group 26 acknowledged, 4 on
+0x500038ED  PanelTxPump             ; every fourth call a status poll, else the TX FIFO into the ring; then starts a frame if the link is idle
+0x50003A4A  PanelErrorRecovery      ; when PanelRecoveryCounters' high nibble counts down to 0: FIFOs, rings and link reset, the init commands again; when the low one does: PanelLedMirrorResetA
+0x50003B27  PanelRxDecodeExpect     ; PanelFrameDecode with flags bit 2 set (a reply is expected)
+0x50003B39  PanelRxDecodeQuiet      ; PanelFrameDecode with flags bit 2 clear
+0x50003E92  PanelFrameDecode_UnusedRet   ; a second epilogue the compiler left after PanelFrameDecode; unreachable
+0x50003F45  PanelTxFifoToRing_UnusedRet  ; a second epilogue left after PanelTxFifoToRing; unreachable
+0x50003F48  PanelEventFifoPush      ; one byte into the event FIFO
+0x50003F5A  PanelTxFifoPush         ; one byte into the TX FIFO (commands and LED data for the panel)
+0x50003F6C  PanelEventFifoPop       ; -1 when empty
+0x50003F7D  PanelTxFifoPop          ; -1 when empty
+0x50003F8E  PanelEventFifoFree      ; free space, -1 when empty
+0x50003F9F  PanelTxFifoFree         ; free space, -1 when empty
+0x50003FB0  PanelEventFifoInit      ; the FIFO's descriptor from its ROM image (PanelEventFifoInitImage)
+0x50003FC8  PanelTxFifoInit         ; the same for the TX FIFO
+0x5000C794  PanelXferStateTable     ; the link's state handlers, indexed by PanelLinkState (0..10)
+0x5000C7C0  PanelEventFifoInitImage ; {base, end, read, write, free} of the event FIFO
+0x5000C7D4  PanelTxFifoInitImage    ; the same for the TX FIFO
+0x5000DF50  PanelDriverOps          ; {init, three empty methods}; BootMain's PanelStart calls the first
+0x50010244  PanelEventFifo          ; FIFO descriptor (PanelFifoPushByte and friends)
+0x500102D8  PanelTxFifo             ; FIFO descriptor
+0x500102EC  PanelLinkState          ; the PanelXferStateTable index: 1-6 transmit, 8-9 receive
+0x500102ED  PanelReplyCountdown     ; reply bytes still expected
+0x500102EE  PanelLinkFlags          ; 0x01 and 0x02 a transfer under way (PanelTxKick sets 0x02; PanelWaitLinkIdle waits for both clear), 0x04 a reply expected, 0xC0 the pump's phase
+0x500102EF  PanelLinkConst7D        ; PanelLinkInit sets it to 0x7D; TODO: nothing in this ROM reads it
+0x500102F0  PanelLinkStatus         ; 0x01 the rings were reset, 0x04 back to ATN-armed idle (PanelLinkRxRearm), 0x80 an error or a time-out
+0x500102F1  PanelPingResult         ; PanelTransaction: bit 0 left panel, bit 3 right panel answered
+0x500102F5  PanelIdleRetries        ; PanelWaitLinkIdle's countdown
+0x500102F8  PanelTickMark           ; the tick count a PanelTickWait* started at
+0x500102FC  PanelRxRingTail
+0x500102FE  PanelRxRingHead
+0x50010300  PanelRxRing
+0x5001035C  PanelTxRingRead
+0x5001035E  PanelTxRingWrite
+0x50010360  PanelTxRing
+0x50010361  PanelTxRingArg          ; the second byte of the first slot: PanelSendPairPolled's argument
+0x500103DD  PanelRecoveryCounters   ; PanelErrorRecovery's two countdowns: high nibble, steps to a full link reset; low nibble, steps to an LED re-send
+0x500103DE  PanelAtnPass            ; PanelAtnIsr: 0 for the first edge of a pulse
+0x500103DF  PanelModeFlag           ; PanelModeFlagSet / Get
+
+; ---- interrupts, and the stand-ins for the firmware's kernel calls ------------
+0x5000841F  IrqDispatch             ; the maskable interrupt (IrqThunk): saves the movm group 0x08 (unidasm's other3), calls IrqHandlerTable[INTC_GROUP_VECTOR], restores it, rti
+0x5000965C  IrqDefaultHandler       ; every IrqHandlerTable slot until IrqRegister fills it: returns
+0x5000965F  LibTickSleep            ; waits until the tick counter (TickCount) has moved on by d0
+0x5000967C  IrqRegister             ; slot d0 := the 20-byte descriptor at a0 {.., handler, group, GxICR address, level, ..}; the group's ICR gets the level, its handler goes in IrqHandlerTable
+0x500096E0  LibIntcDisable          ; slot d0's GxICR enable bit (8) off; slot 0: all interrupts off (loc_cpu)
+0x5000970F  LibIntcEnable           ; slot d0's GxICR enable bit on; slot 0: interrupts on (unl_cpu)
+0x5000973E  loc_cpu                 ; PSW IE off (the firmware's kernel call of this name does the same job)
+0x50009745  unl_cpu                 ; PSW IE on
+0x5000974C  BoardClass              ; returns 1: a stand-in for the firmware's strap probe, so PanelInit always picks wiring mode A
+0x50009751  KernelStubZero          ; returns 0; only unreferenced code calls it
+0x50009755  PanelCtrlDispatch       ; a stand-in for the firmware's latched-control dispatch: PanelFrameDecode calls it where the firmware calls its PanelCtrlDispatch
+0x50009758  KernelStubSlot          ; does nothing; PanelDisableIrqGroups calls it with four interrupt slots
+0x5000975B  PanelSubTypeGet         ; returns 1: a stand-in for the firmware's board sub-type probe (5, 1, 2 or 3 from the strap), so the SD code always takes the class-1 paths
+0x500100F0  IrqHandlerTable         ; one handler per interrupt group, all IrqDefaultHandler in the image
+0x50019730  TickCount               ; counted up by TickIsr
+0x5001974C  IrqSlots                ; IrqRegister's copies of the 20-byte descriptors, one per slot
+
+; ---- the floppy disk controller (FDC at 0x98020000, DMA through 0x98010000) ----
+; Registers two bytes apart: +4 the digital output register (0x1C motor on, 0x0C off),
+; +8 the main status register (read) / data-rate select (write), +0xA the data FIFO,
+; +0xE the digital input register (bit 7 disk changed) / configuration control.
+; A request is seven words (FdcRequestBlock): command, drive, head, cylinder (the
+; media type for command 0), sector, sector count, buffer.
+0x50004053  FdcMotorCtl             ; d0 0x81 motor on; 0x80 start the off countdown; 0x82 one tick of it, motor off at 0; 0x83 save the DOR and turn the motor on to read the DIR; 0x84 restore the DOR
+0x50004111  FdcReadMsr              ; the main status register, then a short delay
+0x5000412A  FdcReadData             ; one byte of FDC_FIFO into d0, with no status check of its own
+0x50004133  FdcWriteDsr             ; keeps the previous value in FdcDsrPrev
+0x50004154  FdcWriteData            ; d0 into FDC_FIFO, with no status check of its own
+0x50004160  FdcWaitIdle             ; until MSR bits 0-4 are clear (no drive seeking, no command); error 1 after 500 ticks
+0x500041C0  FdcWaitParamReady       ; until MSR has RQM and CB (0x90): the controller takes the next command byte; error 1 after 500 ticks
+0x5000421E  FdcWaitRqm              ; until MSR has RQM; error 1 after 500 ticks
+0x5000427C  FdcSoftReset            ; data-rate register 0x80 (software reset), a short wait; the head position unknown again
+0x5000429A  FdcInit                 ; reset, sense the interrupts the reset raised, then the data rate and density for the media type (configuration control register), motor, recalibrate
+0x50004500  FdcResetProbe           ; a software reset; error 0xFC when the status register then reads 0xFF (no controller)
+0x5000452C  FdcRequestCheck         ; validates the request against the media geometry; error 0xFE when it does not fit
+0x5000470A  FdcMediaParams          ; the geometry of a media type (low nibble): 0/4/5 nine 512-byte sectors, 80 cylinders; 2 eight 1024-byte sectors, 77; 3 eighteen 512-byte sectors, 80; the high nibble is the step rate
+0x50004897  FdcCheckHead            ; head 0 or 1, else error 0xFE
+0x500048CF  FdcHookNop
+0x500048D2  FdcCheckHead2           ; the same check, for the other commands
+0x500048F8  FdcDelay                ; counts d0 down
+0x5000491C  FdcHookNop2
+0x5000491F  FdcDmaStart             ; the D-cache flushed, then DMA channel 0 one way or the other by the command: reads (0xC6, 0xCC, 0x42, 0x4A, 0xD1, 0xD9, 0xDD) or writes
+0x5000498D  FdcDmaSetupRead         ; DMA channel 0 from the FDC data port to the buffer
+0x50004A7A  FdcDmaSetupWrite        ; DMA channel 0 from the buffer to the FDC data port
+0x50004B66  FdcWaitResultByte       ; until MSR reads RQM+DIO (a result byte waiting); error 2 after 500 ticks
+0x50004BCA  FdcWaitResultPhase      ; the same wait with CB as don't-care; error 2
+0x50004C2E  FdcDrainResult          ; reads any pending result bytes (into FdcResult) before a new command; error 3 on time-out
+0x50004CD9  FdcSendCmdByte          ; FdcDrainResult, then the command byte
+0x50004CEF  FdcSendParamByte        ; FdcWaitParamReady, then one parameter byte
+0x50004D05  FdcCheckResult          ; ST0's interrupt code and ST1/ST2's error bits to an error code (0x2F..0x37); stops the DMA on an abnormal end
+0x50004E10  FdcIrqEnable            ; interrupt slots 0xC and 0xB on
+0x50004E24  FdcIssueCommand         ; one command with its parameters: CONFIGURE (0x13), SENSE INTERRUPT (8), SPECIFY (3), SENSE DRIVE (4), RECALIBRATE (7), READ ID (0x4A), FORMAT (0x4D), SEEK (0xF), else the read/write set
+0x50004F0E  FdcOpcodeInvalid        ; 0 for a command code (low 5 bits) the controller knows, else 1
+0x50004F7F  FdcSendStp              ; the scan commands' last byte
+0x50004F94  FdcSendSpecifyParams    ; step rate / head unload, head load / non-DMA
+0x50004FEE  FdcSendFormatParams     ; size code, sectors, gap, fill byte
+0x50005024  FdcSendSeekCylinder
+0x50005035  FdcSendRwParams         ; cylinder, head, sector, size code, end of track, gap, data length (or STP)
+0x500050B5  FdcIsSector1Probe       ; -1 for a one-sector read of sector 1, head 0, cylinder 0 before the media is known
+0x50005115  FdcIsSector2Probe       ; the same for sector 2 (or 0xFF)
+0x50005183  FdcIsInitAll            ; -1 for command 0 with a count of -1
+0x500051A6  FdcHookNop3
+0x500051A9  FdcSetError             ; the first error of a request sticks; returns it
+0x500051ED  FdcClearError
+0x500051F7  FdcArmIrqFlag           ; FdcIrqFlag := 0xFF before a command that ends with an interrupt
+0x50005203  FdcWaitIrq              ; until FdcIrq has cleared FdcIrqFlag; error 9 after 500 ticks
+0x5000525A  FdcTickWait             ; d0/2 ticks
+0x5000529C  FdcTickWait40
+0x500052A9  FdcOpen                 ; interrupts on, FdcSoftReset, FdcInit
+0x500052D0  FdcRecalibrate          ; RECALIBRATE, wait for its interrupt; the head at cylinder 0
+0x50005333  FdcSeek                 ; SEEK to FdcSeekCyl unless the head is there already
+0x5000538B  FdcReadDataCmd          ; CONFIGURE, DMA in, READ DATA (0xC6), wait for its interrupt
+0x500053D8  FdcReadSectors          ; the request's sectors, track by track, with retries and FdcInit after an error
+0x50005615  FdcWriteSectors         ; the same for writing
+0x5000582B  FdcWriteDataCmd         ; CONFIGURE, DMA out, WRITE DATA (0xC5), wait for its interrupt
+0x50005878  FdcFormatDisk           ; recalibrate, then FdcFormatTrack for every cylinder and head
+0x500059D6  FdcFormatTrack          ; seek, the sector ID list, FORMAT TRACK (0x4D)
+0x50005A1C  FdcBuildFormatIds       ; {cylinder, head, sector, size} for each sector of the track
+0x50005C3B  FdcFormatTrackCmd       ; CONFIGURE, DMA out, FORMAT, wait for its interrupt
+0x50005C86  FdcMotorOnWait          ; motor on and a settling wait
+0x50005C9B  FdcMotorOffLater        ; starts the motor-off countdown
+0x50005CA9  FdcGetLastError         ; the error of the previous request
+0x50005CB8  FdcSelectHead           ; request head 0 or 1
+0x50005CE8  FdcHeadSet1
+0x50005CF3  FdcHeadSet0
+0x50005CFD  FdcSenseDrive           ; SENSE DRIVE STATUS: write protect (0x32), not ready (0x31), fault (0x2F)
+0x50005D71  FdcHwInit               ; the FDC interrupts: data request (group 24), FDC (25), DMA done (15)
+0x50005E35  FdcRequest              ; runs one request: 0 init, 1 recalibrate, 2 seek, 3 read, 4 write, 5 format, 6 motor on, 7 motor off, 8 last error, 9 head, 0xA probe, 0xB sense drive; busy guard 0xA5 (error 0xFB)
+0x50005FDF  FdcDreqIsr              ; group 24: moves the transfer's last byte through the data port by hand, P04 bit 4 off
+0x50006070  FdcDmaDoneIsr           ; group 15: P04 bit 4 on, arms the group 24 interrupt for the last byte
+0x500060CE  FdcIrq                  ; group 25: reads the result phase into FdcResult (or a SENSE INTERRUPT), FdcCheckResult
+0x50006182  FdcHookNop4
+0x50006185  DCacheFlush             ; with interrupts off: data cache off, written back way by way (DCACHE_WAY0/1) unless write-through, invalidated, on again
+0x50006201  FdcSeekTestLoop         ; repeats reads at cylinders 0, 0x4E, 0x0A, 0x28 forever, 3000 ticks apart
+0x5000638A  FdcIndexDetectInit      ; registers FdcIndexIsr (group 30), runs request 0 for media 0xD3
+0x50006408  FdcDiskSpinning         ; 1 if an index pulse came in the last 0x6E ticks
+0x5000643C  FdcIndexIsr             ; group 30, the index pulse: notes its tick, sets FdcIndexSeen
+0x5000647E  FdcDiskPresent          ; reads the DIR with the motor on: no disk-change flag, or the disk turning (index pulses) -> 1
+0x500064FE  FdcDiskChangedClear     ; an init request clears the change flag, then reads it again
+0x50006578  FdcMediaChangePoll      ; posts event 0x10708000 (KernelStubZero) on insert and removal
+0x500103E0  FdcMotorCountdown
+0x500103E2  FdcSavedDor
+0x50010000  FdcMotorState           ; 0 off, 1 on, 2 counting down
+0x50010004  FdcSeekTestCount
+0x50010008  FdcLastDir              ; the DIR as FdcDiskPresent last read it
+0x50010009  FdcIndexInitDone
+0x5001000C  FdcMediaState           ; FdcMediaChangePoll: 0xFF unknown, 0 empty, 1 a disk
+0x50010070  FdcIndexSeen
+0x50010074  FdcIndexTick
+0x50012584  FdcProbeMarker          ; -1 while the media is being identified
+0x50012587  FdcBusy                 ; 0xA5 during a request, 0x5A after
+0x50012588  FdcByteCount            ; the transfer's bytes
+0x5001258C  FdcSectorSize           ; 0x200, or 0x400 for media type 2
+0x50012590  FdcInitBusy
+0x50012598  FdcError
+0x50012599  FdcPrevError
+0x5001259A  FdcOpcode
+0x5001259B  FdcHeadSel
+0x5001259C  FdcDrive
+0x5001259D  FdcCylinder
+0x5001259E  FdcHead
+0x5001259F  FdcSector
+0x500125A0  FdcSizeCode
+0x500125A1  FdcEot
+0x500125A2  FdcGapRw
+0x500125A3  FdcDtl
+0x500125A4  FdcFmtSectors
+0x500125A5  FdcGapFmt
+0x500125A6  FdcFillByte
+0x500125A7  FdcStp
+0x500125A8  FdcSeekCyl
+0x500125A9  FdcSrt
+0x500125AA  FdcHut
+0x500125AB  FdcHlt
+0x500125AC  FdcNonDma
+0x500125B4  FdcRequestBlock         ; the request being served: command
+0x500125B8  FdcReqDrive
+0x500125BC  FdcReqHead
+0x500125C0  FdcReqCylinder          ; the media type for command 0
+0x500125C4  FdcReqSector
+0x500125C8  FdcReqCount
+0x500125CC  FdcReqBuffer
+0x500125D0  FdcRequestCopy          ; the request as it came in
+0x500125EC  FdcIrqFlag              ; 0xFF while a command waits for its interrupt; FdcIrq clears it
+0x500125ED  FdcResult               ; the result bytes, ST0 first (FdcInit drains interrupts until ST0 reads 0x80)
+0x500125F4  FdcRetryCount
+0x500125F5  FdcHeadSelect
+0x500125F6  FdcDensity
+0x500125F7  FdcMediaType
+0x500125F8  FdcFormatIds
+0x50012640  FdcAbnormalEnd
+0x50012641  FdcCurrentCyl           ; 0xFF when not known
+0x50012644  FdcLastCyl
+0x50012648  FdcCylCount
+0x5001264C  FdcSectorsPerTrack
+0x50012650  FdcLastSector
+0x50012654  FdcSavedSector
+0x50012658  FdcSavedCount
+0x5001265C  FdcDsrPrev
+0x5001265D  FdcDsr
+0x5001265E  FdcIcrReadback          ; the ISRs read their GxICR back into it
+0x50012660  FdcTestRequest          ; FdcSeekTestLoop's and FdcIndexDetectInit's request block
+0x5001267C  FdcTestBuffer
+
+; ---- the FAT12 reader on the SD card (the SD update files) --------------------
+0x50007141  SdReadSector            ; sector d0 into a0 through DiskCmdTransact (message: command 3, count 1); -1 on failure
+0x50007166  FatClusterToSector      ; (cluster - 2) * sectors per cluster + the first data sector
+0x50007185  FatReadCluster          ; every sector of cluster d0 into a0
+0x500071BD  FatMount                ; partition 1's start from the MBR, then its boot sector: 512-byte sectors, two FATs, "FAT12   ", the sizes; on a failure the volume name is "12345678"
+0x500072E6  FatLoadFat              ; the first FAT into FatTable
+0x50007321  FatLoadRootDir          ; the root directory into FatRootDir; the first data sector after it
+0x50007373  FatFindRootEntry        ; the root entry of an 8.3 name ("NAME.EXT"); the entry count when it is not there, 0xFFFF without a dot
+0x50007400  FatClusterValid         ; 2..0xFF6
+0x50007413  FatNextCluster          ; the 12-bit FAT entry of cluster d0
+0x50007469  SdFatOpenVolume         ; mounts the card (SD command 0), FatMount, FatLoadFat, FatLoadRootDir; -1 no card, -2 no FAT12 volume
+0x500074A3  FatOpen                 ; opens a root-directory file into FatFile and reads its first sector; a0 = FatFile or 0
+0x5000757C  FatRead                 ; up to d0 bytes of the file a1 into a0; the count read
+0x500075A6  FatGetc                 ; the next byte of the file a0, following the cluster chain; -1 at the end
+0x50007633  FatEof                  ; 1 when the position has reached the size
+0x50007644  FatClose                ; the file control block back to FatFileInitImage
+0x50007657  FatReadTestFile         ; opens MORITANI.DAT and reads it through to the end, 512 bytes at a time into a ten-sector ring
+0x5000DF70  FatMountFailImage       ; FatMount copies these nine words over its volume variables when it rejects the boot sector, then returns -1. TODO: the numbers do not describe a usable volume (32 bytes a sector, no FAT); what they were meant to be is not known
+0x5000DF94  FatFileInitImage        ; a closed file control block
+0x500128F8  FatVolumeName
+0x50012904  FatPartitionStart
+0x50012908  FatBytesPerSector
+0x5001290A  FatSectorsPerCluster
+0x5001290C  FatNumFats
+0x5001290E  FatRootEntries
+0x50012910  FatSectorsPerFat
+0x50012912  FatEntryCount           ; the 12-bit entries the FAT holds
+0x50012914  FatTotalSectors         ; from the 32-bit field of the boot sector
+0x50012918  FatDataStart            ; the first data sector
+0x5001291C  FatTable
+0x5001411C  FatRootDir
+0x5001811C  FatFile                 ; the open file: {cluster, offset in sector, buffer, sector in cluster, size, position}
+0x5001811E  FatFileOffset
+0x50018120  FatFileBuffer
+0x50018124  FatFileSectorInCluster
+0x50018128  FatFileSize
+0x5001812C  FatFilePos
+0x50018130  FatSectorBuffer
+0x50018330  FatTestRing             ; FatReadTestFile's ten sectors
+
+; ---- the caches, the tick, BootMain's helpers ---------------------------------
+0x50008435  ICacheInvalidate        ; instruction cache off, wait, invalidate, on again
+0x5000845C  DCacheInvalidate        ; data cache off, wait, invalidate, on again
+0x50008482  ICacheDisable
+0x500084A3  DCacheFlushDisable      ; written back way by way unless write-through, invalidated, left off
+0x50008515  TickIsr                 ; interrupt group 6 (timer 4): TickCount += 1; a six-step cycle sets the request bits of TickJobs
+0x50008617  LcdControllerInitOld    ; another set-up of the LCD controller, by a register map that is not the S1D13506's (even offsets 0x00-0x14, two palette tables at +0x20 and +0x60), then 512 KB of LCDC_VRAM cleared
+0x50008BEB  BootMain_UnusedRet      ; an epilogue left after BootMain; unreachable
+0x50008BEE  TickStart               ; TickIsr on interrupt group 6, timer 4 reloading 0xFA0, interrupts on
+0x50008C4C  FlashAllToReadMode      ; every flash device back to read mode (Flash32Reset 0, FlashResetToRead 4..10)
+0x50008C6A  PanelStart              ; the D-cache written back and off, PanelDriverOps[0] (PanelInit), the D-cache invalidated and on
+0x50008C82  FdcStart                ; FdcHookNop4, FdcHwInit
+0x50008C92  ScreenInit              ; LcdControllerInit, then panel commands 0x1C/0x32 and 8..0xD with 4, and PanelPump
+0x50008D04  SpinDelay               ; d0 rounds of ten nops
+0x50008D23  SpinDelay10000          ; d0 rounds of SpinDelay(10000)
+0x50008D43  UpdateSystemMenu        ; UPDATE / DISKCHK / EXIT: FlashUpdateScreen or DiskCheckScreen
+0x50008DB9  DeviceInfoScreen        ; DEVICE INFO: DeviceInfoProbe
+0x50008DF1  DiskCheckScreen         ; UPDATE DISK CHECK: the floppy's kind, then DiskCheckRun
+0x50008E7D  FlashUpdateScreen       ; FLASH MEMORY UPDATE: the program's version now (PROGRAM_FLASH_VERSION) and on the disk, then FlashUpdateRun
+0x50008FDA  SdUpdateScreen          ; FLASH MEMORY UPDATE --- SD: two confirmations, then SdUpdateStart
+0x50009095  LcdControllerInitAlt    ; a third set-up of the LCD controller, by yet another register map: the offsets 0x01-0x23 and the values fit Epson's earlier S1D13505 ([INFERENCE] there 0x04 = 0x4F is 640 pixels a line, 0x08 = 0xEF 240 lines, 0x0D the display mode, enabled last; not checked against its data sheet)
+0x5000917E  IrqGroupsDisableAll     ; the enable bit of every GxICR off, before the jump to the firmware
+0x50009301  LcdControllerInit       ; the LCD controller's registers, by the S1D13506 map (640 x 240, 16 bits a pixel), LCDC_VRAM cleared, the display on
+0x500095F9  HexDumpLines            ; ten lines of "%08X :" and sixteen "%02X " bytes from a0
+
+; ---- the flash programmer ------------------------------------------------------
+; The update writes 13 kinds of device (FlashDeviceBase, numbered as the floppy kinds
+; KN7KP1..KN7KA2 of UpdateDiskIdentify). Kinds 0..3, the program and table flash, are
+; two 16-bit chips side by side (32-bit commands 0x00AA00AA at 0x1554); the others are
+; one 16-bit chip (0xAA at 0xAAAA). Both AMD-style command sets.
+0x500097B0  FlashBusyWait6000       ; counted busy loop (0x1770)
+0x500097DD  FlashBusyWait33         ; counted busy loop (0x21)
+0x50009808  FlashDeviceBase         ; the uncached base of device d0: 0/1 program 0x88400000 (+2 MB), 2/3 table 0x88000000 (+2 MB), 4 IC21 0x96800000, 5 0x96000000, 6 0x97000000, 7 0x81000000, 8/9 0x80000000 (+2 MB), 10-12 IC19 0x97800000
+0x500098A5  FlashResetToRead        ; the read/reset command (0xF0) by the identified chip's command layout
+0x50009945  FlashIdentify           ; autoselect (0x90): maker and device, printed "M:%2X D:%2X"; known Fujitsu (4), Atmel (0x1F) and Macronix (0xC2) parts set FlashChipId; 0 if known else 0xFFFF
+0x50009A6A  FlashPageWrite          ; Atmel page mode: collects 128 words in FlashPageBuffer, then programs the page (0xA0) and polls
+0x50009B1D  FlashProgramWord        ; one word (0xA0), then polls until it reads back; Atmel parts through FlashPageWrite
+0x50009B82  FlashEraseChip          ; chip erase (0x80, 0x10); kinds 8 and 0xB erase both halves
+0x50009C76  FlashEraseSectors       ; sector erase (0x30) of the eight sectors at 0x8000, 0x40000..0x1C0000
+0x50009CDE  FlashWaitEraseDone      ; until FlashEraseComplete, printing a mark every 50 ticks
+0x50009D29  FlashEraseBootSectors   ; the small sectors one by one, then the large ones
+0x50009E06  FlashEraseComplete      ; device 9: always; Atmel: status 0x80; else the first word reads 0xFFFF twice
+0x50009E59  FlashEraseChipWait
+0x50009E87  FlashEraseSectorsWait
+0x50009EB5  Flash32Reset            ; read/reset for the program/table pair
+0x50009F32  Flash32Identify         ; autoselect on the pair: Fujitsu 0x22F6/0x22F9/0x225F/0x2250 or Macronix 0xA100/0xA200 set Flash32ChipId; 0 if known
+0x50009FD0  Flash32ProgramWord      ; one 32-bit word (0x00A000A0), polled until it reads back
+0x5000A018  Flash32EraseChip        ; chip erase on the pair
+0x5000A059  Flash32IsErased         ; the first word reads 0xFFFFFFFF twice
+0x5000A078  Flash32EraseChipWait
+0x5000A09E  Flash32WordErased       ; word d1 of the table pair reads 0xFFFFFFFF twice
+0x5000A0C4  Flash32WaitErasedAt     ; until Flash32WordErased, then a progress mark
+0x5000A0F9  Flash32EraseRegion      ; region d0 (0..3) erased sector by sector, by the sector map of the identified chips
+0x5000C538  PfConversionCases       ; vsprintf_core's switch on the conversion letter 'E'..'x'
+0x5000C608  PfFlagChars             ; PfParseSpec's hashed switch: {flag character + 1, handler}
+0x5000CD70  FlashDeviceBaseCases    ; FlashDeviceBase's switch
+0x5000CDA4  FlashResetById          ; FlashResetToRead's hashed switch on the device code
+0x5000CE24  FlashFujitsuIds         ; FlashIdentify's hashed switch on the Fujitsu device codes 0x2227..0x22F9
+0x5000E104  FontTable               ; two 8x16 fonts: {width, height, .., glyph bitmaps}
+0x5001006C  Flash32ChipId           ; both chips' device codes, or -1
+0x50010170  FlashChipId             ; the 16-bit chip's device code, 0xFFFF until identified
+0x50012468  FlashPageBuffer         ; FlashPageWrite's 128 words; Reset puts the stack top 12 bytes below it
+0x50012568  FlashPageIndex          ; FlashPageWrite's word count
+
+; ---- the floppy update ---------------------------------------------------------
+; An update floppy (1.44 MB) carries at LBA 0x21 a six-character kind (KN7KP1 ...) and at
+; LBA 0x22 the block sums, '@'-separated hex; the image follows from LBA 0x24 as an LZSS
+; stream (4 KB window, 12-bit offsets, 4-bit lengths + 3, window pre-filled to 0xFEE)
+; whose eight-byte header is followed by the 24-bit size.
+0x5000A7A2  FloppyInit144           ; FdcRequest 0 for 1.44 MB media (0xD3)
+0x5000A7C5  FloppyLbaToRequest      ; buffer, LBA, count into FloppyRequest: cylinder LBA/36, head (LBA/18)%2, sector LBA%18+1
+0x5000A826  FloppyRead              ; d1 sectors from LBA d0 into a0, re-initialising and retrying until it reads
+0x5000A858  UpdateDiskIdentify      ; the update kind at LBA 0x21: 0 KN7KP1 .. 12 KN7KA2, 0xFF none
+0x5000A9B3  UpdateDiskLoadSums      ; LBA 0x22's '@'-separated hex: the block count, then the 16-bit sums into UpdateSums (not for second disks: kinds 1, 3, 9, 12)
+0x5000AA5D  WaitForDisk             ; until the disk is taken out, put in again and is of kind d0
+0x5000AAAC  FlashEraseForKind       ; kinds 0..3 Flash32EraseRegion, else FlashEraseChip and a wait with progress marks
+0x5000AB24  FloppyFlashUpdate       ; "Now erasing", erase, "Now writing", UpdWriteDisk; a two-disk image asks for disk 2/2; "Completed! Turn on Again."
+0x5000ABD9  FloppyDiskCheck         ; UpdVerifyDisk over one or two disks against the sums: "NG disk" or "OK! Turn on again."
+0x5000AC7E  FloppyDiskCheck_UnusedRet    ; an epilogue left after FloppyDiskCheck, which never returns; unreachable
+0x5000AC81  UpdStreamGetByte        ; the next byte of the LZSS stream, reading the next four tracks when the buffer runs out; 0xFFFF past the end
+0x5000AD05  UpdFlashPutByte         ; gathers bytes into a word (4 for kinds 0..3, else 2) and programs it at UpdWriteAddr
+0x5000ADA9  UpdSumByte              ; adds a byte to the block sum; every 0x40000 bytes compares it with UpdateSums ("NG Disk", halt)
+0x5000AE3C  UpdFlashFlush           ; the last partial word, padded with 0xFF
+0x5000AEBF  UpdVerifyDisk           ; decompresses the disk's stream through UpdSumByte only; returns the size
+0x5000B080  UpdWriteDisk            ; decompresses the disk's stream into the flash (UpdFlashPutByte), "> Write Address = ..."; returns the size
+0x5000B280  UpdDiskVersion          ; decompresses the first 16 bytes of the program disk; returns byte 15, the version
+0x5000B450  DeviceInfoProbe         ; "FLASH ROM" if the program flash identifies, else "MASK ROM"; never returns
+0x5000B477  DeviceInfoProbe_UnusedRet    ; unreachable
+0x5000B47A  DiskCheckRun            ; UpdateDiskLoadSums, FloppyDiskCheck
+0x5000B490  FlashUpdateRun          ; identifies the target flash for the disk's kind, then FloppyFlashUpdate; hangs if it is not a known flash
+0x5000B4C7  FlashUpdateRun_UnusedRet     ; unreachable
+0x5002B9D0  UpdStreamSize
+0x5002B9D4  UpdStreamPos
+0x5002B9D8  UpdWriteAddr
+0x5002B9DC  UpdTrackPtr             ; the next byte in UpdTrackBuffer
+0x5002B9E4  UpdNextLba
+0x5002B9E8  UpdByteCount            ; bytes gathered for the word (UpdFlashPutByte) or summed in the block (UpdSumByte)
+0x5002B9EC  UpdBlockSum
+0x5002B9EE  UpdBlockIndex
+0x5002B9F0  UpdTotalSum
+0x5002B9F4  UpdateSums              ; the 16-bit block sums from LBA 0x22
+0x5002BA14  UpdateSumCount
+0x5002BA18  FloppyRequest           ; FloppyRead's FdcRequest block
+0x500199CC  UpdTargetBase
+0x500199D0  UpdTrackBuffer          ; four tracks (0x9000 bytes) of the stream
+0x5001256C  UpdWordBuffer
+
+; ---- the SD update ---------------------------------------------------------------
+0x5000B4CA  SdFlashUpdate           ; for each update file on the card (UpdateFileNames): the target flash identified, erased, written, verified; then "Update Infomation" and the per-file result
+0x5000BD07  SdFlashUpdate_UnusedRet ; unreachable
+0x5000BD0A  FlashFindNonBlank       ; the first 0x40-byte step from a0 up to a1 whose word is not 0xFFFFFFFF, else 0
+0x5000BD39  StatusLedOff            ; clears bit 2+d0 of StatusLatchShadow and sends it (StatusLatchWrite)
+0x5000BDA0  SdUpdateFilePresent     ; 1 if the card holds any of UpdateFileNames
+0x5000BDE8  SdUpdateStart
+0x5000BDFA  DiskStart               ; LCDC_GPIO_CONFIG1 := 0x0E (pins 1-3 outputs), DiskInit
+0x50010174  UpdateFileNames         ; KN7KPRG.DAT, KN7KTBL.DAT, KN7KCSTM.DAT, KN7KRHY.DAT, KN7KAROM.DAT, ""
+0x50012570  StatusLatchShadow
+0x50007060  StatusLatchWrite        ; sends d0 & 0x7F on the SPI shift register, then pulses the SD select line, which latches it (TODO: which device: the update's status lamps, by StatusLedOff)
+
+; ---- the text screen and the soft keys -------------------------------------------
+0x5000BE0D  ScreenClear             ; the 10 x 78 text buffer to spaces, the cursor home, the frame buffer cleared
+0x5000BE58  ScreenTitle             ; "UPDATE SYSTEM", a rule, the title, two lines across
+0x5000BE9E  MenuSoftKeyChoice       ; up to four captions "[%s]" across the bottom; waits for a panel key under one: 0..3 (4 when there are none)
+0x5000C068  ScreenPrint             ; text into the buffer at the cursor (\n, \r, wrap, scroll), then the changed lines drawn
+0x5000C1C9  PanelWaitEvent          ; pumps the link until a three-byte switch event {group, bits, changed} comes in
+0x5000C216  PanelDiskLed            ; panel command 9 with 8 (on) or 0
+0x5000C23F  LcdFill                 ; the whole frame buffer with pattern 0, 0x5555, 0xAAAA or 0xFFFF
+0x5000C27D  LcdHLine                ; pixel row d0 with pattern d1
+0x5000C2BE  LcdDrawChar             ; one glyph of a FontTable font at text column/row
+0x5000C3FD  LcdDrawString
+0x5002BA40  ScreenText              ; 10 lines of 78 characters
+0x5002BD4C  ScreenLineFlags
+0x5002BD9A  ScreenCursorCol
+0x5002BD9C  ScreenCursorRow
+
+; ---- disk: the SD card and the drive-letter commands, the firmware's design ----
+0x500065E9  DiskInit                ; DiskDriverOps[0]: SdHwInit, the card records reset, slot power off, SdSlotDischarge
+0x50006616  DiskHookNop1            ; an empty method of DiskDriverOps
+0x50006619  DiskHookNop2            ; an empty method of DiskDriverOps
+0x5000661C  DiskHookNop3            ; an empty method of DiskDriverOps
+0x50006679  DiskCmdTransact         ; runs one disk message to completion: no worker task here, it calls the handler (SdWorkerCmdHandler) directly
+0x500066CF  DiskDriveCtrlWrap       ; DiskDriveCtrlHandler on a canned message
+0x500066DA  SdWorkerCmdHandler      ; message type 3, the SD media commands: 0 mount (power on, SdCardInitFull), 3 read, 4 write, and the status queries
+0x50006A60  DiskDriveCtrlHandler    ; message type 2, drive control, switched on the drive letter '@'..'N' (DiskDriveCtrlCases)
+0x50006C6E  SdMediaStateGet         ; 0..3, 3 = ready
+0x50006CB5  SdDrvPhaseGet
+0x50006CBE  SdDrvRecordsReset       ; the CSD record invalidated, the card-info record reset
+0x50006CDA  SdProbeFlagGet
+0x50006CE3  SdCardReadyCheck        ; card present and initialised
+0x50006D05  SdCardDetectPoll        ; SdCardDetectRaw
+0x50006D11  SdCardDetectPoll2       ; the same
+0x50006D1D  SdWriteProtectPoll      ; SdWriteProtectGet
+0x50006D29  SdCardRegRead           ; re-reads a card register into its record
+0x50006DDC  SdCardInitFull          ; the SPI card init: wake clocks, CMD0 and the rest of the ladder; prints "spiStart : Error n" on each failure
+0x50006EAB  SdCardInfoReset         ; block length 0x200, capacity 0, not initialised
+0x50006ECF  SdCardInfoReset_UnusedRet    ; a second epilogue left after SdCardInfoReset; unreachable
+0x50006ED1  SdCardIdentify          ; CMD9: the CSD, the block length and capacity from its fields; prints "spiGetInfo : %d = sendReadCOM(CSD);" on failure
+0x500070B9  SdMediaChangeService    ; on a card: the canned drive-control messages '@' and 'C', state 2
+0x5000710A  SdPowerDownNotify       ; the canned 'F' drive-control message
+0x5000713C  StubMinusOne            ; returns -1
+0x500076BF  SdHwInit                ; select pulse, SdSpiPortSetup, SdDetectPortInit
+0x500076D4  SdSpiPortSetup          ; EXTMD bits 10-11 for the SPI handshake group, the slow clock
+0x50007725  SdSpiClockSet           ; d0 2: the slow clock; 3: the stored working pair
+0x500077D5  SdDetectPortInit        ; the detect lines, SdSlotDischarge, the slot powered off, EXTMD for the detect edge
+0x50007817  SdCardDetectRaw         ; the raw card-detect line (through G27ICR)
+0x50007858  SdPowerLineSet          ; LCDC_GPIO_CTRL1 bit 2
+0x5000786F  SdPowerLineClear
+0x50007886  SdPowerRailSet          ; SdPowerCtrlSetRaw(4)
+0x50007893  SdPowerRailClear        ; SdPowerCtrlClearRaw(4)
+0x500078A0  SdSlotDrainWait         ; powers the slot down, then watches the sense line until it drains
+0x50007943  SdSlotDischarge         ; line and rail off, select, the presence latched
+0x50007988  SdSlotSenseGet          ; LCDC_GPIO_CTRL1 bit 0
+0x500079A5  SdWriteProtectGet       ; LCDC_GPIO_CTRL1 bit 4
+0x50007A15  SdSpiSendBuf            ; d0 bytes from a0
+0x50007AF0  SdSpiRecvBuf            ; d0 bytes to a0
+0x50007C57  SdSenseBusyWait         ; waits for the sense line to clear (d0/2-tick time-out)
+0x50007D14  SdCommandSend           ; one command frame: select, clock, CRC7, six bytes, the response
+0x50007D9C  SdReadBlockCmd          ; command, start token, the block, the CRC bytes
+0x50007E86  SdReadChainCmd          ; a block read whose last byte gives the length of a second part
+0x50007F60  SdWriteBlockCmd         ; command, start token, data, CRC16, the data response, busy wait
+0x500082A1  SdCmdCrc7               ; table-driven CRC7 over a0, d0 bytes (SdCrc7Table)
+0x500082CB  SdStatusProbeCmdA       ; a fixed command frame with two extra reply bytes
+0x50008380  SdStatusProbeCmdB       ; its twin, used by DiskDriveCtrlHandler
+0x5000C890  DiskDriveCtrlCases      ; DiskDriveCtrlHandler's switch, drive letters '@'..'N'
+0x5000DF60  DiskDriverOps           ; {DiskInit, three empty methods}
+0x5000C8CC  DriveLetterClassCases   ; DriveLetterClass's switch, 'A'..'N'
+0x5000C844  SdFrameCmd10            ; SEND_CID
+0x5000C850  SdFrameCmd9             ; SEND_CSD
+0x5000C85C  SdFrameCmd16            ; SET_BLOCKLEN 0x200
+0x5000C93C  SdLsbMasks              ; SdCsdBitfield's low-bit masks
+0x5000C944  SdMsbMasks              ; SdCsdBitfield's high-bit masks
+0x5000C94C  SdFrameProbeA           ; SdStatusProbeCmdA's frame
+0x5000C958  SdFrameProbeB           ; SdStatusProbeCmdB's frame
+0x5000DFA8  SdCrc7Table             ; CRC7 (polynomial 0x09) of each byte, shifted left one
+0x50010010  DiskReplyPending        ; DiskCmdReplyCopy: 1 while a reply is awaited
+0x50010012  DiskReplyResult
+0x50010014  DiskCmdBusy             ; DiskCmdTransact's guard: 0xFB when a command is already running
+0x50010018  DiskAttachReply         ; the reply word of DiskMsgAttach
+0x5001001C  DiskCheckReply          ; the reply word of DiskMsgCheck
+0x50010020  DiskMsgAttach           ; a canned drive-control message: drive '@', reply, length 4, buffer
+0x50010034  DiskMsgCheck            ; drive 'C'
+0x50010048  DiskMsgPowerDown        ; drive 'F'
+0x5001005C  SdClockMode             ; SdSpiClockSet's stored mode
+0x50010060  SdClockGap              ; the shift-register gap: 0x19 slow, 4 fast
+0x50010064  TickPhase               ; TickIsr's six-step cycle
+0x50010065  TickPhase2              ; and its eight-step one
+0x50010068  SdPowerShadow           ; the last byte written to SD_POWER_CTRL
+0x50010078  SdFrameSlowCmd1         ; the frames of the SD commands, slow clock (mode 2) ...
+0x50010082  SdFrameSlowCmd2
+0x50010086  SdFrameSlowCmd2Bytes    ; the code fills in its argument
+0x5001008B  SdFrameSlowCmd2Crc
+0x5001008C  SdFrameR2Cmd0           ; response type 2 frames: TODO, commands 0x40, 0x45, 0x43, 0x46, 0x47 with arguments
+0x50010096  SdFrameR2Cmd5
+0x500100A0  SdFrameR2Cmd3
+0x500100AA  SdFrameR2Cmd6
+0x500100B4  SdFrameR2Cmd7
+0x500100BE  SdFrameCmd0             ; ... and the working clock (mode 3): GO_IDLE_STATE with its CRC 0x95
+0x500100C8  SdFrameCmd1             ; SEND_OP_COND
+0x500100D2  SdFrameCmd17            ; READ_SINGLE_BLOCK
+0x500100D6  SdFrameCmd17Bytes       ; its command bytes; the code fills in the address
+0x500100DC  SdFrameCmd24            ; WRITE_BLOCK
+0x500100E0  SdFrameCmd24Bytes
+0x500100EC  SdDetectOverride        ; the latched card presence (SdSlotDischarge), -1 for none
+0x5001018C  UpdateFileKinds         ; the device kind of each UpdateFileNames entry: 0 program, 2 table, 4 IC21, 8 rhythm, 0x0B, then 0x32
+0x50010192  SdUpdateWaitFlag        ; SdUpdateStart clears it; SdFlashUpdate pauses between files when it is set (TODO: who sets it)
+0x5000D121  Str_EndOfList           ; the empty name that ends UpdateFileNames
+
+; ---- the C library's data ----------------------------------------------------------
+0x5000C42C  CtypeTable              ; newlib's _ctype_ by its values: 0x01 upper, 0x02 lower, 0x04 digit, 0x08 hex digit, 0x10 control, 0x20 white space, 0x40 punctuation, 0x80 printable
+0x5000D53C  CtypePtr                ; the ctype table every is*/to* reads through (+1 for EOF)
+0x5000D540  LocaleMonetaryC         ; the "C" locale's monetary strings and fields
+0x5000D568  LocaleNumericC          ; the "C" locale's name, decimal point, thousands separator, grouping
+0x5000D584  MonetaryLocaleIndex
+0x5000D588  NumericLocaleIndex
+0x5000C6C0  PfDecimalInit           ; PfDoubleToDecimal's initial five words (1, 0, 0, 0, 0)
+0x5000C6D4  F64ZeroConst            ; LibF64Zero's 0.0
+0x5000D590  F64Tenth                ; 0.1
+0x5000D598  F64Five                 ; 5.0
+0x5000D5A0  F64Log10Of2             ; log10(2)
+0x5000D5A8  F64One                  ; 1.0 = 1e0, the first power of ten
+0x5000D5B0  F64PowersOfTen          ; 1e1 .. 1e308
+0x50010194  __bss_start             ; .bss follows .data in RAM: = __data_end; its first object is the struct lconv localeconv fills (decimal_point first)
+0x50010198  LconvThousandsSep
+0x5001019C  LconvGrouping
+0x500101A0  LconvIntCurrSymbol
+0x500101A4  LconvCurrencySymbol
+0x500101A8  LconvMonDecimalPoint
+0x500101AC  LconvMonThousandsSep
+0x500101B0  LconvMonGrouping
+0x500101B4  LconvPositiveSign
+0x500101B8  LconvNegativeSign
+0x500101BC  LconvIntFracDigits
+0x500101BD  LconvFracDigits
+0x500101BE  LconvPCsPrecedes
+0x500101BF  LconvPSepBySpace
+0x500101C0  LconvNCsPrecedes
+0x500101C1  LconvNSepBySpace
+0x500101C2  LconvPSignPosn
+0x500101C3  LconvNSignPosn
+
+; ---- the panel link's buffers and the key-combination tables ------------------------
+0x500101C4  PanelEventFifoBuf
+0x50010243  PanelEventFifoBufEnd
+0x50010258  PanelTxFifoBuf
+0x500102D7  PanelTxFifoBufEnd
+0x500102F2  PanelFrameByte0         ; PanelFrameDecode's bytes of the report being assembled (TODO: their roles)
+0x500102F3  PanelFrameByte1
+0x500102F4  PanelFrameByte2
+0x500102F6  PanelAtnCountdown       ; set by PanelAtnIsr, counted down by PanelTxPump (TODO: its unit)
+0x5001039C  PanelSwShadow00         ; the switch-report bytes as PanelFrameDecode stores them; each name ends in the byte's offset in the report, in hex
+0x5001039E  PanelSwShadow02
+0x5001039F  PanelSwShadow03
+0x500103A0  PanelSwShadow04
+0x500103A1  PanelSwShadow05
+0x500103A2  PanelSwShadow06
+0x500103A6  PanelSwShadow0A
+0x500103CC  PanelSwShadow30
+0x500103CE  PanelSwShadow32
+0x500103D0  PanelSwShadow34
+0x5000C6DC  BootKeyCombo3           ; BootKeyComboMatch's tables, by the number each gives
+0x5000C6EC  BootKeyCombo2
+0x5000C70C  BootKeyCombo1
+0x5000C71C  BootKeyCombo4           ; BootMain: UPDATE SYSTEM MENU
+0x5000C744  BootKeyCombo5           ; BootMain: DEVICE INFO
+0x5000C764  BootKeyCombo6
+0x5000C774  BootKeyCombo7           ; BootMain: UPDATE DISK CHECK
+0x50012580  PanelRxErrorFlag        ; PanelRxIsr: a serial error was seen
+0x50019734  TickJobs                ; request bits TickIsr sets on its cycle (TODO: their consumers)
+0x50019735  TickJobs2
+0x50019738  PanelIrqSlot0           ; the four slots PanelDisableIrqGroups passes on (TODO: nothing in the image sets them)
+0x5001973C  PanelIrqSlot1
+0x50019740  PanelIrqSlot2
+0x50019744  PanelIrqSlot3
+0x50019748  PanelLedMirror          ; the LED bytes last sent; PanelLedMirrorResetA clears them
+0x5001975A  PanelLedMirrorEnd
+
+; ---- the disk layer's variables, laid out like the firmware's driver block --------
+0x500103E4  DiskAttachBuffer        ; DiskMsgAttach's buffer
+0x50010464  SdProbeReply0           ; the two extra reply bytes of the status probes
+0x50010466  SdProbeReply1
+0x5001287C  SdProbeFlag
+0x5001287E  SdMediaState            ; 0..3, 3 = ready
+0x50012880  SdDrvPhase
+0x50012884  SdCardInitFlag          ; the card-info record (+8 in the firmware's block)
+0x50012886  SdLastError
+0x50012894  SdTotalBytes
+0x5001289C  SdSectorCount
+0x500128A0  SdByteMultiplier
+0x500128A4  SdCsdRecord             ; {valid, length, data}
+0x500128A8  SdCsdRecordData
+0x500128E8  DiskReplyShadow         ; DiskCmdReplyCopy's 16-byte copy of the reply
+
+; ---- the rest of the floppy and update work areas -----------------------------------
+0x50012586  FdcFormatCyl
+0x50012594  FdcInitCleared          ; FdcInit sets it to 0 for every media type; nothing reads it
+0x500125AD  FdcSpareParam0          ; FdcMediaParams clears these five; nothing reads them
+0x500125AE  FdcSpareParam1
+0x500125AF  FdcSpareParam2
+0x500125B0  FdcSpareParam3
+0x500125B1  FdcSpareParam4
+0x50012664  FdcTestReqDrive
+0x50012668  FdcTestReqHead
+0x5001266C  FdcTestReqCylinder
+0x50012670  FdcTestReqSector
+0x50012674  FdcTestReqCount
+0x50012678  FdcTestReqBuffer
+0x5002BA1C  FloppyReqDrive
+0x5002BA20  FloppyReqHead
+0x5002BA24  FloppyReqCylinder
+0x5002BA28  FloppyReqSector
+0x5002BA2C  FloppyReqCount
+0x5002BA30  FloppyReqBuffer
+0x5002BA34  SdUpdateWork            ; SdFlashUpdate's work buffer
+0x5002BCFE  ScreenTextLastLine      ; the tenth line of ScreenText, blanked on a scroll
+0x5000C964  LcdOldPaletteA          ; LcdControllerInitOld's two palette tables
+0x5000C984  LcdOldPaletteB
+0x5000E11C  FontGlyphs8x16          ; 16 bytes per character from 0x20

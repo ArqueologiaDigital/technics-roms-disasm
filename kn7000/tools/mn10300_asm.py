@@ -41,7 +41,11 @@ def reg(tok):
 
 
 def imm(tok):
+    """A number, or a sum of numbers: `REG+0x0d`, once the caller has put the
+    value of REG in, reaches here as `0x9cc00000+0x0d`."""
     tok = tok.strip()
+    if "+" in tok[1:]:
+        return sum(imm(t) for t in tok.split("+"))
     try:
         return int(tok, 16) if tok.startswith(("0x", "-0x")) else int(tok, 0)
     except ValueError:
