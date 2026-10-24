@@ -2,14 +2,14 @@
 """semantic_score.py -- one score for the semantic-disassembly effort, and the README badges that show it.
 
 QUESTION IT ANSWERS
-  "How far is the disassembly of every ROM of all three models from fully semantic, as one number that can sit
+  "How far is the disassembly of every ROM of every model in the tree from fully semantic, as one number that can sit
    in a badge -- and what is that number made of?"  Byte-identity is a gate (always 100%), not progress.  The
   score averages four measurable shares from DISASSEMBLY-COMPLETENESS-SPEC.md's levels.  Each is pooled over
   every image of a model, so a bigger image weighs more.  The KN5000 and SX-WSA1R definitions:
 
   bytes   L1  bytes whose purpose the source states with evidence: (CODE + DATA-KNOWN-A + FILLER) / all bytes.
               Source: scripts/analysis/data_range_census.py --json (its "strict" figure).
-  names   L2  symbols in the linked ELFs (.text, all 12 images) with a semantic name / all rated symbols.
+  names   L2  symbols in the linked ELFs (.text, all 13 images) with a semantic name / all rated symbols.
               Rated = semantic + generic + positional.  Not rated: local branch labels, in every style the
               trees use -- _Skip/_Join/_Loop/_Return/..., and prom_c's Parent__F9A123 / Parent__loop -- whatever
               their parent is called, so a routine is rated once, by its own name, not once per branch inside
@@ -31,42 +31,88 @@ QUESTION IT ANSWERS
               field_0a38, str_3, v80_e0, ptrs_0.  w0_text, rect and Style_g0_s0_Title3 count as named.
               A model with no C has no fields component.
 
-  THE SX-KN7000 MODEL (rules 3).  Images: program (build 941), table (build 84) and cnv, the seven Style Convert
-  Disk converters pooled (kn7000/src/cnv/*.s).  The SP7001 set (942/83, BASEEXT.XAP) and the IC19 picture image
-  are not rated yet.  It has no ELF, no dispatch census and no C, so two of its components are defined from the
-  sources and two are absent:
+  THE SX-KN7000 MODEL (rules 3, revised in rules 4).  Images: program (build 941), table (build 84), cnv (the
+  seven Style Convert Disk converters pooled, kn7000/src/cnv/*.s) and, since rules 4, program942 (the SP7001
+  PLUG-iN program flash, build 942, kn7000/src/sp7001/program.s).  The SP7001 table (build 83), BASEEXT.XAP, the
+  IC18 boot ROM, table 80 and the IC19 picture image are not rated yet.  It has no ELF, no dispatch census and no
+  C, so two of its components are defined from the sources and two are absent:
   bytes   the share of each image emitted by source rather than `.incbin_range` passthrough: kn7000/tools/
           coverage_score.py's "source coverage" for program (its figure is cross-checked and the run stops on a
-          mismatch), and the same parse for table and cnv.  Image sizes are the built images'
-          (kn7000/build/, `make kn7000`).  WEAKER than the L1 figure above: a byte spelled as `.byte` or as
+          mismatch), and the same parse for the other images.  Image sizes are the built images'
+          (kn7000/build/, `make kn7000`; program942's needs more, see RUN).  WEAKER than the L1 figure above: a byte spelled as `.byte` or as
           an instruction counts whether or not its purpose is stated, so this is an upper bound on L1.
-  names   named routines / all rated routines.  program: the recovered functions, i.e. the generator banners
-          `# Name  (CPU 0x...)` (converted or still passthrough), plus the names in program.s's block of
-          `.equ` labels for internal helpers called by converted code (`func_484057D9` and friends), minus the
-          `*_entry` second entry points; distinct names.  cnv: the label under each generator banner
-          `# ---- Name ----`, in each converter (a routine the seven share counts once per converter).  table:
-          none (data only).  Positional / generic as above (`func_<hex>` is positional).  Data labels (cnv's
-          str_/bss_/data_, RAM `.equ`s) are not rated, unlike the KN5000/WSA1 rating of every .text symbol, and a
-          routine nobody has found inside the passthrough is in no denominator.
+  names   named routines / all rated routines.  program and program942 follow THE GENERATED-SOURCE ROUTINE RULE
+          below.  cnv: the label under each generator banner `# ---- Name ----`, in each converter (a routine
+          the seven share counts once per converter).  table: none (data only).  Positional / generic as above
+          (`func_<hex>` is positional).  Data labels (cnv's str_/bss_/data_, rodata_, RAM `.equ`s) are not
+          rated, unlike the KN5000/WSA1 rating of every .text symbol, and a routine nobody has found inside the
+          passthrough is in no denominator.
   entry   absent (null): no dispatch census covers the MN10300 images.
   fields  absent: no C.
 
+  THE MN10300-SIBLINGS MODEL (rules 4).  Images: kn2400 (SX-KN2400/2600 program flash, v1.1), kn6000 (SX-KN6000,
+  v7.1), kn6500 (SX-KN6500, v1.3) and hdsx3 (the HD-SX3 XAPR plug-in), each generated by kn7000/tools/
+  gen_image_s.py into <model>/src/program.s.  They are their own model, with their own badge, and not part of
+  kn7000: they are other instruments whose sources come from a different generator, their names come from each
+  image's own reflection tables, and their conversion is at a different stage, so pooling them would make the
+  KN7000 badge move for work done on other keyboards.  Components as for the KN7000: bytes is the source share of
+  the built image (<model>/build/, `make kn2400 kn6000 kn6500 hdsx3`), names follows THE GENERATED-SOURCE
+  ROUTINE RULE, entry and fields are absent.
+
+  THE GENERATED-SOURCE ROUTINE RULE (rules 4; kn7000/tools/gen_program_s.py and gen_image_s.py output).  A rated
+  routine is a distinct name that is
+    - a column-0 label whose next statement is an instruction, except: `loc_<hex>` (gen_program_s.py's branch
+      targets and code addresses inside a function), `<name>_L<hex>` (gen_image_s.py's local branch targets),
+      `<name>_entry` (the register-save entry a few bytes into its function, not a second routine) and the
+      CONTINUATION names above, and except a LOCAL LABEL: a label that no call / calls names and no other
+      operand uses as an address (mov, .long, .equ ...), and that either follows an instruction that falls
+      through into it (anything but bra, jmp, ret, retf, rets, rti and nop, which is alignment fill before an
+      entry) or is named only by conditional branches (b<cc>).  That is a branch target inside a function,
+      however it is spelled (GetJpegSize_NotApp, BmpUnpackRow_4bppDone, GetBitmapInfo_DepthOk), so it is not
+      rated, as the KN5000/WSA1 rule does not rate local branch labels.  A banner name and a generator `func_<hex>`
+      are always rated.  The left-out count is the image's "local" entry in semantic-score.json (program and
+      program942: 197 each; the siblings: 0, gen_image_s.py spells theirs `_L<hex>`).  LIMIT: a branch target
+      that follows an unconditional jump and is reached only by bra / jmp looks exactly like a tail-called
+      routine and is still rated: 16 semantic names in program and in program942 (two real routines, ResetEntry
+      and DspApplyUnits; two banner names, RhyPatternScan and StyleNameDefaultFill, that the annotations call
+      functions although they look like blocks of their caller; and 12 _Dirty / _NextChar style labels inside a
+      function), and 1 (crt0_start, a real entry) in each of kn2400, kn6000 and kn6500.
+      scripts/analysis/semantic_score_jump_only_labels.py lists them; or
+    - a generator banner `# Name  (CPU 0x...)` or `# Name  (lib CPU 0x...)`, which also covers a recovered
+      function that is still passthrough.
+  Rules 3 rated program by its `(CPU 0x...)` banners and a block of `.equ` names for internal helpers.  After
+  the full conversion that block no longer exists, the banner pattern missed the 521 `(lib CPU 0x...)` banners
+  (`cat kn7000/src/program/*.s | command grep -c '^# .*(lib CPU 0x'`), and the 6,620 functions the converted
+  code labels `func_<hex>` (`cat kn7000/src/program/*.s | command grep -cE '^func_[0-9A-Fa-f]+:'`) had no
+  banner, so program rated 3,076 names, all semantic (semantic-score.json at cdc6226f).  Rules 4 rates every
+  routine label of the converted code, which is what the KN5000/WSA1 definition does with the ELF, and the
+  KN7000 names figure falls accordingly.  The local-label test was added in review of wave2/metrics-2, before
+  any rules-4 figure reached a snapshot; without it program and program942 each rated 197 more semantic names.
+
   score = the mean of the components a model has.  "all" pools the models component by component, then
-  averages.  So "all" bytes adds the strict L1 count of KN5000 and WSA1 to kn7000's source-share upper bound
-  (kn7000 is about 42% of the pooled denominator): the pooled bytes badge mixes the two definitions, and the
-  per-model components in the JSON are the ones to compare.  A number goes up only when the disassembly gets more meaningful.  The score is a summary for a
-  badge, not a substitute for the components, which the JSON and the README badges also show.
+  averages.  So "all" bytes adds the strict L1 count of KN5000 and WSA1 to the MN10300 models' source-share upper
+  bound (since rules 4 kn7000 and the siblings are most of the pooled denominator): the pooled bytes badge mixes
+  the two definitions, and the per-model components in the JSON are the ones to compare.  A number goes up only
+  when the disassembly gets more meaningful.  The score is a summary for a badge, not a substitute for the
+  components, which the JSON and the README badges also show.
 
 OUTPUT (docs/badges/)
-  semantic-score.svg, semantic-score-kn5000.svg, semantic-score-wsa1.svg, semantic-score-kn7000.svg, and one
-  badge per component: semantic-bytes.svg, semantic-names.svg, semantic-entry.svg, semantic-fields.svg (all
-  models pooled)
+  semantic-score.svg, semantic-score-kn5000.svg, semantic-score-wsa1.svg, semantic-score-kn7000.svg,
+  semantic-score-mn10300-siblings.svg, and one badge per component: semantic-bytes.svg, semantic-names.svg,
+  semantic-entry.svg, semantic-fields.svg (all models pooled)
   semantic-score.json   every numerator and denominator, the commit, the date
   semantic-score-history.csv   one row appended per run (a rerun at the same commit replaces its row); the
-                               kn7000 column is the last one and is empty in the rows from before rules 3
+                               kn7000 column is empty in the rows from before rules 3, the last one,
+                               mn10300-siblings, in the rows from before rules 4
 
-RUN (repository root; needs a built tree: `make everything`, which builds kn7000/build/ too)
-  python3 scripts/analysis/semantic_score.py                       # runs the data census (a few minutes)
+RUN (repository root; needs a built tree: `make everything`, which builds kn7000/build/ and the siblings' build/,
+     plus kn7000/build/kn7000_program_sp7001.rom, which `make everything` does not build: `make gate-kn7000`, or
+     `make -C kn7000 build/kn7000_program_sp7001.rom ROMSET_DIR=... UNIDASM=...`.  Its reference image, which the source
+     passes through with .incbin_range, is de-interleaved from the build-942 EPROM dumps in the PRIVATE kn7000
+     romset (kn7000/Makefile ROMSET_DIR); without it the run stops and says so)
+  python3 scripts/analysis/semantic_score.py                       # runs the data census (a few minutes) into
+                                                                   # $TMPDIR/semantic-score-<checkout>/, one
+                                                                   # directory per checkout
   python3 scripts/analysis/semantic_score.py --census-json F.json  # reuse a data_range_census.py --json output
   python3 scripts/analysis/semantic_score.py --print                # compute and print only, write nothing
   make semantic-score
@@ -86,36 +132,54 @@ NM = os.path.expanduser("~/compartilhado/llvm-project/build/bin/llvm-nm")
 OUT = os.path.join(ROOT, "docs", "badges")
 
 MODELS = {
-    "kn5000": ["v10", "v9", "v7", "v142", "subboot", "tabledata", "customdata", "hdae5000"],
+    "kn5000": ["v10", "v9", "v7", "v142", "v141", "subboot", "tabledata", "customdata", "hdae5000"],
     "wsa1": ["prom_a", "prom_b", "prom_c", "prom_d"],
-    "kn7000": ["program", "table", "cnv"],
+    "kn7000": ["program", "table", "cnv", "program942"],
+    "mn10300-siblings": ["kn2400", "kn6000", "kn6500", "hdsx3"],
 }
-KN7000 = {      # key: (sources, built images) -- glob patterns, relative to ROOT
-    "program": ("kn7000/src/program.s", "kn7000/build/kn7000_program.rom"),
-    "table": ("kn7000/src/table.s", "kn7000/build/kn7000_table.rom"),
-    "cnv": ("kn7000/src/cnv/*.s", "kn7000/build/cnv/*.cnv"),
+MN = {      # key: (tree, sources, built images, name rule) -- glob patterns relative to the tree, which is the
+            # assembler's working directory (`.include` paths are relative to it)
+    "program": ("kn7000", "src/program.s", "build/kn7000_program.rom", "generated"),
+    "table": ("kn7000", "src/table.s", "build/kn7000_table.rom", None),
+    "cnv": ("kn7000", "src/cnv/*.s", "build/cnv/*.cnv", "cnv"),
+    "program942": ("kn7000", "src/sp7001/program.s", "build/kn7000_program_sp7001.rom", "generated"),
+    "kn2400": ("kn2400", "src/program.s", "build/kn2400_program.rom", "generated"),
+    "kn6000": ("kn6000", "src/program.s", "build/kn6000_program.rom", "generated"),
+    "kn6500": ("kn6500", "src/program.s", "build/kn6500_program.rom", "generated"),
+    "hdsx3": ("hdsx3", "src/program.s", "build/hdsx3_extapr.rom", "generated"),
+}
+MN_BUILD = {   # how to build an image that the top-level `make <tree>` (and so `make everything`) does not build
+    "program942": "make -C kn7000 build/kn7000_program_sp7001.rom ROMSET_DIR=<the private kn7000 romset with the "
+                  "SP7001 build-942 EPROM dumps> UNIDASM=<MAME unidasm, in case the SP7001 symbol files are "
+                  "regenerated>, or make gate-kn7000",
 }
 ELF = {
     "v10": "rebuilt_ROMs/kn5000_v10_program.llvm.elf", "v9": "rebuilt_ROMs/kn5000_v9_program.llvm.elf",
     "v7": "rebuilt_ROMs/kn5000_v7_program.llvm.elf", "v142": "rebuilt_ROMs/kn5000_subprogram_v142.llvm.elf",
+    "v141": "rebuilt_ROMs/kn5000_subprogram_v141.llvm.elf",
     "subboot": "rebuilt_ROMs/kn5000_subcpu_boot.llvm.elf", "tabledata": "rebuilt_ROMs/kn5000_table_data.llvm.elf",
     "customdata": "rebuilt_ROMs/kn5000_custom_data.llvm.elf", "hdae5000": "rebuilt_ROMs/hd-ae5000_v2_06i.llvm.elf",
     "prom_a": "wsa1/rebuilt_ROMs/wsa1_prom_a.llvm.elf", "prom_b": "wsa1/rebuilt_ROMs/wsa1_prom_b.llvm.elf",
     "prom_c": "wsa1/rebuilt_ROMs/wsa1_prom_c.llvm.elf", "prom_d": "wsa1/rebuilt_ROMs/wsa1_prom_d.llvm.elf",
 }
 C_TREES = {
-    "kn5000": ["v10/maincpu", "v9/maincpu", "v7/maincpu", "v142/subcpu", "subcpu/boot", "table_data",
+    "kn5000": ["v10/maincpu", "v9/maincpu", "v7/maincpu", "v142/subcpu", "v141/subcpu", "subcpu/boot", "table_data",
                "custom_data", "hdae5000"],
     "wsa1": ["wsa1"],
     "kn7000": [],
+    "mn10300-siblings": [],
 }
 POSITIONAL = [re.compile(p) for p in (r'_0x[0-9A-Fa-f]+$', r'_[0-9A-F]{4,}$', r'^LABEL_', r'^(loc|sub|unk)_', r'^\.L')]
 CONTINUATION = re.compile(r'_(Skip|Join|Loop|Return|Epilogue|Done|Next|Exit|Cont|End|Default|Resume|Nop)\d*$'
                           r'|__[0-9A-Fa-f]{4,6}$|__[a-z]\w*$')
-RULES = 3       # 1: first release; 2 (2026-10-06): local branch labels are not rated whatever their parent;
+RULES = 4       # 1: first release; 2 (2026-10-06): local branch labels are not rated whatever their parent;
                 # 3 (2026-10-24): the SX-KN7000 model (program, table, cnv) is added and pooled into "all".  The
                 #   KN5000 and WSA1 figures are computed exactly as under 2; "all" and the pooled component badges
                 #   move because the kn7000 bytes and names join their numerators and denominators.
+                # 4 (2026-10-24, wave2/metrics-2): images v141 (kn5000) and program942 (kn7000); the
+                #   mn10300-siblings model (kn2400, kn6000, kn6500, hdsx3), pooled into "all"; the generated-
+                #   source routine rule for kn7000 program (see the docstring).  WSA1 is computed exactly as
+                #   under 3; KN5000 moves only by v141's figures, kn7000 by program942's and the new rule.
 GENERIC = re.compile(r'_(Helper|Data|Code|Block|Branch|Stub|Part|Case|Entry|Sub|Thunk|Wrapper|Body|Chunk|Tail|Frag'
                      r'|Fragment)\d*(_\d+)*$|_Switch\d+_Case\d+$')
 GENERIC_WORDS = {"field", "unk", "unknown", "pad", "padding", "reserved", "res", "str", "ptr", "ptrs", "entry",
@@ -138,8 +202,8 @@ def git(*a):
 
 # ---- components -------------------------------------------------------------------------------------------
 def names(key):
-    if key in KN7000:
-        return kn7000_names(key)
+    if key in MN:
+        return mn_names(key)
     out = subprocess.run([NM, "--defined-only", os.path.join(ROOT, ELF[key])], capture_output=True, text=True)
     if out.returncode:
         sys.exit("llvm-nm failed on %s (build the tree first: make everything)" % ELF[key])
@@ -160,18 +224,20 @@ def names(key):
     return c["semantic"], c["semantic"] + c["generic"] + c["positional"], dict(c)
 
 
-def kn7000_files(pattern):
-    return sorted(glob.glob(os.path.join(ROOT, pattern)))
+def mn_files(key, which):
+    """The source files (which = 1) or built images (which = 2) of one MN10300 image, sorted."""
+    return sorted(glob.glob(os.path.join(ROOT, MN[key][0], MN[key][which])))
 
 
-def kn7000_text(p):
-    """A kn7000 source with every `.include`d .s file inlined, as kn7000/tools/coverage_score.py reads it:
-    src/program.s holds only `.include "src/program/<part>.s"` lines since the full conversion, and paths
-    are relative to kn7000/."""
+def mn_text(p, tree):
+    """An MN10300 source with every `.include`d .s file inlined, as kn7000/tools/coverage_score.py reads it:
+    src/program.s holds only `.include "src/program/<part>.s"` lines since the full conversion.  Paths are
+    relative to the tree (kn7000/, kn2400/, ...), the assembler's working directory.  `.inc` files (symbol
+    `.equ` lists) are not inlined."""
     out = []
     for line in open(p, "rb").read().decode("latin-1").split("\n"):
         m = re.match(r'\s*\.include\s+"([^"]+\.s)"', line)
-        out.append(kn7000_text(os.path.join(ROOT, "kn7000", m.group(1))) if m else line)
+        out.append(mn_text(os.path.join(ROOT, tree, m.group(1)), tree) if m else line)
     return "\n".join(out)
 
 
@@ -186,20 +252,21 @@ def kn7000_val(expr):
     return total
 
 
-def kn7000_bytes(key):
-    """(bytes emitted by source, image bytes) for one kn7000 image: the image minus its .incbin_range bytes."""
-    srcs, imgs = kn7000_files(KN7000[key][0]), kn7000_files(KN7000[key][1])
+def mn_bytes(key):
+    """(bytes emitted by source, image bytes) for one MN10300 image: the image minus its .incbin_range bytes."""
+    tree = MN[key][0]
+    srcs, imgs = mn_files(key, 1), mn_files(key, 2)
     if not srcs or len(imgs) != len(srcs):
-        sys.exit("kn7000 %s: %d sources but %d built images under %s (build them: make kn7000)"
-                 % (key, len(srcs), len(imgs), KN7000[key][1]))
+        sys.exit("%s: %d sources but %d built images under %s/%s (build them: %s)"
+                 % (key, len(srcs), len(imgs), tree, MN[key][2], MN_BUILD.get(key, "make " + tree)))
     raw = 0
     for p in srcs:
-        text = kn7000_text(p)
+        text = mn_text(p, tree)
         # A plain .incbin is allowed only for a tracked asset under src/ (the table's JPEG/BMP segments,
         # extracted by tools/gen_table_s.py, like src/picture/): typed data, counted as source exactly as
         # coverage_score.py counts it. Passthrough of the git-ignored reference image must be .incbin_range.
         for inc in re.findall(r'^\s*\.incbin\s+"([^"]+)"', text, re.M):
-            if not inc.startswith("src/") or not os.path.isfile(os.path.join(ROOT, "kn7000", inc)):
+            if not inc.startswith("src/") or not os.path.isfile(os.path.join(ROOT, tree, inc)):
                 sys.exit("%s: .incbin \"%s\" is not a tracked src/ asset; passthrough must be .incbin_range"
                          % (p, inc))
         hits = re.findall(r'^\s*\.incbin_range\s+"[^"]+",\s*([^,]+?),\s*([^\n#;]+?)\s*(?:[#;]|$)', text, re.M)
@@ -220,26 +287,114 @@ def kn7000_bytes(key):
     return size - raw, size
 
 
-def kn7000_names(key):
-    """kn7000 routine names, classified like names(): see the docstring (THE SX-KN7000 MODEL)."""
-    rated = []
-    for p in kn7000_files(KN7000[key][0]):
-        lines = kn7000_text(p).split("\n")
-        if key == "program":
-            got = set()
-            for i, ln in enumerate(lines):
-                m = re.match(r'^#\s+([A-Za-z_]\w*)\s+\(CPU 0x[0-9A-Fa-f]+\)\s*$', ln)
-                if m:
-                    got.add(m.group(1))
-                elif ln.startswith("#") and "synthetic labels for internal helpers" in ln:
-                    for eq in lines[i + 1:]:
-                        mm = re.match(r'^\.equ\s+([A-Za-z_]\w*)\s*,', eq)
-                        if not mm:
-                            break
-                        if not mm.group(1).endswith("_entry"):
-                            got.add(mm.group(1))
-            rated += sorted(got)
+MN_LABEL = re.compile(r'^([A-Za-z_.$][\w.$]*):')
+MN_BANNER = re.compile(r'^#\s+([A-Za-z_]\w*)\s+\((?:lib )?CPU 0x[0-9A-Fa-f]+\)')
+MN_NOT_ROUTINE = re.compile(r'^loc_[0-9A-Fa-f]+$|_L[0-9a-f]+$|_entry$')
+
+
+def mn_statement(line):
+    """The statement on a line of MN10300 source with its label and comment removed ('' if none)."""
+    s = line
+    m = MN_LABEL.match(s)
+    if m:
+        s = s[m.end():]
+    q = False
+    for i, ch in enumerate(s):
+        if ch == '"':
+            q = not q
+        elif ch in "#;" and not q:
+            s = s[:i]
+            break
+    return s.strip()
+
+
+MN_COND_BRANCH = re.compile(r'^b(eq|ne|lt|gt|ge|le|cs|cc|hi|ls|vc|vs|nc|ns)$')
+MN_NO_FALL = {"bra", "jmp", "ret", "retf", "rets", "rti", "nop"}     # nop: alignment fill before an entry
+MN_IDENT = re.compile(r'(?<![\w.$])[A-Za-z_.$][\w.$]*')
+
+
+def mn_label_context(lines):
+    """For THE GENERATED-SOURCE ROUTINE RULE's local-label test: ({name: Counter of reference kinds},
+    {label: mnemonic of the statement before it}).  A reference is 'cond' (b<cc>), 'jump' (bra / jmp), 'call'
+    (call / calls) or 'addr' (any other operand: mov, .long, .equ ...).  The statement before a label is None
+    at the start of the text, '.' after a directive."""
+    refs = collections.defaultdict(collections.Counter)
+    before, prev = {}, None
+    for ln in lines:
+        m = MN_LABEL.match(ln)
+        if m:
+            before[m.group(1)] = prev
+        st = mn_statement(ln)
+        if not st:
+            continue
+        mn = st.split()[0].lower()
+        if mn.startswith("."):
+            kind, prev = "addr", "."
         else:
+            prev = mn
+            kind = ("cond" if MN_COND_BRANCH.match(mn) else "jump" if mn in ("bra", "jmp")
+                    else "call" if mn in ("call", "calls") else "addr")
+        for t in MN_IDENT.findall(st[len(mn):]):
+            refs[t][kind] += 1
+    return refs, before
+
+
+def mn_local_label(name, refs, before):
+    """True for a label that THE GENERATED-SOURCE ROUTINE RULE treats as a branch target inside a function: never
+    called nor used as an address, and either reached by falling through from an instruction or referenced
+    only by conditional branches."""
+    r = refs.get(name, {})
+    if r.get("call") or r.get("addr"):
+        return False
+    p = before.get(name)
+    falls_in = p is not None and p != "." and p not in MN_NO_FALL
+    return falls_in or bool(r.get("cond")) and not r.get("jump")
+
+
+def generated_routines(lines, stats=None):
+    """THE GENERATED-SOURCE ROUTINE RULE (docstring): distinct routine names of a gen_program_s.py /
+    gen_image_s.py source, as {name: 'label' | 'banner'} (a banner name that is also a routine label is 'label').
+    stats, when given, counts the local labels left out ('local')."""
+    banners = {b.group(1) for b in map(MN_BANNER.match, lines) if b}
+    refs, before = mn_label_context(lines)
+    got = {}
+    for i, ln in enumerate(lines):
+        b = MN_BANNER.match(ln)
+        if b:
+            got.setdefault(b.group(1), "banner")
+            continue
+        m = MN_LABEL.match(ln)
+        if not m:
+            continue
+        n = m.group(1)
+        if MN_NOT_ROUTINE.search(n) or CONTINUATION.search(n):
+            continue
+        st, j = mn_statement(ln), i + 1
+        while not st and j < len(lines):
+            st, j = mn_statement(lines[j]), j + 1
+        if not st or st.startswith("."):
+            continue
+        if n not in banners and not n.startswith("func_") and mn_local_label(n, refs, before):
+            if stats is not None:
+                stats["local"] += 1
+            continue
+        got[n] = "label"
+    return got
+
+
+def mn_names(key):
+    """Routine names of one MN10300 image, classified like names(): see the docstring (THE SX-KN7000 MODEL,
+    THE GENERATED-SOURCE ROUTINE RULE)."""
+    rule, tree = MN[key][3], MN[key][0]
+    rated = []
+    extra = collections.Counter()
+    for p in mn_files(key, 1):
+        lines = mn_text(p, tree).split("\n")
+        if rule == "generated":
+            got = generated_routines(lines, extra)
+            extra["banner_only"] += sum(1 for v in got.values() if v == "banner")
+            rated += sorted(got)
+        elif rule == "cnv":
             for i, ln in enumerate(lines[:-1]):
                 if re.match(r'^# ---- [A-Za-z_]\w* -*\s*$', ln):
                     for nx in lines[i + 1:]:
@@ -257,6 +412,8 @@ def kn7000_names(key):
             c["generic"] += 1
         else:
             c["semantic"] += 1
+    c.update(extra)                 # banner_only: rated names with a banner but no routine label (passthrough);
+                                    # local: unrated branch-target labels (THE GENERATED-SOURCE ROUTINE RULE)
     return c["semantic"], c["semantic"] + c["generic"] + c["positional"], dict(c)
 
 
@@ -272,10 +429,23 @@ def entry_tables():
     return res, snaps[-1], d.get("head")
 
 
+def census_scratch():
+    """This checkout's scratch directory for the data census: $TMPDIR/semantic-score-<checkout>-<hash>/.  The
+    hash of the checkout's absolute path keeps two checkouts (or worktrees) that share TMPDIR and a basename
+    apart, so parallel runs in different checkouts cannot read each other's census.  (Until 2026-10-24 every
+    checkout wrote $TMPDIR/semantic-score-data-census.json.)"""
+    import hashlib
+    tmp = os.environ.get("TMPDIR") or os.path.expanduser("~/compartilhado/tmp")
+    tag = "%s-%s" % (re.sub(r'[^\w.-]', '_', os.path.basename(ROOT)), hashlib.sha1(ROOT.encode()).hexdigest()[:10])
+    d = os.path.join(tmp, "semantic-score-" + tag)
+    os.makedirs(d, exist_ok=True)
+    return d
+
+
 def bytes_understood(census_json):
     if not census_json:
-        census_json = os.path.join(os.environ.get("TMPDIR") or os.path.expanduser("~/compartilhado/tmp"),
-                                   "semantic-score-data-census.json")
+        census_json = os.path.join(census_scratch(), "data-census.json")
+        print("data census: %s (reuse it with --census-json)" % census_json)
         r = subprocess.run([sys.executable, os.path.join(ROOT, "scripts/analysis/data_range_census.py"),
                             "--json", census_json], cwd=ROOT, capture_output=True, text=True)
         if r.returncode:
@@ -284,8 +454,8 @@ def bytes_understood(census_json):
     for r in json.load(open(census_json))["results"]:
         t = r["totals"]
         res[r["key"]] = (t["CODE"] + t["KNOWN-A"] + t["FILLER"], r["size"])
-    for key in KN7000:
-        res[key] = kn7000_bytes(key)
+    for key in MN:
+        res[key] = mn_bytes(key)
     return res
 
 
@@ -365,8 +535,8 @@ def main():
     head = git("rev-parse", "--short=8", "HEAD")
     dirty = bool(git("status", "--porcelain", "--untracked-files=no"))
     day = datetime.date.today().isoformat()
-    for m in ("all", "kn5000", "wsa1", "kn7000"):
-        print("%-7s score %5.1f%%   " % (m, score[m]) + "   ".join(
+    for m in ("all", "kn5000", "wsa1", "kn7000", "mn10300-siblings"):
+        print("%-16s score %5.1f%%   " % (m, score[m]) + "   ".join(
             "%s %5.1f%% (%d/%d)" % (k, pct(*comp[m][k]), comp[m][k][0], comp[m][k][1])
             for k in ("bytes", "names", "entry", "fields") if comp[m][k][1]))
     print("measured at %s%s; entry from %s" % (head, " (+ uncommitted changes)" if dirty else "", snap))
@@ -374,7 +544,7 @@ def main():
         return
     os.makedirs(OUT, exist_ok=True)
     for m, lab in (("all", "semantic disasm"), ("kn5000", "KN5000 semantic"), ("wsa1", "SX-WSA1R semantic"),
-                   ("kn7000", "SX-KN7000 semantic")):
+                   ("kn7000", "SX-KN7000 semantic"), ("mn10300-siblings", "MN10300 siblings semantic")):
         fn = "semantic-score.svg" if m == "all" else "semantic-score-%s.svg" % m
         open(os.path.join(OUT, fn), "w").write(badge(lab, "%.1f%%" % score[m], colour(score[m])))
     for k in ("bytes", "names", "entry", "fields"):
@@ -387,12 +557,14 @@ def main():
                    images=detail), open(os.path.join(OUT, "semantic-score.json"), "w"), indent=1)
     hist = os.path.join(OUT, "semantic-score-history.csv")
     rows = list(csv.reader(open(hist))) if os.path.exists(hist) else []
-    hdr = ["date", "commit", "score", "kn5000", "wsa1", "bytes", "names", "entry", "fields", "rules", "kn7000"]
-    # rows from before rules 3 have no kn7000 column, and the oldest no rules column either (rules 1)
-    rows = [r + ["1", ""][len(r) - 9:] if len(r) < 11 else r for r in rows[1:] if r and r[1] != head] if rows else []
+    hdr = ["date", "commit", "score", "kn5000", "wsa1", "bytes", "names", "entry", "fields", "rules", "kn7000",
+           "mn10300-siblings"]
+    # rows from before rules 4 have no mn10300-siblings column, from before rules 3 no kn7000 column either, and
+    # the oldest no rules column (rules 1)
+    rows = [r + ["1", "", ""][len(r) - 9:] if len(r) < 12 else r for r in rows[1:] if r and r[1] != head] if rows else []
     rows.append([day, head, "%.2f" % score["all"], "%.2f" % score["kn5000"], "%.2f" % score["wsa1"]] +
                 ["%.2f" % pct(*comp["all"][k]) for k in ("bytes", "names", "entry", "fields")] + [str(RULES)] +
-                ["%.2f" % score["kn7000"]])
+                ["%.2f" % score["kn7000"], "%.2f" % score["mn10300-siblings"]])
     w = csv.writer(open(hist, "w", newline=""))
     w.writerow(hdr)
     w.writerows(rows)

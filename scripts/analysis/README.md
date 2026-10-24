@@ -524,9 +524,9 @@ what resisted: `notes/lanes/llvmalumem-2026-09-02.md`.
 
 ## Added 2026-10-24 (measurement first, audit work package WP02)
 
-| script                  | question it answers                                                                                                                                                                                                                                                                                                                                                                                              |
-|-------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `doc_quality_census.py` | Per image of all three models (KN5000 v10 v9 v7 v142 subboot tabledata customdata hdae5000, WSA1 prom_a-d, kn7000 program/table/cnv), how many routines lack a header comment, how many addresses are spelled as numbers, how many labels are named only by an address, how many `.byte` runs sit between instructions, and how many routines still have placeholder names? Did a change make any of them worse? |
+| script                  | question it answers                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+|-------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `doc_quality_census.py` | Per image of every model (KN5000 v10 v9 v7 v142 v141 subboot tabledata customdata hdae5000, WSA1 prom_a-d, kn7000 program/table/cnv/program942, the MN10300 siblings kn2400 kn6000 kn6500 hdsx3), how many routines lack a header comment, how many addresses are spelled as numbers, how many labels are named only by an address, how many `.byte` runs sit between instructions, and how many routines still have placeholder names? Did a change make any of them worse? |
 
     python3 scripts/analysis/doc_quality_census.py                 # the table
     python3 scripts/analysis/doc_quality_census.py --files v10     # per-file breakdown of one image
@@ -534,5 +534,16 @@ what resisted: `notes/lanes/llvmalumem-2026-09-02.md`.
     make doc-quality                                               # compare with the newest committed snapshot, then
                                                                    # write docs/coverage/doc-quality-<date>-NN.{txt,json}
 
-It reads sources only and takes about 15 seconds. Its rules are in its docstring, and the ledger policy is in
+It reads sources only and takes about a minute and a half (81 s for 21 images on 2026-10-24; the four siblings' generated sources are large). Its rules are in its docstring, and the ledger policy is in
 CLAUDE.md, "Code-Coverage Evidence Ledger", point 7.
+
+## Added 2026-10-24 (wave2/metrics-2)
+
+| script                               | question it answers                                                                                                                                                                                                                                                                |
+|--------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `comment_check_difflib_probe.py`     | On a real commit, how many comments does `assert_comments_preserved.py`'s greedy subsequence test report as lost, and how many did the difflib alignment it used before 2026-10-24 report? On 1b6fe98c7: difflib 3 in 1 file, greedy 0.                                            |
+| `semantic_score_jump_only_labels.py` | Which rated routine names of the MN10300 images are reached only by bra / jmp, the branch targets that `semantic_score.py`'s local-label test cannot tell from a tail-called routine? On 2026-10-24: 16 in program and in program942, 1 (crt0_start) in kn2400, kn6000 and kn6500. |
+
+    python3 scripts/analysis/comment_check_difflib_probe.py 1b6fe98c7
+    python3 scripts/analysis/assert_comments_preserved.py --selftest   # now includes the repeated-comment case
+    python3 scripts/analysis/semantic_score_jump_only_labels.py        # every generated MN10300 image

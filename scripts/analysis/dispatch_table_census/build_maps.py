@@ -18,7 +18,7 @@ HOW
   pickles all live under OUT ($DISPATCH_CENSUS_DIR, else $TMPDIR/dispatch-table-census).
 
 RUN
-  python3 scripts/analysis/dispatch_table_census/build_maps.py [keys...]   # default: all 11 images, ~2 min
+  python3 scripts/analysis/dispatch_table_census/build_maps.py [keys...]   # default: all 12 images, ~2 min
 """
 import importlib.util
 import os
@@ -37,7 +37,7 @@ spec = importlib.util.spec_from_file_location(
 drc = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(drc)
 
-KEYS = ["v10", "v9", "v7", "v142", "subboot", "tabledata", "customdata", "hdae5000",
+KEYS = ["v10", "v9", "v7", "v142", "v141", "subboot", "tabledata", "customdata", "hdae5000",
         "prom_a", "prom_b", "prom_c"]
 
 

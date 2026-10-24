@@ -31,26 +31,18 @@ table_data/includes/help_databases/help_db_*_compressed.bin
 table_data/includes/help_databases/stale_style_records_residue.bin
 table_data/includes/help_databases/stale_help_db_german_head.bin
 
-# Test ROM artifacts
+# Test ROM artifacts.  test_ROMs/*.rom is in test_ROMs/.gitignore (create_test_table_data_rom.py's
+# output) and the ASL *.p / *.lst are ignored everywhere above, so only the .bin needs a line here.
 test_ROMs/*.bin
-test_ROMs/*.p
-test_ROMs/*.lst
-test_ROMs/*.rom
-
-# LLVM build artifacts (object files, linked binaries)
-maincpu/llvm/*.o
-maincpu/llvm/*.elf
 
 # Extracted font intermediates (PNGs are in technics-docs, PGMs are raw)
 extracted_fonts/*.pgm
 extracted_fonts/*.png
 
-# Generated binary blobs (compiled from C, .incbin'd by assembly)
-maincpu/includes/generated/*.bin
-
 # Cruft and temporary files
 cruft_please_ignore/
 mame_driver/build_error.txt
+# Generated binary blobs (compiled from C, .incbin'd by assembly)
 */maincpu/includes/generated/*.bin
 hdae5000/includes/generated/*.bin
 table_data/includes/generated/*.bin

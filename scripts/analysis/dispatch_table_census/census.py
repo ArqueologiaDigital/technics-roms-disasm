@@ -17,8 +17,10 @@ TABLE DETECTORS (each a separate, stated rule)
      POINTER if its value lies in an image of the same CPU address space:
        KN5000 main: maincpu(same version) / hdae5000 / table_data / custom_data
                     (table_data's own boot block also at +0x600000);
-       KN5000 sub : v142 / subboot;  WSA1 CPU1: prom_a / prom_b;  WSA1 CPU2: prom_c.
-     v142 only: an all-numeric run is constants (0x400.. collides with numbers).
+       KN5000 sub : v142 / subboot, and v141 / subboot (v1.41 and v1.42 are alternative
+                    payloads, never loaded together; subboot itself looks only in v142);
+       WSA1 CPU1: prom_a / prom_b;  WSA1 CPU2: prom_c.
+     v142 and v141 only: an all-numeric run is constants (0x400.. collides with numbers).
   J  jump-vector runs framed as code: >= 4 consecutive contiguous equal-length
      unconditional `jp imm24` / `jp imm16` / `jrl T` / `jr T` lines; plus the prom_b
      routine directory 0xF40000-0xF44018 as ONE table (`jp` slots are jumps, its
@@ -99,7 +101,9 @@ RUN (from the repository root; `make dispatch-census` does the first and the --s
         # writes dispatch-census-<date>-NN.txt (report + top) and .json (per-image summary, every not-used table);
         # NN numbers the day's snapshots, so a committed one is never overwritten
   python3 scripts/analysis/dispatch_table_census/census.py --compare docs/coverage/dispatch-census-<date>.json
-        # exit 1 when an image's not-used tables, unused targets or not-used unframed runs ROSE
+        # exit 1 when an image's not-used tables, unused targets or not-used unframed runs ROSE, or an image of
+        # the old snapshot is no longer measured (GONE).  An image the old snapshot does not have (v141, added
+        # 2026-10-24) is printed as `new` with its figures and is not a rise: its first snapshot is its baseline
 
 PROVENANCE
   Written 2026-10-05 by a measurement lane (scratch ~/compartilhado/tmp/jumptable-census-2026-10-05/, harvested to
@@ -116,7 +120,7 @@ import sys
 HERE = os.environ.get("DISPATCH_CENSUS_DIR") or os.path.join(os.environ.get("TMPDIR") or os.path.expanduser("~/compartilhado/tmp"),
                                                              "dispatch-table-census")   # build_maps.py's OUT
 REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-KEYS = ["v10", "v9", "v7", "v142", "subboot", "tabledata", "customdata", "hdae5000",
+KEYS = ["v10", "v9", "v7", "v142", "v141", "subboot", "tabledata", "customdata", "hdae5000",
         "prom_a", "prom_b", "prom_c"]
 
 BYTECMT = re.compile(r'^\s*(\S+:)?\s*\.byte\b[^;\n]*;\s*(?:MAME:|unidasm:|=\s*|[0-9A-F]{6}\s+[0-9a-f]{2}(?: [0-9a-f]{2})*\s{2,})?\s*(ld|lda|ldw|ldb|push|pop|call|calr|jp|jr|jrl|ret|reti|add|sub|and|or|xor|cp|inc|dec|bit|set|res|tset|ex|mul|div|sll|srl|sla|sra|rlc|rrc|rl|rr|ldir|lddr|ldi|ldd|swi|ei|nop|halt|link|unlk|djnz|scc|neg|cpl|extz|exts|mirr|paa|incf|decf|ldf|ldc|ldx)\b', re.I)
@@ -169,8 +173,8 @@ def space(key):
         return [("tabledata", 0), ("tabledata", 0x600000), ("hdae5000", 0), ("customdata", 0)]
     if key in ("hdae5000", "customdata"):
         return [(key, 0)] + [(k, 0) for k in ("v10", "hdae5000", "tabledata", "customdata") if k != key]
-    if key in ("v142", "subboot"):
-        return [(key, 0), ("subboot" if key == "v142" else "v142", 0)]
+    if key in ("v142", "v141", "subboot"):
+        return [(key, 0), ("subboot" if key in ("v142", "v141") else "v142", 0)]
     if key in ("prom_a", "prom_b"):
         return [(key, 0), ("prom_b" if key == "prom_a" else "prom_a", 0)]
     return [(key, 0)]
@@ -444,12 +448,12 @@ def detect_A(key):
                 e = mk_entry(key, val, numeric, op)
                 if e is None:
                     continue
-                if numeric and key == "v142":
+                if numeric and key in ("v142", "v141"):
                     e["v142num"] = True     # kept only if the table also has a symbolic pointer
                 e["at"] = lo + 4 * k
                 ents.append(e)
         if any(e.get("v142num") for e in ents) and all(e.get("v142num") for e in ents):
-            ents = []                       # v142: an all-numeric run is constants, not pointers
+            ents = []                       # v142/v141: an all-numeric run is constants, not pointers
         name = label_of(m, rows, i0)
         out.append(dict(kind="A", addr=rows[i0][0], name=name, nwords=nwords,
                         file="%s:%d" % (rows[i0][2], rows[i0][3] + 1), ents=ents))
@@ -678,7 +682,7 @@ def detect_D(key, skip_addrs):
 
 TREES = {"v10": "v10/maincpu", "v9": "v9/maincpu", "v7": "v7/maincpu",
          "hdae5000": "hdae5000", "tabledata": "table_data", "customdata": "custom_data",
-         "v142": "v142/subcpu", "subboot": "subcpu/boot"}
+         "v142": "v142/subcpu", "v141": "v141/subcpu", "subboot": "subcpu/boot"}
 _LD = {}
 
 
@@ -1040,7 +1044,9 @@ def compare(res, old_path):
     rose = 0
     for key in KEYS:
         o, n = old.get(key), new[key]
-        if o is None:
+        if o is None:               # an image added since that snapshot: its first figures are a baseline, not a rise
+            print("new   %-10s (not in %s): not_used %d, unframed_not_used %d, d_unresolved_sites %d, stale_tables %d"
+                  % (key, old_path, n["not_used"], n["unframed_not_used"], n["d_unresolved_sites"], n["stale_tables"]))
             continue
         for f in ("not_used", "new_targets_same_image", "new_targets_other_image", "spelling_only_targets",
                   "unframed_not_used", "unframed_new_targets", "d_unresolved_sites",
@@ -1052,10 +1058,14 @@ def compare(res, old_path):
                 print("ROSE  %-10s %-26s %d -> %d" % (key, f, o[f], n[f]))
             elif n[f] < o[f]:
                 print("fell  %-10s %-26s %d -> %d" % (key, f, o[f], n[f]))
-    print("compared with %s: %s" % (old_path, "%d figure(s) ROSE" % rose if rose else "nothing rose"))
-    if any(new[k]["stale_tables"] > old.get(k, {}).get("stale_tables", 0) for k in KEYS):
+    gone = [k for k in old if k not in new]
+    for k in gone:
+        print("GONE  %-10s (in %s, not measured now: a renamed or removed image key)" % (k, old_path))
+    print("compared with %s: %s%s" % (old_path, "%d figure(s) ROSE" % rose if rose else "nothing rose",
+                                      ", %d image(s) GONE" % len(gone) if gone else ""))
+    if any(k in old and new[k]["stale_tables"] > old[k].get("stale_tables", 0) for k in KEYS):
         print("  (a stale rise moves tables out of NOT: the commit message must say which, and why they are dead)")
-    return 1 if rose else 0
+    return 1 if rose or gone else 0
 
 
 if __name__ == "__main__":

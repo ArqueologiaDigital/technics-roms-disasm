@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-r"""data_range_census.py -- a per-range census of EVERY BYTE of all 12 gated images.
+r"""data_range_census.py -- a per-range census of EVERY BYTE of all 13 gated images.
 
 QUESTION ANSWERED
 -----------------
@@ -29,7 +29,7 @@ BUCKETS
 
 HOW THE MAP IS BUILT (and why it can be trusted)
     The same instrument as scripts/analysis/address_line_map.py, generalised to
-    all twelve images: mirror each image's source tree, insert a synthetic label
+    all thirteen images: mirror each image's source tree, insert a synthetic label
     `__drc_<n>:` in front of every byte-emitting line, assemble and LINK the
     mirror with the real linker script, and read the marker addresses out of the
     ELF symbol table.  Byte [addr(marker n), addr(marker n+1)) is emitted by the
@@ -77,9 +77,9 @@ MARK = "__drc_"
 # How far above an object its banner may sit and still be credited to it.
 ANCHOR_SLACK = 6
 
-# ---------------------------------------------------------------- the 12 images
+# ---------------------------------------------------------------- the 13 images
 # `mirror` is the directory copied and marked; `root` and `incs` are relative to
-# it.  `split` (v142 only) maps a linked-image offset to a ROM offset, because
+# it.  `split` (v142 and v141) maps a linked-image offset to a ROM offset, because
 # that image's ROM is two slices of the linked binary spliced by `dd`.
 IMAGES = [
     dict(key="v10", title="KN5000 maincpu v10", mirror="v10/maincpu",
@@ -94,6 +94,12 @@ IMAGES = [
     dict(key="v142", title="KN5000 subcpu payload v1.42", mirror="v142/subcpu",
          root="kn5000_subprogram_v142.s", ld="subcpu.ld", incs=[""],
          rom="original_ROMs/kn5000_subprogram_v142.rom", base=0x0400, size=196608,
+         split=(256, 60416)),
+    # v1.41 is generated from the v1.42 tree (scripts/generators/create_v141_subcpu_source.py)
+    # and has the same layout and splice.
+    dict(key="v141", title="KN5000 subcpu payload v1.41", mirror="v141/subcpu",
+         root="kn5000_subprogram_v141.s", ld="subcpu.ld", incs=[""],
+         rom="original_ROMs/kn5000_subprogram_v141.rom", base=0x0400, size=196608,
          split=(256, 60416)),
     dict(key="subboot", title="KN5000 subcpu boot IC30", mirror="subcpu/boot",
          root="kn5000_subcpu_boot.s", ld="subcpu_boot.ld", incs=[""],
@@ -120,7 +126,7 @@ IMAGES = [
          root="prom_d/wsa1_prom_d.s", ld="prom_d/prom_d.ld", incs=["", "prom_d"],
          rom="wsa1/original_ROMs/wsa1_prom_d.bin", base=0x000000, size=524288),
 ]
-TOTAL_BYTES = 12386304          # sum of the twelve dumps; asserted in selftest
+TOTAL_BYTES = 12582912          # sum of the thirteen dumps; asserted in selftest
 
 # ---------------------------------------------------------------- directives
 DATA_DIRS = {".byte", ".short", ".word", ".hword", ".2byte", ".long", ".4byte",
@@ -1126,7 +1132,7 @@ def selftest():
         f += not cond
 
     ck("the pinned llvm-mc exists", os.path.exists(MC), MC)
-    ck("twelve images are declared", len(IMAGES) == 12, str(len(IMAGES)))
+    ck("thirteen images are declared", len(IMAGES) == 13, str(len(IMAGES)))
     ck("declared sizes sum to the known total",
        sum(i["size"] for i in IMAGES) == TOTAL_BYTES,
        "%d vs %d" % (sum(i["size"] for i in IMAGES), TOTAL_BYTES))
@@ -1224,6 +1230,9 @@ def selftest():
     ck("v142 splice: the hole is a hole", off(0x0400 + 256) is None)
     ck("v142 splice: body starts at 256", off(0x0400 + 60416) == 256)
     ck("v142 splice: last byte", off(0x0400 + 60416 + 196608 - 256 - 1) == 196607)
+    v141 = [i for i in IMAGES if i["key"] == "v141"][0]
+    ck("v141 has v142's base, size and splice (the Makefile's dd rules are the same)",
+       (v141["base"], v141["size"], v141["split"]) == (v142["base"], v142["size"], v142["split"]))
 
     off10 = rom_offset_fn([i for i in IMAGES if i["key"] == "v10"][0])
     ck("plain map: base -> 0", off10(0xE00000) == 0)

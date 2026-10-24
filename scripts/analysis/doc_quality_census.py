@@ -1,14 +1,20 @@
 #!/usr/bin/env python3
-"""doc_quality_census.py -- the documentation-quality ledger: five debts per image, for all three models.
+"""doc_quality_census.py -- the documentation-quality ledger: five debts per image, for every model in the tree.
 
 QUESTION IT ANSWERS
   "Per image, how much of the disassembly is still unexplained or spelled as numbers -- and did a change make any
    of it worse?"  Byte identity says nothing about this, and the dispatch census (dispatch_table_census/) only
    covers entry points.  This census counts five debts in the committed sources of every image:
 
-  KN5000   v10 v9 v7 v142 subboot tabledata customdata hdae5000   (TLCS-900, llvm-mc dialect, `;` comments)
-  SX-WSA1R prom_a prom_b prom_c prom_d                             (TLCS-900, llvm-mc dialect, `;` comments)
-  SX-KN7000 program table cnv                                      (MN10300, kn7asm dialect, `#` / `;` comments)
+  KN5000   v10 v9 v7 v142 v141 subboot tabledata customdata hdae5000   (TLCS-900, llvm-mc dialect, `;` comments)
+  SX-WSA1R prom_a prom_b prom_c prom_d                                  (TLCS-900, llvm-mc dialect, `;` comments)
+  SX-KN7000 program table cnv program942                                (MN10300, kn7asm dialect, `#` / `;` comments)
+  MN10300 siblings kn2400 kn6000 kn6500 hdsx3                           (MN10300, kn7asm dialect, `#` / `;` comments)
+
+  program942 is the SP7001 PLUG-iN program flash (build 942, kn7000/src/sp7001/program.s).  The siblings are the
+  SX-KN2400/2600, SX-KN6000 and SX-KN6500 program flashes and the HD-SX3 plug-in image, generated with the
+  kn7000 tools (kn7000/tools/gen_image_s.py); model `mn10300-siblings`.  v141, program942 and the siblings were
+  added on 2026-10-24 (wave2/metrics-2); a --compare against an older snapshot lists them as `new`, not as rises.
 
   An image's files are its root source(s) plus everything they `.include`, resolved the way the build resolves
   them (the including file's directory, then each -I directory, then the assembler's working directory).  Only
@@ -98,9 +104,10 @@ RULES (each count is re-derivable from these definitions)
   (f) insn macros uses of the WSA1 instruction byte-emitter macros (see DATA macro above).
 
   The image address ranges used by (b) are in IMAGES below (from the linked ELFs' LOAD segments; kn7000 from
-  `.mnbase` and the image size).  prom_d (data at 0x0) has no range, so its (b) in/other split is not computed.
-  imm_in_image is not computed for v142 either: its range starts at 0x400, so masks and counts such as 0xffff
-  and 0x2710 would land in it.
+  `.mnbase` and the image size; kn2400 also has its work-RAM link window).  prom_d (data at 0x0) has no range,
+  so its (b) in/other split is not computed.  imm_in_image is not computed for v142 / v141 either: their range
+  starts at 0x400, so masks and counts such as 0xffff and 0x2710 would land in it.  kn7000 program and
+  program942 use the flash range only: code linked for the library window at 0x4C000000 counts as elsewhere.
 
 LIMITS
   A source-text census: it reads names, not the CPU.  A case of a `.long` jump table and a pushed return address
@@ -135,12 +142,13 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-# key: (model, dialect, assembler cwd, -I dirs, roots, (lo, hi) address range or None)
+# key: (model, dialect, assembler cwd, -I dirs, roots, (lo, hi) address range, a list of such ranges, or None)
 IMAGES = collections.OrderedDict([
     ("v10", ("kn5000", "tlcs", ".", ["v10/maincpu"], ["v10/maincpu/kn5000_v10_program.s"], (0xE00000, 0x1000000))),
     ("v9", ("kn5000", "tlcs", ".", ["v9/maincpu"], ["v9/maincpu/kn5000_v9_program.s"], (0xE00000, 0x1000000))),
     ("v7", ("kn5000", "tlcs", ".", ["v7/maincpu"], ["v7/maincpu/kn5000_v7_program.s"], (0xE00000, 0x1000000))),
     ("v142", ("kn5000", "tlcs", ".", ["v142/subcpu"], ["v142/subcpu/kn5000_subprogram_v142.s"], (0x400, 0x3EF00))),
+    ("v141", ("kn5000", "tlcs", ".", ["v141/subcpu"], ["v141/subcpu/kn5000_subprogram_v141.s"], (0x400, 0x3EF00))),
     ("subboot", ("kn5000", "tlcs", ".", ["subcpu/boot"], ["subcpu/boot/kn5000_subcpu_boot.s"], (0xFE0000, 0x1000000))),
     ("tabledata", ("kn5000", "tlcs", ".", ["table_data"], ["table_data/kn5000_table_data.s"], (0x800000, 0xA00000))),
     ("customdata", ("kn5000", "tlcs", ".", ["custom_data"], ["custom_data/kn5000_custom_data.s"], (0x300000, 0x400000))),
@@ -153,7 +161,28 @@ IMAGES = collections.OrderedDict([
     ("table", ("kn7000", "mn", "kn7000", ["kn7000"], ["kn7000/src/table.s"], (0x48000000, 0x48000000 + 0x3E94D4))),
     # load address + 0x28000: the largest converter (0x1A970 bytes) plus its .bss
     ("cnv", ("kn7000", "mn", "kn7000", ["kn7000"], "kn7000/src/cnv/*.s", (0x502B8000, 0x502E0000))),
+    # the SP7001 PLUG-iN program flash, build 942 (4 MiB image)
+    ("program942", ("kn7000", "mn", "kn7000", ["kn7000"], ["kn7000/src/sp7001/program.s"],
+                    (0x48400000, 0x48400000 + 0x400000))),
+    # MN10300 siblings, assembled from their own directory (`kn7asm.py src/program.s -I .`).  kn2400 links the
+    # code from file 0x3285be to 0x3965bb for work RAM at 0x50120000 (kn2400/README.md, "Layout"), so its
+    # image has that window as well as its flash addresses.
+    ("kn2400", ("mn10300-siblings", "mn", "kn2400", ["kn2400"], ["kn2400/src/program.s"],
+                [(0x48400000, 0x48400000 + 0x3965D3), (0x50120000, 0x50120000 + 0x3965BB - 0x3285BE)])),
+    ("kn6000", ("mn10300-siblings", "mn", "kn6000", ["kn6000"], ["kn6000/src/program.s"],
+                (0x4C000000, 0x4C000000 + 0x3F7A31))),
+    ("kn6500", ("mn10300-siblings", "mn", "kn6500", ["kn6500"], ["kn6500/src/program.s"],
+                (0x4C000000, 0x4C000000 + 0x381691))),
+    ("hdsx3", ("mn10300-siblings", "mn", "hdsx3", ["hdsx3"], ["hdsx3/src/program.s"], (0x97800000, 0x978C0000))),
 ])
+
+
+def in_ranges(rng, v):
+    """True when v lies in the image's address range(s): rng is (lo, hi), a list of (lo, hi), or None."""
+    if not rng:
+        return False
+    return any(lo <= v < hi for lo, hi in ([rng] if isinstance(rng[0], int) else rng))
+
 INSN_MACRO_FILES = {"wsa1/include/tlcs900_mem_ops.inc"}
 
 DATA_DIRS = {".short", ".long", ".word", ".ascii", ".asciz", ".string", ".incbin", ".incbin_range", ".fill",
@@ -361,7 +390,8 @@ def count_values(body):
 def measure(key, cache, tracked, per_file=False):
     model, dialect, cwd, idirs, roots, rng = IMAGES[key]
     mn = dialect == "mn"
-    imm_rng = rng if rng and rng[0] >= 0x10000 else None      # v142 (0x400..) overlaps ordinary constants
+    # v142 / v141 (0x400..) overlap ordinary constants
+    imm_rng = rng if rng and (rng[0] if isinstance(rng[0], int) else min(r[0] for r in rng)) >= 0x10000 else None
     files, untracked = image_files(key, tracked)
     parsed = []
     for f in files:
@@ -429,7 +459,7 @@ def measure(key, cache, tracked, per_file=False):
                     addr_ref.update((u, nm) for nm in IDENT.findall(m.group(1)))
                 if mn:
                     m = EQU.match(body)
-                    if m and PLACEHOLDER.match(m.group(1)) and rng and rng[0] <= int(m.group(2), 16) < rng[1]:
+                    if m and PLACEHOLDER.match(m.group(1)) and in_ranges(rng, int(m.group(2), 16)):
                         equ_ph.add(m.group(1))
         kinds[p.path] = ks
 
@@ -569,13 +599,13 @@ def measure(key, cache, tracked, per_file=False):
                 continue
             for m in ABS_MEM.finditer(ops):
                 v = int(m.group(1), 0)
-                if rng and rng[0] <= v < rng[1]:
+                if in_ranges(rng, v):
                     fc["numeric.mem_abs_in_image"] += 1
                 else:
                     fc["numeric.mem_abs_other"] += 1
             for o in oplist:
                 o = o.strip()
-                if imm_rng and HEXNUM.fullmatch(o) and imm_rng[0] <= int(o.split(":")[0], 16) < imm_rng[1]:
+                if imm_rng and HEXNUM.fullmatch(o) and in_ranges(imm_rng, int(o.split(":")[0], 16)):
                     fc["numeric.imm_in_image"] += 1
         # (d) .byte runs between instructions
         k = 0
