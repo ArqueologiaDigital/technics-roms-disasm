@@ -51,7 +51,7 @@ The data comes first and the code after it: the reverse of the KN7000's program 
 `0x50120000`. It is placed at `file offset + 0x4fdf7a42`. The evidence, from
 `notes/layout-probes/ram_linked_range.py` (README there):
 
-- the flash code makes 6,876 calls and jumps into `0x50120000`-`0x5018e5bb`. All 6,876 land
+- the flash code makes 6,876 calls and jumps into `0x50120000`-`0x5018dffd`. All 6,876 land
   on an instruction start of that range, decoded at that address;
 - the range makes 15,011 calls and jumps of its own. Decoded at its flash address, 629 of them
   go nowhere: outside both the image and the RAM window. Decoded at `0x50120000`, 5 do;

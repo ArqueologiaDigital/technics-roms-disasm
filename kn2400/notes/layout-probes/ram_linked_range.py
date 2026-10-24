@@ -8,7 +8,7 @@
 # It decodes the flash-linked code (file 0x1e427c..0x3285be, at 0x48400000 + file)
 # and the candidate range twice (at its flash address and at 0x50120000), then
 # counts, with MAME's unidasm:
-#   A. calls/jmps in flash code whose target is in 0x50120000..0x5018e5bb, and how
+#   A. calls/jmps in flash code whose target is in 0x50120000..0x5018dffd, and how
 #      many of those land on an instruction start of the RAM-linked decode;
 #   B. calls/jmps in the candidate range whose target lies in the image or in that
 #      RAM window, under each of the two link addresses;
