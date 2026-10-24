@@ -58,7 +58,7 @@
 .equ MSP_SETTINGS, 0xc9a	; 1500h = 5376 bytes
 					; next free address: 0219Ah
 
-.equ COM_SELECT, 0xb720	; (byte)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0xb7e0
+.equ COM_SELECT, 0xb720	; (byte)	; v6 address, from the v6 code's uses (port_maincpu_version.py); was a copy of v10's 0xb7e0	; v7: 0xb744
 
 .equ SEQ_ALT3_RINGBUF_BASE, 0x201c1
 

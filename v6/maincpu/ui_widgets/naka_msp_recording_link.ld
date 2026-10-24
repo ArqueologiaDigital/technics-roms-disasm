@@ -9,8 +9,8 @@ SECTIONS {
     /DISCARD/ : { *(.comment) *(.note*) *(.eh_frame*) }
 }
 
-NakaInst_Param_EndFF = 0x00EE013B;
-Naka_PresentationRootState = 0x00EF013F;
+NakaInst_Param_EndFF = 0x00EE003F;
+Naka_PresentationRootState = 0x00EF0015;
 SeqByteBlock_EffectsSeqData = 0x00F5008B;
 SeqByteBlock_EffectsSeqDotExt = 0x00F500B5;
 NakaWidget_CmpMeas = 0x00E190EA;

@@ -9,11 +9,11 @@ SECTIONS {
     /DISCARD/ : { *(.comment) *(.note*) *(.eh_frame*) }
 }
 
-ExtData_ChordTypeTable_Top = 0x00ED0008;
-NakaData_EffectsStringPtrs = 0x00E30006;
-NakaInst_NEXT = 0x00EE00C3;
-NakaInst_Param_EndFF = 0x00EE013B;
-NakaInst_Param_Repeat = 0x00EE009B;
-Naka_PresentationRootState = 0x00EF013F;
-SetWall_MiscDataAndCode = 0x00F200EF;
-WidgetCharMap_DataEntry1 = 0x00EB00D8;
+ExtData_ChordTypeTable_Top = 0x00ECFE56;
+NakaData_EffectsStringPtrs = 0x00E2FFEE;
+NakaInst_NEXT = 0x00EDFFAF;
+NakaInst_Param_EndFF = 0x00EE0027;
+NakaInst_Param_Repeat = 0x00EDFF87;
+Naka_PresentationRootState = 0x00EEFFFD;
+SetWall_MiscDataAndCode = 0x00F1FFAE;
+WidgetCharMap_DataEntry1 = 0x00EAFF8C;

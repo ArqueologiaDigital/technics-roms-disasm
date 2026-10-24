@@ -597,19 +597,19 @@
 .equ EVT_AMD_CALL, 0x1e7000a	; Firmware method MT_AmdCall: track-assign: apply the AMD setting (the expansion of AMD is not established)
 .equ EVT_DIRECT_PLAY_MUTE, 0x1e7000b	; Firmware method MT_DirectPlayMute: apply the direct-play / SMF track mute settings
 .equ EVT_TRACK_MIDI_CALL, 0x1e7000c	; Firmware method MT_TrackMidiCall: track-assign: apply the track MIDI setting
-.equ EVT_GET_CUR_SONG_NAME, 0x1e7000c	; Firmware method MT_GetCurSongName: copy the current song name (16 chars) for display
-.equ EVT_GET_DISK_FILE_NAME, 0x1e7000d	; Firmware method MT_GetDiskFileName: get the disk file name for display
-.equ EVT_GET_SMF_FILE_NAME, 0x1e7000e	; Firmware method MT_GetSmfFileName: get the SMF file name
-.equ EVT_GET_SMF_SONG_NAME, 0x1e7000f	; Firmware method MT_GetSmfSongName: get the SMF song name
-.equ EVT_GET_DOC_SONG_NAME, 0x1e70011	; Firmware method MT_GetDocSongName: get the DOC song name
-.equ EVT_GET_DOC_FILE_NO, 0x1e70012	; Firmware method MT_GetDocFileNo: get the DOC file number
-.equ EVT_GET_PD_SONG_NAME, 0x1e70013	; Firmware method MT_GetPDSongName: get the PD song name
-.equ EVT_GET_PD_FILE_NO, 0x1e70014	; Firmware method MT_GetPDFileNo: get the PD file number
-.equ EVT_GET_MEAS_STRING, 0x1e70015	; Firmware method MT_GetMeasString: format the measure-number string of the measure box
-.equ EVT_GET_TOGGLE_SW, 0x1e70016	; Firmware method MT_GetToggleSw: query the on/off state of a mute toggle switch
-.equ EVT_LYRICS_CHARA_REQ, 0x1e70017	; Firmware method MT_LyricsCharaReq: request the lyrics characters for the lyrics display
-.equ EVT_GET_LYRICS_SONG_NAME, 0x1e70018	; Firmware method MT_GetLyricsSongName: get the song name shown with the lyrics
-.equ EVT_GET_COMPOSER_NAME, 0x1e70019	; Firmware method MT_GetComporserName [sic, misspelt in ROM]: get the composer name of the song
+.equ EVT_GET_CUR_SONG_NAME, 0x1e7000c	; Firmware method MT_GetCurSongName: copy the current song name (16 chars) for display	; v6: 0x1e7000d
+.equ EVT_GET_DISK_FILE_NAME, 0x1e7000d	; Firmware method MT_GetDiskFileName: get the disk file name for display	; v6: 0x1e7000e
+.equ EVT_GET_SMF_FILE_NAME, 0x1e7000e	; Firmware method MT_GetSmfFileName: get the SMF file name	; v6: 0x1e7000f
+.equ EVT_GET_SMF_SONG_NAME, 0x1e7000f	; Firmware method MT_GetSmfSongName: get the SMF song name	; v6: 0x1e70010
+.equ EVT_GET_DOC_SONG_NAME, 0x1e70011	; Firmware method MT_GetDocSongName: get the DOC song name	; v6: 0x1e70012
+.equ EVT_GET_DOC_FILE_NO, 0x1e70012	; Firmware method MT_GetDocFileNo: get the DOC file number	; v6: 0x1e70013
+.equ EVT_GET_PD_SONG_NAME, 0x1e70013	; Firmware method MT_GetPDSongName: get the PD song name	; v6: 0x1e70014
+.equ EVT_GET_PD_FILE_NO, 0x1e70014	; Firmware method MT_GetPDFileNo: get the PD file number	; v6: 0x1e70015
+.equ EVT_GET_MEAS_STRING, 0x1e70015	; Firmware method MT_GetMeasString: format the measure-number string of the measure box	; v6: 0x1e70016
+.equ EVT_GET_TOGGLE_SW, 0x1e70016	; Firmware method MT_GetToggleSw: query the on/off state of a mute toggle switch	; v6: 0x1e70017
+.equ EVT_LYRICS_CHARA_REQ, 0x1e70017	; Firmware method MT_LyricsCharaReq: request the lyrics characters for the lyrics display	; v6: 0x1e70018
+.equ EVT_GET_LYRICS_SONG_NAME, 0x1e70018	; Firmware method MT_GetLyricsSongName: get the song name shown with the lyrics	; v6: 0x1e70019
+.equ EVT_GET_COMPOSER_NAME, 0x1e70019	; Firmware method MT_GetComporserName [sic, misspelt in ROM]: get the composer name of the song	; v6: 0x1e7001a
 .equ EVT_GET_EFF_FIX_STRING, 0x1e80000	; Kubo method MT_GetEffFixString: an effect widget asks its ApFunction for the effect-type ("fixed") string; DspItem0CngFunc case copies the current ...
 .equ EVT_GET_EFF_DLT0_STR, 0x1e80001	; Kubo method MT_GetEffDlt0Str: get the display string of effect parameter 0; formatted by DspItem0CngFunc (DspItem0_DisplayParamValues cases).
 .equ EVT_GET_EFF_DLT1_STR, 0x1e80002	; Kubo method MT_GetEffDlt1Str: get the display string of effect parameter 1; formatted by DspItem0CngFunc (DspItem0_DisplayParamValues cases).
@@ -2083,7 +2083,7 @@
 .equ NAKA_VIEW_PleaseWait, 0xee0016	; view "PleaseWait": Viewable slot 0xEE entry 22
 .equ NAKA_VIEW_Welcom, 0xef0000	; view "Welcom": Viewable slot 0xEF entry 0
 .equ NAKA_VIEW_AllInitial, 0xef0004	; view "AllInitial": Viewable slot 0xEF entry 4
-.equ NAKA_VIEW_MPVersion, 0xef0004	; view "MPVersion": Viewable slot 0xEF entry 7
+.equ NAKA_VIEW_MPVersion, 0xef0004	; view "MPVersion": Viewable slot 0xEF entry 7	; v7: 0xef0007
 .equ NAKA_VIEW_MPver, 0xef000a	; view "MPver": Viewable slot 0xEF entry 10
 .equ NAKA_VIEW_Softver, 0xf00000	; view "Softver": Viewable slot 0xF0 entry 0
 .equ NAKA_VIEW_MainProgram, 0xf00001	; view "MainProgram": Viewable slot 0xF0 entry 1

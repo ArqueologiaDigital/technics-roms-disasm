@@ -15,19 +15,19 @@ SECTIONS {
 }
 
 /* Scoop Envelope Calculation handlers (inside Scoop_EnvelopeCalc_Data) */
-Scoop_EnvCalc_Handler0 = 0x00F01C29;
-Scoop_EnvCalc_Handler1 = 0x00F01C6C;
-Scoop_EnvCalc_Handler2 = 0x00F01D09;
-Scoop_EnvCalc_Handler3 = 0x00F01D38;
+Scoop_EnvCalc_Handler0 = 0x00F01B00;
+Scoop_EnvCalc_Handler1 = 0x00F01B43;
+Scoop_EnvCalc_Handler2 = 0x00F01BE0;
+Scoop_EnvCalc_Handler3 = 0x00F01C0F;
 
 /* Scoop Glide Parameter handlers */
-Scoop_GlideParam_Setup = 0x00F01DAB;
+Scoop_GlideParam_Setup = 0x00F01C82;
 Scoop_GlideParam_Data  = 0x00F01E89;
 
 /* Scoop Glide Calculation handlers (inside Scoop_GlideParam_Data) */
-Scoop_GlideCalc_Handler0 = 0x00F01F26;
-Scoop_GlideCalc_Handler1 = 0x00F01FB7;
-Scoop_GlideCalc_Handler2 = 0x00F01FDD;
+Scoop_GlideCalc_Handler0 = 0x00F01DFD;
+Scoop_GlideCalc_Handler1 = 0x00F01E8E;
+Scoop_GlideCalc_Handler2 = 0x00F01EB4;
 
 /* Scoop Dispatch handlers */
 Scoop_Dispatch_Nop         = 0x00F020D6;

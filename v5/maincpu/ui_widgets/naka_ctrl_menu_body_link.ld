@@ -11,14 +11,14 @@ SECTIONS {
 
 CRTC_LINE_COMPARE = 0x00000018;
 FDC_CMD_READ_ID = 0x0000000A;
-NakaStr_CtrlParam9e9 = 0x00ED013B;
-NakaInst_RHYTHM_SELECT_TEMPO_APC_MEMORY_SPLIT_POINT = 0x00EF0130;
-NakaState_ZeroBlock_3 = 0x00EF0117;
-NakaState_ZeroBlock_4 = 0x00EF013B;
-Naka_PresentationRootState = 0x00EF013F;
-PlySngSel2Func = 0x00F30017;
+NakaStr_CtrlParam9e9 = 0x00ED0027;
+NakaInst_RHYTHM_SELECT_TEMPO_APC_MEMORY_SPLIT_POINT = 0x00EEFFEE;
+NakaState_ZeroBlock_3 = 0x00EEFFD5;
+NakaState_ZeroBlock_4 = 0x00EEFFF9;
+Naka_PresentationRootState = 0x00EEFFFD;
+PlySngSel2Func = 0x00F2FD59;
 SeqByteBlock_EffectsSeqData = 0x00F5008B;
 SeqByteBlock_EffectsSeqDotExt = 0x00F500B5;
 SeqByteBlock_EffectsSeqEntry = 0x00F5008F;
 SeqByteBlock_TechnichordCfgA = 0x00F500D6;
-WidgetCharMap_DataEntry1 = 0x00EB00D8;
+WidgetCharMap_DataEntry1 = 0x00EAFF8C;

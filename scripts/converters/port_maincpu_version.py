@@ -1250,6 +1250,7 @@ class Port:
         root_s = "kn5000_%s_program.s" % src
         files = collections.OrderedDict()
         rawbuf = []                      # pending target byte ranges
+        self.relinked = 0
         self.rawbytes = 0
 
         def out(rel, line):
@@ -1289,6 +1290,14 @@ class Port:
                     old = m.group(2)
                     nb = body[:m.start(2)] + fmt_like(old, self.newequ[m.group(1)]) + body[m.end(2):]
                     text = text.replace(body, nb, 1)
+                    # the comment was written for the source tree's value: say whose value
+                    # this is now and keep the old one
+                    text = text.rstrip()
+                    if com and text.endswith(com):
+                        text = text[:len(text) - len(com)] + re.sub(
+                            r"%s address(, (?:derived from|from the \w+ code's uses)[^;]*)?" % src,
+                            "%s address, from the %s code's uses (port_maincpu_version.py)" % (dst, dst), com)
+                    text += "\t; %s: %s" % (src, old)
                 m = EQU_EXPR.match(body)
                 base = self.tval(m.group(2)) if m and m.group(1) in self.newexpr else None
                 if m and m.group(1) in self.newexpr and base is None:
@@ -1358,6 +1367,21 @@ class Port:
                 if r in ("transplant_manifest.txt", "README.md"):
                     continue                 # describes the source tree's own history
                 dr = r.replace(root_s, "kn5000_%s_program.s" % dst)
+                if r.endswith("_link.ld"):
+                    # the C data's link scripts give ROM labels absolute addresses: the
+                    # target tree's, where the label has one, so the C compiles to the
+                    # target's pointers and the divergence json does not have to move them
+                    def relink(m):
+                        v = self.tval(m.group(1))
+                        old = int(m.group(2), 16)
+                        if v is None or not (BASE <= old < BASE + len(self.rom)):
+                            return m.group(0)
+                        self.relinked += v != old
+                        return "%s = 0x%08X;" % (m.group(1), v)
+                    txt = open(os.path.join(sdir, r), encoding="latin-1").read()
+                    txt = re.sub(r'^([A-Za-z_][\w]*) = 0x([0-9A-Fa-f]+);', relink, txt, flags=re.M)
+                    open(os.path.join(ddir, dr), "w", encoding="latin-1").write(txt)
+                    continue
                 shutil.copy2(os.path.join(sdir, r), os.path.join(ddir, dr))
         for rel, lines in files.items():
             dr = rel.replace(root_s, "kn5000_%s_program.s" % dst)
@@ -1492,7 +1516,8 @@ def main():
                     e1 and e1.hex(" ")))
     if args.emit:
         P.emit()
-        print("wrote %s/maincpu: %d raw target bytes in TODO(port) rows" % (args.dst, P.rawbytes))
+        print("wrote %s/maincpu: %d raw target bytes in TODO(port) rows; %d link-script addresses moved"
+              % (args.dst, P.rawbytes, P.relinked))
 
 
 if __name__ == "__main__":

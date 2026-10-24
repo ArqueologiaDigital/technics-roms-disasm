@@ -9,16 +9,16 @@ SECTIONS {
     /DISCARD/ : { *(.comment) *(.note*) *(.eh_frame*) }
 }
 
-NakaInst_Param_EndFF = 0x00EE013B;
-NakaInst_Param_Repeat = 0x00EE009B;
-NakaInst_Param_Val00_01 = 0x00EE0113;
-NakaInst_Param_Val02 = 0x00EE00D8;
-NakaInst_SequencerComboBox = 0x00E90130;
-Naka_PresentationRootState = 0x00EF013F;
+NakaInst_Param_EndFF = 0x00EE003F;
+NakaInst_Param_Repeat = 0x00EDFF9F;
+NakaInst_Param_Val00_01 = 0x00EE0017;
+NakaInst_Param_Val02 = 0x00EDFFDC;
+NakaInst_SequencerComboBox = 0x00E90040;
+Naka_PresentationRootState = 0x00EF0015;
 PDFC = 0x00000037;
-PlySngSel2Func = 0x00F30017;
+PlySngSel2Func = 0x00F2FE35;
 SeqByteBlock_EffectsSeqData = 0x00F5008B;
 SeqByteBlock_EffectsSeqDotExt = 0x00F500B5;
-WidgetCharMap_DataEntry1 = 0x00EB00D8;
-WidgetCharMap_DataEntry2 = 0x00EB013F;
-NakaWidget_MdPresetUserWriteList = 0x00E57D62;
+WidgetCharMap_DataEntry1 = 0x00EAFFA4;
+WidgetCharMap_DataEntry2 = 0x00EB000B;
+NakaWidget_MdPresetUserWriteList = 0x00E57D68;

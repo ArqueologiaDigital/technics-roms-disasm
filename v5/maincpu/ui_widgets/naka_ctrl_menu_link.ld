@@ -15,4 +15,4 @@ SECTIONS {
 }
 
 /* NAKA presentation root state handler (in kn5000_v10_program.s) */
-Naka_PresentationRootState = 0x00EF013F;
+Naka_PresentationRootState = 0x00EEFFFD;

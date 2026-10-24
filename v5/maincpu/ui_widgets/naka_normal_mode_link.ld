@@ -10,4 +10,4 @@ SECTIONS {
 }
 
 CRTC_LINE_COMPARE = 0x00000018;
-Naka_PresentationRootState = 0x00EF013F;
+Naka_PresentationRootState = 0x00EEFFFD;

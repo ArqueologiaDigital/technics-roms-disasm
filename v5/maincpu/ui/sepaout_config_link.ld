@@ -17,7 +17,7 @@ SECTIONS {
 
 /* Display/UI handler pointers */
 Display_InitGraphicsAndScreen  = 0x00F22238;
-Display_CallConditionalCompare = 0x00F2225E;
+Display_CallConditionalCompare = 0x00F22147;
 Display_CallPollAudioUpdate    = 0x00F2226B;
 SqTrSel_CaseA                 = 0x00F22278;
 
