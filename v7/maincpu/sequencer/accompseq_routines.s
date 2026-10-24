@@ -70,13 +70,13 @@ AccompSeq_SetupChannel1:
 	ld wa, (0x7d92:16)
 	ld (0x7da8:16), wa
 	ld wa, (0x7da0:16)
-	ld (0x7daa:16), wa
+	ld (ACCSEQ_BEAT_COUNTER:16), wa
 	ld a, (0x7dd2:16)
 	ld (0x7dd1:16), a
 	calr AccompSeq_InitEventDispatch
 	ld a, (0x7dd1:16)
 	ld (0x7dd2:16), a
-	ld wa, (0x7daa:16)
+	ld wa, (ACCSEQ_BEAT_COUNTER:16)
 	ld (0x7da0:16), wa
 	ld wa, (0x7da8:16)
 	ld (0x7d92:16), wa
@@ -98,13 +98,13 @@ AccompSeq_SetupChannel2:
 	ld wa, (0x7d96:16)
 	ld (0x7da8:16), wa
 	ld wa, (0x7da2:16)
-	ld (0x7daa:16), wa
+	ld (ACCSEQ_BEAT_COUNTER:16), wa
 	ld a, (0x7dd3:16)
 	ld (0x7dd1:16), a
 	calr AccompSeq_InitEventDispatch
 	ld a, (0x7dd1:16)
 	ld (0x7dd3:16), a
-	ld wa, (0x7daa:16)
+	ld wa, (ACCSEQ_BEAT_COUNTER:16)
 	ld (0x7da2:16), wa
 	ld wa, (0x7da8:16)
 	ld (0x7d96:16), wa
@@ -201,9 +201,9 @@ AccompSeq_EndMarkerCalcTime:
 	jp	AccompSeq_EventDispatchLoop
 AccompSeq_EndMarkerAdvance:
 	or	(0x7db7:16), 2
-	ld	wa, (0x7daa:16)
+	ld	wa, (ACCSEQ_BEAT_COUNTER:16)
 	inc	1, wa
-	ld	(0x7daa:16), wa
+	ld	(ACCSEQ_BEAT_COUNTER:16), wa
 	calr	AccompSeq_AdvancePosition
 	jp	AccompSeq_EventDispatchLoop
 AccompSeq_EventDispatchDone:
@@ -368,7 +368,7 @@ AccompSeq_DispatchReturn:
 
 AccompSeq_CalcDeltaTime:
 	ld E,A
-	ld wa, (0x7daa:16)
+	ld wa, (ACCSEQ_BEAT_COUNTER:16)
 	cp wa, (0x7d80:16)
 	jr nz, AccompSeq_DeltaCompare
 	ld a, (0x7d82:16)
@@ -1802,13 +1802,13 @@ AccompSeq_SetupChannels:
 	ld	wa, (0x7d92:16)
 	ld	(0x7da8:16), wa
 	ld	wa, (0x7da0:16)
-	ld	(0x7daa:16), wa
+	ld	(ACCSEQ_BEAT_COUNTER:16), wa
 	ld	a, (0x7dd2:16)
 	ld	(0x7dd1:16), a
 	calr	AccompSeq_ParseSequenceData
 	ld	a, (0x7dd1:16)
 	ld	(0x7dd2:16), a
-	ld	wa, (0x7daa:16)
+	ld	wa, (ACCSEQ_BEAT_COUNTER:16)
 	ld	(0x7da0:16), wa
 	ld	wa, (0x7da8:16)
 	ld	(0x7d92:16), wa
@@ -1827,13 +1827,13 @@ AccompSeq_SetupCh2:
 	ld	wa, (0x7d96:16)
 	ld	(0x7da8:16), wa
 	ld	wa, (0x7da2:16)
-	ld	(0x7daa:16), wa
+	ld	(ACCSEQ_BEAT_COUNTER:16), wa
 	ld	a, (0x7dd3:16)
 	ld	(0x7dd1:16), a
 	calr	AccompSeq_ParseSequenceData
 	ld	a, (0x7dd1:16)
 	ld	(0x7dd3:16), a
-	ld	wa, (0x7daa:16)
+	ld	wa, (ACCSEQ_BEAT_COUNTER:16)
 	ld	(0x7da2:16), wa
 	ld	wa, (0x7da8:16)
 	ld	(0x7d96:16), wa
@@ -1890,7 +1890,7 @@ AccompSeq_SeqParse_EndMark:
 	or	(0x7db7:16), 1
 	jr	AccompSeq_SeqParse_Loop
 AccompSeq_SeqParse_TimeAdvance:
-	ld	bc, (0x7daa:16)
+	ld	bc, (ACCSEQ_BEAT_COUNTER:16)
 	inc	1, bc
 	ld	b, c
 	xor	c, c
@@ -1899,14 +1899,14 @@ AccompSeq_SeqParse_TimeAdvance:
 	or	(0x7db7:16), 1
 	jr	AccompSeq_SeqParse_Loop
 AccompSeq_SeqParse_TimeStore:
-	incw	1, (32170:16)
+	incw	1, (ACCSEQ_BEAT_COUNTER:16)
 	calr	AccompSeq_AdvancePosition
 	jr	AccompSeq_SeqParse_Loop
 AccompSeq_SeqParse_MidiEvent:
 	calr	AccompSeq_CheckPatternEnd
-	ld	bc, (0x7daa:16)
+	ld	bc, (ACCSEQ_BEAT_COUNTER:16)
 	ld	c, a
-	ld	b, (0x7daa:16)
+	ld	b, (ACCSEQ_BEAT_COUNTER:16)
 	cp	de, bc
 	jr	nc, AccompSeq_SeqParse_CheckNoteOn
 	or	(0x7db7:16), 1

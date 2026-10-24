@@ -711,13 +711,13 @@ FmmLoadTtl_LoadSlots:
 	ld	xbc, EVT_ALL_PAINT
 	ld	xde, 0:i3
 	call	ApPostEvent
-	ld	(35168:16), 0
-	ld	(35170:16), 0
-	ld	(35172:16), 0
-	ld	(35174:16), 0
-	ld	(35176:16), 0
-	ld	(35178:16), 0
-	ld	(35180:16), 0
+	ld	(SLOAD_SRC_PMEM_POS:16), 0
+	ld	(SLOAD_SRC_CMP_POS:16), 0
+	ld	(SLOAD_SRC_SOUND_POS:16), 0
+	ld	(SLOAD_DST_PMEM_POS:16), 0
+	ld	(SLOAD_DST_SONG:16), 0
+	ld	(SLOAD_DST_CMP_POS:16), 0
+	ld	(SLOAD_DST_SOUND_POS:16), 0
 	ld	iz, 0:i3
 FmmLoadTtl_SlotLoop:
 	ldto_berp	a, 248

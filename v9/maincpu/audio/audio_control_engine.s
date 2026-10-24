@@ -4045,7 +4045,7 @@ Audio_InitAllDefaults:
 	ldw (0x90e0:16), 0
 	ld (0xbf39:16), 255
 	ldw (0x90e2:16), 0
-	ldw (0x9133:16), 0
+	ldw (EXT_RECORD_OFFSET:16), 0
 	ld (0x90fb:16), 255
 	ld (0x91ad:16), 255
 	ld (0x91b5:16), 255
@@ -4945,7 +4945,7 @@ Audio_MainPeriodicUpdate:
 	ret
 
 Audio_SyncBufferPositions:
-	ldw (0x9133:16), 0
+	ldw (EXT_RECORD_OFFSET:16), 0
 	ldmm16 0x90e0, 0x90de
 	jr FileIO_ProcessRemainingOps
 
@@ -4973,7 +4973,7 @@ FileIO_OperationDispatch:
 
 FileIO_ProcessRemainingOps:
 	lda xbc, (0xc039:16)
-	ld wa, (0x9133:16)
+	ld wa, (EXT_RECORD_OFFSET:16)
 	extz xwa
 	add xwa, xbc
 	cp (xwa), 0xff
@@ -6697,10 +6697,10 @@ ToshiCmd_DefaultHandler_Ret:
 	ret
 
 SndParam_FetchSequencerParams:
-	ld wa, (0x9133:16)
+	ld wa, (EXT_RECORD_OFFSET:16)
 	ld bc, wa
 	inc 1, wa
-	ld (0x9133:16), wa
+	ld (EXT_RECORD_OFFSET:16), wa
 	lda xwa, (0xc039:16)
 	extz xbc
 	add xbc, xwa
@@ -6709,28 +6709,28 @@ SndParam_FetchSequencerParams:
 	extz wa
 	calr PanelTlv_PayloadOfTag
 	ld (0x912b:16), xhl
-	ld wa, (0x9133:16)
+	ld wa, (EXT_RECORD_OFFSET:16)
 	ld de, wa
 	inc 1, wa
-	ld (0x9133:16), wa
+	ld (EXT_RECORD_OFFSET:16), wa
 	lda xbc, (0xc039:16)
 	extz xde
 	add xde, xbc
 	ld a, (xde)
 	ld (MIDI_MSG_DATA1:16), a
 	ld (EXTDATA_TLV_OFFSET:16), a
-	ld wa, (0x9133:16)
+	ld wa, (EXT_RECORD_OFFSET:16)
 	ld de, wa
 	inc 1, wa
-	ld (0x9133:16), wa
+	ld (EXT_RECORD_OFFSET:16), wa
 	extz xde
 	add xde, xbc
 	mrib4 0x82, 0x19, 0x30, 0x91
 	ld (MIDI_MSG_DATA2:16), 0
-	ld wa, (0x9133:16)
+	ld wa, (EXT_RECORD_OFFSET:16)
 	ld de, wa
 	inc 1, wa
-	ld (0x9133:16), wa
+	ld (EXT_RECORD_OFFSET:16), wa
 	extz xde
 	add xde, xbc
 	mrib4 0x82, 0x19, 0x31, 0x91
@@ -11404,11 +11404,11 @@ MidiStream_ProcessRxBuffer:
 	jr nz, MidiStream_ProcessDone
 	bit 4, (PANEL_MIDI:16)
 	jr nz, MidiStream_ProcessDone
-	ldw (0x9133:16), 0
+	ldw (EXT_RECORD_OFFSET:16), 0
 
 MidiStream_DispatchLoop:
 	ld xix, 0xc039
-	ld hl, (0x9133:16)
+	ld hl, (EXT_RECORD_OFFSET:16)
 	ld	a, (xix+hl)
 	cp a, 0xff
 	jr z, MidiStream_ProcessDone
@@ -11428,7 +11428,7 @@ MidiStream_DispatchLoop:
 	call (xiy)
 
 MidiStream_AdvanceRxPtr:
-	inc 4, (0x9133:16)
+	inc 4, (EXT_RECORD_OFFSET:16)
 	jr MidiStream_DispatchLoop
 
 MidiStream_ProcessDone:

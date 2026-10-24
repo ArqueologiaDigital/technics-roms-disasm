@@ -8429,8 +8429,8 @@ SeMenu_ClearRect:
 SeMenu_DrawKeyboardGraphic:
 	ld (COLORBLIT_MODE:24), 0x00
 	ld C, 0x07:opc
-	ld ix, (0x06c6:16)
-	ld iy, (0x06c8:16)
+	ld ix, (SEMENU_GFX_X:16)
+	ld iy, (SEMENU_GFX_Y:16)
 .Lc_f0f166:
 SeMenu_ShowConfirmDialog_Data_Code_Loop:
 	pushw ix
@@ -8443,8 +8443,8 @@ SeMenu_ShowConfirmDialog_Data_Code_Loop:
 	add IX,0x001c
 	dec 1,C
 	jr nz, .Lc_f0f166
-	ld ix, (0x06c6:16)
-	ld iy, (0x06c8:16)
+	ld ix, (SEMENU_GFX_X:16)
+	ld iy, (SEMENU_GFX_Y:16)
 	ld (0x06cc:16), ix
 	addw (0x06cc:16), 0x00c4
 	ld (0x06d0:16), ix
@@ -8453,8 +8453,8 @@ SeMenu_ShowConfirmDialog_Data_Code_Loop:
 	ld (0x06d2:16), iy
 	addw (0x06d2:16), 0x000c
 	call SeGfx_StaticOp09_FromBuf
-	ld ix, (0x06c6:16)
-	ld iy, (0x06c8:16)
+	ld ix, (SEMENU_GFX_X:16)
+	ld iy, (SEMENU_GFX_Y:16)
 	add IX,0x00c4
 	ld (0x06cc:16), ix
 	ld (0x06d0:16), ix
@@ -8463,8 +8463,8 @@ SeMenu_ShowConfirmDialog_Data_Code_Loop:
 	ld (0x06d2:16), iy
 	subw (0x06d2:16), 0x0001
 	call SeGfx_StaticOp09_FromBuf
-	ld ix, (0x06c6:16)
-	ld iy, (0x06c8:16)
+	ld ix, (SEMENU_GFX_X:16)
+	ld iy, (SEMENU_GFX_Y:16)
 	ld (0x06cc:16), ix
 	subw (0x06cc:16), 0x0008
 	ld (0x06d0:16), ix
@@ -8472,8 +8472,8 @@ SeMenu_ShowConfirmDialog_Data_Code_Loop:
 	ld (0x06d2:16), iy
 	addw (0x06d2:16), 0x000c
 	call SeGfx_StaticOp09_FromBuf
-	ld ix, (0x06c6:16)
-	ld iy, (0x06c8:16)
+	ld ix, (SEMENU_GFX_X:16)
+	ld iy, (SEMENU_GFX_Y:16)
 	ld (0x06cc:16), ix
 	subw (0x06cc:16), 0x0005
 	ld (0x06d0:16), ix
@@ -8483,8 +8483,8 @@ SeMenu_ShowConfirmDialog_Data_Code_Loop:
 	ld (0x06d2:16), iy
 	addw (0x06d2:16), 0x0007
 	call SeGfx_StaticOp09_FromBuf
-	ld ix, (0x06c6:16)
-	ld iy, (0x06c8:16)
+	ld ix, (SEMENU_GFX_X:16)
+	ld iy, (SEMENU_GFX_Y:16)
 	sub IX,0x0004
 	ld (0x06cc:16), ix
 	ld (0x06d0:16), ix
@@ -8493,8 +8493,8 @@ SeMenu_ShowConfirmDialog_Data_Code_Loop:
 	ld (0x06d2:16), iy
 	addw (0x06d2:16), 0x000b
 	call SeGfx_StaticOp02_FromBuf
-	ld ix, (0x06c6:16)
-	ld iy, (0x06c8:16)
+	ld ix, (SEMENU_GFX_X:16)
+	ld iy, (SEMENU_GFX_Y:16)
 	ld (0x06cc:16), ix
 	addw (0x06cc:16), 0x001c
 	ld (0x06d0:16), ix
@@ -8620,9 +8620,9 @@ SeMenu_ShowConfirmDialog_Data_Code_Join:
 	push	xwa
 	add	xiz, xwa
 	ld	wa, (xiz)
-	ld	(0x6c6:16), wa
+	ld	(SEMENU_GFX_X:16), wa
 	ld	wa, (xiz+2)
-	ld	(0x6c8:16), wa
+	ld	(SEMENU_GFX_Y:16), wa
 	cp	(SEMENU_PART_MODE:16), 1
 	jr	nz, SeMenu_ShowConfirmDialog_Data_Code_Skip3
 	ld	xiz, 1634
@@ -8659,8 +8659,8 @@ SeMenu_DrawEnvCurvePicture:
 	srl	a, 5
 	cp	a, 3:i3
 	jr	nz, SeMenu_ShowConfirmDialog_Data_Code_Skip5
-	ldw_d16	ix, (0x6c6)
-	ldw_d16	iy, (0x6c8)
+	ldw_d16	ix, (SEMENU_GFX_X)
+	ldw_d16	iy, (SEMENU_GFX_Y)
 	ld	(0x6cc:16), ix
 	addw	(0x6cc:16), 1
 	ld	(0x6d0:16), ix
@@ -8670,8 +8670,8 @@ SeMenu_DrawEnvCurvePicture:
 	ld	(0x6d2:16), iy
 	addw	(0x6d2:16), 37
 	call	SeGfx_StaticOp1B_FromBuf
-	ldw_d16	ix, (0x6c6)
-	ldw_d16	iy, (0x6c8)
+	ldw_d16	ix, (SEMENU_GFX_X)
+	ldw_d16	iy, (SEMENU_GFX_Y)
 	ld	(0x6cc:16), ix
 	addw	(0x6cc:16), 1
 	ld	(0x6d0:16), ix
@@ -8687,10 +8687,10 @@ SeMenu_ShowConfirmDialog_Data_Code_Skip5:
 	xor	w, w
 	sll	wa, 2
 	ld	xiy, (xiz+wa)
-	ldw_d16	wa, (0x6c6)
+	ldw_d16	wa, (SEMENU_GFX_X)
 	div	a, 8
 	xor	w, w
-	ldw_d16	hl, (0x6c8)
+	ldw_d16	hl, (SEMENU_GFX_Y)
 	mul	l, 40
 	add	hl, wa
 	ld	ix, hl
@@ -9369,8 +9369,8 @@ SeMenu_CompareAndApply_Data6:
 ; SeMenu_DrawBreakpointKeyboard: Draws the mini keyboard at (56,139) (SeMenu_DrawKeyboardGraphic) and the fields below
 ;   it: params 0-2 (0x660-0x662) as note names, param 3 (0x663) as a number. Basis: callers + body.
 SeMenu_DrawBreakpointKeyboard:
-	ldw	(1734:16), 56
-	ldw	(1736:16), 139
+	ldw	(SEMENU_GFX_X:16), 56
+	ldw	(SEMENU_GFX_Y:16), 139
 	call	SeMenu_DrawKeyboardGraphic
 	ld	(COLORBLIT_MODE:24), 0
 	ld	xiy, SeMenu_DrawBreakpointKeyboard_Records
@@ -9454,8 +9454,8 @@ SeAmpEnv2_DrawStaticScreen:
 	ld	xix, SeFil_PageHeader_Records
 	call	SeGfx_DrawStaticList
 	call	SeMenu_PresetManager_Save
-	ldw	(1734:16), 56
-	ldw	(1736:16), 139
+	ldw	(SEMENU_GFX_X:16), 56
+	ldw	(SEMENU_GFX_Y:16), 139
 	call	SeMenu_DrawKeyboardGraphic
 	call	SeMenu_DrawSoloButton
 	call	SeMenu_DrawPartSelector
@@ -10464,8 +10464,8 @@ SeTonRan1_DrawStaticScreen:
 	ld	xiy, SeScreenData_0x34E9
 	ld	xix, SeTonRan1_KeyLayerFrame
 	call	SeGfx_DrawStaticList
-	ldw	(1734:16), 47
-	ldw	(1736:16), 51
+	ldw	(SEMENU_GFX_X:16), 47
+	ldw	(SEMENU_GFX_Y:16), 51
 	call	SeMenu_DrawKeyboardGraphic
 	call	SeMenu_DrawSoloButton
 	call	SeMenu_DrawPartSelector
@@ -10548,8 +10548,8 @@ SeMenu_FilterEdit_Init_Sub:
 	ld	xix, SeTonTon1_Field14_Record
 	call	SeGfx_DrawStaticList
 	call	SeMenu_PresetManager_Save
-	ldw	(1734:16), 56
-	ldw	(1736:16), 139
+	ldw	(SEMENU_GFX_X:16), 56
+	ldw	(SEMENU_GFX_Y:16), 139
 	call	SeMenu_DrawKeyboardGraphic
 	call	SeMenu_DrawSoloButton
 	call	SeMenu_DrawPartSelector
@@ -16402,10 +16402,10 @@ PsCstmCpBnkBoxProc_OnPaintOrRepaint:
 	call	GetViewInstance
 	cp	(xhl+36), 0
 	jr	nz, PsCstmCpBnkBox_ReadParam2
-	ldb_d8	a, (0x391a)
+	ldb_d8	a, (CSTMCP_FROM_SLOT)
 	jr	PsCstmCpBnkBox_LookupAndSend
 PsCstmCpBnkBox_ReadParam2:
-	ld	a, (14619:16)
+	ld	a, (CSTMCP_TO_SLOT:16)
 PsCstmCpBnkBox_LookupAndSend:
 	extz	wa
 	sla	wa, 2
@@ -16464,7 +16464,7 @@ PsCstmCpSwBoxProc_OnPaintOrRepaint:
 	cp	(xhl+36), 0
 	jr	nz, PsCstmCpSwBox_ReadParam2
 	ld	xwa, PsCstmCpSwBox_HandleEvtBC_Str_CUSTOM
-	cp	(0x391a:16), 10
+	cp	(CSTMCP_FROM_SLOT:16), 10
 	jr	nc, PsCstmCpSwBox_PushTableAddr0
 	ld	xwa, PsCstmCpSwBox_HandleEvtBC_Str_MEMORY
 PsCstmCpSwBox_PushTableAddr0:
@@ -16474,7 +16474,7 @@ PsCstmCpSwBox_PushTableAddr0:
 
 PsCstmCpSwBox_ReadParam2:
 	ld	xwa, PsCstmCpSwBox_ReadParam2_Str_CUSTOM
-	cp	(14619:16), 10
+	cp	(CSTMCP_TO_SLOT:16), 10
 	jr	nc, PsCstmCpSwBox_PushTableAddr1
 	ld	xwa, PsCstmCpSwBox_ReadParam2_Str_MEMORY
 PsCstmCpSwBox_PushTableAddr1:
@@ -16530,7 +16530,7 @@ PsCstmCpNameBox_CallInherited:
 	jrl PsCtmAtt_ReturnZero
 
 PsCstmCpNameBoxProc_OnDraw:
-	cp	(0x39e2:16), 0
+	cp	(CSTMCP_WINDOW:16), 0
 	jrl	nz, PsCtmAtt_ReturnZero
 	ld	xwa, xiz
 	ld	xde, (xsp+260)
@@ -16556,7 +16556,7 @@ PsCstmCpNameBox_MainFuncCall:
 	jr PsCtmAtt_ReturnZero
 
 PsCstmCpNameBoxProc_OnCstmFNmDisp:
-	cp (0x39e2:16), 0x00
+	cp (CSTMCP_WINDOW:16), 0x00
 	jr nz, PsCtmAtt_ReturnZero
 	ld XWA,XIZ
 	call GetViewInstance
@@ -16571,7 +16571,7 @@ PsCstmCpNameBoxProc_OnCstmFNmDisp:
 	ld XBC,EVT_PARA_DRAW
 	jr t, PsCstmCpNameBox_SendEventJoin
 PsCstmCpNameBoxProc_OnCstmTNmDisp:
-	cp (0x39e2:16), 0x00
+	cp (CSTMCP_WINDOW:16), 0x00
 	jr nz, PsCtmAtt_ReturnZero
 	ld XWA,XIZ
 	call GetViewInstance

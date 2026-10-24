@@ -278,7 +278,7 @@ BmDrEdit_CalcNotePosition:
 	call GetTitleNow
 	cp xhl, TITLE_SQNOTEEDT
 	jr nz, BmDrEdit_CalcNotePos_VerticalMode
-	cp (0x2798:16), 0
+	cp (NOTEEDIT_BASE_KEY:16), 0
 	jr nz, BmDrEdit_CalcNotePos_ReadFields
 	inc 3, (0x2806:16)
 	jr BmDrEdit_CalcNotePos_ReadFields
@@ -454,7 +454,7 @@ BmDrEdit_CalcSecondaryPosition:
 	call GetTitleNow
 	cp xhl, TITLE_SQNOTEEDT
 	jr nz, BmDrEdit_CalcSecondaryPos_Vert
-	cp (0x2798:16), 0
+	cp (NOTEEDIT_BASE_KEY:16), 0
 	jr nz, BmDrEdit_CalcSecondaryPos_ClampSize
 	inc 3, (0x0210b0:24)
 	jr BmDrEdit_CalcSecondaryPos_ClampSize
@@ -481,7 +481,7 @@ BmDrEdit_InitDisplayParams:
 	ldw (0x2794:16), 48
 	ldw (0x2796:16), 48
 	ldw (0x2790:16), 38
-	ld (0x2798:16), 5
+	ld (NOTEEDIT_BASE_KEY:16), 5
 	ldw (0x279e:16), 40
 	ldw (0x27a0:16), 5
 	ld (0x278a:16), 100
@@ -1587,11 +1587,11 @@ BmDrEdit_ChordScrollUp_Check:
 	ret nz
 
 BmDrEdit_ChordScrollUp:
-	ld a, (0x2798:16)
+	ld a, (NOTEEDIT_BASE_KEY:16)
 	cp a, 0x9
 	ret nc
 	inc 1, a
-	ld (0x2798:16), a
+	ld (NOTEEDIT_BASE_KEY:16), a
 	call NoteEditSy_UpdateChordDisplay
 	ld (0x295c:16), 129
 	ld (0x295d:16), 4
@@ -1604,11 +1604,11 @@ BmDrEdit_ChordScrollDown_Check:
 	ret nz
 
 BmDrEdit_ChordScrollDown:
-	ld a, (0x2798:16)
+	ld a, (NOTEEDIT_BASE_KEY:16)
 	cp a, 0:i3
 	ret z
 	dec 1, a
-	ld (0x2798:16), a
+	ld (NOTEEDIT_BASE_KEY:16), a
 	call NoteEditSy_UpdateChordDisplay
 	ld (0x295c:16), 129
 	ld (0x295d:16), 4
@@ -1775,13 +1775,13 @@ BmDrEdit_SetupScrollRegion:
 	ret
 
 BmDrEdit_SetupScrollRegion_MelodicMode:
-	ld a, (0x2798:16)
+	ld a, (NOTEEDIT_BASE_KEY:16)
 	extz wa
 	add wa, wa
 	lda xhl, (WidgetData_DrawbarPositionTable:24)
 	ld	a, (xhl+wa)
 	ld (xde), a
-	ld a, (0x2798:16)
+	ld a, (NOTEEDIT_BASE_KEY:16)
 	extz wa
 	add wa, wa
 	inc 1, wa
@@ -3705,21 +3705,21 @@ BmDrEdit_AdjustScrollToView:
 	dec 4, xsp
 	bit 0, (0x2742:16)
 	jr nz, NoteEditSy_ScrollComplete_Return
-	ldmm8 0x27ca, 0x2798
+	ldmm8 0x27ca, NOTEEDIT_BASE_KEY
 
 BmDrEdit_ScrollAdjustLoop:
 	lda xwa, (xsp + 2)
 	lda xbc, (xsp)
 	calr BmDrEdit_SetupScrollRegion
 	ld c, (0x2962:16)
-	ld a, (0x2798:16)
+	ld a, (NOTEEDIT_BASE_KEY:16)
 	cp c, (xsp + 2)
 	jr nc, BmDrEdit_ScrollAdjust_CheckUpper
 	ld c, a
 	cp a, 0:i3
 	jr z, NoteEditSy_ScrollComplete_Return
 	dec 1, c
-	ld (0x2798:16), c
+	ld (NOTEEDIT_BASE_KEY:16), c
 	jr BmDrEdit_ScrollAdjustLoop
 
 BmDrEdit_ScrollAdjust_CheckUpper:
@@ -3729,12 +3729,12 @@ BmDrEdit_ScrollAdjust_CheckUpper:
 	cp a, 0x9
 	jr nc, NoteEditSy_ScrollComplete_Return
 	inc 1, c
-	ld (0x2798:16), c
+	ld (NOTEEDIT_BASE_KEY:16), c
 	jr BmDrEdit_ScrollAdjustLoop
 
 BmDrEdit_ScrollAdjust_CompareAndUpdate:
 	ld a, (0x27ca:16)
-	cp a, (0x2798:16)
+	cp a, (NOTEEDIT_BASE_KEY:16)
 	jr z, NoteEditSy_ScrollComplete_Return
 	call NoteEditSy_UpdateChordDisplay
 
@@ -3978,7 +3978,7 @@ BmDrEdit_SetRowOffsetFromDelta:
 BmDrEdit_UpdateDisplay_MelodicOffset:
 	ld c, a
 	ld (0x27cc:16), a
-	cp (0x2798:16), 0
+	cp (NOTEEDIT_BASE_KEY:16), 0
 	ret nz
 	inc 3, c
 	ld (0x27cc:16), c

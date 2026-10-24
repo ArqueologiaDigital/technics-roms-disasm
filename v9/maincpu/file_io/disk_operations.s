@@ -741,13 +741,13 @@ FmmLoadTtl_LoadSlots:
 	ld xbc, EVT_ALL_PAINT
 	ld xde, 0:i3
 	call ApPostEvent
-	ld (0x89fc:16), 0
-	ld (0x89fe:16), 0
-	ld (0x8a00:16), 0
-	ld (0x8a02:16), 0
-	ld (0x8a04:16), 0
-	ld (0x8a06:16), 0
-	ld (0x8a08:16), 0
+	ld (SLOAD_SRC_PMEM_POS:16), 0
+	ld (SLOAD_SRC_CMP_POS:16), 0
+	ld (SLOAD_SRC_SOUND_POS:16), 0
+	ld (SLOAD_DST_PMEM_POS:16), 0
+	ld (SLOAD_DST_SONG:16), 0
+	ld (SLOAD_DST_CMP_POS:16), 0
+	ld (SLOAD_DST_SOUND_POS:16), 0
 	ld iz, 0:i3
 
 FmmLoadTtl_SlotLoop:

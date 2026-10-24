@@ -2373,7 +2373,7 @@ Flash_AssignSlotsToBlocks_Loop:
 	jr nz, .Lc_f173a0
 .Lc_f1738d:
 Flash_AssignSlotsToBlocks_Skip:
-	lda xbc, (0x07a0:16)
+	lda xbc, (FLASH_SLOT_ASSIGN_LIST:16)
 	ld WA,(XIX)
 	ld (XBC),WA
 	extz HL
@@ -2419,7 +2419,7 @@ Flash_AssignSlotsToBlocks_Skip3:
 	sla de, 2
 	ld IZ,DE
 	inc 4,IZ
-	lda xiy, (0x07a0:16)
+	lda xiy, (FLASH_SLOT_ASSIGN_LIST:16)
 	ld WA,(XBC)
 	ld	(xiy+iz), wa
 	inc 6,DE
@@ -2453,7 +2453,7 @@ Flash_InitBytecodeBlock_Helper2:
 	lda	xwa, (1748:16)
 	cpw	(xwa), 0xffff
 	jr	z, Flash_InitBytecodeBlock_Helper2_Skip5
-	lda	xbc, (1952:16)
+	lda	xbc, (FLASH_SLOT_ASSIGN_LIST:16)
 	ld	wa, (xwa)
 	ld	(xbc), wa
 	ldw	(xbc+2), 1536
@@ -2491,7 +2491,7 @@ Flash_StoreBaseAndInitAccPatch_Loop3:
 	sla	wa, 2
 	ld	iy, wa
 	inc	4, iy
-	lda	xix, (1952:16)
+	lda	xix, (FLASH_SLOT_ASSIGN_LIST:16)
 	ld	(xix+iy), bc
 	ld	bc, wa
 	inc	6, bc
@@ -2523,7 +2523,7 @@ Flash_InitBytecodeBlock_Helper2_Loop5:
 	sla	wa, 2
 	ld	iy, wa
 	inc	4, iy
-	lda	xix, (1952:16)
+	lda	xix, (FLASH_SLOT_ASSIGN_LIST:16)
 	ld	(xix+iy), bc
 	ld	bc, wa
 	inc	6, bc
@@ -2550,7 +2550,7 @@ Flash_InitBytecodeBlock_Helper3:
 	dec 2,XSP
 	push XIZ
 	ld (XSP+0x04),A
-	cpw (0x07a0:16), 0xffff
+	cpw (FLASH_SLOT_ASSIGN_LIST:16), 0xffff
 	jr z, .Lc_f1756b
 	lds_erpb 0xf9, 0
 .Lc_f17529:
@@ -2565,7 +2565,7 @@ Flash_InitBytecodeBlock_Helper3:
 	extz BC
 	ld de, 0:i3
 	calr Util_FrameSetup10
-	lda xwa, (0x07a0:16)
+	lda xwa, (FLASH_SLOT_ASSIGN_LIST:16)
 	cp HL,(XWA)
 	jr nz, .Lc_f17562
 	ld HL,(XWA+0x02)
@@ -2607,7 +2607,7 @@ Flash_StoreBaseAndInitAccPatch_Loop5:
 	sla	wa, 2
 	ld	de, wa
 	inc	4, de
-	lda	xbc, (1952:16)
+	lda	xbc, (FLASH_SLOT_ASSIGN_LIST:16)
 	.byte	0xd3, 0x07, 0xe4, 0xe8, 0xf3
 	jr	nz, Flash_StoreBaseAndInitAccPatch_Sub_Skip2
 	inc	6, wa
@@ -2631,7 +2631,7 @@ Flash_StoreBaseAndInitAccPatch_Sub_Skip2:
 	sla	wa, 2
 	ld	de, wa
 	inc	4, de
-	lda	xbc, (1952:16)
+	lda	xbc, (FLASH_SLOT_ASSIGN_LIST:16)
 	.byte	0xd3, 0x07, 0xe4, 0xe8, 0xf3
 	jr	nz, Flash_StoreBaseAndInitAccPatch_Sub_Skip3
 	inc	6, wa
@@ -2655,7 +2655,7 @@ Flash_StoreBaseAndInitAccPatch_Sub_Skip3:
 	sla	wa, 2
 	ld	de, wa
 	inc	4, de
-	lda	xbc, (1952:16)
+	lda	xbc, (FLASH_SLOT_ASSIGN_LIST:16)
 	.byte	0xd3, 0x07, 0xe4, 0xe8, 0xf3
 	jr	nz, Flash_StoreBaseAndInitAccPatch_Sub_Skip4
 	inc	6, wa
@@ -2679,7 +2679,7 @@ Flash_StoreBaseAndInitAccPatch_Sub_Skip4:
 	sla	wa, 2
 	ld	de, wa
 	inc	4, de
-	lda	xbc, (1952:16)
+	lda	xbc, (FLASH_SLOT_ASSIGN_LIST:16)
 	.byte	0xd3, 0x07, 0xe4, 0xe8, 0xf3
 	jr	nz, Flash_StoreBaseAndInitAccPatch_Sub_Skip5
 	inc	6, wa
@@ -2711,7 +2711,7 @@ Flash_WriteSlotOwnerMap:
 	ld	xiy, (FLASH_SECTION_PTR_7:16)
 	ldw	bc, 0x8000
 	ldirw
-	lda	xhl, (1952:16)
+	lda	xhl, (FLASH_SLOT_ASSIGN_LIST:16)
 	ld	bc, (xhl+2)
 	cp	bc, 0xffff
 	jr	z, Flash_WriteSlotOwnerMap_Skip7
@@ -2817,7 +2817,7 @@ Flash_CopyBlocksToSlots:
 	ld	xiy, (FLASH_SECTION_PTR_7:16)
 	ldw	bc, 0x8000
 	ldirw
-	lda_d16	xwa, (0x7a0)
+	lda_d16	xwa, (FLASH_SLOT_ASSIGN_LIST)
 	cpw	(xwa), 0xffff
 	jr	z, Flash_CopyBlocksToSlots_Skip12
 	ld	hl, (xwa)
@@ -2871,7 +2871,7 @@ Flash_CopyBlocksToSlots_Loop2:
 	sla	bc, 2
 	ld	wa, bc
 	inc	4, wa
-	lda	xde, (1952:16)
+	lda	xde, (FLASH_SLOT_ASSIGN_LIST:16)
 	ld	wa, (xde+wa)
 	cp	wa, 65535
 	jr	z, Flash_StoreBaseAndInitAccPatch_Skip13
@@ -2936,7 +2936,7 @@ Flash_StoreBaseAndInitAccPatch_Skip13:
 Flash_InitBytecodeBlock_Helper9_Helper:
 	lda	xsp, (xsp-12)
 	push	xiz
-	lda	xwa, (1952:16)
+	lda	xwa, (FLASH_SLOT_ASSIGN_LIST:16)
 	cpw	(xwa), 0xffff
 	jr	z, Flash_StoreBaseAndInitAccPatch_Skip14
 	ld	hl, (xwa)
@@ -2989,7 +2989,7 @@ Flash_InitBytecodeBlock_Helper3_Loop5:
 	sla	bc, 2
 	ld	wa, bc
 	inc	4, wa
-	lda	xde, (1952:16)
+	lda	xde, (FLASH_SLOT_ASSIGN_LIST:16)
 	ld	wa, (xde+wa)
 	cp	wa, 65535
 	jr	z, Flash_InitBytecodeBlock_Helper3_Epilogue
@@ -3075,7 +3075,7 @@ Flash_StoreBaseAndInitAccPatch_Skip15:
 	inc	1, ix
 	cp	c, 4:i3
 	jr	c, Flash_StoreBaseAndInitAccPatch_Loop10
-	lda	xhl, (1952:16)
+	lda	xhl, (FLASH_SLOT_ASSIGN_LIST:16)
 	ld	wa, (1748:16)
 	ld	(xhl), wa
 	ld	a, d
@@ -3126,7 +3126,7 @@ Flash_StoreBaseAndInitAccPatch_Skip16:
 	sla	ix, 2
 	ld	iz, ix
 	inc	4, iz
-	lda	xiy, (1952:16)
+	lda	xiy, (FLASH_SLOT_ASSIGN_LIST:16)
 	ld	wa, (xhl)
 	ld	(xiy+iz), wa
 	inc	6, ix
@@ -3179,7 +3179,7 @@ Flash_InitBytecodeBlock_Helper8_Skip6:
 	sla	iy, 2
 	ld	qwa, iy
 	inc	4, qwa
-	lda	xiz, (1952:16)
+	lda	xiz, (FLASH_SLOT_ASSIGN_LIST:16)
 	ld	wa, (xhl)
 	ld	(xiz+qwa), wa
 	inc	6, iy
@@ -3850,7 +3850,7 @@ SlotTable_InitBank1850_Loop:
 	ret
 
 SlotTable_ExtendedOpsBlock:
-	lda	xde, (1952:16)
+	lda	xde, (FLASH_SLOT_ASSIGN_LIST:16)
 	ldw (xde), 65535
 	ldw (xde+2), 65535
 	lda	xbc, (xde+6)
@@ -4179,7 +4179,7 @@ Flash_InitBytecodeBlock_Helper6:
 	extz	wa
 	calr	NoteEventBuffer_CopyToSlot
 	calr	SlotTable_ExtendedOpsBlock
-	lda	xbc, (1952:16)
+	lda	xbc, (FLASH_SLOT_ASSIGN_LIST:16)
 	ld	wa, (2362:16)
 	ld	(xbc), wa
 	ldw	(xbc+2), 0
@@ -4217,7 +4217,7 @@ Flash_InitBytecodeBlock_Helper8_Loop:
 	extz	wa
 	calr	NoteEventBuffer_CopyToSlot
 	calr	SlotTable_ExtendedOpsBlock
-	lda	xbc, (1952:16)
+	lda	xbc, (FLASH_SLOT_ASSIGN_LIST:16)
 	ld	e, (xsp+2)
 	extz	de
 	sla	de, 2
@@ -4249,7 +4249,7 @@ Flash_InitBytecodeBlock_Helper8_Epilogue:
 	ld	wa, (xhl+2)
 	cp	wa, 0xffff
 	jr	z, Flash_WriteBackSlotTable_Skip
-	lda	xbc, (1952:16)
+	lda	xbc, (FLASH_SLOT_ASSIGN_LIST:16)
 	ld	(xbc), wa
 	ld	wa, (xhl+4)
 	ld	(xbc+2), wa
@@ -4266,7 +4266,7 @@ Flash_WriteBackSlotTable_Loop:
 	jr	z, Flash_WriteBackSlotTable_Skip2
 	ld	ix, bc
 	inc	4, ix
-	lda	xde, (1952:16)
+	lda	xde, (FLASH_SLOT_ASSIGN_LIST:16)
 	ld	(xde+ix), wa
 	ld	ix, bc
 	inc	6, ix
@@ -4314,7 +4314,7 @@ Flash_InitBytecodeBlock_Helper9:
 	ld	wa, (xhl+2)
 	cp	wa, 0xffff
 	jr	z, Flash_WriteBackSlotTable_Skip3
-	lda	xbc, (1952:16)
+	lda	xbc, (FLASH_SLOT_ASSIGN_LIST:16)
 	ld	(xbc), wa
 	ld	wa, (xhl+4)
 	ld	(xbc+2), wa
@@ -4331,7 +4331,7 @@ Flash_WriteBackSlotTable_Loop2:
 	jr	z, Flash_WriteBackSlotTable_Skip4
 	ld	ix, bc
 	inc	4, ix
-	lda	xde, (1952:16)
+	lda	xde, (FLASH_SLOT_ASSIGN_LIST:16)
 	ld	(xde+ix), wa
 	ld	ix, bc
 	inc	6, ix

@@ -22482,7 +22482,7 @@ CharMap_ActivePreamb_Prologue:
 	jr	nz, CharMap_ActivePreamb_LoadDRAM2
 	ld	xwa, 0x4c
 CharMap_ActivePreamb_LoadDRAM2:
-	ld	xde, (0xe0b2:16)
+	ld	xde, (SOUND_TABLE_BASE:16)
 	add	xde, xwa
 	extz	xbc
 	add	xbc, (xde)
@@ -22499,13 +22499,13 @@ CharMap_ActivePreamb_Compare:
 	jr	nz, CharMap_ActivePreamb_LoadDRAM4
 	ld	xwa, 0x44
 CharMap_ActivePreamb_LoadDRAM3:
-	ld	xde, (0xe0b2:16)
+	ld	xde, (SOUND_TABLE_BASE:16)
 	add	xde, xwa
 	add	xbc, (xde)
 	ld	l, (xbc)
 	jr	CharMap_ActivePreamb_Increment
 CharMap_ActivePreamb_LoadDRAM4:
-	ld	xwa, (0xe0b2:16)
+	ld	xwa, (SOUND_TABLE_BASE:16)
 	add	xbc, (xwa + 60)
 	ld	l, (xbc)
 CharMap_ActivePreamb_Increment:
@@ -22659,7 +22659,7 @@ StoreDRAMInit_LoadParam2:
 	lda	xsp, (xsp+304)
 	retd	0x4
 StoreDRAMInit_LoadDRAM:
-	ld	xhl, (0xe0b2:16)
+	ld	xhl, (SOUND_TABLE_BASE:16)
 	ld	xde, (xhl + 4)
 	dec	1, xde
 	ld	xix, 0:i3
@@ -22823,13 +22823,13 @@ ApplyProgramChangeAs_SetByte:
 	ld	l, 0x89:opc
 	jr	ApplyProgramChangeAs_Return
 ApplyProgramChangeAs_LoadDRAM:
-	ld	xwa, (0xe0b2:16)
+	ld	xwa, (SOUND_TABLE_BASE:16)
 	ld	xwa, (xwa + 4)
 	ld	l, a
 ApplyProgramChangeAs_Return:
 	ret
 ApplyProgramChangeAs_LoadDRAM2:
-	ld	xhl, (0xe0b2:16)
+	ld	xhl, (SOUND_TABLE_BASE:16)
 	add	xhl, xbc
 	ld	xix, (xhl)
 	ld	c, (xwa + 4)
@@ -22886,7 +22886,7 @@ FetchOscTableEntry_Prologue:
 	ld	(xsp + 4), xbc
 	ld	xiz, xwa
 	calr	ApplyProgramChangeAs_DoLookupRe
-	ld	xbc, (0xe0b2:16)
+	ld	xbc, (SOUND_TABLE_BASE:16)
 	ld	xwa, (xbc + 8)
 	ld	e, a
 	cp	(xiz), l
@@ -22941,7 +22941,7 @@ ApplyProgramChange_Epilogue:
 	pop	xiz
 	ret
 ApplyProgramChange_LoadDRAM:
-	ld	xhl, (0xe0b2:16)
+	ld	xhl, (SOUND_TABLE_BASE:16)
 	add	xhl, xbc
 	ld	xix, (xhl)
 	ld	c, (xwa + 4)
@@ -23003,11 +23003,11 @@ SndParam_LookupOscEnvelope:
 	lda	xbc, (xiz + 2)
 	cp	hl, 0xf0
 	jr	lt, LookupOscEnvelope_LoadDRAM
-	ld	xwa, (0xe0b2:16)
+	ld	xwa, (SOUND_TABLE_BASE:16)
 	ld	xhl, (xwa + 48)
 	jr	LookupOscEnvelope_LoadReg2
 LookupOscEnvelope_LoadDRAM:
-	ld	xwa, (0xe0b2:16)
+	ld	xwa, (SOUND_TABLE_BASE:16)
 	ld	xde, (xwa + 28)
 	ld	xwa, 0:i3
 	ld	a, (xbc)
@@ -23028,7 +23028,7 @@ LookupOscEnvelope_LoadReg:
 	jr	nz, LookupOscEnvelope_Increment
 	jr	LookupOscEnvelope_LoadReg3
 LookupOscEnvelope_LoadDRAM2:
-	ld	xwa, (0xe0b2:16)
+	ld	xwa, (SOUND_TABLE_BASE:16)
 	ld	xhl, (xwa + 48)
 	lda	xbc, (xiz + 2)
 LookupOscEnvelope_LoadReg2:
@@ -23087,7 +23087,7 @@ SndParam_CheckAndApplyMode_Epilogue:
 	pop	xiz
 	ret
 SndParam_LookupFromPointerTable:
-	ld	xix, (0xe0b2:16)
+	ld	xix, (SOUND_TABLE_BASE:16)
 	add	xix, 0x38
 	ld	xiy, (xix)
 	ld	l, a
@@ -23110,7 +23110,7 @@ SndParam_LookupByPartAndNote:
 	dec	6, xsp
 	push	xiz
 	ld	e, c
-	ld	xbc, (0xe0b2:16)
+	ld	xbc, (SOUND_TABLE_BASE:16)
 	ld	xiz, (xbc + 52)
 	lda	xbc, (xsp + 4)
 	ld	(xbc + 3), a
@@ -23144,7 +23144,7 @@ SndParam_LookupAndDispatch:
 	jr	z, SndParam_ReturnResult
 	cp	(xsp + 4), 0x78
 	jr	nz, SndParam_ApplyMaskAndCheck
-	ld	xwa, (0xe0b2:16)
+	ld	xwa, (SOUND_TABLE_BASE:16)
 	ld	xbc, (xwa + 48)
 	ld	a, (xsp + 6)
 	extz	wa
@@ -23331,7 +23331,7 @@ Param_SignExtendRetu_Return:
 	ret
 Param_SignExtendRetu_Block:
 	ld	xwa, (SoundData_CategoryDescPtr:24)
-	ld	(0xe0b2:16), xwa
+	ld	(SOUND_TABLE_BASE:16), xwa
 	ret
 ; SoundData_InitPhase0: Init-phase-0 handler of subsystem table 11 (phases 1-3 are bare returns): jumps to the code
 ;   that sets the sound-table base 0xE0B2 to (SoundData_CategoryDescPtr). Basis: callers (SoundData_InitFuncTable entry

@@ -7182,7 +7182,7 @@ NoteEdit_GetParamValue_IncField:	; cases 6, 9
 	jrl	NoteEdit_Epilogue
 NoteEdit_GetParamValue_KeyNamesPart:
 	ld	xhl, 0:i3
-	ld	l, (0x2798:16)
+	ld	l, (NOTEEDIT_BASE_KEY:16)
 	jrl	NoteEdit_Epilogue
 NoteEdit_GetParamValue_DrumRowNamesPart:
 	ld	xhl, 0:i3
@@ -7230,14 +7230,14 @@ NoteEditFunc_OnNoteHilightDisp:
 NoteEdit_FormatNoteNameHigh:
 	ld xiz, xde
 	pushw 0x6
-	ld a, (0x2798:16)
+	ld a, (NOTEEDIT_BASE_KEY:16)
 	inc 1, a
 	jr NoteEdit_CopyNoteName
 
 NoteEdit_FormatNoteNameLow:
 	ld xiz, xde
 	pushw 0x6
-	ld a, (0x2798:16)
+	ld a, (NOTEEDIT_BASE_KEY:16)
 
 NoteEdit_CopyNoteName:
 	extz wa
@@ -10825,7 +10825,7 @@ SqedtVal2_SendCommonEvents:
 	call SetDialDown
 	ld wa, 1:i3
 	call SetDialEnable
-	ld (0x03e2e0:24), 0x00
+	ld (SQEDT_CURSOR_SIDE:24), 0x00
 	jrl AccIll_ReturnZero2
 
 SqedtVal2_HandleScrollEvent:
@@ -11238,7 +11238,7 @@ SqedtVal2_HandleSelectEvent:
 	ld xwa, (xsp + 66)
 	cp xwa, 0x1
 	jrl nz, SqedtVal2_HandleSelectCase3
-	ld (0x03e2e0:24), 0x00
+	ld (SQEDT_CURSOR_SIDE:24), 0x00
 	ld xwa, (xbc)
 	ld xbc, EVT_GET_FROM_CUR
 	ld xde, 0:i3
@@ -11353,7 +11353,7 @@ SqedtVal2_HandleSelectCase3:
 	ld xwa, (xsp + 66)
 	cp xwa, 0x3
 	jrl nz, SqedtVal2_HandleSelectCase2
-	ld (0x03e2e0:24), 0x01
+	ld (SQEDT_CURSOR_SIDE:24), 0x01
 	ld xwa, (xbc)
 	ld xbc, EVT_GET_TO_CUR
 	ld xde, 0:i3
@@ -11469,7 +11469,7 @@ SqedtVal2_HandleSelectCase2:
 	ld xwa, (xsp + 66)
 	cp xwa, 0x2
 	jrl nz, SqedtVal2_HandleSelectCase4
-	ld (0x03e2e0:24), 0x00
+	ld (SQEDT_CURSOR_SIDE:24), 0x00
 	ld xwa, (xbc)
 	ld xbc, EVT_GET_FROM_CUR
 	ld xde, 0:i3
@@ -11523,7 +11523,7 @@ SqedtVal2_HandleSelectCase4:
 	ld xwa, (xsp + 66)
 	cp xwa, 0x4
 	jrl nz, AccIll_ReturnZero2
-	ld (0x03e2e0:24), 0x01
+	ld (SQEDT_CURSOR_SIDE:24), 0x01
 	ld xwa, (xbc)
 	ld xbc, EVT_GET_TO_CUR
 	ld xde, 0:i3
@@ -11586,7 +11586,7 @@ SqedtVal2Proc_OnIndexswDown:
 	ld xwa, (xsp + 66)
 	cp xwa, 0x1
 	jrl nz, SqedtVal2_HandleDownScrollInner
-	ld (0x03e2e0:24), 0x00
+	ld (SQEDT_CURSOR_SIDE:24), 0x00
 	ld xwa, (xsp + 8)
 	ld xwa, (xwa + 26)
 	ld xbc, EVT_GET_FROM_CUR
@@ -11728,7 +11728,7 @@ SqedtVal2_HandleDownScrollInner:
 	ld xwa, (xsp + 66)
 	cp xwa, 0x3
 	jrl nz, SqedtVal2_HandleDownCase2
-	ld (0x03e2e0:24), 0x01
+	ld (SQEDT_CURSOR_SIDE:24), 0x01
 	ld xwa, (xbc)
 	ld xbc, EVT_GET_TO_CUR
 	ld xde, 0:i3
@@ -11868,7 +11868,7 @@ SqedtVal2_HandleDownCase2:
 	ld xwa, (xsp + 66)
 	cp xwa, 0x2
 	jrl nz, SqedtVal2_HandleDownCase4
-	ld (0x03e2e0:24), 0x00
+	ld (SQEDT_CURSOR_SIDE:24), 0x00
 	ld xwa, (xbc)
 	ld xbc, EVT_GET_FROM_CUR
 	ld xde, 0:i3
@@ -11922,7 +11922,7 @@ SqedtVal2_HandleDownCase4:
 	ld xwa, (xsp + 66)
 	cp xwa, 0x4
 	jrl nz, AccIll_ReturnZero2
-	ld (0x03e2e0:24), 0x01
+	ld (SQEDT_CURSOR_SIDE:24), 0x01
 	ld xwa, (xbc)
 	ld xbc, EVT_GET_TO_CUR
 	ld xde, 0:i3
@@ -15125,17 +15125,17 @@ SqedtFunc_OnChkCur_AtCursorPos6:	; cases 9, 11, 14
 	jr	SqedtFunc_OnChkCur_AtCursorPos0_Join
 SqedtFunc_OnGetFromCur:
 	ld	xhl, 0:i3
-	ld	l, (0x03e2dc:24)
+	ld	l, (SQEDT_FROM_CURSOR:24)
 	jrl	SqedtFunc_Epilogue12
 SqedtFunc_OnSetFromCur:
-	ld	(0x03e2dc:24), a
+	ld	(SQEDT_FROM_CURSOR:24), a
 	jrl	SeqFunc_ReturnZeroJmp
 SqedtFunc_OnGetToCur:
 	ld	xhl, 0:i3
-	ld	l, (0x03e2de:24)
+	ld	l, (SQEDT_TO_CURSOR:24)
 	jrl	SqedtFunc_Epilogue12
 SqedtFunc_OnSetToCur:
-	ld	(0x03e2de:24), a
+	ld	(SQEDT_TO_CURSOR:24), a
 	jrl	SeqFunc_ReturnZeroJmp
 SqedtFunc_OnChkCur2:
 	extz	wa
@@ -15154,42 +15154,42 @@ SqedtFunc_OnChkCur2:
 ;   SqedtFunc_OnChkCur2's field switch (siblings McpTrBFields 18-20, MinsTrAFields 21-23, MinsTrBFields 24-26,
 ;   ScpFromFields, ScpToFields).
 SqedtFunc_OnChkCur2_McpTrAFields:
-	cp	(0x03e2e0:24), 0
+	cp	(SQEDT_CURSOR_SIDE:24), 0
 	jrl	nz, SeqFunc_ReturnZeroJmp
 	ld	xwa, 15
 	jr	SqedtFunc_OnChkCur2_ScpFromFields_Join2
 ; SqedtFunc_OnChkCur2_McpTrBFields: Fields 18-20 (measure-copy TrB, SM, Rep): true when side 0x3E2E0 = 1 and the to-
 ;   cursor (0x3E2DE) = field - 18.
 SqedtFunc_OnChkCur2_McpTrBFields:	; cases 18, 19, 20
-	cp	(0x03e2e0:24), 1
+	cp	(SQEDT_CURSOR_SIDE:24), 1
 	jrl	nz, SeqFunc_ReturnZeroJmp
 	ld	xwa, 18
 	jr	SqedtFunc_OnChkCur2_ScpToFields_Join3
 ; SqedtFunc_OnChkCur2_MinsTrAFields: Fields 21-23 (measure-insert TrA, FM, LM): true when side 0x3E2E0 = 0 and the
 ;   from-cursor (0x3E2DC) = field - 21.
 SqedtFunc_OnChkCur2_MinsTrAFields:	; cases 21, 22, 23
-	cp	(0x03e2e0:24), 0
+	cp	(SQEDT_CURSOR_SIDE:24), 0
 	jrl	nz, SeqFunc_ReturnZeroJmp
 	ld	xwa, 21
 	jr	SqedtFunc_OnChkCur2_ScpFromFields_Join2
 ; SqedtFunc_OnChkCur2_MinsTrBFields: Fields 24-26 (measure-insert TrB, SM, Rep): true when side 0x3E2E0 = 1 and the
 ;   to-cursor (0x3E2DE) = field - 24.
 SqedtFunc_OnChkCur2_MinsTrBFields:	; cases 24, 25, 26
-	cp	(0x03e2e0:24), 1
+	cp	(SQEDT_CURSOR_SIDE:24), 1
 	jrl	nz, SeqFunc_ReturnZeroJmp
 	ld	xwa, 24
 	jr	SqedtFunc_OnChkCur2_ScpToFields_Join3
 ; SqedtFunc_OnChkCur2_ScpFromFields: Fields 27-28 (song-copy from-song, from-track): true when side 0x3E2E0 = 0 and
 ;   the from-cursor (0x3E2DC) = field - 27.
 SqedtFunc_OnChkCur2_ScpFromFields:	; cases 27, 28
-	cp	(0x03e2e0:24), 0
+	cp	(SQEDT_CURSOR_SIDE:24), 0
 	jrl	nz, SeqFunc_ReturnZeroJmp
 	ld	xwa, 27
 SqedtFunc_OnChkCur2_ScpFromFields_Join2:
 	ld	xbc, (xsp+8)
 	sub	xbc, xwa
 	ld	xwa, 0:i3
-	ld	a, (0x03e2dc:24)
+	ld	a, (SQEDT_FROM_CURSOR:24)
 	cp	xwa, xbc
 	scc16	z, hl
 	extz	xhl
@@ -15197,14 +15197,14 @@ SqedtFunc_OnChkCur2_ScpFromFields_Join2:
 ; SqedtFunc_OnChkCur2_ScpToFields: Fields 29-30 (song-copy to-song, to-track): true when side 0x3E2E0 = 1 and the to-
 ;   cursor (0x3E2DE) = field - 29.
 SqedtFunc_OnChkCur2_ScpToFields:	; cases 29, 30
-	cp	(0x03e2e0:24), 1
+	cp	(SQEDT_CURSOR_SIDE:24), 1
 	jrl	nz, SeqFunc_ReturnZeroJmp
 	ld	xwa, 29
 SqedtFunc_OnChkCur2_ScpToFields_Join3:
 	ld	xbc, (xsp+8)
 	sub	xbc, xwa
 	ld	xwa, 0:i3
-	ld	a, (0x03e2de:24)
+	ld	a, (SQEDT_TO_CURSOR:24)
 	cp	xwa, xbc
 	scc16	z, hl
 	extz	xhl
