@@ -23,10 +23,11 @@ six probes with it.
 ## ★★ THE COVERAGE GOAL IS MET: every reachable code path with start evidence is converted
 
 ⚠ The figures in this section were measured on 2026-08-31, before prom_a and prom_b reached zero
-`.incbin` (see "Where it stands").  On 2026-10-24 `notes/reachability.py` could not be re-run: it,
-and about 37 other probes under `wsa1/notes/`, hard-code `~/compartilhado/kn7000_mame_build/unidasm`,
-which no longer exists.  Its decode cache is keyed on that binary's SHA-1, so pointing it at
-another unidasm build is a decision, not a path fix.
+`.incbin` (see "Where it stands").  On 2026-10-24 `notes/reachability.py` could not be re-run: it
+hard-codes `~/compartilhado/kn7000_mame_build/unidasm`, which no longer exists, and so do 26 other
+`.py` probes (`command grep -rl kn7000_mame_build notes | command grep -c '\.py$'`, run in `wsa1/`,
+printed 27 on 2026-10-24, `reachability.py` included).  `reachability.py`'s decode cache is keyed
+on that binary's SHA-1, so pointing it at another unidasm build is a decision, not a path fix.
 
     python3 notes/reachability.py --targets
     TOTAL reachable-and-unconverted: STRONG 17 bytes, ANY 1,702, in 17 spans.
