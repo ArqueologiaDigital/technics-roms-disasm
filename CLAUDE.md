@@ -3,8 +3,9 @@
 > ⚠️ **Beads was decommissioned on 2026-07-27** at the owner's request. `bd` and
 > `beads-lite` were removed from the machine — do not run them and do not reinstall
 > them. `.beads/issues.jsonl` **stays** and remains this project's task list: read
-> it with `jq`/`grep`, write it by editing it directly, publish it with
-> `make issues` (which reads the file itself and never invoked `bd`).
+> it with `jq`/`grep`, write it by editing it directly. The website has had no issues
+> page since technics-docs f6fcaa6 (2026-09-04), so `make issues` now refuses;
+> `python3 scripts/build/export_issues_to_website.py OUT.md` renders the file to Markdown.
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
@@ -41,7 +42,7 @@ to this repository, `kn7000/` commits included.
 Detailed documentation is at `../technics-docs/`. Key pages:
 - **Hardware**: `hardware-architecture.md`, `memory-map.md`, `cpu-subsystem.md`
 - **Protocols**: `control-panel-protocol.md`, `inter-cpu-protocol.md`, `boot-sequence.md`
-- **Progress**: `rom-reconstruction.md`, `issues.md`, `reverse-engineering.md`
+- **Progress**: `rom-reconstruction.md`, `reverse-engineering.md`
 - **Subsystems**: `audio-subsystem.md`, `fdc-subsystem.md`, `hdae5000.md`
 - **Data Formats**: `lzss-compression.md` (0x3E0000 address resolved - see [Firmware Update System](../technics-docs/lzss-compression.md#firmware-update-system-and-0x3e0000))
 
@@ -273,7 +274,7 @@ commit.
 
 ### Image Extraction and Gallery Updates
 
-When new images are discovered and extracted as `.bin` files in `maincpu/images/` or `table_data/images/`:
+When new images are discovered and extracted as `.bin` files in `v10/maincpu/images/` (and its `v9/`, `v7/` twins) or `table_data/images/`:
 
 1. **Add metadata** to `scripts/build/convert_images.py` in the `IMAGE_METADATA` dictionary:
    - Filename
@@ -308,13 +309,15 @@ This ensures the documentation website always reflects the latest extracted imag
 The documentation website at `../technics-docs/` must be kept in sync with project progress. **Run these commands regularly:**
 
 ```bash
-make website   # Updates gallery, issues, and ROM status diagram
+make website   # Updates gallery and ROM status diagram
 ```
 
 This runs:
 1. `make gallery` - Converts extracted images to PNG
-2. `make issues` - Exports Beads issue tracker to `issues.md`
-3. `make rom-status` - Regenerates the ROM status visualization diagram
+2. `make rom-status` - Regenerates the ROM status visualization diagram
+
+(`make issues` used to be step 2; it now refuses, because the website has had no issues page since
+technics-docs f6fcaa6, 2026-09-04.)
 
 **When to update the website:**
 - After extracting new images
@@ -328,20 +331,17 @@ Always commit both repositories together when making website updates.
 
 **The ROM status diagram must be kept in sync with disassembly progress.**
 
-The file `scripts/build/generate_rom_status_diagram.py` generates an SVG visualization showing the disassembly status of each ROM component. This diagram provides an at-a-glance view of project progress.
+The file `scripts/build/generate_rom_status_diagram.py` generates a PNG (`<DOCS_DIR>/assets/images/rom-status-diagram.png`, `DOCS_DIR` defaulting to `../technics-docs`) showing, byte by byte, what kind of source emits each of six KN5000 images (main CPU v10, table data, sub-CPU boot, sub-CPU payload v1.42, custom data, HD-AE5000). This diagram provides an at-a-glance view of project progress.
 
-**Status categories:**
-| Color | Category | Description |
-|-------|----------|-------------|
-| Green | Disassembled Code | Properly disassembled with symbolic instructions |
-| Blue | Known Data | Documented data structures |
-| Cyan | String Data | Text strings |
-| Light Green | Pointer/Jump Tables | Tables of addresses |
-| Purple | Binary Includes | External binary files not yet analyzed |
-| Red | Raw Bytes (unknown) | Hex bytes with unknown purpose |
-| Orange | Raw Bytes (known code) | Code not yet disassembled |
-| Gray | Padding/Unused | Fill bytes (0x00 or 0xFF) |
-| Yellow | Undetermined | Not yet categorized |
+**Status categories** (since 2026-10-24 taken from `scripts/analysis/data_range_census.py`'s per-byte map; the script refuses to draw if any byte falls in no bucket):
+| Color       | Category                  | Description                                                                                     |
+|-------------|---------------------------|-------------------------------------------------------------------------------------------------|
+| Green       | Assembly code             | census bucket CODE: instruction statements                                                      |
+| Light Green | Compiled C                | data whose every line is an `.incbin` of byte-exact clang output (`<tree>/includes/generated/`) |
+| Blue        | Data, purpose explained   | census grade KNOWN-A: purpose stated, evidence cited                                            |
+| Cyan        | Data, named               | census grade KNOWN-B: descriptive name and header                                               |
+| Red         | Data, purpose unexplained | census grade UNKNOWN                                                                            |
+| Gray        | Filler                    | census grade FILLER: verified uniform fill, >= 16 B                                             |
 
 **Regeneration triggers:**
 - After disassembling new code sections
@@ -448,10 +448,10 @@ asking. The archived issues are at
 
 The task list is:
 - Versioned via `.beads/issues.jsonl` in git (single source of truth)
-- Exported to the website via `make issues` (reads JSONL directly)
-- Visible at `/issues/` on the documentation site
+- No longer published on the website (technics-docs f6fcaa6, 2026-09-04, retired the `/issues/` page;
+  `make issues` refuses); `python3 scripts/build/export_issues_to_website.py OUT.md` renders it to Markdown
 
-**Quick access:** read `.beads/issues.jsonl`, or see `../technics-docs/issues.md` for the web version.
+**Quick access:** read `.beads/issues.jsonl`.
 
 ### Disassembly Quality Standards (MANDATORY)
 
@@ -1055,7 +1055,8 @@ echo "XX XX XX XX" | xxd -r -p > /tmp/bytes.bin
 
 **Reference files available:**
 - `original_ROMs/kn5000_subcpu_boot.ic30.unidasm` - Sub CPU boot ROM
-- `original_ROMs/kn5000_v10_program.ic9.unidasm` - Main CPU ROM (if available)
+- `original_ROMs/kn5000_v10_program.rom.unidasm` - Main CPU ROM v10
+- `original_ROMs/kn5000_subprogram_v142.rom.unidasm` - Sub CPU payload v1.42
 - `original_ROMs/hd-ae5000_v2_06i.ic4.unidasm` - HDAE5000 expansion ROM
 
 **Note:** unidasm provides a linear disassembly without distinguishing code from data. Manual analysis is still required to identify routine boundaries, data tables, and add meaningful labels/comments.

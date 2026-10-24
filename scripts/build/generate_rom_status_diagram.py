@@ -31,6 +31,15 @@ WHERE THE CLASSES COME FROM
     archived in 38e7d9f, found none of them, and painted every image
     "Undetermined"; it also wrote into scripts/kn5000-docs/ inside this repo.
 
+DOCS PAGE (follow-up, not yet done)
+    technics-docs rom-reconstruction.md still carries the old nine-colour legend
+    (strings, pointer tables, binary includes, orange, yellow) and a "This image
+    is stale" box.  The first commit in technics-docs that publishes a diagram
+    from this script must replace both with this legend, which is CLASSES below:
+        green = assembly code · light green = compiled C (clang `.incbin`) ·
+        blue = data, purpose explained (census A) · cyan = data, named
+        (census B) · red = data, purpose unexplained · gray = verified filler.
+
 RUN (needs the pinned LLVM toolchain; about two minutes)
     python3 scripts/build/generate_rom_status_diagram.py --docs-dir ../technics-docs
     make rom-status DOCS_DIR=/path/to/technics-docs
@@ -66,9 +75,11 @@ CLASSES = [
     ("Data, named (census B)", (0, 190, 190)),
     ("Data, purpose unexplained", (220, 40, 40)),
     ("Filler (verified uniform)", (150, 150, 150)),
-    ("Not mapped", (240, 200, 120)),
 ]
-ASM, CC, KA, KB, UNK, FILL, NONE = range(len(CLASSES))
+ASM, CC, KA, KB, UNK, FILL = range(len(CLASSES))
+# Internal sentinel for "no census bucket yet"; class_map() refuses to return a
+# map that still holds it, so it is never drawn and has no legend entry.
+NONE = len(CLASSES)
 GRADE_CLASS = {"CODE": ASM, "KNOWN-A": KA, "KNOWN-B": KB, "UNKNOWN": UNK, "FILLER": FILL}
 
 # (census key, block title); the first two form the left column.
@@ -239,7 +250,7 @@ def main():
     for key, title in LAYOUT_LEFT + LAYOUT_RIGHT:
         b = blocks[key]
         rows.append([title, "{:,}".format(b["size"])] +
-                    ["%.1f%%" % (100.0 * b["counts"][k] / b["size"]) for k in range(NONE)])
+                    ["%.1f%%" % (100.0 * b["counts"][k] / b["size"]) for k in range(len(CLASSES))])
     widths = [max(len(r[i]) for r in rows + [heads]) for i in range(len(heads))]
     fmt = lambda r: "| " + " | ".join(c.ljust(widths[i]) for i, c in enumerate(r)) + " |"
     print(fmt(heads))
