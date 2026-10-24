@@ -2488,7 +2488,7 @@
     mov     0x3ff, d0
     calls   (a2)
     clr     d0
-    .byte 0xFA, 0x92, 0x5F, 0x04   # movbu d100, (0x45f, sp)
+    movbu   d0, (0x45f, sp)
     bra     0x483e985c
     mov     (0x50299298), a0
     mov     a3, a1
@@ -2619,9 +2619,9 @@
     mulu    d0, d3
     movhu   (0x58, sp), d0
     mov     d1, (0x48, sp)
-    .byte 0xFA, 0x93, 0x60, 0x04   # movhu d100, (0x460, sp)
+    movhu   d0, (0x460, sp)
     movhu   (0x5c, sp), d0
-    .byte 0xFA, 0x93, 0x64, 0x04   # movhu d100, (0x464, sp)
+    movhu   d0, (0x464, sp)
     mov     (0x38, sp), d0
     add     0x26, d0
     mov     d0, (0x40, sp)
@@ -2645,21 +2645,21 @@
     mov     2, d1
     call    func_483EF4EC, 0, 0
     add     d2, d0
-    .byte 0xFA, 0x93, 0x68, 0x04   # movhu d100, (0x468, sp)
+    movhu   d0, (0x468, sp)
     bra     0x483e99af
     movhu   (0x460, sp), d0
     mov     sp, a0
     mov     a0, d1
     add     0x468, d1
     mov     d1, (0x28, sp)
-    .byte 0xFA, 0x93, 0x68, 0x04   # movhu d100, (0x468, sp)
+    movhu   d0, (0x468, sp)
     mov     (0x38, sp), a0
     add     0x2c, a0
     movbu   (a0), d0
     cmp     1, d0
     bne     0x483e99c2
     movhu   (0x5a, sp), d0
-    .byte 0xFA, 0x93, 0x62, 0x04   # movhu d100, (0x462, sp)
+    movhu   d0, (0x462, sp)
     bra     0x483e99ed
     movbu   (a0), d0
     cmp     0, d0
@@ -2671,7 +2671,7 @@
     add     d0, d1
     lsr     1, d3
     sub     d3, d1
-    .byte 0xFA, 0x97, 0x62, 0x04   # movhu d100, (0x462, sp)
+    movhu   d1, (0x462, sp)
     bra     0x483e99ed
     movbu   (a0), d0
     cmp     2, d0
@@ -2679,13 +2679,13 @@
     movhu   (0x5e, sp), d0
     exth    d0
     sub     d3, d0
-    .byte 0xFA, 0x93, 0x62, 0x04   # movhu d100, (0x462, sp)
+    movhu   d0, (0x462, sp)
     mov     (0x2c, sp), d1
     movhu   (0x462, sp), d0
     mov     (0x34, sp), a2
     exth    d0
     add     d1, d0
-    .byte 0xFA, 0x93, 0x66, 0x04   # movhu d100, (0x466, sp)
+    movhu   d0, (0x466, sp)
     mov     (0x38, sp), d0
     clr     d3
     add     0x24, d0
@@ -2715,7 +2715,7 @@
     mov     2, d1
     call    func_483EF4EC, 0, 0
     add     d2, d0
-    .byte 0xFA, 0x93, 0x6A, 0x04   # movhu d100, (0x46a, sp)
+    movhu   d0, (0x46a, sp)
     movhu   (0x462, sp), d1
     movhu   (0x5a, sp), d0
     exth    d1
@@ -2723,7 +2723,7 @@
     cmp     d0, d1
     bge     0x483e9a53
     movhu   (0x5a, sp), d0
-    .byte 0xFA, 0x93, 0x62, 0x04   # movhu d100, (0x462, sp)
+    movhu   d0, (0x462, sp)
     movhu   (0x5e, sp), d0
     movhu   (0x466, sp), d1
     exth    d0
@@ -2731,7 +2731,7 @@
     cmp     d0, d1
     ble     0x483e9a66
     movhu   (0x5e, sp), d0
-    .byte 0xFA, 0x93, 0x66, 0x04   # movhu d100, (0x466, sp)
+    movhu   d0, (0x466, sp)
     mov     (0x38, sp), a0
     mov     (0x28, a0), d0
     cmp     0, d0
@@ -2783,11 +2783,11 @@
     movhu   (0x462, sp), d0
     exth    d0
     add     d1, d0
-    .byte 0xFA, 0x93, 0x62, 0x04   # movhu d100, (0x462, sp)
+    movhu   d0, (0x462, sp)
     movhu   (0x466, sp), d0
     exth    d0
     add     d1, d0
-    .byte 0xFA, 0x93, 0x66, 0x04   # movhu d100, (0x466, sp)
+    movhu   d0, (0x466, sp)
     bra     0x483e9ae2
     inc     a2
     movbu   (a2), d0
@@ -6760,8 +6760,8 @@
     movm    [d2,d3,a2,a3], (sp)
 # func_483ECA4F  (CPU 0x483ECA4F)
     add     -0x130, sp
-    .byte 0xFA, 0x90, 0x48, 0x01   # mov d97, (0x148, sp)
-    .byte 0xFA, 0x94, 0x4C, 0x01   # mov d97, (0x14c, sp)
+    mov     a0, (0x148, sp)
+    mov     a1, (0x14c, sp)
     clr     d0
     mov     d0, (0x1c, sp)
     mov     d0, (0x20, sp)
@@ -9568,7 +9568,7 @@
     movm    [d2,d3,a2,a3], (sp)
 # func_483EE52B  (CPU 0x483EE52B)
     add     -0x124, sp
-    .byte 0xFA, 0x94, 0x40, 0x01   # mov d97, (0x140, sp)
+    mov     a1, (0x140, sp)
     mov     a0, a3
     mov     (0x502991c4), a0
     clr     d0
