@@ -1348,8 +1348,8 @@ SeqTrack_InitScoopAndSetWall:
 	ld hl, 1:i3
 	ld (SEQ_TRACK:16), a
 	inc 1, (SEQ_TRACK:16)
-	ld (9858:16), l
-	inc 1, (9858:16)
+	ld (SEQ_OP_DEST_TRACK:16), l
+	inc 1, (SEQ_OP_DEST_TRACK:16)
 	ld a, (SEQ_TRACK:16)
 	ld (9860:16), a
 	pushw wa
@@ -2158,9 +2158,9 @@ SetWall_ValidateAndApply:
 	jrl c, SetWall_ParamOutOfRange
 	cp a, (0x28a1:16)
 	jrl ugt, SetWall_ParamOutOfRange
-	cp a, (9858:16)
+	cp a, (SEQ_OP_DEST_TRACK:16)
 	jrl z, SetWall_ParamOutOfRange
-	ld a, (9858:16)
+	ld a, (SEQ_OP_DEST_TRACK:16)
 	cp a, 1:i3
 	jrl c, SetWall_ParamOutOfRange
 	cp a, (0x28a1:16)
@@ -2188,7 +2188,7 @@ SetWall_ParamsValid:
 SetWall_SlotResolved:
 	ld wa, (SEQ_DATA_BLOCK:16)
 	ld (0x27d4:16), wa
-	ld a, (9858:16)
+	ld a, (SEQ_OP_DEST_TRACK:16)
 	call SetWall_SingleSlotResolve
 	cp (SEQ_ERROR_CODE:16), 0
 	jrl nz, Scoop_NullRet
@@ -2197,7 +2197,7 @@ SetWall_SlotResolved:
 	ld a, (9860:16)
 	cp a, (SEQ_TRACK:16)
 	jrl z, SetWall_InitVoiceSlots
-	cp a, (9858:16)
+	cp a, (SEQ_OP_DEST_TRACK:16)
 	jrl z, SetWall_InitVoiceSlots
 	ld a, (SEQ_TRACK:16)
 	pushw wa
@@ -2220,7 +2220,7 @@ SetWall_InitVoiceSlots:
 	call VoiceChannel_CopyParamBlock
 	ld (0x27d6:16), iy
 	xor xhl, xhl
-	ld l, (9858:16)
+	ld l, (SEQ_OP_DEST_TRACK:16)
 	call VoiceChannel_ClearRegisters
 	ld xix, 0x18fa
 	nop

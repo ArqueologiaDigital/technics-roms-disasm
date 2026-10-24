@@ -4041,7 +4041,7 @@ FindBit_ShiftLoop:
 Audio_InitAllDefaults:
 	ld (PANEL_EVENT_QUEUE:16), 255
 	ld (SWBTWR_EVENT_QUEUE:16), 255
-	ldw (0x90de:16), 0
+	ldw (SWBTWR_WRITE_INDEX:16), 0
 	ldw (0x90e0:16), 0
 	ld (0xbf39:16), 255
 	ldw (0x90e2:16), 0
@@ -4824,42 +4824,42 @@ MidiNoHeader_Done:
 	ret
 
 MIDI_WriteCommandToBuffer:
-	ld hl, (0x90de:16)
+	ld hl, (SWBTWR_WRITE_INDEX:16)
 	ld ix, hl
 	inc 1, hl
-	ld (0x90de:16), hl
+	ld (SWBTWR_WRITE_INDEX:16), hl
 	lda xhl, (SWBTWR_EVENT_QUEUE:16)
 	extz xix
 	add xix, xhl
 	ld (xix), a
-	ld wa, (0x90de:16)
+	ld wa, (SWBTWR_WRITE_INDEX:16)
 	ld ix, wa
 	inc 1, wa
-	ld (0x90de:16), wa
+	ld (SWBTWR_WRITE_INDEX:16), wa
 	ld wa, ix
 	extz xwa
 	add xwa, xhl
 	ld (xwa), c
-	ld wa, (0x90de:16)
+	ld wa, (SWBTWR_WRITE_INDEX:16)
 	ld bc, wa
 	inc 1, wa
-	ld (0x90de:16), wa
+	ld (SWBTWR_WRITE_INDEX:16), wa
 	extz xbc
 	add xbc, xhl
 	ld (xbc), e
-	ld wa, (0x90de:16)
+	ld wa, (SWBTWR_WRITE_INDEX:16)
 	ld bc, wa
 	inc 1, wa
-	ld (0x90de:16), wa
+	ld (SWBTWR_WRITE_INDEX:16), wa
 	extz xbc
 	add xbc, xhl
 	ld a, (xsp + 4)
 	ld (xbc), a
-	ld wa, (0x90de:16)
+	ld wa, (SWBTWR_WRITE_INDEX:16)
 	extz xwa
 	add xwa, xhl
 	ld (xwa), 0xff
-	cpw (0x90de:16), 508
+	cpw (SWBTWR_WRITE_INDEX:16), 508
 	jr c, MidiWrite_ReturnDiscard
 	push xde
 	push xhl
@@ -4870,7 +4870,7 @@ MIDI_WriteCommandToBuffer:
 	pop xix
 	pop xhl
 	pop xde
-	ldw (0x90de:16), 0
+	ldw (SWBTWR_WRITE_INDEX:16), 0
 
 MidiWrite_ReturnDiscard:
 	retd 0x2
@@ -4946,7 +4946,7 @@ Audio_MainPeriodicUpdate:
 
 Audio_SyncBufferPositions:
 	ldw (EXT_RECORD_OFFSET:16), 0
-	ldmm16 0x90e0, 0x90de
+	ldmm16 0x90e0, SWBTWR_WRITE_INDEX
 	jr FileIO_ProcessRemainingOps
 
 ; File I/O operation dispatch
@@ -4958,7 +4958,7 @@ FileIO_OperationDispatch:
 	lda xbc, (SoundProgram_DispatchTable:24)
 	ld	xhl, (xbc+wa)
 	call (xhl)
-	cpw (0x90de:16), 508
+	cpw (SWBTWR_WRITE_INDEX:16), 508
 	jr c, FileIO_ProcessRemainingOps
 	push xde
 	push xhl
@@ -4979,7 +4979,7 @@ FileIO_ProcessRemainingOps:
 	cp (xwa), 0xff
 	jr nz, FileIO_OperationDispatch
 	lda xbc, (SWBTWR_EVENT_QUEUE:16)
-	ld wa, (0x90de:16)
+	ld wa, (SWBTWR_WRITE_INDEX:16)
 	extz xwa
 	add xwa, xbc
 	ld (xwa), 0xff
@@ -5567,63 +5567,63 @@ MIDI_WriteResetSequence:
 	ld a, (0x90f9:16)
 	bit 0, a
 	ret z
-	ld wa, (0x90de:16)
+	ld wa, (SWBTWR_WRITE_INDEX:16)
 	ld de, wa
 	inc 1, wa
-	ld (0x90de:16), wa
+	ld (SWBTWR_WRITE_INDEX:16), wa
 	lda xbc, (SWBTWR_EVENT_QUEUE:16)
 	extz xde
 	add xde, xbc
 	ld (xde), 0x90
-	ld wa, (0x90de:16)
+	ld wa, (SWBTWR_WRITE_INDEX:16)
 	ld de, wa
 	inc 1, wa
-	ld (0x90de:16), wa
+	ld (SWBTWR_WRITE_INDEX:16), wa
 	extz xde
 	add xde, xbc
 	ld (xde), 0x0
-	ld wa, (0x90de:16)
+	ld wa, (SWBTWR_WRITE_INDEX:16)
 	ld hl, wa
 	inc 1, wa
-	ld (0x90de:16), wa
+	ld (SWBTWR_WRITE_INDEX:16), wa
 	extz xhl
 	add xhl, xbc
 	lda xde, (PANEL_REC_90:16)
 	ld a, (xde)
 	ld (xhl), a
-	ld wa, (0x90de:16)
+	ld wa, (SWBTWR_WRITE_INDEX:16)
 	ld hl, wa
 	inc 1, wa
-	ld (0x90de:16), wa
+	ld (SWBTWR_WRITE_INDEX:16), wa
 	extz xhl
 	add xhl, xbc
 	ld (xhl), 0x1f
-	ld wa, (0x90de:16)
+	ld wa, (SWBTWR_WRITE_INDEX:16)
 	ld hl, wa
 	inc 1, wa
-	ld (0x90de:16), wa
+	ld (SWBTWR_WRITE_INDEX:16), wa
 	extz xhl
 	add xhl, xbc
 	ld (xhl), 0x90
-	ld wa, (0x90de:16)
+	ld wa, (SWBTWR_WRITE_INDEX:16)
 	ld hl, wa
 	inc 1, wa
-	ld (0x90de:16), wa
+	ld (SWBTWR_WRITE_INDEX:16), wa
 	extz xhl
 	add xhl, xbc
 	ld (xhl), 0x1
-	ld wa, (0x90de:16)
+	ld wa, (SWBTWR_WRITE_INDEX:16)
 	ld hl, wa
 	inc 1, wa
-	ld (0x90de:16), wa
+	ld (SWBTWR_WRITE_INDEX:16), wa
 	extz xhl
 	add xhl, xbc
 	ld a, (xde + 1)
 	ld (xhl), a
-	ld wa, (0x90de:16)
+	ld wa, (SWBTWR_WRITE_INDEX:16)
 	ld de, wa
 	inc 1, wa
-	ld (0x90de:16), wa
+	ld (SWBTWR_WRITE_INDEX:16), wa
 	extz xde
 	add xde, xbc
 	ld (xde), 0x1f
@@ -6763,7 +6763,7 @@ SndParam_WriteLookupAndStore:
 SwbtWr_FlushAndAppendParams:
 	cp (MIDI_MSG_DATA3:16), 0
 	ret z
-	cpw (0x90de:16), 508
+	cpw (SWBTWR_WRITE_INDEX:16), 508
 	jr c, SwbtWr_FlushDone
 	push xde
 	push xhl
@@ -6774,14 +6774,14 @@ SwbtWr_FlushAndAppendParams:
 	pop xix
 	pop xhl
 	pop xde
-	ldw (0x90de:16), 0
+	ldw (SWBTWR_WRITE_INDEX:16), 0
 
 SwbtWr_FlushDone:
 	calr SwbtWr_AppendFixedParamBlock
 	ret
 
 SwbtWr_CheckBufferOverflow:
-	cpw	(0x90de:16), 508
+	cpw	(SWBTWR_WRITE_INDEX:16), 508
 	jr	c, SwbtWr_CheckBufferOverflow_Skip
 	push	xde
 	push	xhl
@@ -6792,12 +6792,12 @@ SwbtWr_CheckBufferOverflow:
 	pop	xix
 	pop	xhl
 	pop	xde
-	ldw	(0x90de:16), 0
+	ldw	(SWBTWR_WRITE_INDEX:16), 0
 SwbtWr_CheckBufferOverflow_Skip:
 	jrl	SwbtWr_AppendFixedParamBlock
 
 SwbtWr_WriteParamBlock:
-	cpw (0x90de:16), 508
+	cpw (SWBTWR_WRITE_INDEX:16), 508
 	jr c, SwbtWr_WriteParamBlock_Join
 	push xde
 	push xhl
@@ -6808,7 +6808,7 @@ SwbtWr_WriteParamBlock:
 	pop xix
 	pop xhl
 	pop xde
-	ldw (0x90de:16), 0
+	ldw (SWBTWR_WRITE_INDEX:16), 0
 
 SwbtWr_WriteParamBlock_Join:
 	jrl SwbtWr_AppendFixedParamBlock
@@ -7563,36 +7563,36 @@ VoiceData_DistributeToChannels_Epilogue:
 	ret
 
 SwbtWr_AppendFixedParamBlock:
-	ld wa, (0x90de:16)
+	ld wa, (SWBTWR_WRITE_INDEX:16)
 	ld de, wa
 	inc 1, wa
-	ld (0x90de:16), wa
+	ld (SWBTWR_WRITE_INDEX:16), wa
 	lda xbc, (SWBTWR_EVENT_QUEUE:16)
 	extz xde
 	add xde, xbc
 	ldmi16 (xde), 0x9127
-	ld wa, (0x90de:16)
+	ld wa, (SWBTWR_WRITE_INDEX:16)
 	ld de, wa
 	inc 1, wa
-	ld (0x90de:16), wa
+	ld (SWBTWR_WRITE_INDEX:16), wa
 	extz xde
 	add xde, xbc
 	ldmi16 (xde), 0x9128
-	ld wa, (0x90de:16)
+	ld wa, (SWBTWR_WRITE_INDEX:16)
 	ld de, wa
 	inc 1, wa
-	ld (0x90de:16), wa
+	ld (SWBTWR_WRITE_INDEX:16), wa
 	extz xde
 	add xde, xbc
 	ldmi16 (xde), 0x9129
-	ld wa, (0x90de:16)
+	ld wa, (SWBTWR_WRITE_INDEX:16)
 	ld de, wa
 	inc 1, wa
-	ld (0x90de:16), wa
+	ld (SWBTWR_WRITE_INDEX:16), wa
 	extz xde
 	add xde, xbc
 	ldmi16 (xde), 0x912a
-	ld wa, (0x90de:16)
+	ld wa, (SWBTWR_WRITE_INDEX:16)
 	extz xwa
 	add xwa, xbc
 	ld (xwa), 0xff
@@ -9359,10 +9359,10 @@ PartExpr_Done:
 
 Part_ReinitAllActive:
 	push xiz
-	ld (0x91c8:16), 0
+	ld (MIDI_CUR_PART:16), 0
 
 PartReinit_ProcessNextPart:
-	ld c, (0x91c8:16)
+	ld c, (MIDI_CUR_PART:16)
 	ldfr_berp A, 0x3c
 	ldfr_werp DE, 0x3e
 	ld de, (SEQ_TRACK_MASK:16)
@@ -9385,8 +9385,8 @@ PartReinit_ProcessNextPart:
 	calr PartReinit_CheckSpecialPart15
 
 PartReinit_AdvancePart:
-	inc 1, (0x91c8:16)
-	cp (0x91c8:16), 16
+	inc 1, (MIDI_CUR_PART:16)
+	cp (MIDI_CUR_PART:16), 16
 	jr c, PartReinit_ProcessNextPart
 	calr PendingParam_ScanAllTables
 	call SwbtWr_ReinitOutputBank
@@ -9400,7 +9400,7 @@ PartReinit_SendD2Command:
 	xor a, a
 	ld w, 0x40:opc
 	ld (xix+), WA
-	ld a, (0x91c8:16)
+	ld a, (MIDI_CUR_PART:16)
 	ld w, 0xff:opc
 	ld (xix), wa
 	calr VoiceParam_DispatchByMode
@@ -9411,7 +9411,7 @@ PartReinit_SendD1Command:
 	ldw wa, 0xd1
 	ld (xix+), WA
 	ld a, 0x0:opc
-	ld w, (0x91c8:16)
+	ld w, (MIDI_CUR_PART:16)
 	ld (xix+), WA
 	ld (xix), 0xff
 	calr VoiceParam_DispatchByMode
@@ -9422,7 +9422,7 @@ PartReinit_SendD0Command:
 	ldw wa, 0xd0
 	ld (xix+), WA
 	ld a, 0x0:opc
-	ld w, (0x91c8:16)
+	ld w, (MIDI_CUR_PART:16)
 	ld (xix+), WA
 	ld (xix), 0xff
 	calr VoiceParam_DispatchByMode
@@ -9433,7 +9433,7 @@ PartReinit_SendB0Command:
 	ldw wa, 0xb0
 	ld (xix+), WA
 	extz hl
-	ld l, (0x91c8:16)
+	ld l, (MIDI_CUR_PART:16)
 	ld xiy, SEQ_TRACK_ASSIGN
 	ld	l, (xiy+hl)
 	ld xiy, SeqTrackAssign_PartTagTable
@@ -9442,7 +9442,7 @@ PartReinit_SendB0Command:
 	ld (xix+), WA
 	ldw wa, 0x800
 	ld (xix+), WA
-	ld a, (0x91c8:16)
+	ld a, (MIDI_CUR_PART:16)
 	ld w, 0xff:opc
 	ld (xix), wa
 	calr VoiceMode_ParamHandler_3
@@ -9466,7 +9466,7 @@ Audio_ReinitAndProcessEvents:
 	ret
 
 Audio_SyncAndProcessSequencer:
-	ld wa, (0x90de:16)
+	ld wa, (SWBTWR_WRITE_INDEX:16)
 	ld (0x90e0:16), wa
 	call SeqBuf_SaveReadPos
 
@@ -9530,7 +9530,7 @@ VoiceMode_ParamHandler_1:
 
 AudioSeq_FlushAndTerminate:
 	ld xix, SWBTWR_EVENT_QUEUE
-	ld hl, (0x90de:16)
+	ld hl, (SWBTWR_WRITE_INDEX:16)
 	ld	(xix+hl), 0xff
 	ret
 
@@ -9542,7 +9542,7 @@ VoiceMode_ParamHandler_4:
 	ld BC, (xix+)
 	ld DE, (xix+)
 	ld a, (xix)
-	ld (0x91c8:16), a
+	ld (MIDI_CUR_PART:16), a
 	extz hl
 	ld l, c
 	sll hl, 2
@@ -9598,7 +9598,7 @@ VoiceMode4_CheckPart0:
 ; MIDI controller dispatch handler
 MidiCtrl_DispatchHandler:
 	xor h, h
-	ld l, (0x91c8:16)
+	ld l, (MIDI_CUR_PART:16)
 	ld xix, SEQ_TRACK_ASSIGN
 	ld	a, (xix+hl)
 	cp a, 0xd
@@ -9635,7 +9635,7 @@ MidiCtrl_Mode0_Handler:
 	xor	d, d
 	call	MIDI_DispatchCC_Guarded
 	xor	h, h
-	ld	l, (37320:16)
+	ld	l, (MIDI_CUR_PART:16)
 	ld	xix, 37070
 	ld	a, (xix+hl)
 	set	7, a
@@ -9657,7 +9657,7 @@ MidiCtrl_Mode1_Handler_Skip:
 	sll	e, 4
 	call	MIDI_DispatchCC_Guarded
 	extz	hl
-	ld	l, (37320:16)
+	ld	l, (MIDI_CUR_PART:16)
 	ld	xix, 37070
 	ld	a, (xix+hl)
 	set	7, a
@@ -9689,7 +9689,7 @@ MidiCtrl_Mode3_Handler:
 	call	MIDI_DispatchCC_Guarded
 MidiCtrl_Mode3_Handler_Skip2:
 	extz	hl
-	ld	l, (37320:16)
+	ld	l, (MIDI_CUR_PART:16)
 	ld	xix, 37070
 	ld	a, (xix+hl)
 	set	7, a
@@ -9783,7 +9783,7 @@ VoiceMode3_EvType0:
 	jr	z, VoiceMode3_DispatchTable_Code_Skip2
 	ld	bc, (37303:16)
 	extz	hl
-	ld	l, (37320:16)
+	ld	l, (MIDI_CUR_PART:16)
 	ld	xix, SEQ_TRACK_ASSIGN
 	ld	a, (xix+hl)
 	cp	a, 14
@@ -9850,7 +9850,7 @@ VoiceMode3_EvType6:
 	set	3, (0x8d52:16)
 VoiceMode3_DispatchTable_Code_Skip4:
 	extz	hl
-	ld	l, (37320:16)
+	ld	l, (MIDI_CUR_PART:16)
 	ld	xix, SEQ_TRACK_ASSIGN
 	ld	a, (xix+hl)
 	cp	a, 15
@@ -9876,7 +9876,7 @@ VoiceMode3_EvType5:
 	bit	7, d
 	jr	nz, MidiPartCC_WriteAndDispatch_Skip
 	extz	hl
-	ld	l, (37320:16)
+	ld	l, (MIDI_CUR_PART:16)
 	ld	xix, SEQ_TRACK_ASSIGN
 	cp	(xix+hl), 0x0f
 	jr	z, MidiPartCC_WriteAndDispatch_Skip
@@ -9887,7 +9887,7 @@ VoiceMode3_EvType5:
 
 MidiPartCC_WriteAndDispatch:
 	extz hl
-	ld l, (0x91c8:16)
+	ld l, (MIDI_CUR_PART:16)
 	ld xix, SEQ_TRACK_ASSIGN
 	ld	l, (xix+hl)
 	ld xix, SeqTrackAssign_PartTagTable
@@ -9904,7 +9904,7 @@ MidiPartCC_WriteAndDispatch_Skip:
 
 MidiPartCC_CheckAndGuard:
 	extz hl
-	ld l, (0x91c8:16)
+	ld l, (MIDI_CUR_PART:16)
 	ld xix, SEQ_TRACK_ASSIGN
 	ld	a, (xix+hl)
 	cp a, 0xe
@@ -9936,7 +9936,7 @@ MidiVoice_DataBlockHandler:
 	ld	(MIDI_MSG_DATA2:16), wa
 MidiVoice_DataBlockHandler_Skip:
 	extz	hl
-	ld	l, (0x91c8:16)
+	ld	l, (MIDI_CUR_PART:16)
 	ld	xix, 0x90ce
 	ld	a, (xix+hl)
 	cp a, 16
@@ -9954,7 +9954,7 @@ MidiVoice_DataBlockHandler_Skip4:
 	ret
 VoiceMode3_EvType2:
 	extz	hl
-	ld	l, (0x91c8:16)
+	ld	l, (MIDI_CUR_PART:16)
 	ld	xix, SEQ_TRACK_ASSIGN
 	cp	(xix+hl), 0x0f
 	jr	nz, VoiceMode3_EvType2_Return
@@ -9967,7 +9967,7 @@ VoiceMode3_EvType2:
 	call	SwbtWr_WriteVoiceParam_PreserveRegs
 VoiceMode3_EvType2_Skip:
 	extz	hl
-	ld	l, (0x91c8:16)
+	ld	l, (MIDI_CUR_PART:16)
 	ld	xix, 0x90ce
 	ld	a, (xix+hl)
 	cp a, 16
@@ -9994,7 +9994,7 @@ VoiceMode3_EvType3:
 	ld	(0x90f8:16), a
 VoiceMode3_EvType3_Skip2:
 	extz	hl
-	ld	l, (0x91c8:16)
+	ld	l, (MIDI_CUR_PART:16)
 	ld	xix, 0x90ce
 	ld	a, (xix+hl)
 	cp a, 16
@@ -10016,7 +10016,7 @@ VoiceMode3_EvType4:
 	call	SwbtWr_WriteVoiceParam_PreserveRegs
 VoiceMode3_EvType4_Skip3:
 	extz	hl
-	ld	l, (0x91c8:16)
+	ld	l, (MIDI_CUR_PART:16)
 	ld	xix, 0x90ce
 	ld	a, (xix+hl)
 	cp a, 16
@@ -10031,7 +10031,7 @@ VoiceMode3_EvType4_Return3:
 
 VoiceMode3_InitChannelMatch:
 	ld a, (0x91bb:16)
-	ld (0x91c8:16), a
+	ld (MIDI_CUR_PART:16), a
 	calr VoiceMode3_BuildChannelTable
 	cp (0x91d2:16), 255
 	jr z, VoiceMode3_NoMatch
@@ -10086,7 +10086,7 @@ VoiceMode3_ScanDone:
 VoiceMode3_BuildChannelTable:
 	ld (0x91d2:16), 255
 	extz hl
-	ld l, (0x91c8:16)
+	ld l, (MIDI_CUR_PART:16)
 	ld xix, SEQ_TRACK_ASSIGN
 	ld	l, (xix+hl)
 	sll hl, 2
@@ -10110,7 +10110,7 @@ VoiceMode_ParamHandler_0:
 	cp (0x91b5:16), 128
 	jr nz, VoiceMode0_Done
 	ld a, (0x91b9:16)
-	ld (0x91c8:16), a
+	ld (MIDI_CUR_PART:16), a
 	call PartCtrl_CheckBitmaskBit
 	jr nc, VoiceMode0_Done
 	ld wa, (0x91b7:16)
@@ -10154,7 +10154,7 @@ VoiceParam_ModeDispatch_Table:
 
 VoiceParam_StorePendingB4:
 	extz hl
-	ld l, (0x91c8:16)
+	ld l, (MIDI_CUR_PART:16)
 	ld xix, 0x94d2
 	ld a, (0x91b7:16)
 	set 7, a
@@ -10164,7 +10164,7 @@ VoiceParam_StorePendingB4:
 VoiceParam_SendPendingB4:
 	ld c, 0xb4:opc
 	ld xix, SEQ_TRACK_ASSIGN
-	ld l, (0x91c8:16)
+	ld l, (MIDI_CUR_PART:16)
 	ld	l, (xix+l)
 	ld xix, SeqTrackAssign_PartTagTable
 	ld	b, (xix+l)
@@ -10180,7 +10180,7 @@ VoiceParam_SendPendingB4:
 	call SwbtWr_WriteVoiceParam_PreserveRegs
 
 VoiceParam_SendPendingB4_Guard:
-	ld l, (0x91c8:16)
+	ld l, (MIDI_CUR_PART:16)
 	ld xix, SEQ_TRACK_ASSIGN
 	cpib_sri 0x03, 0xf0, 0xec, 0x0f
 	jr z, VoiceParam_SendPendingB4_Done
@@ -10199,7 +10199,7 @@ VoiceParam_SendPendingB4_Done:
 
 VoiceParam_StorePendingModulation:
 	extz hl
-	ld l, (0x91c8:16)
+	ld l, (MIDI_CUR_PART:16)
 	ld xix, 0x9452
 	ld a, (0x91b7:16)
 	set 7, a
@@ -10209,7 +10209,7 @@ VoiceParam_StorePendingModulation:
 VoiceParam_SendPendingModulation:
 	ld c, 0xb2:opc
 	ld xix, SEQ_TRACK_ASSIGN
-	ld l, (0x91c8:16)
+	ld l, (MIDI_CUR_PART:16)
 	ld	l, (xix+l)
 	ld xix, SeqTrackAssign_PartTagTable
 	ld	b, (xix+l)
@@ -10225,7 +10225,7 @@ VoiceParam_SendPendingModulation:
 	call SwbtWr_WriteVoiceParam_PreserveRegs
 
 VoiceParam_SendPendingModulation_Guard:
-	ld l, (0x91c8:16)
+	ld l, (MIDI_CUR_PART:16)
 	ld xix, SEQ_TRACK_ASSIGN
 	cpib_sri 0x03, 0xf0, 0xec, 0x0f
 	jr z, VoiceParam_SendPendingModulation_Done
@@ -10244,7 +10244,7 @@ VoiceParam_SendPendingModulation_Done:
 
 VoiceParam_StorePendingPitchBend:
 	extz hl
-	ld l, (0x91c8:16)
+	ld l, (MIDI_CUR_PART:16)
 	sll l, 1
 	ld xix, 0x9472
 	ld wa, (0x91b7:16)
@@ -10256,7 +10256,7 @@ VoiceParam_StorePendingPitchBend:
 VoiceParam_SendPendingPitchBend:
 	ld c, 0xb1:opc
 	ld xix, SEQ_TRACK_ASSIGN
-	ld l, (0x91c8:16)
+	ld l, (MIDI_CUR_PART:16)
 	ld	l, (xix+l)
 	ld xix, SeqTrackAssign_PartTagTable
 	ld	b, (xix+l)
@@ -10272,7 +10272,7 @@ VoiceParam_SendPendingPitchBend:
 	call SwbtWr_WriteParamBlockSafe
 
 VoiceParam_SendPendingPitchBend_Guard:
-	ld l, (0x91c8:16)
+	ld l, (MIDI_CUR_PART:16)
 	ld xix, SEQ_TRACK_ASSIGN
 	cpib_sri 0x03, 0xf0, 0xec, 0x0f
 	jr z, VoiceParam_SendPendingPitchBend_Done
@@ -10293,7 +10293,7 @@ VoiceNote_StoreBankSelect:
 
 	ld e, (0x91b7:16)
 	extz hl
-	ld l, (0x91c8:16)
+	ld l, (MIDI_CUR_PART:16)
 	bit 7, (DEMO_CONTROL_FLAGS:16)
 
 	; LD SP, (XBC)
@@ -10308,7 +10308,7 @@ VoiceNote_StoreBankSelect:
 VoiceNote_WriteBankAndCC:
 	ldw bc, 0x1b0
 	extz hl
-	ld l, (0x91c8:16)
+	ld l, (MIDI_CUR_PART:16)
 	ld xix, SEQ_TRACK_ASSIGN
 	ld	a, (xix+hl)
 	cp a, 0xf
@@ -10349,7 +10349,7 @@ VoiceNote_ApplyBankSelect:
 
 MIDI_VoiceNote_CtrlExit:
 	extz hl
-	ld l, (0x91c8:16)
+	ld l, (MIDI_CUR_PART:16)
 	ld xix, 0x90ce
 	ld	a, (xix+hl)
 	cp a, 0x10
@@ -10403,7 +10403,7 @@ MidiVoiceNote_LookupMode3:
 MidiPart_FindChannelInTable:
 	cp xbc, 0x0
 	jr z, MidiPart_NoChannelFound
-	ld (0x91c8:16), l
+	ld (MIDI_CUR_PART:16), l
 	ld xix, SEQ_TRACK_ASSIGN
 	ld	w, (xix+hl)
 	ld (0x91cd:16), w
@@ -10425,7 +10425,7 @@ MidiNote_RhythmPartDispatch:
 	jrl nz, MidiNoteVel_Handler_2
 	ld (0x915b:16), bc
 	ld (0x915d:16), de
-	ld (0x91c8:16), a
+	ld (MIDI_CUR_PART:16), a
 	ld (PROGRAM_CHANGE_PART:16), c
 	ld hl, de
 	call PartCtrl_WriteProgramChange
@@ -10452,7 +10452,7 @@ MidiNote_RhythmPartDispatch:
 ; MIDI part channel dispatch
 MidiPart_ChannelDispatch:
 	extz hl
-	ld l, (0x91c8:16)
+	ld l, (MIDI_CUR_PART:16)
 	ld xix, SEQ_TRACK_ASSIGN
 	cp	(xix+hl), 0x10
 	jrl nz, MidiNoteVel_Handler_2
@@ -10486,7 +10486,7 @@ MidiNoteVel_Handler_0:
 MidiNoteVel_Handler_0_Skip:
 	call	MIDI_DispatchCC_Guarded
 	xor	h, h
-	ld	l, (0x91c8:16)
+	ld	l, (MIDI_CUR_PART:16)
 	ld	xix, 0x90ce
 	ld	a, (xix+hl)
 	set	7, a
@@ -10509,7 +10509,7 @@ MidiNoteVel_Handler_1_Skip:
 	sll	e, 4
 	call	MIDI_DispatchCC_Guarded
 	extz	hl
-	ld	l, (0x91c8:16)
+	ld	l, (MIDI_CUR_PART:16)
 	ld	xix, 0x90ce
 	ld	a, (xix+hl)
 	set	7, a
@@ -10526,7 +10526,7 @@ MidiNoteVel_Handler_2:
 SeqVoice_UpdateTempoParam:
 	cp bc, 0x748
 	jr nz, SeqVoice_TempoDone
-	ld (0x91c8:16), a
+	ld (MIDI_CUR_PART:16), a
 	call PartCtrl_CheckBitmaskBit
 	jr nc, SeqVoice_TempoDone
 	and d, 0x30
@@ -10558,7 +10558,7 @@ PendingB4_ScanEntry:
 	ld e, (xiy)
 	ld xhl, xiy
 	sub xhl, 0x94d2
-	ld (0x91c8:16), l
+	ld (MIDI_CUR_PART:16), l
 	pushw bc
 	push xiy
 	calr VoiceParam_SendPendingB4
@@ -10578,7 +10578,7 @@ PendingModulation_ScanEntry:
 	ld e, (xiy)
 	ld xhl, xiy
 	sub xhl, 0x9452
-	ld (0x91c8:16), l
+	ld (MIDI_CUR_PART:16), l
 	pushw bc
 	push xiy
 	calr VoiceParam_SendPendingModulation
@@ -10599,7 +10599,7 @@ PendingPitchBend_ScanEntry:
 	ld xhl, xiy
 	sub xhl, 0x9472
 	srl l, 1
-	ld (0x91c8:16), l
+	ld (MIDI_CUR_PART:16), l
 	pushw bc
 	push xiy
 	calr VoiceParam_SendPendingPitchBend
@@ -10619,7 +10619,7 @@ PendingExpression_ScanEntry:
 	ld e, (xiy)
 	ld xhl, xiy
 	sub xhl, 0x9432
-	ld (0x91c8:16), l
+	ld (MIDI_CUR_PART:16), l
 	pushw bc
 	push xiy
 	calr VoiceNote_WriteBankAndCC
@@ -10639,7 +10639,7 @@ PendingVolume_ScanEntry:
 	ld e, (xiy)
 	ld hl, iy
 	sub xhl, 0x94b2
-	ld (0x91c8:16), l
+	ld (MIDI_CUR_PART:16), l
 	pushw bc
 	push xiy
 	calr MidiPartCC_WriteAndDispatch
@@ -10655,7 +10655,7 @@ PartCtrl_CheckBitmaskBit:
 	pushw wa
 	pushw bc
 	ld wa, (SEQ_SONG_RECORD+80:16)
-	ld c, (0x91c8:16)
+	ld c, (MIDI_CUR_PART:16)
 	inc 1, c
 
 PartCtrl_ShiftBitmask:

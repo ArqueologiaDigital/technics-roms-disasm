@@ -1423,7 +1423,7 @@ SwbtWr_ReinitBothBanks:
 	call SwbtWr_InitBank1
 	call SwbtWr_InitBank2
 	ld (SWBTWR_EVENT_QUEUE:16), 255
-	ldw (0x90de:16), 0
+	ldw (SWBTWR_WRITE_INDEX:16), 0
 
 SwbtWr_ReinitBothBanks_Return:
 	ret
@@ -1436,7 +1436,7 @@ SwbtWr_ReinitOutputBank:
 	jr z, SwbtWr_ReinitOutputBank_Return
 	call SwbtWr_InitBank2
 	ld (SWBTWR_EVENT_QUEUE:16), 255
-	ldw (0x90de:16), 0
+	ldw (SWBTWR_WRITE_INDEX:16), 0
 
 SwbtWr_ReinitOutputBank_Return:
 	ret

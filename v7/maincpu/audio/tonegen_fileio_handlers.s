@@ -579,7 +579,7 @@ DSPCfg_SyncBitmapData:
 	lda	xwa, (SWBTWR_EVENT_QUEUE:16)
 	ld	(xsp+14), xwa
 	ld	(xsp+10), xwa
-	ld	bc, (0x9042:16)
+	ld	bc, (SWBTWR_WRITE_INDEX:16)
 	jrl	DSPCfg_SyncBitmapData_Join
 DSPCfg_SyncBitmapData_Loop:
 	ld	(xsp+6), 0
@@ -654,7 +654,7 @@ DSPCfg_SyncBitmapData_Join:
 	extz	xwa
 	add	xwa, (xsp+14)
 	ld	(xwa), 255
-	ld	(0x9042:16), bc
+	ld	(SWBTWR_WRITE_INDEX:16), bc
 	pop	xiz
 	lda	xsp, (xsp+18)
 	ret
@@ -723,7 +723,7 @@ SoundParam_NotifyMultipleChanges:
 ToneGen_DiffScanAndUpdate:
 	lda	xsp, (xsp - 14)
 	pushw	iz
-	ld	bc, (0x9042:16)
+	ld	bc, (SWBTWR_WRITE_INDEX:16)
 	lda	xwa, (SWBTWR_EVENT_QUEUE:16)
 	ld	(xsp + 12), xwa
 	ld	(xsp + 8), xwa
@@ -831,7 +831,7 @@ ToneGen_DiffScanCheckEnd:
 	extz	xwa
 	add	xwa, (xsp + 12)
 	ld	(xwa), 0xff
-	ld	(0x9042:16), bc
+	ld	(SWBTWR_WRITE_INDEX:16), bc
 	popw	iz
 	lda	xsp, (xsp + 14)
 	ret

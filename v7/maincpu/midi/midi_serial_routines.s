@@ -952,7 +952,7 @@ MidiSerial_ProcessInput:
 	bit	4, (PANEL_MIDI:16)
 	jr	nz, MidiSerial_Return
 	call	SeqMain_SaveWritePos
-	ldw	(0x9042:16), 0
+	ldw	(SWBTWR_WRITE_INDEX:16), 0
 MidiSerial_PumpLoop:
 	ld	xix, SEQMAIN_RING
 	ld	wa, (xix - 10)
@@ -971,7 +971,7 @@ MidiSerial_PumpLoop:
 MidiSerial_PumpDone:
 	call	MidiStream_LoadAllPresets
 	ld	xix, SWBTWR_EVENT_QUEUE
-	ld	hl, (0x9042:16)
+	ld	hl, (SWBTWR_WRITE_INDEX:16)
 	ld	(xix+hl), 0xff
 MidiSerial_Return:
 	ret

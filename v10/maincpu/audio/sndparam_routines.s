@@ -2880,10 +2880,10 @@ SndParam_WidgetDispatch:
 	jr z, SndParam_WidgetAppendType2
 	cp hl, 1:i3
 	jr nz, SndParam_WidgetDispatchDone
-	cpw (0x90de:16), 508
+	cpw (SWBTWR_WRITE_INDEX:16), 508
 	call nc, (SwbtWr_ReinitBothBanks:24)
 	lda xbc, (SWBTWR_EVENT_QUEUE:16)
-	ld de, (0x90de:16)
+	ld de, (SWBTWR_WRITE_INDEX:16)
 	extz xde
 	add xde, xbc
 	ld a, (xiz + 4)
@@ -2897,10 +2897,10 @@ SndParam_WidgetDispatch:
 	jr SndParam_WidgetAppendTail
 
 SndParam_WidgetAppendType2:
-	cpw (0x90de:16), 508
+	cpw (SWBTWR_WRITE_INDEX:16), 508
 	call nc, (SwbtWr_ReinitOutputBank:24)
 	lda xbc, (SWBTWR_EVENT_QUEUE:16)
-	ld de, (0x90de:16)
+	ld de, (SWBTWR_WRITE_INDEX:16)
 	extz xde
 	add xde, xbc
 	ld a, (xiz + 4)
@@ -2914,7 +2914,7 @@ SndParam_WidgetAppendType2:
 
 SndParam_WidgetAppendTail:
 	ld (xde), 0xff
-	incw 4, (0x90de:16)
+	incw 4, (SWBTWR_WRITE_INDEX:16)
 	jr SndParam_WidgetDispatchDone
 
 SndParam_WidgetCallType3:
@@ -2951,10 +2951,10 @@ SndParam_WidgetNotifyType1:
 	jr z, SndParam_Widget1_AppendType2
 	cp wa, 1:i3
 	jrl nz, SndParam_Widget1_Done
-	cpw (0x90de:16), 504
+	cpw (SWBTWR_WRITE_INDEX:16), 504
 	call nc, (SwbtWr_ReinitBothBanks:24)
 	lda xbc, (SWBTWR_EVENT_QUEUE:16)
-	ld de, (0x90de:16)
+	ld de, (SWBTWR_WRITE_INDEX:16)
 	extz xde
 	add xde, xbc
 	ld a, (xiz + 4)
@@ -2976,10 +2976,10 @@ SndParam_WidgetNotifyType1:
 	jr SndParam_Widget1_AppendTail
 
 SndParam_Widget1_AppendType2:
-	cpw (0x90de:16), 504
+	cpw (SWBTWR_WRITE_INDEX:16), 504
 	call nc, (SwbtWr_ReinitOutputBank:24)
 	lda xbc, (SWBTWR_EVENT_QUEUE:16)
-	ld de, (0x90de:16)
+	ld de, (SWBTWR_WRITE_INDEX:16)
 	extz xde
 	add xde, xbc
 	ld a, (xiz + 4)
@@ -3001,7 +3001,7 @@ SndParam_Widget1_AppendType2:
 
 SndParam_Widget1_AppendTail:
 	ld (xde), 0xff
-	incw 8, (0x90de:16)
+	incw 8, (SWBTWR_WRITE_INDEX:16)
 	jr SndParam_Widget1_Done
 
 SndParam_Widget1_CallType3:

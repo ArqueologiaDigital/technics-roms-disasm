@@ -12848,7 +12848,7 @@ SeqData_FormatOutput_CaseA:
 	calr	SeqData_FormatOutput_CaseB
 	ret
 SeqData_FormatOutput_CaseB:
-	ldw	(0x9042:16), 0
+	ldw	(SWBTWR_WRITE_INDEX:16), 0
 	push xde
 	push xhl
 	push xix
@@ -12885,13 +12885,13 @@ SeqData_FormatOutput_Data:
 	bit	4, (PANEL_MIDI:16)
 	ret	nz
 	calr	SeqData_FormatOutput_Data_Helper
-	cpw	(0x9042:16), 0
+	cpw	(SWBTWR_WRITE_INDEX:16), 0
 	ret	z
 	push	xde
 	push	xhl
 	push	xix
 	push	xiz
-	ldmm16	0x9044, 0x9042
+	ldmm16	0x9044, SWBTWR_WRITE_INDEX
 	call	MidiStream_JumpStubData
 	call	SwbtWr_ReinitBothBanks
 	pop	xiz

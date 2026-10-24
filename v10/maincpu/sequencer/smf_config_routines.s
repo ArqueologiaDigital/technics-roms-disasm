@@ -376,8 +376,8 @@ SMF_AssignRemainingChannels:
 	cp	(xix+iz), 0x10
 	pop xix
 	jr z, SMF_AssignRemaining_Next
-	ld (9858:16), c
-	inc 1, (9858:16)
+	ld (SEQ_OP_DEST_TRACK:16), c
+	inc 1, (SEQ_OP_DEST_TRACK:16)
 	ld a, (SEQ_TRACK:16)
 	ld (9860:16), a
 	push xhl

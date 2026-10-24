@@ -1916,7 +1916,7 @@ BitMapOut_DetectChanges_CheckMode:
 	jr z, .Lc_fb4e45
 BitMapOut_DetectChanges_UseShortList:
 .Lc_fb4e34:
-	ld hl, (0x9042:16)
+	ld hl, (SWBTWR_WRITE_INDEX:16)
 	lda xwa, (SWBTWR_EVENT_QUEUE:16)
 	ld (XSP+0x08),XWA
 	set 2, (0x8caa:16)
@@ -2000,7 +2000,7 @@ BitMapOut_DeltaEncode_BufferFull:
 	ld	(36934:16), hl
 	lda	xwa, (SWBTWR_EVENT_QUEUE:16)
 	ld	(xsp+8), xwa
-	ld	hl, (36930:16)
+	ld	hl, (SWBTWR_WRITE_INDEX:16)
 	ld	a, (36010:16)
 	set	2, a
 	ld	(36010:16), a
@@ -2115,7 +2115,7 @@ BitMapOut_DeltaEncode_CheckBounds:
 	ld (0x9046:16), hl
 	jr t, BitMapOut_DeltaEncode_Return
 BitMapOut_DeltaEncode_StoreShortLen:
-	ld	(36930:16), hl
+	ld	(SWBTWR_WRITE_INDEX:16), hl
 BitMapOut_DeltaEncode_Return:
 	popw iz
 	lda xsp, (xsp + 10)

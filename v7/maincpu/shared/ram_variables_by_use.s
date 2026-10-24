@@ -67,9 +67,12 @@
 	.equ PART_PARAM_VALUE,			0x111d	; its value, shown under that label by DisplayStr_ShowPartParamLine
 	.equ PLAYBACK_COUNTDOWN,		0x1144	; ticks before an armed playback starts: 10 when armed (PlayMode_LoadStartCountdown), CDlikeSwitch_PlaybackTimer counts it down
 	.equ SEQ_BLOCK_POOL,			0x1d5a	; base of the sequencer's pool of 256-byte data blocks: SeqInit_SetBaseAddress sets 0xB0000; block n (1-based) is at this + (n - 1) * 0x100
+	.equ SEQ_OP_MEASURES,			0x25de	; word: measures the edit operation covers, last - first + 1 (the EXECUTE handlers MainExeCall_OnTitleSq* store it; SeqPart_* and the Seq_Validate* checks read it)
+	.equ SEQ_PART_LOOP,			0x25e0	; the part (0..15) the sequencer's per-part loops are on (SeqAcc_ProcessTempo_*, Portamento_Scan*, SeqScan_*)
 	.equ SQEDT_TRKCLR_MASK,			0x25e8	; word: TT_SQTRKCLR's track mask; EXECUTE clears every track whose bit is set and zeroes it
 	.equ SQEDT_VELOCNG_LAST,		0x25fa	; TT_SQVELOCNG: last measure (word)
 	.equ SQEDT_QTZ_LAST,			0x25fc	; TT_SQQTZ: last measure (word)
+	.equ SEQ_OP_QUANTIZE,			0x25fe	; the quantize value, SQEDT_QTZ_VALUE doubled (SeqPart_VelocityCurveCalc reads it)
 	.equ SQEDT_ADVDLY_TRACK,		0x2604	; TT_SQADVDLY: track
 	.equ SQEDT_ADVDLY_FROM,			0x2606	; TT_SQADVDLY: first measure (word; also the default the FM string shows)
 	.equ SQEDT_ADVDLY_LAST,			0x2608	; TT_SQADVDLY: last measure (word)
@@ -85,10 +88,15 @@
 	.equ SQEDT_MDEL_LAST,			0x262c	; TT_SQMDEL: last measure (word)
 	.equ SQEDT_MINS_LAST,			0x262e	; TT_SQMINS: last measure of A (word)
 	.equ SQEDT_MINS_REPEAT,			0x2630	; TT_SQMINS: repeat count
+	.equ SEQ_OP_FROM,			0x2632	; word: first measure of the edit operation (MainExeCall_OnTitleSq*)
+	.equ SEQ_OP_ERASE_CHOICE,		0x2650	; what a measure erase removes (SQEDT_MERS_CHOICE; SeqPart_FullLoad picks its mode by it)
+	.equ SEQ_OP_VELOCITY,			0x2654	; the velocity amount of a velocity change (SQEDT_VELOCNG_AMOUNT)
 	.equ SEQ_DATA_OFFSET,			0x2666	; word: byte offset of the song-data cursor in SEQ_DATA_BLOCK, 5..255 (5 = first byte after the block header); at 255 ToneGen_AdvancePosition moves on to a new linked block
 	.equ SEQ_START_MEASURE,			0x2668	; word: the measure playback starts from, sign-magnitude (0x8002 = 2 measures before measure 1): punch-in minus SEQ_COUNT_IN (SeqPlay_UpdateStartFromPunchIn)
 	.equ SCOOP_DST_BLOCK_PTR,		0x267a	; address of the destination block of the scoop display's chained copy (SeqData_ChainNextDstBlock follows the +3 link and stores the next block here)
 	.equ SCOOP_SRC_BLOCK_PTR,		0x267e	; address of its source block (SeqData_ChainPrevSrcBlock follows the +1 link)
+	.equ SEQ_OP_DEST_TRACK,			0x2682	; destination track of a copy / insert operation (SQEDT_MCP_TRACK_B, SQEDT_MINS_TRACK_B)
+	.equ SEQ_OP_DEST_MEASURE,		0x2686	; word: destination measure of a copy / insert operation (SQEDT_MCP_AT, SQEDT_MINS_AT)
 	.equ NOTEEDIT_BASE_KEY,			0x2798	; the lowest key the note-edit display shows; MT_GetKb1Str / MT_GetKb2Str name it and the next (BmDrEdit_ChordScroll* step it)
 	.equ SEQ_BLOCK_TOTAL,			0x286d	; word: blocks in the pool, 1240 (SeqInit_SetBaseAddress); DispatchHandler_InitAllSlots starts SEQ_FREE_BLOCKS from it, the song-usage percentages divide by it
 	.equ TRACK_ASSIGN_EDIT_VALUE,		0x2873	; the TRACK ASSIGN value being edited, reloaded from SEQ_TRACK_ASSIGN when the cursor moves (SetWall_UpdateSlotIndex)
@@ -233,6 +241,7 @@
 	.equ LED_REQUEST_3,			0x8ea6	; word: panel-LED update requests of group 3 (PanelLed_PendingGroup3Handlers)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8f42
 	.equ LED_REQUEST_HOLD_3,		0x8ea8	; word: group-3 bits held back	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8f44
 	.equ DEMO_PLAY_STATE,			0x8eb2	; 4 = idle (the Demo_SelectEntry_* paths), 6 = a song started by Demo_SelectEntry_PlaySong	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8f4e
+	.equ SWBTWR_WRITE_INDEX,		0x9042	; word: write index of the parameter-event output buffer that MIDI_WriteCommandToBuffer, AssswbWr and the SwbtWr_* appenders fill (Audio_InitAllDefaults zeroes it)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x90de
 	.equ PART_RECORD_PTRS,			0x9056	; address of the part-record pointer table: entry p = part p's RAM record, 0xFFFFFFFF = none (Audio_InitAllDefaults stores it; MIDI_WriteVoiceParam* index it)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x90f2
 	.equ PROGRAM_CHANGE_PART,		0x905b	; the part a program change or sound selection is for: 0..31, 16-20 from the accompaniment chains (AccPatch_UpdateChain_*), 72 = the rhythm part	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x90f7
 	.equ EXTDATA_TLV_OFFSET,		0x9093	; byte offset in the panel record (tag MIDI_MSG_STATUS) the ExtData_* handlers change	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x912f
@@ -240,6 +249,7 @@
 	.equ EXTDATA_MASK,			0x9095	; the bits of the record byte EXTDATA_VALUE may change (ExtData_SetTlvField)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x9131
 	.equ EXTDATA_NEW_VALUE,			0x9096	; the record byte after the change, also sent as MIDI_MSG_DATA2	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x9132
 	.equ EXT_RECORD_OFFSET,			0x9097	; word: read offset in the buffer of received 4-byte records at 0xC039 (SndParam_FetchSequencerParams; a type byte 0xFF ends the scan)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x9133
+	.equ MIDI_CUR_PART,			0x912c	; the part the MIDI controller and pending-parameter handlers work on (Pending*_ScanEntry, MidiCtrl_Mode*_Handler, the Part_ReinitAllActive loop)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x91c8
 	.equ MIDIRX_STATUS,			0x9598	; status byte of the MIDI message being received (MidiSerial_PumpLoop; MidiRx_ChannelMsgDispatch maps its channel to parts)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x9634
 	.equ MIDIRX_DATA1,			0x9599	; its first data byte (the controller number of a CC, the program of a program change)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x9635
 	.equ MIDIRX_DATA2,			0x959a	; its second data byte (the controller value the MidiCC_Handler_* read)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x9636

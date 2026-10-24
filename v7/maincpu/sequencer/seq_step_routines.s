@@ -195,7 +195,7 @@ SeqStep_EventProcess:
 	cp a, 0xa
 	jrl nz, SeqStep_EventExit
 	ld (SEQ_ERROR_CODE:16), 0
-	cpw (9778:16), 1
+	cpw (SEQ_OP_FROM:16), 1
 	jr nz, SeqStep_EventPosManage
 	cp iz, 0:i3
 	jr nz, SeqStep_EventPosManage
@@ -399,7 +399,7 @@ SeqStep_EventAdvancePos:
 	jrl SeqStep_EventPosConsumeLoop
 
 SeqStep_VelNoteFwd:
-	ld wa, (9778:16)
+	ld wa, (SEQ_OP_FROM:16)
 	cp wa, 1:i3
 	ret z
 	ld c, (9780:16)

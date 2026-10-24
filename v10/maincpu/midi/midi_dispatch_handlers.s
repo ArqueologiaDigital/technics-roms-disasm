@@ -16,7 +16,7 @@ MidiSerial_ProcessInput:
 	bit 4, (PANEL_MIDI:16)
 	jr nz, MidiSerial_Return
 	call SeqMain_SaveWritePos
-	ldw (0x90de:16), 0
+	ldw (SWBTWR_WRITE_INDEX:16), 0
 
 MidiSerial_PumpLoop:
 	ld xix, SEQMAIN_RING
@@ -37,7 +37,7 @@ MidiSerial_PumpLoop:
 MidiSerial_PumpDone:
 	call MidiStream_LoadAllPresets
 	ld xix, SWBTWR_EVENT_QUEUE
-	ld hl, (0x90de:16)
+	ld hl, (SWBTWR_WRITE_INDEX:16)
 	ld	(xix+hl), 0xff
 
 MidiSerial_Return:
@@ -14122,7 +14122,7 @@ SeqData_FormatOutput_CaseA:
 	calr SeqData_FormatOutput_CaseB
 	ret
 SeqData_FormatOutput_CaseB:
-	ldw	(0x90de:16), 0
+	ldw	(SWBTWR_WRITE_INDEX:16), 0
 	push xde
 	push xhl
 	push xix
@@ -14165,13 +14165,13 @@ SysEx_OnTechnicsParamChange:
 	bit	4, (PANEL_MIDI:16)
 	ret	nz
 	calr	SysEx_DispatchTechnicsParamChange
-	cpw	(0x90de:16), 0
+	cpw	(SWBTWR_WRITE_INDEX:16), 0
 	ret	z
 	push	xde
 	push	xhl
 	push	xix
 	push	xiz
-	ldmm16	0x90e0, 0x90de
+	ldmm16	0x90e0, SWBTWR_WRITE_INDEX
 	call	MidiStream_JumpStubData
 	call	SwbtWr_ReinitBothBanks
 	pop	xiz

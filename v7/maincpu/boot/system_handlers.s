@@ -1396,7 +1396,7 @@ SwbtWr_ReinitBothBanks:
 	call SwbtWr_InitBank1
 	call SwbtWr_InitBank2
 	ld (SWBTWR_EVENT_QUEUE:16), 0xff
-	ldw (0x9042:16), 0x0000
+	ldw (SWBTWR_WRITE_INDEX:16), 0x0000
 SwbtWr_ReinitBothBanks_Return:
 	ret
 ; SwbtWr_ReinitOutputBank - Reinitialize the output tone generator bank
@@ -1407,7 +1407,7 @@ SwbtWr_ReinitOutputBank:
 	jr z, SwbtWr_ReinitOutputBank_Return
 	call SwbtWr_InitBank2
 	ld (SWBTWR_EVENT_QUEUE:16), 0xff
-	ldw (0x9042:16), 0x0000
+	ldw (SWBTWR_WRITE_INDEX:16), 0x0000
 SwbtWr_ReinitOutputBank_Return:
 	ret
 

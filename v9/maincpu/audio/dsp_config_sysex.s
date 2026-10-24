@@ -810,7 +810,7 @@ AssswbWr_Return:
 	pop xiz
 	ret
 AssswbWr:
-	ld hl, (0x90de:16)
+	ld hl, (SWBTWR_WRITE_INDEX:16)
 	cp hl, 0x1fc
 	jr nc, AssswbWr_BufferFull
 	lda xix, (SWBTWR_EVENT_QUEUE:16)
@@ -822,9 +822,9 @@ AssswbWr:
 	ld a, (xsp + 4)
 	ld (xhl+), a
 	ld (xhl), 0xff
-	ld wa, (0x90de:16)
+	ld wa, (SWBTWR_WRITE_INDEX:16)
 	inc 4, wa
-	ld (0x90de:16), wa
+	ld (SWBTWR_WRITE_INDEX:16), wa
 
 AssswbWr_BufferFull:
 	retd 0x2
@@ -897,7 +897,7 @@ SwbtWr_ProcessAll:
 SwbtWr_ProcessAll_CompactDone:
 	ld (xix), 0xff
 	sub xix, 0xbd3c
-	ld (0x90de:16), ix
+	ld (SWBTWR_WRITE_INDEX:16), ix
 	ld (0xbf39:16), 255
 	ldw (0x90e2:16), 0
 	ret
@@ -1008,14 +1008,14 @@ SwbtWr_PostCallback_Done:
 	ret
 
 SwbtWr_QueueMainEvent:
-	cpw (0x90de:16), 507
+	cpw (SWBTWR_WRITE_INDEX:16), 507
 	jr ugt, SwbtWr_QueueMainEvent_Done
 	ld xhl, SWBTWR_EVENT_QUEUE
-	add hl, (0x90de:16)
+	add hl, (SWBTWR_WRITE_INDEX:16)
 	ld (xhl), de
 	ld (xhl + 2), wa
 	ld (xhl + 4), 0xff
-	add (0x90de:16), 4
+	add (SWBTWR_WRITE_INDEX:16), 4
 
 SwbtWr_QueueMainEvent_Done:
 	ret
