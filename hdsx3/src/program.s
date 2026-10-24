@@ -13963,18 +13963,18 @@ sprintf_entry:
 	mov	a2, (a0)
 	mov	(0x2c, sp), a0
 	mov	1, d0
-	call	func_97807F15_entry, [d2,d3,a2,a3], 0x98
+	call	vsprintf_core_entry, [d2,d3,a2,a3], 0x98
 	ret	[a2], 0x20
 
-func_97807F15:
+vsprintf_core:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x88, sp
 
-func_97807F15_entry:
+vsprintf_core_entry:
 	mov	a1, (0xa8, sp)
 	mov	d0, (0xac, sp)
 	mov	a0, (0xa4, sp)
-	call	func_9780851A, 0, 0
+	call	localeconv, 0, 0
 	mov	a0, (0x97989294)
 	nop
 	clr	d3
@@ -13987,9 +13987,9 @@ func_97807F15_entry:
 	extb	d1
 	cmp	d3, d1
 	nop
-	bne	func_97807F15_entry_L27
-	jmp	func_97807F15_entry_L2b3
-func_97807F15_entry_L27:
+	bne	vsprintf_core_entry_L27
+	jmp	vsprintf_core_entry_L2b3
+vsprintf_core_entry_L27:
 	mov	sp, a0
 	mov	a0, d0
 	add	0xa0, d0
@@ -14005,7 +14005,7 @@ func_97807F15_entry_L27:
 	mov	a0, d0
 	add	0x40, d0
 	mov	d0, (0x28, sp)
-func_97807F15_entry_L47:
+vsprintf_core_entry_L47:
 	mov	sp, a0
 	mov	a0, d0
 	mov	(0xa4, sp), a0
@@ -14016,7 +14016,7 @@ func_97807F15_entry_L47:
 	extb	d0
 	cmp	0x25, d0
 	nop
-	beq	func_97807F15_entry_L6f
+	beq	vsprintf_core_entry_L6f
 	mov	(0xa4, sp), a0
 	mov	(0xac, sp), d1
 	movbu	(a0), d0
@@ -14025,9 +14025,9 @@ func_97807F15_entry_L47:
 	mov	(0x2c, sp), a0
 	inc	a2
 	mov	1, d1
-	call	func_97808325_entry, [d2,a2,a3], 0x1c
-	jmp	func_97807F15_entry_L29a
-func_97807F15_entry_L6f:
+	call	PfOutPad_entry, [d2,a2,a3], 0x1c
+	jmp	vsprintf_core_entry_L29a
+vsprintf_core_entry_L6f:
 	mov	(0xa4, sp), d0
 	nop
 	inc	d0
@@ -14037,7 +14037,7 @@ func_97807F15_entry_L6f:
 	extb	d0
 	cmp	0x25, d0
 	nop
-	bne	func_97807F15_entry_L95
+	bne	vsprintf_core_entry_L95
 	mov	(0xa4, sp), a0
 	mov	(0xac, sp), d1
 	movbu	(a0), d0
@@ -14046,9 +14046,9 @@ func_97807F15_entry_L6f:
 	mov	(0x2c, sp), a0
 	inc	a2
 	mov	1, d1
-	call	func_97808325_entry, [d2,a2,a3], 0x1c
-	jmp	func_97807F15_entry_L29a
-func_97807F15_entry_L95:
+	call	PfOutPad_entry, [d2,a2,a3], 0x1c
+	jmp	vsprintf_core_entry_L29a
+vsprintf_core_entry_L95:
 	mov	(0x28, sp), d0
 	mov	a3, d1
 	mov	d0, (0x18, sp)
@@ -14060,23 +14060,23 @@ func_97807F15_entry_L95:
 	nop
 	cmp	0, a0
 	nop
-	bne	func_97807F15_entry_Lb3
+	bne	vsprintf_core_entry_Lb3
 	mov	-1, d0
 	ret	[d2,d3,a2,a3], 0x98
-func_97807F15_entry_Lb3:
+vsprintf_core_entry_Lb3:
 	mov	(0xa4, sp), a0
 	movbu	(a0), d0
 	extb	d0
 	cmp	0x45, d0
 	nop
-	bge	func_97807F15_entry_Lc0
-	jmp	func_97807F15_entry_L259
-func_97807F15_entry_Lc0:
+	bge	vsprintf_core_entry_Lc0
+	jmp	vsprintf_core_entry_L259
+vsprintf_core_entry_Lc0:
 	cmp	0x78, d0
 	nop
-	ble	func_97807F15_entry_Lc8
-	jmp	func_97807F15_entry_L259
-func_97807F15_entry_Lc8:
+	ble	vsprintf_core_entry_Lc8
+	jmp	vsprintf_core_entry_L259
+vsprintf_core_entry_Lc8:
 	add	-0x45, d0
 	asl2	d0
 	mov	0x9783e40c, a0
@@ -14093,7 +14093,7 @@ func_97807F15_entry_Lc8:
 	nop
 	and	0xfffd, d0
 	mov	d0, (0x40, sp)
-	jmp	func_97807F15_entry_L262
+	jmp	vsprintf_core_entry_L262
 	mov	(a3), d0
 	nop
 	add	4, d0
@@ -14106,7 +14106,7 @@ func_97807F15_entry_Lc8:
 	extb	d0
 	cmp	d3, d0
 	nop
-	beq	func_97807F15_entry_L111
+	beq	vsprintf_core_entry_L111
 	mov	(0x24, sp), a0
 	setlb
 	inc	a0
@@ -14117,22 +14117,22 @@ func_97807F15_entry_Lc8:
 	cmp	0, d0
 	nop
 	lne
-func_97807F15_entry_L111:
+vsprintf_core_entry_L111:
 	mov	(0x3c, sp), d2
 	nop
 	cmp	0, d2
 	nop
-	blt	func_97807F15_entry_L11e
+	blt	vsprintf_core_entry_L11e
 	cmp	d2, d3
 	nop
-	ble	func_97807F15_entry_L11e
+	ble	vsprintf_core_entry_L11e
 	mov	d2, d3
-func_97807F15_entry_L11e:
+vsprintf_core_entry_L11e:
 	mov	(0x40, sp), d0
 	nop
 	and	0xfffd, d0
 	mov	d0, (0x40, sp)
-	jmp	func_97807F15_entry_L262
+	jmp	vsprintf_core_entry_L262
 	mov	sp, a0
 	mov	a3, (0x84, sp)
 	nop
@@ -14145,13 +14145,13 @@ func_97807F15_entry_L11e:
 	mov	(0x24, sp), a0
 	mov	(0x28, sp), a1
 	mov	-0xa, d0
-	call	func_978085EA_entry, [d2,d3,a2,a3], 0x2c
+	call	PfFormatInteger_entry, [d2,d3,a2,a3], 0x2c
 	mov	d0, d3
 	mov	(0x40, sp), d0
 	nop
 	and	0xfffb, d0
 	mov	d0, (0x40, sp)
-	jmp	func_97807F15_entry_L262
+	jmp	vsprintf_core_entry_L262
 	mov	sp, a0
 	mov	a3, (0x84, sp)
 	nop
@@ -14164,13 +14164,13 @@ func_97807F15_entry_L11e:
 	mov	(0x24, sp), a0
 	mov	(0x28, sp), a1
 	mov	0xa, d0
-	call	func_978085EA_entry, [d2,d3,a2,a3], 0x2c
+	call	PfFormatInteger_entry, [d2,d3,a2,a3], 0x2c
 	mov	d0, d3
 	mov	(0x40, sp), d0
 	nop
 	and	0xfffb, d0
 	mov	d0, (0x40, sp)
-	jmp	func_97807F15_entry_L262
+	jmp	vsprintf_core_entry_L262
 	mov	sp, a0
 	mov	a3, (0x84, sp)
 	nop
@@ -14184,9 +14184,9 @@ func_97807F15_entry_L11e:
 	mov	(0x24, sp), a0
 	mov	(0x28, sp), a1
 	mov	8, d0
-	call	func_978085EA_entry, [d2,d3,a2,a3], 0x2c
+	call	PfFormatInteger_entry, [d2,d3,a2,a3], 0x2c
 	mov	d0, d3
-	jmp	func_97807F15_entry_L262
+	jmp	vsprintf_core_entry_L262
 	mov	sp, a0
 	mov	a3, (0x84, sp)
 	nop
@@ -14200,9 +14200,9 @@ func_97807F15_entry_L11e:
 	mov	(0x24, sp), a0
 	mov	(0x28, sp), a1
 	mov	0x10, d0
-	call	func_978085EA_entry, [d2,d3,a2,a3], 0x2c
+	call	PfFormatInteger_entry, [d2,d3,a2,a3], 0x2c
 	mov	d0, d3
-	jmp	func_97807F15_entry_L262
+	jmp	vsprintf_core_entry_L262
 	mov	a3, (0x84, sp)
 	mov	(0x40, sp), d0
 	mov	sp, a0
@@ -14217,9 +14217,9 @@ func_97807F15_entry_L11e:
 	mov	(0x24, sp), a0
 	mov	(0x28, sp), a1
 	mov	0x10, d0
-	call	func_978085EA_entry, [d2,d3,a2,a3], 0x2c
+	call	PfFormatInteger_entry, [d2,d3,a2,a3], 0x2c
 	mov	d0, d3
-	jmp	func_97807F15_entry_L262
+	jmp	vsprintf_core_entry_L262
 	mov	(0x28, sp), d0
 	mov	a3, a1
 	mov	d0, (0x18, sp)
@@ -14228,9 +14228,9 @@ func_97807F15_entry_L11e:
 	nop
 	clr	d1
 	nop
-	call	func_978088D8_entry, [d2,a2,a3], 0x7c
+	call	PfFormatF_entry, [d2,a2,a3], 0x7c
 	mov	d0, d3
-	bra	func_97807F15_entry_L262
+	bra	vsprintf_core_entry_L262
 	mov	(0xa4, sp), a0
 	nop
 	clr	d0
@@ -14242,9 +14242,9 @@ func_97807F15_entry_L11e:
 	mov	(0x24, sp), a0
 	mov	a3, a1
 	mov	(0x3c, sp), d0
-	call	func_9780895D_entry, [d2,d3,a2,a3], 0x80
+	call	PfFormatE_entry, [d2,d3,a2,a3], 0x80
 	mov	d0, d3
-	bra	func_97807F15_entry_L262
+	bra	vsprintf_core_entry_L262
 	mov	(0xa4, sp), a0
 	mov	(0x28, sp), d0
 	movbu	(a0), d1
@@ -14253,14 +14253,14 @@ func_97807F15_entry_L11e:
 	mov	(0x24, sp), a0
 	mov	a3, a1
 	mov	(0x3c, sp), d0
-	call	func_97808ABD_entry, [d2,d3,a2,a3], 0x84
+	call	PfFormatG_entry, [d2,d3,a2,a3], 0x84
 	mov	d0, d3
-	bra	func_97807F15_entry_L262
+	bra	vsprintf_core_entry_L262
 	mov	(0x40, sp), d0
 	nop
 	btst	0x10, d0
 	nop
-	beq	func_97807F15_entry_L237
+	beq	vsprintf_core_entry_L237
 	mov	(a3), d0
 	nop
 	add	4, d0
@@ -14269,11 +14269,11 @@ func_97807F15_entry_L11e:
 	mov	a2, d0
 	mov	(-4, a0), a0
 	movhu	d0, (a0)
-	bra	func_97807F15_entry_L262
-func_97807F15_entry_L237:
+	bra	vsprintf_core_entry_L262
+vsprintf_core_entry_L237:
 	btst	0x20, d0
 	nop
-	beq	func_97807F15_entry_L24b
+	beq	vsprintf_core_entry_L24b
 	mov	(a3), d0
 	nop
 	add	4, d0
@@ -14281,8 +14281,8 @@ func_97807F15_entry_L237:
 	mov	(a3), a0
 	mov	(-4, a0), a0
 	mov	a2, (a0)
-	bra	func_97807F15_entry_L262
-func_97807F15_entry_L24b:
+	bra	vsprintf_core_entry_L262
+vsprintf_core_entry_L24b:
 	mov	(a3), d0
 	nop
 	add	4, d0
@@ -14290,13 +14290,13 @@ func_97807F15_entry_L24b:
 	mov	(a3), a0
 	mov	(-4, a0), a0
 	mov	a2, (a0)
-	bra	func_97807F15_entry_L262
-func_97807F15_entry_L259:
+	bra	vsprintf_core_entry_L262
+vsprintf_core_entry_L259:
 	mov	(0xa4, sp), a0
 	mov	1, d3
 	movbu	(a0), d0
 	movbu	d0, (0x44, sp)
-func_97807F15_entry_L262:
+vsprintf_core_entry_L262:
 	mov	(0x3c, sp), d0
 	mov	d0, (0x18, sp)
 	mov	(0xac, sp), d0
@@ -14307,29 +14307,29 @@ func_97807F15_entry_L262:
 	mov	(0x24, sp), a1
 	mov	d3, d0
 	mov	(0x38, sp), d1
-	call	func_978081E5_entry, [d2,d3,a2,a3], 0x30
+	call	PfOutField_entry, [d2,d3,a2,a3], 0x30
 	mov	(0xac, sp), d0
 	nop
 	cmp	0, d0
 	nop
-	beq	func_97807F15_entry_L28d
+	beq	vsprintf_core_entry_L28d
 	mov	sp, a0
 	add	0xa0, a0
 	mov	(a0), a0
 	nop
 	clr	d0
 	movbu	d0, (a0)
-func_97807F15_entry_L28d:
+vsprintf_core_entry_L28d:
 	mov	(0x38, sp), d0
 	nop
 	cmp	d0, d3
 	nop
-	bge	func_97807F15_entry_L298
+	bge	vsprintf_core_entry_L298
 	sub	d3, d0
 	add	d0, a2
-func_97807F15_entry_L298:
+vsprintf_core_entry_L298:
 	add	d3, a2
-func_97807F15_entry_L29a:
+vsprintf_core_entry_L29a:
 	mov	(0xa4, sp), d0
 	nop
 	clr	d3
@@ -14343,29 +14343,29 @@ func_97807F15_entry_L29a:
 	extb	d0
 	cmp	d3, d0
 	nop
-	beq	func_97807F15_entry_L2b3
-	jmp	func_97807F15_entry_L47
-func_97807F15_entry_L2b3:
+	beq	vsprintf_core_entry_L2b3
+	jmp	vsprintf_core_entry_L47
+vsprintf_core_entry_L2b3:
 	mov	(0xac, sp), d0
 	nop
 	cmp	d3, d0
 	nop
-	beq	func_97807F15_entry_L2c5
+	beq	vsprintf_core_entry_L2c5
 	mov	sp, a0
 	add	0xa0, a0
 	mov	(a0), a0
 	nop
 	clr	d0
 	movbu	d0, (a0)
-func_97807F15_entry_L2c5:
+vsprintf_core_entry_L2c5:
 	mov	a2, d0
 	ret	[d2,d3,a2,a3], 0x98
 
-func_978081E5:
+PfOutField:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x20, sp
 
-func_978081E5_entry:
+PfOutField_entry:
 	mov	(0x50, sp), a2
 	mov	d1, (0x44, sp)
 	mov	a0, (0x38, sp)
@@ -14376,45 +14376,45 @@ func_978081E5_entry:
 	mov	a1, d2
 	btst	0x40, d0
 	mov	0, a3
-	beq	func_978081E5_entry_L34
+	beq	PfOutField_entry_L34
 	mov	(a2), d0
 	nop
 	btst	0x08, d0
 	nop
-	bne	func_978081E5_entry_L34
+	bne	PfOutField_entry_L34
 	mov	(0x4c, sp), a0
 	mov	0x20, d0
 	mov	a0, (0x14, sp)
 	mov	(0x38, sp), a0
 	mov	1, d1
-	call	func_97808325_entry, [d2,a2,a3], 0x1c
+	call	PfOutPad_entry, [d2,a2,a3], 0x1c
 	mov	(0x44, sp), d0
 	nop
 	add	-1, d0
 	mov	d0, (0x44, sp)
-func_978081E5_entry_L34:
+PfOutField_entry_L34:
 	mov	(a2), d0
 	nop
 	btst	0x01, d0
 	nop
-	beq	func_978081E5_entry_L41
+	beq	PfOutField_entry_L41
 	mov	1, a3
-	jmp	func_978081E5_entry_Ld3
-func_978081E5_entry_L41:
+	jmp	PfOutField_entry_Ld3
+PfOutField_entry_L41:
 	mov	(a2), d0
 	nop
 	btst	0x02, d0
 	nop
-	bne	func_978081E5_entry_L4c
-	jmp	func_978081E5_entry_Ld3
-func_978081E5_entry_L4c:
+	bne	PfOutField_entry_L4c
+	jmp	PfOutField_entry_Ld3
+PfOutField_entry_L4c:
 	mov	(0x48, sp), a0
 	nop
 	cmp	a3, a0
 	nop
-	blt	func_978081E5_entry_L56
-	jmp	func_978081E5_entry_Ld3
-func_978081E5_entry_L56:
+	blt	PfOutField_entry_L56
+	jmp	PfOutField_entry_Ld3
+PfOutField_entry_L56:
 	mov	d2, a0
 	mov	0x30, d0
 	movbu	d0, (0x1c, sp)
@@ -14426,13 +14426,13 @@ func_978081E5_entry_L56:
 	nop
 	btst	0x08, d0
 	nop
-	beq	func_978081E5_entry_L78
+	beq	PfOutField_entry_L78
 	mov	(a2), d0
 	nop
 	btst	0x04, d0
 	nop
-	beq	func_978081E5_entry_Ld3
-func_978081E5_entry_L78:
+	beq	PfOutField_entry_Ld3
+PfOutField_entry_L78:
 	mov	d2, a0
 	mov	0x9783e404, a1
 	mov	2, d0
@@ -14440,7 +14440,7 @@ func_978081E5_entry_L78:
 	nop
 	cmp	0, d0
 	nop
-	beq	func_978081E5_entry_La2
+	beq	PfOutField_entry_La2
 	mov	d2, a0
 	mov	0x9783e407, a1
 	mov	2, d0
@@ -14448,19 +14448,19 @@ func_978081E5_entry_L78:
 	nop
 	cmp	0, d0
 	nop
-	bne	func_978081E5_entry_Lb7
-func_978081E5_entry_La2:
+	bne	PfOutField_entry_Lb7
+PfOutField_entry_La2:
 	mov	(0x38, sp), a0
 	mov	2, d0
 	mov	(0x4c, sp), d1
 	mov	d2, a1
-	call	func_978082FD_entry, [d2,a2,a3], 0x24
+	call	PfOutString_entry, [d2,a2,a3], 0x24
 	nop
 	add	2, d2
 	add	-2, d3
 	nop
-	bra	func_978081E5_entry_Ld3
-func_978081E5_entry_Lb7:
+	bra	PfOutField_entry_Ld3
+PfOutField_entry_Lb7:
 	mov	d2, a0
 	movbu	(a0), d0
 	mov	(0x4c, sp), a0
@@ -14468,14 +14468,14 @@ func_978081E5_entry_Lb7:
 	mov	a0, (0x14, sp)
 	mov	(0x38, sp), a0
 	mov	1, d1
-	call	func_97808325_entry, [d2,a2,a3], 0x1c
+	call	PfOutPad_entry, [d2,a2,a3], 0x1c
 	mov	(0x44, sp), d0
 	nop
 	inc	d2
 	add	-1, d3
 	add	-1, d0
 	mov	d0, (0x44, sp)
-func_978081E5_entry_Ld3:
+PfOutField_entry_Ld3:
 	mov	(0x44, sp), d0
 	mov	1, a2
 	sub	d3, d0
@@ -14483,45 +14483,45 @@ func_978081E5_entry_Ld3:
 	movbu	(0x1c, sp), d0
 	extb	d0
 	mov	d0, (0x18, sp)
-func_978081E5_entry_Le1:
+PfOutField_entry_Le1:
 	nop
 	cmp	0, a3
 	nop
-	beq	func_978081E5_entry_Lf7
+	beq	PfOutField_entry_Lf7
 	mov	(0x38, sp), a0
 	mov	d2, a1
 	mov	d3, d0
 	mov	(0x4c, sp), d1
-	call	func_978082FD_entry, [d2,a2,a3], 0x24
+	call	PfOutString_entry, [d2,a2,a3], 0x24
 	mov	0, a3
-	bra	func_978081E5_entry_L108
-func_978081E5_entry_Lf7:
+	bra	PfOutField_entry_L108
+PfOutField_entry_Lf7:
 	mov	(0x4c, sp), a0
 	mov	1, a3
 	mov	a0, (0x14, sp)
 	mov	(0x38, sp), a0
 	mov	(0x18, sp), d0
 	mov	(0x44, sp), d1
-	call	func_97808325_entry, [d2,a2,a3], 0x1c
-func_978081E5_entry_L108:
+	call	PfOutPad_entry, [d2,a2,a3], 0x1c
+PfOutField_entry_L108:
 	mov	a2, a0
 	add	-1, a2
 	cmp	0, a0
 	nop
-	bne	func_978081E5_entry_Le1
+	bne	PfOutField_entry_Le1
 	ret	[d2,d3,a2,a3], 0x30
 
-func_978082FD:
+PfOutString:
 	movm	[d2,a2,a3], (sp)
 	add	-0x18, sp
 
-func_978082FD_entry:
+PfOutString_entry:
 	mov	a1, a2
 	mov	d0, d2
 	mov	a0, a3
 	cmp	0, d1
 	nop
-	beq	func_978082FD_entry_L16
+	beq	PfOutString_entry_L16
 	mov	(a3), d1
 	mov	d1, a0
 	call	memcpy_entry, [a2,a3], 8
@@ -14529,32 +14529,32 @@ func_978082FD_entry:
 	nop
 	add	d2, d0
 	mov	d0, (a3)
-	bra	func_978082FD_entry_L20
-func_978082FD_entry_L16:
+	bra	PfOutString_entry_L20
+PfOutString_entry_L16:
 	mov	(a3), a1
 	mov	1, d1
 	mov	a2, a0
-	call	func_97809F1F_entry, [d2,d3,a2,a3], 0x20
-func_978082FD_entry_L20:
+	call	fwrite_entry, [d2,d3,a2,a3], 0x20
+PfOutString_entry_L20:
 	ret	[d2,a2,a3], 0x24
 
-func_97808325:
+PfOutPad:
 	movm	[d2,a2,a3], (sp)
 	add	-0x10, sp
 
-func_97808325_entry:
+PfOutPad_entry:
 	mov	d0, d2
 	mov	a0, a3
 	mov	(0x30, sp), a0
 	mov	d1, a2
 	cmp	0, a0
 	nop
-	beq	func_97808325_entry_L25
+	beq	PfOutPad_entry_L25
 	mov	a2, a0
 	add	-1, a2
 	cmp	0, a0
 	nop
-	ble	func_97808325_entry_L3e
+	ble	PfOutPad_entry_L3e
 	setlb
 	mov	(a3), a0
 	movbu	d2, (a0)
@@ -14567,15 +14567,15 @@ func_97808325_entry:
 	cmp	0, a0
 	nop
 	lgt
-	bra	func_97808325_entry_L3e
-func_97808325_entry_L25:
+	bra	PfOutPad_entry_L3e
+PfOutPad_entry_L25:
 	mov	a2, a0
 	add	-1, a2
 	cmp	0, a0
 	nop
-	ble	func_97808325_entry_L3e
+	ble	PfOutPad_entry_L3e
 	extb	d2
-func_97808325_entry_L2e:
+PfOutPad_entry_L2e:
 	mov	(a3), a0
 	mov	d2, d0
 	call	func_97809F11_entry, 0, 0x10
@@ -14583,8 +14583,8 @@ func_97808325_entry_L2e:
 	add	-1, a2
 	cmp	0, a0
 	nop
-	bgt	func_97808325_entry_L2e
-func_97808325_entry_L3e:
+	bgt	PfOutPad_entry_L2e
+PfOutPad_entry_L3e:
 	ret	[d2,a2,a3], 0x1c
 
 func_9780836B:
@@ -14687,7 +14687,7 @@ func_9780836B_entry_L8f:
 	mov	d3, d1
 	mov	d2, d0
 	mov	a2, a0
-	call	func_97808414_entry, [d2,d3,a2,a3], 0x24
+	call	PfParseWidthPrecSize_entry, [d2,d3,a2,a3], 0x24
 	bra	func_9780836B_entry_La1
 func_9780836B_entry_L9d:
 	inc	a2
@@ -14695,11 +14695,11 @@ func_9780836B_entry_L9d:
 func_9780836B_entry_La1:
 	ret	[d2,d3,a2,a3], 0x2c
 
-func_97808414:
+PfParseWidthPrecSize:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x14, sp
 
-func_97808414_entry:
+PfParseWidthPrecSize_entry:
 	mov	a0, (0x2c, sp)
 	mov	d0, d3
 	movbu	(a0), d0
@@ -14708,7 +14708,7 @@ func_97808414_entry:
 	extb	d0
 	cmp	0x2a, d0
 	nop
-	bne	func_97808414_entry_L34
+	bne	PfParseWidthPrecSize_entry_L34
 	mov	(a3), d0
 	nop
 	add	4, d0
@@ -14719,7 +14719,7 @@ func_97808414_entry:
 	nop
 	cmp	0, d0
 	nop
-	bge	func_97808414_entry_L2d
+	bge	PfParseWidthPrecSize_entry_L2d
 	mov	(a2), d0
 	nop
 	not	d0
@@ -14730,31 +14730,31 @@ func_97808414_entry:
 	nop
 	or	0x01, d0
 	mov	d0, (a0)
-func_97808414_entry_L2d:
+PfParseWidthPrecSize_entry_L2d:
 	mov	(0x2c, sp), a0
 	inc	a0
 	mov	a0, (0x2c, sp)
-	bra	func_97808414_entry_L3f
-func_97808414_entry_L34:
+	bra	PfParseWidthPrecSize_entry_L3f
+PfParseWidthPrecSize_entry_L34:
 	mov	sp, a1
 	add	0x2c, a1
 	mov	0xa, d0
-	call	func_97809F65_entry, [a2], 0x20
+	call	strtol_entry, [a2], 0x20
 	mov	d0, (a2)
-func_97808414_entry_L3f:
+PfParseWidthPrecSize_entry_L3f:
 	mov	(0x2c, sp), a0
 	movbu	(a0), d0
 	extb	d0
 	cmp	0x2e, d0
 	nop
-	bne	func_97808414_entry_L8d
+	bne	PfParseWidthPrecSize_entry_L8d
 	inc	a0
 	mov	a0, (0x2c, sp)
 	movbu	(a0), d0
 	extb	d0
 	cmp	0x2a, d0
 	nop
-	bne	func_97808414_entry_L65
+	bne	PfParseWidthPrecSize_entry_L65
 	mov	(a3), d0
 	inc	a0
 	add	4, d0
@@ -14764,8 +14764,8 @@ func_97808414_entry_L3f:
 	mov	d3, a1
 	mov	d0, (a1)
 	mov	a0, (0x2c, sp)
-	bra	func_97808414_entry_L8d
-func_97808414_entry_L65:
+	bra	PfParseWidthPrecSize_entry_L8d
+PfParseWidthPrecSize_entry_L65:
 	movbu	(a0), d2
 	mov	(0x978afd7c), d0
 	extb	d2
@@ -14775,25 +14775,25 @@ func_97808414_entry_L65:
 	nop
 	btst	0x04, d0
 	nop
-	beq	func_97808414_entry_L89
+	beq	PfParseWidthPrecSize_entry_L89
 	mov	sp, a1
 	add	0x2c, a1
 	mov	0xa, d0
-	call	func_97809F65_entry, [a2], 0x20
+	call	strtol_entry, [a2], 0x20
 	mov	d3, a0
 	mov	d0, (a0)
-	bra	func_97808414_entry_L8d
-func_97808414_entry_L89:
+	bra	PfParseWidthPrecSize_entry_L8d
+PfParseWidthPrecSize_entry_L89:
 	clr	d0
 	mov	d3, a0
 	mov	d0, (a0)
-func_97808414_entry_L8d:
+PfParseWidthPrecSize_entry_L8d:
 	mov	(0x2c, sp), a0
 	movbu	(a0), d0
 	extb	d0
 	cmp	0x68, d0
 	nop
-	bne	func_97808414_entry_La4
+	bne	PfParseWidthPrecSize_entry_La4
 	mov	(0x3c, sp), a0
 	mov	(a0), d0
 	nop
@@ -14802,12 +14802,12 @@ func_97808414_entry_L8d:
 	mov	(0x2c, sp), a0
 	inc	a0
 	mov	a0, (0x2c, sp)
-func_97808414_entry_La4:
+PfParseWidthPrecSize_entry_La4:
 	movbu	(a0), d0
 	extb	d0
 	cmp	0x6c, d0
 	nop
-	bne	func_97808414_entry_Lb9
+	bne	PfParseWidthPrecSize_entry_Lb9
 	mov	(0x3c, sp), a0
 	mov	(a0), d0
 	nop
@@ -14816,12 +14816,12 @@ func_97808414_entry_La4:
 	mov	(0x2c, sp), a0
 	inc	a0
 	mov	a0, (0x2c, sp)
-func_97808414_entry_Lb9:
+PfParseWidthPrecSize_entry_Lb9:
 	movbu	(a0), d0
 	extb	d0
 	cmp	0x4c, d0
 	nop
-	bne	func_97808414_entry_Lce
+	bne	PfParseWidthPrecSize_entry_Lce
 	mov	(0x3c, sp), a0
 	mov	(a0), d0
 	nop
@@ -14830,7 +14830,7 @@ func_97808414_entry_Lb9:
 	mov	(0x2c, sp), a0
 	inc	a0
 	mov	a0, (0x2c, sp)
-func_97808414_entry_Lce:
+PfParseWidthPrecSize_entry_Lce:
 	ret	[d2,d3,a2,a3], 0x24
 
 strncmp:
@@ -14873,7 +14873,7 @@ strncmp_entry_L2a:
 	nop
 	retf	[a2], 4
 
-func_9780851A:
+localeconv:
 	mov	(0x978afd68), d0
 	mov	0x28, d1
 	asl	4, d0
@@ -14925,11 +14925,11 @@ func_9780851A:
 	movbu	d0, (0x97913abb)
 	rets
 
-func_978085EA:
+PfFormatInteger:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x1c, sp
 
-func_978085EA_entry:
+PfFormatInteger_entry:
 	mov	a1, (0x48, sp)
 	movbu	d1, (0x40, sp)
 	mov	a0, a2
@@ -14938,7 +14938,7 @@ func_978085EA_entry:
 	mov	0, a3
 	btst	0x10, d0
 	nop
-	beq	func_978085EA_entry_L59
+	beq	PfFormatInteger_entry_L59
 	mov	sp, a0
 	add	0x38, a0
 	mov	(a0), a0
@@ -14958,37 +14958,37 @@ func_978085EA_entry:
 	exth	d0
 	cmp	0, d0
 	nop
-	bne	func_978085EA_entry_L3c
+	bne	PfFormatInteger_entry_L3c
 	mov	(0x44, sp), a0
 	nop
 	cmp	a3, a0
 	nop
-	bne	func_978085EA_entry_L3c
+	bne	PfFormatInteger_entry_L3c
 	clr	d0
 	nop
 	ret	[d2,d3,a2,a3], 0x2c
-func_978085EA_entry_L3c:
+PfFormatInteger_entry_L3c:
 	cmp	0, d0
 	nop
-	blt	func_978085EA_entry_L44
-	jmp	func_978085EA_entry_Lef
-func_978085EA_entry_L44:
+	blt	PfFormatInteger_entry_L44
+	jmp	PfFormatInteger_entry_Lef
+PfFormatInteger_entry_L44:
 	cmp	0, d1
 	nop
-	blt	func_978085EA_entry_L4c
-	jmp	func_978085EA_entry_Lef
-func_978085EA_entry_L4c:
+	blt	PfFormatInteger_entry_L4c
+	jmp	PfFormatInteger_entry_Lef
+PfFormatInteger_entry_L4c:
 	mov	d0, d3
 	not	d3
 	inc	d3
 	mov	0xffffffff, a3
-	jmp	func_978085EA_entry_Lef
-func_978085EA_entry_L59:
+	jmp	PfFormatInteger_entry_Lef
+PfFormatInteger_entry_L59:
 	mov	(a1), d0
 	nop
 	btst	0x20, d0
 	nop
-	beq	func_978085EA_entry_La1
+	beq	PfFormatInteger_entry_La1
 	mov	sp, a0
 	add	0x38, a0
 	mov	(a0), a0
@@ -15007,27 +15007,27 @@ func_978085EA_entry_L59:
 	nop
 	cmp	0, d2
 	nop
-	bne	func_978085EA_entry_L8c
+	bne	PfFormatInteger_entry_L8c
 	mov	(0x44, sp), a0
 	nop
 	cmp	a3, a0
 	nop
-	bne	func_978085EA_entry_L8c
+	bne	PfFormatInteger_entry_L8c
 	clr	d0
 	nop
 	ret	[d2,d3,a2,a3], 0x2c
-func_978085EA_entry_L8c:
+PfFormatInteger_entry_L8c:
 	cmp	0, d2
 	nop
-	bge	func_978085EA_entry_Lef
+	bge	PfFormatInteger_entry_Lef
 	cmp	0, d1
 	nop
-	bge	func_978085EA_entry_Lef
+	bge	PfFormatInteger_entry_Lef
 	not	d2
 	inc	d2
 	mov	0xffffffff, a3
-	bra	func_978085EA_entry_Lef
-func_978085EA_entry_La1:
+	bra	PfFormatInteger_entry_Lef
+PfFormatInteger_entry_La1:
 	movbu	(0x40, sp), d0
 	mov	sp, a0
 	add	0x38, a0
@@ -15035,7 +15035,7 @@ func_978085EA_entry_La1:
 	extb	d0
 	cmp	0x69, d0
 	nop
-	beq	func_978085EA_entry_Lc8
+	beq	PfFormatInteger_entry_Lc8
 	mov	sp, a0
 	add	0x38, a0
 	mov	(a0), a0
@@ -15051,38 +15051,38 @@ func_978085EA_entry_La1:
 	mov	(a0), a0
 	mov	(a0), a0
 	mov	(-4, a0), a1
-func_978085EA_entry_Lc8:
+PfFormatInteger_entry_Lc8:
 	nop
 	cmp	a3, a1
 	nop
-	bne	func_978085EA_entry_Ld9
+	bne	PfFormatInteger_entry_Ld9
 	mov	(0x44, sp), a0
 	nop
 	cmp	a3, a0
 	nop
-	bne	func_978085EA_entry_Ld9
+	bne	PfFormatInteger_entry_Ld9
 	clr	d0
 	nop
 	ret	[d2,d3,a2,a3], 0x2c
-func_978085EA_entry_Ld9:
+PfFormatInteger_entry_Ld9:
 	cmp	a3, a1
 	nop
-	bge	func_978085EA_entry_Lef
+	bge	PfFormatInteger_entry_Lef
 	cmp	0, d1
 	nop
-	bge	func_978085EA_entry_Lef
+	bge	PfFormatInteger_entry_Lef
 	mov	a1, d0
 	not	d0
 	mov	d0, a1
 	inc	a1
 	mov	0xffffffff, a3
-func_978085EA_entry_Lef:
+PfFormatInteger_entry_Lef:
 	cmp	0, d1
 	nop
-	bge	func_978085EA_entry_L121
+	bge	PfFormatInteger_entry_L121
 	cmp	0, a3
 	nop
-	bge	func_978085EA_entry_L10b
+	bge	PfFormatInteger_entry_L10b
 	mov	(0x48, sp), a0
 	nop
 	add	2, a3
@@ -15093,35 +15093,35 @@ func_978085EA_entry_Lef:
 	mov	0x2d, d0
 	movbu	d0, (a2)
 	inc	a2
-	bra	func_978085EA_entry_L11b
-func_978085EA_entry_L10b:
+	bra	PfFormatInteger_entry_L11b
+PfFormatInteger_entry_L10b:
 	mov	(0x48, sp), a0
 	mov	(a0), d0
 	nop
 	btst	0x08, d0
 	nop
-	beq	func_978085EA_entry_L11b
+	beq	PfFormatInteger_entry_L11b
 	mov	0x2b, d0
 	movbu	d0, (a2)
 	inc	a2
 	inc	a3
-func_978085EA_entry_L11b:
+PfFormatInteger_entry_L11b:
 	not	d1
 	inc	d1
 	nop
-	bra	func_978085EA_entry_L14a
-func_978085EA_entry_L121:
+	bra	PfFormatInteger_entry_L14a
+PfFormatInteger_entry_L121:
 	mov	(0x48, sp), a0
 	mov	(a0), d0
 	nop
 	btst	0x04, d0
 	nop
-	beq	func_978085EA_entry_L14a
+	beq	PfFormatInteger_entry_L14a
 	movbu	(0x40, sp), d0
 	extb	d0
 	cmp	0, d0
 	nop
-	beq	func_978085EA_entry_L14a
+	beq	PfFormatInteger_entry_L14a
 	mov	d1, (0x18, sp)
 	mov	0x30, d1
 	movbu	d1, (a2)
@@ -15130,33 +15130,33 @@ func_978085EA_entry_L121:
 	inc	a3
 	cmp	0x6f, d0
 	nop
-	beq	func_978085EA_entry_L14a
+	beq	PfFormatInteger_entry_L14a
 	movbu	(0x40, sp), d0
 	inc	a3
 	movbu	d0, (a2)
 	inc	a2
-func_978085EA_entry_L14a:
+PfFormatInteger_entry_L14a:
 	mov	(0x48, sp), a0
 	mov	(a0), d0
 	nop
 	btst	0x10, d0
 	nop
-	beq	func_978085EA_entry_L165
+	beq	PfFormatInteger_entry_L165
 	movbu	(0x40, sp), d0
 	mov	a2, a0
 	extb	d0
 	mov	d0, (0x14, sp)
 	exthu	d3
 	mov	d3, d0
-	call	func_97808E89_entry, [d2,d3,a2,a3], 0x28
+	call	PfShortToDigits_entry, [d2,d3,a2,a3], 0x28
 	mov	d0, d2
-	bra	func_978085EA_entry_L18c
-func_978085EA_entry_L165:
+	bra	PfFormatInteger_entry_L18c
+PfFormatInteger_entry_L165:
 	mov	(a0), d0
 	nop
 	btst	0x20, d0
 	nop
-	beq	func_978085EA_entry_L17d
+	beq	PfFormatInteger_entry_L17d
 	movbu	(0x40, sp), d0
 	mov	a2, a0
 	extb	d0
@@ -15164,8 +15164,8 @@ func_978085EA_entry_L165:
 	mov	d2, d0
 	call	func_97808EDE_entry, [d2,d3,a2], 0x10
 	mov	d0, d2
-	bra	func_978085EA_entry_L18c
-func_978085EA_entry_L17d:
+	bra	PfFormatInteger_entry_L18c
+PfFormatInteger_entry_L17d:
 	movbu	(0x40, sp), d0
 	mov	a2, a0
 	extb	d0
@@ -15173,19 +15173,19 @@ func_978085EA_entry_L17d:
 	mov	a1, d0
 	call	func_97808E3B_entry, [d2,d3,a2], 0x10
 	mov	d0, d2
-func_978085EA_entry_L18c:
+PfFormatInteger_entry_L18c:
 	mov	(0x44, sp), a0
 	nop
 	cmp	0, a0
 	nop
-	ble	func_978085EA_entry_L1ab
+	ble	PfFormatInteger_entry_L1ab
 	mov	a0, d3
 	sub	d0, d3
 	cmp	0, d3
 	nop
-	bge	func_978085EA_entry_L19e
+	bge	PfFormatInteger_entry_L19e
 	clr	d3
-func_978085EA_entry_L19e:
+PfFormatInteger_entry_L19e:
 	mov	a2, a0
 	add	d0, a0
 	mov	0x30, d0
@@ -15193,20 +15193,20 @@ func_978085EA_entry_L19e:
 	call	memset_entry, [a2], 4
 	nop
 	add	d3, d2
-func_978085EA_entry_L1ab:
+PfFormatInteger_entry_L1ab:
 	mov	d2, d0
 	mov	a2, a0
-	call	func_97808F2C_entry, [d2], 4
+	call	StrReverse_entry, [d2], 4
 	mov	a3, d0
 	add	d2, d0
 	nop
 	ret	[d2,d3,a2,a3], 0x2c
 
-func_978087A8:
+PfFloatToDigits:
 	movm	[d2,a2,a3], (sp)
 	add	-0x5c, sp
 
-func_978087A8_entry:
+PfFloatToDigits_entry:
 	mov	sp, a2
 	add	0x48, a2
 	mov	a2, (4, sp)
@@ -15219,18 +15219,18 @@ func_978087A8_entry:
 	nop
 	cmp	d0, d1
 	nop
-	bge	func_978087A8_entry_L16
+	bge	PfFloatToDigits_entry_L16
 	mov	6, d0
 	mov	d0, (a0)
-func_978087A8_entry_L16:
+PfFloatToDigits_entry_L16:
 	mov	(0x80, sp), a2
 	mov	(a2), d0
 	nop
 	btst	0x80, d0
 	nop
-	bne	func_978087A8_entry_L23
-	jmp	func_978087A8_entry_La7
-func_978087A8_entry_L23:
+	bne	PfFloatToDigits_entry_L23
+	jmp	PfFloatToDigits_entry_La7
+PfFloatToDigits_entry_L23:
 	mov	(a1), d0
 	nop
 	add	8, d0
@@ -15246,7 +15246,7 @@ func_978087A8_entry_L23:
 	mov	d0, (8, sp)
 	mov	d2, (0xc, sp)
 	call	LibF64CmpZero_entry, [d2,d3], 0x10
-	bge	func_978087A8_entry_L67
+	bge	PfFloatToDigits_entry_L67
 	mov	(a2), d0
 	nop
 	or	0x08, d0
@@ -15265,13 +15265,13 @@ func_978087A8_entry_L23:
 	nop
 	inc	d0
 	mov	d0, (a3)
-	bra	func_978087A8_entry_L79
-func_978087A8_entry_L67:
+	bra	PfFloatToDigits_entry_L79
+PfFloatToDigits_entry_L67:
 	mov	(a2), d0
 	nop
 	btst	0x08, d0
 	nop
-	beq	func_978087A8_entry_L79
+	beq	PfFloatToDigits_entry_L79
 	mov	(0x70, sp), a0
 	mov	0x2b, d0
 	movbu	d0, (a0)
@@ -15279,12 +15279,12 @@ func_978087A8_entry_L67:
 	nop
 	inc	d0
 	mov	d0, (a3)
-func_978087A8_entry_L79:
+PfFloatToDigits_entry_L79:
 	mov	(0x18, sp), d0
 	mov	(0x1c, sp), d1
 	mov	d0, (8, sp)
 	mov	d1, (0xc, sp)
-	call	func_9780903D_entry, [d2,d3,a2,a3], 0x80
+	call	PfDoubleToDecimal_entry, [d2,d3,a2,a3], 0x80
 	mov	(4, sp), a0
 	mov	sp, a1
 	add	0x20, a1
@@ -15310,7 +15310,7 @@ func_978087A8_entry_L79:
 	nop
 	lne
 	ret	[d2,a2,a3], 0x68
-func_978087A8_entry_La7:
+PfFloatToDigits_entry_La7:
 	mov	(a1), d0
 	nop
 	add	8, d0
@@ -15326,7 +15326,7 @@ func_978087A8_entry_La7:
 	mov	d0, (8, sp)
 	mov	d2, (0xc, sp)
 	call	LibF64CmpZero_entry, [d2,d3], 0x10
-	bge	func_978087A8_entry_Leb
+	bge	PfFloatToDigits_entry_Leb
 	mov	(a2), d0
 	nop
 	or	0x08, d0
@@ -15345,13 +15345,13 @@ func_978087A8_entry_La7:
 	nop
 	inc	d0
 	mov	d0, (a3)
-	bra	func_978087A8_entry_Lfd
-func_978087A8_entry_Leb:
+	bra	PfFloatToDigits_entry_Lfd
+PfFloatToDigits_entry_Leb:
 	mov	(a2), d0
 	nop
 	btst	0x08, d0
 	nop
-	beq	func_978087A8_entry_Lfd
+	beq	PfFloatToDigits_entry_Lfd
 	mov	(0x70, sp), a0
 	mov	0x2b, d0
 	movbu	d0, (a0)
@@ -15359,12 +15359,12 @@ func_978087A8_entry_Leb:
 	nop
 	inc	d0
 	mov	d0, (a3)
-func_978087A8_entry_Lfd:
+PfFloatToDigits_entry_Lfd:
 	mov	(0x18, sp), d0
 	mov	(0x1c, sp), d1
 	mov	d0, (8, sp)
 	mov	d1, (0xc, sp)
-	call	func_9780903D_entry, [d2,d3,a2,a3], 0x80
+	call	PfDoubleToDecimal_entry, [d2,d3,a2,a3], 0x80
 	mov	(4, sp), a0
 	mov	sp, a1
 	add	0x34, a1
@@ -15391,11 +15391,11 @@ func_978087A8_entry_Lfd:
 	lne
 	ret	[d2,a2,a3], 0x68
 
-func_978088D8:
+PfFormatF:
 	movm	[d2,a2,a3], (sp)
 	add	-0x70, sp
 
-func_978088D8_entry:
+PfFormatF_entry:
 	mov	sp, a2
 	add	0x5c, a2
 	mov	a2, (4, sp)
@@ -15410,7 +15410,7 @@ func_978088D8_entry:
 	mov	a2, d1
 	add	0x2c, d1
 	mov	a0, a2
-	call	func_978087A8_entry, [d2,a2,a3], 0x68
+	call	PfFloatToDigits_entry, [d2,a2,a3], 0x68
 	mov	(4, sp), a0
 	mov	sp, a1
 	add	0x34, a1
@@ -15440,13 +15440,13 @@ func_978088D8_entry:
 	exth	d0
 	cmp	0x135, d0
 	nop
-	ble	func_978088D8_entry_L59
+	ble	PfFormatF_entry_L59
 	mov	0x9783e674, a1
 	mov	a2, a0
 	call	strcpy_entry, [a2], 4
 	mov	8, d0
-	bra	func_978088D8_entry_L7c
-func_978088D8_entry_L59:
+	bra	PfFormatF_entry_L7c
+PfFormatF_entry_L59:
 	mov	(0x2c, sp), d0
 	mov	a2, a0
 	add	d0, a0
@@ -15466,20 +15466,20 @@ func_978088D8_entry_L59:
 	mov	a3, a1
 	mov	(0x8c, sp), d0
 	mov	d2, d1
-	call	func_97808C88_entry, [d2,d3,a2,a3], 0x2c
+	call	PfAssembleFloat_entry, [d2,d3,a2,a3], 0x2c
 	mov	d0, d1
 	mov	(0x2c, sp), d0
 	nop
 	add	d1, d0
-func_978088D8_entry_L7c:
+PfFormatF_entry_L7c:
 	nop
 	ret	[d2,a2,a3], 0x7c
 
-func_9780895D:
+PfFormatE:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x70, sp
 
-func_9780895D_entry:
+PfFormatE_entry:
 	mov	sp, a2
 	add	0x5c, a2
 	mov	a2, (4, sp)
@@ -15494,7 +15494,7 @@ func_9780895D_entry:
 	mov	a2, d1
 	add	0x2c, d1
 	nop
-	call	func_978087A8_entry, [d2,a2,a3], 0x68
+	call	PfFloatToDigits_entry, [d2,a2,a3], 0x68
 	mov	(4, sp), a0
 	mov	sp, a1
 	add	0x30, a1
@@ -15526,19 +15526,19 @@ func_9780895D_entry:
 	exth	d0
 	cmp	0x135, d0
 	nop
-	ble	func_9780895D_entry_L60
+	ble	PfFormatE_entry_L60
 	mov	(0x88, sp), a0
 	mov	0x9783e680, a1
 	call	strcpy_entry, [a2], 4
 	mov	8, d0
 	ret	[d2,d3,a2,a3], 0x80
-func_9780895D_entry_L60:
+PfFormatE_entry_L60:
 	inc4	a1
 	movbu	(a1), d0
 	mov	1, d1
 	cmp	0, d0
 	nop
-	bne	func_9780895D_entry_L79
+	bne	PfFormatE_entry_L79
 	setlb
 	mov	d1, d0
 	movbu	(d0, a1), d0
@@ -15546,31 +15546,31 @@ func_9780895D_entry_L60:
 	inc	d1
 	cmp	0, d0
 	nop
-	bne	func_9780895D_entry_L79
+	bne	PfFormatE_entry_L79
 	cmp	0x10, d1
 	nop
 	llt
-func_9780895D_entry_L79:
+PfFormatE_entry_L79:
 	movhu	(0x46, sp), d0
 	exth	d0
 	cmp	0, d0
 	nop
-	bne	func_9780895D_entry_L87
+	bne	PfFormatE_entry_L87
 	cmp	0x10, d1
 	nop
-	beq	func_9780895D_entry_L96
-func_9780895D_entry_L87:
+	beq	PfFormatE_entry_L96
+PfFormatE_entry_L87:
 	movhu	(0x46, sp), d0
 	exth	d0
 	add	-1, d0
 	mov	d0, (0x58, sp)
 	mov	1, d0
 	movhu	d0, (0x46, sp)
-	bra	func_9780895D_entry_L99
-func_9780895D_entry_L96:
+	bra	PfFormatE_entry_L99
+PfFormatE_entry_L96:
 	clr	d0
 	mov	d0, (0x58, sp)
-func_9780895D_entry_L99:
+PfFormatE_entry_L99:
 	mov	(0x2c, sp), d2
 	mov	(0x88, sp), d0
 	mov	sp, a2
@@ -15591,7 +15591,7 @@ func_9780895D_entry_L99:
 	mov	(0x98, sp), d1
 	mov	(0x90, sp), d0
 	mov	d2, a0
-	call	func_97808C88_entry, [d2,d3,a2,a3], 0x2c
+	call	PfAssembleFloat_entry, [d2,d3,a2,a3], 0x2c
 	mov	(0x2c, sp), d3
 	nop
 	add	d0, d3
@@ -15605,7 +15605,7 @@ func_9780895D_entry_L99:
 	nop
 	btst	0x04, d0
 	nop
-	bne	func_9780895D_entry_Le2
+	bne	PfFormatE_entry_Le2
 	setlb
 	inc	a0
 	movbu	(a0), d0
@@ -15615,7 +15615,7 @@ func_9780895D_entry_L99:
 	btst	0x04, d0
 	nop
 	leq
-func_9780895D_entry_Le2:
+PfFormatE_entry_Le2:
 	movbu	(a0), d0
 	nop
 	clr	d2
@@ -15624,7 +15624,7 @@ func_9780895D_entry_Le2:
 	nop
 	btst	0x04, d0
 	nop
-	beq	func_9780895D_entry_Lff
+	beq	PfFormatE_entry_Lff
 	setlb
 	inc	a0
 	movbu	(a0), d0
@@ -15636,10 +15636,10 @@ func_9780895D_entry_Le2:
 	btst	0x04, d0
 	nop
 	lne
-func_9780895D_entry_Lff:
+PfFormatE_entry_Lff:
 	cmp	1, d2
 	nop
-	ble	func_9780895D_entry_L120
+	ble	PfFormatE_entry_L120
 	mov	a0, a1
 	add	-1, a1
 	movbu	(a1), d0
@@ -15654,7 +15654,7 @@ func_9780895D_entry_Lff:
 	nop
 	inc	d0
 	mov	d0, (0x58, sp)
-func_9780895D_entry_L120:
+PfFormatE_entry_L120:
 	mov	(0x88, sp), a0
 	movbu	(0x94, sp), d0
 	mov	sp, a1
@@ -15681,7 +15681,7 @@ func_9780895D_entry_L120:
 	mov	2, d0
 	mov	d0, (0x18, sp)
 	mov	-0xa, d0
-	call	func_978085EA_entry, [d2,d3,a2,a3], 0x2c
+	call	PfFormatInteger_entry, [d2,d3,a2,a3], 0x2c
 	mov	d0, d1
 	mov	(0x2c, sp), d0
 	nop
@@ -15690,11 +15690,11 @@ func_9780895D_entry_L120:
 	mov	d2, (a3)
 	ret	[d2,d3,a2,a3], 0x80
 
-func_97808ABD:
+PfFormatG:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x74, sp
 
-func_97808ABD_entry:
+PfFormatG_entry:
 	mov	sp, a2
 	add	0x60, a2
 	mov	a2, (4, sp)
@@ -15717,7 +15717,7 @@ func_97808ABD_entry:
 	mov	a2, d1
 	add	0x30, d1
 	mov	(0x34, sp), a2
-	call	func_978087A8_entry, [d2,a2,a3], 0x68
+	call	PfFloatToDigits_entry, [d2,a2,a3], 0x68
 	mov	(4, sp), a0
 	mov	sp, a1
 	add	0x38, a1
@@ -15747,7 +15747,7 @@ func_97808ABD_entry:
 	exth	d0
 	cmp	0x135, d0
 	nop
-	ble	func_97808ABD_entry_L6b
+	ble	PfFormatG_entry_L6b
 	mov	(0x2c, sp), d0
 	mov	0x9783e68c, a1
 	mov	d0, (a2)
@@ -15755,35 +15755,35 @@ func_97808ABD_entry:
 	call	strcpy_entry, [a2], 4
 	mov	8, d0
 	ret	[d2,d3,a2,a3], 0x84
-func_97808ABD_entry_L6b:
+PfFormatG_entry_L6b:
 	mov	(0x94, sp), a0
 	nop
 	cmp	0, a0
 	nop
-	bne	func_97808ABD_entry_L77
+	bne	PfFormatG_entry_L77
 	mov	1, d0
 	mov	d0, (0x94, sp)
-func_97808ABD_entry_L77:
+PfFormatG_entry_L77:
 	mov	(0x94, sp), d0
 	mov	2, d2
 	cmp	d2, d0
 	nop
-	blt	func_97808ABD_entry_L80
+	blt	PfFormatG_entry_L80
 	mov	d0, d2
-func_97808ABD_entry_L80:
+PfFormatG_entry_L80:
 	movhu	(0x4e, sp), d1
 	exth	d1
 	add	-1, d1
 	cmp	-4, d1
 	nop
-	blt	func_97808ABD_entry_L96
+	blt	PfFormatG_entry_L96
 	movhu	(0x4e, sp), d1
 	exth	d1
 	cmp	d0, d1
 	nop
-	bgt	func_97808ABD_entry_L96
-	jmp	func_97808ABD_entry_L149
-func_97808ABD_entry_L96:
+	bgt	PfFormatG_entry_L96
+	jmp	PfFormatG_entry_L149
+PfFormatG_entry_L96:
 	extb	d3
 	mov	a2, a1
 	mov	1, d1
@@ -15791,17 +15791,17 @@ func_97808ABD_entry_L96:
 	mov	a3, (0x1c, sp)
 	mov	(0x8c, sp), a0
 	mov	d3, d1
-	call	func_9780895D_entry, [d2,d3,a2,a3], 0x80
+	call	PfFormatE_entry, [d2,d3,a2,a3], 0x80
 	mov	d0, a1
 	mov	a1, (0x30, sp)
 	mov	(a3), d0
 	nop
 	btst	0x04, d0
 	nop
-	beq	func_97808ABD_entry_Lb7
+	beq	PfFormatG_entry_Lb7
 	mov	a1, d0
 	ret	[d2,d3,a2,a3], 0x84
-func_97808ABD_entry_Lb7:
+PfFormatG_entry_Lb7:
 	mov	(0x8c, sp), d0
 	mov	-1, d1
 	add	a1, d1
@@ -15816,7 +15816,7 @@ func_97808ABD_entry_Lb7:
 	clr	d2
 	btst	0x04, d0
 	nop
-	beq	func_97808ABD_entry_Le8
+	beq	PfFormatG_entry_Le8
 	setlb
 	mov	1, d0
 	sub	d0, d1
@@ -15830,7 +15830,7 @@ func_97808ABD_entry_Lb7:
 	btst	0x04, d0
 	nop
 	lne
-func_97808ABD_entry_Le8:
+PfFormatG_entry_Le8:
 	mov	(0x97989294), a3
 	mov	d1, a2
 	mov	(a3), a0
@@ -15847,12 +15847,12 @@ func_97808ABD_entry_Le8:
 	extb	d1
 	cmp	d0, d1
 	nop
-	beq	func_97808ABD_entry_L12b
+	beq	PfFormatG_entry_L12b
 	movbu	(a2), d0
 	extb	d0
 	cmp	0x30, d0
 	nop
-	bne	func_97808ABD_entry_L12b
+	bne	PfFormatG_entry_L12b
 	setlb
 	add	-1, a1
 	mov	a1, (0x30, sp)
@@ -15865,13 +15865,13 @@ func_97808ABD_entry_Le8:
 	extb	d0
 	cmp	d0, d1
 	nop
-	beq	func_97808ABD_entry_L12b
+	beq	PfFormatG_entry_L12b
 	movbu	(a2), d0
 	extb	d0
 	cmp	0x30, d0
 	nop
 	leq
-func_97808ABD_entry_L12b:
+PfFormatG_entry_L12b:
 	mov	(a3), a0
 	movbu	(a2), d1
 	movbu	(a0), d0
@@ -15879,19 +15879,19 @@ func_97808ABD_entry_L12b:
 	extb	d0
 	cmp	d0, d1
 	nop
-	beq	func_97808ABD_entry_L13a
+	beq	PfFormatG_entry_L13a
 	inc	a2
-	bra	func_97808ABD_entry_L13e
-func_97808ABD_entry_L13a:
+	bra	PfFormatG_entry_L13e
+PfFormatG_entry_L13a:
 	add	-1, a1
 	mov	a1, (0x30, sp)
-func_97808ABD_entry_L13e:
+PfFormatG_entry_L13e:
 	mov	d3, d0
 	mov	d2, a1
 	mov	a2, a0
 	call	memcpy_entry, [a2,a3], 8
-	bra	func_97808ABD_entry_L1c1
-func_97808ABD_entry_L149:
+	bra	PfFormatG_entry_L1c1
+PfFormatG_entry_L149:
 	mov	(0x2c, sp), d0
 	mov	sp, a1
 	mov	d0, (a2)
@@ -15913,7 +15913,7 @@ func_97808ABD_entry_L149:
 	mov	a3, a1
 	mov	d2, d0
 	mov	1, d1
-	call	func_97808C88_entry, [d2,d3,a2,a3], 0x2c
+	call	PfAssembleFloat_entry, [d2,d3,a2,a3], 0x2c
 	mov	(0x30, sp), d3
 	nop
 	add	d0, d3
@@ -15922,21 +15922,21 @@ func_97808ABD_entry_L149:
 	nop
 	btst	0x04, d0
 	nop
-	beq	func_97808ABD_entry_L18e
+	beq	PfFormatG_entry_L18e
 	movhu	(0x4e, sp), d0
 	exth	d0
 	cmp	0, d0
 	nop
-	ble	func_97808ABD_entry_L18b
+	ble	PfFormatG_entry_L18b
 	mov	(0x94, sp), a0
 	mov	2, d0
 	cmp	2, a0
 	nop
-	blt	func_97808ABD_entry_L1c3
-func_97808ABD_entry_L18b:
+	blt	PfFormatG_entry_L1c3
+PfFormatG_entry_L18b:
 	mov	d3, d0
-	bra	func_97808ABD_entry_L1c3
-func_97808ABD_entry_L18e:
+	bra	PfFormatG_entry_L1c3
+PfFormatG_entry_L18e:
 	mov	(0x8c, sp), a0
 	mov	(0x978afd7c), a1
 	mov	-1, d2
@@ -15950,32 +15950,32 @@ func_97808ABD_entry_L18e:
 	nop
 	btst	0x04, d0
 	nop
-	bne	func_97808ABD_entry_L1af
+	bne	PfFormatG_entry_L1af
 	add	-1, d3
 	mov	d3, (0x30, sp)
-	bra	func_97808ABD_entry_L1c1
-func_97808ABD_entry_L1af:
+	bra	PfFormatG_entry_L1c1
+PfFormatG_entry_L1af:
 	movbu	(a0), d0
 	extb	d0
 	cmp	0x30, d0
 	nop
-	bne	func_97808ABD_entry_L1c1
+	bne	PfFormatG_entry_L1c1
 	add	-1, d3
 	mov	d3, (0x30, sp)
 	mov	1, d0
 	sub	d0, a0
 	nop
 	lra
-func_97808ABD_entry_L1c1:
+PfFormatG_entry_L1c1:
 	mov	(0x30, sp), d0
-func_97808ABD_entry_L1c3:
+PfFormatG_entry_L1c3:
 	ret	[d2,d3,a2,a3], 0x84
 
-func_97808C88:
+PfAssembleFloat:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x1c, sp
 
-func_97808C88_entry:
+PfAssembleFloat_entry:
 	mov	a1, (0x54, sp)
 	mov	d0, (0x4c, sp)
 	mov	a0, (0x34, sp)
@@ -15988,7 +15988,7 @@ func_97808C88_entry:
 	exth	d0
 	cmp	0, d0
 	nop
-	bgt	func_97808C88_entry_L5f
+	bgt	PfAssembleFloat_entry_L5f
 	mov	(0x34, sp), a0
 	mov	0x30, d0
 	movbu	d0, (a0)
@@ -16012,29 +16012,29 @@ func_97808C88_entry:
 	nop
 	cmp	0, d2
 	nop
-	beq	func_97808C88_entry_L56
+	beq	PfAssembleFloat_entry_L56
 	mov	(0x4c, sp), d0
 	nop
 	add	d3, d0
 	add	-1, d0
 	mov	d0, (0x18, sp)
-	bra	func_97808C88_entry_L7b
-func_97808C88_entry_L56:
+	bra	PfAssembleFloat_entry_L7b
+PfAssembleFloat_entry_L56:
 	mov	(0x4c, sp), d0
 	nop
 	add	2, d0
 	mov	d0, (0x18, sp)
-	bra	func_97808C88_entry_L7b
-func_97808C88_entry_L5f:
+	bra	PfAssembleFloat_entry_L7b
+PfAssembleFloat_entry_L5f:
 	cmp	0, d2
 	nop
-	beq	func_97808C88_entry_L6c
+	beq	PfAssembleFloat_entry_L6c
 	mov	(0x4c, sp), d0
 	nop
 	inc	d0
 	mov	d0, (0x18, sp)
-	bra	func_97808C88_entry_L79
-func_97808C88_entry_L6c:
+	bra	PfAssembleFloat_entry_L79
+PfAssembleFloat_entry_L6c:
 	mov	sp, a0
 	add	0x38, a0
 	movhu	(2, a0), d0
@@ -16043,10 +16043,10 @@ func_97808C88_entry_L6c:
 	add	d1, d0
 	inc	d0
 	mov	d0, (0x18, sp)
-func_97808C88_entry_L79:
+PfAssembleFloat_entry_L79:
 	nop
 	clr	d3
-func_97808C88_entry_L7b:
+PfAssembleFloat_entry_L7b:
 	mov	sp, a0
 	add	0x38, a0
 	movhu	(2, a0), d0
@@ -16065,18 +16065,18 @@ func_97808C88_entry_L7b:
 	nop
 	cmp	d0, d3
 	nop
-	bne	func_97808C88_entry_La7
+	bne	PfAssembleFloat_entry_La7
 	mov	(0x97989294), a0
 	mov	(a0), a0
 	movbu	(a0), d0
 	movbu	d0, (a3)
-	bra	func_97808C88_entry_Lae
-func_97808C88_entry_La7:
+	bra	PfAssembleFloat_entry_Lae
+PfAssembleFloat_entry_La7:
 	movbu	(a1), d0
 	inc	a1
 	add	0x30, d0
 	movbu	d0, (a2)
-func_97808C88_entry_Lae:
+PfAssembleFloat_entry_Lae:
 	nop
 	inc	d3
 	inc	a2
@@ -16090,7 +16090,7 @@ func_97808C88_entry_Lae:
 	exth	d0
 	cmp	0x10, d0
 	nop
-	blt	func_97808C88_entry_L102
+	blt	PfAssembleFloat_entry_L102
 	mov	sp, a0
 	add	0x38, a0
 	movhu	(2, a0), d1
@@ -16120,14 +16120,14 @@ func_97808C88_entry_Lae:
 	call	memset_entry, [a2], 4
 	mov	(0x18, sp), d0
 	ret	[d2,d3,a2,a3], 0x2c
-func_97808C88_entry_L102:
+PfAssembleFloat_entry_L102:
 	mov	sp, a0
 	add	0x38, a0
 	movhu	(2, a0), d0
 	exth	d0
 	cmp	0, d0
 	nop
-	ble	func_97808C88_entry_L150
+	ble	PfAssembleFloat_entry_L150
 	mov	sp, a0
 	add	0x38, a0
 	movhu	(2, a0), d0
@@ -16138,7 +16138,7 @@ func_97808C88_entry_L102:
 	nop
 	cmp	d1, d0
 	nop
-	ble	func_97808C88_entry_L150
+	ble	PfAssembleFloat_entry_L150
 	mov	sp, a0
 	add	0x38, a0
 	movhu	(2, a0), d0
@@ -16164,20 +16164,20 @@ func_97808C88_entry_L102:
 	sub	d1, d0
 	add	d0, d3
 	nop
-	bra	func_97808C88_entry_L174
-func_97808C88_entry_L150:
+	bra	PfAssembleFloat_entry_L174
+PfAssembleFloat_entry_L150:
 	mov	sp, a0
 	add	0x38, a0
 	movhu	(2, a0), d0
 	exth	d0
 	cmp	0, d0
 	nop
-	bgt	func_97808C88_entry_L174
+	bgt	PfAssembleFloat_entry_L174
 	mov	(0x4c, sp), d0
 	nop
 	cmp	0x10, d0
 	nop
-	ble	func_97808C88_entry_L174
+	ble	PfAssembleFloat_entry_L174
 	mov	(0x34, sp), a0
 	mov	d0, d2
 	add	-0x10, d2
@@ -16186,36 +16186,36 @@ func_97808C88_entry_L150:
 	add	d2, d3
 	mov	0x30, d0
 	call	memset_entry, [a2], 4
-func_97808C88_entry_L174:
+PfAssembleFloat_entry_L174:
 	mov	d3, d0
 	mov	(0x34, sp), a0
-	call	func_97808F2C_entry, [d2], 4
+	call	StrReverse_entry, [d2], 4
 	mov	(0x18, sp), d1
 	mov	(0x34, sp), a0
 	mov	d3, d0
 	sub	d1, d0
 	mov	d3, d1
-	call	func_97808F4E_entry, [d2,d3,a2,a3], 0x28
+	call	PfRoundDigits_entry, [d2,d3,a2,a3], 0x28
 	mov	d0, d2
 	mov	(0x18, sp), d0
 	mov	(0x34, sp), a0
 	nop
 	add	d0, d2
 	mov	d2, d0
-	call	func_97808F2C_entry, [d2], 4
+	call	StrReverse_entry, [d2], 4
 	mov	(0x4c, sp), d0
 	nop
 	cmp	0, d0
 	nop
-	bne	func_97808C88_entry_L1aa
+	bne	PfAssembleFloat_entry_L1aa
 	mov	(0x54, sp), a0
 	mov	(a0), d1
 	nop
 	btst	0x04, d1
 	nop
-	bne	func_97808C88_entry_L1aa
+	bne	PfAssembleFloat_entry_L1aa
 	add	-1, d2
-func_97808C88_entry_L1aa:
+PfAssembleFloat_entry_L1aa:
 	mov	d2, d0
 	ret	[d2,d3,a2,a3], 0x2c
 
@@ -16273,11 +16273,11 @@ func_97808E3B_entry_L35:
 	leq
 	ret	[d2,d3,a2], 0x10
 
-func_97808E89:
+PfShortToDigits:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x18, sp
 
-func_97808E89_entry:
+PfShortToDigits_entry:
 	mov	a0, a2
 	mov	d1, a3
 	movbu	(0x3c, sp), d1
@@ -16286,7 +16286,7 @@ func_97808E89_entry:
 	mov	d3, d2
 	extb	d1
 	mov	d1, (0x10, sp)
-func_97808E89_entry_Lc:
+PfShortToDigits_entry_Lc:
 	exthu	d0
 	mov	d2, (0x14, sp)
 	mov	d0, d2
@@ -16298,22 +16298,22 @@ func_97808E89_entry_Lc:
 	nop
 	cmp	0xa, d1
 	nop
-	blt	func_97808E89_entry_L31
+	blt	PfShortToDigits_entry_L31
 	cmp	0xf, d1
 	nop
-	bgt	func_97808E89_entry_L31
+	bgt	PfShortToDigits_entry_L31
 	mov	(0x10, sp), a0
 	nop
 	add	a0, d1
 	add	-0x21, d1
 	movbu	d1, (a2)
 	inc	a2
-	bra	func_97808E89_entry_L36
-func_97808E89_entry_L31:
+	bra	PfShortToDigits_entry_L36
+PfShortToDigits_entry_L31:
 	add	0x30, d1
 	movbu	d1, (a2)
 	inc	a2
-func_97808E89_entry_L36:
+PfShortToDigits_entry_L36:
 	mov	a3, d1
 	call	LibDiv32, 0, 0
 	nop
@@ -16323,10 +16323,10 @@ func_97808E89_entry_L36:
 	exthu	d1
 	cmp	0, d1
 	nop
-	bne	func_97808E89_entry_Lc
+	bne	PfShortToDigits_entry_Lc
 	cmp	0, d2
 	nop
-	beq	func_97808E89_entry_Lc
+	beq	PfShortToDigits_entry_Lc
 	mov	d3, d0
 	ret	[d2,d3,a2,a3], 0x28
 
@@ -16384,15 +16384,15 @@ func_97808EDE_entry_L35:
 	leq
 	ret	[d2,d3,a2], 0x10
 
-func_97808F2C:
+StrReverse:
 	movm	[d2], (sp)
 
-func_97808F2C_entry:
+StrReverse_entry:
 	mov	d0, d1
 	add	-1, d1
 	cmp	0, d1
 	nop
-	ble	func_97808F2C_entry_L1d
+	ble	StrReverse_entry_L1d
 	setlb
 	mov	a0, a1
 	movbu	(a0), d2
@@ -16407,14 +16407,14 @@ func_97808F2C_entry:
 	cmp	0, d1
 	nop
 	lgt
-func_97808F2C_entry_L1d:
+StrReverse_entry_L1d:
 	retf	[d2], 4
 
-func_97808F4E:
+PfRoundDigits:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x18, sp
 
-func_97808F4E_entry:
+PfRoundDigits_entry:
 	mov	d0, (0x34, sp)
 	mov	d1, (0x38, sp)
 	nop
@@ -16425,7 +16425,7 @@ func_97808F4E_entry:
 	cmp	d3, d0
 	mov	a2, (0x14, sp)
 	mov	0, a3
-	ble	func_97808F4E_entry_L3c
+	ble	PfRoundDigits_entry_L3c
 	setlb
 	movbu	(a2), d0
 	extb	d0
@@ -16434,22 +16434,22 @@ func_97808F4E_entry:
 	extb	d1
 	cmp	0x35, d1
 	nop
-	bge	func_97808F4E_entry_L21
+	bge	PfRoundDigits_entry_L21
 	clr	d3
 	nop
-	bra	func_97808F4E_entry_L32
-func_97808F4E_entry_L21:
+	bra	PfRoundDigits_entry_L32
+PfRoundDigits_entry_L21:
 	mov	(0x34, sp), d2
 	nop
 	cmp	d2, a3
 	nop
-	bge	func_97808F4E_entry_L32
+	bge	PfRoundDigits_entry_L32
 	mov	1, d3
 	cmp	0x39, d1
 	nop
-	ble	func_97808F4E_entry_L32
+	ble	PfRoundDigits_entry_L32
 	mov	0x30, d0
-func_97808F4E_entry_L32:
+PfRoundDigits_entry_L32:
 	movbu	d0, (a2)
 	mov	(0x34, sp), d0
 	inc	a2
@@ -16457,15 +16457,15 @@ func_97808F4E_entry_L32:
 	cmp	d0, a3
 	nop
 	llt
-func_97808F4E_entry_L3c:
+PfRoundDigits_entry_L3c:
 	cmp	0, d3
 	nop
-	beq	func_97808F4E_entry_L82
+	beq	PfRoundDigits_entry_L82
 	mov	(0x38, sp), d0
 	nop
 	cmp	d0, a3
 	nop
-	bge	func_97808F4E_entry_L82
+	bge	PfRoundDigits_entry_L82
 	setlb
 	mov	(0x97989294), a1
 	movbu	(a2), d0
@@ -16478,45 +16478,45 @@ func_97808F4E_entry_L3c:
 	extb	d1
 	cmp	d1, d2
 	nop
-	bne	func_97808F4E_entry_L66
+	bne	PfRoundDigits_entry_L66
 	mov	(a1), a0
 	movbu	(a0), d0
-	bra	func_97808F4E_entry_L72
-func_97808F4E_entry_L66:
+	bra	PfRoundDigits_entry_L72
+PfRoundDigits_entry_L66:
 	clr	d3
 	mov	d0, d1
 	extb	d1
 	cmp	0x39, d1
 	nop
-	ble	func_97808F4E_entry_L72
+	ble	PfRoundDigits_entry_L72
 	mov	1, d3
 	mov	0x30, d0
-func_97808F4E_entry_L72:
+PfRoundDigits_entry_L72:
 	movbu	d0, (a2)
 	inc	a2
 	inc	a3
 	cmp	0, d3
 	nop
-	beq	func_97808F4E_entry_L82
+	beq	PfRoundDigits_entry_L82
 	mov	(0x38, sp), d0
 	nop
 	cmp	d0, a3
 	nop
 	llt
-func_97808F4E_entry_L82:
+PfRoundDigits_entry_L82:
 	mov	(0x38, sp), d0
 	nop
 	cmp	d0, a3
 	nop
-	blt	func_97808F4E_entry_L96
+	blt	PfRoundDigits_entry_L96
 	cmp	0, d3
 	nop
-	beq	func_97808F4E_entry_L96
+	beq	PfRoundDigits_entry_L96
 	inc	d0
 	mov	d0, (0x38, sp)
 	mov	0x31, d0
 	movbu	d0, (a2)
-func_97808F4E_entry_L96:
+PfRoundDigits_entry_L96:
 	mov	(0x34, sp), d0
 	mov	(0x14, sp), a0
 	mov	(0x38, sp), d1
@@ -16570,11 +16570,11 @@ LibDiv32_L16:
 	nop
 	retf	0, 0
 
-func_9780903D:
+PfDoubleToDecimal:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x70, sp
 
-func_9780903D_entry:
+PfDoubleToDecimal_entry:
 	mov	sp, a2
 	add	0x68, a2
 	mov	a2, (4, sp)
@@ -16623,7 +16623,7 @@ func_9780903D_entry:
 	and	d2, d0
 	cmp	d2, d0
 	nop
-	bne	func_9780903D_entry_L77
+	bne	PfDoubleToDecimal_entry_L77
 	mov	0x7fff, d0
 	movhu	d0, (0x46, sp)
 	mov	sp, a1
@@ -16639,13 +16639,13 @@ func_9780903D_entry:
 	nop
 	lne
 	ret	[d2,d3,a2,a3], 0x80
-func_9780903D_entry_L77:
+PfDoubleToDecimal_entry_L77:
 	movhu	(0x5e, sp), d0
 	nop
 	asr	4, d0
 	and	d2, d0
 	nop
-	bne	func_9780903D_entry_L95
+	bne	PfDoubleToDecimal_entry_L95
 	mov	sp, a1
 	add	0x44, a1
 	mov	(0x84, sp), a0
@@ -16659,13 +16659,13 @@ func_9780903D_entry_L77:
 	nop
 	lne
 	ret	[d2,d3,a2,a3], 0x80
-func_9780903D_entry_L95:
+PfDoubleToDecimal_entry_L95:
 	movhu	(0x5e, sp), d0
 	nop
 	asr	15, d0
 	cmp	1, d0
 	nop
-	bne	func_9780903D_entry_Ld4
+	bne	PfDoubleToDecimal_entry_Ld4
 	mov	sp, a0
 	add	0x58, a0
 	mov	sp, a1
@@ -16674,7 +16674,7 @@ func_9780903D_entry_L95:
 	mov	(4, a0), d0
 	mov	d1, (a1)
 	mov	d0, (4, a1)
-	call	func_9780950E, 0, 0
+	call	LibF64NegTo, 0, 0
 	mov	(4, sp), a0
 	mov	sp, a1
 	add	0x60, a1
@@ -16692,21 +16692,21 @@ func_9780903D_entry_L95:
 	mov	a0, (4, a1)
 	mov	-1, d0
 	movbu	d0, (0x44, sp)
-func_9780903D_entry_Ld4:
+PfDoubleToDecimal_entry_Ld4:
 	movhu	(0x5e, sp), d0
 	mov	0x3ff, d1
 	asr	4, d0
 	and	d2, d0
 	cmp	d1, d0
 	nop
-	bge	func_9780903D_entry_Le6
-	jmp	func_9780903D_entry_L1e1
-func_9780903D_entry_Le6:
+	bge	PfDoubleToDecimal_entry_Le6
+	jmp	PfDoubleToDecimal_entry_L1e1
+PfDoubleToDecimal_entry_Le6:
 	cmp	0x433, d0
 	nop
-	blt	func_9780903D_entry_Lf0
-	jmp	func_9780903D_entry_L1e1
-func_9780903D_entry_Lf0:
+	blt	PfDoubleToDecimal_entry_Lf0
+	jmp	PfDoubleToDecimal_entry_L1e1
+PfDoubleToDecimal_entry_Lf0:
 	mov	(0x58, sp), d0
 	mov	(0x5c, sp), d1
 	mov	d0, (8, sp)
@@ -16745,8 +16745,8 @@ func_9780903D_entry_Lf0:
 	mov	d0, (0x10, sp)
 	mov	d1, (0x14, sp)
 	call	LibF64Cmp_entry, [d2,d3], 0x10
-	blt	func_9780903D_entry_L180
-func_9780903D_entry_L14a:
+	blt	PfDoubleToDecimal_entry_L180
+PfDoubleToDecimal_entry_L14a:
 	mov	(0x58, sp), d0
 	mov	(0x5c, sp), d1
 	mov	d0, (8, sp)
@@ -16770,8 +16770,8 @@ func_9780903D_entry_L14a:
 	mov	d0, (0x10, sp)
 	mov	d1, (0x14, sp)
 	call	LibF64Cmp_entry, [d2,d3], 0x10
-	bge	func_9780903D_entry_L14a
-func_9780903D_entry_L180:
+	bge	PfDoubleToDecimal_entry_L14a
+PfDoubleToDecimal_entry_L180:
 	movhu	(0x46, sp), d3
 	mov	sp, a0
 	mov	a0, d0
@@ -16782,14 +16782,14 @@ func_9780903D_entry_L180:
 	add	d3, d2
 	cmp	0, d2
 	nop
-	bge	func_9780903D_entry_L196
-	jmp	func_9780903D_entry_L33c
-func_9780903D_entry_L196:
+	bge	PfDoubleToDecimal_entry_L196
+	jmp	PfDoubleToDecimal_entry_L33c
+PfDoubleToDecimal_entry_L196:
 	add	4, d0
 	add	d0, d2
 	mov	d2, a2
 	mov	d0, a3
-func_9780903D_entry_L19d:
+PfDoubleToDecimal_entry_L19d:
 	mov	(0x2c, sp), d0
 	mov	(0x30, sp), d1
 	mov	d0, (8, sp)
@@ -16818,9 +16818,9 @@ func_9780903D_entry_L19d:
 	sub	d0, a2
 	cmp	a3, a2
 	nop
-	bcc	func_9780903D_entry_L19d
-	jmp	func_9780903D_entry_L33c
-func_9780903D_entry_L1e1:
+	bcc	PfDoubleToDecimal_entry_L19d
+	jmp	PfDoubleToDecimal_entry_L33c
+PfDoubleToDecimal_entry_L1e1:
 	mov	0x978afd90, a0
 	mov	(a0), d2
 	mov	(4, a0), d3
@@ -16844,7 +16844,7 @@ func_9780903D_entry_L1e1:
 	mov	d0, (8, sp)
 	mov	d1, (0xc, sp)
 	call	LibF64CmpZero_entry, [d2,d3], 0x10
-	bgt	func_9780903D_entry_L24b
+	bgt	PfDoubleToDecimal_entry_L24b
 	mov	0x978afd90, a0
 	mov	(a0), d0
 	mov	(4, a0), d1
@@ -16857,12 +16857,12 @@ func_9780903D_entry_L1e1:
 	call	LibF64Div_entry, [d2,d3,a2,a3], 0x18
 	mov	d0, (8, sp)
 	mov	d1, (0xc, sp)
-	call	func_97809853_entry, [d2,a2], 0x18
+	call	ceil_entry, [d2,a2], 0x18
 	mov	d0, (8, sp)
 	mov	d1, (0xc, sp)
 	call	LibF64ToI32_entry, [d3,a3], 0x10
-	bra	func_9780903D_entry_L278
-func_9780903D_entry_L24b:
+	bra	PfDoubleToDecimal_entry_L278
+PfDoubleToDecimal_entry_L24b:
 	mov	0x978afd90, a0
 	mov	(a0), d0
 	mov	(4, a0), d1
@@ -16879,7 +16879,7 @@ func_9780903D_entry_L24b:
 	mov	d0, (8, sp)
 	mov	d1, (0xc, sp)
 	call	LibF64ToI32_entry, [d3,a3], 0x10
-func_9780903D_entry_L278:
+PfDoubleToDecimal_entry_L278:
 	mov	sp, a0
 	mov	a0, d1
 	add	0x44, d1
@@ -16893,12 +16893,12 @@ func_9780903D_entry_L278:
 	mov	d1, (0x30, sp)
 	mov	d0, (0x3c, sp)
 	mov	d1, (0x40, sp)
-func_9780903D_entry_L290:
+PfDoubleToDecimal_entry_L290:
 	movhu	(0x46, sp), d0
 	exth	d0
 	cmp	0, d0
 	nop
-	bgt	func_9780903D_entry_L2cc
+	bgt	PfDoubleToDecimal_entry_L2cc
 	movhu	(0x46, sp), d0
 	exth	d0
 	not	d0
@@ -16921,8 +16921,8 @@ func_9780903D_entry_L290:
 	call	LibF64Div_entry, [d2,d3,a2,a3], 0x18
 	mov	d0, (0x34, sp)
 	mov	d1, (0x38, sp)
-	bra	func_9780903D_entry_L2fa
-func_9780903D_entry_L2cc:
+	bra	PfDoubleToDecimal_entry_L2fa
+PfDoubleToDecimal_entry_L2cc:
 	movhu	(0x46, sp), d0
 	exth	d0
 	asl	3, d0
@@ -16943,7 +16943,7 @@ func_9780903D_entry_L2cc:
 	call	LibF64Mul_entry, [d2,d3,a2,a3], 0x18
 	mov	d0, (0x34, sp)
 	mov	d1, (0x38, sp)
-func_9780903D_entry_L2fa:
+PfDoubleToDecimal_entry_L2fa:
 	mov	d0, (8, sp)
 	mov	d1, (0xc, sp)
 	mov	(0x1c, sp), d0
@@ -16951,13 +16951,13 @@ func_9780903D_entry_L2fa:
 	mov	d0, (0x10, sp)
 	mov	d1, (0x14, sp)
 	call	LibF64Cmp_entry, [d2,d3], 0x10
-	bge	func_9780903D_entry_L319
+	bge	PfDoubleToDecimal_entry_L319
 	movhu	(0x46, sp), d0
 	exth	d0
 	add	-1, d0
 	movhu	d0, (0x46, sp)
-	jmp	func_9780903D_entry_L290
-func_9780903D_entry_L319:
+	jmp	PfDoubleToDecimal_entry_L290
+PfDoubleToDecimal_entry_L319:
 	mov	(0x34, sp), d0
 	mov	(0x38, sp), d1
 	mov	d0, (8, sp)
@@ -16967,25 +16967,25 @@ func_9780903D_entry_L319:
 	mov	d0, (0x10, sp)
 	mov	d1, (0x14, sp)
 	call	LibF64Cmp_entry, [d2,d3], 0x10
-	blt	func_9780903D_entry_L33b
+	blt	PfDoubleToDecimal_entry_L33b
 	movhu	(0x46, sp), d0
 	exth	d0
 	inc	d0
 	movhu	d0, (0x46, sp)
-	jmp	func_9780903D_entry_L290
-func_9780903D_entry_L33b:
+	jmp	PfDoubleToDecimal_entry_L290
+PfDoubleToDecimal_entry_L33b:
 	clr	d3
-func_9780903D_entry_L33c:
+PfDoubleToDecimal_entry_L33c:
 	cmp	0x10, d3
 	nop
-	bge	func_9780903D_entry_L3a3
+	bge	PfDoubleToDecimal_entry_L3a3
 	mov	(0x18, sp), d2
 	nop
 	add	4, d2
 	add	d2, d3
 	mov	d3, a3
 	add	0x10, d2
-func_9780903D_entry_L34b:
+PfDoubleToDecimal_entry_L34b:
 	mov	(0x34, sp), d0
 	mov	(0x38, sp), d1
 	mov	d0, (8, sp)
@@ -17024,8 +17024,8 @@ func_9780903D_entry_L34b:
 	inc	a3
 	cmp	d2, a3
 	nop
-	bcs	func_9780903D_entry_L34b
-func_9780903D_entry_L3a3:
+	bcs	PfDoubleToDecimal_entry_L34b
+PfDoubleToDecimal_entry_L3a3:
 	mov	0x978afd88, a0
 	mov	(a0), d0
 	mov	(4, a0), d1
@@ -17040,7 +17040,7 @@ func_9780903D_entry_L3a3:
 	mov	d0, (0x10, sp)
 	mov	d1, (0x14, sp)
 	call	LibF64Cmp_entry, [d2,d3], 0x10
-	bgt	func_9780903D_entry_L3f9
+	bgt	PfDoubleToDecimal_entry_L3f9
 	mov	0x978afd88, a0
 	mov	(a0), d0
 	mov	(4, a0), d1
@@ -17055,14 +17055,14 @@ func_9780903D_entry_L3a3:
 	mov	d0, (0x10, sp)
 	mov	d1, (0x14, sp)
 	call	LibF64Cmp_entry, [d2,d3], 0x10
-	bne	func_9780903D_entry_L431
+	bne	PfDoubleToDecimal_entry_L431
 	mov	(0x18, sp), a0
 	movbu	(0x13, a0), d0
 	nop
 	btst	0x01, d0
 	nop
-	beq	func_9780903D_entry_L431
-func_9780903D_entry_L3f9:
+	beq	PfDoubleToDecimal_entry_L431
+PfDoubleToDecimal_entry_L3f9:
 	mov	(0x18, sp), a0
 	mov	0xf, d1
 	add	0x13, a0
@@ -17071,34 +17071,34 @@ func_9780903D_entry_L3f9:
 	nop
 	cmp	9, d0
 	nop
-	bne	func_9780903D_entry_L40d
+	bne	PfDoubleToDecimal_entry_L40d
 	clr	d0
 	movbu	d0, (a0)
-	bra	func_9780903D_entry_L415
-func_9780903D_entry_L40d:
+	bra	PfDoubleToDecimal_entry_L415
+PfDoubleToDecimal_entry_L40d:
 	movbu	(a0), d0
 	nop
 	inc	d0
 	movbu	d0, (a0)
-	bra	func_9780903D_entry_L41f
-func_9780903D_entry_L415:
+	bra	PfDoubleToDecimal_entry_L41f
+PfDoubleToDecimal_entry_L415:
 	add	-1, d1
 	mov	1, d0
 	sub	d0, a0
 	cmp	0, d1
 	nop
 	lge
-func_9780903D_entry_L41f:
+PfDoubleToDecimal_entry_L41f:
 	cmp	0, d1
 	nop
-	bge	func_9780903D_entry_L431
+	bge	PfDoubleToDecimal_entry_L431
 	movhu	(0x46, sp), d0
 	exth	d0
 	inc	d0
 	movhu	d0, (0x46, sp)
 	mov	1, d0
 	movbu	d0, (0x48, sp)
-func_9780903D_entry_L431:
+PfDoubleToDecimal_entry_L431:
 	mov	sp, a1
 	add	0x44, a1
 	mov	(0x84, sp), a0
@@ -17155,7 +17155,7 @@ LibI32ToF64_L55:
 	mov	a0, d2
 	retf	0, 0
 
-func_978094DF:
+LibF64Zero:
 	add	-8, sp
 	mov	0x9783e6ac, a0
 	mov	sp, a1
@@ -17177,7 +17177,7 @@ func_978094F8:
 	mov	d1, (0xc, sp)
 	retf	0, 0x10
 
-func_9780950E:
+LibF64NegTo:
 	mov	sp, a0
 	add	8, a0
 	movhu	(6, a0), d0
@@ -17630,11 +17630,11 @@ LibF64Add_L24c:
 	nop
 	ret	[d2,d3,a2,a3], 0x18
 
-func_97809853:
+ceil:
 	movm	[d2,a2], (sp)
 	add	-0x10, sp
 
-func_97809853_entry:
+ceil_entry:
 	mov	sp, a0
 	mov	a0, d0
 	add	0x20, d0
@@ -18574,11 +18574,11 @@ func_97809F11_entry:
 func_97809F1C:
 	retf	0, 0
 
-func_97809F1F:
+fwrite:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x10, sp
 
-func_97809F1F_entry:
+fwrite_entry:
 	mov	a1, (0x34, sp)
 	mov	d0, (0x2c, sp)
 	mov	d1, d2
@@ -18588,14 +18588,14 @@ func_97809F1F_entry:
 	sub	d0, d2
 	cmp	0, d1
 	nop
-	bls	func_97809F1F_entry_L3d
-func_97809F1F_entry_L10:
+	bls	fwrite_entry_L3d
+fwrite_entry_L10:
 	mov	(0x2c, sp), d0
 	mov	0, a2
 	cmp	0, d0
 	nop
-	bls	func_97809F1F_entry_L31
-func_97809F1F_entry_L19:
+	bls	fwrite_entry_L31
+fwrite_entry_L19:
 	movbu	(a3), d0
 	inc	a3
 	mov	(0x34, sp), a0
@@ -18603,51 +18603,51 @@ func_97809F1F_entry_L19:
 	nop
 	cmp	-1, d0
 	nop
-	beq	func_97809F1F_entry_L31
+	beq	fwrite_entry_L31
 	mov	(0x2c, sp), d0
 	inc	a2
 	cmp	d0, a2
 	nop
-	bcs	func_97809F1F_entry_L19
-func_97809F1F_entry_L31:
+	bcs	fwrite_entry_L19
+fwrite_entry_L31:
 	inc	d3
 	mov	d2, a0
 	mov	1, d0
 	sub	d0, d2
 	cmp	0, a0
 	nop
-	bhi	func_97809F1F_entry_L10
-func_97809F1F_entry_L3d:
+	bhi	fwrite_entry_L10
+fwrite_entry_L3d:
 	mov	d3, d0
 	ret	[d2,d3,a2,a3], 0x20
 
-func_97809F65:
+strtol:
 	movm	[a2], (sp)
 	add	-0x1c, sp
 
-func_97809F65_entry:
+strtol_entry:
 	mov	sp, a2
 	clr	d1
 	mov	d1, (0x18, sp)
 	mov	a2, d1
 	add	0x18, d1
 	nop
-	call	func_97809F8B_entry, [d2,d3,a2,a3], 0x4c
+	call	StrToLongCore_entry, [d2,d3,a2,a3], 0x4c
 	mov	(0x18, sp), d1
 	nop
 	cmp	0, d1
 	nop
-	beq	func_97809F65_entry_L1e
+	beq	strtol_entry_L1e
 	mov	2, d1
 	mov	d1, (0x97989298)
-func_97809F65_entry_L1e:
+strtol_entry_L1e:
 	ret	[a2], 0x20
 
-func_97809F8B:
+StrToLongCore:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x3c, sp
 
-func_97809F8B_entry:
+StrToLongCore_entry:
 	mov	a1, (0x58, sp)
 	mov	d1, (0x60, sp)
 	mov	a0, a2
@@ -18657,18 +18657,18 @@ func_97809F8B_entry:
 	nop
 	cmp	2, a3
 	nop
-	blt	func_97809F8B_entry_L16
+	blt	StrToLongCore_entry_L16
 	cmp	0x24, a3
 	nop
-	ble	func_97809F8B_entry_L20
-func_97809F8B_entry_L16:
+	ble	StrToLongCore_entry_L20
+StrToLongCore_entry_L16:
 	cmp	0, a3
 	nop
-	beq	func_97809F8B_entry_L20
+	beq	StrToLongCore_entry_L20
 	clr	d0
 	nop
 	ret	[d2,d3,a2,a3], 0x4c
-func_97809F8B_entry_L20:
+StrToLongCore_entry_L20:
 	mov	a2, (0x34, sp)
 	movbu	(a2), d0
 	mov	(0x978afd7c), a0
@@ -18678,7 +18678,7 @@ func_97809F8B_entry_L20:
 	nop
 	btst	0x20, d0
 	nop
-	beq	func_97809F8B_entry_L42
+	beq	StrToLongCore_entry_L42
 	setlb
 	inc	a2
 	movbu	(a2), d0
@@ -18688,75 +18688,75 @@ func_97809F8B_entry_L20:
 	btst	0x20, d0
 	nop
 	lne
-func_97809F8B_entry_L42:
+StrToLongCore_entry_L42:
 	mov	a2, (0x38, sp)
 	movbu	(a2), d0
 	extb	d0
 	cmp	0x2b, d0
 	nop
-	bne	func_97809F8B_entry_L4f
+	bne	StrToLongCore_entry_L4f
 	inc	a2
-	bra	func_97809F8B_entry_L5c
-func_97809F8B_entry_L4f:
+	bra	StrToLongCore_entry_L5c
+StrToLongCore_entry_L4f:
 	movbu	(a2), d0
 	extb	d0
 	cmp	0x2d, d0
 	nop
-	bne	func_97809F8B_entry_L5c
+	bne	StrToLongCore_entry_L5c
 	inc	a2
 	mov	-1, d0
 	mov	d0, (0x20, sp)
-func_97809F8B_entry_L5c:
+StrToLongCore_entry_L5c:
 	nop
 	cmp	0, a3
 	nop
-	bne	func_97809F8B_entry_L84
+	bne	StrToLongCore_entry_L84
 	movbu	(a2), d0
 	mov	0xa, a3
 	extb	d0
 	cmp	0x30, d0
 	nop
-	bne	func_97809F8B_entry_La5
+	bne	StrToLongCore_entry_La5
 	inc	a2
 	movbu	(a2), d0
 	mov	8, a3
 	extb	d0
 	cmp	0x78, d0
 	nop
-	beq	func_97809F8B_entry_L7f
+	beq	StrToLongCore_entry_L7f
 	movbu	(a2), d0
 	extb	d0
 	cmp	0x58, d0
 	nop
-	bne	func_97809F8B_entry_La5
-func_97809F8B_entry_L7f:
+	bne	StrToLongCore_entry_La5
+StrToLongCore_entry_L7f:
 	inc	a2
 	mov	0x10, a3
-	bra	func_97809F8B_entry_La5
-func_97809F8B_entry_L84:
+	bra	StrToLongCore_entry_La5
+StrToLongCore_entry_L84:
 	cmp	0x10, a3
 	nop
-	bne	func_97809F8B_entry_La5
+	bne	StrToLongCore_entry_La5
 	movbu	(a2), d0
 	extb	d0
 	cmp	0x30, d0
 	nop
-	bne	func_97809F8B_entry_La5
+	bne	StrToLongCore_entry_La5
 	mov	a2, a1
 	inc	a1
 	movbu	(a1), d0
 	extb	d0
 	cmp	0x78, d0
 	nop
-	beq	func_97809F8B_entry_La3
+	beq	StrToLongCore_entry_La3
 	movbu	(a1), d0
 	extb	d0
 	cmp	0x58, d0
 	nop
-	bne	func_97809F8B_entry_La5
-func_97809F8B_entry_La3:
+	bne	StrToLongCore_entry_La5
+StrToLongCore_entry_La3:
 	add	2, a2
-func_97809F8B_entry_La5:
+StrToLongCore_entry_La5:
 	mov	0x7fffffff, d0
 	mov	a3, d1
 	call	LibDiv32, 0, 0
@@ -18775,8 +18775,8 @@ func_97809F8B_entry_La5:
 	nop
 	cmp	0, d0
 	nop
-	beq	func_97809F8B_entry_Lec
-func_97809F8B_entry_Ld9:
+	beq	StrToLongCore_entry_Lec
+StrToLongCore_entry_Ld9:
 	mov	(0x18, sp), d1
 	nop
 	inc	d1
@@ -18786,8 +18786,8 @@ func_97809F8B_entry_Ld9:
 	nop
 	cmp	0, d0
 	nop
-	bne	func_97809F8B_entry_Ld9
-func_97809F8B_entry_Lec:
+	bne	StrToLongCore_entry_Ld9
+StrToLongCore_entry_Lec:
 	mov	0x80000001, d0
 	mov	a3, d1
 	call	LibDiv32, 0, 0
@@ -18808,8 +18808,8 @@ func_97809F8B_entry_Lec:
 	mov	d0, d2
 	cmp	0, d2
 	nop
-	beq	func_97809F8B_entry_L136
-func_97809F8B_entry_L123:
+	beq	StrToLongCore_entry_L136
+StrToLongCore_entry_L123:
 	mov	(0x14, sp), d0
 	mov	a3, d1
 	inc	d0
@@ -18819,21 +18819,21 @@ func_97809F8B_entry_L123:
 	mov	d0, d2
 	cmp	0, d0
 	nop
-	bne	func_97809F8B_entry_L123
-func_97809F8B_entry_L136:
+	bne	StrToLongCore_entry_L123
+StrToLongCore_entry_L136:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
 	add	a3, d0
 	mov	d0, (0x1c, sp)
-func_97809F8B_entry_L13f:
+StrToLongCore_entry_L13f:
 	movbu	(a2), d0
 	extb	d0
 	cmp	0x30, d0
 	nop
-	bge	func_97809F8B_entry_L14a
-	jmp	func_97809F8B_entry_L1f8
-func_97809F8B_entry_L14a:
+	bge	StrToLongCore_entry_L14a
+	jmp	StrToLongCore_entry_L1f8
+StrToLongCore_entry_L14a:
 	movbu	(a2), d1
 	mov	(0x978afd7c), d0
 	extb	d1
@@ -18843,42 +18843,42 @@ func_97809F8B_entry_L14a:
 	nop
 	btst	0x40, d1
 	nop
-	beq	func_97809F8B_entry_L162
-	jmp	func_97809F8B_entry_L1f8
-func_97809F8B_entry_L162:
+	beq	StrToLongCore_entry_L162
+	jmp	StrToLongCore_entry_L1f8
+StrToLongCore_entry_L162:
 	movbu	(a2), d0
 	mov	0x57, d3
 	extb	d0
-	call	func_9780A1BB_entry, [d2], 4
+	call	tolower_entry, [d2], 4
 	extb	d0
 	cmp	0x39, d0
 	nop
-	bgt	func_97809F8B_entry_L174
+	bgt	StrToLongCore_entry_L174
 	mov	0x30, d3
-func_97809F8B_entry_L174:
+StrToLongCore_entry_L174:
 	mov	(0x1c, sp), a0
 	mov	d0, d1
 	sub	d3, d1
 	cmp	a0, d1
 	nop
-	bgt	func_97809F8B_entry_L1f8
+	bgt	StrToLongCore_entry_L1f8
 	mov	(0x30, sp), a0
 	nop
 	cmp	a0, d2
 	nop
-	blt	func_97809F8B_entry_L1b2
+	blt	StrToLongCore_entry_L1b2
 	mov	(0x10, sp), a0
 	mov	(0x18, sp), a1
 	nop
 	cmp	a1, a0
 	nop
-	bgt	func_97809F8B_entry_L197
+	bgt	StrToLongCore_entry_L197
 	mov	(0x2c, sp), a0
 	nop
 	cmp	a0, d1
 	nop
-	ble	func_97809F8B_entry_L1e5
-func_97809F8B_entry_L197:
+	ble	StrToLongCore_entry_L1e5
+StrToLongCore_entry_L197:
 	mov	(0x60, sp), a0
 	mov	1, d0
 	mov	d0, (a0)
@@ -18886,28 +18886,28 @@ func_97809F8B_entry_L197:
 	mov	0x80000001, d0
 	cmp	0, d1
 	nop
-	blt	func_97809F8B_entry_L1af
+	blt	StrToLongCore_entry_L1af
 	mov	0x7fffffff, d0
-func_97809F8B_entry_L1af:
+StrToLongCore_entry_L1af:
 	ret	[d2,d3,a2,a3], 0x4c
-func_97809F8B_entry_L1b2:
+StrToLongCore_entry_L1b2:
 	mov	(0x28, sp), a0
 	nop
 	cmp	a0, d2
 	nop
-	bgt	func_97809F8B_entry_L1e5
+	bgt	StrToLongCore_entry_L1e5
 	mov	(0x10, sp), a0
 	mov	(0x14, sp), a1
 	nop
 	cmp	a1, a0
 	nop
-	bge	func_97809F8B_entry_L1cb
+	bge	StrToLongCore_entry_L1cb
 	mov	(0x24, sp), a0
 	nop
 	cmp	a0, d1
 	nop
-	ble	func_97809F8B_entry_L1e5
-func_97809F8B_entry_L1cb:
+	ble	StrToLongCore_entry_L1e5
+StrToLongCore_entry_L1cb:
 	mov	(0x60, sp), a0
 	mov	1, d0
 	mov	d0, (a0)
@@ -18915,10 +18915,10 @@ func_97809F8B_entry_L1cb:
 	mov	0x7fffffff, d0
 	cmp	0, d1
 	nop
-	bgt	func_97809F8B_entry_L228
+	bgt	StrToLongCore_entry_L228
 	mov	0x80000001, d0
-	bra	func_97809F8B_entry_L228
-func_97809F8B_entry_L1e5:
+	bra	StrToLongCore_entry_L228
+StrToLongCore_entry_L1e5:
 	inc	a2
 	mov	a3, d1
 	nop
@@ -18930,45 +18930,45 @@ func_97809F8B_entry_L1e5:
 	sub	d3, d2
 	inc	d0
 	mov	d0, (0x10, sp)
-	jmp	func_97809F8B_entry_L13f
-func_97809F8B_entry_L1f8:
+	jmp	StrToLongCore_entry_L13f
+StrToLongCore_entry_L1f8:
 	mov	(0x58, sp), d0
 	nop
 	cmp	0, d0
 	nop
-	beq	func_97809F8B_entry_L214
+	beq	StrToLongCore_entry_L214
 	mov	(0x38, sp), d0
 	nop
 	cmp	a2, d0
 	nop
-	bne	func_97809F8B_entry_L210
+	bne	StrToLongCore_entry_L210
 	mov	(0x34, sp), d0
 	mov	(0x58, sp), a0
 	mov	d0, (a0)
 	mov	d2, d0
-	bra	func_97809F8B_entry_L228
-func_97809F8B_entry_L210:
+	bra	StrToLongCore_entry_L228
+StrToLongCore_entry_L210:
 	mov	(0x58, sp), a0
 	mov	a2, (a0)
-func_97809F8B_entry_L214:
+StrToLongCore_entry_L214:
 	nop
 	cmp	0x80000001, d2
 	nop
-	bne	func_97809F8B_entry_L222
+	bne	StrToLongCore_entry_L222
 	mov	1, d0
 	mov	d0, (0x20, sp)
-func_97809F8B_entry_L222:
+StrToLongCore_entry_L222:
 	mov	(0x20, sp), d0
 	nop
 	nop
 	mul	d2, d0
-func_97809F8B_entry_L228:
+StrToLongCore_entry_L228:
 	ret	[d2,d3,a2,a3], 0x4c
 
-func_9780A1BB:
+tolower:
 	movm	[d2], (sp)
 
-func_9780A1BB_entry:
+tolower_entry:
 	mov	(0x978afd7c), a0
 	mov	d0, d2
 	inc	a0
@@ -18977,9 +18977,9 @@ func_9780A1BB_entry:
 	add	d2, d0
 	btst	0x01, d1
 	nop
-	bne	func_9780A1BB_entry_L14
+	bne	tolower_entry_L14
 	mov	d2, d0
-func_9780A1BB_entry_L14:
+tolower_entry_L14:
 	retf	[d2], 4
 
 func_9780A1D4:
@@ -18993,7 +18993,7 @@ func_9780A1D4_entry:
 	mov	a2, d1
 	add	0x18, d1
 	nop
-	call	func_97809F8B_entry, [d2,d3,a2,a3], 0x4c
+	call	StrToLongCore_entry, [d2,d3,a2,a3], 0x4c
 	ret	[a2], 0x20
 
 func_9780A1EB:
@@ -83939,7 +83939,7 @@ func_978343AC_L49:
 	movbu	(d0, a0), d1
 	extb	d1
 	mov	d1, d0
-	call	func_9780A1BB_entry, [d2], 4
+	call	tolower_entry, [d2], 4
 	mov	(0x64, sp), d1
 	add	0x50, d1
 	mov	(0x14, sp), d2
@@ -84037,7 +84037,7 @@ func_978343AC_L123:
 	mov	(0x18, sp), d0
 	movbu	(d0, a0), d0
 	extb	d0
-	call	func_9780A1BB_entry, [d2], 4
+	call	tolower_entry, [d2], 4
 	mov	(0x14, sp), d1
 	mov	0x450, d2
 	nop

@@ -3,21 +3,46 @@
 ; how a name qualifies. Columns: B address, name, ; the A address it was carried
 ; from and the number of instructions that matched (entry to first return).
 ;
-; 29 names carried (3600 candidates in A, 14818 routine starts in A, 538 unnamed entries in B)
-; not carried: 562 A signatures with fewer than 8 unmasked instructions; 0 with a twin among A's routine starts;
+; 52 names carried (3720 candidates in A, 14827 routine starts in A, 538 unnamed entries in B)
+; not carried: 565 A signatures with fewer than 8 unmasked instructions; 0 with a twin among A's routine starts;
 ; 0 whose name is taken in B
+; --fuzzy, whole bodies (tools/fn_similarity.py): 0 more names carried (0 exact, 0 skeleton, 0 fuzzy); not carried:
+;       1 below the class thresholds or ambiguous
+;       1 name already in B
+;       0 name used twice in A
+;    3002 no candidate in B
+;     664 too little unmasked content
 0x97807DCA  LibF64ToI16	; = 0x4C001624, 9 insns
 0x97807DE3  LibF64UnpackedToI32	; = 0x4C000263, 32 insns
 0x97807E33  LibF64ToI32	; = 0x4C0002B3, 8 insns
 0x97807E4B  LibF64Unpack	; = 0x4C0002CB, 25 insns
 0x97807EF3  sprintf	; = 0x4C001A43, 16 insns
+0x97807F15  vsprintf_core	; = 0x4C001A65, 90 insns
+0x978081E5  PfOutField	; = 0x4C001D35, 135 insns
+0x978082FD  PfOutString	; = 0x4C001E4D, 21 insns
+0x97808325  PfOutPad	; = 0x4C001E75, 42 insns
+0x97808414  PfParseWidthPrecSize	; = 0x4C001F64, 125 insns
 0x978084EA  strncmp	; = 0x4C00203A, 33 insns
+0x9780851A  localeconv	; = 0x4C00206A, 50 insns
+0x978085EA  PfFormatInteger	; = 0x4C00213A, 39 insns
+0x978087A8  PfFloatToDigits	; = 0x4C0022F8, 101 insns
+0x978088D8  PfFormatF	; = 0x4C002428, 78 insns
+0x9780895D  PfFormatE	; = 0x4C0024AD, 54 insns
+0x97808ABD  PfFormatG	; = 0x4C00260D, 62 insns
+0x97808C88  PfAssembleFloat	; = 0x4C0027D8, 139 insns
+0x97808E89  PfShortToDigits	; = 0x4C0029D9, 50 insns
+0x97808F2C  StrReverse	; = 0x4C002A7C, 21 insns
+0x97808F4E  PfRoundDigits	; = 0x4C002A9E, 107 insns
 0x97808FFE  abs	; = 0x4C002B4E, 9 insns
 0x97809020  LibDiv32	; = 0x4C0019D5, 9 insns
+0x9780903D  PfDoubleToDecimal	; = 0x4C002B70, 66 insns
 0x97809485  LibI32ToF64	; = 0x4C000523, 35 insns
+0x978094DF  LibF64Zero	; = 0x4C002FB8, 10 insns
+0x9780950E  LibF64NegTo	; = 0x4C002FE7, 15 insns
 0x97809549  LibF64Modf	; = 0x4C000FA7, 22 insns
 0x978095EE  LibF64Sub	; = 0x4C00057D, 290 insns
 0x978095FF  LibF64Add	; = 0x4C00058E, 284 insns
+0x97809853  ceil	; = 0x4C001A0D, 25 insns
 0x978098E4  LibF64CmpZero	; = 0x4C000851, 16 insns
 0x97809907  LibF64Cmp	; = 0x4C0007E2, 56 insns
 0x97809A50  LibF64Abs	; = 0x4C000F8F, 12 insns
@@ -26,6 +51,10 @@
 0x97809EC7  memcpy	; = 0x4C003037, 17 insns
 0x97809EDF  memset	; = 0x4C003022, 15 insns
 0x97809EF4  strcpy	; = 0x4C00304F, 19 insns
+0x97809F1F  fwrite	; = 0x4C00307A, 39 insns
+0x97809F65  strtol	; = 0x4C0030C0, 17 insns
+0x97809F8B  StrToLongCore	; = 0x4C00178C, 21 insns
+0x9780A1BB  tolower	; = 0x4C0019BC, 12 insns
 0x9780A208  LibU32ToF64	; = 0x4C000F54, 23 insns
 0x9780A243  strcat	; = 0x4C003985, 31 insns
 0x9780A271  strncpy	; = 0x4C0039E9, 32 insns
