@@ -1155,17 +1155,29 @@ rebuilt_ROMs/hd-ae5000_v2_06i.rebuilt.rom: rebuilt_ROMs/hd-ae5000_v2_06i.rebuilt
 # ============================================================================
 # Documentation website targets
 # ============================================================================
-DOCS_DIR=../technics-docs
+# The website checkout (override: make rom-status DOCS_DIR=/abs/path/technics-docs,
+# e.g. from a worktree, where ../technics-docs does not exist).
+DOCS_DIR ?= ../technics-docs
 DOCS_GALLERY=$(DOCS_DIR)/assets/images/gallery
 
 gallery:
 	python scripts/build/convert_images.py $(DOCS_GALLERY)
 
+# Retired.  This target used to cd into a different project (kn5000_project) and
+# export ITS issues.jsonl, not this repo's.  The website has had no issues page
+# since technics-docs f6fcaa6 (2026-09-04, "Retire the frozen issue-tracker
+# dump"); its CLAUDE.md says there should not be one.  The task list is
+# .beads/issues.jsonl, read directly.  scripts/build/export_issues_to_website.py
+# still renders it to a Markdown file named on its command line.
 issues:
-	cd $(PROJECTS_ROOT)/kn5000_project && python scripts/export_issues_to_website.py $(DOCS_DIR)/issues.md
+	@echo "REFUSED: the website has no issues page since technics-docs f6fcaa6 (2026-09-04)." >&2
+	@echo "Read .beads/issues.jsonl directly, or render it to a file of your choice with:" >&2
+	@echo "    python3 scripts/build/export_issues_to_website.py OUT.md" >&2
+	@exit 1
 
+# Classes come from scripts/analysis/data_range_census.py (see the script's docstring).
 rom-status:
-	python scripts/build/generate_rom_status_diagram.py
+	python3 scripts/build/generate_rom_status_diagram.py --docs-dir $(DOCS_DIR)
 
 # Code-coverage evidence ledger (CLAUDE.md "Code-Coverage Evidence Ledger"): rebuild the address maps in scratch,
 # compare with the newest committed snapshot (exit 1 if a figure rose), then write today's snapshot to docs/coverage/.
@@ -1179,7 +1191,7 @@ dispatch-census:
 semantic-score:
 	python3 scripts/analysis/semantic_score.py
 
-website: gallery issues rom-status
+website: gallery rom-status
 	@echo "Website content updated. Don't forget to commit technics-docs."
 
 # ============================================================================

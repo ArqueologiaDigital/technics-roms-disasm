@@ -92,9 +92,9 @@ python scripts/build/compare_roms.py
 
 # Update documentation website
 make gallery            # Convert images to PNG for gallery
-make issues             # Export issue tracker to website
-make rom-status         # Generate ROM status diagram
-make website            # All of the above (gallery + issues + rom-status)
+make issues             # RETIRED: refuses; the website has had no issues page since 2026-09-04
+make rom-status         # Generate ROM status diagram (classes from data_range_census.py)
+make website            # gallery + rom-status; pass DOCS_DIR=/abs/path/technics-docs from a worktree
 ```
 
 ### Assembly Source Organization

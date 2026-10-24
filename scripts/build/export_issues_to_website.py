@@ -242,13 +242,15 @@ def generate_markdown(issues: list) -> str:
 
 def main():
     script_dir = Path(__file__).parent
-    repo_dir = script_dir.parent
+    repo_dir = script_dir.parent.parent   # scripts/build/ -> repo root
     jsonl_path = repo_dir / ".beads" / "issues.jsonl"
 
-    if len(sys.argv) > 1:
-        output_path = Path(sys.argv[1])
-    else:
-        output_path = script_dir.parent / "kn5000-docs" / "issues.md"
+    # No default output: the website retired its issues page (technics-docs
+    # f6fcaa6, 2026-09-04), and the old default wrote into scripts/kn5000-docs/.
+    if len(sys.argv) != 2:
+        print("usage: export_issues_to_website.py OUT.md")
+        sys.exit(2)
+    output_path = Path(sys.argv[1])
 
     if not jsonl_path.exists():
         print(f"Error: Issues file not found: {jsonl_path}")
