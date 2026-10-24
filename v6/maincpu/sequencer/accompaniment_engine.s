@@ -11646,7 +11646,7 @@ AccTone_ReadAndProcess:
 	ld	xwa, xde
 	call AccTone_WriteProgramChange
 	cp	(xsp+2), 128
-	jr	nc, AccTone_ReadAndProcess_Skip
+	jr nc, AccTone_Process_Under80
 	ld	a, (xsp+0:8)
 	ld	e, a
 	extz	de
@@ -11654,23 +11654,23 @@ AccTone_ReadAndProcess:
 	ld	c, a
 	extz	bc
 	ld	wa, de
-	calr	AccTone_NoteLookup
+	calr	AccTone_Process_Cleanup_Loop
 	jr	AccTone_Process_Cleanup
-AccTone_ReadAndProcess_Skip:
+AccTone_Process_Under80:
 	cp	(xsp+2), 240
-	jr	nc, AccTone_Process_Under80
+	jr	nc, AccTone_Process_Under80_Skip
 	ld	a, (xsp+2)
 	res	7, a
 	ld	c, (xsp+3)
 	extz wa
 	extz bc
-	calr	AccTone_CheckBit10Flag_Skip11
+	calr	AccTone_ExtendAndDispatch
 	jr AccTone_Process_Cleanup
 
-AccTone_Process_Under80:
 
+AccTone_Process_Under80_Skip:
 	ld	a, (xsp+2)
-AccTone_Process_UnderF0:
+; port: v7's label AccTone_Process_UnderF0 is not in v6 -- no v6 bytes correspond to what it named
 	sub a, 0xf0
 	extz wa
 	sla wa, 2
@@ -11681,19 +11681,20 @@ AccTone_Process_UnderF0:
 	ld bc, 0:i3
 
 AccTone_Process_CalcResult:
-	calr	AccTone_CheckBit10Flag_Skip11
+	calr AccTone_ExtendAndDispatch
 
 AccTone_Process_Cleanup:
 	inc 4, xsp
 	ret
 
-AccTone_NoteLookup:
+; port: v7's label AccTone_NoteLookup is not in v6 -- no v6 bytes correspond to what it named
+AccTone_Process_Cleanup_Loop:
 	ld	e, a
 	extz	de
 	ld	wa, (0x1108:16)
 	and	wa, 0x4
 	cp	wa, 4:i3
-	jr	nz, AccTone_NoteLookup_Ret
+	jr	nz, AccTone_NoteLookup_ReadTable_Skip
 	ld	l, 0:opc
 	ld a, c
 	add a, c
@@ -11712,29 +11713,26 @@ AccTone_NoteLookup_ReadTable:
 	ld	xbc, AccTone_NoteLookup_Table
 	add	xbc, xwa
 	ld	l, (xbc)
-	jr	AccTone_CheckBit10Flag_Skip
+	jr AccTone_NoteLookup_Ret
 
-AccTone_NoteLookup_CheckBit3:
+; port: v7's label AccTone_NoteLookup_CheckBit3 is not in v6 -- no v6 bytes correspond to what it named
 
-AccTone_NoteLookup_Ret:
 
-AccTone_ExtendAndDispatch:
 
-AccTone_ExtendAndDispatch_Body:
+; port: v7's label AccTone_ExtendAndDispatch_Body is not in v6 -- no v6 bytes correspond to what it named
+AccTone_NoteLookup_ReadTable_Skip:
 	ld wa, (4360:16)
 
-AccTone_SetupExit:
 
-AccTone_ExtendAndDispatch_PopRet:
 
-AccTone_CheckBit10Flag:
+; port: v7's label AccTone_CheckBit10Flag is not in v6 -- no v6 bytes correspond to what it named
 
-AccTone_FoundMatch_IncRet:
+; port: v7's label AccTone_FoundMatch_IncRet is not in v6 -- no v6 bytes correspond to what it named
 
 AccTone_CheckBit3Flag:
 	and	wa, 0x400
 	cp	wa, 0x400
-	jr	nz, AccTone_CheckBit10Flag_Skip12
+	jr nz, AccTone_SetupExit
 	ld	l, 1:opc
 	ld	a, c
 	add	a, c
@@ -11751,19 +11749,19 @@ AccTone_CheckBit3Flag:
 	ld	xbc, AccTone_NoteLookup_Table
 	add	xbc, xwa
 	ld	l, (xbc)
-	jr	AccTone_CheckBit10Flag_Skip
-AccTone_CheckBit10Flag_Skip12:
+	jr	AccTone_NoteLookup_Ret
+AccTone_SetupExit:
 	ld	wa, (0x1108:16)
 	and	wa, 0x8
 	cp	wa, 8
-	jr	nz, AccTone_CheckBit10Flag_Skip2
+	jr	nz, AccTone_SetupExit_Skip
 	ld	l, 1:opc
-	jr	AccTone_CheckBit10Flag_Skip
-AccTone_CheckBit10Flag_Skip2:
+	jr	AccTone_NoteLookup_Ret
+AccTone_SetupExit_Skip:
 	ld	l, 0:opc
-AccTone_CheckBit10Flag_Skip:
+AccTone_NoteLookup_Ret:
 	ret
-AccTone_CheckBit10Flag_Skip11:
+AccTone_ExtendAndDispatch:
 	ld	e, c
 	extz	de
 	sla	de, 2
@@ -11771,8 +11769,8 @@ AccTone_CheckBit10Flag_Skip11:
 	ld	xde, (xhl+de)
 	extz	wa
 	extz	bc
-	jr	AccTone_CheckBit10Flag_Skip3
-AccTone_CheckBit10Flag_Skip3:
+	jr	AccTone_ExtendAndDispatch_Skip3
+AccTone_ExtendAndDispatch_Skip3:
 	ld	e, c
 	extz	de
 	sla	de, 2
@@ -11799,7 +11797,7 @@ AccTone_CheckBit10Flag_Skip3:
 	ld	wa, (0x1108:16)
 	and	wa, 0x4
 	cp	wa, 4:i3
-	jr	nz, AccTone_CheckBit10Flag_Skip4
+	jr	nz, AccTone_ExtendAndDispatch_Skip4
 	ld	a, c
 	extz	wa
 	lda	xbc, (AccTone_ExtendAndDispatch_Body_Table_3:24)
@@ -11814,18 +11812,18 @@ AccTone_CheckBit10Flag_Skip3:
 	extz	wa
 	lda	xbc, (AccTone_LookupByProgram_Table:24)
 	cp	e, (xbc+wa)
-	jr	nz, AccTone_CheckBit10Flag_Skip5
+	jr	nz, AccTone_ExtendAndDispatch_Skip5
 	ld	l, (xix+13)
 	inc	1, l
-	jr	AccTone_CheckBit10Flag_Skip6
-AccTone_CheckBit10Flag_Skip5:
+	jr	AccTone_ExtendAndDispatch_PopRet
+AccTone_ExtendAndDispatch_Skip5:
 	ld	l, 0:opc
-	jr	AccTone_CheckBit10Flag_Skip6
-AccTone_CheckBit10Flag_Skip4:
+	jr	AccTone_ExtendAndDispatch_PopRet
+AccTone_ExtendAndDispatch_Skip4:
 	ld	wa, (0x1108:16)
 	and	wa, 0x400
 	cp	wa, 0x400
-	jr	nz, AccTone_CheckBit10Flag_Skip7
+	jr	nz, AccTone_ExtendAndDispatch_Skip6
 	ld	a, c
 	extz	wa
 	lda	xbc, (AccTone_ExtendAndDispatch_PopRet_Table:24)
@@ -11840,31 +11838,31 @@ AccTone_CheckBit10Flag_Skip4:
 	extz	wa
 	lda	xbc, (AccTone_LookupByProgram_Table:24)
 	cp	e, (xbc+wa)
-	jr	nz, AccTone_CheckBit10Flag_Skip8
+	jr	nz, AccTone_ExtendAndDispatch_Skip7
 	ld	l, (xix+13)
 	inc	1, l
-	jr	AccTone_CheckBit10Flag_Skip6
-AccTone_CheckBit10Flag_Skip8:
+	jr	AccTone_ExtendAndDispatch_PopRet
+AccTone_ExtendAndDispatch_Skip7:
 	ld	l, 0:opc
-	jr	AccTone_CheckBit10Flag_Skip6
-AccTone_CheckBit10Flag_Skip7:
+	jr	AccTone_ExtendAndDispatch_PopRet
+AccTone_ExtendAndDispatch_Skip6:
 	ld	wa, (0x1108:16)
 	and	wa, 0x8
 	cp	wa, 8
-	jr	nz, AccTone_CheckBit10Flag_Skip9
+	jr	nz, AccTone_ExtendAndDispatch_Skip8
 	ld	a, e
 	extz wa
 	lda xbc, (AccStyle_ApplyExt_SkipClamp_Table:24)
 	bit	0, (xbc+wa)
-	jr	z, AccTone_CheckBit10Flag_Skip10
+	jr	z, AccTone_ExtendAndDispatch_Skip9
 	ld	l, 0x0:opc
-	jr	AccTone_CheckBit10Flag_Skip6
-AccTone_CheckBit10Flag_Skip10:
+	jr AccTone_ExtendAndDispatch_PopRet
+AccTone_ExtendAndDispatch_Skip9:
 	ld	l, 1:opc
-	jr	AccTone_CheckBit10Flag_Skip6
-AccTone_CheckBit10Flag_Skip9:
+	jr	AccTone_ExtendAndDispatch_PopRet
+AccTone_ExtendAndDispatch_Skip8:
 	ld	l, 0:opc
-AccTone_CheckBit10Flag_Skip6:
+AccTone_ExtendAndDispatch_PopRet:
 	ret
 	dec 4, xsp
 	ld de, (4360:16)
@@ -11885,10 +11883,10 @@ AccTone_CheckBit10Flag_Skip6:
 	extz wa
 	lda xbc, (AccStyle_ApplyExt_SkipClamp_Table:24)
 	bit	0, (xbc+wa)
-	jr	z, AccTone_CheckBit10Flag_Skip13
+	jr	z, AccTone_ExtendAndDispatch_PopRet_Skip
 	ld	l, 0:opc
 	jrl	AccTone_LookupDone
-AccTone_CheckBit10Flag_Skip13:
+AccTone_ExtendAndDispatch_PopRet_Skip:
 	ld	a, (xde+16)
 	ld	(xsp+0:8), a
 	ld	a, (xde+17)
@@ -11947,7 +11945,7 @@ AccTone_ValidateAndWrite:
 	ld	c, a
 	extz bc
 	ld	wa, de
-	calr AccTone_NoteLookup
+	calr	AccTone_Process_Cleanup_Loop
 	jr AccTone_LookupDone
 
 AccTone_LookupFailed:
@@ -12019,6 +12017,7 @@ AccTone_ExtendAndDispatch_Helper:
 	ld	(13170), (xbc)
 	ld	(0x3373:16), 0
 	ret
+AccTone_JumpTableData_Data:
 	bit	0, (0x3367:16)
 	ret	z
 	call	Rhythm_SendChanPressure_Wrap
@@ -12088,6 +12087,7 @@ AccVoice_BarCounterBytecodeData_Helper2:
 	lda	xwa, (xbc+hl)
 	ld HL,(XWA+0x02)
 	ret
+AccTone_JumpTableData_Helper:
 	dec	2, xsp
 	push	xiz
 	ld	a, (0x322d:16)
@@ -12176,6 +12176,7 @@ AccVoice_BarCounterBytecodeData_Helper2_Skip:
 	pop	xiz
 	inc	2, xsp
 	ret
+AccTone_JumpTableData_Helper2:
 	cp	(0x322d:16), 240
 	ret	c
 	calr	AccTone_ExtendAndDispatch_Helper
@@ -12184,6 +12185,7 @@ AccVoice_BarCounterBytecodeData_Helper2_Skip:
 	ret	z
 	set	0, (0x3283:16)
 	ret
+AccTone_JumpTableData_Helper3:
 	dec	2, xsp
 	push	xiz
 	ld	a, (0x322d:16)
@@ -12298,7 +12300,7 @@ AccVoice_BarCounterBytecodeData_Helper2_Skip7:
 	ld	a, (0x433:16)
 	cp	a, (0x32ae:16)
 	jr	nz, AccVoice_BarCounterBytecodeData_Helper2_Skip10
-	call	0xf5e33e
+	call	AccTone_LookupByProgramWrapped_Join
 	jr	AccVoice_BarCounterBytecodeData_Helper2_Skip9
 AccVoice_BarCounterBytecodeData_Helper2_Skip10:
 	calr	AccVoice_BarCounterBytecodeData_Helper5
@@ -12307,7 +12309,7 @@ AccVoice_BarCounterBytecodeData_Helper2_Skip6:
 	ld	a, (0x433:16)
 	cp	a, (0x32ac:16)
 	jr	nz, AccVoice_BarCounterBytecodeData_Helper2_Skip11
-	call	0xf5e33e
+	call	AccTone_LookupByProgramWrapped_Join
 	jr	AccVoice_BarCounterBytecodeData_Helper2_Skip9
 AccVoice_BarCounterBytecodeData_Helper2_Skip11:
 	calr	AccVoice_BarCounterBytecodeData_Helper4
@@ -12788,7 +12790,7 @@ AccVoice_BarCounterBytecodeData_Skip8:
 	ld	xwa, (0x336e:16)
 ; TODO(port): v6 bytes with no v7 line -- disassemble
 	.byte	0x1d, 0x67
-AccVoice_BarCounterBytecodeData_Skip9:
+; port: v7's label AccVoice_BarCounterBytecodeData_Skip9 is not in v6 -- no v6 bytes correspond to what it named
 ; TODO(port): v6 bytes with no v7 line -- disassemble
 	.byte	0xe1, 0xf5, 0xc1, 0x74, 0x32, 0x3e, 0x3f, 0x78
 	.byte	0x80, 0x00, 0xe1, 0x3a, 0x33, 0x21, 0x89, 0x10
@@ -12813,7 +12815,7 @@ AccVoice_BarCounterBytecodeData_Skip9:
 	cp	a, 1:i3
 	jr	z, AccVoice_BarCounterBytecodeData_Skip11
 	cp	a, 2:i3
-AccVoice_BarCounterBytecodeData_Skip10:
+; port: v7's label AccVoice_BarCounterBytecodeData_Skip10 is not in v6 -- no v6 bytes correspond to what it named
 	jr	nz, AccVoice_BarCounterBytecodeData_Skip11
 	ldw	bc, 1060
 	jr	AccVoice_BarCounterBytecodeData_Join
@@ -12834,7 +12836,7 @@ AccVoice_IncrementBarWithSave_Helper2:
 	dec	2, xsp
 	push	xiz
 	bit	0, (0x32ab:16)
-	jrl	z, AccVoice_BarCounterBytecodeData_Skip15
+	jrl	z, AccVoice_BarCounterBytecodeData_Skip27
 	ld	a, (0x3251:16)
 	cp	a, 1:i3
 	jr	z, AccVoice_BarCounterBytecodeData_Skip13
@@ -12887,7 +12889,8 @@ AccVoice_BarCounterBytecodeData_Skip14:
 	call	AccTuning_CopyAllPartsFromStyle_Wrap
 	or	(0x3274:16), 0x3f
 	jr	AccVoice_BarCounterBytecodeData_Join3_Skip
-AccVoice_BarCounterBytecodeData_Skip15:
+; port: v7's label AccVoice_BarCounterBytecodeData_Skip15 is not in v6 -- no v6 bytes correspond to what it named
+AccVoice_BarCounterBytecodeData_Skip27:
 	ld	xbc, (0x333a:16)
 	ld	a, (xbc+16)
 	ld	(xsp+4), a
@@ -12901,7 +12904,7 @@ AccVoice_BarCounterBytecodeData_Skip15:
 	sll	wa, 8
 	or	wa, bc
 	cp	wa, 0x208
-	jr	z, AccVoice_BarCounterBytecodeData_Skip27
+	jr	z, AccVoice_BarCounterBytecodeData_Skip28
 	ld	a, (xsp+4)
 	ld	c, a
 	extz	bc
@@ -12910,10 +12913,10 @@ AccVoice_BarCounterBytecodeData_Skip15:
 	sll	wa, 8
 	or	wa, bc
 	cp	wa, 0x318
-	jr	z, AccVoice_BarCounterBytecodeData_Skip27
+	jr	z, AccVoice_BarCounterBytecodeData_Skip28
 	lda	xwa, (xsp+4)
 	call	AccTone_ValidateAndClamp
-AccVoice_BarCounterBytecodeData_Skip27:
+AccVoice_BarCounterBytecodeData_Skip28:
 	ld	a, (xsp+4)
 	ld	e, a
 	extz	de
@@ -12921,7 +12924,7 @@ AccVoice_BarCounterBytecodeData_Skip27:
 	ld	c, a
 	extz	bc
 	ld	wa, de
-AccVoice_BarCounterBytecodeData_Skip16:
+; port: v7's label AccVoice_BarCounterBytecodeData_Skip16 is not in v6 -- no v6 bytes correspond to what it named
 	call	AccTone_LookupByProgram_Dispatch
 	ld	xiz, xhl
 	ld	a, (0x31eb:16)
@@ -13000,7 +13003,7 @@ AccVoice_BarCounterBytecodeData_Skip19:
 	sll	wa, 8
 	or	wa, bc
 	cp	wa, 0x208
-	jr	z, AccVoice_BarCounterBytecodeData_Skip28
+	jr	z, AccVoice_BarCounterBytecodeData_Skip29
 	ld	a, (xsp+4)
 	ld	c, a
 	extz	bc
@@ -13009,10 +13012,10 @@ AccVoice_BarCounterBytecodeData_Skip19:
 	sll	wa, 8
 	or	wa, bc
 	cp	wa, 0x318
-	jr	z, AccVoice_BarCounterBytecodeData_Skip28
+	jr	z, AccVoice_BarCounterBytecodeData_Skip29
 	lda	xwa, (xsp+4)
 	call	AccTone_ValidateAndClamp
-AccVoice_BarCounterBytecodeData_Skip28:
+AccVoice_BarCounterBytecodeData_Skip29:
 	ld	a, (xsp+4)
 	ld	e, a
 	extz	de
@@ -13020,7 +13023,7 @@ AccVoice_BarCounterBytecodeData_Skip28:
 	ld	c, a
 	extz	bc
 	ld	wa, de
-AccVoice_BarCounterBytecodeData_Skip20:
+; port: v7's label AccVoice_BarCounterBytecodeData_Skip20 is not in v6 -- no v6 bytes correspond to what it named
 	call	AccTone_LookupByProgram_Dispatch
 	ld	xiz, xhl
 	ld	xwa, xiz
@@ -13069,7 +13072,7 @@ AccVoice_BarCounterBytecodeData_Skip23:
 	sll	wa, 8
 	or	wa, bc
 	cp	wa, 0x208
-	jr	z, AccVoice_BarCounterBytecodeData_Skip29
+	jr	z, AccVoice_BarCounterBytecodeData_Skip30
 	ld	a, (xsp+4)
 	ld	c, a
 	extz	bc
@@ -13078,10 +13081,10 @@ AccVoice_BarCounterBytecodeData_Skip23:
 	sll	wa, 8
 	or	wa, bc
 	cp	wa, 0x318
-	jr	z, AccVoice_BarCounterBytecodeData_Skip29
+	jr	z, AccVoice_BarCounterBytecodeData_Skip30
 	lda	xwa, (xsp+4)
 	call	AccTone_ValidateAndClamp
-AccVoice_BarCounterBytecodeData_Skip29:
+AccVoice_BarCounterBytecodeData_Skip30:
 	ld	a, (xsp+4)
 	ld	e, a
 	extz	de
@@ -13089,7 +13092,7 @@ AccVoice_BarCounterBytecodeData_Skip29:
 	ld	c, a
 	extz	bc
 	ld	wa, de
-AccVoice_BarCounterBytecodeData_Skip24:
+; port: v7's label AccVoice_BarCounterBytecodeData_Skip24 is not in v6 -- no v6 bytes correspond to what it named
 	call	AccTone_LookupByProgram_Dispatch
 	ld	xiz, xhl
 	ld	a, (0x3252:16)
@@ -13163,10 +13166,10 @@ AccTuning_ComplexBytecodeData_Loop2:
 ; TODO(port): v6 bytes with no v7 line -- disassemble
 AccTuning_ComplexBytecodeData_Skip12:
 	.byte	0xc1, 0x1c, 0x33, 0x21, 0xc9, 0x06, 0xc1, 0x5b
-AccTuning_ComplexBytecodeData_Skip2:
+; port: v7's label AccTuning_ComplexBytecodeData_Skip2 is not in v6 -- no v6 bytes correspond to what it named
 ; TODO(port): v6 bytes with no v7 line -- disassemble
 	.byte	0x32, 0xc9
-AccTuning_ComplexBytecodeData_Skip3:
+; port: v7's label AccTuning_ComplexBytecodeData_Skip3 is not in v6 -- no v6 bytes correspond to what it named
 	ld	a, (0x433:16)
 	cp	a, (0x32b0:16)
 	jr	nz, AccTuning_ComplexBytecodeData_Skip6
@@ -13234,7 +13237,7 @@ AccTuning_ComplexBytecodeData_Skip14:
 	ld	c, a
 	extz	bc
 	ld	wa, de
-AccTuning_ComplexBytecodeData_Code_Skip:
+; port: v7's label AccTuning_ComplexBytecodeData_Code_Skip is not in v6 -- no v6 bytes correspond to what it named
 	call	AccTone_LookupByProgram_Dispatch
 	ld	xiz, xhl
 	call	AccPedal_DirectionA_Wrap
@@ -13775,10 +13778,21 @@ AccTone_LookupByProgramWrapped:
 	ret
 
 AccTone_JumpTableData:
-	.byte	0x1d, 0x88, 0xd0, 0xf5, 0x0e, 0x1d, 0x57, 0xd3
-	.byte	0xf5, 0x0e, 0x1d, 0x3e, 0xd3, 0xf5, 0x0e, 0x1d
-	.byte	0x20, 0xd2, 0xf5, 0x0e, 0x1d, 0x48, 0xd1, 0xf5
-	.byte	0x0e, 0x3e, 0x1d, 0x97, 0x59, 0xf5, 0x5e, 0x0e
+	call	AccTone_InlineBytecodeData
+	ret
+	call	AccTone_JumpTableData_Helper3
+	ret
+	call	AccTone_JumpTableData_Helper2
+	ret
+	call	AccTone_JumpTableData_Helper
+	ret
+	call	AccTone_JumpTableData_Data
+	ret
+AccTone_LookupByProgramWrapped_Join:
+	push	xiz
+	call	AccStyle_UseSecondarySource
+	pop	xiz
+	ret
 AccPatch_InitFuncTable:
 	.long	AccTone_StubReturn_B
 	.long	AccTone_StubReturn_A
@@ -26747,14 +26761,13 @@ Tempo_AdjustEndMeasure:
 	cpw	(0x38d4:16), 0x3e7
 	jr nc, Tempo_EndMeasureReturn
 	incw	1, (0x38d4:16)
-	jr	t, Tempo_EndMeasureDec_Skip
+	jr t, Tempo_EndMeasureSyncStart
 Tempo_EndMeasureDec:
 	cpw	(0x38d4:16), 1
 	jr	ule, Tempo_EndMeasureReturn
 	decw	1, (0x38d4:16)
-Tempo_EndMeasureDec_Skip:
-	ld	wa, (14546:16)
 Tempo_EndMeasureSyncStart:
+	ld	wa, (14546:16)
 	cp	wa, (0x38d4:16)
 	jr	ule, Tempo_EndMeasureSyncFar
 	ldw	(0x38d2), (0x38d4:16)
@@ -26985,22 +26998,21 @@ Tempo_EditParam93:
 	cpw	(0x38d4:16), 0x3dd
 	jr	c, Tempo_EditBPMClamp_Code_Skip5
 	ldw	(14548:16), 999
-	jr	Tempo_EditBPMClamp_Code_Skip2
+	jr	Tempo_EditBPMClamp_Code_Join2
 Tempo_EditBPMClamp_Code_Skip5:
 	addw	(0x38d4:16), 10
-	jr	Tempo_EditBPMClamp_Code_Skip2
+	jr	Tempo_EditBPMClamp_Code_Join2
 Tempo_EditParam93_Skip6:
 	cpw	(0x38d4:16), 1
 	jr	ule, Tempo_EditBPMClamp_Code_Epilogue2
 	cpw	(0x38d4:16), 10
 	jr	ugt, Tempo_EditBPMClamp_Code_Skip7
 	ldw	(14548:16), 1
-	jr	Tempo_EditBPMClamp_Code_Skip2
+	jr	Tempo_EditBPMClamp_Code_Join2
 Tempo_EditBPMClamp_Code_Skip7:
 	subw	(0x38d4:16), 10
-Tempo_EditBPMClamp_Code_Skip2:
-	ld	wa, (14546:16)
 Tempo_EditBPMClamp_Code_Join2:
+	ld	wa, (14546:16)
 	cp	wa, (0x38d4:16)
 	jr	ule, Tempo_EditBPMClamp_Code_Skip8
 	ldw	(0x38d2), (0x38d4:16)
@@ -27054,16 +27066,16 @@ Tempo_DisplayParamReturn:
 	calr Part_IsPercussionType
 	cp l, 0:i3
 	jr	nz, Tempo_DisplayEffectLookup
-Tempo_DisplayStartMeasure:
-.Lc_f661c5:
+; port: v7's label Tempo_DisplayStartMeasure is not in v6 -- no v6 bytes correspond to what it named
+; port: v7's label .Lc_f661c5 is not in v6 -- no v6 bytes correspond to what it named
 	ld	a, (0x38d9:16)
 	ld	c, a
-Tempo_DisplayEndMeasure:
-.Lc_f66202:
-Tempo_DisplayQuantize:
-.Lc_f6623e:
-Tempo_DisplayTimeSigNum:
-.Lc_f6627a:
+; port: v7's label Tempo_DisplayEndMeasure is not in v6 -- no v6 bytes correspond to what it named
+; port: v7's label .Lc_f66202 is not in v6 -- no v6 bytes correspond to what it named
+; port: v7's label Tempo_DisplayQuantize is not in v6 -- no v6 bytes correspond to what it named
+; port: v7's label .Lc_f6623e is not in v6 -- no v6 bytes correspond to what it named
+; port: v7's label Tempo_DisplayTimeSigNum is not in v6 -- no v6 bytes correspond to what it named
+; port: v7's label .Lc_f6627a is not in v6 -- no v6 bytes correspond to what it named
 	extz BC
 	ld	wa, (0x38d2:16)
 	calr SetWall_StoreAndResolve
@@ -27622,7 +27634,7 @@ SeqRec_CommitData:
 
 ; TODO(port): v6 bytes with no v7 line -- disassemble
 	.byte	0xb0, 0x00
-SeqRec_CommitFinalize:
+; port: v7's label SeqRec_CommitFinalize is not in v6 -- no v6 bytes correspond to what it named
 	nop
 	ld	(xwa+1), 0
 	ret
@@ -27772,8 +27784,8 @@ VoiceSlot_CheckSlot3:
 	cp	(0x38d9:16), 0
 	jr	z, VoiceSlot_StoreAndReturn
 	ld	a, (14553:16)
-VoiceSlot_CheckSlot4:
-VoiceSlot_CheckSlot5:
+; port: v7's label VoiceSlot_CheckSlot4 is not in v6 -- no v6 bytes correspond to what it named
+; port: v7's label VoiceSlot_CheckSlot5 is not in v6 -- no v6 bytes correspond to what it named
 	extz	wa
 VoiceSlot_ResolveAddr:
 	call Voice_ResolveSlotAddr
@@ -27936,7 +27948,7 @@ VoiceScan_WriteLoop:
 	ld	a, (xbc)
 	ld	(xhl), a
 	ld	xwa, xhl
-	calr	VoiceTable_AdvanceWritePos
+	calr	VoiceTable_ResolveReadAddr_Skip
 	cp	xhl, 0xffffffff
 	jr	nz, VoiceScan_NextEntry
 	ld	l, 1:opc
@@ -27986,7 +27998,7 @@ VoiceTable_ResolveReadAddr:
 	add	xwa, xbc
 	ld	xhl, xwa
 	ret
-VoiceTable_AdvanceWritePos:
+VoiceTable_ResolveReadAddr_Skip:
 	incw	1, (0x38cc:16)
 	cpw	(0x38cc:16), 255
 	jr	c, RhythmParam_Setup
@@ -28117,107 +28129,108 @@ RhythmParam_Process:
 	cp	a, 208
 	jrl	z, VoiceParam_D0Handler
 	cp	a, 176
-	jrl	z, RhythmParam_Process_Skip7
+	jrl	z, VoiceParam_B0_Handler
 	cp	a, 144
-	jrl	nz, VoiceSlot_DispatchByType_Skip2
+	jrl	nz, RhythmParam_Dispatch_KeepBeatAdvance_Skip2
 	cp	(0x38d6:16), 25
-	jr	ule, RhythmParam_Process_Skip8
+	jr	ule, VoiceNote_SubtractOffset
 	ld	a, (0x38d6:16)
 	sub	a, 25
 	add	(0x38e2:16), a
 	cp	(0x38e2:16), 127
-	jr	ule, RhythmParam_Process_Skip
+	jr	ule, VoiceNote_SubtractOffset_Skip
 	ld	(0x38e2:16), 127
-	jr	RhythmParam_Process_Skip
-RhythmParam_Process_Skip8:
+	jr	VoiceNote_SubtractOffset_Skip
+VoiceNote_SubtractOffset:
 	cp	(0x38d6:16), 25
-	jr	nc, RhythmParam_Process_Skip
+	jr	nc, VoiceNote_SubtractOffset_Skip
 	ld	a, 25:opc
 	sub	a, (0x38d6:16)
 	sub	(0x38e2:16), a
 	ld	a, (0x38e2:16)
 	cp	a, 0:i3
-	jr	ge, RhythmParam_Process_Skip
+	jr	ge, VoiceNote_SubtractOffset_Skip
 	ld	(0x38e2:16), 0
-RhythmParam_Process_Skip:
+VoiceNote_SubtractOffset_Skip:
 	bit	1, (0x38df:16)
-	jr	z, RhythmParam_Process_Skip2
+	jr	z, VoiceNote_SubtractOffset_Skip2
 	cp	(0x38e2:16), 12
-	jr	c, RhythmParam_Process_Skip2
+	jr	c, VoiceNote_SubtractOffset_Skip2
 	sub	(0x38e2:16), 12
-RhythmParam_Process_Skip2:
+VoiceNote_SubtractOffset_Skip2:
 	ld	a, (0x38e2:16)
 	extz	wa
 	div	a, 12
 	ld	a, w
 	cp	a, 11
-	jr	z, RhythmParam_Process_Skip3
+	jr	z, VoiceNote_SubtractOffset_Skip3
 	cp	a, 7:i3
-	jr	z, RhythmParam_Process_Skip4
+	jr	z, VoiceNote_SubtractOffset_Skip4
 	cp	a, 4:i3
-	jr	z, RhythmParam_Process_Skip5
+	jr	z, VoiceNote_SubtractOffset_Skip5
 	cp	a, 3:i3
-	jr	nz, RhythmParam_Process_Skip6
-RhythmParam_Process_Skip5:
+	jr	nz, VoiceNote_SubtractOffset_Skip6
+VoiceNote_SubtractOffset_Skip5:
 	ld	(0x38e0:16), 145
 	ld	(0x38e6:16), 0
 	ld	(0x38e7:16), 17
 	ret
-RhythmParam_Process_Skip4:
+VoiceNote_SubtractOffset_Skip4:
 	ld	(0x38e0:16), 145
 	ld	(0x38e6:16), 3
 	ld	(0x38e7:16), 0
 	ret
-RhythmParam_Process_Skip3:
+VoiceNote_SubtractOffset_Skip3:
 	ld	(0x38e0:16), 145
 	ld	(0x38e6:16), 17
 	ld	(0x38e7:16), 17
 	ret
-RhythmParam_Process_Skip6:
+VoiceNote_SubtractOffset_Skip6:
 	ld	(0x38e0:16), 144
 	ret
-RhythmParam_Process_Skip7:
+VoiceParam_B0_Handler:
 	ld	a, (0x38e2:16)
 	res	7, a
 	cp	a, 22
-	jr	ule, 12
+	jr	ule, VoiceParam_B0_Handler_Skip
 ; TODO(port): v6 bytes with no v7 line -- disassemble
 	.byte	0xc1, 0xe2, 0x38, 0x21, 0xc9
-VoiceNote_SubtractOffset:
-
 ; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x30, 0x07, 0xc9, 0xcf, 0x19, 0x6e, 0x58, 0xc1
-	.byte	0xe3, 0x38, 0x21, 0xc9, 0xcc, 0x1f, 0xc9, 0xdc
-	.byte	0x6e, 0x1f
+	.byte	0x30, 0x07, 0xc9, 0xcf, 0x19, 0x6e, 0x58
+VoiceParam_B0_Handler_Skip:
+
+	ld	a, (0x38e3:16)
+	and	a, 0x1f
+	cp	a, 4:i3
+	jr	nz, VoiceBound_CalcOctave
 Voice_BoundaryCheck:
 	bit	3, (0x38e5:16)
-	jr	z, VoiceParam_D0_CheckD4
+	jr	z, VoiceBound_CalcOctave
 	ld	(0x38e0:16), 211
 	bit	3, (0x38e4:16)
-VoiceBound_CalcOctave:
-	jr	nz, VoiceParam_D0_Skip
+	jr nz, VoiceParam_D0_StoreD5
 
-VoiceParam_D0_Process:
+; port: v7's label VoiceParam_D0_Process is not in v6 -- no v6 bytes correspond to what it named
 
 	ld	(0x38e2:16), 0
-	jrl	VoiceSlot_DispatchByType_Skip
-VoiceParam_D0_Skip:
+	jrl	RhythmParam_Dispatch_KeepBeatAdvance_Skip3
+; port: v7's label VoiceParam_D0_Skip is not in v6 -- no v6 bytes correspond to what it named
+VoiceParam_D0_StoreD5:
 	ld	(0x38e2:16), 127
 	ret
 
-VoiceParam_D0_CheckD4:
+; port: v7's label VoiceParam_D0_CheckD4 is not in v6 -- no v6 bytes correspond to what it named
 
+VoiceBound_CalcOctave:
 	ld	a, (0x38e3:16)
-VoiceParam_D0_CheckD5:
+; port: v7's label VoiceParam_D0_CheckD5 is not in v6 -- no v6 bytes correspond to what it named
 
-VoiceParam_D0_StoreD5:
 
-VoiceParam_B0_Handler:
 
-VoiceParam_B0_CheckType:
+; port: v7's label VoiceParam_B0_CheckType is not in v6 -- no v6 bytes correspond to what it named
 	and a, 0x1f
 
-VoiceParam_B0_Process:
+; port: v7's label VoiceParam_B0_Process is not in v6 -- no v6 bytes correspond to what it named
 
 VoiceParam_B0_Process_Join:
 	cp a, 0x8
@@ -28276,11 +28289,11 @@ VoiceSlot_Dispatch:
 	extz	wa
 	sub	wa, 128
 	cp	wa, 0:i3
-	jr	lt, VoiceSlot_DispatchByType_Skip3
+	jr	lt, RhythmParam_Dispatch_KeepBeatAdvance_Skip
 	cp	wa, 6:i3
-	jr	gt, VoiceSlot_DispatchByType_Skip3
+	jr	gt, RhythmParam_Dispatch_KeepBeatAdvance_Skip
 	add	wa, wa
-	lda	xix, (0xe4a11e:24)
+	lda	xix, (VoiceSlot_Dispatch_CaseTable_Data:24)
 	ld	wa, (xix+wa)
 	lda xix, (Voice_ClearSlotAndRet:24)
 
@@ -28292,17 +28305,17 @@ Voice_ClearSlotAndRet:
 RhythmParam_Dispatch_KeepBeatAdvance:
 	ret
 
-VoiceSlot_DispatchByType:
+; port: v7's label VoiceSlot_DispatchByType is not in v6 -- no v6 bytes correspond to what it named
 	ld	(0x38e0:16), 131
 	ret
-VoiceSlot_DispatchByType_Skip3:
+RhythmParam_Dispatch_KeepBeatAdvance_Skip:
 	ld	(0x38e0:16), 0
 	ret
 	ret
-VoiceSlot_DispatchByType_Skip2:
+RhythmParam_Dispatch_KeepBeatAdvance_Skip2:
 	ld	(0x38e0:16), 0
 	ret
-VoiceSlot_DispatchByType_Skip:
+RhythmParam_Dispatch_KeepBeatAdvance_Skip3:
 	ret
 	ret
 	nop
@@ -31514,7 +31527,7 @@ CmpNcpTtl_TableDispatch_OnToItemNext:	; cases 132, 133
 	pop	xiz
 	pop	xix
 	pop	xhl
-CmpNcpTtl_TableDispatch_OnToItemNext_Skip:
+VoiceTable_AdvanceWritePos:
 	pop	xde
 	; v10 does not spell this byte either
 	cp	(0x39c8:16), 1

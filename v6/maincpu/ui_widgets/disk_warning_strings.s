@@ -1950,90 +1950,106 @@ NakaClass_AcBitEditBox_PropNames:	.incbin "includes/generated/naka_disk_warning.
 ; NakaClass_AcBitEditBox_PropNameText -- 14 x char: the property-name strings NakaClass_AcBitEditBox_PropNames points at, "" first, each NUL-terminated and 0xff-padded to even
 ; TODO(port): v6 bytes with no v7 line -- disassemble
 	.byte	0x00, 0xff, 0x64, 0x61, 0x74, 0x61, 0x00, 0xff
-	.byte	0x66, 0x75, 0x6e, 0x63, 0x00, 0xff, 0xb6, 0xc5
-	.byte	0xea, 0x00, 0xb4, 0xc5, 0xea, 0x00, 0x00, 0xff
-	.byte	0x66, 0x75, 0x6e, 0x63, 0x00, 0xff, 0xc6, 0xc5
-	.byte	0xea, 0x00, 0xc4, 0xc5, 0xea, 0x00, 0x00, 0xff
-	.byte	0x65, 0x64, 0x69, 0x74, 0x73, 0x77, 0x32, 0x00
-	.byte	0xd2, 0xc5, 0xea, 0x00, 0x00, 0xff, 0xd8, 0xc5
-	.byte	0xea, 0x00, 0x00, 0xff, 0xe4, 0xc5, 0xea, 0x00
-	.byte	0xe2, 0xc5, 0xea, 0x00, 0x00, 0xff, 0x6d, 0x6f
-	.byte	0x64, 0x65, 0x00, 0xff, 0xf4, 0xc5, 0xea, 0x00
-	.byte	0xf2, 0xc5, 0xea, 0x00, 0x00, 0xff, 0x73, 0x63
-	.byte	0x72, 0x65, 0x65, 0x6e, 0x00, 0xff, 0x06, 0xc6
-	.byte	0xea, 0x00, 0x04, 0xc6, 0xea, 0x00, 0x00, 0xff
-	.byte	0x77, 0x69, 0x6e, 0x64, 0x6f, 0x77, 0x00, 0xff
-	.byte	0x12, 0xc6, 0xea, 0x00, 0x00, 0xff, 0x1e, 0xc6
-	.byte	0xea, 0x00, 0x1c, 0xc6, 0xea, 0x00, 0x00, 0xff
-	.byte	0x63, 0x75, 0x72, 0x73, 0x6f, 0x72, 0x00, 0xff
+	.byte	0x66, 0x75, 0x6e, 0x63, 0x00, 0xff
+NakaClass_AcFuncToggle_PropNames:
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0xb6, 0xc5, 0xea, 0x00, 0xb4, 0xc5, 0xea, 0x00
+	.byte	0x00, 0xff, 0x66, 0x75, 0x6e, 0x63, 0x00, 0xff
+NakaClass_PsWideToggle_PropNames:
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0xc6, 0xc5, 0xea, 0x00, 0xc4, 0xc5, 0xea, 0x00
+	.byte	0x00, 0xff, 0x65, 0x64, 0x69, 0x74, 0x73, 0x77
+	.byte	0x32, 0x00
+NakaClass_DbMemo_PropNames:
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0xd2, 0xc5, 0xea, 0x00, 0x00, 0xff
+NakaClass_IvExit_PropNames:
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0xd8, 0xc5, 0xea, 0x00, 0x00, 0xff
+NakaClass_IvExitMode_PropNames:
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0xe4, 0xc5, 0xea, 0x00, 0xe2, 0xc5, 0xea, 0x00
+	.byte	0x00, 0xff, 0x6d, 0x6f, 0x64, 0x65, 0x00, 0xff
+NakaClass_IvExitScreen_PropNames:
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0xf4, 0xc5, 0xea, 0x00, 0xf2, 0xc5, 0xea, 0x00
+	.byte	0x00, 0xff, 0x73, 0x63, 0x72, 0x65, 0x65, 0x6e
+	.byte	0x00, 0xff
+NakaClass_IvFixWin_PropNames:
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0x06, 0xc6, 0xea, 0x00, 0x04, 0xc6, 0xea, 0x00
+	.byte	0x00, 0xff, 0x77, 0x69, 0x6e, 0x64, 0x6f, 0x77
+	.byte	0x00, 0xff
+NakaClass_AcNamingWindow_PropNames:
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0x12, 0xc6, 0xea, 0x00, 0x00, 0xff
+NakaClass_PsCursorBox_PropNames:
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0x1e, 0xc6, 0xea, 0x00, 0x1c, 0xc6, 0xea, 0x00
+	.byte	0x00, 0xff, 0x63, 0x75, 0x72, 0x73, 0x6f, 0x72
+	.byte	0x00, 0xff
+NakaClass_IvNaming_PropNames:
+; TODO(port): v6 bytes with no v7 line -- disassemble
 	.byte	0x30, 0xc6, 0xea, 0x00, 0x2e, 0xc6, 0xea, 0x00
 	.byte	0x00, 0xff, 0x66, 0x75, 0x6e, 0x63, 0x00, 0xff
+NakaClass_AcIndexToggle_PropNames:
+; TODO(port): v6 bytes with no v7 line -- disassemble
 	.byte	0x48, 0xc6, 0xea, 0x00, 0x44, 0xc6, 0xea, 0x00
 	.byte	0x42, 0xc6, 0xea, 0x00, 0x00, 0xff, 0x74, 0x61
 	.byte	0x67, 0x00, 0x69, 0x6e, 0x64, 0x65, 0x78, 0x00
+NakaClass_AcRamBox_PropNames:
+; TODO(port): v6 bytes with no v7 line -- disassemble
 	.byte	0x62, 0xc6, 0xea, 0x00, 0x5c, 0xc6, 0xea, 0x00
 	.byte	0x5a, 0xc6, 0xea, 0x00
 NakaClass_AcBitEditBox_PropNameText:	.incbin "includes/generated/naka_disk_warning.bin", 0x39EE, 0xE
 ; NakaClass_AcFuncToggle_PropNames -- 2 x u32: name pointers of class AcFuncToggle (0x1600044)'s own properties, one per letter of its propdata "j":
 ; "func", ended by "". +20 (propname) of entry 68 of Root_ClassTable_160; ClassProc_OnGetPropNameSp reads entry [property].
-NakaClass_AcFuncToggle_PropNames:
 ; NakaClass_AcFuncToggle_PropNameText -- 8 x char: the property-name strings NakaClass_AcFuncToggle_PropNames points at, "" first, each NUL-terminated and 0xff-padded to even
-NakaClass_AcFuncToggle_PropNameText:
+; port: v7's label NakaClass_AcFuncToggle_PropNameText is not in v6 -- no v6 bytes correspond to what it named
 ; NakaClass_PsWideToggle_PropNames -- 2 x u32: name pointers of class PsWideToggle (0x1600045)'s own properties, one per letter of its propdata "e":
 ; "editsw2", ended by "". +20 (propname) of entry 69 of Root_ClassTable_160; ClassProc_OnGetPropNameSp reads entry [property].
-NakaClass_PsWideToggle_PropNames:
 ; NakaClass_PsWideToggle_PropNameText -- 10 x char: the property-name strings NakaClass_PsWideToggle_PropNames points at, "" first, each NUL-terminated and 0xff-padded to even
-NakaClass_PsWideToggle_PropNameText:
+; port: v7's label NakaClass_PsWideToggle_PropNameText is not in v6 -- no v6 bytes correspond to what it named
 ; NakaClass_DbMemo_PropNames -- 1 x u32: name pointers of class DbMemo (0x1600046)'s own properties, one per letter of its propdata "":
 ; no own property, ended by "". +20 (propname) of entry 70 of Root_ClassTable_160; ClassProc_OnGetPropNameSp reads entry [property].
-NakaClass_DbMemo_PropNames:
 ; NakaClass_DbMemo_PropNameText -- 2 x char: the property-name strings NakaClass_DbMemo_PropNames points at, "" first, each NUL-terminated and 0xff-padded to even
-NakaClass_DbMemo_PropNameText:
+; port: v7's label NakaClass_DbMemo_PropNameText is not in v6 -- no v6 bytes correspond to what it named
 ; NakaClass_IvExit_PropNames -- 1 x u32: name pointers of class IvExit (0x1600047)'s own properties, one per letter of its propdata "":
 ; no own property, ended by "". +20 (propname) of entry 71 of Root_ClassTable_160; ClassProc_OnGetPropNameSp reads entry [property].
-NakaClass_IvExit_PropNames:
 ; NakaClass_IvExit_PropNameText -- 2 x char: the property-name strings NakaClass_IvExit_PropNames points at, "" first, each NUL-terminated and 0xff-padded to even
-NakaClass_IvExit_PropNameText:
+; port: v7's label NakaClass_IvExit_PropNameText is not in v6 -- no v6 bytes correspond to what it named
 ; NakaClass_IvExitMode_PropNames -- 2 x u32: name pointers of class IvExitMode (0x1600048)'s own properties, one per letter of its propdata "`":
 ; "mode", ended by "". +20 (propname) of entry 72 of Root_ClassTable_160; ClassProc_OnGetPropNameSp reads entry [property].
-NakaClass_IvExitMode_PropNames:
 ; NakaClass_IvExitMode_PropNameText -- 8 x char: the property-name strings NakaClass_IvExitMode_PropNames points at, "" first, each NUL-terminated and 0xff-padded to even
-NakaClass_IvExitMode_PropNameText:
+; port: v7's label NakaClass_IvExitMode_PropNameText is not in v6 -- no v6 bytes correspond to what it named
 ; NakaClass_IvExitScreen_PropNames -- 2 x u32: name pointers of class IvExitScreen (0x1600049)'s own properties, one per letter of its propdata "N":
 ; "screen", ended by "". +20 (propname) of entry 73 of Root_ClassTable_160; ClassProc_OnGetPropNameSp reads entry [property].
-NakaClass_IvExitScreen_PropNames:
 ; NakaClass_IvExitScreen_PropNameText -- 10 x char: the property-name strings NakaClass_IvExitScreen_PropNames points at, "" first, each NUL-terminated and 0xff-padded to even
-NakaClass_IvExitScreen_PropNameText:
+; port: v7's label NakaClass_IvExitScreen_PropNameText is not in v6 -- no v6 bytes correspond to what it named
 ; NakaClass_IvFixWin_PropNames -- 2 x u32: name pointers of class IvFixWin (0x160004a)'s own properties, one per letter of its propdata "t":
 ; "window", ended by "". +20 (propname) of entry 74 of Root_ClassTable_160; ClassProc_OnGetPropNameSp reads entry [property].
-NakaClass_IvFixWin_PropNames:
 ; NakaClass_IvFixWin_PropNameText -- 10 x char: the property-name strings NakaClass_IvFixWin_PropNames points at, "" first, each NUL-terminated and 0xff-padded to even
-NakaClass_IvFixWin_PropNameText:
+; port: v7's label NakaClass_IvFixWin_PropNameText is not in v6 -- no v6 bytes correspond to what it named
 ; NakaClass_AcNamingWindow_PropNames -- 1 x u32: name pointers of class AcNamingWindow (0x160004b)'s own properties, one per letter of its propdata "":
 ; no own property, ended by "". +20 (propname) of entry 75 of Root_ClassTable_160; ClassProc_OnGetPropNameSp reads entry [property].
-NakaClass_AcNamingWindow_PropNames:
 ; NakaClass_AcNamingWindow_PropNameText -- 2 x char: the property-name strings NakaClass_AcNamingWindow_PropNames points at, "" first, each NUL-terminated and 0xff-padded to even
-NakaClass_AcNamingWindow_PropNameText:
+; port: v7's label NakaClass_AcNamingWindow_PropNameText is not in v6 -- no v6 bytes correspond to what it named
 ; NakaClass_PsCursorBox_PropNames -- 2 x u32: name pointers of class PsCursorBox (0x160004c)'s own properties, one per letter of its propdata "n":
 ; "cursor", ended by "". +20 (propname) of entry 76 of Root_ClassTable_160; ClassProc_OnGetPropNameSp reads entry [property].
-NakaClass_PsCursorBox_PropNames:
 ; NakaClass_PsCursorBox_PropNameText -- 10 x char: the property-name strings NakaClass_PsCursorBox_PropNames points at, "" first, each NUL-terminated and 0xff-padded to even
-NakaClass_PsCursorBox_PropNameText:
+; port: v7's label NakaClass_PsCursorBox_PropNameText is not in v6 -- no v6 bytes correspond to what it named
 ; NakaClass_IvNaming_PropNames -- 2 x u32: name pointers of class IvNaming (0x160004d)'s own properties, one per letter of its propdata "j":
 ; "func", ended by "". +20 (propname) of entry 77 of Root_ClassTable_160; ClassProc_OnGetPropNameSp reads entry [property].
-NakaClass_IvNaming_PropNames:
 ; NakaClass_IvNaming_PropNameText -- 8 x char: the property-name strings NakaClass_IvNaming_PropNames points at, "" first, each NUL-terminated and 0xff-padded to even
-NakaClass_IvNaming_PropNameText:
+; port: v7's label NakaClass_IvNaming_PropNameText is not in v6 -- no v6 bytes correspond to what it named
 ; NakaClass_AcIndexToggle_PropNames -- 3 x u32: name pointers of class AcIndexToggle (0x160004e)'s own properties, one per letter of its propdata "AA":
 ; "index", "tag", ended by "". +20 (propname) of entry 78 of Root_ClassTable_160; ClassProc_OnGetPropNameSp reads entry [property].
-NakaClass_AcIndexToggle_PropNames:
 ; NakaClass_AcIndexToggle_PropNameText -- 12 x char: the property-name strings NakaClass_AcIndexToggle_PropNames points at, "" first, each NUL-terminated and 0xff-padded to even
-NakaClass_AcIndexToggle_PropNameText:
+; port: v7's label NakaClass_AcIndexToggle_PropNameText is not in v6 -- no v6 bytes correspond to what it named
 ; NakaClass_AcRamBox_PropNames -- 3 x u32: name pointers of class AcRamBox (0x160004f)'s own properties, one per letter of its propdata "jr":
 ; "func", "data", ended by "". +20 (propname) of entry 79 of Root_ClassTable_160; ClassProc_OnGetPropNameSp reads entry [property].
-NakaClass_AcRamBox_PropNames:
 ; NakaClass_AcRamBox_PropNameText -- 14 x char: the property-name strings NakaClass_AcRamBox_PropNames points at, "" first, each NUL-terminated and 0xff-padded to even
-NakaClass_AcRamBox_PropNameText:
+; port: v7's label NakaClass_AcRamBox_PropNameText is not in v6 -- no v6 bytes correspond to what it named
 ; NakaClass_PsRadioBox_PropNames -- 7 x u32: name pointers of class PsRadioBox (0x1600050)'s own properties, one per letter of its propdata "c^demA":
 ; "font", "fontcolor", "align", "editsw", "selected", "tag", ended by "". +20 (propname) of entry 80 of Root_ClassTable_160; ClassProc_OnGetPropNameSp reads entry [property].
 NakaClass_PsRadioBox_PropNames:	.incbin "includes/generated/naka_disk_warning.bin", 0x3AB8, 0x1C

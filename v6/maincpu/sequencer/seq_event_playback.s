@@ -3410,7 +3410,7 @@ AcVocalGrid_DialSetup:
 	extz xde
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_DOWN
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 	jrl AcVocalGrid_SetDialAndRet
 AcVocalGridBoxProc_OnIndexswUp:	; cases 29360151, 29360153
@@ -3469,7 +3469,7 @@ AcVocalGrid_CheckEvent91:
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 12)
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 	jrl AcVocalGrid_SetDialAndRet
 AcVocalGridBoxProc_OnIndexswDown:	; cases 29360152, 29360154
@@ -3528,7 +3528,7 @@ AcVocalGrid_CheckEvent91B:
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 12)
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 
 AcVocalGrid_SetDialAndRet:

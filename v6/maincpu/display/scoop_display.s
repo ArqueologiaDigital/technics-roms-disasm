@@ -1104,9 +1104,9 @@ PerfMode_ParamHandler_Table:
 	.long PerfMode_ParamHandler_2
 	.long PerfMode_ParamHandler_3
 	.long PerfMode_ParamHandler_4
-	.long PerfMode_ParamHandler_5
+	.long	PerfMode_ParamHandler_4_Data2
 	.long PerfMode_ParamHandler_2
-	.long PerfMode_ParamHandler_7
+	.long	PerfMode_ParamHandler_5
 	.long PerfMode_ParamHandler_8
 	.long PerfMode_ParamHandler_9
 	.long PerfMode_ParamHandler_10
@@ -1453,6 +1453,36 @@ PerfMode_EventTable_3:
 PerfMode_ParamHandler_4:
 	ld	hl, bc
 	cp	hl, 31
+	jrl	ugt, PerfMode_ParamHandler_4_Skip
+	sla	hl, 2
+	push	xix
+	ld	xix, PerfMode_ParamHandler_4_Data
+	ld	xhl, (xix+hl)
+	pop	xix
+	call	(xhl)
+PerfMode_ParamHandler_4_Skip:
+	ret
+PerfMode_ParamHandler_4_Data:
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0x73, 0x64, 0xef, 0x00, 0xbf, 0x60, 0xef, 0x00
+	.byte	0xbf, 0x60, 0xef, 0x00, 0xbf, 0x60, 0xef, 0x00
+	.byte	0xbf, 0x60, 0xef, 0x00, 0xbf, 0x60, 0xef, 0x00
+	.byte	0x63, 0x5f, 0xef, 0x00, 0x74, 0x5f, 0xef, 0x00
+	.byte	0xfc, 0x68, 0xef, 0x00, 0x86, 0x7f, 0xef, 0x00
+	.byte	0xbf, 0x60, 0xef, 0x00, 0xbf, 0x60, 0xef, 0x00
+	.byte	0xbf, 0x60, 0xef, 0x00, 0xbf, 0x60, 0xef, 0x00
+	.byte	0xbf, 0x60, 0xef, 0x00, 0xfe, 0x61, 0xef, 0x00
+	.byte	0xbf, 0x60, 0xef, 0x00, 0x73, 0x64, 0xef, 0x00
+	.byte	0xbf, 0x60, 0xef, 0x00, 0xbf, 0x60, 0xef, 0x00
+	.byte	0xbf, 0x60, 0xef, 0x00, 0xbf, 0x60, 0xef, 0x00
+	.byte	0xbf, 0x60, 0xef, 0x00, 0x63, 0x5f, 0xef, 0x00
+	.byte	0x74, 0x5f, 0xef, 0x00, 0xbf, 0x60, 0xef, 0x00
+	.byte	0xbf, 0x60, 0xef, 0x00, 0xbf, 0x60, 0xef, 0x00
+	.byte	0xbf, 0x60, 0xef, 0x00, 0xbf, 0x60, 0xef, 0x00
+	.byte	0xbf, 0x60, 0xef, 0x00, 0xbf, 0x60, 0xef, 0x00
+PerfMode_ParamHandler_4_Data2:
+	ld	hl, bc
+	cp	hl, 31
 	jrl	ugt, PerfMode_ParamHandler_4_Return
 	sla	hl, 2
 	push	xix
@@ -1503,59 +1533,17 @@ PerfMode_EventTable_4:
 PerfMode_ParamHandler_5:
 	ld	hl, bc
 	cp	hl, 31
-	jrl	ugt, PerfMode_ParamHandler_5_Return
-	sla	hl, 2
-	push	xix
-	ld	xix, PerfMode_EventTable_5
-	ld	xhl, (xix+hl)
-	pop	xix
-	call	(xhl)
-PerfMode_ParamHandler_5_Return:
-	ret
-	; Handler dispatch table, 128 B.  Read by PerfMode_ParamHandler_5 (0xEF6817): `ld xix, PerfMode_EventTable_5`
-	; indexed with stride 4 (`sla hl, 2`), index from `ld hl, bc`
-	; 32 x 4-byte handler pointers; entry = index * 4, called through `call (x)`
-	; index bounded to 0..31 (`cp hl, 31` / `jrl ugt` skips larger values)
-PerfMode_EventTable_5:
-	.long	UIDisp_DefaultInputHandler
-	.long	DefaultHandler_Ret
-	.long	DefaultHandler_Ret
-	.long	DefaultHandler_Ret
-	.long	DefaultHandler_Ret
-	.long	DefaultHandler_Ret
-	.long	SoundEvt_ShortPacketHandler
-	.long	SoundEvt_LongPacketHandler
-	.long	PerfMode_VolumeParam_Process
-	.long	ToneParam_Evt09_BytecodeHandler
-	.long	DefaultHandler_Ret
-	.long	DefaultHandler_Ret
-	.long	DefaultHandler_Ret
-	.long	DefaultHandler_Ret
-	.long	DefaultHandler_Ret
-	.long	ToneParam_Evt0F_BytecodeHandler
-	.long	DefaultHandler_Ret
-	.long	UIDisp_DefaultInputHandler
-	.long	DefaultHandler_Ret
-	.long	DefaultHandler_Ret
-	.long	DefaultHandler_Ret
-	.long	DefaultHandler_Ret
-	.long	DefaultHandler_Ret
-	.long	SoundEvt_ShortPacketHandler
-	.long	SoundEvt_LongPacketHandler
-	.long	DefaultHandler_Ret
-	.long	DefaultHandler_Ret
-	.long	DefaultHandler_Ret
-	.long	DefaultHandler_Ret
-	.long	DefaultHandler_Ret
-	.long	DefaultHandler_Ret
-	.long	DefaultHandler_Ret
-PerfMode_ParamHandler_7:
-	ld	hl, bc
-	cp	hl, 31
 	jrl	ugt, PerfMode_ParamHandler_7_Return
 	sla	hl, 2
 	push	xix
 	ld	xix, PerfMode_ParamHandler_7_DispatchTbl
+; port: v7's label PerfMode_ParamHandler_5_Return is not in v6 -- no v6 bytes correspond to what it named
+	; Handler dispatch table, 128 B.  Read by PerfMode_ParamHandler_5 (0xEF6817): `ld xix, PerfMode_EventTable_5`
+	; indexed with stride 4 (`sla hl, 2`), index from `ld hl, bc`
+	; 32 x 4-byte handler pointers; entry = index * 4, called through `call (x)`
+	; index bounded to 0..31 (`cp hl, 31` / `jrl ugt` skips larger values)
+; port: v7's label PerfMode_EventTable_5 is not in v6 -- no v6 bytes correspond to what it named
+; port: v7's label PerfMode_ParamHandler_7 is not in v6 -- no v6 bytes correspond to what it named
 	ld	xhl, (xix+hl)
 	pop xix
 	call	(xhl)
@@ -8508,11 +8496,11 @@ MemConfig_Handler_4_Helper2:
 SndDispatch_JumpTable_Main:
 	.long	DefaultHandler_Ret
 	.long	SndDispatch_Handler_1
+	.long	SndDispatch_Handler_1_Data2
 	.long	SndDispatch_Handler_2
-	.long	SndDispatch_TableEntryBegin
 	.long	SndDispatch_ShortHandler
-	.long	SndDispatch_TableEntryBegin
-	.long	SndDispatch_TableEntryBegin
+	.long	SndDispatch_Handler_2
+	.long	SndDispatch_Handler_2
 	.long	SndDispatch_Handler_3
 	.long	SndDispatch_ShortHandler
 	.long	SndDispatch_Handler_3
@@ -8521,9 +8509,30 @@ SndDispatch_Handler_1:
 	call	SndDispatch_Handler_1_Helper2
 	call	SndDispatch_Handler_1_Helper
 	cp	a, 0:i3
-	jrl	z, SndDispatch_Handler_1_Return
+	jrl	z, SndDispatch_Handler_1_Skip
 	dec	1, a
 	xor	w, w
+	sla	wa, 2
+	ld	hl, wa
+	push	xix
+	ld	xix, SndDispatch_Handler_1_Data
+	ld	xhl, (xix+hl)
+	pop	xix
+	call	(xhl)
+SndDispatch_Handler_1_Skip:
+	ret
+SndDispatch_Handler_1_Data:
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0xe8, 0xb1, 0xef, 0x00, 0xfc, 0xb1, 0xef, 0x00
+	.byte	0xfc, 0xb1, 0xef, 0x00, 0xbf, 0x60, 0xef, 0x00
+	.byte	0xbf, 0x60, 0xef, 0x00, 0xbf, 0x60, 0xef, 0x00
+SndDispatch_Handler_1_Data2:
+	call	SndDispatch_Handler_1_Helper2
+	call	SndDispatch_Handler_1_Helper
+	cp	a, 0:i3
+	jrl	z, SndDispatch_Handler_1_Return
+	dec	1, a
+	exts	wa
 	sla	wa, 2
 	ld	hl, wa
 	push	xix
@@ -8547,32 +8556,6 @@ SndDispatch_Handler_2:
 	call	SndDispatch_Handler_1_Helper2
 	call	SndDispatch_Handler_1_Helper
 	cp	a, 0:i3
-	jrl	z, SndDispatch_Handler_2_Return
-	dec	1, a
-	exts	wa
-	sla	wa, 2
-	ld	hl, wa
-	push	xix
-	ld	xix, SndDispatch_SubTable_2
-	ld	xhl, (xix+hl)
-	pop xix
-	call	(xhl)
-SndDispatch_Handler_2_Return:
-	ret
-	; Handler dispatch table, 24 B.  Read by SndDispatch_Handler_2 (0xEFB1E5): `ld xix, SndDispatch_SubTable_2`
-	; indexed with stride 4 (`sla wa, 2`), index from `ld hl, wa`
-	; 6 x 4-byte handler pointers; entry = index * 4, called through `call (x)`
-SndDispatch_SubTable_2:
-	.long	SndDispatch_InitHandler
-	.long	SndDispatch_ProcessCommand
-	.long	SndDispatch_ProcessCommand
-	.long	DefaultHandler_Ret
-	.long	DefaultHandler_Ret
-	.long	DefaultHandler_Ret
-SndDispatch_TableEntryBegin:
-	call	SndDispatch_Handler_1_Helper2
-	call	SndDispatch_Handler_1_Helper
-	cp	a, 0:i3
 	jrl	z, SndDispatch_TableEntryBegin_Return
 	dec	1, a
 	exts	wa
@@ -8580,6 +8563,12 @@ SndDispatch_TableEntryBegin:
 	ld	hl, wa
 	push	xix
 	ld	xix, SndDispatch_BytecodeString
+; port: v7's label SndDispatch_Handler_2_Return is not in v6 -- no v6 bytes correspond to what it named
+	; Handler dispatch table, 24 B.  Read by SndDispatch_Handler_2 (0xEFB1E5): `ld xix, SndDispatch_SubTable_2`
+	; indexed with stride 4 (`sla wa, 2`), index from `ld hl, wa`
+	; 6 x 4-byte handler pointers; entry = index * 4, called through `call (x)`
+; port: v7's label SndDispatch_SubTable_2 is not in v6 -- no v6 bytes correspond to what it named
+; port: v7's label SndDispatch_TableEntryBegin is not in v6 -- no v6 bytes correspond to what it named
 	ld	xhl, (xix+hl)
 	pop	xix
 	call	(xhl)
@@ -11366,7 +11355,7 @@ VoiceSlot_StatusRet_Skip74:
 	cp	(0x0d65:16), 3
 	jrl	z, VoiceSlot_StatusRet_Skip75
 	ld	(0x0def:16), 7
-	call	0xefedd8
+	call	VoiceSlot_StatusRet_Helper3
 	jp	VoiceSlot_StatusRet_Return
 VoiceSlot_StatusRet_Skip75:
 	ld	(0x0def:16), 17
@@ -14431,27 +14420,38 @@ DisplayStr_BytecodeBlock_C:
 DisplayStr_ShowTempoLine:
 	call	DisplayStr_BlankLineBuffer
 	ld	xix, 3786
-	ld	xiy, 0xefeda6
+	ld	xiy, DisplayStr_ShowTempoLine_Data
+	cp	(0xfc5a:16), 7
+	jrl	nz, DisplayStr_ShowTempoLine_Skip
+	cp	(0xfc5b:16), 2
+	jrl	nz, DisplayStr_ShowTempoLine_Skip
+	ld	xiy, 0xefedbf
+DisplayStr_ShowTempoLine_Skip:
+	ld	xix, 0xecf
+	ldw	bc, 25
+	ldir85
+	call	Display_UpdateRegion5
+	call	DisplayStr_WriteTempoValue
+	call	Display_UpdateRegion3
+	ret
+DisplayStr_ShowTempoLine_Data:
 ; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xc1, 0x5a, 0xfc, 0x3f, 0x07, 0x7e, 0x0d, 0x00
-	.byte	0xc1, 0x5b, 0xfc, 0x3f, 0x02, 0x7e, 0x05, 0x00
-	.byte	0x45, 0xbf, 0xed, 0xef, 0x00, 0x44, 0xcf, 0x0e
-	.byte	0x00, 0x00, 0x31, 0x19, 0x00, 0x85, 0x11, 0x1d
-	.byte	0x29, 0x5b, 0xef, 0x1d, 0xbd, 0xf2, 0xef, 0x1d
-	.byte	0xde, 0x5a, 0xef, 0x0e, 0x20, 0x20, 0x54, 0x45
-	.byte	0x4d, 0x50, 0x4f, 0x20, 0x20, 0x15, 0x3d, 0x20
+	.byte	0x20, 0x20, 0x54, 0x45, 0x4d, 0x50, 0x4f, 0x20
+	.byte	0x20, 0x15, 0x3d, 0x20, 0x20, 0x20, 0x20, 0x20
 	.byte	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20
-	.byte	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x54
-	.byte	0x45, 0x4d, 0x50, 0x4f, 0x20, 0x20, 0x93, 0x3d
+	.byte	0x20, 0x20, 0x20, 0x54, 0x45, 0x4d, 0x50, 0x4f
+	.byte	0x20, 0x20, 0x93, 0x3d, 0x20, 0x20, 0x20, 0x20
 	.byte	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20
-	.byte	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x1d, 0x62
-	.byte	0x5a, 0xef, 0x1d, 0x48, 0xf3, 0xef, 0x45, 0x11
-	.byte	0xee, 0xef, 0x00
+	.byte	0x20, 0x20
+VoiceSlot_StatusRet_Helper3:
+	call	Display_UpdateRegion0
+	call	DisplayStr_BlankLineBuffer
+	ld	xiy, Str_TempoEq
 	cp	(0xfc5a:16), 7
 	jrl	nz, DisplayStr_BytecodeBlock_C_Skip
 	cp	(0xfc5b:16), 2
 	jrl	nz, DisplayStr_BytecodeBlock_C_Skip
-	ld	xiy, 0xefee2a
+	ld	xiy, DisplayStr_BytecodeBlock_C_Tbl
 DisplayStr_BytecodeBlock_C_Skip:
 	ld	xix, 3791
 	ldw	bc, 25
@@ -14467,15 +14467,21 @@ Str_TempoEq:
 	; copies 25 byte(s) per use (`ld bc, 25` + ldir) into the LCD text buffer
 ; TODO(port): v6 bytes with no v7 line -- disassemble
 	.byte	0x20, 0x20, 0x54
+	ld	xiy, 0x204f504d
+	ld	w, 21:opc
+	push	xiy
+	ld	w, 32:opc
+	ld	w, 32:opc
+	ld	w, 32:opc
+	ld	w, 32:opc
+	ld	w, 32:opc
+	ld	w, 32:opc
+	ld	w, 32:opc
 DisplayStr_BytecodeBlock_C_Tbl:
-VoiceSlot_StatusRet_Helper3:
-	ld	xiy, 0x204f504d
 ; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x20, 0x15, 0x3d, 0x20, 0x20, 0x20, 0x20, 0x20
-	.byte	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20
-	.byte	0x20, 0x20, 0x20, 0x54
+	.byte	0x20, 0x20, 0x54
 	ld	xiy, 0x204f504d
-VoiceSlot_StatusRet_Helper3_Skip:
+; port: v7's label VoiceSlot_StatusRet_Helper3_Skip is not in v6 -- no v6 bytes correspond to what it named
 	; Lcd text, 25 B.  Read by DisplayStr_BytecodeBlock_C (0xEFEE47): `ld xiy, DisplayStr_TempoString`
 	; reader DisplayStr_BytecodeBlock_C: `ld xiy, DisplayStr_TempoString`
 	ld	w, 147:opc
@@ -14487,10 +14493,10 @@ VoiceSlot_StatusRet_Helper3_Skip:
 	ld	w, 32:opc
 	ld	w, 32:opc
 	ld	w, 32:opc
-DisplayStr_TempoString:
+; port: v7's label DisplayStr_TempoString is not in v6 -- no v6 bytes correspond to what it named
 	; Byte data, 25 B.  Read by DisplayStr_BytecodeBlock_C (0xEFEE47): `ld xiy, DisplayStr_BytecodeBlock_C_Tbl2`
 	; copies 25 byte(s) per use (`ld bc, 25` + ldir) into the LCD text buffer
-DisplayStr_BytecodeBlock_C_Tbl2:
+; port: v7's label DisplayStr_BytecodeBlock_C_Tbl2 is not in v6 -- no v6 bytes correspond to what it named
 ; DisplayMode_RedrawWithBlankLine: Redraws region 0, blanks the LCD text line at 0x0ECA (30 bytes, then 25) and
 ;   redraws regions 5, 3 and 4. Basis: callers + body -- both callers set the pop-up id (0x0DEF) to 8 and call it;
 ;   DMA_ChannelHandler_2 reuses the tail without region 0 when already in that pop-up.

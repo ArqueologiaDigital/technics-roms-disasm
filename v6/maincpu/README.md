@@ -18,36 +18,45 @@ The tree was generated from `v7/maincpu` by `scripts/converters/port_maincpu_ver
 - replaced by `.byte` rows under `; TODO(port): v6 bytes with no v7 line -- disassemble`
   where no v7 line maps.  Those rows are verbatim debt and are meant to be disassembled.
 
-`scripts/converters/disassemble_port_todo.py --tree v6` then decoded the TODO(port) rows that
-sit between instructions (each instruction re-assembled alone to its own bytes) and named
-the branch and call targets they and the porter's rewritten lines reach.  The rows left are
-mostly data next to v7's C data and pointer tables.
+Labels: a v7 label stays on the v6 bytes its v7 bytes map to, or goes where the v6 uses of
+it point (the v6 bytes of every mapped use vote).  A v7 label for something v6 does not have
+(v7-only code or data, or a branch v6 sends straight to the next thing) is dropped: a
+`; port:` comment marks where it stood and `port_dropped_labels.txt` lists every one with its
+v7 address.  `scripts/analysis/check_ported_labels.py --src v7 --dst v6` checks every carried
+label against the bytes (see its docstring for what "misplaced" can and cannot tell).
 
-The C data sources are v7's.  `includes/v6_c_divergence.json` records where the v6 ROM
-differs from what they compile to, as pointer relocations and raw bytes, and
-`scripts/build/apply_c_divergence.py v6` applies it after compiling.  The json is written
-by `port_maincpu_version.py --cdiv`.
+`scripts/converters/disassemble_port_todo.py --tree v6` then decoded the TODO(port) rows that
+are code (between instructions, or reached by a branch, call or jump) and named the branch
+and call targets they and the porter's rewritten lines reach.  The rows left are mostly data
+next to v7's C data and pointer tables.
+
+The C data sources are v7's.  Their link scripts give each ROM label its v6 address.
+`includes/v6_c_divergence.json` records where the v6 ROM still differs from what they compile
+to, as pointer relocations and raw bytes, and `scripts/build/apply_c_divergence.py v6` applies
+it after compiling.  The json is written by `port_maincpu_version.py --cdiv`.  The raw bytes
+count as verbatim debt.  The relocations are numeric moves of v7's compiled pointers: no v6
+label checks what they point at, so they are not yet explained.
 
 Comments were carried over from v7 unchanged, so an address or a version number quoted in a
-comment may be v7's.  Labels and code are v6's.
+comment may be v7's.
 
 ## After generation
 
-The generator overwrites `v6/maincpu` (except this README) and is not re-run once the tree has
-been edited by hand; later changes are ordinary commits to this tree.  To regenerate before
-that point:
+The generator overwrites `v6/maincpu` (except this README).  The tree is regenerated whole,
+never edited by hand: an edit it needs goes into `scripts/tools/port_hand_edits.py`, which
+redoes every such edit and is part of the sequence below.
 
+    V6=/path/to/kn5000_v6_program.rom
     python3 scripts/converters/port_maincpu_version.py --src v7 --dst v6 --rom $V6 --emit
     rm -rf v6/maincpu/includes/generated && make v6-c-bins-raw
     python3 scripts/converters/port_maincpu_version.py --src v7 --dst v6 --rom $V6 --cdiv
-    make v6-progress
+    make v6-progress KN5000_V6_REF=$V6
+    python3 scripts/converters/disassemble_port_todo.py --tree v6 --rom $V6 --apply
+    python3 scripts/tools/port_hand_edits.py --tree v6 --fw 0x06
     python3 scripts/converters/disassemble_port_todo.py --tree v6 --rom $V6 --apply
 
-Edits made by hand after the last generation (redo them if the tree is regenerated):
-
-- `boot/rom_end_structure.s`: `FIRMWARE_VERSION` is `.byte FW_VERSION_BYTE`, with the default
-  `FW_VERSION_BYTE` set to 0x06.  v7 spells that byte `reti` (0x07 read as an instruction), so
-  the porter could only write the v6 byte as a TODO(port) row.
+`port_hand_edits.py` makes `FIRMWARE_VERSION` the byte `FW_VERSION_BYTE` (v7 spells it `reti`)
+and decodes `AccTone_JumpTableData` as the call/ret thunks it is (v10's spelling and names).
 
 ## Build
 

@@ -1443,7 +1443,7 @@ Slider_Decrement:
 	ld xde, (xsp + 8)
 
 Slider_DecrDone:
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 
 Slider_ReturnZero:

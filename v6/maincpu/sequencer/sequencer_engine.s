@@ -3560,9 +3560,9 @@ SeqNote_AllocateSubChannel:
 	cp	(8982:16), 255
 	jr	nz, SeqNote_ProcessCurrent_DrumCheck
 
-SeqNote_AllocSub_SetBitAndFlags:
+; port: v7's label SeqNote_AllocSub_SetBitAndFlags is not in v6 -- no v6 bytes correspond to what it named
 
-SeqNote_ProcessCurrentChannel:
+; port: v7's label SeqNote_ProcessCurrentChannel is not in v6 -- no v6 bytes correspond to what it named
 	jr VoiceConfig_SlotCheck
 
 SeqNote_ProcessCurrent_ComparePos:
@@ -3626,15 +3626,15 @@ VoiceConfig_SlotCheck:
 	cp	(8984:16), 255
 	jr	nz, VoiceConfig_EventType_GetChannel
 
-VoiceConfig_SlotCheck_ReadData:
+; port: v7's label VoiceConfig_SlotCheck_ReadData is not in v6 -- no v6 bytes correspond to what it named
 
-VoiceConfig_SlotCheck_SubOffset:
+; port: v7's label VoiceConfig_SlotCheck_SubOffset is not in v6 -- no v6 bytes correspond to what it named
 
-VoiceConfig_SlotCheck_ProcessAndLoad:
+; port: v7's label VoiceConfig_SlotCheck_ProcessAndLoad is not in v6 -- no v6 bytes correspond to what it named
 
-VoiceConfig_SlotCheck_GetChannel:
+; port: v7's label VoiceConfig_SlotCheck_GetChannel is not in v6 -- no v6 bytes correspond to what it named
 
-VoiceConfig_EventTypeChk:
+; port: v7's label VoiceConfig_EventTypeChk is not in v6 -- no v6 bytes correspond to what it named
 	jrl SeqNote_CheckActiveChannels
 
 VoiceConfig_EventType_ReadData:
@@ -4053,7 +4053,7 @@ SeqNote_ProcessForChannel:
 	call Voice_AllocateFromSeqData
 	ld (xsp + 6), l
 	cp (xsp + 6), 0x0
-	jrl	z, SeqNote_HandleMasterChannel_Skip
+	jrl z, SeqNote_ReturnNotProcessed
 
 SeqNoteCh_CheckStatusByte:
 	ld	c, (xsp + 18)
@@ -4062,7 +4062,7 @@ SeqNoteCh_CheckStatusByte:
 	sla bc, 3
 	lda	xwa, (9012:16)
 	cp	(xwa+bc), 0x82
-	jrl	nz, SeqNote_HandleMasterChannel_Skip
+	jrl nz, SeqNote_ReturnNotProcessed
 	ld (xsp + 6), 0x0
 
 SeqNoteCh_CheckMasterChan:
@@ -4072,12 +4072,12 @@ SeqNoteCh_CheckMasterChan:
 	extz wa
 	calr Chan_IsActive
 	cp l, 1:i3
-	jrl	nz, SeqNote_HandleMasterChannel_Skip
+	jrl nz, SeqNote_ReturnNotProcessed
 	ld wa, 0:i3
 	call Voice_AllocateFromSeqData
 	ld (xsp + 6), l
 	cp (xsp + 6), 0x0
-	jrl	z, SeqNote_HandleMasterChannel_Skip
+	jrl z, SeqNote_ReturnNotProcessed
 	ld (xsp + 6), 0x0
 
 SeqNoteCh_CheckZeroChannel:
@@ -4135,7 +4135,7 @@ SeqNoteCh_WriteStatusByte:
 	cp	a, (8980:16)
 	jr nz, SeqNoteCh_CheckChannel11
 	cp (xhl), 0x82
-	jrl	nz, SeqNote_HandleMasterChannel_Skip
+	jrl nz, SeqNote_ReturnNotProcessed
 	ld	a, (xsp + 18)
 	extz wa
 	dec 1, a
@@ -4162,7 +4162,7 @@ SeqNoteCh_CompareVoicePos:
 
 SeqNoteCh_DeactivateCheck82:
 	cp (xhl), 0x82
-	jr	nz, SeqNote_HandleMasterChannel_Skip
+	jr	nz, SeqNote_ReturnNotProcessed
 	ld	a, (xsp + 18)
 	extz wa
 	dec 1, a
@@ -4175,7 +4175,7 @@ SeqNote_DeactivateChannelBit:
 	cpl bc
 	and	(8976:16), bc
 
-	jr	SeqNote_HandleMasterChannel_Skip
+	jr	SeqNote_ReturnNotProcessed
 SeqNoteCh_LoadVoiceAndCompare:
 	ld	wa, (7520:16)
 	ld	de, (xix+128)
@@ -4194,11 +4194,11 @@ SeqNote_HandleMasterChannel:
 	ldw	(xix+wa), 0xffff
 	ld a, (0xfc5f:16)
 	and a, 0x30
-	jr	nz, SeqNote_HandleMasterChannel_Skip
+	jr nz, SeqNote_ReturnNotProcessed
 	bit 2, (1054:16)
 
 	call	nz, (16093680)
-SeqNote_HandleMasterChannel_Skip:
+SeqNote_ReturnNotProcessed:
 	ld	l, 0:opc
 	jrl	SeqNote_WriteEvent_Return
 SeqNoteCh_CheckMasterFallback:
@@ -4209,13 +4209,12 @@ SeqNoteCh_CheckMasterFallback:
 
 SeqNote_HandleAccompChannel:
 
-SeqNoteCh_HandleAccompVoice:
+; port: v7's label SeqNoteCh_HandleAccompVoice is not in v6 -- no v6 bytes correspond to what it named
 
-SeqNote_ReturnNotProcessed:
 
-SeqNote_SetDrumChannelPair:
+; port: v7's label SeqNote_SetDrumChannelPair is not in v6 -- no v6 bytes correspond to what it named
 
-SeqNoteCh_DispatchEventType:
+; port: v7's label SeqNoteCh_DispatchEventType is not in v6 -- no v6 bytes correspond to what it named
 	ld e, (xbc)
 	ld a, e
 	and a, 0xf0
@@ -4275,7 +4274,7 @@ SeqNoteCh_HandleOtherEvents:
 	ld	c, (xsp+18)
 	extz	bc
 	cp	e, 133
-	jrl	z, SeqNote_UpdatePositionA_Entry
+	jrl	z, SeqNote_NoteOff_WritePart_Skip
 	cp e, 0xd2
 	jrl z, SeqNote_NoteOff_CheckActive2
 	cp e, 0x80
@@ -4367,7 +4366,8 @@ SeqNote_NoteOff_WritePart:
 	ld (xsp + 4), 0x5
 	jr SeqNote_WriteEventToBuffer
 
-SeqNote_UpdatePositionA_Entry:
+; port: v7's label SeqNote_UpdatePositionA_Entry is not in v6 -- no v6 bytes correspond to what it named
+SeqNote_NoteOff_WritePart_Skip:
 	ld	wa, bc
 	calr Chan_IsActive
 	cp l, 1:i3
@@ -4433,19 +4433,19 @@ SeqNote_WriteEvent_Return:
 	pop xiz
 	lda	xsp, (xsp + 16)
 
-VoiceType_CheckDrumOrControl:
+; port: v7's label VoiceType_CheckDrumOrControl is not in v6 -- no v6 bytes correspond to what it named
 
-VoiceType_CheckControlB0:
+; port: v7's label VoiceType_CheckControlB0 is not in v6 -- no v6 bytes correspond to what it named
 
-VoiceType_SetMatchFlag:
+; port: v7's label VoiceType_SetMatchFlag is not in v6 -- no v6 bytes correspond to what it named
 
-VoiceType_ValidateCode:
+; port: v7's label VoiceType_ValidateCode is not in v6 -- no v6 bytes correspond to what it named
 
-VoiceType_ReturnZero:
+; port: v7's label VoiceType_ReturnZero is not in v6 -- no v6 bytes correspond to what it named
 
-VoiceType_CheckMatchFlag:
+; port: v7's label VoiceType_CheckMatchFlag is not in v6 -- no v6 bytes correspond to what it named
 
-VoiceType_ReturnFFFF:
+; port: v7's label VoiceType_ReturnFFFF is not in v6 -- no v6 bytes correspond to what it named
 	ret
 
 SeqNote_ProcessForChannelAlt:
@@ -5013,13 +5013,13 @@ SeqNotePos_CheckInterruptFlag:
 	ei 6
 	ld a, (xsp)
 	cp a, (8988:16)
-	jr z, SeqNotePos_CheckMainChannel
+	jr	z, SeqNotePos_IncrementTick
 	cp a, (8990:16)
-	jr	nz, SeqNotePos_StoreTick_Skip2
+	jr	nz, SeqNotePos_StoreTick_Skip
 
-SeqNotePos_CheckMainChannel:
+; port: v7's label SeqNotePos_CheckMainChannel is not in v6 -- no v6 bytes correspond to what it named
 
-SeqNotePos_ClampAndWrite:
+; port: v7's label SeqNotePos_ClampAndWrite is not in v6 -- no v6 bytes correspond to what it named
 
 SeqNotePos_IncrementTick:
 	ld a, (SEQ_BEAT_TICK:16)
@@ -5032,13 +5032,13 @@ SeqNotePos_StoreTick:
 	ld (1071:16), a
 
 	jr	SeqNotePos_SetUpdateFlag
-SeqNotePos_StoreTick_Skip2:
+SeqNotePos_StoreTick_Skip:
 	ld	xwa, (xsp+2)
 	inc	1, xwa
 	cp	(xwa), 0
-	jr	nz, SeqNotePos_StoreTick_Skip
+	jr	nz, SeqNotePos_StoreTick_Skip2
 	ld	(xwa), 95
-SeqNotePos_StoreTick_Skip:
+SeqNotePos_StoreTick_Skip2:
 	ld	(0x42f), (xwa)
 SeqNotePos_SetUpdateFlag:
 	set 0, (1073:16)
@@ -6653,23 +6653,23 @@ SeqPlay_BassCheck_TestBit:
 SeqPlay_BassEpilogue18:
 	lda xsp, (xsp + 18)
 
-SeqPlay_AssignChordVoices:
+; port: v7's label SeqPlay_AssignChordVoices is not in v6 -- no v6 bytes correspond to what it named
 
-SeqPlay_Chord_ShiftDone:
+; port: v7's label SeqPlay_Chord_ShiftDone is not in v6 -- no v6 bytes correspond to what it named
 
-SeqPlay_Chord_CompareLoop:
+; port: v7's label SeqPlay_Chord_CompareLoop is not in v6 -- no v6 bytes correspond to what it named
 
-SeqPlay_Chord_CheckMatch:
+; port: v7's label SeqPlay_Chord_CheckMatch is not in v6 -- no v6 bytes correspond to what it named
 
-SeqPlay_Chord_CopyDataLoop:
+; port: v7's label SeqPlay_Chord_CopyDataLoop is not in v6 -- no v6 bytes correspond to what it named
 
-SeqPlay_LoadChannelRet:
+; port: v7's label SeqPlay_LoadChannelRet is not in v6 -- no v6 bytes correspond to what it named
 
-SeqPlay_Chord_NextPart:
+; port: v7's label SeqPlay_Chord_NextPart is not in v6 -- no v6 bytes correspond to what it named
 
-SeqPlay_Chord_NextShiftDone:
+; port: v7's label SeqPlay_Chord_NextShiftDone is not in v6 -- no v6 bytes correspond to what it named
 
-SeqPlay_ChordEpilogue14:
+; port: v7's label SeqPlay_ChordEpilogue14 is not in v6 -- no v6 bytes correspond to what it named
 	ret
 
 SeqCh_ClearActivePartBit:
@@ -17317,9 +17317,9 @@ SeqMIDI_GetEventSizeLookup:
 	sla	wa, 3
 	lda	xbc, (0x2332:16)
 	st_rrw	iz, xbc, wa
-SeqMIDI_ValidateChannel:
+; port: v7's label SeqMIDI_ValidateChannel is not in v6 -- no v6 bytes correspond to what it named
 
-SeqMIDI_ChannelInRange:
+; port: v7's label SeqMIDI_ChannelInRange is not in v6 -- no v6 bytes correspond to what it named
 
 SeqMIDI_ChannelReturn:
 	ld	a, (9670:16)
@@ -19776,27 +19776,26 @@ SeqTimer_BarChangeProcess:
 	calr Part_ReadByteDirect
 	ldfr_berp	l, 251
 	cp_erpb	251, 255
-	jr	nz, SeqTimer_BarChangeProcess_Skip
+	jr nz, SeqTimer_BarChangeLoop
 	ld	wa, 4:i3
 	ld	bc, 1:i3
-	jr	SeqTimer_BarChangeProcess_Skip2
-SeqTimer_BarChangeProcess_Skip:
+	jr	SeqTimer_BarChangeLoop_Skip
+SeqTimer_BarChangeLoop:
 	ld wa, 4:i3
 	ld	bc, 0:i3
-SeqTimer_BarChangeProcess_Skip2:
+SeqTimer_BarChangeLoop_Skip:
 	calr SeqStatus_SetOrClearBit
 	ld (4330:16), 1
 	ld	e, 0:opc
 	cp_erpb	251, 255
-	jr	nz, SeqTimer_BarChangeProcess_Skip3
+	jr	nz, SeqTimer_BarChangeLoop_Skip2
 	ld	e, 4:opc
-SeqTimer_BarChangeProcess_Skip3:
+SeqTimer_BarChangeLoop_Skip2:
 	extz	de
 	pushw 0x4
 	ldw wa, 0x91
 	ld bc, 3:i3
 
-SeqTimer_BarChangeLoop:
 
 SeqTimer_BarChangeEnd:
 	call	AssswbWr

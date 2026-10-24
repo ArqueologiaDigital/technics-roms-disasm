@@ -5249,12 +5249,12 @@ SeqDMA_MultiWrite_NoteEvent_Loop:
 	pushw bc
 	call SeqBuf_DmaChan0_WriteByte
 
-SeqDMA_MultiWrite_NoteEvent_Done:
+; port: v7's label SeqDMA_MultiWrite_NoteEvent_Done is not in v6 -- no v6 bytes correspond to what it named
 
 
-SeqDMA_MultiWrite_VoiceMap:
+; port: v7's label SeqDMA_MultiWrite_VoiceMap is not in v6 -- no v6 bytes correspond to what it named
 
-SeqDMA_MultiWrite_VoiceMap_Loop:
+; port: v7's label SeqDMA_MultiWrite_VoiceMap_Loop is not in v6 -- no v6 bytes correspond to what it named
 	inc 2, xsp
 	inc 1, iz
 	ld a, (xsp + 6)
@@ -5326,6 +5326,7 @@ SeqDMA_MultiWrite_SoundEdit_Skip:
 	popw	iz
 	inc	6, xsp
 	ret
+SeqDMA_MultiWrite_SoundEdit_Data:
 	dec	6, xsp
 	pushw	iz
 	ld	(xsp+2), xbc

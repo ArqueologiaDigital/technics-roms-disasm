@@ -468,11 +468,11 @@ SMF_ReadMThd_Matched_Loop:
 	call FloppyIO_ReadNextByte
 	ld (3936:16), a
 	cpw (3936:16), 0
-	jrl nz, FloppyIO_WaitReadComplete
+	jrl	nz, SMF_AfterFloppyWait
 	ldw (6699:16), 48
 	jrl SeqPlay_FloppyReady
 
-FloppyIO_WaitReadComplete:
+; port: v7's label FloppyIO_WaitReadComplete is not in v6 -- no v6 bytes correspond to what it named
 
 SMF_AfterFloppyWait:
 	ld a, (4600:16)

@@ -492,19 +492,19 @@ WelcomVersion_NameListEnd:	.incbin "includes/generated/naka_technichord_strings.
 ; [nakarest] Str_Version_MPver  +0x5b4..+0x5ba (0xe86502, 6 B)
 ; [nakarest] name string, entry 10 of ResName slot 0x3ef (table 0xe864d0, 11 entries,
 ; [nakarest] InitializeMurai) (names for Viewable slot 0xef): "MPver".
-Str_Version_MPver:
+; port: v7's label Str_Version_MPver is not in v6 -- no v6 bytes correspond to what it named
 ; [nakarest] Str_Version_Empty2  +0x5ba..+0x5bc (0xe86508, 2 B)
 ; [nakarest] name string, entry 9 of ResName slot 0x3ef (table 0xe864d0, 11 entries,
 ; [nakarest] InitializeMurai) (names for Viewable slot 0xef): "".
-Str_Version_Empty2:
+; port: v7's label Str_Version_Empty2 is not in v6 -- no v6 bytes correspond to what it named
 ; [nakarest] Str_Version_Empty3  +0x5bc..+0x5be (0xe8650a, 2 B)
 ; [nakarest] name string, entry 8 of ResName slot 0x3ef (table 0xe864d0, 11 entries,
 ; [nakarest] InitializeMurai) (names for Viewable slot 0xef): "".
-Str_Version_Empty3:
+; port: v7's label Str_Version_Empty3 is not in v6 -- no v6 bytes correspond to what it named
 ; [nakarest] Str_Version_MPVersion  +0x5be..+0x5c8 (0xe8650c, 10 B)
 ; [nakarest] name string, entry 7 of ResName slot 0x3ef (table 0xe864d0, 11 entries,
 ; [nakarest] InitializeMurai) (names for Viewable slot 0xef): "MPVersion".
-Str_Version_MPVersion:
+; port: v7's label Str_Version_MPVersion is not in v6 -- no v6 bytes correspond to what it named
 ; [nakarest] Str_Version_Empty4  +0x5c8..+0x5ca (0xe86516, 2 B)
 ; [nakarest] name string, entry 6 of ResName slot 0x3ef (table 0xe864d0, 11 entries,
 ; [nakarest] InitializeMurai) (names for Viewable slot 0xef): "".
@@ -2916,8 +2916,8 @@ Softver_ShowHide_Str_Fmt4d_2:	.incbin "includes/generated/naka_technichord_strin
 Softver_ShowHide_Str_Fmt4d_3:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17EF8, 0x4	; "%4d"
 Softver_ShowHide_Str_Fmt4d_4:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17EFC, 0x4	; "%4d"
 Softver_GetText_Str_Soft:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17F00, 0x6	; "Soft"
-MPver_ShowHide_Str_Ver_Fmt2X:
-MPver_GetText_Str_MPv:
+; port: v7's label MPver_ShowHide_Str_Ver_Fmt2X is not in v6 -- no v6 bytes correspond to what it named
+; port: v7's label MPver_GetText_Str_MPv is not in v6 -- no v6 bytes correspond to what it named
 ; -----------------------------------------------------------------------------
 ; [nakarest_retype] WelcomeGlyph_C
 ; WelcomeGlyph_C  --  'C', 1 glyph of 16 x 17 pixels, 1 bpp, 34 bytes

@@ -3624,7 +3624,7 @@ SeqNote_ProcessCurrent_DrumCheck_Table:	.incbin "includes/generated/naka_widget_
 ; Typed in naka_widget_descriptors.c as uint16_t
 ; SeqPlay_AssignChordVoices_LocalInit[4].
 ; -----------------------------------------------------------------------------
-SeqPlay_AssignChordVoices_LocalInit:
+; port: v7's label SeqPlay_AssignChordVoices_LocalInit is not in v6 -- no v6 bytes correspond to what it named
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] SeqPlay_AssignChordVoices_LocalInit_Tail
 ; SeqPlay_AssignChordVoices_LocalInit_Tail -- 16 bytes after
@@ -5580,8 +5580,11 @@ VoiceSlot_Dispatch_CaseTable:
 	.short	Voice_ClearSlotAndRet - Voice_ClearSlotAndRet
 ; TODO(port): v6 bytes with no v7 line -- disassemble
 	.byte	0x05, 0x00, 0x05, 0x00, 0x0f, 0x00, 0x05, 0x00
-	.byte	0x0a, 0x00, 0x0a, 0x00, 0x00, 0x00, 0x12, 0x00
-	.byte	0x06, 0x00, 0x0c, 0x00, 0x06, 0x00
+	.byte	0x0a, 0x00, 0x0a, 0x00
+VoiceSlot_Dispatch_CaseTable_Data:
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0x00, 0x00, 0x12, 0x00, 0x06, 0x00, 0x0c, 0x00
+	.byte	0x06, 0x00
 	.short	Voice_ClearSlotAndRet - Voice_ClearSlotAndRet
 	.short	Voice_ClearSlotAndRet - Voice_ClearSlotAndRet
 ; -----------------------------------------------------------------------------

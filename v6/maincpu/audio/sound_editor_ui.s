@@ -9172,19 +9172,18 @@ SeLfo1_DrawPartLabels_Loop:
 	sla	a, 1
 	dec	1, a
 	.byte 0xc8, 0xff
-	jr	c, SeLfo1_DrawPartLabels_Skip2
+	jr	c, SeLfo1_DrawPartLabels_Skip
 	.byte 0xcb, 0x04
 	xor	b, b
 	sla	bc, 2
 	ld	xiz, SeScreenData_0x3869
-SeLfo1_DrawPartLabels_Skip:
 	ld	xiy, (xiz+bc)
 	add	bc, 4
 	ld	xix, (xiz+bc)
 	call	SeGfx_DrawStaticList
 	pop	c
 	jr	SeMenu_PresetBrowser_Data_Code_Join
-SeLfo1_DrawPartLabels_Skip2:
+SeLfo1_DrawPartLabels_Skip:
 	push	c
 	xor	b, b
 	sla	bc, 2
@@ -17324,7 +17323,7 @@ EasyCmp_DialGrid:
 	extz xde
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_DOWN
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 	jrl EasyCmp_SetDialEnable
 AcEasyCmpGridBoxProc_OnIndexswUp:	; cases 29360151, 29360153
@@ -17379,7 +17378,7 @@ EasyCmp_SendEvt091:
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 12)
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 	jrl EasyCmp_SetDialEnable
 AcEasyCmpGridBoxProc_OnIndexswDown:	; cases 29360152, 29360154
@@ -17434,7 +17433,7 @@ EasyCmp_IncSendEvt091:
 	ld xwa, xiz
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 12)
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 
 EasyCmp_SetDialEnable:
@@ -19185,7 +19184,7 @@ AcSndArgGrid_Init:
 	extz	xde
 	ld	xwa, (xsp+22)
 	ld	xbc, EVT_INDEXSW_DOWN
-	call	SetDialUp_Entry
+	call	SetDialDown
 	ld	wa, 1:i3
 	jrl	AcSndArgGrid_ScrollCommit
 AcSndArgGridBoxProc_OnIndexswUp:	; cases 29360151, 29360153
@@ -19253,7 +19252,7 @@ AcSndArgGrid_ScrollUp_NoCanScroll:
 	ld	xwa, (xsp+22)
 	ld	xbc, EVT_INDEXSW_DOWN
 	ld	xde, (xsp+18)
-	call	SetDialUp_Entry
+	call	SetDialDown
 	ld	wa, 1:i3
 	jrl	AcSndArgGrid_ScrollCommit
 AcSndArgGridBoxProc_OnIndexswDown:	; cases 29360152, 29360154
@@ -19321,7 +19320,7 @@ AcSndArgGrid_ScrollDown_NoCanScroll:
 	ld xwa, (xsp + 22)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 18)
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 
 AcSndArgGrid_ScrollCommit:

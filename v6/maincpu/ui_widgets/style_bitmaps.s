@@ -3724,7 +3724,7 @@ MemScreen_Blank:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x18DA8, 0
 ; "min  ", ...; 42-63 blank); this slice is entries 0-36 and the low half of 37, the table runs on past 0xed0000
 ; into extensions/extension_data.s. MainChordPre (kn5000_v10_program.s), EVT_CHORD_PRE, Strcats the root name
 ; [RAM byte 0x8d40] and then entry [chord type, RAM byte 0x8d42] into the chord display string.
-MainChordPre_ChordTypeNames:
+MainChordPre_ChordTypeNames:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x18DAC, 0x96
 ; [nakarest] naka_style_bitmaps+0x18e42  +0x18e42..+0x18e4a (0xed0000, 8 B)
 ; [nakarest] purpose not established: layout of 8 B at 0xed0000 not derived; readers below
 ; [nakarest] Readers: source references InitializeSuna (storage/flash_floppy_handlers.s: `ld
@@ -3733,8 +3733,6 @@ MainChordPre_ChordTypeNames:
 ; [nakarest] word in WelcomeScript_Steps_B (at 0xe9edcc), which is read by AcWelcomScreenProc
 ; [nakarest] (ui/drawbar_panel_ui.s: `ld xwa, WelcomeScript_Steps_B`); 2 data words in
 ; [nakarest] Naka_KeyScaling_NavTrail (at 0xe8303c, 0xe846c6).
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x10, 0x01, 0xed, 0x00, 0x0a, 0x01
 	.incbin "includes/generated/naka_style_bitmaps.bin", 0x18E42, 0x8
 ; External label offsets within the binary blob above.
 .include "extensions/extension_data.s"

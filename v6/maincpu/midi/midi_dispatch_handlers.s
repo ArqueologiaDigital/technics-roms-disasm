@@ -11778,7 +11778,7 @@ SoundMode_ApplyVoiceParams:
 	ld wa, 4:i3
 	ld xbc, 0xf980
 	jp	SysEx_ApplyVoiceParam_4B
-SoundMode_VoiceIterLoop:
+; port: v7's label SoundMode_VoiceIterLoop is not in v6 -- no v6 bytes correspond to what it named
 SoundMode_RetStub_E:
 	ret
 SoundMode_RetStub_F:

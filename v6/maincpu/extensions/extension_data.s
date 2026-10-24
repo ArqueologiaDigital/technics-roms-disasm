@@ -92,48 +92,31 @@
 ; naka_perf_style_link.ld and naka_extension_device_link.ld name the address.
 ; ---------------------------------------------------------------------------
 ExtData_ChordTypeTable_Top:
-	.short 0x00ed	; high half of entry 39, begun in style_bitmaps.s
-	.long	ChordTypeStr_Type04
-	.long	ChordTypeStr_Type05
-	.long	ChordTypeStr_Type06
-	.long	ChordTypeStr_Type07
-	.long	ChordTypeStr_Type08
-	.long	ChordTypeStr_Type09
-	.long	ChordTypeStr_7sus4
-	.long	ChordTypeStr_Type11
-	.long	ChordTypeStr_Type12
-	.long	ChordTypeStr_Type13
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xb6, 0x00, 0xed, 0x00, 0xb0, 0x00, 0xed, 0x00
-	.byte	0xa8, 0x00, 0xed, 0x00, 0xa2, 0x00, 0xed, 0x00
-	.byte	0x9c, 0x00, 0xed, 0x00, 0x96, 0x00, 0xed, 0x00
-	.long	ChordTypeStr_Type20
-	.long	ChordTypeStr_Type21
-	.long	ChordTypeStr_69
-	.long	ChordTypeStr_sus4
-	.long	ChordTypeStr_7_Flat9
-	.long	ChordTypeStr_M7_Sharp5
-	.long	ChordTypeStr_M7_Flat5
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x5c, 0x00, 0xed, 0x00, 0x56, 0x00, 0xed, 0x00
-	.byte	0x4e, 0x00, 0xed, 0x00, 0x46, 0x00, 0xed, 0x00
-	.byte	0x3e, 0x00, 0xed, 0x00, 0x36, 0x00, 0xed, 0x00
-	.byte	0x2c, 0x00, 0xed, 0x00, 0x22, 0x00, 0xed, 0x00
-	.byte	0x1c, 0x00, 0xed, 0x00, 0x14, 0x00, 0xed, 0x00
-	.byte	0x0c, 0x00, 0xed, 0x00, 0x06, 0x00, 0xed, 0x00
-	.byte	0xfe, 0xff, 0xec, 0x00, 0xf8, 0xff, 0xec, 0x00
-	.byte	0xf2, 0xff, 0xec, 0x00, 0xec, 0xff, 0xec, 0x00
-	.byte	0xe6, 0xff, 0xec, 0x00, 0xe0, 0xff, 0xec, 0x00
-	.byte	0xda, 0xff, 0xec, 0x00, 0xd4, 0xff, 0xec, 0x00
-	.byte	0xce, 0xff, 0xec, 0x00, 0xc8, 0xff, 0xec, 0x00
-	.byte	0xc2, 0xff, 0xec, 0x00, 0xbc, 0xff, 0xec, 0x00
-	.byte	0xb6, 0xff, 0xec, 0x00, 0xb0, 0xff, 0xec, 0x00
-	.byte	0xaa, 0xff, 0xec, 0x00, 0xa4, 0xff, 0xec, 0x00
-	.byte	0x9e, 0xff, 0xec, 0x00, 0x98, 0xff, 0xec, 0x00
-	.byte	0x92, 0xff, 0xec, 0x00, 0x8c, 0xff, 0xec, 0x00
-	.byte	0x86, 0xff, 0xec, 0x00, 0x80, 0xff, 0xec, 0x00
-	.byte	0x7a, 0xff, 0xec, 0x00, 0x74, 0xff, 0xec, 0x00
-	.byte	0x6e, 0xff, 0xec, 0x00
+	.short	0x00ec	; high half of entry 39, begun in style_bitmaps.s
+	.long ChordTypeStr_Type40
+	.long ChordTypeStr_Type41
+	.long ChordTypeStr_Type42
+	.long ChordTypeStr_Type43
+	.long ChordTypeStr_Type44
+	.long ChordTypeStr_Type45
+	.long ChordTypeStr_Type46
+	.long ChordTypeStr_Type47
+	.long ChordTypeStr_Type48
+	.long ChordTypeStr_Type49
+	.long ChordTypeStr_Type50
+	.long ChordTypeStr_Type51
+	.long ChordTypeStr_Type52
+	.long ChordTypeStr_Type53
+	.long ChordTypeStr_Type54
+	.long ChordTypeStr_Type55
+	.long ChordTypeStr_Type56
+	.long ChordTypeStr_Type57
+	.long ChordTypeStr_Type58
+	.long ChordTypeStr_Type59
+	.long ChordTypeStr_Type60
+	.long ChordTypeStr_Blank_2
+	.long ChordTypeStr_Blank_1
+	.long ChordTypeStr_Blank_0
 ChordTypeStr_Blank_0:		aligned_string "     "
 ChordTypeStr_Blank_1:		aligned_string "     "
 ChordTypeStr_Blank_2:		aligned_string "     "
@@ -702,31 +685,37 @@ FswAssign_FunctionCodes:
 	.byte 0x00, 0x90, 0x91, 0xb3, 0xb4, 0xc0, 0xc1, 0xc2, 0xc3, 0xc4, 0xc5, 0xc6, 0xc7, 0xb2, 0x88, 0x92
 	.byte 0x93, 0x94, 0x95, 0x40, 0x96, 0x99, 0x97, 0x98, 0xad, 0xb0, 0xb1, 0xb8, 0xb9, 0xb6, 0xb7, 0xff
 FswAssign_FunctionNames:
-	.long	CtrlAssignStr_Off
-	.long	CtrlAssignStr_PMemIncrement
-	.long	CtrlAssignStr_PMemDecrement
-	.long	CtrlAssignStr_PMemBankInc
-	.long	CtrlAssignStr_PMemBankDec
-	.long	CtrlAssignStr_PanelMemory1
-	.long	CtrlAssignStr_PanelMemory2
-	.long	CtrlAssignStr_PanelMemory3
-	.long	CtrlAssignStr_PanelMemory4
-	.long	CtrlAssignStr_PanelMemory5
-	.long	CtrlAssignStr_PanelMemory6
-	.long	CtrlAssignStr_PanelMemory7
-	.long	CtrlAssignStr_PanelMemory8
-	.long	CtrlAssignStr_PMemIncDec
-	.long	CtrlAssignStr_StartStop
-	.long	CtrlAssignStr_FillIn1
-	.long	CtrlAssignStr_FillIn2
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xae, 0x0f, 0xed, 0x00, 0x9c, 0x0f, 0xed, 0x00
-	.byte	0x8a, 0x0f, 0xed, 0x00, 0x78, 0x0f, 0xed, 0x00
-	.byte	0x66, 0x0f, 0xed, 0x00, 0x54, 0x0f, 0xed, 0x00
-	.byte	0x42, 0x0f, 0xed, 0x00, 0x30, 0x0f, 0xed, 0x00
-	.byte	0x1e, 0x0f, 0xed, 0x00, 0x0c, 0x0f, 0xed, 0x00
-	.byte	0xfa, 0x0e, 0xed, 0x00, 0xe8, 0x0e, 0xed, 0x00
-	.byte	0xd6, 0x0e, 0xed, 0x00, 0xc4, 0x0e, 0xed, 0x00
+	.long CtrlAssignStr_Off
+	.long CtrlAssignStr_PMemIncrement
+	.long CtrlAssignStr_PMemDecrement
+	.long CtrlAssignStr_PMemBankInc
+	.long CtrlAssignStr_PMemBankDec
+	.long CtrlAssignStr_PanelMemory1
+	.long CtrlAssignStr_PanelMemory2
+	.long CtrlAssignStr_PanelMemory3
+	.long CtrlAssignStr_PanelMemory4
+	.long CtrlAssignStr_PanelMemory5
+	.long CtrlAssignStr_PanelMemory6
+	.long CtrlAssignStr_PanelMemory7
+	.long CtrlAssignStr_PanelMemory8
+	.long CtrlAssignStr_PMemIncDec
+	.long CtrlAssignStr_StartStop
+	.long CtrlAssignStr_FillIn1
+	.long CtrlAssignStr_FillIn2
+	.long CtrlAssignStr_IntroEnding1
+	.long CtrlAssignStr_IntroEnding2
+	.long CtrlAssignStr_Sustain
+	.long CtrlAssignStr_Glide
+	.long CtrlAssignStr_TechniChord
+	.long CtrlAssignStr_DigitalEffect
+	.long CtrlAssignStr_DspEffect
+	.long CtrlAssignStr_RotarySlowFast
+	.long CtrlAssignStr_PunchRecord
+	.long CtrlAssignStr_ApcHold
+	.long CtrlAssignStr_FadeIn
+	.long CtrlAssignStr_FadeOut
+	.long CtrlAssignStr_TotalExpression
+	.long CtrlAssignStr_PartExpression
 CtrlAssignStr_PartExpression:	aligned_string "PART EXPRESSION "
 CtrlAssignStr_TotalExpression:	aligned_string "TOTAL EXPRESSION"
 CtrlAssignStr_FadeOut:	aligned_string "    FADE OUT    "
@@ -1340,7 +1329,7 @@ Toshi_ApFunction_Table:
 	.long SysIniYesFunc
 	.long SysSureShowHideFunc
 	.long AttnLngCheck
-	.long	0xfb7715
+	.long	AttnLngCheck_Data
 	.long	SysSureLngCheck
 	.long TchSensGridCheck
 	.long FSWAssGridCheck
@@ -1424,7 +1413,8 @@ Toshi_ApFunctionName_Table:
 	.long FuncNameStr_PmemExpLngCheck
 	.long FuncNameStr_NullTerm
 FuncNameStr_NullTerm:
-	aligned_string ""
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0x00, 0xff
 FuncNameStr_PmemExpLngCheck:	aligned_string "PmemExpLngCheck"
 FuncNameStr_PmemNormLngCheck:	aligned_string "PmemNormLngCheck"
 FuncNameStr_CtlIniLngCheck:	aligned_string "CtlIniLngCheck"
@@ -1487,19 +1477,12 @@ NakaParam_VariScreen:
 	.long NakaParam_VariScreen_Empty	; NormScreen: 0 variables
 NakaParam_VariScreen_Empty:
 	aligned_string ""
-NakaParam_RVariScreen:
-	.long	0xed2036	; VariScreen: 9 variables
-	.long	0xed2030
-	.long	0xed2026
-	.long	0xed2020
-	.long	0xed201a
-	.long	0xed2012
-	.long	0xed200a
-	.long	0xed2002
-	.long	0xed1ffa
-	.long ParamStr08_Empty
-ParamStr08_Empty:
 ; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0x36, 0x20, 0xed, 0x00, 0x30, 0x20, 0xed, 0x00
+	.byte	0x26, 0x20, 0xed, 0x00, 0x20, 0x20, 0xed, 0x00
+	.byte	0x1a, 0x20, 0xed, 0x00, 0x12, 0x20, 0xed, 0x00
+	.byte	0x0a, 0x20, 0xed, 0x00, 0x02, 0x20, 0xed, 0x00
+	.byte	0xfa, 0x1f, 0xed, 0x00, 0xf8, 0x1f, 0xed, 0x00
 	.byte	0x00, 0xff, 0x6f, 0x6c, 0x64, 0x76, 0x61, 0x72
 	.byte	0x69, 0x00, 0x6e, 0x6f, 0x77, 0x76, 0x61, 0x72
 	.byte	0x69, 0x00, 0x6e, 0x6f, 0x77, 0x73, 0x77, 0x6e
@@ -1508,12 +1491,19 @@ ParamStr08_Empty:
 	.byte	0x70, 0x61, 0x67, 0x65, 0x00, 0xff, 0x66, 0x6f
 	.byte	0x6e, 0x74, 0x63, 0x6f, 0x6c, 0x6f, 0x72, 0x00
 	.byte	0x66, 0x6f, 0x6e, 0x74, 0x00, 0xff, 0x66, 0x75
-	.byte	0x6e, 0x63, 0x00, 0xff, 0xa2, 0x20, 0xed, 0x00
-	.byte	0x9c, 0x20, 0xed, 0x00, 0x92, 0x20, 0xed, 0x00
-	.byte	0x8c, 0x20, 0xed, 0x00, 0x86, 0x20, 0xed, 0x00
-	.byte	0x7e, 0x20, 0xed, 0x00, 0x76, 0x20, 0xed, 0x00
-	.byte	0x6e, 0x20, 0xed, 0x00, 0x66, 0x20, 0xed, 0x00
-	.byte	0x64, 0x20, 0xed, 0x00
+	.byte	0x6e, 0x63, 0x00, 0xff
+NakaParam_RVariScreen:
+	.long ClassVar_VariScreen_func	; VariScreen: 9 variables
+	.long ClassVar_VariScreen_font
+	.long ClassVar_VariScreen_fontcolor
+	.long ClassVar_VariScreen_page
+	.long ClassVar_VariScreen_part
+	.long ClassVar_VariScreen_varisu
+	.long ParamStr08_nowswno
+	.long ParamStr08_nowvari
+	.long ParamStr08_oldvari
+	.long ParamStr08_Empty
+ParamStr08_Empty:
 	aligned_string ""
 ParamStr08_oldvari:
 	aligned_string "oldvari"
@@ -1527,17 +1517,20 @@ ClassVar_VariScreen_page:	aligned_string "page"
 ClassVar_VariScreen_fontcolor:	aligned_string "fontcolor"
 ClassVar_VariScreen_font:	aligned_string "font"
 ClassVar_VariScreen_func:	aligned_string "func"
-ParamStr_Table_09:
+; port: v7's label ParamStr_Table_09 is not in v6 -- no v6 bytes correspond to what it named
+	.long ParamStr09_Empty
 ParamStr09_Empty:
-ParamStr09_oldvari:
-ParamStr09_nowvari:
-ParamStr09_nowswno:
-ParamStr09_varisu:
-ParamStr09_part:
-ParamStr09_page:
-ParamStr09_fontcolor:
-ParamStr09_font:
-ParamStr09_func:
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0x00, 0xff
+; port: v7's label ParamStr09_oldvari is not in v6 -- no v6 bytes correspond to what it named
+; port: v7's label ParamStr09_nowvari is not in v6 -- no v6 bytes correspond to what it named
+; port: v7's label ParamStr09_nowswno is not in v6 -- no v6 bytes correspond to what it named
+; port: v7's label ParamStr09_varisu is not in v6 -- no v6 bytes correspond to what it named
+; port: v7's label ParamStr09_part is not in v6 -- no v6 bytes correspond to what it named
+; port: v7's label ParamStr09_page is not in v6 -- no v6 bytes correspond to what it named
+; port: v7's label ParamStr09_fontcolor is not in v6 -- no v6 bytes correspond to what it named
+; port: v7's label ParamStr09_font is not in v6 -- no v6 bytes correspond to what it named
+; port: v7's label ParamStr09_func is not in v6 -- no v6 bytes correspond to what it named
 NakaParam_AcChordBox:
 	.long NakaParam_AcChordBox_Empty	; TransposeBox: 0 variables
 NakaParam_AcChordBox_Empty:
@@ -1554,10 +1547,8 @@ NakaParam_AcPmBkNoBox:
 	.long NakaParam_AcPmBkNoBox_Empty	; BkNoBox: 0 variables
 NakaParam_AcPmBkNoBox_Empty:
 	aligned_string ""
-NakaParam_PmBankScreen:
-	.long NakaParam_PmBankScreen_Empty	; PmBkNoBox: 0 variables
-NakaParam_PmBankScreen_Empty:
-	aligned_string ""
+; port: v7's label NakaParam_PmBankScreen is not in v6 -- no v6 bytes correspond to what it named
+; port: v7's label NakaParam_PmBankScreen_Empty is not in v6 -- no v6 bytes correspond to what it named
 ParamStr_Table_10:
 	.long ParamStr10_func	; PmBankScreen: 6 variables
 	.long ParamStr10_font
@@ -3689,28 +3680,28 @@ SndParamRun_EDBAC0:
 	sndparam_descriptor 0x002184, 128, 0, 0x20, 0, 1, 5, 0x00, 0xff, 1, 1, 1, 0, 0, 0xff
 	sndparam_descriptor 0x002200, 128, 0, 0x04, 0, 1, 2, 0x00, 0xff, 1, 1, 1, 0, 0, 0xff
 	sndparam_descriptor 0x002201, 128, 0, 0x03, 0, 3, 0, 0x00, 0x01, 1, 7, 5, 0, 0, 0xff
-.set SndParam_Transpose, SndParamRun_EDBAC0 + 252
-.set SndParam_Tempo, SndParamRun_EDBAC0 + 270
-.set SndParam_Tempo_Bit8, SndParamRun_EDBAC0 + 288
-.set SndParam_GmOnOff, SndParamRun_EDBAC0 + 306
-.set VoiceCtrlR1_Entry_005, SndParamRun_EDBAC0 + 324
-.set SndParam_InitialTouch_VelocitySense, SndParamRun_EDBAC0 + 342
-.set SndParam_AfterTouch_Curve, SndParamRun_EDBAC0 + 360
-.set SndParam_AfterTouch_Threshold, SndParamRun_EDBAC0 + 378
-.set SndParam_AfterTouch_OnOff, SndParamRun_EDBAC0 + 410
-.set SndParam_PanelMemory_Number, SndParamRun_EDBAC0 + 428
-.set VoiceCtrlR1_Entry_011, SndParamRun_EDBAC0 + 216
-.set SndParam_PanelMemory_Mode, SndParamRun_EDBAC0 + 234
-.set SndParam_MusicStyleArranger_OnOff, SndParamRun_EDBAC0 + 640
-.set SndParam_MusicStyleArranger_Mode, SndParamRun_EDBAC0 + 658
-.set SndParam_MidiIn_Right1Input, SndParamRun_EDBAC0 + 446
-.set SndParam_MidiIn_AutoPlayChord, SndParamRun_EDBAC0 + 478
-.set SndParam_MidiOut_TechniChord, SndParamRun_EDBAC0 + 496
-.set SndParam_MidiOut_DrumPattern, SndParamRun_EDBAC0 + 514
-.set SndParam_MidiOut_AutoPlayChord, SndParamRun_EDBAC0 + 532
-.set SndParam_MidiOut_Transpose, SndParamRun_EDBAC0 + 550
-.set SndParam_MidiRealtime_Clock, SndParamRun_EDBAC0 + 568
-.set SndParam_MidiCommon_ProgramChangeMode, SndParamRun_EDBAC0 + 586
+.set SndParam_Transpose, SndParamRun_EDBAC0 + 0
+.set SndParam_Tempo, SndParamRun_EDBAC0 + 18
+.set SndParam_Tempo_Bit8, SndParamRun_EDBAC0 + 36
+.set SndParam_GmOnOff, SndParamRun_EDBAC0 + 54
+.set VoiceCtrlR1_Entry_005, SndParamRun_EDBAC0 + 72
+.set SndParam_InitialTouch_VelocitySense, SndParamRun_EDBAC0 + 90
+.set SndParam_AfterTouch_Curve, SndParamRun_EDBAC0 + 108
+.set SndParam_AfterTouch_Threshold, SndParamRun_EDBAC0 + 126
+.set SndParam_AfterTouch_OnOff, SndParamRun_EDBAC0 + 144
+.set SndParam_PanelMemory_Number, SndParamRun_EDBAC0 + 162
+.set VoiceCtrlR1_Entry_011, SndParamRun_EDBAC0 + 180
+.set SndParam_PanelMemory_Mode, SndParamRun_EDBAC0 + 198
+.set SndParam_MusicStyleArranger_OnOff, SndParamRun_EDBAC0 + 216
+.set SndParam_MusicStyleArranger_Mode, SndParamRun_EDBAC0 + 234
+.set SndParam_MidiIn_Right1Input, SndParamRun_EDBAC0 + 252
+.set SndParam_MidiIn_AutoPlayChord, SndParamRun_EDBAC0 + 270
+.set SndParam_MidiOut_TechniChord, SndParamRun_EDBAC0 + 288
+.set SndParam_MidiOut_DrumPattern, SndParamRun_EDBAC0 + 306
+.set SndParam_MidiOut_AutoPlayChord, SndParamRun_EDBAC0 + 324
+.set SndParam_MidiOut_Transpose, SndParamRun_EDBAC0 + 342
+.set SndParam_MidiRealtime_Clock, SndParamRun_EDBAC0 + 360
+.set SndParam_MidiCommon_ProgramChangeMode, SndParamRun_EDBAC0 + 378
 VoiceCtrlR1_Entry_023:
 	.byte 0x00, 0x01, 0x03
 	.byte 0xff
@@ -3743,13 +3734,10 @@ SndParamRun_EDBC9E:
 	sndparam_descriptor 0x00228b, 128, 7, 0x20, 0, 1, 5, 0x00, 0xff, 1, 1, 1, 0, 0, 0xff
 	sndparam_descriptor 0x00228c, 128, 7, 0x40, 0, 1, 6, 0x00, 0xff, 1, 1, 1, 0, 0, 0xff
 	sndparam_descriptor 0x00228d, 128, 8, 0x80, 0, 1, 7, 0x00, 0xff, 1, 1, 1, 0, 0, 0xff
-SndParamRun_EDBC9E_Data:
 	sndparam_descriptor 0x00228e, 128, 8, 0x04, 0, 1, 2, 0x00, 0xff, 1, 1, 1, 0, 0, 0xff
-SndParamRun_EDBC9E_Data2:
 	sndparam_descriptor 0x00228f, 128, 8, 0x08, 0, 1, 3, 0x00, 0xff, 1, 1, 1, 0, 0, 0xff
 	sndparam_descriptor 0x002290, 128, 8, 0x10, 0, 1, 4, 0x00, 0xff, 1, 1, 1, 0, 0, 0xff
 	sndparam_descriptor 0x002291, 128, 8, 0x01, 0, 1, 0, 0x00, 0xff, 1, 1, 1, 0, 0, 0xff
-SndParamRun_EDBC9E_Data3:
 	sndparam_descriptor 0x002294, 128, 8, 0x20, 0, 1, 5, 0x00, 0xff, 1, 1, 1, 0, 0, 0xff
 	sndparam_descriptor 0x002295, 128, 8, 0x02, 0, 1, 1, 0x00, 0xff, 1, 1, 1, 0, 0, 0xff
 	sndparam_descriptor 0x002296, 128, 7, 0x02, 0, 1, 1, 0x00, 0xff, 1, 1, 1, 0, 0, 0xff
@@ -3817,84 +3805,84 @@ SndParamRun_EDBC9E_Data3:
 	sndparam_descriptor 0x002d07, 71, 0, 0x08, 0, 1, 3, 0x00, 0xff, 1, 1, 1, 0, 0, 0xff
 	sndparam_descriptor 0x002d08, 71, 4, 0xc0, 0, 3, 6, 0x00, 0xff, 1, 1, 1, 0, 0, 0xff
 	sndparam_descriptor 0x002d09, 71, 0, 0x10, 0, 1, 4, 0x00, 0xff, 1, 1, 1, 0, 0, 0xff
-.set SndParam_MidiCommon_SongSelect, SndParamRun_EDBC9E + 216
-.set SndParam_MidiRealtime_Commands, SndParamRun_EDBC9E + 234
-.set SndParam_MidiCommon_RealtimeSysex, SndParamRun_EDBC9E + 252
-.set SndParam_MidiCtlMsg_ProgramChange, SndParamRun_EDBC9E + 306
-.set SndParam_MidiCtlMsg_AfterTouch, SndParamRun_EDBC9E + 324
-.set SndParam_MidiCtlMsg_PitchBend, SndParamRun_EDBC9E + 342
-.set SndParam_MidiCtlMsg_BankSelect, SndParamRun_EDBC9E + 360
-.set SndParam_MidiCtlMsg_Volume, SndParamRun_EDBC9E + 378
-.set SndParam_MidiCtlMsg_Expression, SndParamRun_EDBC9E + 396
-.set SndParam_MidiCtlMsg_Pan, SndParamRun_EDBC9E + 414
-.set SndParam_MidiCtlMsg_Sustain, SndParamRun_EDBC9E + 432
-.set SndParam_MidiCtlMsg_EffectReverb, SndParamRun_EDBC9E + 450
-.set SndParam_MidiCtlMsg_Modulation, SndParamRun_EDBC9E + 468
-.set SndParam_MidiCtlMsg_Tuning, SndParamRun_EDBC9E + 486
-.set SndParam_MidiCtlMsg_BendRange, SndParamRun_EDBC9E + 504
-.set SndParam_MidiCtlMsg_ResetAllControllers, SndParamRun_EDBC9E + 522
-.set SndParam_MidiCommon_FadeInOut, SndParamRun_EDBC9E + 540
-.set SndParam_FootCtrl_ExpressionPedal, SndParamRun_EDBC9E + 558
-.set VoiceCtrlR1_Entry_045, SndParamRun_EDBC9E + 576
-.set VoiceCtrlR1_Entry_046, SndParamRun_EDBC9E + 594
-.set SndParam_FootCtrl_FootSwitch1, SndParamRun_EDBC9E + 612
-.set VoiceCtrlR1_Entry_048, SndParamRun_EDBC9E + 630
-.set SndParam_FootCtrl_FootSwitch2, SndParamRun_EDBC9E + 648
-.set VoiceCtrlR1_Entry_050, SndParamRun_EDBC9E + 666
-.set SndParam_FootCtrl_FootContSw1, SndParamRun_EDBC9E + 684
-.set VoiceCtrlR1_Entry_052, SndParamRun_EDBC9E + 702
-.set SndParam_FootCtrl_FootContSw2, SndParamRun_EDBC9E + 720
-.set VoiceCtrlR1_Entry_054, SndParamRun_EDBC9E + 738
-.set SndParam_FootCtrl_FootContSw3, SndParamRun_EDBC9E + 756
-.set VoiceCtrlR1_Entry_056, SndParamRun_EDBC9E + 774
-.set SndParam_FootCtrl_FootContSw4, SndParamRun_EDBC9E + 792
-.set VoiceCtrlR1_Entry_058, SndParamRun_EDBC9E + 810
-.set VoiceCtrlR1_Entry_059, SndParamRun_EDBC9E + 828
-.set VoiceCtrlR1_Entry_060, SndParamRun_EDBC9E + 846
-.set VoiceCtrlR1_Entry_061, SndParamRun_EDBC9E + 864
-.set VoiceCtrlR1_Entry_062, SndParamRun_EDBC9E + 882
-.set VoiceCtrlR1_Entry_063, SndParamRun_EDBC9E + 900
-.set VoiceCtrlR1_Entry_064, SndParamRun_EDBC9E + 918
-.set VoiceCtrlR1_Entry_065, SndParamRun_EDBC9E + 936
-.set VoiceCtrlR1_Entry_066, SndParamRun_EDBC9E + 954
-.set VoiceCtrlR1_Entry_067, SndParamRun_EDBC9E + 972
-.set VoiceCtrlR1_Entry_068, SndParamRun_EDBC9E + 990
-.set VoiceCtrlR1_Entry_069, SndParamRun_EDBC9E + 1008
-.set VoiceCtrlR1_Entry_070, SndParamRun_EDBC9E + 1026
-.set SndParam_PmemFilter_RhythmSelection, SndParamRun_EDBC9E + 1044
-.set SndParam_PmemFilter_Tempo, SndParamRun_EDBC9E + 1062
-.set SndParam_PmemFilter_SplitPoint, SndParamRun_EDBC9E + 1080
-.set SndParam_PmemFilter_Transpose, SndParamRun_EDBC9E + 1098
-.set SndParam_PmemFilter_ApcMemory, SndParamRun_EDBC9E + 1116
-.set SndParam_PmemFilter_Midi, SndParamRun_EDBC9E + 1134
-.set SndParam_PmemFilter_KeyScale, SndParamRun_EDBC9E + 1152
-.set SndParam_PmemFilter_Reverb, SndParamRun_EDBC9E + 1170
-.set SndParam_PmemFilter_DspEffect, SndParamRun_EDBC9E + 1188
-.set SndParam_PmemFilter_Part4To16, SndParamRun_EDBC9E + 1206
-.set SndParam_PmemFilter_FootCtrl, SndParamRun_EDBC9E + 1224
-.set SndParam_PmemFilter_MicLevelReverb, SndParamRun_EDBC9E + 1242
-.set SndParam_PmemFilter_FadeInOut, SndParamRun_EDBC9E + 1260
-.set SndParam_PmemFilter_R1R2Octave, SndParamRun_EDBC9E + 1278
-.set SndParam_PmemFilter_Vocalist, SndParamRun_EDBC9E + 1296
-.set SndParam_PmemFilter_AcousticIllusion, SndParamRun_EDBC9E + 1314
-.set SndParam_PmemFilter_Equalizer, SndParamRun_EDBC9E + 1332
-.set SndParam_PmemFilter_MspBank, SndParamRun_EDBC9E + 1350
-.set SndParam_FadeIn_Time, SndParamRun_EDBC9E + 1368
-.set SndParam_FadeOut_Time, SndParamRun_EDBC9E + 1386
-.set SndParam_FadeOut_RhythmAutoStop, SndParamRun_EDBC9E + 1404
-.set SndParam_FadeOut_SeqAutoStop, SndParamRun_EDBC9E + 1542
-.set SndParam_FadeOut_AutoReset, SndParamRun_EDBC9E + 1560
-.set SndParam_ComputerConnectMode, SndParamRun_EDBC9E + 1578
-.set SndParam_Vocalist_MidiChannel, SndParamRun_EDBC9E + 1596
-.set SndParam_Vocalist_MidiChannelSend, SndParamRun_EDBC9E + 1614
-.set SndParam_Vocalist_Program, SndParamRun_EDBC9E + 1632
-.set SndParam_Vocalist_ProgramSend, SndParamRun_EDBC9E + 1650
-.set SndParam_Vocalist_Harmony, SndParamRun_EDBC9E + 1668
-.set SndParam_Vocalist_HarmonySend, SndParamRun_EDBC9E + 1686
-.set SndParam_Vocalist_Key, SndParamRun_EDBC9E + 2926
-.set SndParam_Vocalist_KeySend, SndParamRun_EDBC9E + 2944
-.set SndParam_Vocalist_ProgChangeOption, SndParamRun_EDBC9E + 2962
-.set SndParam_Vocalist_ProgChangeOptionSend, SndParamRun_EDBC9E + 2980
+.set SndParam_MidiCommon_SongSelect, SndParamRun_EDBC9E + 0
+.set SndParam_MidiRealtime_Commands, SndParamRun_EDBC9E + 18
+.set SndParam_MidiCommon_RealtimeSysex, SndParamRun_EDBC9E + 36
+.set SndParam_MidiCtlMsg_ProgramChange, SndParamRun_EDBC9E + 54
+.set SndParam_MidiCtlMsg_AfterTouch, SndParamRun_EDBC9E + 72
+.set SndParam_MidiCtlMsg_PitchBend, SndParamRun_EDBC9E + 90
+.set SndParam_MidiCtlMsg_BankSelect, SndParamRun_EDBC9E + 108
+.set SndParam_MidiCtlMsg_Volume, SndParamRun_EDBC9E + 126
+.set SndParam_MidiCtlMsg_Expression, SndParamRun_EDBC9E + 144
+.set SndParam_MidiCtlMsg_Pan, SndParamRun_EDBC9E + 162
+.set SndParam_MidiCtlMsg_Sustain, SndParamRun_EDBC9E + 180
+.set SndParam_MidiCtlMsg_EffectReverb, SndParamRun_EDBC9E + 198
+.set SndParam_MidiCtlMsg_Modulation, SndParamRun_EDBC9E + 216
+.set SndParam_MidiCtlMsg_Tuning, SndParamRun_EDBC9E + 234
+.set SndParam_MidiCtlMsg_BendRange, SndParamRun_EDBC9E + 252
+.set SndParam_MidiCtlMsg_ResetAllControllers, SndParamRun_EDBC9E + 270
+.set SndParam_MidiCommon_FadeInOut, SndParamRun_EDBC9E + 288
+.set SndParam_FootCtrl_ExpressionPedal, SndParamRun_EDBC9E + 306
+.set VoiceCtrlR1_Entry_045, SndParamRun_EDBC9E + 324
+.set VoiceCtrlR1_Entry_046, SndParamRun_EDBC9E + 342
+.set SndParam_FootCtrl_FootSwitch1, SndParamRun_EDBC9E + 360
+.set VoiceCtrlR1_Entry_048, SndParamRun_EDBC9E + 378
+.set SndParam_FootCtrl_FootSwitch2, SndParamRun_EDBC9E + 396
+.set VoiceCtrlR1_Entry_050, SndParamRun_EDBC9E + 414
+.set SndParam_FootCtrl_FootContSw1, SndParamRun_EDBC9E + 432
+.set VoiceCtrlR1_Entry_052, SndParamRun_EDBC9E + 450
+.set SndParam_FootCtrl_FootContSw2, SndParamRun_EDBC9E + 468
+.set VoiceCtrlR1_Entry_054, SndParamRun_EDBC9E + 486
+.set SndParam_FootCtrl_FootContSw3, SndParamRun_EDBC9E + 504
+.set VoiceCtrlR1_Entry_056, SndParamRun_EDBC9E + 522
+.set SndParam_FootCtrl_FootContSw4, SndParamRun_EDBC9E + 540
+.set VoiceCtrlR1_Entry_058, SndParamRun_EDBC9E + 558
+.set VoiceCtrlR1_Entry_059, SndParamRun_EDBC9E + 576
+.set VoiceCtrlR1_Entry_060, SndParamRun_EDBC9E + 594
+.set VoiceCtrlR1_Entry_061, SndParamRun_EDBC9E + 612
+.set VoiceCtrlR1_Entry_062, SndParamRun_EDBC9E + 630
+.set VoiceCtrlR1_Entry_063, SndParamRun_EDBC9E + 648
+.set VoiceCtrlR1_Entry_064, SndParamRun_EDBC9E + 666
+.set VoiceCtrlR1_Entry_065, SndParamRun_EDBC9E + 684
+.set VoiceCtrlR1_Entry_066, SndParamRun_EDBC9E + 702
+.set VoiceCtrlR1_Entry_067, SndParamRun_EDBC9E + 720
+.set VoiceCtrlR1_Entry_068, SndParamRun_EDBC9E + 738
+.set VoiceCtrlR1_Entry_069, SndParamRun_EDBC9E + 756
+.set VoiceCtrlR1_Entry_070, SndParamRun_EDBC9E + 774
+.set SndParam_PmemFilter_RhythmSelection, SndParamRun_EDBC9E + 792
+.set SndParam_PmemFilter_Tempo, SndParamRun_EDBC9E + 810
+.set SndParam_PmemFilter_SplitPoint, SndParamRun_EDBC9E + 828
+.set SndParam_PmemFilter_Transpose, SndParamRun_EDBC9E + 846
+.set SndParam_PmemFilter_ApcMemory, SndParamRun_EDBC9E + 864
+.set SndParam_PmemFilter_Midi, SndParamRun_EDBC9E + 882
+.set SndParam_PmemFilter_KeyScale, SndParamRun_EDBC9E + 900
+.set SndParam_PmemFilter_Reverb, SndParamRun_EDBC9E + 918
+.set SndParam_PmemFilter_DspEffect, SndParamRun_EDBC9E + 936
+.set SndParam_PmemFilter_Part4To16, SndParamRun_EDBC9E + 954
+.set SndParam_PmemFilter_FootCtrl, SndParamRun_EDBC9E + 972
+.set SndParam_PmemFilter_MicLevelReverb, SndParamRun_EDBC9E + 990
+.set SndParam_PmemFilter_FadeInOut, SndParamRun_EDBC9E + 1008
+.set SndParam_PmemFilter_R1R2Octave, SndParamRun_EDBC9E + 1026
+.set SndParam_PmemFilter_Vocalist, SndParamRun_EDBC9E + 1044
+.set SndParam_PmemFilter_AcousticIllusion, SndParamRun_EDBC9E + 1062
+.set SndParam_PmemFilter_Equalizer, SndParamRun_EDBC9E + 1080
+.set SndParam_PmemFilter_MspBank, SndParamRun_EDBC9E + 1098
+.set SndParam_FadeIn_Time, SndParamRun_EDBC9E + 1116
+.set SndParam_FadeOut_Time, SndParamRun_EDBC9E + 1134
+.set SndParam_FadeOut_RhythmAutoStop, SndParamRun_EDBC9E + 1152
+.set SndParam_FadeOut_SeqAutoStop, SndParamRun_EDBC9E + 1170
+.set SndParam_FadeOut_AutoReset, SndParamRun_EDBC9E + 1188
+.set SndParam_ComputerConnectMode, SndParamRun_EDBC9E + 1206
+.set SndParam_Vocalist_MidiChannel, SndParamRun_EDBC9E + 1224
+.set SndParam_Vocalist_MidiChannelSend, SndParamRun_EDBC9E + 1242
+.set SndParam_Vocalist_Program, SndParamRun_EDBC9E + 1260
+.set SndParam_Vocalist_ProgramSend, SndParamRun_EDBC9E + 1278
+.set SndParam_Vocalist_Harmony, SndParamRun_EDBC9E + 1296
+.set SndParam_Vocalist_HarmonySend, SndParamRun_EDBC9E + 1314
+.set SndParam_Vocalist_Key, SndParamRun_EDBC9E + 1332
+.set SndParam_Vocalist_KeySend, SndParamRun_EDBC9E + 1350
+.set SndParam_Vocalist_ProgChangeOption, SndParamRun_EDBC9E + 1368
+.set SndParam_Vocalist_ProgChangeOptionSend, SndParamRun_EDBC9E + 1386
 SndParam_Vocalist_ControlVolume:
 	sndparam_descriptor 0x002d0a, 71, 5, 0x7f, 0, 121, 0, 0x00, 0x0a, 1, 7, 5, 0, 0, 0xff
 WidgetParam_MidiCC_NameEdit_Map:
@@ -3937,15 +3925,15 @@ SndParamRun_EDC2A4:
 	sndparam_descriptor 0x0040c1, 152, 11, 0x40, 0, 1, 6, 0x00, 0xff, 1, 1, 1, 0, 0, 0xff
 	sndparam_descriptor 0x0040e0, 144, 4, 0xff, 40, 88, 0, 0x00, 0xff, 1, 1, 7, 0, 0, 0xff
 	sndparam_descriptor 0x004100, 144, 0, 0x1f, 0, 5, 0, 0x00, 0x00, 4, 5, 4, 0, 0, 0xff
-.set SndParam_Vocalist_ControlVolumeSend, SndParamRun_EDC2A4 + 1474
-.set SndParam_Vocalist_VocoderKeySplit, SndParamRun_EDC2A4 + 1492
-.set SndParam_Vocalist_VocoderKeySplitNote, SndParamRun_EDC2A4 + 1510
-.set SndParam_Vocalist_VocoderKeySplitSide, SndParamRun_EDC2A4 + 1536
-.set SndParam_Vocalist_VocoderIgnore, SndParamRun_EDC2A4 + 1554
-.set SndParam_Vocalist_ChordalKeySplit, SndParamRun_EDC2A4 + 1572
-.set SndParam_Vocalist_ChordalKeySplitNote, SndParamRun_EDC2A4 + 1608
-.set SndParam_Vocalist_ChordalKeySplitSide, SndParamRun_EDC2A4 + 1626
-.set SndParam_Vocalist_ChordalIgnore, SndParamRun_EDC2A4 + 1644
+.set SndParam_Vocalist_ControlVolumeSend, SndParamRun_EDC2A4 + 0
+.set SndParam_Vocalist_VocoderKeySplit, SndParamRun_EDC2A4 + 18
+.set SndParam_Vocalist_VocoderKeySplitNote, SndParamRun_EDC2A4 + 36
+.set SndParam_Vocalist_VocoderKeySplitSide, SndParamRun_EDC2A4 + 54
+.set SndParam_Vocalist_VocoderIgnore, SndParamRun_EDC2A4 + 72
+.set SndParam_Vocalist_ChordalKeySplit, SndParamRun_EDC2A4 + 90
+.set SndParam_Vocalist_ChordalKeySplitNote, SndParamRun_EDC2A4 + 108
+.set SndParam_Vocalist_ChordalKeySplitSide, SndParamRun_EDC2A4 + 126
+.set SndParam_Vocalist_ChordalIgnore, SndParamRun_EDC2A4 + 144
 .set MidiChParam_Entry_040, SndParamRun_EDC2A4 + 162
 .set SndParam_TotalExpression, SndParamRun_EDC2A4 + 180
 .set SndParam_ReverbOnOff, SndParamRun_EDC2A4 + 198
@@ -4090,20 +4078,19 @@ SndParamRun_EDC7FA:
 	sndparam_descriptor 0x008001, 178, 0, 0x7f, 0, 127, 0, 0x00, 0x03, 2, 3, 0, 0, 0, 0xff
 	sndparam_descriptor 0x008007, 0, 3, 0x7f, 0, 127, 0, 0x00, 0xff, 1, 1, 1, 0, 0, 0xff
 	sndparam_descriptor 0x008008, 0, 3, 0x80, 0, 1, 7, 0x00, 0xff, 1, 1, 1, 0, 0, 0xff
-SndParamRun_EDC7FA_Data:
 	sndparam_descriptor 0x00800a, 0, 8, 0x7f, 0, 127, 0, 0x00, 0xff, 1, 1, 1, 0, 0, 0xff
 	sndparam_descriptor 0x00800b, 179, 0, 0x7f, 0, 127, 0, 0x00, 0xff, 2, 3, 0, 0, 0, 0xff
 	sndparam_descriptor 0x008020, 0, 1, 0x7f, 0, 255, 0, 0x00, 0xff, 1, 1, 1, 0, 0, 0xff
 	sndparam_descriptor 0x008040, 0, 4, 0x08, 0, 127, 3, 0x00, 0x00, 3, 4, 3, 1, 0, 0xff
 .set SndParam_MidiIn_VelocityFixed, SndParamRun_EDC7FA + 0
-.set SndParam_Part00_Sound, SndParamRun_EDC7FA + 296
-.set SndParam_Part00_Modulation, SndParamRun_EDC7FA + 314
-.set SndParam_Part00_Volume, SndParamRun_EDC7FA + 224
-.set SndParam_Part00_Mute, SndParamRun_EDC7FA + 332
-.set SndParam_Part00_Pan, SndParamRun_EDC7FA + 350
-.set SndParam_Part00_Expression, SndParamRun_EDC7FA + 390
-.set SndParam_Part00_Bank, SndParamRun_EDC7FA + 408
-.set SndParam_Part00_Sustain, SndParamRun_EDC7FA + 426
+.set SndParam_Part00_Sound, SndParamRun_EDC7FA + 18
+.set SndParam_Part00_Modulation, SndParamRun_EDC7FA + 36
+.set SndParam_Part00_Volume, SndParamRun_EDC7FA + 54
+.set SndParam_Part00_Mute, SndParamRun_EDC7FA + 72
+.set SndParam_Part00_Pan, SndParamRun_EDC7FA + 90
+.set SndParam_Part00_Expression, SndParamRun_EDC7FA + 108
+.set SndParam_Part00_Bank, SndParamRun_EDC7FA + 126
+.set SndParam_Part00_Sustain, SndParamRun_EDC7FA + 144
 WidgetParam_MidiCC_Chorus:
 	.byte 0x40, 0x00, 0x01, 0x00, 0x7f, 0x00, 0x01, 0xff
 ;  10 x 18-byte sound-parameter descriptors, 0xEDC8A4-0xEDC958, one
@@ -4121,16 +4108,16 @@ SndParamRun_EDC8A4:
 	sndparam_descriptor 0x0081b0, 177, 0, 0x7f, 0, 127, 0, 0x00, 0x02, 2, 3, 0, 0, 0, 0xff
 	sndparam_descriptor 0x0081b2, 180, 0, 0x7f, 0, 127, 0, 0x00, 0x04, 2, 3, 0, 0, 0, 0xff
 	sndparam_descriptor 0x008221, 68, 8, 0x0f, 0, 1, 0, 0x00, 0xff, 1, 1, 1, 0, 0, 0xff
-.set SndParam_Part00_ReverbSend, SndParamRun_EDC8A4 + 274
-.set SndParam_Part00_DspEffect, SndParamRun_EDC8A4 + 292
-.set SndParam_Part00_DigitalEffect, SndParamRun_EDC8A4 + 310
-.set SndParam_Part00_AllSoundOff, SndParamRun_EDC8A4 + 418
-.set SndParam_Part00_BendRange, SndParamRun_EDC8A4 + 328
-.set SndParam_Part00_Tuning, SndParamRun_EDC8A4 + 346
-.set SndParam_Part00_KeyShift, SndParamRun_EDC8A4 + 364
-.set SndParam_Part00_PitchBend, SndParamRun_EDC8A4 + 382
-.set SndParam_Part00_ChannelPressure, SndParamRun_EDC8A4 + 400
-.set MidiChParam_Entry_103, SndParamRun_EDC8A4 + 436
+.set SndParam_Part00_ReverbSend, SndParamRun_EDC8A4 + 0
+.set SndParam_Part00_DspEffect, SndParamRun_EDC8A4 + 18
+.set SndParam_Part00_DigitalEffect, SndParamRun_EDC8A4 + 36
+.set SndParam_Part00_AllSoundOff, SndParamRun_EDC8A4 + 54
+.set SndParam_Part00_BendRange, SndParamRun_EDC8A4 + 72
+.set SndParam_Part00_Tuning, SndParamRun_EDC8A4 + 90
+.set SndParam_Part00_KeyShift, SndParamRun_EDC8A4 + 108
+.set SndParam_Part00_PitchBend, SndParamRun_EDC8A4 + 126
+.set SndParam_Part00_ChannelPressure, SndParamRun_EDC8A4 + 144
+.set MidiChParam_Entry_103, SndParamRun_EDC8A4 + 162
 SndParam_Part00_PercDecay:
 	sndparam_descriptor 0x0082cc, 68, 1, 0x0f, 0, 15, 0, 0x00, 0x09, 1, 7, 5, 0, 0, 0xff
 WidgetParam_MidiCC_DspEffect_Map:
@@ -4158,7 +4145,6 @@ SndParamRun_EDC980:
 	sndparam_descriptor 0x008287, 68, 6, 0xf0, 0, 8, 4, 0x00, 0xff, 1, 1, 1, 0, 0, 0xff
 	sndparam_descriptor 0x008288, 68, 7, 0x0f, 0, 8, 0, 0x00, 0xff, 1, 1, 1, 0, 0, 0xff
 	sndparam_descriptor 0x0082c0, 68, 7, 0x10, 0, 1, 4, 0x00, 0xff, 1, 1, 1, 0, 0, 0xff
-SndParamRun_EDC980_Data:
 	sndparam_descriptor 0x0082c1, 68, 7, 0x20, 0, 1, 5, 0x00, 0xff, 1, 1, 1, 0, 0, 0xff
 	sndparam_descriptor 0x008400, 1, 0, 0xff, 0, 255, 0, 0x00, 0xff, 1, 1, 1, 0, 0, 0xff
 	sndparam_descriptor 0x008401, 178, 1, 0x7f, 0, 127, 0, 0x00, 0x03, 2, 3, 0, 0, 0, 0xff
@@ -4606,466 +4592,466 @@ SndParamRun_EDC980_Data:
 	sndparam_descriptor 0x018001, 0, 13, 0x0f, 0, 15, 0, 0x00, 0xff, 1, 1, 1, 0, 0, 0xff
 	sndparam_descriptor 0x018002, 0, 13, 0x40, 0, 1, 6, 0xff, 0xff, 1, 1, 1, 0, 0, 0xff
 	sndparam_descriptor 0x018003, 0, 13, 0x80, 0, 1, 7, 0xff, 0xff, 1, 1, 1, 0, 0, 0xff
-.set SndParam_Part00_PercLevel, SndParamRun_EDC980 + 252
-.set SndParam_Part00_DrawRelease, SndParamRun_EDC980 + 270
-.set SndParam_Part00_DrawAttack, SndParamRun_EDC980 + 288
-.set SndParam_Part00_Drawbar16, SndParamRun_EDC980 + 306
-.set SndParam_Part00_Drawbar8, SndParamRun_EDC980 + 324
-.set SndParam_Part00_Drawbar5_1_3, SndParamRun_EDC980 + 342
-.set SndParam_Part00_Drawbar4, SndParamRun_EDC980 + 360
-.set SndParam_Part00_Drawbar2_2_3, SndParamRun_EDC980 + 378
-.set SndParam_Part00_Drawbar2, SndParamRun_EDC980 + 396
-.set SndParam_Part00_Drawbar1_3_5, SndParamRun_EDC980 + 414
-.set SndParam_Part00_Drawbar1_1_3, SndParamRun_EDC980 + 432
+.set SndParam_Part00_PercLevel, SndParamRun_EDC980 + 0
+.set SndParam_Part00_DrawRelease, SndParamRun_EDC980 + 18
+.set SndParam_Part00_DrawAttack, SndParamRun_EDC980 + 36
+.set SndParam_Part00_Drawbar16, SndParamRun_EDC980 + 54
+.set SndParam_Part00_Drawbar8, SndParamRun_EDC980 + 72
+.set SndParam_Part00_Drawbar5_1_3, SndParamRun_EDC980 + 90
+.set SndParam_Part00_Drawbar4, SndParamRun_EDC980 + 108
+.set SndParam_Part00_Drawbar2_2_3, SndParamRun_EDC980 + 126
+.set SndParam_Part00_Drawbar2, SndParamRun_EDC980 + 144
+.set SndParam_Part00_Drawbar1_3_5, SndParamRun_EDC980 + 162
+.set SndParam_Part00_Drawbar1_1_3, SndParamRun_EDC980 + 180
 .set SndParam_Part00_Drawbar1, SndParamRun_EDC980 + 198
-.set SndParam_Part00_Perc4, SndParamRun_EDC980 + 468
-.set SndParam_Part00_Perc2_2_3, SndParamRun_EDC980 + 486
-.set SndParam_Part01_Sound, SndParamRun_EDC980 + 504
-.set SndParam_Part01_Modulation, SndParamRun_EDC980 + 522
-.set SndParam_Part01_Volume, SndParamRun_EDC980 + 540
-.set SndParam_Part01_Mute, SndParamRun_EDC980 + 558
-.set SndParam_Part01_Pan, SndParamRun_EDC980 + 576
-.set SndParam_Part01_Expression, SndParamRun_EDC980 + 594
-.set SndParam_Part01_Bank, SndParamRun_EDC980 + 612
-.set SndParam_Part01_Sustain, SndParamRun_EDC980 + 630
-.set SndParam_Part01_ReverbSend, SndParamRun_EDC980 + 648
-.set SndParam_Part01_DspEffect, SndParamRun_EDC980 + 666
-.set SndParam_Part01_DigitalEffect, SndParamRun_EDC980 + 684
+.set SndParam_Part00_Perc4, SndParamRun_EDC980 + 216
+.set SndParam_Part00_Perc2_2_3, SndParamRun_EDC980 + 234
+.set SndParam_Part01_Sound, SndParamRun_EDC980 + 252
+.set SndParam_Part01_Modulation, SndParamRun_EDC980 + 270
+.set SndParam_Part01_Volume, SndParamRun_EDC980 + 288
+.set SndParam_Part01_Mute, SndParamRun_EDC980 + 306
+.set SndParam_Part01_Pan, SndParamRun_EDC980 + 324
+.set SndParam_Part01_Expression, SndParamRun_EDC980 + 342
+.set SndParam_Part01_Bank, SndParamRun_EDC980 + 360
+.set SndParam_Part01_Sustain, SndParamRun_EDC980 + 378
+.set SndParam_Part01_ReverbSend, SndParamRun_EDC980 + 396
+.set SndParam_Part01_DspEffect, SndParamRun_EDC980 + 414
+.set SndParam_Part01_DigitalEffect, SndParamRun_EDC980 + 432
 .set SndParam_Part01_AllSoundOff, SndParamRun_EDC980 + 450
-.set SndParam_Part01_BendRange, SndParamRun_EDC980 + 720
-.set SndParam_Part01_Tuning, SndParamRun_EDC980 + 738
-.set SndParam_Part01_KeyShift, SndParamRun_EDC980 + 756
-.set SndParam_Part01_PitchBend, SndParamRun_EDC980 + 774
-.set SndParam_Part01_ChannelPressure, SndParamRun_EDC980 + 792
-.set VoiceParamEx_Entry_024, SndParamRun_EDC980 + 810
-.set SndParam_Part01_PercDecay, SndParamRun_EDC980 + 828
-.set SndParam_Part01_PercLevel, SndParamRun_EDC980 + 846
-.set SndParam_Part01_DrawRelease, SndParamRun_EDC980 + 864
-.set SndParam_Part01_DrawAttack, SndParamRun_EDC980 + 882
-.set SndParam_Part01_Drawbar16, SndParamRun_EDC980 + 900
-.set SndParam_Part01_Drawbar8, SndParamRun_EDC980 + 918
-.set SndParam_Part01_Drawbar5_1_3, SndParamRun_EDC980 + 936
-.set SndParam_Part01_Drawbar4, SndParamRun_EDC980 + 954
-.set SndParam_Part01_Drawbar2_2_3, SndParamRun_EDC980 + 972
-.set SndParam_Part01_Drawbar2, SndParamRun_EDC980 + 990
-.set SndParam_Part01_Drawbar1_3_5, SndParamRun_EDC980 + 1008
-.set SndParam_Part01_Drawbar1_1_3, SndParamRun_EDC980 + 1026
+.set SndParam_Part01_BendRange, SndParamRun_EDC980 + 468
+.set SndParam_Part01_Tuning, SndParamRun_EDC980 + 486
+.set SndParam_Part01_KeyShift, SndParamRun_EDC980 + 504
+.set SndParam_Part01_PitchBend, SndParamRun_EDC980 + 522
+.set SndParam_Part01_ChannelPressure, SndParamRun_EDC980 + 540
+.set VoiceParamEx_Entry_024, SndParamRun_EDC980 + 558
+.set SndParam_Part01_PercDecay, SndParamRun_EDC980 + 576
+.set SndParam_Part01_PercLevel, SndParamRun_EDC980 + 594
+.set SndParam_Part01_DrawRelease, SndParamRun_EDC980 + 612
+.set SndParam_Part01_DrawAttack, SndParamRun_EDC980 + 630
+.set SndParam_Part01_Drawbar16, SndParamRun_EDC980 + 648
+.set SndParam_Part01_Drawbar8, SndParamRun_EDC980 + 666
+.set SndParam_Part01_Drawbar5_1_3, SndParamRun_EDC980 + 684
+.set SndParam_Part01_Drawbar4, SndParamRun_EDC980 + 702
+.set SndParam_Part01_Drawbar2_2_3, SndParamRun_EDC980 + 720
+.set SndParam_Part01_Drawbar2, SndParamRun_EDC980 + 738
+.set SndParam_Part01_Drawbar1_3_5, SndParamRun_EDC980 + 756
+.set SndParam_Part01_Drawbar1_1_3, SndParamRun_EDC980 + 774
 .set SndParam_Part01_Drawbar1, SndParamRun_EDC980 + 792
-.set SndParam_Part01_Perc4, SndParamRun_EDC980 + 1062
-.set SndParam_Part01_Perc2_2_3, SndParamRun_EDC980 + 1080
-.set SndParam_Part02_Sound, SndParamRun_EDC980 + 1098
-.set SndParam_Part02_Modulation, SndParamRun_EDC980 + 1116
-.set SndParam_Part02_Volume, SndParamRun_EDC980 + 1134
-.set SndParam_Part02_Mute, SndParamRun_EDC980 + 1152
-.set SndParam_Part02_Pan, SndParamRun_EDC980 + 1170
-.set SndParam_Part02_Expression, SndParamRun_EDC980 + 1188
-.set SndParam_Part02_Bank, SndParamRun_EDC980 + 1206
-.set SndParam_Part02_Sustain, SndParamRun_EDC980 + 1224
-.set SndParam_Part02_ReverbSend, SndParamRun_EDC980 + 1242
-.set SndParam_Part02_DspEffect, SndParamRun_EDC980 + 1260
-.set SndParam_Part02_DigitalEffect, SndParamRun_EDC980 + 1278
+.set SndParam_Part01_Perc4, SndParamRun_EDC980 + 810
+.set SndParam_Part01_Perc2_2_3, SndParamRun_EDC980 + 828
+.set SndParam_Part02_Sound, SndParamRun_EDC980 + 846
+.set SndParam_Part02_Modulation, SndParamRun_EDC980 + 864
+.set SndParam_Part02_Volume, SndParamRun_EDC980 + 882
+.set SndParam_Part02_Mute, SndParamRun_EDC980 + 900
+.set SndParam_Part02_Pan, SndParamRun_EDC980 + 918
+.set SndParam_Part02_Expression, SndParamRun_EDC980 + 936
+.set SndParam_Part02_Bank, SndParamRun_EDC980 + 954
+.set SndParam_Part02_Sustain, SndParamRun_EDC980 + 972
+.set SndParam_Part02_ReverbSend, SndParamRun_EDC980 + 990
+.set SndParam_Part02_DspEffect, SndParamRun_EDC980 + 1008
+.set SndParam_Part02_DigitalEffect, SndParamRun_EDC980 + 1026
 .set SndParam_Part02_AllSoundOff, SndParamRun_EDC980 + 1044
-.set SndParam_Part02_BendRange, SndParamRun_EDC980 + 1314
-.set SndParam_Part02_Tuning, SndParamRun_EDC980 + 1332
-.set SndParam_Part02_KeyShift, SndParamRun_EDC980 + 1350
-.set SndParam_Part02_PitchBend, SndParamRun_EDC980 + 1368
-.set SndParam_Part02_ChannelPressure, SndParamRun_EDC980 + 1386
-.set VoiceParamEx_Entry_057, SndParamRun_EDC980 + 1404
-.set SndParam_Part02_PercDecay, SndParamRun_EDC980 + 1422
-.set SndParam_Part02_PercLevel, SndParamRun_EDC980 + 1440
-.set SndParam_Part02_DrawRelease, SndParamRun_EDC980 + 1458
-.set SndParam_Part02_DrawAttack, SndParamRun_EDC980 + 1476
-.set SndParam_Part02_Drawbar16, SndParamRun_EDC980 + 1494
-.set SndParam_Part02_Drawbar8, SndParamRun_EDC980 + 1512
-.set SndParam_Part02_Drawbar5_1_3, SndParamRun_EDC980 + 1530
-.set SndParam_Part02_Drawbar4, SndParamRun_EDC980 + 1548
-.set SndParam_Part02_Drawbar2_2_3, SndParamRun_EDC980 + 1566
-.set SndParam_Part02_Drawbar2, SndParamRun_EDC980 + 1584
-.set SndParam_Part02_Drawbar1_3_5, SndParamRun_EDC980 + 1602
-.set SndParam_Part02_Drawbar1_1_3, SndParamRun_EDC980 + 1620
+.set SndParam_Part02_BendRange, SndParamRun_EDC980 + 1062
+.set SndParam_Part02_Tuning, SndParamRun_EDC980 + 1080
+.set SndParam_Part02_KeyShift, SndParamRun_EDC980 + 1098
+.set SndParam_Part02_PitchBend, SndParamRun_EDC980 + 1116
+.set SndParam_Part02_ChannelPressure, SndParamRun_EDC980 + 1134
+.set VoiceParamEx_Entry_057, SndParamRun_EDC980 + 1152
+.set SndParam_Part02_PercDecay, SndParamRun_EDC980 + 1170
+.set SndParam_Part02_PercLevel, SndParamRun_EDC980 + 1188
+.set SndParam_Part02_DrawRelease, SndParamRun_EDC980 + 1206
+.set SndParam_Part02_DrawAttack, SndParamRun_EDC980 + 1224
+.set SndParam_Part02_Drawbar16, SndParamRun_EDC980 + 1242
+.set SndParam_Part02_Drawbar8, SndParamRun_EDC980 + 1260
+.set SndParam_Part02_Drawbar5_1_3, SndParamRun_EDC980 + 1278
+.set SndParam_Part02_Drawbar4, SndParamRun_EDC980 + 1296
+.set SndParam_Part02_Drawbar2_2_3, SndParamRun_EDC980 + 1314
+.set SndParam_Part02_Drawbar2, SndParamRun_EDC980 + 1332
+.set SndParam_Part02_Drawbar1_3_5, SndParamRun_EDC980 + 1350
+.set SndParam_Part02_Drawbar1_1_3, SndParamRun_EDC980 + 1368
 .set SndParam_Part02_Drawbar1, SndParamRun_EDC980 + 1386
-.set SndParam_Part02_Perc4, SndParamRun_EDC980 + 1656
-.set SndParam_Part02_Perc2_2_3, SndParamRun_EDC980 + 1674
-.set SndParam_Part03_Sound, SndParamRun_EDC980 + 1692
-.set SndParam_Part03_Modulation, SndParamRun_EDC980 + 1710
-.set SndParam_Part03_Volume, SndParamRun_EDC980 + 1728
-.set SndParam_Part03_Mute, SndParamRun_EDC980 + 1746
-.set SndParam_Part03_Pan, SndParamRun_EDC980 + 1764
-.set SndParam_Part03_Expression, SndParamRun_EDC980 + 1782
-.set SndParam_Part03_Bank, SndParamRun_EDC980 + 1800
-.set SndParam_Part03_Sustain, SndParamRun_EDC980 + 1818
-.set SndParam_Part03_ReverbSend, SndParamRun_EDC980 + 1836
-.set SndParam_Part03_DspEffect, SndParamRun_EDC980 + 1854
-.set SndParam_Part03_DigitalEffect, SndParamRun_EDC980 + 1872
-.set SndParam_Part03_AllSoundOff, SndParamRun_EDC980 + 1998
-.set SndParam_Part03_BendRange, SndParamRun_EDC980 + 1890
-.set SndParam_Part03_Tuning, SndParamRun_EDC980 + 1908
-.set SndParam_Part03_KeyShift, SndParamRun_EDC980 + 1926
-.set SndParam_Part03_PitchBend, SndParamRun_EDC980 + 1962
-.set SndParam_Part03_ChannelPressure, SndParamRun_EDC980 + 1980
-.set SndParam_Part04_Sound, SndParamRun_EDC980 + 2016
-.set SndParam_Part04_Modulation, SndParamRun_EDC980 + 2034
-.set SndParam_Part04_Volume, SndParamRun_EDC980 + 1944
-.set SndParam_Part04_Mute, SndParamRun_EDC980 + 2052
-.set SndParam_Part04_Pan, SndParamRun_EDC980 + 2070
-.set SndParam_Part04_Expression, SndParamRun_EDC980 + 2088
-.set SndParam_Part04_Bank, SndParamRun_EDC980 + 2106
-.set SndParam_Part04_Sustain, SndParamRun_EDC980 + 2124
-.set SndParam_Part04_ReverbSend, SndParamRun_EDC980 + 2142
-.set SndParam_Part04_DspEffect, SndParamRun_EDC980 + 2160
-.set SndParam_Part04_DigitalEffect, SndParamRun_EDC980 + 2178
-.set SndParam_Part04_AllSoundOff, SndParamRun_EDC980 + 2304
-.set SndParam_Part04_BendRange, SndParamRun_EDC980 + 2196
-.set SndParam_Part04_Tuning, SndParamRun_EDC980 + 2214
-.set SndParam_Part04_KeyShift, SndParamRun_EDC980 + 2232
-.set SndParam_Part04_PitchBend, SndParamRun_EDC980 + 2268
-.set SndParam_Part04_ChannelPressure, SndParamRun_EDC980 + 2286
-.set SndParam_Part05_Sound, SndParamRun_EDC980 + 2322
-.set SndParam_Part05_Modulation, SndParamRun_EDC980 + 2340
-.set SndParam_Part05_Volume, SndParamRun_EDC980 + 2250
-.set SndParam_Part05_Mute, SndParamRun_EDC980 + 2358
-.set SndParam_Part05_Pan, SndParamRun_EDC980 + 2376
-.set SndParam_Part05_Expression, SndParamRun_EDC980 + 2394
-.set SndParam_Part05_Bank, SndParamRun_EDC980 + 2412
-.set SndParam_Part05_Sustain, SndParamRun_EDC980 + 2430
-.set SndParam_Part05_ReverbSend, SndParamRun_EDC980 + 2448
-.set SndParam_Part05_DspEffect, SndParamRun_EDC980 + 2466
-.set SndParam_Part05_DigitalEffect, SndParamRun_EDC980 + 2484
-.set SndParam_Part05_AllSoundOff, SndParamRun_EDC980 + 2610
-.set SndParam_Part05_BendRange, SndParamRun_EDC980 + 2502
-.set SndParam_Part05_Tuning, SndParamRun_EDC980 + 2520
-.set SndParam_Part05_KeyShift, SndParamRun_EDC980 + 2538
-.set SndParam_Part05_PitchBend, SndParamRun_EDC980 + 2574
-.set SndParam_Part05_ChannelPressure, SndParamRun_EDC980 + 2592
-.set SndParam_Part06_Sound, SndParamRun_EDC980 + 2628
-.set SndParam_Part06_Modulation, SndParamRun_EDC980 + 2646
-.set SndParam_Part06_Volume, SndParamRun_EDC980 + 2556
-.set SndParam_Part06_Mute, SndParamRun_EDC980 + 2664
-.set SndParam_Part06_Pan, SndParamRun_EDC980 + 2682
-.set SndParam_Part06_Expression, SndParamRun_EDC980 + 2700
-.set SndParam_Part06_Bank, SndParamRun_EDC980 + 2718
-.set SndParam_Part06_Sustain, SndParamRun_EDC980 + 2736
-.set SndParam_Part06_ReverbSend, SndParamRun_EDC980 + 2754
-.set SndParam_Part06_DspEffect, SndParamRun_EDC980 + 2772
-.set SndParam_Part06_DigitalEffect, SndParamRun_EDC980 + 2790
-.set SndParam_Part06_AllSoundOff, SndParamRun_EDC980 + 2916
-.set SndParam_Part06_BendRange, SndParamRun_EDC980 + 2808
-.set SndParam_Part06_Tuning, SndParamRun_EDC980 + 2826
-.set SndParam_Part06_KeyShift, SndParamRun_EDC980 + 2844
-.set SndParam_Part06_PitchBend, SndParamRun_EDC980 + 2880
-.set SndParam_Part06_ChannelPressure, SndParamRun_EDC980 + 2898
-.set SndParam_Part07_Sound, SndParamRun_EDC980 + 2934
-.set SndParam_Part07_Modulation, SndParamRun_EDC980 + 2952
-.set SndParam_Part07_Volume, SndParamRun_EDC980 + 2862
-.set SndParam_Part07_Mute, SndParamRun_EDC980 + 2970
-.set SndParam_Part07_Pan, SndParamRun_EDC980 + 2988
-.set SndParam_Part07_Expression, SndParamRun_EDC980 + 3006
-.set SndParam_Part07_Bank, SndParamRun_EDC980 + 3024
-.set SndParam_Part07_Sustain, SndParamRun_EDC980 + 3042
-.set SndParam_Part07_ReverbSend, SndParamRun_EDC980 + 3060
-.set SndParam_Part07_DspEffect, SndParamRun_EDC980 + 3078
-.set SndParam_Part07_DigitalEffect, SndParamRun_EDC980 + 3096
-.set SndParam_Part07_AllSoundOff, SndParamRun_EDC980 + 3222
-.set SndParam_Part07_BendRange, SndParamRun_EDC980 + 3114
-.set SndParam_Part07_Tuning, SndParamRun_EDC980 + 3132
-.set SndParam_Part07_KeyShift, SndParamRun_EDC980 + 3150
-.set SndParam_Part07_PitchBend, SndParamRun_EDC980 + 3186
-.set SndParam_Part07_ChannelPressure, SndParamRun_EDC980 + 3204
-.set SndParam_Part08_Sound, SndParamRun_EDC980 + 3240
-.set SndParam_Part08_Modulation, SndParamRun_EDC980 + 3258
-.set SndParam_Part08_Volume, SndParamRun_EDC980 + 3168
-.set SndParam_Part08_Mute, SndParamRun_EDC980 + 3276
-.set SndParam_Part08_Pan, SndParamRun_EDC980 + 3294
-.set SndParam_Part08_Expression, SndParamRun_EDC980 + 3312
-.set SndParam_Part08_Bank, SndParamRun_EDC980 + 3330
-.set SndParam_Part08_Sustain, SndParamRun_EDC980 + 3348
-.set SndParam_Part08_ReverbSend, SndParamRun_EDC980 + 3366
-.set SndParam_Part08_DspEffect, SndParamRun_EDC980 + 3384
-.set SndParam_Part08_DigitalEffect, SndParamRun_EDC980 + 3402
-.set SndParam_Part08_AllSoundOff, SndParamRun_EDC980 + 3528
-.set SndParam_Part08_BendRange, SndParamRun_EDC980 + 3420
-.set SndParam_Part08_Tuning, SndParamRun_EDC980 + 3438
-.set SndParam_Part08_KeyShift, SndParamRun_EDC980 + 3456
-.set SndParam_Part08_PitchBend, SndParamRun_EDC980 + 3492
-.set SndParam_Part08_ChannelPressure, SndParamRun_EDC980 + 3510
-.set SndParam_Part09_Sound, SndParamRun_EDC980 + 3546
-.set SndParam_Part09_Modulation, SndParamRun_EDC980 + 3564
-.set SndParam_Part09_Volume, SndParamRun_EDC980 + 3474
-.set SndParam_Part09_Mute, SndParamRun_EDC980 + 3582
-.set SndParam_Part09_Pan, SndParamRun_EDC980 + 3600
-.set SndParam_Part09_Expression, SndParamRun_EDC980 + 3618
-.set SndParam_Part09_Bank, SndParamRun_EDC980 + 3636
-.set SndParam_Part09_Sustain, SndParamRun_EDC980 + 3654
-.set SndParam_Part09_ReverbSend, SndParamRun_EDC980 + 3672
-.set SndParam_Part09_DspEffect, SndParamRun_EDC980 + 3690
-.set SndParam_Part09_DigitalEffect, SndParamRun_EDC980 + 3708
-.set SndParam_Part09_AllSoundOff, SndParamRun_EDC980 + 3834
-.set SndParam_Part09_BendRange, SndParamRun_EDC980 + 3726
-.set SndParam_Part09_Tuning, SndParamRun_EDC980 + 3744
-.set SndParam_Part09_KeyShift, SndParamRun_EDC980 + 3762
-.set SndParam_Part09_PitchBend, SndParamRun_EDC980 + 3798
-.set SndParam_Part09_ChannelPressure, SndParamRun_EDC980 + 3816
-.set SndParam_Part0A_Sound, SndParamRun_EDC980 + 3852
-.set SndParam_Part0A_Modulation, SndParamRun_EDC980 + 3870
-.set SndParam_Part0A_Volume, SndParamRun_EDC980 + 3780
-.set SndParam_Part0A_Mute, SndParamRun_EDC980 + 3888
-.set SndParam_Part0A_Pan, SndParamRun_EDC980 + 3906
-.set SndParam_Part0A_Expression, SndParamRun_EDC980 + 3924
-.set SndParam_Part0A_Bank, SndParamRun_EDC980 + 3942
-.set SndParam_Part0A_Sustain, SndParamRun_EDC980 + 3960
-.set SndParam_Part0A_ReverbSend, SndParamRun_EDC980 + 3978
-.set SndParam_Part0A_DspEffect, SndParamRun_EDC980 + 3996
-.set SndParam_Part0A_DigitalEffect, SndParamRun_EDC980 + 4014
-.set SndParam_Part0A_AllSoundOff, SndParamRun_EDC980 + 4140
-.set SndParam_Part0A_BendRange, SndParamRun_EDC980 + 4032
-.set SndParam_Part0A_Tuning, SndParamRun_EDC980 + 4050
-.set SndParam_Part0A_KeyShift, SndParamRun_EDC980 + 4068
-.set SndParam_Part0A_PitchBend, SndParamRun_EDC980 + 4104
-.set SndParam_Part0A_ChannelPressure, SndParamRun_EDC980 + 4122
-.set SndParam_Part0B_Sound, SndParamRun_EDC980 + 4158
-.set SndParam_Part0B_Modulation, SndParamRun_EDC980 + 4176
-.set SndParam_Part0B_Volume, SndParamRun_EDC980 + 4086
-.set SndParam_Part0B_Mute, SndParamRun_EDC980 + 4194
-.set SndParam_Part0B_Pan, SndParamRun_EDC980 + 4212
-.set SndParam_Part0B_Expression, SndParamRun_EDC980 + 4230
-.set SndParam_Part0B_Bank, SndParamRun_EDC980 + 4248
-.set SndParam_Part0B_Sustain, SndParamRun_EDC980 + 4266
-.set SndParam_Part0B_ReverbSend, SndParamRun_EDC980 + 4284
-.set SndParam_Part0B_DspEffect, SndParamRun_EDC980 + 4302
-.set SndParam_Part0B_DigitalEffect, SndParamRun_EDC980 + 4320
-.set SndParam_Part0B_AllSoundOff, SndParamRun_EDC980 + 4446
-.set SndParam_Part0B_BendRange, SndParamRun_EDC980 + 4338
-.set SndParam_Part0B_Tuning, SndParamRun_EDC980 + 4356
-.set SndParam_Part0B_KeyShift, SndParamRun_EDC980 + 4374
-.set SndParam_Part0B_PitchBend, SndParamRun_EDC980 + 4410
-.set SndParam_Part0B_ChannelPressure, SndParamRun_EDC980 + 4428
-.set SndParam_Part0C_Sound, SndParamRun_EDC980 + 4464
-.set SndParam_Part0C_Modulation, SndParamRun_EDC980 + 4482
-.set SndParam_Part0C_Volume, SndParamRun_EDC980 + 4392
-.set SndParam_Part0C_Mute, SndParamRun_EDC980 + 4500
-.set SndParam_Part0C_Pan, SndParamRun_EDC980 + 4518
-.set SndParam_Part0C_Expression, SndParamRun_EDC980 + 4536
-.set SndParam_Part0C_Bank, SndParamRun_EDC980 + 4554
-.set SndParam_Part0C_Sustain, SndParamRun_EDC980 + 4572
-.set SndParam_Part0C_ReverbSend, SndParamRun_EDC980 + 4590
-.set SndParam_Part0C_DspEffect, SndParamRun_EDC980 + 4608
-.set SndParam_Part0C_DigitalEffect, SndParamRun_EDC980 + 4626
-.set SndParam_Part0C_AllSoundOff, SndParamRun_EDC980 + 4752
-.set SndParam_Part0C_BendRange, SndParamRun_EDC980 + 4644
-.set SndParam_Part0C_Tuning, SndParamRun_EDC980 + 4662
-.set SndParam_Part0C_KeyShift, SndParamRun_EDC980 + 4680
-.set SndParam_Part0C_PitchBend, SndParamRun_EDC980 + 4716
-.set SndParam_Part0C_ChannelPressure, SndParamRun_EDC980 + 4734
-.set SndParam_Part0D_Sound, SndParamRun_EDC980 + 4770
-.set SndParam_Part0D_Modulation, SndParamRun_EDC980 + 4788
-.set SndParam_Part0D_Volume, SndParamRun_EDC980 + 4698
-.set SndParam_Part0D_Mute, SndParamRun_EDC980 + 4806
-.set SndParam_Part0D_Pan, SndParamRun_EDC980 + 4824
-.set SndParam_Part0D_Expression, SndParamRun_EDC980 + 4842
-.set SndParam_Part0D_Bank, SndParamRun_EDC980 + 4860
-.set SndParam_Part0D_Sustain, SndParamRun_EDC980 + 4878
-.set SndParam_Part0D_ReverbSend, SndParamRun_EDC980 + 4896
-.set SndParam_Part0D_DspEffect, SndParamRun_EDC980 + 4914
-.set SndParam_Part0D_DigitalEffect, SndParamRun_EDC980 + 4932
-.set SndParam_Part0D_AllSoundOff, SndParamRun_EDC980 + 5058
-.set SndParam_Part0D_BendRange, SndParamRun_EDC980 + 4950
-.set SndParam_Part0D_Tuning, SndParamRun_EDC980 + 4968
-.set SndParam_Part0D_KeyShift, SndParamRun_EDC980 + 4986
-.set SndParam_Part0D_PitchBend, SndParamRun_EDC980 + 5022
-.set SndParam_Part0D_ChannelPressure, SndParamRun_EDC980 + 5040
-.set SndParam_Part0E_Sound, SndParamRun_EDC980 + 5076
-.set SndParam_Part0E_Modulation, SndParamRun_EDC980 + 5094
-.set SndParam_Part0E_Volume, SndParamRun_EDC980 + 5004
-.set SndParam_Part0E_Mute, SndParamRun_EDC980 + 5112
-.set SndParam_Part0E_Pan, SndParamRun_EDC980 + 5130
-.set SndParam_Part0E_Expression, SndParamRun_EDC980 + 5148
-.set SndParam_Part0E_Bank, SndParamRun_EDC980 + 5166
-.set SndParam_Part0E_Sustain, SndParamRun_EDC980 + 5184
-.set SndParam_Part0E_ReverbSend, SndParamRun_EDC980 + 5202
-.set SndParam_Part0E_DspEffect, SndParamRun_EDC980 + 5220
-.set SndParam_Part0E_DigitalEffect, SndParamRun_EDC980 + 5238
-.set SndParam_Part0E_AllSoundOff, SndParamRun_EDC980 + 5364
-.set SndParam_Part0E_BendRange, SndParamRun_EDC980 + 5256
-.set SndParam_Part0E_Tuning, SndParamRun_EDC980 + 5274
-.set SndParam_Part0E_KeyShift, SndParamRun_EDC980 + 5292
-.set SndParam_Part0E_PitchBend, SndParamRun_EDC980 + 5328
-.set SndParam_Part0E_ChannelPressure, SndParamRun_EDC980 + 5346
-.set SndParam_Part0F_Sound, SndParamRun_EDC980 + 5382
-.set SndParam_Part0F_Modulation, SndParamRun_EDC980 + 5400
-.set SndParam_Part0F_Volume, SndParamRun_EDC980 + 5310
-.set SndParam_Part0F_Mute, SndParamRun_EDC980 + 5418
-.set SndParam_Part0F_Pan, SndParamRun_EDC980 + 5436
-.set SndParam_Part0F_Expression, SndParamRun_EDC980 + 5454
-.set SndParam_Part0F_Bank, SndParamRun_EDC980 + 5472
-.set SndParam_Part0F_Sustain, SndParamRun_EDC980 + 5490
-.set SndParam_Part0F_ReverbSend, SndParamRun_EDC980 + 5508
-.set SndParam_Part0F_DspEffect, SndParamRun_EDC980 + 5526
-.set SndParam_Part0F_DigitalEffect, SndParamRun_EDC980 + 5544
-.set SndParam_Part0F_AllSoundOff, SndParamRun_EDC980 + 5670
-.set SndParam_Part0F_BendRange, SndParamRun_EDC980 + 5562
-.set SndParam_Part0F_Tuning, SndParamRun_EDC980 + 5580
-.set SndParam_Part0F_KeyShift, SndParamRun_EDC980 + 5598
-.set SndParam_Part0F_PitchBend, SndParamRun_EDC980 + 5634
-.set SndParam_Part0F_ChannelPressure, SndParamRun_EDC980 + 5652
-.set SndParam_Part10_Sound, SndParamRun_EDC980 + 5688
-.set SndParam_Part10_Modulation, SndParamRun_EDC980 + 5706
-.set SndParam_Part10_Volume, SndParamRun_EDC980 + 5616
-.set SndParam_Part10_Mute, SndParamRun_EDC980 + 5724
-.set SndParam_Part10_Pan, SndParamRun_EDC980 + 5742
-.set SndParam_Part10_Expression, SndParamRun_EDC980 + 5760
-.set SndParam_Part10_Bank, SndParamRun_EDC980 + 5778
-.set SndParam_Part10_Sustain, SndParamRun_EDC980 + 5796
-.set SndParam_Part10_ReverbSend, SndParamRun_EDC980 + 5814
-.set SndParam_Part10_DspEffect, SndParamRun_EDC980 + 5832
-.set SndParam_Part10_DigitalEffect, SndParamRun_EDC980 + 5850
-.set SndParam_Part10_AllSoundOff, SndParamRun_EDC980 + 5976
-.set SndParam_Part10_BendRange, SndParamRun_EDC980 + 5868
-.set SndParam_Part10_Tuning, SndParamRun_EDC980 + 5886
-.set SndParam_Part10_KeyShift, SndParamRun_EDC980 + 5904
-.set SndParam_Part10_PitchBend, SndParamRun_EDC980 + 5940
-.set SndParam_Part10_ChannelPressure, SndParamRun_EDC980 + 5958
-.set SndParam_Part11_Sound, SndParamRun_EDC980 + 5994
-.set SndParam_Part11_Modulation, SndParamRun_EDC980 + 6012
-.set SndParam_Part11_Volume, SndParamRun_EDC980 + 5922
-.set SndParam_Part11_Mute, SndParamRun_EDC980 + 6030
-.set SndParam_Part11_Pan, SndParamRun_EDC980 + 6048
-.set SndParam_Part11_Expression, SndParamRun_EDC980 + 6066
-.set SndParam_Part11_Bank, SndParamRun_EDC980 + 6084
-.set SndParam_Part11_Sustain, SndParamRun_EDC980 + 6102
-.set SndParam_Part11_ReverbSend, SndParamRun_EDC980 + 6120
-.set SndParam_Part11_DspEffect, SndParamRun_EDC980 + 6138
-.set SndParam_Part11_DigitalEffect, SndParamRun_EDC980 + 6156
-.set SndParam_Part11_AllSoundOff, SndParamRun_EDC980 + 6282
-.set SndParam_Part11_BendRange, SndParamRun_EDC980 + 6174
-.set SndParam_Part11_Tuning, SndParamRun_EDC980 + 6192
-.set SndParam_Part11_KeyShift, SndParamRun_EDC980 + 6210
-.set SndParam_Part11_PitchBend, SndParamRun_EDC980 + 6246
-.set SndParam_Part11_ChannelPressure, SndParamRun_EDC980 + 6264
-.set SndParam_Part12_Sound, SndParamRun_EDC980 + 6300
-.set SndParam_Part12_Modulation, SndParamRun_EDC980 + 6318
-.set SndParam_Part12_Volume, SndParamRun_EDC980 + 6228
-.set SndParam_Part12_Mute, SndParamRun_EDC980 + 6336
-.set SndParam_Part12_Pan, SndParamRun_EDC980 + 6354
-.set SndParam_Part12_Expression, SndParamRun_EDC980 + 6372
-.set SndParam_Part12_Bank, SndParamRun_EDC980 + 6390
-.set SndParam_Part12_Sustain, SndParamRun_EDC980 + 6408
-.set SndParam_Part12_ReverbSend, SndParamRun_EDC980 + 6426
-.set SndParam_Part12_DspEffect, SndParamRun_EDC980 + 6444
-.set SndParam_Part12_DigitalEffect, SndParamRun_EDC980 + 6462
-.set SndParam_Part12_AllSoundOff, SndParamRun_EDC980 + 6588
-.set SndParam_Part12_BendRange, SndParamRun_EDC980 + 6480
-.set SndParam_Part12_Tuning, SndParamRun_EDC980 + 6498
-.set SndParam_Part12_KeyShift, SndParamRun_EDC980 + 6516
-.set SndParam_Part12_PitchBend, SndParamRun_EDC980 + 6552
-.set SndParam_Part12_ChannelPressure, SndParamRun_EDC980 + 6570
-.set SndParam_Part13_Sound, SndParamRun_EDC980 + 6606
-.set SndParam_Part13_Modulation, SndParamRun_EDC980 + 6624
-.set SndParam_Part13_Volume, SndParamRun_EDC980 + 6534
-.set SndParam_Part13_Mute, SndParamRun_EDC980 + 6642
-.set SndParam_Part13_Pan, SndParamRun_EDC980 + 6660
-.set SndParam_Part13_Expression, SndParamRun_EDC980 + 6678
-.set SndParam_Part13_Bank, SndParamRun_EDC980 + 6696
-.set SndParam_Part13_Sustain, SndParamRun_EDC980 + 6714
-.set SndParam_Part13_ReverbSend, SndParamRun_EDC980 + 6732
-.set SndParam_Part13_DspEffect, SndParamRun_EDC980 + 6750
-.set SndParam_Part13_DigitalEffect, SndParamRun_EDC980 + 6768
-.set SndParam_Part13_AllSoundOff, SndParamRun_EDC980 + 6894
-.set SndParam_Part13_BendRange, SndParamRun_EDC980 + 6786
-.set SndParam_Part13_Tuning, SndParamRun_EDC980 + 6804
-.set SndParam_Part13_KeyShift, SndParamRun_EDC980 + 6822
-.set SndParam_Part13_PitchBend, SndParamRun_EDC980 + 6858
-.set SndParam_Part13_ChannelPressure, SndParamRun_EDC980 + 6876
-.set SndParam_Part14_Sound, SndParamRun_EDC980 + 6912
-.set SndParam_Part14_Modulation, SndParamRun_EDC980 + 6930
-.set SndParam_Part14_Volume, SndParamRun_EDC980 + 6840
-.set SndParam_Part14_Mute, SndParamRun_EDC980 + 6948
-.set SndParam_Part14_Pan, SndParamRun_EDC980 + 6966
-.set SndParam_Part14_Expression, SndParamRun_EDC980 + 6984
-.set SndParam_Part14_Bank, SndParamRun_EDC980 + 7002
-.set SndParam_Part14_Sustain, SndParamRun_EDC980 + 7020
-.set SndParam_Part14_ReverbSend, SndParamRun_EDC980 + 7038
-.set SndParam_Part14_DspEffect, SndParamRun_EDC980 + 7056
-.set SndParam_Part14_DigitalEffect, SndParamRun_EDC980 + 7074
-.set SndParam_Part14_AllSoundOff, SndParamRun_EDC980 + 7200
-.set SndParam_Part14_BendRange, SndParamRun_EDC980 + 7092
-.set SndParam_Part14_Tuning, SndParamRun_EDC980 + 7110
-.set SndParam_Part14_KeyShift, SndParamRun_EDC980 + 7128
-.set SndParam_Part14_PitchBend, SndParamRun_EDC980 + 7164
-.set SndParam_Part14_ChannelPressure, SndParamRun_EDC980 + 7182
-.set SndParam_Part15_Sound, SndParamRun_EDC980 + 7218
-.set SndParam_Part15_Modulation, SndParamRun_EDC980 + 7236
-.set SndParam_Part15_Volume, SndParamRun_EDC980 + 7146
-.set SndParam_Part15_Mute, SndParamRun_EDC980 + 7254
-.set SndParam_Part15_Pan, SndParamRun_EDC980 + 7272
-.set SndParam_Part15_Expression, SndParamRun_EDC980 + 7290
-.set SndParam_Part15_Bank, SndParamRun_EDC980 + 7308
-.set SndParam_Part15_Sustain, SndParamRun_EDC980 + 7326
-.set SndParam_Part15_ReverbSend, SndParamRun_EDC980 + 7344
-.set SndParam_Part15_DspEffect, SndParamRun_EDC980 + 7362
-.set SndParam_Part15_DigitalEffect, SndParamRun_EDC980 + 7380
-.set SndParam_Part15_AllSoundOff, SndParamRun_EDC980 + 7506
-.set SndParam_Part15_BendRange, SndParamRun_EDC980 + 7398
-.set SndParam_Part15_Tuning, SndParamRun_EDC980 + 7416
-.set SndParam_Part15_KeyShift, SndParamRun_EDC980 + 7434
-.set SndParam_Part15_PitchBend, SndParamRun_EDC980 + 7470
-.set SndParam_Part15_ChannelPressure, SndParamRun_EDC980 + 7488
-.set SndParam_Part16_Sound, SndParamRun_EDC980 + 7524
-.set SndParam_Part16_Modulation, SndParamRun_EDC980 + 7542
-.set SndParam_Part16_Volume, SndParamRun_EDC980 + 7452
-.set SndParam_Part16_Mute, SndParamRun_EDC980 + 7560
-.set SndParam_Part16_Pan, SndParamRun_EDC980 + 7578
-.set SndParam_Part16_Expression, SndParamRun_EDC980 + 7596
-.set SndParam_Part16_Bank, SndParamRun_EDC980 + 7614
-.set SndParam_Part16_Sustain, SndParamRun_EDC980 + 7632
-.set SndParam_Part16_ReverbSend, SndParamRun_EDC980 + 7650
-.set SndParam_Part16_DspEffect, SndParamRun_EDC980 + 7668
-.set SndParam_Part16_DigitalEffect, SndParamRun_EDC980 + 7686
-.set SndParam_Part16_AllSoundOff, SndParamRun_EDC980 + 7812
-.set SndParam_Part16_BendRange, SndParamRun_EDC980 + 7704
-.set SndParam_Part16_Tuning, SndParamRun_EDC980 + 7722
-.set SndParam_Part16_KeyShift, SndParamRun_EDC980 + 7740
-.set SndParam_Part16_PitchBend, SndParamRun_EDC980 + 7776
-.set SndParam_Part16_ChannelPressure, SndParamRun_EDC980 + 7794
-.set SndParam_Part17_Sound, SndParamRun_EDC980 + 7830
-.set SndParam_Part17_Modulation, SndParamRun_EDC980 + 7848
-.set SndParam_Part17_Volume, SndParamRun_EDC980 + 7758
-.set SndParam_Part17_Mute, SndParamRun_EDC980 + 7866
-.set SndParam_Part17_Pan, SndParamRun_EDC980 + 7884
-.set SndParam_Part17_Expression, SndParamRun_EDC980 + 7902
-.set SndParam_Part17_Bank, SndParamRun_EDC980 + 7920
-.set SndParam_Part17_Sustain, SndParamRun_EDC980 + 7938
-.set SndParam_Part17_ReverbSend, SndParamRun_EDC980 + 7956
-.set SndParam_Part17_DspEffect, SndParamRun_EDC980 + 7974
-.set SndParam_Part17_DigitalEffect, SndParamRun_EDC980 + 7992
-.set SndParam_Part17_AllSoundOff, SndParamRun_EDC980 + 8118
-.set SndParam_Part17_BendRange, SndParamRun_EDC980 + 8010
-.set SndParam_Part17_Tuning, SndParamRun_EDC980 + 8028
-.set SndParam_Part17_KeyShift, SndParamRun_EDC980 + 8046
-.set SndParam_Part17_PitchBend, SndParamRun_EDC980 + 8082
-.set SndParam_Part17_ChannelPressure, SndParamRun_EDC980 + 8100
-.set SndParam_Part18_Sound, SndParamRun_EDC980 + 8136
-.set SndParam_Part18_Modulation, SndParamRun_EDC980 + 8154
-.set SndParam_Part18_Volume, SndParamRun_EDC980 + 8064
-.set SndParam_Part18_Mute, SndParamRun_EDC980 + 8172
-.set SndParam_Part18_Pan, SndParamRun_EDC980 + 8190
-.set SndParam_Part18_Expression, SndParamRun_EDC980 + 8208
-.set SndParam_Part18_Bank, SndParamRun_EDC980 + 8226
-.set SndParam_Part18_Sustain, SndParamRun_EDC980 + 8244
-.set SndParam_Part18_ReverbSend, SndParamRun_EDC980 + 8262
-.set SndParam_Part18_DspEffect, SndParamRun_EDC980 + 8280
-.set SndParam_Part18_DigitalEffect, SndParamRun_EDC980 + 8316
+.set SndParam_Part02_Perc4, SndParamRun_EDC980 + 1404
+.set SndParam_Part02_Perc2_2_3, SndParamRun_EDC980 + 1422
+.set SndParam_Part03_Sound, SndParamRun_EDC980 + 1440
+.set SndParam_Part03_Modulation, SndParamRun_EDC980 + 1458
+.set SndParam_Part03_Volume, SndParamRun_EDC980 + 1476
+.set SndParam_Part03_Mute, SndParamRun_EDC980 + 1494
+.set SndParam_Part03_Pan, SndParamRun_EDC980 + 1512
+.set SndParam_Part03_Expression, SndParamRun_EDC980 + 1530
+.set SndParam_Part03_Bank, SndParamRun_EDC980 + 1548
+.set SndParam_Part03_Sustain, SndParamRun_EDC980 + 1566
+.set SndParam_Part03_ReverbSend, SndParamRun_EDC980 + 1584
+.set SndParam_Part03_DspEffect, SndParamRun_EDC980 + 1602
+.set SndParam_Part03_DigitalEffect, SndParamRun_EDC980 + 1620
+.set SndParam_Part03_AllSoundOff, SndParamRun_EDC980 + 1638
+.set SndParam_Part03_BendRange, SndParamRun_EDC980 + 1656
+.set SndParam_Part03_Tuning, SndParamRun_EDC980 + 1674
+.set SndParam_Part03_KeyShift, SndParamRun_EDC980 + 1692
+.set SndParam_Part03_PitchBend, SndParamRun_EDC980 + 1710
+.set SndParam_Part03_ChannelPressure, SndParamRun_EDC980 + 1728
+.set SndParam_Part04_Sound, SndParamRun_EDC980 + 1746
+.set SndParam_Part04_Modulation, SndParamRun_EDC980 + 1764
+.set SndParam_Part04_Volume, SndParamRun_EDC980 + 1782
+.set SndParam_Part04_Mute, SndParamRun_EDC980 + 1800
+.set SndParam_Part04_Pan, SndParamRun_EDC980 + 1818
+.set SndParam_Part04_Expression, SndParamRun_EDC980 + 1836
+.set SndParam_Part04_Bank, SndParamRun_EDC980 + 1854
+.set SndParam_Part04_Sustain, SndParamRun_EDC980 + 1872
+.set SndParam_Part04_ReverbSend, SndParamRun_EDC980 + 1890
+.set SndParam_Part04_DspEffect, SndParamRun_EDC980 + 1908
+.set SndParam_Part04_DigitalEffect, SndParamRun_EDC980 + 1926
+.set SndParam_Part04_AllSoundOff, SndParamRun_EDC980 + 1944
+.set SndParam_Part04_BendRange, SndParamRun_EDC980 + 1962
+.set SndParam_Part04_Tuning, SndParamRun_EDC980 + 1980
+.set SndParam_Part04_KeyShift, SndParamRun_EDC980 + 1998
+.set SndParam_Part04_PitchBend, SndParamRun_EDC980 + 2016
+.set SndParam_Part04_ChannelPressure, SndParamRun_EDC980 + 2034
+.set SndParam_Part05_Sound, SndParamRun_EDC980 + 2052
+.set SndParam_Part05_Modulation, SndParamRun_EDC980 + 2070
+.set SndParam_Part05_Volume, SndParamRun_EDC980 + 2088
+.set SndParam_Part05_Mute, SndParamRun_EDC980 + 2106
+.set SndParam_Part05_Pan, SndParamRun_EDC980 + 2124
+.set SndParam_Part05_Expression, SndParamRun_EDC980 + 2142
+.set SndParam_Part05_Bank, SndParamRun_EDC980 + 2160
+.set SndParam_Part05_Sustain, SndParamRun_EDC980 + 2178
+.set SndParam_Part05_ReverbSend, SndParamRun_EDC980 + 2196
+.set SndParam_Part05_DspEffect, SndParamRun_EDC980 + 2214
+.set SndParam_Part05_DigitalEffect, SndParamRun_EDC980 + 2232
+.set SndParam_Part05_AllSoundOff, SndParamRun_EDC980 + 2250
+.set SndParam_Part05_BendRange, SndParamRun_EDC980 + 2268
+.set SndParam_Part05_Tuning, SndParamRun_EDC980 + 2286
+.set SndParam_Part05_KeyShift, SndParamRun_EDC980 + 2304
+.set SndParam_Part05_PitchBend, SndParamRun_EDC980 + 2322
+.set SndParam_Part05_ChannelPressure, SndParamRun_EDC980 + 2340
+.set SndParam_Part06_Sound, SndParamRun_EDC980 + 2358
+.set SndParam_Part06_Modulation, SndParamRun_EDC980 + 2376
+.set SndParam_Part06_Volume, SndParamRun_EDC980 + 2394
+.set SndParam_Part06_Mute, SndParamRun_EDC980 + 2412
+.set SndParam_Part06_Pan, SndParamRun_EDC980 + 2430
+.set SndParam_Part06_Expression, SndParamRun_EDC980 + 2448
+.set SndParam_Part06_Bank, SndParamRun_EDC980 + 2466
+.set SndParam_Part06_Sustain, SndParamRun_EDC980 + 2484
+.set SndParam_Part06_ReverbSend, SndParamRun_EDC980 + 2502
+.set SndParam_Part06_DspEffect, SndParamRun_EDC980 + 2520
+.set SndParam_Part06_DigitalEffect, SndParamRun_EDC980 + 2538
+.set SndParam_Part06_AllSoundOff, SndParamRun_EDC980 + 2556
+.set SndParam_Part06_BendRange, SndParamRun_EDC980 + 2574
+.set SndParam_Part06_Tuning, SndParamRun_EDC980 + 2592
+.set SndParam_Part06_KeyShift, SndParamRun_EDC980 + 2610
+.set SndParam_Part06_PitchBend, SndParamRun_EDC980 + 2628
+.set SndParam_Part06_ChannelPressure, SndParamRun_EDC980 + 2646
+.set SndParam_Part07_Sound, SndParamRun_EDC980 + 2664
+.set SndParam_Part07_Modulation, SndParamRun_EDC980 + 2682
+.set SndParam_Part07_Volume, SndParamRun_EDC980 + 2700
+.set SndParam_Part07_Mute, SndParamRun_EDC980 + 2718
+.set SndParam_Part07_Pan, SndParamRun_EDC980 + 2736
+.set SndParam_Part07_Expression, SndParamRun_EDC980 + 2754
+.set SndParam_Part07_Bank, SndParamRun_EDC980 + 2772
+.set SndParam_Part07_Sustain, SndParamRun_EDC980 + 2790
+.set SndParam_Part07_ReverbSend, SndParamRun_EDC980 + 2808
+.set SndParam_Part07_DspEffect, SndParamRun_EDC980 + 2826
+.set SndParam_Part07_DigitalEffect, SndParamRun_EDC980 + 2844
+.set SndParam_Part07_AllSoundOff, SndParamRun_EDC980 + 2862
+.set SndParam_Part07_BendRange, SndParamRun_EDC980 + 2880
+.set SndParam_Part07_Tuning, SndParamRun_EDC980 + 2898
+.set SndParam_Part07_KeyShift, SndParamRun_EDC980 + 2916
+.set SndParam_Part07_PitchBend, SndParamRun_EDC980 + 2934
+.set SndParam_Part07_ChannelPressure, SndParamRun_EDC980 + 2952
+.set SndParam_Part08_Sound, SndParamRun_EDC980 + 2970
+.set SndParam_Part08_Modulation, SndParamRun_EDC980 + 2988
+.set SndParam_Part08_Volume, SndParamRun_EDC980 + 3006
+.set SndParam_Part08_Mute, SndParamRun_EDC980 + 3024
+.set SndParam_Part08_Pan, SndParamRun_EDC980 + 3042
+.set SndParam_Part08_Expression, SndParamRun_EDC980 + 3060
+.set SndParam_Part08_Bank, SndParamRun_EDC980 + 3078
+.set SndParam_Part08_Sustain, SndParamRun_EDC980 + 3096
+.set SndParam_Part08_ReverbSend, SndParamRun_EDC980 + 3114
+.set SndParam_Part08_DspEffect, SndParamRun_EDC980 + 3132
+.set SndParam_Part08_DigitalEffect, SndParamRun_EDC980 + 3150
+.set SndParam_Part08_AllSoundOff, SndParamRun_EDC980 + 3168
+.set SndParam_Part08_BendRange, SndParamRun_EDC980 + 3186
+.set SndParam_Part08_Tuning, SndParamRun_EDC980 + 3204
+.set SndParam_Part08_KeyShift, SndParamRun_EDC980 + 3222
+.set SndParam_Part08_PitchBend, SndParamRun_EDC980 + 3240
+.set SndParam_Part08_ChannelPressure, SndParamRun_EDC980 + 3258
+.set SndParam_Part09_Sound, SndParamRun_EDC980 + 3276
+.set SndParam_Part09_Modulation, SndParamRun_EDC980 + 3294
+.set SndParam_Part09_Volume, SndParamRun_EDC980 + 3312
+.set SndParam_Part09_Mute, SndParamRun_EDC980 + 3330
+.set SndParam_Part09_Pan, SndParamRun_EDC980 + 3348
+.set SndParam_Part09_Expression, SndParamRun_EDC980 + 3366
+.set SndParam_Part09_Bank, SndParamRun_EDC980 + 3384
+.set SndParam_Part09_Sustain, SndParamRun_EDC980 + 3402
+.set SndParam_Part09_ReverbSend, SndParamRun_EDC980 + 3420
+.set SndParam_Part09_DspEffect, SndParamRun_EDC980 + 3438
+.set SndParam_Part09_DigitalEffect, SndParamRun_EDC980 + 3456
+.set SndParam_Part09_AllSoundOff, SndParamRun_EDC980 + 3474
+.set SndParam_Part09_BendRange, SndParamRun_EDC980 + 3492
+.set SndParam_Part09_Tuning, SndParamRun_EDC980 + 3510
+.set SndParam_Part09_KeyShift, SndParamRun_EDC980 + 3528
+.set SndParam_Part09_PitchBend, SndParamRun_EDC980 + 3546
+.set SndParam_Part09_ChannelPressure, SndParamRun_EDC980 + 3564
+.set SndParam_Part0A_Sound, SndParamRun_EDC980 + 3582
+.set SndParam_Part0A_Modulation, SndParamRun_EDC980 + 3600
+.set SndParam_Part0A_Volume, SndParamRun_EDC980 + 3618
+.set SndParam_Part0A_Mute, SndParamRun_EDC980 + 3636
+.set SndParam_Part0A_Pan, SndParamRun_EDC980 + 3654
+.set SndParam_Part0A_Expression, SndParamRun_EDC980 + 3672
+.set SndParam_Part0A_Bank, SndParamRun_EDC980 + 3690
+.set SndParam_Part0A_Sustain, SndParamRun_EDC980 + 3708
+.set SndParam_Part0A_ReverbSend, SndParamRun_EDC980 + 3726
+.set SndParam_Part0A_DspEffect, SndParamRun_EDC980 + 3744
+.set SndParam_Part0A_DigitalEffect, SndParamRun_EDC980 + 3762
+.set SndParam_Part0A_AllSoundOff, SndParamRun_EDC980 + 3780
+.set SndParam_Part0A_BendRange, SndParamRun_EDC980 + 3798
+.set SndParam_Part0A_Tuning, SndParamRun_EDC980 + 3816
+.set SndParam_Part0A_KeyShift, SndParamRun_EDC980 + 3834
+.set SndParam_Part0A_PitchBend, SndParamRun_EDC980 + 3852
+.set SndParam_Part0A_ChannelPressure, SndParamRun_EDC980 + 3870
+.set SndParam_Part0B_Sound, SndParamRun_EDC980 + 3888
+.set SndParam_Part0B_Modulation, SndParamRun_EDC980 + 3906
+.set SndParam_Part0B_Volume, SndParamRun_EDC980 + 3924
+.set SndParam_Part0B_Mute, SndParamRun_EDC980 + 3942
+.set SndParam_Part0B_Pan, SndParamRun_EDC980 + 3960
+.set SndParam_Part0B_Expression, SndParamRun_EDC980 + 3978
+.set SndParam_Part0B_Bank, SndParamRun_EDC980 + 3996
+.set SndParam_Part0B_Sustain, SndParamRun_EDC980 + 4014
+.set SndParam_Part0B_ReverbSend, SndParamRun_EDC980 + 4032
+.set SndParam_Part0B_DspEffect, SndParamRun_EDC980 + 4050
+.set SndParam_Part0B_DigitalEffect, SndParamRun_EDC980 + 4068
+.set SndParam_Part0B_AllSoundOff, SndParamRun_EDC980 + 4086
+.set SndParam_Part0B_BendRange, SndParamRun_EDC980 + 4104
+.set SndParam_Part0B_Tuning, SndParamRun_EDC980 + 4122
+.set SndParam_Part0B_KeyShift, SndParamRun_EDC980 + 4140
+.set SndParam_Part0B_PitchBend, SndParamRun_EDC980 + 4158
+.set SndParam_Part0B_ChannelPressure, SndParamRun_EDC980 + 4176
+.set SndParam_Part0C_Sound, SndParamRun_EDC980 + 4194
+.set SndParam_Part0C_Modulation, SndParamRun_EDC980 + 4212
+.set SndParam_Part0C_Volume, SndParamRun_EDC980 + 4230
+.set SndParam_Part0C_Mute, SndParamRun_EDC980 + 4248
+.set SndParam_Part0C_Pan, SndParamRun_EDC980 + 4266
+.set SndParam_Part0C_Expression, SndParamRun_EDC980 + 4284
+.set SndParam_Part0C_Bank, SndParamRun_EDC980 + 4302
+.set SndParam_Part0C_Sustain, SndParamRun_EDC980 + 4320
+.set SndParam_Part0C_ReverbSend, SndParamRun_EDC980 + 4338
+.set SndParam_Part0C_DspEffect, SndParamRun_EDC980 + 4356
+.set SndParam_Part0C_DigitalEffect, SndParamRun_EDC980 + 4374
+.set SndParam_Part0C_AllSoundOff, SndParamRun_EDC980 + 4392
+.set SndParam_Part0C_BendRange, SndParamRun_EDC980 + 4410
+.set SndParam_Part0C_Tuning, SndParamRun_EDC980 + 4428
+.set SndParam_Part0C_KeyShift, SndParamRun_EDC980 + 4446
+.set SndParam_Part0C_PitchBend, SndParamRun_EDC980 + 4464
+.set SndParam_Part0C_ChannelPressure, SndParamRun_EDC980 + 4482
+.set SndParam_Part0D_Sound, SndParamRun_EDC980 + 4500
+.set SndParam_Part0D_Modulation, SndParamRun_EDC980 + 4518
+.set SndParam_Part0D_Volume, SndParamRun_EDC980 + 4536
+.set SndParam_Part0D_Mute, SndParamRun_EDC980 + 4554
+.set SndParam_Part0D_Pan, SndParamRun_EDC980 + 4572
+.set SndParam_Part0D_Expression, SndParamRun_EDC980 + 4590
+.set SndParam_Part0D_Bank, SndParamRun_EDC980 + 4608
+.set SndParam_Part0D_Sustain, SndParamRun_EDC980 + 4626
+.set SndParam_Part0D_ReverbSend, SndParamRun_EDC980 + 4644
+.set SndParam_Part0D_DspEffect, SndParamRun_EDC980 + 4662
+.set SndParam_Part0D_DigitalEffect, SndParamRun_EDC980 + 4680
+.set SndParam_Part0D_AllSoundOff, SndParamRun_EDC980 + 4698
+.set SndParam_Part0D_BendRange, SndParamRun_EDC980 + 4716
+.set SndParam_Part0D_Tuning, SndParamRun_EDC980 + 4734
+.set SndParam_Part0D_KeyShift, SndParamRun_EDC980 + 4752
+.set SndParam_Part0D_PitchBend, SndParamRun_EDC980 + 4770
+.set SndParam_Part0D_ChannelPressure, SndParamRun_EDC980 + 4788
+.set SndParam_Part0E_Sound, SndParamRun_EDC980 + 4806
+.set SndParam_Part0E_Modulation, SndParamRun_EDC980 + 4824
+.set SndParam_Part0E_Volume, SndParamRun_EDC980 + 4842
+.set SndParam_Part0E_Mute, SndParamRun_EDC980 + 4860
+.set SndParam_Part0E_Pan, SndParamRun_EDC980 + 4878
+.set SndParam_Part0E_Expression, SndParamRun_EDC980 + 4896
+.set SndParam_Part0E_Bank, SndParamRun_EDC980 + 4914
+.set SndParam_Part0E_Sustain, SndParamRun_EDC980 + 4932
+.set SndParam_Part0E_ReverbSend, SndParamRun_EDC980 + 4950
+.set SndParam_Part0E_DspEffect, SndParamRun_EDC980 + 4968
+.set SndParam_Part0E_DigitalEffect, SndParamRun_EDC980 + 4986
+.set SndParam_Part0E_AllSoundOff, SndParamRun_EDC980 + 5004
+.set SndParam_Part0E_BendRange, SndParamRun_EDC980 + 5022
+.set SndParam_Part0E_Tuning, SndParamRun_EDC980 + 5040
+.set SndParam_Part0E_KeyShift, SndParamRun_EDC980 + 5058
+.set SndParam_Part0E_PitchBend, SndParamRun_EDC980 + 5076
+.set SndParam_Part0E_ChannelPressure, SndParamRun_EDC980 + 5094
+.set SndParam_Part0F_Sound, SndParamRun_EDC980 + 5112
+.set SndParam_Part0F_Modulation, SndParamRun_EDC980 + 5130
+.set SndParam_Part0F_Volume, SndParamRun_EDC980 + 5148
+.set SndParam_Part0F_Mute, SndParamRun_EDC980 + 5166
+.set SndParam_Part0F_Pan, SndParamRun_EDC980 + 5184
+.set SndParam_Part0F_Expression, SndParamRun_EDC980 + 5202
+.set SndParam_Part0F_Bank, SndParamRun_EDC980 + 5220
+.set SndParam_Part0F_Sustain, SndParamRun_EDC980 + 5238
+.set SndParam_Part0F_ReverbSend, SndParamRun_EDC980 + 5256
+.set SndParam_Part0F_DspEffect, SndParamRun_EDC980 + 5274
+.set SndParam_Part0F_DigitalEffect, SndParamRun_EDC980 + 5292
+.set SndParam_Part0F_AllSoundOff, SndParamRun_EDC980 + 5310
+.set SndParam_Part0F_BendRange, SndParamRun_EDC980 + 5328
+.set SndParam_Part0F_Tuning, SndParamRun_EDC980 + 5346
+.set SndParam_Part0F_KeyShift, SndParamRun_EDC980 + 5364
+.set SndParam_Part0F_PitchBend, SndParamRun_EDC980 + 5382
+.set SndParam_Part0F_ChannelPressure, SndParamRun_EDC980 + 5400
+.set SndParam_Part10_Sound, SndParamRun_EDC980 + 5418
+.set SndParam_Part10_Modulation, SndParamRun_EDC980 + 5436
+.set SndParam_Part10_Volume, SndParamRun_EDC980 + 5454
+.set SndParam_Part10_Mute, SndParamRun_EDC980 + 5472
+.set SndParam_Part10_Pan, SndParamRun_EDC980 + 5490
+.set SndParam_Part10_Expression, SndParamRun_EDC980 + 5508
+.set SndParam_Part10_Bank, SndParamRun_EDC980 + 5526
+.set SndParam_Part10_Sustain, SndParamRun_EDC980 + 5544
+.set SndParam_Part10_ReverbSend, SndParamRun_EDC980 + 5562
+.set SndParam_Part10_DspEffect, SndParamRun_EDC980 + 5580
+.set SndParam_Part10_DigitalEffect, SndParamRun_EDC980 + 5598
+.set SndParam_Part10_AllSoundOff, SndParamRun_EDC980 + 5616
+.set SndParam_Part10_BendRange, SndParamRun_EDC980 + 5634
+.set SndParam_Part10_Tuning, SndParamRun_EDC980 + 5652
+.set SndParam_Part10_KeyShift, SndParamRun_EDC980 + 5670
+.set SndParam_Part10_PitchBend, SndParamRun_EDC980 + 5688
+.set SndParam_Part10_ChannelPressure, SndParamRun_EDC980 + 5706
+.set SndParam_Part11_Sound, SndParamRun_EDC980 + 5724
+.set SndParam_Part11_Modulation, SndParamRun_EDC980 + 5742
+.set SndParam_Part11_Volume, SndParamRun_EDC980 + 5760
+.set SndParam_Part11_Mute, SndParamRun_EDC980 + 5778
+.set SndParam_Part11_Pan, SndParamRun_EDC980 + 5796
+.set SndParam_Part11_Expression, SndParamRun_EDC980 + 5814
+.set SndParam_Part11_Bank, SndParamRun_EDC980 + 5832
+.set SndParam_Part11_Sustain, SndParamRun_EDC980 + 5850
+.set SndParam_Part11_ReverbSend, SndParamRun_EDC980 + 5868
+.set SndParam_Part11_DspEffect, SndParamRun_EDC980 + 5886
+.set SndParam_Part11_DigitalEffect, SndParamRun_EDC980 + 5904
+.set SndParam_Part11_AllSoundOff, SndParamRun_EDC980 + 5922
+.set SndParam_Part11_BendRange, SndParamRun_EDC980 + 5940
+.set SndParam_Part11_Tuning, SndParamRun_EDC980 + 5958
+.set SndParam_Part11_KeyShift, SndParamRun_EDC980 + 5976
+.set SndParam_Part11_PitchBend, SndParamRun_EDC980 + 5994
+.set SndParam_Part11_ChannelPressure, SndParamRun_EDC980 + 6012
+.set SndParam_Part12_Sound, SndParamRun_EDC980 + 6030
+.set SndParam_Part12_Modulation, SndParamRun_EDC980 + 6048
+.set SndParam_Part12_Volume, SndParamRun_EDC980 + 6066
+.set SndParam_Part12_Mute, SndParamRun_EDC980 + 6084
+.set SndParam_Part12_Pan, SndParamRun_EDC980 + 6102
+.set SndParam_Part12_Expression, SndParamRun_EDC980 + 6120
+.set SndParam_Part12_Bank, SndParamRun_EDC980 + 6138
+.set SndParam_Part12_Sustain, SndParamRun_EDC980 + 6156
+.set SndParam_Part12_ReverbSend, SndParamRun_EDC980 + 6174
+.set SndParam_Part12_DspEffect, SndParamRun_EDC980 + 6192
+.set SndParam_Part12_DigitalEffect, SndParamRun_EDC980 + 6210
+.set SndParam_Part12_AllSoundOff, SndParamRun_EDC980 + 6228
+.set SndParam_Part12_BendRange, SndParamRun_EDC980 + 6246
+.set SndParam_Part12_Tuning, SndParamRun_EDC980 + 6264
+.set SndParam_Part12_KeyShift, SndParamRun_EDC980 + 6282
+.set SndParam_Part12_PitchBend, SndParamRun_EDC980 + 6300
+.set SndParam_Part12_ChannelPressure, SndParamRun_EDC980 + 6318
+.set SndParam_Part13_Sound, SndParamRun_EDC980 + 6336
+.set SndParam_Part13_Modulation, SndParamRun_EDC980 + 6354
+.set SndParam_Part13_Volume, SndParamRun_EDC980 + 6372
+.set SndParam_Part13_Mute, SndParamRun_EDC980 + 6390
+.set SndParam_Part13_Pan, SndParamRun_EDC980 + 6408
+.set SndParam_Part13_Expression, SndParamRun_EDC980 + 6426
+.set SndParam_Part13_Bank, SndParamRun_EDC980 + 6444
+.set SndParam_Part13_Sustain, SndParamRun_EDC980 + 6462
+.set SndParam_Part13_ReverbSend, SndParamRun_EDC980 + 6480
+.set SndParam_Part13_DspEffect, SndParamRun_EDC980 + 6498
+.set SndParam_Part13_DigitalEffect, SndParamRun_EDC980 + 6516
+.set SndParam_Part13_AllSoundOff, SndParamRun_EDC980 + 6534
+.set SndParam_Part13_BendRange, SndParamRun_EDC980 + 6552
+.set SndParam_Part13_Tuning, SndParamRun_EDC980 + 6570
+.set SndParam_Part13_KeyShift, SndParamRun_EDC980 + 6588
+.set SndParam_Part13_PitchBend, SndParamRun_EDC980 + 6606
+.set SndParam_Part13_ChannelPressure, SndParamRun_EDC980 + 6624
+.set SndParam_Part14_Sound, SndParamRun_EDC980 + 6642
+.set SndParam_Part14_Modulation, SndParamRun_EDC980 + 6660
+.set SndParam_Part14_Volume, SndParamRun_EDC980 + 6678
+.set SndParam_Part14_Mute, SndParamRun_EDC980 + 6696
+.set SndParam_Part14_Pan, SndParamRun_EDC980 + 6714
+.set SndParam_Part14_Expression, SndParamRun_EDC980 + 6732
+.set SndParam_Part14_Bank, SndParamRun_EDC980 + 6750
+.set SndParam_Part14_Sustain, SndParamRun_EDC980 + 6768
+.set SndParam_Part14_ReverbSend, SndParamRun_EDC980 + 6786
+.set SndParam_Part14_DspEffect, SndParamRun_EDC980 + 6804
+.set SndParam_Part14_DigitalEffect, SndParamRun_EDC980 + 6822
+.set SndParam_Part14_AllSoundOff, SndParamRun_EDC980 + 6840
+.set SndParam_Part14_BendRange, SndParamRun_EDC980 + 6858
+.set SndParam_Part14_Tuning, SndParamRun_EDC980 + 6876
+.set SndParam_Part14_KeyShift, SndParamRun_EDC980 + 6894
+.set SndParam_Part14_PitchBend, SndParamRun_EDC980 + 6912
+.set SndParam_Part14_ChannelPressure, SndParamRun_EDC980 + 6930
+.set SndParam_Part15_Sound, SndParamRun_EDC980 + 6948
+.set SndParam_Part15_Modulation, SndParamRun_EDC980 + 6966
+.set SndParam_Part15_Volume, SndParamRun_EDC980 + 6984
+.set SndParam_Part15_Mute, SndParamRun_EDC980 + 7002
+.set SndParam_Part15_Pan, SndParamRun_EDC980 + 7020
+.set SndParam_Part15_Expression, SndParamRun_EDC980 + 7038
+.set SndParam_Part15_Bank, SndParamRun_EDC980 + 7056
+.set SndParam_Part15_Sustain, SndParamRun_EDC980 + 7074
+.set SndParam_Part15_ReverbSend, SndParamRun_EDC980 + 7092
+.set SndParam_Part15_DspEffect, SndParamRun_EDC980 + 7110
+.set SndParam_Part15_DigitalEffect, SndParamRun_EDC980 + 7128
+.set SndParam_Part15_AllSoundOff, SndParamRun_EDC980 + 7146
+.set SndParam_Part15_BendRange, SndParamRun_EDC980 + 7164
+.set SndParam_Part15_Tuning, SndParamRun_EDC980 + 7182
+.set SndParam_Part15_KeyShift, SndParamRun_EDC980 + 7200
+.set SndParam_Part15_PitchBend, SndParamRun_EDC980 + 7218
+.set SndParam_Part15_ChannelPressure, SndParamRun_EDC980 + 7236
+.set SndParam_Part16_Sound, SndParamRun_EDC980 + 7254
+.set SndParam_Part16_Modulation, SndParamRun_EDC980 + 7272
+.set SndParam_Part16_Volume, SndParamRun_EDC980 + 7290
+.set SndParam_Part16_Mute, SndParamRun_EDC980 + 7308
+.set SndParam_Part16_Pan, SndParamRun_EDC980 + 7326
+.set SndParam_Part16_Expression, SndParamRun_EDC980 + 7344
+.set SndParam_Part16_Bank, SndParamRun_EDC980 + 7362
+.set SndParam_Part16_Sustain, SndParamRun_EDC980 + 7380
+.set SndParam_Part16_ReverbSend, SndParamRun_EDC980 + 7398
+.set SndParam_Part16_DspEffect, SndParamRun_EDC980 + 7416
+.set SndParam_Part16_DigitalEffect, SndParamRun_EDC980 + 7434
+.set SndParam_Part16_AllSoundOff, SndParamRun_EDC980 + 7452
+.set SndParam_Part16_BendRange, SndParamRun_EDC980 + 7470
+.set SndParam_Part16_Tuning, SndParamRun_EDC980 + 7488
+.set SndParam_Part16_KeyShift, SndParamRun_EDC980 + 7506
+.set SndParam_Part16_PitchBend, SndParamRun_EDC980 + 7524
+.set SndParam_Part16_ChannelPressure, SndParamRun_EDC980 + 7542
+.set SndParam_Part17_Sound, SndParamRun_EDC980 + 7560
+.set SndParam_Part17_Modulation, SndParamRun_EDC980 + 7578
+.set SndParam_Part17_Volume, SndParamRun_EDC980 + 7596
+.set SndParam_Part17_Mute, SndParamRun_EDC980 + 7614
+.set SndParam_Part17_Pan, SndParamRun_EDC980 + 7632
+.set SndParam_Part17_Expression, SndParamRun_EDC980 + 7650
+.set SndParam_Part17_Bank, SndParamRun_EDC980 + 7668
+.set SndParam_Part17_Sustain, SndParamRun_EDC980 + 7686
+.set SndParam_Part17_ReverbSend, SndParamRun_EDC980 + 7704
+.set SndParam_Part17_DspEffect, SndParamRun_EDC980 + 7722
+.set SndParam_Part17_DigitalEffect, SndParamRun_EDC980 + 7740
+.set SndParam_Part17_AllSoundOff, SndParamRun_EDC980 + 7758
+.set SndParam_Part17_BendRange, SndParamRun_EDC980 + 7776
+.set SndParam_Part17_Tuning, SndParamRun_EDC980 + 7794
+.set SndParam_Part17_KeyShift, SndParamRun_EDC980 + 7812
+.set SndParam_Part17_PitchBend, SndParamRun_EDC980 + 7830
+.set SndParam_Part17_ChannelPressure, SndParamRun_EDC980 + 7848
+.set SndParam_Part18_Sound, SndParamRun_EDC980 + 7866
+.set SndParam_Part18_Modulation, SndParamRun_EDC980 + 7884
+.set SndParam_Part18_Volume, SndParamRun_EDC980 + 7902
+.set SndParam_Part18_Mute, SndParamRun_EDC980 + 7920
+.set SndParam_Part18_Pan, SndParamRun_EDC980 + 7938
+.set SndParam_Part18_Expression, SndParamRun_EDC980 + 7956
+.set SndParam_Part18_Bank, SndParamRun_EDC980 + 7974
+.set SndParam_Part18_Sustain, SndParamRun_EDC980 + 7992
+.set SndParam_Part18_ReverbSend, SndParamRun_EDC980 + 8010
+.set SndParam_Part18_DspEffect, SndParamRun_EDC980 + 8028
+.set SndParam_Part18_DigitalEffect, SndParamRun_EDC980 + 8046
 .set SndParam_Part18_AllSoundOff, SndParamRun_EDC980 + 8064
-.set SndParam_Part18_BendRange, SndParamRun_EDC980 + 8334
-.set SndParam_Part18_Tuning, SndParamRun_EDC980 + 8352
-.set SndParam_Part18_KeyShift, SndParamRun_EDC980 + 8370
-.set SndParam_Part18_PitchBend, SndParamRun_EDC980 + 8388
-.set SndParam_Part18_ChannelPressure, SndParamRun_EDC980 + 8406
-.set SndParam_Metronome_Volume, SndParamRun_EDC980 + 8424
-.set SndParam_Metronome_Mute, SndParamRun_EDC980 + 8442
-.set SndParam_Part00_LocalControl, SndParamRun_EDC980 + 8460
-.set SndParam_Part00_MidiChannel, SndParamRun_EDC980 + 8478
-.set SndParam_Part00_MidiTransmitOn, SndParamRun_EDC980 + 8496
-.set SndParam_Part00_MidiReceiveOn, SndParamRun_EDC980 + 8514
+.set SndParam_Part18_BendRange, SndParamRun_EDC980 + 8082
+.set SndParam_Part18_Tuning, SndParamRun_EDC980 + 8100
+.set SndParam_Part18_KeyShift, SndParamRun_EDC980 + 8118
+.set SndParam_Part18_PitchBend, SndParamRun_EDC980 + 8136
+.set SndParam_Part18_ChannelPressure, SndParamRun_EDC980 + 8154
+.set SndParam_Metronome_Volume, SndParamRun_EDC980 + 8172
+.set SndParam_Metronome_Mute, SndParamRun_EDC980 + 8190
+.set SndParam_Part00_LocalControl, SndParamRun_EDC980 + 8208
+.set SndParam_Part00_MidiChannel, SndParamRun_EDC980 + 8226
+.set SndParam_Part00_MidiTransmitOn, SndParamRun_EDC980 + 8244
+.set SndParam_Part00_MidiReceiveOn, SndParamRun_EDC980 + 8262
 SndParam_Part00_MidiOctave:
 	sndparam_descriptor 0x018004, 0, 12, 0x07, 0, 127, 0, 0x00, 0x02, 1, 7, 5, 0, 0, 0xff
 WidgetParam_MidiCC_PitchBend_Map:
@@ -5092,7 +5078,6 @@ SndParamRun_EDE9FC:
 	sndparam_descriptor 0x018402, 1, 13, 0x40, 0, 1, 6, 0xff, 0xff, 1, 1, 1, 0, 0, 0xff
 	sndparam_descriptor 0x018403, 1, 13, 0x80, 0, 1, 7, 0xff, 0xff, 1, 1, 1, 0, 0, 0xff
 	sndparam_descriptor 0x018404, 1, 12, 0x07, 0, 127, 0, 0x00, 0x02, 1, 7, 5, 0, 0, 0xff
-SndParamRun_EDE9FC_Data:
 	sndparam_descriptor 0x018600, 1, 4, 0x07, 0, 7, 0, 0x00, 0xff, 1, 1, 1, 0, 0, 0xff
 	sndparam_descriptor 0x018601, 1, 4, 0x10, 0, 1, 4, 0x00, 0xff, 1, 1, 1, 0, 0, 0xff
 	sndparam_descriptor 0x018602, 1, 12, 0x08, 0, 1, 3, 0x00, 0xff, 1, 1, 1, 0, 0, 0xff
@@ -5395,317 +5380,317 @@ SndParamRun_EDE9FC_Data:
 	sndparam_descriptor 0x028081, 72, 3, 0x08, 0, 1, 3, 0x00, 0xff, 1, 1, 1, 0, 0, 0xff
 	sndparam_descriptor 0x028082, 144, 3, 0x01, 0, 1, 0, 0x00, 0xff, 1, 1, 1, 0, 0, 0xff
 	sndparam_descriptor 0x028083, 144, 3, 0x02, 0, 1, 1, 0x00, 0xff, 1, 1, 1, 0, 0, 0xff
-.set SndParam_Part00_SustainLength, SndParamRun_EDE9FC + 252
-.set SndParam_Part00_SustainPedal, SndParamRun_EDE9FC + 270
-.set SndParam_Part00_KeyScaling, SndParamRun_EDE9FC + 288
-.set SndParam_Part00_GlidePedal, SndParamRun_EDE9FC + 306
-.set SndParam_Part00_PartExp, SndParamRun_EDE9FC + 324
-.set ExtPartParam_Entry_374, SndParamRun_EDE9FC + 342
-.set SndParam_Part00_AfterTouch, SndParamRun_EDE9FC + 360
-.set SndParam_Part01_LocalControl, SndParamRun_EDE9FC + 378
-.set SndParam_Part01_MidiChannel, SndParamRun_EDE9FC + 396
-.set SndParam_Part01_MidiTransmitOn, SndParamRun_EDE9FC + 414
-.set SndParam_Part01_MidiReceiveOn, SndParamRun_EDE9FC + 432
-.set SndParam_Part01_MidiOctave, SndParamRun_EDE9FC + 450
-.set SndParam_Part01_SustainLength, SndParamRun_EDE9FC + 468
-.set SndParam_Part01_SustainPedal, SndParamRun_EDE9FC + 486
-.set SndParam_Part01_KeyScaling, SndParamRun_EDE9FC + 504
-.set SndParam_Part01_GlidePedal, SndParamRun_EDE9FC + 522
-.set SndParam_Part01_PartExp, SndParamRun_EDE9FC + 540
-.set ExtPartParam_Entry_386, SndParamRun_EDE9FC + 558
-.set SndParam_Part01_AfterTouch, SndParamRun_EDE9FC + 576
-.set SndParam_Part02_LocalControl, SndParamRun_EDE9FC + 594
-.set SndParam_Part02_MidiChannel, SndParamRun_EDE9FC + 612
-.set SndParam_Part02_MidiTransmitOn, SndParamRun_EDE9FC + 630
-.set SndParam_Part02_MidiReceiveOn, SndParamRun_EDE9FC + 648
-.set SndParam_Part02_MidiOctave, SndParamRun_EDE9FC + 666
-.set SndParam_Part02_SustainLength, SndParamRun_EDE9FC + 684
-.set SndParam_Part02_SustainPedal, SndParamRun_EDE9FC + 702
-.set SndParam_Part02_KeyScaling, SndParamRun_EDE9FC + 720
-.set SndParam_Part02_GlidePedal, SndParamRun_EDE9FC + 738
-.set SndParam_Part02_PartExp, SndParamRun_EDE9FC + 756
-.set ExtPartParam_Entry_398, SndParamRun_EDE9FC + 774
-.set SndParam_Part02_AfterTouch, SndParamRun_EDE9FC + 792
-.set SndParam_Part03_LocalControl, SndParamRun_EDE9FC + 810
-.set SndParam_Part03_MidiChannel, SndParamRun_EDE9FC + 828
-.set SndParam_Part03_MidiTransmitOn, SndParamRun_EDE9FC + 846
-.set SndParam_Part03_MidiReceiveOn, SndParamRun_EDE9FC + 864
-.set SndParam_Part03_MidiOctave, SndParamRun_EDE9FC + 882
-.set SndParam_Part03_SustainLength, SndParamRun_EDE9FC + 900
-.set SndParam_Part03_SustainPedal, SndParamRun_EDE9FC + 918
-.set SndParam_Part03_KeyScaling, SndParamRun_EDE9FC + 936
-.set SndParam_Part03_GlidePedal, SndParamRun_EDE9FC + 954
-.set SndParam_Part03_PartExp, SndParamRun_EDE9FC + 972
-.set ExtPartParam_Entry_410, SndParamRun_EDE9FC + 990
-.set SndParam_Part03_AfterTouch, SndParamRun_EDE9FC + 1008
-.set SndParam_Part04_LocalControl, SndParamRun_EDE9FC + 1026
-.set SndParam_Part04_MidiChannel, SndParamRun_EDE9FC + 1044
-.set SndParam_Part04_MidiTransmitOn, SndParamRun_EDE9FC + 1062
-.set SndParam_Part04_MidiReceiveOn, SndParamRun_EDE9FC + 1080
-.set SndParam_Part04_MidiOctave, SndParamRun_EDE9FC + 1098
-.set SndParam_Part04_SustainLength, SndParamRun_EDE9FC + 1116
-.set SndParam_Part04_SustainPedal, SndParamRun_EDE9FC + 1134
-.set SndParam_Part04_KeyScaling, SndParamRun_EDE9FC + 1152
-.set SndParam_Part04_GlidePedal, SndParamRun_EDE9FC + 1170
-.set SndParam_Part04_PartExp, SndParamRun_EDE9FC + 1188
-.set ExtPartParam_Entry_422, SndParamRun_EDE9FC + 1206
-.set SndParam_Part04_AfterTouch, SndParamRun_EDE9FC + 1224
-.set SndParam_Part05_LocalControl, SndParamRun_EDE9FC + 1242
-.set SndParam_Part05_MidiChannel, SndParamRun_EDE9FC + 1260
-.set SndParam_Part05_MidiTransmitOn, SndParamRun_EDE9FC + 1278
-.set SndParam_Part05_MidiReceiveOn, SndParamRun_EDE9FC + 1296
-.set SndParam_Part05_MidiOctave, SndParamRun_EDE9FC + 1314
-.set SndParam_Part05_SustainLength, SndParamRun_EDE9FC + 1332
-.set SndParam_Part05_SustainPedal, SndParamRun_EDE9FC + 1350
-.set SndParam_Part05_KeyScaling, SndParamRun_EDE9FC + 1368
-.set SndParam_Part05_GlidePedal, SndParamRun_EDE9FC + 1386
-.set SndParam_Part05_PartExp, SndParamRun_EDE9FC + 1404
-.set ExtPartParam_Entry_434, SndParamRun_EDE9FC + 1422
-.set SndParam_Part05_AfterTouch, SndParamRun_EDE9FC + 1440
-.set SndParam_Part06_LocalControl, SndParamRun_EDE9FC + 1458
-.set SndParam_Part06_MidiChannel, SndParamRun_EDE9FC + 1476
-.set SndParam_Part06_MidiTransmitOn, SndParamRun_EDE9FC + 1494
-.set SndParam_Part06_MidiReceiveOn, SndParamRun_EDE9FC + 1512
-.set SndParam_Part06_MidiOctave, SndParamRun_EDE9FC + 1530
-.set SndParam_Part06_SustainLength, SndParamRun_EDE9FC + 1548
-.set SndParam_Part06_SustainPedal, SndParamRun_EDE9FC + 1566
-.set SndParam_Part06_KeyScaling, SndParamRun_EDE9FC + 1584
-.set SndParam_Part06_GlidePedal, SndParamRun_EDE9FC + 1602
-.set SndParam_Part06_PartExp, SndParamRun_EDE9FC + 1620
-.set ExtPartParam_Entry_446, SndParamRun_EDE9FC + 1638
-.set SndParam_Part06_AfterTouch, SndParamRun_EDE9FC + 1656
-.set SndParam_Part07_LocalControl, SndParamRun_EDE9FC + 1674
-.set SndParam_Part07_MidiChannel, SndParamRun_EDE9FC + 1692
-.set SndParam_Part07_MidiTransmitOn, SndParamRun_EDE9FC + 1710
-.set SndParam_Part07_MidiReceiveOn, SndParamRun_EDE9FC + 1728
-.set SndParam_Part07_MidiOctave, SndParamRun_EDE9FC + 1746
-.set SndParam_Part07_SustainLength, SndParamRun_EDE9FC + 1764
-.set SndParam_Part07_SustainPedal, SndParamRun_EDE9FC + 1782
-.set SndParam_Part07_KeyScaling, SndParamRun_EDE9FC + 1800
-.set SndParam_Part07_GlidePedal, SndParamRun_EDE9FC + 1818
-.set SndParam_Part07_PartExp, SndParamRun_EDE9FC + 1836
-.set SeqMixParam_Entry_004, SndParamRun_EDE9FC + 1854
-.set SndParam_Part07_AfterTouch, SndParamRun_EDE9FC + 1872
-.set SndParam_Part08_LocalControl, SndParamRun_EDE9FC + 1890
-.set SndParam_Part08_MidiChannel, SndParamRun_EDE9FC + 1908
-.set SndParam_Part08_MidiTransmitOn, SndParamRun_EDE9FC + 1926
-.set SndParam_Part08_MidiReceiveOn, SndParamRun_EDE9FC + 1944
-.set SndParam_Part08_MidiOctave, SndParamRun_EDE9FC + 1962
-.set SndParam_Part08_SustainLength, SndParamRun_EDE9FC + 1980
-.set SndParam_Part08_SustainPedal, SndParamRun_EDE9FC + 1998
-.set SndParam_Part08_KeyScaling, SndParamRun_EDE9FC + 2016
-.set SndParam_Part08_GlidePedal, SndParamRun_EDE9FC + 2034
-.set SndParam_Part08_PartExp, SndParamRun_EDE9FC + 2052
-.set SeqMixParam_Entry_016, SndParamRun_EDE9FC + 2070
-.set SndParam_Part08_AfterTouch, SndParamRun_EDE9FC + 2088
-.set SndParam_Part09_LocalControl, SndParamRun_EDE9FC + 2106
-.set SndParam_Part09_MidiChannel, SndParamRun_EDE9FC + 2124
-.set SndParam_Part09_MidiTransmitOn, SndParamRun_EDE9FC + 2142
-.set SndParam_Part09_MidiReceiveOn, SndParamRun_EDE9FC + 2160
-.set SndParam_Part09_MidiOctave, SndParamRun_EDE9FC + 2178
-.set SndParam_Part09_SustainLength, SndParamRun_EDE9FC + 2196
-.set SndParam_Part09_SustainPedal, SndParamRun_EDE9FC + 2214
-.set SndParam_Part09_KeyScaling, SndParamRun_EDE9FC + 2232
-.set SndParam_Part09_GlidePedal, SndParamRun_EDE9FC + 2250
-.set SndParam_Part09_PartExp, SndParamRun_EDE9FC + 2268
-.set SeqMixParam_Entry_028, SndParamRun_EDE9FC + 2286
-.set SndParam_Part09_AfterTouch, SndParamRun_EDE9FC + 2304
-.set SndParam_Part0A_LocalControl, SndParamRun_EDE9FC + 2322
-.set SndParam_Part0A_MidiChannel, SndParamRun_EDE9FC + 2340
-.set SndParam_Part0A_MidiTransmitOn, SndParamRun_EDE9FC + 2358
-.set SndParam_Part0A_MidiReceiveOn, SndParamRun_EDE9FC + 2376
-.set SndParam_Part0A_MidiOctave, SndParamRun_EDE9FC + 2394
-.set SndParam_Part0A_SustainLength, SndParamRun_EDE9FC + 2412
-.set SndParam_Part0A_SustainPedal, SndParamRun_EDE9FC + 2430
-.set SndParam_Part0A_KeyScaling, SndParamRun_EDE9FC + 2448
-.set SndParam_Part0A_GlidePedal, SndParamRun_EDE9FC + 2466
-.set SndParam_Part0A_PartExp, SndParamRun_EDE9FC + 2484
-.set SeqMixParam_Entry_040, SndParamRun_EDE9FC + 2502
-.set SndParam_Part0A_AfterTouch, SndParamRun_EDE9FC + 2520
-.set SndParam_Part0B_LocalControl, SndParamRun_EDE9FC + 2538
-.set SndParam_Part0B_MidiChannel, SndParamRun_EDE9FC + 2556
-.set SndParam_Part0B_MidiTransmitOn, SndParamRun_EDE9FC + 2574
-.set SndParam_Part0B_MidiReceiveOn, SndParamRun_EDE9FC + 2592
-.set SndParam_Part0B_MidiOctave, SndParamRun_EDE9FC + 2610
-.set SndParam_Part0B_SustainLength, SndParamRun_EDE9FC + 2628
-.set SndParam_Part0B_SustainPedal, SndParamRun_EDE9FC + 2646
-.set SndParam_Part0B_KeyScaling, SndParamRun_EDE9FC + 2664
-.set SndParam_Part0B_GlidePedal, SndParamRun_EDE9FC + 2682
-.set SndParam_Part0B_PartExp, SndParamRun_EDE9FC + 2700
-.set SeqMixParam_Entry_052, SndParamRun_EDE9FC + 2718
-.set SndParam_Part0B_AfterTouch, SndParamRun_EDE9FC + 2736
-.set SndParam_Part0C_LocalControl, SndParamRun_EDE9FC + 2754
-.set SndParam_Part0C_MidiChannel, SndParamRun_EDE9FC + 2772
-.set SndParam_Part0C_MidiTransmitOn, SndParamRun_EDE9FC + 2790
-.set SndParam_Part0C_MidiReceiveOn, SndParamRun_EDE9FC + 2808
-.set SndParam_Part0C_MidiOctave, SndParamRun_EDE9FC + 2826
-.set SndParam_Part0C_SustainLength, SndParamRun_EDE9FC + 2844
-.set SndParam_Part0C_SustainPedal, SndParamRun_EDE9FC + 2862
-.set SndParam_Part0C_KeyScaling, SndParamRun_EDE9FC + 2880
-.set SndParam_Part0C_GlidePedal, SndParamRun_EDE9FC + 2898
-.set SndParam_Part0C_PartExp, SndParamRun_EDE9FC + 2916
-.set SeqMixParam_Entry_064, SndParamRun_EDE9FC + 2934
-.set SndParam_Part0C_AfterTouch, SndParamRun_EDE9FC + 2952
-.set SndParam_Part0D_LocalControl, SndParamRun_EDE9FC + 2970
-.set SndParam_Part0D_MidiChannel, SndParamRun_EDE9FC + 2988
-.set SndParam_Part0D_MidiTransmitOn, SndParamRun_EDE9FC + 3006
-.set SndParam_Part0D_MidiReceiveOn, SndParamRun_EDE9FC + 3024
-.set SndParam_Part0D_MidiOctave, SndParamRun_EDE9FC + 3042
-.set SndParam_Part0D_SustainLength, SndParamRun_EDE9FC + 3060
-.set SndParam_Part0D_SustainPedal, SndParamRun_EDE9FC + 3078
-.set SndParam_Part0D_KeyScaling, SndParamRun_EDE9FC + 3096
-.set SndParam_Part0D_GlidePedal, SndParamRun_EDE9FC + 3114
-.set SndParam_Part0D_PartExp, SndParamRun_EDE9FC + 3132
-.set SeqMixParam_Entry_076, SndParamRun_EDE9FC + 3150
-.set SndParam_Part0D_AfterTouch, SndParamRun_EDE9FC + 3168
-.set SndParam_Part0E_LocalControl, SndParamRun_EDE9FC + 3186
-.set SndParam_Part0E_MidiChannel, SndParamRun_EDE9FC + 3204
-.set SndParam_Part0E_MidiTransmitOn, SndParamRun_EDE9FC + 3222
-.set SndParam_Part0E_MidiReceiveOn, SndParamRun_EDE9FC + 3240
-.set SndParam_Part0E_MidiOctave, SndParamRun_EDE9FC + 3258
-.set SndParam_Part0E_SustainLength, SndParamRun_EDE9FC + 3276
-.set SndParam_Part0E_SustainPedal, SndParamRun_EDE9FC + 3294
-.set SndParam_Part0E_KeyScaling, SndParamRun_EDE9FC + 3312
-.set SndParam_Part0E_GlidePedal, SndParamRun_EDE9FC + 3330
-.set SndParam_Part0E_PartExp, SndParamRun_EDE9FC + 3348
-.set SeqMixParam_Entry_088, SndParamRun_EDE9FC + 3366
-.set SndParam_Part0E_AfterTouch, SndParamRun_EDE9FC + 3384
-.set SndParam_Part0F_LocalControl, SndParamRun_EDE9FC + 3402
-.set SndParam_Part0F_MidiChannel, SndParamRun_EDE9FC + 3420
-.set SndParam_Part0F_MidiTransmitOn, SndParamRun_EDE9FC + 3438
-.set SndParam_Part0F_MidiReceiveOn, SndParamRun_EDE9FC + 3456
-.set SndParam_Part0F_MidiOctave, SndParamRun_EDE9FC + 3474
-.set SndParam_Part0F_SustainLength, SndParamRun_EDE9FC + 3492
-.set SndParam_Part0F_SustainPedal, SndParamRun_EDE9FC + 3510
-.set SndParam_Part0F_KeyScaling, SndParamRun_EDE9FC + 3528
-.set SndParam_Part0F_GlidePedal, SndParamRun_EDE9FC + 3546
-.set SndParam_Part0F_PartExp, SndParamRun_EDE9FC + 3564
-.set SeqMixParam_Entry_100, SndParamRun_EDE9FC + 3582
-.set SndParam_Part0F_AfterTouch, SndParamRun_EDE9FC + 3600
-.set SndParam_Part10_LocalControl, SndParamRun_EDE9FC + 3618
-.set SndParam_Part10_MidiChannel, SndParamRun_EDE9FC + 3636
-.set SndParam_Part10_MidiTransmitOn, SndParamRun_EDE9FC + 3654
-.set SndParam_Part10_MidiReceiveOn, SndParamRun_EDE9FC + 3672
-.set SndParam_Part10_MidiOctave, SndParamRun_EDE9FC + 3690
-.set SndParam_Part10_SustainLength, SndParamRun_EDE9FC + 3708
-.set SndParam_Part10_SustainPedal, SndParamRun_EDE9FC + 3726
-.set SndParam_Part10_KeyScaling, SndParamRun_EDE9FC + 3744
-.set SndParam_Part10_GlidePedal, SndParamRun_EDE9FC + 3762
-.set SndParam_Part10_PartExp, SndParamRun_EDE9FC + 3780
-.set SeqMixParam_Entry_112, SndParamRun_EDE9FC + 3798
-.set SndParam_Part10_AfterTouch, SndParamRun_EDE9FC + 3816
-.set SndParam_Part11_LocalControl, SndParamRun_EDE9FC + 3834
-.set SndParam_Part11_MidiChannel, SndParamRun_EDE9FC + 3852
-.set SndParam_Part11_MidiTransmitOn, SndParamRun_EDE9FC + 3870
-.set SndParam_Part11_MidiReceiveOn, SndParamRun_EDE9FC + 3888
-.set SndParam_Part11_MidiOctave, SndParamRun_EDE9FC + 3906
-.set SndParam_Part11_SustainLength, SndParamRun_EDE9FC + 3924
-.set SndParam_Part11_SustainPedal, SndParamRun_EDE9FC + 3942
-.set SndParam_Part11_KeyScaling, SndParamRun_EDE9FC + 3960
-.set SndParam_Part11_GlidePedal, SndParamRun_EDE9FC + 3978
-.set SndParam_Part11_PartExp, SndParamRun_EDE9FC + 3996
-.set SeqMixParam_Entry_124, SndParamRun_EDE9FC + 4014
-.set SndParam_Part11_AfterTouch, SndParamRun_EDE9FC + 4032
-.set SndParam_Part12_LocalControl, SndParamRun_EDE9FC + 4050
-.set SndParam_Part12_MidiChannel, SndParamRun_EDE9FC + 4068
-.set SndParam_Part12_MidiTransmitOn, SndParamRun_EDE9FC + 4086
-.set SndParam_Part12_MidiReceiveOn, SndParamRun_EDE9FC + 4104
-.set SndParam_Part12_MidiOctave, SndParamRun_EDE9FC + 4122
-.set SndParam_Part12_SustainLength, SndParamRun_EDE9FC + 4140
-.set SndParam_Part12_SustainPedal, SndParamRun_EDE9FC + 4158
-.set SndParam_Part12_KeyScaling, SndParamRun_EDE9FC + 4176
-.set SndParam_Part12_GlidePedal, SndParamRun_EDE9FC + 4194
-.set SndParam_Part12_PartExp, SndParamRun_EDE9FC + 4212
-.set SeqMixParam_Entry_136, SndParamRun_EDE9FC + 4230
-.set SndParam_Part12_AfterTouch, SndParamRun_EDE9FC + 4248
-.set SndParam_Part13_LocalControl, SndParamRun_EDE9FC + 4266
-.set SndParam_Part13_MidiChannel, SndParamRun_EDE9FC + 4284
-.set SndParam_Part13_MidiTransmitOn, SndParamRun_EDE9FC + 4302
-.set SndParam_Part13_MidiReceiveOn, SndParamRun_EDE9FC + 4320
-.set SndParam_Part13_MidiOctave, SndParamRun_EDE9FC + 4338
-.set SndParam_Part13_SustainLength, SndParamRun_EDE9FC + 4356
-.set SndParam_Part13_SustainPedal, SndParamRun_EDE9FC + 4374
-.set SndParam_Part13_KeyScaling, SndParamRun_EDE9FC + 4392
-.set SndParam_Part13_GlidePedal, SndParamRun_EDE9FC + 4410
-.set SndParam_Part13_PartExp, SndParamRun_EDE9FC + 4428
-.set SeqMixParam_Entry_148, SndParamRun_EDE9FC + 4446
-.set SndParam_Part13_AfterTouch, SndParamRun_EDE9FC + 4464
-.set SndParam_Part14_LocalControl, SndParamRun_EDE9FC + 4482
-.set SndParam_Part14_MidiChannel, SndParamRun_EDE9FC + 4500
-.set SndParam_Part14_MidiTransmitOn, SndParamRun_EDE9FC + 4518
-.set SndParam_Part14_MidiReceiveOn, SndParamRun_EDE9FC + 4536
-.set SndParam_Part14_MidiOctave, SndParamRun_EDE9FC + 4554
-.set SndParam_Part14_SustainLength, SndParamRun_EDE9FC + 4572
-.set SndParam_Part14_SustainPedal, SndParamRun_EDE9FC + 4590
-.set SndParam_Part14_KeyScaling, SndParamRun_EDE9FC + 4608
-.set SndParam_Part14_GlidePedal, SndParamRun_EDE9FC + 4626
-.set SndParam_Part14_PartExp, SndParamRun_EDE9FC + 4644
-.set SeqMixParam_Entry_160, SndParamRun_EDE9FC + 4662
-.set SndParam_Part14_AfterTouch, SndParamRun_EDE9FC + 4680
-.set SndParam_Part15_LocalControl, SndParamRun_EDE9FC + 4698
-.set SndParam_Part15_MidiChannel, SndParamRun_EDE9FC + 4716
-.set SndParam_Part15_MidiTransmitOn, SndParamRun_EDE9FC + 4734
-.set SndParam_Part15_MidiReceiveOn, SndParamRun_EDE9FC + 4752
-.set SndParam_Part15_MidiOctave, SndParamRun_EDE9FC + 4770
-.set SndParam_Part15_SustainLength, SndParamRun_EDE9FC + 4788
-.set SndParam_Part15_SustainPedal, SndParamRun_EDE9FC + 4806
-.set SndParam_Part15_KeyScaling, SndParamRun_EDE9FC + 4824
-.set SndParam_Part15_GlidePedal, SndParamRun_EDE9FC + 4842
-.set SndParam_Part15_PartExp, SndParamRun_EDE9FC + 4860
-.set SeqMixParam_Entry_172, SndParamRun_EDE9FC + 4878
-.set SndParam_Part15_AfterTouch, SndParamRun_EDE9FC + 4896
-.set SndParam_Part16_LocalControl, SndParamRun_EDE9FC + 4914
-.set SndParam_Part16_MidiChannel, SndParamRun_EDE9FC + 4932
-.set SndParam_Part16_MidiTransmitOn, SndParamRun_EDE9FC + 4950
-.set SndParam_Part16_MidiReceiveOn, SndParamRun_EDE9FC + 4968
-.set SndParam_Part16_MidiOctave, SndParamRun_EDE9FC + 4986
-.set SndParam_Part16_SustainLength, SndParamRun_EDE9FC + 5004
-.set SndParam_Part16_SustainPedal, SndParamRun_EDE9FC + 5022
-.set SndParam_Part16_KeyScaling, SndParamRun_EDE9FC + 5040
-.set SndParam_Part16_GlidePedal, SndParamRun_EDE9FC + 5058
-.set SndParam_Part16_PartExp, SndParamRun_EDE9FC + 5076
-.set SeqMixParam_Entry_184, SndParamRun_EDE9FC + 5094
-.set SndParam_Part16_AfterTouch, SndParamRun_EDE9FC + 5112
-.set SndParam_Part17_LocalControl, SndParamRun_EDE9FC + 5130
-.set SndParam_Part17_MidiChannel, SndParamRun_EDE9FC + 5148
-.set SndParam_Part17_MidiTransmitOn, SndParamRun_EDE9FC + 5166
-.set SndParam_Part17_MidiReceiveOn, SndParamRun_EDE9FC + 5184
-.set SndParam_Part17_MidiOctave, SndParamRun_EDE9FC + 5202
-.set SndParam_Part17_SustainLength, SndParamRun_EDE9FC + 5220
-.set SndParam_Part17_SustainPedal, SndParamRun_EDE9FC + 5238
-.set SndParam_Part17_KeyScaling, SndParamRun_EDE9FC + 5256
-.set SndParam_Part17_GlidePedal, SndParamRun_EDE9FC + 5274
-.set SndParam_Part17_PartExp, SndParamRun_EDE9FC + 5292
-.set SeqMixParam_Entry_196, SndParamRun_EDE9FC + 5310
-.set SndParam_Part17_AfterTouch, SndParamRun_EDE9FC + 5328
-.set SndParam_Part18_LocalControl, SndParamRun_EDE9FC + 5346
-.set SndParam_Part18_MidiChannel, SndParamRun_EDE9FC + 5364
-.set SndParam_Part18_MidiTransmitOn, SndParamRun_EDE9FC + 5382
-.set SndParam_Part18_MidiReceiveOn, SndParamRun_EDE9FC + 5400
-.set SndParam_Part18_MidiOctave, SndParamRun_EDE9FC + 5418
-.set SndParam_Part18_SustainLength, SndParamRun_EDE9FC + 5436
-.set SndParam_Part18_SustainPedal, SndParamRun_EDE9FC + 5454
-.set SndParam_Part18_KeyScaling, SndParamRun_EDE9FC + 5472
-.set SndParam_Part18_GlidePedal, SndParamRun_EDE9FC + 5490
-.set SndParam_Part18_PartExp, SndParamRun_EDE9FC + 5508
-.set SeqMixParam_Entry_208, SndParamRun_EDE9FC + 5526
-.set SndParam_Part18_AfterTouch, SndParamRun_EDE9FC + 5544
-.set SndParam_Part19_LocalControl, SndParamRun_EDE9FC + 5562
-.set SndParam_Part19_MidiChannel, SndParamRun_EDE9FC + 5580
-.set SndParam_Part19_MidiTransmitOn, SndParamRun_EDE9FC + 5598
-.set SndParam_Part19_MidiReceiveOn, SndParamRun_EDE9FC + 5616
-.set SndParam_Part19_MidiOctave, SndParamRun_EDE9FC + 5634
-.set SndParam_Part19_SustainLength, SndParamRun_EDE9FC + 5652
+.set SndParam_Part00_SustainLength, SndParamRun_EDE9FC + 0
+.set SndParam_Part00_SustainPedal, SndParamRun_EDE9FC + 18
+.set SndParam_Part00_KeyScaling, SndParamRun_EDE9FC + 36
+.set SndParam_Part00_GlidePedal, SndParamRun_EDE9FC + 54
+.set SndParam_Part00_PartExp, SndParamRun_EDE9FC + 72
+.set ExtPartParam_Entry_374, SndParamRun_EDE9FC + 90
+.set SndParam_Part00_AfterTouch, SndParamRun_EDE9FC + 108
+.set SndParam_Part01_LocalControl, SndParamRun_EDE9FC + 126
+.set SndParam_Part01_MidiChannel, SndParamRun_EDE9FC + 144
+.set SndParam_Part01_MidiTransmitOn, SndParamRun_EDE9FC + 162
+.set SndParam_Part01_MidiReceiveOn, SndParamRun_EDE9FC + 180
+.set SndParam_Part01_MidiOctave, SndParamRun_EDE9FC + 198
+.set SndParam_Part01_SustainLength, SndParamRun_EDE9FC + 216
+.set SndParam_Part01_SustainPedal, SndParamRun_EDE9FC + 234
+.set SndParam_Part01_KeyScaling, SndParamRun_EDE9FC + 252
+.set SndParam_Part01_GlidePedal, SndParamRun_EDE9FC + 270
+.set SndParam_Part01_PartExp, SndParamRun_EDE9FC + 288
+.set ExtPartParam_Entry_386, SndParamRun_EDE9FC + 306
+.set SndParam_Part01_AfterTouch, SndParamRun_EDE9FC + 324
+.set SndParam_Part02_LocalControl, SndParamRun_EDE9FC + 342
+.set SndParam_Part02_MidiChannel, SndParamRun_EDE9FC + 360
+.set SndParam_Part02_MidiTransmitOn, SndParamRun_EDE9FC + 378
+.set SndParam_Part02_MidiReceiveOn, SndParamRun_EDE9FC + 396
+.set SndParam_Part02_MidiOctave, SndParamRun_EDE9FC + 414
+.set SndParam_Part02_SustainLength, SndParamRun_EDE9FC + 432
+.set SndParam_Part02_SustainPedal, SndParamRun_EDE9FC + 450
+.set SndParam_Part02_KeyScaling, SndParamRun_EDE9FC + 468
+.set SndParam_Part02_GlidePedal, SndParamRun_EDE9FC + 486
+.set SndParam_Part02_PartExp, SndParamRun_EDE9FC + 504
+.set ExtPartParam_Entry_398, SndParamRun_EDE9FC + 522
+.set SndParam_Part02_AfterTouch, SndParamRun_EDE9FC + 540
+.set SndParam_Part03_LocalControl, SndParamRun_EDE9FC + 558
+.set SndParam_Part03_MidiChannel, SndParamRun_EDE9FC + 576
+.set SndParam_Part03_MidiTransmitOn, SndParamRun_EDE9FC + 594
+.set SndParam_Part03_MidiReceiveOn, SndParamRun_EDE9FC + 612
+.set SndParam_Part03_MidiOctave, SndParamRun_EDE9FC + 630
+.set SndParam_Part03_SustainLength, SndParamRun_EDE9FC + 648
+.set SndParam_Part03_SustainPedal, SndParamRun_EDE9FC + 666
+.set SndParam_Part03_KeyScaling, SndParamRun_EDE9FC + 684
+.set SndParam_Part03_GlidePedal, SndParamRun_EDE9FC + 702
+.set SndParam_Part03_PartExp, SndParamRun_EDE9FC + 720
+.set ExtPartParam_Entry_410, SndParamRun_EDE9FC + 738
+.set SndParam_Part03_AfterTouch, SndParamRun_EDE9FC + 756
+.set SndParam_Part04_LocalControl, SndParamRun_EDE9FC + 774
+.set SndParam_Part04_MidiChannel, SndParamRun_EDE9FC + 792
+.set SndParam_Part04_MidiTransmitOn, SndParamRun_EDE9FC + 810
+.set SndParam_Part04_MidiReceiveOn, SndParamRun_EDE9FC + 828
+.set SndParam_Part04_MidiOctave, SndParamRun_EDE9FC + 846
+.set SndParam_Part04_SustainLength, SndParamRun_EDE9FC + 864
+.set SndParam_Part04_SustainPedal, SndParamRun_EDE9FC + 882
+.set SndParam_Part04_KeyScaling, SndParamRun_EDE9FC + 900
+.set SndParam_Part04_GlidePedal, SndParamRun_EDE9FC + 918
+.set SndParam_Part04_PartExp, SndParamRun_EDE9FC + 936
+.set ExtPartParam_Entry_422, SndParamRun_EDE9FC + 954
+.set SndParam_Part04_AfterTouch, SndParamRun_EDE9FC + 972
+.set SndParam_Part05_LocalControl, SndParamRun_EDE9FC + 990
+.set SndParam_Part05_MidiChannel, SndParamRun_EDE9FC + 1008
+.set SndParam_Part05_MidiTransmitOn, SndParamRun_EDE9FC + 1026
+.set SndParam_Part05_MidiReceiveOn, SndParamRun_EDE9FC + 1044
+.set SndParam_Part05_MidiOctave, SndParamRun_EDE9FC + 1062
+.set SndParam_Part05_SustainLength, SndParamRun_EDE9FC + 1080
+.set SndParam_Part05_SustainPedal, SndParamRun_EDE9FC + 1098
+.set SndParam_Part05_KeyScaling, SndParamRun_EDE9FC + 1116
+.set SndParam_Part05_GlidePedal, SndParamRun_EDE9FC + 1134
+.set SndParam_Part05_PartExp, SndParamRun_EDE9FC + 1152
+.set ExtPartParam_Entry_434, SndParamRun_EDE9FC + 1170
+.set SndParam_Part05_AfterTouch, SndParamRun_EDE9FC + 1188
+.set SndParam_Part06_LocalControl, SndParamRun_EDE9FC + 1206
+.set SndParam_Part06_MidiChannel, SndParamRun_EDE9FC + 1224
+.set SndParam_Part06_MidiTransmitOn, SndParamRun_EDE9FC + 1242
+.set SndParam_Part06_MidiReceiveOn, SndParamRun_EDE9FC + 1260
+.set SndParam_Part06_MidiOctave, SndParamRun_EDE9FC + 1278
+.set SndParam_Part06_SustainLength, SndParamRun_EDE9FC + 1296
+.set SndParam_Part06_SustainPedal, SndParamRun_EDE9FC + 1314
+.set SndParam_Part06_KeyScaling, SndParamRun_EDE9FC + 1332
+.set SndParam_Part06_GlidePedal, SndParamRun_EDE9FC + 1350
+.set SndParam_Part06_PartExp, SndParamRun_EDE9FC + 1368
+.set ExtPartParam_Entry_446, SndParamRun_EDE9FC + 1386
+.set SndParam_Part06_AfterTouch, SndParamRun_EDE9FC + 1404
+.set SndParam_Part07_LocalControl, SndParamRun_EDE9FC + 1422
+.set SndParam_Part07_MidiChannel, SndParamRun_EDE9FC + 1440
+.set SndParam_Part07_MidiTransmitOn, SndParamRun_EDE9FC + 1458
+.set SndParam_Part07_MidiReceiveOn, SndParamRun_EDE9FC + 1476
+.set SndParam_Part07_MidiOctave, SndParamRun_EDE9FC + 1494
+.set SndParam_Part07_SustainLength, SndParamRun_EDE9FC + 1512
+.set SndParam_Part07_SustainPedal, SndParamRun_EDE9FC + 1530
+.set SndParam_Part07_KeyScaling, SndParamRun_EDE9FC + 1548
+.set SndParam_Part07_GlidePedal, SndParamRun_EDE9FC + 1566
+.set SndParam_Part07_PartExp, SndParamRun_EDE9FC + 1584
+.set SeqMixParam_Entry_004, SndParamRun_EDE9FC + 1602
+.set SndParam_Part07_AfterTouch, SndParamRun_EDE9FC + 1620
+.set SndParam_Part08_LocalControl, SndParamRun_EDE9FC + 1638
+.set SndParam_Part08_MidiChannel, SndParamRun_EDE9FC + 1656
+.set SndParam_Part08_MidiTransmitOn, SndParamRun_EDE9FC + 1674
+.set SndParam_Part08_MidiReceiveOn, SndParamRun_EDE9FC + 1692
+.set SndParam_Part08_MidiOctave, SndParamRun_EDE9FC + 1710
+.set SndParam_Part08_SustainLength, SndParamRun_EDE9FC + 1728
+.set SndParam_Part08_SustainPedal, SndParamRun_EDE9FC + 1746
+.set SndParam_Part08_KeyScaling, SndParamRun_EDE9FC + 1764
+.set SndParam_Part08_GlidePedal, SndParamRun_EDE9FC + 1782
+.set SndParam_Part08_PartExp, SndParamRun_EDE9FC + 1800
+.set SeqMixParam_Entry_016, SndParamRun_EDE9FC + 1818
+.set SndParam_Part08_AfterTouch, SndParamRun_EDE9FC + 1836
+.set SndParam_Part09_LocalControl, SndParamRun_EDE9FC + 1854
+.set SndParam_Part09_MidiChannel, SndParamRun_EDE9FC + 1872
+.set SndParam_Part09_MidiTransmitOn, SndParamRun_EDE9FC + 1890
+.set SndParam_Part09_MidiReceiveOn, SndParamRun_EDE9FC + 1908
+.set SndParam_Part09_MidiOctave, SndParamRun_EDE9FC + 1926
+.set SndParam_Part09_SustainLength, SndParamRun_EDE9FC + 1944
+.set SndParam_Part09_SustainPedal, SndParamRun_EDE9FC + 1962
+.set SndParam_Part09_KeyScaling, SndParamRun_EDE9FC + 1980
+.set SndParam_Part09_GlidePedal, SndParamRun_EDE9FC + 1998
+.set SndParam_Part09_PartExp, SndParamRun_EDE9FC + 2016
+.set SeqMixParam_Entry_028, SndParamRun_EDE9FC + 2034
+.set SndParam_Part09_AfterTouch, SndParamRun_EDE9FC + 2052
+.set SndParam_Part0A_LocalControl, SndParamRun_EDE9FC + 2070
+.set SndParam_Part0A_MidiChannel, SndParamRun_EDE9FC + 2088
+.set SndParam_Part0A_MidiTransmitOn, SndParamRun_EDE9FC + 2106
+.set SndParam_Part0A_MidiReceiveOn, SndParamRun_EDE9FC + 2124
+.set SndParam_Part0A_MidiOctave, SndParamRun_EDE9FC + 2142
+.set SndParam_Part0A_SustainLength, SndParamRun_EDE9FC + 2160
+.set SndParam_Part0A_SustainPedal, SndParamRun_EDE9FC + 2178
+.set SndParam_Part0A_KeyScaling, SndParamRun_EDE9FC + 2196
+.set SndParam_Part0A_GlidePedal, SndParamRun_EDE9FC + 2214
+.set SndParam_Part0A_PartExp, SndParamRun_EDE9FC + 2232
+.set SeqMixParam_Entry_040, SndParamRun_EDE9FC + 2250
+.set SndParam_Part0A_AfterTouch, SndParamRun_EDE9FC + 2268
+.set SndParam_Part0B_LocalControl, SndParamRun_EDE9FC + 2286
+.set SndParam_Part0B_MidiChannel, SndParamRun_EDE9FC + 2304
+.set SndParam_Part0B_MidiTransmitOn, SndParamRun_EDE9FC + 2322
+.set SndParam_Part0B_MidiReceiveOn, SndParamRun_EDE9FC + 2340
+.set SndParam_Part0B_MidiOctave, SndParamRun_EDE9FC + 2358
+.set SndParam_Part0B_SustainLength, SndParamRun_EDE9FC + 2376
+.set SndParam_Part0B_SustainPedal, SndParamRun_EDE9FC + 2394
+.set SndParam_Part0B_KeyScaling, SndParamRun_EDE9FC + 2412
+.set SndParam_Part0B_GlidePedal, SndParamRun_EDE9FC + 2430
+.set SndParam_Part0B_PartExp, SndParamRun_EDE9FC + 2448
+.set SeqMixParam_Entry_052, SndParamRun_EDE9FC + 2466
+.set SndParam_Part0B_AfterTouch, SndParamRun_EDE9FC + 2484
+.set SndParam_Part0C_LocalControl, SndParamRun_EDE9FC + 2502
+.set SndParam_Part0C_MidiChannel, SndParamRun_EDE9FC + 2520
+.set SndParam_Part0C_MidiTransmitOn, SndParamRun_EDE9FC + 2538
+.set SndParam_Part0C_MidiReceiveOn, SndParamRun_EDE9FC + 2556
+.set SndParam_Part0C_MidiOctave, SndParamRun_EDE9FC + 2574
+.set SndParam_Part0C_SustainLength, SndParamRun_EDE9FC + 2592
+.set SndParam_Part0C_SustainPedal, SndParamRun_EDE9FC + 2610
+.set SndParam_Part0C_KeyScaling, SndParamRun_EDE9FC + 2628
+.set SndParam_Part0C_GlidePedal, SndParamRun_EDE9FC + 2646
+.set SndParam_Part0C_PartExp, SndParamRun_EDE9FC + 2664
+.set SeqMixParam_Entry_064, SndParamRun_EDE9FC + 2682
+.set SndParam_Part0C_AfterTouch, SndParamRun_EDE9FC + 2700
+.set SndParam_Part0D_LocalControl, SndParamRun_EDE9FC + 2718
+.set SndParam_Part0D_MidiChannel, SndParamRun_EDE9FC + 2736
+.set SndParam_Part0D_MidiTransmitOn, SndParamRun_EDE9FC + 2754
+.set SndParam_Part0D_MidiReceiveOn, SndParamRun_EDE9FC + 2772
+.set SndParam_Part0D_MidiOctave, SndParamRun_EDE9FC + 2790
+.set SndParam_Part0D_SustainLength, SndParamRun_EDE9FC + 2808
+.set SndParam_Part0D_SustainPedal, SndParamRun_EDE9FC + 2826
+.set SndParam_Part0D_KeyScaling, SndParamRun_EDE9FC + 2844
+.set SndParam_Part0D_GlidePedal, SndParamRun_EDE9FC + 2862
+.set SndParam_Part0D_PartExp, SndParamRun_EDE9FC + 2880
+.set SeqMixParam_Entry_076, SndParamRun_EDE9FC + 2898
+.set SndParam_Part0D_AfterTouch, SndParamRun_EDE9FC + 2916
+.set SndParam_Part0E_LocalControl, SndParamRun_EDE9FC + 2934
+.set SndParam_Part0E_MidiChannel, SndParamRun_EDE9FC + 2952
+.set SndParam_Part0E_MidiTransmitOn, SndParamRun_EDE9FC + 2970
+.set SndParam_Part0E_MidiReceiveOn, SndParamRun_EDE9FC + 2988
+.set SndParam_Part0E_MidiOctave, SndParamRun_EDE9FC + 3006
+.set SndParam_Part0E_SustainLength, SndParamRun_EDE9FC + 3024
+.set SndParam_Part0E_SustainPedal, SndParamRun_EDE9FC + 3042
+.set SndParam_Part0E_KeyScaling, SndParamRun_EDE9FC + 3060
+.set SndParam_Part0E_GlidePedal, SndParamRun_EDE9FC + 3078
+.set SndParam_Part0E_PartExp, SndParamRun_EDE9FC + 3096
+.set SeqMixParam_Entry_088, SndParamRun_EDE9FC + 3114
+.set SndParam_Part0E_AfterTouch, SndParamRun_EDE9FC + 3132
+.set SndParam_Part0F_LocalControl, SndParamRun_EDE9FC + 3150
+.set SndParam_Part0F_MidiChannel, SndParamRun_EDE9FC + 3168
+.set SndParam_Part0F_MidiTransmitOn, SndParamRun_EDE9FC + 3186
+.set SndParam_Part0F_MidiReceiveOn, SndParamRun_EDE9FC + 3204
+.set SndParam_Part0F_MidiOctave, SndParamRun_EDE9FC + 3222
+.set SndParam_Part0F_SustainLength, SndParamRun_EDE9FC + 3240
+.set SndParam_Part0F_SustainPedal, SndParamRun_EDE9FC + 3258
+.set SndParam_Part0F_KeyScaling, SndParamRun_EDE9FC + 3276
+.set SndParam_Part0F_GlidePedal, SndParamRun_EDE9FC + 3294
+.set SndParam_Part0F_PartExp, SndParamRun_EDE9FC + 3312
+.set SeqMixParam_Entry_100, SndParamRun_EDE9FC + 3330
+.set SndParam_Part0F_AfterTouch, SndParamRun_EDE9FC + 3348
+.set SndParam_Part10_LocalControl, SndParamRun_EDE9FC + 3366
+.set SndParam_Part10_MidiChannel, SndParamRun_EDE9FC + 3384
+.set SndParam_Part10_MidiTransmitOn, SndParamRun_EDE9FC + 3402
+.set SndParam_Part10_MidiReceiveOn, SndParamRun_EDE9FC + 3420
+.set SndParam_Part10_MidiOctave, SndParamRun_EDE9FC + 3438
+.set SndParam_Part10_SustainLength, SndParamRun_EDE9FC + 3456
+.set SndParam_Part10_SustainPedal, SndParamRun_EDE9FC + 3474
+.set SndParam_Part10_KeyScaling, SndParamRun_EDE9FC + 3492
+.set SndParam_Part10_GlidePedal, SndParamRun_EDE9FC + 3510
+.set SndParam_Part10_PartExp, SndParamRun_EDE9FC + 3528
+.set SeqMixParam_Entry_112, SndParamRun_EDE9FC + 3546
+.set SndParam_Part10_AfterTouch, SndParamRun_EDE9FC + 3564
+.set SndParam_Part11_LocalControl, SndParamRun_EDE9FC + 3582
+.set SndParam_Part11_MidiChannel, SndParamRun_EDE9FC + 3600
+.set SndParam_Part11_MidiTransmitOn, SndParamRun_EDE9FC + 3618
+.set SndParam_Part11_MidiReceiveOn, SndParamRun_EDE9FC + 3636
+.set SndParam_Part11_MidiOctave, SndParamRun_EDE9FC + 3654
+.set SndParam_Part11_SustainLength, SndParamRun_EDE9FC + 3672
+.set SndParam_Part11_SustainPedal, SndParamRun_EDE9FC + 3690
+.set SndParam_Part11_KeyScaling, SndParamRun_EDE9FC + 3708
+.set SndParam_Part11_GlidePedal, SndParamRun_EDE9FC + 3726
+.set SndParam_Part11_PartExp, SndParamRun_EDE9FC + 3744
+.set SeqMixParam_Entry_124, SndParamRun_EDE9FC + 3762
+.set SndParam_Part11_AfterTouch, SndParamRun_EDE9FC + 3780
+.set SndParam_Part12_LocalControl, SndParamRun_EDE9FC + 3798
+.set SndParam_Part12_MidiChannel, SndParamRun_EDE9FC + 3816
+.set SndParam_Part12_MidiTransmitOn, SndParamRun_EDE9FC + 3834
+.set SndParam_Part12_MidiReceiveOn, SndParamRun_EDE9FC + 3852
+.set SndParam_Part12_MidiOctave, SndParamRun_EDE9FC + 3870
+.set SndParam_Part12_SustainLength, SndParamRun_EDE9FC + 3888
+.set SndParam_Part12_SustainPedal, SndParamRun_EDE9FC + 3906
+.set SndParam_Part12_KeyScaling, SndParamRun_EDE9FC + 3924
+.set SndParam_Part12_GlidePedal, SndParamRun_EDE9FC + 3942
+.set SndParam_Part12_PartExp, SndParamRun_EDE9FC + 3960
+.set SeqMixParam_Entry_136, SndParamRun_EDE9FC + 3978
+.set SndParam_Part12_AfterTouch, SndParamRun_EDE9FC + 3996
+.set SndParam_Part13_LocalControl, SndParamRun_EDE9FC + 4014
+.set SndParam_Part13_MidiChannel, SndParamRun_EDE9FC + 4032
+.set SndParam_Part13_MidiTransmitOn, SndParamRun_EDE9FC + 4050
+.set SndParam_Part13_MidiReceiveOn, SndParamRun_EDE9FC + 4068
+.set SndParam_Part13_MidiOctave, SndParamRun_EDE9FC + 4086
+.set SndParam_Part13_SustainLength, SndParamRun_EDE9FC + 4104
+.set SndParam_Part13_SustainPedal, SndParamRun_EDE9FC + 4122
+.set SndParam_Part13_KeyScaling, SndParamRun_EDE9FC + 4140
+.set SndParam_Part13_GlidePedal, SndParamRun_EDE9FC + 4158
+.set SndParam_Part13_PartExp, SndParamRun_EDE9FC + 4176
+.set SeqMixParam_Entry_148, SndParamRun_EDE9FC + 4194
+.set SndParam_Part13_AfterTouch, SndParamRun_EDE9FC + 4212
+.set SndParam_Part14_LocalControl, SndParamRun_EDE9FC + 4230
+.set SndParam_Part14_MidiChannel, SndParamRun_EDE9FC + 4248
+.set SndParam_Part14_MidiTransmitOn, SndParamRun_EDE9FC + 4266
+.set SndParam_Part14_MidiReceiveOn, SndParamRun_EDE9FC + 4284
+.set SndParam_Part14_MidiOctave, SndParamRun_EDE9FC + 4302
+.set SndParam_Part14_SustainLength, SndParamRun_EDE9FC + 4320
+.set SndParam_Part14_SustainPedal, SndParamRun_EDE9FC + 4338
+.set SndParam_Part14_KeyScaling, SndParamRun_EDE9FC + 4356
+.set SndParam_Part14_GlidePedal, SndParamRun_EDE9FC + 4374
+.set SndParam_Part14_PartExp, SndParamRun_EDE9FC + 4392
+.set SeqMixParam_Entry_160, SndParamRun_EDE9FC + 4410
+.set SndParam_Part14_AfterTouch, SndParamRun_EDE9FC + 4428
+.set SndParam_Part15_LocalControl, SndParamRun_EDE9FC + 4446
+.set SndParam_Part15_MidiChannel, SndParamRun_EDE9FC + 4464
+.set SndParam_Part15_MidiTransmitOn, SndParamRun_EDE9FC + 4482
+.set SndParam_Part15_MidiReceiveOn, SndParamRun_EDE9FC + 4500
+.set SndParam_Part15_MidiOctave, SndParamRun_EDE9FC + 4518
+.set SndParam_Part15_SustainLength, SndParamRun_EDE9FC + 4536
+.set SndParam_Part15_SustainPedal, SndParamRun_EDE9FC + 4554
+.set SndParam_Part15_KeyScaling, SndParamRun_EDE9FC + 4572
+.set SndParam_Part15_GlidePedal, SndParamRun_EDE9FC + 4590
+.set SndParam_Part15_PartExp, SndParamRun_EDE9FC + 4608
+.set SeqMixParam_Entry_172, SndParamRun_EDE9FC + 4626
+.set SndParam_Part15_AfterTouch, SndParamRun_EDE9FC + 4644
+.set SndParam_Part16_LocalControl, SndParamRun_EDE9FC + 4662
+.set SndParam_Part16_MidiChannel, SndParamRun_EDE9FC + 4680
+.set SndParam_Part16_MidiTransmitOn, SndParamRun_EDE9FC + 4698
+.set SndParam_Part16_MidiReceiveOn, SndParamRun_EDE9FC + 4716
+.set SndParam_Part16_MidiOctave, SndParamRun_EDE9FC + 4734
+.set SndParam_Part16_SustainLength, SndParamRun_EDE9FC + 4752
+.set SndParam_Part16_SustainPedal, SndParamRun_EDE9FC + 4770
+.set SndParam_Part16_KeyScaling, SndParamRun_EDE9FC + 4788
+.set SndParam_Part16_GlidePedal, SndParamRun_EDE9FC + 4806
+.set SndParam_Part16_PartExp, SndParamRun_EDE9FC + 4824
+.set SeqMixParam_Entry_184, SndParamRun_EDE9FC + 4842
+.set SndParam_Part16_AfterTouch, SndParamRun_EDE9FC + 4860
+.set SndParam_Part17_LocalControl, SndParamRun_EDE9FC + 4878
+.set SndParam_Part17_MidiChannel, SndParamRun_EDE9FC + 4896
+.set SndParam_Part17_MidiTransmitOn, SndParamRun_EDE9FC + 4914
+.set SndParam_Part17_MidiReceiveOn, SndParamRun_EDE9FC + 4932
+.set SndParam_Part17_MidiOctave, SndParamRun_EDE9FC + 4950
+.set SndParam_Part17_SustainLength, SndParamRun_EDE9FC + 4968
+.set SndParam_Part17_SustainPedal, SndParamRun_EDE9FC + 4986
+.set SndParam_Part17_KeyScaling, SndParamRun_EDE9FC + 5004
+.set SndParam_Part17_GlidePedal, SndParamRun_EDE9FC + 5022
+.set SndParam_Part17_PartExp, SndParamRun_EDE9FC + 5040
+.set SeqMixParam_Entry_196, SndParamRun_EDE9FC + 5058
+.set SndParam_Part17_AfterTouch, SndParamRun_EDE9FC + 5076
+.set SndParam_Part18_LocalControl, SndParamRun_EDE9FC + 5094
+.set SndParam_Part18_MidiChannel, SndParamRun_EDE9FC + 5112
+.set SndParam_Part18_MidiTransmitOn, SndParamRun_EDE9FC + 5130
+.set SndParam_Part18_MidiReceiveOn, SndParamRun_EDE9FC + 5148
+.set SndParam_Part18_MidiOctave, SndParamRun_EDE9FC + 5166
+.set SndParam_Part18_SustainLength, SndParamRun_EDE9FC + 5184
+.set SndParam_Part18_SustainPedal, SndParamRun_EDE9FC + 5202
+.set SndParam_Part18_KeyScaling, SndParamRun_EDE9FC + 5220
+.set SndParam_Part18_GlidePedal, SndParamRun_EDE9FC + 5238
+.set SndParam_Part18_PartExp, SndParamRun_EDE9FC + 5256
+.set SeqMixParam_Entry_208, SndParamRun_EDE9FC + 5274
+.set SndParam_Part18_AfterTouch, SndParamRun_EDE9FC + 5292
+.set SndParam_Part19_LocalControl, SndParamRun_EDE9FC + 5310
+.set SndParam_Part19_MidiChannel, SndParamRun_EDE9FC + 5328
+.set SndParam_Part19_MidiTransmitOn, SndParamRun_EDE9FC + 5346
+.set SndParam_Part19_MidiReceiveOn, SndParamRun_EDE9FC + 5364
+.set SndParam_Part19_MidiOctave, SndParamRun_EDE9FC + 5382
+.set SndParam_Part19_SustainLength, SndParamRun_EDE9FC + 5400
 .set SndParam_Part19_SustainPedal, SndParamRun_EDE9FC + 5418
-.set SndParam_Part19_KeyScaling, SndParamRun_EDE9FC + 5688
-.set SndParam_Part19_GlidePedal, SndParamRun_EDE9FC + 5706
-.set SndParam_Part19_PartExp, SndParamRun_EDE9FC + 5724
-.set SeqMixParam_Entry_220, SndParamRun_EDE9FC + 5742
-.set SndParam_Part19_AfterTouch, SndParamRun_EDE9FC + 5760
-.set SndParam_Style_Number, SndParamRun_EDE9FC + 5670
-.set SndParam_Style_Bank, SndParamRun_EDE9FC + 5778
-.set SndParam_Style_Variation, SndParamRun_EDE9FC + 5814
-.set SndParam_Apc_Mode, SndParamRun_EDE9FC + 5832
-.set SndParam_Apc_Memory, SndParamRun_EDE9FC + 5850
-.set SndParam_LeftHold, SndParamRun_EDE9FC + 5868
-.set SndParam_Apc_OnBass, SndParamRun_EDE9FC + 5886
+.set SndParam_Part19_KeyScaling, SndParamRun_EDE9FC + 5436
+.set SndParam_Part19_GlidePedal, SndParamRun_EDE9FC + 5454
+.set SndParam_Part19_PartExp, SndParamRun_EDE9FC + 5472
+.set SeqMixParam_Entry_220, SndParamRun_EDE9FC + 5490
+.set SndParam_Part19_AfterTouch, SndParamRun_EDE9FC + 5508
+.set SndParam_Style_Number, SndParamRun_EDE9FC + 5526
+.set SndParam_Style_Bank, SndParamRun_EDE9FC + 5544
+.set SndParam_Style_Variation, SndParamRun_EDE9FC + 5562
+.set SndParam_Apc_Mode, SndParamRun_EDE9FC + 5580
+.set SndParam_Apc_Memory, SndParamRun_EDE9FC + 5598
+.set SndParam_LeftHold, SndParamRun_EDE9FC + 5616
+.set SndParam_Apc_OnBass, SndParamRun_EDE9FC + 5634

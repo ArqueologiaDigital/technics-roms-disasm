@@ -2095,9 +2095,9 @@ SMF_NoteOn_SlotFound:
 	call SMF_CalcTimeDelta
 	call SMF_ProcessChannels
 
-SMF_NoteOn_SlotFound_Underflow:
+; port: v7's label SMF_NoteOn_SlotFound_Underflow is not in v6 -- no v6 bytes correspond to what it named
 
-SMF_NoteOn_WriteEventBytes:
+; port: v7's label SMF_NoteOn_WriteEventBytes is not in v6 -- no v6 bytes correspond to what it named
 	popw hl
 	push xwa
 	push xbc

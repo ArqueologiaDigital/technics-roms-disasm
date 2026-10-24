@@ -1054,7 +1054,7 @@ WidgetName_PtrBlock_B2:	.incbin "includes/generated/naka_widget_names_charmap.bi
 ; [nakarest] Continues the table itself: Function slot 0x400 (table 0xeafff2, 352 entries,
 ; [nakarest] InitializeRoot), 352 entry pointers x 4 bytes (starts 0xeafff2, 1352 of its 1408
 ; [nakarest] bytes are here or later).
-WidgetName_PtrBlock_C:
+; port: v7's label WidgetName_PtrBlock_C is not in v6 -- no v6 bytes correspond to what it named
 ; [nakarest] WidgetName_PtrBlock_D  +0x2be1..+0x2c08 (0xeb0051, 39 B)
 ; [nakarest] Continues the table itself: Function slot 0x400 (table 0xeafff2, 352 entries,
 ; [nakarest] InitializeRoot), 352 entry pointers x 4 bytes (starts 0xeafff2, 1313 of its 1408
@@ -1063,7 +1063,7 @@ WidgetName_PtrBlock_C:
 	.byte	0x4a, 0x17, 0xeb, 0x00, 0x38, 0x17, 0xeb, 0x00
 	.byte	0x26, 0x17, 0xeb, 0x00, 0x14, 0x17, 0xeb, 0x00
 	.byte	0x02, 0x17, 0xeb, 0x00, 0xf0, 0x16
-WidgetName_PtrBlock_D:
+; port: v7's label WidgetName_PtrBlock_D is not in v6 -- no v6 bytes correspond to what it named
 ; [nakarest] WidgetName_PtrBlock_E  +0x2c08..+0x2c2c (0xeb0078, 36 B)
 ; [nakarest] Continues the table itself: Function slot 0x400 (table 0xeafff2, 352 entries,
 ; [nakarest] InitializeRoot), 352 entry pointers x 4 bytes (starts 0xeafff2, 1274 of its 1408
@@ -2573,80 +2573,96 @@ IconIDProc_EntryCount:	.incbin "includes/generated/naka_widget_names_charmap.bin
 ; "Default", "i0", "i1" .. IconIDProc answers EVT_GET_PROP_DATA_SP / EVT_GET_PROPERTY_EX with entry [id] (x4), Strcpy'd to the
 ; request buffer, and EVT_SET_PROPERTY_EX by Strcmp-ing the given name with each entry up to the NULL; entries 13-176 are the
 ; `.long IconName_iN` lines and the incbin after this slice.
-IconIDProc_NameTable:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x96, 0x1f, 0xeb, 0x00
-	.long	IconName_Default
-	.long	IconName_i0
-	.long	IconName_i1
-	.long	IconName_i2
-	.long	IconName_i3
-	.long	IconName_i4
-	.long	IconName_i5
-	.long	IconName_i6
-	.long	IconName_i7
-	.long	IconName_i8
-	.long	IconName_i9
-	.long	IconName_i10
-	.long	IconName_i11
-	.long	IconName_i12
-	.long	IconName_i13
-	.long	IconName_i14
-	.long	IconName_i15
-	.long	IconName_i16
-	.long	IconName_i17
-	.long	IconName_i18
-	.long	IconName_i19
-	.long	IconName_i20
-	.long	IconName_i21
-	.long	IconName_i22
-	.long	IconName_i23
-	.long	IconName_i24
-	.long	IconName_i25
-	.long	IconName_i26
-	.long	IconName_i27
-	.long	IconName_i28
-	.long	IconName_i29
-	.long	IconName_i30
-	.long	IconName_i31
-	.long	IconName_i32
-	.long	IconName_i33
-	.long	IconName_i34
-	.long	IconName_i35
-	.long	IconName_i36
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xf6, 0x1e, 0xeb, 0x00, 0xf2, 0x1e, 0xeb, 0x00
-	.byte	0xee, 0x1e, 0xeb, 0x00, 0xea, 0x1e, 0xeb, 0x00
-	.byte	0xe6, 0x1e, 0xeb, 0x00, 0xe2, 0x1e, 0xeb, 0x00
-	.byte	0xde, 0x1e, 0xeb, 0x00, 0xda, 0x1e, 0xeb, 0x00
-	.byte	0xd6, 0x1e, 0xeb, 0x00, 0xd2, 0x1e, 0xeb, 0x00
-	.byte	0xce, 0x1e, 0xeb, 0x00, 0xca, 0x1e, 0xeb, 0x00
-	.byte	0xc6, 0x1e, 0xeb, 0x00, 0xc2, 0x1e, 0xeb, 0x00
-	.byte	0xbe, 0x1e, 0xeb, 0x00, 0xba, 0x1e, 0xeb, 0x00
-	.byte	0xb6, 0x1e, 0xeb, 0x00, 0xb2, 0x1e, 0xeb, 0x00
-	.byte	0xae, 0x1e, 0xeb, 0x00, 0xaa, 0x1e, 0xeb, 0x00
-	.byte	0xa6, 0x1e, 0xeb, 0x00, 0xa2, 0x1e, 0xeb, 0x00
-	.byte	0x9e, 0x1e, 0xeb, 0x00, 0x9a, 0x1e, 0xeb, 0x00
-	.byte	0x96, 0x1e, 0xeb, 0x00, 0x92, 0x1e, 0xeb, 0x00
-	.byte	0x8e, 0x1e, 0xeb, 0x00, 0x8a, 0x1e, 0xeb, 0x00
-	.byte	0x86, 0x1e, 0xeb, 0x00, 0x82, 0x1e, 0xeb, 0x00
-	.byte	0x7e, 0x1e, 0xeb, 0x00, 0x7a, 0x1e, 0xeb, 0x00
-	.byte	0x76, 0x1e, 0xeb, 0x00, 0x72, 0x1e, 0xeb, 0x00
-	.byte	0x6e, 0x1e, 0xeb, 0x00, 0x6a, 0x1e, 0xeb, 0x00
-	.byte	0x66, 0x1e, 0xeb, 0x00, 0x62, 0x1e, 0xeb, 0x00
-	.byte	0x5e, 0x1e, 0xeb, 0x00, 0x5a, 0x1e, 0xeb, 0x00
-	.byte	0x56, 0x1e, 0xeb, 0x00, 0x52, 0x1e, 0xeb, 0x00
-	.byte	0x4e, 0x1e, 0xeb, 0x00, 0x4a, 0x1e, 0xeb, 0x00
-	.byte	0x46, 0x1e, 0xeb, 0x00, 0x42, 0x1e, 0xeb, 0x00
-	.byte	0x3e, 0x1e, 0xeb, 0x00, 0x3a, 0x1e, 0xeb, 0x00
-	.byte	0x36, 0x1e, 0xeb, 0x00, 0x32, 0x1e, 0xeb, 0x00
-	.byte	0x2e, 0x1e, 0xeb, 0x00, 0x2a, 0x1e, 0xeb, 0x00
-	.byte	0x26, 0x1e, 0xeb, 0x00, 0x22, 0x1e, 0xeb, 0x00
-	.byte	0x1e, 0x1e, 0xeb, 0x00, 0x1a, 0x1e, 0xeb, 0x00
-	.byte	0x16, 0x1e, 0xeb, 0x00, 0x12, 0x1e, 0xeb, 0x00
-	.byte	0x0e, 0x1e, 0xeb, 0x00, 0x0a, 0x1e, 0xeb, 0x00
-	.byte	0x06, 0x1e, 0xeb, 0x00, 0x02, 0x1e, 0xeb, 0x00
-	.byte	0xfe, 0x1d, 0xeb, 0x00
+IconIDProc_NameTable:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x44CC, 0x34
+	.long IconName_i11
+	.long IconName_i12
+	.long IconName_i13
+	.long IconName_i14
+	.long IconName_i15
+	.long IconName_i16
+	.long IconName_i17
+	.long IconName_i18
+	.long IconName_i19
+	.long IconName_i20
+	.long IconName_i21
+	.long IconName_i22
+	.long IconName_i23
+	.long IconName_i24
+	.long IconName_i25
+	.long IconName_i26
+	.long IconName_i27
+	.long IconName_i28
+	.long IconName_i29
+	.long IconName_i30
+	.long IconName_i31
+	.long IconName_i32
+	.long IconName_i33
+	.long IconName_i34
+	.long IconName_i35
+	.long IconName_i36
+	.long IconName_i37
+	.long IconName_i38
+	.long IconName_i39
+	.long IconName_i40
+	.long IconName_i41
+	.long IconName_i42
+	.long IconName_i43
+	.long IconName_i44
+	.long IconName_i45
+	.long IconName_i46
+	.long IconName_i47
+	.long IconName_i48
+	.long IconName_i49
+	.long IconName_i50
+	.long IconName_i51
+	.long IconName_i52
+	.long IconName_i53
+	.long IconName_i54
+	.long IconName_i55
+	.long IconName_i56
+	.long IconName_i57
+	.long IconName_i58
+	.long IconName_i59
+	.long IconName_i60
+	.long IconName_i61
+	.long IconName_i62
+	.long IconName_i63
+	.long IconName_i64
+	.long IconName_i65
+	.long IconName_i66
+	.long IconName_i67
+	.long IconName_i68
+	.long IconName_i69
+	.long IconName_i70
+	.long IconName_i71
+	.long IconName_i72
+	.long IconName_i73
+	.long IconName_i74
+	.long IconName_i75
+	.long IconName_i76
+	.long IconName_i77
+	.long IconName_i78
+	.long IconName_i79
+	.long IconName_i80
+	.long IconName_i81
+	.long IconName_i82
+	.long IconName_i83
+	.long IconName_i84
+	.long IconName_i85
+	.long IconName_i86
+	.long IconName_i87
+	.long IconName_i88
+	.long IconName_i89
+	.long IconName_i90
+	.long IconName_i91
+	.long IconName_i92
+	.long IconName_i93
+	.long IconName_i94
+	.long IconName_i95
+	.long IconName_i96
+	.long IconName_i97
+	.long IconName_i98
+	.long IconName_i99
 	.long IconName_i100
 	.long IconName_i101
 	.long IconName_i102
@@ -3864,124 +3880,138 @@ IconBitmapNamePtrTable:
 	.long BmpFile_i40_bmp
 	.long BmpFile_i41_bmp
 	.long BmpFile_i42_bmp
-	.long	BmpFile_i43_bmp
-	.long	BmpFile_i44_bmp
-	.long	BmpFile_i45_bmp
-	.long	BmpFile_i46_bmp
-	.long	BmpFile_i47_bmp
-	.long	BmpFile_i48_bmp
-	.long	BmpFile_i49_bmp
-	.long	BmpFile_i50_bmp
-	.long	BmpFile_i51_bmp
-	.long	BmpFile_i52_bmp
-	.long	BmpFile_i53_bmp
-	.long	BmpFile_i54_bmp
-	.long	BmpFile_i55_bmp
-	.long	BmpFile_i56_bmp
-	.long	BmpFile_i57_bmp
-	.long	BmpFile_i58_bmp
-	.long	BmpFile_i59_bmp
-	.long	BmpFile_i60_bmp
-	.long	BmpFile_i61_bmp
-	.long	BmpFile_i62_bmp
-	.long	BmpFile_i63_bmp
-	.long	BmpFile_i64_bmp
-	.long	BmpFile_i65_bmp
-	.long	BmpFile_i66_bmp
-	.long	BmpFile_i67_bmp
-	.long	BmpFile_i68_bmp
-	.long	BmpFile_i69_bmp
-	.long	NakaInst_0_bmp
-	.long	NakaInst_i71_bmp
-	.long	NakaInst_i72_bmp
-	.long	NakaInst_i73o_bmp
-	.long	NakaInst_i74o_bmp
-	.long	NakaInst_i75_bmp
-	.long	NakaInst_i76_bmp
-	.long	NakaInst_i77_bmp
-	.long	NakaInst_i78_bmp
-	.long	NakaInst_i79_bmp
-	.long	NakaInst_i80_bmp
-	.long	NakaInst_i81_bmp
-	.long	NakaInst_i82_bmp
-	.long	NakaInst_i83_bmp
-	.long	NakaInst_i84o_bmp
-	.long	NakaInst_i85_bmp
-	.long	NakaInst_i86_bmp
-	.long	NakaInst_i87_bmp
-	.long	IconBitmapName_i88
-	.long	IconBitmapName_i89
-	.long	IconBitmapName_i90o
-	.long	IconBitmapName_i91o
-	.long	IconBitmapName_i92o
-	.long	IconBitmapName_i93o
-	.long	IconBitmapName_i94
-	.long	IconBitmapName_i95
-	.long	IconBitmapName_i96o
-	.long	IconBitmapName_i97
-	.long	IconBitmapName_i98
-	.long	IconBitmapName_i99
-	.long	IconBitmapName_i100
-	.long	IconBitmapName_i101
-	.long	IconBitmapName_i102
-	.long	IconBitmapName_i103
-	.long	IconBitmapName_i104
-	.long	IconBitmapName_i105
-	.long	IconBitmapName_i106
-	.long	IconBitmapName_i107o
-	.long	IconBitmapName_i108
-	.long	IconBitmapName_i109
-	.long	IconBitmapName_i110
-	.long	IconBitmapName_i111
-	.long	IconBitmapName_i112
-	.long	IconBitmapName_i113
-	.long	IconBitmapName_i114
-	.long	IconBitmapName_i115
-	.long	IconBitmapName_i116
-	.long	IconBitmapName_i117
-	.long	IconBitmapName_i118
-	.long	IconBitmapName_i119
-	.long	IconBitmapName_i120
-	.long	IconBitmapName_i121
-	.long	IconBitmapName_i122
-	.long	IconBitmapName_i123
-	.long	IconBitmapName_i124
-	.long	IconBitmapName_i125
-	.long	IconBitmapName_i126
-	.long	IconBitmapName_i127
-	.long	IconBitmapName_i128
-	.long	IconBitmapName_i129
-	.long	IconBitmapName_i130
-	.long	IconBitmapName_i131
-	.long	IconBitmapName_i132
-	.long	IconBitmapName_i133
-	.long	IconBitmapName_i134
-	.long	IconBitmapName_i135
-	.long	IconBitmapName_i136
-	.long	IconBitmapName_i137
-	.long	IconBitmapName_i138
-	.long	IconBitmapName_i139
-	.long	IconBitmapName_i140
-	.long	IconBitmapName_i141
-	.long	IconBitmapName_i142
-	.long	IconBitmapName_i143
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xc0, 0x24, 0xeb, 0x00, 0xb6, 0x24, 0xeb, 0x00
-	.byte	0xac, 0x24, 0xeb, 0x00, 0xa2, 0x24, 0xeb, 0x00
-	.byte	0x98, 0x24, 0xeb, 0x00, 0x8e, 0x24, 0xeb, 0x00
-	.byte	0x84, 0x24, 0xeb, 0x00, 0x7a, 0x24, 0xeb, 0x00
-	.byte	0x70, 0x24, 0xeb, 0x00, 0x66, 0x24, 0xeb, 0x00
-	.byte	0x5c, 0x24, 0xeb, 0x00, 0x52, 0x24, 0xeb, 0x00
-	.byte	0x48, 0x24, 0xeb, 0x00, 0x3e, 0x24, 0xeb, 0x00
-	.byte	0x34, 0x24, 0xeb, 0x00, 0x2a, 0x24, 0xeb, 0x00
-	.byte	0x20, 0x24, 0xeb, 0x00, 0x16, 0x24, 0xeb, 0x00
-	.byte	0x0c, 0x24, 0xeb, 0x00, 0x02, 0x24, 0xeb, 0x00
-	.byte	0xf8, 0x23, 0xeb, 0x00, 0xee, 0x23, 0xeb, 0x00
-	.byte	0xe4, 0x23, 0xeb, 0x00, 0xda, 0x23, 0xeb, 0x00
-	.byte	0xd0, 0x23, 0xeb, 0x00, 0xc6, 0x23, 0xeb, 0x00
-	.byte	0xbc, 0x23, 0xeb, 0x00, 0xb2, 0x23, 0xeb, 0x00
-	.byte	0xa8, 0x23, 0xeb, 0x00, 0x9e, 0x23, 0xeb, 0x00
-	.byte	0x9c, 0x23, 0xeb, 0x00
+	.long BmpFile_i43_bmp
+	.long BmpFile_i44_bmp
+	.long BmpFile_i45_bmp
+	.long BmpFile_i46_bmp
+	.long BmpFile_i47_bmp
+	.long BmpFile_i48_bmp
+	.long BmpFile_i49_bmp
+	.long BmpFile_i50_bmp
+	.long BmpFile_i51_bmp
+	.long BmpFile_i52_bmp
+	.long BmpFile_i53_bmp
+	.long BmpFile_i54_bmp
+	.long BmpFile_i55_bmp
+	.long BmpFile_i56_bmp
+	.long BmpFile_i57_bmp
+	.long BmpFile_i58_bmp
+	.long BmpFile_i59_bmp
+	.long BmpFile_i60_bmp
+	.long BmpFile_i61_bmp
+	.long BmpFile_i62_bmp
+	.long BmpFile_i63_bmp
+	.long BmpFile_i64_bmp
+	.long BmpFile_i65_bmp
+	.long BmpFile_i66_bmp
+	.long BmpFile_i67_bmp
+	.long BmpFile_i68_bmp
+	.long BmpFile_i69_bmp
+	.long NakaInst_0_bmp
+	.long NakaInst_i71_bmp
+	.long NakaInst_i72_bmp
+	.long NakaInst_i73o_bmp
+	.long NakaInst_i74o_bmp
+	.long NakaInst_i75_bmp
+	.long NakaInst_i76_bmp
+	.long NakaInst_i77_bmp
+	.long NakaInst_i78_bmp
+	.long NakaInst_i79_bmp
+	.long NakaInst_i80_bmp
+	.long NakaInst_i81_bmp
+	.long NakaInst_i82_bmp
+	.long NakaInst_i83_bmp
+	.long NakaInst_i84o_bmp
+	.long NakaInst_i85_bmp
+	.long NakaInst_i86_bmp
+	.long NakaInst_i87_bmp
+	.long IconBitmapName_i88
+	.long IconBitmapName_i89
+	.long IconBitmapName_i90o
+	.long IconBitmapName_i91o
+	.long IconBitmapName_i92o
+	.long IconBitmapName_i93o
+	.long IconBitmapName_i94
+	.long IconBitmapName_i95
+	.long IconBitmapName_i96o
+	.long IconBitmapName_i97
+	.long IconBitmapName_i98
+	.long IconBitmapName_i99
+	.long IconBitmapName_i100
+	.long IconBitmapName_i101
+	.long IconBitmapName_i102
+	.long IconBitmapName_i103
+	.long IconBitmapName_i104
+	.long IconBitmapName_i105
+	.long IconBitmapName_i106
+	.long IconBitmapName_i107o
+	.long IconBitmapName_i108
+	.long IconBitmapName_i109
+	.long IconBitmapName_i110
+	.long IconBitmapName_i111
+	.long IconBitmapName_i112
+	.long IconBitmapName_i113
+	.long IconBitmapName_i114
+	.long IconBitmapName_i115
+	.long IconBitmapName_i116
+	.long IconBitmapName_i117
+	.long IconBitmapName_i118
+	.long IconBitmapName_i119
+	.long IconBitmapName_i120
+	.long IconBitmapName_i121
+	.long IconBitmapName_i122
+	.long IconBitmapName_i123
+	.long IconBitmapName_i124
+	.long IconBitmapName_i125
+	.long IconBitmapName_i126
+	.long IconBitmapName_i127
+	.long IconBitmapName_i128
+	.long IconBitmapName_i129
+	.long IconBitmapName_i130
+	.long IconBitmapName_i131
+	.long IconBitmapName_i132
+	.long IconBitmapName_i133
+	.long IconBitmapName_i134
+	.long IconBitmapName_i135
+	.long IconBitmapName_i136
+	.long IconBitmapName_i137
+	.long IconBitmapName_i138
+	.long IconBitmapName_i139
+	.long IconBitmapName_i140
+	.long IconBitmapName_i141
+	.long IconBitmapName_i142
+	.long IconBitmapName_i143
+	.long IconBitmapName_i144
+	.long IconBitmapName_i145
+	.long IconBitmapName_i146
+	.long IconBitmapName_i147
+	.long IconBitmapName_i148
+	.long IconBitmapName_i149
+	.long IconBitmapName_i150
+	.long IconBitmapName_i151
+	.long IconBitmapName_i152
+	.long IconBitmapName_i153
+	.long IconBitmapName_i154
+	.long IconBitmapName_i155
+	.long IconBitmapName_i156
+	.long IconBitmapName_i157
+	.long IconBitmapName_i158
+	.long IconBitmapName_i159
+	.long IconBitmapName_i160
+	.long IconBitmapName_i161
+	.long IconBitmapName_i162
+	.long IconBitmapName_i163
+	.long IconBitmapName_i164
+	.long IconBitmapName_i165
+	.long IconBitmapName_i166
+	.long IconBitmapName_i167
+	.long IconBitmapName_i168
+	.long IconBitmapName_i169
+	.long IconBitmapName_i170
+	.long IconBitmapName_i171
+	.long IconBitmapName_i172
+	.long IconBitmapName_i173
+	.long IconBitmapName_Empty
 	.long 0x00000000
 	.long 0x00000000
 	.long 0x00000000

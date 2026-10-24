@@ -391,7 +391,7 @@ Murai_ClassCount_161:
 ; [nakarest] InitializeMurai), 10 entry pointers x 4 bytes.
 ; TODO(port): v6 bytes with no v7 line -- disassemble
 	.byte	0x24, 0x00
-Murai_ResEventTable_1C1:
+; port: v7's label Murai_ResEventTable_1C1 is not in v6 -- no v6 bytes correspond to what it named
 ; [nakarest] Naka_EventDispatch_Table  +0x306..+0x32e (0xe812e8, 40 B)
 ; [nakarest] 4 B at 0xe8130c: the end marker of ResEvent slot 0x1c1 (table 0xe812e4, 10 entries, InitializeMurai) -- a zero word after entry 9, the last, as every ResEvent table ends.
 ; [nakarest] Continues the table itself: ResEvent slot 0x1c1 (table 0xe812e4, 10 entries,
@@ -474,7 +474,7 @@ Murai_FunctionTable_401:
 ; [nakarest] bytes are here or later).
 ; TODO(port): v6 bytes with no v7 line -- disassemble
 	.byte	0x5a, 0x18, 0xe8, 0x00, 0x44, 0x18, 0xe8, 0x00
-Naka_Event_Table2:
+; port: v7's label Naka_Event_Table2 is not in v6 -- no v6 bytes correspond to what it named
 ; Murai_FunctionNameListEnd -- 1 x char[2]: "" + 0xFF pad, entry 37 (one past the count) of Murai_FunctionTable_401
 ; Murai_FunctionTable_401 (registry slot 0x401 = 0x101 + 0x300, 37 entries, InitializeMurai) names the procedures
 ; of Murai_FunctionTable_101, whose entry 37 is the NULL end; FunctionProc answers EVT_GET_NAME with names[index].

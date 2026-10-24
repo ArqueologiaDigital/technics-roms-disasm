@@ -223,7 +223,7 @@ GroupBox_DialDown:
 	ld xde, (xsp + 30)
 	ld xwa, (xsp + 38)
 	ld xbc, EVT_SW_IN
-	calr	SetDialUp_Entry
+	calr SetDialDown
 	jrl GroupBox_ReturnZero
 
 	; --- Event 0x1e00071: Dial Up ---
@@ -381,12 +381,11 @@ SetDialUp:
 	ld	(0x3ef56:24), xbc
 	ld	(0x3ef5e:24), xde
 	jr	SetDialFocus
-SetDialUp_Entry:
+SetDialDown:
 	ld	(0x3ef52:24), xwa
 	ld	(0x3ef5a:24), xbc
 	ld	(0x3ef62:24), xde
 
-SetDialDown:
 	jr SetDialFocus
 
 SetAutoIncDefault:

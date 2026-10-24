@@ -569,7 +569,7 @@ AcPmemOutL_Init_Cell01:
 	extz xde
 	ld xwa, (xsp + 16)
 	ld xbc, EVT_INDEXSW_DOWN
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 	jr AcPmemOutL_Init_ScrollCommit
 
@@ -596,7 +596,7 @@ AcPmemOutL_Init_Cell3:
 	extz xde
 	ld xwa, (xsp + 16)
 	ld xbc, EVT_INDEXSW_DOWN
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 
 AcPmemOutL_Init_ScrollCommit:
@@ -626,7 +626,7 @@ AcPmemOutLGridBoxProc_OnIndexswUp:
 	ld xwa, (xsp + 16)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 8)
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 	call SetDialEnable
 	ld xwa, (xsp + 16)
@@ -673,7 +673,7 @@ AcPmemOutL_AutoIncUp_Cell2:
 	ld xwa, (xsp + 16)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 8)
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 	call SetDialEnable
 	ld xwa, (xsp + 16)
@@ -720,7 +720,7 @@ AcPmemOutL_AutoIncDown_Cell3:
 	ld xwa, (xsp + 16)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 8)
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 	call SetDialEnable
 	ld xwa, (xsp + 16)
@@ -889,7 +889,7 @@ AcPmemOutR_Init_Cell567:
 	extz xde
 	ld xwa, (xsp + 16)
 	ld xbc, EVT_INDEXSW_DOWN
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 	call SetDialEnable
 
@@ -917,7 +917,7 @@ AcPmemOutRGridBoxProc_OnIndexswUp:
 	ld xwa, (xsp + 16)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 8)
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 	call SetDialEnable
 	ld xwa, (xsp + 16)
@@ -964,7 +964,7 @@ AcPmemOutR_AutoIncUp_Cell6:
 	ld xwa, (xsp + 16)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 8)
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 	call SetDialEnable
 	ld xwa, (xsp + 16)
@@ -1011,7 +1011,7 @@ AcPmemOutR_AutoIncDown_Cell7:
 	ld xwa, (xsp + 16)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 8)
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 	call SetDialEnable
 	ld xwa, (xsp + 16)
@@ -1418,9 +1418,8 @@ PmemOutLGridCheck_OnRamData_Join3:
 	push	xwa
 	call	Strcpy
 	inc	8, xsp
-	jr	PmemOutLGridCheck_OnRamData_Join4_Skip
+	jr	PmemOutLGridCheck_OnRamData_Join4
 PmemOutLGridCheck_OnRamData_Skip6:
-PmemOutLGridCheck_OnRamData_Join4:
 	ld	a, (xwa)
 	extz	wa
 	pushw	wa
@@ -1430,7 +1429,7 @@ PmemOutLGridCheck_OnRamData_Join4:
 	push	xwa
 	call	Sprintf_Locked
 	lda	xsp, (xsp+10)
-PmemOutLGridCheck_OnRamData_Join4_Skip:
+PmemOutLGridCheck_OnRamData_Join4:
 	lda	xde, (xsp+36)
 	ld	xwa, 0x5b0009
 	ld	xbc, 0x1e0008c
@@ -2801,7 +2800,7 @@ AcCtlMsgGrid_Init:
 	extz xde
 	ld xwa, (xsp + 32)
 	ld xbc, EVT_INDEXSW_DOWN
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 	jrl AcCtlMsgGrid_ScrollCommit
 
@@ -2992,7 +2991,7 @@ AcCtlMsgGrid_ScrollUp_AutoScroll:
 	ld xwa, (xsp + 32)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 24)
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 	jrl AcCtlMsgGrid_ScrollCommit
 AcCtlMsgGridBoxProc_OnIndexswDown:
@@ -3088,7 +3087,7 @@ AcCtlMsgGrid_ScrollDown_AutoScroll:
 	ld xwa, (xsp + 32)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 24)
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 
 AcCtlMsgGrid_ScrollCommit:
@@ -3473,7 +3472,7 @@ MidiSetup_TtlCase3:
 	extz xde
 	ld xwa, (xsp + 32)
 	ld xbc, EVT_INDEXSW_DOWN
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 	jrl MidiPart_SetDialEnable
 
@@ -3746,7 +3745,7 @@ MidiPart_SendShowQuery:
 	ld xwa, (xsp + 32)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 24)
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 	jrl MidiPart_SetDialEnable
 
@@ -3892,7 +3891,7 @@ MidiPart_SendShowQueryUp:
 	ld xwa, (xsp + 32)
 	ld xbc, EVT_INDEXSW_DOWN
 	ld xde, (xsp + 24)
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 
 MidiPart_SetDialEnable:
@@ -4498,7 +4497,7 @@ InitializeMurai:
 	ld (XBC+0x04),XWA
 	ld wa, (Murai_ResEventCount_1C1:24)
 	ld (XBC+0x08),WA
-	lda xwa, (Murai_ResEventTable_1C1:24)
+	lda	xwa, (Naka_EventDispatch_Table:24)
 	ld (XBC+0x0a),XWA
 	ldw WA, 0x01c1
 	call RegisterObjectTable
@@ -4959,28 +4958,27 @@ InitializeMurai:
 	ld	xde, NAKA_VIEW_Softver
 	call	RegisterTitle
 	lda	xsp, (xsp+14)
-BitmapAccita16:
+; port: v7's label BitmapAccita16 is not in v6 -- no v6 bytes correspond to what it named
 
-BitmapAccita16_DataPtr:
+; port: v7's label BitmapAccita16_DataPtr is not in v6 -- no v6 bytes correspond to what it named
 
-BitmapAccita16_Width:
+; port: v7's label BitmapAccita16_Width is not in v6 -- no v6 bytes correspond to what it named
 
-BitmapAccita16_Height:
+; port: v7's label BitmapAccita16_Height is not in v6 -- no v6 bytes correspond to what it named
 
-BitmapAccger16:
 
-BitmapAccger16_DataPtr:
+; port: v7's label BitmapAccger16_DataPtr is not in v6 -- no v6 bytes correspond to what it named
 
-BitmapAccger16_Width:
+; port: v7's label BitmapAccger16_Width is not in v6 -- no v6 bytes correspond to what it named
 
-BitmapAccger16_Height:
+; port: v7's label BitmapAccger16_Height is not in v6 -- no v6 bytes correspond to what it named
 	ret
 
 BitmapDrawsw:
 	cp xbc, EVT_GET_BITMAP_HEIGHT
-	jr	z, BitmapDrawsw_DataPtr_Skip5
+	jr	z, BitmapDrawsw_DataPtr_Skip2
 	cp xbc, EVT_GET_BITMAP_WIDTH
-	jr	z, BitmapDrawsw_DataPtr_Skip6
+	jr	z, BitmapDrawsw_DataPtr_Skip
 	cp xbc, EVT_GET_BITMAP_DATA
 	jr z, BitmapDrawsw_DataPtr
 	ld xhl, 0:i3
@@ -4989,38 +4987,40 @@ BitmapDrawsw:
 BitmapDrawsw_DataPtr:
 	lda	xhl, (Bitmap_Accita16:24)
 	ret
-BitmapDrawsw_DataPtr_Skip6:
+BitmapDrawsw_DataPtr_Skip:
 	ld	xhl, 120
-	ret
-BitmapDrawsw_DataPtr_Skip5:
-	ld	xhl, 95
-	ret
-	cp	xbc, 0x1e000a3
-	jr	z, BitmapDrawsw_DataPtr_Skip
-	cp	xbc, 0x1e000a2
-	jr	z, BitmapDrawsw_DataPtr_Skip2
-	cp	xbc, 0x1e000a1
-	jr	z, BitmapDrawsw_DataPtr_Skip3
-	ld	xhl, 0:i3
-	ret
-BitmapDrawsw_DataPtr_Skip3:
-	lda	xhl, (Bitmap_Accger16:24)
 	ret
 BitmapDrawsw_DataPtr_Skip2:
-	ld	xhl, 120
-	ret
-BitmapDrawsw_DataPtr_Skip:
 	ld	xhl, 95
 	ret
+BitmapAccger16:
+	cp	xbc, 0x1e000a3
+	jr	z, BitmapAccger16_Skip
+	cp	xbc, 0x1e000a2
+	jr	z, BitmapAccger16_Skip2
+	cp	xbc, 0x1e000a1
+	jr	z, BitmapAccger16_Skip3
+	ld	xhl, 0:i3
+	ret
+BitmapAccger16_Skip3:
+	lda	xhl, (Bitmap_Accger16:24)
+	ret
+BitmapAccger16_Skip2:
+	ld	xhl, 120
+	ret
+BitmapAccger16_Skip:
+	ld	xhl, 95
+	ret
+BitmapAccger16_Data:
 	cp	xbc, 0x1e000a3
 	jr	z, BitmapDrawsw_Height
 	cp	xbc, 0x1e000a2
 	jr	z, BitmapDrawsw_Width
 	cp	xbc, 0x1e000a1
-	jr	z, BitmapDrawsw_DataPtr_Skip4
+	jr	z, BitmapAccger16_Skip4
 	ld	xhl, 0:i3
 	ret
-BitmapDrawsw_DataPtr_Skip4:
+BitmapAccger16_Skip4:
 	lda	xhl, (Bitmap_SomeArrows:24)
 	ret
 
@@ -10257,7 +10257,7 @@ IvSdtecd1Proc:
 	ld	xwa, (xsp+4)
 	ld	xbc, EVT_INDEXSW_UP
 	ld	xde, 1:i3
-	call	SetDialUp_Entry
+	call	SetDialDown
 	ld	wa, 1:i3
 	call	SetDialEnable
 	jrl	IvSdtecd1_ReturnDefault	; -> 0xF7E6A5
@@ -10284,7 +10284,7 @@ IvSdtecd1Proc_OnIndexswUpAny:
 	ld xwa, (xsp + 4)
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, 1:i3
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 	call SetDialEnable
 	jrl IvSdtecd1_ReturnDefault
@@ -10329,7 +10329,7 @@ IvSdtecd1Proc_OnIndexswDownAny:
 	ld xwa, (xsp + 4)
 	ld xbc, EVT_INDEXSW_UP
 	ld xde, 1:i3
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 	call SetDialEnable
 	jrl IvSdtecd1_ReturnDefault
@@ -11310,18 +11310,18 @@ Softver_GetText:
 	pushw	Softver_GetText_Str_Soft@lo16
 	push	xde
 	call	Strcpy
-Softver_ReturnZero:
+; port: v7's label Softver_ReturnZero is not in v6 -- no v6 bytes correspond to what it named
 
-Softver_Epilogue:
+; port: v7's label Softver_Epilogue is not in v6 -- no v6 bytes correspond to what it named
 
-IvMPverProc:
+; port: v7's label IvMPverProc is not in v6 -- no v6 bytes correspond to what it named
 
-MPver_ShowHide:
-MPver_Paint:
+; port: v7's label MPver_ShowHide is not in v6 -- no v6 bytes correspond to what it named
+; port: v7's label MPver_Paint is not in v6 -- no v6 bytes correspond to what it named
 
-MPver_SendEvent:
+; port: v7's label MPver_SendEvent is not in v6 -- no v6 bytes correspond to what it named
 
-MPver_GetText:
+; port: v7's label MPver_GetText is not in v6 -- no v6 bytes correspond to what it named
 	inc	8, xsp
 MPver_ReturnZero:
 	ld xhl, 0:i3
@@ -11369,7 +11369,7 @@ AcWelcomScreen_Init_StoreData:
 	call InheritedProc
 	call	SubCPU_Payload_GetErrorFlag
 
-AcWelcomScreen_Init_CheckSubCpu:
+; port: v7's label AcWelcomScreen_Init_CheckSubCpu is not in v6 -- no v6 bytes correspond to what it named
 	cp hl, 0:i3
 	jr ge, AcWelcomScreen_Init_SwitchMode
 	ld xwa, 0xffffffff
@@ -11797,14 +11797,14 @@ AcWelcomScreen_Select_NextStep:
 AcWelcomScreen_Select_StartTimer:
 	call SetApTimer
 
-AcWelcomScreen_SubCpuError:
+; port: v7's label AcWelcomScreen_SubCpuError is not in v6 -- no v6 bytes correspond to what it named
 	jr	AcWelcomScreen_ReturnHandled
 AcWelcomScreen_SubCpuLoaded:
 	ld	xwa, (xsp+20)
 	ld	xbc, xiz
 	ld	xde, (xsp+16)
 	call	InheritedProc
-	ld	xwa, NAKA_VIEW_MPVersion
+	ld	xwa, NAKA_VIEW_AllInitial
 	ld	xbc, EVT_SHOW
 	ld	xde, 3:i3
 AcWelcomScreen_DispatchEvent:
@@ -12011,7 +12011,7 @@ PsMixer_ControlCase2:
 	add xde, xbc
 	ld xwa, (xsp + 90)
 	ld xbc, EVT_INDEXSW_DOWN
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 	call SetDialEnable
 	call GetPartSelect
@@ -12214,7 +12214,7 @@ PsMixer_ControlCase5:
 	add xde, xbc
 	ld xwa, (xsp + 90)
 	ld xbc, EVT_INDEXSW_DOWN
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 	call SetDialEnable
 	ld (0x024790:24), iz
@@ -12330,7 +12330,7 @@ AudioCtrl_DispatchHandler:
 	add xde, xbc
 	ld xwa, (xsp + 90)
 	ld xbc, EVT_INDEXSW_DOWN
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 	call SetDialEnable
 	ld xwa, (xsp + 90)
@@ -12405,7 +12405,7 @@ AudioCtrl_SetupPartDisplay:
 	add xde, xbc
 	ld xwa, (xsp + 90)
 	ld xbc, EVT_INDEXSW_DOWN
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 	call SetDialEnable
 	ld xwa, (xsp + 90)
@@ -12888,7 +12888,7 @@ PsMixer_VolumeSelect_Continue:
 	add xde, xbc
 	ld xwa, (xsp + 90)
 	ld xbc, EVT_INDEXSW_DOWN
-	call	SetDialUp_Entry
+	call SetDialDown
 	ld wa, 1:i3
 	call SetDialEnable
 	ld xwa, (xsp + 90)

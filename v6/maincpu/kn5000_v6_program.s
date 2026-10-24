@@ -217,10 +217,11 @@ InitializeScoop_Str_TT_SEWRTSND:	.incbin "includes/generated/gui_display_struct_
 ; (+10 data field of a RegisterObjectTable descriptor, registry 0x27ED2 + 14*index); the slice runs to the next boundary, 136 B; the proc's read length was not measured
 GUI_DisplayStructData_0x750:
 	.long	SeMenuModeFunc
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0d, 0x36, 0xf0, 0x00, 0x40, 0x36, 0xf0, 0x00
-	.byte	0x73, 0x36, 0xf0, 0x00, 0xa6, 0x36, 0xf0, 0x00
-	.byte	0xd9, 0x36, 0xf0, 0x00
+	.long	SeMenuTitleFunc
+	.long	SeEasyTitleFunc
+	.long	SeTonTon1TitleFunc
+	.long	SeTonTon2TitleFunc
+	.long	SeTonRan1TitleFunc
 	.long	SeTonRan2TitleFunc
 	.long	SeTonHyb1TitleFunc
 	.long	SePitPit1TitleFunc
@@ -264,156 +265,164 @@ GUI_DisplayStructData_0x7D8:	.incbin "includes/generated/gui_display_struct_data
 ; Every other event goes to DirmdEmu_DefaultCase.  Framed 2026-10-06 (scripts/tools/frame_semenu_title_methods.py).
 ; ---------------------------------------------------------------------------------------------------------------
 SeMenuTitleFunc_Methods:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x2a, 0x36, 0xf0, 0x00, 0x2e, 0x36, 0xf0, 0x00
-	.byte	0x32, 0x36, 0xf0, 0x00, 0x3c, 0x36, 0xf0, 0x00
-	.byte	0x5d, 0x36, 0xf0, 0x00, 0x61, 0x36, 0xf0, 0x00
-	.byte	0x65, 0x36, 0xf0, 0x00, 0x6f, 0x36, 0xf0, 0x00
-	.byte	0x90, 0x36, 0xf0, 0x00, 0x94, 0x36, 0xf0, 0x00
-	.byte	0x98, 0x36, 0xf0, 0x00, 0xa2, 0x36, 0xf0, 0x00
-	.byte	0xc3, 0x36, 0xf0, 0x00, 0xc7, 0x36, 0xf0, 0x00
-	.byte	0xcb, 0x36, 0xf0, 0x00, 0xd5, 0x36, 0xf0, 0x00
-	.byte	0xf6, 0x36, 0xf0, 0x00, 0xfa, 0x36, 0xf0, 0x00
-	.byte	0xfe, 0x36, 0xf0, 0x00, 0x08, 0x37, 0xf0, 0x00
-SeMenuTitleFunc_Methods_Data:
-	.long	SeTonRan2TitleFunc_OnDraw
-	.long	SeTonRan2TitleFunc_OnHide
-	.long	SeTonRan2TitleFunc_OnSwitchIn
-	.long	SeTonRan2TitleFunc_Nop
+	.long SeMenuTitleFunc_OnDraw
+	.long SeMenuTitleFunc_OnHide
+	.long SeMenuTitleFunc_OnSwitchIn
+	.long SeMenuTitleFunc_Nop
 SeEasyTitleFunc_Methods:
-	.long	SeTonHyb1TitleFunc_OnDraw
-	.long	SeTonHyb1TitleFunc_OnHide
-	.long	SeTonHyb1TitleFunc_OnSwitchIn
-	.long	SeTonHyb1TitleFunc_Nop
+	.long SeEasyTitleFunc_OnDraw
+	.long SeEasyTitleFunc_OnHide
+	.long SeEasyTitleFunc_OnSwitchIn
+	.long SeEasyTitleFunc_Nop
 SeTonTon1TitleFunc_Methods:
-	.long	SePitPit1TitleFunc_OnDraw
-	.long	SePitPit1TitleFunc_OnHide
-	.long	SePitPit1TitleFunc_OnSwitchIn
-	.long	SePitPit1TitleFunc_Nop
+	.long SeTonTon1TitleFunc_OnDraw
+	.long SeTonTon1TitleFunc_OnHide
+	.long SeTonTon1TitleFunc_OnSwitchIn
+	.long SeTonTon1TitleFunc_Nop
 SeTonTon2TitleFunc_Methods:
-	.long	SePitEnv1TitleFunc_OnDraw
-	.long	SePitEnv1TitleFunc_OnHide
-	.long	SePitEnv1TitleFunc_OnSwitchIn
-	.long	SePitEnv1TitleFunc_Nop
+	.long SeTonTon2TitleFunc_OnDraw
+	.long SeTonTon2TitleFunc_OnHide
+	.long SeTonTon2TitleFunc_OnSwitchIn
+	.long SeTonTon2TitleFunc_Nop
 SeTonRan1TitleFunc_Methods:
-	.long	SePitEnv2TitleFunc_OnDraw
-	.long	SePitEnv2TitleFunc_OnHide
-	.long	SePitEnv2TitleFunc_OnSwitchIn
-	.long	SePitEnv2TitleFunc_Nop
+	.long SeTonRan1TitleFunc_OnDraw
+	.long SeTonRan1TitleFunc_OnHide
+	.long SeTonRan1TitleFunc_OnSwitchIn
+	.long SeTonRan1TitleFunc_Nop
 SeTonRan2TitleFunc_Methods:
-	.long	SePitLfo1TitleFunc_OnDraw
-	.long	SePitLfo1TitleFunc_OnHide
-	.long	SePitLfo1TitleFunc_OnSwitchIn
-	.long	SePitLfo1TitleFunc_Nop
+	.long SeTonRan2TitleFunc_OnDraw
+	.long SeTonRan2TitleFunc_OnHide
+	.long SeTonRan2TitleFunc_OnSwitchIn
+	.long SeTonRan2TitleFunc_Nop
 SeTonHyb1TitleFunc_Methods:
-	.long	SeAmpAmp1TitleFunc_OnDraw
-	.long	SeAmpAmp1TitleFunc_OnHide
-	.long	SeAmpAmp1TitleFunc_OnSwitchIn
-	.long	SeAmpAmp1TitleFunc_Nop
+	.long SeTonHyb1TitleFunc_OnDraw
+	.long SeTonHyb1TitleFunc_OnHide
+	.long SeTonHyb1TitleFunc_OnSwitchIn
+	.long SeTonHyb1TitleFunc_Nop
 SePitPit1TitleFunc_Methods:
-	.long	SeAmpAmp2TitleFunc_OnDraw
-	.long	SeAmpAmp2TitleFunc_OnHide
-	.long	SeAmpAmp2TitleFunc_OnSwitchIn
-	.long	SeAmpAmp2TitleFunc_Nop
+	.long SePitPit1TitleFunc_OnDraw
+	.long SePitPit1TitleFunc_OnHide
+	.long SePitPit1TitleFunc_OnSwitchIn
+	.long SePitPit1TitleFunc_Nop
 SePitEnv1TitleFunc_Methods:
-	.long	SeAmpEnv1TitleFunc_OnDraw
-	.long	SeAmpEnv1TitleFunc_OnHide
-	.long	SeAmpEnv1TitleFunc_OnSwitchIn
-	.long	SeAmpEnv1TitleFunc_Nop
+	.long SePitEnv1TitleFunc_OnDraw
+	.long SePitEnv1TitleFunc_OnHide
+	.long SePitEnv1TitleFunc_OnSwitchIn
+	.long SePitEnv1TitleFunc_Nop
 SePitEnv2TitleFunc_Methods:
-	.long	SeAmpEnv2TitleFunc_OnDraw
-	.long	SeAmpEnv2TitleFunc_OnHide
-	.long	SeAmpEnv2TitleFunc_OnSwitchIn
-	.long	SeAmpEnv2TitleFunc_Nop
+	.long SePitEnv2TitleFunc_OnDraw
+	.long SePitEnv2TitleFunc_OnHide
+	.long SePitEnv2TitleFunc_OnSwitchIn
+	.long SePitEnv2TitleFunc_Nop
 SePitLfo1TitleFunc_Methods:
-	.long	SeAmpLfo1TitleFunc_OnDraw
-	.long	SeAmpLfo1TitleFunc_OnHide
-	.long	SeAmpLfo1TitleFunc_OnSwitchIn
-	.long	SeAmpLfo1TitleFunc_Nop
+	.long SePitLfo1TitleFunc_OnDraw
+	.long SePitLfo1TitleFunc_OnHide
+	.long SePitLfo1TitleFunc_OnSwitchIn
+	.long SePitLfo1TitleFunc_Nop
 SeAmpAmp1TitleFunc_Methods:
-	.long	SeFilLpq1TitleFunc_OnDraw
-	.long	SeFilLpq1TitleFunc_OnHide
-	.long	SeFilLpq1TitleFunc_OnSwitchIn
-	.long	SeFilLpq1TitleFunc_Nop
+	.long SeAmpAmp1TitleFunc_OnDraw
+	.long SeAmpAmp1TitleFunc_OnHide
+	.long SeAmpAmp1TitleFunc_OnSwitchIn
+	.long SeAmpAmp1TitleFunc_Nop
 SeAmpAmp2TitleFunc_Methods:
-	.long	SeFilHpq1TitleFunc_OnDraw
-	.long	SeFilHpq1TitleFunc_OnHide
-	.long	SeFilHpq1TitleFunc_OnSwitchIn
-	.long	SeFilHpq1TitleFunc_Nop
+	.long SeAmpAmp2TitleFunc_OnDraw
+	.long SeAmpAmp2TitleFunc_OnHide
+	.long SeAmpAmp2TitleFunc_OnSwitchIn
+	.long SeAmpAmp2TitleFunc_Nop
 SeAmpEnv1TitleFunc_Methods:
-	.long	SeFilL241TitleFunc_OnDraw
-	.long	SeFilL241TitleFunc_OnHide
-	.long	SeFilL241TitleFunc_OnSwitchIn
-	.long	SeFilL241TitleFunc_Nop
+	.long SeAmpEnv1TitleFunc_OnDraw
+	.long SeAmpEnv1TitleFunc_OnHide
+	.long SeAmpEnv1TitleFunc_OnSwitchIn
+	.long SeAmpEnv1TitleFunc_Nop
 SeAmpEnv2TitleFunc_Methods:
-	.long	SeFilH241TitleFunc_OnDraw
-	.long	SeFilH241TitleFunc_OnHide
-	.long	SeFilH241TitleFunc_OnSwitchIn
-	.long	SeFilH241TitleFunc_Nop
+	.long SeAmpEnv2TitleFunc_OnDraw
+	.long SeAmpEnv2TitleFunc_OnHide
+	.long SeAmpEnv2TitleFunc_OnSwitchIn
+	.long SeAmpEnv2TitleFunc_Nop
 SeAmpLfo1TitleFunc_Methods:
-	.long	SeFilBpf1TitleFunc_OnDraw
-	.long	SeFilBpf1TitleFunc_OnHide
-	.long	SeFilBpf1TitleFunc_OnSwitchIn
-	.long	SeFilBpf1TitleFunc_Nop
+	.long SeAmpLfo1TitleFunc_OnDraw
+	.long SeAmpLfo1TitleFunc_OnHide
+	.long SeAmpLfo1TitleFunc_OnSwitchIn
+	.long SeAmpLfo1TitleFunc_Nop
 SeFilLpq1TitleFunc_Methods:
-	.long	SeFilBcf1TitleFunc_OnDraw
-	.long	SeFilBcf1TitleFunc_OnHide
-	.long	SeFilBcf1TitleFunc_OnSwitchIn
-	.long	SeFilBcf1TitleFunc_Nop
+	.long SeFilLpq1TitleFunc_OnDraw
+	.long SeFilLpq1TitleFunc_OnHide
+	.long SeFilLpq1TitleFunc_OnSwitchIn
+	.long SeFilLpq1TitleFunc_Nop
 SeFilHpq1TitleFunc_Methods:
-	.long	SeFilFil2TitleFunc_OnDraw
-	.long	SeFilFil2TitleFunc_OnHide
-	.long	SeFilFil2TitleFunc_OnSwitchIn
-	.long	SeFilFil2TitleFunc_Nop
+	.long SeFilHpq1TitleFunc_OnDraw
+	.long SeFilHpq1TitleFunc_OnHide
+	.long SeFilHpq1TitleFunc_OnSwitchIn
+	.long SeFilHpq1TitleFunc_Nop
 SeFilL241TitleFunc_Methods:
-	.long	SeFilEnv1TitleFunc_OnDraw
-	.long	SeFilEnv1TitleFunc_OnHide
-	.long	SeFilEnv1TitleFunc_OnSwitchIn
-	.long	SeFilEnv1TitleFunc_Nop
+	.long SeFilL241TitleFunc_OnDraw
+	.long SeFilL241TitleFunc_OnHide
+	.long SeFilL241TitleFunc_OnSwitchIn
+	.long SeFilL241TitleFunc_Nop
 SeFilH241TitleFunc_Methods:
-	.long	SeFilEnv2TitleFunc_OnDraw
-	.long	SeFilEnv2TitleFunc_OnHide
-	.long	SeFilEnv2TitleFunc_OnSwitchIn
-	.long	SeFilEnv2TitleFunc_Nop
+	.long SeFilH241TitleFunc_OnDraw
+	.long SeFilH241TitleFunc_OnHide
+	.long SeFilH241TitleFunc_OnSwitchIn
+	.long SeFilH241TitleFunc_Nop
 SeFilBpf1TitleFunc_Methods:
-	.long	SeFilLfo1TitleFunc_OnDraw
-	.long	SeFilLfo1TitleFunc_OnHide
-	.long	SeFilLfo1TitleFunc_OnSwitchIn
-	.long	SeFilLfo1TitleFunc_Nop
+	.long SeFilBpf1TitleFunc_OnDraw
+	.long SeFilBpf1TitleFunc_OnHide
+	.long SeFilBpf1TitleFunc_OnSwitchIn
+	.long SeFilBpf1TitleFunc_Nop
 SeFilBcf1TitleFunc_Methods:
-	.long	SeDigEffTitleFunc_OnDraw
-	.long	SeDigEffTitleFunc_OnHide
-	.long	SeDigEffTitleFunc_OnSwitchIn
-	.long	SeDigEffTitleFunc_Nop
+	.long SeFilBcf1TitleFunc_OnDraw
+	.long SeFilBcf1TitleFunc_OnHide
+	.long SeFilBcf1TitleFunc_OnSwitchIn
+	.long SeFilBcf1TitleFunc_Nop
 SeFilFil2TitleFunc_Methods:
-	.long	SeCtr2TitleFunc_OnDraw
-	.long	SeCtr2TitleFunc_OnHide
-	.long	SeCtr2TitleFunc_OnSwitchIn
-	.long	SeCtr2TitleFunc_Nop
+	.long SeFilFil2TitleFunc_OnDraw
+	.long SeFilFil2TitleFunc_OnHide
+	.long SeFilFil2TitleFunc_OnSwitchIn
+	.long SeFilFil2TitleFunc_Nop
 SeFilEnv1TitleFunc_Methods:
-	.long	SeCtr3TitleFunc_OnDraw
-	.long	SeCtr3TitleFunc_OnHide
-	.long	SeCtr3TitleFunc_OnSwitchIn
-	.long	SeCtr3TitleFunc_Nop
+	.long SeFilEnv1TitleFunc_OnDraw
+	.long SeFilEnv1TitleFunc_OnHide
+	.long SeFilEnv1TitleFunc_OnSwitchIn
+	.long SeFilEnv1TitleFunc_Nop
 SeFilEnv2TitleFunc_Methods:
-	.long	SeCopyTitleFunc_OnDraw
-	.long	SeCopyTitleFunc_OnHide
-	.long	SeCopyTitleFunc_OnSwitchIn
-	.long	SeCopyTitleFunc_Nop
+	.long SeFilEnv2TitleFunc_OnDraw
+	.long SeFilEnv2TitleFunc_OnHide
+	.long SeFilEnv2TitleFunc_OnSwitchIn
+	.long SeFilEnv2TitleFunc_Nop
 SeFilLfo1TitleFunc_Methods:
-	.long	SeWrtMemTitleFunc_OnDraw
-	.long	SeWrtMemTitleFunc_OnHide
-	.long	SeWrtMemTitleFunc_OnSwitchIn
-	.long	SeWrtMemTitleFunc_Nop
+	.long SeFilLfo1TitleFunc_OnDraw
+	.long SeFilLfo1TitleFunc_OnHide
+	.long SeFilLfo1TitleFunc_OnSwitchIn
+	.long SeFilLfo1TitleFunc_Nop
 SeDigEffTitleFunc_Methods:
-	.long	SeWrtSndTitleFunc_OnDraw
-	.long	SeWrtSndTitleFunc_OnHide
-	.long	SeWrtSndTitleFunc_OnSwitchIn
+	.long SeDigEffTitleFunc_OnDraw
+	.long SeDigEffTitleFunc_OnHide
+	.long SeDigEffTitleFunc_OnSwitchIn
+	.long SeDigEffTitleFunc_Nop
 SeCtr2TitleFunc_Methods:
+	.long SeCtr2TitleFunc_OnDraw
+	.long SeCtr2TitleFunc_OnHide
+	.long SeCtr2TitleFunc_OnSwitchIn
+	.long SeCtr2TitleFunc_Nop
 SeCtr3TitleFunc_Methods:
+	.long SeCtr3TitleFunc_OnDraw
+	.long SeCtr3TitleFunc_OnHide
+	.long SeCtr3TitleFunc_OnSwitchIn
+	.long SeCtr3TitleFunc_Nop
 SeCopyTitleFunc_Methods:
+	.long SeCopyTitleFunc_OnDraw
+	.long SeCopyTitleFunc_OnHide
+	.long SeCopyTitleFunc_OnSwitchIn
+	.long SeCopyTitleFunc_Nop
 SeWrtMemTitleFunc_Methods:
+	.long SeWrtMemTitleFunc_OnDraw
+	.long SeWrtMemTitleFunc_OnHide
+	.long SeWrtMemTitleFunc_OnSwitchIn
+	.long SeWrtMemTitleFunc_Nop
 SeWrtSndTitleFunc_Methods:
+	.long SeWrtSndTitleFunc_OnDraw
+	.long SeWrtSndTitleFunc_OnHide
+	.long SeWrtSndTitleFunc_OnSwitchIn
 	.long SeWrtSndTitleFunc_Nop
 ; table of 4-byte code pointers, 72 B = 18 entries to the next address the code names
 ; evidence: SeAmpAmp1TitleFunc_DispatchSwitch+0x1E (0xF03DA7) loads it into XDE, adds BC*4 and calls the entry (`exts xbc / add xbc,xde / ld xhl,(xbc) / call (xhl)`)
@@ -1424,7 +1433,7 @@ Boot_DisplayScreen:
 	call	TaskSched_SpawnTask	; start task 4, MainTitle_TeardownAndLoop
 	calr	Boot_SetConfigFlag7
 	jp	MainLoop
-Boot_GetButtonComboCode:
+; port: v7's label Boot_GetButtonComboCode is not in v6 -- no v6 bytes correspond to what it named
 
 Boot_ClearAllInterruptEnables:
 	ld (INTE0AD:8), 0x00:io
@@ -3559,7 +3568,7 @@ SndParam_RW_ProcessResult:
 	inc	3, a
 	extz	wa
 	sla	wa, 2
-	lda	xbc, (SndParam_RegisterHandlers_Data:24)
+	lda	xbc, (SndParam_EncodeHandlers:24)
 	lda	xde, (xbc+wa)
 	ld	xwa, xiz
 	ld	bc, (xsp + 4)
