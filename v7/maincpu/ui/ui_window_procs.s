@@ -4094,7 +4094,7 @@ DrawDesignBox_ByteData:
 	calr	IS_XSP_INSIDE_4K_REGION_AT_1C032
 	cp	hl, 0:i3
 	jr	z, ClampColorToRange_Skip
-	cpw	(197710:24), 0
+	cpw	(DRAW_ENABLED:24), 0
 	jr	z, ClampColorToRange_Epilogue
 	ld	xwa, xiz
 	ld	xbc, (xsp+6)
@@ -4127,7 +4127,7 @@ DrawDesignBox_ByteData_Code:
 	lda	xhl, (xwa+4)
 	lda	xbc, (xwa+8)
 	ld	de, (xwa+12)
-	cpw	(197710:24), 0
+	cpw	(DRAW_ENABLED:24), 0
 	ret	z
 	ld	xwa, xhl
 	calr	DrawDottedLine_Impl
@@ -4435,7 +4435,7 @@ DrawDesignBox:	; SysData_FAD559
 	calr IS_XSP_INSIDE_4K_REGION_AT_1C032
 	cp hl, 0:i3
 	jr z, DrawDesignBox_QueuedPath
-	cpw (0x03044e:24), 0
+	cpw (DRAW_ENABLED:24), 0
 	jr z, DrawDesignBox_DirectEpilogue
 	ld xwa, xiz
 	ld bc, (xsp + 6)
@@ -4468,7 +4468,7 @@ DrawDesignBox_QueueCallback:
 	lda	xhl, (xwa+4)
 	ld	bc, (xwa+12)
 	ld	de, (xwa+14)
-	cpw	(0x03044e:24), 0
+	cpw	(DRAW_ENABLED:24), 0
 	ret	z
 	ld	xwa, xhl
 	calr	DrawDesignBox_Impl
@@ -7827,7 +7827,7 @@ ColorBlit:
 	jr z, ColorBlit_Deferred
 	ld a, (COLORBLIT_MODE:24)
 	ld (COLORBLIT_MODE_ACTIVE:24), a
-	cpw (0x03044e:24), 0
+	cpw (DRAW_ENABLED:24), 0
 	jr z, ColorBlit_Return
 	ld xwa, xiz
 	ld bc, (xsp + 4)
@@ -7861,7 +7861,7 @@ ColorBlit_CallbackBlock:
 	ld	de, (xbc+12)
 	ld	c, (xbc+14)
 	ld	(COLORBLIT_MODE_ACTIVE:24), c
-	cpw	(0x03044e:24), 0
+	cpw	(DRAW_ENABLED:24), 0
 	ret	z
 	ld	bc, de
 	calr	ColorBlit_Impl
@@ -8123,7 +8123,7 @@ ColorBlit2:
 	jr z, ColorBlit2_Deferred
 	ld a, (COLORBLIT_MODE:24)
 	ld (COLORBLIT_MODE_ACTIVE:24), a
-	cpw (0x03044e:24), 0
+	cpw (DRAW_ENABLED:24), 0
 	jr z, ColorBlit2_Return
 	ld xwa, xiz
 	ld bc, (xsp + 4)
@@ -8157,7 +8157,7 @@ ColorBlit2_CallbackBlock:
 	ld	de, (xbc+12)
 	ld	c, (xbc+14)
 	ld	(COLORBLIT_MODE_ACTIVE:24), c
-	cpw	(0x03044e:24), 0
+	cpw	(DRAW_ENABLED:24), 0
 	ret	z
 	ld	bc, de
 	calr	ColorBlit2_Impl
@@ -8487,7 +8487,7 @@ DrawMonoBitmap:
 	jr	z, DrawMonoBitmap_DeferredPath
 	ld	a, (COLORBLIT_MODE:24)
 	ld	(COLORBLIT_MODE_ACTIVE:24), a
-	cpw	(0x03044e:24), 0
+	cpw	(DRAW_ENABLED:24), 0
 	jr	z, DrawMonoBitmap_Return
 	ld	xwa, xiz
 	ld	xbc, (xsp+6)
@@ -8522,7 +8522,7 @@ DrawMonoBitmap_ParamBlock:
 	ld	de, (xbc+16)
 	ld	c, (xbc+18)
 	ld	(COLORBLIT_MODE_ACTIVE:24), c
-	cpw	(0x03044e:24), 0
+	cpw	(DRAW_ENABLED:24), 0
 	ret	z
 	ld	xbc, xhl
 	calr	DrawMonoBitmap_Impl
@@ -8622,7 +8622,7 @@ DrawMonoBitmap_Impl_Skip2:
 	jr	DrawMonoBitmap_Impl_Join
 DrawMonoBitmap_Impl_Skip3:
 	ld	xiy, (xsp+10)
-	ld	iz, (0x03efa2:24)
+	ld	iz, (GFX_BG_COLOR:24)
 	ld	xwa, (xsp+10)
 	ld	wa, (xwa)
 	exts	xwa
@@ -8893,7 +8893,7 @@ DrawLineWithMode:
 	jr	z, DrawLineWithMode_DeferredPath
 	ld	a, (COLORBLIT_MODE:24)
 	ld	(COLORBLIT_MODE_ACTIVE:24), a
-	cpw	(0x03044e:24), 0
+	cpw	(DRAW_ENABLED:24), 0
 	jr	z, DrawLineWithMode_Return
 	ld	xwa, xiz
 	ld	xbc, (xsp+6)
@@ -8931,7 +8931,7 @@ DrawLineWithMode_ParamBlock:
 	ld	de, (xbc+12)
 	ld	c, (xbc+14)
 	ld	(COLORBLIT_MODE_ACTIVE:24), c
-	cpw	(0x03044e:24), 0
+	cpw	(DRAW_ENABLED:24), 0
 	ret	z
 	ld	xbc, xhl
 	calr	DrawLineWithMode_Impl
@@ -9733,7 +9733,7 @@ DrawDottedLineWithMode:
 	jr	z, DrawDottedLineWithMode_DeferredPath
 	ld	a, (COLORBLIT_MODE:24)
 	ld	(COLORBLIT_MODE_ACTIVE:24), a
-	cpw	(0x03044e:24), 0
+	cpw	(DRAW_ENABLED:24), 0
 	jr	z, DrawDottedLineWithMode_Return
 	ld	xwa, xiz
 	ld	xbc, (xsp+6)
@@ -9771,7 +9771,7 @@ DrawDottedLineWithMode_ParamBlock:
 	ld	de, (xbc+12)
 	ld	c, (xbc+14)
 	ld	(COLORBLIT_MODE_ACTIVE:24), c
-	cpw	(0x03044e:24), 0
+	cpw	(DRAW_ENABLED:24), 0
 	ret	z
 	ld	xbc, xhl
 	calr	DrawDottedLineWithMode_Impl

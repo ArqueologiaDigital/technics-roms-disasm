@@ -107,7 +107,7 @@ AccPedal_BankBaseTableCopy:
 AccPedal_ProcessAllChanges:
 	xor WA,WA
 	ld XHL,AccStyle_ApplyExt_SkipClamp_Table
-	ld a, (0x0433:16)
+	ld a, (ACC_BEATS_PER_BAR:16)
 	bit	0, (xhl+wa)
 	jrl z, AccPedal_ReadBankAndReturn
 	xor a, a
@@ -167,7 +167,7 @@ AccPedal_ReadBankAndReturn:
 AccVoice_ReadBankAssign:
 	xor WA,WA
 	ld XHL,AccStyle_ApplyExt_SkipClamp_Table
-	ld a, (0x0433:16)
+	ld a, (ACC_BEATS_PER_BAR:16)
 	ld	a, (xhl+wa)
 	bit 0, (0x31e7:16)
 	jr nz, AccVoice_StoreBankAssign
@@ -264,7 +264,7 @@ AccChannel_ActivityCheckDone:
 	ret
 
 AccChannel_CheckPartIndexDirty:
-	ld a, (0x0433:16)
+	ld a, (ACC_BEATS_PER_BAR:16)
 	cp a, 1:i3
 	jr nz, AccChannel_PartIndexDone
 	or (0x328a:16), 0x3f
@@ -389,7 +389,7 @@ AccVoice_CheckBitsAndSetFlags:
 	ld de, (0x3247:16)
 	and D,0x07
 	inc 1,D
-	cp d, (0x0433:16)
+	cp d, (ACC_BEATS_PER_BAR:16)
 	jr nz, AccVoice_BitsCheckDone
 	or (0x328b:16), 0x3f
 AccVoice_BitsCheckDone:
@@ -402,7 +402,7 @@ AccPitch_CheckTransposeFlags:
 	jr z, .Lc_f536c0
 	ld a, (0x31e4:16)
 	inc 1,A
-	cp a, (0x0433:16)
+	cp a, (ACC_BEATS_PER_BAR:16)
 	jr nz, .Lc_f536c0
 	or (0x328d:16), 0x3f
 AccPitch_UpdateCheck:
@@ -413,7 +413,7 @@ AccPitch_UpdateCheck:
 	jr z, AccPitch_FinalReturn
 	ld a, (0x31e4:16)
 	inc 1,A
-	cp a, (0x0433:16)
+	cp a, (ACC_BEATS_PER_BAR:16)
 	jr nz, AccPitch_FinalReturn
 	or (0x328d:16), 0x3f
 AccPitch_FinalReturn:
@@ -702,7 +702,7 @@ AccVoice_PatchFromDirect:
 	and	a, 127
 	calr	AccPatch_SetVoiceParam
 AccVoice_StorePatchAndLookup:
-	ld	(1075:16), a
+	ld	(ACC_BEATS_PER_BAR:16), a
 	ld	xhl, AccVoice_LookupTableAddress_Table
 	sla	a, 1
 	ld	wa, (xhl+a)
@@ -1112,24 +1112,24 @@ RhythmAccent_CopyAndUpdateRingBuf:
 	pushw	de
 	pushw	wa
 	ld	a, (12880:16)
-	ld	(13202:16), a
+	ld	(ACC_EVENT+1:16), a
 	calr	RhythmAccent_UpdateRingBufPosition
 	popw	wa
 	popw	de
 	ret
 RhythmAccent_UpdateRingBufPosition:
-	ld a, (0x3392:16)
+	ld a, (ACC_EVENT+1:16)
 	ei 0x06
 	sub a, (0x0464:16)
 	jr ugt, RhythmAccent_StorePosition
 	ld A, 0x01:opc
-	ld (0x3392:16), a
+	ld (ACC_EVENT+1:16), a
 	cp (0x0462:16), 0x00
 	jr z, RhythmAccent_AddAndCompare
 	xor A,A
 	jr t, RhythmAccent_AddAndCompare
 RhythmAccent_StorePosition:
-	ld	(13202:16), a
+	ld	(ACC_EVENT+1:16), a
 RhythmAccent_AddAndCompare:
 	ld	w, (1122:16)
 	add	a, w
@@ -1170,11 +1170,11 @@ RhythmPart2_LoadAndStore:
 	ld e, (0x31b1:16)
 	ld d, (0x31b2:16)
 	ld a, (0x31b3:16)
-	ld (0x3393:16), a
+	ld (ACC_EVENT+2:16), a
 	ld a, (0x31b4:16)
-	ld (0x3394:16), a
+	ld (ACC_EVENT+3:16), a
 	ld a, (0x31b5:16)
-	ld (0x3395:16), a
+	ld (ACC_EVENT+4:16), a
 	ld a, (0x31b6:16)
 	ld (0x3227:16), a
 	ld a, (0x31b7:16)
@@ -1197,13 +1197,13 @@ RhythmPart2_ProcessRingBuf:
 	calr RingBuf_AdvanceIndex
 	ld	(xhl+iy), d
 	calr RingBuf_AdvanceIndex
-	ld a, (0x3393:16)
+	ld a, (ACC_EVENT+2:16)
 	ld	(xhl+iy), a
 	calr RingBuf_AdvanceIndex
-	ld a, (0x3394:16)
+	ld a, (ACC_EVENT+3:16)
 	ld	(xhl+iy), a
 	calr RingBuf_AdvanceIndex
-	ld a, (0x3395:16)
+	ld a, (ACC_EVENT+4:16)
 	ld	(xhl+iy), a
 	calr RingBuf_AdvanceIndex
 	ld (XHL+0x04),IY
@@ -1221,11 +1221,11 @@ RhythmPart2_WriteDone:
 AccVoiceReg_StoreParamRecord:
 	ld	(xhl), e
 	ld	(xhl+1), d
-	ld	a, (13203:16)
+	ld	a, (ACC_EVENT+2:16)
 	ld	(xhl+2), a
-	ld	a, (13204:16)
+	ld	a, (ACC_EVENT+3:16)
 	ld	(xhl+3), a
-	ld	a, (13205:16)
+	ld	a, (ACC_EVENT+4:16)
 	ld	(xhl+4), a
 	ret
 Rhythm_PackVelocityHighBit:
@@ -1247,11 +1247,11 @@ RhythmPart3_LoadAndStore:
 	ld e, (0x31b8:16)
 	ld d, (0x31b9:16)
 	ld a, (0x31ba:16)
-	ld (0x3393:16), a
+	ld (ACC_EVENT+2:16), a
 	ld a, (0x31bb:16)
-	ld (0x3394:16), a
+	ld (ACC_EVENT+3:16), a
 	ld a, (0x31bc:16)
-	ld (0x3395:16), a
+	ld (ACC_EVENT+4:16), a
 	ld a, (0x31bd:16)
 	ld (0x3228:16), a
 	ld a, (0x31be:16)
@@ -1274,13 +1274,13 @@ RhythmPart3_ProcessRingBuf:
 	calr RingBuf_AdvanceIndex
 	ld	(xhl+iy), d
 	calr RingBuf_AdvanceIndex
-	ld a, (0x3393:16)
+	ld a, (ACC_EVENT+2:16)
 	ld	(xhl+iy), a
 	calr RingBuf_AdvanceIndex
-	ld a, (0x3394:16)
+	ld a, (ACC_EVENT+3:16)
 	ld	(xhl+iy), a
 	calr RingBuf_AdvanceIndex
-	ld a, (0x3395:16)
+	ld a, (ACC_EVENT+4:16)
 	ld	(xhl+iy), a
 	calr RingBuf_AdvanceIndex
 	ld (XHL+0x04),IY
@@ -1305,11 +1305,11 @@ RhythmPart4_LoadAndStore:
 	ld e, (0x31bf:16)
 	ld d, (0x31c0:16)
 	ld a, (0x31c1:16)
-	ld (0x3393:16), a
+	ld (ACC_EVENT+2:16), a
 	ld a, (0x31c2:16)
-	ld (0x3394:16), a
+	ld (ACC_EVENT+3:16), a
 	ld a, (0x31c3:16)
-	ld (0x3395:16), a
+	ld (ACC_EVENT+4:16), a
 	ld a, (0x31c4:16)
 	ld (0x3229:16), a
 	ld a, (0x31c5:16)
@@ -1332,13 +1332,13 @@ RhythmPart4_ProcessRingBuf:
 	calr RingBuf_AdvanceIndex
 	ld	(xhl+iy), d
 	calr RingBuf_AdvanceIndex
-	ld a, (0x3393:16)
+	ld a, (ACC_EVENT+2:16)
 	ld	(xhl+iy), a
 	calr RingBuf_AdvanceIndex
-	ld a, (0x3394:16)
+	ld a, (ACC_EVENT+3:16)
 	ld	(xhl+iy), a
 	calr RingBuf_AdvanceIndex
-	ld a, (0x3395:16)
+	ld a, (ACC_EVENT+4:16)
 	ld	(xhl+iy), a
 	calr RingBuf_AdvanceIndex
 	ld (XHL+0x04),IY
@@ -1363,11 +1363,11 @@ RhythmPart5_LoadAndStore:
 	ld e, (0x31c6:16)
 	ld d, (0x31c7:16)
 	ld a, (0x31c8:16)
-	ld (0x3393:16), a
+	ld (ACC_EVENT+2:16), a
 	ld a, (0x31c9:16)
-	ld (0x3394:16), a
+	ld (ACC_EVENT+3:16), a
 	ld a, (0x31ca:16)
-	ld (0x3395:16), a
+	ld (ACC_EVENT+4:16), a
 	ld a, (0x31cb:16)
 	ld (0x322a:16), a
 	ld a, (0x31cc:16)
@@ -1390,13 +1390,13 @@ RhythmPart5_ProcessRingBuf:
 	calr RingBuf_AdvanceIndex
 	ld	(xhl+iy), d
 	calr RingBuf_AdvanceIndex
-	ld a, (0x3393:16)
+	ld a, (ACC_EVENT+2:16)
 	ld	(xhl+iy), a
 	calr RingBuf_AdvanceIndex
-	ld a, (0x3394:16)
+	ld a, (ACC_EVENT+3:16)
 	ld	(xhl+iy), a
 	calr RingBuf_AdvanceIndex
-	ld a, (0x3395:16)
+	ld a, (ACC_EVENT+4:16)
 	ld	(xhl+iy), a
 	calr RingBuf_AdvanceIndex
 	ld (XHL+0x04),IY

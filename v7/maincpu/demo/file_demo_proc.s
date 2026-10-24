@@ -1007,7 +1007,7 @@ Banner_Loop_Check:
 Banner_Loop_CheckEntry:
 	ldto_berp A, 0xfb
 	extz wa
-	lda xbc, (0xf1a0:16)
+	lda xbc, (SEQ_TRACK_ASSIGN:16)
 	extz xwa
 	add xwa, xbc
 	ld a, (xwa)
@@ -1051,7 +1051,7 @@ Demo_PreSetup:
 
 Demo_ScanActivePartChannels:
 	ld l, 0x0:opc
-	lda xix, (0xf1a0:16)
+	lda xix, (SEQ_TRACK_ASSIGN:16)
 
 Demo_ScanPartLoop:
 	ld a, l
@@ -1066,10 +1066,10 @@ Demo_ScanPartLoop:
 	add bc, bc
 	lda xde, (Demo_PartBitMask:24)
 	ld	bc, (xde+bc)
-	and bc, (0xf19e:16)
+	and bc, (SEQ_SONG_RECORD+30:16)
 	jr z, Demo_ScanPartSkipToEnd
 	muls wa, 0x3
-	lda xbc, (0xf250:16)
+	lda xbc, (SEQ_TRACK_TABLE:16)
 	bit	7, (xbc+wa)
 	jr z, Demo_ScanPartSkipToEnd
 	ld a, l
@@ -4169,7 +4169,7 @@ FileIO_OpenWithMode:
 FileIO_OpenMode_CheckWrite:
 	cp	(xiz), 0x77
 	jr	nz, FileIO_OpenMode_UnknownMode
-	cpw	(0x1e53c:24), 31
+	cpw	(FILE_ERROR:24), 31
 	jr	nz, FileIO_OpenMode_WriteMaxFiles
 	ldw	(0x7eac:16), 0xfff5
 	ldw	hl, 0xfff5
@@ -4266,7 +4266,7 @@ FileIO_CopyAndOpen:
 	jr FileIO_CopyOpen_Return
 
 FileIO_CopyOpen_CheckMaxFiles:
-	cpw (0x1e53c:24), 31
+	cpw (FILE_ERROR:24), 31
 	jr nz, FileIO_CopyOpen_OtherError
 	ldw hl, 0xfff5
 	jr FileIO_CopyOpen_Return
@@ -4599,7 +4599,7 @@ FileIO_CompareFiles:
 	ld xwa, (xsp + 6)
 	or xwa, xwa
 	jr nz, FileIO_Compare_Return
-	cpw (0x1e53c:24), 31
+	cpw (FILE_ERROR:24), 31
 	jr nz, FileIO_Compare_Mismatch
 	ldw hl, 0xfff5
 	jrl FileIO_ParseHeader_Error
@@ -4699,7 +4699,7 @@ FileIO_ValidateRecord_CheckSize:
 	ret
 
 FileIO_ValidateRecord_Fail:
-	cpw (0x1e53c:24), 31
+	cpw (FILE_ERROR:24), 31
 	jr nz, FileIO_ValidateRecord_Ok
 	ldw hl, 0xfff5
 	ret
@@ -8406,7 +8406,7 @@ InitWPNav_ClampEnd:
 	ret
 
 ResetProgressIndication:
-	ldw (0x8464:16), 0xffff
+	ldw (DISK_MEDIA_TYPE:16), 0xffff
 	ldw (0x8466:16), 0xffff
 	ldw (0x8468:16), 0xffff
 	ldw (0x846a:16), 0xffff
@@ -8488,14 +8488,14 @@ SeqPhase_OperationStateCheck:
 	jrl nz, SeqPhase_PopIzRet
 	ld wa, 0:i3
 	calr InitializeOperationState
-	cpw (0x8464:16), 0x0000
+	cpw (DISK_MEDIA_TYPE:16), 0x0000
 	jr ge, SeqPhase_CheckMediaType
 	call GetDiskSizeInfo
 	extz HL
-	ld (0x8464:16), hl
+	ld (DISK_MEDIA_TYPE:16), hl
 	calr SignalProgressUpdate
 SeqPhase_CheckMediaType:
-	ld	wa, (33892:16)
+	ld	wa, (DISK_MEDIA_TYPE:16)
 	cp	wa, 2:i3
 	jr	z, SeqPhase_MediaIsValid
 	cp	wa, 3:i3
@@ -8579,13 +8579,13 @@ FileIO_DiskEventDispatch:
 	dec 4,XSP
 	ld (XSP),C
 	ld (XSP+0x02),A
-	cpw (0x8464:16), 0x0000
+	cpw (DISK_MEDIA_TYPE:16), 0x0000
 	jr ge, DiskEvt_CheckMediaType
 	call GetDiskSizeInfo
 	extz HL
-	ld (0x8464:16), hl
+	ld (DISK_MEDIA_TYPE:16), hl
 DiskEvt_CheckMediaType:
-	ld	wa, (33892:16)
+	ld	wa, (DISK_MEDIA_TYPE:16)
 	cp	wa, 1:i3
 	jr	z, DiskEvt_TypeIsCard
 	cp	wa, 0:i3
@@ -8631,13 +8631,13 @@ DiskEvt_Return:
 	ret
 
 FileIO_DetectFileTypeAndPost:
-	cpw (0x8464:16), 0x0000
+	cpw (DISK_MEDIA_TYPE:16), 0x0000
 	jr ge, DetectType_CheckMediaType
 	call GetDiskSizeInfo
 	extz HL
-	ld (0x8464:16), hl
+	ld (DISK_MEDIA_TYPE:16), hl
 DetectType_CheckMediaType:
-	ld	wa, (33892:16)
+	ld	wa, (DISK_MEDIA_TYPE:16)
 	cp	wa, 1:i3
 	jr	z, DetectType_IsCardReset
 	cp	wa, 0:i3
@@ -8680,13 +8680,13 @@ DetectType_IsCardReset:
 FileIO_GetDiskCapacity:
 	dec 2,XSP
 	ld (XSP),A
-	cpw (0x8464:16), 0x0000
+	cpw (DISK_MEDIA_TYPE:16), 0x0000
 	jr ge, DiskCap_CheckMediaType
 	call GetDiskSizeInfo
 	extz HL
-	ld (0x8464:16), hl
+	ld (DISK_MEDIA_TYPE:16), hl
 DiskCap_CheckMediaType:
-	ld	wa, (33892:16)
+	ld	wa, (DISK_MEDIA_TYPE:16)
 	cp	wa, 3:i3
 	jr	z, DiskCap_TypeIsFloppyOrHD
 	cp	wa, 2:i3
@@ -8874,13 +8874,13 @@ FileIO_ErrorCodeByteBlock_Skip10:
 	call	FDemo_MultiGuardCheck
 	cp	hl, 0:i3
 	ret	z
-	cpw	(33892:16), 0
+	cpw	(DISK_MEDIA_TYPE:16), 0
 	jr	ge, FileIO_ErrorCodeByteBlock_Skip11
 	call	GetDiskSizeInfo
 	extz	hl
-	ld	(33892:16), hl
+	ld	(DISK_MEDIA_TYPE:16), hl
 FileIO_ErrorCodeByteBlock_Skip11:
-	ld	wa, (33892:16)
+	ld	wa, (DISK_MEDIA_TYPE:16)
 	cp	wa, 1:i3
 	jrl	z, FileIO_ErrorCodeByteBlock_Loop
 	cp	wa, 0:i3

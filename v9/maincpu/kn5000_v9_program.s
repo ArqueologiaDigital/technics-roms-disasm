@@ -2537,7 +2537,7 @@ DrawRect:
 	jr	z, DrawRect_Deferred
 	ld	a, (COLORBLIT_MODE:24)
 	ld	(COLORBLIT_MODE_ACTIVE:24), a
-	cpw	(197710:24), 0
+	cpw	(DRAW_ENABLED:24), 0
 	jr	z, DrawRect_Return
 	ld	xwa, xiz
 	ld	bc, (xsp+4)
@@ -2568,7 +2568,7 @@ DrawRect_CallbackBlock:
 	ld	de, (xbc+12)
 	ld	c, (xbc+14)
 	ld	(COLORBLIT_MODE_ACTIVE:24), c
-	cpw	(197710:24), 0
+	cpw	(DRAW_ENABLED:24), 0
 	ret	z
 	ld	bc, de
 	calr	DrawRect_Impl
@@ -2683,7 +2683,7 @@ DrawText_QueueOrDirect:
 	jr z, DrawText_QueueDeferred
 	ld a, (COLORBLIT_MODE:24)
 	ld (COLORBLIT_MODE_ACTIVE:24), a
-	cpw (197710:24), 0
+	cpw (DRAW_ENABLED:24), 0
 	jrl z, DrawText_PopAndReturn
 	ld xwa, (xsp + 28)
 	push xwa
@@ -2751,7 +2751,7 @@ DrawText_PopAndReturn_Code:
 	ld de, (xiz + 26)
 	ld a, (xiz + 28)
 	ld (COLORBLIT_MODE_ACTIVE:24), a
-	cpw (197710:24), 0
+	cpw (DRAW_ENABLED:24), 0
 	jr z, DrawText_DeferredFreeAndReturn
 	push xiy
 	pushw ix
@@ -3321,7 +3321,7 @@ MainChordPre:
 	call Malloc
 	ld xiz, xhl
 	ld (xiz), 0x0
-	ld a, (36160:16)
+	ld a, (DISPLAY_CHORD_ROOT:16)
 	extz wa
 	sla wa, 2
 	lda xbc, (MainChordPre_RootNames:24)
@@ -3329,7 +3329,7 @@ MainChordPre:
 	push xwa
 	push xiz
 	call Strcat
-	ld a, (36162:16)
+	ld a, (DISPLAY_CHORD_TYPE:16)
 	extz wa
 	sla wa, 2
 	lda xbc, (MainChordPre_ChordTypeNames:24)
@@ -3338,9 +3338,9 @@ MainChordPre:
 	push xiz
 	call Strcat
 	lda xsp, (xsp + 18)
-	cp (36164:16), 0
+	cp (DISPLAY_CHORD_BASS:16), 0
 	jr z, MainChordPre_EmptyChordStr
-	bit 1, (52958:16)
+	bit 1, (CHORD_FLAGS:16)
 	jr z, MainChordPre_EmptyChordStr
 	ld xwa, ChordStr_On
 	jr MainChordPre_AppendChordSuffix
@@ -3352,16 +3352,16 @@ MainChordPre_AppendChordSuffix:
 	push xwa
 	push xiz
 	call Strcat
-	ld a, (36162:16)
+	ld a, (DISPLAY_CHORD_TYPE:16)
 	extz wa
 	sla wa, 2
 	lda xbc, (0x03f2f8:24)
 	ld	xbc, (xbc+wa)
-	ld a, (36160:16)
+	ld a, (DISPLAY_CHORD_ROOT:16)
 	extz wa
 	sla wa, 2
 	ld	xbc, (xbc+wa)
-	ld a, (36164:16)
+	ld a, (DISPLAY_CHORD_BASS:16)
 	extz wa
 	sla wa, 2
 	ld	xbc, (xbc+wa)

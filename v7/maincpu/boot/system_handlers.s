@@ -491,9 +491,9 @@ INTT1_CheckAltSeqTimer:
 	bit 3, (SEQ_TRANSPORT_STATE:16)
 	jr z, INTT1_CheckMetroTimer
 	ld (SEQ_TRANSPORT_STATE:16), 16
-	ld a, (1045:16)
+	ld a, (ACC_CLOCK:16)
 	ld (1078:16), a
-	ld a, (1046:16)
+	ld a, (ACC_BEAT:16)
 	ld (1079:16), a
 
 INTT1_CheckMetroTimer:
@@ -683,21 +683,21 @@ INTTR4_MetroCounter_Store:
 INTTR4_CheckSeqEnable:
 	bit	2, (1054:16)
 	jr	z, INTTR4_CheckAltSeqEnable
-	inc	1, (1045:16)
-	cp	(1045:16), 96
+	inc	1, (ACC_CLOCK:16)
+	cp	(ACC_CLOCK:16), 96
 	jr	c, INTTR4_CheckAltSeqEnable
-	ld	(1045:16), 0
-	inc	1, (1046:16)
-	cp	(0x36ff:16), 0
+	ld	(ACC_CLOCK:16), 0
+	inc	1, (ACC_BEAT:16)
+	cp	(CMP_RECORD_PART:16), 0
 	jr	z, INTTR4_SeqTick_CheckBeat
 	calr	TempoRingBuf_Write
 INTTR4_SeqTick_CheckBeat:
-	ld	a, (1046:16)
-	ld	w, (1075:16)
+	ld	a, (ACC_BEAT:16)
+	ld	w, (ACC_BEATS_PER_BAR:16)
 	ex	(0x458:16), w
 	cp	a, w
 	jr	c, INTTR4_CheckAltSeqEnable
-	ld	(1046:16), 0
+	ld	(ACC_BEAT:16), 0
 	inc	1, (1076:16)
 	inc	1, (1077:16)
 	ld	a, (1077:16)
@@ -738,13 +738,13 @@ INTTR4_SeqAutoStart:
 	jr	z, INTTR4_MetroBeat_Check
 	bit	2, (1054:16)
 	jr	z, INTTR4_SeqInit_SetEnable
-	cp	(1045:16), 95
+	cp	(ACC_CLOCK:16), 95
 	jr	c, INTTR4_SeqAutoStart_Skip
 	cp	(1076:16), 1
 	jr	c, INTTR4_SeqAutoStart_Skip
-	ld	a, (1075:16)
+	ld	a, (ACC_BEATS_PER_BAR:16)
 	dec	1, a
-	cp	(1046:16), a
+	cp	(ACC_BEAT:16), a
 	jr	c, INTTR4_SeqAutoStart_Skip
 	ld	a, 0x1:opc
 	ld	(1056:16), a
@@ -802,9 +802,9 @@ INTTR4_AltSeqBeat_Check:
 	bit 3, (SEQ_TRANSPORT_STATE:16)
 	jr z, INTTR4_MetroQuarter_Check
 	ld (SEQ_TRANSPORT_STATE:16), 16
-	ld a, (1045:16)
+	ld a, (ACC_CLOCK:16)
 	ld (1078:16), a
-	ld a, (1046:16)
+	ld a, (ACC_BEAT:16)
 	ld (1079:16), a
 
 INTTR4_MetroQuarter_Check:
@@ -825,7 +825,7 @@ INTTR4_SeqAccum_Update:
 	jr z, INTTR4_SeqAccum_Reset
 	push	sr
 	ei 6
-	ld a, (1045:16)
+	ld a, (ACC_CLOCK:16)
 	ld w, a
 	sub a, (1111:16)
 	jr z, INTTR4_SeqAccum_Done
@@ -1023,11 +1023,11 @@ INTTR4_SubTick_MetroInc:
 INTTR4_SubTick_SeqInc:
 	bit 2, (1054:16)
 	jr z, INTTR4_SubTick_PhaseSync
-	ld a, (1045:16)
+	ld a, (ACC_CLOCK:16)
 	xor a, 0x3
 	and a, 0x3
 	jr z, INTTR4_SubTick_PhaseSync
-	inc 1, (1045:16)
+	inc 1, (ACC_CLOCK:16)
 
 INTTR4_SubTick_PhaseSync:
 	bit 2, (1056:16)
@@ -1231,7 +1231,7 @@ Seq_TickWrapper:
 	lda xiy, (0x045b:16)
 	cp (XIY),0x01
 	jr nz, SeqTick_CheckActive
-	cp (0xce43:16), 0x00
+	cp (CHORD_TYPE:16), 0x00
 	jr z, SeqTick_CheckActive
 	ld (XIY),0x00
 SeqTick_CheckActive:

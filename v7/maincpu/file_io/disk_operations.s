@@ -427,14 +427,14 @@ FmmFormatFunc:
 	ld	wa, 1:i3
 	calr	InitializeOperationState
 	ldmm8	0x7ece, PREVIOUS_TITLE
-	cpw	(33892:16), 0
+	cpw	(DISK_MEDIA_TYPE:16), 0
 	jr	ge, FmmFmt_InitPhase_CheckDrive
 	call	GetDiskSizeInfo
 	extz	hl
-	ld	(33892:16), hl
+	ld	(DISK_MEDIA_TYPE:16), hl
 	calr	SignalProgressUpdate
 FmmFmt_InitPhase_CheckDrive:
-	ld	wa, (33892:16)
+	ld	wa, (DISK_MEDIA_TYPE:16)
 	cp	wa, 2:i3
 	jr	z, FmmFmt_InitPhase_DriveType23
 	cp	wa, 3:i3
@@ -591,7 +591,7 @@ FmmLoadTitleFunc:
 	cp	xde, 2
 	jrl	nz, FmmLoadTtl_Return
 	ld	(MEDLEY_PLAY_FLAG:16), 0
-	ldmm16	0x7ed4, 0x8464
+	ldmm16	0x7ed4, DISK_MEDIA_TYPE
 	ld	wa, 1:i3
 	calr	InitializeOperationState
 	ld	xwa, 6291494
@@ -599,14 +599,14 @@ FmmLoadTitleFunc:
 	ld	xde, 5:i3
 	call	ApPostEvent
 	ldmm8	0x7ed2, PREVIOUS_TITLE
-	cpw	(33892:16), 0
+	cpw	(DISK_MEDIA_TYPE:16), 0
 	jr	ge, FmmLoadTtl_StateDispatch
 	call	GetDiskSizeInfo
 	extz	hl
-	ld	(33892:16), hl
+	ld	(DISK_MEDIA_TYPE:16), hl
 	calr	SignalProgressUpdate
 FmmLoadTtl_StateDispatch:
-	ld	wa, (33892:16)
+	ld	wa, (DISK_MEDIA_TYPE:16)
 	cp	wa, 1:i3
 	jrl	z, FmmLoadTtl_StateSuccess
 	cp	wa, 0:i3
@@ -726,7 +726,7 @@ FmmLoadTtl_SlotLoop:
 	inc	1, iz
 	cp	iz, 8
 	jr	lt, FmmLoadTtl_SlotLoop	; -> 0xF8BFD9
-	ld	(35164:16), 4
+	ld	(SINGLE_LOAD_AREA:16), 4
 	jr	FmmLoadTtl_Return	; -> 0xF8C043
 FmmLoadTtl_HandleScrollNav:
 	cpw	(0x7ed4:16), 0
@@ -939,13 +939,13 @@ DiskInfoFunc:
 	jrl nz, DiskInfo_Return
 	ld wa, 0:i3
 	calr InitializeOperationState
-	cpw (0x8464:16), 0x0000
+	cpw (DISK_MEDIA_TYPE:16), 0x0000
 	jr ge, DiskInfo_ReadDriveType
 	call GetDiskSizeInfo
 	extz HL
-	ld (0x8464:16), hl
+	ld (DISK_MEDIA_TYPE:16), hl
 DiskInfo_ReadDriveType:
-	ld	wa, (33892:16)
+	ld	wa, (DISK_MEDIA_TYPE:16)
 	cp	wa, 1:i3
 	jr	z, DiskInfo_ResetCapacity
 	cp	wa, 0:i3
@@ -996,7 +996,7 @@ DiskInfo_RenderStrings:
 	ld	(xsp+4), xbc
 	sra	xbc, 10
 	ld	(xsp+4), xbc
-	ld	wa, (33892:16)
+	ld	wa, (DISK_MEDIA_TYPE:16)
 	sla	wa, 2
 	lda	xbc, (DiskInfo_MediaTypeNames:24)
 	ld	xbc, (xbc+wa)

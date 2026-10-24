@@ -1186,7 +1186,7 @@ AccPlay_InitializeStart:
 	pop xbc
 	pop xhl
 	pop xwa
-	ld a, (1075:16)
+	ld a, (ACC_BEATS_PER_BAR:16)
 	sla a, 1
 	and a, 0x1f
 	or a, 0x80
@@ -2617,8 +2617,8 @@ AccPlay_StopAndReset:
 	ld wa, 0:i3
 	ld (1047:16), a
 	ld (1048:16), wa
-	ld (1045:16), a
-	ld (1046:16), a
+	ld (ACC_CLOCK:16), a
+	ld (ACC_BEAT:16), a
 	ld (1076:16), a
 	ld (1077:16), a
 	ld (1130:16), a

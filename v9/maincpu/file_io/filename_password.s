@@ -396,7 +396,7 @@ FileName_OpSave:
 	ld xbc, EVT_SET_NOT_DRAW_FLAG
 	ld xde, 1:i3
 	call ApPostEvent
-	cpw (0xf19e:16), 0
+	cpw (SEQ_SONG_RECORD+30:16), 0
 	jr z, FileName_OpSave_ShowCode1
 	ld wa, 2:i3
 	call FileIO_WriteRecordName_Done
@@ -658,7 +658,7 @@ FileName_UpdateDisplay:
 	cp (xsp + 4), wa
 	jrl z, FileName_Return
 	call NotifyUIOfSelectionChange
-	ld (0x89f8:16), 4
+	ld (SINGLE_LOAD_AREA:16), 4
 	ld de, (0x7f7a:16)
 	exts xde
 	ld xwa, (0x7f72:16)

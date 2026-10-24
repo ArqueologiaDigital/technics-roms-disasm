@@ -383,7 +383,7 @@ SMF_ResetMidiChanMap_Loop:
 	ret
 
 SoundBank_LoadToWorkRAM:
-	ld wa, (0xf22f:16)
+	ld wa, (SEQ_SONG_RECORD+175:16)
 	ld (0x286f:16), wa
 	ld wa, (SEQ_FREE_BLOCKS:16)
 	ld (0x2871:16), wa
@@ -392,17 +392,17 @@ SoundBank_LoadToWorkRAM:
 	sla xwa, 11
 	ld xiy, SEQ_SONG_SLOTS
 	add xiy, xwa
-	ld xix, 0xf180
+	ld xix, SEQ_SONG_RECORD
 	ldw bc, 0x800
 	ldir85
 	ld wa, (0x286f:16)
-	ld (0xf22f:16), wa
+	ld (SEQ_SONG_RECORD+175:16), wa
 	ld wa, (0x2871:16)
 	ld (SEQ_FREE_BLOCKS:16), wa
-	ld wa, (0xf19e:16)
+	ld wa, (SEQ_SONG_RECORD+30:16)
 	ld (0x00ffec:24), wa
 	xor wa, wa
-	ld (0xf19e:16), wa
+	ld (SEQ_SONG_RECORD+30:16), wa
 	ret
 
 SMF_InitSequencerState:
@@ -562,7 +562,7 @@ SMF_ReadTrackData_Continue:
 	call SeqPlay_CheckStartConditions
 	call SeqPlay_RestoreVoiceState_Return
 	xor wa, wa
-	ld (0xf19e:16), wa
+	ld (SEQ_SONG_RECORD+30:16), wa
 	ld (0x00ffec:24), wa
 	call SeqTrack_AssignFloppyChannels
 	cp (SEQ_EVENT_ABORT:16), 0

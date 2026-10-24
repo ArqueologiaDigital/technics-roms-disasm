@@ -55,7 +55,7 @@ UIStateEvt_VoiceParamHandler_Skip6:
 	call	SeqBuf_Init
 	ld	(1073:16), 0
 	or (10419:16), 16
-	ldw	(0xf19e:16), 0
+	ldw	(SEQ_SONG_RECORD+30:16), 0
 	and (10405:16), 254
 	ld	a, 76:opc
 	call	CtrlPanel_SetIndicatorBit
@@ -71,7 +71,7 @@ UIStateEvt_VoiceParamHandler_Skip7:
 	call	SeqBuf_Init
 	ld	(1073:16), 0
 	or (10419:16), 16
-	ldw	(0xf19e:16), 0
+	ldw	(SEQ_SONG_RECORD+30:16), 0
 	ld	(4596:16), 0
 	call	SeqPlay_CheckStartConditions
 UIStateEvt_VoiceParamHandler_Return:
@@ -83,7 +83,7 @@ UIStateEvt_VoiceParamHandler_Return:
 ;   = 0. Basis: callers + body -- UIStateEvt_VoiceParamHandler runs it before AccWrap_PlayModeDispatch / SeqBuf_Init
 ;   when the sequencer starts; value 16 is RHYTHM in both track-assign name tables.
 Seq_FindRhythmTrack:
-	ld	xix, 0xf1a0
+	ld	xix, SEQ_TRACK_ASSIGN
 	xor	bc, bc
 	ld	c, 16:opc
 	ld	a, 16:opc
@@ -97,14 +97,14 @@ Seq_FindRhythmTrack_Skip3:
 	sub	wa, bc
 	ld	c, a
 	ld	b, a
-	ld	iz, (0xf19e:16)
+	ld	iz, (SEQ_SONG_RECORD+30:16)
 	ld	a, c
 	scf
 	xorcf_a_16	iz	; after scf: C = NOT bit A (the track) of the mask
 	ld	a, b
 	jr	c, Seq_FindRhythmTrack_Join
 	pushw	wa
-	ld	xhl, 0xf250
+	ld	xhl, SEQ_TRACK_TABLE
 	ld	c, 3:opc
 	mul	wa, c
 	ld	iy, wa
@@ -158,16 +158,16 @@ PlayMode_NullRet:
 	ret
 PlayMode_SetupAndDispatch:
 	; --- Setup: load/store/call/set flag ---
-	ld	wa, (0xf19e:16)
+	ld	wa, (SEQ_SONG_RECORD+30:16)
 	ld	(0x2875:16), wa
-	ld	(3424:16), 0
+	ld	(SEQ_SELECTED_TRACK:16), 0
 	call AccWrap_PlayModeDispatch
 	or	(SEQ_RTMCFG:16), 4
 	ret
 PlayMode_TeardownAndRestore:
 	; --- Teardown: load/store/clear flags ---
 	ld	wa, (0x2875:16)
-	ld	(0xf19e:16), wa
+	ld	(SEQ_SONG_RECORD+30:16), wa
 	and	(SEQ_RTMCFG:16), 251
 	or	(0x28b3:16), 16
 	and	(SEQ_RTMCFG:16), 247
@@ -256,22 +256,22 @@ PartParam_Handler_0F:
 	ret
 Part_LookupParam:
 	; --- Lookup function: load from table[IY], store ---
-	ld xhl, 0x0000f1a0
+	ld xhl, SEQ_TRACK_ASSIGN
 	xor b, b
 	ld iy, bc
 	ld e, c
 	ld	a, (xhl+iy)
 	ld	(3423:16), a
 	inc 1, e
-	ld	(3424:16), e
+	ld	(SEQ_SELECTED_TRACK:16), e
 	ret
 Part_ValidateAndActivate:
 	; --- Validation: check range, optionally call ---
 	ldw	(0x287f:16), 1
 	ldw	(3383:16), 0
-	cp	(3424:16), 0
+	cp	(SEQ_SELECTED_TRACK:16), 0
 	jr z, PartValidate_Done
-	cp	(3424:16), 16
+	cp	(SEQ_SELECTED_TRACK:16), 16
 	jr ugt, PartValidate_Done
 	ldw	(4360:16), 0
 	xor	wa, wa
@@ -936,8 +936,8 @@ CDlike_ResetPlaybackState:
 	bit 1, (SEQ_RTMCFG:16)
 	jr z, CDlikeReset_SetTimerFlags
 	ld (1054:16), 1
-	ld (1045:16), 0
-	ld (1046:16), 0
+	ld (ACC_CLOCK:16), 0
+	ld (ACC_BEAT:16), 0
 	ld (1076:16), 0
 	ld (1077:16), 0
 
@@ -963,9 +963,9 @@ CDlike_InitModeAndLoadBank:
 	cp (CURRENT_TITLE:16), 122
 	jr z, CDlikeSw_NullRet
 	call SqTrAs_InitWall
-	ld wa, (0xf19e:16)
+	ld wa, (SEQ_SONG_RECORD+30:16)
 	ld (0x2875:16), wa
-	ldw (0xf19e:16), 0
+	ldw (SEQ_SONG_RECORD+30:16), 0
 	ldw (8980:16), 0
 	ld xiy, 0xf9a0
 	ld xix, 0x3cf04
@@ -977,14 +977,14 @@ CDlikeSw_NullRet:
 
 CDlike_LoadSongBankData:
 	ld (6882:16), 0
-	cpw (0xf19e:16), 0
+	cpw (SEQ_SONG_RECORD+30:16), 0
 	jr nz, CDlikeBankLoad_CheckSavedState
 	ld (6882:16), 1
 
 CDlikeBankLoad_CheckSavedState:
 	ld wa, (0x00ffec:24)
-	ld (0xf19e:16), wa
-	ld xiy, 0xf180
+	ld (SEQ_SONG_RECORD+30:16), wa
+	ld xiy, SEQ_SONG_RECORD
 	ld xix, SEQ_SONG_SLOTS
 	xor xwa, xwa
 	ld a, (SEQ_CURRENT_SONG:24)
@@ -994,7 +994,7 @@ CDlikeBankLoad_CheckSavedState:
 	ldir85
 	cp (6882:16), 1
 	jr nz, CDlikeBankLoad_Return
-	ldw (0xf19e:16), 0
+	ldw (SEQ_SONG_RECORD+30:16), 0
 
 CDlikeBankLoad_Return:
 	ret
@@ -1023,7 +1023,7 @@ CDlikeExit_CheckPlaybackType:
 	call SwbtWr_ResetAllChannels
 	call SqTrAs_Setup
 	ld wa, (0x2875:16)
-	ld (0xf19e:16), wa
+	ld (SEQ_SONG_RECORD+30:16), wa
 
 PlayMode_ResetAndSchedule:
 	ld (3380:16), 0
@@ -1037,7 +1037,7 @@ SongBank_SwitchAndUpdateTempo:
 	ret
 
 SongBank_SaveAndReload:
-	ld wa, (0xf22f:16)
+	ld wa, (SEQ_SONG_RECORD+175:16)
 	ld (0x286f:16), wa
 	ld wa, (SEQ_FREE_BLOCKS:16)
 	ld (0x2871:16), wa
@@ -1052,19 +1052,19 @@ SongBank_LoadToWorkArea:
 	sla xwa, 11
 	ld xiy, SEQ_SONG_SLOTS
 	add xiy, xwa
-	ld xix, 0xf180
+	ld xix, SEQ_SONG_RECORD
 	ldw bc, 0x800
 	ldir85
-	ld wa, (0xf19e:16)
+	ld wa, (SEQ_SONG_RECORD+30:16)
 	ld (0x00ffec:24), wa
 	ld wa, (0x286f:16)
-	ld (0xf22f:16), wa
+	ld (SEQ_SONG_RECORD+175:16), wa
 	ld wa, (0x2871:16)
 	ld (SEQ_FREE_BLOCKS:16), wa
 	ret
 
 SongBank_CheckAccompanimentMode:
-	cp (0xf23d:16), 255
+	cp (SEQ_SONG_RECORD+189:16), 255
 	jr z, SongBank_EnableAccompaniment
 	bit 2, (PANEL_REC_91+3:16)
 	jr z, SongBank_CheckBassMode
@@ -1087,7 +1087,7 @@ SongBank_SendAccompEvent:
 	call SwbtWr_ReinitBothBanks
 
 SongBank_CheckBassMode:
-	cp (0xf24b:16), 255
+	cp (SEQ_SONG_RECORD+203:16), 255
 	jr z, SongBank_EnableBassMode
 	and (PANEL_REC_91+3:16), 254
 	xor a, a
@@ -1111,7 +1111,7 @@ SongBank_SendBassEvent:
 ; SqTrAs setup handler
 SqTrAs_Setup:
 	ld xiy, 0xcce
-	ld xix, 0xf1a0
+	ld xix, SEQ_TRACK_ASSIGN
 	xor bc, bc
 	ld c, 0x10:opc
 	ldir85
@@ -1120,7 +1120,7 @@ SqTrAs_Setup:
 ; SqTrAs init wall data
 SqTrAs_InitWall:
 	ld xix, 0xcce
-	ld xiy, 0xf1a0
+	ld xiy, SEQ_TRACK_ASSIGN
 	xor bc, bc
 	ld c, 0x10:opc
 	ldir85

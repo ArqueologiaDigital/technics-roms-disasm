@@ -89,11 +89,11 @@ TextRender_PopAndReturn:
 ;   drawing use it for 0 bits (0xF5 = copy the wallpaper pixel). Basis: callers + body -- the four screen-init
 ;   sequences call it with WA = 0xF5 next to GraphicsRender_ByteData (foreground colour, 0x3EFA4 = 0xFF).
 Display_SetBackgroundColor:
-	ld (0x03efa2:24), wa
+	ld (GFX_BG_COLOR:24), wa
 	ret
 
 GraphicsRender_ByteData:
-	ld	(0x03efa4:24), wa
+	ld	(GFX_FG_COLOR:24), wa
 	ret
 ; Display_FillPaletteBandFromEntry: Sets palette entries 64..191 to the RGB of palette entry WA (shadow table 0x324FC)
 ;   and flags a palette upload; runs directly on the draw task, otherwise posts itself to the draw ring. Basis:
@@ -395,8 +395,8 @@ DrawText_NullTerminate:
 	lda xwa, (xsp+270)
 	ld xbc, 0:i3
 	push xbc
-	pushw	(0x3efa4:24)
-	pushw	(0x3efa2:24)
+	pushw	(GFX_FG_COLOR:24)
+	pushw	(GFX_BG_COLOR:24)
 	ld xbc, (xsp + 14)
 	calr DrawText_QueueOrDirect
 	pop xiz
@@ -455,8 +455,8 @@ DrawText_LayoutAndRender_Variant1_Skip:
 	lda	xwa, (xsp+270)
 	ld	xbc, 1:i3
 	push	xbc
-	pushw	(0x3efa4:24)
-	pushw	(0x3efa2:24)
+	pushw	(GFX_FG_COLOR:24)
+	pushw	(GFX_BG_COLOR:24)
 	ld	xbc, (xsp+14)
 	calr	DrawText_QueueOrDirect
 	pop	xiz
@@ -514,8 +514,8 @@ DrawText_LayoutAndRender_Variant1_Skip2:
 	lda	xwa, (xsp+270)
 	ld	xbc, 2:i3
 	push	xbc
-	pushw	(0x3efa4:24)
-	pushw	(0x3efa2:24)
+	pushw	(GFX_FG_COLOR:24)
+	pushw	(GFX_BG_COLOR:24)
 	ld	xbc, (xsp+14)
 	calr	DrawText_QueueOrDirect
 	pop	xiz
@@ -568,8 +568,8 @@ DrawText_LayoutAndRender_Variant1_Skip3:
 	lda	xwa, (xsp+270)
 	ld	xbc, 3:i3
 	push	xbc
-	pushw	(0x3efa4:24)
-	pushw	(0x3efa2:24)
+	pushw	(GFX_FG_COLOR:24)
+	pushw	(GFX_BG_COLOR:24)
 	ld	xbc, (xsp+14)
 	calr	DrawText_QueueOrDirect
 	pop	xiz
@@ -622,8 +622,8 @@ DrawText_LayoutAndRender_Variant1_Skip4:
 	lda	xwa, (xsp+270)
 	ld	xbc, 4:i3
 	push	xbc
-	pushw	(0x3efa4:24)
-	pushw	(0x3efa2:24)
+	pushw	(GFX_FG_COLOR:24)
+	pushw	(GFX_BG_COLOR:24)
 	ld	xbc, (xsp+14)
 	calr	DrawText_QueueOrDirect
 	pop	xiz
@@ -681,8 +681,8 @@ DrawText_LayoutAndRender_Variant1_Skip5:
 	lda	xwa, (xsp+270)
 	ld	xbc, 6:i3
 	push	xbc
-	pushw	(0x3efa4:24)
-	pushw	(0x3efa2:24)
+	pushw	(GFX_FG_COLOR:24)
+	pushw	(GFX_BG_COLOR:24)
 	ld	xbc, (xsp+14)
 	calr	DrawText_QueueOrDirect
 	pop	xiz
@@ -701,7 +701,7 @@ SeGfx_StaticOp00_Line:
 	ld	(xbc), hl
 	ld	de, (xde+8)
 	ld	(xbc+2), de
-	ld	de, (0x03efa4:24)
+	ld	de, (GFX_FG_COLOR:24)
 	calr	DrawLineWithMode
 	inc	8, xsp
 	ret
@@ -718,7 +718,7 @@ SeGfx_StaticOp01_Line:
 	ld	(xbc), hl
 	ld	de, (xde+8)
 	ld	(xbc+2), de
-	ld	de, (0x03efa4:24)
+	ld	de, (GFX_FG_COLOR:24)
 	calr	DrawLineWithMode
 	inc	8, xsp
 	ret
@@ -735,7 +735,7 @@ SeGfx_StaticOp02_Line:
 	ld	(xbc), hl
 	ld	de, (xde+8)
 	ld	(xbc+2), de
-	ld	de, (0x03efa4:24)
+	ld	de, (GFX_FG_COLOR:24)
 	calr	DrawLineWithMode
 	inc	8, xsp
 	ret
@@ -752,7 +752,7 @@ SeGfx_StaticOp11_DottedLine:
 	ld	(xbc), hl
 	ld	de, (xde+8)
 	ld	(xbc+2), de
-	ld	de, (0x03efa4:24)
+	ld	de, (GFX_FG_COLOR:24)
 	calr	DrawDottedLineWithMode
 	inc	8, xsp
 	ret
@@ -769,7 +769,7 @@ SeGfx_StaticOp12_DottedLine:
 	ld	(xbc), hl
 	ld	de, (xde+8)
 	ld	(xbc+2), de
-	ld	de, (0x03efa4:24)
+	ld	de, (GFX_FG_COLOR:24)
 	calr	DrawDottedLineWithMode
 	inc	8, xsp
 	ret
@@ -786,7 +786,7 @@ SeGfx_StaticOp15_DottedLine:
 	ld	(xbc), hl
 	ld	de, (xde+8)
 	ld	(xbc+2), de
-	ld	de, (0x03efa4:24)
+	ld	de, (GFX_FG_COLOR:24)
 	calr	DrawDottedLineWithMode
 	inc	8, xsp
 	ret
@@ -801,7 +801,7 @@ SeGfx_StaticOp09_Box:
 	ld	(xbc+4), de
 	ld	wa, (xwa+8)
 	ld	(xbc+6), wa
-	ld	de, (0x03efa4:24)
+	ld	de, (GFX_FG_COLOR:24)
 	ld	xwa, xbc
 	ld	bc, de
 	calr	DrawRect
@@ -820,7 +820,7 @@ SeGfx_StaticOp0A_ShadowBox2:
 	ld	(xwa+4), bc
 	ld	bc, (xiz+8)
 	ld	(xwa+6), bc
-	ld	bc, (0x03efa4:24)
+	ld	bc, (GFX_FG_COLOR:24)
 	calr	DrawRect
 	lda	xwa, (xsp+8)
 	lda	xde, (xiz+6)
@@ -837,7 +837,7 @@ SeGfx_StaticOp0A_ShadowBox2:
 	ld	de, (xiz+8)
 	inc	1, de
 	ld	(xbc+2), de
-	ld	de, (0x03efa4:24)
+	ld	de, (GFX_FG_COLOR:24)
 	calr	DrawLineWithMode
 	lda	xwa, (xsp+8)
 	lda	xde, (xiz+6)
@@ -854,7 +854,7 @@ SeGfx_StaticOp0A_ShadowBox2:
 	ld	de, (xiz+8)
 	inc	2, de
 	ld	(xbc+2), de
-	ld	de, (0x03efa4:24)
+	ld	de, (GFX_FG_COLOR:24)
 	calr	DrawLineWithMode
 	lda	xwa, (xsp+8)
 	ld	bc, (xiz+2)
@@ -871,7 +871,7 @@ SeGfx_StaticOp0A_ShadowBox2:
 	ld	de, (xhl)
 	inc	1, de
 	ld	(xbc+2), de
-	ld	de, (0x03efa4:24)
+	ld	de, (GFX_FG_COLOR:24)
 	calr	DrawLineWithMode
 	lda	xwa, (xsp+8)
 	ld	bc, (xiz+2)
@@ -888,7 +888,7 @@ SeGfx_StaticOp0A_ShadowBox2:
 	ld	de, (xhl)
 	inc	2, de
 	ld	(xbc+2), de
-	ld	de, (0x03efa4:24)
+	ld	de, (GFX_FG_COLOR:24)
 	calr	DrawLineWithMode
 	pop	xiz
 	lda	xsp, (xsp+16)
@@ -908,7 +908,7 @@ SeGfx_StaticOp13_DottedBox:
 	ld	(xbc), de
 	ld	de, (xhl)
 	ld	(xbc+2), de
-	ld	de, (0x03efa4:24)
+	ld	de, (GFX_FG_COLOR:24)
 	calr	DrawDottedLineWithMode
 	lda	xwa, (xsp+8)
 	ld	bc, (xiz+2)
@@ -921,7 +921,7 @@ SeGfx_StaticOp13_DottedBox:
 	ld	(xbc), de
 	ld	de, (xhl)
 	ld	(xbc+2), de
-	ld	de, (0x03efa4:24)
+	ld	de, (GFX_FG_COLOR:24)
 	calr	DrawDottedLineWithMode
 	lda	xwa, (xsp+8)
 	lda	xde, (xiz+2)
@@ -934,7 +934,7 @@ SeGfx_StaticOp13_DottedBox:
 	ld	(xbc), de
 	ld	de, (xiz+8)
 	ld	(xbc+2), de
-	ld	de, (0x03efa4:24)
+	ld	de, (GFX_FG_COLOR:24)
 	calr	DrawDottedLineWithMode
 	lda	xwa, (xsp+8)
 	lda	xde, (xiz+6)
@@ -947,7 +947,7 @@ SeGfx_StaticOp13_DottedBox:
 	ld	(xbc), de
 	ld	de, (xiz+8)
 	ld	(xbc+2), de
-	ld	de, (0x03efa4:24)
+	ld	de, (GFX_FG_COLOR:24)
 	calr	DrawDottedLineWithMode
 	pop	xiz
 	inc	8, xsp
@@ -965,7 +965,7 @@ SeGfx_StaticOp22_ShadowBox1:
 	ld	(xwa+4), bc
 	ld	bc, (xiz+8)
 	ld	(xwa+6), bc
-	ld	bc, (0x03efa4:24)
+	ld	bc, (GFX_FG_COLOR:24)
 	calr	DrawRect
 	lda	xwa, (xsp+8)
 	lda	xde, (xiz+6)
@@ -982,7 +982,7 @@ SeGfx_StaticOp22_ShadowBox1:
 	ld	de, (xiz+8)
 	inc	1, de
 	ld	(xbc+2), de
-	ld	de, (0x03efa4:24)
+	ld	de, (GFX_FG_COLOR:24)
 	calr	DrawLineWithMode
 	lda	xwa, (xsp+8)
 	ld	bc, (xiz+2)
@@ -999,7 +999,7 @@ SeGfx_StaticOp22_ShadowBox1:
 	ld	de, (xhl)
 	inc	1, de
 	ld	(xbc+2), de
-	ld	de, (0x03efa4:24)
+	ld	de, (GFX_FG_COLOR:24)
 	calr	DrawLineWithMode
 	pop	xiz
 	lda	xsp, (xsp+16)
@@ -1028,7 +1028,7 @@ SeGfx_StaticOp03_Bitmap:
 	add	de, bc
 	ld	(xhl+4), de
 	ld	xbc, (xwa+2)
-	ld	de, (0x03efa4:24)
+	ld	de, (GFX_FG_COLOR:24)
 	ld	xwa, xhl
 	calr	ColorBlit2_LargeCodeBlock
 	inc	8, xsp
@@ -1091,7 +1091,7 @@ SeGfx_StaticOp05_FillBoxMode1:
 	ld	a, (COLORBLIT_MODE:24)
 	ldfr_berp	a, 251
 	ld	(COLORBLIT_MODE:24), 1
-	ld	de, (0x03efa4:24)
+	ld	de, (GFX_FG_COLOR:24)
 	ld	xwa, xbc
 	ld	bc, de
 	calr	ColorBlit
@@ -1125,7 +1125,7 @@ ColorBlit_ComputeRectAndBlit:
 	ld de, (xwa)
 	add de, bc
 	ld (xwa + 4), de
-	ld bc, (0x03efa2:24)
+	ld bc, (GFX_BG_COLOR:24)
 	calr ColorBlit2
 	inc 8, xsp
 	ret
@@ -1141,7 +1141,7 @@ ColorBlit_ByteData:
 	ld	(xbc+4), de
 	ld	wa, (xwa+8)
 	ld	(xbc+6), wa
-	ld	de, (0x03efa2:24)
+	ld	de, (GFX_BG_COLOR:24)
 	ld	xwa, xbc
 	ld	bc, de
 	calr	ColorBlit2
@@ -1232,8 +1232,8 @@ DrawText_ExtLayout_NullAndDraw:
 	ld	xbc, (xbc+wa)
 	lda xwa, (xsp+276)
 	push xbc
-	pushw	(0x3efa4:24)
-	pushw	(0x3efa2:24)
+	pushw	(GFX_FG_COLOR:24)
+	pushw	(GFX_BG_COLOR:24)
 	ld xbc, (xsp + 20)
 	ld xde, (xsp + 16)
 	calr DrawText_QueueOrDirect
@@ -1316,8 +1316,8 @@ DrawText_ExtLayout_Variant1_Skip:
 	extz	xbc
 	lda	xwa, (xsp+276)
 	push	xbc
-	pushw	(0x03efa4:24)
-	pushw	(0x03efa2:24)
+	pushw	(GFX_FG_COLOR:24)
+	pushw	(GFX_BG_COLOR:24)
 	ld	xbc, (xsp+20)
 	ld	xde, (xsp+16)
 	calr	DrawText_QueueOrDirect
@@ -1390,8 +1390,8 @@ DrawFunc_Init_PushFontAndDraw:
 	lda	xbc, (xsp+260)
 	lda	xde, (xsp+4)
 	push	xhl
-	pushw	(0x3efa4:24)
-	pushw	(0x3efa2:24)
+	pushw	(GFX_FG_COLOR:24)
+	pushw	(GFX_BG_COLOR:24)
 	calr	DrawText_QueueOrDirect
 	pop	xiz
 	lda	xsp, (xsp+268)
@@ -1500,8 +1500,8 @@ DrawFunc_Init_Join4:
 	lda	xbc, (xsp+260)
 	lda	xde, (xsp+4)
 	push	xhl
-	pushw	(0x3efa4:24)
-	pushw	(0x3efa2:24)
+	pushw	(GFX_FG_COLOR:24)
+	pushw	(GFX_BG_COLOR:24)
 	calr	DrawText_QueueOrDirect
 	pop	xiz
 	lda	xsp, (xsp+268)
@@ -1558,8 +1558,8 @@ AccDraw_Secondary_Helper20:
 	lda xbc, (xsp + 0x0104)
 	lda xde, (xsp + 0x04)
 	push XHL
-	pushw	(0x3efa4:24)
-	pushw	(0x3efa2:24)
+	pushw	(GFX_FG_COLOR:24)
+	pushw	(GFX_BG_COLOR:24)
 	calr	DrawText_QueueOrDirect
 	pop	xiz
 	lda	xsp, (xsp+268)
@@ -1619,8 +1619,8 @@ SeGfx_BoundOp09_FormatNumber_Join4:
 	lda	xbc, (xsp+260)
 	lda	xde, (xsp+4)
 	push	xhl
-	pushw	(0x3efa4:24)
-	pushw	(0x3efa2:24)
+	pushw	(GFX_FG_COLOR:24)
+	pushw	(GFX_BG_COLOR:24)
 	calr	DrawText_QueueOrDirect
 	pop	xiz
 	lda	xsp, (xsp+268)
@@ -1719,8 +1719,8 @@ AccDraw_Secondary_Helper20_Join5:
 	lda	xbc, (xsp+260)
 	lda	xde, (xsp+4)
 	push	xhl
-	pushw	(0x3efa4:24)
-	pushw	(0x3efa2:24)
+	pushw	(GFX_FG_COLOR:24)
+	pushw	(GFX_BG_COLOR:24)
 	calr	DrawText_QueueOrDirect
 	pop	xiz
 	lda	xsp, (xsp+268)
@@ -1774,8 +1774,8 @@ SeGfx_BoundOp0A_FormatNumber_Join7:
 	lda	xbc, (xsp+260)
 	lda	xde, (xsp+4)
 	push	xhl
-	pushw	(0x3efa4:24)
-	pushw	(0x3efa2:24)
+	pushw	(GFX_FG_COLOR:24)
+	pushw	(GFX_BG_COLOR:24)
 	calr	DrawText_QueueOrDirect
 	pop	xiz
 	lda	xsp, (xsp+268)
@@ -1814,7 +1814,7 @@ ColorBlit_PalSave_SkipShift:
 	ld c, (COLORBLIT_MODE:24)
 	ldfr_berp C, 0xfb
 	ld (COLORBLIT_MODE:24), 0x01
-	ld bc, (0x03efa4:24)
+	ld bc, (GFX_FG_COLOR:24)
 	calr ColorBlit
 	ldto_berp A, 0xfb
 	ld (COLORBLIT_MODE:24), a
@@ -1863,7 +1863,7 @@ ColorBlit_Variant_ByteData_Skip:
 	ld	de, (xwa)
 	add	de, bc
 	ld	(xwa+4), de
-	ld	bc, (0x03efa2:24)
+	ld	bc, (GFX_BG_COLOR:24)
 	calr	ColorBlit2
 	inc	8, xsp
 	ret
@@ -1896,7 +1896,7 @@ SeGfx_BoundOp08_ColorBlit_Skip2:
 	ld	(xwa+4), bc
 	ld	bc, (xde+6)
 	ld	(xwa+6), bc
-	ld	bc, (0x03efa2:24)
+	ld	bc, (GFX_BG_COLOR:24)
 	calr	ColorBlit2
 	inc	8, xsp
 	ret

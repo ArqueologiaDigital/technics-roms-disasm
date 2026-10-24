@@ -3843,7 +3843,7 @@ SetSongSlotValue:
 	extz de
 	cp de, wa
 	ret nz
-	lda xhl, (0x00f180:24)
+	lda xhl, (SEQ_SONG_RECORD:24)
 	add xhl, 0x1c
 	ld (xhl), bc
 	ret

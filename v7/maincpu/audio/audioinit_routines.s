@@ -105,7 +105,7 @@ AudioInit_FallbackToStereo:
 	extz	wa
 	jrl	AudioInit_ConfigStereoVoice
 AudioInit_SelectVoiceByType:
-	ld	a, (0x36ff:16)
+	ld	a, (CMP_RECORD_PART:16)
 	cp	a, 0x60
 	jr	z, AudioInit_StereoVoiceCfg
 	cp	a, 0x10
@@ -609,7 +609,7 @@ Audio_CheckInitStatus:
 	ldw	(xsp), 0x0
 	ldw	(0xc4fc:16), 0
 	ld	(0xc502:16), 255
-	ld	hl, (0xf19e:16)
+	ld	hl, (SEQ_SONG_RECORD+30:16)
 	or	hl, (3409:16)
 	ld	wa, hl
 	cp	wa, 0:i3
@@ -635,24 +635,24 @@ AudioInit_ChannelLoop_Init:
 AudioInit_ChannelLoop_Body:
 	ld	a, e
 	extz	wa
-	lda	xix, (0xf1a0:16)
+	lda	xix, (SEQ_TRACK_ASSIGN:16)
 	extz	xwa
 	add	xwa, xix
 	ld	a, (xwa)
 	ld	d, a
-	bit	1, (62014:16)
+	bit	1, (SEQ_SONG_RECORD+190:16)
 	jr	z, AudioInit_ChannelLoop_Body_Skip2
 	ldi_erpb	230, 255
 	ld	a, e
 	extz	wa
-	lda	xix, (61872:16)
+	lda	xix, (SEQ_SONG_RECORD+48:16)
 	extz	xwa
 	add	xwa, xix
 	cp	(xwa), 16
 	jr	z, AudioInit_ChannelLoop_Body_Skip
 	ld	a, e
 	extz	wa
-	lda	xix, (61872:16)
+	lda	xix, (SEQ_SONG_RECORD+48:16)
 	extz	xwa
 	add	xwa, xix
 	ld	a, (xwa)
@@ -667,11 +667,11 @@ AudioInit_ChannelLoop_Body_Skip2:
 	add	wa, wa
 	lda	xix, (Bit16Mask_Table:24)
 	ld	wa, (xix+wa)
-	and	wa, (0xf290:16)
+	and	wa, (SEQ_SONG_RECORD+272:16)
 	jr	z, AudioInit_VoiceNotAssigned
 	ld	a, e
 	extz	wa
-	lda	xix, (0xf1a0:16)
+	lda	xix, (SEQ_TRACK_ASSIGN:16)
 	extz	xwa
 	add	xwa, xix
 	ld	a, (xwa)
@@ -840,7 +840,7 @@ AudioInit_GroupA_DefaultMapping:
 	add	wa, wa
 	lda	xix, (Bit16Mask_Table:24)
 	ld	wa, (xix+wa)
-	and	wa, (0xf1d0:16)
+	and	wa, (SEQ_SONG_RECORD+80:16)
 	jr	z, AudioInit_GroupA_NoSecondary
 	ld	a, e
 	extz	wa
@@ -1040,7 +1040,7 @@ AudioInit_ApplyOutputRouting:
 	inc	2, xsp
 	ret
 AudioInit_SelectPriority:
-	ld	a, (0x36ff:16)
+	ld	a, (CMP_RECORD_PART:16)
 	cp	a, 0x10
 	jrl	z, AudioInit_Priority_Mode10
 	cp	a, 0x8

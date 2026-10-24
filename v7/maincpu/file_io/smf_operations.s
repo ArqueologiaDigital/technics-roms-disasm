@@ -15,14 +15,14 @@ FmmSmfLoadTitleFunc:
 	ld	xde, 5:i3
 	call	ApPostEvent
 	ldmm8	0x7fee, PREVIOUS_TITLE
-	cpw	(33892:16), 0
+	cpw	(DISK_MEDIA_TYPE:16), 0
 	jr	ge, SmfLoad_DispatchState
 	call	GetDiskSizeInfo
 	extz	hl
-	ld	(33892:16), hl
+	ld	(DISK_MEDIA_TYPE:16), hl
 	calr	SignalProgressUpdate
 SmfLoad_DispatchState:
-	ld	wa, (33892:16)
+	ld	wa, (DISK_MEDIA_TYPE:16)
 	cp	wa, 1:i3
 	jrl	z, SmfLoad_Success
 	cp	wa, 0:i3
@@ -731,7 +731,7 @@ SmfFN_Save_WriteSlot:
 	ld	a, (SEQ_CURRENT_SONG:24)
 	cp	a, (34988:16)
 	jr	nz, SmfFN_Save_Finish
-	lda	xwa, (61824:24)
+	lda	xwa, (SEQ_SONG_RECORD:24)
 	lda	xwa, (xwa+256)
 	lda	xbc, (xsp+8)
 	ldw	de, 16
@@ -745,7 +745,7 @@ SmfFN_Save_Finish:
 	ld xbc, EVT_SET_NOT_DRAW_FLAG
 	ld xde, 1:i3
 	call ApPostEvent
-	cpw (0xf19e:16), 0
+	cpw (SEQ_SONG_RECORD+30:16), 0
 	jr z, SmfFN_Save_NoAltSlot
 	ldw wa, 0xa
 	jr SmfFN_Save_CallResult

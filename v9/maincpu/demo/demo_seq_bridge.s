@@ -456,7 +456,7 @@ CDlikeSwTtl_ReturnZeroStub2:
 CDlikeSwTtl_SendEvt4:
 	bit	0, (0xce0:16)
 	jr	nz, CDlikeSwTtl_SendEvt4_Bit0Set
-	ldb_d8	a, (0xcdf)
+	ldb_d8	a, (TRACK_ASSIGN_CURSOR)
 	inc	2, a
 	extz	wa
 	ld	de, wa
@@ -466,7 +466,7 @@ CDlikeSwTtl_SendEvt4:
 	ld	xbc, EVT_REQUEST_GRID_DRAW
 	jr	CDlikeSwTtl_SendEvt4_Post
 CDlikeSwTtl_SendEvt4_Bit0Set:
-	ldb_d8	a, (0xcdf)
+	ldb_d8	a, (TRACK_ASSIGN_CURSOR)
 	dec	6, a
 	extz	wa
 	ld	de, wa
@@ -794,7 +794,7 @@ DispatchHandler_InitAllSlots:
 	pop xde
 	ld iy, 1:i3
 	call SeqNode_ResolveSlotPtr
-	ldw (0xf22f:16), 1
+	ldw (SEQ_SONG_RECORD+175:16), 1
 	ld xiy, (SEQ_BLOCK_PTR:16)
 	xor xhl, xhl
 	ld de, 2:i3
@@ -815,7 +815,7 @@ SeqSlot_InitEntryLoop:
 	ld (xiy + 1), hl
 	ld (xiy + 5), 0x82
 	ldw (xiy + 3), 0xffff
-	ld xhl, 0xf250
+	ld xhl, SEQ_TRACK_TABLE
 	ldw bc, 0x10
 
 SeqSlot_ClearF250Loop:
@@ -860,7 +860,7 @@ DispatchHandler_ResolveSlot:
 	ld xde, (SEQ_BLOCK_POOL:16)
 	ld (xhl), xde
 	pop xde
-	ld iy, (0xf22f:16)
+	ld iy, (SEQ_SONG_RECORD+175:16)
 	cp iy, 0xffff
 	jr z, DispatchResolve_ReturnFail
 	ld xde, (SEQ_BLOCK_PTR:16)
@@ -868,7 +868,7 @@ DispatchHandler_ResolveSlot:
 	call SeqNode_ResolveSlotPtr
 	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld wa, (xhl + 3)
-	ld (0xf22f:16), wa
+	ld (SEQ_SONG_RECORD+175:16), wa
 	ld ix, iy
 	cp wa, 0xffff
 	jr z, DispatchResolve_MarkCurrent
@@ -901,8 +901,8 @@ SeqNode_InsertAtPosition:
 	ld (xhl), xde
 	pop xde
 	ld (3302:16), wa
-	ld bc, (0xf22f:16)
-	ld (0xf22f:16), iy
+	ld bc, (SEQ_SONG_RECORD+175:16)
+	ld (SEQ_SONG_RECORD+175:16), iy
 	xor wa, wa
 	call SeqNode_ResolveSlotPtr
 	ld xhl, (SEQ_BLOCK_PTR:16)
@@ -992,7 +992,7 @@ VoiceSlot_AssignWrapper:
 VoiceSlot_AssignToChannel:
 	pushw bc
 	ld (4353:16), xiy
-	ld (3822:16), a
+	ld (SEQ_CURSOR_TRACK:16), a
 	ld c, w
 	call VoiceSlot_ComputeWordIndex
 	extz xiz
@@ -1154,14 +1154,14 @@ VoiceSlot_AllocNewSlot:
 	pushw wa
 	pushw iz
 	push xix
-	ld a, (3822:16)
+	ld a, (SEQ_CURSOR_TRACK:16)
 	dec 1, a
 	ld w, a
 	sla a, 1
 	add a, w
 	xor w, w
 	ld iz, wa
-	ld xix, 0xf250
+	ld xix, SEQ_TRACK_TABLE
 	or	(xix+iz), 0x80
 	ldfr_lerp XIX, 0x38
 	lda	xix, (xix+iz)

@@ -1093,7 +1093,7 @@ BmDrEdit_CountNotesLoop_Retry:
 
 BmDrEdit_CheckChannelActive:
 	ld e, 0x0:opc
-	lda xbc, (0xf1a0:16)
+	lda xbc, (SEQ_TRACK_ASSIGN:16)
 
 BmDrEdit_CheckChannelActive_Loop:
 	ld a, e
@@ -1126,7 +1126,7 @@ BmDrEdit_CheckChannelActive_None:
 BmDrEdit_SelectActiveChannel:
 	pushw_erp 0xfa
 	ldib_erp 0xfb, 0
-	lda xbc, (0xf1a0:16)
+	lda xbc, (SEQ_TRACK_ASSIGN:16)
 
 BmDrEdit_SelectChannel_Loop:
 	ldto_berp A, 0xfb
@@ -1801,7 +1801,7 @@ BmDrEdit_SetupScrollRegion_MelodicMode:
 BmDrEdit_TestPartTableEntry:
 	ld a, (0x2965:16)
 	extz wa
-	lda_d16 xbc, (0xf1a0)
+	lda_d16 xbc, (SEQ_TRACK_ASSIGN)
 	extz xwa
 	add xwa, xbc
 	ld a, (xwa)
@@ -1897,7 +1897,7 @@ BmDrEdit_ReadVoiceBitAndCopy:
 	jr z, BmDrEdit_InitFirstStep
 
 BmDrEdit_CopyStepCount:
-	ldmm16 0x2744, 9832
+	ldmm16 0x2744, SEQ_START_MEASURE
 	jrl BmDrEdit_InitPlayback
 
 BmDrEdit_InitFirstStep:
@@ -2021,7 +2021,7 @@ BmDrEdit_CleanupCommon:
 
 	ldw (3409:16), 0
 
-	ldmm16 9832, 0x2744
+	ldmm16 SEQ_START_MEASURE, 0x2744
 
 	call	Audio_CheckSubsystemReady
 
@@ -3826,7 +3826,7 @@ BmDrEdit_ProcessVoiceSection:
 	ld (SEQ_ERROR_CODE:16), 0
 	bit 2, (0x287b:16)
 	jr nz, BmDrEdit_ProcessVoice_WithState
-	ld c, (1075:16)
+	ld c, (ACC_BEATS_PER_BAR:16)
 	extz bc
 	ld wa, (3299:16)
 	extz xwa
@@ -3834,7 +3834,7 @@ BmDrEdit_ProcessVoiceSection:
 	ld bc, wa
 	ld xde, (xsp + 4)
 	ld (xde), bc
-	ld c, (1075:16)
+	ld c, (ACC_BEATS_PER_BAR:16)
 	extz bc
 	ld wa, (3299:16)
 	extz xwa
@@ -3843,7 +3843,7 @@ BmDrEdit_ProcessVoiceSection:
 	ld xwa, (xsp)
 	ld (xwa), bc
 	incw 1, (xde)
-	ld l, (1075:16)
+	ld l, (ACC_BEATS_PER_BAR:16)
 	jr BmDrEdit_ProcessVoice_Epilog
 
 BmDrEdit_ProcessVoice_WithState:
@@ -4524,10 +4524,10 @@ BmDrEdit_EnterPlayMode:
 	set 0, (0x28b1:16)
 	cp (0x283a:16), 0
 	jr nz, BmDrEdit_EnterPlay_RestoreSettings
-	ldw (0xf19e:16), (0x00ffec:24)
+	ldw (SEQ_SONG_RECORD+30:16), (0x00ffec:24)
 	jr BmDrEdit_EnterPlay_CheckAudio
 BmDrEdit_EnterPlay_RestoreSettings:
-	ldmm16 0xf19e, 0x2963
+	ldmm16 SEQ_SONG_RECORD+30, 0x2963
 
 BmDrEdit_EnterPlay_CheckAudio:
 	call	Audio_CheckSubsystemReady
@@ -4537,8 +4537,8 @@ BmDrEdit_EnterPlay_CheckAudio:
 	jr	ule, BmDrEdit_EnterPlay_UpdateProgress	; -> 0xF3880C
 	ld	(9502:16), wa
 BmDrEdit_EnterPlay_UpdateProgress:
-	ldmm16 9832, 9500
-	cpw (9832:16), 1
+	ldmm16 SEQ_START_MEASURE, 9500
+	cpw (SEQ_START_MEASURE:16), 1
 	jr z, BmDrEdit_EnterPlay_AllocAndInit
 	set 3, (SEQ_RTMCFG:16)
 
@@ -4550,7 +4550,7 @@ BmDrEdit_ExitPlayMode:
 	cp a, (PREVIOUS_TITLE:16)
 	ret Z
 	ldmm8 0x28b1, 0x283c
-	ldw (0xf19e:16), 0
+	ldw (SEQ_SONG_RECORD+30:16), 0
 	call Audio_CheckSubsystemReady
 	call AccWrap_PlayModeDispatch
 	ld a, (ACTIVE_TITLE:16)

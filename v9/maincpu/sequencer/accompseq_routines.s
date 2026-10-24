@@ -1025,11 +1025,11 @@ AccompSeq_PortaFadeOut_Helper_Skip:
 	call	AccompSeq_ReinitPart
 AccompSeq_PortaFadeOut_Join:
 	ei	6
-	ld	c, (1045:16)
+	ld	c, (ACC_CLOCK:16)
 	ld	(1130:16), c
 	ld	(1138:16), c
 	ld	wa, 0:i3
-	ld	a, (1046:16)
+	ld	a, (ACC_BEAT:16)
 	ld	(1128:16), wa
 	ei	0
 AccompSeq_PortaFadeOut_Return2:
@@ -1248,7 +1248,7 @@ AccompSeq_LoadParams_OverrideCheck:
 	ld wa, (0x7e32:16)
 	ld (0x7e69:16), xwa
 	ld wa, 0:i3
-	ld a, (1075:16)
+	ld a, (ACC_BEATS_PER_BAR:16)
 	dec 1, a
 	and a, 0x7
 	sll wa, 2
@@ -1468,7 +1468,7 @@ AccompSeq_OutputEvent:
 	jr nz, AccompSeq_Output_CheckFilter
 	cp (CURRENT_TITLE:16), 138
 	jr nz, AccompSeq_Output_CheckManual
-	cp (3429:16), 2
+	cp (SQSTEP_DISPLAY_MODE:16), 2
 	jr nz, AccompSeq_Output_CheckManual
 
 AccompSeq_Output_CheckFilter:
@@ -1818,8 +1818,8 @@ AccompSeq_CompareChord:
 	ld a, (xiy + 0:8)
 	bit 4, a
 	jr z, AccompSeq_CompareChord_RestorePos
-	ld a, (1075:16)
-	ld w, (1046:16)
+	ld a, (ACC_BEATS_PER_BAR:16)
+	ld w, (ACC_BEAT:16)
 	inc 1, w
 	cp a, w
 	jr z, AccompSeq_CompareChord_Match
@@ -1840,10 +1840,10 @@ AccompSeq_CompareChord_Return:
 
 AccompSeq_SetupChannels:
 	ei 6
-	ld c, (1045:16)
+	ld c, (ACC_CLOCK:16)
 	ld (0x7e63:16), c
 	ld wa, 0:i3
-	ld a, (1046:16)
+	ld a, (ACC_BEAT:16)
 	ld (0x7e64:16), a
 	ld (1130:16), c
 	ld (1138:16), c

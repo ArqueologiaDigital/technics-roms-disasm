@@ -4960,7 +4960,7 @@ IvSdpart_Init:
 
 IvSdpart_Init_ResetPart:
 	ldw (0x03e99c:24), 0x0008
-	ldw (0x03e99e:24), 0x0000
+	ldw (SDPART_ROW:24), 0x0000
 	ld xwa, 0xffffffff
 	ld xbc, EVT_INDEX_SELECT
 	ld xde, 0x8
@@ -4998,7 +4998,7 @@ IvSdpart_ShowHide:
 	ld xbc, xiz
 	ld xde, (xsp + 4)
 	call InheritedProc
-	cpw (0x3e99e:24), 18
+	cpw (SDPART_ROW:24), 18
 	jr ge, IvSdpart_ShowHide_UpdateUI
 	call GetPartSelect
 	ld xwa, IvSdpart_PartNumberByRow
@@ -5007,11 +5007,11 @@ IvSdpart_ShowHide:
 	ld de, hl
 	cp de, 0xffff
 	jr z, IvSdpart_ShowHide_UpdateUI
-	ld (0x03e99e:24), de
+	ld (SDPART_ROW:24), de
 
 IvSdpart_ShowHide_UpdateUI:
 	calr SdpartUpdatePartUI
-	ld wa, (0x03e99e:24)
+	ld wa, (SDPART_ROW:24)
 	sla wa, 2
 	lda xbc, (0x03e924:24)
 	ld	xde, (xbc+wa)
@@ -5108,23 +5108,23 @@ IvSdpartProc_OnIndexswUp:
 	calr SdpartScrollDelta
 	cp hl, 0:i3
 	jrl z, IvSdpart_ReturnHandled
-	ld wa, (0x03e99e:24)
+	ld wa, (SDPART_ROW:24)
 	ld bc, wa
 	add bc, hl
 	jrl lt, IvSdpart_ReturnHandled
 	cp bc, 0x17
 	jrl gt, IvSdpart_ReturnHandled
 	add wa, hl
-	ld (0x03e99e:24), wa
+	ld (SDPART_ROW:24), wa
 	calr SdpartUpdatePartUI
-	ld wa, (0x03e99e:24)
+	ld wa, (SDPART_ROW:24)
 	sla wa, 2
 	lda xbc, (0x03e924:24)
 	ld	xde, (xbc+wa)
 	ld xwa, 0x3000b
 	ld xbc, EVT_PARA_DRAW
 	call SendEvent
-	ld wa, (0x03e99e:24)
+	ld wa, (SDPART_ROW:24)
 	sla wa, 1
 	lda xbc, (IvSdpart_PartNumberByRow:24)
 	ld	de, (xbc+wa)
@@ -5150,7 +5150,7 @@ IvSdpart_Refresh:
 	ld xbc, xiz
 	ld xde, (xsp + 4)
 	call InheritedProc
-	cpw (0x3e99e:24), 18
+	cpw (SDPART_ROW:24), 18
 	jrl ge, IvSdpart_ReturnHandled
 	call GetPartSelect
 	ld xwa, IvSdpart_PartNumberByRow
@@ -5159,11 +5159,11 @@ IvSdpart_Refresh:
 	ld de, hl
 	cp de, 0xffff
 	jrl z, IvSdpart_ReturnHandled
-	cp (0x3e99e:24), de
+	cp (SDPART_ROW:24), de
 	jrl z, IvSdpart_ReturnHandled
-	ld (0x03e99e:24), de
+	ld (SDPART_ROW:24), de
 	calr SdpartUpdatePartUI
-	ld wa, (0x03e99e:24)
+	ld wa, (SDPART_ROW:24)
 	sla wa, 2
 	lda xbc, (0x03e924:24)
 	ld	xde, (xbc+wa)
@@ -5182,7 +5182,7 @@ IvSdpartProc_OnLswData:
 	ld xbc, xiz
 	ld xde, (xsp + 4)
 	call InheritedProc
-	ld wa, (0x03e99e:24)
+	ld wa, (SDPART_ROW:24)
 	sla wa, 1
 	lda xbc, (IvSdpart_PartNumberByRow:24)
 	ld	de, (xbc+wa)
@@ -5208,7 +5208,7 @@ IvSdpartProc_OnSoundName:
 	ld xbc, xiz
 	ld xde, (xsp + 4)
 	call InheritedProc
-	ld wa, (0x03e99e:24)
+	ld wa, (SDPART_ROW:24)
 	sla wa, 1
 	lda xbc, (IvSdpart_PartNumberByRow:24)
 	ld	bc, (xbc+wa)
@@ -5291,13 +5291,13 @@ AcLswPartEditBoxProc:
 	ld xwa, (xsp + 28)
 	call GetViewInstance
 	ld xiz, xhl
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xiz + 50)
 	ld xbc, EVT_GET_PART
 	call ApFuncCall
 	ld (xsp + 22), hl
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xiz + 50)
 	ld xbc, EVT_GET_LSW_DATA_NO
@@ -5305,7 +5305,7 @@ AcLswPartEditBoxProc:
 	ld (xsp + 20), hl
 	ld bc, (xsp + 20)
 	extz xbc
-	ld wa, (0x03e99e:24)
+	ld wa, (SDPART_ROW:24)
 	extz xwa
 	sll xwa, 16
 	add xwa, xbc
@@ -5325,14 +5325,14 @@ AcLswPartEdit_SetValue:
 	ld xwa, (xsp + 28)
 	call GetViewInstance
 	ld xiz, xhl
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xiz + 50)
 	ld xbc, EVT_CHECK_PART
 	call ApFuncCall
 	or xhl, xhl
 	jrl z, AcLswPartEdit_ReturnHandled
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xiz + 50)
 	ld xbc, EVT_GET_PART
@@ -5340,7 +5340,7 @@ AcLswPartEdit_SetValue:
 	ld (xsp + 22), hl
 	ld xwa, (xsp + 24)
 	ld (xsp + 4), wa
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xiz + 50)
 	ld xbc, EVT_GET_LSW_OUTPUT
@@ -5350,7 +5350,7 @@ AcLswPartEdit_SetValue:
 	lda xwa, (xiz + 50)
 	cp bc, 0xffff
 	jr z, AcLswPartEdit_SetValue_Unbounded
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xwa)
 	ld xbc, EVT_GET_LSW_DATA_NO
@@ -5364,7 +5364,7 @@ AcLswPartEdit_SetValue:
 	jrl AcLswPartEdit_ReturnHandled
 
 AcLswPartEdit_SetValue_Unbounded:
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xwa)
 	ld xbc, EVT_GET_LSW_DATA_NO
@@ -5379,14 +5379,14 @@ AcLswPartEdit_AddDelta:
 	ld xwa, (xsp + 28)
 	call GetViewInstance
 	ld xiz, xhl
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xiz + 50)
 	ld xbc, EVT_CHECK_PART
 	call ApFuncCall
 	or xhl, xhl
 	jrl z, AcLswPartEdit_ReturnHandled
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xiz + 50)
 	ld xbc, EVT_GET_PART
@@ -5394,14 +5394,14 @@ AcLswPartEdit_AddDelta:
 	ld (xsp + 22), hl
 	ld xwa, (xsp + 24)
 	ld (xsp + 4), wa
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xiz + 50)
 	ld xbc, EVT_GET_LSW_OUTPUT
 	call ApFuncCall
 	ld (xsp + 6), hl
 	ld bc, (xsp + 22)
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	lda xwa, (xiz + 50)
 	cp bc, 0xffff
@@ -5431,7 +5431,7 @@ AcLswPartEdit_ShowHide:
 	ld xwa, (xsp + 28)
 	call GetViewInstance
 	ld (xsp + 4), xhl
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xsp + 4)
 	ld xwa, (xwa + 50)
@@ -5439,7 +5439,7 @@ AcLswPartEdit_ShowHide:
 	call ApFuncCall
 	ld (xsp + 22), hl
 	ld bc, (xsp + 22)
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xsp + 4)
 	lda xwa, (xwa + 50)
@@ -5497,7 +5497,7 @@ AcLswPartEdit_Match:
 	ld xwa, (xiz + 50)
 	cp hl, 0xffff
 	jr z, AcLswPartEdit_Match_Unbounded
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xbc, EVT_GET_PART
 	call ApFuncCall
@@ -5505,7 +5505,7 @@ AcLswPartEdit_Match:
 	extz xwa
 	cp xwa, xhl
 	jrl nz, AcLswPartEdit_ReturnHandled
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xiz + 50)
 	ld xbc, EVT_GET_LSW_DATA_NO
@@ -5531,7 +5531,7 @@ AcLswPartEdit_Match:
 	jrl AcLswPartEdit_DispatchEvent
 
 AcLswPartEdit_Match_Unbounded:
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xbc, EVT_GET_LSW_DATA_NO
 	call ApFuncCall
@@ -5567,7 +5567,7 @@ AcLswPartEdit_AutoIncUp:
 	jrl z, AcLswPartEdit_ReturnHandled
 	ld xwa, (xsp + 28)
 	call GetViewInstance
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xhl + 50)
 	ld xbc, EVT_GET_LARGE_STEP
@@ -5590,7 +5590,7 @@ AcLswPartEdit_ScrollUp:
 	jrl z, AcLswPartEdit_ReturnHandled
 	ld xwa, (xsp + 28)
 	call GetViewInstance
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xhl + 50)
 	ld xbc, EVT_GET_SMALL_STEP
@@ -5613,7 +5613,7 @@ AcLswPartEdit_AutoIncDown:
 	jrl z, AcLswPartEdit_ReturnHandled
 	ld xwa, (xsp + 28)
 	call GetViewInstance
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xhl + 50)
 	ld xbc, EVT_GET_LARGE_STEP
@@ -5639,7 +5639,7 @@ AcLswPartEdit_ScrollDown:
 	jrl z, AcLswPartEdit_ReturnHandled
 	ld xwa, (xsp + 28)
 	call GetViewInstance
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xhl + 50)
 	ld xbc, EVT_GET_SMALL_STEP
@@ -5666,14 +5666,14 @@ AcLswPartEdit_Snap:
 	ld xwa, (xsp + 28)
 	call GetViewInstance
 	ld xiz, xhl
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xiz + 50)
 	ld xbc, EVT_CHECK_INIT_DATA
 	call ApFuncCall
 	or xhl, xhl
 	jr z, AcLswPartEdit_ReturnHandled
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xiz + 50)
 	ld xbc, EVT_GET_INIT_DATA
@@ -5734,14 +5734,14 @@ AcVolPartEditBoxProc:
 	ld xwa, (xsp + 38)
 	call GetViewInstance
 	ld (xsp + 10), xhl
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xsp + 10)
 	ld xwa, (xwa + 50)
 	ld xbc, EVT_GET_PART
 	call ApFuncCall
 	ld (xsp + 28), hl
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xsp + 10)
 	ld xwa, (xwa + 50)
@@ -5750,7 +5750,7 @@ AcVolPartEditBoxProc:
 	ld (xsp + 26), hl
 	ld bc, (xsp + 26)
 	extz xbc
-	ld wa, (0x03e99e:24)
+	ld wa, (SDPART_ROW:24)
 	extz xwa
 	sll xwa, 16
 	add xwa, xbc
@@ -5771,14 +5771,14 @@ AudioCtrl_InitPartPanDisplay:
 	ld xwa, (xsp + 38)
 	call GetViewInstance
 	ld (xsp + 8), xhl
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xsp + 8)
 	ld xwa, (xwa + 50)
 	ld xbc, EVT_GET_PART
 	call ApFuncCall
 	ld (xsp + 28), hl
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xsp + 8)
 	ld xwa, (xwa + 50)
@@ -5794,7 +5794,7 @@ AudioCtrl_InitPartPanDisplay:
 	jr nc, AudioCtrl_HighPartOffset
 	cp de, 0xffff
 	jr z, AudioCtrl_UnboundedPart
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xbc)
 	ld xbc, EVT_GET_LSW_DATA_NO
@@ -5807,7 +5807,7 @@ AudioCtrl_InitPartPanDisplay:
 	jrl AudioCtrl_CallMainLswPartPut
 
 AudioCtrl_UnboundedPart:
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xbc)
 	ld xbc, EVT_GET_LSW_DATA_NO
@@ -5825,7 +5825,7 @@ AudioCtrl_HighPartOffset:
 	ld xwa, (xbc)
 	cp de, 0xffff
 	jr z, AudioCtrl_HighPartUnbounded
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xbc, EVT_GET_LSW_DATA_NO
 	call ApFuncCall
@@ -5835,14 +5835,14 @@ AudioCtrl_HighPartOffset:
 	ld bc, (xsp + 28)
 	ld de, (xsp + 6)
 	call MainLswPartPut
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xsp + 8)
 	ld xwa, (xwa + 54)
 	ld xbc, EVT_GET_LSW_DATA_NO
 	call ApFuncCall
 	ld (xsp + 26), hl
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xsp + 8)
 	ld xwa, (xwa + 54)
@@ -5859,7 +5859,7 @@ AudioCtrl_CallMainLswPartPut:
 	jrl AudioCtrl_ReturnZeroEpilogue
 
 AudioCtrl_HighPartUnbounded:
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xbc, EVT_GET_LSW_DATA_NO
 	call ApFuncCall
@@ -5868,14 +5868,14 @@ AudioCtrl_HighPartUnbounded:
 	ld bc, (xsp + 4)
 	ld de, (xsp + 6)
 	call MainLswPut
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xsp + 8)
 	ld xwa, (xwa + 54)
 	ld xbc, EVT_GET_LSW_DATA_NO
 	call ApFuncCall
 	ld xiz, xhl
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xsp + 8)
 	ld xwa, (xwa + 54)
@@ -5891,7 +5891,7 @@ AudioCtrl_DualPartNavigate:
 	ld xwa, (xsp + 38)
 	call GetViewInstance
 	ld (xsp + 10), xhl
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xsp + 10)
 	ld xwa, (xwa + 50)
@@ -5908,7 +5908,7 @@ AudioCtrl_DualPartNavigate:
 	ld xbc, (xbc)
 	cpw (xbc), 0x80
 	jr ge, AudioCtrl_DualPartHighOffset
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xhl)
 	ld xbc, EVT_GET_LSW_DATA_NO
@@ -5916,7 +5916,7 @@ AudioCtrl_DualPartNavigate:
 	ld (xsp + 26), hl
 	ld xwa, (xsp + 30)
 	ld (xsp + 4), wa
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xsp + 10)
 	ld xwa, (xwa + 50)
@@ -5931,12 +5931,12 @@ AudioCtrl_DualPartNavigate:
 	jrl AudioCtrl_ReturnZeroEpilogue
 
 AudioCtrl_DualPartHighOffset:
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xbc, EVT_GET_LSW_DATA_NO
 	call ApFuncCall
 	ld (xsp + 26), hl
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xsp + 10)
 	ld xwa, (xwa + 54)
@@ -5952,7 +5952,7 @@ AudioCtrl_DualPartHighOffset:
 
 AudioCtrl_DualPartUnbounded:
 	ld xbc, (xbc)
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	cpw (xbc), 0x80
 	jr ge, AudioCtrl_DualPartResolve
@@ -5962,7 +5962,7 @@ AudioCtrl_DualPartUnbounded:
 	ld xiz, xhl
 	ld xwa, (xsp + 30)
 	ld (xsp + 4), wa
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xsp + 10)
 	ld xwa, (xwa + 50)
@@ -5979,7 +5979,7 @@ AudioCtrl_DualPartResolve:
 	ld xbc, EVT_GET_LSW_DATA_NO
 	call ApFuncCall
 	ld xiz, xhl
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xsp + 10)
 	ld xwa, (xwa + 54)
@@ -6000,14 +6000,14 @@ AudioCtrl_InitPartSelection:
 	ld (xsp + 10), xhl
 	ld xwa, (xsp + 10)
 	ld (xsp + 6), xwa
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xwa + 50)
 	ld xbc, EVT_GET_PART
 	call ApFuncCall
 	ld (xsp + 28), hl
 	ld bc, (xsp + 28)
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xsp + 10)
 	lda xwa, (xwa + 50)
@@ -6023,7 +6023,7 @@ AudioCtrl_InitPartSelection:
 	ld xbc, (xsp + 10)
 	ld xwa, (xbc + 58)
 	ld (xwa), hl
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xbc + 54)
 	ld xbc, EVT_GET_LSW_DATA_NO
@@ -6044,7 +6044,7 @@ AudioCtrl_UnboundedPartSel:
 	ld xwa, (xsp + 10)
 	ld xwa, (xwa + 58)
 	ld (xwa), hl
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xsp + 6)
 	ld xwa, (xwa + 54)
@@ -6091,7 +6091,7 @@ AudioCtrl_MidiMatchHandler:
 	lda xwa, (xwa + 50)
 	cp hl, 0xffff
 	jrl z, AudioCtrl_UnboundedMatch
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xwa)
 	ld xbc, EVT_GET_PART
@@ -6100,7 +6100,7 @@ AudioCtrl_MidiMatchHandler:
 	extz xwa
 	cp xwa, xhl
 	jrl nz, AudioCtrl_ReturnZeroEpilogue
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xsp + 10)
 	ld xwa, (xwa + 50)
@@ -6131,7 +6131,7 @@ AudioCtrl_ConfirmAndReturn:
 	jrl AudioCtrl_SendEventThenReturn
 
 AudioCtrl_CheckSecondPart:
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xsp + 10)
 	ld xwa, (xwa + 54)
@@ -6159,7 +6159,7 @@ AudioCtrl_ConfirmAndReturn2:
 	jrl AudioCtrl_SendEventThenReturn
 
 AudioCtrl_UnboundedMatch:
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xwa)
 	ld xbc, EVT_GET_LSW_DATA_NO
@@ -6189,7 +6189,7 @@ AudioCtrl_ConfirmAndReturn3:
 	jrl AudioCtrl_SendEventThenReturn
 
 AudioCtrl_CheckSecondUnbounded:
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xsp + 10)
 	ld xwa, (xwa + 54)
@@ -6229,7 +6229,7 @@ AudioCtrl_GetMinLimit:
 	jrl z, AudioCtrl_ReturnZeroEpilogue
 	ld xwa, (xsp + 38)
 	call GetViewInstance
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xhl + 50)
 	ld xbc, EVT_GET_LARGE_STEP
@@ -6252,7 +6252,7 @@ AudioCtrl_GetMaxLimit:
 	jrl z, AudioCtrl_ReturnZeroEpilogue
 	ld xwa, (xsp + 38)
 	call GetViewInstance
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xhl + 50)
 	ld xbc, EVT_GET_SMALL_STEP
@@ -6275,7 +6275,7 @@ AudioCtrl_GetNegMin:
 	jrl z, AudioCtrl_ReturnZeroEpilogue
 	ld xwa, (xsp + 38)
 	call GetViewInstance
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xhl + 50)
 	ld xbc, EVT_GET_LARGE_STEP
@@ -6301,7 +6301,7 @@ AudioCtrl_GetNegMax:
 	jr z, AudioCtrl_ReturnZeroEpilogue
 	ld xwa, (xsp + 38)
 	call GetViewInstance
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xhl + 50)
 	ld xbc, EVT_GET_SMALL_STEP
@@ -6378,7 +6378,7 @@ AcLswPartPan_ShowHide:
 	ld xwa, (xsp + 36)
 	call GetViewInstance
 	ld (xsp + 8), xhl
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xsp + 8)
 	ld xwa, (xwa + 28)
@@ -6386,7 +6386,7 @@ AcLswPartPan_ShowHide:
 	call ApFuncCall
 	ld (xsp + 30), hl
 	ld bc, (xsp + 30)
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xsp + 8)
 	lda xwa, (xwa + 28)
@@ -6522,7 +6522,7 @@ AcLswPartPan_Confirm:
 	ld (xwa), de
 	ld de, 0:i3
 	call DrawLine
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xsp + 4)
 	ld xwa, (xwa + 28)
@@ -6584,7 +6584,7 @@ AcLswPartPan_Match:
 	lda xde, (xsp + 28)
 	ld xwa, (xsp + 32)
 	call SndParam_KeyToLswPartNumber
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xiz + 28)
 	cp hl, 0xffff
@@ -6595,7 +6595,7 @@ AcLswPartPan_Match:
 	extz xwa
 	cp xwa, xhl
 	jr nz, AcLswPartPan_ReturnHandled
-	ld de, (0x03e99e:24)
+	ld de, (SDPART_ROW:24)
 	exts xde
 	ld xwa, (xiz + 28)
 	ld xbc, EVT_GET_LSW_DATA_NO
@@ -6686,7 +6686,7 @@ SdpartScrollDelta_Zero:
 	ret
 
 SdpartUpdatePartUI:
-	ld bc, (0x03e99e:24)
+	ld bc, (SDPART_ROW:24)
 	ld wa, bc
 	sla wa, 2
 	lda xde, (PartParam_EnableMask:24)
@@ -15397,7 +15397,7 @@ IvDrawbar_Init_Part03:
 	ldw (0x024798:24), 0x0000
 	call GetPartSelect
 	ld (0x02479a:24), hl
-	ldw (0x03e99e:24), 0x0000
+	ldw (SDPART_ROW:24), 0x0000
 	call GetModeNow
 	cp xhl, NAKA_MODE_MD_SOUNDEDIT
 	jr z, IvDrawbar_Init_CheckDualMode

@@ -300,7 +300,7 @@ RhythmEvt_Full91:
 	pushw iy
 	call RingBuf_AdvanceIndex
 	ld	a, (xhl+iy)
-	ld (0x3394:16), a
+	ld (ACC_EVENT+3:16), a
 	calr Rhythm_AdvancePosition
 	ld	a, (xhl+iy)
 	ld (0x3397:16), a
@@ -325,7 +325,7 @@ RhythmEvt_Full91_PostTransp:
 
 	ld	(xhl+iy), a
 	call RingBuf_AdvanceIndex	; call RingBuf_AdvanceIndex (v7 addr)
-	ld a, (0x3394:16)	; ldb_d8 a, (0x3430) (v7 patched)
+	ld a, (ACC_EVENT+3:16)	; ldb_d8 a, (0x3430) (v7 patched)
 
 
 
@@ -945,7 +945,7 @@ Rhythm_Mismatch90_Output:
 Rhythm_MismatchOther:
 	pushw wa
 	ld a, (xix+3)
-	ld (0x3394:16), a
+	ld (ACC_EVENT+3:16), a
 	ld a, (xix+6)
 	ld (0x3397:16), a
 	ld a, (xix+7)
@@ -963,7 +963,7 @@ Rhythm_MismatchOther_PostRange:
 Rhythm_MismatchOther_Output:
 	calr	Rhythm_VoiceMapLookup
 	ld	(xix+2), a
-	ld	a, (13204:16)
+	ld	a, (ACC_EVENT+3:16)
 	ld	(xix+3), a
 	popw	wa
 Rhythm_MismatchOther_Return:
@@ -1429,7 +1429,7 @@ Rhythm_SeqResetCheck:
 	jr z, Rhythm_SeqReset_UpdateFlags
 	bit 4, (0x3433:16)
 	jr nz, Rhythm_SeqReset_UpdateFlags
-	ld l, (0x36ff:16)
+	ld l, (CMP_RECORD_PART:16)
 	xor H,H
 	sla L, 0x02
 	ld XIY,Rhythm_SeqResetTable

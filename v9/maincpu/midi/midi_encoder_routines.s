@@ -141,7 +141,7 @@ Encoder_ProcessBreath:
 	extz wa
 	lda xbc, (ENCODER_LUT_BREATH_VALUE:24); Lookup table
 	ld	a, (xbc+wa)	; Get processed value
-	ld c, (0x379b:16); Get system mode flags
+	ld c, (CMP_RECORD_PART:16); Get system mode flags
 	and c, 0xf	; Mask relevant bits
 	jr nz, Encoder_ProcessBreath_WithModeAdjustment	; If mode active, process
 	cp (0x7f0b:16), 0; Check alternate condition

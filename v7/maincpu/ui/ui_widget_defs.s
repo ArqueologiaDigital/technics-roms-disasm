@@ -19362,7 +19362,7 @@ DrawTask_FuncDispatch:
 
 DrawTask_DequeueLoop:
 	ld wa, (0x030450:24)
-	ld (0x03044e:24), wa
+	ld (DRAW_ENABLED:24), wa
 	ld wa, 1:i3
 	call Audio_Lock_Acquire
 	jr DrawTask_EventLoop
@@ -19785,7 +19785,7 @@ UpdateScreen:
 	ld wa, (0x030450:24)
 	cp wa, 0:i3
 	ret nz
-	ld (0x03044e:24), wa
+	ld (DRAW_ENABLED:24), wa
 	ret
 
 UpdateScreen_Prologue:
@@ -19802,7 +19802,7 @@ UpdateScreen_CheckDirty:
 	ld	wa, (197712:24)
 	cp	wa, 0:i3
 	ret	nz
-	ld	(197710:24), wa
+	ld	(DRAW_ENABLED:24), wa
 	ret
 
 Gfx_BlitDirtyRegions:

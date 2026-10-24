@@ -2246,7 +2246,7 @@ SeqStep_ParseRhythm:
 	ld c, (0x289d:16)
 	res 2, c
 	ld (0x289d:16), c
-	ld e, (0x2873:16)
+	ld e, (TRACK_ASSIGN_EDIT_VALUE:16)
 	extz de
 	lda xhl, (SeqStep_ParseRhythm_ByteMap:24)
 	ld a, (4340:16)
@@ -2309,7 +2309,7 @@ SeqStep_ParseRhythmError:
 	ld a, (0x289d:16)
 	res 2, a
 	ld (0x289d:16), a
-	cp (0x2873:16), 12
+	cp (TRACK_ASSIGN_EDIT_VALUE:16), 12
 	jr z, SeqStep_ParseRhythmSkip
 	res 0, a
 	res 2, a
@@ -2716,7 +2716,7 @@ SeqStep_FindAndCompactEntry:
 SeqStep_FindAndCompact:
 	dec 4, xsp
 	pushw iz
-	ldw (0xf1ce:16), 0x4d80
+	ldw (SEQ_SONG_RECORD+78:16), 0x4d80
 	ldw wa, 0x4d8
 	calr SeqStep_SearchBackward
 	ld (xsp + 2), hl
@@ -2742,7 +2742,7 @@ SeqStep_CompactDone:
 	dec 1, iz
 	ld wa, iz
 	sll wa, 4
-	ld (0xf1ce:16), wa
+	ld (SEQ_SONG_RECORD+78:16), wa
 	ld wa, (xsp + 4)
 	calr SeqStep_RebuildPartChain
 	ld hl, iz
@@ -2964,7 +2964,7 @@ SeqStep_RebuildPartChain:
 	cpw (xsp + 2), 0x4d8
 	jr ule, SeqStep_RebuildLoop
 	ldw (SEQ_FREE_BLOCKS:16), 0
-	ldw (0xf22f:16), 0xffff
+	ldw (SEQ_SONG_RECORD+175:16), 0xffff
 	jrl SeqStep_RebuildReturn
 
 SeqStep_RebuildLoop:
@@ -3055,34 +3055,34 @@ SeqStep_RebuildReturn:
 SeqStep_ByteBlockEA5F:
 	dec 2, xsp
 	push xiz
-	ld (0xf247:16), (SEQ_CURRENT_SONG:24)
-	ldw (0xf248:16), (0x00ffec:24)
+	ld (SEQ_SONG_RECORD+199:16), (SEQ_CURRENT_SONG:24)
+	ldw (SEQ_SONG_RECORD+200:16), (0x00ffec:24)
 	ld a, (SEQ_CURRENT_SONG:24)
 	extz wa
 	call SeqData_CopyBlockToBuffer
 	calr SeqStep_FindAndCompact
-	ld wa, (0xf1ce:16)
+	ld wa, (SEQ_SONG_RECORD+78:16)
 	ld qiz, wa
 	ld iz, (SEQ_FREE_BLOCKS:16)
-	ldw (xsp+4), (0xf22f)
+	ldw (xsp+4), (SEQ_SONG_RECORD+175)
 	ld a, (SEQ_CURRENT_SONG:24)
 	extz wa
 	call VoicePreset_LoadAndInitPan
 	ld wa, qiz
-	ld (0xf1ce:16), wa
+	ld (SEQ_SONG_RECORD+78:16), wa
 	ld (SEQ_FREE_BLOCKS:16), iz
-	ldw (0xf22f), (xsp+4)
+	ldw (SEQ_SONG_RECORD+175), (xsp+4)
 	pop xiz
 	inc 2, xsp
 	ret
 MidiSysEx_RestoreSongSelection:
-	ld a, (0xf247:16)
+	ld a, (SEQ_SONG_RECORD+199:16)
 	ld (SEQ_CURRENT_SONG:24), a
-	ld (0xf247:16), 0
-	ld wa, (0xf248:16)
+	ld (SEQ_SONG_RECORD+199:16), 0
+	ld wa, (SEQ_SONG_RECORD+200:16)
 	ld (0x00ffec:24), wa
-	ldw (0xf248:16), 0
-	ldw (0x2668:16), 1
+	ldw (SEQ_SONG_RECORD+200:16), 0
+	ldw (SEQ_START_MEASURE:16), 1
 	res 3, (SEQ_RTMCFG:16)
 	jrl SeqStep_FindAndCompactEntry
 SeqStep_ReinitPartTable:
@@ -3102,16 +3102,16 @@ SeqStep_ReinitPartTable:
 	call Part_WriteWord
 	calr SeqStep_FindAndCompact
 	ld (xsp + 4), xhl
-	ld iz, (0xf1ce:16)
-	ld wa, (0xf22f:16)
+	ld iz, (SEQ_SONG_RECORD+78:16)
+	ld wa, (SEQ_SONG_RECORD+175:16)
 	ldfr_werp WA, 0xfa
 	ldmw2 (xsp + 8), 0xf231
 	ld a, (SEQ_CURRENT_SONG:24)
 	extz wa
 	call VoicePreset_LoadAndInitPan
-	ld (0xf1ce:16), iz
+	ld (SEQ_SONG_RECORD+78:16), iz
 	ldto_werp WA, 0xfa
-	ld (0xf22f:16), wa
+	ld (SEQ_SONG_RECORD+175:16), wa
 	mrdw5 0x9f, 0x08, 0x19, 0x31, 0xf2
 	ldto_werp WA, 0xfa
 	call Part_WriteWordBlock_OffsetAF
@@ -3122,7 +3122,7 @@ SeqStep_ReinitPartTable:
 SeqStep_ReinitLoop:
 	ldto_berp A, 0xfb
 	extz wa
-	ld de, (0xf1ce:16)
+	ld de, (SEQ_SONG_RECORD+78:16)
 	ldw bc, 0x4e
 	call Part_WriteWord
 	inc1b_erp 0xfb
@@ -3152,7 +3152,7 @@ SeqStep_MemAllocWrapper:
 	inc	8, xsp
 	jr	SeqStep_MemAllocReturn
 SeqStep_MemAllocFail:
-	ldw (0x01e53c:24), 0x0003
+	ldw (FILE_ERROR:24), 0x0003
 
 SeqStep_MemAllocReturn:
 	ld xhl, xiz

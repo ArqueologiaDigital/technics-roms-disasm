@@ -315,7 +315,7 @@ RhythmEvt_Full91:
 	pushw iy
 	call RingBuf_AdvanceIndex
 	ld	a, (xhl+iy)
-	ld (0x3430:16), a
+	ld (ACC_EVENT+3:16), a
 	calr Rhythm_AdvancePosition
 	ld	a, (xhl+iy)
 	ld (0x3433:16), a
@@ -339,7 +339,7 @@ RhythmEvt_Full91_PostTransp:
 	popw iy
 	ld	(xhl+iy), a
 	call RingBuf_AdvanceIndex
-	ld a, (0x3430:16)
+	ld a, (ACC_EVENT+3:16)
 	ld	(xhl+iy), a
 	calr Rhythm_AdvancePosition
 	calr Rhythm_AdvancePosition
@@ -977,7 +977,7 @@ Rhythm_Mismatch90_Output:
 Rhythm_MismatchOther:
 	pushw wa
 	ld a, (xix + 3)
-	ld (0x3430:16), a
+	ld (ACC_EVENT+3:16), a
 	ld a, (xix + 6)
 	ld (0x3433:16), a
 	ld a, (xix + 7)
@@ -996,7 +996,7 @@ Rhythm_MismatchOther_PostRange:
 Rhythm_MismatchOther_Output:
 	calr Rhythm_VoiceMapLookup
 	ld (xix + 2), a
-	ld a, (0x3430:16)
+	ld a, (ACC_EVENT+3:16)
 	ld (xix + 3), a
 	popw wa
 
@@ -1489,7 +1489,7 @@ Rhythm_SeqResetCheck:
 	jr z, Rhythm_SeqReset_UpdateFlags
 	bit 4, (0x34cf:16)
 	jr nz, Rhythm_SeqReset_UpdateFlags
-	ld l, (0x379b:16)
+	ld l, (CMP_RECORD_PART:16)
 	xor h, h
 	sla l, 2
 	ld xiy, Rhythm_SeqResetTable

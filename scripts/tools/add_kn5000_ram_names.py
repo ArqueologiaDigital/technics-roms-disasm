@@ -13,7 +13,10 @@ JOB IT DOES
        routines (all votes must agree), the .equ is corrected to it, and their operands take the name;
     4. drops from v9's / v7's file every name this run added that the tree's code does not use after
        step 3 -- a name whose address could not be derived for that tree is left out rather than kept
-       with v10's value (the convention of shared/ram_variables.s).
+       with v10's value (the convention of shared/ram_variables.s);
+    5. for a name whose reason starts with `[N bytes]` -- a record or array the code shows to be N bytes
+       long -- spells every numeric memory operand inside it that has no name of its own as NAME+offset
+       (decimal), in each tree where the name exists, from that tree's own value of it.
   The ROM bytes cannot change by construction (a number becomes a name of the same value); `make gate`
   checks it anyway.
 
@@ -130,6 +133,71 @@ def ensure_include(t):
         write(rv, L)
 
 
+SIZE = re.compile(r'^\[(0x[0-9a-fA-F]+|\d+) bytes\]')
+MEMOP = re.compile(r'\((0x[0-9a-fA-F]+|\d+)(:8|:16|:24)?\)')
+MMOP = re.compile(r'^(\s*ldmm(?:8|16)\s+)(0x[0-9a-fA-F]+|\d+)(\s*,\s*)(0x[0-9a-fA-F]+|\d+)(\s*)$', re.I)
+
+
+def spell_structs(t):
+    """step 5: operands inside a sized record become RECORD+offset; returns the count"""
+    spans = []
+    for l in read(path(t)):
+        m = EQU_FULL.match(l)
+        if m and m.group(3):
+            z = SIZE.match(m.group(3))
+            if z:
+                spans.append((int(m.group(2), 0), int(m.group(2), 0) + int(z.group(1), 0), m.group(1)))
+    spans.sort()
+    for i, (s0, e0, n0) in enumerate(spans):
+        for s1, e1, n1 in spans[i + 1:]:
+            # a record may hold another (the song record holds the track table), never half of one
+            assert s1 >= e0 or e1 <= e0, "%s and %s overlap" % (n0, n1)
+    if not spans:
+        return 0
+    exact = set(named_addresses(t))
+
+    def spell(v):
+        if v in exact:
+            return None
+        inner = [(e0 - s0, s0, n0) for s0, e0, n0 in spans if s0 < v < e0]
+        if inner:
+            _, s0, n0 = min(inner)
+            return "%s+%d" % (n0, v - s0)
+        return None
+
+    count = 0
+    for f in glob.glob(os.path.join(REPO, t, "maincpu", "**", "*.s"), recursive=True):
+        L = read(f)
+        ch = False
+        for i, l in enumerate(L):
+            code, sep, cmt = l.partition(";")
+            st = code.strip()
+            if not st or st.startswith("."):
+                continue
+            hit = [0]
+
+            def mem(m):
+                x = spell(int(m.group(1), 0))
+                if x:
+                    hit[0] += 1
+                    return "(%s%s)" % (x, m.group(2) or "")
+                return m.group(0)
+
+            new = MEMOP.sub(mem, code)
+            q = MMOP.match(new)
+            if q:
+                x, y = spell(int(q.group(2), 0)), spell(int(q.group(4), 0))
+                hit[0] += bool(x) + bool(y)
+                new = q.group(1) + (x or q.group(2)) + q.group(3) + (y or q.group(4)) + q.group(5)
+            if new != code:
+                L[i] = new + sep + cmt
+                count += hit[0]
+                ch = True
+        if ch:
+            write(f, L)
+    return count
+
+
 def used_names(t, names):
     pat = re.compile(r'\b(%s)\b' % "|".join(map(re.escape, names))) if names else None
     used = set()
@@ -212,6 +280,9 @@ def main():
             t, len(added[t]) - len(drop), len(added[t]), len(drop), " ".join(drop)))
     for t in TREES:
         realign(t)
+        n = spell_structs(t)
+        if n:
+            print("%s: %d operands inside sized records spelled RECORD+offset" % (t, n))
     return 0
 
 

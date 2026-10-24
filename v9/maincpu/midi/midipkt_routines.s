@@ -1372,7 +1372,7 @@ MidiPkt_SysExBulkTransfer_Data_Case6:
 	calr	SysEx_ApplyGsChorusLevel
 	ret
 MidiPkt_SysExBulkTransfer_Data_Helper:
-	lda	xde, (0x9644:16)
+	lda	xde, (MIDIRX_PART_EVENT:16)
 	ld	c, (xwa)
 	ld	(xde), c
 	ld	c, (xwa+1)
@@ -1392,7 +1392,7 @@ MidiPkt_SysExBulkTransfer_Data_Helper:
 	pop	xde
 	ret
 MidiPkt_SysExBulkTransfer_Data_Helper2:
-	lda	xde, (0x9644:16)
+	lda	xde, (MIDIRX_PART_EVENT:16)
 	ld	c, (xwa)
 	ld	(xde), c
 	ld	c, (xwa+1)

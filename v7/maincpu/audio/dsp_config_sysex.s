@@ -678,7 +678,7 @@ BitMapOut_RenderDisplay:
 	call	Mem_Copy
 	lda	xsp, (xsp + 20)
 	calr	VoiceParam_SaveReverbChorus
-	lda	xix, (0xf460:16)
+	lda	xix, (SEQ_SONG_RECORD+736:16)
 	lda	xbc, (0xf980:16)
 	ld	xhl, xbc
 	lda	xwa, (0xfd5e:16)
@@ -721,7 +721,7 @@ BitMapOut_MergeOutputFields:
 	lda	xhl, (0xf980:16)
 	ld	xwa, xbc
 	sub	xwa, xhl
-	lda	xde, (0xf460:16)
+	lda	xde, (SEQ_SONG_RECORD+736:16)
 	ld	xiy, xde
 	add	xiy, xwa
 	ld	w, (xiy)

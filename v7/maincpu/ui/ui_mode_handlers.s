@@ -11929,9 +11929,9 @@ GmOnOff_GetBoundsRect:
 	jr GmOnOff_SendAndReturn
 
 GmOnOff_CheckDesign:
-	ld	c, (36004:16)
-	or	c, (36006:16)
-	or	c, (36008:16)
+	ld	c, (DISPLAY_CHORD_ROOT:16)
+	or	c, (DISPLAY_CHORD_TYPE:16)
+	or	c, (DISPLAY_CHORD_BASS:16)
 	jr	nz, GmOnOff_SendHideEvent
 	ldw	bc, 245
 	call	DrawBox

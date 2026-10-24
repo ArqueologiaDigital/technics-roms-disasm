@@ -992,11 +992,11 @@ AccompSeq_ManualMidi_ClearFlags_Code_Skip:
 	call	AccompSeq_ReinitPart
 AccompSeq_ManualMidi_ClearFlags_Code_Join:
 	ei	0x06
-	ld	c, (1045:16)
+	ld	c, (ACC_CLOCK:16)
 	ld	(1130:16), c
 	ld	(1138:16), c
 	ld	wa, 0:i3
-	ld	a, (1046:16)
+	ld	a, (ACC_BEAT:16)
 	ld	(1128:16), wa
 	ei	0x00
 AccompSeq_ManualMidi_ClearFlags_Code_Return2:
@@ -1207,7 +1207,7 @@ AccompSeq_LoadParams_OverrideCheck:
 	ld	wa, (0x7d96:16)
 	ld	(0x7dcd:16), xwa
 	ld	wa, 0:i3
-	ld	a, (0x433:16)
+	ld	a, (ACC_BEATS_PER_BAR:16)
 	dec	1, a
 	and	a, 7
 	sll	wa, 2
@@ -1419,7 +1419,7 @@ AccompSeq_OutputEvent:
 	jr	nz, AccompSeq_Output_CheckFilter
 	cp	(CURRENT_TITLE:16), 138
 	jr	nz, AccompSeq_Output_CheckManual
-	cp	(0xd65:16), 2
+	cp	(SQSTEP_DISPLAY_MODE:16), 2
 	jr	nz, AccompSeq_Output_CheckManual
 AccompSeq_Output_CheckFilter:
 	bit	3, (0x7e79:16)
@@ -1761,8 +1761,8 @@ AccompSeq_CompareChord:
 	ld	a, (xiy+0:8)
 	bit	4, a
 	jr	z, AccompSeq_CompareChord_RestorePos
-	ld	a, (0x433:16)
-	ld	w, (0x416:16)
+	ld	a, (ACC_BEATS_PER_BAR:16)
+	ld	w, (ACC_BEAT:16)
 	inc	1, w
 	cp	a, w
 	jr	z, AccompSeq_CompareChord_Match
@@ -1781,10 +1781,10 @@ AccompSeq_CompareChord_Return:
 
 AccompSeq_SetupChannels:
 	ei	6
-	ld	c, (0x415:16)
+	ld	c, (ACC_CLOCK:16)
 	ld	(0x7dc7:16), c
 	ld	wa, 0:i3
-	ld	a, (0x416:16)
+	ld	a, (ACC_BEAT:16)
 	ld	(0x7dc8:16), a
 	ld	(0x46a:16), c
 	ld	(0x472:16), c

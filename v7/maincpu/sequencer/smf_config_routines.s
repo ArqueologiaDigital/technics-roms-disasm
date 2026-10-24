@@ -271,7 +271,7 @@ SMF_ScanChannels_Loop:
 	xor b, b
 	ld iy, bc
 	push xix
-	ld xix, 0xf1a0
+	ld xix, SEQ_TRACK_ASSIGN
 	ld	a, (xix+iy)
 	pop xix
 	cp a, 0x10
@@ -348,14 +348,14 @@ SMF_FindFree_CheckPart:
 	add l, c
 	xor h, h
 	push xix
-	ld xix, 0xf250
+	ld xix, SEQ_TRACK_TABLE
 	bit	7, (xix+hl)
 	pop xix
 	jr z, SMF_FindFree_Next
 	xor xhl, xhl
 	ld l, c
 	push xix
-	ld xix, 0xf1a0
+	ld xix, SEQ_TRACK_ASSIGN
 	cp	(xix+hl), 0x10
 	pop xix
 	jr z, SMF_FindFree_Next
@@ -372,7 +372,7 @@ SMF_AssignRemainingChannels:
 	xor b, b
 	ld iz, bc
 	push xix
-	ld xix, 0xf1a0
+	ld xix, SEQ_TRACK_ASSIGN
 	cp	(xix+iz), 0x10
 	pop xix
 	jr z, SMF_AssignRemaining_Next
@@ -939,7 +939,7 @@ SMF_DispatchEvent:
 	ld iy, bc
 	and (4331:16), 254
 	push xix
-	ld xix, 0xf1a0
+	ld xix, SEQ_TRACK_ASSIGN
 	cp	(xix+iy), 0x0f
 	pop xix
 	jr nz, SMF_Dispatch_CheckDrumMode
@@ -951,7 +951,7 @@ SMF_Dispatch_CheckDrumMode:
 	jrl z, SMF_Dispatch_NoDrumMode
 	ld (4324:16), 255
 	push xix
-	ld xix, 0xf1a0
+	ld xix, SEQ_TRACK_ASSIGN
 	cp	(xix+iy), 0x0c
 	pop xix
 	jr nz, SMF_Dispatch_DrumChannel
@@ -964,7 +964,7 @@ SMF_Dispatch_DrumChannel:
 	bit 0, (4331:16)
 	jrl nz, SMF_HandleEventType
 	push xix
-	ld xix, 0xf1a0
+	ld xix, SEQ_TRACK_ASSIGN
 	ld	a, (xix+iy)
 	pop xix
 	xor xiy, xiy
@@ -981,12 +981,12 @@ SMF_Dispatch_DrumSearch:
 	ldto_berp A, 0x3c
 	jr c, SMF_Dispatch_DrumFound
 	push xix
-	ld xix, 0xf1a0
+	ld xix, SEQ_TRACK_ASSIGN
 	cp	(xix+iy), a
 	pop xix
 	jr z, SMF_Dispatch_DrumFound
 	push xix
-	ld xix, 0xf1a0
+	ld xix, SEQ_TRACK_ASSIGN
 	cp	(xix+iy), 0x0c
 	pop xix
 	jr z, SMF_Dispatch_DrumFound
@@ -1003,7 +1003,7 @@ SMF_Dispatch_DrumFound:
 
 SMF_Dispatch_NoDrumMode:
 	push xix
-	ld xix, 0xf1a0
+	ld xix, SEQ_TRACK_ASSIGN
 	cp	(xix+iy), 0x0c
 	pop xix
 	jr nz, SMF_Dispatch_Ch15Remap
@@ -1016,7 +1016,7 @@ SMF_Dispatch_Ch15Remap:
 	bit 0, (4331:16)
 	jr nz, SMF_HandleEventType
 	push xix
-	ld xix, 0xf1a0
+	ld xix, SEQ_TRACK_ASSIGN
 	ld	a, (xix+iy)
 	pop xix
 	xor xiy, xiy
@@ -1033,12 +1033,12 @@ SMF_Dispatch_Ch15Search:
 	ldto_berp A, 0x3c
 	jr c, SMF_Dispatch_DrumFound
 	push xix
-	ld xix, 0xf1a0
+	ld xix, SEQ_TRACK_ASSIGN
 	cp	(xix+iy), a
 	pop xix
 	jr z, SMF_Dispatch_Ch15Found
 	push xix
-	ld xix, 0xf1a0
+	ld xix, SEQ_TRACK_ASSIGN
 	cp	(xix+iy), 0x0c
 	pop xix
 	jr z, SMF_Dispatch_Ch15Found
@@ -1163,7 +1163,7 @@ SMF_Event_ProgramChange:
 
 SMF_ProgChg_SearchPart:
 	push xix
-	ld xix, 0xf1a0
+	ld xix, SEQ_TRACK_ASSIGN
 	cp	(xix+hl), a
 	pop xix
 	jr z, SMF_ProgChg_Found
@@ -1234,7 +1234,7 @@ SMF_Event_ControlChange:
 
 SMF_CtrlChg_SearchPart:
 	push xix
-	ld xix, 0xf1a0
+	ld xix, SEQ_TRACK_ASSIGN
 	cp	(xix+hl), a
 	pop xix
 	jr z, SMF_CtrlChg_Found
@@ -1487,7 +1487,7 @@ SMF_ResolveChannel:
 	cp (4324:16), 255
 	jr nz, SMF_Resolve_NoDrum
 	push xix
-	ld xix, 0xf1a0
+	ld xix, SEQ_TRACK_ASSIGN
 	cp	(xix+iy), 0x0c
 	pop xix
 	jr nz, SMF_Resolve_DrumCh9
@@ -1498,7 +1498,7 @@ SMF_Resolve_DrumCh9:
 	cp iy, 0x9
 	jrl nz, SMF_Resolve_Return
 	push xix
-	ld xix, 0xf1a0
+	ld xix, SEQ_TRACK_ASSIGN
 	ld	a, (xix+iy)
 	pop xix
 	xor xiy, xiy
@@ -1515,12 +1515,12 @@ SMF_Resolve_DrumSearch:
 	ldto_berp A, 0x3c
 	jr c, SMF_Resolve_DrumFound
 	push xix
-	ld xix, 0xf1a0
+	ld xix, SEQ_TRACK_ASSIGN
 	cp	(xix+iy), a
 	pop xix
 	jr z, SMF_Resolve_DrumFound
 	push xix
-	ld xix, 0xf1a0
+	ld xix, SEQ_TRACK_ASSIGN
 	cp	(xix+iy), 0x0c
 	pop xix
 	jr z, SMF_Resolve_DrumFound
@@ -1536,7 +1536,7 @@ SMF_Resolve_DrumFound:
 
 SMF_Resolve_NoDrum:
 	push xix
-	ld xix, 0xf1a0
+	ld xix, SEQ_TRACK_ASSIGN
 	cp	(xix+iy), 0x0c
 	pop xix
 	jr nz, SMF_Resolve_Ch15Check
@@ -1547,7 +1547,7 @@ SMF_Resolve_Ch15Check:
 	cp iy, 0xf
 	jr nz, SMF_Resolve_Return
 	push xix
-	ld xix, 0xf1a0
+	ld xix, SEQ_TRACK_ASSIGN
 	ld	a, (xix+iy)
 	pop xix
 	xor xiy, xiy
@@ -1564,12 +1564,12 @@ SMF_Resolve_Ch15Search:
 	ldto_berp A, 0x3c
 	jr c, SMF_Resolve_Ch15Found
 	push xix
-	ld xix, 0xf1a0
+	ld xix, SEQ_TRACK_ASSIGN
 	cp	(xix+iy), a
 	pop xix
 	jr z, SMF_Resolve_Ch15Found
 	push xix
-	ld xix, 0xf1a0
+	ld xix, SEQ_TRACK_ASSIGN
 	cp	(xix+iy), 0x0c
 	pop xix
 	jr z, SMF_Resolve_Ch15Found
@@ -1704,7 +1704,7 @@ SMF_ResolveGlobalChannel:
 	push xde
 	xor iy, iy
 	ld iy, (SEQ_TRACK:16)
-	ld xix, 0xf1a0
+	ld xix, SEQ_TRACK_ASSIGN
 	cp	(xix+iy), 0x0c
 	jr nz, SMF_GlobalCh_NoDrum
 
@@ -1731,7 +1731,7 @@ SMF_GlobalCh_NonDrumCh15:
 	jp SMF_GlobalCh_Found
 
 SMF_GlobalCh_FreeSearch:
-	ld xix, 0xf1a0
+	ld xix, SEQ_TRACK_ASSIGN
 	ld	a, (xix+iy)
 	xor xiy, xiy
 
@@ -1746,10 +1746,10 @@ SMF_GlobalCh_SearchLoop:
 	ldto_werp DE, 0x3e
 	ldto_berp A, 0x3c
 	jr c, SMF_GlobalCh_Found
-	ld xix, 0xf1a0
+	ld xix, SEQ_TRACK_ASSIGN
 	cp	(xix+iy), a
 	jr z, SMF_GlobalCh_Found
-	ld xix, 0xf1a0
+	ld xix, SEQ_TRACK_ASSIGN
 	cp	(xix+iy), 0x0c
 	jr z, SMF_GlobalCh_Found
 	inc 1, iy
@@ -1790,7 +1790,7 @@ SMF_LoadBank_ReadEntries:
 	push xhl
 	ldw de, 0xaf
 	ld	wa, (xhl+de)
-	ld (0xf22f:16), wa
+	ld (SEQ_SONG_RECORD+175:16), wa
 	pop xhl
 	ldw de, 0xb1
 	ld	wa, (xhl+de)
@@ -1809,7 +1809,7 @@ SMF_LoadBank_Return:
 	ret
 
 SMF_SetupReadPointers:
-	ld wa, (0xf22f:16)
+	ld wa, (SEQ_SONG_RECORD+175:16)
 	ld (0x286f:16), wa
 	ld wa, (SEQ_FREE_BLOCKS:16)
 	ld (0x2871:16), wa
@@ -1837,15 +1837,15 @@ SMF_ParseEvents:
 	cp a, 0xf
 	jr ugt, SMF_Parse_Complete
 	ld c, (3301:16)
-	ld wa, (0xf19e:16)
+	ld wa, (SEQ_SONG_RECORD+30:16)
 	ld (SEQ_ERROR_CODE:16), 0
 	and (0x287b:16), 191
 	xor xhl, xhl
 	ld l, (3301:16)
-	ld xix, 0xf1a0
+	ld xix, SEQ_TRACK_ASSIGN
 	add xix, xhl
 	ld l, (xix)
-	ld (0x2873:16), l
+	ld (TRACK_ASSIGN_EDIT_VALUE:16), l
 	cp l, 0xf
 	jr nz, SMF_Parse_ClearAutoFlag
 	or (4393:16), 1
@@ -2448,7 +2448,7 @@ SMF_CalcPageAddress:
 SMF_SlotChain_CheckInstr:
 	bit 0, (4411:16)
 	jr nz, SMF_SlotChain_InstrReturn
-	cp (0x2873:16), 16
+	cp (TRACK_ASSIGN_EDIT_VALUE:16), 16
 	jr z, SMF_SlotChain_InstrReturn
 	ld a, (xiy + 2)
 	cp a, 0x1e
@@ -2483,9 +2483,9 @@ SMF_SlotChain_InstrReturn:
 SMF_SlotChain_CheckVoice:
 	bit 0, (4411:16)
 	jr nz, SMF_SlotChain_VoiceReturn
-	cp (0x2873:16), 15
+	cp (TRACK_ASSIGN_EDIT_VALUE:16), 15
 	jr z, SMF_SlotChain_VoiceReturn
-	cp (0x2873:16), 16
+	cp (TRACK_ASSIGN_EDIT_VALUE:16), 16
 	jr z, SMF_SlotChain_VoiceReturn
 	ld a, (xiy + 2)
 	cp a, 0x1e
@@ -2555,9 +2555,9 @@ SMF_SlotChain_Fmt3Voice:
 	ld a, (4394:16)
 	cp a, 3:i3
 	jr nz, SMF_SlotChain_Fmt3Return
-	cp (0x2873:16), 15
+	cp (TRACK_ASSIGN_EDIT_VALUE:16), 15
 	jr z, SMF_SlotChain_Fmt3Return
-	cp (0x2873:16), 16
+	cp (TRACK_ASSIGN_EDIT_VALUE:16), 16
 	jr z, SMF_SlotChain_Fmt3Return
 	ld a, (xiy + 2)
 	cp a, 0x1e
@@ -2677,9 +2677,9 @@ SMF_SlotParam_VolumeReturn:
 SMF_SlotParam_Pan:
 	bit 0, (4411:16)
 	jr nz, SMF_SlotParam_PanReturn
-	cp (0x2873:16), 15
+	cp (TRACK_ASSIGN_EDIT_VALUE:16), 15
 	jr z, SMF_SlotParam_PanReturn
-	cp (0x2873:16), 16
+	cp (TRACK_ASSIGN_EDIT_VALUE:16), 16
 	jr z, SMF_SlotParam_PanReturn
 	cp (xiy + 2), 0x27
 	jr nz, SMF_SlotParam_PanReturn
@@ -2694,9 +2694,9 @@ SMF_SlotParam_PanReturn:
 SMF_SlotParam_Expression:
 	bit 0, (4411:16)
 	jr nz, SMF_SlotParam_ExprReturn
-	cp (0x2873:16), 15
+	cp (TRACK_ASSIGN_EDIT_VALUE:16), 15
 	jr z, SMF_SlotParam_ExprReturn
-	cp (0x2873:16), 16
+	cp (TRACK_ASSIGN_EDIT_VALUE:16), 16
 	jr z, SMF_SlotParam_ExprReturn
 	cp (xiy + 2), 0x2b
 	jr nz, SMF_SlotParam_ExprReturn
@@ -2711,9 +2711,9 @@ SMF_SlotParam_ExprReturn:
 SMF_SlotParam_Reverb:
 	bit 0, (4411:16)
 	jr nz, SMF_SlotParam_ReverbReturn
-	cp (0x2873:16), 15
+	cp (TRACK_ASSIGN_EDIT_VALUE:16), 15
 	jr z, SMF_SlotParam_ReverbReturn
-	cp (0x2873:16), 16
+	cp (TRACK_ASSIGN_EDIT_VALUE:16), 16
 	jr z, SMF_SlotParam_ReverbReturn
 	cp (xiy + 2), 0x29
 	jr nz, SMF_SlotParam_ReverbReturn
@@ -2728,9 +2728,9 @@ SMF_SlotParam_ReverbReturn:
 SMF_SlotParam_Chorus:
 	bit 0, (4411:16)
 	jr nz, SMF_SlotParam_ChorusReturn
-	cp (0x2873:16), 15
+	cp (TRACK_ASSIGN_EDIT_VALUE:16), 15
 	jr z, SMF_SlotParam_ChorusReturn
-	cp (0x2873:16), 16
+	cp (TRACK_ASSIGN_EDIT_VALUE:16), 16
 	jr z, SMF_SlotParam_ChorusReturn
 	cp (xiy + 2), 0x2a
 	jr nz, SMF_SlotParam_ChorusReturn
@@ -2745,13 +2745,13 @@ SMF_SlotParam_ChorusReturn:
 SMF_SlotParam_ModWheel:
 	bit 0, (4411:16)
 	jr nz, SMF_SlotParam_ModWheelReturn
-	cp (0x2873:16), 15
+	cp (TRACK_ASSIGN_EDIT_VALUE:16), 15
 	jr z, SMF_SlotParam_ModWheelImpl
-	cp (0x2873:16), 16
+	cp (TRACK_ASSIGN_EDIT_VALUE:16), 16
 	jr z, SMF_SlotParam_ModWheelImpl
-	cp (0x2873:16), 13
+	cp (TRACK_ASSIGN_EDIT_VALUE:16), 13
 	jr z, SMF_SlotParam_ModWheelImpl
-	cp (0x2873:16), 14
+	cp (TRACK_ASSIGN_EDIT_VALUE:16), 14
 	jr nz, SMF_SlotParam_ModWheelReturn
 
 SMF_SlotParam_ModWheelImpl:
@@ -2794,13 +2794,13 @@ SMF_SlotParam_ModWheelReturn:
 SMF_SlotParam_PitchBend:
 	bit 0, (4411:16)
 	jr nz, SMF_SlotParam_Detune
-	cp (0x2873:16), 15
+	cp (TRACK_ASSIGN_EDIT_VALUE:16), 15
 	jr z, SMF_SlotParam_PitchBendImpl
-	cp (0x2873:16), 16
+	cp (TRACK_ASSIGN_EDIT_VALUE:16), 16
 	jr z, SMF_SlotParam_PitchBendImpl
-	cp (0x2873:16), 13
+	cp (TRACK_ASSIGN_EDIT_VALUE:16), 13
 	jr z, SMF_SlotParam_PitchBendImpl
-	cp (0x2873:16), 14
+	cp (TRACK_ASSIGN_EDIT_VALUE:16), 14
 	jr nz, SMF_SlotParam_Detune
 
 SMF_SlotParam_PitchBendImpl:
@@ -2866,7 +2866,7 @@ SMF_SlotParam_DetuneImpl:
 SMF_SlotParam_Aftertouch:
 	bit 0, (4411:16)
 	jr nz, SMF_SlotParam_AftertouchReturn
-	cp (0x2873:16), 15
+	cp (TRACK_ASSIGN_EDIT_VALUE:16), 15
 	jr nz, SMF_SlotParam_AftertouchReturn
 	cp (xiy + 2), 0x18
 	jr nz, SMF_SlotParam_AftertouchReturn
@@ -2901,7 +2901,7 @@ SMF_SlotParam_AftertouchReturn:
 SMF_SlotParam_PortamentoSwitch:
 	and (4404:16), 253
 	and (4411:16), 253
-	cp (0x2873:16), 15
+	cp (TRACK_ASSIGN_EDIT_VALUE:16), 15
 	jr nz, SMF_SlotParam_PortaReturn
 	cp (xiy + 2), 0x12
 	jr nz, SMF_SlotParam_PortaReturn
@@ -2936,7 +2936,7 @@ SMF_SlotParam_Remap14To2:
 	cp a, 3:i3
 	jr nz, SMF_SlotParam_Remap14To2_Return
 SMF_SlotParam_Remap14To2_Match:
-	cp (0x2873:16), 15
+	cp (TRACK_ASSIGN_EDIT_VALUE:16), 15
 	jr nz, SMF_SlotParam_Remap14To2_Return
 	cp (xiy+2), 20
 	jr nz, SMF_SlotParam_Remap14To2_Return
@@ -2958,7 +2958,7 @@ SMF_SlotParam_Remap14To2_Return:
 SMF_SlotParam_Sustain:
 	bit 0, (4411:16)
 	jr nz, SMF_SlotParam_SustainReturn
-	cp (0x2873:16), 15
+	cp (TRACK_ASSIGN_EDIT_VALUE:16), 15
 	jr nz, SMF_SlotParam_SustainReturn
 	cp (xiy + 2), 0x18
 	jr nz, SMF_SlotParam_SustainReturn
@@ -2986,7 +2986,7 @@ SMF_SlotParam_SustainReturn:
 SMF_SlotParam_Sostenuto:
 	bit 0, (4411:16)
 	jr nz, SMF_SlotParam_SostenutoReturn1
-	cp (0x2873:16), 15
+	cp (TRACK_ASSIGN_EDIT_VALUE:16), 15
 	jr nz, SMF_SlotParam_SostenutoReturn1
 	cp (xiy + 2), 0x18
 	jr nz, SMF_SlotParam_SostenutoReturn1
@@ -3010,7 +3010,7 @@ SMF_SlotParam_SostenutoReturn1:
 SMF_SlotParam_SoftPedal:
 	bit 0, (4411:16)
 	jr nz, SMF_SlotParam_SoftPedalReturn
-	cp (0x2873:16), 15
+	cp (TRACK_ASSIGN_EDIT_VALUE:16), 15
 	jr nz, SMF_SlotParam_SoftPedalReturn
 	cp (xiy + 2), 0x18
 	jr nz, SMF_SlotParam_SoftPedalReturn
@@ -3034,13 +3034,13 @@ SMF_SlotParam_SoftPedalReturn:
 SMF_SlotParam_Format5Handler:
 	bit 0, (4411:16)
 	jr nz, SMF_SlotParam_Format5Return
-	cp (0x2873:16), 15
+	cp (TRACK_ASSIGN_EDIT_VALUE:16), 15
 	jr z, SMF_SlotParam_Format5Impl
-	cp (0x2873:16), 16
+	cp (TRACK_ASSIGN_EDIT_VALUE:16), 16
 	jr z, SMF_SlotParam_Format5Impl
-	cp (0x2873:16), 13
+	cp (TRACK_ASSIGN_EDIT_VALUE:16), 13
 	jr z, SMF_SlotParam_Format5Impl
-	cp (0x2873:16), 14
+	cp (TRACK_ASSIGN_EDIT_VALUE:16), 14
 	jr nz, SMF_SlotParam_Format5Return
 
 SMF_SlotParam_Format5Impl:
@@ -3074,13 +3074,13 @@ SMF_SlotParam_Format5Return:
 SMF_SlotParam_ReverbType:
 	bit 0, (4411:16)
 	jr nz, SMF_SlotParam_ReverbTypeReturn
-	cp (0x2873:16), 15
+	cp (TRACK_ASSIGN_EDIT_VALUE:16), 15
 	jr z, SMF_SlotParam_ReverbTypeImpl
-	cp (0x2873:16), 16
+	cp (TRACK_ASSIGN_EDIT_VALUE:16), 16
 	jr z, SMF_SlotParam_ReverbTypeImpl
-	cp (0x2873:16), 13
+	cp (TRACK_ASSIGN_EDIT_VALUE:16), 13
 	jr z, SMF_SlotParam_ReverbTypeImpl
-	cp (0x2873:16), 14
+	cp (TRACK_ASSIGN_EDIT_VALUE:16), 14
 	jr nz, SMF_SlotParam_ReverbTypeReturn
 
 SMF_SlotParam_ReverbTypeImpl:
@@ -3121,7 +3121,7 @@ SMF_SlotParam_ReverbTypeReturn:
 SMF_SlotParam_ChorusType:
 	bit 0, (4411:16)
 	jr nz, SMF_SlotParam_ChorusTypeDone
-	cp (0x2873:16), 15
+	cp (TRACK_ASSIGN_EDIT_VALUE:16), 15
 	jr nz, SMF_SlotParam_ChorusTypeDone
 	cp (xiy + 2), 0x20
 	jr nz, SMF_SlotParam_ChorusTypeDone
@@ -3180,7 +3180,7 @@ SMF_SlotParam_ChorusTypeReturn:
 SMF_SlotParam_BankSelect:
 	bit 0, (4411:16)
 	jr nz, SMF_SlotParam_BankSelectDone
-	cp (0x2873:16), 15
+	cp (TRACK_ASSIGN_EDIT_VALUE:16), 15
 	jr nz, SMF_SlotParam_BankSelectDone
 	cp (xiy + 2), 0x20
 	jr nz, SMF_SlotParam_BankSelectDone
@@ -3204,11 +3204,11 @@ SMF_SlotParam_BankSelectDone:
 SMF_SlotParam_BankSelectReturn:
 	bit 0, (4411:16)
 	jr nz, SMF_SlotParam_BankLSBDone
-	cp (0x2873:16), 0
+	cp (TRACK_ASSIGN_EDIT_VALUE:16), 0
 	jr z, SMF_SlotParam_BankSelectLSB
-	cp (0x2873:16), 2
+	cp (TRACK_ASSIGN_EDIT_VALUE:16), 2
 	jr z, SMF_SlotParam_BankSelectLSB
-	cp (0x2873:16), 1
+	cp (TRACK_ASSIGN_EDIT_VALUE:16), 1
 	jr nz, SMF_SlotParam_BankLSBDone
 
 SMF_SlotParam_BankSelectLSB:
@@ -3317,7 +3317,7 @@ SMF_SlotParam_NRPNReturn:
 	ld a, (xiy + 2)
 	calr SMF_TranslateChannel
 	ld (xiy + 2), a
-	cp (0x2873:16), 15
+	cp (TRACK_ASSIGN_EDIT_VALUE:16), 15
 	jr nz, SMF_SlotParam_DataEntry
 	cp (4419:16), 1
 	jr z, SMF_SlotParam_DataEntryReturn
@@ -3332,9 +3332,9 @@ SMF_SlotParam_DataEntryReturn:
 	ret
 
 SMF_SlotParam_TypeD2Handler:
-	cp (0x2873:16), 15
+	cp (TRACK_ASSIGN_EDIT_VALUE:16), 15
 	jr z, SMF_SlotParam_TypeD2Return
-	cp (0x2873:16), 16
+	cp (TRACK_ASSIGN_EDIT_VALUE:16), 16
 	jr z, SMF_SlotParam_TypeD2Return
 	ld a, (xiy + 2)
 	cp a, 0x40
@@ -3404,13 +3404,13 @@ SMF_SetupRead_Finalize:
 
 SMF_SetupRead_Return:
 	ld wa, (0x00ffec:24)
-	ld (0xf19e:16), wa
+	ld (SEQ_SONG_RECORD+30:16), wa
 	ld xix, SEQ_SONG_SLOTS
 	xor xhl, xhl
 	ld l, (SEQ_CURRENT_SONG:24)
 	sla xhl, 11
 	add xix, xhl
-	ld xiy, 0xf180
+	ld xiy, SEQ_SONG_RECORD
 	ldw bc, 0x800
 	ldir85
 	ret

@@ -26,7 +26,7 @@ SingleLoadModeFunc:
 	jr SLMode_Return
 
 SingleLoadModeFunc_OnPaint:
-	ld a, (0x89f8:16)
+	ld a, (SINGLE_LOAD_AREA:16)
 	extz wa
 	sla wa, 2
 	lda xbc, (StorageArea_NameTable:24)
@@ -48,7 +48,7 @@ SingleLoadDstBankFunc:
 	jr SLDstBank_Return
 
 SingleLoadDstBankFunc_OnPaint:
-	ld a, (0x89f8:16)
+	ld a, (SINGLE_LOAD_AREA:16)
 	extz wa
 	sla wa, 2
 	lda xbc, (SingleLoad_BankCaptionByMode:24)
@@ -74,14 +74,14 @@ SingleLoadDstMemFunc_OnPaint:
 	lda xde, (StorageArea_UnitNames:24)
 	cp (0x89fa:16), 0
 	jr z, SLDstMem_ShowFromBank
-	cp (0x89f8:16), 1
+	cp (SINGLE_LOAD_AREA:16), 1
 	jr z, SLDstMem_ShowFromBank
 	ld xde, (xde + 16)
 	ld xbc, EVT_PARA_DRAW
 	jr SLDstMem_DispatchShow
 
 SLDstMem_ShowFromBank:
-	ld c, (0x89f8:16)
+	ld c, (SINGLE_LOAD_AREA:16)
 	extz bc
 	sla bc, 2
 	ld	xde, (xde+bc)
@@ -105,7 +105,7 @@ SingleLoadSrcBankFunc:
 SingleLoadSrcBankFunc_OnPaint:
 	ld xwa, (0x81c2:16)
 	lda xde, (SingleLoad_BankCaptionByMode:24)
-	ld c, (0x89f8:16)
+	ld c, (SINGLE_LOAD_AREA:16)
 	cp c, 0:i3
 	jr nz, SLSrcBank_ShowFromIndex
 	cp (0x8a0a:16), 0
@@ -138,7 +138,7 @@ SingleLoadSrcMemFunc:
 SingleLoadSrcMemFunc_OnPaint:
 	ld xwa, (0x81c6:16)
 	lda xde, (StorageArea_UnitNames:24)
-	ld c, (0x89f8:16)
+	ld c, (SINGLE_LOAD_AREA:16)
 	cp c, 1:i3
 	jr z, SLSrcMem_ShowDirect
 	cp (0x89fa:16), 0
@@ -169,7 +169,7 @@ SLSrcBankList_FuncBody:
 	ld	(xsp+6), xwa
 	lda	xwa, (0x894e:16)
 	ld (xwa+), 0
-	ld	c, (0x89f8:16)
+	ld	c, (SINGLE_LOAD_AREA:16)
 	extz	bc
 	sla	bc, 2
 	lda	xde, (SingleLoad_BankCaptionByMode:24)
@@ -244,7 +244,7 @@ SingleLoadSrc_PanelMemDrawMemoryNumber:
 	lda	xwa, (0x894e:16)
 	ld	(xwa+42), 2
 	lda	xwa, (xwa+43)
-	ld	c, (0x89f8:16)
+	ld	c, (SINGLE_LOAD_AREA:16)
 	extz	bc
 	sla	bc, 2
 	lda	xde, (StorageArea_UnitNames:24)
@@ -536,7 +536,7 @@ SingleLoadSrc_SequencerListProc:
 	lda	xwa, (0x894e:16)
 	ld	(xwa+21), 1
 	lda	xwa, (xwa+22)
-	ld	c, (0x89f8:16)
+	ld	c, (SINGLE_LOAD_AREA:16)
 	extz	bc
 	sla	bc, 2
 	lda	xde, (StorageArea_UnitNames:24)
@@ -599,7 +599,7 @@ SingleLoadSrc_ComposerDrawBankName:
 	ld	xiz, xwa
 	lda	xwa, (0x894e:16)
 	ld (xwa+), 0
-	ld	c, (0x89f8:16)
+	ld	c, (SINGLE_LOAD_AREA:16)
 	extz	bc
 	sla	bc, 2
 	lda	xde, (SingleLoad_BankCaptionByMode:24)
@@ -650,7 +650,7 @@ SingleLoadSrc_ComposerDrawPatternSlot:
 	lda	xwa, (0x894e:16)
 	ld	(xwa+42), 2
 	lda	xwa, (xwa+43)
-	ld	c, (0x89f8:16)
+	ld	c, (SINGLE_LOAD_AREA:16)
 	extz	bc
 	sla	bc, 2
 	lda	xde, (StorageArea_UnitNames:24)
@@ -981,7 +981,7 @@ SingleLoadSrc_DrawSoundMemBankRows:
 	ld	(xsp+2), xwa
 	lda	xwa, (0x894e:16)
 	ld (xwa+), 0
-	ld	c, (0x89f8:16)
+	ld	c, (SINGLE_LOAD_AREA:16)
 	extz	bc
 	sla	bc, 2
 	lda	xde, (SingleLoad_BankCaptionByMode:24)
@@ -1063,7 +1063,7 @@ SingleLoadSrc_DrawSoundMemItemNumber:
 	lda	xwa, (0x894e:16)
 	ld	(xwa+42), 2
 	lda	xwa, (xwa+43)
-	ld	c, (0x89f8:16)
+	ld	c, (SINGLE_LOAD_AREA:16)
 	extz	bc
 	sla	bc, 2
 	lda	xde, (StorageArea_UnitNames:24)
@@ -1504,7 +1504,7 @@ SingleLoadSrcFunc_OnPaint:
 	ld xde, 0xffffffff
 	call ApPostEvent
 	ld xwa, (0x81e0:16)
-	ld c, (0x89f8:16)
+	ld c, (SINGLE_LOAD_AREA:16)
 	extz bc
 	sla bc, 2
 	lda xde, (SingleLoadSrc_ListProcByMode:24)
@@ -1519,7 +1519,7 @@ SingleLoadSrcFunc_OnPaint:
 SLSrc_HandleScroll:
 	cp xiz, 0x5
 	jr nz, SLSrc_ScrollMode6
-	cp (0x89f8:16), 1
+	cp (SINGLE_LOAD_AREA:16), 1
 	jr z, SLSrc_ScrollMode5_Prev
 	ld xwa, (0x81e0:16)
 	ld xbc, EVT_SET_SELECTED_FILE_NUMBER
@@ -1534,7 +1534,7 @@ SLSrc_ScrollMode5_Prev:
 SLSrc_ScrollMode5_Dispatch:
 	call ApPostEvent
 	ld xwa, (0x81e0:16)
-	ld c, (0x89f8:16)
+	ld c, (SINGLE_LOAD_AREA:16)
 	extz bc
 	sla bc, 2
 	lda xde, (SingleLoadSrc_ListProcByMode:24)
@@ -1548,7 +1548,7 @@ SLSrc_ScrollMode5_Dispatch:
 SLSrc_ScrollMode6:
 	cp xiz, 0x6
 	jr nz, SLSrc_ScrollMode7
-	cp (0x89f8:16), 1
+	cp (SINGLE_LOAD_AREA:16), 1
 	jr z, SLSrc_ScrollMode6_NoStep
 	cp (0x89fa:16), 0
 	jr nz, SLSrc_ScrollMode6_NoStep
@@ -1565,7 +1565,7 @@ SLSrc_ScrollMode6_NoStep:
 SLSrc_ScrollMode6_Dispatch:
 	call ApPostEvent
 	ld xwa, (0x81e0:16)
-	ld c, (0x89f8:16)
+	ld c, (SINGLE_LOAD_AREA:16)
 	extz bc
 	sla bc, 2
 	lda xde, (SingleLoadSrc_ListProcByMode:24)
@@ -1584,7 +1584,7 @@ SLSrc_ScrollMode7:
 	ld xde, 0xffffffff
 	call ApPostEvent
 	ld xwa, (0x81e0:16)
-	ld c, (0x89f8:16)
+	ld c, (SINGLE_LOAD_AREA:16)
 	extz bc
 	sla bc, 2
 	lda xde, (SingleLoadSrc_ListProcByMode:24)
@@ -1602,7 +1602,7 @@ SLSrc_ScrollMode8:
 	ld xde, 0xffffffff
 	call ApPostEvent
 	ld xwa, (0x81e0:16)
-	ld c, (0x89f8:16)
+	ld c, (SINGLE_LOAD_AREA:16)
 	extz bc
 	sla bc, 2
 	lda xde, (SingleLoadSrc_ListProcByMode:24)
@@ -1616,7 +1616,7 @@ SLSrc_ScrollMode8:
 SLSrc_ScrollMode40:
 	cp xiz, 0x28
 	jr nz, SLSrc_Return
-	ld c, (0x89f8:16)
+	ld c, (SINGLE_LOAD_AREA:16)
 	extz bc
 	sla bc, 2
 	lda xde, (SingleLoadSrc_ListProcByMode:24)
@@ -1645,7 +1645,7 @@ SLDstBankList_FuncBody:
 	ld	(xsp+6), xwa
 	lda	xwa, (0x89a2:16)
 	ld (xwa+), 0
-	ld	c, (0x89f8:16)
+	ld	c, (SINGLE_LOAD_AREA:16)
 	extz	bc
 	sla	bc, 2
 	lda	xde, (SingleLoad_BankCaptionByMode:24)
@@ -1705,7 +1705,7 @@ SingleLoadDst_DrawPanelMemItemRows:
 	lda	xde, (0x89a2:16)
 	ld	(xde+42), 2
 	ld	(xde+63), 3
-	ld	a, (0x89f8:16)
+	ld	a, (SINGLE_LOAD_AREA:16)
 	extz	wa
 	lda	xhl, (StorageArea_UnitNames:24)
 	ld	bc, wa
@@ -1962,7 +1962,7 @@ SingleLoadDst_DrawSongRows:
 	lda	xwa, (0x89a2:16)
 	ld	(xwa+21), 1
 	lda	xwa, (xwa+22)
-	ld	c, (0x89f8:16)
+	ld	c, (SINGLE_LOAD_AREA:16)
 	extz	bc
 	sla	bc, 2
 	lda	xde, (StorageArea_UnitNames:24)
@@ -2109,7 +2109,7 @@ SingleLoadDst_DrawComposerBankRows:
 	ld	xiz, xwa
 	lda	xwa, (0x89a2:16)
 	ld (xwa+), 0
-	ld	c, (0x89f8:16)
+	ld	c, (SINGLE_LOAD_AREA:16)
 	extz	bc
 	sla	bc, 2
 	lda	xde, (SingleLoad_BankCaptionByMode:24)
@@ -2155,7 +2155,7 @@ SingleLoadDst_DrawComposerItemRows:
 	lda	xwa, (0x89a2:16)
 	ld	(xwa+42), 2
 	lda	xwa, (xwa+43)
-	ld	c, (0x89f8:16)
+	ld	c, (SINGLE_LOAD_AREA:16)
 	extz	bc
 	sla	bc, 2
 	lda	xde, (StorageArea_UnitNames:24)
@@ -2412,7 +2412,7 @@ SingleLoadDst_DrawSoundMemBankRows:
 	ld	(xsp+2), xwa
 	lda	xwa, (0x89a2:16)
 	ld (xwa+), 0
-	ld	c, (0x89f8:16)
+	ld	c, (SINGLE_LOAD_AREA:16)
 	extz	bc
 	sla	bc, 2
 	lda	xde, (SingleLoad_BankCaptionByMode:24)
@@ -2468,7 +2468,7 @@ SingleLoadDst_DrawSoundMemItemRows:
 	lda	xwa, (0x89a2:16)
 	ld	(xwa+42), 2
 	lda	xwa, (xwa+43)
-	ld	c, (0x89f8:16)
+	ld	c, (SINGLE_LOAD_AREA:16)
 	extz	bc
 	sla	bc, 2
 	ld	xbc, (xde+bc)
@@ -2494,7 +2494,7 @@ SingleLoadDst_DrawSoundMemItemRows_Skip:
 	ld	(xbc+42), 2
 	cp	(0x8a08:16), l
 	jr	c, SingleLoadDst_DrawSoundMemItemRows_Skip2
-	ld	c, (0x89f8:16)
+	ld	c, (SINGLE_LOAD_AREA:16)
 	extz	bc
 	sla	bc, 2
 	ld	xbc, (xde+bc)
@@ -2528,7 +2528,7 @@ SingleLoadDst_DrawSoundMemItemRows_Skip:
 	calr	WP_GetUserName3
 	jr	SingleLoadDst_DrawSoundMemItemRows_Join
 SingleLoadDst_DrawSoundMemItemRows_Skip2:
-	ld	c, (0x89f8:16)
+	ld	c, (SINGLE_LOAD_AREA:16)
 	extz	bc
 	sla	bc, 2
 	ld	xbc, (xde+bc)
@@ -2893,7 +2893,7 @@ SingleLoadDstFunc:
 	calr SignalProgressUpdate
 	calr WP_ScanAvailability
 	calr SignalProgressUpdate
-	cp (0x89f8:16), 1
+	cp (SINGLE_LOAD_AREA:16), 1
 	jr z, SLDst_ShowHide_Internal
 	ld xwa, 0x61004a
 	ld xbc, EVT_SET_VISIBLE
@@ -2911,7 +2911,7 @@ SLDst_ShowHide_Dispatch:
 	ld xbc, EVT_SET_SELECTED_FILE_NUMBER
 	ld xde, 0xffffffff
 	call ApPostEvent
-	cp (0x89f8:16), 0
+	cp (SINGLE_LOAD_AREA:16), 0
 	jr nz, SLDst_ClearFloppyFlag
 	call FileIO_ValidateWithExtHeader
 	cp hl, 0:i3
@@ -2956,7 +2956,7 @@ SingleLoadDstFunc_OnPaint:
 	ld xde, 0:i3
 	call ApPostEvent
 	ld xwa, (0x81f0:16)
-	ld c, (0x89f8:16)
+	ld c, (SINGLE_LOAD_AREA:16)
 	extz bc
 	sla bc, 2
 	lda xde, (SingleLoadDst_AreaListProcs:24)
@@ -2973,7 +2973,7 @@ SLDst_HandleConfirm:
 	ld xde, 0xffffffff
 	call ApPostEvent
 	ld xwa, (0x81f0:16)
-	ld c, (0x89f8:16)
+	ld c, (SINGLE_LOAD_AREA:16)
 	extz bc
 	sla bc, 2
 	lda xde, (SingleLoadDst_AreaListProcs:24)
@@ -2988,7 +2988,7 @@ SLDst_HandleScroll:
 	ld xwa, (xsp + 4)
 	cp xwa, 0x3
 	jr nz, SLDst_ScrollMode4
-	cp (0x89f8:16), 1
+	cp (SINGLE_LOAD_AREA:16), 1
 	jr z, SLDst_ScrollMode4
 	ld xwa, (xsp + 8)
 	cp xwa, EVT_INDEXSW_UP
@@ -3011,7 +3011,7 @@ SLDst_HandleScroll:
 	ld xde, 0:i3
 	call ApPostEvent
 	ld xwa, (0x81f0:16)
-	ld c, (0x89f8:16)
+	ld c, (SINGLE_LOAD_AREA:16)
 	extz bc
 	sla bc, 2
 	lda xde, (SingleLoadDst_AreaListProcs:24)
@@ -3032,7 +3032,7 @@ SLDst_ScrollMode4:
 	calr WP_FindNextSlot
 	cp l, 0:i3
 	jrl z, SLDst_Return
-	cp (0x89f8:16), 1
+	cp (SINGLE_LOAD_AREA:16), 1
 	jr z, SLDst_ScrollMode4_Internal
 	ld xwa, 0x61004a
 	ld xbc, EVT_SET_VISIBLE
@@ -3075,7 +3075,7 @@ SLDst_ScrollMode4_Dispatch:
 	ld xde, 0:i3
 	call ApPostEvent
 	ld xwa, (0x81f0:16)
-	ld c, (0x89f8:16)
+	ld c, (SINGLE_LOAD_AREA:16)
 	extz bc
 	sla bc, 2
 	lda xde, (SingleLoadDst_AreaListProcs:24)
@@ -3096,7 +3096,7 @@ SLDst_ScrollDispatch:
 	ld xwa, (xsp + 4)
 	cp xwa, 0xa
 	jr nz, SLDst_Scroll_ChildReturn
-	cp (0x89f8:16), 4
+	cp (SINGLE_LOAD_AREA:16), 4
 	jr z, SLDst_Scroll_ChildReturn
 	ld xwa, 0x600026
 	ld xbc, EVT_SHOW
@@ -3105,7 +3105,7 @@ SLDst_ScrollDispatch:
 	ld wa, 0:i3
 	calr InitializeOperationState
 	ld xwa, (0x81f0:16)
-	ld c, (0x89f8:16)
+	ld c, (SINGLE_LOAD_AREA:16)
 	extz bc
 	sla bc, 2
 	lda xde, (SingleLoadDst_AreaListProcs:24)
@@ -3130,14 +3130,14 @@ SLDst_Scroll_ChildReturn:
 	ld xwa, (xsp + 4)
 	cp xwa, 0x7
 	jr nz, SLDst_Scroll_SubMode2
-	cp (0x89f8:16), 1
+	cp (SINGLE_LOAD_AREA:16), 1
 	jr z, SLDst_Scroll_SubMode
 	ld xwa, (0x81f0:16)
 	ld xbc, EVT_SET_SELECTED_FILE_NUMBER
 	ld xde, 1:i3
 	call ApPostEvent
 	ld xwa, (0x81f0:16)
-	ld c, (0x89f8:16)
+	ld c, (SINGLE_LOAD_AREA:16)
 	extz bc
 	sla bc, 2
 	lda xde, (SingleLoadDst_AreaListProcs:24)
@@ -3154,7 +3154,7 @@ SLDst_Scroll_SubMode:
 	ld xde, 0xffffffff
 	call ApPostEvent
 	ld xwa, (0x81f0:16)
-	ld c, (0x89f8:16)
+	ld c, (SINGLE_LOAD_AREA:16)
 	extz bc
 	sla bc, 2
 	lda xde, (SingleLoadDst_AreaListProcs:24)
@@ -3170,13 +3170,13 @@ SLDst_Scroll_SubMode2:
 	ld xbc, (xsp + 4)
 	cp xbc, 0x8
 	jrl nz, SLDst_Scroll_SubMode5
-	cp (0x89f8:16), 1
+	cp (SINGLE_LOAD_AREA:16), 1
 	jr nz, SLDst_Scroll_SubMode3
 	ld xbc, EVT_SET_SELECTED_FILE_NUMBER
 	ld xde, 2:i3
 	call ApPostEvent
 	ld xwa, (0x81f0:16)
-	ld c, (0x89f8:16)
+	ld c, (SINGLE_LOAD_AREA:16)
 	extz bc
 	sla bc, 2
 	lda xde, (SingleLoadDst_AreaListProcs:24)
@@ -3194,7 +3194,7 @@ SLDst_Scroll_SubMode3:
 	ld xde, 3:i3
 	call ApPostEvent
 	ld xwa, (0x81f0:16)
-	ld c, (0x89f8:16)
+	ld c, (SINGLE_LOAD_AREA:16)
 	extz bc
 	sla bc, 2
 	lda xde, (SingleLoadDst_AreaListProcs:24)
@@ -3210,7 +3210,7 @@ SLDst_Scroll_SubMode4:
 	ld xde, 0xffffffff
 	call ApPostEvent
 	ld xwa, (0x81f0:16)
-	ld c, (0x89f8:16)
+	ld c, (SINGLE_LOAD_AREA:16)
 	extz bc
 	sla bc, 2
 	lda xde, (SingleLoadDst_AreaListProcs:24)
@@ -3229,7 +3229,7 @@ SLDst_Scroll_SubMode5:
 	ld xde, 0xffffffff
 	call ApPostEvent
 	ld xwa, (0x81f0:16)
-	ld c, (0x89f8:16)
+	ld c, (SINGLE_LOAD_AREA:16)
 	extz bc
 	sla bc, 2
 	lda xde, (SingleLoadDst_AreaListProcs:24)
@@ -3248,7 +3248,7 @@ SLDst_Scroll_SubMode6:
 	ld xde, 0xffffffff
 	call ApPostEvent
 	ld xwa, (0x81f0:16)
-	ld c, (0x89f8:16)
+	ld c, (SINGLE_LOAD_AREA:16)
 	extz bc
 	sla bc, 2
 	lda xde, (SingleLoadDst_AreaListProcs:24)
@@ -3295,7 +3295,7 @@ CmpSrc_HandleShow:
 	ld xde, 0xffffffff
 	call ApPostEvent
 	ld xwa, (0x81f4:16)
-	ld c, (0x89f8:16)
+	ld c, (SINGLE_LOAD_AREA:16)
 	extz bc
 	sla bc, 2
 	lda xde, (CmpSingleLoadSrc_ListProcByMode:24)
@@ -3315,7 +3315,7 @@ CmpSrc_HandleScroll:
 	ld xde, 1:i3
 	call ApPostEvent
 	ld xwa, (0x81f4:16)
-	ld c, (0x89f8:16)
+	ld c, (SINGLE_LOAD_AREA:16)
 	extz bc
 	sla bc, 2
 	lda xde, (CmpSingleLoadSrc_ListProcByMode:24)
@@ -3337,7 +3337,7 @@ CmpSrc_ScrollMode6:
 	ld xde, 3:i3
 	call ApPostEvent
 	ld xwa, (0x81f4:16)
-	ld c, (0x89f8:16)
+	ld c, (SINGLE_LOAD_AREA:16)
 	extz bc
 	sla bc, 2
 	lda xde, (CmpSingleLoadSrc_ListProcByMode:24)
@@ -3354,7 +3354,7 @@ CmpSrc_ScrollMode6_NoStep:
 	ld xde, 0xffffffff
 	call ApPostEvent
 	ld xwa, (0x81f4:16)
-	ld c, (0x89f8:16)
+	ld c, (SINGLE_LOAD_AREA:16)
 	extz bc
 	sla bc, 2
 	lda xde, (CmpSingleLoadSrc_ListProcByMode:24)
@@ -3374,7 +3374,7 @@ CmpSrc_ScrollMode7:
 	ld xde, 0xffffffff
 	call ApPostEvent
 	ld xwa, (0x81f4:16)
-	ld c, (0x89f8:16)
+	ld c, (SINGLE_LOAD_AREA:16)
 	extz bc
 	sla bc, 2
 	lda xde, (CmpSingleLoadSrc_ListProcByMode:24)
@@ -3395,7 +3395,7 @@ CmpSrc_ScrollMode8:
 	ld xde, 0xffffffff
 	call ApPostEvent
 	ld xwa, (0x81f4:16)
-	ld c, (0x89f8:16)
+	ld c, (SINGLE_LOAD_AREA:16)
 	extz bc
 	sla bc, 2
 	lda xde, (CmpSingleLoadSrc_ListProcByMode:24)
@@ -3410,7 +3410,7 @@ CmpSrc_ScrollMode40:
 	ld xbc, (xsp + 4)
 	cp xbc, 0x28
 	jr nz, CmpSrc_Return
-	ld c, (0x89f8:16)
+	ld c, (SINGLE_LOAD_AREA:16)
 	extz bc
 	sla bc, 2
 	lda xde, (CmpSingleLoadSrc_ListProcByMode:24)
@@ -3482,7 +3482,7 @@ CmpSingleLoadDstFunc_OnPaint:
 	ld xde, 0:i3
 	call ApPostEvent
 	ld xwa, (0x81f8:16)
-	ld c, (0x89f8:16)
+	ld c, (SINGLE_LOAD_AREA:16)
 	extz bc
 	sla bc, 2
 	lda xde, (CmpSingleLoadDst_AreaListProcs:24)
@@ -3518,7 +3518,7 @@ CmpDst_HandleScroll:
 	ld xde, 0:i3
 	call ApPostEvent
 	ld xwa, (0x81f8:16)
-	ld c, (0x89f8:16)
+	ld c, (SINGLE_LOAD_AREA:16)
 	extz bc
 	sla bc, 2
 	lda xde, (CmpSingleLoadDst_AreaListProcs:24)
@@ -3537,7 +3537,7 @@ CmpDst_ScrollModeA:
 	ld xwa, (xsp + 4)
 	cp xwa, 0xa
 	jr nz, CmpDst_ScrollMode7
-	cp (0x89f8:16), 4
+	cp (SINGLE_LOAD_AREA:16), 4
 	jr z, CmpDst_ScrollMode7
 	ld xwa, 0x600026
 	ld xbc, EVT_SHOW
@@ -3546,7 +3546,7 @@ CmpDst_ScrollModeA:
 	ld wa, 0:i3
 	calr InitializeOperationState
 	ld xwa, (0x81f8:16)
-	ld c, (0x89f8:16)
+	ld c, (SINGLE_LOAD_AREA:16)
 	extz bc
 	sla bc, 2
 	lda xde, (CmpSingleLoadDst_AreaListProcs:24)
@@ -3576,7 +3576,7 @@ CmpDst_ScrollMode7:
 	ld xde, 1:i3
 	call ApPostEvent
 	ld xwa, (0x81f8:16)
-	ld c, (0x89f8:16)
+	ld c, (SINGLE_LOAD_AREA:16)
 	extz bc
 	sla bc, 2
 	lda xde, (CmpSingleLoadDst_AreaListProcs:24)
@@ -3598,7 +3598,7 @@ CmpDst_ScrollMode8:
 	ld xde, 3:i3
 	call ApPostEvent
 	ld xwa, (0x81f8:16)
-	ld c, (0x89f8:16)
+	ld c, (SINGLE_LOAD_AREA:16)
 	extz bc
 	sla bc, 2
 	lda xde, (CmpSingleLoadDst_AreaListProcs:24)
@@ -3614,7 +3614,7 @@ CmpDst_ScrollMode8_NoStep:
 	ld xde, 0xffffffff
 	call ApPostEvent
 	ld xwa, (0x81f8:16)
-	ld c, (0x89f8:16)
+	ld c, (SINGLE_LOAD_AREA:16)
 	extz bc
 	sla bc, 2
 	lda xde, (CmpSingleLoadDst_AreaListProcs:24)
@@ -3633,7 +3633,7 @@ CmpDst_ScrollMode5:
 	ld xde, 0xffffffff
 	call ApPostEvent
 	ld xwa, (0x81f8:16)
-	ld c, (0x89f8:16)
+	ld c, (SINGLE_LOAD_AREA:16)
 	extz bc
 	sla bc, 2
 	lda xde, (CmpSingleLoadDst_AreaListProcs:24)
@@ -3654,7 +3654,7 @@ CmpDst_ScrollMode6:
 	ld xde, 0xffffffff
 	call ApPostEvent
 	ld xwa, (0x81f8:16)
-	ld c, (0x89f8:16)
+	ld c, (SINGLE_LOAD_AREA:16)
 	extz bc
 	sla bc, 2
 	lda xde, (CmpSingleLoadDst_AreaListProcs:24)
@@ -3703,7 +3703,7 @@ CmpFile_Selection_Clamp:
 
 CmpSingleLoadFileFunc_OnPaint:
 	ld (0x8870:16), 0
-	cp (0x89f8:16), 2
+	cp (SINGLE_LOAD_AREA:16), 2
 	jr nz, CmpFile_ShowDefault
 	ld wa, (0x8200:16)
 	call GetFileEntryPtr
@@ -3758,7 +3758,7 @@ CmpFile_ScrollRedraw:
 	call NotifyUIOfSelectionChange
 	ld (0x8870:16), 0
 	lda xiz, (Str_EmptyFileName_Cmp:24)
-	ld (0x89f8:16), 4
+	ld (SINGLE_LOAD_AREA:16), 4
 	ld wa, 3:i3
 	call FileIO_CheckRecordValid
 	cp l, 0:i3
@@ -3766,7 +3766,7 @@ CmpFile_ScrollRedraw:
 	call FileIO_ValidateAndOpenFile
 	cp hl, 0:i3
 	jr z, CmpFile_RedrawDispatch
-	ld (0x89f8:16), 2
+	ld (SINGLE_LOAD_AREA:16), 2
 	ld wa, (0x8200:16)
 	call GetFileEntryPtr
 	ld xiz, xhl
@@ -3815,15 +3815,15 @@ FmmCmpSingleLoadFunc:
 	ld xbc, EVT_SHOW
 	ld xde, 5:i3
 	call ApPostEvent
-	cpw (0x8500:16), 0
+	cpw (DISK_MEDIA_TYPE:16), 0
 	jr ge, FmmCmpLoad_DispatchState
 	call GetDiskSizeInfo
 	extz hl
-	ld (0x8500:16), hl
+	ld (DISK_MEDIA_TYPE:16), hl
 	calr SignalProgressUpdate
 
 FmmCmpLoad_DispatchState:
-	ld wa, (0x8500:16)
+	ld wa, (DISK_MEDIA_TYPE:16)
 	cp wa, 1:i3
 	jrl z, FmmCmpLoad_HandleSuccess
 	cp wa, 0:i3
@@ -3839,7 +3839,7 @@ FmmCmpLoad_DispatchState:
 	calr SignalProgressUpdate
 
 FmmCmpLoad_ContinueLoad:
-	ld (0x89f8:16), 4
+	ld (SINGLE_LOAD_AREA:16), 4
 	ld wa, 3:i3
 	call FileIO_CheckRecordValid
 	cp l, 0:i3
@@ -3847,7 +3847,7 @@ FmmCmpLoad_ContinueLoad:
 	call FileIO_ValidateAndOpenFile
 	cp hl, 0:i3
 	jr z, FmmCmpLoad_SignalProgress
-	ld (0x89f8:16), 2
+	ld (SINGLE_LOAD_AREA:16), 2
 
 FmmCmpLoad_SignalProgress:
 	calr SignalProgressUpdate

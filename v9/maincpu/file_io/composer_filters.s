@@ -33,15 +33,15 @@ FmmComposerLoadFunc:
 	ld xbc, EVT_SHOW
 	ld xde, 5:i3
 	call ApPostEvent
-	cpw (0x8500:16), 0
+	cpw (DISK_MEDIA_TYPE:16), 0
 	jr ge, CompLoad_DispatchState
 	call GetDiskSizeInfo
 	extz hl
-	ld (0x8500:16), hl
+	ld (DISK_MEDIA_TYPE:16), hl
 	calr SignalProgressUpdate
 
 CompLoad_DispatchState:
-	ld wa, (0x8500:16)
+	ld wa, (DISK_MEDIA_TYPE:16)
 	cp wa, 1:i3
 	jrl z, CompLoad_HandleSuccess
 	cp wa, 0:i3
@@ -563,7 +563,7 @@ LoadFilter_OpLoad:
 	ld xbc, EVT_SET_NOT_DRAW_FLAG
 	ld xde, 1:i3
 	call ApPostEvent
-	cpw (0xf19e:16), 0
+	cpw (SEQ_SONG_RECORD+30:16), 0
 	jr z, LoadFilter_Load_ShowCode1
 	ld wa, 2:i3
 	call FileIO_WriteRecordName_Done

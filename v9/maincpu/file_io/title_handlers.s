@@ -98,15 +98,15 @@ FmmUtilityTitleFunc:
 	ld xde, 0:i3
 	call ApDeliveryEvent
 	ldmm8 0x7f5c, PREVIOUS_TITLE
-	cpw (0x8500:16), 0
+	cpw (DISK_MEDIA_TYPE:16), 0
 	jr ge, FmmUtility_DispatchState
 	call GetDiskSizeInfo
 	extz hl
-	ld (0x8500:16), hl
+	ld (DISK_MEDIA_TYPE:16), hl
 	calr SignalProgressUpdate
 
 FmmUtility_DispatchState:
-	ld wa, (0x8500:16)
+	ld wa, (DISK_MEDIA_TYPE:16)
 	cp wa, 1:i3
 	jrl z, FmmUtility_HandleSuccess
 	cp wa, 0:i3
@@ -230,15 +230,15 @@ FmmSmfUtilityTitleFunc:
 	ld xde, 0:i3
 	call ApDeliveryEvent
 	ldmm8 0x7f5e, PREVIOUS_TITLE
-	cpw (0x8500:16), 0
+	cpw (DISK_MEDIA_TYPE:16), 0
 	jr ge, FmmSmfUtility_DispatchState
 	call GetDiskSizeInfo
 	extz hl
-	ld (0x8500:16), hl
+	ld (DISK_MEDIA_TYPE:16), hl
 	calr SignalProgressUpdate
 
 FmmSmfUtility_DispatchState:
-	ld wa, (0x8500:16)
+	ld wa, (DISK_MEDIA_TYPE:16)
 	cp wa, 1:i3
 	jrl z, FmmSmfUtility_HandleSuccess
 	cp wa, 0:i3

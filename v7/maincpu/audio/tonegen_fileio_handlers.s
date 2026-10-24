@@ -99,7 +99,7 @@ PanelTlv_WriteAllHeaders:
 	calr	PanelTlv_WriteLivePanelHeaders
 	jrl	PanelTlv_WritePanelMemoryHeaders
 PanelTlv_ValidateSongPanel:
-	lda	xwa, (0xf480:16)
+	lda	xwa, (SEQ_SONG_RECORD+768:16)
 	jrl	PanelTlv_ValidateBlock0
 ; a jr to PanelTlv_ResolvePartCompanions, for callers outside its calr reach
 PanelTlv_ResolvePartCompanions_Entry:
@@ -536,7 +536,7 @@ PanelTlv_Rule_ZeroByte:
 	.byte	0xf3, 0x07, 0xe0, 0xe4, 0x00, 0x00	; ld (XWA+BC),0x00
 	ld	hl, 2:i3
 	ret
-	lda_d16	xwa, (0xf480)
+	lda_d16	xwa, (SEQ_SONG_RECORD+768)
 	jrl	PanelTlv_WriteBlock0Headers
 ; xwa = a block-1 base.  PanelTlv_WriteRecordHeader for each of the 30 PanelTlv_Block1_Layout records.
 PanelTlv_WriteBlock1Headers:

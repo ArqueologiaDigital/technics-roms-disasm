@@ -878,7 +878,7 @@ MidiPkt_SysExBulkTransfer_Data_Case6:
 	calr	SysEx_ApplyToSlot49_Format_Data
 	ret
 MidiPkt_SysExBulkTransfer_Data_Helper:
-	lda	xde, (0x95a8:16)
+	lda	xde, (MIDIRX_PART_EVENT:16)
 	ld	c, (xwa)
 	ld	(xde), c
 	ld	c, (xwa+1)
@@ -898,7 +898,7 @@ MidiPkt_SysExBulkTransfer_Data_Helper:
 	pop	xde
 	ret
 MidiPkt_SysExBulkTransfer_Data_Helper2:
-	lda	xde, (0x95a8:16)
+	lda	xde, (MIDIRX_PART_EVENT:16)
 	ld	c, (xwa)
 	ld	(xde), c
 	ld	c, (xwa+1)
@@ -1414,7 +1414,7 @@ SysEx_ValidateRolandHeader:
 	ret	nz
 	cp	c, 0:i3
 	jr	nz, SysEx_ValidateRolandHeader_NonZeroChan
-	lda	xbc, (0xf180:24)
+	lda	xbc, (SEQ_SONG_RECORD:24)
 	add	xbc, 0x2e0
 	jr	SysEx_ValidateRolandHeader_Dispatch
 SysEx_ValidateRolandHeader_NonZeroChan:

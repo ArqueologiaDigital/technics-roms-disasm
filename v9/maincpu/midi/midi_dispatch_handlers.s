@@ -313,8 +313,8 @@ MidiCC_Handler_BitManipulation_Skip:
 	ld d, 192:opc
 	ld	a, (0x9637:16)
 	ld	(0x9648:16), a
-	ld	(0x9644:16), bc
-	ld	(0x9646:16), de
+	ld	(MIDIRX_PART_EVENT:16), bc
+	ld	(MIDIRX_PART_EVENT+2:16), de
 	call	MidiCC_RxCC83_SetParamBitsAndQueue
 MidiCC_Handler_BitManipulation_Return:
 	ret
@@ -344,8 +344,8 @@ MidiCC_Handler_PairedParamA:
 	ld	d, 255:opc
 	ld	a, (0x9637:16)
 	ld	(0x9648:16), a
-	ld	(0x9644:16), bc
-	ld	(0x9646:16), de
+	ld	(MIDIRX_PART_EVENT:16), bc
+	ld	(MIDIRX_PART_EVENT+2:16), de
 	call	MidiCC_ApplyBankSelect
 MidiCC_Handler_PairedParamA_Return:
 	ret
@@ -365,8 +365,8 @@ MidiCC_Handler_PairedParamB:
 	ld	e, 255:opc
 	ld	a, (0x9637:16)
 	ld	(0x9648:16), a
-	ld	(0x9644:16), bc
-	ld	(0x9646:16), de
+	ld	(MIDIRX_PART_EVENT:16), bc
+	ld	(MIDIRX_PART_EVENT+2:16), de
 	call	MidiCC_ApplyBankSelect
 MidiCC_Handler_PairedParamB_Return:
 	ret
@@ -387,8 +387,8 @@ MidiCC_Handler_RangeCheck_Skip:
 	ld	d, 7:opc
 	ld	a, (0x9637:16)
 	ld	(0x9648:16), a
-	ld	(0x9644:16), bc
-	ld	(0x9646:16), de
+	ld	(MIDIRX_PART_EVENT:16), bc
+	ld	(MIDIRX_PART_EVENT+2:16), de
 	call	MidiStream_ApplyPendingParams
 MidiCC_Handler_RangeCheck_Return:
 	ret
@@ -476,8 +476,8 @@ MidiCC_RxCC64_Sustain:
 	ld e, (38454:16)
 	ld	a, (0x9637:16)
 	ld	(0x9648:16), a
-	ld	(0x9644:16), bc
-	ld	(0x9646:16), de
+	ld	(MIDIRX_PART_EVENT:16), bc
+	ld	(MIDIRX_PART_EVENT+2:16), de
 	calr	MidiCC_Helper_ConditionalESetup
 MidiCC_RxCC64_Sustain_Return:
 	ret
@@ -498,8 +498,8 @@ MidiCC_RxFunc08:
 	ld e, (38454:16)
 	ld	a, (0x9637:16)
 	ld	(0x9648:16), a
-	ld	(0x9644:16), bc
-	ld	(0x9646:16), de
+	ld	(MIDIRX_PART_EVENT:16), bc
+	ld	(MIDIRX_PART_EVENT+2:16), de
 	call	MidiCC_RxFunc08_QueuePartParam
 MidiCC_RxFunc08_Return:
 	ret
@@ -520,8 +520,8 @@ MidiCC_RxFunc09:
 	ld e, (38454:16)
 	ld	a, (0x9637:16)
 	ld	(0x9648:16), a
-	ld	(0x9644:16), bc
-	ld	(0x9646:16), de
+	ld	(MIDIRX_PART_EVENT:16), bc
+	ld	(MIDIRX_PART_EVENT+2:16), de
 	call	MidiCC_RxFunc08_QueuePartParam
 MidiCC_RxFunc09_Return:
 	ret
@@ -542,8 +542,8 @@ MidiCC_RxCC1_Modulation:
 	ld e, (38454:16)
 	ld	a, (0x9637:16)
 	ld	(0x9648:16), a
-	ld	(0x9644:16), bc
-	ld	(0x9646:16), de
+	ld	(MIDIRX_PART_EVENT:16), bc
+	ld	(MIDIRX_PART_EVENT+2:16), de
 	call	MidiCC_SetPendingPartModulation
 MidiCC_RxCC1_Modulation_Return:
 	ret
@@ -564,8 +564,8 @@ MidiCC_RxCC7_Volume:
 	ld e, (38454:16)
 	ld	a, (0x9637:16)
 	ld	(0x9648:16), a
-	ld	(0x9644:16), bc
-	ld	(0x9646:16), de
+	ld	(MIDIRX_PART_EVENT:16), bc
+	ld	(MIDIRX_PART_EVENT+2:16), de
 	call	MidiCC_SetPendingPartVolume
 MidiCC_RxCC7_Volume_Return:
 	ret
@@ -586,8 +586,8 @@ MidiCC_RxCC11_Expression:
 	ld e, (38454:16)
 	ld	a, (0x9637:16)
 	ld	(0x9648:16), a
-	ld	(0x9644:16), bc
-	ld	(0x9646:16), de
+	ld	(MIDIRX_PART_EVENT:16), bc
+	ld	(MIDIRX_PART_EVENT+2:16), de
 	call	MidiCC_SetPendingPartExpression
 MidiCC_RxCC11_Expression_Return:
 	ret
@@ -608,8 +608,8 @@ MidiCC_RxCC10_Pan:
 	ld e, (38454:16)
 	ld	a, (0x9637:16)
 	ld	(0x9648:16), a
-	ld	(0x9644:16), bc
-	ld	(0x9646:16), de
+	ld	(MIDIRX_PART_EVENT:16), bc
+	ld	(MIDIRX_PART_EVENT+2:16), de
 	call	MidiCC_WritePartParamAndQueue
 MidiCC_RxCC10_Pan_Return:
 	ret
@@ -630,8 +630,8 @@ MidiCC_RxCC93_Chorus:
 	ld e, (38454:16)
 	ld	a, (0x9637:16)
 	ld	(0x9648:16), a
-	ld	(0x9644:16), bc
-	ld	(0x9646:16), de
+	ld	(MIDIRX_PART_EVENT:16), bc
+	ld	(MIDIRX_PART_EVENT+2:16), de
 	call	MidiCC_WritePartParamAndQueue
 MidiCC_RxCC93_Chorus_Return:
 	ret
@@ -652,8 +652,8 @@ MidiCC_RxCC94_Celeste:
 	ld e, (38454:16)
 	ld	a, (0x9637:16)
 	ld	(0x9648:16), a
-	ld	(0x9644:16), bc
-	ld	(0x9646:16), de
+	ld	(MIDIRX_PART_EVENT:16), bc
+	ld	(MIDIRX_PART_EVENT+2:16), de
 	calr	MidiCC_Helper_ConditionalESetup
 MidiCC_RxCC94_Celeste_Return:
 	ret
@@ -674,8 +674,8 @@ MidiCC_RxCC91_Reverb:
 	ld e, (38454:16)
 	ld	a, (0x9637:16)
 	ld	(0x9648:16), a
-	ld	(0x9644:16), bc
-	ld	(0x9646:16), de
+	ld	(MIDIRX_PART_EVENT:16), bc
+	ld	(MIDIRX_PART_EVENT+2:16), de
 	cp	c, 96
 	jr	z, MidiCC_RxCC91_Reverb_Skip
 	call	MidiCC_WritePartParamAndQueue
@@ -705,8 +705,8 @@ MidiCC_RxFunc12:
 	ld e, (38454:16)
 	ld	a, (0x9637:16)
 	ld	(0x9648:16), a
-	ld	(0x9644:16), bc
-	ld	(0x9646:16), de
+	ld	(MIDIRX_PART_EVENT:16), bc
+	ld	(MIDIRX_PART_EVENT+2:16), de
 	call	MidiCC_QueuePartParam
 MidiCC_RxFunc12_Return:
 	ret
@@ -728,8 +728,8 @@ MidiCC_RxFunc13_MidEntry:
 	ld e, (38454:16)
 	ld	a, (0x9637:16)
 	ld	(0x9648:16), a
-	ld	(0x9644:16), bc
-	ld	(0x9646:16), de
+	ld	(MIDIRX_PART_EVENT:16), bc
+	ld	(MIDIRX_PART_EVENT+2:16), de
 	call	MidiCC_QueuePartParam
 MidiCC_RxFunc13_Return:
 	ret
@@ -750,8 +750,8 @@ MidiCC_RxFunc14:
 	ld e, (38454:16)
 	ld	a, (0x9637:16)
 	ld	(0x9648:16), a
-	ld	(0x9644:16), bc
-	ld	(0x9646:16), de
+	ld	(MIDIRX_PART_EVENT:16), bc
+	ld	(MIDIRX_PART_EVENT+2:16), de
 	call	MidiCC_QueuePartParam
 MidiCC_RxFunc14_Return:
 	ret
@@ -772,8 +772,8 @@ MidiCC_RxFunc15:
 	ld e, (38454:16)
 	ld	a, (0x9637:16)
 	ld	(0x9648:16), a
-	ld	(0x9644:16), bc
-	ld	(0x9646:16), de
+	ld	(MIDIRX_PART_EVENT:16), bc
+	ld	(MIDIRX_PART_EVENT+2:16), de
 	call	MidiCC_QueuePartParam
 MidiCC_RxFunc15_Return:
 	ret
@@ -826,8 +826,8 @@ MidiCC_Handler_BankModeSelect_Skip3:
 MidiCC_Handler_BankModeSelect_Join:
 	ld	a, (0x9637:16)
 	ld	(0x9648:16), a
-	ld	(0x9644:16), bc
-	ld	(0x9646:16), de
+	ld	(MIDIRX_PART_EVENT:16), bc
+	ld	(MIDIRX_PART_EVENT+2:16), de
 	call	MidiCC_DataEntry_WritePartParamAndQueue
 MidiCC_Handler_BankModeSelect_Return:
 	ret
@@ -861,8 +861,8 @@ MidiCC_Handler_ExpressionParam:
 	ld	d, 255:opc
 	ld	a, (0x9637:16)
 	ld	(0x9648:16), a
-	ld	(0x9644:16), bc
-	ld	(0x9646:16), de
+	ld	(MIDIRX_PART_EVENT:16), bc
+	ld	(MIDIRX_PART_EVENT+2:16), de
 	call	MidiCC_DataEntry_WritePartParamAndQueue
 MidiCC_Handler_ExpressionParam_Return:
 	ret
@@ -912,8 +912,8 @@ MidiCC_Handler_ParamDispatch:
 	ld	d, 127:opc
 	ld	a, (0x9637:16)
 	ld	(0x9648:16), a
-	ld	(0x9644:16), bc
-	ld	(0x9646:16), de
+	ld	(MIDIRX_PART_EVENT:16), bc
+	ld	(MIDIRX_PART_EVENT+2:16), de
 	call	MidiCC_ResetAllControllers
 MidiCC_Handler_ParamDispatch_Return:
 	ret
@@ -931,21 +931,21 @@ MidiCC_Handler_TableDispatch:
 	ld d, 0x7f:opc
 	ld	a, (0x9637:16)
 	ld	(0x9648:16), a
-	ld	(0x9644:16), bc
-	ld	(0x9646:16), de
+	ld	(MIDIRX_PART_EVENT:16), bc
+	ld	(MIDIRX_PART_EVENT+2:16), de
 	call MidiCC_AllSoundOff_QueuePartParam
 MidiCC_Handler_TableDispatch_Ret:
 	ret
 MidiCC_Helper_ConditionalESetup:
 	; --- Subroutine 2: conditional E setup from D (26 bytes) ---
 	ld	a, (0x9636:16)
-	ld	de, (0x9646:16)
+	ld	de, (MIDIRX_PART_EVENT+2:16)
 	xor e, e
 	cp a, 0x40
 	jr c, MidiCC_Helper_ConditionalESetup_Store
 	ld e, d
 MidiCC_Helper_ConditionalESetup_Store:
-	ld	(0x9646:16), de
+	ld	(MIDIRX_PART_EVENT+2:16), de
 	call MidiCC_Switch_WritePartParamAndQueue
 	ret
 MidiCC_Helper_EntryWithEqA:
@@ -953,8 +953,8 @@ MidiCC_Helper_EntryWithEqA:
 	ld e, a
 	ld	a, (0x9637:16)
 	ld	(0x9648:16), a
-	ld	(0x9644:16), bc
-	ld	(0x9646:16), de
+	ld	(MIDIRX_PART_EVENT:16), bc
+	ld	(MIDIRX_PART_EVENT+2:16), de
 	call MidiCC_WritePartParamAndQueue
 	ret
 
@@ -974,8 +974,8 @@ MidiRx_ProgramChange:
 	ld	d, 255:opc
 	ld	a, (0x9637:16)
 	ld	(0x9648:16), a
-	ld	(0x9644:16), bc
-	ld	(0x9646:16), de
+	ld	(MIDIRX_PART_EVENT:16), bc
+	ld	(MIDIRX_PART_EVENT+2:16), de
 	call	MidiRx_ApplyProgramChange
 MidiRx_ProgramChange_Return:
 	ret
@@ -994,8 +994,8 @@ MidiRx_PitchBend:
 	ld	d, (0x9636:16)
 	ld	a, (0x9637:16)
 	ld	(0x9648:16), a
-	ld	(0x9644:16), bc
-	ld	(0x9646:16), de
+	ld	(MIDIRX_PART_EVENT:16), bc
+	ld	(MIDIRX_PART_EVENT+2:16), de
 	call	MidiRx_SetPendingPartPitchBend
 MidiRx_PitchBend_Return:
 	ret
@@ -1014,8 +1014,8 @@ MidiRx_ChannelPressure:
 	ld	d, 127:opc
 	ld	a, (0x9637:16)
 	ld	(0x9648:16), a
-	ld	(0x9644:16), bc
-	ld	(0x9646:16), de
+	ld	(MIDIRX_PART_EVENT:16), bc
+	ld	(MIDIRX_PART_EVENT+2:16), de
 	call	MidiCC_QueuePartParam
 MidiRx_ChannelPressure_Return:
 	ret
@@ -7296,13 +7296,13 @@ DataBuf_InitSlotFromPreset:
 	lda xwa, (DataSlot_HeaderTemplate:24)
 	cp iz, 0:i3
 	jr nz, DataBuf_InitSlotFromPreset_Alt
-	lda xbc, (0x00f180:24)
+	lda xbc, (SEQ_SONG_RECORD:24)
 	add xbc, 0x2e0
 	pushw 0x20
 	push xwa
 	push xbc
 	call Mem_Copy
-	lda xbc, (0x00f180:24)
+	lda xbc, (SEQ_SONG_RECORD:24)
 	add xbc, 0x300
 	lda xwa, (PANEL_REC_98+12:16)
 	sub xwa, 0xf9a0
@@ -10416,7 +10416,7 @@ MidiPkt_SetXferBlock_StyleImagePool_Epilogue3:
 MidiPkt_SetXferTotal_SeqData:
 	push	xiz
 	ld	xiz, xwa
-	lda	xwa, (0xf180:16)
+	lda	xwa, (SEQ_SONG_RECORD:16)
 	ld	(xiz), xwa
 	add	xwa, 0x53000
 	ld	(xiz+4), xwa
@@ -10440,7 +10440,7 @@ MidiPkt_SetXferTotal_SeqData_Epilogue4:
 ;   descriptor 0xBCDC (MidiPkt_SetXferTotal_SeqData) and the block descriptor 0xBCEC (this) and starts step 11; the
 ;   send side uses it at 11236.
 MidiPkt_SetXferBlock_CurrentSong:
-	lda	xbc, (0xf180:16)
+	lda	xbc, (SEQ_SONG_RECORD:16)
 	ld	(xwa), xbc
 	lda	xbc, (xbc+2048)
 	ld	(xwa+4), xbc
@@ -10611,7 +10611,7 @@ MidiPkt_GetUsedSize_SeqEvents:
 	pop	xix
 	pop	xhl
 	pop	xde
-	ld	hl, (0xf1ce:16)
+	ld	hl, (SEQ_SONG_RECORD+78:16)
 	extz	xhl
 	sll	xhl, 4
 	ret
