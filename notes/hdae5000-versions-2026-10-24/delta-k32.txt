@@ -1,0 +1,188 @@
+  v2_06i  c4da28f0ad16b1288774af761b3729142e8050b3  original_ROMs/hd-ae5000_v2_06i.ic4
+  v2_01i  0160c17baa7b026771872126d8146038a19ef53b  /home/fsanches/compartilhado/technics_roms/roms/kn5000/hd-ae5000_v2_01i.ic4
+  v1_15i  581fa58e2cd6fe381cfc312c73771d25ff2e662c  /home/fsanches/compartilhado/technics_roms/roms/kn5000/hd-ae5000_v1_15i.ic4
+  v1_10i  6019f3c28b6277730418974dde4dc6893fced00e  /home/fsanches/compartilhado/technics_roms/roms/kn5000/hd-ae5000_v1_10i.ic4
+  K = 32-byte unique anchors
+
+=== v2_06i -> v2_01i ===
+  positional diff ......   426,370 B (81.32%)
+  aligned (offset map) .   335,668 B in 813 blocks, 46 distinct deltas
+  gaps ................. 814: 188,620 B of v2_06i unaligned
+    same-size .......... 764 gaps, 141,276 B, of which 44,910 B differ:
+      rom-moved       2,189 B
+      rom-other       3,416 B
+      ram             2,813 B
+      ui-object         362 B
+      other          36,130 B
+    size-changing ...... 50 gaps, 47,344 B of v2_06i, 47,344 B of v2_01i; layout churn 5,303 B
+  estimated change ..... 86,890 B of v2_06i (other + rom-other + size-changing gaps; rom-moved, ram and ui-object bytes left out)
+  largest deltas (shift: bytes) -0x7f2: 160,013, -0xb0a: 78,167, -0xb4e: 24,282, -0x942: 10,580, -0x760: 8,759, +0x0: 7,750
+  largest gaps (A addr+len -> B addr+len, differing bytes or 'resized'):
+    2ce7fe+20362  -> 2ce11c+20090  resized       HDAE5000_Palette_FilePanel+0x270
+    2d6766+17279  -> 2d5f74+17279  8,280 differ  HDAE5000_Bitmap_FilePanel+0x7dd8
+    2db00f+14006  -> 2da81d+14006  8,408 differ  HDAE5000_Bitmap_FilePanel+0xc681
+    2d37a8+12190  -> 2d2fb6+12190  5,842 differ  HDAE5000_Bitmap_FilePanel+0x4e1a
+    2de6e6+11944  -> 2ddef4+11944  10,397 differ HDAE5000_Bitmap_FilePanel+0xfd58
+    28b679+6075   -> 28b141+5856   resized       HDAE5000_AcLanguageText1Proc_Join4+0x17
+    2a5c3c+5309   -> 2a5534+3381   resized       HdaeUiObj_784+0x0
+    295647+3207   -> 294f75+3207   726 differ    HDAE5000_PPORT_Cmd01_SendInfosAboutHd+0x5
+    300000+0      -> 2ff4b2+2894   resized       HDAE5000_Init_Data_End+0x5ecc
+    2a7294+857    -> 2a643c+2493   resized       HDAE5000_UiObjectName_PtrTable+0x910
+    28449d+2469   -> 28449d+1478   resized       HDAE5000_HDD_DIRNAMECheck+0x30
+    29435d+2354   -> 293c8b+2354   358 differ    HDAE5000_HD_WriteStream+0x5c
+    296a85+1941   -> 2963b3+1941   379 differ    HDAE5000_PPORT_EndBlock+0x55
+    2a1c52+1643   -> 2a1536+1643   181 differ    HdaeUiObj_385+0x1c
+    2a09b8+1579   -> 2a029c+1579   156 differ    HdaeUiObj_277+0x4
+    28cf10+1548   -> 28c8fd+1572   resized       HDAE5000_LyricBoxProc_Ev01CA0003+0xf7
+    2963ab+1426   -> 295cd9+1426   322 differ    HDAE5000_PPORT_Cmd13_RcvDataFromPc+0x6f
+    2a26ea+1409   -> 2a1fce+1409   138 differ    HdaeUiObj_449+0x4
+    2920df+1266   -> 291a92+1160   resized       HDAE5000_FdSong_CheckFiles_Skip10+0xe
+    29f3f8+1239   -> 29ecdc+1239   135 differ    HdaeUiObj_143+0x6
+  differing same-size-gap bytes per v2_06i symbol (top 20):
+     33,415  HDAE5000_Bitmap_FilePanel: other 32,926, rom-other 375, ram 114
+        195  HDAE5000_PPORT_Cmd08_SendDataToPc: ram 103, rom-other 90, rom-moved 2
+        179  HDAE5000_PPORT_Cmd09_SendFilesToPc: ram 95, rom-other 82, rom-moved 2
+        122  HDAE5000_PPORT_ServiceTable: rom-other 114, rom-moved 8
+        117  HDAE5000_PPORT_Cmd10_RcvDataFromPc: rom-other 58, ram 57, rom-moved 2
+        107  HDAE5000_FDFileSelectProc: ram 44, other 35, rom-moved 24, rom-other 4
+         93  HDAE5000_PPORT_InitRegionDescriptors: ram 59, rom-other 34
+         92  HDAE5000_SetupPage_BuildDriveInfo: rom-moved 66, rom-other 18, other 4, ram 2, ui-object 2
+         90  HDAE5000_CopyToHd_Execute: other 33, rom-other 20, ram 17, ui-object 11, rom-moved 9
+         90  HDAE5000_Lyrics_PlayToPosition: ram 62, other 16, rom-other 8, rom-moved 4
+         82  HDAE5000_WindowGeometry_Init: other 62, rom-other 14, ram 4, rom-moved 2
+         78  HDAE5000_TextPtrs_A_to_SPC: rom-moved 76, other 2
+         78  HDAE5000_TextPtrs_A_to_SPC_2: rom-moved 76, other 2
+         76  HDAE5000_PPORT_Svc13_SendInfosAboutSong: ram 64, rom-moved 12
+         71  HDAE5000_PPORT_Cmd13_RcvDataFromPc: rom-other 44, ram 24, rom-moved 2, other 1
+         70  HDAE5000_CopyToHDDirSelScreen: ram 27, ui-object 21, other 16, rom-moved 4, rom-other 2
+         66  HDAE5000_TextPtrs_Chr21_to_Chr7D: rom-moved 64, other 2
+         62  HDAE5000_TitleInfo_Build: rom-moved 30, rom-other 18, other 13, ram 1
+         62  HDAE5000_PPORT_SendRegionToPc: ram 30, rom-other 30, rom-moved 2
+         60  HDAE5000_HardTestPage: ram 21, rom-moved 18, ui-object 9, other 6, rom-other 6
+
+=== v2_01i -> v1_15i ===
+  positional diff ......   462,181 B (88.15%)
+  aligned (offset map) .   240,674 B in 557 blocks, 103 distinct deltas
+  gaps ................. 558: 283,614 B of v2_01i unaligned
+    same-size .......... 453 gaps, 53,072 B, of which 8,394 B differ:
+      rom-moved       1,615 B
+      rom-other       1,774 B
+      ram             2,304 B
+      ui-object         290 B
+      other           2,411 B
+    size-changing ...... 105 gaps, 230,542 B of v2_01i, 230,542 B of v1_15i; layout churn 99,132 B
+  estimated change ..... 234,727 B of v2_01i (other + rom-other + size-changing gaps; rom-moved, ram and ui-object bytes left out)
+  largest deltas (shift: bytes) -0x408c: 156,074, -0x17c5c: 27,172, -0x3a30: 5,834, -0x38f1: 4,974, -0x17790: 4,841, -0x13f: 3,283
+  largest gaps (A addr+len -> B addr+len, differing bytes or 'resized'):
+    300000+0      -> 2e83a4+97372  resized       
+    2e52bc+77832  -> 2cd8fe+77824  resized       
+    2cdd9c+77824  -> 2c9d10+0      resized       
+    28b141+16384  -> 28aa68+5966   resized       
+    2a508e+7753   -> 2a130e+7021   resized       
+    294f17+4948   -> 29196f+4156   resized       
+    2a29be+2811   -> 29ec08+3369   resized       
+    29ea6a+2805   -> 29ae22+2805   360 differ    
+    293c8b+2355   -> 29074e+2296   resized       
+    2a1536+2103   -> 29d89c+1943   resized       
+    2963b3+1941   -> 292af3+1895   resized       
+    2a029c+1789   -> 29c64a+1717   resized       
+    2e26fe+1688   -> 2cb5fe+10     resized       
+    287515+1504   -> 28746b+440    resized       
+    2a1fce+1409   -> 29e294+1493   resized       
+    28918a+1393   -> 288c51+1239   resized       
+    291623+1229   -> 28e3f3+1109   resized       
+    290945+1163   -> 28d92a+848    resized       
+    29f698+1107   -> 29ba50+1071   resized       
+    28461c+1095   -> 28448b+1095   204 differ    
+
+=== v1_15i -> v1_10i ===
+  positional diff ......   280,466 B (53.49%)
+  aligned (offset map) .   474,629 B in 874 blocks, 21 distinct deltas
+  gaps ................. 875: 49,659 B of v1_15i unaligned
+    same-size .......... 851 gaps, 35,288 B, of which 6,325 B differ:
+      rom-moved       2,415 B
+      rom-other       1,592 B
+      ram                45 B
+      ui-object          43 B
+      other           2,230 B
+    size-changing ...... 24 gaps, 14,371 B of v1_15i, 14,371 B of v1_10i; layout churn 1,535 B
+  estimated change ..... 18,193 B of v1_15i (other + rom-other + size-changing gaps; rom-moved, ram and ui-object bytes left out)
+  largest deltas (shift: bytes) -0x190: 205,862, -0x150: 167,040, -0xfc: 43,583, +0x0: 34,937, -0xbe: 5,727, -0x14e: 4,829
+  largest gaps (A addr+len -> B addr+len, differing bytes or 'resized'):
+    28aa7b+5418   -> 28aa7b+5345   resized       
+    2a1600+4133   -> 2a14ce+3793   resized       
+    2a2648+1081   -> 2a23c2+1125   resized       
+    291e25+1036   -> 291d29+1036   138 differ    
+    291989+874    -> 29188d+874    186 differ    
+    2a2ca0+442    -> 2a29fe+786    resized       
+    292b7f+756    -> 292a83+756    108 differ    
+    294c6b+547    -> 294b6f+547    106 differ    
+    29551b+546    -> 29541f+546    66 differ     
+    2a10d0+542    -> 2a0f9e+542    53 differ     
+    29252f+538    -> 292433+538    94 differ     
+    293f78+532    -> 293ff7+153    resized       
+    285a1c+517    -> 285a1c+517    88 differ     
+    2914c7+510    -> 2913cb+510    131 differ    
+    295295+499    -> 295199+499    64 differ     
+    293ee8+105    -> 293dec+484    resized       
+    2908a2+462    -> 2907a7+462    64 differ     
+    2a2aac+449    -> 2a2852+377    resized       
+    2e10ae+428    -> 2e0f1e+428    207 differ    
+    29228d+412    -> 292191+412    58 differ     
+
+=== v2_06i -> v1_15i ===
+  positional diff ......   453,447 B (86.49%)
+  aligned (offset map) .   236,923 B in 544 blocks, 104 distinct deltas
+  gaps ................. 545: 287,365 B of v2_06i unaligned
+    same-size .......... 438 gaps, 53,025 B, of which 8,303 B differ:
+      rom-moved       1,515 B
+      rom-other       1,788 B
+      ram             2,161 B
+      ui-object         260 B
+      other           2,579 B
+    size-changing ...... 107 gaps, 234,340 B of v2_06i, 234,340 B of v1_15i; layout churn 101,245 B
+  estimated change ..... 238,707 B of v2_06i (other + rom-other + size-changing gaps; rom-moved, ram and ui-object bytes left out)
+  largest deltas (shift: bytes) -0x487e: 155,981, -0x187aa: 24,278, -0x4190: 5,834, -0x4029: 4,974, -0x180d2: 4,381, -0x13f: 3,283
+  largest gaps (A addr+len -> B addr+len, differing bytes or 'resized'):
+    300000+0      -> 2e7856+100266 resized       HDAE5000_Init_Data_End+0x5ecc
+    2e5dc6+77832  -> 2cd8fe+77824  resized       HDAE5000_Str_XAP+0x0
+    2ce58e+77824  -> 2c9d10+0      resized       HDAE5000_Palette_FilePanel+0x0
+    28b679+16661  -> 28aa68+5966   resized       HDAE5000_AcLanguageText1Proc_Join4+0x17
+    2a57e0+7911   -> 2a130e+7021   resized       HdaeUiObj_752+0x6
+    2955e9+4948   -> 29196f+4156   resized       HDAE5000_PPORT_Cmd20_SendXapFileFlash_Str_N20_Send_XapFile_flash+0x3
+    2a30da+3713   -> 29ec08+3713   535 differ    HdaeUiObj_506+0x4
+    284318+2858   -> 284187+1867   resized       HDAE5000_HDDNamingCheck_OnSwIn+0x1b
+    29f186+2805   -> 29ae22+2805   360 differ    HdaeUiObj_129+0x4
+    287625+2568   -> 286d25+2302   resized       HDAE5000_LBNLswBitCheck+0x2a
+    291c70+2402   -> 28e3f3+2128   resized       HDAE5000_FdSong_CheckFiles+0x18
+    29435d+2355   -> 29074e+2296   resized       HDAE5000_HD_WriteStream+0x5c
+    2a1c52+2103   -> 29d89c+1943   resized       HdaeUiObj_385+0x1c
+    296a85+1941   -> 292af3+1895   resized       HDAE5000_PPORT_EndBlock+0x55
+    2a09b8+1789   -> 29c64a+1717   resized       HdaeUiObj_277+0x4
+    2e3040+1688   -> 2cb5fe+10     resized       HDAE5000_Fmt_s_DelTlxEditCheck+0x0
+    2a26ea+1409   -> 29e294+1493   resized       HdaeUiObj_449+0x4
+    2896c2+1393   -> 288c51+1239   resized       HDAE5000_FdList_Redisplay+0x5d
+    28a6c4+1378   -> 289b8a+1208   resized       HDAE5000_DelLswEditCheck+0x27
+    290f92+1163   -> 28d92a+848    resized       HDAE5000_LoadSong_Md+0x4d
+  differing same-size-gap bytes per v2_06i symbol (top 20):
+        117  HDAE5000_SetupPage_BuildDriveInfo: rom-moved 70, rom-other 21, ram 17, other 7, ui-object 2
+        117  HDAE5000_TextPtrs_A_to_SPC: rom-moved 117
+        117  HDAE5000_TextPtrs_A_to_SPC_2: rom-moved 117
+        102  HDAE5000_CopyToHDDirSelScreen: ram 55, ui-object 21, other 19, rom-moved 4, rom-other 3
+         99  HDAE5000_TextPtrs_Chr21_to_Chr7D: rom-moved 99
+         85  HDAE5000_Handler_Registration: ram 66, other 9, rom-other 8, rom-moved 2
+         85  HDAE5000_TitleInfo_Build: rom-moved 31, rom-other 26, other 15, ram 13
+         77  HDAE5000_HDAETitleFunc: ram 43, rom-moved 11, other 10, ui-object 9, rom-other 4
+         75  HDAE5000_AttenHDFormatSwCatch_OnCancel: ram 31, ui-object 23, other 15, rom-moved 4, rom-other 2
+         56  HDAE5000_FdList_Scan: ram 30, rom-moved 11, other 8, ui-object 7
+         56  HDAE5000_SeparateOutput_Apply: ram 54, other 2
+         52  HDAE5000_SEL_DIR_Screen: ram 36, ui-object 10, other 4, rom-moved 2
+         52  HDAE5000_SaveSong_Lsw: ram 32, rom-moved 14, other 4, rom-other 2
+         51  HDAE5000_TextPtrs_NONE_to_16: rom-other 51
+         51  HDAE5000_TextPtrs_NONE_to_16_2: rom-other 51
+         49  HDAE5000_LoadSong_Lsw: ram 29, rom-moved 10, other 6, rom-other 4
+         45  HDAE5000_HardTest_HddIdRead: rom-moved 22, rom-other 15, other 8
+         43  HDAE5000_SongScreen_Refresh: rom-moved 14, rom-other 12, ram 9, other 8
+         43  HDAE5000_Lbn_StepDigit_SongUnits: ram 23, rom-moved 9, other 9, ui-object 2
+         43  HDAE5000_FlsScreen_Refresh_Join: rom-moved 14, rom-other 12, ram 9, other 8
+
