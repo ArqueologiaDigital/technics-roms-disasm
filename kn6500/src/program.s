@@ -67518,10 +67518,10 @@ func_4C0253A5_entry:
 	call	func_4C02494B_entry, 0, 0x10
 	bra	func_4C0253A5_entry_L2f
 func_4C0253A5_entry_L23:
-	call	PanelTxFifoToRing_entry, [d2,a2], 0x10
+	call	func_4C025959_entry, [d2,a2], 0x10
 	bra	func_4C0253A5_entry_L2f
 func_4C0253A5_entry_L2a:
-	call	PanelTxFifoToRing_entry, [d2,a2], 0x10
+	call	func_4C025959_entry, [d2,a2], 0x10
 func_4C0253A5_entry_L2f:
 	call	loc_cpu_entry, 0, 0x10
 	btst	0x01, (0x36008084)
@@ -67593,7 +67593,7 @@ func_4C0253A5_entry_L126:
 	call	unl_cpu, 0, 0
 	ret	[d2], 0x10
 
-PanelLedMirrorResetA:
+func_4C0254DA:
 	mov	0x5025036c, a0
 	setlb
 	clr	d0
@@ -67680,7 +67680,7 @@ PanelErrorRecovery_entry_L9e:
 	extbu	d0
 	btst	0x0f, d0
 	bne	PanelErrorRecovery_entry_Ld9
-	call	PanelLedMirrorResetA, 0, 0
+	call	func_4C0254DA, 0, 0
 PanelErrorRecovery_entry_Ld9:
 	ret	[d2,d3], 0x10
 
@@ -68016,47 +68016,47 @@ PanelFrameDecode_entry_L347:
 	jmp	PanelFrameDecode_entry_L6
 .incbin_range "baserom/kn6500_program.rom", 0x025956, 0x025959
 
-PanelTxFifoToRing:
+func_4C025959:
 	movm	[d2,a2], (sp)
 	add	-8, sp
 
-PanelTxFifoToRing_entry:
+func_4C025959_entry:
 	mov	0x5001af94, a2
-PanelTxFifoToRing_entry_L6:
+func_4C025959_entry_L6:
 	call	func_4C025A67_entry, 0, 0xc
 	exth	d0
 	cmp	-1, d0
-	bne	PanelTxFifoToRing_entry_L13
+	bne	func_4C025959_entry_L13
 	ret	[d2,a2], 0x10
-PanelTxFifoToRing_entry_L13:
+func_4C025959_entry_L13:
 	call	loc_cpu_entry, 0, 0x10
 	movhu	(0x5001af92), d0
 	movhu	(0x5001af90), d1
 	mov	d1, d2
 	sub	d0, d2
 	cmp	d1, d0
-	blt	PanelTxFifoToRing_entry_L32
+	blt	func_4C025959_entry_L32
 	sub	d1, d0
 	mov	0x3c, d2
 	sub	d0, d2
-PanelTxFifoToRing_entry_L32:
+func_4C025959_entry_L32:
 	call	unl_cpu, 0, 0
 	exthu	d2
 	cmp	3, d2
-	bge	PanelTxFifoToRing_entry_L41
+	bge	func_4C025959_entry_L41
 	ret	[d2,a2], 0x10
-PanelTxFifoToRing_entry_L41:
+func_4C025959_entry_L41:
 	call	func_4C025A45_entry, 0, 0xc
 	mov	d0, d1
 	extbu	d0
 	and	0x30, d0
 	asr	4, d0
-	beq	PanelTxFifoToRing_entry_L58
+	beq	func_4C025959_entry_L58
 	cmp	1, d0
-	beq	PanelTxFifoToRing_entry_L58
+	beq	func_4C025959_entry_L58
 	cmp	2, d0
-	bne	PanelTxFifoToRing_entry_L6
-PanelTxFifoToRing_entry_L58:
+	bne	func_4C025959_entry_L6
+func_4C025959_entry_L58:
 	movhu	(0x5001af92), d0
 	movbu	d1, (d0, a2)
 	movhu	(0x5001af92), d0
@@ -68064,10 +68064,10 @@ PanelTxFifoToRing_entry_L58:
 	movhu	d0, (0x5001af92)
 	movhu	(0x5001af92), d0
 	cmp	0x3c, d0
-	blt	PanelTxFifoToRing_entry_L7e
+	blt	func_4C025959_entry_L7e
 	clr	d0
 	movhu	d0, (0x5001af92)
-PanelTxFifoToRing_entry_L7e:
+func_4C025959_entry_L7e:
 	call	func_4C025A45_entry, 0, 0xc
 	movhu	(0x5001af92), d1
 	movbu	d0, (d1, a2)
@@ -68076,12 +68076,12 @@ PanelTxFifoToRing_entry_L7e:
 	movhu	d0, (0x5001af92)
 	movhu	(0x5001af92), d0
 	cmp	0x3c, d0
-	bge	PanelTxFifoToRing_entry_La5
-	jmp	PanelTxFifoToRing_entry_L6
-PanelTxFifoToRing_entry_La5:
+	bge	func_4C025959_entry_La5
+	jmp	func_4C025959_entry_L6
+func_4C025959_entry_La5:
 	clr	d0
 	movhu	d0, (0x5001af92)
-	jmp	PanelTxFifoToRing_entry_L6
+	jmp	func_4C025959_entry_L6
 .incbin_range "baserom/kn6500_program.rom", 0x025a0d, 0x025a13
 
 func_4C025A13:
@@ -185725,7 +185725,7 @@ func_4C067038_entry_L2a:
 func_4C067038_entry_L2c:
 	ret	0, 0x10
 	add	-8, sp
-	call	TempoTimerInit_entry, 0, 8
+	call	func_4C0696CC_entry, 0, 8
 	call	TempoClocksReset_entry, 0, 0x14
 	clr	d0
 	movhu	d0, (0x50276dfc)
@@ -189001,10 +189001,10 @@ func_4C06968E_entry:
 	call	ena_int_entry, [d2], 4
 	ret	0, 0x24
 
-TempoTimerInit:
+func_4C0696CC:
 	add	-8, sp
 
-TempoTimerInit_entry:
+func_4C0696CC_entry:
 	mov	0x001312d0, d0
 	mov	d0, (0x50033704)
 	mov	0x7d0, d0
@@ -216459,7 +216459,7 @@ HpBmpResetDefault_entry:
 	exth	d0
 	cmp	0, d0
 	blt	HpBmpResetDefault_entry_L50
-	call	ZArenaReset, 0, 0
+	call	func_4C1505E3, 0, 0
 	mov	0x42b6, d0
 	call	ZArenaAlloc_entry, [d2,a2,a3], 0xc
 	mov	a0, a3
@@ -216540,7 +216540,7 @@ HmpBufferAlloc:
 HmpBufferAlloc_entry:
 	mov	a1, a3
 	mov	a0, a2
-	call	ZArenaReset, 0, 0
+	call	func_4C1505E3, 0, 0
 	mov	0x4442, d0
 	call	ZArenaAlloc_entry, [d2,a2,a3], 0xc
 	mov	a0, (0x50033b60)
@@ -216598,7 +216598,7 @@ LoadHpBmp:
 
 LoadHpBmp_entry:
 	add	-0x458, sp
-	call	ZArenaReset, 0, 0
+	call	func_4C1505E3, 0, 0
 	mov	0x42b6, d0
 	call	ZArenaAlloc_entry, [d2,a2,a3], 0xc
 	mov	a0, a2
@@ -218190,7 +218190,7 @@ func_4C07BCCF_entry:
 	cmp	0, d0
 	beq	func_4C07BCCF_entry_L66
 	mov	d3, d0
-	call	TgPartToneDescPtr, 0, 0
+	call	func_4C097AC1, 0, 0
 	movbu	(0x38, sp), d2
 	mov	0x27, d0
 	mov	d2, d1
@@ -221639,7 +221639,7 @@ func_4C07D6BC_entry_Lf8:
 	mov	0, a2
 func_4C07D6BC_entry_L139:
 	mov	d2, d0
-	call	TgPartLocalEditRecPtr, 0, 0
+	call	func_4C08C883, 0, 0
 	mov	(0x50276e88), d1
 	extbu	d2
 	add	0x70f7, d1
@@ -228007,7 +228007,7 @@ func_4C080AD6_entry:
 	ret	[d2,d3,a2,a3], 0x34
 func_4C080AD6_entry_L55:
 	mov	a2, d0
-	call	TgPartToneDescPtr, 0, 0
+	call	func_4C097AC1, 0, 0
 	add	d2, a0
 	add	0x2c, a0
 	mov	a0, (0x14, sp)
@@ -236783,7 +236783,7 @@ func_4C08553C_entry:
 	ret	[d2,d3,a2,a3], 0x3c
 func_4C08553C_entry_L25:
 	mov	(0x20, sp), d0
-	call	TgPartToneDescPtr, 0, 0
+	call	func_4C097AC1, 0, 0
 	add	0x13, a0
 	mov	a0, (0x28, sp)
 	movbu	(0x48, sp), d1
@@ -236824,7 +236824,7 @@ func_4C08553C_entry_L3a:
 	bra	func_4C08553C_entry_Lbc
 func_4C08553C_entry_L73:
 	mov	(0x20, sp), d0
-	call	TgPartToneDescPtr, 0, 0
+	call	func_4C097AC1, 0, 0
 	add	0x12, a0
 	mov	a0, (0x24, sp)
 	movbu	(0x48, sp), d3
@@ -237465,7 +237465,7 @@ func_4C085A70_entry:
 	ret	[d2,d3,a2,a3], 0x3c
 func_4C085A70_entry_L25:
 	mov	(0x20, sp), d0
-	call	TgPartToneDescPtr, 0, 0
+	call	func_4C097AC1, 0, 0
 	add	0x19, a0
 	mov	a0, (0x28, sp)
 	movbu	(0x48, sp), d1
@@ -237506,7 +237506,7 @@ func_4C085A70_entry_L3a:
 	bra	func_4C085A70_entry_Lbc
 func_4C085A70_entry_L73:
 	mov	(0x20, sp), d0
-	call	TgPartToneDescPtr, 0, 0
+	call	func_4C097AC1, 0, 0
 	add	0x18, a0
 	mov	a0, (0x24, sp)
 	movbu	(0x48, sp), d3
@@ -237567,7 +237567,7 @@ func_4C085B34_entry:
 	ret	[d2,d3,a2,a3], 0x3c
 func_4C085B34_entry_L25:
 	mov	(0x20, sp), d0
-	call	TgPartToneDescPtr, 0, 0
+	call	func_4C097AC1, 0, 0
 	add	0x1f, a0
 	mov	a0, (0x28, sp)
 	movbu	(0x48, sp), d1
@@ -237608,7 +237608,7 @@ func_4C085B34_entry_L3a:
 	bra	func_4C085B34_entry_Lbc
 func_4C085B34_entry_L73:
 	mov	(0x20, sp), d0
-	call	TgPartToneDescPtr, 0, 0
+	call	func_4C097AC1, 0, 0
 	add	0x1e, a0
 	mov	a0, (0x24, sp)
 	movbu	(0x48, sp), d3
@@ -242546,35 +242546,35 @@ func_4C0886AE_L29:
 	retf	0, 0
 .incbin_range "baserom/kn6500_program.rom", 0x0886da, 0x0886e7
 
-TgEffectEnableBit10:
+func_4C0886E7:
 	extbu	d0
 	cmp	0, d0
-	beq	TgEffectEnableBit10_L17
+	beq	func_4C0886E7_L17
 	movhu	(0x50041888), d0
 	or	0x0400, d0
 	movhu	d0, (0x50041888)
-	bra	TgEffectEnableBit10_L29
-TgEffectEnableBit10_L17:
+	bra	func_4C0886E7_L29
+func_4C0886E7_L17:
 	movhu	(0x50041888), d0
 	and	0xfffffbff, d0
 	movhu	d0, (0x50041888)
-TgEffectEnableBit10_L29:
+func_4C0886E7_L29:
 	retf	0, 0
 .incbin_range "baserom/kn6500_program.rom", 0x088713, 0x088720
 
-TgEffectEnableBit4:
+func_4C088720:
 	extbu	d0
 	cmp	0, d0
-	beq	TgEffectEnableBit4_L16
+	beq	func_4C088720_L16
 	movhu	(0x50041888), d0
 	or	0x10, d0
 	movhu	d0, (0x50041888)
-	bra	TgEffectEnableBit4_L26
-TgEffectEnableBit4_L16:
+	bra	func_4C088720_L26
+func_4C088720_L16:
 	movhu	(0x50041888), d0
 	and	0xffef, d0
 	movhu	d0, (0x50041888)
-TgEffectEnableBit4_L26:
+func_4C088720_L26:
 	retf	0, 0
 
 func_4C088749:
@@ -242612,34 +242612,34 @@ func_4C088780_L19:
 func_4C088780_L28:
 	retf	0, 0
 
-TgEffectEnableMulti:
+func_4C0887AB:
 	extbu	d0
 	cmp	0, d0
-	beq	TgEffectEnableMulti_L17
+	beq	func_4C0887AB_L17
 	movhu	(0x50041888), d0
 	or	0x1000, d0
 	movhu	d0, (0x50041888)
-	bra	TgEffectEnableMulti_L29
-TgEffectEnableMulti_L17:
+	bra	func_4C0887AB_L29
+func_4C0887AB_L17:
 	movhu	(0x50041888), d0
 	and	0xffffefff, d0
 	movhu	d0, (0x50041888)
-TgEffectEnableMulti_L29:
+func_4C0887AB_L29:
 	retf	0, 0
 
-TgEffectEnableBit13:
+func_4C0887D7:
 	extbu	d0
 	cmp	0, d0
-	beq	TgEffectEnableBit13_L17
+	beq	func_4C0887D7_L17
 	movhu	(0x50041888), d0
 	or	0x2000, d0
 	movhu	d0, (0x50041888)
-	bra	TgEffectEnableBit13_L29
-TgEffectEnableBit13_L17:
+	bra	func_4C0887D7_L29
+func_4C0887D7_L17:
 	movhu	(0x50041888), d0
 	and	0xffffdfff, d0
 	movhu	d0, (0x50041888)
-TgEffectEnableBit13_L29:
+func_4C0887D7_L29:
 	retf	0, 0
 
 func_4C088803:
@@ -242663,19 +242663,19 @@ func_4C088803_entry_L23:
 func_4C088803_entry_L2d:
 	ret	0, 0x10
 
-TgEffectEnableBit14:
+func_4C088836:
 	extbu	d0
 	cmp	0, d0
-	beq	TgEffectEnableBit14_L17
+	beq	func_4C088836_L17
 	movhu	(0x50041888), d0
 	or	0x4000, d0
 	movhu	d0, (0x50041888)
-	bra	TgEffectEnableBit14_L29
-TgEffectEnableBit14_L17:
+	bra	func_4C088836_L29
+func_4C088836_L17:
 	movhu	(0x50041888), d0
 	and	0xffffbfff, d0
 	movhu	d0, (0x50041888)
-TgEffectEnableBit14_L29:
+func_4C088836_L29:
 	retf	0, 0
 
 func_4C088862:
@@ -242871,11 +242871,11 @@ func_4C0888DD_entry_Lf:
 	ret	[d2,a2], 0x5c
 	extbu	d1
 	mov	d1, d0
-	call	TgEffectEnableBit10, 0, 0
+	call	func_4C0886E7, 0, 0
 	ret	[d2,a2], 0x5c
 	extbu	d1
 	mov	d1, d0
-	call	TgEffectEnableBit4, 0, 0
+	call	func_4C088720, 0, 0
 	ret	[d2,a2], 0x5c
 	mov	d1, d0
 	extb	d0
@@ -242899,19 +242899,19 @@ func_4C0888DD_entry_Lf:
 	bra	func_4C0888DD_entry_L224
 	extbu	d1
 	mov	d1, d0
-	call	TgEffectEnableMulti, 0, 0
+	call	func_4C0887AB, 0, 0
 	call	func_4C088596_entry, 0, 0x10
 	call	func_4C0883E3_entry, [d2], 0x14
 	bra	func_4C0888DD_entry_L224
 	extbu	d1
 	mov	d1, d0
-	call	TgEffectEnableBit13, 0, 0
+	call	func_4C0887D7, 0, 0
 	call	func_4C088803_entry, 0, 0x10
 	bra	func_4C0888DD_entry_L224
 	mov	d1, d2
 	extbu	d2
 	mov	d2, d0
-	call	TgEffectEnableBit14, 0, 0
+	call	func_4C088836, 0, 0
 	mov	d2, d0
 	call	func_4C0954B4_entry, [d2,d3,a2,a3], 0x20
 	bra	func_4C0888DD_entry_L224
@@ -243207,9 +243207,9 @@ func_4C088B09_entry_L283:
 	clr	d0
 	call	func_4C0886AE, 0, 0
 	clr	d0
-	call	TgEffectEnableBit13, 0, 0
+	call	func_4C0887D7, 0, 0
 	clr	d0
-	call	TgEffectEnableBit14, 0, 0
+	call	func_4C088836, 0, 0
 	clr	d0
 	call	func_4C08886F, 0, 0
 	clr	d0
@@ -243457,7 +243457,7 @@ func_4C089086:
 func_4C089086_L19:
 	mov	d3, d0
 	mov	d2, d1
-	call	TgPartElemLastGet, 0, 0
+	call	func_4C095E81, 0, 0
 	extbu	d0
 	cmp	0xff, d0
 	beq	func_4C089086_L3e
@@ -243736,7 +243736,7 @@ func_4C0892B2_entry_L22:
 	jmp	func_4C0892B2_entry_L180
 func_4C0892B2_entry_L25:
 	mov	d2, d0
-	call	TgPartToneDescPtr, 0, 0
+	call	func_4C097AC1, 0, 0
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x13, a2
@@ -243825,7 +243825,7 @@ func_4C0892B2_entry_L25:
 	jmp	func_4C0892B2_entry_L180
 func_4C0892B2_entry_Lec:
 	mov	d2, d0
-	call	TgPartToneDescPtr, 0, 0
+	call	func_4C097AC1, 0, 0
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x12, a2
@@ -244086,7 +244086,7 @@ func_4C08956B_entry_L17:
 	blt	func_4C08956B_entry_L17
 	ret	[d2,d3,a2,a3], 0x24
 
-TgPartDrawbarTypeSet:
+func_4C0895C2:
 	extbu	d0
 	mov	0x1c, d1
 	nop
@@ -244098,7 +244098,7 @@ TgPartDrawbarTypeSet:
 	movbu	d1, (0x19, a0)
 	rets
 
-TgPartDrawbarTypeClear:
+func_4C0895D8:
 	extbu	d0
 	mov	0x1c, d1
 	nop
@@ -244241,7 +244241,7 @@ func_4C08965A_entry_L76:
 	cmp	0, d0
 	beq	func_4C08965A_entry_L96
 	mov	d2, d0
-	call	TgPartDrawbarTypeSet, 0, 0
+	call	func_4C0895C2, 0, 0
 func_4C08965A_entry_L96:
 	ret	[d2,a2], 0x14
 
@@ -250079,7 +250079,7 @@ func_4C08C87A:
 	mov	0x5027e474, a0
 	retf	0, 0
 
-TgPartLocalEditRecPtr:
+func_4C08C883:
 	extbu	d0
 	mov	0x8e, d1
 	nop
@@ -250467,7 +250467,7 @@ func_4C08CB11:
 func_4C08CB11_entry:
 	extbu	d0
 	mov	d0, a3
-	call	TgPartToneDescPtr, 0, 0
+	call	func_4C097AC1, 0, 0
 	mov	a3, d1
 	mov	0x2c8, d0
 	nop
@@ -250519,7 +250519,7 @@ TgPartToneDescScratchCopy:
 
 TgPartToneDescScratchCopy_entry:
 	extbu	d0
-	call	TgPartToneDescPtr, 0, 0
+	call	func_4C097AC1, 0, 0
 	mov	0x5027e474, a1
 	mov	-0x1a7, d1
 	setlb
@@ -252719,7 +252719,7 @@ func_4C08DE0D:
 func_4C08DE0D_entry:
 	extbu	d0
 	mov	d1, d2
-	call	TgPartToneDescPtr, 0, 0
+	call	func_4C097AC1, 0, 0
 	exthu	d2
 	add	d2, a0
 	movbu	(a0), d0
@@ -261425,7 +261425,7 @@ func_4C092357_entry_L7d:
 	add	a2, a1
 	call	func_4C09B642_entry, [d2,d3,a2,a3], 0x20
 	mov	(0x20, sp), d0
-	call	TgPartToneDescPtr, 0, 0
+	call	func_4C097AC1, 0, 0
 	mov	0x38, a3
 	add	a2, a3
 	mov	a0, (a3)
@@ -261659,7 +261659,7 @@ func_4C09257D_entry_L7d:
 	add	a2, a1
 	call	func_4C09B642_entry, [d2,d3,a2,a3], 0x20
 	mov	(0x1c, sp), d0
-	call	TgPartToneDescPtr, 0, 0
+	call	func_4C097AC1, 0, 0
 	mov	0x38, d3
 	add	a2, d3
 	mov	d3, a1
@@ -261896,7 +261896,7 @@ func_4C0927E7_entry_L7d:
 	beq	func_4C0927E7_entry_Lea
 	mov	(0x28, sp), d0
 	mov	1, d1
-	call	TgPartElemLastGet, 0, 0
+	call	func_4C095E81, 0, 0
 	mov	d0, d3
 	extbu	d0
 	cmp	0xff, d0
@@ -261941,7 +261941,7 @@ func_4C0927E7_entry_Le1:
 func_4C0927E7_entry_Lea:
 	mov	(0x28, sp), d0
 	clr	d1
-	call	TgPartElemLastGet, 0, 0
+	call	func_4C095E81, 0, 0
 	mov	d0, d3
 	extbu	d0
 	cmp	0xff, d0
@@ -262037,7 +262037,7 @@ func_4C0927E7_entry_L1a9:
 	beq	func_4C0927E7_entry_L217
 	mov	(0x28, sp), d0
 	clr	d1
-	call	TgPartElemLastGet, 0, 0
+	call	func_4C095E81, 0, 0
 	mov	d0, d3
 	extbu	d0
 	cmp	0xff, d0
@@ -262082,7 +262082,7 @@ func_4C0927E7_entry_L20d:
 func_4C0927E7_entry_L217:
 	mov	(0x28, sp), d0
 	mov	1, d1
-	call	TgPartElemLastGet, 0, 0
+	call	func_4C095E81, 0, 0
 	mov	d0, d3
 	extbu	d0
 	cmp	0xff, d0
@@ -262187,7 +262187,7 @@ func_4C0927E7_entry_L2df:
 func_4C0927E7_entry_L2f6:
 	mov	(0x28, sp), d0
 	mov	d2, d1
-	call	TgPartElemLastGet, 0, 0
+	call	func_4C095E81, 0, 0
 	mov	d0, d3
 	extbu	d0
 	cmp	0xff, d0
@@ -262372,7 +262372,7 @@ func_4C0927E7_entry_L478:
 func_4C0927E7_entry_L48f:
 	mov	(0x28, sp), d0
 	mov	d2, d1
-	call	TgPartElemLastGet, 0, 0
+	call	func_4C095E81, 0, 0
 	mov	d0, d2
 	extbu	d0
 	cmp	0xff, d0
@@ -262686,7 +262686,7 @@ func_4C092E6D_entry_L80:
 	clr	d0
 	movbu	d0, (0x18, a2)
 	mov	d3, d0
-	call	TgPartToneDescPtr, 0, 0
+	call	func_4C097AC1, 0, 0
 	mov	a0, (0x38, a2)
 	mov	(0x20, sp), d0
 	mov	a2, a0
@@ -263023,7 +263023,7 @@ func_4C0931CC_entry:
 	or	0x80, d0
 	movhu	d0, (a0)
 	mov	a3, d0
-	call	TgPartToneDescPtr, 0, 0
+	call	func_4C097AC1, 0, 0
 	extbu	d2
 	mov	d2, d1
 	asl2	d1
@@ -264562,7 +264562,7 @@ func_4C093EFA:
 	movhu	(4, a0), d0
 	retf	0, 0
 
-TgPartEgRampScaleACurve:
+func_4C093F0C:
 	extbu	d0
 	asl	3, d0
 	mov	d0, a0
@@ -264794,7 +264794,7 @@ func_4C0940C1:
 	movhu	(6, a0), d0
 	retf	0, 0
 
-TgPartEgRampScaleBCurve:
+func_4C0940D3:
 	extbu	d0
 	asl	3, d0
 	mov	d0, a0
@@ -267711,7 +267711,7 @@ func_4C095E52_entry:
 	movbu	d0, (a2)
 	ret	[d2,a2], 0x20
 
-TgPartElemLastGet:
+func_4C095E81:
 	extbu	d1
 	extbu	d0
 	asl	3, d0
@@ -270238,7 +270238,7 @@ func_4C0973C1_entry_L32:
 	jmp	func_4C0973C1_entry_L19d
 func_4C0973C1_entry_L50:
 	mov	(0x18, sp), d0
-	call	TgPartToneDescPtr, 0, 0
+	call	func_4C097AC1, 0, 0
 	mov	a0, (0x1c, sp)
 	cmp	0, a3
 	bgt	func_4C0973C1_entry_L60
@@ -270541,7 +270541,7 @@ func_4C09760A_entry_L2e:
 	cmp	a1, d2
 	bcc	func_4C09760A_entry_L6f
 	mov	(0x2c, sp), d0
-	call	TgPartToneDescPtr, 0, 0
+	call	func_4C097AC1, 0, 0
 	mov	(0x30, sp), d0
 	exthu	d3
 	add	d3, a0
@@ -270577,7 +270577,7 @@ func_4C09760A_entry_L6f:
 	mov	mdr, d1
 	movhu	d1, (0x58, sp)
 	mov	(0x2c, sp), d0
-	call	TgPartToneDescPtr, 0, 0
+	call	func_4C097AC1, 0, 0
 	extbu	d3
 	mov	d3, (0x28, sp)
 	extbu	d3
@@ -271105,7 +271105,7 @@ func_4C097AA4:
 	movhu	d1, (a0)
 	rets
 
-TgPartToneDescPtr:
+func_4C097AC1:
 	extbu	d0
 	mov	0x130, d1
 	nop
@@ -271847,7 +271847,7 @@ TgPartVoiceRecFetchSel_entry:
 	beq	TgPartVoiceRecFetchSel_entry_L1b
 	extbu	d3
 	mov	d3, d0
-	call	TgPartLocalEditRecPtr, 0, 0
+	call	func_4C08C883, 0, 0
 	bra	TgPartVoiceRecFetchSel_entry_L32
 TgPartVoiceRecFetchSel_entry_L1b:
 	movbu	(0x34, sp), d0
@@ -275076,7 +275076,7 @@ func_4C0998D1_entry_L63:
 	cmp	0, d0
 	bne	func_4C0998D1_entry_L7e
 	movbu	(0x1c, sp), d0
-	call	TgPartEgRampScaleBCurve, 0, 0
+	call	func_4C0940D3, 0, 0
 	mov	d0, d1
 	exthu	d1
 	exthu	d3
@@ -275089,7 +275089,7 @@ func_4C0998D1_entry_L7e:
 	cmp	1, d0
 	bne	func_4C0998D1_entry_La1
 	movbu	(0x1c, sp), d0
-	call	TgPartEgRampScaleACurve, 0, 0
+	call	func_4C093F0C, 0, 0
 	mov	d0, d1
 	exthu	d1
 	exthu	d3
@@ -275677,7 +275677,7 @@ func_4C099D72_entry:
 	clr	d1
 	call	func_4C09978F_entry, [d2,d3,a2,a3], 0x2c
 	mov	d2, d0
-	call	TgPartDrawbarTypeClear, 0, 0
+	call	func_4C0895D8, 0, 0
 	mov	d2, d0
 	call	func_4C098DE3_entry, [d2,d3,a2,a3], 0x58
 	ret	[d2], 0x14
@@ -275826,15 +275826,15 @@ TgPartProgramInitAll_entry_L1:
 	blt	TgPartProgramInitAll_entry_L1
 	ret	[d2], 0x20
 
-TgActiveHighWaterUpdate:
+func_4C099EDB:
 	movm	[d2], (sp)
 	movhu	(0x5004a94a), d2
 	mov	d0, d1
 	exthu	d1
 	cmp	d1, d2
-	bge	TgActiveHighWaterUpdate_L13
+	bge	func_4C099EDB_L13
 	movhu	d0, (0x5004a94a)
-TgActiveHighWaterUpdate_L13:
+func_4C099EDB_L13:
 	retf	[d2], 4
 .incbin_range "baserom/kn6500_program.rom", 0x099ef1, 0x099efb
 
@@ -307432,50 +307432,50 @@ MainSNDARG_PtselPut_entry:
 	mov	d2, d0
 	ret	[d2], 0x14
 
-TtSndArg:
+func_4C0AD8B1:
 	movm	[d2,a2], (sp)
 	add	-0x20, sp
 	cmp	0x1a000d6, d1
-	beq	TtSndArg_L2b
+	beq	func_4C0AD8B1_L2b
 	cmp	0x1a000d5, d1
-	beq	TtSndArg_L2b
+	beq	func_4C0AD8B1_L2b
 	cmp	0x180000b, d1
-	beq	TtSndArg_L4a
+	beq	func_4C0AD8B1_L4a
 	cmp	0x1800000, d1
-	bne	TtSndArg_L28
+	bne	func_4C0AD8B1_L28
 	ret	[d2,a2], 0x28
-TtSndArg_L28:
+func_4C0AD8B1_L28:
 	jmp	0x4c0adb49
-TtSndArg_L2b:
+func_4C0AD8B1_L2b:
 	call	func_4C061C1B, 0, 0x10
 	cmp	0, d0
-	bge	TtSndArg_L46
+	bge	func_4C0AD8B1_L46
 	mov	3, d0
 	mov	0x51, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
 	mov	1, d0
 	ret	[d2,a2], 0x28
-TtSndArg_L46:
+func_4C0AD8B1_L46:
 	clr	d0
 	ret	[d2,a2], 0x28
-TtSndArg_L4a:
+func_4C0AD8B1_L4a:
 	mov	(0x38, sp), a0
 	cmp	2, a0
-	beq	TtSndArg_L68
+	beq	func_4C0AD8B1_L68
 	cmp	4, a0
-	bne	TtSndArg_L57
-	jmp	TtSndArg_Le1
-TtSndArg_L57:
+	bne	func_4C0AD8B1_L57
+	jmp	func_4C0AD8B1_Le1
+func_4C0AD8B1_L57:
 	cmp	5, a0
-	bne	TtSndArg_L5e
-	jmp	TtSndArg_L105
-TtSndArg_L5e:
+	bne	func_4C0AD8B1_L5e
+	jmp	func_4C0AD8B1_L105
+func_4C0AD8B1_L5e:
 	cmp	3, a0
-	bne	TtSndArg_L65
-	jmp	TtSndArg_L241
-TtSndArg_L65:
+	bne	func_4C0AD8B1_L65
+	jmp	func_4C0AD8B1_L241
+func_4C0AD8B1_L65:
 	ret	[d2,a2], 0x28
-TtSndArg_L68:
+func_4C0AD8B1_L68:
 	mov	2, d0
 	mov	1, d1
 	call	func_4C04E7D6_entry, [d2,d3,a2], 0xc
@@ -307496,23 +307496,23 @@ TtSndArg_L68:
 	call	func_4C032F8C_entry, [d2,d3], 8
 	call	func_4C061C1B, 0, 0x10
 	cmp	0, d0
-	bge	TtSndArg_Lc3
+	bge	func_4C0AD8B1_Lc3
 	mov	3, d0
 	mov	0x51, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
 	clr	d0
 	ret	[d2,a2], 0x28
-TtSndArg_Lc3:
+func_4C0AD8B1_Lc3:
 	cmp	0, d0
-	bne	TtSndArg_Ldd
+	bne	func_4C0AD8B1_Ldd
 	call	func_4C061CA5_entry, [d2,d3,a2,a3], 0x24
 	mov	0x900000b0, d0
 	mov	1, d1
 	call	PutM3Em_entry, [d2,d3,a2], 0x24
-TtSndArg_Ldd:
+func_4C0AD8B1_Ldd:
 	clr	d0
 	ret	[d2,a2], 0x28
-TtSndArg_Le1:
+func_4C0AD8B1_Le1:
 	mov	sp, a0
 	add	0x14, a0
 	mov	0x0000c000, d0
@@ -307523,35 +307523,35 @@ TtSndArg_Le1:
 	mov	d0, (0x5004b3b4)
 	clr	d0
 	ret	[d2,a2], 0x28
-TtSndArg_L105:
+func_4C0AD8B1_L105:
 	call	func_4C061C1B, 0, 0x10
 	mov	d0, d2
 	call	GetTitleOld_entry, 0, 0x10
 	cmp	0x1f00003, d0
-	bne	TtSndArg_L12e
+	bne	func_4C0AD8B1_L12e
 	cmp	0, d2
-	bge	TtSndArg_L12e
+	bge	func_4C0AD8B1_L12e
 	mov	1, d0
 	clr	d1
 	call	ChangeMode_entry, [d2,d3,a2], 0x20
 	clr	d0
 	ret	[d2,a2], 0x28
-TtSndArg_L12e:
+func_4C0AD8B1_L12e:
 	cmp	0, d2
-	bge	TtSndArg_L141
+	bge	func_4C0AD8B1_L141
 	mov	3, d0
 	mov	0x51, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
 	clr	d0
 	ret	[d2,a2], 0x28
-TtSndArg_L141:
+func_4C0AD8B1_L141:
 	cmp	0, d2
-	bne	TtSndArg_L15b
+	bne	func_4C0AD8B1_L15b
 	call	func_4C061CA5_entry, [d2,d3,a2,a3], 0x24
 	mov	0x900000b0, d0
 	mov	1, d1
 	call	PutM3Em_entry, [d2,d3,a2], 0x24
-TtSndArg_L15b:
+func_4C0AD8B1_L15b:
 	mov	sp, a2
 	add	0x14, a2
 	mov	a2, a0
@@ -307562,9 +307562,9 @@ TtSndArg_L15b:
 	mov	d0, (0x14, sp)
 	mov	(0x5004b3b4), d1
 	cmp	d0, d1
-	beq	TtSndArg_L182
-	jmp	TtSndArg_L23e
-TtSndArg_L182:
+	beq	func_4C0AD8B1_L182
+	jmp	func_4C0AD8B1_L23e
+func_4C0AD8B1_L182:
 	call	func_4C0B7F0B_entry, 0, 0x14
 	extbu	d0
 	asl	24, d0
@@ -307588,7 +307588,7 @@ TtSndArg_L182:
 	mov	(0x14, sp), d2
 	mov	(0x5004b3b8), d1
 	cmp	d2, d1
-	beq	TtSndArg_L1fe
+	beq	func_4C0AD8B1_L1fe
 	call	func_4C0B7F0B_entry, 0, 0x14
 	extbu	d0
 	asl	24, d0
@@ -307601,8 +307601,8 @@ TtSndArg_L182:
 	and	0xff, d1
 	extbu	d1
 	call	func_4C061ECF_entry, [d2,d3], 0x1c
-	bra	TtSndArg_L23e
-TtSndArg_L1fe:
+	bra	func_4C0AD8B1_L23e
+func_4C0AD8B1_L1fe:
 	call	func_4C0B7F0B_entry, 0, 0x14
 	extbu	d0
 	asl	24, d0
@@ -307619,15 +307619,15 @@ TtSndArg_L1fe:
 	mov	d2, d0
 	extbu	d0
 	cmp	d0, d1
-	beq	TtSndArg_L23e
+	beq	func_4C0AD8B1_L23e
 	mov	(0x5004b3b8), d0
 	extbu	d2
 	mov	d2, d1
 	call	func_4C061ECF_entry, [d2,d3], 0x1c
-TtSndArg_L23e:
+func_4C0AD8B1_L23e:
 	clr	d0
 	bra	0x4c0adb4a
-TtSndArg_L241:
+func_4C0AD8B1_L241:
 	mov	9, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -347593,19 +347593,19 @@ SeqTrAsGridCheck_entry_L6b6:
 SeqTrAsGridCheck_entry_L6b8:
 	ret	[d2,d3,a2,a3], 0x3c
 
-SeqTrasOK:
+func_4C0C7EDB:
 	movm	[d2,d3], (sp)
 	add	-0x14, sp
 	cmp	0x1af001c, d1
-	beq	SeqTrasOK_L23
+	beq	func_4C0C7EDB_L23
 	cmp	0x1800005, d1
-	beq	SeqTrasOK_L3c
+	beq	func_4C0C7EDB_L3c
 	cmp	0x1800000, d1
-	bne	SeqTrasOK_L20
+	bne	func_4C0C7EDB_L20
 	ret	[d2,d3], 0x1c
-SeqTrasOK_L20:
+func_4C0C7EDB_L20:
 	jmp	0x4c0c8068
-SeqTrasOK_L23:
+func_4C0C7EDB_L23:
 	mov	(0x2c, sp), d0
 	movhu	d0, (0x5004b7fe)
 	lsr	16, d0
@@ -347613,7 +347613,7 @@ SeqTrasOK_L23:
 	movbu	d0, (0x5004b7fc)
 	clr	d0
 	ret	[d2,d3], 0x1c
-SeqTrasOK_L3c:
+func_4C0C7EDB_L3c:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x012f008f, d0
@@ -347621,122 +347621,122 @@ SeqTrasOK_L3c:
 	call	ApFuncCall_entry, [d2,d3,a2], 0x24
 	movhu	(0x5004b7fe), d3
 	cmp	0x1b, d3
-	beq	SeqTrasOK_L60
+	beq	func_4C0C7EDB_L60
 	cmp	0x40, d3
-	bne	SeqTrasOK_L87
-SeqTrasOK_L60:
+	bne	func_4C0C7EDB_L87
+func_4C0C7EDB_L60:
 	movbu	(0x5004b7fc), d1
 	clr	d2
 	add	-1, d1
 	mov	0x50005a72, a0
 	setlb
 	cmp	d2, d1
-	beq	SeqTrasOK_L7f
+	beq	func_4C0C7EDB_L7f
 	movhu	(a0), d0
 	cmp	0x1b, d0
-	beq	SeqTrasOK_La5
+	beq	func_4C0C7EDB_La5
 	movhu	(a0), d0
 	cmp	0x40, d0
-	beq	SeqTrasOK_La5
-SeqTrasOK_L7f:
+	beq	func_4C0C7EDB_La5
+func_4C0C7EDB_L7f:
 	inc	d2
 	add	2, a0
 	cmp	0x10, d2
 	lcs
-	bra	SeqTrasOK_La5
-SeqTrasOK_L87:
+	bra	func_4C0C7EDB_La5
+func_4C0C7EDB_L87:
 	movbu	(0x5004b7fc), d1
 	clr	d2
 	add	-1, d1
 	mov	0x50005a72, a0
 	setlb
 	cmp	d2, d1
-	beq	SeqTrasOK_L9f
+	beq	func_4C0C7EDB_L9f
 	movhu	(a0), d0
 	cmp	d3, d0
-	beq	SeqTrasOK_La5
-SeqTrasOK_L9f:
+	beq	func_4C0C7EDB_La5
+func_4C0C7EDB_L9f:
 	inc	d2
 	add	2, a0
 	cmp	0x10, d2
 	lcs
-SeqTrasOK_La5:
+func_4C0C7EDB_La5:
 	cmp	0x10, d2
-	bcs	SeqTrasOK_Lac
-	jmp	SeqTrasOK_L14e
-SeqTrasOK_Lac:
+	bcs	func_4C0C7EDB_Lac
+	jmp	func_4C0C7EDB_L14e
+func_4C0C7EDB_Lac:
 	cmp	0x40, d3
-	beq	SeqTrasOK_Lbe
+	beq	func_4C0C7EDB_Lbe
 	cmp	0x41, d3
-	beq	SeqTrasOK_Ld2
+	beq	func_4C0C7EDB_Ld2
 	cmp	0x1b, d3
-	beq	SeqTrasOK_Le8
+	beq	func_4C0C7EDB_Le8
 	cmp	0x42, d3
-	beq	SeqTrasOK_Lfe
-	bra	SeqTrasOK_L112
-SeqTrasOK_Lbe:
+	beq	func_4C0C7EDB_Lfe
+	bra	func_4C0C7EDB_L112
+func_4C0C7EDB_Lbe:
 	mov	3, d0
 	movbu	d0, (0x5004b8ca)
 	mov	0x1a, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	jmp	SeqTrasOK_L188
-SeqTrasOK_Ld2:
+	jmp	func_4C0C7EDB_L188
+func_4C0C7EDB_Ld2:
 	mov	2, d0
 	movbu	d0, (0x5004b8ca)
 	mov	3, d0
 	mov	0x1a, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	jmp	SeqTrasOK_L188
-SeqTrasOK_Le8:
+	jmp	func_4C0C7EDB_L188
+func_4C0C7EDB_Le8:
 	mov	1, d0
 	movbu	d0, (0x5004b8ca)
 	mov	3, d0
 	mov	0x1a, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	jmp	SeqTrasOK_L188
-SeqTrasOK_Lfe:
+	jmp	func_4C0C7EDB_L188
+func_4C0C7EDB_Lfe:
 	clr	d0
 	movbu	d0, (0x5004b8ca)
 	mov	3, d0
 	mov	0x1a, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	bra	SeqTrasOK_L188
-SeqTrasOK_L112:
+	bra	func_4C0C7EDB_L188
+func_4C0C7EDB_L112:
 	call	func_4C0B6B38, 0, 0
 	exthu	d0
 	cmp	0, d0
-	beq	SeqTrasOK_L136
+	beq	func_4C0C7EDB_L136
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x008b001a, d0
 	mov	0x01800001, d1
 	call	PostEvent_entry, [d2,d3], 0x24
-	bra	SeqTrasOK_L188
-SeqTrasOK_L136:
+	bra	func_4C0C7EDB_L188
+func_4C0C7EDB_L136:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x012f010c, d0
 	mov	0x01800005, d1
 	call	ApFuncCall_entry, [d2,d3,a2], 0x24
-	bra	SeqTrasOK_L188
-SeqTrasOK_L14e:
+	bra	func_4C0C7EDB_L188
+func_4C0C7EDB_L14e:
 	call	func_4C0B6B38, 0, 0
 	exthu	d0
 	cmp	0, d0
-	beq	SeqTrasOK_L172
+	beq	func_4C0C7EDB_L172
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x008b001a, d0
 	mov	0x01800001, d1
 	call	PostEvent_entry, [d2,d3], 0x24
-	bra	SeqTrasOK_L188
-SeqTrasOK_L172:
+	bra	func_4C0C7EDB_L188
+func_4C0C7EDB_L172:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x012f010c, d0
 	mov	0x01800005, d1
 	call	ApFuncCall_entry, [d2,d3,a2], 0x24
-SeqTrasOK_L188:
+func_4C0C7EDB_L188:
 	clr	d0
 	bra	0x4c0c8069
 .incbin_range "baserom/kn6500_program.rom", 0x0c8066, 0x0c80b7
@@ -443591,7 +443591,7 @@ TEffFilter_L21:
 TEffFilter_L22:
 	ret	0, 0x10
 
-EffAlocGrid:
+func_4C102BB5:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x30, sp
 	mov	d0, d3
@@ -443615,42 +443615,42 @@ EffAlocGrid:
 	mov	d0, (a1)
 	mov	a0, (4, a1)
 	cmp	0x1800011, d2
-	beq	EffAlocGrid_L81
+	beq	func_4C102BB5_L81
 	cmp	0x180000f, d2
-	beq	EffAlocGrid_L81
+	beq	func_4C102BB5_L81
 	cmp	0x1800012, d2
-	bne	EffAlocGrid_L47
-	jmp	EffAlocGrid_L164
-EffAlocGrid_L47:
+	bne	func_4C102BB5_L47
+	jmp	func_4C102BB5_L164
+func_4C102BB5_L47:
 	cmp	0x1800010, d2
-	bne	EffAlocGrid_L52
-	jmp	EffAlocGrid_L164
-EffAlocGrid_L52:
+	bne	func_4C102BB5_L52
+	jmp	func_4C102BB5_L164
+func_4C102BB5_L52:
 	cmp	0x1800014, d2
-	bne	EffAlocGrid_L5d
-	jmp	EffAlocGrid_L24b
-EffAlocGrid_L5d:
+	bne	func_4C102BB5_L5d
+	jmp	func_4C102BB5_L24b
+func_4C102BB5_L5d:
 	cmp	0x1800015, d2
-	bne	EffAlocGrid_L68
-	jmp	EffAlocGrid_L46e
-EffAlocGrid_L68:
+	bne	func_4C102BB5_L68
+	jmp	func_4C102BB5_L46e
+func_4C102BB5_L68:
 	cmp	0x1a00083, d2
-	bne	EffAlocGrid_L73
-	jmp	EffAlocGrid_L472
-EffAlocGrid_L73:
+	bne	func_4C102BB5_L73
+	jmp	func_4C102BB5_L472
+func_4C102BB5_L73:
 	cmp	0x1800000, d2
-	bne	EffAlocGrid_L7e
-	jmp	EffAlocGrid_L598
-EffAlocGrid_L7e:
-	jmp	EffAlocGrid_L59b
-EffAlocGrid_L81:
+	bne	func_4C102BB5_L7e
+	jmp	func_4C102BB5_L598
+func_4C102BB5_L7e:
+	jmp	func_4C102BB5_L59b
+func_4C102BB5_L81:
 	mov	0x0000b000, d0
 	clr	d1
 	call	GetM3EmVal_entry, 0, 0x10
 	cmp	1, d0
-	beq	EffAlocGrid_L96
-	jmp	EffAlocGrid_L160
-EffAlocGrid_L96:
+	beq	func_4C102BB5_L96
+	jmp	func_4C102BB5_L160
+func_4C102BB5_L96:
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -443664,17 +443664,17 @@ EffAlocGrid_L96:
 	movhu	(0x28, sp), d0
 	exth	d0
 	cmp	1, d0
-	beq	EffAlocGrid_Lc6
-	jmp	EffAlocGrid_L160
-EffAlocGrid_Lc6:
+	beq	func_4C102BB5_Lc6
+	jmp	func_4C102BB5_L160
+func_4C102BB5_Lc6:
 	movhu	(0x2a, sp), d0
 	exth	d0
 	cmp	0, d0
-	beq	EffAlocGrid_Ld5
+	beq	func_4C102BB5_Ld5
 	cmp	1, d0
-	beq	EffAlocGrid_L119
-	jmp	EffAlocGrid_L15c
-EffAlocGrid_Ld5:
+	beq	func_4C102BB5_L119
+	jmp	func_4C102BB5_L15c
+func_4C102BB5_Ld5:
 	mov	0x0000b040, d0
 	clr	d1
 	call	GetM3EmVal_entry, 0, 0x10
@@ -443692,21 +443692,21 @@ EffAlocGrid_Ld5:
 	mov	d3, d0
 	inc	d0
 	cmp	d2, d0
-	beq	EffAlocGrid_L101
+	beq	func_4C102BB5_L101
 	mov	d3, d1
 	inc	d1
-EffAlocGrid_L101:
+func_4C102BB5_L101:
 	mov	d1, d0
 	exth	d0
 	cmp	0xf, d0
-	bgt	EffAlocGrid_L115
+	bgt	func_4C102BB5_L115
 	mov	0x0000b040, d0
 	exth	d1
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
-EffAlocGrid_L115:
+func_4C102BB5_L115:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x40
-EffAlocGrid_L119:
+func_4C102BB5_L119:
 	mov	0x0000b040, d0
 	clr	d1
 	call	GetM3EmVal_entry, 0, 0x10
@@ -443723,34 +443723,34 @@ EffAlocGrid_L119:
 	mov	d0, d2
 	inc	d2
 	cmp	d3, d2
-	beq	EffAlocGrid_L144
+	beq	func_4C102BB5_L144
 	mov	d0, d1
 	inc	d1
-EffAlocGrid_L144:
+func_4C102BB5_L144:
 	mov	d1, d2
 	exth	d2
 	cmp	0xf, d2
-	bgt	EffAlocGrid_L158
+	bgt	func_4C102BB5_L158
 	mov	0x0000b050, d0
 	exth	d1
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
-EffAlocGrid_L158:
+func_4C102BB5_L158:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x40
-EffAlocGrid_L15c:
+func_4C102BB5_L15c:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x40
-EffAlocGrid_L160:
+func_4C102BB5_L160:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x40
-EffAlocGrid_L164:
+func_4C102BB5_L164:
 	mov	0x0000b000, d0
 	clr	d1
 	call	GetM3EmVal_entry, 0, 0x10
 	cmp	1, d0
-	beq	EffAlocGrid_L179
-	jmp	EffAlocGrid_L247
-EffAlocGrid_L179:
+	beq	func_4C102BB5_L179
+	jmp	func_4C102BB5_L247
+func_4C102BB5_L179:
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -443764,17 +443764,17 @@ EffAlocGrid_L179:
 	movhu	(0x28, sp), d0
 	exth	d0
 	cmp	1, d0
-	beq	EffAlocGrid_L1a9
-	jmp	EffAlocGrid_L247
-EffAlocGrid_L1a9:
+	beq	func_4C102BB5_L1a9
+	jmp	func_4C102BB5_L247
+func_4C102BB5_L1a9:
 	movhu	(0x2a, sp), d0
 	exth	d0
 	cmp	0, d0
-	beq	EffAlocGrid_L1b8
+	beq	func_4C102BB5_L1b8
 	cmp	1, d0
-	beq	EffAlocGrid_L1fe
-	jmp	EffAlocGrid_L243
-EffAlocGrid_L1b8:
+	beq	func_4C102BB5_L1fe
+	jmp	func_4C102BB5_L243
+func_4C102BB5_L1b8:
 	mov	0x0000b040, d0
 	clr	d1
 	call	GetM3EmVal_entry, 0, 0x10
@@ -443792,21 +443792,21 @@ EffAlocGrid_L1b8:
 	mov	-1, d0
 	add	d3, d0
 	cmp	d2, d0
-	beq	EffAlocGrid_L1e6
+	beq	func_4C102BB5_L1e6
 	mov	-1, d1
 	add	d3, d1
-EffAlocGrid_L1e6:
+func_4C102BB5_L1e6:
 	mov	d1, d0
 	exth	d0
 	cmp	0, d0
-	blt	EffAlocGrid_L1fa
+	blt	func_4C102BB5_L1fa
 	mov	0x0000b040, d0
 	exth	d1
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
-EffAlocGrid_L1fa:
+func_4C102BB5_L1fa:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x40
-EffAlocGrid_L1fe:
+func_4C102BB5_L1fe:
 	mov	0x0000b040, d0
 	clr	d1
 	call	GetM3EmVal_entry, 0, 0x10
@@ -443823,27 +443823,27 @@ EffAlocGrid_L1fe:
 	mov	-1, d2
 	add	d0, d2
 	cmp	d3, d2
-	beq	EffAlocGrid_L22b
+	beq	func_4C102BB5_L22b
 	mov	-1, d1
 	add	d0, d1
-EffAlocGrid_L22b:
+func_4C102BB5_L22b:
 	mov	d1, d2
 	exth	d2
 	cmp	0, d2
-	blt	EffAlocGrid_L23f
+	blt	func_4C102BB5_L23f
 	mov	0x0000b050, d0
 	exth	d1
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
-EffAlocGrid_L23f:
+func_4C102BB5_L23f:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x40
-EffAlocGrid_L243:
+func_4C102BB5_L243:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x40
-EffAlocGrid_L247:
+func_4C102BB5_L247:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x40
-EffAlocGrid_L24b:
+func_4C102BB5_L24b:
 	mov	(0x50, sp), a2
 	mov	sp, a0
 	mov	a0, d0
@@ -443857,17 +443857,17 @@ EffAlocGrid_L24b:
 	mov	(a2), d0
 	and	0x00ffffff, d0
 	cmp	0xb000, d0
-	beq	EffAlocGrid_L286
+	beq	func_4C102BB5_L286
 	cmp	0xb040, d0
-	bne	EffAlocGrid_L278
-	jmp	EffAlocGrid_L37d
-EffAlocGrid_L278:
+	bne	func_4C102BB5_L278
+	jmp	func_4C102BB5_L37d
+func_4C102BB5_L278:
 	cmp	0xb050, d0
-	bne	EffAlocGrid_L283
-	jmp	EffAlocGrid_L3f4
-EffAlocGrid_L283:
-	jmp	EffAlocGrid_L46a
-EffAlocGrid_L286:
+	bne	func_4C102BB5_L283
+	jmp	func_4C102BB5_L3f4
+func_4C102BB5_L283:
+	jmp	func_4C102BB5_L46a
+func_4C102BB5_L286:
 	clr	d0
 	movhu	d0, (0x2a, sp)
 	mov	(4, a2), d0
@@ -443878,11 +443878,11 @@ EffAlocGrid_L286:
 	call	GetM3EmVal_entry, 0, 0x10
 	movbu	(0x18, sp), d3
 	cmp	d2, d3
-	bne	EffAlocGrid_L2d6
+	bne	func_4C102BB5_L2d6
 	mov	d0, d1
 	exth	d1
 	cmp	0xf, d1
-	bgt	EffAlocGrid_L2d6
+	bgt	func_4C102BB5_L2d6
 	exthu	d0
 	call	func_4C0FDCCB, 0, 0
 	mov	a0, a1
@@ -443893,8 +443893,8 @@ EffAlocGrid_L286:
 	mov	0x01a00082, d1
 	mov	a2, (0x10, sp)
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	EffAlocGrid_L2fc
-EffAlocGrid_L2d6:
+	bra	func_4C102BB5_L2fc
+func_4C102BB5_L2d6:
 	mov	a3, a0
 	mov	0x4c237e4c, a1
 	call	strcpy_entry, [a2], 4
@@ -443903,17 +443903,17 @@ EffAlocGrid_L2d6:
 	mov	0x01a00082, d1
 	mov	a2, (0x10, sp)
 	call	SendEvent_entry, [d2,d3], 0x24
-EffAlocGrid_L2fc:
+func_4C102BB5_L2fc:
 	movhu	d2, (0x2a, sp)
 	mov	0x0000b050, d0
 	clr	d1
 	call	GetM3EmVal_entry, 0, 0x10
 	cmp	d2, d3
-	bne	EffAlocGrid_L33d
+	bne	func_4C102BB5_L33d
 	mov	d0, d1
 	exth	d1
 	cmp	0xf, d1
-	bgt	EffAlocGrid_L33d
+	bgt	func_4C102BB5_L33d
 	exthu	d0
 	call	func_4C0FDCCB, 0, 0
 	mov	a0, a1
@@ -443923,8 +443923,8 @@ EffAlocGrid_L2fc:
 	mov	a2, (0x10, sp)
 	mov	0x01a00082, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	EffAlocGrid_L361
-EffAlocGrid_L33d:
+	bra	func_4C102BB5_L361
+func_4C102BB5_L33d:
 	mov	0x4c237e58, a1
 	mov	a3, a0
 	call	strcpy_entry, [a2], 4
@@ -443932,7 +443932,7 @@ EffAlocGrid_L33d:
 	mov	a2, (0x10, sp)
 	mov	0x01a00082, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-EffAlocGrid_L361:
+func_4C102BB5_L361:
 	movbu	(0x18, sp), d0
 	mov	0x01a0003b, d1
 	mov	d0, (0x10, sp)
@@ -443940,20 +443940,20 @@ EffAlocGrid_L361:
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x40
-EffAlocGrid_L37d:
+func_4C102BB5_L37d:
 	clr	d0
 	movhu	d0, (0x2a, sp)
 	mov	0x0000b000, d0
 	clr	d1
 	call	GetM3EmVal_entry, 0, 0x10
 	cmp	d2, d0
-	bne	EffAlocGrid_L3ca
+	bne	func_4C102BB5_L3ca
 	inc4	a2
 	mov	(a2), d0
 	and	0xff, d0
 	extbu	d0
 	cmp	0xf, d0
-	bgt	EffAlocGrid_L3ca
+	bgt	func_4C102BB5_L3ca
 	mov	(a2), d0
 	and	0xff, d0
 	extbu	d0
@@ -443967,8 +443967,8 @@ EffAlocGrid_L37d:
 	mov	0x01a00082, d1
 	mov	a0, (0x10, sp)
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	EffAlocGrid_L3f0
-EffAlocGrid_L3ca:
+	bra	func_4C102BB5_L3f0
+func_4C102BB5_L3ca:
 	mov	a3, a0
 	mov	0x4c237e64, a1
 	call	strcpy_entry, [a2], 4
@@ -443977,22 +443977,22 @@ EffAlocGrid_L3ca:
 	mov	0x01a00082, d1
 	mov	a0, (0x10, sp)
 	call	SendEvent_entry, [d2,d3], 0x24
-EffAlocGrid_L3f0:
+func_4C102BB5_L3f0:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x40
-EffAlocGrid_L3f4:
+func_4C102BB5_L3f4:
 	movhu	d2, (0x2a, sp)
 	mov	0x0000b000, d0
 	clr	d1
 	call	GetM3EmVal_entry, 0, 0x10
 	cmp	d2, d0
-	bne	EffAlocGrid_L440
+	bne	func_4C102BB5_L440
 	inc4	a2
 	mov	(a2), d0
 	and	0xff, d0
 	extbu	d0
 	cmp	0xf, d0
-	bgt	EffAlocGrid_L440
+	bgt	func_4C102BB5_L440
 	mov	(a2), d0
 	and	0xff, d0
 	extbu	d0
@@ -444006,8 +444006,8 @@ EffAlocGrid_L3f4:
 	mov	0x01a00082, d1
 	mov	a0, (0x10, sp)
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	EffAlocGrid_L466
-EffAlocGrid_L440:
+	bra	func_4C102BB5_L466
+func_4C102BB5_L440:
 	mov	a3, a0
 	mov	0x4c237e70, a1
 	call	strcpy_entry, [a2], 4
@@ -444016,16 +444016,16 @@ EffAlocGrid_L440:
 	mov	0x01a00082, d1
 	mov	a0, (0x10, sp)
 	call	SendEvent_entry, [d2,d3], 0x24
-EffAlocGrid_L466:
+func_4C102BB5_L466:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x40
-EffAlocGrid_L46a:
+func_4C102BB5_L46a:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x40
-EffAlocGrid_L46e:
+func_4C102BB5_L46e:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x40
-EffAlocGrid_L472:
+func_4C102BB5_L472:
 	mov	(0x50, sp), d0
 	mov	(0x50, sp), d1
 	lsr	16, d0
@@ -444040,17 +444040,17 @@ EffAlocGrid_L472:
 	mov	a2, (0x2c, sp)
 	exth	d0
 	cmp	1, d0
-	beq	EffAlocGrid_L496
-	jmp	EffAlocGrid_L595
-EffAlocGrid_L496:
+	beq	func_4C102BB5_L496
+	jmp	func_4C102BB5_L595
+func_4C102BB5_L496:
 	movhu	(0x2a, sp), d0
 	exth	d0
 	cmp	0, d0
-	beq	EffAlocGrid_L4a5
+	beq	func_4C102BB5_L4a5
 	cmp	1, d0
-	beq	EffAlocGrid_L51c
-	jmp	EffAlocGrid_L592
-EffAlocGrid_L4a5:
+	beq	func_4C102BB5_L51c
+	jmp	func_4C102BB5_L592
+func_4C102BB5_L4a5:
 	mov	0x0000b000, d0
 	clr	d1
 	call	GetM3EmVal_entry, 0, 0x10
@@ -444060,11 +444060,11 @@ EffAlocGrid_L4a5:
 	call	GetM3EmVal_entry, 0, 0x10
 	extbu	d2
 	cmp	1, d2
-	bne	EffAlocGrid_L4f4
+	bne	func_4C102BB5_L4f4
 	mov	d0, d1
 	exth	d1
 	cmp	0xf, d1
-	bgt	EffAlocGrid_L4f4
+	bgt	func_4C102BB5_L4f4
 	exthu	d0
 	call	func_4C0FDCCB, 0, 0
 	mov	a0, a1
@@ -444074,8 +444074,8 @@ EffAlocGrid_L4a5:
 	mov	a3, (0x10, sp)
 	mov	0x01a00082, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	EffAlocGrid_L518
-EffAlocGrid_L4f4:
+	bra	func_4C102BB5_L518
+func_4C102BB5_L4f4:
 	mov	0x4c237e7c, a1
 	mov	a2, a0
 	call	strcpy_entry, [a2], 4
@@ -444083,10 +444083,10 @@ EffAlocGrid_L4f4:
 	mov	a3, (0x10, sp)
 	mov	0x01a00082, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-EffAlocGrid_L518:
+func_4C102BB5_L518:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x40
-EffAlocGrid_L51c:
+func_4C102BB5_L51c:
 	mov	0x0000b000, d0
 	clr	d1
 	call	GetM3EmVal_entry, 0, 0x10
@@ -444096,11 +444096,11 @@ EffAlocGrid_L51c:
 	call	GetM3EmVal_entry, 0, 0x10
 	extbu	d2
 	cmp	1, d2
-	bne	EffAlocGrid_L56b
+	bne	func_4C102BB5_L56b
 	mov	d0, d1
 	exth	d1
 	cmp	0xf, d1
-	bgt	EffAlocGrid_L56b
+	bgt	func_4C102BB5_L56b
 	exthu	d0
 	call	func_4C0FDCCB, 0, 0
 	mov	a0, a1
@@ -444110,8 +444110,8 @@ EffAlocGrid_L51c:
 	mov	a3, (0x10, sp)
 	mov	0x01a00082, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	EffAlocGrid_L58f
-EffAlocGrid_L56b:
+	bra	func_4C102BB5_L58f
+func_4C102BB5_L56b:
 	mov	0x4c237e88, a1
 	mov	a2, a0
 	call	strcpy_entry, [a2], 4
@@ -444119,21 +444119,21 @@ EffAlocGrid_L56b:
 	mov	a3, (0x10, sp)
 	mov	0x01a00082, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-EffAlocGrid_L58f:
+func_4C102BB5_L58f:
 	clr	d0
-	bra	EffAlocGrid_L59c
-EffAlocGrid_L592:
+	bra	func_4C102BB5_L59c
+func_4C102BB5_L592:
 	clr	d0
-	bra	EffAlocGrid_L59c
-EffAlocGrid_L595:
+	bra	func_4C102BB5_L59c
+func_4C102BB5_L595:
 	clr	d0
-	bra	EffAlocGrid_L59c
-EffAlocGrid_L598:
+	bra	func_4C102BB5_L59c
+func_4C102BB5_L598:
 	mov	d3, d0
-	bra	EffAlocGrid_L59c
-EffAlocGrid_L59b:
+	bra	func_4C102BB5_L59c
+func_4C102BB5_L59b:
 	clr	d0
-EffAlocGrid_L59c:
+func_4C102BB5_L59c:
 	ret	[d2,d3,a2,a3], 0x40
 
 TEffAloc:
@@ -574266,7 +574266,7 @@ func_4C14FA8F_entry:
 	movhu	d0, (0x50072f74)
 	mov	-1, d0
 	mov	d0, (0x50072f78)
-	call	ZArenaReset, 0, 0
+	call	func_4C1505E3, 0, 0
 	clr	d0
 	mov	d0, (0x50062f58)
 	mov	d0, (0x50062f5c)
@@ -574312,7 +574312,7 @@ func_4C14FB22_entry:
 	mov	d1, (0x50062f3c)
 	mov	a0, (0x50062f44)
 	mov	d0, (0x50062f48)
-	call	ZArenaReset, 0, 0
+	call	func_4C1505E3, 0, 0
 	clr	d0
 	mov	d0, (0x50062f70)
 	mov	0x50062f38, a0
@@ -574352,7 +574352,7 @@ func_4C14FBA1_entry:
 	mov	a2, (0x50062f10)
 	mov	a0, (0x50062f00)
 	mov	d2, (0x50062f04)
-	call	ZArenaReset, 0, 0
+	call	func_4C1505E3, 0, 0
 	mov	(0x50062f04), d1
 	mov	1, d3
 	cmp	d1, d2
@@ -574614,7 +574614,7 @@ func_4C14FE61_entry:
 	mov	1, d3
 	mov	d0, (0x50062f00)
 	mov	d0, (0x50062f04)
-	call	ZArenaReset, 0, 0
+	call	func_4C1505E3, 0, 0
 	mov	0x50062f00, a0
 	mov	0x4c25a4d8, a1
 	mov	0x38, d0
@@ -575262,7 +575262,7 @@ func_4C15056B_entry:
 	mov	a0, a3
 	mov	d1, d2
 	mov	a1, a2
-	call	ZArenaReset, 0, 0
+	call	func_4C1505E3, 0, 0
 	mov	sp, a0
 	mov	a0, d0
 	add	0x18, d0
@@ -575310,7 +575310,7 @@ func_4C1505D9:
 	movbu	d0, (0x50072f7c)
 	retf	0, 0
 
-ZArenaReset:
+func_4C1505E3:
 	mov	0x50072f7c, a0
 	mov	0x5028cca0, a1
 	mov	0x10, d0
@@ -636093,7 +636093,7 @@ compEnd:
 
 initialize_comp:
 	add	-8, sp
-	call	ZArenaReset, 0, 0
+	call	func_4C1505E3, 0, 0
 	ret	0, 8
 
 cre_tsk_X:

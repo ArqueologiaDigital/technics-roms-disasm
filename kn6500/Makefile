@@ -32,10 +32,11 @@ ROM      := $(MODEL)_program.rom
 BASE     := 0x4c000000
 # SHA-1 of the 3,675,793-byte image (IKV1.SLD + IKV2.SLD, decompressed, joined).
 ROM_SHA1 := a507de3977def5d4148c4d3dbc16e3f6ff9f01c8
-# File-offset ranges that hold code (README.md, "Layout"): the boot code and
-# application from offset 0, and the MILK kernel at the top of the image.
-CODE     := --code 0x0:0x176839 --code 0x37e44c:0x381447
-SYMRANGE := --code-range 0x0:0x176839 --code-range 0x37e44c:0x381447
+# File-offset ranges that hold code (README.md, "Layout"): the boot header (its
+# vectors), the start-up code and application after the erased 0x10-0x80 bytes,
+# and the MILK kernel at the top of the image.
+CODE     := --code 0x0:0x10 --code 0x80:0x176839 --code 0x37e44c:0x381447
+SYMRANGE := --code-range 0x0:0x10 --code-range 0x80:0x176839 --code-range 0x37e44c:0x381447
 TITLE    := 'Technics SX-KN6500 program flash image (update v1.3) - byte-exact.'
 
 .PHONY: all baserom build verify ported-names symbols program-src clean distclean
@@ -95,7 +96,8 @@ program-src: $(TOOLS)/gen_image_s.py $(MODEL).sym $(MODEL)_manual.sym $(MODEL)_p
 # ---- names carried over from the KN7000 where a routine is the same code ---------
 # port_names_by_code.py compares each unnamed entry with the KN7000 (program 941)
 # routines its symbol files name, relocation-masked, entry to first return; only
-# unique matches of >= 8 instructions count (the tool's header has the rule). It
+# matches with >= 8 unmasked instructions, unique among all the KN7000's routine
+# starts and among this image's entries, count (the tool's header has the rule). It
 # reads the KN7000 reference image (../kn7000: make -C ../kn7000 baserom) and this
 # tree's generated labels; run `make program-src` again afterwards. The committed
 # $(MODEL)_ported.sym is the result, so the build does not need the KN7000 image.

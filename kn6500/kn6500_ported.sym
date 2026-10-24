@@ -3,7 +3,9 @@
 ; how a name qualifies. Columns: B address, name, ; the A address it was carried
 ; from and the number of instructions that matched (entry to first return).
 ;
-; 572 names carried (3600 candidates in A, 6837 unnamed entries in B, 0 skipped: the name is taken in B)
+; 552 names carried (3600 candidates in A, 14818 routine starts in A, 6837 unnamed entries in B)
+; not carried: 562 A signatures with fewer than 8 unmasked instructions; 3 with a twin among A's routine starts;
+; 0 whose name is taken in B
 0x4C000080  LibF64Pow	; = 0x4C000000, 262 insns
 0x4C00051B  LibF64UnpackedToI32	; = 0x4C000263, 32 insns
 0x4C00056B  LibF64ToI32	; = 0x4C0002B3, 8 insns
@@ -72,11 +74,9 @@
 0x4C024C59  PanelTxDoneIsr	; = 0x484AC70E, 18 insns
 0x4C025118  PanelRxState8	; = 0x484ACC13, 66 insns
 0x4C025347  PanelLinkRxRearm	; = 0x484ACE42, 23 insns
-0x4C0254DA  PanelLedMirrorResetA	; = 0x484ACFE4, 8 insns
 0x4C0254EF  PanelHeaderValidate	; = 0x484ACFF9, 10 insns
 0x4C025502  PanelErrorRecovery	; = 0x484AD00C, 59 insns
 0x4C025607  PanelFrameDecode	; = 0x484AD111, 12 insns
-0x4C025959  PanelTxFifoToRing	; = 0x484AD45F, 8 insns
 0x4C047980  PanelCtrlValueGet	; = 0x484AD65F, 12 insns
 0x4C04799C  PanelCtrlDispatch	; = 0x484AD67B, 18 insns
 0x4C0479D7  PanelCtrlLatch00	; = 0x484AD6B0, 15 insns
@@ -154,7 +154,6 @@
 0x4C068E1C  TempoClkStopNow	; = 0x4844702F, 19 insns
 0x4C068E4C  TempoClkBeatStopRequest	; = 0x4844705F, 14 insns
 0x4C068E71  TempoTick96Isr	; = 0x48447084, 197 insns
-0x4C0696CC  TempoTimerInit	; = 0x48447847, 8 insns
 0x4C0696F1  TempoBpmReloadWrite	; = 0x4844786C, 15 insns
 0x4C069716  TempoReloadFromInterval	; = 0x48447891, 21 insns
 0x4C069790  TempoSyncD001Set	; = 0x484478E7, 11 insns
@@ -183,15 +182,8 @@
 0x4C08816F  TgGlobalRampStateSet	; = 0x4C008E49, 29 insns
 0x4C0881CA  TgGlobalRampParamSet	; = 0x4C008EA4, 35 insns
 0x4C0882B2  TgAllPartsEffectRefresh	; = 0x4C008F8C, 10 insns
-0x4C0886E7  TgEffectEnableBit10	; = 0x4C0090C0, 11 insns
-0x4C088720  TgEffectEnableBit4	; = 0x4C0090EC, 11 insns
-0x4C0887AB  TgEffectEnableMulti	; = 0x4C00916B, 11 insns
-0x4C0887D7  TgEffectEnableBit13	; = 0x4C009197, 11 insns
-0x4C088836  TgEffectEnableBit14	; = 0x4C0091C3, 11 insns
 0x4C088E0F  TgGlobalRampTick	; = 0x4C009837, 75 insns
 0x4C08950F  TgDrawbarToneRecInit	; = 0x4C00A1F7, 51 insns
-0x4C0895C2  TgPartDrawbarTypeSet	; = 0x4C00A2F1, 10 insns
-0x4C0895D8  TgPartDrawbarTypeClear	; = 0x4C00A307, 10 insns
 0x4C0895ED  TgPartDrawbarTypeGet	; = 0x4C00A31C, 9 insns
 0x4C089601  TgPartDrawbarRegExport	; = 0x4C00A330, 49 insns
 0x4C0896F8  TgDrawbarNibbleScatter	; = 0x4C00A44C, 27 insns
@@ -209,7 +201,6 @@
 0x4C08C7EE  TgPartAuxRecPtr	; = 0x4C00C233, 15 insns
 0x4C08C816  TgPartAuxModRecPtr	; = 0x4C00C25B, 25 insns
 0x4C08C848  TgPartAuxElemRecPtr	; = 0x4C00C28D, 25 insns
-0x4C08C883  TgPartLocalEditRecPtr	; = 0x4C00C2C8, 8 insns
 0x4C08C895  TgPartLocalEditModRecPtr	; = 0x4C00C2DA, 16 insns
 0x4C08C8B4  TgPartLocalEditElemRecPtr	; = 0x4C00C2F9, 16 insns
 0x4C08C8D3  TgPartAuxMod04Get	; = 0x4C00C35A, 18 insns
@@ -252,14 +243,10 @@
 0x4C092297  TgVoiceListReleasePart	; = 0x4C01008C, 11 insns
 0x4C0922D6  TgVoiceListCollectPartLive	; = 0x4C0100CB, 10 insns
 0x4C092312  TgVoiceListCollectPartAll	; = 0x4C010107, 10 insns
-0x4C093F0C  TgPartEgRampScaleACurve	; = 0x4C0118F5, 9 insns
-0x4C0940D3  TgPartEgRampScaleBCurve	; = 0x4C011ACE, 9 insns
 0x4C0944BF  TgPartEgRampDispatchTick	; = 0x4C011EC9, 43 insns
-0x4C095E81  TgPartElemLastGet	; = 0x4C01226C, 8 insns
 0x4C0978AA  TgPartToneProgramGet	; = 0x4C0384C4, 9 insns
 0x4C0978BF  TgPartToneBankLoGet	; = 0x4C0384D9, 9 insns
 0x4C0978D4  TgPartToneBankHiGet	; = 0x4C0384EE, 9 insns
-0x4C097AC1  TgPartToneDescPtr	; = 0x4C038503, 8 insns
 0x4C097B93  TgPartToneIsTableClass	; = 0x4C038515, 15 insns
 0x4C09800D  TgPartVoiceRecFetchSel	; = 0x4C03858D, 25 insns
 0x4C098047  TgPartVoiceRecFetchIdx	; = 0x4C0385C7, 39 insns
@@ -270,7 +257,6 @@
 0x4C099020  TgPartModUnitParamGet	; = 0x4C0399DB, 22 insns
 0x4C09997B  TgVoiceEgSegFlagTest	; = 0x4C03A2BD, 38 insns
 0x4C099EBD  TgPartProgramInitAll	; = 0x4C03A75B, 15 insns
-0x4C099EDB  TgActiveHighWaterUpdate	; = 0x4C014784, 8 insns
 0x4C099F8D  TgNodeRingSeed	; = 0x4C03A779, 10 insns
 0x4C099FA1  TgNodeRingInsert	; = 0x4C03A78D, 17 insns
 0x4C099FC0  TgVoiceNodeToClassRing	; = 0x4C03A7AC, 50 insns
@@ -327,7 +313,6 @@
 0x4C0AD80D  MdSndArg	; = 0x485071A2, 23 insns
 0x4C0AD854  MainSNDARG_SetSndaParaCur	; = 0x48507177, 18 insns
 0x4C0AD895  MainSNDARG_PtselPut	; = 0x4850715B, 9 insns
-0x4C0AD8B1  TtSndArg	; = 0x485071E9, 11 insns
 0x4C0ADD43  MainCOMP_CmpPatternCopy	; = 0x485106E3, 40 insns
 0x4C0ADE8D  MainCOMP_SetMidimFilter	; = 0x48502ED0, 14 insns
 0x4C0ADF75  MainPAD_PadPhraseCopy	; = 0x48516083, 43 insns
@@ -481,7 +466,6 @@
 0x4C0C2C58  FE_CmpCstmCpy	; = 0x4850C34B, 97 insns
 0x4C0C7058  FE_SeqTrkMrgTrack	; = 0x48538ACC, 63 insns
 0x4C0C781B  SeqTrAsGridCheck	; = 0x48537381, 45 insns
-0x4C0C7EDB  SeqTrasOK	; = 0x48537A41, 9 insns
 0x4C0C80B7  FE_SeqTrAsPSongSel	; = 0x48537CFE, 44 insns
 0x4C0C81FB  SeqTrAsPSongOK	; = 0x48537E42, 71 insns
 0x4C0C9D81  FE_SeqToCmpMemory	; = 0x4850B10A, 35 insns
@@ -510,7 +494,6 @@
 0x4C1023CD  EffectWrite	; = 0x4856857A, 24 insns
 0x4C1024F3  EffNamingCheck	; = 0x485686A0, 23 insns
 0x4C102978  EffFilterGrid	; = 0x48568B25, 70 insns
-0x4C102BB5  EffAlocGrid	; = 0x48568D62, 102 insns
 0x4C10345B  EffDispGrid	; = 0x48569608, 71 insns
 0x4C1045DE  EffAlocCatch	; = 0x4856A78B, 12 insns
 0x4C10467C  EffDispCatch	; = 0x4856A829, 12 insns
@@ -542,7 +525,6 @@
 0x4C14D038  CheckSavePMBankNUM	; = 0x4852FBDF, 10 insns
 0x4C14F7FD  fmmcopy	; = 0x485329E5, 43 insns
 0x4C14F907  fmmformat	; = 0x48532AEF, 14 insns
-0x4C1505E3  ZArenaReset	; = 0x485340BE, 19 insns
 0x4C15063F  ZArenaAlloc	; = 0x4853411A, 55 insns
 0x4C1506C2  ZArenaFree	; = 0x4853419D, 49 insns
 0x4C15819D  DspBootDefaultEffects	; = 0x4840537D, 44 insns

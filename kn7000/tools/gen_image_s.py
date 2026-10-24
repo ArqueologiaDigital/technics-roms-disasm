@@ -46,7 +46,9 @@
 #   * branch, jump and call targets that land on an emitted instruction print as
 #     names: the entry name, or <entry>_L<offset> (a hex offset from the entry) for
 #     a target inside it. Targets in .incbin_range bytes stay numeric.
-#   * everything outside the code ranges is .incbin_range from the reference image.
+#   * everything outside the code ranges is .incbin_range from the reference image,
+#     except the typed data ranges (--long-table, --text, --reflection-tables); a
+#     --sym name at the start of one labels it.
 #
 # Usage:
 #   gen_image_s.py --rom baserom/X.rom --base 0x48400000 --code LO:HI[:CPU] [--code ...]
@@ -487,6 +489,14 @@ def main():
                 n_reflect += 1
     typed.sort()
     label_at = {cpu_of(o): nm for o, nm in labels.items()}
+    # a --sym name outside the code ranges labels the typed data range it starts
+    # (the .long rows that hold its address then print the name)
+    data_labels = {}
+    for lo, _hi, _k in typed:
+        nm = names.get(base + lo)
+        if nm is not None and not img.in_code(lo):
+            data_labels[lo] = nm
+            label_at[base + lo] = nm
 
     def emit_typed(lo, hi, kind):
         if kind == "long":
@@ -511,6 +521,9 @@ def main():
                 if base != mnbase:
                     body.append(f".mnbase 0x{base:08x}")
                     mnbase = base
+                if cur in data_labels:
+                    body.append(f"{data_labels[cur]}:")
+                    defined.add(data_labels[cur])
                 stop = min(to, t[1])
                 emit_typed(cur, stop, t[2])
                 cur = stop
@@ -588,6 +601,10 @@ def main():
     short = sum(1 for e in order if result[e][3] and (
         not result[e][1] or result[e][1][-1][0] + len(result[e][1][-1][1]) < result[e][0]))
     named = sum(1 for e in order if not names[cpu_of(e)].startswith("func_"))
+    # <function>_entry register-save labels of named functions are derived from
+    # their function's name (func_<ADDR>_entry ones count with the func_ entries)
+    derived = sum(1 for e in order if names[cpu_of(e)].endswith("_entry")
+                  and not names[cpu_of(e)].startswith("func_"))
     pieces = 0
     for line in body:
         m = re.match(r"\.incbin_range .*, (0x[0-9a-f]+), (0x[0-9a-f]+)$", line)
@@ -595,7 +612,8 @@ def main():
             pieces += 1
     stats = [f"image bytes                 {len(d)}",
              f"code-range bytes            {code_total}",
-             f"entries                     {len(order)} ({named} named, {len(order) - named} func_)",
+             f"entries                     {len(order)} ({named - derived} named, {derived} derived "
+             f"<name>_entry, {len(order) - named} func_)",
              f"bytes emitted as code       {conv_bytes} ({100.0 * conv_bytes / len(d):.2f}% of image, "
              f"{100.0 * conv_bytes / code_total:.2f}% of code ranges)",
              f"instructions                {n_insn} (+{n_byte} .byte escapes)",

@@ -10093,3 +10093,4 @@
 .equ func_9783DE8A_L43, 0x9783decd
 .equ func_9783DE8A_L47, 0x9783ded1
 .equ func_9783DE8A_L49, 0x9783ded3
+.equ XaprTrailerSignature, 0x978b655c

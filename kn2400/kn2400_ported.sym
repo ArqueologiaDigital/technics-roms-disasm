@@ -3,7 +3,9 @@
 ; how a name qualifies. Columns: B address, name, ; the A address it was carried
 ; from and the number of instructions that matched (entry to first return).
 ;
-; 512 names carried (3600 candidates in A, 7643 unnamed entries in B, 4 skipped: the name is taken in B)
+; 485 names carried (3600 candidates in A, 14818 routine starts in A, 7643 unnamed entries in B)
+; not carried: 562 A signatures with fewer than 8 unmasked instructions; 4 with a twin among A's routine starts;
+; 4 whose name is taken in B
 0x485EDF8B  Malloc	; = 0x48416625, 77 insns
 0x485F94D4  DrawRing_Post	; = 0x4842199F, 56 insns
 0x485F968F  DrawQueue_Alloc	; = 0x48421B5A, 20 insns
@@ -47,7 +49,6 @@
 0x486150F2  SwInMeasSeq	; = 0x48453EE6, 42 insns
 0x4861516B  GetTrackStatusSeq	; = 0x48453F5F, 64 insns
 0x486151F0  GetTrackPartSeq	; = 0x48453FE4, 11 insns
-0x48615C89  SetSeqSongNo	; = 0x48454A7D, 9 insns
 0x48615D87  seq_anoff_op	; = 0x48454B7B, 10 insns
 0x48615D9D  sqpstp_op	; = 0x48454B91, 15 insns
 0x4861602B  SeqPlayChk	; = 0x48454E60, 16 insns
@@ -97,7 +98,6 @@
 0x486D3DC1  fmmformat	; = 0x48532AEF, 14 insns
 0x486D4F8C  FmmSlideComp	; = 0x48533CBA, 70 insns
 0x486D522E  FmmSlideDecomp	; = 0x48533F5C, 163 insns
-0x486D5390  ZArenaReset	; = 0x485340BE, 19 insns
 0x486D53EC  ZArenaAlloc	; = 0x4853411A, 55 insns
 0x486D546F  ZArenaFree	; = 0x4853419D, 49 insns
 0x486E812A  LoadSmf	; = 0x485466DE, 12 insns
@@ -163,7 +163,6 @@
 0x4870F89F  sdfmdopen	; = 0x48565CD6, 19 insns
 0x4870F90E  sdfmmkdir	; = 0x48565D45, 24 insns
 0x4870F94D  sdfmpath	; = 0x48565D84, 14 insns
-0x487105ED  SdUiBusyEnd	; = 0x48551902, 8 insns
 0x4871060B  SdCardInsertMsgHandler	; = 0x48551920, 10 insns
 0x48710D7B  SdUiMountGateCheck	; = 0x4855219C, 14 insns
 0x48710DA2  SdMountBusyCheck	; = 0x485521C3, 15 insns
@@ -172,13 +171,10 @@
 0x4871F4A2  SdAudSongIndexSet	; = 0x48573228, 11 insns
 0x4871F4C2  SdAudListIndexSetClamped	; = 0x48573248, 22 insns
 0x4871F501  SdSndSongIndexSet	; = 0x48573287, 11 insns
-0x4871F56A  SdSndPlayChIndexSetClamped	; = 0x485732EC, 10 insns
 0x4871F5CE  SdSndEditDefListIndexSet	; = 0x4857334E, 10 insns
 0x4871F5E9  SdSndEditCurEntryIndexSet	; = 0x48573369, 10 insns
 0x4871F604  SdSndEditCurListIndexSet	; = 0x48573384, 10 insns
-0x4871F629  SdSndEditMoveDirSet	; = 0x485733A9, 8 insns
 0x487252C3  SDModuleModeReq	; = 0x48578FED, 50 insns
-0x48725616  SdAudListEntryCountGet	; = 0x48579344, 8 insns
 0x50120000  LibF64Pow	; = 0x4C000000, 262 insns
 0x50120263  LibF64UnpackedToI32	; = 0x4C000263, 32 insns
 0x501202B3  LibF64ToI32	; = 0x4C0002B3, 8 insns
@@ -254,14 +250,6 @@
 0x5012C8A4  TgEffectRouteSelect	; = 0x4C008FA1, 23 insns
 0x5012C8F9  TgReverbPartsApply	; = 0x4C008FF6, 35 insns
 0x5012C992  TgEffectEnableReverb	; = 0x4C00908F, 13 insns
-0x5012C9C3  TgEffectEnableBit10	; = 0x4C0090C0, 11 insns
-0x5012C9EF  TgEffectEnableBit4	; = 0x4C0090EC, 11 insns
-0x5012CA18  TgGroupGainClass23Enable	; = 0x4C009115, 11 insns
-0x5012CA43  TgGroupGainParts13To1AEnable	; = 0x4C009140, 11 insns
-0x5012CA6E  TgEffectEnableMulti	; = 0x4C00916B, 11 insns
-0x5012CA9A  TgEffectEnableBit13	; = 0x4C009197, 11 insns
-0x5012CAC6  TgEffectEnableBit14	; = 0x4C0091C3, 11 insns
-0x5012CAF2  TgMasterVolumeSubEnable	; = 0x4C0091EF, 11 insns
 0x5012D17E  TgGlobalRampTick	; = 0x4C009837, 75 insns
 0x5012DCBB  TgDrawbarToneRecInit	; = 0x4C00A1F7, 51 insns
 0x5012DD17  TgPartDrawbarCapture	; = 0x4C00A253, 69 insns
@@ -288,7 +276,6 @@
 0x50131161  TgPartAuxRecPtr	; = 0x4C00C233, 15 insns
 0x50131189  TgPartAuxModRecPtr	; = 0x4C00C25B, 25 insns
 0x501311BB  TgPartAuxElemRecPtr	; = 0x4C00C28D, 25 insns
-0x501311F6  TgPartLocalEditRecPtr	; = 0x4C00C2C8, 8 insns
 0x50131208  TgPartLocalEditModRecPtr	; = 0x4C00C2DA, 16 insns
 0x50131227  TgPartLocalEditElemRecPtr	; = 0x4C00C2F9, 16 insns
 0x501312CE  TgPartAuxMod06Get	; = 0x4C00C3A0, 18 insns
@@ -355,24 +342,19 @@
 0x5013A838  TgNoteOnKitLayer	; = 0x4C03678A, 25 insns
 0x5013ADD9  TgVoiceSlotService	; = 0x4C036D3A, 38 insns
 0x5013C63A  TgPartEgRampInit	; = 0x4C011730, 38 insns
-0x5013C7F4  TgPartEgRampScaleACurve	; = 0x4C0118F5, 9 insns
-0x5013C9B1  TgPartEgRampScaleBCurve	; = 0x4C011ACE, 9 insns
 0x5013CD95  TgPartEgRampDispatchTick	; = 0x4C011EC9, 43 insns
 0x5013CE27  TgGlobalRegWriteB	; = 0x4C037037, 12 insns
 0x5013CEC2  TgVoiceRecordReset	; = 0x4C0370F3, 25 insns
-0x5013CEF2  TgVoiceRecordPtr	; = 0x4C037123, 8 insns
 0x5013D685  TgVoiceSendWordALevelSet	; = 0x4C0378B6, 12 insns
 0x5013D6A6  TgVoiceSendWordBLevelSet	; = 0x4C0378D7, 12 insns
 0x5013D8E9  TgVoiceEgRate89HiSet	; = 0x4C037B1A, 23 insns
 0x5013D919  TgVoiceEgRate89LoSet	; = 0x4C037B4A, 16 insns
 0x5013E3F6  TgPartElemLastSet	; = 0x4C012225, 20 insns
 0x5013E425  TgPartElemLastClear	; = 0x4C012254, 10 insns
-0x5013E43D  TgPartElemLastGet	; = 0x4C01226C, 8 insns
 0x5013F630  TgPartCtrlSenseKit	; = 0x4C013497, 78 insns
 0x501408FC  TgPartToneProgramGet	; = 0x4C0384C4, 9 insns
 0x50140911  TgPartToneBankLoGet	; = 0x4C0384D9, 9 insns
 0x50140926  TgPartToneBankHiGet	; = 0x4C0384EE, 9 insns
-0x5014093B  TgPartToneDescPtr	; = 0x4C038503, 8 insns
 0x5014094D  TgPartToneIsTableClass	; = 0x4C038515, 15 insns
 0x501409C5  TgPartVoiceRecFetchSel	; = 0x4C03858D, 25 insns
 0x50140A65  TgPartVoiceRecFetchIdxSel	; = 0x4C03862D, 28 insns
@@ -393,7 +375,6 @@
 0x50142A51  TgPartToneModSetupDispatch	; = 0x4C03A65B, 14 insns
 0x50142AE8  TgPartProgramSet	; = 0x4C03A6F2, 39 insns
 0x50142B51  TgPartProgramInitAll	; = 0x4C03A75B, 15 insns
-0x50142B6F  TgActiveHighWaterUpdate	; = 0x4C014784, 8 insns
 0x50142BEE  TgNodeRingSeed	; = 0x4C03A779, 10 insns
 0x50142C02  TgNodeRingInsert	; = 0x4C03A78D, 17 insns
 0x50142C21  TgVoiceNodeToClassRing	; = 0x4C03A7AC, 50 insns
@@ -419,13 +400,9 @@
 0x50143E95  M3BufferOut	; = 0x4C014E10, 20 insns
 0x5014405A  M3SendProcess	; = 0x4C014FD5, 30 insns
 0x5014421B  M3SendProcessMidi	; = 0x4C015196, 12 insns
-0x50153476  PanelFifoPushByte	; = 0x484AD5AE, 27 insns
-0x501534A7  PanelFifoPopByte	; = 0x484AD5DF, 28 insns
-0x501534D6  PanelFifoFreeCount	; = 0x484AD60E, 8 insns
 0x50159961  PanelLinkRxRearm	; = 0x484ACE42, 23 insns
 0x5015D3CD  Midi1RxIsr	; = 0x484B1E86, 49 insns
 0x5015D57E  Midi2RxIsr	; = 0x484B2037, 107 insns
-0x5015DBAC  MidiBaudTimerSetup	; = 0x484B2691, 11 insns
 0x5016F7F7  DirPlayRx	; = 0x484C464C, 25 insns
 0x50171414  StyleBuiltinNameTableInit	; = 0x484332F9, 11 insns
 0x50171575  StyleNameCommit	; = 0x484334A4, 52 insns
@@ -495,9 +472,7 @@
 0x50183DFD  TempoClkStopNow	; = 0x4844702F, 19 insns
 0x50183E2D  TempoClkBeatStopRequest	; = 0x4844705F, 14 insns
 0x50183E52  TempoTick96Isr	; = 0x48447084, 197 insns
-0x501845A1  Tm5TempoTimerStart	; = 0x484477D3, 10 insns
 0x501845D7  Tm5TempoIsrRegister	; = 0x48447809, 20 insns
-0x50184615  TempoTimerInit	; = 0x48447847, 8 insns
 0x5018463A  TempoBpmReloadWrite	; = 0x4844786C, 15 insns
 0x5018465F  TempoReloadFromInterval	; = 0x48447891, 21 insns
 0x501846B5  TempoSyncD001Set	; = 0x484478E7, 11 insns

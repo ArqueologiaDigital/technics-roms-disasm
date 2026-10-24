@@ -9,4 +9,4 @@
 0x4840000A  _vector_0a      ; second vector jmp, at the same offset as the KN7000's
 ;
 ; ---- start-up ----------------------------------------------------------------
-0x48705BDF  crt0_start      ; _reset's target: ports + memory controller (0x32000020..0x32000042), sp = 0x5006908C, clears 0x50006E88 (+0x189178) and 0x502B8000 (+0x148000), copies .data 0x485DD334 -> 0x50000010 (0x6E78 bytes), writes the jmp vectors at 0x90000000/0x90000006, then calls 0x48705883 and jumps to 0x48728591
+0x48705BDF  crt0_start      ; _reset's target: ports + memory controller (0x32000020..0x32000042), sp = 0x5006908C, clears 0x50006E88 (+0x189178) and 0x502B8000 (+0x148000), copies .data 0x485DD334 -> 0x50000010 (0x6E78 bytes), writes the jmp vectors at 0x90000000/0x90000006, then calls func_4870587E_entry and jumps to func_48728591

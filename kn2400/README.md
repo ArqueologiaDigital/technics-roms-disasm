@@ -82,12 +82,15 @@ to RAM has not been found: crt0 copies only `.data`, `0x6e78` bytes from `0x485d
   data. `../kn7000/notes/sibling-symbol-probes/whole_image_pairings.py` produces these figures;
   its README has the command and the output.
 - `kn2400_manual.sym` holds names recovered by hand: `_reset`, `_vector_0a`, `crt0_start`.
-- `kn2400_ported.sym` (`make ported-names`, generated) holds 512 names carried over from the
+- `kn2400_ported.sym` (`make ported-names`, generated) holds 485 names carried over from the
   KN7000 (program 941). `../kn7000/tools/port_names_by_code.py` carries a name when one of
   this image's unnamed entries is the same code as a routine the KN7000's symbol files name:
-  the same instructions from the entry to the first return, with addresses masked out,
-  at least 8 of them, and a unique match on both sides. Each row records the KN7000 address
-  it came from.
+  the same instructions from the entry to the first return, with every number of 0x10000 or
+  more masked out (addresses, and MILK message codes, which are renumbered between models).
+  At least 8 of those instructions must have nothing masked, and the match must be unique among
+  all of the KN7000's routine starts (every `movm` prologue and call target, named or not) and
+  among this image's entries. Each row records the KN7000 address it came from; the file's
+  header counts what was not carried.
 - `src/labels.inc` is generated with the source. It holds every other label the source defines,
   so that `kn7asm` resolves each reference in one pass and checks each label against its
   `.equ`. It holds these kinds of label:
@@ -104,7 +107,8 @@ Its header describes the method. In short:
 1. Every named entry, every call target, and the functions that sit back to back after them
    are decoded and walked by control flow.
 2. Only code a traced path reaches becomes instructions, re-encoded by `mn10300_asm` and
-   compared with the image. Everything else stays `.incbin_range` from `baserom/`, so data is
+   compared with the image. The code halves of the 69 MILK reflection tables in the data are
+   `.long` rows of names. Everything else stays `.incbin_range` from `baserom/`, so data is
    never spelled as instructions.
 3. An instruction the encoder spells differently becomes a `.byte` escape with the disassembly
    beside it. These are the compiler's non-minimal `call` / `or` forms and the `udf*`
@@ -112,13 +116,18 @@ Its header describes the method. In short:
 
 The figures from `notes/conversion-stats.txt`, which the generator writes:
 
-| measure                      | value                                 |
-|------------------------------|---------------------------------------|
-| entries                      | 15,797 (3,471 named, 12,326 `func_`)  |
-| bytes emitted as code        | 1,759,156: 98.88% of the code ranges  |
-| instructions                 | 657,260, plus 389 `.byte` escapes     |
-| local branch labels          | 54,871                                |
-| code-range bytes left binary | 19,986, in 377 `.incbin_range` pieces |
+`named` counts the independent names (the reflection-table, manual and ported files);
+`derived` counts the `<name>_entry` register-save labels of named functions, which take their
+name from the function. `python3 ../kn7000/tools/stats_table_md.py notes/conversion-stats.txt`
+prints the table.
+
+| measure                      | value                                                            |
+|------------------------------|------------------------------------------------------------------|
+| entries                      | 15,797 (2,765 named, 673 derived `<name>_entry`, 12,359 `func_`) |
+| bytes emitted as code        | 1,759,156: 98.91% of the code-range bytes                        |
+| instructions                 | 657,260, plus 389 `.byte` escapes                                |
+| local branch labels          | 54,871                                                           |
+| code-range bytes left binary | 19,350, in 376 `.incbin_range` pieces                            |
 
 Most of the remaining code-range bytes are short stretches no traced path enters, such as switch
 cases reached only through RAM-linked jump tables and handlers reached only through tables of
@@ -126,8 +135,9 @@ non-`movm` code pointers.
 
 ## Open work
 
-- Names: 12,326 entries are still `func_<ADDR>`. `make ported-names` carries only exact,
-  unique matches. Routines that differ slightly from their KN7000 versions need another method.
+- Names: 12,359 entries are still `func_<ADDR>`. `make ported-names` carries only exact,
+  unique, non-trivial matches. Routines that differ slightly from their KN7000 versions need
+  another method.
 - Reflection tables whose procedures are in the RAM-linked range: `gen_symbols.py` assumes one
   link base, so it pairs none of them.
 - RAM, I/O and data addresses are still numbers in the source.

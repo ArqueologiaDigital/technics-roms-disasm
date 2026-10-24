@@ -31,10 +31,11 @@ BASE     := 0x48400000
 ROM_SHA1 := 39163ea892baf8ad11419c29fe58cc536bef9ca7
 # File-offset ranges that hold code (LO:HI, or LO:HI:CPU when the range is linked
 # for another address than its flash one): the boot vectors; the code linked for
-# flash, from the MILK kernel to 0x3285be; and the code linked for work RAM at
+# flash, from the MILK kernel (after the data, which ends with the MILK banner and
+# a table of words at 0x1e41c8-0x1e427c) to 0x3285be; and the code linked for work RAM at
 # 0x50120000, which runs from 0x3285be to the 24-byte trailer at the end of the
 # image (README.md, "Layout"). The data comes first in this image.
-CODE     := --code 0x0:0x10 --code 0x1e4000:0x3285be --code 0x3285be:0x3965bb:0x50120000
+CODE     := --code 0x0:0x10 --code 0x1e427c:0x3285be --code 0x3285be:0x3965bb:0x50120000
 
 .PHONY: all baserom build verify ported-names verify-kn2600 symbols program-src clean distclean
 .DELETE_ON_ERROR:
@@ -88,7 +89,7 @@ verify-kn2600: baserom/$(ROM) | baserom/.dir
 # would name the text "EV_DISPPADRUN") and a menu table pointing into data.
 symbols kn2400.sym src/symbols.inc: $(TOOLS)/gen_symbols.py baserom/$(ROM)
 	$(PYTHON) $(TOOLS)/gen_symbols.py baserom/$(ROM) --program-base 0x48400000 \
-	    --code-range 0x1e4000:0x3285be --no-manual \
+	    --code-range 0x1e427c:0x3285be --no-manual \
 	    --title "KN2400/KN2600 program-image symbols recovered from the MILK toolkit" \
 	    --inc-title "KN2400/KN2600 symbols" --sym kn2400.sym --inc src/symbols.inc
 
@@ -104,7 +105,8 @@ program-src: $(TOOLS)/gen_image_s.py $(MODEL).sym $(MODEL)_manual.sym $(MODEL)_p
 # ---- names carried over from the KN7000 where a routine is the same code ---------
 # port_names_by_code.py compares each unnamed entry with the KN7000 (program 941)
 # routines its symbol files name, relocation-masked, entry to first return; only
-# unique matches of >= 8 instructions count (the tool's header has the rule). It
+# matches with >= 8 unmasked instructions, unique among all the KN7000's routine
+# starts and among this image's entries, count (the tool's header has the rule). It
 # reads the KN7000 reference image (../kn7000: make -C ../kn7000 baserom) and this
 # tree's generated labels; run `make program-src` again afterwards. The committed
 # $(MODEL)_ported.sym is the result, so the build does not need the KN7000 image.

@@ -12,7 +12,7 @@
 .include "src/labels.inc"
 
 	.byte	0x58, 0x41, 0x50, 0x52	# "XAPR"
-	.long	0x978b655c
+	.long	XaprTrailerSignature
 	.long	func_9783DBC9
 	.long	func_9783DC78
 	.long	func_97837743
@@ -99609,6 +99609,9 @@ func_9783DE8A_L49:
 	.long	KssCopySMFToHDScreen
 	.long	SmfFilterFunc
 	.long	KssSelectListTestFunc
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0b63c0, 0x0c0000
+.incbin_range "baserom/hdsx3_extapr.rom", 0x0b63c0, 0x0b655c
+XaprTrailerSignature:
+	.byte	0x58, 0x41, 0x50, 0x52	# "XAPR"
+.incbin_range "baserom/hdsx3_extapr.rom", 0x0b6560, 0x0c0000
 
 .org 0x0c0000

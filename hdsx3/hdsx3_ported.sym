@@ -3,7 +3,9 @@
 ; how a name qualifies. Columns: B address, name, ; the A address it was carried
 ; from and the number of instructions that matched (entry to first return).
 ;
-; 29 names carried (3600 candidates in A, 538 unnamed entries in B, 0 skipped: the name is taken in B)
+; 29 names carried (3600 candidates in A, 14818 routine starts in A, 538 unnamed entries in B)
+; not carried: 562 A signatures with fewer than 8 unmasked instructions; 0 with a twin among A's routine starts;
+; 0 whose name is taken in B
 0x97807DCA  LibF64ToI16	; = 0x4C001624, 9 insns
 0x97807DE3  LibF64UnpackedToI32	; = 0x4C000263, 32 insns
 0x97807E33  LibF64ToI32	; = 0x4C0002B3, 8 insns

@@ -89,7 +89,7 @@ gate-kn7000:
 # kn6500/ (v1.3), hdsx3/ (the KN6000/KN6500 expansion board's XAPR plug-in,
 # update sx6-113). Their reference images (*/baserom/, not committed) are
 # regenerated from the manufacturer's update installers in the private
-# ../../ca-software-mirror (CA_MIRROR=...), and each Makefile records the SHA-1.
+# ../../ca-software-mirror/files (CA_MIRROR=...), and each Makefile records the SHA-1.
 #
 #   make kn2400 ...       assemble the image
 #   make gate-kn2400 ...  its byte-identity gate (gate-kn2400 also checks that the

@@ -34,8 +34,9 @@ ROM_SHA1 := 88699a7e9584e0c30c175babd1482e5aa586ad3d
 # File-offset ranges that hold code (README.md, "Layout").
 CODE     := --code 0x80:0x3ded6
 SYMRANGE := --code-range 0x80:0x3ded6
-# The XAPR header: the signature, then the entry vectors.
-TYPED    := --text 0x0:0x4 --long-table 0x4:0x80 --reflection-tables
+# The XAPR header: the signature, then the entry vectors; and the second XAPR
+# signature, at the end of the image, which header word +0x04 points at.
+TYPED    := --text 0x0:0x4 --long-table 0x4:0x80 --text 0xb655c:0xb6560 --reflection-tables
 
 .PHONY: all baserom build verify ported-names symbols program-src clean distclean
 .DELETE_ON_ERROR:
@@ -86,7 +87,8 @@ program-src: $(TOOLS)/gen_image_s.py $(MODEL).sym $(MODEL)_manual.sym $(MODEL)_p
 # ---- names carried over from the KN7000 where a routine is the same code ---------
 # port_names_by_code.py compares each unnamed entry with the KN7000 (program 941)
 # routines its symbol files name, relocation-masked, entry to first return; only
-# unique matches of >= 8 instructions count (the tool's header has the rule). It
+# matches with >= 8 unmasked instructions, unique among all the KN7000's routine
+# starts and among this image's entries, count (the tool's header has the rule). It
 # reads the KN7000 reference image (../kn7000: make -C ../kn7000 baserom) and this
 # tree's generated labels; run `make program-src` again afterwards. The committed
 # $(MODEL)_ported.sym is the result, so the build does not need the KN7000 image.
