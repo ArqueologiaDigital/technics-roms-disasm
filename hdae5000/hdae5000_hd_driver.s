@@ -1274,7 +1274,7 @@ HDAE5000_SongScreen_Refresh:	; 0x283B68 (4737 bytes)
 	ld	(xsp+24), c
 	ld	(xsp+26), a
 	cp	(xsp+24), 0x00
-	jrl nz, .LHRW_3c5d                     ; [7e e4 00] jrl NZ,0x283c5d
+	jrl nz, HDAE5000_SongScreen_Refresh_Join                     ; [7e e4 00] jrl NZ,0x283c5d
 	pushw 0x0020
 	pushw 0x0000
 	lda xwa, (0x22a038:24)
@@ -1343,13 +1343,13 @@ HDAE5000_SongScreen_Refresh:	; 0x283B68 (4737 bytes)
 	ld	xbc, EVT_PARA_DRAW
 	ld	xde, 0xffffffff
 	call	(xhl)
-.LHRW_3c5d:
+HDAE5000_SongScreen_Refresh_Join:
 	cp	(xsp+24), 0x00
-	jrl nz, .LHRW_3d45                     ; [7e e1 00] jrl NZ,0x283d45
+	jrl nz, HDAE5000_SongScreen_Refresh_Join3                     ; [7e e1 00] jrl NZ,0x283d45
 	ld	iz, 0:i3
 	cp	iz, 0x0010
-	jr ge, .LHRW_3ce5                      ; [69 79] jr GE,0x283ce5
-.LHRW_3c6c:
+	jr ge, HDAE5000_SongScreen_Refresh_Join2                      ; [69 79] jr GE,0x283ce5
+HDAE5000_SongScreen_Refresh_Loop:
 	pushw 0x001c
 	lda xwa, (HDAE5000_Str_Chr3A2020202020:24)
 	push xwa
@@ -1394,8 +1394,8 @@ HDAE5000_SongScreen_Refresh:	; 0x283B68 (4737 bytes)
 	lda	xsp, (xsp+10)
 	inc	1, iz
 	cp	iz, 0x0010
-	jr lt, .LHRW_3c6c                      ; [61 87] jr LT,0x283c6c
-.LHRW_3ce5:
+	jr lt, HDAE5000_SongScreen_Refresh_Loop                      ; [61 87] jr LT,0x283c6c
+HDAE5000_SongScreen_Refresh_Join2:
 	ld	a, (xsp+26)
 	extz wa
 	sla	wa, 0x02
@@ -1421,13 +1421,13 @@ HDAE5000_SongScreen_Refresh:	; 0x283B68 (4737 bytes)
 	ld	xbc, EVT_PARA_DRAW
 	ld	xde, 0xffffffff
 	call	(xhl)
-.LHRW_3d45:
+HDAE5000_SongScreen_Refresh_Join3:
 	ld	wa, (HDAE5000_RAM_CurDir:24)
 	ld	bc, (HDAE5000_RAM_CurSong:24)
 	call HDAE5000_Song_PartMask
 	ld	wa, hl
 	cp	wa, 0xffff
-	jr z, .LHRW_3d7d                       ; [66 22] jr Z,0x283d7d
+	jr z, HDAE5000_SongScreen_Refresh_Skip                       ; [66 22] jr Z,0x283d7d
 	ld	a, (xsp+26)
 	extz wa
 	sla	wa, 0x02
@@ -1437,8 +1437,8 @@ HDAE5000_SongScreen_Refresh:	; 0x283B68 (4737 bytes)
 	ld	de, (HDAE5000_RAM_CurSong:24)
 	pushw hl                                ; push HL
 	calr	HDAE5000_PartList_Build
-	jr t, .LHRW_3d9b                       ; [68 1e] jr T,0x283d9b
-.LHRW_3d7d:
+	jr t, HDAE5000_SongScreen_Refresh_Epilogue                       ; [68 1e] jr T,0x283d9b
+HDAE5000_SongScreen_Refresh_Skip:
 	ld	a, (xsp+26)
 	extz wa
 	sla	wa, 0x02
@@ -1448,7 +1448,7 @@ HDAE5000_SongScreen_Refresh:	; 0x283B68 (4737 bytes)
 	ldw	bc, 0xffff
 	ldw	de, 0xffff
 	calr	HDAE5000_PartList_Build
-.LHRW_3d9b:
+HDAE5000_SongScreen_Refresh_Epilogue:
 	popw iz                                 ; pop IZ
 	lda	xsp, (xsp+26)
 	ret
@@ -1570,20 +1570,20 @@ HDAE5000_FILE_LOAD_Screen_Ev01EA0002:
 	call HDAE5000_Song_PartMask
 	ld	wa, hl
 	cp	wa, 0xffff
-	jr z, .LHRW_3f62                       ; [66 14] jr Z,0x283f62
+	jr z, HDAE5000_FILE_LOAD_Screen_Ev01EA0002_Skip                       ; [66 14] jr Z,0x283f62
 	lda xwa, (HDAE5000_RAM_SaveOptions:24)
 	pushw 0x0002
 	ld	bc, hl
 	lda xde, (HDAE5000_TypeSel_TemplateBlank:24)
 	calr	HDAE5000_TypeSel_Init
-	jr t, .LHRW_3f74                       ; [68 12] jr T,0x283f74
-.LHRW_3f62:
+	jr t, HDAE5000_FILE_LOAD_Screen_Ev01EA0002_Join                       ; [68 12] jr T,0x283f74
+HDAE5000_FILE_LOAD_Screen_Ev01EA0002_Skip:
 	lda xwa, (HDAE5000_RAM_SaveOptions:24)
 	pushw 0x0002
 	lda xde, (HDAE5000_TypeSel_TemplateBlank:24)
 	ld	bc, 0:i3
 	calr	HDAE5000_TypeSel_Init
-.LHRW_3f74:
+HDAE5000_FILE_LOAD_Screen_Ev01EA0002_Join:
 	ld	wa, 0:i3
 	ld	bc, 1:i3
 	calr	HDAE5000_SongScreen_Refresh
@@ -1598,21 +1598,21 @@ HDAE5000_AttenDelDirSwCatch:
 	ld	xiz, xwa
 	ld	xwa, xbc
 	cp	xwa, EVT_SW_IN
-	jr z, .LHRW_3ff0                       ; [66 64] jr Z,0x283ff0
+	jr z, HDAE5000_AttenDelDirSwCatch_OnSwIn                       ; [66 64] jr Z,0x283ff0
 	cp	xwa, EVT_DRAW
-	jr z, .LHRW_3fb7                       ; [66 23] jr Z,0x283fb7
+	jr z, HDAE5000_AttenDelDirSwCatch_OnDraw                       ; [66 23] jr Z,0x283fb7
 	cp	xwa, EVT_ARE_YOU_CLASS_PROC
-	jr z, .LHRW_3fb2                       ; [66 16] jr Z,0x283fb2
+	jr z, HDAE5000_AttenDelDirSwCatch_OnAreYouClassProc                       ; [66 16] jr Z,0x283fb2
 	ld	xwa, xiz
 	ld	xhl, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xhl, (xhl + WS_RootFnTable)
 	ld_sril	xix, (xhl + RootFn_InheritedProc)
 	call	(xix)
-	jrl t, .LHRW_40a1                      ; [78 ef 00] jrl T,0x2840a1
-.LHRW_3fb2:
+	jrl t, HDAE5000_AttenDelDirSwCatch_Epilogue                      ; [78 ef 00] jrl T,0x2840a1
+HDAE5000_AttenDelDirSwCatch_OnAreYouClassProc:
 	ld	xhl, 1:i3
-	jrl t, .LHRW_40a1                      ; [78 ea 00] jrl T,0x2840a1
-.LHRW_3fb7:
+	jrl t, HDAE5000_AttenDelDirSwCatch_Epilogue                      ; [78 ea 00] jrl T,0x2840a1
+HDAE5000_AttenDelDirSwCatch_OnDraw:
 	ld	xwa, xiz
 	ld	xhl, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xhl, (xhl + WS_RootFnTable)
@@ -1628,8 +1628,8 @@ HDAE5000_AttenDelDirSwCatch:
 	ld	xbc, EVT_PARA_DRAW
 	call	(xhl)
 	ld	xhl, 0:i3
-	jrl t, .LHRW_40a1                      ; [78 b1 00] jrl T,0x2840a1
-.LHRW_3ff0:
+	jrl t, HDAE5000_AttenDelDirSwCatch_Epilogue                      ; [78 b1 00] jrl T,0x2840a1
+HDAE5000_AttenDelDirSwCatch_OnSwIn:
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_RootFnTable)
 	ld_sril	xix, (xwa + RootFn_SendEvent)
@@ -1637,14 +1637,14 @@ HDAE5000_AttenDelDirSwCatch:
 	ld	xbc, EVT_MAKE_EDIT_SW_ID
 	call	(xix)
 	cp	xhl, 0x00000007
-	jr z, .LHRW_4082                       ; [66 6f] jr Z,0x284082
+	jr z, HDAE5000_AttenDelDirSwCatch_Skip                       ; [66 6f] jr Z,0x284082
 	cp	xhl, 0x00000006
-	jr z, .LHRW_4082                       ; [66 67] jr Z,0x284082
+	jr z, HDAE5000_AttenDelDirSwCatch_Skip                       ; [66 67] jr Z,0x284082
 	cp	xhl, 0x00000001
-	jr z, .LHRW_4027                       ; [66 04] jr Z,0x284027
+	jr z, HDAE5000_AttenDelDirSwCatch_Join                       ; [66 04] jr Z,0x284027
 	or xhl, xhl
-	jr nz, .LHRW_409f                      ; [6e 78] jr NZ,0x28409f
-.LHRW_4027:
+	jr nz, HDAE5000_AttenDelDirSwCatch_Done                      ; [6e 78] jr NZ,0x28409f
+HDAE5000_AttenDelDirSwCatch_Join:
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_RootFnTable)
 	ld_sril	xhl, (xwa + RootFn_SendEvent)
@@ -1669,8 +1669,8 @@ HDAE5000_AttenDelDirSwCatch:
 	ld	xbc, EVT_SHOW
 	ld	xde, 0:i3
 	call	(xhl)
-	jr t, .LHRW_409f                       ; [68 1d] jr T,0x28409f
-.LHRW_4082:
+	jr t, HDAE5000_AttenDelDirSwCatch_Done                       ; [68 1d] jr T,0x28409f
+HDAE5000_AttenDelDirSwCatch_Skip:
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_RootFnTable)
 	ld	xhl, (xwa + RootFn_PostEvent)
@@ -1678,9 +1678,9 @@ HDAE5000_AttenDelDirSwCatch:
 	ld	xbc, EVT_SHOW
 	ld	xde, 0:i3
 	call	(xhl)
-.LHRW_409f:
+HDAE5000_AttenDelDirSwCatch_Done:
 	ld	xhl, 0:i3
-.LHRW_40a1:
+HDAE5000_AttenDelDirSwCatch_Epilogue:
 	pop xiz
 	ret
 
@@ -1690,21 +1690,21 @@ HDAE5000_AttenDelFileSwCatch:
 	ld	xiz, xwa
 	ld	xwa, xbc
 	cp	xwa, EVT_SW_IN
-	jr z, .LHRW_4114                       ; [66 64] jr Z,0x284114
+	jr z, HDAE5000_AttenDelFileSwCatch_OnSwIn                       ; [66 64] jr Z,0x284114
 	cp	xwa, EVT_DRAW
-	jr z, .LHRW_40db                       ; [66 23] jr Z,0x2840db
+	jr z, HDAE5000_AttenDelFileSwCatch_OnDraw                       ; [66 23] jr Z,0x2840db
 	cp	xwa, EVT_ARE_YOU_CLASS_PROC
-	jr z, .LHRW_40d6                       ; [66 16] jr Z,0x2840d6
+	jr z, HDAE5000_AttenDelFileSwCatch_OnAreYouClassProc                       ; [66 16] jr Z,0x2840d6
 	ld	xwa, xiz
 	ld	xhl, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xhl, (xhl + WS_RootFnTable)
 	ld_sril	xix, (xhl + RootFn_InheritedProc)
 	call	(xix)
-	jrl t, .LHRW_41e3                      ; [78 0d 01] jrl T,0x2841e3
-.LHRW_40d6:
+	jrl t, HDAE5000_AttenDelFileSwCatch_Epilogue                      ; [78 0d 01] jrl T,0x2841e3
+HDAE5000_AttenDelFileSwCatch_OnAreYouClassProc:
 	ld	xhl, 1:i3
-	jrl t, .LHRW_41e3                      ; [78 08 01] jrl T,0x2841e3
-.LHRW_40db:
+	jrl t, HDAE5000_AttenDelFileSwCatch_Epilogue                      ; [78 08 01] jrl T,0x2841e3
+HDAE5000_AttenDelFileSwCatch_OnDraw:
 	ld	xwa, xiz
 	ld	xhl, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xhl, (xhl + WS_RootFnTable)
@@ -1720,8 +1720,8 @@ HDAE5000_AttenDelFileSwCatch:
 	ld	xbc, EVT_PARA_DRAW
 	call	(xhl)
 	ld	xhl, 0:i3
-	jrl t, .LHRW_41e3                      ; [78 cf 00] jrl T,0x2841e3
-.LHRW_4114:
+	jrl t, HDAE5000_AttenDelFileSwCatch_Epilogue                      ; [78 cf 00] jrl T,0x2841e3
+HDAE5000_AttenDelFileSwCatch_OnSwIn:
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_RootFnTable)
 	ld_sril	xix, (xwa + RootFn_SendEvent)
@@ -1729,14 +1729,14 @@ HDAE5000_AttenDelFileSwCatch:
 	ld	xbc, EVT_MAKE_EDIT_SW_ID
 	call	(xix)
 	cp	xhl, 0x00000007
-	jrl z, .LHRW_41c4                      ; [76 8c 00] jrl Z,0x2841c4
+	jrl z, HDAE5000_AttenDelFileSwCatch_Skip                      ; [76 8c 00] jrl Z,0x2841c4
 	cp	xhl, 0x00000006
-	jrl z, .LHRW_41c4                      ; [76 83 00] jrl Z,0x2841c4
+	jrl z, HDAE5000_AttenDelFileSwCatch_Skip                      ; [76 83 00] jrl Z,0x2841c4
 	cp	xhl, 0x00000001
-	jr z, .LHRW_414e                       ; [66 05] jr Z,0x28414e
+	jr z, HDAE5000_AttenDelFileSwCatch_Join                       ; [66 05] jr Z,0x28414e
 	or xhl, xhl
-	jrl nz, .LHRW_41e1                     ; [7e 93 00] jrl NZ,0x2841e1
-.LHRW_414e:
+	jrl nz, HDAE5000_AttenDelFileSwCatch_Done                     ; [7e 93 00] jrl NZ,0x2841e1
+HDAE5000_AttenDelFileSwCatch_Join:
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_RootFnTable)
 	ld_sril	xhl, (xwa + RootFn_SendEvent)
@@ -1767,8 +1767,8 @@ HDAE5000_AttenDelFileSwCatch:
 	ld	xbc, EVT_SHOW
 	ld	xde, 0:i3
 	call	(xhl)
-	jr t, .LHRW_41e1                       ; [68 1d] jr T,0x2841e1
-.LHRW_41c4:
+	jr t, HDAE5000_AttenDelFileSwCatch_Done                       ; [68 1d] jr T,0x2841e1
+HDAE5000_AttenDelFileSwCatch_Skip:
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_RootFnTable)
 	ld	xhl, (xwa + RootFn_PostEvent)
@@ -1776,16 +1776,16 @@ HDAE5000_AttenDelFileSwCatch:
 	ld	xbc, EVT_SHOW
 	ld	xde, 0:i3
 	call	(xhl)
-.LHRW_41e1:
+HDAE5000_AttenDelFileSwCatch_Done:
 	ld	xhl, 0:i3
-.LHRW_41e3:
+HDAE5000_AttenDelFileSwCatch_Epilogue:
 	pop xiz
 	ret
 
 HDAE5000_FileLoadSwCatch:
 	; registered as "FileLoadSwCatch" in HDAE5000_ScreenProc_Table
 	cp	xbc, EVT_SW_IN
-	jr nz, .LHRW_4267                      ; [6e 7a] jr NZ,0x284267
+	jr nz, HDAE5000_FileLoadSwCatch_Done                      ; [6e 7a] jr NZ,0x284267
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_RootFnTable)
 	ld_sril	xix, (xwa + RootFn_SendEvent)
@@ -1793,10 +1793,10 @@ HDAE5000_FileLoadSwCatch:
 	ld	xbc, EVT_MAKE_EDIT_SW_ID
 	call	(xix)
 	cp	xhl, 0x00000009
-	jr z, .LHRW_4218                       ; [66 08] jr Z,0x284218
+	jr z, HDAE5000_FileLoadSwCatch_Join                       ; [66 08] jr Z,0x284218
 	cp	xhl, 0x00000008
-	jr nz, .LHRW_4267                      ; [6e 4f] jr NZ,0x284267
-.LHRW_4218:
+	jr nz, HDAE5000_FileLoadSwCatch_Done                      ; [6e 4f] jr NZ,0x284267
+HDAE5000_FileLoadSwCatch_Join:
 	pushw 0x0000
 	ld	xwa, HDAE5000_OBJ_SELECT_FILE
 	push xwa
@@ -1805,11 +1805,11 @@ HDAE5000_FileLoadSwCatch:
 	ld	de, (HDAE5000_RAM_SaveOptions:24)
 	calr	HDAE5000_LoadSongWithUi
 	cp	(HDAE5000_RAM_LyricJump:24), 2
-	jr nz, .LHRW_4267                      ; [6e 2c] jr NZ,0x284267
+	jr nz, HDAE5000_FileLoadSwCatch_Done                      ; [6e 2c] jr NZ,0x284267
 	ld	wa, (HDAE5000_RAM_SaveOptions:24)
 	and	wa, 0x0100
 	cp	wa, 0x0100
-	jr nz, .LHRW_4267                      ; [6e 1d] jr NZ,0x284267
+	jr nz, HDAE5000_FileLoadSwCatch_Done                      ; [6e 1d] jr NZ,0x284267
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_RootFnTable)
 	ld	xhl, (xwa + RootFn_ApPostEvent)
@@ -1817,14 +1817,14 @@ HDAE5000_FileLoadSwCatch:
 	ld	xbc, EVT_SHOW
 	ld	xde, 0:i3
 	call	(xhl)
-.LHRW_4267:
+HDAE5000_FileLoadSwCatch_Done:
 	ld	xhl, 0:i3
 	ret
 
 HDAE5000_FILE_Naming_Screen:
 	; registered as "FILE_Naming_Screen" in HDAE5000_ScreenProc_Table
 	cp	xbc, EVT_SW_IN
-	jr nz, .LHRW_4295                      ; [6e 23] jr NZ,0x284295
+	jr nz, HDAE5000_FILE_Naming_Screen_Done                      ; [6e 23] jr NZ,0x284295
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_RootFnTable)
 	ld_sril	xix, (xwa + RootFn_SendEvent)
@@ -1832,8 +1832,8 @@ HDAE5000_FILE_Naming_Screen:
 	ld	xbc, EVT_MAKE_EDIT_SW_ID
 	call	(xix)
 	cp	xhl, 0x0000000b
-	jr z, .LHRW_4295                       ; [66 00] jr Z,0x284295
-.LHRW_4295:
+	jr z, HDAE5000_FILE_Naming_Screen_Done                       ; [66 00] jr Z,0x284295
+HDAE5000_FILE_Naming_Screen_Done:
 	ld	xhl, 0:i3
 	ret
 
@@ -1842,15 +1842,15 @@ HDAE5000_HDDNamingCheck:
 	push xiz
 	ld	xiz, xwa
 	cp	xbc, EVT_SW_IN
-	jr z, .LHRW_42fd                       ; [66 5a] jr Z,0x2842fd
+	jr z, HDAE5000_HDDNamingCheck_OnSwIn                       ; [66 5a] jr Z,0x2842fd
 	cp	xbc, EVT_GET_STRING_LENGTH
-	jr z, .LHRW_42f5                       ; [66 4a] jr Z,0x2842f5
+	jr z, HDAE5000_HDDNamingCheck_OnGetStringLength                       ; [66 4a] jr Z,0x2842f5
 	cp	xbc, EVT_GET_NAMING_MODE
-	jr z, .LHRW_42f0                       ; [66 3d] jr Z,0x2842f0
+	jr z, HDAE5000_HDDNamingCheck_OnGetNamingMode                       ; [66 3d] jr Z,0x2842f0
 	cp	xbc, EVT_SET_STRING
-	jr z, .LHRW_42da                       ; [66 1f] jr Z,0x2842da
+	jr z, HDAE5000_HDDNamingCheck_OnSetString                       ; [66 1f] jr Z,0x2842da
 	cp	xbc, EVT_GET_STRING
-	jrl nz, .LHRW_4469                     ; [7e a5 01] jrl NZ,0x284469
+	jrl nz, HDAE5000_HDDNamingCheck_Done                     ; [7e a5 01] jrl NZ,0x284469
 	pushw 0x001a
 	lda xwa, (0x23a04e:24)
 	push xwa
@@ -1858,8 +1858,8 @@ HDAE5000_HDDNamingCheck:
 	call HDAE5000_StrNCpy
 	lda	xsp, (xsp+10)
 	ld	xhl, xiz
-	jrl t, .LHRW_446b                      ; [78 91 01] jrl T,0x28446b
-.LHRW_42da:
+	jrl t, HDAE5000_HDDNamingCheck_Epilogue                      ; [78 91 01] jrl T,0x28446b
+HDAE5000_HDDNamingCheck_OnSetString:
 	pushw 0x001a
 	push xde
 	pushw 0x0023
@@ -1867,26 +1867,26 @@ HDAE5000_HDDNamingCheck:
 	call HDAE5000_StrNCpy
 	lda	xsp, (xsp+10)
 	ld	xhl, xiz
-	jrl t, .LHRW_446b                      ; [78 7b 01] jrl T,0x28446b
-.LHRW_42f0:
+	jrl t, HDAE5000_HDDNamingCheck_Epilogue                      ; [78 7b 01] jrl T,0x28446b
+HDAE5000_HDDNamingCheck_OnGetNamingMode:
 	ld	xhl, 0:i3
-	jrl t, .LHRW_446b                      ; [78 76 01] jrl T,0x28446b
-.LHRW_42f5:
+	jrl t, HDAE5000_HDDNamingCheck_Epilogue                      ; [78 76 01] jrl T,0x28446b
+HDAE5000_HDDNamingCheck_OnGetStringLength:
 	ld	xhl, 0x0000001a
-	jrl t, .LHRW_446b                      ; [78 6e 01] jrl T,0x28446b
-.LHRW_42fd:
+	jrl t, HDAE5000_HDDNamingCheck_Epilogue                      ; [78 6e 01] jrl T,0x28446b
+HDAE5000_HDDNamingCheck_OnSwIn:
 	cp	xde, 0x0000000b
-	jrl z, .LHRW_43e4                      ; [76 de 00] jrl Z,0x2843e4
+	jrl z, HDAE5000_HDDNamingCheck_Skip3                      ; [76 de 00] jrl Z,0x2843e4
 	cp	xde, 0x0000000a
-	jr z, .LHRW_4365                       ; [66 57] jr Z,0x284365
+	jr z, HDAE5000_HDDNamingCheck_Skip                       ; [66 57] jr Z,0x284365
 	cp	xde, 0x0000008a
-	jrl nz, .LHRW_4469                     ; [7e 52 01] jrl NZ,0x284469
+	jrl nz, HDAE5000_HDDNamingCheck_Done                     ; [7e 52 01] jrl NZ,0x284469
 	lda xwa, (0x22ac7e:24)
 	calr	HDAE5000_NameHistory_Recall
 	ld	xiz, xhl
 	ld	xwa, xiz
 	or xwa, xwa
-	jrl z, .LHRW_4469                      ; [76 41 01] jrl Z,0x284469
+	jrl z, HDAE5000_HDDNamingCheck_Done                      ; [76 41 01] jrl Z,0x284469
 	ld	xwa, xiz
 	push xwa
 	call HDAE5000_StrLen
@@ -1905,27 +1905,27 @@ HDAE5000_HDDNamingCheck:
 	ld	xwa, HDAE5000_OBJ_HddNamingWindow
 	ld	xbc, EVT_SET_STRING
 	call	(xhl)
-	jrl t, .LHRW_4469                      ; [78 04 01] jrl T,0x284469
-.LHRW_4365:
+	jrl t, HDAE5000_HDDNamingCheck_Done                      ; [78 04 01] jrl T,0x284469
+HDAE5000_HDDNamingCheck_Skip:
 	ld	wa, (HDAE5000_RAM_CurDir:24)
 	ld	bc, (HDAE5000_RAM_CurSong:24)
 	call HDAE5000_Song_PartMask
 	ld	wa, hl
 	cp	wa, 0xffff
-	jr nz, .LHRW_4390                      ; [6e 15] jr NZ,0x284390
+	jr nz, HDAE5000_HDDNamingCheck_Skip2                      ; [6e 15] jr NZ,0x284390
 	lda xwa, (HDAE5000_RAM_SaveOptions:24)
 	pushw 0x0002
 	lda xde, (HDAE5000_TypeSel_TemplateAllNo:24)
 	ldw	bc, 0x003f
 	calr	HDAE5000_TypeSel_Init
-	jr t, .LHRW_43a2                       ; [68 12] jr T,0x2843a2
-.LHRW_4390:
+	jr t, HDAE5000_HDDNamingCheck_Join                       ; [68 12] jr T,0x2843a2
+HDAE5000_HDDNamingCheck_Skip2:
 	lda xwa, (HDAE5000_RAM_SaveOptions:24)
 	pushw 0x0002
 	ld	bc, hl
 	lda xde, (HDAE5000_TypeSel_TemplateAllNo:24)
 	calr	HDAE5000_TypeSel_Init
-.LHRW_43a2:
+HDAE5000_HDDNamingCheck_Join:
 	lda xwa, (0x23a04e:24)
 	ld	xde, xwa
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
@@ -1941,8 +1941,8 @@ HDAE5000_HDDNamingCheck:
 	ld	xbc, EVT_SHOW
 	ld	xde, 0:i3
 	call	(xhl)
-	jrl t, .LHRW_4469                      ; [78 85 00] jrl T,0x284469
-.LHRW_43e4:
+	jrl t, HDAE5000_HDDNamingCheck_Done                      ; [78 85 00] jrl T,0x284469
+HDAE5000_HDDNamingCheck_Skip3:
 	lda xwa, (0x23a04e:24)
 	ld	xde, xwa
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
@@ -1952,12 +1952,12 @@ HDAE5000_HDDNamingCheck:
 	ld	xbc, EVT_GET_STRING
 	call	(xhl)
 	cp	(HDAE5000_RAM_WriteConfirm:24), 1
-	jr nz, .LHRW_4441                      ; [6e 33] jr NZ,0x284441
+	jr nz, HDAE5000_HDDNamingCheck_Skip4                      ; [6e 33] jr NZ,0x284441
 	ld	wa, (HDAE5000_RAM_CurDir:24)
 	ld	bc, (HDAE5000_RAM_CurSong:24)
 	call HDAE5000_Song_IsUsed
 	cp	hl, 0xffff
-	jr z, .LHRW_4441                       ; [66 1f] jr Z,0x284441
+	jr z, HDAE5000_HDDNamingCheck_Skip4                       ; [66 1f] jr Z,0x284441
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_RootFnTable)
 	ld	xhl, (xwa + RootFn_PostEvent)
@@ -1965,8 +1965,8 @@ HDAE5000_HDDNamingCheck:
 	ld	xbc, EVT_SHOW
 	ld	xde, 0:i3
 	call	(xhl)
-	jr t, .LHRW_4462                       ; [68 21] jr T,0x284462
-.LHRW_4441:
+	jr t, HDAE5000_HDDNamingCheck_Join2                       ; [68 21] jr T,0x284462
+HDAE5000_HDDNamingCheck_Skip4:
 	pushw 0x0023
 	pushw 0xa04e
 	pushw 0x0001
@@ -1976,13 +1976,13 @@ HDAE5000_HDDNamingCheck:
 	ld	bc, (HDAE5000_RAM_CurSong:24)
 	ld	de, (HDAE5000_RAM_SaveOptions:24)
 	calr	HDAE5000_SaveSongWithUi
-.LHRW_4462:
+HDAE5000_HDDNamingCheck_Join2:
 	ld	wa, 0:i3
 	ld	bc, 0:i3
 	calr	HDAE5000_SongScreen_Refresh
-.LHRW_4469:
+HDAE5000_HDDNamingCheck_Done:
 	ld	xhl, 0:i3
-.LHRW_446b:
+HDAE5000_HDDNamingCheck_Epilogue:
 	pop xiz
 	ret
 
@@ -1991,15 +1991,15 @@ HDAE5000_HDD_DIRNAMECheck:
 	push xiz
 	ld	xiz, xwa
 	cp	xbc, EVT_SW_IN
-	jr z, .LHRW_44d8                       ; [66 60] jr Z,0x2844d8
+	jr z, HDAE5000_HDD_DIRNAMECheck_OnSwIn                       ; [66 60] jr Z,0x2844d8
 	cp	xbc, EVT_GET_STRING_LENGTH
-	jr z, .LHRW_44d0                       ; [66 50] jr Z,0x2844d0
+	jr z, HDAE5000_HDD_DIRNAMECheck_OnGetStringLength                       ; [66 50] jr Z,0x2844d0
 	cp	xbc, EVT_GET_NAMING_MODE
-	jr z, .LHRW_44cb                       ; [66 43] jr Z,0x2844cb
+	jr z, HDAE5000_HDD_DIRNAMECheck_OnGetNamingMode                       ; [66 43] jr Z,0x2844cb
 	cp	xbc, EVT_SET_STRING
-	jr z, .LHRW_44af                       ; [66 1f] jr Z,0x2844af
+	jr z, HDAE5000_HDD_DIRNAMECheck_OnSetString                       ; [66 1f] jr Z,0x2844af
 	cp	xbc, EVT_GET_STRING
-	jrl nz, .LHRW_4592                     ; [7e f9 00] jrl NZ,0x284592
+	jrl nz, HDAE5000_HDD_DIRNAMECheck_Done                     ; [7e f9 00] jrl NZ,0x284592
 	pushw 0x0010
 	lda xwa, (0x23a06e:24)
 	push xwa
@@ -2007,8 +2007,8 @@ HDAE5000_HDD_DIRNAMECheck:
 	call HDAE5000_StrNCpy
 	lda	xsp, (xsp+10)
 	ld	xhl, xiz
-	jrl t, .LHRW_4594                      ; [78 e5 00] jrl T,0x284594
-.LHRW_44af:
+	jrl t, HDAE5000_HDD_DIRNAMECheck_Epilogue                      ; [78 e5 00] jrl T,0x284594
+HDAE5000_HDD_DIRNAMECheck_OnSetString:
 	pushw 0x0010
 	push xde
 	pushw 0x0023
@@ -2017,24 +2017,24 @@ HDAE5000_HDD_DIRNAMECheck:
 	lda	xsp, (xsp+10)
 	ld	(0x23A07E:24), 0
 	ld	xhl, xiz
-	jrl t, .LHRW_4594                      ; [78 c9 00] jrl T,0x284594
-.LHRW_44cb:
+	jrl t, HDAE5000_HDD_DIRNAMECheck_Epilogue                      ; [78 c9 00] jrl T,0x284594
+HDAE5000_HDD_DIRNAMECheck_OnGetNamingMode:
 	ld	xhl, 0:i3
-	jrl t, .LHRW_4594                      ; [78 c4 00] jrl T,0x284594
-.LHRW_44d0:
+	jrl t, HDAE5000_HDD_DIRNAMECheck_Epilogue                      ; [78 c4 00] jrl T,0x284594
+HDAE5000_HDD_DIRNAMECheck_OnGetStringLength:
 	ld	xhl, 0x00000010
-	jrl t, .LHRW_4594                      ; [78 bc 00] jrl T,0x284594
-.LHRW_44d8:
+	jrl t, HDAE5000_HDD_DIRNAMECheck_Epilogue                      ; [78 bc 00] jrl T,0x284594
+HDAE5000_HDD_DIRNAMECheck_OnSwIn:
 	cp	xde, 0x0000000b
-	jr z, .LHRW_4546                       ; [66 66] jr Z,0x284546
+	jr z, HDAE5000_HDD_DIRNAMECheck_Skip                       ; [66 66] jr Z,0x284546
 	cp	xde, 0x0000008a
-	jrl nz, .LHRW_4592                     ; [7e a9 00] jrl NZ,0x284592
+	jrl nz, HDAE5000_HDD_DIRNAMECheck_Done                     ; [7e a9 00] jrl NZ,0x284592
 	lda xwa, (0x22abf2:24)
 	calr	HDAE5000_NameHistory_Recall
 	ld	xiz, xhl
 	ld	xwa, xiz
 	or xwa, xwa
-	jrl z, .LHRW_4592                      ; [76 98 00] jrl Z,0x284592
+	jrl z, HDAE5000_HDD_DIRNAMECheck_Done                      ; [76 98 00] jrl Z,0x284592
 	ld	xwa, xiz
 	push xwa
 	call HDAE5000_StrLen
@@ -2058,8 +2058,8 @@ HDAE5000_HDD_DIRNAMECheck:
 	ld_sril	xhl, (xbc + RootFn_SendEvent)
 	ld	xbc, EVT_SET_STRING
 	call	(xhl)
-	jr t, .LHRW_4592                       ; [68 4c] jr T,0x284592
-.LHRW_4546:
+	jr t, HDAE5000_HDD_DIRNAMECheck_Done                       ; [68 4c] jr T,0x284592
+HDAE5000_HDD_DIRNAMECheck_Skip:
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_RootFnTable)
 	ld	xix, (xwa + RootFn_GetNamingWindowID)
@@ -2079,9 +2079,9 @@ HDAE5000_HDD_DIRNAMECheck:
 	calr	HDAE5000_DirName_StoreWithUi
 	ld	xwa, HDAE5000_OBJ_SEL_DIR
 	calr	HDAE5000_DirList_BuildPage
-.LHRW_4592:
+HDAE5000_HDD_DIRNAMECheck_Done:
 	ld	xhl, 0:i3
-.LHRW_4594:
+HDAE5000_HDD_DIRNAMECheck_Epilogue:
 	pop xiz
 	ret
 
@@ -2094,14 +2094,14 @@ HDAE5000_HDD_UTIL_PAGE:
 	ld (xsp + 0x70), xwa
 	ld	xwa, xiz
 	cp	xwa, EVT_SW_IN
-	jr z, .LHRW_4602                       ; [66 56] jr Z,0x284602
+	jr z, HDAE5000_HDD_UTIL_PAGE_OnSwIn                       ; [66 56] jr Z,0x284602
 	cp	xwa, EVT_DRAW
-	jr z, .LHRW_45c2                       ; [66 0e] jr Z,0x2845c2
+	jr z, HDAE5000_HDD_UTIL_PAGE_OnDraw                       ; [66 0e] jr Z,0x2845c2
 	cp	xwa, EVT_ARE_YOU_CLASS_PROC
-	jrl nz, .LHRW_4d61                     ; [7e a4 07] jrl NZ,0x284d61
+	jrl nz, HDAE5000_HDD_UTIL_PAGE_Join                     ; [7e a4 07] jrl NZ,0x284d61
 	ld	xhl, 1:i3
-	jrl t, .LHRW_4d7a                      ; [78 b8 07] jrl T,0x284d7a
-.LHRW_45c2:
+	jrl t, HDAE5000_HDD_UTIL_PAGE_Epilogue                      ; [78 b8 07] jrl T,0x284d7a
+HDAE5000_HDD_UTIL_PAGE_OnDraw:
 	ld xwa, (xsp + 0x70)
 	ld	xbc, xiz
 	ld xde, (xsp + 0x6c)
@@ -2119,11 +2119,11 @@ HDAE5000_HDD_UTIL_PAGE:
 	ld	xbc, EVT_PARA_DRAW
 	call	(xhl)
 	ld	xhl, 0:i3
-	jrl t, .LHRW_4d7a                      ; [78 78 07] jrl T,0x284d7a
-.LHRW_4602:
+	jrl t, HDAE5000_HDD_UTIL_PAGE_Epilogue                      ; [78 78 07] jrl T,0x284d7a
+HDAE5000_HDD_UTIL_PAGE_OnSwIn:
 	ld xwa, (xsp + 0x6c)
 	cp	xwa, 0x0000000b
-	jrl nz, .LHRW_4d61                     ; [7e 53 07] jrl NZ,0x284d61
+	jrl nz, HDAE5000_HDD_UTIL_PAGE_Join                     ; [7e 53 07] jrl NZ,0x284d61
 	calr	HDAE5000_HardTest_HddIdRead
 	lda	xwa, (xsp+4)
 	ld	xbc, xwa
@@ -2805,7 +2805,7 @@ HDAE5000_HDD_UTIL_PAGE:
 	inc 8, xsp                              ; inc 0,XSP
 	lda	xwa, (xsp+44)
 	calr	HDAE5000_HardTest_Print
-.LHRW_4d61:
+HDAE5000_HDD_UTIL_PAGE_Join:
 	ld xwa, (xsp + 0x70)
 	ld	xbc, xiz
 	ld xde, (xsp + 0x6c)
@@ -2813,7 +2813,7 @@ HDAE5000_HDD_UTIL_PAGE:
 	ld	xhl, (xhl + WS_RootFnTable)
 	ld_sril	xix, (xhl + RootFn_InheritedProc)
 	call	(xix)
-.LHRW_4d7a:
+HDAE5000_HDD_UTIL_PAGE_Epilogue:
 	pop xiz
 	lda	xsp, (xsp+112)
 	ret
@@ -2833,9 +2833,9 @@ HDAE5000_PPORT_Svc26_ShowStatus:
 	call HDAE5000_StrLen
 	inc 4, xsp
 	cp	hl, 0x0019
-	jr ule, .LHRW_4d94                     ; [63 03] jr ULE,0x284d94
+	jr ule, HDAE5000_PPORT_Svc26_ShowStatus_Join                     ; [63 03] jr ULE,0x284d94
 	ldw	hl, 0x0019
-.LHRW_4d94:
+HDAE5000_PPORT_Svc26_ShowStatus_Join:
 	pushw hl                                ; push HL
 	ld	xwa, xiz
 	push xwa
@@ -3645,21 +3645,21 @@ HDAE5000_SaveOptSwEventCatch:
 	ld	xiz, xwa
 	ld	xwa, xbc
 	cp	xwa, EVT_SW_IN
-	jr z, .LHCM_5634                       ; [66 64] jr Z,0x285634
+	jr z, HDAE5000_SaveOptSwEventCatch_OnSwIn                       ; [66 64] jr Z,0x285634
 	cp	xwa, EVT_DRAW
-	jr z, .LHCM_55fb                       ; [66 23] jr Z,0x2855fb
+	jr z, HDAE5000_SaveOptSwEventCatch_OnDraw                       ; [66 23] jr Z,0x2855fb
 	cp	xwa, EVT_ARE_YOU_CLASS_PROC
-	jr z, .LHCM_55f6                       ; [66 16] jr Z,0x2855f6
+	jr z, HDAE5000_SaveOptSwEventCatch_OnAreYouClassProc                       ; [66 16] jr Z,0x2855f6
 	ld	xwa, xiz
 	ld	xhl, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xhl, (xhl + WS_RootFnTable)
 	ld_sril	xix, (xhl + RootFn_InheritedProc)
 	call	(xix)
-	jrl t, .LHCM_577a                      ; [78 84 01] jrl T,0x28577a
-.LHCM_55f6:
+	jrl t, HDAE5000_SaveOptSwEventCatch_Epilogue                      ; [78 84 01] jrl T,0x28577a
+HDAE5000_SaveOptSwEventCatch_OnAreYouClassProc:
 	ld	xhl, 1:i3
-	jrl t, .LHCM_577a                      ; [78 7f 01] jrl T,0x28577a
-.LHCM_55fb:
+	jrl t, HDAE5000_SaveOptSwEventCatch_Epilogue                      ; [78 7f 01] jrl T,0x28577a
+HDAE5000_SaveOptSwEventCatch_OnDraw:
 	ld	xwa, xiz
 	ld	xhl, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xhl, (xhl + WS_RootFnTable)
@@ -3675,8 +3675,8 @@ HDAE5000_SaveOptSwEventCatch:
 	ld	xbc, EVT_PARA_DRAW
 	call	(xhl)
 	ld	xhl, 0:i3
-	jrl t, .LHCM_577a                      ; [78 46 01] jrl T,0x28577a
-.LHCM_5634:
+	jrl t, HDAE5000_SaveOptSwEventCatch_Epilogue                      ; [78 46 01] jrl T,0x28577a
+HDAE5000_SaveOptSwEventCatch_OnSwIn:
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_RootFnTable)
 	ld_sril	xix, (xwa + RootFn_SendEvent)
@@ -3684,15 +3684,15 @@ HDAE5000_SaveOptSwEventCatch:
 	ld	xbc, EVT_MAKE_EDIT_SW_ID
 	call	(xix)
 	cp	xhl, 0x0000008b
-	jrl z, .LHCM_574a                      ; [76 f2 00] jrl Z,0x28574a
+	jrl z, HDAE5000_SaveOptSwEventCatch_Skip5                      ; [76 f2 00] jrl Z,0x28574a
 	cp	xhl, 0x0000000b
-	jrl z, .LHCM_5733                      ; [76 d2 00] jrl Z,0x285733
+	jrl z, HDAE5000_SaveOptSwEventCatch_Skip4                      ; [76 d2 00] jrl Z,0x285733
 	cp	xhl, 0x0000000a
-	jrl z, .LHCM_571b                      ; [76 b1 00] jrl Z,0x28571b
+	jrl z, HDAE5000_SaveOptSwEventCatch_Skip3                      ; [76 b1 00] jrl Z,0x28571b
 	cp	xhl, 0x00000009
-	jrl z, .LHCM_5703                      ; [76 90 00] jrl Z,0x285703
+	jrl z, HDAE5000_SaveOptSwEventCatch_Skip2                      ; [76 90 00] jrl Z,0x285703
 	cp	xhl, 0x00000008
-	jrl nz, .LHCM_5778                     ; [7e fc 00] jrl NZ,0x285778
+	jrl nz, HDAE5000_SaveOptSwEventCatch_Done                     ; [7e fc 00] jrl NZ,0x285778
 	lda xwa, (0x23a04e:24)
 	ld	xde, xwa
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
@@ -3702,12 +3702,12 @@ HDAE5000_SaveOptSwEventCatch:
 	ld	xbc, EVT_GET_STRING
 	call	(xhl)
 	cp	(HDAE5000_RAM_WriteConfirm:24), 1
-	jr nz, .LHCM_56d9                      ; [6e 33] jr NZ,0x2856d9
+	jr nz, HDAE5000_SaveOptSwEventCatch_Skip                      ; [6e 33] jr NZ,0x2856d9
 	ld	wa, (HDAE5000_RAM_CurDir:24)
 	ld	bc, (HDAE5000_RAM_CurSong:24)
 	call HDAE5000_Song_IsUsed
 	cp	hl, 0xffff
-	jr z, .LHCM_56d9                       ; [66 1f] jr Z,0x2856d9
+	jr z, HDAE5000_SaveOptSwEventCatch_Skip                       ; [66 1f] jr Z,0x2856d9
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_RootFnTable)
 	ld	xhl, (xwa + RootFn_PostEvent)
@@ -3715,8 +3715,8 @@ HDAE5000_SaveOptSwEventCatch:
 	ld	xbc, EVT_SHOW
 	ld	xde, 0:i3
 	call	(xhl)
-	jr t, .LHCM_56fa                       ; [68 21] jr T,0x2856fa
-.LHCM_56d9:
+	jr t, HDAE5000_SaveOptSwEventCatch_Join                       ; [68 21] jr T,0x2856fa
+HDAE5000_SaveOptSwEventCatch_Skip:
 	pushw 0x0023
 	pushw 0xa04e
 	pushw 0x0001
@@ -3726,54 +3726,54 @@ HDAE5000_SaveOptSwEventCatch:
 	ld	bc, (HDAE5000_RAM_CurSong:24)
 	ld	de, (HDAE5000_RAM_SaveOptions:24)
 	calr	HDAE5000_SaveSongWithUi
-.LHCM_56fa:
+HDAE5000_SaveOptSwEventCatch_Join:
 	ld	wa, 0:i3
 	ld	bc, 0:i3
 	calr	HDAE5000_SongScreen_Refresh
-	jr t, .LHCM_5778                       ; [68 75] jr T,0x285778
-.LHCM_5703:
+	jr t, HDAE5000_SaveOptSwEventCatch_Done                       ; [68 75] jr T,0x285778
+HDAE5000_SaveOptSwEventCatch_Skip2:
 	lda xwa, (HDAE5000_RAM_SaveOptions:24)
 	pushw 0x0002
 	lda xde, (HDAE5000_TypeSel_TemplateAllNo:24)
 	ldw	bc, 0x003f
 	calr	HDAE5000_TypeSel_Init
 	calr	HDAE5000_TypeSel_ShowSaveFlags
-	jr t, .LHCM_5778                       ; [68 5d] jr T,0x285778
-.LHCM_571b:
+	jr t, HDAE5000_SaveOptSwEventCatch_Done                       ; [68 5d] jr T,0x285778
+HDAE5000_SaveOptSwEventCatch_Skip3:
 	lda xwa, (HDAE5000_RAM_SaveOptions:24)
 	pushw 0x0002
 	lda xde, (HDAE5000_TypeSel_TemplateAllNo:24)
 	ldw	bc, 0x01ff
 	calr	HDAE5000_TypeSel_Init
 	calr	HDAE5000_TypeSel_ShowSaveFlags
-	jr t, .LHCM_5778                       ; [68 45] jr T,0x285778
-.LHCM_5733:
+	jr t, HDAE5000_SaveOptSwEventCatch_Done                       ; [68 45] jr T,0x285778
+HDAE5000_SaveOptSwEventCatch_Skip4:
 	lda xwa, (HDAE5000_RAM_SaveOptions:24)
 	pushw 0x0002
 	lda xde, (HDAE5000_TypeSel_TemplateAllNo:24)
 	ld	bc, 0:i3
 	calr	HDAE5000_TypeSel_Init
 	calr	HDAE5000_TypeSel_ShowSaveFlags
-	jr t, .LHCM_5778                       ; [68 2e] jr T,0x285778
-.LHCM_574a:
+	jr t, HDAE5000_SaveOptSwEventCatch_Done                       ; [68 2e] jr T,0x285778
+HDAE5000_SaveOptSwEventCatch_Skip5:
 	ld	bc, (HDAE5000_RAM_SaveOptions:24)
 	ld	wa, bc
 	and	wa, 0x0100
 	cp	wa, 0x0100
-	jr nz, .LHCM_5761                      ; [6e 06] jr NZ,0x285761
+	jr nz, HDAE5000_SaveOptSwEventCatch_Skip6                      ; [6e 06] jr NZ,0x285761
 	sub	bc, 0x0100
-	jr t, .LHCM_5765                       ; [68 04] jr T,0x285765
-.LHCM_5761:
+	jr t, HDAE5000_SaveOptSwEventCatch_Join2                       ; [68 04] jr T,0x285765
+HDAE5000_SaveOptSwEventCatch_Skip6:
 	add	bc, 0x0100
-.LHCM_5765:
+HDAE5000_SaveOptSwEventCatch_Join2:
 	lda xwa, (HDAE5000_RAM_SaveOptions:24)
 	pushw 0x0002
 	lda xde, (HDAE5000_TypeSel_TemplateAllNo:24)
 	calr	HDAE5000_TypeSel_Init
 	calr	HDAE5000_TypeSel_ShowSaveFlags
-.LHCM_5778:
+HDAE5000_SaveOptSwEventCatch_Done:
 	ld	xhl, 0:i3
-.LHCM_577a:
+HDAE5000_SaveOptSwEventCatch_Epilogue:
 	pop xiz
 	ret
 
@@ -3784,7 +3784,7 @@ HDAE5000_FileOptNameCheck:
 	ld (xsp + 0x04), xwa
 	ld	xwa, xbc
 	cp	xwa, EVT_RAM_DATA_REQ
-	jr z, .LHCM_57f8                       ; [66 6c] jr Z,0x2857f8
+	jr z, HDAE5000_FileOptNameCheck_OnRamDataReq                       ; [66 6c] jr Z,0x2857f8
 	sub	xwa, EVT_GET_LARGE_STEP
 	cp	xwa, 0x00000000
 	jr lt, HDAE5000_FileOptNameCheck_Default                      ; [61 62] jr LT,0x2857fc
@@ -3808,31 +3808,31 @@ HDAE5000_FileOptNameCheck_Ev01E00047:
 	call HDAE5000_SPrintf
 	lda	xsp, (xsp+12)
 	ld xhl, (xsp + 0x04)
-	jr t, .LHCM_57fe                       ; [68 21] jr T,0x2857fe
+	jr t, HDAE5000_FileOptNameCheck_Epilogue                       ; [68 21] jr T,0x2857fe
 HDAE5000_FileOptNameCheck_Ev01E0003E:
 	ld	xhl, 1:i3
-	jr t, .LHCM_57fe                       ; [68 1d] jr T,0x2857fe
+	jr t, HDAE5000_FileOptNameCheck_Epilogue                       ; [68 1d] jr T,0x2857fe
 HDAE5000_FileOptNameCheck_Ev01E0003F:
 	ld	xhl, 1:i3
-	jr t, .LHCM_57fe                       ; [68 19] jr T,0x2857fe
+	jr t, HDAE5000_FileOptNameCheck_Epilogue                       ; [68 19] jr T,0x2857fe
 HDAE5000_FileOptNameCheck_Ev01E00043:
 	ld	xhl, 0:i3
-	jr t, .LHCM_57fe                       ; [68 15] jr T,0x2857fe
+	jr t, HDAE5000_FileOptNameCheck_Epilogue                       ; [68 15] jr T,0x2857fe
 HDAE5000_FileOptNameCheck_Ev01E00044:
 	ld	xhl, 0:i3
-	jr t, .LHCM_57fe                       ; [68 11] jr T,0x2857fe
+	jr t, HDAE5000_FileOptNameCheck_Epilogue                       ; [68 11] jr T,0x2857fe
 HDAE5000_FileOptNameCheck_Ev01E00045:
 	lda xhl, (0x22aa57:24)
-	jr t, .LHCM_57fe                       ; [68 0a] jr T,0x2857fe
+	jr t, HDAE5000_FileOptNameCheck_Epilogue                       ; [68 0a] jr T,0x2857fe
 HDAE5000_FileOptNameCheck_Ev01E00046:
 	ld	xhl, 1:i3
-	jr t, .LHCM_57fe                       ; [68 06] jr T,0x2857fe
-.LHCM_57f8:
+	jr t, HDAE5000_FileOptNameCheck_Epilogue                       ; [68 06] jr T,0x2857fe
+HDAE5000_FileOptNameCheck_OnRamDataReq:
 	ld	xhl, 0:i3
-	jr t, .LHCM_57fe                       ; [68 02] jr T,0x2857fe
+	jr t, HDAE5000_FileOptNameCheck_Epilogue                       ; [68 02] jr T,0x2857fe
 HDAE5000_FileOptNameCheck_Default:
 	ld	xhl, 0:i3
-.LHCM_57fe:
+HDAE5000_FileOptNameCheck_Epilogue:
 	pop xiz
 	inc 4, xsp
 	ret
@@ -3843,7 +3843,7 @@ HDAE5000_SfxLswBitCheck:
 	ld	xiz, xwa
 	ld	xwa, xbc
 	cp	xwa, EVT_RAM_DATA_REQ
-	jrl z, .LHCM_5890                      ; [76 80 00] jrl Z,0x285890
+	jrl z, HDAE5000_SfxLswBitCheck_OnRamDataReq                      ; [76 80 00] jrl Z,0x285890
 	sub	xwa, EVT_GET_LARGE_STEP
 	cp	xwa, 0x00000000
 	jrl lt, HDAE5000_SfxLswBitCheck_Default                     ; [71 95 00] jrl LT,0x2858b4
@@ -3868,34 +3868,34 @@ HDAE5000_SfxLswBitCheck_Ev01E00047:
 	call HDAE5000_SPrintf
 	lda	xsp, (xsp+12)
 	ld	xhl, xiz
-	jr t, .LHCM_58b6                       ; [68 55] jr T,0x2858b6
+	jr t, HDAE5000_SfxLswBitCheck_Epilogue                       ; [68 55] jr T,0x2858b6
 HDAE5000_SfxLswBitCheck_Ev01E0003E:
 	ld	xhl, 1:i3
-	jr t, .LHCM_58b6                       ; [68 51] jr T,0x2858b6
+	jr t, HDAE5000_SfxLswBitCheck_Epilogue                       ; [68 51] jr T,0x2858b6
 HDAE5000_SfxLswBitCheck_Ev01E0003F:
 	ld	xhl, 1:i3
-	jr t, .LHCM_58b6                       ; [68 4d] jr T,0x2858b6
+	jr t, HDAE5000_SfxLswBitCheck_Epilogue                       ; [68 4d] jr T,0x2858b6
 HDAE5000_SfxLswBitCheck_Ev01E00043:
 	ld	xhl, 2:i3
 	cp	(0x22AA4E:24), 0
-	jr nz, .LHCM_5875                      ; [6e 02] jr NZ,0x285875
+	jr nz, HDAE5000_SfxLswBitCheck_Ev01E00043_Join                      ; [6e 02] jr NZ,0x285875
 	ld	xhl, 0:i3
-.LHCM_5875:
-	jr t, .LHCM_58b6                       ; [68 3f] jr T,0x2858b6
+HDAE5000_SfxLswBitCheck_Ev01E00043_Join:
+	jr t, HDAE5000_SfxLswBitCheck_Epilogue                       ; [68 3f] jr T,0x2858b6
 HDAE5000_SfxLswBitCheck_Ev01E00044:
 	ld	xhl, 1:i3
 	cp	(0x22AA4E:24), 0
-	jr nz, .LHCM_5883                      ; [6e 02] jr NZ,0x285883
+	jr nz, HDAE5000_SfxLswBitCheck_Ev01E00044_Join                      ; [6e 02] jr NZ,0x285883
 	ld	xhl, 0:i3
-.LHCM_5883:
-	jr t, .LHCM_58b6                       ; [68 31] jr T,0x2858b6
+HDAE5000_SfxLswBitCheck_Ev01E00044_Join:
+	jr t, HDAE5000_SfxLswBitCheck_Epilogue                       ; [68 31] jr T,0x2858b6
 HDAE5000_SfxLswBitCheck_Ev01E00045:
 	lda xhl, (0x22aa4e:24)
-	jr t, .LHCM_58b6                       ; [68 2a] jr T,0x2858b6
+	jr t, HDAE5000_SfxLswBitCheck_Epilogue                       ; [68 2a] jr T,0x2858b6
 HDAE5000_SfxLswBitCheck_Ev01E00046:
 	ld	xhl, 1:i3
-	jr t, .LHCM_58b6                       ; [68 26] jr T,0x2858b6
-.LHCM_5890:
+	jr t, HDAE5000_SfxLswBitCheck_Epilogue                       ; [68 26] jr T,0x2858b6
+HDAE5000_SfxLswBitCheck_OnRamDataReq:
 	lda xwa, (HDAE5000_RAM_SaveOptions:24)
 	calr	HDAE5000_TypeSel_BuildMask
 	ld	bc, (HDAE5000_RAM_CurDir:24)
@@ -3905,10 +3905,10 @@ HDAE5000_SfxLswBitCheck_Ev01E00046:
 	ld	xwa, HDAE5000_OBJ_HD_FILE_OPTION
 	calr	HDAE5000_PartList_Build
 	ld	xhl, 0:i3
-	jr t, .LHCM_58b6                       ; [68 02] jr T,0x2858b6
+	jr t, HDAE5000_SfxLswBitCheck_Epilogue                       ; [68 02] jr T,0x2858b6
 HDAE5000_SfxLswBitCheck_Default:
 	ld	xhl, 0:i3
-.LHCM_58b6:
+HDAE5000_SfxLswBitCheck_Epilogue:
 	pop xiz
 	ret
 
@@ -3918,7 +3918,7 @@ HDAE5000_SfxPmtBitCheck:
 	ld	xiz, xwa
 	ld	xwa, xbc
 	cp	xwa, EVT_RAM_DATA_REQ
-	jrl z, .LHCM_5946                      ; [76 80 00] jrl Z,0x285946
+	jrl z, HDAE5000_SfxPmtBitCheck_OnRamDataReq                      ; [76 80 00] jrl Z,0x285946
 	sub	xwa, EVT_GET_LARGE_STEP
 	cp	xwa, 0x00000000
 	jrl lt, HDAE5000_SfxPmtBitCheck_Default                     ; [71 95 00] jrl LT,0x28596a
@@ -3943,34 +3943,34 @@ HDAE5000_SfxPmtBitCheck_Ev01E00047:
 	call HDAE5000_SPrintf
 	lda	xsp, (xsp+12)
 	ld	xhl, xiz
-	jr t, .LHCM_596c                       ; [68 55] jr T,0x28596c
+	jr t, HDAE5000_SfxPmtBitCheck_Epilogue                       ; [68 55] jr T,0x28596c
 HDAE5000_SfxPmtBitCheck_Ev01E0003E:
 	ld	xhl, 1:i3
-	jr t, .LHCM_596c                       ; [68 51] jr T,0x28596c
+	jr t, HDAE5000_SfxPmtBitCheck_Epilogue                       ; [68 51] jr T,0x28596c
 HDAE5000_SfxPmtBitCheck_Ev01E0003F:
 	ld	xhl, 1:i3
-	jr t, .LHCM_596c                       ; [68 4d] jr T,0x28596c
+	jr t, HDAE5000_SfxPmtBitCheck_Epilogue                       ; [68 4d] jr T,0x28596c
 HDAE5000_SfxPmtBitCheck_Ev01E00043:
 	ld	xhl, 2:i3
 	cp	(0x22AA4F:24), 0
-	jr nz, .LHCM_592b                      ; [6e 02] jr NZ,0x28592b
+	jr nz, HDAE5000_SfxPmtBitCheck_Ev01E00043_Join                      ; [6e 02] jr NZ,0x28592b
 	ld	xhl, 0:i3
-.LHCM_592b:
-	jr t, .LHCM_596c                       ; [68 3f] jr T,0x28596c
+HDAE5000_SfxPmtBitCheck_Ev01E00043_Join:
+	jr t, HDAE5000_SfxPmtBitCheck_Epilogue                       ; [68 3f] jr T,0x28596c
 HDAE5000_SfxPmtBitCheck_Ev01E00044:
 	ld	xhl, 1:i3
 	cp	(0x22AA4F:24), 0
-	jr nz, .LHCM_5939                      ; [6e 02] jr NZ,0x285939
+	jr nz, HDAE5000_SfxPmtBitCheck_Ev01E00044_Join                      ; [6e 02] jr NZ,0x285939
 	ld	xhl, 0:i3
-.LHCM_5939:
-	jr t, .LHCM_596c                       ; [68 31] jr T,0x28596c
+HDAE5000_SfxPmtBitCheck_Ev01E00044_Join:
+	jr t, HDAE5000_SfxPmtBitCheck_Epilogue                       ; [68 31] jr T,0x28596c
 HDAE5000_SfxPmtBitCheck_Ev01E00045:
 	lda xhl, (0x22aa4f:24)
-	jr t, .LHCM_596c                       ; [68 2a] jr T,0x28596c
+	jr t, HDAE5000_SfxPmtBitCheck_Epilogue                       ; [68 2a] jr T,0x28596c
 HDAE5000_SfxPmtBitCheck_Ev01E00046:
 	ld	xhl, 1:i3
-	jr t, .LHCM_596c                       ; [68 26] jr T,0x28596c
-.LHCM_5946:
+	jr t, HDAE5000_SfxPmtBitCheck_Epilogue                       ; [68 26] jr T,0x28596c
+HDAE5000_SfxPmtBitCheck_OnRamDataReq:
 	lda xwa, (HDAE5000_RAM_SaveOptions:24)
 	calr	HDAE5000_TypeSel_BuildMask
 	ld	bc, (HDAE5000_RAM_CurDir:24)
@@ -3980,10 +3980,10 @@ HDAE5000_SfxPmtBitCheck_Ev01E00046:
 	ld	xwa, HDAE5000_OBJ_HD_FILE_OPTION
 	calr	HDAE5000_PartList_Build
 	ld	xhl, 0:i3
-	jr t, .LHCM_596c                       ; [68 02] jr T,0x28596c
+	jr t, HDAE5000_SfxPmtBitCheck_Epilogue                       ; [68 02] jr T,0x28596c
 HDAE5000_SfxPmtBitCheck_Default:
 	ld	xhl, 0:i3
-.LHCM_596c:
+HDAE5000_SfxPmtBitCheck_Epilogue:
 	pop xiz
 	ret
 
@@ -3993,7 +3993,7 @@ HDAE5000_SfxSqtBitCheck:
 	ld	xiz, xwa
 	ld	xwa, xbc
 	cp	xwa, EVT_RAM_DATA_REQ
-	jrl z, .LHCM_59fc                      ; [76 80 00] jrl Z,0x2859fc
+	jrl z, HDAE5000_SfxSqtBitCheck_OnRamDataReq                      ; [76 80 00] jrl Z,0x2859fc
 	sub	xwa, EVT_GET_LARGE_STEP
 	cp	xwa, 0x00000000
 	jrl lt, HDAE5000_SfxSqtBitCheck_Default                     ; [71 95 00] jrl LT,0x285a20
@@ -4018,34 +4018,34 @@ HDAE5000_SfxSqtBitCheck_Ev01E00047:
 	call HDAE5000_SPrintf
 	lda	xsp, (xsp+12)
 	ld	xhl, xiz
-	jr t, .LHCM_5a22                       ; [68 55] jr T,0x285a22
+	jr t, HDAE5000_SfxSqtBitCheck_Epilogue                       ; [68 55] jr T,0x285a22
 HDAE5000_SfxSqtBitCheck_Ev01E0003E:
 	ld	xhl, 1:i3
-	jr t, .LHCM_5a22                       ; [68 51] jr T,0x285a22
+	jr t, HDAE5000_SfxSqtBitCheck_Epilogue                       ; [68 51] jr T,0x285a22
 HDAE5000_SfxSqtBitCheck_Ev01E0003F:
 	ld	xhl, 1:i3
-	jr t, .LHCM_5a22                       ; [68 4d] jr T,0x285a22
+	jr t, HDAE5000_SfxSqtBitCheck_Epilogue                       ; [68 4d] jr T,0x285a22
 HDAE5000_SfxSqtBitCheck_Ev01E00043:
 	ld	xhl, 2:i3
 	cp	(0x22AA50:24), 0
-	jr nz, .LHCM_59e1                      ; [6e 02] jr NZ,0x2859e1
+	jr nz, HDAE5000_SfxSqtBitCheck_Ev01E00043_Join                      ; [6e 02] jr NZ,0x2859e1
 	ld	xhl, 0:i3
-.LHCM_59e1:
-	jr t, .LHCM_5a22                       ; [68 3f] jr T,0x285a22
+HDAE5000_SfxSqtBitCheck_Ev01E00043_Join:
+	jr t, HDAE5000_SfxSqtBitCheck_Epilogue                       ; [68 3f] jr T,0x285a22
 HDAE5000_SfxSqtBitCheck_Ev01E00044:
 	ld	xhl, 1:i3
 	cp	(0x22AA50:24), 0
-	jr nz, .LHCM_59ef                      ; [6e 02] jr NZ,0x2859ef
+	jr nz, HDAE5000_SfxSqtBitCheck_Ev01E00044_Join                      ; [6e 02] jr NZ,0x2859ef
 	ld	xhl, 0:i3
-.LHCM_59ef:
-	jr t, .LHCM_5a22                       ; [68 31] jr T,0x285a22
+HDAE5000_SfxSqtBitCheck_Ev01E00044_Join:
+	jr t, HDAE5000_SfxSqtBitCheck_Epilogue                       ; [68 31] jr T,0x285a22
 HDAE5000_SfxSqtBitCheck_Ev01E00045:
 	lda xhl, (0x22aa50:24)
-	jr t, .LHCM_5a22                       ; [68 2a] jr T,0x285a22
+	jr t, HDAE5000_SfxSqtBitCheck_Epilogue                       ; [68 2a] jr T,0x285a22
 HDAE5000_SfxSqtBitCheck_Ev01E00046:
 	ld	xhl, 1:i3
-	jr t, .LHCM_5a22                       ; [68 26] jr T,0x285a22
-.LHCM_59fc:
+	jr t, HDAE5000_SfxSqtBitCheck_Epilogue                       ; [68 26] jr T,0x285a22
+HDAE5000_SfxSqtBitCheck_OnRamDataReq:
 	lda xwa, (HDAE5000_RAM_SaveOptions:24)
 	calr	HDAE5000_TypeSel_BuildMask
 	ld	bc, (HDAE5000_RAM_CurDir:24)
@@ -4055,10 +4055,10 @@ HDAE5000_SfxSqtBitCheck_Ev01E00046:
 	ld	xwa, HDAE5000_OBJ_HD_FILE_OPTION
 	calr	HDAE5000_PartList_Build
 	ld	xhl, 0:i3
-	jr t, .LHCM_5a22                       ; [68 02] jr T,0x285a22
+	jr t, HDAE5000_SfxSqtBitCheck_Epilogue                       ; [68 02] jr T,0x285a22
 HDAE5000_SfxSqtBitCheck_Default:
 	ld	xhl, 0:i3
-.LHCM_5a22:
+HDAE5000_SfxSqtBitCheck_Epilogue:
 	pop xiz
 	ret
 
@@ -4068,7 +4068,7 @@ HDAE5000_SfxCmpBitCheck:
 	ld	xiz, xwa
 	ld	xwa, xbc
 	cp	xwa, EVT_RAM_DATA_REQ
-	jrl z, .LHCM_5ab2                      ; [76 80 00] jrl Z,0x285ab2
+	jrl z, HDAE5000_SfxCmpBitCheck_OnRamDataReq                      ; [76 80 00] jrl Z,0x285ab2
 	sub	xwa, EVT_GET_LARGE_STEP
 	cp	xwa, 0x00000000
 	jrl lt, HDAE5000_SfxCmpBitCheck_Default                     ; [71 95 00] jrl LT,0x285ad6
@@ -4093,34 +4093,34 @@ HDAE5000_SfxCmpBitCheck_Ev01E00047:
 	call HDAE5000_SPrintf
 	lda	xsp, (xsp+12)
 	ld	xhl, xiz
-	jr t, .LHCM_5ad8                       ; [68 55] jr T,0x285ad8
+	jr t, HDAE5000_SfxCmpBitCheck_Epilogue                       ; [68 55] jr T,0x285ad8
 HDAE5000_SfxCmpBitCheck_Ev01E0003E:
 	ld	xhl, 1:i3
-	jr t, .LHCM_5ad8                       ; [68 51] jr T,0x285ad8
+	jr t, HDAE5000_SfxCmpBitCheck_Epilogue                       ; [68 51] jr T,0x285ad8
 HDAE5000_SfxCmpBitCheck_Ev01E0003F:
 	ld	xhl, 1:i3
-	jr t, .LHCM_5ad8                       ; [68 4d] jr T,0x285ad8
+	jr t, HDAE5000_SfxCmpBitCheck_Epilogue                       ; [68 4d] jr T,0x285ad8
 HDAE5000_SfxCmpBitCheck_Ev01E00043:
 	ld	xhl, 2:i3
 	cp	(0x22AA51:24), 0
-	jr nz, .LHCM_5a97                      ; [6e 02] jr NZ,0x285a97
+	jr nz, HDAE5000_SfxCmpBitCheck_Ev01E00043_Join                      ; [6e 02] jr NZ,0x285a97
 	ld	xhl, 0:i3
-.LHCM_5a97:
-	jr t, .LHCM_5ad8                       ; [68 3f] jr T,0x285ad8
+HDAE5000_SfxCmpBitCheck_Ev01E00043_Join:
+	jr t, HDAE5000_SfxCmpBitCheck_Epilogue                       ; [68 3f] jr T,0x285ad8
 HDAE5000_SfxCmpBitCheck_Ev01E00044:
 	ld	xhl, 1:i3
 	cp	(0x22AA51:24), 0
-	jr nz, .LHCM_5aa5                      ; [6e 02] jr NZ,0x285aa5
+	jr nz, HDAE5000_SfxCmpBitCheck_Ev01E00044_Join                      ; [6e 02] jr NZ,0x285aa5
 	ld	xhl, 0:i3
-.LHCM_5aa5:
-	jr t, .LHCM_5ad8                       ; [68 31] jr T,0x285ad8
+HDAE5000_SfxCmpBitCheck_Ev01E00044_Join:
+	jr t, HDAE5000_SfxCmpBitCheck_Epilogue                       ; [68 31] jr T,0x285ad8
 HDAE5000_SfxCmpBitCheck_Ev01E00045:
 	lda xhl, (0x22aa51:24)
-	jr t, .LHCM_5ad8                       ; [68 2a] jr T,0x285ad8
+	jr t, HDAE5000_SfxCmpBitCheck_Epilogue                       ; [68 2a] jr T,0x285ad8
 HDAE5000_SfxCmpBitCheck_Ev01E00046:
 	ld	xhl, 1:i3
-	jr t, .LHCM_5ad8                       ; [68 26] jr T,0x285ad8
-.LHCM_5ab2:
+	jr t, HDAE5000_SfxCmpBitCheck_Epilogue                       ; [68 26] jr T,0x285ad8
+HDAE5000_SfxCmpBitCheck_OnRamDataReq:
 	lda xwa, (HDAE5000_RAM_SaveOptions:24)
 	calr	HDAE5000_TypeSel_BuildMask
 	ld	bc, (HDAE5000_RAM_CurDir:24)
@@ -4130,10 +4130,10 @@ HDAE5000_SfxCmpBitCheck_Ev01E00046:
 	ld	xwa, HDAE5000_OBJ_HD_FILE_OPTION
 	calr	HDAE5000_PartList_Build
 	ld	xhl, 0:i3
-	jr t, .LHCM_5ad8                       ; [68 02] jr T,0x285ad8
+	jr t, HDAE5000_SfxCmpBitCheck_Epilogue                       ; [68 02] jr T,0x285ad8
 HDAE5000_SfxCmpBitCheck_Default:
 	ld	xhl, 0:i3
-.LHCM_5ad8:
+HDAE5000_SfxCmpBitCheck_Epilogue:
 	pop xiz
 	ret
 
@@ -4143,7 +4143,7 @@ HDAE5000_SfxTmBitCheck:
 	ld	xiz, xwa
 	ld	xwa, xbc
 	cp	xwa, EVT_RAM_DATA_REQ
-	jrl z, .LHCM_5b68                      ; [76 80 00] jrl Z,0x285b68
+	jrl z, HDAE5000_SfxTmBitCheck_OnRamDataReq                      ; [76 80 00] jrl Z,0x285b68
 	sub	xwa, EVT_GET_LARGE_STEP
 	cp	xwa, 0x00000000
 	jrl lt, HDAE5000_SfxTmBitCheck_Default                     ; [71 95 00] jrl LT,0x285b8c
@@ -4168,34 +4168,34 @@ HDAE5000_SfxTmBitCheck_Ev01E00047:
 	call HDAE5000_SPrintf
 	lda	xsp, (xsp+12)
 	ld	xhl, xiz
-	jr t, .LHCM_5b8e                       ; [68 55] jr T,0x285b8e
+	jr t, HDAE5000_SfxTmBitCheck_Epilogue                       ; [68 55] jr T,0x285b8e
 HDAE5000_SfxTmBitCheck_Ev01E0003E:
 	ld	xhl, 1:i3
-	jr t, .LHCM_5b8e                       ; [68 51] jr T,0x285b8e
+	jr t, HDAE5000_SfxTmBitCheck_Epilogue                       ; [68 51] jr T,0x285b8e
 HDAE5000_SfxTmBitCheck_Ev01E0003F:
 	ld	xhl, 1:i3
-	jr t, .LHCM_5b8e                       ; [68 4d] jr T,0x285b8e
+	jr t, HDAE5000_SfxTmBitCheck_Epilogue                       ; [68 4d] jr T,0x285b8e
 HDAE5000_SfxTmBitCheck_Ev01E00043:
 	ld	xhl, 2:i3
 	cp	(0x22AA52:24), 0
-	jr nz, .LHCM_5b4d                      ; [6e 02] jr NZ,0x285b4d
+	jr nz, HDAE5000_SfxTmBitCheck_Ev01E00043_Join                      ; [6e 02] jr NZ,0x285b4d
 	ld	xhl, 0:i3
-.LHCM_5b4d:
-	jr t, .LHCM_5b8e                       ; [68 3f] jr T,0x285b8e
+HDAE5000_SfxTmBitCheck_Ev01E00043_Join:
+	jr t, HDAE5000_SfxTmBitCheck_Epilogue                       ; [68 3f] jr T,0x285b8e
 HDAE5000_SfxTmBitCheck_Ev01E00044:
 	ld	xhl, 1:i3
 	cp	(0x22AA52:24), 0
-	jr nz, .LHCM_5b5b                      ; [6e 02] jr NZ,0x285b5b
+	jr nz, HDAE5000_SfxTmBitCheck_Ev01E00044_Join                      ; [6e 02] jr NZ,0x285b5b
 	ld	xhl, 0:i3
-.LHCM_5b5b:
-	jr t, .LHCM_5b8e                       ; [68 31] jr T,0x285b8e
+HDAE5000_SfxTmBitCheck_Ev01E00044_Join:
+	jr t, HDAE5000_SfxTmBitCheck_Epilogue                       ; [68 31] jr T,0x285b8e
 HDAE5000_SfxTmBitCheck_Ev01E00045:
 	lda xhl, (0x22aa52:24)
-	jr t, .LHCM_5b8e                       ; [68 2a] jr T,0x285b8e
+	jr t, HDAE5000_SfxTmBitCheck_Epilogue                       ; [68 2a] jr T,0x285b8e
 HDAE5000_SfxTmBitCheck_Ev01E00046:
 	ld	xhl, 1:i3
-	jr t, .LHCM_5b8e                       ; [68 26] jr T,0x285b8e
-.LHCM_5b68:
+	jr t, HDAE5000_SfxTmBitCheck_Epilogue                       ; [68 26] jr T,0x285b8e
+HDAE5000_SfxTmBitCheck_OnRamDataReq:
 	lda xwa, (HDAE5000_RAM_SaveOptions:24)
 	calr	HDAE5000_TypeSel_BuildMask
 	ld	bc, (HDAE5000_RAM_CurDir:24)
@@ -4205,10 +4205,10 @@ HDAE5000_SfxTmBitCheck_Ev01E00046:
 	ld	xwa, HDAE5000_OBJ_HD_FILE_OPTION
 	calr	HDAE5000_PartList_Build
 	ld	xhl, 0:i3
-	jr t, .LHCM_5b8e                       ; [68 02] jr T,0x285b8e
+	jr t, HDAE5000_SfxTmBitCheck_Epilogue                       ; [68 02] jr T,0x285b8e
 HDAE5000_SfxTmBitCheck_Default:
 	ld	xhl, 0:i3
-.LHCM_5b8e:
+HDAE5000_SfxTmBitCheck_Epilogue:
 	pop xiz
 	ret
 
@@ -4218,7 +4218,7 @@ HDAE5000_SfxMspBitCheck:
 	ld	xiz, xwa
 	ld	xwa, xbc
 	cp	xwa, EVT_RAM_DATA_REQ
-	jrl z, .LHCM_5c1e                      ; [76 80 00] jrl Z,0x285c1e
+	jrl z, HDAE5000_SfxMspBitCheck_OnRamDataReq                      ; [76 80 00] jrl Z,0x285c1e
 	sub	xwa, EVT_GET_LARGE_STEP
 	cp	xwa, 0x00000000
 	jrl lt, HDAE5000_SfxMspBitCheck_Default                     ; [71 95 00] jrl LT,0x285c42
@@ -4243,34 +4243,34 @@ HDAE5000_SfxMspBitCheck_Ev01E00047:
 	call HDAE5000_SPrintf
 	lda	xsp, (xsp+12)
 	ld	xhl, xiz
-	jr t, .LHCM_5c44                       ; [68 55] jr T,0x285c44
+	jr t, HDAE5000_SfxMspBitCheck_Epilogue                       ; [68 55] jr T,0x285c44
 HDAE5000_SfxMspBitCheck_Ev01E0003E:
 	ld	xhl, 1:i3
-	jr t, .LHCM_5c44                       ; [68 51] jr T,0x285c44
+	jr t, HDAE5000_SfxMspBitCheck_Epilogue                       ; [68 51] jr T,0x285c44
 HDAE5000_SfxMspBitCheck_Ev01E0003F:
 	ld	xhl, 1:i3
-	jr t, .LHCM_5c44                       ; [68 4d] jr T,0x285c44
+	jr t, HDAE5000_SfxMspBitCheck_Epilogue                       ; [68 4d] jr T,0x285c44
 HDAE5000_SfxMspBitCheck_Ev01E00043:
 	ld	xhl, 2:i3
 	cp	(0x22AA53:24), 0
-	jr nz, .LHCM_5c03                      ; [6e 02] jr NZ,0x285c03
+	jr nz, HDAE5000_SfxMspBitCheck_Ev01E00043_Join                      ; [6e 02] jr NZ,0x285c03
 	ld	xhl, 0:i3
-.LHCM_5c03:
-	jr t, .LHCM_5c44                       ; [68 3f] jr T,0x285c44
+HDAE5000_SfxMspBitCheck_Ev01E00043_Join:
+	jr t, HDAE5000_SfxMspBitCheck_Epilogue                       ; [68 3f] jr T,0x285c44
 HDAE5000_SfxMspBitCheck_Ev01E00044:
 	ld	xhl, 1:i3
 	cp	(0x22AA53:24), 0
-	jr nz, .LHCM_5c11                      ; [6e 02] jr NZ,0x285c11
+	jr nz, HDAE5000_SfxMspBitCheck_Ev01E00044_Join                      ; [6e 02] jr NZ,0x285c11
 	ld	xhl, 0:i3
-.LHCM_5c11:
-	jr t, .LHCM_5c44                       ; [68 31] jr T,0x285c44
+HDAE5000_SfxMspBitCheck_Ev01E00044_Join:
+	jr t, HDAE5000_SfxMspBitCheck_Epilogue                       ; [68 31] jr T,0x285c44
 HDAE5000_SfxMspBitCheck_Ev01E00045:
 	lda xhl, (0x22aa53:24)
-	jr t, .LHCM_5c44                       ; [68 2a] jr T,0x285c44
+	jr t, HDAE5000_SfxMspBitCheck_Epilogue                       ; [68 2a] jr T,0x285c44
 HDAE5000_SfxMspBitCheck_Ev01E00046:
 	ld	xhl, 1:i3
-	jr t, .LHCM_5c44                       ; [68 26] jr T,0x285c44
-.LHCM_5c1e:
+	jr t, HDAE5000_SfxMspBitCheck_Epilogue                       ; [68 26] jr T,0x285c44
+HDAE5000_SfxMspBitCheck_OnRamDataReq:
 	lda xwa, (HDAE5000_RAM_SaveOptions:24)
 	calr	HDAE5000_TypeSel_BuildMask
 	ld	bc, (HDAE5000_RAM_CurDir:24)
@@ -4280,10 +4280,10 @@ HDAE5000_SfxMspBitCheck_Ev01E00046:
 	ld	xwa, HDAE5000_OBJ_HD_FILE_OPTION
 	calr	HDAE5000_PartList_Build
 	ld	xhl, 0:i3
-	jr t, .LHCM_5c44                       ; [68 02] jr T,0x285c44
+	jr t, HDAE5000_SfxMspBitCheck_Epilogue                       ; [68 02] jr T,0x285c44
 HDAE5000_SfxMspBitCheck_Default:
 	ld	xhl, 0:i3
-.LHCM_5c44:
+HDAE5000_SfxMspBitCheck_Epilogue:
 	pop xiz
 	ret
 
@@ -4293,7 +4293,7 @@ HDAE5000_SfxRcmBitCheck:
 	ld	xiz, xwa
 	ld	xwa, xbc
 	cp	xwa, EVT_RAM_DATA_REQ
-	jrl z, .LHCM_5cd4                      ; [76 80 00] jrl Z,0x285cd4
+	jrl z, HDAE5000_SfxRcmBitCheck_OnRamDataReq                      ; [76 80 00] jrl Z,0x285cd4
 	sub	xwa, EVT_GET_LARGE_STEP
 	cp	xwa, 0x00000000
 	jrl lt, HDAE5000_SfxRcmBitCheck_Default                     ; [71 95 00] jrl LT,0x285cf8
@@ -4318,34 +4318,34 @@ HDAE5000_SfxRcmBitCheck_Ev01E00047:
 	call HDAE5000_SPrintf
 	lda	xsp, (xsp+12)
 	ld	xhl, xiz
-	jr t, .LHCM_5cfa                       ; [68 55] jr T,0x285cfa
+	jr t, HDAE5000_SfxRcmBitCheck_Epilogue                       ; [68 55] jr T,0x285cfa
 HDAE5000_SfxRcmBitCheck_Ev01E0003E:
 	ld	xhl, 1:i3
-	jr t, .LHCM_5cfa                       ; [68 51] jr T,0x285cfa
+	jr t, HDAE5000_SfxRcmBitCheck_Epilogue                       ; [68 51] jr T,0x285cfa
 HDAE5000_SfxRcmBitCheck_Ev01E0003F:
 	ld	xhl, 1:i3
-	jr t, .LHCM_5cfa                       ; [68 4d] jr T,0x285cfa
+	jr t, HDAE5000_SfxRcmBitCheck_Epilogue                       ; [68 4d] jr T,0x285cfa
 HDAE5000_SfxRcmBitCheck_Ev01E00043:
 	ld	xhl, 2:i3
 	cp	(0x22AA54:24), 0
-	jr nz, .LHCM_5cb9                      ; [6e 02] jr NZ,0x285cb9
+	jr nz, HDAE5000_SfxRcmBitCheck_Ev01E00043_Join                      ; [6e 02] jr NZ,0x285cb9
 	ld	xhl, 0:i3
-.LHCM_5cb9:
-	jr t, .LHCM_5cfa                       ; [68 3f] jr T,0x285cfa
+HDAE5000_SfxRcmBitCheck_Ev01E00043_Join:
+	jr t, HDAE5000_SfxRcmBitCheck_Epilogue                       ; [68 3f] jr T,0x285cfa
 HDAE5000_SfxRcmBitCheck_Ev01E00044:
 	ld	xhl, 1:i3
 	cp	(0x22AA54:24), 0
-	jr nz, .LHCM_5cc7                      ; [6e 02] jr NZ,0x285cc7
+	jr nz, HDAE5000_SfxRcmBitCheck_Ev01E00044_Join                      ; [6e 02] jr NZ,0x285cc7
 	ld	xhl, 0:i3
-.LHCM_5cc7:
-	jr t, .LHCM_5cfa                       ; [68 31] jr T,0x285cfa
+HDAE5000_SfxRcmBitCheck_Ev01E00044_Join:
+	jr t, HDAE5000_SfxRcmBitCheck_Epilogue                       ; [68 31] jr T,0x285cfa
 HDAE5000_SfxRcmBitCheck_Ev01E00045:
 	lda xhl, (0x22aa54:24)
-	jr t, .LHCM_5cfa                       ; [68 2a] jr T,0x285cfa
+	jr t, HDAE5000_SfxRcmBitCheck_Epilogue                       ; [68 2a] jr T,0x285cfa
 HDAE5000_SfxRcmBitCheck_Ev01E00046:
 	ld	xhl, 1:i3
-	jr t, .LHCM_5cfa                       ; [68 26] jr T,0x285cfa
-.LHCM_5cd4:
+	jr t, HDAE5000_SfxRcmBitCheck_Epilogue                       ; [68 26] jr T,0x285cfa
+HDAE5000_SfxRcmBitCheck_OnRamDataReq:
 	lda xwa, (HDAE5000_RAM_SaveOptions:24)
 	calr	HDAE5000_TypeSel_BuildMask
 	ld	bc, (HDAE5000_RAM_CurDir:24)
@@ -4355,10 +4355,10 @@ HDAE5000_SfxRcmBitCheck_Ev01E00046:
 	ld	xwa, HDAE5000_OBJ_HD_FILE_OPTION
 	calr	HDAE5000_PartList_Build
 	ld	xhl, 0:i3
-	jr t, .LHCM_5cfa                       ; [68 02] jr T,0x285cfa
+	jr t, HDAE5000_SfxRcmBitCheck_Epilogue                       ; [68 02] jr T,0x285cfa
 HDAE5000_SfxRcmBitCheck_Default:
 	ld	xhl, 0:i3
-.LHCM_5cfa:
+HDAE5000_SfxRcmBitCheck_Epilogue:
 	pop xiz
 	ret
 
@@ -4368,7 +4368,7 @@ HDAE5000_SfxMdBitCheck:
 	ld	xiz, xwa
 	ld	xwa, xbc
 	cp	xwa, EVT_RAM_DATA_REQ
-	jrl z, .LHCM_5d8a                      ; [76 80 00] jrl Z,0x285d8a
+	jrl z, HDAE5000_SfxMdBitCheck_OnRamDataReq                      ; [76 80 00] jrl Z,0x285d8a
 	sub	xwa, EVT_GET_LARGE_STEP
 	cp	xwa, 0x00000000
 	jrl lt, HDAE5000_SfxMdBitCheck_Default                     ; [71 95 00] jrl LT,0x285dae
@@ -4393,34 +4393,34 @@ HDAE5000_SfxMdBitCheck_Ev01E00047:
 	call HDAE5000_SPrintf
 	lda	xsp, (xsp+12)
 	ld	xhl, xiz
-	jr t, .LHCM_5db0                       ; [68 55] jr T,0x285db0
+	jr t, HDAE5000_SfxMdBitCheck_Epilogue                       ; [68 55] jr T,0x285db0
 HDAE5000_SfxMdBitCheck_Ev01E0003E:
 	ld	xhl, 1:i3
-	jr t, .LHCM_5db0                       ; [68 51] jr T,0x285db0
+	jr t, HDAE5000_SfxMdBitCheck_Epilogue                       ; [68 51] jr T,0x285db0
 HDAE5000_SfxMdBitCheck_Ev01E0003F:
 	ld	xhl, 1:i3
-	jr t, .LHCM_5db0                       ; [68 4d] jr T,0x285db0
+	jr t, HDAE5000_SfxMdBitCheck_Epilogue                       ; [68 4d] jr T,0x285db0
 HDAE5000_SfxMdBitCheck_Ev01E00043:
 	ld	xhl, 2:i3
 	cp	(0x22AA55:24), 0
-	jr nz, .LHCM_5d6f                      ; [6e 02] jr NZ,0x285d6f
+	jr nz, HDAE5000_SfxMdBitCheck_Ev01E00043_Join                      ; [6e 02] jr NZ,0x285d6f
 	ld	xhl, 0:i3
-.LHCM_5d6f:
-	jr t, .LHCM_5db0                       ; [68 3f] jr T,0x285db0
+HDAE5000_SfxMdBitCheck_Ev01E00043_Join:
+	jr t, HDAE5000_SfxMdBitCheck_Epilogue                       ; [68 3f] jr T,0x285db0
 HDAE5000_SfxMdBitCheck_Ev01E00044:
 	ld	xhl, 1:i3
 	cp	(0x22AA55:24), 0
-	jr nz, .LHCM_5d7d                      ; [6e 02] jr NZ,0x285d7d
+	jr nz, HDAE5000_SfxMdBitCheck_Ev01E00044_Join                      ; [6e 02] jr NZ,0x285d7d
 	ld	xhl, 0:i3
-.LHCM_5d7d:
-	jr t, .LHCM_5db0                       ; [68 31] jr T,0x285db0
+HDAE5000_SfxMdBitCheck_Ev01E00044_Join:
+	jr t, HDAE5000_SfxMdBitCheck_Epilogue                       ; [68 31] jr T,0x285db0
 HDAE5000_SfxMdBitCheck_Ev01E00045:
 	lda xhl, (0x22aa55:24)
-	jr t, .LHCM_5db0                       ; [68 2a] jr T,0x285db0
+	jr t, HDAE5000_SfxMdBitCheck_Epilogue                       ; [68 2a] jr T,0x285db0
 HDAE5000_SfxMdBitCheck_Ev01E00046:
 	ld	xhl, 1:i3
-	jr t, .LHCM_5db0                       ; [68 26] jr T,0x285db0
-.LHCM_5d8a:
+	jr t, HDAE5000_SfxMdBitCheck_Epilogue                       ; [68 26] jr T,0x285db0
+HDAE5000_SfxMdBitCheck_OnRamDataReq:
 	lda xwa, (HDAE5000_RAM_SaveOptions:24)
 	calr	HDAE5000_TypeSel_BuildMask
 	ld	bc, (HDAE5000_RAM_CurDir:24)
@@ -4430,10 +4430,10 @@ HDAE5000_SfxMdBitCheck_Ev01E00046:
 	ld	xwa, HDAE5000_OBJ_HD_FILE_OPTION
 	calr	HDAE5000_PartList_Build
 	ld	xhl, 0:i3
-	jr t, .LHCM_5db0                       ; [68 02] jr T,0x285db0
+	jr t, HDAE5000_SfxMdBitCheck_Epilogue                       ; [68 02] jr T,0x285db0
 HDAE5000_SfxMdBitCheck_Default:
 	ld	xhl, 0:i3
-.LHCM_5db0:
+HDAE5000_SfxMdBitCheck_Epilogue:
 	pop xiz
 	ret
 
@@ -4444,7 +4444,7 @@ HDAE5000_SfxTlxBitCheck:
 	ld (xsp + 0x04), xwa
 	ld	xwa, xbc
 	cp	xwa, EVT_RAM_DATA_REQ
-	jrl z, .LHCM_5e6d                      ; [76 aa 00] jrl Z,0x285e6d
+	jrl z, HDAE5000_SfxTlxBitCheck_OnRamDataReq                      ; [76 aa 00] jrl Z,0x285e6d
 	sub	xwa, EVT_GET_LARGE_STEP
 	cp	xwa, 0x00000000
 	jrl lt, HDAE5000_SfxTlxBitCheck_Default                     ; [71 bf 00] jrl LT,0x285e91
@@ -4472,45 +4472,45 @@ HDAE5000_SfxTlxBitCheck_Ev01E00047:
 	ld xwa, (xiz + 0x0e)
 	ld	(0x23a0a6), xwa
 	ld xhl, (xsp + 0x04)
-	jr t, .LHCM_5e93                       ; [68 74] jr T,0x285e93
+	jr t, HDAE5000_SfxTlxBitCheck_Epilogue                       ; [68 74] jr T,0x285e93
 HDAE5000_SfxTlxBitCheck_Ev01E0003E:
 	ld	xhl, 1:i3
-	jr t, .LHCM_5e93                       ; [68 70] jr T,0x285e93
+	jr t, HDAE5000_SfxTlxBitCheck_Epilogue                       ; [68 70] jr T,0x285e93
 HDAE5000_SfxTlxBitCheck_Ev01E0003F:
 	ld	xhl, 1:i3
-	jr t, .LHCM_5e93                       ; [68 6c] jr T,0x285e93
+	jr t, HDAE5000_SfxTlxBitCheck_Epilogue                       ; [68 6c] jr T,0x285e93
 HDAE5000_SfxTlxBitCheck_Ev01E00043:
 	ld	xhl, 2:i3
 	cp	(0x22AA56:24), 0
-	jr nz, .LHCM_5e33                      ; [6e 02] jr NZ,0x285e33
+	jr nz, HDAE5000_SfxTlxBitCheck_Ev01E00043_Join                      ; [6e 02] jr NZ,0x285e33
 	ld	xhl, 0:i3
-.LHCM_5e33:
-	jr t, .LHCM_5e93                       ; [68 5e] jr T,0x285e93
+HDAE5000_SfxTlxBitCheck_Ev01E00043_Join:
+	jr t, HDAE5000_SfxTlxBitCheck_Epilogue                       ; [68 5e] jr T,0x285e93
 HDAE5000_SfxTlxBitCheck_Ev01E00044:
 	ld	xwa, (0x23a0a6)
 	cp	xwa, 0x00000001
-	jr nz, .LHCM_5e4d                      ; [6e 0b] jr NZ,0x285e4d
+	jr nz, HDAE5000_SfxTlxBitCheck_Ev01E00044_Skip                      ; [6e 0b] jr NZ,0x285e4d
 	ld	xwa, 2:i3
 	ld	(0x23a0a6), xwa
 	ld	xhl, 2:i3
-	jr t, .LHCM_5e56                       ; [68 09] jr T,0x285e56
-.LHCM_5e4d:
+	jr t, HDAE5000_SfxTlxBitCheck_Ev01E00044_Join                       ; [68 09] jr T,0x285e56
+HDAE5000_SfxTlxBitCheck_Ev01E00044_Skip:
 	ld	xwa, 1:i3
 	ld	(0x23a0a6), xwa
 	ld	xhl, 1:i3
-.LHCM_5e56:
+HDAE5000_SfxTlxBitCheck_Ev01E00044_Join:
 	cp	(0x22AA56:24), 0
-	jr nz, .LHCM_5e60                      ; [6e 02] jr NZ,0x285e60
+	jr nz, HDAE5000_SfxTlxBitCheck_Ev01E00044_Join2                      ; [6e 02] jr NZ,0x285e60
 	ld	xhl, 0:i3
-.LHCM_5e60:
-	jr t, .LHCM_5e93                       ; [68 31] jr T,0x285e93
+HDAE5000_SfxTlxBitCheck_Ev01E00044_Join2:
+	jr t, HDAE5000_SfxTlxBitCheck_Epilogue                       ; [68 31] jr T,0x285e93
 HDAE5000_SfxTlxBitCheck_Ev01E00045:
 	lda xhl, (0x22aa56:24)
-	jr t, .LHCM_5e93                       ; [68 2a] jr T,0x285e93
+	jr t, HDAE5000_SfxTlxBitCheck_Epilogue                       ; [68 2a] jr T,0x285e93
 HDAE5000_SfxTlxBitCheck_Ev01E00046:
 	ld	xhl, 1:i3
-	jr t, .LHCM_5e93                       ; [68 26] jr T,0x285e93
-.LHCM_5e6d:
+	jr t, HDAE5000_SfxTlxBitCheck_Epilogue                       ; [68 26] jr T,0x285e93
+HDAE5000_SfxTlxBitCheck_OnRamDataReq:
 	lda xwa, (HDAE5000_RAM_SaveOptions:24)
 	calr	HDAE5000_TypeSel_BuildMask
 	ld	bc, (HDAE5000_RAM_CurDir:24)
@@ -4520,10 +4520,10 @@ HDAE5000_SfxTlxBitCheck_Ev01E00046:
 	ld	xwa, HDAE5000_OBJ_HD_FILE_OPTION
 	calr	HDAE5000_PartList_Build
 	ld	xhl, 0:i3
-	jr t, .LHCM_5e93                       ; [68 02] jr T,0x285e93
+	jr t, HDAE5000_SfxTlxBitCheck_Epilogue                       ; [68 02] jr T,0x285e93
 HDAE5000_SfxTlxBitCheck_Default:
 	ld	xhl, 0:i3
-.LHCM_5e93:
+HDAE5000_SfxTlxBitCheck_Epilogue:
 	pop xiz
 	inc 4, xsp
 	ret
@@ -4534,7 +4534,7 @@ HDAE5000_WriteProtectEditCheck:
 	ld	xiz, xwa
 	ld	xwa, xbc
 	cp	xwa, EVT_RAM_DATA_REQ
-	jr z, .LHCM_5f0a                       ; [66 66] jr Z,0x285f0a
+	jr z, HDAE5000_WriteProtectEditCheck_OnRamDataReq                       ; [66 66] jr Z,0x285f0a
 	sub	xwa, EVT_GET_LARGE_STEP
 	cp	xwa, 0x00000000
 	jr lt, HDAE5000_WriteProtectEditCheck_Default                      ; [61 66] jr LT,0x285f18
@@ -4559,31 +4559,31 @@ HDAE5000_WriteProtectEditCheck_Ev01E00047:
 	call HDAE5000_SPrintf
 	lda	xsp, (xsp+12)
 	ld	xhl, xiz
-	jr t, .LHCM_5f1a                       ; [68 27] jr T,0x285f1a
+	jr t, HDAE5000_WriteProtectEditCheck_Epilogue                       ; [68 27] jr T,0x285f1a
 HDAE5000_WriteProtectEditCheck_Ev01E0003E:
 	ld	xhl, 1:i3
-	jr t, .LHCM_5f1a                       ; [68 23] jr T,0x285f1a
+	jr t, HDAE5000_WriteProtectEditCheck_Epilogue                       ; [68 23] jr T,0x285f1a
 HDAE5000_WriteProtectEditCheck_Ev01E00043:
 	ld	xhl, 1:i3
-	jr t, .LHCM_5f1a                       ; [68 1f] jr T,0x285f1a
+	jr t, HDAE5000_WriteProtectEditCheck_Epilogue                       ; [68 1f] jr T,0x285f1a
 HDAE5000_WriteProtectEditCheck_Ev01E00044:
 	ld	xhl, 0:i3
-	jr t, .LHCM_5f1a                       ; [68 1b] jr T,0x285f1a
+	jr t, HDAE5000_WriteProtectEditCheck_Epilogue                       ; [68 1b] jr T,0x285f1a
 HDAE5000_WriteProtectEditCheck_Ev01E00045:
 	lda xhl, (HDAE5000_RAM_WriteProtect:24)
-	jr t, .LHCM_5f1a                       ; [68 14] jr T,0x285f1a
+	jr t, HDAE5000_WriteProtectEditCheck_Epilogue                       ; [68 14] jr T,0x285f1a
 HDAE5000_WriteProtectEditCheck_Ev01E00046:
 	ld	xhl, 1:i3
-	jr t, .LHCM_5f1a                       ; [68 10] jr T,0x285f1a
-.LHCM_5f0a:
+	jr t, HDAE5000_WriteProtectEditCheck_Epilogue                       ; [68 10] jr T,0x285f1a
+HDAE5000_WriteProtectEditCheck_OnRamDataReq:
 	ld	a, (HDAE5000_RAM_WriteProtect:24)
 	extz wa
 	calr	HDAE5000_Set_Menu_Visibility
 	ld	xhl, 0:i3
-	jr t, .LHCM_5f1a                       ; [68 02] jr T,0x285f1a
+	jr t, HDAE5000_WriteProtectEditCheck_Epilogue                       ; [68 02] jr T,0x285f1a
 HDAE5000_WriteProtectEditCheck_Default:
 	ld	xhl, 0:i3
-.LHCM_5f1a:
+HDAE5000_WriteProtectEditCheck_Epilogue:
 	pop xiz
 	ret
 
@@ -4593,7 +4593,7 @@ HDAE5000_LyricJumpEditCheck:
 	ld	xiz, xwa
 	ld	xwa, xbc
 	cp	xwa, EVT_RAM_DATA_REQ
-	jr z, .LHCM_5f83                       ; [66 5a] jr Z,0x285f83
+	jr z, HDAE5000_LyricJumpEditCheck_OnRamDataReq                       ; [66 5a] jr Z,0x285f83
 	sub	xwa, EVT_GET_LARGE_STEP
 	cp	xwa, 0x00000000
 	jr lt, HDAE5000_LyricJumpEditCheck_Default                      ; [61 50] jr LT,0x285f87
@@ -4614,39 +4614,39 @@ HDAE5000_LyricJumpEditCheck_Ev01E00047:
 	call HDAE5000_SPrintf
 	lda	xsp, (xsp+12)
 	ld	xhl, xiz
-	jr t, .LHCM_5f89                       ; [68 1d] jr T,0x285f89
+	jr t, HDAE5000_LyricJumpEditCheck_Epilogue                       ; [68 1d] jr T,0x285f89
 HDAE5000_LyricJumpEditCheck_Ev01E0003E:
 	ld	xhl, 1:i3
-	jr t, .LHCM_5f89                       ; [68 19] jr T,0x285f89
+	jr t, HDAE5000_LyricJumpEditCheck_Epilogue                       ; [68 19] jr T,0x285f89
 HDAE5000_LyricJumpEditCheck_Ev01E00043:
 	ld	xhl, 2:i3
-	jr t, .LHCM_5f89                       ; [68 15] jr T,0x285f89
+	jr t, HDAE5000_LyricJumpEditCheck_Epilogue                       ; [68 15] jr T,0x285f89
 HDAE5000_LyricJumpEditCheck_Ev01E00044:
 	ld	xhl, 1:i3
-	jr t, .LHCM_5f89                       ; [68 11] jr T,0x285f89
+	jr t, HDAE5000_LyricJumpEditCheck_Epilogue                       ; [68 11] jr T,0x285f89
 HDAE5000_LyricJumpEditCheck_Ev01E00045:
 	lda xhl, (HDAE5000_RAM_LyricJump:24)
-	jr t, .LHCM_5f89                       ; [68 0a] jr T,0x285f89
+	jr t, HDAE5000_LyricJumpEditCheck_Epilogue                       ; [68 0a] jr T,0x285f89
 HDAE5000_LyricJumpEditCheck_Ev01E00046:
 	ld	xhl, 1:i3
-	jr t, .LHCM_5f89                       ; [68 06] jr T,0x285f89
-.LHCM_5f83:
+	jr t, HDAE5000_LyricJumpEditCheck_Epilogue                       ; [68 06] jr T,0x285f89
+HDAE5000_LyricJumpEditCheck_OnRamDataReq:
 	ld	xhl, 0:i3
-	jr t, .LHCM_5f89                       ; [68 02] jr T,0x285f89
+	jr t, HDAE5000_LyricJumpEditCheck_Epilogue                       ; [68 02] jr T,0x285f89
 HDAE5000_LyricJumpEditCheck_Default:
 	ld	xhl, 0:i3
-.LHCM_5f89:
+HDAE5000_LyricJumpEditCheck_Epilogue:
 	pop xiz
 	ret
 
 	push xiz
 	ld	xiz, xwa
 	cp	xbc, EVT_SW_IN
-	jr z, .LHCM_5fc3                       ; [66 2d] jr Z,0x285fc3
+	jr z, HDAE5000_LyricJumpEditCheck_Default_OnSwIn                       ; [66 2d] jr Z,0x285fc3
 	cp	xbc, EVT_RAM_DATA_REQ
-	jr z, .LHCM_5fbf                       ; [66 21] jr Z,0x285fbf
+	jr z, HDAE5000_LyricJumpEditCheck_Default_OnRamDataReq                       ; [66 21] jr Z,0x285fbf
 	cp	xbc, EVT_GET_RAM_STRING
-	jr nz, .LHCM_5fe2                      ; [6e 3c] jr NZ,0x285fe2
+	jr nz, HDAE5000_LyricJumpEditCheck_Default_Done                      ; [6e 3c] jr NZ,0x285fe2
 	ld xwa, (xde + 0x0e)
 	push xwa
 	pushw HDAE5000_Fmt_1d_LyricJumpEditCheck@hi16
@@ -4656,11 +4656,11 @@ HDAE5000_LyricJumpEditCheck_Default:
 	call HDAE5000_SPrintf
 	lda	xsp, (xsp+12)
 	ld	xhl, xiz
-	jr t, .LHCM_5fe4                       ; [68 25] jr T,0x285fe4
-.LHCM_5fbf:
+	jr t, HDAE5000_LyricJumpEditCheck_Default_Epilogue                       ; [68 25] jr T,0x285fe4
+HDAE5000_LyricJumpEditCheck_Default_OnRamDataReq:
 	ld	xhl, 0:i3
-	jr t, .LHCM_5fe4                       ; [68 21] jr T,0x285fe4
-.LHCM_5fc3:
+	jr t, HDAE5000_LyricJumpEditCheck_Default_Epilogue                       ; [68 21] jr T,0x285fe4
+HDAE5000_LyricJumpEditCheck_Default_OnSwIn:
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_RootFnTable)
 	ld_sril	xix, (xwa + RootFn_SendEvent)
@@ -4668,10 +4668,10 @@ HDAE5000_LyricJumpEditCheck_Default:
 	ld	xbc, EVT_MAKE_EDIT_SW_ID
 	call	(xix)
 	or xhl, xhl
-	jr z, .LHCM_5fe2                       ; [66 00] jr Z,0x285fe2
-.LHCM_5fe2:
+	jr z, HDAE5000_LyricJumpEditCheck_Default_Done                       ; [66 00] jr Z,0x285fe2
+HDAE5000_LyricJumpEditCheck_Default_Done:
 	ld	xhl, 0:i3
-.LHCM_5fe4:
+HDAE5000_LyricJumpEditCheck_Default_Epilogue:
 	pop xiz
 	ret
 
@@ -4681,7 +4681,7 @@ HDAE5000_LyricForeColorCheck:
 	ld	xiz, xwa
 	ld	xwa, xbc
 	cp	xwa, EVT_RAM_DATA_REQ
-	jr z, .LHCM_605d                       ; [66 6a] jr Z,0x28605d
+	jr z, HDAE5000_LyricForeColorCheck_OnRamDataReq                       ; [66 6a] jr Z,0x28605d
 	sub	xwa, EVT_GET_LARGE_STEP
 	cp	xwa, 0x00000000
 	jr lt, HDAE5000_LyricForeColorCheck_Default                      ; [61 60] jr LT,0x286061
@@ -4706,31 +4706,31 @@ HDAE5000_LyricForeColorCheck_Ev01E00047:
 	call HDAE5000_SPrintf
 	lda	xsp, (xsp+12)
 	ld	xhl, xiz
-	jr t, .LHCM_6063                       ; [68 21] jr T,0x286063
+	jr t, HDAE5000_LyricForeColorCheck_Epilogue                       ; [68 21] jr T,0x286063
 HDAE5000_LyricForeColorCheck_Ev01E0003E:
 	ld	xhl, 1:i3
-	jr t, .LHCM_6063                       ; [68 1d] jr T,0x286063
+	jr t, HDAE5000_LyricForeColorCheck_Epilogue                       ; [68 1d] jr T,0x286063
 HDAE5000_LyricForeColorCheck_Ev01E0003F:
 	ld	xhl, 1:i3
-	jr t, .LHCM_6063                       ; [68 19] jr T,0x286063
+	jr t, HDAE5000_LyricForeColorCheck_Epilogue                       ; [68 19] jr T,0x286063
 HDAE5000_LyricForeColorCheck_Ev01E00043:
 	ld	xhl, 4:i3
-	jr t, .LHCM_6063                       ; [68 15] jr T,0x286063
+	jr t, HDAE5000_LyricForeColorCheck_Epilogue                       ; [68 15] jr T,0x286063
 HDAE5000_LyricForeColorCheck_Ev01E00044:
 	ld	xhl, 0:i3
-	jr t, .LHCM_6063                       ; [68 11] jr T,0x286063
+	jr t, HDAE5000_LyricForeColorCheck_Epilogue                       ; [68 11] jr T,0x286063
 HDAE5000_LyricForeColorCheck_Ev01E00045:
 	lda xhl, (HDAE5000_RAM_LyricForeColor:24)
-	jr t, .LHCM_6063                       ; [68 0a] jr T,0x286063
+	jr t, HDAE5000_LyricForeColorCheck_Epilogue                       ; [68 0a] jr T,0x286063
 HDAE5000_LyricForeColorCheck_Ev01E00046:
 	ld	xhl, 1:i3
-	jr t, .LHCM_6063                       ; [68 06] jr T,0x286063
-.LHCM_605d:
+	jr t, HDAE5000_LyricForeColorCheck_Epilogue                       ; [68 06] jr T,0x286063
+HDAE5000_LyricForeColorCheck_OnRamDataReq:
 	ld	xhl, 0:i3
-	jr t, .LHCM_6063                       ; [68 02] jr T,0x286063
+	jr t, HDAE5000_LyricForeColorCheck_Epilogue                       ; [68 02] jr T,0x286063
 HDAE5000_LyricForeColorCheck_Default:
 	ld	xhl, 0:i3
-.LHCM_6063:
+HDAE5000_LyricForeColorCheck_Epilogue:
 	pop xiz
 	ret
 
@@ -4740,7 +4740,7 @@ HDAE5000_LyricBackColorCheck:
 	ld	xiz, xwa
 	ld	xwa, xbc
 	cp	xwa, EVT_RAM_DATA_REQ
-	jr z, .LHCM_60dc                       ; [66 6a] jr Z,0x2860dc
+	jr z, HDAE5000_LyricBackColorCheck_OnRamDataReq                       ; [66 6a] jr Z,0x2860dc
 	sub	xwa, EVT_GET_LARGE_STEP
 	cp	xwa, 0x00000000
 	jr lt, HDAE5000_LyricBackColorCheck_Default                      ; [61 60] jr LT,0x2860e0
@@ -4765,31 +4765,31 @@ HDAE5000_LyricBackColorCheck_Ev01E00047:
 	call HDAE5000_SPrintf
 	lda	xsp, (xsp+12)
 	ld	xhl, xiz
-	jr t, .LHCM_60e2                       ; [68 21] jr T,0x2860e2
+	jr t, HDAE5000_LyricBackColorCheck_Epilogue                       ; [68 21] jr T,0x2860e2
 HDAE5000_LyricBackColorCheck_Ev01E0003E:
 	ld	xhl, 1:i3
-	jr t, .LHCM_60e2                       ; [68 1d] jr T,0x2860e2
+	jr t, HDAE5000_LyricBackColorCheck_Epilogue                       ; [68 1d] jr T,0x2860e2
 HDAE5000_LyricBackColorCheck_Ev01E0003F:
 	ld	xhl, 1:i3
-	jr t, .LHCM_60e2                       ; [68 19] jr T,0x2860e2
+	jr t, HDAE5000_LyricBackColorCheck_Epilogue                       ; [68 19] jr T,0x2860e2
 HDAE5000_LyricBackColorCheck_Ev01E00043:
 	ld	xhl, 4:i3
-	jr t, .LHCM_60e2                       ; [68 15] jr T,0x2860e2
+	jr t, HDAE5000_LyricBackColorCheck_Epilogue                       ; [68 15] jr T,0x2860e2
 HDAE5000_LyricBackColorCheck_Ev01E00044:
 	ld	xhl, 0:i3
-	jr t, .LHCM_60e2                       ; [68 11] jr T,0x2860e2
+	jr t, HDAE5000_LyricBackColorCheck_Epilogue                       ; [68 11] jr T,0x2860e2
 HDAE5000_LyricBackColorCheck_Ev01E00045:
 	lda xhl, (HDAE5000_RAM_LyricBackColor:24)
-	jr t, .LHCM_60e2                       ; [68 0a] jr T,0x2860e2
+	jr t, HDAE5000_LyricBackColorCheck_Epilogue                       ; [68 0a] jr T,0x2860e2
 HDAE5000_LyricBackColorCheck_Ev01E00046:
 	ld	xhl, 1:i3
-	jr t, .LHCM_60e2                       ; [68 06] jr T,0x2860e2
-.LHCM_60dc:
+	jr t, HDAE5000_LyricBackColorCheck_Epilogue                       ; [68 06] jr T,0x2860e2
+HDAE5000_LyricBackColorCheck_OnRamDataReq:
 	ld	xhl, 0:i3
-	jr t, .LHCM_60e2                       ; [68 02] jr T,0x2860e2
+	jr t, HDAE5000_LyricBackColorCheck_Epilogue                       ; [68 02] jr T,0x2860e2
 HDAE5000_LyricBackColorCheck_Default:
 	ld	xhl, 0:i3
-.LHCM_60e2:
+HDAE5000_LyricBackColorCheck_Epilogue:
 	pop xiz
 	ret
 
@@ -4799,7 +4799,7 @@ HDAE5000_WriteConfirmEditCheck:
 	ld	xiz, xwa
 	ld	xwa, xbc
 	cp	xwa, EVT_RAM_DATA_REQ
-	jr z, .LHCM_6157                       ; [66 66] jr Z,0x286157
+	jr z, HDAE5000_WriteConfirmEditCheck_OnRamDataReq                       ; [66 66] jr Z,0x286157
 	sub	xwa, EVT_GET_LARGE_STEP
 	cp	xwa, 0x00000000
 	jr lt, HDAE5000_WriteConfirmEditCheck_Default                      ; [61 5c] jr LT,0x28615b
@@ -4824,28 +4824,28 @@ HDAE5000_WriteConfirmEditCheck_Ev01E00047:
 	call HDAE5000_SPrintf
 	lda	xsp, (xsp+12)
 	ld	xhl, xiz
-	jr t, .LHCM_615d                       ; [68 1d] jr T,0x28615d
+	jr t, HDAE5000_WriteConfirmEditCheck_Epilogue                       ; [68 1d] jr T,0x28615d
 HDAE5000_WriteConfirmEditCheck_Ev01E0003E:
 	ld	xhl, 1:i3
-	jr t, .LHCM_615d                       ; [68 19] jr T,0x28615d
+	jr t, HDAE5000_WriteConfirmEditCheck_Epilogue                       ; [68 19] jr T,0x28615d
 HDAE5000_WriteConfirmEditCheck_Ev01E00043:
 	ld	xhl, 1:i3
-	jr t, .LHCM_615d                       ; [68 15] jr T,0x28615d
+	jr t, HDAE5000_WriteConfirmEditCheck_Epilogue                       ; [68 15] jr T,0x28615d
 HDAE5000_WriteConfirmEditCheck_Ev01E00044:
 	ld	xhl, 0:i3
-	jr t, .LHCM_615d                       ; [68 11] jr T,0x28615d
+	jr t, HDAE5000_WriteConfirmEditCheck_Epilogue                       ; [68 11] jr T,0x28615d
 HDAE5000_WriteConfirmEditCheck_Ev01E00045:
 	lda xhl, (HDAE5000_RAM_WriteConfirm:24)
-	jr t, .LHCM_615d                       ; [68 0a] jr T,0x28615d
+	jr t, HDAE5000_WriteConfirmEditCheck_Epilogue                       ; [68 0a] jr T,0x28615d
 HDAE5000_WriteConfirmEditCheck_Ev01E00046:
 	ld	xhl, 1:i3
-	jr t, .LHCM_615d                       ; [68 06] jr T,0x28615d
-.LHCM_6157:
+	jr t, HDAE5000_WriteConfirmEditCheck_Epilogue                       ; [68 06] jr T,0x28615d
+HDAE5000_WriteConfirmEditCheck_OnRamDataReq:
 	ld	xhl, 0:i3
-	jr t, .LHCM_615d                       ; [68 02] jr T,0x28615d
+	jr t, HDAE5000_WriteConfirmEditCheck_Epilogue                       ; [68 02] jr T,0x28615d
 HDAE5000_WriteConfirmEditCheck_Default:
 	ld	xhl, 0:i3
-.LHCM_615d:
+HDAE5000_WriteConfirmEditCheck_Epilogue:
 	pop xiz
 	ret
 
@@ -4855,7 +4855,7 @@ HDAE5000_QuickLoadModeEditCheck:
 	ld	xiz, xwa
 	ld	xwa, xbc
 	cp	xwa, EVT_RAM_DATA_REQ
-	jr z, .LHCM_61c6                       ; [66 5a] jr Z,0x2861c6
+	jr z, HDAE5000_QuickLoadModeEditCheck_OnRamDataReq                       ; [66 5a] jr Z,0x2861c6
 	sub	xwa, EVT_GET_LARGE_STEP
 	cp	xwa, 0x00000000
 	jr lt, HDAE5000_QuickLoadModeEditCheck_Default                      ; [61 50] jr LT,0x2861ca
@@ -4876,28 +4876,28 @@ HDAE5000_QuickLoadModeEditCheck_Ev01E00047:
 	call HDAE5000_SPrintf
 	lda	xsp, (xsp+12)
 	ld	xhl, xiz
-	jr t, .LHCM_61cc                       ; [68 1d] jr T,0x2861cc
+	jr t, HDAE5000_QuickLoadModeEditCheck_Epilogue                       ; [68 1d] jr T,0x2861cc
 HDAE5000_QuickLoadModeEditCheck_Ev01E0003E:
 	ld	xhl, 1:i3
-	jr t, .LHCM_61cc                       ; [68 19] jr T,0x2861cc
+	jr t, HDAE5000_QuickLoadModeEditCheck_Epilogue                       ; [68 19] jr T,0x2861cc
 HDAE5000_QuickLoadModeEditCheck_Ev01E00043:
 	ld	xhl, 3:i3
-	jr t, .LHCM_61cc                       ; [68 15] jr T,0x2861cc
+	jr t, HDAE5000_QuickLoadModeEditCheck_Epilogue                       ; [68 15] jr T,0x2861cc
 HDAE5000_QuickLoadModeEditCheck_Ev01E00044:
 	ld	xhl, 1:i3
-	jr t, .LHCM_61cc                       ; [68 11] jr T,0x2861cc
+	jr t, HDAE5000_QuickLoadModeEditCheck_Epilogue                       ; [68 11] jr T,0x2861cc
 HDAE5000_QuickLoadModeEditCheck_Ev01E00045:
 	lda xhl, (HDAE5000_RAM_QuickLoadMode:24)
-	jr t, .LHCM_61cc                       ; [68 0a] jr T,0x2861cc
+	jr t, HDAE5000_QuickLoadModeEditCheck_Epilogue                       ; [68 0a] jr T,0x2861cc
 HDAE5000_QuickLoadModeEditCheck_Ev01E00046:
 	ld	xhl, 1:i3
-	jr t, .LHCM_61cc                       ; [68 06] jr T,0x2861cc
-.LHCM_61c6:
+	jr t, HDAE5000_QuickLoadModeEditCheck_Epilogue                       ; [68 06] jr T,0x2861cc
+HDAE5000_QuickLoadModeEditCheck_OnRamDataReq:
 	ld	xhl, 0:i3
-	jr t, .LHCM_61cc                       ; [68 02] jr T,0x2861cc
+	jr t, HDAE5000_QuickLoadModeEditCheck_Epilogue                       ; [68 02] jr T,0x2861cc
 HDAE5000_QuickLoadModeEditCheck_Default:
 	ld	xhl, 0:i3
-.LHCM_61cc:
+HDAE5000_QuickLoadModeEditCheck_Epilogue:
 	pop xiz
 	ret
 
@@ -4907,7 +4907,7 @@ HDAE5000_LoadByNumberModeEditCheck:
 	ld	xiz, xwa
 	ld	xwa, xbc
 	cp	xwa, EVT_RAM_DATA_REQ
-	jr z, .LHCM_6235                       ; [66 5a] jr Z,0x286235
+	jr z, HDAE5000_LoadByNumberModeEditCheck_OnRamDataReq                       ; [66 5a] jr Z,0x286235
 	sub	xwa, EVT_GET_LARGE_STEP
 	cp	xwa, 0x00000000
 	jr lt, HDAE5000_LoadByNumberModeEditCheck_Default                      ; [61 50] jr LT,0x286239
@@ -4928,28 +4928,28 @@ HDAE5000_LoadByNumberModeEditCheck_Ev01E00047:
 	call HDAE5000_SPrintf
 	lda	xsp, (xsp+12)
 	ld	xhl, xiz
-	jr t, .LHCM_623b                       ; [68 1d] jr T,0x28623b
+	jr t, HDAE5000_LoadByNumberModeEditCheck_Epilogue                       ; [68 1d] jr T,0x28623b
 HDAE5000_LoadByNumberModeEditCheck_Ev01E0003E:
 	ld	xhl, 1:i3
-	jr t, .LHCM_623b                       ; [68 19] jr T,0x28623b
+	jr t, HDAE5000_LoadByNumberModeEditCheck_Epilogue                       ; [68 19] jr T,0x28623b
 HDAE5000_LoadByNumberModeEditCheck_Ev01E00043:
 	ld	xhl, 2:i3
-	jr t, .LHCM_623b                       ; [68 15] jr T,0x28623b
+	jr t, HDAE5000_LoadByNumberModeEditCheck_Epilogue                       ; [68 15] jr T,0x28623b
 HDAE5000_LoadByNumberModeEditCheck_Ev01E00044:
 	ld	xhl, 1:i3
-	jr t, .LHCM_623b                       ; [68 11] jr T,0x28623b
+	jr t, HDAE5000_LoadByNumberModeEditCheck_Epilogue                       ; [68 11] jr T,0x28623b
 HDAE5000_LoadByNumberModeEditCheck_Ev01E00045:
 	lda xhl, (HDAE5000_RAM_LoadByNumberMode:24)
-	jr t, .LHCM_623b                       ; [68 0a] jr T,0x28623b
+	jr t, HDAE5000_LoadByNumberModeEditCheck_Epilogue                       ; [68 0a] jr T,0x28623b
 HDAE5000_LoadByNumberModeEditCheck_Ev01E00046:
 	ld	xhl, 1:i3
-	jr t, .LHCM_623b                       ; [68 06] jr T,0x28623b
-.LHCM_6235:
+	jr t, HDAE5000_LoadByNumberModeEditCheck_Epilogue                       ; [68 06] jr T,0x28623b
+HDAE5000_LoadByNumberModeEditCheck_OnRamDataReq:
 	ld	xhl, 0:i3
-	jr t, .LHCM_623b                       ; [68 02] jr T,0x28623b
+	jr t, HDAE5000_LoadByNumberModeEditCheck_Epilogue                       ; [68 02] jr T,0x28623b
 HDAE5000_LoadByNumberModeEditCheck_Default:
 	ld	xhl, 0:i3
-.LHCM_623b:
+HDAE5000_LoadByNumberModeEditCheck_Epilogue:
 	pop xiz
 	ret
 
@@ -4959,7 +4959,7 @@ HDAE5000_JumpAfterLoadModeEditCheck:
 	ld	xiz, xwa
 	ld	xwa, xbc
 	cp	xwa, EVT_RAM_DATA_REQ
-	jr z, .LHCM_62a4                       ; [66 5a] jr Z,0x2862a4
+	jr z, HDAE5000_JumpAfterLoadModeEditCheck_OnRamDataReq                       ; [66 5a] jr Z,0x2862a4
 	sub	xwa, EVT_GET_LARGE_STEP
 	cp	xwa, 0x00000000
 	jr lt, HDAE5000_JumpAfterLoadModeEditCheck_Default                      ; [61 50] jr LT,0x2862a8
@@ -4980,28 +4980,28 @@ HDAE5000_JumpAfterLoadModeEditCheck_Ev01E00047:
 	call HDAE5000_SPrintf
 	lda	xsp, (xsp+12)
 	ld	xhl, xiz
-	jr t, .LHCM_62aa                       ; [68 1d] jr T,0x2862aa
+	jr t, HDAE5000_JumpAfterLoadModeEditCheck_Epilogue                       ; [68 1d] jr T,0x2862aa
 HDAE5000_JumpAfterLoadModeEditCheck_Ev01E0003E:
 	ld	xhl, 1:i3
-	jr t, .LHCM_62aa                       ; [68 19] jr T,0x2862aa
+	jr t, HDAE5000_JumpAfterLoadModeEditCheck_Epilogue                       ; [68 19] jr T,0x2862aa
 HDAE5000_JumpAfterLoadModeEditCheck_Ev01E00043:
 	ld	xhl, 2:i3
-	jr t, .LHCM_62aa                       ; [68 15] jr T,0x2862aa
+	jr t, HDAE5000_JumpAfterLoadModeEditCheck_Epilogue                       ; [68 15] jr T,0x2862aa
 HDAE5000_JumpAfterLoadModeEditCheck_Ev01E00044:
 	ld	xhl, 1:i3
-	jr t, .LHCM_62aa                       ; [68 11] jr T,0x2862aa
+	jr t, HDAE5000_JumpAfterLoadModeEditCheck_Epilogue                       ; [68 11] jr T,0x2862aa
 HDAE5000_JumpAfterLoadModeEditCheck_Ev01E00045:
 	lda xhl, (HDAE5000_RAM_JumpAfterLoad:24)
-	jr t, .LHCM_62aa                       ; [68 0a] jr T,0x2862aa
+	jr t, HDAE5000_JumpAfterLoadModeEditCheck_Epilogue                       ; [68 0a] jr T,0x2862aa
 HDAE5000_JumpAfterLoadModeEditCheck_Ev01E00046:
 	ld	xhl, 1:i3
-	jr t, .LHCM_62aa                       ; [68 06] jr T,0x2862aa
-.LHCM_62a4:
+	jr t, HDAE5000_JumpAfterLoadModeEditCheck_Epilogue                       ; [68 06] jr T,0x2862aa
+HDAE5000_JumpAfterLoadModeEditCheck_OnRamDataReq:
 	ld	xhl, 0:i3
-	jr t, .LHCM_62aa                       ; [68 02] jr T,0x2862aa
+	jr t, HDAE5000_JumpAfterLoadModeEditCheck_Epilogue                       ; [68 02] jr T,0x2862aa
 HDAE5000_JumpAfterLoadModeEditCheck_Default:
 	ld	xhl, 0:i3
-.LHCM_62aa:
+HDAE5000_JumpAfterLoadModeEditCheck_Epilogue:
 	pop xiz
 	ret
 
