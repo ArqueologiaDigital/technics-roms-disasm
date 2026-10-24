@@ -19,6 +19,8 @@ and header text that holds for the target build.
 | Did any byte move?                                            | `make -j3 gate`                                                                                         |
 | Calibrate address translation (dry run)                       | `python3 scripts/tools/propagate_v10_headers.py --no-translate`                                         |
 | Where does v7 keep a v10 RAM address?                         | `python3 scripts/analysis/v7_ram_shift_map.py --min-obs 2`                                              |
+| Draft a hand port (first guess, for a person to finish)       | `python3 scripts/tools/draft_handport_headers.py LABEL ...`                                             |
+| Is v10 routine X the same code as v7 routine Y?               | `python3 scripts/analysis/v7_routine_equivalence.py X=Y=NBYTES`                                         |
 | Apply the hand ports (idempotent)                             | `python3 scripts/tools/apply_handported_headers.py analysis/header-propagation/handport-2026-10-24.txt` |
 
 The dry run and `--apply` read the linked ELFs in `rebuilt_ROMs/`, so run `make all` first.
@@ -90,7 +92,12 @@ review list's `handport` column. A port adapts the header only in these ways:
   reverted by hand.
 - **Callee names.** v7 sometimes calls the same routine under a placeholder name. The header
   then names v7's label, but only after the two routines were shown to be the same: equal ROM
-  bytes modulo the RAM map and relocated pointers, or equal bodies modulo spelling.
+  bytes modulo the RAM map and relocated pointers. The pairs used, and the two whole-span checks
+  (FDC_CMD_EXEC over 672 bytes and CmpRealTtl_EnterTitle_Impl), are in
+  `callee-equivalence-2026-10-24.txt`. That file is the output of
+  `scripts/analysis/v7_routine_equivalence.py` run on those pairs.
+- **Drafts.** The entries were first drafted by `scripts/tools/draft_handport_headers.py`, which
+  maps every RAM-range number and renames differing callees, and were then corrected by hand.
 - **Decimal RAM addresses** (FDC_CMD_EXEC, AccPart_GetParamAddr_Wrap) are rewritten the same way.
 
 A header is not ported when it names a symbol v7 does not define, or when v7 frames the code
