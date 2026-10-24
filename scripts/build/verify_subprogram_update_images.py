@@ -22,12 +22,13 @@ DECODER
     decode_compressed, encode_decisions) -- the one the v1.42 update-image
     build rule uses -- not a copy.  Back-reference length = low nibble + 3.
     scripts/build/decompress_lzss.py uses + 2 and is NOT used here: on the
-    v1.40 stream it yields 177,007 bytes, 172,469 of the first 177,007 wrong
-    (checked 2026-10-24 by calling its decompress_slide4k on the stream).
+    v1.40 stream it yields 177,007 bytes, 172,469 of them wrong
+    (`--legacy-decoder` reproduces that figure).
 
 RUN
     python3 scripts/build/verify_subprogram_update_images.py
     make verify-subprogram-update-images        (part of `make gate`)
+    python3 scripts/build/verify_subprogram_update_images.py --legacy-decoder
 Exits non-zero on any mismatch.
 """
 import os
@@ -85,7 +86,21 @@ def check(ver):
     return problems, summary
 
 
+def legacy_decoder():
+    """What decompress_lzss.py's decoder (length = nibble + 2) makes of v1.40."""
+    import decompress_lzss
+    comp = open(os.path.join(ROOT, "original_ROMs", "kn5000_subprogram_v140_compressed.rom"), "rb").read()
+    plain = open(os.path.join(ROOT, "original_ROMs", "kn5000_subprogram_v140.rom"), "rb").read()
+    out = decompress_lzss.decompress_slide4k(comp[lz.HEADER_LEN:])
+    wrong = sum(1 for x, y in zip(out, plain) if x != y)
+    print(f"  decompress_lzss.py on v140: {len(out):,} B out (plain image {len(plain):,} B), "
+          f"{wrong:,} of the first {min(len(out), len(plain)):,} differ")
+    return 0
+
+
 def main():
+    if "--legacy-decoder" in sys.argv:
+        return legacy_decoder()
     bad = 0
     for ver in VERSIONS:
         problems, summary = check(ver)
