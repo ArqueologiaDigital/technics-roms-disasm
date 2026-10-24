@@ -392,102 +392,102 @@
 	.set GroupMaxMemberIndex_DrumGroupsSecondWindow, 0x00F06ED4
 	.set GroupMaxMemberIndex_ToneGroupsCopy,      0x00F06EE4
 	.set SoundCodeByGroupMember_ModeOffsetGroup,  0x00F06EF4
-	.set PanelSoundSel_ByProgramAndBank,        0x00F07134
-	.set ProgramChangeOut_ByProgramAndBank,    0x00F08514
-	.set SoftKeyCol2_SoundEditPitchTune,                              0x00F0A162
-	.set SoftKeyCol3_SoundEditPitchTune,                              0x00F0A1D1
-	.set SoftKeyCol4_SoundEditPitchTune,                              0x00F0A240
-	.set SoftKeyCol6_SoundEditPitchTune,                              0x00F0A2AB
-	.set LcdKeyRow1_SoundEditPitchTune,                              0x00F0A3A1
-	.set LcdKeyRow2_SoundEditPitchTune,                              0x00F0A3BF
-	.set LcdKeyRow3_SoundEditPitchTune,                              0x00F0A3DB
-	.set LcdKeyRow4_SoundEditPitchTune,                              0x00F0A404
-	.set LcdKeyRow5_SoundEditPitchTune,                              0x00F0A451
-	.set ExitKey_SoundEditPitchTune,                              0x00F0A49E
-	.set SoftKeyCol1_SoundEditPitchEnvelope1,                              0x00F0A4BE
-	.set SoftKeyCol2_SoundEditPitchEnvelope1,                              0x00F0A4D7
-	.set SoftKeyCol3_SoundEditPitchEnvelope1,                              0x00F0A4F0
-	.set SoftKeyCol4_SoundEditPitchEnvelope1,                              0x00F0A509
-	.set SoftKeyCol5_SoundEditPitchEnvelope1,                              0x00F0A522
-	.set SoftKeyCol6_SoundEditPitchEnvelope1,                              0x00F0A53B
-	.set SoftKeyCol7_SoundEditPitchEnvelope1,                              0x00F0A554
-	.set LcdKeyRow1_SoundEditPitchEnvelope1,                              0x00F0A56D
-	.set LcdKeyRow2_SoundEditPitchEnvelope1,                              0x00F0A57E
-	.set LcdKeyRow3_SoundEditPitchEnvelope1,                              0x00F0A5AA
-	.set LcdKeyRow4_SoundEditPitchEnvelope1,                              0x00F0A5D6
-	.set LcdKeyRow5_SoundEditPitchEnvelope1,                              0x00F0A604
-	.set PageKey_SoundEditPitchEnvelope1,                              0x00F0A632
-	.set ExitKey_SoundEditPitchEnvelope1,                              0x00F0A64A
-	.set SoftKeyCol2_SoundEditPitchEnvelope2,                              0x00F0A66A
-	.set SoftKeyCol3_SoundEditPitchEnvelope2,                              0x00F0A67F
-	.set SoftKeyCol4_SoundEditPitchEnvelope2,                              0x00F0A694
-	.set SoftKeyCol5_SoundEditPitchEnvelope2,                              0x00F0A6A9
-	.set SoftKeyCol7_SoundEditPitchEnvelope2,                              0x00F0A6BE
-	.set SoftKeyCol8_SoundEditPitchEnvelope2,                              0x00F0A6D3
-	.set LcdKeyRow1_SoundEditPitchEnvelope2,                              0x00F0A6E8
-	.set LcdKeyRow2_SoundEditPitchEnvelope2,                              0x00F0A6F9
-	.set LcdKeyRow3_SoundEditPitchEnvelope2,                              0x00F0A725
-	.set LcdKeyRow4_SoundEditPitchEnvelope2,                              0x00F0A751
-	.set LcdKeyRow5_SoundEditPitchEnvelope2,                              0x00F0A775
-	.set PageKey_SoundEditPitchEnvelope2,                              0x00F0A799
-	.set ExitKey_SoundEditPitchEnvelope2,                              0x00F0A7B1
-	.set SoftKeyCol2_SoundEditPitchLfo,                              0x00F0A7D1
-	.set SoftKeyCol3_SoundEditPitchLfo,                              0x00F0A7E6
-	.set SoftKeyCol4_SoundEditPitchLfo,                              0x00F0A7FB
-	.set SoftKeyCol5_SoundEditPitchLfo,                              0x00F0A810
-	.set SoftKeyCol6_SoundEditPitchLfo,                              0x00F0A825
-	.set SoftKeyCol7_SoundEditPitchLfo,                              0x00F0A83A
-	.set SoftKeyCol8_SoundEditPitchLfo,                              0x00F0A84F
-	.set LcdKeyRow1_SoundEditPitchLfo,                              0x00F0A864
-	.set LcdKeyRow2_SoundEditPitchLfo,                              0x00F0A882
-	.set LcdKeyRow3_SoundEditPitchLfo,                              0x00F0A8A6
-	.set LcdKeyRow4_SoundEditPitchLfo,                              0x00F0A8BE
-	.set LcdKeyRow5_SoundEditPitchLfo,                              0x00F0A8D6
-	.set ExitKey_SoundEditPitchLfo,                              0x00F0A8EE
-	.set SoftKeyCol2_SoundEditDrumMenu,                              0x00F0AB4B
-	.set SoftKeyCol3_SoundEditDrumMenu,                              0x00F0ABB9
-	.set SoftKeyCol4_SoundEditDrumMenu,                              0x00F0AC43
-	.set LcdKeyRow1_SoundEditDrumMenu,                              0x00F0ACB1
-	.set LcdKeyRow2_SoundEditDrumMenu,                              0x00F0ACCE
-	.set LcdKeyRow3_SoundEditDrumMenu,                              0x00F0AD02
-	.set LcdKeyRow4_SoundEditDrumMenu,                              0x00F0AD36
-	.set LcdKeyRow5_SoundEditDrumMenu,                              0x00F0AD75
-	.set ExitKey_SoundEditDrumMenu,                              0x00F0ADBC
-	.set SoftKeyCol1_SoundEditDigitalEffect,                              0x00F0ADD4
-	.set SoftKeyCol2_SoundEditDigitalEffect,                              0x00F0AE9B
-	.set SoftKeyCol3_SoundEditDigitalEffect,                              0x00F0AF66
-	.set SoftKeyCol4_SoundEditDigitalEffect,                              0x00F0B041
-	.set SoftKeyCol5_SoundEditDigitalEffect,                              0x00F0B0FF
-	.set SoftKeyCol6_SoundEditDigitalEffect,                              0x00F0B1A9
-	.set SoftKeyCol7_SoundEditDigitalEffect,                              0x00F0B228
-	.set SoftKeyCol8_SoundEditDigitalEffect,                              0x00F0B2E2
-	.set LcdKeyRow2_SoundEditDigitalEffect,                              0x00F0B39C
-	.set LcdKeyRow3_SoundEditDigitalEffect,                              0x00F0B462
-	.set ExitKey_SoundEditDigitalEffect,                              0x00F0B51B
-	.set LcdKeyRow1_SoundEditMemoryWrite,                              0x00F0B533
-	.set LcdKeyRow3_SoundEditMemoryWrite,                              0x00F0B578
-	.set LcdKeyRow4_SoundEditMemoryWrite,                              0x00F0B62F
-	.set LcdKeyRow5_SoundEditMemoryWrite,                              0x00F0B6D7
-	.set ExitKey_SoundEditMemoryWrite,                              0x00F0B6EF
-	.set SoftKeyCol1_SoundEditNaming,                              0x00F0B70F
-	.set SoftKeyCol2_SoundEditNaming,                              0x00F0B713
-	.set SoftKeyCol3_SoundEditNaming,                              0x00F0B717
-	.set SoftKeyCol4_SoundEditNaming,                              0x00F0B71B
-	.set SoftKeyCol5_SoundEditNaming,                              0x00F0B71F
-	.set SoftKeyCol6_SoundEditNaming,                              0x00F0B723
-	.set SoftKeyCol7_SoundEditNaming,                              0x00F0B727
-	.set SoftKeyCol8_SoundEditNaming,                              0x00F0B747
-	.set LcdKeyRow1_SoundEditNaming,                              0x00F0B74B
-	.set LcdKeyRow2_SoundEditNaming,                              0x00F0B80D
-	.set ExitKey_SoundEditNaming,                              0x00F0B81D
-	.set NameEntry_Begin,                              0x00F0B91C
-	.set SoftKeyCol1_SoundEditCopy,                              0x00F0C0BB
-	.set SoftKeyCol2_SoundEditCopy,                              0x00F0C35D
-	.set SoftKeyCol3_SoundEditCopy,                              0x00F0C3F9
-	.set SoftKeyCol4_SoundEditCopy,                              0x00F0C47B
-	.set SoftKeyCol6_SoundEditCopy,                              0x00F0C528
-	.set LcdKeyRow4_SoundEditCopy,                              0x00F0C616
-	.set ExitKey_SoundEditCopy,                              0x00F0C70A
+	.set PanelSoundSel_ByProgramAndBank,          0x00F07134
+	.set ProgramChangeOut_ByProgramAndBank,       0x00F08514
+	.set SoftKeyCol2_SoundEditPitchTune,          0x00F0A162
+	.set SoftKeyCol3_SoundEditPitchTune,          0x00F0A1D1
+	.set SoftKeyCol4_SoundEditPitchTune,          0x00F0A240
+	.set SoftKeyCol6_SoundEditPitchTune,          0x00F0A2AB
+	.set LcdKeyRow1_SoundEditPitchTune,           0x00F0A3A1
+	.set LcdKeyRow2_SoundEditPitchTune,           0x00F0A3BF
+	.set LcdKeyRow3_SoundEditPitchTune,           0x00F0A3DB
+	.set LcdKeyRow4_SoundEditPitchTune,           0x00F0A404
+	.set LcdKeyRow5_SoundEditPitchTune,           0x00F0A451
+	.set ExitKey_SoundEditPitchTune,              0x00F0A49E
+	.set SoftKeyCol1_SoundEditPitchEnvelope1,     0x00F0A4BE
+	.set SoftKeyCol2_SoundEditPitchEnvelope1,     0x00F0A4D7
+	.set SoftKeyCol3_SoundEditPitchEnvelope1,     0x00F0A4F0
+	.set SoftKeyCol4_SoundEditPitchEnvelope1,     0x00F0A509
+	.set SoftKeyCol5_SoundEditPitchEnvelope1,     0x00F0A522
+	.set SoftKeyCol6_SoundEditPitchEnvelope1,     0x00F0A53B
+	.set SoftKeyCol7_SoundEditPitchEnvelope1,     0x00F0A554
+	.set LcdKeyRow1_SoundEditPitchEnvelope1,      0x00F0A56D
+	.set LcdKeyRow2_SoundEditPitchEnvelope1,      0x00F0A57E
+	.set LcdKeyRow3_SoundEditPitchEnvelope1,      0x00F0A5AA
+	.set LcdKeyRow4_SoundEditPitchEnvelope1,      0x00F0A5D6
+	.set LcdKeyRow5_SoundEditPitchEnvelope1,      0x00F0A604
+	.set PageKey_SoundEditPitchEnvelope1,         0x00F0A632
+	.set ExitKey_SoundEditPitchEnvelope1,         0x00F0A64A
+	.set SoftKeyCol2_SoundEditPitchEnvelope2,     0x00F0A66A
+	.set SoftKeyCol3_SoundEditPitchEnvelope2,     0x00F0A67F
+	.set SoftKeyCol4_SoundEditPitchEnvelope2,     0x00F0A694
+	.set SoftKeyCol5_SoundEditPitchEnvelope2,     0x00F0A6A9
+	.set SoftKeyCol7_SoundEditPitchEnvelope2,     0x00F0A6BE
+	.set SoftKeyCol8_SoundEditPitchEnvelope2,     0x00F0A6D3
+	.set LcdKeyRow1_SoundEditPitchEnvelope2,      0x00F0A6E8
+	.set LcdKeyRow2_SoundEditPitchEnvelope2,      0x00F0A6F9
+	.set LcdKeyRow3_SoundEditPitchEnvelope2,      0x00F0A725
+	.set LcdKeyRow4_SoundEditPitchEnvelope2,      0x00F0A751
+	.set LcdKeyRow5_SoundEditPitchEnvelope2,      0x00F0A775
+	.set PageKey_SoundEditPitchEnvelope2,         0x00F0A799
+	.set ExitKey_SoundEditPitchEnvelope2,         0x00F0A7B1
+	.set SoftKeyCol2_SoundEditPitchLfo,           0x00F0A7D1
+	.set SoftKeyCol3_SoundEditPitchLfo,           0x00F0A7E6
+	.set SoftKeyCol4_SoundEditPitchLfo,           0x00F0A7FB
+	.set SoftKeyCol5_SoundEditPitchLfo,           0x00F0A810
+	.set SoftKeyCol6_SoundEditPitchLfo,           0x00F0A825
+	.set SoftKeyCol7_SoundEditPitchLfo,           0x00F0A83A
+	.set SoftKeyCol8_SoundEditPitchLfo,           0x00F0A84F
+	.set LcdKeyRow1_SoundEditPitchLfo,            0x00F0A864
+	.set LcdKeyRow2_SoundEditPitchLfo,            0x00F0A882
+	.set LcdKeyRow3_SoundEditPitchLfo,            0x00F0A8A6
+	.set LcdKeyRow4_SoundEditPitchLfo,            0x00F0A8BE
+	.set LcdKeyRow5_SoundEditPitchLfo,            0x00F0A8D6
+	.set ExitKey_SoundEditPitchLfo,               0x00F0A8EE
+	.set SoftKeyCol2_SoundEditDrumMenu,           0x00F0AB4B
+	.set SoftKeyCol3_SoundEditDrumMenu,           0x00F0ABB9
+	.set SoftKeyCol4_SoundEditDrumMenu,           0x00F0AC43
+	.set LcdKeyRow1_SoundEditDrumMenu,            0x00F0ACB1
+	.set LcdKeyRow2_SoundEditDrumMenu,            0x00F0ACCE
+	.set LcdKeyRow3_SoundEditDrumMenu,            0x00F0AD02
+	.set LcdKeyRow4_SoundEditDrumMenu,            0x00F0AD36
+	.set LcdKeyRow5_SoundEditDrumMenu,            0x00F0AD75
+	.set ExitKey_SoundEditDrumMenu,               0x00F0ADBC
+	.set SoftKeyCol1_SoundEditDigitalEffect,      0x00F0ADD4
+	.set SoftKeyCol2_SoundEditDigitalEffect,      0x00F0AE9B
+	.set SoftKeyCol3_SoundEditDigitalEffect,      0x00F0AF66
+	.set SoftKeyCol4_SoundEditDigitalEffect,      0x00F0B041
+	.set SoftKeyCol5_SoundEditDigitalEffect,      0x00F0B0FF
+	.set SoftKeyCol6_SoundEditDigitalEffect,      0x00F0B1A9
+	.set SoftKeyCol7_SoundEditDigitalEffect,      0x00F0B228
+	.set SoftKeyCol8_SoundEditDigitalEffect,      0x00F0B2E2
+	.set LcdKeyRow2_SoundEditDigitalEffect,       0x00F0B39C
+	.set LcdKeyRow3_SoundEditDigitalEffect,       0x00F0B462
+	.set ExitKey_SoundEditDigitalEffect,          0x00F0B51B
+	.set LcdKeyRow1_SoundEditMemoryWrite,         0x00F0B533
+	.set LcdKeyRow3_SoundEditMemoryWrite,         0x00F0B578
+	.set LcdKeyRow4_SoundEditMemoryWrite,         0x00F0B62F
+	.set LcdKeyRow5_SoundEditMemoryWrite,         0x00F0B6D7
+	.set ExitKey_SoundEditMemoryWrite,            0x00F0B6EF
+	.set SoftKeyCol1_SoundEditNaming,             0x00F0B70F
+	.set SoftKeyCol2_SoundEditNaming,             0x00F0B713
+	.set SoftKeyCol3_SoundEditNaming,             0x00F0B717
+	.set SoftKeyCol4_SoundEditNaming,             0x00F0B71B
+	.set SoftKeyCol5_SoundEditNaming,             0x00F0B71F
+	.set SoftKeyCol6_SoundEditNaming,             0x00F0B723
+	.set SoftKeyCol7_SoundEditNaming,             0x00F0B727
+	.set SoftKeyCol8_SoundEditNaming,             0x00F0B747
+	.set LcdKeyRow1_SoundEditNaming,              0x00F0B74B
+	.set LcdKeyRow2_SoundEditNaming,              0x00F0B80D
+	.set ExitKey_SoundEditNaming,                 0x00F0B81D
+	.set NameEntry_Begin,                         0x00F0B91C
+	.set SoftKeyCol1_SoundEditCopy,               0x00F0C0BB
+	.set SoftKeyCol2_SoundEditCopy,               0x00F0C35D
+	.set SoftKeyCol3_SoundEditCopy,               0x00F0C3F9
+	.set SoftKeyCol4_SoundEditCopy,               0x00F0C47B
+	.set SoftKeyCol6_SoundEditCopy,               0x00F0C528
+	.set LcdKeyRow4_SoundEditCopy,                0x00F0C616
+	.set ExitKey_SoundEditCopy,                   0x00F0C70A
 	.set DL_Input0utputFilterMidiT0talM0de,       0x00F0C800
 	.set DL_RealtimeMessageInput0utput,           0x00F0C8D5
 	.set DL_F0C917,                               0x00F0C917
@@ -496,7 +496,7 @@
 	.set DL_MultiSingleOmni,                      0x00F0CA2F
 	.set DL_MultiSingle,                          0x00F0CA3E
 	.set DL_F0CA4D,                               0x00F0CA4D
-	.set MidiTotalMode_PaintSingleChannel_DL,                               0x00F0CA5C
+	.set MidiTotalMode_PaintSingleChannel_DL,     0x00F0CA5C
 	.set DL_NormalTechRemap,                      0x00F0CA6B
 	.set DL_F0CA7A,                               0x00F0CA7A
 	.set DL_F0CA89,                               0x00F0CA89
@@ -523,20 +523,20 @@
 	.set DL_F0D005,                               0x00F0D005
 	.set DL_F0D00F,                               0x00F0D00F
 	.set DL_F0D019,                               0x00F0D019
-	.set MidiOutProgramChange_PaintBankLsb_DL,                               0x00F0D023
-	.set MidiOutProgramChange_PaintBankSelect_DL,                               0x00F0D02D
+	.set MidiOutProgramChange_PaintBankLsb_DL,    0x00F0D023
+	.set MidiOutProgramChange_PaintBankSelect_DL, 0x00F0D02D
 	.set DL_OffOff,                               0x00F0D036
 	.set DL_F0D04B,                               0x00F0D04B
 	.set Data_F0D061,                             0x00F0D061
 	.set DL_Sending,                              0x00F0D79C
 	.set DL_SystemExclusivePleaseWait,            0x00F0D7A7
-	.set Paint_SysPartMidiSoundCombination_DL,                               0x00F0D7E2
+	.set Paint_SysPartMidiSoundCombination_DL,    0x00F0D7E2
 	.set DL_F0D81B,                               0x00F0D81B
 	.set DL_F0D82E,                               0x00F0D82E
 	.set DLPtrTable_F0D942,                       0x00F0D942
 	.set DLPtrTable_F0D96E,                       0x00F0D96E
 	.set Chars_F0D99A,                            0x00F0D99A
-	.set SysexProgressBar_DrawDots_DL,                               0x00F0D99C
+	.set SysexProgressBar_DrawDots_DL,            0x00F0D99C
 	.set DL_GeneralMidiMidiGeneralMidiMode,       0x00F0D9E2
 	.set DL_F0DA73,                               0x00F0DA73
 	.set DL_F0DA93,                               0x00F0DA93
@@ -545,21 +545,21 @@
 	.set DL_OtherParts,                           0x00F17C08
 	.set DL_Solo_F17C2A,                          0x00F17C2A
 	.set DL_F17C45,                               0x00F17C45
-	.set CombiEditMixer_DrawPartBoxRow_DL4,                               0x00F17C4F
+	.set CombiEditMixer_DrawPartBoxRow_DL4,       0x00F17C4F
 	.set DL_Mixer,                                0x00F17C8C
-	.set CombiEditMixer_ShowOtherParts_DL1,                               0x00F17E2E
+	.set CombiEditMixer_ShowOtherParts_DL1,       0x00F17E2E
 	.set DL_Sound,                                0x00F17E42
-	.set CombiEditMixer_ShowOtherParts_DL2,                               0x00F17E9D
+	.set CombiEditMixer_ShowOtherParts_DL2,       0x00F17E9D
 	.set DL_KeyShift,                             0x00F17F07
 	.set DL_Midiout,                              0x00F17FA4
-	.set CombiEditMixer_ShowOtherParts_DL3,                               0x00F1802A
+	.set CombiEditMixer_ShowOtherParts_DL3,       0x00F1802A
 	.set DL_F18044,                               0x00F18044
 	.set RecordArray_F18066,                      0x00F18066
 	.set DL_Pt1Pt9Pt2Pt3Pt4Pt5Pt6Pt7,             0x00F1814E
 	.set DL_Part1Part9Part17Part25Part2,          0x00F181D6
-	.set CombiEditMixer_DrawPartBoxRow_DL1,                               0x00F1825E
-	.set CombiEditMixer_DrawPartBoxRow_DL3,                               0x00F18269
-	.set CombiEditMixer_DrawPartBoxRow_DL2,                               0x00F18274
+	.set CombiEditMixer_DrawPartBoxRow_DL1,       0x00F1825E
+	.set CombiEditMixer_DrawPartBoxRow_DL3,       0x00F18269
+	.set CombiEditMixer_DrawPartBoxRow_DL2,       0x00F18274
 	.set StringTable_F1828A,                      0x00F1828A
 	.set DL_InternalSound_F18A1D,                 0x00F18A1D
 	.set DL_CopyFromSoundPlay,                    0x00F18AB7
@@ -568,7 +568,7 @@
 	.set DL_Solo_F18BE8,                          0x00F18BE8
 	.set DL_F18C08,                               0x00F18C08
 	.set DL_F18C12,                               0x00F18C12
-	.set CombiEditSound_PageIndex_DL,                               0x00F18C1C
+	.set CombiEditSound_PageIndex_DL,             0x00F18C1C
 	.set DL_Part_F18C69,                          0x00F18C69
 	.set DL_F18CD5,                               0x00F18CD5
 	.set DL_InternalSound_F18CDD,                 0x00F18CDD
@@ -584,59 +584,59 @@
 	.set DL_F191F8,                               0x00F191F8
 	.set DL_F19207,                               0x00F19207
 	.set StringTable_F19238,                      0x00F19238
-	.set CombiEditSound_MoveLevelsPageRowCursor_DL,                               0x00F19481
+	.set CombiEditSound_MoveLevelsPageRowCursor_DL, 0x00F19481
 	.set IndexMap_F19497,                         0x00F19497
-	.set CombiEditSound_MoveControllerFilterPageRowCursor_DL,                               0x00F19517
+	.set CombiEditSound_MoveControllerFilterPageRowCursor_DL, 0x00F19517
 	.set IndexMap_F1952D,                         0x00F1952D
-	.set CombiEditSound_MoveAssignAndInputFilterPageRowCursor_DL,                               0x00F195AD
+	.set CombiEditSound_MoveAssignAndInputFilterPageRowCursor_DL, 0x00F195AD
 	.set IndexMap_F195C3,                         0x00F195C3
-	.set CombiEditSound_MoveMidiOutPageRowCursor_DL,                               0x00F19603
+	.set CombiEditSound_MoveMidiOutPageRowCursor_DL, 0x00F19603
 	.set IndexMap_F19619,                         0x00F19619
-	.set CombiEditSound_MoveMidiOutFilterPageRowCursor_DL,                               0x00F19659
+	.set CombiEditSound_MoveMidiOutFilterPageRowCursor_DL, 0x00F19659
 	.set IndexMap_F1966F,                         0x00F1966F
-	.set CombiEditSound_MoveMultipleMessagesPageRowCursor_DL,                               0x00F196EF
+	.set CombiEditSound_MoveMultipleMessagesPageRowCursor_DL, 0x00F196EF
 	.set IndexMap_F19705,                         0x00F19705
-	.set CombiEdit_TakePartIndex_DL,                               0x00F19745
+	.set CombiEdit_TakePartIndex_DL,              0x00F19745
 	.set DL_Rd1Rd2Ud1Ud2Ed1,                      0x00F19754
 	.set DL_F19772,                               0x00F19772
-	.set CombiEditSound_PaintLevelsPage_DL3,                               0x00F19781
-	.set CombiEditSound_PaintLevelsPage_DL8,                               0x00F19790
+	.set CombiEditSound_PaintLevelsPage_DL3,      0x00F19781
+	.set CombiEditSound_PaintLevelsPage_DL8,      0x00F19790
 	.set DL_OffMainSub1Sub2Sub3Eff2,              0x00F1979F
-	.set CombiEditSound_PaintLevelsPage_DL1,                               0x00F197AE
-	.set CombiEditSound_PaintLevelsPage_DL2,                               0x00F197B8
-	.set CombiEditSound_PaintLevelsPage_DL4,                               0x00F197C2
-	.set CombiEditSound_PaintLevelsPage_DL5,                               0x00F197CC
-	.set CombiEditSound_PaintLevelsPage_DL6,                               0x00F197D7
-	.set CombiEditSound_PaintLevelsPage_DL7,                               0x00F197E2
-	.set CombiEditSound_PaintControllerFilterPage_DL,                               0x00F19818
+	.set CombiEditSound_PaintLevelsPage_DL1,      0x00F197AE
+	.set CombiEditSound_PaintLevelsPage_DL2,      0x00F197B8
+	.set CombiEditSound_PaintLevelsPage_DL4,      0x00F197C2
+	.set CombiEditSound_PaintLevelsPage_DL5,      0x00F197CC
+	.set CombiEditSound_PaintLevelsPage_DL6,      0x00F197D7
+	.set CombiEditSound_PaintLevelsPage_DL7,      0x00F197E2
+	.set CombiEditSound_PaintControllerFilterPage_DL, 0x00F19818
 	.set DL_F198AE,                               0x00F198AE
-	.set CombiEditSound_PaintAssignAndInputFilterPage_DL1,                               0x00F198BD
-	.set CombiEditSound_PaintAssignAndInputFilterPage_DL2,                               0x00F198CC
-	.set CombiEditSound_PaintAssignAndInputFilterPage_DL3,                               0x00F198D7
-	.set CombiEditSound_PaintAssignAndInputFilterPage_DL4,                               0x00F198E6
-	.set CombiEditSound_PaintAssignAndInputFilterPage_DL5,                               0x00F198F5
-	.set CombiEditSound_PaintMidiOutPage_DL1,                               0x00F19904
-	.set CombiEditSound_PaintMidiOutPage_DL3,                               0x00F19913
-	.set CombiEditSound_PaintMidiOutPage_DL5,                               0x00F19922
-	.set CombiEditSound_PaintMidiOutPage_DL2,                               0x00F19931
-	.set CombiEditSound_PaintMidiOutPage_DL4,                               0x00F19940
-	.set CombiEditSound_PaintMidiOutPage_DL6,                               0x00F1994F
-	.set CombiEditSound_PaintMidiOutFilterPage_DL,                               0x00F1995A
+	.set CombiEditSound_PaintAssignAndInputFilterPage_DL1, 0x00F198BD
+	.set CombiEditSound_PaintAssignAndInputFilterPage_DL2, 0x00F198CC
+	.set CombiEditSound_PaintAssignAndInputFilterPage_DL3, 0x00F198D7
+	.set CombiEditSound_PaintAssignAndInputFilterPage_DL4, 0x00F198E6
+	.set CombiEditSound_PaintAssignAndInputFilterPage_DL5, 0x00F198F5
+	.set CombiEditSound_PaintMidiOutPage_DL1,     0x00F19904
+	.set CombiEditSound_PaintMidiOutPage_DL3,     0x00F19913
+	.set CombiEditSound_PaintMidiOutPage_DL5,     0x00F19922
+	.set CombiEditSound_PaintMidiOutPage_DL2,     0x00F19931
+	.set CombiEditSound_PaintMidiOutPage_DL4,     0x00F19940
+	.set CombiEditSound_PaintMidiOutPage_DL6,     0x00F1994F
+	.set CombiEditSound_PaintMidiOutFilterPage_DL, 0x00F1995A
 	.set DL_F199F0,                               0x00F199F0
-	.set CombiEditSound_PaintMultipleMessagesPage_DL1,                               0x00F199FF
-	.set CombiEditSound_PaintMultipleMessagesPage_DL5,                               0x00F19A09
-	.set CombiEditSound_PaintMultipleMessagesPage_DL4,                               0x00F19A18
-	.set CombiEditSound_PaintMultipleMessagesPage_DL3,                               0x00F19A22
-	.set CombiEditSound_PaintMultipleMessagesPage_DL2,                               0x00F19A31
-	.set CombiEditSound_PaintMultipleMessagesPage_DL6,                               0x00F19A3B
-	.set CombiEditSound_PaintMultipleMessagesPage_DL8,                               0x00F19A4A
-	.set CombiEditSound_PaintMultipleMessagesPage_DL7,                               0x00F19A59
-	.set CombiEditSound_PaintMultipleMessagesPage_DL9,                               0x00F19A63
-	.set CombiEditSound_PaintMultipleMessagesPage_DL10,                               0x00F19A72
-	.set CombiEditSound_PaintMultipleMessagesPage_DL12,                               0x00F19A81
-	.set CombiEditSound_PaintMultipleMessagesPage_DL11,                               0x00F19A90
-	.set CombiEditSound_PaintMultipleMessagesPage_DL14,                               0x00F19A9A
-	.set CombiEditSound_PaintMultipleMessagesPage_DL13,                               0x00F19AA9
+	.set CombiEditSound_PaintMultipleMessagesPage_DL1, 0x00F199FF
+	.set CombiEditSound_PaintMultipleMessagesPage_DL5, 0x00F19A09
+	.set CombiEditSound_PaintMultipleMessagesPage_DL4, 0x00F19A18
+	.set CombiEditSound_PaintMultipleMessagesPage_DL3, 0x00F19A22
+	.set CombiEditSound_PaintMultipleMessagesPage_DL2, 0x00F19A31
+	.set CombiEditSound_PaintMultipleMessagesPage_DL6, 0x00F19A3B
+	.set CombiEditSound_PaintMultipleMessagesPage_DL8, 0x00F19A4A
+	.set CombiEditSound_PaintMultipleMessagesPage_DL7, 0x00F19A59
+	.set CombiEditSound_PaintMultipleMessagesPage_DL9, 0x00F19A63
+	.set CombiEditSound_PaintMultipleMessagesPage_DL10, 0x00F19A72
+	.set CombiEditSound_PaintMultipleMessagesPage_DL12, 0x00F19A81
+	.set CombiEditSound_PaintMultipleMessagesPage_DL11, 0x00F19A90
+	.set CombiEditSound_PaintMultipleMessagesPage_DL14, 0x00F19A9A
+	.set CombiEditSound_PaintMultipleMessagesPage_DL13, 0x00F19AA9
 	.set DL_CombinationNaming_F19ABF,             0x00F19ABF
 	.set DL_F19BBD,                               0x00F19BBD
 	.set DL_CombinationNaming_F19BE5,             0x00F19BE5
@@ -646,28 +646,28 @@
 	.set DL_Inter,                                0x00F19DDA
 	.set DL_KeyLayer,                             0x00F19ED6
 	.set DL_VelocityLayer,                        0x00F19F89
-	.set ExitKey_CombiEditConfigure_DL2,                               0x00F1A019
-	.set ExitKey_CombiEditConfigure_DL1,                               0x00F1A02D
+	.set ExitKey_CombiEditConfigure_DL2,          0x00F1A019
+	.set ExitKey_CombiEditConfigure_DL1,          0x00F1A02D
 	.set RecordArray_F1A037,                      0x00F1A037
 	.set DL_Pt1Pt2Pt3Pt4Pt5Pt6Pt7Pt8,             0x00F1A0BF
-	.set CombiEditConfigure_RepaintMarkedSounds_DL4,                               0x00F1A137
-	.set CombiEditConfigure_RepaintMarkedSounds_DL3,                               0x00F1A14D
-	.set ExitKey_CombiEditConfigure_DL3,                               0x00F1A158
-	.set CombiEditConfigure_RepaintMarkedSounds_DL2,                               0x00F1A163
-	.set CombiEditConfigure_RepaintMarkedSounds_DL1,                               0x00F1A179
-	.set CombiEditConfigure_RepaintMarkedSounds_DL5,                               0x00F1A183
-	.set CombiEditConfigure_DrawMidiSettings_DL,                               0x00F1A2AD
+	.set CombiEditConfigure_RepaintMarkedSounds_DL4, 0x00F1A137
+	.set CombiEditConfigure_RepaintMarkedSounds_DL3, 0x00F1A14D
+	.set ExitKey_CombiEditConfigure_DL3,          0x00F1A158
+	.set CombiEditConfigure_RepaintMarkedSounds_DL2, 0x00F1A163
+	.set CombiEditConfigure_RepaintMarkedSounds_DL1, 0x00F1A179
+	.set CombiEditConfigure_RepaintMarkedSounds_DL5, 0x00F1A183
+	.set CombiEditConfigure_DrawMidiSettings_DL,  0x00F1A2AD
 	.set StringTable_F1A515,                      0x00F1A515
-	.set CombiEditConfigure_DrawKeyLayers_DL,                               0x00F1A53F
+	.set CombiEditConfigure_DrawKeyLayers_DL,     0x00F1A53F
 	.set MidiNoteNames,                           0x00F1A62F
-	.set CombiEditConfigure_DrawVelocityLayers_DL,                               0x00F1A7AF
+	.set CombiEditConfigure_DrawVelocityLayers_DL, 0x00F1A7AF
 	.set DL_F1A84F,                               0x00F1A84F
-	.set ExitKey_Effect2OutputConflict_DL,                               0x00F1A8EF
+	.set ExitKey_Effect2OutputConflict_DL,        0x00F1A8EF
 	.set DL_Err0rTheS0undOrC0mbinati0n,           0x00F1A999
-	.set PartParamField_KeyLayerLow,                           0x00F1AA7C
-	.set PartParamField_KeyLayerHigh,                           0x00F1AA85
-	.set PartParamField_VelocityLayerLow,                           0x00F1AA8E
-	.set PartParamField_VelocityLayerHigh,                           0x00F1AA97
+	.set PartParamField_KeyLayerLow,              0x00F1AA7C
+	.set PartParamField_KeyLayerHigh,             0x00F1AA85
+	.set PartParamField_VelocityLayerLow,         0x00F1AA8E
+	.set PartParamField_VelocityLayerHigh,        0x00F1AA97
 	.set Record_F1AAA0,                           0x00F1AAA0
 	.set Record_F1AAA9,                           0x00F1AAA9
 	.set Record_F1AAB5,                           0x00F1AAB5
@@ -675,72 +675,72 @@
 	.set Record_F1AAD3,                           0x00F1AAD3
 	.set Record_F1AADF,                           0x00F1AADF
 	.set Record_F1AAEC,                           0x00F1AAEC
-	.set PartParamStep_Ids00to1F,                         0x00F1AB13
-	.set PartParamStep_Ids20to3F,                         0x00F1AB4B
-	.set PartParamStep_Ids40to5F,                         0x00F1AB6F
-	.set PartParamStep_Ids60to7F,                         0x00F1AB97
-	.set PartParamStep_Ids80to9F,                         0x00F1ABA3
-	.set PartParamStep_IdsA0toBF,                         0x00F1ABE7
-	.set PartParamEnter_Ids00to1F,                         0x00F1AC07
-	.set PartParamEnter_Ids20to3F,                         0x00F1AC3F
-	.set PartParamEnter_Ids40to5F,                         0x00F1AC63
-	.set PartParamEnter_Ids60to7F,                         0x00F1AC8B
-	.set PartParamEnter_Ids80to9F,                         0x00F1AC97
-	.set PartParamEnter_IdsA0toBF,                         0x00F1ACDB
-	.set PartParamField_Volume,                           0x00F1ACFB
-	.set PartParamField_Panpot,                           0x00F1AD04
-	.set PartParamField_KeyShift,                           0x00F1AD0D
-	.set PartParamField_FineTune,                           0x00F1AD16
-	.set PartParamField_PitchBendRange,                           0x00F1AD1F
-	.set PartParamField_Effect1Send,                           0x00F1AD28
-	.set PartParamField_ReverbSend,                           0x00F1AD31
-	.set PartParamField_LocalControl,                           0x00F1AD3A
-	.set PartParamField_MidiOutSetting,                           0x00F1AD3D
-	.set PartParamField_MidiInSetting,                           0x00F1AD40
-	.set PartParamField_KeyScaling,                           0x00F1AD43
-	.set PartParamField_MainOut,                           0x00F1AD46
-	.set PartParamField_SubOut,                           0x00F1AD4F
-	.set PartParamField_AssignMode,                           0x00F1AD58
-	.set PartParamField_VelocityOffset,                           0x00F1AD61
-	.set PartParamField_BasicChannel,                           0x00F1AD6A
-	.set PartParamField_ControllerInternalFilterPitchBend,                           0x00F1AD73
-	.set PartParamField_ControllerInternalFilterModulation1,                           0x00F1AD76
-	.set PartParamField_ControllerInternalFilterModulation2,                           0x00F1AD79
-	.set PartParamField_ControllerInternalFilterRealTimeCreatorX,                           0x00F1AD7C
-	.set PartParamField_ControllerInternalFilterRealTimeCreatorY,                           0x00F1AD7F
-	.set PartParamField_ControllerInternalFilterRealTimeControllerX,                           0x00F1AD82
-	.set PartParamField_ControllerInternalFilterRealTimeControllerY,                           0x00F1AD85
-	.set PartParamField_ControllerInternalFilterHold1,                           0x00F1AD88
-	.set PartParamField_ControllerInternalFilterControlPedal,                           0x00F1AD8B
-	.set PartParamField_ControllerInternalFilterAfterTouch,                           0x00F1AD8E
-	.set PartParamField_MidiInputFilterProgramChange,                           0x00F1AD91
-	.set PartParamField_MidiInputFilterBankSelect,                           0x00F1AD94
-	.set PartParamField_MidiInputFilterVolume,                           0x00F1AD97
-	.set PartParamField_MidiOutputFilterProgramChange,                           0x00F1AD9A
-	.set PartParamField_MidiOutputFilterBankSelect,                           0x00F1AD9D
-	.set PartParamField_MidiOutputFilterVolume,                           0x00F1ADA0
-	.set PartParamField_MidiOutputFilterPanpot,                           0x00F1ADA3
-	.set PartParamField_MidiOutputFilterEffectDepth_F1ADA6,                           0x00F1ADA6
-	.set PartParamField_MidiOutputFilterEffectDepth_F1ADA9,                           0x00F1ADA9
-	.set PartParamField_MidiOutKeyTranspose_F1ADAC,                           0x00F1ADAC
-	.set PartParamField_MidiOutputFilterPitchBend,                           0x00F1ADB5
-	.set PartParamField_MidiOutputFilterModulation1,                           0x00F1ADB8
-	.set PartParamField_MidiOutputFilterModulation2,                           0x00F1ADBB
-	.set PartParamField_MidiOutputFilterRealTimeCreatorX,                           0x00F1ADBE
-	.set PartParamField_MidiOutputFilterRealTimeCreatorY,                           0x00F1ADC1
-	.set PartParamField_MidiOutputFilterRealTimeControllerX,                           0x00F1ADC4
-	.set PartParamField_MidiOutputFilterRealTimeControllerY,                           0x00F1ADC7
-	.set PartParamField_MidiOutputFilterHold1,                           0x00F1ADCA
-	.set PartParamField_MidiOutputFilterControlPedal,                           0x00F1ADCD
-	.set PartParamField_MidiOutputFilterAfterTouch,                           0x00F1ADD0
-	.set PartParamField_MidiMultipleMessagesOutputProgramChange,                           0x00F1ADD3
-	.set PartParamField_MidiMultipleMessagesOutputProgramChangeValue,                           0x00F1ADDC
-	.set PartParamField_MidiMultipleMessagesOutputBankSelectMsbValue,                           0x00F1ADE5
-	.set PartParamField_MidiMultipleMessagesOutputBankSelectLsbValue,                           0x00F1ADEE
-	.set PartParamField_MidiMultipleMessagesOutputVolumeValue,                           0x00F1ADF7
-	.set PartParamField_MidiMultipleMessagesOutputReverbDepthValue,                           0x00F1AE00
-	.set PartParamField_MidiMultipleMessagesOutputChorusDepthValue,                           0x00F1AE09
-	.set PartParamField_MidiOutKeyTranspose_F1AE12,                           0x00F1AE12
+	.set PartParamStep_Ids00to1F,                 0x00F1AB13
+	.set PartParamStep_Ids20to3F,                 0x00F1AB4B
+	.set PartParamStep_Ids40to5F,                 0x00F1AB6F
+	.set PartParamStep_Ids60to7F,                 0x00F1AB97
+	.set PartParamStep_Ids80to9F,                 0x00F1ABA3
+	.set PartParamStep_IdsA0toBF,                 0x00F1ABE7
+	.set PartParamEnter_Ids00to1F,                0x00F1AC07
+	.set PartParamEnter_Ids20to3F,                0x00F1AC3F
+	.set PartParamEnter_Ids40to5F,                0x00F1AC63
+	.set PartParamEnter_Ids60to7F,                0x00F1AC8B
+	.set PartParamEnter_Ids80to9F,                0x00F1AC97
+	.set PartParamEnter_IdsA0toBF,                0x00F1ACDB
+	.set PartParamField_Volume,                   0x00F1ACFB
+	.set PartParamField_Panpot,                   0x00F1AD04
+	.set PartParamField_KeyShift,                 0x00F1AD0D
+	.set PartParamField_FineTune,                 0x00F1AD16
+	.set PartParamField_PitchBendRange,           0x00F1AD1F
+	.set PartParamField_Effect1Send,              0x00F1AD28
+	.set PartParamField_ReverbSend,               0x00F1AD31
+	.set PartParamField_LocalControl,             0x00F1AD3A
+	.set PartParamField_MidiOutSetting,           0x00F1AD3D
+	.set PartParamField_MidiInSetting,            0x00F1AD40
+	.set PartParamField_KeyScaling,               0x00F1AD43
+	.set PartParamField_MainOut,                  0x00F1AD46
+	.set PartParamField_SubOut,                   0x00F1AD4F
+	.set PartParamField_AssignMode,               0x00F1AD58
+	.set PartParamField_VelocityOffset,           0x00F1AD61
+	.set PartParamField_BasicChannel,             0x00F1AD6A
+	.set PartParamField_ControllerInternalFilterPitchBend, 0x00F1AD73
+	.set PartParamField_ControllerInternalFilterModulation1, 0x00F1AD76
+	.set PartParamField_ControllerInternalFilterModulation2, 0x00F1AD79
+	.set PartParamField_ControllerInternalFilterRealTimeCreatorX, 0x00F1AD7C
+	.set PartParamField_ControllerInternalFilterRealTimeCreatorY, 0x00F1AD7F
+	.set PartParamField_ControllerInternalFilterRealTimeControllerX, 0x00F1AD82
+	.set PartParamField_ControllerInternalFilterRealTimeControllerY, 0x00F1AD85
+	.set PartParamField_ControllerInternalFilterHold1, 0x00F1AD88
+	.set PartParamField_ControllerInternalFilterControlPedal, 0x00F1AD8B
+	.set PartParamField_ControllerInternalFilterAfterTouch, 0x00F1AD8E
+	.set PartParamField_MidiInputFilterProgramChange, 0x00F1AD91
+	.set PartParamField_MidiInputFilterBankSelect, 0x00F1AD94
+	.set PartParamField_MidiInputFilterVolume,    0x00F1AD97
+	.set PartParamField_MidiOutputFilterProgramChange, 0x00F1AD9A
+	.set PartParamField_MidiOutputFilterBankSelect, 0x00F1AD9D
+	.set PartParamField_MidiOutputFilterVolume,   0x00F1ADA0
+	.set PartParamField_MidiOutputFilterPanpot,   0x00F1ADA3
+	.set PartParamField_MidiOutputFilterEffectDepth_F1ADA6, 0x00F1ADA6
+	.set PartParamField_MidiOutputFilterEffectDepth_F1ADA9, 0x00F1ADA9
+	.set PartParamField_MidiOutKeyTranspose_F1ADAC, 0x00F1ADAC
+	.set PartParamField_MidiOutputFilterPitchBend, 0x00F1ADB5
+	.set PartParamField_MidiOutputFilterModulation1, 0x00F1ADB8
+	.set PartParamField_MidiOutputFilterModulation2, 0x00F1ADBB
+	.set PartParamField_MidiOutputFilterRealTimeCreatorX, 0x00F1ADBE
+	.set PartParamField_MidiOutputFilterRealTimeCreatorY, 0x00F1ADC1
+	.set PartParamField_MidiOutputFilterRealTimeControllerX, 0x00F1ADC4
+	.set PartParamField_MidiOutputFilterRealTimeControllerY, 0x00F1ADC7
+	.set PartParamField_MidiOutputFilterHold1,    0x00F1ADCA
+	.set PartParamField_MidiOutputFilterControlPedal, 0x00F1ADCD
+	.set PartParamField_MidiOutputFilterAfterTouch, 0x00F1ADD0
+	.set PartParamField_MidiMultipleMessagesOutputProgramChange, 0x00F1ADD3
+	.set PartParamField_MidiMultipleMessagesOutputProgramChangeValue, 0x00F1ADDC
+	.set PartParamField_MidiMultipleMessagesOutputBankSelectMsbValue, 0x00F1ADE5
+	.set PartParamField_MidiMultipleMessagesOutputBankSelectLsbValue, 0x00F1ADEE
+	.set PartParamField_MidiMultipleMessagesOutputVolumeValue, 0x00F1ADF7
+	.set PartParamField_MidiMultipleMessagesOutputReverbDepthValue, 0x00F1AE00
+	.set PartParamField_MidiMultipleMessagesOutputChorusDepthValue, 0x00F1AE09
+	.set PartParamField_MidiOutKeyTranspose_F1AE12, 0x00F1AE12
 	.set Record_F1AE1B,                           0x00F1AE1B
 	.set Record_F1AE24,                           0x00F1AE24
 	.set Record_F1AE2D,                           0x00F1AE2D
@@ -749,12 +749,12 @@
 	.set PtrTable_F1AE71,                         0x00F1AE71
 	.set PtrTable_F1AE89,                         0x00F1AE89
 	.set BitTable_F1AE95,                         0x00F1AE95
-	.set ScreenButtons_CombiEditPartMenu,                         0x00F1AEB5
-	.set ScreenButtons_CombiEditInternalSound,                         0x00F1AF11
+	.set ScreenButtons_CombiEditPartMenu,         0x00F1AEB5
+	.set ScreenButtons_CombiEditInternalSound,    0x00F1AF11
 	.set IndexMap_F1AF6D,                         0x00F1AF6D
 	.set PtrTable_F1AFA5,                         0x00F1AFA5
 	.set PtrTable_F1AFBD,                         0x00F1AFBD
-	.set ScreenButtons_CombiEditMixer,                         0x00F1AFD5
+	.set ScreenButtons_CombiEditMixer,            0x00F1AFD5
 	.set IndexMap_F1B031,                         0x00F1B031
 	.set PtrTable_F1B03F,                         0x00F1B03F
 	.set PtrTable_F1B04B,                         0x00F1B04B
@@ -767,14 +767,14 @@
 	.set IndexMap_F1B0FB,                         0x00F1B0FB
 	.set PtrTable_F1B10B,                         0x00F1B10B
 	.set PtrTable_F1B12B,                         0x00F1B12B
-	.set ScreenButtons_CombinationNaming,                         0x00F1B14B
+	.set ScreenButtons_CombinationNaming,         0x00F1B14B
 	.set Record_F1B1A7,                           0x00F1B1A7
-	.set ScreenButtons_CombinationNamingWrite,                         0x00F1B1B0
+	.set ScreenButtons_CombinationNamingWrite,    0x00F1B1B0
 	.set IndexMap_F1B230,                         0x00F1B230
-	.set ScreenButtons_CombiEditConfigure,                         0x00F1B239
-	.set ScreenButtons_CombiEditMenu,                         0x00F1B295
-	.set ScreenButtons_Effect2OutputConflict,                         0x00F1B2F1
-	.set ScreenButtons_WriteProtectError,                         0x00F1B34D
+	.set ScreenButtons_CombiEditConfigure,        0x00F1B239
+	.set ScreenButtons_CombiEditMenu,             0x00F1B295
+	.set ScreenButtons_Effect2OutputConflict,     0x00F1B2F1
+	.set ScreenButtons_WriteProtectError,         0x00F1B34D
 	.set Font_Svc06_8x14,                         0x00F1B400
 	.set Font_Svc07_8x16,                         0x00F1BEF0
 	.set Font_Svc08_16x16,                        0x00F1CB70
@@ -790,92 +790,92 @@
 	.set DL_F27C00,                               0x00F27C00
 	.set DL_F28064,                               0x00F28064
 	.set DL_F2808C,                               0x00F2808C
-	.set Paint_SoundMode_DeadCopy_DL,                               0x00F28331
-	.set Paint_SoundMode_DL,                               0x00F2833B
+	.set Paint_SoundMode_DeadCopy_DL,             0x00F28331
+	.set Paint_SoundMode_DL,                      0x00F2833B
 	.set DL_Drawbar,                              0x00F2834F
-	.set Paint_Drawbar_DL1,                               0x00F28373
-	.set Paint_Drawbar_DL2,                               0x00F2837D
+	.set Paint_Drawbar_DL1,                       0x00F28373
+	.set Paint_Drawbar_DL2,                       0x00F2837D
 	.set Data_F283A7,                             0x00F283A7
-	.set C0mbinati0nM0de_RepaintPage1Fields_DL,                               0x00F286A2
+	.set C0mbinati0nM0de_RepaintPage1Fields_DL,   0x00F286A2
 	.set DL_F286CB,                               0x00F286CB
 	.set DL_F286E2,                               0x00F286E2
-	.set ModeScreen_PaintDirtyFields2_DL1,                               0x00F286F9
+	.set ModeScreen_PaintDirtyFields2_DL1,        0x00F286F9
 	.set DLTable_F28725,                          0x00F28725
-	.set ModeScreen_PaintDirtyFields2_DeadCopy_DL,                          0x00F287C1
-	.set ModeScreen_PaintDirtyFields2_DL2,                               0x00F28802
-	.set ModeScreen_PaintDirtyFields2_DL6,                               0x00F2880C
-	.set ModeScreen_PaintDirtyFields2_DL10,                               0x00F28816
-	.set ModeScreen_PaintDirtyFields2_DL3,                               0x00F28820
+	.set ModeScreen_PaintDirtyFields2_DeadCopy_DL, 0x00F287C1
+	.set ModeScreen_PaintDirtyFields2_DL2,        0x00F28802
+	.set ModeScreen_PaintDirtyFields2_DL6,        0x00F2880C
+	.set ModeScreen_PaintDirtyFields2_DL10,       0x00F28816
+	.set ModeScreen_PaintDirtyFields2_DL3,        0x00F28820
 	.set Data_F2882B,                             0x00F2882B
-	.set ModeScreen_PaintDirtyFields2_DL7,                               0x00F2885B
+	.set ModeScreen_PaintDirtyFields2_DL7,        0x00F2885B
 	.set Data_F28866,                             0x00F28866
-	.set ModeScreen_PaintDirtyFields2_DL11,                               0x00F28896
+	.set ModeScreen_PaintDirtyFields2_DL11,       0x00F28896
 	.set Data_F288A1,                             0x00F288A1
-	.set ModeScreen_PaintDirtyFields2_DL4,                               0x00F288D1
-	.set ModeScreen_PaintDirtyFields2_DL5,                               0x00F288E0
-	.set ModeScreen_PaintDirtyFields2_DL8,                               0x00F288EF
-	.set ModeScreen_PaintDirtyFields2_DL9,                               0x00F288FE
-	.set ModeScreen_PaintDirtyFields2_DL12,                               0x00F2890D
-	.set ModeScreen_PaintDirtyFields2_DL13,                               0x00F2891C
-	.set ModeScreen_DrawGmModeGlyph_DL2,                               0x00F2892B
-	.set ModeScreen_DrawGmModeGlyph_DL1,                               0x00F28930
-	.set Paint_C0mbinati0nM0dePage1_DL1,                               0x00F28938
-	.set Paint_C0mbinati0nM0dePage1_DL2,                               0x00F28DF3
-	.set Paint_C0mbinati0nM0dePage1_DL3,                               0x00F28E1B
-	.set Paint_C0mbinati0nM0dePage1_DL4,                               0x00F29121
+	.set ModeScreen_PaintDirtyFields2_DL4,        0x00F288D1
+	.set ModeScreen_PaintDirtyFields2_DL5,        0x00F288E0
+	.set ModeScreen_PaintDirtyFields2_DL8,        0x00F288EF
+	.set ModeScreen_PaintDirtyFields2_DL9,        0x00F288FE
+	.set ModeScreen_PaintDirtyFields2_DL12,       0x00F2890D
+	.set ModeScreen_PaintDirtyFields2_DL13,       0x00F2891C
+	.set ModeScreen_DrawGmModeGlyph_DL2,          0x00F2892B
+	.set ModeScreen_DrawGmModeGlyph_DL1,          0x00F28930
+	.set Paint_C0mbinati0nM0dePage1_DL1,          0x00F28938
+	.set Paint_C0mbinati0nM0dePage1_DL2,          0x00F28DF3
+	.set Paint_C0mbinati0nM0dePage1_DL3,          0x00F28E1B
+	.set Paint_C0mbinati0nM0dePage1_DL4,          0x00F29121
 	.set DL_C0mbinati0nM0dePage22Sound,           0x00F29135
 	.set DL_F29672,                               0x00F29672
 	.set DL_F2967C,                               0x00F2967C
 	.set DL_F29686,                               0x00F29686
-	.set C0mbinati0nM0de_HighlightSoundRow_DL,                               0x00F296AE
-	.set C0mbinati0nM0de_HighlightIntRow_DL,                               0x00F296B8
-	.set C0mbinati0nM0de_HighlightPanRow_DL,                               0x00F296C2
+	.set C0mbinati0nM0de_HighlightSoundRow_DL,    0x00F296AE
+	.set C0mbinati0nM0de_HighlightIntRow_DL,      0x00F296B8
+	.set C0mbinati0nM0de_HighlightPanRow_DL,      0x00F296C2
 	.set DL_F296CC,                               0x00F296CC
 	.set DL_F29765,                               0x00F29765
-	.set Paint_C0mbinati0nM0dePage2Sound1_DL,                               0x00F29783
+	.set Paint_C0mbinati0nM0dePage2Sound1_DL,     0x00F29783
 	.set Data_F297A0,                             0x00F297A0
-	.set Paint_C0mbinati0nM0dePage2Sound2_DL,                               0x00F29863
-	.set Paint_C0mbinati0nM0dePage2Sound3_DL,                               0x00F29880
-	.set Paint_C0mbinati0nM0dePage2Sound4_DL,                               0x00F2989D
-	.set Paint_C0mbinati0nM0dePage2Sound5_DL,                               0x00F298BA
-	.set Paint_C0mbinati0nM0dePage2Sound6_DL,                               0x00F298D7
-	.set Paint_C0mbinati0nM0dePage2Sound7_DL,                               0x00F298F4
-	.set C0mbinati0nM0de_DrawPart8Sound_DL,                               0x00F29911
-	.set C0mbinati0nM0de_DrawPart1Int_DL,                               0x00F2992E
+	.set Paint_C0mbinati0nM0dePage2Sound2_DL,     0x00F29863
+	.set Paint_C0mbinati0nM0dePage2Sound3_DL,     0x00F29880
+	.set Paint_C0mbinati0nM0dePage2Sound4_DL,     0x00F2989D
+	.set Paint_C0mbinati0nM0dePage2Sound5_DL,     0x00F298BA
+	.set Paint_C0mbinati0nM0dePage2Sound6_DL,     0x00F298D7
+	.set Paint_C0mbinati0nM0dePage2Sound7_DL,     0x00F298F4
+	.set C0mbinati0nM0de_DrawPart8Sound_DL,       0x00F29911
+	.set C0mbinati0nM0de_DrawPart1Int_DL,         0x00F2992E
 	.set DLTable_F29944,                          0x00F29944
-	.set C0mbinati0nM0de_DrawPart2Int_DL,                               0x00F29964
+	.set C0mbinati0nM0de_DrawPart2Int_DL,         0x00F29964
 	.set DLTable_F2997A,                          0x00F2997A
-	.set C0mbinati0nM0de_DrawPart3Int_DL,                               0x00F2999A
+	.set C0mbinati0nM0de_DrawPart3Int_DL,         0x00F2999A
 	.set DLTable_F299B0,                          0x00F299B0
-	.set C0mbinati0nM0de_DrawPart4Int_DL,                               0x00F299D0
+	.set C0mbinati0nM0de_DrawPart4Int_DL,         0x00F299D0
 	.set DLTable_F299E6,                          0x00F299E6
-	.set C0mbinati0nM0de_DrawPart5Int_DL,                               0x00F29A06
+	.set C0mbinati0nM0de_DrawPart5Int_DL,         0x00F29A06
 	.set DLTable_F29A1C,                          0x00F29A1C
-	.set C0mbinati0nM0de_DrawPart6Int_DL,                               0x00F29A3C
+	.set C0mbinati0nM0de_DrawPart6Int_DL,         0x00F29A3C
 	.set DLTable_F29A52,                          0x00F29A52
-	.set C0mbinati0nM0de_DrawPart7Int_DL,                               0x00F29A72
+	.set C0mbinati0nM0de_DrawPart7Int_DL,         0x00F29A72
 	.set DLTable_F29A88,                          0x00F29A88
-	.set C0mbinati0nM0de_DrawPart8Int_DL,                               0x00F29AA8
+	.set C0mbinati0nM0de_DrawPart8Int_DL,         0x00F29AA8
 	.set DLTable_F29ABE,                          0x00F29ABE
-	.set C0mbinati0nM0de_DrawPart1Pan_DL,                               0x00F29ADE
-	.set C0mbinati0nM0de_DrawPart2Pan_DL,                               0x00F29AEF
-	.set C0mbinati0nM0de_DrawPart3Pan_DL,                               0x00F29B00
-	.set C0mbinati0nM0de_DrawPart4Pan_DL,                               0x00F29B11
-	.set C0mbinati0nM0de_DrawPart5Pan_DL,                               0x00F29B22
-	.set C0mbinati0nM0de_DrawPart6Pan_DL,                               0x00F29B33
-	.set C0mbinati0nM0de_DrawPart7Pan_DL,                               0x00F29B44
-	.set C0mbinati0nM0de_DrawPart8Pan_DL,                               0x00F29B55
-	.set C0mbinati0nM0de_DrawPart1Vol_DL,                               0x00F29B66
-	.set C0mbinati0nM0de_DrawPart2Vol_DL,                               0x00F29B72
-	.set C0mbinati0nM0de_DrawPart3Vol_DL,                               0x00F29B7E
-	.set C0mbinati0nM0de_DrawPart4Vol_DL,                               0x00F29B8A
-	.set C0mbinati0nM0de_DrawPart5Vol_DL,                               0x00F29B96
-	.set C0mbinati0nM0de_DrawPart6Vol_DL,                               0x00F29BA2
-	.set C0mbinati0nM0de_DrawPart7Vol_DL,                               0x00F29BAE
-	.set C0mbinati0nM0de_DrawPart8Vol_DL,                               0x00F29BBA
-	.set Draw_CombinationGroupMenuReMap1_DL,                               0x00F2AC50
+	.set C0mbinati0nM0de_DrawPart1Pan_DL,         0x00F29ADE
+	.set C0mbinati0nM0de_DrawPart2Pan_DL,         0x00F29AEF
+	.set C0mbinati0nM0de_DrawPart3Pan_DL,         0x00F29B00
+	.set C0mbinati0nM0de_DrawPart4Pan_DL,         0x00F29B11
+	.set C0mbinati0nM0de_DrawPart5Pan_DL,         0x00F29B22
+	.set C0mbinati0nM0de_DrawPart6Pan_DL,         0x00F29B33
+	.set C0mbinati0nM0de_DrawPart7Pan_DL,         0x00F29B44
+	.set C0mbinati0nM0de_DrawPart8Pan_DL,         0x00F29B55
+	.set C0mbinati0nM0de_DrawPart1Vol_DL,         0x00F29B66
+	.set C0mbinati0nM0de_DrawPart2Vol_DL,         0x00F29B72
+	.set C0mbinati0nM0de_DrawPart3Vol_DL,         0x00F29B7E
+	.set C0mbinati0nM0de_DrawPart4Vol_DL,         0x00F29B8A
+	.set C0mbinati0nM0de_DrawPart5Vol_DL,         0x00F29B96
+	.set C0mbinati0nM0de_DrawPart6Vol_DL,         0x00F29BA2
+	.set C0mbinati0nM0de_DrawPart7Vol_DL,         0x00F29BAE
+	.set C0mbinati0nM0de_DrawPart8Vol_DL,         0x00F29BBA
+	.set Draw_CombinationGroupMenuReMap1_DL,      0x00F2AC50
 	.set DL_CombinationGroupMenuReMap1,           0x00F2ADD2
-	.set Draw_SoundGroupMenuReMap1ReMap2_DL,                               0x00F2AF81
+	.set Draw_SoundGroupMenuReMap1ReMap2_DL,      0x00F2AF81
 	.set DL_SoundGroupMenuReMap1ReMap2,           0x00F2B130
 	.set DLTable_F2B2F9,                          0x00F2B2F9
 	.set DL_F2B379,                               0x00F2B379
@@ -883,33 +883,33 @@
 	.set DLPtrTable_F2B510,                       0x00F2B510
 	.set DL_GroupSoundDisplayHoldGr0up,           0x00F2B574
 	.set DL_GroupCombiDisplayHoldGr0up,           0x00F2B736
-	.set DisplayHold_DrawHoldHighlight_DL1,                               0x00F2BA0C
-	.set DisplayHold_DrawHoldHighlight_DL2,                               0x00F2BA16
+	.set DisplayHold_DrawHoldHighlight_DL1,       0x00F2BA0C
+	.set DisplayHold_DrawHoldHighlight_DL2,       0x00F2BA16
 	.set DL_Drum,                                 0x00F2BA20
-	.set Paint_Drum_DL1,                               0x00F2BA50
-	.set Paint_Drum_DL2,                               0x00F2BA5A
+	.set Paint_Drum_DL1,                          0x00F2BA50
+	.set Paint_Drum_DL2,                          0x00F2BA5A
 	.set DL_F2BA64,                               0x00F2BA64
 	.set DL_Ext1,                                 0x00F2BA73
 	.set DL_F2BB03,                               0x00F2BB03
 	.set DL_Usr1,                                 0x00F2BD18
-	.set BankLegend_DrawUser_DL3,                               0x00F2BD48
-	.set BankLegend_DrawUser_DL2,                               0x00F2BD52
+	.set BankLegend_DrawUser_DL3,                 0x00F2BD48
+	.set BankLegend_DrawUser_DL2,                 0x00F2BD52
 	.set DL_Usr2,                                 0x00F2BD66
-	.set BankLegend_DrawUser_DL1,                               0x00F2BD96
-	.set BankLegend_DrawUser_DL4,                               0x00F2BDA0
-	.set GroupCombiDisplayHold_DrawNumberRange_DL2,                               0x00F2BDB4
-	.set GroupCombiDisplayHold_DrawNumberRange_DL1,                               0x00F2BDC3
-	.set GroupCombiDisplayHold_DrawNumberRange_DL3,                               0x00F2BDD2
-	.set GroupDisplayHold_ClearNameSlots_DL,                               0x00F2BDF5
+	.set BankLegend_DrawUser_DL1,                 0x00F2BD96
+	.set BankLegend_DrawUser_DL4,                 0x00F2BDA0
+	.set GroupCombiDisplayHold_DrawNumberRange_DL2, 0x00F2BDB4
+	.set GroupCombiDisplayHold_DrawNumberRange_DL1, 0x00F2BDC3
+	.set GroupCombiDisplayHold_DrawNumberRange_DL3, 0x00F2BDD2
+	.set GroupDisplayHold_ClearNameSlots_DL,      0x00F2BDF5
 	.set MsgPad_F2BE35,                           0x00F2BE35
 	.set DL_GateArrayCheckPleaseCheckWithOsciloscope, 0x00F2C800
 	.set DL_PanelCpuCheckPleaseCheckTheCpuPort,   0x00F2C84D
 	.set DL_SineWaveCheckCheckMode1SineWaveRomCheck, 0x00F2C88B
-	.set Paint_SineWaveCheckMode_DL1,                            0x00F2C9C2
-	.set Paint_SineWaveCheckMode_DL3,                               0x00F2CA0D
-	.set Paint_SineWaveCheckMode_DL2,                            0x00F2CA15
-	.set Paint_SineWaveCheckMode_DL4,                            0x00F2CA26
-	.set Paint_SineWaveCheckMode_DL5,                            0x00F2CA37
+	.set Paint_SineWaveCheckMode_DL1,             0x00F2C9C2
+	.set Paint_SineWaveCheckMode_DL3,             0x00F2CA0D
+	.set Paint_SineWaveCheckMode_DL2,             0x00F2CA15
+	.set Paint_SineWaveCheckMode_DL4,             0x00F2CA26
+	.set Paint_SineWaveCheckMode_DL5,             0x00F2CA37
 	.set DL_PanelSwLedCheckPleasePushAAnyButton,  0x00F2CA54
 	.set Bitmap_F2CAC3,                           0x00F2CAC3
 	.set ScreenFieldListPtrs,                     0x00F2D000
@@ -988,9 +988,9 @@
 	.set DL_CopyCompletedIntroFillInsUndEndingDesVon, 0x00F3006A
 	.set DL_CopyCompletedDasVonLhnenGew,          0x00F30105
 	.set RamDefault_F30800,                       0x00F30800
-	.set RamDefault_SoundRemap,                       0x00F30810
-	.set RamDefault_CombiRemap,                       0x00F30E60
-	.set RamDefault_DrumMap,                       0x00F314B0
+	.set RamDefault_SoundRemap,                   0x00F30810
+	.set RamDefault_CombiRemap,                   0x00F30E60
+	.set RamDefault_DrumMap,                      0x00F314B0
 	.set DL_F3934C,                               0x00F3934C
 	.set DL_F394E3,                               0x00F394E3
 	.set DL_F39551,                               0x00F39551
@@ -1002,53 +1002,53 @@
 	.set DL_F3AB9C,                               0x00F3AB9C
 	.set DL_QuantizeTrackStrengthFirstMeasure,    0x00F3ABDB
 	.set DL_N0teChangeTargetNoteTrack,            0x00F3AEAF
-	.set Paint_N0teChange_DL1,                               0x00F3AFAF
+	.set Paint_N0teChange_DL1,                    0x00F3AFAF
 	.set DL_F3AFE7,                               0x00F3AFE7
 	.set Data_F3B065,                             0x00F3B065
-	.set Paint_N0teChange_DL2,                               0x00F3B0C3
+	.set Paint_N0teChange_DL2,                    0x00F3B0C3
 	.set DL_Transp0seTrackFirstMeasure,           0x00F3B102
 	.set DL_F3B379,                               0x00F3B379
 	.set DL_MeasureC0pyFromTrackToTrack,          0x00F3BBA5
-	.set Paint_MeasureC0py_DL,                               0x00F3BC93
+	.set Paint_MeasureC0py_DL,                    0x00F3BC93
 	.set DL_F3BCCB,                               0x00F3BCCB
 	.set DL_F3BD07,                               0x00F3BD07
 	.set Data_F3BD58,                             0x00F3BD58
 	.set DL_F3BD90,                               0x00F3BD90
 	.set DL_MeasureInsertFromTrackToTrack,        0x00F3BDCF
-	.set Paint_MeasureInsert_DL,                               0x00F3BEBF
+	.set Paint_MeasureInsert_DL,                  0x00F3BEBF
 	.set DL_F3BEF7,                               0x00F3BEF7
 	.set Data_F3BF48,                             0x00F3BF48
 	.set DL_S0ngC0pyFromToSongSongOk,             0x00F3BF80
 	.set DL_FromToSongNoTrAllSongNoTrAll,         0x00F3BFF8
 	.set DL_TrackTrack,                           0x00F3C133
 	.set DL_AllAll,                               0x00F3C145
-	.set S0ngC0py_DrawFromSong_DL2,                               0x00F3C15D
-	.set S0ngC0py_DrawToSong_DL,                               0x00F3C16C
-	.set S0ngC0py_DrawTracks_DL,                               0x00F3C17B
-	.set S0ngC0py_DrawFromSong_DL1,                               0x00F3C199
+	.set S0ngC0py_DrawFromSong_DL2,               0x00F3C15D
+	.set S0ngC0py_DrawToSong_DL,                  0x00F3C16C
+	.set S0ngC0py_DrawTracks_DL,                  0x00F3C17B
+	.set S0ngC0py_DrawFromSong_DL1,               0x00F3C199
 	.set DL_S0ngSelectNameKbS0ngName,             0x00F3C1AD
-	.set S0ngSelectName_DrawValues_DL,                               0x00F3C31E
+	.set S0ngSelectName_DrawValues_DL,            0x00F3C31E
 	.set DL_F3C351,                               0x00F3C351
 	.set DL_F3C367,                               0x00F3C367
 	.set DLTable_F3C37D,                          0x00F3C37D
 	.set DL_ACurrentTrackWillBeClearedAutomaticaly, 0x00F3C4D5
-	.set Paint_S0ngC0py_DL,                               0x00F3C530
+	.set Paint_S0ngC0py_DL,                       0x00F3C530
 	.set Data_F3C53F,                             0x00F3C53F
 	.set DL_SequencerMedleyStartFirstS0ng,        0x00F3C562
 	.set DL_F3C6B3,                               0x00F3C6B3
 	.set DL_SelectIntFd,                          0x00F3C721
 	.set DL_FirstS0ngLastS0ng,                    0x00F3C778
-	.set SequencerMedley_DrawPlayState_DL4,                               0x00F3C7AD
-	.set SequencerMedley_DrawSourceBox_DL,                               0x00F3C7C3
-	.set SequencerMedley_DrawFileTypeBox_DL,                               0x00F3C7CD
-	.set SequencerMedley_DrawPlayState_DL1,                               0x00F3C86B
-	.set SequencerMedley_DrawPlayState_DL2,                               0x00F3C873
-	.set SequencerMedley_DrawPlayState_DL3,                               0x00F3C89D
+	.set SequencerMedley_DrawPlayState_DL4,       0x00F3C7AD
+	.set SequencerMedley_DrawSourceBox_DL,        0x00F3C7C3
+	.set SequencerMedley_DrawFileTypeBox_DL,      0x00F3C7CD
+	.set SequencerMedley_DrawPlayState_DL1,       0x00F3C86B
+	.set SequencerMedley_DrawPlayState_DL2,       0x00F3C873
+	.set SequencerMedley_DrawPlayState_DL3,       0x00F3C89D
 	.set DL_StepRecordPartSelectPressTheUpDownButton, 0x00F3C8A7
 	.set DL_F3C947,                               0x00F3C947
-	.set Paint_StepRecord_DL2,                               0x00F3CF09
+	.set Paint_StepRecord_DL2,                    0x00F3CF09
 	.set DL_F3CF57,                               0x00F3CF57
-	.set Paint_StepRecord_DL1,                               0x00F3CFC6
+	.set Paint_StepRecord_DL1,                    0x00F3CFC6
 	.set DL_StepRecordTrackTrackClrMeas,          0x00F3D016
 	.set StepSelectAddrTable_F3D089,              0x00F3D089
 	.set DL_F3D1B9,                               0x00F3D1B9
@@ -1058,7 +1058,7 @@
 	.set Data_F3DAED,                             0x00F3DAED
 	.set DL_F3DC00,                               0x00F3DC00
 	.set Data_F3DC21,                             0x00F3DC21
-	.set Paint_StepRecord_DL3,                               0x00F3DE26
+	.set Paint_StepRecord_DL3,                    0x00F3DE26
 	.set DL_F3DEB2,                               0x00F3DEB2
 	.set DL_MasterTrackClearAttention,            0x00F3E06E
 	.set DL_F3E15C,                               0x00F3E15C
@@ -1139,602 +1139,602 @@
 	.set Rec_F3FD10,                              0x00F3FD10
 	.set Rec_F3FD28,                              0x00F3FD28
 	.set Rec_F3FD38,                              0x00F3FD38
-	.set T_MainTask_PhaseVector,                                                                      0x00F40000
-	.set T_Dev7F_WriteSlot8_Slot0,                                                      0x00F40004
-	.set T_Dev7F_WriteSlot8_Slot1,                                                      0x00F40008
-	.set T_Dev7F_WriteSlot8_Slot2,                                                      0x00F4000C
-	.set T_Dev7F_WriteSlot8_Slot3,                                                      0x00F40010
-	.set T_Queue2C00_DrainPassAB,                                                       0x00F40018
-	.set T_SeqBuf_FlushStaged,                                                          0x00F40024
-	.set T_Queue2C00_DrainPassB,                                                        0x00F40038
-	.set T_MainTask_Entry,                                                              0x00F4005C
-	.set T_LCD_EntryThunks,                                                             0x00F400A0
-	.set T_SWI7_ServiceCall_Dispatch,                                                   0x00F400A4
-	.set T_Paint_GateArrayCheck,                                                        0x00F400D0
-	.set T_Paint_PanelCpuCheck,                                                         0x00F400E0
-	.set T_Paint_SineWaveCheckMode,                                                     0x00F400F0
-	.set T_Paint_PanelSwLedCheck,                                                       0x00F40100
-	.set T_F40110,                                                                      0x00F40110
-	.set T_ScreenEnter_DebugMonitor,                                                    0x00F40130
-	.set T_DebugMonitor_PhaseVector,                                                                      0x00F40140
-	.set T_CheckingDevice_RunSelfTest,                                                  0x00F40144
-	.set T_TestMode_SelectFromPowerOnKeys,                                              0x00F40148
-	.set T_TestMode_Tick,                                                               0x00F4014C
-	.set T_F401D0,                                                                      0x00F401D0
-	.set T_F401D4,                                                                      0x00F401D4
-	.set T_ParamImage_SnapshotAll,                                                      0x00F401D8
-	.set T_ParamImage_QueueDiffAll,                                                     0x00F401DC
-	.set T_F401E8,                                                                      0x00F401E8
-	.set T_F401EC,                                                                      0x00F401EC
-	.set T_F40210,                                                                      0x00F40210
-	.set T_ParamImage_SanitizeAll_Entry,                                                0x00F40214
-	.set T_ParamImage_SanitizeAllAndHook_Entry,                                         0x00F4021C
-	.set T_ParamImage_ApplyAndMaskTable_Entry,                                          0x00F40220
-	.set T_ParamImage_WriteRecordHeaders_Entry,                                         0x00F40224
-	.set T_ParamImageAlt_SanitizeCombination_Entry,                                     0x00F40228
-	.set T_F40240,                                                                      0x00F40240
-	.set T_Combination_RecallOnSelect,                                                  0x00F40244
-	.set T_ParamImage_QueueDiffCombination,                                             0x00F40248
-	.set T_ParamImage_SnapshotCombination_Entry,                                        0x00F4024C
-	.set T_Combination_Recall,                                                          0x00F40254
-	.set T_PanelScreen_RequestRedrawIfFieldQueued,                                      0x00F40290
-	.set T_EditScreen_PhaseVector,                                                                      0x00F402A0
-	.set T_ModeEnter_Sequencer,                                                                      0x00F402A4
-	.set T_Paint_Sequencer,                                                             0x00F402AC
-	.set T_ShowScreen_NoteEditPartSelect,                                               0x00F402BC
-	.set T_EditScreen_EnterNoteEdit,                                                                      0x00F402CC
-	.set T_ShowScreen_DrumEditPartSelect,                                               0x00F402DC
-	.set T_EditScreen_EnterDrumEdit,                                                                      0x00F402EC
-	.set T_Transport_ResetAndStartBC,                                                                      0x00F40304
-	.set T_EditScreen_Tick_Call,                                                                      0x00F40308
-	.set T_PowerFail_PrepareSongWorkspace,                                                                      0x00F4030C
-	.set T_Ctrl_Normalise,                                                              0x00F405F0
-	.set T_PanelWire_EntryThunks,                                                                      0x00F40610
-	.set T_PanelWire_Service,                                                           0x00F40614
-	.set T_PanelEvent_PhaseVector,                                                                      0x00F40630
-	.set T_PanelEvent_Service,                                                          0x00F40634
-	.set T_PanelLed_PhaseVector,                                                                      0x00F40660
-	.set T_PanelLed_ProcessRequests,                                                    0x00F40664
-	.set T_PanelLed_Refresh,                                                            0x00F40668
-	.set T_PanelLed_SendByteUnconditional,                                              0x00F40670
-	.set T_PanelLed_FlashTransportBeat,                                                 0x00F40674
-	.set T_PanelLed_SendByte,                                                           0x00F40678
-	.set T_PanelLed_OnPartEvent,                                                        0x00F4067C
-	.set T_PanelLed_OnClass90Event,                                                     0x00F40680
-	.set T_F40684,                                                                      0x00F40684
-	.set T_F40688,                                                                      0x00F40688
-	.set T_PanelLed_OnClassA8Event,                                                     0x00F4068C
-	.set T_F40690,                                                                      0x00F40690
-	.set T_PanelLed_OnClass98Event,                                                     0x00F40694
-	.set T_PanelLed_OnClass20Event,                                                     0x00F40698
-	.set T_PanelLed_OnCtrlParamEvent,                                                   0x00F4069C
-	.set T_PanelLed_ToggleActivityLed,                                                  0x00F406A0
-	.set T_MIDI_EntryThunks,                                                            0x00F40710
-	.set T_MIDI_RX_Byte,                                                                0x00F40714
-	.set T_MIDI_TX_Ready,                                                               0x00F40718
-	.set T_MIDI_Clock_CatchUpIfAnySlot,                                                                      0x00F40720
-	.set T_MIDI_PostSendWork,                                                           0x00F40724
-	.set T_MIDI_DrainQueue,                                                             0x00F40728
-	.set T_MIDI_SendBankAndProgram,                                                     0x00F4072C
-	.set T_MIDI_PostSendWork_PortB,                                                     0x00F40730
-	.set T_MIDI_SendAllNotesOff_AllChannels,                                            0x00F40734
-	.set T_MidiIn_EntryThunks,                                                          0x00F40740
-	.set T_MidiIn_PumpPortA,                                                            0x00F40744
-	.set T_MidiOut_ParamChanged,                                                        0x00F40748
-	.set T_MidiIn_ReqRouteRebuild_Msg0D,                                                0x00F40754
-	.set T_MidiIn_ServiceDeferred,                                                      0x00F40758
-	.set T_MidiOut_RunPeriodicTimeouts,                                                                      0x00F4075C
-	.set T_MidiOut_ResyncChangedParts,                                                                      0x00F40760
-	.set T_ParamModule_PhaseVector,                                                                      0x00F40770
-	.set T_ParamImage_PostAllAsChangeEvents_Call,                                                                      0x00F40774
-	.set T_MidiSettings_ResetToDefault,                                                                      0x00F4077C
-	.set T_List2030_ProcessEvents,                                                                      0x00F40780
-	.set T_SoundSel_ClampToProgramAndBankRegs,                                                                      0x00F4078C
-	.set T_SoundSel_FromProgramAndBankRegs,                                                                      0x00F40790
-	.set T_Tempo_ApplyBpm,                                                                      0x00F40794
-	.set T_ParamMsg_RefreshPartMasks,                                                   0x00F40798
-	.set T_ProgramChangeMode_OnEvent,                                                                      0x00F4079C
-	.set T_F407A0,                                                                      0x00F407A0
-	.set T_F407A4,                                                                      0x00F407A4
-	.set T_ParamImage_LoadFactoryDefaults,                                                                      0x00F407AC
-	.set T_ParamImage_PostAllAsChangeEvents,                                                                      0x00F407B0
-	.set T_Queue2C00_PublishStagedIfPending,                                            0x00F407B4
-	.set T_Queue2C00_PublishStagedDrainPassB,                                           0x00F407B8
-	.set T_ParamChange_NotifyClearSource,                                               0x00F407CC
-	.set T_ParamChange_Notify,                                                          0x00F407D0
-	.set T_ParamRecord_WriteFieldAndStage,                                              0x00F407D4
-	.set T_ParamRecord_WriteFieldAndStage_Copy,                                         0x00F407D8
-	.set T_F407E8,                                                                      0x00F407E8
-	.set T_ParamB0_PublishField0IfPending,                                                                      0x00F407EC
-	.set T_SoundSel_ClampToProgramAndBank,                                                                      0x00F407F4
-	.set T_CombiSel_ClampToNumberAndBankRegs,                                                                      0x00F407FC
-	.set T_CombiSel_ClampToNumberAndBank,                                                                      0x00F40804
-	.set T_CombiSel_GroupMemberFromNumberAndBank,                                                                      0x00F40808
-	.set T_MidiIn_ControlRecord_Dispatch,                                               0x00F4080C
-	.set T_ParamMsg_RefreshMasksOnCtrlFieldChange,                                      0x00F40810
-	.set T_F40840,                                                                      0x00F40840
-	.set T_Evt2030_RunList,                                                             0x00F40850
-	.set T_ParamApply_ByModeOfParam80,                                                  0x00F40854
-	.set T_ParamApply_MaskedWriteAndPublish,                                            0x00F40858
-	.set T_ParamShadow_SetPitchBend,                                                    0x00F40864
-	.set T_ParamShadow_SetModulation1,                                                  0x00F40868
-	.set T_ParamShadow_SetExpression,                                                   0x00F4086C
-	.set T_ParamApply_StorePairAndDerive,                                               0x00F40870
-	.set T_ParamShadow_SetField3,                                                       0x00F40874
-	.set T_ParamApply_WriteStagedAndPublish,                                            0x00F40878
-	.set T_ParamApply_PublishStagedAndPostSeven,                                        0x00F4087C
-	.set T_ParamApply_PublishStagedPairBCDE,                                            0x00F40880
-	.set T_ParamApply_PublishStagedPair,                                                0x00F40884
-	.set T_ParamApply_WriteStagedAndPublish_Copy,                                       0x00F40888
-	.set T_ParamApply_PublishStagedPair_Copy,                                           0x00F4088C
-	.set T_F40894,                                                                      0x00F40894
-	.set T_ParamShadow_FlushAll,                                                        0x00F40898
-	.set T_ParamApply_OneHotOfSix,                                                      0x00F4089C
-	.set T_SysExModule_EntryThunks,                                                                      0x00F408E0
-	.set T_SysExDump_RunSendJob,                                                        0x00F408E4
-	.set T_SysExRx_PollRing601646,                                                                      0x00F408E8
-	.set T_SysExTx_Tempo,                                                                      0x00F408EC
-	.set T_GmMode_HandleChange,                                                                      0x00F408F0
-	.set T_GmMode_OnEventPassB,                                                                      0x00F408F4
-	.set T_SysExTx_EmitStagedParams,                                                                      0x00F40900
-	.set T_SysExRx_PollRing601C6E,                                                                      0x00F40904
-	.set T_MidiFilePlay_Tick,                                                                      0x00F40950
-	.set T_MidiFileDirectPlay_LcdKeyRow1,                                                                      0x00F40954
-	.set T_MidiFileDirectPlay_InitOnEntry,                                                                      0x00F40958
-	.set T_MidiFileDirectPlay_RestoreOnLeave,                                                                      0x00F4095C
-	.set T_wsa1_prom_b_Join2,                                                                      0x00F409A0
-	.set T_Transport_StartCAndB,                                                                      0x00F409A4
-	.set T_Transport_StopAllRunning,                                                                      0x00F409AC
-	.set T_F409C0,                                                                      0x00F409C0
-	.set T_F409C4,                                                                      0x00F409C4
-	.set T_Seq_MainLoopService,                                                                      0x00F409C8
-	.set T_Seq_RewindAfterSongLoad,                                                                      0x00F409CC
-	.set T_Seq_RequestRewind,                                                                      0x00F409E0
-	.set T_Seq_RewindOnMidiStart,                                                                      0x00F409E4
-	.set T_BStore_TrackToPart_SaveBackup,                                                                      0x00F409EC
-	.set T_BStore_TrackToPart_RestoreBackup,                                                                      0x00F409F0
-	.set T_F409FC,                                                                      0x00F409FC
-	.set T_F40A00,                                                                      0x00F40A00
-	.set T_Var34D1_SetBits20,                                                                      0x00F40A08
-	.set T_TimedEvents_ClearEndedTrackBits,                                                                      0x00F40A0C
-	.set T_SeqBufRing_Discard,                                                                      0x00F40A10
-	.set T_TimedEventRing_Discard,                                                                      0x00F40A14
-	.set T_Sequencer_ResetToDefault,                                                                      0x00F40A18
-	.set T_SeqRecord_StartOnFirstEvent,                                                                      0x00F40A24
-	.set T_SeqRecord_TerminateTracksIfRecording,                                                                      0x00F40A28
-	.set T_F40A34_Zeroed,                                                               0x00F40A34	; prom_b: 8 zero bytes (nop) that run into T_SeqCycle_TickDeferredAction
-	.set T_SeqCycle_TickDeferredAction,                                                                      0x00F40A3C
-	.set T_SeqMasterTrack_UpdateActiveFromSavedMask,                                                                      0x00F40A70
-	.set T_Seq_ApplySongBeatsPerBar,                                                                      0x00F40AC8
-	.set T_BStore_SeekChainToMeasure,                                                                      0x00F40C5C
-	.set T_Seq_BeatsToMeasureAndBeat,                                                                      0x00F40C60
-	.set T_BStore_AllocBlock_B_Veneer,                                                                      0x00F40C88
-	.set T_Seq_RequestRewindOnEvent,                                                                      0x00F40CBC
-	.set T_ModeEnter_SeqPlay_Fwd,                                                                      0x00F40D90
-	.set T_ModeEnter_RealtimeRecord_Fwd,                                                                      0x00F40D98
-	.set T_ScreenEnter_SeqPlayScreen_Fwd,                                                                      0x00F40DA0
-	.set T_ScreenEnter_CyclePlayScreen_Fwd,                                                                      0x00F40DB0
-	.set T_ScreenEnter_RealtimeRecordScreen_Fwd,                                                                      0x00F40DC0
-	.set T_ScreenEnter_CycleRecordScreen_Fwd,                                                                      0x00F40DD0
-	.set T_F40DE0,                                                                      0x00F40DE0
-	.set T_ScreenEnter_CyclePlayEditScreen29_Fwd,                                                                      0x00F40DF0
-	.set T_ScreenEnter_MetronomeBalanceScreen_Fwd,                                                                      0x00F40E00
-	.set T_RingPutBlock_EntryThunks,                                                    0x00F40ED0
-	.set T_Link_SendBlockIn32ByteChunks,                                                0x00F40ED4
-	.set T_Link_ServiceTask,                                                            0x00F40ED8
-	.set T_INT0_LinkByte,                                                               0x00F40EDC
-	.set T_INTT2_Reti,                                                                  0x00F40EE0
-	.set T_INTTC2_uDMA2Done,                                                            0x00F40EE4
-	.set T_INTTC3_LinkDmaDone,                                                          0x00F40EE8
-	.set T_Link_SendCommandE1,                                                          0x00F40EEC
-	.set T_Link_SendCommandE2,                                                          0x00F40EF0
-	.set T_SC1_Vtable,                                                                  0x00F40F00
-	.set T_SC1_Service,                                                                 0x00F40F04
-	.set T_SC1_TxFlush,                                                                 0x00F40F08
-	.set T_INT6_SC1_PeerRequest,                                                        0x00F40F0C
-	.set T_INTRX1_SC1_Dispatch,                                                         0x00F40F10
-	.set T_INTTX1_SC1_Dispatch,                                                         0x00F40F14
-	.set T_SC1_Entry_F40F18_Ret,                                                        0x00F40F18
-	.set T_F40F1C,                                                                      0x00F40F1C
-	.set T_F40F20,                                                                      0x00F40F20
-	.set T_PanelTask_EntryVectors,                                                      0x00F40F30
-	.set T_PanelTask_Step,                                                              0x00F40F34
-	.set T_Queue2C00_AppendRegs,                                                        0x00F40F38
-	.set T_Queue2E00_AppendRegs,                                                        0x00F40F3C
-	.set T_List2030_AppendRegs,                                                         0x00F40F40
-	.set T_PanelTimers_Step,                                                            0x00F40F44
-	.set T_PanelState_CheckRequestAllowed_2,                                            0x00F40F4C
-	.set T_UiEventList_Publish,                                                         0x00F40F50
-	.set T_UiEventList_RunPassA,                                                        0x00F40F5C
-	.set T_UiEventList_RunPassB,                                                        0x00F40F60
-	.set T_UiEventList_RunPassC,                                                        0x00F40F64
-	.set T_PanelHold_Tick,                                                              0x00F40F74
-	.set T_Msg0716_InitAllRecords_Entry,                                                                      0x00F40FB0
-	.set T_Msg0716_FlushIfPending,                                                                      0x00F40FB4
-	.set T_Msg0716_AllPartsResetBendAndModulation,                                                                      0x00F40FD0
-	.set T_Msg0716_PostSysEx50_87_StackArg,                                                                      0x00F40FDC
-	.set T_Msg0716_PostRestageAllParts,                                                                      0x00F40FEC
-	.set T_Msg0716_PostClearSoundRamAndRestageAllParts,                                                                      0x00F40FF0
-	.set T_F40FF4,                                                                      0x00F40FF4
-	.set T_SoundSel_ToProgramAndBank,                                                                      0x00F40FFC
-	.set T_SoundSel_FromProgramAndBank,                                                                      0x00F41000
-	.set T_PartSound_FromProgramChange,                                                                      0x00F41004
-	.set T_PartSound_ToProgramChange,                                                                      0x00F41008
-	.set T_Msg0716_PostSysEx50_A3,                                                                      0x00F4100C
-	.set T_SoundName_Lookup,                                                                      0x00F41010
-	.set T_SoundGroupName_Lookup,                                                                      0x00F41018
-	.set T_SoundGroup_MaxMemberIndex_Get,                                               0x00F4101C
-	.set T_CombiSel_ToNumberAndBank,                                                                      0x00F41024
-	.set T_CombiSel_FromNumberAndBank,                                                                      0x00F41028
-	.set T_CombiName_Lookup,                                                                      0x00F4102C
-	.set T_CombiGroupName_Lookup,                                                                      0x00F41030
-	.set T_SoundGroup_MaxMemberIndex_GetToneCopy,                                       0x00F41034
-	.set T_CreatorSelect_ReadSlotLabelIds,                                                                      0x00F41038
-	.set T_Cpu2Query_DrainRecordReplies,                                                                      0x00F4103C
-	.set T_DrumMap_MapNoteForPart,                                                                      0x00F41040
-	.set T_DrumMap_MapNoteForPart_StackArgs,                                                                      0x00F41044
-	.set T_SoundRemap_ResetToDefault,                                                                      0x00F41048
-	.set T_CombiRemap_ResetToDefault,                                                                      0x00F4104C
-	.set T_DrumMap_ResetToDefault,                                                                      0x00F41050
-	.set T_Cpu2Query_RefreshPartSoundRecord,                                                                      0x00F41054
-	.set T_Msg0716_PostGmSystemOnOff,                                                                      0x00F4105C
-	.set T_Msg0716_PostSysEx50_92_SaveRegs,                                                                      0x00F41060
-	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_Msg0716_HandlerTables_13,        0x00F41070
-	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_8_Msg0716_HandlerTables_13,      0x00F41074
-	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_16_Msg0716_HandlerTables_13,     0x00F41078
-	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_24_Msg0716_HandlerTables_13,     0x00F4107C
-	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_32_Msg0716_HandlerTables_13,     0x00F41080
-	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_40_Msg0716_HandlerTables_13,     0x00F41084
-	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_48_Msg0716_HandlerTables_13,     0x00F41088
-	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_56_Msg0716_HandlerTables_13,     0x00F4108C
-	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_64_Msg0716_HandlerTables_13,     0x00F41090
-	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_72_Msg0716_HandlerTables_13,     0x00F41094
-	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_80_Msg0716_HandlerTables_13,     0x00F41098
-	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_88_Msg0716_HandlerTables_13,     0x00F4109C
-	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_96_Msg0716_HandlerTables_13,     0x00F410A0
-	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_104_Msg0716_HandlerTables_13,    0x00F410A4
-	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_112_Msg0716_HandlerTables_13,    0x00F410A8
-	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_120_Msg0716_HandlerTables_13,    0x00F410AC
-	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_128_Msg0716_HandlerTables_13,    0x00F410B0
-	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_136_Msg0716_HandlerTables_13,    0x00F410B4
-	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_144_Msg0716_HandlerTables_13,    0x00F410B8
-	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_152_Msg0716_HandlerTables_13,    0x00F410BC
-	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_160_Msg0716_HandlerTables_13,    0x00F410C0
-	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_168_Msg0716_HandlerTables_13,    0x00F410C4
-	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_176_Msg0716_HandlerTables_13,    0x00F410C8
-	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_184_Msg0716_HandlerTables_13,    0x00F410CC
-	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_192_Msg0716_HandlerTables_13,    0x00F410D0
-	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_200_Msg0716_HandlerTables_13,    0x00F410D4
-	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_208_Msg0716_HandlerTables_13,    0x00F410D8
-	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_216_Msg0716_HandlerTables_13,    0x00F410DC
-	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_224_Msg0716_HandlerTables_13,    0x00F410E0
-	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_232_Msg0716_HandlerTables_13,    0x00F410E4
-	.set T_F410E8,                                                                      0x00F410E8
-	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_248_Msg0716_HandlerTables_13,    0x00F410EC
-	.set T_F410F0,                                                                      0x00F410F0
-	.set T_F410F4,                                                                      0x00F410F4
-	.set T_F410F8,                                                                      0x00F410F8
-	.set T_F410FC,                                                                      0x00F410FC
-	.set T_F41100,                                                                      0x00F41100
-	.set T_F41104,                                                                      0x00F41104
-	.set T_F41108,                                                                      0x00F41108
-	.set T_F4110C,                                                                      0x00F4110C
-	.set T_Msg0716_SetPendingBit0,                                                                      0x00F41110
-	.set T_Msg0716_SetPendingBit1,                                                                      0x00F41114
-	.set T_Msg0716_SetPendingBit2,                                                                      0x00F41118
-	.set T_Msg0716_SetPendingBit3,                                                                      0x00F4111C
-	.set T_F41120,                                                                      0x00F41120
-	.set T_F41124,                                                                      0x00F41124
-	.set T_F41128,                                                                      0x00F41128
-	.set T_F4112C,                                                                      0x00F4112C
-	.set T_F41130,                                                                      0x00F41130
-	.set T_F41134,                                                                      0x00F41134
-	.set T_F41138,                                                                      0x00F41138
-	.set T_F4113C,                                                                      0x00F4113C
-	.set T_Msg0716_DispatchIndex_Twin_Msg0716_HandlerTables_164_6,                      0x00F41140
-	.set T_F41144,                                                                      0x00F41144
-	.set T_Msg0716_DispatchIndex_Twin_Msg0716_HandlerTables_280_2,                      0x00F41148
-	.set T_F4114C,                                                                      0x00F4114C
-	.set T_F41150,                                                                      0x00F41150
-	.set T_Msg0716_DispatchIndex_Twin_Msg0716_HandlerTables_292_14,                     0x00F41154
-	.set T_Msg0716_DispatchIndex_Twin_Msg0716_HandlerTables_192_13,                     0x00F41158
-	.set T_Msg0716_DispatchIndex_Twin_Msg0716_HandlerTables_248_7,                      0x00F4115C
-	.set T_Msg0716_DispatchIndex_Twin_Msg0716_HandlerTables_352_4,                      0x00F41160
-	.set T_F41164,                                                                      0x00F41164
-	.set T_UiListB_Class9A_Nop,                                                                      0x00F41168
-	.set T_Msg0716_DispatchIndex_Twin_Msg0716_HandlerTables_372_19,                     0x00F4116C
-	.set T_F41170,                                                                      0x00F41170
-	.set T_F41174,                                                                      0x00F41174
-	.set T_F41178,                                                                      0x00F41178
-	.set T_F4117C,                                                                      0x00F4117C
-	.set T_Msg0716_EventPartPostCC78_AllSoundOff,                                                                      0x00F41180
-	.set T_NoteRouting_PhaseVector,                                                                      0x00F411B0
-	.set T_NoteRouting_RebuildIfPending,                                                                      0x00F411B4
-	.set T_NoteRouting_RebuildForSong,                                                                      0x00F411B8
-	.set T_NoteRouting_Rebuild,                                                                      0x00F411BC
-	.set T_NoteRouting_OnPartMidiEvent,                                                                      0x00F411C0
-	.set T_NoteRouting_OnPartPlayParamEvent,                                                                      0x00F411C4
-	.set T_F411C8,                                                                      0x00F411C8
-	.set T_F411CC,                                                                      0x00F411CC
-	.set T_NoteRouting_OnPlayModeRequest,                                                                      0x00F411D0
-	.set T_NoteRouting_OnMidiSystemEvent,                                                                      0x00F411D4
-	.set T_F411D8,                                                                      0x00F411D8
-	.set T_F411DC,                                                                      0x00F411DC
-	.set T_NoteRouting_SetMidiOutPorts,                                                                      0x00F411E0
-	.set T_F411E4,                                                                      0x00F411E4
-	.set T_F411E8,                                                                      0x00F411E8
-	.set T_NoteRouting_SetSoloAndRebuild,                                                                      0x00F411EC
-	.set T_Link_SendCommandE4,                                                          0x00F41230
-	.set T_Link_SendCommand3_WaitTicks,                                                 0x00F41234
-	.set T_Link_SendCommand5_WaitDone,                                                  0x00F41238
-	.set T_Link_WaitBlockDone,                                                          0x00F4123C
-	.set T_Link_SendCommandE7,                                                          0x00F41240
-	.set T_SysExThirdRegion_FetchNextChunk,                                                                      0x00F41250
-	.set T_SysExThirdRegion_AcceptRequest,                                                                      0x00F41254
-	.set T_SysExToneImage_WriteByte,                                                                      0x00F41258
-	.set T_SysExParam_ExecSoundWriteRequest,                                                                      0x00F4125C
-	.set T_SysExThirdRegion_GetReplyDataBuffer,                                                                      0x00F41260
-	.set T_SysExThirdRegion_SendReplyChunk,                                                                      0x00F41264
-	.set T_Ram3800_Start_Entry,                                                                      0x00F413B0
-	.set T_MidiInA_ProcessRing,                                                                      0x00F413B4
-	.set T_F413B8,                                                                      0x00F413B8
-	.set T_TimedEvents_ProcessRing,                                                                      0x00F413BC
-	.set T_PartNotes_ReleaseAllReceivedMidiIn,                                                                      0x00F413C0
-	.set T_NoteList_ReleaseAllSource0,                                                                      0x00F413C4
-	.set T_PartNotes_ReleaseAllTrackNotes,                                                                      0x00F413C8
-	.set T_F413CC,                                                                      0x00F413CC
-	.set T_Ram3800_InitDataImage,                                                       0x00F413D0
-	.set T_NoteRouting_ApplyQueuedChanges,                                                                      0x00F413D4
-	.set T_NoteRouting_DefaultRecordPtrs,                                                                      0x00F413DC
-	.set T_PartNoteList_NextHeldNote,                                                                      0x00F413E0
-	.set T_MidiInB_ProcessRing,                                                                      0x00F413F8
-	.set T_ToneGen_SendSoundSelNote,                                                                      0x00F413FC
-	.set T_MidiOut_SendNote,                                                                      0x00F41400
-	.set T_BStore_CompactBlocks_Veneer,                                                                      0x00F414B0
-	.set T_BStore_RebuildFreeListAfterLoad_Veneer,                                                                      0x00F414B4
-	.set T_SysExDump_RestoreSavedCurrentBank,                                                                      0x00F414B8
-	.set T_SysExDump_PrepareSequencerData,                                                                      0x00F414BC
-	.set T_SeqFile_RestoreSavedCurrentBank,                                                                      0x00F414C0
-	.set T_SeqFile_PrepareSaveAllBanks,                                                                      0x00F414C4
-	.set T_ModeEnter_Sound,                                                             0x00F41500
-	.set T_ModeEnter_Combination,                                                       0x00F41508
-	.set T_ScreenEnter_PowerOnSplash,                                                   0x00F41510
-	.set T_InstallPainter_SoundMode_Entry,                                              0x00F41520
-	.set T_InstallPainter_C0mbinati0nM0de_Entry,                                        0x00F41530
-	.set T_InstallPainter_SoundGroupMenu_Entry,                                         0x00F41540
-	.set T_InstallPainter_GroupSoundDisplayHold_Entry,                                  0x00F41550
-	.set T_InstallPainter_CombinationGroupMenu_Entry,                                   0x00F41560
-	.set T_InstallPainter_CombinationGroupMenu_Entry_5,                                 0x00F41570
-	.set T_InstallPainter_GroupCombiDisplayHold_Entry,                                  0x00F41580
-	.set T_F41590,                                                                      0x00F41590
-	.set T_UiEvent_MarkRedrawFromClass20Block,                                          0x00F415A0
-	.set T_GmMode_RepaintModeScreen,                                                                      0x00F415A4
-	.set T_UiEvent_SyncSoundSelection,                                                  0x00F415A8
-	.set T_UiEventClassA8_ShowGroupScreen,                                              0x00F415AC
-	.set T_F415B0,                                                                      0x00F415B0
-	.set T_LCD_BlitValueBar,                                                            0x00F415B4
-	.set T_UiEventClass7A_QueueDialValueRedraw,                                         0x00F415B8
-	.set T_Mode_SwitchToCombination,                                                    0x00F415C0
-	.set T_Mode_SwitchToSound,                                                          0x00F415C4
-	.set T_SoundGroup_ReloadSelection,                                                  0x00F415C8
-	.set T_MessageScreen_Paint,                                                         0x00F41600
-	.set T_InstallPainter_MessageScreen,                                                0x00F41604
-	.set T_PanelMode_MidiEnter,                                                         0x00F41640
-	.set T_Paint_MidiMenu,                                                              0x00F41650
-	.set T_F41660,                                                                      0x00F41660
-	.set T_F41670,                                                                      0x00F41670
-	.set T_F41680,                                                                      0x00F41680
-	.set T_Paint_MidiRealtimeMessages,                                                  0x00F41690
-	.set T_F416A0,                                                                      0x00F416A0
-	.set T_F416B0,                                                                      0x00F416B0
-	.set T_F416C0,                                                                      0x00F416C0
-	.set T_F41700,                                                                      0x00F41700
-	.set T_Paint_SysexBulkDump_Entry,                                                   0x00F41710
-	.set T_Paint_GeneralMidiMode_Entry,                                                 0x00F41720
-	.set T_Paint_Sending_Entry,                                                         0x00F41730
-	.set T_Paint_SystemExclusivePleaseWait_Entry,                                       0x00F41734
-	.set T_Paint_MidiTotalMode,                                                         0x00F4173C
-	.set T_Paint_MidiInputOutputFilter,                                                 0x00F4174C
-	.set T_Paint_MidiOutProgramChange,                                                  0x00F4175C
-	.set T_SysexBulkDump_PhaseVector,                                                                      0x00F4176C
-	.set T_DisplayList_Run,                                                             0x00F417F0
-	.set T_DisplayListB_Run,                                                            0x00F417F4
-	.set T_DLB_Handler_StringTable,                                                     0x00F417F8
-	.set T_DLB_Handler_StringTable2,                                                    0x00F417FC
-	.set T_DLB_Handler_Decimal,                                                         0x00F41800
-	.set T_DLB_Handler_Decimal_2,                                                       0x00F41804
-	.set T_DLB_Handler_Decimal2Words,                                                   0x00F4180C
-	.set T_DLB_Handler_DecimalSigned2Words,                                             0x00F41814
-	.set T_DLB_Handler_Array8,                                                          0x00F4181C
-	.set T_DLB_Handler_Array8_2,                                                        0x00F41820
-	.set T_DLB_Handler_Array6,                                                          0x00F41824
-	.set T_DLHandler_IX_Text,                                                           0x00F4182C
-	.set T_DrawValueGlyph_24x24,                                                        0x00F41834
-	.set T_ModeEnter_CombiEditPart,                                                                      0x00F41840
-	.set T_ScreenEnter_CombiEditPartMenu,                                                                      0x00F41848
-	.set T_ScreenEnter_CombiEditInternalSound,                                                                      0x00F41858
-	.set T_ScreenEnter_CombiEditConfigure_B2,                                                                      0x00F41868
-	.set T_ScreenEnter_WriteProtectError,                                                                      0x00F41878
-	.set T_ScreenEnter_CombiEditInternalSound_B4,                                                                      0x00F41888
-	.set T_ScreenEnter_CombiEditInternalSound_B5,                                                                      0x00F41898
-	.set T_ScreenEnter_Effect2OutputConflict,                                                                      0x00F418A8
-	.set T_ScreenEnterBody_CombiEditMixer,                                                                      0x00F418B8
-	.set T_CombiEdit_OnPartParamEvent,                                                                      0x00F418C8
-	.set T_CombiEdit_RunPendingRepaint,                                                                      0x00F418CC
-	.set T_PanelMode_System_Enter,                                                      0x00F41910
-	.set T_Screen_System_Enter,                                                         0x00F41918
-	.set T_Screen_TuneScale_Enter,                                                      0x00F41928
-	.set T_Screen_TouchSensitivityOrTest_Enter,                                                                      0x00F41938
-	.set T_Screen_ControllerAssign_Enter,                                                                      0x00F41948
-	.set T_Screen_MainOutEqualizer_Enter,                                               0x00F41958
-	.set T_Screen_ReMapEdit_Enter,                                                      0x00F41968
-	.set T_Screen_SoundCombinationManager_Enter,                                        0x00F41978
-	.set T_Screen_MemoryProtect_Enter,                                                  0x00F41988
-	.set T_Screen_DataLoadFilter_Enter,                                                 0x00F41998
-	.set T_Screen_DspEffect_Enter,                                                      0x00F419A8
-	.set T_Screen_DrumsMapNaming_Enter,                                                 0x00F419B8
-	.set T_CombiEdit_Begin,                                                                      0x00F41A00
-	.set T_ScreenEnter_CombiEditMenuRedirect,                                                                      0x00F41A08
-	.set T_ScreenEnter_CombiEditMenu,                                                                      0x00F41A18
-	.set T_F41A28,                                                                      0x00F41A28
-	.set T_ScreenEnter_CombinationNaming,                                                                      0x00F41A38
-	.set T_F41A48,                                                                      0x00F41A48
-	.set T_F41A58,                                                                      0x00F41A58
-	.set T_ScreenEnter_CombiEditDspEffect,                                                                      0x00F41A68
-	.set T_ScreenEnter_CombiEditMixer,                                                                      0x00F41A78
-	.set T_F41A88,                                                                      0x00F41A88
-	.set T_Screen_CombinationNaming_Enter,                                              0x00F41A98
-	.set T_Value_ToAsciiDigits3_RightJustified,                                         0x00F41AF0
-	.set T_Value_ToAsciiDigits3_LeftJustified,                                          0x00F41AF4
-	.set T_Value_ToAsciiDigits3,                                                        0x00F41B00
-	.set T_Value_ApplyNibbleDeltaClamped,                                               0x00F41B04
-	.set T_PanelButton_CallTableEntry,                                                  0x00F41B08
-	.set T_PanelButton_CallPageTableEntry,                                              0x00F41B0C
-	.set T_FixedEventList_AppendStackArgs,                                              0x00F41B10
-	.set T_EventQueue_AppendStackArgs,                                                  0x00F41B14
-	.set T_PendingEventQueue_AppendStackArgs,                                           0x00F41B18
-	.set T_AnalogScan_PhaseVector,                                                                      0x00F41B30
-	.set T_AnalogScan_All,                                                              0x00F41B34
-	.set T_Ring608A0A_Get,                                                              0x00F41CD0
-	.set T_Ring608A0A_IsEmpty,                                                          0x00F41CDC
-	.set T_Ring608A0A_Init,                                                             0x00F41CE0
-	.set T_Ring60480A_Get,                                                              0x00F41CF4
-	.set T_Ring60480A_Init,                                                             0x00F41D04
-	.set T_Ring60195A_Get,                                                              0x00F41D18
-	.set T_Ring60195A_IsEmpty,                                                          0x00F41D24
-	.set T_Ring60195A_Init,                                                             0x00F41D28
-	.set T_Ring601B64_Init,                                                             0x00F41D4C
-	.set T_TimedEventRing_Put,                                                              0x00F41D64
-	.set T_TimedEventRing_Init,                                                             0x00F41D70
-	.set T_TimedEventRing_ScanRewind,                                                       0x00F41D74
-	.set T_TimedEventRing_Scan,                                                             0x00F41D78
-	.set T_SeqBufRing_Get,                                                              0x00F41D84
-	.set T_SeqBufRing_PutBlock,                                                         0x00F41D8C
-	.set T_SeqBufRing_IsEmpty,                                                          0x00F41D90
-	.set T_SeqBufRing_Init,                                                             0x00F41D94
-	.set T_MidiInARing_Put,                                                              0x00F41DAC
-	.set T_MidiInARing_PutBlock,                                                         0x00F41DB0
-	.set T_MidiInARing_IsEmpty,                                                          0x00F41DB4
-	.set T_MidiInARing_Init,                                                             0x00F41DB8
-	.set T_MidiInARing_ScanRewind,                                                       0x00F41DBC
-	.set T_MidiInARing_Scan,                                                             0x00F41DC0
-	.set T_MidiInBRing_PutBlock,                                                         0x00F41DD4
-	.set T_MidiInBRing_IsEmpty,                                                          0x00F41DD8
-	.set T_MidiInBRing_Init,                                                             0x00F41DDC
-	.set T_MidiInBRing_ScanRewind,                                                       0x00F41DE0
-	.set T_MidiInBRing_Scan,                                                             0x00F41DE4
-	.set T_Ring601432_Get,                                                              0x00F41DF0
-	.set T_Ring601432_Put,                                                              0x00F41DF4
-	.set T_Ring601432_PutBlock,                                                         0x00F41DF8
-	.set T_Ring601432_IsEmpty,                                                          0x00F41DFC
-	.set T_Ring601432_Init,                                                             0x00F41E00
-	.set T_Ring60153C_Get,                                                              0x00F41E14
-	.set T_Ring60153C_PutBlock,                                                         0x00F41E1C
-	.set T_Ring60153C_Init,                                                             0x00F41E24
-	.set T_Ring601646_Get,                                                              0x00F41E38
-	.set T_Ring601646_Put,                                                              0x00F41E3C
-	.set T_Ring601646_PutBlock,                                                         0x00F41E40
-	.set T_Ring601646_Init,                                                             0x00F41E48
-	.set T_Ring601850_Get,                                                              0x00F41E5C
-	.set T_Ring601850_PutBlock,                                                         0x00F41E64
-	.set T_Ring601850_IsEmpty,                                                          0x00F41E68
-	.set T_Ring601850_Init,                                                             0x00F41E6C
-	.set T_Ring60000C_Get,                                                              0x00F41E80
-	.set T_Ring60000C_IsEmpty,                                                          0x00F41E8C
-	.set T_Ring60000C_Init,                                                             0x00F41E90
-	.set T_Ring601C6E_Get,                                                              0x00F41EA4
-	.set T_Ring601C6E_Put,                                                              0x00F41EA8
-	.set T_Ring601C6E_PutBlock,                                                         0x00F41EAC
-	.set T_Ring601C6E_IsEmpty,                                                          0x00F41EB0
-	.set T_Ring601C6E_Init,                                                             0x00F41EB4
-	.set T_Dispatch_Code80_Bracketed,                                                   0x00F41ED0
-	.set T_Dispatch_Code80,                                                             0x00F41ED4
-	.set T_UiPaint_Solo,                                                                0x00F41ED8
-	.set T_Gfx_EraseRect,                                                               0x00F41EE0
-	.set T_Gfx_DrawLine_Solid,                                                          0x00F41EE4
-	.set T_Gfx_DrawLine_Dashed,                                                         0x00F41EE8
-	.set T_List2030_PostSoundSelection,                                                                      0x00F41EEC
-	.set T_SeqFile_Load,                                                                      0x00F41EF8
-	.set T_SeqFile_Save,                                                                      0x00F41EFC
-	.set T_BStore_GetDiskBankPassword,                                                                      0x00F41F00
-	.set T_BStore_GetAnyBankPassword,                                                                      0x00F41F04
-	.set T_F41F10,                                                                      0x00F41F10
-	.set T_F41F14,                                                                      0x00F41F14
-	.set T_F41F18,                                                                      0x00F41F18
-	.set T_F41F30,                                                                      0x00F41F30
-	.set T_F41F34,                                                                      0x00F41F34
-	.set T_ModeEnter_SoundEdit,                                                                      0x00F41F54
-	.set T_ScreenEnter_SoundEditMenu,                                                                      0x00F41F5C
-	.set T_ToneEditPage_A0_ModelingTop,                                                                      0x00F41F6C
-	.set T_F41F7C,                                                                      0x00F41F7C
-	.set T_F41F8C,                                                                      0x00F41F8C
-	.set T_ToneEditPage_A3_PositionParameter,                                           0x00F41F9C
-	.set T_ToneEditPage_A4_PositionMovement,                                            0x00F41FAC
-	.set T_ToneEditPage_A5_FittingMutingTuning,                                         0x00F41FBC
-	.set T_ToneEditPage_A6_TouchDepth,                                                  0x00F41FCC
-	.set T_ToneEditPage_A7_ResoModeKeyFollow,                                           0x00F41FDC
-	.set T_ToneEditPage_A8_SerialParallel,                                                                      0x00F41FEC
-	.set T_ScreenEnter_SoundEditPitchTune,                                                                      0x00F41FFC
-	.set T_ScreenEnter_SoundEditPitchEnvelope1,                                                                      0x00F4200C
-	.set T_ScreenEnter_SoundEditPitchEnvelope2,                                                                      0x00F4201C
-	.set T_ScreenEnter_SoundEditPitchLfo,                                                                      0x00F4202C
-	.set T_ScreenEnter_SoundEditAmpLevel1,                                                                      0x00F4203C
-	.set T_ScreenEnter_SoundEditAmpLevel2,                                                                      0x00F4204C
-	.set T_ScreenEnter_SoundEditAmpEnvelope1,                                                                      0x00F4205C
-	.set T_ScreenEnter_SoundEditAmpEnvelope2,                                                                      0x00F4206C
-	.set T_ScreenEnter_SoundEditAmpLfo,                                                                      0x00F4207C
-	.set T_ScreenEnter_SoundEditControllerPage1,                                                                      0x00F4208C
-	.set T_ScreenEnter_SoundEditControllerPage2,                                                                      0x00F4209C
-	.set T_ScreenEnter_SoundEditDigitalEffectFromMenu,                                                                      0x00F420AC
-	.set T_ScreenEnter_SoundEditFilterLpf12,                                                                      0x00F420BC
-	.set T_ScreenEnter_SoundEditFilterHpf12,                                                                      0x00F420CC
-	.set T_ScreenEnter_SoundEditFilterLpf24,                                                                      0x00F420DC
-	.set T_ScreenEnter_SoundEditFilterHpf24,                                                                      0x00F420EC
-	.set T_ScreenEnter_SoundEditFilterBpf,                                                                      0x00F420FC
-	.set T_ScreenEnter_SoundEditFilterThrough,                                                                      0x00F4210C
-	.set T_ScreenEnter_SoundEditFilterKeyFollow,                                                                      0x00F4211C
-	.set T_ScreenEnter_SoundEditFilterEnvelope1,                                                                      0x00F4212C
-	.set T_ScreenEnter_SoundEditFilterEnvelope2,                                                                      0x00F4213C
-	.set T_ScreenEnter_SoundEditFilterLfo,                                                                      0x00F4214C
-	.set T_ScreenEnter_SoundEditModelingToneTemplate,                                                                      0x00F4215C
-	.set T_ScreenEnter_SoundEditToneLayerPanning,                                                                      0x00F4216C
-	.set T_ScreenEnter_SoundEditToneLayerKeyLayer,                                                                      0x00F4217C
-	.set T_ScreenEnter_SoundEditToneLayerVelocityLayer,                                                                      0x00F4218C
-	.set T_ScreenEnter_SoundEditModelingDriverWaveform,                                                                      0x00F4219C
-	.set T_DiskScreens_PhaseVector,                                                                      0x00F42250
-	.set T_ModeEnter_SoundCopy,                                                                      0x00F42254
-	.set T_ModeEnter_SoundCopy_Call,                                                                      0x00F4225C
-	.set T_Paint_DiskMenu,                                                              0x00F42264
-	.set T_Paint_MidiFileDirectPlay,                                                    0x00F42274
-	.set T_ScreenEnter_SoundEditDspEffect,                                                                      0x00F42320
-	.set T_ScreenEnter_SoundEditDrumMenu,                                                                      0x00F42330
-	.set T_F42340,                                                                      0x00F42340
-	.set T_ScreenEnter_SoundEditCopy,                                                                      0x00F42350
-	.set T_ScreenEnter_SoundEditMemoryWrite,                                                                      0x00F42360
-	.set T_ScreenEnter_SoundEditNaming,                                                                      0x00F42370
-	.set T_Ring608A0A_DrainAll,                                                         0x00F42380
-	.set T_Paint_DiskL0adFile,                                                          0x00F423A0
-	.set T_PageDispatch_DiskSaveFile,                                                   0x00F423B0
-	.set T_PageDispatch_MidiFileSave,                                                   0x00F423C0
-	.set T_Paint_FloppyDiskFormatSelectType,                                            0x00F423D0
-	.set T_PageDispatch_L0adSingleS0und,                                                0x00F423E0
-	.set T_Paint_FloppyDiskFormatAreYouSure,                                            0x00F423F0
-	.set T_Paint_MidiFileL0ad,                                                          0x00F42400
-	.set T_DiskLoad_SetContentTypeFromSelectedEntry,                                                                      0x00F42418
-	.set T_PageDispatch_L0adSingleC0mbination,                                          0x00F4241C
-	.set T_F42470,                                                                      0x00F42470
-	.set T_F42474,                                                                      0x00F42474
-	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_16_Msg0716_HandlerTables_56_26,  0x00F42478
-	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_24_Msg0716_HandlerTables_56_26,  0x00F4247C
-	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_32_Msg0716_HandlerTables_56_26,  0x00F42480
-	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_40_Msg0716_HandlerTables_56_26,  0x00F42484
-	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_48_Msg0716_HandlerTables_56_26,  0x00F42488
-	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_56_Msg0716_HandlerTables_56_26,  0x00F4248C
-	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_64_Msg0716_HandlerTables_56_26,  0x00F42490
-	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_72_Msg0716_HandlerTables_56_26,  0x00F42494
-	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_80_Msg0716_HandlerTables_56_26,  0x00F42498
-	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_88_Msg0716_HandlerTables_56_26,  0x00F4249C
-	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_96_Msg0716_HandlerTables_56_26,  0x00F424A0
+	.set T_MainTask_PhaseVector,                  0x00F40000
+	.set T_Dev7F_WriteSlot8_Slot0,                0x00F40004
+	.set T_Dev7F_WriteSlot8_Slot1,                0x00F40008
+	.set T_Dev7F_WriteSlot8_Slot2,                0x00F4000C
+	.set T_Dev7F_WriteSlot8_Slot3,                0x00F40010
+	.set T_Queue2C00_DrainPassAB,                 0x00F40018
+	.set T_SeqBuf_FlushStaged,                    0x00F40024
+	.set T_Queue2C00_DrainPassB,                  0x00F40038
+	.set T_MainTask_Entry,                        0x00F4005C
+	.set T_LCD_EntryThunks,                       0x00F400A0
+	.set T_SWI7_ServiceCall_Dispatch,             0x00F400A4
+	.set T_Paint_GateArrayCheck,                  0x00F400D0
+	.set T_Paint_PanelCpuCheck,                   0x00F400E0
+	.set T_Paint_SineWaveCheckMode,               0x00F400F0
+	.set T_Paint_PanelSwLedCheck,                 0x00F40100
+	.set T_F40110,                                0x00F40110
+	.set T_ScreenEnter_DebugMonitor,              0x00F40130
+	.set T_DebugMonitor_PhaseVector,              0x00F40140
+	.set T_CheckingDevice_RunSelfTest,            0x00F40144
+	.set T_TestMode_SelectFromPowerOnKeys,        0x00F40148
+	.set T_TestMode_Tick,                         0x00F4014C
+	.set T_F401D0,                                0x00F401D0
+	.set T_F401D4,                                0x00F401D4
+	.set T_ParamImage_SnapshotAll,                0x00F401D8
+	.set T_ParamImage_QueueDiffAll,               0x00F401DC
+	.set T_F401E8,                                0x00F401E8
+	.set T_F401EC,                                0x00F401EC
+	.set T_F40210,                                0x00F40210
+	.set T_ParamImage_SanitizeAll_Entry,          0x00F40214
+	.set T_ParamImage_SanitizeAllAndHook_Entry,   0x00F4021C
+	.set T_ParamImage_ApplyAndMaskTable_Entry,    0x00F40220
+	.set T_ParamImage_WriteRecordHeaders_Entry,   0x00F40224
+	.set T_ParamImageAlt_SanitizeCombination_Entry, 0x00F40228
+	.set T_F40240,                                0x00F40240
+	.set T_Combination_RecallOnSelect,            0x00F40244
+	.set T_ParamImage_QueueDiffCombination,       0x00F40248
+	.set T_ParamImage_SnapshotCombination_Entry,  0x00F4024C
+	.set T_Combination_Recall,                    0x00F40254
+	.set T_PanelScreen_RequestRedrawIfFieldQueued, 0x00F40290
+	.set T_EditScreen_PhaseVector,                0x00F402A0
+	.set T_ModeEnter_Sequencer,                   0x00F402A4
+	.set T_Paint_Sequencer,                       0x00F402AC
+	.set T_ShowScreen_NoteEditPartSelect,         0x00F402BC
+	.set T_EditScreen_EnterNoteEdit,              0x00F402CC
+	.set T_ShowScreen_DrumEditPartSelect,         0x00F402DC
+	.set T_EditScreen_EnterDrumEdit,              0x00F402EC
+	.set T_Transport_ResetAndStartBC,             0x00F40304
+	.set T_EditScreen_Tick_Call,                  0x00F40308
+	.set T_PowerFail_PrepareSongWorkspace,        0x00F4030C
+	.set T_Ctrl_Normalise,                        0x00F405F0
+	.set T_PanelWire_EntryThunks,                 0x00F40610
+	.set T_PanelWire_Service,                     0x00F40614
+	.set T_PanelEvent_PhaseVector,                0x00F40630
+	.set T_PanelEvent_Service,                    0x00F40634
+	.set T_PanelLed_PhaseVector,                  0x00F40660
+	.set T_PanelLed_ProcessRequests,              0x00F40664
+	.set T_PanelLed_Refresh,                      0x00F40668
+	.set T_PanelLed_SendByteUnconditional,        0x00F40670
+	.set T_PanelLed_FlashTransportBeat,           0x00F40674
+	.set T_PanelLed_SendByte,                     0x00F40678
+	.set T_PanelLed_OnPartEvent,                  0x00F4067C
+	.set T_PanelLed_OnClass90Event,               0x00F40680
+	.set T_F40684,                                0x00F40684
+	.set T_F40688,                                0x00F40688
+	.set T_PanelLed_OnClassA8Event,               0x00F4068C
+	.set T_F40690,                                0x00F40690
+	.set T_PanelLed_OnClass98Event,               0x00F40694
+	.set T_PanelLed_OnClass20Event,               0x00F40698
+	.set T_PanelLed_OnCtrlParamEvent,             0x00F4069C
+	.set T_PanelLed_ToggleActivityLed,            0x00F406A0
+	.set T_MIDI_EntryThunks,                      0x00F40710
+	.set T_MIDI_RX_Byte,                          0x00F40714
+	.set T_MIDI_TX_Ready,                         0x00F40718
+	.set T_MIDI_Clock_CatchUpIfAnySlot,           0x00F40720
+	.set T_MIDI_PostSendWork,                     0x00F40724
+	.set T_MIDI_DrainQueue,                       0x00F40728
+	.set T_MIDI_SendBankAndProgram,               0x00F4072C
+	.set T_MIDI_PostSendWork_PortB,               0x00F40730
+	.set T_MIDI_SendAllNotesOff_AllChannels,      0x00F40734
+	.set T_MidiIn_EntryThunks,                    0x00F40740
+	.set T_MidiIn_PumpPortA,                      0x00F40744
+	.set T_MidiOut_ParamChanged,                  0x00F40748
+	.set T_MidiIn_ReqRouteRebuild_Msg0D,          0x00F40754
+	.set T_MidiIn_ServiceDeferred,                0x00F40758
+	.set T_MidiOut_RunPeriodicTimeouts,           0x00F4075C
+	.set T_MidiOut_ResyncChangedParts,            0x00F40760
+	.set T_ParamModule_PhaseVector,               0x00F40770
+	.set T_ParamImage_PostAllAsChangeEvents_Call, 0x00F40774
+	.set T_MidiSettings_ResetToDefault,           0x00F4077C
+	.set T_List2030_ProcessEvents,                0x00F40780
+	.set T_SoundSel_ClampToProgramAndBankRegs,    0x00F4078C
+	.set T_SoundSel_FromProgramAndBankRegs,       0x00F40790
+	.set T_Tempo_ApplyBpm,                        0x00F40794
+	.set T_ParamMsg_RefreshPartMasks,             0x00F40798
+	.set T_ProgramChangeMode_OnEvent,             0x00F4079C
+	.set T_F407A0,                                0x00F407A0
+	.set T_F407A4,                                0x00F407A4
+	.set T_ParamImage_LoadFactoryDefaults,        0x00F407AC
+	.set T_ParamImage_PostAllAsChangeEvents,      0x00F407B0
+	.set T_Queue2C00_PublishStagedIfPending,      0x00F407B4
+	.set T_Queue2C00_PublishStagedDrainPassB,     0x00F407B8
+	.set T_ParamChange_NotifyClearSource,         0x00F407CC
+	.set T_ParamChange_Notify,                    0x00F407D0
+	.set T_ParamRecord_WriteFieldAndStage,        0x00F407D4
+	.set T_ParamRecord_WriteFieldAndStage_Copy,   0x00F407D8
+	.set T_F407E8,                                0x00F407E8
+	.set T_ParamB0_PublishField0IfPending,        0x00F407EC
+	.set T_SoundSel_ClampToProgramAndBank,        0x00F407F4
+	.set T_CombiSel_ClampToNumberAndBankRegs,     0x00F407FC
+	.set T_CombiSel_ClampToNumberAndBank,         0x00F40804
+	.set T_CombiSel_GroupMemberFromNumberAndBank, 0x00F40808
+	.set T_MidiIn_ControlRecord_Dispatch,         0x00F4080C
+	.set T_ParamMsg_RefreshMasksOnCtrlFieldChange, 0x00F40810
+	.set T_F40840,                                0x00F40840
+	.set T_Evt2030_RunList,                       0x00F40850
+	.set T_ParamApply_ByModeOfParam80,            0x00F40854
+	.set T_ParamApply_MaskedWriteAndPublish,      0x00F40858
+	.set T_ParamShadow_SetPitchBend,              0x00F40864
+	.set T_ParamShadow_SetModulation1,            0x00F40868
+	.set T_ParamShadow_SetExpression,             0x00F4086C
+	.set T_ParamApply_StorePairAndDerive,         0x00F40870
+	.set T_ParamShadow_SetField3,                 0x00F40874
+	.set T_ParamApply_WriteStagedAndPublish,      0x00F40878
+	.set T_ParamApply_PublishStagedAndPostSeven,  0x00F4087C
+	.set T_ParamApply_PublishStagedPairBCDE,      0x00F40880
+	.set T_ParamApply_PublishStagedPair,          0x00F40884
+	.set T_ParamApply_WriteStagedAndPublish_Copy, 0x00F40888
+	.set T_ParamApply_PublishStagedPair_Copy,     0x00F4088C
+	.set T_F40894,                                0x00F40894
+	.set T_ParamShadow_FlushAll,                  0x00F40898
+	.set T_ParamApply_OneHotOfSix,                0x00F4089C
+	.set T_SysExModule_EntryThunks,               0x00F408E0
+	.set T_SysExDump_RunSendJob,                  0x00F408E4
+	.set T_SysExRx_PollRing601646,                0x00F408E8
+	.set T_SysExTx_Tempo,                         0x00F408EC
+	.set T_GmMode_HandleChange,                   0x00F408F0
+	.set T_GmMode_OnEventPassB,                   0x00F408F4
+	.set T_SysExTx_EmitStagedParams,              0x00F40900
+	.set T_SysExRx_PollRing601C6E,                0x00F40904
+	.set T_MidiFilePlay_Tick,                     0x00F40950
+	.set T_MidiFileDirectPlay_LcdKeyRow1,         0x00F40954
+	.set T_MidiFileDirectPlay_InitOnEntry,        0x00F40958
+	.set T_MidiFileDirectPlay_RestoreOnLeave,     0x00F4095C
+	.set T_wsa1_prom_b_Join2,                     0x00F409A0
+	.set T_Transport_StartCAndB,                  0x00F409A4
+	.set T_Transport_StopAllRunning,              0x00F409AC
+	.set T_F409C0,                                0x00F409C0
+	.set T_F409C4,                                0x00F409C4
+	.set T_Seq_MainLoopService,                   0x00F409C8
+	.set T_Seq_RewindAfterSongLoad,               0x00F409CC
+	.set T_Seq_RequestRewind,                     0x00F409E0
+	.set T_Seq_RewindOnMidiStart,                 0x00F409E4
+	.set T_BStore_TrackToPart_SaveBackup,         0x00F409EC
+	.set T_BStore_TrackToPart_RestoreBackup,      0x00F409F0
+	.set T_F409FC,                                0x00F409FC
+	.set T_F40A00,                                0x00F40A00
+	.set T_Var34D1_SetBits20,                     0x00F40A08
+	.set T_TimedEvents_ClearEndedTrackBits,       0x00F40A0C
+	.set T_SeqBufRing_Discard,                    0x00F40A10
+	.set T_TimedEventRing_Discard,                0x00F40A14
+	.set T_Sequencer_ResetToDefault,              0x00F40A18
+	.set T_SeqRecord_StartOnFirstEvent,           0x00F40A24
+	.set T_SeqRecord_TerminateTracksIfRecording,  0x00F40A28
+	.set T_F40A34_Zeroed,                         0x00F40A34
+	.set T_SeqCycle_TickDeferredAction,           0x00F40A3C
+	.set T_SeqMasterTrack_UpdateActiveFromSavedMask, 0x00F40A70
+	.set T_Seq_ApplySongBeatsPerBar,              0x00F40AC8
+	.set T_BStore_SeekChainToMeasure,             0x00F40C5C
+	.set T_Seq_BeatsToMeasureAndBeat,             0x00F40C60
+	.set T_BStore_AllocBlock_B_Veneer,            0x00F40C88
+	.set T_Seq_RequestRewindOnEvent,              0x00F40CBC
+	.set T_ModeEnter_SeqPlay_Fwd,                 0x00F40D90
+	.set T_ModeEnter_RealtimeRecord_Fwd,          0x00F40D98
+	.set T_ScreenEnter_SeqPlayScreen_Fwd,         0x00F40DA0
+	.set T_ScreenEnter_CyclePlayScreen_Fwd,       0x00F40DB0
+	.set T_ScreenEnter_RealtimeRecordScreen_Fwd,  0x00F40DC0
+	.set T_ScreenEnter_CycleRecordScreen_Fwd,     0x00F40DD0
+	.set T_F40DE0,                                0x00F40DE0
+	.set T_ScreenEnter_CyclePlayEditScreen29_Fwd, 0x00F40DF0
+	.set T_ScreenEnter_MetronomeBalanceScreen_Fwd, 0x00F40E00
+	.set T_RingPutBlock_EntryThunks,              0x00F40ED0
+	.set T_Link_SendBlockIn32ByteChunks,          0x00F40ED4
+	.set T_Link_ServiceTask,                      0x00F40ED8
+	.set T_INT0_LinkByte,                         0x00F40EDC
+	.set T_INTT2_Reti,                            0x00F40EE0
+	.set T_INTTC2_uDMA2Done,                      0x00F40EE4
+	.set T_INTTC3_LinkDmaDone,                    0x00F40EE8
+	.set T_Link_SendCommandE1,                    0x00F40EEC
+	.set T_Link_SendCommandE2,                    0x00F40EF0
+	.set T_SC1_Vtable,                            0x00F40F00
+	.set T_SC1_Service,                           0x00F40F04
+	.set T_SC1_TxFlush,                           0x00F40F08
+	.set T_INT6_SC1_PeerRequest,                  0x00F40F0C
+	.set T_INTRX1_SC1_Dispatch,                   0x00F40F10
+	.set T_INTTX1_SC1_Dispatch,                   0x00F40F14
+	.set T_SC1_Entry_F40F18_Ret,                  0x00F40F18
+	.set T_F40F1C,                                0x00F40F1C
+	.set T_F40F20,                                0x00F40F20
+	.set T_PanelTask_EntryVectors,                0x00F40F30
+	.set T_PanelTask_Step,                        0x00F40F34
+	.set T_Queue2C00_AppendRegs,                  0x00F40F38
+	.set T_Queue2E00_AppendRegs,                  0x00F40F3C
+	.set T_List2030_AppendRegs,                   0x00F40F40
+	.set T_PanelTimers_Step,                      0x00F40F44
+	.set T_PanelState_CheckRequestAllowed_2,      0x00F40F4C
+	.set T_UiEventList_Publish,                   0x00F40F50
+	.set T_UiEventList_RunPassA,                  0x00F40F5C
+	.set T_UiEventList_RunPassB,                  0x00F40F60
+	.set T_UiEventList_RunPassC,                  0x00F40F64
+	.set T_PanelHold_Tick,                        0x00F40F74
+	.set T_Msg0716_InitAllRecords_Entry,          0x00F40FB0
+	.set T_Msg0716_FlushIfPending,                0x00F40FB4
+	.set T_Msg0716_AllPartsResetBendAndModulation, 0x00F40FD0
+	.set T_Msg0716_PostSysEx50_87_StackArg,       0x00F40FDC
+	.set T_Msg0716_PostRestageAllParts,           0x00F40FEC
+	.set T_Msg0716_PostClearSoundRamAndRestageAllParts, 0x00F40FF0
+	.set T_F40FF4,                                0x00F40FF4
+	.set T_SoundSel_ToProgramAndBank,             0x00F40FFC
+	.set T_SoundSel_FromProgramAndBank,           0x00F41000
+	.set T_PartSound_FromProgramChange,           0x00F41004
+	.set T_PartSound_ToProgramChange,             0x00F41008
+	.set T_Msg0716_PostSysEx50_A3,                0x00F4100C
+	.set T_SoundName_Lookup,                      0x00F41010
+	.set T_SoundGroupName_Lookup,                 0x00F41018
+	.set T_SoundGroup_MaxMemberIndex_Get,         0x00F4101C
+	.set T_CombiSel_ToNumberAndBank,              0x00F41024
+	.set T_CombiSel_FromNumberAndBank,            0x00F41028
+	.set T_CombiName_Lookup,                      0x00F4102C
+	.set T_CombiGroupName_Lookup,                 0x00F41030
+	.set T_SoundGroup_MaxMemberIndex_GetToneCopy, 0x00F41034
+	.set T_CreatorSelect_ReadSlotLabelIds,        0x00F41038
+	.set T_Cpu2Query_DrainRecordReplies,          0x00F4103C
+	.set T_DrumMap_MapNoteForPart,                0x00F41040
+	.set T_DrumMap_MapNoteForPart_StackArgs,      0x00F41044
+	.set T_SoundRemap_ResetToDefault,             0x00F41048
+	.set T_CombiRemap_ResetToDefault,             0x00F4104C
+	.set T_DrumMap_ResetToDefault,                0x00F41050
+	.set T_Cpu2Query_RefreshPartSoundRecord,      0x00F41054
+	.set T_Msg0716_PostGmSystemOnOff,             0x00F4105C
+	.set T_Msg0716_PostSysEx50_92_SaveRegs,       0x00F41060
+	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_Msg0716_HandlerTables_13, 0x00F41070
+	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_8_Msg0716_HandlerTables_13, 0x00F41074
+	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_16_Msg0716_HandlerTables_13, 0x00F41078
+	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_24_Msg0716_HandlerTables_13, 0x00F4107C
+	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_32_Msg0716_HandlerTables_13, 0x00F41080
+	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_40_Msg0716_HandlerTables_13, 0x00F41084
+	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_48_Msg0716_HandlerTables_13, 0x00F41088
+	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_56_Msg0716_HandlerTables_13, 0x00F4108C
+	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_64_Msg0716_HandlerTables_13, 0x00F41090
+	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_72_Msg0716_HandlerTables_13, 0x00F41094
+	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_80_Msg0716_HandlerTables_13, 0x00F41098
+	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_88_Msg0716_HandlerTables_13, 0x00F4109C
+	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_96_Msg0716_HandlerTables_13, 0x00F410A0
+	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_104_Msg0716_HandlerTables_13, 0x00F410A4
+	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_112_Msg0716_HandlerTables_13, 0x00F410A8
+	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_120_Msg0716_HandlerTables_13, 0x00F410AC
+	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_128_Msg0716_HandlerTables_13, 0x00F410B0
+	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_136_Msg0716_HandlerTables_13, 0x00F410B4
+	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_144_Msg0716_HandlerTables_13, 0x00F410B8
+	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_152_Msg0716_HandlerTables_13, 0x00F410BC
+	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_160_Msg0716_HandlerTables_13, 0x00F410C0
+	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_168_Msg0716_HandlerTables_13, 0x00F410C4
+	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_176_Msg0716_HandlerTables_13, 0x00F410C8
+	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_184_Msg0716_HandlerTables_13, 0x00F410CC
+	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_192_Msg0716_HandlerTables_13, 0x00F410D0
+	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_200_Msg0716_HandlerTables_13, 0x00F410D4
+	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_208_Msg0716_HandlerTables_13, 0x00F410D8
+	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_216_Msg0716_HandlerTables_13, 0x00F410DC
+	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_224_Msg0716_HandlerTables_13, 0x00F410E0
+	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_232_Msg0716_HandlerTables_13, 0x00F410E4
+	.set T_F410E8,                                0x00F410E8
+	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_248_Msg0716_HandlerTables_13, 0x00F410EC
+	.set T_F410F0,                                0x00F410F0
+	.set T_F410F4,                                0x00F410F4
+	.set T_F410F8,                                0x00F410F8
+	.set T_F410FC,                                0x00F410FC
+	.set T_F41100,                                0x00F41100
+	.set T_F41104,                                0x00F41104
+	.set T_F41108,                                0x00F41108
+	.set T_F4110C,                                0x00F4110C
+	.set T_Msg0716_SetPendingBit0,                0x00F41110
+	.set T_Msg0716_SetPendingBit1,                0x00F41114
+	.set T_Msg0716_SetPendingBit2,                0x00F41118
+	.set T_Msg0716_SetPendingBit3,                0x00F4111C
+	.set T_F41120,                                0x00F41120
+	.set T_F41124,                                0x00F41124
+	.set T_F41128,                                0x00F41128
+	.set T_F4112C,                                0x00F4112C
+	.set T_F41130,                                0x00F41130
+	.set T_F41134,                                0x00F41134
+	.set T_F41138,                                0x00F41138
+	.set T_F4113C,                                0x00F4113C
+	.set T_Msg0716_DispatchIndex_Twin_Msg0716_HandlerTables_164_6, 0x00F41140
+	.set T_F41144,                                0x00F41144
+	.set T_Msg0716_DispatchIndex_Twin_Msg0716_HandlerTables_280_2, 0x00F41148
+	.set T_F4114C,                                0x00F4114C
+	.set T_F41150,                                0x00F41150
+	.set T_Msg0716_DispatchIndex_Twin_Msg0716_HandlerTables_292_14, 0x00F41154
+	.set T_Msg0716_DispatchIndex_Twin_Msg0716_HandlerTables_192_13, 0x00F41158
+	.set T_Msg0716_DispatchIndex_Twin_Msg0716_HandlerTables_248_7, 0x00F4115C
+	.set T_Msg0716_DispatchIndex_Twin_Msg0716_HandlerTables_352_4, 0x00F41160
+	.set T_F41164,                                0x00F41164
+	.set T_UiListB_Class9A_Nop,                   0x00F41168
+	.set T_Msg0716_DispatchIndex_Twin_Msg0716_HandlerTables_372_19, 0x00F4116C
+	.set T_F41170,                                0x00F41170
+	.set T_F41174,                                0x00F41174
+	.set T_F41178,                                0x00F41178
+	.set T_F4117C,                                0x00F4117C
+	.set T_Msg0716_EventPartPostCC78_AllSoundOff, 0x00F41180
+	.set T_NoteRouting_PhaseVector,               0x00F411B0
+	.set T_NoteRouting_RebuildIfPending,          0x00F411B4
+	.set T_NoteRouting_RebuildForSong,            0x00F411B8
+	.set T_NoteRouting_Rebuild,                   0x00F411BC
+	.set T_NoteRouting_OnPartMidiEvent,           0x00F411C0
+	.set T_NoteRouting_OnPartPlayParamEvent,      0x00F411C4
+	.set T_F411C8,                                0x00F411C8
+	.set T_F411CC,                                0x00F411CC
+	.set T_NoteRouting_OnPlayModeRequest,         0x00F411D0
+	.set T_NoteRouting_OnMidiSystemEvent,         0x00F411D4
+	.set T_F411D8,                                0x00F411D8
+	.set T_F411DC,                                0x00F411DC
+	.set T_NoteRouting_SetMidiOutPorts,           0x00F411E0
+	.set T_F411E4,                                0x00F411E4
+	.set T_F411E8,                                0x00F411E8
+	.set T_NoteRouting_SetSoloAndRebuild,         0x00F411EC
+	.set T_Link_SendCommandE4,                    0x00F41230
+	.set T_Link_SendCommand3_WaitTicks,           0x00F41234
+	.set T_Link_SendCommand5_WaitDone,            0x00F41238
+	.set T_Link_WaitBlockDone,                    0x00F4123C
+	.set T_Link_SendCommandE7,                    0x00F41240
+	.set T_SysExThirdRegion_FetchNextChunk,       0x00F41250
+	.set T_SysExThirdRegion_AcceptRequest,        0x00F41254
+	.set T_SysExToneImage_WriteByte,              0x00F41258
+	.set T_SysExParam_ExecSoundWriteRequest,      0x00F4125C
+	.set T_SysExThirdRegion_GetReplyDataBuffer,   0x00F41260
+	.set T_SysExThirdRegion_SendReplyChunk,       0x00F41264
+	.set T_Ram3800_Start_Entry,                   0x00F413B0
+	.set T_MidiInA_ProcessRing,                   0x00F413B4
+	.set T_F413B8,                                0x00F413B8
+	.set T_TimedEvents_ProcessRing,               0x00F413BC
+	.set T_PartNotes_ReleaseAllReceivedMidiIn,    0x00F413C0
+	.set T_NoteList_ReleaseAllSource0,            0x00F413C4
+	.set T_PartNotes_ReleaseAllTrackNotes,        0x00F413C8
+	.set T_F413CC,                                0x00F413CC
+	.set T_Ram3800_InitDataImage,                 0x00F413D0
+	.set T_NoteRouting_ApplyQueuedChanges,        0x00F413D4
+	.set T_NoteRouting_DefaultRecordPtrs,         0x00F413DC
+	.set T_PartNoteList_NextHeldNote,             0x00F413E0
+	.set T_MidiInB_ProcessRing,                   0x00F413F8
+	.set T_ToneGen_SendSoundSelNote,              0x00F413FC
+	.set T_MidiOut_SendNote,                      0x00F41400
+	.set T_BStore_CompactBlocks_Veneer,           0x00F414B0
+	.set T_BStore_RebuildFreeListAfterLoad_Veneer, 0x00F414B4
+	.set T_SysExDump_RestoreSavedCurrentBank,     0x00F414B8
+	.set T_SysExDump_PrepareSequencerData,        0x00F414BC
+	.set T_SeqFile_RestoreSavedCurrentBank,       0x00F414C0
+	.set T_SeqFile_PrepareSaveAllBanks,           0x00F414C4
+	.set T_ModeEnter_Sound,                       0x00F41500
+	.set T_ModeEnter_Combination,                 0x00F41508
+	.set T_ScreenEnter_PowerOnSplash,             0x00F41510
+	.set T_InstallPainter_SoundMode_Entry,        0x00F41520
+	.set T_InstallPainter_C0mbinati0nM0de_Entry,  0x00F41530
+	.set T_InstallPainter_SoundGroupMenu_Entry,   0x00F41540
+	.set T_InstallPainter_GroupSoundDisplayHold_Entry, 0x00F41550
+	.set T_InstallPainter_CombinationGroupMenu_Entry, 0x00F41560
+	.set T_InstallPainter_CombinationGroupMenu_Entry_5, 0x00F41570
+	.set T_InstallPainter_GroupCombiDisplayHold_Entry, 0x00F41580
+	.set T_F41590,                                0x00F41590
+	.set T_UiEvent_MarkRedrawFromClass20Block,    0x00F415A0
+	.set T_GmMode_RepaintModeScreen,              0x00F415A4
+	.set T_UiEvent_SyncSoundSelection,            0x00F415A8
+	.set T_UiEventClassA8_ShowGroupScreen,        0x00F415AC
+	.set T_F415B0,                                0x00F415B0
+	.set T_LCD_BlitValueBar,                      0x00F415B4
+	.set T_UiEventClass7A_QueueDialValueRedraw,   0x00F415B8
+	.set T_Mode_SwitchToCombination,              0x00F415C0
+	.set T_Mode_SwitchToSound,                    0x00F415C4
+	.set T_SoundGroup_ReloadSelection,            0x00F415C8
+	.set T_MessageScreen_Paint,                   0x00F41600
+	.set T_InstallPainter_MessageScreen,          0x00F41604
+	.set T_PanelMode_MidiEnter,                   0x00F41640
+	.set T_Paint_MidiMenu,                        0x00F41650
+	.set T_F41660,                                0x00F41660
+	.set T_F41670,                                0x00F41670
+	.set T_F41680,                                0x00F41680
+	.set T_Paint_MidiRealtimeMessages,            0x00F41690
+	.set T_F416A0,                                0x00F416A0
+	.set T_F416B0,                                0x00F416B0
+	.set T_F416C0,                                0x00F416C0
+	.set T_F41700,                                0x00F41700
+	.set T_Paint_SysexBulkDump_Entry,             0x00F41710
+	.set T_Paint_GeneralMidiMode_Entry,           0x00F41720
+	.set T_Paint_Sending_Entry,                   0x00F41730
+	.set T_Paint_SystemExclusivePleaseWait_Entry, 0x00F41734
+	.set T_Paint_MidiTotalMode,                   0x00F4173C
+	.set T_Paint_MidiInputOutputFilter,           0x00F4174C
+	.set T_Paint_MidiOutProgramChange,            0x00F4175C
+	.set T_SysexBulkDump_PhaseVector,             0x00F4176C
+	.set T_DisplayList_Run,                       0x00F417F0
+	.set T_DisplayListB_Run,                      0x00F417F4
+	.set T_DLB_Handler_StringTable,               0x00F417F8
+	.set T_DLB_Handler_StringTable2,              0x00F417FC
+	.set T_DLB_Handler_Decimal,                   0x00F41800
+	.set T_DLB_Handler_Decimal_2,                 0x00F41804
+	.set T_DLB_Handler_Decimal2Words,             0x00F4180C
+	.set T_DLB_Handler_DecimalSigned2Words,       0x00F41814
+	.set T_DLB_Handler_Array8,                    0x00F4181C
+	.set T_DLB_Handler_Array8_2,                  0x00F41820
+	.set T_DLB_Handler_Array6,                    0x00F41824
+	.set T_DLHandler_IX_Text,                     0x00F4182C
+	.set T_DrawValueGlyph_24x24,                  0x00F41834
+	.set T_ModeEnter_CombiEditPart,               0x00F41840
+	.set T_ScreenEnter_CombiEditPartMenu,         0x00F41848
+	.set T_ScreenEnter_CombiEditInternalSound,    0x00F41858
+	.set T_ScreenEnter_CombiEditConfigure_B2,     0x00F41868
+	.set T_ScreenEnter_WriteProtectError,         0x00F41878
+	.set T_ScreenEnter_CombiEditInternalSound_B4, 0x00F41888
+	.set T_ScreenEnter_CombiEditInternalSound_B5, 0x00F41898
+	.set T_ScreenEnter_Effect2OutputConflict,     0x00F418A8
+	.set T_ScreenEnterBody_CombiEditMixer,        0x00F418B8
+	.set T_CombiEdit_OnPartParamEvent,            0x00F418C8
+	.set T_CombiEdit_RunPendingRepaint,           0x00F418CC
+	.set T_PanelMode_System_Enter,                0x00F41910
+	.set T_Screen_System_Enter,                   0x00F41918
+	.set T_Screen_TuneScale_Enter,                0x00F41928
+	.set T_Screen_TouchSensitivityOrTest_Enter,   0x00F41938
+	.set T_Screen_ControllerAssign_Enter,         0x00F41948
+	.set T_Screen_MainOutEqualizer_Enter,         0x00F41958
+	.set T_Screen_ReMapEdit_Enter,                0x00F41968
+	.set T_Screen_SoundCombinationManager_Enter,  0x00F41978
+	.set T_Screen_MemoryProtect_Enter,            0x00F41988
+	.set T_Screen_DataLoadFilter_Enter,           0x00F41998
+	.set T_Screen_DspEffect_Enter,                0x00F419A8
+	.set T_Screen_DrumsMapNaming_Enter,           0x00F419B8
+	.set T_CombiEdit_Begin,                       0x00F41A00
+	.set T_ScreenEnter_CombiEditMenuRedirect,     0x00F41A08
+	.set T_ScreenEnter_CombiEditMenu,             0x00F41A18
+	.set T_F41A28,                                0x00F41A28
+	.set T_ScreenEnter_CombinationNaming,         0x00F41A38
+	.set T_F41A48,                                0x00F41A48
+	.set T_F41A58,                                0x00F41A58
+	.set T_ScreenEnter_CombiEditDspEffect,        0x00F41A68
+	.set T_ScreenEnter_CombiEditMixer,            0x00F41A78
+	.set T_F41A88,                                0x00F41A88
+	.set T_Screen_CombinationNaming_Enter,        0x00F41A98
+	.set T_Value_ToAsciiDigits3_RightJustified,   0x00F41AF0
+	.set T_Value_ToAsciiDigits3_LeftJustified,    0x00F41AF4
+	.set T_Value_ToAsciiDigits3,                  0x00F41B00
+	.set T_Value_ApplyNibbleDeltaClamped,         0x00F41B04
+	.set T_PanelButton_CallTableEntry,            0x00F41B08
+	.set T_PanelButton_CallPageTableEntry,        0x00F41B0C
+	.set T_FixedEventList_AppendStackArgs,        0x00F41B10
+	.set T_EventQueue_AppendStackArgs,            0x00F41B14
+	.set T_PendingEventQueue_AppendStackArgs,     0x00F41B18
+	.set T_AnalogScan_PhaseVector,                0x00F41B30
+	.set T_AnalogScan_All,                        0x00F41B34
+	.set T_Ring608A0A_Get,                        0x00F41CD0
+	.set T_Ring608A0A_IsEmpty,                    0x00F41CDC
+	.set T_Ring608A0A_Init,                       0x00F41CE0
+	.set T_Ring60480A_Get,                        0x00F41CF4
+	.set T_Ring60480A_Init,                       0x00F41D04
+	.set T_Ring60195A_Get,                        0x00F41D18
+	.set T_Ring60195A_IsEmpty,                    0x00F41D24
+	.set T_Ring60195A_Init,                       0x00F41D28
+	.set T_Ring601B64_Init,                       0x00F41D4C
+	.set T_TimedEventRing_Put,                    0x00F41D64
+	.set T_TimedEventRing_Init,                   0x00F41D70
+	.set T_TimedEventRing_ScanRewind,             0x00F41D74
+	.set T_TimedEventRing_Scan,                   0x00F41D78
+	.set T_SeqBufRing_Get,                        0x00F41D84
+	.set T_SeqBufRing_PutBlock,                   0x00F41D8C
+	.set T_SeqBufRing_IsEmpty,                    0x00F41D90
+	.set T_SeqBufRing_Init,                       0x00F41D94
+	.set T_MidiInARing_Put,                       0x00F41DAC
+	.set T_MidiInARing_PutBlock,                  0x00F41DB0
+	.set T_MidiInARing_IsEmpty,                   0x00F41DB4
+	.set T_MidiInARing_Init,                      0x00F41DB8
+	.set T_MidiInARing_ScanRewind,                0x00F41DBC
+	.set T_MidiInARing_Scan,                      0x00F41DC0
+	.set T_MidiInBRing_PutBlock,                  0x00F41DD4
+	.set T_MidiInBRing_IsEmpty,                   0x00F41DD8
+	.set T_MidiInBRing_Init,                      0x00F41DDC
+	.set T_MidiInBRing_ScanRewind,                0x00F41DE0
+	.set T_MidiInBRing_Scan,                      0x00F41DE4
+	.set T_Ring601432_Get,                        0x00F41DF0
+	.set T_Ring601432_Put,                        0x00F41DF4
+	.set T_Ring601432_PutBlock,                   0x00F41DF8
+	.set T_Ring601432_IsEmpty,                    0x00F41DFC
+	.set T_Ring601432_Init,                       0x00F41E00
+	.set T_Ring60153C_Get,                        0x00F41E14
+	.set T_Ring60153C_PutBlock,                   0x00F41E1C
+	.set T_Ring60153C_Init,                       0x00F41E24
+	.set T_Ring601646_Get,                        0x00F41E38
+	.set T_Ring601646_Put,                        0x00F41E3C
+	.set T_Ring601646_PutBlock,                   0x00F41E40
+	.set T_Ring601646_Init,                       0x00F41E48
+	.set T_Ring601850_Get,                        0x00F41E5C
+	.set T_Ring601850_PutBlock,                   0x00F41E64
+	.set T_Ring601850_IsEmpty,                    0x00F41E68
+	.set T_Ring601850_Init,                       0x00F41E6C
+	.set T_Ring60000C_Get,                        0x00F41E80
+	.set T_Ring60000C_IsEmpty,                    0x00F41E8C
+	.set T_Ring60000C_Init,                       0x00F41E90
+	.set T_Ring601C6E_Get,                        0x00F41EA4
+	.set T_Ring601C6E_Put,                        0x00F41EA8
+	.set T_Ring601C6E_PutBlock,                   0x00F41EAC
+	.set T_Ring601C6E_IsEmpty,                    0x00F41EB0
+	.set T_Ring601C6E_Init,                       0x00F41EB4
+	.set T_Dispatch_Code80_Bracketed,             0x00F41ED0
+	.set T_Dispatch_Code80,                       0x00F41ED4
+	.set T_UiPaint_Solo,                          0x00F41ED8
+	.set T_Gfx_EraseRect,                         0x00F41EE0
+	.set T_Gfx_DrawLine_Solid,                    0x00F41EE4
+	.set T_Gfx_DrawLine_Dashed,                   0x00F41EE8
+	.set T_List2030_PostSoundSelection,           0x00F41EEC
+	.set T_SeqFile_Load,                          0x00F41EF8
+	.set T_SeqFile_Save,                          0x00F41EFC
+	.set T_BStore_GetDiskBankPassword,            0x00F41F00
+	.set T_BStore_GetAnyBankPassword,             0x00F41F04
+	.set T_F41F10,                                0x00F41F10
+	.set T_F41F14,                                0x00F41F14
+	.set T_F41F18,                                0x00F41F18
+	.set T_F41F30,                                0x00F41F30
+	.set T_F41F34,                                0x00F41F34
+	.set T_ModeEnter_SoundEdit,                   0x00F41F54
+	.set T_ScreenEnter_SoundEditMenu,             0x00F41F5C
+	.set T_ToneEditPage_A0_ModelingTop,           0x00F41F6C
+	.set T_F41F7C,                                0x00F41F7C
+	.set T_F41F8C,                                0x00F41F8C
+	.set T_ToneEditPage_A3_PositionParameter,     0x00F41F9C
+	.set T_ToneEditPage_A4_PositionMovement,      0x00F41FAC
+	.set T_ToneEditPage_A5_FittingMutingTuning,   0x00F41FBC
+	.set T_ToneEditPage_A6_TouchDepth,            0x00F41FCC
+	.set T_ToneEditPage_A7_ResoModeKeyFollow,     0x00F41FDC
+	.set T_ToneEditPage_A8_SerialParallel,        0x00F41FEC
+	.set T_ScreenEnter_SoundEditPitchTune,        0x00F41FFC
+	.set T_ScreenEnter_SoundEditPitchEnvelope1,   0x00F4200C
+	.set T_ScreenEnter_SoundEditPitchEnvelope2,   0x00F4201C
+	.set T_ScreenEnter_SoundEditPitchLfo,         0x00F4202C
+	.set T_ScreenEnter_SoundEditAmpLevel1,        0x00F4203C
+	.set T_ScreenEnter_SoundEditAmpLevel2,        0x00F4204C
+	.set T_ScreenEnter_SoundEditAmpEnvelope1,     0x00F4205C
+	.set T_ScreenEnter_SoundEditAmpEnvelope2,     0x00F4206C
+	.set T_ScreenEnter_SoundEditAmpLfo,           0x00F4207C
+	.set T_ScreenEnter_SoundEditControllerPage1,  0x00F4208C
+	.set T_ScreenEnter_SoundEditControllerPage2,  0x00F4209C
+	.set T_ScreenEnter_SoundEditDigitalEffectFromMenu, 0x00F420AC
+	.set T_ScreenEnter_SoundEditFilterLpf12,      0x00F420BC
+	.set T_ScreenEnter_SoundEditFilterHpf12,      0x00F420CC
+	.set T_ScreenEnter_SoundEditFilterLpf24,      0x00F420DC
+	.set T_ScreenEnter_SoundEditFilterHpf24,      0x00F420EC
+	.set T_ScreenEnter_SoundEditFilterBpf,        0x00F420FC
+	.set T_ScreenEnter_SoundEditFilterThrough,    0x00F4210C
+	.set T_ScreenEnter_SoundEditFilterKeyFollow,  0x00F4211C
+	.set T_ScreenEnter_SoundEditFilterEnvelope1,  0x00F4212C
+	.set T_ScreenEnter_SoundEditFilterEnvelope2,  0x00F4213C
+	.set T_ScreenEnter_SoundEditFilterLfo,        0x00F4214C
+	.set T_ScreenEnter_SoundEditModelingToneTemplate, 0x00F4215C
+	.set T_ScreenEnter_SoundEditToneLayerPanning, 0x00F4216C
+	.set T_ScreenEnter_SoundEditToneLayerKeyLayer, 0x00F4217C
+	.set T_ScreenEnter_SoundEditToneLayerVelocityLayer, 0x00F4218C
+	.set T_ScreenEnter_SoundEditModelingDriverWaveform, 0x00F4219C
+	.set T_DiskScreens_PhaseVector,               0x00F42250
+	.set T_ModeEnter_SoundCopy,                   0x00F42254
+	.set T_ModeEnter_SoundCopy_Call,              0x00F4225C
+	.set T_Paint_DiskMenu,                        0x00F42264
+	.set T_Paint_MidiFileDirectPlay,              0x00F42274
+	.set T_ScreenEnter_SoundEditDspEffect,        0x00F42320
+	.set T_ScreenEnter_SoundEditDrumMenu,         0x00F42330
+	.set T_F42340,                                0x00F42340
+	.set T_ScreenEnter_SoundEditCopy,             0x00F42350
+	.set T_ScreenEnter_SoundEditMemoryWrite,      0x00F42360
+	.set T_ScreenEnter_SoundEditNaming,           0x00F42370
+	.set T_Ring608A0A_DrainAll,                   0x00F42380
+	.set T_Paint_DiskL0adFile,                    0x00F423A0
+	.set T_PageDispatch_DiskSaveFile,             0x00F423B0
+	.set T_PageDispatch_MidiFileSave,             0x00F423C0
+	.set T_Paint_FloppyDiskFormatSelectType,      0x00F423D0
+	.set T_PageDispatch_L0adSingleS0und,          0x00F423E0
+	.set T_Paint_FloppyDiskFormatAreYouSure,      0x00F423F0
+	.set T_Paint_MidiFileL0ad,                    0x00F42400
+	.set T_DiskLoad_SetContentTypeFromSelectedEntry, 0x00F42418
+	.set T_PageDispatch_L0adSingleC0mbination,    0x00F4241C
+	.set T_F42470,                                0x00F42470
+	.set T_F42474,                                0x00F42474
+	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_16_Msg0716_HandlerTables_56_26, 0x00F42478
+	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_24_Msg0716_HandlerTables_56_26, 0x00F4247C
+	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_32_Msg0716_HandlerTables_56_26, 0x00F42480
+	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_40_Msg0716_HandlerTables_56_26, 0x00F42484
+	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_48_Msg0716_HandlerTables_56_26, 0x00F42488
+	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_56_Msg0716_HandlerTables_56_26, 0x00F4248C
+	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_64_Msg0716_HandlerTables_56_26, 0x00F42490
+	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_72_Msg0716_HandlerTables_56_26, 0x00F42494
+	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_80_Msg0716_HandlerTables_56_26, 0x00F42498
+	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_88_Msg0716_HandlerTables_56_26, 0x00F4249C
+	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_96_Msg0716_HandlerTables_56_26, 0x00F424A0
 	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_104_Msg0716_HandlerTables_56_26, 0x00F424A4
 	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_112_Msg0716_HandlerTables_56_26, 0x00F424A8
 	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_120_Msg0716_HandlerTables_56_26, 0x00F424AC
@@ -1754,293 +1754,302 @@
 	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_232_Msg0716_HandlerTables_56_26, 0x00F424E4
 	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_240_Msg0716_HandlerTables_56_26, 0x00F424E8
 	.set T_Msg0716_DispatchIndex_Msg0716_ObjectRecords_248_Msg0716_HandlerTables_56_26, 0x00F424EC
-	.set T_Msg0716_DispatchIndex_Twin_Msg0716_HandlerTables_452_17,                     0x00F424F0
-	.set T_Msg0716_OnPitchBendEvent,                                                                      0x00F424F4
-	.set T_Msg0716_EventPartPostCC01_ModulationIfEnabled,                                                                      0x00F424F8
-	.set T_Msg0716_EventPartPostCC0B_Expression,                                                                      0x00F424FC
-	.set T_Msg0716_OnChannelPressureEvent,                                                                      0x00F42500
-	.set T_Msg0716_EventPartPostCC40_SustainFromValueIfEnabled,                                                                      0x00F42504
-	.set T_F42508,                                                                      0x00F42508
-	.set T_F4250C,                                                                      0x00F4250C
-	.set T_Msg0716_EventPartPostCC10_GeneralPurpose1IfEnabled,                                                                      0x00F42510
-	.set T_Msg0716_EventPartPostCC11_GeneralPurpose2IfEnabled,                                                                      0x00F42514
-	.set T_Msg0716_EventPartPostCC12_GeneralPurpose3IfEnabled,                                                                      0x00F42518
-	.set T_Msg0716_EventPartPostCC13_GeneralPurpose4IfEnabled,                                                                      0x00F4251C
-	.set T_Msg0716_EventPartPostCC02_BreathIfEnabled,                                                                      0x00F42520
-	.set T_Msg0716_EventPartPostCC04_FootIfEnabled,                                                                      0x00F42524
-	.set T_Disk_PhaseVector,                                                                      0x00F42570
-	.set T_BStore_Workspace_StoreParamImage,                                                                      0x00F42574
-	.set T_F42578,                                                                      0x00F42578
-	.set T_F42580,                                                                      0x00F42580
-	.set T_MidiFilePlay_OnSongSelect,                                                                      0x00F42584
-	.set T_Disk_PortA3_Release_Call_Call,                                               0x00F42590
-	.set T_Playback_StopAllAndIgnoreMidiStart,                                                                      0x00F42594
-	.set T_DiskApi_ReadFileToWindow_Entry,                                                                      0x00F425A8
-	.set T_DiskApi_WriteFileFromWindow_Entry,                                                                      0x00F425AC
-	.set T_DiskApi_DeleteFile_Call,                                                                      0x00F425B0
-	.set T_DiskLoadScreen_MountAndScanDirectory,                                                                      0x00F425B4
-	.set T_DiskSaveScreen_MountAndScanDirectory,                                                                      0x00F425B8
-	.set T_Disk_TickCountdowns,                                                                      0x00F425C4
-	.set T_DiskLoadFile_Execute,                                                                      0x00F425C8
-	.set T_DiskSaveFile_Execute_Entry,                                                                      0x00F425CC
-	.set T_MidiFileSave_Page5_LcdKeyRow3,                                                                      0x00F425D0
-	.set T_NameEdit_MoveCursor_Call,                                                                      0x00F425D4
-	.set T_NameEdit_StepChar_Call,                                                                      0x00F425D8
-	.set T_Playback_AcceptMidiStartAgain,                                                                      0x00F425DC
-	.set T_DiskApi_CloseFile_Call,                                                                      0x00F425E4
-	.set T_DiskSave_CheckFreeSpace,                                                                      0x00F425E8
-	.set T_DiskSaveFile_Page5_LcdKeyRow3,                                                                      0x00F425F4
-	.set T_NameEdit_SyncCharIndex_Call,                                                                      0x00F425F8
-	.set T_DiskSaveFile_SaveOrConfirmOverwrite_Call,                                                                      0x00F42608
-	.set T_DiskSaveFile_CheckPasswordThenSave_Call,                                                                      0x00F4260C
-	.set T_F42610,                                                                      0x00F42610
-	.set T_Disk_MountAndScanMidiFilesResetRings,                                                                      0x00F42614
-	.set T_MidiFileStream_Open,                                                                      0x00F42618
-	.set T_MidiFileStream_GetByte,                                                                      0x00F4261C
-	.set T_MidiFileStream_Close,                                                                      0x00F42620
-	.set T_Disk_LoadSqfToWorkspace_Entry,                                                                      0x00F42624
-	.set T_Disk_LoadSeqToHeap_Entry,                                                                      0x00F42628
-	.set T_Disk_SaveSqfFromStaging_Entry,                                                                      0x00F4262C
-	.set T_MidiFileSave_Page3_LcdKeyRow3,                                                                      0x00F42634
-	.set T_ParamImage_CopyToSongWorkspace,                                                                      0x00F42660
-	.set T_F42664,                                                                      0x00F42664
-	.set T_Screen_Initial_Enter,                                                                      0x00F42670
-	.set T_Screen_SoundGroupNaming_Enter,                                               0x00F42680
-	.set T_Screen_CombinationGroupNaming_Enter,                                         0x00F42690
-	.set T_Screen_SoundCopy_Enter,                                                      0x00F426A0
-	.set T_Screen_CombinationCopy_Enter,                                                0x00F426B0
-	.set T_SongClear_ClearCurrentBank,                                                                      0x00F42708
-	.set T_SongGmFlag_OnEventPassB_Veneer,                                                                      0x00F42828
-	.set T_BStore_LoadSongFromCurrentBank,                                                                      0x00F4282C
-	.set T_BStore_AppendBytes_Veneer,                                                   0x00F42894
-	.set T_MeasureInsert_InitFields,                                                                      0x00F429A8
-	.set T_MeasureInsert_OnLeave,                                                                      0x00F429AC
-	.set T_MeasureInsert_SelectField1,                                                                      0x00F429B0
-	.set T_MeasureInsert_SelectField2,                                                                      0x00F429B4
-	.set T_MeasureInsert_SelectField3,                                                                      0x00F429B8
-	.set T_MeasureInsert_SelectField4,                                                                      0x00F429BC
-	.set T_MeasureInsert_SelectField5,                                                                      0x00F429C0
-	.set T_MeasureInsert_SelectField6,                                                                      0x00F429C4
-	.set T_MeasureInsert_StepFieldUp,                                                                      0x00F429C8
-	.set T_MeasureInsert_StepFieldDown,                                                                      0x00F429CC
-	.set T_MeasureInsert_ReturnToStageZero,                                                                      0x00F429D0
-	.set T_MeasureInsert_LcdKeyRow1,                                                                      0x00F429D4
-	.set T_MeasureC0py_InitFields,                                                                      0x00F429D8
-	.set T_MeasureC0py_OnLeave,                                                                      0x00F429DC
-	.set T_MeasureC0py_SelectField1,                                                                      0x00F429E0
-	.set T_MeasureC0py_SelectField2,                                                                      0x00F429E4
-	.set T_MeasureC0py_SelectField3,                                                                      0x00F429E8
-	.set T_MeasureC0py_SelectField4,                                                                      0x00F429EC
-	.set T_MeasureC0py_SelectField5,                                                                      0x00F429F0
-	.set T_MeasureC0py_SelectField6,                                                                      0x00F429F4
-	.set T_MeasureC0py_StepFieldUp,                                                                      0x00F429F8
-	.set T_MeasureC0py_StepFieldDown,                                                                      0x00F429FC
-	.set T_MeasureC0py_ReturnToStageZero,                                                                      0x00F42A00
-	.set T_MeasureC0py_LcdKeyRow1,                                                                      0x00F42A04
-	.set T_S0ngC0py_InitFields,                                                                      0x00F42A08
-	.set T_S0ngC0py_StageZero_SoftKeyCol2,                                                                      0x00F42A10
-	.set T_S0ngC0py_StageZero_SoftKeyCol1,                                                                      0x00F42A14
-	.set T_S0ngC0py_StageZero_SoftKeyCol4,                                                                      0x00F42A18
-	.set T_S0ngC0py_StageZero_SoftKeyCol3,                                                                      0x00F42A1C
-	.set T_S0ngC0py_StageZero_SoftKeyCol6,                                                                      0x00F42A20
-	.set T_S0ngC0py_StageZero_SoftKeyCol5,                                                                      0x00F42A24
-	.set T_S0ngC0py_StageZero_SoftKeyCol8,                                                                      0x00F42A28
-	.set T_S0ngC0py_StageZero_SoftKeyCol7,                                                                      0x00F42A2C
-	.set T_S0ngC0py_LcdKeyRow2,                                                                      0x00F42A30
-	.set T_S0ngC0py_ReturnToStageZero,                                                                      0x00F42A34
-	.set T_AdvanceDelay_SelectField1,                                                                      0x00F42A68
-	.set T_AdvanceDelay_SelectField2,                                                                      0x00F42A6C
-	.set T_AdvanceDelay_SelectField3,                                                                      0x00F42A70
-	.set T_AdvanceDelay_SelectField4,                                                                      0x00F42A74
-	.set T_AdvanceDelay_StepFieldUp,                                                                      0x00F42A78
-	.set T_AdvanceDelay_StepFieldDown,                                                                      0x00F42A7C
-	.set T_AdvanceDelay_LcdKeyRow3,                                                                      0x00F42A80
-	.set T_AdvanceDelay_ReturnToStageZero,                                                                      0x00F42A84
-	.set T_N0teChange_InitFields,                                                                      0x00F42A88
-	.set T_N0teChange_OnLeave,                                                                      0x00F42A8C
-	.set T_N0teChange_SelectField1,                                                                      0x00F42A90
-	.set T_N0teChange_SelectField2,                                                                      0x00F42A94
-	.set T_N0teChange_SelectField3,                                                                      0x00F42A98
-	.set T_N0teChange_SelectField4,                                                                      0x00F42A9C
-	.set T_N0teChange_SelectField5,                                                                      0x00F42AA0
-	.set T_N0teChange_StepSelectedFieldUp,                                                                      0x00F42AA4
-	.set T_N0teChange_StepFieldDown,                                                                      0x00F42AA8
-	.set T_N0teChange_LcdKeyRow4,                                                                      0x00F42AAC
-	.set T_N0teChange_ReturnToStageZero,                                                                      0x00F42AB0
-	.set T_F42B70,                                                                      0x00F42B70
-	.set T_Medley_SelectField1,                                                                      0x00F42B7C
-	.set T_Medley_SelectField2,                                                                      0x00F42B80
-	.set T_SequencerMedley_StepFieldUp,                                                                      0x00F42B84
-	.set T_SequencerMedley_StepFieldDown,                                                                      0x00F42B88
-	.set T_TrackAssign_IsLocalControlDashed,                                                                      0x00F42B9C
-	.set T_F42BB4,                                                                      0x00F42BB4
-	.set T_F42BB8,                                                                      0x00F42BB8
-	.set T_StepRecordPartSelect_OpenStepRecord,                                                                      0x00F42BBC
-	.set T_StepRecordPartSelect_ResetOnEntry,                                                                      0x00F42BC4
-	.set T_StepRecordPartSelect_OnLeave,                                                                      0x00F42BC8
-	.set T_SequencerMedley_InitOnEntry,                                                                      0x00F42BCC
-	.set T_SequencerMedley_OnLeave,                                                                      0x00F42BD0
-	.set T_SequencerMedley_LcdKeyRow2,                                                                      0x00F42BD4
-	.set T_SequencerMedley_StopPlayback,                                                                      0x00F42BD8
-	.set T_SequencerMedley_SetSourceInternal,                                                                      0x00F42C18
-	.set T_SequencerMedley_SoftKeyCol3,                                                                      0x00F42C1C
-	.set T_SequencerMedley_SoftKeyCol7,                                                                      0x00F42C24
-	.set T_SequencerMedley_SoftKeyCol8,                                                                      0x00F42C28
-	.set T_SequencerMedley_LcdKeyRow4,                                                                      0x00F42C2C
-	.set T_TableDefault_Ret,                                                            0x00F42C70
-	.set T_PanelCode_ToSlotAndFlags,                                                    0x00F42C74
-	.set T_EditValue_StepBitField,                                                                      0x00F42C78
-	.set T_Queue2C00_Append4,                                                           0x00F42C80
-	.set T_Queue2E00_Append4,                                                           0x00F42C84
-	.set T_List2030_Append4,                                                            0x00F42C88
-	.set T_IndexedTable_GetPtr,                                                         0x00F42C8C
-	.set T_IndexedTable_GetByte,                                                        0x00F42C90
-	.set T_IndexedParam_AdjustField,                                                    0x00F42C94
-	.set T_IndexedParam_SetBit,                                                         0x00F42C98
-	.set T_PartIndex_PostChangeEvent,                                                                      0x00F42C9C
-	.set T_PartSound_CopyNameToDrawScratch,                                                                      0x00F42CA0
-	.set T_IndexedParam_SetFieldFromAsciiEntry,                                         0x00F42CA8
-	.set T_INT5_Dev7B_Receive_Alias,                                                    0x00F42D28
-	.set T_INTTC0_uDMA0Done_Alias,                                                      0x00F42D30
-	.set T_Disk_CommandDispatch_SaveRegs_Entry,                                         0x00F42D34
-	.set T_Fdc_Request_SaveRegs_Entry,                                                  0x00F42D38
-	.set T_Kernel_InitRam,                                                              0x00F42D60
-	.set T_INTT3_KernelTick,                                                            0x00F42D64
-	.set T_IRQ_Epilogue,                                                                0x00F42D68
-	.set T_Kernel_StartTask,                                                            0x00F42D6C
-	.set T_Kernel_SemaSignal,                                                           0x00F42D88
-	.set T_Kernel_SemaWait,                                                             0x00F42D90
-	.set T_Kernel_KillTask,                                                             0x00F42DA8
-	.set T_Kernel_StartTask_StackArg,                                                   0x00F42DAC
-	.set T_Kernel_ExitTask_2,                                                           0x00F42DB0
-	.set T_Kernel_SemaSignal_StackArg,                                                  0x00F42DC0
-	.set T_Kernel_SemaWait_StackArg,                                                    0x00F42DC4
-	.set T_MsgQueue_Send_StackArg,                                                      0x00F42DC8
-	.set T_MsgQueue_ReceiveBlocking,                                                    0x00F42DCC
-	.set T_Kernel_SemaTryWait,                                                          0x00F42DD8
-	.set T_MsgQueue_Receive_NoBlock,                                                    0x00F42DDC
-	.set T_DSP_ChannelRegs_Write8,                                                      0x00F42DE0
-	.set T_DisplayList_Run_Stack,                                                       0x00F42E00
-	.set T_DisplayListB_Run_Stack,                                                      0x00F42E04
-	.set T_DisplayList_RunOne_Stack,                                                    0x00F42E08
-	.set T_DisplayListB_RunOne_Stack,                                                   0x00F42E0C
-	.set T_LCD_BlankThenSetPanel3Layer_Copy,                                                                      0x00F42E10
-	.set T_LCD_ShowAllLayers_StackFrame_Copy,                                                                      0x00F42E14
-	.set T_UiPaint_PageLabelBackdrop,                                                                      0x00F42E18
-	.set T_Blink_Command,                                                               0x00F42E20
-	.set T_Blink_Stop,                                                                  0x00F42E24
-	.set T_Blink_SetEnable,                                                             0x00F42E28
-	.set T_Blink_Tick,                                                                  0x00F42E2C
-	.set T_Blink_GetState,                                                              0x00F42E30
-	.set T_ScreenEnter_DrawbarScreen,                                                                      0x00F42E44
-	.set T_Drawbar_MarkReloadOnSoundEvent,                                                                      0x00F42E54
-	.set T_Drawbar_ReloadIfMarked,                                                                      0x00F42E60
-	.set T_Drawbar_OnCpu2Reply,                                                                      0x00F42E64
-	.set T_Drawbar_EnterScreenIfMarked,                                                                      0x00F42E68
-	.set T_Drawbar_WaitReloadMark,                                                                      0x00F42E6C
-	.set T_CallbackQueue_Post,                                                          0x00F42E84
-	.set T_Task2_CallbackDispatcher,                                                    0x00F42E88
-	.set T_Medley_ToggleMidiFileStream,                                                                      0x00F42E90
-	.set T_StepRecord_OnEnter,                                                                      0x00F42EC0
-	.set T_StepRecord_OnLeave,                                                                      0x00F42EC4
-	.set T_StepRecord_MainLoopService,                                                                      0x00F42ED0
-	.set T_StepRecord_Tick,                                                                      0x00F42EDC
-	.set T_F42F00,                                                                      0x00F42F00
-	.set T_F42F04,                                                                      0x00F42F04
-	.set T_ScreenEnterBody_DspEffect,                                                                      0x00F42F4C
-	.set T_ScreenButtonBody_DspEffect,                                                                      0x00F42F50
-	.set T_DspEffect_OnParamEvent,                                                                      0x00F42F54
-	.set T_DspEffect_ApplyAlgorithmDefaults,                                                                      0x00F42F58
-	.set T_DspEffect_SanitizeBlock,                                                                      0x00F42F5C
-	.set T_ScreenEnterBody_MainOutEqualizer,                                                                      0x00F42F68
-	.set T_ScreenButtonBody_MainOutEqualizer,                                                                      0x00F42F6C
-	.set T_NameEntry_Begin,                                                                      0x00F42F80
-	.set T_SoundEditNaming_SoftKeyCol1,                                                                      0x00F42F84
-	.set T_SoundEditNaming_SoftKeyCol2,                                                                      0x00F42F88
-	.set T_SoundEditNaming_SoftKeyCol3,                                                                      0x00F42F8C
-	.set T_SoundEditNaming_SoftKeyCol4,                                                                      0x00F42F90
-	.set T_SoundEditNaming_SoftKeyCol5,                                                                      0x00F42F94
-	.set T_SoundEditNaming_SoftKeyCol6,                                                                      0x00F42F98
-	.set T_SoundEditNaming_SoftKeyCol7,                                                                      0x00F42F9C
-	.set T_SoundEditNaming_SoftKeyCol8,                                                                      0x00F42FA0
-	.set T_SoundEditNaming_LcdKeyRow1,                                                                      0x00F42FA4
-	.set T_SoundEditNaming_LcdKeyRow2,                                                                      0x00F42FA8
-	.set T_DrumSoundNames_FetchNext,                                                                      0x00F42FAC
-	.set T_Medley_Tick,                                                                      0x00F43020
-	.set T_Medley_ScheduleNextMidiFile,                                                                      0x00F43028
-	.set T_ModeEnter_Edit,                                                                      0x00F43040
-	.set T_ModeEnter_StepRecord,                                                                      0x00F43048
-	.set T_ScreenEnter_Edit,                                                            0x00F43050
-	.set T_ScreenEnter_SongClear,                                                       0x00F43060
-	.set T_ScreenEnter_TrackClear,                                                      0x00F43070
-	.set T_ScreenEnter_Vel0cityChange,                                                  0x00F43080
-	.set T_ScreenEnter_Quantize,                                                        0x00F43090
-	.set T_ScreenEnter_TrackMerge,                                                      0x00F430A0
-	.set T_ScreenEnter_MeasureErase,                                                    0x00F430B0
-	.set T_ScreenEnter_MeasureC0py,                                                     0x00F430C0
-	.set T_ScreenEnter_MeasureInsert,                                                   0x00F430D0
-	.set T_ScreenEnter_MeasureDelete,                                                   0x00F430E0
-	.set T_ScreenEnter_S0ngC0py,                                                        0x00F430F0
-	.set T_ScreenEnter_Transp0se,                                                       0x00F43100
-	.set T_ScreenEnter_AdvanceDelay,                                                    0x00F43110
-	.set T_ScreenEnter_N0teChange,                                                      0x00F43120
-	.set T_ScreenEnter_PanelWrite,                                                      0x00F43130
-	.set T_ScreenEnter_TrackAssign,                                                     0x00F43140
-	.set T_ScreenEnter_SequencerMedley,                                                 0x00F43150
-	.set T_ScreenEnter_StepRecord,                                                                      0x00F43160
-	.set T_ScreenEnter_StepRecordPartSelect,                                            0x00F43170
-	.set T_ScreenEnter_AfterT0uchSetting,                                               0x00F43180
-	.set T_ScreenEnter_TrackAssignPresets,                                              0x00F43190
-	.set T_ScreenEnter_S0ngSelectName,                                                  0x00F431A0
-	.set T_ScreenCode15_Handler,                                                                      0x00F431D0
-	.set T_AsciiDigits3_ToValue,                                                        0x00F432F0
-	.set T_AsciiField_ToSignedValue,                                                    0x00F432F4
-	.set T_AsciiField_Clear,                                                            0x00F432F8
-	.set T_UiText_CopyLabel13_To_22F0,                                                  0x00F43330
-	.set T_MidiIn_ReqListRebuild_Msg13_16,                                              0x00F43350
-	.set T_MidiIn_ReqRebuild_Msg03_0A,                                                  0x00F43354
-	.set T_MidiIn_PumpPortB,                                                            0x00F43358
-	.set T_MidiFileL0ad_LcdKeyRow1,                                                                      0x00F43380
-	.set T_MidiFileSave_WriteSeqBankSmf,                                                                      0x00F43384
-	.set T_MidiFileStream_ReaderTask,                                                   0x00F433C0
-	.set T_ScreenEnter_SoundEditDigitalEffect,                                                                      0x00F433D0
-	.set T_F433E0,                                                                      0x00F433E0
-	.set T_SoundName_CopyToBuffer,                                                      0x00F43400
-	.set T_SoundGroupName_CopyToBuffer,                                                 0x00F43404
-	.set T_SoundGroup_MaxMemberIndex_ByStack,                                           0x00F43408
-	.set T_CombiName_CopyToBuffer,                                                      0x00F4340C
-	.set T_CombiGroupName_CopyToBuffer,                                                 0x00F43410
-	.set T_CombiGroup_MaxMemberIndex_ByStack,                                           0x00F43414
-	.set T_DrumsMap_RefreshSoundColumn,                                                 0x00F43418
-	.set T_SoundCopy_HandleReceivedSound,                                               0x00F4341C
-	.set T_TuneScale_KeyScalingCodeToIndex,                                             0x00F43420
-	.set T_DiskFile_CheckSignature,                                                     0x00F43430
-	.set T_PartSettings_ResetToDefault,                                                                      0x00F43440
-	.set T_SystemSettings_ResetToDefault,                                                                      0x00F43444
-	.set T_ParamRecord_SetPartsField18Bit0,                                             0x00F4344C
-	.set T_Mode_InitSavedPartBlocks,                                                                      0x00F43450
-	.set T_Queue2E00_PostParam98Fields,                                                 0x00F43454
-	.set T_Disk_FormatSelectedMedia,                                                    0x00F43460
-	.set T_DspParam_WriteByNumber,                                                      0x00F434A0
-	.set T_DspParam_ReadByNumber,                                                       0x00F434A4
-	.set T_Screen_SoundMute_Enter,                                                      0x00F434C0
-	.set T_SystemTest_PlayNotesOnPanelKey,                                                                      0x00F434D4
-	.set T_ScreenEnter_CreatorSelectController,                                                                      0x00F434E0
-	.set T_CreatorSelectController_OpenOnEvent,                                                                      0x00F434F0
-	.set T_CreatorSelectController_OnPartEvent,                                                                      0x00F434F4
-	.set LCD_BlitValueBar_StackArgs,                              0x00F4F000
+	.set T_Msg0716_DispatchIndex_Twin_Msg0716_HandlerTables_452_17, 0x00F424F0
+	.set T_Msg0716_OnPitchBendEvent,              0x00F424F4
+	.set T_Msg0716_EventPartPostCC01_ModulationIfEnabled, 0x00F424F8
+	.set T_Msg0716_EventPartPostCC0B_Expression,  0x00F424FC
+	.set T_Msg0716_OnChannelPressureEvent,        0x00F42500
+	.set T_Msg0716_EventPartPostCC40_SustainFromValueIfEnabled, 0x00F42504
+	.set T_F42508,                                0x00F42508
+	.set T_F4250C,                                0x00F4250C
+	.set T_Msg0716_EventPartPostCC10_GeneralPurpose1IfEnabled, 0x00F42510
+	.set T_Msg0716_EventPartPostCC11_GeneralPurpose2IfEnabled, 0x00F42514
+	.set T_Msg0716_EventPartPostCC12_GeneralPurpose3IfEnabled, 0x00F42518
+	.set T_Msg0716_EventPartPostCC13_GeneralPurpose4IfEnabled, 0x00F4251C
+	.set T_Msg0716_EventPartPostCC02_BreathIfEnabled, 0x00F42520
+	.set T_Msg0716_EventPartPostCC04_FootIfEnabled, 0x00F42524
+	.set T_Disk_PhaseVector,                      0x00F42570
+	.set T_BStore_Workspace_StoreParamImage,      0x00F42574
+	.set T_F42578,                                0x00F42578
+	.set T_F42580,                                0x00F42580
+	.set T_MidiFilePlay_OnSongSelect,             0x00F42584
+	.set T_Disk_PortA3_Release_Call_Call,         0x00F42590
+	.set T_Playback_StopAllAndIgnoreMidiStart,    0x00F42594
+	.set T_DiskApi_ReadFileToWindow_Entry,        0x00F425A8
+	.set T_DiskApi_WriteFileFromWindow_Entry,     0x00F425AC
+	.set T_DiskApi_DeleteFile_Call,               0x00F425B0
+	.set T_DiskLoadScreen_MountAndScanDirectory,  0x00F425B4
+	.set T_DiskSaveScreen_MountAndScanDirectory,  0x00F425B8
+	.set T_Disk_TickCountdowns,                   0x00F425C4
+	.set T_DiskLoadFile_Execute,                  0x00F425C8
+	.set T_DiskSaveFile_Execute_Entry,            0x00F425CC
+	.set T_MidiFileSave_Page5_LcdKeyRow3,         0x00F425D0
+	.set T_NameEdit_MoveCursor_Call,              0x00F425D4
+	.set T_NameEdit_StepChar_Call,                0x00F425D8
+	.set T_Playback_AcceptMidiStartAgain,         0x00F425DC
+	.set T_DiskApi_CloseFile_Call,                0x00F425E4
+	.set T_DiskSave_CheckFreeSpace,               0x00F425E8
+	.set T_DiskSaveFile_Page5_LcdKeyRow3,         0x00F425F4
+	.set T_NameEdit_SyncCharIndex_Call,           0x00F425F8
+	.set T_DiskSaveFile_SaveOrConfirmOverwrite_Call, 0x00F42608
+	.set T_DiskSaveFile_CheckPasswordThenSave_Call, 0x00F4260C
+	.set T_F42610,                                0x00F42610
+	.set T_Disk_MountAndScanMidiFilesResetRings,  0x00F42614
+	.set T_MidiFileStream_Open,                   0x00F42618
+	.set T_MidiFileStream_GetByte,                0x00F4261C
+	.set T_MidiFileStream_Close,                  0x00F42620
+	.set T_Disk_LoadSqfToWorkspace_Entry,         0x00F42624
+	.set T_Disk_LoadSeqToHeap_Entry,              0x00F42628
+	.set T_Disk_SaveSqfFromStaging_Entry,         0x00F4262C
+	.set T_MidiFileSave_Page3_LcdKeyRow3,         0x00F42634
+	.set T_ParamImage_CopyToSongWorkspace,        0x00F42660
+	.set T_F42664,                                0x00F42664
+	.set T_Screen_Initial_Enter,                  0x00F42670
+	.set T_Screen_SoundGroupNaming_Enter,         0x00F42680
+	.set T_Screen_CombinationGroupNaming_Enter,   0x00F42690
+	.set T_Screen_SoundCopy_Enter,                0x00F426A0
+	.set T_Screen_CombinationCopy_Enter,          0x00F426B0
+	.set T_SongClear_ClearCurrentBank,            0x00F42708
+	.set T_SongGmFlag_OnEventPassB_Veneer,        0x00F42828
+	.set T_BStore_LoadSongFromCurrentBank,        0x00F4282C
+	.set T_BStore_AppendBytes_Veneer,             0x00F42894
+	.set T_MeasureInsert_InitFields,              0x00F429A8
+	.set T_MeasureInsert_OnLeave,                 0x00F429AC
+	.set T_MeasureInsert_SelectField1,            0x00F429B0
+	.set T_MeasureInsert_SelectField2,            0x00F429B4
+	.set T_MeasureInsert_SelectField3,            0x00F429B8
+	.set T_MeasureInsert_SelectField4,            0x00F429BC
+	.set T_MeasureInsert_SelectField5,            0x00F429C0
+	.set T_MeasureInsert_SelectField6,            0x00F429C4
+	.set T_MeasureInsert_StepFieldUp,             0x00F429C8
+	.set T_MeasureInsert_StepFieldDown,           0x00F429CC
+	.set T_MeasureInsert_ReturnToStageZero,       0x00F429D0
+	.set T_MeasureInsert_LcdKeyRow1,              0x00F429D4
+	.set T_MeasureC0py_InitFields,                0x00F429D8
+	.set T_MeasureC0py_OnLeave,                   0x00F429DC
+	.set T_MeasureC0py_SelectField1,              0x00F429E0
+	.set T_MeasureC0py_SelectField2,              0x00F429E4
+	.set T_MeasureC0py_SelectField3,              0x00F429E8
+	.set T_MeasureC0py_SelectField4,              0x00F429EC
+	.set T_MeasureC0py_SelectField5,              0x00F429F0
+	.set T_MeasureC0py_SelectField6,              0x00F429F4
+	.set T_MeasureC0py_StepFieldUp,               0x00F429F8
+	.set T_MeasureC0py_StepFieldDown,             0x00F429FC
+	.set T_MeasureC0py_ReturnToStageZero,         0x00F42A00
+	.set T_MeasureC0py_LcdKeyRow1,                0x00F42A04
+	.set T_S0ngC0py_InitFields,                   0x00F42A08
+	.set T_S0ngC0py_StageZero_SoftKeyCol2,        0x00F42A10
+	.set T_S0ngC0py_StageZero_SoftKeyCol1,        0x00F42A14
+	.set T_S0ngC0py_StageZero_SoftKeyCol4,        0x00F42A18
+	.set T_S0ngC0py_StageZero_SoftKeyCol3,        0x00F42A1C
+	.set T_S0ngC0py_StageZero_SoftKeyCol6,        0x00F42A20
+	.set T_S0ngC0py_StageZero_SoftKeyCol5,        0x00F42A24
+	.set T_S0ngC0py_StageZero_SoftKeyCol8,        0x00F42A28
+	.set T_S0ngC0py_StageZero_SoftKeyCol7,        0x00F42A2C
+	.set T_S0ngC0py_LcdKeyRow2,                   0x00F42A30
+	.set T_S0ngC0py_ReturnToStageZero,            0x00F42A34
+	.set T_AdvanceDelay_SelectField1,             0x00F42A68
+	.set T_AdvanceDelay_SelectField2,             0x00F42A6C
+	.set T_AdvanceDelay_SelectField3,             0x00F42A70
+	.set T_AdvanceDelay_SelectField4,             0x00F42A74
+	.set T_AdvanceDelay_StepFieldUp,              0x00F42A78
+	.set T_AdvanceDelay_StepFieldDown,            0x00F42A7C
+	.set T_AdvanceDelay_LcdKeyRow3,               0x00F42A80
+	.set T_AdvanceDelay_ReturnToStageZero,        0x00F42A84
+	.set T_N0teChange_InitFields,                 0x00F42A88
+	.set T_N0teChange_OnLeave,                    0x00F42A8C
+	.set T_N0teChange_SelectField1,               0x00F42A90
+	.set T_N0teChange_SelectField2,               0x00F42A94
+	.set T_N0teChange_SelectField3,               0x00F42A98
+	.set T_N0teChange_SelectField4,               0x00F42A9C
+	.set T_N0teChange_SelectField5,               0x00F42AA0
+	.set T_N0teChange_StepSelectedFieldUp,        0x00F42AA4
+	.set T_N0teChange_StepFieldDown,              0x00F42AA8
+	.set T_N0teChange_LcdKeyRow4,                 0x00F42AAC
+	.set T_N0teChange_ReturnToStageZero,          0x00F42AB0
+	.set T_F42B70,                                0x00F42B70
+	.set T_Medley_SelectField1,                   0x00F42B7C
+	.set T_Medley_SelectField2,                   0x00F42B80
+	.set T_SequencerMedley_StepFieldUp,           0x00F42B84
+	.set T_SequencerMedley_StepFieldDown,         0x00F42B88
+	.set T_TrackAssign_IsLocalControlDashed,      0x00F42B9C
+	.set T_F42BB4,                                0x00F42BB4
+	.set T_F42BB8,                                0x00F42BB8
+	.set T_StepRecordPartSelect_OpenStepRecord,   0x00F42BBC
+	.set T_StepRecordPartSelect_ResetOnEntry,     0x00F42BC4
+	.set T_StepRecordPartSelect_OnLeave,          0x00F42BC8
+	.set T_SequencerMedley_InitOnEntry,           0x00F42BCC
+	.set T_SequencerMedley_OnLeave,               0x00F42BD0
+	.set T_SequencerMedley_LcdKeyRow2,            0x00F42BD4
+	.set T_SequencerMedley_StopPlayback,          0x00F42BD8
+	.set T_SequencerMedley_SetSourceInternal,     0x00F42C18
+	.set T_SequencerMedley_SoftKeyCol3,           0x00F42C1C
+	.set T_SequencerMedley_SoftKeyCol7,           0x00F42C24
+	.set T_SequencerMedley_SoftKeyCol8,           0x00F42C28
+	.set T_SequencerMedley_LcdKeyRow4,            0x00F42C2C
+	.set T_TableDefault_Ret,                      0x00F42C70
+	.set T_PanelCode_ToSlotAndFlags,              0x00F42C74
+	.set T_EditValue_StepBitField,                0x00F42C78
+	.set T_Queue2C00_Append4,                     0x00F42C80
+	.set T_Queue2E00_Append4,                     0x00F42C84
+	.set T_List2030_Append4,                      0x00F42C88
+	.set T_IndexedTable_GetPtr,                   0x00F42C8C
+	.set T_IndexedTable_GetByte,                  0x00F42C90
+	.set T_IndexedParam_AdjustField,              0x00F42C94
+	.set T_IndexedParam_SetBit,                   0x00F42C98
+	.set T_PartIndex_PostChangeEvent,             0x00F42C9C
+	.set T_PartSound_CopyNameToDrawScratch,       0x00F42CA0
+	.set T_IndexedParam_SetFieldFromAsciiEntry,   0x00F42CA8
+	.set T_INT5_Dev7B_Receive_Alias,              0x00F42D28
+	.set T_INTTC0_uDMA0Done_Alias,                0x00F42D30
+	.set T_Disk_CommandDispatch_SaveRegs_Entry,   0x00F42D34
+	.set T_Fdc_Request_SaveRegs_Entry,            0x00F42D38
+	.set T_Kernel_InitRam,                        0x00F42D60
+	.set T_INTT3_KernelTick,                      0x00F42D64
+	.set T_IRQ_Epilogue,                          0x00F42D68
+	.set T_Kernel_StartTask,                      0x00F42D6C
+	.set T_Kernel_SemaSignal,                     0x00F42D88
+	.set T_Kernel_SemaWait,                       0x00F42D90
+	.set T_Kernel_KillTask,                       0x00F42DA8
+	.set T_Kernel_StartTask_StackArg,             0x00F42DAC
+	.set T_Kernel_ExitTask_2,                     0x00F42DB0
+	.set T_Kernel_SemaSignal_StackArg,            0x00F42DC0
+	.set T_Kernel_SemaWait_StackArg,              0x00F42DC4
+	.set T_MsgQueue_Send_StackArg,                0x00F42DC8
+	.set T_MsgQueue_ReceiveBlocking,              0x00F42DCC
+	.set T_Kernel_SemaTryWait,                    0x00F42DD8
+	.set T_MsgQueue_Receive_NoBlock,              0x00F42DDC
+	.set T_DSP_ChannelRegs_Write8,                0x00F42DE0
+	.set T_DisplayList_Run_Stack,                 0x00F42E00
+	.set T_DisplayListB_Run_Stack,                0x00F42E04
+	.set T_DisplayList_RunOne_Stack,              0x00F42E08
+	.set T_DisplayListB_RunOne_Stack,             0x00F42E0C
+	.set T_LCD_BlankThenSetPanel3Layer_Copy,      0x00F42E10
+	.set T_LCD_ShowAllLayers_StackFrame_Copy,     0x00F42E14
+	.set T_UiPaint_PageLabelBackdrop,             0x00F42E18
+	.set T_Blink_Command,                         0x00F42E20
+	.set T_Blink_Stop,                            0x00F42E24
+	.set T_Blink_SetEnable,                       0x00F42E28
+	.set T_Blink_Tick,                            0x00F42E2C
+	.set T_Blink_GetState,                        0x00F42E30
+	.set T_ScreenEnter_DrawbarScreen,             0x00F42E44
+	.set T_Drawbar_MarkReloadOnSoundEvent,        0x00F42E54
+	.set T_Drawbar_ReloadIfMarked,                0x00F42E60
+	.set T_Drawbar_OnCpu2Reply,                   0x00F42E64
+	.set T_Drawbar_EnterScreenIfMarked,           0x00F42E68
+	.set T_Drawbar_WaitReloadMark,                0x00F42E6C
+	.set T_CallbackQueue_Post,                    0x00F42E84
+	.set T_Task2_CallbackDispatcher,              0x00F42E88
+	.set T_Medley_ToggleMidiFileStream,           0x00F42E90
+	.set T_StepRecord_OnEnter,                    0x00F42EC0
+	.set T_StepRecord_OnLeave,                    0x00F42EC4
+	.set T_StepRecord_MainLoopService,            0x00F42ED0
+	.set T_StepRecord_Tick,                       0x00F42EDC
+	.set T_F42F00,                                0x00F42F00
+	.set T_F42F04,                                0x00F42F04
+	.set T_ScreenEnterBody_DspEffect,             0x00F42F4C
+	.set T_ScreenButtonBody_DspEffect,            0x00F42F50
+	.set T_DspEffect_OnParamEvent,                0x00F42F54
+	.set T_DspEffect_ApplyAlgorithmDefaults,      0x00F42F58
+	.set T_DspEffect_SanitizeBlock,               0x00F42F5C
+	.set T_ScreenEnterBody_MainOutEqualizer,      0x00F42F68
+	.set T_ScreenButtonBody_MainOutEqualizer,     0x00F42F6C
+	.set T_NameEntry_Begin,                       0x00F42F80
+	.set T_SoundEditNaming_SoftKeyCol1,           0x00F42F84
+	.set T_SoundEditNaming_SoftKeyCol2,           0x00F42F88
+	.set T_SoundEditNaming_SoftKeyCol3,           0x00F42F8C
+	.set T_SoundEditNaming_SoftKeyCol4,           0x00F42F90
+	.set T_SoundEditNaming_SoftKeyCol5,           0x00F42F94
+	.set T_SoundEditNaming_SoftKeyCol6,           0x00F42F98
+	.set T_SoundEditNaming_SoftKeyCol7,           0x00F42F9C
+	.set T_SoundEditNaming_SoftKeyCol8,           0x00F42FA0
+	.set T_SoundEditNaming_LcdKeyRow1,            0x00F42FA4
+	.set T_SoundEditNaming_LcdKeyRow2,            0x00F42FA8
+	.set T_DrumSoundNames_FetchNext,              0x00F42FAC
+	.set T_Medley_Tick,                           0x00F43020
+	.set T_Medley_ScheduleNextMidiFile,           0x00F43028
+	.set T_ModeEnter_Edit,                        0x00F43040
+	.set T_ModeEnter_StepRecord,                  0x00F43048
+	.set T_ScreenEnter_Edit,                      0x00F43050
+	.set T_ScreenEnter_SongClear,                 0x00F43060
+	.set T_ScreenEnter_TrackClear,                0x00F43070
+	.set T_ScreenEnter_Vel0cityChange,            0x00F43080
+	.set T_ScreenEnter_Quantize,                  0x00F43090
+	.set T_ScreenEnter_TrackMerge,                0x00F430A0
+	.set T_ScreenEnter_MeasureErase,              0x00F430B0
+	.set T_ScreenEnter_MeasureC0py,               0x00F430C0
+	.set T_ScreenEnter_MeasureInsert,             0x00F430D0
+	.set T_ScreenEnter_MeasureDelete,             0x00F430E0
+	.set T_ScreenEnter_S0ngC0py,                  0x00F430F0
+	.set T_ScreenEnter_Transp0se,                 0x00F43100
+	.set T_ScreenEnter_AdvanceDelay,              0x00F43110
+	.set T_ScreenEnter_N0teChange,                0x00F43120
+	.set T_ScreenEnter_PanelWrite,                0x00F43130
+	.set T_ScreenEnter_TrackAssign,               0x00F43140
+	.set T_ScreenEnter_SequencerMedley,           0x00F43150
+	.set T_ScreenEnter_StepRecord,                0x00F43160
+	.set T_ScreenEnter_StepRecordPartSelect,      0x00F43170
+	.set T_ScreenEnter_AfterT0uchSetting,         0x00F43180
+	.set T_ScreenEnter_TrackAssignPresets,        0x00F43190
+	.set T_ScreenEnter_S0ngSelectName,            0x00F431A0
+	.set T_ScreenCode15_Handler,                  0x00F431D0
+	.set T_AsciiDigits3_ToValue,                  0x00F432F0
+	.set T_AsciiField_ToSignedValue,              0x00F432F4
+	.set T_AsciiField_Clear,                      0x00F432F8
+	.set T_UiText_CopyLabel13_To_22F0,            0x00F43330
+	.set T_MidiIn_ReqListRebuild_Msg13_16,        0x00F43350
+	.set T_MidiIn_ReqRebuild_Msg03_0A,            0x00F43354
+	.set T_MidiIn_PumpPortB,                      0x00F43358
+	.set T_MidiFileL0ad_LcdKeyRow1,               0x00F43380
+	.set T_MidiFileSave_WriteSeqBankSmf,          0x00F43384
+	.set T_MidiFileStream_ReaderTask,             0x00F433C0
+	.set T_ScreenEnter_SoundEditDigitalEffect,    0x00F433D0
+	.set T_F433E0,                                0x00F433E0
+	.set T_SoundName_CopyToBuffer,                0x00F43400
+	.set T_SoundGroupName_CopyToBuffer,           0x00F43404
+	.set T_SoundGroup_MaxMemberIndex_ByStack,     0x00F43408
+	.set T_CombiName_CopyToBuffer,                0x00F4340C
+	.set T_CombiGroupName_CopyToBuffer,           0x00F43410
+	.set T_CombiGroup_MaxMemberIndex_ByStack,     0x00F43414
+	.set T_DrumsMap_RefreshSoundColumn,           0x00F43418
+	.set T_SoundCopy_HandleReceivedSound,         0x00F4341C
+	.set T_TuneScale_KeyScalingCodeToIndex,       0x00F43420
+	.set T_DiskFile_CheckSignature,               0x00F43430
+	.set T_PartSettings_ResetToDefault,           0x00F43440
+	.set T_SystemSettings_ResetToDefault,         0x00F43444
+	.set T_ParamRecord_SetPartsField18Bit0,       0x00F4344C
+	.set T_Mode_InitSavedPartBlocks,              0x00F43450
+	.set T_Queue2E00_PostParam98Fields,           0x00F43454
+	.set T_Disk_FormatSelectedMedia,              0x00F43460
+	.set T_DspParam_WriteByNumber,                0x00F434A0
+	.set T_DspParam_ReadByNumber,                 0x00F434A4
+	.set T_Screen_SoundMute_Enter,                0x00F434C0
+	.set T_SystemTest_PlayNotesOnPanelKey,        0x00F434D4
+	.set T_ScreenEnter_CreatorSelectController,   0x00F434E0
+	.set T_CreatorSelectController_OpenOnEvent,   0x00F434F0
+	.set T_CreatorSelectController_OnPartEvent,   0x00F434F4
+	.set LCD_BlitValueBar_StackArgs,              0x00F4F000
 	.set DrawValueGlyph_Veneer,                   0x00F4F017
-	.set PartSound_StepBankGroupMember,                              0x00F4F02E
+	.set PartSound_StepBankGroupMember,           0x00F4F02E
 	.set PtrTable_F4F800,                         0x00F4F800
 	.set PtrTable_F4F888,                         0x00F4F888
 	.set PtrTable_F4F916,                         0x00F4F916
-	.set SysExSession_ContinuationTable,                         0x00F4F99E
-	.set SysExSession_CategoryEndTable,                         0x00F4F9E6
-	.set SysExSession_AbortTable,                         0x00F4FA2E
+	.set SysExSession_ContinuationTable,          0x00F4F99E
+	.set SysExSession_CategoryEndTable,           0x00F4F9E6
+	.set SysExSession_AbortTable,                 0x00F4FA2E
 	.set MidiSysEx_Tail3Init,                     0x00F4FA76
-	.set SysExInitial_ItemTable,                         0x00F4FB1C
-	.set SysExTx_StagedParamHandlers,                         0x00F4FB38
-	.set SysExStatus_MessageIdMap,                         0x00F511C7
+	.set SysExInitial_ItemTable,                  0x00F4FB1C
+	.set SysExTx_StagedParamHandlers,             0x00F4FB38
+	.set ParamFieldInit_x32_F4FE38,               0x00F4FE38
+	.set ParamFieldInit_F4FE50,                   0x00F4FE50
+	.set WordTable_F4FE6A,                        0x00F4FE6A
+	.set WordTable_F4FE76,                        0x00F4FE76
+	.set SysExRxClass_ByResult,                   0x00F4FE82
+	.set ZeroBlock16_F4FEA4,                      0x00F4FEA4
+	.set SysExMessageStrings_F4FEB4,              0x00F4FEB4
+	.set SysExDecodeTree_Root,                    0x00F5115B
+	.set SysExStatus_MessageIdMap,                0x00F511C7
+	.set SysExParamDesc_Placeholder,              0x00F511F9
 	.set Pointer_F51E20,                          0x00F51E20
 	.set Pointer_F51E24,                          0x00F51E24
 	.set Pointer_F51E28,                          0x00F51E28
@@ -2087,16 +2096,16 @@
 	.set DL_F5879C,                               0x00F5879C
 	.set CharPalette_F587B2,                      0x00F587B2
 	.set DL_MidiFileSaveFileNaming,               0x00F58A21
-	.set ScreenEnter_MidiFileSave_Page0_DL,                               0x00F58A41
+	.set ScreenEnter_MidiFileSave_Page0_DL,       0x00F58A41
 	.set DL_MidiFileSave,                         0x00F58AA5
 	.set DL_MidiFileSaveFileDelete,               0x00F58AB7
 	.set DL_LoadSingleSoundDiskGr0upSingleFileBankS0undGr0up, 0x00F58AD7
-	.set ScreenEnter_L0adSingleS0und_Page1_DL,                               0x00F58C49
+	.set ScreenEnter_L0adSingleS0und_Page1_DL,    0x00F58C49
 	.set DL_LoadSingleSoundDiskGr0upSingleFileBankS0und, 0x00F58C53
-	.set ScreenEnter_L0adSingleS0und_Page0_DL,                               0x00F58DF0
+	.set ScreenEnter_L0adSingleS0und_Page0_DL,    0x00F58DF0
 	.set DL_LoadSingleCombinationDiskGr0upSingleUser1FileBankUser1S0und, 0x00F58E04
 	.set DL_LoadSingleCombinationDiskGr0upSingleUser1FileBankUser1C0mbi, 0x00F58F55
-	.set ScreenEnter_L0adSingleC0mbination_Page0_DL,                               0x00F590C9
+	.set ScreenEnter_L0adSingleC0mbination_Page0_DL, 0x00F590C9
 	.set DL_F590DD,                               0x00F590DD
 	.set DL_F590E7,                               0x00F590E7
 	.set DL_F590F1,                               0x00F590F1
@@ -2109,19 +2118,19 @@
 	.set DL_2dd,                                  0x00F591FC
 	.set DL_2hd,                                  0x00F59205
 	.set DL_F5920E,                               0x00F5920E
-	.set ScreenEnter_MidiFileSave_Page1_DL1,                               0x00F59218
+	.set ScreenEnter_MidiFileSave_Page1_DL1,      0x00F59218
 	.set DL_MidiFileSaveFileSelecti0n,            0x00F59222
-	.set ScreenEnter_MidiFileSave_Page1_DL2,                               0x00F59301
+	.set ScreenEnter_MidiFileSave_Page1_DL2,      0x00F59301
 	.set DL_MidiFileL0adL0ad,                     0x00F5930B
 	.set DL_ToS0ngNumberL0adAsGm,                 0x00F5933B
-	.set Paint_MidiFileL0ad_DL,                               0x00F593E9
+	.set Paint_MidiFileL0ad_DL,                   0x00F593E9
 	.set DL_F593F3,                               0x00F593F3
 	.set DL_F593FE,                               0x00F593FE
 	.set DL_F59409,                               0x00F59409
 	.set DL_MidiFileDirectPlayPlayAsGm,           0x00F5944C
 	.set DL_Play,                                 0x00F594F9
 	.set DL_Stop,                                 0x00F59503
-	.set Paint_MidiFileDirectPlay_DL,                               0x00F5950D
+	.set Paint_MidiFileDirectPlay_DL,             0x00F5950D
 	.set DL_F59517,                               0x00F59517
 	.set DL_F59522,                               0x00F59522
 	.set DLText_F59535,                           0x00F59535
@@ -2133,7 +2142,7 @@
 	.set DLText_F59857_MID,                       0x00F59857
 	.set DL_FloppyDiskFormatSelectTheF0rmatTypeForYo, 0x00F5985B
 	.set DL_ComposerLoad,                         0x00F59904
-	.set ScreenEnter_MidiFileSave_Page1_DL3,                               0x00F59915
+	.set ScreenEnter_MidiFileSave_Page1_DL3,      0x00F59915
 	.set DL_F5993E,                               0x00F5993E
 	.set DL_F59948,                               0x00F59948
 	.set DL_F59952,                               0x00F59952
@@ -2150,14 +2159,14 @@
 	.set DL_AttentionAFileAlreadyExistsAtThe,     0x00F59B86
 	.set DLText_F59C2C,                           0x00F59C2C
 	.set DL_F59C4B,                               0x00F59C4B
-	.set SoftKeyCol1_TrackClear_StageZero,         0x00F7ECFF
-	.set SoftKeyCol2_TrackClear_StageZero,         0x00F7ED18
-	.set SoftKeyCol3_TrackClear_StageZero,         0x00F7ED31
-	.set SoftKeyCol4_TrackClear_StageZero,         0x00F7ED4A
-	.set SoftKeyCol5_TrackClear_StageZero,         0x00F7ED63
-	.set SoftKeyCol6_TrackClear_StageZero,         0x00F7ED7C
-	.set SoftKeyCol7_TrackClear_StageZero,         0x00F7ED95
-	.set SoftKeyCol8_TrackClear_StageZero,         0x00F7EDAE
+	.set SoftKeyCol1_TrackClear_StageZero,        0x00F7ECFF
+	.set SoftKeyCol2_TrackClear_StageZero,        0x00F7ED18
+	.set SoftKeyCol3_TrackClear_StageZero,        0x00F7ED31
+	.set SoftKeyCol4_TrackClear_StageZero,        0x00F7ED4A
+	.set SoftKeyCol5_TrackClear_StageZero,        0x00F7ED63
+	.set SoftKeyCol6_TrackClear_StageZero,        0x00F7ED7C
+	.set SoftKeyCol7_TrackClear_StageZero,        0x00F7ED95
+	.set SoftKeyCol8_TrackClear_StageZero,        0x00F7EDAE
 ; <<< END prom_b ADDRESS EQUATES
 ; MACRO-PRELUDE-END
 
@@ -25820,12 +25829,12 @@ ZeroInitData_F8E773:   ; 9 B, all zero -- LDIR source named by the
 AddrTable_F8E77C:   ; 8 entries
 	.long 0x00f8e68b   ; F8E77C  [0]
 	.long 0x00f8e67a   ; F8E780  [1]
-	.long 0x00f8e000   ; F8E784  [2]
+	.long LinkSelector1_NoAction ; F8E784  [2]
 	.long .LF8E69C     ; F8E788  [3]  instruction boundary
 	.long uDMA2_SetDest+11   ; F8E78C  [4]
 	.long uDMA3_GetDest+0x1 ; F8E790  [5]
 	.long 0x00f8e6be   ; F8E794  [6]
-	.long 0x00f8e000   ; F8E798  [7]
+	.long LinkSelector1_NoAction ; F8E798  [7]
 ; 0xF8E79C-0xF8E7A9 (13 B) -- RESIDUE, byte-identical to 0xF8E76F-0xF8E77C:
 ; `jr nz / ret / reti` closing the init routine at 0xF8E74B, then the
 ; nine-byte LDIR source that follows it.  Left as bytes on purpose: framing
@@ -25838,11 +25847,11 @@ AddrTable_F8E7A9:   ; 9 entries; ends exactly where the 0x0E pad begins
 	.long uDMA3_SetDest ; F8E7AD  [1]  instruction boundary
 	.long Link_Init_DmaAndTimer ; F8E7B1  [2]  instruction boundary
 	.long 0x00f8e6eb   ; F8E7B5  [3]
-	.long 0x00f8e000   ; F8E7B9  [4]
+	.long LinkSelector1_NoAction ; F8E7B9  [4]
 	.long .LF8E70C     ; F8E7BD  [5]  instruction boundary
 	.long 0x00f8e029   ; F8E7C1  [6]
-	.long 0x00f8e000   ; F8E7C5  [7]
-	.long 0x00f8e000   ; F8E7C9  [8]
+	.long LinkSelector1_NoAction ; F8E7C5  [7]
+	.long LinkSelector1_NoAction ; F8E7C9  [8]
 ; 0xF8E7CD-0xF8E7FF -- 51 bytes of 0x0E (RET), module padding.
 ; Checked byte by byte, not sampled: verified against original_ROMs/wsa1_prom_a.ic12.
 	.fill 51, 1, 0x0E
@@ -90604,7 +90613,7 @@ SysExSession_AnswerByStatus:
 	cp h, 0x00:i3                                          ; FB28D2  ce d8
 	jr nz, .LFB28E1                                      ; FB28D4  6e 0b
 	pushw 0x05                                           ; FB28D6  0b 05 00
-	lda xwa, (0xf4feb4:24)                               ; FB28D9  f2 b4 fe f4 30
+	lda xwa, (SysExMessageStrings_F4FEB4:24)             ; FB28D9  f2 b4 fe f4 30
 	push XWA                                             ; FB28DE  38
 	jr .LFB28F7                                          ; FB28DF  68 16
 .LFB28E1:
@@ -94854,7 +94863,7 @@ SysExParamDesc_FindForEvent:
 	ld XIY,(XBC)                                         ; FB4D33  a1 25
 	ld XIX,XIY                                           ; FB4D35  ed 8c
 	ld (xiz-8), xiy                                      ; FB4D37  be f8 65
-	lda xbc, (0xf511f9:24)                               ; FB4D3A  f2 f9 11 f5 31
+	lda xbc, (SysExParamDesc_Placeholder:24)             ; FB4D3A  f2 f9 11 f5 31
 	cp XIY,XBC                                           ; FB4D3F  e9 f5
 	jr z, .LFB4D5A                                       ; FB4D41  66 17
 	ld H,(XIX+0x07)                                      ; FB4D43  8c 07 26
@@ -94900,7 +94909,7 @@ SysExTx_SendParamValue:
 	ld XBC,(XIX+0x04)                                    ; FB4D89  ac 04 21
 	ld (xiz-4), xbc                                      ; FB4D8C  be fc 61
 	ld (xiz-11), xbc                                     ; FB4D8F  be f5 61
-	lda xwa, (0xf511f9:24)                               ; FB4D92  f2 f9 11 f5 30
+	lda xwa, (SysExParamDesc_Placeholder:24)             ; FB4D92  f2 f9 11 f5 30
 	cp XBC,XWA                                           ; FB4D97  e8 f1
 	jrl z, .LFB4E1B                                      ; FB4D99  76 7f 00
 	ld xbc, (xiz-4)                                      ; FB4D9C  ae fc 21
@@ -94977,7 +94986,7 @@ SysExTx_SendWordFieldParamValue:
 	jrl z, .LFB4ECE                                      ; FB4E45  76 86 00
 	ld XBC,(XIX+0x04)                                    ; FB4E48  ac 04 21
 	ld (xiz-7), xbc                                      ; FB4E4B  be f9 61
-	lda xwa, (0xf511f9:24)                               ; FB4E4E  f2 f9 11 f5 30
+	lda xwa, (SysExParamDesc_Placeholder:24)             ; FB4E4E  f2 f9 11 f5 30
 	cp XBC,XWA                                           ; FB4E53  e8 f1
 	jrl z, .LFB4ECE                                      ; FB4E55  76 76 00
 	ld XBC,(XIX)                                         ; FB4E58  a4 21
@@ -95049,7 +95058,7 @@ sub_FB4ED4:
 	ld XWA,(XBC+0x04)                                    ; FB4F01  a9 04 20
 	ld (xiz-4), xwa                                      ; FB4F04  be fc 60
 	ld (xiz-11), xwa                                     ; FB4F07  be f5 60
-	lda xiy, (0xf511f9:24)                               ; FB4F0A  f2 f9 11 f5 35
+	lda xiy, (SysExParamDesc_Placeholder:24)             ; FB4F0A  f2 f9 11 f5 35
 	cp XWA,XIY                                           ; FB4F0F  ed f0
 	jrl z, .LFB4F87                                      ; FB4F11  76 73 00
 	ld xwa, (xiz-4)                                      ; FB4F14  ae fc 20
@@ -95128,7 +95137,7 @@ SysExTx_SendPartParamValue:
 	ld XBC,(XIX+0x04)                                    ; FB4FB6  ac 04 21
 	ld (xiz-4), xbc                                      ; FB4FB9  be fc 61
 	ld (xiz-18), xbc                                     ; FB4FBC  be ee 61
-	lda xwa, (0xf511f9:24)                               ; FB4FBF  f2 f9 11 f5 30
+	lda xwa, (SysExParamDesc_Placeholder:24)             ; FB4FBF  f2 f9 11 f5 30
 	cp XBC,XWA                                           ; FB4FC4  e8 f1
 	jrl z, .LFB5061                                      ; FB4FC6  76 98 00
 	ld xbc, (xiz-4)                                      ; FB4FC9  ae fc 21
@@ -95548,7 +95557,7 @@ SysExTx_CombinationNumberAndBank:
 	ld XWA,(XBC+0x04)                                    ; FB539A  a9 04 20
 	ld (xiz-4), xwa                                      ; FB539D  be fc 60
 	ld (xiz-13), xwa                                     ; FB53A0  be f3 60
-	lda xiy, (0xf511f9:24)                               ; FB53A3  f2 f9 11 f5 35
+	lda xiy, (SysExParamDesc_Placeholder:24)             ; FB53A3  f2 f9 11 f5 35
 	cp XWA,XIY                                           ; FB53A8  ed f0
 	jrl z, .LFB5420                                      ; FB53AA  76 73 00
 	ld xwa, (xiz-4)                                      ; FB53AD  ae fc 20
@@ -95619,7 +95628,7 @@ SysExTx_ProgramChangeAndBank:
 	ld XBC,(XIX+0x04)                                    ; FB544E  ac 04 21
 	ld XIX,XBC                                           ; FB5451  e9 8c
 	ld (xiz-22), xbc                                     ; FB5453  be ea 61
-	lda xwa, (0xf511f9:24)                               ; FB5456  f2 f9 11 f5 30
+	lda xwa, (SysExParamDesc_Placeholder:24)             ; FB5456  f2 f9 11 f5 30
 	cp XBC,XWA                                           ; FB545B  e8 f1
 	jrl z, .LFB5567                                      ; FB545D  76 07 01
 	ld H,(XIX+0x08)                                      ; FB5460  8c 08 26
@@ -95753,23 +95762,23 @@ GmReset_FieldTablesAndEffectAlgorithms:
 	ld l, 0x06:opc                                          ; FB559A  27 06
 .LFB559C:
 	ld (xiz-8), xix                                      ; FB559C  be f8 64
-	lda xbc, (0xf4fe38:24)                               ; FB559F  f2 38 fe f4 31
+	lda xbc, (ParamFieldInit_x32_F4FE38:24)              ; FB559F  f2 38 fe f4 31
 	add	xbc, (xiz-8)                                 ; FB55A4  ae f8 81
 	ld A,(XBC)                                           ; FB55A7  81 21
 	ld (xiz-4), a                                        ; FB55A9  be fc 41
 	ld xbc, (xiz-8)                                      ; FB55AC  ae f8 21
 	inc 1,XBC                                            ; FB55AF  e9 61
-	add XBC,0x00f4fe38                                   ; FB55B1  e9 c8 38 fe f4 00
+	add XBC,ParamFieldInit_x32_F4FE38                    ; FB55B1  e9 c8 38 fe f4 00
 	ld A,(XBC)                                           ; FB55B7  81 21
 	ld (xiz-3), a                                        ; FB55B9  be fd 41
 	ld xbc, (xiz-8)                                      ; FB55BC  ae f8 21
 	inc 2,XBC                                            ; FB55BF  e9 62
-	add XBC,0x00f4fe38                                   ; FB55C1  e9 c8 38 fe f4 00
+	add XBC,ParamFieldInit_x32_F4FE38                    ; FB55C1  e9 c8 38 fe f4 00
 	ld A,(XBC)                                           ; FB55C7  81 21
 	ld (xiz-2), a                                        ; FB55C9  be fe 41
 	ld xbc, (xiz-8)                                      ; FB55CC  ae f8 21
 	inc 3,XBC                                            ; FB55CF  e9 63
-	add XBC,0x00f4fe38                                   ; FB55D1  e9 c8 38 fe f4 00
+	add XBC,ParamFieldInit_x32_F4FE38                    ; FB55D1  e9 c8 38 fe f4 00
 	ld A,(XBC)                                           ; FB55D7  81 21
 	ld (xiz-1), a                                        ; FB55D9  be ff 41
 	ld h, 0x20:opc                                          ; FB55DC  26 20
@@ -95792,22 +95801,22 @@ GmReset_FieldTablesAndEffectAlgorithms:
 	ld (xiz-8), xix                                      ; FB55FF  be f8 64
 	ld xbc, (xiz-8)                                      ; FB5602  ae f8 21
 	ld (xiz-12), xbc                                     ; FB5605  be f4 61
-	add XBC,0x00f4fe50                                   ; FB5608  e9 c8 50 fe f4 00
+	add XBC,ParamFieldInit_F4FE50                        ; FB5608  e9 c8 50 fe f4 00
 	ld A,(XBC)                                           ; FB560E  81 21
 	ld (xiz-4), a                                        ; FB5610  be fc 41
 	ld xbc, (xiz-12)                                     ; FB5613  ae f4 21
 	inc 1,XBC                                            ; FB5616  e9 61
-	add XBC,0x00f4fe50                                   ; FB5618  e9 c8 50 fe f4 00
+	add XBC,ParamFieldInit_F4FE50                        ; FB5618  e9 c8 50 fe f4 00
 	ld A,(XBC)                                           ; FB561E  81 21
 	ld (xiz-3), a                                        ; FB5620  be fd 41
 	ld xbc, (xiz-12)                                     ; FB5623  ae f4 21
 	inc 2,XBC                                            ; FB5626  e9 62
-	add XBC,0x00f4fe50                                   ; FB5628  e9 c8 50 fe f4 00
+	add XBC,ParamFieldInit_F4FE50                        ; FB5628  e9 c8 50 fe f4 00
 	ld A,(XBC)                                           ; FB562E  81 21
 	ld (xiz-2), a                                        ; FB5630  be fe 41
 	ld xbc, (xiz-12)                                     ; FB5633  ae f4 21
 	inc 3,XBC                                            ; FB5636  e9 63
-	add XBC,0x00f4fe50                                   ; FB5638  e9 c8 50 fe f4 00
+	add XBC,ParamFieldInit_F4FE50                        ; FB5638  e9 c8 50 fe f4 00
 	ld A,(XBC)                                           ; FB563E  81 21
 	ld (xiz-1), a                                        ; FB5640  be ff 41
 	lda xbc, (xiz-4)                                     ; FB5643  be fc 31
@@ -97000,10 +97009,10 @@ SysEx_FeatureWordForVariant:
 	jr NC,.LFB601F                                       ; FB5FFE  6f 1f
 	cp	(Variant_Flag:8), 0x01                               ; FB6000  c0 c4 3f 01
 	jr nz, .LFB600D                                      ; FB6004  6e 07
-	lda xix, (0xf4fe6a:24)                               ; FB6006  f2 6a fe f4 34
+	lda xix, (WordTable_F4FE6A:24)                       ; FB6006  f2 6a fe f4 34
 	jr .LFB6012                                          ; FB600B  68 05
 .LFB600D:
-	lda xix, (0xf4fe76:24)                               ; FB600D  f2 76 fe f4 34
+	lda xix, (WordTable_F4FE76:24)                       ; FB600D  f2 76 fe f4 34
 .LFB6012:
 	ld c, 0x02:opc                                          ; FB6012  23 02
 	mul	bc, (xiz+8)                                  ; FB6014  8e 08 43
@@ -97545,7 +97554,7 @@ SysExRx_MatchTrie:
 	ld BC,DE                                             ; FB63F5  da 89
 	extz XBC                                             ; FB63F7  e9 12
 	ld (xiz-6), xbc                                      ; FB63F9  be fa 61
-	add XBC,0x00f5115b                                   ; FB63FC  e9 c8 5b 11 f5 00
+	add XBC,SysExDecodeTree_Root                         ; FB63FC  e9 c8 5b 11 f5 00
 	ld A,(XBC)                                           ; FB6402  81 21
 	ld (xiz-1), a                                        ; FB6404  be ff 41
 	cp A,0xff                                            ; FB6407  c9 cf ff
@@ -97566,7 +97575,7 @@ SysExRx_MatchTrie:
 	ld xix, (xiz-6)                                      ; FB642B  ae fa 24
 	ld XBC,XIX                                           ; FB642E  ec 89
 	inc 1,XBC                                            ; FB6430  e9 61
-	add XBC,0x00f5115b                                   ; FB6432  e9 c8 5b 11 f5 00
+	add XBC,SysExDecodeTree_Root                         ; FB6432  e9 c8 5b 11 f5 00
 	ld H,(XBC)                                           ; FB6438  81 26
 	inc 8,XSP                                            ; FB643A  ef 60
 	cp h, 0x00:i3                                          ; FB643C  ce d8
@@ -97580,7 +97589,7 @@ SysExRx_MatchTrie:
 	calr U8Rec16_SetField                                          ; FB644E  1e c8 fd
 	ld xix, (xiz-6)                                      ; FB6451  ae fa 24
 	inc 2,XIX                                            ; FB6454  ec 62
-	lda xbc, (0xf5115b:24)                               ; FB6456  f2 5b 11 f5 31
+	lda xbc, (SysExDecodeTree_Root:24)                   ; FB6456  f2 5b 11 f5 31
 	add XBC,XIX                                          ; FB645B  ec 81
 	ld XWA,(XBC)                                         ; FB645D  a1 20
 	ld B,(XWA)                                           ; FB645F  80 22
@@ -97591,7 +97600,7 @@ SysExRx_MatchTrie:
 	ld xbc, (0x60fcd8:24)                               ; FB6469  e2 d8 fc 60 21
 	push XBC                                             ; FB646E  39
 	calr U8Rec16_SetField                                          ; FB646F  1e a7 fd
-	lda xbc, (0xf5115b:24)                               ; FB6472  f2 5b 11 f5 31
+	lda xbc, (SysExDecodeTree_Root:24)                   ; FB6472  f2 5b 11 f5 31
 	add XBC,XIX                                          ; FB6477  ec 81
 	ld XWA,(XBC)                                         ; FB6479  a1 20
 	ld B,(XWA+0x01)                                      ; FB647B  88 01 22
@@ -97604,7 +97613,7 @@ SysExRx_MatchTrie:
 .LFB648A:
 	ld XBC,XIX                                           ; FB648A  ec 89
 	inc 2,XBC                                            ; FB648C  e9 62
-	add XBC,0x00f5115b                                   ; FB648E  e9 c8 5b 11 f5 00
+	add XBC,SysExDecodeTree_Root                         ; FB648E  e9 c8 5b 11 f5 00
 	ld XBC,(XBC)                                         ; FB6494  a1 21
 	ld XIX,XBC                                           ; FB6496  e9 8c
 	jr .LFB64A3                                          ; FB6498  68 09
@@ -98439,7 +98448,7 @@ SysExRx_CheckCommandClass:
 	calr U8Rec16_GetField                                          ; FB6BA7  1e 29 f7
 	extz WA                                              ; FB6BAA  d8 12
 	extz XWA                                             ; FB6BAC  e8 12
-	add XWA,0x00f4fe82                                   ; FB6BAE  e8 c8 82 fe f4 00
+	add XWA,SysExRxClass_ByResult                        ; FB6BAE  e8 c8 82 fe f4 00
 	ld C,(XWA)                                           ; FB6BB4  80 23
 	extz BC                                              ; FB6BB6  d9 12
 	inc 6,XSP                                            ; FB6BB8  ef 66
@@ -100895,7 +100904,7 @@ SysExTx_ResetBuffer:
 SysExXfer_ClearJobRecords:
 	push XIX                                             ; FB8117  3c
 	ldw bc, 0x08                                         ; FB8118  31 08 00
-	lda xiy, (0xf4fea4:24)                               ; FB811B  f2 a4 fe f4 35
+	lda xiy, (ZeroBlock16_F4FEA4:24)                     ; FB811B  f2 a4 fe f4 35
 	lda xix, (0x60fce8:24)                               ; FB8120  f2 e8 fc 60 34
 	ldirw                                                ; FB8125  95 11
 	ldw bc, 0x08                                         ; FB8127  31 08 00
