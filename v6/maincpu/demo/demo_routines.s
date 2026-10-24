@@ -136,7 +136,6 @@ DemoStyle_PostEventCommon:
 
 DemoStyle_EnterHandler:
 	push xde
-DemoStyle_EnterHandler_Loop:
 	push xhl
 	push xix
 	push xiz
@@ -156,7 +155,6 @@ DemoSoundTtlFunc:
 	cp xbc, EVT_ACTIVATE_STATE
 	jrl nz, DemoSoundTtlFunc_Exit
 	dec 2, xde
-DemoSoundTtlFunc_Loop:
 	cp xde, 0x0
 	jrl c, DemoSoundTtlFunc_Exit
 	cp xde, 0x5
@@ -182,7 +180,6 @@ DemoSound_InputHandler:
 	cp xde, 0xf
 	jr z, DemoSound_EnterHandler
 	cp xde, 0x87
-DemoSound_InputHandler_Loop:
 	jr z, DemoSound_DirectionHandler
 	cp xde, 0x7
 	jr z, DemoSound_DirectionHandler
@@ -252,7 +249,6 @@ DemoRhythm_DispatchTable:
 	push	xde
 	push	xhl
 	push	xix
-DemoRhythm_DispatchTable_Loop:
 	push	xiz
 DemoRhythm_DispatchTable_Code:
 	call	FDemo_IndicatorSetup
@@ -267,7 +263,6 @@ DemoRhythm_InputHandler:
 	cp xde, 0x84
 	jr z, DemoRhythm_DirectionHandler
 	cp xde, 0x4
-DemoRhythm_InputHandler_Loop:
 	jr z, DemoRhythm_DirectionHandler
 	cp xde, 0x83
 	jr z, DemoRhythm_DirectionHandler

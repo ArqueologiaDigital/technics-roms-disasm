@@ -1368,9 +1368,9 @@ Toshi_ApFunction_Table:
 	.long WallUsrShowHideFunc
 	.long WallSureShowHideFunc
 	.long WallSureLngCheck
-	.long	SureLngCheck
-	.long	CtlIniLngCheck
-	.long	PmemNormLngCheck
+	.long CtlIniLngCheck
+	.long PmemNormLngCheck
+	.long PmemExpLngCheck
 	.long 0
 	; data-as-code (v10_data_as_code_census.py, STRICT rule): 0xED1D1B-0xED1D3A (31 B), unreached CODE-territory, was disassembled as 19 plausible-but-dead instruction lines; per=70% dist=12 near ChordStr_Blank+129
 ; Toshi_ApFunctionName_Table -- object-registry slot 0x422 (InitializeToshi:
@@ -2117,7 +2117,7 @@ Toshi_Function_Table:
 	.long AcFSWAssGridBoxProc
 	.long AcPmExpFilterGridBoxProc
 	.long AcDispTimeSetGridBoxProc
-	.long	PmemExpLngCheck
+	.long AcMstSugAlpGridBoxProc
 	.long AcMstStyleAlp_Boundary
 	.long IvMstStyleWindowPgCtlProc
 	.long AcMstStyle1GridBoxProc

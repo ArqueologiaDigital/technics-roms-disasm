@@ -1865,7 +1865,6 @@ Sprintf_FormatGGeneral:
 	ld	iz, 0:i3
 	ldw	(xsp + 6), 0xf
 	ldw	(xsp + 8), 0x8
-Sprintf_FormatGGeneral_Loop:
 	pushw	0x20
 	pushw	0x0
 	pushw	0x3

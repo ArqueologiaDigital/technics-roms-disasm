@@ -1384,9 +1384,9 @@ Boot_DisplayScreen:
 	extz	wa
 	calr	Boot_HandleComboDisplay
 	ld	wa, 4:i3
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x1d, 0x73, 0x1a, 0xef, 0x1e, 0x40, 0x01, 0x1b
-	.byte	0x1c, 0x11, 0xef
+	call	TaskSched_SpawnTask	; start task 4, MainTitle_TeardownAndLoop
+	calr	Boot_SetConfigFlag7
+	jp	MainLoop
 Boot_GetButtonComboCode:
 
 Boot_ClearAllInterruptEnables:
@@ -1457,7 +1457,6 @@ SubCPU_Payload_DelayLoop_Short:
 	jr nz, SubCPU_Payload_TransferPart2
 	ld xiz, 0x50000
 	ld xwa, 0x3e0000
-SubCPU_Payload_DelayLoop_Short_Loop:
 	ld xbc, 0x50000
 	call SLIDE_Parse_Header
 	cp hl, 0xffff
@@ -1531,11 +1530,13 @@ Boot_HandleComboDisplay:
 	ld	c, (xbc+hl)	; Read LED pattern from table
 	extz bc
 	ld wa, 7:i3
+	call Set_LEDs			; Display version on control panel LEDs
+	push xiz
+	call CPanel_Poll		; Poll control panel (keep LEDs updated)
+	pop xiz
 
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x1d, 0xf1, 0x68, 0xfc, 0x3e, 0x1d, 0x0b, 0x36
-	.byte	0xfc, 0x5e, 0x30, 0x88, 0x13, 0x1b, 0xb1, 0x22
-	.byte	0xef
+	ldw	wa, 0x1388
+	jp	TaskSched_DelayTicks
 Boot_HandleComboDisplay_Check3:
 	cp a, 3:i3
 	ret nz

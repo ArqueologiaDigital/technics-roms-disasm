@@ -2336,8 +2336,9 @@ TtMdExc:
 	cp	xbc, EVT_HIDE
 	jr	z, TtMdExc_HandleClose
 	cp	xbc, EVT_SHOW
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x6e, 0x14, 0xea, 0xe2, 0x6e, 0x10
+	jr	nz, TtMdExc_ReturnZero
+	or	xde, xde
+	jr	nz, TtMdExc_ReturnZero
 	ld	xwa, 0x570003
 	call	GetViewInstance
 	ld	xwa, (xhl+38)

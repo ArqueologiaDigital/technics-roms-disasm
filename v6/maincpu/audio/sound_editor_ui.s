@@ -8380,7 +8380,7 @@ SeMenu_DrawPartSelector_Skip:
 	call	SeGfx_DrawStaticList
 	pop	c
 SeMenu_DrawPartSelector_Join:
-	djnz8	c, -84
+	djnz8	c, .Lc_f0f0a6
 	ld	(COLORBLIT_MODE:24), 1
 	ld	xiy, SeMenu_DrawPartSelector_Records5
 	ld	xix, SeMenu_DrawPartSelector_Records3
@@ -9002,7 +9002,7 @@ SeMenu_DrawPartLabels_Skip:
 	call	SeGfx_DrawStaticList
 	pop c
 SeMenu_DrawPartLabels_Join2:
-	djnz8	c, -84
+	djnz8	c, SeMenu_DrawPartLabels_Join
 	ret
 ; SeMenu_DrawPartRadioButtons: Draws, for each part 1..N (N = 2 when mode byte 0x6AE = 1, else 4), a RadioOn button
 ;   with its "1ST".."4TH" label when the part is enabled in 0x65E, or a RadioOff button with a hatch pattern when not
@@ -9046,7 +9046,7 @@ SeMenu_DrawPartRadioButtons_Skip2:
 	call	SeGfx_DrawStaticList
 	pop c
 SeMenu_DrawPartRadioButtons_Join2:
-	djnz8	c, -84
+	djnz8	c, SeMenu_DrawPartRadioButtons_Join
 	ret
 ; SeMenu_DrawTwoPartRadioButtons: Two-part variant of SeMenu_DrawPartRadioButtons: for parts 2 and 1 (C = 2 down to 1)
 ;   tests the part bit in the mask 0x65E and draws a RadioOn button (SeMenu_DrawTwoPartRadioButtons_Records) or a RadioOff button
@@ -9084,7 +9084,7 @@ SeMenu_DrawTwoPartRadioButtons_Skip:
 	call	SeGfx_DrawStaticList
 	pop c
 SeMenu_DrawTwoPartRadioButtons_Join4:
-	djnz8	c, -84
+	djnz8	c, SeMenu_DrawTwoPartRadioButtons_Loop
 	ret
 ; SeMenu_DrawToneSelectTitle: Draws the title block of the sound editor's TONE SELECT pages (static records
 ;   SeMenu_DrawToneSelectTitle_Records..0x09D5: "TONE SELECT", "SOUND EDIT" and the title box). Basis: callers + body -- the TONE
@@ -9172,25 +9172,30 @@ SeLfo1_DrawPartLabels_Loop:
 	sla	a, 1
 	dec	1, a
 	.byte 0xc8, 0xff
-	jr	c, 34
+	jr	c, SeLfo1_DrawPartLabels_Skip_Skip
 	.byte 0xcb, 0x04
 	xor	b, b
 	sla	bc, 2
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x46, 0x46, 0x43, 0xf1, 0x00
+	ld	xiz, SeScreenData_0x3869
 SeLfo1_DrawPartLabels_Skip:
 	ld	xiy, (xiz+bc)
 	add	bc, 4
 	ld	xix, (xiz+bc)
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x1d, 0xd7, 0xea, 0xf0, 0xcb, 0x05, 0x68, 0x20
-	.byte	0xcb, 0x04, 0xca, 0xd2, 0xd9, 0xec, 0x02, 0x46
-	.byte	0xfe, 0x42, 0xf1, 0x00, 0xe3, 0x07, 0xf8, 0xe4
-	.byte	0x25, 0xd9, 0xc8, 0x04, 0x00, 0xe3, 0x07, 0xf8
-	.byte	0xe4, 0x24, 0x1d, 0xd7, 0xea, 0xf0
+	call	SeGfx_DrawStaticList
+	pop	c
+	jr	SeMenu_PresetBrowser_Data_Code_Join
+SeLfo1_DrawPartLabels_Skip_Skip:
+	push	c
+	xor	b, b
+	sla	bc, 2
+	ld	xiz, SeScreenData_0x3821
+	ld_rrl	xiy, xiz, bc
+	add	bc, 4
+	ld_rrl	xix, xiz, bc
+	call	SeGfx_DrawStaticList
 	pop c
 SeMenu_PresetBrowser_Data_Code_Join:
-	djnz8	c, -84
+	djnz8	c, SeLfo1_DrawPartLabels_Loop
 	ret
 SeMenu_DrawLfoPartSwitches:
 	ld	(COLORBLIT_MODE:24), 1

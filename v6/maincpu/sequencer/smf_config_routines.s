@@ -507,7 +507,6 @@ SMF_OutputCmd_Send03:
 	jr lt, SMF_OutputCmd_ErrorCheck4
 	pop xbc
 	pop xwa
-SMF_OutputCmd_Send03_Loop:
 	jp SMF_OutputCmd_SendTempoH
 
 SMF_OutputCmd_ErrorCheck4:

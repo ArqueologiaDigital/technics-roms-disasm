@@ -1361,10 +1361,10 @@ AudioInit_Routing_NoActiveVoices:
 	ld	(0xc158:16), 255
 	jr	AudioInit_Routing_Done
 AudioInit_Routing_FullDisable:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xf1, 0xfa, 0xc1, 0x00, 0xff, 0xf1, 0xfb, 0xc1
-	.byte	0x00, 0xff, 0xf1, 0x57, 0xc1, 0x00, 0xff, 0xf1
-	.byte	0x58, 0xc1, 0x00, 0xff
+	ld	(0xc1fa:16), 255
+	ld	(0xc1fb:16), 255
+	ld	(0xc157:16), 255
+	ld	(0xc158:16), 255
 AudioInit_Routing_Done:
 	orw	(0xc4dc:16), 260
 	ret
@@ -1400,9 +1400,9 @@ AudioInit_Pan_SetStereoRight:
 AudioInit_Pan_CheckTypeED:
 	ld	wa, (0xc4d8:16)
 	and	wa, 0x60
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x66, 0x22, 0xd1, 0xd4, 0xc4, 0x20, 0xd8, 0x33
-	.byte	0x04
+	jr	z, AudioInit_Pan_DefaultCenter
+	ld	wa, (0xc4d4:16)
+	bit	4, wa
 	jr	z, AudioInit_Pan_DefaultCenter
 	ld	a, (0xfc66:16)
 	and	a, 0x3
@@ -1442,9 +1442,9 @@ AudioInit_Pan_Reverb_Right:
 AudioInit_Pan_Reverb_CheckTypeED:
 	ld	wa, (0xc4d8:16)
 	and	wa, 0x60
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x66, 0x22, 0xd1, 0xd4, 0xc4, 0x20, 0xd8, 0x33
-	.byte	0x04
+	jr	z, AudioInit_Pan_Reverb_Center
+	ld	wa, (0xc4d4:16)
+	bit	4, wa
 	jr	z, AudioInit_Pan_Reverb_Center
 	ld	a, (0xfc66:16)
 	and	a, 0x3

@@ -78,9 +78,10 @@ Seq_FindRhythmTrack:
 	xor	bc, bc
 	ld	c, 16:opc
 	ld	a, 16:opc
+Seq_FindRhythmTrack_Loop:
 	cp	a, (xix+)
 	jr	z, Seq_FindRhythmTrack_Skip3
-	djnz16	bc, -8
+	djnz16	bc, Seq_FindRhythmTrack_Loop
 	jr	Seq_FindRhythmTrack_Join
 Seq_FindRhythmTrack_Skip3:
 	xor	wa, wa
@@ -121,7 +122,6 @@ Seq_FindRhythmTrack_Return2:
 	ret
 SeqPlay_RestoreVoiceState_Return:
 	ld	a, (0x285c:16)
-SeqPlay_RestoreVoiceState_Return_Loop:
 	pushw wa
 	ld a, (0x00ffe3:24)
 	ld	(0x285c:16), a
@@ -2630,7 +2630,6 @@ CDlikeSwTtl_SongNavDispatch:
 	call	Song_AbortPlayback
 	ld	xwa, 7274534
 	ld	xbc, EVT_LYRICS_ALL_CLEAR
-CDlikeSwTtl_SongNavDispatch_Loop:
 	ld	xde, 0:i3
 	call	ApPostEvent
 	ld	wa, iz

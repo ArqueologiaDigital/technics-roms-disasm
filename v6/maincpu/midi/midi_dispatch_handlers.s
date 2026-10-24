@@ -645,8 +645,9 @@ UIState_DisplayUpdate_BitmapHandler_Helper:
 UIState_DisplayUpdate_BitmapHandler_Skip:
 	ldw	wa, 0xffff
 	ldw	bc, 16
+UIState_DisplayUpdate_BitmapHandler_Skip_Loop:
 	ld	(xix+), wa
-	djnz16	bc, -6
+	djnz16	bc, UIState_DisplayUpdate_BitmapHandler_Skip_Loop
 	ld	xix, 0x9454
 	cp	(0x95ad:16), 128
 	jr	z, UIState_DisplayUpdate_BitmapHandler_Skip2
@@ -654,8 +655,9 @@ UIState_DisplayUpdate_BitmapHandler_Skip:
 UIState_DisplayUpdate_BitmapHandler_Skip2:
 	xor	wa, wa
 	ldw	bc, 64
+UIState_DisplayUpdate_BitmapHandler_Skip2_Loop:
 	ld	(xix+), wa
-	djnz16	bc, -6
+	djnz16	bc, UIState_DisplayUpdate_BitmapHandler_Skip2_Loop
 	ld	xix, 0x9434
 	ld	xiy, 0x9454
 	cp	(0x95ad:16), 128
@@ -11775,8 +11777,7 @@ SoundMode_ApplyVoiceParams:
 	call	SysEx_ApplyVoiceParam_49
 	ld wa, 4:i3
 	ld xbc, 0xf980
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x1b, 0xab, 0xa5, 0xfd
+	jp	SysEx_ApplyVoiceParam_4B
 SoundMode_VoiceIterLoop:
 SoundMode_RetStub_E:
 	ret

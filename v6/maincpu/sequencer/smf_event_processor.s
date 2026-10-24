@@ -1040,7 +1040,7 @@ SMF_WriteChannel_FileUnderflow:
 	jrl SMF_FlushAndFinalize
 
 SMF_WriteChannel_Continue:
-	djnz16 bc, -46
+	djnz16 bc, SMF_WriteChannelDataLoop
 
 	ld (4376:16), xix
 
@@ -2092,9 +2092,9 @@ SMF_NoteOn_SlotFound:
 	or (4236:16), 1
 	pushw hl
 	ld c, (4212:16)
+	call SMF_CalcTimeDelta
+	call SMF_ProcessChannels
 
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x1d, 0xd5, 0x84, 0xf2, 0x1d, 0x22, 0x85, 0xf2
 SMF_NoteOn_SlotFound_Underflow:
 
 SMF_NoteOn_WriteEventBytes:
@@ -2112,17 +2112,29 @@ SMF_NoteOn_WriteEventBytes:
 SMF_NoteOn_WriteEvent_Underflow:
 	pop xbc
 	pop xwa
+	jp SMF_FlushAndFinalize
 
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x1b, 0x35, 0x80, 0xf2
 SMF_NoteOn_StoreVoiceData:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x2b, 0xc1, 0x73, 0x10, 0x21, 0xc1, 0x75, 0x10
-	.byte	0x20, 0xc1, 0x76, 0x10, 0x27, 0x1d, 0xd4, 0x83
-	.byte	0xf2, 0x4b, 0x38, 0x39, 0xe9, 0xa8, 0xe1, 0x2d
-	.byte	0x1a, 0x20, 0xe9, 0xf0, 0x61, 0x06, 0x59, 0x58
-	.byte	0x1b, 0x33, 0x79, 0xf2, 0x59, 0x58, 0x1b, 0x35
-	.byte	0x80, 0xf2
+	pushw	hl
+	ld	a, (0x1073:16)
+	ld	w, (0x1075:16)
+	ld	l, (0x1076:16)
+	call	SMF_WriteByteLoop
+	popw	hl
+	push	xwa
+	push	xbc
+	ld	xbc, 0:i3
+	ld	xwa, (0x1a2d:16)
+	cp	xwa, xbc
+	jr	lt, SMF_NoteOn_StoreVoiceData_Skip
+	pop	xbc
+	pop	xwa
+	jp	SMF_NoteOn_StoreVoiceData_Skip_Entry
+SMF_NoteOn_StoreVoiceData_Skip:
+	pop	xbc
+	pop	xwa
+	jp	SMF_FlushAndFinalize
+SMF_NoteOn_StoreVoiceData_Skip_Entry:
 	ld xix, 0x11f9
 	lda	xix, (xix+hl)
 	ld a, 0x80:opc
@@ -2442,7 +2454,6 @@ SMF_CC_RPN_WriteCC101:
 	push xbc
 	ld xbc, 0:i3
 	ld xwa, (FILEIO_BLOCK_BYTES:16)
-SMF_CC_RPN_WriteCC101_Loop:
 	cp xwa, xbc
 	jr lt, SMF_CC_RPN_WriteCC101_Underflow
 	pop xbc
@@ -7212,6 +7223,7 @@ Fat_ReadFile_Join3:
 	ld	iz, wa
 	cp	iz, 0:i3
 	jr	z, SeqByteBlock_StyleBitmapRef_Code_Join4
+Fat_ReadFile_Join3_Loop:
 	ld	xwa, (xsp+10)
 	bitm	2, (xwa+3)
 	jr	z, Fat_ReadFile_Skip10
@@ -7237,7 +7249,7 @@ Fat_ReadFile_Join4:
 	ld	xwa, (xsp+10)
 	ld	xde, 1:i3
 	add	(xwa+22), xde
-	djnz16	iz, -68
+	djnz16	iz, Fat_ReadFile_Join3_Loop
 SeqByteBlock_StyleBitmapRef_Code_Join4:
 	ld	xwa, (xsp+10)
 	ld	xwa, (xwa+30)

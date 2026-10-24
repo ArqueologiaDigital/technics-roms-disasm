@@ -377,18 +377,17 @@ GetDialFocus_Active:
 	ret
 
 SetDialUp:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xf2, 0x4e, 0xef, 0x03, 0x60, 0xf2, 0x56, 0xef
-	.byte	0x03, 0x61, 0xf2, 0x5e, 0xef, 0x03, 0x62, 0x68
-	.byte	0xbd
+	ld	(0x3ef4e:24), xwa
+	ld	(0x3ef56:24), xbc
+	ld	(0x3ef5e:24), xde
+	jr	SetDialFocus
 SetDialUp_Entry:
 	ld	(0x3ef52:24), xwa
 	ld	(0x3ef5a:24), xbc
 	ld	(0x3ef62:24), xde
 
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x68, 0xac
 SetDialDown:
+	jr SetDialFocus
 
 SetAutoIncDefault:
 	dec 4, xsp

@@ -4447,8 +4447,7 @@ Display_SetRegionNon2:
 	ld	(0x00ffc8:24), 0x02
 Display_RegionDone:
 	ld	wa, 0:i3
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x1b, 0x68, 0x57, 0xfb
+	jp	BitMapOut_PrepareRender_CheckBit2
 Display_CopyAndRenderBitmaps:
 	pushw	iz
 	pushw	0x10
@@ -6474,7 +6473,6 @@ SndParam_WriteLookupAndStore:
 	ret	z
 	ld	a, (0x906f:16)
 	extz	wa
-SndParam_WriteLookupAndStore_Loop:
 	ld	(0x9072), (xhl+wa)
 	ret
 SwbtWr_FlushAndAppendParams:
@@ -6751,7 +6749,6 @@ ExtData_Voice_FullHandler_Helper2:
 	cpl	a
 	and	a, (xhl)
 	ld	c, a
-ExtData_Voice_FullHandler_Helper2_Loop:
 	ld	a, (36976:16)
 	and	a, (xsp)
 	or	a, c
@@ -6798,7 +6795,6 @@ ToneGen_ApplyVoiceParams:
 ToneGen_DispatchStartVoice:
 	inc	6, xsp
 	retd	0x2
-ToneGen_DispatchStartVoice_Loop:
 	dec	6, xsp
 	pushw_erp	0xfa
 	cp	(SWBTWR_PAYLOAD_1:16), 3

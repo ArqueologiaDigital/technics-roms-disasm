@@ -1114,10 +1114,15 @@ SMF_MTrk_CompareSignature:
 
 SMF_MTrk_SignatureMatch:
 	djnz16 bc, SMF_MTrk_ReadByteLoop
+	ld	xix, 0xfa2
+	ld	bc, 4:i3
+SMF_MTrk_SignatureMatch_Loop:
+	pushw	bc
+	push	xix
+	call FloppyIO_ReadNextByte
 
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x44, 0xa2, 0x0f, 0x00, 0x00, 0xd9, 0xac, 0x29
-	.byte	0x3c, 0x1d, 0xa2, 0x35, 0xf2, 0x5c, 0x49
+	pop	xix
+	popw	bc
 SMF_MTrk_FileSizeReadFailed:
 
 SMF_MTrk_FileSizeReady:
@@ -1136,27 +1141,79 @@ SMF_VoiceData_DispatchAndParse:
 	ld xbc, 0:i3
 	ld xwa, (FILEIO_BLOCK_BYTES:16)
 	cp xwa, xbc
-	jr lt, SMF_VoiceData_ParseFailed
+	jr	lt, SMF_MTrk_FileSizeReadFailed_Skip
 	pop xbc
 	pop xwa
+	jp	SMF_MTrk_FileSizeReadFailed_Entry
+SMF_MTrk_FileSizeReadFailed_Skip:
+	pop	xbc
+	pop	xwa
+	ld	(0xef6:16), 255
+	jrl	SMF_NullRet
+SMF_MTrk_FileSizeReadFailed_Entry:
+	ld	(xix+), a
+	djnz16	bc, SMF_MTrk_SignatureMatch_Loop
+	ld	(0x108c:16), 0
+SMF_MTrk_FileSizeReadFailed_Entry_Loop:
+	cp	(0x10e3:16), 0
+	jrl	nz, SMF_EventFailureExit
+	push	xwa
+	push	xbc
+	ld	xbc, 0:i3
+	ld	xwa, (0x1a2d:16)
+	cp	xwa, xbc
+	jr	lt, SMF_MTrk_FileSizeReadFailed_Entry_Skip
+	pop	xbc
+	pop	xwa
+	jp	SMF_MTrk_FileSizeReadFailed_Entry_Skip_Entry
+SMF_MTrk_FileSizeReadFailed_Entry_Skip:
+	pop	xbc
+	pop	xwa
+	ld	(0xef6:16), 255
+	jrl	SMF_NullRet
+SMF_MTrk_FileSizeReadFailed_Entry_Skip_Entry:
+	call	FloppyIO_ReadToTrackBuffer
+	push	xwa
+	push	xbc
+	ld	xbc, 0:i3
+	ld	xwa, (0x1a2d:16)
+	cp	xwa, xbc
+	jr	lt, SMF_MTrk_FileSizeReadFailed_Entry_Skip_Entry_Skip
+	pop	xbc
+	pop	xwa
+	jp	SMF_MTrk_FileSizeReadFailed_Entry_Skip_Entry_Skip_Entry
+SMF_MTrk_FileSizeReadFailed_Entry_Skip_Entry_Skip:
+	pop	xbc
+	pop	xwa
+	ld	(0xef6:16), 255
+	jrl	SMF_NullRet
+SMF_MTrk_FileSizeReadFailed_Entry_Skip_Entry_Skip_Entry:
+	call	SeqTrack_DispatchPartEvt
+	ld	iy, (0x108d:16)
+	call	SoundGen_ClampVoiceIndexMin1
+	call	SeqTrack_ComputeTempoScaling
+	call	SeqTrack_UpdateChannelVolumes
+	call	FloppyIO_ReadNextByte
+	push	xwa
+	push	xbc
+	ld	xbc, 0:i3
+	ld	xwa, (0x1a2d:16)
+	cp	xwa, xbc
+	jr	lt, SMF_VoiceData_ParseFailed
+	pop	xbc
+	pop	xwa
 	jp SMF_VoiceData_CheckMetaFlag
 
 SMF_VoiceData_ParseFailed:
 	pop xbc
 	pop xwa
 	ld (3830:16), 255
+	jrl SMF_NullRet
 
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x78, 0x49, 0x01
 SMF_VoiceData_CheckMetaFlag:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xf5, 0xf0, 0x41, 0xd9, 0x1c, 0xd6, 0xf1, 0x8c
-	.byte	0x10, 0x00, 0x00, 0xc1, 0xe3, 0x10, 0x3f, 0x00
-	.byte	0x7e, 0x09, 0x01, 0x38, 0x39, 0xe9, 0xa8, 0xe1
-	.byte	0x2d, 0x1a, 0x20, 0xe9, 0xf0, 0x61, 0x06, 0x59
-	.byte	0x58, 0x1b, 0x34, 0x3e, 0xf2, 0x59, 0x58, 0xf1
-	.byte	0xf6, 0x0e, 0x00, 0xff, 0x78, 0x1a, 0x01, 0x1d
-	.byte	0xd1, 0x37, 0xf2
+	cp a, 0xff
+	jrl nz, SMF_VoiceData_CheckSysEx
+	call SMF_ParseTrackEvent
 	push xwa
 	push xbc
 	ld xbc, 0:i3
@@ -1171,35 +1228,19 @@ SMF_VoiceData_MetaParseFailed:
 	pop xbc
 	pop xwa
 	ld (3830:16), 255
+	jrl SMF_NullRet
 
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x78, 0xfa, 0x00
 SMF_VoiceData_CheckEndOfTrack:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x1d, 0x04, 0x38, 0xf2, 0xd1, 0x8d, 0x10, 0x25
-	.byte	0x1d, 0xc4, 0x45, 0xf2, 0x1d, 0x85, 0x38, 0xf2
-	.byte	0x1d, 0xc4, 0x39, 0xf2, 0x1d, 0xa2, 0x35, 0xf2
-	.byte	0x38, 0x39, 0xe9, 0xa8, 0xe1, 0x2d, 0x1a, 0x20
-	.byte	0xe9, 0xf0, 0x61, 0x06, 0x59, 0x58, 0x1b, 0x88
-	.byte	0x3e, 0xf2, 0x59, 0x58, 0xf1, 0xf6, 0x0e, 0x00
-	.byte	0xff, 0x78, 0xc6, 0x00, 0xc9, 0xcf, 0xff, 0x7e
-	.byte	0x3e, 0x00, 0x1d, 0x0e, 0x3a, 0xf2, 0x38, 0x39
-	.byte	0xe9, 0xa8, 0xe1, 0x2d, 0x1a, 0x20, 0xe9, 0xf0
-	.byte	0x61, 0x06, 0x59, 0x58, 0x1b, 0xae, 0x3e, 0xf2
-	.byte	0x59, 0x58, 0xf1, 0xf6, 0x0e, 0x00, 0xff, 0x78
-	.byte	0xa0, 0x00
 	cp (4009:16), 255
 	jrl z, SMF_VoiceData_HandleEndOfTrack
 	cp (4323:16), 0
-	jrl	z, -174
+	jrl	z, SMF_MTrk_FileSizeReadFailed_Entry_Loop
 	ld (3830:16), 255
+	jr SMF_EventFailureExit
 
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x68, 0x5c
 SMF_VoiceData_HandleEndOfTrack:
+	call SeqTrack_ReleaseVoiceAtEndOfTrack
 
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x1d, 0xd2, 0x45, 0xf2
 SMF_VoiceData_DrainRemaining:
 
 SMF_VoiceData_DrainDone:
@@ -1230,7 +1271,7 @@ SMF_VoiceData_SysExFailed:
 	jrl SMF_NullRet
 
 SMF_VoiceData_SysExContinue:
-	jrl	-235
+	jrl	SMF_MTrk_FileSizeReadFailed_Entry_Loop
 
 SMF_VoiceData_CheckMidiStatus:
 	bit 7, a
@@ -1246,7 +1287,7 @@ SMF_VoiceData_CheckMidiStatus:
 	jr lt, SMF_VoiceData_MidiStatusFailed
 	pop xbc
 	pop xwa
-	jp	0xf23e10
+	jp	SMF_MTrk_FileSizeReadFailed_Entry_Loop
 
 SMF_VoiceData_MidiStatusFailed:
 	pop xbc
@@ -1268,7 +1309,7 @@ SMF_VoiceData_ReadMidiRunning:
 	jr lt, SMF_VoiceData_RunningMidiFailed
 	pop xbc
 	pop xwa
-	jp	0xf23e10
+	jp	SMF_MTrk_FileSizeReadFailed_Entry_Loop
 
 SMF_VoiceData_RunningMidiFailed:
 	pop xbc
@@ -3646,7 +3687,6 @@ MidiEvent_HandlePitchBendB:
 	call SoundGen_ScalePitchByTempo
 	pop xiy
 	push xiy
-MidiEvent_HandlePitchBendB_Loop:
 	call SoundGen_UpdateAndRefresh
 	pop xiy
 	cp (4323:16), 0

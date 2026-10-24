@@ -1174,7 +1174,6 @@ MainLoop_AfterSwbtWr:
 	call AccDir_PeriodicEntry
 	calr Seq_EventProcessingTick
 	call SeqBuf_NoteEvent_CheckSongEnd
-MainLoop_AfterSwbtWr_Loop:
 	and hl, hl
 	jr z, MainLoop_AfterSeqBuf_NoteEvent
 	call SeMenu_ListSelector_Select
@@ -2536,7 +2535,6 @@ TaskSched_WakeInline_Pending:
 	push xhl
 	push xwa
 	push xbc
-TaskSched_WakeInline_Pending_Loop:
 	push xde
 	push xix
 	push xiy
@@ -2722,7 +2720,6 @@ Audio_Lock_Release:
 	push xbc
 	push xde
 	push xix
-Audio_Lock_Release_Loop:
 	push xiy
 	push xiz
 	ld l, a
@@ -2911,7 +2908,6 @@ AudioLock_GetCount:
 TaskMsg_Send:
 	push	sr
 	ei 6
-TaskMsg_Send_Loop:
 	push xhl
 	push xwa
 	push xbc
@@ -2984,7 +2980,6 @@ TaskMsg_Send_WakeReceiver:
 	ld wa, (xiy + 2)
 	ld (xix + 2), wa
 	ld (xwa), ix
-TaskMsg_Send_WakeReceiver_Loop:
 	ld (xiy + 2), ix
 	jrl TaskSched_Dispatch
 	push xwa
@@ -3147,7 +3142,6 @@ TaskMsg_TryReceive:
 	sll a, 2
 	extz wa
 	add wa, 0x54f
-TaskMsg_TryReceive_Loop:
 	ld iy, wa
 	push	sr
 	ei 6
@@ -3324,7 +3318,6 @@ TaskSched_TCBTemplate:
 	pop	xiy
 	pop	xix
 	popw	wa
-TaskSched_TCBTemplate_Loop:
 	ret
 
 TaskSched_DelayTicks:
@@ -3432,7 +3425,6 @@ SeqBuf_ReadAlternate2:
 	pushw	ix
 	push	xde
 	lda	xde, (0x1e549:24)
-SeqBuf_ReadAlternate2_Loop:
 	call	RingBuf512_ReadAlt_ByteBlock
 	pop	xde
 	popw	ix
@@ -3578,10 +3570,11 @@ RhythmBuf_InlineBytecode:
 	ld	bc, (xiz+8)
 	ld	xiy, (xiz+10)
 	lda	xde, (0x1ef5d:24)
+RhythmBuf_InlineBytecode_Loop:
 	ld	a, (xiy)
 	calr	Seq_RingBuf_WriteByte_512
 	inc	1, xiy
-	djnz16	bc, -10
+	djnz16	bc, RhythmBuf_InlineBytecode_Loop
 	pop	xde
 	pop	xix
 	pop	xiy
@@ -3761,10 +3754,11 @@ SeqEvtBuf_InlineBytecode:
 	ld	bc, (xiz+8)
 	ld	xiy, (xiz+10)
 	lda	xde, (0x1f271:24)
+SeqEvtBuf_InlineBytecode_Loop:
 	ld	a, (xiy)
 	calr	Seq_RingBuf_WriteByte_Small
 	inc	1, xiy
-	djnz16	bc, -10
+	djnz16	bc, SeqEvtBuf_InlineBytecode_Loop
 	pop	xde
 	pop	xix
 	pop	xiy
@@ -4356,10 +4350,11 @@ CPanel_RxEventQueue_Push:
 	ld	bc, (xiz+8)
 	ld	xiy, (xiz+10)
 	lda	xde, (CPANEL_RX_EVENT_QUEUE:24)
+CPanel_RxEventQueue_Push_Loop:
 	ld	a, (xiy)
 	calr	RingBuf128_WriteByte_CheckFull
 	inc	1, xiy
-	djnz16	bc, -10
+	djnz16	bc, CPanel_RxEventQueue_Push_Loop
 	pop	xde
 	pop	xix
 	pop	xiy
@@ -4440,10 +4435,11 @@ SeqBuf_TimerEvent_BytecodeBlock2:
 	ld	bc, (xiz+8)
 	ld	xiy, (xiz+10)
 	lda	xde, (CPANEL_LED_EVENT_QUEUE:24)
+SeqBuf_TimerEvent_BytecodeBlock2_Loop:
 	ld	a, (xiy)
 	calr	RingBuf128_WriteByte_CheckFull
 	inc	1, xiy
-	djnz16	bc, -10
+	djnz16	bc, SeqBuf_TimerEvent_BytecodeBlock2_Loop
 	pop	xde
 	pop	xix
 	pop	xiy
@@ -4634,10 +4630,11 @@ SeqBuf_NoteEvent_WriteByte:
 	ld	bc, (xiz+8)
 	ld	xiy, (xiz+10)
 	lda	xde, (0x202cb:24)
+SeqBuf_NoteEvent_WriteByte_Loop:
 	ld	a, (xiy)
 	calr	Seq_RingBuf_WriteByte_Small
 	inc	1, xiy
-	djnz16	bc, -10
+	djnz16	bc, SeqBuf_NoteEvent_WriteByte_Loop
 	pop	xde
 	pop	xix
 	pop	xiy
@@ -4723,10 +4720,11 @@ SeqBuf_DmaChan0_WriteByte:
 	ld	bc, (xiz+8)
 	ld	xiy, (xiz+10)
 	lda	xde, (0x203d5:24)
+SeqBuf_DmaChan0_WriteByte_Loop:
 	ld	a, (xiy)
 	calr	Seq_RingBuf_WriteByte_Small
 	inc	1, xiy
-	djnz16	bc, -10
+	djnz16	bc, SeqBuf_DmaChan0_WriteByte_Loop
 	pop	xde
 	pop	xix
 	pop	xiy
@@ -4819,10 +4817,11 @@ SeqBuf_SoundEdit_BytecodeBlock:
 	ld	bc, (xiz+8)
 	ld	xiy, (xiz+10)
 	lda	xde, (0x204df:24)
+SeqBuf_SoundEdit_BytecodeBlock_Loop:
 	ld	a, (xiy)
 	calr	Seq_RingBuf_WriteByte_Small
 	inc	1, xiy
-	djnz16	bc, -10
+	djnz16	bc, SeqBuf_SoundEdit_BytecodeBlock_Loop
 	pop	xde
 	pop	xix
 	pop	xiy
@@ -5248,9 +5247,8 @@ SeqDMA_MultiWrite_NoteEvent_Loop:
 	ld (xsp + 2), xwa
 	extz bc
 	pushw bc
+	call SeqBuf_DmaChan0_WriteByte
 
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x1d, 0x62, 0x2c, 0xef
 SeqDMA_MultiWrite_NoteEvent_Done:
 
 
@@ -5309,7 +5307,7 @@ SeqDMA_MultiWrite_SoundEdit:
 	ld a, (xsp + 6)
 	extz wa
 	cp wa, 0:i3
-	jr	ule, 29
+	jr	ule, SeqDMA_MultiWrite_SoundEdit_Loop_Skip
 
 SeqDMA_MultiWrite_SoundEdit_Loop:
 	ld xwa, (xsp + 2)
@@ -5317,21 +5315,39 @@ SeqDMA_MultiWrite_SoundEdit_Loop:
 	ld (xsp + 2), xwa
 	extz bc
 	pushw bc
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x1d, 0xfc, 0x28, 0xef, 0xef, 0x62, 0xde, 0x61
-	.byte	0x8f, 0x06, 0x21, 0xd8, 0x12, 0xd8, 0xf6, 0x67
-	.byte	0xe3, 0x4e, 0xef, 0x66, 0x0e, 0xef, 0x6e, 0x2e
-	.byte	0xbf, 0x02, 0x61, 0xbf, 0x06, 0x41, 0xde, 0xa8
-	.byte	0x8f, 0x06, 0x21, 0xd8, 0x12, 0xd8, 0xd8, 0x63
-	.byte	0x1d, 0xaf, 0x02, 0x20, 0xc5, 0xe0, 0x23, 0xbf
-	.byte	0x02, 0x60, 0xd9, 0x12, 0x29, 0x1d, 0x10, 0x2d
-	.byte	0xef
+	call	SeqBuf_DspSysEx_WriteByte
+	inc	2, xsp
+	inc	1, iz
+	ld	a, (xsp+6)
+	extz	wa
+	cp	iz, wa
+	jr	c, SeqDMA_MultiWrite_SoundEdit_Loop
+SeqDMA_MultiWrite_SoundEdit_Loop_Skip:
+	popw	iz
+	inc	6, xsp
+	ret
+	dec	6, xsp
+	pushw	iz
+	ld	(xsp+2), xbc
+	ld	(xsp+6), a
+	ld	iz, 0:i3
+	ld	a, (xsp+6)
+	extz	wa
+	cp	wa, 0:i3
+	jr	ule, SeqDMA_MultiWrite_SoundEdit_Done
+SeqDMA_MultiWrite_SoundEdit_Loop_Skip_Loop:
+	ld	xwa, (xsp+2)
+	ld	c, (xwa+)
+	ld	(xsp+2), xwa
+	extz	bc
+	pushw	bc
+	call	SeqBuf_SoundEdit_BytecodeBlock
 	inc 2, xsp
 	inc 1, iz
 	ld a, (xsp + 6)
 	extz wa
 	cp iz, wa
-	jr	c, -29
+	jr	c, SeqDMA_MultiWrite_SoundEdit_Loop_Skip_Loop
 
 SeqDMA_MultiWrite_SoundEdit_Done:
 	popw iz
@@ -8574,7 +8590,6 @@ LZ_Decompress_ReadSizeField:
 	calr Parport_ReadNextByte
 	inc1w_erp 0xfa
 	cp_erpw 0xfa, 0x08, 0x00
-LZ_Decompress_ReadSizeField_Loop:
 	jr c, LZ_Decompress_ReadSizeField
 	calr Parport_ReadNextByte
 	extz xhl

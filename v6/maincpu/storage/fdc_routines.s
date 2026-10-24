@@ -1015,7 +1015,6 @@ FDC_CMD_SEND_Skip4:
 	cp	a, 14
 	jr	z, FDC_CMD_SEND_Skip5
 	ld	a, (xsp)
-FDC_CMD_SEND_Skip4_Loop:
 	and	a, 15
 	cp	a, 11
 	jr	nz, FDC_HardwareSetup_Skip6
@@ -1969,9 +1968,10 @@ FDC_MC_EXIT_Code_Skip3:
 	ld	iz, 1:i3
 	cp	iz, 0:i3
 	jr	z, FDC_MC_EXIT_Code_Epilogue
+FDC_MC_EXIT_Code_Skip3_Loop:
 	ldw	wa, 10
 	calr	SOME_DELAY
-	djnz16	iz, -9
+	djnz16	iz, FDC_MC_EXIT_Code_Skip3_Loop
 FDC_MC_EXIT_Code_Epilogue:
 	popw	iz
 	ret

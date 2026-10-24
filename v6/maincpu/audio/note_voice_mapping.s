@@ -7670,11 +7670,16 @@ ScanEmitMidi_VoiceLoop:
 	inc	4, xbc
 	add	xbc, (xsp + 6)
 	cp	(xbc + 3), 0xff
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x76, 0xd3, 0x00, 0xd7, 0xfa, 0x88, 0xe8, 0x12
-	.byte	0xe8, 0x89, 0xe9, 0xee, 0x02, 0xe8, 0x81, 0xe9
-	.byte	0x64, 0xaf, 0x06, 0x81, 0x89, 0x03, 0x3f, 0x78
-	.byte	0x7f, 0xbb, 0x00
+	jrl	z, MIDI_SysExParse_CheckLength
+	ld	wa, qiz
+	extz	xwa
+	ld	xbc, xwa
+	sll	xbc, 2
+	add	xbc, xwa
+	inc	4, xbc
+	add	xbc, (xsp+6)
+	cp	(xbc+3), 120
+	jrl	nc, MIDI_SysExParse_CheckLength
 	ld	a, (xsp + 4)
 	or	a, 0x90
 	extz	wa
@@ -9751,7 +9756,6 @@ InitChannelState_Che_LoopBody:
 	ld	(xde + 4), 0x0
 	ld	bc, hl
 	extz	xbc
-InitChannelState_Che_LoopBody_Loop:
 	ld	xde, xbc
 	sll	xde, 2
 	add	xde, xbc
@@ -11764,7 +11768,6 @@ ProcessLayeredNoteOn_InitVal2:
 	jrl	nc, NoteMap_PopIzStoreRet
 ProcessLayeredNoteOn_LoadIter2:
 	ld	wa, iz
-ProcessLayeredNoteOn_LoadIter2_Loop:
 	lda	xbc, (0xc328:16)
 	extz	xwa
 	add	xwa, xbc
@@ -12769,7 +12772,6 @@ SeqPart_EmitNoteOn_Full_SetPartController:	; cases 212, 213, 214, 215, 216
 	cp	wa, 0xffff
 	jrl	z, RhythmBuf_EventDispatchLoop
 	call	RhythmBuf_ReadAlternate
-SeqPart_EmitNoteOn_Full_SetPartController_Loop:
 	ld	iz, hl
 	ld	wa, iz
 	cp	wa, 0xffff
@@ -13555,7 +13557,7 @@ SoundFX_Handler_1_LoadReg:
 	addmi8	(xwa + 1), 0xc
 	jr	SoundFX_SetVolumeOffset_Return
 SoundFX_Handler_1_LoadReg_Skip:
-	djnz16	de, -43
+	djnz16	de, SoundFX_Handler_1_LoadReg
 SoundFX_SetVolumeOffset_Return:
 	ld	hl, (xiz)
 	pop	xiz
@@ -13967,7 +13969,6 @@ SoundFX_Handler_8:
 	calr	VoiceBank_MapNoteToOffset
 	ld	a, l
 	cp	a, 0xff
-SoundFX_Handler_8_Loop:
 	jrl	z, SoundFX_Handler_8_ClearWord
 	ld	a, (0xcdea:16)
 	sub	a, (0xce20:16)
@@ -14608,6 +14609,7 @@ ComputeNoteBitPositi_Data:
 	xor	hl, hl
 	xor	iy, iy
 	xor	wa, wa
+ComputeNoteBitPositi_Data_Loop:
 	pushw	bc
 	ld	xiz, 0xce26
 	ld	l, (xiz)
@@ -14629,7 +14631,7 @@ ComputeNoteBitPositi_Data:
 Voice_ComputeNoteBitPosition_Skip:
 	popw	bc
 	inc	1, iy
-	djnz16	bc, -52
+	djnz16	bc, ComputeNoteBitPositi_Data_Loop
 	or	de, 1
 	ld	c, 11:opc
 	sub	c, a
@@ -24914,7 +24916,6 @@ HdaeRom_DataHandler_Helper_Skip2:
 	ld	c, (xhl+bc)
 	ldfr_berp	c, 240
 	ldto_berp	d, 240
-HdaeRom_DataHandler_Helper_Skip2_Loop:
 	sll	d, 6
 	ld	e, (xwa+19)
 	ld	c, e

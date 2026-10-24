@@ -18,6 +18,11 @@ The tree was generated from `v7/maincpu` by `scripts/converters/port_maincpu_ver
 - replaced by `.byte` rows under `; TODO(port): v6 bytes with no v7 line -- disassemble`
   where no v7 line maps.  Those rows are verbatim debt and are meant to be disassembled.
 
+`scripts/converters/disassemble_port_todo.py --tree v6` then decoded the TODO(port) rows that
+sit between instructions (each instruction re-assembled alone to its own bytes) and named
+the branch and call targets they and the porter's rewritten lines reach.  The rows left are
+mostly data next to v7's C data and pointer tables.
+
 The C data sources are v7's.  `includes/v6_c_divergence.json` records where the v6 ROM
 differs from what they compile to, as pointer relocations and raw bytes, and
 `scripts/build/apply_c_divergence.py v6` applies it after compiling.  The json is written
@@ -28,8 +33,15 @@ comment may be v7's.  Labels and code are v6's.
 
 ## After generation
 
-The generator overwrites `v6/maincpu` and is not re-run once the tree has been edited by
-hand or by later passes; later changes are ordinary commits to this tree.
+The generator overwrites `v6/maincpu` (except this README) and is not re-run once the tree has
+been edited by hand; later changes are ordinary commits to this tree.  To regenerate before
+that point:
+
+    python3 scripts/converters/port_maincpu_version.py --src v7 --dst v6 --rom $V6 --emit
+    rm -rf v6/maincpu/includes/generated && make v6-c-bins-raw
+    python3 scripts/converters/port_maincpu_version.py --src v7 --dst v6 --rom $V6 --cdiv
+    make v6-progress
+    python3 scripts/converters/disassemble_port_todo.py --tree v6 --rom $V6 --apply
 
 ## Build
 

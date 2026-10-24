@@ -39,7 +39,6 @@ MiddleFuncCall_OnSongNameSet:
 	pushw	0
 	pushw	4441
 	call	Strcpy
-MiddleFuncCall_OnSongNameSet_Loop:
 	inc	8, xsp
 	push	xde
 	push	xhl
@@ -630,7 +629,6 @@ SqTrSel_CaseF:
 PlayMode_SendStopEvent:
 	ld xwa, 0x6f0026
 	ld xbc, EVT_LYRICS_ALL_CLEAR
-PlayMode_SendStopEvent_Loop:
 	ld xde, 0:i3
 	jp ApPostEvent
 

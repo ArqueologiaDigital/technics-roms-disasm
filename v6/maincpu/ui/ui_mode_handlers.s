@@ -1552,8 +1552,7 @@ VramTest_Done:
 	ret
 
 SelfTest_FirmwareVersionCheck:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xef, 0x68
+	dec	8, xsp
 	push	qiz
 	call	Get_Firmware_Version
 	cp	l, 119
@@ -1562,15 +1561,12 @@ SelfTest_FirmwareVersionCheck:
 	call	UI_PostModeChangeEvent
 	call	SubCPU_PayloadErrorStore
 	ld	(36034:16), 2
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x78, 0x8f, 0x01
+	jrl	EffectMode_PopRetFA
 SelfTest_InterCPU_Send:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xbf, 0x02, 0x32
+	lda	xde, (xsp+2)
 	ld	xwa, 61442
 	ldw	bc, 8
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x1d, 0x81, 0x32, 0xef
+	call	InterCPU_E2_Send
 	ld	xwa, 4194303
 	jr	SelfTest_WaitBitLoop_Check
 SelfTest_WaitBitLoop_Copy:
@@ -1585,21 +1581,25 @@ SelfTest_WaitBitLoop_Check:
 	jr nz, SelfTest_WaitBitLoop_Copy
 
 SelfTest_WaitDone_CountBits:
+	ldib_erp	0xfb, 0
+	ldib_erp	250, 0	; ld qizh, 0
 
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xc7, 0xfb, 0xa8, 0xc7, 0xfa, 0xa8
 SelfTest_CountBits_Loop:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xc7, 0xfa, 0x8b, 0xd9, 0x12, 0xbf, 0x02, 0x30
-	.byte	0xc3, 0x07, 0xe0, 0xe4, 0x21
+	ldto_berp	c, 250	; ld c, qizh
+	extz	bc
+	lda	xwa, (xsp+2)
+	ld_rrb	a, xwa, bc
 	extz	wa
 	calr	SelfTest_PopCount
 	ldto_berp	a, 251	; ld a, qizl
 	add	a, l
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xc7, 0xfb, 0x99, 0xc7, 0xfa, 0x61, 0xc7, 0xfa
-	.byte	0xcf, 0x08, 0x67, 0xdd, 0xc7, 0xfb, 0xda, 0x6e
-	.byte	0x7a, 0xbf, 0x02, 0x32
+	ldfr_berp	a, 251	; ld qizl, a
+	inc1b_erp	250	; inc 1, qizh
+	cp_erpb	250, 8
+	jr	c, SelfTest_CountBits_Loop
+	cpib_erp	251, 2	; cp qizl, 2
+	jr	nz, SelfTest_SramAndRom
+	lda	xde, (xsp+2)
 	ld	c, (xde+3)
 	lda	xwa, (xde+4)
 	bit	0, c
@@ -1722,8 +1722,7 @@ SelfTest_PostRomError:
 	call	ApPostEvent
 EffectMode_PopRetFA:
 	popw_erp 0xfa
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xef, 0x60
+	inc	8, xsp
 	ret
 
 SelfTest_PopCount:
@@ -2535,11 +2534,15 @@ SysSureShowHideFunc:
 
 AttnLngCheck:
 	cp xbc, EVT_GET_LANGUAGE_PTR
-	jr	nz, 6
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xf2, 0xc8, 0x03, 0xed, 0x33, 0x0e, 0xeb, 0xa8
-	.byte	0x0e, 0xe9, 0xcf, 0x9f, 0x00, 0xe0, 0x01, 0x6e
-	.byte	0x06, 0xf2, 0x22, 0x04, 0xed, 0x33
+	jr	nz, AttnLngCheck_Skip
+	lda xhl, (LngTable_Attention:24)
+	ret
+AttnLngCheck_Skip:
+	ld	xhl, 0:i3
+	ret
+	cp	xbc, 0x1e0009f
+	jr	nz, AttnLngCheck_ReturnZero
+	lda	xhl, (LngTable_InitSettingWarn:24)
 	ret
 
 AttnLngCheck_ReturnZero:
@@ -2548,18 +2551,12 @@ AttnLngCheck_ReturnZero:
 
 SysSureLngCheck:
 	cp xbc, EVT_GET_LANGUAGE_PTR
-	jr nz, SysSureLngCheck_ReturnZero
-	lda	xhl, (LngTable_AreYouSure:24)
-	ret
+	jr	nz, SureLngCheck_ReturnZero
 
 SysSureLngCheck_ReturnZero:
-	ld xhl, 0:i3
-	ret
 
 SureLngCheck:
-	cp xbc, EVT_GET_LANGUAGE_PTR
-	jr nz, SureLngCheck_ReturnZero
-	lda	xhl, (LngTable_FactoryResetDesc:24)
+	lda xhl, (LngTable_AreYouSure:24)
 	ret
 
 SureLngCheck_ReturnZero:
@@ -2569,7 +2566,7 @@ SureLngCheck_ReturnZero:
 CtlIniLngCheck:
 	cp xbc, EVT_GET_LANGUAGE_PTR
 	jr nz, CtlIniLngCheck_ReturnZero
-	lda	xhl, (LngTable_StoreSoundBalance:24)
+	lda xhl, (LngTable_FactoryResetDesc:24)
 	ret
 
 CtlIniLngCheck_ReturnZero:
@@ -2579,7 +2576,7 @@ CtlIniLngCheck_ReturnZero:
 PmemNormLngCheck:
 	cp xbc, EVT_GET_LANGUAGE_PTR
 	jr nz, PmemNormLngCheck_ReturnZero
-	lda	xhl, (LngTable_StoreTotalSetting:24)
+	lda xhl, (LngTable_StoreSoundBalance:24)
 	ret
 
 PmemNormLngCheck_ReturnZero:
@@ -2587,13 +2584,18 @@ PmemNormLngCheck_ReturnZero:
 	ret
 
 PmemExpLngCheck:
+	cp xbc, EVT_GET_LANGUAGE_PTR
+	jr nz, PmemExpLngCheck_ReturnZero
+	lda xhl, (LngTable_StoreTotalSetting:24)
+	ret
 
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x1b, 0x07, 0x3f, 0xfa
 PmemExpLngCheck_ReturnZero:
+	ld xhl, 0:i3
+	ret
 PmemExpLng_Boundary:
 
 AcMstSugAlpGridBoxProc:
+	jp InheritedProc
 
 MstSugAlpGridCheck:
 	ld xhl, 0:i3
@@ -2745,6 +2747,7 @@ AcMstStyleAlp_Boundary_Join2:
 	ld	iz, (xwa)
 	cp	iz, 0:i3
 	jr	z, MasterSetup_StringSearch_Done
+AcMstStyleAlp_Boundary_Join2_Loop:
 	pushw	1
 	ld	wa, iz
 	extz	xwa
@@ -2762,7 +2765,7 @@ AcMstStyleAlp_Boundary_Join2:
 	add	xsp, 10
 	cp	hl, 0:i3
 	jr	nz, MasterSetup_StringSearch_Done
-	djnz16	iz, -46
+	djnz16	iz, AcMstStyleAlp_Boundary_Join2_Loop
 ; === end v7 block ===
 MasterSetup_StringSearch_Done:
 	cp iz, 0:i3
@@ -2994,7 +2997,7 @@ MasterSetup_DialDown_Search_Loop:
 	add	xsp, 10
 	cp	hl, 0:i3
 	jr	nz, MasterSetup_DialDown_Search_Done
-	djnz16	iz, -46
+	djnz16	iz, MasterSetup_DialDown_Search_Loop
 MasterSetup_DialDown_Search_Done:
 	cp iz, 0:i3
 	jr z, MasterSetup_DialDown_AdjustView

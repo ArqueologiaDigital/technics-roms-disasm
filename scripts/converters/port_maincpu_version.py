@@ -20,7 +20,10 @@ HOW
      monotonically and extended (scripts/analysis/kn5000_version_delta.py), then
      difflib inside every gap whose two sides differ in size.  Equal-size gaps
      between matched blocks map byte for byte (a substitution).  Result: a delta
-     for every mapped source byte.
+     for every mapped source byte.  A size-changing gap whose source lines are mostly
+     instructions is then re-aligned by instruction: both sides are decoded with
+     llvm-mc and the two sequences matched by shape (numbers ignored); that mapping
+     replaces the byte one when it pairs more lines.
   3. A source line whose bytes all map with ONE delta is PORTED to address+delta.
      Equal bytes: the text is kept.  Different bytes: every number / symbol
      operand whose source value sits little-endian in the line's bytes at an
@@ -34,9 +37,15 @@ HOW
      them in the source inside the target gap (unique match), else dropped when
      nothing references them; a referenced label that cannot be placed stops
      the tool.
-  5. A symbol defined by `.equ`/`.set` to a number (a RAM variable) whose uses
-     all require one new value gets that value in the target tree.  Uses that
-     disagree get the number written at the use instead.
+  5. A symbol defined by `.equ`/`.set` to a number (a RAM variable), or to
+     `Label +/- K`, whose uses require one new value gets it at its definition.  Uses
+     that disagree get the number written at the use instead.
+  6. Labels go where their uses say: every mapped use votes for the target address
+     its bytes name, and a label moves into the inserted bytes before its line when
+     three fifths of the votes put it there.  A target address no label names gets a
+     new one when it starts an emitted line (see Port.new_labels for the names).
+  Afterwards scripts/converters/disassemble_port_todo.py turns the TODO(port) rows
+  that sit between instructions into instructions.
 
 RUN
     python3 scripts/converters/port_maincpu_version.py --src v7 --dst v6 \
@@ -193,11 +202,53 @@ def align(a, b, k=16, max_gap=24000):
             put(qa, ea, qb - qa)
 
     pa = pb = 0
+    gaps = []
     for s, e, sb in bl + [(len(a), len(a), len(b))]:
         refine(pa, s, pb, sb)
+        if s > pa or sb > pb:
+            gaps.append((pa, s, pb, sb))
         put(s, e, sb - s)
         pa, pb = e, sb + (e - s)
-    return dm
+    return dm, gaps
+
+
+# ------------------------------------------------------------------ instruction decoding
+def decode_region(bs, limit=400):
+    """-> [(offset, length, text)] for the instructions llvm-mc decodes from bs, each
+    re-encoding to exactly its own bytes; a byte that does not decode (or whose
+    instruction does not re-encode identically) is an item (offset, 1, None)"""
+    out = []
+    pos = 0
+    for _ in range(limit):
+        if pos >= len(bs):
+            break
+        r = subprocess.run([MC, "-triple=tlcs900", "--disassemble", "-show-encoding"],
+                           input=" ".join("0x%02x" % x for x in bs[pos:]), capture_output=True, text=True)
+        moved = False
+        for ln in r.stdout.splitlines():
+            m = re.match(r'^\s*(.*?)\s*; encoding: \[(.*)\]\s*$', ln)
+            if not m:
+                continue
+            enc = bytes(int(x, 16) for x in m.group(2).split(","))
+            if bs[pos:pos + len(enc)] != enc:
+                break
+            out.append((pos, len(enc), re.sub(r'\s+', " ", m.group(1)).strip()))
+            pos += len(enc)
+            moved = True
+        if pos < len(bs):
+            out.append((pos, 1, None))          # this byte does not start a clean instruction
+            pos += 1
+    while pos < len(bs):
+        out.append((pos, 1, None))
+        pos += 1
+    return out
+
+
+def skeleton(text):
+    """an instruction's shape: its text with every number replaced by #"""
+    if text is None:
+        return None
+    return re.sub(r'-?\b\d+\b', "#", text)
 
 
 # ------------------------------------------------------------------ driver
@@ -216,12 +267,14 @@ def load(args):
         open(os.path.join(cache, "rom_%s.bin" % args.src), "wb").write(rom)
     tgt = open(args.rom, "rb").read()
     key = hashlib.sha1(rom + tgt).hexdigest()[:16]
-    g = os.path.join(cache, "dm_%s.json" % key)
+    g = os.path.join(cache, "dm2_%s.json" % key)
     if os.path.exists(g):
-        dm = json.load(open(g))
+        d = json.load(open(g))
+        dm, gaps = d["dm"], d["gaps"]
     else:
-        dm = align(rom, tgt)
-        json.dump(dm, open(g, "w"))
+        dm, gaps = align(rom, tgt)
+        json.dump({"dm": dm, "gaps": gaps}, open(g, "w"))
+    args.gaps = gaps
     return order, syms, rom, tgt, dm
 
 
@@ -245,7 +298,7 @@ def classify(order, size, rom, tgt, dm):
 
 # ------------------------------------------------------------------ line parsing
 REL = {"jr", "jrl", "calr", "djnz", "djnz16", "djnz8"}
-REL_W = {"jr": 1, "djnz": 1, "djnz8": 1, "jrl": 2, "calr": 2, "djnz16": 2}
+REL_W = {"jr": 1, "djnz": 1, "djnz8": 1, "jrl": 2, "calr": 2, "djnz16": 1}  # djnz16: 16-bit counter, 8-bit displacement
 RESERVED = set("""a w b c d e h l wa bc de hl ix iy iz sp xwa xbc xde xhl xix xiy xiz xsp
     ixl ixh iyl iyh izl izh qa qw qb qc qd qe qh ql qwa qbc qde qhl qix qiy qiz qsp
     ra rw rb rc rd re rh rl t f z nz nc ov nov pl mi ge lt gt le uge ult ugt ule eq ne
@@ -435,8 +488,9 @@ class Port:
         self.order, self.syms, self.rom, self.tgt, self.dm = load(args)
         self.cache = args.cache
         self.size = fill_sizes(self.order)
-        self.cls = classify(self.order, self.size, self.rom, self.tgt, self.dm)
         self.parsed = [split_line(e[3]) for e in self.order]
+        self.realign_code_gaps(args.gaps)
+        self.cls = classify(self.order, self.size, self.rom, self.tgt, self.dm)
         # source values: ELF symbols plus every label line (locals are not in the ELF)
         self.sv = dict(self.syms)
         for i, e in enumerate(self.order):
@@ -464,6 +518,79 @@ class Port:
         self.macro_rel = set()          # symbols a macro body branches to relatively
         self.newequ = {}
         self.newexpr = {}
+
+    def realign_code_gaps(self, gaps):
+        """Inside a gap between the anchor blocks, byte matching pairs lines badly where
+        code was inserted or changed: it maps a few equal bytes and cuts instructions.
+        Where the source lines of a gap are mostly instructions, decode both sides and match
+        the two instruction sequences by shape (mnemonic and operands, numbers ignored);
+        matched lines map to their instruction, the rest are unmapped.  The new mapping is
+        kept when it pairs more lines than the byte mapping maps with equal bytes."""
+        starts = sorted((e[0] - BASE, i) for i, e in enumerate(self.order) if self.size[i] > 0)
+        keys = [a for a, i in starts]
+        cache = os.path.join(self.cache, "realign_%s.json" % hashlib.sha1(self.rom + self.tgt).hexdigest()[:16])
+        memo = json.load(open(cache)) if os.path.exists(cache) else {}
+        self.realigned = collections.Counter()
+        for pa, ea, pb, eb in gaps:
+            if ea - pa == eb - pb or ea - pa > 20000 or eb - pb > 20000:
+                continue
+            j0 = bisect.bisect_right(keys, pa) - 1
+            j1 = bisect.bisect_left(keys, ea)
+            if j0 < 0 or j1 <= j0:
+                continue
+            a0 = keys[j0]
+            lines = [i for a, i in starts[j0:j1]]
+            a1 = self.order[lines[-1]][0] - BASE + self.size[lines[-1]]
+            b0, b1 = pb - (pa - a0), eb + (a1 - ea)
+            if b0 < 0 or b1 > len(self.tgt) or b1 <= b0:
+                continue
+            bodies = [self.parsed[i][1] for i in lines]
+            if sum(1 for b in bodies if b and not b.startswith(".")) * 2 < len(bodies):
+                continue                                 # mostly data: keep the byte mapping
+            key = "%x-%x-%x-%x" % (a0, a1, b0, b1)
+            if key not in memo:
+                memo[key] = [decode_region(self.rom[a0:a1]), decode_region(self.tgt[b0:b1])]
+            ds, dt = memo[key]
+            at = {a0 + o: (l, t) for o, l, t in ds}
+            sk_s = []
+            for i in lines:
+                a, n = self.order[i][0] - BASE, self.size[i]
+                parts, x = [], a
+                while x < a + n and x in at and at[x][1] is not None:
+                    parts.append(skeleton(at[x][1]))
+                    x += at[x][0]
+                sk_s.append(";".join(parts) if x == a + n else "?%x" % a)
+            sk_t = [skeleton(t) if t is not None else "?t%x" % (b0 + o) for o, l, t in dt]
+            sm = difflib.SequenceMatcher(None, sk_s, sk_t, autojunk=False)
+            pairs = []
+            for bi, bj, bn in sm.get_matching_blocks():
+                for k in range(bn):
+                    i = lines[bi + k]
+                    o, l, t = dt[bj + k]
+                    if l == self.size[i]:
+                        pairs.append((i, b0 + o))
+            old = sum(1 for i in lines if self._maps_whole(i))
+            if len(pairs) <= old:
+                continue
+            for i in lines:
+                a, n = self.order[i][0] - BASE, self.size[i]
+                for x in range(a, a + n):
+                    self.dm[x] = None
+            for i, t in pairs:
+                a, n = self.order[i][0] - BASE, self.size[i]
+                for x in range(a, a + n):
+                    self.dm[x] = t - a
+            self.realigned["gaps"] += 1
+            self.realigned["lines matched"] += len(pairs)
+        json.dump(memo, open(cache, "w"))
+
+    def _maps_whole(self, i):
+        a, n = self.order[i][0] - BASE, self.size[i]
+        ds = set(self.dm[a:a + n])
+        if len(ds) != 1 or None in ds:
+            return False
+        d = ds.pop()
+        return self.rom[a:a + n] == self.tgt[a + d:a + d + n]
 
     def _refcount(self):
         """how many lines name each symbol (C sources and link scripts included)"""
@@ -1155,6 +1282,7 @@ def main():
     if args.cdiv:
         return c_divergence(args)
     P = Port(args)
+    print("code gaps re-aligned by instruction:", dict(P.realigned))
     rom, dm, size, cls = P.rom, P.dm, P.size, P.cls
     st = collections.Counter()
     sb = collections.Counter()

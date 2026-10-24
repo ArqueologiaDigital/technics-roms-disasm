@@ -5601,7 +5601,11 @@ VoiceSlot_Dispatch_CaseTable:
 RhythmParam_Dispatch_CaseTable:
 	.short	RhythmParam_CheckExit - RhythmParam_CheckExit
 ; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xd5, 0x01, 0x06, 0x00, 0x0c, 0x00, 0x06, 0x00
+	.byte	0xd5, 0x01
+	.short	RhythmParam_DispatchTableData - RhythmParam_CheckExit
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0x0c, 0x00
+	.short	RhythmParam_DispatchTableData - RhythmParam_CheckExit
 	.short	RhythmParam_CheckExit - RhythmParam_CheckExit
 	.short	RhythmParam_CheckExit - RhythmParam_CheckExit
 ; -----------------------------------------------------------------------------

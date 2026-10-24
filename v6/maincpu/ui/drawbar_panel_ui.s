@@ -1418,38 +1418,54 @@ PmemOutLGridCheck_OnRamData_Join3:
 	push	xwa
 	call	Strcpy
 	inc	8, xsp
-	jr	PmemOutLGridCheck_OnRamData_Skip6_Skip
+	jr	PmemOutLGridCheck_OnRamData_Join4_Skip
 PmemOutLGridCheck_OnRamData_Skip6:
 PmemOutLGridCheck_OnRamData_Join4:
 	ld	a, (xwa)
 	extz	wa
 	pushw	wa
 	pushw	PmemOutLGridCheck_OnRamData_Str_Fmt3d_2@hi16
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0x56, 0x01
+	pushw	0x156
 	lda	xwa, (xsp+50)
 	push	xwa
 	call	Sprintf_Locked
 	lda	xsp, (xsp+10)
-PmemOutLGridCheck_OnRamData_Skip6_Skip:
+PmemOutLGridCheck_OnRamData_Join4_Skip:
+	lda	xde, (xsp+36)
+	ld	xwa, 0x5b0009
+	ld	xbc, 0x1e0008c
+	call	SendEvent
+	ldw	(xsp+38), 1
+	lda	xwa, (0xf9c5:16)
+	sub	xwa, 0xf9a0
+	ld	(xsp+32), xwa
+	ld	xwa, 0:i3
+	ld	a, (0x24774:24)
+	ld	xbc, 26
+	call	Math_Multiply32
+	ld	xwa, 0:i3
+	ld	a, (0x24772:24)
+	ld	xbc, xwa
+	sll	xbc, 4
+	sub	xbc, xwa
+	sll	xbc, 6
+	lda	xwa, (0x1ed400:24)
+	add	xwa, xbc
+	add	xwa, xhl
+	add	xwa, (xsp+32)
+	ld	a, (xwa)
+	extz	wa
+	pushw	wa
+	pushw	232
+	pushw	0x15c
+	lda	xwa, (xsp+50)
+	push	xwa
+	call	Sprintf_Locked
+	lda	xsp, (xsp+10)
 	lda	xde, (xsp+36)
 	ld	xwa, 0x5b0009
 	ld	xbc, EVT_GRID_DRAW
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x1d, 0x5e, 0x91, 0xfa, 0xbf, 0x26, 0x02, 0x01
-	.byte	0x00, 0xf1, 0xc5, 0xf9, 0x30, 0xe8, 0xca, 0xa0
-	.byte	0xf9, 0x00, 0x00, 0xbf, 0x20, 0x60, 0xe8, 0xa8
-	.byte	0xc2, 0x74, 0x47, 0x02, 0x21, 0x41, 0x1a, 0x00
-	.byte	0x00, 0x00, 0x1d, 0x81, 0x01, 0xff, 0xe8, 0xa8
-	.byte	0xc2, 0x72, 0x47, 0x02, 0x21, 0xe8, 0x89, 0xe9
-	.byte	0xee, 0x04, 0xe8, 0xa1, 0xe9, 0xee, 0x06, 0xf2
-	.byte	0x00, 0xd4, 0x1e, 0x30, 0xe9, 0x80, 0xeb, 0x80
-	.byte	0xaf, 0x20, 0x80, 0x80, 0x21, 0xd8, 0x12, 0x28
-	.byte	0x0b, 0xe8, 0x00, 0x0b, 0x5c, 0x01, 0xbf, 0x32
-	.byte	0x30, 0x38, 0x1d, 0x97, 0x01, 0xff, 0xbf, 0x0a
-	.byte	0x37, 0xbf, 0x24, 0x32, 0x40, 0x09, 0x00, 0x5b
-	.byte	0x00, 0x41, 0x8c, 0x00, 0xe0, 0x01, 0x1d, 0x5e
-	.byte	0x91, 0xfa
+	call	SendEvent
 	ldw	(xsp+38), 2
 	lda	xwa, (0xf9c7:16)
 	sub	xwa, 63904
@@ -4962,28 +4978,50 @@ BitmapAccger16_Height:
 
 BitmapDrawsw:
 	cp xbc, EVT_GET_BITMAP_HEIGHT
-	jr	z, 31
+	jr	z, BitmapDrawsw_DataPtr_Skip4
 	cp xbc, EVT_GET_BITMAP_WIDTH
-	jr	z, 17
+	jr	z, BitmapDrawsw_DataPtr_Skip5
 	cp xbc, EVT_GET_BITMAP_DATA
 	jr z, BitmapDrawsw_DataPtr
 	ld xhl, 0:i3
 	ret
 
 BitmapDrawsw_DataPtr:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xf2, 0x86, 0x65, 0xe8, 0x33, 0x0e, 0x43, 0x78
-	.byte	0x00, 0x00, 0x00, 0x0e, 0x43, 0x5f, 0x00, 0x00
-	.byte	0x00, 0x0e, 0xe9, 0xcf, 0xa3, 0x00, 0xe0, 0x01
-	.byte	0x66, 0x1f, 0xe9, 0xcf, 0xa2, 0x00, 0xe0, 0x01
-	.byte	0x66, 0x11, 0xe9, 0xcf, 0xa1, 0x00, 0xe0, 0x01
-	.byte	0x66, 0x03, 0xeb, 0xa8, 0x0e, 0xf2, 0x0e, 0x92
-	.byte	0xe8, 0x33, 0x0e, 0x43, 0x78, 0x00, 0x00, 0x00
-	.byte	0x0e, 0x43, 0x5f, 0x00, 0x00, 0x00, 0x0e, 0xe9
-	.byte	0xcf, 0xa3, 0x00, 0xe0, 0x01, 0x66, 0x1f, 0xe9
-	.byte	0xcf, 0xa2, 0x00, 0xe0, 0x01, 0x66, 0x11, 0xe9
-	.byte	0xcf, 0xa1, 0x00, 0xe0, 0x01, 0x66, 0x03, 0xeb
-	.byte	0xa8, 0x0e, 0xf2, 0x96, 0xbe, 0xe8, 0x33
+	lda	xhl, (Bitmap_Accita16:24)
+	ret
+BitmapDrawsw_DataPtr_Skip5:
+	ld	xhl, 120
+	ret
+BitmapDrawsw_DataPtr_Skip4:
+	ld	xhl, 95
+	ret
+	cp	xbc, 0x1e000a3
+	jr	z, BitmapDrawsw_DataPtr_Skip
+	cp	xbc, 0x1e000a2
+	jr	z, BitmapDrawsw_DataPtr_Skip2
+	cp	xbc, 0x1e000a1
+	jr	z, BitmapDrawsw_DataPtr_Skip3
+	ld	xhl, 0:i3
+	ret
+BitmapDrawsw_DataPtr_Skip3:
+	lda	xhl, (Bitmap_Accger16:24)
+	ret
+BitmapDrawsw_DataPtr_Skip2:
+	ld	xhl, 120
+	ret
+BitmapDrawsw_DataPtr_Skip:
+	ld	xhl, 95
+	ret
+	cp	xbc, 0x1e000a3
+	jr	z, BitmapDrawsw_Height
+	cp	xbc, 0x1e000a2
+	jr	z, BitmapDrawsw_Width
+	cp	xbc, 0x1e000a1
+	jr	z, BitmapDrawsw_DataPtr_Skip_Skip
+	ld	xhl, 0:i3
+	ret
+BitmapDrawsw_DataPtr_Skip_Skip:
+	lda	xhl, (Bitmap_SomeArrows:24)
 	ret
 
 BitmapDrawsw_Width:
@@ -11269,8 +11307,9 @@ Softver_SendEvent:
 
 Softver_GetText:
 	pushw	Softver_GetText_Str_Soft@hi16
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0b, 0x5e, 0xdd, 0x3a, 0x1d, 0x72, 0x06, 0xff
+	pushw	Softver_GetText_Str_Soft@lo16
+	push	xde
+	call	Strcpy
 Softver_ReturnZero:
 
 Softver_Epilogue:
@@ -11299,10 +11338,9 @@ AcWelcomScreenProc:
 	ld xiz, xbc
 	ld (xsp + 20), xwa
 	cp xiz, EVT_DRAW
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x76, 0x45, 0x05
+	jrl	z, AcWelcomScreen_Paint
 	cp xiz, EVT_ALL_INITIAL
-	jrl z, AcWelcomScreen_SubCpuError
+	jrl	z, AcWelcomScreen_SubCpuLoaded
 	cp xiz, EVT_SELE_DRAW
 	jrl z, AcWelcomScreen_Select
 	cp xiz, EVT_REPAINT
@@ -11328,9 +11366,9 @@ AcWelcomScreen_Init_StoreData:
 	ld xwa, (xsp + 20)
 	ld xbc, xiz
 	ld xde, (xsp + 16)
+	call InheritedProc
+	call	SubCPU_Payload_GetErrorFlag
 
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x1d, 0x07, 0x3f, 0xfa, 0x1d, 0x50, 0x08, 0xef
 AcWelcomScreen_Init_CheckSubCpu:
 	cp hl, 0:i3
 	jr ge, AcWelcomScreen_Init_SwitchMode
@@ -11346,7 +11384,7 @@ AcWelcomScreen_Init_SwitchMode:
 	ld xwa, 0xffffffff
 	ld xbc, EVT_SET_KEEP
 	ld xde, 1:i3
-	jrl	AcWelcomScreen_SubCpuError_Skip
+	jrl AcWelcomScreen_DispatchEvent
 
 AcWelcomScreen_Close:
 	ld xwa, EVT_SELE_DRAW
@@ -11432,7 +11470,7 @@ AcWelcomScreen_RenderBytecode:
 	ld	xwa, 0xffffffff
 	ld	xbc, EVT_SET_KEEP
 	ld	xde, 0:i3
-	jrl	AcWelcomScreen_SubCpuError_Skip
+	jrl	AcWelcomScreen_DispatchEvent
 ; AcWelcomScreen_Select_OpMoveBlit: Welcome-script op 2: blits at the position saved in slot arg (0/1, table 0x03ea0c)
 ;   with ClipBlit_Direct, blits at the step's x,y with ClipBlit_Replace, and saves the step in the slot.
 AcWelcomScreen_Select_OpMoveBlit:
@@ -11758,23 +11796,19 @@ AcWelcomScreen_Select_NextStep:
 
 AcWelcomScreen_Select_StartTimer:
 	call SetApTimer
-	jr AcWelcomScreen_ReturnHandled
 
 AcWelcomScreen_SubCpuError:
+	jr	AcWelcomScreen_ReturnHandled
+AcWelcomScreen_SubCpuLoaded:
 	ld	xwa, (xsp+20)
 	ld	xbc, xiz
 	ld	xde, (xsp+16)
 	call	InheritedProc
-	ld	xwa, NAKA_VIEW_AllInitial
+	ld	xwa, NAKA_VIEW_MPVersion
 	ld	xbc, EVT_SHOW
 	ld	xde, 3:i3
-AcWelcomScreen_SubCpuError_Skip:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x1d, 0x5e
-AcWelcomScreen_SubCpuLoaded:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x91, 0xfa
 AcWelcomScreen_DispatchEvent:
+	call SendEvent
 	jr AcWelcomScreen_ReturnHandled
 
 AcWelcomScreen_Paint:

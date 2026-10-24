@@ -3970,7 +3970,6 @@ WriteVerify_WriteLoopNext:
 	inc 1, iz
 	cp iz, 0xa
 	jr lt, WriteVerify_WriteLoop
-WriteVerify_WriteLoopNext_Loop:
 	call FileIO_GetDiskFreeSpace
 	cp xhl, (xsp + 8)
 	jr ge, WriteVerify_SetupReadback
