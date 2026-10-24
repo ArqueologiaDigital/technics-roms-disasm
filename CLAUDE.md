@@ -27,8 +27,10 @@ live in their own folders, each migrated with its full history rewritten to its 
   `kn7000/notes/migration-commit-map.txt` maps its old commit hashes). CPU: Panasonic MN10300
   (MN103002A), so it has its own assembler, `kn7000/tools/kn7asm.py` (Python, no LLVM), and its own
   `kn7000/README.md`. `make kn7000`, and `make gate-kn7000` = `make -C kn7000 verify verify-sp7001
-  verify-picture`. Its reference images (`kn7000/baserom/`) are git-ignored; its Makefile regenerates
-  them from the update disks and the private romset beside this tree.
+  verify-picture verify-cnv`. Its reference images (`kn7000/baserom/`) are git-ignored; its Makefile
+  regenerates them from the update disks, the private romset and the softlist floppy set beside this
+  tree. `verify-cnv` covers the seven Style Convert Disk converters (`kn7000/src/cnv/`, fully
+  disassembled from the `scd7000` / `scd6000` softlist disks; names in `kn7000/cnv_manual.sym`).
 
 `make everything` and `make gate-all` cover all three. The TLCS-900 rules below (LLVM, ASL, label
 naming) are about the KN5000 and WSA1R trees; the `LLVM:` trailer is still required on every commit

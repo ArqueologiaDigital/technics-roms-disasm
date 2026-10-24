@@ -61,3 +61,12 @@ LOAD, SAVE, SD SONG MEDLEY, SD-AUDIO PLAY and SD-SOUND PLAY: no STYLE CONVERT.
       set-0   46 callers {'0x4848xxxx': 1, '0x4851xxxx': 2, '0x4855xxxx': 42, '0x4858xxxx': 1}; inside STYLE CONVERT: 0
     kn7000_program_sp7001.rom: drive byte 0x5007126A, set 0x48532335, set-0 0x48532344, '*.CNV' pattern 0x485CDA28
       (the same counts)
+
+## The disassembly (2026-10-24)
+
+| script         | question it answers                                                                     | command                                                            |
+|----------------|-----------------------------------------------------------------------------------------|--------------------------------------------------------------------|
+| `cnv_table.py` | per converter: size, instructions, routines, strings; are there `.incbin` / code bytes? | `python3 -I cnv_table.py ../../src/cnv/*.s` (after `make cnv-src`) |
+
+Its output, 2026-10-24, is the table in `../style-converter.md`, "The disassembly". The two
+`.incbin` / `.byte in code` columns must read 0: that is what makes the sources complete.

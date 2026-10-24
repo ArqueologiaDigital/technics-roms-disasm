@@ -443,13 +443,41 @@ def name_all(cnvs, a):
             sys.exit(f"gen_cnv_s: {a.names}: unknown converter {stem}")
         if (stem, v) in groups:
             by_group.setdefault(groups[(stem, v)], (nm, note))
+    # a data name given for one converter reaches the others through the same
+    # operand of the same instruction of the same-code routine
+    sites = {}
+    for c in cnvs:
+        st = sites[c.stem] = {}
+        for f, (pcs, _end) in c.chunks().items():
+            g = groups[(c.stem, f)]
+            for i, pc in enumerate(pcs):
+                _b, mn, ops = c.code[pc]
+                if mn in XFER:
+                    continue
+                for k, h in enumerate(re.findall(r"0x([0-9a-f]{5,8})", ops)):
+                    st[(g, i, k)] = int(h, 16)
+    data_names = collections.defaultdict(dict)       # stem -> {addr: (name, note)}
+    for (stem, v), (nm, note) in manual.items():
+        if (stem, v) not in groups:
+            data_names[stem][v] = (nm, note)
+    for (stem, v), (nm, note) in list(manual.items()):
+        if (stem, v) in groups:
+            continue
+        keys = [k for k, a in sites[stem].items() if a == v]
+        for c in cnvs:
+            if c.stem == stem:
+                continue
+            found = {sites[c.stem][k] for k in keys if k in sites[c.stem]}
+            if len(found) == 1:
+                w = found.pop()
+                if w not in data_names[c.stem] and nm not in {x for x, _ in data_names[c.stem].values()}:
+                    data_names[c.stem][w] = (nm, note)
     for c in cnvs:
         names, notes = {}, {}
-        for (stem, v), (nm, note) in manual.items():   # data and in-routine names
-            if stem == c.stem and (stem, v) not in groups:
-                names[v] = nm
-                if note:
-                    notes[v] = note
+        for v, (nm, note) in data_names[c.stem].items():   # data and in-routine names
+            names[v] = nm
+            if note:
+                notes[v] = note
         for f in c.funcs:
             g = groups[(c.stem, f)]
             if g in by_group:
@@ -479,7 +507,11 @@ def name_all(cnvs, a):
         fixed = {c.dat_run: "__data_start", c.dat_run + c.dat_n: "__data_end",
                  c.bss: "__bss_start", c.bss + c.bss_n: "__bss_end", c.dat_src: "__data_load"}
         taken = set(names.values())
+        c.alias = {}
         for v in sorted(c.labels):
+            if v in fixed and v in names:          # a named variable that starts an area
+                c.alias[v] = fixed[v]
+                continue
             if v in fixed:
                 names[v] = fixed[v]
                 continue
@@ -588,7 +620,10 @@ def emit(c, out_path, nconv):
             prev_str = bool(L) and L[-1].lstrip().startswith((".asciz", ".ascii"))
             cpu = cpu_of(o)
             if cpu in labels:
-                L.append(f"{names[cpu]}:")
+                if cpu in c.alias:
+                    L.append(f"{c.alias[cpu]}:")
+                L.append(f"{names[cpu]}:" + (f"{' ' * max(1, 32 - len(names[cpu]))}# {notes[cpu]}"
+                                             if cpu in notes else ""))
                 ws = c.widths.get(cpu, set())
                 cur_w = min(ws) if len(ws) == 1 else 1
             nxt = next((x for x in offs if x > o), r1)
@@ -653,7 +688,9 @@ def emit(c, out_path, nconv):
     for v in sorted(x for x in labels if c.bss <= x <= END):
         if v > cur:
             R.append(f"    .space  {v - cur}")
-        R.append(f"{names[v]}:")
+        if v in c.alias:
+            R.append(f"{c.alias[v]}:")
+        R.append(f"{names[v]}:" + (f"{' ' * max(1, 32 - len(names[v]))}# {notes[v]}" if v in notes else ""))
         cur = v
     if END > cur:
         R.append(f"    .space  {END - cur}")

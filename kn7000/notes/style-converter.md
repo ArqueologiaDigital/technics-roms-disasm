@@ -2,31 +2,59 @@
 
 Static analysis of PROGRAM 941 plus the KN6000 program, the two Style Convert Disks
 (`scd7000.exe`, `scd6000.exe` in the CA software mirror) and one RAM read on a booted KN7000.
-Scripts in `style-converter-probes/`.
+Scripts in `style-converter-probes/`. **All seven converters are disassembled (2026-10-24):
+`src/cnv/*.s`**, see [The disassembly](#the-disassembly-srccnv-2026-10-24).
 
 ## The disk
 
-| file                     | size    | KN6000 disk = KN7000 disk? | converts styles of                                   |
-|--------------------------|---------|----------------------------|------------------------------------------------------|
-| `GEM_WS2.CNV`            | 99,857  | identical                  | GEM (General Music) WS2                              |
-| `GEM_WX2.CNV`            | 108,049 | identical                  | GEM WX2                                              |
-| `KORG.CNV`               | 108,912 | identical                  | Korg                                                 |
-| `Roland.cnv`             | 91,872  | identical                  | Roland                                               |
-| `SOLTON.CNV`             | 96,706  | identical                  | Solton                                               |
-| `TECHNICS.CNV`           | 101,992 | relinked (data moved 0x2C) | Technics KN1000 / KN750 (the firmware's own prompt)  |
-| `V1%0_.ver`, `V2%0_.ver` | 369     | same content, other name   | none: a version tag read from the name only          |
+The same two disks are in MAME's floppy software lists: `scd7000` (`hash/kn7000_flop.xml`) and
+`scd6000` (`hash/kn6000_flop.xml`). The files below are the same in the installers and in the
+softlist images, the 2026-10-18 rebuild included.
 
-The brands are only in the file names: the converters contain no text at all.
+| file                     | size    | KN6000 disk = KN7000 disk?          | converts styles of                                                   |
+|--------------------------|---------|-------------------------------------|----------------------------------------------------------------------|
+| `GEM_WS2.CNV`            | 99,857  | identical                           | GEM (General Music) WS2                                              |
+| `GEM_WX2.CNV`            | 108,049 | identical                           | GEM WX2 ("GENERALMUSIC")                                             |
+| `KORG.CNV`               | 108,912 | identical                           | Korg i1 - i5 series                                                  |
+| `ROLAND.CNV`             | 91,872  | identical                           | Roland                                                               |
+| `SOLTON.CNV`             | 96,706  | identical                           | Solton                                                               |
+| `TECHNICS.CNV`           | 101,992 | another build: 4 of 128 routines    | Technics KN 800/770 and KN 1000/750 (its own two prompts)            |
+| `V1%0_.ver`, `V2%0_.ver` | 369     | same content, other name            | none: a version tag read from the name only                          |
+
+`ROLAND.CNV` is `Roland.cnv` in the installer. The two `TECHNICS.CNV` are the same length but
+not one program relinked: CnvMain and three other routines differ. The other 124 routines have
+the same code. Among the differences are the constants 0x7800 (KN6000) / 0x7400 (KN7000) and the
+limit compared, 0x23FFFFC / 0x8FFFFF.
+
+~~The brands are only in the file names: the converters contain no text at all.~~ **Wrong**
+(corrected 2026-10-24). The converters do hold text: 120 to 299 strings and text fields each
+(`style-converter-probes/cnv_table.py`). Among them are their own disk prompts ("Insert Style
+Disk of Korg i1 - i5 series") and file patterns ("*.STY,***"). There are also menu and selection
+texts and sixteen error messages, from "Nullpointer assignment!" to "No Drum Track in this
+song!". `strings` finds them; the claim came from a search that did not.
 
 ## What a .CNV is
 
 A raw MN10300 program, no header, linked to run at `0x502B8000`. Offset 0 is `bra main` (0x33
-in KORG). Offsets 2-0x32 are C start-up: zero the BSS, copy initial data, both at fixed
-`0x502Cxxxx`/`0x502Dxxxx` addresses. `main` is a state machine (state byte at `0x502D127C` in
-KORG): each call does one step and returns. **Nothing in a converter calls outside itself**:
-every call and jump in all six lands inside the file and none goes through a register
-(`cnv_calls.py`). It can only talk to the firmware through memory, which is why one binary runs
-on both firmwares.
+in KORG). Offsets 2-0x32 are C start-up (`CnvStartup`): zero the BSS, copy initial data, both at
+fixed `0x502Cxxxx`/`0x502Dxxxx` addresses. `main` (`CnvMain`) is a state machine (state byte
+`CnvState`, `0x502D127C` in KORG): each call does one step and returns. **Nothing in a converter
+calls outside itself**: every call and jump in all six lands inside the file and none goes
+through a register (`cnv_calls.py`; the disassembly's recursive descent confirms it for all
+seven). It can only talk to the firmware through memory, which is why one binary runs on both
+firmwares.
+
+The file is laid out by that start-up code. Each part is a range of the file:
+
+| part      | what it is                                                                                      |
+|-----------|-------------------------------------------------------------------------------------------------|
+| code      | from offset 0, then zero padding to a word boundary                                             |
+| `.rodata` | strings and constant tables                                                                     |
+| `.data`   | the initialised-data image, which `CnvStartup` copies to the file range right after it          |
+| zeros     | the `.data` run area, `.bss` (`CnvStartup` zeroes it again) and a short tail, up to the file end |
+
+So a converter needs no relocation and no loader beyond `fmmread`: the firmware's load is a
+plain copy of the file to `0x502B8000`.
 
 ## How the firmware runs one (KN7000 941; the KN6000 has the same code)
 
@@ -120,9 +148,84 @@ A converter has to be on the floppy. That holds for program 941 and, by the code
   `open` in the current folder reads the floppy. Calling the setter itself to read data from the
   SD card is conceivable but untried.
 
+## The mailbox seen from the converter side (2026-10-24, from the disassembly)
+
+All seven converters build their requests with the same three routines:
+
+- `CnvRequestWithText` (d0 request, a0 text) writes the request to mailbox byte 0 and the
+  NUL-terminated text from byte 1.
+- `CnvRequestWithSubText` (d0 request, d1 sub-code, a0 text) writes the request to byte 0, the
+  sub-code to byte 1 and the text from byte 2.
+- `CnvMailboxStatus` reads byte 0 back, sign-extended. `CnvMain` stores it on every call; -1
+  (0xFF) means the last request was served. Any other value, or an error already set, ends the
+  step: the state sets `CnvErrorCode` to 10 ("User Error!") or 8 ("File Format not known!") and
+  calls `CnvShowError`.
+
+KORG's states use these combinations:
+
+| request, sub-code | text                                               | what KORG uses it for                          |
+|-------------------|----------------------------------------------------|------------------------------------------------|
+| 5                 | `Insert Style Disk of Korg i1 - i5 series`         | first call: the prompt                         |
+| 2, 0x00           | `*.STY,***`                                        | list files by pattern                          |
+| 2, 0x80           | `.STY,.PCG,***`                                    | list files by pattern                          |
+| 4, 0              | none                                               | file I/O                                       |
+| 1                 | `Select one of four User Styles\| 1 ` + four names | the four user styles found, between `\|` marks |
+
+On the first call `CnvMain` reads a 32-bit little-endian word from mailbox+2 and rounds it up to
+0x100. It adds that to `0x502B8000` and keeps the result as `CnvWorkArea`. This is the same "first
+free byte after the file" the firmware records at `0x5004E440`, so those 4 bytes are the file's
+size.
+
+Errors: `CnvErrorCode` (0 = none) indexes `CnvErrorText`, sixteen 40-byte texts that `CnvInit`
+copies into `.bss`. Codes 1 to 16 read, in order: Nullpointer assignment, Not enough memory, Wrong
+or corrupted pointer, OPEN error, READ error, WRITE error, CLOSE error, File Format not known,
+Wrong Style Format, User Error, Sequence corrupted, Parameter is missing, Unknown Memory Block Id,
+Memory Full, This User Style is empty, No Drum Track in this song. A higher code is shown as
+"Fcode = n" (TECHNICS: from 16 on), and 0x63 shows nothing. `CnvShowError` sets state 10 and
+sends the text as request 5.
+
+## The disassembly (`src/cnv/`, 2026-10-24)
+
+`make verify-cnv` (part of `make gate-kn7000`) rebuilds all seven files byte for byte from
+`src/cnv/*.s`. It takes the two disk images from the softlist set and checks them against the
+softlists' SHA-1. The sources are generated by `tools/gen_cnv_s.py` (`make cnv-src`), which also
+reads `cnv_manual.sym`. **Every byte is source**: no `.incbin`, and every code byte is an
+instruction.
+
+- **Code** is found by recursive descent from offset 0. The routines nothing calls are then
+  decoded until no gap is left below `.rodata`.
+- **Instructions** are kept only if `tools/mn10300_asm.py` re-encodes the exact bytes. Each file
+  has up to two calls the linker left in the d32 form; they are written `target:32`.
+- **Data**: `.rodata` and the `.data` image are typed as text, pointers, or the widths the code
+  reads them with. The image is assembled under `.mnbase RUN - FILE`, so its labels are the run
+  addresses.
+
+`python3 -I style-converter-probes/cnv_table.py src/cnv/*.s`, 2026-10-24:
+
+| converter       | bytes  | instructions | routines | no caller | firmware copies | in all seven | strings | .incbin | .byte in code | SHA-1    |
+|-----------------|--------|--------------|----------|-----------|-----------------|--------------|---------|---------|---------------|----------|
+| GEM_WS2         | 99857  | 19640        | 140      | 23        | 6               | 75           | 250     | 0       | 0             | bd4fac1e |
+| GEM_WX2         | 108049 | 21822        | 149      | 25        | 6               | 75           | 133     | 0       | 0             | 2eb3e74d |
+| KORG            | 108912 | 22593        | 144      | 24        | 6               | 75           | 132     | 0       | 0             | 269ee986 |
+| ROLAND          | 91872  | 17247        | 132      | 25        | 6               | 75           | 120     | 0       | 0             | ebd6641a |
+| SOLTON          | 96706  | 18945        | 137      | 23        | 6               | 75           | 121     | 0       | 0             | 2cc961fa |
+| TECHNICS        | 101992 | 16941        | 128      | 35        | 7               | 75           | 299     | 0       | 0             | 650ab69d |
+| TECHNICS_KN6000 | 101992 | 16920        | 128      | 35        | 7               | 75           | 299     | 0       | 0             | 7ad7102d |
+
+"no caller" counts routines that are linked in but never called. "firmware copies" are routines
+byte-identical, to their first return, to a named PROGRAM 941 routine, which gives them its name
+(`LibDiv32`, `LibStrlen`, `strcmp`, ...). "in all seven" counts routines with the same code in
+every converter: data addresses masked, calls compared by the callee's own group. These are the
+converters' shared library: the mailbox and error routines, the C string and memory functions,
+the soft-float routines, and the byte-order helpers.
+
+Names come from `cnv_manual.sym`, one line per routine group or variable, and reach every
+converter that holds the same code. Format-specific routines are still `func_<ADDR>`.
+
 ## Not established
 
-- The layout of each request's arguments in the mailbox, beyond the bytes listed.
+- The layout of each request's arguments in the mailbox, beyond the bytes listed (and the text
+  requests above).
 - Where the converted style is left for the STORE screen.
 - What the Technics path does after `ChangeMode(1)`.
 - That the TECHNICS converter reads KN1000/KN750 disks rests on the firmware's prompt text.

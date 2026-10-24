@@ -78,10 +78,10 @@ loc_502B8043:
     movbu   d0, (CnvInitFlag)
 loc_502B8050:
     mov     CnvMailbox, d0
-    mov     d0, (bss_502CEFA8)
-    call    func_502C2443, 0, 0
-    mov     d0, (bss_502CEFAC)
-    movbu   (bss_502CEFA4), d0
+    mov     d0, (CnvMailboxPtr)
+    call    CnvMailboxStatus, 0, 0
+    mov     d0, (CnvMailboxReply)
+    movbu   (CnvState), d0
     cmp     0, d0
     bne     loc_502B8075
     bra     loc_502B80BE
@@ -130,139 +130,139 @@ loc_502B80BB:
 loc_502B80BE:
     clr     d0
     mov     d0, (bss_502CEFB0)
-    call    func_502C2454, 0, 0x14
+    call    CnvInit, 0, 0x14
     mov     6, d0
     movbu   d0, (bss_502CF9F0)
-    mov     (bss_502CEFA8), d0
+    mov     (CnvMailboxPtr), d0
     add     2, d0
     mov     d0, (bss_502CEFB4)
     mov     d0, a0
-    call    func_502BB5BB, 0, 0x10
+    call    GetU32LE, 0, 0x10
     mov     d0, (bss_502CEFB8)
     add     0xff, d0
     mov     d0, (bss_502CEFB8)
     and     0x0fffff00, d0
     mov     d0, (bss_502CEFB8)
     mov     CnvEntry, d0
-    mov     d0, (bss_502D0324)
+    mov     d0, (CnvWorkArea)
     mov     (bss_502CEFB8), d1
     add     d1, d0
-    mov     d0, (bss_502D0324)
+    mov     d0, (CnvWorkArea)
     mov     5, d0
     mov     Str_InsertStyleDiskOfGEMWS2Ws400, a0
-    call    func_502C23A9, 0, 0x10
+    call    CnvRequestWithText, 0, 0x10
     mov     1, d0
-    movbu   d0, (bss_502CEFA4)
+    movbu   d0, (CnvState)
     jmp     loc_502B859C
 loc_502B8138:
-    mov     (bss_502CEFAC), d0
+    mov     (CnvMailboxReply), d0
     cmp     -1, d0
     beq     loc_502B8144
     bra     loc_502B8150
 loc_502B8144:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     bne     loc_502B8150
     bra     loc_502B8162
 loc_502B8150:
     mov     0xa, d0
-    mov     d0, (data_502CB9EC)
-    call    func_502C2751, 0, 0x14
+    mov     d0, (CnvErrorCode)
+    call    CnvShowError, 0, 0x14
     jmp     loc_502B859C
 loc_502B8162:
     mov     2, d0
     clr     d1
     mov     Str_ALLSEQ, a0
-    call    func_502C23EE, 0, 0x10
+    call    CnvRequestWithSubText, 0, 0x10
     mov     4, d0
-    movbu   d0, (bss_502CEFA4)
+    movbu   d0, (CnvState)
     jmp     loc_502B859C
 loc_502B817D:
-    mov     (bss_502CEFAC), d0
+    mov     (CnvMailboxReply), d0
     cmp     -1, d0
     beq     loc_502B8189
     bra     loc_502B8195
 loc_502B8189:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     bne     loc_502B8195
     bra     loc_502B81A7
 loc_502B8195:
     mov     0xa, d0
-    mov     d0, (data_502CB9EC)
-    call    func_502C2751, 0, 0x14
+    mov     d0, (CnvErrorCode)
+    call    CnvShowError, 0, 0x14
     jmp     loc_502B859C
 loc_502B81A7:
     mov     4, d0
     clr     d1
     mov     0, a0
-    call    func_502C23EE, 0, 0x10
+    call    CnvRequestWithSubText, 0, 0x10
     mov     2, d0
-    movbu   d0, (bss_502CEFA4)
+    movbu   d0, (CnvState)
     jmp     loc_502B859C
 loc_502B81BE:
-    mov     (bss_502CEFAC), d0
+    mov     (CnvMailboxReply), d0
     cmp     -1, d0
     beq     loc_502B81CA
     bra     loc_502B81D6
 loc_502B81CA:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     bne     loc_502B81D6
     bra     loc_502B81E8
 loc_502B81D6:
     mov     8, d0
-    mov     d0, (data_502CB9EC)
-    call    func_502C2751, 0, 0x14
+    mov     d0, (CnvErrorCode)
+    call    CnvShowError, 0, 0x14
     jmp     loc_502B859C
 loc_502B81E8:
     mov     2, d0
     mov     -0x80, d1
     mov     Str_ALLSEQ_2, a0
-    call    func_502C23EE, 0, 0x10
+    call    CnvRequestWithSubText, 0, 0x10
     mov     6, d0
-    movbu   d0, (bss_502CEFA4)
+    movbu   d0, (CnvState)
     jmp     loc_502B859C
 loc_502B8204:
-    mov     (bss_502CEFAC), d0
+    mov     (CnvMailboxReply), d0
     cmp     -1, d0
     beq     loc_502B8210
     bra     loc_502B821C
 loc_502B8210:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     bne     loc_502B821C
     bra     loc_502B822E
 loc_502B821C:
     mov     0xa, d0
-    mov     d0, (data_502CB9EC)
-    call    func_502C2751, 0, 0x14
+    mov     d0, (CnvErrorCode)
+    call    CnvShowError, 0, 0x14
     jmp     loc_502B859C
 loc_502B822E:
     mov     4, d0
     clr     d1
     mov     0, a0
-    call    func_502C23EE, 0, 0x10
+    call    CnvRequestWithSubText, 0, 0x10
     mov     9, d0
-    movbu   d0, (bss_502CEFA4)
+    movbu   d0, (CnvState)
     jmp     loc_502B859C
 loc_502B8245:
-    mov     (bss_502CEFAC), d0
+    mov     (CnvMailboxReply), d0
     cmp     -1, d0
     beq     loc_502B8251
     bra     loc_502B825D
 loc_502B8251:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     bne     loc_502B825D
     bra     loc_502B826F
 loc_502B825D:
     mov     8, d0
-    mov     d0, (data_502CB9EC)
-    call    func_502C2751, 0, 0x14
+    mov     d0, (CnvErrorCode)
+    call    CnvShowError, 0, 0x14
     jmp     loc_502B859C
 loc_502B826F:
-    mov     (bss_502CEFA8), d0
+    mov     (CnvMailboxPtr), d0
     add     2, d0
     mov     d0, (bss_502CEFB4)
     mov     d0, a0
@@ -282,14 +282,14 @@ loc_502B829E:
     mov     d0, (__bss_start)
 loc_502B82A6:
     call    func_502BB11C, 0, 0x14
-    mov     (bss_502CEFA8), d0
+    mov     (CnvMailboxPtr), d0
     add     2, d0
     mov     d0, (bss_502CEFB4)
     mov     d0, a0
-    call    func_502BB5BB, 0, 0x10
+    call    GetU32LE, 0, 0x10
     mov     d0, (bss_502CEFB8)
     mov     (bss_502CEFB4), a0
-    call    func_502BB5BB, 0, 0x10
+    call    GetU32LE, 0, 0x10
     mov     d0, (bss_502CEFBC)
     mov     9, d0
     mov     d0, (data_502CDB00)
@@ -321,12 +321,12 @@ loc_502B8306:
     mov     d0, a0
     mov     0xff, d0
     mov     0x820, d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     mov     (bss_502CEFC0), d0
     add     0x820, d0
     mov     d0, (bss_502CEFC0)
     mov     (bss_502CEFC0), d0
-    mov     (bss_502CEFA8), d1
+    mov     (CnvMailboxPtr), d1
     sub     d0, d1
     mov     d1, (0x14, sp)
     mov     (0x14, sp), d0
@@ -341,14 +341,14 @@ loc_502B8306:
     mov     (bss_502D02EC), a0
     mov     0xff, d0
     mov     (bss_502D02F0), d1
-    call    func_502BB7BD, 0, 4
-    mov     (bss_502CEFA8), d0
+    call    FillBytes, 0, 4
+    mov     (CnvMailboxPtr), d0
     inc     d0
     mov     d0, (bss_502CEFB4)
     mov     d0, a0
     add     0x200, a0
     mov     Str_SelectProgrammableStyle, a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     mov     (bss_502CEFB4), a0
     add     0x200, a0
     call    func_502B8660, [d2], 0x54
@@ -356,77 +356,77 @@ loc_502B8306:
     mov     a0, a1
     add     0x200, a1
     mov     0x1f4, d0
-    call    func_502BB249, 0, 0x10
+    call    MemCopyGuarded, 0, 0x10
     mov     1, d0
     mov     (bss_502CEFB4), a0
     add     0x200, a0
-    call    func_502C23A9, 0, 0x10
+    call    CnvRequestWithText, 0, 0x10
     mov     7, d0
-    movbu   d0, (bss_502CEFA4)
+    movbu   d0, (CnvState)
     jmp     loc_502B859C
 loc_502B8426:
     mov     9, d0
-    mov     d0, (data_502CB9EC)
-    call    func_502C2751, 0, 0x14
+    mov     d0, (CnvErrorCode)
+    call    CnvShowError, 0, 0x14
     jmp     loc_502B859C
 loc_502B8438:
-    mov     (bss_502CEFAC), d0
+    mov     (CnvMailboxReply), d0
     cmp     -1, d0
     beq     loc_502B8444
     bra     loc_502B8450
 loc_502B8444:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     bne     loc_502B8450
     bra     loc_502B8462
 loc_502B8450:
     mov     5, d0
-    mov     d0, (data_502CB9EC)
-    call    func_502C2751, 0, 0x14
+    mov     d0, (CnvErrorCode)
+    call    CnvShowError, 0, 0x14
     jmp     loc_502B859C
 loc_502B8462:
     mov     3, d0
     mov     0, a0
-    call    func_502C23A9, 0, 0x10
+    call    CnvRequestWithText, 0, 0x10
     mov     5, d0
-    movbu   d0, (bss_502CEFA4)
+    movbu   d0, (CnvState)
     jmp     loc_502B859C
 loc_502B8478:
-    mov     (bss_502CEFAC), d0
+    mov     (CnvMailboxReply), d0
     cmp     -1, d0
     beq     loc_502B8484
     bra     loc_502B8490
 loc_502B8484:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     bne     loc_502B8490
     bra     loc_502B84A2
 loc_502B8490:
     mov     0xa, d0
-    mov     d0, (data_502CB9EC)
-    call    func_502C2751, 0, 0x14
+    mov     d0, (CnvErrorCode)
+    call    CnvShowError, 0, 0x14
     jmp     loc_502B859C
 loc_502B84A2:
     mov     5, d0
     mov     Str_ConvertingStyle, a0
-    call    func_502C23A9, 0, 0x10
+    call    CnvRequestWithText, 0, 0x10
     mov     5, d0
-    movbu   d0, (bss_502CEFA4)
+    movbu   d0, (CnvState)
     jmp     loc_502B859C
 loc_502B84BC:
-    mov     (bss_502CEFAC), d0
+    mov     (CnvMailboxReply), d0
     cmp     -1, d0
     beq     loc_502B84C8
     bra     loc_502B84D4
 loc_502B84C8:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     bne     loc_502B84D4
     bra     loc_502B84E6
 loc_502B84D4:
     mov     5, d0
-    mov     d0, (data_502CB9EC)
-    call    func_502C2751, 0, 0x14
+    mov     d0, (CnvErrorCode)
+    call    CnvShowError, 0, 0x14
     jmp     loc_502B859C
 loc_502B84E6:
     clr     d0
@@ -439,21 +439,21 @@ loc_502B84E6:
     call    func_502B88A7, [d2], 0x24
     mov     0xa, d0
     call    func_502BB755, 0, 4
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     beq     loc_502B851C
     jmp     loc_502B859C
 loc_502B851C:
     mov     5, d0
     mov     Str_ConvertingStyle_2, a0
-    call    func_502C23A9, 0, 0x10
+    call    CnvRequestWithText, 0, 0x10
     mov     8, d0
-    movbu   d0, (bss_502CEFA4)
+    movbu   d0, (CnvState)
     bra     loc_502B859C
 loc_502B8535:
     mov     (bss_502CFAA8), d0
     call    func_502B89B8, [d2], 0x20
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     beq     loc_502B854C
     bra     loc_502B8567
@@ -463,26 +463,26 @@ loc_502B854C:
     movbu   d0, (CnvMailbox)
     movbu   d0, (CnvInitFlag)
     clr     d0
-    movbu   d0, (bss_502CEFA4)
+    movbu   d0, (CnvState)
     bra     loc_502B859C
 loc_502B8567:
-    call    func_502C2751, 0, 0x14
+    call    CnvShowError, 0, 0x14
     bra     loc_502B859C
 loc_502B8570:
     mov     -2, d0
     mov     0, a0
-    call    func_502C23A9, 0, 0x10
+    call    CnvRequestWithText, 0, 0x10
     clr     d0
-    movbu   d0, (bss_502CEFA4)
+    movbu   d0, (CnvState)
     clr     d0
     movbu   d0, (CnvInitFlag)
     bra     loc_502B859C
 loc_502B858B:
     clr     d0
-    movbu   d0, (bss_502CEFA4)
+    movbu   d0, (CnvState)
     clr     d0
     mov     0, a0
-    call    func_502C23A9, 0, 0x10
+    call    CnvRequestWithText, 0, 0x10
 loc_502B859C:
     ret     0, 0x18
 
@@ -606,22 +606,22 @@ loc_502B8673:
     mov     (bss_502CF310), a0
     mov     0xff, d0
     mov     0x820, d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     mov     sp, a0
     add     0x24, a0
     clr     d0
     mov     8, d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     mov     sp, a0
     add     0x2c, a0
     clr     d0
     mov     8, d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     mov     sp, a0
     add     0x34, a0
     clr     d0
     mov     5, d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     clr     d0
     mov     d0, (0x18, sp)
     mov     d0, (0x1c, sp)
@@ -659,7 +659,7 @@ loc_502B86F6:
     mov     0x262, a1
     add     d0, a1
     mov     7, d0
-    call    func_502BB249, 0, 0x10
+    call    MemCopyGuarded, 0, 0x10
     bra     loc_502B8769
 loc_502B871D:
     mov     sp, a0
@@ -676,7 +676,7 @@ loc_502B871D:
     mov     0x262, a1
     add     d0, a1
     mov     7, d0
-    call    func_502BB249, 0, 0x10
+    call    MemCopyGuarded, 0, 0x10
     mov     sp, a0
     add     0x24, a0
     mov     sp, a1
@@ -725,7 +725,7 @@ loc_502B8798:
     add     0x3c, a0
     clr     d0
     mov     0x11, d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     movbu   (bss_502D0398), d0
     cmp     0, d0
     bne     loc_502B87B1
@@ -747,7 +747,7 @@ loc_502B87B1:
     mov     0x13cb, a1
     add     d1, a1
     mov     7, d0
-    call    func_502BB249, 0, 0x10
+    call    MemCopyGuarded, 0, 0x10
     bra     loc_502B880A
 loc_502B87DC:
     mov     (0x20, sp), d1
@@ -767,7 +767,7 @@ loc_502B87DC:
     mov     0x262, a1
     add     d0, a1
     mov     7, d0
-    call    func_502BB249, 0, 0x10
+    call    MemCopyGuarded, 0, 0x10
 loc_502B880A:
     mov     sp, a0
     add     0x3c, a0
@@ -799,11 +799,11 @@ loc_502B880A:
     mov     (0x5c, sp), a0
     mov     sp, a1
     add     0x34, a1
-    call    func_502C3A0E, [a2], 4
+    call    strcat, [a2], 4
     mov     (0x5c, sp), a0
     mov     sp, a1
     add     0x3c, a1
-    call    func_502C3A0E, [a2], 4
+    call    strcat, [a2], 4
     mov     (0x18, sp), d0
     mov     1, d1
     sub     d1, d0
@@ -814,7 +814,7 @@ loc_502B880A:
 loc_502B8876:
     mov     (0x5c, sp), a0
     mov     str_502C3DF0, a1
-    call    func_502C3A0E, [a2], 4
+    call    strcat, [a2], 4
 loc_502B8885:
     mov     (0x20, sp), d0
     inc     d0
@@ -830,7 +830,7 @@ loc_502B8894:
 loc_502B8896:
     mov     Str_NoStylesInThisFile, a0
     clr     d0
-    call    func_502C2780, [d2,a2], 0xa0
+    call    CnvShowNumber, [d2,a2], 0xa0
 loc_502B88A4:
     ret     [d2], 0x54
 
@@ -849,7 +849,7 @@ loc_502B88B0:
     add     0x14, a0
     clr     d0
     mov     0xa, d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     mov     (0x2c, sp), d0
     asl2    d0
     mov     (bss_502CF310), a0
@@ -880,7 +880,7 @@ loc_502B88E3:
     mov     0x13cb, a1
     add     d1, a1
     mov     7, d0
-    call    func_502BB249, 0, 0x10
+    call    MemCopyGuarded, 0, 0x10
     bra     loc_502B893E
 loc_502B890F:
     mov     (0x2c, sp), d0
@@ -901,7 +901,7 @@ loc_502B890F:
     mov     0x262, a1
     add     d0, a1
     mov     7, d0
-    call    func_502BB249, 0, 0x10
+    call    MemCopyGuarded, 0, 0x10
 loc_502B893E:
     mov     sp, a0
     add     0x14, a0
@@ -918,7 +918,7 @@ loc_502B895A:
     mov     sp, a1
     add     0x14, a1
     mov     7, d0
-    call    func_502BB249, 0, 0x10
+    call    MemCopyGuarded, 0, 0x10
     mov     0x20, d0
     movbu   d0, (data_502CC7A7)
     mov     0x2a, d0
@@ -935,12 +935,12 @@ loc_502B8994:
     mov     sp, a1
     add     0x14, a1
     mov     7, d0
-    call    func_502BB249, 0, 0x10
+    call    MemCopyGuarded, 0, 0x10
     bra     loc_502B89B5
 loc_502B89A6:
     mov     Str_InvalidSelection, a0
     mov     (0x2c, sp), d0
-    call    func_502C2780, [d2,a2], 0xa0
+    call    CnvShowNumber, [d2,a2], 0xa0
 loc_502B89B5:
     ret     [d2], 0x24
 
@@ -987,13 +987,13 @@ loc_502B8A27:
     mov     bss_502CF3B8, a0
     clr     d0
     mov     0x1e, d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     mov     (0x28, sp), d0
     cmp     0, d0
     bhi     loc_502B8A40
     jmp     loc_502B8B79
 loc_502B8A40:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     beq     loc_502B8A4D
     jmp     loc_502B8B79
@@ -1090,7 +1090,7 @@ loc_502B8AE0:
     bne     loc_502B8AE8
     bra     loc_502B8B44
 loc_502B8AE8:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     beq     loc_502B8AF4
     bra     loc_502B8AFD
@@ -1099,7 +1099,7 @@ loc_502B8AF4:
     mov     (0x18, sp), d1
     call    func_502B8BFC, [d2], 0x48
 loc_502B8AFD:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     beq     loc_502B8B09
     bra     loc_502B8B10
@@ -1120,7 +1120,7 @@ loc_502B8B1C:
     mulu    d1, d0
     mov     d0, a1
     add     __data_start, a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     movbu   (0x14, sp), d0
     extbu   d0
     call    func_502C298D, [d2,d3,a2,a3], 0x7c
@@ -1134,12 +1134,12 @@ loc_502B8B49:
     bls     loc_502B8B51
     bra     loc_502B8B5E
 loc_502B8B51:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     bne     loc_502B8B5E
     jmp     loc_502B8A64
 loc_502B8B5E:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     beq     loc_502B8B6A
     bra     loc_502B8B79
@@ -1401,14 +1401,14 @@ loc_502B8D6A:
     ble     loc_502B8D73
     bra     loc_502B8D80
 loc_502B8D73:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     bne     loc_502B8D80
     jmp     loc_502B8C61
 loc_502B8D80:
     mov     4, d0
     mov     d0, (0x24, sp)
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     beq     loc_502B8D90
     bra     loc_502B8DA6
@@ -1624,7 +1624,7 @@ loc_502B8F83:
     beq     loc_502B8F8B
     bra     loc_502B8F98
 loc_502B8F8B:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     bne     loc_502B8F98
     jmp     loc_502B8DB7
@@ -1642,7 +1642,7 @@ loc_502B8FAA:
     ble     loc_502B8FB3
     bra     loc_502B8FC0
 loc_502B8FB3:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     bne     loc_502B8FC0
     jmp     loc_502B8DAD
@@ -1670,7 +1670,7 @@ loc_502B8FD8:
     mov     d0, (data_502CDB20)
     mov     (data_502CDB20), d0
     mov     d0, (0x10, a0)
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     beq     loc_502B9019
     bra     loc_502B9074
@@ -1707,7 +1707,7 @@ loc_502B9019:
     blt     loc_502B9068
     bra     loc_502B9074
 loc_502B9068:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     bne     loc_502B9074
     bra     loc_502B9019
@@ -1718,7 +1718,7 @@ loc_502B9074:
     bhi     loc_502B9086
     jmp     loc_502B91A3
 loc_502B9086:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     beq     loc_502B9093
     jmp     loc_502B91A3
@@ -1890,12 +1890,12 @@ loc_502B91D8:
     ble     loc_502B91E1
     bra     loc_502B91ED
 loc_502B91E1:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     bne     loc_502B91ED
     bra     loc_502B91A9
 loc_502B91ED:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     beq     loc_502B91F9
     bra     loc_502B91FE
@@ -1946,7 +1946,7 @@ loc_502B924A:
     ble     loc_502B9253
     bra     loc_502B925F
 loc_502B9253:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     bne     loc_502B925F
     bra     loc_502B9204
@@ -2272,7 +2272,7 @@ loc_502B94D4:
     mov     (bss_502CF314), a0
     mov     0xff, d0
     mov     0xfa0, d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     clr     d0
     mov     d0, (0x18, sp)
     mov     d0, (bss_502CFA94)
@@ -2318,7 +2318,7 @@ loc_502B952E:
     extbu   d1
     mov     d1, (data_502CDB20)
     movbu   (0x42, sp), d0
-    call    func_502C2925, 0, 0x10
+    call    IntAbs, 0, 0x10
     mov     d0, (0x34, sp)
     mov     (bss_502CF30C), a0
     mov     d0, (8, a0)
@@ -2548,7 +2548,7 @@ loc_502B96F2:
     beq     loc_502B9759
     bra     loc_502B9765
 loc_502B9759:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     bne     loc_502B9765
     bra     loc_502B96F2
@@ -2638,7 +2638,7 @@ loc_502B97F7:
     nop
     mul     d2, d1
     mov     d1, d0
-    call    func_502C2925, 0, 0x10
+    call    IntAbs, 0, 0x10
     movhu   d0, (0x4e, sp)
     movbu   (0x40, sp), d0
     cmp     0, d0
@@ -2710,7 +2710,7 @@ loc_502B9877:
     mov     (0x74, sp), a0
     add     d1, a0
     movhu   (0x4c, sp), d0
-    call    func_502BB67D, 0, 0x14
+    call    PutU16LE, 0, 0x14
     movhu   (0x56, sp), d0
     mov     0x100, d1
     call    LibDiv32, 0, 0
@@ -2799,7 +2799,7 @@ loc_502B9948:
     sub     d0, d1
     mov     d1, a1
     mov     6, d0
-    call    func_502BB249, 0, 0x10
+    call    MemCopyGuarded, 0, 0x10
     movhu   (0x54, sp), d0
     extbu   d0
     add     0xc, d0
@@ -2903,7 +2903,7 @@ loc_502B9A19:
     nop
     mul     d2, d1
     mov     d1, d0
-    call    func_502C2925, 0, 0x10
+    call    IntAbs, 0, 0x10
     movhu   d0, (0x4e, sp)
     movbu   (0x40, sp), d0
     cmp     0, d0
@@ -2988,7 +2988,7 @@ loc_502B9AD4:
     mul     d0, d1
     mov     (0x74, sp), a0
     add     d1, a0
-    call    func_502BB581, 0, 0x10
+    call    GetU16LE, 0, 0x10
     movhu   d0, (0x58, sp)
     movhu   (0x4c, sp), d1
     movhu   (0x58, sp), d0
@@ -3045,7 +3045,7 @@ loc_502B9B56:
     mov     (0x74, sp), a0
     add     d1, a0
     movhu   (0x4c, sp), d0
-    call    func_502BB67D, 0, 0x14
+    call    PutU16LE, 0, 0x14
     mov     (0x18, sp), d1
     mov     6, d0
     nop
@@ -3134,7 +3134,7 @@ loc_502B9BFD:
     sub     d0, d1
     mov     d1, a1
     mov     6, d0
-    call    func_502BB249, 0, 0x10
+    call    MemCopyGuarded, 0, 0x10
     movhu   (0x54, sp), d0
     add     0xc, d0
     mov     (0x18, sp), d1
@@ -3158,7 +3158,7 @@ loc_502B9C3C:
     mov     (0x74, sp), a0
     add     d1, a0
     movhu   (0x4c, sp), d0
-    call    func_502BB67D, 0, 0x14
+    call    PutU16LE, 0, 0x14
     mov     (0x18, sp), d1
     mov     6, d0
     nop
@@ -3315,7 +3315,7 @@ loc_502B9D63:
     nop
     mul     d0, d1
     mov     d1, d0
-    call    func_502C2925, 0, 0x10
+    call    IntAbs, 0, 0x10
     movhu   d0, (0x4e, sp)
     mov     (bss_502CFA94), d0
     call    func_502BA6CC, [d2], 0x44
@@ -3330,7 +3330,7 @@ loc_502B9D90:
     mov     (0x74, sp), a0
     add     d1, a0
     movhu   (0x4c, sp), d0
-    call    func_502BB67D, 0, 0x14
+    call    PutU16LE, 0, 0x14
     mov     (0x18, sp), d1
     mov     6, d0
     nop
@@ -3395,7 +3395,7 @@ loc_502B9E11:
     beq     loc_502B9E1A
     bra     loc_502B9E27
 loc_502B9E1A:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     bne     loc_502B9E27
     jmp     loc_502B9628
@@ -3463,7 +3463,7 @@ loc_502B9E94:
     mov     d1, a1
     mov     a1, d0
     mov     a2, a1
-    call    func_502BB249, 0, 0x10
+    call    MemCopyGuarded, 0, 0x10
     mov     (0x18, sp), d0
     mov     d0, (0x3c, sp)
     bra     loc_502B9EF3
@@ -3475,7 +3475,7 @@ loc_502B9EBA:
     mul     d1, d0
     mov     (0x74, sp), a0
     add     d0, a0
-    call    func_502BB581, 0, 0x10
+    call    GetU16LE, 0, 0x10
     movhu   d0, (0x58, sp)
     mov     (0x3c, sp), d2
     mov     6, d0
@@ -3493,7 +3493,7 @@ loc_502B9EBA:
     add     d0, d1
     exthu   d1
     mov     d1, d0
-    call    func_502BB67D, 0, 0x14
+    call    PutU16LE, 0, 0x14
     mov     (0x3c, sp), d0
     inc     d0
     mov     d0, (0x3c, sp)
@@ -3525,7 +3525,7 @@ loc_502B9F1E:
     blt     loc_502B9F2F
     bra     loc_502B9F3C
 loc_502B9F2F:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     bne     loc_502B9F3C
     jmp     loc_502B9E94
@@ -3552,7 +3552,7 @@ func_502B9F5C:
     mov     d0, (0x1c, sp)
     movhu   (0x1c, sp), d0
     exthu   d0
-    call    func_502BB67D, 0, 0x14
+    call    PutU16LE, 0, 0x14
     clr     d0
     mov     (0x18, sp), a0
     movbu   d0, (2, a0)
@@ -3928,7 +3928,7 @@ loc_502BA26C:
     call    LibDiv32, 0, 0
     mov     d0, d1
     mov     d1, d0
-    call    func_502BB045, 0, 0
+    call    ClampToLimits, 0, 0
     mov     d0, d1
     extbu   d1
     add     0x80, d1
@@ -3962,7 +3962,7 @@ loc_502BA2B4:
     mul     d1, d0
     mov     0xa, d1
     call    LibDiv32, 0, 0
-    call    func_502BB045, 0, 0
+    call    ClampToLimits, 0, 0
     mov     d0, d1
     extbu   d1
     add     0x80, d1
@@ -3976,7 +3976,7 @@ loc_502BA2DB:
     call    LibDiv32, 0, 0
     mov     d0, d1
     mov     d1, d0
-    call    func_502BB045, 0, 0
+    call    ClampToLimits, 0, 0
     mov     d0, d1
     extbu   d1
     add     0x80, d1
@@ -4001,7 +4001,7 @@ loc_502BA313:
     mul     d1, d0
     mov     0xa, d1
     call    LibDiv32, 0, 0
-    call    func_502BB045, 0, 0
+    call    ClampToLimits, 0, 0
     mov     d0, d1
     extbu   d1
     add     0x80, d1
@@ -4066,7 +4066,7 @@ func_502BA363:
     movbu   d0, (0x36, sp)
     movbu   d0, (0x37, sp)
     mov     (0x18, sp), a0
-    call    func_502BB581, 0, 0x10
+    call    GetU16LE, 0, 0x10
     exthu   d0
     mov     d0, (0x24, sp)
     jmp     loc_502BA607
@@ -4083,7 +4083,7 @@ loc_502BA3BD:
     movbu   (4, a0), d1
     extbu   d1
     mov     d1, (0x28, sp)
-    call    func_502BB581, 0, 0x10
+    call    GetU16LE, 0, 0x10
     exthu   d0
     mov     d0, (bss_502CFA24)
     mov     (bss_502CFA24), d0
@@ -4163,7 +4163,7 @@ loc_502BA497:
     mov     d1, (0x10, sp)
     clr     d0
     mov     0x7f, d1
-    call    func_502BB00E, 0, 0xc
+    call    FoldByOctaves, 0, 0xc
     mov     (0x18, sp), a0
     movbu   d0, (4, a0)
 loc_502BA4AF:
@@ -4181,7 +4181,7 @@ loc_502BA4BE:
 loc_502BA4CB:
     mov     2, d0
     movbu   d0, (0x36, sp)
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     beq     loc_502BA4DC
     bra     loc_502BA4FD
@@ -4221,7 +4221,7 @@ loc_502BA4FD:
     mov     (bss_502CFA24), d1
     add     d1, d0
     exthu   d0
-    call    func_502BB67D, 0, 0x14
+    call    PutU16LE, 0, 0x14
     movbu   (0x36, sp), d1
     movbu   (0x37, sp), d0
     cmp     d0, d1
@@ -4275,7 +4275,7 @@ loc_502BA59D:
     mov     (bss_502CFA24), d1
     add     d1, d0
     exthu   d0
-    call    func_502BB67D, 0, 0x14
+    call    PutU16LE, 0, 0x14
     mov     (0x30, sp), a0
     mov     2, d0
     clr     d1
@@ -4317,7 +4317,7 @@ loc_502BA607:
     bne     loc_502BA617
     bra     loc_502BA624
 loc_502BA617:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     bne     loc_502BA624
     jmp     loc_502BA3BD
@@ -4433,7 +4433,7 @@ loc_502BA6E6:
     add     0x28, a0
     clr     d0
     mov     8, d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     mov     sp, a0
     add     0x28, a0
     mov     (bss_502CF9EC), d2
@@ -4443,7 +4443,7 @@ loc_502BA6E6:
     add     d1, d2
     mov     d2, a1
     mov     7, d0
-    call    func_502BB249, 0, 0x10
+    call    MemCopyGuarded, 0, 0x10
     mov     sp, a0
     add     0x28, a0
     call    func_502BB75B, 0, 0x14
@@ -4460,7 +4460,7 @@ loc_502BA727:
     add     0x34, a0
     clr     d0
     mov     8, d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     mov     sp, a0
     add     0x34, a0
     movhu   (0x24, sp), d1
@@ -4471,7 +4471,7 @@ loc_502BA727:
     mov     d1, a1
     add     Str_GrandP, a1
     mov     7, d0
-    call    func_502BB249, 0, 0x10
+    call    MemCopyGuarded, 0, 0x10
     mov     sp, a0
     add     0x34, a0
     call    func_502B8B7C, 0, 0x18
@@ -4580,7 +4580,7 @@ loc_502BA80C:
     mov     (bss_502CF310), a0
     clr     d0
     mov     0x820, d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     clr     d0
     mov     (bss_502CF310), a0
     mov     d0, (a0)
@@ -4941,7 +4941,7 @@ loc_502BAB3E:
     bra     loc_502BAB96
 loc_502BAB62:
     mov     (0x1c, sp), a0
-    call    func_502BB581, 0, 0x10
+    call    GetU16LE, 0, 0x10
     exthu   d0
     mov     d0, (0x20, sp)
     mov     (0x1c, sp), a0
@@ -4953,7 +4953,7 @@ loc_502BAB62:
 loc_502BAB7A:
     mov     (0x1c, sp), a0
     add     2, a0
-    call    func_502BB638, 0, 0x14
+    call    GetU16BE, 0, 0x14
     exthu   d0
     mov     (0x20, sp), d1
     add     d1, d0
@@ -4994,10 +4994,11 @@ func_502BABB2:
     movbu   d0, (d1, a0)
     ret     0, 0
 
-# ---- func_502BABC1 -----------------------------------------------------
+# ---- PutU32LE2 ---------------------------------------------------------
+# (a0 p, d0 v): PutU32LE compiled again (extb where PutU32LE has extbu)
 # no caller: unreferenced code
 # the same code is in all the other converters
-func_502BABC1:
+PutU32LE2:
     mov     d0, (0xc, sp)
     mov     a0, (8, sp)
     mov     d0, d1
@@ -5041,11 +5042,11 @@ loc_502BAC04:
     bra     loc_502BAC5D
 loc_502BAC0E:
     mov     (0x1c, sp), a0
-    call    func_502BB581, 0, 0x10
+    call    GetU16LE, 0, 0x10
     mov     d0, d2
     mov     (0x1c, sp), a0
     add     6, a0
-    call    func_502BB581, 0, 0x10
+    call    GetU16LE, 0, 0x10
     exthu   d2
     exthu   d0
     cmp     d0, d2
@@ -5056,18 +5057,18 @@ loc_502BAC26:
     add     0x24, a0
     mov     (0x1c, sp), a1
     mov     6, d0
-    call    func_502C39E5, [a2,a3], 8
+    call    memcpy, [a2,a3], 8
     mov     (0x1c, sp), a0
     mov     a0, a1
     add     6, a1
     mov     6, d0
-    call    func_502C39E5, [a2,a3], 8
+    call    memcpy, [a2,a3], 8
     mov     (0x1c, sp), a0
     add     6, a0
     mov     sp, a1
     add     0x24, a1
     mov     6, d0
-    call    func_502C39E5, [a2,a3], 8
+    call    memcpy, [a2,a3], 8
 loc_502BAC52:
     mov     (0x1c, sp), d0
     add     6, d0
@@ -5124,11 +5125,11 @@ loc_502BAC99:
     mov     d0, a0
     mov     (0x2c, sp), d0
     add     d0, a0
-    call    func_502BB5BB, 0, 0x10
+    call    GetU32LE, 0, 0x10
     mov     d0, (0x1c, sp)
     mov     (0x14, sp), a0
     inc4    a0
-    call    func_502BB5BB, 0, 0x10
+    call    GetU32LE, 0, 0x10
     mov     d0, (0x20, sp)
     mov     (0x1c, sp), d0
     mov     (0x20, sp), d1
@@ -5141,11 +5142,11 @@ loc_502BACBC:
     mov     (0x2c, sp), a0
     add     d1, a0
     mov     (0x20, sp), d0
-    call    func_502BB6D5, 0, 4
+    call    PutU32LE, 0, 4
     mov     (0x14, sp), a0
     inc4    a0
     mov     (0x1c, sp), d0
-    call    func_502BB6D5, 0, 4
+    call    PutU32LE, 0, 4
 loc_502BACD4:
     mov     (0x14, sp), d0
     add     4, d0
@@ -5191,13 +5192,13 @@ loc_502BAD0B:
     asl2    d0
     mov     (0x2c, sp), a0
     add     d0, a0
-    call    func_502BB5BB, 0, 0x10
+    call    GetU32LE, 0, 0x10
     mov     d0, (0x1c, sp)
     mov     (0x18, sp), d0
     asl2    d0
     mov     (0x2c, sp), a0
     add     d0, a0
-    call    func_502BB5BB, 0, 0x10
+    call    GetU32LE, 0, 0x10
     mov     d0, (0x20, sp)
     mov     (0x30, sp), d1
     mov     1, d0
@@ -5208,13 +5209,13 @@ loc_502BAD0B:
     mov     (0x2c, sp), a0
     add     d1, a0
     mov     (0x20, sp), d0
-    call    func_502BB6D5, 0, 4
+    call    PutU32LE, 0, 4
     mov     (0x18, sp), d1
     asl2    d1
     mov     (0x2c, sp), a0
     add     d1, a0
     mov     (0x1c, sp), d0
-    call    func_502BB6D5, 0, 4
+    call    PutU32LE, 0, 4
     mov     (0x18, sp), d0
     inc     d0
     mov     d0, (0x18, sp)
@@ -5300,7 +5301,7 @@ loc_502BADD2:
     add     d1, a0
     mov     (0x14, sp), a1
     mov     (0x1c, sp), d0
-    call    func_502BB249, 0, 0x10
+    call    MemCopyGuarded, 0, 0x10
     bra     loc_502BADFE
 loc_502BADE9:
     mov     (0x40, sp), d0
@@ -5312,7 +5313,7 @@ loc_502BADE9:
     sub     d0, a0
     mov     (0x14, sp), a1
     mov     (0x1c, sp), d0
-    call    func_502BB249, 0, 0x10
+    call    MemCopyGuarded, 0, 0x10
 loc_502BADFE:
     clr     d0
     mov     d0, (0x28, sp)
@@ -5451,7 +5452,7 @@ loc_502BAF01:
 # ---- func_502BAF04 -----------------------------------------------------
 # the same code is in all the other converters
 func_502BAF04:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     beq     loc_502BAF10
     bra     loc_502BAF70
@@ -5485,7 +5486,7 @@ loc_502BAF2E:
     bra     loc_502BAF4C
 loc_502BAF44:
     mov     0xb, d0
-    mov     d0, (data_502CB9EC)
+    mov     d0, (CnvErrorCode)
 loc_502BAF4C:
     mov     (0x14, sp), d0
     inc     d0
@@ -5586,9 +5587,10 @@ func_502BAFE3:
     movbu   d1, (5, a0)
     ret     0, 0
 
-# ---- func_502BB00E -----------------------------------------------------
+# ---- FoldByOctaves -----------------------------------------------------
+# (d0 lo, d1 hi, stack v) -> v moved by 12 until lo <= v <= hi
 # the same code is in all the other converters
-func_502BB00E:
+FoldByOctaves:
     mov     d1, (0x18, sp)
     mov     d0, (0x14, sp)
     mov     (0x14, sp), d0
@@ -5624,9 +5626,10 @@ loc_502BB040:
     mov     (8, sp), d0
     ret     0, 0xc
 
-# ---- func_502BB045 -----------------------------------------------------
+# ---- ClampToLimits -----------------------------------------------------
+# (d0 v) -> v clamped to bss_502D1D24 .. bss_502D1D28
 # the same code is in all the other converters
-func_502BB045:
+ClampToLimits:
     mov     d0, (8, sp)
     mov     (bss_502CFA4C), d0
     mov     (8, sp), d1
@@ -5650,9 +5653,10 @@ loc_502BB073:
     mov     (8, sp), d0
     ret     0, 0
 
-# ---- func_502BB078 -----------------------------------------------------
+# ---- BitTest -----------------------------------------------------------
+# (d0 word, d1 n) -> d0 = 1 if bit n is set, else 0
 # the same code is in all the other converters
-func_502BB078:
+BitTest:
     mov     d0, (0x14, sp)
     mov     d1, (0x18, sp)
     clr     d0
@@ -5692,10 +5696,11 @@ loc_502BB0AF:
     mov     (8, sp), d0
     ret     0, 0xc
 
-# ---- func_502BB0B4 -----------------------------------------------------
+# ---- BitClear ----------------------------------------------------------
+# (a0 *word, d0 n): as compiled, *word &= (1 << n) ? 0 : 1, which clears the whole word (! for ~)
 # no caller: unreferenced code
 # the same code is in all the other converters
-func_502BB0B4:
+BitClear:
     mov     a0, (0x10, sp)
     movhu   d0, (0x14, sp)
     clr     d0
@@ -5736,10 +5741,11 @@ loc_502BB0E5:
     mov     d1, (a0)
     ret     0, 8
 
-# ---- func_502BB0F1 -----------------------------------------------------
+# ---- BitSet ------------------------------------------------------------
+# (a0 *word, d0 n): *word |= 1 << n
 # no caller: unreferenced code
 # the same code is in all the other converters
-func_502BB0F1:
+BitSet:
     mov     a0, (0x10, sp)
     mov     d0, (0x14, sp)
     clr     d0
@@ -5776,11 +5782,11 @@ func_502BB11C:
     mov     data_502CBF88, a0
     mov     -1, d0
     mov     0x258, d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     mov     data_502CC1E0, a0
     clr     d0
     mov     0x258, d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     ret     0, 0x14
 
 # ---- func_502BB148 -----------------------------------------------------
@@ -5805,17 +5811,17 @@ loc_502BB160:
     inc     d0
     call    func_502BB2FB, [d2], 0x24
     mov     d0, (0x14, sp)
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     beq     loc_502BB176
     bra     loc_502BB188
 loc_502BB176:
     mov     (0x14, sp), d0
-    call    func_502BB3DB, [d2], 0x10
+    call    MemBlockFind, [d2], 0x10
     mov     a0, (0x18, sp)
     mov     (0x24, sp), a1
     mov     (0x28, sp), d0
-    call    func_502BB249, 0, 0x10
+    call    MemCopyGuarded, 0, 0x10
 loc_502BB188:
     mov     (0x14, sp), d0
     ret     0, 0x1c
@@ -5854,13 +5860,13 @@ loc_502BB1B7:
     inc     d0
     call    func_502BB2FB, [d2], 0x24
     mov     d0, (0x14, sp)
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     beq     loc_502BB1CD
     bra     loc_502BB200
 loc_502BB1CD:
     mov     (0x14, sp), d0
-    call    func_502BB3DB, [d2], 0x10
+    call    MemBlockFind, [d2], 0x10
     mov     a0, (0x1c, sp)
     mov     (0x28, sp), d0
     cmp     0, d0
@@ -5870,7 +5876,7 @@ loc_502BB1DE:
     mov     (0x1c, sp), a0
     mov     (0x28, sp), a1
     mov     (0x30, sp), d0
-    call    func_502BB249, 0, 0x10
+    call    MemCopyGuarded, 0, 0x10
 loc_502BB1E9:
     mov     (0x2c, sp), d0
     cmp     0, d0
@@ -5882,7 +5888,7 @@ loc_502BB1F1:
     add     d0, a0
     mov     (0x2c, sp), a1
     mov     (0x34, sp), d0
-    call    func_502BB249, 0, 0x10
+    call    MemCopyGuarded, 0, 0x10
 loc_502BB200:
     mov     (0x14, sp), d0
     ret     0, 0x20
@@ -5903,17 +5909,17 @@ loc_502BB213:
     inc     d0
     call    func_502BB2FB, [d2], 0x24
     mov     d0, (0x14, sp)
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     beq     loc_502BB229
     bra     loc_502BB244
 loc_502BB229:
     mov     (0x14, sp), d0
-    call    func_502BB3DB, [d2], 0x10
+    call    MemBlockFind, [d2], 0x10
     mov     a0, (0x18, sp)
     mov     0x20, d0
     mov     (0x24, sp), d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     clr     d0
     mov     (0x18, sp), a0
     mov     (0x24, sp), d1
@@ -5922,9 +5928,10 @@ loc_502BB244:
     mov     (0x14, sp), d0
     ret     0, 0x1c
 
-# ---- func_502BB249 -----------------------------------------------------
+# ---- MemCopyGuarded ----------------------------------------------------
+# (a0 dst, a1 src, d0 n): copies only while CnvErrorCode is 0 and neither pointer is 0
 # the same code is in all the other converters
-func_502BB249:
+MemCopyGuarded:
     mov     d0, (0x20, sp)
     mov     a0, (0x18, sp)
     mov     a1, (0x1c, sp)
@@ -5941,7 +5948,7 @@ loc_502BB265:
     mov     0xc8, d0
     mov     d0, (0xc, sp)
 loc_502BB26A:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     beq     loc_502BB277
     jmp     loc_502BB2F8
@@ -6034,7 +6041,7 @@ func_502BB2FB:
     mov     d0, (0x2c, sp)
     mov     -1, d0
     mov     d0, (0x14, sp)
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     beq     loc_502BB30E
     jmp     loc_502BB3D6
@@ -6097,7 +6104,7 @@ loc_502BB360:
     mov     (0x18, sp), a0
     add     8, a0
     clr     d0
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     mov     (0x1c, sp), a0
     mov     (4, a0), d2
     mov     (0x18, sp), d0
@@ -6107,20 +6114,21 @@ loc_502BB360:
     bra     loc_502BB3D6
 loc_502BB3C4:
     mov     0xd, d0
-    mov     d0, (data_502CB9EC)
+    mov     d0, (CnvErrorCode)
     bra     loc_502BB3D6
 loc_502BB3CE:
     mov     2, d0
-    mov     d0, (data_502CB9EC)
+    mov     d0, (CnvErrorCode)
 loc_502BB3D6:
     mov     (0x14, sp), d0
     ret     [d2], 0x24
 
-# ---- func_502BB3DB -----------------------------------------------------
+# ---- MemBlockFind ------------------------------------------------------
+# (d0 id): the block list at bss_502D25C4 ({id, size, data}, id -1 = end); not found -> CnvErrorCode 13
 # the same code is in all the other converters
-func_502BB3DB:
+MemBlockFind:
     mov     d0, (0x18, sp)
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     beq     loc_502BB3EA
     jmp     loc_502BB481
@@ -6163,7 +6171,7 @@ loc_502BB428:
     mov     1, d0
     movbu   d0, (8, sp)
     mov     0xd, d0
-    mov     d0, (data_502CB9EC)
+    mov     d0, (CnvErrorCode)
     clr     d0
     mov     d0, (0, sp)
     bra     loc_502BB46A
@@ -6185,7 +6193,7 @@ loc_502BB45A:
     mov     1, d0
     movbu   d0, (8, sp)
     mov     0xd, d0
-    mov     d0, (data_502CB9EC)
+    mov     d0, (CnvErrorCode)
     clr     d0
     mov     d0, (0, sp)
 loc_502BB46A:
@@ -6194,7 +6202,7 @@ loc_502BB46A:
     beq     loc_502BB473
     bra     loc_502BB484
 loc_502BB473:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     bne     loc_502BB47F
     bra     loc_502BB404
@@ -6211,7 +6219,7 @@ loc_502BB484:
 # the same code is in GEM_WX2.CNV, KORG.CNV, ROLAND.CNV, SOLTON.CNV
 func_502BB489:
     mov     d0, (0x40, sp)
-    call    func_502BB3DB, [d2], 0x10
+    call    MemBlockFind, [d2], 0x10
     mov     a0, (0x14, sp)
     mov     a0, d0
     cmp     0, d0
@@ -6254,7 +6262,7 @@ loc_502BB4EA:
     mov     (0x18, sp), a0
     mov     (0x20, sp), a1
     mov     (0x2c, sp), d0
-    call    func_502BB249, 0, 0x10
+    call    MemCopyGuarded, 0, 0x10
     bra     loc_502BB4FA
 loc_502BB4F7:
     clr     d0
@@ -6269,7 +6277,7 @@ loc_502BB4FA:
     add     d0, a0
     mov     -1, d0
     mov     (0x24, sp), d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
 loc_502BB516:
     mov     -1, d0
     ret     [d2], 0x38
@@ -6333,9 +6341,10 @@ loc_502BB575:
 loc_502BB57E:
     ret     0, 0x14
 
-# ---- func_502BB581 -----------------------------------------------------
+# ---- GetU16LE ----------------------------------------------------------
+# (a0 p) -> d0 = p[0] | p[1] << 8
 # the same code is in all the other converters
-func_502BB581:
+GetU16LE:
     mov     a0, (0x18, sp)
     clr     d0
     mov     d0, (0, sp)
@@ -6370,9 +6379,10 @@ loc_502BB5B5:
     movhu   (0, sp), d0
     ret     0, 0x10
 
-# ---- func_502BB5BB -----------------------------------------------------
+# ---- GetU32LE ----------------------------------------------------------
+# (a0 p) -> d0, little-endian
 # the same code is in all the other converters
-func_502BB5BB:
+GetU32LE:
     mov     a0, (0x18, sp)
     clr     d0
     mov     d0, (0, sp)
@@ -6407,9 +6417,10 @@ loc_502BB5EF:
     mov     (0, sp), d0
     ret     0, 0x10
 
-# ---- func_502BB5F4 -----------------------------------------------------
+# ---- GetU32BE ----------------------------------------------------------
+# (a0 p) -> d0, big-endian
 # the same code is in all the other converters
-func_502BB5F4:
+GetU32BE:
     mov     a0, (0x1c, sp)
     clr     d0
     mov     d0, (0, sp)
@@ -6449,9 +6460,10 @@ loc_502BB633:
     mov     (0, sp), d0
     ret     0, 0x14
 
-# ---- func_502BB638 -----------------------------------------------------
+# ---- GetU16BE ----------------------------------------------------------
+# (a0 p) -> d0 = p[0] << 8 | p[1]
 # the same code is in all the other converters
-func_502BB638:
+GetU16BE:
     mov     a0, (0x1c, sp)
     clr     d0
     mov     d0, (0, sp)
@@ -6491,9 +6503,10 @@ loc_502BB677:
     movhu   (0, sp), d0
     ret     0, 0x14
 
-# ---- func_502BB67D -----------------------------------------------------
+# ---- PutU16LE ----------------------------------------------------------
+# (a0 p, d0 v)
 # the same code is in all the other converters
-func_502BB67D:
+PutU16LE:
     movhu   d0, (0x20, sp)
     mov     a0, (0x1c, sp)
     mov     a0, d0
@@ -6512,10 +6525,11 @@ func_502BB67D:
     movbu   d1, (1, a0)
     ret     0, 0x14
 
-# ---- func_502BB6A9 -----------------------------------------------------
+# ---- PutU16BE ----------------------------------------------------------
+# (a0 p, d0 v)
 # no caller: unreferenced code
 # the same code is in all the other converters
-func_502BB6A9:
+PutU16BE:
     movhu   d0, (0x20, sp)
     mov     a0, (0x1c, sp)
     mov     a0, d0
@@ -6534,9 +6548,10 @@ func_502BB6A9:
     movbu   d1, (a0)
     ret     0, 0x14
 
-# ---- func_502BB6D5 -----------------------------------------------------
+# ---- PutU32LE ----------------------------------------------------------
+# (a0 p, d0 v)
 # the same code is in all the other converters
-func_502BB6D5:
+PutU32LE:
     mov     d0, (0x10, sp)
     mov     a0, (0xc, sp)
     mov     a0, d0
@@ -6567,10 +6582,11 @@ func_502BB6D5:
     movbu   d1, (3, a0)
     ret     0, 4
 
-# ---- func_502BB715 -----------------------------------------------------
+# ---- PutU32BE ----------------------------------------------------------
+# (a0 p, d0 v)
 # no caller: unreferenced code
 # the same code is in all the other converters
-func_502BB715:
+PutU32BE:
     mov     d0, (0x10, sp)
     mov     a0, (0xc, sp)
     mov     a0, d0
@@ -6623,7 +6639,7 @@ loc_502BB76B:
     movbu   (d0, a0), d1
     extb    d1
     mov     d1, d0
-    call    func_502C36C1:32, [d2], 4
+    call    toupper:32, [d2], 4
     mov     (0x1c, sp), a0
     mov     (0x10, sp), d1
     movbu   d0, (d1, a0)
@@ -6639,10 +6655,11 @@ loc_502BB785:
 loc_502BB78E:
     ret     0, 0x14
 
-# ---- func_502BB791 -----------------------------------------------------
+# ---- IntPow ------------------------------------------------------------
+# (d0 base byte, d1 n) -> d0 = base ** n
 # no caller: unreferenced code
 # the same code is in all the other converters
-func_502BB791:
+IntPow:
     mov     d1, (0x14, sp)
     movbu   d0, (0x10, sp)
     clr     d0
@@ -6670,9 +6687,10 @@ loc_502BB7B8:
     mov     (4, sp), d0
     ret     0, 8
 
-# ---- func_502BB7BD -----------------------------------------------------
+# ---- FillBytes ---------------------------------------------------------
+# (a0 p, d0 byte, d1 n): memset written as a C loop
 # the same code is in all the other converters
-func_502BB7BD:
+FillBytes:
     mov     d1, (0x14, sp)
     movbu   d0, (0x10, sp)
     mov     a0, (0xc, sp)
@@ -6757,7 +6775,7 @@ loc_502BB83C:
     jmp     loc_502BBC5A
 loc_502BB842:
     mov     (0x28, sp), a0
-    call    func_502BB5BB, 0, 0x10
+    call    GetU32LE, 0, 0x10
     cmp     0, d0
     beq     loc_502BB84F
     bra     loc_502BB861
@@ -7077,7 +7095,7 @@ loc_502BBA8B:
     add     d1, a1
     mov     3, d0
     mov     d2, a0
-    call    func_502BB249, 0, 0x10
+    call    MemCopyGuarded, 0, 0x10
     mov     (bss_502CF9EC), d1
     add     0xfde8, d1
     mov     Str_SFF, a1
@@ -7123,7 +7141,7 @@ loc_502BBB0C:
 loc_502BBB13:
     mov     (0x28, sp), a0
     add     0x18, a0
-    call    func_502BB5F4, 0, 0x14
+    call    GetU32BE, 0, 0x14
     cmp     0x5060708, d0
     beq     loc_502BBB26
     bra     loc_502BBB40
@@ -7144,7 +7162,7 @@ loc_502BBB39:
     jmp     loc_502BBC5A
 loc_502BBB40:
     mov     (0x28, sp), a0
-    call    func_502BB5BB, 0, 0x10
+    call    GetU32LE, 0, 0x10
     cmp     0, d0
     beq     loc_502BBB4D
     bra     loc_502BBB78
@@ -7210,7 +7228,7 @@ loc_502BBBB3:
     jmp     loc_502BBC5A
 loc_502BBBBA:
     mov     (0x28, sp), a0
-    call    func_502BB5BB, 0, 0x10
+    call    GetU32LE, 0, 0x10
     cmp     0, d0
     beq     loc_502BBBC7
     bra     loc_502BBBDA
@@ -7292,7 +7310,7 @@ loc_502BBC4C:
     bra     loc_502BBC5A
 loc_502BBC52:
     mov     3, d0
-    mov     d0, (data_502CB9EC)
+    mov     d0, (CnvErrorCode)
 loc_502BBC5A:
     mov     (0x14, sp), d0
     ret     [d2], 0x20
@@ -7359,7 +7377,7 @@ func_502BBCAF:
     mov     d0, (0x10, sp)
     clr     d0
     movbu   d0, (4, sp)
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     beq     loc_502BBCC3
     bra     loc_502BBD0B
@@ -7458,7 +7476,7 @@ loc_502BBD3D:
     asl2    d1
     mov     d0, a0
     mov     (d1, a0), d0
-    call    func_502BB3DB, [d2], 0x10
+    call    MemBlockFind, [d2], 0x10
     mov     a0, (0x10, sp)
     mov     (0x38, sp), d0
     mov     (0x34, sp), d0
@@ -7472,7 +7490,7 @@ loc_502BBD3D:
     mov     d0, a0
     mov     (d1, a0), d2
     mov     d2, (0x14, sp)
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     beq     loc_502BBD8E
     jmp     loc_502BBE3A
@@ -7573,7 +7591,7 @@ loc_502BBE24:
     beq     loc_502BBE2D
     bra     loc_502BBE3A
 loc_502BBE2D:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     bne     loc_502BBE3A
     jmp     loc_502BBD8E
@@ -7894,7 +7912,7 @@ loc_502BC04A:
     mov     d0, (0x10, sp)
     clr     d0
     mov     0x7f, d1
-    call    func_502BB00E, 0, 0xc
+    call    FoldByOctaves, 0, 0xc
     mov     (0x20, sp), a0
     movbu   d0, (4, a0)
 loc_502BC05C:
@@ -7922,7 +7940,7 @@ loc_502BC076:
 func_502BC079:
     mov     d0, (0x1c, sp)
     mov     a0, (0x18, sp)
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     beq     loc_502BC089
     bra     loc_502BC0D4
@@ -7930,7 +7948,7 @@ loc_502BC089:
     mov     (0x18, sp), a0
     movhu   (bss_502CFA24), d0
     exthu   d0
-    call    func_502BB67D, 0, 0x14
+    call    PutU16LE, 0, 0x14
     clr     d0
     mov     (0x18, sp), a0
     movbu   d0, (2, a0)
@@ -8614,7 +8632,7 @@ loc_502BC57B:
     add     0x20, a0
     mov     0x20, d0
     mov     0x20, d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     movbu   (0x50, sp), d0
     mov     2, d1
     call    LibDiv32, 0, 0
@@ -8640,12 +8658,12 @@ loc_502BC57B:
     mov     d0, d2
     inc     d2
     mov     d2, d0
-    call    func_502BB249, 0, 0x10
+    call    MemCopyGuarded, 0, 0x10
     mov     (0x4c, sp), a0
     mov     sp, a1
     add     0x20, a1
     movbu   (0x50, sp), d0
-    call    func_502BB249, 0, 0x10
+    call    MemCopyGuarded, 0, 0x10
 loc_502BC5CB:
     ret     [d2], 0x44
 
@@ -8751,7 +8769,7 @@ loc_502BC681:
     bcs     loc_502BC689
     bra     loc_502BC695
 loc_502BC689:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     bne     loc_502BC695
     bra     loc_502BC63E
@@ -8760,11 +8778,11 @@ loc_502BC695:
     mov     (bss_502CF310), a0
     mov     0xff, d0
     mov     0x820, d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     mov     data_502CBF00, a0
     clr     d0
     mov     0x80, d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     clr     d0
     mov     d0, (bss_502CFA54)
     clr     d0
@@ -8790,7 +8808,7 @@ loc_502BC6E7:
     bcs     loc_502BC6EF
     bra     loc_502BC6FB
 loc_502BC6EF:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     bne     loc_502BC6FB
     bra     loc_502BC6D9
@@ -8804,7 +8822,7 @@ loc_502BC700:
     bcs     loc_502BC708
     bra     loc_502BC714
 loc_502BC708:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     bne     loc_502BC714
     bra     loc_502BC6D3
@@ -8836,7 +8854,7 @@ loc_502BC73E:
     bcs     loc_502BC751
     jmp     loc_502BC88C
 loc_502BC751:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     beq     loc_502BC75E
     jmp     loc_502BC88C
@@ -8864,13 +8882,13 @@ loc_502BC76B:
     mov     (0x2c, sp), d0
     call    func_502BB2FB, [d2], 0x24
     mov     d0, (0x30, sp)
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     beq     loc_502BC79A
     jmp     loc_502BC84F
 loc_502BC79A:
     mov     (0x30, sp), d0
-    call    func_502BB3DB, [d2], 0x10
+    call    MemBlockFind, [d2], 0x10
     mov     a0, (0x34, sp)
     clr     d0
     mov     (0x24, sp), d1
@@ -8882,7 +8900,7 @@ loc_502BC79A:
     mov     (0x34, sp), a2
     mov     (0x2c, sp), d0
     mov     a2, a0
-    call    func_502BB249, 0, 0x10
+    call    MemCopyGuarded, 0, 0x10
     mov     (0x24, sp), d0
     asl     3, d0
     mov     (0x20, sp), d1
@@ -8948,7 +8966,7 @@ loc_502BC79A:
     nop
     nop
     mulu    d1, d0
-    call    func_502BB249, 0, 0x10
+    call    MemCopyGuarded, 0, 0x10
     mov     (0x30, sp), d0
     call    func_502BB489, [d2], 0x38
     call    func_502BAF04, 0, 0x20
@@ -8964,7 +8982,7 @@ loc_502BC854:
     bls     loc_502BC860
     bra     loc_502BC86D
 loc_502BC860:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     bne     loc_502BC86D
     jmp     loc_502BC76B
@@ -8978,7 +8996,7 @@ loc_502BC872:
     bcs     loc_502BC87A
     bra     loc_502BC887
 loc_502BC87A:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     bne     loc_502BC887
     jmp     loc_502BC765
@@ -8991,7 +9009,7 @@ loc_502BC88C:
     beq     loc_502BC896
     jmp     loc_502BCB32
 loc_502BC896:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     beq     loc_502BC8A3
     jmp     loc_502BCB32
@@ -8999,11 +9017,11 @@ loc_502BC8A3:
     mov     (bss_502CF310), a0
     mov     0xff, d0
     mov     0x820, d1
-    call    func_502BB7BD, 0, 4
+    call    FillBytes, 0, 4
     mov     data_502CBF00, a0
     clr     d0
     mov     0x80, d1
-    call    func_502BB7BD, 0, 4
+    call    FillBytes, 0, 4
     clr     d0
     mov     1, d1
     call    func_502BAB06, 0, 0
@@ -9042,7 +9060,7 @@ loc_502BC901:
     bcs     loc_502BC909
     bra     loc_502BC915
 loc_502BC909:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     bne     loc_502BC915
     bra     loc_502BC8D8
@@ -9056,7 +9074,7 @@ loc_502BC91A:
     bcs     loc_502BC922
     bra     loc_502BC92E
 loc_502BC922:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     bne     loc_502BC92E
     bra     loc_502BC8D2
@@ -9103,7 +9121,7 @@ loc_502BC976:
     bcs     loc_502BC97E
     bra     loc_502BC98A
 loc_502BC97E:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     bne     loc_502BC98A
     bra     loc_502BC940
@@ -9125,7 +9143,7 @@ loc_502BC9A2:
     bcs     loc_502BC9AA
     bra     loc_502BC9B7
 loc_502BC9AA:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     bne     loc_502BC9B7
     jmp     loc_502BC933
@@ -9177,7 +9195,7 @@ loc_502BC9C1:
     nop
     nop
     mul     d1, d0
-    call    func_502BB249, 0, 0x10
+    call    MemCopyGuarded, 0, 0x10
     mov     (0x24, sp), d0
     inc     d0
     mov     d0, (0x24, sp)
@@ -9187,7 +9205,7 @@ loc_502BCA20:
     bcs     loc_502BCA28
     bra     loc_502BCA34
 loc_502BCA28:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     bne     loc_502BCA34
     bra     loc_502BC9C1
@@ -9273,7 +9291,7 @@ loc_502BCA67:
     mov     d1, a1
     mov     a1, d0
     mov     a2, a1
-    call    func_502BB249, 0, 0x10
+    call    MemCopyGuarded, 0, 0x10
     mov     (0x3c, sp), d0
     inc     d0
     mov     d0, (0x3c, sp)
@@ -9300,7 +9318,7 @@ loc_502BCAFD:
     beq     loc_502BCB06
     bra     loc_502BCB13
 loc_502BCB06:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     bne     loc_502BCB13
     jmp     loc_502BCA4E
@@ -9314,7 +9332,7 @@ loc_502BCB18:
     bcs     loc_502BCB20
     bra     loc_502BCB2D
 loc_502BCB20:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     bne     loc_502BCB2D
     jmp     loc_502BCA3F
@@ -9378,7 +9396,7 @@ loc_502BCBA1:
     movbu   (4, a0), d1
     extbu   d1
     mov     d1, (0x20, sp)
-    call    func_502BB581, 0, 0x10
+    call    GetU16LE, 0, 0x10
     exthu   d0
     mov     d0, (bss_502CFA24)
     mov     (0x1c, sp), a0
@@ -9451,7 +9469,7 @@ loc_502BCC3E:
     beq     loc_502BCC47
     bra     loc_502BCC54
 loc_502BCC47:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     bne     loc_502BCC54
     jmp     loc_502BCB7C
@@ -9679,7 +9697,7 @@ loc_502BCE20:
     beq     loc_502BCE29
     bra     loc_502BCE36
 loc_502BCE29:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     bne     loc_502BCE36
     jmp     loc_502BCCA6
@@ -9803,7 +9821,7 @@ loc_502BCF38:
     beq     loc_502BCF41
     bra     loc_502BCF4E
 loc_502BCF41:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     bne     loc_502BCF4E
     jmp     loc_502BCE8D
@@ -9868,7 +9886,7 @@ func_502BCF79:
     mov     data_502CBCF8, a0
     clr     d0
     mov     0x208, d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     clr     d0
     movbu   d0, (0x41, sp)
     clr     d0
@@ -9893,7 +9911,7 @@ loc_502BD00F:
     mov     (0x28, sp), a0
     movbu   (4, a0), d0
     movbu   d0, (0x42, sp)
-    call    func_502BB581, 0, 0x10
+    call    GetU16LE, 0, 0x10
     exthu   d0
     mov     d0, (bss_502CFA24)
     mov     (0x28, sp), a0
@@ -9977,7 +9995,7 @@ loc_502BD0C1:
     beq     loc_502BD0D9
     bra     loc_502BD102
 loc_502BD0D9:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     beq     loc_502BD0E5
     bra     loc_502BD102
@@ -9989,7 +10007,7 @@ loc_502BD0E5:
     mul     d1, d0
     mov     (0x28, sp), a0
     sub     d0, a0
-    call    func_502BB581, 0, 0x10
+    call    GetU16LE, 0, 0x10
     exthu   d0
     mov     (bss_502CFA24), d1
     cmp     d1, d0
@@ -10028,7 +10046,7 @@ loc_502BD102:
     nop
     nop
     mulu    d1, d0
-    call    func_502BB249, 0, 0x10
+    call    MemCopyGuarded, 0, 0x10
     mov     1, d0
     movbu   (0x43, sp), d1
     call    func_502BAB06, 0, 0
@@ -10088,7 +10106,7 @@ loc_502BD1D0:
     beq     loc_502BD1D9
     bra     loc_502BD1E6
 loc_502BD1D9:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     bne     loc_502BD1E6
     jmp     loc_502BCFF1
@@ -10096,7 +10114,7 @@ loc_502BD1E6:
     mov     (0x28, sp), a0
     mov     6, d0
     sub     d0, a0
-    call    func_502BB581, 0, 0x10
+    call    GetU16LE, 0, 0x10
     exthu   d0
     add     0x10, d0
     mov     d0, (bss_502CFA5C)
@@ -10147,7 +10165,7 @@ loc_502BD223:
     nop
     nop
     mulu    d1, d0
-    call    func_502BB249, 0, 0x10
+    call    MemCopyGuarded, 0, 0x10
     mov     1, d0
     movbu   (0x43, sp), d1
     call    func_502BAB06, 0, 0
@@ -10173,7 +10191,7 @@ func_502BD28F:
     mov     a0, (0x10, sp)
     clr     d0
     movhu   d0, (0x18, sp)
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     beq     loc_502BD2B8
     jmp     loc_502BD36F
@@ -10191,7 +10209,7 @@ loc_502BD2C1:
     mul     d1, d0
     mov     (0x10, sp), a0
     add     d0, a0
-    call    func_502BB581, 0, 0x10
+    call    GetU16LE, 0, 0x10
     exthu   d0
     movhu   (0x2c, sp), d1
     cmp     d1, d0
@@ -10209,7 +10227,7 @@ loc_502BD2E2:
     mul     d1, d0
     mov     (0x10, sp), a0
     add     d0, a0
-    call    func_502BB581, 0, 0x10
+    call    GetU16LE, 0, 0x10
     exthu   d0
     movhu   (0x2c, sp), d1
     cmp     d1, d0
@@ -10263,7 +10281,7 @@ loc_502BD348:
     mov     d1, a0
     mov     (0x10, sp), d0
     add     d0, a0
-    call    func_502BB581, 0, 0x10
+    call    GetU16LE, 0, 0x10
     exthu   d0
     movhu   (0x30, sp), d1
     cmp     d1, d0
@@ -10285,8 +10303,8 @@ func_502BD375:
     mov     data_502CBF00, a0
     clr     d0
     mov     0x80, d1
-    call    func_502BB7BD, 0, 4
-    mov     (data_502CB9EC), d0
+    call    FillBytes, 0, 4
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     beq     loc_502BD393
     jmp     loc_502BDA65
@@ -10352,7 +10370,7 @@ loc_502BD40D:
     blt     loc_502BD416
     bra     loc_502BD422
 loc_502BD416:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     bne     loc_502BD422
     bra     loc_502BD3A5
@@ -10362,7 +10380,7 @@ loc_502BD422:
     blt     loc_502BD42C
     jmp     loc_502BDA43
 loc_502BD42C:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     beq     loc_502BD439
     jmp     loc_502BDA43
@@ -10959,7 +10977,7 @@ loc_502BD88F:
     beq     loc_502BD898
     bra     loc_502BD8A5
 loc_502BD898:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     bne     loc_502BD8A5
     jmp     loc_502BD44B
@@ -10978,7 +10996,7 @@ loc_502BD8B5:
     beq     loc_502BD8BE
     bra     loc_502BD8CB
 loc_502BD8BE:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     bne     loc_502BD8CB
     jmp     loc_502BD443
@@ -11009,13 +11027,13 @@ loc_502BD8E2:
     inc     d0
     call    func_502BB2FB, [d2], 0x24
     mov     d0, (0x14, sp)
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     beq     loc_502BD916
     jmp     loc_502BDA43
 loc_502BD916:
     mov     (0x14, sp), d0
-    call    func_502BB3DB, [d2], 0x10
+    call    MemBlockFind, [d2], 0x10
     mov     a0, (0x18, sp)
     mov     (0x48, sp), d0
     mov     1, d0
@@ -11063,7 +11081,7 @@ loc_502BD965:
     add     d1, a0
     mov     (0x20, sp), a1
     mov     6, d0
-    call    func_502BB249, 0, 0x10
+    call    MemCopyGuarded, 0, 0x10
     movhu   (0x36, sp), d0
     inc     d0
     movhu   d0, (0x36, sp)
@@ -11079,7 +11097,7 @@ loc_502BD989:
     ble     loc_502BD996
     bra     loc_502BD9A2
 loc_502BD996:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     bne     loc_502BD9A2
     bra     loc_502BD93D
@@ -11109,7 +11127,7 @@ loc_502BD9A2:
     nop
     mul     d0, d1
     mov     d1, d0
-    call    func_502BB249, 0, 0x10
+    call    MemCopyGuarded, 0, 0x10
     mov     1, d0
     movbu   d0, (bss_502CFA73)
     mov     (0x48, sp), d0
@@ -11155,7 +11173,7 @@ loc_502BDA4F:
     bne     loc_502BDA58
     bra     loc_502BDA65
 loc_502BDA58:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     bne     loc_502BDA65
     jmp     loc_502BD393
@@ -11266,7 +11284,7 @@ loc_502BDB29:
     movbu   (0xd, sp), d0
     add     d0, d1
     mov     d1, d0
-    call    func_502C2925, 0, 0x10
+    call    IntAbs, 0, 0x10
     movhu   (0x1c, sp), d1
     sub     d1, d0
     movbu   (0xe, sp), d1
@@ -11285,7 +11303,7 @@ loc_502BDB4B:
     movhu   (0x20, sp), d0
     sub     d0, d1
     mov     d1, d0
-    call    func_502C2925, 0, 0x10
+    call    IntAbs, 0, 0x10
     cmp     0xf, d0
     ble     loc_502BDB69
     bra     loc_502BDBC0
@@ -11300,11 +11318,11 @@ loc_502BDB69:
     movhu   (0x1c, sp), d1
     mov     d2, d0
     sub     d1, d0
-    call    func_502C2925, 0, 0x10
+    call    IntAbs, 0, 0x10
     mov     d0, d2
     movbu   (0xe, sp), d0
     extb    d0
-    call    func_502C2925, 0, 0x10
+    call    IntAbs, 0, 0x10
     cmp     d0, d2
     ble     loc_502BDB90
     bra     loc_502BDBC0
@@ -11329,7 +11347,7 @@ loc_502BDB90:
     movhu   (0x1c, sp), d1
     mov     d2, d0
     sub     d1, d0
-    call    func_502C2925, 0, 0x10
+    call    IntAbs, 0, 0x10
     movbu   d0, (0xe, sp)
 loc_502BDBC0:
     movbu   (0xd, sp), d0
@@ -11351,7 +11369,7 @@ loc_502BDBD1:
     movhu   (0x1c, sp), d0
     sub     d0, d1
     mov     d1, d0
-    call    func_502C2925, 0, 0x10
+    call    IntAbs, 0, 0x10
     movbu   (0xe, sp), d1
     extb    d1
     cmp     d1, d0
@@ -11796,7 +11814,7 @@ loc_502BDF6C:
     mov     (bss_502CF308), a1
     add     d1, a1
     mov     6, d0
-    call    func_502BB249, 0, 0x10
+    call    MemCopyGuarded, 0, 0x10
     mov     (0x28, sp), d1
     asl     3, d1
     add     6, d1
@@ -11880,7 +11898,7 @@ loc_502BE053:
     mov     (bss_502CF310), a0
     clr     d0
     mov     0x820, d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     call    func_502C13FF, 0, 0
     clr     d0
     movbu   d0, (0x54, sp)
@@ -11933,7 +11951,7 @@ loc_502BE0F4:
     clr     d0
     movbu   d0, (0x52, sp)
     mov     (0x40, sp), a0
-    call    func_502BB581, 0, 0x10
+    call    GetU16LE, 0, 0x10
     exthu   d0
     mov     d0, (bss_502CFA24)
     mov     (bss_502CFA68), d0
@@ -11973,7 +11991,7 @@ loc_502BE158:
     bra     loc_502BE11A
 loc_502BE17A:
     mov     (0x40, sp), a0
-    call    func_502BB581, 0, 0x10
+    call    GetU16LE, 0, 0x10
     exthu   d0
     mov     d0, (bss_502CFA68)
     mov     (0x40, sp), a0
@@ -11983,7 +12001,7 @@ loc_502BE17A:
     add     8, d0
     mov     d0, (0x40, sp)
     mov     d0, a0
-    call    func_502BB581, 0, 0x10
+    call    GetU16LE, 0, 0x10
     exthu   d0
     cmp     0xfff0, d0
     blt     loc_502BE1AA
@@ -12146,7 +12164,7 @@ loc_502BE33F:
     bne     loc_502BE347
     bra     loc_502BE3C1
 loc_502BE347:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     beq     loc_502BE353
     bra     loc_502BE371
@@ -12164,7 +12182,7 @@ loc_502BE353:
     mov     d2, a0
     mov     d0, (d1, a0)
 loc_502BE371:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     beq     loc_502BE37D
     bra     loc_502BE3C1
@@ -12190,11 +12208,11 @@ loc_502BE37D:
     asl2    d1
     mov     d0, a0
     mov     (d1, a0), d0
-    call    func_502BB3DB, [d2], 0x10
+    call    MemBlockFind, [d2], 0x10
     mov     a0, (0x48, sp)
     mov     (bss_502CF9E8), a1
     mov     (0x44, sp), d0
-    call    func_502BB249, 0, 0x10
+    call    MemCopyGuarded, 0, 0x10
 loc_502BE3C1:
     mov     (bss_502CFA28), d0
     cmp     -1, d0
@@ -12283,7 +12301,7 @@ loc_502BE482:
     mov     mdr, d0
     mov     0x10, d1
     call    LibDiv32, 0, 0
-    call    func_502C2925, 0, 0x10
+    call    IntAbs, 0, 0x10
     mov     d0, (0x4c, sp)
     movbu   (0x54, sp), d0
     cmp     0, d0
@@ -12480,7 +12498,7 @@ func_502BE643:
     add     0x30, a0
     clr     d0
     mov     0x80, d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     clr     d0
     mov     d0, (0x1c, sp)
     jmp     loc_502BE77A
@@ -12502,7 +12520,7 @@ loc_502BE699:
     extb    d1
     and     0x7f, d1
     movbu   d1, (0x2c, sp)
-    call    func_502BB581, 0, 0x10
+    call    GetU16LE, 0, 0x10
     exthu   d0
     mov     (0xcc, sp), a0
     cmp     a0, d0
@@ -12543,7 +12561,7 @@ loc_502BE6F5:
     movbu   (7, a0), d0
     extb    d0
     mov     4, d1
-    call    func_502BB078, 0, 0xc
+    call    BitTest, 0, 0xc
     mov     (0x20, sp), a0
     movbu   (7, a0), d3
     extb    d3
@@ -12561,7 +12579,7 @@ loc_502BE718:
     movbu   (6, a0), d0
     extb    d0
     mov     4, d1
-    call    func_502BB078, 0, 0xc
+    call    BitTest, 0, 0xc
     mov     (0x20, sp), a0
     movbu   (6, a0), d3
     extb    d3
@@ -12575,7 +12593,7 @@ loc_502BE718:
     mov     d1, (0x28, sp)
 loc_502BE739:
     mov     (0x20, sp), a0
-    call    func_502BB581, 0, 0x10
+    call    GetU16LE, 0, 0x10
     mov     d0, d2
     mov     (0xd4, sp), d0
     mov     5, d1
@@ -12624,7 +12642,7 @@ loc_502BE784:
 func_502BE787:
     movbu   d0, (0x3c, sp)
     mov     a0, (0x38, sp)
-    call    func_502BB581, 0, 0x10
+    call    GetU16LE, 0, 0x10
     exthu   d0
     mov     0xc0, d1
     ext     d0
@@ -12785,7 +12803,7 @@ loc_502BE8D9:
     and     0x7f, d1
     movbu   d1, (0x2a, sp)
     add     2, a0
-    call    func_502BB638, 0, 0x14
+    call    GetU16BE, 0, 0x14
     exthu   d0
     inc     d0
     mov     d0, (0x24, sp)
@@ -12947,7 +12965,7 @@ loc_502BE9CC:
     call    func_502BEA96, 0, 8
     mov     (0x38, sp), a0
     add     6, a0
-    call    func_502BB581, 0, 0x10
+    call    GetU16LE, 0, 0x10
     exthu   d0
     cmp     0, d0
     bne     loc_502BEA45
@@ -13170,7 +13188,7 @@ loc_502BEC07:
     movbu   d1, (0x67, sp)
     clr     d0
     mov     d0, (0x44, sp)
-    call    func_502BB581, 0, 0x10
+    call    GetU16LE, 0, 0x10
     exthu   d0
     mov     d0, (bss_502CFA24)
     movbu   (0x65, sp), d0
@@ -13210,7 +13228,7 @@ loc_502BEC4D:
     sub     d1, d0
     mov     d0, (0x48, sp)
     mov     (0x48, sp), d0
-    call    func_502C2925, 0, 0x10
+    call    IntAbs, 0, 0x10
     mov     d0, d2
     mov     (0x48, sp), d0
     cmp     0, d0
@@ -13222,7 +13240,7 @@ loc_502BEC7C:
 loc_502BEC7F:
     mov     1, d0
 loc_502BEC81:
-    call    func_502C2925, 0, 0x10
+    call    IntAbs, 0, 0x10
     asl     4, d0
     add     d0, d2
     mov     d2, d1
@@ -13264,7 +13282,7 @@ loc_502BECC9:
     mov     d0, (0x48, sp)
 loc_502BECCD:
     mov     (0x48, sp), d0
-    call    func_502C2925, 0, 0x10
+    call    IntAbs, 0, 0x10
     mov     d0, d2
     mov     (0x48, sp), d0
     cmp     0, d0
@@ -13276,7 +13294,7 @@ loc_502BECDD:
 loc_502BECE0:
     mov     1, d0
 loc_502BECE2:
-    call    func_502C2925, 0, 0x10
+    call    IntAbs, 0, 0x10
     mov     d0, d1
     asl     4, d1
     add     d1, d2
@@ -13305,7 +13323,7 @@ loc_502BED13:
     movbu   (4, a0), d0
     extb    d0
     mov     7, d1
-    call    func_502BB078, 0, 0xc
+    call    BitTest, 0, 0xc
     cmp     0, d0
     beq     loc_502BED27
     jmp     loc_502BF655
@@ -13347,7 +13365,7 @@ loc_502BED65:
     asl     3, d0
     mov     (0x50, sp), a0
     add     d0, a0
-    call    func_502BB581, 0, 0x10
+    call    GetU16LE, 0, 0x10
     exthu   d0
     mov     (bss_502CFA24), d1
     add     -0x10, d1
@@ -13417,7 +13435,7 @@ loc_502BEE04:
     mov     d0, a0
     mov     (0x50, sp), d0
     add     d0, a0
-    call    func_502BB581, 0, 0x10
+    call    GetU16LE, 0, 0x10
     exthu   d0
     mov     (bss_502CFA24), d1
     add     0x10, d1
@@ -13487,7 +13505,7 @@ loc_502BEE88:
     movbu   (d0, a0), d0
     extb    d0
     mov     7, d1
-    call    func_502BB078, 0, 0xc
+    call    BitTest, 0, 0xc
     cmp     0, d0
     beq     loc_502BEEA2
     bra     loc_502BEEAD
@@ -13527,7 +13545,7 @@ loc_502BEED2:
     asl     3, d0
     mov     (0x50, sp), a0
     add     d0, a0
-    call    func_502BB581, 0, 0x10
+    call    GetU16LE, 0, 0x10
     exthu   d0
     mov     (bss_502CFA24), d1
     add     0x10, d1
@@ -13588,7 +13606,7 @@ loc_502BEF61:
     asl     3, d0
     mov     (0x50, sp), a0
     add     d0, a0
-    call    func_502BB581, 0, 0x10
+    call    GetU16LE, 0, 0x10
     exthu   d0
     mov     (bss_502CFA24), d1
     add     0x10, d1
@@ -13641,7 +13659,7 @@ loc_502BEFCA:
     movbu   (d0, a0), d0
     extb    d0
     mov     7, d1
-    call    func_502BB078, 0, 0xc
+    call    BitTest, 0, 0xc
     cmp     0, d0
     beq     loc_502BEFE5
     jmp     loc_502BF1BE
@@ -13673,7 +13691,7 @@ loc_502BEFE5:
     mov     0x3fe99999, d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    func_502C3B6D, [d2,d3,a2,a3], 0x18
+    call    LibF64Mul, [d2,d3,a2,a3], 0x18
     mov     d0, (0x28, sp)
     mov     d1, (0x2c, sp)
     mov     (0x20, sp), d0
@@ -13684,7 +13702,7 @@ loc_502BEFE5:
     mov     (0x2c, sp), d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    func_502C3639, [d2,d3], 0x10
+    call    LibF64Cmp, [d2,d3], 0x10
     bgt     loc_502BF04B
     bra     loc_502BF08F
 loc_502BF04B:
@@ -13700,7 +13718,7 @@ loc_502BF04B:
     mov     0x3ff80000, d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    func_502C3B6D, [d2,d3,a2,a3], 0x18
+    call    LibF64Mul, [d2,d3,a2,a3], 0x18
     mov     d0, (0x28, sp)
     mov     d1, (0x2c, sp)
     mov     (0x20, sp), d0
@@ -13711,7 +13729,7 @@ loc_502BF04B:
     mov     (0x2c, sp), d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    func_502C3639, [d2,d3], 0x10
+    call    LibF64Cmp, [d2,d3], 0x10
     bge     loc_502BF08F
     bra     loc_502BF099
 loc_502BF08F:
@@ -13747,7 +13765,7 @@ loc_502BF0C7:
     movbu   (d0, a0), d0
     extb    d0
     mov     7, d1
-    call    func_502BB078, 0, 0xc
+    call    BitTest, 0, 0xc
     cmp     0, d0
     beq     loc_502BF0E2
     jmp     loc_502BF1BE
@@ -13764,7 +13782,7 @@ loc_502BF0E2:
     mov     0x3fe99999, d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    func_502C3B6D, [d2,d3,a2,a3], 0x18
+    call    LibF64Mul, [d2,d3,a2,a3], 0x18
     mov     d0, (0x28, sp)
     mov     d1, (0x2c, sp)
     mov     (0x20, sp), d0
@@ -13775,7 +13793,7 @@ loc_502BF0E2:
     mov     (0x2c, sp), d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    func_502C3639, [d2,d3], 0x10
+    call    LibF64Cmp, [d2,d3], 0x10
     bgt     loc_502BF12A
     bra     loc_502BF16E
 loc_502BF12A:
@@ -13791,7 +13809,7 @@ loc_502BF12A:
     mov     0x3ff80000, d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    func_502C3B6D, [d2,d3,a2,a3], 0x18
+    call    LibF64Mul, [d2,d3,a2,a3], 0x18
     mov     d0, (0x28, sp)
     mov     d1, (0x2c, sp)
     mov     (0x20, sp), d0
@@ -13802,7 +13820,7 @@ loc_502BF12A:
     mov     (0x2c, sp), d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    func_502C3639, [d2,d3], 0x10
+    call    LibF64Cmp, [d2,d3], 0x10
     bge     loc_502BF16E
     bra     loc_502BF177
 loc_502BF16E:
@@ -13824,10 +13842,10 @@ loc_502BF177:
     movbu   (0x6c, sp), d0
     movbu   (0x67, sp), d1
     sub     d1, d0
-    call    func_502C2925, 0, 0x10
+    call    IntAbs, 0, 0x10
     mov     d0, d2
     mov     (0x48, sp), d0
-    call    func_502C2925, 0, 0x10
+    call    IntAbs, 0, 0x10
     cmp     d0, d2
     blt     loc_502BF1A9
     bra     loc_502BF1BE
@@ -13852,7 +13870,7 @@ loc_502BF1C7:
     mov     d0, a0
     mov     (0x50, sp), d0
     add     d0, a0
-    call    func_502BB581, 0, 0x10
+    call    GetU16LE, 0, 0x10
     exthu   d0
     mov     (bss_502CFA24), d1
     add     0x10, d1
@@ -13902,7 +13920,7 @@ loc_502BF224:
     bra     loc_502BF266
 loc_502BF22D:
     mov     (0x48, sp), d0
-    call    func_502C2925, 0, 0x10
+    call    IntAbs, 0, 0x10
     mov     d0, d2
     mov     (0x48, sp), d0
     cmp     0, d0
@@ -13914,7 +13932,7 @@ loc_502BF23D:
 loc_502BF240:
     mov     1, d0
 loc_502BF242:
-    call    func_502C2925, 0, 0x10
+    call    IntAbs, 0, 0x10
     asl     4, d0
     add     d0, d2
     mov     (0x40, sp), a0
@@ -13932,7 +13950,7 @@ loc_502BF258:
     bra     loc_502BF29E
 loc_502BF266:
     mov     (0x48, sp), d0
-    call    func_502C2925, 0, 0x10
+    call    IntAbs, 0, 0x10
     mov     d0, d2
     mov     (0x48, sp), d0
     cmp     0, d0
@@ -13944,7 +13962,7 @@ loc_502BF276:
 loc_502BF279:
     mov     1, d0
 loc_502BF27B:
-    call    func_502C2925, 0, 0x10
+    call    IntAbs, 0, 0x10
     mov     d0, d1
     asl     4, d1
     add     d1, d2
@@ -13974,7 +13992,7 @@ loc_502BF2AD:
     jmp     loc_502BF655
 loc_502BF2B7:
     mov     (0x40, sp), a0
-    call    func_502BB581, 0, 0x10
+    call    GetU16LE, 0, 0x10
     exthu   d0
     mov     d0, (bss_502CFA4C)
     mov     (bss_502CFA4C), d0
@@ -13998,7 +14016,7 @@ loc_502BF2ED:
     asl     3, d0
     mov     (0x50, sp), a0
     add     d0, a0
-    call    func_502BB581, 0, 0x10
+    call    GetU16LE, 0, 0x10
     mov     d0, d2
     mov     (0x4c, sp), d0
     mov     4, d1
@@ -14015,7 +14033,7 @@ loc_502BF316:
     mov     bss_502CF3E8, a0
     clr     d0
     mov     0x200, d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     clr     d0
     mov     d0, (0x58, sp)
 loc_502BF328:
@@ -14036,7 +14054,7 @@ loc_502BF348:
     asl     3, d0
     mov     (0x50, sp), a0
     add     d0, a0
-    call    func_502BB581, 0, 0x10
+    call    GetU16LE, 0, 0x10
     exthu   d0
     mov     d0, (0x5c, sp)
     movhu   (0x7a, sp), d1
@@ -14162,7 +14180,7 @@ loc_502BF42C:
     mov     0x3fe66666, d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    func_502C3B6D, [d2,d3,a2,a3], 0x18
+    call    LibF64Mul, [d2,d3,a2,a3], 0x18
     mov     d0, (0x30, sp)
     mov     d1, (0x34, sp)
     mov     (0x28, sp), d0
@@ -14173,7 +14191,7 @@ loc_502BF42C:
     mov     (0x34, sp), d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    func_502C36D8, [d2,d3,a2,a3], 0x18
+    call    LibF64Sub, [d2,d3,a2,a3], 0x18
     mov     d0, (0x28, sp)
     mov     d1, (0x2c, sp)
     mov     (0x20, sp), d0
@@ -14184,7 +14202,7 @@ loc_502BF42C:
     mov     (0x2c, sp), d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    func_502C3639, [d2,d3], 0x10
+    call    LibF64Cmp, [d2,d3], 0x10
     bge     loc_502BF49F
     bra     loc_502BF4EE
 loc_502BF49F:
@@ -14202,7 +14220,7 @@ loc_502BF49F:
     mov     0x3fe66666, d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    func_502C3B6D, [d2,d3,a2,a3], 0x18
+    call    LibF64Mul, [d2,d3,a2,a3], 0x18
     mov     d0, (0x28, sp)
     mov     d1, (0x2c, sp)
     mov     (0x20, sp), d0
@@ -14213,7 +14231,7 @@ loc_502BF49F:
     mov     (0x2c, sp), d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    func_502C36E4, [d2,d3,a2,a3], 0x18
+    call    LibF64Add, [d2,d3,a2,a3], 0x18
     bne     loc_502BF4EE
     bra     loc_502BF4F2
 loc_502BF4EE:
@@ -14269,7 +14287,7 @@ loc_502BF53A:
     mov     0x40040000, d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    func_502C3B6D, [d2,d3,a2,a3], 0x18
+    call    LibF64Mul, [d2,d3,a2,a3], 0x18
     mov     d0, (0x28, sp)
     mov     d1, (0x2c, sp)
     mov     (0x20, sp), d0
@@ -14280,7 +14298,7 @@ loc_502BF53A:
     mov     (0x2c, sp), d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    func_502C3639, [d2,d3], 0x10
+    call    LibF64Cmp, [d2,d3], 0x10
     bgt     loc_502BF57E
     bra     loc_502BF58B
 loc_502BF57E:
@@ -14443,7 +14461,7 @@ loc_502BF6B4:
     movbu   (4, a0), d0
     extb    d0
     mov     7, d1
-    call    func_502BB078, 0, 0xc
+    call    BitTest, 0, 0xc
     cmp     0, d0
     beq     loc_502BF6C8
     jmp     loc_502BFA90
@@ -14456,7 +14474,7 @@ loc_502BF6C8:
     extbu   d3
     add     d3, d1
     mov     d1, (0x4c, sp)
-    call    func_502BB581, 0, 0x10
+    call    GetU16LE, 0, 0x10
     exthu   d0
     mov     d0, (bss_502CFA4C)
     mov     (bss_502CFA4C), d0
@@ -14471,11 +14489,11 @@ loc_502BF6C8:
     mov     data_502CBCF8, a0
     clr     d0
     mov     0x208, d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     mov     bss_502CF3E8, a0
     clr     d0
     mov     0x200, d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     movbu   (0x64, sp), d0
     mov     (bss_502CFA4C), d2
     mov     d2, (0x10, sp)
@@ -14511,7 +14529,7 @@ loc_502BF6C8:
     mov     bss_502CEFC8, a0
     clr     d0
     mov     0xc, d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     clr     d0
     movhu   d0, (0x82, sp)
     clr     d0
@@ -14556,7 +14574,7 @@ loc_502BF7C7:
     mov     0x3fe66666, d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    func_502C3B6D, [d2,d3,a2,a3], 0x18
+    call    LibF64Mul, [d2,d3,a2,a3], 0x18
     mov     d0, (0x28, sp)
     mov     d1, (0x2c, sp)
     mov     (0x20, sp), d0
@@ -14567,7 +14585,7 @@ loc_502BF7C7:
     mov     (0x2c, sp), d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    func_502C3639, [d2,d3], 0x10
+    call    LibF64Cmp, [d2,d3], 0x10
     bgt     loc_502BF819
     bra     loc_502BF838
 loc_502BF819:
@@ -14659,7 +14677,7 @@ loc_502BF8C2:
     mov     0x3fe00000, d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    func_502C3B6D, [d2,d3,a2,a3], 0x18
+    call    LibF64Mul, [d2,d3,a2,a3], 0x18
     mov     d0, (0x28, sp)
     mov     d1, (0x2c, sp)
     mov     (0x20, sp), d0
@@ -14670,7 +14688,7 @@ loc_502BF8C2:
     mov     (0x2c, sp), d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    func_502C3639, [d2,d3], 0x10
+    call    LibF64Cmp, [d2,d3], 0x10
     bgt     loc_502BF910
     bra     loc_502BF93A
 loc_502BF910:
@@ -14813,7 +14831,7 @@ loc_502BFA2C:
     bra     loc_502BFA58
 loc_502BFA35:
     mov     (0x48, sp), d0
-    call    func_502C2925, 0, 0x10
+    call    IntAbs, 0, 0x10
     mov     d0, d2
     mov     (0x48, sp), d0
     cmp     0, d0
@@ -14825,7 +14843,7 @@ loc_502BFA45:
 loc_502BFA48:
     mov     1, d0
 loc_502BFA4A:
-    call    func_502C2925, 0, 0x10
+    call    IntAbs, 0, 0x10
     asl     4, d0
     add     d0, d2
     mov     (0x40, sp), a0
@@ -14837,7 +14855,7 @@ loc_502BFA58:
     bra     loc_502BFA84
 loc_502BFA61:
     mov     (0x48, sp), d0
-    call    func_502C2925, 0, 0x10
+    call    IntAbs, 0, 0x10
     mov     d0, d2
     mov     (0x48, sp), d0
     cmp     0, d0
@@ -14849,7 +14867,7 @@ loc_502BFA71:
 loc_502BFA74:
     mov     1, d0
 loc_502BFA76:
-    call    func_502C2925, 0, 0x10
+    call    IntAbs, 0, 0x10
     asl     4, d0
     add     d0, d2
     mov     (0x40, sp), a0
@@ -15078,7 +15096,7 @@ func_502BFC03:
     mov     bss_502CEFE5, a0
     clr     d0
     mov     0x80, d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     clr     d0
     mov     d0, (0x38, sp)
     jmp     loc_502BFE81
@@ -15100,7 +15118,7 @@ loc_502BFC5C:
     extb    d0
     and     0x7f, d0
     mov     d0, (0x40, sp)
-    call    func_502BB581, 0, 0x10
+    call    GetU16LE, 0, 0x10
     exthu   d0
     mov     d0, (0x44, sp)
     mov     (0x44, sp), d0
@@ -15252,7 +15270,7 @@ loc_502BFD53:
     mov     0x3fe66666, d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    func_502C3B6D, [d2,d3,a2,a3], 0x18
+    call    LibF64Mul, [d2,d3,a2,a3], 0x18
     mov     d0, (0x28, sp)
     mov     d1, (0x2c, sp)
     mov     (0x20, sp), d0
@@ -15263,7 +15281,7 @@ loc_502BFD53:
     mov     (0x2c, sp), d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    func_502C36D8, [d2,d3,a2,a3], 0x18
+    call    LibF64Sub, [d2,d3,a2,a3], 0x18
     mov     d0, (0x20, sp)
     mov     d1, (0x24, sp)
     mov     (0x18, sp), d0
@@ -15274,7 +15292,7 @@ loc_502BFD53:
     mov     (0x24, sp), d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    func_502C3639, [d2,d3], 0x10
+    call    LibF64Cmp, [d2,d3], 0x10
     bge     loc_502BFDC2
     bra     loc_502BFE32
 loc_502BFDC2:
@@ -15296,7 +15314,7 @@ loc_502BFDC2:
     mov     0x3fe66666, d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    func_502C3B6D, [d2,d3,a2,a3], 0x18
+    call    LibF64Mul, [d2,d3,a2,a3], 0x18
     mov     d0, (0x28, sp)
     mov     d1, (0x2c, sp)
     mov     (0x20, sp), d0
@@ -15307,7 +15325,7 @@ loc_502BFDC2:
     mov     (0x2c, sp), d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    func_502C36E4, [d2,d3,a2,a3], 0x18
+    call    LibF64Add, [d2,d3,a2,a3], 0x18
     mov     d0, (0x20, sp)
     mov     d1, (0x24, sp)
     mov     (0x18, sp), d0
@@ -15318,7 +15336,7 @@ loc_502BFDC2:
     mov     (0x24, sp), d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    func_502C3639, [d2,d3], 0x10
+    call    LibF64Cmp, [d2,d3], 0x10
     bgt     loc_502BFE32
     bra     loc_502BFE36
 loc_502BFE32:
@@ -15393,7 +15411,7 @@ loc_502BFE93:
     add     data_502CC794, a0
     mov     rodata_502C4EA8, a1
     mov     0x60, d0
-    call    func_502BB249, 0, 0x10
+    call    MemCopyGuarded, 0, 0x10
     mov     (0x14, sp), d0
     inc     d0
     mov     d0, (0x14, sp)
@@ -15416,7 +15434,7 @@ func_502BFEC0:
     add     d0, a0
     mov     str_502CD2D4, a1
     mov     0x60, d0
-    call    func_502BB249, 0, 0x10
+    call    MemCopyGuarded, 0, 0x10
     call    func_502C00C4, [d2,d3], 0x24
     call    func_502C0558, [d2], 0x28
     movhu   (bss_502CFA86), d1
@@ -15486,33 +15504,33 @@ func_502BFEC0:
     mov     (0x14, sp), d0
     add     d0, a1
     mov     0x1400, d0
-    call    func_502BB249, 0, 0x10
+    call    MemCopyGuarded, 0, 0x10
     mov     (bss_502D02EC), a0
     mov     (bss_502CF9EC), a1
     mov     0x5400, d0
-    call    func_502BB249, 0, 0x10
-    mov     (bss_502D0324), a0
+    call    MemCopyGuarded, 0, 0x10
+    mov     (CnvWorkArea), a0
     add     0x1400, a0
     mov     (bss_502CF308), a1
     mov     0x00010000, d0
-    call    func_502BB249, 0, 0x10
-    mov     (bss_502D0324), d1
+    call    MemCopyGuarded, 0, 0x10
+    mov     (CnvWorkArea), d1
     add     0x11400, d1
     mov     (bss_502D02EC), a1
     mov     0x5400, d0
     mov     d1, a0
-    call    func_502BB249, 0, 0x10
-    mov     (bss_502D0324), a0
+    call    MemCopyGuarded, 0, 0x10
+    mov     (CnvWorkArea), a0
     mov     (bss_502CF30C), a1
     mov     0x1400, d0
-    call    func_502BB249, 0, 0x10
-    mov     (bss_502D0324), d0
+    call    MemCopyGuarded, 0, 0x10
+    mov     (CnvWorkArea), d0
     add     0x16800, d0
     mov     d0, (0x18, sp)
     mov     d0, a0
     movhu   (str_502CDB0C), d0
     exthu   d0
-    call    func_502BB67D, 0, 0x14
+    call    PutU16LE, 0, 0x14
     clr     d0
     movbu   d0, (0x1d, sp)
     bra     loc_502C0056
@@ -15537,7 +15555,7 @@ loc_502C0060:
     mov     (0x18, sp), a0
     add     2, a0
     mov     str_502CDB51, a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     clr     d0
     movbu   d0, (0x1d, sp)
     bra     loc_502C007D
@@ -16537,7 +16555,7 @@ loc_502C0849:
     asl2    d0
     mov     bss_502CFAAC, a0
     mov     (d0, a0), d0
-    call    func_502BB3DB, [d2], 0x10
+    call    MemBlockFind, [d2], 0x10
     mov     a0, (0x18, sp)
     movbu   (0x24, sp), d0
     movbu   (0x25, sp), d2
@@ -16560,7 +16578,7 @@ loc_502C0849:
     mov     bss_502CFAAC, a0
     mov     d0, (d1, a0)
 loc_502C0890:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     beq     loc_502C089C
     bra     loc_502C08B6
@@ -16577,7 +16595,7 @@ loc_502C089C:
     mov     bss_502CFAAC, a0
     mov     d0, (d2, a0)
 loc_502C08B6:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     beq     loc_502C08C2
     bra     loc_502C08F9
@@ -16601,11 +16619,11 @@ loc_502C08C2:
     asl2    d0
     mov     bss_502CFAAC, a0
     mov     (d0, a0), d0
-    call    func_502BB3DB, [d2], 0x10
+    call    MemBlockFind, [d2], 0x10
     mov     a0, (0x18, sp)
     clr     d0
     mov     0x20, d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
 loc_502C08F9:
     movbu   (0x25, sp), d0
     inc     d0
@@ -16653,7 +16671,7 @@ loc_502C0943:
     add     data_502CC794, a0
     mov     data_502CC794, a1
     mov     0x60, d0
-    call    func_502BB249, 0, 0x10
+    call    MemCopyGuarded, 0, 0x10
     movbu   (0x26, sp), d0
     mov     0x60, d1
     nop
@@ -16663,7 +16681,7 @@ loc_502C0943:
     mov     0x40, a0
     add     d0, a0
     mov     Str_Clear, a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
 loc_502C097F:
     clr     d0
     movbu   d0, (0x25, sp)
@@ -16734,7 +16752,7 @@ loc_502C0A04:
     asl2    d0
     mov     d1, a0
     mov     (d0, a0), d0
-    call    func_502BB3DB, [d2], 0x10
+    call    MemBlockFind, [d2], 0x10
     mov     a0, (0x18, sp)
     movbu   (0x26, sp), d0
     mov     0x14, d1
@@ -16758,7 +16776,7 @@ loc_502C0A04:
     mov     d2, a0
     mov     d0, (d1, a0)
 loc_502C0A55:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     beq     loc_502C0A61
     bra     loc_502C0A83
@@ -16776,7 +16794,7 @@ loc_502C0A61:
     mov     d2, a0
     mov     d0, (d1, a0)
 loc_502C0A83:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     beq     loc_502C0A8F
     bra     loc_502C0AFB
@@ -16802,11 +16820,11 @@ loc_502C0A8F:
     asl2    d0
     mov     d1, a0
     mov     (d0, a0), d0
-    call    func_502BB3DB, [d2], 0x10
+    call    MemBlockFind, [d2], 0x10
     mov     a0, (0x18, sp)
     clr     d0
     mov     (bss_502CFA20), d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     mov     (0x18, sp), a0
     mov     0x81, d2
     movbu   (0x28, sp), d0
@@ -16815,7 +16833,7 @@ loc_502C0A8F:
     nop
     mulu    d0, d1
     mov     d2, d0
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     movbu   (0x28, sp), d0
     movbu   (0x27, sp), d1
     nop
@@ -16914,7 +16932,7 @@ loc_502C0B79:
     asl2    d1
     mov     bss_502CFAAC, a0
     mov     (d1, a0), d0
-    call    func_502BB3DB, [d2], 0x10
+    call    MemBlockFind, [d2], 0x10
     mov     a0, (0x18, sp)
     clr     d0
     movbu   d0, (0x2a, sp)
@@ -17008,7 +17026,7 @@ loc_502C0C32:
     asl2    d0
     mov     d1, a0
     mov     (d0, a0), d0
-    call    func_502BB3DB, [d2], 0x10
+    call    MemBlockFind, [d2], 0x10
     mov     a0, (0x1c, sp)
     movbu   (0x2d, sp), d0
     add     -1, d0
@@ -17031,7 +17049,7 @@ loc_502C0C32:
     add     d1, a0
     mov     (0x1c, sp), a1
     mov     (bss_502CFA20), d0
-    call    func_502BB249, 0, 0x10
+    call    MemCopyGuarded, 0, 0x10
     movbu   (0x24, sp), d0
     cmp     0xc, d0
     blt     loc_502C0CDF
@@ -17068,7 +17086,7 @@ loc_502C0D09:
     asl2    d0
     mov     bss_502CFAAC, a0
     mov     (d0, a0), d0
-    call    func_502BB3DB, [d2], 0x10
+    call    MemBlockFind, [d2], 0x10
     mov     a0, (0x20, sp)
     movhu   (0x32, sp), d0
     extbu   d0
@@ -17446,7 +17464,7 @@ loc_502C1030:
     mov     d1, a1
     add     data_502CC794, a1
     mov     0x60, d0
-    call    func_502BB249, 0, 0x10
+    call    MemCopyGuarded, 0, 0x10
     movbu   (0x24, sp), d0
     inc     d0
     movbu   d0, (0x24, sp)
@@ -17465,8 +17483,8 @@ loc_502C1072:
     jmp     loc_502C118D
 loc_502C108D:
     mov     0xe, d0
-    mov     d0, (data_502CB9EC)
-    call    func_502C2751, 0, 0x14
+    mov     d0, (CnvErrorCode)
+    call    CnvShowError, 0, 0x14
     jmp     loc_502C118D
 loc_502C109D:
     mov     (bss_502CF308), d0
@@ -17550,7 +17568,7 @@ loc_502C10B8:
     add     d1, a0
     clr     d0
     mov     (bss_502CFA20), d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     movhu   (0x32, sp), d1
     and     0xff, d1
     movhu   (bss_502CFA88), d0
@@ -17579,7 +17597,7 @@ loc_502C1199:
     add     d1, a0
     mov     rodata_502C5378, a1
     mov     0x860, d0
-    call    func_502BB249, 0, 0x10
+    call    MemCopyGuarded, 0, 0x10
     call    func_502C14A7, 0, 0x10
     ret     [d2,d3], 0x5c
 
@@ -18216,7 +18234,7 @@ loc_502C16AA:
     asl2    d0
     mov     d1, a0
     mov     (d0, a0), d0
-    call    func_502BB3DB, [d2], 0x10
+    call    MemBlockFind, [d2], 0x10
     mov     a0, (0xc, sp)
     mov     a0, d0
     cmp     0, d0
@@ -18560,7 +18578,7 @@ loc_502C1916:
     mov     d0, (0x20, sp)
     clr     d0
     movbu   d0, (0x3f, sp)
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     beq     loc_502C192E
     jmp     loc_502C1A4B
@@ -18628,7 +18646,7 @@ loc_502C198D:
 loc_502C199F:
     mov     (0x2c, sp), d0
     mov     (0x4c, sp), d1
-    call    func_502BB078, 0, 0xc
+    call    BitTest, 0, 0xc
     cmp     1, d0
     beq     loc_502C19AE
     bra     loc_502C19B3
@@ -18638,14 +18656,14 @@ loc_502C19AE:
 loc_502C19B3:
     mov     (0x2c, sp), d0
     mov     (0x4c, sp), d1
-    call    func_502BB078, 0, 0xc
+    call    BitTest, 0, 0xc
     cmp     1, d0
     beq     loc_502C19C2
     bra     loc_502C19D6
 loc_502C19C2:
     mov     (0x2c, sp), d0
     mov     (0x50, sp), d1
-    call    func_502BB078, 0, 0xc
+    call    BitTest, 0, 0xc
     cmp     1, d0
     beq     loc_502C19D1
     bra     loc_502C19D6
@@ -18655,7 +18673,7 @@ loc_502C19D1:
 loc_502C19D6:
     mov     (0x2c, sp), d0
     mov     (0x50, sp), d1
-    call    func_502BB078, 0, 0xc
+    call    BitTest, 0, 0xc
     cmp     1, d0
     beq     loc_502C19E5
     bra     loc_502C19F3
@@ -18670,7 +18688,7 @@ loc_502C19EE:
 loc_502C19F3:
     mov     (0x2c, sp), d0
     mov     (0x4c, sp), d1
-    call    func_502BB078, 0, 0xc
+    call    BitTest, 0, 0xc
     cmp     1, d0
     beq     loc_502C1A02
     bra     loc_502C1A10
@@ -18687,7 +18705,7 @@ loc_502C1A10:
     movbu   d0, (0x3f, sp)
     mov     (0x2c, sp), d0
     mov     (0x4c, sp), d1
-    call    func_502BB078, 0, 0xc
+    call    BitTest, 0, 0xc
     cmp     1, d0
     bne     loc_502C1A25
     bra     loc_502C1A2D
@@ -18721,7 +18739,7 @@ loc_502C1A4B:
 loc_502C1A54:
     mov     (0x2c, sp), d0
     mov     (0x50, sp), d1
-    call    func_502BB078, 0, 0xc
+    call    BitTest, 0, 0xc
     cmp     0, d0
     beq     loc_502C1A63
     bra     loc_502C1A6B
@@ -18821,7 +18839,7 @@ loc_502C1AFC:
     mov     d0, (0x20, sp)
     clr     d0
     movbu   d0, (0x38, sp)
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     beq     loc_502C1B19
     jmp     loc_502C1BD4
@@ -18868,7 +18886,7 @@ loc_502C1B61:
     mov     d0, (0x1c, sp)
     mov     (0x28, sp), d0
     mov     (0x4c, sp), d1
-    call    func_502BB078, 0, 0xc
+    call    BitTest, 0, 0xc
     cmp     1, d0
     bne     loc_502C1B74
     bra     loc_502C1B7C
@@ -18885,14 +18903,14 @@ loc_502C1B7C:
 loc_502C1B85:
     mov     (0x28, sp), d0
     mov     (0x48, sp), d1
-    call    func_502BB078, 0, 0xc
+    call    BitTest, 0, 0xc
     cmp     1, d0
     beq     loc_502C1B94
     bra     loc_502C1BB5
 loc_502C1B94:
     mov     (0x28, sp), d0
     mov     (0x4c, sp), d1
-    call    func_502BB078, 0, 0xc
+    call    BitTest, 0, 0xc
     cmp     1, d0
     bne     loc_502C1BA3
     bra     loc_502C1BB0
@@ -18967,7 +18985,7 @@ loc_502C1C1E:
     beq     loc_502C1C27
     bra     loc_502C1C34
 loc_502C1C27:
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0, d0
     bne     loc_502C1C34
     jmp     loc_502C1AFC
@@ -19076,13 +19094,13 @@ loc_502C1CF6:
 loc_502C1CF9:
     mov     1, d0
 loc_502C1CFB:
-    call    func_502C2925, 0, 0x10
+    call    IntAbs, 0, 0x10
     movbu   d0, (0x29, sp)
     clr     d0
     movbu   d0, (0x28, sp)
 loc_502C1D07:
     mov     (0x24, sp), a0
-    call    func_502BB581, 0, 0x10
+    call    GetU16LE, 0, 0x10
     exthu   d0
     mov     d0, (bss_502CFA24)
     mov     (0x24, sp), a0
@@ -19166,7 +19184,7 @@ loc_502C1DAB:
     call    LibDiv32, 0, 0
     mov     d0, a0
     mov     a0, d0
-    call    func_502BB045, 0, 0
+    call    ClampToLimits, 0, 0
     add     0x80, d0
     mov     (0x24, sp), a0
     movbu   d0, (5, a0)
@@ -19213,7 +19231,7 @@ loc_502C1E0C:
     mul     d1, d0
     mov     0xa, d1
     call    LibDiv32, 0, 0
-    call    func_502BB045, 0, 0
+    call    ClampToLimits, 0, 0
     mov     0x80, d1
     add     d0, d1
     mov     (0x24, sp), a0
@@ -19376,7 +19394,7 @@ loc_502C1F43:
     extb    d1
     and     0x7f, d1
     movbu   d1, (0x29, sp)
-    call    func_502BB581, 0, 0x10
+    call    GetU16LE, 0, 0x10
     exthu   d0
     mov     d0, (bss_502CFA24)
     mov     (0x24, sp), a0
@@ -19437,7 +19455,7 @@ loc_502C1FC5:
     mul     d0, d2
     mov     0x6c, d1
     mov     d2, d0
-    call    func_502BB00E, 0, 0xc
+    call    FoldByOctaves, 0, 0xc
     mov     (0x24, sp), a0
     mov     4, d2
     movhu   (0x2c, sp), d1
@@ -19482,7 +19500,7 @@ loc_502C2033:
     call    LibDiv32, 0, 0
     mov     d0, d1
     mov     d1, d0
-    call    func_502BB045, 0, 0
+    call    ClampToLimits, 0, 0
     mov     d0, d1
     add     0x80, d1
     mov     (0x24, sp), a0
@@ -19932,76 +19950,79 @@ loc_502C2396:
     movhu   (0x1a, sp), d0
     ret     0, 0x1c
 
-# ---- func_502C23A9 -----------------------------------------------------
+# ---- CnvRequestWithText ------------------------------------------------
+# (d0 request, a0 text or 0): mailbox[0] = request, the NUL-terminated text from mailbox[1]
 # the same code is in all the other converters
-func_502C23A9:
+CnvRequestWithText:
     mov     a0, (0x1c, sp)
     movbu   d0, (0x18, sp)
-    mov     (bss_502CEFA8), a0
+    mov     (CnvMailboxPtr), a0
     movbu   d0, (a0)
     mov     (0x1c, sp), d0
     cmp     0, d0
     bne     loc_502C23BE
     bra     loc_502C23E1
 loc_502C23BE:
-    mov     (bss_502CEFA8), a0
+    mov     (CnvMailboxPtr), a0
     inc     a0
     mov     (0x1c, sp), a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     mov     (0x1c, sp), a0
     call    LibStrlen, 0, 0
     mov     d0, d1
     add     2, d1
     clr     d0
-    mov     (bss_502CEFA8), a0
+    mov     (CnvMailboxPtr), a0
     movbu   d0, (d1, a0)
     bra     loc_502C23EB
 loc_502C23E1:
     clr     d0
-    mov     (bss_502CEFA8), a0
+    mov     (CnvMailboxPtr), a0
     movbu   d0, (1, a0)
 loc_502C23EB:
     ret     0, 0x10
 
-# ---- func_502C23EE -----------------------------------------------------
+# ---- CnvRequestWithSubText ---------------------------------------------
+# (d0 request, d1 sub-code, a0 text or 0): mailbox[0] = request, [1] = sub-code, the text from [2]
 # the same code is in all the other converters
-func_502C23EE:
+CnvRequestWithSubText:
     mov     a0, (0x20, sp)
     movbu   d1, (0x1c, sp)
     movbu   d0, (0x18, sp)
-    mov     (bss_502CEFA8), a0
+    mov     (CnvMailboxPtr), a0
     movbu   d0, (a0)
     movbu   (0x1c, sp), d0
-    mov     (bss_502CEFA8), a0
+    mov     (CnvMailboxPtr), a0
     movbu   d0, (1, a0)
     mov     (0x20, sp), d0
     cmp     0, d0
     bne     loc_502C2412
     bra     loc_502C2436
 loc_502C2412:
-    mov     (bss_502CEFA8), a0
+    mov     (CnvMailboxPtr), a0
     add     2, a0
     mov     (0x20, sp), a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     mov     (0x20, sp), a0
     call    LibStrlen, 0, 0
     mov     d0, d1
     add     3, d1
     clr     d0
-    mov     (bss_502CEFA8), a0
+    mov     (CnvMailboxPtr), a0
     movbu   d0, (d1, a0)
     bra     loc_502C2440
 loc_502C2436:
     clr     d0
-    mov     (bss_502CEFA8), a0
+    mov     (CnvMailboxPtr), a0
     movbu   d0, (2, a0)
 loc_502C2440:
     ret     0, 0x10
 
-# ---- func_502C2443 -----------------------------------------------------
+# ---- CnvMailboxStatus --------------------------------------------------
+# -> d0 = mailbox[0], sign-extended: -1 (0xFF) once the firmware has served the last request
 # the same code is in all the other converters
-func_502C2443:
-    mov     (bss_502CEFA8), a0
+CnvMailboxStatus:
+    mov     (CnvMailboxPtr), a0
     movbu   (a0), d0
     extb    d0
     ret     0, 0
@@ -20013,13 +20034,14 @@ func_502C244F:
     mov     (0, sp), d0
     ret     0, 4
 
-# ---- func_502C2454 -----------------------------------------------------
+# ---- CnvInit -----------------------------------------------------------
+# first call: conversion defaults, the 16 error texts into CnvErrorText, tables cleared
 # the same code is in all the other converters
-func_502C2454:
+CnvInit:
     mov     2, d0
     movbu   d0, (bss_502CF9F1)
     clr     d0
-    mov     d0, (data_502CB9EC)
+    mov     d0, (CnvErrorCode)
     clr     d0
     mov     d0, (data_502CB9F0)
     mov     0x1a, d0
@@ -20086,123 +20108,124 @@ func_502C2454:
     mov     d0, (data_502CEF94)
     mov     1, d0
     movbu   d0, (data_502CEF98)
-    mov     bss_502CF088, a0
+    mov     CnvErrorText, a0
     mov     Str_NullpointerAssignment, a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     mov     bss_502CF0B0, a0
     mov     Str_NotEnoughMemory, a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     mov     bss_502CF0D8, a0
     mov     Str_WrongOrCorruptedPointer, a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     mov     bss_502CF100, a0
     mov     Str_OpenError, a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     mov     bss_502CF128, a0
     mov     Str_ReadError, a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     mov     bss_502CF150, a0
     mov     Str_WriteError, a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     mov     bss_502CF178, a0
     mov     Str_CloseError, a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     mov     bss_502CF1A0, a0
     mov     Str_FileFormatNotKnown, a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     mov     bss_502CF1C8, a0
     mov     Str_WrongStyleFormat, a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     mov     bss_502CF1F0, a0
     mov     Str_UserError, a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     mov     bss_502CF218, a0
     mov     Str_SequenceCorrupted, a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     mov     bss_502CF240, a0
     mov     Str_ParameterIsMissing, a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     mov     bss_502CF268, a0
     mov     Str_UnknownMemoryBlockId, a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     mov     bss_502CF290, a0
     mov     Str_MemoryFull, a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     mov     bss_502CF2B8, a0
     mov     Str_ThisUserStyleIsEmpty, a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     mov     bss_502CF2E0, a0
     mov     Str_NoDrumTrackInThisSong, a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     mov     data_502CBBF8, a0
     clr     d0
     mov     0x100, d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     mov     data_502CB9F8, a0
     clr     d0
     mov     0x200, d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     mov     data_502CBCF8, a0
     clr     d0
     mov     0x208, d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     mov     data_502CBF00, a0
     clr     d0
     mov     0x80, d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     mov     data_502CBF80, a0
     clr     d0
     mov     8, d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     mov     data_502CBF88, a0
     clr     d0
     mov     0x258, d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     mov     data_502CC1E0, a0
     clr     d0
     mov     0x258, d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     mov     data_502CC438, a0
     clr     d0
     mov     0x35c, d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     mov     data_502CC794, a0
     clr     d0
     mov     0xb40, d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     mov     data_502CD8EA, a0
     clr     d0
     mov     0x200, d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     mov     data_502CDAEA, a0
     clr     d0
     mov     0xa, d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     mov     str_502CEF6C, a0
     mov     0x20, d0
     mov     0x20, d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     mov     bss_502CFAAC, a0
     mov     -1, d0
     mov     0x420, d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     mov     bss_502CFECC, a0
     clr     d0
     mov     0x420, d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     ret     0, 0x14
 
-# ---- func_502C2751 -----------------------------------------------------
+# ---- CnvShowError ------------------------------------------------------
+# CnvState = 10; unless CnvErrorCode is 0x63, request 5 with CnvErrorMessage's text
 # the same code is in GEM_WX2.CNV, KORG.CNV, ROLAND.CNV, SOLTON.CNV
-func_502C2751:
+CnvShowError:
     mov     0xa, d0
-    movbu   d0, (bss_502CEFA4)
-    mov     (data_502CB9EC), d0
+    movbu   d0, (CnvState)
+    mov     (CnvErrorCode), d0
     cmp     0x63, d0
     bne     loc_502C2765
     bra     loc_502C277D
 loc_502C2765:
-    call    func_502C2945, 0, 0x18
+    call    CnvErrorMessage, 0, 0x18
     mov     a0, (0x10, sp)
     mov     a0, d0
     cmp     0, d0
@@ -20211,16 +20234,17 @@ loc_502C2765:
 loc_502C2774:
     mov     5, d0
     mov     (0x10, sp), a0
-    call    func_502C23A9, 0, 0x10
+    call    CnvRequestWithText, 0, 0x10
 loc_502C277D:
     ret     0, 0x14
 
-# ---- func_502C2780 -----------------------------------------------------
+# ---- CnvShowNumber -----------------------------------------------------
+# (d0 n, a0 text): request 5 with the text followed by n in decimal
 # the same code is in all the other converters
-func_502C2780:
+CnvShowNumber:
     mov     d0, (0xac, sp)
     mov     a0, (0xa8, sp)
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0x63, d0
     bne     loc_502C2791
     jmp     loc_502C2843
@@ -20229,16 +20253,16 @@ loc_502C2791:
     add     0x20, a0
     clr     d0
     mov     0x64, d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     mov     sp, a0
     add     0x84, a0
     clr     d0
     mov     0x14, d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     mov     sp, a0
     add     0x20, a0
     mov     (0xa8, sp), a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     mov     0x12, d0
     mov     d0, (0x14, sp)
     mov     (0xac, sp), d0
@@ -20304,25 +20328,26 @@ loc_502C2801:
     sub     d0, a1
     mov     a1, d0
     mov     a2, a1
-    call    func_502C3B3B, [a2,a3], 8
+    call    strncat, [a2,a3], 8
     mov     sp, a0
     add     0x20, a0
     mov     str_502C3FFC, a1
-    call    func_502C3A0E, [a2], 4
+    call    strcat, [a2], 4
     mov     5, d0
     mov     sp, a0
     add     0x20, a0
-    call    func_502C23A9, 0, 0x10
+    call    CnvRequestWithText, 0, 0x10
 loc_502C2843:
     ret     [d2,a2], 0xa0
 
-# ---- func_502C2846 -----------------------------------------------------
+# ---- CnvShowHexNumber --------------------------------------------------
+# (d0 n, a0 text): request 5 with the text, " HEX " and n in hexadecimal
 # no caller: unreferenced code
 # the same code is in all the other converters
-func_502C2846:
+CnvShowHexNumber:
     mov     d0, (0xb0, sp)
     mov     a0, (0xac, sp)
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     cmp     0x63, d0
     bne     loc_502C2857
     jmp     loc_502C2922
@@ -20331,16 +20356,16 @@ loc_502C2857:
     add     0x24, a0
     clr     d0
     mov     0x64, d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     mov     sp, a0
     add     0x88, a0
     clr     d0
     mov     0x14, d1
-    call    func_502C39FB, [a2], 4
+    call    memset, [a2], 4
     mov     sp, a0
     add     0x24, a0
     mov     (0xac, sp), a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     mov     0x12, d0
     mov     d0, (0x14, sp)
     mov     (0xb0, sp), d0
@@ -20396,7 +20421,7 @@ loc_502C28D2:
     mov     sp, a0
     add     0x24, a0
     mov     str_502C4000, a1
-    call    func_502C3A0E, [a2], 4
+    call    strcat, [a2], 4
     mov     sp, a0
     mov     a0, d0
     add     0x88, d0
@@ -20416,26 +20441,27 @@ loc_502C28D2:
     sub     d0, a2
     mov     a2, d0
     mov     a3, a1
-    call    func_502C3B3B, [a2,a3], 8
+    call    strncat, [a2,a3], 8
     mov     sp, a0
     add     0x24, a0
     mov     Str_HEX, a1
-    call    func_502C3A0E, [a2], 4
+    call    strcat, [a2], 4
     mov     5, d0
     mov     sp, a0
     add     0x24, a0
-    call    func_502C23A9, 0, 0x10
+    call    CnvRequestWithText, 0, 0x10
 loc_502C2922:
     ret     [a2,a3], 0xa4
 
-# ---- func_502C2925 -----------------------------------------------------
+# ---- IntAbs ------------------------------------------------------------
+# (d0 n) -> |n|, by way of LibI32ToF64 and LibF64CmpZero
 # the same code is in all the other converters
-func_502C2925:
+IntAbs:
     mov     d0, (0x18, sp)
     call    LibI32ToF64, 0, 0
     mov     d0, (8, sp)
     mov     d1, (0xc, sp)
-    call    func_502C36A3, [d2,d3], 0x10
+    call    LibF64CmpZero, [d2,d3], 0x10
     bge     loc_502C2939
     bra     loc_502C293D
 loc_502C2939:
@@ -20448,10 +20474,11 @@ loc_502C293D:
 loc_502C2942:
     ret     0, 0x10
 
-# ---- func_502C2945 -----------------------------------------------------
+# ---- CnvErrorMessage ---------------------------------------------------
+# -> a0 = the text for CnvErrorCode (0 after showing "Fcode = n" for a code above 16)
 # the same code is in GEM_WX2.CNV, KORG.CNV, ROLAND.CNV, SOLTON.CNV
-func_502C2945:
-    mov     (data_502CB9EC), d0
+CnvErrorMessage:
+    mov     (CnvErrorCode), d0
     movbu   d0, (0x10, sp)
     movbu   (0x10, sp), d0
     cmp     0x10, d0
@@ -20459,15 +20486,15 @@ func_502C2945:
     bra     loc_502C296D
 loc_502C2957:
     mov     Str_Fcode, a0
-    mov     (data_502CB9EC), d0
-    call    func_502C2780, [d2,a2], 0xa0
+    mov     (CnvErrorCode), d0
+    call    CnvShowNumber, [d2,a2], 0xa0
     clr     d0
     mov     d0, (0x14, sp)
     bra     loc_502C2988
 loc_502C296D:
-    mov     bss_502CF088, d0
+    mov     CnvErrorText, d0
     mov     d0, (0x14, sp)
-    mov     (data_502CB9EC), d0
+    mov     (CnvErrorCode), d0
     add     -1, d0
     mov     0x28, d1
     nop
@@ -20539,15 +20566,15 @@ loc_502C29EB:
     mov     sp, a0
     add     0x24, a0
     mov     str_502CDB51, a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     mov     sp, a0
     add     0x38, a0
     mov     str_502CDB51, a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     mov     sp, a0
     add     0x4c, a0
     mov     bss_502CF398, a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     mov     (data_502CDB00), d0
     cmp     6, d0
     bne     loc_502C2A21
@@ -20569,7 +20596,7 @@ loc_502C2A42:
     mov     sp, a0
     add     0x4c, a0
     mov     Str_OriginalBsc, a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     jmp     loc_502C2DD0
 loc_502C2A53:
     mov     sp, a0
@@ -20583,7 +20610,7 @@ loc_502C2A67:
     mov     sp, a0
     add     0x4c, a0
     mov     Str_OriginalAdv, a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     jmp     loc_502C2DD0
 loc_502C2A78:
     mov     sp, a0
@@ -20597,7 +20624,7 @@ loc_502C2A8C:
     mov     sp, a0
     add     0x4c, a0
     mov     Str_VariationBsc, a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     jmp     loc_502C2DD0
 loc_502C2A9D:
     mov     sp, a0
@@ -20611,7 +20638,7 @@ loc_502C2AB1:
     mov     sp, a0
     add     0x4c, a0
     mov     Str_VariationAdv, a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     jmp     loc_502C2DD0
 loc_502C2AC2:
     mov     sp, a0
@@ -20625,7 +20652,7 @@ loc_502C2AD6:
     mov     sp, a0
     add     0x4c, a0
     mov     Str_IntroAdvMin, a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     jmp     loc_502C2DD0
 loc_502C2AE7:
     mov     sp, a0
@@ -20639,7 +20666,7 @@ loc_502C2AFB:
     mov     sp, a0
     add     0x4c, a0
     mov     Str_IntroAdvMaj, a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     jmp     loc_502C2DD0
 loc_502C2B0C:
     mov     sp, a0
@@ -20653,7 +20680,7 @@ loc_502C2B20:
     mov     sp, a0
     add     0x4c, a0
     mov     Str_FillOriAdv, a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     jmp     loc_502C2DD0
 loc_502C2B31:
     mov     sp, a0
@@ -20667,7 +20694,7 @@ loc_502C2B45:
     mov     sp, a0
     add     0x4c, a0
     mov     Str_FillOriBsc, a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     jmp     loc_502C2DD0
 loc_502C2B56:
     mov     sp, a0
@@ -20681,7 +20708,7 @@ loc_502C2B6A:
     mov     sp, a0
     add     0x4c, a0
     mov     Str_FillVarAdv, a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     jmp     loc_502C2DD0
 loc_502C2B7B:
     mov     sp, a0
@@ -20695,7 +20722,7 @@ loc_502C2B8F:
     mov     sp, a0
     add     0x4c, a0
     mov     Str_FillVarBsc, a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     jmp     loc_502C2DD0
 loc_502C2BA0:
     mov     sp, a0
@@ -20709,7 +20736,7 @@ loc_502C2BB4:
     mov     sp, a0
     add     0x4c, a0
     mov     Str_EndAdvMin, a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     jmp     loc_502C2DD0
 loc_502C2BC5:
     mov     sp, a0
@@ -20723,7 +20750,7 @@ loc_502C2BDA:
     mov     sp, a0
     add     0x4c, a0
     mov     Str_EndAdvMaj, a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     jmp     loc_502C2DD0
 loc_502C2BEB:
     mov     (data_502CDB00), d0
@@ -20734,7 +20761,7 @@ loc_502C2BF8:
     mov     sp, a0
     add     0x4c, a0
     mov     Str_Var, a1
-    call    func_502C3AC2, [d2,a2,a3], 0xc
+    call    strstr, [d2,a2,a3], 0xc
     cmp     0, a0
     bne     loc_502C2C0D
     jmp     loc_502C2CA0
@@ -20745,7 +20772,7 @@ loc_502C2C0D:
     mov     9, a0
     add     d0, a0
     mov     str_502C41F4, a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     movbu   (0x84, sp), d1
     movbu   (data_502CDB28), d0
     cmp     d0, d1
@@ -20779,7 +20806,7 @@ loc_502C2C5B:
     mov     0xa, a0
     add     d0, a0
     mov     str_502C41FC, a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     jmp     loc_502C2DD0
 loc_502C2C72:
     mov     sp, a0
@@ -20788,7 +20815,7 @@ loc_502C2C72:
     mov     0xa, a0
     add     d0, a0
     mov     str_502C4200, a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     jmp     loc_502C2DD0
 loc_502C2C89:
     mov     sp, a0
@@ -20797,7 +20824,7 @@ loc_502C2C89:
     mov     0xa, a0
     add     d0, a0
     mov     str_502C4204, a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     jmp     loc_502C2DD0
 loc_502C2CA0:
     mov     (data_502CDB00), d0
@@ -20808,7 +20835,7 @@ loc_502C2CAD:
     mov     sp, a0
     add     0x4c, a0
     mov     Str_Basic, a1
-    call    func_502C3AC2, [d2,a2,a3], 0xc
+    call    strstr, [d2,a2,a3], 0xc
     cmp     0, a0
     bne     loc_502C2CC2
     jmp     loc_502C2D62
@@ -20816,14 +20843,14 @@ loc_502C2CC2:
     mov     sp, a0
     add     0x4c, a0
     mov     Str_Basic_2, a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     mov     sp, a0
     mov     a0, d0
     add     0x4c, d0
     mov     5, a0
     add     d0, a0
     mov     str_502C4218, a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     movbu   (0x84, sp), d1
     movbu   (data_502CDB28), d0
     cmp     d0, d1
@@ -20857,7 +20884,7 @@ loc_502C2D1E:
     mov     6, a0
     add     d0, a0
     mov     str_502C4224, a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     jmp     loc_502C2DD0
 loc_502C2D35:
     mov     sp, a0
@@ -20866,7 +20893,7 @@ loc_502C2D35:
     mov     6, a0
     add     d0, a0
     mov     str_502C4228, a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     jmp     loc_502C2DD0
 loc_502C2D4C:
     mov     sp, a0
@@ -20875,13 +20902,13 @@ loc_502C2D4C:
     mov     6, a0
     add     d0, a0
     mov     str_502C422C, a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     bra     loc_502C2DD0
 loc_502C2D62:
     mov     sp, a0
     add     0x4c, a0
     mov     Str_Variation, a1
-    call    func_502C3AC2, [d2,a2,a3], 0xc
+    call    strstr, [d2,a2,a3], 0xc
     cmp     0, a0
     bne     loc_502C2D76
     bra     loc_502C2DBE
@@ -20889,7 +20916,7 @@ loc_502C2D76:
     mov     sp, a0
     add     0x4c, a0
     mov     Str_MainVariationAdvanced, a1
-    call    func_502C3AC2, [d2,a2,a3], 0xc
+    call    strstr, [d2,a2,a3], 0xc
     cmp     0, a0
     bne     loc_502C2D8A
     bra     loc_502C2D9A
@@ -20897,13 +20924,13 @@ loc_502C2D8A:
     mov     sp, a0
     add     0x4c, a0
     mov     Str_MainVarAdv, a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     bra     loc_502C2DD0
 loc_502C2D9A:
     mov     sp, a0
     add     0x4c, a0
     mov     Str_MainVariation, a1
-    call    func_502C3AC2, [d2,a2,a3], 0xc
+    call    strstr, [d2,a2,a3], 0xc
     cmp     0, a0
     bne     loc_502C2DAE
     bra     loc_502C2DD0
@@ -20911,7 +20938,7 @@ loc_502C2DAE:
     mov     sp, a0
     add     0x4c, a0
     mov     Str_MainVar, a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     bra     loc_502C2DD0
 loc_502C2DBE:
     mov     sp, a0
@@ -20933,7 +20960,7 @@ loc_502C2DDC:
     add     0x4c, a0
     mov     str_502CDB51, a1
     mov     0x10, d0
-    call    func_502C3D24, [a2,a3], 8
+    call    memmove, [a2,a3], 8
     movbu   (0x84, sp), d0
     cmp     4, d0
     blt     loc_502C2DF5
@@ -20961,7 +20988,7 @@ loc_502C2E01:
     call    LibStrlen, 0, 0
     mov     a2, a1
     mov     a3, a0
-    call    func_502C3D24, [a2,a3], 8
+    call    memmove, [a2,a3], 8
     mov     sp, a0
     add     0x4c, a0
     call    LibStrlen, 0, 0
@@ -20982,7 +21009,7 @@ loc_502C2E01:
     add     d1, d2
     mov     str_502CEF6C, a1
     mov     d2, a0
-    call    func_502C3D24, [a2,a3], 8
+    call    memmove, [a2,a3], 8
     mov     1, d0
     movbu   d0, (data_502CD2E4)
     mov     0x63, d0
@@ -21020,7 +21047,7 @@ loc_502C2EA0:
     mov     2, d1
     call    LibDiv32, 0, 0
     add     0x50, d0
-    call    func_502BB045, 0, 0
+    call    ClampToLimits, 0, 0
     mov     (0x18, sp), a0
     movbu   d0, (4, a0)
 loc_502C2EC4:
@@ -21115,7 +21142,7 @@ loc_502C2F8D:
     mov     (0x18, sp), a0
     add     2, a0
     clr     d0
-    call    func_502BB6D5, 0, 4
+    call    PutU32LE, 0, 4
 loc_502C2F97:
     movbu   (0x20, sp), d0
     extb    d0
@@ -21175,7 +21202,7 @@ loc_502C2FDD:
     add     0x24, a0
     mov     sp, a1
     add     0x38, a1
-    call    func_502C3AA7, [a2], 4
+    call    strcpy, [a2], 4
     ret     [d2,d3,a2,a3], 0x7c
 
 # ---- func_502C3028 -----------------------------------------------------
@@ -21185,12 +21212,12 @@ func_502C3028:
     add     0x20, a0
     mov     str_502CDB51, a1
     mov     0x11, d0
-    call    func_502BB249, 0, 0x10
+    call    MemCopyGuarded, 0, 0x10
     mov     sp, a0
     add     0x40, a0
     mov     str_502CDB51, a1
     mov     0x11, d0
-    call    func_502BB249, 0, 0x10
+    call    MemCopyGuarded, 0, 0x10
     mov     str_502CDB51, d0
     mov     d0, (0x14, sp)
     mov     (data_502CDB00), d0
@@ -21264,138 +21291,138 @@ loc_502C30FC:
     mov     sp, a1
     add     0x20, a1
     mov     0xa, d0
-    call    func_502C3A3A, [a2,a3], 8
+    call    strncpy, [a2,a3], 8
     mov     (0x14, sp), a0
     add     9, a0
     mov     Str_E86, a1
     mov     4, d0
-    call    func_502C3A3A, [a2,a3], 8
+    call    strncpy, [a2,a3], 8
     jmp     loc_502C32AA
 loc_502C311C:
     mov     (0x14, sp), a0
     mov     sp, a1
     add     0x20, a1
     mov     9, d0
-    call    func_502C3A3A, [a2,a3], 8
+    call    strncpy, [a2,a3], 8
     mov     (0x14, sp), a0
     add     8, a0
     mov     Str_G800, a1
     mov     5, d0
-    call    func_502C3A3A, [a2,a3], 8
+    call    strncpy, [a2,a3], 8
     jmp     loc_502C32AA
 loc_502C313C:
     mov     (0x14, sp), a0
     mov     sp, a1
     add     0x20, a1
     mov     0xa, d0
-    call    func_502C3A3A, [a2,a3], 8
+    call    strncpy, [a2,a3], 8
     mov     (0x14, sp), a0
     add     0xa, a0
     mov     str_502C4290, a1
     mov     3, d0
-    call    func_502C3A3A, [a2,a3], 8
+    call    strncpy, [a2,a3], 8
     jmp     loc_502C32AA
 loc_502C315C:
     mov     (0x14, sp), a0
     mov     sp, a1
     add     0x20, a1
     mov     0xa, d0
-    call    func_502C3A3A, [a2,a3], 8
+    call    strncpy, [a2,a3], 8
     mov     (0x14, sp), a0
     add     9, a0
     mov     Str_WS2, a1
     mov     4, d0
-    call    func_502C3A3A, [a2,a3], 8
+    call    strncpy, [a2,a3], 8
     jmp     loc_502C32AA
 loc_502C317C:
     mov     (0x14, sp), a0
     mov     sp, a1
     add     0x20, a1
     mov     0xa, d0
-    call    func_502C3A3A, [a2,a3], 8
+    call    strncpy, [a2,a3], 8
     mov     (0x14, sp), a0
     add     9, a0
     mov     Str_WX2, a1
     mov     4, d0
-    call    func_502C3A3A, [a2,a3], 8
+    call    strncpy, [a2,a3], 8
     jmp     loc_502C32AA
 loc_502C319C:
     mov     (0x14, sp), a0
     mov     sp, a1
     add     0x20, a1
     mov     9, d0
-    call    func_502C3A3A, [a2,a3], 8
+    call    strncpy, [a2,a3], 8
     mov     (0x14, sp), a0
     add     9, a0
     mov     Str_Peg, a1
     mov     4, d0
-    call    func_502C3A3A, [a2,a3], 8
+    call    strncpy, [a2,a3], 8
     jmp     loc_502C32AA
 loc_502C31BC:
     mov     (0x14, sp), a0
     mov     sp, a1
     add     0x20, a1
     mov     9, d0
-    call    func_502C3A3A, [a2,a3], 8
+    call    strncpy, [a2,a3], 8
     mov     (0x14, sp), a0
     add     9, a0
     mov     str_502C42AC, a1
     mov     4, d0
-    call    func_502C3A3A, [a2,a3], 8
+    call    strncpy, [a2,a3], 8
     jmp     loc_502C32AA
 loc_502C31DC:
     mov     (0x14, sp), a0
     mov     sp, a1
     add     0x20, a1
     mov     0xa, d0
-    call    func_502C3A3A, [a2,a3], 8
+    call    strncpy, [a2,a3], 8
     mov     (0x14, sp), a0
     add     9, a0
     mov     Str_MS5, a1
     mov     4, d0
-    call    func_502C3A3A, [a2,a3], 8
+    call    strncpy, [a2,a3], 8
     jmp     loc_502C32AA
 loc_502C31FC:
     mov     (0x14, sp), a0
     mov     sp, a1
     add     0x20, a1
     mov     9, d0
-    call    func_502C3A3A, [a2,a3], 8
+    call    strncpy, [a2,a3], 8
     mov     (0x14, sp), a0
     add     8, a0
     mov     Str_Ms50, a1
     mov     5, d0
-    call    func_502C3A3A, [a2,a3], 8
+    call    strncpy, [a2,a3], 8
     jmp     loc_502C32AA
 loc_502C321C:
     mov     (0x14, sp), a0
     mov     sp, a1
     add     0x20, a1
     mov     9, d0
-    call    func_502C3A3A, [a2,a3], 8
+    call    strncpy, [a2,a3], 8
     mov     (0x14, sp), a0
     add     8, a0
     mov     Str_Arr, a1
     mov     5, d0
-    call    func_502C3A3A, [a2,a3], 8
+    call    strncpy, [a2,a3], 8
     bra     loc_502C32AA
 loc_502C323B:
     mov     (0x14, sp), a0
     mov     sp, a1
     add     0x20, a1
     mov     9, d0
-    call    func_502C3A3A, [a2,a3], 8
+    call    strncpy, [a2,a3], 8
     mov     (0x14, sp), a0
     add     8, a0
     mov     Str_FrSt, a1
     mov     5, d0
-    call    func_502C3A3A, [a2,a3], 8
+    call    strncpy, [a2,a3], 8
     bra     loc_502C32AA
 loc_502C325A:
     mov     sp, a0
     add     0x20, a0
     mov     Str_YamahaSFF, a1
-    call    func_502C3AC2, [d2,a2,a3], 0xc
+    call    strstr, [d2,a2,a3], 0xc
     cmp     0, a0
     beq     loc_502C326E
     bra     loc_502C32AA
@@ -21404,24 +21431,24 @@ loc_502C326E:
     mov     sp, a1
     add     0x20, a1
     mov     0xa, d0
-    call    func_502C3A3A, [a2,a3], 8
+    call    strncpy, [a2,a3], 8
     mov     (0x14, sp), a0
     add     9, a0
     mov     Str_SFF_2, a1
     mov     4, d0
-    call    func_502C3A3A, [a2,a3], 8
+    call    strncpy, [a2,a3], 8
     bra     loc_502C32AA
 loc_502C328D:
     mov     (0x14, sp), a0
     mov     sp, a1
     add     0x20, a1
     mov     0xa, d0
-    call    func_502C3A3A, [a2,a3], 8
+    call    strncpy, [a2,a3], 8
     mov     (0x14, sp), a0
     add     9, a0
     mov     Str_MID, a1
     mov     4, d0
-    call    func_502C3A3A, [a2,a3], 8
+    call    strncpy, [a2,a3], 8
 loc_502C32AA:
     clr     d0
     movbu   d0, (0x1c, sp)
@@ -21855,9 +21882,10 @@ loc_502C3631:
     add     0x2ac, sp
     ret     0, 0
 
-# ---- func_502C3639 -----------------------------------------------------
+# ---- LibF64Cmp ---------------------------------------------------------
+# compare arg1 ? arg2, CPU flags set for signed branches (as the firmware's)
 # the same code is in GEM_WX2.CNV, KORG.CNV, ROLAND.CNV, SOLTON.CNV
-func_502C3639:
+LibF64Cmp:
     mov     (0x24, sp), d3
     mov     (0x20, sp), d0
     mov     d3, d2
@@ -21867,7 +21895,7 @@ func_502C3639:
     or      d0, d0
     nop
     bne     loc_502C364E
-    bra     func_502C36A3
+    bra     LibF64CmpZero
 loc_502C364E:
     mov     d0, a0
     mov     (0x1c, sp), d1
@@ -21918,9 +21946,10 @@ loc_502C369D:
 loc_502C36A0:
     retf    [d2,d3], 0x10
 
-# ---- func_502C36A3 -----------------------------------------------------
+# ---- LibF64CmpZero -----------------------------------------------------
+# compare arg1 with 0.0: flags set, d1 = +2 / -2 / 0 (as the firmware's)
 # the same code is in all the other converters
-func_502C36A3:
+LibF64CmpZero:
     mov     (0x1c, sp), d1
     mov     (0x18, sp), d0
     mov     d1, d2
@@ -21938,9 +21967,10 @@ loc_502C36B6:
 loc_502C36BE:
     retf    [d2,d3], 0x10
 
-# ---- func_502C36C1 -----------------------------------------------------
+# ---- toupper -----------------------------------------------------------
+# (d0 c) through the ctype table that rodata_502C991C points at
 # the same code is in all the other converters
-func_502C36C1:
+toupper:
     mov     (rodata_502C8390), a0
     mov     d0, d2
     inc     a0
@@ -21954,17 +21984,19 @@ func_502C36C1:
 loc_502C36D5:
     retf    [d2], 4
 
-# ---- func_502C36D8 -----------------------------------------------------
+# ---- LibF64Sub ---------------------------------------------------------
+# arg1 - arg2: flips arg2's sign on the stack and falls into LibF64Add (as the firmware's)
 # the same code is in GEM_WX2.CNV, KORG.CNV, ROLAND.CNV, SOLTON.CNV
-func_502C36D8:
+LibF64Sub:
     mov     (0x2c, sp), d0
     xor     0x80000000, d0
     mov     d0, (0x2c, sp)
-    bra     func_502C36E4
+    bra     LibF64Add
 
-# ---- func_502C36E4 -----------------------------------------------------
+# ---- LibF64Add ---------------------------------------------------------
+# arg1 + arg2, IEEE double (as the firmware's)
 # the same code is in GEM_WX2.CNV, KORG.CNV, ROLAND.CNV, SOLTON.CNV
-func_502C36E4:
+LibF64Add:
     mov     (0x24, sp), d1
     mov     d1, d2
     and     0x000fffff, d1
@@ -22381,9 +22413,10 @@ loc_502C39E0:
     mov     a0, d2
     retf    0, 0
 
-# ---- func_502C39E5 -----------------------------------------------------
+# ---- memcpy ------------------------------------------------------------
+# (a0 dst, a1 src, d0 n) -> a0 = dst
 # the same code is in all the other converters
-func_502C39E5:
+memcpy:
     mov     a0, a3
     mov     a3, a2
     add     d0, a2
@@ -22402,9 +22435,10 @@ loc_502C39F7:
     mov     a3, a0
     retf    [a2,a3], 8
 
-# ---- func_502C39FB -----------------------------------------------------
+# ---- memset ------------------------------------------------------------
+# (a0 dst, d0 byte, d1 n) -> a0 = dst
 # the same code is in all the other converters
-func_502C39FB:
+memset:
     mov     a0, a2
     mov     a2, a1
     add     d1, a1
@@ -22421,9 +22455,10 @@ loc_502C3A0A:
     mov     a2, a0
     retf    [a2], 4
 
-# ---- func_502C3A0E -----------------------------------------------------
+# ---- strcat ------------------------------------------------------------
+# (a0 dst, a1 src) -> a0 = dst
 # the same code is in all the other converters
-func_502C3A0E:
+strcat:
     movbu   (a0), d0
     mov     a0, a2
     extb    d0
@@ -22457,9 +22492,10 @@ loc_502C3A36:
     mov     a2, a0
     retf    [a2], 4
 
-# ---- func_502C3A3A -----------------------------------------------------
+# ---- strncpy -----------------------------------------------------------
+# (a0 dst, a1 src, d0 n), NUL-padded to n -> a0 = dst
 # the same code is in all the other converters
-func_502C3A3A:
+strncpy:
     mov     a0, a3
     mov     a3, a2
     add     d0, a2
@@ -22551,9 +22587,10 @@ loc_502C3A9C:
     nop
     retf    0, 0
 
-# ---- func_502C3AA7 -----------------------------------------------------
+# ---- strcpy ------------------------------------------------------------
+# (a0 dst, a1 src) -> a0 = dst
 # the same code is in all the other converters
-func_502C3AA7:
+strcpy:
     movbu   (a1), d0
     mov     a0, a2
     movbu   d0, (a0)
@@ -22574,9 +22611,10 @@ loc_502C3ABE:
     mov     a2, a0
     retf    [a2], 4
 
-# ---- func_502C3AC2 -----------------------------------------------------
+# ---- strstr ------------------------------------------------------------
+# (a0 haystack, a1 needle) -> a0 = the first match or 0
 # the same code is in all the other converters
-func_502C3AC2:
+strstr:
     mov     a1, a3
     movbu   (a3), d0
     extb    d0
@@ -22673,9 +22711,10 @@ loc_502C3B37:
     nop
     retf    [a2], 4
 
-# ---- func_502C3B3B -----------------------------------------------------
+# ---- strncat -----------------------------------------------------------
+# (a0 dst, a1 src, d0 n): at most n bytes of src, then a NUL -> a0 = dst
 # the same code is in all the other converters
-func_502C3B3B:
+strncat:
     movbu   (a0), d1
     mov     a0, a3
     mov     a1, a2
@@ -22714,9 +22753,10 @@ loc_502C3B66:
     mov     a3, a0
     retf    [a2,a3], 8
 
-# ---- func_502C3B6D -----------------------------------------------------
+# ---- LibF64Mul ---------------------------------------------------------
+# arg1 * arg2, IEEE double (as the firmware's)
 # the same code is in all the other converters
-func_502C3B6D:
+LibF64Mul:
     mov     0x000fffff, d0
     mov     (0x24, sp), d1
     mov     d1, d2
@@ -22950,9 +22990,10 @@ loc_502C3D1C:
     nop
     ret     [d2,d3,a2,a3], 0x18
 
-# ---- func_502C3D24 -----------------------------------------------------
+# ---- memmove -----------------------------------------------------------
+# (a0 dst, a1 src, d0 n), overlap-safe -> a0 = dst
 # the same code is in all the other converters
-func_502C3D24:
+memmove:
     mov     a0, a3
     mov     a3, a2
     add     d0, a2
@@ -24499,7 +24540,7 @@ __data_start:
     .byte   0x00
     .asciz  "Main (7th)"
     .align  4
-data_502CB9EC:
+CnvErrorCode:                    # 0 = none; 1..16 index CnvErrorText; above 16 the text is "Fcode = n"; 0x63 shows no text
     .long   0x00000000
 data_502CB9F0:
     .long   0x00000000, 0x00000000
@@ -25031,11 +25072,11 @@ __bss_start:
     .space  4
 bss_502CEFA0:
     .space  4
-bss_502CEFA4:
+CnvState:                        # the step CnvMain runs on this call
     .space  4
-bss_502CEFA8:
+CnvMailboxPtr:                   # = CnvMailbox, stored on every call
     .space  4
-bss_502CEFAC:
+CnvMailboxReply:
     .space  4
 bss_502CEFB0:
     .space  4
@@ -25069,7 +25110,7 @@ bss_502CF080:
     .space  4
 bss_502CF084:
     .space  4
-bss_502CF088:
+CnvErrorText:                    # 16 texts of 40 bytes, for codes 1..16, copied there by CnvInit
     .space  40
 bss_502CF0B0:
     .space  40
@@ -25207,7 +25248,7 @@ bss_502D031C:
     .space  4
 bss_502D0320:
     .space  4
-bss_502D0324:
+CnvWorkArea:                     # the first byte after the loaded file: 0x502B8000 + the file size (mailbox+2) rounded up to 0x100
     .space  4
 bss_502D0328:
     .space  112

@@ -9,3 +9,74 @@
 ; shared routine is named once, for any one of them; give one converter's copy a
 ; line of its own to override that. Other addresses (data, labels inside a
 ; routine) are named for that converter only.
+
+; ---- the firmware interface (notes/style-converter.md) ----------------------
+KORG 0x502C3F55 CnvRequestWithText      ; (d0 request, a0 text or 0): mailbox[0] = request, the NUL-terminated text from mailbox[1]
+KORG 0x502C3F9A CnvRequestWithSubText   ; (d0 request, d1 sub-code, a0 text or 0): mailbox[0] = request, [1] = sub-code, the text from [2]
+KORG 0x502C3FEF CnvMailboxStatus        ; -> d0 = mailbox[0], sign-extended: -1 (0xFF) once the firmware has served the last request
+KORG 0x502D1280 CnvMailboxPtr           ; = CnvMailbox, stored on every call
+KORG 0x502D1284 CnvMailboxReply         ; CnvMailboxStatus on entry to CnvMain: -1 = served, anything else ends the step with an error
+KORG 0x502D127C CnvState                ; the step CnvMain runs on this call
+KORG 0x502D25FC CnvWorkArea             ; the first byte after the loaded file: 0x502B8000 + the file size (mailbox+2) rounded up to 0x100
+
+; ---- errors -------------------------------------------------------------------
+KORG 0x502C4000 CnvInit                 ; first call: conversion defaults, the 16 error texts into CnvErrorText, tables cleared
+KORG 0x502CDCC8 CnvErrorCode            ; 0 = none; 1..16 index CnvErrorText; above 16 the text is "Fcode = n"; 0x63 shows no text
+KORG 0x502D1360 CnvErrorText            ; 16 texts of 40 bytes, for codes 1..16, copied there by CnvInit
+KORG 0x502C44F1 CnvErrorMessage         ; -> a0 = the text for CnvErrorCode (0 after showing "Fcode = n" for a code above 16)
+KORG 0x502C42FD CnvShowError            ; CnvState = 10; unless CnvErrorCode is 0x63, request 5 with CnvErrorMessage's text
+KORG 0x502C432C CnvShowNumber           ; (d0 n, a0 text): request 5 with the text followed by n in decimal
+KORG 0x502C43F2 CnvShowHexNumber        ; (d0 n, a0 text): request 5 with the text, " HEX " and n in hexadecimal
+
+; ---- C library ------------------------------------------------------------------
+KORG 0x502C5591 memcpy                  ; (a0 dst, a1 src, d0 n) -> a0 = dst
+KORG 0x502C55A7 memset                  ; (a0 dst, d0 byte, d1 n) -> a0 = dst
+KORG 0x502C55BA strcat                  ; (a0 dst, a1 src) -> a0 = dst
+KORG 0x502C55E6 strncpy                 ; (a0 dst, a1 src, d0 n), NUL-padded to n -> a0 = dst
+KORG 0x502C5653 strcpy                  ; (a0 dst, a1 src) -> a0 = dst
+KORG 0x502C566E strstr                  ; (a0 haystack, a1 needle) -> a0 = the first match or 0
+KORG 0x502C56E7 strncat                 ; (a0 dst, a1 src, d0 n): at most n bytes of src, then a NUL -> a0 = dst
+KORG 0x502C58D0 memmove                 ; (a0 dst, a1 src, d0 n), overlap-safe -> a0 = dst
+KORG 0x502C526D toupper                 ; (d0 c) through the ctype table that rodata_502C991C points at
+KORG 0x502C5284 LibF64Sub               ; arg1 - arg2: flips arg2's sign on the stack and falls into LibF64Add (as the firmware's)
+KORG 0x502C5290 LibF64Add               ; arg1 + arg2, IEEE double (as the firmware's)
+KORG 0x502C51E5 LibF64Cmp               ; compare arg1 ? arg2, CPU flags set for signed branches (as the firmware's)
+KORG 0x502C524F LibF64CmpZero           ; compare arg1 with 0.0: flags set, d1 = +2 / -2 / 0 (as the firmware's)
+KORG 0x502C5719 LibF64Mul               ; arg1 * arg2, IEEE double (as the firmware's)
+KORG 0x502C44D1 IntAbs                  ; (d0 n) -> |n|, by way of LibI32ToF64 and LibF64CmpZero
+
+; ---- byte-order helpers and bits ------------------------------------------------
+KORG 0x502BD12D GetU16LE                ; (a0 p) -> d0 = p[0] | p[1] << 8
+KORG 0x502BD167 GetU32LE                ; (a0 p) -> d0, little-endian
+KORG 0x502BD1E4 GetU16BE                ; (a0 p) -> d0 = p[0] << 8 | p[1]
+KORG 0x502BD1A0 GetU32BE                ; (a0 p) -> d0, big-endian
+KORG 0x502BD229 PutU16LE                ; (a0 p, d0 v)
+KORG 0x502BD255 PutU16BE                ; (a0 p, d0 v)
+KORG 0x502BD281 PutU32LE                ; (a0 p, d0 v)
+KORG 0x502BD2C1 PutU32BE                ; (a0 p, d0 v)
+KORG 0x502BC76D PutU32LE2               ; (a0 p, d0 v): PutU32LE compiled again (extb where PutU32LE has extbu)
+KORG 0x502BD33D IntPow                  ; (d0 base byte, d1 n) -> d0 = base ** n
+KORG 0x502BD369 FillBytes               ; (a0 p, d0 byte, d1 n): memset written as a C loop
+KORG 0x502BCC24 BitTest                 ; (d0 word, d1 n) -> d0 = 1 if bit n is set, else 0
+KORG 0x502BCC9D BitSet                  ; (a0 *word, d0 n): *word |= 1 << n
+KORG 0x502BCC60 BitClear                ; (a0 *word, d0 n): as compiled, *word &= (1 << n) ? 0 : 1, which clears the whole word (! for ~)
+KORG 0x502BCBF1 ClampToLimits           ; (d0 v) -> v clamped to bss_502D1D24 .. bss_502D1D28
+KORG 0x502BCBBA FoldByOctaves           ; (d0 lo, d1 hi, stack v) -> v moved by 12 until lo <= v <= hi
+KORG 0x502BCF87 MemBlockFind            ; (d0 id): the block list at bss_502D25C4 ({id, size, data}, id -1 = end); not found -> CnvErrorCode 13
+KORG 0x502BCDF5 MemCopyGuarded          ; (a0 dst, a1 src, d0 n): copies only while CnvErrorCode is 0 and neither pointer is 0
+
+; ---- the same variables where the converter's own CnvMain holds them ---------------
+GEM_WS2         0x502CEFAC CnvMailboxReply
+GEM_WX2         0x502D0534 CnvMailboxReply
+ROLAND          0x502CD0C4 CnvMailboxReply
+ROLAND          0x502CE43C CnvWorkArea
+SOLTON          0x502CE254 CnvMailboxReply
+TECHNICS        0x502CF760 CnvMailboxReply
+TECHNICS        0x502CF758 CnvState
+TECHNICS        0x502D0AD8 CnvWorkArea
+TECHNICS_KN6000 0x502CF734 CnvMailboxReply
+TECHNICS_KN6000 0x502CF72C CnvState
+TECHNICS_KN6000 0x502D0AAC CnvWorkArea
+SOLTON          0x502CE24C CnvState
+TECHNICS        0x502C0BB7 CnvShowError     ; CnvState = 10; unless CnvErrorCode is 0x63, request 5 with CnvErrorMessage's text
+TECHNICS        0x502C0DAB CnvErrorMessage  ; -> a0 = the text for CnvErrorCode; this build stops at 15 (16 and above: "Fcode = n", a0 = 0)
