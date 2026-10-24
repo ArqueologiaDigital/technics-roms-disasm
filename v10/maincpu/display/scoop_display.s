@@ -350,6 +350,8 @@ GraphicsRender_TwoTable_Alt_Body:
 	pop xwa
 	ret
 
+; Calls ColorBlit_WithPaletteSave with XWA = XIY when bit 0 of DISPLAY_ENABLE_FLAG is set; XWA is
+; preserved.
 UIRender_TwoTableEvtCheck:
 	bit 0, (DISPLAY_ENABLE_FLAG:24)
 	jr nz, UIRender_TwoTableEvtCheck_Body
@@ -421,6 +423,8 @@ UIRender_ConditionalFBCall_Body:
 	pop xwa
 	ret
 
+; Calls Scoop_EventLoop_36Entry with XWA = XIY when bit 0 of DISPLAY_ENABLE_FLAG is set; XWA is
+; preserved.
 GraphicsRender_EventCheck:
 	bit 0, (DISPLAY_ENABLE_FLAG:24)
 	jr nz, GraphicsRender_EventCheck_Body
@@ -482,6 +486,7 @@ ParamDigit_ExtractAndFormat:
 ParamDigit_ExtractDone:
 	ret
 
+; ScoopDisp_BytecodeBlock1, then ParamDigit_ExtractAndFormat.
 ParamDigit_CalrData:
 	calr	ScoopDisp_BytecodeBlock1
 	calr	ParamDigit_ExtractAndFormat
@@ -2284,6 +2289,7 @@ Display_RedrawInd_StoreDigits:
 Display_RedrawInd_Ret:
 	ret
 
+; Loads W with the part number byte at 0xeee and sets bit 2 of 0x287b.
 VoiceBank_BitsAndLoad:
 	ld w, (3822:16)
 	or (0x287b:16), 4
@@ -7512,6 +7518,8 @@ Interrupt_ClearModeAndRet:
 	ld (3432:16), 0
 	ret
 
+; Copies the bytes at 0x8d40, 0x8d42 and 0x8d44 to 0xd6d, 0xd6e and 0x1127, reloads the key /
+; chord / duration display data (SNS_Init_Startup) and marks display region 3 for redraw.
 Display_RegionUpdateFromHW:
 	ld a, (0x8d40:16)
 	ld (3437:16), a
@@ -9138,6 +9146,8 @@ SndDispatch_ProcessCommand_Skip23:
 	call	VoiceSlot_RestoreState
 SndDispatch_ProcessCommand_Return2:
 	ret
+; When the byte at the current part's read position is 0x90 (note on), runs
+; MemConfig_Handler_5_Helper10; then DMA_FlagCheckWithCalls.
 PortConfig_Handler_0_Helper7:
 	call	VoiceSlot_ReadCurrentParams
 	cp	a, 144
@@ -14848,6 +14858,7 @@ DisplayStr_ShowBlankLine:
 	; copies 25 byte(s) per use (`ld bc, 25` + ldir) into the LCD text buffer
 DisplayStr_BytecodeBlock_C_Text:
 	.ascii	"                         "
+; Marks display region 0 for redraw (Display_UpdateRegion0).
 DisplayMode_Handler_3_Helper13:
 	call	Display_UpdateRegion0
 	ret
@@ -14871,6 +14882,7 @@ DisplayStr_ShowMeasureNumber_Skip3:
 DisplayStr_ShowMeasureNumber_Return:
 	ret
 
+; Writes "---" at the start of the display text line 0xeca.
 DisplayStr_FillDashes:
 	ld xix, 0xeca
 	ld a, 0x2d:opc

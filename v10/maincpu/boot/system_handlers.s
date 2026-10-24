@@ -136,6 +136,7 @@ SubCPU_Payload_GetErrorFlag:
 	exts hl
 	ret
 
+; Stores 0xff at 0x1e53e.
 SubCPU_PayloadErrorStore:
 	ld (0x01e53e:24), 0xff
 	ret
@@ -1384,6 +1385,7 @@ MidiEvt_UpdateReadPosition:
 	add (xhl - 2), wa
 	ret
 
+; Calls RhythmBuf_DispatchEvent.
 RhythmBuf_DispatchWrap:
 	calr RhythmBuf_DispatchEvent
 	ret
@@ -3409,6 +3411,8 @@ SeqBuf_BytecodeSnippet:
 	ret
 	decw	1, (0x5c3:16)
 	ret
+; Takes the next byte from the sequencer event buffer (descriptor ending at 0x1e549) with
+; RingBuf_CheckFull_512.  Out: HL = byte or 0xffff.  Preserves IX and XDE.
 SeqBuf_ReadByte:
 	pushw ix
 	push xde
@@ -3591,6 +3595,8 @@ TempoRingBuf_Init:
 	popw ix
 	ret
 
+; Resets the tempo event buffer's read-ahead index (word 0x1e749, -10 of its descriptor) to its
+; read index (0x1e74b, -8).  HL is preserved.
 TempoRingBuf_SaveReadPos:
 	pushw hl
 	ld hl, (0x01e74b:24)
@@ -3669,6 +3675,8 @@ RhythmBuf_InlineBytecode:
 	unlk	xiz
 	ret
 
+; Returns HL = 0 when the rhythm event buffer's read and write indexes (words 0x1ef55 and
+; 0x1ef59) are equal, else 0xffff.
 RhythmBuf_CheckEmpty:
 	ld hl, (0x01ef59:24)
 	cp hl, (0x1ef55:24)
@@ -3971,6 +3979,8 @@ SeqMain_GetTimingValue:
 	ld hl, (0x01f379:24)
 	ret
 
+; Empties the 1024-byte ring buffer whose descriptor ends at 0x1f37b (Seq_RingBuf_Init_1024).
+; Preserves IX and XDE.
 SeqMain_InitBuffer:
 	pushw ix
 	push xde
@@ -4074,6 +4084,8 @@ SeqBuf_MidiOut_GetTimingValue:
 	ld hl, (0x01f783:24)
 	ret
 
+; Empties the 256-byte ring buffer whose descriptor ends at 0x1f785 (Seq_RingBuf_Init_256).
+; Preserves IX and XDE.
 SeqBuf_MidiOut_Init:
 	pushw ix
 	push xde
@@ -4589,6 +4601,7 @@ SeqBuf_TimerEvent_BytecodeBlock2_Return:
 	ret
 
 
+; Seq_RingBuf_ReadByte on the ring buffer at SEQ_ALT3_RINGBUF_BASE.  Preserves IX and XDE.
 SeqBuf_VoiceMap_ReadByte:
 	pushw ix
 	push xde
@@ -4964,6 +4977,8 @@ SeqBuf_NoteEvent_AlternateRead:
 	popw	ix
 	ret
 
+; Seq_RingBuf_ReadByte_Small on the ring buffer whose descriptor ends at 0x204df.  Preserves IX
+; and XDE.
 Seq_RingBuf_ReadSmall:
 	pushw ix
 	push xde

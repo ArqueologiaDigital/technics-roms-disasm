@@ -1088,6 +1088,7 @@ Demo_ScanPartDone:
 	res 2, (0x287b:16)
 	ret
 
+; Copies the 16 bytes at 0xf1a0 to 0xcce (Mem_Copy).
 Voice_SavePreset:
 	pushw 0x10
 	pushw 0x0
@@ -1117,6 +1118,8 @@ Demo_LookupPartTableEntry:
 	ld xhl, (xwa)
 	ret
 
+; Waits while bit 2 of the byte at 0x420 is set, for at most NakaData_RomEnd polls (the constant
+; is used as a loop count).
 Demo_WaitForDisplayBit:
 	ld xwa, NakaData_RomEnd
 	bit 2, (1056:16)
@@ -5130,6 +5133,8 @@ FileIO_GetRecordPtrAlt:
 	lda xhl, (0x0271f2:24)
 	ret
 
+; Copies at most 12 characters of the string at XWA to 0x271f2 (FileIO_CopyString_WriteNull) and
+; terminates it at 0x271fe.
 FileIO_WriteRecordName:
 	ld xbc, xwa
 	ld xwa, 0x271f2

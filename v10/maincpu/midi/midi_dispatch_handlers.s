@@ -4266,6 +4266,7 @@ DataBuf_CopyReverbBlock6:
 	stcfm 0, (xbc)
 	ret
 
+; Copies byte +2 and bit 7 of byte +3 from the record at XWA to the record at XBC.
 DataBuf_CopySimpleBlock4:
 	ld e, (xwa + 2)
 	ld (xbc + 2), e
@@ -4676,6 +4677,8 @@ DataBuf_CopyCompressorBlock16:
 	ld (xde + 15), a
 	ret
 
+; Copies bits 1 and 0 of byte +2 from the record at XWA to the record at XBC; both pointers are
+; advanced by 2.
 DataBuf_CopyDelayBit2:
 	inc 2, xbc
 	inc 2, xwa
@@ -6341,6 +6344,8 @@ VoiceParam_CopyFields_TypeD:
 	or (xbc + 3), a
 	ret
 
+; Copies bits 1 and 0 of byte +2 from the record at XWA to the record at XBC; both pointers are
+; advanced by 2 (the same code as DataBuf_CopyDelayBit2).
 VoiceParam_CopyBits_TwoFlags:
 	inc 2, xbc
 	inc 2, xwa
@@ -10722,6 +10727,7 @@ MidiChan_TimerDispatch_Data_Code_Loop:
 	jr	lt, MidiChan_TimerDispatch_Data_Code_Loop
 	ret
 
+; Returns in XHL entry WA (zero-extended) of the pointer table the u32 at 0x90f2 points to.
 Part_LookupByIndex:
 	ld xbc, (0x90f2:16)
 	extz wa
@@ -12517,6 +12523,7 @@ MidiSysEx_FinishPanelXfer:
 	calr	MidiSysEx_ProcessBlock_Helper5
 	res	7, (0xbd1a:16)
 	ret
+; Sets bit 0 of 0x10ea when bit 4 of 0xbd1a is set.
 MidiSysEx_ProcessBlock_Helper5:
 	bit	4, (0xbd1a:16)
 	ret	z

@@ -2958,6 +2958,7 @@ SoundCtrl_SendCommand:
 	inc 2, xsp
 	ret
 
+; Posts EVT_ALL_PAINT with parameter 0 to the current target (ApPostEvent).
 UI_PostRefreshEvent:
 	ld xwa, 0xffffffff
 	ld xbc, EVT_ALL_PAINT

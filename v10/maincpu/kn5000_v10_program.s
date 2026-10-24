@@ -2145,6 +2145,7 @@ free_X:
 	.include "sequencer/seq_audio_mode.s"
 	.include "sequencer/rhythm_routines.s"
 	.include "sequencer/accompaniment_engine.s"
+; Voice_InitBankData with XIZ preserved.
 Voice_InitBankDataSafe:
 	push xiz
 	call Voice_InitBankData

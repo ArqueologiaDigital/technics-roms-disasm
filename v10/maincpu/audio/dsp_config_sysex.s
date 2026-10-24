@@ -73,6 +73,7 @@ SysEx_ClampVoiceIndex8_Epilogue:
 	inc	2, xsp
 	ret
 
+; Returns in L entry A of SysEx4B_LevelCurve128; A >= 0x80 is taken as 0.
 SysEx_ClampVoiceIndex128:
 	cp a, 0x80
 	jr c, SysEx_ClampVoiceIndex128_DoLookup
@@ -140,6 +141,7 @@ SysEx_ClampVoiceIndex128_Epilogue:
 	inc	2, xsp
 	ret
 
+; Returns in L entry A of SysEx49_VoiceIndexMap8 (8 entries); A >= 8 is taken as 0.
 SysEx_ClampVoiceIndex8_49:
 	cp a, 0x8
 	jr c, SysEx_ClampVoiceIndex8_49_DoLookup
@@ -205,6 +207,7 @@ SysEx_ApplyGsChorusLevel_Epilogue:
 	inc	2, xsp
 	ret
 
+; Returns in L entry A of SysEx49_LevelCurve128; A >= 0x80 is taken as 0.
 SysEx_ClampVoiceIndex128_49:
 	cp a, 0x80
 	jr c, SysEx_ClampVoiceIndex128_49_DoLookup
@@ -923,6 +926,9 @@ SwbtWr_ProcessAll_CompactDone:
 	ldw (0x90e2:16), 0
 	ret
 
+; Points the switch-write dispatcher at bank 1: listener table SwbtBank1_ListenerTable (0xc081),
+; post callbacks SwbtBank1_PostCallbacks (0xc085), queue SWBTWR_EVENT_QUEUE (0xc089), then
+; SwbtWr_DispatchLoop_Init.
 SwbtWr_InitBank1:
 	ld xiy, SwbtBank1_ListenerTable
 	ld (0xc081:16), xiy
@@ -933,6 +939,9 @@ SwbtWr_InitBank1:
 	calr SwbtWr_DispatchLoop_Init
 	ret
 
+; Points the switch-write dispatcher at bank 2: listener table Naka_RenderMode_A_Table (0xc081),
+; post callbacks SwbtBank2_PostCallbacks (0xc085), queue SWBTWR_EVENT_QUEUE (0xc089), then
+; SwbtWr_DispatchLoop_Init.
 SwbtWr_InitBank2:
 	ld xiy, Naka_RenderMode_A_Table
 	ld (0xc081:16), xiy
@@ -943,6 +952,9 @@ SwbtWr_InitBank2:
 	calr SwbtWr_DispatchLoop_Init
 	ret
 
+; Points the switch-write dispatcher at bank 3: listener table Naka_EventHandler_Table (0xc081),
+; post callbacks SwbtBank3_PostCallbacks (0xc085), queue 0xc039 (SwbtWr's buffer, 0xc089), then
+; SwbtWr_DispatchLoop_Init.
 SwbtWr_InitBank3:
 	ld xiy, Naka_EventHandler_Table
 	ld (0xc081:16), xiy
@@ -1076,6 +1088,8 @@ SwbtWr_TrailingBytecode_Skip:
 SwbtWr_TrailingBytecode_Return:
 	ret
 
+; Before a panel-memory (LSW) load: VoiceParam_SaveReverbChorus, then SndParam_SyncDisplayBitmap
+; (tail jump).
 PreLswLoad:
 	calr VoiceParam_SaveReverbChorus
 	jp SndParam_SyncDisplayBitmap
@@ -1122,9 +1136,12 @@ PreLswSave:
 PostLswSave:
 	ret
 
+; Empty routine (`ret`).
 PrePmLoad:
 	ret
 
+; After a panel-memory load that succeeded (WA >= 0): PanelTlv_ValidatePanelMemories and
+; PanelTlv_WritePanelMemoryHeaders.
 PostPmLoad:
 	cp wa, 0:i3
 	ret lt
@@ -1912,10 +1929,12 @@ MidiThru_Disable:
 	res 6, (0xb7e2:16)
 	ret
 
+; Sets bit 6 of 0xb7e2.
 MidiThru_Enable:
 	set 6, (0xb7e2:16)
 	ret
 
+; Returns in L the computer-interface selection (COM_SELECT; 0 = MIDI).
 GET_COMPUTER_INTERFACE_SELECTION:
 	ld l, (COM_SELECT:16)
 	ret
@@ -2855,6 +2874,7 @@ DSPCfg_ReadViaTableLookup:
 	inc 2, xsp
 	ret
 
+; Stores A at (XBC) and returns HL = 0.
 DSPCfg_StoreByte_ReturnZero:
 	ld (xbc), a
 	ld hl, 0:i3
@@ -5529,6 +5549,7 @@ AudioInit_SelectAndDispatch:
 	call AudioInit_SelectPriority
 	jp AudioInit_DispatchChanges
 
+; AudioInit_CheckMIDIStatus, then AudioInit_DispatchChanges (tail jump).
 AudioInit_CheckMIDIAndDispatch:
 	call AudioInit_CheckMIDIStatus
 	jp AudioInit_DispatchChanges

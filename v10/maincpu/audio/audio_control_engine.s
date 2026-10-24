@@ -2327,10 +2327,12 @@ PanelInput_QueueChange_Done:
 	pop xiz
 	ret
 
+; Returns XHL = 0x8e94, the panel input change queue.
 PanelInput_ChangeQueue:
 	lda xhl, (0x8e94:16)
 	ret
 
+; Empties the panel input change queue: 0xff at 0x8e94 and 0 at 0x8ec4.
 PanelInput_ClearChangeQueue:
 	ld (0x8e94:16), 255
 	ld (0x8ec4:16), 0
@@ -9489,6 +9491,8 @@ PartReinit_SendD1Command:
 	calr VoiceParam_DispatchByMode
 	ret
 
+; Writes the command {0xd0, 0, 0, part (byte 0x91c8)} with an 0xff end mark at 0x91b5 and runs it
+; (VoiceParam_DispatchByMode).
 PartReinit_SendD0Command:
 	ld xix, 0x91b5
 	ldw wa, 0xd0

@@ -766,6 +766,7 @@ DispatchHandler_ConditionalJump:
 DispatchHandler_JumpToSubHandler:
 	jr DispatchHandler_CallResolve
 
+; One-entry `jr` thunk: runs SeqNode_InsertAtPosition (through DispatchHandler_CallNodeInsert).
 DispatchHandler_JumpSub:
 	jr DispatchHandler_CallNodeInsert
 

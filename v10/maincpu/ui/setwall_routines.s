@@ -541,6 +541,8 @@ SetWall_WriteAll_ModeSet:
 SetWall_NopPadding:
 	.fill 6, 1, 0x0e
 
+; SetWall_LocalWriteAll when the byte at 0xd3f is 10, otherwise SetWall_LocalSingle_Exec; then
+; PlayMode_SwitchToModeAndNotify.
 SetWall_LocalSlotChange:
 	cp (3391:16), 10
 	jr nz, SetWall_LocalSingle

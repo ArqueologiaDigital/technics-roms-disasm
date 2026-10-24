@@ -125,6 +125,8 @@ FDC_WaitParamByteReady_Skip6:
 FDC_WaitParamByteReady_Epilogue2:
 	pop	xiz
 	ret
+; Sends floppy-controller command 0x36 (FDC_Send_Command), waits SOME_DELAY 2 and marks the head
+; position unknown (0x8b04 = 0xff).
 FDC_INIT:
 	ldw	wa, 54
 	calr	FDC_Send_Command
@@ -579,6 +581,7 @@ FDC_NOP_Delay_Exit:
 	ret
 
 
+; Pulses port H bit 0 high for FDC_NOP_Delay 10.
 FDC_Pulse_PH0:
 	set	0, (PH:8)
 	ldw wa, 0xa

@@ -14153,6 +14153,7 @@ Voice_ReadSearchResult:
 	ld l, (0xceaa:16)
 	ret
 
+; Clears the word at 0xce66 and the byte at 0xceb2.
 Voice_ResetSearchState:
 	ldw (0xce66:16), 0
 	ld (0xceb2:16), 0
@@ -20436,6 +20437,7 @@ PlayModeStateMachine_LoadParam:
 	inc 4, xsp
 	ret
 
+; Spins while bit 0 of the byte at 0x432 is set.
 SeqPlay_BusyWaitLoop:
 	bit 0, (1074:16)
 	jr nz, SeqPlay_BusyWaitLoop
@@ -23955,6 +23957,7 @@ SysexRingBuf_IncrementRead:
 SysexRingBuf_ReadReturn:
 	ret
 
+; Returns HL = 0x7ff minus the word at 0xd8b2.
 SysexRingBuf_GetFreeSpace:
 	ldw hl, 0x7ff
 	sub hl, (0xd8b2:16)
@@ -24791,6 +24794,7 @@ ApplyProgramChange_LoadReg:
 	ldw de, 0x400
 	jr ApplyProgramChange_LoadDRAM
 
+; Enters ApplyProgramChange_LoadDRAM with XBC = 0x28 and DE = 0x200.
 SndParam_InitBufferConverge:
 	ld xbc, 0x28
 	ldw de, 0x200
@@ -25242,6 +25246,7 @@ Param_SignExtendRetu_Data:
 	or xhl, xde
 	or xhl, xbc
 	ret
+; Returns HL = WA & ~BC and pops two stack words (RETD 4).
 Param_SignExtendReturn_Helper2:
 	ld hl, wa
 	cpl	bc
@@ -26625,6 +26630,8 @@ SendPartDataBlock_SetWord6:
 SendPartDataBlock_Return4:
 	ret
 
+; When SubCPU_Payload_GetErrorFlag returns 0xffff, sends the inter-CPU message
+; COMM_BuildAndSendPacket(0xff, 0xff).
 SendPartDataBlock_DoGetError:
 	call	SubCPU_Payload_GetErrorFlag
 	cp	hl, 0xffff
@@ -29391,6 +29398,7 @@ Memset_Block3:
 	djnz16 de, Memset_Block3
 	ret
 
+; Returns HL = |stack word +4| (signed 16-bit).
 Math_AbsInt16:
 	ld hl, (xsp + 4)
 	cp hl, 0:i3

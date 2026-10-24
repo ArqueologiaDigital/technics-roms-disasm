@@ -26,6 +26,8 @@ SeMenu_SendEvent_StoreAndReturn:
 	inc 2, xsp
 	ret
 
+; Copies the byte at RAM 0x8d38 to (XWA) (spelled `ldmi16 (xwa), 0x8d38`, the memory-to-memory
+; move ld (xwa),(0x8d38)).
 SeMenu_LoadRawAddr:
 	ldmi16 (xwa), 0x8d38
 	ret
@@ -6003,6 +6005,7 @@ SeMenu_LoadObjEntries:
 	ldmi16 (xwa), 0x6ae
 	ret
 
+; Stores A in the sound-editor state byte 0x6ae (read by SeMenu_LoadObjEntries).
 SeMenu_SetMode:
 	ld (1710:16), a
 	ret

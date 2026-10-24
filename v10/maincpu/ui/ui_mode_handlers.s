@@ -1098,6 +1098,7 @@ ShortPause_InnerLoop:
 	jr c, ShortPause_OuterLoop
 	ret
 
+; Busy-waits 16 iterations.  Clobbers WA.
 DramTest_Loop:
 	ld wa, 0:i3
 

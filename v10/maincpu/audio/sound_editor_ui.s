@@ -7847,6 +7847,8 @@ SeGfx_StaticOp00_FromBuf:
 	call SeGfx_StaticOp00_Line
 	pop xwa
 	ret
+; Calls SeGfx_StaticOp02_Line with XWA = 0x6ca (a RAM buffer) and COLORBLIT_MODE cleared; XWA is
+; preserved.
 SeGfx_StaticOp02_FromBuf:
 	; --- Wrapper function 5: same pattern ---
 	ld	(COLORBLIT_MODE:24), 0

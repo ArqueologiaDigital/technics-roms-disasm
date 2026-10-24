@@ -9136,14 +9136,17 @@ GetRootObject:
 	ld xhl, (ROOT_OBJECT:24)
 	ret
 
+; Returns in XHL the root event (ROOT_EVENT).
 GetRootEvent:
 	ld xhl, (ROOT_EVENT:24)
 	ret
 
+; Returns in XHL the root event's parameter (ROOT_PARAM).
 GetRootParam:
 	ld xhl, (ROOT_PARAM:24)
 	ret
 
+; Stores XWA in ROOT_OBJECT.
 SetRootObject:
 	ld (ROOT_OBJECT:24), xwa
 	ret
@@ -10052,6 +10055,7 @@ GetModeNow:
 	ld xhl, (MODE_NOW:24)
 	ret
 
+; Returns in XHL the previous mode as an object id (MODE_OLD).
 GetModeOld:
 	ld xhl, (MODE_OLD:24)
 	ret

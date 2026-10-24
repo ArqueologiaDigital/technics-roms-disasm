@@ -4146,6 +4146,7 @@ SetCurrentSlotIndex:
 	ld (0x09480e:24), wa
 	ret
 
+; Returns in HL the word at 0x9480e, the current medley slot.
 GetCurrentSlotIndex:
 	ld hl, (0x09480e:24)
 	ret
