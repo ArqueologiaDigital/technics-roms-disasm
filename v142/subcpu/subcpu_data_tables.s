@@ -229,8 +229,8 @@ DSP2_MixerGain_Curve:
 ; --- 0x00F340-0x00F34D  14 bytes between the curve and the pool (0xEE9AFF00, 0x10000003, zeros).
 ; No reader found: no absolute operand (hex or decimal, :16 or :24) and no 3-byte LE
 ; value in the image names an address in this range.  Purpose not established.
-; Bytes 2..5 are a u32 pointer into the zero-initialised RAM: 0x0003EE9A in v1.42,
-; 0x0003EE82 in v1.41 -- the same offset from Payload_Bss_Start in both, so it moves
+; Bytes 2..5 are a u32 pointer into the zero-initialised RAM: 0x0003ee9a in v1.42,
+; 0x0003ee82 in v1.41 -- the same offset from Payload_Bss_Start in both, so it moves
 ; with the BSS base the way the code's DRAM operands do.
 IRAM_Unreferenced_F340:
 	.byte 0x00, 0xff

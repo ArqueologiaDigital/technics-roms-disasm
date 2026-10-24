@@ -8,13 +8,13 @@ QUESTION THIS ANSWERS
     applies EDITS below, and the result assembles byte-for-byte to
     original_ROMs/kn5000_subprogram_v141.rom (make gate, section "subcpu payload v141").
     Measured 2026-10-24 (notes/v141-subcpu-port/README.md has the alignment that found it):
-      1. the payload version word at 0x00F000: 141 instead of 142;
+      1. the payload version word at 0x00f000: 141 instead of 142;
       2. v1.42 added five stores (0x17 bytes) at the top of RESET -- v1.41 lacks them, so
          every later v1.41 address is 0x17 lower;
-      3. the one 0xFF alignment byte in front of the FP library (FP_dcmp_AlignPad in v1.42)
+      3. the one 0xff alignment byte in front of the FP library (FP_dcmp_AlignPad in v1.42)
          is not needed in v1.41, so from FP_dcmp on the shift is 0x18;
       4. consequently the zero-initialised RAM linked after the image starts 0x18 lower
-         (0x03EE5E instead of 0x03EE76).  No source edit is needed for that: both trees spell
+         (0x03ee5e instead of 0x03ee76).  No source edit is needed for that: both trees spell
          those operands Payload_Bss_Start+offset (scripts/converters/subcpu_bss_relative_refs.py).
     Nothing else differs.
 
@@ -48,9 +48,9 @@ BANNER = (b"; ==================================================================
           b"; EDITS list is the whole v1.41 / v1.42 difference.  Edit v142 and re-run that script\n"
           b"; rather than editing this tree by hand (it has --check).\n"
           b"; \xe2\x9a\xa0 ADDRESSES QUOTED IN COMMENTS ARE v1.42 ADDRESSES (the comments are v142's).\n"
-          b";   v1.41 address = v1.42 address        for 0x000400-0x01F924 (vectors, tables, RESET)\n"
-          b";                 = v1.42 address - 0x17 for 0x01F93B-0x03D2AA (after RESET's v1.42-only stores)\n"
-          b";                 = v1.42 address - 0x18 for 0x03D2AC-0x03EE75 (FP_dcmp onward)\n"
+          b";   v1.41 address = v1.42 address        for 0x000400-0x01f924 (vectors, tables, RESET)\n"
+          b";                 = v1.42 address - 0x17 for 0x01f93b-0x03d2aa (after RESET's v1.42-only stores)\n"
+          b";                 = v1.42 address - 0x18 for 0x03d2ac-0x03ee75 (FP_dcmp onward)\n"
           b";   and DRAM in the zero-initialised window (Payload_Bss_Start+offset) is 0x18 lower.\n"
           b"; Labels are what to trust: rebuilt_ROMs/kn5000_subprogram_v141.llvm.elf and\n"
           b"; symbols/subcpu_v141_symbols_reference.txt give the v1.41 address of every name.\n"
@@ -60,7 +60,7 @@ BANNER = (b"; ==================================================================
 EDITS = [
     ("subcpu_data_tables.s",
      b"\t.short 142\t\t; payload version 1.42 (0x008E); see the banner\n",
-     b"\t.short 141\t\t; payload version 1.41 (0x008D); see the banner\n"),
+     b"\t.short 141\t\t; payload version 1.41 (0x008d); see the banner\n"),
     (MAIN_DST,
      b"; =============================================================================\n"
      b"; KN5000 Sub-CPU Payload ROM (192KB)\n"
@@ -86,7 +86,7 @@ EDITS = [
      b"FP_dcmp_AlignPad:\n"
      b"\t.byte 0xff\n",
      b"; The FP library (FP_dcmp onward) starts on an even address.  In v1.42 the code above ends on\n"
-     b"; an odd one and a 0xFF pad byte (FP_dcmp_AlignPad there) fills the gap; in v1.41, 0x17 bytes\n"
+     b"; an odd one and a 0xff pad byte (FP_dcmp_AlignPad there) fills the gap; in v1.41, 0x17 bytes\n"
      b"; shorter, it already ends on an even address and no pad byte exists.\n"
      b"\t.balign\t2, 0xff\n"),
 ]

@@ -11,9 +11,10 @@
 	.equ	ToneGen_RegAddrLatch, 0x100000
 	.equ	ToneGen_RegDataPort, 0x100002
 
-; --- DRAM variables named by the headers that use them (2026-09-25).  Only these five have names;
-; the other RAM operands are spelled Payload_Bss_Start+offset until their meaning is pinned the
-; same way (scripts/converters/subcpu_bss_relative_refs.py). ---
+; --- DRAM variables named by the headers that use them (2026-09-25; the stack tops and FP_Errno
+; 2026-10-24).  Only these have names; the other RAM operands are spelled Payload_Bss_Start+offset
+; until their meaning is pinned the same way.  scripts/converters/subcpu_bss_relative_refs.py
+; writes each name below in place of the offset it stands for, wherever that offset is spelled. ---
 ; ToneGen_StagingBlock: "THE TONE GENERATOR STAGING BLOCK AT 0x0451CC" (the banner that decodes
 ;   its layout, above Voice_Build_OutputLevel in this file) -- the shadow record the TG writers
 ;   copy from.
@@ -28,6 +29,23 @@
 	.equ	Part_PresentWord, Payload_Bss_Start+0x24f4
 	.equ	Part_PatchRecord_Ptr, Payload_Bss_Start+0x24f8
 	.equ	Voice_GlobalFlags, Payload_Bss_Start+0x24cd
+; Task1_StackTop / Task2_StackTop / Task3_StackTop: the initial stack tops in the +4 field of the
+;   three TaskSched_TaskDescriptorTable records (that table's header gives the DRAM partition).
+;   Task 1's is also the boot stack PostReset_InitAudio loads before it calls TaskSched_Init.
+; TaskSched_StackTop: the scheduler's own stack, reloaded by TaskSched_Init, TaskSched_Dispatch
+;   and TaskSched_ExitCurrentTask; it sits between task 3's stack and task 2's.
+	.equ	Task1_StackTop, Payload_Bss_Start+0x1824
+	.equ	Task2_StackTop, Payload_Bss_Start+0x1daa
+	.equ	Task3_StackTop, Payload_Bss_Start+0x1c26
+	.equ	TaskSched_StackTop, Payload_Bss_Start+0x1ca8
+; FP_Errno: the C library's errno word.  The double-precision routines in subcpu_fp_math.s store
+;   ERRNO_EDOM there for a domain error (FP_log of x <= 0, FP_pow of 0 to a power <= 0) and
+;   ERRNO_ERANGE for a range error (FP_tan of |x| >= 2^31, FP_pow over/underflow); FP_pow_ExpLog
+;   saves it, clears it, calls FP_log and tests it for ERRNO_EDOM, then restores it.  The values
+;   are the classic Unix EDOM / ERANGE numbers.
+	.equ	FP_Errno, Payload_Bss_Start+0x1dac
+	.equ	ERRNO_EDOM, 33
+	.equ	ERRNO_ERANGE, 34
 ; Payload_Bss_Size: bytes of zero-initialised RAM that MemClear_DRAM_And_ExtRAM clears from
 ;   Payload_Bss_Start (the first even address after the program image) at reset.
 	.equ	Payload_Bss_Size, 0x66f2
@@ -52,9 +70,9 @@ RESET:
 	ld (DMAR:16), 0
 	ld (DMAB:16), 0
 	ld (INTCLR:8), 0x00:io
-	ld (272:16), 0
-	ld (273:16), 177
-	ld (266:16), 4
+	ld (WDMOD:16), 0
+	ld (WDCR:16), 0xb1	; the watchdog disable code; with WDMOD.WDTE just cleared, this stops the watchdog
+	ld (CLKMOD:16), 0x04
 	ld (P1FC:8), 0xFF:io
 	ld (P2FC:8), 0xFF:io
 	ld (P3FC:8), 0xFF:io
@@ -152,7 +170,7 @@ RESET:
 	calr MemClear_DRAM_And_ExtRAM
 
 PostReset_InitAudio:
-	lda xwa, (Payload_Bss_Start+0x1824:24)
+	lda xwa, (Task1_StackTop:24)
 	ld xsp, xwa
 	call TaskSched_Init
 ; ★ TASK 1 ENTRY POINT (0x01FAB1).  The `call` above never returns here in the ordinary way:
@@ -694,13 +712,13 @@ DSP_ChecksumRange_Loop:
 ; operand 0xFFF980DE with this code's 0x0001FD8C (= this table - 12), and its "ROM image of the
 ; semaphore counts" with 0x0001FDBC (TaskSched_EventFlagInit below).
 TaskSched_TaskDescriptorTable:
-	.long	Task1_StartAudioSystem, Payload_Bss_Start+0x1824	; task 1: entry, stack top
+	.long	Task1_StartAudioSystem, Task1_StackTop	; task 1: entry, stack top
 	.short	0x8800					;         initial SR
 	.byte	3, 0					;         priority 3
-	.long	Task2_NeverSpawned, Payload_Bss_Start+0x1daa		; task 2: entry, stack top
+	.long	Task2_NeverSpawned, Task2_StackTop	; task 2: entry, stack top
 	.short	0x8800
 	.byte	1, 0					;         priority 1
-	.long	Task3_EnterDspApplyLoop, Payload_Bss_Start+0x1c26		; task 3: entry, stack top
+	.long	Task3_EnterDspApplyLoop, Task3_StackTop	; task 3: entry, stack top
 	.short	0x8800
 	.byte	3, 0					;         priority 3
 ; Initial values of the two EVENT flag bytes 0x1080/0x1081 (events 1, 2): TaskSched_Init
@@ -739,7 +757,7 @@ INTT3_TaskSwitch_Handler:
 	jrl TaskSwitch_Countdown
 
 TaskSched_Init:
-	ld xsp, Payload_Bss_Start+0x1ca8
+	ld xsp, TaskSched_StackTop
 	xor wa, wa
 	ld (4166:16), wa
 	inc 1, wa
@@ -902,7 +920,7 @@ TaskSched_Dispatch:
 	ld iy, (4166:16)
 	extz xiy
 	ld (xiy + 4), xsp
-	ld xsp, Payload_Bss_Start+0x1ca8
+	ld xsp, TaskSched_StackTop
 	xor wa, wa
 	ld (4166:16), wa
 
@@ -1073,7 +1091,7 @@ TaskSched_SpawnTask:
 ; TaskSched_Dispatch picks the next task.  No caller in v1.42.
 TaskSched_ExitCurrentTask:
 	ei 6
-	ld xsp, Payload_Bss_Start+0x1ca8
+	ld xsp, TaskSched_StackTop
 	ld ix, (4166:16)
 	extz xix
 	ld (xix + 9), 0x0
@@ -34906,7 +34924,7 @@ DSP_VoiceParamReadWrite:
 	extz xwa
 	ld xbc, 0x11F
 	call Math_Multiply32
-	ld xwa, Payload_Bss_Start+0x24f2
+	ld xwa, Part_Record_Base
 	add xwa, xhl
 	ld wa, (xwa)
 	bit 0, wa
@@ -34940,7 +34958,7 @@ DSP_VoiceParam_MultiSlot_LoopBody:
 	extz xwa
 	ld xbc, 0x11F
 	call Math_Multiply32
-	ld xwa, Payload_Bss_Start+0x24f2
+	ld xwa, Part_Record_Base
 	add xwa, xhl
 	add xwa, xiz
 	ld xwa, (xwa)
@@ -34957,7 +34975,7 @@ DSP_VoiceParam_MultiSlot_LoopBody:
 	extz xwa
 	ld xbc, 0x11F
 	call Math_Multiply32
-	ld xwa, Payload_Bss_Start+0x24f2
+	ld xwa, Part_Record_Base
 	add xwa, xhl
 	add xwa, xiz
 	ld xwa, (xwa)

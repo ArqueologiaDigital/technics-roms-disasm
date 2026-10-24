@@ -15,12 +15,12 @@ is address ripple. The real changes are three, plus one consequence:
 
 | # | v1.42                                                                   | v1.41                  | effect                                        |
 |---|-------------------------------------------------------------------------|------------------------|-----------------------------------------------|
-| 1 | version word at 0x00F000 = 142                                          | 141                    | none                                          |
+| 1 | version word at 0x00f000 = 142                                          | 141                    | none                                          |
 | 2 | RESET begins with 5 stores: DMA0V, DMA2V, DMAR, DMAB, INTCLR := 0       | absent                 | every later address 0x17 lower                |
-| 3 | 1 byte of 0xFF pad (FP_dcmp_AlignPad) before the FP library at 0x03D2AB | absent (already even)  | from FP_dcmp on, 0x18 lower                   |
-| 4 | zero-initialised RAM (BSS) at 0x03EE76, 0x66F2 bytes                    | at 0x03EE5E, same size | every absolute DRAM operand in it, 0x18 lower |
+| 3 | 1 byte of 0xff pad (FP_dcmp_AlignPad) before the FP library at 0x03d2ab | absent (already even)  | from FP_dcmp on, 0x18 lower                   |
+| 4 | zero-initialised RAM (BSS) at 0x03ee76, 0x66f2 bytes                    | at 0x03ee5e, same size | every absolute DRAM operand in it, 0x18 lower |
 
-The image end moves by the same amount, so v1.41 carries 0x18 more bytes of 0xFF tail fill.
+The image end moves by the same amount, so v1.41 carries 0x18 more bytes of 0xff tail fill.
 Nothing else differs. That is not an inference: it is what the byte-exact build proves.
 
 ## How the tree is made, and how it stays in sync
@@ -36,9 +36,19 @@ Nothing else differs. That is not an inference: it is what the byte-exact build 
   excluded because they are Q23 coefficients, not addresses: they are identical in v1.41.
   The converter also found one pointer hidden in a `.byte` run (IRAM_Unreferenced_F340
   +2 = Payload_Bss_Start+0x24).
+  Since the review fixes of 2026-10-24 it also writes a name in place of an offset whenever
+  the tree defines `.equ NAME, Payload_Bss_Start+0xOFFSET` (step 5 of its docstring; it
+  prints how many operands it named). That run named 28 operands: `Part_Record_Base` (3,
+  previously written as the bare offset), and the new `Task1_StackTop` (1), `TaskSched_StackTop`
+  (3) and `FP_Errno` (21). The three `.long` stack tops in `TaskSched_TaskDescriptorTable`
+  were respelled by hand. `scripts/renaming/rename_v142_fp_errno_values.sed` then wrote the
+  values stored into `FP_Errno` as `ERRNO_EDOM` / `ERRNO_ERANGE`.
+* `make gate` runs `create_v141_subcpu_source.py --check` last. A comment-only v142 change
+  leaves both images byte-identical, so without the check nobody would notice that v141
+  had not been regenerated.
 * Addresses quoted in v141 comments are v1.42 addresses, because the comments are v142's
   (the banner gives the conversion). Labels carry the right address for each revision:
-  `symbols/subcpu_v141_symbols_reference.txt` (5,058 names). That is every v142 name
+  `symbols/subcpu_v141_symbols_reference.txt` (5,063 names). That is every v142 name
   except `FP_dcmp_AlignPad`, which covers no byte in v1.41.
 
 ## How the delta was found
@@ -58,16 +68,16 @@ that differ by the shift. Eight change length:
 
 | v1.42 address | v1.42 bytes | v1.41 bytes | what it is                                             |
 |---------------|-------------|-------------|--------------------------------------------------------|
-| 0x01F925      | 23          | 0           | item 2 (RESET; the first byte, 0xF1, happens to match) |
-| 0x0249C3      | 50          | 36          | aligner artefact: same code, repetitive 7-byte stores  |
-| 0x024A08      | 0           | 14          | (the other half of the artefact above)                 |
-| 0x0272D8      | 29          | 1           | aligner artefact, as above                             |
+| 0x01f925      | 23          | 0           | item 2 (RESET; the first byte, 0xf1, happens to match) |
+| 0x0249c3      | 50          | 36          | aligner artefact: same code, repetitive 7-byte stores  |
+| 0x024a08      | 0           | 14          | (the other half of the artefact above)                 |
+| 0x0272d8      | 29          | 1           | aligner artefact, as above                             |
 | 0x027309      | 8           | 1           | (artefact)                                             |
-| 0x02731E      | 1           | 36          | (artefact; the three net to zero)                      |
-| 0x03D2AB      | 1           | 0           | item 3                                                 |
-| 0x03EF00      | 0           | 24          | the longer tail fill                                   |
+| 0x02731e      | 1           | 36          | (artefact; the three net to zero)                      |
+| 0x03d2ab      | 1           | 0           | item 3                                                 |
+| 0x03ef00      | 0           | 24          | the longer tail fill                                   |
 
-The build is what decides "artefact": the v141 tree has no edit at 0x0249C3 or 0x0272D8 and
+The build is what decides "artefact": the v141 tree has no edit at 0x0249c3 or 0x0272d8 and
 still matches byte for byte.
 
 ## Reproduce
@@ -85,5 +95,5 @@ To reproduce it:
         original_ROMs/kn5000_subprogram_v141.rom original_ROMs/kn5000_subprogram_v140.rom
 
 The raw diff is 56,018 B in 2,508 runs. The shifts are -0x34 and -0x86. Length-changing
-gaps sit around 0x031103-0x03121B (net about -134 B) and 0x035CC1-0x03602C (net about
+gaps sit around 0x031103-0x03121b (net about -134 B) and 0x035cc1-0x03602c (net about
 +82 B). A v140 tree should be derived from v141 the same way. Its tail is 52 bytes longer.

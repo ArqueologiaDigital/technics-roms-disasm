@@ -126,7 +126,7 @@ def main():
     uneq = [g for g in gaps if g[1] != g[3]]
     print("gaps: %d, of which equal-length %d, length-changing %d:" % (len(gaps), len(gaps) - len(uneq), len(uneq)))
     for ga, la, gb, lb in uneq:
-        print("  v1.42 0x%06X +%-3d  <->  v1.41 0x%06X +%-3d  (net %+d)" % (ga + BASE, la, gb + BASE, lb, lb - la))
+        print("  v1.42 0x%06x +%-3d  <->  v1.41 0x%06x +%-3d  (net %+d)" % (ga + BASE, la, gb + BASE, lb, lb - la))
 
 
 if __name__ == "__main__":

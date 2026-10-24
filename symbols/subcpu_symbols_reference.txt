@@ -5,8 +5,8 @@
 # scripts/analysis/l2_symbol_reference.py --regen
 # Do not hand-edit: rename in the sources and regenerate.
 #
-#   symbols .................. 5,059
-#   semantic names ........... 5,038 (99.6%)
+#   symbols .................. 5,064
+#   semantic names ........... 5,043 (99.6%)
 #   positional names ......... 21
 #
 PAYLOAD_ENTRY 00000400
@@ -5063,6 +5063,11 @@ FP_Overflow_Handler_Pad 0003EE6F
 FP_Overflow_Handler 0003EE70
 FP_Library_End_Pad 0003EE75
 Payload_Bss_Start 0003EE76
+Task1_StackTop 0004069A
+Task3_StackTop 00040A9C
+TaskSched_StackTop 00040B1E
+Task2_StackTop 00040C20
+FP_Errno 00040C22
 Voice_GlobalFlags 00041343
 Part_Record_Base 00041368
 Part_PresentWord 0004136A
