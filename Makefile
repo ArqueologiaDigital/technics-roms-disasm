@@ -32,6 +32,7 @@ CLANG=$(LLVM_BIN)/clang
 
 .PHONY: all llvm-all paramblocks screendata naka clean clean-asl clean-all
 .PHONY: wsa1 wsa1-clean everything gate gate-wsa1 gate-all
+.PHONY: verify-v8-reference
 .PHONY: kn7000 kn7000-clean gate-kn7000
 .PHONY: llvm-convert llvm-convert-all asl-all gallery issues rom-status website dispatch-census semantic-score
 .SECONDARY:
@@ -106,6 +107,7 @@ everything: all wsa1 kn7000
 gate: all
 	python3 scripts/analysis/assert_images_assemble.py
 	python3 scripts/analysis/assert_byte_identical.py
+	$(MAKE) --no-print-directory verify-v8-reference
 
 gate-wsa1:
 	cd wsa1 && python3 scripts/analysis/assert_byte_identical.py
@@ -116,7 +118,7 @@ gate-all: gate gate-wsa1 gate-kn7000
 	python3 scripts/analysis/assert_toolchain_is_a_prerequisite.py
 
 # LLVM build targets (primary)
-llvm-all: rebuilt_ROMs/kn5000_v10_program.llvm.rom rebuilt_ROMs/kn5000_v9_program.llvm.rom rebuilt_ROMs/kn5000_v7_program.llvm.rom rebuilt_ROMs/kn5000_subprogram_v142.llvm.rom rebuilt_ROMs/kn5000_subprogram_v142_compressed.rom rebuilt_ROMs/kn5000_subcpu_boot.llvm.rom rebuilt_ROMs/hd-ae5000_v2_06i.llvm.rom rebuilt_ROMs/kn5000_table_data.llvm.rom rebuilt_ROMs/kn5000_custom_data.llvm.rom
+llvm-all: rebuilt_ROMs/kn5000_v10_program.llvm.rom rebuilt_ROMs/kn5000_v9_program.llvm.rom original_ROMs/kn5000_v8_program.rom rebuilt_ROMs/kn5000_v8_program.llvm.rom rebuilt_ROMs/kn5000_v7_program.llvm.rom rebuilt_ROMs/kn5000_subprogram_v142.llvm.rom rebuilt_ROMs/kn5000_subprogram_v142_compressed.rom rebuilt_ROMs/kn5000_subcpu_boot.llvm.rom rebuilt_ROMs/hd-ae5000_v2_06i.llvm.rom rebuilt_ROMs/kn5000_table_data.llvm.rom rebuilt_ROMs/kn5000_custom_data.llvm.rom
 
 # ============================================================================
 # C-compiled ScreenData paramblocks
@@ -746,6 +748,48 @@ rebuilt_ROMs/kn5000_v9_program.llvm.elf: rebuilt_ROMs/kn5000_v9_program.llvm.o v
 rebuilt_ROMs/kn5000_v9_program.llvm.rom: rebuilt_ROMs/kn5000_v9_program.llvm.elf
 	$(LLVM_OBJCOPY) -O binary $< $@
 
+# --- V8 Maincpu: the v9 sources with the version byte preset ---
+# The v8 program ROM differs from v9 in exactly one byte, FIRMWARE_VERSION at
+# 0xFFFFE8 (file offset 0x1FFFE8): 0x08 instead of 0x09.  So v8 has no source
+# tree of its own: it is v9/maincpu assembled with --defsym FW_VERSION_BYTE=0x08,
+# which v9/maincpu/boot/rom_end_structure.s honours through `.ifndef`.
+#
+# The reference image is NOT committed (this repository is public).  It is
+# copied, git-ignored, from the private romset; override the source with
+#   make KN5000_V8_REF=/path/to/kn5000_v8_program.rom ...
+# The copy is refused unless its SHA-1 is KN5000_V8_SHA1, and a missing source
+# stops the build with a message instead of silently skipping v8.
+KN5000_V8_REF  ?= $(PROJECTS_ROOT)/technics_roms/roms/kn5000/kn5000_v8_program.rom
+KN5000_V8_SHA1 := a10a6f5a35175b74c3cfb42cef3bdf571c2858bb
+
+original_ROMs/kn5000_v8_program.rom:
+	@if [ ! -f "$(KN5000_V8_REF)" ]; then \
+	  echo "ERROR: the KN5000 v8 reference image is missing: $(KN5000_V8_REF)"; \
+	  echo "       It is not in git (copyrighted). Point KN5000_V8_REF at a copy whose"; \
+	  echo "       SHA-1 is $(KN5000_V8_SHA1), e.g. make KN5000_V8_REF=/path/kn5000_v8_program.rom"; \
+	  exit 1; fi
+	@got=$$(sha1sum < "$(KN5000_V8_REF)" | cut -d' ' -f1); \
+	 if [ "$$got" != "$(KN5000_V8_SHA1)" ]; then \
+	  echo "ERROR: $(KN5000_V8_REF) has SHA-1 $$got, expected $(KN5000_V8_SHA1)"; exit 1; fi
+	cp "$(KN5000_V8_REF)" $@.tmp
+	mv $@.tmp $@
+
+# Re-checks the copy already in original_ROMs/ (it may predate a change of source).
+verify-v8-reference: original_ROMs/kn5000_v8_program.rom
+	@got=$$(sha1sum < $< | cut -d' ' -f1); \
+	 if [ "$$got" = "$(KN5000_V8_SHA1)" ]; then echo "OK    $< has SHA-1 $(KN5000_V8_SHA1)"; \
+	 else echo "FAIL  $< has SHA-1 $$got, expected $(KN5000_V8_SHA1)"; exit 1; fi
+
+rebuilt_ROMs/kn5000_v8_program.llvm.o: $(V9_SRC) $(V9_C_DATA_BINS) indexed-images $(INDEXED_IMAGE_SRC) $(LLVM_MC)
+	mkdir -p rebuilt_ROMs
+	$(LLVM_MC) -triple=tlcs900 -filetype=obj --defsym FW_VERSION_BYTE=0x08 -I v9/maincpu -o $@ v9/maincpu/kn5000_v9_program.s
+
+rebuilt_ROMs/kn5000_v8_program.llvm.elf: rebuilt_ROMs/kn5000_v8_program.llvm.o v9/maincpu/maincpu.ld
+	$(LLVM_LLD) -T v9/maincpu/maincpu.ld -o $@ $<
+
+rebuilt_ROMs/kn5000_v8_program.llvm.rom: rebuilt_ROMs/kn5000_v8_program.llvm.elf
+	$(LLVM_OBJCOPY) -O binary $< $@
+
 # --- V7 Maincpu ---
 # V7 bins are extracted from the v7 ROM, not compiled from C.
 # Two-pass build: first pass uses v9 ELF for address fallback,
@@ -1169,6 +1213,7 @@ website: gallery issues rom-status
 clean:
 	rm -f rebuilt_ROMs/kn5000_v10_program.llvm.*
 	rm -f rebuilt_ROMs/kn5000_v9_program.llvm.*
+	rm -f rebuilt_ROMs/kn5000_v8_program.llvm.*
 	rm -rf v9/maincpu/includes/generated/
 	rm -f rebuilt_ROMs/kn5000_v7_program.llvm.*
 	rm -rf v7/maincpu/includes/generated/

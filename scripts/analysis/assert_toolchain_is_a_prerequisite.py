@@ -75,7 +75,7 @@ def _pinned_assembler():
 
 # (label, makefile dir, how many images that Makefile builds)
 TREES = [
-    ("KN5000", ROOT, 8),
+    ("KN5000", ROOT, 9),   # v10 v9 v8 v7 v142 subboot hdae table custom
     ("SX-WSA1R", ROOT / "wsa1", 4),
 ]
 

@@ -91,3 +91,7 @@ wsa1/notes/fonts-kanji/kana_words.txt
 # notes/data-census-2026-09-02/README-rq-codeshape.md)
 code_suspect_v*.json
 code_shape_shortlist.json
+
+# KN5000 v8 program ROM: copyrighted, so not committed. `make` copies it from the
+# private romset (KN5000_V8_REF) and checks its SHA-1 -- see the V8 rules in Makefile.
+original_ROMs/kn5000_v8_program.rom
