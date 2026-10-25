@@ -8,8 +8,8 @@
 # "menu_test: <check> PASS|FAIL detail" (appended to OUT/summary.txt). The card copy is deleted after each run.
 # OUT is a scratch directory (~/compartilhado/tmp/..., never /tmp). CASEs:
 #   guard      guard.py on the menu (clean), and on test/guard_selftest.s (must find each planted reference)
-#   card       the card `make card` builds (the menu, Another World, passes 5-9): the list, the screen,
-#              the buttons, the redraw, EXIT / YES / LEAVE / NO (menu_test.lua MT_MODE=card)
+#   card       the card `make card` builds (the menu, Another World, Pinball Fantasies, passes 5-9, DSPTONE):
+#              the list, the screen, the buttons, the redraw, EXIT / YES / LEAVE / NO (menu_test.lua MT_MODE=card)
 #   fallback   test/mkfallback.py's card: missing and malformed manifests and icons, a long-named folder, a
 #              folder without a program, a damaged and a foreign KN7APP.BIN (refused, with the message)
 #   buttons    a menu that reads no button (-D BUTTONS_USED=0) on the card: what each candidate button does to

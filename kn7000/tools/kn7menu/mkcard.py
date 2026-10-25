@@ -3,11 +3,13 @@
 #
 # mkcard.py -- the SD card's folder tree for the program menu (README.md, "The card"): what to copy to the
 # card's root, as it is.
-#   python3 -I mkcard.py OUTDIR MENU_KN7APP.BIN AW_SDCARD_DIR RELEASES_DIR [ICONDIR]
+#   python3 -I mkcard.py OUTDIR MENU_KN7APP.BIN AW_SDCARD_DIR PF_CARD_DIR RELEASES_DIR [ICONDIR]
 # OUTDIR is made afresh: the menu as the root KN7APP.BIN, and a folder per program (PROGRAMS below), each
 # with its KN7APP.BIN, a MANIFEST.TXT and an ICON.BMP (gen_icons.py -> PNG -> png2icon.py, into ICONDIR,
 # default OUTDIR/../icons). Another World's folder takes everything its own build wrote (AW_SDCARD_DIR:
-# technics-anotherworld kn7000/build/sdcard, KN7APP.BIN and all its game files). The probes' KN7APP.BINs are
+# technics-anotherworld kn7000/build/sdcard, KN7APP.BIN and all its game files), and Pinball Fantasies' the
+# same way (PF_CARD_DIR: ~/compartilhado/Pinball/kn7000 build/card/PINBALL, its KN7APP.BIN, the table programs
+# and the game's files made from the player's copy; the folder's own MANIFEST.TXT is replaced). The probes' KN7APP.BINs are
 # the released ones (RELEASES_DIR: ../cnv_romdump/releases), checked against each release's SHA1SUMS; DSPTONE's
 # comes from ../dsptone/releases the same way.
 # Writes OUTDIR.txt: every file, its size and SHA-1, as an aligned Markdown table.
@@ -21,6 +23,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 # folder (8.3), what goes in it, NAME=, icon (gen_icons.py)
 PROGRAMS = [
     ("AW", "aw", "Another World", "aw"),
+    ("PINBALL", "pf", "Pinball Fantasies", "pinball"),
     ("SURVEY2", "2026-10-20-survey2/sdcard-pass5-SURVEY2", "Pass 5: ROM dumper SURVEY2 (IC23, work RAM)", "survey2"),
     ("DSPPROBE", "2026-10-20-dspprobe/sdcard-pass6-DSPPROBE", "Pass 6: DSP probe, phase 1", "dspprobe"),
     ("DSPMEM", "2026-10-20-dspmem/sdcard-pass7-DSPMEM", "Pass 7: DSP probe, phase 2 (DSP memory)", "dspmem"),
@@ -28,6 +31,8 @@ PROGRAMS = [
     ("CPUTIME", "2026-10-20-cputime/sdcard-pass9-CPUTIME", "Pass 9: CPU timing probe", "cputime"),
     ("DSPTONE", "dsptone:2026-10-20-iter1/sdcard-DSPTONE", "DSP tone: our own effects-DSP program", "dsptone"),
 ]
+# what a PINBALL\ folder without the game's files lacks (`make card-dir` run without PF_DATA)
+PF_NEEDED = ['KN7APP.BIN', 'PFBANK.BIN'] + [f'PF{t}.{e}' for t in range(1, 5) for e in ('BIN', 'IMG', 'PIC', 'MOD')]
 DSPTONE_RELEASES = os.path.join(HERE, '..', 'dsptone', 'releases')   # ../dsptone (its own releases)
 
 
@@ -50,8 +55,8 @@ def released(releases, rel):
 
 
 def main():
-    out, menu, aw, releases = sys.argv[1:5]
-    icons = sys.argv[5] if len(sys.argv) > 5 else os.path.join(os.path.dirname(os.path.abspath(out)), 'icons')
+    out, menu, aw, pf, releases = sys.argv[1:6]
+    icons = sys.argv[6] if len(sys.argv) > 6 else os.path.join(os.path.dirname(os.path.abspath(out)), 'icons')
     out = os.path.abspath(out)
     parent = os.path.dirname(out)
     assert os.path.isdir(parent) and out != parent and os.path.basename(out), out
@@ -72,6 +77,14 @@ def main():
                 sys.exit(f'mkcard: no KN7APP.BIN in {aw} (make -C technics-anotherworld/kn7000 sdcard)')
             for f in files:
                 shutil.copyfile(os.path.join(aw, f), os.path.join(d, f))
+        elif src == 'pf':
+            files = sorted(os.listdir(pf))
+            missing = [f for f in PF_NEEDED if f not in files]
+            if missing:
+                sys.exit(f'mkcard: {pf} lacks {" ".join(missing)} '
+                         '(make -C ~/compartilhado/Pinball/kn7000 card-dir PF_DATA=<the game\'s folder>)')
+            for f in files:
+                shutil.copyfile(os.path.join(pf, f), os.path.join(d, f))
         elif src.startswith('dsptone:'):
             shutil.copyfile(released(DSPTONE_RELEASES, src.split(':', 1)[1]), os.path.join(d, 'KN7APP.BIN'))
         else:

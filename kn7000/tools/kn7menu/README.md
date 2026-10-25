@@ -18,9 +18,13 @@ Contents: [Using it](#using-it) · [The card](#the-card) · [Adding a program](#
 ## Using it
 
 1. `make card` writes `build/card/`, everything for the SD card, and `build/card.txt`, every file
-   with its size and SHA-1 (it builds Another World from `AW_DIR` first; its data comes from
-   `~/compartilhado/MSDOS/`, as that game's own Makefile takes it).
-2. Copy **the contents of** `build/card/` to the SD card's root: `KN7APP.BIN` and the seven folders.
+   with its size and SHA-1. It builds the two games first, each with its own Makefile:
+   - Another World from `AW_DIR`, its data from `~/compartilhado/MSDOS/`, as that game's Makefile
+     takes it;
+   - Pinball Fantasies from `PF_DIR` (`~/compartilhado/Pinball/kn7000`, `make card-dir`), its data
+     from `PF_DATA` (default `~/compartilhado/Projeto_Pinball/data`: `TABLE1.PRG` .. `TABLE4.MOD`
+     of the 1994 DOS game).
+2. Copy **the contents of** `build/card/` to the SD card's root: `KN7APP.BIN` and the eight folders.
 3. On the KN7000: **DISK MENU**, **STYLE CONVERT** (left button 3), `KN7LOAD.CNV`, **OK** (right
    button 4), as for every pass so far.
 4. The loader's screen flashes by, then "Looking for the panel's buttons in the firmware...", then
@@ -54,20 +58,22 @@ EXIT on "Continue Next?" cancels to the STYLE CONVERT screen). **YES** makes the
 `make card` lays it out as follows (`mkcard.py`; every folder name is a plain 8.3 name, so nothing
 depends on how a computer makes short names):
 
-| on the card  | what                                                                                                | its `KN7APP.BIN`: from, bytes, SHA-1                                                                                |
-|--------------|-----------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------|
-| `KN7APP.BIN` | the menu                                                                                            | `build/KN7APP.BIN`, 12,739, `0566fba32f5588761de0cbbb34e3f84c2ae1c16d`                                              |
-| `AW\`        | Another World: `KN7APP.BIN` and its 61 game files (DSP sound, the coded bank `AWSB0-D.AW`, round 3) | technics-anotherworld `kn7000/build/sdcard/` (`main` `e4b87fa`), 32,332, `94910f68eec0fd4839ab2eb2842311e4ed07028f` |
-| `SURVEY2\`   | pass 5, the ROM dumper's SURVEY2 (IC23, the work RAM, the windows)                                  | `../cnv_romdump/releases/2026-10-20-survey2/`, 11,412, `24bdc35ded21b1a5742bd8c77320b471bf302b2e`                   |
-| `DSPPROBE\`  | pass 6, the DSP probe, phase 1                                                                      | `../cnv_romdump/releases/2026-10-20-dspprobe/`, 15,440, `ddc23b5328c22c73fdef45f409ec4dabe63af374`                  |
-| `DSPMEM\`    | pass 7, the DSP probe, phase 2                                                                      | `../cnv_romdump/releases/2026-10-20-dspmem/`, 15,440, `9a5077d387cb73cd36331a616ca35cb3e1e85c57`                    |
-| `DSPRATE\`   | pass 8, the DSP probe's frame rate                                                                  | `../cnv_romdump/releases/2026-10-20-dsprate/`, 16,640, `c8334f68c9e3450312db35052cd96bc5fd94a13a`                   |
-| `CPUTIME\`   | pass 9, the CPU timing probe                                                                        | `../cnv_romdump/releases/2026-10-20-cputime/`, 21,496, `91022a0f7239bd85049a56ecd914202673475847`                   |
-| `DSPTONE\`   | our own program on the effects DSP, iteration 1 (`../dsptone`)                                      | `../dsptone/releases/2026-10-20-iter1/`, 99,596, `5d7d5df5b59494effed0cdc32256d59b425ae994`                         |
+| on the card  | what                                                                                                                                                                 | its `KN7APP.BIN`: from, bytes, SHA-1                                                                                   |
+|--------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|
+| `KN7APP.BIN` | the menu                                                                                                                                                             | `build/KN7APP.BIN`, 12,739, `0566fba32f5588761de0cbbb34e3f84c2ae1c16d`                                                 |
+| `AW\`        | Another World: `KN7APP.BIN` and its 61 game files (DSP sound, the coded bank `AWSB0-D.AW`, round 3)                                                                  | technics-anotherworld `kn7000/build/sdcard/` (`main` `e4b87fa`), 32,332, `94910f68eec0fd4839ab2eb2842311e4ed07028f`    |
+| `PINBALL\`   | Pinball Fantasies: `KN7APP.BIN`, the table programs `PF1-4.BIN` and the game files made from your copy (`PFn.IMG/PIC/MOD`, the DSP bank `PFBANK.BIN`, `PFSB0-E.BIN`) | `~/compartilhado/Pinball` `kn7000/build/card/PINBALL/` (`a1caf99`), 14,834, `c2e1af4c5c86b040162a306631c7d355979e84ea` |
+| `SURVEY2\`   | pass 5, the ROM dumper's SURVEY2 (IC23, the work RAM, the windows)                                                                                                   | `../cnv_romdump/releases/2026-10-20-survey2/`, 11,412, `24bdc35ded21b1a5742bd8c77320b471bf302b2e`                      |
+| `DSPPROBE\`  | pass 6, the DSP probe, phase 1                                                                                                                                       | `../cnv_romdump/releases/2026-10-20-dspprobe/`, 15,440, `ddc23b5328c22c73fdef45f409ec4dabe63af374`                     |
+| `DSPMEM\`    | pass 7, the DSP probe, phase 2                                                                                                                                       | `../cnv_romdump/releases/2026-10-20-dspmem/`, 15,440, `9a5077d387cb73cd36331a616ca35cb3e1e85c57`                       |
+| `DSPRATE\`   | pass 8, the DSP probe's frame rate                                                                                                                                   | `../cnv_romdump/releases/2026-10-20-dsprate/`, 16,640, `c8334f68c9e3450312db35052cd96bc5fd94a13a`                      |
+| `CPUTIME\`   | pass 9, the CPU timing probe                                                                                                                                         | `../cnv_romdump/releases/2026-10-20-cputime/`, 21,496, `91022a0f7239bd85049a56ecd914202673475847`                      |
+| `DSPTONE\`   | our own program on the effects DSP, iteration 1 (`../dsptone`)                                                                                                       | `../dsptone/releases/2026-10-20-iter1/`, 99,596, `5d7d5df5b59494effed0cdc32256d59b425ae994`                            |
 
 Each folder also holds a `MANIFEST.TXT` (its name in the list) and an `ICON.BMP` (drawn by
 `gen_icons.py`, converted by `png2icon.py`); `build/card.txt` lists every file with its SHA-1 (the game
-files' among them: they are made from your own copy of the game and never committed). The probes' binaries are the released ones, byte for
+files' among them: they are made from your own copy of each game and never committed). `PINBALL\`'s
+own `MANIFEST.TXT` is replaced by one that also names its icon. The probes' binaries are the released ones, byte for
 byte: `mkcard.py` checks each against its release's `SHA1SUMS`.
 
 **Where the probes write.** Exactly where they did when they were the root's `KN7APP.BIN`: the loader
@@ -386,6 +392,12 @@ measurement is of the firmware, not of the menu):
 | `fallback` | menu, list, screen, refuse-crc, refuse-header, taps       | 6 of 6: 8 programs of 10 folders as `fatscan.py` has them (a long name; an 8.3 name; a manifest of nothing usable; a missing and a wrong-size icon; a top-down 32-bit BMP behind a V5 header, a BOM, lower-case keys); RUN on the damaged copy: "Damaged: its CRC-32 does not match. Not started."; on 1,000 random bytes: "Not a KN7LOAD application (bad header): not started."; the menu stays, nothing launched                                                                                                             |
 | `buttons`  | menu, buttons, taps                                       | 3 of 3 (Buttons)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 | `cputime`  | menu, start, area, finished, back, taps; the verifier     | 6 of 6: pass 9 started from `CPUTIME\`: its header at `APP_BASE`, the launch block (`CPUTIME`, `CPUTIME\`, `C:\CPUTIME`), the trampoline wrote all 47,104 words of the application area (the program, then zeros); `C:\CPUTIME.BIN` and `C:\DUMPLIST.TXT` in the root; `verify_dump.py --cputime`: 2 of 2 files as expected, `cpu_tap.lua`: 4 chunks, 41,212,229 reads and 1,722,996 writes by the probe's code, 0 against its rules; `check_cpu_probe.py`: "everything checks out"; YES: the menu again, the launch block zero |
+
+**2026-10-25, the card with `PINBALL\`:** `card` again on the card of eight programs (two pages): 8 of 8, the
+list in `fatscan.py`'s order with Pinball Fantasies last. Pinball Fantasies then played from that card in its own
+MAME session (`~/compartilhado/Pinball/kn7000/notes/session-2026-10-25/`). **On the owner's unit** the same day
+the instrument restarted right after RUN on Pinball Fantasies, while Another World started from the menu; the
+game's diagnostic build (`PFDIAG\`, its README "If it does not start") is to find where.
 
 In every case the taps found no write into IC23 or the pools from the converter's code (the firmware's
 own IC23 writes: 952,168 in a run), none into the loader's area but the loader's own (and, once pass 9

@@ -5,7 +5,7 @@
 #   python3 -I gen_icons.py --inc default_icon.inc     the menu's built-in default icon (RGB565 .word data)
 #   python3 -I gen_icons.py --png NAME OUT.png          one card icon as a 32x32 PNG, for png2icon.py
 #   python3 -I gen_icons.py --list                      the names
-# NAME: default, aw (Another World), survey2, dspprobe, dspmem, dsprate, cputime (the ROM dumper's passes
+# NAME: default, aw (Another World), pinball (Pinball Fantasies), survey2, dspprobe, dspmem, dsprate, cputime (the ROM dumper's passes
 # 5 to 9), dsptone (../dsptone). The PNGs go through png2icon.py on their way to the card, as anyone's own icon would.
 import math
 import struct
@@ -98,6 +98,22 @@ def icon(name):
         cv.rect(9, 15, 4, 1, (10, 8, 12))
         cv.text('AW', 1, 26, (250, 250, 250))
         return cv
+    if name == 'pinball':                       # Pinball Fantasies: a playfield, two bumpers, the ball, the flippers
+        cv = Canvas((0, 0, 0))
+        cv.rect(4, 1, 24, 30, (20, 30, 110))
+        cv.rect(4, 1, 24, 1, (200, 200, 220))
+        cv.rect(4, 1, 1, 30, (200, 200, 220))
+        cv.rect(27, 1, 1, 30, (200, 200, 220))
+        cv.disc(11, 8, 3, (230, 60, 60))
+        cv.disc(11, 8, 1, (255, 230, 120))
+        cv.disc(21, 11, 3, (60, 200, 90))
+        cv.disc(21, 11, 1, (255, 230, 120))
+        cv.disc(16, 19, 2, (235, 235, 245))
+        cv.put(15, 18, (255, 255, 255))
+        for k in range(3):                      # the flippers, leaning down to the drain
+            cv.line(6, 24 + k // 2, 13, 27 + k // 2, (250, 200, 40))
+            cv.line(25, 24 + k // 2, 18, 27 + k // 2, (250, 200, 40))
+        return cv
     if name == 'dsptone':                       # DSPTONE: the DSP chip with a sine across it, and a speaker
         cv = Canvas((0, 0, 0))
         chip(cv, (40, 40, 44), (190, 190, 190))
@@ -130,7 +146,7 @@ def icon(name):
     raise SystemExit(f'gen_icons: no icon named {name!r}')
 
 
-NAMES = ['default', 'aw', 'survey2', 'dspprobe', 'dspmem', 'dsprate', 'cputime', 'dsptone']
+NAMES = ['default', 'aw', 'pinball', 'survey2', 'dspprobe', 'dspmem', 'dsprate', 'cputime', 'dsptone']
 
 
 def png_bytes(cv):

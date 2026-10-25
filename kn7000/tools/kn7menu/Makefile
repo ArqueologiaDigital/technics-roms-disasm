@@ -1,9 +1,11 @@
 # KN7MENU, the program menu (README.md): the root KN7APP.BIN that KN7LOAD.CNV loads, which lists the programs
 # in the SD card's folders and starts the one chosen; and the card that goes with it.
 #   make            build/KN7APP.BIN: the menu (guards first: guard.py)
-#   make card       build/card/: the whole SD card tree (the menu, Another World, the ROM dumper's passes 5-9),
-#                   with build/card.txt (every file, size, SHA-1). Builds Another World from AW_DIR first (its
-#                   own Makefile: its guards, its data from ~/compartilhado/MSDOS; nothing of it is committed).
+#   make card       build/card/: the whole SD card tree (the menu, Another World, Pinball Fantasies, the ROM
+#                   dumper's passes 5-9, DSPTONE), with build/card.txt (every file, size, SHA-1). Builds Another
+#                   World from AW_DIR first (its own Makefile: its guards, its data from ~/compartilhado/MSDOS) and
+#                   Pinball Fantasies from PF_DIR (`card-dir`, the game's files from PF_DATA); nothing of either
+#                   game's data is committed.
 #   make check      png2icon.py's self-test and fatscan.py on the card (what the menu will list)
 PYTHON  ?= python3
 TOOLS   := ..
@@ -13,6 +15,9 @@ OUT     ?= build
 INC     := -I . -I $(OUT) -I $(LOADER)
 # Another World with the launch block support (technics-anotherworld; branch launcher-folders merged as 2d74cb9)
 AW_DIR  ?= ../../../../technics-anotherworld/kn7000
+# Pinball Fantasies (~/compartilhado/Pinball, kn7000/), and the player's copy of the 1994 DOS game it is made from
+PF_DIR  ?= ../../../../Pinball/kn7000
+PF_DATA ?= $(HOME)/compartilhado/Projeto_Pinball/data
 
 all: $(OUT)/KN7APP.BIN
 
@@ -42,7 +47,9 @@ $(OUT)/KN7APP.BIN: $(OUT)/menu.bin $(OUT)/guard.txt $(LOADER)/mkapp.py
 
 card: $(OUT)/KN7APP.BIN mkcard.py gen_icons.py png2icon.py
 	$(MAKE) -C $(AW_DIR) sdcard
-	$(PYTHON) -I mkcard.py $(OUT)/card $(OUT)/KN7APP.BIN $(AW_DIR)/build/sdcard $(LOADER)/releases $(OUT)/icons
+	$(MAKE) -C $(PF_DIR) OUT=build card-dir PF_DATA=$(abspath $(PF_DATA))
+	$(PYTHON) -I mkcard.py $(OUT)/card $(OUT)/KN7APP.BIN $(AW_DIR)/build/sdcard $(PF_DIR)/build/card/PINBALL \
+	  $(LOADER)/releases $(OUT)/icons
 	$(PYTHON) -I fatscan.py $(OUT)/card
 
 check: card
