@@ -133,6 +133,12 @@ Every memory operand of the code that names a device register is an `.equ` (`HW`
     sense, enable, supply and write-protect lines, and the two SD lamps. Those offsets are the chip's GPIO
     registers.
   - Not checked against a board photo.
+  - On the owner's KN7000 its display memory turned out to be 1280 KB (Pinball/kn7000 PFT16 and PFT17,
+    `notes/session-2026-10-26/`): words above it read 0xFFDF, and its ink layer is counted from 0x140000,
+    with REG[071h] valid up to 160. Those fit the **S1D13806**, the S1D13506 with 1280 KB of memory inside
+    (Epson's S1D13806 Series Technical Manual), and not the S1D13506 with its external 512 KB or 2 MB.
+    `LcdControllerInit`'s clear of 0x140000 bytes fits it too. The register names stay the S1D13506's,
+    which the S1D13806 shares.
 
   `LcdControllerInitAlt` and `LcdControllerInitOld`, which nothing calls, program other register maps.
   Their operands are spelled `LCDC+0xNN`. `[INFERENCE]` Alt's offsets and values fit the earlier S1D13505;
