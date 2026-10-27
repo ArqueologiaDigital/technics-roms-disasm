@@ -168,7 +168,7 @@ local function to_menu()              -- DISK MENU, STYLE CONVERT (left button 3
     if wait_until(function() return u32(LV_STATE) == 1 end, 8) then break end
     log(string.format("OK press %d not taken at t=%.0f s; again", i, now()))
   end
-  return wait_until(function() return menu_up() and mstate() >= S.ST_MENU end, 120)
+  return wait_until(function() return menu_up() and mstate() == S.ST_MENU end, 120)  -- (ST_TOC is 8: ">=" took it for the menu)
 end
 
 -- ---- what the menu shows -------------------------------------------------------------------------
@@ -243,6 +243,12 @@ end
 local function index_of(name)
   for i = 0, u32(S.V_NPROG) - 1 do if cstr(rec(i) + S.PR_NAME) == name then return i end end
 end
+local function select(i)              -- page to it, then its row's left button
+  while u32(S.V_TOP) + S.ROWS <= i do btn("PGDN"); wait(1) end
+  while u32(S.V_TOP) > i do btn("PGUP"); wait(1) end
+  btn("L" .. (i - u32(S.V_TOP) + 1)); wait(1)
+  return u32(S.V_SEL) == i
+end
 -- the program named `name` shown: the menu folders KN7MENU.TOC put it in opened from the top, its index then
 local function open_to(name)
   local target
@@ -259,18 +265,14 @@ local function open_to(name)
     end
   end
   while u32(S.V_LEVEL) ~= 0 do btn("R1"); wait(1) end
+  log(string.format("open_to %q: its folders %s", name, table.concat(path, " / ")))
   for _, f in ipairs(path) do
     local i = index_of(f)
+    log(string.format("  folder %q at %s; level %d", f, tostring(i), u32(S.V_LEVEL)))
     if not i then return nil end
     select(i)
   end
   return index_of(name)
-end
-local function select(i)              -- page to it, then its row's left button
-  while u32(S.V_TOP) + S.ROWS <= i do btn("PGDN"); wait(1) end
-  while u32(S.V_TOP) > i do btn("PGUP"); wait(1) end
-  btn("L" .. (i - u32(S.V_TOP) + 1)); wait(1)
-  return u32(S.V_SEL) == i
 end
 -- After 0xFE the firmware shows its message (title 3) for about 3 s, then "Continue Next?" (title 0x4C) by
 -- itself; EXIT dismisses the message sooner, but pressed on "Continue Next?" it cancels it (to title 0x46).
@@ -409,6 +411,7 @@ local function run()
   if not ok then return end
   wait(2)
   local want = os.getenv("MT_PROGRAM")
+  wait(3)  -- (as card() does: a press at once, as the list first shows, is not taken)
   local i = open_to(want)
   if i == nil then result("start", false, "no program named " .. want); return end
   local r = rec(i)

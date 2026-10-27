@@ -1,0 +1,17 @@
+run_menu_tests: emulator md5 2265d97e; floppy b7a67de602694fd2; card image 3a6227294a56e751; bios v13
+run_menu_tests: menu KN7APP.BIN a18ee30f135915cbd41b2401b91522f690d92bd9 (14442 bytes)
+  menu_test: OK press 1 not taken at t=53 s; again
+  menu_test: menu      PASS  menu state 4, 3 programs
+  menu_test: open_to "Pass 9: CPU timing probe": its folders HW Probes / ROM dumper passes
+  menu_test:   folder "HW Probes" at 1; level 0
+  menu_test:   folder "ROM dumper passes" at 0; level 2
+  menu_test: start     PASS  RUN on "Pass 9: CPU timing probe": APP_BASE holds "KN7000 CPU TIMING PROBE 1.0" (21496 bytes), launch block 4C374E4B dir "CPUTIME" prefix "CPUTIME\\" path "C:\\CPUTIME" name "Pass 9: CPU timing probe"; trampoline result 0; loader state 1, calls 190 -> 195
+  menu_test: area      PASS  the trampoline wrote 47104 of the application area's 47104 words (the program, then zeros), 0 non-zero writes between the program's end and the launch block
+  menu_test: finished  PASS  the program's word 502E0000 = 3 at t=71 s
+  menu_test: "Continue Next?" up (title F004C)
+  menu_test: back      FAIL  YES at "Continue Next?": "KN7000 CPU TIMING PROBE 1.0" again, state 1414877251, 1972 programs, launch block now 4C374E4B
+  menu_test: "Continue Next?" NOT up (title F0001)
+  menu_test: taps      PASS  IC23 writes from the converter's code 0 (the firmware's own: 952168), pools 0, loader area foreign 0, converter RAM foreign 0 (/home/fsanches/compartilhado/tmp/kn7menu-cache-2026-10-27e/cputime/taps.txt)
+  menu_test: 6 checks, 1 failed (t=213 s); presses the emulated panel lost and the harness repeated: 0
+run_menu_tests: run FAIL  5 checks passed, 1 failed (/home/fsanches/compartilhado/tmp/kn7menu-cache-2026-10-27e/cputime/session.txt)
+run_menu_tests: cputime verify PASS  verify_dump.py: 2 of 2 files as expected; check_cpu_probe.py: everything checks out; C:\CPUTIME.BIN in the root: 1

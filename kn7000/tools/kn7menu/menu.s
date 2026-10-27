@@ -772,18 +772,6 @@ lc_pad:
     inc     a0
     add     -1, d1
     bne     lc_pad
-    mov     T_SLED, a0              # the sled: nops, and a rets as its last two bytes
-    mov     SLED_LEN/4, d1
-    mov     0xCBCBCBCB, d0
-lc_sled:
-    mov     d0, (a0)
-    add     4, a0
-    add     -1, d1
-    bne     lc_sled
-    mov     0xF0, d0                # its last two bytes
-    movbu   d0, (-2, a0)
-    mov     0xFC, d0
-    movbu   d0, (-1, a0)
     mov     TrampImage, a0          # the trampoline
     mov     T_CODE, a1
     mov     TRAMP_LEN, d1
@@ -851,26 +839,13 @@ lc_clr:
     call    StrCpy, 0, 0
     mov     1, d0
     mov     d0, (V_LAUNCHES)
-    call    EvictD, 0, 0            # the trampoline and the sled to RAM, out of the data cache
-    mov     T_SLED, a0              # and no old line of their region left in the I-cache
-    calls   (a0)
-    mov     T_SLED, a0
-    calls   (a0)
+    call    CacheSync, 0, 0         # the trampoline to RAM, no old line of its region in the I-cache (cachesync.inc)
     mov     T_LAUNCH, a0
     calls   (a0)                    # returns to the loader, not here
 lc_hang:
     bra     lc_hang
 
-# EvictD: as tramp.s EvictD -- read EVICT_LEN bytes of program flash, a load per 16-byte line. Leaf.
-EvictD:
-    mov     EVICT_FROM, a0
-    mov     EVICT_LEN/16, d1
-ed_line:
-    mov     (a0), d0
-    add     16, a0
-    add     -1, d1
-    bne     ed_line
-    rets
+.include "cachesync.inc"
 
 # CheckMsg(d0 = CK_*) -> a0 = its message. Leaf.
 CheckMsg:

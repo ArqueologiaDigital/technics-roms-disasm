@@ -7,16 +7,14 @@
 # APP_BASE, exactly as the loader would have, and hands the converter calls over to it.
 #
 # The menu copies this image to T_CODE (its bytes are in menu.s, from tramp_bin.inc), fills the data
-# block at T_DATA (menu.inc TD_*), writes the instruction-cache sled at T_SLED, empties the data cache and
-# runs the sled, and calls Launch with `calls`, from its own entry's frame. Launch:
+# block at T_DATA (menu.inc TD_*), syncs the caches (cachesync.inc), and calls Launch with `calls`, from its own entry's frame. Launch:
 #   1. copies TD_SIZE bytes from STAGE to APP_BASE, and zeroes the rest of the application area up to the
 #      launch block, as the loader zeroes the whole area before it loads (CNV_END - 0x100 = LB_ADDR);
 #   2. compares APP_BASE with STAGE byte for byte (the CRC-32 the menu checked on STAGE then holds here)
 #      and checks the header as the loader does (magic, loader ABI, link address, size, entry);
 #   3. writes the launch block (kn7cnv.inc LB_*): the program's folder;
-#   4. empties the data cache (EVICT_LEN bytes of program flash read, a load per 16-byte line), so that
-#      the new code is in RAM, and runs the sled twice, so that no line of the menu's code stays in the
-#      instruction cache where the new program now is;
+#   4. writes the data cache back and invalidates both caches (cachesync.inc), so that the new code is in
+#      RAM and no line of the menu's code stays in the instruction cache where the new program now is;
 #   5. answers request 1 (call again, no repaint) and returns straight to the loader, with the stack
 #      pointer and the registers the loader called the menu with (TD_RETSP; the menu's entry saved them
 #      with `movm [d2,d3,a2,a3], (sp)` and made a 0x20-byte frame). From the next converter call on, the
@@ -146,11 +144,7 @@ la_fail:
     mov     APP_BASE, d0
     mov     d0, (AH_BASE, a0)
 la_caches:
-    call    EvictD, 0, 0            # 4. the new code to RAM, the menu's out of the I-cache
-    mov     T_SLED, a0
-    calls   (a0)
-    mov     T_SLED, a0
-    calls   (a0)
+    call    CacheSync, 0, 0         # 4. the new code to RAM, the menu's out of the I-cache
     mov     MAILBOX, a0             # 5. request 1: call again at once, leave the screen alone
     mov     RQ_PARK, d0
     movbu   d0, (a0)
@@ -165,17 +159,7 @@ la_return:
     mov     a0, sp
     ret     [d2,d3,a2,a3], 0x30
 
-# EvictD: read EVICT_LEN bytes of program flash, one load per 16-byte line, through the cached view:
-# every line of the data cache is replaced, and a dirty one written back to RAM first. Leaf.
-EvictD:
-    mov     EVICT_FROM, a0
-    mov     EVICT_LEN/16, d1
-ev_line:
-    mov     (a0), d0
-    add     16, a0
-    add     -1, d1
-    bne     ev_line
-    rets
+.include "cachesync.inc"
 
 # ErrApp: the entry the failed launch leaves in the header at APP_BASE. Shows why, through request 5,
 # for HOLD_MS (HOLD_CALLS calls without a millisecond counter), then ends the conversion: the firmware's

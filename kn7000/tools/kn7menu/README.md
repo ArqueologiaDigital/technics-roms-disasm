@@ -260,22 +260,23 @@ by reasoning:
   this: it loads into an area nothing has executed since STYLE CONVERT zeroed it, and "Continue Next?"
   YES reloads the same file over itself (or, with the menu, comes after seconds of the firmware's own
   screens).
-- **The data cache** is emptied by reading `EVICT_LEN` = 64 KB of program flash (`0x48400000`..), one
-  load per 16-byte line, through the cached view: every line is replaced, and a dirty one written back
-  to RAM first. The firmware's flush routine shows a 4 KB, two-way data cache of 16-byte lines (`0x80`
-  lines per way, read from `0x28400000` and `0x28401000`); 64 KB is 16 times that. Ordinary loads only:
-  no cache register is written.
-- **The instruction cache** is emptied by executing a 32 KB sled of `nop`s (`0xCB`) ending in `rets`,
-  twice: every line is replaced by a sled line. Ordinary instruction fetches only.
-- **The order.** The menu writes the sled, the trampoline and its data, empties the data cache (the
-  trampoline is then in RAM) and runs the sled twice (no stale line of the trampoline's region from an
-  earlier start can remain), then calls the trampoline. The trampoline copies the program, zeroes,
-  checks, writes the launch block, empties the data cache (the program is then in RAM) and runs the sled
-  twice (no line of the menu's code remains), and only then returns to the loader. All of it costs a
-  few milliseconds.
-- **Not used:** the firmware's cache routines (the instruction-cache invalidation was never called at
-  run time; the data-cache flush leaves the data cache disabled), CHCTR itself, and executing from the
-  uncached view (`0x9xxxxxxx`), which nothing has done on the unit.
+- **What is done** (`cachesync.inc`, CacheSync), as program 893's own routines do it (its instruction-cache
+  routine at `0x48407B..` and its data-cache purge `func_48407C39`), with interrupts off for the few
+  microseconds it takes: the data cache off (CHCTR bit 1), waited for (bit 3), each line of both ways
+  written back by reading the purge window `0x28400000` and `0x28401000` at 16-byte steps (unless it
+  writes through, bit 6, or a way is locked, bits 12-13), invalidated (bit 5) and on again; then the
+  instruction cache off (bit 0), waited for (bit 2), invalidated (bit 4) and on again. Interrupts are off
+  because, while the data cache is off, a handler would read RAM that its dirty lines have not reached.
+- **The order.** The menu copies the trampoline and its data, syncs the caches and calls the trampoline.
+  The trampoline copies the program, zeroes, checks, writes the launch block, syncs the caches, and only
+  then returns to the loader.
+- **Until 2026-10-27** both emptied the data cache by reading 64 KB of program flash a line at a time and
+  emptied the instruction cache by running a 32 KB sled of `nop`s twice, without touching CHCTR. The
+  Pinball port did the same between its programs, and on the owner's unit the CPU stopped in its sled
+  (a system error NMI at `0x5031C75C`, 0x75C into it) as its menu came back after a table: a line of the
+  sled was still in the data cache, and the instruction fetch read what RAM held there before (Pinball
+  `notes/session-2026-10-27`, "The caches"). The menu had shown nothing of the kind, but rested on the
+  same assumption, so it now does what the firmware does.
 
 ## Buttons
 
@@ -408,6 +409,14 @@ The menu `KN7APP.BIN` `bd6c6085d40faa7fe99658a433badef660cafa41` (14,227 bytes),
 - `tree` on the staged card of KN7000's `tools/sdcard/stage.sh` (`tree-staged-card-summary.txt`): 8 of 8. 28
   programs in 5 menu folders, all placed by the table; HW Probes, then Pinball probes (19 entries) opened; LCDL 3,
   PART SELECT, PAGE DOWN / PAGE UP across its pages; BACK twice, each landing on the folder left.
+
+With `cachesync.inc` (the firmware's cache sequence; `test/results-2026-10-27/card-cachesync-summary.txt`,
+`cputime-cachesync-summary.txt`): `card` 8 of 8; `cputime` 5 of 6: pass 9 started from its folder, the whole
+application area written, the probe finished, `CPUTIME.BIN` verified ("everything checks out"); but "Continue
+Next?" YES then left STYLE CONVERT for the main screen instead of loading the menu again (`back`). The menu as it was
+before the change does the same (`cputime-old-caches-summary.txt`), so it is not the caches; on 2026-10-20 `back`
+passed. Open: whether the table of contents or the emulator's panel change of 2026-10-27 (kn7000_mame `c5392ca`) is
+behind it.
 
 ### Results (2026-10-20)
 
