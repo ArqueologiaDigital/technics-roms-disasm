@@ -1,0 +1,16 @@
+run_menu_tests: emulator md5 2265d97e; floppy b7a67de602694fd2; card image 3a6227294a56e751; bios v13
+run_menu_tests: menu KN7APP.BIN bd6c6085d40faa7fe99658a433badef660cafa41 (14227 bytes)
+run_menu_tests: card tree /home/fsanches/compartilhado/tmp/kn7menu-2026-10-27/build/card (120 files); its KN7APP.BINs: 94910f68eec0 91022a0f7239 9a5077d387cb ddc23b5328c2 c8334f68c9e3 5d7d5df5b594 7d1d2ad190db 24bdc35ded21 bd6c6085d40f 
+  menu_test: OK press 1 not taken at t=53 s; again
+  menu_test: menu      PASS  the loader (state 1) runs "KN7000 PROGRAM MENU 1.0"; menu state 8, panel 5006BE4C, ms counter 500C53F8, calls 3
+  menu_test: list      PASS  KN7MENU.TOC 1, 8 programs (fatscan.py: 8) in 4 menu folders, 8 placed by it, 1 folders looked into; the top: Games | HW Probes | Other apps
+  menu_test: screen    PASS  first page: selected 0 (want 0), top 0; page from 0: 3 of 3 icons on the LCD; full redraws after the firmware's paint 1
+  menu_test: navigate  PASS  opened Other apps: selected 0 (want 0), top 0; page from 0: 1 of 1 icons on the LCD, 1 entries; LCDR 1, BACK to the top: selected 2 (want 2), top 0; page from 0: 3 of 3 icons on the LCD
+  menu_test: repaint   PASS  full redraws 1 -> 2; page from 0: 3 of 3 icons on the LCD
+  menu_test: "Continue Next?" up (title F004C)
+  menu_test: again     PASS  EXIT held: the menu ended; YES: the loader started it again (calls 38, menu state 4, 3 programs)
+  menu_test: "Continue Next?" up (title F004C)
+  menu_test: leave     PASS  LEAVE, NO: STYLE CONVERT left, the converter is not called any more (snapshot: main screen)
+  menu_test: taps      PASS  IC23 writes from the converter's code 0 (the firmware's own: 952168), pools 0, loader area foreign 0, converter RAM foreign 0 (/home/fsanches/compartilhado/tmp/kn7menu-2026-10-27/card/taps.txt)
+  menu_test: 8 checks, 0 failed (t=93 s); presses the emulated panel lost and the harness repeated: 0
+run_menu_tests: card PASS  8 checks passed, 0 failed (/home/fsanches/compartilhado/tmp/kn7menu-2026-10-27/card/session.txt)

@@ -398,6 +398,17 @@ the converter's code (the loader, the menu, a program, the trampoline), any writ
 area but the loader's own, and any write into the converter's RAM while the menu runs that is neither the
 menu's nor a sector read the menu asked for, into its destination (`taps.txt` in each run).
 
+### Results (2026-10-27): the table of contents and the menu folders
+
+The menu `KN7APP.BIN` `bd6c6085d40faa7fe99658a433badef660cafa41` (14,227 bytes), on kn7000_mame `c5392ca` (md5
+`2265d97e`). `test/results-2026-10-27/`:
+- `card` (`card-summary.txt`): 8 of 8. `KN7MENU.TOC` used; the 8 programs equal `fatscan.py`'s, all placed by it, in
+  4 menu folders (Games, HW Probes, ROM dumper passes, Other apps); one folder of the card image looked into (not a
+  program's); a folder opened and BACK.
+- `tree` on the staged card of KN7000's `tools/sdcard/stage.sh` (`tree-staged-card-summary.txt`): 8 of 8. 28
+  programs in 5 menu folders, all placed by the table; HW Probes, then Pinball probes (19 entries) opened; LCDL 3,
+  PART SELECT, PAGE DOWN / PAGE UP across its pages; BACK twice, each landing on the folder left.
+
 ### Results (2026-10-20)
 
 The menu `KN7APP.BIN` `0566fba32f5588761de0cbbb34e3f84c2ae1c16d` (12,739 bytes), the card of `make card`

@@ -300,12 +300,41 @@ local function card()
   local n = u32(S.V_NPROG)
   local n0, trail = n, nil
   local all = true
-  if u32(S.V_NREC) > u32(S.V_NCAND) then  -- menu folders: into the last at each level to a list of programs, and back
+  if u32(S.V_NREC) > u32(S.V_NCAND) then  -- menu folders: into the largest at each level to a list of programs, and back
     trail = {}
-    while (u32(rec(n - 1) + S.PR_FLAGS) & S.PF_FOLDER) ~= 0 do
-      local name = cstr(rec(n - 1) + S.PR_NAME)
-      trail[#trail + 1] = { n - 1, name }
-      select(n - 1)
+    local function below(id)  -- programs anywhere under menu folder id
+      local c = 0
+      for i = 0, u32(S.V_NCAND) - 1 do
+        local r = S.PROG_TAB + i * S.PR_LEN
+        local cat = u32(r + S.PR_CAT)
+        while cat ~= 0 and cat ~= id do
+          local up = 0
+          for j = u32(S.V_NCAND), u32(S.V_NREC) - 1 do
+            local f = S.PROG_TAB + j * S.PR_LEN
+            if u32(f + S.PR_CATID) == cat then up = u32(f + S.PR_CAT) end
+          end
+          cat = up
+        end
+        if cat == id and (u32(r + S.PR_FLAGS) & S.PF_APP) ~= 0 then c = c + 1 end
+      end
+      return c
+    end
+    local function largest()  -- the folder in the view with the most programs under it, or nil
+      local best, most
+      for i = 0, n - 1 do
+        local r = rec(i)
+        if (u32(r + S.PR_FLAGS) & S.PF_FOLDER) ~= 0 then
+          local c = below(u32(r + S.PR_CATID))
+          if most == nil or c > most then best, most = i, c end
+        end
+      end
+      return best
+    end
+    while largest() do
+      local k = largest()
+      local name = cstr(rec(k) + S.PR_NAME)
+      trail[#trail + 1] = { k, name }
+      select(k)
       n = u32(S.V_NPROG)
       local g, dd = sel_is(0, "opened " .. name)
       g = g and u32(S.V_LEVEL) ~= 0 and u32(S.V_TITLEP) ~= 0 and cstr(u32(S.V_TITLEP)) == name
