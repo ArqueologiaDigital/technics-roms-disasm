@@ -450,13 +450,16 @@ dn_ret:
 # The scan.
 
 # ScanRoot -> d0 = 0 with the root's folders in PROG_TAB (V_NCAND of them, at most MAX_PROG; their 8.3
-# name, first cluster, and the long name when the entries before them give one), else 1 and a0 = why.
+# name, first cluster, and the long name when the entries before them give one), else 1 and a0 = why. A file
+# KN7MENU.TOC there: its first cluster and size in V_TOCCL, V_TOCSZ.
 ScanRoot:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x20, sp
     clr     d0
     mov     d0, (V_NCAND)
     mov     d0, (V_ROOTFULL)
+    mov     d0, (V_TOCCL)
+    mov     d0, (V_TOCSZ)
     call    DirOpen, 0, 0
     call    LfnReset, 0, 0
 srt_loop:
@@ -480,8 +483,8 @@ srt_loop:
 srt_entry:
     btst    0x08, d1                # a volume label
     bne     srt_reset
-    btst    0x10, d1                # a file
-    beq     srt_reset
+    btst    0x10, d1                # a file: KN7MENU.TOC, or nothing of ours
+    beq     srt_file
     cmp     0x2E, d0                # "." and ".." (not in the root, but)
     beq     srt_reset
     mov     (V_NCAND), d0
@@ -540,6 +543,21 @@ srt_named:
 srt_reset:
     call    LfnReset, 0, 0
     bra     srt_loop
+srt_file:
+    mov     a2, a0
+    mov     name_toc, a1
+    call    Same11, 0, 0
+    cmp     0, d0
+    beq     srt_reset
+    mov     a2, a0
+    add     0x1A, a0
+    call    Read16U, 0, 0
+    mov     d0, (V_TOCCL)
+    mov     a2, a0
+    add     0x1C, a0
+    call    Read32U, 0, 0
+    mov     d0, (V_TOCSZ)
+    bra     srt_reset
 srt_done:
     mov     (V_DR_ERR), d0
     cmp     0, d0
@@ -709,6 +727,381 @@ so_manbad:
     or      PF_MANBAD, d0
     mov     d0, (PR_FLAGS, a3)
 so_ret:
+    ret     [d2,d3,a2,a3], 0x30
+
+# ================================================================================================
+# KN7MENU.TOC (README.md, "The table of contents"; mktoc.py writes it): the menu's folders, and for each
+# program folder of the root its name, its menu folder, KN7APP.BIN's size and its icon, decoded.
+
+# LoadToc -> d0 = 0 when it was read, checked (size, header, counts, CRC-32) and applied: a record per menu
+# folder after the root's (V_NREC grows), and the root's folders it lists named, placed and iconed (PF_TOC);
+# else 1, and nothing changed. It is read whole into STAGE, which nothing uses before a program is run.
+LoadToc:
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x20, sp
+    mov     (V_TOCSZ), d1
+    cmp     TH_LEN, d1
+    bcs     lt_bad
+    mov     STAGE_MAX, d0
+    cmp     d0, d1
+    bhi     lt_bad
+    mov     (V_TOCCL), d0
+    call    ValidCluster, 0, 0
+    cmp     0, d0
+    bne     lt_bad
+    mov     (V_TOCCL), d0
+    mov     (V_TOCSZ), d1
+    mov     STAGE, a0
+    call    ReadFile, 0, 0
+    cmp     0, d0
+    bne     lt_bad
+    mov     STAGE, a2               # a2 = the header
+    mov     (a2), d0
+    mov     TOC_MAGIC, d1
+    cmp     d1, d0
+    bne     lt_bad
+    mov     (TH_VERSION, a2), d0
+    cmp     TOC_VERSION, d0
+    bne     lt_bad
+    mov     (TH_BYTES, a2), d0
+    mov     (V_TOCSZ), d1
+    cmp     d1, d0
+    bne     lt_bad
+    mov     (TH_NFOLD, a2), d0      # the counts, and the size they make
+    cmp     TOC_MAXFOLD, d0
+    bhi     lt_bad
+    mov     (TH_NPROG, a2), d0
+    cmp     MAX_PROG, d0
+    bhi     lt_bad
+    mov     (TH_NICON, a2), d0
+    cmp     MAX_PROG, d0
+    bhi     lt_bad
+    mov     ICON_BYTES, d1
+    mulu    d1, d0
+    mov     d0, d2
+    mov     (TH_NPROG, a2), d0
+    mov     TP_LEN, d1
+    mulu    d1, d0
+    add     d0, d2
+    mov     (TH_NFOLD, a2), d0
+    mov     TF_LEN, d1
+    mulu    d1, d0
+    add     d0, d2
+    add     TH_LEN, d2
+    mov     (V_TOCSZ), d0
+    cmp     d0, d2
+    bne     lt_bad
+    mov     a2, a0                  # the CRC-32 of all after the first 16 bytes
+    add     16, a0
+    mov     (V_TOCSZ), d0
+    add     -16, d0
+    call    Crc32, 0, 0
+    mov     (TH_CRC, a2), d1
+    cmp     d1, d0
+    bne     lt_bad
+    clr     d2                      # the menu's folders
+lt_fold:
+    mov     (TH_NFOLD, a2), d0
+    cmp     d0, d2
+    bcc     lt_progs
+    mov     (V_NREC), d0
+    cmp     MAX_PROG, d0
+    bcc     lt_progs
+    call    RecAddr, 0, 0
+    mov     a0, a3
+    mov     PR_LEN/4, d1            # a clean record
+    clr     d0
+lt_clr:
+    mov     d0, (a0)
+    add     4, a0
+    add     -1, d1
+    bne     lt_clr
+    mov     PF_FOLDER, d0
+    mov     d0, (PR_FLAGS, a3)
+    mov     (V_NREC), d0
+    mov     d0, (PR_INDEX, a3)
+    mov     d2, d0
+    inc     d0
+    mov     d0, (PR_CATID, a3)
+    mov     d2, d0                  # a1 = its entry
+    mov     TF_LEN, d1
+    mulu    d1, d0
+    mov     a2, a1
+    add     TH_LEN, a1
+    add     d0, a1
+    mov     a1, (0x14, sp)
+    mov     (TF_PARENT, a1), d0
+    mov     d0, (PR_CAT, a3)
+    mov     a3, a0
+    add     PR_NAME, a0
+    call    TocName, 0, 0           # (a0 = to, a1 = the 64 bytes)
+    mov     (0x14, sp), a1
+    mov     (TF_ICON, a1), d0
+    mov     a3, a0
+    call    TocIcon, 0, 0
+    mov     (V_NREC), d0
+    inc     d0
+    mov     d0, (V_NREC)
+    inc     d2
+    bra     lt_fold
+lt_progs:
+    clr     d2                      # the programs: each to the root's folder of that name
+    mov     d2, (V_TOCPROGS)
+lt_prog:
+    mov     (TH_NPROG, a2), d0
+    cmp     d0, d2
+    bcc     lt_ok
+    mov     (TH_NFOLD, a2), d0      # 0x14(sp) = its entry
+    mov     TF_LEN, d1
+    mulu    d1, d0
+    mov     d0, d3
+    mov     d2, d0
+    mov     TP_LEN, d1
+    mulu    d1, d0
+    add     d3, d0
+    add     TH_LEN, d0
+    mov     a2, a0
+    add     d0, a0
+    mov     a0, (0x14, sp)
+    clr     d3                      # the candidate with that folder name, not placed yet
+lt_cand:
+    mov     (V_NCAND), d0
+    cmp     d0, d3
+    bcc     lt_pnext
+    mov     d3, d0
+    call    RecAddr, 0, 0
+    mov     a0, a3
+    mov     (PR_FLAGS, a3), d0
+    btst    PF_TOC, d0
+    bne     lt_cnext
+    mov     a3, a0
+    add     PR_DIR, a0
+    mov     (0x14, sp), a1
+    call    StrCmpI, 0, 0
+    cmp     0, d0
+    beq     lt_place
+lt_cnext:
+    inc     d3
+    bra     lt_cand
+lt_place:
+    mov     (PR_FLAGS, a3), d0
+    or      PF_APP|PF_TOC|PF_MANIFEST|PF_MNAME, d0
+    mov     d0, (PR_FLAGS, a3)
+    mov     (0x14, sp), a1
+    mov     (TP_FOLDER, a1), d0
+    mov     d0, (PR_CAT, a3)
+    mov     (TP_APPSZ, a1), d0
+    mov     d0, (PR_APPSZ, a3)
+    clr     d0
+    mov     d0, (PR_APPCL, a3)
+    mov     a3, a0
+    add     PR_NAME, a0
+    add     TP_NAME, a1
+    call    TocName, 0, 0
+    mov     (0x14, sp), a1
+    mov     (TP_ICON, a1), d0
+    mov     a3, a0
+    call    TocIcon, 0, 0
+    mov     (V_TOCPROGS), d0
+    inc     d0
+    mov     d0, (V_TOCPROGS)
+lt_pnext:
+    inc     d2
+    bra     lt_prog
+lt_ok:
+    clr     d0
+    bra     lt_ret
+lt_bad:
+    mov     1, d0
+lt_ret:
+    ret     [d2,d3,a2,a3], 0x30
+
+# TocName(a0 = to, a1 = 64 bytes): at most 63 characters, NUL-ended, printable ASCII kept (else '?'). Leaf.
+TocName:
+    mov     63, d1
+tn_c:
+    movbu   (a1), d0
+    cmp     0, d0
+    beq     tn_end
+    cmp     0x20, d0
+    bcs     tn_q
+    cmp     0x7F, d0
+    bcs     tn_put
+tn_q:
+    mov     0x3F, d0
+tn_put:
+    movbu   d0, (a0)
+    inc     a0
+    inc     a1
+    add     -1, d1
+    bne     tn_c
+tn_end:
+    clr     d0
+    movbu   d0, (a0)
+    rets
+
+# TocIcon(a0 = record, d0 = the TOC's icon index, or -1): the icon into its record's slot of ICONS (PF_ICON),
+# or the default one. STAGE holds the TOC.
+TocIcon:
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x20, sp
+    mov     a0, a3
+    mov     DefaultIcon, d1
+    mov     d1, (PR_ICONP, a3)
+    mov     STAGE, a2
+    mov     (TH_NICON, a2), d1
+    cmp     d1, d0
+    bcc     ti2_ret                 # (-1 too, unsigned)
+    mov     ICON_BYTES, d1          # a1 = the TOC's icon
+    mulu    d1, d0
+    mov     d0, a1
+    add     a2, a1
+    add     TH_LEN, a1
+    mov     (TH_NFOLD, a2), d0
+    mov     TF_LEN, d1
+    mulu    d1, d0
+    add     d0, a1
+    mov     (TH_NPROG, a2), d0
+    mov     TP_LEN, d1
+    mulu    d1, d0
+    add     d0, a1
+    mov     (PR_INDEX, a3), d0      # a0 = its slot
+    mov     ICON_BYTES, d1
+    mulu    d1, d0
+    mov     ICONS, a0
+    add     d0, a0
+    mov     a0, (PR_ICONP, a3)
+    mov     ICON_BYTES/4, d1
+ti2_cp:
+    mov     (a1), d0
+    mov     d0, (a0)
+    add     4, a0
+    add     4, a1
+    add     -1, d1
+    bne     ti2_cp
+    mov     (PR_FLAGS, a3), d0
+    or      PF_ICON, d0
+    mov     d0, (PR_FLAGS, a3)
+ti2_ret:
+    ret     [d2,d3,a2,a3], 0x30
+
+# FindApp(a0 = record) -> d0 = 0 with KN7APP.BIN's first cluster and size in it, else 1 (not in its folder, or
+# the folder unreadable). For a program KN7MENU.TOC placed, as it is run.
+FindApp:
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x20, sp
+    mov     a0, a3
+    mov     (PR_DIRCL, a3), d0
+    call    DirOpen, 0, 0
+fa_loop:
+    call    DirNext, 0, 0
+    cmp     0, a0
+    beq     fa_no
+    mov     a0, a2
+    movbu   (a2), d0
+    cmp     0, d0
+    beq     fa_no
+    cmp     0xE5, d0
+    beq     fa_loop
+    movbu   (11, a2), d0            # files only
+    and     0x18, d0
+    bne     fa_loop
+    mov     a2, a0
+    mov     name_app, a1
+    call    Same11, 0, 0
+    cmp     0, d0
+    beq     fa_loop
+    mov     a2, a0
+    add     0x1A, a0
+    call    Read16U, 0, 0
+    mov     d0, (PR_APPCL, a3)
+    mov     a2, a0
+    add     0x1C, a0
+    call    Read32U, 0, 0
+    mov     d0, (PR_APPSZ, a3)
+    mov     (PR_APPCL, a3), d0
+    call    ValidCluster, 0, 0
+    cmp     0, d0
+    bne     fa_no
+    clr     d0
+    bra     fa_ret
+fa_no:
+    clr     d0
+    mov     d0, (PR_APPCL, a3)
+    mov     1, d0
+fa_ret:
+    ret     [d2,d3,a2,a3], 0x30
+
+# CountFolders: each menu folder's PR_COUNT, the programs and folders listed in it.
+CountFolders:
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x20, sp
+    clr     d2
+cfo_f:
+    mov     (V_NREC), d0
+    cmp     d0, d2
+    bcc     cfo_ret
+    mov     d2, d0
+    call    RecAddr, 0, 0
+    mov     a0, a2
+    mov     (PR_FLAGS, a2), d0
+    btst    PF_FOLDER, d0
+    beq     cfo_next
+    clr     d0
+    mov     d0, (PR_COUNT, a2)
+    clr     d3
+cfo_r:
+    mov     (V_NREC), d0
+    cmp     d0, d3
+    bcc     cfo_next
+    mov     d3, d0
+    call    RecAddr, 0, 0
+    mov     (PR_FLAGS, a0), d0
+    and     PF_APP|PF_FOLDER, d0
+    beq     cfo_rn
+    mov     (PR_CAT, a0), d0
+    mov     (PR_CATID, a2), d1
+    cmp     d1, d0
+    bne     cfo_rn
+    mov     (PR_COUNT, a2), d0
+    inc     d0
+    mov     d0, (PR_COUNT, a2)
+cfo_rn:
+    inc     d3
+    bra     cfo_r
+cfo_next:
+    inc     d2
+    bra     cfo_f
+cfo_ret:
+    ret     [d2,d3,a2,a3], 0x30
+
+# FolderRec -> a0 = the record of the menu folder shown (V_LEVEL), or 0 at the top.
+FolderRec:
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x20, sp
+    clr     d2
+fdr_n:
+    mov     (V_LEVEL), d0
+    cmp     0, d0
+    beq     fdr_none
+    mov     (V_NREC), d0
+    cmp     d0, d2
+    bcc     fdr_none
+    mov     d2, d0
+    call    RecAddr, 0, 0
+    mov     (PR_FLAGS, a0), d0
+    btst    PF_FOLDER, d0
+    beq     fdr_next
+    mov     (PR_CATID, a0), d0
+    mov     (V_LEVEL), d1
+    cmp     d1, d0
+    beq     fdr_ret
+fdr_next:
+    inc     d2
+    bra     fdr_n
+fdr_none:
+    mov     0, a0
+fdr_ret:
     ret     [d2,d3,a2,a3], 0x30
 
 # Same11(a0, a1) -> d0 = 1 when the 11 bytes at a0 and a1 are equal, else 0.
@@ -1306,22 +1699,39 @@ db_ret:
     ret     [d2,d3,a2,a3], 0x30
 
 # ================================================================================================
-# The list: ORDER holds the records of the folders with a KN7APP.BIN, sorted by the name shown (ASCII,
-# case ignored); V_NPROG of them.
+# The list: ORDER holds what the menu folder shown (V_LEVEL) lists: its menu folders that hold anything, then
+# the root's folders with a KN7APP.BIN placed in it (KN7MENU.TOC; the rest at the top), each group sorted by the
+# name shown (ASCII, case ignored); V_NPROG of them. V_TITLEP: the folder's name, or 0 at the top.
 SortPrograms:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x20, sp
+    call    FolderRec, 0, 0
+    cmp     0, a0
+    beq     sp_title
+    add     PR_NAME, a0
+sp_title:
+    mov     a0, (V_TITLEP)
     clr     d2
     clr     d3
 sp_c:
-    mov     (V_NCAND), d0
+    mov     (V_NREC), d0
     cmp     d0, d2
     bcc     sp_sort
     mov     d2, d0
     call    RecAddr, 0, 0
+    mov     (PR_CAT, a0), d0
+    mov     (V_LEVEL), d1
+    cmp     d1, d0
+    bne     sp_n
     mov     (PR_FLAGS, a0), d0
     btst    PF_APP, d0
+    bne     sp_take
+    btst    PF_FOLDER, d0
     beq     sp_n
+    mov     (PR_COUNT, a0), d0
+    cmp     0, d0
+    beq     sp_n
+sp_take:
     mov     d3, d0
     asl     2, d0
     mov     ORDER, a1
@@ -1348,10 +1758,8 @@ sp_j:
     cmp     d0, a2
     beq     sp_place
     mov     (-4, a2), a0
-    add     PR_NAME, a0
     mov     a3, a1
-    add     PR_NAME, a1
-    call    StrCmpI, 0, 0
+    call    OrderCmp, 0, 0
     cmp     0, d0
     ble     sp_place
     mov     (-4, a2), a0
@@ -1363,6 +1771,29 @@ sp_place:
     inc     d2
     bra     sp_i
 sp_ret:
+    ret     [d2,d3,a2,a3], 0x30
+
+# OrderCmp(a0, a1 = records) -> d0 < 0, 0, > 0 as the first sorts before, with, after the second: a menu folder
+# before a program, then StrCmpI on the names.
+OrderCmp:
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x20, sp
+    mov     (PR_FLAGS, a0), d0
+    and     PF_FOLDER, d0
+    mov     (PR_FLAGS, a1), d1
+    and     PF_FOLDER, d1
+    cmp     d1, d0
+    beq     oc_names
+    mov     -1, d0
+    cmp     0, d1
+    beq     oc_ret                  # the first is the folder
+    mov     1, d0
+    bra     oc_ret
+oc_names:
+    add     PR_NAME, a0
+    add     PR_NAME, a1
+    call    StrCmpI, 0, 0
+oc_ret:
     ret     [d2,d3,a2,a3], 0x30
 
 # StrCmpI(a0, a1) -> d0 < 0, 0, > 0 as the first string sorts before, with, after the second (ASCII,

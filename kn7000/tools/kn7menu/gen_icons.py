@@ -6,7 +6,7 @@
 #   python3 -I gen_icons.py --png NAME OUT.png          one card icon as a 32x32 PNG, for png2icon.py
 #   python3 -I gen_icons.py --list                      the names
 # NAME: default, aw (Another World), pinball (Pinball Fantasies), survey2, dspprobe, dspmem, dsprate, cputime (the ROM dumper's passes
-# 5 to 9), dsptone (../dsptone). The PNGs go through png2icon.py on their way to the card, as anyone's own icon would.
+# 5 to 9), dsptone (../dsptone); folder, folder-games, folder-probes, folder-apps (the menu's folders, mktoc.py). The PNGs go through png2icon.py on their way to the card, as anyone's own icon would.
 import math
 import struct
 import sys
@@ -143,10 +143,30 @@ def icon(name):
             cv.ring(24, 24, 5, (255, 255, 160))
             cv.line(27, 27, 30, 30, (255, 255, 160))
         return cv
+    if name.startswith('folder'):               # a menu folder: a yellow folder, with what it holds on it
+        cv = Canvas((0, 0, 0))
+        cv.rect(2, 6, 12, 4, (200, 150, 30))   # the tab
+        cv.rect(2, 9, 28, 19, (240, 190, 50))
+        cv.rect(2, 9, 28, 1, (255, 225, 120))
+        kind = name[7:]
+        if kind == 'games':                     # a ball and a flipper
+            cv.disc(13, 17, 3, (235, 235, 245))
+            cv.line(17, 23, 25, 20, (180, 40, 40))
+            cv.line(17, 24, 25, 21, (180, 40, 40))
+        elif kind == 'probes':                  # a chip
+            cv.rect(11, 13, 10, 10, (40, 40, 44))
+            for k in range(3):
+                cv.rect(12 + k * 3, 11, 2, 2, (120, 120, 120))
+                cv.rect(12 + k * 3, 23, 2, 2, (120, 120, 120))
+        elif kind == 'apps':                    # a window
+            cv.rect(10, 12, 13, 11, (250, 250, 250))
+            cv.rect(10, 12, 13, 3, (0, 0, 160))
+        return cv
     raise SystemExit(f'gen_icons: no icon named {name!r}')
 
 
-NAMES = ['default', 'aw', 'pinball', 'survey2', 'dspprobe', 'dspmem', 'dsprate', 'cputime', 'dsptone']
+NAMES = ['default', 'aw', 'pinball', 'survey2', 'dspprobe', 'dspmem', 'dsprate', 'cputime', 'dsptone', 'folder',
+         'folder-games', 'folder-probes', 'folder-apps']
 
 
 def png_bytes(cv):

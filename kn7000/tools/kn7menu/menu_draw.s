@@ -92,7 +92,8 @@ dsc_fail:
 dsc_ret:
     ret     [d2,d3,a2,a3], 0x30
 
-# Title(a0 = the bar's right-hand text, or 0): the title bar.
+# Title(a0 = the bar's right-hand text, or 0): the title bar; on its left str_title, or the menu folder shown
+# (V_TITLEP, at most 23 characters).
 Title:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x20, sp
@@ -109,9 +110,15 @@ Title:
     mov     2, d0
     mov     d0, (V_SCALE)
     mov     str_title, a0
+    mov     (V_TITLEP), d0
+    cmp     0, d0
+    beq     ti_left
+    mov     d0, a0
+ti_left:
     mov     8, d0
     mov     1, d1
-    call    DrawText, 0, 0
+    mov     23, a1
+    call    DrawTextN, 0, 0
     mov     1, d0
     mov     d0, (V_SCALE)
     cmp     0, a2
@@ -386,6 +393,19 @@ drw_prog:
 drw_where:
     mov     C_DIM, d0
     mov     d0, (V_FG)
+    mov     (PR_FLAGS, a2), d0      # a menu folder: how much it holds
+    btst    PF_FOLDER, d0
+    beq     drw_wl
+    mov     LINEBUF, a0
+    mov     str_w_folder, a1
+    call    StrCpy, 0, 0
+    mov     (PR_COUNT, a2), d0
+    call    PutDec, 0, 0
+    mov     str_w_entries, a1
+    call    StrCpy, 0, 0
+    mov     LINEBUF, a0
+    bra     drw_line2
+drw_wl:
     mov     a2, a0
     call    WhereLine, 0, 0         # a0 = LINEBUF
 drw_line2:
@@ -431,8 +451,8 @@ wl_ret:
     mov     LINEBUF, a0
     ret     [d2,d3,a2,a3], 0x30
 
-# DrawLabels: the right buttons: LCDR 1 PAGE UP and LCDR 2 PAGE DOWN when there is a page that way, LCDR 4
-# LEAVE, LCDR 5 RUN (WAIT while a program is read and checked).
+# DrawLabels: the right buttons: LCDR 1 BACK in a menu folder, LCDR 4 LEAVE, LCDR 5 RUN (OPEN on a menu folder,
+# WAIT while a program is read and checked). The pages turn with PAGE UP and PAGE DOWN, which have no label.
 DrawLabels:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x20, sp
@@ -450,21 +470,11 @@ DrawLabels:
     mov     1, a0
     mov     240-TITLE_H, a1
     call    FillRect, 0, 0
-    mov     (V_TOP), d0             # LCDR 1
+    mov     (V_LEVEL), d0           # LCDR 1
     cmp     0, d0
-    beq     dl_r2
-    mov     str_l_pgup, a0
+    beq     dl_r4
+    mov     str_l_back, a0
     clr     d0
-    mov     C_LABEL, d1
-    call    Label, 0, 0
-dl_r2:
-    mov     (V_TOP), d0             # LCDR 2
-    add     ROWS, d0
-    mov     (V_NPROG), d1
-    cmp     d1, d0
-    bcc     dl_r4
-    mov     str_l_pgdn, a0
-    mov     1, d0
     mov     C_LABEL, d1
     call    Label, 0, 0
 dl_r4:
@@ -475,6 +485,11 @@ dl_r4:
     mov     (V_NPROG), d0           # LCDR 5
     cmp     0, d0
     beq     dl_ret
+    call    SelRec, 0, 0
+    mov     (PR_FLAGS, a0), d0
+    mov     str_l_open, a0
+    btst    PF_FOLDER, d0
+    bne     dl_r5
     mov     str_l_run, a0
     mov     (V_STATE), d0
     cmp     ST_READ, d0

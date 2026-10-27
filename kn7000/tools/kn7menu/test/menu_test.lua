@@ -5,9 +5,9 @@
 -- check prints "menu_test: <name> PASS|FAIL detail"; the write taps' report goes to MT_OUT/taps.txt.
 --
 -- MT_MODE:
---   card      the card make card builds: the list (names, folders, sizes, icons in RAM and on the LCD)
---             equals fatscan.py's (MT_EXPECT); the left buttons pick rows, PART SELECT moves, LCDR 2 / LCDR 1
---             and PAGE DOWN / PAGE UP turn pages; the menu draws itself again after something else drew
+--   card      the card make card builds: the programs (names, folders, sizes, icons in RAM and on the LCD),
+--             in whichever menu folder KN7MENU.TOC put them, equal fatscan.py's (MT_EXPECT); the left buttons
+--             pick rows (and open folders), PART SELECT moves, PAGE DOWN / PAGE UP turn pages, LCDR 1 goes back; the menu draws itself again after something else drew
 --             on the LCD; holding EXIT leaves, "Continue Next?" YES brings the menu back (the loader loads
 --             it again); LEAVE (LCDR 4), then NO, leaves STYLE CONVERT.
 --   fallback  a card of malformed and missing manifests and icons, a long-named folder, a folder without a
@@ -187,7 +187,34 @@ local function icon_on_lcd(row, r)    -- the LCD at row's icon position = the re
   end end
   return true
 end
+local function lower(t) return (t:gsub("%u", function(c) return c:lower() end)) end
+-- the programs in every menu folder, as one list sorted by name (fatscan.py's order); and a view's names
+local function programs()
+  local all = {}
+  for i = 0, u32(S.V_NCAND) - 1 do
+    local r = S.PROG_TAB + i * S.PR_LEN
+    if (u32(r + S.PR_FLAGS) & S.PF_APP) ~= 0 then all[#all + 1] = r end
+  end
+  table.sort(all, function(a, b) return lower(cstr(a + S.PR_NAME)) < lower(cstr(b + S.PR_NAME)) end)
+  return all
+end
 local function check_list(tag)
+  if u32(S.V_NREC) > u32(S.V_NCAND) then  -- KN7MENU.TOC's folders: all programs, wherever they are listed
+    local all, bad = programs(), {}
+    local ok = EXPECT ~= nil and #all == #EXPECT
+    for i = 1, math.min(#all, #(EXPECT or {})) do
+      local r, e = all[i], EXPECT[i]
+      local fl = u32(r + S.PR_FLAGS)
+      if not (cstr(r + S.PR_NAME) == e.name and cstr(r + S.PR_DIR, 16) == e.dir and u32(r + S.PR_APPSZ) == e.appsize
+        and (fl & S.PF_TOC) ~= 0 and icon_ok_ram(r, e)) then ok = false; bad[#bad + 1] = string.format("#%d %q flags %03X", i, cstr(r + S.PR_NAME), fl) end
+    end
+    local names = {}
+    for i = 1, u32(S.V_NPROG) do names[#names + 1] = cstr(rec(i - 1) + S.PR_NAME) end
+    result(tag, ok and u32(S.V_TOCST) == S.TOC_USED, string.format("KN7MENU.TOC %d, %d programs (fatscan.py: %d) in %d menu folders, %d placed by it, %d folders looked into; the top: %s%s",
+      u32(S.V_TOCST), #all, EXPECT and #EXPECT or -1, u32(S.V_NREC) - u32(S.V_NCAND), u32(S.V_TOCPROGS), u32(S.V_NFOLDERS),
+      table.concat(names, " | "), #bad > 0 and ("; DIFFER: " .. table.concat(bad, ", ")) or ""))
+    return
+  end
   local n = u32(S.V_NPROG)
   local ok, bad = EXPECT ~= nil and n == #EXPECT, {}
   for i = 1, math.min(n, #(EXPECT or {})) do
@@ -216,9 +243,32 @@ end
 local function index_of(name)
   for i = 0, u32(S.V_NPROG) - 1 do if cstr(rec(i) + S.PR_NAME) == name then return i end end
 end
+-- the program named `name` shown: the menu folders KN7MENU.TOC put it in opened from the top, its index then
+local function open_to(name)
+  local target
+  for i = 0, u32(S.V_NREC) - 1 do
+    local r = S.PROG_TAB + i * S.PR_LEN
+    if (u32(r + S.PR_FLAGS) & S.PF_APP) ~= 0 and cstr(r + S.PR_NAME) == name then target = r end
+  end
+  if not target then return nil end
+  local path, cat = {}, u32(target + S.PR_CAT)
+  while cat ~= 0 do
+    for i = u32(S.V_NCAND), u32(S.V_NREC) - 1 do
+      local r = S.PROG_TAB + i * S.PR_LEN
+      if u32(r + S.PR_CATID) == cat then table.insert(path, 1, cstr(r + S.PR_NAME)); cat = u32(r + S.PR_CAT) end
+    end
+  end
+  while u32(S.V_LEVEL) ~= 0 do btn("R1"); wait(1) end
+  for _, f in ipairs(path) do
+    local i = index_of(f)
+    if not i then return nil end
+    select(i)
+  end
+  return index_of(name)
+end
 local function select(i)              -- page to it, then its row's left button
-  while u32(S.V_TOP) + S.ROWS <= i do btn("R2"); wait(1) end
-  while u32(S.V_TOP) > i do btn("R1"); wait(1) end
+  while u32(S.V_TOP) + S.ROWS <= i do btn("PGDN"); wait(1) end
+  while u32(S.V_TOP) > i do btn("PGUP"); wait(1) end
   btn("L" .. (i - u32(S.V_TOP) + 1)); wait(1)
   return u32(S.V_SEL) == i
 end
@@ -248,11 +298,30 @@ local function card()
   local steps = {}
   local function step(b, want, label) btn(b); wait(1); local g, dd = sel_is(want, label); steps[#steps + 1] = (g and "" or "NOT ") .. dd; return g end
   local n = u32(S.V_NPROG)
-  local all = step("L3", 2, "LCDL 3") and step("NEXT", 3, "PART SELECT RIGHT 1") and step("PREV", 2, "PART SELECT LEFT")
+  local n0, trail = n, nil
+  local all = true
+  if u32(S.V_NREC) > u32(S.V_NCAND) then  -- menu folders: into the last at each level to a list of programs, and back
+    trail = {}
+    while (u32(rec(n - 1) + S.PR_FLAGS) & S.PF_FOLDER) ~= 0 do
+      local name = cstr(rec(n - 1) + S.PR_NAME)
+      trail[#trail + 1] = { n - 1, name }
+      select(n - 1)
+      n = u32(S.V_NPROG)
+      local g, dd = sel_is(0, "opened " .. name)
+      g = g and u32(S.V_LEVEL) ~= 0 and u32(S.V_TITLEP) ~= 0 and cstr(u32(S.V_TITLEP)) == name
+      steps[#steps + 1] = (g and "" or "NOT ") .. dd .. string.format(", %d entries", n)
+      all = all and g
+      if n == 0 then break end
+    end
+  end
+  all = all and (n < 3 or (step("L3", 2, "LCDL 3") and step("NEXT", math.min(3, n - 1), "PART SELECT RIGHT 1") and step("PREV", 2, "PART SELECT LEFT")))
   if n > S.ROWS then
-    all = step("R2", S.ROWS, "LCDR 2 (page down)") and step("R1", 0, "LCDR 1 (page up)")
-      and step("PGDN", S.ROWS, "PAGE DOWN") and step("PGUP", 0, "PAGE UP") and all
+    all = step("PGDN", S.ROWS, "PAGE DOWN") and step("PGUP", 0, "PAGE UP") and all
     all = step("L5", 4, "LCDL 5") and step("NEXT", 5, "PART SELECT RIGHT 1 onto page 2") and step("PREV", 4, "PART SELECT LEFT back") and all
+  end
+  if trail then
+    for k = #trail, 1, -1 do all = step("R1", trail[k][1], "LCDR 1, BACK to " .. (k > 1 and trail[k - 1][2] or "the top")) and all end
+    all = all and u32(S.V_LEVEL) == 0
   end
   result("navigate", all, table.concat(steps, "; "))
   local r0 = u32(S.V_NREDRAW)         -- something else draws on the LCD: the menu draws itself again
@@ -266,7 +335,7 @@ local function card()
   continue_next(YES)                  -- YES: the loader loads C:\KN7APP.BIN, the menu, again
   ok = ok and wait_until(function() return menu_up() and mstate() == S.ST_MENU and u32(S.SVC + S.SV_CALLS) < calls end, 90)
   wait(2)
-  result("again", ok and u32(S.V_NPROG) == n, string.format("EXIT held: the menu ended; YES: the loader started it again (calls %d, menu state %d, %d programs)",
+  result("again", ok and u32(S.V_NPROG) == n0, string.format("EXIT held: the menu ended; YES: the loader started it again (calls %d, menu state %d, %d programs)",
     u32(S.SVC + S.SV_CALLS), mstate(), u32(S.V_NPROG)))
   btn("R4")                           -- LEAVE
   ok = wait_until(function() return mstate() == S.ST_END end, 5)
@@ -311,7 +380,7 @@ local function run()
   if not ok then return end
   wait(2)
   local want = os.getenv("MT_PROGRAM")
-  local i = index_of(want)
+  local i = open_to(want)
   if i == nil then result("start", false, "no program named " .. want); return end
   local r = rec(i)
   local dir, size = cstr(r + S.PR_DIR, 16), u32(r + S.PR_APPSZ)

@@ -14,6 +14,9 @@
 #              folder without a program, a damaged and a foreign KN7APP.BIN (refused, with the message)
 #   buttons    a menu that reads no button (-D BUTTONS_USED=0) on the card: what each candidate button does to
 #              IC23 (the panel settings), to the LCD and to the converter calls
+#   tree       the card tree TREE names, as it is (KN7000's tools/sdcard/stage.sh: ~/compartilhado/sdcard-stage/card,
+#              the owner's whole card), with menu_test.lua's card checks (MT_MODE=card); its root KN7APP.BIN must be
+#              this build of the menu
 #   cputime    pass 9 started from its folder (CPUTIME): its file written to the card's root, checked by the
 #              release's verifier (verify_dump.py --cputime with cpu_tap.lua's account, check_cpu_probe.py);
 #              then "Continue Next?" YES brings the menu back
@@ -75,6 +78,12 @@ while [ $# -gt 0 ]; do
     say "card tree $OUT/build/card ($(find "$OUT/build/card" -type f | wc -l) files); its KN7APP.BINs: $(cd "$OUT/build/card" && sha1sum */KN7APP.BIN KN7APP.BIN | cut -c1-12 | tr '\n' ' ')"
     mame "$OUT/card" "$OUT/build/card" card
     rm -f -- "$OUT/card/sd.img" "$OUT/card/floppy.img"
+    ;;
+  tree)
+    [ -n "${TREE:-}" ] && cmp -s "$TREE/KN7APP.BIN" "$OUT/build/KN7APP.BIN" || { say "tree FAIL: TREE unset, or its KN7APP.BIN is not this menu"; continue; }
+    say "card tree $TREE ($(find "$TREE" -type f | wc -l) files)"
+    mame "$OUT/tree" "$TREE" card
+    rm -f -- "$OUT/tree/sd.img" "$OUT/tree/floppy.img"
     ;;
   fallback)
     python3 -I "$HERE/mkfallback.py" "$OUT/fallback-tree" "$OUT/build/KN7APP.BIN" "$LOADER/releases" > /dev/null

@@ -35,11 +35,11 @@ buttons left and right of the display.
 
 | button                      | what it does                                                                    |
 |-----------------------------|---------------------------------------------------------------------------------|
-| left buttons 1-5            | select the program on that row                                                  |
-| PART SELECT LEFT / RIGHT 1  | select the program above / below (across pages)                                 |
-| right button 1, PAGE UP     | the page before (the label shows only when there is one)                        |
-| right button 2, PAGE DOWN   | the page after (the label shows only when there is one)                         |
-| right button 5, **RUN**     | read the selected program's `KN7APP.BIN`, check it, start it                    |
+| left buttons 1-5            | select the program on that row; a folder's row opens the folder                 |
+| PART SELECT LEFT / RIGHT 1  | select the entry above / below (across pages)                                   |
+| PAGE UP, PAGE DOWN          | the page before, the page after                                                 |
+| right button 1, **BACK**    | in a folder: the folder above it (the label shows only in a folder)             |
+| right button 5, **RUN**     | read the selected program's `KN7APP.BIN`, check it, start it (**OPEN**: folder) |
 | right button 4, **LEAVE**   | end the conversion (when let go): the firmware's message, then "Continue Next?" |
 | EXIT, held 1.5 s and let go | the same as LEAVE                                                               |
 
@@ -109,7 +109,7 @@ folder, it reads the launch block (below), as Another World now does.
     NAME=Another World
     ICON=ICON.BMP
 
-- One `KEY=VALUE` per line. The keys are `NAME` and `ICON`, in any case; blanks around the key, the
+- One `KEY=VALUE` per line. The keys are `NAME`, `ICON` and `FOLDER`, in any case; blanks around the key, the
   `=` and the value do not count. Other keys, blank lines and lines starting with `#` are ignored. A
   UTF-8 byte-order mark at the start is skipped. The menu reads the first 2,047 bytes.
 - `NAME`: what the list shows, up to 63 characters (a row shows the first 57). ASCII only: any other
@@ -120,6 +120,9 @@ folder, it reads the launch block (below), as Another World now does.
   FAT's VFAT entries) or, without one, its 8.3 name. **Without a usable icon** (no `ICON=`, a missing
   file, a file the menu cannot read) it shows the built-in default icon, a small window, and the row's
   second line says "(its icon file is unusable)" when an `ICON=` named one.
+- `FOLDER`: the menu folder the program is listed in, by name (`FOLDER=Games`), or a path of folders
+  (`FOLDER=HW Probes/Pinball probes`). Without it, the top of the menu. It is read only by `mktoc.py`, as
+  the card is made: a folder not in `KN7MENU.TOC` is listed at the top.
 
 ## The icon
 
@@ -136,6 +139,23 @@ plainest BMP: 24 bits, bottom-up, a 40-byte header. No library is needed.
     python3 -I png2icon.py my-icon.png ICON.BMP     # convert
     python3 -I png2icon.py --check ICON.BMP         # would the menu take it?
     python3 -I png2icon.py --self-test              # the decoder against Pillow, when it is installed
+
+## The table of contents
+
+`make card` (and KN7000's `tools/sdcard/stage.sh`, over the whole staged tree) ends with `mktoc.py`, which writes
+`C:\KN7MENU.TOC`: every folder of the root with a `KN7APP.BIN`, the name and the menu folder its manifest gives,
+its icon decoded as the menu decodes it, and `KN7APP.BIN`'s size; and the menu's folders, made from the
+manifests' `FOLDER=` paths, each with a folder icon (`gen_icons.py`). Its layout is in `mktoc.py`'s header and
+`menu.inc` (`TH_*`, `TF_*`, `TP_*`); a CRC-32 covers it.
+
+As it starts, the menu reads the root directory and that one file, and nothing in the program folders: before, it
+read every folder's directory (twice, once for the icon), its manifest and its icon, which grew with every probe
+added to the card. It finds a program's `KN7APP.BIN` in its folder when the program is run. A folder of the root
+that the file does not list (copied to the card by hand afterwards) is looked into as before, and listed at the
+top. A file it cannot use (its size, its header, its counts, its CRC-32) is ignored, and every folder is looked into.
+
+The top of the menu lists the menu's folders first, then the programs placed there; a folder lists its own folders,
+then its programs; each part sorted by name. A folder's second line says how many entries it holds.
 
 ## How it finds the programs
 
@@ -435,6 +455,7 @@ The same branch's game from the root without the menu, `run_cnv_tests.sh` unchan
 | `png2icon.py`            | a PNG to the menu's icon format; `--check` a BMP; `--self-test`                                        |
 | `fatscan.py`             | what the menu will list for a folder tree or a card image, by its rules but not its code               |
 | `mkcard.py`              | `make card`: the card tree and `card.txt`                                                              |
+| `mktoc.py`               | `KN7MENU.TOC`, the menu's table of contents, from a card tree (The table of contents)                  |
 | `fatimg.py`              | a folder tree into a FAT16 card image, long names included (for the tests)                             |
 | `guard.py`               | the build-time guards: addresses, the five services, frames, the memory map; `--selftest`              |
 | `Makefile`               | `make`, `make card`, `make check`                                                                      |

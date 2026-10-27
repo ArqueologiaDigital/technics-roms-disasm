@@ -20,16 +20,17 @@ import subprocess
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-# folder (8.3), what goes in it, NAME=, icon (gen_icons.py)
+# folder (8.3), what goes in it, NAME=, icon (gen_icons.py), FOLDER= (the menu folder it is listed in: mktoc.py)
+PASSES = "HW Probes/ROM dumper passes"
 PROGRAMS = [
-    ("AW", "aw", "Another World", "aw"),
-    ("PINBALL", "pf", "Pinball Fantasies", "pinball"),
-    ("SURVEY2", "2026-10-20-survey2/sdcard-pass5-SURVEY2", "Pass 5: ROM dumper SURVEY2 (IC23, work RAM)", "survey2"),
-    ("DSPPROBE", "2026-10-20-dspprobe/sdcard-pass6-DSPPROBE", "Pass 6: DSP probe, phase 1", "dspprobe"),
-    ("DSPMEM", "2026-10-20-dspmem/sdcard-pass7-DSPMEM", "Pass 7: DSP probe, phase 2 (DSP memory)", "dspmem"),
-    ("DSPRATE", "2026-10-20-dsprate/sdcard-pass8-DSPRATE", "Pass 8: DSP probe, frame rate", "dsprate"),
-    ("CPUTIME", "2026-10-20-cputime/sdcard-pass9-CPUTIME", "Pass 9: CPU timing probe", "cputime"),
-    ("DSPTONE", "dsptone:2026-10-20-iter1/sdcard-DSPTONE", "DSP tone: our own effects-DSP program", "dsptone"),
+    ("AW", "aw", "Another World", "aw", "Games"),
+    ("PINBALL", "pf", "Pinball Fantasies", "pinball", "Games"),
+    ("SURVEY2", "2026-10-20-survey2/sdcard-pass5-SURVEY2", "Pass 5: ROM dumper SURVEY2 (IC23, work RAM)", "survey2", PASSES),
+    ("DSPPROBE", "2026-10-20-dspprobe/sdcard-pass6-DSPPROBE", "Pass 6: DSP probe, phase 1", "dspprobe", PASSES),
+    ("DSPMEM", "2026-10-20-dspmem/sdcard-pass7-DSPMEM", "Pass 7: DSP probe, phase 2 (DSP memory)", "dspmem", PASSES),
+    ("DSPRATE", "2026-10-20-dsprate/sdcard-pass8-DSPRATE", "Pass 8: DSP probe, frame rate", "dsprate", PASSES),
+    ("CPUTIME", "2026-10-20-cputime/sdcard-pass9-CPUTIME", "Pass 9: CPU timing probe", "cputime", PASSES),
+    ("DSPTONE", "dsptone:2026-10-20-iter1/sdcard-DSPTONE", "DSP tone: our own effects-DSP program", "dsptone", "Other apps"),
 ]
 # what a PINBALL\ folder without the game's files lacks (`make card-dir` run without PF_DATA)
 PF_NEEDED = ['KN7APP.BIN', 'PFBANK.BIN'] + [f'PF{t}.{e}' for t in range(1, 5) for e in ('BIN', 'IMG', 'PIC', 'MOD')]
@@ -68,7 +69,7 @@ def main():
     os.makedirs(out)
     os.makedirs(icons, exist_ok=True)
     shutil.copyfile(menu, os.path.join(out, 'KN7APP.BIN'))
-    for folder, src, name, icon in PROGRAMS:
+    for folder, src, name, icon, where in PROGRAMS:
         d = os.path.join(out, folder)
         os.makedirs(d)
         if src == 'aw':
@@ -91,11 +92,12 @@ def main():
             shutil.copyfile(released(releases, src), os.path.join(d, 'KN7APP.BIN'))
         with open(os.path.join(d, 'MANIFEST.TXT'), 'w', newline='\r\n') as f:
             f.write(f'# {folder}: the KN7000 program menu shows this name and icon (kn7menu/README.md)\n')
-            f.write(f'NAME={name}\nICON=ICON.BMP\n')
+            f.write(f'NAME={name}\nICON=ICON.BMP\nFOLDER={where}\n')
         png = os.path.join(icons, f'{icon}.png')
         subprocess.run([sys.executable, '-I', os.path.join(HERE, 'gen_icons.py'), '--png', icon, png], check=True)
         subprocess.run([sys.executable, '-I', os.path.join(HERE, 'png2icon.py'), png, os.path.join(d, 'ICON.BMP')],
                        check=True, stdout=subprocess.DEVNULL)
+    subprocess.run([sys.executable, '-I', os.path.join(HERE, 'mktoc.py'), out], check=True)
     rows = [('file', 'bytes', 'SHA-1')]
     for root, dirs, files in os.walk(out):
         dirs.sort()

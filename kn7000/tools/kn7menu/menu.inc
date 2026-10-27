@@ -77,6 +77,9 @@
 .equ PR_NAME,       0x40            # 64 bytes: the name shown
 .equ PR_ICONP,      0x80            # its icon: ICONS + index * ICON_BYTES, or DefaultIcon
 .equ PR_INDEX,      0x84            # its index in PROG_TAB (the folder's place in the root directory)
+.equ PR_CAT,        0x88            # the menu folder it is listed in (KN7MENU.TOC): 0 the top, else a PR_CATID
+.equ PR_CATID,      0x8C            # a menu folder's own number (PF_FOLDER), 1 up
+.equ PR_COUNT,      0x90            # a menu folder's entries (programs and folders in it)
 .equ PF_APP,        0x01            # KN7APP.BIN is there
 .equ PF_MANIFEST,   0x02            # MANIFEST.TXT is there
 .equ PF_MNAME,      0x04            # ... and gave a NAME
@@ -85,6 +88,8 @@
 .equ PF_ICONNAME,   0x20            # MANIFEST.TXT gave a valid ICON= name
 .equ PF_ICONBAD,    0x40            # ... but the file is missing or not a 32x32 24/32-bit BMP
 .equ PF_MANBAD,     0x80            # MANIFEST.TXT could not be read (or holds no line we use)
+.equ PF_TOC,        0x100           # named, placed and iconed by KN7MENU.TOC; KN7APP.BIN looked for at RUN
+.equ PF_FOLDER,     0x200           # not a program: a folder of the menu's (KN7MENU.TOC), opened with its button
 .equ CK_NONE,       0               # not checked yet
 .equ CK_OK,         1
 .equ CK_READ,       2               # the card could not be read
@@ -158,6 +163,13 @@
 .equ V_LEAVEREQ,    M_VARS+0xF4     # 1 once LEAVE went down: the menu ends when it is let go
 .equ V_DIRBUF,      M_VARS+0x100    # 16 bytes: an 11-byte name being compared
 .equ V_LCDSUM2,     M_VARS+0x110    # the sum read this call (for the tests)
+.equ V_TOCCL,       M_VARS+0x114    # KN7MENU.TOC in the root: its first cluster and size (0: none)
+.equ V_TOCSZ,       M_VARS+0x118
+.equ V_NREC,        M_VARS+0x11C    # records in PROG_TAB: the root's folders, then the menu's folders
+.equ V_LEVEL,       M_VARS+0x120    # the menu folder shown (PR_CATID), 0 the top
+.equ V_TOCST,       M_VARS+0x124    # TOC_* below
+.equ V_TITLEP,      M_VARS+0x128    # the title bar's text, or 0 for str_title
+.equ V_TOCPROGS,    M_VARS+0x12C    # programs KN7MENU.TOC placed
 
 .equ RD_ALL,        1               # V_REDRAW: the whole screen
 .equ RD_STATUS,     2               #   the progress screen's status lines only
@@ -169,6 +181,30 @@
 .equ ST_READ,       5               # reading the chosen KN7APP.BIN to STAGE, a cluster or so per call
 .equ ST_FAIL,       6               # cannot go on: the reason stays on screen; EXIT, or 15 s, ends it
 .equ ST_END,        7               # answered 0xFE
+.equ ST_TOC,        8               # KN7MENU.TOC: read, checked, applied (one call)
+.equ TOC_NONE,      0               # V_TOCST: no KN7MENU.TOC in the root
+.equ TOC_USED,      1               #   read and applied
+.equ TOC_BAD,       2               #   there but unusable (size, header, CRC-32): every folder is scanned
+
+# ---- KN7MENU.TOC (mktoc.py), little-endian ---------------------------------------------------------
+.equ TOC_MAGIC,     0x434F544B      # "KTOC"
+.equ TOC_VERSION,   1
+.equ TH_VERSION,    0x04            # the header: magic, version, the file's bytes, CRC-32 of what follows it,
+.equ TH_BYTES,      0x08            #   then the counts
+.equ TH_CRC,        0x0C
+.equ TH_NFOLD,      0x10
+.equ TH_NPROG,      0x14
+.equ TH_NICON,      0x18
+.equ TH_LEN,        0x20
+.equ TF_LEN,        0x50            # a folder: its name (64), its parent (0 the top, else 1 + its index), its icon
+.equ TF_PARENT,     0x40
+.equ TF_ICON,       0x44            #   (an index, or -1: the default)
+.equ TP_LEN,        0x60            # a program: its folder on the card (16, as PR_DIR), the name shown (64),
+.equ TP_NAME,       0x10            #   its menu folder (as TF_PARENT), KN7APP.BIN's size, its icon
+.equ TP_FOLDER,     0x50
+.equ TP_APPSZ,      0x54
+.equ TP_ICON,       0x58
+.equ TOC_MAXFOLD,   16
 
 # ---- limits (every loop is bounded) ----------------------------------------------------------------
 .equ DIR_MAXCL,     64              # clusters of one folder's directory looked at
@@ -184,8 +220,8 @@
 # ---- the buttons, as B_* bit numbers (ButtonTab in menu.s) ----------------------------------------
 .equ B_L1,          0               # LCDL 1..5: the five rows
 .equ B_L5,          4
-.equ B_R1,          5               # LCDR 1: page up
-.equ B_R2,          6               # LCDR 2: page down
+.equ B_R1,          5               # LCDR 1: back, out of a menu folder
+.equ B_R2,          6               # LCDR 2 (read, no use)
 .equ B_R4,          8               # LCDR 4: leave
 .equ B_R5,          9               # LCDR 5: RUN
 .equ B_EXIT,        10              # EXIT (held QUIT_MS: leave)
@@ -194,8 +230,8 @@
 .equ B_PREV,        13              # PART SELECT LEFT
 .equ B_NEXT,        14              # PART SELECT RIGHT 1
 .equ NBUTTONS,      15
-.equ M_UP,          (1<<B_R1)|(1<<B_PGUP)   # the buttons that turn a page back
-.equ M_DOWN,        (1<<B_R2)|(1<<B_PGDN)   # and forward
+.equ M_UP,          1<<B_PGUP       # the buttons that turn a page back
+.equ M_DOWN,        1<<B_PGDN       # and forward
 # The buttons the menu reads. Each one was pressed while the menu ran, in MAME, and changed no setting
 # and drew nothing (test/buttons.lua, README.md "Buttons"); R3 is read for the test but left out here.
 .ifndef BUTTONS_USED                # (test/run_menu_tests.sh buttons builds a menu that reads none: -D BUTTONS_USED=0)

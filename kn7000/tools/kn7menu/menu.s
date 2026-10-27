@@ -7,6 +7,9 @@
 # one the user picks: it reads that KN7APP.BIN, checks it as the loader would, and hands it to the
 # trampoline (tramp.s), which puts it at APP_BASE over the menu and gives it the converter calls.
 # README.md describes the menu, the manifest and icon format, the launch block, and what has run where.
+# When the root holds KN7MENU.TOC (mktoc.py writes it as the card is made), the programs it lists are named,
+# placed in the menu's folders and given their icons from it, and only the root's other folders are looked into:
+# the menu no longer reads every folder's directory, manifest and icon as it starts.
 #
 # How it reads the card: only through the raw sector read the loader found (SV_RAWREAD), parsing the FAT
 # itself, read-only. It names no routine that writes (SV_WRITE, SV_RAWWRITE, SV_MKDIR, SV_SETPATH; guard.py
@@ -64,7 +67,12 @@ MenuEntry:
     beq     me_read
     cmp     ST_FAIL, d0
     beq     me_fail
+    cmp     ST_TOC, d0
+    beq     me_toc
     bra     me_answer               # ST_END: 0xFE again
+me_toc:
+    call    DoToc, 0, 0
+    bra     me_refresh
 me_init:
     call    DoInit, 0, 0
     bra     me_refresh
@@ -180,7 +188,14 @@ DoRoot:
     bne     dr_fail
     clr     d0
     mov     d0, (V_SCANI)
+    mov     (V_NCAND), d0
+    mov     d0, (V_NREC)
     mov     ST_SCAN, d0
+    mov     (V_TOCSZ), d1           # KN7MENU.TOC first, when the root has one
+    cmp     0, d1
+    beq     dr_state
+    mov     ST_TOC, d0
+dr_state:
     mov     d0, (V_STATE)
     mov     RD_STATUS, d0
     mov     d0, (V_REDRAW)
@@ -188,6 +203,23 @@ DoRoot:
 dr_fail:
     call    Fail, 0, 0
 dr_ret:
+    ret     [d2,d3,a2,a3], 0x30
+
+# DoToc: KN7MENU.TOC read and applied (LoadToc), or found unusable; then the scan, of what it did not place.
+DoToc:
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x20, sp
+    call    LoadToc, 0, 0           # d0 = 0 applied, 1 unusable
+    mov     TOC_USED, d1
+    cmp     0, d0
+    beq     dt_st
+    mov     TOC_BAD, d1
+dt_st:
+    mov     d1, (V_TOCST)
+    mov     ST_SCAN, d0
+    mov     d0, (V_STATE)
+    mov     RD_STATUS, d0
+    mov     d0, (V_REDRAW)
     ret     [d2,d3,a2,a3], 0x30
 
 # DoScan: look into the candidates, as many as fit in SCAN_MS (one per call without a clock); then sort
@@ -203,7 +235,11 @@ ds_next:
     cmp     d1, d0
     bcc     ds_done
     call    RecAddr, 0, 0           # a0 = the record
+    mov     (PR_FLAGS, a0), d0      # (one KN7MENU.TOC placed needs no look)
+    btst    PF_TOC, d0
+    bne     ds_skip
     call    ScanOne, 0, 0
+ds_skip:
     mov     (V_SCANI), d0
     inc     d0
     mov     d0, (V_SCANI)
@@ -220,6 +256,9 @@ ds_more:
     mov     d0, (V_REDRAW)
     bra     ds_ret
 ds_done:
+    call    CountFolders, 0, 0
+    clr     d0
+    mov     d0, (V_LEVEL)
     call    SortPrograms, 0, 0
     clr     d0
     mov     d0, (V_SEL)
@@ -272,13 +311,27 @@ dm_rows:
     cmp     d1, d0
     bcc     dm_paging
     mov     d0, (V_SEL)
+    call    SelRec, 0, 0            # a menu folder opens at once
+    mov     (PR_FLAGS, a0), d0
+    btst    PF_FOLDER, d0
+    beq     dm_moved
+    call    EnterFolder, 0, 0
     bra     dm_moved
 dm_rnext:
     inc     d2
     cmp     ROWS, d2
     bcs     dm_rows
 dm_paging:
-    mov     d3, d0                  # LCDR 1, PAGE UP: the page before
+    mov     d3, d0                  # LCDR 1, BACK: out of a menu folder
+    and     1<<B_R1, d0
+    beq     dm_pgup
+    mov     (V_LEVEL), d0
+    cmp     0, d0
+    beq     dm_pgup
+    call    LeaveFolder, 0, 0
+    bra     dm_moved
+dm_pgup:
+    mov     d3, d0                  # PAGE UP: the page before
     and     M_UP, d0
     beq     dm_pgdn
     mov     (V_TOP), d0
@@ -289,7 +342,7 @@ dm_paging:
     mov     d0, (V_SEL)
     bra     dm_moved
 dm_pgdn:
-    mov     d3, d0                  # LCDR 2, PAGE DOWN: the page after
+    mov     d3, d0                  # PAGE DOWN: the page after
     and     M_DOWN, d0
     beq     dm_prev
     mov     (V_TOP), d0
@@ -335,6 +388,16 @@ dm_run:
     mov     d3, d0                  # LCDR 5, RUN
     and     1<<B_R5, d0
     beq     dm_leave
+    mov     (V_NPROG), d0
+    cmp     0, d0
+    beq     dm_ret
+    call    SelRec, 0, 0            # (OPEN on a menu folder)
+    mov     (PR_FLAGS, a0), d0
+    btst    PF_FOLDER, d0
+    beq     dm_start
+    call    EnterFolder, 0, 0
+    bra     dm_moved
+dm_start:
     call    StartRead, 0, 0
     bra     dm_ret
 dm_leave:
@@ -410,6 +473,23 @@ StartRead:
     mov     a0, a2
     mov     a2, (V_RUNREC)
     mov     a2, (V_MSGREC)
+    mov     (PR_FLAGS, a2), d0      # placed by KN7MENU.TOC: KN7APP.BIN in its folder now
+    btst    PF_TOC, d0
+    beq     sr_have
+    mov     (PR_APPCL, a2), d0
+    cmp     0, d0
+    bne     sr_have
+    mov     a2, a0
+    call    FindApp, 0, 0
+    cmp     0, d0
+    beq     sr_have
+    mov     CK_READ, d0
+    mov     d0, (PR_CHECK, a2)
+    call    CheckMsg, 0, 0
+    mov     C_BAD, d0
+    call    SetMsg, 0, 0
+    bra     sr_draw
+sr_have:
     mov     (PR_APPSZ, a2), d0      # its size, as the folder gives it
     cmp     0, d0
     beq     sr_size
@@ -439,6 +519,65 @@ sr_draw:
     mov     RD_ALL, d0
     mov     d0, (V_REDRAW)
 sr_ret:
+    ret     [d2,d3,a2,a3], 0x30
+
+# EnterFolder(a0 = a menu folder's record): its entries shown, the first selected.
+EnterFolder:
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x20, sp
+    mov     (PR_CATID, a0), d0
+    mov     d0, (V_LEVEL)
+    call    SortPrograms, 0, 0
+    clr     d0
+    mov     d0, (V_SEL)
+    mov     d0, (V_TOP)
+    call    ClearMsg, 0, 0
+    ret     [d2,d3,a2,a3], 0x30
+
+# LeaveFolder: the folder above the one shown (its own PR_CAT), with the one left selected.
+LeaveFolder:
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x20, sp
+    call    FolderRec, 0, 0         # a0 = the folder shown, or 0
+    cmp     0, a0
+    beq     lf_top
+    mov     a0, a2
+    mov     (PR_CAT, a2), d0
+    bra     lf_set
+lf_top:
+    mov     0, a2
+    clr     d0
+lf_set:
+    mov     d0, (V_LEVEL)
+    call    SortPrograms, 0, 0
+    clr     d2                      # the one left, in the list now shown
+    clr     d0
+    mov     d0, (V_SEL)
+    mov     d0, (V_TOP)
+lf_find:
+    mov     (V_NPROG), d0
+    cmp     d0, d2
+    bcc     lf_done
+    mov     d2, d0
+    asl     2, d0
+    mov     ORDER, a0
+    add     d0, a0
+    mov     (a0), a0
+    cmp     a2, a0
+    beq     lf_found
+    inc     d2
+    bra     lf_find
+lf_found:
+    mov     d2, (V_SEL)
+    mov     d2, d0
+    clr     d1
+    mov     d1, mdr
+    mov     ROWS, d1
+    divu    d1, d0
+    mulu    d1, d0
+    mov     d0, (V_TOP)
+lf_done:
+    call    ClearMsg, 0, 0
     ret     [d2,d3,a2,a3], 0x30
 
 # DoRead: read KN7APP.BIN to STAGE, up to 4 clusters (and about 64 KB) per call; when all of it is there,
