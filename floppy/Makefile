@@ -21,7 +21,7 @@ PYTHON        ?= python3
 # summary.tsv lists the SHA-1s).  kn7000/Makefile's SOFTLIST_DIR names the same set.
 SOFTLIST_DIR  ?= $(PROJECTS_ROOT)/technics_romsets/floppy-rebuild-2026-10-18/roms
 
-MODELS := kn5000
+MODELS := kn5000 wsa1 kn6000 kn7000
 include $(MODELS:%=%/disks.mk)
 
 TOOLS := tools/fat12.inc
@@ -76,6 +76,9 @@ build/$(1)/$(2).o: $(1)/$(2)/disk.s $(1)/baserom/$(2).img build/$(1)/$(2)/extrac
 endef
 $(foreach m,$(MODELS),$(eval $(call FLOPPY_MODEL,$(m)))\
   $(foreach d,$($(m)_DISKS),$(eval $(call FLOPPY_DISK,$(m),$(d)))))
+
+# The KN6000 / KN7000 compressed files: payload sources -> stored streams (tools/kd/README.md).
+include tools/kd/kd.mk
 
 .SECONDARY:
 
