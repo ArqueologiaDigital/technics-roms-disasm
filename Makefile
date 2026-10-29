@@ -1021,7 +1021,7 @@ $(1)-c-bins-raw: $$($(2)_C_DATA_BINS)
 $(1)-c-bins: $(1)-c-bins-raw
 	python3 scripts/build/apply_c_divergence.py $(1)
 
-rebuilt_ROMs/kn5000_$(1)_program.llvm.o: $$($(2)_SRC) $(1)-c-bins $$(LLVM_MC)
+rebuilt_ROMs/kn5000_$(1)_program.llvm.o: $$($(2)_SRC) $(1)-c-bins indexed-images $$(wildcard $(1)/maincpu/images/*.png) $$(LLVM_MC)
 	mkdir -p rebuilt_ROMs
 	$$(LLVM_MC) -triple=tlcs900 -filetype=obj -I $(1)/maincpu -o $$@ $(1)/maincpu/kn5000_$(1)_program.s
 
