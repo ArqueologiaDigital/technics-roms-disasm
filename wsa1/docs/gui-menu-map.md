@@ -31,7 +31,7 @@ Record macros: `wsa1/include/wsa1_gui.inc`. Key names: the `KEY_*` equates there
 | mode   | 0x14 | `ModeEnter_SoundCopy`                         |                                                              | 0    |                                                        |
 | mode   | 0x15 | `ModeEnter_SoundCopy_Call`                    | MIDI FILE LOAD / MIDI FILE SAVE / LOAD                       | 0    |                                                        |
 | mode   | 0x16 | `CombiEdit_Begin`                             |                                                              | 0    |                                                        |
-| mode   | 0x17 | `ModeEnter_SoundEdit`                         |                                                              | 0    |                                                        |
+| mode   | 0x17 | `ModeEnter_SoundEdit`                         | SOUND EDIT / · WRITE / COPY                                  | 0    |                                                        |
 | mode   | 0x21 | `InstallPainter_SoundMode_Entry`              | SOUND MODE / 1 / 2                                           | 19   |                                                        |
 | screen | 0x01 | `InstallPainter_SoundMode_Entry`              | SOUND MODE / 1 / 2                                           | 19   | screen 0xA1, screen 0xA6                               |
 | mode   | 0x22 | `InstallPainter_C0mbinati0nM0de_Entry`        | C0MBINATI0N M0DE / PAGE2/2 / SOUND:                          | 0    |                                                        |
@@ -132,36 +132,36 @@ Record macros: `wsa1/include/wsa1_gui.inc`. Key names: the `KEY_*` equates there
 | screen | 0x7D | `Paint_MidiTotalMode`                         | LOCAL TOTAL     :                                            | 17   | screen 0x70                                            |
 | screen | 0x7E | `Paint_MidiInputOutputFilter`                 | INPUT&OUTPUT / FILTER / MIDI                                 | 17   | screen 0x70                                            |
 | screen | 0x7F | `Paint_MidiOutProgramChange`                  | PROGRAM / CHANGE / MIDI                                      | 19   |                                                        |
-| screen | 0x80 | `ScreenEnter_SoundEditMenu`                   |                                                              | 0    |                                                        |
+| screen | 0x80 | `ScreenEnter_SoundEditMenu`                   | SOUND EDIT / · WRITE / COPY                                  | 0    |                                                        |
 | screen | 0x82 | `ScreenEnter_SoundEditModelingToneTemplate`   |                                                              | 11   |                                                        |
-| screen | 0x83 | `ScreenEnter_SoundEditToneLayerPanning`       |                                                              | 9    |                                                        |
-| screen | 0x84 | `ScreenEnter_SoundEditToneLayerKeyLayer`      |                                                              | 10   |                                                        |
-| screen | 0x85 | `ScreenEnter_SoundEditToneLayerVelocityLayer` |                                                              | 10   |                                                        |
-| screen | 0x86 | `ScreenEnter_SoundEditModelingDriverWaveform` |                                                              | 10   |                                                        |
-| screen | 0x87 | `ScreenEnter_SoundEditPitchTune`              |                                                              | 10   |                                                        |
-| screen | 0x88 | `ScreenEnter_SoundEditPitchEnvelope1`         |                                                              | 14   |                                                        |
-| screen | 0x89 | `ScreenEnter_SoundEditPitchEnvelope2`         |                                                              | 13   |                                                        |
+| screen | 0x83 | `ScreenEnter_SoundEditToneLayerPanning`       | PANNING / PANNING                                            | 9    |                                                        |
+| screen | 0x84 | `ScreenEnter_SoundEditToneLayerKeyLayer`      | KEY LAYER / 0 / 1                                            | 10   |                                                        |
+| screen | 0x85 | `ScreenEnter_SoundEditToneLayerVelocityLayer` | VELOCITY LAYER / 0 / 32                                      | 10   |                                                        |
+| screen | 0x86 | `ScreenEnter_SoundEditModelingDriverWaveform` | DRIVER / DRIVER WAVEFORM / RESO                              | 10   |                                                        |
+| screen | 0x87 | `ScreenEnter_SoundEditPitchTune`              | KEY / DE- / TONE                                             | 10   |                                                        |
+| screen | 0x88 | `ScreenEnter_SoundEditPitchEnvelope1`         | START PITCH / STOP / PITCH                                   | 14   |                                                        |
+| screen | 0x89 | `ScreenEnter_SoundEditPitchEnvelope2`         | PAGE2/2 / KEY FOLLOW / 0                                     | 13   |                                                        |
 | screen | 0x8A | `ScreenEnter_SoundEditPitchLfo`               |                                                              | 13   |                                                        |
-| screen | 0x8B | `ScreenEnter_SoundEditAmpLevel1`              |                                                              | 13   |                                                        |
-| screen | 0x8C | `ScreenEnter_SoundEditAmpLevel2`              |                                                              | 11   |                                                        |
-| screen | 0x8D | `ScreenEnter_SoundEditAmpEnvelope1`           |                                                              | 15   |                                                        |
-| screen | 0x8E | `ScreenEnter_SoundEditAmpEnvelope2`           |                                                              | 15   |                                                        |
+| screen | 0x8B | `ScreenEnter_SoundEditAmpLevel1`              | PAGE1/2 / LEVEL / TOUCH                                      | 13   |                                                        |
+| screen | 0x8C | `ScreenEnter_SoundEditAmpLevel2`              | PAGE2/2 / KEY FOLLOW / 0                                     | 11   |                                                        |
+| screen | 0x8D | `ScreenEnter_SoundEditAmpEnvelope1`           | ENVELOPE / KEYOFF / ATK                                      | 15   |                                                        |
+| screen | 0x8E | `ScreenEnter_SoundEditAmpEnvelope2`           | PAGE2/2 / KEY FOLLOW ( / 0                                   | 15   |                                                        |
 | screen | 0x8F | `ScreenEnter_SoundEditAmpLfo`                 |                                                              | 13   |                                                        |
-| screen | 0x90 | `ScreenEnter_SoundEditFilterLpf12`            |                                                              | 14   |                                                        |
-| screen | 0x91 | `ScreenEnter_SoundEditFilterHpf12`            |                                                              | 14   |                                                        |
-| screen | 0x92 | `ScreenEnter_SoundEditFilterLpf24`            |                                                              | 11   |                                                        |
-| screen | 0x93 | `ScreenEnter_SoundEditFilterHpf24`            |                                                              | 11   |                                                        |
-| screen | 0x94 | `ScreenEnter_SoundEditFilterBpf`              |                                                              | 13   |                                                        |
-| screen | 0x95 | `ScreenEnter_SoundEditFilterThrough`          |                                                              | 7    |                                                        |
-| screen | 0x96 | `ScreenEnter_SoundEditFilterKeyFollow`        |                                                              | 11   |                                                        |
-| screen | 0x97 | `ScreenEnter_SoundEditFilterEnvelope1`        |                                                              | 14   |                                                        |
-| screen | 0x98 | `ScreenEnter_SoundEditFilterEnvelope2`        |                                                              | 13   |                                                        |
+| screen | 0x90 | `ScreenEnter_SoundEditFilterLpf12`            | FILTER: / CUTOFF / EQUALIZER                                 | 14   |                                                        |
+| screen | 0x91 | `ScreenEnter_SoundEditFilterHpf12`            | FILTER: / CUTOFF / EQUALIZER                                 | 14   |                                                        |
+| screen | 0x92 | `ScreenEnter_SoundEditFilterLpf24`            | FILTER: / CUTOFF / FILTER                                    | 11   |                                                        |
+| screen | 0x93 | `ScreenEnter_SoundEditFilterHpf24`            | FILTER: / CUTOFF / FILTER                                    | 11   |                                                        |
+| screen | 0x94 | `ScreenEnter_SoundEditFilterBpf`              | FILTER: / BAND PASS / · LOW                                  | 13   |                                                        |
+| screen | 0x95 | `ScreenEnter_SoundEditFilterThrough`          | THROUGH                                                      | 7    |                                                        |
+| screen | 0x96 | `ScreenEnter_SoundEditFilterKeyFollow`        | PAGE2/2 / KEY FOLLOW / 0                                     | 11   |                                                        |
+| screen | 0x97 | `ScreenEnter_SoundEditFilterEnvelope1`        | START / POINT / STOP                                         | 14   |                                                        |
+| screen | 0x98 | `ScreenEnter_SoundEditFilterEnvelope2`        | FILTER / SOUND EDIT                                          | 13   |                                                        |
 | screen | 0x99 | `ScreenEnter_SoundEditFilterLfo`              |                                                              | 13   |                                                        |
-| screen | 0x9A | `ScreenEnter_SoundEditDigitalEffect`          |                                                              | 11   |                                                        |
-| screen | 0x9B | `ScreenEnter_SoundEditControllerPage2`        |                                                              | 13   |                                                        |
-| screen | 0x9C | `ScreenEnter_SoundEditDigitalEffectFromMenu`  |                                                              | 11   |                                                        |
-| screen | 0x9D | `ScreenEnter_SoundEditCopy`                   |                                                              | 7    |                                                        |
-| screen | 0x9E | `ScreenEnter_SoundEditMemoryWrite`            |                                                              | 5    |                                                        |
+| screen | 0x9A | `ScreenEnter_SoundEditDigitalEffect`          | DIGITAL EFFECT / SOUND EDIT / TYPE                           | 11   |                                                        |
+| screen | 0x9B | `ScreenEnter_SoundEditControllerPage2`        | DIGITAL EFFECT / SOUND EDIT / TYPE                           | 13   |                                                        |
+| screen | 0x9C | `ScreenEnter_SoundEditDigitalEffectFromMenu`  | DIGITAL EFFECT / SOUND EDIT / TYPE                           | 11   |                                                        |
+| screen | 0x9D | `ScreenEnter_SoundEditCopy`                   | COPY / SOUND EDIT / FROM                                     | 7    |                                                        |
+| screen | 0x9E | `ScreenEnter_SoundEditMemoryWrite`            | MEM0RY WRITE / SOUND EDIT / 0K                               | 5    |                                                        |
 | screen | 0x9F | `ScreenEnter_SoundEditNaming`                 |                                                              | 11   |                                                        |
 | screen | 0xA0 | `InstallPainter_SoundGroupMenu_Entry`         | SOUND / GROUP / MENU                                         | 0    | screen 0xA1                                            |
 | screen | 0xA1 | `InstallPainter_GroupSoundDisplayHold_Entry`  | GROUP: / SOUND / DISPLAY                                     | 23   | screen 0xA1                                            |
@@ -181,19 +181,19 @@ Record macros: `wsa1/include/wsa1_gui.inc`. Key names: the `KEY_*` equates there
 | screen | 0xB5 | `ScreenEnter_CombiEditInternalSound_B5`       | C0MBINATI0N EDIT / INTERNAL / CONFIGURE                      | 0    |                                                        |
 | screen | 0xB6 | `ScreenEnter_Effect2OutputConflict`           | ERR0R! / The S0UND or C0MBINATI0N / memories are write prote | 0    | mode 0x21, screen 0x01                                 |
 | screen | 0xB7 | `ScreenEnterBody_CombiEditMixer`              | MIXER / SOUND:                                               | 0    | mode 0x26, screen 0x06, screen 0x12                    |
-| screen | 0xC0 | `ToneEditPage_A0_ModelingTop`                 |                                                              | 11   |                                                        |
+| screen | 0xC0 | `ToneEditPage_A0_ModelingTop`                 | : / :                                                        | 11   |                                                        |
 | screen | 0xC1 | `T_F41F7C_Nop`                                |                                                              | 0    |                                                        |
 | screen | 0xC2 | `T_F41F8C_Nop`                                |                                                              | 0    |                                                        |
-| screen | 0xC3 | `ToneEditPage_A3_PositionParameter`           |                                                              | 11   |                                                        |
-| screen | 0xC4 | `ToneEditPage_A4_PositionMovement`            |                                                              | 11   |                                                        |
-| screen | 0xC5 | `ToneEditPage_A5_FittingMutingTuning`         |                                                              | 13   |                                                        |
-| screen | 0xC6 | `ToneEditPage_A6_TouchDepth`                  |                                                              | 12   |                                                        |
-| screen | 0xC7 | `ToneEditPage_A7_ResoModeKeyFollow`           |                                                              | 13   |                                                        |
-| screen | 0xC8 | `ToneEditPage_A8_SerialParallel`              |                                                              | 8    |                                                        |
+| screen | 0xC3 | `ToneEditPage_A3_PositionParameter`           | PAGE1/2 / P0SITI0N PARAMETER / P0SITI0N  :                   | 11   |                                                        |
+| screen | 0xC4 | `ToneEditPage_A4_PositionMovement`            | PAGE2/2 / P0SITI0N M0VEMENT / WIDTH :                        | 11   |                                                        |
+| screen | 0xC5 | `ToneEditPage_A5_FittingMutingTuning`         | PAGE1/3 / FIT / MUT                                          | 13   |                                                        |
+| screen | 0xC6 | `ToneEditPage_A6_TouchDepth`                  | PAGE2/3 / TOUCH DEPTH / SUB                                  | 12   |                                                        |
+| screen | 0xC7 | `ToneEditPage_A7_ResoModeKeyFollow`           | MUTING / KEY FOLLOW / SLOPE                                  | 13   |                                                        |
+| screen | 0xC8 | `ToneEditPage_A8_SerialParallel`              | SERIAL                                                       | 8    |                                                        |
 | screen | 0xCA | `ScreenEnter_SoundEditDspEffect`              | SEND                                                         | 0    |                                                        |
-| screen | 0xCB | `ScreenEnter_SoundEditDrumMenu`               |                                                              | 9    |                                                        |
+| screen | 0xCB | `ScreenEnter_SoundEditDrumMenu`               | SOUND EDIT / · WRITE / COPY                                  | 9    |                                                        |
 | screen | 0xCC | `T_F42340_Nop`                                |                                                              | 0    |                                                        |
-| screen | 0xCD | `ScreenEnter_SoundEditControllerPage1`        |                                                              | 11   |                                                        |
+| screen | 0xCD | `ScreenEnter_SoundEditControllerPage1`        | DIGITAL EFFECT / SOUND EDIT / TYPE                           | 11   |                                                        |
 | screen | 0xCE | `T_F433E0_Nop`                                |                                                              | 0    |                                                        |
 | screen | 0xD8 | `Paint_GateArrayCheck`                        | PANEL CPU CHECK / Please check the CPU port / LED flash.     | 0    |                                                        |
 | screen | 0xD9 | `Paint_PanelCpuCheck`                         | SINE WAVE CHECK / CHECK MODE / (1) SINE WAVE & ROM CHECK     | 0    |                                                        |
@@ -217,7 +217,6 @@ Object `T_ModeEnter_Sequencer` (`PanelScreen_VtableTable` entry 3). Enter `ModeE
 Draws:
 
 - `DisplayList_SequencerRealtimeEdit`: "SEQUENCER"; "REALTIME"; "EDIT"; "MASTER"
-- `DisplayList_NoteEditTrackSong`: "NOTE EDIT"; "TRACK"; "SONG"; "PLAY"
 - `Sequencer_DrawTitleIcon_DL`
 - `Sequencer_DrawRealtimeIcon_DL`
 - `Sequencer_DrawMasterRecordIcon_DL`
@@ -243,7 +242,6 @@ Draws:
 
 - `DL_EditSeqN0teEditS0ngClear`: "EDIT"; "SEQ."; "N0TE"; "EDIT"
 - `DL_EditSeqSongCopyCopyErase`: "EDIT"; "SEQ."; "SONG"; "COPY"
-- `DL_TrackClearPressTheUpDown`: "TRACK"; "CLEAR"; "Press"; "the"
 
 ## mode 0x07: `ModeEnter_Edit`
 
@@ -253,7 +251,6 @@ Draws:
 
 - `DL_EditSeqN0teEditS0ngClear`: "EDIT"; "SEQ."; "N0TE"; "EDIT"
 - `DL_EditSeqSongCopyCopyErase`: "EDIT"; "SEQ."; "SONG"; "COPY"
-- `DL_TrackClearPressTheUpDown`: "TRACK"; "CLEAR"; "Press"; "the"
 
 ## mode 0x08: `ModeEnter_SeqPlay_Fwd`
 
@@ -314,6 +311,17 @@ Object `T_CombiEdit_Begin` (`PanelScreen_VtableTable` entry 22). Enter `CombiEdi
 
 Object `T_ModeEnter_SoundEdit` (`PanelScreen_VtableTable` entry 23). Enter `ModeEnter_SoundEdit`, Leave `sub_FDACBD`, Button `ScreenEnter_SoundEditMenu`.
 
+Draws:
+
+- `DL_SoundEditWriteCopy`: "SOUND EDIT"; "· WRITE"; "COPY"
+- `DL_ToneLayerDspEffectPitchDigital`: "TONE LAYER"; "DSP EFFECT"; "PITCH"; "DIGITAL"
+- `DL_UserKitSoundEditSoundToneSelect`: "User Kit"; "SOUND EDIT"; ":"; "SOUND"
+- `DisplayList_FC517E`
+- `SoundEditMenu_RepaintField_DL1`
+- `SoundEditMenu_RepaintField_DL2`
+- `SoundEditMenu_RepaintField_DL3`
+- `SoundEditMenu_RepaintField_DL4`
+
 ## mode 0x21: `InstallPainter_SoundMode_Entry`
 
 Object `T_InstallPainter_SoundMode_Entry` (`PanelScreen_VtableTable` entry 33). Enter `InstallPainter_SoundMode_Entry`, Leave `ScreenLeave_SoundMode`, Button `ScreenButton_SoundMode`.
@@ -324,19 +332,19 @@ Draws:
 - `DL_F28064`
 - `DL_F2808C`: "SOUND MODE"; "1"; "2"; "3"
 - `Paint_SoundMode_DL`
-- `DL_Drawbar`: "DRAWBAR"
 - `DL_F29765`
-- `Paint_C0mbinati0nM0dePage2Sound1_DL`
 - `DL_F286CB`
 - `DL_F286E2`
 - `ModeScreen_PaintDirtyFields2_DL1`
 - `ModeScreen_PaintDirtyFields2_DL2`
-- `ModeScreen_PaintDirtyFields2_DL6`
 - `ModeScreen_PaintDirtyFields2_DL3`
 - `ModeScreen_PaintDirtyFields2_DL4`
 - `ModeScreen_PaintDirtyFields2_DL5`
+- `ModeScreen_PaintDirtyFields2_DL6`
+- `ModeScreen_PaintDirtyFields2_DL7`
 - `ModeScreen_PaintDirtyFields2_DL8`
-- ... 11 more
+- `ModeScreen_PaintDirtyFields2_DL9`
+- ... 9 more
 
 Enter requests: request screen 0xAB (InstallPainter_MessageScreen).
 
@@ -374,19 +382,19 @@ Draws:
 - `DL_F28064`
 - `DL_F2808C`: "SOUND MODE"; "1"; "2"; "3"
 - `Paint_SoundMode_DL`
-- `DL_Drawbar`: "DRAWBAR"
 - `DL_F29765`
-- `Paint_C0mbinati0nM0dePage2Sound1_DL`
 - `DL_F286CB`
 - `DL_F286E2`
 - `ModeScreen_PaintDirtyFields2_DL1`
 - `ModeScreen_PaintDirtyFields2_DL2`
-- `ModeScreen_PaintDirtyFields2_DL6`
 - `ModeScreen_PaintDirtyFields2_DL3`
 - `ModeScreen_PaintDirtyFields2_DL4`
 - `ModeScreen_PaintDirtyFields2_DL5`
+- `ModeScreen_PaintDirtyFields2_DL6`
+- `ModeScreen_PaintDirtyFields2_DL7`
 - `ModeScreen_PaintDirtyFields2_DL8`
-- ... 11 more
+- `ModeScreen_PaintDirtyFields2_DL9`
+- ... 9 more
 
 Enter requests: request screen 0xAB (InstallPainter_MessageScreen).
 
@@ -423,10 +431,9 @@ Object `T_InstallPainter_C0mbinati0nM0de_Entry` (`PanelScreen_VtableTable` entry
 Draws:
 
 - `DL_C0mbinati0nM0dePage22Sound`: "C0MBINATI0N M0DE"; "PAGE2/2"; "SOUND:"; "SOUND"
-- `DL_F29672`
 - `DL_F296CC`
+- `DL_F29672`
 - `DL_F2967C`
-- `DL_F29686`
 - `Paint_C0mbinati0nM0dePage2Sound1_DL`
 - `Paint_C0mbinati0nM0dePage2Sound2_DL`
 - `Paint_C0mbinati0nM0dePage2Sound3_DL`
@@ -438,7 +445,8 @@ Draws:
 - `C0mbinati0nM0de_DrawPart1Int_DL`
 - `C0mbinati0nM0de_DrawPart2Int_DL`
 - `C0mbinati0nM0de_DrawPart3Int_DL`
-- ... 29 more
+- `C0mbinati0nM0de_DrawPart4Int_DL`
+- ... 28 more
 
 Enter requests: request screen 0xAB (InstallPainter_MessageScreen).
 
@@ -449,10 +457,9 @@ Object `T_InstallPainter_C0mbinati0nM0de_Entry` (`PanelScreen_VtableTable` entry
 Draws:
 
 - `DL_C0mbinati0nM0dePage22Sound`: "C0MBINATI0N M0DE"; "PAGE2/2"; "SOUND:"; "SOUND"
-- `DL_F29672`
 - `DL_F296CC`
+- `DL_F29672`
 - `DL_F2967C`
-- `DL_F29686`
 - `Paint_C0mbinati0nM0dePage2Sound1_DL`
 - `Paint_C0mbinati0nM0dePage2Sound2_DL`
 - `Paint_C0mbinati0nM0dePage2Sound3_DL`
@@ -464,7 +471,8 @@ Draws:
 - `C0mbinati0nM0de_DrawPart1Int_DL`
 - `C0mbinati0nM0de_DrawPart2Int_DL`
 - `C0mbinati0nM0de_DrawPart3Int_DL`
-- ... 29 more
+- `C0mbinati0nM0de_DrawPart4Int_DL`
+- ... 28 more
 
 Enter requests: request screen 0xAB (InstallPainter_MessageScreen).
 
@@ -477,7 +485,6 @@ Object `T_Paint_Sequencer` (`PanelScreen_VtableTable` entry 36). Enter `Paint_Se
 Draws:
 
 - `DisplayList_SequencerRealtimeEdit`: "SEQUENCER"; "REALTIME"; "EDIT"; "MASTER"
-- `DisplayList_NoteEditTrackSong`: "NOTE EDIT"; "TRACK"; "SONG"; "PLAY"
 - `Sequencer_DrawTitleIcon_DL`
 - `Sequencer_DrawRealtimeIcon_DL`
 - `Sequencer_DrawMasterRecordIcon_DL`
@@ -517,7 +524,6 @@ Object `T_Paint_Sequencer` (`PanelScreen_VtableTable` entry 36). Enter `Paint_Se
 Draws:
 
 - `DisplayList_SequencerRealtimeEdit`: "SEQUENCER"; "REALTIME"; "EDIT"; "MASTER"
-- `DisplayList_NoteEditTrackSong`: "NOTE EDIT"; "TRACK"; "SONG"; "PLAY"
 - `Sequencer_DrawTitleIcon_DL`
 - `Sequencer_DrawRealtimeIcon_DL`
 - `Sequencer_DrawMasterRecordIcon_DL`
@@ -749,8 +755,8 @@ Object `T_ScreenEnter_S0ngSelectName` (`PanelScreen_VtableTable` entry 45). Ente
 Draws:
 
 - `DL_S0ngSelectNameKbS0ngName`: "S0NG SELECT & NAME"; "KB"; "S0NG"; ":"
-- `S0ngSelectName_DrawValues_DL`
 - `DL_F3C351`
+- `S0ngSelectName_DrawValues_DL`
 - `DL_F3C367`
 
 ## screen 0x0D: `ScreenEnter_S0ngSelectName`
@@ -760,8 +766,8 @@ Object `T_ScreenEnter_S0ngSelectName` (`PanelScreen_VtableTable` entry 45). Ente
 Draws:
 
 - `DL_S0ngSelectNameKbS0ngName`: "S0NG SELECT & NAME"; "KB"; "S0NG"; ":"
-- `S0ngSelectName_DrawValues_DL`
 - `DL_F3C351`
+- `S0ngSelectName_DrawValues_DL`
 - `DL_F3C367`
 
 Reached from: mode 0x24 `KEY_LcdRow4` (`LcdKeyRow4_Sequencer`); screen 0x04 `KEY_LcdRow4` (`LcdKeyRow4_Sequencer`).
@@ -783,12 +789,9 @@ Object `T_ScreenEnter_StepRecordPartSelect` (`PanelScreen_VtableTable` entry 47)
 Draws:
 
 - `DL_StepRecordPartSelectPressTheUpDownButton`: "STEP RECORD"; ": PART SELECT"; "Press the up/down button under"; "the screen corresponding to the"
-- `DL_F3C947`
 - `DL_F3934C`: "1"; "2"; "3"; "4"
-- `DL_F394E3`
 - `DL_F3A0D1`
 - `TrackGrid_DrawPartLabels_DL`
-- `DL_TrackAssignPresetsTechnicsSetUp1116`: "TRACK"; "ASSIGN"; "PRESETS"; "TECHNICS SET-UP1 ( 1-16)"
 
 Keys (`ButtonTable_StepRecordPartSelect`):
 
@@ -819,12 +822,9 @@ Object `T_ScreenEnter_StepRecordPartSelect` (`PanelScreen_VtableTable` entry 47)
 Draws:
 
 - `DL_StepRecordPartSelectPressTheUpDownButton`: "STEP RECORD"; ": PART SELECT"; "Press the up/down button under"; "the screen corresponding to the"
-- `DL_F3C947`
 - `DL_F3934C`: "1"; "2"; "3"; "4"
-- `DL_F394E3`
 - `DL_F3A0D1`
 - `TrackGrid_DrawPartLabels_DL`
-- `DL_TrackAssignPresetsTechnicsSetUp1116`: "TRACK"; "ASSIGN"; "PRESETS"; "TECHNICS SET-UP1 ( 1-16)"
 
 Keys (`ButtonTable_StepRecordPartSelect`):
 
@@ -856,14 +856,11 @@ Draws:
 
 - `Paint_TrackAssign_DL1`: "SONG"; "TRACK ASSIGN"; "TRACK   L0CAL   MIDI"; "ASSIGN  CONTROL OUT CH"
 - `Paint_TrackAssign_DL2`: "ASSIGN"
-- `Paint_TrackLabels1To8_DL`: "TR 1"; "TR 2"; "TR 3"; "TR 4"
 - `DL_TrackAssignChangeAttention`: "TRACK ASSIGN CHANGE"; "ATTENTION!"; "YES"; "Changing the assignment of"
 - `Paint_TrackAssign_DL3`
-- `DL_AfterT0uchSettingSelectWhetherOrNotAfter`: "AFTER T0UCH SETTING"; "Select whether or not After Touch"; "is recorded by the Sequencer."; "EN"
 - `TrackAssign_DrawSelectedPart_DL`
 - `DL_F39854`: "OK ·"
 - `DL_F39870`
-- `DL_F3987A`: "TRACK"; "ASSIGN"; "CHANGE"; "ATTENTI0N!"
 
 Keys (`ButtonTable_TrackAssign_StageZero`, `ButtonTable_TrackAssign_StageNonZero`):
 
@@ -894,10 +891,10 @@ Object `T_ScreenEnter_TrackAssignPresets` (`PanelScreen_VtableTable` entry 49). 
 Draws:
 
 - `DL_TrackAssignPresetsTechnicsSetUp1116`: "TRACK"; "ASSIGN"; "PRESETS"; "TECHNICS SET-UP1 ( 1-16)"
-- `Paint_TrackAssignPresets_DL2`
 - `DL_All`: "ALL"
 - `Paint_TrackAssignPresets_DL1`
 - `DL_S0ng`: "S0NG"
+- `Paint_TrackAssignPresets_DL2`
 - `TrackAssignPresets_MoveFieldHighlight_DL`
 
 Enter requests: go to screen 0x10 (ScreenEnter_TrackAssign).
@@ -963,14 +960,12 @@ Object `T_ScreenEnter_SequencerMedley` (`PanelScreen_VtableTable` entry 51). Ent
 Draws:
 
 - `DL_SequencerMedleyStartFirstS0ng`: "SEQUENCER MEDLEY"; "START"; "FIRST S0NG"; "STOP"
-- `DL_F3C6B3`: "SELECT"; "INT"; "FD"; "HD"
 - `DL_SelectIntFd`: "SELECT"; "INT"; "FD"
 - `DL_FirstS0ngLastS0ng`
-- `SequencerMedley_DrawPlayState_DL4`
 - `SequencerMedley_DrawPlayState_DL1`
 - `SequencerMedley_DrawPlayState_DL2`: "N0W PLAYING S0NG"; ":"
 - `SequencerMedley_DrawPlayState_DL3`
-- `DL_StepRecordPartSelectPressTheUpDownButton`: "STEP RECORD"; ": PART SELECT"; "Press the up/down button under"; "the screen corresponding to the"
+- `SequencerMedley_DrawPlayState_DL4`
 
 Keys (`ButtonTable_SequencerMedley`):
 
@@ -1023,7 +1018,6 @@ Draws:
 
 - `DL_EditSeqN0teEditS0ngClear`: "EDIT"; "SEQ."; "N0TE"; "EDIT"
 - `DL_EditSeqSongCopyCopyErase`: "EDIT"; "SEQ."; "SONG"; "COPY"
-- `DL_TrackClearPressTheUpDown`: "TRACK"; "CLEAR"; "Press"; "the"
 
 Keys (`ButtonTable_Edit_0C10Zero`, `ButtonTable_Edit_0C10NonZero`):
 
@@ -1056,14 +1050,12 @@ Draws:
 
 - `DL_SongClearKbSongS0ngAll`: "SONG"; "CLEAR"; "KB"; "SONG"
 - `Paint_SongClear_DL1`
-- `DL_SongClearKbSongAttenti0n`: "SONG"; "CLEAR"; "KB"; "."
 - `Paint_SongClear_DL2`: ":"; "ALL S0NGS"; "100%"
-- `Paint_SongClear_DL5`: ":"; "ALL S0NGS"; "100%"
 - `Paint_SongClear_DL3`
+- `DL_SongClearKbSongAttenti0n`: "SONG"; "CLEAR"; "KB"; "."
 - `Paint_SongClear_DL4`
+- `Paint_SongClear_DL5`: ":"; "ALL S0NGS"; "100%"
 - `Paint_SongClear_DL6`
-- `DL_AdvanceDelayTrackFirstMeasure`: "ADVANCE/DELAY"; "TRACK           :"; "FIRST MEASURE   :"; "LAST MEASURE    :"
-- `DL_TrackClearAttenti0nUsing`: "TRACK"; "CLEAR"; "ATTENTI0N!"; "Using"
 
 Enter requests: mode change 0x01.
 
@@ -1089,13 +1081,10 @@ Draws:
 
 - `DL_TrackClearPressTheUpDown`: "TRACK"; "CLEAR"; "Press"; "the"
 - `DL_F3934C`: "1"; "2"; "3"; "4"
-- `DL_F394E3`
 - `DL_TrackClearAttenti0nUsing`: "TRACK"; "CLEAR"; "ATTENTI0N!"; "Using"
-- `DL_EditSeqN0teEditS0ngClear`: "EDIT"; "SEQ."; "N0TE"; "EDIT"
 - `DL_F3A0D1`
 - `Data_F3A0E4`
 - `TrackGrid_DrawPartLabels_DL`
-- `DL_TrackAssignPresetsTechnicsSetUp1116`: "TRACK"; "ASSIGN"; "PRESETS"; "TECHNICS SET-UP1 ( 1-16)"
 
 Keys (`ButtonTable_TrackClear_StageZero`, `ButtonTable_TrackClear_StageNonZero`):
 
@@ -1132,11 +1121,9 @@ Object `T_ScreenEnter_Vel0cityChange` (`PanelScreen_VtableTable` entry 61). Ente
 Draws:
 
 - `DL_Vel0cityChangeTrackFirstMeasure`: "VEL0CITY CHANGE"; "TRACK           :"; "FIRST MEASURE   :"; "LAST MEASURE    :"
-- `DL_F3AB3B`
 - `DL_F3AB9C`: "YES"; "NO"
-- `DL_QuantizeTrackStrengthFirstMeasure`: "QUANTIZE"; "TRACK         :"; "STRENGTH :"; "%"
 - `DL_AreYouSure`: "Are You Sure ?"
-- `DL_TrackMergeOkTrackTrackTrack`: "TRACK MERGE"; "OK"; "TRACK  :"; "TRACK  :"
+- `DL_F3AB3B`
 
 Keys (`ButtonTable_Vel0cityChange_StageZero`, `ButtonTable_Vel0cityChange_StageNonZero`):
 
@@ -1164,11 +1151,9 @@ Draws:
 
 - `DL_QuantizeTrackStrengthFirstMeasure`: "QUANTIZE"; "TRACK         :"; "STRENGTH :"; "%"
 - `Paint_Quantize_DL`: "OK"
-- `DL_TrackValueFirstMeasureLastMeasureStrengthWindow`
 - `DL_F3A7DA`: "YES"; "NO"
-- `DL_MeasureEraseTrackFirstMeasure`: "MEASURE ERASE"; "TRACK           :"; "FIRST MEASURE   :"; "LAST MEASURE    :"
 - `DL_AreYouSure`: "Are You Sure ?"
-- `DL_TrackMergeOkTrackTrackTrack`: "TRACK MERGE"; "OK"; "TRACK  :"; "TRACK  :"
+- `DL_TrackValueFirstMeasureLastMeasureStrengthWindow`
 
 Enter requests: go to screen 0x06 (ScreenEnter_RealtimeRecordScreen_Fwd); go to screen 0x1A (ScreenEnter_Edit).
 
@@ -1198,10 +1183,9 @@ Draws:
 
 - `DL_TrackMergeOkTrackTrackTrack`: "TRACK MERGE"; "OK"; "TRACK  :"; "TRACK  :"
 - `DL_Track`: "TRACK"
-- `DL_F3A561`
 - `Paint_TrackMerge_DL`: "YES"; "NO"
-- `DL_MeasureDeleteTrackFirstMeasure`: "MEASURE DELETE"; "TRACK           :"; "FIRST MEASURE   :"; "LAST MEASURE    :"
 - `DL_AreYouSure`: "Are You Sure ?"
+- `DL_F3A561`
 
 Keys (`ButtonTable_TrackMerge_StageZero`, `ButtonTable_TrackMerge_StageNonZero`):
 
@@ -1226,11 +1210,9 @@ Draws:
 
 - `DL_MeasureEraseTrackFirstMeasure`: "MEASURE ERASE"; "TRACK           :"; "FIRST MEASURE   :"; "LAST MEASURE    :"
 - `Paint_MeasureErase_DL`: "OK"
-- `DL_F3A9DA`
 - `DL_F3AB9C`: "YES"; "NO"
-- `DL_QuantizeTrackStrengthFirstMeasure`: "QUANTIZE"; "TRACK         :"; "STRENGTH :"; "%"
 - `DL_AreYouSure`: "Are You Sure ?"
-- `DL_TrackMergeOkTrackTrackTrack`: "TRACK MERGE"; "OK"; "TRACK  :"; "TRACK  :"
+- `DL_F3A9DA`
 
 Keys (`ButtonTable_MeasureErase_StageZero`, `ButtonTable_MeasureErase_StageNonZero`):
 
@@ -1257,13 +1239,11 @@ Object `T_ScreenEnter_MeasureC0py` (`PanelScreen_VtableTable` entry 65). Enter `
 Draws:
 
 - `DL_F3BCCB`
-- `DL_F3BD07`
 - `DL_MeasureC0pyFromTrackToTrack`: "MEASURE C0PY"; "FROM TRACK"; "TO TRACK"; ":"
 - `Paint_MeasureC0py_DL`: "OK"
 - `DL_F3BD90`: "YES"; "NO"
-- `DL_MeasureInsertFromTrackToTrack`: "MEASURE INSERT"; "FROM TRACK"; "TO TRACK"; ":"
 - `DL_AreYouSure`: "Are You Sure ?"
-- `DL_TrackMergeOkTrackTrackTrack`: "TRACK MERGE"; "OK"; "TRACK  :"; "TRACK  :"
+- `DL_F3BD07`
 
 Keys (`ButtonTable_MeasureC0py_StageZero`, `ButtonTable_MeasureC0py_StageNonZero`):
 
@@ -1290,13 +1270,11 @@ Object `T_ScreenEnter_MeasureInsert` (`PanelScreen_VtableTable` entry 66). Enter
 Draws:
 
 - `DL_F3BCCB`
-- `DL_F3BD07`
 - `DL_MeasureInsertFromTrackToTrack`: "MEASURE INSERT"; "FROM TRACK"; "TO TRACK"; ":"
 - `Paint_MeasureInsert_DL`: "OK"
-- `DL_F3BEF7`
 - `DL_F3BD90`: "YES"; "NO"
 - `DL_AreYouSure`: "Are You Sure ?"
-- `DL_TrackMergeOkTrackTrackTrack`: "TRACK MERGE"; "OK"; "TRACK  :"; "TRACK  :"
+- `DL_F3BEF7`
 
 Keys (`ButtonTable_MeasureInsert_StageZero`, `ButtonTable_MeasureInsert_StageNonZero`):
 
@@ -1324,11 +1302,9 @@ Draws:
 
 - `DL_MeasureDeleteTrackFirstMeasure`: "MEASURE DELETE"; "TRACK           :"; "FIRST MEASURE   :"; "LAST MEASURE    :"
 - `Paint_MeasureDelete_DL`: "OK"
-- `DL_LastMeasure`
 - `DL_F3A7DA`: "YES"; "NO"
-- `DL_MeasureEraseTrackFirstMeasure`: "MEASURE ERASE"; "TRACK           :"; "FIRST MEASURE   :"; "LAST MEASURE    :"
 - `DL_AreYouSure`: "Are You Sure ?"
-- `DL_TrackMergeOkTrackTrackTrack`: "TRACK MERGE"; "OK"; "TRACK  :"; "TRACK  :"
+- `DL_LastMeasure`
 - `DL_F39551`
 
 Keys (`ButtonTable_MeasureDelete_StageZero`, `ButtonTable_MeasureDelete_StageNonZero`):
@@ -1355,7 +1331,6 @@ Object `T_ShowScreen_NoteEditPartSelect` (`PanelScreen_VtableTable` entry 68). E
 Draws:
 
 - `DisplayList_NoteEditPartSelect`: "NOTE"; "EDIT"; ":"; "PART"
-- `DisplayList_DrumEditPartSelect`: "DRUM"; "EDIT"; ":"; "PART"
 - `EditPartSelect_DrawPartLabels_DL`
 - `NoteEditPartSelect_DrawTitleIcon_DL`
 - `DrumEditPartSelect_DrawTitleIcon_DL`
@@ -1406,7 +1381,7 @@ Draws:
 - `EditScreen_EraseFieldRow_DL`
 - `EditScreen_MeasureNumberAt0_DL1`
 - `EditScreen_MeasureNumberAt0_DL2`
-- ... 31 more
+- ... 30 more
 
 Enter requests: go to screen 0x24 (ShowScreen_NoteEditPartSelect); go to screen 0x26 (ScreenEnter_CyclePlayEditScreen_Fwd); go to screen 0x27 (ShowScreen_DrumEditPartSelect); go to screen 0x29 (ScreenEnter_CyclePlayEditScreen29_Fwd); request screen 0xAB (InstallPainter_MessageScreen).
 
@@ -1545,19 +1520,16 @@ Draws:
 
 - `DL_S0ngC0pyFromToSongSongOk`: "S0NG C0PY"; "FROM"; "TO"; "SONG"
 - `DL_FromToSongNoTrAllSongNoTrAll`: "FROM"; "TO"; "SONG NO   TR/ALL    SONG NO   TR/ALL"; "<    >    <    >    <    >    <    >"
-- `DL_TrackTrack`: "TRACK"; "TRACK"
 - `DL_F3AB9C`: "YES"; "NO"
-- `DL_QuantizeTrackStrengthFirstMeasure`: "QUANTIZE"; "TRACK         :"; "STRENGTH :"; "%"
 - `DL_ACurrentTrackWillBeClearedAutomaticaly`: "A current"; "track will be"; "."; "cleared automaticaly"
 - `Paint_S0ngC0py_DL`
 - `DL_AreYouSure`: "Are You Sure ?"
-- `DL_TrackMergeOkTrackTrackTrack`: "TRACK MERGE"; "OK"; "TRACK  :"; "TRACK  :"
 - `S0ngC0py_DrawFromSong_DL1`
 - `S0ngC0py_DrawFromSong_DL2`
 - `S0ngC0py_DrawToSong_DL`
-- `DL_S0ngSelectNameKbS0ngName`: "S0NG SELECT & NAME"; "KB"; "S0NG"; ":"
-- `S0ngC0py_DrawTracks_DL`
 - `DL_AllAll`: "ALL"; "ALL"
+- `S0ngC0py_DrawTracks_DL`
+- `DL_TrackTrack`: "TRACK"; "TRACK"
 
 Keys (`ButtonTable_S0ngC0py_StageZero`, `ButtonTable_S0ngC0py_StageNonZero`):
 
@@ -1594,11 +1566,9 @@ Object `T_ScreenEnter_Transp0se` (`PanelScreen_VtableTable` entry 75). Enter `Sc
 Draws:
 
 - `DL_Transp0seTrackFirstMeasure`: "TRANSP0SE"; "TRACK           :"; "FIRST MEASURE   :"; "LAST MEASURE    :"
-- `DL_F3B1E3`
 - `DL_F3AB9C`: "YES"; "NO"
-- `DL_QuantizeTrackStrengthFirstMeasure`: "QUANTIZE"; "TRACK         :"; "STRENGTH :"; "%"
 - `DL_AreYouSure`: "Are You Sure ?"
-- `DL_TrackMergeOkTrackTrackTrack`: "TRACK MERGE"; "OK"; "TRACK  :"; "TRACK  :"
+- `DL_F3B1E3`
 
 Enter requests: go to screen 0x1A (ScreenEnter_Edit).
 
@@ -1628,11 +1598,9 @@ Draws:
 
 - `DL_AdvanceDelayTrackFirstMeasure`: "ADVANCE/DELAY"; "TRACK           :"; "FIRST MEASURE   :"; "LAST MEASURE    :"
 - `Paint_AdvanceDelay_DL`: "OK"
-- `DL_F3B379`
 - `DL_F3A7DA`: "YES"; "NO"
-- `DL_MeasureEraseTrackFirstMeasure`: "MEASURE ERASE"; "TRACK           :"; "FIRST MEASURE   :"; "LAST MEASURE    :"
 - `DL_AreYouSure`: "Are You Sure ?"
-- `DL_TrackMergeOkTrackTrackTrack`: "TRACK MERGE"; "OK"; "TRACK  :"; "TRACK  :"
+- `DL_F3B379`
 
 Keys (`ButtonTable_AdvanceDelay_StageZero`, `ButtonTable_AdvanceDelay_StageNonZero`):
 
@@ -1660,11 +1628,9 @@ Draws:
 
 - `DL_N0teChangeTargetNoteTrack`: "N0TE CHANGE"; "TARGET NOTE"; "TRACK         :"; ":"
 - `Paint_N0teChange_DL1`: "OK"
-- `DL_F3AFE7`
 - `Paint_N0teChange_DL2`: "YES"; "NO"
-- `DL_Transp0seTrackFirstMeasure`: "TRANSP0SE"; "TRACK           :"; "FIRST MEASURE   :"; "LAST MEASURE    :"
 - `DL_AreYouSure`: "Are You Sure ?"
-- `DL_TrackMergeOkTrackTrackTrack`: "TRACK MERGE"; "OK"; "TRACK  :"; "TRACK  :"
+- `DL_F3AFE7`
 
 Keys (`ButtonTable_N0teChange_StageZero`, `ButtonTable_N0teChange_StageNonZero`):
 
@@ -1690,7 +1656,6 @@ Object `T_ScreenEnter_PanelWrite` (`PanelScreen_VtableTable` entry 78). Enter `S
 Draws:
 
 - `DL_PanelWritePanelWriteReplacesTheSoundsAnd`: "PANEL WRITE"; "PANEL WRITE replaces the sounds and"; "settings at the beginning of your"; "song,which are selected when"
-- `DL_N0teChangeTargetNoteTrack`: "N0TE CHANGE"; "TARGET NOTE"; "TRACK         :"; ":"
 
 Enter requests: go to screen 0x1A (ScreenEnter_Edit).
 
@@ -2539,8 +2504,6 @@ Object `T_Paint_SysexBulkDump_Entry` (`PanelScreen_VtableTable` entry 153). Ente
 Draws:
 
 - `DL_SysexBulkDumpMidiTotalKeyboard`: "SYSEX BULK DUMP"; "MIDI"; "TOTAL KEYBOARD"; "SEND"
-- `DL_Sending`: "SENDING"
-- `DL_SysexBulkDump_SequencerRow`: "SEQUENCER"
 
 Keys (`ScreenButtonRow_SysexBulkDump`):
 
@@ -2562,8 +2525,8 @@ Object `T_Paint_GeneralMidiMode_Entry` (`PanelScreen_VtableTable` entry 154). En
 Draws:
 
 - `DL_F0DA73`: "OK"
-- `DL_F0DA93`
 - `DL_GeneralMidiMidiGeneralMidiMode`: "GENERAL MIDI"; "MIDI"; "GENERAL MIDI MODE  :"; "ON"
+- `DL_F0DA93`
 - `DL_GeneralMidiMidiYesNo`: "GENERAL MIDI"; "MIDI"; "YES"; "NO"
 
 Enter requests: mode change 0x01.
@@ -2717,9 +2680,24 @@ Keys (`ScreenButtonHandlers_MidiOutProgramChange`):
 
 Object `T_ScreenEnter_SoundEditMenu` (`PanelScreen_VtableTable` entry 160). Enter `ScreenEnter_SoundEditMenu`, Leave `ScreenLeave_SoundEditMenu`, Button `ScreenButton_SoundEditMenu`.
 
+Painted by `SoundEditMenu_Paint` (`Dispatch_Code80_PaintTable`), one field at a time by `SoundEditMenu_RepaintField` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCode80_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0x80`.
+
+Draws:
+
+- `DL_SoundEditWriteCopy`: "SOUND EDIT"; "· WRITE"; "COPY"
+- `DL_ToneLayerDspEffectPitchDigital`: "TONE LAYER"; "DSP EFFECT"; "PITCH"; "DIGITAL"
+- `DL_UserKitSoundEditSoundToneSelect`: "User Kit"; "SOUND EDIT"; ":"; "SOUND"
+- `DisplayList_FC517E`
+- `SoundEditMenu_RepaintField_DL1`
+- `SoundEditMenu_RepaintField_DL2`
+- `SoundEditMenu_RepaintField_DL3`
+- `SoundEditMenu_RepaintField_DL4`
+
 ## screen 0x82: `ScreenEnter_SoundEditModelingToneTemplate`
 
 Object `T_ScreenEnter_SoundEditModelingToneTemplate` (`PanelScreen_VtableTable` entry 162). Enter `ScreenEnter_SoundEditModelingToneTemplate`, Leave `ScreenLeave_SoundEditModelingToneTemplate`, Button `ScreenButton_SoundEditModelingToneTemplate`.
+
+Painted by `Draw_ToneTemplateLevelKeyTune` (`Dispatch_Code80_PaintTable`), one field at a time by `SoundEditModelingToneTemplate_RepaintField` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCode80_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0x82`.
 
 Keys (`PanelOpTable_FCF80C`):
 
@@ -2741,6 +2719,18 @@ Keys (`PanelOpTable_FCF80C`):
 
 Object `T_ScreenEnter_SoundEditToneLayerPanning` (`PanelScreen_VtableTable` entry 163). Enter `ScreenEnter_SoundEditToneLayerPanning`, Leave `ScreenLeave_SoundEditToneLayerPanning`, Button `ScreenButton_SoundEditToneLayerPanning`.
 
+Painted by `SoundEditToneLayerPanning_Paint` (`Dispatch_Code80_PaintTable`), one field at a time by `SoundEditToneLayerPanning_RepaintField` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCode80_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0x83`.
+
+Draws:
+
+- `DL_PanningPanning`: "PANNING"; "PANNING"
+- `DL_F3294B`
+- `DL_TriggerDelayTriggerDelay`: "TRIGGER"; "DELAY"; "TRIGGER"; "DELAY"
+- `DL_F328DC`
+- `DL_T0neLayerSoundEditTrigGer`: "T0NE LAYER"; "SOUND EDIT"; "TRIG"; "GER"
+- `SoundEdit_PaintSlotOrdinals_DL`
+- `Data_F039ED`: "1st"; "2nd"; "3rd"; "4th"
+
 Keys (`PanelOpTable_FCF854`):
 
 | key map               | key               | handler                                 | requests |
@@ -2758,6 +2748,28 @@ Keys (`PanelOpTable_FCF854`):
 ## screen 0x84: `ScreenEnter_SoundEditToneLayerKeyLayer`
 
 Object `T_ScreenEnter_SoundEditToneLayerKeyLayer` (`PanelScreen_VtableTable` entry 164). Enter `ScreenEnter_SoundEditToneLayerKeyLayer`, Leave `ScreenLeave_SoundEditToneLayerKeyLayer`, Button `ScreenButton_SoundEditToneLayerKeyLayer`.
+
+Painted by `SoundEditToneLayerKeyLayer_Paint` (`Dispatch_Code80_PaintTable`), one field at a time by `SoundEditToneLayerKeyLayer_RepaintField` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCode80_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0x84`.
+
+Draws:
+
+- `SoundEditToneLayerKeyLayer_Paint_DL1`: "KEY LAYER"; "0"; "1"; "2"
+- `DL_F060DA`
+- `SoundEditToneLayerKeyLayer_Paint_DL2`
+- `SoundEditToneLayerVelocityLayer_Paint_DL1`: "VELOCITY LAYER"; "0"; "32"; "64"
+- `SoundEditToneLayerVelocityLayer_Paint_DL2`
+- `DL_StartPitchStopPitchTotal`: "START PITCH"; "STOP"; "PITCH"; "TOTAL"
+- `DL_Page22KeyFollowSlopeRange`: "PAGE2/2"; "KEY FOLLOW"; "0"; "1"
+- `DL_F04344`
+- `DL_FilterKeyFollow`: "FILTER KEY FOLLOW"
+- `DL_T0neLayerSoundEditTrigGer`: "T0NE LAYER"; "SOUND EDIT"; "TRIG"; "GER"
+- `DL_KeyDeToneKeyScalingShift`: "KEY"; "DE-"; "TONE"; "KEY SCALING"
+- `Draw_KeyDeToneKeyScalingShift_DL`
+- `DL_PitchSoundEditEnvPitchLf0`: "PITCH"; "SOUND EDIT"; "ENV ·"; "PITCH ·"
+- `DL_Page12EnvelopeKeyoffCurSor`: "PAGE1/2"; "ENVELOPE"; "KEYOFF"; "CUR"
+- `Draw_Page12EnvelopeKeyoffCurSor_DL1`
+- `Draw_Page12EnvelopeKeyoffCurSor_DL2`
+- ... 21 more
 
 Keys (`PanelOpTable_FCF89C`):
 
@@ -2778,6 +2790,28 @@ Keys (`PanelOpTable_FCF89C`):
 
 Object `T_ScreenEnter_SoundEditToneLayerVelocityLayer` (`PanelScreen_VtableTable` entry 165). Enter `ScreenEnter_SoundEditToneLayerVelocityLayer`, Leave `ScreenLeave_SoundEditToneLayerVelocityLayer`, Button `ScreenButton_SoundEditToneLayerVelocityLayer`.
 
+Painted by `SoundEditToneLayerVelocityLayer_Paint` (`Dispatch_Code80_PaintTable`), one field at a time by `SoundEditToneLayerVelocityLayer_RepaintField` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCode80_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0x85`.
+
+Draws:
+
+- `SoundEditToneLayerVelocityLayer_Paint_DL1`: "VELOCITY LAYER"; "0"; "32"; "64"
+- `DL_F060DA`
+- `SoundEditToneLayerVelocityLayer_Paint_DL2`
+- `DL_StartPitchStopPitchTotal`: "START PITCH"; "STOP"; "PITCH"; "TOTAL"
+- `DL_Page22KeyFollowSlopeRange`: "PAGE2/2"; "KEY FOLLOW"; "0"; "1"
+- `DL_F04344`
+- `DL_FilterKeyFollow`: "FILTER KEY FOLLOW"
+- `DL_T0neLayerSoundEditTrigGer`: "T0NE LAYER"; "SOUND EDIT"; "TRIG"; "GER"
+- `DL_KeyDeToneKeyScalingShift`: "KEY"; "DE-"; "TONE"; "KEY SCALING"
+- `Draw_KeyDeToneKeyScalingShift_DL`
+- `DL_PitchSoundEditEnvPitchLf0`: "PITCH"; "SOUND EDIT"; "ENV ·"; "PITCH ·"
+- `SoundEdit_PaintSlotOrdinals_DL`
+- `Data_F039ED`: "1st"; "2nd"; "3rd"; "4th"
+- `DL_Page12EnvelopeKeyoffCurSor`: "PAGE1/2"; "ENVELOPE"; "KEYOFF"; "CUR"
+- `Draw_Page12EnvelopeKeyoffCurSor_DL1`
+- `Draw_Page12EnvelopeKeyoffCurSor_DL2`
+- ... 45 more
+
 Keys (`PanelOpTable_FCF8E4`):
 
 | key map               | key               | handler                                       | requests |
@@ -2796,6 +2830,28 @@ Keys (`PanelOpTable_FCF8E4`):
 ## screen 0x86: `ScreenEnter_SoundEditModelingDriverWaveform`
 
 Object `T_ScreenEnter_SoundEditModelingDriverWaveform` (`PanelScreen_VtableTable` entry 166). Enter `ScreenEnter_SoundEditModelingDriverWaveform`, Leave `ScreenLeave_SoundEditModelingDriverWaveform`, Button `ScreenButton_SoundEditModelingDriverWaveform`.
+
+Painted by `Draw_DriverDriverWaveformReso` (`Dispatch_Code80_PaintTable`), one field at a time by `SoundEditModelingDriverWaveform_RepaintField` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCode80_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0x86`.
+
+Draws:
+
+- `DL_DriverDriverWaveformReso`: "DRIVER"; "DRIVER WAVEFORM"; "RESO"; "NATOR"
+- `DL_F338EB`
+- `DL_Page12P0siti0nParameterP0siti0n`: "PAGE1/2"; "P0SITI0N PARAMETER"; "P0SITI0N  :"; "."
+- `DL_P0siti0n`
+- `DL_Page22P0siti0nM0vementWidth`: "PAGE2/2"; "P0SITI0N M0VEMENT"; "WIDTH :"; "SPEED :"
+- `ToneEditPage_A4_Paint_DL`
+- `DL_Page13FitMutKeyDeResoTing`: "PAGE1/3"; "FIT"; "MUT"; "KEY"
+- `ToneEditPage_A5_Paint_DL`
+- `DL_M0delingSoundEditToneDriver`: "M0DELING"; "SOUND EDIT"; "TONE"; "DRIVER"
+- `SoundEditModelingDriverWaveform_PaintRows_DL1`: "0-"
+- `SoundEditModelingDriverWaveform_PaintRows_DL2`
+- `ToneEditPage_A3_RepaintField_DL`
+- `ToneEditPage_A4_RepaintField_DL`
+- `DL_F03581`
+- `ToneEditPage_A5_RepaintField_DL1`
+- `ToneEditPage_A5_RepaintField_DL2`
+- ... 46 more
 
 Keys (`PanelOpTable_FCF92C`):
 
@@ -2816,6 +2872,16 @@ Keys (`PanelOpTable_FCF92C`):
 
 Object `T_ScreenEnter_SoundEditPitchTune` (`PanelScreen_VtableTable` entry 167). Enter `ScreenEnter_SoundEditPitchTune`, Leave `ScreenLeave_SoundEditPitchTune`, Button `ScreenButton_SoundEditPitchTune`.
 
+Painted by `Draw_KeyDeToneKeyScalingShift` (`Dispatch_Code80_PaintTable`), one field at a time by `SoundEditPitchTune_RepaintField` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCode80_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0x87`.
+
+Draws:
+
+- `DL_KeyDeToneKeyScalingShift`: "KEY"; "DE-"; "TONE"; "KEY SCALING"
+- `Draw_KeyDeToneKeyScalingShift_DL`
+- `DL_PitchSoundEditEnvPitchLf0`: "PITCH"; "SOUND EDIT"; "ENV ·"; "PITCH ·"
+- `SoundEdit_PaintSlotOrdinals_DL`
+- `Data_F039ED`: "1st"; "2nd"; "3rd"; "4th"
+
 Keys (`PanelOpTable_FCF383`):
 
 | key map               | key               | handler                          | requests |
@@ -2834,6 +2900,28 @@ Keys (`PanelOpTable_FCF383`):
 ## screen 0x88: `ScreenEnter_SoundEditPitchEnvelope1`
 
 Object `T_ScreenEnter_SoundEditPitchEnvelope1` (`PanelScreen_VtableTable` entry 168). Enter `ScreenEnter_SoundEditPitchEnvelope1`, Leave `ScreenLeave_SoundEditPitchEnvelope1`, Button `ScreenButton_SoundEditPitchEnvelope1`.
+
+Painted by `Draw_StartPitchStopPitchTotal` (`Dispatch_Code80_PaintTable`), one field at a time by `SoundEditEnvelope1_RepaintField` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCode80_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0x88`.
+
+Draws:
+
+- `DL_StartPitchStopPitchTotal`: "START PITCH"; "STOP"; "PITCH"; "TOTAL"
+- `DL_Page22KeyFollowSlopeRange`: "PAGE2/2"; "KEY FOLLOW"; "0"; "1"
+- `DL_F04344`
+- `DL_FilterKeyFollow`: "FILTER KEY FOLLOW"
+- `DL_PitchSoundEditEnvPitchLf0`: "PITCH"; "SOUND EDIT"; "ENV ·"; "PITCH ·"
+- `DL_Lf01Lf02Lf03Lf04Lf0WaveDelay`: "LF01"; "LF02"; "LF03"; "LF04"
+- `DL_F053B6`
+- `DL_Page12EnvelopeKeyoffCurSor`: "PAGE1/2"; "ENVELOPE"; "KEYOFF"; "CUR"
+- `Draw_Page12EnvelopeKeyoffCurSor_DL1`
+- `Draw_Page12EnvelopeKeyoffCurSor_DL2`
+- `ToneEditPage_A0_RepaintField_DL`
+- `DL_F030E6`
+- `SoundEditCopy_Frame`: "COPY"; "SOUND EDIT"; "FROM"; "TO"
+- `SoundEditCopy_DrumLabels`: "DRUM KIT:"; "1st TONE"; "2nd TONE"; "DRUM SOUND:"
+- `SoundEditCopy_DrumValues`
+- `SoundEditCopy_Field2Box`
+- ... 37 more
 
 Keys (`PanelOpTable_FCF3CB`):
 
@@ -2858,6 +2946,28 @@ Keys (`PanelOpTable_FCF3CB`):
 
 Object `T_ScreenEnter_SoundEditPitchEnvelope2` (`PanelScreen_VtableTable` entry 169). Enter `ScreenEnter_SoundEditPitchEnvelope2`, Leave `ScreenLeave_SoundEditPitchEnvelope2`, Button `ScreenButton_SoundEditPitchEnvelope2`.
 
+Painted by `SoundEditPitchEnvelope2_Paint` (`Dispatch_Code80_PaintTable`), one field at a time by `SoundEditEnvelope2_RepaintField` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCode80_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0x89`.
+
+Draws:
+
+- `DL_Page22KeyFollowSlopeRange`: "PAGE2/2"; "KEY FOLLOW"; "0"; "1"
+- `DL_F04344`
+- `DL_FilterKeyFollow`: "FILTER KEY FOLLOW"
+- `DL_PitchSoundEditEnvPitchLf0`: "PITCH"; "SOUND EDIT"; "ENV ·"; "PITCH ·"
+- `DL_Lf01Lf02Lf03Lf04Lf0WaveDelay`: "LF01"; "LF02"; "LF03"; "LF04"
+- `DL_F053B6`
+- `DL_Page22KeyFollowEnvelopeKeyFollowTouchAttack`: "PAGE2/2"; "KEY"; "FOLLOW"; "("
+- `Draw_Page22KeyFollowEnvelopeKeyFollowTouchAttack_DL1`
+- `Draw_Page22KeyFollowEnvelopeKeyFollowTouchAttack_DL2`
+- `DL_F3294B`
+- `DL_F328DC`
+- `SoundEditToneLayerPanning_RepaintField_DL1`
+- `SoundEditToneLayerPanning_RepaintField_DL2`
+- `DL_F32B32`
+- `DL_F32FA0`
+- `DL_Page22AfterTouchCtrlPedal`: "PAGE2/2"; "__"; "__"; "__"
+- ... 21 more
+
 Keys (`PanelOpTable_FCF413`):
 
 | key map               | key               | handler                               | requests |
@@ -2879,6 +2989,8 @@ Keys (`PanelOpTable_FCF413`):
 ## screen 0x8A: `ScreenEnter_SoundEditPitchLfo`
 
 Object `T_ScreenEnter_SoundEditPitchLfo` (`PanelScreen_VtableTable` entry 170). Enter `ScreenEnter_SoundEditPitchLfo`, Leave `ScreenLeave_SoundEditPitchLfo`, Button `ScreenButton_SoundEditPitchLfo`.
+
+Painted by `SoundEditPitchLfo_Paint` (`Dispatch_Code80_PaintTable`), one field at a time by `SoundEditLfo_RepaintField` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCode80_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0x8A`.
 
 Keys (`PanelOpTable_FCF45B`):
 
@@ -2902,6 +3014,27 @@ Keys (`PanelOpTable_FCF45B`):
 
 Object `T_ScreenEnter_SoundEditAmpLevel1` (`PanelScreen_VtableTable` entry 171). Enter `ScreenEnter_SoundEditAmpLevel1`, Leave `ScreenLeave_SoundEditAmpLevel1`, Button `ScreenButton_SoundEditAmpLevel1`.
 
+Painted by `Draw_Page12LevelTouchCurveLevel` (`Dispatch_Code80_PaintTable`), one field at a time by `SoundEditAmpLevel1_RepaintField` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCode80_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0x8B`.
+
+Draws:
+
+- `DL_Page12LevelTouchCurveLevel`: "PAGE1/2"; "LEVEL"; "TOUCH"; "CURVE"
+- `DL_DelayLevelTouchCurveGroupDump`: "DELAY"; "LEVEL"; "TOUCH"; "CURVE"
+- `Draw_Page12LevelTouchCurveLevel_DL`
+- `DL_F33796`
+- `DL_Page22KeyFollowSlopeRange`: "PAGE2/2"; "KEY FOLLOW"; "0"; "1"
+- `DL_F04344`
+- `SoundEditFilterKeyFollow_PaintKeyboardAndValues_DL`
+- `DL_EnvelopeKeyoffAtkPeakDecay1`: "ENVELOPE"; "KEYOFF"; "ATK"; "PEAK"
+- `DL_Keyoff`: "KEYOFF"
+- `DL_KeyOffModeTouchAtkDecay1Sust1Decay2Sust2`: "·KEY OFF MODE :"; "TOUCH"; "ATK  DECAY1 SUST1 DECAY2 SUST2 RELEASE"; "ATK  DECAY"
+- `SoundEditAmpEnvelope1_Paint_DL1`
+- `SoundEditAmpEnvelope1_Paint_DL2`
+- `SoundEdit_PaintSlotOrdinals_DL`
+- `Data_F039ED`: "1st"; "2nd"; "3rd"; "4th"
+- `TouchCurve_DrawCurrentSlot_DL1`
+- `TouchCurve_DrawCurrentSlot_DL2`
+
 Keys (`PanelOpTable_FCF21B`):
 
 | key map               | key               | handler                          | requests |
@@ -2924,6 +3057,19 @@ Keys (`PanelOpTable_FCF21B`):
 
 Object `T_ScreenEnter_SoundEditAmpLevel2` (`PanelScreen_VtableTable` entry 172). Enter `ScreenEnter_SoundEditAmpLevel2`, Leave `ScreenLeave_SoundEditAmpLevel2`, Button `ScreenButton_SoundEditAmpLevel2`.
 
+Painted by `Draw_Page22KeyFollowSlopeRange` (`Dispatch_Code80_PaintTable`), one field at a time by `SoundEditKeyFollow_RepaintField` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCode80_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0x8C`.
+
+Draws:
+
+- `DL_Page22KeyFollowSlopeRange`: "PAGE2/2"; "KEY FOLLOW"; "0"; "1"
+- `DL_F04344`
+- `SoundEditFilterKeyFollow_PaintKeyboardAndValues_DL`
+- `DL_EnvelopeKeyoffAtkPeakDecay1`: "ENVELOPE"; "KEYOFF"; "ATK"; "PEAK"
+- `DL_Keyoff`: "KEYOFF"
+- `DL_KeyOffModeTouchAtkDecay1Sust1Decay2Sust2`: "·KEY OFF MODE :"; "TOUCH"; "ATK  DECAY1 SUST1 DECAY2 SUST2 RELEASE"; "ATK  DECAY"
+- `SoundEditAmpEnvelope1_Paint_DL1`
+- `SoundEditAmpEnvelope1_Paint_DL2`
+
 Keys (`PanelOpTable_FCF263`):
 
 | key map               | key               | handler                          | requests |
@@ -2943,6 +3089,28 @@ Keys (`PanelOpTable_FCF263`):
 ## screen 0x8D: `ScreenEnter_SoundEditAmpEnvelope1`
 
 Object `T_ScreenEnter_SoundEditAmpEnvelope1` (`PanelScreen_VtableTable` entry 173). Enter `ScreenEnter_SoundEditAmpEnvelope1`, Leave `ScreenLeave_SoundEditAmpEnvelope1`, Button `ScreenButton_SoundEditAmpEnvelope1`.
+
+Painted by `SoundEditAmpEnvelope1_Paint` (`Dispatch_Code80_PaintTable`), one field at a time by `SoundEditAmpEnvelope1_RepaintField` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCode80_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0x8D`.
+
+Draws:
+
+- `DL_EnvelopeKeyoffAtkPeakDecay1`: "ENVELOPE"; "KEYOFF"; "ATK"; "PEAK"
+- `DL_Keyoff`: "KEYOFF"
+- `DL_KeyOffModeTouchAtkDecay1Sust1Decay2Sust2`: "·KEY OFF MODE :"; "TOUCH"; "ATK  DECAY1 SUST1 DECAY2 SUST2 RELEASE"; "ATK  DECAY"
+- `SoundEditAmpEnvelope1_Paint_DL1`
+- `SoundEditAmpEnvelope1_Paint_DL2`
+- `DL_Page22KeyFollowSlopeRange`: "PAGE2/2"; "KEY FOLLOW"; "0"; "1"
+- `DL_F04344`
+- `SoundEditFilterKeyFollow_PaintKeyboardAndValues_DL`
+- `Draw_Keyoff_DL1`
+- `Draw_Keyoff_DL2`: "--"; "--"
+- `Draw_Keyoff_DL3`
+- `DL_Page22KeyFollowEnvelopeKeyFollowTouchAtk`: "PAGE2/2"; "KEY FOLLOW ("; "0"; "1"
+- `Draw_Page22KeyFollowEnvelopeKeyFollowTouchAtk_DL1`
+- `Draw_Page22KeyFollowEnvelopeKeyFollowTouchAtk_DL2`
+- `DL_FilterCutoffEqualizerFreq`: "FILTER:"; "CUTOFF"; "EQUALIZER"; "FREQ"
+- `DL_LowPass12db`: "LOW PASS -12dB"
+- ... 2 more
 
 Keys (`PanelOpTable_FCF2AB`):
 
@@ -2968,6 +3136,28 @@ Keys (`PanelOpTable_FCF2AB`):
 
 Object `T_ScreenEnter_SoundEditAmpEnvelope2` (`PanelScreen_VtableTable` entry 174). Enter `ScreenEnter_SoundEditAmpEnvelope2`, Leave `ScreenLeave_SoundEditAmpEnvelope2`, Button `ScreenButton_SoundEditAmpEnvelope2`.
 
+Painted by `Draw_Page22KeyFollowEnvelopeKeyFollowTouchAtk` (`Dispatch_Code80_PaintTable`), one field at a time by `SoundEditAmpEnvelope2_RepaintField` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCode80_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0x8E`.
+
+Draws:
+
+- `DL_Page22KeyFollowEnvelopeKeyFollowTouchAtk`: "PAGE2/2"; "KEY FOLLOW ("; "0"; "1"
+- `Draw_Page22KeyFollowEnvelopeKeyFollowTouchAtk_DL1`
+- `Draw_Page22KeyFollowEnvelopeKeyFollowTouchAtk_DL2`
+- `DL_FilterCutoffEqualizerFreq`: "FILTER:"; "CUTOFF"; "EQUALIZER"; "FREQ"
+- `DL_LowPass12db`: "LOW PASS -12dB"
+- `DL_F04D43`
+- `DL_Page22KeyFollowSlopeRange`: "PAGE2/2"; "KEY FOLLOW"; "0"; "1"
+- `DL_F04344`
+- `SoundEditFilterKeyFollow_PaintKeyboardAndValues_DL`
+- `DL_EnvelopeKeyoffAtkPeakDecay1`: "ENVELOPE"; "KEYOFF"; "ATK"; "PEAK"
+- `DL_Keyoff`: "KEYOFF"
+- `DL_KeyOffModeTouchAtkDecay1Sust1Decay2Sust2`: "·KEY OFF MODE :"; "TOUCH"; "ATK  DECAY1 SUST1 DECAY2 SUST2 RELEASE"; "ATK  DECAY"
+- `SoundEditAmpEnvelope1_Paint_DL1`
+- `SoundEditAmpEnvelope1_Paint_DL2`
+- `SoundEditFilter_PaintHeader_DL`: "FILTER"; "SOUND EDIT"
+- `SoundEditFilter_PaintModeField_DL1`: "M0DE"
+- ... 11 more
+
 Keys (`PanelOpTable_FCF2F3`):
 
 | key map               | key               | handler                             | requests |
@@ -2992,6 +3182,8 @@ Keys (`PanelOpTable_FCF2F3`):
 
 Object `T_ScreenEnter_SoundEditAmpLfo` (`PanelScreen_VtableTable` entry 175). Enter `ScreenEnter_SoundEditAmpLfo`, Leave `ScreenLeave_SoundEditAmpLfo`, Button `ScreenButton_SoundEditAmpLfo`.
 
+Painted by `SoundEditAmpLfo_Paint` (`Dispatch_Code80_PaintTable`), one field at a time by `SoundEditLfo_RepaintField` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCode80_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0x8F`.
+
 Keys (`PanelOpTable_FCF33B`):
 
 | key map               | key               | handler                       | requests |
@@ -3013,6 +3205,27 @@ Keys (`PanelOpTable_FCF33B`):
 ## screen 0x90: `ScreenEnter_SoundEditFilterLpf12`
 
 Object `T_ScreenEnter_SoundEditFilterLpf12` (`PanelScreen_VtableTable` entry 176). Enter `ScreenEnter_SoundEditFilterLpf12`, Leave `ScreenLeave_SoundEditFilterLpf12`, Button `ScreenButton_SoundEditFilterLpf12`.
+
+Painted by `SoundEditFilterLpf12_Paint` (`Dispatch_Code80_PaintTable`), one field at a time by `Draw_LowHigh` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCode80_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0x90`.
+
+Draws:
+
+- `DL_FilterCutoffEqualizerFreq`: "FILTER:"; "CUTOFF"; "EQUALIZER"; "FREQ"
+- `DL_LowPass12db`: "LOW PASS -12dB"
+- `DL_F04D43`
+- `SoundEditFilter_PaintHeader_DL`: "FILTER"; "SOUND EDIT"
+- `SoundEdit_PaintPage12Label_DL`: "PAGE1/2"
+- `SoundEditFilter_PaintModeField_DL1`: "M0DE"
+- `SoundEditFilter_PaintModeField_DL2`
+- `DL_HighPass12db`: "HIGH PASS -12dB"
+- `DL_FilterCutoffFilterCutoff`: "FILTER:"; "CUTOFF"; "FILTER"; "CUTOFF"
+- `DL_LowPass24db`: "LOW PASS -24dB"
+- `DL_F04DFF`
+- `DL_HighPass24db`: "HIGH PASS -24dB"
+- `DL_FilterBandPassLowHighCutoff`: "FILTER:"; "BAND PASS"; "· LOW"; "HIGH ~"
+- `Draw_FilterBandPassLowHighCutoff_DL`
+- `DL_Through`: "THROUGH"
+- `DL_StartPointStopPointCutoff`: "START"; "POINT"; "STOP"; "POINT"
 
 Keys (`PanelOpTable_FCF4A3`):
 
@@ -3037,6 +3250,28 @@ Keys (`PanelOpTable_FCF4A3`):
 
 Object `T_ScreenEnter_SoundEditFilterHpf12` (`PanelScreen_VtableTable` entry 177). Enter `ScreenEnter_SoundEditFilterHpf12`, Leave `ScreenLeave_SoundEditFilterHpf12`, Button `ScreenButton_SoundEditFilterHpf12`.
 
+Painted by `SoundEditFilterHpf12_Paint` (`Dispatch_Code80_PaintTable`), one field at a time by `Draw_LowHigh_2` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCode80_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0x91`.
+
+Draws:
+
+- `DL_FilterCutoffEqualizerFreq`: "FILTER:"; "CUTOFF"; "EQUALIZER"; "FREQ"
+- `DL_HighPass12db`: "HIGH PASS -12dB"
+- `DL_F04D43`
+- `DL_FilterCutoffFilterCutoff`: "FILTER:"; "CUTOFF"; "FILTER"; "CUTOFF"
+- `DL_LowPass24db`: "LOW PASS -24dB"
+- `DL_F04DFF`
+- `DL_HighPass24db`: "HIGH PASS -24dB"
+- `DL_FilterBandPassLowHighCutoff`: "FILTER:"; "BAND PASS"; "· LOW"; "HIGH ~"
+- `Draw_FilterBandPassLowHighCutoff_DL`
+- `DL_Through`: "THROUGH"
+- `DL_StartPointStopPointCutoff`: "START"; "POINT"; "STOP"; "POINT"
+- `SoundEditFilter_PaintHeader_DL`: "FILTER"; "SOUND EDIT"
+- `SoundEditFilter_PaintModeField_DL1`: "M0DE"
+- `SoundEditFilter_PaintModeField_DL2`
+- `SoundEdit_PaintPage12Label_DL`: "PAGE1/2"
+- `DL_Page12EnvelopeKeyoffCurSor`: "PAGE1/2"; "ENVELOPE"; "KEYOFF"; "CUR"
+- ... 4 more
+
 Keys (`PanelOpTable_FCF4EB`):
 
 | key map               | key               | handler                            | requests |
@@ -3060,6 +3295,28 @@ Keys (`PanelOpTable_FCF4EB`):
 
 Object `T_ScreenEnter_SoundEditFilterLpf24` (`PanelScreen_VtableTable` entry 178). Enter `ScreenEnter_SoundEditFilterLpf24`, Leave `ScreenLeave_SoundEditFilterLpf24`, Button `ScreenButton_SoundEditFilterLpf24`.
 
+Painted by `SoundEditFilterLpf24_Paint` (`Dispatch_Code80_PaintTable`), one field at a time by `SoundEditFilterLpf24_RepaintField` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCode80_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0x92`.
+
+Draws:
+
+- `DL_FilterCutoffFilterCutoff`: "FILTER:"; "CUTOFF"; "FILTER"; "CUTOFF"
+- `DL_LowPass24db`: "LOW PASS -24dB"
+- `DL_F04DFF`
+- `DL_HighPass24db`: "HIGH PASS -24dB"
+- `DL_FilterBandPassLowHighCutoff`: "FILTER:"; "BAND PASS"; "· LOW"; "HIGH ~"
+- `Draw_FilterBandPassLowHighCutoff_DL`
+- `DL_Through`: "THROUGH"
+- `DL_StartPointStopPointCutoff`: "START"; "POINT"; "STOP"; "POINT"
+- `SoundEditFilter_PaintHeader_DL`: "FILTER"; "SOUND EDIT"
+- `SoundEditFilter_PaintModeField_DL1`: "M0DE"
+- `SoundEditFilter_PaintModeField_DL2`
+- `DL_FilterCutoffEqualizerFreq`: "FILTER:"; "CUTOFF"; "EQUALIZER"; "FREQ"
+- `DL_HighPass12db`: "HIGH PASS -12dB"
+- `DL_F04D43`
+- `SoundEdit_PaintPage12Label_DL`: "PAGE1/2"
+- `DL_Page12EnvelopeKeyoffCurSor`: "PAGE1/2"; "ENVELOPE"; "KEYOFF"; "CUR"
+- ... 4 more
+
 Keys (`PanelOpTable_FCF533`):
 
 | key map               | key               | handler                            | requests |
@@ -3080,6 +3337,28 @@ Keys (`PanelOpTable_FCF533`):
 
 Object `T_ScreenEnter_SoundEditFilterHpf24` (`PanelScreen_VtableTable` entry 179). Enter `ScreenEnter_SoundEditFilterHpf24`, Leave `ScreenLeave_SoundEditFilterHpf24`, Button `ScreenButton_SoundEditFilterHpf24`.
 
+Painted by `SoundEditFilterHpf24_Paint` (`Dispatch_Code80_PaintTable`), one field at a time by `SoundEditFilterHpf24_RepaintField` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCode80_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0x93`.
+
+Draws:
+
+- `DL_FilterCutoffFilterCutoff`: "FILTER:"; "CUTOFF"; "FILTER"; "CUTOFF"
+- `DL_HighPass24db`: "HIGH PASS -24dB"
+- `DL_F04DFF`
+- `DL_FilterBandPassLowHighCutoff`: "FILTER:"; "BAND PASS"; "· LOW"; "HIGH ~"
+- `Draw_FilterBandPassLowHighCutoff_DL`
+- `DL_Through`: "THROUGH"
+- `DL_StartPointStopPointCutoff`: "START"; "POINT"; "STOP"; "POINT"
+- `SoundEditFilter_PaintHeader_DL`: "FILTER"; "SOUND EDIT"
+- `SoundEditFilter_PaintModeField_DL1`: "M0DE"
+- `SoundEditFilter_PaintModeField_DL2`
+- `DL_FilterCutoffEqualizerFreq`: "FILTER:"; "CUTOFF"; "EQUALIZER"; "FREQ"
+- `DL_HighPass12db`: "HIGH PASS -12dB"
+- `DL_F04D43`
+- `DL_LowPass24db`: "LOW PASS -24dB"
+- `SoundEdit_PaintPage12Label_DL`: "PAGE1/2"
+- `DL_Page12EnvelopeKeyoffCurSor`: "PAGE1/2"; "ENVELOPE"; "KEYOFF"; "CUR"
+- ... 4 more
+
 Keys (`PanelOpTable_FCF57B`):
 
 | key map               | key               | handler                            | requests |
@@ -3099,6 +3378,28 @@ Keys (`PanelOpTable_FCF57B`):
 ## screen 0x94: `ScreenEnter_SoundEditFilterBpf`
 
 Object `T_ScreenEnter_SoundEditFilterBpf` (`PanelScreen_VtableTable` entry 180). Enter `ScreenEnter_SoundEditFilterBpf`, Leave `ScreenLeave_SoundEditFilterBpf`, Button `ScreenButton_SoundEditFilterBpf`.
+
+Painted by `Draw_FilterBandPassLowHighCutoff` (`Dispatch_Code80_PaintTable`), one field at a time by `SoundEditFilterBpf_RepaintField` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCode80_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0x94`.
+
+Draws:
+
+- `DL_FilterBandPassLowHighCutoff`: "FILTER:"; "BAND PASS"; "· LOW"; "HIGH ~"
+- `Draw_FilterBandPassLowHighCutoff_DL`
+- `DL_Through`: "THROUGH"
+- `DL_StartPointStopPointCutoff`: "START"; "POINT"; "STOP"; "POINT"
+- `SoundEditFilter_PaintHeader_DL`: "FILTER"; "SOUND EDIT"
+- `SoundEditFilter_PaintModeField_DL1`: "M0DE"
+- `SoundEditFilter_PaintModeField_DL2`
+- `DL_FilterCutoffEqualizerFreq`: "FILTER:"; "CUTOFF"; "EQUALIZER"; "FREQ"
+- `DL_HighPass12db`: "HIGH PASS -12dB"
+- `DL_F04D43`
+- `DL_FilterCutoffFilterCutoff`: "FILTER:"; "CUTOFF"; "FILTER"; "CUTOFF"
+- `DL_LowPass24db`: "LOW PASS -24dB"
+- `DL_F04DFF`
+- `DL_HighPass24db`: "HIGH PASS -24dB"
+- `SoundEdit_PaintPage12Label_DL`: "PAGE1/2"
+- `DL_Page12EnvelopeKeyoffCurSor`: "PAGE1/2"; "ENVELOPE"; "KEYOFF"; "CUR"
+- ... 4 more
 
 Keys (`PanelOpTable_FCF5C3`):
 
@@ -3122,6 +3423,28 @@ Keys (`PanelOpTable_FCF5C3`):
 
 Object `T_ScreenEnter_SoundEditFilterThrough` (`PanelScreen_VtableTable` entry 181). Enter `ScreenEnter_SoundEditFilterThrough`, Leave `ScreenLeave_SoundEditFilterThrough`, Button `ScreenButton_SoundEditFilterThrough`.
 
+Painted by `Draw_Through` (`Dispatch_Code80_PaintTable`), one field at a time by `-` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCode80_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0x95`.
+
+Draws:
+
+- `DL_Through`: "THROUGH"
+- `DL_StartPointStopPointCutoff`: "START"; "POINT"; "STOP"; "POINT"
+- `SoundEditFilter_PaintHeader_DL`: "FILTER"; "SOUND EDIT"
+- `SoundEditFilter_PaintModeField_DL1`: "M0DE"
+- `SoundEditFilter_PaintModeField_DL2`
+- `DL_FilterCutoffEqualizerFreq`: "FILTER:"; "CUTOFF"; "EQUALIZER"; "FREQ"
+- `DL_HighPass12db`: "HIGH PASS -12dB"
+- `DL_F04D43`
+- `DL_FilterCutoffFilterCutoff`: "FILTER:"; "CUTOFF"; "FILTER"; "CUTOFF"
+- `DL_LowPass24db`: "LOW PASS -24dB"
+- `DL_F04DFF`
+- `DL_HighPass24db`: "HIGH PASS -24dB"
+- `DL_FilterBandPassLowHighCutoff`: "FILTER:"; "BAND PASS"; "· LOW"; "HIGH ~"
+- `Draw_FilterBandPassLowHighCutoff_DL`
+- `DL_Page12EnvelopeKeyoffCurSor`: "PAGE1/2"; "ENVELOPE"; "KEYOFF"; "CUR"
+- `Draw_Page12EnvelopeKeyoffCurSor_DL1`
+- ... 4 more
+
 Keys (`PanelOpTable_FCF60B`):
 
 | key map               | key           | handler                             | requests |
@@ -3137,6 +3460,28 @@ Keys (`PanelOpTable_FCF60B`):
 ## screen 0x96: `ScreenEnter_SoundEditFilterKeyFollow`
 
 Object `T_ScreenEnter_SoundEditFilterKeyFollow` (`PanelScreen_VtableTable` entry 182). Enter `ScreenEnter_SoundEditFilterKeyFollow`, Leave `ScreenLeave_SoundEditFilterKeyFollow`, Button `ScreenButton_SoundEditFilterKeyFollow`.
+
+Painted by `SoundEditFilterKeyFollow_Paint` (`Dispatch_Code80_PaintTable`), one field at a time by `SoundEditKeyFollow_RepaintField` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCode80_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0x96`.
+
+Draws:
+
+- `DL_Page22KeyFollowSlopeRange`: "PAGE2/2"; "KEY FOLLOW"; "0"; "1"
+- `DL_F04344`
+- `DL_FilterKeyFollow`: "FILTER KEY FOLLOW"
+- `SoundEditFilter_PaintHeader_DL`: "FILTER"; "SOUND EDIT"
+- `SoundEditFilterKeyFollow_PaintKeyboardAndValues_DL`
+- `DL_EnvelopeKeyoffAtkPeakDecay1`: "ENVELOPE"; "KEYOFF"; "ATK"; "PEAK"
+- `DL_Keyoff`: "KEYOFF"
+- `DL_KeyOffModeTouchAtkDecay1Sust1Decay2Sust2`: "·KEY OFF MODE :"; "TOUCH"; "ATK  DECAY1 SUST1 DECAY2 SUST2 RELEASE"; "ATK  DECAY"
+- `SoundEditAmpEnvelope1_Paint_DL1`
+- `SoundEditAmpEnvelope1_Paint_DL2`
+- `SoundEdit_PaintPage12Label_DL`: "PAGE1/2"
+- `Draw_Keyoff_DL1`
+- `Draw_Keyoff_DL2`: "--"; "--"
+- `Draw_Keyoff_DL3`
+- `DL_Page22KeyFollowEnvelopeKeyFollowTouchAtk`: "PAGE2/2"; "KEY FOLLOW ("; "0"; "1"
+- `Draw_Page22KeyFollowEnvelopeKeyFollowTouchAtk_DL1`
+- ... 20 more
 
 Keys (`PanelOpTable_FCF653`):
 
@@ -3157,6 +3502,18 @@ Keys (`PanelOpTable_FCF653`):
 ## screen 0x97: `ScreenEnter_SoundEditFilterEnvelope1`
 
 Object `T_ScreenEnter_SoundEditFilterEnvelope1` (`PanelScreen_VtableTable` entry 183). Enter `ScreenEnter_SoundEditFilterEnvelope1`, Leave `ScreenLeave_SoundEditFilterEnvelope1`, Button `ScreenButton_SoundEditFilterEnvelope1`.
+
+Painted by `Draw_StartPointStopPointCutoff` (`Dispatch_Code80_PaintTable`), one field at a time by `SoundEditEnvelope1_RepaintField` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCode80_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0x97`.
+
+Draws:
+
+- `DL_StartPointStopPointCutoff`: "START"; "POINT"; "STOP"; "POINT"
+- `SoundEditFilter_PaintHeader_DL`: "FILTER"; "SOUND EDIT"
+- `DL_Page12EnvelopeKeyoffCurSor`: "PAGE1/2"; "ENVELOPE"; "KEYOFF"; "CUR"
+- `Draw_Page12EnvelopeKeyoffCurSor_DL1`
+- `Draw_Page12EnvelopeKeyoffCurSor_DL2`
+- `ToneEditPage_A0_RepaintField_DL`
+- `DL_F030E6`
 
 Keys (`PanelOpTable_FCF69B`):
 
@@ -3181,6 +3538,28 @@ Keys (`PanelOpTable_FCF69B`):
 
 Object `T_ScreenEnter_SoundEditFilterEnvelope2` (`PanelScreen_VtableTable` entry 184). Enter `ScreenEnter_SoundEditFilterEnvelope2`, Leave `ScreenLeave_SoundEditFilterEnvelope2`, Button `ScreenButton_SoundEditFilterEnvelope2`.
 
+Painted by `SoundEditFilterEnvelope2_Paint` (`Dispatch_Code80_PaintTable`), one field at a time by `SoundEditEnvelope2_RepaintField` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCode80_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0x98`.
+
+Draws:
+
+- `SoundEditFilter_PaintHeader_DL`: "FILTER"; "SOUND EDIT"
+- `DL_Page22KeyFollowEnvelopeKeyFollowTouchAttack`: "PAGE2/2"; "KEY"; "FOLLOW"; "("
+- `Draw_Page22KeyFollowEnvelopeKeyFollowTouchAttack_DL1`
+- `Draw_Page22KeyFollowEnvelopeKeyFollowTouchAttack_DL2`
+- `DL_F3294B`
+- `DL_F328DC`
+- `SoundEditToneLayerPanning_RepaintField_DL1`
+- `SoundEditToneLayerPanning_RepaintField_DL2`
+- `DL_F32B32`
+- `DL_F32FA0`
+- `DL_Page22AfterTouchCtrlPedal`: "PAGE2/2"; "__"; "__"; "__"
+- `DL_F3341C`
+- `DL_F32FC8`
+- `DL_Lf01Lf02Lf03Lf04Lf0WaveDelay`: "LF01"; "LF02"; "LF03"; "LF04"
+- `DL_F053B6`
+- `DL_Page22KeyFollowSlopeRange`: "PAGE2/2"; "KEY FOLLOW"; "0"; "1"
+- ... 3 more
+
 Keys (`PanelOpTable_FCF6E3`):
 
 | key map               | key               | handler                                | requests |
@@ -3202,6 +3581,8 @@ Keys (`PanelOpTable_FCF6E3`):
 ## screen 0x99: `ScreenEnter_SoundEditFilterLfo`
 
 Object `T_ScreenEnter_SoundEditFilterLfo` (`PanelScreen_VtableTable` entry 185). Enter `ScreenEnter_SoundEditFilterLfo`, Leave `ScreenLeave_SoundEditFilterLfo`, Button `ScreenButton_SoundEditFilterLfo`.
+
+Painted by `SoundEditFilterLfo_Paint` (`Dispatch_Code80_PaintTable`), one field at a time by `SoundEditLfo_RepaintField` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCode80_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0x99`.
 
 Keys (`PanelOpTable_FCF72B`):
 
@@ -3225,6 +3606,17 @@ Keys (`PanelOpTable_FCF72B`):
 
 Object `T_ScreenEnter_SoundEditDigitalEffect` (`PanelScreen_VtableTable` entry 186). Enter `ScreenEnter_SoundEditDigitalEffect`, Leave `ScreenLeave_SoundEditDigitalEffect`, Button `ScreenButton_SoundEditDigitalEffect`.
 
+Painted by `SoundEditDigitalEffect_Paint` (`Dispatch_Code80_PaintTable`), one field at a time by `SoundEditDigitalEffect_RepaintField` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCode80_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0x9A`.
+
+Draws:
+
+- `SoundEditDigitalEffect_Paint_DL1`: "DIGITAL EFFECT"; "SOUND EDIT"; "TYPE"; ":"
+- `DigitalEffect_Header`: "INTENSITY"; ":"; "INTENS."
+- `DigitalEffect_Frame`
+- `SoundEditDigitalEffect_Paint_DL2`
+- `DigitalEffect_Values`
+- `SoundEditDigitalEffect_RepaintField_DL`
+
 Keys (`PanelOpTable_FCFBFC`):
 
 | key map               | key               | handler                              | requests |
@@ -3244,6 +3636,27 @@ Keys (`PanelOpTable_FCFBFC`):
 ## screen 0x9B: `ScreenEnter_SoundEditControllerPage2`
 
 Object `T_ScreenEnter_SoundEditControllerPage2` (`PanelScreen_VtableTable` entry 187). Enter `ScreenEnter_SoundEditControllerPage2`, Leave `ScreenLeave_SoundEditControllerPage2`, Button `ScreenButton_SoundEditControllerPage2`.
+
+Painted by `SoundEditController_PaintPage2` (`Dispatch_Code80_PaintTable`), one field at a time by `SoundEditController_RepaintFieldPage2` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCode80_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0x9B`.
+
+Draws:
+
+- `SoundEditController_RepaintFieldPage2_DL`
+- `DL_F3341C`
+- `DL_F32FC8`
+- `DL_F32FA0`
+- `SoundEditDigitalEffect_Paint_DL1`: "DIGITAL EFFECT"; "SOUND EDIT"; "TYPE"; ":"
+- `DigitalEffect_Header`: "INTENSITY"; ":"; "INTENS."
+- `DigitalEffect_Frame`
+- `SoundEditDigitalEffect_Paint_DL2`
+- `DigitalEffect_Values`
+- `SoundEditDigitalEffect_RepaintField_DL`
+- `DL_Page22AfterTouchCtrlPedal`: "PAGE2/2"; "__"; "__"; "__"
+- `DL_C0ntr0llerSoundEditDepth`: "C0NTR0LLER"; "SOUND EDIT"; "DEPTH"; "FUNCTION"
+- `DL_1st2nd`: "1st 2nd"
+- `SoundEditController_RepaintFieldPage1_DL1`
+- `SoundEditController_RepaintFieldPage1_DL2`
+- `DL_F32F43`
 
 Keys (`PanelOpTable_FCF7BB`):
 
@@ -3267,6 +3680,15 @@ Keys (`PanelOpTable_FCF7BB`):
 
 Object `T_ScreenEnter_SoundEditDigitalEffectFromMenu` (`PanelScreen_VtableTable` entry 188). Enter `ScreenEnter_SoundEditDigitalEffectFromMenu`, Leave `ScreenLeave_SoundEditDigitalEffectFromMenu`, Button `ScreenButton_SoundEditDigitalEffectFromMenu`.
 
+Draws:
+
+- `SoundEditDigitalEffect_Paint_DL1`: "DIGITAL EFFECT"; "SOUND EDIT"; "TYPE"; ":"
+- `DigitalEffect_Header`: "INTENSITY"; ":"; "INTENS."
+- `DigitalEffect_Frame`
+- `SoundEditDigitalEffect_Paint_DL2`
+- `DigitalEffect_Values`
+- `SoundEditDigitalEffect_RepaintField_DL`
+
 Keys (`PanelOpTable_FCFBFC`):
 
 | key map               | key               | handler                              | requests |
@@ -3287,6 +3709,20 @@ Keys (`PanelOpTable_FCFBFC`):
 
 Object `T_ScreenEnter_SoundEditCopy` (`PanelScreen_VtableTable` entry 189). Enter `ScreenEnter_SoundEditCopy`, Leave `ScreenLeave_SoundEditCopy`, Button `ScreenButton_SoundEditCopy`.
 
+Painted by `SoundEditCopy_Paint` (`Dispatch_Code80_PaintTable`), one field at a time by `SoundEditCopy_RepaintField` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCode80_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0x9D`.
+
+Draws:
+
+- `SoundEditCopy_Frame`: "COPY"; "SOUND EDIT"; "FROM"; "TO"
+- `SoundEditCopy_DrumLabels`: "DRUM KIT:"; "1st TONE"; "2nd TONE"; "DRUM SOUND:"
+- `SoundEditCopy_DrumValues`
+- `SoundEditCopy_Field2Box`
+- `SoundEditMenu_RepaintField_DL1`
+- `SoundEditMenu_RepaintField_DL2`
+- `DisplayList_FC517E`
+- `SoundEditMenu_RepaintField_DL3`
+- `SoundEditMenu_RepaintField_DL4`
+
 Keys (`PanelOpTable_FCFC44`):
 
 | key map               | key               | handler                     | requests |
@@ -3303,6 +3739,28 @@ Keys (`PanelOpTable_FCFC44`):
 
 Object `T_ScreenEnter_SoundEditMemoryWrite` (`PanelScreen_VtableTable` entry 190). Enter `ScreenEnter_SoundEditMemoryWrite`, Leave `T_F42364_Nop`, Button `ScreenButton_SoundEditMemoryWrite`.
 
+Painted by `Draw_Mem0ryWriteSoundEditName` (`Dispatch_Code80_PaintTable`), one field at a time by `SoundEditMemoryWrite_RepaintField` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCode80_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0x9E`.
+
+Draws:
+
+- `DL_Mem0ryWriteSoundEditName`: "MEM0RY WRITE"; "SOUND EDIT"; "0K"; "NAME:"
+- `DL_F057C0`
+- `DL_MemoryBank`
+- `DL_Write`: "WRITE"
+- `DL_SoundEditS0undNaming`: "SOUND EDIT"; "S0UND NAMING"
+- `DL_ClrP0siti0nAbcInsDelAA`: "A B C D E F G H I J K L M N O"; "P Q R S T U V W X Y Z a b c d e"; "f g h i j k l m n o p q r s t u"; "v w x y z 0 1 2 3 4 5 6 7 8 9 !"
+- `Draw_Write_DL1`
+- `DL_F05A68`
+- `Draw_Write_DL2`
+- `DL_F05A4C`
+- `Draw_Write_DL3`
+- `DL_F05A84`
+- `DL_SoundEditWriteCopy`: "SOUND EDIT"; "· WRITE"; "COPY"
+- `DL_EffectSendOutputDspEffect`: "EFFECT SEND"; "& OUTPUT"; "DSP EFFECT"; "KIT PARAMETER"
+- `DL_F33538`
+- `SoundEditNaming_RepaintField_DL1`
+- ... 1 more
+
 Keys (`PanelOpTable_FCFB6C`):
 
 | key map               | key           | handler                           | requests |
@@ -3316,6 +3774,8 @@ Keys (`PanelOpTable_FCFB6C`):
 ## screen 0x9F: `ScreenEnter_SoundEditNaming`
 
 Object `T_ScreenEnter_SoundEditNaming` (`PanelScreen_VtableTable` entry 191). Enter `ScreenEnter_SoundEditNaming`, Leave `T_F42374_Nop`, Button `ScreenButton_SoundEditNaming`.
+
+Painted by `Draw_Write` (`Dispatch_Code80_PaintTable`), one field at a time by `SoundEditNaming_RepaintField` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCode80_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0x9F`.
 
 Keys (`PanelOpTable_FCFBB4`):
 
@@ -3337,6 +3797,8 @@ Keys (`PanelOpTable_FCFBB4`):
 
 Object `T_InstallPainter_SoundGroupMenu_Entry` (`PanelScreen_VtableTable` entry 192). Enter `InstallPainter_SoundGroupMenu_Entry`, Leave `ScreenLeave_SoundGroupMenu`, Button `ScreenButton_SoundGroupMenu`.
 
+Painted by `ToneEditPage_A0_Paint` (`Dispatch_Code80_PaintTable`), one field at a time by `ToneEditPage_A0_RepaintField` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCode80_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0xA0`.
+
 Draws:
 
 - `Draw_SoundGroupMenuReMap1ReMap2_DL`: "SOUND"; "GROUP"; "MENU"; "1."
@@ -3345,17 +3807,17 @@ Draws:
 - `DL_Drum`: "DRUM"
 - `Paint_Drum_DL1`
 - `Paint_Drum_DL2`
-- `DL_F2BA64`
 - `DL_Usr2`: "USR2"
 - `BankLegend_DrawUser_DL1`
-- `BankLegend_DrawUser_DL4`
 - `BankLegend_DrawUser_DL2`
 - `DL_Usr1`: "USR1"
 - `BankLegend_DrawUser_DL3`
-- `GroupCombiDisplayHold_DrawNumberRange_DL2`
+- `BankLegend_DrawUser_DL4`
 - `DL_F2BB03`
 - `DL_Ext1`: "R0M1"; "EXT1"; "R0M2"
-- ... 3 more
+- `GroupCombiDisplayHold_DrawNumberRange_DL1`
+- `GroupCombiDisplayHold_DrawNumberRange_DL2`
+- ... 2 more
 
 Enter requests: go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry).
 
@@ -3365,25 +3827,27 @@ Reached from: screen 0xA1 `KEY_SoftKeyCol6Alt` (`SoftKeyCol6_GroupSoundDisplayHo
 
 Object `T_InstallPainter_GroupSoundDisplayHold_Entry` (`PanelScreen_VtableTable` entry 193). Enter `InstallPainter_GroupSoundDisplayHold_Entry`, Leave `ScreenLeave_GroupSoundDisplayHold`, Button `ScreenButton_GroupSoundDisplayHold`.
 
+Painted by `Draw_ToneTemplateLevelKeyTune` (`Dispatch_Code80_PaintTable`), one field at a time by `SoundEditModelingToneTemplate_RepaintField` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCode80_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0xA1`.
+
 Draws:
 
 - `DL_GroupSoundDisplayHoldGr0up`: "GROUP:"; "SOUND"; "DISPLAY"; "HOLD"
-- `DL_GroupCombiDisplayHoldGr0up`: "GROUP:"; "COMBI."; "DISPLAY"; "HOLD"
 - `GroupDisplayHold_ClearNameSlots_DL`
 - `GroupCombiDisplayHold_DrawNumberRange_DL1`
-- `GroupCombiDisplayHold_DrawNumberRange_DL3`: "-"
 - `GroupCombiDisplayHold_DrawNumberRange_DL2`
+- `GroupCombiDisplayHold_DrawNumberRange_DL3`: "-"
 - `DL_F2BA64`
-- `DL_Ext1`: "R0M1"; "EXT1"; "R0M2"
 - `DisplayHold_DrawHoldHighlight_DL1`
 - `DisplayHold_DrawHoldHighlight_DL2`
-- `DL_Drum`: "DRUM"
+- `DL_Ext1`: "R0M1"; "EXT1"; "R0M2"
 - `DL_F2BB03`
+- `DL_Drum`: "DRUM"
 - `Paint_Drum_DL1`
 - `Paint_Drum_DL2`
 - `DL_Usr2`: "USR2"
 - `BankLegend_DrawUser_DL1`
-- ... 4 more
+- `BankLegend_DrawUser_DL2`
+- ... 3 more
 
 Enter requests: go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry).
 
@@ -3421,30 +3885,33 @@ Reached from: screen 0xA1 `KEY_SoftKeyCol1Alt` (`SoftKeyCol1_GroupSoundDisplayHo
 
 Object `T_InstallPainter_CombinationGroupMenu_Entry` (`PanelScreen_VtableTable` entry 194). Enter `InstallPainter_CombinationGroupMenu_Entry`, Leave `InstallPainter_CombinationGroupMenu_Entry`, Button `InstallPainter_CombinationGroupMenu_Entry`.
 
+Painted by `Draw_DriverDriverWaveformReso` (`Dispatch_Code80_PaintTable`), one field at a time by `SoundEditModelingDriverWaveform_RepaintField` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCode80_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0xA2`.
+
 Draws:
 
 - `Draw_CombinationGroupMenuReMap1_DL`: "COMBINATION GROUP MENU"; "1."; "9."; "2."
 - `DL_CombinationGroupMenuReMap1`: "COMBINATION GROUP MENU"; "1."; "9."; "2."
-- `Draw_SoundGroupMenuReMap1ReMap2_DL`: "SOUND"; "GROUP"; "MENU"; "1."
 - `DL_F2B379`
 - `GroupCombiDisplayHold_DrawNumberRange_DL1`
-- `GroupCombiDisplayHold_DrawNumberRange_DL3`: "-"
 - `GroupCombiDisplayHold_DrawNumberRange_DL2`
+- `GroupCombiDisplayHold_DrawNumberRange_DL3`: "-"
 - `GroupDisplayHold_ClearNameSlots_DL`
 - `DL_Ext1`: "R0M1"; "EXT1"; "R0M2"
 - `DL_F2BB03`
 - `DL_Usr2`: "USR2"
 - `BankLegend_DrawUser_DL1`
-- `BankLegend_DrawUser_DL4`
 - `BankLegend_DrawUser_DL2`
 - `DL_Usr1`: "USR1"
 - `BankLegend_DrawUser_DL3`
+- `BankLegend_DrawUser_DL4`
 
 Enter requests: go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry).
 
 ## screen 0xA3: `ScreenEnter_DrawbarScreen`
 
 Object `T_ScreenEnter_DrawbarScreen` (`PanelScreen_VtableTable` entry 195). Enter `ScreenEnter_DrawbarScreen`, Leave `T_F42E48_Nop`, Button `DrawbarScreen_Dispatch`.
+
+Painted by `ToneEditPage_A3_Paint` (`Dispatch_Code80_PaintTable`), one field at a time by `ToneEditPage_A3_RepaintField` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCode80_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0xA3`.
 
 Draws:
 
@@ -3469,24 +3936,25 @@ Draws:
 
 Object `T_InstallPainter_CombinationGroupMenu_Entry_5` (`PanelScreen_VtableTable` entry 197). Enter `InstallPainter_CombinationGroupMenu_Entry`, Leave `ScreenLeave_CombinationGroupMenu`, Button `ScreenButton_CombinationGroupMenu`.
 
+Painted by `ToneEditPage_A5_Paint` (`Dispatch_Code80_PaintTable`), one field at a time by `ToneEditPage_A5_RepaintField` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCode80_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0xA5`.
+
 Draws:
 
 - `Draw_CombinationGroupMenuReMap1_DL`: "COMBINATION GROUP MENU"; "1."; "9."; "2."
 - `DL_CombinationGroupMenuReMap1`: "COMBINATION GROUP MENU"; "1."; "9."; "2."
-- `Draw_SoundGroupMenuReMap1ReMap2_DL`: "SOUND"; "GROUP"; "MENU"; "1."
 - `DL_F2B379`
 - `GroupCombiDisplayHold_DrawNumberRange_DL1`
-- `GroupCombiDisplayHold_DrawNumberRange_DL3`: "-"
 - `GroupCombiDisplayHold_DrawNumberRange_DL2`
+- `GroupCombiDisplayHold_DrawNumberRange_DL3`: "-"
 - `GroupDisplayHold_ClearNameSlots_DL`
 - `DL_Ext1`: "R0M1"; "EXT1"; "R0M2"
 - `DL_F2BB03`
 - `DL_Usr2`: "USR2"
 - `BankLegend_DrawUser_DL1`
-- `BankLegend_DrawUser_DL4`
 - `BankLegend_DrawUser_DL2`
 - `DL_Usr1`: "USR1"
 - `BankLegend_DrawUser_DL3`
+- `BankLegend_DrawUser_DL4`
 
 Enter requests: go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry).
 
@@ -3513,25 +3981,26 @@ Reached from: screen 0xA6 `KEY_SoftKeyCol6Alt` (`SoftKeyCol6_GroupCombiDisplayHo
 
 Object `T_InstallPainter_GroupCombiDisplayHold_Entry` (`PanelScreen_VtableTable` entry 198). Enter `InstallPainter_GroupCombiDisplayHold_Entry`, Leave `ScreenLeave_GroupCombiDisplayHold`, Button `ScreenButton_GroupCombiDisplayHold`.
 
+Painted by `ToneEditPage_A6_Paint` (`Dispatch_Code80_PaintTable`), one field at a time by `ToneEditPage_A6_RepaintField` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCode80_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0xA6`.
+
 Draws:
 
 - `DL_GroupCombiDisplayHoldGr0up`: "GROUP:"; "COMBI."; "DISPLAY"; "HOLD"
 - `GroupDisplayHold_ClearNameSlots_DL`
 - `GroupCombiDisplayHold_DrawNumberRange_DL1`
-- `GroupCombiDisplayHold_DrawNumberRange_DL3`: "-"
 - `GroupCombiDisplayHold_DrawNumberRange_DL2`
+- `GroupCombiDisplayHold_DrawNumberRange_DL3`: "-"
 - `DL_F2BA64`
-- `DL_Ext1`: "R0M1"; "EXT1"; "R0M2"
 - `DisplayHold_DrawHoldHighlight_DL1`
 - `DisplayHold_DrawHoldHighlight_DL2`
-- `DL_Drum`: "DRUM"
+- `DL_Ext1`: "R0M1"; "EXT1"; "R0M2"
 - `DL_F2BB03`
 - `DL_Usr2`: "USR2"
 - `BankLegend_DrawUser_DL1`
-- `BankLegend_DrawUser_DL4`
 - `BankLegend_DrawUser_DL2`
 - `DL_Usr1`: "USR1"
-- ... 1 more
+- `BankLegend_DrawUser_DL3`
+- `BankLegend_DrawUser_DL4`
 
 Enter requests: go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry).
 
@@ -3565,9 +4034,13 @@ Reached from: screen 0xA5 `KEY_SoftKeyCol6Alt` (`SoftKeyCol6_CombinationGroupMen
 
 Object `T_F41590` (`PanelScreen_VtableTable` entry 199). Enter `UiEvent_MarkRedrawFromPartClass`, Leave `UiEvent_MarkRedrawFromPartClass`, Button `UiEvent_MarkRedrawFromPartClass`.
 
+Painted by `ToneEditPage_A7_Paint` (`Dispatch_Code80_PaintTable`), one field at a time by `ToneEditPage_A7_RepaintField` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCode80_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0xA7`.
+
 ## screen 0xAA: `ScreenEnter_PowerOnSplash`
 
 Object `T_ScreenEnter_PowerOnSplash` (`PanelScreen_VtableTable` entry 202). Enter `ScreenEnter_PowerOnSplash`, Leave `ScreenLeave_PowerOnSplash`, Button `ScreenButton_PowerOnSplash`.
+
+Painted by `Dispatch_Code80_PaintNoAction` (`Dispatch_Code80_PaintTable`), one field at a time by `Dispatch_Code80_RepaintFieldNoAction` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCode80_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0xAA`.
 
 Keys (`DisplayListPtrs_F9408E`):
 
@@ -3579,11 +4052,15 @@ Keys (`DisplayListPtrs_F9408E`):
 
 Object `T_InstallPainter_MessageScreen` (`PanelScreen_VtableTable` entry 203). Enter `InstallPainter_MessageScreen`, Leave `T_F41608_Nop`, Button `ScreenButton_MessageScreen`.
 
+Painted by `SoundEditDrumMenu_Paint` (`Dispatch_Code80_PaintTable`), one field at a time by `SoundEditDrumMenu_RepaintField` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCode80_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0xAB`.
+
 Reached from: mode 0x26 `KEY_LcdRow2` (`LcdKeyRow2_RealtimeRecordScreen`); mode 0x28 `KEY_LcdRow5` (`LcdKeyRow5_CycleRecordScreen`); screen 0x06 `KEY_LcdRow2` (`LcdKeyRow2_RealtimeRecordScreen`); screen 0x08 `KEY_LcdRow5` (`LcdKeyRow5_CycleRecordScreen`); screen 0x11 `KEY_SoftKeyCol6` (`SoftKeyCol6_TrackAssignPresets`); screen 0x13 `KEY_LcdRow4` (`LcdKeyRow4_SequencerMedley`); screen 0x1B `KEY_LcdRow4` (`LcdKeyRow4_SongClear`); screen 0x1C `KEY_LcdRow2` (`LcdKeyRow2_TrackClear_StageNonZero`); screen 0x1C `KEY_LcdRow2` (`LcdKeyRow2_TrackClear_StageZero`); screen 0x1D `KEY_LcdRow2` (`LcdKeyRow2_Vel0cityChange_StageNonZero`); screen 0x1D `KEY_LcdRow2` (`LcdKeyRow2_Vel0cityChange_StageZero`); screen 0x1E `KEY_LcdRow3` (`LcdKeyRow3_Quantize_StageNonZero`); screen 0x1E `KEY_LcdRow3` (`LcdKeyRow3_Quantize_StageZero`); screen 0x1F `KEY_LcdRow2` (`LcdKeyRow2_TrackMerge_StageNonZero`); screen 0x1F `KEY_LcdRow2` (`LcdKeyRow2_TrackMerge_StageZero`); screen 0x20 `KEY_LcdRow2` (`LcdKeyRow2_MeasureErase_StageNonZero`); screen 0x20 `KEY_LcdRow2` (`LcdKeyRow2_MeasureErase_StageZero`); screen 0x21 `KEY_LcdRow1` (`LcdKeyRow1_MeasureC0py_StageNonZero`); screen 0x21 `KEY_LcdRow1` (`LcdKeyRow1_MeasureC0py_StageZero`); screen 0x22 `KEY_LcdRow1` (`LcdKeyRow1_MeasureInsert_StageNonZero`); screen 0x22 `KEY_LcdRow1` (`LcdKeyRow1_MeasureInsert_StageZero`); screen 0x23 `KEY_LcdRow3` (`LcdKeyRow3_MeasureDelete_StageNonZero`); screen 0x23 `KEY_LcdRow3` (`LcdKeyRow3_MeasureDelete_StageZero`); screen 0x2A `KEY_LcdRow2` (`LcdKeyRow2_S0ngC0py_StageNonZero`); screen 0x2A `KEY_LcdRow2` (`LcdKeyRow2_S0ngC0py_StageZero`); screen 0x2B `KEY_LcdRow2` (`LcdKeyRow2_Transp0se_StageNonZero`); screen 0x2B `KEY_LcdRow2` (`LcdKeyRow2_Transp0se_StageZero`); screen 0x2C `KEY_LcdRow3` (`LcdKeyRow3_AdvanceDelay_StageNonZero`); screen 0x2C `KEY_LcdRow3` (`LcdKeyRow3_AdvanceDelay_StageZero`); screen 0x2D `KEY_LcdRow4` (`LcdKeyRow4_N0teChange_StageNonZero`); screen 0x2D `KEY_LcdRow4` (`LcdKeyRow4_N0teChange_StageZero`).
 
 ## screen 0xAD: `ScreenEnter_CreatorSelectController`
 
 Object `T_ScreenEnter_CreatorSelectController` (`PanelScreen_VtableTable` entry 205). Enter `ScreenEnter_CreatorSelectController`, Leave `UI_RequestBits_ClearBit7`, Button `ScreenButton_CreatorSelectController`.
+
+Painted by `SoundEditController_PaintPage1` (`Dispatch_Code80_PaintTable`), one field at a time by `SoundEditController_RepaintFieldPage1` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCode80_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0xAD`.
 
 ## screen 0xB0: `ScreenEnter_CombiEditPartMenu`
 
@@ -3755,6 +4232,28 @@ Reached from: mode 0x26 `KEY_LcdRow3` (`LcdKeyRow3_RealtimeRecordScreen`); scree
 
 Object `T_ToneEditPage_A0_ModelingTop` (`PanelScreen_VtableTable` entry 224). Enter `ToneEditPage_A0_ModelingTop`, Leave `ToneEditPage_A0_Leave`, Button `ToneEditPage_A0_KeyDispatch`.
 
+Painted by `ToneEditPage_A0_Paint` (`Dispatch_Code80_PaintTable`), one field at a time by `ToneEditPage_A0_RepaintField` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCodeC0_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0xC0`.
+
+Draws:
+
+- `ToneEditPage_A0_Paint_DL1`: ":"; ":"
+- `DL_ResonatorDriverOnOffGroup`: "RESONATOR"; "DRIVER"; ":"; ":"
+- `DL_OriginalStringCylinderCone`
+- `ToneEditPage_A0_Paint_DL2`
+- `DL_F030E6`
+- `DL_DriverDriverWaveformReso`: "DRIVER"; "DRIVER WAVEFORM"; "RESO"; "NATOR"
+- `DL_F338EB`
+- `DL_Page12P0siti0nParameterP0siti0n`: "PAGE1/2"; "P0SITI0N PARAMETER"; "P0SITI0N  :"; "."
+- `DL_P0siti0n`
+- `DL_Page22P0siti0nM0vementWidth`: "PAGE2/2"; "P0SITI0N M0VEMENT"; "WIDTH :"; "SPEED :"
+- `ToneEditPage_A4_Paint_DL`
+- `DL_Page13FitMutKeyDeResoTing`: "PAGE1/3"; "FIT"; "MUT"; "KEY"
+- `ToneEditPage_A5_Paint_DL`
+- `DL_M0delingSoundEditToneDriver`: "M0DELING"; "SOUND EDIT"; "TONE"; "DRIVER"
+- `DL_ToneDriverResonator`: "TONE"; "DRIVER"; "RESONATOR"
+- `SoundEditCopy_Frame`: "COPY"; "SOUND EDIT"; "FROM"; "TO"
+- ... 40 more
+
 Keys (`ToneEditPage_A0_OpTable`):
 
 | key map                   | key               | handler                          | requests |
@@ -3775,13 +4274,39 @@ Keys (`ToneEditPage_A0_OpTable`):
 
 Object `T_F41F7C` (`PanelScreen_VtableTable` entry 225). Enter `T_F41F7C_Nop`, Leave `ToneEditPage_A1_Leave`, Button `T_F41F84_Nop`.
 
+Painted by `Draw_ToneTemplateLevelKeyTune` (`Dispatch_Code80_PaintTable`), one field at a time by `SoundEditModelingToneTemplate_RepaintField` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCodeC0_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0xC1`.
+
 ## screen 0xC2: `T_F41F8C_Nop`
 
 Object `T_F41F8C` (`PanelScreen_VtableTable` entry 226). Enter `T_F41F8C_Nop`, Leave `ToneEditPage_A2_Leave`, Button `T_F41F94_Nop`.
 
+Painted by `Draw_DriverDriverWaveformReso` (`Dispatch_Code80_PaintTable`), one field at a time by `SoundEditModelingDriverWaveform_RepaintField` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCodeC0_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0xC2`.
+
 ## screen 0xC3: `ToneEditPage_A3_PositionParameter`
 
 Object `T_ToneEditPage_A3_PositionParameter` (`PanelScreen_VtableTable` entry 227). Enter `ToneEditPage_A3_PositionParameter`, Leave `ToneEditPage_A3_Leave`, Button `ToneEditPage_A3_KeyDispatch`.
+
+Painted by `ToneEditPage_A3_Paint` (`Dispatch_Code80_PaintTable`), one field at a time by `ToneEditPage_A3_RepaintField` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCodeC0_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0xC3`.
+
+Draws:
+
+- `DL_Page12P0siti0nParameterP0siti0n`: "PAGE1/2"; "P0SITI0N PARAMETER"; "P0SITI0N  :"; "."
+- `DL_P0siti0n`
+- `DL_Page22P0siti0nM0vementWidth`: "PAGE2/2"; "P0SITI0N M0VEMENT"; "WIDTH :"; "SPEED :"
+- `ToneEditPage_A4_Paint_DL`
+- `DL_Page13FitMutKeyDeResoTing`: "PAGE1/3"; "FIT"; "MUT"; "KEY"
+- `ToneEditPage_A5_Paint_DL`
+- `DL_M0delingSoundEditToneDriver`: "M0DELING"; "SOUND EDIT"; "TONE"; "DRIVER"
+- `DL_ResoDriverNatorPositionMovement`: "~"; "RESO"; "DRIVER"; "NATOR"
+- `DL_MainDriverResonatorSubResonator`: "MAIN"; "DRIVER"; "RESONATOR"; "SUB"
+- `ToneEditPage_PaintMainAndSubFocus_DL1`
+- `ToneEditPage_PaintMainAndSubFocus_DL2`
+- `DL_Page23TouchDepthSubFittingMutingSubGain`: "PAGE2/3"; "TOUCH DEPTH"; "SUB"; "FITTING MUTING SUB-GAIN"
+- `ToneEditPage_A6_Paint_DL`
+- `DL_MutingKeyFollowSlopeRange`: "MUTING"; "KEY FOLLOW"; "SLOPE"; "RANGE"
+- `ToneEditPage_A7_Paint_DL1`
+- `DL_Page33ResoMode`: "PAGE3/3"; "RESO"; "MODE"
+- ... 14 more
 
 Keys (`ToneEditPage_A3_OpTable`):
 
@@ -3803,6 +4328,28 @@ Keys (`ToneEditPage_A3_OpTable`):
 
 Object `T_ToneEditPage_A4_PositionMovement` (`PanelScreen_VtableTable` entry 228). Enter `ToneEditPage_A4_PositionMovement`, Leave `ToneEditPage_A4_Leave`, Button `ToneEditPage_A4_KeyDispatch`.
 
+Painted by `ToneEditPage_A4_Paint` (`Dispatch_Code80_PaintTable`), one field at a time by `ToneEditPage_A4_RepaintField` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCodeC0_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0xC4`.
+
+Draws:
+
+- `DL_Page22P0siti0nM0vementWidth`: "PAGE2/2"; "P0SITI0N M0VEMENT"; "WIDTH :"; "SPEED :"
+- `ToneEditPage_A4_Paint_DL`
+- `DL_Page13FitMutKeyDeResoTing`: "PAGE1/3"; "FIT"; "MUT"; "KEY"
+- `ToneEditPage_A5_Paint_DL`
+- `DL_M0delingSoundEditToneDriver`: "M0DELING"; "SOUND EDIT"; "TONE"; "DRIVER"
+- `DL_ResoDriverNatorPositionMovement`: "~"; "RESO"; "DRIVER"; "NATOR"
+- `DL_MainDriverResonatorSubResonator`: "MAIN"; "DRIVER"; "RESONATOR"; "SUB"
+- `ToneEditPage_PaintMainAndSubFocus_DL1`
+- `ToneEditPage_PaintMainAndSubFocus_DL2`
+- `DL_Page23TouchDepthSubFittingMutingSubGain`: "PAGE2/3"; "TOUCH DEPTH"; "SUB"; "FITTING MUTING SUB-GAIN"
+- `ToneEditPage_A6_Paint_DL`
+- `DL_MutingKeyFollowSlopeRange`: "MUTING"; "KEY FOLLOW"; "SLOPE"; "RANGE"
+- `ToneEditPage_A7_Paint_DL1`
+- `DL_Page33ResoMode`: "PAGE3/3"; "RESO"; "MODE"
+- `ToneEditPage_A7_Paint_DL2`
+- `DL_Serial`: "SERIAL"
+- ... 12 more
+
 Keys (`ToneEditPage_A4_OpTable`):
 
 | key map                   | key               | handler                       | requests |
@@ -3822,6 +4369,28 @@ Keys (`ToneEditPage_A4_OpTable`):
 ## screen 0xC5: `ToneEditPage_A5_FittingMutingTuning`
 
 Object `T_ToneEditPage_A5_FittingMutingTuning` (`PanelScreen_VtableTable` entry 229). Enter `ToneEditPage_A5_FittingMutingTuning`, Leave `ToneEditPage_A5_Leave`, Button `ToneEditPage_A5_KeyDispatch`.
+
+Painted by `ToneEditPage_A5_Paint` (`Dispatch_Code80_PaintTable`), one field at a time by `ToneEditPage_A5_RepaintField` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCodeC0_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0xC5`.
+
+Draws:
+
+- `DL_Page13FitMutKeyDeResoTing`: "PAGE1/3"; "FIT"; "MUT"; "KEY"
+- `ToneEditPage_A5_Paint_DL`
+- `DL_M0delingSoundEditToneDriver`: "M0DELING"; "SOUND EDIT"; "TONE"; "DRIVER"
+- `DL_MainDriverResonatorSubResonator`: "MAIN"; "DRIVER"; "RESONATOR"; "SUB"
+- `ToneEditPage_PaintMainAndSubFocus_DL1`
+- `ToneEditPage_PaintMainAndSubFocus_DL2`
+- `DL_Page23TouchDepthSubFittingMutingSubGain`: "PAGE2/3"; "TOUCH DEPTH"; "SUB"; "FITTING MUTING SUB-GAIN"
+- `ToneEditPage_A6_Paint_DL`
+- `DL_MutingKeyFollowSlopeRange`: "MUTING"; "KEY FOLLOW"; "SLOPE"; "RANGE"
+- `ToneEditPage_A7_Paint_DL1`
+- `DL_Page33ResoMode`: "PAGE3/3"; "RESO"; "MODE"
+- `ToneEditPage_A7_Paint_DL2`
+- `DL_Serial`: "SERIAL"
+- `Draw_Serial_DL1`
+- `DL_Parallel`: "PARALLEL"
+- `DL_EffectBlockEff1Eff2RevMain`: "EFFECT"; "BLOCK"; "EFF1"; "EFF2"
+- ... 9 more
 
 Keys (`ToneEditPage_A5_OpTable`):
 
@@ -3845,6 +4414,28 @@ Keys (`ToneEditPage_A5_OpTable`):
 
 Object `T_ToneEditPage_A6_TouchDepth` (`PanelScreen_VtableTable` entry 230). Enter `ToneEditPage_A6_TouchDepth`, Leave `ToneEditPage_A6_Leave`, Button `ToneEditPage_A6_KeyDispatch`.
 
+Painted by `ToneEditPage_A6_Paint` (`Dispatch_Code80_PaintTable`), one field at a time by `ToneEditPage_A6_RepaintField` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCodeC0_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0xC6`.
+
+Draws:
+
+- `DL_Page23TouchDepthSubFittingMutingSubGain`: "PAGE2/3"; "TOUCH DEPTH"; "SUB"; "FITTING MUTING SUB-GAIN"
+- `ToneEditPage_A6_Paint_DL`
+- `DL_MutingKeyFollowSlopeRange`: "MUTING"; "KEY FOLLOW"; "SLOPE"; "RANGE"
+- `ToneEditPage_A7_Paint_DL1`
+- `DL_Page33ResoMode`: "PAGE3/3"; "RESO"; "MODE"
+- `ToneEditPage_A7_Paint_DL2`
+- `DL_Serial`: "SERIAL"
+- `Draw_Serial_DL1`
+- `DL_Parallel`: "PARALLEL"
+- `DL_EffectBlockEff1Eff2RevMain`: "EFFECT"; "BLOCK"; "EFF1"; "EFF2"
+- `Draw_Serial_DL2`
+- `DL_M0delingSoundEditToneDriver`: "M0DELING"; "SOUND EDIT"; "TONE"; "DRIVER"
+- `DL_MainDriverResonatorSubResonator`: "MAIN"; "DRIVER"; "RESONATOR"; "SUB"
+- `ToneEditPage_PaintMainAndSubFocus_DL1`
+- `ToneEditPage_PaintMainAndSubFocus_DL2`
+- `ToneEditPage_A8_PaintField5Switch_DL1`
+- ... 7 more
+
 Keys (`ToneEditPage_A6_OpTable`):
 
 | key map                   | key               | handler                              | requests |
@@ -3865,6 +4456,28 @@ Keys (`ToneEditPage_A6_OpTable`):
 ## screen 0xC7: `ToneEditPage_A7_ResoModeKeyFollow`
 
 Object `T_ToneEditPage_A7_ResoModeKeyFollow` (`PanelScreen_VtableTable` entry 231). Enter `ToneEditPage_A7_ResoModeKeyFollow`, Leave `ToneEditPage_A7_Leave`, Button `ToneEditPage_A7_KeyDispatch`.
+
+Painted by `ToneEditPage_A7_Paint` (`Dispatch_Code80_PaintTable`), one field at a time by `ToneEditPage_A7_RepaintField` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCodeC0_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0xC7`.
+
+Draws:
+
+- `DL_MutingKeyFollowSlopeRange`: "MUTING"; "KEY FOLLOW"; "SLOPE"; "RANGE"
+- `ToneEditPage_A7_Paint_DL1`
+- `DL_Page33ResoMode`: "PAGE3/3"; "RESO"; "MODE"
+- `ToneEditPage_A7_Paint_DL2`
+- `DL_Serial`: "SERIAL"
+- `Draw_Serial_DL1`
+- `DL_Parallel`: "PARALLEL"
+- `DL_EffectBlockEff1Eff2RevMain`: "EFFECT"; "BLOCK"; "EFF1"; "EFF2"
+- `Draw_Serial_DL2`
+- `DL_M0delingSoundEditToneDriver`: "M0DELING"; "SOUND EDIT"; "TONE"; "DRIVER"
+- `DL_MainDriverResonatorSubResonator`: "MAIN"; "DRIVER"; "RESONATOR"; "SUB"
+- `ToneEditPage_PaintMainAndSubFocus_DL1`
+- `ToneEditPage_PaintMainAndSubFocus_DL2`
+- `DL_Page23TouchDepthSubFittingMutingSubGain`: "PAGE2/3"; "TOUCH DEPTH"; "SUB"; "FITTING MUTING SUB-GAIN"
+- `ToneEditPage_A6_Paint_DL`
+- `ToneEditPage_A8_PaintField5Switch_DL1`
+- ... 7 more
 
 Keys (`ToneEditPage_A7_OpTable`):
 
@@ -3888,6 +4501,24 @@ Keys (`ToneEditPage_A7_OpTable`):
 
 Object `T_ToneEditPage_A8_SerialParallel` (`PanelScreen_VtableTable` entry 232). Enter `ToneEditPage_A8_SerialParallel`, Leave `ToneEditPage_A8_Leave`, Button `ToneEditPage_A8_KeyDispatch`.
 
+Painted by `Draw_Serial` (`Dispatch_Code80_PaintTable`), one field at a time by `ToneEditPage_A8_RepaintField` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCodeC0_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0xC8`.
+
+Draws:
+
+- `DL_Serial`: "SERIAL"
+- `Draw_Serial_DL1`
+- `DL_Parallel`: "PARALLEL"
+- `DL_EffectBlockEff1Eff2RevMain`: "EFFECT"; "BLOCK"; "EFF1"; "EFF2"
+- `Draw_Serial_DL2`
+- `ToneEditPage_A8_PaintField5Switch_DL1`
+- `ToneEditPage_A8_PaintField5Switch_DL2`
+- `DL_ToneTemplateLevelKeyTune`: "TONE TEMPLATE"; "LEVEL KEY TUNE"; ":"; ":"
+- `Draw_ToneTemplateLevelKeyTune_DL1`
+- `Draw_ToneTemplateLevelKeyTune_DL2`: ":"; ":"
+- `Draw_ToneTemplateLevelKeyTune_DL3`
+- `Draw_ToneTemplateLevelKeyTune_DL4`
+- `Draw_ToneTemplateLevelKeyTune_DL5`
+
 Keys (`ToneEditPage_A8_OpTable`):
 
 | key map                   | key               | handler                | requests |
@@ -3904,6 +4535,8 @@ Keys (`ToneEditPage_A8_OpTable`):
 ## screen 0xCA: `ScreenEnter_SoundEditDspEffect`
 
 Object `T_ScreenEnter_SoundEditDspEffect` (`PanelScreen_VtableTable` entry 234). Enter `ScreenEnter_SoundEditDspEffect`, Leave `ScreenLeave_SoundEditDspEffect`, Button `ScreenButton_SoundEditDspEffect`.
+
+Painted by `Dispatch_Code80_PaintNoAction` (`Dispatch_Code80_PaintTable`), one field at a time by `Dispatch_Code80_RepaintFieldNoAction` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCodeC0_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0xCA`.
 
 Draws:
 
@@ -3929,6 +4562,28 @@ Draws:
 
 Object `T_ScreenEnter_SoundEditDrumMenu` (`PanelScreen_VtableTable` entry 235). Enter `ScreenEnter_SoundEditDrumMenu`, Leave `ScreenLeave_SoundEditDrumMenu`, Button `ScreenButton_SoundEditDrumMenu`.
 
+Painted by `SoundEditDrumMenu_Paint` (`Dispatch_Code80_PaintTable`), one field at a time by `SoundEditDrumMenu_RepaintField` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCodeC0_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0xCB`.
+
+Draws:
+
+- `DL_SoundEditWriteCopy`: "SOUND EDIT"; "· WRITE"; "COPY"
+- `DL_EffectSendOutputDspEffect`: "EFFECT SEND"; "& OUTPUT"; "DSP EFFECT"; "KIT PARAMETER"
+- `DL_F33538`
+- `DL_F057C0`
+- `DL_MemoryBank`
+- `SoundEditNaming_RepaintField_DL1`
+- `DL_F05A4C`
+- `DL_F05A68`
+- `DL_F05A84`
+- `SoundEditNaming_RepaintField_DL2`
+- `DL_Write`: "WRITE"
+- `DL_SoundEditS0undNaming`: "SOUND EDIT"; "S0UND NAMING"
+- `DL_ClrP0siti0nAbcInsDelAA`: "A B C D E F G H I J K L M N O"; "P Q R S T U V W X Y Z a b c d e"; "f g h i j k l m n o p q r s t u"; "v w x y z 0 1 2 3 4 5 6 7 8 9 !"
+- `Draw_Write_DL1`
+- `Draw_Write_DL2`
+- `Draw_Write_DL3`
+- ... 4 more
+
 Keys (`PanelOpTable_FCFC8C`):
 
 | key map               | key               | handler                         | requests |
@@ -3950,6 +4605,28 @@ Object `T_F42340` (`PanelScreen_VtableTable` entry 236). Enter `T_F42340_Nop`, L
 ## screen 0xCD: `ScreenEnter_SoundEditControllerPage1`
 
 Object `T_ScreenEnter_SoundEditControllerPage1` (`PanelScreen_VtableTable` entry 237). Enter `ScreenEnter_SoundEditControllerPage1`, Leave `ScreenLeave_SoundEditControllerPage1`, Button `ScreenButton_SoundEditControllerPage1`.
+
+Painted by `SoundEditController_PaintPage1` (`Dispatch_Code80_PaintTable`), one field at a time by `SoundEditController_RepaintFieldPage1` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCodeC0_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0xCD`.
+
+Draws:
+
+- `SoundEditController_RepaintFieldPage1_DL1`
+- `SoundEditController_RepaintFieldPage1_DL2`
+- `DL_F32F43`
+- `SoundEditController_RepaintFieldPage2_DL`
+- `DL_F3341C`
+- `DL_F32FC8`
+- `DL_F32FA0`
+- `SoundEditDigitalEffect_Paint_DL1`: "DIGITAL EFFECT"; "SOUND EDIT"; "TYPE"; ":"
+- `DigitalEffect_Header`: "INTENSITY"; ":"; "INTENS."
+- `DigitalEffect_Frame`
+- `SoundEditDigitalEffect_Paint_DL2`
+- `DigitalEffect_Values`
+- `SoundEditDigitalEffect_RepaintField_DL`
+- `SoundEditController_PaintPage1_DL`: "PAGE1/2"; "1"; "2"; "3"
+- `DL_Page22AfterTouchCtrlPedal`: "PAGE2/2"; "__"; "__"; "__"
+- `DL_C0ntr0llerSoundEditDepth`: "C0NTR0LLER"; "SOUND EDIT"; "DEPTH"; "FUNCTION"
+- ... 1 more
 
 Keys (`PanelOpTable_FCF773`):
 

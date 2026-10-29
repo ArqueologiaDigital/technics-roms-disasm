@@ -146,8 +146,14 @@ The map is a static reading of the code, and it misses three things:
 
 - a request written through a register;
 - a list chosen through a pointer table;
-- the sound-edit pages (0x80-0x9F). They ask CPU 2 for their parameter values and paint from the replies, so
-  their Enter methods name no list at all.
+- ~~the sound-edit pages (0x80-0x9F)~~ -- resolved in round 2. Their Enter methods ask CPU 2 for the page's
+  values, and `Cpu2Reply_HandleNext` re-runs the same Enter for each reply, through `ScreenCode80_Handlers` /
+  `ScreenCodeC0_Handlers` when the reply's tag is `UI_ScreenId`. Each run stores the reply in
+  `ModelingPage_Fields` and then calls `pushw <code> / call T_Dispatch_Code80_Bracketed`. That call runs
+  prom_b's `Dispatch_Code80_PaintTable[code]` between an LCD blank and an LCD show, and
+  `Dispatch_Code80_RepaintFieldTable[code]` repaints a single field. The generator now follows that call,
+  and a fall-through into the next label, so every page 0x80-0xAF / 0xC0-0xCF lists its painter and what the
+  painter draws.
 
 ## 4. The readability census (before -> after)
 
@@ -185,6 +191,16 @@ reached by a symbol in code, never by an index.
   does not exist. It now names the real directories: 0 `.incbin`, generic 0.
 
 ## 5. What is left, and why
+
+⚠ Round 2 (2026-10-29, after the merge) closed most of this section. What is still open:
+
+- the 0xF3D3AD run is a fixed-stride array of 102 records, and nothing names an address in it after
+  0xF3D407 (`gen_f3d1b9_region.py --refs`), so how most of it is reached is open;
+- the record framed at y = 649 (below);
+- the three neutral RAM names of section 8;
+- the TODO fields.
+
+The original text follows.
 
 - **89 raw records.**
   - 88 of them are one run at 0xF3D1B9 (`DL_F3D1B9`). Its caller draws only `BC * 35` bytes of it (prom_a

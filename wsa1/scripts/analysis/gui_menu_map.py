@@ -22,8 +22,12 @@ WHAT IT READS (all of it from wsa1/prom_a and wsa1/prom_b, plus the two ELFs a b
         UI_Request_Hi bit 7 = go to screen id <lo> (PanelScreen_ApplyRequestForced), bit 6 = request it
         (PanelScreen_ApplyRequest), bit 1 = mode change (PanelScreen_ApplyModeChange), bit 4 = repaint
         (PanelState_RunRequests; FINDINGS-prom_ab-screen-stage-and-flags.md).
-    and follows `call` / `calr` / `jp` / `jr` into other routines, through thunks, to depth 3, skipping shared
+    and follows `call` / `calr` / `jp` / `jr` into other routines (and a fall-through into the next label), through thunks, to depth 3, skipping shared
     helpers (a routine called from more than 6 places).
+    A `pushw <code> / call T_Dispatch_Code80_Bracketed` (or T_Dispatch_Code80) is followed into the painter
+    prom_b's Dispatch_Code80_PaintTable (or _RepaintFieldTable) holds for that screen code: that is how the
+    sound-edit and tone-edit pages paint, from their Enter methods, which Cpu2Reply_HandleNext re-runs for each
+    of CPU 2's replies through ScreenCode80_Handlers / ScreenCodeC0_Handlers.
     It also follows a routine handed over by address (`ld XWA,<routine>` before T_CallbackQueue_Post and
     the like), because that is how most screens queue their painters.
   The map is a static reading: a request written through a register, or a list chosen through a pointer
@@ -181,13 +185,18 @@ class Tree:
                             called.add(m.group(1))
         self.called = called
         self.span = {}
+        self.next_label = {}
         stop = called | set(self.dl) | set(self.keymap)
         for k, L in self.lines.items():
             starts = [(i, LABEL.match(l).group(1)) for i, l in enumerate(L) if l[:1].isalpha() or l[:1] == "_"]
             starts = [(i, n) for i, n in [(i, (LABEL.match(L[i]) or [None, None])[1]) for i, _ in starts] if n]
             ends = [i for i, name in starts if name in stop] + [len(L)]
+            at = {i: name for i, name in starts}
             for i, name in starts:
-                self.span.setdefault(name, (k, i, ends[bisect.bisect_right(ends, i)]))
+                j = ends[bisect.bisect_right(ends, i)]
+                self.span.setdefault(name, (k, i, j))
+                if j in at:
+                    self.next_label.setdefault(name, at[j])
         self._callees = {}
         fan = collections.defaultdict(set)
         for name in self.span:
@@ -211,9 +220,47 @@ class Tree:
     REG = re.compile(r'^(xiy|xix|xiz|xhl|xwa|xbc|xde)$', re.I)
     POSTED = re.compile(r'^(?:ld|lda|push)\s+x\w+\s*,\s*([A-Za-z_]\w*)\s*$', re.I)
 
+    def code80_tables(self):
+        """Dispatch_Code80_PaintTable / _RepaintFieldTable (prom_b): one painter per screen code 0x80..0xAF;
+        codes 0xC0.. use entry code - 0x40 (Dispatch_Code80_Bracketed / Dispatch_Code80, `sub HL,0x00c0` then
+        the table + 0x80)."""
+        if not hasattr(self, "_c80"):
+            self._c80 = {}
+            for tname, key in (("Dispatch_Code80_PaintTable", "paint"), ("Dispatch_Code80_RepaintFieldTable", "field")):
+                if tname not in self.where:
+                    continue
+                image, f, i = self.where[tname]
+                ents = []
+                for l in self.lines[(image, f)][i + 1:]:
+                    m = re.match(r'^\s*\.long\s+([A-Za-z_]\w*)\s*(\+\s*0x[0-9a-fA-F]+)?', l)
+                    if not m:
+                        if l.strip() and not l.strip().startswith(";"):
+                            break
+                        continue
+                    ents.append(None if m.group(2) else m.group(1))
+                self._c80[key] = ents
+        return self._c80
+
+    def code80_painter(self, sel, key):
+        t = self.code80_tables().get(key, [])
+        k = sel - 0x80 if sel < 0xC0 else sel - 0xC0 + 0x20
+        return t[k] if 0 <= k < len(t) else None
+
     def callees_of(self, name):
         if name not in self._callees:
             out = []
+            prev = ""
+            for l in self.body(name):
+                # `pushw <code> / call T_Dispatch_Code80[_Bracketed]`: the painter of screen code <code>, from
+                # prom_b's Dispatch_Code80_PaintTable (full paint) or _RepaintFieldTable (one field)
+                m = re.match(r'^\s*call\s+(T_Dispatch_Code80_Bracketed|T_Dispatch_Code80)\s*$', l, re.I)
+                pm = re.match(r'^\s*pushw\s+(0x[0-9a-fA-F]+|\d+)\s*$', prev, re.I)
+                if m and pm:
+                    tgt = self.code80_painter(int(pm.group(1), 0),
+                                              "paint" if m.group(1).endswith("Bracketed") else "field")
+                    if tgt:
+                        out.append(tgt)
+                prev = l
             for l in self.body(name):
                 if "c" in l or "j" in l:
                     m = self.CALL.match(l.strip())
@@ -225,6 +272,11 @@ class Tree:
                 m = self.POSTED.match(l.strip())
                 if m and m.group(1) in self.called and m.group(1) not in self.dl and m.group(1) not in self.keymap:
                     out.append(self.resolve(m.group(1)))
+            # a body that does not end in an unconditional transfer falls through into the next routine
+            code = [l.strip() for l in self.body(name) if l.strip() and not LABEL.match(l.strip())]
+            last = code[-1] if code else ""
+            if name in self.next_label and not re.match(r'^(ret|reti|retd\b|jp\s+(t\s*,\s*)?\(?[A-Za-z_(]|jrl?\s+(t\s*,\s*)?[A-Za-z_.])', last, re.I):
+                out.append(self.next_label[name])
             self._callees[name] = out
         return self._callees[name]
 
@@ -257,8 +309,9 @@ class Tree:
             dls, kms = [], []
             b = self.body(name)
             for l in b:
+                end_bound = re.match(r'^\s*ld\s+xix\s*,', l, re.I)   # XIX is a list's exclusive END, not drawn
                 for tok in self.TOK.findall(l):
-                    if tok in self.dl and tok not in dls:
+                    if tok in self.dl and tok not in dls and not end_bound:
                         dls.append(tok)
                     if tok in self.keymap and tok not in kms:
                         kms.append(tok)
@@ -438,6 +491,14 @@ def render():
         o.append("Object `%s` (`PanelScreen_VtableTable` entry %d). Enter `%s`, Leave `%s`, Button `%s`." % (
             obj, e, m[0][1], m[1][1], m[2][1]))
         o.append("")
+        if kind == "screen" and (0x80 <= n < 0xB0 or 0xC0 <= n < 0xD0):
+            pt, ft = t.code80_painter(n, "paint"), t.code80_painter(n, "field")
+            if pt or ft:
+                o.append("Painted by `%s` (`Dispatch_Code80_PaintTable`), one field at a time by `%s` "
+                         "(`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run "
+                         "for each one through `ScreenCode%s_Handlers` by `Cpu2Reply_HandleNext`) and then calls "
+                         "the painter with `pushw 0x%02X`." % (pt or "-", ft or "-", "80" if n < 0xC0 else "C0", n))
+                o.append("")
         if I["dls"]:
             o.append("Draws:")
             o.append("")
