@@ -13,22 +13,22 @@ All routine addresses are program 941's (`kn7000.sym`, `kn7000_manual.sym`).
 
 ## Where each segment stands
 
-| segment                        | slot | form now                                                                          | tool                     |
-|--------------------------------|------|-----------------------------------------------------------------------------------|--------------------------|
-| GUI bitmaps, frames, icons     | 0    | 366 indexed PNGs, `src/table/gui/`                                                | `tools/table_png.py`     |
-| GUI fonts                      | 0    | 12 PNG glyph sheets, `src/table/gui/font_NN.png`; font 5's kern table typed       | `tools/table_png.py`     |
-| `SramRecordDefaultsZZZJ`       | 1    | typed: signature, 220 records of eight `zzzj_voice` entries                       | `tools/gen_table_styles` |
-| `FactoryMemStyleContainer`     | 2    | typed 'TCMP': header, 3 style records, 60 variation records, heap streams         | `tools/gen_table_styles` |
-| `FactoryMemPadContainer`       | 3    | typed 'TPAD': header, 5 bank records, 18 pad records, heap streams                | `tools/gen_table_styles` |
-| `TechnicsPadsResource`         | 4    | typed: header, pad-ID index, pad table, 120 pads in `src/table/pads/`             | `tools/gen_table_styles` |
-| `InternalVoiceArchive`         | 6    | **still generic** (below)                                                         |                          |
-| `UserHpMenuData`               | 57   | 47 2-bpp PNGs, `src/table/user_hp_menu/`                                          | `tools/table_png.py`     |
-| `TcdImages`                    | 58   | 14 1-bpp PNGs, `src/table/tcd/`                                                   | `tools/table_png.py`     |
-| `BuiltinStyleSubTable`         | 59   | typed: offsets + 52 styles (51 in table 83), one file each in `src/table/styles/` | `tools/gen_table_styles` |
-| `TechnicsRhythmsTable`         | 83   | typed: the copy of IC18's header, index (`sidx_*`) and offset tables              | `tools/gen_table_styles` |
-| table 83's plug-in data gaps   |      | typed where understood (`typed_gap`); 3 gaps still generic (below)                | `tools/gen_table_s.py`   |
-| `BASEEXT.XAP` data             |      | typed (`--typed-gaps`); one 42-byte gap still generic                             | `tools/gen_xap_s.py`     |
-| table 80                       |      | its two passthroughs of table 83's image marked `census: generated`               |                          |
+| segment                      | slot | form now                                                                          | tool                     |
+|------------------------------|------|-----------------------------------------------------------------------------------|--------------------------|
+| GUI bitmaps, frames, icons   | 0    | 366 indexed PNGs, `src/table/gui/`                                                | `tools/table_png.py`     |
+| GUI fonts                    | 0    | 12 PNG glyph sheets, `src/table/gui/font_NN.png`; font 5's kern table typed       | `tools/table_png.py`     |
+| `SramRecordDefaultsZZZJ`     | 1    | typed: signature, 220 records of eight `zzzj_voice` entries                       | `tools/gen_table_styles` |
+| `FactoryMemStyleContainer`   | 2    | typed 'TCMP': header, 3 style records, 60 variation records, heap streams         | `tools/gen_table_styles` |
+| `FactoryMemPadContainer`     | 3    | typed 'TPAD': header, 5 bank records, 18 pad records, heap streams                | `tools/gen_table_styles` |
+| `TechnicsPadsResource`       | 4    | typed: header, pad-ID index, pad table, 120 pads in `src/table/pads/`             | `tools/gen_table_styles` |
+| `InternalVoiceArchive`       | 6    | **still generic** (below)                                                         |                          |
+| `UserHpMenuData`             | 57   | 47 2-bpp PNGs, `src/table/user_hp_menu/`                                          | `tools/table_png.py`     |
+| `TcdImages`                  | 58   | 14 1-bpp PNGs, `src/table/tcd/`                                                   | `tools/table_png.py`     |
+| `BuiltinStyleSubTable`       | 59   | typed: offsets + 52 styles (51 in table 83), one file each in `src/table/styles/` | `tools/gen_table_styles` |
+| `TechnicsRhythmsTable`       | 83   | typed: the copy of IC18's header, index (`sidx_*`) and offset tables              | `tools/gen_table_styles` |
+| table 83's plug-in data gaps |      | typed where understood (`typed_gap`); 3 gaps still generic (below)                | `tools/gen_table_s.py`   |
+| `BASEEXT.XAP` data           |      | typed (`--typed-gaps`); one 42-byte gap still generic                             | `tools/gen_xap_s.py`     |
+| table 80                     |      | its two passthroughs of table 83's image marked `census: generated`               |                          |
 
 `tools/gen_table_s.py` still writes `src/table.s` and `src/sp7001/table.s` whole (`make table-src`,
 `make table-src-sp7001`), and `tools/gen_xap_s.py` writes `src/sp7001/baseext.s` (`make
@@ -45,13 +45,13 @@ the sources `.incbin` those, marked `census: generated -- tools/table_png.py`. T
 for viewing. The 8 bpp items use the firmware's CLUT seed (`display_palette` in
 `src/program/region1_0C.s`, `ClutPaletteSeedTable` 0x4872573C, 0x00BBGGRR), with 0xF7 transparent.
 
-| format         | items                     | packing (evidence: `annotations/gfx_draw.ann`)                                                                         |
-|----------------|---------------------------|------------------------------------------------------------------------------------------------------------------------|
-| `p8 W H`       | 53 bitmaps, 73 frames     | `DrawBitmap_Impl` 0x48423BBA, `DrawFrameSP_Impl` 0x48423F6E: 1 byte a pixel, rows padded to even (pad byte 0 always)    |
-| `p4 24 24`     | 240 icons                 | `DrawIcons_Impl` 0x48423E31: 24x24, 4 bpp, high nibble left; nibble n -> index n or 0xF0 + n                           |
-| `font C H N`   | 12 fonts, 224 glyphs each | `DrawString_Impl` 0x48425467: 1 bpp column-major, C 8-pixel columns of H bytes, from 0x20; font 5 proportional         |
-| `b1 240 80`    | 14 TCD pictures           | `AcTcdImageProc` 0x4848CBC4 -> `DrawBitmapSP2` (width 0xF0, height 0x50): MSB-first rows; they are chord-voicing staves |
-| `p2 W H`       | 47 USER HP pictures       | `AcUserHpMenuProc` 0x4849681E (`func_48496B28`) -> `DrawBitmapSPFast4`: four 2-bit pixels a byte, rows of (W + 3) / 4  |
+| format       | items                     | packing (evidence: `annotations/gfx_draw.ann`)                                                                          |
+|--------------|---------------------------|-------------------------------------------------------------------------------------------------------------------------|
+| `p8 W H`     | 53 bitmaps, 73 frames     | `DrawBitmap_Impl` 0x48423BBA, `DrawFrameSP_Impl` 0x48423F6E: 1 byte a pixel, rows padded to even (pad byte 0 always)    |
+| `p4 24 24`   | 240 icons                 | `DrawIcons_Impl` 0x48423E31: 24x24, 4 bpp, high nibble left; nibble n -> index n or 0xF0 + n                            |
+| `font C H N` | 12 fonts, 224 glyphs each | `DrawString_Impl` 0x48425467: 1 bpp column-major, C 8-pixel columns of H bytes, from 0x20; font 5 proportional          |
+| `b1 240 80`  | 14 TCD pictures           | `AcTcdImageProc` 0x4848CBC4 -> `DrawBitmapSP2` (width 0xF0, height 0x50): MSB-first rows; they are chord-voicing staves |
+| `p2 W H`     | 47 USER HP pictures       | `AcUserHpMenuProc` 0x4849681E (`func_48496B28`) -> `DrawBitmapSPFast4`: four 2-bit pixels a byte, rows of (W + 3) / 4   |
 
 Font 5 is proportional: its kern table, typed in the source, holds {u8 advance width, u8 0, u16
 offset of the glyph} per character from 0x20. The offsets are contiguous, and each glyph's column
@@ -141,14 +141,14 @@ census still counts, rather than becoming a wall of anonymous `.byte`.
 
 ## What is still generic, and why
 
-| tree          | entry                                          | bytes   | why                                                                                                  |
-|---------------|------------------------------------------------|---------|------------------------------------------------------------------------------------------------------|
-| kn7000-table  | `InternalVoiceArchive`, `src/table.s`          | 832,592 | the 'JK' voice archive; structure partly known (below), records not decoded                          |
-| kn7000-sp7001 | the same, `src/sp7001/table.s`                 | 832,592 | the same segment                                                                                     |
-| kn7000-sp7001 | plug-in data 0x3EF6C5..0x3F782C                | 33,127  | widget/descriptor tables: names (`ap_func`, `style_id`, `font` ...) and binary records, not decoded  |
-| kn7000-sp7001 | plug-in data 0x3F783E..0x3F88F0                | 4,274   | the same kind                                                                                        |
-| kn7000-sp7001 | plug-in data 0x3F9194..0x3FB59C                | 9,224   | the same kind                                                                                        |
-| kn7000-sp7001 | `BASEEXT.XAP` 0x0167E4..0x01680E               | 42      | a small table of {u8, u8, u16} rows after a pointer, not identified                                  |
+| tree          | entry                                          | bytes   | why                                                                                                 |
+|---------------|------------------------------------------------|---------|-----------------------------------------------------------------------------------------------------|
+| kn7000-table  | `InternalVoiceArchive`, `src/table.s`          | 832,592 | the 'JK' voice archive; structure partly known (below), records not decoded                         |
+| kn7000-sp7001 | the same, `src/sp7001/table.s`                 | 832,592 | the same segment                                                                                    |
+| kn7000-sp7001 | plug-in data 0x3EF6C5..0x3F782C                | 33,127  | widget/descriptor tables: names (`ap_func`, `style_id`, `font` ...) and binary records, not decoded |
+| kn7000-sp7001 | plug-in data 0x3F783E..0x3F88F0                | 4,274   | the same kind                                                                                       |
+| kn7000-sp7001 | plug-in data 0x3F9194..0x3FB59C                | 9,224   | the same kind                                                                                       |
+| kn7000-sp7001 | `BASEEXT.XAP` 0x0167E4..0x01680E               | 42      | a small table of {u8, u8, u16} rows after a pointer, not identified                                 |
 | kn7000-sp7001 | `program/region1_0C.s` x 2, `library_00.s` x 1 | 2.6 MB  | program 942's data region and library head: the program image, not the table (no program lane here) |
 
 **The 'JK' archive** (`VoiceArchiveScanBoot`, the `Voice*LookupInternal` routines;
@@ -167,11 +167,11 @@ gives 0xCC00. TPAD stores 0xE13D and SumU16BE(0xD0, 936) gives 0xE13D.
 
 `python3 scripts/analysis/data_incbin_census.py` at this lane's last commit:
 
-| tree          | generated        | media           | opaque | generic n | generic bytes |
-|---------------|------------------|-----------------|--------|-----------|---------------|
-| kn7000-table  | 439 / 299,512    | 159 / 1,316,309 | 0 / 0  | 1         | 832,592       |
-| kn7000-sp7001 | 439 / 299,512    | 159 / 1,316,309 | 0 / 0  | 8         | 3,478,904     |
-| kn7000-b80    | 2 / 4,064,860    | 0 / 0           | 0 / 0  | 0         | 0             |
+| tree          | generated     | media           | opaque | generic n | generic bytes |
+|---------------|---------------|-----------------|--------|-----------|---------------|
+| kn7000-table  | 439 / 299,512 | 159 / 1,316,309 | 0 / 0  | 1         | 832,592       |
+| kn7000-sp7001 | 439 / 299,512 | 159 / 1,316,309 | 0 / 0  | 8         | 3,478,904     |
+| kn7000-b80    | 2 / 4,064,860 | 0 / 0           | 0 / 0  | 0         | 0             |
 
 Before: kn7000-table 447 entries / 2,560,580 B, kn7000-sp7001 704 / 5,176,151 B, kn7000-b80 2 /
 4,064,860 B (`notes/data-semantics-2026-10-29/README.md`). Table 80's two entries are generated
