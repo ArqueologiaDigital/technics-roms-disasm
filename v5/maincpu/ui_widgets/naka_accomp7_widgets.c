@@ -142,7 +142,7 @@ const naka_accomp7_widgets_t naka_accomp7_widgets_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0001,
-        .window = 0x00C80006,
+        .window = NAKA_VIEW_ID(Naka_Accomp7_Screens, OBJ_MspBkslP1Win),
     },
 
     .MspBnkP2Ctl = {
@@ -154,7 +154,7 @@ const naka_accomp7_widgets_t naka_accomp7_widgets_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0002,
-        .window = 0x00C80011,
+        .window = NAKA_VIEW_ID(Naka_Accomp7_Screens, OBJ_MspBkslP2Win),
     },
 
     .vC8_e4 = {
@@ -179,6 +179,8 @@ const naka_accomp7_widgets_t naka_accomp7_widgets_data
         .time = IT_Default,
     },
 
+    /* ==== VIEW OBJ_MspBkslP1Win: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .MspBkslP1Win = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -394,6 +396,8 @@ const naka_accomp7_widgets_t naka_accomp7_widgets_data
         ._pad_43 = { 0x00 },
     },
 
+    /* ==== VIEW OBJ_MspBkslP2Win: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .MspBkslP2Win = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,

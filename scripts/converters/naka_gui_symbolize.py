@@ -148,7 +148,7 @@ class Tables:
         for r in m.regs:
             if r['cls'] != 0x1600010 or not m.inrom(r['table']):
                 continue
-            el = m.entries(r)
+            el = [a if m.inrom(a) else (G.rom_image_of(a) or a) for a in m.entries(r)]
             lab = m.name_of(r['table'])
             self.t[r['slot']] = dict(label=lab[1] if lab[0] == r['table'] else 'ViewTable_%03X' % r['slot'],
                                      count=r['count'], init=r['init'], elems=el, reg=r,
@@ -234,7 +234,9 @@ def enum_block(f, slot, names, tabs, glob_index, nm):
             c = tabs.m.record_class(t['elems'][k])
             lab = tabs.m.name_of(t['elems'][k])
             where = lab[1] if lab[0] == t['elems'][k] else '0x%06X' % t['elems'][k]
-            what = '%s, record outside the C sources (%s)' % (c['name'] if c else '?', where)
+            ram = not tabs.m.inrom(tabs.m.entries(t['reg'])[k])
+            what = '%s, %s (%s)' % (c['name'] if c else '?', 'RAM record initialised from the work-RAM image'
+                                    if ram else 'record outside the C sources', where)
         else:
             what = 'not in the registered table'
         item = '    ' + '  ' * d + n + ','
@@ -315,6 +317,12 @@ def rewrite(path, nm, tabs, glob_index, letters, generated):
                     new = 'NAKA_NONE' if k == NONE else name_of.get((r['slot'], k))
             elif fname == 'rect' and letter == 'P':
                 new = rect_text(v)
+            elif letter in ('t', 'N') and NUM.match(v.strip()):
+                x = int(v, 0)
+                tgt = name_of.get((x >> 16, x & 0xFFFF)) if x not in (0, 0xFFFFFFFF) else None
+                if tgt:
+                    t = tabs.t.get(x >> 16)
+                    new = 'NAKA_VIEW_ID(%s, %s)' % (t['label'] if t else 'ViewTable_%03X' % (x >> 16), tgt)
             elif letter:
                 new = field_value(nm, letter, fname, v)
             if new is None or new == v:
@@ -341,6 +349,76 @@ def rewrite(path, nm, tabs, glob_index, letters, generated):
 
 
 FIELDSUB = re.compile(r'^        \.(\w+) = ([^\n]*),$', re.M)
+
+HEADER_RE = re.compile(r'^    /\* ==== (?:SCREEN|VIEW) .*?\*/\n', re.M | re.S)
+
+
+def wrap(text, first, rest, width=100):
+    words, lines, cur = text.split(), [], first
+    for w in words:
+        if len(cur) + 1 + len(w) > width and cur.strip() not in ('*', ''):
+            lines.append(cur)
+            cur = rest + w
+        else:
+            cur = cur + ('' if cur.endswith(' ') else ' ') + w
+    lines.append(cur)
+    return lines
+
+
+def screen_headers(g):
+    """file name -> {member: header comment text} for every title's screen record and every
+    top-level view with children."""
+    paths = g.menu_paths()
+    menu, exits, into = G.title_links(g)
+    out = {}
+    for f in g.files:
+        hs = {}
+        for r in f.records:
+            key = (r['slot'], r['elem'])
+            tids = g.view_titles.get(key, [])
+            L = []
+            if tids:
+                for tid in tids:
+                    t = g.titles[tid]
+                    st = G.title_screen_text(g, tid)
+                    L.append('    /* ==== SCREEN %s%s -- "%s", title id 0x%X, function %s ===='
+                             % (g.title_name(tid), (' "%s"' % st) if st else '', t['name'], t['index'],
+                                g.name_by_value.get(t['func'], '0x%08X' % (t['func'] or 0))))
+                    d = G.title_description(g, tid)
+                    if d:
+                        L += wrap(d, '     * What:', '     *       ')
+                    pth = G.title_path(g, tid, paths)
+                    L.append('     * Path: %s' % (pth or 'no menu entry opens it (opened by code)'))
+                    for lab, to in menu.get(tid, []):
+                        L.append('     * Menu: "%s" -> %s' % (lab or '?', g.title_name(to)))
+                    for frm, k2, fn, lab in g.func_entries:
+                        if frm == tid:
+                            L.append('     * Menu: "%s" -> by code, %s' % (lab or '?', fn))
+                    if exits.get(tid):
+                        L.append('     * EXIT -> %s' % ', '.join(g.title_name(x) for x in sorted(exits[tid])))
+                    fr = sorted({(g.title_name(a) if a else 'an untitled view', b) for a, b in into.get(tid, [])})
+                    if fr:
+                        L += wrap(', '.join('%s ("%s")' % (a, b) if b else a for a, b in fr),
+                                  '     * Opened from:', '     *       ')
+            else:
+                lk = g.links(key)
+                if lk[0] != NONE or lk[1] in (None, NONE):
+                    continue
+                lab = g.label(f, r)
+                L.append('    /* ==== VIEW OBJ_%s: %s%s, the top of an object tree that no title shows'
+                         % (r['member'], r['cls'], (' "%s"' % lab) if lab else ''))
+                L.append('     * directly (a window, page or popup another view or procedure opens) ====')
+            L[-1] = L[-1] + ' */'
+            hs[r['member']] = '\n'.join(L) + '\n'
+        out[f.name] = hs
+    return out
+
+
+def apply_headers(path, hs):
+    txt = HEADER_RE.sub('', G.read(path))
+    for member, h in hs.items():
+        txt = re.sub(r'^(    \.%s = \{\n)' % re.escape(member), lambda m: h + m.group(1), txt, count=1, flags=re.M)
+    return txt
 
 
 # ------------------------------------------------------------------ verify
@@ -379,13 +457,45 @@ def compile_c(cpath, ld, text):
         shutil.rmtree(d)
 
 
+def sync(trees):
+    import glob
+    src = os.path.join(ROOT, 'v10', 'maincpu', 'ui_widgets')
+
+    def head(rel):
+        r = subprocess.run(['git', 'show', 'HEAD:' + rel], cwd=ROOT, capture_output=True)
+        return r.stdout if r.returncode == 0 else None
+    for t in trees:
+        n = 0
+        for p in sorted(glob.glob(os.path.join(src, '*.c')) + glob.glob(os.path.join(src, '*.h'))):
+            b = os.path.basename(p)
+            dst = os.path.join(ROOT, t, 'maincpu', 'ui_widgets', b)
+            if not os.path.exists(dst):
+                continue
+            base = head('v10/maincpu/ui_widgets/' + b)
+            if base is None or head('%s/maincpu/ui_widgets/%s' % (t, b)) != base:
+                continue
+            new = open(p, 'rb').read()
+            if open(dst, 'rb').read() != new:
+                open(dst, 'wb').write(new)
+                n += 1
+        print('%s: %d files copied from v10' % (t, n))
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--tree', default='v10')
     ap.add_argument('--apply', action='store_true')
-    ap.add_argument('--sync-from', help='copy this tree\'s transformed files where the old files were equal')
+    ap.add_argument('--headers', action='store_true', help='(re)write the SCREEN / VIEW header comments')
+    ap.add_argument('--check', action='store_true',
+                    help='exit 1 if a rewrite or a header pass would change any file (no compile)')
+    ap.add_argument('--sync', metavar='TREES',
+                    help='copy each changed v10 GUI file (ui_widgets/*.c, *.h) into these trees where the '
+                         'tree\'s committed file equals v10\'s committed file (v7,v6,v5 share v10\'s C)')
     ap.add_argument('files', nargs='*')
     a = ap.parse_args()
+    if a.sync:
+        sync(a.sync.split(','))
+        return
     files = [os.path.abspath(p) for p in a.files] or G.tree_files(a.tree)
     m = O.Map('v10')
     nm = Names(m)
@@ -394,9 +504,27 @@ def main():
     generated = G.read(os.path.join(ROOT, 'v10', 'maincpu', 'ui_widgets', 'naka_classes.h'))
     allf = [G.CFile(p) for p in G.tree_files(a.tree)]
     glob_index = build_global(allf)
+    if a.check:
+        heads = screen_headers(G.Graph(a.tree, m))
+        stale = []
+        for p in files:
+            cur = G.read(p)
+            new, st = rewrite(p, nm, tabs, glob_index, letters, generated)
+            if new is not None and new != cur:
+                stale.append('%s (spelling)' % os.path.relpath(p, ROOT))
+            elif apply_headers(p, heads.get(os.path.basename(p), {})) != cur:
+                stale.append('%s (SCREEN/VIEW headers)' % os.path.relpath(p, ROOT))
+        for x in stale:
+            print('STALE: ' + x)
+        print('naka_gui_symbolize --check %s: %s' % (a.tree, '%d stale' % len(stale) if stale else 'up to date'))
+        sys.exit(1 if stale else 0)
     bad = 0
+    heads = screen_headers(G.Graph(a.tree, m)) if a.headers else {}
     for p in files:
-        new, st = rewrite(p, nm, tabs, glob_index, letters, generated)
+        if a.headers:
+            new, st = apply_headers(p, heads.get(os.path.basename(p), {})), {'headers': len(heads.get(os.path.basename(p), {}))}
+        else:
+            new, st = rewrite(p, nm, tabs, glob_index, letters, generated)
         if new is None or new == G.read(p):
             continue
         b, ld = bin_rule(a.tree, p)

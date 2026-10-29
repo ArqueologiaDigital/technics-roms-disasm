@@ -470,6 +470,9 @@ enum Naka_Accomp13_Screens_objects {
 const naka_msp_recording_t naka_msp_recording_data
     __attribute__((section(".text"), used)) = {
 
+    /* ==== SCREEN TITLE_MSPREC "MSP PHRASE RECORDING" -- "TT_MSPREC", title id 0xC9, function NAKA_MAINFUNC_MspRecTtlFunc ====
+     * Path: mode MD_MSP_REC
+     * EXIT -> TITLE_NORMAL */
     .MspRecScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -724,6 +727,11 @@ const naka_msp_recording_t naka_msp_recording_data
         .mode = NAKA_MODE_MD_NORMAL,
     },
 
+    /* ==== SCREEN TITLE_MSPMENU "MSP MENU" -- "TT_MSPMENU", title id 0xCA, function NAKA_MAINFUNC_MspMenuTtlFunc ====
+     * Path: mode MD_MSP
+     * Menu: "COMPILE SET" -> TITLE_MSPGROUP
+     * Menu: "Naming for User&COMPILE Banks" -> TITLE_MSPNAME
+     * EXIT -> TITLE_NORMAL */
     .MspMenuScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -843,6 +851,10 @@ const naka_msp_recording_t naka_msp_recording_data
         .style = SS_UpDown,
     },
 
+    /* ==== SCREEN TITLE_MSPNAME "NAMING" -- "TT_MSPNAME", title id 0xCB, function NAKA_MAINFUNC_MspNameTtlFunc ====
+     * Path: mode MD_MSP > "Naming for User&COMPILE Banks"
+     * EXIT -> TITLE_MSPMENU
+     * Opened from: TITLE_MSPMENU ("Naming for User&COMPILE Banks") */
     .MspNamingScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -907,6 +919,10 @@ const naka_msp_recording_t naka_msp_recording_data
         .align = AL_LeftJustify,
     },
 
+    /* ==== SCREEN TITLE_MSPGROUP "MSP COMPILE SETTING" -- "TT_MSPGROUP", title id 0xCC, function NAKA_APFUNC_DefaultFunction ====
+     * Path: mode MD_MSP > "COMPILE SET"
+     * EXIT -> TITLE_MSPMENU
+     * Opened from: TITLE_MSPMENU ("COMPILE SET") */
     .MspReGrpScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -1076,6 +1092,10 @@ const naka_msp_recording_t naka_msp_recording_data
         .func = NAKA_APFUNC_MspRgpShowHideFunc,
     },
 
+    /* ==== SCREEN TITLE_SNDARG "SOUND ARRANGER" -- "TT_SNDARG", title id 0xDC, function NAKA_MAINFUNC_SndArgTtlFunc ====
+     * What: the Sound Arranger page. It is the home title of mode 0x11, MD_SND_ARG.
+     * Path: mode MD_SND_ARG
+     * EXIT -> TITLE_NORMAL */
     .SndArgrScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -1218,6 +1238,9 @@ const naka_msp_recording_t naka_msp_recording_data
         .func = NAKA_APFUNC_SndArrLangCheck,
     },
 
+    /* ==== SCREEN TITLE_APCSEL "AUTO PLAY CHORD" -- "TT_APCSEL", title id 0xED, function NAKA_APFUNC_DefaultFunction ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_PS */
     .ApcSelScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,

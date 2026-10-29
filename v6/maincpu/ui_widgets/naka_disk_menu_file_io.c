@@ -2722,6 +2722,17 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
 
     .PsFileNameBoxProc_str = "PsFileNameBoxProc",
 
+    /* ==== SCREEN TITLE_DKMENU "DISK MENU" -- "TT_DKMENU", title id 0x60, function NAKA_APFUNC_DefaultFunction ====
+     * Path: mode MD_DISK
+     * Menu: "STYLE CONVERT" -> TITLE_STYLCNVWAIT
+     * Menu: "PREFERENCES" -> TITLE_DKSETUP
+     * Menu: "SAVE" -> TITLE_DKSVMENU
+     * Menu: "HARD DISK MAIN MENU" -> TITLE_HDDEXT
+     * Menu: "DISK TOOLS" -> by code, NAKA_MAINFUNC_UtilityTtlJgFunc
+     * Menu: "LOAD" -> by code, NAKA_MAINFUNC_LoadTtlJgFunc
+     * Menu: "DIRECT PLAY" -> by code, NAKA_MAINFUNC_DirectPlayTtlJgFunc
+     * Menu: "SONG MEDLEY" -> by code, NAKA_MAINFUNC_SongMedleyTtlJgFunc
+     * EXIT -> TITLE_PS */
     .DiskMenu = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -2914,6 +2925,10 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
 
     .SongMedley_str = "SONG MEDLEY",
 
+    /* ==== SCREEN TITLE_SQMDLY "INTERNAL SONG MEDLEY" -- "TT_SQMDLY", title id 0x79, function NAKA_MAINFUNC_FmmIntMedleyFunc ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_SQPLAY
+     * Opened from: an untitled view ("MEDLEY") */
     .IntSongMedley = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -3154,6 +3169,10 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
 
     .Loop_text = ALIGNED_STRING("LOOP"),
 
+    /* ==== SCREEN TITLE_DKSVNAME "SAVE FILE NAMING" -- "TT_DKSVNAME", title id 0x66, function NAKA_APFUNC_DefaultFunction ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_DKSV
+     * Opened from: an untitled view ("NAME") */
     .DiskSaveName = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -3202,6 +3221,9 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .func = NAKA_APFUNC_TechnicsFileNaming,
     },
 
+    /* ==== SCREEN TITLE_CMPLD "COMPOSER LOAD" -- "TT_CMPLD", title id 0xBC, function NAKA_MAINFUNC_FmmComposerLoadFunc ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_DKMENU */
     .ComposerLoad = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -3393,6 +3415,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .mode = NAKA_MODE_MD_NORMAL,
     },
 
+    /* ==== VIEW OBJ_DiskWaitWin: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .DiskWaitWin = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -3428,6 +3452,10 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .paintok = 0x0003EC90,
     },
 
+    /* ==== SCREEN TITLE_DKSVNAMESMF "SAVE FILE NAMING" -- "TT_DKSVNAMESMF", title id 0x6A, function NAKA_APFUNC_DefaultFunction ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_DKSVSMF
+     * Opened from: TITLE_DKSVSMF ("NAME") */
     .DiskSaveNameSMF = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -3476,6 +3504,10 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .func = NAKA_APFUNC_SmfFileNaming,
     },
 
+    /* ==== SCREEN TITLE_DKWPLD "WALLPAPER LOAD" -- "TT_DKWPLD", title id 0x63, function NAKA_MAINFUNC_FmmWallpaperLoadFunc ====
+     * Path: mode MD_CONTROL > "WALLPAPER SETTING" > "LOAD"
+     * EXIT -> TITLE_CTWALLSET
+     * Opened from: TITLE_CTWALLSET ("LOAD"), an untitled view ("LOAD") */
     .WallpaperLoad = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -3686,6 +3718,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .aicok = 0x0003ECA2,
     },
 
+    /* ==== VIEW OBJ_DiskSaveSureWin: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .DiskSaveSureWin = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -3837,6 +3871,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .func = NAKA_APFUNC_SaveYes,
     },
 
+    /* ==== VIEW OBJ_PasswordWin: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .PasswordWin = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -3919,6 +3955,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .func = NAKA_APFUNC_PasswordText,
     },
 
+    /* ==== VIEW OBJ_CheckPasswordWin: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .CheckPasswordWin = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -4001,6 +4039,10 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .func = NAKA_APFUNC_CheckPasswordText,
     },
 
+    /* ==== SCREEN TITLE_DKLD -- "TT_DKLD", title id 0x61, function NAKA_MAINFUNC_FmmLoadTitleFunc ====
+     * Path: mode MD_ENTERTAINER > "DISK LOAD"
+     * EXIT -> TITLE_DKMENU
+     * Opened from: TITLE_DKLDSMF ("TECH"), TITLE_ETMENU ("DISK LOAD") */
     .DiskLoad = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -4044,7 +4086,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0001,
-        .window = 0x00610007,
+        .window = NAKA_VIEW_ID(Cheap_ViewableTable_061, OBJ_DiskLoadP1),
     },
 
     .DiskLoad_IvPageControl_2 = {
@@ -4056,7 +4098,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(32, 0, 32, 32),
         .page = 0x0002,
-        .window = 0x00610014,
+        .window = NAKA_VIEW_ID(Cheap_ViewableTable_061, OBJ_DiskLoadP2),
     },
 
     .DiskLoad_IvPageControl_3 = {
@@ -4068,7 +4110,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(64, 0, 32, 32),
         .page = 0x0003,
-        .window = 0x00610034,
+        .window = NAKA_VIEW_ID(Cheap_ViewableTable_061, OBJ_DiskLoadP3),
     },
 
     .w37 = {
@@ -4105,6 +4147,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
 
     .field_0e48 = 0x0145,
 
+    /* ==== VIEW OBJ_DiskLoadP1: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .DiskLoadP1 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -4336,6 +4380,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
 
     .v61_e19_title = ALIGNED_STRING("LOAD"),
 
+    /* ==== VIEW OBJ_DiskLoadP2: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .DiskLoadP2 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -4852,6 +4898,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
 
     .Load_text_4 = ALIGNED_STRING("LOAD"),
 
+    /* ==== VIEW OBJ_DiskLoadP3: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .DiskLoadP3 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -5269,6 +5317,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
 
     .BANK_str = ALIGNED_STRING("BANK"),
 
+    /* ==== SCREEN TITLE_DKLDSMF "SMF LOAD" -- "TT_DKLDSMF", title id 0x64, function NAKA_MAINFUNC_FmmSmfLoadTitleFunc ====
+     * Path: no menu entry opens it (opened by code)
+     * Menu: "TECH" -> TITLE_DKLD
+     * EXIT -> TITLE_DKMENU
+     * Opened from: an untitled view ("SMF") */
     .DiskLoadSMF = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -5446,8 +5499,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .stroff = SELF(v61_e84_stroff),
         .onoff = 0x0003ED2A,
         .editsw = ES_Left2,
-        .onwin = 0x0061005F,
-        .offwin = 0x00610063,
+        .onwin = NAKA_VIEW_ID(Cheap_ViewableTable_061, OBJ_SongNameSmfLdWin),
+        .offwin = NAKA_VIEW_ID(Cheap_ViewableTable_061, OBJ_DiskInfoSmfLdWin),
         .main_func = NAKA_MAINFUNC_FmmSmfFileNameFunc,
     },
 
@@ -5642,6 +5695,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .style = SS_Special,
     },
 
+    /* ==== VIEW OBJ_SongNameSmfLdWin: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .SongNameSmfLdWin = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -5708,6 +5763,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
 
     .Load_text_6 = ALIGNED_STRING("LOAD"),
 
+    /* ==== VIEW OBJ_DiskInfoSmfLdWin: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .DiskInfoSmfLdWin = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -5807,6 +5864,10 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
 
     .Load_text_7 = ALIGNED_STRING("LOAD"),
 
+    /* ==== SCREEN TITLE_CMPLDSNGL "LOAD SINGLE COMPOSER" -- "TT_CMPLDSNGL", title id 0x62, function NAKA_MAINFUNC_FmmCmpSingleLoadFunc ====
+     * Path: mode MD_CMP > "LOAD SINGLE COMPOSER"
+     * EXIT -> TITLE_CMMENU
+     * Opened from: TITLE_CMMENU ("LOAD SINGLE COMPOSER") */
     .CmpSingleLoad = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -6240,6 +6301,12 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .send_index = 0x0028,
     },
 
+    /* ==== SCREEN TITLE_DKSVMENU "SAVE" -- "TT_DKSVMENU", title id 0x65, function NAKA_APFUNC_DefaultFunction ====
+     * Path: mode MD_DISK > "SAVE"
+     * Menu: "TECHNICS FORMAT" -> by code, NAKA_MAINFUNC_SaveTtlJgFunc
+     * Menu: "SMF FORMAT 0" -> by code, NAKA_MAINFUNC_SaveSmfTtlJgFunc
+     * EXIT -> TITLE_DKMENU
+     * Opened from: TITLE_DKMENU ("SAVE") */
     .DiskSaveMenu = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -6304,6 +6371,10 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
 
     .SmfFormat_str = ALIGNED_STRING("SMF FORMAT 0"),
 
+    /* ==== SCREEN TITLE_DKSV -- "TT_DKSV", title id 0x67, function NAKA_MAINFUNC_FmmSaveTitleFunc ====
+     * What: the disk SAVE page. The file-naming window returns to it.
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_DKMENU */
     .DiskSave = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -6347,7 +6418,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0001,
-        .window = 0x00670007,
+        .window = NAKA_VIEW_ID(Cheap_ViewableTable_067, OBJ_DiskSaveP1),
     },
 
     .DiskSave_IvPageControl_2 = {
@@ -6359,7 +6430,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(32, 0, 32, 32),
         .page = 0x0002,
-        .window = 0x00670015,
+        .window = NAKA_VIEW_ID(Cheap_ViewableTable_067, OBJ_DiskSaveP2),
     },
 
     .DiskSave_IvPageControl_3 = {
@@ -6371,7 +6442,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(64, 0, 32, 32),
         .page = 0x0003,
-        .window = 0x0067003D,
+        .window = NAKA_VIEW_ID(Cheap_ViewableTable_067, OBJ_DiskSaveP3),
     },
 
     .w91 = {
@@ -6408,6 +6479,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
 
     .field_242c = 0x0145,
 
+    /* ==== VIEW OBJ_DiskSaveP1: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .DiskSaveP1 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -6650,6 +6723,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
 
     .v67_e20_title = ALIGNED_STRING("SAVE"),
 
+    /* ==== VIEW OBJ_DiskSaveP2: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .DiskSaveP2 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -7291,6 +7366,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
 
     .AllOff_text = "ALL OFF",
 
+    /* ==== VIEW OBJ_DiskSaveP3: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .DiskSaveP3 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -7458,6 +7535,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .func = NAKA_APFUNC_WakeUpPassword,
     },
 
+    /* ==== SCREEN TITLE_DKSVSMF "SMF SAVE" -- "TT_DKSVSMF", title id 0x6B, function NAKA_MAINFUNC_FmmSmfSaveTitleFunc ====
+     * What: the disk save-as-SMF page.
+     * Path: no menu entry opens it (opened by code)
+     * Menu: "NAME" -> TITLE_DKSVNAMESMF
+     * EXIT -> TITLE_DKMENU */
     .DiskSmfSave = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -7845,6 +7927,9 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
 
     .As_text_2 = ALIGNED_STRING(" AS:"),
 
+    /* ==== SCREEN TITLE_DKDPSMF "SMF DIRECT PLAY" -- "TT_DKDPSMF", title id 0x6C, function NAKA_MAINFUNC_FmmSmfMedleyFunc ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_DKMENU */
     .DiskSmfDirectPlay = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -8022,8 +8107,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .stroff = SELF(v6C_e9_stroff),
         .onoff = 0x0003EDFC,
         .editsw = ES_Left2,
-        .onwin = 0x006C001C,
-        .offwin = 0x006C0020,
+        .onwin = NAKA_VIEW_ID(Cheap_ViewableTable_06C, OBJ_SongNameDPSmfWin),
+        .offwin = NAKA_VIEW_ID(Cheap_ViewableTable_06C, OBJ_DiskInfoDPSmfWin),
         .main_func = NAKA_MAINFUNC_FmmSmfFileNameFunc,
     },
 
@@ -8308,6 +8393,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .style = SS_Special,
     },
 
+    /* ==== VIEW OBJ_SongNameDPSmfWin: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .SongNameDPSmfWin = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -8374,6 +8461,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
 
     .Start_text_2 = "START",
 
+    /* ==== VIEW OBJ_DiskInfoDPSmfWin: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .DiskInfoDPSmfWin = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -8473,6 +8562,9 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
 
     .Start_text_3 = "START",
 
+    /* ==== SCREEN TITLE_DKDPDOC "DOC DIRECT PLAY" -- "TT_DKDPDOC", title id 0x6D, function NAKA_MAINFUNC_FmmDocMedleyFunc ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_DKMENU */
     .DiskDocDirectPlay = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -8848,6 +8940,9 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
 
     .Add_text_3 = "ADD",
 
+    /* ==== SCREEN TITLE_DKDPPD "PIANO DISC DIRECT PLAY" -- "TT_DKDPPD", title id 0x6E, function NAKA_MAINFUNC_FmmPdMedleyFunc ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_DKMENU */
     .DiskPdDirectPlay = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -9205,6 +9300,9 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
 
     .Add_text_4 = "ADD",
 
+    /* ==== SCREEN TITLE_DKMDLY "SONG MEDLEY" -- "TT_DKMDLY", title id 0x77, function NAKA_MAINFUNC_FmmDiskMedleySelectFunc ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_DKMENU */
     .DiskSongMedley = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -9578,6 +9676,12 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
 
     .Loop_text_5 = ALIGNED_STRING("LOOP"),
 
+    /* ==== SCREEN TITLE_DKUT "DISK TOOLS" -- "TT_DKUT", title id 0x7B, function NAKA_MAINFUNC_FmmUtilityTitleFunc ====
+     * Path: no menu entry opens it (opened by code)
+     * Menu: "SMF" -> TITLE_DKUTSMF
+     * Menu: "?" -> TITLE_DKUTFRMT
+     * EXIT -> TITLE_DKMENU
+     * Opened from: TITLE_DKUTSMF ("TECH") */
     .DiskUtility = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -9810,7 +9914,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .editsw = ES_Right2,
         .selected = 0x0003EE66,
         .str = SELF(field_44fe),
-        .screen = 0x007B0014,
+        .screen = NAKA_VIEW_ID(Cheap_ViewableTable_07B, OBJ_FileRename),
         .icon = idICON_None,
     },
 
@@ -9868,7 +9972,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .editsw = ES_Left2,
         .selected = 0x0003EE68,
         .str = SELF(COPY_str),
-        .screen = 0x007B0044,
+        .screen = NAKA_VIEW_ID(Cheap_ViewableTable_07B, OBJ_FileCopy),
         .icon = idICON_None,
     },
 
@@ -9941,9 +10045,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .prev = OBJ_DiskUtility_PsFileNameBox,
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
-        .win = 0x00600026,
+        .win = NAKA_VIEW_ID(Cheap_ViewableTable_060, OBJ_DiskWaitWin),
     },
 
+    /* ==== VIEW OBJ_FileRename: Screen, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .FileRename = {
         .class_ = NAKA_CLASS(Screen),
         .super = NAKA_NONE,
@@ -10006,6 +10112,10 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .func = NAKA_APFUNC_TechnicsFileRename,
     },
 
+    /* ==== SCREEN TITLE_DKUTFRMT "FLOPPY DISK FORMAT" -- "TT_DKUTFRMT", title id 0x7D, function NAKA_MAINFUNC_FmmFormatFunc ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_DKMENU
+     * Opened from: TITLE_DKUT, TITLE_DKUTSMF */
     .DiskFormat = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -10024,6 +10134,12 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
 
     .FloppyDiskFormat_text = ALIGNED_STRING("FLOPPY DISK FORMAT"),
 
+    /* ==== SCREEN TITLE_DKUTSMF "SMF DISK TOOLS" -- "TT_DKUTSMF", title id 0x7C, function NAKA_MAINFUNC_FmmSmfUtilityTitleFunc ====
+     * Path: no menu entry opens it (opened by code)
+     * Menu: "TECH" -> TITLE_DKUT
+     * Menu: "?" -> TITLE_DKUTFRMT
+     * EXIT -> TITLE_DKMENU
+     * Opened from: TITLE_DKUT ("SMF") */
     .DiskUtilitySMF = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -10201,8 +10317,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .stroff = SELF(v7B_e34_stroff),
         .onoff = 0x0003EE88,
         .editsw = ES_Left2,
-        .onwin = 0x007B002F,
-        .offwin = 0x007B002B,
+        .onwin = NAKA_VIEW_ID(Cheap_ViewableTable_07B, OBJ_SongNameWin),
+        .offwin = NAKA_VIEW_ID(Cheap_ViewableTable_07B, OBJ_DiskInfoWin),
         .main_func = NAKA_MAINFUNC_FmmSmfFileNameFunc,
     },
 
@@ -10298,7 +10414,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .editsw = ES_Right2,
         .selected = 0x0003EE8C,
         .str = SELF(field_49ce),
-        .screen = 0x007B004D,
+        .screen = NAKA_VIEW_ID(Cheap_ViewableTable_07B, OBJ_FileRenameSMF),
         .icon = idICON_None,
     },
 
@@ -10343,9 +10459,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .prev = OBJ_DiskUtilitySMF_IvIndexSwDelay,
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
-        .win = 0x00600026,
+        .win = NAKA_VIEW_ID(Cheap_ViewableTable_060, OBJ_DiskWaitWin),
     },
 
+    /* ==== VIEW OBJ_DiskInfoWin: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .DiskInfoWin = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -10412,6 +10530,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .paintok = 0x0003EE98,
     },
 
+    /* ==== VIEW OBJ_SongNameWin: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .SongNameWin = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -10445,6 +10565,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .paintok = 0x0003EEA2,
     },
 
+    /* ==== VIEW OBJ_DiskFormatNamingWin: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .DiskFormatNamingWin = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -10516,6 +10638,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
 
     .DiskNaming_text = "DISK NAMING",
 
+    /* ==== VIEW OBJ_DiskFormatSureWin: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .DiskFormatSureWin = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -10663,6 +10787,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .func = NAKA_MAINFUNC_FmmFormatFunc,
     },
 
+    /* ==== VIEW OBJ_DiskFormatSelectWin: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .DiskFormatSelectWin = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -10748,6 +10874,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
 
     .MByteFormatHd_str = "    1.44M Byte format : 2HD",
 
+    /* ==== VIEW OBJ_FileCopy: Screen, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .FileCopy = {
         .class_ = NAKA_CLASS(Screen),
         .super = NAKA_NONE,
@@ -10903,6 +11031,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .aicok = 0x0003EECA,
     },
 
+    /* ==== VIEW OBJ_FileRenameSMF: Screen, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .FileRenameSMF = {
         .class_ = NAKA_CLASS(Screen),
         .super = NAKA_NONE,
@@ -10965,6 +11095,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .func = NAKA_APFUNC_SmfFileRename,
     },
 
+    /* ==== VIEW OBJ_DiskDeleteSureWin: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .DiskDeleteSureWin = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -11116,6 +11248,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .func = NAKA_APFUNC_DeleteNo,
     },
 
+    /* ==== VIEW OBJ_DiskDeleteSureScr: Screen, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .DiskDeleteSureScr = {
         .class_ = NAKA_CLASS(Screen),
         .super = NAKA_NONE,
@@ -11145,6 +11279,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
 
     .DeleteSure_text = "DELETE SURE",
 
+    /* ==== VIEW OBJ_DiskSaveSureScr: Screen, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .DiskSaveSureScr = {
         .class_ = NAKA_CLASS(Screen),
         .super = NAKA_NONE,
@@ -11174,6 +11310,10 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
 
     .OverwriteSure_text = ALIGNED_STRING("OVERWRITE SURE"),
 
+    /* ==== SCREEN TITLE_DKSETUP "PREFERENCES" -- "TT_DKSETUP", title id 0x7E, function NAKA_APFUNC_DefaultFunction ====
+     * Path: mode MD_DISK > "PREFERENCES"
+     * EXIT -> TITLE_DKMENU
+     * Opened from: TITLE_DKMENU ("PREFERENCES") */
     .DiskSetup = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,

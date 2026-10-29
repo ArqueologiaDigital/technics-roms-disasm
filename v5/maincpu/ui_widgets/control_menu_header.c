@@ -109,6 +109,18 @@ const ctrl_menu_header_t ctrl_menu_header_data
     __attribute__((section(".text"), used)) = {
 
     /* ─── w1: CONTAINER "CONTROL MENU" ─────────────────── */
+    /* ==== SCREEN TITLE_CTMENU -- "TT_CTMENU", title id 0x40, function NAKA_APFUNC_DefaultFunction ====
+     * What: the CONTROL menu. It is the home title of mode 4, MD_CONTROL. Control sub-pages request
+     *       it to navigate back.
+     * Path: mode MD_CONTROL
+     * Menu: "INITIAL" -> TITLE_CTINIT
+     * Menu: "OVERALL TOUCH SENSITIVITY" -> TITLE_CTTOUCH
+     * Menu: "?" -> TITLE_CTFSWAS
+     * Menu: "?" -> TITLE_CTSYSTEM
+     * Menu: "PANEL MEMORY MODE" -> TITLE_CTPMMD
+     * Menu: "MUSIC STYLE ARRANGER MODE" -> TITLE_MSAMODE
+     * Menu: "WALLPAPER SETTING" -> TITLE_CTWALLSET
+     * EXIT -> TITLE_NORMAL */
     .ControlMenu = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,

@@ -247,6 +247,10 @@ const naka_normal_mode_t naka_normal_mode_data
 
     .Normal_text = ALIGNED_STRING("NORMAL"),
 
+    /* ==== SCREEN TITLE_NORMAL "NORMAL" -- "TT_NORMAL", title id 0x1, function NAKA_APFUNC_DefaultFunction ====
+     * What: the normal play screen. It is the home title of mode 1, MD_NORMAL (0x01800001).
+     * Path: mode MD_NORMAL
+     * EXIT -> TITLE_PS */
     .normal = {
         .class_ = NAKA_CLASS(NormScreen),
         .super = NAKA_NONE,
@@ -524,7 +528,7 @@ const naka_normal_mode_t naka_normal_mode_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0001,
-        .window = 0x00010018,
+        .window = NAKA_VIEW_ID(Toshi_Viewable_NORMAL, OBJ_NakaWidget_N1),
     },
 
     .normal_IvPageOverWr_2 = {
@@ -536,7 +540,7 @@ const naka_normal_mode_t naka_normal_mode_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0002,
-        .window = 0x00010021,
+        .window = NAKA_VIEW_ID(Toshi_Viewable_NORMAL, OBJ_Toshi_NORMAL_Elem33),
     },
 
     .normal_IvPageOverWr_3 = {
@@ -548,7 +552,7 @@ const naka_normal_mode_t naka_normal_mode_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0003,
-        .window = 0x00010027,
+        .window = NAKA_VIEW_ID(Toshi_Viewable_NORMAL, OBJ_Toshi_NORMAL_Elem39),
     },
 
     .normal_IvPageOverWr_4 = {
@@ -560,7 +564,7 @@ const naka_normal_mode_t naka_normal_mode_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0004,
-        .window = 0x00010030,
+        .window = NAKA_VIEW_ID(Toshi_Viewable_NORMAL, OBJ_Toshi_NORMAL_Elem48),
     },
 
     .normal_IvPageOverWr_5 = {
@@ -572,7 +576,7 @@ const naka_normal_mode_t naka_normal_mode_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0005,
-        .window = 0x00010039,
+        .window = NAKA_VIEW_ID(Toshi_Viewable_NORMAL, OBJ_Toshi_NORMAL_Elem57),
     },
 
     .normal_IvPageOverWr_6 = {
@@ -584,7 +588,7 @@ const naka_normal_mode_t naka_normal_mode_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0006,
-        .window = 0x0001003C,
+        .window = NAKA_VIEW_ID(Toshi_Viewable_NORMAL, OBJ_Toshi_NORMAL_Elem60),
     },
 
     .bytes_0464 = { 0x47, 0x00, 0x60, 0x01, 0x01, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x16, 0x00, 0x18, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1F, 0x00, 0x1F, 0x00 },

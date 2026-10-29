@@ -2454,6 +2454,9 @@ enum NAKA_UIObjectTable_objects {
 const naka_perf_style_t naka_perf_style_data
     __attribute__((section(".text"), used)) = {
 
+    /* ==== SCREEN TITLE_FDMSP -- "TT_FDMSP", title id 0xFD, function NAKA_APFUNC_DefaultFunction ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_PS */
     .ftdemo01 = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -2485,6 +2488,8 @@ const naka_perf_style_t naka_perf_style_data
 
     .ftdemobmptop_file = "FTBMP01",
 
+    /* ==== VIEW OBJ_ftdemo02: TtlScreen, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .ftdemo02 = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -3292,6 +3297,8 @@ const naka_perf_style_t naka_perf_style_data
         .linemode = LM_RightDown,
     },
 
+    /* ==== VIEW OBJ_ftdemo03: TtlScreen, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .ftdemo03 = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -3865,6 +3872,8 @@ const naka_perf_style_t naka_perf_style_data
 
     .VariousInstruments_text = "various instruments !",
 
+    /* ==== VIEW OBJ_ftdemo04: TtlScreen, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .ftdemo04 = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -3962,6 +3971,8 @@ const naka_perf_style_t naka_perf_style_data
         .func = NAKA_APFUNC_FtLangText01S,
     },
 
+    /* ==== VIEW OBJ_ftdemo05: TtlScreen, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .ftdemo05 = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -4016,6 +4027,8 @@ const naka_perf_style_t naka_perf_style_data
         .func = NAKA_APFUNC_FtLangText04,
     },
 
+    /* ==== VIEW OBJ_ftdemo06: TtlScreen, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .ftdemo06 = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -4065,6 +4078,8 @@ const naka_perf_style_t naka_perf_style_data
 
     .ftdemobmpsoft_file = "FTBMP03",
 
+    /* ==== VIEW OBJ_ftdemo07: TtlScreen, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .ftdemo07 = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -4114,6 +4129,8 @@ const naka_perf_style_t naka_perf_style_data
         .func = NAKA_APFUNC_FtLangText06,
     },
 
+    /* ==== VIEW OBJ_ftdemo08: TtlScreen, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .ftdemo08 = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -4150,6 +4167,8 @@ const naka_perf_style_t naka_perf_style_data
         .func = NAKA_APFUNC_FtLangText07,
     },
 
+    /* ==== VIEW OBJ_ftdemo09: TtlScreen, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .ftdemo09 = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -4204,6 +4223,8 @@ const naka_perf_style_t naka_perf_style_data
         .func = NAKA_APFUNC_FtLangText09,
     },
 
+    /* ==== VIEW OBJ_ftdemo10: TtlScreen, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .ftdemo10 = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -4258,6 +4279,8 @@ const naka_perf_style_t naka_perf_style_data
         .func = NAKA_APFUNC_FtLangText11,
     },
 
+    /* ==== VIEW OBJ_ftdemo20: TtlScreen, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .ftdemo20 = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -4325,6 +4348,8 @@ const naka_perf_style_t naka_perf_style_data
 
     .ftdemobmpill_file = "FTBMP05",
 
+    /* ==== VIEW OBJ_ftdemo21: TtlScreen, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .ftdemo21 = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -4361,6 +4386,8 @@ const naka_perf_style_t naka_perf_style_data
         .func = NAKA_APFUNC_FtLangText14,
     },
 
+    /* ==== VIEW OBJ_ftdemo22: TtlScreen "BANK VIEW", the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .ftdemo22 = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -4733,6 +4760,8 @@ const naka_perf_style_t naka_perf_style_data
 
     .Page_text = ALIGNED_STRING("PAGE 2/2"),
 
+    /* ==== VIEW OBJ_ftdemo23: TtlScreen "SMF DIRECT PLAY  ", the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .ftdemo23 = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -5082,6 +5111,8 @@ const naka_perf_style_t naka_perf_style_data
         .bmp = idNext,
     },
 
+    /* ==== VIEW OBJ_ftdemo24: TtlScreen "ENTERTAINER", the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .ftdemo24 = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -5641,6 +5672,8 @@ const naka_perf_style_t naka_perf_style_data
         .color = CL_Selected,
     },
 
+    /* ==== VIEW OBJ_ftdemo25: TtlScreen, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .ftdemo25 = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -5672,6 +5705,8 @@ const naka_perf_style_t naka_perf_style_data
 
     .ftdemobmpend_file = "FTBMP06",
 
+    /* ==== VIEW OBJ_ftdemo26: TtlScreen "FADE IN/OUT SETTING", the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .ftdemo26 = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -5965,6 +6000,8 @@ const naka_perf_style_t naka_perf_style_data
         .linemode = LM_RightDown,
     },
 
+    /* ==== VIEW OBJ_ftdemo40: TtlScreen, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .ftdemo40 = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -6067,6 +6104,8 @@ const naka_perf_style_t naka_perf_style_data
 
     .AlphabeticalStyleSelect_text = "> Alphabetical style select",
 
+    /* ==== VIEW OBJ_ftdemo41: TtlScreen "STYLE EXPLORER", the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .ftdemo41 = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -6630,6 +6669,8 @@ const naka_perf_style_t naka_perf_style_data
 
     .w194_text = "2/4",
 
+    /* ==== VIEW OBJ_ftdemo42: TtlScreen "STYLE EXPLORER", the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .ftdemo42 = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -7193,6 +7234,8 @@ const naka_perf_style_t naka_perf_style_data
 
     .w225_text = "2/4",
 
+    /* ==== VIEW OBJ_ftdemo44: TtlScreen "STYLE EXPLORER", the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .ftdemo44 = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -7534,6 +7577,8 @@ const naka_perf_style_t naka_perf_style_data
 
     .CategoryRockPop_text = "CATEGORY : Rock & Pop",
 
+    /* ==== VIEW OBJ_ftdemo45: TtlScreen "STYLE EXPLORER", the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .ftdemo45 = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -7875,6 +7920,8 @@ const naka_perf_style_t naka_perf_style_data
 
     .CategoryRockPop_text_2 = "CATEGORY : Rock & Pop",
 
+    /* ==== VIEW OBJ_ftdemo46: TtlScreen "ALPHABETICAL EXPLORER", the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .ftdemo46 = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -8216,6 +8263,8 @@ const naka_perf_style_t naka_perf_style_data
         .linemode = LM_RightDown,
     },
 
+    /* ==== VIEW OBJ_ftdemo47: TtlScreen "ALPHABETICAL EXPLORER", the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .ftdemo47 = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -8527,6 +8576,8 @@ const naka_perf_style_t naka_perf_style_data
         .linemode = LM_RightDown,
     },
 
+    /* ==== VIEW OBJ_ftdemo48: TtlScreen "ALPHABETICAL EXPLORER", the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .ftdemo48 = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -8838,6 +8889,8 @@ const naka_perf_style_t naka_perf_style_data
         .linemode = LM_RightDown,
     },
 
+    /* ==== VIEW OBJ_ftdemo43: TtlScreen "STYLE EXPLORER", the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .ftdemo43 = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,

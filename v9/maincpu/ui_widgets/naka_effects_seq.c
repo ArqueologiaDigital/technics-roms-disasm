@@ -3548,6 +3548,10 @@ const naka_effects_seq_t naka_effects_seq_data
 
     .Kubo_FunctionNameTable_408_EndName = "\x00\xFF",
 
+    /* ==== SCREEN TITLE_SDREVSET "REVERB" -- "TT_SDREVSET", title id 0xA, function NAKA_MAINFUNC_SdRevsetTitleFunc ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_SDMENU
+     * Opened from: an untitled view ("REVERB") */
     .Reverb_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -3734,6 +3738,10 @@ const naka_effects_seq_t naka_effects_seq_data
         .rect = NAKA_XYWH(0, 32, 32, 32),
     },
 
+    /* ==== SCREEN TITLE_SDDSPEFF "DSP EFFECT" -- "TT_SDDSPEFF", title id 0xB, function NAKA_MAINFUNC_SdDspeffTitleFunc ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_SDMENU
+     * Opened from: an untitled view ("DSP EFFECT") */
     .DspEffect_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -3920,6 +3928,10 @@ const naka_effects_seq_t naka_effects_seq_data
         .rect = NAKA_XYWH(0, 32, 32, 32),
     },
 
+    /* ==== SCREEN TITLE_SDEQUALIZER "EQUALIZER" -- "TT_SDEQUALIZER", title id 0xC, function NAKA_APFUNC_DefaultFunction ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_SDMENU
+     * Opened from: an untitled view ("EQUALIZER") */
     .Equalizer_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -4487,6 +4499,10 @@ const naka_effects_seq_t naka_effects_seq_data
 
     .EqOnOff_stron = "EQ:ON",
 
+    /* ==== SCREEN TITLE_SDACCILL "ACOUSTIC ILLUSION" -- "TT_SDACCILL", title id 0xE, function NAKA_MAINFUNC_SdAccillTitleFunc ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_SDMENU
+     * Opened from: an untitled view ("ACOUSTIC ILLUSION") */
     .AcousticIllusion_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -4663,6 +4679,12 @@ const naka_effects_seq_t naka_effects_seq_data
         .time = IT_Default,
     },
 
+    /* ==== SCREEN TITLE_SQMENU "SEQUENCER MENU" -- "TT_SQMENU", title id 0x80, function NAKA_APFUNC_DefaultFunction ====
+     * What: the SEQUENCER menu. It is the home title of mode 8, MD_SEQ.
+     * Path: mode MD_SEQ
+     * Menu: "CREATE" -> TITLE_SQCMENU
+     * Menu: "PANEL WRITE" -> TITLE_SQPNLWRM
+     * EXIT -> TITLE_NORMAL */
     .SequencerMenu_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -4876,6 +4898,10 @@ const naka_effects_seq_t naka_effects_seq_data
 
     .PanelWrite_text = "PANEL WRITE",
 
+    /* ==== SCREEN TITLE_SQPLAY "SEQUENCER PLAY" -- "TT_SQPLAY", title id 0x81, function NAKA_MAINFUNC_SqPlayTitleFunc ====
+     * What: the sequencer play page. It is the home title of mode 0xA, MD_SEQ_PLAY.
+     * Path: mode MD_SEQ_PLAY
+     * EXIT -> TITLE_NORMAL */
     .SequencerPlay_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -5155,6 +5181,8 @@ const naka_effects_seq_t naka_effects_seq_data
         ._pad_35 = { 0x00 },
     },
 
+    /* ==== VIEW OBJ_SngSelWin1: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .SngSelWin1 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -5227,6 +5255,8 @@ const naka_effects_seq_t naka_effects_seq_data
 
     .Song_text_2 = ALIGNED_STRING("SONG"),
 
+    /* ==== VIEW OBJ_SngSelWin2: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .SngSelWin2 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -5314,6 +5344,9 @@ const naka_effects_seq_t naka_effects_seq_data
         .rect = NAKA_XYWH(60, 84, 200, 48),
     },
 
+    /* ==== SCREEN TITLE_SQCYCPLY "CYCLE PLAY" -- "TT_SQCYCPLY", title id 0x82, function NAKA_APFUNC_DefaultFunction ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_SQPLAY */
     .CyclePlay_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -5465,6 +5498,11 @@ const naka_effects_seq_t naka_effects_seq_data
 
     .Value_text_3 = "VALUE",
 
+    /* ==== SCREEN TITLE_SQEASYREC "EASY RECORD" -- "TT_SQEASYREC", title id 0x83, function NAKA_APFUNC_DefaultFunction ====
+     * What: the sequencer easy-record page. It is the home title of mode 9, MD_SEQ_EREC.
+     * Path: mode MD_SEQ_EREC
+     * Menu: "NAMING" -> TITLE_SQEASYNAME
+     * EXIT -> TITLE_PS */
     .EasyRecord_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -5721,6 +5759,19 @@ const naka_effects_seq_t naka_effects_seq_data
         .func = NAKA_APFUNC_StsEasyRec2Check,
     },
 
+    /* ==== SCREEN TITLE_SQCMENU "CREATE" -- "TT_SQCMENU", title id 0x84, function NAKA_APFUNC_DefaultFunction ====
+     * What: a sequencer sub-menu. The record, punch, track-select, panel-write and song-copy pages
+     *       return to it.
+     * Path: mode MD_SEQ > "CREATE"
+     * Menu: "TRACK ASSIGN" -> TITLE_SQTRAS
+     * Menu: "PANEL WRITE" -> TITLE_SQPNLWR
+     * Menu: "SONG SELECT /NAMING" -> TITLE_SQSNGSEL
+     * Menu: "SONG CLEAR" -> TITLE_SQSNGCLR
+     * Menu: "SONG/TRACK COPY" -> TITLE_SQSNGCPC
+     * Menu: "AFTER TOUCH SET" -> TITLE_SQAFTSET
+     * Menu: "PUNCH RECORD" -> TITLE_SQPUNCH
+     * EXIT -> TITLE_SQMENU
+     * Opened from: TITLE_SQMENU ("CREATE") */
     .Create_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -5946,6 +5997,9 @@ const naka_effects_seq_t naka_effects_seq_data
 
     .PunchRecord_text = ALIGNED_STRING("PUNCH RECORD"),
 
+    /* ==== SCREEN TITLE_SQREALREC "REALTIME RECORD" -- "TT_SQREALREC", title id 0x85, function NAKA_MAINFUNC_SqRealRecTitleFunc ====
+     * Path: mode MD_SEQ_REAL
+     * EXIT -> TITLE_SQCMENU */
     .RealtimeRecord_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -6257,6 +6311,8 @@ const naka_effects_seq_t naka_effects_seq_data
         .rect = NAKA_XYWH(0, 0, 32, 32),
     },
 
+    /* ==== VIEW OBJ_CycClrSw: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .CycClrSw = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -6306,6 +6362,9 @@ const naka_effects_seq_t naka_effects_seq_data
 
     .Clear_text = "CLEAR",
 
+    /* ==== SCREEN TITLE_SQCYCREC "REALTIME RECORD" -- "TT_SQCYCREC", title id 0x86, function NAKA_APFUNC_DefaultFunction ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_SQREALREC */
     .RealtimeRecord_TtlScreen_2 = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -6511,6 +6570,11 @@ const naka_effects_seq_t naka_effects_seq_data
 
     .v86_e10_caption = "CYCLE :",
 
+    /* ==== SCREEN TITLE_SQPUNCH "PUNCH RECORD" -- "TT_SQPUNCH", title id 0x87, function NAKA_MAINFUNC_SqPunchTitleFunc ====
+     * What: the sequencer punch-in record page.
+     * Path: mode MD_SEQ > "CREATE" > "PUNCH RECORD"
+     * EXIT -> TITLE_SQCMENU
+     * Opened from: TITLE_SQCMENU ("PUNCH RECORD") */
     .PunchRecord_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -6890,6 +6954,10 @@ const naka_effects_seq_t naka_effects_seq_data
 
     .Punch_text = "PUNCH",
 
+    /* ==== SCREEN TITLE_SQPUNCHM "AUTO PUNCH RECORD" -- "TT_SQPUNCHM", title id 0x88, function NAKA_MAINFUNC_SqPunchmTitleFunc ====
+     * What: the auto-punch variant of the punch-in page.
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_SQPUNCH */
     .AutoPunchRecord_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -7107,6 +7175,17 @@ const naka_effects_seq_t naka_effects_seq_data
 
     .AutoPunchRecord_text_2 = "AUTO PUNCH RECORD",
 
+    /* ==== SCREEN TITLE_SQPNLWR "PANEL WRITE" -- "TT_SQPNLWR", title id 0x8D, function NAKA_APFUNC_DefaultFunction ====
+     * What: the sequencer panel-write page. Its exit returns to TT_SQCMENU.
+     * Path: mode MD_SEQ > "CREATE" > "PANEL WRITE"
+     * EXIT -> TITLE_SQCMENU
+     * Opened from: TITLE_SQCMENU ("PANEL WRITE")
+    /* ==== SCREEN TITLE_SQPNLWRM "PANEL WRITE" -- "TT_SQPNLWRM", title id 0xAA, function NAKA_APFUNC_DefaultFunction ====
+     * What: the panel-write page reached from TT_SQMENU. It reuses TT_SQPNLWR's view 0x008D0000,
+     *       and its exit returns to TT_SQMENU.
+     * Path: mode MD_SEQ > "PANEL WRITE"
+     * EXIT -> TITLE_SQCMENU
+     * Opened from: TITLE_SQMENU ("PANEL WRITE") */
     .PanelWrite_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -7172,6 +7251,11 @@ const naka_effects_seq_t naka_effects_seq_data
         .rect = NAKA_XYWH(0, 0, 32, 32),
     },
 
+    /* ==== SCREEN TITLE_SQSNGCLR "SONG CLEAR" -- "TT_SQSNGCLR", title id 0x90, function NAKA_MAINFUNC_SqSoclTitleFunc ====
+     * What: the sequencer song-clear page.
+     * Path: mode MD_SEQ > "CREATE" > "SONG CLEAR"
+     * EXIT -> TITLE_SQCMENU
+     * Opened from: TITLE_SQCMENU ("SONG CLEAR") */
     .SongClear_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -7308,6 +7392,8 @@ const naka_effects_seq_t naka_effects_seq_data
         .func = NAKA_APFUNC_SureJudgeFunc,
     },
 
+    /* ==== VIEW OBJ_SoclSureDisp: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .SoclSureDisp = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -7352,7 +7438,7 @@ const naka_effects_seq_t naka_effects_seq_data
         .editsw = ES_Right4,
         .selected = 0x0003DFD4,
         .str = SELF(NO_str),
-        .screen = 0x00900000,
+        .screen = NAKA_VIEW_ID(Kubo_ViewableTable_090, OBJ_SongClear_TtlScreen),
         .icon = idICON_None,
     },
 
@@ -7385,7 +7471,7 @@ const naka_effects_seq_t naka_effects_seq_data
         .prev = OBJ_SoclSureDisp_AcFuncEditSw,
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
-        .screen = 0x00900000,
+        .screen = NAKA_VIEW_ID(Kubo_ViewableTable_090, OBJ_SongClear_TtlScreen),
     },
 
     .SoclSureDisp_AcLanguageText = {
@@ -7442,6 +7528,18 @@ const naka_effects_seq_t naka_effects_seq_data
         .func = NAKA_APFUNC_AttSongClrCheck,
     },
 
+    /* ==== SCREEN TITLE_SQSNGCP "SONG/TRACK COPY" -- "TT_SQSNGCP", title id 0x91, function NAKA_MAINFUNC_SqSngcpTitleFunc ====
+     * What: the sequencer song-copy page, as entered from the edit menu. Its exit returns to
+     *       TT_SQEMENU.
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_SQCMENU
+     * Opened from: an untitled view ("SONG/TRACK COPY")
+    /* ==== SCREEN TITLE_SQSNGCPC "SONG/TRACK COPY" -- "TT_SQSNGCPC", title id 0xA8, function NAKA_MAINFUNC_SqSngcpTitleFunc ====
+     * What: the song-copy page reached from TT_SQCMENU. It reuses TT_SQSNGCP's view 0x00910000, and
+     *       its exit returns to TT_SQCMENU.
+     * Path: mode MD_SEQ > "CREATE" > "SONG/TRACK COPY"
+     * EXIT -> TITLE_SQCMENU
+     * Opened from: TITLE_SQCMENU ("SONG/TRACK COPY") */
     .SongTrackCopy_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -7611,6 +7709,8 @@ const naka_effects_seq_t naka_effects_seq_data
         .func = NAKA_APFUNC_SureJudgeFunc,
     },
 
+    /* ==== VIEW OBJ_SngCpSureDisp: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .SngCpSureDisp = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -7679,7 +7779,7 @@ const naka_effects_seq_t naka_effects_seq_data
         .editsw = ES_Right4,
         .selected = 0x0003DFE2,
         .str = SELF(NO_str_2),
-        .screen = 0x00910000,
+        .screen = NAKA_VIEW_ID(Kubo_ViewableTable_091, OBJ_SongTrackCopy_TtlScreen),
         .icon = idICON_None,
     },
 
@@ -7693,7 +7793,7 @@ const naka_effects_seq_t naka_effects_seq_data
         .prev = OBJ_NO_AcScreenMenu_2,
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(32, 0, 32, 32),
-        .screen = 0x00910000,
+        .screen = NAKA_VIEW_ID(Kubo_ViewableTable_091, OBJ_SongTrackCopy_TtlScreen),
     },
 
     .SngCpSureDisp_AcFuncEditSw = {
@@ -7733,6 +7833,10 @@ const naka_effects_seq_t naka_effects_seq_data
         .func = NAKA_APFUNC_AttAreYouSureCheck,
     },
 
+    /* ==== SCREEN TITLE_SQEMENU "EDIT" -- "TT_SQEMENU", title id 0x93, function NAKA_APFUNC_DefaultFunction ====
+     * What: the sequencer EDIT menu. It is the home title of mode 0xC, MD_SEQ_EDIT.
+     * Path: mode MD_SEQ_EDIT
+     * EXIT -> TITLE_SQMENU */
     .Edit_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -7760,7 +7864,7 @@ const naka_effects_seq_t naka_effects_seq_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0001,
-        .window = 0x00930006,
+        .window = NAKA_VIEW_ID(Kubo_ViewableTable_093, OBJ_SQEMENU_1),
     },
 
     .EdMenuPage = {
@@ -7788,7 +7892,7 @@ const naka_effects_seq_t naka_effects_seq_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(32, 0, 32, 32),
         .page = 0x0002,
-        .window = 0x00930011,
+        .window = NAKA_VIEW_ID(Kubo_ViewableTable_093, OBJ_SQEMENU_2),
     },
 
     .Edit_IvExitMode = {
@@ -7813,6 +7917,8 @@ const naka_effects_seq_t naka_effects_seq_data
         .func = NAKA_APFUNC_EdMenuPageFunc,
     },
 
+    /* ==== VIEW OBJ_SQEMENU_1: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .SQEMENU_1 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -8058,6 +8164,8 @@ const naka_effects_seq_t naka_effects_seq_data
 
     .AdvanceDelay_text = "ADVANCE/DELAY",
 
+    /* ==== VIEW OBJ_SQEMENU_2: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .SQEMENU_2 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -8216,6 +8324,10 @@ const naka_effects_seq_t naka_effects_seq_data
         .linemode = LM_RightUp,
     },
 
+    /* ==== SCREEN TITLE_SQNOTESEL "NOTE EDIT  " -- "TT_SQNOTESEL", title id 0x94, function NAKA_MAINFUNC_SqNoteSelTitleFunc ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_SQEMENU
+     * Opened from: an untitled view ("NOTE EDIT") */
     .NoteEdit_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -8277,6 +8389,11 @@ const naka_effects_seq_t naka_effects_seq_data
         .func = NAKA_APFUNC_StsNtDrEditCheck,
     },
 
+    /* ==== SCREEN TITLE_SQNOTEEDT "NOTE EDIT" -- "TT_SQNOTEEDT", title id 0x95, function NAKA_MAINFUNC_SqNoteEdtTitleFunc ====
+     * What: the sequencer note-edit page. Grid and box code shared with another edit title picks
+     *       its layout coordinates by whether ...
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_SQNOTESEL */
     .NoteEdit_TtlScreen_2 = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -8710,6 +8827,9 @@ const naka_effects_seq_t naka_effects_seq_data
         .style = SS_Right2,
     },
 
+    /* ==== SCREEN TITLE_SQNOTECYCP "CYCLE PLAY" -- "TT_SQNOTECYCP", title id 0x96, function NAKA_MAINFUNC_SqNoteCycpTitleFunc ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_SQNOTEEDT */
     .CyclePlay_TtlScreen_2 = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -8861,6 +8981,10 @@ const naka_effects_seq_t naka_effects_seq_data
 
     .v96_e7_caption = "CYCLE END MEASURE   :",
 
+    /* ==== SCREEN TITLE_SQDRMSEL "DRUM EDIT  " -- "TT_SQDRMSEL", title id 0x97, function NAKA_MAINFUNC_SqDrmSelTitleFunc ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_SQEMENU
+     * Opened from: an untitled view ("DRUM EDIT") */
     .DrumEdit_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -8922,6 +9046,9 @@ const naka_effects_seq_t naka_effects_seq_data
         .func = NAKA_APFUNC_StsNtDrEditCheck,
     },
 
+    /* ==== SCREEN TITLE_SQDRMEDT "DRUM EDIT" -- "TT_SQDRMEDT", title id 0x98, function NAKA_MAINFUNC_SqDrmEdtTitleFunc ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_SQDRMSEL */
     .DrumEdit_TtlScreen_2 = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -9337,6 +9464,9 @@ const naka_effects_seq_t naka_effects_seq_data
         .style = SS_Right2,
     },
 
+    /* ==== SCREEN TITLE_SQDRMCYCP "CYCLE PLAY" -- "TT_SQDRMCYCP", title id 0x99, function NAKA_MAINFUNC_SqDrmCycpTitleFunc ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_SQDRMEDT */
     .CyclePlay_TtlScreen_3 = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -9488,6 +9618,12 @@ const naka_effects_seq_t naka_effects_seq_data
 
     .v99_e7_caption = "CYCLE END MEASURE   :",
 
+    /* ==== SCREEN TITLE_SQTRKCLR "TRACK CLEAR" -- "TT_SQTRKCLR", title id 0x9A, function NAKA_MAINFUNC_SqTrclTitleFunc ====
+     * What: the sequencer track-clear page. It is also the first of the 15 titles 0x9A..0xA8 that
+     *       SureJudge_ShowSureDisp indexes by ...
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_SQEMENU
+     * Opened from: an untitled view ("TRACK CLEAR") */
     .TrackClear_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -9581,6 +9717,8 @@ const naka_effects_seq_t naka_effects_seq_data
         .func = NAKA_APFUNC_SureJudgeFunc,
     },
 
+    /* ==== VIEW OBJ_TrkClrSureDisp: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .TrkClrSureDisp = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -9632,7 +9770,7 @@ const naka_effects_seq_t naka_effects_seq_data
         .editsw = ES_Right3,
         .selected = 0x0003E046,
         .str = SELF(NO_str_3),
-        .screen = 0x009A0000,
+        .screen = NAKA_VIEW_ID(Kubo_ViewableTable_09A, OBJ_TrackClear_TtlScreen),
         .icon = idICON_None,
     },
 
@@ -9659,7 +9797,7 @@ const naka_effects_seq_t naka_effects_seq_data
         .prev = OBJ_TrkClrSureDisp_VwBox,
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(32, 0, 32, 32),
-        .screen = 0x009A0000,
+        .screen = NAKA_VIEW_ID(Kubo_ViewableTable_09A, OBJ_TrackClear_TtlScreen),
     },
 
     .TrkClrSureDisp_AcLanguageText = {
@@ -9716,6 +9854,10 @@ const naka_effects_seq_t naka_effects_seq_data
         .func = NAKA_APFUNC_AttTrkClrCheck,
     },
 
+    /* ==== SCREEN TITLE_SQTRKMRG "TRACK MERGE" -- "TT_SQTRKMRG", title id 0x9B, function NAKA_MAINFUNC_SqTrmgTitleFunc ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_SQEMENU
+     * Opened from: an untitled view ("TRACK MERGE") */
     .TrackMerge_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -9953,6 +10095,8 @@ const naka_effects_seq_t naka_effects_seq_data
         .func = NAKA_APFUNC_SureJudgeFunc,
     },
 
+    /* ==== VIEW OBJ_TrkMrgSureDisp: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .TrkMrgSureDisp = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -10004,7 +10148,7 @@ const naka_effects_seq_t naka_effects_seq_data
         .editsw = ES_Right4,
         .selected = 0x0003E05A,
         .str = SELF(NO_str_4),
-        .screen = 0x009B0000,
+        .screen = NAKA_VIEW_ID(Kubo_ViewableTable_09B, OBJ_TrackMerge_TtlScreen),
         .icon = idICON_None,
     },
 
@@ -10018,7 +10162,7 @@ const naka_effects_seq_t naka_effects_seq_data
         .prev = OBJ_NO_AcScreenMenu_4,
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
-        .screen = 0x009B0000,
+        .screen = NAKA_VIEW_ID(Kubo_ViewableTable_09B, OBJ_TrackMerge_TtlScreen),
     },
 
     .TrkMrgSureDisp_Box = {
@@ -10063,6 +10207,10 @@ const naka_effects_seq_t naka_effects_seq_data
         .func = NAKA_APFUNC_AttAreYouSureCheck,
     },
 
+    /* ==== SCREEN TITLE_SQQTZ "QUANTIZE" -- "TT_SQQTZ", title id 0x9C, function NAKA_MAINFUNC_SqQtzTitleFunc ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_SQEMENU
+     * Opened from: an untitled view ("QUANTIZE") */
     .Quantize_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -10327,6 +10475,8 @@ const naka_effects_seq_t naka_effects_seq_data
         .func = NAKA_APFUNC_SureJudgeFunc,
     },
 
+    /* ==== VIEW OBJ_QtzSureDisp: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .QtzSureDisp = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -10359,7 +10509,7 @@ const naka_effects_seq_t naka_effects_seq_data
         .editsw = ES_Right4,
         .selected = 0x0003E074,
         .str = SELF(NO_str_5),
-        .screen = 0x009C0000,
+        .screen = NAKA_VIEW_ID(Kubo_ViewableTable_09C, OBJ_Quantize_TtlScreen),
         .icon = idICON_None,
     },
 
@@ -10392,7 +10542,7 @@ const naka_effects_seq_t naka_effects_seq_data
         .prev = OBJ_QtzSureDisp_AcFuncEditSw,
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
-        .screen = 0x009C0000,
+        .screen = NAKA_VIEW_ID(Kubo_ViewableTable_09C, OBJ_Quantize_TtlScreen),
     },
 
     .QtzSureDisp_Box = {
@@ -10437,6 +10587,10 @@ const naka_effects_seq_t naka_effects_seq_data
         .func = NAKA_APFUNC_AttAreYouSureCheck,
     },
 
+    /* ==== SCREEN TITLE_SQTRNS "TRANSPOSE" -- "TT_SQTRNS", title id 0x9D, function NAKA_MAINFUNC_SqTrnsTitleFunc ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_SQEMENU
+     * Opened from: an untitled view ("TRANSPOSE") */
     .Transpose_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -10625,6 +10779,8 @@ const naka_effects_seq_t naka_effects_seq_data
         .func = NAKA_APFUNC_SureJudgeFunc,
     },
 
+    /* ==== VIEW OBJ_TrnsSureDisp: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .TrnsSureDisp = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -10657,7 +10813,7 @@ const naka_effects_seq_t naka_effects_seq_data
         .editsw = ES_Right4,
         .selected = 0x0003E08A,
         .str = SELF(NO_str_6),
-        .screen = 0x009D0000,
+        .screen = NAKA_VIEW_ID(Kubo_ViewableTable_09D, OBJ_Transpose_TtlScreen),
         .icon = idICON_None,
     },
 
@@ -10690,7 +10846,7 @@ const naka_effects_seq_t naka_effects_seq_data
         .prev = OBJ_TrnsSureDisp_AcFuncEditSw,
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
-        .screen = 0x009D0000,
+        .screen = NAKA_VIEW_ID(Kubo_ViewableTable_09D, OBJ_Transpose_TtlScreen),
     },
 
     .TrnsSureDisp_Box = {
@@ -10723,6 +10879,10 @@ const naka_effects_seq_t naka_effects_seq_data
         .func = NAKA_APFUNC_AttAreYouSureCheck,
     },
 
+    /* ==== SCREEN TITLE_SQVELOCNG "VELOCITY CHANGE" -- "TT_SQVELOCNG", title id 0x9E, function NAKA_MAINFUNC_SqVcngTitleFunc ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_SQEMENU
+     * Opened from: an untitled view ("VELOCITY CHANGE") */
     .VelocityChange_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -10911,6 +11071,8 @@ const naka_effects_seq_t naka_effects_seq_data
         .func = NAKA_APFUNC_SureJudgeFunc,
     },
 
+    /* ==== VIEW OBJ_VeloSureDisp: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .VeloSureDisp = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -10943,7 +11105,7 @@ const naka_effects_seq_t naka_effects_seq_data
         .editsw = ES_Right4,
         .selected = 0x0003E0A0,
         .str = SELF(NO_str_7),
-        .screen = 0x009E0000,
+        .screen = NAKA_VIEW_ID(Kubo_ViewableTable_09E, OBJ_VelocityChange_TtlScreen),
         .icon = idICON_None,
     },
 
@@ -10976,7 +11138,7 @@ const naka_effects_seq_t naka_effects_seq_data
         .prev = OBJ_VeloSureDisp_AcFuncEditSw,
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
-        .screen = 0x009E0000,
+        .screen = NAKA_VIEW_ID(Kubo_ViewableTable_09E, OBJ_VelocityChange_TtlScreen),
     },
 
     .VeloSureDisp_Box = {
@@ -11009,6 +11171,10 @@ const naka_effects_seq_t naka_effects_seq_data
         .func = NAKA_APFUNC_AttAreYouSureCheck,
     },
 
+    /* ==== SCREEN TITLE_SQNOTECNG "NOTE CHANGE" -- "TT_SQNOTECNG", title id 0x9F, function NAKA_MAINFUNC_SqNcngTitleFunc ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_SQEMENU
+     * Opened from: an untitled view ("NOTE CHANGE") */
     .NoteChange_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -11310,6 +11476,8 @@ const naka_effects_seq_t naka_effects_seq_data
         .func = NAKA_APFUNC_SureJudgeFunc,
     },
 
+    /* ==== VIEW OBJ_NoteSureDisp: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .NoteSureDisp = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -11342,7 +11510,7 @@ const naka_effects_seq_t naka_effects_seq_data
         .editsw = ES_Right4,
         .selected = 0x0003E0B8,
         .str = SELF(NO_str_8),
-        .screen = 0x009F0000,
+        .screen = NAKA_VIEW_ID(Kubo_ViewableTable_09F, OBJ_NoteChange_TtlScreen),
         .icon = idICON_None,
     },
 
@@ -11375,7 +11543,7 @@ const naka_effects_seq_t naka_effects_seq_data
         .prev = OBJ_NoteSureDisp_AcFuncEditSw,
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
-        .screen = 0x009F0000,
+        .screen = NAKA_VIEW_ID(Kubo_ViewableTable_09F, OBJ_NoteChange_TtlScreen),
     },
 
     .NoteSureDisp_Box = {
@@ -11420,6 +11588,10 @@ const naka_effects_seq_t naka_effects_seq_data
         .func = NAKA_APFUNC_AttAreYouSureCheck,
     },
 
+    /* ==== SCREEN TITLE_SQADVDLY "ADVANCE/DELAY" -- "TT_SQADVDLY", title id 0xA0, function NAKA_MAINFUNC_SqAdlyTitleFunc ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_SQEMENU
+     * Opened from: an untitled view ("ADVANCE/DELAY") */
     .AdvanceDelay_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -11608,6 +11780,8 @@ const naka_effects_seq_t naka_effects_seq_data
         .func = NAKA_APFUNC_SureJudgeFunc,
     },
 
+    /* ==== VIEW OBJ_AdvSureDisp: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .AdvSureDisp = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -11659,7 +11833,7 @@ const naka_effects_seq_t naka_effects_seq_data
         .editsw = ES_Right4,
         .selected = 0x0003E0CE,
         .str = SELF(NO_str_9),
-        .screen = 0x00A00000,
+        .screen = NAKA_VIEW_ID(Kubo_ViewableTable_0A0, OBJ_AdvanceDelay_TtlScreen),
         .icon = idICON_None,
     },
 
@@ -11673,7 +11847,7 @@ const naka_effects_seq_t naka_effects_seq_data
         .prev = OBJ_NO_AcScreenMenu_9,
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
-        .screen = 0x00A00000,
+        .screen = NAKA_VIEW_ID(Kubo_ViewableTable_0A0, OBJ_AdvanceDelay_TtlScreen),
     },
 
     .AdvSureDisp_Box = {
@@ -11706,6 +11880,10 @@ const naka_effects_seq_t naka_effects_seq_data
         .func = NAKA_APFUNC_AttAreYouSureCheck,
     },
 
+    /* ==== SCREEN TITLE_SQMERS "MEASURE ERASE" -- "TT_SQMERS", title id 0xA1, function NAKA_MAINFUNC_SqMersTitleFunc ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_SQEMENU
+     * Opened from: an untitled view ("ERASE") */
     .MeasureErase_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -11894,6 +12072,8 @@ const naka_effects_seq_t naka_effects_seq_data
         .func = NAKA_APFUNC_SureJudgeFunc,
     },
 
+    /* ==== VIEW OBJ_MersSureDisp: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .MersSureDisp = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -11926,7 +12106,7 @@ const naka_effects_seq_t naka_effects_seq_data
         .editsw = ES_Right4,
         .selected = 0x0003E0E4,
         .str = SELF(NO_str_10),
-        .screen = 0x00A10000,
+        .screen = NAKA_VIEW_ID(Kubo_ViewableTable_0A1, OBJ_MeasureErase_TtlScreen),
         .icon = idICON_None,
     },
 
@@ -11959,7 +12139,7 @@ const naka_effects_seq_t naka_effects_seq_data
         .prev = OBJ_MersSureDisp_AcFuncEditSw,
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
-        .screen = 0x00A10000,
+        .screen = NAKA_VIEW_ID(Kubo_ViewableTable_0A1, OBJ_MeasureErase_TtlScreen),
     },
 
     .MersSureDisp_Box = {
@@ -11992,6 +12172,10 @@ const naka_effects_seq_t naka_effects_seq_data
         .func = NAKA_APFUNC_AttAreYouSureCheck,
     },
 
+    /* ==== SCREEN TITLE_SQMCP "MEASURE COPY" -- "TT_SQMCP", title id 0xA2, function NAKA_MAINFUNC_SqMcpyTitleFunc ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_SQEMENU
+     * Opened from: an untitled view ("COPY") */
     .MeasureCopy_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -12141,6 +12325,8 @@ const naka_effects_seq_t naka_effects_seq_data
         .func = NAKA_APFUNC_SureJudgeFunc,
     },
 
+    /* ==== VIEW OBJ_McpSureDisp: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .McpSureDisp = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -12200,7 +12386,7 @@ const naka_effects_seq_t naka_effects_seq_data
         .prev = OBJ_McpSureDisp_Box_3,
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
-        .screen = 0x00A20000,
+        .screen = NAKA_VIEW_ID(Kubo_ViewableTable_0A2, OBJ_MeasureCopy_TtlScreen),
     },
 
     .McpSureDisp_AcFuncEditSw = {
@@ -12257,12 +12443,16 @@ const naka_effects_seq_t naka_effects_seq_data
         .editsw = ES_Right4,
         .selected = 0x0003E0F2,
         .str = SELF(NO_str_11),
-        .screen = 0x00A20000,
+        .screen = NAKA_VIEW_ID(Kubo_ViewableTable_0A2, OBJ_MeasureCopy_TtlScreen),
         .icon = idICON_None,
     },
 
     .NO_str_11 = ALIGNED_STRING("NO"),
 
+    /* ==== SCREEN TITLE_SQMDEL "MEASURE DELETE" -- "TT_SQMDEL", title id 0xA3, function NAKA_MAINFUNC_SqMdelTitleFunc ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_SQEMENU
+     * Opened from: an untitled view ("DELETE") */
     .MeasureDelete_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -12428,6 +12618,8 @@ const naka_effects_seq_t naka_effects_seq_data
         .func = NAKA_APFUNC_SureJudgeFunc,
     },
 
+    /* ==== VIEW OBJ_MdelSureDisp: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .MdelSureDisp = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -12460,7 +12652,7 @@ const naka_effects_seq_t naka_effects_seq_data
         .editsw = ES_Right4,
         .selected = 0x0003E106,
         .str = SELF(NO_str_12),
-        .screen = 0x00A30000,
+        .screen = NAKA_VIEW_ID(Kubo_ViewableTable_0A3, OBJ_MeasureDelete_TtlScreen),
         .icon = idICON_None,
     },
 
@@ -12493,7 +12685,7 @@ const naka_effects_seq_t naka_effects_seq_data
         .prev = OBJ_MdelSureDisp_AcFuncEditSw,
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
-        .screen = 0x00A30000,
+        .screen = NAKA_VIEW_ID(Kubo_ViewableTable_0A3, OBJ_MeasureDelete_TtlScreen),
     },
 
     .MdelSureDisp_Box = {
@@ -12526,6 +12718,10 @@ const naka_effects_seq_t naka_effects_seq_data
         .func = NAKA_APFUNC_AttAreYouSureCheck,
     },
 
+    /* ==== SCREEN TITLE_SQMINS "MEASURE INSERT" -- "TT_SQMINS", title id 0xA4, function NAKA_MAINFUNC_SqMinsTitleFunc ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_SQEMENU
+     * Opened from: an untitled view ("INSERT") */
     .MeasureInsert_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -12675,6 +12871,8 @@ const naka_effects_seq_t naka_effects_seq_data
         .func = NAKA_APFUNC_SureJudgeFunc,
     },
 
+    /* ==== VIEW OBJ_MinsSureDisp: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .MinsSureDisp = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -12734,7 +12932,7 @@ const naka_effects_seq_t naka_effects_seq_data
         .prev = OBJ_MinsSureDisp_Box_3,
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
-        .screen = 0x00A40000,
+        .screen = NAKA_VIEW_ID(Kubo_ViewableTable_0A4, OBJ_MeasureInsert_TtlScreen),
     },
 
     .MinsSureDisp_AcFuncEditSw = {
@@ -12791,12 +12989,15 @@ const naka_effects_seq_t naka_effects_seq_data
         .editsw = ES_Right4,
         .selected = 0x0003E114,
         .str = SELF(NO_str_13),
-        .screen = 0x00A40000,
+        .screen = NAKA_VIEW_ID(Kubo_ViewableTable_0A4, OBJ_MeasureInsert_TtlScreen),
         .icon = idICON_None,
     },
 
     .NO_str_13 = ALIGNED_STRING("NO"),
 
+    /* ==== SCREEN TITLE_SQMETBAL "METRONOME BALANCE" -- "TT_SQMETBAL", title id 0xAB, function NAKA_APFUNC_DefaultFunction ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_PS */
     .MetronomeBalance_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -12830,6 +13031,14 @@ const naka_effects_seq_t naka_effects_seq_data
         .editsw = ES_Bottom4,
     },
 
+    /* ==== SCREEN TITLE_ETMENU "ENTERTAINER" -- "TT_ETMENU", title id 0xD6, function NAKA_MAINFUNC_EtmenuTitleFunc ====
+     * What: the Entertainer menu. It is the home title of mode 7, MD_ENTERTAINER (0x01800007).
+     * Path: mode MD_ENTERTAINER
+     * Menu: "VOCALIST WORKSTATION" -> TITLE_ETVOCAL
+     * Menu: "FADE IN/OUT SETTING" -> TITLE_ETFADEIN
+     * Menu: "MIXER" -> TITLE_SDMIXER
+     * Menu: "DISK LOAD" -> TITLE_DKLD
+     * EXIT -> TITLE_PS */
     .EnterTainerScr = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -13036,6 +13245,10 @@ const naka_effects_seq_t naka_effects_seq_data
 
     .Panic_text = "PANIC",
 
+    /* ==== SCREEN TITLE_SWHELP "HELP FUNCTION" -- "TT_SWHELP", title id 0xE7, function NAKA_MAINFUNC_HelpTitleFunc ====
+     * What: the help screen. It is the home title of mode 0x14, MD_HELP.
+     * Path: mode MD_HELP
+     * EXIT -> TITLE_PS */
     .HelpFunction_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -13113,6 +13326,8 @@ const naka_effects_seq_t naka_effects_seq_data
         .func = NAKA_APFUNC_HelpOkSwFunc,
     },
 
+    /* ==== VIEW OBJ_HelpNotXWin: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .HelpNotXWin = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -13220,6 +13435,8 @@ const naka_effects_seq_t naka_effects_seq_data
 
     .vE7_e9_stron = "SPANISH",
 
+    /* ==== VIEW OBJ_HelpXWin: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .HelpXWin = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -13305,6 +13522,8 @@ const naka_effects_seq_t naka_effects_seq_data
 
     .vE7_e13_stron = "INDONESIA",
 
+    /* ==== VIEW OBJ_HelpSwTtl1Scr: Screen, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .HelpSwTtl1Scr = {
         .class_ = NAKA_CLASS(Screen),
         .super = NAKA_NONE,
@@ -13327,7 +13546,7 @@ const naka_effects_seq_t naka_effects_seq_data
         .prev = NAKA_NONE,
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
-        .screen = 0x00E70000,
+        .screen = NAKA_VIEW_ID(Kubo_ViewableTable_0E7, OBJ_HelpFunction_TtlScreen),
     },
 
     .HelpTtlStr1 = {
@@ -13374,6 +13593,8 @@ const naka_effects_seq_t naka_effects_seq_data
         .func = NAKA_APFUNC_HelpFuncChkFunc,
     },
 
+    /* ==== VIEW OBJ_HelpLang2P1: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .HelpLang2P1 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -13407,6 +13628,8 @@ const naka_effects_seq_t naka_effects_seq_data
         .func = NAKA_APFUNC_HelpStsCheck,
     },
 
+    /* ==== VIEW OBJ_HelpLang2P2: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .HelpLang2P2 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -13440,6 +13663,8 @@ const naka_effects_seq_t naka_effects_seq_data
         .func = NAKA_APFUNC_HelpStsP2Check,
     },
 
+    /* ==== VIEW OBJ_HelpSwTtl2Scr: Screen, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .HelpSwTtl2Scr = {
         .class_ = NAKA_CLASS(Screen),
         .super = NAKA_NONE,
@@ -13462,7 +13687,7 @@ const naka_effects_seq_t naka_effects_seq_data
         .prev = NAKA_NONE,
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
-        .screen = 0x00E70000,
+        .screen = NAKA_VIEW_ID(Kubo_ViewableTable_0E7, OBJ_HelpFunction_TtlScreen),
     },
 
     .HelpTtlStr2 = {
@@ -13489,7 +13714,7 @@ const naka_effects_seq_t naka_effects_seq_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 32, 32, 32),
         .page = 0x0001,
-        .window = 0x00E70013,
+        .window = NAKA_VIEW_ID(Kubo_ViewableTable_0E7, OBJ_HelpLang2P1),
     },
 
     .HelpSwTtl2Scr_IvPageControl_2 = {
@@ -13501,7 +13726,7 @@ const naka_effects_seq_t naka_effects_seq_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 64, 32, 32),
         .page = 0x0002,
-        .window = 0x00E70015,
+        .window = NAKA_VIEW_ID(Kubo_ViewableTable_0E7, OBJ_HelpLang2P2),
     },
 
     .Help_P2 = {
@@ -13531,6 +13756,8 @@ const naka_effects_seq_t naka_effects_seq_data
         .func = NAKA_APFUNC_HelpFuncChkFunc,
     },
 
+    /* ==== VIEW OBJ_HelpLang3P1: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .HelpLang3P1 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -13564,6 +13791,8 @@ const naka_effects_seq_t naka_effects_seq_data
         .func = NAKA_APFUNC_HelpStsCheck,
     },
 
+    /* ==== VIEW OBJ_HelpLang3P2: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .HelpLang3P2 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -13597,6 +13826,8 @@ const naka_effects_seq_t naka_effects_seq_data
         .func = NAKA_APFUNC_HelpStsP2Check,
     },
 
+    /* ==== VIEW OBJ_HelpLang3P3: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .HelpLang3P3 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -13630,6 +13861,8 @@ const naka_effects_seq_t naka_effects_seq_data
         .func = NAKA_APFUNC_HelpStsP3Check,
     },
 
+    /* ==== VIEW OBJ_HelpSwTtl3Scr: Screen, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .HelpSwTtl3Scr = {
         .class_ = NAKA_CLASS(Screen),
         .super = NAKA_NONE,
@@ -13652,7 +13885,7 @@ const naka_effects_seq_t naka_effects_seq_data
         .prev = NAKA_NONE,
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
-        .screen = 0x00E70000,
+        .screen = NAKA_VIEW_ID(Kubo_ViewableTable_0E7, OBJ_HelpFunction_TtlScreen),
     },
 
     .HelpTtlStr3 = {
@@ -13695,7 +13928,7 @@ const naka_effects_seq_t naka_effects_seq_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 32, 32, 32),
         .page = 0x0001,
-        .window = 0x00E7001E,
+        .window = NAKA_VIEW_ID(Kubo_ViewableTable_0E7, OBJ_HelpLang3P1),
     },
 
     .HelpSwTtl3Scr_IvPageControl_2 = {
@@ -13707,7 +13940,7 @@ const naka_effects_seq_t naka_effects_seq_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 64, 32, 32),
         .page = 0x0002,
-        .window = 0x00E70020,
+        .window = NAKA_VIEW_ID(Kubo_ViewableTable_0E7, OBJ_HelpLang3P2),
     },
 
     .HelpSwTtl3Scr_IvPageControl_3 = {
@@ -13719,7 +13952,7 @@ const naka_effects_seq_t naka_effects_seq_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 96, 32, 32),
         .page = 0x0003,
-        .window = 0x00E70022,
+        .window = NAKA_VIEW_ID(Kubo_ViewableTable_0E7, OBJ_HelpLang3P3),
     },
 
     .HelpSwTtl3Scr_IvShowHide = {
@@ -13733,6 +13966,8 @@ const naka_effects_seq_t naka_effects_seq_data
         .func = NAKA_APFUNC_HelpFuncChkFunc,
     },
 
+    /* ==== VIEW OBJ_HelpSwTtl4Scr: Screen, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .HelpSwTtl4Scr = {
         .class_ = NAKA_CLASS(Screen),
         .super = NAKA_NONE,
@@ -13755,7 +13990,7 @@ const naka_effects_seq_t naka_effects_seq_data
         .prev = NAKA_NONE,
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
-        .screen = 0x00E70000,
+        .screen = NAKA_VIEW_ID(Kubo_ViewableTable_0E7, OBJ_HelpFunction_TtlScreen),
     },
 
     .Help_P4 = {
@@ -13798,7 +14033,7 @@ const naka_effects_seq_t naka_effects_seq_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 32, 32, 32),
         .page = 0x0001,
-        .window = 0x00E70035,
+        .window = NAKA_VIEW_ID(Kubo_ViewableTable_0E7, OBJ_HelpLang4P1),
     },
 
     .HelpSwTtl4Scr_IvPageControl_2 = {
@@ -13810,7 +14045,7 @@ const naka_effects_seq_t naka_effects_seq_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 64, 32, 32),
         .page = 0x0002,
-        .window = 0x00E70037,
+        .window = NAKA_VIEW_ID(Kubo_ViewableTable_0E7, OBJ_HelpLang4P2),
     },
 
     .HelpSwTtl4Scr_IvPageControl_3 = {
@@ -13822,7 +14057,7 @@ const naka_effects_seq_t naka_effects_seq_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 96, 32, 32),
         .page = 0x0003,
-        .window = 0x00E70039,
+        .window = NAKA_VIEW_ID(Kubo_ViewableTable_0E7, OBJ_HelpLang4P3),
     },
 
     .HelpSwTtl4Scr_IvPageControl_4 = {
@@ -13834,7 +14069,7 @@ const naka_effects_seq_t naka_effects_seq_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 128, 32, 32),
         .page = 0x0004,
-        .window = 0x00E7003B,
+        .window = NAKA_VIEW_ID(Kubo_ViewableTable_0E7, OBJ_HelpLang4P4),
     },
 
     .HelpSwTtl4Scr_IvShowHide = {
@@ -13848,6 +14083,8 @@ const naka_effects_seq_t naka_effects_seq_data
         .func = NAKA_APFUNC_HelpFuncChkFunc,
     },
 
+    /* ==== VIEW OBJ_HelpLang4P1: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .HelpLang4P1 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -13881,6 +14118,8 @@ const naka_effects_seq_t naka_effects_seq_data
         .func = NAKA_APFUNC_HelpStsCheck,
     },
 
+    /* ==== VIEW OBJ_HelpLang4P2: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .HelpLang4P2 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -13914,6 +14153,8 @@ const naka_effects_seq_t naka_effects_seq_data
         .func = NAKA_APFUNC_HelpStsP2Check,
     },
 
+    /* ==== VIEW OBJ_HelpLang4P3: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .HelpLang4P3 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -13947,6 +14188,8 @@ const naka_effects_seq_t naka_effects_seq_data
         .func = NAKA_APFUNC_HelpStsP3Check,
     },
 
+    /* ==== VIEW OBJ_HelpLang4P4: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .HelpLang4P4 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,

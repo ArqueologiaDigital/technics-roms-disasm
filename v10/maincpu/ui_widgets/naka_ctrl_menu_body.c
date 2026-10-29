@@ -1016,6 +1016,15 @@ enum Toshi_Viewable_TEST1_objects {
 const naka_ctrl_menu_body_t naka_ctrl_menu_body_data
     __attribute__((section(".text"), used)) = {
 
+    /* ==== SCREEN TITLE_CTINIT "INITIAL" -- "TT_CTINIT", title id 0x41, function NAKA_MAINFUNC_CntIniFunc ====
+     * What: the CONTROL > initialize page. The 'No' answer of the initialize confirmation returns
+     *       to it.
+     * Path: mode MD_CONTROL > "INITIAL"
+     * EXIT -> TITLE_CTMENU
+     * Opened from: TITLE_CTMENU ("INITIAL")
+    /* ==== SCREEN TITLE_CTPMPARA "INITIAL" -- "TT_CTPMPARA", title id 0x46, function NAKA_APFUNC_DefaultFunction ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_CTMENU */
     .ControlIni = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -1141,6 +1150,8 @@ const naka_ctrl_menu_body_t naka_ctrl_menu_body_data
 
     .Initial_text_2 = "INITIAL",
 
+    /* ==== VIEW OBJ_SYSINISURE: Screen, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .SYSINISURE = {
         .class_ = NAKA_CLASS(Screen),
         .super = NAKA_NONE,
@@ -1296,6 +1307,10 @@ const naka_ctrl_menu_body_t naka_ctrl_menu_body_data
         .func = NAKA_APFUNC_SysSureShowHideFunc,
     },
 
+    /* ==== SCREEN TITLE_CTFSWAS "FOOT CONTROLLERS" -- "TT_CTFSWAS", title id 0x42, function NAKA_MAINFUNC_FswAsIniFunc ====
+     * Path: mode MD_CONTROL > (unlabelled entry)
+     * EXIT -> TITLE_CTMENU
+     * Opened from: TITLE_CTMENU */
     .ControlFsw = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -1413,6 +1428,10 @@ const naka_ctrl_menu_body_t naka_ctrl_menu_body_data
         .style = SS_UpDown,
     },
 
+    /* ==== SCREEN TITLE_CTTOUCH "OVERALL TOUCH SENSITIVITY" -- "TT_CTTOUCH", title id 0x43, function NAKA_APFUNC_DefaultFunction ====
+     * Path: mode MD_CONTROL > "OVERALL TOUCH SENSITIVITY"
+     * EXIT -> TITLE_CTMENU
+     * Opened from: TITLE_CTMENU ("OVERALL TOUCH SENSITIVITY") */
     .ControlSns = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -1560,6 +1579,10 @@ const naka_ctrl_menu_body_t naka_ctrl_menu_body_data
 
     .Value_text = "VALUE",
 
+    /* ==== SCREEN TITLE_MSAMODE -- "TT_MSAMODE", title id 0x44, function NAKA_APFUNC_DefaultFunction ====
+     * Path: mode MD_CONTROL > "MUSIC STYLE ARRANGER MODE"
+     * EXIT -> TITLE_PS
+     * Opened from: TITLE_CTMENU ("MUSIC STYLE ARRANGER MODE") */
     .NakaWidget_ToshiView044_0_MsaModeScreen = {
         .class_ = NAKA_CLASS(MsaModeScreen),
         .super = NAKA_NONE,
@@ -1715,6 +1738,8 @@ const naka_ctrl_menu_body_t naka_ctrl_menu_body_data
         .time = IT_Default,
     },
 
+    /* ==== VIEW OBJ_NakaWidget_ToshiView044_10_MsaModeScreen: MsaModeScreen, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .NakaWidget_ToshiView044_10_MsaModeScreen = {
         .class_ = NAKA_CLASS(MsaModeScreen),
         .super = NAKA_NONE,
@@ -1859,6 +1884,10 @@ const naka_ctrl_menu_body_t naka_ctrl_menu_body_data
 
     .PanelMemory_text_2 = ALIGNED_STRING("PANEL MEMORY"),
 
+    /* ==== SCREEN TITLE_CTPMMD "PANEL MEMORY MODE       " -- "TT_CTPMMD", title id 0x45, function NAKA_APFUNC_DefaultFunction ====
+     * Path: mode MD_CONTROL > "PANEL MEMORY MODE"
+     * EXIT -> TITLE_PS
+     * Opened from: TITLE_CTMENU ("PANEL MEMORY MODE") */
     .PanelMemoryMode_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -1897,7 +1926,7 @@ const naka_ctrl_menu_body_t naka_ctrl_menu_body_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0001,
-        .window = 0x00450005,
+        .window = NAKA_VIEW_ID(Toshi_Viewable_CTPMMD, OBJ_PMEM1),
     },
 
     .PanelMemoryMode_IvPageControl_2 = {
@@ -1909,7 +1938,7 @@ const naka_ctrl_menu_body_t naka_ctrl_menu_body_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0002,
-        .window = 0x0045000D,
+        .window = NAKA_VIEW_ID(Toshi_Viewable_CTPMMD, OBJ_PMEM2),
     },
 
     .PanelMemoryMode_IvIntEasySet = {
@@ -1923,6 +1952,8 @@ const naka_ctrl_menu_body_t naka_ctrl_menu_body_data
         .time = IT_Default,
     },
 
+    /* ==== VIEW OBJ_PMEM1: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .PMEM1 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -2057,6 +2088,8 @@ const naka_ctrl_menu_body_t naka_ctrl_menu_body_data
         .func = NAKA_APFUNC_PmemExpLngCheck,
     },
 
+    /* ==== VIEW OBJ_PMEM2: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .PMEM2 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -2174,6 +2207,10 @@ const naka_ctrl_menu_body_t naka_ctrl_menu_body_data
         .child = 0x0003F4BA,
     },
 
+    /* ==== SCREEN TITLE_CTSYSTEM "DISPLAY TIME OUT" -- "TT_CTSYSTEM", title id 0x47, function NAKA_APFUNC_DefaultFunction ====
+     * Path: mode MD_CONTROL > (unlabelled entry)
+     * EXIT -> TITLE_CTMENU
+     * Opened from: TITLE_CTMENU */
     .ControlSys = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -2310,6 +2347,8 @@ const naka_ctrl_menu_body_t naka_ctrl_menu_body_data
         .func = NAKA_APFUNC_DispTimeSetOKFunc,
     },
 
+    /* ==== VIEW OBJ_WallpaperSetting_TtlScreen: TtlScreen "WALLPAPER SETTING", the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .WallpaperSetting_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -2351,6 +2390,12 @@ const naka_ctrl_menu_body_t naka_ctrl_menu_body_data
 
     .Load_text = ALIGNED_STRING("LOAD"),
 
+    /* ==== SCREEN TITLE_CTWALLSET "WALLPAPER SETTING" -- "TT_CTWALLSET", title id 0x48, function NAKA_APFUNC_DefaultFunction ====
+     * What: the CONTROL > wallpaper-setting page.
+     * Path: mode MD_CONTROL > "WALLPAPER SETTING"
+     * Menu: "LOAD" -> TITLE_DKWPLD
+     * EXIT -> TITLE_CTMENU
+     * Opened from: TITLE_CTMENU ("WALLPAPER SETTING") */
     .ControlWallSet = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -2595,6 +2640,8 @@ const naka_ctrl_menu_body_t naka_ctrl_menu_body_data
         .func = NAKA_APFUNC_WallUsrShowHideFunc,
     },
 
+    /* ==== VIEW OBJ_WALLSETSURE: Screen, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .WALLSETSURE = {
         .class_ = NAKA_CLASS(Screen),
         .super = NAKA_NONE,
@@ -2750,6 +2797,9 @@ const naka_ctrl_menu_body_t naka_ctrl_menu_body_data
 
     .WallpaperSetting_text_3 = "WALLPAPER SETTING",
 
+    /* ==== SCREEN TITLE_ONETCH -- "TT_ONETCH", title id 0xC0, function NAKA_MAINFUNC_OneTchFUNC ====
+     * Path: mode MD_OTP
+     * EXIT -> TITLE_NORMAL */
     .ONETCH = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -2812,6 +2862,12 @@ const naka_ctrl_menu_body_t naka_ctrl_menu_body_data
         .mode = NAKA_MODE_MD_NORMAL,
     },
 
+    /* ==== SCREEN TITLE_MUSICSTYL "MUSIC STYLIST" -- "TT_MUSICSTYL", title id 0xC1, function NAKA_APFUNC_DefaultFunction ====
+     * What: the music-style page in the One-Touch-Play (MD_OTP) title group.
+     * Path: no menu entry opens it (opened by code)
+     * Menu: "STYLE EXPLORER" -> TITLE_MSCTSEL
+     * Menu: "STYLE ALPHABETICAL" -> TITLE_MSALPSEL
+     * EXIT -> TITLE_PS */
     .MUSICSTYL = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -2887,6 +2943,10 @@ const naka_ctrl_menu_body_t naka_ctrl_menu_body_data
 
     .StyleAlphabetical_text = ALIGNED_STRING("STYLE ALPHABETICAL"),
 
+    /* ==== SCREEN TITLE_MSCTSEL "STYLE EXPLORER" -- "TT_MSCTSEL", title id 0xC2, function NAKA_APFUNC_DefaultFunction ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_PS
+     * Opened from: TITLE_MUSICSTYL ("STYLE EXPLORER") */
     .MSCTSEL = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -2925,7 +2985,7 @@ const naka_ctrl_menu_body_t naka_ctrl_menu_body_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0001,
-        .window = 0x00C20004,
+        .window = NAKA_VIEW_ID(Toshi_Viewable_MSCTSEL, OBJ_STYLE1),
     },
 
     .MSCTSEL_IvPageControl_2 = {
@@ -2937,9 +2997,11 @@ const naka_ctrl_menu_body_t naka_ctrl_menu_body_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0002,
-        .window = 0x00C2000C,
+        .window = NAKA_VIEW_ID(Toshi_Viewable_MSCTSEL, OBJ_STYLE2),
     },
 
+    /* ==== VIEW OBJ_STYLE1: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .STYLE1 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -3112,6 +3174,8 @@ const naka_ctrl_menu_body_t naka_ctrl_menu_body_data
 
     .SubCategory_text = ALIGNED_STRING("SUB CATEGORY"),
 
+    /* ==== VIEW OBJ_STYLE2: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .STYLE2 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -3262,6 +3326,9 @@ const naka_ctrl_menu_body_t naka_ctrl_menu_body_data
 
     .Skip_text = ALIGNED_STRING("SKIP"),
 
+    /* ==== SCREEN TITLE_MSSCTSEL "SUGGESTED SONG LIST" -- "TT_MSSCTSEL", title id 0xC3, function NAKA_APFUNC_DefaultFunction ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_PS */
     .MSSCTSEL = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -3300,7 +3367,7 @@ const naka_ctrl_menu_body_t naka_ctrl_menu_body_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0001,
-        .window = 0x00C30004,
+        .window = NAKA_VIEW_ID(Toshi_Viewable_MSSCTSEL, OBJ_SONG1),
     },
 
     .MSSCTSEL_IvPageControl_2 = {
@@ -3312,9 +3379,11 @@ const naka_ctrl_menu_body_t naka_ctrl_menu_body_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0002,
-        .window = 0x00C30009,
+        .window = NAKA_VIEW_ID(Toshi_Viewable_MSSCTSEL, OBJ_SONG2),
     },
 
+    /* ==== VIEW OBJ_SONG1: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .SONG1 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -3419,6 +3488,8 @@ const naka_ctrl_menu_body_t naka_ctrl_menu_body_data
 
     .ByCategory_text = "(BY CATEGORY)",
 
+    /* ==== VIEW OBJ_SONG2: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .SONG2 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -3569,6 +3640,9 @@ const naka_ctrl_menu_body_t naka_ctrl_menu_body_data
 
     .Skip_text_2 = ALIGNED_STRING("SKIP"),
 
+    /* ==== SCREEN TITLE_MSSONGLIST "SUGGESTED SONG LIST" -- "TT_MSSONGLIST", title id 0xC4, function NAKA_APFUNC_DefaultFunction ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_MUSICSTYL */
     .MSSONGLIST = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -3722,6 +3796,10 @@ const naka_ctrl_menu_body_t naka_ctrl_menu_body_data
 
     .Skip_text_3 = ALIGNED_STRING("SKIP"),
 
+    /* ==== SCREEN TITLE_MSALPSEL "STYLE ALPHABETICAL" -- "TT_MSALPSEL", title id 0xC5, function NAKA_APFUNC_DefaultFunction ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_MUSICSTYL
+     * Opened from: TITLE_MUSICSTYL ("STYLE ALPHABETICAL") */
     .MSSTLSEL = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -3858,6 +3936,10 @@ const naka_ctrl_menu_body_t naka_ctrl_menu_body_data
 
     .Skip_text_4 = ALIGNED_STRING("SKIP"),
 
+    /* ==== SCREEN TITLE_PMBKSEL -- "TT_PMBKSEL", title id 0xD0, function NAKA_APFUNC_DefaultFunction ====
+     * What: the panel-memory bank-select page.
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_NORMAL */
     .PMBANK = {
         .class_ = NAKA_CLASS(PmBankScreen),
         .super = NAKA_NONE,
@@ -3947,6 +4029,10 @@ const naka_ctrl_menu_body_t naka_ctrl_menu_body_data
         .time = IT_Default,
     },
 
+    /* ==== SCREEN TITLE_PMVIEW "BANK VIEW" -- "TT_PMVIEW", title id 0xD1, function NAKA_APFUNC_DefaultFunction ====
+     * What: the panel-memory view page. The panel-memory naming and save/delete flows return to it.
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_NORMAL */
     .PMVIEW = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -4160,6 +4246,10 @@ const naka_ctrl_menu_body_t naka_ctrl_menu_body_data
         .time = IT_Default,
     },
 
+    /* ==== SCREEN TITLE_PMNAME "NAMING" -- "TT_PMNAME", title id 0xD2, function NAKA_APFUNC_DefaultFunction ====
+     * What: the panel-memory name page.
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_PS */
     .PMNAME = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -4357,6 +4447,11 @@ const naka_ctrl_menu_body_t naka_ctrl_menu_body_data
         .time = IT_Default,
     },
 
+    /* ==== SCREEN TITLE_RVARI -- "TT_RVARI", title id 0xE9, function NAKA_APFUNC_DefaultFunction ====
+     * What: Title id 0xE9, "TT_RVARI". It is the companion of TT_SVARI. What the screen shows is
+     *       not established beyond the firmware name.
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_PS */
     .RVARI = {
         .class_ = NAKA_CLASS(RVariScreen),
         .super = NAKA_NONE,
@@ -4407,6 +4502,11 @@ const naka_ctrl_menu_body_t naka_ctrl_menu_body_data
         .time = IT_Default,
     },
 
+    /* ==== SCREEN TITLE_TEST1 -- "TT_TEST1", title id 0xF4, function NAKA_APFUNC_DefaultFunction ====
+     * What: the first self-test screen. It is shown when the SRAM test or the panel-detection check
+     *       reports a problem, and an entry of ...
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_PS */
     .vF4_e0 = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -4425,6 +4525,8 @@ const naka_ctrl_menu_body_t naka_ctrl_menu_body_data
 
     .w126_text = ALIGNED_STRING(""),
 
+    /* ==== VIEW OBJ_TEST1RAM: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .TEST1RAM = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -4515,6 +4617,8 @@ const naka_ctrl_menu_body_t naka_ctrl_menu_body_data
 
     .ThisUnitNeedsRepairing_text = ALIGNED_STRING("this unit needs repairing."),
 
+    /* ==== VIEW OBJ_TEST1CP: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .TEST1CP = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,

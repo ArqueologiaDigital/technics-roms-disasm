@@ -722,6 +722,10 @@ const naka_sound_menu_drawbar_t naka_sound_menu_drawbar_data
 
     .IvSdpartProc_str = ALIGNED_STRING("IvSdpartProc"),
 
+    /* ==== SCREEN TITLE_SDMENU "SOUND MENU" -- "TT_SDMENU", title id 0x2, function NAKA_APFUNC_DefaultFunction ====
+     * What: the SOUND menu. It is the home title of mode 2, MD_SOUND (0x01800002).
+     * Path: mode MD_SOUND
+     * EXIT -> TITLE_PS */
     .Sdmenu = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,

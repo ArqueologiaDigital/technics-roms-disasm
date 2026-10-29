@@ -1175,7 +1175,7 @@ const naka_debug_naming_t naka_debug_naming_data
         .editsw = ES_Left5,
         .selected = 0x0003F0B2,
         .str = SELF(DebugWindow_str),
-        .window = 0x00000007,
+        .window = NAKA_VIEW_ID(Root_ViewableTable_000, OBJ_DebugWindow),
         .icon = idICON_Default,
     },
 
@@ -1195,6 +1195,8 @@ const naka_debug_naming_t naka_debug_naming_data
         .window = 0x0003F0B4,
     },
 
+    /* ==== VIEW OBJ_DebugWindow: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .DebugWindow = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -1244,6 +1246,8 @@ const naka_debug_naming_t naka_debug_naming_data
         .page = 0x0003F0C2,
     },
 
+    /* ==== VIEW OBJ_NamingWindow: AcNamingWindow, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .NamingWindow = {
         .class_ = NAKA_CLASS(AcNamingWindow),
         .super = NAKA_NONE,
@@ -1541,6 +1545,8 @@ const naka_debug_naming_t naka_debug_naming_data
         .align = AL_Center,
     },
 
+    /* ==== VIEW OBJ_MemoWindow: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .MemoWindow = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -1566,6 +1572,8 @@ const naka_debug_naming_t naka_debug_naming_data
         .rect = NAKA_XYWH(48, 81, 223, 151),
     },
 
+    /* ==== VIEW OBJ_TrackSwitchWindow: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .TrackSwitchWindow = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -1805,6 +1813,8 @@ const naka_debug_naming_t naka_debug_naming_data
         .recplay = 0x0003F142,
     },
 
+    /* ==== VIEW OBJ_MemDumpWindow: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .MemDumpWindow = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -1831,6 +1841,10 @@ const naka_debug_naming_t naka_debug_naming_data
         .adr = 0x0003F14C,
     },
 
+    /* ==== SCREEN TITLE_CHECK "CHECK TITLE" -- "TT_CHECK", title id 0xFF, function NAKA_MAINFUNC_CheckTitleFunc ====
+     * Path: mode MD_PS > "CHECK TITLE"
+     * EXIT -> TITLE_PS
+     * Opened from: TITLE_PS ("CHECK TITLE") */
     .CheckTitle = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -1877,7 +1891,7 @@ const naka_debug_naming_t naka_debug_naming_data
         .editsw = ES_Left5,
         .selected = 0x0003F154,
         .str = SELF(Naming_str),
-        .screen = 0x00FF0004,
+        .screen = NAKA_VIEW_ID(Root_ViewableTable_0FF, OBJ_CheckNaming),
         .icon = idICON_None,
     },
 
@@ -1900,12 +1914,14 @@ const naka_debug_naming_t naka_debug_naming_data
         .editsw = ES_Right5,
         .selected = 0x0003F156,
         .str = SELF(Wall_str),
-        .screen = 0x00FF0007,
+        .screen = NAKA_VIEW_ID(Root_ViewableTable_0FF, OBJ_CheckWall),
         .icon = idICON_None,
     },
 
     .Wall_str = ALIGNED_STRING("Wall"),
 
+    /* ==== VIEW OBJ_CheckNaming: TtlScreen "Check Naming", the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .CheckNaming = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -1943,9 +1959,11 @@ const naka_debug_naming_t naka_debug_naming_data
         .prev = OBJ_CheckNaming_IvNaming,
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(32, 0, 32, 32),
-        .screen = 0x00FF0000,
+        .screen = NAKA_VIEW_ID(Root_ViewableTable_0FF, OBJ_CheckTitle),
     },
 
+    /* ==== VIEW OBJ_CheckWall: Screen, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .CheckWall = {
         .class_ = NAKA_CLASS(Screen),
         .super = NAKA_NONE,

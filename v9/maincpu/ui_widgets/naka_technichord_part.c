@@ -1605,6 +1605,10 @@ const naka_technichord_part_t naka_technichord_part_data
 
     .TechniChord_str = ALIGNED_STRING("TECHNI-CHORD"),
 
+    /* ==== SCREEN TITLE_SDPART "SOUND PART SETTING" -- "TT_SDPART", title id 0x3, function NAKA_APFUNC_DefaultFunction ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_PS
+     * Opened from: an untitled view ("PART SETTING") */
     .Sdpart = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -2132,6 +2136,8 @@ const naka_technichord_part_t naka_technichord_part_data
         .rect = NAKA_XYWH(0, 0, 32, 32),
     },
 
+    /* ==== VIEW OBJ_SdpartMain: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .SdpartMain = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -2461,6 +2467,8 @@ const naka_technichord_part_t naka_technichord_part_data
 
     .v3_e42_caption = ALIGNED_STRING("VOLUME     :"),
 
+    /* ==== VIEW OBJ_SdpartVol: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .SdpartVol = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -2533,6 +2541,8 @@ const naka_technichord_part_t naka_technichord_part_data
 
     .v3_e46_caption = ALIGNED_STRING("VOLUME       :"),
 
+    /* ==== VIEW OBJ_SdpartPan: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .SdpartPan = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -2647,6 +2657,8 @@ const naka_technichord_part_t naka_technichord_part_data
         .index = 0xFFFF,
     },
 
+    /* ==== VIEW OBJ_SdpartEff: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .SdpartEff = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -2768,6 +2780,8 @@ const naka_technichord_part_t naka_technichord_part_data
         .index = 0xFFFF,
     },
 
+    /* ==== VIEW OBJ_SdpartSus: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .SdpartSus = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -2864,6 +2878,8 @@ const naka_technichord_part_t naka_technichord_part_data
         .index = 0xFFFF,
     },
 
+    /* ==== VIEW OBJ_SdpartKey: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .SdpartKey = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -2935,6 +2951,8 @@ const naka_technichord_part_t naka_technichord_part_data
         .index = 0xFFFF,
     },
 
+    /* ==== VIEW OBJ_SdpartTun: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .SdpartTun = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -3006,6 +3024,8 @@ const naka_technichord_part_t naka_technichord_part_data
         .index = 0xFFFF,
     },
 
+    /* ==== VIEW OBJ_SdpartBnd: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .SdpartBnd = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -3077,6 +3097,8 @@ const naka_technichord_part_t naka_technichord_part_data
         .index = 0xFFFF,
     },
 
+    /* ==== VIEW OBJ_SdpartOth: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .SdpartOth = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -3235,6 +3257,10 @@ const naka_technichord_part_t naka_technichord_part_data
 
     .v3_e83_caption = "PART EXP PDL:",
 
+    /* ==== SCREEN TITLE_SDMTUNE "MASTER TUNING" -- "TT_SDMTUNE", title id 0x4, function NAKA_APFUNC_DefaultFunction ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_SDMENU
+     * Opened from: an untitled view ("MASTER TUNING") */
     .Sdmtune = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -3312,6 +3338,10 @@ const naka_technichord_part_t naka_technichord_part_data
         .style = SS_UpDown,
     },
 
+    /* ==== SCREEN TITLE_SDSCLTYP "KEY SCALING" -- "TT_SDSCLTYP", title id 0x5, function NAKA_APFUNC_DefaultFunction ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_SDMENU
+     * Opened from: an untitled view ("KEY SCALING") */
     .Sdscltyp = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -3355,7 +3385,7 @@ const naka_technichord_part_t naka_technichord_part_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0001,
-        .window = 0x00050005,
+        .window = NAKA_VIEW_ID(Murai_ViewableTable_005, OBJ_Sdscltyp1),
     },
 
     .Sdscltyp_IvPageControl_2 = {
@@ -3367,7 +3397,7 @@ const naka_technichord_part_t naka_technichord_part_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(32, 0, 32, 32),
         .page = 0x0002,
-        .window = 0x0005000B,
+        .window = NAKA_VIEW_ID(Murai_ViewableTable_005, OBJ_Sdscltyp2),
     },
 
     .Sdscltyp_IvShowHide = {
@@ -3381,6 +3411,8 @@ const naka_technichord_part_t naka_technichord_part_data
         .func = NAKA_APFUNC_TtSdscltyp,
     },
 
+    /* ==== VIEW OBJ_Sdscltyp1: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .Sdscltyp1 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -3508,6 +3540,8 @@ const naka_technichord_part_t naka_technichord_part_data
 
     .v5_e10_caption = "SCALING MODE  :",
 
+    /* ==== VIEW OBJ_Sdscltyp2: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .Sdscltyp2 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -4216,6 +4250,10 @@ const naka_technichord_part_t naka_technichord_part_data
         .rect = NAKA_XYWH(0, 0, 32, 32),
     },
 
+    /* ==== SCREEN TITLE_SDLFTHLD "LEFT HOLD SETTING" -- "TT_SDLFTHLD", title id 0x7, function NAKA_APFUNC_DefaultFunction ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_SDMENU
+     * Opened from: an untitled view ("LEFT HOLD") */
     .Sdlfthld = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -4278,6 +4316,10 @@ const naka_technichord_part_t naka_technichord_part_data
 
     .v7_e2_caption = ALIGNED_STRING("LEFT HOLD      :"),
 
+    /* ==== SCREEN TITLE_SDMIXER "MIXER" -- "TT_SDMIXER", title id 0x8, function NAKA_APFUNC_DefaultFunction ====
+     * Path: mode MD_ENTERTAINER > "MIXER"
+     * EXIT -> TITLE_SDMENU
+     * Opened from: TITLE_ETMENU ("MIXER"), an untitled view ("MIXER") */
     .Sdmixer = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -4399,7 +4441,7 @@ const naka_technichord_part_t naka_technichord_part_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0001,
-        .window = 0x000D0006,
+        .window = NAKA_VIEW_ID(Murai_ViewableTable_00D, OBJ_Sdtecd1),
     },
 
     .NakaWidget_Sdtecd_3_IvPageControl = {
@@ -4411,7 +4453,7 @@ const naka_technichord_part_t naka_technichord_part_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(32, 0, 32, 32),
         .page = 0x0002,
-        .window = 0x000D0019,
+        .window = NAKA_VIEW_ID(Murai_ViewableTable_00D, OBJ_Sdtecd2),
     },
 
     .NakaWidget_Sdtecd_4_IvSdtecd = {
@@ -4435,6 +4477,8 @@ const naka_technichord_part_t naka_technichord_part_data
         .time = IT_Default,
     },
 
+    /* ==== VIEW OBJ_Sdtecd1: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .Sdtecd1 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -4809,6 +4853,8 @@ const naka_technichord_part_t naka_technichord_part_data
         .rect = NAKA_XYWH(96, 0, 32, 32),
     },
 
+    /* ==== VIEW OBJ_Sdtecd2: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .Sdtecd2 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -4883,6 +4929,12 @@ const naka_technichord_part_t naka_technichord_part_data
 
     .Value_text = "VALUE",
 
+    /* ==== SCREEN TITLE_SQMIXER "TRACK MIXER" -- "TT_SQMIXER", title id 0xA5, function NAKA_APFUNC_DefaultFunction ====
+     * What: the sequencer track-mixer page.
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_PS
+     * Opened from: an untitled view ("LYRICS"), an untitled view ("MIC"), an untitled view
+     *       ("MIXER") */
     .Sqmixer = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -5001,6 +5053,8 @@ const naka_technichord_part_t naka_technichord_part_data
 
     .StartTheInternalDemo_str = "Start the internal DEMO",
 
+    /* ==== VIEW OBJ_Demofeature1: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .Demofeature1 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -5044,6 +5098,8 @@ const naka_technichord_part_t naka_technichord_part_data
         .func = NAKA_APFUNC_FDemoText,
     },
 
+    /* ==== VIEW OBJ_Demofeature2: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .Demofeature2 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -5121,6 +5177,8 @@ const naka_technichord_part_t naka_technichord_part_data
         .window = 0x0003E832,
     },
 
+    /* ==== VIEW OBJ_PresentationControl: AcPresentationControl, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .PresentationControl = {
         .class_ = NAKA_CLASS(AcPresentationControl),
         .super = NAKA_NONE,
@@ -5151,6 +5209,8 @@ const naka_technichord_part_t naka_technichord_part_data
 
     .PresentationMode_text = "Presentation Mode",
 
+    /* ==== VIEW OBJ_LoadingPresentation: Screen, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .LoadingPresentation = {
         .class_ = NAKA_CLASS(Screen),
         .super = NAKA_NONE,
@@ -5196,6 +5256,10 @@ const naka_technichord_part_t naka_technichord_part_data
         .align = AL_Center,
     },
 
+    /* ==== SCREEN TITLE_DRAWBAR -- "TT_DRAWBAR", title id 0xEA, function NAKA_APFUNC_DefaultFunction ====
+     * What: the drawbar-organ screen. It is opened when the sound category byte (0xC07E) is 12.
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_PS */
     .Drawbar = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -5357,7 +5421,7 @@ const naka_technichord_part_t naka_technichord_part_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(124, 32, 32, 32),
         .page = 0x0001,
-        .window = 0x00EA000D,
+        .window = NAKA_VIEW_ID(Murai_ViewableTable_0EA, OBJ_Drawbar1),
     },
 
     .Drawbar_IvPageOverWrite = {
@@ -5369,7 +5433,7 @@ const naka_technichord_part_t naka_technichord_part_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(156, 32, 32, 32),
         .page = 0x0002,
-        .window = 0x00EA0016,
+        .window = NAKA_VIEW_ID(Murai_ViewableTable_0EA, OBJ_Drawbar2),
     },
 
     .Drawbar_IvDrawbar = {
@@ -5403,6 +5467,8 @@ const naka_technichord_part_t naka_technichord_part_data
 
     .DrawSetting_stron = "DRAWBAR SETTING",
 
+    /* ==== VIEW OBJ_Drawbar1: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .Drawbar1 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -5530,6 +5596,8 @@ const naka_technichord_part_t naka_technichord_part_data
         .func = NAKA_APFUNC_BitmapDrawsw,
     },
 
+    /* ==== VIEW OBJ_Drawbar2: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .Drawbar2 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -5692,6 +5760,8 @@ const naka_technichord_part_t naka_technichord_part_data
         .editsw = ES_Left5,
     },
 
+    /* ==== VIEW OBJ_DrawbarNorm: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .DrawbarNorm = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -5808,6 +5878,8 @@ const naka_technichord_part_t naka_technichord_part_data
 
     .Drawbar_text = "DRAWBAR",
 
+    /* ==== VIEW OBJ_DrawbarSndE: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .DrawbarSndE = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -5895,6 +5967,10 @@ const naka_technichord_part_t naka_technichord_part_data
 
     .DrawbarEdit_text = ALIGNED_STRING("DRAWBAR EDIT"),
 
+    /* ==== SCREEN TITLE_ACCORDION -- "TT_ACCORDION", title id 0xEB, function NAKA_APFUNC_DefaultFunction ====
+     * What: the accordion screen. It is opened when the sound category byte (0xC07E) is 13.
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_PS */
     .Accordion = {
         .class_ = NAKA_CLASS(Screen),
         .super = NAKA_NONE,
@@ -6023,6 +6099,8 @@ const naka_technichord_part_t naka_technichord_part_data
         .rect = NAKA_XYWH(0, 0, 32, 32),
     },
 
+    /* ==== VIEW OBJ_Accordion1: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .Accordion1 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -6332,6 +6410,8 @@ const naka_technichord_part_t naka_technichord_part_data
         .rect = NAKA_XYWH(8, 112, 32, 32),
     },
 
+    /* ==== VIEW OBJ_Accordion2: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .Accordion2 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -6641,6 +6721,11 @@ const naka_technichord_part_t naka_technichord_part_data
         .rect = NAKA_XYWH(0, 0, 32, 32),
     },
 
+    /* ==== SCREEN TITLE_MESAGE -- "TT_MESAGE", title id 0xEE, function NAKA_APFUNC_DefaultFunction ====
+     * What: Title id 0xEE, "TT_MESAGE" (the firmware's own spelling): the message /
+     *       confirmation-box title. About 30 call sites show it with title request ...
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_PS */
     .Mesage = {
         .class_ = NAKA_CLASS(IvScreen),
         .super = NAKA_NONE,
@@ -6665,6 +6750,8 @@ const naka_technichord_part_t naka_technichord_part_data
         .rect = NAKA_XYWH(0, 0, 32, 32),
     },
 
+    /* ==== VIEW OBJ_Completed: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .Completed = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -6709,6 +6796,8 @@ const naka_technichord_part_t naka_technichord_part_data
         .time = IT_2Sec,
     },
 
+    /* ==== VIEW OBJ_Reminder: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .Reminder = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -6771,6 +6860,8 @@ const naka_technichord_part_t naka_technichord_part_data
         .time = IT_Default,
     },
 
+    /* ==== VIEW OBJ_Error: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .Error = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -6833,6 +6924,8 @@ const naka_technichord_part_t naka_technichord_part_data
         .func = NAKA_APFUNC_MessageText,
     },
 
+    /* ==== VIEW OBJ_Other: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .Other = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -6866,6 +6959,8 @@ const naka_technichord_part_t naka_technichord_part_data
         .func = NAKA_APFUNC_MessageText,
     },
 
+    /* ==== VIEW OBJ_CheckMessage: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .CheckMessage = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -6963,6 +7058,8 @@ const naka_technichord_part_t naka_technichord_part_data
         .field_2a       = 0x0031,
     },
 
+    /* ==== VIEW OBJ_NoMessage: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .NoMessage = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -6996,6 +7093,8 @@ const naka_technichord_part_t naka_technichord_part_data
         .data = 0x0003E8F8,
     },
 
+    /* ==== VIEW OBJ_PleaseWait: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .PleaseWait = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -7027,6 +7126,10 @@ const naka_technichord_part_t naka_technichord_part_data
         .align = AL_Center,
     },
 
+    /* ==== SCREEN TITLE_WELCOM -- "TT_WELCOM", title id 0xEF, function NAKA_APFUNC_DefaultFunction ====
+     * What: the welcome (boot) screen. It is requested once at boot.
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_PS */
     .Welcom = {
         .class_ = NAKA_CLASS(AcWelcomScreen),
         .super = NAKA_NONE,
@@ -7074,6 +7177,8 @@ const naka_technichord_part_t naka_technichord_part_data
         .func = NAKA_APFUNC_BitmapKn5000,
     },
 
+    /* ==== VIEW OBJ_AllInitial: Screen, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .AllInitial = {
         .class_ = NAKA_CLASS(Screen),
         .super = NAKA_NONE,
@@ -7114,6 +7219,8 @@ const naka_technichord_part_t naka_technichord_part_data
         .time = IT_Default,
     },
 
+    /* ==== VIEW OBJ_MPVersion: Screen, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .MPVersion = {
         .class_ = NAKA_CLASS(Screen),
         .super = NAKA_NONE,
@@ -7165,6 +7272,10 @@ const naka_technichord_part_t naka_technichord_part_data
         .align = AL_Center,
     },
 
+    /* ==== SCREEN TITLE_SOFTVER "SOFT VERSION" -- "TT_SOFTVER", title id 0xF0, function NAKA_APFUNC_DefaultFunction ====
+     * What: the software-version screen, requested by a control-panel switch chord.
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_PS */
     .Softver = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,

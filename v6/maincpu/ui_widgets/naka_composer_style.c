@@ -1270,6 +1270,10 @@ const naka_composer_style_t naka_composer_style_data
 
     .PaintArrowProc_name = ALIGNED_STRING("PaintArrowProc"),
 
+    /* ==== SCREEN TITLE_STYLCNVWAIT "STYLE CONVERT" -- "TT_STYLCNVWAIT", title id 0x10, function NAKA_MAINFUNC_StylCnvWaitTtlFunc ====
+     * Path: mode MD_DISK > "STYLE CONVERT"
+     * EXIT -> TITLE_DKMENU
+     * Opened from: TITLE_DKMENU ("STYLE CONVERT") */
     .StylCnvWaitScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -1319,6 +1323,9 @@ const naka_composer_style_t naka_composer_style_data
         .func = NAKA_APFUNC_StylCnvLangCheck,
     },
 
+    /* ==== SCREEN TITLE_STYLCNVMODL "STYLE TYPE SELECT" -- "TT_STYLCNVMODL", title id 0x11, function NAKA_MAINFUNC_StylCnvModlTtlFunc ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_DKMENU */
     .StylCnvModlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -1467,6 +1474,9 @@ const naka_composer_style_t naka_composer_style_data
         .align = AL_Center,
     },
 
+    /* ==== SCREEN TITLE_STYLCNVCNVT "STYLE CONVERT" -- "TT_STYLCNVCNVT", title id 0x12, function NAKA_MAINFUNC_StylCnvCnvtTtlFunc ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_STYLCNVWAIT */
     .StylCnvCnvtScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -1599,6 +1609,9 @@ const naka_composer_style_t naka_composer_style_data
 
     .str_22 = ALIGNED_STRING(""),
 
+    /* ==== SCREEN TITLE_STYLCNVSTOR "STORAGE DATA" -- "TT_STYLCNVSTOR", title id 0x13, function NAKA_MAINFUNC_StylCnvStorTtlFunc ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_STYLCNVWAIT */
     .StylCnvStorScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -1680,6 +1693,9 @@ const naka_composer_style_t naka_composer_style_data
         .func = NAKA_APFUNC_StylCnvStorOkFunc,
     },
 
+    /* ==== SCREEN TITLE_STYLCNVTXT "STYLE CONVERT" -- "TT_STYLCNVTXT", title id 0x14, function NAKA_MAINFUNC_StylCnvTxtTtlFunc ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_STYLCNVWAIT */
     .StylCnvTxtScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -1739,6 +1755,9 @@ const naka_composer_style_t naka_composer_style_data
         .func = NAKA_MAINFUNC_StylCnvTxtTtlFunc,
     },
 
+    /* ==== SCREEN TITLE_STYLCNVSEL "STYLE CONVERT" -- "TT_STYLCNVSEL", title id 0x15, function NAKA_MAINFUNC_StylCnvSelTtlFunc ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_STYLCNVWAIT */
     .StylCnvSelScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -1887,6 +1906,9 @@ const naka_composer_style_t naka_composer_style_data
         .align = AL_LeftJustify,
     },
 
+    /* ==== SCREEN TITLE_STYLCNVCONT "STYLE CONVERT" -- "TT_STYLCNVCONT", title id 0x16, function NAKA_MAINFUNC_StylCnvContTtlFunc ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_STYLCNVWAIT */
     .StylCnvContScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -2001,6 +2023,15 @@ const naka_composer_style_t naka_composer_style_data
 
     .str_38 = ALIGNED_STRING(""),
 
+    /* ==== SCREEN TITLE_CMMENU "COMPOSER MENU" -- "TT_CMMENU", title id 0xB0, function NAKA_MAINFUNC_CmpMenuTtlFunc ====
+     * Path: mode MD_CMP
+     * Menu: "BEND RANGE SET" -> TITLE_CMBEND
+     * Menu: "EASY COMPOSER" -> TITLE_CMEASY
+     * Menu: "PATTERN COPY" -> TITLE_CMPNCP
+     * Menu: "CUSTOM COPY" -> TITLE_CMCSTMCP
+     * Menu: "SEQ TO COMPOSER COPY" -> TITLE_CMSEQCP
+     * Menu: "LOAD SINGLE COMPOSER" -> TITLE_CMPLDSNGL
+     * EXIT -> TITLE_NORMAL */
     .CmpMenuScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -2323,6 +2354,9 @@ const naka_composer_style_t naka_composer_style_data
         .mode = NAKA_MODE_MD_NORMAL,
     },
 
+    /* ==== SCREEN TITLE_CMBKSL "RECORD MEMORY" -- "TT_CMBKSL", title id 0xB1, function NAKA_MAINFUNC_CmpBkslTtlFunc ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_CMMENU */
     .CmpBkslScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -2572,6 +2606,9 @@ const naka_composer_style_t naka_composer_style_data
 
     .Ending_str_2 = ALIGNED_STRING("ENDING 2"),
 
+    /* ==== SCREEN TITLE_CMBKSL_S "RECORDING" -- "TT_CMBKSL_S", title id 0xB2, function NAKA_MAINFUNC_CmpBksl_STtlFunc ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_CMBKSL */
     .CmpBkslSScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -2878,6 +2915,8 @@ const naka_composer_style_t naka_composer_style_data
 
     .ClearTheEntirePattern_str = ALIGNED_STRING("CLEAR THE ENTIRE PATTERN"),
 
+    /* ==== VIEW OBJ_CmpClrSure: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .CmpClrSure = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -2949,6 +2988,9 @@ const naka_composer_style_t naka_composer_style_data
         .func = NAKA_APFUNC_SureLangCheck,
     },
 
+    /* ==== SCREEN TITLE_CMNAME "VARIATION NAMING" -- "TT_CMNAME", title id 0xB3, function NAKA_APFUNC_DefaultFunction ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_CMBKSL_S */
     .CmpNamingScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -3028,6 +3070,9 @@ const naka_composer_style_t naka_composer_style_data
         .align = AL_Center,
     },
 
+    /* ==== SCREEN TITLE_CMSET "RECORD SETTING" -- "TT_CMSET", title id 0xB4, function NAKA_MAINFUNC_CmpSetTtlFunc ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_CMBKSL_S */
     .CmpSetScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -3082,7 +3127,7 @@ const naka_composer_style_t naka_composer_style_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0001,
-        .window = 0x00B40006,
+        .window = NAKA_VIEW_ID(Suna_ViewableTable_0B4, OBJ_CmSetPage1),
     },
 
     .CmSetP2Ctl = {
@@ -3094,7 +3139,7 @@ const naka_composer_style_t naka_composer_style_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0002,
-        .window = 0x00B4000D,
+        .window = NAKA_VIEW_ID(Suna_ViewableTable_0B4, OBJ_CmSetPage2),
     },
 
     .CmpSetScreen_IvShowHide = {
@@ -3108,6 +3153,8 @@ const naka_composer_style_t naka_composer_style_data
         .func = NAKA_APFUNC_CmpSetPageFunc,
     },
 
+    /* ==== VIEW OBJ_CmSetPage1: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .CmSetPage1 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -3237,6 +3284,8 @@ const naka_composer_style_t naka_composer_style_data
 
     .Value_text = "VALUE",
 
+    /* ==== VIEW OBJ_CmSetPage2: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .CmSetPage2 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -3340,6 +3389,12 @@ const naka_composer_style_t naka_composer_style_data
         .style = SS_UpDown,
     },
 
+    /* ==== SCREEN TITLE_CMREAL "REALTIME RECORDING" -- "TT_CMREAL", title id 0xB5, function NAKA_MAINFUNC_CmpRealTtlFunc ====
+     * What: the Composer (mode 0xE, MD_CMP) real-time page.
+     * Path: no menu entry opens it (opened by code)
+     * Menu: "BAL" -> TITLE_CMBAL
+     * Menu: "STEP" -> TITLE_CMSTEP
+     * EXIT -> TITLE_CMBKSL_S */
     .CmpRealScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -3812,6 +3867,10 @@ const naka_composer_style_t naka_composer_style_data
         .align = AL_Center,
     },
 
+    /* ==== SCREEN TITLE_CMSTEP -- "TT_CMSTEP", title id 0xB6, function NAKA_MAINFUNC_CmpStepTitleFunc ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_CMREAL
+     * Opened from: TITLE_CMREAL ("STEP") */
     .NakaWidget_SunaView0B6_0_IvDirmdScreen = {
         .class_ = NAKA_CLASS(IvDirmdScreen),
         .super = NAKA_NONE,
@@ -3826,6 +3885,10 @@ const naka_composer_style_t naka_composer_style_data
         .window = 0x0003D6CC,
     },
 
+    /* ==== SCREEN TITLE_CMBAL "PART BALANCE" -- "TT_CMBAL", title id 0xB7, function NAKA_APFUNC_DefaultFunction ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_CMREAL
+     * Opened from: TITLE_CMREAL ("BAL") */
     .CmpBalScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -3919,6 +3982,11 @@ const naka_composer_style_t naka_composer_style_data
         .editsw = ES_Bottom5,
     },
 
+    /* ==== SCREEN TITLE_CMPNCP "PATTERN COPY" -- "TT_CMPNCP", title id 0xB8, function NAKA_MAINFUNC_CmpNcpTtlFunc ====
+     * What: a Composer copy page. Three box procs fill different notify data while on it.
+     * Path: mode MD_CMP > "PATTERN COPY"
+     * EXIT -> TITLE_CMMENU
+     * Opened from: TITLE_CMMENU ("PATTERN COPY") */
     .CmpNcpScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -4342,6 +4410,10 @@ const naka_composer_style_t naka_composer_style_data
         .tail_y_rate = 0x0032,
     },
 
+    /* ==== SCREEN TITLE_CMSEQCP "SEQ TO COMPOSER COPY" -- "TT_CMSEQCP", title id 0xB9, function NAKA_MAINFUNC_S2cTtlFunc ====
+     * Path: mode MD_CMP > "SEQ TO COMPOSER COPY"
+     * EXIT -> TITLE_CMMENU
+     * Opened from: TITLE_CMMENU ("SEQ TO COMPOSER COPY") */
     .S2CScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -4886,6 +4958,10 @@ const naka_composer_style_t naka_composer_style_data
         .func = NAKA_APFUNC_S2cShowHideFunc,
     },
 
+    /* ==== SCREEN TITLE_CMEASY "EASY COMPOSER" -- "TT_CMEASY", title id 0xBA, function NAKA_MAINFUNC_CmEsyTtlFunc ====
+     * Path: mode MD_CMP > "EASY COMPOSER"
+     * EXIT -> TITLE_CMMENU
+     * Opened from: TITLE_CMMENU ("EASY COMPOSER") */
     .CmpEasyScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -5146,6 +5222,10 @@ const naka_composer_style_t naka_composer_style_data
         .style = SS_UpDown,
     },
 
+    /* ==== SCREEN TITLE_CMBEND "COMPOSER PITCH BEND RANGE SETTING" -- "TT_CMBEND", title id 0xBB, function NAKA_APFUNC_DefaultFunction ====
+     * Path: mode MD_CMP > "BEND RANGE SET"
+     * EXIT -> TITLE_CMMENU
+     * Opened from: TITLE_CMMENU ("BEND RANGE SET") */
     .CmpBendScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -5223,6 +5303,9 @@ const naka_composer_style_t naka_composer_style_data
 
     .Value_text_2 = "VALUE",
 
+    /* ==== SCREEN TITLE_CMMODE "MODE SELECT" -- "TT_CMMODE", title id 0xBD, function NAKA_APFUNC_DefaultFunction ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_CMMENU */
     .CmpModeScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -5411,6 +5494,10 @@ const naka_composer_style_t naka_composer_style_data
 
     .vBD_e10_caption = " EXPAND MODE:",
 
+    /* ==== SCREEN TITLE_CMCSTMCP "CUSTOM COPY" -- "TT_CMCSTMCP", title id 0xBE, function NAKA_MAINFUNC_CstmCpTtlFunc ====
+     * Path: mode MD_CMP > "CUSTOM COPY"
+     * EXIT -> TITLE_CMMENU
+     * Opened from: TITLE_CMMENU ("CUSTOM COPY") */
     .CmpCstmCpScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -5706,6 +5793,8 @@ const naka_composer_style_t naka_composer_style_data
         .tail_y_rate = 0x0032,
     },
 
+    /* ==== VIEW OBJ_CstmMemFulWin: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .CstmMemFulWin = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -5846,6 +5935,8 @@ const naka_composer_style_t naka_composer_style_data
 
     .ABORT_str = "ABORT",
 
+    /* ==== VIEW OBJ_CstmFuncSelWin: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .CstmFuncSelWin = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -5986,6 +6077,9 @@ const naka_composer_style_t naka_composer_style_data
 
     .ABORT_str_2 = "ABORT",
 
+    /* ==== SCREEN TITLE_MSPBKSL "MSP BANK SELECT" -- "TT_MSPBKSL", title id 0xC8, function NAKA_MAINFUNC_MspBkslTtlFunc ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_NORMAL */
     .MspBkslScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,

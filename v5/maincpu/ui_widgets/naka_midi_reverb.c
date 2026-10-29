@@ -1434,6 +1434,13 @@ const naka_midi_reverb_t naka_midi_reverb_data
 
     .AcVocalistListBoxProc_str = "AcVocalistListBoxProc",
 
+    /* ==== SCREEN TITLE_REVEQMENU "REVERB & EQUALIZER PRESETS" -- "TT_REVEQMENU", title id 0x9, function NAKA_APFUNC_DefaultFunction ====
+     * Path: no menu entry opens it (opened by code)
+     * Menu: "REVERB PRESETS" -> TITLE_REVPRESET
+     * Menu: "EQUALIZER PRESETS" -> TITLE_EQPRESET
+     * Menu: "REVERB + EQUALIZER PRESETS" -> TITLE_REVEQPRESET
+     * EXIT -> TITLE_SDMENU
+     * Opened from: an untitled view ("REVERB & EQ PRESETS") */
     .ReverbEqualizerMenu = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -1521,6 +1528,9 @@ const naka_midi_reverb_t naka_midi_reverb_data
 
     .ReverbEqualizerPresets_text_2 = ALIGNED_STRING("REVERB + EQUALIZER PRESETS"),
 
+    /* ==== SCREEN TITLE_SDOCT "RIGHT1/RIGHT2 OCTAVE" -- "TT_SDOCT", title id 0xF, function NAKA_APFUNC_DefaultFunction ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_PS */
     .R12OctaveSetting = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -1583,6 +1593,10 @@ const naka_midi_reverb_t naka_midi_reverb_data
         .style = SS_UpDown,
     },
 
+    /* ==== SCREEN TITLE_REVPRESET "REVERB PRESETS" -- "TT_REVPRESET", title id 0x18, function NAKA_APFUNC_DefaultFunction ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_REVEQMENU
+     * Opened from: TITLE_REVEQMENU ("REVERB PRESETS") */
     .ReverbPreset = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -1832,6 +1846,10 @@ const naka_midi_reverb_t naka_midi_reverb_data
 
     .Cavernous_str = "Cavernous",
 
+    /* ==== SCREEN TITLE_EQPRESET "EQUALIZER PRESETS" -- "TT_EQPRESET", title id 0x19, function NAKA_APFUNC_DefaultFunction ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_REVEQMENU
+     * Opened from: TITLE_REVEQMENU ("EQUALIZER PRESETS") */
     .EqualizerPreset = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -2079,6 +2097,10 @@ const naka_midi_reverb_t naka_midi_reverb_data
 
     .EqOnOffBox_stron = "EQ : ON",
 
+    /* ==== SCREEN TITLE_REVEQPRESET "REVERB + EQUALIZER PRESETS" -- "TT_REVEQPRESET", title id 0x1A, function NAKA_APFUNC_DefaultFunction ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_REVEQMENU
+     * Opened from: TITLE_REVEQMENU ("REVERB + EQUALIZER PRESETS") */
     .ReverbEqualizerPreset = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -2326,6 +2348,9 @@ const naka_midi_reverb_t naka_midi_reverb_data
         .func = NAKA_APFUNC_RevEqSelFunc,
     },
 
+    /* ==== SCREEN TITLE_MDMENU "MIDI MENU" -- "TT_MDMENU", title id 0x50, function NAKA_APFUNC_DefaultFunction ====
+     * Path: mode MD_MIDI
+     * EXIT -> TITLE_NORMAL */
     .MidiMenu = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -2369,7 +2394,7 @@ const naka_midi_reverb_t naka_midi_reverb_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(32, 0, 32, 32),
         .page = 0x0001,
-        .window = 0x00500006,
+        .window = NAKA_VIEW_ID(East_ViewableTable_050, OBJ_MidiMenuPage1),
     },
 
     .MidiMenu_IvPageControl_2 = {
@@ -2381,7 +2406,7 @@ const naka_midi_reverb_t naka_midi_reverb_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(64, 0, 32, 32),
         .page = 0x0002,
-        .window = 0x00500011,
+        .window = NAKA_VIEW_ID(East_ViewableTable_050, OBJ_MidiMenuPage2),
     },
 
     .MidiMenu_IvExitMode = {
@@ -2406,6 +2431,8 @@ const naka_midi_reverb_t naka_midi_reverb_data
         .func = NAKA_APFUNC_TtMdmenu,
     },
 
+    /* ==== VIEW OBJ_MidiMenuPage1: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .MidiMenuPage1 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -2651,6 +2678,8 @@ const naka_midi_reverb_t naka_midi_reverb_data
 
     .PMemOutput_text = ALIGNED_STRING("P.MEM OUTPUT"),
 
+    /* ==== VIEW OBJ_MidiMenuPage2: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .MidiMenuPage2 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -2712,6 +2741,10 @@ const naka_midi_reverb_t naka_midi_reverb_data
 
     .MidiSettingsLoadOption_text = "MIDI SETTINGS LOAD OPTION",
 
+    /* ==== SCREEN TITLE_MDPART "PART SETTING" -- "TT_MDPART", title id 0x51, function NAKA_APFUNC_DefaultFunction ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_MDMENU
+     * Opened from: an untitled view ("PART SETTING") */
     .MidiPartSetting = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -2849,6 +2882,10 @@ const naka_midi_reverb_t naka_midi_reverb_data
         .func = NAKA_APFUNC_TtMdPart,
     },
 
+    /* ==== SCREEN TITLE_MDCTRL "CONTROL MESSAGES" -- "TT_MDCTRL", title id 0x52, function NAKA_APFUNC_DefaultFunction ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_MDMENU
+     * Opened from: an untitled view ("CONTROL MESSAGES") */
     .MidiControlMessage = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -2992,6 +3029,10 @@ const naka_midi_reverb_t naka_midi_reverb_data
         .func = NAKA_APFUNC_TtMdCtlMsg,
     },
 
+    /* ==== SCREEN TITLE_MDREAL "REALTIME MESSAGES" -- "TT_MDREAL", title id 0x53, function NAKA_APFUNC_DefaultFunction ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_MDMENU
+     * Opened from: an untitled view ("REALTIME MESSAGES") */
     .MidiRealtimeMessage = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -3119,6 +3160,10 @@ const naka_midi_reverb_t naka_midi_reverb_data
         .func = NAKA_APFUNC_TtMdRealMsg,
     },
 
+    /* ==== SCREEN TITLE_MDCOM "COMMON SETTING" -- "TT_MDCOM", title id 0x54, function NAKA_APFUNC_DefaultFunction ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_MDMENU
+     * Opened from: an untitled view ("COMMON SETTING") */
     .MidiCommonSetting = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -3217,6 +3262,10 @@ const naka_midi_reverb_t naka_midi_reverb_data
         .func = NAKA_APFUNC_TtComSet,
     },
 
+    /* ==== SCREEN TITLE_MDINOUT "INPUT/OUTPUT SETTING" -- "TT_MDINOUT", title id 0x55, function NAKA_APFUNC_DefaultFunction ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_MDMENU
+     * Opened from: an untitled view ("INPUT/OUTPUT SETTING") */
     .MidiInOutSetting = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -3315,6 +3364,10 @@ const naka_midi_reverb_t naka_midi_reverb_data
         .func = NAKA_APFUNC_TtMdInOut,
     },
 
+    /* ==== SCREEN TITLE_MDPRESET "MIDI PRESETS" -- "TT_MDPRESET", title id 0x56, function NAKA_APFUNC_DefaultFunction ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_MDMENU
+     * Opened from: an untitled view ("MIDI PRESETS") */
     .MidiPresets = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -3358,7 +3411,7 @@ const naka_midi_reverb_t naka_midi_reverb_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(64, 0, 32, 32),
         .page = 0x0003,
-        .window = 0x0056001F,
+        .window = NAKA_VIEW_ID(East_ViewableTable_056, OBJ_MidiPresetPage3),
     },
 
     .MidiPresets_IvPageControl_2 = {
@@ -3370,7 +3423,7 @@ const naka_midi_reverb_t naka_midi_reverb_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(96, 0, 32, 32),
         .page = 0x0004,
-        .window = 0x00560024,
+        .window = NAKA_VIEW_ID(East_ViewableTable_056, OBJ_MidiPresetPage4),
     },
 
     .MpstPageCtl1 = {
@@ -3382,8 +3435,8 @@ const naka_midi_reverb_t naka_midi_reverb_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0001,
-        .window0 = 0x00560007,
-        .window1 = 0x00560013,
+        .window0 = NAKA_VIEW_ID(East_ViewableTable_056, OBJ_MidiPresetSlaveWithout),
+        .window1 = NAKA_VIEW_ID(East_ViewableTable_056, OBJ_MidiPresetSlaveWith),
     },
 
     .MpstPageCtl2 = {
@@ -3395,8 +3448,8 @@ const naka_midi_reverb_t naka_midi_reverb_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(32, 0, 32, 32),
         .page = 0x0002,
-        .window0 = 0x0056002B,
-        .window1 = 0x00560037,
+        .window0 = NAKA_VIEW_ID(East_ViewableTable_056, OBJ_MidiPresetMasterWithout),
+        .window1 = NAKA_VIEW_ID(East_ViewableTable_056, OBJ_MidiPresetMasterWith),
     },
 
     .MidiPresets_IvShowHide = {
@@ -3410,6 +3463,8 @@ const naka_midi_reverb_t naka_midi_reverb_data
         .func = NAKA_APFUNC_TtMdPreset,
     },
 
+    /* ==== VIEW OBJ_MidiPresetSlaveWithout: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .MidiPresetSlaveWithout = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -3609,6 +3664,8 @@ const naka_midi_reverb_t naka_midi_reverb_data
 
     .Kn5000_text = ALIGNED_STRING("KN5000"),
 
+    /* ==== VIEW OBJ_MidiPresetSlaveWith: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .MidiPresetSlaveWith = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -3808,6 +3865,8 @@ const naka_midi_reverb_t naka_midi_reverb_data
 
     .Value_text_3 = "VALUE",
 
+    /* ==== VIEW OBJ_MidiPresetPage3: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .MidiPresetPage3 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -3898,6 +3957,8 @@ const naka_midi_reverb_t naka_midi_reverb_data
 
     .Value_text_4 = "VALUE",
 
+    /* ==== VIEW OBJ_MidiPresetPage4: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .MidiPresetPage4 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -4023,6 +4084,8 @@ const naka_midi_reverb_t naka_midi_reverb_data
 
     .Value_text_5 = "VALUE",
 
+    /* ==== VIEW OBJ_MidiPresetMasterWithout: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .MidiPresetMasterWithout = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -4222,6 +4285,8 @@ const naka_midi_reverb_t naka_midi_reverb_data
 
     .Value_text_6 = "VALUE",
 
+    /* ==== VIEW OBJ_MidiPresetMasterWith: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .MidiPresetMasterWith = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -4421,6 +4486,10 @@ const naka_midi_reverb_t naka_midi_reverb_data
 
     .Kn5000_text_4 = ALIGNED_STRING("KN5000"),
 
+    /* ==== SCREEN TITLE_MDEXC "SYSEX BULK DUMP" -- "TT_MDEXC", title id 0x57, function NAKA_APFUNC_DefaultFunction ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_MDMENU
+     * Opened from: an untitled view ("SYSEX BULK DUMP") */
     .MidiExclusive = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -4525,6 +4594,8 @@ const naka_midi_reverb_t naka_midi_reverb_data
         .func = NAKA_APFUNC_TtMdExc,
     },
 
+    /* ==== VIEW OBJ_ExcSendWindow: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .ExcSendWindow = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -4741,6 +4812,8 @@ const naka_midi_reverb_t naka_midi_reverb_data
         .data = 0x0003E54C,
     },
 
+    /* ==== VIEW OBJ_ExcRcvWindow: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .ExcRcvWindow = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -4957,6 +5030,10 @@ const naka_midi_reverb_t naka_midi_reverb_data
         .data = 0x0003E576,
     },
 
+    /* ==== SCREEN TITLE_MDGMMODE "GENERAL MIDI" -- "TT_MDGMMODE", title id 0x58, function NAKA_APFUNC_DefaultFunction ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_MDMENU
+     * Opened from: an untitled view ("GENERAL MIDI") */
     .MidiGmMode = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -5048,6 +5125,8 @@ const naka_midi_reverb_t naka_midi_reverb_data
         .func = NAKA_APFUNC_TtMdGm,
     },
 
+    /* ==== VIEW OBJ_GMONSure: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .GMONSure = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -5178,6 +5257,8 @@ const naka_midi_reverb_t naka_midi_reverb_data
         .rect = NAKA_XYWH(0, 0, 32, 32),
     },
 
+    /* ==== VIEW OBJ_GMOFFSure: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .GMOFFSure = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -5308,6 +5389,10 @@ const naka_midi_reverb_t naka_midi_reverb_data
         .func = NAKA_APFUNC_StsAreYouSureCheck,
     },
 
+    /* ==== SCREEN TITLE_MDTXPCG "PROGRAM CHANGE MIDI OUT" -- "TT_MDTXPCG", title id 0x59, function NAKA_APFUNC_DefaultFunction ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_MDMENU
+     * Opened from: an untitled view ("PROG.CHANGE MIDI OUT") */
     .MidiPcgOutput = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -5408,6 +5493,10 @@ const naka_midi_reverb_t naka_midi_reverb_data
         .func = NAKA_APFUNC_TtMdPcgOut,
     },
 
+    /* ==== SCREEN TITLE_MDCOMP "COMPUTER CONNECTION" -- "TT_MDCOMP", title id 0x5A, function NAKA_APFUNC_DefaultFunction ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_MDMENU
+     * Opened from: an untitled view ("COMPUTER CONNECTION") */
     .MidiComputerConnection = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -5509,6 +5598,10 @@ const naka_midi_reverb_t naka_midi_reverb_data
         .func = NAKA_APFUNC_TtComputerConnection,
     },
 
+    /* ==== SCREEN TITLE_MDPMLCTL "PANEL MEMORY OUTPUT" -- "TT_MDPMLCTL", title id 0x5B, function NAKA_APFUNC_DefaultFunction ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_MDMENU
+     * Opened from: an untitled view ("P.MEM OUTPUT") */
     .MidiPanelMemoryOutput = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -5813,6 +5906,10 @@ const naka_midi_reverb_t naka_midi_reverb_data
         .func = NAKA_APFUNC_TtMdPmemOut,
     },
 
+    /* ==== SCREEN TITLE_MDSETUP "MIDI SETTINGS LOAD OPTION" -- "TT_MDSETUP", title id 0x5C, function NAKA_APFUNC_DefaultFunction ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_MDMENU
+     * Opened from: an untitled view ("MIDI SETTINGS LOAD OPTION") */
     .MidiSetup = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -5960,6 +6057,10 @@ const naka_midi_reverb_t naka_midi_reverb_data
         .func = NAKA_APFUNC_TtMdParaLoad,
     },
 
+    /* ==== SCREEN TITLE_ETVOCAL "VOCALIST WORKSTATION" -- "TT_ETVOCAL", title id 0xD7, function NAKA_APFUNC_DefaultFunction ====
+     * Path: mode MD_ENTERTAINER > "VOCALIST WORKSTATION"
+     * EXIT -> TITLE_ETMENU
+     * Opened from: TITLE_ETMENU ("VOCALIST WORKSTATION") */
     .EntertainerVocal = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -5987,7 +6088,7 @@ const naka_midi_reverb_t naka_midi_reverb_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0001,
-        .window = 0x00D70005,
+        .window = NAKA_VIEW_ID(East_ViewableTable_0D7, OBJ_VocalistPage1),
     },
 
     .EntertainerVocal_IvPageControl_2 = {
@@ -5999,7 +6100,7 @@ const naka_midi_reverb_t naka_midi_reverb_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(32, 0, 32, 32),
         .page = 0x0002,
-        .window = 0x00D7000D,
+        .window = NAKA_VIEW_ID(East_ViewableTable_0D7, OBJ_VocalistPage2),
     },
 
     .VocalistPage = {
@@ -6029,6 +6130,8 @@ const naka_midi_reverb_t naka_midi_reverb_data
         .func = NAKA_APFUNC_TtVocalistWorkstation,
     },
 
+    /* ==== VIEW OBJ_VocalistPage1: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .VocalistPage1 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -6167,6 +6270,8 @@ const naka_midi_reverb_t naka_midi_reverb_data
 
     .HarmOnOffBox_stron = ALIGNED_STRING("HARMONY PART LOCAL: ON"),
 
+    /* ==== VIEW OBJ_VocalistPage2: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .VocalistPage2 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -6364,6 +6469,10 @@ const naka_midi_reverb_t naka_midi_reverb_data
         .style = SS_UpDown2,
     },
 
+    /* ==== SCREEN TITLE_ETFADEIN "FADE IN/OUT SETTING" -- "TT_ETFADEIN", title id 0xD8, function NAKA_APFUNC_DefaultFunction ====
+     * Path: mode MD_ENTERTAINER > "FADE IN/OUT SETTING"
+     * EXIT -> TITLE_ETMENU
+     * Opened from: TITLE_ETMENU ("FADE IN/OUT SETTING") */
     .EntertainerFade = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -6503,6 +6612,9 @@ const naka_midi_reverb_t naka_midi_reverb_data
         .func = NAKA_APFUNC_TtFadeInOut,
     },
 
+    /* ==== SCREEN TITLE_SPLITSEL "SPLIT POINT" -- "TT_SPLITSEL", title id 0xEC, function NAKA_APFUNC_DefaultFunction ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_PS */
     .SplitSetting = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,

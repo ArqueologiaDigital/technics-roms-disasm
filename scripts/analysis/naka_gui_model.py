@@ -98,7 +98,54 @@ def tree_files(tree):
     return sorted(glob.glob(os.path.join(ROOT, tree, 'maincpu', 'ui_widgets', '*.c')))
 
 
+def check_tree(tree):
+    """the object enums tell the truth: every record's own OBJ_ constant has its element index,
+    the enum's indentation is the record's depth by its super links, and the links agree with
+    each other (a child's super is its parent, next/prev are mutual).  Returns problem strings."""
+    bad = []
+    for p in tree_files(tree):
+        f = CFile(p)
+        if not f.records:
+            continue
+        depth_of = {}
+        for m in ENUM.finditer(f.text):
+            for ln in m.group(3).split('\n'):
+                mm = re.match(r'^(\s+)(OBJ_\w+),', ln)
+                if mm:
+                    depth_of[mm.group(2)] = (len(mm.group(1)) - 4) // 2
+        recs = {(r['slot'], r['elem']): r for r in f.records}
+        for r in f.records:
+            o = 'OBJ_' + r['member']
+            got = f.obj_index.get(o)
+            if got != (r['slot'], r['elem']):
+                bad.append('%s: %s is %s in the enum, element %d of slot 0x%X in the struct'
+                           % (f.name, o, got, r['elem'], r['slot']))
+                continue
+            sup, sub, nxt, prv = (f.link_value(r['fields'].get(x, '')) for x in ('super', 'sub', 'next', 'prev'))
+            names = f.enums.get(next((lab for lab, (sl, ns) in f.enums.items() if sl == r['slot']), None), (0, []))[1]
+            want = 0 if sup == NONE else (depth_of.get(names[sup]) + 1 if sup is not None and sup < len(names)
+                                         and depth_of.get(names[sup]) is not None else None)
+            if want is None or depth_of.get(o) != want:
+                bad.append('%s: %s is indented at depth %s, its super (%s) says %s'
+                           % (f.name, o, depth_of.get(o), sup, want))
+            for k, back, what in ((sub, 'super', 'sub'), (nxt, 'prev', 'next'), (prv, 'next', 'prev')):
+                c = recs.get((r['slot'], k)) if k not in (None, NONE) else None
+                if c is not None and f.link_value(c['fields'].get(back, '')) != (r['elem'] if what != 'sub' else r['elem']):
+                    bad.append('%s: %s.%s = %s, whose %s is not %s' % (f.name, o, what, k, back, o))
+    return bad
+
+
 def main():
+    if '--check' in sys.argv:
+        trees = [a for a in sys.argv[1:] if not a.startswith('--')] or ['v10', 'v9', 'v7', 'v6', 'v5']
+        bad = []
+        for t in trees:
+            b = check_tree(t)
+            bad += ['%s/%s' % (t, x) for x in b]
+            print('naka_gui_model --check %s: %d problems' % (t, len(b)))
+        for x in bad[:40]:
+            print('  ' + x)
+        sys.exit(1 if bad else 0)
     tree = sys.argv[1] if len(sys.argv) > 1 else 'v10'
     tot = 0
     for p in tree_files(tree):
@@ -115,6 +162,18 @@ if __name__ == '__main__':
 
 
 # ====================================================================== the GUI graph
+# Boot_InitWorkRAM (boot/system_handlers.s) copies two ROM images into DRAM at reset; a view
+# record registered at a DRAM address is initialised from the ROM bytes at the image address.
+WORK_RAM_IMAGES = ((0x3D524, 0xEED8C8, 0x219E), (0xE35E, 0xEEFA66, 0x95B))
+
+
+def rom_image_of(a):
+    """the ROM address a DRAM address is initialised from (None if it is not in an image)."""
+    for ram, rom, n in WORK_RAM_IMAGES:
+        if ram <= a < ram + n:
+            return a - ram + rom
+    return None
+
 STR_LIT = re.compile(r'"((?:[^"\\]|\\.)*)"')
 
 
@@ -237,10 +296,48 @@ class Graph:
             if reg['cls'] != 0x1600010 or not m.inrom(reg['table']):
                 continue
             for k, a in enumerate(m.entries(reg)):
-                if m.inrom(a):
+                if not m.inrom(a):
+                    a = rom_image_of(a)
+                if a is not None:
                     self.rom[(reg['slot'], k)] = (a, tuple(m.u16(a + o) for o in (4, 6, 8, 10)))
         self.edges = []                     # (from title or None, from record key, to title, kind, label)
+        self.func_entries = []              # (from title or None, record key, function name, label)
         self._edges()
+        self._rom_edges()
+
+    def rom_fields(self, key):
+        """{field: (letter, value)} of an element read from the ROM bytes (records outside the C)."""
+        a = self.rom.get(key, (None,))[0]
+        c = self.m.record_class(a) if a is not None else None
+        if not c:
+            return {}
+        out = {}
+        sizes = {1: self.m.u8, 2: self.m.u16, 4: self.m.u32}
+        import nakarest_objtab_map as O
+        for off, name, ch in self.m.class_fields(c):
+            n = O.SIG_SIZE.get(ch, 0)
+            if n in sizes:
+                out[name] = (ch, sizes[n](a + off))
+        return out
+
+    def rom_label(self, key):
+        for fld in ('str', 'title', 'caption', 'stron', 'text', 'str1'):
+            ch, v = self.rom_fields(key).get(fld, (None, None))
+            if ch == 'X' and self.m.inrom(v):
+                s = self.m.string_at(v)
+                if s:
+                    return s
+        return ''
+
+    def _rom_edges(self):
+        for key in self.rom:
+            if key in self.rec:
+                continue
+            for fld, (ch, v) in self.rom_fields(key).items():
+                if ch == 'a' and (v >> 16) == 0x1A0 and v != 0xFFFFFFFF:
+                    kind = 'exit' if fld == 'exit' else 'menu'
+                    for frm in self.screen_titles(key) or [None]:
+                        self.edges.append((frm, key, v, kind, self.rom_label(key)))
 
     def rom_name(self, key):
         """(class name, asm label or address) of an element from the ROM."""
@@ -311,11 +408,37 @@ class Graph:
             k = self.links((key[0], k))[2]
         return out
 
+    def is_menu_class(self, cname):
+        """a class derived from PsMenuBox or VwMenuBox (a menu entry box)."""
+        ids = {c['name']: cid for cid, c in self.m.classes.items()}
+        c = self.m.klass(ids.get(cname, -1))
+        while c:
+            if c['name'] in ('PsMenuBox', 'VwMenuBox'):
+                return True
+            c = self.m.klass(c['parent']) if c['parent'] not in (0xFFFFFFFF, 0x01600000) else None
+        return False
+
+    def menu_function(self, f, r):
+        """the function object a menu-entry box calls when it opens a title by code."""
+        if not self.is_menu_class(r['cls']):
+            return None
+        lt = dict(self.letters.get(r['cls'], []))
+        for fld, letter in lt.items():
+            if letter in 'jk' and fld in r['fields']:
+                v = r['fields'][fld].strip()
+                if v.startswith('NAKA_') and 'DefaultFunction' not in v:
+                    return v
+        return None
+
     def _edges(self):
         for f in self.files:
             for r in f.records:
                 lt = dict(self.letters.get(r['cls'], []))
                 key = (r['slot'], r['elem'])
+                fn = self.menu_function(f, r)
+                if fn:
+                    for frm in self.screen_titles(key) or [None]:
+                        self.func_entries.append((frm, key, fn, self.label(f, r)))
                 for fld, letter in lt.items():
                     if letter != 'a' or fld not in r['fields']:
                         continue
@@ -347,3 +470,54 @@ class Graph:
                     path[to] = path[t] + [(t, lab)]
                     q.append(to)
         return path
+
+
+# ---------------------------------------------------------------- shared renderings
+def title_description(g, tid):
+    """what event_codes.s says a title is, without the parts every comment repeats."""
+    n = g.title_name(tid)
+    c = g.comments.get(n, '')
+    c = re.sub(r'^Title id (0x)?[0-9a-fA-F]+, "TT_\w+":\s*', '', c)
+    c = re.sub(r'\s*Derived by scripts/analysis/naka_object_id_names\.py\.?', '', c)
+    return '' if c.startswith('registered by RegTitle in') else c
+
+
+def title_screen_text(g, tid):
+    """the title string the title's screen shows (its TtlScreen's `title`)."""
+    t = g.titles.get(tid)
+    if not t or t['view'] is None:
+        return ''
+    key = (t['view'] >> 16, t['view'] & 0xFFFF)
+    for k in (key, (key[0], 0)):
+        fr = g.rec.get(k)
+        if fr:
+            s = g.label(*fr)
+            if s:
+                return s
+    return ''
+
+
+def title_path(g, tid, paths=None):
+    """'mode MD_X > "ENTRY" > "ENTRY"', or None when no menu entry leads to the title."""
+    paths = g.menu_paths() if paths is None else paths
+    if tid not in paths:
+        return None
+    parts = []
+    for x, lab in paths[tid]:
+        parts.append('mode %s' % lab if x == 'mode' else ('"%s"' % lab if lab else '(unlabelled entry)'))
+    return ' > '.join(parts)
+
+
+def title_links(g):
+    """per title: menu entries [(label, to)], exits {to}, opened-from [(from, label)]."""
+    import collections
+    menu, exits, into = collections.defaultdict(list), collections.defaultdict(set), collections.defaultdict(list)
+    for frm, key, to, kind, lab in g.edges:
+        if kind == 'exit':
+            if frm is not None:
+                exits[frm].add(to)
+            continue
+        into[to].append((frm, lab))
+        if frm is not None:
+            menu[frm].append((lab, to))
+    return menu, exits, into

@@ -1715,6 +1715,9 @@ const naka_extension_device_t naka_extension_device_data
 
     .w0_text = ALIGNED_STRING(""),
 
+    /* ==== SCREEN TITLE_TEST2 -- "TT_TEST2", title id 0xF5, function NAKA_MAINFUNC_TEST2FUNC ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_PS */
     .TEST2 = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -1836,7 +1839,7 @@ const naka_extension_device_t naka_extension_device_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0001,
-        .window = 0x00F5000B,
+        .window = NAKA_VIEW_ID(Toshi_Viewable_TEST2, OBJ_TEST2OKOK),
     },
 
     .TEST2_IvPageControl_2 = {
@@ -1848,7 +1851,7 @@ const naka_extension_device_t naka_extension_device_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0002,
-        .window = 0x00F5000E,
+        .window = NAKA_VIEW_ID(Toshi_Viewable_TEST2, OBJ_TEST2NGNG),
     },
 
     .TEST2_IvPageControl_3 = {
@@ -1860,7 +1863,7 @@ const naka_extension_device_t naka_extension_device_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0003,
-        .window = 0x00F50011,
+        .window = NAKA_VIEW_ID(Toshi_Viewable_TEST2, OBJ_TEST2NGOK),
     },
 
     .TEST2_IvPageControl_4 = {
@@ -1872,9 +1875,11 @@ const naka_extension_device_t naka_extension_device_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0004,
-        .window = 0x00F50014,
+        .window = NAKA_VIEW_ID(Toshi_Viewable_TEST2, OBJ_TEST2OKNG),
     },
 
+    /* ==== VIEW OBJ_TEST2OKOK: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .TEST2OKOK = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -1920,6 +1925,8 @@ const naka_extension_device_t naka_extension_device_data
 
     .Ok_text_2 = ALIGNED_STRING("OK"),
 
+    /* ==== VIEW OBJ_TEST2NGNG: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .TEST2NGNG = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -1965,6 +1972,8 @@ const naka_extension_device_t naka_extension_device_data
 
     .No_text_2 = ALIGNED_STRING("NO"),
 
+    /* ==== VIEW OBJ_TEST2NGOK: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .TEST2NGOK = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -2010,6 +2019,8 @@ const naka_extension_device_t naka_extension_device_data
 
     .Ok_text_3 = ALIGNED_STRING("OK"),
 
+    /* ==== VIEW OBJ_TEST2OKNG: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .TEST2OKNG = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -2055,6 +2066,11 @@ const naka_extension_device_t naka_extension_device_data
 
     .No_text_4 = ALIGNED_STRING("NO"),
 
+    /* ==== SCREEN TITLE_TEST3 -- "TT_TEST3", title id 0xF6, function NAKA_MAINFUNC_TEST3FUNC ====
+     * What: a self-test screen. While it is up, some panel handlers stand down and one is active
+     *       only there.
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_PS */
     .TEST3 = {
         .class_ = NAKA_CLASS(SineWaveScreen),
         .super = NAKA_NONE,
@@ -2074,6 +2090,9 @@ const naka_extension_device_t naka_extension_device_data
         .oldswno = 0x0003F670,
     },
 
+    /* ==== SCREEN TITLE_TEST4 -- "TT_TEST4", title id 0xF7, function NAKA_MAINFUNC_TEST4FUNC ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_PS */
     .TEST4 = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -2126,6 +2145,9 @@ const naka_extension_device_t naka_extension_device_data
 
     .PanelSwLedCheck_text = ALIGNED_STRING("PANEL SW&LED CHECK"),
 
+    /* ==== SCREEN TITLE_TEST5 -- "TT_TEST5", title id 0xF8, function NAKA_APFUNC_DefaultFunction ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_PS */
     .TEST5 = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -2153,7 +2175,7 @@ const naka_extension_device_t naka_extension_device_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0001,
-        .window = 0x00F80006,
+        .window = NAKA_VIEW_ID(Toshi_Viewable_TEST5, OBJ_TEST51),
     },
 
     .TEST5_IvPageControl_2 = {
@@ -2165,7 +2187,7 @@ const naka_extension_device_t naka_extension_device_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0002,
-        .window = 0x00F80008,
+        .window = NAKA_VIEW_ID(Toshi_Viewable_TEST5, OBJ_TEST52),
     },
 
     .TEST5_IvPageControl_3 = {
@@ -2177,7 +2199,7 @@ const naka_extension_device_t naka_extension_device_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0003,
-        .window = 0x00F8000A,
+        .window = NAKA_VIEW_ID(Toshi_Viewable_TEST5, OBJ_TEST53),
     },
 
     .TEST5_IvPageControl_4 = {
@@ -2189,7 +2211,7 @@ const naka_extension_device_t naka_extension_device_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0004,
-        .window = 0x00F8000C,
+        .window = NAKA_VIEW_ID(Toshi_Viewable_TEST5, OBJ_TEST54),
     },
 
     .TEST5_IvPageControl_5 = {
@@ -2201,9 +2223,11 @@ const naka_extension_device_t naka_extension_device_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0005,
-        .window = 0x00F8000E,
+        .window = NAKA_VIEW_ID(Toshi_Viewable_TEST5, OBJ_TEST55),
     },
 
+    /* ==== VIEW OBJ_TEST51: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .TEST51 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -2234,6 +2258,8 @@ const naka_extension_device_t naka_extension_device_data
 
     .LcdPanelTest_text = ALIGNED_STRING("LCD PANEL TEST"),
 
+    /* ==== VIEW OBJ_TEST52: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .TEST52 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -2264,6 +2290,8 @@ const naka_extension_device_t naka_extension_device_data
 
     .LcdPanelTest_text_2 = ALIGNED_STRING("LCD PANEL TEST"),
 
+    /* ==== VIEW OBJ_TEST53: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .TEST53 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -2294,6 +2322,8 @@ const naka_extension_device_t naka_extension_device_data
 
     .LcdPanelTest_text_3 = ALIGNED_STRING("LCD PANEL TEST"),
 
+    /* ==== VIEW OBJ_TEST54: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .TEST54 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -2324,6 +2354,8 @@ const naka_extension_device_t naka_extension_device_data
 
     .LcdPanelTest_text_4 = ALIGNED_STRING("LCD PANEL TEST"),
 
+    /* ==== VIEW OBJ_TEST55: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .TEST55 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -2354,6 +2386,8 @@ const naka_extension_device_t naka_extension_device_data
 
     .LcdPanelTest_text_5 = ALIGNED_STRING("LCD PANEL TEST"),
 
+    /* ==== VIEW OBJ_TEST56: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .TEST56 = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -3109,6 +3143,9 @@ const naka_extension_device_t naka_extension_device_data
 
     .H_text_40 = "H",
 
+    /* ==== SCREEN TITLE_TEST6 -- "TT_TEST6", title id 0xF9, function NAKA_MAINFUNC_TEST6FUNC ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_PS */
     .TEST6 = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -3166,7 +3203,7 @@ const naka_extension_device_t naka_extension_device_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0001,
-        .window = 0x00F90005,
+        .window = NAKA_VIEW_ID(Toshi_Viewable_TEST6, OBJ_TEST6OK),
     },
 
     .TEST6_IvPageControl_2 = {
@@ -3178,9 +3215,11 @@ const naka_extension_device_t naka_extension_device_data
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
         .page = 0x0002,
-        .window = 0x00F90007,
+        .window = NAKA_VIEW_ID(Toshi_Viewable_TEST6, OBJ_TEST6NG),
     },
 
+    /* ==== VIEW OBJ_TEST6OK: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .TEST6OK = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -3211,6 +3250,8 @@ const naka_extension_device_t naka_extension_device_data
 
     .MayBeOk_text = "= may be OK",
 
+    /* ==== VIEW OBJ_TEST6NG: Window, the top of an object tree that no title shows
+     * directly (a window, page or popup another view or procedure opens) ==== */
     .TEST6NG = {
         .class_ = NAKA_CLASS(Window),
         .super = NAKA_NONE,
@@ -3241,6 +3282,9 @@ const naka_extension_device_t naka_extension_device_data
 
     .No_text_5 = ALIGNED_STRING("= NO"),
 
+    /* ==== SCREEN TITLE_EXT -- "TT_EXT", title id 0xFB, function NAKA_APFUNC_DefaultFunction ====
+     * Path: no menu entry opens it (opened by code)
+     * EXIT -> TITLE_PS */
     .EXT = {
         .class_ = NAKA_CLASS(IvScreen),
         .super = NAKA_NONE,
