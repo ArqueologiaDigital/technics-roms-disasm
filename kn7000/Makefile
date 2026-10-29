@@ -59,7 +59,8 @@ baserom/kn7000_program.rom baserom/kn7000_table.rom &:
 # --labels: the previous build's label addresses seed kn7asm's first pass (only
 # an estimate -- the passes still run until one is exact -- so a fully
 # converted program assembles in about one pass instead of five).
-build/kn7000_program.rom: src/program.s $(wildcard src/program/*.s) src/symbols.inc tools/kn7asm.py baserom/kn7000_program.rom
+build/kn7000_program.rom: src/program.s $(wildcard src/program/*.s) $(wildcard src/program/data/*) src/symbols.inc \
+		src/constants.inc tools/kn7asm.py baserom/kn7000_program.rom
 	@mkdir -p build
 	$(ASM) src/program.s -I . -o $@ --labels build/kn7000_program.labels
 
@@ -81,6 +82,23 @@ constants src/constants.inc: tools/gen_constants.py baserom/kn7000_program.rom
 program-src: tools/gen_program_s.py tools/mn10300_asm.py kn7000.sym kn7000_manual.sym \
 		kn7000_exports_from_942.sym $(wildcard annotations/*.ann) baserom/kn7000_program.rom
 	UNIDASM=$(UNIDASM) $(PYTHON) tools/gen_program_s.py
+
+# Regenerate src/program/data/, the data region (file 0x186000..0x3B8FD1) as typed
+# source: the MILK class / object / name tables and the widget records as macros,
+# strings, pointer tables (tools/gen_data_s.py, tools/milk_model.py; reads the
+# converted code and build/kn7000_program.labels, so build first). The committed
+# files are the result; the build does not need this.
+.PHONY: data-src
+data-src: tools/gen_data_s.py tools/milk_model.py baserom/kn7000_program.rom build/kn7000_program.rom
+	$(PYTHON) tools/gen_data_s.py
+
+# The GUI menu map (notes/gui-data-region/menu-map.md), generated from the typed
+# data region's source by tools/gui_menu_map.py; verify-gui-map fails when it is stale.
+.PHONY: gui-map verify-gui-map
+gui-map:
+	$(PYTHON) tools/gui_menu_map.py
+verify-gui-map:
+	@$(PYTHON) tools/gui_menu_map.py --check
 
 # The table image's pictures live in src/table/: the 57 JPEG segments, and in
 # subdirectories the JPEG/BMP items of the picture-group segments. The same files

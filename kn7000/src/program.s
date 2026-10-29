@@ -8,8 +8,8 @@
 # region 1 and the library image are split at the recovered functions
 # (kn7000.sym + kn7000_manual.sym) and emitted as MN10300 assembly, each
 # instruction checked byte-exact by the mn10300_asm encoder; their parts
-# are in src/program/. The data region stays raw .incbin_range except the
-# palette. make verify guarantees byte-identity.
+# are in src/program/. The data region is typed source in src/program/data/
+# (tools/gen_data_s.py). make verify guarantees byte-identity.
 #
 # Labels in converted code: a function keeps its symbol-file name (an
 # `X_entry` label is the register-save `call` entry a few bytes after the
