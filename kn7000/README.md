@@ -62,6 +62,9 @@ kn7000_b935*.sym, kn7000_b893*.sym  Their symbols: ported from 941 through the o
                 names carried by code.
 src/ic18/boot.s IC18's first 64 KB, the boot ROM and update system, GENERATED, fully
                 disassembled: see "IC18". kn7000_ic18.sym holds its names.
+src/ic18/rhythm.s  IC18 from 0x10000: the "Technics Rhythms" style data, GENERATED, every
+                record and event typed; one file per style in src/ic18/styles/<group>/,
+                the leftovers in src/ic18/old_build.s; src/ic18/ic18.s is boot.s + rhythm.s.
 src/cnv/        The seven Style Convert Disk converters (.CNV), GENERATED, fully
                 disassembled: see "Style Convert Disk converters".
 cnv_manual.sym  Their names: one line per routine shared across converters.
@@ -83,11 +86,13 @@ make verify-sp7001     # SP7001 firmware (942 / 83) + BASEEXT.XAP: assert 100% b
 make verify-sp7001-floppy  # table 83 vs the SP7001 update's two table disks (+ SMCKTB*.INF)
 make verify-table80    # table build 80 from src/b80/table.s (+ table 83): assert 100% byte-match
 make verify-ic18       # the IC18 boot ROM from src/ic18/boot.s: assert 100% byte-match
+make verify-ic18-full  # all 4 MB of IC18 from src/ic18/ic18.s (boot ROM + rhythm data): assert 100% byte-match
 make verify-935        # program build 935 (v1.5) from src/b935/: assert 100% byte-match
 make verify-893        # program build 893 (v1.3) from src/b893/: assert 100% byte-match
 make verify-wave       # the 4 wave ROMs from src/wave/main.s + sub.s (notes/wave-roms-2026-10-29.md)
 make symbols-935 program-src-935 ported-names-935 check-names-935   # regenerate / check it (same for 893)
 make ic18-src          # regenerate src/ic18/boot.s (needs unidasm and baserom/kn7000_program.rom)
+make ic18-rhythm-src   # regenerate src/ic18/rhythm.s (needs baserom/kn7000_program.rom and _table.rom)
 make symbols-sp7001    # port the 941/84 symbols to 942/83 (+ the plug-in's own names)
 make program-src-sp7001 table-src-sp7001   # regenerate src/sp7001/*.s (needs unidasm)
 make verify-cnv        # the 7 Style Convert Disk converters from src/cnv/: assert 100% byte-match
@@ -343,8 +348,16 @@ CS0 or picture flash; then it jumps to the firmware at `0x48400000`. [`src/ic18/
 is all of it, made by [`tools/gen_ic18_s.py`](tools/gen_ic18_s.py): recursive descent through its jump
 tables, then every gap decoded; every routine named from the code (`kn7000_ic18.sym`) or from the
 firmware where the code is the same, every table typed, nothing `.incbin`'d. The reference is cut from the
-chip image in the private romset (SHA-1 checked, not committed). Details, including the rest of IC18 (the
-rhythm data): [`notes/ic18-boot-rom.md`](notes/ic18-boot-rom.md). `make verify-ic18`.
+chip image in the private romset (SHA-1 checked, not committed). Details:
+[`notes/ic18-boot-rom.md`](notes/ic18-boot-rom.md). `make verify-ic18`.
+
+The rest of IC18, from `0x10000`, is the built-in rhythm data: the "Technics Rhythms" resource with 169
+styles of 20 variations and 8 count-in patterns (the other 51 of the 220 rhythms are in the table ROM).
+[`src/ic18/rhythm.s`](src/ic18/rhythm.s), made by [`tools/gen_ic18_rhythm_s.py`](tools/gen_ic18_rhythm_s.py),
+types every header, table, style record, part set-up and variation record, and every event of every
+pattern, one per line, a file per style under `src/ic18/styles/`. `make verify-ic18-full` rebuilds all
+4 MB. Format:
+[`notes/ic18-rhythm-rom.md`](notes/ic18-rhythm-rom.md).
 
 ## IC19, the picture ROM
 
