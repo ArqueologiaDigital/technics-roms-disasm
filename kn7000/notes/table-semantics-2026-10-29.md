@@ -213,6 +213,44 @@ Field readings for the 0x7A units are left as candidates, not applied. The `Tg*`
 does not fit the 0x1C-byte voice sub-record the staging stores there. Which record those offsets
 really address needs the staging traced once more.
 
+## The SP7001 plug-in's GUI data: preparation (not typed yet)
+
+These are the three generic plug-in gaps of table 83: 0x3EF6C5..0x3F782C (33,127 B),
+0x3F783E..0x3F88F0 (4,274 B) and 0x3F9194..0x3FB59C (9,224 B). They hold the plug-in's MILK GUI:
+its own class records, their field-name arrays, the widget records and their caption strings
+("SELECT SONG", "SD-AUDIO PLAY" ...).
+
+`table-semantics-probes/plugin_milk_probe.py` finds the plug-in's 10 classes, at 0x483F8DB8..
+0x483F8EA8. The record is the 24-byte KN5000/KN7000 class layout that lane gui-kn7000 documents.
+
+| class               | parent       | allsize | selfsize | own fields                                                                       |
+|---------------------|--------------|---------|----------|----------------------------------------------------------------------------------|
+| `AcKssList`         | `0x00040012` | 112     | 80       | ap_func, style_id, is_big, ... num_items, enum_type, is_ringlist, dial, ... (28) |
+| `PsKssTextBox`      | `0x0004001D` | 64      | 24       | is_3d, ver_align, padding, auto_wrap, init_str, str_adr                          |
+| `KssBgScreen`       | `0x00040041` | 52      | 12       | image_id, title, icon                                                            |
+| `DbKssMemo`         | `0x00040012` | 44      | 12       | ap_func, popup, extension                                                        |
+| `AcKssScreenMenu`   | `0x02F40001` | 72      | 8        | ap_func, editsw                                                                  |
+| `AcKssEditBox`      | `0x0004001D` | 84      | 44       | ap_func, editsw, is_selected, selection, caption, cap_font, ... (13)             |
+| `AcKssNamingWindow` | `0x00040043` | 44      | 0        | (none)                                                                           |
+| `IvKssNaming`       | `0x00040015` | 28      | 4        | func                                                                             |
+| `AcKssNamingEditSw` | `0x00040020` | 52      | 8        | sign, page                                                                       |
+| `KssXLyricsBox`     | `0x00040012` | 36      | 4        | pEnable                                                                          |
+
+The parents are the firmware's block-0 classes (`0x0004xxxx`), plus one class of the plug-in's own
+registry slot 0x2F4 (`0x02F40001`; `AcKssScreenMenu` derives from it). After the field-name strings,
+the widget records start at about 0x3F0668. Each is a Viewable header: class id, super / sub / next /
+prev indices, flag, rect. It is followed by the class's own fields and, inline, the caption
+strings the records point at.
+
+Plan, once `data/gui-kn7000` is on main:
+
+1. Reuse `milk_model.py`, which computes the field sizes from propdata and checks the links, and
+   reuse the per-class macros of `gui_classes.inc` for the firmware's base classes.
+2. Generate macros for the 10 KSS classes from the records above.
+3. Spell every record by name, with the class by name, rect as X/Y/W/H and links by object name,
+   from `gen_table_s.py`'s plug-in pass.
+4. Add the plug-in's screens to the menu map.
+
 ## BASEEXT.XAP 0x167E4..0x16810
 
 It is now typed: 0xFFFFFFFF, the pointer 0x502AFF88, eight u32 values `0x02F001nn` (nn = 3, 4, 5,
