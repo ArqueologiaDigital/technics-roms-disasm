@@ -6,8 +6,11 @@ that lane typed program 941's GUI, demo songs, built-in style, reader tables, sp
 memories, and left about 793 KB per build generic.  This lane types what is left from the code that
 reads it.
 
-(Status, numbers and the open list: see "Census" and "What remains" below; they are filled in as
-the work lands.)
+Result for program 941: of the 793,436 bytes lane gui-kn7000 left generic, 17,416 bytes in 433
+pieces stay generic (each read by some instruction no pass could turn into a type, listed under
+"What remains"); 119,033 bytes in 4,129 pieces are declared opaque because no instruction reads
+them (see "What is declared opaque"); the rest is typed.  The other three builds get the same
+from the same generator (see "Census").
 
 ## The instrument: who reads each byte (`tools/data_readers.py`)
 
@@ -101,6 +104,56 @@ and are listed under "What remains".
   0x483F9130 holds 25 names and the code run before its NUL 25 entries (0x483F90C8..0x483F9128).
 - 935 and 893 still called 941's get_tid routine ter_tsk (941's names were corrected by 612f5881c
   and never re-ported); `make symbols-935 symbols-893` re-ported them with those programs.
+
+## Census
+
+`gap_kinds.py` (`../gui-data-region-probes/`; it counts only the generic `.incbin_range` pieces, not
+the ones declared opaque), program 941:
+
+| kind         | before (434eed3b4) pieces | before bytes | after pieces | after bytes |
+|--------------|---------------------------|--------------|--------------|-------------|
+| other binary | 3,812                     | 627,482      | 374          | 15,974      |
+| text-like    | 330                       | 75,819       | 24           | 186         |
+| pointer-like | 415                       | 62,275       | 5            | 684         |
+| 7-bit values | 1,253                     | 25,800       | 29           | 568         |
+| short tails  | 484                       | 2,060        | 1            | 4           |
+| total        | 6,294                     | 793,436      | 433          | 17,416      |
+
+`scripts/analysis/data_incbin_census.py` (count / bytes; "before" is 434eed3b4, lane gui-kn7000's
+end; "after" is 287a2d468):
+
+| tree           | before generic  | generated     | media           | opaque          | generic n | generic bytes |
+|----------------|-----------------|---------------|-----------------|-----------------|-----------|---------------|
+| kn7000-program | 6,294 / 793,436 | 87 / 162,942  | 10 / 58,992     | 4,129 / 119,033 | 433       | 17,416        |
+| kn7000-sp7001  | 6,382 / 837,130 | 526 / 462,454 | 169 / 1,375,301 | 3,120 / 123,492 | 424       | 63,269        |
+| kn7000-b935    | 6,304 / 794,127 | 87 / 162,942  | 10 / 58,992     | 3,112 / 126,019 | 421       | 16,644        |
+| kn7000-b893    | 6,315 / 793,764 | 87 / 162,942  | 10 / 58,992     | 3,105 / 124,902 | 418       | 16,544        |
+
+kn7000-sp7001 also holds table build 83: three of its generic entries (46,625 bytes) are in
+`src/sp7001/table.s` (the table flash's XAPR plug-in region), outside the program data this lane
+covers.  The generated column is the bitmaps (`census: generated -- tools/table_png.py`).
+
+## What remains
+
+- **Generic, read but untyped (941: 433 pieces, 17,416 bytes).**  Each holds an address some
+  instruction reads, loads as a base or passes to a call, but no pass could give the bytes a type:
+  mostly blocks handed to a library routine as a0 / a1 (`func_4C01C252`, `func_4C01A6ED`, the MILK
+  `NameProc` / `ConstFlagProc` argument words), 256 x u16 lookup tables read with an index the walk
+  does not scale (`DrawIcons_PixelPairTable`), the continuation of name / value tables after a NULL
+  name (`names_48589D3C`), the 4-byte records after the demo banks (0x48791DDF.., three copies),
+  and the conversion-rule pieces after `NoteConvRules` (0x485CC220).  The biggest are in
+  `../data-rest-probes/` (`pieces.py`).
+- **Counts that are inferences.**  An array's record count is where its records stop being free,
+  its pointer fields stop holding addresses, or another base / name begins, capped by an index
+  bound the readers check (`cmp N, rX` before the branch, or a byte index).  Where the readers
+  check nothing, an all-number array can run on into the next table (listed in each macro header
+  as its count).
+- **Field names.**  `tools/data_struct_names.py` names 17 record kinds; the rest keep offset names
+  (f / p / s / a / x + offset) with every field's readers in the header.
+- **Bitmaps without MT_GetBitCount** are taken as 4 bits a pixel only when their pixels end at the
+  next label ([INFERENCE]).
+- **Dispatch tables** (`{u32 key, code address}`) are named by their shape; their readers are cited
+  only where the walk sees them.
 
 ## Website page draft
 
