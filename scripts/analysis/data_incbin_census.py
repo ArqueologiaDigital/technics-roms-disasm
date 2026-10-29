@@ -14,8 +14,8 @@ WHAT IT READS
 SIZE
   `.incbin "f", skip, count`  -> count;   `.incbin "f", skip` -> size(f) - skip;   `.incbin "f"` -> size(f);
   `.incbin_range "f", a, b`   -> b - a.
-  A file is looked up next to the including file, then in each ancestor directory up to the repo root, and in
-  `<tree>/build/`.  A file that does not exist (not built yet, or a git-ignored reference not copied) and has no
+  A file is looked up next to the including file, then in each ancestor directory (and its `build/`) up to the
+  repo root, and in `<tree>/build/`.  A file that does not exist (not built yet, or a git-ignored reference not copied) and has no
   count is reported as `unsized`; run the tree's build first for exact byte figures.
 
 CLASSES (first match wins)
@@ -115,6 +115,7 @@ def locate(path, src, tree_dirs):
     d = (ROOT / src).parent
     while True:
         cands.append(d / path)
+        cands.append(d / "build" / path)
         if d == ROOT:
             break
         d = d.parent
