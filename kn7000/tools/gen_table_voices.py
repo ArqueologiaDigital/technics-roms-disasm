@@ -277,7 +277,7 @@ def internal_voice_archive(d, s, e, label, ref):
             for k in range(128):
                 q = o + 0x27 + 3 * k
                 tl.append(f"    tone_note\t0x{c[q]:02x}, 0x{c[q + 1]:02x}, 0x{c[q + 2]:02x}\t# note {k}")
-        elif size >= 0x54 + 0x7A and (size - 0x54) % 0x7A == 0:
+        elif size >= 0x54 and ((size - 0x54) % 0x7A == 0 or size < 0x54 + 0x7A):
             h = c[o:o + 0x54]
             tl.append(f"    tone_head\t0x{h[0x10]:02x}, 0x{h[0x11]:02x}, 0x{h[0x12]:02x}")
             tl.append(f"    .byte\t{hexrow(h[0x13:0x23])}\t# +0x13")
@@ -290,9 +290,121 @@ def internal_voice_archive(d, s, e, label, ref):
                 tl.append(f"{labels[o]}_Unit{k}:\t\t# +0x54 + {k} x 0x7A (VoiceModRecFetch 0x4844982A)")
                 for j in range(0, 0x7A, 16):
                     tl.append(f"    .byte\t{hexrow(c[q + j:q + min(j + 16, 0x7A)])}\t# +0x{j:02x}")
+            if (size - 0x54) % 0x7A:
+                q = o + 0x54
+                tl.append(f"    .byte\t{hexrow(c[q:o + size])}\t# after the head: no unit (reader not traced)")
         else:
             size = 16
         put(o, size, tl)
+
+    # ---- the remaining tables the bank block points at ----
+    def rows(o, size, stride, lab, head, name_len=0, row_label=None):
+        out_ = [f"{lab}:\t\t# {head}"]
+        n = size // stride
+        for k in range(n):
+            q = o + stride * k
+            if row_label:
+                out_.append(f"{row_label}{k:02d}:")
+            j = 0
+            if name_len:
+                out_.append(f"    .ascii\t{asc(c[q:q + name_len])}")
+                j = name_len
+            while j < stride:
+                out_.append(f"    .byte\t{hexrow(c[q + j:q + min(j + 16, stride)])}\t# +0x{j:02x}")
+                j += 16
+        rest = size - n * stride
+        if rest:
+            out_.append(f"    .byte\t{hexrow(c[o + n * stride:o + size])}\t# after the last row")
+        put(o, size, out_)
+
+    t = lambda k: u32(c, T + k)                                        # noqa: E731
+    # T + 0x00: a tone record outside the directory, "Initial" (0x54 + 4 x 0x7A)
+    o = t(0x00)
+    tl = [f"    .ascii\t{asc(c[o:o + 16])}", f"    tone_head\t0x{c[o + 0x10]:02x}, 0x{c[o + 0x11]:02x}, 0x{c[o + 0x12]:02x}"]
+    for a_, b_ in ((0x13, 0x23), (0x23, 0x33), (0x33, 0x44)):
+        tl.append(f"    .byte\t{hexrow(c[o + a_:o + b_])}\t# +0x{a_:02x}")
+    tl.append(f"    tone_type\t0x{c[o + 0x44]:02x}, 0x{c[o + 0x45]:02x}")
+    tl.append(f"    .byte\t{hexrow(c[o + 0x46:o + 0x54])}\t# +0x46")
+    nu = (t(0x04) - o - 0x54) // 0x7A
+    for k in range(nu):
+        q = o + 0x54 + 0x7A * k
+        tl.append(f"JkInitialTone_Unit{k}:")
+        for j in range(0, 0x7A, 16):
+            tl.append(f"    .byte\t{hexrow(c[q + j:q + min(j + 16, 0x7A)])}\t# +0x{j:02x}")
+    labels[o] = "JkInitialTone"
+    put(o, 0x54 + 0x7A * nu, ["JkInitialTone:\t\t# bank block +0x00: a tone record outside the directory"] + tl)
+    # T + 0x04: the default voice record (VoiceRecDefaultPtr), 0x10 + one 0x1C sub-record
+    o = t(0x04)
+    labels[o] = "JkDefaultVoice"
+    put(o, 0x2C, ["JkDefaultVoice:\t\t# bank block +0x04 (VoiceRecDefaultPtr 0x484497E0)",
+                  f"    .ascii\t{asc(c[o:o + 13])}", f"    .byte\t{hexrow(c[o + 13:o + 16])}",
+                  f"    .byte\t{hexrow(c[o + 16:o + 0x2C])}\t# sub-record 0"])
+    # the sound directory's +0x10 / +0x14: 128 sixteen-character names and a 128-byte table
+    o = u32(c, D + 0x10)
+    labels[o] = "JkGroupNames"
+    put(o, 0x800, ["JkGroupNames:\t\t# sound directory +0x10: 128 names of 16 characters (PIANO, GUITAR ...)"] +
+        [f"    .ascii\t{asc(c[o + 16 * k:o + 16 * k + 16])}\t# {k}" for k in range(128)])
+    o = u32(c, D + 0x14)
+    labels[o] = "JkGroupTable"
+    rows(o, 0x80, 16, "JkGroupTable", "sound directory +0x14: 128 bytes, reader not traced")
+    # descriptor +0x30 .. +0x44 (T + 0x3C .. 0x50) and T + 0x08
+    o = t(0x3C)
+    labels[o] = "JkDesc30Records"
+    rows(o, t(0x40) - o, 0x10, "JkDesc30Records", "descriptor +0x30: 0x10-byte records (func_484499E9 indexes them by a byte)")
+    o = t(0x40)
+    labels[o] = "JkDesc34Rows"
+    rows(o, t(0x44) - o, 0x14, "JkDesc34Rows", "descriptor +0x34: 20-byte rows, reader not traced")
+    o = t(0x44)
+    labels[o] = "JkDesc38Table"
+    rows(o, t(0x24) - o, 0x10, "JkDesc38Table", "descriptor +0x38: reader not traced")
+    o = t(0x24)
+    labels[o] = "JkElementTable"
+    rows(o, t(0x50) - o, 0x23, "JkElementTable", "descriptor +0x18: elements of 0x23 bytes (VoiceElemRecFetch 0x4844987C); "
+         "TgVoiceZoneVeloResolve reads 5-byte entries from +5 by velocity layer")
+    o = t(0x50)
+    labels[o] = "JkTuningTable"
+    rows(o, t(0x4C) - o, 0x1C, "JkTuningTable", "descriptor +0x44: [INFERENCE] scale tunings, a 16-byte name and 12 "
+         "values (0x80 = 0) per scale (FLAT, DUMMY ...)", name_len=16)
+    o = t(0x4C)
+    labels[o] = "JkCurveTable"
+    rows(o, t(0x08) - o, 0x90, "JkCurveTable", "descriptor +0x40: a 16-byte name and 128 values per curve (PIANO ...)",
+         name_len=16)
+    o = t(0x08)
+    labels[o] = "JkKeyTables"
+    rows(o, u32(c, D + 0x44) - o, 0x80, "JkKeyTables", "bank block +0x08: 128-byte key tables, reader not traced")
+    # descriptor +0x3C (T + 0x48): 40 named records of 0x2C8 bytes
+    o = t(0x48)
+    labels[o] = "JkDesc3CRecords"
+    rows(o, t(0x00) - o, 0x2C8, "JkDesc3CRecords", "descriptor +0x3C: 40 named records of 0x2C8 bytes (the size of a "
+         "SOUND EDIT record, 0x500C0784 + n x 0x2C8)", name_len=16)
+    # the zones the tone-key table's entries point at (entry +14), 8 bytes each
+
+    # an array of 8-byte zones after the multisample data (labels only where an aligned offset to it exists)
+    ms_end = max(max(b + zs * nz, a + 4 + ng) for i, r, a, b, fl, km, ng, nz, zs in recs)
+    zone_hi = min(x for x in items if x > ms_end)
+    tz = sorted({u32(c, p_ + 14) for p_ in chains[0][7] if ms_end <= u32(c, p_ + 14) < zone_hi})
+    z0 = ms_end + (2 if c[ms_end:ms_end + 2] == b"\xff\xff" else 0)
+    tz = [x for x in tz if (x - z0) % 8 == 0]
+    if (zone_hi - z0) % 8 == 0:
+        zend = zone_hi
+        if z0 > ms_end:
+            put(ms_end, 2, ["    .space\t2, 0xff\t# alignment"])
+        zl = ["JkKitZones:\t\t# 8-byte zones after the multisample data; no offset to them was found in the",
+              "\t\t\t# archive (the drum-kit path, TgDrumStageStd 0x4C035879, is the candidate reader)"]
+        for k in range((zend - z0) // 8):
+            z = z0 + 8 * k
+            page, fb, ent, b4, b5 = c[z], c[z + 1], u16(c, z + 2), c[z + 4], c[z + 5]
+            names = [f"{tg}_P{page:02X}_E{ent:03X}" for tg in ("Main", "Sub") if f"{tg}_P{page:02X}_E{ent:03X}" in WAVE]
+            rec = " / ".join(names) if names else f"page 0x{page:02x} entry 0x{ent:03x}: no such wave entry"
+            if z in tz:
+                zl.append(f"JkKitZone{z:06x}:")
+            zl.append(f"    jk_zone8\t0x{page:02x}, 0x{fb:02x}, 0x{ent:03x}, {b4}, {b5}, "
+                      f"{struct.unpack_from('<h', c, z + 6)[0]}\t# {rec}")
+        for x in tz:
+            labels[x] = f"JkKitZone{x:06x}"
+        put(z0, 8 * ((zend - z0) // 8), zl)
+    if c[0x20:0x24] == bytes(4) and 0x20 not in items:
+        put(0x20, 4, ["    .space\t4, 0x00\t# before the first hash chain"])
 
     # ---- assemble, passthroughs for the gaps ----
     out = []
