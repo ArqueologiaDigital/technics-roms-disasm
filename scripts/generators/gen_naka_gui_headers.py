@@ -289,7 +289,11 @@ def ram_cells(path):
     base = int(re.search(r'^#define BASE\s+0x([0-9A-Fa-f]+)u', txt, re.M).group(1), 16)
     ram0 = base - 0xEED8C8 + 0x3D524
     local = {}
-    for mm in re.finditer(r'typedef struct __attribute__\(\(packed\)\) \{([^{}]*)\} (\w+);', txt):
+    # the class records typed in the image (naka_cls_<Class>_t, naka_classes.h) count as local
+    # structs too: their live-value fields are cells like any other
+    hdr = open(os.path.join(os.path.dirname(path), 'naka_classes.h'), encoding='latin-1').read()
+    CM.register_local_types(hdr)
+    for mm in re.finditer(r'typedef struct __attribute__\(\(packed\)\) \{([^{}]*)\} (\w+);', hdr + '\n' + txt):
         fl, off = [], 0
         for ln in mm.group(1).split('\n'):
             f = re.match(r'\s*(u?int(?:8|16|32)_t|char)\s+(\w+)((?:\[\d+\])*)\s*;', ln)
