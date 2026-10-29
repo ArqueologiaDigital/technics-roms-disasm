@@ -21,9 +21,15 @@ table_data/includes/preset_data.p
 # and its LZSS payload are both generated (see the demo-preset rules in Makefile).
 table_data/includes/demo_presets/demo_preset_*.bin
 
-# Help databases: the checked-in source is the decompressed help_db_<lang>.bin;
-# the SLIDE8K payload is generated (see the help-database rules in Makefile).
+# Help databases: the SLIDE8K payload is generated (see the help-database rules in Makefile).
 table_data/includes/help_databases/help_db_*_compressed.bin
+# ... and since 2026-10-29 the five live decompressed databases too: their source is the text
+# listing help_db_<lang>.txt (scripts/build/help_db_text.py).  help_db_german_stale.bin stays tracked.
+table_data/includes/help_databases/help_db_english.bin
+table_data/includes/help_databases/help_db_german.bin
+table_data/includes/help_databases/help_db_french.bin
+table_data/includes/help_databases/help_db_spanish.bin
+table_data/includes/help_databases/help_db_indonesian.bin
 
 # The table_data stale-remnant duplicate (style_records.s + help_databases.s): derived
 # byte-for-byte from help_db_english_compressed.bin + help_db_german_compressed.bin by
@@ -94,3 +100,9 @@ original_ROMs/kn5000_v6_program.rom
 original_ROMs/kn5000_v5_program.rom
 # HD-AE5000 v2.01i: same convention (HDAE5000_V201_REF in Makefile).
 original_ROMs/hd-ae5000_v2_01i.ic4
+# KN5000 waveform ROM IC307: same convention (KN5000_IC307_REF in Makefile).
+original_ROMs/kn5000_waveform_rom.ic307
+# KN5000 rhythm data ROM IC14, descrambled image and raw chip read: same convention
+# (KN5000_RHYTHM_REF / KN5000_RHYTHM_RAW_REF in Makefile).
+original_ROMs/kn5000_rhythm_data_rom.ic14
+original_ROMs/kn5000_rhythm_data_rom.ic14.as-read-a19a21-swapped

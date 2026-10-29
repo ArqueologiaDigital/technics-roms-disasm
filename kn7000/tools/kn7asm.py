@@ -39,7 +39,9 @@
 #
 # An instruction operand may be NAME+N or NAME-N (folded to one number).
 #
-# EXPR supports hex (0x..), decimal, defined symbols, and + - * ( ).
+# EXPR supports hex (0x..), decimal, defined symbols, and + - * ( ), and also
+# / (integer division), << >> | & with Python's precedence (| lowest, then &,
+# then the shifts, then + -, then * /): `PFMT | 18<<4 | 5`, `(Rec - Page) / 2`.
 # Numeric byte/word/long args additionally accept the same expressions.
 #
 # An instruction operand or an EXPR may name a label defined LATER in the source
@@ -91,6 +93,9 @@ class Assembler:
         self.known = {}    # symbol -> value, as found by the previous pass
         self.parsed = {}   # path -> its lines, parsed once for every pass
         self.enc_cache = {}  # (mnemonic, resolved operands, pc) -> bytes, this pass
+        self.file_cache = {}  # path -> its bytes, read once for every pass (an open() on the
+                              # virtiofs share costs ~3 ms, and a source may hold thousands of
+                              # .incbin_range lines of one reference image)
         self.start_pass()
 
     def start_pass(self):
@@ -171,12 +176,14 @@ class Assembler:
     def evaluate(self, expr):
         expr = expr.strip()
         # tokenise into numbers, symbols and operators
-        tokens = re.findall(r"0x[0-9A-Fa-f]+|\d+|[A-Za-z_.][\w.]*|[()+\-*]", expr)
+        tokens = re.findall(r"0x[0-9A-Fa-f]+|\d+|[A-Za-z_.][\w.]*|<<|>>|[()+\-*/|&]", expr)
         py = []
         for tok in tokens:
             if re.fullmatch(r"0x[0-9A-Fa-f]+|\d+", tok):
                 py.append(str(int(tok, 0)))
-            elif tok in "()+-*":
+            elif tok == "/":
+                py.append("//")                # integer division
+            elif tok in ("<<", ">>") or tok in "()+-*|&":
                 py.append(tok)
             else:
                 if tok == ".":
@@ -265,9 +272,7 @@ class Assembler:
                       f"{len(self.out):#x} (gap or overlap in the layout)")
         if end < start:
             raise AsmError(f".incbin_range end {end:#x} < start {start:#x}")
-        with open(path, "rb") as f:
-            f.seek(start)
-            chunk = f.read(end - start)
+        chunk = self.file_bytes(path)[start:end]
         if len(chunk) != end - start:
             raise AsmError(f"{path}: only {len(chunk):#x} bytes available for "
                            f"range [{start:#x}, {end:#x})")
@@ -276,10 +281,14 @@ class Assembler:
     def do_incbin(self, args):
         path = self.resolve_path(self.unquote(args[0]))
         start = self.evaluate(args[1]) if len(args) >= 2 else 0
-        with open(path, "rb") as f:
-            f.seek(start)
-            chunk = f.read(self.evaluate(args[2]) if len(args) >= 3 else -1)
-        self.out += chunk
+        data = self.file_bytes(path)
+        self.out += data[start:start + self.evaluate(args[2])] if len(args) >= 3 else data[start:]
+
+    def file_bytes(self, path):
+        if path not in self.file_cache:
+            with open(path, "rb") as f:
+                self.file_cache[path] = f.read()
+        return self.file_cache[path]
 
     def do_byte(self, args, width):
         for a in args:

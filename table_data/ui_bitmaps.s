@@ -260,17 +260,17 @@ Bitmap_SoundIcon_Microphone:		.incbin "includes/generated/Bitmap_SoundIcon_Micro
 ; survive in maincpu routine/widget names (e.g. BitmapBmphk dimension helper,
 ; NakaInst_BitmapBmphk widget descriptor).
 ; 312x45; black wordmark, 0xf7 transparent; maincpu copy at 0xe8ffa6
-SectionBank06_TechnicsLogo:		.incbin "../v10/maincpu/images/BitmapTechnicsLogo.bin"
+SectionBank06_TechnicsLogo:		.incbin "../v10/maincpu/images/BitmapTechnicsLogo.bin"	; census: generated -- scripts/build/indexed_images.py, from the .png beside it
 ; 100x120; the KN5000 itself on teal ("bmphk"); maincpu copy at 0xe7be12
-SectionBank28_KN5000Picture:		.incbin "../v10/maincpu/images/BitmapBmphk.bin"
+SectionBank28_KN5000Picture:		.incbin "../v10/maincpu/images/BitmapBmphk.bin"	; census: generated -- scripts/build/indexed_images.py, from the .png beside it
 ; 16x127; vertical piano ruler for the note-edit screen ("ntedt0k"); maincpu copy at 0xe34e78
-SectionBank29_NoteEditKeyboard:		.incbin "../v10/maincpu/images/BitmapNtedt0k.bin"
+SectionBank29_NoteEditKeyboard:		.incbin "../v10/maincpu/images/BitmapNtedt0k.bin"	; census: generated -- scripts/build/indexed_images.py, from the .png beside it
 ; 240x127; dotted note-edit grid ("ntedt0d"); maincpu copy at 0xe35668
-SectionBank30_NoteEditGrid:		.incbin "../v10/maincpu/images/BitmapNtedt0d.bin"
+SectionBank30_NoteEditGrid:		.incbin "../v10/maincpu/images/BitmapNtedt0d.bin"	; census: generated -- scripts/build/indexed_images.py, from the .png beside it
 ; 88x119; ruled instrument rows for the drum-edit screen ("dredt0k"); maincpu copy at 0xe3cd78
-SectionBank31_DrumEditRows:		.incbin "../v10/maincpu/images/BitmapDredt0k.bin"
+SectionBank31_DrumEditRows:		.incbin "../v10/maincpu/images/BitmapDredt0k.bin"	; census: generated -- scripts/build/indexed_images.py, from the .png beside it
 ; 168x119; drum-edit grid ("dredt0d"); maincpu copy at 0xe3f660
-SectionBank32_DrumEditGrid:		.incbin "../v10/maincpu/images/BitmapDredt0d.bin"
+SectionBank32_DrumEditGrid:		.incbin "../v10/maincpu/images/BitmapDredt0d.bin"	; census: generated -- scripts/build/indexed_images.py, from the .png beside it
 	.fill 5192, 1, 0xff	; tail of section bank 32
 
 ; -----------------------------------------------------------------------------

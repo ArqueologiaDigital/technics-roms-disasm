@@ -30,8 +30,14 @@ byte-identical to v10's (`cmp` on all eight pairs) and were counted as 4,928 B o
 debt by kn5000_source_coverage.py.  Its PNGs were exported from v7's own .bin files and the
 loop now covers all three revisions.
 
-    python3 scripts/build/mono_images.py export   # bin -> png (run once, both revisions)
-    python3 scripts/build/mono_images.py build    # png -> bin (build step, both revisions)
+v6 and v5 (ported trees, added 2026-10-24) were the same case again until 2026-10-29 (lane
+kn5000-existing): eight committed .bin files each, byte-identical to v10's (`cmp` on all sixteen
+pairs), no PNG and no build step, so data_incbin_census.py counted them as generic.  Their PNGs were
+exported from their own .bin files, and the Makefile's PORTED_MAINCPU objects now depend on
+`indexed-images` and on those PNGs.
+
+    python3 scripts/build/mono_images.py export   # bin -> png (run once, every revision)
+    python3 scripts/build/mono_images.py build    # png -> bin (build step, every revision)
     python3 scripts/build/mono_images.py verify   # assert the round trip is exact, both
 """
 import pathlib
@@ -40,7 +46,8 @@ import sys
 from PIL import Image
 
 REPO = pathlib.Path(__file__).resolve().parent.parent.parent
-DIRS = [REPO / 'v7' / 'maincpu' / 'images', REPO / 'v9' / 'maincpu' / 'images',
+DIRS = [REPO / 'v5' / 'maincpu' / 'images', REPO / 'v6' / 'maincpu' / 'images',
+        REPO / 'v7' / 'maincpu' / 'images', REPO / 'v9' / 'maincpu' / 'images',
         REPO / 'v10' / 'maincpu' / 'images']
 W, H = 224, 22
 STRIDE = W // 8            # 28 bytes per row

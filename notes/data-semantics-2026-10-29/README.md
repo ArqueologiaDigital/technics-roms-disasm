@@ -80,5 +80,14 @@ The dumps with no tree at all are not in that table:
 | floppy-others    | WSA1, KN6000 and KN7000 disk file formats; their disks on the framework   |
 | kn5000-existing  | table_data, custom_data and the maincpu trees' generic includes           |
 | kn7000-table     | table 84's generic segments, then tables 83 and 80                        |
+| gui-kn5000       | the NAKA GUI C of v10, then v9/v7/v6/v5: readable at a glance; menu map   |
+| gui-hdae5000     | the HD-AE5000 GUI, v2.06i and v2.01i                                      |
+| gui-kn7000       | program 941's data region, GUI first; then the other program builds      |
+| gui-wsa1         | the SX-WSA1R's pages, menus, field editors and display lists              |
+
+The four `gui-*` lanes answer the owner's second request, the same day: *"The entire set of GUI data
+structures must also be semantically described. One should be able to easily grasp all the menus, submenus,
+screens, GUI widgets, etc, just by glancing at the source code. Use macros or high-level C data structures to
+represent them cleanly and effectively."* Their acceptance test is `GUI-BRIEF.md`.
 
 Each lane's outcome and open items are added below as lanes merge.
