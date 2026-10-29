@@ -3446,7 +3446,9 @@ func_485E6419_Lb6:
 	movhu	(0x34000164), d0
 func_485E6419_Lc3:
 	ret	0, 0x18
-.incbin_range "baserom/kn2400_program.rom", 0x1e64df, 0x1e64e5
+# func_485E6419 + 0xc6: no traced path reaches what follows (--decode-gaps)
+	ret	0, 0
+	add	-8, sp
 
 func_485E64E5:
 	call	loc_cpu_entry, 0, 0x10
@@ -9049,7 +9051,10 @@ func_485E9CA4_entry:
 	mov	0x0000ffd9, d0
 	call	func_485EA340_entry, [d2], 0xc
 	ret	0, 0xc
-.incbin_range "baserom/kn2400_program.rom", 0x1e9cb5, 0x1e9cba
+# func_485E9CA4_entry + 0xe: no traced path reaches what follows (--decode-gaps)
+	.space	3, 0xff
+	nop
+	nop
 
 func_485E9CBA:
 	movm	[d2,d3,a2,a3], (sp)
@@ -9304,7 +9309,9 @@ func_485E9CBA_entry:
 	add	-1, a2
 	lne
 	retf	[d2,d3,a2,a3], 0x30
-.incbin_range "baserom/kn2400_program.rom", 0x1e9f2f, 0x1e9f31
+# func_485E9CBA_entry + 0x270: no traced path reaches what follows (--decode-gaps)
+	.space	1, 0xff
+	nop
 
 func_485E9F31:
 	movm	[d2,d3,a2,a3], (sp)
@@ -9494,7 +9501,9 @@ func_485E9F31_entry_L18f:
 	clr	d0
 func_485E9F31_entry_L190:
 	ret	[d2,d3,a2,a3], 0x30
-.incbin_range "baserom/kn2400_program.rom", 0x1ea0c9, 0x1ea0d3
+# func_485E9F31_entry + 0x193: no traced path reaches what follows (--decode-gaps)
+	.space	7, 0xff
+	add	-0x10, sp
 
 func_485EA0D3:
 	mov	d1, a1
@@ -9512,7 +9521,8 @@ func_485EA0D3_L20:
 	mov	d1, (0x50111b3c)
 	clr	d0
 	ret	0, 0x10
-.incbin_range "baserom/kn2400_program.rom", 0x1ea103, 0x1ea108
+# func_485EA0D3 + 0x30: no traced path reaches what follows (--decode-gaps)
+	.space	5, 0xff
 
 func_485EA108:
 	movm	[d2,d3,a2,a3], (sp)
@@ -9567,7 +9577,8 @@ func_485EA108_entry_L58:
 	mov	d1, (0x50111b3c)
 	clr	d0
 	retf	[d2,d3,a2,a3], 0x10
-.incbin_range "baserom/kn2400_program.rom", 0x1ea193, 0x1ea198
+# func_485EA108_entry + 0x89: no traced path reaches what follows (--decode-gaps)
+	.space	5, 0xff
 
 func_485EA198:
 	movm	[d2], (sp)
@@ -11060,7 +11071,8 @@ func_485EAF5B_entry_L7:
 	bne	func_485EAF5B_entry_L7
 func_485EAF5B_entry_L13:
 	ret	[d2], 0xc
-.incbin_range "baserom/kn2400_program.rom", 0x1eaf76, 0x1eaf78
+# func_485EAF5B_entry + 0x16: no traced path reaches what follows (--decode-gaps)
+	.space	2, 0xff
 
 func_485EAF78:
 	movm	[d2,d3,a2,a3], (sp)
@@ -11751,7 +11763,10 @@ func_485EAF78_entry_L600:
 	lne
 func_485EAF78_entry_L69a:
 	retf	[d2,d3,a2,a3], 0x2c
-.incbin_range "baserom/kn2400_program.rom", 0x1eb61a, 0x1eb622
+# func_485EAF78_entry + 0x69d: no traced path reaches what follows (--decode-gaps)
+	.space	6, 0xff
+	nop
+	nop
 
 func_485EB622:
 	movm	[d2,d3,a2,a3], (sp)
@@ -11970,7 +11985,8 @@ func_485EB7DC_entry_L34:
 	mov	d3, d0
 func_485EB7DC_entry_L49:
 	ret	[d2,d3,a2,a3], 0x24
-.incbin_range "baserom/kn2400_program.rom", 0x1eb82d, 0x1eb830
+# func_485EB7DC_entry + 0x4c: no traced path reaches what follows (--decode-gaps)
+	.space	3, 0xff
 
 func_485EB830:
 	movm	[d2,a2], (sp)
@@ -12608,7 +12624,9 @@ func_485EBDAE_L9b:
 	mov	a1, d0
 	movhu	d1, (d0, a2)
 	bra	func_485EBDAE_L56
-.incbin_range "baserom/kn2400_program.rom", 0x1ebe79, 0x1ebe7f
+# func_485EBDAE + 0xcb: no traced path reaches what follows (--decode-gaps)
+	ret	[a2,a3], 0x24
+	add	-8, sp
 
 func_485EBE7F:
 	mov	(0x500275e4), d0
@@ -12632,6 +12650,7 @@ func_485EBE7F_L18:
 	movhu	d0, (d1, a1)
 	ret	0, 8
 	add	-0x10, sp
+func_485EBE7F_L3f:
 	mov	1, d0
 	mov	d0, (0x500275e0)
 	mov	d0, (0x500275e4)
@@ -13362,7 +13381,13 @@ RefreshSwEvent_entry:
 	mov	0x000600a5, d1
 	call	ApPostEvent_entry, [d2], 0x1c
 	ret	0, 0x14
-.incbin_range "baserom/kn2400_program.rom", 0x1ec6b3, 0x1ec6c8
+# RefreshSwEvent_entry + 0x55: no traced path reaches what follows (--decode-gaps)
+	mov	1, d0
+	mov	d0, (0x500275e8)
+	retf	0, 0
+	clr	d0
+	mov	d0, (0x500275e8)
+	retf	0, 0
 
 func_485EC6C8:
 	movm	[d2,d3,a2,a3], (sp)
@@ -14467,7 +14492,9 @@ func_485ECA02_entry_L56e:
 	jmp	func_485ECA02_entry_L4a4
 func_485ECA02_entry_L58b:
 	ret	[d2,d3,a2,a3], 0x70
-.incbin_range "baserom/kn2400_program.rom", 0x1ecf95, 0x1ecf9b
+# func_485ECA02_entry + 0x58e: no traced path reaches what follows (--decode-gaps)
+	retf	0, 0
+	add	-0xc, sp
 
 func_485ECF9B:
 	mov	1, d0
@@ -15944,7 +15971,9 @@ MainGetEffName_L2d:
 	clr	d0
 MainGetEffName_L2e:
 	ret	0, 0xc
-.incbin_range "baserom/kn2400_program.rom", 0x1edc96, 0x1edc9a
+# MainGetEffName + 0x31: no traced path reaches what follows (--decode-gaps)
+	clr	d0
+	retf	0, 0
 
 MainTrSwControl:
 	mov	(0x10, sp), a0
@@ -24409,11 +24438,11 @@ GridCheck:
 	cmp	0x60081, d1
 	beq	GridCheck_L48
 	cmp	0x50000, d1
-	beq	0x485f2ca0
-	bra	0x485f2c9f
+	beq	GridCheck_L9c
+	bra	GridCheck_L9b
 GridCheck_L45:
 	clr	d0
-	bra	0x485f2ca0
+	bra	GridCheck_L9c
 GridCheck_L48:
 	mov	(0x3c, sp), d0
 	mov	sp, a0
@@ -24442,8 +24471,13 @@ GridCheck_L48:
 	mov	0x00060080, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	0x485f2ca0
-.incbin_range "baserom/kn2400_program.rom", 0x1f2c9d, 0x1f2ca3
+	bra	GridCheck_L9c
+# GridCheck + 0x99: no traced path reaches what follows (--decode-gaps)
+	bra	GridCheck_L9c
+GridCheck_L9b:
+	clr	d0
+GridCheck_L9c:
+	ret	0, 0x2c
 
 PsEditBoxProc:
 	movm	[d2,d3,a2,a3], (sp)
@@ -34865,7 +34899,8 @@ func_485F93B0_L58:
 	mov	a0, d0
 	movhu	d1, (d0, a3)
 	bra	func_485F93B0_L10
-.incbin_range "baserom/kn2400_program.rom", 0x1f9421, 0x1f9424
+# func_485F93B0 + 0x71: no traced path reaches what follows (--decode-gaps)
+	ret	[d2,a2,a3], 0x28
 
 InitDrawTask:
 	add	-8, sp
@@ -47178,7 +47213,27 @@ IsPointOnScreen_L28:
 	mov	1, d0
 IsPointOnScreen_L2a:
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x1ff4e2, 0x1ff505
+# IsPointOnScreen + 0x2d: no traced path reaches what follows (--decode-gaps)
+	exth	d0
+	cmp	0, d0
+	blt	IsPointOnScreen_L3c
+	cmp	0xff, d0
+	bgt	IsPointOnScreen_L3c
+	mov	1, d0
+	bra	IsPointOnScreen_L4a
+IsPointOnScreen_L3c:
+	mov	0x100, d1
+	cmp	d1, d0
+	blt	IsPointOnScreen_L49
+	cmp	d1, d0
+	bgt	IsPointOnScreen_L49
+	mov	1, d0
+	bra	IsPointOnScreen_L4a
+IsPointOnScreen_L49:
+	clr	d0
+IsPointOnScreen_L4a:
+	retf	0, 0
+	add	-0xc, sp
 
 func_485FF505:
 	clr	d0
@@ -48106,7 +48161,11 @@ Draw2BpFile_Impl_entry_L125:
 Draw2BpFile_Impl_entry_L19c:
 	add	0x47c, sp
 	ret	[d2,d3,a2,a3], 0x10
-.incbin_range "baserom/kn2400_program.rom", 0x1ffc17, 0x1ffc21
+# Draw2BpFile_Impl_entry + 0x1a3: no traced path reaches what follows (--decode-gaps)
+	retf	0, 0
+	retf	0, 0
+	clr	d0
+	retf	0, 0
 
 InitializeEventQueue:
 	movm	[d2,d3], (sp)
@@ -66096,7 +66155,9 @@ func_48609476_entry:
 
 func_48609480:
 	ret	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x209483, 0x209488
+# func_48609480 + 0x3: no traced path reaches what follows (--decode-gaps)
+	mov	1, d0
+	ret	0, 0
 
 func_48609488:
 	ret	0, 0
@@ -66109,7 +66170,11 @@ func_48609490:
 func_48609493:
 	clr	d0
 	ret	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x209497, 0x2094a1
+# func_48609493 + 0x4: no traced path reaches what follows (--decode-gaps)
+	ret	0, 0
+	ret	0, 0
+	clr	d0
+	ret	0, 0
 
 func_486094A1:
 	ret	0, 0
@@ -66147,22 +66212,54 @@ func_486094BE:
 func_486094C3:
 	mov	-1, d0
 	ret	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x2094c8, 0x2094cc
+# func_486094C3 + 0x5: no traced path reaches what follows (--decode-gaps)
+	clr	d0
+	ret	0, 0
 
 func_486094CC:
 	ret	0, 0
 
 func_486094CF:
 	ret	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x2094d2, 0x2094d8
+# func_486094CF + 0x3: no traced path reaches what follows (--decode-gaps)
+	ret	0, 0
+	ret	0, 0
 
 func_486094D8:
 	ret	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x2094db, 0x2094ee
+# func_486094D8 + 0x3: no traced path reaches what follows (--decode-gaps)
+	ret	0, 0
+	mov	-1, d0
+	ret	0, 0
+	ret	0, 0
+	clr	d0
+	ret	0, 0
+	clr	d0
+	ret	0, 0
 
 func_486094EE:
 	ret	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x2094f1, 0x209523
+# func_486094EE + 0x3: no traced path reaches what follows (--decode-gaps)
+	clr	d0
+	ret	0, 0
+	ret	0, 0
+	ret	0, 0
+	ret	0, 0
+	ret	0, 0
+	ret	0, 0
+	ret	0, 0
+	ret	0, 0
+	clr	d0
+	ret	0, 0
+	clr	d0
+	ret	0, 0
+	ret	0, 0
+	ret	0, 0
+	clr	d0
+	ret	0, 0
+	clr	d0
+	ret	0, 0
+	add	-0x24, sp
 
 func_48609523:
 	mov	0xc, d0
@@ -66205,7 +66302,8 @@ func_4860958E_entry:
 	mov	1, d1
 	call	set_flg, 0, 0
 	ret	0, 0x10
-.incbin_range "baserom/kn2400_program.rom", 0x20959f, 0x2095a2
+# func_4860958E_entry + 0xe: no traced path reaches what follows (--decode-gaps)
+	retf	0, 0
 
 func_486095A2:
 	clr	d0
@@ -66484,7 +66582,28 @@ func_486097D6_entry_Le:
 	bne	func_486097D6_entry_Le
 func_486097D6_entry_L19:
 	ret	[a2], 0x14
-.incbin_range "baserom/kn2400_program.rom", 0x2097f7, 0x209826
+# func_486097D6_entry + 0x1c: no traced path reaches what follows (--decode-gaps)
+	mov	d0, d1
+	extbu	d1
+	cmp	0xc8, d1
+	ble	func_486097D6_entry_L27
+	mov	0xc8, d0
+func_486097D6_entry_L27:
+	mov	d0, d1
+	extbu	d1
+	cmp	0x96, d1
+	bge	func_486097D6_entry_L32
+	mov	0x96, d0
+func_486097D6_entry_L32:
+	extbu	d0
+	movbu	(0x4854652b), d1
+	mov	data_4854647C, a0
+	movbu	(d0, a0), d0
+	sub	d0, d1
+	mov	d1, d0
+	extb	d0
+	retf	0, 0
+	add	-0xc, sp
 
 func_48609826:
 	call	func_4860964C_entry, [d2,d3,a2,a3], 0x2c
@@ -68361,7 +68480,20 @@ func_4860A75C_L43:
 func_4860A75C_L54:
 	extbu	d0
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x20a7b4, 0x20a7c8
+# func_4860A75C + 0x58: no traced path reaches what follows (--decode-gaps)
+	mov	d0, d1
+	extbu	d1
+	cmp	0x22, d1
+	beq	func_4860A75C_L63
+	clr	d0
+	cmp	0x2a, d1
+	bne	func_4860A75C_L65
+func_4860A75C_L63:
+	mov	1, d0
+func_4860A75C_L65:
+	extbu	d0
+	retf	0, 0
+	add	-0x14, sp
 
 func_4860A7C8:
 	extbu	d0
@@ -70475,7 +70607,47 @@ VoiceBankSourceFlagGet_L16:
 func_4860B9AC:
 	clr	d0
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x20b9b0, 0x20ba02
+# func_4860B9AC + 0x4: no traced path reaches what follows (--decode-gaps)
+	clr	d0
+	retf	0, 0
+	clr	d0
+	retf	0, 0
+	clr	d0
+	retf	0, 0
+	clr	d0
+	retf	0, 0
+	clr	d0
+	retf	0, 0
+	retf	0, 0
+	retf	0, 0
+	clr	d0
+	retf	0, 0
+	clr	d0
+	retf	0, 0
+	clr	d0
+	retf	0, 0
+	clr	d0
+	retf	0, 0
+	retf	0, 0
+	retf	0, 0
+	movhu	(0x5003a6e0), d1
+	extbu	d0
+	exth	d1
+	cmp	0xf, d0
+	ble	func_4860B9AC_L41
+	clr	d1
+func_4860B9AC_L41:
+	mov	d1, d0
+	retf	0, 0
+	movhu	(0x5003a6e2), d1
+	extbu	d0
+	exth	d1
+	cmp	0xf, d0
+	ble	func_4860B9AC_L52
+	clr	d1
+func_4860B9AC_L52:
+	mov	d1, d0
+	retf	0, 0
 
 func_4860BA02:
 	movhu	(0x5003a6e4), d1
@@ -70591,7 +70763,8 @@ func_4860BA91:
 	exth	d0
 func_4860BA91_L23:
 	ret	[d2,d3], 8
-.incbin_range "baserom/kn2400_program.rom", 0x20bab7, 0x20baba
+# func_4860BA91 + 0x26: no traced path reaches what follows (--decode-gaps)
+	retf	0, 0
 
 func_4860BABA:
 	movm	[d2], (sp)
@@ -70614,7 +70787,8 @@ func_4860BABA_entry:
 	cmp	0xf, d1
 	lle
 	ret	[d2], 4
-.incbin_range "baserom/kn2400_program.rom", 0x20bad9, 0x20badc
+# func_4860BABA_entry + 0x1d: no traced path reaches what follows (--decode-gaps)
+	retf	0, 0
 
 func_4860BADC:
 	mov	(0x500d7398), a0
@@ -70653,7 +70827,9 @@ func_4860BB0B:
 func_4860BB14:
 	mov	0x2c8, d0
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x20bb1a, 0x20bb20
+# func_4860BB14 + 0x6: no traced path reaches what follows (--decode-gaps)
+	mov	0x48a7, d0
+	retf	0, 0
 
 func_4860BB20:
 	mov	0x8e, d0
@@ -72145,7 +72321,102 @@ func_4860C5DA_L5d:
 	mov	0xffffff9a, a0
 func_4860C5DA_L63:
 	ret	[d2,a2], 0x18
-.incbin_range "baserom/kn2400_program.rom", 0x20c640, 0x20c6e6
+# func_4860C5DA + 0x66: no traced path reaches what follows (--decode-gaps)
+	mov	d0, d1
+	exthu	d1
+	cmp	0x28, d1
+	bge	func_4860C5DA_L80
+	exthu	d0
+	mov	0x2c8, d1
+	nop
+	nop
+	mulu	d1, d0
+	add	0x502a5024, d0
+	mov	d0, (a0)
+	movhu	d1, (a1)
+	clr	d0
+	rets
+func_4860C5DA_L80:
+	mov	-0xc8, d0
+	rets
+	movm	[d2,d3,a2,a3], (sp)
+	add	-0xc, sp
+	mov	d1, d3
+	mov	a1, a3
+	mov	d0, d2
+	mov	a0, a2
+	call	func_4860BE7C_entry, [d2,d3], 8
+	extbu	d0
+	cmp	7, d0
+	beq	func_4860C5DA_Lb6
+	cmp	1, d0
+	beq	func_4860C5DA_Lb6
+	cmp	2, d0
+	beq	func_4860C5DA_Lb6
+	cmp	8, d0
+	beq	func_4860C5DA_Lb6
+	cmp	6, d0
+	beq	func_4860C5DA_Ld0
+	cmp	3, d0
+	beq	func_4860C5DA_Ld0
+	cmp	4, d0
+	beq	func_4860C5DA_Ld0
+	cmp	5, d0
+	beq	func_4860C5DA_Lea
+	bra	func_4860C5DA_L104
+func_4860C5DA_Lb6:
+	exthu	d2
+	mov	0x2c8, d0
+	nop
+	nop
+	mulu	d0, d2
+	mov	0x10, d0
+	add	a2, d0
+	add	d2, d0
+	sub	a2, d0
+	mov	d0, (a3)
+	mov	0x2c8, d0
+	mov	d3, a0
+	movhu	d0, (a0)
+	clr	d0
+	bra	func_4860C5DA_L106
+func_4860C5DA_Ld0:
+	exthu	d2
+	mov	0x1d6, d0
+	nop
+	nop
+	mulu	d0, d2
+	mov	0x10, d0
+	add	a2, d0
+	add	d2, d0
+	sub	a2, d0
+	mov	d0, (a3)
+	mov	0x1d6, d0
+	mov	d3, a0
+	movhu	d0, (a0)
+	clr	d0
+	bra	func_4860C5DA_L106
+func_4860C5DA_Lea:
+	exthu	d2
+	mov	0x90, d0
+	nop
+	nop
+	mulu	d0, d2
+	mov	0x50, d0
+	add	a2, d0
+	add	d2, d0
+	sub	a2, d0
+	mov	d0, (a3)
+	mov	0x90, d0
+	mov	d3, a0
+	movhu	d0, (a0)
+	clr	d0
+	bra	func_4860C5DA_L106
+func_4860C5DA_L104:
+	mov	-0x66, d0
+func_4860C5DA_L106:
+	ret	[d2,d3,a2,a3], 0x1c
+	add	-8, sp
 
 func_4860C6E6:
 	call	func_4860C24C_entry, [d2,d3], 0x1c
@@ -72196,7 +72467,8 @@ func_4860C73F:
 func_4860C73F_entry:
 	call	func_4860C24C_entry, [d2,d3], 0x1c
 	ret	0, 8
-.incbin_range "baserom/kn2400_program.rom", 0x20c74a, 0x20c74d
+# func_4860C73F_entry + 0x8: no traced path reaches what follows (--decode-gaps)
+	retf	0, 0
 
 func_4860C74D:
 	retf	0, 0
@@ -76853,7 +77125,15 @@ func_4860EBE0_Le:
 	bclr	0x02, (data_50000B07)
 func_4860EBE0_L15:
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x20ebf8, 0x20ec09
+# func_4860EBE0 + 0x18: no traced path reaches what follows (--decode-gaps)
+	btst	0x02, (data_50000B07)
+	beq	func_4860EBE0_L25
+	mov	1, d0
+	bra	func_4860EBE0_L26
+func_4860EBE0_L25:
+	clr	d0
+func_4860EBE0_L26:
+	retf	0, 0
 
 func_4860EC09:
 	extbu	d0
@@ -76865,7 +77145,15 @@ func_4860EC09_Le:
 	bclr	0x04, (data_50000B07)
 func_4860EC09_L15:
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x20ec21, 0x20ec32
+# func_4860EC09 + 0x18: no traced path reaches what follows (--decode-gaps)
+	btst	0x04, (data_50000B07)
+	beq	func_4860EC09_L25
+	mov	1, d0
+	bra	func_4860EC09_L26
+func_4860EC09_L25:
+	clr	d0
+func_4860EC09_L26:
+	retf	0, 0
 
 func_4860EC32:
 	movm	[d2,d3], (sp)
@@ -87512,7 +87800,9 @@ func_4861446F_entry_L88:
 	mov	-1, d0
 func_4861446F_entry_L8a:
 	ret	[d2,d3], 0x18
-.incbin_range "baserom/kn2400_program.rom", 0x214501, 0x214506
+# func_4861446F_entry + 0x8d: no traced path reaches what follows (--decode-gaps)
+	mov	1, d0
+	retf	0, 0
 
 func_48614506:
 	movm	[a2], (sp)
@@ -90721,7 +91011,8 @@ func_48615F2D_entry_Laf:
 
 func_48615FE2:
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x215fe5, 0x215fe8
+# func_48615FE2 + 0x3: no traced path reaches what follows (--decode-gaps)
+	retf	0, 0
 
 func_48615FE8:
 	retf	0, 0
@@ -91812,7 +92103,11 @@ func_48616956:
 func_4861695A:
 	clr	d0
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x21695e, 0x216966
+# func_4861695A + 0x4: no traced path reaches what follows (--decode-gaps)
+	clr	d0
+	retf	0, 0
+	clr	d0
+	retf	0, 0
 
 func_48616966:
 	mov	d0, d1
@@ -92523,7 +92818,19 @@ func_48616DD2_entry_La:
 	clr	d0
 func_48616DD2_entry_L25:
 	ret	[d2,d3], 0x1c
-.incbin_range "baserom/kn2400_program.rom", 0x216dff, 0x216e17
+# func_48616DD2_entry + 0x28: no traced path reaches what follows (--decode-gaps)
+	mov	-1, d1
+	extbu	d0
+	cmp	0, d0
+	ble	func_48616DD2_entry_L3c
+	cmp	0x10, d0
+	bgt	func_48616DD2_entry_L3c
+	add	d1, d0
+	mov	data_4841D238, a0
+	movbu	(d0, a0), d1
+func_48616DD2_entry_L3c:
+	mov	d1, d0
+	retf	0, 0
 
 func_48616E17:
 	movm	[d2], (sp)
@@ -94742,7 +95049,9 @@ Rec8E0TablePtr_L16:
 func_48617EFA:
 	mov	0x58c0, d0
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x217f00, 0x217f06
+# func_48617EFA + 0x6: no traced path reaches what follows (--decode-gaps)
+	mov	0x5000, d0
+	retf	0, 0
 
 func_48617F06:
 	mov	0x5460, d0
@@ -94770,7 +95079,16 @@ func_48617F27:
 	add	0x501bb9a0, d0
 	add	-0x100, d0
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x217f38, 0x217f4e
+# func_48617F27 + 0x11: no traced path reaches what follows (--decode-gaps)
+	extbu	d0
+	cmp	1, d0
+	bne	func_48617F27_L1e
+	mov	0x501bb9a0, d0
+	bra	func_48617F27_L24
+func_48617F27_L1e:
+	mov	0x501bb9a0, d0
+func_48617F27_L24:
+	retf	0, 0
 
 Rec8E0Field120Ptr:
 	mov	d0, d1
@@ -95032,7 +95350,10 @@ func_48618145:
 	mov	0x502b8000, a0
 	movbu	d1, (d0, a0)
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x218150, 0x21815b
+# func_48618145 + 0xb: no traced path reaches what follows (--decode-gaps)
+	mov	0x502b8000, a0
+	movbu	(d0, a0), d0
+	retf	0, 0
 
 func_4861815B:
 	mov	(0x5003cf2c), d0
@@ -107859,21 +108180,54 @@ func_4861F4DB_entry_L3a:
 	mov	d0, d1
 	exth	d1
 	cmp	0, d1
-	beq	0x4861f55e
+	beq	func_4861F4DB_entry_L7e
 	mov	d0, d1
 	exth	d1
 	cmp	1, d1
-	bne	0x4861f5a8
+	bne	func_4861F4DB_entry_Lc8
 	cmp	0, d3
-	bne	0x4861f55e
+	bne	func_4861F4DB_entry_L7e
 	mov	a2, d0
 	call	func_4861F293_entry, [d2], 0x14
 	mov	a2, d0
 	clr	d1
 	call	func_48615CDB_entry, [d2,d3], 0x14
 	clr	d0
-	bra	0x4861f5a8
-.incbin_range "baserom/kn2400_program.rom", 0x21f55c, 0x21f5ab
+	bra	func_4861F4DB_entry_Lc8
+# func_4861F4DB_entry + 0x7c: no traced path reaches what follows (--decode-gaps)
+	bra	func_4861F4DB_entry_Lc8
+func_4861F4DB_entry_L7e:
+	call	func_48619D46_entry, 0, 0xc
+	mov	d0, d2
+	call	func_48619D98_entry, 0, 0xc
+	mov	d0, d1
+	exthu	d2
+	exthu	d1
+	mov	d2, d0
+	call	func_48619B89_entry, 0, 0x18
+	movhu	(0x14, sp), d0
+	movhu	(0x16, sp), d1
+	call	func_4861924B_entry, [d2,d3,a2], 0x18
+	mov	d0, d3
+	exth	d0
+	cmp	0, d0
+	bne	func_4861F4DB_entry_Lc7
+	call	func_48619D35_entry, 0, 0xc
+	mov	d0, d2
+	call	func_48619D87_entry, 0, 0xc
+	extbu	d0
+	mov	d0, (0x10, sp)
+	mov	a2, d0
+	mov	d2, d1
+	exthu	d1
+	call	func_486170D2_entry, [d2,d3], 0x1c
+	call	func_48619D35_entry, 0, 0xc
+	exthu	d0
+	call	func_48617A54_entry, [d2,d3,a2], 0x1c
+func_4861F4DB_entry_Lc7:
+	mov	d3, d0
+func_4861F4DB_entry_Lc8:
+	ret	[d2,d3,a2], 0x24
 
 func_4861F5AB:
 	movm	[d2,d3,a2], (sp)
@@ -113092,7 +113446,8 @@ func_48621E9E_Le:
 	ble	func_48621E9E_Lc
 	call	func_48622220_entry, [d2,d3], 0x1c
 	ret	[d2,d3], 0x18
-.incbin_range "baserom/kn2400_program.rom", 0x221ecd, 0x221ed0
+# func_48621E9E + 0x2f: no traced path reaches what follows (--decode-gaps)
+	retf	0, 0
 
 func_48621ED0:
 	movm	[d2,d3,a2,a3], (sp)
@@ -113683,7 +114038,8 @@ func_486223AC_entry:
 	movhu	d3, (data_50000CB0)
 func_486223AC_entry_L38:
 	retf	[d2,d3,a2], 0xc
-.incbin_range "baserom/kn2400_program.rom", 0x2223e9, 0x2223ec
+# func_486223AC_entry + 0x3b: no traced path reaches what follows (--decode-gaps)
+	retf	0, 0
 
 func_486223EC:
 	movm	[d2,d3,a2], (sp)
@@ -123756,7 +124112,9 @@ func_48628290:
 func_486282A8:
 	movhu	(0x50041d18), d0
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x2282b1, 0x2282ba
+# func_486282A8 + 0x9: no traced path reaches what follows (--decode-gaps)
+	movbu	(0x50041ed0), d0
+	retf	0, 0
 
 func_486282BA:
 	movm	[d2], (sp)
@@ -124259,7 +124617,10 @@ func_48628821_entry:
 	cmp	0x21, d1
 	llt
 	ret	[d2], 4
-.incbin_range "baserom/kn2400_program.rom", 0x228882, 0x22888b
+# func_48628821_entry + 0x5f: no traced path reaches what follows (--decode-gaps)
+	retf	0, 0
+	retf	0, 0
+	add	-0xc, sp
 
 func_4862888B:
 	movbu	(0x50041cfc), d1
@@ -126112,7 +126473,9 @@ func_48629A8E:
 	movbu	d0, (a0)
 func_48629A8E_L2b:
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x229abc, 0x229ac0
+# func_48629A8E + 0x2e: no traced path reaches what follows (--decode-gaps)
+	clr	d0
+	retf	0, 0
 
 func_48629AC0:
 	movm	[a2,a3], (sp)
@@ -131082,7 +131445,11 @@ func_4862C84B_entry_L54:
 	clr	d0
 func_4862C84B_entry_L71:
 	ret	0, 0x10
-.incbin_range "baserom/kn2400_program.rom", 0x22c8c2, 0x22c8ca
+# func_4862C84B_entry + 0x74: no traced path reaches what follows (--decode-gaps)
+	extbu	d0
+	retf	0, 0
+	extbu	d0
+	retf	0, 0
 
 func_4862C8CA:
 	movm	[d2], (sp)
@@ -131545,7 +131912,12 @@ func_4862CC04_entry_L85:
 	mov	1, d0
 	call	func_486298D4_entry, [d2], 0x10
 	ret	[d2,d3,a2,a3], 0x3c
-.incbin_range "baserom/kn2400_program.rom", 0x22cc98, 0x22cca7
+# func_4862CC04_entry + 0x8f: no traced path reaches what follows (--decode-gaps)
+	extbu	d0
+	mov	0x4841de64, a0
+	movbu	(d0, a0), d0
+	retf	0, 0
+	retf	0, 0
 
 func_4862CCA7:
 	movm	[d2,d3], (sp)
@@ -133092,7 +133464,8 @@ func_4862D92E_entry_L175:
 	mov	a3, d0
 	movhu	d0, (0x50041f42)
 	jmp	func_4862D92E_entry_L29
-.incbin_range "baserom/kn2400_program.rom", 0x22dabd, 0x22dac0
+# func_4862D92E_entry + 0x18a: no traced path reaches what follows (--decode-gaps)
+	ret	[d2,d3,a2,a3], 0x58
 
 func_4862DAC0:
 	movm	[d2,d3], (sp)
@@ -133372,7 +133745,9 @@ func_4862DCB0_entry_L154:
 	exthu	d0
 	call	func_4861A012_entry, 0, 0x14
 	jmp	func_4862DCB0_entry_L16
-.incbin_range "baserom/kn2400_program.rom", 0x22de16, 0x22de1c
+# func_4862DCB0_entry + 0x161: no traced path reaches what follows (--decode-gaps)
+	ret	[d2,d3,a2,a3], 0x54
+	add	-8, sp
 
 func_4862DE1C:
 	movbu	(0x50041f40), d0
@@ -133392,7 +133767,171 @@ func_4862DE1C:
 func_4862DE1C_L3d:
 	call	func_4862E0B0, 0, 0x10
 	ret	0, 8
-.incbin_range "baserom/kn2400_program.rom", 0x22de61, 0x22e0b0
+# func_4862DE1C + 0x45: no traced path reaches what follows (--decode-gaps)
+	retf	0, 0
+	add	-8, sp
+	mov	0x0000ffff, d0
+	movhu	d0, (0x50041f5a)
+	mov	0xff, d0
+	movhu	d0, (0x50041f5c)
+	mov	0x50041f10, a0
+	mov	0x50041f28, a1
+	mov	(a0), d1
+	mov	(4, a0), d0
+	mov	d1, (a1)
+	mov	d0, (4, a1)
+	call	func_4862DE1C_Lb7, [d2,d3], 0x18
+	extb	d0
+	ret	0, 8
+	add	-8, sp
+	mov	0x0000ffff, d0
+	movhu	d0, (0x50041f5e)
+	mov	0xff, d0
+	movhu	d0, (0x50041f60)
+	mov	0x50041f10, a0
+	mov	0x50041f30, a1
+	mov	(a0), d1
+	mov	(4, a0), d0
+	mov	d1, (a1)
+	mov	d0, (4, a1)
+	call	func_4862DE1C_Lb7, [d2,d3], 0x18
+	extb	d0
+	ret	0, 8
+	movm	[d2,d3], (sp)
+	add	-0x10, sp
+func_4862DE1C_Lb7:
+	movhu	(0x50041f5a), d3
+	cmp	0xffff, d3
+	bne	func_4862DE1C_Ldd
+	movhu	(0x50041f5e), d0
+	cmp	0xffff, d0
+	bne	func_4862DE1C_Ldd
+	call	func_4862DE1C, 0, 8
+	mov	-1, d0
+	ret	[d2,d3], 0x18
+func_4862DE1C_Ldd:
+	movhu	(0x50041f5e), d2
+	cmp	d2, d3
+	bne	func_4862DE1C_Lf8
+	movhu	(0x50041f5c), d1
+	movhu	(0x50041f60), d0
+	cmp	d0, d1
+	bne	func_4862DE1C_Lf8
+	jmp	func_4862DE1C_L1c6
+func_4862DE1C_Lf8:
+	cmp	d2, d3
+	blt	func_4862DE1C_L10d
+	cmp	d2, d3
+	bne	func_4862DE1C_L169
+	movhu	(0x50041f5c), d1
+	movhu	(0x50041f60), d0
+	cmp	d0, d1
+	bge	func_4862DE1C_L169
+func_4862DE1C_L10d:
+	movhu	(0x50041f5a), d0
+	mov	0x50041f20, a0
+	movhu	d0, (0x50041f56)
+	movhu	(0x50041f5c), d0
+	mov	0x50041f38, a1
+	movhu	d0, (0x50041f58)
+	mov	(a0), d0
+	mov	(4, a0), a0
+	mov	d0, (a1)
+	mov	a0, (4, a1)
+	mov	0x50041f28, a0
+	mov	(a0), d1
+	mov	(4, a0), d0
+	mov	0x50041f20, a1
+	mov	d1, (a1)
+	mov	d0, (4, a1)
+	call	func_4862E0D9_entry, [d2,d3,a2], 0x20
+	movhu	(0x50041f46), d0
+	movhu	(0x50041f48), d1
+	call	func_48619BBB_entry, 0, 0x18
+	clr	d0
+	jmp	func_4862DE1C_L28d
+func_4862DE1C_L169:
+	movhu	(0x50041f5e), d0
+	mov	0x50041f20, a0
+	movhu	d0, (0x50041f56)
+	movhu	(0x50041f60), d0
+	mov	0x50041f38, a1
+	movhu	d0, (0x50041f58)
+	mov	(a0), d0
+	mov	(4, a0), a0
+	mov	d0, (a1)
+	mov	a0, (4, a1)
+	mov	0x50041f30, a0
+	mov	(a0), d0
+	mov	(4, a0), a0
+	mov	0x50041f20, a1
+	mov	d0, (a1)
+	mov	a0, (4, a1)
+	call	func_4862E0D9_entry, [d2,d3,a2], 0x20
+	movhu	(0x50041f4a), d0
+	movhu	(0x50041f4c), d1
+	call	func_48619BBB_entry, 0, 0x18
+	mov	1, d0
+	jmp	func_4862DE1C_L28d
+func_4862DE1C_L1c6:
+	cmp	0, d3
+	bne	func_4862DE1C_L1ce
+	cmp	0, d1
+	beq	func_4862DE1C_L1d8
+func_4862DE1C_L1ce:
+	call	func_4862E33C_L5, [d2], 0x14
+	extbu	d0
+	cmp	0x41, d0
+	bne	func_4862DE1C_L233
+func_4862DE1C_L1d8:
+	movhu	(0x50041f5e), d0
+	mov	0x50041f20, a0
+	movhu	d0, (0x50041f56)
+	movhu	(0x50041f60), d0
+	mov	0x50041f38, a1
+	movhu	d0, (0x50041f58)
+	mov	(a0), d0
+	mov	(4, a0), a0
+	mov	d0, (a1)
+	mov	a0, (4, a1)
+	mov	0x50041f30, a0
+	mov	(a0), d1
+	mov	(4, a0), d0
+	mov	0x50041f20, a1
+	mov	d1, (a1)
+	mov	d0, (4, a1)
+	call	func_4862E0D9_entry, [d2,d3,a2], 0x20
+	movhu	(0x50041f46), d0
+	movhu	(0x50041f48), d1
+	call	func_48619BBB_entry, 0, 0x18
+	clr	d0
+	bra	func_4862DE1C_L28d
+func_4862DE1C_L233:
+	movhu	(0x50041f5a), d0
+	mov	0x50041f20, a0
+	movhu	d0, (0x50041f56)
+	movhu	(0x50041f5c), d0
+	mov	0x50041f38, a1
+	movhu	d0, (0x50041f58)
+	mov	(a0), d0
+	mov	(4, a0), a0
+	mov	d0, (a1)
+	mov	a0, (4, a1)
+	mov	0x50041f28, a0
+	mov	(a0), d0
+	mov	(4, a0), a0
+	mov	0x50041f20, a1
+	mov	d0, (a1)
+	mov	a0, (4, a1)
+	call	func_4862E0D9_entry, [d2,d3,a2], 0x20
+	movhu	(0x50041f4a), d0
+	movhu	(0x50041f4c), d1
+	call	func_48619BBB_entry, 0, 0x18
+	mov	1, d0
+func_4862DE1C_L28d:
+	extb	d0
+	ret	[d2,d3], 0x18
+	add	-0x10, sp
 
 func_4862E0B0:
 	mov	(0x50041f10), d1
@@ -133601,6 +134140,7 @@ func_4862E0D9_entry_L21e:
 func_4862E33C:
 	movm	[d2], (sp)
 	add	-0x10, sp
+func_4862E33C_L5:
 	mov	1, d2
 func_4862E33C_L7:
 	mov	d2, d0
@@ -134899,7 +135439,10 @@ func_4862EDB7_L17:
 	calls	(a3)
 func_4862EDB7_L29:
 	ret	[a2,a3], 0x1c
-.incbin_range "baserom/kn2400_program.rom", 0x22ede3, 0x22edea
+# func_4862EDB7 + 0x2c: no traced path reaches what follows (--decode-gaps)
+	clr	d0
+	mov	d0, (8, a0)
+	retf	0, 0
 
 func_4862EDEA:
 	movm	[d2,d3,a2,a3], (sp)
@@ -135428,7 +135971,55 @@ func_4862F1E2_entry:
 	mov	d1, d0
 	add	d3, d0
 	retf	[d2,d3], 8
-.incbin_range "baserom/kn2400_program.rom", 0x22f20e, 0x22f263
+# func_4862F1E2_entry + 0x2a: no traced path reaches what follows (--decode-gaps)
+	mov	(a0), a1
+	exthu	d0
+	mov	0xff, d1
+	and	d0, d1
+	movbu	d1, (a1)
+	mov	(a0), d1
+	asr	8, d0
+	inc	d1
+	mov	d1, (a0)
+	mov	d1, a1
+	movbu	d0, (a1)
+	mov	(a0), d0
+	inc	d0
+	mov	d0, (a0)
+	retf	0, 0
+	movm	[d2], (sp)
+	mov	(a0), a1
+	mov	d0, d2
+	mov	0xff, d0
+	and	d2, d0
+	movbu	d0, (a1)
+	mov	(a0), d0
+	mov	d2, d1
+	inc	d0
+	mov	d0, (a0)
+	lsr	8, d1
+	and	0xff, d1
+	mov	d0, a1
+	movbu	d1, (a1)
+	mov	(a0), d1
+	mov	d2, d0
+	inc	d1
+	mov	d1, (a0)
+	lsr	16, d0
+	and	0xff, d0
+	mov	d1, a1
+	movbu	d0, (a1)
+	mov	(a0), d0
+	lsr	24, d2
+	inc	d0
+	mov	d0, (a0)
+	and	0xff, d2
+	mov	d0, a1
+	movbu	d2, (a1)
+	mov	(a0), d0
+	inc	d0
+	mov	d0, (a0)
+	retf	[d2], 4
 
 func_4862F263:
 	movm	[a2,a3], (sp)
@@ -136245,6 +136836,7 @@ func_4862F7A6_entry_L85:
 	movbu	(a1), d0
 	btst	0x40, d0
 	beq	func_4862F7A6_entry_Lb8
+func_4862F7A6_entry_L98:
 	mov	(0x40, sp), a0
 	movhu	(0x2c, a0), d0
 	mov	(0x88, sp), a0
@@ -136343,7 +136935,7 @@ func_4862F7A6_entry_L150:
 	movbu	(a2), d0
 	cmp	0, d0
 	bne	func_4862F7A6_entry_L159
-	jmp	0x4862fabf
+	jmp	func_4862F7A6_entry_L314
 func_4862F7A6_entry_L159:
 	mov	(0x2c, sp), a0
 	mov	a2, a1
@@ -136413,16 +137005,17 @@ func_4862F7A6_entry_L1da:
 	mov	(0x20, sp), d0
 	cmp	0, d0
 	bne	func_4862F7A6_entry_L1e3
-	jmp	0x4862fad8
+	jmp	func_4862F7A6_entry_L32d
 func_4862F7A6_entry_L1e3:
 	mov	(0x3c, sp), d0
 	add	0xc, d0
 	mov	d0, (0x48, sp)
+func_4862F7A6_entry_L1e9:
 	mov	(0x48, sp), a0
 	movbu	(a0), d0
 	btst	0x10, d0
 	bne	func_4862F7A6_entry_L1f5
-	jmp	0x4862fab4
+	jmp	func_4862F7A6_entry_L309
 func_4862F7A6_entry_L1f5:
 	mov	(0x2c, sp), a0
 	mov	(0x5c, sp), a1
@@ -136448,7 +137041,7 @@ func_4862F7A6_entry_L216:
 	add	-8, d0
 	cmp	d0, d2
 	ble	func_4862F7A6_entry_L225
-	jmp	0x4862fab9
+	jmp	func_4862F7A6_entry_L30e
 func_4862F7A6_entry_L225:
 	mov	(0x28, sp), a0
 	mov	-2, d0
@@ -136499,7 +137092,7 @@ func_4862F7A6_entry_L275:
 	movbu	(a2), d0
 	cmp	0, d0
 	bne	func_4862F7A6_entry_L27e
-	jmp	0x4862fabf
+	jmp	func_4862F7A6_entry_L314
 func_4862F7A6_entry_L27e:
 	mov	(0x2c, sp), a0
 	mov	a2, a1
@@ -136528,7 +137121,7 @@ func_4862F7A6_entry_L27e:
 	mov	(0x54, sp), a0
 	clr	d0
 	mov	d0, (a0)
-	bra	0x4862fab9
+	bra	func_4862F7A6_entry_L30e
 func_4862F7A6_entry_L2c0:
 	mov	(0x30, sp), a0
 	add	0x20, a2
@@ -136565,9 +137158,101 @@ func_4862F7A6_entry_L2ee:
 	mov	d2, a3
 	add	-8, d0
 	cmp	d0, d2
-	bgt	0x4862fab9
+	bgt	func_4862F7A6_entry_L30e
 	jmp	func_4862F7A6_entry_L225
-.incbin_range "baserom/kn2400_program.rom", 0x22fab2, 0x22fb51
+# func_4862F7A6_entry + 0x307: no traced path reaches what follows (--decode-gaps)
+	bra	func_4862F7A6_entry_L30e
+func_4862F7A6_entry_L309:
+	mov	0xc, d0
+	ret	[d2,d3,a2,a3], 0x80
+func_4862F7A6_entry_L30e:
+	mov	(0x18, sp), d0
+	cmp	0, d0
+	beq	func_4862F7A6_entry_L324
+func_4862F7A6_entry_L314:
+	mov	(0x20, sp), d0
+	cmp	0, d0
+	beq	func_4862F7A6_entry_L31f
+	mov	7, d0
+	ret	[d2,d3,a2,a3], 0x80
+func_4862F7A6_entry_L31f:
+	mov	5, d0
+	ret	[d2,d3,a2,a3], 0x80
+func_4862F7A6_entry_L324:
+	mov	(0x20, sp), d0
+	cmp	0, d0
+	beq	func_4862F7A6_entry_L32d
+	jmp	func_4862F7A6_entry_L1e9
+func_4862F7A6_entry_L32d:
+	mov	(0x88, sp), a1
+	add	3, a1
+	movbu	(a1), d0
+	btst	0x40, d0
+	beq	func_4862F7A6_entry_L381
+	mov	(0x3c, sp), a0
+	movbu	(0xc, a0), d0
+	btst	0x10, d0
+	bne	func_4862F7A6_entry_L347
+	mov	0xd, d0
+	ret	[d2,d3,a2,a3], 0x80
+func_4862F7A6_entry_L347:
+	mov	d2, d0
+	exthu	d0
+	cmp	0, d0
+	bne	func_4862F7A6_entry_L350
+	jmp	func_4862F7A6_entry_L98
+func_4862F7A6_entry_L350:
+	mov	(0x40, sp), d3
+	exthu	d2
+	add	0x24, d3
+	mov	d3, a0
+	movhu	(a0), d0
+	add	-8, d0
+	cmp	d0, d2
+	bgt	func_4862F7A6_entry_L37e
+	mov	(0x88, sp), a2
+	mov	(0x40, sp), a3
+	add	0x50, a2
+	add	0x28, a3
+func_4862F7A6_entry_L366:
+	mov	(a2), d1
+	movhu	(a3), d0
+	add	d0, d1
+	mov	d2, d0
+	mov	d1, (a2)
+	mov	(0x88, sp), a0
+	call	func_4862F326_entry, [d2,d3,a2,a3], 0x34
+	mov	d3, a0
+	mov	d0, d2
+	movhu	(a0), d0
+	exthu	d2
+	add	-8, d0
+	cmp	d0, d2
+	ble	func_4862F7A6_entry_L366
+func_4862F7A6_entry_L37e:
+	clr	d0
+	bra	func_4862F7A6_entry_L3a3
+func_4862F7A6_entry_L381:
+	mov	(0x3c, sp), a0
+	add	0xc, a0
+	movbu	(a0), d0
+	btst	0x18, d0
+	beq	func_4862F7A6_entry_L390
+	mov	0xd, d0
+	bra	func_4862F7A6_entry_L3a3
+func_4862F7A6_entry_L390:
+	movbu	(a0), d0
+	btst	0x01, d0
+	beq	func_4862F7A6_entry_L3a2
+	movbu	(a1), d0
+	btst	0x02, d0
+	beq	func_4862F7A6_entry_L3a2
+	mov	0xe, d0
+	bra	func_4862F7A6_entry_L3a3
+func_4862F7A6_entry_L3a2:
+	clr	d0
+func_4862F7A6_entry_L3a3:
+	ret	[d2,d3,a2,a3], 0x80
 
 func_4862FB51:
 	movm	[d2,d3,a2,a3], (sp)
@@ -136648,7 +137333,7 @@ func_4862FB51_entry_L75:
 func_4862FB51_entry_L88:
 	mov	(0x20, sp), a0
 	movbu	d1, (0x1d, a0)
-	jmp	0x4862fd2f
+	jmp	func_4862FB51_entry_L1d9
 func_4862FB51_entry_L90:
 	inc	d1
 	add	0x20, a2
@@ -136772,10 +137457,10 @@ func_4862FB51_entry_L15e:
 	setlb
 	movbu	(a2), d0
 	cmp	0xe5, d0
-	beq	0x4862fd2f
+	beq	func_4862FB51_entry_L1d9
 	movbu	(a2), d0
 	cmp	0, d0
-	beq	0x4862fd2f
+	beq	func_4862FB51_entry_L1d9
 	movbu	(a3), d0
 	add	0x20, a2
 	inc	d0
@@ -136824,9 +137509,51 @@ func_4862FB51_entry_L1bc:
 	mov	d0, d1
 	call	func_4862F576_entry, [d2,d3,a2,a3], 0x4c
 	cmp	0, d0
-	bne	0x4862fd8e
+	bne	func_4862FB51_entry_L238
 	jmp	func_4862FB51_entry_Lfc
-.incbin_range "baserom/kn2400_program.rom", 0x22fd2d, 0x22fd91
+# func_4862FB51_entry + 0x1d7: no traced path reaches what follows (--decode-gaps)
+	bra	func_4862FB51_entry_L238
+func_4862FB51_entry_L1d9:
+	mov	(0x20, sp), a0
+	clr	d0
+	movhu	d0, (0x14, a0)
+	mov	(0x20, sp), a0
+	movhu	d0, (0x18, a0)
+	mov	(0x20, sp), a0
+	movbu	d0, (0x1c, a0)
+	mov	(0x20, sp), a3
+	mov	(0x38, sp), a1
+	add	0x20, a3
+	mov	a3, a0
+	mov	0xb, d0
+	call	memcpy_entry, [a2,a3], 8
+	clr	d0
+	movbu	d0, (0xc, a3)
+	movhu	d0, (0x12, a3)
+	mov	d0, (0x14, a3)
+	mov	(0x20, sp), a0
+	mov	d0, (0xc, a0)
+	mov	(0x60, sp), a0
+	mov	(0x10, a0), a0
+	mov	(0x18, a0), a1
+	mov	0xe, a0
+	add	a3, a0
+	calls	(a1)
+	mov	a2, a1
+	mov	a3, a0
+	call	func_4862F2AD_entry, [a2,a3], 0x1c
+	mov	0x18, a0
+	add	d2, a0
+	movbu	(a0), d0
+	or	0x02, d0
+	movbu	d0, (a0)
+	extbu	d0
+	and	0xffffffe7, d0
+	movbu	d0, (a0)
+	mov	d2, a0
+	call	func_4862F076_entry, [d2,d3,a2,a3], 0x28
+func_4862FB51_entry_L238:
+	ret	[d2,d3,a2,a3], 0x58
 
 func_4862FD91:
 	movm	[d2,d3,a2,a3], (sp)
@@ -143373,7 +144100,18 @@ func_4863330A_Lf5:
 	movbu	d0, (0x500eec90)
 	call	exd_tsk, 0, 0
 	ret	[a2,a3], 0x1c
-.incbin_range "baserom/kn2400_program.rom", 0x233410, 0x233421
+# func_4863330A + 0x106: no traced path reaches what follows (--decode-gaps)
+	mov	d0, d1
+	add	-1, d0
+	cmp	0, d1
+	beq	func_4863330A_L114
+	setlb
+	mov	d0, d1
+	add	-1, d0
+	cmp	0, d1
+	lne
+func_4863330A_L114:
+	retf	0, 0
 
 func_48633421:
 	movm	[d2], (sp)
@@ -144056,7 +144794,9 @@ func_48633A27_entry_L79:
 	movbu	d0, (0x500eec91)
 	call	exd_tsk, 0, 0
 	ret	0, 0x10
-.incbin_range "baserom/kn2400_program.rom", 0x233ace, 0x233ad4
+# func_48633A27_entry + 0xa2: no traced path reaches what follows (--decode-gaps)
+	retf	0, 0
+	add	-0x10, sp
 
 func_48633AD4:
 	movbu	(0x500eec93), d0
@@ -144129,7 +144869,24 @@ func_48633B56_entry_La:
 	bne	func_48633B56_entry_La
 func_48633B56_entry_L1d:
 	ret	0, 0xc
-.incbin_range "baserom/kn2400_program.rom", 0x233b79, 0x233bb0
+# func_48633B56_entry + 0x20: no traced path reaches what follows (--decode-gaps)
+	retf	0, 0
+	add	-0xc, sp
+	and	0x00ffffff, d0
+	cmp	0x8080, d0
+	beq	func_48633B56_entry_L53
+	cmp	0x8081, d0
+	beq	func_48633B56_entry_L4c
+	cmp	0x8082, d0
+	beq	func_48633B56_entry_L4c
+	cmp	0x600000, d0
+	bne	func_48633B56_entry_L53
+func_48633B56_entry_L4c:
+	mov	2, d0
+	call	func_48633BB0_entry, [a2], 0x14
+func_48633B56_entry_L53:
+	clr	d0
+	ret	0, 0xc
 
 func_48633BB0:
 	movm	[a2], (sp)
@@ -155943,7 +156700,18 @@ inflate_trees_dynamic_entry_Lb5:
 	clr	d0
 inflate_trees_dynamic_entry_Lb6:
 	ret	[d2,d3,a2,a3], 0x38
-.incbin_range "baserom/kn2400_program.rom", 0x238f5e, 0x238f77
+# inflate_trees_dynamic_entry + 0xb9: no traced path reaches what follows (--decode-gaps)
+	mov	a0, a1
+	mov	(a1), a0
+	add	d1, d0
+	sub	d1, d0
+	sub	d0, a0
+	mov	a0, d0
+	mov	d0, (a1)
+	asl	3, d0
+	mov	d0, a0
+	add	0x50043734, a0
+	retf	0, 0
 
 inflate_trees_fixed:
 	movm	[d2,d3,a2,a3], (sp)
@@ -157834,7 +158602,25 @@ inflate_fast_entry_L306:
 	mov	a3, (a0)
 inflate_fast_entry_L332:
 	retf	[d2,d3,a2,a3], 0x44
-.incbin_range "baserom/kn2400_program.rom", 0x239cbd, 0x239cec
+# inflate_fast_entry + 0x335: no traced path reaches what follows (--decode-gaps)
+	mov	0x48431090, a0
+	retf	0, 0
+	movm	[d2], (sp)
+	add	-0x10, sp
+	mov	d0, d2
+	cmp	0, a0
+	beq	inflate_fast_entry_L34b
+	mov	d1, d0
+	clr	d0
+	add	d0, d2
+inflate_fast_entry_L34b:
+	mov	d2, d0
+	call	func_486D5460_L3, 0, 0xc
+	ret	[d2], 0x14
+	add	-0xc, sp
+	mov	a1, a0
+	call	ZArenaFree_entry, [a2,a3], 8
+	ret	0, 0xc
 
 func_48639CEC:
 	movm	[d2,a2,a3], (sp)
@@ -159175,7 +159961,8 @@ func_4863A2C6_L541:
 	mov	(0x2c, sp), a0
 	call	func_5018D2FE, 0, 0
 	jmp	func_4863A2C6_L10
-.incbin_range "baserom/kn2400_program.rom", 0x23a820, 0x23a823
+# func_4863A2C6 + 0x55a: no traced path reaches what follows (--decode-gaps)
+	ret	[d2,d3,a2,a3], 0x40
 
 func_4863A823:
 	movm	[d2,d3,a2], (sp)
@@ -160762,7 +161549,127 @@ func_4863B3CF_entry_L134:
 	mov	0xa, d0
 	call	func_48639DEB_entry, 0, 0x10
 	ret	[d2,d3,a2,a3], 0x48
-.incbin_range "baserom/kn2400_program.rom", 0x23b51b, 0x23b608
+# func_4863B3CF_entry + 0x147: no traced path reaches what follows (--decode-gaps)
+	retf	0, 0
+	movm	[d2,d3,a2,a3], (sp)
+	add	-0x4c, sp
+	movhu	d0, (0x64, sp)
+	clr	d0
+	movhu	d0, (0x28, sp)
+	exthu	d1
+	asl	8, d1
+	or	0x80, d1
+	mov	d1, (0x1c, sp)
+	mov	d1, d0
+	call	func_4863D3FF_entry, [d2], 0x14
+	mov	(0x1c, sp), d0
+	call	func_4863D33F_L5, [d2], 0x10
+	movhu	d0, (0x24, sp)
+	exthu	d0
+	cmp	-1, d0
+	bne	func_4863B3CF_entry_L177
+	ret	[d2,d3,a2,a3], 0x5c
+func_4863B3CF_entry_L177:
+	clr	d3
+	mov	(0x1c, sp), d0
+	call	func_4863D1B3_entry, [d2], 0x14
+	clr	d2
+	exth	d0
+	cmp	d3, d0
+	ble	func_4863B3CF_entry_L1a6
+	movhu	(0x24, sp), d0
+	mov	d0, a2
+func_4863B3CF_entry_L189:
+	mov	(0x1c, sp), d0
+	mov	d3, d1
+	extbu	d1
+	call	func_4863D5A4_entry, [d2,d3], 0x14
+	exth	d0
+	cmp	a2, d0
+	beq	func_4863B3CF_entry_L1a6
+	mov	d2, d3
+	inc	d3
+	mov	(0x1c, sp), d0
+	call	func_4863D1B3_entry, [d2], 0x14
+	mov	d3, d2
+	exth	d2
+	exth	d0
+	cmp	d0, d2
+	blt	func_4863B3CF_entry_L189
+func_4863B3CF_entry_L1a6:
+	mov	sp, a2
+	add	0x2c, a2
+	mov	a2, a0
+	mov	sp, a3
+	add	0x40, a3
+	clr	d0
+	mov	0x14, d1
+	call	memset_entry, [a2], 4
+	mov	a3, a0
+	clr	d0
+	mov	0xc, d1
+	call	memset_entry, [a2], 4
+	mov	sp, a0
+	mov	a0, d0
+	add	0x28, d0
+	mov	d0, (0x10, sp)
+	movhu	(0x24, sp), d1
+	mov	a3, a0
+	mov	(0x1c, sp), d0
+	extbu	d1
+	mov	a2, a1
+	call	func_4863DF3E_entry, [d2,d3,a2,a3], 0x24
+	exth	d0
+	cmp	0, d0
+	beq	func_4863B3CF_entry_L231
+	movhu	(0x28, sp), d2
+	mov	(0x6c, sp), d1
+	mov	d2, d0
+	asl2	d0
+	mov	(d0, a3), d0
+	asl2	d2
+	add	d0, d1
+	add	-0x40, d1
+	mov	d1, (d2, a3)
+	movbu	d3, (0x20, sp)
+	mov	(0x1c, sp), d0
+	movbu	(0x20, sp), d1
+	call	func_4863D568_entry, [d2,d3], 0x14
+	movhu	(0x28, sp), d3
+	mov	d3, d1
+	asl2	d1
+	mov	(d1, a3), d2
+	mov	d0, d1
+	exth	d1
+	cmp	d1, d2
+	blt	func_4863B3CF_entry_L207
+	asl2	d3
+	exth	d0
+	mov	d0, (d3, a3)
+func_4863B3CF_entry_L207:
+	mov	(0x1c, sp), d0
+	movbu	(0x20, sp), d1
+	call	func_4863D52C_entry, [d2,d3], 0x14
+	movhu	(0x28, sp), d3
+	mov	d3, d1
+	asl2	d1
+	mov	(d1, a3), d2
+	mov	d0, d1
+	exth	d1
+	cmp	d1, d2
+	bgt	func_4863B3CF_entry_L221
+	asl2	d3
+	exth	d0
+	mov	d0, (d3, a3)
+func_4863B3CF_entry_L221:
+	movhu	(0x24, sp), d0
+	mov	a3, a0
+	mov	d0, (0x10, sp)
+	movhu	(0x64, sp), d1
+	mov	2, d0
+	call	func_48639E41_entry, [d2,d3,a2,a3], 0x14
+func_4863B3CF_entry_L231:
+	ret	[d2,d3,a2,a3], 0x5c
 
 func_4863B608:
 	movm	[d2,d3,a2,a3], (sp)
@@ -161369,7 +162276,7 @@ func_4863BA75_entry:
 	beq	func_4863BA75_entry_L27
 	cmp	2, d0
 	beq	func_4863BA75_entry_L27
-	jmp	0x4863bb83
+	jmp	func_4863BA75_entry_L109
 func_4863BA75_entry_L27:
 	mov	(0x1c, sp), d0
 	call	func_4863D3FF_entry, [d2], 0x14
@@ -161388,7 +162295,7 @@ func_4863BA75_entry_L27:
 	exth	d0
 	cmp	0, d0
 	bge	func_4863BA75_entry_L53
-	jmp	0x4863bb87
+	jmp	func_4863BA75_entry_L10d
 func_4863BA75_entry_L53:
 	mov	sp, a2
 	add	0x50, a2
@@ -161479,9 +162386,19 @@ func_4863BA75_entry_Lf1:
 	mov	d0, a3
 	exth	d0
 	cmp	0, d0
-	blt	0x4863bb87
+	blt	func_4863BA75_entry_L10d
 	jmp	func_4863BA75_entry_L60
-.incbin_range "baserom/kn2400_program.rom", 0x23bb81, 0x23bb91
+# func_4863BA75_entry + 0x107: no traced path reaches what follows (--decode-gaps)
+	bra	func_4863BA75_entry_L10d
+func_4863BA75_entry_L109:
+	mov	-1, d0
+	bra	func_4863BA75_entry_L10e
+func_4863BA75_entry_L10d:
+	clr	d0
+func_4863BA75_entry_L10e:
+	ret	[d2,d3,a2,a3], 0x6c
+	retf	0, 0
+	retf	0, 0
 
 func_4863BB91:
 	movm	[a2,a3], (sp)
@@ -161935,7 +162852,17 @@ func_4863BEA9_L8:
 	mov	data_484316D4, a0
 	movbu	(d0, a0), d0
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x23bebd, 0x23bed1
+# func_4863BEA9 + 0x14: no traced path reaches what follows (--decode-gaps)
+	extbu	d0
+	mov	d0, a0
+	cmp	0x80, a0
+	bcs	func_4863BEA9_L1c
+	clr	d0
+func_4863BEA9_L1c:
+	extbu	d0
+	mov	0x48431754, a0
+	movbu	(d0, a0), d0
+	retf	0, 0
 
 func_4863BED1:
 	extbu	d0
@@ -163941,7 +164868,53 @@ func_4863CF8E_L43:
 	mov	-1, d0
 func_4863CF8E_L45:
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x23cfd6, 0x23d01e
+# func_4863CF8E + 0x48: no traced path reaches what follows (--decode-gaps)
+	exthu	d0
+	cmp	0, d0
+	beq	func_4863CF8E_L6b
+	cmp	1, d0
+	beq	func_4863CF8E_L6f
+	cmp	2, d0
+	beq	func_4863CF8E_L73
+	cmp	3, d0
+	beq	func_4863CF8E_L77
+	cmp	4, d0
+	beq	func_4863CF8E_L7b
+	cmp	5, d0
+	beq	func_4863CF8E_L7f
+	cmp	6, d0
+	beq	func_4863CF8E_L83
+	cmp	9, d0
+	beq	func_4863CF8E_L87
+	bra	func_4863CF8E_L8b
+func_4863CF8E_L6b:
+	mov	0x78, d0
+	bra	func_4863CF8E_L8d
+func_4863CF8E_L6f:
+	mov	0x7b, d0
+	bra	func_4863CF8E_L8d
+func_4863CF8E_L73:
+	mov	0x7a, d0
+	bra	func_4863CF8E_L8d
+func_4863CF8E_L77:
+	mov	0x7a, d0
+	bra	func_4863CF8E_L8d
+func_4863CF8E_L7b:
+	mov	0x7a, d0
+	bra	func_4863CF8E_L8d
+func_4863CF8E_L7f:
+	mov	0x7a, d0
+	bra	func_4863CF8E_L8d
+func_4863CF8E_L83:
+	mov	0x7a, d0
+	bra	func_4863CF8E_L8d
+func_4863CF8E_L87:
+	mov	0x7c, d0
+	bra	func_4863CF8E_L8d
+func_4863CF8E_L8b:
+	mov	-1, d0
+func_4863CF8E_L8d:
+	retf	0, 0
 
 func_4863D01E:
 	movm	[d2,d3,a2,a3], (sp)
@@ -164355,6 +165328,7 @@ func_4863D30F_entry_L28:
 func_4863D33F:
 	movm	[d2], (sp)
 	add	-0xc, sp
+func_4863D33F_L5:
 	mov	d0, d2
 	call	func_4863DC81, 0, 0
 	exth	d0
@@ -166439,7 +167413,22 @@ func_4863E309_entry:
 	mov	0x502b0810, a0
 	call	strcpy_entry, [a2], 4
 	ret	0, 0x10
-.incbin_range "baserom/kn2400_program.rom", 0x23e31d, 0x23e334
+# func_4863E309_entry + 0x11: no traced path reaches what follows (--decode-gaps)
+	exth	d0
+	cmp	0xc, d0
+	ble	func_4863E309_entry_L19
+	clr	d0
+	bra	func_4863E309_entry_L22
+func_4863E309_entry_L19:
+	cmp	0, d0
+	bge	func_4863E309_entry_L20
+	clr	d0
+	bra	func_4863E309_entry_L22
+func_4863E309_entry_L20:
+	mov	1, d0
+func_4863E309_entry_L22:
+	retf	0, 0
+	add	-0xc, sp
 
 func_4863E334:
 	call	func_4863D3FF_entry, [d2], 0x14
@@ -166722,7 +167711,40 @@ func_4863E41C_entry_Lfa:
 	mov	-1, d0
 func_4863E41C_entry_Lfc:
 	ret	[d2], 0x10
-.incbin_range "baserom/kn2400_program.rom", 0x23e520, 0x23e583
+# func_4863E41C_entry + 0xff: no traced path reaches what follows (--decode-gaps)
+	exthu	d0
+	cmp	0, d0
+	blt	func_4863E41C_entry_L15e
+	cmp	9, d0
+	bgt	func_4863E41C_entry_L15e
+	asl2	d0
+	mov	0x4843236c, a0
+	mov	(d0, a0), a0
+	jmp	(a0)
+	movhu	(data_485538CC), d0
+	bra	func_4863E41C_entry_L15f
+	movhu	(data_48557F3C), d0
+	bra	func_4863E41C_entry_L15f
+	movhu	(Str_empty_361), d0
+	bra	func_4863E41C_entry_L15f
+	movhu	(Str_empty_361), d0
+	bra	func_4863E41C_entry_L15f
+	movhu	(Str_empty_361), d0
+	bra	func_4863E41C_entry_L15f
+	movhu	(Str_empty_361), d0
+	bra	func_4863E41C_entry_L15f
+	movhu	(Str_empty_361), d0
+	bra	func_4863E41C_entry_L15f
+	movhu	(data_485606C0), d0
+	bra	func_4863E41C_entry_L15f
+	clr	d0
+	bra	func_4863E41C_entry_L15f
+	movhu	(data_485646FC), d0
+	bra	func_4863E41C_entry_L15f
+func_4863E41C_entry_L15e:
+	clr	d0
+func_4863E41C_entry_L15f:
+	retf	0, 0
 
 InitializeBlock21:
 	movm	[d2,d3,a2,a3], (sp)
@@ -171015,15 +172037,27 @@ func_48641141_entry:
 	call	func_486466EA_entry, [d2,d3,a2,a3], 0x24
 	exthu	d2
 	cmp	0, d2
-	beq	0x4864117f
+	beq	func_48641141_entry_L39
 	cmp	1, d2
-	beq	0x48641169
+	beq	func_48641141_entry_L23
 	cmp	2, d2
-	beq	0x48641171
+	beq	func_48641141_entry_L2b
 	cmp	3, d2
-	beq	0x48641179
-	bra	0x4864117f
-.incbin_range "baserom/kn2400_program.rom", 0x241167, 0x241183
+	beq	func_48641141_entry_L33
+	bra	func_48641141_entry_L39
+# func_48641141_entry + 0x21: no traced path reaches what follows (--decode-gaps)
+	bra	func_48641141_entry_L39
+func_48641141_entry_L23:
+	mov	0x50046168, a2
+	bra	func_48641141_entry_L39
+func_48641141_entry_L2b:
+	mov	0x50046178, a2
+	bra	func_48641141_entry_L39
+func_48641141_entry_L33:
+	mov	0x50046188, a2
+func_48641141_entry_L39:
+	mov	a2, a0
+	ret	[d2,a2], 0x18
 
 func_48641183:
 	movm	[a2], (sp)
@@ -174132,15 +175166,15 @@ func_48642B9F_entry:
 	and	d2, d1
 	cmp	d2, d1
 	beq	func_48642B9F_entry_L23
-	jmp	0x48642d05
+	jmp	func_48642B9F_entry_L161
 func_48642B9F_entry_L23:
 	cmp	d2, d0
 	bge	func_48642B9F_entry_L29
-	jmp	0x48642d3f
+	jmp	func_48642B9F_entry_L19b
 func_48642B9F_entry_L29:
 	cmp	0xff, d0
 	ble	func_48642B9F_entry_L32
-	jmp	0x48642d3f
+	jmp	func_48642B9F_entry_L19b
 func_48642B9F_entry_L32:
 	sub	d2, d0
 	asl2	d0
@@ -174159,8 +175193,176 @@ func_48642B9F_entry_L4f:
 	extbu	d0
 	cmp	0xf7, d0
 	bne	func_48642B9F_entry_L3f
-	jmp	0x48642d3f
-.incbin_range "baserom/kn2400_program.rom", 0x242bfd, 0x242d43
+	jmp	func_48642B9F_entry_L19b
+# func_48642B9F_entry + 0x59: no traced path reaches what follows (--decode-gaps)
+	bra	func_48642B9F_entry_L3f
+	clr	d2
+func_48642B9F_entry_L5c:
+	call	func_48643ED5_entry, [d2], 0xc
+	exth	d0
+	cmp	0, d0
+	bge	func_48642B9F_entry_L6b
+	mov	-1, d0
+	ret	[d2,d3,a2,a3], 0x2c
+func_48642B9F_entry_L6b:
+	inc	d2
+	cmp	1, d2
+	blt	func_48642B9F_entry_L5c
+	jmp	func_48642B9F_entry_L19b
+	mov	-3, d0
+	ret	[d2,d3,a2,a3], 0x2c
+	mov	sp, a0
+	mov	a0, d2
+	add	0x10, d2
+	mov	d2, a2
+	inc	d2
+func_48642B9F_entry_L80:
+	call	func_48643ED5_entry, [d2], 0xc
+	mov	d0, d1
+	exth	d1
+	cmp	0, d1
+	bge	func_48642B9F_entry_L90
+	mov	-1, d0
+	ret	[d2,d3,a2,a3], 0x2c
+func_48642B9F_entry_L90:
+	movbu	d0, (a2)
+	inc	a2
+	cmp	d2, a2
+	bcs	func_48642B9F_entry_L80
+	mov	sp, a0
+	add	0x10, a0
+	mov	0xf3, d0
+	call	func_48642D43_entry, [d2,d3], 8
+	mov	d0, d1
+	mov	(data_50006B18), d0
+	add	d1, d0
+	mov	d0, (data_50006B18)
+	jmp	func_48642B9F_entry_L19b
+	mov	sp, a0
+	mov	a0, d2
+	add	0x10, d2
+	mov	d2, a2
+	add	2, d2
+func_48642B9F_entry_Lbc:
+	call	func_48643ED5_entry, [d2], 0xc
+	mov	d0, d1
+	exth	d1
+	cmp	0, d1
+	bge	func_48642B9F_entry_Lcc
+	mov	-1, d0
+	ret	[d2,d3,a2,a3], 0x2c
+func_48642B9F_entry_Lcc:
+	movbu	d0, (a2)
+	inc	a2
+	cmp	d2, a2
+	bcs	func_48642B9F_entry_Lbc
+	mov	sp, a0
+	add	0x10, a0
+	mov	0xf4, d0
+	call	func_48642D43_entry, [d2,d3], 8
+	mov	(data_50006B18), d1
+	add	d0, d1
+	mov	d1, (data_50006B18)
+	jmp	func_48642B9F_entry_L19b
+	clr	d2
+func_48642B9F_entry_Lef:
+	call	func_48643ED5_entry, [d2], 0xc
+	exth	d0
+	cmp	0, d0
+	bge	func_48642B9F_entry_Lfe
+	mov	-1, d0
+	ret	[d2,d3,a2,a3], 0x2c
+func_48642B9F_entry_Lfe:
+	inc	d2
+	cmp	2, d2
+	blt	func_48642B9F_entry_Lef
+	jmp	func_48642B9F_entry_L19b
+	mov	sp, a0
+	mov	a0, d2
+	add	0x10, d2
+	mov	d2, a2
+	add	2, d2
+func_48642B9F_entry_L10f:
+	call	func_48643ED5_entry, [d2], 0xc
+	mov	d0, d1
+	exth	d1
+	cmp	0, d1
+	bge	func_48642B9F_entry_L11f
+	mov	-1, d0
+	ret	[d2,d3,a2,a3], 0x2c
+func_48642B9F_entry_L11f:
+	movbu	d0, (a2)
+	inc	a2
+	cmp	d2, a2
+	bcs	func_48642B9F_entry_L10f
+	mov	sp, a0
+	add	0x10, a0
+	call	func_48642D81_entry, [d2,d3,a2], 0x18
+	bra	func_48642B9F_entry_L19b
+	clr	d2
+func_48642B9F_entry_L131:
+	call	func_48643ED5_entry, [d2], 0xc
+	exth	d0
+	cmp	0, d0
+	bge	func_48642B9F_entry_L140
+	mov	-1, d0
+	ret	[d2,d3,a2,a3], 0x2c
+func_48642B9F_entry_L140:
+	inc	d2
+	cmp	2, d2
+	blt	func_48642B9F_entry_L131
+	bra	func_48642B9F_entry_L19b
+func_48642B9F_entry_L147:
+	call	func_48643ED5_entry, [d2], 0xc
+	mov	d0, d1
+	exth	d1
+	cmp	0, d1
+	bge	func_48642B9F_entry_L156
+	mov	-1, d0
+	bra	func_48642B9F_entry_L19c
+func_48642B9F_entry_L156:
+	extbu	d0
+	cmp	0xf7, d0
+	beq	func_48642B9F_entry_L19b
+	bra	func_48642B9F_entry_L147
+	bra	func_48642B9F_entry_L19b
+func_48642B9F_entry_L161:
+	mov	sp, a3
+	add	0x10, a3
+	movbu	d3, (0x10, sp)
+	cmp	0xd0, d1
+	beq	func_48642B9F_entry_L175
+	mov	3, d2
+	cmp	0xc0, d1
+	bne	func_48642B9F_entry_L177
+func_48642B9F_entry_L175:
+	mov	2, d2
+func_48642B9F_entry_L177:
+	cmp	1, d2
+	ble	func_48642B9F_entry_L195
+	mov	a3, a2
+	inc	a2
+	add	a3, d2
+func_48642B9F_entry_L17f:
+	call	func_48643ED5_entry, [d2], 0xc
+	mov	d0, d1
+	exth	d1
+	cmp	0, d1
+	bge	func_48642B9F_entry_L18e
+	mov	-1, d0
+	bra	func_48642B9F_entry_L19c
+func_48642B9F_entry_L18e:
+	movbu	d0, (a2)
+	inc	a2
+	cmp	d2, a2
+	bcs	func_48642B9F_entry_L17f
+func_48642B9F_entry_L195:
+	mov	a3, a0
+	call	func_48642DE9_entry, [d2,d3,a2,a3], 0x38
+func_48642B9F_entry_L19b:
+	clr	d0
+func_48642B9F_entry_L19c:
+	ret	[d2,d3,a2,a3], 0x2c
 
 func_48642D43:
 	movm	[d2,d3], (sp)
@@ -177269,7 +178471,9 @@ func_486445F8_entry_L18a:
 	jmp	func_486445F8_entry_L27
 func_486445F8_entry_L192:
 	ret	[d2,d3,a2,a3], 0x38
-.incbin_range "baserom/kn2400_program.rom", 0x244792, 0x24479b
+# func_486445F8_entry + 0x195: no traced path reaches what follows (--decode-gaps)
+	movhu	(data_50006B2A), d0
+	retf	0, 0
 
 func_4864479B:
 	movm	[d2], (sp)
@@ -177340,7 +178544,11 @@ func_4864482C:
 	movhu	d0, (data_50006B16)
 func_4864482C_L1a:
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x244849, 0x24485e
+# func_4864482C + 0x1d: no traced path reaches what follows (--decode-gaps)
+	movhu	(data_50006B16), d0
+	and	0xfffffffb, d0
+	movhu	d0, (data_50006B16)
+	retf	0, 0
 
 func_4864485E:
 	movhu	(data_50006B16), d0
@@ -177361,7 +178569,20 @@ func_48644879:
 func_48644882:
 	movhu	d0, (data_50006B28)
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x24488b, 0x2448c4
+# func_48644882 + 0x9: no traced path reaches what follows (--decode-gaps)
+	mov	(data_50006B18), d0
+	retf	0, 0
+	mov	d0, (data_50006B18)
+	retf	0, 0
+	mov	(0x50006b1c), d0
+	retf	0, 0
+	mov	d0, (0x50006b1c)
+	retf	0, 0
+	movhu	(data_50006B24), d0
+	retf	0, 0
+	movhu	d0, (data_50006B24)
+	retf	0, 0
+	add	-0x18, sp
 
 func_486448C4:
 	mov	0xf0, d1
@@ -177402,7 +178623,12 @@ func_4864490C_entry:
 	call	func_5016F6EF_entry, [d2,d3], 8
 	clr	d0
 	ret	0, 0xc
-.incbin_range "baserom/kn2400_program.rom", 0x24491c, 0x244927
+# func_4864490C_entry + 0xd: no traced path reaches what follows (--decode-gaps)
+	retf	0, 0
+	clr	d0
+	retf	0, 0
+	clr	d0
+	retf	0, 0
 
 func_48644927:
 	movm	[d2,a2], (sp)
@@ -179113,7 +180339,175 @@ func_486456DB_entry:
 	call	func_5018C0E1, 0, 0
 func_486456DB_entry_L2e:
 	ret	0, 0x10
-.incbin_range "baserom/kn2400_program.rom", 0x24570f, 0x24586c
+# func_486456DB_entry + 0x31: no traced path reaches what follows (--decode-gaps)
+	movbu	d0, (8, sp)
+	movbu	(8, sp), d0
+	cmp	0x13, d0
+	bge	func_486456DB_entry_L3d
+	bra	func_486456DB_entry_L8f
+func_486456DB_entry_L3d:
+	movbu	(8, sp), d0
+	cmp	0x1a, d0
+	ble	func_486456DB_entry_L46
+	bra	func_486456DB_entry_L8f
+func_486456DB_entry_L46:
+	movhu	(0x50093794), d0
+	btst	0x0800, d0
+	bne	func_486456DB_entry_L54
+	bra	func_486456DB_entry_L88
+func_486456DB_entry_L54:
+	movbu	(8, sp), d0
+	mov	0x54c, d1
+	nop
+	nop
+	mulu	d1, d0
+	mov	0x5008837c, a0
+	movhu	(d0, a0), d0
+	btst	0x04, d0
+	bne	func_486456DB_entry_L6d
+	bra	func_486456DB_entry_L88
+func_486456DB_entry_L6d:
+	movbu	(8, sp), d0
+	mov	0x54c, d1
+	nop
+	nop
+	mulu	d1, d0
+	add	0x5008837c, d0
+	mov	d0, a0
+	movbu	(0x16, a0), d0
+	cmp	0, d0
+	beq	func_486456DB_entry_L88
+	bra	func_486456DB_entry_L8b
+func_486456DB_entry_L88:
+	clr	d0
+	bra	func_486456DB_entry_L8d
+func_486456DB_entry_L8b:
+	mov	1, d0
+func_486456DB_entry_L8d:
+	bra	func_486456DB_entry_Lc8
+func_486456DB_entry_L8f:
+	movbu	(8, sp), d0
+	mov	0x54c, d1
+	nop
+	nop
+	mulu	d1, d0
+	mov	0x5008837c, a0
+	movhu	(d0, a0), d0
+	btst	0x04, d0
+	bne	func_486456DB_entry_La8
+	bra	func_486456DB_entry_Lc3
+func_486456DB_entry_La8:
+	movbu	(8, sp), d0
+	mov	0x54c, d1
+	nop
+	nop
+	mulu	d1, d0
+	add	0x5008837c, d0
+	mov	d0, a0
+	movbu	(0x16, a0), d0
+	cmp	0, d0
+	beq	func_486456DB_entry_Lc3
+	bra	func_486456DB_entry_Lc6
+func_486456DB_entry_Lc3:
+	clr	d0
+	bra	func_486456DB_entry_Lc8
+func_486456DB_entry_Lc6:
+	mov	1, d0
+func_486456DB_entry_Lc8:
+	ret	0, 0
+	movbu	d0, (8, sp)
+	movbu	(8, sp), d0
+	mov	0x54c, d1
+	nop
+	nop
+	mulu	d1, d0
+	mov	d0, a0
+	add	0x5008837c, a0
+	movhu	(0x62, a0), d0
+	mov	0xb, d1
+	exthu	d1
+	lsr	d1, d0
+	and	0x03, d0
+	exthu	d0
+	cmp	0, d0
+	bne	func_486456DB_entry_Lf2
+	bra	func_486456DB_entry_Lf8
+func_486456DB_entry_Lf2:
+	cmp	3, d0
+	beq	func_486456DB_entry_Lf8
+	bra	func_486456DB_entry_L150
+func_486456DB_entry_Lf8:
+	movbu	(8, sp), d0
+	mov	0x54c, d1
+	nop
+	nop
+	mulu	d1, d0
+	mov	0x5008837c, a0
+	movhu	(d0, a0), d0
+	btst	0x08, d0
+	bne	func_486456DB_entry_L111
+	bra	func_486456DB_entry_L149
+func_486456DB_entry_L111:
+	movbu	(8, sp), d0
+	mov	0x54c, d1
+	nop
+	nop
+	mulu	d1, d0
+	add	0x5008837c, d0
+	mov	d0, a0
+	movhu	(0x62, a0), d0
+	btst	0xe000, d0
+	bne	func_486456DB_entry_L12e
+	bra	func_486456DB_entry_L149
+func_486456DB_entry_L12e:
+	movbu	(8, sp), d0
+	mov	0x54c, d1
+	nop
+	nop
+	mulu	d1, d0
+	mov	d0, a0
+	add	0x5008837c, a0
+	movbu	(0x14, a0), d0
+	cmp	0, d0
+	beq	func_486456DB_entry_L149
+	bra	func_486456DB_entry_L14c
+func_486456DB_entry_L149:
+	clr	d0
+	bra	func_486456DB_entry_L14e
+func_486456DB_entry_L14c:
+	mov	1, d0
+func_486456DB_entry_L14e:
+	bra	func_486456DB_entry_L18b
+func_486456DB_entry_L150:
+	movbu	(8, sp), d0
+	mov	0x54c, d1
+	nop
+	nop
+	mulu	d1, d0
+	mov	0x5008837c, a0
+	movhu	(d0, a0), d0
+	btst	0x08, d0
+	bne	func_486456DB_entry_L169
+	bra	func_486456DB_entry_L186
+func_486456DB_entry_L169:
+	movbu	(8, sp), d0
+	mov	0x54c, d1
+	nop
+	nop
+	mulu	d0, d1
+	mov	d1, a0
+	add	0x5008837c, a0
+	movhu	(0x62, a0), d0
+	btst	0xe000, d0
+	beq	func_486456DB_entry_L186
+	bra	func_486456DB_entry_L189
+func_486456DB_entry_L186:
+	clr	d0
+	bra	func_486456DB_entry_L18b
+func_486456DB_entry_L189:
+	mov	1, d0
+func_486456DB_entry_L18b:
+	ret	0, 0
 
 func_4864586C:
 	movhu	d0, (8, sp)
@@ -192893,7 +194287,7 @@ func_4864DA1A:
 	beq	func_4864DA1A_L85
 	cmp	0x760000, a0
 	beq	func_4864DA1A_L97
-	jmp	0x4864db22
+	jmp	func_4864DA1A_L108
 func_4864DA1A_L2d:
 	clr	d2
 	exthu	d3
@@ -192909,13 +194303,13 @@ func_4864DA1A_L2f:
 	asl2	d2
 	mov	data_48464378, a0
 	mov	(d2, a0), a2
-	jmp	0x4864db31
+	jmp	func_4864DA1A_L117
 func_4864DA1A_L50:
 	inc	d2
 	exth	d2
 	cmp	5, d2
 	blt	func_4864DA1A_L2f
-	jmp	0x4864db31
+	jmp	func_4864DA1A_L117
 func_4864DA1A_L59:
 	mov	(0x3c, sp), d2
 	mov	0xff, d1
@@ -192934,12 +194328,12 @@ func_4864DA1A_L59:
 	mov	d2, d0
 	add	d1, d0
 	mov	d0, a2
-	jmp	0x4864db31
+	jmp	func_4864DA1A_L117
 func_4864DA1A_L85:
 	mov	(0x3c, sp), a0
 	mov	Str_empty_1106, a1
 	call	strcpy_entry, [a2], 4
-	jmp	0x4864db31
+	jmp	func_4864DA1A_L117
 func_4864DA1A_L97:
 	exth	d0
 	mov	d0, d1
@@ -192952,7 +194346,7 @@ func_4864DA1A_L97:
 	mov	d0, a0
 	mov	(4, a0), a0
 	cmp	a2, a0
-	beq	0x4864db31
+	beq	func_4864DA1A_L117
 	mov	0x1c, d0
 	nop
 	nop
@@ -192964,7 +194358,7 @@ func_4864DA1A_L97:
 	mov	(a0), a0
 	movbu	(d0, a0), d0
 	cmp	0, d0
-	beq	0x4864db31
+	beq	func_4864DA1A_L117
 	clr	d2
 	exthu	d3
 func_4864DA1A_Lcc:
@@ -192988,14 +194382,26 @@ func_4864DA1A_Lcc:
 	mov	(a0), a0
 	movbu	(d0, a0), d1
 	mov	d1, a2
-	bra	0x4864db31
+	bra	func_4864DA1A_L117
 func_4864DA1A_Lfe:
 	inc	d2
 	exth	d2
 	cmp	5, d2
 	blt	func_4864DA1A_Lcc
-	bra	0x4864db31
-.incbin_range "baserom/kn2400_program.rom", 0x24db20, 0x24db36
+	bra	func_4864DA1A_L117
+# func_4864DA1A + 0x106: no traced path reaches what follows (--decode-gaps)
+	bra	func_4864DA1A_L117
+func_4864DA1A_L108:
+	mov	a0, (0x10, sp)
+	mov	(0x3c, sp), a0
+	exth	d0
+	mov	a0, (0x14, sp)
+	exthu	d1
+	call	func_4864D0EC_entry, [d2,d3,a2,a3], 0x2c
+	mov	d0, a2
+func_4864DA1A_L117:
+	mov	a2, d0
+	ret	[d2,d3,a2,a3], 0x28
 
 func_4864DB36:
 	movm	[d2,d3,a2,a3], (sp)
@@ -196407,13 +197813,13 @@ TtSdmixer:
 	cmp	0x6003b, d1
 	beq	TtSdmixer_L2f
 	cmp	0x600d8, d1
-	beq	0x4864fd42
+	beq	TtSdmixer_L62
 	cmp	0x6008e, d1
-	beq	0x4864fd40
-	bra	0x4864fd42
+	beq	TtSdmixer_L60
+	bra	TtSdmixer_L62
 TtSdmixer_L28:
 	call	func_4864CDAC, 0, 0
-	bra	0x4864fd42
+	bra	TtSdmixer_L62
 TtSdmixer_L2f:
 	clr	d0
 	movhu	d2, (0x50051bc6)
@@ -196424,8 +197830,14 @@ TtSdmixer_L2f:
 	movhu	d0, (0x50051bcc)
 	mov	0x0000ffff, d0
 	movhu	d0, (0x50051bd0)
-	bra	0x4864fd42
-.incbin_range "baserom/kn2400_program.rom", 0x24fd3e, 0x24fd46
+	bra	TtSdmixer_L62
+# TtSdmixer + 0x5e: no traced path reaches what follows (--decode-gaps)
+	bra	TtSdmixer_L62
+TtSdmixer_L60:
+	mov	0xd, d2
+TtSdmixer_L62:
+	mov	d2, d0
+	ret	[d2], 0xc
 
 TtSqmixer:
 	movm	[d2,d3], (sp)
@@ -196437,16 +197849,16 @@ TtSqmixer:
 	beq	TtSqmixer_L37
 	cmp	0x600d8, d1
 	bne	TtSqmixer_L21
-	jmp	0x4864fe58
+	jmp	TtSqmixer_L112
 TtSqmixer_L21:
 	cmp	0x6008e, d1
 	bne	TtSqmixer_L2c
-	jmp	0x4864fe56
+	jmp	TtSqmixer_L110
 TtSqmixer_L2c:
-	jmp	0x4864fe58
+	jmp	TtSqmixer_L112
 TtSqmixer_L2f:
 	call	func_4864CDAC, 0, 0
-	jmp	0x4864fe58
+	jmp	TtSqmixer_L112
 TtSqmixer_L37:
 	mov	2, d0
 	movhu	d0, (0x50051bc6)
@@ -196510,20 +197922,26 @@ TtSqmixer_Lc0:
 	cmp	0x11, d0
 	beq	TtSqmixer_Le6
 	cmp	0x12, d0
-	bne	0x4864fe58
+	bne	TtSqmixer_L112
 TtSqmixer_Le6:
 	movhu	(data_500017B0), d0
 	cmp	1, d0
-	beq	0x4864fe58
+	beq	TtSqmixer_L112
 	mov	0x90008041, d0
 	clr	d1
 	call	PutM3Em_entry, [d2,d3,a2], 0x24
-	bra	0x4864fe58
+	bra	TtSqmixer_L112
 TtSqmixer_L100:
 	mov	0x0000ffff, d0
 	movhu	d0, (0x50051bd0)
-	bra	0x4864fe58
-.incbin_range "baserom/kn2400_program.rom", 0x24fe54, 0x24fe5c
+	bra	TtSqmixer_L112
+# TtSqmixer + 0x10e: no traced path reaches what follows (--decode-gaps)
+	bra	TtSqmixer_L112
+TtSqmixer_L110:
+	mov	0xd, d3
+TtSqmixer_L112:
+	mov	d3, d0
+	ret	[d2,d3], 0x18
 
 func_4864FE5C:
 	mov	(data_500017B4), a0
@@ -205454,7 +206872,231 @@ InitializeBlock03_entry:
 	mov	Str_TT_PROGRAM, a0
 	call	RegisterTitle_entry, [d2,a2], 8
 	ret	[d2,d3,a2,a3], 0x3c
-.incbin_range "baserom/kn2400_program.rom", 0x2558ec, 0x255aeb
+# InitializeBlock03_entry + 0x22e: no traced path reaches what follows (--decode-gaps)
+	cmp	0x5001f, d0
+	beq	InitializeBlock03_entry_L260
+	cmp	0x50011, d0
+	beq	InitializeBlock03_entry_L260
+	cmp	0x50005, d0
+	beq	InitializeBlock03_entry_L263
+	cmp	0x5000f, d0
+	beq	InitializeBlock03_entry_L263
+	cmp	0x50012, d0
+	beq	InitializeBlock03_entry_L268
+	cmp	0x50010, d0
+	beq	InitializeBlock03_entry_L271
+	bra	InitializeBlock03_entry_L27c
+InitializeBlock03_entry_L260:
+	mov	d1, d0
+	rets
+InitializeBlock03_entry_L263:
+	movhu	(0x10, sp), d0
+	rets
+InitializeBlock03_entry_L268:
+	exthu	d1
+	mov	-1, d0
+	nop
+	nop
+	mul	d1, d0
+	rets
+InitializeBlock03_entry_L271:
+	movhu	(0x10, sp), d0
+	mov	-1, d1
+	nop
+	nop
+	mul	d1, d0
+	rets
+InitializeBlock03_entry_L27c:
+	clr	d0
+	rets
+	movm	[d2,d3,a2,a3], (sp)
+	add	-0x20, sp
+	mov	a0, a2
+	movhu	(a2), d0
+	mov	2, d2
+	exth	d0
+	movhu	d0, (0x18, sp)
+	add	a2, d2
+	mov	d2, a0
+	movhu	(a0), d0
+	mov	sp, a0
+	exth	d0
+	movhu	d0, (0x1a, sp)
+	movhu	(a2), d0
+	mov	a0, d1
+	exth	d0
+	add	0x1c, d1
+	mov	d1, (0x14, sp)
+	movhu	d0, (0x1c, sp)
+	mov	d2, a0
+	movhu	(a0), d0
+	mov	sp, a3
+	add	0x18, a3
+	exth	d0
+	add	3, d0
+	movhu	d0, (0x1e, sp)
+	mov	a3, a0
+	mov	d1, a1
+	mov	0xf5, d0
+	call	DrawLine_entry, [d2,a2,a3], 0x20
+	movhu	(a2), d0
+	mov	d2, a0
+	exth	d0
+	inc	d0
+	movhu	d0, (0x1c, sp)
+	movhu	(a0), d0
+	mov	a3, a0
+	exth	d0
+	inc	d0
+	movhu	d0, (0x1e, sp)
+	mov	(0x14, sp), a1
+	mov	0xf5, d0
+	call	DrawLine_entry, [d2,a2,a3], 0x20
+	movhu	(a2), d0
+	mov	d2, a0
+	exth	d0
+	add	3, d0
+	movhu	d0, (0x1c, sp)
+	movhu	(a0), d0
+	mov	a3, a0
+	exth	d0
+	movhu	d0, (0x1e, sp)
+	mov	(0x14, sp), a1
+	mov	0xf5, d0
+	call	DrawLine_entry, [d2,a2,a3], 0x20
+	movhu	(a2), d0
+	mov	6, d3
+	exth	d0
+	movhu	d0, (0x18, sp)
+	add	a2, d3
+	mov	d3, a0
+	movhu	(a0), d0
+	exth	d0
+	movhu	d0, (0x1a, sp)
+	movhu	(a2), d0
+	exth	d0
+	movhu	d0, (0x1c, sp)
+	movhu	(a0), d0
+	mov	a3, a0
+	exth	d0
+	add	-3, d0
+	movhu	d0, (0x1e, sp)
+	mov	(0x14, sp), a1
+	mov	0xf5, d0
+	call	DrawLine_entry, [d2,a2,a3], 0x20
+	movhu	(a2), d0
+	mov	d3, a0
+	exth	d0
+	inc	d0
+	movhu	d0, (0x1c, sp)
+	movhu	(a0), d0
+	mov	a3, a0
+	exth	d0
+	add	-1, d0
+	movhu	d0, (0x1e, sp)
+	mov	(0x14, sp), a1
+	mov	0xf5, d0
+	call	DrawLine_entry, [d2,a2,a3], 0x20
+	movhu	(a2), d0
+	mov	d3, a0
+	exth	d0
+	add	3, d0
+	movhu	d0, (0x1c, sp)
+	movhu	(a0), d0
+	mov	a3, a0
+	exth	d0
+	movhu	d0, (0x1e, sp)
+	mov	(0x14, sp), a1
+	inc4	a2
+	mov	0xf5, d0
+	call	DrawLine_entry, [d2,a2,a3], 0x20
+	movhu	(a2), d0
+	mov	d2, a0
+	exth	d0
+	movhu	d0, (0x18, sp)
+	movhu	(a0), d0
+	exth	d0
+	movhu	d0, (0x1a, sp)
+	movhu	(a2), d0
+	exth	d0
+	movhu	d0, (0x1c, sp)
+	movhu	(a0), d0
+	mov	a3, a0
+	exth	d0
+	add	3, d0
+	movhu	d0, (0x1e, sp)
+	mov	(0x14, sp), a1
+	mov	0xf5, d0
+	call	DrawLine_entry, [d2,a2,a3], 0x20
+	movhu	(a2), d0
+	mov	d2, a0
+	exth	d0
+	add	-1, d0
+	movhu	d0, (0x1c, sp)
+	movhu	(a0), d0
+	mov	a3, a0
+	exth	d0
+	inc	d0
+	movhu	d0, (0x1e, sp)
+	mov	(0x14, sp), a1
+	mov	0xf5, d0
+	call	DrawLine_entry, [d2,a2,a3], 0x20
+	movhu	(a2), d0
+	mov	d2, a0
+	exth	d0
+	add	-3, d0
+	movhu	d0, (0x1c, sp)
+	movhu	(a0), d0
+	mov	a3, a0
+	exth	d0
+	movhu	d0, (0x1e, sp)
+	mov	(0x14, sp), a1
+	mov	0xf5, d0
+	call	DrawLine_entry, [d2,a2,a3], 0x20
+	movhu	(a2), d0
+	mov	d3, a0
+	exth	d0
+	movhu	d0, (0x18, sp)
+	movhu	(a0), d0
+	exth	d0
+	movhu	d0, (0x1a, sp)
+	movhu	(a2), d0
+	exth	d0
+	movhu	d0, (0x1c, sp)
+	movhu	(a0), d0
+	mov	a3, a0
+	exth	d0
+	add	-3, d0
+	movhu	d0, (0x1e, sp)
+	mov	(0x14, sp), a1
+	mov	0xf5, d0
+	call	DrawLine_entry, [d2,a2,a3], 0x20
+	movhu	(a2), d0
+	mov	d3, a0
+	exth	d0
+	add	-1, d0
+	movhu	d0, (0x1c, sp)
+	movhu	(a0), d0
+	mov	a3, a0
+	exth	d0
+	add	-1, d0
+	movhu	d0, (0x1e, sp)
+	mov	(0x14, sp), a1
+	mov	0xf5, d0
+	call	DrawLine_entry, [d2,a2,a3], 0x20
+	movhu	(a2), d0
+	mov	d3, a0
+	exth	d0
+	add	-3, d0
+	movhu	d0, (0x1c, sp)
+	movhu	(a0), d0
+	mov	a3, a0
+	exth	d0
+	movhu	d0, (0x1e, sp)
+	mov	(0x14, sp), a1
+	mov	0xf5, d0
+	call	DrawLine_entry, [d2,a2,a3], 0x20
+	ret	[d2,d3,a2,a3], 0x30
 
 IvRstOtherPartProc:
 	movm	[d2,d3,a2,a3], (sp)
@@ -209854,7 +211496,11 @@ func_48658857_entry:
 	mov	0x00350009, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
 	ret	0, 0x14
-.incbin_range "baserom/kn2400_program.rom", 0x25886f, 0x25887a
+# func_48658857_entry + 0x15: no traced path reaches what follows (--decode-gaps)
+	retf	0, 0
+	retf	0, 0
+	mov	0, a0
+	retf	0, 0
 
 func_4865887A:
 	retf	0, 0
@@ -211218,7 +212864,484 @@ func_486595FE_L67:
 func_486595FE_L7a:
 	clr	d0
 	ret	[d2], 0x14
-.incbin_range "baserom/kn2400_program.rom", 0x25967c, 0x259a93
+# func_486595FE + 0x7e: no traced path reaches what follows (--decode-gaps)
+func_486595FE_L7e:
+	mov	(0x50051c14), d0
+	cmp	0, d0
+	beq	func_486595FE_L8c
+	mov	1, d0
+	bra	func_486595FE_Lb7
+func_486595FE_L8c:
+	mov	(0x50051c18), d0
+	cmp	0, d0
+	beq	func_486595FE_L9a
+	mov	2, d0
+	bra	func_486595FE_Lb7
+func_486595FE_L9a:
+	mov	(0x50051c1c), d0
+	cmp	0, d0
+	beq	func_486595FE_La8
+	mov	3, d0
+	bra	func_486595FE_Lb7
+func_486595FE_La8:
+	mov	(0x50051c20), d0
+	cmp	0, d0
+	beq	func_486595FE_Lb6
+	mov	4, d0
+	bra	func_486595FE_Lb7
+func_486595FE_Lb6:
+	clr	d0
+func_486595FE_Lb7:
+	retf	0, 0
+	movm	[d2,d3,a2,a3], (sp)
+	add	-0x20, sp
+func_486595FE_Lbf:
+	mov	a0, a2
+	mov	a0, d2
+	inc4	a2
+	mov	3, a3
+	add	d2, a3
+	movbu	(a3), d1
+	add	2, d2
+	mov	d2, a0
+	mov	d0, d3
+	movbu	(a2), d0
+	mov	d2, (0x14, sp)
+	movbu	(a0), d2
+	mov	d2, (0x10, sp)
+	call	func_4860A75C, 0, 0
+	extbu	d0
+	cmp	3, d0
+	beq	func_486595FE_Le6
+	mov	-1, d0
+	bra	func_486595FE_L129
+func_486595FE_Le6:
+	extbu	d3
+	exthu	d3
+	mov	d3, d0
+	call	func_48658B0E_entry, 0, 0xc
+	cmp	0, d0
+	beq	func_486595FE_Lfc
+	mov	sp, a1
+	add	0x18, a1
+	mov	2, d0
+	movbu	d0, (0x1d, sp)
+	bra	func_486595FE_L104
+func_486595FE_Lfc:
+	mov	sp, a1
+	add	0x18, a1
+	mov	3, d0
+	movbu	d0, (0x1d, sp)
+func_486595FE_L104:
+	movbu	(a2), d0
+	movbu	d0, (0x1a, sp)
+	movbu	(a3), d0
+	movbu	d0, (0x1b, sp)
+	mov	(0x14, sp), a0
+	movbu	(a0), d0
+	mov	a1, a0
+	movbu	d0, (0x1c, sp)
+	call	func_4860A8A0_entry, [d2,d3,a2,a3], 0x38
+	movbu	(0x1d, sp), d0
+	cmp	4, d0
+	bge	func_486595FE_L128
+	mov	-1, d0
+	bra	func_486595FE_L129
+func_486595FE_L128:
+	clr	d0
+func_486595FE_L129:
+	ret	[d2,d3,a2,a3], 0x30
+	movm	[d2,a2], (sp)
+	add	-0x20, sp
+func_486595FE_L131:
+	mov	d0, d2
+	mov	sp, a2
+	add	0x10, a2
+	clr	d0
+	movbu	d0, (0x10, sp)
+	movbu	d0, (0x11, sp)
+	call	func_486595FE_L7e, 0, 0
+	extbu	d0
+	mov	d0, a0
+	add	a0, a0
+	add	2, a0
+	mov	a0, d0
+	movbu	d0, (0x15, sp)
+	extbu	d2
+	exthu	d2
+	mov	d2, d0
+	call	func_48658B0E_entry, 0, 0xc
+	cmp	0, d0
+	bne	func_486595FE_L160
+	movbu	(0x15, sp), d0
+	inc	d0
+	movbu	d0, (0x15, sp)
+func_486595FE_L160:
+	mov	a2, a0
+	call	func_4860A954_entry, [d2,d3,a2,a3], 0x38
+	mov	0x34, d0
+	movbu	d0, (0x18, sp)
+	movbu	(0x12, sp), d1
+	mov	sp, a0
+	movbu	d1, (0x1c, sp)
+	movbu	(0x13, sp), d1
+	add	0x18, a0
+	movbu	d1, (0x1b, sp)
+	movbu	(0x14, sp), d0
+	movbu	d0, (0x1a, sp)
+	mov	d2, d0
+	call	func_5014AC9F_entry, [d2,d3,a2], 0x28
+	ret	[d2,a2], 0x28
+	movm	[d2,d3,a2,a3], (sp)
+	add	-0x30, sp
+func_486595FE_L192:
+	mov	0, a2
+	mov	sp, a0
+	mov	a0, d1
+	add	0x20, d1
+	mov	d1, (0x18, sp)
+	extbu	d0
+	movhu	d0, (0x1c, sp)
+func_486595FE_L19f:
+	mov	a2, a0
+	add	a0, a0
+	add	a0, a0
+	add	0x50051c10, a0
+	mov	(4, a0), d0
+	cmp	0, d0
+	bne	func_486595FE_L1b4
+	jmp	func_486595FE_L23a
+func_486595FE_L1b4:
+	mov	a2, a1
+	add	a1, a1
+	inc4	a1
+	mov	a1, d0
+	movbu	d0, (0x25, sp)
+	movhu	(0x1c, sp), d0
+	mov	d0, (0x14, sp)
+	call	func_48658B0E_entry, 0, 0xc
+	cmp	0, d0
+	bne	func_486595FE_L1d2
+	movbu	(0x25, sp), d0
+	inc	d0
+	movbu	d0, (0x25, sp)
+func_486595FE_L1d2:
+	movbu	(0x25, sp), d0
+	call	func_4860A1F4_entry, 0, 0xc
+	clr	d1
+	clr	d3
+	extbu	d0
+	exthu	d0
+	mov	d0, a3
+	cmp	0, a3
+	ble	func_486595FE_L23a
+func_486595FE_L1e6:
+	movbu	d1, (0x20, sp)
+	clr	d0
+	movbu	d0, (0x21, sp)
+	mov	(0x18, sp), a0
+	call	func_4860A954_entry, [d2,d3,a2,a3], 0x38
+	movbu	(0x24, sp), d2
+	movbu	(0x22, sp), d0
+	movbu	(0x23, sp), d1
+	mov	d2, (0x10, sp)
+	call	func_4860A7C8, 0, 0x14
+	extbu	d0
+	cmp	2, d0
+	bne	func_486595FE_L233
+	mov	0x34, d0
+	movbu	d0, (0x28, sp)
+	movbu	(0x22, sp), d0
+	mov	sp, a0
+	movbu	d0, (0x2c, sp)
+	movbu	(0x23, sp), d0
+	add	0x28, a0
+	movbu	d0, (0x2b, sp)
+	movbu	(0x24, sp), d0
+	movbu	d0, (0x2a, sp)
+	mov	(0x14, sp), d0
+	call	func_5014AC9F_entry, [d2,d3,a2], 0x28
+	clr	d0
+	bra	func_486595FE_L249
+func_486595FE_L233:
+	inc	d3
+	mov	d3, d1
+	exthu	d3
+	cmp	a3, d3
+	blt	func_486595FE_L1e6
+func_486595FE_L23a:
+	mov	a2, d0
+	inc	d0
+	extbu	d0
+	mov	d0, a2
+	cmp	4, d0
+	bge	func_486595FE_L247
+	jmp	func_486595FE_L19f
+func_486595FE_L247:
+	mov	-1, d0
+func_486595FE_L249:
+	ret	[d2,d3,a2,a3], 0x40
+	movm	[d2,a2], (sp)
+	add	-0x20, sp
+func_486595FE_L251:
+	mov	d0, d2
+	mov	sp, a2
+	add	0x10, a2
+	clr	d0
+	movbu	d0, (0x10, sp)
+	movbu	d0, (0x11, sp)
+	mov	2, d0
+	movbu	d0, (0x15, sp)
+	extbu	d2
+	exthu	d2
+	mov	d2, d0
+	call	func_48658B0E_entry, 0, 0xc
+	cmp	0, d0
+	bne	func_486595FE_L274
+	movbu	(0x15, sp), d0
+	inc	d0
+	movbu	d0, (0x15, sp)
+func_486595FE_L274:
+	mov	a2, a0
+	call	func_4860A954_entry, [d2,d3,a2,a3], 0x38
+	mov	0xa, d0
+	movbu	d0, (0x18, sp)
+	movbu	(0x12, sp), d1
+	mov	sp, a0
+	movbu	d1, (0x1c, sp)
+	movbu	(0x13, sp), d1
+	add	0x18, a0
+	movbu	d1, (0x1b, sp)
+	movbu	(0x14, sp), d1
+	mov	d2, d0
+	movbu	d1, (0x1a, sp)
+	call	func_5014AC9F_entry, [d2,d3,a2], 0x28
+	ret	[d2,a2], 0x28
+	movm	[d2,d3,a2,a3], (sp)
+	add	-0x28, sp
+func_486595FE_L2a6:
+	mov	sp, a3
+	add	0x18, a3
+	mov	2, d1
+	movbu	d1, (0x1d, sp)
+	extbu	d0
+	exthu	d0
+	mov	d0, (0x14, sp)
+	call	func_48658B0E_entry, 0, 0xc
+	cmp	0, d0
+	bne	func_486595FE_L2c2
+	movbu	(0x1d, sp), d0
+	inc	d0
+	movbu	d0, (0x1d, sp)
+func_486595FE_L2c2:
+	movbu	(0x1d, sp), d0
+	call	func_4860A1F4_entry, 0, 0xc
+	clr	d1
+	clr	d3
+	extbu	d0
+	exthu	d0
+	mov	d0, a2
+	cmp	0, a2
+	ble	func_486595FE_L329
+func_486595FE_L2d6:
+	mov	a3, a0
+	movbu	d1, (0x18, sp)
+	clr	d0
+	movbu	d0, (0x19, sp)
+	call	func_4860A954_entry, [d2,d3,a2,a3], 0x38
+	movbu	(0x1c, sp), d2
+	movbu	(0x1a, sp), d0
+	movbu	(0x1b, sp), d1
+	mov	d2, (0x10, sp)
+	call	func_4860A7C8, 0, 0x14
+	extbu	d0
+	cmp	2, d0
+	bne	func_486595FE_L322
+	mov	0xa, d0
+	movbu	d0, (0x20, sp)
+	movbu	(0x1a, sp), d0
+	mov	sp, a0
+	movbu	d0, (0x24, sp)
+	movbu	(0x1b, sp), d0
+	add	0x20, a0
+	movbu	d0, (0x23, sp)
+	movbu	(0x1c, sp), d0
+	movbu	d0, (0x22, sp)
+	mov	(0x14, sp), d0
+	call	func_5014AC9F_entry, [d2,d3,a2], 0x28
+	clr	d0
+	bra	func_486595FE_L32b
+func_486595FE_L322:
+	inc	d3
+	mov	d3, d1
+	exthu	d3
+	cmp	a2, d3
+	blt	func_486595FE_L2d6
+func_486595FE_L329:
+	mov	-1, d0
+func_486595FE_L32b:
+	ret	[d2,d3,a2,a3], 0x38
+	movm	[d2,d3,a2], (sp)
+	add	-0x1c, sp
+	mov	0xff, d0
+	and	d1, d0
+	extbu	d0
+	cmp	0, d0
+	bne	func_486595FE_L340
+	jmp	func_486595FE_L490
+func_486595FE_L340:
+	and	0xff00, d1
+	lsr	8, d1
+	mov	d1, d0
+	extbu	d0
+	cmp	0x34, d0
+	beq	func_486595FE_L350
+	jmp	func_486595FE_L3f3
+func_486595FE_L350:
+	call	func_486595FE_L7e, 0, 0
+	extbu	d0
+	cmp	0, d0
+	bne	func_486595FE_L369
+	mov	3, d0
+	mov	0x59, d1
+	call	InterruptTitle_entry, [d2,d3,a2], 0x20
+	clr	d0
+	ret	[d2,d3,a2], 0x28
+func_486595FE_L369:
+	mov	0x00008041, d0
+	clr	d1
+	call	func_50143A7C_entry, 0, 0x10
+	mov	d0, d3
+	mov	sp, a2
+	add	0x14, a2
+	mov	0x34, d0
+	movbu	d0, (0x14, sp)
+	and	0xff, d3
+	extbu	d3
+	mov	d3, d0
+	mov	a2, a0
+	call	func_5014ABD2_entry, [d2,d3,a2], 0x24
+	mov	d3, d0
+	mov	a2, a0
+	call	func_486595FE_Lbf, [d2,d3,a2,a3], 0x30
+	exth	d0
+	cmp	0, d0
+	bge	func_486595FE_L3bc
+	cmp	0x19, d3
+	beq	func_486595FE_L3aa
+	cmp	0x1a, d3
+	beq	func_486595FE_L3aa
+	mov	d3, d0
+	call	func_486595FE_L131, [d2,a2], 0x28
+	jmp	func_486595FE_L490
+func_486595FE_L3aa:
+	mov	d3, d0
+	call	func_486595FE_L192, [d2,d3,a2,a3], 0x40
+	exth	d0
+	cmp	0, d0
+	blt	func_486595FE_L3b8
+	jmp	func_486595FE_L490
+func_486595FE_L3b8:
+	clr	d0
+	ret	[d2,d3,a2], 0x28
+func_486595FE_L3bc:
+	cmp	0x19, d3
+	beq	func_486595FE_L3c7
+	cmp	0x1a, d3
+	beq	func_486595FE_L3c7
+	jmp	func_486595FE_L490
+func_486595FE_L3c7:
+	movbu	(0x16, sp), d2
+	movbu	(0x18, sp), d0
+	movbu	(0x17, sp), d1
+	mov	d2, (0x10, sp)
+	call	func_4860A7C8, 0, 0x14
+	extbu	d0
+	cmp	2, d0
+	bne	func_486595FE_L3e1
+	jmp	func_486595FE_L490
+func_486595FE_L3e1:
+	mov	d3, d0
+	call	func_486595FE_L192, [d2,d3,a2,a3], 0x40
+	exth	d0
+	cmp	0, d0
+	blt	func_486595FE_L3ef
+	jmp	func_486595FE_L490
+func_486595FE_L3ef:
+	clr	d0
+	ret	[d2,d3,a2], 0x28
+func_486595FE_L3f3:
+	extbu	d1
+	cmp	0xa, d1
+	beq	func_486595FE_L3fb
+	jmp	func_486595FE_L490
+func_486595FE_L3fb:
+	clr	d1
+	mov	0x00008041, d0
+	call	func_50143A7C_entry, 0, 0x10
+	and	0xff, d0
+	mov	d0, d3
+	extbu	d3
+	mov	d3, d0
+	mov	sp, a0
+	add	0x14, a0
+	mov	0xa, d1
+	movbu	d1, (0x14, sp)
+	call	func_5014ABD2_entry, [d2,d3,a2], 0x24
+	movbu	(0x16, sp), d2
+	movbu	(0x18, sp), d0
+	movbu	(0x17, sp), d1
+	mov	d2, (0x10, sp)
+	call	func_4860A75C, 0, 0
+	extbu	d0
+	cmp	0, d0
+	beq	func_486595FE_L453
+	cmp	4, d0
+	beq	func_486595FE_L453
+	cmp	5, d0
+	beq	func_486595FE_L453
+	cmp	6, d0
+	beq	func_486595FE_L453
+	cmp	7, d0
+	beq	func_486595FE_L453
+	cmp	1, d0
+	beq	func_486595FE_L47a
+	cmp	2, d0
+	beq	func_486595FE_L47a
+	cmp	3, d0
+	beq	func_486595FE_L47a
+	bra	func_486595FE_L490
+func_486595FE_L453:
+	cmp	0x19, d3
+	beq	func_486595FE_L45b
+	cmp	0x1a, d3
+	bne	func_486595FE_L490
+func_486595FE_L45b:
+	movbu	(0x16, sp), d2
+	movbu	(0x18, sp), d0
+	movbu	(0x17, sp), d1
+	mov	d2, (0x10, sp)
+	call	func_4860A7C8, 0, 0x14
+	extbu	d0
+	cmp	2, d0
+	beq	func_486595FE_L490
+	mov	d3, d0
+	call	func_486595FE_L2a6, [d2,d3,a2,a3], 0x38
+	bra	func_486595FE_L490
+func_486595FE_L47a:
+	cmp	0x19, d3
+	beq	func_486595FE_L48a
+	cmp	0x1a, d3
+	beq	func_486595FE_L48a
+	mov	d3, d0
+	call	func_486595FE_L251, [d2,a2], 0x28
+	bra	func_486595FE_L490
+func_486595FE_L48a:
+	mov	d3, d0
+	call	func_486595FE_L2a6, [d2,d3,a2,a3], 0x38
+func_486595FE_L490:
+	mov	-1, d0
+	ret	[d2,d3,a2], 0x28
 
 func_48659A93:
 	movm	[d2,a2], (sp)
@@ -213533,7 +215656,67 @@ AcAcdnTypeProc_L53:
 	call	InheritedProc_entry, [d2,d3,a2,a3], 0x28
 AcAcdnTypeProc_L5e:
 	ret	[d2], 0x18
-.incbin_range "baserom/kn2400_program.rom", 0x25b32a, 0x25b3b7
+# AcAcdnTypeProc + 0x61: no traced path reaches what follows (--decode-gaps)
+	cmp	0x60092, d1
+	beq	AcAcdnTypeProc_L7b
+	cmp	0x60093, d1
+	beq	AcAcdnTypeProc_L83
+	cmp	0x60094, d1
+	beq	AcAcdnTypeProc_L87
+	bra	AcAcdnTypeProc_L8c
+AcAcdnTypeProc_L7b:
+	mov	data_4846FE60, d0
+	bra	AcAcdnTypeProc_L8d
+AcAcdnTypeProc_L83:
+	mov	0x16, d0
+	bra	AcAcdnTypeProc_L8d
+AcAcdnTypeProc_L87:
+	mov	0xde, d0
+	bra	AcAcdnTypeProc_L8d
+AcAcdnTypeProc_L8c:
+	clr	d0
+AcAcdnTypeProc_L8d:
+	retf	0, 0
+	cmp	0x60092, d1
+	beq	AcAcdnTypeProc_Laa
+	cmp	0x60093, d1
+	beq	AcAcdnTypeProc_Lb2
+	cmp	0x60094, d1
+	beq	AcAcdnTypeProc_Lb6
+	bra	AcAcdnTypeProc_Lbb
+AcAcdnTypeProc_Laa:
+	mov	data_48471174, d0
+	bra	AcAcdnTypeProc_Lbc
+AcAcdnTypeProc_Lb2:
+	mov	0x16, d0
+	bra	AcAcdnTypeProc_Lbc
+AcAcdnTypeProc_Lb6:
+	mov	0xde, d0
+	bra	AcAcdnTypeProc_Lbc
+AcAcdnTypeProc_Lbb:
+	clr	d0
+AcAcdnTypeProc_Lbc:
+	retf	0, 0
+	cmp	0x60092, d1
+	beq	AcAcdnTypeProc_Ld9
+	cmp	0x60093, d1
+	beq	AcAcdnTypeProc_Le1
+	cmp	0x60094, d1
+	beq	AcAcdnTypeProc_Le5
+	bra	AcAcdnTypeProc_Lea
+AcAcdnTypeProc_Ld9:
+	mov	data_48472488, d0
+	bra	AcAcdnTypeProc_Leb
+AcAcdnTypeProc_Le1:
+	mov	0x16, d0
+	bra	AcAcdnTypeProc_Leb
+AcAcdnTypeProc_Le5:
+	mov	0xde, d0
+	bra	AcAcdnTypeProc_Leb
+AcAcdnTypeProc_Lea:
+	clr	d0
+AcAcdnTypeProc_Leb:
+	retf	0, 0
 
 AcDrawbarProc:
 	movm	[d2,d3,a2,a3], (sp)
@@ -216627,33 +218810,33 @@ func_4865D3C2:
 	beq	func_4865D3C2_L60
 	cmp	0x600d8, d1
 	bne	func_4865D3C2_L1b
-	jmp	0x4865d710
+	jmp	func_4865D3C2_L34e
 func_4865D3C2_L1b:
 	cmp	0x6008e, d1
 	bne	func_4865D3C2_L26
-	jmp	0x4865d46f
+	jmp	func_4865D3C2_Lad
 func_4865D3C2_L26:
 	cmp	0x50014, d1
 	bne	func_4865D3C2_L31
-	jmp	0x4865d474
+	jmp	func_4865D3C2_Lb2
 func_4865D3C2_L31:
 	cmp	0x860003, d1
 	bne	func_4865D3C2_L3c
-	jmp	0x4865d4c9
+	jmp	func_4865D3C2_L107
 func_4865D3C2_L3c:
 	cmp	0x6003b, d1
 	bne	func_4865D3C2_L47
-	jmp	0x4865d4d6
+	jmp	func_4865D3C2_L114
 func_4865D3C2_L47:
 	cmp	0x5000b, d1
 	bne	func_4865D3C2_L52
-	jmp	0x4865d52a
+	jmp	func_4865D3C2_L168
 func_4865D3C2_L52:
 	cmp	0x860002, d1
 	bne	func_4865D3C2_L5d
-	jmp	0x4865d54f
+	jmp	func_4865D3C2_L18d
 func_4865D3C2_L5d:
-	jmp	0x4865d710
+	jmp	func_4865D3C2_L34e
 func_4865D3C2_L60:
 	mov	-2, d0
 	mov	d0, (0x10, sp)
@@ -216677,8 +218860,221 @@ func_4865D3C2_L60:
 	mov	0x007020ae, d0
 	mov	-0x100, d1
 	call	RegisterEasySet_entry, [d2,a2], 8
-	jmp	0x4865d710
-.incbin_range "baserom/kn2400_program.rom", 0x25d46c, 0x25d715
+	jmp	func_4865D3C2_L34e
+# func_4865D3C2 + 0xaa: no traced path reaches what follows (--decode-gaps)
+	jmp	func_4865D3C2_L34e
+func_4865D3C2_Lad:
+	mov	0xd, a2
+	jmp	func_4865D3C2_L34e
+func_4865D3C2_Lb2:
+	mov	(0x3c, sp), a0
+	mov	(a0), d0
+	and	0x00ffffff, d0
+	cmp	0x7020ae, d0
+	beq	func_4865D3C2_Lc6
+	jmp	func_4865D3C2_L34e
+func_4865D3C2_Lc6:
+	mov	(4, a0), d0
+	and	0xff, d0
+	extbu	d0
+	cmp	1, d0
+	beq	func_4865D3C2_Ld4
+	jmp	func_4865D3C2_L34e
+func_4865D3C2_Ld4:
+	call	GetTitleNow_entry, 0, 0x10
+	clr	d1
+	mov	d1, (0x10, sp)
+	mov	0x0006006f, d1
+	call	ApPostEvent_entry, [d2], 0x1c
+	call	GetTitleNow_entry, 0, 0x10
+	clr	d1
+	mov	d1, (0x10, sp)
+	mov	0x0006008b, d1
+	call	ApPostEvent_entry, [d2], 0x1c
+	mov	1, a2
+	jmp	func_4865D3C2_L34e
+func_4865D3C2_L107:
+	mov	(0x3c, sp), d0
+	exthu	d0
+	call	func_48641B3F_entry, [d2,d3], 0x18
+	jmp	func_4865D3C2_L34e
+func_4865D3C2_L114:
+	mov	(0x3c, sp), a0
+	cmp	1, a0
+	beq	func_4865D3C2_L11d
+	jmp	func_4865D3C2_L34e
+func_4865D3C2_L11d:
+	call	GetModeNow_entry, 0, 0x10
+	cmp	0xe000d, d0
+	beq	func_4865D3C2_L15b
+	mov	1, d0
+	mov	d0, (0x10, sp)
+	mov	-1, d0
+	mov	0x0006008f, d1
+	call	ApPostEvent_entry, [d2], 0x1c
+	mov	0xd, d0
+	clr	d1
+	call	ChangeMode_entry, [d2,d3,a2], 0x20
+	clr	d0
+	mov	d0, (0x10, sp)
+	mov	-1, d0
+	mov	0x0006008f, d1
+	call	ApPostEvent_entry, [d2], 0x1c
+func_4865D3C2_L15b:
+	mov	0x10, d0
+	clr	d1
+	call	ChangeTitle_entry, [d2,d3,a2], 0x20
+	jmp	func_4865D3C2_L34e
+func_4865D3C2_L168:
+	mov	(0x3c, sp), a0
+	cmp	2, a0
+	beq	func_4865D3C2_L175
+	cmp	3, a0
+	beq	func_4865D3C2_L181
+	jmp	func_4865D3C2_L34e
+func_4865D3C2_L175:
+	mov	0xb, d0
+	call	func_5015CE95_entry, 0, 0xc
+	jmp	func_4865D3C2_L34e
+func_4865D3C2_L181:
+	mov	0xb, d0
+	call	func_5015CF95_entry, 0, 0xc
+	jmp	func_4865D3C2_L34e
+func_4865D3C2_L18d:
+	mov	(0x3c, sp), d2
+	cmp	0x25, d2
+	bcc	func_4865D3C2_L196
+	jmp	func_4865D3C2_L34e
+func_4865D3C2_L196:
+	cmp	0x5f, d2
+	bls	func_4865D3C2_L19d
+	jmp	func_4865D3C2_L34e
+func_4865D3C2_L19d:
+	mov	0x25, d1
+	mov	0x48477c54, a0
+	mov	d2, d0
+	sub	d1, d0
+	asl2	d0
+	mov	(d0, a0), a1
+	jmp	(a1)
+	call	GetModeNow_entry, 0, 0x10
+	cmp	0xe0006, d0
+	beq	func_4865D3C2_L1c6
+	mov	6, d0
+	clr	d1
+	call	ChangeMode_entry, [d2,d3,a2], 0x20
+func_4865D3C2_L1c6:
+	call	func_486BFC4B_entry, 0, 0x14
+	jmp	func_4865D3C2_L34e
+	call	GetModeNow_entry, 0, 0x10
+	cmp	0xe0006, d0
+	beq	func_4865D3C2_L1e9
+	mov	6, d0
+	clr	d1
+	call	ChangeMode_entry, [d2,d3,a2], 0x20
+func_4865D3C2_L1e9:
+	call	func_486BFC5E_entry, 0, 0x10
+	jmp	func_4865D3C2_L34e
+	call	GetModeNow_entry, 0, 0x10
+	cmp	0xe0006, d0
+	beq	func_4865D3C2_L20c
+	mov	6, d0
+	clr	d1
+	call	ChangeMode_entry, [d2,d3,a2], 0x20
+func_4865D3C2_L20c:
+	mov	0x18, d0
+	nop
+	nop
+	mulu	d2, d0
+	mov	d0, a0
+	add	data_484759D0, a0
+	mov	(0xc, a0), d0
+	extbu	d0
+	call	func_486BFC6D_entry, 0, 0xc
+	jmp	func_4865D3C2_L34e
+	call	GetModeNow_entry, 0, 0x10
+	cmp	0xe0006, d0
+	beq	func_4865D3C2_L241
+	mov	6, d0
+	clr	d1
+	call	ChangeMode_entry, [d2,d3,a2], 0x20
+func_4865D3C2_L241:
+	call	func_486BFC40_entry, 0, 8
+	jmp	func_4865D3C2_L34e
+	call	GetModeNow_entry, 0, 0x10
+	cmp	0xe0018, d0
+	beq	func_4865D3C2_L264
+	mov	0x18, d0
+	clr	d1
+	call	ChangeMode_entry, [d2,d3,a2], 0x20
+func_4865D3C2_L264:
+	mov	d3, (0x10, sp)
+	mov	0x00050005, d1
+	mov	d3, d0
+	call	func_48710F9A, 0, 0x10
+	jmp	func_4865D3C2_L34e
+	call	GetModeNow_entry, 0, 0x10
+	cmp	0xe0018, d0
+	beq	func_4865D3C2_L290
+	mov	0x18, d0
+	clr	d1
+	call	ChangeMode_entry, [d2,d3,a2], 0x20
+func_4865D3C2_L290:
+	mov	d3, (0x10, sp)
+	mov	0x00050005, d1
+	mov	d3, d0
+	call	func_48711160, 0, 0x10
+	jmp	func_4865D3C2_L34e
+	call	GetModeNow_entry, 0, 0x10
+	cmp	0xe0018, d0
+	beq	func_4865D3C2_L2bc
+	mov	0x18, d0
+	clr	d1
+	call	ChangeMode_entry, [d2,d3,a2], 0x20
+func_4865D3C2_L2bc:
+	mov	d3, (0x10, sp)
+	mov	0x00050005, d1
+	mov	d3, d0
+	call	SdcFmmModeFunc_entry, 0, 0x10
+	jmp	func_4865D3C2_L34e
+	call	GetModeNow_entry, 0, 0x10
+	cmp	0xe0018, d0
+	beq	func_4865D3C2_L2e8
+	mov	0x18, d0
+	clr	d1
+	call	ChangeMode_entry, [d2,d3,a2], 0x20
+func_4865D3C2_L2e8:
+	mov	d3, (0x10, sp)
+	mov	0x00050005, d1
+	mov	d3, d0
+	call	SdcFmmLoadTitleFunc_entry, 0, 0x10
+	bra	func_4865D3C2_L34e
+	call	GetModeNow_entry, 0, 0x10
+	cmp	0xe0018, d0
+	beq	func_4865D3C2_L313
+	mov	0x18, d0
+	clr	d1
+	call	ChangeMode_entry, [d2,d3,a2], 0x20
+func_4865D3C2_L313:
+	mov	d3, (0x10, sp)
+	mov	0x00050005, d1
+	mov	d3, d0
+	call	func_4871107C, 0, 0x10
+	bra	func_4865D3C2_L34e
+	call	GetModeNow_entry, 0, 0x10
+	cmp	0xe0018, d0
+	beq	func_4865D3C2_L33e
+	mov	0x18, d0
+	clr	d1
+	call	ChangeMode_entry, [d2,d3,a2], 0x20
+func_4865D3C2_L33e:
+	mov	d3, (0x10, sp)
+	mov	0x00050005, d1
+	mov	d3, d0
+	call	SdcFmmFavSetTitleFunc_entry, 0, 0x10
+func_4865D3C2_L34e:
+	mov	a2, d0
+	ret	[d2,d3,a2], 0x2c
 
 AcFavBankProc:
 	movm	[d2,d3,a2], (sp)
@@ -221499,7 +223895,7 @@ func_486605C3_entry_L276:
 	movbu	(a0), d0
 	and	d0, d1
 	bne	func_486605C3_entry_L291
-	jmp	0x486609d5
+	jmp	func_486605C3_entry_L40d
 func_486605C3_entry_L291:
 	movbu	(a3), d0
 	mov	(0x18, sp), a1
@@ -221511,7 +223907,7 @@ func_486605C3_entry_L291:
 	movbu	(a1), d1
 	and	d1, d2
 	beq	func_486605C3_entry_L2ac
-	jmp	0x486609d5
+	jmp	func_486605C3_entry_L40d
 func_486605C3_entry_L2ac:
 	mov	(0x1c, sp), a1
 	movbu	(a3), d0
@@ -221526,11 +223922,11 @@ func_486605C3_entry_L2ac:
 	movbu	(a3), d0
 	cmp	0, d0
 	bge	func_486605C3_entry_L2c9
-	jmp	0x486609d5
+	jmp	func_486605C3_entry_L40d
 func_486605C3_entry_L2c9:
 	cmp	0x12, d0
 	ble	func_486605C3_entry_L2d0
-	jmp	0x486609d5
+	jmp	func_486605C3_entry_L40d
 func_486605C3_entry_L2d0:
 	asl2	d0
 	mov	ptrs_4847DB78, a0
@@ -221565,7 +223961,7 @@ func_486605C3_entry_L2db:
 	mov	-1, d0
 	mov	0x00060023, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-	jmp	0x486609d5
+	jmp	func_486605C3_entry_L40d
 	mov	(0x18, sp), a0
 	movbu	(a0), d0
 	btst	0xe0, d0
@@ -221599,13 +223995,97 @@ func_486605C3_entry_L340:
 	mov	-1, d0
 	mov	0x00060023, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-	bra	0x486609d5
+	bra	func_486605C3_entry_L40d
 	mov	(0x18, sp), a0
 	movbu	(a0), d0
 	btst	0xc0, d0
 	bne	func_486605C3_entry_L340
 	jmp	func_486605C3_entry_L2db
-.incbin_range "baserom/kn2400_program.rom", 0x26096f, 0x260a59
+# func_486605C3_entry + 0x3a7: no traced path reaches what follows (--decode-gaps)
+	bra	func_486605C3_entry_L340
+	mov	(0x18, sp), a0
+	movbu	(a0), d0
+	btst	0x60, d0
+	beq	func_486605C3_entry_L3b4
+	bra	func_486605C3_entry_L340
+func_486605C3_entry_L3b4:
+	movbu	(0x50051f8a), d0
+	inc	d0
+	movbu	d0, (0x50051f8a)
+	mov	0x18, d0
+	call	Malloc_entry, [d2,a2,a3], 0x28
+	mov	a0, a2
+	mov	a2, a1
+	mov	data_4847D4A0, a0
+	mov	-6, d1
+	setlb
+	mov	(a0), d0
+	inc4	a0
+	mov	d0, (a1)
+	inc4	a1
+	inc	d1
+	lne
+	mov	0x50051f8a, d0
+	mov	d0, (a2)
+	movbu	(0x50051f8a), d0
+	mov	0x00050015, d1
+	mov	d0, (0x10, a2)
+	mov	a2, (0x10, sp)
+	mov	-1, d0
+	call	ApPostEvent_entry, [d2], 0x1c
+	mov	a2, (0x10, sp)
+	mov	-1, d0
+	mov	0x00060023, d1
+	call	ApPostEvent_entry, [d2], 0x1c
+func_486605C3_entry_L40d:
+	mov	(0x1c, sp), a0
+	movbu	(a0), d1
+	mov	(0x18, sp), a0
+	movbu	(a0), d0
+	and	d0, d1
+	beq	func_486605C3_entry_L41c
+	ret	[d2,d3,a2,a3], 0x34
+func_486605C3_entry_L41c:
+	movbu	(0x50051f88), d2
+	movbu	(0x50051f89), d0
+	movbu	(0x50051f8a), d1
+	add	d0, d2
+	add	d1, d2
+	call	func_4865F889_entry, 0, 8
+	extbu	d0
+	cmp	0xfc, d0
+	bne	func_486605C3_entry_L446
+	mov	0x77, d0
+	mov	0x010000d8, a2
+	bra	func_486605C3_entry_L44e
+func_486605C3_entry_L446:
+	mov	0x79, d0
+	mov	0x0100002f, a2
+func_486605C3_entry_L44e:
+	extbu	d2
+	extbu	d0
+	cmp	d0, d2
+	blt	func_486605C3_entry_L48b
+	movbu	(0x50051f8b), d0
+	cmp	0, d0
+	bne	func_486605C3_entry_L48b
+	mov	1, d0
+	movbu	d0, (0x50051f8b)
+	mov	0x3c, d0
+	mov	d0, (0x10, sp)
+	mov	0x7f, d0
+	mov	d0, (0x14, sp)
+	clr	d0
+	mov	0xf5, d1
+	call	func_48645B79_entry, 0, 0x1c
+	mov	1, d0
+	mov	d0, (0x10, sp)
+	mov	a2, d0
+	mov	0x01060020, d1
+	call	ApPostEvent_entry, [d2], 0x1c
+func_486605C3_entry_L48b:
+	ret	[d2,d3,a2,a3], 0x34
+	add	-0xc, sp
 
 func_48660A59:
 	call	func_486605C3_entry, [d2,d3,a2,a3], 0x34
@@ -225812,7 +228292,8 @@ func_4866353E_entry_L67:
 func_4866353E_entry_L82:
 	call	func_486643D4_entry, [d2,d3], 0x14
 	bra	func_4866353E_entry_L82
-.incbin_range "baserom/kn2400_program.rom", 0x2635cc, 0x2635cf
+# func_4866353E_entry + 0x89: no traced path reaches what follows (--decode-gaps)
+	ret	[d2,d3], 0x14
 
 func_486635CF:
 	movm	[d2,d3,a2,a3], (sp)
@@ -231731,19 +234212,24 @@ MdCustom:
 	cmp	0x5000b, d1
 	beq	MdCustom_L15
 	cmp	0x50000, d1
-	beq	0x486673d8
-	bra	0x486673d7
+	beq	MdCustom_L33
+	bra	MdCustom_L32
 MdCustom_L15:
 	mov	(0x24, sp), a0
 	cmp	0, a0
-	bne	0x486673d7
+	bne	MdCustom_L32
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
 	mov	0x00060075, d1
 	call	ApSendEvent_entry, [d2], 0x1c
-	bra	0x486673d7
-.incbin_range "baserom/kn2400_program.rom", 0x2673d5, 0x2673db
+	bra	MdCustom_L32
+# MdCustom + 0x30: no traced path reaches what follows (--decode-gaps)
+	bra	MdCustom_L33
+MdCustom_L32:
+	clr	d0
+MdCustom_L33:
+	ret	0, 0x14
 
 TSONICTitleFunc:
 	movm	[d2], (sp)
@@ -233228,7 +235714,9 @@ TouchFilter_L41:
 	clr	d0
 TouchFilter_L42:
 	ret	[d2], 0x10
-.incbin_range "baserom/kn2400_program.rom", 0x2684ef, 0x2684f3
+# TouchFilter + 0x45: no traced path reaches what follows (--decode-gaps)
+	clr	d0
+	retf	0, 0
 
 AcTchSensGridBoxProc:
 	movm	[d2,d3,a2], (sp)
@@ -237897,7 +240385,9 @@ FadeIOFilter_L41:
 	clr	d0
 FadeIOFilter_L42:
 	ret	[d2], 0x10
-.incbin_range "baserom/kn2400_program.rom", 0x26b43b, 0x26b444
+# FadeIOFilter + 0x45: no traced path reaches what follows (--decode-gaps)
+	movbu	(0x500528b9), d0
+	retf	0, 0
 
 func_4866B444:
 	movm	[a2], (sp)
@@ -238194,7 +240684,9 @@ func_4866B606_entry_L60:
 	mov	-0x66, d0
 func_4866B606_entry_L62:
 	ret	[d2], 0x10
-.incbin_range "baserom/kn2400_program.rom", 0x26b670, 0x26b676
+# func_4866B606_entry + 0x65: no traced path reaches what follows (--decode-gaps)
+	mov	-0xc8, d0
+	retf	0, 0
 
 func_4866B676:
 	movm	[d2,d3,a2,a3], (sp)
@@ -269551,7 +272043,7 @@ EzBrillSe:
 	bne	EzBrillSe_L38
 	ret	[d2], 0x1c
 EzBrillSe_L38:
-	jmp	0x4867ec8b
+	jmp	EzBrillSe_Ld3
 EzBrillSe_L3b:
 	call	GetPartSelect_entry, 0, 0x14
 	clr	d1
@@ -269575,7 +272067,7 @@ EzBrillSe_L5b:
 	clr	d1
 	call	func_50133992_entry, [d2,d3,a2,a3], 0x84
 	clr	d0
-	bra	0x4867ec8c
+	bra	EzBrillSe_Ld4
 EzBrillSe_L6e:
 	call	GetPartSelect_entry, 0, 0x14
 	clr	d1
@@ -269599,7 +272091,7 @@ EzBrillSe_L8f:
 	clr	d1
 	call	func_50133992_entry, [d2,d3,a2,a3], 0x84
 	clr	d0
-	bra	0x4867ec8c
+	bra	EzBrillSe_Ld4
 EzBrillSe_La2:
 	call	GetPartSelect_entry, 0, 0x14
 	extbu	d0
@@ -269616,8 +272108,13 @@ EzBrillSe_La2:
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	0x4867ec8c
-.incbin_range "baserom/kn2400_program.rom", 0x27ec89, 0x27ec8f
+	bra	EzBrillSe_Ld4
+# EzBrillSe + 0xd1: no traced path reaches what follows (--decode-gaps)
+	bra	EzBrillSe_Ld4
+EzBrillSe_Ld3:
+	clr	d0
+EzBrillSe_Ld4:
+	ret	[d2], 0x1c
 
 EzVibDepSe:
 	movm	[d2], (sp)
@@ -269636,7 +272133,7 @@ EzVibDepSe:
 	bne	EzVibDepSe_L38
 	ret	[d2], 0x1c
 EzVibDepSe_L38:
-	jmp	0x4867ed81
+	jmp	EzVibDepSe_Lf2
 EzVibDepSe_L3b:
 	call	GetPartSelect_entry, 0, 0x14
 	mov	1, d1
@@ -269684,7 +272181,7 @@ EzVibDepSe_L93:
 	mov	1, d1
 	call	func_50133992_entry, [d2,d3,a2,a3], 0x84
 	clr	d0
-	bra	0x4867ed82
+	bra	EzVibDepSe_Lf3
 EzVibDepSe_La7:
 	call	GetPartSelect_entry, 0, 0x14
 	extbu	d0
@@ -269711,8 +272208,13 @@ EzVibDepSe_Ld8:
 	call	sprintf_entry, [a2], 0x20
 EzVibDepSe_Led:
 	clr	d0
-	bra	0x4867ed82
-.incbin_range "baserom/kn2400_program.rom", 0x27ed7f, 0x27ed85
+	bra	EzVibDepSe_Lf3
+# EzVibDepSe + 0xf0: no traced path reaches what follows (--decode-gaps)
+	bra	EzVibDepSe_Lf3
+EzVibDepSe_Lf2:
+	clr	d0
+EzVibDepSe_Lf3:
+	ret	[d2], 0x1c
 
 EzVibSpdSe:
 	movm	[d2], (sp)
@@ -269731,7 +272233,7 @@ EzVibSpdSe:
 	bne	EzVibSpdSe_L38
 	ret	[d2], 0x1c
 EzVibSpdSe_L38:
-	jmp	0x4867ee5d
+	jmp	EzVibSpdSe_Ld8
 EzVibSpdSe_L3b:
 	call	GetPartSelect_entry, 0, 0x14
 	mov	2, d1
@@ -269755,7 +272257,7 @@ EzVibSpdSe_L5c:
 	mov	2, d1
 	call	func_50133992_entry, [d2,d3,a2,a3], 0x84
 	clr	d0
-	bra	0x4867ee5e
+	bra	EzVibSpdSe_Ld9
 EzVibSpdSe_L70:
 	call	GetPartSelect_entry, 0, 0x14
 	mov	2, d1
@@ -269779,7 +272281,7 @@ EzVibSpdSe_L92:
 	mov	2, d1
 	call	func_50133992_entry, [d2,d3,a2,a3], 0x84
 	clr	d0
-	bra	0x4867ee5e
+	bra	EzVibSpdSe_Ld9
 EzVibSpdSe_La6:
 	call	GetPartSelect_entry, 0, 0x14
 	extbu	d0
@@ -269796,8 +272298,13 @@ EzVibSpdSe_La6:
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	0x4867ee5e
-.incbin_range "baserom/kn2400_program.rom", 0x27ee5b, 0x27ee61
+	bra	EzVibSpdSe_Ld9
+# EzVibSpdSe + 0xd6: no traced path reaches what follows (--decode-gaps)
+	bra	EzVibSpdSe_Ld9
+EzVibSpdSe_Ld8:
+	clr	d0
+EzVibSpdSe_Ld9:
+	ret	[d2], 0x1c
 
 EzVibDlySe:
 	movm	[d2], (sp)
@@ -269816,7 +272323,7 @@ EzVibDlySe:
 	bne	EzVibDlySe_L38
 	ret	[d2], 0x1c
 EzVibDlySe_L38:
-	jmp	0x4867ef39
+	jmp	EzVibDlySe_Ld8
 EzVibDlySe_L3b:
 	call	GetPartSelect_entry, 0, 0x14
 	mov	3, d1
@@ -269840,7 +272347,7 @@ EzVibDlySe_L5c:
 	mov	3, d1
 	call	func_50133992_entry, [d2,d3,a2,a3], 0x84
 	clr	d0
-	bra	0x4867ef3a
+	bra	EzVibDlySe_Ld9
 EzVibDlySe_L70:
 	call	GetPartSelect_entry, 0, 0x14
 	mov	3, d1
@@ -269864,7 +272371,7 @@ EzVibDlySe_L92:
 	mov	3, d1
 	call	func_50133992_entry, [d2,d3,a2,a3], 0x84
 	clr	d0
-	bra	0x4867ef3a
+	bra	EzVibDlySe_Ld9
 EzVibDlySe_La6:
 	call	GetPartSelect_entry, 0, 0x14
 	extbu	d0
@@ -269881,8 +272388,13 @@ EzVibDlySe_La6:
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	0x4867ef3a
-.incbin_range "baserom/kn2400_program.rom", 0x27ef37, 0x27ef3d
+	bra	EzVibDlySe_Ld9
+# EzVibDlySe + 0xd6: no traced path reaches what follows (--decode-gaps)
+	bra	EzVibDlySe_Ld9
+EzVibDlySe_Ld8:
+	clr	d0
+EzVibDlySe_Ld9:
+	ret	[d2], 0x1c
 
 EzAtkSe:
 	movm	[d2], (sp)
@@ -269901,7 +272413,7 @@ EzAtkSe:
 	bne	EzAtkSe_L38
 	ret	[d2], 0x1c
 EzAtkSe_L38:
-	jmp	0x4867f015
+	jmp	EzAtkSe_Ld8
 EzAtkSe_L3b:
 	call	GetPartSelect_entry, 0, 0x14
 	mov	5, d1
@@ -269925,7 +272437,7 @@ EzAtkSe_L5c:
 	mov	5, d1
 	call	func_50133992_entry, [d2,d3,a2,a3], 0x84
 	clr	d0
-	bra	0x4867f016
+	bra	EzAtkSe_Ld9
 EzAtkSe_L70:
 	call	GetPartSelect_entry, 0, 0x14
 	mov	5, d1
@@ -269949,7 +272461,7 @@ EzAtkSe_L92:
 	mov	5, d1
 	call	func_50133992_entry, [d2,d3,a2,a3], 0x84
 	clr	d0
-	bra	0x4867f016
+	bra	EzAtkSe_Ld9
 EzAtkSe_La6:
 	call	GetPartSelect_entry, 0, 0x14
 	extbu	d0
@@ -269966,8 +272478,13 @@ EzAtkSe_La6:
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	0x4867f016
-.incbin_range "baserom/kn2400_program.rom", 0x27f013, 0x27f019
+	bra	EzAtkSe_Ld9
+# EzAtkSe + 0xd6: no traced path reaches what follows (--decode-gaps)
+	bra	EzAtkSe_Ld9
+EzAtkSe_Ld8:
+	clr	d0
+EzAtkSe_Ld9:
+	ret	[d2], 0x1c
 
 EzRlsSe:
 	movm	[d2], (sp)
@@ -269986,7 +272503,7 @@ EzRlsSe:
 	bne	EzRlsSe_L38
 	ret	[d2], 0x1c
 EzRlsSe_L38:
-	jmp	0x4867f0f1
+	jmp	EzRlsSe_Ld8
 EzRlsSe_L3b:
 	call	GetPartSelect_entry, 0, 0x14
 	mov	6, d1
@@ -270010,7 +272527,7 @@ EzRlsSe_L5c:
 	mov	6, d1
 	call	func_50133992_entry, [d2,d3,a2,a3], 0x84
 	clr	d0
-	bra	0x4867f0f2
+	bra	EzRlsSe_Ld9
 EzRlsSe_L70:
 	call	GetPartSelect_entry, 0, 0x14
 	mov	6, d1
@@ -270034,7 +272551,7 @@ EzRlsSe_L92:
 	mov	6, d1
 	call	func_50133992_entry, [d2,d3,a2,a3], 0x84
 	clr	d0
-	bra	0x4867f0f2
+	bra	EzRlsSe_Ld9
 EzRlsSe_La6:
 	call	GetPartSelect_entry, 0, 0x14
 	extbu	d0
@@ -270051,8 +272568,13 @@ EzRlsSe_La6:
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	0x4867f0f2
-.incbin_range "baserom/kn2400_program.rom", 0x27f0ef, 0x27f0f5
+	bra	EzRlsSe_Ld9
+# EzRlsSe + 0xd6: no traced path reaches what follows (--decode-gaps)
+	bra	EzRlsSe_Ld9
+EzRlsSe_Ld8:
+	clr	d0
+EzRlsSe_Ld9:
+	ret	[d2], 0x1c
 
 EzDeffSe:
 	add	-0x14, sp
@@ -270082,7 +272604,7 @@ EzDeffSe_L47:
 	bne	EzDeffSe_L52
 	ret	0, 0x14
 EzDeffSe_L52:
-	jmp	0x4867f3b9
+	jmp	EzDeffSe_L2c4
 EzDeffSe_L55:
 	mov	0x00b0005e, d0
 	call	SetMmmFilter_entry, [d2], 0x18
@@ -270277,8 +272799,13 @@ EzDeffSe_L19f:
 	call	sprintf_entry, [a2], 0x20
 EzDeffSe_L2bf:
 	clr	d0
-	bra	0x4867f3ba
-.incbin_range "baserom/kn2400_program.rom", 0x27f3b7, 0x27f3bd
+	bra	EzDeffSe_L2c5
+# EzDeffSe + 0x2c2: no traced path reaches what follows (--decode-gaps)
+	bra	EzDeffSe_L2c5
+EzDeffSe_L2c4:
+	clr	d0
+EzDeffSe_L2c5:
+	ret	0, 0x14
 
 Ed1stOnSe:
 	movm	[a2,a3], (sp)
@@ -270296,8 +272823,8 @@ Ed1stOnSe:
 	cmp	0x6003a, d1
 	beq	Ed1stOnSe_L71
 	cmp	0x50000, d1
-	beq	0x4867f44a
-	bra	0x4867f449
+	beq	Ed1stOnSe_L8d
+	bra	Ed1stOnSe_L8c
 Ed1stOnSe_L3f:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -270305,19 +272832,19 @@ Ed1stOnSe_L3f:
 	mov	0x01b60000, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	0x4867f44a
+	bra	Ed1stOnSe_L8d
 Ed1stOnSe_L58:
 	mov	1, d0
 	clr	d1
 	call	func_4869CD36_entry, [d2,d3], 0x20
 	clr	d0
-	bra	0x4867f44a
+	bra	Ed1stOnSe_L8d
 Ed1stOnSe_L65:
 	clr	d0
 	mov	d0, d1
 	call	func_4869CD36_entry, [d2,d3], 0x20
 	clr	d0
-	bra	0x4867f44a
+	bra	Ed1stOnSe_L8d
 Ed1stOnSe_L71:
 	mov	sp, a3
 	add	0x14, a3
@@ -270328,8 +272855,13 @@ Ed1stOnSe_L71:
 	mov	(0x38, sp), a0
 	call	strcpy_entry, [a2], 4
 	clr	d0
-	bra	0x4867f44a
-.incbin_range "baserom/kn2400_program.rom", 0x27f447, 0x27f44d
+	bra	Ed1stOnSe_L8d
+# Ed1stOnSe + 0x8a: no traced path reaches what follows (--decode-gaps)
+	bra	Ed1stOnSe_L8d
+Ed1stOnSe_L8c:
+	clr	d0
+Ed1stOnSe_L8d:
+	ret	[a2,a3], 0x28
 
 Ed2ndOnSe:
 	movm	[a2,a3], (sp)
@@ -270347,8 +272879,8 @@ Ed2ndOnSe:
 	cmp	0x6003a, d1
 	beq	Ed2ndOnSe_L73
 	cmp	0x50000, d1
-	beq	0x4867f4dd
-	bra	0x4867f4dc
+	beq	Ed2ndOnSe_L90
+	bra	Ed2ndOnSe_L8f
 Ed2ndOnSe_L3f:
 	mov	1, d0
 	mov	d0, (0x10, sp)
@@ -270356,19 +272888,19 @@ Ed2ndOnSe_L3f:
 	mov	0x01b60000, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	0x4867f4dd
+	bra	Ed2ndOnSe_L90
 Ed2ndOnSe_L59:
 	mov	1, d0
 	mov	d0, d1
 	call	func_4869CD36_entry, [d2,d3], 0x20
 	clr	d0
-	bra	0x4867f4dd
+	bra	Ed2ndOnSe_L90
 Ed2ndOnSe_L66:
 	clr	d0
 	mov	1, d1
 	call	func_4869CD36_entry, [d2,d3], 0x20
 	clr	d0
-	bra	0x4867f4dd
+	bra	Ed2ndOnSe_L90
 Ed2ndOnSe_L73:
 	mov	sp, a3
 	add	0x14, a3
@@ -270379,8 +272911,13 @@ Ed2ndOnSe_L73:
 	mov	(0x38, sp), a0
 	call	strcpy_entry, [a2], 4
 	clr	d0
-	bra	0x4867f4dd
-.incbin_range "baserom/kn2400_program.rom", 0x27f4da, 0x27f4e0
+	bra	Ed2ndOnSe_L90
+# Ed2ndOnSe + 0x8d: no traced path reaches what follows (--decode-gaps)
+	bra	Ed2ndOnSe_L90
+Ed2ndOnSe_L8f:
+	clr	d0
+Ed2ndOnSe_L90:
+	ret	[a2,a3], 0x28
 
 Ed3rdOnSe:
 	movm	[a2,a3], (sp)
@@ -270398,8 +272935,8 @@ Ed3rdOnSe:
 	cmp	0x6003a, d1
 	beq	Ed3rdOnSe_L74
 	cmp	0x50000, d1
-	beq	0x4867f571
-	bra	0x4867f570
+	beq	Ed3rdOnSe_L91
+	bra	Ed3rdOnSe_L90
 Ed3rdOnSe_L3f:
 	mov	2, d0
 	mov	d0, (0x10, sp)
@@ -270407,19 +272944,19 @@ Ed3rdOnSe_L3f:
 	mov	0x01b60000, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	0x4867f571
+	bra	Ed3rdOnSe_L91
 Ed3rdOnSe_L59:
 	mov	1, d0
 	mov	2, d1
 	call	func_4869CD36_entry, [d2,d3], 0x20
 	clr	d0
-	bra	0x4867f571
+	bra	Ed3rdOnSe_L91
 Ed3rdOnSe_L67:
 	clr	d0
 	mov	2, d1
 	call	func_4869CD36_entry, [d2,d3], 0x20
 	clr	d0
-	bra	0x4867f571
+	bra	Ed3rdOnSe_L91
 Ed3rdOnSe_L74:
 	mov	sp, a3
 	add	0x14, a3
@@ -270430,8 +272967,13 @@ Ed3rdOnSe_L74:
 	mov	(0x38, sp), a0
 	call	strcpy_entry, [a2], 4
 	clr	d0
-	bra	0x4867f571
-.incbin_range "baserom/kn2400_program.rom", 0x27f56e, 0x27f574
+	bra	Ed3rdOnSe_L91
+# Ed3rdOnSe + 0x8e: no traced path reaches what follows (--decode-gaps)
+	bra	Ed3rdOnSe_L91
+Ed3rdOnSe_L90:
+	clr	d0
+Ed3rdOnSe_L91:
+	ret	[a2,a3], 0x28
 
 Ed4thOnSe:
 	movm	[a2,a3], (sp)
@@ -270449,8 +272991,8 @@ Ed4thOnSe:
 	cmp	0x6003a, d1
 	beq	Ed4thOnSe_L74
 	cmp	0x50000, d1
-	beq	0x4867f605
-	bra	0x4867f604
+	beq	Ed4thOnSe_L91
+	bra	Ed4thOnSe_L90
 Ed4thOnSe_L3f:
 	mov	3, d0
 	mov	d0, (0x10, sp)
@@ -270458,19 +273000,19 @@ Ed4thOnSe_L3f:
 	mov	0x01b60000, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	0x4867f605
+	bra	Ed4thOnSe_L91
 Ed4thOnSe_L59:
 	mov	1, d0
 	mov	3, d1
 	call	func_4869CD36_entry, [d2,d3], 0x20
 	clr	d0
-	bra	0x4867f605
+	bra	Ed4thOnSe_L91
 Ed4thOnSe_L67:
 	clr	d0
 	mov	3, d1
 	call	func_4869CD36_entry, [d2,d3], 0x20
 	clr	d0
-	bra	0x4867f605
+	bra	Ed4thOnSe_L91
 Ed4thOnSe_L74:
 	mov	sp, a3
 	add	0x14, a3
@@ -270481,27 +273023,89 @@ Ed4thOnSe_L74:
 	mov	(0x38, sp), a0
 	call	strcpy_entry, [a2], 4
 	clr	d0
-	bra	0x4867f605
-.incbin_range "baserom/kn2400_program.rom", 0x27f602, 0x27f608
+	bra	Ed4thOnSe_L91
+# Ed4thOnSe + 0x8e: no traced path reaches what follows (--decode-gaps)
+	bra	Ed4thOnSe_L91
+Ed4thOnSe_L90:
+	clr	d0
+Ed4thOnSe_L91:
+	ret	[a2,a3], 0x28
 
 GlideEditSe:
 	add	-0x20, sp
 	cmp	0x50011, d1
-	beq	0x4867f643
+	beq	GlideEditSe_L3b
 	cmp	0x5000f, d1
-	beq	0x4867f643
+	beq	GlideEditSe_L3b
 	cmp	0x50012, d1
-	beq	0x4867f65c
+	beq	GlideEditSe_L54
 	cmp	0x50010, d1
-	beq	0x4867f65c
+	beq	GlideEditSe_L54
 	cmp	0x6003a, d1
-	beq	0x4867f673
+	beq	GlideEditSe_L6b
 	cmp	0x50000, d1
 	beq	GlideEditSe_L36
-	jmp	0x4867f6bb
+	jmp	GlideEditSe_Lb3
 GlideEditSe_L36:
 	ret	0, 0x20
-.incbin_range "baserom/kn2400_program.rom", 0x27f641, 0x27f6bf
+# GlideEditSe + 0x39: no traced path reaches what follows (--decode-gaps)
+	bra	GlideEditSe_Lb3
+GlideEditSe_L3b:
+	mov	1, d0
+	mov	d0, (0x10, sp)
+	clr	d0
+	mov	d0, (0x14, sp)
+	mov	0x20, d0
+	mov	d0, (0x18, sp)
+	mov	0x10, d0
+	mov	1, d1
+	call	func_4869CB5A_entry, [d2,d3,a2], 0x2c
+	clr	d0
+	bra	GlideEditSe_Lb4
+GlideEditSe_L54:
+	clr	d0
+	mov	d0, (0x10, sp)
+	mov	d0, (0x14, sp)
+	mov	0x20, d0
+	mov	d0, (0x18, sp)
+	mov	0x10, d0
+	mov	-1, d1
+	call	func_4869CB5A_entry, [d2,d3,a2], 0x2c
+	clr	d0
+	bra	GlideEditSe_Lb4
+GlideEditSe_L6b:
+	mov	sp, a0
+	add	0x1c, a0
+	mov	0x10, d0
+	mov	0x20, d1
+	call	func_4869CF7C_entry, [d2,d3,a2], 0x24
+	movbu	(0x1c, sp), d0
+	cmp	0, d0
+	beq	GlideEditSe_L86
+	cmp	1, d0
+	beq	GlideEditSe_L9b
+	bra	GlideEditSe_Lae
+GlideEditSe_L86:
+	mov	(0x30, sp), a0
+	mov	Str_DISABLE_4, d0
+	mov	a0, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+	bra	GlideEditSe_Lae
+GlideEditSe_L9b:
+	mov	(0x30, sp), a1
+	mov	Str_ENABLE_4, d0
+	mov	a1, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+GlideEditSe_Lae:
+	clr	d0
+	bra	GlideEditSe_Lb4
+	bra	GlideEditSe_Lb4
+GlideEditSe_Lb3:
+	clr	d0
+GlideEditSe_Lb4:
+	ret	0, 0x20
 
 OctShiftSe:
 	movm	[a2,a3], (sp)
@@ -270526,7 +273130,7 @@ OctShiftSe_L36:
 	bne	OctShiftSe_L41
 	ret	[a2,a3], 0x2c
 OctShiftSe_L41:
-	jmp	0x4867f834
+	jmp	OctShiftSe_L175
 OctShiftSe_L44:
 	mov	sp, a2
 	add	0x1c, a2
@@ -270638,7 +273242,7 @@ OctShiftSe_Lc6:
 	mov	a3, a0
 	call	SoundEditRefSet_entry, 0, 8
 	clr	d0
-	bra	0x4867f835
+	bra	OctShiftSe_L176
 OctShiftSe_L147:
 	mov	sp, a0
 	add	0x1c, a0
@@ -270655,8 +273259,13 @@ OctShiftSe_L147:
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	0x4867f835
-.incbin_range "baserom/kn2400_program.rom", 0x27f832, 0x27f838
+	bra	OctShiftSe_L176
+# OctShiftSe + 0x173: no traced path reaches what follows (--decode-gaps)
+	bra	OctShiftSe_L176
+OctShiftSe_L175:
+	clr	d0
+OctShiftSe_L176:
+	ret	[a2,a3], 0x2c
 
 RightSplitSe:
 	movm	[a2,a3], (sp)
@@ -270681,7 +273290,7 @@ RightSplitSe_L36:
 	bne	RightSplitSe_L41
 	ret	[a2,a3], 0x2c
 RightSplitSe_L41:
-	jmp	0x4867f9b0
+	jmp	RightSplitSe_L178
 RightSplitSe_L44:
 	mov	sp, a2
 	add	0x1c, a2
@@ -270793,7 +273402,7 @@ RightSplitSe_Lc7:
 	mov	a3, a0
 	call	SoundEditRefSet_entry, 0, 8
 	clr	d0
-	bra	0x4867f9b1
+	bra	RightSplitSe_L179
 RightSplitSe_L149:
 	mov	sp, a0
 	add	0x1c, a0
@@ -270810,8 +273419,13 @@ RightSplitSe_L149:
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	0x4867f9b1
-.incbin_range "baserom/kn2400_program.rom", 0x27f9ae, 0x27f9b4
+	bra	RightSplitSe_L179
+# RightSplitSe + 0x176: no traced path reaches what follows (--decode-gaps)
+	bra	RightSplitSe_L179
+RightSplitSe_L178:
+	clr	d0
+RightSplitSe_L179:
+	ret	[a2,a3], 0x2c
 
 LeftSplitSe:
 	movm	[a2,a3], (sp)
@@ -270836,7 +273450,7 @@ LeftSplitSe_L36:
 	bne	LeftSplitSe_L41
 	ret	[a2,a3], 0x2c
 LeftSplitSe_L41:
-	jmp	0x4867fb29
+	jmp	LeftSplitSe_L175
 LeftSplitSe_L44:
 	mov	sp, a2
 	add	0x1c, a2
@@ -270948,7 +273562,7 @@ LeftSplitSe_Lc6:
 	mov	a3, a0
 	call	SoundEditRefSet_entry, 0, 8
 	clr	d0
-	bra	0x4867fb2a
+	bra	LeftSplitSe_L176
 LeftSplitSe_L147:
 	mov	sp, a0
 	add	0x1c, a0
@@ -270965,8 +273579,13 @@ LeftSplitSe_L147:
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	0x4867fb2a
-.incbin_range "baserom/kn2400_program.rom", 0x27fb27, 0x27fb2d
+	bra	LeftSplitSe_L176
+# LeftSplitSe + 0x173: no traced path reaches what follows (--decode-gaps)
+	bra	LeftSplitSe_L176
+LeftSplitSe_L175:
+	clr	d0
+LeftSplitSe_L176:
+	ret	[a2,a3], 0x2c
 
 MonoPolySe:
 	add	-0x14, sp
@@ -270994,7 +273613,7 @@ MonoPolySe_L44:
 	bne	MonoPolySe_L4f
 	ret	0, 0x14
 MonoPolySe_L4f:
-	jmp	0x4867fc9a
+	jmp	MonoPolySe_L16d
 MonoPolySe_L52:
 	mov	0x00b0007e, d0
 	call	SetMmmFilter_entry, [d2], 0x18
@@ -271090,8 +273709,13 @@ MonoPolySe_L13c:
 	mov	0x000600b2, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	0x4867fc9b
-.incbin_range "baserom/kn2400_program.rom", 0x27fc98, 0x27fc9e
+	bra	MonoPolySe_L16e
+# MonoPolySe + 0x16b: no traced path reaches what follows (--decode-gaps)
+	bra	MonoPolySe_L16e
+MonoPolySe_L16d:
+	clr	d0
+MonoPolySe_L16e:
+	ret	0, 0x14
 
 PortamentOnSe:
 	add	-0x14, sp
@@ -271113,7 +273737,7 @@ PortamentOnSe_L36:
 	bne	PortamentOnSe_L41
 	ret	0, 0x14
 PortamentOnSe_L41:
-	jmp	0x4867fdb9
+	jmp	PortamentOnSe_L11b
 PortamentOnSe_L44:
 	mov	0x4d, d0
 	mov	0x500528d0, a0
@@ -271188,8 +273812,13 @@ PortamentOnSe_L103:
 	call	sprintf_entry, [a2], 0x20
 PortamentOnSe_L116:
 	clr	d0
-	bra	0x4867fdba
-.incbin_range "baserom/kn2400_program.rom", 0x27fdb7, 0x27fdbd
+	bra	PortamentOnSe_L11c
+# PortamentOnSe + 0x119: no traced path reaches what follows (--decode-gaps)
+	bra	PortamentOnSe_L11c
+PortamentOnSe_L11b:
+	clr	d0
+PortamentOnSe_L11c:
+	ret	0, 0x14
 
 PortamentTimeSe:
 	movm	[d2], (sp)
@@ -271212,7 +273841,7 @@ PortamentTimeSe_L38:
 	bne	PortamentTimeSe_L43
 	ret	[d2], 0x18
 PortamentTimeSe_L43:
-	jmp	0x4867fec6
+	jmp	PortamentTimeSe_L109
 PortamentTimeSe_L46:
 	mov	0x4d, d0
 	mov	0x500528d4, a0
@@ -271252,7 +273881,7 @@ PortamentTimeSe_L8f:
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
 PortamentTimeSe_Lc1:
 	clr	d0
-	bra	0x4867fec7
+	bra	PortamentTimeSe_L10a
 PortamentTimeSe_Lc4:
 	movbu	(data_50006D5B), d0
 	cmp	0, d0
@@ -271277,8 +273906,13 @@ PortamentTimeSe_Le9:
 	call	sprintf_entry, [a2], 0x20
 PortamentTimeSe_L104:
 	clr	d0
-	bra	0x4867fec7
-.incbin_range "baserom/kn2400_program.rom", 0x27fec4, 0x27feca
+	bra	PortamentTimeSe_L10a
+# PortamentTimeSe + 0x107: no traced path reaches what follows (--decode-gaps)
+	bra	PortamentTimeSe_L10a
+PortamentTimeSe_L109:
+	clr	d0
+PortamentTimeSe_L10a:
+	ret	[d2], 0x18
 
 EffPage2Catch:
 	movm	[d2,d3], (sp)
@@ -271433,7 +274067,7 @@ DspOnSe_L44:
 	bne	DspOnSe_L4f
 	ret	0, 0x14
 DspOnSe_L4f:
-	jmp	0x4868018f
+	jmp	DspOnSe_L140
 DspOnSe_L52:
 	mov	0x0020005f, d0
 	call	SetMmmFilter_entry, [d2], 0x18
@@ -271496,7 +274130,7 @@ DspOnSe_Lf8:
 	call	sprintf_entry, [a2], 0x20
 DspOnSe_L10b:
 	clr	d0
-	bra	0x48680190
+	bra	DspOnSe_L141
 DspOnSe_L10e:
 	mov	(0x24, sp), a0
 	mov	(a0), d0
@@ -271519,8 +274153,13 @@ DspOnSe_L134:
 	movbu	d0, (0x500528d8)
 DspOnSe_L13b:
 	clr	d0
-	bra	0x48680190
-.incbin_range "baserom/kn2400_program.rom", 0x28018d, 0x280193
+	bra	DspOnSe_L141
+# DspOnSe + 0x13e: no traced path reaches what follows (--decode-gaps)
+	bra	DspOnSe_L141
+DspOnSe_L140:
+	clr	d0
+DspOnSe_L141:
+	ret	0, 0x14
 
 DrumDspOnSe:
 	add	-0x14, sp
@@ -271548,7 +274187,7 @@ DrumDspOnSe_L44:
 	bne	DrumDspOnSe_L4f
 	ret	0, 0x14
 DrumDspOnSe_L4f:
-	jmp	0x486802d3
+	jmp	DrumDspOnSe_L140
 DrumDspOnSe_L52:
 	mov	0x0020005f, d0
 	call	SetMmmFilter_entry, [d2], 0x18
@@ -271611,7 +274250,7 @@ DrumDspOnSe_Lf9:
 	movbu	d0, (0x500528dc)
 DrumDspOnSe_L100:
 	clr	d0
-	bra	0x486802d4
+	bra	DrumDspOnSe_L141
 DrumDspOnSe_L103:
 	movbu	(0x500528dc), d0
 	cmp	0, d0
@@ -271634,8 +274273,13 @@ DrumDspOnSe_L128:
 	call	sprintf_entry, [a2], 0x20
 DrumDspOnSe_L13b:
 	clr	d0
-	bra	0x486802d4
-.incbin_range "baserom/kn2400_program.rom", 0x2802d1, 0x2802d7
+	bra	DrumDspOnSe_L141
+# DrumDspOnSe + 0x13e: no traced path reaches what follows (--decode-gaps)
+	bra	DrumDspOnSe_L141
+DrumDspOnSe_L140:
+	clr	d0
+DrumDspOnSe_L141:
+	ret	0, 0x14
 
 DspTenSe:
 	movm	[d2,d3], (sp)
@@ -271660,7 +274304,7 @@ DspTenSe_L3b:
 	bne	DspTenSe_L46
 	ret	[d2,d3], 0x1c
 DspTenSe_L46:
-	jmp	0x486803e7
+	jmp	DspTenSe_L110
 DspTenSe_L49:
 	mov	0x51, d0
 	mov	Str_empty_294, a0
@@ -271690,7 +274334,7 @@ DspTenSe_L5e:
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
 DspTenSe_La3:
 	clr	d0
-	bra	0x486803e8
+	bra	DspTenSe_L111
 DspTenSe_La6:
 	movbu	(Str_empty_294), d0
 	cmp	0, d0
@@ -271714,7 +274358,7 @@ DspTenSe_La6:
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
 DspTenSe_Led:
 	clr	d0
-	bra	0x486803e8
+	bra	DspTenSe_L111
 DspTenSe_Lf0:
 	mov	(0x2c, sp), a1
 	mov	Str_02x_2, d0
@@ -271724,8 +274368,13 @@ DspTenSe_Lf0:
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	0x486803e8
-.incbin_range "baserom/kn2400_program.rom", 0x2803e5, 0x2803eb
+	bra	DspTenSe_L111
+# DspTenSe + 0x10e: no traced path reaches what follows (--decode-gaps)
+	bra	DspTenSe_L111
+DspTenSe_L110:
+	clr	d0
+DspTenSe_L111:
+	ret	[d2,d3], 0x1c
 
 DspSufSe:
 	movm	[d2,d3], (sp)
@@ -271750,7 +274399,7 @@ DspSufSe_L3b:
 	bne	DspSufSe_L46
 	ret	[d2,d3], 0x1c
 DspSufSe_L46:
-	jmp	0x486804fb
+	jmp	DspSufSe_L110
 DspSufSe_L49:
 	mov	0x52, d0
 	mov	Str_empty_294+1, a0
@@ -271780,7 +274429,7 @@ DspSufSe_L5e:
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
 DspSufSe_La3:
 	clr	d0
-	bra	0x486804fc
+	bra	DspSufSe_L111
 DspSufSe_La6:
 	movbu	(Str_empty_294+1), d0
 	cmp	0, d0
@@ -271804,7 +274453,7 @@ DspSufSe_La6:
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
 DspSufSe_Led:
 	clr	d0
-	bra	0x486804fc
+	bra	DspSufSe_L111
 DspSufSe_Lf0:
 	mov	(0x2c, sp), a1
 	mov	Str_02x, d0
@@ -271814,8 +274463,13 @@ DspSufSe_Lf0:
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	0x486804fc
-.incbin_range "baserom/kn2400_program.rom", 0x2804f9, 0x2804ff
+	bra	DspSufSe_L111
+# DspSufSe + 0x10e: no traced path reaches what follows (--decode-gaps)
+	bra	DspSufSe_L111
+DspSufSe_L110:
+	clr	d0
+DspSufSe_L111:
+	ret	[d2,d3], 0x1c
 
 DspGroupSe:
 	movm	[d2,d3,a2], (sp)
@@ -271842,7 +274496,7 @@ DspGroupSe_L3e:
 	bne	DspGroupSe_L49
 	ret	[d2,d3,a2], 0x20
 DspGroupSe_L49:
-	jmp	0x48680731
+	jmp	DspGroupSe_L232
 DspGroupSe_L4c:
 	mov	0x51, d0
 	mov	Str_empty_294, a0
@@ -271976,7 +274630,7 @@ DspGroupSe_L14a:
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
 DspGroupSe_L1dc:
 	clr	d0
-	bra	0x48680732
+	bra	DspGroupSe_L233
 DspGroupSe_L1df:
 	mov	(0x30, sp), a2
 	movbu	(Str_empty_294), d0
@@ -271999,8 +274653,13 @@ DspGroupSe_L1df:
 	mov	0x000600b4, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	0x48680732
-.incbin_range "baserom/kn2400_program.rom", 0x28072f, 0x280735
+	bra	DspGroupSe_L233
+# DspGroupSe + 0x230: no traced path reaches what follows (--decode-gaps)
+	bra	DspGroupSe_L233
+DspGroupSe_L232:
+	clr	d0
+DspGroupSe_L233:
+	ret	[d2,d3,a2], 0x20
 
 DrumDspGroupSe:
 	movm	[d2,d3,a2], (sp)
@@ -272027,7 +274686,7 @@ DrumDspGroupSe_L3e:
 	bne	DrumDspGroupSe_L49
 	ret	[d2,d3,a2], 0x20
 DrumDspGroupSe_L49:
-	jmp	0x48680967
+	jmp	DrumDspGroupSe_L232
 DrumDspGroupSe_L4c:
 	mov	0x24, d0
 	mov	Str_empty_294, a0
@@ -272161,7 +274820,7 @@ DrumDspGroupSe_L14a:
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
 DrumDspGroupSe_L1dc:
 	clr	d0
-	bra	0x48680968
+	bra	DrumDspGroupSe_L233
 DrumDspGroupSe_L1df:
 	mov	(0x30, sp), a2
 	movbu	(Str_empty_294), d0
@@ -272184,8 +274843,13 @@ DrumDspGroupSe_L1df:
 	mov	0x000600b4, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	0x48680968
-.incbin_range "baserom/kn2400_program.rom", 0x280965, 0x28096b
+	bra	DrumDspGroupSe_L233
+# DrumDspGroupSe + 0x230: no traced path reaches what follows (--decode-gaps)
+	bra	DrumDspGroupSe_L233
+DrumDspGroupSe_L232:
+	clr	d0
+DrumDspGroupSe_L233:
+	ret	[d2,d3,a2], 0x20
 
 DspVariSe:
 	movm	[d2,d3,a2,a3], (sp)
@@ -272212,7 +274876,7 @@ DspVariSe_L3e:
 	bne	DspVariSe_L49
 	ret	[d2,d3,a2,a3], 0x24
 DspVariSe_L49:
-	jmp	0x48680bad
+	jmp	DspVariSe_L242
 DspVariSe_L4c:
 	mov	0x51, d0
 	mov	Str_empty_294, a0
@@ -272366,7 +275030,7 @@ DspVariSe_L163:
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
 DspVariSe_L203:
 	clr	d0
-	bra	0x48680bae
+	bra	DspVariSe_L243
 DspVariSe_L206:
 	mov	(0x34, sp), a2
 	mov	Str_s_17, d0
@@ -272384,8 +275048,13 @@ DspVariSe_L206:
 	mov	a2, (8, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	0x48680bae
-.incbin_range "baserom/kn2400_program.rom", 0x280bab, 0x280bb1
+	bra	DspVariSe_L243
+# DspVariSe + 0x240: no traced path reaches what follows (--decode-gaps)
+	bra	DspVariSe_L243
+DspVariSe_L242:
+	clr	d0
+DspVariSe_L243:
+	ret	[d2,d3,a2,a3], 0x24
 
 DrumDspVariSe:
 	movm	[d2,d3,a2,a3], (sp)
@@ -272412,7 +275081,7 @@ DrumDspVariSe_L3e:
 	bne	DrumDspVariSe_L49
 	ret	[d2,d3,a2,a3], 0x24
 DrumDspVariSe_L49:
-	jmp	0x48680df3
+	jmp	DrumDspVariSe_L242
 DrumDspVariSe_L4c:
 	mov	0x24, d0
 	mov	Str_empty_294, a0
@@ -272566,7 +275235,7 @@ DrumDspVariSe_L163:
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
 DrumDspVariSe_L203:
 	clr	d0
-	bra	0x48680df4
+	bra	DrumDspVariSe_L243
 DrumDspVariSe_L206:
 	mov	(0x34, sp), a2
 	mov	Str_s_16, d0
@@ -272584,8 +275253,13 @@ DrumDspVariSe_L206:
 	mov	a2, (8, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	0x48680df4
-.incbin_range "baserom/kn2400_program.rom", 0x280df1, 0x280df7
+	bra	DrumDspVariSe_L243
+# DrumDspVariSe + 0x240: no traced path reaches what follows (--decode-gaps)
+	bra	DrumDspVariSe_L243
+DrumDspVariSe_L242:
+	clr	d0
+DrumDspVariSe_L243:
+	ret	[d2,d3,a2,a3], 0x24
 
 DspVOnSe:
 	movm	[d2,d3], (sp)
@@ -272618,7 +275292,7 @@ DspVOnSe_L4c:
 	bne	DspVOnSe_L57
 	ret	[d2,d3], 0x1c
 DspVOnSe_L57:
-	jmp	0x48680fa8
+	jmp	DspVOnSe_L1b1
 DspVOnSe_L5a:
 	mov	0x0000b014, d0
 	call	SetMmmFilter_entry, [d2], 0x18
@@ -272711,7 +275385,7 @@ DspVOnSe_L16a:
 	movbu	d0, (data_50006D59)
 DspVOnSe_L171:
 	clr	d0
-	bra	0x48680fa9
+	bra	DspVOnSe_L1b2
 DspVOnSe_L174:
 	movbu	(data_50006D59), d0
 	cmp	0, d0
@@ -272734,8 +275408,13 @@ DspVOnSe_L199:
 	call	sprintf_entry, [a2], 0x20
 DspVOnSe_L1ac:
 	clr	d0
-	bra	0x48680fa9
-.incbin_range "baserom/kn2400_program.rom", 0x280fa6, 0x280fac
+	bra	DspVOnSe_L1b2
+# DspVOnSe + 0x1af: no traced path reaches what follows (--decode-gaps)
+	bra	DspVOnSe_L1b2
+DspVOnSe_L1b1:
+	clr	d0
+DspVOnSe_L1b2:
+	ret	[d2,d3], 0x1c
 
 DrumDspVOnSe:
 	movm	[d2,d3], (sp)
@@ -272768,7 +275447,7 @@ DrumDspVOnSe_L4c:
 	bne	DrumDspVOnSe_L57
 	ret	[d2,d3], 0x1c
 DrumDspVOnSe_L57:
-	jmp	0x4868115d
+	jmp	DrumDspVOnSe_L1b1
 DrumDspVOnSe_L5a:
 	mov	0x0000b014, d0
 	call	SetMmmFilter_entry, [d2], 0x18
@@ -272861,7 +275540,7 @@ DrumDspVOnSe_L16a:
 	movbu	d0, (data_50006D59)
 DrumDspVOnSe_L171:
 	clr	d0
-	bra	0x4868115e
+	bra	DrumDspVOnSe_L1b2
 DrumDspVOnSe_L174:
 	movbu	(data_50006D59), d0
 	cmp	0, d0
@@ -272884,8 +275563,13 @@ DrumDspVOnSe_L199:
 	call	sprintf_entry, [a2], 0x20
 DrumDspVOnSe_L1ac:
 	clr	d0
-	bra	0x4868115e
-.incbin_range "baserom/kn2400_program.rom", 0x28115b, 0x281161
+	bra	DrumDspVOnSe_L1b2
+# DrumDspVOnSe + 0x1af: no traced path reaches what follows (--decode-gaps)
+	bra	DrumDspVOnSe_L1b2
+DrumDspVOnSe_L1b1:
+	clr	d0
+DrumDspVOnSe_L1b2:
+	ret	[d2,d3], 0x1c
 
 DspDptSe:
 	movm	[d2], (sp)
@@ -272908,7 +275592,7 @@ DspDptSe_L38:
 	bne	DspDptSe_L43
 	ret	[d2], 0x18
 DspDptSe_L43:
-	jmp	0x48681243
+	jmp	DspDptSe_Le2
 DspDptSe_L46:
 	mov	0x53, d0
 	mov	0x500528e0, a0
@@ -272931,7 +275615,7 @@ DspDptSe_L5b:
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
 DspDptSe_L8b:
 	clr	d0
-	bra	0x48681244
+	bra	DspDptSe_Le3
 DspDptSe_L8e:
 	movbu	(0x500528e0), d0
 	cmp	0, d0
@@ -272947,7 +275631,7 @@ DspDptSe_L8e:
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
 DspDptSe_Lbf:
 	clr	d0
-	bra	0x48681244
+	bra	DspDptSe_Le3
 DspDptSe_Lc2:
 	mov	(0x28, sp), a0
 	mov	Str_3d_175, d0
@@ -272957,8 +275641,13 @@ DspDptSe_Lc2:
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	0x48681244
-.incbin_range "baserom/kn2400_program.rom", 0x281241, 0x281247
+	bra	DspDptSe_Le3
+# DspDptSe + 0xe0: no traced path reaches what follows (--decode-gaps)
+	bra	DspDptSe_Le3
+DspDptSe_Le2:
+	clr	d0
+DspDptSe_Le3:
+	ret	[d2], 0x18
 
 DrumDspDptSe:
 	movm	[d2], (sp)
@@ -272981,7 +275670,7 @@ DrumDspDptSe_L38:
 	bne	DrumDspDptSe_L43
 	ret	[d2], 0x18
 DrumDspDptSe_L43:
-	jmp	0x48681329
+	jmp	DrumDspDptSe_Le2
 DrumDspDptSe_L46:
 	mov	0x26, d0
 	mov	0x500528e4, a0
@@ -273004,7 +275693,7 @@ DrumDspDptSe_L5b:
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
 DrumDspDptSe_L8b:
 	clr	d0
-	bra	0x4868132a
+	bra	DrumDspDptSe_Le3
 DrumDspDptSe_L8e:
 	movbu	(0x500528e4), d0
 	cmp	0, d0
@@ -273020,7 +275709,7 @@ DrumDspDptSe_L8e:
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
 DrumDspDptSe_Lbf:
 	clr	d0
-	bra	0x4868132a
+	bra	DrumDspDptSe_Le3
 DrumDspDptSe_Lc2:
 	mov	(0x28, sp), a0
 	mov	Str_3d_174, d0
@@ -273030,8 +275719,13 @@ DrumDspDptSe_Lc2:
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	0x4868132a
-.incbin_range "baserom/kn2400_program.rom", 0x281327, 0x28132d
+	bra	DrumDspDptSe_Le3
+# DrumDspDptSe + 0xe0: no traced path reaches what follows (--decode-gaps)
+	bra	DrumDspDptSe_Le3
+DrumDspDptSe_Le2:
+	clr	d0
+DrumDspDptSe_Le3:
+	ret	[d2], 0x18
 
 ChoOnSe:
 	add	-0x14, sp
@@ -273059,7 +275753,7 @@ ChoOnSe_L44:
 	bne	ChoOnSe_L4f
 	ret	0, 0x14
 ChoOnSe_L4f:
-	jmp	0x4868146d
+	jmp	ChoOnSe_L140
 ChoOnSe_L52:
 	mov	0x0020005d, d0
 	call	SetMmmFilter_entry, [d2], 0x18
@@ -273122,7 +275816,7 @@ ChoOnSe_Lf9:
 	movbu	d0, (0x500528e8)
 ChoOnSe_L100:
 	clr	d0
-	bra	0x4868146e
+	bra	ChoOnSe_L141
 ChoOnSe_L103:
 	movbu	(0x500528e8), d0
 	cmp	0, d0
@@ -273145,8 +275839,13 @@ ChoOnSe_L128:
 	call	sprintf_entry, [a2], 0x20
 ChoOnSe_L13b:
 	clr	d0
-	bra	0x4868146e
-.incbin_range "baserom/kn2400_program.rom", 0x28146b, 0x281471
+	bra	ChoOnSe_L141
+# ChoOnSe + 0x13e: no traced path reaches what follows (--decode-gaps)
+	bra	ChoOnSe_L141
+ChoOnSe_L140:
+	clr	d0
+ChoOnSe_L141:
+	ret	0, 0x14
 
 ChoDptSe:
 	movm	[d2], (sp)
@@ -273169,7 +275868,7 @@ ChoDptSe_L38:
 	bne	ChoDptSe_L43
 	ret	[d2], 0x18
 ChoDptSe_L43:
-	jmp	0x48681553
+	jmp	ChoDptSe_Le2
 ChoDptSe_L46:
 	mov	0x4e, d0
 	mov	0x500528ec, a0
@@ -273192,7 +275891,7 @@ ChoDptSe_L5b:
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
 ChoDptSe_L8b:
 	clr	d0
-	bra	0x48681554
+	bra	ChoDptSe_Le3
 ChoDptSe_L8e:
 	movbu	(0x500528ec), d0
 	cmp	0, d0
@@ -273208,7 +275907,7 @@ ChoDptSe_L8e:
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
 ChoDptSe_Lbf:
 	clr	d0
-	bra	0x48681554
+	bra	ChoDptSe_Le3
 ChoDptSe_Lc2:
 	mov	(0x28, sp), a0
 	mov	Str_3d_173, d0
@@ -273218,8 +275917,13 @@ ChoDptSe_Lc2:
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	0x48681554
-.incbin_range "baserom/kn2400_program.rom", 0x281551, 0x281557
+	bra	ChoDptSe_Le3
+# ChoDptSe + 0xe0: no traced path reaches what follows (--decode-gaps)
+	bra	ChoDptSe_Le3
+ChoDptSe_Le2:
+	clr	d0
+ChoDptSe_Le3:
+	ret	[d2], 0x18
 
 RevAdjSe:
 	add	-0x20, sp
@@ -273234,8 +275938,8 @@ RevAdjSe:
 	cmp	0x6003a, d1
 	beq	RevAdjSe_L6b
 	cmp	0x50000, d1
-	beq	0x486815f0
-	bra	0x486815ef
+	beq	RevAdjSe_L99
+	bra	RevAdjSe_L98
 RevAdjSe_L35:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
@@ -273247,7 +275951,7 @@ RevAdjSe_L35:
 	mov	1, d1
 	call	func_4869CB5A_entry, [d2,d3,a2], 0x2c
 	clr	d0
-	bra	0x486815f0
+	bra	RevAdjSe_L99
 RevAdjSe_L50:
 	mov	-0x80, d0
 	mov	d0, (0x10, sp)
@@ -273259,7 +275963,7 @@ RevAdjSe_L50:
 	mov	-1, d1
 	call	func_4869CB5A_entry, [d2,d3,a2], 0x2c
 	clr	d0
-	bra	0x486815f0
+	bra	RevAdjSe_L99
 RevAdjSe_L6b:
 	mov	sp, a0
 	add	0x1c, a0
@@ -273275,8 +275979,13 @@ RevAdjSe_L6b:
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	0x486815f0
-.incbin_range "baserom/kn2400_program.rom", 0x2815ed, 0x2815f3
+	bra	RevAdjSe_L99
+# RevAdjSe + 0x96: no traced path reaches what follows (--decode-gaps)
+	bra	RevAdjSe_L99
+RevAdjSe_L98:
+	clr	d0
+RevAdjSe_L99:
+	ret	0, 0x20
 
 DeffOnSe:
 	add	-0x14, sp
@@ -273298,7 +276007,7 @@ DeffOnSe_L31:
 	bne	DeffOnSe_L3c
 	ret	0, 0x14
 DeffOnSe_L3c:
-	jmp	0x48681711
+	jmp	DeffOnSe_L11e
 DeffOnSe_L3f:
 	mov	0x00b0005e, d0
 	call	SetMmmFilter_entry, [d2], 0x18
@@ -273358,7 +276067,7 @@ DeffOnSe_Lde:
 	call	sprintf_entry, [a2], 0x20
 DeffOnSe_Lf1:
 	clr	d0
-	bra	0x48681712
+	bra	DeffOnSe_L11f
 DeffOnSe_Lf4:
 	mov	(0x24, sp), a0
 	mov	(a0), d0
@@ -273375,8 +276084,13 @@ DeffOnSe_Lf4:
 	movbu	d0, (0x500528f0)
 DeffOnSe_L119:
 	clr	d0
-	bra	0x48681712
-.incbin_range "baserom/kn2400_program.rom", 0x28170f, 0x281715
+	bra	DeffOnSe_L11f
+# DeffOnSe + 0x11c: no traced path reaches what follows (--decode-gaps)
+	bra	DeffOnSe_L11f
+DeffOnSe_L11e:
+	clr	d0
+DeffOnSe_L11f:
+	ret	0, 0x14
 
 DeffStereoSe:
 	add	-0x20, sp
@@ -273390,7 +276104,7 @@ DeffStereoSe:
 	bne	DeffStereoSe_L26
 	ret	0, 0x20
 DeffStereoSe_L26:
-	jmp	0x486817d0
+	jmp	DeffStereoSe_Lbb
 DeffStereoSe_L29:
 	mov	sp, a0
 	add	0x1c, a0
@@ -273425,7 +276139,7 @@ DeffStereoSe_L5c:
 	call	func_4869CB5A_entry, [d2,d3,a2], 0x2c
 DeffStereoSe_L70:
 	clr	d0
-	bra	0x486817d1
+	bra	DeffStereoSe_Lbc
 DeffStereoSe_L73:
 	mov	sp, a0
 	add	0x1c, a0
@@ -273453,8 +276167,13 @@ DeffStereoSe_La3:
 	call	sprintf_entry, [a2], 0x20
 DeffStereoSe_Lb6:
 	clr	d0
-	bra	0x486817d1
-.incbin_range "baserom/kn2400_program.rom", 0x2817ce, 0x2817d4
+	bra	DeffStereoSe_Lbc
+# DeffStereoSe + 0xb9: no traced path reaches what follows (--decode-gaps)
+	bra	DeffStereoSe_Lbc
+DeffStereoSe_Lbb:
+	clr	d0
+DeffStereoSe_Lbc:
+	ret	0, 0x20
 
 DeffTypeSe:
 	add	-0x14, sp
@@ -273476,7 +276195,7 @@ DeffTypeSe_L36:
 	bne	DeffTypeSe_L41
 	ret	0, 0x14
 DeffTypeSe_L41:
-	jmp	0x486819cb
+	jmp	DeffTypeSe_L1f7
 DeffTypeSe_L44:
 	call	func_4869E5E8_entry, 0, 0x18
 	movbu	d0, (data_50006D5C)
@@ -273607,8 +276326,13 @@ DeffTypeSe_Ld2:
 	call	sprintf_entry, [a2], 0x20
 DeffTypeSe_L1f2:
 	clr	d0
-	bra	0x486819cc
-.incbin_range "baserom/kn2400_program.rom", 0x2819c9, 0x2819cf
+	bra	DeffTypeSe_L1f8
+# DeffTypeSe + 0x1f5: no traced path reaches what follows (--decode-gaps)
+	bra	DeffTypeSe_L1f8
+DeffTypeSe_L1f7:
+	clr	d0
+DeffTypeSe_L1f8:
+	ret	0, 0x14
 
 MemoryBankSe:
 	add	-0x14, sp
@@ -273623,8 +276347,8 @@ MemoryBankSe:
 	cmp	0x6003a, d1
 	beq	MemoryBankSe_L5e
 	cmp	0x50000, d1
-	beq	0x48681a65
-	bra	0x48681a64
+	beq	MemoryBankSe_L96
+	bra	MemoryBankSe_L95
 MemoryBankSe_L35:
 	movhu	(data_50006D54), d0
 	cmp	0x27, d0
@@ -273633,7 +276357,7 @@ MemoryBankSe_L35:
 	movhu	d0, (data_50006D54)
 MemoryBankSe_L46:
 	clr	d0
-	bra	0x48681a65
+	bra	MemoryBankSe_L96
 MemoryBankSe_L49:
 	movhu	(data_50006D54), d0
 	cmp	0, d0
@@ -273642,7 +276366,7 @@ MemoryBankSe_L49:
 	movhu	d0, (data_50006D54)
 MemoryBankSe_L5b:
 	clr	d0
-	bra	0x48681a65
+	bra	MemoryBankSe_L96
 MemoryBankSe_L5e:
 	mov	(0x24, sp), a1
 	mov	Str_2d_42, d0
@@ -273658,8 +276382,13 @@ MemoryBankSe_L5e:
 	mov	0x01b00266, d0
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	0x48681a65
-.incbin_range "baserom/kn2400_program.rom", 0x281a62, 0x281a68
+	bra	MemoryBankSe_L96
+# MemoryBankSe + 0x93: no traced path reaches what follows (--decode-gaps)
+	bra	MemoryBankSe_L96
+MemoryBankSe_L95:
+	clr	d0
+MemoryBankSe_L96:
+	ret	0, 0x14
 
 DrumRevAdjSe:
 	add	-0x20, sp
@@ -273677,7 +276406,7 @@ DrumRevAdjSe:
 	bne	DrumRevAdjSe_L36
 	ret	0, 0x20
 DrumRevAdjSe_L36:
-	jmp	0x48681b36
+	jmp	DrumRevAdjSe_Lce
 DrumRevAdjSe_L39:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
@@ -273695,7 +276424,7 @@ DrumRevAdjSe_L39:
 	mov	1, d1
 	call	func_4869CC48_entry, [d2,d3,a2], 0x2c
 	clr	d0
-	bra	0x48681b37
+	bra	DrumRevAdjSe_Lcf
 DrumRevAdjSe_L64:
 	mov	-0x80, d0
 	mov	d0, (0x10, sp)
@@ -273714,7 +276443,7 @@ DrumRevAdjSe_L64:
 	mov	-1, d1
 	call	func_4869CC48_entry, [d2,d3,a2], 0x2c
 	clr	d0
-	bra	0x48681b37
+	bra	DrumRevAdjSe_Lcf
 DrumRevAdjSe_L90:
 	movbu	(Str_empty_293), d0
 	mov	sp, a0
@@ -273737,8 +276466,13 @@ DrumRevAdjSe_L90:
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	0x48681b37
-.incbin_range "baserom/kn2400_program.rom", 0x281b34, 0x281b3a
+	bra	DrumRevAdjSe_Lcf
+# DrumRevAdjSe + 0xcc: no traced path reaches what follows (--decode-gaps)
+	bra	DrumRevAdjSe_Lcf
+DrumRevAdjSe_Lce:
+	clr	d0
+DrumRevAdjSe_Lcf:
+	ret	0, 0x20
 
 DrumPrioritySe:
 	add	-0x20, sp
@@ -273756,7 +276490,7 @@ DrumPrioritySe:
 	bne	DrumPrioritySe_L36
 	ret	0, 0x20
 DrumPrioritySe_L36:
-	jmp	0x48681c02
+	jmp	DrumPrioritySe_Lc8
 DrumPrioritySe_L39:
 	mov	3, d0
 	mov	d0, (0x10, sp)
@@ -273774,7 +276508,7 @@ DrumPrioritySe_L39:
 	mov	1, d1
 	call	func_4869CC48_entry, [d2,d3,a2], 0x2c
 	clr	d0
-	bra	0x48681c03
+	bra	DrumPrioritySe_Lc9
 DrumPrioritySe_L63:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -273791,7 +276525,7 @@ DrumPrioritySe_L63:
 	mov	-1, d1
 	call	func_4869CC48_entry, [d2,d3,a2], 0x2c
 	clr	d0
-	bra	0x48681c03
+	bra	DrumPrioritySe_Lc9
 DrumPrioritySe_L8b:
 	movbu	(Str_empty_293), d0
 	mov	sp, a0
@@ -273813,8 +276547,13 @@ DrumPrioritySe_L8b:
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	0x48681c03
-.incbin_range "baserom/kn2400_program.rom", 0x281c00, 0x281c06
+	bra	DrumPrioritySe_Lc9
+# DrumPrioritySe + 0xc6: no traced path reaches what follows (--decode-gaps)
+	bra	DrumPrioritySe_Lc9
+DrumPrioritySe_Lc8:
+	clr	d0
+DrumPrioritySe_Lc9:
+	ret	0, 0x20
 
 DrumGDumpOnSe:
 	add	-0x20, sp
@@ -273832,7 +276571,7 @@ DrumGDumpOnSe:
 	bne	DrumGDumpOnSe_L36
 	ret	0, 0x20
 DrumGDumpOnSe_L36:
-	jmp	0x48681ced
+	jmp	DrumGDumpOnSe_Le7
 DrumGDumpOnSe_L39:
 	mov	1, d0
 	mov	d0, (0x10, sp)
@@ -273868,7 +276607,7 @@ DrumGDumpOnSe_L64:
 	mov	-1, d1
 	call	func_4869CC48_entry, [d2,d3,a2], 0x2c
 	clr	d0
-	bra	0x48681cee
+	bra	DrumGDumpOnSe_Le8
 DrumGDumpOnSe_L8d:
 	movbu	(Str_empty_293), d0
 	mov	sp, a0
@@ -273903,8 +276642,13 @@ DrumGDumpOnSe_Lcf:
 	call	sprintf_entry, [a2], 0x20
 DrumGDumpOnSe_Le2:
 	clr	d0
-	bra	0x48681cee
-.incbin_range "baserom/kn2400_program.rom", 0x281ceb, 0x281cf1
+	bra	DrumGDumpOnSe_Le8
+# DrumGDumpOnSe + 0xe5: no traced path reaches what follows (--decode-gaps)
+	bra	DrumGDumpOnSe_Le8
+DrumGDumpOnSe_Le7:
+	clr	d0
+DrumGDumpOnSe_Le8:
+	ret	0, 0x20
 
 DrumGDumpGroupSe:
 	add	-0x20, sp
@@ -273922,7 +276666,7 @@ DrumGDumpGroupSe:
 	bne	DrumGDumpGroupSe_L36
 	ret	0, 0x20
 DrumGDumpGroupSe_L36:
-	jmp	0x48681db5
+	jmp	DrumGDumpGroupSe_Lc4
 DrumGDumpGroupSe_L39:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
@@ -273940,7 +276684,7 @@ DrumGDumpGroupSe_L39:
 	mov	1, d1
 	call	func_4869CC48_entry, [d2,d3,a2], 0x2c
 	clr	d0
-	bra	0x48681db6
+	bra	DrumGDumpGroupSe_Lc5
 DrumGDumpGroupSe_L62:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -273957,7 +276701,7 @@ DrumGDumpGroupSe_L62:
 	mov	-1, d1
 	call	func_4869CC48_entry, [d2,d3,a2], 0x2c
 	clr	d0
-	bra	0x48681db6
+	bra	DrumGDumpGroupSe_Lc5
 DrumGDumpGroupSe_L89:
 	movbu	(Str_empty_293), d0
 	mov	sp, a0
@@ -273978,8 +276722,13 @@ DrumGDumpGroupSe_L89:
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	0x48681db6
-.incbin_range "baserom/kn2400_program.rom", 0x281db3, 0x281db9
+	bra	DrumGDumpGroupSe_Lc5
+# DrumGDumpGroupSe + 0xc2: no traced path reaches what follows (--decode-gaps)
+	bra	DrumGDumpGroupSe_Lc5
+DrumGDumpGroupSe_Lc4:
+	clr	d0
+DrumGDumpGroupSe_Lc5:
+	ret	0, 0x20
 
 DrumKeyOffSe:
 	add	-0x20, sp
@@ -273997,7 +276746,7 @@ DrumKeyOffSe:
 	bne	DrumKeyOffSe_L36
 	ret	0, 0x20
 DrumKeyOffSe_L36:
-	jmp	0x48681ec4
+	jmp	DrumKeyOffSe_L10b
 DrumKeyOffSe_L39:
 	mov	1, d0
 	mov	d0, (0x10, sp)
@@ -274076,8 +276825,13 @@ DrumKeyOffSe_Lde:
 	mov	0x000600b4, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	0x48681ec5
-.incbin_range "baserom/kn2400_program.rom", 0x281ec2, 0x281ec8
+	bra	DrumKeyOffSe_L10c
+# DrumKeyOffSe + 0x109: no traced path reaches what follows (--decode-gaps)
+	bra	DrumKeyOffSe_L10c
+DrumKeyOffSe_L10b:
+	clr	d0
+DrumKeyOffSe_L10c:
+	ret	0, 0x20
 
 CopyFromSe:
 	movm	[d2], (sp)
@@ -274098,7 +276852,7 @@ CopyFromSe_L30:
 	bne	CopyFromSe_L3b
 	ret	[d2], 0x14
 CopyFromSe_L3b:
-	jmp	0x48681fea
+	jmp	CopyFromSe_L122
 CopyFromSe_L3e:
 	movbu	(Str_empty_293+1), d0
 	cmp	3, d0
@@ -274189,8 +276943,13 @@ CopyFromSe_L10a:
 	call	sprintf_entry, [a2], 0x20
 CopyFromSe_L11d:
 	clr	d0
-	bra	0x48681feb
-.incbin_range "baserom/kn2400_program.rom", 0x281fe8, 0x281fee
+	bra	CopyFromSe_L123
+# CopyFromSe + 0x120: no traced path reaches what follows (--decode-gaps)
+	bra	CopyFromSe_L123
+CopyFromSe_L122:
+	clr	d0
+CopyFromSe_L123:
+	ret	[d2], 0x14
 
 CopyToSe:
 	movm	[d2], (sp)
@@ -274211,7 +276970,7 @@ CopyToSe_L30:
 	bne	CopyToSe_L3b
 	ret	[d2], 0x14
 CopyToSe_L3b:
-	jmp	0x48682110
+	jmp	CopyToSe_L122
 CopyToSe_L3e:
 	movbu	(data_50006D60), d0
 	cmp	3, d0
@@ -274302,8 +277061,13 @@ CopyToSe_L10a:
 	call	sprintf_entry, [a2], 0x20
 CopyToSe_L11d:
 	clr	d0
-	bra	0x48682111
-.incbin_range "baserom/kn2400_program.rom", 0x28210e, 0x282114
+	bra	CopyToSe_L123
+# CopyToSe + 0x120: no traced path reaches what follows (--decode-gaps)
+	bra	CopyToSe_L123
+CopyToSe_L122:
+	clr	d0
+CopyToSe_L123:
+	ret	[d2], 0x14
 
 CopyOptSe:
 	add	-0x10, sp
@@ -274321,7 +277085,7 @@ CopyOptSe:
 	bne	CopyOptSe_L36
 	ret	0, 0x10
 CopyOptSe_L36:
-	jmp	0x48682200
+	jmp	CopyOptSe_Lec
 CopyOptSe_L39:
 	movbu	(data_50006D61), d0
 	cmp	4, d0
@@ -274389,8 +277153,13 @@ CopyOptSe_Ld4:
 	call	sprintf_entry, [a2], 0x20
 CopyOptSe_Le7:
 	clr	d0
-	bra	0x48682201
-.incbin_range "baserom/kn2400_program.rom", 0x2821fe, 0x282204
+	bra	CopyOptSe_Led
+# CopyOptSe + 0xea: no traced path reaches what follows (--decode-gaps)
+	bra	CopyOptSe_Led
+CopyOptSe_Lec:
+	clr	d0
+CopyOptSe_Led:
+	ret	0, 0x10
 
 Ac1stEditBoxSeProc:
 	movm	[d2,d3,a2,a3], (sp)
@@ -275741,7 +278510,7 @@ DeffVal0Se_L3f:
 	bne	DeffVal0Se_L4a
 	ret	0, 0x20
 DeffVal0Se_L4a:
-	jmp	0x4868330d
+	jmp	DeffVal0Se_L325
 DeffVal0Se_L4d:
 	movbu	(data_50006D5C), d0
 	cmp	0, d0
@@ -275977,8 +278746,13 @@ DeffVal0Se_L2f7:
 	call	SendEvent_entry, [d2,d3], 0x24
 DeffVal0Se_L320:
 	clr	d0
-	bra	0x4868330e
-.incbin_range "baserom/kn2400_program.rom", 0x28330b, 0x283311
+	bra	DeffVal0Se_L326
+# DeffVal0Se + 0x323: no traced path reaches what follows (--decode-gaps)
+	bra	DeffVal0Se_L326
+DeffVal0Se_L325:
+	clr	d0
+DeffVal0Se_L326:
+	ret	0, 0x20
 
 DeffVal1Se:
 	add	-0x20, sp
@@ -276006,7 +278780,7 @@ DeffVal1Se_L3f:
 	bne	DeffVal1Se_L4a
 	ret	0, 0x20
 DeffVal1Se_L4a:
-	jmp	0x48683679
+	jmp	DeffVal1Se_L368
 DeffVal1Se_L4d:
 	movbu	(data_50006D5C), d0
 	cmp	0, d0
@@ -276266,8 +279040,13 @@ DeffVal1Se_L33a:
 	call	SendEvent_entry, [d2,d3], 0x24
 DeffVal1Se_L363:
 	clr	d0
-	bra	0x4868367a
-.incbin_range "baserom/kn2400_program.rom", 0x283677, 0x28367d
+	bra	DeffVal1Se_L369
+# DeffVal1Se + 0x366: no traced path reaches what follows (--decode-gaps)
+	bra	DeffVal1Se_L369
+DeffVal1Se_L368:
+	clr	d0
+DeffVal1Se_L369:
+	ret	0, 0x20
 
 DeffVal2Se:
 	add	-0x20, sp
@@ -276295,7 +279074,7 @@ DeffVal2Se_L3f:
 	bne	DeffVal2Se_L4a
 	ret	0, 0x20
 DeffVal2Se_L4a:
-	jmp	0x48683b39
+	jmp	DeffVal2Se_L4bc
 DeffVal2Se_L4d:
 	movbu	(data_50006D5C), d0
 	cmp	0, d0
@@ -276676,8 +279455,13 @@ DeffVal2Se_L48e:
 	call	SendEvent_entry, [d2,d3], 0x24
 DeffVal2Se_L4b7:
 	clr	d0
-	bra	0x48683b3a
-.incbin_range "baserom/kn2400_program.rom", 0x283b37, 0x283b3d
+	bra	DeffVal2Se_L4bd
+# DeffVal2Se + 0x4ba: no traced path reaches what follows (--decode-gaps)
+	bra	DeffVal2Se_L4bd
+DeffVal2Se_L4bc:
+	clr	d0
+DeffVal2Se_L4bd:
+	ret	0, 0x20
 
 DeffVal3Se:
 	add	-0x20, sp
@@ -276705,7 +279489,7 @@ DeffVal3Se_L3f:
 	bne	DeffVal3Se_L4a
 	ret	0, 0x20
 DeffVal3Se_L4a:
-	jmp	0x48683e4d
+	jmp	DeffVal3Se_L310
 DeffVal3Se_L4d:
 	movbu	(data_50006D5C), d0
 	cmp	0, d0
@@ -276935,8 +279719,13 @@ DeffVal3Se_L2e2:
 	call	SendEvent_entry, [d2,d3], 0x24
 DeffVal3Se_L30b:
 	clr	d0
-	bra	0x48683e4e
-.incbin_range "baserom/kn2400_program.rom", 0x283e4b, 0x283e51
+	bra	DeffVal3Se_L311
+# DeffVal3Se + 0x30e: no traced path reaches what follows (--decode-gaps)
+	bra	DeffVal3Se_L311
+DeffVal3Se_L310:
+	clr	d0
+DeffVal3Se_L311:
+	ret	0, 0x20
 
 DeffVal4Se:
 	add	-0x20, sp
@@ -276962,7 +279751,7 @@ DeffVal4Se_L3c:
 	bne	DeffVal4Se_L47
 	ret	0, 0x20
 DeffVal4Se_L47:
-	jmp	0x4868409e
+	jmp	DeffVal4Se_L24d
 DeffVal4Se_L4a:
 	movbu	(data_50006D5C), d0
 	cmp	0, d0
@@ -277138,8 +279927,13 @@ DeffVal4Se_L21f:
 	call	SendEvent_entry, [d2,d3], 0x24
 DeffVal4Se_L248:
 	clr	d0
-	bra	0x4868409f
-.incbin_range "baserom/kn2400_program.rom", 0x28409c, 0x2840a2
+	bra	DeffVal4Se_L24e
+# DeffVal4Se + 0x24b: no traced path reaches what follows (--decode-gaps)
+	bra	DeffVal4Se_L24e
+DeffVal4Se_L24d:
+	clr	d0
+DeffVal4Se_L24e:
+	ret	0, 0x20
 
 DeffVal5Se:
 	add	-0x20, sp
@@ -277163,7 +279957,7 @@ DeffVal5Se_L39:
 	bne	DeffVal5Se_L44
 	ret	0, 0x20
 DeffVal5Se_L44:
-	jmp	0x486842a6
+	jmp	DeffVal5Se_L204
 DeffVal5Se_L47:
 	movbu	(data_50006D5C), d0
 	cmp	0, d0
@@ -277313,8 +280107,13 @@ DeffVal5Se_L1d6:
 	call	SendEvent_entry, [d2,d3], 0x24
 DeffVal5Se_L1ff:
 	clr	d0
-	bra	0x486842a7
-.incbin_range "baserom/kn2400_program.rom", 0x2842a4, 0x2842aa
+	bra	DeffVal5Se_L205
+# DeffVal5Se + 0x202: no traced path reaches what follows (--decode-gaps)
+	bra	DeffVal5Se_L205
+DeffVal5Se_L204:
+	clr	d0
+DeffVal5Se_L205:
+	ret	0, 0x20
 
 DeffVal6Se:
 	add	-0x20, sp
@@ -277340,7 +280139,7 @@ DeffVal6Se_L3c:
 	bne	DeffVal6Se_L47
 	ret	0, 0x20
 DeffVal6Se_L47:
-	jmp	0x486844ff
+	jmp	DeffVal6Se_L255
 DeffVal6Se_L4a:
 	movbu	(data_50006D5C), d0
 	cmp	0, d0
@@ -277520,8 +280319,13 @@ DeffVal6Se_L227:
 	call	SendEvent_entry, [d2,d3], 0x24
 DeffVal6Se_L250:
 	clr	d0
-	bra	0x48684500
-.incbin_range "baserom/kn2400_program.rom", 0x2844fd, 0x284503
+	bra	DeffVal6Se_L256
+# DeffVal6Se + 0x253: no traced path reaches what follows (--decode-gaps)
+	bra	DeffVal6Se_L256
+DeffVal6Se_L255:
+	clr	d0
+DeffVal6Se_L256:
+	ret	0, 0x20
 
 DeffVal7Se:
 	add	-0x20, sp
@@ -277545,7 +280349,7 @@ DeffVal7Se_L39:
 	bne	DeffVal7Se_L44
 	ret	0, 0x20
 DeffVal7Se_L44:
-	jmp	0x48684681
+	jmp	DeffVal7Se_L17e
 DeffVal7Se_L47:
 	movbu	(data_50006D5C), d0
 	cmp	0, d0
@@ -277657,8 +280461,13 @@ DeffVal7Se_L150:
 	call	SendEvent_entry, [d2,d3], 0x24
 DeffVal7Se_L179:
 	clr	d0
-	bra	0x48684682
-.incbin_range "baserom/kn2400_program.rom", 0x28467f, 0x284685
+	bra	DeffVal7Se_L17f
+# DeffVal7Se + 0x17c: no traced path reaches what follows (--decode-gaps)
+	bra	DeffVal7Se_L17f
+DeffVal7Se_L17e:
+	clr	d0
+DeffVal7Se_L17f:
+	ret	0, 0x20
 
 DrumKeyNameSe:
 	movm	[d2,d3,a2], (sp)
@@ -277681,7 +280490,7 @@ DrumKeyNameSe_L38:
 	bne	DrumKeyNameSe_L43
 	ret	[d2,d3,a2], 0x2c
 DrumKeyNameSe_L43:
-	jmp	0x48684777
+	jmp	DrumKeyNameSe_Lf2
 DrumKeyNameSe_L46:
 	movbu	(Str_empty_293), d0
 	cmp	0x7f, d0
@@ -277734,7 +280543,7 @@ DrumKeyNameSe_L76:
 	mov	0x01b50004, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	0x48684778
+	bra	DrumKeyNameSe_Lf3
 DrumKeyNameSe_Lc7:
 	mov	sp, a2
 	add	0x14, a2
@@ -277748,8 +280557,13 @@ DrumKeyNameSe_Lc7:
 	mov	a2, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	0x48684778
-.incbin_range "baserom/kn2400_program.rom", 0x284775, 0x28477b
+	bra	DrumKeyNameSe_Lf3
+# DrumKeyNameSe + 0xf0: no traced path reaches what follows (--decode-gaps)
+	bra	DrumKeyNameSe_Lf3
+DrumKeyNameSe_Lf2:
+	clr	d0
+DrumKeyNameSe_Lf3:
+	ret	[d2,d3,a2], 0x2c
 
 AcFuncBoxSeProc:
 	movm	[d2,d3], (sp)
@@ -277813,7 +280627,7 @@ DeffVal0SwSe:
 	bne	DeffVal0SwSe_L16
 	ret	0, 0x10
 DeffVal0SwSe_L16:
-	jmp	0x486848f5
+	jmp	DeffVal0SwSe_Le4
 DeffVal0SwSe_L19:
 	movbu	(data_50006D5C), d0
 	cmp	0, d0
@@ -277878,8 +280692,13 @@ DeffVal0SwSe_Lcc:
 	call	sprintf_entry, [a2], 0x20
 DeffVal0SwSe_Ldf:
 	clr	d0
-	bra	0x486848f6
-.incbin_range "baserom/kn2400_program.rom", 0x2848f3, 0x2848f9
+	bra	DeffVal0SwSe_Le5
+# DeffVal0SwSe + 0xe2: no traced path reaches what follows (--decode-gaps)
+	bra	DeffVal0SwSe_Le5
+DeffVal0SwSe_Le4:
+	clr	d0
+DeffVal0SwSe_Le5:
+	ret	0, 0x10
 
 DeffVal1SwSe:
 	add	-0x10, sp
@@ -277889,7 +280708,7 @@ DeffVal1SwSe:
 	bne	DeffVal1SwSe_L16
 	ret	0, 0x10
 DeffVal1SwSe_L16:
-	jmp	0x486849dd
+	jmp	DeffVal1SwSe_Le4
 DeffVal1SwSe_L19:
 	movbu	(data_50006D5C), d0
 	cmp	0, d0
@@ -277954,8 +280773,13 @@ DeffVal1SwSe_Lcc:
 	call	sprintf_entry, [a2], 0x20
 DeffVal1SwSe_Ldf:
 	clr	d0
-	bra	0x486849de
-.incbin_range "baserom/kn2400_program.rom", 0x2849db, 0x2849e1
+	bra	DeffVal1SwSe_Le5
+# DeffVal1SwSe + 0xe2: no traced path reaches what follows (--decode-gaps)
+	bra	DeffVal1SwSe_Le5
+DeffVal1SwSe_Le4:
+	clr	d0
+DeffVal1SwSe_Le5:
+	ret	0, 0x10
 
 DeffVal2SwSe:
 	add	-0x10, sp
@@ -277965,7 +280789,7 @@ DeffVal2SwSe:
 	bne	DeffVal2SwSe_L16
 	ret	0, 0x10
 DeffVal2SwSe_L16:
-	jmp	0x48684ac5
+	jmp	DeffVal2SwSe_Le4
 DeffVal2SwSe_L19:
 	movbu	(data_50006D5C), d0
 	cmp	0, d0
@@ -278030,8 +280854,13 @@ DeffVal2SwSe_Lcc:
 	call	sprintf_entry, [a2], 0x20
 DeffVal2SwSe_Ldf:
 	clr	d0
-	bra	0x48684ac6
-.incbin_range "baserom/kn2400_program.rom", 0x284ac3, 0x284ac9
+	bra	DeffVal2SwSe_Le5
+# DeffVal2SwSe + 0xe2: no traced path reaches what follows (--decode-gaps)
+	bra	DeffVal2SwSe_Le5
+DeffVal2SwSe_Le4:
+	clr	d0
+DeffVal2SwSe_Le5:
+	ret	0, 0x10
 
 DeffVal3SwSe:
 	add	-0x10, sp
@@ -278041,7 +280870,7 @@ DeffVal3SwSe:
 	bne	DeffVal3SwSe_L16
 	ret	0, 0x10
 DeffVal3SwSe_L16:
-	jmp	0x48684bad
+	jmp	DeffVal3SwSe_Le4
 DeffVal3SwSe_L19:
 	movbu	(data_50006D5C), d0
 	cmp	0, d0
@@ -278106,43 +280935,177 @@ DeffVal3SwSe_Lcc:
 	call	sprintf_entry, [a2], 0x20
 DeffVal3SwSe_Ldf:
 	clr	d0
-	bra	0x48684bae
-.incbin_range "baserom/kn2400_program.rom", 0x284bab, 0x284bb1
+	bra	DeffVal3SwSe_Le5
+# DeffVal3SwSe + 0xe2: no traced path reaches what follows (--decode-gaps)
+	bra	DeffVal3SwSe_Le5
+DeffVal3SwSe_Le4:
+	clr	d0
+DeffVal3SwSe_Le5:
+	ret	0, 0x10
 
 DeffVal4SwSe:
 	add	-0x10, sp
 	cmp	0x6003a, d1
-	beq	0x48684bc9
+	beq	DeffVal4SwSe_L18
 	cmp	0x50000, d1
-	bne	0x48684c39
+	bne	DeffVal4SwSe_L88
 	ret	0, 0x10
-.incbin_range "baserom/kn2400_program.rom", 0x284bc7, 0x284c3d
+# DeffVal4SwSe + 0x16: no traced path reaches what follows (--decode-gaps)
+	bra	DeffVal4SwSe_L88
+DeffVal4SwSe_L18:
+	movbu	(data_50006D5C), d0
+	cmp	0, d0
+	blt	DeffVal4SwSe_L70
+	cmp	0xc, d0
+	bgt	DeffVal4SwSe_L70
+	asl2	d0
+	mov	0x484a0468, a0
+	mov	(d0, a0), a0
+	jmp	(a0)
+	mov	(0x20, sp), a0
+	mov	Str_BAL_10, d0
+	mov	a0, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+	bra	DeffVal4SwSe_L83
+	mov	(0x20, sp), a0
+	mov	Str_DETUNE_7, d0
+	mov	a0, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+	bra	DeffVal4SwSe_L83
+	mov	(0x20, sp), a1
+	mov	0x4849dee0, d0
+	mov	a1, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+	bra	DeffVal4SwSe_L83
+DeffVal4SwSe_L70:
+	mov	(0x20, sp), a0
+	mov	0x4849dee8, d0
+	mov	a0, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+DeffVal4SwSe_L83:
+	clr	d0
+	bra	DeffVal4SwSe_L89
+	bra	DeffVal4SwSe_L89
+DeffVal4SwSe_L88:
+	clr	d0
+DeffVal4SwSe_L89:
+	ret	0, 0x10
 
 DeffVal5SwSe:
 	add	-0x10, sp
 	cmp	0x6003a, d1
-	beq	0x48684c55
+	beq	DeffVal5SwSe_L18
 	cmp	0x50000, d1
-	bne	0x48684cc5
+	bne	DeffVal5SwSe_L88
 	ret	0, 0x10
-.incbin_range "baserom/kn2400_program.rom", 0x284c53, 0x284cc9
+# DeffVal5SwSe + 0x16: no traced path reaches what follows (--decode-gaps)
+	bra	DeffVal5SwSe_L88
+DeffVal5SwSe_L18:
+	movbu	(data_50006D5C), d0
+	cmp	0, d0
+	blt	DeffVal5SwSe_L70
+	cmp	0xc, d0
+	bgt	DeffVal5SwSe_L70
+	asl2	d0
+	mov	0x484a049c, a0
+	mov	(d0, a0), a0
+	jmp	(a0)
+	mov	(0x20, sp), a0
+	mov	0x4849def0, d0
+	mov	a0, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+	bra	DeffVal5SwSe_L83
+	mov	(0x20, sp), a0
+	mov	Str_DELAY_14, d0
+	mov	a0, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+	bra	DeffVal5SwSe_L83
+	mov	(0x20, sp), a1
+	mov	0x4849df00, d0
+	mov	a1, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+	bra	DeffVal5SwSe_L83
+DeffVal5SwSe_L70:
+	mov	(0x20, sp), a0
+	mov	0x4849df08, d0
+	mov	a0, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+DeffVal5SwSe_L83:
+	clr	d0
+	bra	DeffVal5SwSe_L89
+	bra	DeffVal5SwSe_L89
+DeffVal5SwSe_L88:
+	clr	d0
+DeffVal5SwSe_L89:
+	ret	0, 0x10
 
 DeffVal6SwSe:
 	add	-0x10, sp
 	cmp	0x6003a, d1
-	beq	0x48684ce1
+	beq	DeffVal6SwSe_L18
 	cmp	0x50000, d1
-	bne	0x48684d51
+	bne	DeffVal6SwSe_L88
 	ret	0, 0x10
-.incbin_range "baserom/kn2400_program.rom", 0x284cdf, 0x284d55
+# DeffVal6SwSe + 0x16: no traced path reaches what follows (--decode-gaps)
+	bra	DeffVal6SwSe_L88
+DeffVal6SwSe_L18:
+	movbu	(data_50006D5C), d0
+	cmp	0, d0
+	blt	DeffVal6SwSe_L70
+	cmp	0xc, d0
+	bgt	DeffVal6SwSe_L70
+	asl2	d0
+	mov	0x484a04d0, a0
+	mov	(d0, a0), a0
+	jmp	(a0)
+	mov	(0x20, sp), a0
+	mov	Str_INTENS, d0
+	mov	a0, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+	bra	DeffVal6SwSe_L83
+	mov	(0x20, sp), a0
+	mov	0x4849df18, d0
+	mov	a0, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+	bra	DeffVal6SwSe_L83
+	mov	(0x20, sp), a1
+	mov	Str_INTENS_2, d0
+	mov	a1, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+	bra	DeffVal6SwSe_L83
+DeffVal6SwSe_L70:
+	mov	(0x20, sp), a0
+	mov	0x4849df28, d0
+	mov	a0, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+DeffVal6SwSe_L83:
+	clr	d0
+	bra	DeffVal6SwSe_L89
+	bra	DeffVal6SwSe_L89
+DeffVal6SwSe_L88:
+	clr	d0
+DeffVal6SwSe_L89:
+	ret	0, 0x10
 
 DeffVal7SwSe:
 	add	-0x10, sp
 	cmp	0x6003a, d1
 	beq	DeffVal7SwSe_L15
 	cmp	0x50000, d1
-	beq	0x48684db1
-	bra	0x48684db0
+	beq	DeffVal7SwSe_L5c
+	bra	DeffVal7SwSe_L5b
 DeffVal7SwSe_L15:
 	movbu	(data_50006D5C), d0
 	cmp	0, d0
@@ -278167,17 +281130,67 @@ DeffVal7SwSe_L43:
 	call	sprintf_entry, [a2], 0x20
 DeffVal7SwSe_L56:
 	clr	d0
-	bra	0x48684db1
-.incbin_range "baserom/kn2400_program.rom", 0x284dae, 0x284db4
+	bra	DeffVal7SwSe_L5c
+# DeffVal7SwSe + 0x59: no traced path reaches what follows (--decode-gaps)
+	bra	DeffVal7SwSe_L5c
+DeffVal7SwSe_L5b:
+	clr	d0
+DeffVal7SwSe_L5c:
+	ret	0, 0x10
 
 EnvKfGraphTitleSe:
 	add	-0x10, sp
 	cmp	0x6003a, d1
-	beq	0x48684dcc
+	beq	EnvKfGraphTitleSe_L18
 	cmp	0x50000, d1
-	bne	0x48684e37
+	bne	EnvKfGraphTitleSe_L83
 	ret	0, 0x10
-.incbin_range "baserom/kn2400_program.rom", 0x284dca, 0x284e3b
+# EnvKfGraphTitleSe + 0x16: no traced path reaches what follows (--decode-gaps)
+	bra	EnvKfGraphTitleSe_L83
+EnvKfGraphTitleSe_L18:
+	movbu	(data_50006D5D), d0
+	cmp	0, d0
+	beq	EnvKfGraphTitleSe_L2c
+	cmp	1, d0
+	beq	EnvKfGraphTitleSe_L41
+	cmp	2, d0
+	beq	EnvKfGraphTitleSe_L56
+	bra	EnvKfGraphTitleSe_L6b
+EnvKfGraphTitleSe_L2c:
+	mov	(0x20, sp), a1
+	mov	Str_ATTACK_KEY_FOLLOW, d0
+	mov	a1, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+	bra	EnvKfGraphTitleSe_L7e
+EnvKfGraphTitleSe_L41:
+	mov	(0x20, sp), a0
+	mov	Str_DECAY_KEY_FOLLOW, d0
+	mov	a0, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+	bra	EnvKfGraphTitleSe_L7e
+EnvKfGraphTitleSe_L56:
+	mov	(0x20, sp), a1
+	mov	Str_RELEASE_KEY_FOLLOW, d0
+	mov	a1, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+	bra	EnvKfGraphTitleSe_L7e
+EnvKfGraphTitleSe_L6b:
+	mov	(0x20, sp), a0
+	mov	Str_ATTACK_KEY_FOLLOW_2, d0
+	mov	a0, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+EnvKfGraphTitleSe_L7e:
+	clr	d0
+	bra	EnvKfGraphTitleSe_L84
+	bra	EnvKfGraphTitleSe_L84
+EnvKfGraphTitleSe_L83:
+	clr	d0
+EnvKfGraphTitleSe_L84:
+	ret	0, 0x10
 
 FltGraphTitleSe:
 	add	-0x10, sp
@@ -278187,7 +281200,7 @@ FltGraphTitleSe:
 	bne	FltGraphTitleSe_L16
 	ret	0, 0x10
 FltGraphTitleSe_L16:
-	jmp	0x48684f50
+	jmp	FltGraphTitleSe_L115
 FltGraphTitleSe_L19:
 	movbu	(data_50006D5A), d0
 	call	func_4869D13D_entry, [d2,a2], 0x20
@@ -278279,16 +281292,21 @@ FltGraphTitleSe_Lfd:
 	call	sprintf_entry, [a2], 0x20
 FltGraphTitleSe_L110:
 	clr	d0
-	bra	0x48684f51
-.incbin_range "baserom/kn2400_program.rom", 0x284f4e, 0x284f54
+	bra	FltGraphTitleSe_L116
+# FltGraphTitleSe + 0x113: no traced path reaches what follows (--decode-gaps)
+	bra	FltGraphTitleSe_L116
+FltGraphTitleSe_L115:
+	clr	d0
+FltGraphTitleSe_L116:
+	ret	0, 0x10
 
 EqGraphTitleSe:
 	add	-0x10, sp
 	cmp	0x6003a, d1
 	beq	EqGraphTitleSe_L15
 	cmp	0x50000, d1
-	beq	0x48684fb5
-	bra	0x48684fb4
+	beq	EqGraphTitleSe_L61
+	bra	EqGraphTitleSe_L60
 EqGraphTitleSe_L15:
 	movbu	(data_50006D5A), d0
 	call	func_4869D13D_entry, [d2,a2], 0x20
@@ -278316,16 +281334,21 @@ EqGraphTitleSe_L48:
 	call	sprintf_entry, [a2], 0x20
 EqGraphTitleSe_L5b:
 	clr	d0
-	bra	0x48684fb5
-.incbin_range "baserom/kn2400_program.rom", 0x284fb2, 0x284fb8
+	bra	EqGraphTitleSe_L61
+# EqGraphTitleSe + 0x5e: no traced path reaches what follows (--decode-gaps)
+	bra	EqGraphTitleSe_L61
+EqGraphTitleSe_L60:
+	clr	d0
+EqGraphTitleSe_L61:
+	ret	0, 0x10
 
 EqGraphXSe:
 	add	-0x10, sp
 	cmp	0x6003a, d1
 	beq	EqGraphXSe_L15
 	cmp	0x50000, d1
-	beq	0x48685019
-	bra	0x48685018
+	beq	EqGraphXSe_L61
+	bra	EqGraphXSe_L60
 EqGraphXSe_L15:
 	movbu	(data_50006D5A), d0
 	call	func_4869D13D_entry, [d2,a2], 0x20
@@ -278353,8 +281376,13 @@ EqGraphXSe_L48:
 	call	sprintf_entry, [a2], 0x20
 EqGraphXSe_L5b:
 	clr	d0
-	bra	0x48685019
-.incbin_range "baserom/kn2400_program.rom", 0x285016, 0x28501c
+	bra	EqGraphXSe_L61
+# EqGraphXSe + 0x5e: no traced path reaches what follows (--decode-gaps)
+	bra	EqGraphXSe_L61
+EqGraphXSe_L60:
+	clr	d0
+EqGraphXSe_L61:
+	ret	0, 0x10
 
 DrumFltGraphTitleSe:
 	add	-0x10, sp
@@ -278364,7 +281392,7 @@ DrumFltGraphTitleSe:
 	bne	DrumFltGraphTitleSe_L16
 	ret	0, 0x10
 DrumFltGraphTitleSe_L16:
-	jmp	0x48685131
+	jmp	DrumFltGraphTitleSe_L115
 DrumFltGraphTitleSe_L19:
 	movbu	(data_50006D5A), d0
 	call	func_4869D1E3_entry, [d2,d3,a2,a3], 0x28
@@ -278456,16 +281484,21 @@ DrumFltGraphTitleSe_Lfd:
 	call	sprintf_entry, [a2], 0x20
 DrumFltGraphTitleSe_L110:
 	clr	d0
-	bra	0x48685132
-.incbin_range "baserom/kn2400_program.rom", 0x28512f, 0x285135
+	bra	DrumFltGraphTitleSe_L116
+# DrumFltGraphTitleSe + 0x113: no traced path reaches what follows (--decode-gaps)
+	bra	DrumFltGraphTitleSe_L116
+DrumFltGraphTitleSe_L115:
+	clr	d0
+DrumFltGraphTitleSe_L116:
+	ret	0, 0x10
 
 DrumEqGraphTitleSe:
 	add	-0x10, sp
 	cmp	0x6003a, d1
 	beq	DrumEqGraphTitleSe_L15
 	cmp	0x50000, d1
-	beq	0x48685196
-	bra	0x48685195
+	beq	DrumEqGraphTitleSe_L61
+	bra	DrumEqGraphTitleSe_L60
 DrumEqGraphTitleSe_L15:
 	movbu	(data_50006D5A), d0
 	call	func_4869D1E3_entry, [d2,d3,a2,a3], 0x28
@@ -278493,16 +281526,21 @@ DrumEqGraphTitleSe_L48:
 	call	sprintf_entry, [a2], 0x20
 DrumEqGraphTitleSe_L5b:
 	clr	d0
-	bra	0x48685196
-.incbin_range "baserom/kn2400_program.rom", 0x285193, 0x285199
+	bra	DrumEqGraphTitleSe_L61
+# DrumEqGraphTitleSe + 0x5e: no traced path reaches what follows (--decode-gaps)
+	bra	DrumEqGraphTitleSe_L61
+DrumEqGraphTitleSe_L60:
+	clr	d0
+DrumEqGraphTitleSe_L61:
+	ret	0, 0x10
 
 DrumEqGraphXSe:
 	add	-0x10, sp
 	cmp	0x6003a, d1
 	beq	DrumEqGraphXSe_L15
 	cmp	0x50000, d1
-	beq	0x486851fa
-	bra	0x486851f9
+	beq	DrumEqGraphXSe_L61
+	bra	DrumEqGraphXSe_L60
 DrumEqGraphXSe_L15:
 	movbu	(data_50006D5A), d0
 	call	func_4869D1E3_entry, [d2,d3,a2,a3], 0x28
@@ -278530,16 +281568,21 @@ DrumEqGraphXSe_L48:
 	call	sprintf_entry, [a2], 0x20
 DrumEqGraphXSe_L5b:
 	clr	d0
-	bra	0x486851fa
-.incbin_range "baserom/kn2400_program.rom", 0x2851f7, 0x2851fd
+	bra	DrumEqGraphXSe_L61
+# DrumEqGraphXSe + 0x5e: no traced path reaches what follows (--decode-gaps)
+	bra	DrumEqGraphXSe_L61
+DrumEqGraphXSe_L60:
+	clr	d0
+DrumEqGraphXSe_L61:
+	ret	0, 0x10
 
 DrumGraphKeyOffXSe:
 	add	-0x18, sp
 	cmp	0x6003a, d1
 	beq	DrumGraphKeyOffXSe_L15
 	cmp	0x50000, d1
-	beq	0x4868526b
-	bra	0x4868526a
+	beq	DrumGraphKeyOffXSe_L6e
+	bra	DrumGraphKeyOffXSe_L6d
 DrumGraphKeyOffXSe_L15:
 	movbu	(Str_empty_293), d0
 	mov	sp, a0
@@ -278573,8 +281616,13 @@ DrumGraphKeyOffXSe_L55:
 	call	sprintf_entry, [a2], 0x20
 DrumGraphKeyOffXSe_L68:
 	clr	d0
-	bra	0x4868526b
-.incbin_range "baserom/kn2400_program.rom", 0x285268, 0x28526e
+	bra	DrumGraphKeyOffXSe_L6e
+# DrumGraphKeyOffXSe + 0x6b: no traced path reaches what follows (--decode-gaps)
+	bra	DrumGraphKeyOffXSe_L6e
+DrumGraphKeyOffXSe_L6d:
+	clr	d0
+DrumGraphKeyOffXSe_L6e:
+	ret	0, 0x18
 
 DrumNoteSelSeProc:
 	movm	[d2,d3], (sp)
@@ -278650,8 +281698,8 @@ MemoryWriteSe:
 	cmp	0x50005, d1
 	beq	MemoryWriteSe_L17
 	cmp	0x50000, d1
-	beq	0x486853b0
-	bra	0x486853af
+	beq	MemoryWriteSe_L7c
+	bra	MemoryWriteSe_L7b
 MemoryWriteSe_L17:
 	call	GetPartSelect_entry, 0, 0x14
 	mov	d0, d2
@@ -278679,8 +281727,13 @@ MemoryWriteSe_L17:
 	mov	0x23, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
 	clr	d0
-	bra	0x486853b0
-.incbin_range "baserom/kn2400_program.rom", 0x2853ad, 0x2853b3
+	bra	MemoryWriteSe_L7c
+# MemoryWriteSe + 0x79: no traced path reaches what follows (--decode-gaps)
+	bra	MemoryWriteSe_L7c
+MemoryWriteSe_L7b:
+	clr	d0
+MemoryWriteSe_L7c:
+	ret	[d2], 0x18
 
 DrumMemoryWriteSe:
 	movm	[d2], (sp)
@@ -278688,8 +281741,8 @@ DrumMemoryWriteSe:
 	cmp	0x50005, d1
 	beq	DrumMemoryWriteSe_L17
 	cmp	0x50000, d1
-	beq	0x4868543a
-	bra	0x48685439
+	beq	DrumMemoryWriteSe_L87
+	bra	DrumMemoryWriteSe_L86
 DrumMemoryWriteSe_L17:
 	call	GetPartSelect_entry, 0, 0x14
 	extbu	d0
@@ -278719,16 +281772,21 @@ DrumMemoryWriteSe_L17:
 	mov	0x23, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
 	clr	d0
-	bra	0x4868543a
-.incbin_range "baserom/kn2400_program.rom", 0x285437, 0x28543d
+	bra	DrumMemoryWriteSe_L87
+# DrumMemoryWriteSe + 0x84: no traced path reaches what follows (--decode-gaps)
+	bra	DrumMemoryWriteSe_L87
+DrumMemoryWriteSe_L86:
+	clr	d0
+DrumMemoryWriteSe_L87:
+	ret	[d2], 0x18
 
 CopyExeSe:
 	add	-0x18, sp
 	cmp	0x50005, d1
 	beq	CopyExeSe_L15
 	cmp	0x50000, d1
-	beq	0x48685488
-	bra	0x48685487
+	beq	CopyExeSe_L4b
+	bra	CopyExeSe_L4a
 CopyExeSe_L15:
 	call	GetPartSelect_entry, 0, 0x14
 	movbu	(data_50006D60), d1
@@ -278742,8 +281800,13 @@ CopyExeSe_L15:
 	mov	0x23, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
 	clr	d0
-	bra	0x48685488
-.incbin_range "baserom/kn2400_program.rom", 0x285485, 0x28548b
+	bra	CopyExeSe_L4b
+# CopyExeSe + 0x48: no traced path reaches what follows (--decode-gaps)
+	bra	CopyExeSe_L4b
+CopyExeSe_L4a:
+	clr	d0
+CopyExeSe_L4b:
+	ret	0, 0x18
 
 NamingSe:
 	movm	[d2,a2,a3], (sp)
@@ -278792,8 +281855,8 @@ NamingFixSe:
 	cmp	0x50005, d1
 	beq	NamingFixSe_L17
 	cmp	0x50000, d1
-	beq	0x4868554b
-	bra	0x4868554a
+	beq	NamingFixSe_L5c
+	bra	NamingFixSe_L5b
 NamingFixSe_L17:
 	call	GetNamingWindowID, 0, 0
 	mov	Str_Sound_Naming_Edt, a3
@@ -278816,8 +281879,13 @@ NamingFixSe_L35:
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
 	clr	d0
-	bra	0x4868554b
-.incbin_range "baserom/kn2400_program.rom", 0x285548, 0x28554e
+	bra	NamingFixSe_L5c
+# NamingFixSe + 0x59: no traced path reaches what follows (--decode-gaps)
+	bra	NamingFixSe_L5c
+NamingFixSe_L5b:
+	clr	d0
+NamingFixSe_L5c:
+	ret	[a2,a3], 0x1c
 
 DrumNamingSe:
 	movm	[d2,d3,a2,a3], (sp)
@@ -278875,8 +281943,8 @@ DrumNamingFixSe:
 	cmp	0x50005, d1
 	beq	DrumNamingFixSe_L17
 	cmp	0x50000, d1
-	beq	0x48685637
-	bra	0x48685636
+	beq	DrumNamingFixSe_L71
+	bra	DrumNamingFixSe_L70
 DrumNamingFixSe_L17:
 	call	GetNamingWindowID, 0, 0
 	mov	Str_Sound_Naming, a3
@@ -278909,8 +281977,13 @@ DrumNamingFixSe_L35:
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
 	clr	d0
-	bra	0x48685637
-.incbin_range "baserom/kn2400_program.rom", 0x285634, 0x28563a
+	bra	DrumNamingFixSe_L71
+# DrumNamingFixSe + 0x6e: no traced path reaches what follows (--decode-gaps)
+	bra	DrumNamingFixSe_L71
+DrumNamingFixSe_L70:
+	clr	d0
+DrumNamingFixSe_L71:
+	ret	[d2,d3,a2,a3], 0x24
 
 AcGridBoxSeProc:
 	movm	[d2,d3,a2], (sp)
@@ -297896,7 +300969,7 @@ TsetGridSe_L4c:
 	bne	TsetGridSe_L57
 	ret	[d2,d3,a2,a3], 0x6c
 TsetGridSe_L57:
-	jmp	0x48692232
+	jmp	TsetGridSe_Lc44
 TsetGridSe_L5a:
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
@@ -299201,8 +302274,13 @@ TsetGridSe_Lc29:
 	mov	0x00060080, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	0x48692233
-.incbin_range "baserom/kn2400_program.rom", 0x292230, 0x292236
+	bra	TsetGridSe_Lc45
+# TsetGridSe + 0xc42: no traced path reaches what follows (--decode-gaps)
+	bra	TsetGridSe_Lc45
+TsetGridSe_Lc44:
+	clr	d0
+TsetGridSe_Lc45:
+	ret	[d2,d3,a2,a3], 0x6c
 
 DrumTsetGridSe:
 	movm	[d2,d3,a2,a3], (sp)
@@ -299235,7 +302313,7 @@ DrumTsetGridSe_L4c:
 	bne	DrumTsetGridSe_L57
 	ret	[d2,d3,a2,a3], 0x7c
 DrumTsetGridSe_L57:
-	jmp	0x48692f1c
+	jmp	DrumTsetGridSe_Lce6
 DrumTsetGridSe_L5a:
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
@@ -300643,8 +303721,13 @@ DrumTsetGridSe_Lcc9:
 	mov	a0, (0x10, sp)
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	0x48692f1d
-.incbin_range "baserom/kn2400_program.rom", 0x292f1a, 0x292f20
+	bra	DrumTsetGridSe_Lce7
+# DrumTsetGridSe + 0xce4: no traced path reaches what follows (--decode-gaps)
+	bra	DrumTsetGridSe_Lce7
+DrumTsetGridSe_Lce6:
+	clr	d0
+DrumTsetGridSe_Lce7:
+	ret	[d2,d3,a2,a3], 0x7c
 
 AcGridBoxScrlSeProc:
 	movm	[d2,d3,a2,a3], (sp)
@@ -302612,7 +305695,7 @@ GraphLvlKfSe:
 	bne	GraphLvlKfSe_L18
 	ret	[d2,d3,a2,a3], 0x60
 GraphLvlKfSe_L18:
-	jmp	0x48694852
+	jmp	GraphLvlKfSe_L604
 GraphLvlKfSe_L1b:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	sp, a0
@@ -303307,8 +306390,13 @@ GraphLvlKfSe_L5d0:
 	mov	0xff, d0
 	call	DrawDottedLine_entry, [d2,a2,a3], 0x20
 	clr	d0
-	bra	0x48694853
-.incbin_range "baserom/kn2400_program.rom", 0x294850, 0x294856
+	bra	GraphLvlKfSe_L605
+# GraphLvlKfSe + 0x602: no traced path reaches what follows (--decode-gaps)
+	bra	GraphLvlKfSe_L605
+GraphLvlKfSe_L604:
+	clr	d0
+GraphLvlKfSe_L605:
+	ret	[d2,d3,a2,a3], 0x60
 
 GraphLenvKfSe:
 	movm	[d2,d3,a2,a3], (sp)
@@ -303319,7 +306407,7 @@ GraphLenvKfSe:
 	bne	GraphLenvKfSe_L18
 	ret	[d2,d3,a2,a3], 0x60
 GraphLenvKfSe_L18:
-	jmp	0x48694eab
+	jmp	GraphLenvKfSe_L655
 GraphLenvKfSe_L1b:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	sp, a0
@@ -304052,8 +307140,13 @@ GraphLenvKfSe_L621:
 	mov	0xff, d0
 	call	DrawDottedLine_entry, [d2,a2,a3], 0x20
 	clr	d0
-	bra	0x48694eac
-.incbin_range "baserom/kn2400_program.rom", 0x294ea9, 0x294eaf
+	bra	GraphLenvKfSe_L656
+# GraphLenvKfSe + 0x653: no traced path reaches what follows (--decode-gaps)
+	bra	GraphLenvKfSe_L656
+GraphLenvKfSe_L655:
+	clr	d0
+GraphLenvKfSe_L656:
+	ret	[d2,d3,a2,a3], 0x60
 
 GraphFltKfSe:
 	movm	[d2,d3,a2,a3], (sp)
@@ -304064,7 +307157,7 @@ GraphFltKfSe:
 	bne	GraphFltKfSe_L18
 	ret	[d2,d3,a2,a3], 0x60
 GraphFltKfSe_L18:
-	jmp	0x486954af
+	jmp	GraphFltKfSe_L600
 GraphFltKfSe_L1b:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	sp, a0
@@ -304759,8 +307852,13 @@ GraphFltKfSe_L5cc:
 	mov	0xff, d0
 	call	DrawDottedLine_entry, [d2,a2,a3], 0x20
 	clr	d0
-	bra	0x486954b0
-.incbin_range "baserom/kn2400_program.rom", 0x2954ad, 0x2954b3
+	bra	GraphFltKfSe_L601
+# GraphFltKfSe + 0x5fe: no traced path reaches what follows (--decode-gaps)
+	bra	GraphFltKfSe_L601
+GraphFltKfSe_L600:
+	clr	d0
+GraphFltKfSe_L601:
+	ret	[d2,d3,a2,a3], 0x60
 
 GraphPenvKfSe:
 	movm	[d2,d3,a2,a3], (sp)
@@ -304771,7 +307869,7 @@ GraphPenvKfSe:
 	bne	GraphPenvKfSe_L18
 	ret	[d2,d3,a2,a3], 0x58
 GraphPenvKfSe_L18:
-	jmp	0x48695ab7
+	jmp	GraphPenvKfSe_L604
 GraphPenvKfSe_L1b:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	sp, a0
@@ -305456,8 +308554,13 @@ GraphPenvKfSe_L5d1:
 	mov	0xff, d0
 	call	DrawDottedLine_entry, [d2,a2,a3], 0x20
 	clr	d0
-	bra	0x48695ab8
-.incbin_range "baserom/kn2400_program.rom", 0x295ab5, 0x295abb
+	bra	GraphPenvKfSe_L605
+# GraphPenvKfSe + 0x602: no traced path reaches what follows (--decode-gaps)
+	bra	GraphPenvKfSe_L605
+GraphPenvKfSe_L604:
+	clr	d0
+GraphPenvKfSe_L605:
+	ret	[d2,d3,a2,a3], 0x58
 
 GraphFenvKfSe:
 	movm	[d2,d3,a2,a3], (sp)
@@ -305468,7 +308571,7 @@ GraphFenvKfSe:
 	bne	GraphFenvKfSe_L18
 	ret	[d2,d3,a2,a3], 0x58
 GraphFenvKfSe_L18:
-	jmp	0x486960bf
+	jmp	GraphFenvKfSe_L604
 GraphFenvKfSe_L1b:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	sp, a0
@@ -306153,8 +309256,13 @@ GraphFenvKfSe_L5d1:
 	mov	0xff, d0
 	call	DrawDottedLine_entry, [d2,a2,a3], 0x20
 	clr	d0
-	bra	0x486960c0
-.incbin_range "baserom/kn2400_program.rom", 0x2960bd, 0x2960c3
+	bra	GraphFenvKfSe_L605
+# GraphFenvKfSe + 0x602: no traced path reaches what follows (--decode-gaps)
+	bra	GraphFenvKfSe_L605
+GraphFenvKfSe_L604:
+	clr	d0
+GraphFenvKfSe_L605:
+	ret	[d2,d3,a2,a3], 0x58
 
 GraphAmpEnvSe:
 	movm	[d2,d3,a2,a3], (sp)
@@ -306165,7 +309273,7 @@ GraphAmpEnvSe:
 	bne	GraphAmpEnvSe_L18
 	ret	[d2,d3,a2,a3], 0x74
 GraphAmpEnvSe_L18:
-	jmp	0x486964dd
+	jmp	GraphAmpEnvSe_L41a
 GraphAmpEnvSe_L1b:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	sp, a0
@@ -306682,8 +309790,13 @@ GraphAmpEnvSe_L3ed:
 	exthu	d0
 	call	func_48696999_entry, [d2,d3,a2,a3], 0x2c
 	clr	d0
-	bra	0x486964de
-.incbin_range "baserom/kn2400_program.rom", 0x2964db, 0x2964e1
+	bra	GraphAmpEnvSe_L41b
+# GraphAmpEnvSe + 0x418: no traced path reaches what follows (--decode-gaps)
+	bra	GraphAmpEnvSe_L41b
+GraphAmpEnvSe_L41a:
+	clr	d0
+GraphAmpEnvSe_L41b:
+	ret	[d2,d3,a2,a3], 0x74
 
 DrumGraphAmpEnvSe:
 	movm	[d2,d3,a2,a3], (sp)
@@ -306694,7 +309807,7 @@ DrumGraphAmpEnvSe:
 	bne	DrumGraphAmpEnvSe_L18
 	ret	[d2,d3,a2,a3], 0x78
 DrumGraphAmpEnvSe_L18:
-	jmp	0x48696995
+	jmp	DrumGraphAmpEnvSe_L4b4
 DrumGraphAmpEnvSe_L1b:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	sp, a0
@@ -307290,8 +310403,13 @@ DrumGraphAmpEnvSe_L488:
 	exthu	d0
 	call	func_48696999_entry, [d2,d3,a2,a3], 0x2c
 	clr	d0
-	bra	0x48696996
-.incbin_range "baserom/kn2400_program.rom", 0x296993, 0x296999
+	bra	DrumGraphAmpEnvSe_L4b5
+# DrumGraphAmpEnvSe + 0x4b2: no traced path reaches what follows (--decode-gaps)
+	bra	DrumGraphAmpEnvSe_L4b5
+DrumGraphAmpEnvSe_L4b4:
+	clr	d0
+DrumGraphAmpEnvSe_L4b5:
+	ret	[d2,d3,a2,a3], 0x78
 
 func_48696999:
 	movm	[d2,d3,a2,a3], (sp)
@@ -307503,7 +310621,7 @@ GraphPitEnvSe:
 	bne	GraphPitEnvSe_L18
 	ret	[d2,d3,a2,a3], 0x84
 GraphPitEnvSe_L18:
-	jmp	0x486971dd
+	jmp	GraphPitEnvSe_L6b7
 GraphPitEnvSe_L1b:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	sp, a0
@@ -308305,8 +311423,13 @@ GraphPitEnvSe_L660:
 	call	func_48696999_entry, [d2,d3,a2,a3], 0x2c
 GraphPitEnvSe_L6b2:
 	clr	d0
-	bra	0x486971de
-.incbin_range "baserom/kn2400_program.rom", 0x2971db, 0x2971e1
+	bra	GraphPitEnvSe_L6b8
+# GraphPitEnvSe + 0x6b5: no traced path reaches what follows (--decode-gaps)
+	bra	GraphPitEnvSe_L6b8
+GraphPitEnvSe_L6b7:
+	clr	d0
+GraphPitEnvSe_L6b8:
+	ret	[d2,d3,a2,a3], 0x84
 
 func_486971E1:
 	movm	[d2,a2], (sp)
@@ -308385,7 +311508,7 @@ GraphFltEnvSe:
 	bne	GraphFltEnvSe_L18
 	ret	[d2,d3,a2,a3], 0x8c
 GraphFltEnvSe_L18:
-	jmp	0x48697840
+	jmp	GraphFltEnvSe_L5ec
 GraphFltEnvSe_L1b:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	sp, a0
@@ -309128,8 +312251,13 @@ GraphFltEnvSe_L57d:
 	call	func_48696A55_entry, [d2,d3,a2,a3], 0x30
 GraphFltEnvSe_L5e7:
 	clr	d0
-	bra	0x48697841
-.incbin_range "baserom/kn2400_program.rom", 0x29783e, 0x297844
+	bra	GraphFltEnvSe_L5ed
+# GraphFltEnvSe + 0x5ea: no traced path reaches what follows (--decode-gaps)
+	bra	GraphFltEnvSe_L5ed
+GraphFltEnvSe_L5ec:
+	clr	d0
+GraphFltEnvSe_L5ed:
+	ret	[d2,d3,a2,a3], 0x8c
 
 func_48697844:
 	mov	d0, d1
@@ -309497,7 +312625,7 @@ GraphFltSe:
 	bne	GraphFltSe_L18
 	ret	[d2,d3,a2,a3], 0x64
 GraphFltSe_L18:
-	jmp	0x4869818b
+	jmp	GraphFltSe_L6a8
 GraphFltSe_L1b:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	sp, a0
@@ -310211,8 +313339,13 @@ GraphFltSe_L67e:
 	call	DrawDottedLine_entry, [d2,a2,a3], 0x20
 GraphFltSe_L6a3:
 	clr	d0
-	bra	0x4869818c
-.incbin_range "baserom/kn2400_program.rom", 0x298189, 0x29818f
+	bra	GraphFltSe_L6a9
+# GraphFltSe + 0x6a6: no traced path reaches what follows (--decode-gaps)
+	bra	GraphFltSe_L6a9
+GraphFltSe_L6a8:
+	clr	d0
+GraphFltSe_L6a9:
+	ret	[d2,d3,a2,a3], 0x64
 
 GraphEqSe:
 	movm	[d2,d3,a2,a3], (sp)
@@ -310223,7 +313356,7 @@ GraphEqSe:
 	bne	GraphEqSe_L18
 	ret	[d2,d3,a2,a3], 0x50
 GraphEqSe_L18:
-	jmp	0x4869842e
+	jmp	GraphEqSe_L29f
 GraphEqSe_L1b:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	sp, a0
@@ -310482,8 +313615,13 @@ GraphEqSe_L28f:
 	call	DrawBox_entry, [d2,a2], 0x18
 GraphEqSe_L29a:
 	clr	d0
-	bra	0x4869842f
-.incbin_range "baserom/kn2400_program.rom", 0x29842c, 0x298432
+	bra	GraphEqSe_L2a0
+# GraphEqSe + 0x29d: no traced path reaches what follows (--decode-gaps)
+	bra	GraphEqSe_L2a0
+GraphEqSe_L29f:
+	clr	d0
+GraphEqSe_L2a0:
+	ret	[d2,d3,a2,a3], 0x50
 
 DrumGraphFltSe:
 	movm	[d2,d3,a2,a3], (sp)
@@ -310494,7 +313632,7 @@ DrumGraphFltSe:
 	bne	DrumGraphFltSe_L18
 	ret	[d2,d3,a2,a3], 0x64
 DrumGraphFltSe_L18:
-	jmp	0x48698b43
+	jmp	DrumGraphFltSe_L711
 DrumGraphFltSe_L1b:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	sp, a0
@@ -311264,8 +314402,13 @@ DrumGraphFltSe_L6e7:
 	call	DrawDottedLine_entry, [d2,a2,a3], 0x20
 DrumGraphFltSe_L70c:
 	clr	d0
-	bra	0x48698b44
-.incbin_range "baserom/kn2400_program.rom", 0x298b41, 0x298b47
+	bra	DrumGraphFltSe_L712
+# DrumGraphFltSe + 0x70f: no traced path reaches what follows (--decode-gaps)
+	bra	DrumGraphFltSe_L712
+DrumGraphFltSe_L711:
+	clr	d0
+DrumGraphFltSe_L712:
+	ret	[d2,d3,a2,a3], 0x64
 
 DrumGraphEqSe:
 	movm	[d2,d3,a2,a3], (sp)
@@ -311276,7 +314419,7 @@ DrumGraphEqSe:
 	bne	DrumGraphEqSe_L18
 	ret	[d2,d3,a2,a3], 0x54
 DrumGraphEqSe_L18:
-	jmp	0x48698e18
+	jmp	DrumGraphEqSe_L2d1
 DrumGraphEqSe_L1b:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	sp, a0
@@ -311559,8 +314702,13 @@ DrumGraphEqSe_L2c1:
 	call	DrawBox_entry, [d2,a2], 0x18
 DrumGraphEqSe_L2cc:
 	clr	d0
-	bra	0x48698e19
-.incbin_range "baserom/kn2400_program.rom", 0x298e16, 0x298e1c
+	bra	DrumGraphEqSe_L2d2
+# DrumGraphEqSe + 0x2cf: no traced path reaches what follows (--decode-gaps)
+	bra	DrumGraphEqSe_L2d2
+DrumGraphEqSe_L2d1:
+	clr	d0
+DrumGraphEqSe_L2d2:
+	ret	[d2,d3,a2,a3], 0x54
 
 GraphLayerSeProc:
 	movm	[d2,d3,a2], (sp)
@@ -311618,7 +314766,7 @@ GraphKeyLay1Se:
 	bne	GraphKeyLay1Se_L18
 	ret	[d2,d3,a2,a3], 0x4c
 GraphKeyLay1Se_L18:
-	jmp	0x48699263
+	jmp	GraphKeyLay1Se_L3c9
 GraphKeyLay1Se_L1b:
 	call	GetFocusObject_entry, 0, 0x10
 	call	GetViewInstance, 0, 0
@@ -311999,8 +315147,13 @@ GraphKeyLay1Se_L29b:
 	movbu	(a0), d0
 	movbu	d0, (0x500528f7)
 	clr	d0
-	bra	0x48699264
-.incbin_range "baserom/kn2400_program.rom", 0x299261, 0x299267
+	bra	GraphKeyLay1Se_L3ca
+# GraphKeyLay1Se + 0x3c7: no traced path reaches what follows (--decode-gaps)
+	bra	GraphKeyLay1Se_L3ca
+GraphKeyLay1Se_L3c9:
+	clr	d0
+GraphKeyLay1Se_L3ca:
+	ret	[d2,d3,a2,a3], 0x4c
 
 GraphVelLay1Se:
 	movm	[d2,d3,a2,a3], (sp)
@@ -312011,7 +315164,7 @@ GraphVelLay1Se:
 	bne	GraphVelLay1Se_L18
 	ret	[d2,d3,a2,a3], 0x50
 GraphVelLay1Se_L18:
-	jmp	0x486995be
+	jmp	GraphVelLay1Se_L357
 GraphVelLay1Se_L1b:
 	call	GetFocusObject_entry, 0, 0x10
 	call	GetViewInstance, 0, 0
@@ -312331,8 +315484,13 @@ GraphVelLay1Se_L1b:
 	movbu	(a0), d0
 	movbu	d0, (0x500528fb)
 	clr	d0
-	bra	0x486995bf
-.incbin_range "baserom/kn2400_program.rom", 0x2995bc, 0x2995c2
+	bra	GraphVelLay1Se_L358
+# GraphVelLay1Se + 0x355: no traced path reaches what follows (--decode-gaps)
+	bra	GraphVelLay1Se_L358
+GraphVelLay1Se_L357:
+	clr	d0
+GraphVelLay1Se_L358:
+	ret	[d2,d3,a2,a3], 0x50
 
 AcDrumGridBoxSeProc:
 	movm	[d2,d3,a2], (sp)
@@ -328481,7 +331639,140 @@ AppSEQ_InitSmfLyricsFunc:
 	call	func_486A26F1_entry, 0, 0xc
 	clr	d0
 	ret	0, 8
-.incbin_range "baserom/kn2400_program.rom", 0x2a3011, 0x2a3151
+# AppSEQ_InitSmfLyricsFunc + 0xc: no traced path reaches what follows (--decode-gaps)
+	movbu	d0, (data_50003620)
+	clr	d0
+	retf	0, 0
+	movm	[d2], (sp)
+	add	-0xc, sp
+	mov	d0, d2
+	call	func_4864485E, 0, 0
+	exthu	d0
+	btst	0x02, d0
+	beq	AppSEQ_InitSmfLyricsFunc_L39
+	mov	1, d0
+	call	func_486A0DB7_entry, 0, 0x14
+	call	func_48644806_entry, 0, 0xc
+	bra	AppSEQ_InitSmfLyricsFunc_L78
+AppSEQ_InitSmfLyricsFunc_L39:
+	call	func_4864485E, 0, 0
+	exthu	d0
+	btst	0x01, d0
+	beq	AppSEQ_InitSmfLyricsFunc_L56
+	mov	2, d0
+	call	func_486A0DB7_entry, 0, 0x14
+	call	func_486447C8_entry, 0, 0xc
+	bra	AppSEQ_InitSmfLyricsFunc_L78
+AppSEQ_InitSmfLyricsFunc_L56:
+	extbu	d2
+	cmp	0, d2
+	beq	AppSEQ_InitSmfLyricsFunc_L65
+	cmp	1, d2
+	beq	AppSEQ_InitSmfLyricsFunc_L6c
+	cmp	2, d2
+	beq	AppSEQ_InitSmfLyricsFunc_L73
+	bra	AppSEQ_InitSmfLyricsFunc_L78
+AppSEQ_InitSmfLyricsFunc_L65:
+	call	func_486A1026_entry, [a2,a3], 0x1c
+	bra	AppSEQ_InitSmfLyricsFunc_L78
+AppSEQ_InitSmfLyricsFunc_L6c:
+	call	func_486A1CB2_entry, [a2,a3], 0x1c
+	bra	AppSEQ_InitSmfLyricsFunc_L78
+AppSEQ_InitSmfLyricsFunc_L73:
+	call	func_486A2066_entry, [a2,a3], 0x1c
+AppSEQ_InitSmfLyricsFunc_L78:
+	clr	d0
+	ret	[d2], 0x10
+	add	-0xc, sp
+	call	func_4864485E, 0, 0
+	exthu	d0
+	btst	0x02, d0
+	beq	AppSEQ_InitSmfLyricsFunc_L9b
+	clr	d0
+	call	func_486A0DB7_entry, 0, 0x14
+	call	func_486431A9_entry, 0, 0xc
+	bra	AppSEQ_InitSmfLyricsFunc_Lb5
+AppSEQ_InitSmfLyricsFunc_L9b:
+	call	func_4864485E, 0, 0
+	exthu	d0
+	btst	0x01, d0
+	beq	AppSEQ_InitSmfLyricsFunc_Lb5
+	clr	d0
+	call	func_486A0DB7_entry, 0, 0x14
+	call	func_486431A9_entry, 0, 0xc
+AppSEQ_InitSmfLyricsFunc_Lb5:
+	clr	d0
+	ret	0, 0xc
+	add	-0xc, sp
+	extbu	d0
+	cmp	0, d0
+	beq	AppSEQ_InitSmfLyricsFunc_Lcb
+	cmp	1, d0
+	beq	AppSEQ_InitSmfLyricsFunc_Ld4
+	cmp	2, d0
+	beq	AppSEQ_InitSmfLyricsFunc_Ldd
+	bra	AppSEQ_InitSmfLyricsFunc_Le4
+AppSEQ_InitSmfLyricsFunc_Lcb:
+	mov	1, d0
+	call	func_486A15FF_entry, [d2], 0x18
+	bra	AppSEQ_InitSmfLyricsFunc_Le4
+AppSEQ_InitSmfLyricsFunc_Ld4:
+	mov	1, d0
+	call	func_486A1D15_entry, [d2], 0x18
+	bra	AppSEQ_InitSmfLyricsFunc_Le4
+AppSEQ_InitSmfLyricsFunc_Ldd:
+	mov	1, d0
+	call	func_486A20C9_entry, [d2], 0x18
+AppSEQ_InitSmfLyricsFunc_Le4:
+	clr	d0
+	ret	0, 0xc
+	add	-0xc, sp
+	extbu	d0
+	cmp	0, d0
+	beq	AppSEQ_InitSmfLyricsFunc_Lfa
+	cmp	1, d0
+	beq	AppSEQ_InitSmfLyricsFunc_L103
+	cmp	2, d0
+	beq	AppSEQ_InitSmfLyricsFunc_L10c
+	bra	AppSEQ_InitSmfLyricsFunc_L113
+AppSEQ_InitSmfLyricsFunc_Lfa:
+	mov	-1, d0
+	call	func_486A15FF_entry, [d2], 0x18
+	bra	AppSEQ_InitSmfLyricsFunc_L113
+AppSEQ_InitSmfLyricsFunc_L103:
+	mov	-1, d0
+	call	func_486A1D15_entry, [d2], 0x18
+	bra	AppSEQ_InitSmfLyricsFunc_L113
+AppSEQ_InitSmfLyricsFunc_L10c:
+	mov	-1, d0
+	call	func_486A20C9_entry, [d2], 0x18
+AppSEQ_InitSmfLyricsFunc_L113:
+	clr	d0
+	ret	0, 0xc
+	add	-8, sp
+	extbu	d0
+	cmp	0, d0
+	beq	AppSEQ_InitSmfLyricsFunc_L129
+	cmp	1, d0
+	beq	AppSEQ_InitSmfLyricsFunc_L130
+	cmp	2, d0
+	beq	AppSEQ_InitSmfLyricsFunc_L137
+	bra	AppSEQ_InitSmfLyricsFunc_L13c
+AppSEQ_InitSmfLyricsFunc_L129:
+	call	func_486A10CD_entry, 0, 0xc
+	bra	AppSEQ_InitSmfLyricsFunc_L13c
+AppSEQ_InitSmfLyricsFunc_L130:
+	call	func_486A1E46_entry, 0, 0xc
+	bra	AppSEQ_InitSmfLyricsFunc_L13c
+AppSEQ_InitSmfLyricsFunc_L137:
+	call	func_486A21FA_entry, 0, 0xc
+AppSEQ_InitSmfLyricsFunc_L13c:
+	clr	d0
+	ret	0, 8
+	add	-8, sp
+	call	func_486A114D_entry, 0, 0xc
+	clr	d0
+	ret	0, 8
 
 AcDPRcVolumeProc:
 	movm	[d2,d3,a2], (sp)
@@ -337677,18 +340968,18 @@ func_486A8EAB_entry:
 	beq	func_486A8EAB_entry_L39
 	cmp	0xe3, d0
 	bne	func_486A8EAB_entry_L36
-	jmp	0x486a912e
+	jmp	func_486A8EAB_entry_L27e
 func_486A8EAB_entry_L36:
-	jmp	0x486a91d5
+	jmp	func_486A8EAB_entry_L325
 func_486A8EAB_entry_L39:
 	mov	0x453, d1
 	cmp	d1, d2
 	bge	func_486A8EAB_entry_L42
-	jmp	0x486a91d5
+	jmp	func_486A8EAB_entry_L325
 func_486A8EAB_entry_L42:
 	cmp	0x489, d2
 	ble	func_486A8EAB_entry_L4b
-	jmp	0x486a91d5
+	jmp	func_486A8EAB_entry_L325
 func_486A8EAB_entry_L4b:
 	sub	d1, d2
 	mov	d2, d0
@@ -337697,39 +340988,39 @@ func_486A8EAB_entry_L4b:
 	mov	(d0, a0), a0
 	jmp	(a0)
 	mov	0x0170001b, a2
-	jmp	0x486a91d5
+	jmp	func_486A8EAB_entry_L325
 	mov	0x01700007, a2
-	jmp	0x486a91d5
+	jmp	func_486A8EAB_entry_L325
 	mov	0x0170000b, a2
-	jmp	0x486a91d5
+	jmp	func_486A8EAB_entry_L325
 	mov	0x0170000c, a2
-	jmp	0x486a91d5
+	jmp	func_486A8EAB_entry_L325
 	mov	0x0170001a, a2
-	jmp	0x486a91d5
+	jmp	func_486A8EAB_entry_L325
 	mov	0x01700006, a2
-	jmp	0x486a91d5
+	jmp	func_486A8EAB_entry_L325
 	mov	0x01700009, a2
-	jmp	0x486a91d5
+	jmp	func_486A8EAB_entry_L325
 	mov	0x0170000d, a2
-	jmp	0x486a91d5
+	jmp	func_486A8EAB_entry_L325
 	mov	0x0170001a, a2
 	mov	0x01760009, d0
 	mov	d0, (0x14, sp)
-	jmp	0x486a91d5
+	jmp	func_486A8EAB_entry_L325
 	mov	0x01700006, a2
 	mov	0x01760009, d0
 	mov	d0, (0x14, sp)
-	jmp	0x486a91d5
+	jmp	func_486A8EAB_entry_L325
 	mov	0x01700009, a2
 	mov	0x01760009, d0
 	mov	d0, (0x14, sp)
-	jmp	0x486a91d5
+	jmp	func_486A8EAB_entry_L325
 	mov	0x0170000d, a2
 	mov	0x01760009, d0
 	mov	d0, (0x14, sp)
-	jmp	0x486a91d5
+	jmp	func_486A8EAB_entry_L325
 	mov	0x0170008d, a2
-	jmp	0x486a91d5
+	jmp	func_486A8EAB_entry_L325
 	mov	(0x38, sp), a0
 	call	func_486A83EB, 0, 0
 	cmp	0, d0
@@ -337748,22 +341039,219 @@ func_486A8EAB_entry_L116:
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
 func_486A8EAB_entry_L131:
 	mov	0x0170008e, a2
-	jmp	0x486a91d5
+	jmp	func_486A8EAB_entry_L325
 	mov	0x01700090, a2
-	jmp	0x486a91d5
+	jmp	func_486A8EAB_entry_L325
 	movbu	(0x500f03d0), d1
 	mov	0x0170003a, a2
 	cmp	1, d1
 	bne	func_486A8EAB_entry_L156
-	jmp	0x486a91d5
+	jmp	func_486A8EAB_entry_L325
 func_486A8EAB_entry_L156:
 	cmp	3, d1
-	beq	0x486a9019
+	beq	func_486A8EAB_entry_L169
 	mov	0x01700058, a2
 	cmp	5, d1
-	bne	0x486a9027
-	jmp	0x486a91d5
-.incbin_range "baserom/kn2400_program.rom", 0x2a9017, 0x2a9246
+	bne	func_486A8EAB_entry_L177
+	jmp	func_486A8EAB_entry_L325
+# func_486A8EAB_entry + 0x167: no traced path reaches what follows (--decode-gaps)
+	bra	func_486A8EAB_entry_L177
+func_486A8EAB_entry_L169:
+	mov	6, d0
+	movbu	d0, (0x18, sp)
+	mov	0x0170004c, a2
+	jmp	func_486A8EAB_entry_L325
+func_486A8EAB_entry_L177:
+	mov	a3, a2
+	jmp	func_486A8EAB_entry_L325
+	mov	0x01700038, a2
+	jmp	func_486A8EAB_entry_L325
+	mov	0x01700039, a2
+	jmp	func_486A8EAB_entry_L325
+	mov	0x0170003b, a2
+	jmp	func_486A8EAB_entry_L325
+	mov	0x0170003c, a2
+	jmp	func_486A8EAB_entry_L325
+	mov	(0x38, sp), a0
+	call	func_486A83EB, 0, 0
+	cmp	1, d0
+	beq	func_486A8EAB_entry_L1bd
+	mov	(0x38, sp), a0
+	mov	Str_NOTE_8, a1
+	call	strcmp, 0, 0
+	cmp	0, d0
+	bne	func_486A8EAB_entry_L1c1
+func_486A8EAB_entry_L1bd:
+	mov	1, d1
+	bra	func_486A8EAB_entry_L1e6
+func_486A8EAB_entry_L1c1:
+	mov	(0x38, sp), a0
+	mov	Str_SOUND_16, a1
+	call	strcmp, 0, 0
+	cmp	0, d0
+	bne	func_486A8EAB_entry_L1de
+	mov	5, d1
+	mov	0x01700059, a2
+	bra	func_486A8EAB_entry_L1e6
+func_486A8EAB_entry_L1de:
+	mov	3, d1
+	mov	0x0170004d, a2
+func_486A8EAB_entry_L1e6:
+	movbu	(0x500f03d0), d2
+	mov	d1, d0
+	extbu	d0
+	cmp	d0, d2
+	bne	func_486A8EAB_entry_L1f4
+	jmp	func_486A8EAB_entry_L325
+func_486A8EAB_entry_L1f4:
+	movbu	d1, (0x500f03d0)
+	movbu	(0x500f03d0), d0
+	mov	0x00050016, d1
+	mov	d0, (0x10, sp)
+	mov	-1, d0
+	call	ApPostEvent_entry, [d2], 0x1c
+	clr	d0
+	mov	d0, (0x10, sp)
+	mov	2, d0
+	mov	0x68, d1
+	call	func_486A8AA4_entry, 0, 0x14
+	clr	d0
+	mov	d0, (0x10, sp)
+	mov	2, d0
+	mov	0x85, d1
+	call	func_486A8AA4_entry, 0, 0x14
+	jmp	func_486A8EAB_entry_L325
+	movbu	(0x500f03d0), d0
+	mov	0x01700054, a2
+	cmp	4, d0
+	bne	func_486A8EAB_entry_L240
+	jmp	func_486A8EAB_entry_L325
+func_486A8EAB_entry_L240:
+	mov	4, d0
+	movbu	d0, (0x500f03d0)
+	mov	d0, (0x10, sp)
+	mov	-1, d0
+	mov	0x00050016, d1
+	call	ApPostEvent_entry, [d2], 0x1c
+	clr	d0
+	mov	d0, (0x10, sp)
+	mov	2, d0
+	mov	0x68, d1
+	call	func_486A8AA4_entry, 0, 0x14
+	clr	d0
+	mov	d0, (0x10, sp)
+	mov	2, d0
+	mov	0x85, d1
+	call	func_486A8AA4_entry, 0, 0x14
+	jmp	func_486A8EAB_entry_L325
+	mov	0x01700053, a2
+	jmp	func_486A8EAB_entry_L325
+func_486A8EAB_entry_L27e:
+	mov	0x453, d1
+	cmp	d1, d2
+	bge	func_486A8EAB_entry_L287
+	jmp	func_486A8EAB_entry_L325
+func_486A8EAB_entry_L287:
+	cmp	0x474, d2
+	ble	func_486A8EAB_entry_L290
+	jmp	func_486A8EAB_entry_L325
+func_486A8EAB_entry_L290:
+	sub	d1, d2
+	mov	d2, d0
+	asl2	d0
+	mov	0x484a9998, a0
+	mov	(d0, a0), a0
+	jmp	(a0)
+	mov	0x01700064, a2
+	jmp	func_486A8EAB_entry_L325
+	mov	0x01700061, a2
+	bra	func_486A8EAB_entry_L325
+	mov	0x01700076, a2
+	bra	func_486A8EAB_entry_L325
+	mov	0x01700082, a2
+	bra	func_486A8EAB_entry_L325
+	mov	0x01700063, a2
+	bra	func_486A8EAB_entry_L325
+	mov	0x01700060, a2
+	bra	func_486A8EAB_entry_L325
+	mov	0x01700075, a2
+	bra	func_486A8EAB_entry_L325
+	mov	0x01700081, a2
+	bra	func_486A8EAB_entry_L325
+	mov	0x01760009, d0
+	mov	d0, (0x14, sp)
+	mov	0x01700063, a2
+	bra	func_486A8EAB_entry_L325
+	mov	0x01760009, d0
+	mov	d0, (0x14, sp)
+	mov	0x01700060, a2
+	bra	func_486A8EAB_entry_L325
+	mov	0x01760009, d0
+	mov	d0, (0x14, sp)
+	mov	0x01700075, a2
+	bra	func_486A8EAB_entry_L325
+	mov	0x01760009, d0
+	mov	d0, (0x14, sp)
+	mov	0x01700081, a2
+	bra	func_486A8EAB_entry_L325
+	mov	0x0170007d, a2
+func_486A8EAB_entry_L325:
+	cmp	a3, a2
+	bne	func_486A8EAB_entry_L32c
+	clr	d0
+	ret	[d2,d3,a2,a3], 0x2c
+func_486A8EAB_entry_L32c:
+	mov	(0x38, sp), a0
+	call	LibStrlen, 0, 0
+	mov	d0, d3
+	mov	d3, d2
+	extbu	d0
+	cmp	0, d0
+	bne	func_486A8EAB_entry_L33f
+	movbu	(0x18, sp), d2
+func_486A8EAB_entry_L33f:
+	extbu	d2
+	mov	d2, d0
+	inc	d0
+	call	Malloc_entry, [d2,a2,a3], 0x28
+	mov	a0, a3
+	cmp	0, a3
+	beq	func_486A8EAB_entry_L392
+	extbu	d3
+	cmp	0, d3
+	bne	func_486A8EAB_entry_L36a
+	clr	d0
+	mov	d2, a1
+	cmp	0, a1
+	bls	func_486A8EAB_entry_L365
+	mov	a3, a0
+	setlb
+	mov	0x20, d1
+	movbu	d1, (a0)
+	inc	d0
+	inc	a0
+	cmp	a1, d0
+	lcs
+func_486A8EAB_entry_L365:
+	clr	d1
+	movbu	d1, (d0, a3)
+	bra	func_486A8EAB_entry_L374
+func_486A8EAB_entry_L36a:
+	mov	a3, a0
+	mov	(0x38, sp), a1
+	call	strcpy_entry, [a2], 4
+func_486A8EAB_entry_L374:
+	mov	a3, (0x10, sp)
+	mov	a2, d0
+	mov	(0x14, sp), d1
+	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
+	mov	a3, (0x10, sp)
+	mov	-1, d0
+	mov	0x00060023, d1
+	call	ApPostEvent_entry, [d2], 0x1c
+func_486A8EAB_entry_L392:
+	clr	d0
+	ret	[d2,d3,a2,a3], 0x2c
 
 MainCOMP_StepUpdate:
 	add	-0x14, sp
@@ -337811,14 +341299,14 @@ MdMsp_L3a:
 	bne	MdMsp_L45
 	ret	[d2], 0x18
 MdMsp_L45:
-	jmp	0x486a941e
+	jmp	MdMsp_L1ab
 MdMsp_L48:
 	mov	(0x28, sp), a0
 	cmp	0, a0
 	beq	MdMsp_L55
 	cmp	1, a0
 	beq	MdMsp_L72
-	jmp	0x486a941e
+	jmp	MdMsp_L1ab
 MdMsp_L55:
 	mov	2, d0
 	call	func_486A5F2C, 0, 0
@@ -337826,7 +341314,7 @@ MdMsp_L55:
 	movbu	d0, (0x500f03b0)
 	movbu	d0, (0x500f03b2)
 	movbu	d0, (0x500f03bc)
-	jmp	0x486a941e
+	jmp	MdMsp_L1ab
 MdMsp_L72:
 	mov	2, d1
 	mov	d1, (0x10, sp)
@@ -337837,12 +341325,12 @@ MdMsp_L72:
 	extbu	d0
 	cmp	0, d0
 	bne	MdMsp_L90
-	jmp	0x486a941e
+	jmp	MdMsp_L1ab
 MdMsp_L90:
 	mov	3, d0
 	mov	0x24, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
-	jmp	0x486a941e
+	jmp	MdMsp_L1ab
 MdMsp_L9e:
 	movhu	(data_48549C02), d0
 	mov	d0, (0x500f03ac)
@@ -337856,15 +341344,15 @@ MdMsp_L9e:
 	mov	d0, (0x500f03b8)
 	mov	d0, (0x50052d6c)
 	mov	d0, (0x50052d70)
-	jmp	0x486a941e
+	jmp	MdMsp_L1ab
 MdMsp_Le4:
 	mov	(0x28, sp), d0
 	mov	d0, (0x50052d6c)
-	jmp	0x486a941e
+	jmp	MdMsp_L1ab
 MdMsp_Lef:
 	mov	(0x28, sp), d0
 	mov	d0, (0x50052d70)
-	jmp	0x486a941e
+	jmp	MdMsp_L1ab
 MdMsp_Lfa:
 	mov	(0x50052d6c), d0
 	cmp	0, d0
@@ -337893,16 +341381,16 @@ MdMsp_L150:
 	mov	(0x500f03b8), d0
 	mov	(0x28, sp), a0
 	cmp	0, d0
-	beq	0x486a941e
+	beq	MdMsp_L1ab
 	mov	(a0), d0
 	and	0x00ffffff, d0
 	cmp	0x702020, d0
-	bne	0x486a941e
+	bne	MdMsp_L1ab
 	mov	(4, a0), d0
 	and	0xff, d0
 	extbu	d0
 	cmp	1, d0
-	bne	0x486a941e
+	bne	MdMsp_L1ab
 	call	func_501825AE, 0, 0
 	exthu	d0
 	cmp	0, d0
@@ -337914,11 +341402,16 @@ MdMsp_L150:
 	mov	0x500f03c4, a0
 	call	func_4860EE33_entry, [d2,d3,a2], 0x1c
 	call	func_486A95FE_entry, 0, 0x10
-	bra	0x486a941e
+	bra	MdMsp_L1ab
 MdMsp_L1a2:
 	call	func_486A9661_entry, 0, 0x10
-	bra	0x486a941e
-.incbin_range "baserom/kn2400_program.rom", 0x2a941c, 0x2a9422
+	bra	MdMsp_L1ab
+# MdMsp + 0x1a9: no traced path reaches what follows (--decode-gaps)
+	bra	MdMsp_L1ac
+MdMsp_L1ab:
+	clr	d0
+MdMsp_L1ac:
+	ret	[d2], 0x18
 
 TtMspMenu:
 	add	-0x10, sp
@@ -343177,22 +346670,27 @@ MdSndArg:
 	cmp	0x600d2, d1
 	beq	MdSndArg_L28
 	cmp	0x5000b, d1
-	beq	0x486ac96e
+	beq	MdSndArg_L43
 	cmp	0x600b5, d1
-	beq	0x486ac96e
+	beq	MdSndArg_L43
 	cmp	0x50000, d1
-	beq	0x486ac96f
-	bra	0x486ac96e
+	beq	MdSndArg_L44
+	bra	MdSndArg_L43
 MdSndArg_L28:
 	call	func_5017D125, 0, 0x10
 	cmp	d2, d0
-	bge	0x486ac96e
+	bge	MdSndArg_L43
 	mov	3, d0
 	mov	0x51, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
 	mov	1, d2
-	bra	0x486ac96e
-.incbin_range "baserom/kn2400_program.rom", 0x2ac96c, 0x2ac972
+	bra	MdSndArg_L43
+# MdSndArg + 0x41: no traced path reaches what follows (--decode-gaps)
+	bra	MdSndArg_L44
+MdSndArg_L43:
+	mov	d2, d0
+MdSndArg_L44:
+	ret	[d2], 0x14
 
 TtSndArg:
 	movm	[d2,a2], (sp)
@@ -343207,7 +346705,7 @@ TtSndArg:
 	bne	TtSndArg_L28
 	ret	[d2,a2], 0x28
 TtSndArg_L28:
-	jmp	0x486acc02
+	jmp	TtSndArg_L290
 TtSndArg_L2b:
 	call	func_5017D125, 0, 0x10
 	cmp	0, d0
@@ -343388,7 +346886,7 @@ TtSndArg_L1f8:
 	call	func_5017D3D9_entry, [d2,d3], 0x1c
 TtSndArg_L236:
 	clr	d0
-	bra	0x486acc03
+	bra	TtSndArg_L291
 TtSndArg_L239:
 	mov	9, d0
 	mov	d0, (0x10, sp)
@@ -343416,8 +346914,13 @@ TtSndArg_L239:
 	clr	d1
 	call	func_5015E7E7_entry, [d2,d3], 8
 	clr	d0
-	bra	0x486acc03
-.incbin_range "baserom/kn2400_program.rom", 0x2acc00, 0x2acc06
+	bra	TtSndArg_L291
+# TtSndArg + 0x28e: no traced path reaches what follows (--decode-gaps)
+	bra	TtSndArg_L291
+TtSndArg_L290:
+	clr	d0
+TtSndArg_L291:
+	ret	[d2,a2], 0x28
 
 InitializeBlock09:
 	movm	[d2,d3,a2,a3], (sp)
@@ -344327,7 +347830,7 @@ FE_CmpRecMeas_entry_L3e:
 	bne	FE_CmpRecMeas_entry_L49
 	ret	0, 0x14
 FE_CmpRecMeas_entry_L49:
-	jmp	0x486ad7b6
+	jmp	FE_CmpRecMeas_entry_Lde
 FE_CmpRecMeas_entry_L4c:
 	call	func_50179C83, 0, 0xc
 	movbu	d0, (0x50053e64)
@@ -344348,7 +347851,7 @@ FE_CmpRecMeas_entry_L5d:
 	call	SendEvent_entry, [d2,d3], 0x24
 FE_CmpRecMeas_entry_L87:
 	clr	d0
-	bra	0x486ad7b7
+	bra	FE_CmpRecMeas_entry_Ldf
 FE_CmpRecMeas_entry_L8a:
 	movbu	(0x50053e64), d0
 	cmp	1, d0
@@ -344362,7 +347865,7 @@ FE_CmpRecMeas_entry_L8a:
 	call	SendEvent_entry, [d2,d3], 0x24
 FE_CmpRecMeas_entry_Lb3:
 	clr	d0
-	bra	0x486ad7b7
+	bra	FE_CmpRecMeas_entry_Ldf
 FE_CmpRecMeas_entry_Lb6:
 	mov	(0x24, sp), a0
 	mov	Str_2d_36, d0
@@ -344372,11 +347875,16 @@ FE_CmpRecMeas_entry_Lb6:
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	0x486ad7b7
+	bra	FE_CmpRecMeas_entry_Ldf
 FE_CmpRecMeas_entry_Ld4:
 	movbu	(0x50053e64), d0
-	bra	0x486ad7b7
-.incbin_range "baserom/kn2400_program.rom", 0x2ad7b4, 0x2ad7ba
+	bra	FE_CmpRecMeas_entry_Ldf
+# FE_CmpRecMeas_entry + 0xdc: no traced path reaches what follows (--decode-gaps)
+	bra	FE_CmpRecMeas_entry_Ldf
+FE_CmpRecMeas_entry_Lde:
+	clr	d0
+FE_CmpRecMeas_entry_Ldf:
+	ret	0, 0x14
 
 FE_CmpRecTS:
 	movm	[d2,d3], (sp)
@@ -345175,7 +348683,7 @@ FE_CmpRecSetKey_L3e:
 	bne	FE_CmpRecSetKey_L49
 	ret	[d2], 0x18
 FE_CmpRecSetKey_L49:
-	jmp	0x486ae086
+	jmp	FE_CmpRecSetKey_L12e
 FE_CmpRecSetKey_L4c:
 	clr	d0
 	ret	[d2], 0x18
@@ -345248,7 +348756,7 @@ FE_CmpRecSetKey_Lae:
 	call	SendEvent_entry, [d2,d3], 0x24
 FE_CmpRecSetKey_L109:
 	clr	d0
-	bra	0x486ae087
+	bra	FE_CmpRecSetKey_L12f
 FE_CmpRecSetKey_L10c:
 	call	func_50179C29_entry, [d2], 0x10
 	mov	(0x28, sp), a0
@@ -345259,8 +348767,13 @@ FE_CmpRecSetKey_L10c:
 	mov	(d0, a1), a1
 	call	strcpy_entry, [a2], 4
 	clr	d0
-	bra	0x486ae087
-.incbin_range "baserom/kn2400_program.rom", 0x2ae084, 0x2ae08a
+	bra	FE_CmpRecSetKey_L12f
+# FE_CmpRecSetKey + 0x12c: no traced path reaches what follows (--decode-gaps)
+	bra	FE_CmpRecSetKey_L12f
+FE_CmpRecSetKey_L12e:
+	clr	d0
+FE_CmpRecSetKey_L12f:
+	ret	[d2], 0x18
 
 FE_CmpRecSetChord:
 	movm	[d2,a2], (sp)
@@ -345287,7 +348800,7 @@ FE_CmpRecSetChord_L3e:
 	bne	FE_CmpRecSetChord_L49
 	ret	[d2,a2], 0x1c
 FE_CmpRecSetChord_L49:
-	jmp	0x486ae1da
+	jmp	FE_CmpRecSetChord_L150
 FE_CmpRecSetChord_L4c:
 	clr	d0
 	ret	[d2,a2], 0x1c
@@ -345348,7 +348861,7 @@ FE_CmpRecSetChord_Lf5:
 	call	SendEvent_entry, [d2,d3], 0x24
 FE_CmpRecSetChord_L10b:
 	clr	d0
-	bra	0x486ae1db
+	bra	FE_CmpRecSetChord_L151
 FE_CmpRecSetChord_L10e:
 	movbu	(0x500f03a0), d0
 	cmp	0xc, d0
@@ -345369,8 +348882,13 @@ FE_CmpRecSetChord_L13c:
 	call	strcpy_entry, [a2], 4
 FE_CmpRecSetChord_L14b:
 	clr	d0
-	bra	0x486ae1db
-.incbin_range "baserom/kn2400_program.rom", 0x2ae1d8, 0x2ae1de
+	bra	FE_CmpRecSetChord_L151
+# FE_CmpRecSetChord + 0x14e: no traced path reaches what follows (--decode-gaps)
+	bra	FE_CmpRecSetChord_L151
+FE_CmpRecSetChord_L150:
+	clr	d0
+FE_CmpRecSetChord_L151:
+	ret	[d2,a2], 0x1c
 
 CmpRecSoloFunc:
 	add	-0xc, sp
@@ -345962,7 +349480,7 @@ FuncEdit_rhyDstName_L30:
 	bne	FuncEdit_rhyDstName_L3b
 	ret	[a2], 0x3c
 FuncEdit_rhyDstName_L3b:
-	jmp	0x486ae854
+	jmp	FuncEdit_rhyDstName_L101
 FuncEdit_rhyDstName_L3e:
 	movbu	(0x500f043c), d1
 	mov	d1, d0
@@ -346002,7 +349520,7 @@ FuncEdit_rhyDstName_L86:
 	call	SendEvent_entry, [d2,d3], 0x24
 FuncEdit_rhyDstName_Lc9:
 	clr	d0
-	bra	0x486ae855
+	bra	FuncEdit_rhyDstName_L102
 FuncEdit_rhyDstName_Lcc:
 	mov	sp, a2
 	add	0x18, a2
@@ -346019,8 +349537,13 @@ FuncEdit_rhyDstName_Lcc:
 	mov	a2, (0x14, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	0x486ae855
-.incbin_range "baserom/kn2400_program.rom", 0x2ae852, 0x2ae858
+	bra	FuncEdit_rhyDstName_L102
+# FuncEdit_rhyDstName + 0xff: no traced path reaches what follows (--decode-gaps)
+	bra	FuncEdit_rhyDstName_L102
+FuncEdit_rhyDstName_L101:
+	clr	d0
+FuncEdit_rhyDstName_L102:
+	ret	[a2], 0x3c
 
 FuncEdit_rhyDstPattern:
 	movm	[d2,a2], (sp)
@@ -346051,7 +349574,7 @@ FuncEdit_rhyDstPattern_L44:
 	bne	FuncEdit_rhyDstPattern_L4f
 	ret	[d2,a2], 0x3c
 FuncEdit_rhyDstPattern_L4f:
-	jmp	0x486aea7e
+	jmp	FuncEdit_rhyDstPattern_L226
 FuncEdit_rhyDstPattern_L52:
 	movbu	(data_50003AF4), d0
 	movbu	(0x500f043b), d2
@@ -346167,7 +349690,7 @@ FuncEdit_rhyDstPattern_L193:
 	mov	0x000600b4, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	0x486aea7f
+	bra	FuncEdit_rhyDstPattern_L227
 FuncEdit_rhyDstPattern_L1c3:
 	movbu	(data_50003AF4), d0
 	movbu	(0x500f043b), d1
@@ -346200,8 +349723,13 @@ FuncEdit_rhyDstPattern_L1fb:
 	mov	a2, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	0x486aea7f
-.incbin_range "baserom/kn2400_program.rom", 0x2aea7c, 0x2aea82
+	bra	FuncEdit_rhyDstPattern_L227
+# FuncEdit_rhyDstPattern + 0x224: no traced path reaches what follows (--decode-gaps)
+	bra	FuncEdit_rhyDstPattern_L227
+FuncEdit_rhyDstPattern_L226:
+	clr	d0
+FuncEdit_rhyDstPattern_L227:
+	ret	[d2,a2], 0x3c
 
 FuncEdit_rhyDstPart2:
 	movm	[d2,d3], (sp)
@@ -346413,7 +349941,7 @@ FuncEdit_rhyName_L4f:
 	bne	FuncEdit_rhyName_L5a
 	ret	[d2,d3,a2], 0x54
 FuncEdit_rhyName_L5a:
-	jmp	0x486aee96
+	jmp	FuncEdit_rhyName_L211
 FuncEdit_rhyName_L5d:
 	mov	(0x64, sp), a0
 	mov	(a0), d0
@@ -346548,8 +350076,13 @@ FuncEdit_rhyName_L200:
 	mov	(0x500f0434), d0
 	mov	d0, (0x50053e6c)
 	clr	d0
-	bra	0x486aee97
-.incbin_range "baserom/kn2400_program.rom", 0x2aee94, 0x2aee9a
+	bra	FuncEdit_rhyName_L212
+# FuncEdit_rhyName + 0x20f: no traced path reaches what follows (--decode-gaps)
+	bra	FuncEdit_rhyName_L212
+FuncEdit_rhyName_L211:
+	clr	d0
+FuncEdit_rhyName_L212:
+	ret	[d2,d3,a2], 0x54
 
 FuncEdit_rhyPattern:
 	movm	[d2,a2], (sp)
@@ -346580,7 +350113,7 @@ FuncEdit_rhyPattern_L44:
 	bne	FuncEdit_rhyPattern_L4f
 	ret	[d2,a2], 0x4c
 FuncEdit_rhyPattern_L4f:
-	jmp	0x486af0eb
+	jmp	FuncEdit_rhyPattern_L251
 FuncEdit_rhyPattern_L52:
 	movbu	(data_50003AFC), d0
 	movbu	(0x500f0438), d2
@@ -346740,8 +350273,13 @@ FuncEdit_rhyPattern_L226:
 	mov	a2, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	0x486af0ec
-.incbin_range "baserom/kn2400_program.rom", 0x2af0e9, 0x2af0ef
+	bra	FuncEdit_rhyPattern_L252
+# FuncEdit_rhyPattern + 0x24f: no traced path reaches what follows (--decode-gaps)
+	bra	FuncEdit_rhyPattern_L252
+FuncEdit_rhyPattern_L251:
+	clr	d0
+FuncEdit_rhyPattern_L252:
+	ret	[d2,a2], 0x4c
 
 FuncEdit_rhyGroup:
 	movm	[d2,d3,a2], (sp)
@@ -346776,7 +350314,7 @@ FuncEdit_rhyGroup_L4f:
 	bne	FuncEdit_rhyGroup_L5a
 	ret	[d2,d3,a2], 0x48
 FuncEdit_rhyGroup_L5a:
-	jmp	0x486af3dd
+	jmp	FuncEdit_rhyGroup_L2ee
 FuncEdit_rhyGroup_L5d:
 	mov	(0x58, sp), a0
 	mov	(a0), d0
@@ -346964,7 +350502,7 @@ FuncEdit_rhyGroup_L294:
 	mov	0x0000c000, d1
 	call	MainFuncCall_entry, [d2,d3,a2], 0x24
 	clr	d0
-	bra	0x486af3de
+	bra	FuncEdit_rhyGroup_L2ef
 FuncEdit_rhyGroup_L2b7:
 	mov	sp, a2
 	add	0x1c, a2
@@ -346980,8 +350518,13 @@ FuncEdit_rhyGroup_L2b7:
 	movbu	(0x500f043a), d0
 	movbu	d0, (0x50053e70)
 	clr	d0
-	bra	0x486af3de
-.incbin_range "baserom/kn2400_program.rom", 0x2af3db, 0x2af3e1
+	bra	FuncEdit_rhyGroup_L2ef
+# FuncEdit_rhyGroup + 0x2ec: no traced path reaches what follows (--decode-gaps)
+	bra	FuncEdit_rhyGroup_L2ef
+FuncEdit_rhyGroup_L2ee:
+	clr	d0
+FuncEdit_rhyGroup_L2ef:
+	ret	[d2,d3,a2], 0x48
 
 FuncEdit_rhyName2:
 	movm	[d2,a2], (sp)
@@ -347004,7 +350547,7 @@ FuncEdit_rhyName2_L38:
 	bne	FuncEdit_rhyName2_L43
 	ret	[d2,a2], 0x44
 FuncEdit_rhyName2_L43:
-	jmp	0x486af50b
+	jmp	FuncEdit_rhyName2_L12a
 FuncEdit_rhyName2_L46:
 	clr	d0
 	ret	[d2,a2], 0x44
@@ -347081,8 +350624,13 @@ FuncEdit_rhyName2_L110:
 	call	sprintf_entry, [a2], 0x20
 FuncEdit_rhyName2_L125:
 	clr	d0
-	bra	0x486af50c
-.incbin_range "baserom/kn2400_program.rom", 0x2af509, 0x2af50f
+	bra	FuncEdit_rhyName2_L12b
+# FuncEdit_rhyName2 + 0x128: no traced path reaches what follows (--decode-gaps)
+	bra	FuncEdit_rhyName2_L12b
+FuncEdit_rhyName2_L12a:
+	clr	d0
+FuncEdit_rhyName2_L12b:
+	ret	[d2,a2], 0x44
 
 FuncEdit_rhyPattern2:
 	movm	[a2], (sp)
@@ -347105,7 +350653,7 @@ FuncEdit_rhyPattern2_L38:
 	bne	FuncEdit_rhyPattern2_L43
 	ret	[a2], 0x38
 FuncEdit_rhyPattern2_L43:
-	jmp	0x486af617
+	jmp	FuncEdit_rhyPattern2_L108
 FuncEdit_rhyPattern2_L46:
 	clr	d0
 	ret	[a2], 0x38
@@ -347146,7 +350694,7 @@ FuncEdit_rhyPattern2_Lba:
 	mov	0x000600b4, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	0x486af618
+	bra	FuncEdit_rhyPattern2_L109
 FuncEdit_rhyPattern2_Ld4:
 	movbu	(data_50003AEC), d0
 	mov	data_484B2C10, a0
@@ -347163,8 +350711,13 @@ FuncEdit_rhyPattern2_Ld4:
 	mov	a2, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	0x486af618
-.incbin_range "baserom/kn2400_program.rom", 0x2af615, 0x2af61b
+	bra	FuncEdit_rhyPattern2_L109
+# FuncEdit_rhyPattern2 + 0x106: no traced path reaches what follows (--decode-gaps)
+	bra	FuncEdit_rhyPattern2_L109
+FuncEdit_rhyPattern2_L108:
+	clr	d0
+FuncEdit_rhyPattern2_L109:
+	ret	[a2], 0x38
 
 FuncEdit_rhyPart2:
 	movm	[d2,d3], (sp)
@@ -347405,7 +350958,7 @@ FuncEdit_rhyGroup2_L3e:
 	bne	FuncEdit_rhyGroup2_L49
 	ret	[d2,a2], 0x40
 FuncEdit_rhyGroup2_L49:
-	jmp	0x486afa18
+	jmp	FuncEdit_rhyGroup2_L17b
 FuncEdit_rhyGroup2_L4c:
 	call	func_486AF81E_entry, 0, 0x14
 	clr	d0
@@ -347487,7 +351040,7 @@ FuncEdit_rhyGroup2_L119:
 	mov	0x000600b4, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	0x486afa19
+	bra	FuncEdit_rhyGroup2_L17c
 FuncEdit_rhyGroup2_L14f:
 	movhu	(data_50003AE8), d0
 	mov	sp, a2
@@ -347502,8 +351055,13 @@ FuncEdit_rhyGroup2_L14f:
 	mov	a2, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	0x486afa19
-.incbin_range "baserom/kn2400_program.rom", 0x2afa16, 0x2afa1c
+	bra	FuncEdit_rhyGroup2_L17c
+# FuncEdit_rhyGroup2 + 0x179: no traced path reaches what follows (--decode-gaps)
+	bra	FuncEdit_rhyGroup2_L17c
+FuncEdit_rhyGroup2_L17b:
+	clr	d0
+FuncEdit_rhyGroup2_L17c:
+	ret	[d2,a2], 0x40
 
 func_486AFA1C:
 	movm	[d2], (sp)
@@ -348021,7 +351579,22 @@ CmpPartCopyOk_L192:
 	clr	d0
 CmpPartCopyOk_L193:
 	ret	[d2,d3,a2,a3], 0x34
-.incbin_range "baserom/kn2400_program.rom", 0x2affd6, 0x2afff3
+# CmpPartCopyOk + 0x196: no traced path reaches what follows (--decode-gaps)
+	extbu	d0
+	mov	0x500f0428, a0
+	setlb
+	movbu	(a0), d1
+	cmp	d0, d1
+	beq	CmpPartCopyOk_L1a6
+	clr	d0
+	bra	CmpPartCopyOk_L1b0
+CmpPartCopyOk_L1a6:
+	inc	a0
+	cmp	0x500f0430, a0
+	lcs
+	mov	1, d0
+CmpPartCopyOk_L1b0:
+	retf	0, 0
 
 func_486AFFF3:
 	extbu	d0
@@ -348179,9 +351752,9 @@ SeqToCmpCopyGrid_L31:
 SeqToCmpCopyGrid_L3c:
 	cmp	0x960001, d1
 	bne	SeqToCmpCopyGrid_L47
-	jmp	0x486b029b
+	jmp	SeqToCmpCopyGrid_L163
 SeqToCmpCopyGrid_L47:
-	jmp	0x486b02a3
+	jmp	SeqToCmpCopyGrid_L16b
 SeqToCmpCopyGrid_L4a:
 	mov	2, d2
 SeqToCmpCopyGrid_L4c:
@@ -348218,13 +351791,13 @@ SeqToCmpCopyGrid_L8b:
 	add	-2, d1
 	cmp	8, d1
 	bcs	SeqToCmpCopyGrid_L98
-	jmp	0x486b02a7
+	jmp	SeqToCmpCopyGrid_L16f
 SeqToCmpCopyGrid_L98:
 	movhu	(0x14, sp), d0
 	exth	d0
 	cmp	1, d0
 	beq	SeqToCmpCopyGrid_La3
-	jmp	0x486b02a7
+	jmp	SeqToCmpCopyGrid_L16f
 SeqToCmpCopyGrid_La3:
 	mov	d1, a0
 	add	data_50003B10, a0
@@ -348234,11 +351807,11 @@ SeqToCmpCopyGrid_La3:
 	add	d3, d0
 	cmp	0, d0
 	bcc	SeqToCmpCopyGrid_Lb7
-	jmp	0x486b02a7
+	jmp	SeqToCmpCopyGrid_L16f
 SeqToCmpCopyGrid_Lb7:
 	cmp	0x10, d0
 	bls	SeqToCmpCopyGrid_Lbe
-	jmp	0x486b02a7
+	jmp	SeqToCmpCopyGrid_L16f
 SeqToCmpCopyGrid_Lbe:
 	movbu	d0, (a0)
 	call	GetFocusObject_entry, 0, 0x10
@@ -348251,7 +351824,7 @@ SeqToCmpCopyGrid_Lbe:
 	mov	d2, (0x10, sp)
 	mov	0x00060081, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	0x486b02a7
+	jmp	SeqToCmpCopyGrid_L16f
 SeqToCmpCopyGrid_Le5:
 	mov	(0x58, sp), d1
 	mov	(0x58, sp), d0
@@ -348268,11 +351841,11 @@ SeqToCmpCopyGrid_Le5:
 	exth	d1
 	add	-2, d1
 	cmp	8, d1
-	bcc	0x486b02a7
+	bcc	SeqToCmpCopyGrid_L16f
 	movhu	(0x14, sp), d0
 	exth	d0
 	cmp	1, d0
-	bne	0x486b02a7
+	bne	SeqToCmpCopyGrid_L16f
 	mov	d1, a0
 	add	data_50003B10, a0
 	movbu	(a0), d0
@@ -348297,8 +351870,19 @@ SeqToCmpCopyGrid_L149:
 	mov	a2, (0x10, sp)
 	mov	0x00060080, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	0x486b02a7
-.incbin_range "baserom/kn2400_program.rom", 0x2b0299, 0x2b02ab
+	bra	SeqToCmpCopyGrid_L16f
+# SeqToCmpCopyGrid + 0x161: no traced path reaches what follows (--decode-gaps)
+	bra	SeqToCmpCopyGrid_L170
+SeqToCmpCopyGrid_L163:
+	mov	data_50003B10, d0
+	bra	SeqToCmpCopyGrid_L170
+SeqToCmpCopyGrid_L16b:
+	mov	-1, d0
+	bra	SeqToCmpCopyGrid_L170
+SeqToCmpCopyGrid_L16f:
+	clr	d0
+SeqToCmpCopyGrid_L170:
+	ret	[d2,d3,a2], 0x48
 
 FE_SeqToCmpFstMeas:
 	movm	[d2,d3], (sp)
@@ -349167,7 +352751,7 @@ EasyCompGrid_L39:
 	bne	EasyCompGrid_L44
 	ret	[d2,d3,a2,a3], 0x50
 EasyCompGrid_L44:
-	jmp	0x486b0db2
+	jmp	EasyCompGrid_L284
 EasyCompGrid_L47:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x50
@@ -349209,7 +352793,7 @@ EasyCompGrid_L8f:
 	bne	EasyCompGrid_La3
 	jmp	EasyCompGrid_L12c
 EasyCompGrid_La3:
-	jmp	0x486b0db6
+	jmp	EasyCompGrid_L288
 EasyCompGrid_La6:
 	movhu	(0x1a, sp), d1
 	movhu	(data_4854B74C), d3
@@ -349228,11 +352812,11 @@ EasyCompGrid_La6:
 	add	d2, d0
 	cmp	0, d0
 	bge	EasyCompGrid_Ld0
-	jmp	0x486b0db6
+	jmp	EasyCompGrid_L288
 EasyCompGrid_Ld0:
 	cmp	d3, d0
 	ble	EasyCompGrid_Ld6
-	jmp	0x486b0db6
+	jmp	EasyCompGrid_L288
 EasyCompGrid_Ld6:
 	mov	a2, a0
 	add	a0, a0
@@ -349257,7 +352841,7 @@ EasyCompGrid_Ld6:
 	mov	d1, (0x10, sp)
 	mov	0x00060081, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	0x486b0db6
+	jmp	EasyCompGrid_L288
 EasyCompGrid_L12c:
 	movhu	(0x1a, sp), d0
 	mov	0x500f03d4, a1
@@ -349301,11 +352885,11 @@ EasyCompGrid_L177:
 	add	d2, d1
 	cmp	d1, d3
 	ble	EasyCompGrid_L182
-	jmp	0x486b0db6
+	jmp	EasyCompGrid_L288
 EasyCompGrid_L182:
 	cmp	d0, d1
 	ble	EasyCompGrid_L188
-	jmp	0x486b0db6
+	jmp	EasyCompGrid_L288
 EasyCompGrid_L188:
 	mov	0x0000ffff, d2
 	cmp	0, d1
@@ -349322,7 +352906,7 @@ EasyCompGrid_L193:
 	mov	d1, (0x10, sp)
 	mov	0x00060081, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	0x486b0db6
+	jmp	EasyCompGrid_L288
 EasyCompGrid_L1bb:
 	mov	(0x60, sp), d0
 	mov	(0x60, sp), d1
@@ -349405,8 +352989,16 @@ EasyCompGrid_L26a:
 	mov	a3, (0x10, sp)
 	mov	0x00060080, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	0x486b0db6
-.incbin_range "baserom/kn2400_program.rom", 0x2b0db0, 0x2b0dba
+	bra	EasyCompGrid_L288
+# EasyCompGrid + 0x282: no traced path reaches what follows (--decode-gaps)
+	bra	EasyCompGrid_L289
+EasyCompGrid_L284:
+	mov	-1, d0
+	bra	EasyCompGrid_L289
+EasyCompGrid_L288:
+	clr	d0
+EasyCompGrid_L289:
+	ret	[d2,d3,a2,a3], 0x50
 
 FE_EasyCompMem:
 	movm	[d2,a2,a3], (sp)
@@ -349429,7 +353021,7 @@ FE_EasyCompMem_L38:
 	bne	FE_EasyCompMem_L43
 	ret	[d2,a2,a3], 0x20
 FE_EasyCompMem_L43:
-	jmp	0x486b0eec
+	jmp	FE_EasyCompMem_L132
 FE_EasyCompMem_L46:
 	movbu	(data_50006D98), d0
 	mov	d0, d1
@@ -349501,11 +353093,16 @@ FE_EasyCompMem_La4:
 	mov	d1, a0
 	call	func_486A40F0_entry, 0, 0x10
 	clr	d0
-	bra	0x486b0eed
+	bra	FE_EasyCompMem_L133
 FE_EasyCompMem_L128:
 	movbu	(data_50006D98), d0
-	bra	0x486b0eed
-.incbin_range "baserom/kn2400_program.rom", 0x2b0eea, 0x2b0ef0
+	bra	FE_EasyCompMem_L133
+# FE_EasyCompMem + 0x130: no traced path reaches what follows (--decode-gaps)
+	bra	FE_EasyCompMem_L133
+FE_EasyCompMem_L132:
+	clr	d0
+FE_EasyCompMem_L133:
+	ret	[d2,a2,a3], 0x20
 
 CmpEasyCompSet:
 	add	-0x14, sp
@@ -349602,7 +353199,7 @@ CmpRecPtChdGrid_L31:
 	bne	CmpRecPtChdGrid_L3c
 	ret	[d2,a2,a3], 0x48
 CmpRecPtChdGrid_L3c:
-	jmp	0x486b13db
+	jmp	CmpRecPtChdGrid_L41d
 CmpRecPtChdGrid_L3f:
 	mov	2, d2
 CmpRecPtChdGrid_L41:
@@ -349646,12 +353243,12 @@ CmpRecPtChdGrid_L8f:
 	bne	CmpRecPtChdGrid_L96
 	jmp	CmpRecPtChdGrid_L23d
 CmpRecPtChdGrid_L96:
-	jmp	0x486b13df
+	jmp	CmpRecPtChdGrid_L421
 CmpRecPtChdGrid_L99:
 	movbu	(0x500f03a0), d0
 	cmp	0xc, d0
 	blt	CmpRecPtChdGrid_La6
-	jmp	0x486b13df
+	jmp	CmpRecPtChdGrid_L421
 CmpRecPtChdGrid_La6:
 	movhu	(0x16, sp), d0
 	extb	d2
@@ -349664,7 +353261,7 @@ CmpRecPtChdGrid_La6:
 	add	d2, d0
 	cmp	0, d0
 	bge	CmpRecPtChdGrid_Lc0
-	jmp	0x486b13df
+	jmp	CmpRecPtChdGrid_L421
 CmpRecPtChdGrid_Lc0:
 	movbu	(a0), d0
 	mov	0xc, d1
@@ -349677,7 +353274,7 @@ CmpRecPtChdGrid_Lc0:
 	mov	(d0, a1), d0
 	cmp	0, d0
 	bne	CmpRecPtChdGrid_Ld9
-	jmp	0x486b13df
+	jmp	CmpRecPtChdGrid_L421
 CmpRecPtChdGrid_Ld9:
 	movbu	(a0), d0
 	clr	d1
@@ -349716,12 +353313,12 @@ CmpRecPtChdGrid_Ld9:
 	mov	d1, (0x10, sp)
 	mov	0x00060081, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	0x486b13df
+	jmp	CmpRecPtChdGrid_L421
 CmpRecPtChdGrid_L161:
 	movbu	(0x500f03a0), d0
 	cmp	0xc, d0
 	blt	CmpRecPtChdGrid_L16e
-	jmp	0x486b13df
+	jmp	CmpRecPtChdGrid_L421
 CmpRecPtChdGrid_L16e:
 	movhu	(0x16, sp), d0
 	extb	d2
@@ -349739,12 +353336,12 @@ CmpRecPtChdGrid_L16e:
 	add	d2, d0
 	cmp	0, d0
 	bge	CmpRecPtChdGrid_L196
-	jmp	0x486b13df
+	jmp	CmpRecPtChdGrid_L421
 CmpRecPtChdGrid_L196:
 	extb	d1
 	cmp	0, d1
 	bge	CmpRecPtChdGrid_L19e
-	jmp	0x486b13df
+	jmp	CmpRecPtChdGrid_L421
 CmpRecPtChdGrid_L19e:
 	mov	0xc, d0
 	nop
@@ -349762,7 +353359,7 @@ CmpRecPtChdGrid_L19e:
 	mov	(4, a0), a0
 	cmp	0, a0
 	bne	CmpRecPtChdGrid_L1c4
-	jmp	0x486b13df
+	jmp	CmpRecPtChdGrid_L421
 CmpRecPtChdGrid_L1c4:
 	movbu	(a1), d0
 	mov	1, d1
@@ -349795,12 +353392,12 @@ CmpRecPtChdGrid_L1c4:
 	mov	d1, (0x10, sp)
 	mov	0x00060081, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	0x486b13df
+	jmp	CmpRecPtChdGrid_L421
 CmpRecPtChdGrid_L23d:
 	movbu	(0x500f03a0), d0
 	cmp	0xc, d0
 	blt	CmpRecPtChdGrid_L24a
-	jmp	0x486b13df
+	jmp	CmpRecPtChdGrid_L421
 CmpRecPtChdGrid_L24a:
 	movhu	(0x16, sp), d1
 	extb	d2
@@ -349813,14 +353410,14 @@ CmpRecPtChdGrid_L24a:
 	add	d2, d0
 	cmp	0, d0
 	bge	CmpRecPtChdGrid_L264
-	jmp	0x486b13df
+	jmp	CmpRecPtChdGrid_L421
 CmpRecPtChdGrid_L264:
 	movbu	(a0), d0
 	extb	d0
 	add	d2, d0
 	cmp	1, d0
 	ble	CmpRecPtChdGrid_L26f
-	jmp	0x486b13df
+	jmp	CmpRecPtChdGrid_L421
 CmpRecPtChdGrid_L26f:
 	movbu	(a0), d0
 	extb	d0
@@ -349833,7 +353430,7 @@ CmpRecPtChdGrid_L26f:
 	mov	d1, (0x10, sp)
 	mov	0x00060081, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	0x486b13df
+	jmp	CmpRecPtChdGrid_L421
 CmpRecPtChdGrid_L298:
 	mov	(0x58, sp), d0
 	mov	(0x58, sp), d1
@@ -349979,8 +353576,16 @@ CmpRecPtChdGrid_L403:
 	mov	a3, (0x10, sp)
 	mov	0x00060080, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	0x486b13df
-.incbin_range "baserom/kn2400_program.rom", 0x2b13d9, 0x2b13e3
+	bra	CmpRecPtChdGrid_L421
+# CmpRecPtChdGrid + 0x41b: no traced path reaches what follows (--decode-gaps)
+	bra	CmpRecPtChdGrid_L422
+CmpRecPtChdGrid_L41d:
+	mov	-1, d0
+	bra	CmpRecPtChdGrid_L422
+CmpRecPtChdGrid_L421:
+	clr	d0
+CmpRecPtChdGrid_L422:
+	ret	[d2,a2,a3], 0x48
 
 CmpPtChdOK:
 	movm	[d2,d3,a2,a3], (sp)
@@ -350074,7 +353679,7 @@ CmpPartSetGrid1_L50:
 	bne	CmpPartSetGrid1_L5b
 	ret	[d2,d3,a2,a3], 0x5c
 CmpPartSetGrid1_L5b:
-	jmp	0x486b194c
+	jmp	CmpPartSetGrid1_L4df
 CmpPartSetGrid1_L5e:
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
@@ -350099,7 +353704,7 @@ CmpPartSetGrid1_L5e:
 	extbu	d2
 	cmp	d2, d1
 	bne	CmpPartSetGrid1_Laa
-	jmp	0x486b1950
+	jmp	CmpPartSetGrid1_L4e3
 CmpPartSetGrid1_Laa:
 	movhu	(0x1c, sp), d3
 	mov	2, d0
@@ -350128,7 +353733,7 @@ CmpPartSetGrid1_Ldc:
 	exth	d0
 	cmp	0xa, d0
 	blt	CmpPartSetGrid1_Lb6
-	jmp	0x486b1950
+	jmp	CmpPartSetGrid1_L4e3
 CmpPartSetGrid1_Lec:
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
@@ -350153,7 +353758,7 @@ CmpPartSetGrid1_Lec:
 	add	-2, d0
 	movbu	(d0, a2), d0
 	call	func_486A4A75_entry, 0, 0x14
-	jmp	0x486b1950
+	jmp	CmpPartSetGrid1_L4e3
 CmpPartSetGrid1_L145:
 	mov	2, d2
 CmpPartSetGrid1_L147:
@@ -350196,7 +353801,7 @@ CmpPartSetGrid1_L18a:
 	mov	(-4, a0), d0
 	cmp	0, d0
 	bne	CmpPartSetGrid1_L1ab
-	jmp	0x486b1950
+	jmp	CmpPartSetGrid1_L4e3
 CmpPartSetGrid1_L1ab:
 	movhu	(0x1c, sp), d0
 	exth	d0
@@ -350210,7 +353815,7 @@ CmpPartSetGrid1_L1ba:
 	bne	CmpPartSetGrid1_L1c1
 	jmp	CmpPartSetGrid1_L294
 CmpPartSetGrid1_L1c1:
-	jmp	0x486b1950
+	jmp	CmpPartSetGrid1_L4e3
 CmpPartSetGrid1_L1c4:
 	movhu	(0x1e, sp), d0
 	movhu	(0x1c, sp), d1
@@ -350229,7 +353834,7 @@ CmpPartSetGrid1_L1c4:
 	add	d2, d1
 	cmp	0, d1
 	bge	CmpPartSetGrid1_L1f2
-	jmp	0x486b1950
+	jmp	CmpPartSetGrid1_L4e3
 CmpPartSetGrid1_L1f2:
 	movhu	(0x1c, sp), d0
 	mov	data_484B340B, a0
@@ -350238,7 +353843,7 @@ CmpPartSetGrid1_L1f2:
 	movbu	(d0, a0), d0
 	cmp	d0, d1
 	ble	CmpPartSetGrid1_L206
-	jmp	0x486b1950
+	jmp	CmpPartSetGrid1_L4e3
 CmpPartSetGrid1_L206:
 	movhu	(0x1e, sp), d0
 	exth	d0
@@ -350264,7 +353869,7 @@ CmpPartSetGrid1_L206:
 	mov	d1, (0x10, sp)
 	mov	0x00060081, d1
 	call	func_486A6268_entry, [d2,d3,a2], 0x20
-	jmp	0x486b1950
+	jmp	CmpPartSetGrid1_L4e3
 CmpPartSetGrid1_L24f:
 	movhu	(0x1e, sp), d0
 	mov	data_484B33F8, a2
@@ -350288,7 +353893,7 @@ CmpPartSetGrid1_L24f:
 	movbu	(d0, a2), d0
 	call	func_5017A2D2_entry, [d2,d3], 0x14
 	movbu	d0, (0x47, sp)
-	jmp	0x486b1950
+	jmp	CmpPartSetGrid1_L4e3
 CmpPartSetGrid1_L294:
 	movhu	(0x1e, sp), d0
 	movhu	(0x1c, sp), d1
@@ -350353,7 +353958,7 @@ CmpPartSetGrid1_L2de:
 	mov	d2, (0x10, sp)
 	mov	0x00060081, d1
 	call	func_486A6268_entry, [d2,d3,a2], 0x20
-	jmp	0x486b1950
+	jmp	CmpPartSetGrid1_L4e3
 CmpPartSetGrid1_L328:
 	mov	(0x6c, sp), d0
 	mov	(0x6c, sp), d1
@@ -350525,8 +354130,16 @@ CmpPartSetGrid1_L4c3:
 	mov	0x00060080, d1
 	mov	a0, (0x10, sp)
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	0x486b1950
-.incbin_range "baserom/kn2400_program.rom", 0x2b194a, 0x2b1954
+	bra	CmpPartSetGrid1_L4e3
+# CmpPartSetGrid1 + 0x4dd: no traced path reaches what follows (--decode-gaps)
+	bra	CmpPartSetGrid1_L4e4
+CmpPartSetGrid1_L4df:
+	mov	-1, d0
+	bra	CmpPartSetGrid1_L4e4
+CmpPartSetGrid1_L4e3:
+	clr	d0
+CmpPartSetGrid1_L4e4:
+	ret	[d2,d3,a2,a3], 0x5c
 
 CmpPartSetGrid2:
 	movm	[d2,d3,a2,a3], (sp)
@@ -350562,7 +354175,7 @@ CmpPartSetGrid2_L50:
 	bne	CmpPartSetGrid2_L5b
 	ret	[d2,d3,a2,a3], 0x4c
 CmpPartSetGrid2_L5b:
-	jmp	0x486b1e76
+	jmp	CmpPartSetGrid2_L522
 CmpPartSetGrid2_L5e:
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
@@ -350587,7 +354200,7 @@ CmpPartSetGrid2_L5e:
 	extbu	d2
 	cmp	d2, d1
 	bne	CmpPartSetGrid2_Laa
-	jmp	0x486b1e7a
+	jmp	CmpPartSetGrid2_L526
 CmpPartSetGrid2_Laa:
 	movhu	(0x14, sp), d3
 	mov	2, d0
@@ -350616,7 +354229,7 @@ CmpPartSetGrid2_Ldc:
 	exth	d0
 	cmp	0xa, d0
 	blt	CmpPartSetGrid2_Lb6
-	jmp	0x486b1e7a
+	jmp	CmpPartSetGrid2_L526
 CmpPartSetGrid2_Lec:
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
@@ -350641,7 +354254,7 @@ CmpPartSetGrid2_Lec:
 	add	-2, d0
 	movbu	(d0, a2), d0
 	call	func_486A4A75_entry, 0, 0x14
-	jmp	0x486b1e7a
+	jmp	CmpPartSetGrid2_L526
 CmpPartSetGrid2_L145:
 	mov	2, d2
 CmpPartSetGrid2_L147:
@@ -350685,7 +354298,7 @@ CmpPartSetGrid2_L186:
 	mov	(-4, a0), d0
 	cmp	0, d0
 	bne	CmpPartSetGrid2_L1a5
-	jmp	0x486b1e7a
+	jmp	CmpPartSetGrid2_L526
 CmpPartSetGrid2_L1a5:
 	movhu	(0x14, sp), d0
 	exth	d0
@@ -350703,7 +354316,7 @@ CmpPartSetGrid2_L1bc:
 	bne	CmpPartSetGrid2_L1c3
 	jmp	CmpPartSetGrid2_L251
 CmpPartSetGrid2_L1c3:
-	jmp	0x486b1e7a
+	jmp	CmpPartSetGrid2_L526
 CmpPartSetGrid2_L1c6:
 	movhu	(0x16, sp), d0
 	movhu	(0x14, sp), d1
@@ -350722,7 +354335,7 @@ CmpPartSetGrid2_L1c6:
 	add	d0, d1
 	cmp	0, d1
 	bge	CmpPartSetGrid2_L1f4
-	jmp	0x486b1e7a
+	jmp	CmpPartSetGrid2_L526
 CmpPartSetGrid2_L1f4:
 	movhu	(0x14, sp), d0
 	mov	data_484B3476, a0
@@ -350731,7 +354344,7 @@ CmpPartSetGrid2_L1f4:
 	movbu	(d0, a0), d0
 	cmp	d0, d1
 	ble	CmpPartSetGrid2_L208
-	jmp	0x486b1e7a
+	jmp	CmpPartSetGrid2_L526
 CmpPartSetGrid2_L208:
 	movhu	(0x16, sp), d0
 	exth	d0
@@ -350757,7 +354370,7 @@ CmpPartSetGrid2_L208:
 	mov	d1, (0x10, sp)
 	mov	0x00060081, d1
 	call	func_486A6268_entry, [d2,d3,a2], 0x20
-	jmp	0x486b1e7a
+	jmp	CmpPartSetGrid2_L526
 CmpPartSetGrid2_L251:
 	movhu	(0x16, sp), d0
 	movhu	(0x14, sp), d1
@@ -350809,7 +354422,7 @@ CmpPartSetGrid2_L2ad:
 	add	d3, d1
 	cmp	d1, d2
 	ble	CmpPartSetGrid2_L2be
-	jmp	0x486b1e7a
+	jmp	CmpPartSetGrid2_L526
 CmpPartSetGrid2_L2be:
 	movhu	(0x14, sp), d0
 	mov	data_484B3476, a0
@@ -350818,7 +354431,7 @@ CmpPartSetGrid2_L2be:
 	movbu	(d0, a0), d0
 	cmp	d0, d1
 	ble	CmpPartSetGrid2_L2d2
-	jmp	0x486b1e7a
+	jmp	CmpPartSetGrid2_L526
 CmpPartSetGrid2_L2d2:
 	movhu	(0x16, sp), d0
 	mov	data_484B346C, a0
@@ -350846,7 +354459,7 @@ CmpPartSetGrid2_L2d2:
 	mov	d2, (0x10, sp)
 	mov	0x00060081, d1
 	call	func_486A6268_entry, [d2,d3,a2], 0x20
-	jmp	0x486b1e7a
+	jmp	CmpPartSetGrid2_L526
 CmpPartSetGrid2_L325:
 	mov	(0x5c, sp), d0
 	mov	(0x5c, sp), d1
@@ -351034,8 +354647,16 @@ CmpPartSetGrid2_L508:
 	mov	a3, (0x10, sp)
 	mov	0x00060080, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	0x486b1e7a
-.incbin_range "baserom/kn2400_program.rom", 0x2b1e74, 0x2b1e7e
+	bra	CmpPartSetGrid2_L526
+# CmpPartSetGrid2 + 0x520: no traced path reaches what follows (--decode-gaps)
+	bra	CmpPartSetGrid2_L527
+CmpPartSetGrid2_L522:
+	mov	-1, d0
+	bra	CmpPartSetGrid2_L527
+CmpPartSetGrid2_L526:
+	clr	d0
+CmpPartSetGrid2_L527:
+	ret	[d2,d3,a2,a3], 0x4c
 
 CmpPartSetGrid3:
 	movm	[d2,d3,a2,a3], (sp)
@@ -354700,14 +358321,14 @@ MdCmp_L3a:
 	bne	MdCmp_L45
 	ret	[d2], 0x24
 MdCmp_L45:
-	jmp	0x486b4488
+	jmp	MdCmp_L252
 MdCmp_L48:
 	mov	(0x34, sp), a0
 	cmp	0, a0
 	beq	MdCmp_L55
 	cmp	1, a0
 	beq	MdCmp_L7b
-	jmp	0x486b4488
+	jmp	MdCmp_L252
 MdCmp_L55:
 	call	func_48616704_entry, 0, 0x14
 	mov	2, d0
@@ -354716,7 +358337,7 @@ MdCmp_L55:
 	movbu	d0, (0x500f03a0)
 	movbu	d0, (0x500f03a9)
 	movbu	d0, (0x500f03bc)
-	jmp	0x486b4488
+	jmp	MdCmp_L252
 MdCmp_L7b:
 	mov	2, d1
 	mov	d1, (0x10, sp)
@@ -354732,7 +358353,7 @@ MdCmp_L7b:
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
 MdCmp_La3:
 	call	func_4861673B_entry, 0, 0xc
-	jmp	0x486b4488
+	jmp	MdCmp_L252
 MdCmp_Lad:
 	call	func_487055C4, 0, 0
 	extbu	d0
@@ -354814,15 +358435,15 @@ MdCmp_L152:
 	mov	d0, (0x50053e8c)
 	mov	d0, (0x50053e80)
 	mov	d0, (0x50053e84)
-	jmp	0x486b4488
+	jmp	MdCmp_L252
 MdCmp_L1a7:
 	mov	(0x34, sp), d0
 	mov	d0, (0x50053e80)
-	jmp	0x486b4488
+	jmp	MdCmp_L252
 MdCmp_L1b2:
 	mov	(0x34, sp), d0
 	mov	d0, (0x50053e84)
-	jmp	0x486b4488
+	jmp	MdCmp_L252
 MdCmp_L1bd:
 	mov	(0x50053e80), d0
 	cmp	0, d0
@@ -354851,14 +358472,14 @@ MdCmp_L213:
 	call	func_4860314E, 0, 0
 	exthu	d0
 	cmp	0x62, d0
-	bne	0x486b4488
+	bne	MdCmp_L252
 	mov	(0x34, sp), a0
 	mov	(a0), d0
 	cmp	0x10708000, d0
-	bne	0x486b4488
+	bne	MdCmp_L252
 	mov	(4, a0), d0
 	cmp	0, d0
-	bne	0x486b4488
+	bne	MdCmp_L252
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -354867,8 +358488,13 @@ MdCmp_L213:
 	mov	0xb0, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-	bra	0x486b4488
-.incbin_range "baserom/kn2400_program.rom", 0x2b4486, 0x2b448c
+	bra	MdCmp_L252
+# MdCmp + 0x250: no traced path reaches what follows (--decode-gaps)
+	bra	MdCmp_L253
+MdCmp_L252:
+	clr	d0
+MdCmp_L253:
+	ret	[d2], 0x24
 
 TtCmMenu:
 	add	-0x10, sp
@@ -355303,7 +358929,7 @@ TtCmPnCp:
 	bne	TtCmPnCp_L1e
 	ret	0, 0x18
 TtCmPnCp_L1e:
-	jmp	0x486b4b27
+	jmp	TtCmPnCp_L238
 TtCmPnCp_L21:
 	mov	0x14, d0
 	movbu	d0, (0x500f0438)
@@ -355455,11 +359081,16 @@ TtCmPnCp_L1bc:
 	call	PutM3Em_entry, [d2,d3,a2], 0x24
 TtCmPnCp_L230:
 	clr	d0
-	bra	0x486b4b28
+	bra	TtCmPnCp_L239
 TtCmPnCp_L233:
 	clr	d0
-	bra	0x486b4b28
-.incbin_range "baserom/kn2400_program.rom", 0x2b4b25, 0x2b4b2b
+	bra	TtCmPnCp_L239
+# TtCmPnCp + 0x236: no traced path reaches what follows (--decode-gaps)
+	bra	TtCmPnCp_L239
+TtCmPnCp_L238:
+	clr	d0
+TtCmPnCp_L239:
+	ret	0, 0x18
 
 TtCmEasy:
 	movm	[a2], (sp)
@@ -355476,7 +359107,7 @@ TtCmEasy_L20:
 	bne	TtCmEasy_L2b
 	ret	[a2], 0x18
 TtCmEasy_L2b:
-	jmp	0x486b4cb7
+	jmp	TtCmEasy_L18c
 TtCmEasy_L2e:
 	mov	0x500f03d4, a1
 TtCmEasy_L34:
@@ -355561,10 +359192,10 @@ TtCmEasy_Ld2:
 	call	func_5018207F, 0, 0
 	call	func_4860EBB0_entry, 0, 0x14
 	clr	d0
-	bra	0x486b4cb8
+	bra	TtCmEasy_L18d
 TtCmEasy_L136:
 	clr	d0
-	bra	0x486b4cb8
+	bra	TtCmEasy_L18d
 TtCmEasy_L139:
 	mov	(0x28, sp), a0
 	mov	(a0), d0
@@ -355593,8 +359224,13 @@ TtCmEasy_L17e:
 	call	func_501831DB_entry, [d2,d3], 0x18
 TtCmEasy_L187:
 	clr	d0
-	bra	0x486b4cb8
-.incbin_range "baserom/kn2400_program.rom", 0x2b4cb5, 0x2b4cbb
+	bra	TtCmEasy_L18d
+# TtCmEasy + 0x18a: no traced path reaches what follows (--decode-gaps)
+	bra	TtCmEasy_L18d
+TtCmEasy_L18c:
+	clr	d0
+TtCmEasy_L18d:
+	ret	[a2], 0x18
 
 TtCmPtChd:
 	movm	[d2,d3,a2,a3], (sp)
@@ -358877,7 +362513,7 @@ MspCompileSetGridCheck_L36:
 	bne	MspCompileSetGridCheck_L41
 	ret	[d2,d3,a2,a3], 0x5c
 MspCompileSetGridCheck_L41:
-	jmp	0x486b7201
+	jmp	MspCompileSetGridCheck_L3b6
 MspCompileSetGridCheck_L44:
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
@@ -359177,7 +362813,7 @@ MspCompileSetGridCheck_L344:
 	mov	a2, a0
 	call	Free_entry, [d2,d3,a2,a3], 0x2c
 	clr	d0
-	bra	0x486b7202
+	bra	MspCompileSetGridCheck_L3b7
 MspCompileSetGridCheck_L365:
 	mov	0x20, d0
 	call	Malloc_entry, [d2,a2,a3], 0x28
@@ -359199,11 +362835,16 @@ MspCompileSetGridCheck_L365:
 	mov	a2, a0
 	call	Free_entry, [d2,d3,a2,a3], 0x2c
 	clr	d0
-	bra	0x486b7202
+	bra	MspCompileSetGridCheck_L3b7
 MspCompileSetGridCheck_L3b1:
 	clr	d0
-	bra	0x486b7202
-.incbin_range "baserom/kn2400_program.rom", 0x2b71ff, 0x2b7205
+	bra	MspCompileSetGridCheck_L3b7
+# MspCompileSetGridCheck + 0x3b4: no traced path reaches what follows (--decode-gaps)
+	bra	MspCompileSetGridCheck_L3b7
+MspCompileSetGridCheck_L3b6:
+	clr	d0
+MspCompileSetGridCheck_L3b7:
+	ret	[d2,d3,a2,a3], 0x5c
 
 MspRGrpSetBnkFunc:
 	movm	[d2,d3,a2], (sp)
@@ -359312,7 +362953,7 @@ FE_PadRecSetKey_L3e:
 	bne	FE_PadRecSetKey_L49
 	ret	[d2], 0x18
 FE_PadRecSetKey_L49:
-	jmp	0x486b73e8
+	jmp	FE_PadRecSetKey_L12e
 FE_PadRecSetKey_L4c:
 	clr	d0
 	ret	[d2], 0x18
@@ -359385,7 +363026,7 @@ FE_PadRecSetKey_Lae:
 	call	SendEvent_entry, [d2,d3], 0x24
 FE_PadRecSetKey_L109:
 	clr	d0
-	bra	0x486b73e9
+	bra	FE_PadRecSetKey_L12f
 FE_PadRecSetKey_L10c:
 	call	func_501706BA_entry, 0, 0xc
 	mov	(0x28, sp), a0
@@ -359396,8 +363037,13 @@ FE_PadRecSetKey_L10c:
 	mov	(d0, a1), a1
 	call	strcpy_entry, [a2], 4
 	clr	d0
-	bra	0x486b73e9
-.incbin_range "baserom/kn2400_program.rom", 0x2b73e6, 0x2b73ec
+	bra	FE_PadRecSetKey_L12f
+# FE_PadRecSetKey + 0x12c: no traced path reaches what follows (--decode-gaps)
+	bra	FE_PadRecSetKey_L12f
+FE_PadRecSetKey_L12e:
+	clr	d0
+FE_PadRecSetKey_L12f:
+	ret	[d2], 0x18
 
 FE_PadRecSetChord:
 	movm	[d2,a2], (sp)
@@ -359422,7 +363068,7 @@ FE_PadRecSetChord_L3b:
 	bne	FE_PadRecSetChord_L46
 	ret	[d2,a2], 0x1c
 FE_PadRecSetChord_L46:
-	jmp	0x486b750a
+	jmp	FE_PadRecSetChord_L11e
 FE_PadRecSetChord_L49:
 	clr	d0
 	ret	[d2,a2], 0x1c
@@ -359477,7 +363123,7 @@ FE_PadRecSetChord_Lde:
 	call	SendEvent_entry, [d2,d3], 0x24
 FE_PadRecSetChord_Lf4:
 	clr	d0
-	bra	0x486b750b
+	bra	FE_PadRecSetChord_L11f
 FE_PadRecSetChord_Lf7:
 	call	func_501706BA_entry, 0, 0xc
 	mov	Str_Min, a1
@@ -359489,8 +363135,13 @@ FE_PadRecSetChord_L110:
 	mov	(0x2c, sp), a0
 	call	strcpy_entry, [a2], 4
 	clr	d0
-	bra	0x486b750b
-.incbin_range "baserom/kn2400_program.rom", 0x2b7508, 0x2b750e
+	bra	FE_PadRecSetChord_L11f
+# FE_PadRecSetChord + 0x11c: no traced path reaches what follows (--decode-gaps)
+	bra	FE_PadRecSetChord_L11f
+FE_PadRecSetChord_L11e:
+	clr	d0
+FE_PadRecSetChord_L11f:
+	ret	[d2,a2], 0x1c
 
 MspPadNmOk:
 	movm	[a2], (sp)
@@ -359702,7 +363353,7 @@ FuncEdit_srcPadBank_L4f:
 	bne	FuncEdit_srcPadBank_L5a
 	ret	[d2,a2], 0x4c
 FuncEdit_srcPadBank_L5a:
-	jmp	0x486b78e5
+	jmp	FuncEdit_srcPadBank_L1fd
 FuncEdit_srcPadBank_L5d:
 	mov	(0x5c, sp), a0
 	mov	(a0), d0
@@ -359849,8 +363500,13 @@ FuncEdit_srcPadBank_L1b6:
 	call	sprintf_entry, [a2], 0x20
 FuncEdit_srcPadBank_L1f8:
 	clr	d0
-	bra	0x486b78e6
-.incbin_range "baserom/kn2400_program.rom", 0x2b78e3, 0x2b78e9
+	bra	FuncEdit_srcPadBank_L1fe
+# FuncEdit_srcPadBank + 0x1fb: no traced path reaches what follows (--decode-gaps)
+	bra	FuncEdit_srcPadBank_L1fe
+FuncEdit_srcPadBank_L1fd:
+	clr	d0
+FuncEdit_srcPadBank_L1fe:
+	ret	[d2,a2], 0x4c
 
 FuncEdit_srcPad:
 	movm	[a2], (sp)
@@ -359877,7 +363533,7 @@ FuncEdit_srcPad_L3e:
 	bne	FuncEdit_srcPad_L49
 	ret	[a2], 0x3c
 FuncEdit_srcPad_L49:
-	jmp	0x486b7a9a
+	jmp	FuncEdit_srcPad_L1b1
 FuncEdit_srcPad_L4c:
 	clr	d0
 	ret	[a2], 0x3c
@@ -359958,7 +363614,7 @@ FuncEdit_srcPad_L13f:
 	call	SendEvent_entry, [d2,d3], 0x24
 FuncEdit_srcPad_L156:
 	clr	d0
-	bra	0x486b7a9b
+	bra	FuncEdit_srcPad_L1b2
 FuncEdit_srcPad_L159:
 	movbu	(0x500f044a), d1
 	cmp	0xff, d1
@@ -359985,8 +363641,13 @@ FuncEdit_srcPad_L176:
 	call	sprintf_entry, [a2], 0x20
 FuncEdit_srcPad_L1ac:
 	clr	d0
-	bra	0x486b7a9b
-.incbin_range "baserom/kn2400_program.rom", 0x2b7a98, 0x2b7a9e
+	bra	FuncEdit_srcPad_L1b2
+# FuncEdit_srcPad + 0x1af: no traced path reaches what follows (--decode-gaps)
+	bra	FuncEdit_srcPad_L1b2
+FuncEdit_srcPad_L1b1:
+	clr	d0
+FuncEdit_srcPad_L1b2:
+	ret	[a2], 0x3c
 
 FuncEdit_dstPadBank:
 	movm	[d2,a2], (sp)
@@ -360007,7 +363668,7 @@ FuncEdit_dstPadBank_L30:
 	bne	FuncEdit_dstPadBank_L3b
 	ret	[d2,a2], 0x40
 FuncEdit_dstPadBank_L3b:
-	jmp	0x486b7bb0
+	jmp	FuncEdit_dstPadBank_L112
 FuncEdit_dstPadBank_L3e:
 	movbu	(0x500f044b), d0
 	movhu	(data_48549C02), d1
@@ -360051,7 +363712,7 @@ FuncEdit_dstPadBank_L8e:
 	call	SendEvent_entry, [d2,d3], 0x24
 FuncEdit_dstPadBank_Ld2:
 	clr	d0
-	bra	0x486b7bb1
+	bra	FuncEdit_dstPadBank_L113
 FuncEdit_dstPadBank_Ld5:
 	mov	sp, a2
 	add	0x18, a2
@@ -360070,8 +363731,13 @@ FuncEdit_dstPadBank_Ld5:
 	mov	a2, (0x14, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	0x486b7bb1
-.incbin_range "baserom/kn2400_program.rom", 0x2b7bae, 0x2b7bb4
+	bra	FuncEdit_dstPadBank_L113
+# FuncEdit_dstPadBank + 0x110: no traced path reaches what follows (--decode-gaps)
+	bra	FuncEdit_dstPadBank_L113
+FuncEdit_dstPadBank_L112:
+	clr	d0
+FuncEdit_dstPadBank_L113:
+	ret	[d2,a2], 0x40
 
 FuncEdit_dstPad:
 	movm	[a2], (sp)
@@ -360098,7 +363764,7 @@ FuncEdit_dstPad_L3e:
 	bne	FuncEdit_dstPad_L49
 	ret	[a2], 0x3c
 FuncEdit_dstPad_L49:
-	jmp	0x486b7d65
+	jmp	FuncEdit_dstPad_L1b1
 FuncEdit_dstPad_L4c:
 	clr	d0
 	ret	[a2], 0x3c
@@ -360179,7 +363845,7 @@ FuncEdit_dstPad_L13f:
 	call	SendEvent_entry, [d2,d3], 0x24
 FuncEdit_dstPad_L156:
 	clr	d0
-	bra	0x486b7d66
+	bra	FuncEdit_dstPad_L1b2
 FuncEdit_dstPad_L159:
 	movbu	(0x500f044c), d1
 	cmp	0xff, d1
@@ -360206,8 +363872,13 @@ FuncEdit_dstPad_L176:
 	call	sprintf_entry, [a2], 0x20
 FuncEdit_dstPad_L1ac:
 	clr	d0
-	bra	0x486b7d66
-.incbin_range "baserom/kn2400_program.rom", 0x2b7d63, 0x2b7d69
+	bra	FuncEdit_dstPad_L1b2
+# FuncEdit_dstPad + 0x1af: no traced path reaches what follows (--decode-gaps)
+	bra	FuncEdit_dstPad_L1b2
+FuncEdit_dstPad_L1b1:
+	clr	d0
+FuncEdit_dstPad_L1b2:
+	ret	[a2], 0x3c
 
 MspPnCpOK:
 	add	-0x14, sp
@@ -360367,7 +364038,7 @@ PadRecPtChdGrid_L31:
 	bne	PadRecPtChdGrid_L3c
 	ret	[d2,a2,a3], 0x48
 PadRecPtChdGrid_L3c:
-	jmp	0x486b82ee
+	jmp	PadRecPtChdGrid_L3e4
 PadRecPtChdGrid_L3f:
 	mov	2, d2
 PadRecPtChdGrid_L41:
@@ -360423,7 +364094,7 @@ PadRecPtChdGrid_La9:
 	bne	PadRecPtChdGrid_Lb0
 	jmp	PadRecPtChdGrid_L23b
 PadRecPtChdGrid_Lb0:
-	jmp	0x486b82f2
+	jmp	PadRecPtChdGrid_L3e8
 PadRecPtChdGrid_Lb3:
 	movhu	(0x16, sp), d0
 	extb	d2
@@ -360436,7 +364107,7 @@ PadRecPtChdGrid_Lb3:
 	add	d2, d0
 	cmp	0, d0
 	bge	PadRecPtChdGrid_Lcd
-	jmp	0x486b82f2
+	jmp	PadRecPtChdGrid_L3e8
 PadRecPtChdGrid_Lcd:
 	movbu	(a0), d0
 	mov	0xc, d1
@@ -360449,7 +364120,7 @@ PadRecPtChdGrid_Lcd:
 	mov	(d0, a1), d0
 	cmp	0, d0
 	bne	PadRecPtChdGrid_Le6
-	jmp	0x486b82f2
+	jmp	PadRecPtChdGrid_L3e8
 PadRecPtChdGrid_Le6:
 	movbu	(a0), d0
 	clr	d1
@@ -360488,7 +364159,7 @@ PadRecPtChdGrid_Le6:
 	mov	d1, (0x10, sp)
 	mov	0x00060081, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	0x486b82f2
+	jmp	PadRecPtChdGrid_L3e8
 PadRecPtChdGrid_L16e:
 	movhu	(0x16, sp), d0
 	extb	d2
@@ -360506,12 +364177,12 @@ PadRecPtChdGrid_L16e:
 	add	d2, d0
 	cmp	0, d0
 	bge	PadRecPtChdGrid_L196
-	jmp	0x486b82f2
+	jmp	PadRecPtChdGrid_L3e8
 PadRecPtChdGrid_L196:
 	extb	d1
 	cmp	0, d1
 	bge	PadRecPtChdGrid_L19e
-	jmp	0x486b82f2
+	jmp	PadRecPtChdGrid_L3e8
 PadRecPtChdGrid_L19e:
 	mov	0xc, d0
 	nop
@@ -360528,7 +364199,7 @@ PadRecPtChdGrid_L19e:
 	mov	(4, a0), a0
 	cmp	0, a0
 	bne	PadRecPtChdGrid_L1c2
-	jmp	0x486b82f2
+	jmp	PadRecPtChdGrid_L3e8
 PadRecPtChdGrid_L1c2:
 	movbu	(a1), d0
 	mov	1, d1
@@ -360561,7 +364232,7 @@ PadRecPtChdGrid_L1c2:
 	mov	d1, (0x10, sp)
 	mov	0x00060081, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	0x486b82f2
+	jmp	PadRecPtChdGrid_L3e8
 PadRecPtChdGrid_L23b:
 	movhu	(0x16, sp), d1
 	extb	d2
@@ -360574,14 +364245,14 @@ PadRecPtChdGrid_L23b:
 	add	d2, d0
 	cmp	0, d0
 	bge	PadRecPtChdGrid_L255
-	jmp	0x486b82f2
+	jmp	PadRecPtChdGrid_L3e8
 PadRecPtChdGrid_L255:
 	movbu	(a0), d0
 	extb	d0
 	add	d2, d0
 	cmp	1, d0
 	ble	PadRecPtChdGrid_L260
-	jmp	0x486b82f2
+	jmp	PadRecPtChdGrid_L3e8
 PadRecPtChdGrid_L260:
 	movbu	(a0), d0
 	extb	d0
@@ -360594,7 +364265,7 @@ PadRecPtChdGrid_L260:
 	mov	d1, (0x10, sp)
 	mov	0x00060081, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	0x486b82f2
+	jmp	PadRecPtChdGrid_L3e8
 PadRecPtChdGrid_L289:
 	mov	(0x58, sp), d0
 	mov	sp, a3
@@ -360730,8 +364401,16 @@ PadRecPtChdGrid_L3ca:
 	mov	a3, (0x10, sp)
 	mov	0x00060080, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	0x486b82f2
-.incbin_range "baserom/kn2400_program.rom", 0x2b82ec, 0x2b82f6
+	bra	PadRecPtChdGrid_L3e8
+# PadRecPtChdGrid + 0x3e2: no traced path reaches what follows (--decode-gaps)
+	bra	PadRecPtChdGrid_L3e9
+PadRecPtChdGrid_L3e4:
+	mov	-1, d0
+	bra	PadRecPtChdGrid_L3e9
+PadRecPtChdGrid_L3e8:
+	clr	d0
+PadRecPtChdGrid_L3e9:
+	ret	[d2,a2,a3], 0x48
 
 PadPtChdOK:
 	movm	[d2,d3,a2,a3], (sp)
@@ -360791,40 +364470,124 @@ PadPtChdOK_L78:
 FE_PadPlaySetSynchro:
 	add	-0x14, sp
 	cmp	0x50001, d1
-	beq	0x486b83b1
+	beq	FE_PadPlaySetSynchro_L40
 	cmp	0x50011, d1
-	beq	0x486b83b4
+	beq	FE_PadPlaySetSynchro_L43
 	cmp	0x5000f, d1
-	beq	0x486b83b4
+	beq	FE_PadPlaySetSynchro_L43
 	cmp	0x50012, d1
-	beq	0x486b83b4
+	beq	FE_PadPlaySetSynchro_L43
 	cmp	0x50010, d1
-	beq	0x486b83b4
+	beq	FE_PadPlaySetSynchro_L43
 	cmp	0x6003a, d1
-	beq	0x486b83f3
+	beq	FE_PadPlaySetSynchro_L82
 	cmp	0x50000, d1
-	bne	0x486b8419
+	bne	FE_PadPlaySetSynchro_La8
 	ret	0, 0x14
-.incbin_range "baserom/kn2400_program.rom", 0x2b83af, 0x2b841d
+# FE_PadPlaySetSynchro + 0x3e: no traced path reaches what follows (--decode-gaps)
+	bra	FE_PadPlaySetSynchro_La8
+FE_PadPlaySetSynchro_L40:
+	clr	d0
+	bra	FE_PadPlaySetSynchro_La9
+FE_PadPlaySetSynchro_L43:
+	call	func_5017058D_entry, 0, 0xc
+	clr	d1
+	extbu	d0
+	cmp	d1, d0
+	bne	FE_PadPlaySetSynchro_L51
+	mov	1, d1
+FE_PadPlaySetSynchro_L51:
+	mov	d1, d0
+	extbu	d0
+	mov	d0, (0x10, sp)
+	mov	0x00a30017, d0
+	mov	0x0006003b, d1
+	call	MainFuncCall_entry, [d2,d3,a2], 0x24
+	call	GetFocusObject_entry, 0, 0x10
+	clr	d1
+	mov	d1, (0x10, sp)
+	mov	0x000600b4, d1
+	call	func_486A6268_entry, [d2,d3,a2], 0x20
+	clr	d0
+	bra	FE_PadPlaySetSynchro_La9
+FE_PadPlaySetSynchro_L82:
+	call	func_5017058D_entry, 0, 0xc
+	mov	Str_SYNCHRO, a1
+	extbu	d0
+	cmp	0, d0
+	bne	FE_PadPlaySetSynchro_L9a
+	mov	Str_INSTANT, a1
+FE_PadPlaySetSynchro_L9a:
+	mov	(0x24, sp), a0
+	call	strcpy_entry, [a2], 4
+	clr	d0
+	bra	FE_PadPlaySetSynchro_La9
+	bra	FE_PadPlaySetSynchro_La9
+FE_PadPlaySetSynchro_La8:
+	clr	d0
+FE_PadPlaySetSynchro_La9:
+	ret	0, 0x14
 
 FE_PadPlaySetLoop:
 	add	-0x14, sp
 	cmp	0x50001, d1
-	beq	0x486b845d
+	beq	FE_PadPlaySetLoop_L40
 	cmp	0x50011, d1
-	beq	0x486b8460
+	beq	FE_PadPlaySetLoop_L43
 	cmp	0x5000f, d1
-	beq	0x486b8460
+	beq	FE_PadPlaySetLoop_L43
 	cmp	0x50012, d1
-	beq	0x486b8460
+	beq	FE_PadPlaySetLoop_L43
 	cmp	0x50010, d1
-	beq	0x486b8460
+	beq	FE_PadPlaySetLoop_L43
 	cmp	0x6003a, d1
-	beq	0x486b849f
+	beq	FE_PadPlaySetLoop_L82
 	cmp	0x50000, d1
-	bne	0x486b84c5
+	bne	FE_PadPlaySetLoop_La8
 	ret	0, 0x14
-.incbin_range "baserom/kn2400_program.rom", 0x2b845b, 0x2b84c9
+# FE_PadPlaySetLoop + 0x3e: no traced path reaches what follows (--decode-gaps)
+	bra	FE_PadPlaySetLoop_La8
+FE_PadPlaySetLoop_L40:
+	clr	d0
+	bra	FE_PadPlaySetLoop_La9
+FE_PadPlaySetLoop_L43:
+	call	func_501705E9_entry, 0, 0xc
+	clr	d1
+	extbu	d0
+	cmp	d1, d0
+	bne	FE_PadPlaySetLoop_L51
+	mov	1, d1
+FE_PadPlaySetLoop_L51:
+	mov	d1, d0
+	extbu	d0
+	mov	d0, (0x10, sp)
+	mov	0x00a30018, d0
+	mov	0x0006003b, d1
+	call	MainFuncCall_entry, [d2,d3,a2], 0x24
+	call	GetFocusObject_entry, 0, 0x10
+	clr	d1
+	mov	d1, (0x10, sp)
+	mov	0x000600b4, d1
+	call	func_486A6268_entry, [d2,d3,a2], 0x20
+	clr	d0
+	bra	FE_PadPlaySetLoop_La9
+FE_PadPlaySetLoop_L82:
+	call	func_501705E9_entry, 0, 0xc
+	mov	0x484ba038, a1
+	extbu	d0
+	cmp	0, d0
+	bne	FE_PadPlaySetLoop_L9a
+	mov	0x484ba03c, a1
+FE_PadPlaySetLoop_L9a:
+	mov	(0x24, sp), a0
+	call	strcpy_entry, [a2], 4
+	clr	d0
+	bra	FE_PadPlaySetLoop_La9
+	bra	FE_PadPlaySetLoop_La9
+FE_PadPlaySetLoop_La8:
+	clr	d0
+FE_PadPlaySetLoop_La9:
+	ret	0, 0x14
 
 PadPartSetGrid1:
 	movm	[d2,d3,a2,a3], (sp)
@@ -360860,7 +364623,7 @@ PadPartSetGrid1_L50:
 	bne	PadPartSetGrid1_L5b
 	ret	[d2,d3,a2,a3], 0x5c
 PadPartSetGrid1_L5b:
-	jmp	0x486b899b
+	jmp	PadPartSetGrid1_L4d2
 PadPartSetGrid1_L5e:
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
@@ -360885,7 +364648,7 @@ PadPartSetGrid1_L5e:
 	extbu	d2
 	cmp	d2, d1
 	bne	PadPartSetGrid1_Laa
-	jmp	0x486b899f
+	jmp	PadPartSetGrid1_L4d6
 PadPartSetGrid1_Laa:
 	movhu	(0x1c, sp), d0
 	mov	d0, d3
@@ -360915,7 +364678,7 @@ PadPartSetGrid1_Ldd:
 	exth	d0
 	cmp	4, d0
 	blt	PadPartSetGrid1_Lb7
-	jmp	0x486b899f
+	jmp	PadPartSetGrid1_L4d6
 PadPartSetGrid1_Led:
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
@@ -360940,7 +364703,7 @@ PadPartSetGrid1_Led:
 	add	-2, d0
 	movbu	(d0, a2), d0
 	call	func_486A4A75_entry, 0, 0x14
-	jmp	0x486b899f
+	jmp	PadPartSetGrid1_L4d6
 PadPartSetGrid1_L146:
 	mov	2, d2
 PadPartSetGrid1_L148:
@@ -360980,7 +364743,7 @@ PadPartSetGrid1_L18b:
 	add	-2, d0
 	cmp	1, d0
 	blt	PadPartSetGrid1_L1a6
-	jmp	0x486b899f
+	jmp	PadPartSetGrid1_L4d6
 PadPartSetGrid1_L1a6:
 	movhu	(0x1c, sp), d0
 	exth	d0
@@ -360990,7 +364753,7 @@ PadPartSetGrid1_L1a6:
 	mov	(-4, a0), d0
 	cmp	0, d0
 	bne	PadPartSetGrid1_L1bd
-	jmp	0x486b899f
+	jmp	PadPartSetGrid1_L4d6
 PadPartSetGrid1_L1bd:
 	movhu	(0x1c, sp), d0
 	exth	d0
@@ -361004,7 +364767,7 @@ PadPartSetGrid1_L1cc:
 	bne	PadPartSetGrid1_L1d3
 	jmp	PadPartSetGrid1_L2aa
 PadPartSetGrid1_L1d3:
-	jmp	0x486b899f
+	jmp	PadPartSetGrid1_L4d6
 PadPartSetGrid1_L1d6:
 	movhu	(0x1e, sp), d0
 	movhu	(0x1c, sp), d1
@@ -361023,7 +364786,7 @@ PadPartSetGrid1_L1d6:
 	add	d0, d1
 	cmp	0, d1
 	bge	PadPartSetGrid1_L204
-	jmp	0x486b899f
+	jmp	PadPartSetGrid1_L4d6
 PadPartSetGrid1_L204:
 	movhu	(0x1c, sp), d0
 	mov	data_484BA047, a0
@@ -361032,7 +364795,7 @@ PadPartSetGrid1_L204:
 	movbu	(d0, a0), d0
 	cmp	d0, d1
 	ble	PadPartSetGrid1_L218
-	jmp	0x486b899f
+	jmp	PadPartSetGrid1_L4d6
 PadPartSetGrid1_L218:
 	movhu	(0x1e, sp), d0
 	exth	d0
@@ -361059,7 +364822,7 @@ PadPartSetGrid1_L218:
 	mov	d2, (0x10, sp)
 	mov	0x00060081, d1
 	call	func_486A6268_entry, [d2,d3,a2], 0x20
-	jmp	0x486b899f
+	jmp	PadPartSetGrid1_L4d6
 PadPartSetGrid1_L265:
 	movhu	(0x1e, sp), d0
 	mov	data_484BA040, a2
@@ -361083,7 +364846,7 @@ PadPartSetGrid1_L265:
 	movbu	(d0, a2), d0
 	call	func_50170944_entry, [d2,d3], 0x14
 	movbu	d0, (0x47, sp)
-	jmp	0x486b899f
+	jmp	PadPartSetGrid1_L4d6
 PadPartSetGrid1_L2aa:
 	movhu	(0x1e, sp), d0
 	movhu	(0x1c, sp), d1
@@ -361148,7 +364911,7 @@ PadPartSetGrid1_L2f4:
 	mov	d2, (0x10, sp)
 	mov	0x00060081, d1
 	call	func_486A6268_entry, [d2,d3,a2], 0x20
-	jmp	0x486b899f
+	jmp	PadPartSetGrid1_L4d6
 PadPartSetGrid1_L33e:
 	mov	sp, a0
 	mov	a0, d0
@@ -361300,8 +365063,16 @@ PadPartSetGrid1_L4b6:
 	mov	0x00060080, d1
 	mov	a0, (0x10, sp)
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	0x486b899f
-.incbin_range "baserom/kn2400_program.rom", 0x2b8999, 0x2b89a3
+	bra	PadPartSetGrid1_L4d6
+# PadPartSetGrid1 + 0x4d0: no traced path reaches what follows (--decode-gaps)
+	bra	PadPartSetGrid1_L4d7
+PadPartSetGrid1_L4d2:
+	mov	-1, d0
+	bra	PadPartSetGrid1_L4d7
+PadPartSetGrid1_L4d6:
+	clr	d0
+PadPartSetGrid1_L4d7:
+	ret	[d2,d3,a2,a3], 0x5c
 
 PadPartSetGrid2:
 	movm	[d2,d3,a2,a3], (sp)
@@ -361337,7 +365108,7 @@ PadPartSetGrid2_L50:
 	bne	PadPartSetGrid2_L5b
 	ret	[d2,d3,a2,a3], 0x4c
 PadPartSetGrid2_L5b:
-	jmp	0x486b8ede
+	jmp	PadPartSetGrid2_L53b
 PadPartSetGrid2_L5e:
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
@@ -361362,7 +365133,7 @@ PadPartSetGrid2_L5e:
 	extbu	d3
 	cmp	d3, d1
 	bne	PadPartSetGrid2_Laa
-	jmp	0x486b8ee2
+	jmp	PadPartSetGrid2_L53f
 PadPartSetGrid2_Laa:
 	movhu	(0x14, sp), d2
 	mov	2, d0
@@ -361391,7 +365162,7 @@ PadPartSetGrid2_Ldc:
 	exth	d0
 	cmp	4, d0
 	blt	PadPartSetGrid2_Lb6
-	jmp	0x486b8ee2
+	jmp	PadPartSetGrid2_L53f
 PadPartSetGrid2_Lec:
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
@@ -361416,7 +365187,7 @@ PadPartSetGrid2_Lec:
 	add	-2, d0
 	movbu	(d0, a2), d0
 	call	func_486A4A75_entry, 0, 0x14
-	jmp	0x486b8ee2
+	jmp	PadPartSetGrid2_L53f
 PadPartSetGrid2_L145:
 	mov	2, d2
 PadPartSetGrid2_L147:
@@ -361456,7 +365227,7 @@ PadPartSetGrid2_L18a:
 	add	-2, d0
 	cmp	1, d0
 	blt	PadPartSetGrid2_L1a5
-	jmp	0x486b8ee2
+	jmp	PadPartSetGrid2_L53f
 PadPartSetGrid2_L1a5:
 	movhu	(0x14, sp), d0
 	exth	d0
@@ -361466,7 +365237,7 @@ PadPartSetGrid2_L1a5:
 	mov	(-4, a0), d0
 	cmp	0, d0
 	bne	PadPartSetGrid2_L1bc
-	jmp	0x486b8ee2
+	jmp	PadPartSetGrid2_L53f
 PadPartSetGrid2_L1bc:
 	movhu	(0x14, sp), d0
 	exth	d0
@@ -361484,7 +365255,7 @@ PadPartSetGrid2_L1d3:
 	bne	PadPartSetGrid2_L1da
 	jmp	PadPartSetGrid2_L268
 PadPartSetGrid2_L1da:
-	jmp	0x486b8ee2
+	jmp	PadPartSetGrid2_L53f
 PadPartSetGrid2_L1dd:
 	movhu	(0x16, sp), d0
 	movhu	(0x14, sp), d1
@@ -361503,7 +365274,7 @@ PadPartSetGrid2_L1dd:
 	add	d3, d1
 	cmp	0, d1
 	bge	PadPartSetGrid2_L20b
-	jmp	0x486b8ee2
+	jmp	PadPartSetGrid2_L53f
 PadPartSetGrid2_L20b:
 	movhu	(0x14, sp), d0
 	mov	data_484BA0AA, a0
@@ -361512,7 +365283,7 @@ PadPartSetGrid2_L20b:
 	movbu	(d0, a0), d0
 	cmp	d0, d1
 	ble	PadPartSetGrid2_L21f
-	jmp	0x486b8ee2
+	jmp	PadPartSetGrid2_L53f
 PadPartSetGrid2_L21f:
 	movhu	(0x16, sp), d0
 	exth	d0
@@ -361538,7 +365309,7 @@ PadPartSetGrid2_L21f:
 	mov	d2, (0x10, sp)
 	mov	0x00060081, d1
 	call	func_486A6268_entry, [d2,d3,a2], 0x20
-	jmp	0x486b8ee2
+	jmp	PadPartSetGrid2_L53f
 PadPartSetGrid2_L268:
 	movhu	(0x16, sp), d0
 	movhu	(0x14, sp), d1
@@ -361590,7 +365361,7 @@ PadPartSetGrid2_L2c4:
 	add	d3, d1
 	cmp	d1, d2
 	ble	PadPartSetGrid2_L2d5
-	jmp	0x486b8ee2
+	jmp	PadPartSetGrid2_L53f
 PadPartSetGrid2_L2d5:
 	movhu	(0x14, sp), d0
 	mov	data_484BA0AA, a0
@@ -361599,7 +365370,7 @@ PadPartSetGrid2_L2d5:
 	movbu	(d0, a0), d0
 	cmp	d0, d1
 	ble	PadPartSetGrid2_L2e9
-	jmp	0x486b8ee2
+	jmp	PadPartSetGrid2_L53f
 PadPartSetGrid2_L2e9:
 	movhu	(0x16, sp), d0
 	mov	data_484BA09C, a0
@@ -361626,7 +365397,7 @@ PadPartSetGrid2_L2e9:
 	mov	d2, (0x10, sp)
 	mov	0x00060081, d1
 	call	func_486A6268_entry, [d2,d3,a2], 0x20
-	jmp	0x486b8ee2
+	jmp	PadPartSetGrid2_L53f
 PadPartSetGrid2_L338:
 	mov	(0x5c, sp), d0
 	mov	sp, a3
@@ -361812,8 +365583,16 @@ PadPartSetGrid2_L521:
 	mov	a3, (0x10, sp)
 	mov	0x00060080, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	0x486b8ee2
-.incbin_range "baserom/kn2400_program.rom", 0x2b8edc, 0x2b8ee6
+	bra	PadPartSetGrid2_L53f
+# PadPartSetGrid2 + 0x539: no traced path reaches what follows (--decode-gaps)
+	bra	PadPartSetGrid2_L540
+PadPartSetGrid2_L53b:
+	mov	-1, d0
+	bra	PadPartSetGrid2_L540
+PadPartSetGrid2_L53f:
+	clr	d0
+PadPartSetGrid2_L540:
+	ret	[d2,d3,a2,a3], 0x4c
 
 PadPartSetGrid3:
 	movm	[d2,d3,a2,a3], (sp)
@@ -362443,7 +366222,7 @@ FE_PadRecMeas_entry_L3e:
 	bne	FE_PadRecMeas_entry_L49
 	ret	0, 0x14
 FE_PadRecMeas_entry_L49:
-	jmp	0x486b95a2
+	jmp	FE_PadRecMeas_entry_Lde
 FE_PadRecMeas_entry_L4c:
 	call	func_501706EC, 0, 0xc
 	movbu	d0, (0x50053e98)
@@ -362464,7 +366243,7 @@ FE_PadRecMeas_entry_L5d:
 	call	SendEvent_entry, [d2,d3], 0x24
 FE_PadRecMeas_entry_L87:
 	clr	d0
-	bra	0x486b95a3
+	bra	FE_PadRecMeas_entry_Ldf
 FE_PadRecMeas_entry_L8a:
 	movbu	(0x50053e98), d0
 	cmp	1, d0
@@ -362478,7 +366257,7 @@ FE_PadRecMeas_entry_L8a:
 	call	SendEvent_entry, [d2,d3], 0x24
 FE_PadRecMeas_entry_Lb3:
 	clr	d0
-	bra	0x486b95a3
+	bra	FE_PadRecMeas_entry_Ldf
 FE_PadRecMeas_entry_Lb6:
 	mov	(0x24, sp), a0
 	mov	Str_2d_22, d0
@@ -362488,11 +366267,16 @@ FE_PadRecMeas_entry_Lb6:
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	0x486b95a3
+	bra	FE_PadRecMeas_entry_Ldf
 FE_PadRecMeas_entry_Ld4:
 	movbu	(0x50053e98), d0
-	bra	0x486b95a3
-.incbin_range "baserom/kn2400_program.rom", 0x2b95a0, 0x2b95a6
+	bra	FE_PadRecMeas_entry_Ldf
+# FE_PadRecMeas_entry + 0xdc: no traced path reaches what follows (--decode-gaps)
+	bra	FE_PadRecMeas_entry_Ldf
+FE_PadRecMeas_entry_Lde:
+	clr	d0
+FE_PadRecMeas_entry_Ldf:
+	ret	0, 0x14
 
 FE_PadRecTS:
 	movm	[d2,d3], (sp)
@@ -362836,9 +366620,9 @@ SeqToPadCopyGrid_L31:
 SeqToPadCopyGrid_L3c:
 	cmp	0xa60000, d1
 	bne	SeqToPadCopyGrid_L47
-	jmp	0x486b9c10
+	jmp	SeqToPadCopyGrid_L325
 SeqToPadCopyGrid_L47:
-	jmp	0x486b9c18
+	jmp	SeqToPadCopyGrid_L32d
 SeqToPadCopyGrid_L4a:
 	mov	2, d2
 SeqToPadCopyGrid_L4c:
@@ -362874,13 +366658,13 @@ SeqToPadCopyGrid_L8f:
 	add	-2, d1
 	cmp	2, d1
 	bcs	SeqToPadCopyGrid_L9e
-	jmp	0x486b9c1c
+	jmp	SeqToPadCopyGrid_L331
 SeqToPadCopyGrid_L9e:
 	movhu	(0x18, sp), d0
 	exth	d0
 	cmp	1, d0
 	beq	SeqToPadCopyGrid_La9
-	jmp	0x486b9c1c
+	jmp	SeqToPadCopyGrid_L331
 SeqToPadCopyGrid_La9:
 	mov	d1, a3
 	add	data_50003EB4, a3
@@ -362892,15 +366676,15 @@ SeqToPadCopyGrid_La9:
 	beq	SeqToPadCopyGrid_Lc2
 	cmp	1, d1
 	beq	SeqToPadCopyGrid_Lf7
-	jmp	0x486b9c1c
+	jmp	SeqToPadCopyGrid_L331
 SeqToPadCopyGrid_Lc2:
 	cmp	0, d3
 	bcc	SeqToPadCopyGrid_Lc9
-	jmp	0x486b9c1c
+	jmp	SeqToPadCopyGrid_L331
 SeqToPadCopyGrid_Lc9:
 	cmp	0x10, d3
 	bls	SeqToPadCopyGrid_Ld0
-	jmp	0x486b9c1c
+	jmp	SeqToPadCopyGrid_L331
 SeqToPadCopyGrid_Ld0:
 	movbu	d3, (a3)
 	call	GetFocusObject_entry, 0, 0x10
@@ -362913,7 +366697,7 @@ SeqToPadCopyGrid_Ld0:
 	mov	d2, (0x10, sp)
 	mov	0x00060081, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	0x486b9c1c
+	jmp	SeqToPadCopyGrid_L331
 SeqToPadCopyGrid_Lf7:
 	mov	6, d0
 	mov	3, d1
@@ -362933,15 +366717,15 @@ SeqToPadCopyGrid_Lf7:
 	extbu	d0
 	cmp	0, d0
 	beq	SeqToPadCopyGrid_L12b
-	jmp	0x486b9c1c
+	jmp	SeqToPadCopyGrid_L331
 SeqToPadCopyGrid_L12b:
 	cmp	0, a2
 	bcc	SeqToPadCopyGrid_L132
-	jmp	0x486b9c1c
+	jmp	SeqToPadCopyGrid_L331
 SeqToPadCopyGrid_L132:
 	cmp	0x10, a2
 	bls	SeqToPadCopyGrid_L139
-	jmp	0x486b9c1c
+	jmp	SeqToPadCopyGrid_L331
 SeqToPadCopyGrid_L139:
 	mov	a2, d0
 	movbu	d0, (a3)
@@ -362955,7 +366739,7 @@ SeqToPadCopyGrid_L139:
 	mov	d2, (0x10, sp)
 	mov	0x00060081, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	0x486b9c1c
+	jmp	SeqToPadCopyGrid_L331
 SeqToPadCopyGrid_L162:
 	mov	(0x80, sp), d1
 	mov	(0x80, sp), d0
@@ -362976,13 +366760,13 @@ SeqToPadCopyGrid_L162:
 	mov	d0, (0x14, sp)
 	cmp	3, a2
 	bcs	SeqToPadCopyGrid_L18e
-	jmp	0x486b9c1c
+	jmp	SeqToPadCopyGrid_L331
 SeqToPadCopyGrid_L18e:
 	movhu	(0x18, sp), d0
 	exth	d0
 	cmp	1, d0
 	beq	SeqToPadCopyGrid_L199
-	jmp	0x486b9c1c
+	jmp	SeqToPadCopyGrid_L331
 SeqToPadCopyGrid_L199:
 	cmp	0, a2
 	beq	SeqToPadCopyGrid_L1a4
@@ -363111,8 +366895,19 @@ SeqToPadCopyGrid_L309:
 	mov	0x00060080, d1
 	mov	a0, (0x10, sp)
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	0x486b9c1c
-.incbin_range "baserom/kn2400_program.rom", 0x2b9c0e, 0x2b9c20
+	bra	SeqToPadCopyGrid_L331
+# SeqToPadCopyGrid + 0x323: no traced path reaches what follows (--decode-gaps)
+	bra	SeqToPadCopyGrid_L332
+SeqToPadCopyGrid_L325:
+	mov	data_50003EB4, d0
+	bra	SeqToPadCopyGrid_L332
+SeqToPadCopyGrid_L32d:
+	mov	-1, d0
+	bra	SeqToPadCopyGrid_L332
+SeqToPadCopyGrid_L331:
+	clr	d0
+SeqToPadCopyGrid_L332:
+	ret	[d2,d3,a2,a3], 0x70
 
 FE_SeqToPadFstMeas:
 	movm	[d2,d3], (sp)
@@ -364185,7 +367980,7 @@ TtMspPnCp:
 	bne	TtMspPnCp_L1e
 	ret	0, 0x20
 TtMspPnCp_L1e:
-	jmp	0x486ba7a9
+	jmp	TtMspPnCp_La9
 TtMspPnCp_L21:
 	movhu	(data_48549C02), d0
 	movbu	d0, (0x500f044b)
@@ -364226,14 +368021,19 @@ TtMspPnCp_L4d:
 	call	PutM3Em_entry, [d2,d3,a2], 0x24
 TtMspPnCp_L9e:
 	clr	d0
-	bra	0x486ba7aa
+	bra	TtMspPnCp_Laa
 TtMspPnCp_La1:
 	clr	d0
-	bra	0x486ba7aa
+	bra	TtMspPnCp_Laa
 TtMspPnCp_La4:
 	clr	d0
-	bra	0x486ba7aa
-.incbin_range "baserom/kn2400_program.rom", 0x2ba7a7, 0x2ba7ad
+	bra	TtMspPnCp_Laa
+# TtMspPnCp + 0xa7: no traced path reaches what follows (--decode-gaps)
+	bra	TtMspPnCp_Laa
+TtMspPnCp_La9:
+	clr	d0
+TtMspPnCp_Laa:
+	ret	0, 0x20
 
 TtMspPadSel_s:
 	add	-0x14, sp
@@ -376118,7 +379918,8 @@ func_486C200E_entry_L98:
 func_486C200E_entry_L9f:
 	movbu	(0x50054b07), d0
 	ret	[d2,d3], 0x14
-.incbin_range "baserom/kn2400_program.rom", 0x2c20bb, 0x2c20be
+# func_486C200E_entry + 0xa8: no traced path reaches what follows (--decode-gaps)
+	retf	0, 0
 
 FmmFileNameFunc:
 	movm	[d2,d3,a2,a3], (sp)
@@ -378307,7 +382108,9 @@ FmmCstLSTitleFunc:
 SendIndexCustomSaveFunc:
 	clr	d0
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x2c3967, 0x2c396c
+# SendIndexCustomSaveFunc + 0x4: no traced path reaches what follows (--decode-gaps)
+	mov	0, a0
+	retf	0, 0
 
 CusLoadSaveSrcDstFunc:
 	clr	d0
@@ -380128,12 +383931,29 @@ FmmWallpaperLoadFunc:
 
 func_486C4D16:
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x2c4d19, 0x2c4d1c
+# func_486C4D16 + 0x3: no traced path reaches what follows (--decode-gaps)
+func_486C4D16_L3:
+	retf	0, 0
 
 FmmPictureLoadFunc:
 	clr	d0
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x2c4d20, 0x2c4d4e
+# FmmPictureLoadFunc + 0x4: no traced path reaches what follows (--decode-gaps)
+	movbu	(0x50054a4d), d0
+	retf	0, 0
+	movbu	d0, (0x50054a4d)
+	retf	0, 0
+	movbu	(0x50054a4e), d0
+	retf	0, 0
+	mov	d0, d1
+	extbu	d1
+	cmp	0, d1
+	blt	FmmPictureLoadFunc_L2f
+	cmp	0x1e, d1
+	bge	FmmPictureLoadFunc_L2f
+	movbu	d0, (0x50054a4e)
+FmmPictureLoadFunc_L2f:
+	retf	0, 0
 
 SmfToDocCngFunc:
 	add	-0x10, sp
@@ -387318,30 +391138,30 @@ FmmDiskMedleySelectFunc_entry:
 	beq	FmmDiskMedleySelectFunc_entry_L3b
 	cmp	0x50001, d1
 	bne	FmmDiskMedleySelectFunc_entry_L17
-	jmp	0x486ca911
+	jmp	FmmDiskMedleySelectFunc_entry_L84d
 FmmDiskMedleySelectFunc_entry_L17:
 	cmp	0x50009, d1
 	bne	FmmDiskMedleySelectFunc_entry_L22
-	jmp	0x486ca957
+	jmp	FmmDiskMedleySelectFunc_entry_L893
 FmmDiskMedleySelectFunc_entry_L22:
 	cmp	0x5000f, d1
 	bne	FmmDiskMedleySelectFunc_entry_L2d
-	jmp	0x486caa1d
+	jmp	FmmDiskMedleySelectFunc_entry_L959
 FmmDiskMedleySelectFunc_entry_L2d:
 	cmp	0x50010, d1
 	bne	FmmDiskMedleySelectFunc_entry_L38
-	jmp	0x486caa1d
+	jmp	FmmDiskMedleySelectFunc_entry_L959
 FmmDiskMedleySelectFunc_entry_L38:
-	jmp	0x486caf6f
+	jmp	FmmDiskMedleySelectFunc_entry_Leab
 FmmDiskMedleySelectFunc_entry_L3b:
 	mov	(0x44, sp), a2
 	cmp	2, a2
 	beq	FmmDiskMedleySelectFunc_entry_L4b
 	cmp	3, a2
 	bne	FmmDiskMedleySelectFunc_entry_L48
-	jmp	0x486ca8cd
+	jmp	FmmDiskMedleySelectFunc_entry_L809
 FmmDiskMedleySelectFunc_entry_L48:
-	jmp	0x486ca90d
+	jmp	FmmDiskMedleySelectFunc_entry_L849
 FmmDiskMedleySelectFunc_entry_L4b:
 	call	func_48633196_entry, 0, 0x1c
 	mov	1, d0
@@ -387466,13 +391286,13 @@ FmmDiskMedleySelectFunc_entry_L1a8:
 	mov	0x00050008, d1
 	call	ApPostEvent_entry, [d2], 0x1c
 	call	func_48622DC9_entry, 0, 0xc
-	jmp	0x486ca8c9
+	jmp	FmmDiskMedleySelectFunc_entry_L805
 FmmDiskMedleySelectFunc_entry_L1e8:
 	call	func_48622856, 0, 0
 	extbu	d0
 	cmp	1, d0
 	beq	FmmDiskMedleySelectFunc_entry_L1f7
-	jmp	0x486ca86e
+	jmp	FmmDiskMedleySelectFunc_entry_L7aa
 FmmDiskMedleySelectFunc_entry_L1f7:
 	mov	1, d0
 	movbu	d0, (0x50054608)
@@ -387497,11 +391317,11 @@ FmmDiskMedleySelectFunc_entry_L1f7:
 	mov	0xaf, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-	jmp	0x486ca8c9
+	jmp	FmmDiskMedleySelectFunc_entry_L805
 FmmDiskMedleySelectFunc_entry_L242:
 	cmp	2, d0
 	beq	FmmDiskMedleySelectFunc_entry_L249
-	jmp	0x486ca8c9
+	jmp	FmmDiskMedleySelectFunc_entry_L805
 FmmDiskMedleySelectFunc_entry_L249:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -387757,14 +391577,14 @@ FmmDiskMedleySelectFunc_entry_L50d:
 	beq	FmmDiskMedleySelectFunc_entry_L521
 	jmp	FmmDiskMedleySelectFunc_entry_L29e
 FmmDiskMedleySelectFunc_entry_L521:
-	jmp	0x486ca8c9
+	jmp	FmmDiskMedleySelectFunc_entry_L805
 FmmDiskMedleySelectFunc_entry_L524:
 	movbu	(0x50054a44), d1
 	movhu	(0x5005443a), d0
 	exth	d0
 	and	d0, d1
 	bne	FmmDiskMedleySelectFunc_entry_L538
-	jmp	0x486ca865
+	jmp	FmmDiskMedleySelectFunc_entry_L7a1
 FmmDiskMedleySelectFunc_entry_L538:
 	clr	d0
 	movbu	d0, (0x50054a43)
@@ -387974,20 +391794,718 @@ FmmDiskMedleySelectFunc_entry_L781:
 	extbu	d0
 	cmp	1, d0
 	bne	FmmDiskMedleySelectFunc_entry_L78a
-	jmp	0x486ca8c9
+	jmp	FmmDiskMedleySelectFunc_entry_L805
 FmmDiskMedleySelectFunc_entry_L78a:
 	movhu	(0x20, sp), d0
 	exth	d0
 	cmp	0, d0
-	beq	0x486ca8c9
+	beq	FmmDiskMedleySelectFunc_entry_L805
 	mov	(0x1c, sp), d0
 	inc	d0
 	exth	d0
 	mov	d0, (0x1c, sp)
 	cmp	0x14, d0
-	bge	0x486ca8c9
+	bge	FmmDiskMedleySelectFunc_entry_L805
 	jmp	FmmDiskMedleySelectFunc_entry_L560
-.incbin_range "baserom/kn2400_program.rom", 0x2ca863, 0x2caf73
+# FmmDiskMedleySelectFunc_entry + 0x79f: no traced path reaches what follows (--decode-gaps)
+	bra	FmmDiskMedleySelectFunc_entry_L805
+FmmDiskMedleySelectFunc_entry_L7a1:
+	clr	d0
+	movbu	d0, (0x50054608)
+	bra	FmmDiskMedleySelectFunc_entry_L805
+FmmDiskMedleySelectFunc_entry_L7aa:
+	call	func_48622856, 0, 0
+	extbu	d0
+	cmp	0, d0
+	bne	FmmDiskMedleySelectFunc_entry_L7e2
+	clr	d0
+	movbu	d0, (0x50054608)
+	mov	d0, (0x10, sp)
+	mov	-1, d0
+	mov	0x0006008f, d1
+	call	ApPostEvent_entry, [d2], 0x1c
+	clr	d0
+	mov	d0, (0x10, sp)
+	mov	-1, d0
+	mov	0x00050008, d1
+	call	ApPostEvent_entry, [d2], 0x1c
+	bra	FmmDiskMedleySelectFunc_entry_L805
+FmmDiskMedleySelectFunc_entry_L7e2:
+	clr	d0
+	movbu	d0, (0x50054608)
+	mov	d0, (0x10, sp)
+	mov	-1, d0
+	mov	0x0006008f, d1
+	call	ApPostEvent_entry, [d2], 0x1c
+	mov	3, d0
+	mov	0xe, d1
+	call	InterruptTitle_entry, [d2,d3,a2], 0x20
+FmmDiskMedleySelectFunc_entry_L805:
+	clr	d0
+	ret	[d2,d3,a2,a3], 0x34
+FmmDiskMedleySelectFunc_entry_L809:
+	call	func_486331AC_entry, 0, 0x1c
+	call	func_486BF713_entry, 0, 8
+	extbu	d0
+	cmp	0xaf, d0
+	beq	FmmDiskMedleySelectFunc_entry_L82c
+	call	func_48622EB6_entry, 0, 0xc
+	clr	d0
+	movbu	d0, (0x50054608)
+FmmDiskMedleySelectFunc_entry_L82c:
+	call	func_486BF772_entry, 0, 0xc
+	clr	d0
+	mov	d0, (0x10, sp)
+	mov	-1, d0
+	mov	0x0006008f, d1
+	call	ApPostEvent_entry, [d2], 0x1c
+	clr	d0
+	ret	[d2,d3,a2,a3], 0x34
+FmmDiskMedleySelectFunc_entry_L849:
+	clr	d0
+	ret	[d2,d3,a2,a3], 0x34
+FmmDiskMedleySelectFunc_entry_L84d:
+	call	func_486D155B_entry, 0, 0xc
+	movhu	d0, (0x50054438)
+	exth	d0
+	cmp	0, d0
+	blt	FmmDiskMedleySelectFunc_entry_L877
+	movhu	(0x50054438), d0
+	mov	0x0145000b, d1
+	exth	d0
+	mov	d0, (0x10, sp)
+	mov	-1, d0
+	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
+	bra	FmmDiskMedleySelectFunc_entry_L88f
+FmmDiskMedleySelectFunc_entry_L877:
+	clr	d0
+	movhu	d0, (0x50054438)
+	mov	d0, (0x10, sp)
+	mov	-1, d0
+	mov	0x0145000b, d1
+	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
+FmmDiskMedleySelectFunc_entry_L88f:
+	clr	d0
+	ret	[d2,d3,a2,a3], 0x34
+FmmDiskMedleySelectFunc_entry_L893:
+	clr	d2
+	clr	d3
+	mov	0x5005461c, a3
+FmmDiskMedleySelectFunc_entry_L89b:
+	mov	0x50054a2e, a0
+	movbu	(d3, a0), d0
+	mov	d2, a2
+	mov	d3, d1
+	asl	3, d1
+	mov	d1, a0
+	add	0x5005443c, a0
+	mov	d2, d1
+	exthu	d1
+	call	func_486C9686_entry, [d2,d3,a2], 0x1c
+	mov	d3, d0
+	asl	3, d0
+	mov	d0, a0
+	add	0x5005443c, a0
+	mov	a0, (0x10, sp)
+	mov	-1, d0
+	mov	0x01450010, d1
+	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
+	mov	d3, d0
+	asl	5, d0
+	movbu	d2, (d0, a3)
+	mov	d3, d0
+	asl	5, d0
+	add	a3, d0
+	clr	d1
+	mov	d0, a0
+	movbu	d1, (1, a0)
+	mov	d2, d0
+	exthu	d0
+	mov	2, d1
+	call	func_486D12BB_entry, [d2], 4
+	extbu	d0
+	cmp	0, d0
+	beq	FmmDiskMedleySelectFunc_entry_L8fe
+	mov	d2, d0
+	exthu	d0
+	call	func_486D15C3_entry, [d2], 0x10
+	bra	FmmDiskMedleySelectFunc_entry_L919
+FmmDiskMedleySelectFunc_entry_L8fe:
+	mov	d2, d0
+	exthu	d0
+	mov	0xb, d1
+	call	func_486D12BB_entry, [d2], 4
+	mov	0x484c677c, a0
+	extbu	d0
+	cmp	0, d0
+	beq	FmmDiskMedleySelectFunc_entry_L919
+	mov	d2, d0
+	exthu	d0
+	call	func_486D15C3_entry, [d2], 0x10
+FmmDiskMedleySelectFunc_entry_L919:
+	clr	d0
+	mov	d0, (0x18, sp)
+	mov	d3, d0
+	asl	5, d0
+	mov	a3, d2
+	add	d0, d2
+	add	2, d2
+	mov	a0, a1
+	mov	a2, d0
+	exthu	d0
+	inc	d0
+	exthu	d0
+	mov	6, d1
+	mov	d2, a0
+	call	func_486D0F3D_entry, [d2,d3,a2,a3], 0x20
+	mov	d3, d1
+	asl	5, d1
+	add	a3, d1
+	mov	d1, (0x10, sp)
+	mov	-1, d0
+	mov	0x01450010, d1
+	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
+	inc	d3
+	mov	d3, d2
+	exth	d3
+	cmp	0x14, d3
+	bge	FmmDiskMedleySelectFunc_entry_L955
+	jmp	FmmDiskMedleySelectFunc_entry_L89b
+FmmDiskMedleySelectFunc_entry_L955:
+	clr	d0
+	ret	[d2,d3,a2,a3], 0x34
+FmmDiskMedleySelectFunc_entry_L959:
+	mov	(0x44, sp), d0
+	cmp	0, d0
+	movhu	(0x50054438), d0
+	movhu	d0, (0x22, sp)
+	bne	FmmDiskMedleySelectFunc_entry_L9b6
+	movbu	(0x50054608), d0
+	cmp	0, d0
+	bne	FmmDiskMedleySelectFunc_entry_L9b6
+	cmp	0x50010, d1
+	bne	FmmDiskMedleySelectFunc_entry_L992
+	movhu	(0x50054438), d0
+	exth	d0
+	cmp	0x13, d0
+	blt	FmmDiskMedleySelectFunc_entry_L988
+	jmp	FmmDiskMedleySelectFunc_entry_Le3f
+FmmDiskMedleySelectFunc_entry_L988:
+	inc	d0
+	movhu	d0, (0x50054438)
+	jmp	FmmDiskMedleySelectFunc_entry_Le3f
+FmmDiskMedleySelectFunc_entry_L992:
+	cmp	0x5000f, d1
+	beq	FmmDiskMedleySelectFunc_entry_L99d
+	jmp	FmmDiskMedleySelectFunc_entry_Le3f
+FmmDiskMedleySelectFunc_entry_L99d:
+	movhu	(0x50054438), d0
+	exth	d0
+	cmp	0, d0
+	bgt	FmmDiskMedleySelectFunc_entry_L9ab
+	jmp	FmmDiskMedleySelectFunc_entry_Le3f
+FmmDiskMedleySelectFunc_entry_L9ab:
+	add	-1, d0
+	movhu	d0, (0x50054438)
+	jmp	FmmDiskMedleySelectFunc_entry_Le3f
+FmmDiskMedleySelectFunc_entry_L9b6:
+	mov	(0x44, sp), d0
+	cmp	1, d0
+	bne	FmmDiskMedleySelectFunc_entry_L9df
+	movbu	(0x50054608), d0
+	cmp	0, d0
+	bne	FmmDiskMedleySelectFunc_entry_L9df
+	movhu	(0x50054438), d0
+	exth	d0
+	cmp	0xa, d0
+	bge	FmmDiskMedleySelectFunc_entry_L9d4
+	jmp	FmmDiskMedleySelectFunc_entry_Le3f
+FmmDiskMedleySelectFunc_entry_L9d4:
+	add	-0xa, d0
+	movhu	d0, (0x50054438)
+	jmp	FmmDiskMedleySelectFunc_entry_Le3f
+FmmDiskMedleySelectFunc_entry_L9df:
+	mov	(0x44, sp), d0
+	cmp	2, d0
+	bne	FmmDiskMedleySelectFunc_entry_La0b
+	movbu	(0x50054608), d0
+	cmp	0, d0
+	bne	FmmDiskMedleySelectFunc_entry_La0b
+	movhu	(0x50054438), d0
+	mov	0xa, d1
+	exth	d0
+	add	d0, d1
+	cmp	0x13, d1
+	ble	FmmDiskMedleySelectFunc_entry_La00
+	jmp	FmmDiskMedleySelectFunc_entry_Le3f
+FmmDiskMedleySelectFunc_entry_La00:
+	add	0xa, d0
+	movhu	d0, (0x50054438)
+	jmp	FmmDiskMedleySelectFunc_entry_Le3f
+FmmDiskMedleySelectFunc_entry_La0b:
+	mov	(0x44, sp), d0
+	cmp	0xa, d0
+	beq	FmmDiskMedleySelectFunc_entry_La14
+	jmp	FmmDiskMedleySelectFunc_entry_Lac2
+FmmDiskMedleySelectFunc_entry_La14:
+	movbu	(0x50054608), d0
+	cmp	0, d0
+	beq	FmmDiskMedleySelectFunc_entry_La21
+	jmp	FmmDiskMedleySelectFunc_entry_Lac2
+FmmDiskMedleySelectFunc_entry_La21:
+	clr	d1
+	setlb
+	mov	0x50054a2e, a0
+	movbu	(d1, a0), d0
+	cmp	0xfe, d0
+	beq	FmmDiskMedleySelectFunc_entry_La36
+	inc	d1
+	exth	d1
+	cmp	0x14, d1
+	llt
+FmmDiskMedleySelectFunc_entry_La36:
+	cmp	0x14, d1
+	bge	FmmDiskMedleySelectFunc_entry_La60
+	clr	d1
+	setlb
+	movbu	(d1, a0), d0
+	cmp	0xfe, d0
+	bne	FmmDiskMedleySelectFunc_entry_La59
+	movbu	(0x50054a42), d0
+	movbu	d0, (d1, a0)
+	movbu	(0x50054a42), d0
+	inc	d0
+	movbu	d0, (0x50054a42)
+FmmDiskMedleySelectFunc_entry_La59:
+	inc	d1
+	exth	d1
+	cmp	0x14, d1
+	llt
+	bra	FmmDiskMedleySelectFunc_entry_La82
+FmmDiskMedleySelectFunc_entry_La60:
+	clr	d1
+	setlb
+	movbu	(d1, a0), d0
+	cmp	0xfd, d0
+	bgt	FmmDiskMedleySelectFunc_entry_La7d
+	mov	0xfe, d0
+	movbu	d0, (d1, a0)
+	movbu	(0x50054a42), d0
+	add	-1, d0
+	movbu	d0, (0x50054a42)
+FmmDiskMedleySelectFunc_entry_La7d:
+	inc	d1
+	exth	d1
+	cmp	0x14, d1
+	llt
+FmmDiskMedleySelectFunc_entry_La82:
+	clr	d2
+	clr	d3
+	mov	0x5005443c, a2
+FmmDiskMedleySelectFunc_entry_La8a:
+	mov	0x50054a2e, a0
+	movbu	(d3, a0), d0
+	mov	d3, d1
+	asl	3, d1
+	mov	a2, a0
+	add	d1, a0
+	exthu	d2
+	mov	d2, d1
+	call	func_486C9686_entry, [d2,d3,a2], 0x1c
+	mov	d3, d0
+	asl	3, d0
+	mov	a2, d1
+	add	d0, d1
+	mov	d1, (0x10, sp)
+	mov	-1, d0
+	mov	0x01450010, d1
+	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
+	inc	d3
+	mov	d3, d2
+	exth	d3
+	cmp	0x14, d3
+	blt	FmmDiskMedleySelectFunc_entry_La8a
+	jmp	FmmDiskMedleySelectFunc_entry_Le3f
+FmmDiskMedleySelectFunc_entry_Lac2:
+	mov	(0x44, sp), d0
+	cmp	0xb, d0
+	beq	FmmDiskMedleySelectFunc_entry_Lacb
+	jmp	FmmDiskMedleySelectFunc_entry_Lb79
+FmmDiskMedleySelectFunc_entry_Lacb:
+	movbu	(0x50054608), d0
+	cmp	0, d0
+	beq	FmmDiskMedleySelectFunc_entry_Lad8
+	jmp	FmmDiskMedleySelectFunc_entry_Lb79
+FmmDiskMedleySelectFunc_entry_Lad8:
+	movhu	(0x50054438), d1
+	mov	0x50054a2e, a2
+	exth	d1
+	movbu	(d1, a2), d0
+	cmp	0xfe, d0
+	bne	FmmDiskMedleySelectFunc_entry_Lb04
+	movbu	(0x50054a42), d0
+	movbu	d0, (d1, a2)
+	movbu	(0x50054a42), d0
+	inc	d0
+	movbu	d0, (0x50054a42)
+	bra	FmmDiskMedleySelectFunc_entry_Lb3d
+FmmDiskMedleySelectFunc_entry_Lb04:
+	movbu	(d1, a2), d0
+	mov	0xfd, d3
+	cmp	d3, d0
+	bgt	FmmDiskMedleySelectFunc_entry_Lb3d
+	movbu	(d1, a2), d2
+	cmp	0x14, d1
+	bge	FmmDiskMedleySelectFunc_entry_Lb25
+	mov	0xfe, d0
+	movbu	d0, (d1, a2)
+	movbu	(0x50054a42), d0
+	add	-1, d0
+	movbu	d0, (0x50054a42)
+FmmDiskMedleySelectFunc_entry_Lb25:
+	clr	d1
+	extbu	d2
+	setlb
+	movbu	(d1, a2), d0
+	cmp	d3, d0
+	bgt	FmmDiskMedleySelectFunc_entry_Lb38
+	movbu	(d1, a2), d0
+	cmp	d2, d0
+	ble	FmmDiskMedleySelectFunc_entry_Lb38
+	movbu	(d1, a2), d0
+	add	-1, d0
+	movbu	d0, (d1, a2)
+FmmDiskMedleySelectFunc_entry_Lb38:
+	inc	d1
+	exth	d1
+	cmp	0x14, d1
+	llt
+FmmDiskMedleySelectFunc_entry_Lb3d:
+	clr	d2
+	clr	d3
+	mov	0x5005443c, a3
+FmmDiskMedleySelectFunc_entry_Lb45:
+	movbu	(d3, a2), d0
+	mov	d3, d1
+	asl	3, d1
+	mov	a3, a0
+	add	d1, a0
+	mov	d0, (0xc, sp)
+	exthu	d2
+	mov	d2, d1
+	call	func_486C9686_entry, [d2,d3,a2], 0x1c
+	mov	d3, d0
+	asl	3, d0
+	mov	a3, a0
+	add	d0, a0
+	mov	a0, (0x10, sp)
+	mov	-1, d0
+	mov	0x01450010, d1
+	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
+	inc	d3
+	mov	d3, d2
+	exth	d3
+	cmp	0x14, d3
+	blt	FmmDiskMedleySelectFunc_entry_Lb45
+	jmp	FmmDiskMedleySelectFunc_entry_Le3f
+FmmDiskMedleySelectFunc_entry_Lb79:
+	mov	(0x44, sp), d0
+	cmp	0xc, d0
+	bne	FmmDiskMedleySelectFunc_entry_Lb9c
+	mov	1, d0
+	movbu	d0, (0x50054a44)
+	cmp	0x5000f, d1
+	bne	FmmDiskMedleySelectFunc_entry_Lb92
+	jmp	FmmDiskMedleySelectFunc_entry_Le3f
+FmmDiskMedleySelectFunc_entry_Lb92:
+	clr	d0
+	movbu	d0, (0x50054a44)
+	jmp	FmmDiskMedleySelectFunc_entry_Le3f
+FmmDiskMedleySelectFunc_entry_Lb9c:
+	cmp	0xd, d0
+	beq	FmmDiskMedleySelectFunc_entry_Lba3
+	jmp	FmmDiskMedleySelectFunc_entry_Le22
+FmmDiskMedleySelectFunc_entry_Lba3:
+	movbu	(0x50054608), d0
+	cmp	0, d0
+	beq	FmmDiskMedleySelectFunc_entry_Lbb0
+	jmp	FmmDiskMedleySelectFunc_entry_Le22
+FmmDiskMedleySelectFunc_entry_Lbb0:
+	clr	d0
+	movbu	d0, (0x50054a43)
+	clr	d2
+FmmDiskMedleySelectFunc_entry_Lbb8:
+	extbu	d0
+	call	func_486D1193_entry, [d2], 4
+	inc	d2
+	mov	d2, d0
+	exth	d2
+	cmp	7, d2
+	blt	FmmDiskMedleySelectFunc_entry_Lbb8
+	mov	7, d0
+	mov	d0, d2
+FmmDiskMedleySelectFunc_entry_Lbc8:
+	extbu	d0
+	call	func_486D11B1_entry, [d2], 4
+	inc	d2
+	mov	d2, d0
+	exth	d2
+	cmp	0xb, d2
+	blt	FmmDiskMedleySelectFunc_entry_Lbc8
+	clr	d0
+	mov	d0, (0x1c, sp)
+FmmDiskMedleySelectFunc_entry_Lbd8:
+	clr	d0
+	movhu	d0, (0x20, sp)
+	mov	d0, d1
+	mov	0, a3
+	movbu	(0x50054a43), d2
+	setlb
+	mov	0x50054a2e, a0
+	mov	d1, d0
+	movbu	(d0, a0), d0
+	cmp	d2, d0
+	beq	FmmDiskMedleySelectFunc_entry_Lbf5
+	jmp	FmmDiskMedleySelectFunc_entry_Ldfe
+FmmDiskMedleySelectFunc_entry_Lbf5:
+	movhu	(0x50054438), d0
+	movhu	d0, (0x22, sp)
+	movhu	d1, (0x50054438)
+	movhu	(0x50054438), d0
+	exthu	d0
+	call	func_486D158E_entry, [d2], 0x10
+	movhu	(0x50054438), d0
+	mov	0x0145000b, d1
+	exth	d0
+	mov	d0, (0x10, sp)
+	mov	-1, d0
+	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
+	cmp	0, a3
+	bne	FmmDiskMedleySelectFunc_entry_Lc2f
+	jmp	FmmDiskMedleySelectFunc_entry_Lcc0
+FmmDiskMedleySelectFunc_entry_Lc2f:
+	clr	d2
+FmmDiskMedleySelectFunc_entry_Lc30:
+	mov	d2, d0
+	asl	5, d0
+	mov	d0, a0
+	add	0x5005461c, a0
+	mov	a0, (0x10, sp)
+	mov	-1, d0
+	mov	0x01450010, d1
+	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
+	inc	d2
+	exth	d2
+	cmp	0x14, d2
+	blt	FmmDiskMedleySelectFunc_entry_Lc30
+	clr	d2
+	clr	d3
+FmmDiskMedleySelectFunc_entry_Lc55:
+	mov	0x50054a2e, a0
+	movbu	(d3, a0), d0
+	mov	d3, d1
+	asl	3, d1
+	mov	d1, a0
+	add	0x5005443c, a0
+	mov	d2, d1
+	exthu	d1
+	call	func_486C9686_entry, [d2,d3,a2], 0x1c
+	mov	d3, d0
+	asl	3, d0
+	mov	d0, a0
+	add	0x5005443c, a0
+	mov	a0, (0x10, sp)
+	mov	-1, d0
+	mov	0x01450010, d1
+	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
+	inc	d3
+	mov	d3, d2
+	exth	d3
+	cmp	0x14, d3
+	blt	FmmDiskMedleySelectFunc_entry_Lc55
+	mov	0x014001c9, d0
+	mov	d0, (0x10, sp)
+	clr	d0
+	mov	0x00050009, d1
+	call	DiskNameFunc_entry, [d2,a2,a3], 0x20
+	mov	0x014001cc, d0
+	mov	d0, (0x10, sp)
+	clr	d0
+	mov	0x00050009, d1
+	call	DiskInfoFunc_entry, [d2,d3,a2], 0x20
+FmmDiskMedleySelectFunc_entry_Lcc0:
+	mov	5, d0
+	mov	d0, (0x10, sp)
+	mov	0x0140000a, d0
+	mov	0x00050001, d1
+	call	ApPostEvent_entry, [d2], 0x1c
+	mov	a3, d0
+	mov	0x500544dc, a0
+	movbu	(d0, a0), d0
+	cmp	0, d0
+	beq	FmmDiskMedleySelectFunc_entry_Lce8
+	jmp	FmmDiskMedleySelectFunc_entry_Ldc0
+FmmDiskMedleySelectFunc_entry_Lce8:
+	mov	0x12c, d0
+	call	dly_tsk_entry, [d2,a2], 0x18
+	call	func_486CEAA1_entry, [d2,d3,a2,a3], 0x3c
+	mov	d0, d2
+	call	func_486BF78F_entry, 0, 8
+	clr	d0
+	mov	d0, (0x10, sp)
+	mov	0x0140000a, d0
+	mov	0x00050002, d1
+	call	ApPostEvent_entry, [d2], 0x1c
+	clr	d0
+	mov	d0, (0x10, sp)
+	mov	-1, d0
+	mov	0x00050008, d1
+	call	ApPostEvent_entry, [d2], 0x1c
+	exth	d2
+	cmp	0, d2
+	bge	FmmDiskMedleySelectFunc_entry_Ld57
+	clr	d0
+	movbu	d0, (0x50054608)
+	mov	0x60, d0
+	clr	d1
+	call	ChangeTitle_entry, [d2,d3,a2], 0x20
+	mov	1, d1
+	mov	d2, d0
+	call	func_486BFBDA_entry, [d2,d3], 8
+	mov	d0, d1
+	extbu	d1
+	exthu	d1
+	mov	3, d0
+	call	InterruptTitle_entry, [d2,d3,a2], 0x20
+	clr	d0
+	ret	[d2,d3,a2,a3], 0x34
+FmmDiskMedleySelectFunc_entry_Ld57:
+	movhu	(0x50054438), d0
+	movhu	d0, (0x22, sp)
+	movbu	(0x50054a43), d0
+	inc	d0
+	movbu	d0, (0x50054a43)
+	mov	(0x44, sp), d0
+	mov	d0, (0x10, sp)
+	mov	(0x3c, sp), d0
+	mov	(0x40, sp), d1
+	call	func_486C9F2B_entry, [d2,d3,a2], 0x18
+	mov	d0, d3
+	extbu	d0
+	cmp	1, d0
+	bne	FmmDiskMedleySelectFunc_entry_Ldb2
+	movhu	(0x5005443a), d0
+	exth	d0
+	cmp	0, d0
+	bne	FmmDiskMedleySelectFunc_entry_Ld93
+	mov	1, d0
+	movhu	d0, (0x5005443a)
+FmmDiskMedleySelectFunc_entry_Ld93:
+	clr	d0
+	mov	d0, (0x10, sp)
+	mov	-1, d0
+	mov	0x0006008b, d1
+	call	ApPostEvent_entry, [d2], 0x1c
+	mov	0xaf, d0
+	clr	d1
+	call	ChangeTitle_entry, [d2,d3,a2], 0x20
+	bra	FmmDiskMedleySelectFunc_entry_Le05
+FmmDiskMedleySelectFunc_entry_Ldb2:
+	mov	1, d0
+	mov	0x500544dc, a0
+	mov	a3, d1
+	movbu	d0, (d1, a0)
+	bra	FmmDiskMedleySelectFunc_entry_Ldf7
+FmmDiskMedleySelectFunc_entry_Ldc0:
+	clr	d0
+	mov	d0, (0x10, sp)
+	mov	0x0140000a, d0
+	mov	0x00050002, d1
+	call	ApPostEvent_entry, [d2], 0x1c
+	clr	d0
+	mov	d0, (0x10, sp)
+	mov	-1, d0
+	mov	0x00050008, d1
+	call	ApPostEvent_entry, [d2], 0x1c
+	movbu	(0x50054a43), d0
+	mov	2, d3
+	inc	d0
+	movbu	d0, (0x50054a43)
+FmmDiskMedleySelectFunc_entry_Ldf7:
+	mov	1, d0
+	movhu	d0, (0x20, sp)
+	bra	FmmDiskMedleySelectFunc_entry_Le05
+FmmDiskMedleySelectFunc_entry_Ldfe:
+	inc	d1
+	exth	d1
+	mov	d1, a3
+	cmp	0x14, a3
+	llt
+FmmDiskMedleySelectFunc_entry_Le05:
+	mov	d3, d0
+	extbu	d0
+	cmp	1, d0
+	beq	FmmDiskMedleySelectFunc_entry_Le3f
+	movhu	(0x20, sp), d0
+	exth	d0
+	cmp	0, d0
+	beq	FmmDiskMedleySelectFunc_entry_Le3f
+	mov	(0x1c, sp), d0
+	inc	d0
+	exth	d0
+	mov	d0, (0x1c, sp)
+	cmp	0x14, d0
+	bge	FmmDiskMedleySelectFunc_entry_Le3f
+	jmp	FmmDiskMedleySelectFunc_entry_Lbd8
+	bra	FmmDiskMedleySelectFunc_entry_Le3f
+FmmDiskMedleySelectFunc_entry_Le22:
+	mov	(0x44, sp), d0
+	cmp	0xe, d0
+	bne	FmmDiskMedleySelectFunc_entry_Le3f
+	mov	1, d0
+	movbu	d0, (0x50054a45)
+	cmp	0x5000f, d1
+	beq	FmmDiskMedleySelectFunc_entry_Le3f
+	clr	d0
+	movbu	d0, (0x50054a45)
+FmmDiskMedleySelectFunc_entry_Le3f:
+	movhu	(0x22, sp), d3
+	movhu	(0x50054438), d1
+	exth	d3
+	exth	d1
+	cmp	d1, d3
+	beq	FmmDiskMedleySelectFunc_entry_Lea8
+	movhu	(0x50054438), d0
+	asl	5, d3
+	exthu	d0
+	call	func_486D158E_entry, [d2], 0x10
+	movhu	(0x50054438), d0
+	mov	0x0145000b, d1
+	exth	d0
+	mov	d0, (0x10, sp)
+	mov	-1, d0
+	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
+	mov	0x5005461c, d2
+	add	d2, d3
+	mov	d3, (0x10, sp)
+	mov	-1, d0
+	mov	0x01450010, d1
+	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
+	movhu	(0x50054438), d0
+	mov	0x01450010, d1
+	exth	d0
+	asl	5, d0
+	add	d0, d2
+	mov	d2, (0x10, sp)
+	mov	-1, d0
+	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
+FmmDiskMedleySelectFunc_entry_Lea8:
+	clr	d0
+	bra	FmmDiskMedleySelectFunc_entry_Leac
+FmmDiskMedleySelectFunc_entry_Leab:
+	clr	d0
+FmmDiskMedleySelectFunc_entry_Leac:
+	ret	[d2,d3,a2,a3], 0x34
 
 func_486CAF73:
 	movbu	(0x50054a46), d0
@@ -387996,7 +392514,15 @@ func_486CAF73:
 func_486CAF7C:
 	movbu	(0x50054a47), d0
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x2caf85, 0x2caf95
+# func_486CAF7C + 0x9: no traced path reaches what follows (--decode-gaps)
+	clr	d1
+	extbu	d0
+	cmp	d1, d0
+	beq	func_486CAF7C_L10
+	mov	1, d1
+func_486CAF7C_L10:
+	movbu	d1, (0x50054a47)
+	retf	0, 0
 
 func_486CAF95:
 	movm	[d2,d3], (sp)
@@ -394293,7 +398819,11 @@ func_486CEAA1_entry_L129:
 func_486CEAA1_entry_L13d:
 	mov	d3, d0
 	ret	[d2,d3,a2,a3], 0x3c
-.incbin_range "baserom/kn2400_program.rom", 0x2cebe7, 0x2cebef
+# func_486CEAA1_entry + 0x141: no traced path reaches what follows (--decode-gaps)
+	clr	d0
+	retf	0, 0
+	clr	d0
+	retf	0, 0
 
 func_486CEBEF:
 	movm	[d2,d3,a2,a3], (sp)
@@ -398765,7 +403295,15 @@ func_486D1090:
 	mov	d1, a0
 	movbu	(1, a0), d0
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x2d10a3, 0x2d10b6
+# func_486D1090 + 0x13: no traced path reaches what follows (--decode-gaps)
+	extbu	d0
+	mov	d0, d1
+	asl2	d1
+	sub	d0, d1
+	add	0x5005629f, d1
+	mov	d1, a0
+	movbu	(2, a0), d0
+	retf	0, 0
 
 func_486D10B6:
 	mov	d0, d1
@@ -398840,7 +403378,8 @@ func_486D1134_entry:
 	movbu	d0, (0x500561d2)
 	ret	[a2], 0x18
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x2d1154, 0x2d1157
+# func_486D1134_entry + 0x1b: no traced path reaches what follows (--decode-gaps)
+	retf	0, 0
 
 func_486D1157:
 	movhu	(0x5005629a), d0
@@ -399154,7 +403693,9 @@ func_486D1345_entry_L26:
 func_486D1345_entry_L27:
 	add	0x11c, sp
 	ret	[a2], 4
-.incbin_range "baserom/kn2400_program.rom", 0x2d1375, 0x2d137a
+# func_486D1345_entry + 0x2e: no traced path reaches what follows (--decode-gaps)
+	mov	0x7f, d0
+	retf	0, 0
 
 func_486D137A:
 	movm	[d2], (sp)
@@ -401216,12 +405757,28 @@ func_486D2417_L15:
 	and	0x01, d0
 func_486D2417_L2d:
 	ret	[d2], 0x10
-.incbin_range "baserom/kn2400_program.rom", 0x2d2447, 0x2d244b
+# func_486D2417 + 0x30: no traced path reaches what follows (--decode-gaps)
+	clr	d0
+	retf	0, 0
 
 func_486D244B:
 	clr	d0
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x2d244f, 0x2d246d
+# func_486D244B + 0x4: no traced path reaches what follows (--decode-gaps)
+	clr	d0
+	retf	0, 0
+	clr	d0
+	retf	0, 0
+	mov	0, a0
+	retf	0, 0
+	clr	d0
+	retf	0, 0
+	clr	d0
+	retf	0, 0
+	clr	d0
+	retf	0, 0
+	mov	0, a0
+	retf	0, 0
 
 func_486D246D:
 	movm	[d2], (sp)
@@ -404607,7 +409164,9 @@ func_486D3F2D:
 	clr	d0
 	movhu	d0, (0x50066482)
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x2d3f37, 0x2d3f40
+# func_486D3F2D + 0xa: no traced path reaches what follows (--decode-gaps)
+	mov	(0x5005647c), d0
+	retf	0, 0
 
 func_486D3F40:
 	mov	d0, (0x50066484)
@@ -406939,6 +411498,7 @@ ZArenaAlloc_entry_L6f:
 
 func_486D5460:
 	add	-0xc, sp
+func_486D5460_L3:
 	nop
 	nop
 	mulu	d1, d0
@@ -412506,7 +417066,7 @@ SeqTrasOK:
 	bne	SeqTrasOK_L20
 	ret	[d2,d3], 0x1c
 SeqTrasOK_L20:
-	jmp	0x486d9006
+	jmp	SeqTrasOK_L18d
 SeqTrasOK_L23:
 	mov	(0x2c, sp), d0
 	movhu	d0, (0x500664ae)
@@ -412640,8 +417200,13 @@ SeqTrasOK_L172:
 	call	ApFuncCall_entry, [d2,d3,a2], 0x24
 SeqTrasOK_L188:
 	clr	d0
-	bra	0x486d9007
-.incbin_range "baserom/kn2400_program.rom", 0x2d9004, 0x2d900a
+	bra	SeqTrasOK_L18e
+# SeqTrasOK + 0x18b: no traced path reaches what follows (--decode-gaps)
+	bra	SeqTrasOK_L18e
+SeqTrasOK_L18d:
+	clr	d0
+SeqTrasOK_L18e:
+	ret	[d2,d3], 0x1c
 
 TrAsSureLangCheck:
 	movm	[d2], (sp)
@@ -412727,8 +417292,8 @@ SeqTrasYes:
 	cmp	0x50005, d1
 	beq	SeqTrasYes_L15
 	cmp	0x50000, d1
-	beq	0x486d9133
-	bra	0x486d9132
+	beq	SeqTrasYes_L48
+	bra	SeqTrasYes_L47
 SeqTrasYes_L15:
 	mov	1, d0
 	mov	d0, (0x10, sp)
@@ -412741,8 +417306,13 @@ SeqTrasYes_L15:
 	mov	0x00050001, d1
 	call	PostEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	0x486d9133
-.incbin_range "baserom/kn2400_program.rom", 0x2d9130, 0x2d9136
+	bra	SeqTrasYes_L48
+# SeqTrasYes + 0x45: no traced path reaches what follows (--decode-gaps)
+	bra	SeqTrasYes_L48
+SeqTrasYes_L47:
+	clr	d0
+SeqTrasYes_L48:
+	ret	0, 0x14
 
 FE_SeqTrAsPSongSel:
 	movm	[d2,d3], (sp)
@@ -416717,7 +421287,7 @@ ApcToSMFConvGrid:
 	beq	ApcToSMFConvGrid_L52
 	cmp	0x50001, d1
 	bne	ApcToSMFConvGrid_L19
-	jmp	0x486dbc06
+	jmp	ApcToSMFConvGrid_L30f
 ApcToSMFConvGrid_L19:
 	cmp	0x50011, d1
 	beq	ApcToSMFConvGrid_L76
@@ -416735,7 +421305,7 @@ ApcToSMFConvGrid_L44:
 	bne	ApcToSMFConvGrid_L4f
 	ret	[d2,a2,a3], 0x34
 ApcToSMFConvGrid_L4f:
-	jmp	0x486dbc06
+	jmp	ApcToSMFConvGrid_L30f
 ApcToSMFConvGrid_L52:
 	mov	(0x44, sp), a0
 	mov	data_50004C50, a1
@@ -417004,8 +421574,13 @@ ApcToSMFConvGrid_L2f4:
 	call	SendEvent_entry, [d2,d3], 0x24
 ApcToSMFConvGrid_L30a:
 	clr	d0
-	bra	0x486dbc08
-.incbin_range "baserom/kn2400_program.rom", 0x2dbc04, 0x2dbc0b
+	bra	ApcToSMFConvGrid_L311
+# ApcToSMFConvGrid + 0x30d: no traced path reaches what follows (--decode-gaps)
+	bra	ApcToSMFConvGrid_L311
+ApcToSMFConvGrid_L30f:
+	mov	-1, d0
+ApcToSMFConvGrid_L311:
+	ret	[d2,a2,a3], 0x34
 
 ApcToSMFConvConv:
 	movm	[a2], (sp)
@@ -424646,15 +429221,15 @@ MdSeq:
 	cmp	0x600b5, d1
 	beq	MdSeq_L57
 	cmp	0x50000, d1
-	beq	0x486e0b27
-	bra	0x486e0b26
+	beq	MdSeq_L63
+	bra	MdSeq_L62
 MdSeq_L1d:
 	mov	(0x1c, sp), a0
 	cmp	0, a0
 	beq	MdSeq_L29
 	cmp	1, a0
 	beq	MdSeq_L43
-	bra	0x486e0b26
+	bra	MdSeq_L62
 MdSeq_L29:
 	call	GetModeNow_entry, 0, 0x10
 	and	0xff, d0
@@ -424662,18 +429237,23 @@ MdSeq_L29:
 	call	func_48623E8F_entry, 0, 8
 	clr	d0
 	call	func_486E0BFA_entry, [d2], 0x18
-	bra	0x486e0b26
+	bra	MdSeq_L62
 MdSeq_L43:
 	call	GetModeOld_entry, 0, 0x10
 	and	0xff, d0
 	extbu	d0
 	call	func_48623EB7_entry, 0, 8
-	bra	0x486e0b26
+	bra	MdSeq_L62
 MdSeq_L57:
 	clr	d0
 	movbu	d0, (data_50004D00)
-	bra	0x486e0b26
-.incbin_range "baserom/kn2400_program.rom", 0x2e0b24, 0x2e0b2a
+	bra	MdSeq_L62
+# MdSeq + 0x60: no traced path reaches what follows (--decode-gaps)
+	bra	MdSeq_L63
+MdSeq_L62:
+	clr	d0
+MdSeq_L63:
+	ret	0, 0xc
 
 TtSeqTitle:
 	add	-0xc, sp
@@ -425289,32 +429869,77 @@ MainSEQ_SeqCycPly_Reload_L5a:
 TtSeqCycPly:
 	add	-0x14, sp
 	cmp	0x5000b, d1
-	beq	0x486e1177
+	beq	TtSeqCycPly_L23
 	cmp	0x600b5, d1
 	bne	TtSeqCycPly_L16
-	jmp	0x486e11e9
+	jmp	TtSeqCycPly_L95
 TtSeqCycPly_L16:
 	cmp	0x50000, d1
-	bne	0x486e11e9
+	bne	TtSeqCycPly_L95
 	ret	0, 0x14
-.incbin_range "baserom/kn2400_program.rom", 0x2e1175, 0x2e11ed
+# TtSeqCycPly + 0x21: no traced path reaches what follows (--decode-gaps)
+	bra	TtSeqCycPly_L95
+TtSeqCycPly_L23:
+	mov	(0x24, sp), a0
+	cmp	2, a0
+	beq	TtSeqCycPly_L33
+	cmp	8, a0
+	beq	TtSeqCycPly_L47
+	cmp	3, a0
+	beq	TtSeqCycPly_L7f
+	bra	TtSeqCycPly_L95
+TtSeqCycPly_L33:
+	call	GetTitleNow_entry, 0, 0x10
+	and	0xff, d0
+	extbu	d0
+	call	func_48623EDF_entry, [d2], 0x10
+	bra	TtSeqCycPly_L95
+TtSeqCycPly_L47:
+	call	func_48615A9F, 0, 0
+	mov	0, a0
+	extbu	d0
+	cmp	0, d0
+	beq	TtSeqCycPly_L57
+	mov	1, a0
+TtSeqCycPly_L57:
+	mov	a0, (0x10, sp)
+	mov	0x00e0004d, d0
+	mov	0x0006003b, d1
+	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
+	clr	d0
+	mov	d0, (0x10, sp)
+	mov	0x00e30021, d0
+	clr	d1
+	call	MainFuncCall_entry, [d2,d3,a2], 0x24
+	bra	TtSeqCycPly_L95
+TtSeqCycPly_L7f:
+	call	GetTitleOld_entry, 0, 0x10
+	and	0xff, d0
+	extbu	d0
+	call	func_48623F4A_entry, [d2], 0x10
+	bra	TtSeqCycPly_L95
+	bra	TtSeqCycPly_L96
+TtSeqCycPly_L95:
+	clr	d0
+TtSeqCycPly_L96:
+	ret	0, 0x14
 
 MdSeqPlay:
 	add	-0xc, sp
 	cmp	0x5000b, d1
 	beq	MdSeqPlay_L1d
 	cmp	0x600b5, d1
-	beq	0x486e1260
+	beq	MdSeqPlay_L73
 	cmp	0x50000, d1
-	beq	0x486e1261
-	bra	0x486e1260
+	beq	MdSeqPlay_L74
+	bra	MdSeqPlay_L73
 MdSeqPlay_L1d:
 	mov	(0x1c, sp), a0
 	cmp	0, a0
 	beq	MdSeqPlay_L29
 	cmp	1, a0
 	beq	MdSeqPlay_L50
-	bra	0x486e1260
+	bra	MdSeqPlay_L73
 MdSeqPlay_L29:
 	call	GetModeNow_entry, 0, 0x10
 	and	0xff, d0
@@ -425324,7 +429949,7 @@ MdSeqPlay_L29:
 	call	func_486E0BFA_entry, [d2], 0x18
 	mov	Str_Seq_Play_New, a0
 	call	func_486491F4_entry, 0, 0x18
-	bra	0x486e1260
+	bra	MdSeqPlay_L73
 MdSeqPlay_L50:
 	call	GetModeOld_entry, 0, 0x10
 	and	0xff, d0
@@ -425332,8 +429957,13 @@ MdSeqPlay_L50:
 	call	func_48623EB7_entry, 0, 8
 	mov	Str_Seq_Play_Old, a0
 	call	func_486491F4_entry, 0, 0x18
-	bra	0x486e1260
-.incbin_range "baserom/kn2400_program.rom", 0x2e125e, 0x2e1264
+	bra	MdSeqPlay_L73
+# MdSeqPlay + 0x71: no traced path reaches what follows (--decode-gaps)
+	bra	MdSeqPlay_L74
+MdSeqPlay_L73:
+	clr	d0
+MdSeqPlay_L74:
+	ret	0, 0xc
 
 TtSeqPlay:
 	add	-0x14, sp
@@ -425341,7 +429971,7 @@ TtSeqPlay:
 	beq	TtSeqPlay_L2f
 	cmp	0x600b5, d1
 	bne	TtSeqPlay_L16
-	jmp	0x486e1356
+	jmp	TtSeqPlay_Lf2
 TtSeqPlay_L16:
 	cmp	0x6003b, d1
 	bne	TtSeqPlay_L21
@@ -425351,7 +429981,7 @@ TtSeqPlay_L21:
 	bne	TtSeqPlay_L2c
 	ret	0, 0x14
 TtSeqPlay_L2c:
-	jmp	0x486e1356
+	jmp	TtSeqPlay_Lf2
 TtSeqPlay_L2f:
 	mov	(0x24, sp), a0
 	cmp	2, a0
@@ -425360,7 +429990,7 @@ TtSeqPlay_L2f:
 	beq	TtSeqPlay_L7c
 	cmp	3, a0
 	beq	TtSeqPlay_La3
-	jmp	0x486e1356
+	jmp	TtSeqPlay_Lf2
 TtSeqPlay_L40:
 	call	GetTitleNow_entry, 0, 0x10
 	and	0xff, d0
@@ -425370,14 +430000,14 @@ TtSeqPlay_L40:
 	movbu	(data_50004D01), d0
 	cmp	0, d0
 	bne	TtSeqPlay_L64
-	jmp	0x486e1356
+	jmp	TtSeqPlay_Lf2
 TtSeqPlay_L64:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x00e00309, d0
 	mov	0x00050001, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-	bra	0x486e1356
+	bra	TtSeqPlay_Lf2
 TtSeqPlay_L7c:
 	call	func_48615A9F, 0, 0
 	mov	0, a0
@@ -425390,13 +430020,13 @@ TtSeqPlay_L8c:
 	mov	0x00e0003c, d0
 	mov	0x0006003b, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-	bra	0x486e1356
+	bra	TtSeqPlay_Lf2
 TtSeqPlay_La3:
 	call	GetTitleOld_entry, 0, 0x10
 	and	0xff, d0
 	extbu	d0
 	call	func_48623F4A_entry, [d2], 0x10
-	bra	0x486e1356
+	bra	TtSeqPlay_Lf2
 TtSeqPlay_Lb7:
 	call	func_48615A9F, 0, 0
 	mov	0, a0
@@ -425411,11 +430041,16 @@ TtSeqPlay_Lc7:
 	call	SendEvent_entry, [d2,d3], 0x24
 	call	CheckNotDrawFlag_entry, 0, 0x10
 	cmp	0, d0
-	beq	0x486e1356
+	beq	TtSeqPlay_Lf2
 	clr	d0
 	movbu	d0, (data_50004D01)
-	bra	0x486e1356
-.incbin_range "baserom/kn2400_program.rom", 0x2e1354, 0x2e135a
+	bra	TtSeqPlay_Lf2
+# TtSeqPlay + 0xf0: no traced path reaches what follows (--decode-gaps)
+	bra	TtSeqPlay_Lf3
+TtSeqPlay_Lf2:
+	clr	d0
+TtSeqPlay_Lf3:
+	ret	0, 0x14
 
 func_486E135A:
 	movm	[d2], (sp)
@@ -425477,27 +430112,27 @@ MdSeqErec:
 	cmp	0x600b5, d1
 	beq	MdSeqErec_L51
 	cmp	0x50000, d1
-	beq	0x486e144f
-	bra	0x486e144e
+	beq	MdSeqErec_L7c
+	bra	MdSeqErec_L7b
 MdSeqErec_L1d:
 	mov	(0x30, sp), a0
 	cmp	0, a0
 	beq	MdSeqErec_L29
 	cmp	1, a0
 	beq	MdSeqErec_L3d
-	bra	0x486e144e
+	bra	MdSeqErec_L7b
 MdSeqErec_L29:
 	call	GetModeNow_entry, 0, 0x10
 	and	0xff, d0
 	extbu	d0
 	call	func_48623E8F_entry, 0, 8
-	bra	0x486e144e
+	bra	MdSeqErec_L7b
 MdSeqErec_L3d:
 	call	GetModeOld_entry, 0, 0x10
 	and	0xff, d0
 	extbu	d0
 	call	func_48623EB7_entry, 0, 8
-	bra	0x486e144e
+	bra	MdSeqErec_L7b
 MdSeqErec_L51:
 	mov	-1, d0
 	mov	d0, (0x10, sp)
@@ -425510,8 +430145,13 @@ MdSeqErec_L51:
 	mov	0x00702040, d0
 	mov	3, d1
 	call	RegisterEasySet_entry, [d2,a2], 8
-	bra	0x486e144e
-.incbin_range "baserom/kn2400_program.rom", 0x2e144c, 0x2e1452
+	bra	MdSeqErec_L7b
+# MdSeqErec + 0x79: no traced path reaches what follows (--decode-gaps)
+	bra	MdSeqErec_L7c
+MdSeqErec_L7b:
+	clr	d0
+MdSeqErec_L7c:
+	ret	0, 0x20
 
 MainSEQ_SwInMetroSwSeq:
 	movm	[d2,d3,a2], (sp)
@@ -425731,13 +430371,13 @@ TtSeqRealRec:
 	beq	TtSeqRealRec_L24
 	cmp	0x600b5, d1
 	bne	TtSeqRealRec_L16
-	jmp	0x486e17aa
+	jmp	TtSeqRealRec_Ld6
 TtSeqRealRec_L16:
 	cmp	0x50000, d1
 	bne	TtSeqRealRec_L21
 	ret	0, 0x14
 TtSeqRealRec_L21:
-	jmp	0x486e17aa
+	jmp	TtSeqRealRec_Ld6
 TtSeqRealRec_L24:
 	mov	(0x24, sp), a0
 	cmp	2, a0
@@ -425748,7 +430388,7 @@ TtSeqRealRec_L24:
 	bne	TtSeqRealRec_L35
 	jmp	TtSeqRealRec_Lc0
 TtSeqRealRec_L35:
-	jmp	0x486e17aa
+	jmp	TtSeqRealRec_Ld6
 TtSeqRealRec_L38:
 	call	GetTitleNow_entry, 0, 0x10
 	and	0xff, d0
@@ -425759,13 +430399,13 @@ TtSeqRealRec_L38:
 	call	func_48615B45, 0, 0
 	extbu	d0
 	cmp	0, d0
-	beq	0x486e17aa
+	beq	TtSeqRealRec_Ld6
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x00e00373, d0
 	mov	0x00050001, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-	bra	0x486e17aa
+	bra	TtSeqRealRec_Ld6
 TtSeqRealRec_L74:
 	call	func_48615A23, 0, 0
 	mov	0, a0
@@ -425789,14 +430429,19 @@ TtSeqRealRec_La9:
 	mov	0x00e0005c, d0
 	mov	0x0006003b, d1
 	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-	bra	0x486e17aa
+	bra	TtSeqRealRec_Ld6
 TtSeqRealRec_Lc0:
 	call	GetTitleOld_entry, 0, 0x10
 	and	0xff, d0
 	extbu	d0
 	call	func_48623F4A_entry, [d2], 0x10
-	bra	0x486e17aa
-.incbin_range "baserom/kn2400_program.rom", 0x2e17a8, 0x2e17ae
+	bra	TtSeqRealRec_Ld6
+# TtSeqRealRec + 0xd4: no traced path reaches what follows (--decode-gaps)
+	bra	TtSeqRealRec_Ld7
+TtSeqRealRec_Ld6:
+	clr	d0
+TtSeqRealRec_Ld7:
+	ret	0, 0x14
 
 TtSeqCycRec:
 	add	-0x14, sp
@@ -425804,13 +430449,13 @@ TtSeqCycRec:
 	beq	TtSeqCycRec_L24
 	cmp	0x600b5, d1
 	bne	TtSeqCycRec_L16
-	jmp	0x486e1892
+	jmp	TtSeqCycRec_Le4
 TtSeqCycRec_L16:
 	cmp	0x50000, d1
 	bne	TtSeqCycRec_L21
 	ret	0, 0x14
 TtSeqCycRec_L21:
-	jmp	0x486e1892
+	jmp	TtSeqCycRec_Le4
 TtSeqCycRec_L24:
 	mov	(0x24, sp), a0
 	cmp	2, a0
@@ -425821,7 +430466,7 @@ TtSeqCycRec_L24:
 	bne	TtSeqCycRec_L35
 	jmp	TtSeqCycRec_Lce
 TtSeqCycRec_L35:
-	jmp	0x486e1892
+	jmp	TtSeqCycRec_Le4
 TtSeqCycRec_L38:
 	call	GetTitleNow_entry, 0, 0x10
 	and	0xff, d0
@@ -425831,14 +430476,14 @@ TtSeqCycRec_L38:
 	extbu	d0
 	cmp	0, d0
 	bne	TtSeqCycRec_L59
-	jmp	0x486e1892
+	jmp	TtSeqCycRec_Le4
 TtSeqCycRec_L59:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x00e00373, d0
 	mov	0x00050001, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-	bra	0x486e1892
+	bra	TtSeqCycRec_Le4
 TtSeqCycRec_L71:
 	call	func_48615A23, 0, 0
 	mov	0, a0
@@ -425867,44 +430512,54 @@ TtSeqCycRec_La6:
 	mov	0x00e30027, d0
 	clr	d1
 	call	MainFuncCall_entry, [d2,d3,a2], 0x24
-	bra	0x486e1892
+	bra	TtSeqCycRec_Le4
 TtSeqCycRec_Lce:
 	call	GetTitleOld_entry, 0, 0x10
 	and	0xff, d0
 	extbu	d0
 	call	func_48623F4A_entry, [d2], 0x10
-	bra	0x486e1892
-.incbin_range "baserom/kn2400_program.rom", 0x2e1890, 0x2e1896
+	bra	TtSeqCycRec_Le4
+# TtSeqCycRec + 0xe2: no traced path reaches what follows (--decode-gaps)
+	bra	TtSeqCycRec_Le5
+TtSeqCycRec_Le4:
+	clr	d0
+TtSeqCycRec_Le5:
+	ret	0, 0x14
 
 TtSeqRecEdit:
 	add	-0xc, sp
 	cmp	0x5000b, d1
 	beq	TtSeqRecEdit_L1d
 	cmp	0x600b5, d1
-	beq	0x486e18e9
+	beq	TtSeqRecEdit_L53
 	cmp	0x50000, d1
-	beq	0x486e18ea
-	bra	0x486e18e9
+	beq	TtSeqRecEdit_L54
+	bra	TtSeqRecEdit_L53
 TtSeqRecEdit_L1d:
 	mov	(0x1c, sp), a0
 	cmp	2, a0
 	beq	TtSeqRecEdit_L29
 	cmp	3, a0
 	beq	TtSeqRecEdit_L3d
-	bra	0x486e18e9
+	bra	TtSeqRecEdit_L53
 TtSeqRecEdit_L29:
 	call	GetTitleNow_entry, 0, 0x10
 	and	0xff, d0
 	extbu	d0
 	call	func_48623EDF_entry, [d2], 0x10
-	bra	0x486e18e9
+	bra	TtSeqRecEdit_L53
 TtSeqRecEdit_L3d:
 	call	GetTitleOld_entry, 0, 0x10
 	and	0xff, d0
 	extbu	d0
 	call	func_48623F4A_entry, [d2], 0x10
-	bra	0x486e18e9
-.incbin_range "baserom/kn2400_program.rom", 0x2e18e7, 0x2e18ed
+	bra	TtSeqRecEdit_L53
+# TtSeqRecEdit + 0x51: no traced path reaches what follows (--decode-gaps)
+	bra	TtSeqRecEdit_L54
+TtSeqRecEdit_L53:
+	clr	d0
+TtSeqRecEdit_L54:
+	ret	0, 0xc
 
 MainSEQ_SongNamingGet:
 	movm	[d2,d3,a2,a3], (sp)
@@ -426577,13 +431232,13 @@ TtSeqPunch:
 	beq	TtSeqPunch_L24
 	cmp	0x600b5, d1
 	bne	TtSeqPunch_L16
-	jmp	0x486e2178
+	jmp	TtSeqPunch_L12a
 TtSeqPunch_L16:
 	cmp	0x50000, d1
 	bne	TtSeqPunch_L21
 	ret	0, 0x14
 TtSeqPunch_L21:
-	jmp	0x486e2178
+	jmp	TtSeqPunch_L12a
 TtSeqPunch_L24:
 	mov	(0x24, sp), a0
 	cmp	2, a0
@@ -426594,7 +431249,7 @@ TtSeqPunch_L24:
 	bne	TtSeqPunch_L35
 	jmp	TtSeqPunch_L114
 TtSeqPunch_L35:
-	jmp	0x486e2178
+	jmp	TtSeqPunch_L12a
 TtSeqPunch_L38:
 	call	GetTitleNow_entry, 0, 0x10
 	and	0xff, d0
@@ -426617,7 +431272,7 @@ TtSeqPunch_L38:
 TtSeqPunch_L7d:
 	clr	d0
 	call	func_486E0BFA_entry, [d2], 0x18
-	jmp	0x486e2178
+	jmp	TtSeqPunch_L12a
 TtSeqPunch_L86:
 	call	func_48615A23, 0, 0
 	mov	0, a0
@@ -426655,33 +431310,83 @@ TtSeqPunch_Le0:
 	call	func_48615BE0, 0, 0
 	extbu	d0
 	cmp	0, d0
-	beq	0x486e2178
+	beq	TtSeqPunch_L12a
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x00e30036, d0
 	clr	d1
 	call	MainFuncCall_entry, [d2,d3,a2], 0x24
-	bra	0x486e2178
+	bra	TtSeqPunch_L12a
 TtSeqPunch_L114:
 	call	GetTitleOld_entry, 0, 0x10
 	and	0xff, d0
 	extbu	d0
 	call	func_48623F4A_entry, [d2], 0x10
-	bra	0x486e2178
-.incbin_range "baserom/kn2400_program.rom", 0x2e2176, 0x2e217c
+	bra	TtSeqPunch_L12a
+# TtSeqPunch + 0x128: no traced path reaches what follows (--decode-gaps)
+	bra	TtSeqPunch_L12b
+TtSeqPunch_L12a:
+	clr	d0
+TtSeqPunch_L12b:
+	ret	0, 0x14
 
 TtSeqPunchMeas:
 	add	-0x14, sp
 	cmp	0x5000b, d1
-	beq	0x486e219f
+	beq	TtSeqPunchMeas_L23
 	cmp	0x600b5, d1
 	bne	TtSeqPunchMeas_L16
-	jmp	0x486e2211
+	jmp	TtSeqPunchMeas_L95
 TtSeqPunchMeas_L16:
 	cmp	0x50000, d1
-	bne	0x486e2211
+	bne	TtSeqPunchMeas_L95
 	ret	0, 0x14
-.incbin_range "baserom/kn2400_program.rom", 0x2e219d, 0x2e2215
+# TtSeqPunchMeas + 0x21: no traced path reaches what follows (--decode-gaps)
+	bra	TtSeqPunchMeas_L95
+TtSeqPunchMeas_L23:
+	mov	(0x24, sp), a0
+	cmp	2, a0
+	beq	TtSeqPunchMeas_L33
+	cmp	8, a0
+	beq	TtSeqPunchMeas_L47
+	cmp	3, a0
+	beq	TtSeqPunchMeas_L7f
+	bra	TtSeqPunchMeas_L95
+TtSeqPunchMeas_L33:
+	call	GetTitleNow_entry, 0, 0x10
+	and	0xff, d0
+	extbu	d0
+	call	func_48623EDF_entry, [d2], 0x10
+	bra	TtSeqPunchMeas_L95
+TtSeqPunchMeas_L47:
+	call	func_48615A23, 0, 0
+	mov	0, a0
+	extbu	d0
+	cmp	0, d0
+	beq	TtSeqPunchMeas_L57
+	mov	1, a0
+TtSeqPunchMeas_L57:
+	mov	a0, (0x10, sp)
+	mov	0x00e000b9, d0
+	mov	0x0006003b, d1
+	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
+	clr	d0
+	mov	d0, (0x10, sp)
+	mov	0x00e30036, d0
+	clr	d1
+	call	MainFuncCall_entry, [d2,d3,a2], 0x24
+	bra	TtSeqPunchMeas_L95
+TtSeqPunchMeas_L7f:
+	call	GetTitleOld_entry, 0, 0x10
+	and	0xff, d0
+	extbu	d0
+	call	func_48623F4A_entry, [d2], 0x10
+	bra	TtSeqPunchMeas_L95
+	bra	TtSeqPunchMeas_L96
+TtSeqPunchMeas_L95:
+	clr	d0
+TtSeqPunchMeas_L96:
+	ret	0, 0x14
 
 MainSEQ_Quantize_SE:
 	movm	[d2], (sp)
@@ -427134,7 +431839,7 @@ TtSeqMdlyPly:
 TtSeqMdlyPly_L16:
 	cmp	0x600b5, d1
 	bne	TtSeqMdlyPly_L21
-	jmp	0x486e2747
+	jmp	TtSeqMdlyPly_L120
 TtSeqMdlyPly_L21:
 	cmp	0x6003b, d1
 	bne	TtSeqMdlyPly_L2c
@@ -427144,7 +431849,7 @@ TtSeqMdlyPly_L2c:
 	bne	TtSeqMdlyPly_L37
 	ret	0, 0x14
 TtSeqMdlyPly_L37:
-	jmp	0x486e2747
+	jmp	TtSeqMdlyPly_L120
 TtSeqMdlyPly_L3a:
 	mov	(0x24, sp), a0
 	cmp	2, a0
@@ -427153,7 +431858,7 @@ TtSeqMdlyPly_L3a:
 	beq	TtSeqMdlyPly_L95
 	cmp	3, a0
 	beq	TtSeqMdlyPly_L9f
-	jmp	0x486e2747
+	jmp	TtSeqMdlyPly_L120
 TtSeqMdlyPly_L4b:
 	call	GetTitleNow_entry, 0, 0x10
 	and	0xff, d0
@@ -427166,18 +431871,18 @@ TtSeqMdlyPly_L4b:
 	movbu	(data_50004D01), d0
 	cmp	0, d0
 	bne	TtSeqMdlyPly_L7c
-	jmp	0x486e2747
+	jmp	TtSeqMdlyPly_L120
 TtSeqMdlyPly_L7c:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x00e003ea, d0
 	mov	0x00050001, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-	jmp	0x486e2747
+	jmp	TtSeqMdlyPly_L120
 TtSeqMdlyPly_L95:
 	mov	1, d0
 	call	func_486E0BFA_entry, [d2], 0x18
-	jmp	0x486e2747
+	jmp	TtSeqMdlyPly_L120
 TtSeqMdlyPly_L9f:
 	call	func_4860314E, 0, 0
 	exthu	d0
@@ -427192,7 +431897,7 @@ TtSeqMdlyPly_Lb3:
 	and	0xff, d0
 	extbu	d0
 	call	func_48623F4A_entry, [d2], 0x10
-	bra	0x486e2747
+	bra	TtSeqMdlyPly_L120
 TtSeqMdlyPly_Ld5:
 	mov	(0x24, sp), a0
 	cmp	0x12, a0
@@ -427201,27 +431906,32 @@ TtSeqMdlyPly_Ld5:
 	beq	TtSeqMdlyPly_Lee
 	cmp	0x17, a0
 	beq	TtSeqMdlyPly_L101
-	bra	0x486e2747
+	bra	TtSeqMdlyPly_L120
 TtSeqMdlyPly_Le5:
 	call	func_486226C7_entry, 0, 0x14
-	bra	0x486e2747
+	bra	TtSeqMdlyPly_L120
 TtSeqMdlyPly_Lee:
 	movbu	(data_50004D01), d0
 	cmp	0, d0
-	beq	0x486e2747
+	beq	TtSeqMdlyPly_L120
 	call	func_486226C7_entry, 0, 0x14
-	bra	0x486e2747
+	bra	TtSeqMdlyPly_L120
 TtSeqMdlyPly_L101:
 	call	func_486225CB_entry, 0, 8
-	bra	0x486e2747
+	bra	TtSeqMdlyPly_L120
 TtSeqMdlyPly_L10a:
 	call	CheckNotDrawFlag_entry, 0, 0x10
 	cmp	0, d0
-	beq	0x486e2747
+	beq	TtSeqMdlyPly_L120
 	clr	d0
 	movbu	d0, (data_50004D01)
-	bra	0x486e2747
-.incbin_range "baserom/kn2400_program.rom", 0x2e2745, 0x2e274b
+	bra	TtSeqMdlyPly_L120
+# TtSeqMdlyPly + 0x11e: no traced path reaches what follows (--decode-gaps)
+	bra	TtSeqMdlyPly_L121
+TtSeqMdlyPly_L120:
+	clr	d0
+TtSeqMdlyPly_L121:
+	ret	0, 0x14
 
 TtDkMdlyPly:
 	add	-0x14, sp
@@ -427233,7 +431943,7 @@ TtDkMdlyPly:
 TtDkMdlyPly_L16:
 	cmp	0x600b5, d1
 	bne	TtDkMdlyPly_L21
-	jmp	0x486e286b
+	jmp	TtDkMdlyPly_L120
 TtDkMdlyPly_L21:
 	cmp	0x6003b, d1
 	bne	TtDkMdlyPly_L2c
@@ -427243,7 +431953,7 @@ TtDkMdlyPly_L2c:
 	bne	TtDkMdlyPly_L37
 	ret	0, 0x14
 TtDkMdlyPly_L37:
-	jmp	0x486e286b
+	jmp	TtDkMdlyPly_L120
 TtDkMdlyPly_L3a:
 	mov	(0x24, sp), a0
 	cmp	2, a0
@@ -427252,7 +431962,7 @@ TtDkMdlyPly_L3a:
 	beq	TtDkMdlyPly_L95
 	cmp	3, a0
 	beq	TtDkMdlyPly_L9f
-	jmp	0x486e286b
+	jmp	TtDkMdlyPly_L120
 TtDkMdlyPly_L4b:
 	call	GetTitleNow_entry, 0, 0x10
 	and	0xff, d0
@@ -427265,18 +431975,18 @@ TtDkMdlyPly_L4b:
 	movbu	(data_50004D01), d0
 	cmp	0, d0
 	bne	TtDkMdlyPly_L7c
-	jmp	0x486e286b
+	jmp	TtDkMdlyPly_L120
 TtDkMdlyPly_L7c:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x00e003f7, d0
 	mov	0x00050001, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-	jmp	0x486e286b
+	jmp	TtDkMdlyPly_L120
 TtDkMdlyPly_L95:
 	mov	1, d0
 	call	func_486E0BFA_entry, [d2], 0x18
-	jmp	0x486e286b
+	jmp	TtDkMdlyPly_L120
 TtDkMdlyPly_L9f:
 	call	func_4860314E, 0, 0
 	exthu	d0
@@ -427291,7 +432001,7 @@ TtDkMdlyPly_Lb3:
 	and	0xff, d0
 	extbu	d0
 	call	func_48623F4A_entry, [d2], 0x10
-	bra	0x486e286b
+	bra	TtDkMdlyPly_L120
 TtDkMdlyPly_Ld5:
 	mov	(0x24, sp), a0
 	cmp	0x12, a0
@@ -427300,27 +432010,32 @@ TtDkMdlyPly_Ld5:
 	beq	TtDkMdlyPly_Lee
 	cmp	0x17, a0
 	beq	TtDkMdlyPly_L101
-	bra	0x486e286b
+	bra	TtDkMdlyPly_L120
 TtDkMdlyPly_Le5:
 	call	func_486226BC_entry, 0, 8
-	bra	0x486e286b
+	bra	TtDkMdlyPly_L120
 TtDkMdlyPly_Lee:
 	movbu	(data_50004D01), d0
 	cmp	0, d0
-	beq	0x486e286b
+	beq	TtDkMdlyPly_L120
 	call	func_486226C7_entry, 0, 0x14
-	bra	0x486e286b
+	bra	TtDkMdlyPly_L120
 TtDkMdlyPly_L101:
 	call	func_486225B5_entry, 0, 8
-	bra	0x486e286b
+	bra	TtDkMdlyPly_L120
 TtDkMdlyPly_L10a:
 	call	CheckNotDrawFlag_entry, 0, 0x10
 	cmp	0, d0
-	beq	0x486e286b
+	beq	TtDkMdlyPly_L120
 	clr	d0
 	movbu	d0, (data_50004D01)
-	bra	0x486e286b
-.incbin_range "baserom/kn2400_program.rom", 0x2e2869, 0x2e286f
+	bra	TtDkMdlyPly_L120
+# TtDkMdlyPly + 0x11e: no traced path reaches what follows (--decode-gaps)
+	bra	TtDkMdlyPly_L121
+TtDkMdlyPly_L120:
+	clr	d0
+TtDkMdlyPly_L121:
+	ret	0, 0x14
 
 MainSEQ_TrackCopySongParaDraw:
 	movm	[d2,d3,a2,a3], (sp)
@@ -439273,7 +443988,8 @@ func_486E9C83_L18:
 	clr	d0
 func_486E9C83_L19:
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x2e9c9f, 0x2e9ca2
+# func_486E9C83 + 0x1c: no traced path reaches what follows (--decode-gaps)
+	retf	0, 0
 
 func_486E9CA2:
 	movm	[d2,d3,a2], (sp)
@@ -442428,7 +447144,45 @@ func_486EB9A3_entry_L5b:
 	mov	0x100, d0
 	call	func_48618199_entry, [d2,d3], 8
 	ret	[d2,d3,a2,a3], 0x24
-.incbin_range "baserom/kn2400_program.rom", 0x2eba22, 0x2eba61
+# func_486EB9A3_entry + 0x7a: no traced path reaches what follows (--decode-gaps)
+	movbu	(5, a0), d0
+	movbu	(6, a0), d1
+	extbu	d0
+	cmp	1, d0
+	beq	func_486EB9A3_entry_L8b
+	cmp	2, d0
+	beq	func_486EB9A3_entry_L9b
+	bra	func_486EB9A3_entry_Lac
+func_486EB9A3_entry_L8b:
+	extbu	d1
+	mov	2, d0
+	cmp	0xa, d1
+	beq	func_486EB9A3_entry_Lb0
+	clr	d0
+	cmp	0xd, d1
+	beq	func_486EB9A3_entry_Lb0
+	mov	-0x66, d0
+	bra	func_486EB9A3_entry_Lb6
+func_486EB9A3_entry_L9b:
+	extbu	d1
+	mov	4, d0
+	cmp	5, d1
+	beq	func_486EB9A3_entry_Lb0
+	mov	2, d0
+	cmp	6, d1
+	beq	func_486EB9A3_entry_Lb0
+	mov	-0x66, d0
+	bra	func_486EB9A3_entry_Lb6
+func_486EB9A3_entry_Lac:
+	mov	-0x66, d0
+	bra	func_486EB9A3_entry_Lb6
+func_486EB9A3_entry_Lb0:
+	movbu	(4, a0), d1
+	extbu	d0
+	add	d1, d0
+	extbu	d0
+func_486EB9A3_entry_Lb6:
+	retf	0, 0
 
 TransldSeq:
 	movm	[d2], (sp)
@@ -443940,7 +448694,50 @@ DiskWorkerTask_L64:
 	mov	(0x10, sp), a0
 	call	func_5018D2FE, 0, 0
 	bra	DiskWorkerTask_L18
-.incbin_range "baserom/kn2400_program.rom", 0x2ec8ac, 0x2ec909
+# DiskWorkerTask + 0x78: no traced path reaches what follows (--decode-gaps)
+	ret	[d2,d3,a2,a3], 0x54
+	movm	[d2], (sp)
+	mov	d0, d2
+	movhu	(data_50004D38), d0
+	mov	-1, d1
+	exth	d0
+	cmp	1, d0
+	bne	DiskWorkerTask_Ld1
+	movhu	(a0), d0
+	movhu	(0x500fe71c), d1
+	cmp	d0, d1
+	bne	DiskWorkerTask_Lb4
+	mov	0x500fe71c, a1
+	mov	-4, d1
+	setlb
+	mov	(a0), d0
+	inc4	a0
+	mov	d0, (a1)
+	inc4	a1
+	inc	d1
+	lne
+	movhu	d2, (data_50004D3A)
+	clr	d0
+	movhu	d0, (data_50004D38)
+	bra	DiskWorkerTask_Ld0
+DiskWorkerTask_Lb4:
+	mov	0x500fe71c, a1
+	mov	-4, d1
+	setlb
+	mov	(a0), d0
+	inc4	a0
+	mov	d0, (a1)
+	inc4	a1
+	inc	d1
+	lne
+	movhu	d2, (data_50004D3A)
+	clr	d0
+	movhu	d0, (data_50004D38)
+DiskWorkerTask_Ld0:
+	clr	d1
+DiskWorkerTask_Ld1:
+	mov	d1, d0
+	retf	[d2], 4
 
 DiskCmdTransact:
 	movm	[d2,a2], (sp)
@@ -444703,7 +449500,10 @@ SdDrvRecordsReset_entry:
 	add	d2, a0
 	call	SdCardInfoReset_entry, 0, 0x14
 	ret	[d2], 0x10
-.incbin_range "baserom/kn2400_program.rom", 0x2ecfff, 0x2ed00b
+# SdDrvRecordsReset_entry + 0x17: no traced path reaches what follows (--decode-gaps)
+	movhu	(0x500fe6b0), d0
+	retf	0, 0
+	add	-8, sp
 
 func_486ED00B:
 	call	SdCardDetectDebounce_entry, [d2,d3], 0x10
@@ -444744,7 +449544,9 @@ func_486ED042:
 	call	func_486ED7FD_entry, 0, 8
 	extbu	d0
 	ret	0, 8
-.incbin_range "baserom/kn2400_program.rom", 0x2ed04e, 0x2ed057
+# func_486ED042 + 0xc: no traced path reaches what follows (--decode-gaps)
+	mov	0x500678dc, a0
+	retf	0, 0
 
 func_486ED057:
 	movm	[d2,d3,a2,a3], (sp)
@@ -445347,7 +450149,9 @@ DriveLetterClass_L1c:
 	mov	d1, d0
 	extbu	d0
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x2ed56d, 0x2ed572
+# DriveLetterClass + 0x21: no traced path reaches what follows (--decode-gaps)
+	mov	-1, d0
+	retf	0, 0
 
 func_486ED572:
 	bset	0x01, (data_50006E78)
@@ -447575,7 +452379,9 @@ func_486EE84A:
 func_486EE84A_entry:
 	call	func_486EE85F_entry, [d2,a2], 0x14
 	ret	0, 8
-.incbin_range "baserom/kn2400_program.rom", 0x2ee855, 0x2ee859
+# func_486EE84A_entry + 0x8: no traced path reaches what follows (--decode-gaps)
+	clr	d0
+	retf	0, 0
 
 func_486EE859:
 	retf	0, 0
@@ -447868,7 +452674,7 @@ func_486EEB73_L2e:
 	bne	func_486EEB73_L39
 	ret	[d2,a2,a3], 0x88
 func_486EEB73_L39:
-	jmp	0x486eed9e
+	jmp	func_486EEB73_L22b
 func_486EEB73_L3c:
 	call	func_487055C4, 0, 0
 	extbu	d0
@@ -447876,7 +452682,7 @@ func_486EEB73_L3c:
 	beq	func_486EEB73_L4f
 	cmp	2, d0
 	beq	func_486EEB73_L78
-	jmp	0x486eed9e
+	jmp	func_486EEB73_L22b
 func_486EEB73_L4f:
 	mov	0x01c0000d, d0
 	mov	d0, (0x10, sp)
@@ -447886,7 +452692,7 @@ func_486EEB73_L4f:
 	mov	0x01c30001, d1
 	mov	Str_TT_DEMOMENU_2, a0
 	call	RegisterTitle_entry, [d2,a2], 8
-	jmp	0x486eed9e
+	jmp	func_486EEB73_L22b
 func_486EEB73_L78:
 	mov	0x01c00010, d0
 	mov	d0, (0x10, sp)
@@ -447896,14 +452702,14 @@ func_486EEB73_L78:
 	mov	0x01c30001, d1
 	mov	Str_TT_DEMOMENU, a0
 	call	RegisterTitle_entry, [d2,a2], 8
-	jmp	0x486eed9e
+	jmp	func_486EEB73_L22b
 func_486EEB73_La1:
 	mov	(0x98, sp), a0
 	cmp	0, a0
 	beq	func_486EEB73_Lae
 	cmp	1, a0
 	beq	func_486EEB73_L122
-	jmp	0x486eed9e
+	jmp	func_486EEB73_L22b
 func_486EEB73_Lae:
 	call	func_48725572_entry, 0, 0x10
 	call	func_486E79B6_entry, [d2,d3], 0x1c
@@ -447933,7 +452739,7 @@ func_486EEB73_Lae:
 	call	func_5015E7E7_entry, [d2,d3], 8
 	clr	d0
 	mov	d0, (0x50067af8)
-	jmp	0x486eed9e
+	jmp	func_486EEB73_L22b
 func_486EEB73_L122:
 	call	func_486E7B5B_entry, 0, 0xc
 	mov	0xf0, d0
@@ -447946,56 +452752,56 @@ func_486EEB73_L122:
 	mov	d0, (0x50067af8)
 	mov	0, a0
 	call	func_486FEC4F, 0, 0
-	jmp	0x486eed9e
+	jmp	func_486EEB73_L22b
 func_486EEB73_L14f:
 	mov	(0x98, sp), a0
 	mov	(a0), d0
 	and	0x00ffffff, d0
 	cmp	0x708000, d0
 	beq	func_486EEB73_L163
-	jmp	0x486eed9e
+	jmp	func_486EEB73_L22b
 func_486EEB73_L163:
 	mov	(4, a0), d0
 	and	0xff, d0
 	extbu	d0
 	cmp	1, d0
 	beq	func_486EEB73_L171
-	jmp	0x486eed9e
+	jmp	func_486EEB73_L22b
 func_486EEB73_L171:
 	call	GetTitleNow_entry, 0, 0x10
 	cmp	0xf00cf, d0
 	beq	func_486EEB73_L183
-	jmp	0x486eed9e
+	jmp	func_486EEB73_L22b
 func_486EEB73_L183:
 	call	func_48614EE5, 0, 0
 	exthu	d0
 	cmp	0, d0
 	beq	func_486EEB73_L192
-	jmp	0x486eed9e
+	jmp	func_486EEB73_L22b
 func_486EEB73_L192:
 	call	func_486E80E2, 0, 0
 	extbu	d0
 	cmp	0, d0
 	beq	func_486EEB73_L19f
-	jmp	0x486eed9e
+	jmp	func_486EEB73_L22b
 func_486EEB73_L19f:
 	call	func_486E80EB, 0, 0
 	extbu	d0
 	cmp	0, d0
 	beq	func_486EEB73_L1ac
-	jmp	0x486eed9e
+	jmp	func_486EEB73_L22b
 func_486EEB73_L1ac:
 	call	func_486EEB3E_entry, 0, 8
 	exth	d0
 	cmp	0, d0
 	beq	func_486EEB73_L1b9
-	jmp	0x486eed9e
+	jmp	func_486EEB73_L22b
 func_486EEB73_L1b9:
 	mov	Str_FEATURE_PRE_2, a0
 	call	func_486D1345_entry, [a2], 4
 	extbu	d0
 	cmp	0, d0
-	beq	0x486eed9e
+	beq	func_486EEB73_L22b
 	mov	sp, a2
 	add	0x1c, a2
 	mov	sp, a0
@@ -448009,7 +452815,7 @@ func_486EEB73_L1b9:
 	call	FeaturePreLoad_entry, [d2,d3,a2,a3], 0x20
 	exth	d0
 	cmp	0, d0
-	blt	0x486eed9e
+	blt	func_486EEB73_L22b
 	mov	1, d0
 	mov	a3, a0
 	call	func_486EF26F_entry, [a2,a3], 0x1c
@@ -448028,17 +452834,22 @@ func_486EEB73_L209:
 	clr	d0
 	mov	a3, a0
 	call	func_486EF26F_entry, [a2,a3], 0x1c
-	bra	0x486eed9e
+	bra	func_486EEB73_L22b
 func_486EEB73_L212:
 	mov	(0x98, sp), a0
 	mov	1, d0
 	mov	d0, (0x50067af4)
 	cmp	0, a0
-	bne	0x486eed9e
+	bne	func_486EEB73_L22b
 	clr	d0
 	mov	d0, (0x50067af4)
-	bra	0x486eed9e
-.incbin_range "baserom/kn2400_program.rom", 0x2eed9c, 0x2eeda2
+	bra	func_486EEB73_L22b
+# func_486EEB73 + 0x229: no traced path reaches what follows (--decode-gaps)
+	bra	func_486EEB73_L22c
+func_486EEB73_L22b:
+	clr	d0
+func_486EEB73_L22c:
+	ret	[d2,a2,a3], 0x88
 
 func_486EEDA2:
 	movm	[d2,d3], (sp)
@@ -449332,7 +454143,32 @@ InitializeBlock12_entry:
 	mov	Str_TT_FXMIC, a0
 	call	RegisterTitle_entry, [d2,a2], 8
 	ret	[d2,d3,a2,a3], 0x3c
-.incbin_range "baserom/kn2400_program.rom", 0x2efcd7, 0x2efd11
+# InitializeBlock12_entry + 0x3d1: no traced path reaches what follows (--decode-gaps)
+	cmp	0x60092, d1
+	beq	InitializeBlock12_entry_L3f3
+	cmp	0x60093, d1
+	beq	InitializeBlock12_entry_L3fb
+	cmp	0x60094, d1
+	beq	InitializeBlock12_entry_L3ff
+	cmp	0x600ad, d1
+	beq	InitializeBlock12_entry_L403
+	bra	InitializeBlock12_entry_L407
+InitializeBlock12_entry_L3f3:
+	mov	0x484edee0, d0
+	bra	InitializeBlock12_entry_L408
+InitializeBlock12_entry_L3fb:
+	mov	0x20, d0
+	bra	InitializeBlock12_entry_L408
+InitializeBlock12_entry_L3ff:
+	mov	0xe, d0
+	bra	InitializeBlock12_entry_L408
+InitializeBlock12_entry_L403:
+	mov	8, d0
+	bra	InitializeBlock12_entry_L408
+InitializeBlock12_entry_L407:
+	clr	d0
+InitializeBlock12_entry_L408:
+	retf	0, 0
 
 BitmapTonctl:
 	cmp	0x60092, d1
@@ -459828,7 +464664,73 @@ BitmapKenban_L37:
 	clr	d0
 BitmapKenban_L38:
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x2f6a82, 0x2f6b47
+# BitmapKenban + 0x3b: no traced path reaches what follows (--decode-gaps)
+	cmp	0x60092, d1
+	beq	BitmapKenban_L5d
+	cmp	0x60093, d1
+	beq	BitmapKenban_L65
+	cmp	0x60094, d1
+	beq	BitmapKenban_L69
+	cmp	0x600ad, d1
+	beq	BitmapKenban_L6d
+	bra	BitmapKenban_L71
+BitmapKenban_L5d:
+	mov	data_484FD9A8, d0
+	bra	BitmapKenban_L72
+BitmapKenban_L65:
+	mov	0x11, d0
+	bra	BitmapKenban_L72
+BitmapKenban_L69:
+	mov	0x34, d0
+	bra	BitmapKenban_L72
+BitmapKenban_L6d:
+	mov	8, d0
+	bra	BitmapKenban_L72
+BitmapKenban_L71:
+	clr	d0
+BitmapKenban_L72:
+	retf	0, 0
+	add	-0x14, sp
+	and	0xff, d1
+	extbu	d1
+	cmp	0, d1
+	beq	BitmapKenban_Ld6
+	call	GetTitleNow_entry, 0, 0x10
+	cmp	0xf00ed, d0
+	beq	BitmapKenban_La8
+	mov	0x000f00ed, d0
+	mov	d0, (0x10, sp)
+	mov	-1, d0
+	mov	0x0005000e, d1
+	call	ApPostEvent_entry, [d2], 0x1c
+	bra	BitmapKenban_Ld6
+BitmapKenban_La8:
+	call	GetTitleNow_entry, 0, 0x10
+	clr	d1
+	mov	d1, (0x10, sp)
+	mov	0x0006006f, d1
+	call	ApPostEvent_entry, [d2], 0x1c
+	call	GetTitleNow_entry, 0, 0x10
+	clr	d1
+	mov	d1, (0x10, sp)
+	mov	0x0006008b, d1
+	call	ApPostEvent_entry, [d2], 0x1c
+BitmapKenban_Ld6:
+	clr	d0
+	ret	0, 0x14
+	add	-0x14, sp
+	and	0xff, d1
+	extbu	d1
+	cmp	0, d1
+	beq	BitmapKenban_Lfc
+	mov	0x000f00ef, d0
+	mov	d0, (0x10, sp)
+	mov	-1, d0
+	mov	0x0005000e, d1
+	call	ApPostEvent_entry, [d2], 0x1c
+BitmapKenban_Lfc:
+	clr	d0
+	ret	0, 0x14
 
 func_486F6B47:
 	movm	[d2,d3], (sp)
@@ -462405,7 +467307,64 @@ func_486F84EC_entry_La2:
 	clr	d0
 func_486F84EC_entry_La3:
 	ret	[d2,d3,a2], 0x20
-.incbin_range "baserom/kn2400_program.rom", 0x2f8597, 0x2f8610
+# func_486F84EC_entry + 0xa6: no traced path reaches what follows (--decode-gaps)
+	clr	d0
+	movhu	d0, (0x500fe754)
+	movhu	d0, (0x500fe750)
+	retf	0, 0
+	movm	[d2,d3,a2,a3], (sp)
+	add	-0x14, sp
+	mov	a0, a2
+	call	GetTitleNow_entry, 0, 0x10
+	cmp	0xf00ee, d0
+	bne	func_486F84EC_entry_L11c
+	mov	a2, a3
+	inc	a3
+	movbu	(a3), d1
+	clr	d0
+	clr	d3
+	cmp	d0, d1
+	ble	func_486F84EC_entry_L11c
+	inc4	a2
+func_486F84EC_entry_Ld5:
+	exthu	d0
+	mov	d0, a1
+	asl2	d0
+	add	a1, d0
+	movbu	(d0, a2), d0
+	cmp	0x24, d0
+	blt	func_486F84EC_entry_L114
+	mov	a1, d0
+	asl2	d0
+	add	a1, d0
+	movbu	(d0, a2), d0
+	cmp	0x47, d0
+	bgt	func_486F84EC_entry_L114
+	mov	a1, d0
+	asl2	d0
+	add	a1, d0
+	add	a2, d0
+	mov	d0, a0
+	movbu	(1, a0), d2
+	mov	a1, d0
+	asl2	d0
+	add	a1, d0
+	movbu	(d0, a2), d0
+	asl	16, d2
+	add	d0, d2
+	mov	d2, (0x10, sp)
+	mov	-1, d0
+	mov	0x00d50001, d1
+	call	ApPostEvent_entry, [d2], 0x1c
+func_486F84EC_entry_L114:
+	movbu	(a3), d1
+	inc	d3
+	mov	d3, d0
+	exthu	d3
+	cmp	d1, d3
+	blt	func_486F84EC_entry_Ld5
+func_486F84EC_entry_L11c:
+	ret	[d2,d3,a2,a3], 0x24
 
 ChordFinderListen:
 	add	-0x14, sp
@@ -470513,7 +475472,9 @@ func_486FCB67_entry:
 	exthu	d1
 	call	func_486FC91C_entry, [d2,d3,a2,a3], 0x2c
 	ret	[d2], 0x18
-.incbin_range "baserom/kn2400_program.rom", 0x2fcb80, 0x2fcb86
+# func_486FCB67_entry + 0x14: no traced path reaches what follows (--decode-gaps)
+	retf	0, 0
+	add	-4, sp
 
 func_486FCB86:
 	clr	d0
@@ -471752,34 +476713,34 @@ func_486FDA8F_entry:
 	beq	func_486FDA8F_entry_L7a
 	cmp	0x600d8, d1
 	bne	func_486FDA8F_entry_L1c
-	jmp	0x486fdbc2
+	jmp	func_486FDA8F_entry_L12e
 func_486FDA8F_entry_L1c:
 	cmp	0x6008e, d1
 	bne	func_486FDA8F_entry_L27
-	jmp	0x486fdba2
+	jmp	func_486FDA8F_entry_L10e
 func_486FDA8F_entry_L27:
 	cmp	0x6003b, d1
 	bne	func_486FDA8F_entry_L32
-	jmp	0x486fdba6
+	jmp	func_486FDA8F_entry_L112
 func_486FDA8F_entry_L32:
-	jmp	0x486fdbc2
+	jmp	func_486FDA8F_entry_L12e
 func_486FDA8F_entry_L35:
 	mov	(0x2c, sp), a0
 	cmp	2, a0
 	bne	func_486FDA8F_entry_L3e
-	jmp	0x486fdbc2
+	jmp	func_486FDA8F_entry_L12e
 func_486FDA8F_entry_L3e:
 	cmp	3, a0
 	bne	func_486FDA8F_entry_L45
-	jmp	0x486fdbc2
+	jmp	func_486FDA8F_entry_L12e
 func_486FDA8F_entry_L45:
 	cmp	4, a0
 	bne	func_486FDA8F_entry_L4c
-	jmp	0x486fdbc2
+	jmp	func_486FDA8F_entry_L12e
 func_486FDA8F_entry_L4c:
 	cmp	5, a0
 	beq	func_486FDA8F_entry_L53
-	jmp	0x486fdbc2
+	jmp	func_486FDA8F_entry_L12e
 func_486FDA8F_entry_L53:
 	movhu	(data_50006E80), d0
 	cmp	d3, d0
@@ -471791,10 +476752,10 @@ func_486FDA8F_entry_L53:
 func_486FDA8F_entry_L67:
 	mov	0x7fff, d0
 	call	func_486FDF50_entry, [d2], 0x18
-	jmp	0x486fdbc2
+	jmp	func_486FDA8F_entry_L12e
 func_486FDA8F_entry_L72:
 	call	func_486FE04A_entry, 0, 0x14
-	jmp	0x486fdbc2
+	jmp	func_486FDA8F_entry_L12e
 func_486FDA8F_entry_L7a:
 	call	GetTitleNow_entry, 0, 0x10
 	mov	d0, d2
@@ -471834,9 +476795,9 @@ func_486FDA8F_entry_Lc2:
 	mov	0x02350000, d1
 	call	ApPostEvent_entry, [d2], 0x1c
 	mov	1, d3
-	bra	0x486fdbc2
+	bra	func_486FDA8F_entry_L12e
 	mov	1, d3
-	bra	0x486fdbc2
+	bra	func_486FDA8F_entry_L12e
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x000f0003, d0
@@ -471846,13 +476807,29 @@ func_486FDA8F_entry_Lc2:
 	movhu	(0x14, a0), d0
 	exth	d0
 	cmp	0x81, d0
-	beq	0x486fdbc2
+	beq	func_486FDA8F_entry_L12e
 	mov	1, d3
-	bra	0x486fdbc2
+	bra	func_486FDA8F_entry_L12e
 func_486FDA8F_entry_L108:
 	mov	1, d3
-	bra	0x486fdbc2
-.incbin_range "baserom/kn2400_program.rom", 0x2fdba0, 0x2fdbc6
+	bra	func_486FDA8F_entry_L12e
+# func_486FDA8F_entry + 0x10c: no traced path reaches what follows (--decode-gaps)
+	bra	func_486FDA8F_entry_L12e
+func_486FDA8F_entry_L10e:
+	mov	0xd, d3
+	bra	func_486FDA8F_entry_L12e
+func_486FDA8F_entry_L112:
+	mov	(0x2c, sp), d0
+	cmp	0x7fff, d0
+	beq	func_486FDA8F_entry_L122
+	mov	(0x2c, sp), d0
+	mov	d0, (0x50067b9c)
+func_486FDA8F_entry_L122:
+	mov	(0x50067ba4), d0
+	mov	d0, (0x50067ba0)
+func_486FDA8F_entry_L12e:
+	mov	d3, d0
+	ret	[d2,d3], 0x1c
 
 AcSswScreenProc:
 	movm	[d2,d3,a2,a3], (sp)
@@ -473242,12 +478219,115 @@ func_486FE967_entry_L19:
 	clr	d0
 	call	func_486FEA6E, 0, 0x10
 	ret	0, 0xc
-.incbin_range "baserom/kn2400_program.rom", 0x2fe98c, 0x2fe992
+# func_486FE967_entry + 0x22: no traced path reaches what follows (--decode-gaps)
+	retf	0, 0
+	add	-0xc, sp
 
 func_486FE992:
 	call	func_486FDF50_entry, [d2], 0x18
 	ret	0, 0xc
-.incbin_range "baserom/kn2400_program.rom", 0x2fe99a, 0x2fea6e
+# func_486FE992 + 0x8: no traced path reaches what follows (--decode-gaps)
+	clr	d0
+	retf	0, 0
+	movm	[d2,a2], (sp)
+	add	-0xc, sp
+	mov	a0, a2
+	mov	d0, d2
+	call	func_486FEBCF_entry, 0, 0x10
+	mov	0, a0
+	call	func_486FEC4F, 0, 0
+	mov	d2, d1
+	exth	d1
+	cmp	0, d1
+	blt	func_486FE992_L2c
+	mov	a2, a0
+	call	SswActOpen_entry, [d2,a2], 0x18
+	mov	d0, d2
+func_486FE992_L2c:
+	mov	d2, d0
+	ret	[d2,a2], 0x14
+	add	-0xc, sp
+	call	func_487005B7_L5, [d2,a2], 0x18
+	ret	0, 0xc
+	movm	[a2], (sp)
+	add	-0xc, sp
+	mov	(0x500fe88c), d0
+	mov	a1, a2
+	mov	d0, (a0)
+	mov	(0x500fe88c), d1
+	mov	0x28, a0
+	add	d1, a0
+	mov	(a0), d0
+	cmp	0, d0
+	beq	func_486FE992_L67
+	mov	(a0), a0
+	call	LibStrlen, 0, 0
+	add	0x800, d0
+	mov	d0, (a2)
+	bra	func_486FE992_L6b
+func_486FE992_L67:
+	mov	0x800, d0
+	mov	d0, (a2)
+func_486FE992_L6b:
+	clr	d0
+	ret	[a2], 0x10
+	movm	[d2,d3,a2], (sp)
+	clr	d3
+	mov	d3, d1
+	mov	(0x500fe88c), a0
+	mov	0x230, a1
+	add	a0, a1
+	setlb
+	mov	d1, d0
+	asl	5, d0
+	add	a1, d0
+	mov	d0, a2
+	mov	(0x10, a2), d0
+	cmp	0, d0
+	beq	func_486FE992_L9b
+	mov	d1, d0
+	asl	5, d0
+	add	a0, d0
+	mov	d0, a2
+	mov	(0x244, a2), d2
+	add	d2, d3
+func_486FE992_L9b:
+	inc	d1
+	exth	d1
+	cmp	0x1e, d1
+	llt
+	clr	d1
+	mov	a0, a1
+	mov	0x5f0, a2
+	add	a1, a2
+	setlb
+	mov	d1, d0
+	asl	5, d0
+	mov	d0, a0
+	add	a2, a0
+	mov	(0x10, a0), a0
+	cmp	0, a0
+	beq	func_486FE992_Lc4
+	mov	d1, d0
+	asl	5, d0
+	add	a1, d0
+	mov	d0, a0
+	mov	(0x604, a0), d2
+	add	d2, d3
+func_486FE992_Lc4:
+	inc	d1
+	exth	d1
+	cmp	0x40, d1
+	llt
+	mov	d3, d0
+	retf	[d2,d3,a2], 0xc
+	clr	d0
+	retf	0, 0
+	clr	d0
+	retf	0, 0
+	clr	d0
+	retf	0, 0
+	add	-0x10, sp
 
 func_486FEA6E:
 	mov	d0, d1
@@ -476576,6 +481656,7 @@ func_4870055D_entry_L51:
 func_487005B7:
 	movm	[d2,a2], (sp)
 	add	-0x10, sp
+func_487005B7_L5:
 	mov	a0, a2
 	mov	Str_wb_10, a1
 	call	fmmopen_entry, [a2,a3], 0x24
@@ -478068,7 +483149,9 @@ SswBmpCropRows_entry_Lb2:
 SswBmpCropRows_entry_Lb4:
 	add	0x460, sp
 	ret	[d2,d3,a2,a3], 0x10
-.incbin_range "baserom/kn2400_program.rom", 0x301262, 0x30126b
+# SswBmpCropRows_entry + 0xbb: no traced path reaches what follows (--decode-gaps)
+	movhu	d0, (data_50006E80)
+	retf	0, 0
 
 func_4870126B:
 	movhu	d0, (data_50006E82)
@@ -478189,7 +483272,9 @@ func_487012FC_entry:
 	mov	d2, (0x500fe894)
 	mov	a2, (0x500fe898)
 	ret	[d2,d3,a2,a3], 0x24
-.incbin_range "baserom/kn2400_program.rom", 0x301381, 0x30138a
+# func_487012FC_entry + 0x80: no traced path reaches what follows (--decode-gaps)
+	mov	0x500fe890, a0
+	retf	0, 0
 
 func_4870138A:
 	movm	[d2,d3,a2,a3], (sp)
@@ -481069,7 +486154,40 @@ func_48702FC2_L7:
 func_48702FC2_Lf:
 	movhu	d0, (0x50068884)
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x302fda, 0x30302c
+# func_48702FC2 + 0x18: no traced path reaches what follows (--decode-gaps)
+	movhu	(0x50068884), d0
+	retf	0, 0
+	movm	[d2,a2], (sp)
+	add	-8, sp
+	movhu	(0x500a05a0), d1
+	cmp	1, d1
+	beq	func_48702FC2_L3c
+	cmp	2, d1
+	beq	func_48702FC2_L3c
+	cmp	3, d1
+	beq	func_48702FC2_L3c
+	clr	d0
+	cmp	d0, d1
+	bne	func_48702FC2_L67
+func_48702FC2_L3c:
+	mov	(0x4800010c), d2
+	movhu	(0x500a05a0), d0
+	add	0x48000000, d2
+	mov	d2, a0
+	asl2	d0
+	mov	(d0, a0), d0
+	mov	a0, a2
+	add	d0, a2
+	call	func_48702FB9, 0, 0
+	exth	d0
+	mov	0xc, d1
+	nop
+	nop
+	mul	d1, d0
+	add	d0, a2
+	movhu	(2, a2), d0
+func_48702FC2_L67:
+	ret	[d2,a2], 0x10
 
 func_4870302C:
 	movm	[d2], (sp)
@@ -483269,7 +488387,8 @@ InitializeBlock41_entry:
 	mov	Str_TT_DEMORUN, a0
 	call	RegisterTitle_entry, [d2,a2], 8
 	ret	[d2,d3,a2,a3], 0x3c
-.incbin_range "baserom/kn2400_program.rom", 0x304720, 0x304723
+# InitializeBlock41_entry + 0x1cb: no traced path reaches what follows (--decode-gaps)
+	retf	0, 0
 
 FtLangTextA1:
 	cmp	0x60090, d1
@@ -484195,7 +489314,41 @@ DemoPictDataH5:
 	add	0x48000000, d1
 	mov	d1, d0
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x304f39, 0x304f8a
+# DemoPictDataH5 + 0x10: no traced path reaches what follows (--decode-gaps)
+DemoPictDataH5_L10:
+	movhu	(0x56c00000), d1
+	mov	0x56c00000, d0
+	cmp	0x400, d1
+	beq	DemoPictDataH5_L28
+	mov	0x56800000, d0
+DemoPictDataH5_L28:
+	retf	0, 0
+	movm	[d2], (sp)
+	add	-8, sp
+	mov	d0, d2
+	call	DemoPictDataH5_L10, 0, 0
+	mov	d0, a0
+	exthu	d2
+	mov	d2, d1
+	asl2	d1
+	mov	(d1, a0), d1
+	add	d1, a0
+	ret	[d2], 0xc
+	movm	[d2], (sp)
+	add	-8, sp
+	mov	d0, d2
+	call	DemoPictDataH5_L10, 0, 0
+	mov	d0, a1
+	exthu	d2
+	mov	d2, d0
+	asl2	d0
+	mov	d0, a0
+	add	a1, a0
+	mov	(4, a0), d0
+	asl2	d2
+	mov	(d2, a1), d1
+	sub	d1, d0
+	ret	[d2], 0xc
 
 func_48704F8A:
 	movhu	(0x32000020), d0
@@ -484509,7 +489662,18 @@ func_4870551C_Ld:
 	clr	d0
 func_4870551C_Le:
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x30552d, 0x305554
+# func_4870551C + 0x11: no traced path reaches what follows (--decode-gaps)
+	clr	d0
+	retf	0, 0
+	mov	0x270f, d0
+	retf	0, 0
+	add	-0x10, sp
+	mov	0x0089bff0, a0
+	mov	0x5f, d0
+	call	strchr_entry, [d2], 4
+	inc	a0
+	call	func_501217B5_entry, [a2], 0x20
+	ret	0, 0x10
 
 func_48705554:
 	movm	[d2], (sp)
@@ -484584,7 +489748,16 @@ func_487055C4_L2e:
 func_487055F5:
 	clr	d0
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x3055f9, 0x30560d
+# func_487055F5 + 0x4: no traced path reaches what follows (--decode-gaps)
+	movhu	(0x98070000), d0
+	btst	0x10, d0
+	bne	func_487055F5_L13
+	mov	2, d0
+	bra	func_487055F5_L15
+func_487055F5_L13:
+	mov	1, d0
+func_487055F5_L15:
+	retf	0, 0
 
 func_4870560D:
 	mov	1, d0
@@ -484593,7 +489766,10 @@ func_4870560D:
 func_48705612:
 	movbu	(0x5006888a), d0
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x30561b, 0x305624
+# func_48705612 + 0x9: no traced path reaches what follows (--decode-gaps)
+	retf	0, 0
+	jmp	func_48705057
+	ret	0, 0
 
 func_48705624:
 	movm	[d2,d3], (sp)
@@ -484638,7 +489814,9 @@ func_48705624_L95:
 	bset	0x08, (0x36008004)
 func_48705624_L9c:
 	bra	func_48705624_L9c
-.incbin_range "baserom/kn2400_program.rom", 0x3056c2, 0x3056c8
+# func_48705624 + 0x9e: no traced path reaches what follows (--decode-gaps)
+	ret	[d2,d3], 0x10
+	add	-0x10, sp
 
 func_487056C8:
 	movbu	(0x50068889), d0
@@ -484716,6 +489894,7 @@ func_4870576B:
 TimeBase2msTick:
 	movm	[d2], (sp)
 	add	-8, sp
+TimeBase2msTick_L5:
 	mov	(0x500ff578), d0
 	mov	0x80, d2
 	inc	d0
@@ -485060,7 +490239,49 @@ func_48705A6A:
 	cmp	0xa, d1
 	llt
 	rets
-.incbin_range "baserom/kn2400_program.rom", 0x305a9e, 0x305b06
+# func_48705A6A + 0x34: no traced path reaches what follows (--decode-gaps)
+	movbu	d0, (0x98000000)
+	movbu	d0, (data_50005668)
+	clr	d1
+	setlb
+	exthu	d0
+	inc	d0
+	inc	d1
+	exthu	d1
+	cmp	0xa, d1
+	llt
+	retf	0, 0
+	movbu	(data_50005668), d1
+	extbu	d0
+	or	d0, d1
+	movbu	d1, (data_50005668)
+	movbu	(data_50005668), d0
+	clr	d1
+	movbu	d0, (0x98000000)
+	setlb
+	exthu	d0
+	inc	d0
+	inc	d1
+	exthu	d1
+	cmp	0xa, d1
+	llt
+	retf	0, 0
+	movbu	(data_50005668), d1
+	extbu	d0
+	not	d0
+	and	d0, d1
+	movbu	d1, (data_50005668)
+	movbu	(data_50005668), d0
+	clr	d1
+	movbu	d0, (0x98000000)
+	setlb
+	exthu	d0
+	inc	d0
+	inc	d1
+	exthu	d1
+	cmp	0xa, d1
+	llt
+	retf	0, 0
 
 func_48705B06:
 	and	0xf7ff, psw
@@ -485287,7 +490508,62 @@ func_48705C5A_L75:
 	bclr	0x20, (0x36008004)
 	call	func_4870587E_entry, [d2,d3,a2,a3], 0x54
 	jmp	func_48728591
-.incbin_range "baserom/kn2400_program.rom", 0x305db3, 0x305e26
+# func_48705C5A + 0x159: no traced path reaches what follows (--decode-gaps)
+	jmp	dly_tsk_entry_Lb2
+	mov	0x20000070, a0
+	movhu	(a0), d0
+	and	0xfffe, d0
+	mov	d0, d1
+	mov	d0, (a0)
+	setlb
+	nop
+	nop
+	nop
+	nop
+	nop
+	movhu	(a0), d0
+	btst	0x04, d0
+	lne
+	.byte	0xfa, 0xe5, 0x10, 0x00	# or 0x0010, d1
+	mov	d1, (a0)
+	or	0x01, d1
+	movhu	d1, (a0)
+	ret	0, 0
+	mov	0x20000070, a0
+	movhu	(a0), d0
+	and	0xfffd, d0
+	mov	d0, d1
+	mov	d0, (a0)
+	setlb
+	nop
+	nop
+	nop
+	nop
+	nop
+	mov	(a0), d0
+	btst	0x08, d0
+	lne
+	.byte	0xfa, 0xe5, 0x20, 0x00	# or 0x0020, d1
+	mov	d1, (a0)
+	or	0x02, d1
+	movhu	d1, (a0)
+	ret	0, 0
+	mov	0x20000070, a0
+	movhu	(a0), d0
+	btst	0x01, d0
+	beq	func_48705C5A_L1c9
+	mov	d0, d3
+	and	0xfffe, d0
+	movhu	d0, (a0)
+	setlb
+	nop
+	nop
+	movhu	(a0), d0
+	btst	0x04, d0
+	lne
+	nop
+func_48705C5A_L1c9:
+	ret	0, 0
 
 DCacheFlushDisable:
 	mov	0x20000070, a0
@@ -490583,7 +495859,9 @@ func_487095D3_entry:
 	clr	d0
 	movbu	d0, (0x500692fa)
 	ret	[a2], 0x18
-.incbin_range "baserom/kn2400_program.rom", 0x3095f2, 0x3095fb
+# func_487095D3_entry + 0x1a: no traced path reaches what follows (--decode-gaps)
+	mov	0x5006931d, a0
+	retf	0, 0
 
 func_487095FB:
 	movm	[a2], (sp)
@@ -491332,7 +496610,9 @@ func_48709B3D_entry:
 	call	func_48709AF8_entry, [d2], 0x18
 	call	func_48709469_entry, [d2], 4
 	ret	0, 8
-.incbin_range "baserom/kn2400_program.rom", 0x309b4d, 0x309b52
+# func_48709B3D_entry + 0xd: no traced path reaches what follows (--decode-gaps)
+	mov	1, d0
+	retf	0, 0
 
 func_48709B52:
 	movm	[a2,a3], (sp)
@@ -492001,7 +497281,28 @@ func_4870A01D:
 	clr	d0
 	movbu	d0, (0x500774c6)
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x30a027, 0x30a05f
+# func_4870A01D + 0xa: no traced path reaches what follows (--decode-gaps)
+	movbu	(0x500692e8), d0
+	cmp	0x63, d0
+	blt	func_4870A01D_L17
+	clr	d0
+	bra	func_4870A01D_L2a
+func_4870A01D_L17:
+	movbu	(0x500692e9), d0
+	cmp	0x14, d0
+	blt	func_4870A01D_L24
+	clr	d0
+	bra	func_4870A01D_L2a
+func_4870A01D_L24:
+	movbu	(0x500774c7), d0
+func_4870A01D_L2a:
+	retf	0, 0
+	mov	1, d0
+	movbu	d0, (0x500774c7)
+	retf	0, 0
+	clr	d0
+	movbu	d0, (0x500774c7)
+	retf	0, 0
 
 func_4870A05F:
 	movhu	(0x500774ca), d0
@@ -492010,7 +497311,24 @@ func_4870A05F:
 func_4870A068:
 	movhu	d0, (0x500774ca)
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x30a071, 0x30a097
+# func_4870A068 + 0x9: no traced path reaches what follows (--decode-gaps)
+	clr	d0
+	retf	0, 0
+	clr	d0
+	retf	0, 0
+	clr	d0
+	retf	0, 0
+	retf	0, 0
+	mov	0, a0
+	retf	0, 0
+	mov	0, a0
+	retf	0, 0
+	clr	d0
+	retf	0, 0
+	clr	d0
+	retf	0, 0
+	mov	0, a0
+	retf	0, 0
 
 func_4870A097:
 	movm	[d2,a2], (sp)
@@ -492487,7 +497805,9 @@ func_4870A417_L5e:
 	mov	d3, d0
 func_4870A417_L65:
 	ret	[d2,d3,a2], 0x5c
-.incbin_range "baserom/kn2400_program.rom", 0x30a47f, 0x30a488
+# func_4870A417 + 0x68: no traced path reaches what follows (--decode-gaps)
+	movhu	(0x50076b58), d0
+	retf	0, 0
 
 func_4870A488:
 	movm	[d2,a2], (sp)
@@ -493366,7 +498686,51 @@ func_4870AB4A_entry_L1e:
 	movhu	(d0, a1), d0
 	extbu	d0
 	retf	[d2], 4
-.incbin_range "baserom/kn2400_program.rom", 0x30ab7c, 0x30abd9
+# func_4870AB4A_entry + 0x30: no traced path reaches what follows (--decode-gaps)
+func_4870AB4A_entry_L30:
+	exth	d0
+	cmp	0, d0
+	blt	func_4870AB4A_entry_L41
+	movhu	(0x50076db8), d1
+	exth	d1
+	add	0x63, d1
+	cmp	d1, d0
+	ble	func_4870AB4A_entry_L45
+func_4870AB4A_entry_L41:
+	mov	-1, d0
+	bra	func_4870AB4A_entry_L46
+func_4870AB4A_entry_L45:
+	clr	d0
+func_4870AB4A_entry_L46:
+	retf	0, 0
+	add	-0xc, sp
+	movhu	(0x50076db6), d0
+	exth	d0
+	call	func_4870AB4A_entry_L30, 0, 0
+	exth	d0
+	cmp	0, d0
+	beq	func_4870AB4A_entry_L61
+	mov	-0x68, d0
+	bra	func_4870AB4A_entry_L67
+func_4870AB4A_entry_L61:
+	movhu	(0x50076db6), d0
+func_4870AB4A_entry_L67:
+	ret	0, 0xc
+	movm	[d2], (sp)
+	add	-0xc, sp
+	mov	d0, d2
+	exth	d0
+	call	func_4870AB4A_entry_L30, 0, 0
+	exth	d0
+	cmp	-1, d0
+	bne	func_4870AB4A_entry_L83
+	movhu	(0x50076db6), d0
+	bra	func_4870AB4A_entry_L8a
+func_4870AB4A_entry_L83:
+	movhu	d2, (0x50076db6)
+	mov	d2, d0
+func_4870AB4A_entry_L8a:
+	ret	[d2], 0x10
 
 func_4870ABD9:
 	movm	[d2,d3,a2], (sp)
@@ -494554,7 +499918,9 @@ func_4870B44A_entry:
 func_4870B47D:
 	mov	Str_CUSTOM, a0
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x30b486, 0x30b48f
+# func_4870B47D + 0x9: no traced path reaches what follows (--decode-gaps)
+	mov	Str_C_DCIM, a0
+	retf	0, 0
 
 func_4870B48F:
 	movm	[a2], (sp)
@@ -496388,7 +501754,9 @@ FavItemSetter_entry_L31:
 func_4870C1DF:
 	movbu	d0, (0x500774cd)
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x30c1e8, 0x30c1f1
+# func_4870C1DF + 0x9: no traced path reaches what follows (--decode-gaps)
+	movbu	(0x500774cd), d0
+	retf	0, 0
 
 func_4870C1F1:
 	movm	[d2], (sp)
@@ -497282,7 +502650,9 @@ func_4870C801_entry_L188:
 	call	sdfmpath_entry, 0, 0x14
 	mov	d3, d0
 	ret	[d2,d3,a2,a3], 0xc4
-.incbin_range "baserom/kn2400_program.rom", 0x30c99a, 0x30c99f
+# func_4870C801_entry + 0x193: no traced path reaches what follows (--decode-gaps)
+	mov	-0x66, d0
+	retf	0, 0
 
 func_4870C99F:
 	movm	[d2,d3,a2,a3], (sp)
@@ -497887,7 +503257,9 @@ func_4870CD6F_entry_L1a9:
 	mov	d2, d0
 func_4870CD6F_entry_L1b1:
 	ret	[d2,d3,a2,a3], 0xe0
-.incbin_range "baserom/kn2400_program.rom", 0x30cf29, 0x30cf2e
+# func_4870CD6F_entry + 0x1b4: no traced path reaches what follows (--decode-gaps)
+	mov	-0x66, d0
+	retf	0, 0
 
 func_4870CF2E:
 	movm	[d2,d3,a2,a3], (sp)
@@ -498222,7 +503594,9 @@ func_4870D201_entry_Le:
 	call	func_4870D166_entry, [a2], 0x10
 func_4870D201_entry_L1f:
 	ret	[d2,a2], 0x4c
-.incbin_range "baserom/kn2400_program.rom", 0x30d228, 0x30d22c
+# func_4870D201_entry + 0x22: no traced path reaches what follows (--decode-gaps)
+	clr	d0
+	retf	0, 0
 
 func_4870D22C:
 	movm	[a2], (sp)
@@ -498563,7 +503937,11 @@ func_4870D264_entry_L2eb:
 func_4870D264_entry_L2ec:
 	add	0x110, sp
 	ret	[d2,d3,a2,a3], 0x10
-.incbin_range "baserom/kn2400_program.rom", 0x30d559, 0x30d561
+# func_4870D264_entry + 0x2f3: no traced path reaches what follows (--decode-gaps)
+	clr	d0
+	retf	0, 0
+	clr	d0
+	retf	0, 0
 
 func_4870D561:
 	movm	[d2,d3,a2,a3], (sp)
@@ -498696,7 +504074,9 @@ func_4870D561_entry_Ld9:
 func_4870D561_entry_L12f:
 	movhu	(0x1c, sp), d0
 	ret	[d2,d3,a2,a3], 0x9c
-.incbin_range "baserom/kn2400_program.rom", 0x30d69c, 0x30d6a0
+# func_4870D561_entry + 0x135: no traced path reaches what follows (--decode-gaps)
+	clr	d0
+	retf	0, 0
 
 func_4870D6A0:
 	movm	[d2,d3,a2,a3], (sp)
@@ -500287,7 +505667,11 @@ func_4870E2A2_entry_L1d9:
 func_4870E2A2_entry_L210:
 	mov	d2, d0
 	ret	[d2,d3,a2,a3], 0xa8
-.incbin_range "baserom/kn2400_program.rom", 0x30e4bc, 0x30e4c4
+# func_4870E2A2_entry + 0x214: no traced path reaches what follows (--decode-gaps)
+	clr	d0
+	retf	0, 0
+	clr	d0
+	retf	0, 0
 
 func_4870E4C4:
 	movm	[d2,a2], (sp)
@@ -502028,7 +507412,10 @@ func_4870F391_entry:
 	mov	a2, a0
 	call	func_4870FAB7_entry, [d2,a2], 0x18
 	ret	[a2,a3], 0x58
-.incbin_range "baserom/kn2400_program.rom", 0x30f3c4, 0x30f3ce
+# func_4870F391_entry + 0x2e: no traced path reaches what follows (--decode-gaps)
+	clr	d0
+	movhu	d0, (0x500778c0)
+	retf	0, 0
 
 func_4870F3CE:
 	movhu	(0x500778c0), d0
@@ -504892,7 +510279,12 @@ SdMountDone_L5b:
 	call	SDModuleModeReq_entry, 0, 0xc
 	clr	d0
 	ret	0, 0x10
-.incbin_range "baserom/kn2400_program.rom", 0x310d70, 0x310d7b
+# SdMountDone + 0x6f: no traced path reaches what follows (--decode-gaps)
+	clr	d0
+	retf	0, 0
+	clr	d0
+	retf	0, 0
+	retf	0, 0
 
 SdUiMountGateCheck:
 	movm	[d2], (sp)
@@ -513079,30 +518471,30 @@ SdcCurFileNameFunc_entry:
 	beq	SdcCurFileNameFunc_entry_L3d
 	cmp	0x1460002, d1
 	bne	SdcCurFileNameFunc_entry_L19
-	jmp	0x48716a58
+	jmp	SdcCurFileNameFunc_entry_L537
 SdcCurFileNameFunc_entry_L19:
 	cmp	0x50009, d1
 	bne	SdcCurFileNameFunc_entry_L24
-	jmp	0x48716a6d
+	jmp	SdcCurFileNameFunc_entry_L54c
 SdcCurFileNameFunc_entry_L24:
 	cmp	0x5000f, d1
 	bne	SdcCurFileNameFunc_entry_L2f
-	jmp	0x48716a9f
+	jmp	SdcCurFileNameFunc_entry_L57e
 SdcCurFileNameFunc_entry_L2f:
 	cmp	0x50010, d1
 	bne	SdcCurFileNameFunc_entry_L3a
-	jmp	0x48716a9f
+	jmp	SdcCurFileNameFunc_entry_L57e
 SdcCurFileNameFunc_entry_L3a:
-	jmp	0x48716f58
+	jmp	SdcCurFileNameFunc_entry_La37
 SdcCurFileNameFunc_entry_L3d:
 	mov	(0x34, sp), a2
 	cmp	2, a2
 	beq	SdcCurFileNameFunc_entry_L4d
 	cmp	3, a2
 	bne	SdcCurFileNameFunc_entry_L4a
-	jmp	0x48716a07
+	jmp	SdcCurFileNameFunc_entry_L4e6
 SdcCurFileNameFunc_entry_L4a:
-	jmp	0x48716a54
+	jmp	SdcCurFileNameFunc_entry_L533
 SdcCurFileNameFunc_entry_L4d:
 	mov	1, d0
 	call	func_487105D7_entry, 0, 0xc
@@ -513185,13 +518577,13 @@ SdcCurFileNameFunc_entry_L121:
 	movbu	d0, (0x50077a65)
 SdcCurFileNameFunc_entry_L14c:
 	call	func_48622DC9_entry, 0, 0xc
-	jmp	0x48716a03
+	jmp	SdcCurFileNameFunc_entry_L4e2
 SdcCurFileNameFunc_entry_L156:
 	call	func_48622856, 0, 0
 	extbu	d0
 	cmp	1, d0
 	beq	SdcCurFileNameFunc_entry_L165
-	jmp	0x487169a9
+	jmp	SdcCurFileNameFunc_entry_L488
 SdcCurFileNameFunc_entry_L165:
 	mov	a2, (0x10, sp)
 	mov	(0x2c, sp), d0
@@ -513213,11 +518605,11 @@ SdcCurFileNameFunc_entry_L165:
 	mov	0x123, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-	jmp	0x48716a03
+	jmp	SdcCurFileNameFunc_entry_L4e2
 SdcCurFileNameFunc_entry_L1a6:
 	cmp	2, d0
 	beq	SdcCurFileNameFunc_entry_L1ad
-	jmp	0x48716a03
+	jmp	SdcCurFileNameFunc_entry_L4e2
 SdcCurFileNameFunc_entry_L1ad:
 	call	func_4870B600, 0, 0
 	mov	d0, d1
@@ -513477,9 +518869,683 @@ SdcCurFileNameFunc_entry_L47c:
 	mov	a3, d0
 	exth	d0
 	cmp	0, d0
-	beq	0x48716a03
+	beq	SdcCurFileNameFunc_entry_L4e2
 	jmp	SdcCurFileNameFunc_entry_L1ad
-.incbin_range "baserom/kn2400_program.rom", 0x3169a7, 0x31711d
+# SdcCurFileNameFunc_entry + 0x486: no traced path reaches what follows (--decode-gaps)
+	bra	SdcCurFileNameFunc_entry_L4e2
+SdcCurFileNameFunc_entry_L488:
+	call	func_48622856, 0, 0
+	extbu	d0
+	cmp	d2, d0
+	bne	SdcCurFileNameFunc_entry_L4bf
+	clr	d0
+	movbu	d2, (data_50005E7C)
+	mov	d0, (0x10, sp)
+	mov	-1, d0
+	mov	0x0006008f, d1
+	call	ApPostEvent_entry, [d2], 0x1c
+	clr	d0
+	mov	d0, (0x10, sp)
+	mov	-1, d0
+	mov	0x00050008, d1
+	call	ApPostEvent_entry, [d2], 0x1c
+	bra	SdcCurFileNameFunc_entry_L4e2
+SdcCurFileNameFunc_entry_L4bf:
+	clr	d0
+	movbu	d2, (data_50005E7C)
+	mov	d0, (0x10, sp)
+	mov	-1, d0
+	mov	0x0006008f, d1
+	call	ApPostEvent_entry, [d2], 0x1c
+	mov	3, d0
+	mov	0xe, d1
+	call	InterruptTitle_entry, [d2,d3,a2], 0x20
+SdcCurFileNameFunc_entry_L4e2:
+	clr	d0
+	ret	[d2,d3,a2,a3], 0x24
+SdcCurFileNameFunc_entry_L4e6:
+	call	GetTitleNow_entry, 0, 0x10
+	exthu	d0
+	cmp	0x123, d0
+	beq	SdcCurFileNameFunc_entry_L509
+	clr	d0
+	movbu	d0, (data_50005E7C)
+	call	func_48622EB6_entry, 0, 0xc
+	call	func_486D360E, 0, 0
+SdcCurFileNameFunc_entry_L509:
+	call	func_486331AC_entry, 0, 0x1c
+	clr	d0
+	mov	d2, d1
+	call	SDModuleModeReq_entry, 0, 0xc
+	call	func_487105ED_entry, 0, 8
+	mov	a3, (0x10, sp)
+	mov	-1, d0
+	mov	0x0006008f, d1
+	call	ApPostEvent_entry, [d2], 0x1c
+	clr	d0
+	ret	[d2,d3,a2,a3], 0x24
+SdcCurFileNameFunc_entry_L533:
+	clr	d0
+	ret	[d2,d3,a2,a3], 0x24
+SdcCurFileNameFunc_entry_L537:
+	mov	-1, d0
+	mov	d0, (0x10, sp)
+	mov	0x0145000b, d1
+	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
+	clr	d0
+	ret	[d2,d3,a2,a3], 0x24
+SdcCurFileNameFunc_entry_L54c:
+	call	func_48709036, 0, 0
+	extbu	d0
+	cmp	2, d0
+	beq	SdcCurFileNameFunc_entry_L55c
+	cmp	1, d0
+	bne	SdcCurFileNameFunc_entry_L560
+SdcCurFileNameFunc_entry_L55c:
+	clr	d0
+	ret	[d2,d3,a2,a3], 0x24
+SdcCurFileNameFunc_entry_L560:
+	movbu	(0x50077a64), d0
+	cmp	0xa, d0
+	blt	SdcCurFileNameFunc_entry_L573
+	mov	0x14, d1
+	call	func_487100A3_entry, [d2,d3,a2,a3], 0x38
+	bra	SdcCurFileNameFunc_entry_L57a
+SdcCurFileNameFunc_entry_L573:
+	mov	0x14, d1
+	call	func_4870FF3F_entry, [d2,d3,a2,a3], 0x34
+SdcCurFileNameFunc_entry_L57a:
+	clr	d0
+	ret	[d2,d3,a2,a3], 0x24
+SdcCurFileNameFunc_entry_L57e:
+	mov	(0x34, sp), a0
+	cmp	0x3d, a0
+	beq	SdcCurFileNameFunc_entry_L587
+	jmp	SdcCurFileNameFunc_entry_L842
+SdcCurFileNameFunc_entry_L587:
+	call	func_4870B600, 0, 0
+	mov	d0, d1
+	extbu	d1
+	cmp	2, d1
+	ble	SdcCurFileNameFunc_entry_L597
+	jmp	SdcCurFileNameFunc_entry_L653
+SdcCurFileNameFunc_entry_L597:
+	extbu	d0
+	mov	d0, a2
+	call	func_4870B891_entry, [d2,d3], 0x10
+	mov	d0, d3
+	mov	d3, d1
+	exth	d1
+	cmp	d2, d1
+	bge	SdcCurFileNameFunc_entry_L5aa
+	jmp	SdcCurFileNameFunc_entry_La37
+SdcCurFileNameFunc_entry_L5aa:
+	clr	d0
+	movbu	d0, (0x50077a64)
+	clr	d1
+	exth	d3
+	cmp	d0, d3
+	bgt	SdcCurFileNameFunc_entry_L5b9
+	jmp	SdcCurFileNameFunc_entry_L649
+SdcCurFileNameFunc_entry_L5b9:
+	mov	a2, d0
+	call	func_4871617B_entry, [d2,d3,a2], 0x20
+	mov	d0, d2
+	exth	d0
+	cmp	0, d0
+	bne	SdcCurFileNameFunc_entry_L62c
+	mov	0xd, d0
+	mov	d0, (0x10, sp)
+	mov	(0x2c, sp), d0
+	mov	0x0005000f, d1
+	call	func_48716234_entry, [d2,d3,a2], 0x18
+	extbu	d0
+	cmp	1, d0
+	bne	SdcCurFileNameFunc_entry_L630
+	movbu	(0x500788c1), d0
+	cmp	0, d0
+	bne	SdcCurFileNameFunc_entry_L5ee
+	mov	1, d0
+	movbu	d0, (0x500788c1)
+SdcCurFileNameFunc_entry_L5ee:
+	call	func_48709676_entry, 0, 0xc
+	exth	d0
+	clr	d1
+	mov	0x485240b0, a0
+	call	func_486D35DF_entry, 0, 0x14
+	mov	a3, (0x10, sp)
+	mov	-1, d0
+	mov	0x0006008b, d1
+	call	ApPostEvent_entry, [d2], 0x1c
+	mov	0x123, d0
+	clr	d1
+	call	ChangeTitle_entry, [d2,d3,a2], 0x20
+	mov	1, d0
+	movbu	d0, (data_50005E7C)
+	clr	d0
+	ret	[d2,d3,a2,a3], 0x24
+SdcCurFileNameFunc_entry_L62c:
+	cmp	0, d0
+	blt	SdcCurFileNameFunc_entry_L649
+SdcCurFileNameFunc_entry_L630:
+	movbu	(0x50077a64), d0
+	inc	d0
+	movbu	d0, (0x50077a64)
+	movbu	(0x50077a64), d1
+	cmp	d3, d1
+	bge	SdcCurFileNameFunc_entry_L649
+	jmp	SdcCurFileNameFunc_entry_L5b9
+SdcCurFileNameFunc_entry_L649:
+	clr	d0
+	movbu	d0, (0x500788c1)
+	jmp	SdcCurFileNameFunc_entry_L804
+SdcCurFileNameFunc_entry_L653:
+	extbu	d0
+	cmp	3, d0
+	beq	SdcCurFileNameFunc_entry_L65b
+	jmp	SdcCurFileNameFunc_entry_L717
+SdcCurFileNameFunc_entry_L65b:
+	clr	d0
+	movbu	d0, (0x50077a64)
+	clr	d1
+SdcCurFileNameFunc_entry_L663:
+	movbu	(0x50077a65), d0
+	call	func_487164C2_entry, [d2,d3,a2,a3], 0x28
+	exth	d0
+	cmp	0, d0
+	bge	SdcCurFileNameFunc_entry_L678
+	mov	1, d2
+	jmp	SdcCurFileNameFunc_entry_L70d
+SdcCurFileNameFunc_entry_L678:
+	movbu	(0x50077a64), d0
+	call	func_48716032_entry, [d2,d3,a2,a3], 0x28
+	mov	d0, d2
+	exth	d0
+	cmp	0, d0
+	bne	SdcCurFileNameFunc_entry_L6ef
+	mov	0xd, d0
+	mov	d0, (0x10, sp)
+	mov	(0x2c, sp), d0
+	mov	0x0005000f, d1
+	call	func_48716234_entry, [d2,d3,a2], 0x18
+	extbu	d0
+	cmp	1, d0
+	bne	SdcCurFileNameFunc_entry_L6f3
+	movbu	(0x500788c1), d0
+	cmp	0, d0
+	bne	SdcCurFileNameFunc_entry_L6b1
+	mov	1, d0
+	movbu	d0, (0x500788c1)
+SdcCurFileNameFunc_entry_L6b1:
+	call	func_48709676_entry, 0, 0xc
+	exth	d0
+	clr	d1
+	mov	0x485240b8, a0
+	call	func_486D35DF_entry, 0, 0x14
+	mov	a3, (0x10, sp)
+	mov	-1, d0
+	mov	0x0006008b, d1
+	call	ApPostEvent_entry, [d2], 0x1c
+	mov	0x123, d0
+	clr	d1
+	call	ChangeTitle_entry, [d2,d3,a2], 0x20
+	mov	1, d0
+	movbu	d0, (data_50005E7C)
+	clr	d0
+	ret	[d2,d3,a2,a3], 0x24
+SdcCurFileNameFunc_entry_L6ef:
+	cmp	0, d0
+	blt	SdcCurFileNameFunc_entry_L70d
+SdcCurFileNameFunc_entry_L6f3:
+	movbu	(0x50077a64), d0
+	inc	d0
+	movbu	d0, (0x50077a64)
+	movbu	(0x50077a64), d1
+	cmp	0x14, d1
+	bge	SdcCurFileNameFunc_entry_L70d
+	jmp	SdcCurFileNameFunc_entry_L663
+SdcCurFileNameFunc_entry_L70d:
+	clr	d0
+	movbu	d0, (0x500788c1)
+	jmp	SdcCurFileNameFunc_entry_L804
+SdcCurFileNameFunc_entry_L717:
+	cmp	4, d0
+	beq	SdcCurFileNameFunc_entry_L71e
+	jmp	SdcCurFileNameFunc_entry_L804
+SdcCurFileNameFunc_entry_L71e:
+	clr	d0
+	movbu	d0, (0x50077a65)
+SdcCurFileNameFunc_entry_L725:
+	clr	d0
+	movbu	d0, (0x50077a64)
+	clr	d1
+SdcCurFileNameFunc_entry_L72d:
+	movbu	(0x50077a65), d0
+	call	func_487164C2_entry, [d2,d3,a2,a3], 0x28
+	exth	d0
+	cmp	0, d0
+	bge	SdcCurFileNameFunc_entry_L742
+	mov	1, d2
+	jmp	SdcCurFileNameFunc_entry_L7dd
+SdcCurFileNameFunc_entry_L742:
+	movbu	(0x50077a65), d0
+	movbu	(0x50077a64), d1
+	call	func_48716163_entry, [d2], 0x10
+	mov	d0, d2
+	exth	d0
+	cmp	0, d0
+	bne	SdcCurFileNameFunc_entry_L7bf
+	mov	0xd, d0
+	mov	d0, (0x10, sp)
+	mov	(0x2c, sp), d0
+	mov	0x0005000f, d1
+	call	func_48716234_entry, [d2,d3,a2], 0x18
+	extbu	d0
+	cmp	1, d0
+	bne	SdcCurFileNameFunc_entry_L7c3
+	movbu	(0x500788c1), d0
+	cmp	0, d0
+	bne	SdcCurFileNameFunc_entry_L781
+	mov	1, d0
+	movbu	d0, (0x500788c1)
+SdcCurFileNameFunc_entry_L781:
+	call	func_48709676_entry, 0, 0xc
+	exth	d0
+	clr	d1
+	mov	0x485240c0, a0
+	call	func_486D35DF_entry, 0, 0x14
+	mov	a3, (0x10, sp)
+	mov	-1, d0
+	mov	0x0006008b, d1
+	call	ApPostEvent_entry, [d2], 0x1c
+	mov	0x123, d0
+	clr	d1
+	call	ChangeTitle_entry, [d2,d3,a2], 0x20
+	mov	1, d0
+	movbu	d0, (data_50005E7C)
+	clr	d0
+	ret	[d2,d3,a2,a3], 0x24
+SdcCurFileNameFunc_entry_L7bf:
+	cmp	0, d0
+	blt	SdcCurFileNameFunc_entry_L7dd
+SdcCurFileNameFunc_entry_L7c3:
+	movbu	(0x50077a64), d0
+	inc	d0
+	movbu	d0, (0x50077a64)
+	movbu	(0x50077a64), d1
+	cmp	0x14, d1
+	bge	SdcCurFileNameFunc_entry_L7dd
+	jmp	SdcCurFileNameFunc_entry_L72d
+SdcCurFileNameFunc_entry_L7dd:
+	mov	d2, d0
+	exth	d0
+	cmp	0, d0
+	blt	SdcCurFileNameFunc_entry_L7fd
+	movbu	(0x50077a65), d0
+	inc	d0
+	movbu	d0, (0x50077a65)
+	movbu	(0x50077a65), d0
+	cmp	0x63, d0
+	bge	SdcCurFileNameFunc_entry_L7fd
+	jmp	SdcCurFileNameFunc_entry_L725
+SdcCurFileNameFunc_entry_L7fd:
+	clr	d0
+	movbu	d0, (0x500788c1)
+SdcCurFileNameFunc_entry_L804:
+	exth	d2
+	cmp	a3, d2
+	blt	SdcCurFileNameFunc_entry_L80c
+	jmp	SdcCurFileNameFunc_entry_La37
+SdcCurFileNameFunc_entry_L80c:
+	clr	d0
+	movbu	d0, (0x50077a65)
+	movbu	d0, (0x50077a64)
+	movbu	d0, (data_50005E7C)
+	mov	0x104, d0
+	clr	d1
+	call	ChangeTitle_entry, [d2,d3,a2], 0x20
+	mov	0x5d, d1
+	mov	d2, d0
+	call	func_4870FD81_entry, [d2,d3], 8
+	mov	d0, d1
+	extbu	d1
+	exthu	d1
+	mov	3, d0
+	call	InterruptTitle_entry, [d2,d3,a2], 0x20
+	clr	d0
+	ret	[d2,d3,a2,a3], 0x24
+SdcCurFileNameFunc_entry_L842:
+	cmp	0x3f, a0
+	beq	SdcCurFileNameFunc_entry_L84d
+	cmp	0x40, a0
+	beq	SdcCurFileNameFunc_entry_L84d
+	jmp	SdcCurFileNameFunc_entry_L8d6
+SdcCurFileNameFunc_entry_L84d:
+	movbu	(data_50005E7C), d0
+	cmp	d2, d0
+	beq	SdcCurFileNameFunc_entry_L85a
+	clr	d0
+	ret	[d2,d3,a2,a3], 0x24
+SdcCurFileNameFunc_entry_L85a:
+	cmp	0x3f, a0
+	bne	SdcCurFileNameFunc_entry_L868
+	clr	d0
+	call	func_4870B57B_entry, [d2,d3], 0x10
+	bra	SdcCurFileNameFunc_entry_L871
+SdcCurFileNameFunc_entry_L868:
+	mov	1, d0
+	call	func_4870B57B_entry, [d2,d3], 0x10
+SdcCurFileNameFunc_entry_L871:
+	call	func_4870B600, 0, 0
+	extbu	d0
+	cmp	4, d0
+	beq	SdcCurFileNameFunc_entry_L889
+	call	func_4870B600, 0, 0
+	extbu	d0
+	cmp	3, d0
+	bne	SdcCurFileNameFunc_entry_L89c
+SdcCurFileNameFunc_entry_L889:
+	mov	-1, d0
+	mov	d0, (0x10, sp)
+	mov	0x0145000b, d1
+	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
+	bra	SdcCurFileNameFunc_entry_L8b4
+SdcCurFileNameFunc_entry_L89c:
+	clr	d0
+	movbu	d0, (0x50077a64)
+	mov	-1, d0
+	mov	d0, (0x10, sp)
+	mov	0x0145000b, d1
+	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
+SdcCurFileNameFunc_entry_L8b4:
+	call	func_4870B600, 0, 0
+	extbu	d0
+	call	func_487163B8_entry, [d2,d3], 0x1c
+	clr	d0
+	mov	d0, (0x10, sp)
+	mov	-1, d0
+	mov	0x00050008, d1
+	call	ApPostEvent_entry, [d2], 0x1c
+	jmp	SdcCurFileNameFunc_entry_La37
+SdcCurFileNameFunc_entry_L8d6:
+	cmp	0x41, a0
+	bne	SdcCurFileNameFunc_entry_L904
+	movbu	(data_50005E7C), d0
+	cmp	d2, d0
+	beq	SdcCurFileNameFunc_entry_L8e7
+	clr	d0
+	ret	[d2,d3,a2,a3], 0x24
+SdcCurFileNameFunc_entry_L8e7:
+	mov	1, d0
+	movbu	d0, (0x500788c2)
+	cmp	0x5000f, d3
+	bne	SdcCurFileNameFunc_entry_L8fa
+	jmp	SdcCurFileNameFunc_entry_La37
+SdcCurFileNameFunc_entry_L8fa:
+	clr	d0
+	movbu	d0, (0x500788c2)
+	jmp	SdcCurFileNameFunc_entry_La37
+SdcCurFileNameFunc_entry_L904:
+	cmp	0x42, a0
+	bne	SdcCurFileNameFunc_entry_L932
+	movbu	(data_50005E7C), d0
+	cmp	d2, d0
+	beq	SdcCurFileNameFunc_entry_L915
+	clr	d0
+	ret	[d2,d3,a2,a3], 0x24
+SdcCurFileNameFunc_entry_L915:
+	mov	1, d0
+	movbu	d0, (0x500788c3)
+	cmp	0x5000f, d3
+	bne	SdcCurFileNameFunc_entry_L928
+	jmp	SdcCurFileNameFunc_entry_La37
+SdcCurFileNameFunc_entry_L928:
+	clr	d0
+	movbu	d0, (0x500788c3)
+	jmp	SdcCurFileNameFunc_entry_La37
+SdcCurFileNameFunc_entry_L932:
+	cmp	0x45, a0
+	beq	SdcCurFileNameFunc_entry_L939
+	jmp	SdcCurFileNameFunc_entry_L9b8
+SdcCurFileNameFunc_entry_L939:
+	movbu	(data_50005E7C), d0
+	cmp	d2, d0
+	beq	SdcCurFileNameFunc_entry_L946
+	clr	d0
+	ret	[d2,d3,a2,a3], 0x24
+SdcCurFileNameFunc_entry_L946:
+	call	func_487096B0_entry, 0, 0xc
+	movbu	d0, (0x50077a65)
+	extbu	d0
+	cmp	d2, d0
+	bge	SdcCurFileNameFunc_entry_L95e
+	clr	d0
+	movbu	d0, (0x50077a65)
+SdcCurFileNameFunc_entry_L95e:
+	movbu	(0x50077a65), d1
+	mov	d1, d0
+	inc	d0
+	cmp	0x63, d0
+	bge	SdcCurFileNameFunc_entry_L9a3
+	inc	d1
+	movbu	d1, (0x50077a65)
+	movbu	(0x50077a65), d0
+	call	func_48709696_entry, [d2], 0x10
+	clr	d0
+	movbu	d0, (0x50077a64)
+	movbu	(0x50077a65), d0
+	clr	d1
+	call	func_48716464_entry, [d2,d3,a2,a3], 0x28
+	exth	d0
+	mov	d0, (0x10, sp)
+	mov	-1, d0
+	mov	0x0145000b, d1
+	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
+SdcCurFileNameFunc_entry_L9a3:
+	clr	d0
+	mov	d0, (0x10, sp)
+	mov	-1, d0
+	mov	0x00050008, d1
+	call	ApPostEvent_entry, [d2], 0x1c
+	jmp	SdcCurFileNameFunc_entry_La37
+SdcCurFileNameFunc_entry_L9b8:
+	cmp	0x44, a0
+	beq	SdcCurFileNameFunc_entry_L9be
+	bra	SdcCurFileNameFunc_entry_La37
+SdcCurFileNameFunc_entry_L9be:
+	movbu	(data_50005E7C), d0
+	cmp	d2, d0
+	beq	SdcCurFileNameFunc_entry_L9ca
+	clr	d0
+	bra	SdcCurFileNameFunc_entry_La38
+SdcCurFileNameFunc_entry_L9ca:
+	call	func_487096B0_entry, 0, 0xc
+	movbu	d0, (0x50077a65)
+	extbu	d0
+	cmp	d2, d0
+	bge	SdcCurFileNameFunc_entry_L9e2
+	clr	d0
+	movbu	d0, (0x50077a65)
+SdcCurFileNameFunc_entry_L9e2:
+	movbu	(0x50077a65), d0
+	cmp	d2, d0
+	ble	SdcCurFileNameFunc_entry_La25
+	add	-1, d0
+	movbu	d0, (0x50077a65)
+	movbu	(0x50077a65), d0
+	call	func_48709696_entry, [d2], 0x10
+	clr	d0
+	movbu	d0, (0x50077a64)
+	movbu	(0x50077a65), d0
+	clr	d1
+	call	func_48716464_entry, [d2,d3,a2,a3], 0x28
+	exth	d0
+	mov	d0, (0x10, sp)
+	mov	-1, d0
+	mov	0x0145000b, d1
+	call	ApDeliveryEvent_entry, [d2,d3,a2], 0x20
+SdcCurFileNameFunc_entry_La25:
+	clr	d0
+	mov	d0, (0x10, sp)
+	mov	-1, d0
+	mov	0x00050008, d1
+	call	ApPostEvent_entry, [d2], 0x1c
+SdcCurFileNameFunc_entry_La37:
+	clr	d0
+SdcCurFileNameFunc_entry_La38:
+	ret	[d2,d3,a2,a3], 0x24
+	add	-0x14, sp
+	cmp	0x5000b, d1
+	beq	SdcCurFileNameFunc_entry_La54
+	cmp	0x50005, d1
+	bne	SdcCurFileNameFunc_entry_La51
+	jmp	SdcCurFileNameFunc_entry_Lbd1
+SdcCurFileNameFunc_entry_La51:
+	jmp	SdcCurFileNameFunc_entry_Lbf8
+SdcCurFileNameFunc_entry_La54:
+	mov	(0x24, sp), a0
+	cmp	2, a0
+	beq	SdcCurFileNameFunc_entry_La6b
+	cmp	8, a0
+	bne	SdcCurFileNameFunc_entry_La61
+	jmp	SdcCurFileNameFunc_entry_Lbb8
+SdcCurFileNameFunc_entry_La61:
+	cmp	3, a0
+	bne	SdcCurFileNameFunc_entry_La68
+	jmp	SdcCurFileNameFunc_entry_Lbbb
+SdcCurFileNameFunc_entry_La68:
+	jmp	SdcCurFileNameFunc_entry_Lbce
+SdcCurFileNameFunc_entry_La6b:
+	call	func_48709036, 0, 0
+	extbu	d0
+	cmp	2, d0
+	beq	SdcCurFileNameFunc_entry_La7b
+	cmp	1, d0
+	bne	SdcCurFileNameFunc_entry_Laa2
+SdcCurFileNameFunc_entry_La7b:
+	call	func_4870B600, 0, 0
+	extbu	d0
+	call	func_487163B8_entry, [d2,d3], 0x1c
+	mov	5, d0
+	mov	d0, (0x10, sp)
+	mov	0x02100300, d0
+	mov	0x00050001, d1
+	call	ApPostEvent_entry, [d2], 0x1c
+	jmp	SdcCurFileNameFunc_entry_Lbb5
+SdcCurFileNameFunc_entry_Laa2:
+	cmp	3, d0
+	bne	SdcCurFileNameFunc_entry_Lb01
+	call	func_4870B600, 0, 0
+	extbu	d0
+	call	func_487163B8_entry, [d2,d3], 0x1c
+	call	GetTitleOld_entry, 0, 0x10
+	exthu	d0
+	cmp	0x110, d0
+	beq	SdcCurFileNameFunc_entry_Lac4
+	jmp	SdcCurFileNameFunc_entry_Lbb5
+SdcCurFileNameFunc_entry_Lac4:
+	clr	d0
+	mov	d0, (0x10, sp)
+	mov	-1, d0
+	mov	0x00050008, d1
+	call	ApPostEvent_entry, [d2], 0x1c
+	mov	5, d0
+	mov	d0, (0x10, sp)
+	mov	0x02100300, d0
+	mov	0x00050001, d1
+	call	ApPostEvent_entry, [d2], 0x1c
+	mov	1, d0
+	call	func_4870902D, 0, 0
+	mov	1, d0
+	movbu	d0, (0x500788c5)
+	jmp	SdcCurFileNameFunc_entry_Lbb5
+SdcCurFileNameFunc_entry_Lb01:
+	cmp	4, d0
+	beq	SdcCurFileNameFunc_entry_Lb08
+	jmp	SdcCurFileNameFunc_entry_Lbb5
+SdcCurFileNameFunc_entry_Lb08:
+	movbu	(0x500788c6), d0
+	cmp	0, d0
+	bne	SdcCurFileNameFunc_entry_Lb4f
+	mov	1, d0
+	mov	d0, (0x10, sp)
+	mov	-1, d0
+	mov	0x0006008f, d1
+	call	ApPostEvent_entry, [d2], 0x1c
+	mov	0x104, d0
+	clr	d1
+	call	ChangeTitle_entry, [d2,d3,a2], 0x20
+	clr	d0
+	mov	d0, (0x10, sp)
+	mov	-1, d0
+	mov	0x0006008f, d1
+	call	ApPostEvent_entry, [d2], 0x1c
+	mov	3, d0
+	mov	0x5e, d1
+	call	InterruptTitle_entry, [d2,d3,a2], 0x20
+	bra	SdcCurFileNameFunc_entry_Lbb5
+SdcCurFileNameFunc_entry_Lb4f:
+	cmp	2, d0
+	bne	SdcCurFileNameFunc_entry_Lb60
+	mov	0x10a, d0
+	clr	d1
+	call	ChangeTitle_entry, [d2,d3,a2], 0x20
+	bra	SdcCurFileNameFunc_entry_Lbb5
+SdcCurFileNameFunc_entry_Lb60:
+	call	func_4870B600, 0, 0
+	extbu	d0
+	call	func_487163B8_entry, [d2,d3], 0x1c
+	call	GetTitleOld_entry, 0, 0x10
+	exthu	d0
+	cmp	0x110, d0
+	bne	SdcCurFileNameFunc_entry_Lbb5
+	clr	d0
+	mov	d0, (0x10, sp)
+	mov	-1, d0
+	mov	0x00050008, d1
+	call	ApPostEvent_entry, [d2], 0x1c
+	mov	5, d0
+	mov	d0, (0x10, sp)
+	mov	0x02100300, d0
+	mov	0x00050001, d1
+	call	ApPostEvent_entry, [d2], 0x1c
+	mov	1, d0
+	call	func_4870902D, 0, 0
+	mov	1, d0
+	movbu	d0, (0x500788c5)
+SdcCurFileNameFunc_entry_Lbb5:
+	clr	d0
+	bra	SdcCurFileNameFunc_entry_Lbf9
+SdcCurFileNameFunc_entry_Lbb8:
+	clr	d0
+	bra	SdcCurFileNameFunc_entry_Lbf9
+SdcCurFileNameFunc_entry_Lbbb:
+	call	func_4870B6AB, 0, 0
+	clr	d0
+	mov	d0, d1
+	call	SDModuleModeReq_entry, 0, 0xc
+	clr	d0
+	bra	SdcCurFileNameFunc_entry_Lbf9
+SdcCurFileNameFunc_entry_Lbce:
+	clr	d0
+	bra	SdcCurFileNameFunc_entry_Lbf9
+SdcCurFileNameFunc_entry_Lbd1:
+	mov	(0x24, sp), a0
+	cmp	0x17, a0
+	bne	SdcCurFileNameFunc_entry_Lbf5
+	call	func_4870B6A2, 0, 0
+	mov	0x000f0110, d0
+	mov	d0, (0x10, sp)
+	mov	-1, d0
+	mov	0x0005000d, d1
+	call	ApPostEvent_entry, [d2], 0x1c
+SdcCurFileNameFunc_entry_Lbf5:
+	clr	d0
+	bra	SdcCurFileNameFunc_entry_Lbf9
+SdcCurFileNameFunc_entry_Lbf8:
+	clr	d0
+SdcCurFileNameFunc_entry_Lbf9:
+	ret	0, 0x14
 
 SdcCurFolderNameFunc:
 	clr	d0
@@ -517787,7 +523853,12 @@ SdcPlistNamingFunc_L142:
 	clr	d0
 SdcPlistNamingFunc_L143:
 	ret	[d2,a2,a3], 0x28
-.incbin_range "baserom/kn2400_program.rom", 0x31a013, 0x31a025
+# SdcPlistNamingFunc + 0x146: no traced path reaches what follows (--decode-gaps)
+	mov	-1, d0
+	retf	0, 0
+	add	-8, sp
+	call	func_486C4D16_L3, 0, 0
+	ret	0, 8
 
 SdcFmmFdSmfFileViewFunc:
 	clr	d0
@@ -521487,7 +527558,10 @@ SdcSingleLoadModeFunc:
 SdcSingleLoadModeFunc_L37:
 	clr	d0
 	ret	[a2], 0x18
-.incbin_range "baserom/kn2400_program.rom", 0x31c9d7, 0x31c9e3
+# SdcSingleLoadModeFunc + 0x3b: no traced path reaches what follows (--decode-gaps)
+	movbu	(0x50078998), d0
+	retf	0, 0
+	add	-0x14, sp
 
 func_4871C9E3:
 	clr	d0
@@ -521716,6 +527790,7 @@ func_4871CBB6:
 
 func_4871CBB6_entry:
 	clr	d3
+func_4871CBB6_entry_L1:
 	mov	0xd8, d0
 	nop
 	nop
@@ -521765,7 +527840,7 @@ func_4871CBB6_entry_L4a:
 	exth	d2
 	cmp	0x63, d2
 	blt	func_4871CBB6_entry_L4a
-	bra	0x4871cc55
+	bra	func_4871CBB6_entry_L9a
 func_4871CBB6_entry_L64:
 	cmp	-5, d1
 	bne	func_4871CBB6_entry_L7e
@@ -521777,10 +527852,10 @@ func_4871CBB6_entry_L64:
 	add	0x5007cfd8, a0
 	mov	2, d0
 	movhu	d0, (0x10, a0)
-	bra	0x4871cc55
+	bra	func_4871CBB6_entry_L9a
 func_4871CBB6_entry_L7e:
 	cmp	-4, d1
-	bne	0x4871cc5f
+	bne	func_4871CBB6_entry_La4
 	mov	0xd8, d0
 	nop
 	nop
@@ -521789,8 +527864,19 @@ func_4871CBB6_entry_L7e:
 	add	0x5007cfd8, a0
 	mov	3, d0
 	movhu	d0, (0x10, a0)
-	bra	0x4871cc55
-.incbin_range "baserom/kn2400_program.rom", 0x31cc53, 0x31cc62
+	bra	func_4871CBB6_entry_L9a
+# func_4871CBB6_entry + 0x98: no traced path reaches what follows (--decode-gaps)
+	bra	func_4871CBB6_entry_La4
+func_4871CBB6_entry_L9a:
+	inc	d3
+	exth	d3
+	cmp	0x63, d3
+	bge	func_4871CBB6_entry_La3
+	jmp	func_4871CBB6_entry_L1
+func_4871CBB6_entry_La3:
+	clr	d0
+func_4871CBB6_entry_La4:
+	ret	[d2,d3,a2,a3], 0x24
 
 func_4871CC62:
 	movm	[d2], (sp)
@@ -523222,7 +529308,9 @@ func_4871D5EB_entry_L21:
 	call	func_4870FADB_entry, [d2,a2], 0x1c
 	mov	d2, d0
 	ret	[d2,a2], 0x30
-.incbin_range "baserom/kn2400_program.rom", 0x31d61f, 0x31d628
+# func_4871D5EB_entry + 0x2f: no traced path reaches what follows (--decode-gaps)
+	mov	Str_C_SD_SOUND, a0
+	retf	0, 0
 
 func_4871D628:
 	mov	Str_SD_SOUND_PLM, a0
@@ -525332,7 +531420,7 @@ func_4871E79F_entry:
 	extbu	d0
 	cmp	d2, d0
 	bne	func_4871E79F_entry_L27
-	jmp	0x4871e8b2
+	jmp	func_4871E79F_entry_L10e
 func_4871E79F_entry_L27:
 	mov	Str_rb_3, a1
 	mov	a3, a0
@@ -525429,9 +531517,19 @@ func_4871E79F_entry_Lfb:
 	mov	d0, (0x2c, sp)
 	exth	d3
 	cmp	0x3e7, d3
-	bge	0x4871e8b4
+	bge	func_4871E79F_entry_L110
 	jmp	func_4871E79F_entry_L67
-.incbin_range "baserom/kn2400_program.rom", 0x31e8b0, 0x31e8cb
+# func_4871E79F_entry + 0x10c: no traced path reaches what follows (--decode-gaps)
+	bra	func_4871E79F_entry_L110
+func_4871E79F_entry_L10e:
+	mov	-6, d2
+func_4871E79F_entry_L110:
+	call	func_4870F4A1, 0, 0xc
+	mov	0, a0
+	call	sdfmpath_entry, 0, 0x14
+	mov	d2, d0
+	ret	[d2,d3,a2,a3], 0x24
+	add	-0xc, sp
 
 func_4871E8CB:
 	call	func_4871EAB2, 0, 0
@@ -526240,7 +532338,8 @@ func_4871EF31_L1ea:
 	call	func_48609488, 0, 0
 	call	func_48726635_entry, [d2,a2,a3], 0x44
 	jmp	func_4871EF31_L29
-.incbin_range "baserom/kn2400_program.rom", 0x31f1bd, 0x31f1c0
+# func_4871EF31 + 0x28c: no traced path reaches what follows (--decode-gaps)
+	ret	[d2,d3,a2,a3], 0x2c
 
 InitializeBlock34:
 	movm	[d2,d3,a2,a3], (sp)
@@ -536109,7 +542208,27 @@ func_487254BD_entry_L14:
 func_487254BD_entry_L24:
 	clr	d0
 	ret	0, 0xc
-.incbin_range "baserom/kn2400_program.rom", 0x3254e8, 0x325520
+# func_487254BD_entry + 0x28: no traced path reaches what follows (--decode-gaps)
+	mov	0x5010b298, a0
+	setlb
+	clr	d0
+	movbu	d0, (a0)
+	mov	d0, (0x14, a0)
+	add	0x18, a0
+	cmp	0x50111040, a0
+	lcs
+	retf	0, 0
+	mov	0x50111040, a0
+	setlb
+	clr	d0
+	movbu	d0, (a0)
+	movhu	d0, (0x12, a0)
+	mov	d0, (0x14, a0)
+	add	0x18, a0
+	cmp	0x501119a0, a0
+	lcs
+	retf	0, 0
+	add	-8, sp
 
 func_48725520:
 	call	func_48724855_entry, 0, 0xc
@@ -541406,7 +547525,14 @@ func_48728591:
 
 func_4872859C:
 	ret	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x32859f, 0x3285be
+# func_4872859C + 0x3: no traced path reaches what follows (--decode-gaps)
+	movhu	(0x34000118), d0
+	and	0xff0f, d0
+	movhu	d0, (0x34000118)
+	add	-4, sp
+	call	func_5018DD6C_L3, 0, 0xc
+	add	4, sp
+	rets
 .mnbase 0x4fdf7a42   # this range is linked for 0x50120000
 
 LibF64Pow:
@@ -548986,7 +555112,7 @@ strrchr_L28:
 func_501236D5:
 	or	d0, d0
 	nop
-	beq	0x50123754
+	beq	func_501236D5_L7f
 	mov	0x4b000000, a0
 	clr	d1
 func_501236D5_Lc:
@@ -549014,11 +555140,30 @@ func_501236D5_L35:
 func_501236D5_L47:
 	btst	0x00800000, d0
 	nop
-	bne	0x5012374a
+	bne	func_501236D5_L75
 	sub	0x800000, a0
 	add	d0, d0
 	bra	func_501236D5_L47
-.incbin_range "baserom/kn2400_program.rom", 0x32bcec, 0x32bd15
+# func_501236D5 + 0x59: no traced path reaches what follows (--decode-gaps)
+	add	d1, d1
+	nop
+	bcc	func_501236D5_L75
+	bne	func_501236D5_L65
+	btst	0x01, d0
+	nop
+	beq	func_501236D5_L75
+func_501236D5_L65:
+	inc	d0
+	and	0x007fffff, d0
+	nop
+	bne	func_501236D5_L75
+	add	0x800000, a0
+func_501236D5_L75:
+	and	0x007fffff, d0
+	mov	a0, d1
+	or	d1, d0
+func_501236D5_L7f:
+	retf	0, 0
 
 strcspn:
 	movm	[d2,a2,a3], (sp)
@@ -549958,7 +556103,53 @@ func_50123F57_L8:
 func_50123F57_L33:
 	call	SndCmdStreamInterpret_entry, [d2,d3,a2,a3], 0x38
 	bra	func_50123F57_L8
-.incbin_range "baserom/kn2400_program.rom", 0x32c54f, 0x32c60d
+# func_50123F57 + 0x3a: no traced path reaches what follows (--decode-gaps)
+	ret	[a2], 0x20
+	add	-0x10, sp
+	clr	d0
+	movhu	d0, (0x500830dc)
+	movhu	d0, (0x500830da)
+	movhu	d0, (0x500830d8)
+	movbu	d0, (0x50006eb8)
+	mov	4, d0
+	mov	0x484003a0, a0
+	call	cre_tsk, 0, 0
+	mov	4, d0
+	clr	d1
+	call	func_5018D990, 0, 0
+	mov	7, d0
+	mov	0x484003b4, a0
+	call	func_5018C994, 0, 0
+	mov	8, d0
+	mov	0x484003c0, a0
+	call	func_5018C994, 0, 0
+	mov	0xb, d0
+	mov	0x484003cc, a0
+	call	func_5018C994, 0, 0
+	call	func_5013DF45_entry, [d2,d3,a2,a3], 0x24
+	call	func_487055C4, 0, 0
+	extbu	d0
+	cmp	3, d0
+	beq	func_50123F57_Lb9
+	call	func_486EE834_entry, 0, 0xc
+func_50123F57_Lb9:
+	call	func_501269D4_entry, [d2], 4
+	clr	d0
+	call	func_50142E89_entry, [d2,d3,a2], 0x18
+	call	func_501347F9_entry, [d2,d3,a2,a3], 0x30
+	call	TgPartProgramInitAll_entry, [d2], 0x20
+	call	TgLocalEditResetAll_entry, [d2], 0x10
+	call	TgGlobalParamInit_entry, [d2,d3,a2], 0x24
+	ret	0, 0x10
+	retf	0, 0
+	exth	d0
+	and	0x7f00, d0
+	exth	d0
+	asr	8, d0
+	exth	d0
+	movbu	(d0, a0), d0
+	extbu	d0
+	retf	0, 0
 
 TgVoiceRoutePtrCalc:
 	movm	[d2,d3,a2,a3], (sp)
@@ -555000,7 +561191,9 @@ func_501269D4_entry:
 	cmp	0x22, d1
 	llt
 	ret	[d2], 4
-.incbin_range "baserom/kn2400_program.rom", 0x32efec, 0x32eff1
+# func_501269D4_entry + 0x58: no traced path reaches what follows (--decode-gaps)
+	mov	-1, d0
+	retf	0, 0
 
 func_50126A33:
 	extbu	d0
@@ -566397,7 +572590,9 @@ TgReverbPartsApply_entry_L4c:
 	cmp	0x22, d2
 	blt	TgReverbPartsApply_entry_L1
 	ret	[d2,d3], 0x20
-.incbin_range "baserom/kn2400_program.rom", 0x334f11, 0x334f1a
+# TgReverbPartsApply_entry + 0x55: no traced path reaches what follows (--decode-gaps)
+	movbu	d0, (0x500937a4)
+	retf	0, 0
 
 func_5012C95C:
 	movbu	d0, (0x50006eca)
@@ -575182,7 +581377,70 @@ TgPartLocalEditElemRecPtr_entry:
 	add	d1, d0
 	mov	d0, a0
 	ret	[d2], 4
-.incbin_range "baserom/kn2400_program.rom", 0x339804, 0x33988c
+# TgPartLocalEditElemRecPtr_entry + 0x1d: no traced path reaches what follows (--decode-gaps)
+	extbu	d0
+	mov	0x2c8, d1
+	nop
+	nop
+	mul	d1, d0
+	add	0x500937c0, d0
+	mov	d0, a0
+	movbu	(-0x2c3b, a0), d0
+	rets
+	extbu	d0
+	mov	0x2c8, d1
+	nop
+	nop
+	mul	d1, d0
+	add	0x500937c0, d0
+	mov	d0, a0
+	movbu	(-0x2c3a, a0), d0
+	rets
+	extbu	d0
+	mov	0x2c8, d1
+	nop
+	nop
+	mul	d1, d0
+	add	0x500937c0, d0
+	mov	d0, a0
+	movbu	(-0x2c39, a0), d0
+	rets
+	movm	[d2], (sp)
+	mov	d1, d2
+	mov	d0, d1
+	extbu	d1
+	mov	0x2c8, d0
+	nop
+	nop
+	mul	d0, d1
+	add	0x500937c0, d1
+	extbu	d2
+	mov	0x7a, d0
+	nop
+	nop
+	mulu	d0, d2
+	add	d2, d1
+	mov	d1, a0
+	movbu	(-0x2c28, a0), d0
+	ret	[d2], 4
+	movm	[d2], (sp)
+	mov	d1, d2
+	mov	d0, d1
+	extbu	d1
+	mov	0x2c8, d0
+	nop
+	nop
+	mul	d0, d1
+	add	0x500937c0, d1
+	extbu	d2
+	mov	0x7a, d0
+	nop
+	nop
+	mulu	d0, d2
+	add	d2, d1
+	mov	d1, a0
+	movbu	(-0x2c27, a0), d0
+	ret	[d2], 4
 
 TgPartAuxMod06Get:
 	movm	[d2], (sp)
@@ -575662,7 +581920,17 @@ TgPartLocalEditActive:
 	and	0x01, d0
 	extbu	d0
 	rets
-.incbin_range "baserom/kn2400_program.rom", 0x339bc0, 0x339bd5
+# TgPartLocalEditActive + 0x15: no traced path reaches what follows (--decode-gaps)
+	extbu	d0
+	mov	9, d1
+	nop
+	nop
+	mulu	d1, d0
+	mov	0x500988ea, a0
+	movbu	(d0, a0), d0
+	and	0x02, d0
+	extbu	d0
+	rets
 
 TgPartAuxRecBuild:
 	movm	[d2,d3,a2], (sp)
@@ -576392,7 +582660,9 @@ TgPartLocalEditSelect_entry_L8d:
 	call	TgPartToneModSetupDispatch_entry, [d2,d3], 0x14
 TgPartLocalEditSelect_entry_Le7:
 	ret	[d2,d3], 0x24
-.incbin_range "baserom/kn2400_program.rom", 0x33a19d, 0x33a1a6
+# TgPartLocalEditSelect_entry + 0xea: no traced path reaches what follows (--decode-gaps)
+	movbu	d0, (0x50098a1c)
+	retf	0, 0
 
 TgPartEditLfoLoadA:
 	movm	[d2,a2], (sp)
@@ -576852,7 +583122,18 @@ TgPartEditLfoFlagSet_entry_L57:
 	movbu	d1, (a0)
 TgPartEditLfoFlagSet_entry_L5d:
 	ret	[d2,d3], 0x14
-.incbin_range "baserom/kn2400_program.rom", 0x33a598, 0x33a5b2
+# TgPartEditLfoFlagSet_entry + 0x60: no traced path reaches what follows (--decode-gaps)
+	extbu	d0
+	mov	0x2c8, d1
+	nop
+	nop
+	mul	d1, d0
+	mov	d0, a0
+	add	0x500937c0, a0
+	movbu	(-0x2c3c, a0), d0
+	and	0x80, d0
+	extbu	d0
+	rets
 
 func_50131FF4:
 	movm	[d2,d3,a2,a3], (sp)
@@ -594676,13 +600957,74 @@ func_5013AF39_entry_L37:
 	call	func_50126295_entry, [d2,d3,a2,a3], 0x78
 	extbu	d0
 	cmp	-1, d0
-	beq	0x5013af92
+	beq	func_5013AF39_entry_L54
 	cmp	-2, d0
-	beq	0x5013afc8
+	beq	func_5013AF39_entry_L8a
 	cmp	0, d0
-	bne	0x5013afc8
-	bra	0x5013aff5
-.incbin_range "baserom/kn2400_program.rom", 0x34354e, 0x3435cd
+	bne	func_5013AF39_entry_L8a
+	bra	func_5013AF39_entry_Lb7
+# func_5013AF39_entry + 0x52: no traced path reaches what follows (--decode-gaps)
+	bra	func_5013AF39_entry_L8a
+func_5013AF39_entry_L54:
+	mov	sp, a2
+	add	0x1c, a2
+	mov	a2, a0
+	mov	d2, d0
+	mov	d3, d1
+	call	TgVoiceListReleaseByNote_entry, [d2], 0x10
+	add	6, a2
+	movbu	(a2), d0
+	cmp	0x40, d0
+	bge	func_5013AF39_entry_L7f
+func_5013AF39_entry_L67:
+	movbu	(a2), d0
+	call	TgVoiceNodeKeyOff_entry, [d2,d3], 0x18
+	movbu	(a2), d0
+	inc	a2
+	clr	d1
+	call	TgVoiceSlotService_entry, [d2,d3], 0x14
+	movbu	(a2), d0
+	cmp	0x40, d0
+	blt	func_5013AF39_entry_L67
+func_5013AF39_entry_L7f:
+	mov	d2, d0
+	mov	d3, d1
+	call	func_50126455_entry, [d2,d3,a2,a3], 0x80
+	bra	func_5013AF39_entry_Lc0
+func_5013AF39_entry_L8a:
+	mov	sp, a2
+	add	0x1c, a2
+	mov	a2, a0
+	mov	d2, d0
+	mov	d3, d1
+	call	TgVoiceListReleaseByNote_entry, [d2], 0x10
+	add	6, a2
+	movbu	(a2), d0
+	cmp	0x40, d0
+	bge	func_5013AF39_entry_Lc0
+func_5013AF39_entry_L9d:
+	movbu	(a2), d0
+	call	TgVoiceNodeKeyOff_entry, [d2,d3], 0x18
+	movbu	(a2), d0
+	inc	a2
+	clr	d1
+	call	TgVoiceSlotService_entry, [d2,d3], 0x14
+	movbu	(a2), d0
+	cmp	0x40, d0
+	blt	func_5013AF39_entry_L9d
+	bra	func_5013AF39_entry_Lc0
+func_5013AF39_entry_Lb7:
+	mov	d2, d0
+	mov	d3, d1
+	call	func_50126455_entry, [d2,d3,a2,a3], 0x80
+func_5013AF39_entry_Lc0:
+	mov	a3, (0x10, sp)
+	movbu	(0x18, sp), d0
+	mov	d3, d1
+	mov	d0, (0x14, sp)
+	mov	d2, d0
+	call	func_5013A621_entry, [d2,d3,a2], 0x38
+	ret	[d2,d3,a2,a3], 0x74
 
 func_5013B00F:
 	movm	[d2], (sp)
@@ -595655,7 +601997,33 @@ func_5013B73A:
 	mov	d0, a0
 	mov	(0x10, a0), a0
 	rets
-.incbin_range "baserom/kn2400_program.rom", 0x343d0c, 0x343d45
+# func_5013B73A + 0x14: no traced path reaches what follows (--decode-gaps)
+	extbu	d0
+	mov	0x1c, d1
+	nop
+	nop
+	mulu	d1, d0
+	mov	0x5000857c, a0
+	movbu	(d0, a0), d0
+	rets
+	extbu	d0
+	mov	0x1c, d1
+	nop
+	nop
+	mulu	d1, d0
+	add	0x5000857c, d0
+	mov	d0, a0
+	movbu	(1, a0), d0
+	rets
+	extbu	d0
+	mov	0x1c, d1
+	nop
+	nop
+	mulu	d1, d0
+	add	0x5000857c, d0
+	mov	d0, a0
+	movbu	(2, a0), d0
+	rets
 
 func_5013B787:
 	extbu	d0
@@ -598312,7 +604680,9 @@ TgGlobalRegWriteB_entry:
 	and	0xffff, d0
 	movhu	d0, (0x98050002)
 	retf	[d2], 4
-.incbin_range "baserom/kn2400_program.rom", 0x345408, 0x34540e
+# TgGlobalRegWriteB_entry + 0x21: no traced path reaches what follows (--decode-gaps)
+	retf	0, 0
+	add	-4, sp
 
 func_5013CE50:
 	mov	d0, (0, sp)
@@ -598325,7 +604695,40 @@ func_5013CE50:
 	mov	d0, (0, sp)
 	movhu	(0, sp), d0
 	retf	0, 4
-.incbin_range "baserom/kn2400_program.rom", 0x345433, 0x345480
+# func_5013CE50 + 0x25: no traced path reaches what follows (--decode-gaps)
+func_5013CE50_L25:
+	clr	d0
+	retf	0, 0
+	movm	[d2], (sp)
+	add	-0xc, sp
+	movhu	(0x5009d97c), d1
+	mov	d0, d2
+	cmp	0x7f, d1
+	beq	func_5013CE50_L6f
+	extbu	d0
+	cmp	0x40, d0
+	bge	func_5013CE50_L56
+	extbu	d2
+	mov	d2, d1
+	asl	20, d1
+	add	0xfc010000, d1
+	mov	d1, d0
+	call	func_5013CE50, 0, 4
+	exthu	d0
+	and	0x1fff, d0
+	bra	func_5013CE50_L6f
+func_5013CE50_L56:
+	and	0x3f, d0
+	extbu	d0
+	mov	d0, d1
+	asl	20, d1
+	add	0xfc010000, d1
+	mov	d1, d0
+	call	func_5013CE50_L25, 0, 0
+	exthu	d0
+	and	0x1fff, d0
+func_5013CE50_L6f:
+	ret	[d2], 0x10
 
 TgVoiceRecordReset:
 	movm	[d2,a2], (sp)
@@ -599836,7 +606239,8 @@ func_5013DCA1_entry:
 	mov	0x800a0000, d1
 	call	func_5013CDFB_entry, [d2], 4
 	ret	[d2,d3], 0x1c
-.incbin_range "baserom/kn2400_program.rom", 0x3462a6, 0x3462a9
+# func_5013DCA1_entry + 0x42: no traced path reaches what follows (--decode-gaps)
+	retf	0, 0
 
 func_5013DCEB:
 	movm	[a2], (sp)
@@ -600216,7 +606620,14 @@ func_5013DF45_entry_Led:
 	jmp	func_5013DF45_entry_Led
 func_5013DF45_entry_L194:
 	ret	[d2,d3,a2,a3], 0x24
-.incbin_range "baserom/kn2400_program.rom", 0x34669f, 0x3466be
+# func_5013DF45_entry + 0x197: no traced path reaches what follows (--decode-gaps)
+	retf	0, 0
+	add	-0xc, sp
+	mov	data_485293D0, a0
+	call	TgGlobalRegsB0LoadB_entry, [a2], 0x18
+	mov	data_485293F0, a0
+	call	func_5013DCEB_entry, [a2], 0x18
+	ret	0, 0xc
 
 func_5013E100:
 	movm	[d2,d3], (sp)
@@ -604368,7 +610779,28 @@ func_50140351_entry:
 	mov	a2, a0
 	call	func_50126A48_entry, [d2,d3,a2,a3], 0x24
 	ret	[a2], 0x58
-.incbin_range "baserom/kn2400_program.rom", 0x348931, 0x34895c
+# func_50140351_entry + 0x1d: no traced path reaches what follows (--decode-gaps)
+	extbu	d0
+	mov	0x5009d980, a0
+	movbu	(d0, a0), d0
+	extb	d0
+	exth	d0
+	add	-0x40, d0
+	retf	0, 0
+	movm	[d2], (sp)
+	clr	d0
+	clr	d1
+	setlb
+	mov	0x40, d2
+	mov	0x5009d980, a0
+	extbu	d0
+	movbu	d2, (d0, a0)
+	inc	d1
+	mov	d1, d0
+	extbu	d1
+	cmp	0x80, d1
+	llt
+	retf	[d2], 4
 
 func_5014039E:
 	movm	[d2,d3,a2,a3], (sp)
@@ -609587,7 +616019,45 @@ func_50142B85:
 func_50142B8F:
 	movbu	d0, (0x5000af3c)
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x34b156, 0x34b1ac
+# func_50142B8F + 0x9: no traced path reaches what follows (--decode-gaps)
+	mov	a0, a1
+	movhu	(a1), d0
+	and	0x3f00, d0
+	asr	8, d0
+	extbu	d0
+	cmp	0x12, d0
+	ble	func_50142B8F_L5c
+	movbu	(0x5000af3c), d0
+	cmp	0, d0
+	beq	func_50142B8F_L40
+	movhu	(0x5000af3e), d0
+	cmp	0x40, d0
+	blt	func_50142B8F_L5c
+	inc4	a0
+	movbu	(a0), d0
+	add	5, a1
+	mov	-0x81, d1
+	and	d1, d0
+	movbu	d0, (a0)
+	movbu	(a1), d0
+	and	d1, d0
+	movbu	d0, (a1)
+	bra	func_50142B8F_L5c
+func_50142B8F_L40:
+	movhu	(0x5000af3e), d0
+	cmp	0x50, d0
+	blt	func_50142B8F_L5c
+	inc4	a0
+	movbu	(a0), d0
+	add	5, a1
+	mov	-0x81, d1
+	and	d1, d0
+	movbu	d0, (a0)
+	movbu	(a1), d0
+	and	d1, d0
+	movbu	d0, (a1)
+func_50142B8F_L5c:
+	retf	0, 0
 
 TgNodeRingSeed:
 	movm	[a2,a3], (sp)
@@ -610440,7 +616910,7 @@ func_5014320B_entry:
 	extbu	d1
 	cmp	0x22, d1
 	blt	func_5014320B_entry_L14
-	jmp	0x50143454
+	jmp	func_5014320B_entry_L244
 func_5014320B_entry_L14:
 	extbu	d2
 	mov	0x1c, d0
@@ -610689,9 +617159,25 @@ func_5014320B_entry_L235:
 	extbu	d0
 	mov	d0, (0x20, sp)
 	cmp	4, d0
-	bge	0x50143465
+	bge	func_5014320B_entry_L255
 	jmp	func_5014320B_entry_L72
-.incbin_range "baserom/kn2400_program.rom", 0x34ba10, 0x34ba26
+# func_5014320B_entry + 0x242: no traced path reaches what follows (--decode-gaps)
+	bra	func_5014320B_entry_L255
+func_5014320B_entry_L244:
+	clr	d0
+	clr	d1
+	add	0xa, a2
+	setlb
+	mov	0xff, d2
+	extbu	d0
+	movbu	d2, (d0, a2)
+	inc	d1
+	mov	d1, d0
+	extbu	d1
+	cmp	4, d1
+	llt
+func_5014320B_entry_L255:
+	ret	[d2,d3,a2,a3], 0x54
 
 TgVoiceNodeKeyOff:
 	movm	[d2,d3], (sp)
@@ -612973,8 +619459,47 @@ func_501445F0_entry_L1a:
 	mov	data_48405B54, a0
 	mov	(d0, a0), a0
 	jmp	(a0)
-	bra	0x50144621
-.incbin_range "baserom/kn2400_program.rom", 0x34cbdc, 0x34cc39
+	bra	func_501445F0_entry_L2c
+# func_501445F0_entry + 0x29: no traced path reaches what follows (--decode-gaps)
+	ret	[d2,d3], 0x18
+func_501445F0_entry_L2c:
+	mov	d2, d0
+	and	0x0f000000, d0
+	lsr	24, d0
+	extbu	d0
+	cmp	0, d0
+	beq	func_501445F0_entry_L57
+	cmp	1, d0
+	beq	func_501445F0_entry_L57
+	cmp	2, d0
+	beq	func_501445F0_entry_L57
+	cmp	3, d0
+	beq	func_501445F0_entry_L57
+	cmp	4, d0
+	beq	func_501445F0_entry_L57
+	cmp	5, d0
+	beq	func_501445F0_entry_L57
+	cmp	6, d0
+	beq	func_501445F0_entry_L57
+	cmp	7, d0
+	bne	func_501445F0_entry_L83
+func_501445F0_entry_L57:
+	mov	d2, d0
+	and	0x00ff0000, d0
+	lsr	16, d0
+	extbu	d0
+	and	0xff000000, d1
+	lsr	24, d1
+	extbu	d1
+	call	func_5014C840_entry, 0, 0x14
+	extbu	d0
+	cmp	0xff, d0
+	beq	func_501445F0_entry_L83
+	mov	d3, d1
+	mov	d2, d0
+	call	func_5015CA12, 0, 0
+func_501445F0_entry_L83:
+	ret	[d2,d3], 0x18
 
 func_5014467B:
 	movm	[d2,d3,a2], (sp)
@@ -621631,7 +628156,7 @@ func_50148E95_entry:
 	extbu	d0
 	cmp	6, d0
 	beq	func_50148E95_entry_L21
-	jmp	0x50148f5e
+	jmp	func_50148E95_entry_Lc4
 func_50148E95_entry_L21:
 	mov	(0x48, sp), d0
 	and	0xff000000, d2
@@ -621694,14 +628219,26 @@ func_50148E95_entry_Lac:
 	mov	a2, d0
 	lsr	1, d0
 	mov	d0, a2
-	beq	0x50148f6e
+	beq	func_50148E95_entry_Ld4
 	inc	d3
 	movbu	d3, (0x24, sp)
 	movbu	(0x24, sp), d3
 	cmp	0x21, d3
-	bgt	0x50148f6e
+	bgt	func_50148E95_entry_Ld4
 	bra	func_50148E95_entry_L46
-.incbin_range "baserom/kn2400_program.rom", 0x35151a, 0x351531
+# func_50148E95_entry + 0xc2: no traced path reaches what follows (--decode-gaps)
+	bra	func_50148E95_entry_Ld4
+func_50148E95_entry_Lc4:
+	movhu	(0x4c, sp), d1
+	mov	d2, d0
+	mov	d1, (0x14, sp)
+	mov	(0x48, sp), d1
+	mov	a3, a0
+	call	func_50147CE8_entry, [d2,d3,a2,a3], 0x34
+	mov	d0, (0x18, sp)
+func_50148E95_entry_Ld4:
+	mov	(0x18, sp), d0
+	ret	[d2,d3,a2,a3], 0x38
 
 func_50148F73:
 	mov	-1, d0
@@ -625111,53 +631648,60 @@ func_5014A9B6_L14:
 	cmp	2, d0
 	beq	func_5014A9B6_L7f
 	cmp	3, d0
-	beq	0x5014aa3f
+	beq	func_5014A9B6_L89
 	cmp	4, d0
-	beq	0x5014aa3f
+	beq	func_5014A9B6_L89
 	cmp	5, d0
-	beq	0x5014aa3d
+	beq	func_5014A9B6_L87
 	cmp	6, d0
-	beq	0x5014aa3f
-	bra	0x5014aa3f
+	beq	func_5014A9B6_L89
+	bra	func_5014A9B6_L89
 func_5014A9B6_L36:
 	movhu	(6, a0), d0
 	exth	d0
 	cmp	0, d0
-	blt	0x5014aa3f
+	blt	func_5014A9B6_L89
 	cmp	0x24, d0
-	bgt	0x5014aa3f
+	bgt	func_5014A9B6_L89
 	asl2	d0
 	mov	data_484060B0, a0
 	mov	(d0, a0), a0
 	jmp	(a0)
 	mov	1, d2
-	bra	0x5014aa3f
+	bra	func_5014A9B6_L89
 	mov	2, d2
-	bra	0x5014aa3f
+	bra	func_5014A9B6_L89
 	mov	3, d2
-	bra	0x5014aa3f
+	bra	func_5014A9B6_L89
 	mov	4, d2
-	bra	0x5014aa3f
+	bra	func_5014A9B6_L89
 func_5014A9B6_L5d:
 	movhu	(6, a0), d0
 	exth	d0
 	cmp	0, d0
-	blt	0x5014aa3f
+	blt	func_5014A9B6_L89
 	cmp	0xb, d0
-	bgt	0x5014aa3f
+	bgt	func_5014A9B6_L89
 	asl2	d0
 	mov	data_48406080, a1
 	mov	(d0, a1), a1
 	jmp	(a1)
 	movbu	(0x12, a0), d2
-	bra	0x5014aa3f
+	bra	func_5014A9B6_L89
 	mov	1, d2
-	bra	0x5014aa3f
-	bra	0x5014aa3f
+	bra	func_5014A9B6_L89
+	bra	func_5014A9B6_L89
 func_5014A9B6_L7f:
 	mov	2, d2
-	bra	0x5014aa3f
-.incbin_range "baserom/kn2400_program.rom", 0x352ff7, 0x353001
+	bra	func_5014A9B6_L89
+# func_5014A9B6 + 0x83: no traced path reaches what follows (--decode-gaps)
+	bra	func_5014A9B6_L89
+	bra	func_5014A9B6_L89
+func_5014A9B6_L87:
+	mov	2, d2
+func_5014A9B6_L89:
+	mov	d2, d0
+	ret	[d2,d3], 0x14
 
 func_5014AA43:
 	and	0xf0000000, d0
@@ -625376,7 +631920,18 @@ func_5014AB4C_entry_L6f:
 	clr	d0
 func_5014AB4C_entry_L70:
 	retf	[d2,d3,a2,a3], 0x10
-.incbin_range "baserom/kn2400_program.rom", 0x35317f, 0x353190
+# func_5014AB4C_entry + 0x73: no traced path reaches what follows (--decode-gaps)
+	cmp	d1, d0
+	ble	func_5014AB4C_entry_L79
+	mov	d1, d0
+	bra	func_5014AB4C_entry_L81
+func_5014AB4C_entry_L79:
+	mov	(0x10, sp), a0
+	cmp	a0, d0
+	bge	func_5014AB4C_entry_L81
+	mov	a0, d0
+func_5014AB4C_entry_L81:
+	retf	0, 0
 
 func_5014ABD2:
 	movm	[d2,d3,a2], (sp)
@@ -625664,7 +632219,9 @@ func_5014AD97_L36:
 func_5014AD97_L67:
 	extbu	d0
 	ret	[d2,d3], 0x20
-.incbin_range "baserom/kn2400_program.rom", 0x3533c0, 0x3533c4
+# func_5014AD97 + 0x6b: no traced path reaches what follows (--decode-gaps)
+	clr	d0
+	retf	0, 0
 
 func_5014AE06:
 	movm	[d2,d3], (sp)
@@ -627475,7 +634032,12 @@ func_5014BE28_entry_L25:
 	mov	0x7f, d0
 func_5014BE28_entry_L27:
 	ret	0, 0x18
-.incbin_range "baserom/kn2400_program.rom", 0x354413, 0x354428
+# func_5014BE28_entry + 0x2a: no traced path reaches what follows (--decode-gaps)
+	movbu	(0x5000b4a4), d0
+	retf	0, 0
+	movbu	d0, (0x5000b4a4)
+	retf	0, 0
+	add	-0xc, sp
 
 func_5014BE6A:
 	mov	0x5000b4b8, a0
@@ -629188,7 +635750,9 @@ func_5014CD3B_entry_L5f:
 func_5014CD9F:
 	movbu	(0x500145f4), d0
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x355366, 0x35536f
+# func_5014CD9F + 0x9: no traced path reaches what follows (--decode-gaps)
+	movbu	(0x50014710), d0
+	retf	0, 0
 
 func_5014CDB1:
 	movm	[d2], (sp)
@@ -629318,7 +635882,9 @@ func_5014CE22_entry_Lc7:
 func_5014CEF1:
 	mov	(0x500145ec), d0
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x3554b8, 0x3554c1
+# func_5014CEF1 + 0x9: no traced path reaches what follows (--decode-gaps)
+	mov	(0x50014708), d0
+	retf	0, 0
 
 func_5014CF03:
 	movm	[d2,d3], (sp)
@@ -629603,7 +636169,10 @@ func_5014CF03_entry_L2ab:
 func_5014D1BB:
 	movbu	(0x500145f6), d0
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x355782, 0x35578e
+# func_5014D1BB + 0x9: no traced path reaches what follows (--decode-gaps)
+	movbu	(0x50014712), d0
+	retf	0, 0
+	add	-0x10, sp
 
 func_5014D1D0:
 	mov	(0x500145ec), d0
@@ -629828,7 +636397,12 @@ func_5014D439:
 func_5014D443:
 	movbu	(0x500145f5), d0
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x355a0a, 0x355a1f
+# func_5014D443 + 0x9: no traced path reaches what follows (--decode-gaps)
+	movbu	(0x50014711), d0
+	retf	0, 0
+	movbu	(0x50014717), d0
+	and	0x03, d0
+	retf	0, 0
 
 func_5014D461:
 	mov	d0, d1
@@ -630315,17 +636889,31 @@ func_5014D807_entry_L147:
 	mov	d0, (0x5001470c)
 func_5014D807_entry_L159:
 	retf	[d2], 4
-.incbin_range "baserom/kn2400_program.rom", 0x355f23, 0x355f37
+# func_5014D807_entry + 0x15c: no traced path reaches what follows (--decode-gaps)
+	extbu	d0
+	cmp	0x10, d0
+	bcs	func_5014D807_entry_L165
+	mov	0x10, d0
+	bra	func_5014D807_entry_L16d
+func_5014D807_entry_L165:
+	mov	data_4840634C, a0
+	movbu	(d0, a0), d0
+func_5014D807_entry_L16d:
+	retf	0, 0
 
 func_5014D979:
 	mov	0x50298000, a0
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x355f40, 0x355f49
+# func_5014D979 + 0x9: no traced path reaches what follows (--decode-gaps)
+	mov	0x50298020, a0
+	retf	0, 0
 
 func_5014D98B:
 	mov	0x810, d0
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x355f4f, 0x355f55
+# func_5014D98B + 0x6: no traced path reaches what follows (--decode-gaps)
+	mov	0x7f0, d0
+	retf	0, 0
 
 func_5014D997:
 	movm	[a2], (sp)
@@ -630359,7 +636947,8 @@ func_5014D9D3_entry:
 	call	func_5014E593_entry, [d2,a2,a3], 0xc
 	bclr	0x01, (0x50298811)
 	ret	0, 0x14
-.incbin_range "baserom/kn2400_program.rom", 0x355fc4, 0x355fc7
+# func_5014D9D3_entry + 0x30: no traced path reaches what follows (--decode-gaps)
+	retf	0, 0
 
 func_5014DA09:
 	movm	[d2,d3], (sp)
@@ -633815,7 +640404,9 @@ func_5014F8B7_entry_L41:
 	call	func_5014F852_entry, 0, 0xc
 func_5014F8B7_entry_L57:
 	ret	0, 0x10
-.incbin_range "baserom/kn2400_program.rom", 0x357ed2, 0x357ed8
+# func_5014F8B7_entry + 0x5a: no traced path reaches what follows (--decode-gaps)
+	retf	0, 0
+	add	-0x14, sp
 
 func_5014F91A:
 	mov	0x50298000, a1
@@ -634998,7 +641589,9 @@ func_50150563_entry:
 func_501505A0:
 	mov	0x0000afc0, d0
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x358b67, 0x358b70
+# func_501505A0 + 0x9: no traced path reaches what follows (--decode-gaps)
+	mov	0x0000afb0, d0
+	retf	0, 0
 
 func_501505B2:
 	mov	0x3a90, d0
@@ -635007,7 +641600,9 @@ func_501505B2:
 func_501505B8:
 	mov	0x10, d0
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x358b7b, 0x358b84
+# func_501505B8 + 0x5: no traced path reaches what follows (--decode-gaps)
+	mov	0x0000afc0, d0
+	retf	0, 0
 
 func_501505C6:
 	mov	0x750, d0
@@ -637165,7 +643760,15 @@ func_50151CBF_entry_L1a:
 func_50151CFF:
 	mov	0x50014800, a0
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x35a2c6, 0x35a2d7
+# func_50151CFF + 0x9: no traced path reaches what follows (--decode-gaps)
+	extbu	d0
+	mov	0x4a, d1
+	nop
+	nop
+	mulu	d0, d1
+	mov	d1, a0
+	add	0x50015820, a0
+	rets
 
 func_50151D19:
 	movm	[d2,d3], (sp)
@@ -639256,12 +645859,12 @@ func_5015350E_entry:
 	extbu	d1
 	cmp	d0, d1
 	bge	func_5015350E_entry_L18
-	jmp	0x50154481
+	jmp	func_5015350E_entry_Lf6e
 func_5015350E_entry_L18:
 	mov	0xe0, d2
 	cmp	d2, d1
 	ble	func_5015350E_entry_L21
-	jmp	0x50154481
+	jmp	func_5015350E_entry_Lf6e
 func_5015350E_entry_L21:
 	inc	d1
 	mov	data_48407934, a1
@@ -639276,7 +645879,7 @@ func_5015350E_entry_L21:
 	setlb
 	cmp	0, d0
 	bne	func_5015350E_entry_L3f
-	jmp	0x50154481
+	jmp	func_5015350E_entry_Lf6e
 func_5015350E_entry_L3f:
 	add	8, a0
 	cmp	data_484079B4, a0
@@ -639342,28 +645945,28 @@ func_5015350E_entry_Lb1:
 	mov	d3, d1
 	extbu	d1
 	call	func_50157105_entry, [d2], 0x14
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 func_5015350E_entry_Lc0:
 	mov	0x1a, d0
 	and	0xff, d3
 	mov	d3, d1
 	extbu	d1
 	call	func_50157105_entry, [d2], 0x14
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 func_5015350E_entry_Lcf:
 	mov	9, d0
 	and	0xff, d3
 	mov	d3, d1
 	extbu	d1
 	call	func_50157105_entry, [d2], 0x14
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 func_5015350E_entry_Lde:
 	mov	-1, d0
 	mov	d0, (0x18, sp)
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	-1, d0
 	mov	d0, (0x18, sp)
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	a2, d0
 	and	0x00ffffff, d0
 	cmp	0x5020, d0
@@ -639385,7 +645988,7 @@ func_5015350E_entry_L10e:
 	and	0xfffd, d1
 	or	d1, d0
 	movhu	d0, (0x500a0bec)
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 func_5015350E_entry_L12c:
 	movhu	(0x500a0bec), d2
 	and	0xff, d3
@@ -639396,7 +645999,7 @@ func_5015350E_entry_L12c:
 	and	0xfffb, d2
 	or	d2, d1
 	movhu	d1, (0x500a0bec)
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 func_5015350E_entry_L14a:
 	movhu	(0x500a0bec), d1
 	and	0xff, d3
@@ -639407,7 +646010,7 @@ func_5015350E_entry_L14a:
 	and	0xfff7, d1
 	or	d1, d0
 	movhu	d0, (0x500a0bec)
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 func_5015350E_entry_L16a:
 	movhu	(0x500a0bec), d2
 	and	0xff, d3
@@ -639418,14 +646021,14 @@ func_5015350E_entry_L16a:
 	and	0xffef, d2
 	or	d2, d1
 	movhu	d1, (0x500a0bec)
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 func_5015350E_entry_L18a:
 	mov	-1, d0
 	mov	d0, (0x18, sp)
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	-1, d0
 	mov	d0, (0x18, sp)
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	a2, d0
 	and	0x00ffffff, d0
 	mov	0x00008001, d1
@@ -639447,43 +646050,43 @@ func_5015350E_entry_L1b7:
 	extbu	d3
 	mov	d3, d1
 	call	func_50157105_entry, [d2], 0x14
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	0x20, d0
 	and	0xff, d3
 	mov	d3, d1
 	extbu	d1
 	call	func_50157105_entry, [d2], 0x14
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	0x21, d0
 	and	0xff, d3
 	mov	d3, d1
 	extbu	d1
 	call	func_50157105_entry, [d2], 0x14
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	0x23, d0
 	and	0xff, d3
 	extbu	d3
 	mov	d3, d1
 	call	func_50157105_entry, [d2], 0x14
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	0x43, d0
 	and	0xff, d3
 	mov	d3, d1
 	extbu	d1
 	call	func_50157105_entry, [d2], 0x14
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	0x24, d0
 	and	0xff, d3
 	mov	d3, d1
 	extbu	d1
 	call	func_50157105_entry, [d2], 0x14
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	0x44, d0
 	and	0xff, d3
 	mov	d3, d1
 	extbu	d1
 	call	func_50157105_entry, [d2], 0x14
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	and	0xff, d3
 	mov	d3, d0
 	extbu	d0
@@ -639491,7 +646094,7 @@ func_5015350E_entry_L1b7:
 	mov	0x20, d0
 	mov	7, d1
 	call	func_5015705B_entry, [d2], 0x18
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	and	0xff, d3
 	mov	d3, d0
 	extbu	d0
@@ -639499,19 +646102,19 @@ func_5015350E_entry_L1b7:
 	mov	0x20, d0
 	mov	0x90, d1
 	call	func_5015705B_entry, [d2], 0x18
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	0x50, d0
 	and	0xff, d3
 	mov	d3, d1
 	extbu	d1
 	call	func_50157105_entry, [d2], 0x14
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	0x30, d0
 	and	0xff, d3
 	mov	d3, d1
 	extbu	d1
 	call	func_50157105_entry, [d2], 0x14
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	and	0xff, d3
 	mov	0x40, d0
 	mov	d3, d1
@@ -639528,40 +646131,40 @@ func_5015350E_entry_L287:
 	mov	9, d0
 	clr	d1
 	call	func_4863AC46_entry, [d2,d3,a2,a3], 0x40
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	0x47, d0
 	and	0xff, d3
 	mov	d3, d1
 	extbu	d1
 	call	func_50157105_entry, [d2], 0x14
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	0x41, d0
 	and	0xff, d3
 	mov	d3, d1
 	extbu	d1
 	call	func_50157105_entry, [d2], 0x14
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	a2, d0
 	mov	d3, d1
 	call	func_50156C1C_entry, 0, 0x14
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	a2, d0
 	mov	d3, d1
 	call	func_50156C1C_entry, 0, 0x14
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	and	0xff, d3
 	movbu	d3, (0x500a0be4)
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	0x25, d0
 	and	0xff, d3
 	mov	d3, d1
 	extbu	d1
 	call	func_50157105_entry, [d2], 0x14
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 func_5015350E_entry_L2e5:
 	mov	-1, d0
 	mov	d0, (0x18, sp)
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	a2, d2
 	and	0x00ffffff, d2
 	cmp	0xa000, d2
@@ -639601,51 +646204,51 @@ func_5015350E_entry_L33a:
 	mov	a2, d0
 	mov	d3, d1
 	call	func_501566F7_entry, [d2,d3], 0x1c
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	a2, d0
 	mov	d3, d1
 	call	func_4863BEF9_entry, [d2,d3,a2], 0x20
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	a2, d0
 	mov	d3, d1
 	call	func_501566F7_entry, [d2,d3], 0x1c
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	a2, d0
 	mov	d3, d1
 	call	func_4863BEF9_entry, [d2,d3,a2], 0x20
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	a2, d0
 	mov	d3, d1
 	call	func_501566F7_entry, [d2,d3], 0x1c
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	a2, d0
 	mov	d3, d1
 	call	func_501566F7_entry, [d2,d3], 0x1c
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	a2, d0
 	mov	d3, d1
 	call	func_50156A88_entry, [d2,d3,a2], 0x20
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	a2, d0
 	mov	d3, d1
 	call	func_501566F7_entry, [d2,d3], 0x1c
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	a2, d0
 	mov	d3, d1
 	call	func_50156A88_entry, [d2,d3,a2], 0x20
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	a2, d0
 	mov	d3, d1
 	call	func_501566F7_entry, [d2,d3], 0x1c
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	a2, d0
 	mov	d3, d1
 	call	func_50156A88_entry, [d2,d3,a2], 0x20
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 func_5015350E_entry_L3bc:
 	mov	-1, d0
 	mov	d0, (0x18, sp)
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	a2, d0
 	and	0x00ffffff, d0
 	mov	0x0000b010, d1
@@ -639665,46 +646268,46 @@ func_5015350E_entry_L3e2:
 	mov	a2, d0
 	mov	d3, d1
 	call	func_50156CE5_entry, [d2,d3,a2,a3], 0x30
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	a2, d0
 	mov	d3, d1
 	call	func_50156DF7_entry, [d2,d3,a2,a3], 0x24
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	a2, d0
 	mov	d3, d1
 	call	func_50156EE3_entry, [d2], 0x18
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	a2, d0
 	mov	d3, d1
 	call	func_50156CE5_entry, [d2,d3,a2,a3], 0x30
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	a2, d0
 	mov	d3, d1
 	call	func_50156DF7_entry, [d2,d3,a2,a3], 0x24
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	a2, d0
 	mov	d3, d1
 	call	func_50156EE3_entry, [d2], 0x18
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	a2, d0
 	mov	d3, d1
 	call	func_50156CE5_entry, [d2,d3,a2,a3], 0x30
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	a2, d0
 	mov	d3, d1
 	call	func_50156DF7_entry, [d2,d3,a2,a3], 0x24
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	a2, d0
 	mov	d3, d1
 	call	func_50156EE3_entry, [d2], 0x18
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 func_5015350E_entry_L452:
 	mov	-1, d0
 	mov	d0, (0x18, sp)
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	-1, d0
 	mov	d0, (0x18, sp)
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	a2, d0
 	and	0x00ffffff, d0
 	cmp	0xe001, d0
@@ -639726,7 +646329,7 @@ func_5015350E_entry_L47a:
 	mov	0x1e, d0
 	mov	7, d1
 	call	func_5015705B_entry, [d2], 0x18
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 func_5015350E_entry_L49a:
 	and	0xff, d3
 	mov	d3, d0
@@ -639741,15 +646344,15 @@ func_5015350E_entry_L49a:
 	mov	0x1e, d0
 	mov	0x90, d1
 	call	func_5015705B_entry, [d2], 0x18
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 func_5015350E_entry_L4bc:
 	mov	-1, d0
 	mov	d0, (0x18, sp)
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 func_5015350E_entry_L4c3:
 	mov	-1, d0
 	mov	d0, (0x18, sp)
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	0xff00, a3
 	mov	a2, d1
 	mov	a3, d0
@@ -639766,7 +646369,7 @@ func_5015350E_entry_L4e2:
 	bne	func_5015350E_entry_L4e9
 	jmp	func_5015350E_entry_L862
 func_5015350E_entry_L4e9:
-	jmp	0x50153e2f
+	jmp	func_5015350E_entry_L91c
 func_5015350E_entry_L4ec:
 	mov	a2, d2
 	and	0x00ffffff, d2
@@ -639814,7 +646417,7 @@ func_5015350E_entry_L53b:
 	extbu	d0
 	mov	0x90, d1
 	call	func_5015705B_entry, [d2], 0x18
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	0xff, d0
 	and	d3, d0
 	extbu	d0
@@ -639827,7 +646430,7 @@ func_5015350E_entry_L53b:
 	extbu	d0
 	mov	0x86, d1
 	call	func_5015705B_entry, [d2], 0x18
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	0xff, d0
 	and	d3, d0
 	extbu	d0
@@ -639841,7 +646444,7 @@ func_5015350E_entry_L53b:
 	extbu	d0
 	mov	0x9d, d1
 	call	func_5015705B_entry, [d2], 0x18
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 func_5015350E_entry_L5a3:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -639851,35 +646454,35 @@ func_5015350E_entry_L5a3:
 	extbu	d0
 	mov	0x9d, d1
 	call	func_5015705B_entry, [d2], 0x18
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	a2, d0
 	mov	d3, d1
 	call	func_501554C3_entry, [d2,d3], 0x1c
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	a2, d0
 	mov	d3, d1
 	call	func_5015557D_entry, [d2,d3], 0x24
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	a2, d0
 	mov	d3, d1
 	call	func_50155C91_entry, [d2,d3], 0x1c
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	a2, d0
 	mov	d3, d1
 	call	func_50155DBB_entry, [d2,d3], 0x1c
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	a2, d0
 	mov	d3, d1
 	call	func_501564AC_entry, [d2,d3,a2,a3], 0x34
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	a2, d0
 	mov	d3, d1
 	call	func_50155E95_entry, [d2,d3,a2], 0x24
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	a2, d0
 	mov	d3, d1
 	call	func_50156374_entry, [d2,d3,a2], 0x24
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	0xff, d0
 	and	d3, d0
 	extbu	d0
@@ -639890,7 +646493,7 @@ func_5015350E_entry_L5a3:
 	extbu	d0
 	mov	0xa0, d1
 	call	func_5015705B_entry, [d2], 0x18
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	0xff, d0
 	and	d3, d0
 	extbu	d0
@@ -639901,7 +646504,7 @@ func_5015350E_entry_L5a3:
 	extbu	d0
 	mov	0xa1, d1
 	call	func_5015705B_entry, [d2], 0x18
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	0xff, d0
 	and	d3, d0
 	extbu	d0
@@ -639912,7 +646515,7 @@ func_5015350E_entry_L5a3:
 	extbu	d0
 	mov	0xa2, d1
 	call	func_5015705B_entry, [d2], 0x18
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	0xff, d0
 	and	d3, d0
 	extbu	d0
@@ -639923,7 +646526,7 @@ func_5015350E_entry_L5a3:
 	extbu	d0
 	mov	0xa3, d1
 	call	func_5015705B_entry, [d2], 0x18
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	0xff, d0
 	and	d3, d0
 	extbu	d0
@@ -639934,7 +646537,7 @@ func_5015350E_entry_L5a3:
 	extbu	d0
 	mov	0xa4, d1
 	call	func_5015705B_entry, [d2], 0x18
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	0xff, d0
 	and	d3, d0
 	extbu	d0
@@ -639945,7 +646548,7 @@ func_5015350E_entry_L5a3:
 	extbu	d0
 	mov	0xa5, d1
 	call	func_5015705B_entry, [d2], 0x18
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	0xff, d0
 	and	d3, d0
 	extbu	d0
@@ -639956,7 +646559,7 @@ func_5015350E_entry_L5a3:
 	extbu	d0
 	mov	0xa6, d1
 	call	func_5015705B_entry, [d2], 0x18
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	0xff, d0
 	and	d3, d0
 	extbu	d0
@@ -639967,7 +646570,7 @@ func_5015350E_entry_L5a3:
 	extbu	d0
 	mov	0xa7, d1
 	call	func_5015705B_entry, [d2], 0x18
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	0xff, d0
 	and	d3, d0
 	extbu	d0
@@ -639978,7 +646581,7 @@ func_5015350E_entry_L5a3:
 	extbu	d0
 	mov	0xa8, d1
 	call	func_5015705B_entry, [d2], 0x18
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	0xff, d0
 	and	d3, d0
 	extbu	d0
@@ -639989,7 +646592,7 @@ func_5015350E_entry_L5a3:
 	extbu	d0
 	mov	0xa9, d1
 	call	func_5015705B_entry, [d2], 0x18
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	0xff, d0
 	and	d3, d0
 	extbu	d0
@@ -640000,7 +646603,7 @@ func_5015350E_entry_L5a3:
 	extbu	d0
 	mov	0xaa, d1
 	call	func_5015705B_entry, [d2], 0x18
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	0xff, d0
 	and	d3, d0
 	extbu	d0
@@ -640011,22 +646614,22 @@ func_5015350E_entry_L5a3:
 	mov	0xab, d1
 	mov	d3, d0
 	call	func_5015705B_entry, [d2], 0x18
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 func_5015350E_entry_L771:
 	mov	-1, d0
 	mov	d0, (0x18, sp)
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 func_5015350E_entry_L778:
 	mov	a2, d0
 	and	0x00ffffff, d0
 	mov	0x00200260, d1
 	cmp	d1, d0
 	bcc	func_5015350E_entry_L78c
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 func_5015350E_entry_L78c:
 	cmp	0x200273, d0
 	bls	func_5015350E_entry_L797
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 func_5015350E_entry_L797:
 	sub	d1, d0
 	asl2	d0
@@ -640084,7 +646687,7 @@ func_5015350E_entry_L7f3:
 	mov	d2, d0
 	mov	0x26, d1
 	call	func_5015705B_entry, [d2], 0x18
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 	mov	d3, d2
 	and	0xff000000, d2
 	lsr	24, d2
@@ -640119,36 +646722,719 @@ func_5015350E_entry_L7f3:
 	mov	0x26, d1
 	mov	d2, d0
 	call	func_5015705B_entry, [d2], 0x18
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 func_5015350E_entry_L862:
 	mov	a2, d0
 	and	0x00ffffff, d0
 	cmp	0x204080, d0
-	beq	0x50153dce
+	beq	func_5015350E_entry_L8bb
 	cmp	0x204081, d0
 	bne	func_5015350E_entry_L87d
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 func_5015350E_entry_L87d:
 	cmp	0x204082, d0
-	beq	0x50153dec
+	beq	func_5015350E_entry_L8d9
 	cmp	0x204083, d0
-	beq	0x50153e0a
+	beq	func_5015350E_entry_L8f7
 	cmp	0x204084, d0
 	bne	func_5015350E_entry_L898
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 func_5015350E_entry_L898:
 	cmp	0x204086, d0
 	bne	func_5015350E_entry_L8a3
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 func_5015350E_entry_L8a3:
 	cmp	0x204087, d0
 	bne	func_5015350E_entry_L8ae
-	jmp	0x50154485
+	jmp	func_5015350E_entry_Lf72
 func_5015350E_entry_L8ae:
 	cmp	0x204088, d0
-	bne	0x50153e28
-	jmp	0x50154485
-.incbin_range "baserom/kn2400_program.rom", 0x35c38a, 0x35ca48
+	bne	func_5015350E_entry_L915
+	jmp	func_5015350E_entry_Lf72
+# func_5015350E_entry + 0x8b9: no traced path reaches what follows (--decode-gaps)
+	bra	func_5015350E_entry_L915
+func_5015350E_entry_L8bb:
+	mov	0xff, d0
+	and	d3, d0
+	extbu	d0
+	mov	d0, (0x10, sp)
+	and	0xff000000, d3
+	mov	d3, d0
+	lsr	24, d0
+	extbu	d0
+	mov	0x85, d1
+	call	func_5015705B_entry, [d2], 0x18
+	jmp	func_5015350E_entry_Lf72
+func_5015350E_entry_L8d9:
+	mov	0xff, d0
+	and	d3, d0
+	extbu	d0
+	mov	d0, (0x10, sp)
+	and	0xff000000, d3
+	mov	d3, d0
+	lsr	24, d0
+	extbu	d0
+	mov	0x93, d1
+	call	func_5015705B_entry, [d2], 0x18
+	jmp	func_5015350E_entry_Lf72
+func_5015350E_entry_L8f7:
+	mov	0xff, d0
+	and	d3, d0
+	extbu	d0
+	mov	d0, (0x10, sp)
+	and	0xff000000, d3
+	lsr	24, d3
+	mov	d3, d0
+	extbu	d0
+	mov	0x84, d1
+	call	func_5015705B_entry, [d2], 0x18
+	jmp	func_5015350E_entry_Lf72
+func_5015350E_entry_L915:
+	mov	-1, d0
+	mov	d0, (0x18, sp)
+	jmp	func_5015350E_entry_Lf72
+func_5015350E_entry_L91c:
+	mov	-1, d0
+	mov	d0, (0x18, sp)
+	jmp	func_5015350E_entry_Lf72
+	mov	a2, d0
+	and	0xff00, d0
+	lsr	8, d0
+	extbu	d0
+	cmp	0, d0
+	beq	func_5015350E_entry_L938
+	cmp	0x10, d0
+	beq	func_5015350E_entry_L991
+	jmp	func_5015350E_entry_Lf72
+func_5015350E_entry_L938:
+	mov	a2, d0
+	and	0x00ffffff, d0
+	cmp	0x600004, d0
+	beq	func_5015350E_entry_L965
+	cmp	0x600006, d0
+	beq	func_5015350E_entry_L970
+	cmp	0x600007, d0
+	bne	func_5015350E_entry_L95b
+	jmp	func_5015350E_entry_Lf72
+func_5015350E_entry_L95b:
+	cmp	0x600020, d0
+	beq	func_5015350E_entry_L97f
+	bra	func_5015350E_entry_L98a
+func_5015350E_entry_L965:
+	mov	0x27, d0
+	clr	d1
+	call	func_50157105_entry, [d2], 0x14
+	jmp	func_5015350E_entry_Lf72
+func_5015350E_entry_L970:
+	mov	0x26, d0
+	and	0xff, d3
+	mov	d3, d1
+	extbu	d1
+	call	func_50157105_entry, [d2], 0x14
+	jmp	func_5015350E_entry_Lf72
+func_5015350E_entry_L97f:
+	mov	a2, d0
+	mov	d3, d1
+	call	func_50156F2D, 0, 0
+	jmp	func_5015350E_entry_Lf72
+func_5015350E_entry_L98a:
+	mov	-1, d0
+	mov	d0, (0x18, sp)
+	jmp	func_5015350E_entry_Lf72
+func_5015350E_entry_L991:
+	mov	a2, d0
+	and	0x00ffffff, d0
+	cmp	0x601000, d0
+	beq	func_5015350E_entry_L9ab
+	cmp	0x601001, d0
+	beq	func_5015350E_entry_L9ca
+	bra	func_5015350E_entry_L9f0
+func_5015350E_entry_L9ab:
+	movhu	(0x500a0bec), d0
+	clr	d1
+	or	0x01, d0
+	movhu	d0, (0x500a0bec)
+	clr	d0
+	mov	d0, (0x10, sp)
+	mov	0x64, d0
+	call	func_4863AC46_entry, [d2,d3,a2,a3], 0x40
+	jmp	func_5015350E_entry_Lf72
+func_5015350E_entry_L9ca:
+	call	func_50156F0E_entry, 0, 8
+	movhu	(0x500a0bec), d0
+	clr	d1
+	and	0xfffe, d0
+	movhu	d0, (0x500a0bec)
+	mov	1, d0
+	mov	d0, (0x10, sp)
+	mov	0x64, d0
+	call	func_4863AC46_entry, [d2,d3,a2,a3], 0x40
+	jmp	func_5015350E_entry_Lf72
+func_5015350E_entry_L9f0:
+	mov	-1, d0
+	mov	d0, (0x18, sp)
+	jmp	func_5015350E_entry_Lf72
+	mov	-1, d0
+	mov	d0, (0x18, sp)
+	jmp	func_5015350E_entry_Lf72
+	mov	0xff, d0
+	and	d3, d0
+	extbu	d0
+	mov	d0, (0x10, sp)
+	clr	d0
+	mov	d0, (0x14, sp)
+	mov	a2, d0
+	and	0xf0000000, d0
+	lsr	28, d0
+	extbu	d0
+	and	0xff000000, d3
+	lsr	24, d3
+	mov	d3, d1
+	extbu	d1
+	call	func_50156F9D_entry, [d2,d3,a2], 0x28
+	jmp	func_5015350E_entry_Lf72
+	mov	0xff, d0
+	and	d3, d0
+	extbu	d0
+	mov	d0, (0x10, sp)
+	mov	0x0000ff00, d0
+	and	d3, d0
+	lsr	8, d0
+	extbu	d0
+	mov	d0, (0x14, sp)
+	mov	a2, d0
+	and	0xf0000000, d0
+	lsr	28, d0
+	extbu	d0
+	and	0xff000000, d3
+	mov	d3, d1
+	lsr	24, d1
+	extbu	d1
+	call	func_50156F9D_entry, [d2,d3,a2], 0x28
+	jmp	func_5015350E_entry_Lf72
+	mov	0xff00, a0
+	mov	0x80, d1
+	mov	a2, d2
+	mov	a0, d0
+	and	d2, d0
+	lsr	8, d0
+	extbu	d0
+	and	d1, d0
+	bne	func_5015350E_entry_La74
+	jmp	func_5015350E_entry_Lb44
+func_5015350E_entry_La74:
+	mov	a2, d0
+	and	0xff, d0
+	extbu	d0
+	and	d1, d0
+	beq	func_5015350E_entry_La85
+	mov	-1, d0
+	mov	d0, (0x18, sp)
+	jmp	func_5015350E_entry_Lf72
+func_5015350E_entry_La85:
+	mov	a2, d0
+	and	0x00ffffff, d0
+	cmp	0xb08000, d0
+	beq	func_5015350E_entry_Lab0
+	cmp	0xb08001, d0
+	beq	func_5015350E_entry_Lace
+	cmp	0xb08002, d0
+	beq	func_5015350E_entry_Laec
+	cmp	0xb08005, d0
+	beq	func_5015350E_entry_Lb0a
+	jmp	func_5015350E_entry_Lb3d
+func_5015350E_entry_Lab0:
+	mov	0xff, d0
+	and	d3, d0
+	extbu	d0
+	mov	d0, (0x10, sp)
+	and	0xff000000, d3
+	mov	d3, d0
+	lsr	24, d0
+	extbu	d0
+	mov	0x80, d1
+	call	func_5015705B_entry, [d2], 0x18
+	jmp	func_5015350E_entry_Lf72
+func_5015350E_entry_Lace:
+	mov	0xff, d0
+	and	d3, d0
+	extbu	d0
+	mov	d0, (0x10, sp)
+	and	0xff000000, d3
+	mov	d3, d0
+	lsr	24, d0
+	extbu	d0
+	mov	0x81, d1
+	call	func_5015705B_entry, [d2], 0x18
+	jmp	func_5015350E_entry_Lf72
+func_5015350E_entry_Laec:
+	mov	0xff, d0
+	and	d3, d0
+	extbu	d0
+	mov	d0, (0x10, sp)
+	and	0xff000000, d3
+	mov	d3, d0
+	lsr	24, d0
+	extbu	d0
+	mov	0x82, d1
+	call	func_5015705B_entry, [d2], 0x18
+	jmp	func_5015350E_entry_Lf72
+func_5015350E_entry_Lb0a:
+	mov	d3, d0
+	and	0xff000000, d0
+	mov	d0, d2
+	lsr	24, d2
+	mov	a0, d0
+	and	d3, d0
+	lsr	8, d0
+	extbu	d0
+	mov	d0, (0x10, sp)
+	mov	d2, d0
+	extbu	d0
+	mov	0x89, d1
+	call	func_5015705B_entry, [d2], 0x18
+	and	0xff, d3
+	mov	d3, d0
+	extbu	d0
+	mov	d0, (0x10, sp)
+	extbu	d2
+	mov	0x8a, d1
+	mov	d2, d0
+	call	func_5015705B_entry, [d2], 0x18
+	jmp	func_5015350E_entry_Lf72
+func_5015350E_entry_Lb3d:
+	mov	-1, d0
+	mov	d0, (0x18, sp)
+	jmp	func_5015350E_entry_Lf72
+func_5015350E_entry_Lb44:
+	mov	a2, d2
+	and	0x00ffffff, d2
+	cmp	0xb00001, d2
+	bcc	func_5015350E_entry_Lb57
+	jmp	func_5015350E_entry_Lf22
+func_5015350E_entry_Lb57:
+	cmp	0xb0007e, d2
+	bls	func_5015350E_entry_Lb62
+	jmp	func_5015350E_entry_Lf22
+func_5015350E_entry_Lb62:
+	add	0xff500000, d2
+	mov	d2, d0
+	and	0x3f, d0
+	asl	3, d0
+	mov	d0, a0
+	mov	0x48407208, a1
+	add	a1, a0
+	mov	(a0), d0
+	cmp	d2, d0
+	beq	func_5015350E_entry_Lb93
+	setlb
+	cmp	0, d0
+	bne	func_5015350E_entry_Lb85
+	jmp	func_5015350E_entry_Lf22
+func_5015350E_entry_Lb85:
+	add	8, a0
+	cmp	data_48407408, a0
+	bcs	func_5015350E_entry_Lb90
+	mov	a1, a0
+func_5015350E_entry_Lb90:
+	mov	(a0), d0
+	cmp	d2, d0
+	lne
+func_5015350E_entry_Lb93:
+	mov	(4, a0), a0
+	jmp	(a0)
+	mov	0xff, d0
+	and	d3, d0
+	extbu	d0
+	mov	d0, (0x10, sp)
+	and	0xff000000, d3
+	mov	d3, d0
+	lsr	24, d0
+	extbu	d0
+	mov	a2, d1
+	and	0xff, d1
+	extbu	d1
+	call	func_5015705B_entry, [d2], 0x18
+	jmp	func_5015350E_entry_Lf72
+	mov	0xff, d0
+	and	d3, d0
+	extbu	d0
+	mov	d0, (0x10, sp)
+	and	0xff000000, d3
+	mov	d3, d0
+	lsr	24, d0
+	extbu	d0
+	mov	a2, d1
+	and	0xff, d1
+	extbu	d1
+	call	func_5015705B_entry, [d2], 0x18
+	jmp	func_5015350E_entry_Lf72
+	mov	a2, d0
+	mov	d3, d1
+	call	func_5015546E_entry, [d2,d3], 0x1c
+	jmp	func_5015350E_entry_Lf72
+	mov	0xff, d0
+	and	d3, d0
+	extbu	d0
+	mov	d0, (0x10, sp)
+	and	0xff000000, d3
+	mov	d3, d0
+	lsr	24, d0
+	extbu	d0
+	mov	a2, d1
+	and	0xff, d1
+	extbu	d1
+	call	func_5015705B_entry, [d2], 0x18
+	jmp	func_5015350E_entry_Lf72
+	mov	0xff, d0
+	and	d3, d0
+	extbu	d0
+	mov	d0, (0x10, sp)
+	and	0xff000000, d3
+	mov	d3, d0
+	lsr	24, d0
+	extbu	d0
+	mov	a2, d1
+	and	0xff, d1
+	extbu	d1
+	call	func_5015705B_entry, [d2], 0x18
+	jmp	func_5015350E_entry_Lf72
+	mov	0xff, d0
+	and	d3, d0
+	extbu	d0
+	mov	d0, (0x10, sp)
+	and	0xff000000, d3
+	mov	d3, d0
+	lsr	24, d0
+	extbu	d0
+	mov	a2, d1
+	and	0xff, d1
+	extbu	d1
+	call	func_5015705B_entry, [d2], 0x18
+	jmp	func_5015350E_entry_Lf72
+	mov	-1, d0
+	mov	d0, (0x18, sp)
+	jmp	func_5015350E_entry_Lf72
+	mov	0xff, d0
+	and	d3, d0
+	extbu	d0
+	mov	d0, (0x10, sp)
+	and	0xff000000, d3
+	mov	d3, d0
+	lsr	24, d0
+	extbu	d0
+	mov	a2, d1
+	and	0xff, d1
+	extbu	d1
+	call	func_5015705B_entry, [d2], 0x18
+	jmp	func_5015350E_entry_Lf72
+	mov	0xff, d0
+	and	d3, d0
+	extbu	d0
+	mov	d0, (0x10, sp)
+	and	0xff000000, d3
+	lsr	24, d3
+	mov	d3, d0
+	extbu	d0
+	mov	a2, d1
+	and	0xff, d1
+	extbu	d1
+	call	func_5015705B_entry, [d2], 0x18
+	jmp	func_5015350E_entry_Lf72
+	mov	0xff, d0
+	and	d3, d0
+	extbu	d0
+	mov	d0, (0x10, sp)
+	and	0xff000000, d3
+	mov	d3, d0
+	lsr	24, d0
+	extbu	d0
+	mov	a2, d1
+	and	0xff, d1
+	extbu	d1
+	call	func_5015705B_entry, [d2], 0x18
+	jmp	func_5015350E_entry_Lf72
+	mov	0xff, d0
+	and	d3, d0
+	extbu	d0
+	mov	d0, (0x10, sp)
+	and	0xff000000, d3
+	lsr	24, d3
+	mov	d3, d0
+	extbu	d0
+	mov	a2, d1
+	and	0xff, d1
+	extbu	d1
+	call	func_5015705B_entry, [d2], 0x18
+	jmp	func_5015350E_entry_Lf72
+	mov	d3, d0
+	and	0xff000000, d0
+	lsr	24, d0
+	movbu	d0, (0x1c, sp)
+	and	0xff, d3
+	mov	d3, d0
+	extbu	d0
+	mov	d0, (0x10, sp)
+	movbu	(0x1c, sp), d0
+	mov	a2, d1
+	and	0xff, d1
+	extbu	d1
+	call	func_5015705B_entry, [d2], 0x18
+	mov	d3, d2
+	extbu	d2
+	mov	d2, (0x10, sp)
+	movbu	(0x1c, sp), d1
+	mov	0xe, d0
+	exth	d1
+	call	func_4863AC46_entry, [d2,d3,a2,a3], 0x40
+	jmp	func_5015350E_entry_Lf72
+	mov	a2, d0
+	mov	d3, d1
+	call	func_50155419_entry, [d2,d3], 0x1c
+	jmp	func_5015350E_entry_Lf72
+	mov	0xff, d0
+	and	d3, d0
+	extbu	d0
+	mov	d0, (0x10, sp)
+	and	0xff000000, d3
+	mov	d3, d0
+	lsr	24, d0
+	extbu	d0
+	mov	a2, d1
+	and	0xff, d1
+	extbu	d1
+	call	func_5015705B_entry, [d2], 0x18
+	jmp	func_5015350E_entry_Lf72
+	mov	0xff, d0
+	and	d3, d0
+	extbu	d0
+	mov	d0, (0x10, sp)
+	and	0xff000000, d3
+	mov	d3, d0
+	lsr	24, d0
+	extbu	d0
+	mov	a2, d1
+	and	0xff, d1
+	extbu	d1
+	call	func_5015705B_entry, [d2], 0x18
+	jmp	func_5015350E_entry_Lf72
+	mov	0xff, d0
+	and	d3, d0
+	extbu	d0
+	mov	d0, (0x10, sp)
+	and	0xff000000, d3
+	mov	d3, d0
+	lsr	24, d0
+	extbu	d0
+	mov	a2, d1
+	and	0xff, d1
+	extbu	d1
+	call	func_5015705B_entry, [d2], 0x18
+	jmp	func_5015350E_entry_Lf72
+	mov	0xff, d0
+	and	d3, d0
+	extbu	d0
+	mov	d0, (0x10, sp)
+	and	0xff000000, d3
+	mov	d3, d0
+	lsr	24, d0
+	extbu	d0
+	mov	a2, d1
+	and	0xff, d1
+	extbu	d1
+	call	func_5015705B_entry, [d2], 0x18
+	jmp	func_5015350E_entry_Lf72
+	mov	0xff, d0
+	and	d3, d0
+	extbu	d0
+	mov	d0, (0x10, sp)
+	and	0xff000000, d3
+	mov	d3, d0
+	lsr	24, d0
+	extbu	d0
+	mov	a2, d1
+	and	0xff, d1
+	extbu	d1
+	call	func_5015705B_entry, [d2], 0x18
+	jmp	func_5015350E_entry_Lf72
+	mov	0xff, d0
+	and	d3, d0
+	extbu	d0
+	mov	d0, (0x10, sp)
+	and	0xff000000, d3
+	mov	d3, d0
+	lsr	24, d0
+	extbu	d0
+	mov	a2, d1
+	and	0xff, d1
+	extbu	d1
+	call	func_5015705B_entry, [d2], 0x18
+	jmp	func_5015350E_entry_Lf72
+	mov	0xff, d0
+	and	d3, d0
+	extbu	d0
+	mov	d0, (0x10, sp)
+	and	0xff000000, d3
+	mov	d3, d0
+	lsr	24, d0
+	extbu	d0
+	mov	a2, d1
+	and	0xff, d1
+	extbu	d1
+	call	func_5015705B_entry, [d2], 0x18
+	jmp	func_5015350E_entry_Lf72
+	mov	0xff, d0
+	and	d3, d0
+	extbu	d0
+	mov	d0, (0x10, sp)
+	and	0xff000000, d3
+	mov	d3, d0
+	lsr	24, d0
+	extbu	d0
+	mov	a2, d1
+	and	0xff, d1
+	extbu	d1
+	call	func_5015705B_entry, [d2], 0x18
+	jmp	func_5015350E_entry_Lf72
+	mov	0xff, d0
+	and	d3, d0
+	extbu	d0
+	mov	d0, (0x10, sp)
+	and	0xff000000, d3
+	mov	d3, d0
+	lsr	24, d0
+	extbu	d0
+	mov	a2, d1
+	and	0xff, d1
+	extbu	d1
+	call	func_5015705B_entry, [d2], 0x18
+	jmp	func_5015350E_entry_Lf72
+	mov	0xff, d0
+	and	d3, d0
+	extbu	d0
+	mov	d0, (0x10, sp)
+	and	0xff000000, d3
+	mov	d3, d0
+	lsr	24, d0
+	extbu	d0
+	mov	a2, d1
+	and	0xff, d1
+	extbu	d1
+	call	func_5015705B_entry, [d2], 0x18
+	jmp	func_5015350E_entry_Lf72
+	mov	a2, d0
+	mov	d3, d1
+	call	func_50155367_entry, [d2,d3], 0x20
+	jmp	func_5015350E_entry_Lf72
+	mov	a2, d0
+	mov	d3, d1
+	call	func_50155511_entry, [d2,d3], 0x20
+	jmp	func_5015350E_entry_Lf72
+	mov	0xff, d0
+	and	d3, d0
+	extbu	d0
+	mov	d0, (0x10, sp)
+	and	0xff000000, d3
+	lsr	24, d3
+	mov	d3, d0
+	extbu	d0
+	mov	a2, d1
+	and	0xff, d1
+	extbu	d1
+	call	func_5015705B_entry, [d2], 0x18
+	jmp	func_5015350E_entry_Lf72
+	mov	a2, d0
+	mov	d3, d1
+	call	func_50155CFD_entry, [d2,d3], 0x1c
+	jmp	func_5015350E_entry_Lf72
+	mov	a2, d0
+	mov	d3, d1
+	call	func_501553C4_entry, [d2,d3], 0x1c
+	jmp	func_5015350E_entry_Lf72
+	mov	a2, d0
+	mov	d3, d1
+	call	func_50155E13_entry, [d2,d3], 0x18
+	jmp	func_5015350E_entry_Lf72
+	mov	0xff, d0
+	and	d3, d0
+	extbu	d0
+	mov	d0, (0x10, sp)
+	and	0xff000000, d3
+	lsr	24, d3
+	mov	d3, d0
+	extbu	d0
+	mov	a2, d1
+	and	0xff, d1
+	extbu	d1
+	call	func_5015705B_entry, [d2], 0x18
+	jmp	func_5015350E_entry_Lf72
+	mov	0xff, d0
+	and	d3, d0
+	extbu	d0
+	mov	d0, (0x10, sp)
+	and	0xff000000, d3
+	lsr	24, d3
+	mov	d3, d0
+	extbu	d0
+	mov	a2, d1
+	and	0xff, d1
+	extbu	d1
+	call	func_5015705B_entry, [d2], 0x18
+	jmp	func_5015350E_entry_Lf72
+	mov	0xff, d0
+	and	d3, d0
+	extbu	d0
+	mov	d0, (0x10, sp)
+	and	0xff000000, d3
+	mov	d3, d0
+	lsr	24, d0
+	extbu	d0
+	mov	a2, d1
+	and	0xff, d1
+	extbu	d1
+	call	func_5015705B_entry, [d2], 0x18
+	bra	func_5015350E_entry_Lf72
+	mov	a2, d0
+	mov	d3, d1
+	call	func_50155D52_entry, [d2,d3], 0x1c
+	bra	func_5015350E_entry_Lf72
+func_5015350E_entry_Lf22:
+	mov	-1, d0
+	mov	d0, (0x18, sp)
+	bra	func_5015350E_entry_Lf72
+	mov	a2, d0
+	mov	d3, d1
+	call	func_50154814_entry, [d2,d3,a2,a3], 0x60
+	bra	func_5015350E_entry_Lf72
+	mov	d3, d0
+	and	0xff000000, d0
+	lsr	24, d0
+	extbu	d0
+	and	0xff, d3
+	mov	d3, d1
+	extbu	d1
+	call	func_501570B9_entry, [d2], 0x14
+	bra	func_5015350E_entry_Lf72
+	mov	0x0000ff00, d0
+	and	d3, d0
+	lsr	8, d0
+	extbu	d0
+	mov	d0, (0x10, sp)
+	mov	d3, d0
+	and	0xff000000, d0
+	lsr	24, d0
+	extbu	d0
+	and	0xff, d3
+	mov	d3, d1
+	extbu	d1
+	call	func_501570DC_entry, [d2], 0x18
+	bra	func_5015350E_entry_Lf72
+func_5015350E_entry_Lf6e:
+	mov	-1, d0
+	mov	d0, (0x18, sp)
+func_5015350E_entry_Lf72:
+	mov	(0x18, sp), d0
+	ret	[d2,d3,a2,a3], 0x30
 
 func_5015448A:
 	movm	[d2,d3], (sp)
@@ -644497,7 +651783,9 @@ func_50156CE5_entry_L96:
 	cmp	0x1a, d2
 	ble	func_50156CE5_entry_L6c
 	ret	[d2,d3,a2,a3], 0x30
-.incbin_range "baserom/kn2400_program.rom", 0x35f34a, 0x35f350
+# func_50156CE5_entry + 0xa2: no traced path reaches what follows (--decode-gaps)
+	retf	0, 0
+	retf	0, 0
 
 func_50156D92:
 	movm	[d2,d3,a2], (sp)
@@ -645331,7 +652619,23 @@ func_501574C3_L6:
 	mov	data_48407A88, a0
 	mov	(d0, a0), d0
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x35fa94, 0x35faaf
+# func_501574C3 + 0x13: no traced path reaches what follows (--decode-gaps)
+	mov	d0, d1
+	clr	d0
+	cmp	d0, d1
+	beq	func_501574C3_L27
+	btst	0x01, d1
+	bne	func_501574C3_L27
+	setlb
+	lsr	1, d1
+	exthu	d0
+	inc	d0
+	btst	0x01, d1
+	leq
+func_501574C3_L27:
+	extbu	d0
+	retf	0, 0
+	add	-8, sp
 
 func_501574F1:
 	call	GetModeNow_entry, 0, 0x10
@@ -645543,7 +652847,8 @@ func_501576A5_entry:
 	call	func_50151615_entry, [d2,d3,a2,a3], 0x30
 func_501576A5_entry_L4e:
 	ret	[d2,a2], 0x20
-.incbin_range "baserom/kn2400_program.rom", 0x35fcb9, 0x35fcbc
+# func_501576A5_entry + 0x51: no traced path reaches what follows (--decode-gaps)
+	retf	0, 0
 
 func_501576FE:
 	mov	0xa0, d0
@@ -647054,7 +654359,26 @@ func_501583EC_entry:
 	mov	3, d0
 	call	func_48609476_entry, 0, 4
 	ret	0, 0x10
-.incbin_range "baserom/kn2400_program.rom", 0x3609eb, 0x360a35
+# func_501583EC_entry + 0x3e: no traced path reaches what follows (--decode-gaps)
+	movbu	d0, (8, sp)
+	movbu	d0, (0x500213e3)
+	ret	0, 0
+	clr	d0
+	ret	0, 0
+	add	-8, sp
+	call	func_50158A2C, 0, 0
+	call	func_50158A2C, 0, 0
+	call	func_50158A2C, 0, 0
+	call	func_50158575_entry, 0, 0x58
+	call	func_50158A4F, 0, 0
+	call	func_50158A4F, 0, 0
+	call	func_50158A4F, 0, 0
+	call	func_50158E6A, 0, 0
+	ret	0, 8
+	ret	0, 0
+	ret	0, 0
+	ret	0, 0
+	add	-0xc, sp
 
 func_50158477:
 	mov	1, d0
@@ -647140,7 +654464,9 @@ func_5015850B_entry_L44:
 	call	sig_sem, 0, 0
 	movbu	(0xf, sp), d0
 	ret	0, 0x10
-.incbin_range "baserom/kn2400_program.rom", 0x360b1f, 0x360b25
+# func_5015850B_entry + 0x53: no traced path reaches what follows (--decode-gaps)
+	ret	0, 0
+	add	-8, sp
 
 func_50158567:
 	call	func_50158D8A_entry, 0, 0x14
@@ -647521,7 +654847,18 @@ func_501589F1_entry_L5:
 	bra	func_501589F1_entry_L5
 func_501589F1_entry_L12:
 	ret	0, 4
-.incbin_range "baserom/kn2400_program.rom", 0x360fc7, 0x360fea
+# func_501589F1_entry + 0x15: no traced path reaches what follows (--decode-gaps)
+	mov	(0x500ff578), d0
+	mov	d0, (0x500212fc)
+func_501589F1_entry_L21:
+	mov	(0x500ff578), d0
+	mov	(0x500212fc), d1
+	sub	d1, d0
+	cmp	2, d0
+	bhi	func_501589F1_entry_L35
+	bra	func_501589F1_entry_L21
+func_501589F1_entry_L35:
+	ret	0, 0
 
 func_50158A2C:
 	mov	(0x500ff578), d0
@@ -647548,7 +654885,66 @@ func_50158A4F_Lc:
 	bra	func_50158A4F_Lc
 func_50158A4F_L20:
 	ret	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x361030, 0x3610a4
+# func_50158A4F + 0x23: no traced path reaches what follows (--decode-gaps)
+	movbu	(0x500213a4), d0
+	cmp	0xf, d0
+	beq	func_50158A4F_L2f
+	bra	func_50158A4F_L33
+func_50158A4F_L2f:
+	mov	3, d0
+	bra	func_50158A4F_L94
+func_50158A4F_L33:
+	movbu	(0x500213a2), d0
+	cmp	7, d0
+	beq	func_50158A4F_L3f
+	bra	func_50158A4F_L43
+func_50158A4F_L3f:
+	mov	2, d0
+	bra	func_50158A4F_L94
+func_50158A4F_L43:
+	movbu	(0x500213d2), d0
+	cmp	0x1c, d0
+	beq	func_50158A4F_L4f
+	bra	func_50158A4F_L53
+func_50158A4F_L4f:
+	mov	1, d0
+	bra	func_50158A4F_L94
+func_50158A4F_L53:
+	movbu	(0x500213aa), d0
+	cmp	0xf, d0
+	beq	func_50158A4F_L5f
+	bra	func_50158A4F_L63
+func_50158A4F_L5f:
+	mov	4, d0
+	bra	func_50158A4F_L94
+func_50158A4F_L63:
+	movbu	(0x500213aa), d0
+	cmp	7, d0
+	beq	func_50158A4F_L6f
+	bra	func_50158A4F_L73
+func_50158A4F_L6f:
+	mov	5, d0
+	bra	func_50158A4F_L94
+func_50158A4F_L73:
+	movbu	(0x500213d0), d0
+	cmp	0x3c, d0
+	beq	func_50158A4F_L7f
+	bra	func_50158A4F_L83
+func_50158A4F_L7f:
+	mov	6, d0
+	bra	func_50158A4F_L94
+func_50158A4F_L83:
+	movbu	(0x500213aa), d0
+	cmp	0xe, d0
+	beq	func_50158A4F_L8f
+	bra	func_50158A4F_L93
+func_50158A4F_L8f:
+	mov	7, d0
+	bra	func_50158A4F_L94
+func_50158A4F_L93:
+	clr	d0
+func_50158A4F_L94:
+	ret	0, 0
 
 func_50158AE6:
 	movm	[d2,d3], (sp)
@@ -649689,7 +657085,131 @@ func_5015A3AE_entry:
 	movbu	d0, (0x500213f5)
 	movbu	(8, sp), d0
 	ret	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x3629b2, 0x362b1c
+# func_5015A3AE_entry + 0x43: no traced path reaches what follows (--decode-gaps)
+	movbu	d0, (8, sp)
+	movbu	(8, sp), d0
+	not	d0
+	movbu	d0, (8, sp)
+	movbu	(8, sp), d0
+	movbu	d0, (0x500213f2)
+	movbu	(8, sp), d0
+	asr	1, d0
+	movbu	d0, (8, sp)
+	movbu	(8, sp), d0
+	mov	0x48408534, a0
+	movbu	(d0, a0), d1
+	movbu	d1, (8, sp)
+	extbu	d1
+	movbu	(0x500213fa), d0
+	cmp	d0, d1
+	beq	func_5015A3AE_entry_L7a
+	bra	func_5015A3AE_entry_L82
+func_5015A3AE_entry_L7a:
+	mov	0x0000ffff, d0
+	bra	func_5015A3AE_entry_L8e
+func_5015A3AE_entry_L82:
+	movbu	(8, sp), d0
+	movbu	d0, (0x500213fa)
+	movbu	(8, sp), d0
+func_5015A3AE_entry_L8e:
+	ret	0, 0
+	movbu	d0, (8, sp)
+	movbu	d0, (0x500213ea)
+	movbu	(8, sp), d0
+	mov	0x484085b4, a0
+	movbu	(d0, a0), d1
+	movbu	d1, (8, sp)
+	extbu	d1
+	movbu	(0x500213f7), d0
+	cmp	d0, d1
+	beq	func_5015A3AE_entry_Lb4
+	bra	func_5015A3AE_entry_Lbc
+func_5015A3AE_entry_Lb4:
+	mov	0x0000ffff, d0
+	bra	func_5015A3AE_entry_Lc8
+func_5015A3AE_entry_Lbc:
+	movbu	(8, sp), d0
+	movbu	d0, (0x500213f7)
+	movbu	(8, sp), d0
+func_5015A3AE_entry_Lc8:
+	ret	0, 0
+	movbu	d0, (8, sp)
+	movbu	(8, sp), d0
+	not	d0
+	movbu	d0, (8, sp)
+	movbu	(8, sp), d0
+	movbu	d0, (0x500213e6)
+	movbu	(8, sp), d0
+	mov	0x484086b4, a0
+	movbu	(d0, a0), d1
+	movbu	d1, (8, sp)
+	extbu	d1
+	movbu	(0x500213f8), d0
+	cmp	d0, d1
+	beq	func_5015A3AE_entry_Lf9
+	bra	func_5015A3AE_entry_L101
+func_5015A3AE_entry_Lf9:
+	mov	0x0000ffff, d0
+	bra	func_5015A3AE_entry_L10d
+func_5015A3AE_entry_L101:
+	movbu	(8, sp), d0
+	movbu	d0, (0x500213f8)
+	movbu	(8, sp), d0
+func_5015A3AE_entry_L10d:
+	ret	0, 0
+	movbu	d0, (8, sp)
+	movbu	d0, (0x500213e5)
+	movbu	(8, sp), d0
+	asr	1, d0
+	movbu	d0, (8, sp)
+	movbu	(8, sp), d0
+	mov	0x484087b4, a0
+	movbu	(d0, a0), d1
+	movbu	d1, (8, sp)
+	extbu	d1
+	movbu	(0x500213f9), d0
+	cmp	d0, d1
+	beq	func_5015A3AE_entry_L13c
+	bra	func_5015A3AE_entry_L144
+func_5015A3AE_entry_L13c:
+	mov	0x0000ffff, d0
+	bra	func_5015A3AE_entry_L150
+func_5015A3AE_entry_L144:
+	movbu	(8, sp), d0
+	movbu	d0, (0x500213f9)
+	movbu	(8, sp), d0
+func_5015A3AE_entry_L150:
+	ret	0, 0
+	movbu	d0, (8, sp)
+	movbu	(8, sp), d0
+	not	d0
+	movbu	d0, (8, sp)
+	movbu	(8, sp), d0
+	movbu	d0, (0x500213ec)
+	movbu	(8, sp), d0
+	asr	1, d0
+	movbu	d0, (8, sp)
+	movbu	(8, sp), d0
+	mov	0x48408834, a0
+	movbu	(d0, a0), d1
+	movbu	d1, (8, sp)
+	extbu	d1
+	movbu	(0x500213fb), d0
+	cmp	d0, d1
+	beq	func_5015A3AE_entry_L18a
+	bra	func_5015A3AE_entry_L192
+func_5015A3AE_entry_L18a:
+	mov	0x0000ffff, d0
+	bra	func_5015A3AE_entry_L19e
+func_5015A3AE_entry_L192:
+	movbu	(8, sp), d0
+	movbu	d0, (0x500213fb)
+	movbu	(8, sp), d0
+func_5015A3AE_entry_L19e:
+	ret	0, 0
+	mov	0x0000ffff, d0
+	ret	0, 0
+	add	-0xc, sp
 
 func_5015A55E:
 	call	func_5015A82E, 0, 0
@@ -649866,7 +657386,9 @@ func_5015A6A0_entry:
 	mov	a2, a0
 	call	func_5015A6F2_entry, [d2], 0x18
 	ret	[a2], 0x14
-.incbin_range "baserom/kn2400_program.rom", 0x362cac, 0x362cb0
+# func_5015A6A0_entry + 0x49: no traced path reaches what follows (--decode-gaps)
+	clr	d0
+	ret	0, 0
 
 func_5015A6F2:
 	movm	[d2], (sp)
@@ -653220,7 +660742,11 @@ func_5015C4DB_entry:
 	or	d1, d2
 	movbu	d2, (0x500a0bf4)
 	ret	[d2], 4
-.incbin_range "baserom/kn2400_program.rom", 0x364abe, 0x364aca
+# func_5015C4DB_entry + 0x23: no traced path reaches what follows (--decode-gaps)
+	ret	0, 0
+	ret	0, 0
+	ret	0, 0
+	add	-0x14, sp
 
 func_5015C50C:
 	movhu	d0, (0x1c, sp)
@@ -657988,7 +665514,27 @@ func_5015F200_L26:
 	clr	d0
 func_5015F200_L27:
 	ret	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x3677e8, 0x367812
+# func_5015F200 + 0x2a: no traced path reaches what follows (--decode-gaps)
+	movbu	d1, (0xc, sp)
+	movbu	d0, (8, sp)
+	movbu	(0x500a10ab), d1
+	movbu	(8, sp), d0
+	cmp	d1, d0
+	beq	func_5015F200_L3e
+	bra	func_5015F200_L50
+func_5015F200_L3e:
+	movbu	(0x500a10ac), d1
+	movbu	(0xc, sp), d0
+	cmp	d1, d0
+	beq	func_5015F200_L4c
+	bra	func_5015F200_L50
+func_5015F200_L4c:
+	mov	1, d0
+	bra	func_5015F200_L51
+func_5015F200_L50:
+	clr	d0
+func_5015F200_L51:
+	ret	0, 0
 
 func_5015F254:
 	movbu	d0, (8, sp)
@@ -669955,7 +677501,28 @@ func_50165374_entry_L13:
 	call	func_50165498_entry, 0, 0x18
 func_50165374_entry_L4d:
 	ret	0, 0x4c
-.incbin_range "baserom/kn2400_program.rom", 0x36d985, 0x36d9d2
+# func_50165374_entry + 0x50: no traced path reaches what follows (--decode-gaps)
+	movbu	(0x500a1d4c), d0
+	mov	7, d1
+	exthu	d1
+	lsr	d1, d0
+	and	0x01, d0
+	ret	0, 0
+	bset	0x80, (0x500a1d4c)
+	ret	0, 0
+	bclr	0x80, (0x500a1d4c)
+	ret	0, 0
+	movbu	(0x500a1d4d), d0
+	mov	7, d1
+	exthu	d1
+	lsr	d1, d0
+	and	0x01, d0
+	ret	0, 0
+	bset	0x80, (0x500a1d4d)
+	ret	0, 0
+	bclr	0x80, (0x500a1d4d)
+	ret	0, 0
+	add	-0x18, sp
 
 func_50165414:
 	mov	a0, (0x20, sp)
@@ -675694,6 +683261,7 @@ func_50167FD2_entry_L11a:
 func_501680F4:
 	movm	[d2,d3], (sp)
 	add	-0x14, sp
+func_501680F4_L5:
 	movbu	d0, (0x28, sp)
 	mov	a0, (0x24, sp)
 	movbu	(7, a0), d2
@@ -675724,7 +683292,203 @@ func_501680F4:
 	mov	(0x24, sp), a0
 	movbu	d1, (5, a0)
 	ret	[d2,d3], 0x1c
-.incbin_range "baserom/kn2400_program.rom", 0x370705, 0x370881
+# func_501680F4 + 0x53: no traced path reaches what follows (--decode-gaps)
+func_501680F4_L53:
+	movbu	d0, (8, sp)
+	movbu	(8, sp), d0
+	ret	0, 0
+	movm	[d2,d3], (sp)
+	add	-0x3c, sp
+	mov	a0, (0x4c, sp)
+	clr	d0
+	mov	d0, (0x14, sp)
+	mov	-1, d0
+	movhu	d0, (0x2c, sp)
+	mov	0xff, d0
+	movbu	d0, (a0)
+	clr	d0
+	movbu	d0, (0x28, sp)
+	jmp	func_501680F4_L1bc
+func_501680F4_L77:
+	movbu	(0x28, sp), d0
+	call	func_501680F4_L53, 0, 0
+	movbu	d0, (0x29, sp)
+	extbu	d0
+	cmp	0xff, d0
+	bne	func_501680F4_L8c
+	jmp	func_501680F4_L1b5
+func_501680F4_L8c:
+	clr	d0
+	mov	d0, (0x18, sp)
+	mov	d0, (0x1c, sp)
+	bra	func_501680F4_Le8
+func_501680F4_L93:
+	mov	(0x1c, sp), d2
+	add	0x2000c0, d2
+	movbu	(0x29, sp), d1
+	asl	24, d1
+	mov	d2, d0
+	call	func_50143A9A_entry, 0, 0x10
+	movbu	d0, (0x2a, sp)
+	movbu	(0x2a, sp), d0
+	cmp	0x80, d0
+	blt	func_501680F4_Lb7
+	bra	func_501680F4_Lc6
+func_501680F4_Lb7:
+	movbu	(0x2a, sp), d1
+	mov	0x80, d0
+	sub	d1, d0
+	mov	0x40, d1
+	sub	d0, d1
+	mov	d1, d0
+	bra	func_501680F4_Lcb
+func_501680F4_Lc6:
+	movbu	(0x2a, sp), d0
+	add	-0x40, d0
+func_501680F4_Lcb:
+	mov	sp, a0
+	add	0x30, a0
+	mov	(0x1c, sp), d1
+	movbu	d0, (d1, a0)
+	mov	sp, a0
+	add	0x30, a0
+	mov	(0x1c, sp), d0
+	movbu	(d0, a0), d0
+	cmp	0x40, d0
+	bne	func_501680F4_Ldf
+	bra	func_501680F4_Le3
+func_501680F4_Ldf:
+	mov	1, d0
+	mov	d0, (0x18, sp)
+func_501680F4_Le3:
+	mov	(0x1c, sp), d0
+	inc	d0
+	mov	d0, (0x1c, sp)
+func_501680F4_Le8:
+	mov	(0x1c, sp), d0
+	cmp	0xc, d0
+	bge	func_501680F4_Lf0
+	bra	func_501680F4_L93
+func_501680F4_Lf0:
+	mov	(0x18, sp), d0
+	cmp	1, d0
+	beq	func_501680F4_Lf9
+	jmp	func_501680F4_L1b5
+func_501680F4_Lf9:
+	mov	1, d0
+	mov	d0, (0x20, sp)
+	clr	d0
+	mov	d0, (0x1c, sp)
+	bra	func_501680F4_L15c
+func_501680F4_L102:
+	clr	d0
+	mov	d0, (0x20, sp)
+	mov	d0, (0x24, sp)
+	bra	func_501680F4_L131
+func_501680F4_L109:
+	mov	(0x1c, sp), d1
+	mov	0x15, d0
+	nop
+	nop
+	mulu	d0, d1
+	mov	(0x24, sp), d0
+	add	d0, d1
+	add	8, d1
+	mov	(0x4c, sp), a0
+	movbu	(d1, a0), d0
+	mov	sp, a0
+	add	0x30, a0
+	mov	(0x24, sp), d1
+	movbu	(d1, a0), d1
+	cmp	d1, d0
+	bne	func_501680F4_L126
+	bra	func_501680F4_L12c
+func_501680F4_L126:
+	mov	1, d0
+	mov	d0, (0x20, sp)
+	bra	func_501680F4_L139
+func_501680F4_L12c:
+	mov	(0x24, sp), d0
+	inc	d0
+	mov	d0, (0x24, sp)
+func_501680F4_L131:
+	mov	(0x24, sp), d0
+	cmp	0xc, d0
+	bge	func_501680F4_L139
+	bra	func_501680F4_L109
+func_501680F4_L139:
+	mov	(0x20, sp), d0
+	cmp	0, d0
+	beq	func_501680F4_L141
+	bra	func_501680F4_L157
+func_501680F4_L141:
+	mov	(0x1c, sp), d1
+	mov	0x15, d0
+	nop
+	nop
+	mulu	d0, d1
+	mov	(0x4c, sp), a0
+	add	d1, a0
+	movbu	(0x28, sp), d0
+	call	func_501680F4_L5, [d2,d3], 0x1c
+	bra	func_501680F4_L16c
+func_501680F4_L157:
+	mov	(0x1c, sp), d0
+	inc	d0
+	mov	d0, (0x1c, sp)
+func_501680F4_L15c:
+	mov	(0x1c, sp), d1
+	mov	(0x14, sp), d0
+	mov	0x15, d2
+	clr	d3
+	mov	d3, mdr
+	divu	d2, d0
+	cmp	d0, d1
+	bcc	func_501680F4_L16c
+	bra	func_501680F4_L102
+func_501680F4_L16c:
+	mov	(0x20, sp), d0
+	cmp	1, d0
+	beq	func_501680F4_L174
+	bra	func_501680F4_L1b5
+func_501680F4_L174:
+	mov	(0x4c, sp), a0
+	mov	(0x14, sp), d0
+	add	d0, a0
+	mov	0x484097dc, a1
+	mov	0x16, d0
+	call	memcpy_entry, [a2,a3], 8
+	mov	(0x14, sp), d1
+	add	8, d1
+	mov	(0x4c, sp), a0
+	add	d1, a0
+	mov	sp, a1
+	add	0x30, a1
+	mov	0xc, d0
+	call	memcpy_entry, [a2,a3], 8
+	mov	(0x4c, sp), a0
+	mov	(0x14, sp), d0
+	add	d0, a0
+	movbu	(0x28, sp), d0
+	call	func_501680F4_L5, [d2,d3], 0x1c
+	mov	(0x14, sp), d0
+	add	0x15, d0
+	mov	d0, (0x14, sp)
+	clr	d0
+	movhu	d0, (0x2c, sp)
+func_501680F4_L1b5:
+	movbu	(0x28, sp), d0
+	inc	d0
+	movbu	d0, (0x28, sp)
+func_501680F4_L1bc:
+	movbu	(0x28, sp), d0
+	cmp	0x10, d0
+	bge	func_501680F4_L1c6
+	jmp	func_501680F4_L77
+func_501680F4_L1c6:
+	movhu	(0x2c, sp), d0
+	ret	[d2,d3], 0x44
+	add	-0x20, sp
 
 func_501682C3:
 	mov	a0, (0x28, sp)
@@ -694466,7 +702230,11 @@ func_50172173:
 	and	0x04, d0
 	extbu	d0
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x37a73e, 0x37a74b
+# func_50172173 + 0xd: no traced path reaches what follows (--decode-gaps)
+	movbu	(0x500a1d9a), d0
+	and	0x08, d0
+	extbu	d0
+	retf	0, 0
 
 func_5017218D:
 	movm	[d2,d3,a2,a3], (sp)
@@ -698035,7 +705803,18 @@ func_50173E4E_entry:
 	call	func_50173E14, 0, 0
 	extbu	d0
 	ret	0, 0x10
-.incbin_range "baserom/kn2400_program.rom", 0x37c426, 0x37c43b
+# func_50173E4E_entry + 0x17: no traced path reaches what follows (--decode-gaps)
+	movhu	(data_4854B1BA), d1
+	extbu	d0
+	cmp	d0, d1
+	bne	func_50173E4E_entry_L25
+	mov	1, d0
+	bra	func_50173E4E_entry_L26
+func_50173E4E_entry_L25:
+	clr	d0
+func_50173E4E_entry_L26:
+	retf	0, 0
+	add	-8, sp
 
 func_50173E7D:
 	call	func_501808DE, 0, 0
@@ -699226,7 +707005,8 @@ func_501746E7_entry_L161:
 	call	func_5017D7F5, 0, 0
 	movhu	d0, (0x500a1db8)
 	jmp	func_501746E7_entry_L2a
-.incbin_range "baserom/kn2400_program.rom", 0x37ce29, 0x37ce2c
+# func_501746E7_entry + 0x17f: no traced path reaches what follows (--decode-gaps)
+	ret	[d2,d3,a2,a3], 0x24
 
 func_5017486E:
 	movm	[a2], (sp)
@@ -699535,7 +707315,9 @@ func_50174A1D_entry_L138:
 	call	func_5017D7F5, 0, 0
 	movhu	d0, (0x500a1db8)
 	jmp	func_50174A1D_entry_L4f
-.incbin_range "baserom/kn2400_program.rom", 0x37d136, 0x37d13c
+# func_50174A1D_entry + 0x156: no traced path reaches what follows (--decode-gaps)
+	ret	[d2,d3,a2], 0x20
+	add	-0xc, sp
 
 func_50174B7E:
 	mov	0x500a1d9c, a0
@@ -703331,7 +711113,8 @@ func_501769FF_entry_L185:
 	call	func_5017D7F5, 0, 0
 	movhu	d0, (0x500a2de4)
 	jmp	func_501769FF_entry_L2a
-.incbin_range "baserom/kn2400_program.rom", 0x37f163, 0x37f166
+# func_501769FF_entry + 0x1a1: no traced path reaches what follows (--decode-gaps)
+	ret	[d2,d3,a2,a3], 0x24
 
 func_50176BA8:
 	movm	[a2], (sp)
@@ -703645,7 +711428,9 @@ func_50176D68_entry_L124:
 	call	func_5017D7F5, 0, 0
 	movhu	d0, (0x500a2de4)
 	jmp	func_50176D68_entry_L4d
-.incbin_range "baserom/kn2400_program.rom", 0x37f46b, 0x37f471
+# func_50176D68_entry + 0x140: no traced path reaches what follows (--decode-gaps)
+	ret	[d2,d3,a2], 0x20
+	add	-0xc, sp
 
 func_50176EB3:
 	movbu	(0x500a2de1), d0
@@ -717099,7 +724884,15 @@ func_5017D755_entry_L59:
 func_5017D755_entry_L5f:
 	mov	d1, d0
 	ret	[d2,d3], 0x18
-.incbin_range "baserom/kn2400_program.rom", 0x385d7b, 0x385d8b
+# func_5017D755_entry + 0x63: no traced path reaches what follows (--decode-gaps)
+	mov	d0, d1
+	clr	d0
+	btst	0x00700000, d1
+	beq	func_5017D755_entry_L6f
+	mov	1, d0
+func_5017D755_entry_L6f:
+	extbu	d0
+	retf	0, 0
 
 LoadU24BE:
 	movbu	(a0), d1
@@ -725227,7 +733020,16 @@ func_50182240:
 	lsr	10, d0
 	and	0x01, d0
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x38a80d, 0x38a82e
+# func_50182240 + 0xf: no traced path reaches what follows (--decode-gaps)
+	movhu	(0x500a2e0c), d0
+	lsr	8, d0
+	and	0x01, d0
+	retf	0, 0
+	movhu	(0x500a2e0c), d0
+	lsr	9, d0
+	and	0x01, d0
+	retf	0, 0
+	add	-0x10, sp
 
 func_50182270:
 	movhu	(0x500a2e0c), d0
@@ -725528,7 +733330,11 @@ func_501825CC:
 	lsr	10, d0
 	and	0x01, d0
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x38ab99, 0x38aba8
+# func_501825CC + 0xf: no traced path reaches what follows (--decode-gaps)
+	movhu	(0x500a2e20), d0
+	lsr	8, d0
+	and	0x01, d0
+	retf	0, 0
 
 func_501825EA:
 	movhu	(0x500a2e20), d0
@@ -725631,7 +733437,11 @@ func_50182709:
 	lsr	8, d0
 	and	0x01, d0
 	retf	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x38acd6, 0x38ace5
+# func_50182709 + 0xf: no traced path reaches what follows (--decode-gaps)
+	movhu	(0x500a2e2a), d0
+	lsr	9, d0
+	and	0x01, d0
+	retf	0, 0
 
 func_50182727:
 	movhu	(0x500a2e2a), d0
@@ -725692,7 +733502,22 @@ func_5018278D:
 	lne
 	call	unl_cpu, 0, 0
 	ret	0, 8
-.incbin_range "baserom/kn2400_program.rom", 0x38adaa, 0x38ade3
+# func_5018278D + 0x5f: no traced path reaches what follows (--decode-gaps)
+	movhu	(0x5002726c), d0
+	movhu	d0, (a0)
+	movhu	(0x50027270), d0
+	movhu	d0, (a1)
+	retf	0, 0
+	movhu	(0x50027276), d0
+	movhu	d0, (a0)
+	movhu	(0x5002727a), d0
+	movhu	d0, (a1)
+	retf	0, 0
+	movhu	(0x50027280), d0
+	movhu	d0, (a0)
+	movhu	(0x50027284), d0
+	movhu	d0, (a1)
+	retf	0, 0
 
 func_50182825:
 	movm	[d2,d3,a2], (sp)
@@ -725993,7 +733818,12 @@ DirStopAll_entry_Lc7:
 	call	MetronomeBeatTask_entry, [d2,d3], 0x1c
 DirStopAll_entry_Ld6:
 	ret	[d2], 0x10
-.incbin_range "baserom/kn2400_program.rom", 0x38b122, 0x38b134
+# DirStopAll_entry + 0xd9: no traced path reaches what follows (--decode-gaps)
+	movhu	(0x500a2e02), d0
+	lsr	15, d0
+	and	0x01, d0
+	retf	0, 0
+	add	-0xc, sp
 
 func_50182B76:
 	movbu	(0x500a2df6), d0
@@ -729197,6 +737027,7 @@ func_50184CFB_entry_L10a:
 func_50184E0D:
 	movm	[d2], (sp)
 	add	-0x10, sp
+func_50184E0D_L5:
 	mov	a0, (0x1c, sp)
 	movhu	d1, (0x24, sp)
 	movhu	d0, (0x20, sp)
@@ -729244,7 +737075,28 @@ func_50184E0D_L41:
 	movhu	d0, (8, a0)
 func_50184E0D_L66:
 	ret	[d2], 0x14
-.incbin_range "baserom/kn2400_program.rom", 0x38d434, 0x38d479
+# func_50184E0D + 0x69: no traced path reaches what follows (--decode-gaps)
+	mov	0x500a2e34, d0
+	mov	d0, (0x500a3bbc)
+	mov	d0, a0
+	ret	0, 0
+	add	-0x18, sp
+	movhu	d1, (0x24, sp)
+	movhu	d0, (0x20, sp)
+	movhu	d0, (0x14, sp)
+	mov	d1, d0
+	movhu	d0, (0x16, sp)
+	mov	0x500a2e34, d0
+	mov	d0, (0x500a3bbc)
+	mov	d0, a0
+	movhu	(0x20, sp), d0
+	movhu	(0x24, sp), d1
+	call	func_50184E0D_L5, [d2], 0x14
+	clr	d0
+	ret	0, 0x18
+	clr	d0
+	ret	0, 0
+	add	-0x18, sp
 
 func_50184EBB:
 	movhu	d1, (0x24, sp)
@@ -729260,7 +737112,9 @@ func_50184EBB:
 	call	func_50184CFB_entry, [d2], 0x20
 	clr	d0
 	ret	0, 0x18
-.incbin_range "baserom/kn2400_program.rom", 0x38d4a3, 0x38d4a7
+# func_50184EBB + 0x2a: no traced path reaches what follows (--decode-gaps)
+	clr	d0
+	ret	0, 0
 
 func_50184EE9:
 	movm	[d2], (sp)
@@ -729428,7 +737282,10 @@ func_50184EE9_entry_Lc5:
 	mov	d0, (0x3c, a0)
 func_50184EE9_entry_L13a:
 	ret	[d2], 0x20
-.incbin_range "baserom/kn2400_program.rom", 0x38d5e9, 0x38d5f0
+# func_50184EE9_entry + 0x13d: no traced path reaches what follows (--decode-gaps)
+	clr	d0
+	ret	0, 0
+	add	-0x38, sp
 
 func_50185032:
 	movhu	d1, (0x44, sp)
@@ -732281,7 +740138,17 @@ func_501868E3:
 	call	func_50186617_entry, [d2], 8
 	movhu	d0, (0x18, sp)
 	ret	0, 0x1c
-.incbin_range "baserom/kn2400_program.rom", 0x38eece, 0x38eee2
+# func_501868E3 + 0x2d: no traced path reaches what follows (--decode-gaps)
+	clr	d0
+	ret	0, 0
+	clr	d0
+	ret	0, 0
+	clr	d0
+	ret	0, 0
+	clr	d0
+	ret	0, 0
+	clr	d0
+	ret	0, 0
 
 func_50186924:
 	movm	[d2,d3], (sp)
@@ -739471,7 +747338,9 @@ func_5018B33D_entry_L68:
 	clr	d0
 func_5018B33D_entry_L69:
 	ret	0, 0x10
-.incbin_range "baserom/kn2400_program.rom", 0x39396a, 0x39396f
+# func_5018B33D_entry + 0x6c: no traced path reaches what follows (--decode-gaps)
+	mov	-1, d0
+	ret	0, 0
 
 func_5018B3B1:
 	ret	0, 0
@@ -739610,14 +747479,16 @@ func_5018B4B1:
 func_5018B4B1_entry:
 	call	func_5018B449_entry, 0, 0xc
 	ret	0, 8
-.incbin_range "baserom/kn2400_program.rom", 0x393a7a, 0x393a7d
+# func_5018B4B1_entry + 0x8: no traced path reaches what follows (--decode-gaps)
+	ret	0, 0
 
 func_5018B4BF:
 	ret	0, 0
 
 func_5018B4C2:
 	ret	0, 0
-.incbin_range "baserom/kn2400_program.rom", 0x393a83, 0x393a86
+# func_5018B4C2 + 0x3: no traced path reaches what follows (--decode-gaps)
+	ret	0, 0
 
 func_5018B4C8:
 	ret	0, 0
@@ -739696,7 +747567,16 @@ func_5018B52D_entry_L3d:
 	clr	d0
 	movbu	d0, (0x500272b8)
 	ret	0, 4
-.incbin_range "baserom/kn2400_program.rom", 0x393b35, 0x393b5c
+# func_5018B52D_entry + 0x47: no traced path reaches what follows (--decode-gaps)
+	mov	1, d0
+	movbu	d0, (0x500272b8)
+	movhu	(0x34000170), d0
+	and	0xff00, d0
+	or	0x01, d0
+	movhu	d0, (0x34000170)
+	movhu	(0x34000170), d0
+	ret	0, 0
+	add	-8, sp
 
 func_5018B59E:
 	call	func_5018B467_entry, 0, 0xc
@@ -739705,7 +747585,97 @@ func_5018B59E:
 	call	func_5018B40D_entry, 0, 0xc
 	call	func_5018AF17_entry, 0, 8
 	ret	0, 8
-.incbin_range "baserom/kn2400_program.rom", 0x393b78, 0x393c77
+# func_5018B59E + 0x1c: no traced path reaches what follows (--decode-gaps)
+func_5018B59E_L1c:
+	ret	0, 0
+func_5018B59E_L1f:
+	ret	0, 0
+	add	-0xc, sp
+	mov	a0, (0x14, sp)
+	call	func_5018B59E_L1c, 0, 0
+	ret	0, 0xc
+	add	-0xc, sp
+	movhu	d0, (0x14, sp)
+	movhu	(0x14, sp), d0
+	extbu	d0
+	call	func_5018B59E_L1f, 0, 0
+	ret	0, 0xc
+	add	-0xc, sp
+	movhu	d0, (0x14, sp)
+	movhu	(0x14, sp), d0
+	asr	8, d0
+	extbu	d0
+	call	func_5018B59E_L1f, 0, 0
+	movhu	(0x14, sp), d0
+	extbu	d0
+	call	func_5018B59E_L1f, 0, 0
+	ret	0, 0xc
+	movm	[d2], (sp)
+	add	-0x10, sp
+	mov	(0x500ad714), d0
+	inc	d0
+	mov	d0, (0x500ad714)
+	btst	0x01, d0
+	beq	func_5018B59E_L7d
+	call	TimeBase2msTick_L5, [d2], 0xc
+func_5018B59E_L7d:
+	and	0xf7ff, psw
+	nop
+	nop
+	movhu	(0x34000118), d0
+	and	0xff00, d0
+	or	0x01, d0
+	movhu	d0, (0x34000118)
+	or	0x0800, psw
+	nop
+	nop
+	call	func_4870551C, 0, 0
+	exth	d0
+	cmp	0, d0
+	beq	func_5018B59E_L112
+	mov	3, d0
+	call	func_5018DA4D, 0, 0
+	mov	2, d0
+	call	func_5018DA4D, 0, 0
+	mov	(0x500ad714), d0
+	and	0x03, d0
+	beq	func_5018B59E_Lcb
+	cmp	1, d0
+	beq	func_5018B59E_Le7
+	cmp	2, d0
+	beq	func_5018B59E_Lde
+	bra	func_5018B59E_Le7
+func_5018B59E_Lcb:
+	mov	1, d0
+	mov	d0, d1
+	call	func_5018C289, 0, 0
+	mov	4, d0
+	mov	2, d1
+	call	func_5018C289, 0, 0
+	bra	func_5018B59E_Le7
+func_5018B59E_Lde:
+	mov	1, d0
+	mov	3, d1
+	call	func_5018C289, 0, 0
+func_5018B59E_Le7:
+	btst	0x03, (0x500ad714)
+	bne	func_5018B59E_Lf9
+	mov	0xc, d0
+	mov	1, d1
+	call	set_flg, 0, 0
+func_5018B59E_Lf9:
+	mov	(0x500ad714), d0
+	mov	0x18, d1
+	clr	d2
+	mov	d2, mdr
+	divu	d1, d0
+	mov	mdr, d0
+	cmp	d2, d0
+	bne	func_5018B59E_L112
+	call	func_485EBE7F_L3f, 0, 0x10
+func_5018B59E_L112:
+	movhu	(0x34000118), d0
+	ret	[d2], 0x14
 
 func_5018B6B9:
 	movm	[d2,d3,a2,a3], (sp)
@@ -739849,7 +747819,8 @@ func_5018B6B9_L159:
 	or	0x0800, psw
 	call	func_5018B821, 0, 0
 	jmp	func_5018B6B9_L7
-.incbin_range "baserom/kn2400_program.rom", 0x393ddc, 0x393ddf
+# func_5018B6B9 + 0x165: no traced path reaches what follows (--decode-gaps)
+	ret	[d2,d3,a2,a3], 0x20
 
 func_5018B821:
 	add	-4, sp
@@ -744344,6 +752315,7 @@ get_tid_entry_L4c:
 
 func_5018DD6C:
 	add	-0xc, sp
+func_5018DD6C_L3:
 	mov	(0x50380000), a0
 	movhu	(0xe, a0), d0
 	cmp	8, d0
@@ -744433,7 +752405,8 @@ func_5018DE08:
 func_5018DE08_Le:
 	call	func_4860958E_entry, 0, 0x10
 	bra	func_5018DE08_Le
-.incbin_range "baserom/kn2400_program.rom", 0x3963dd, 0x3963e0
+# func_5018DE08 + 0x17: no traced path reaches what follows (--decode-gaps)
+	ret	0, 8
 
 dis_int:
 	movm	[d2], (sp)
@@ -744486,7 +752459,129 @@ dly_tsk_entry_L10:
 dly_tsk_entry_L20:
 	clr	d0
 	ret	[d2,a2], 0x18
-.incbin_range "baserom/kn2400_program.rom", 0x39643b, 0x39658e
+# dly_tsk_entry + 0x24: no traced path reaches what follows (--decode-gaps)
+	jmp	func_48728591
+	.space	3, 0xff
+	.byte	0xcf, 0xf8	# movm [d2,d3,a2,a3,other3], (sp)
+	add	-0xc, sp
+	mov	psw, d3
+	udf15	d3, d3
+	mov	d3, (0xc, sp)
+	udf13	d3, d3
+	mov	d3, (8, sp)
+	udf12	d3, d3
+	mov	d3, (4, sp)
+	mov	psw, d3
+	mov	d3, (0, sp)
+	movhu	(0x50380cec), d3
+	add	1, d3
+	movhu	d3, (0x50380cec)
+	mov	0x34000100, a2
+	movhu	(a2), d3
+	cmp	0, d3
+	bne	dly_tsk_entry_L67
+	mov	0x34000104, a2
+	movhu	(a2), d3
+	add	8, d3
+dly_tsk_entry_L67:
+	lsr	1, d3
+	mov	0x50380a6c, a2
+	add	d3, d3
+	movhu	(d3, a2), d3
+	mov	0x50380b64, a2
+	add	d3, d3
+	mov	(d3, a2), a2
+	add	-4, sp
+	calls	(a2)
+	add	4, sp
+	and	0xf7ff, psw
+	movhu	(0x50380cec), d3
+	add	-1, d3
+	movhu	d3, (0x50380cec)
+	mov	(0, sp), d2
+	and	0x08, d2
+	mov	psw, d3
+	or	d2, d3
+	mov	d3, psw
+	mov	(4, sp), d3
+	mov	(8, sp), d2
+	udf21	d3, d2
+	mov	(0xc, sp), d3
+	udf20	d3, d3
+	add	0xc, sp
+	.byte	0xce, 0xf8	# movm (sp), [d2,d3,a2,a3,other3]
+	rti
+dly_tsk_entry_Lb2:
+	.byte	0xcf, 0xf8	# movm [d2,d3,a2,a3,other3], (sp)
+	add	-0xc, sp
+	mov	psw, d3
+	udf15	d3, d3
+	mov	d3, (0xc, sp)
+	udf13	d3, d3
+	mov	d3, (8, sp)
+	udf12	d3, d3
+	mov	d3, (4, sp)
+	mov	psw, d3
+	mov	d3, (0, sp)
+	movhu	(0x50380cec), d3
+	add	0, d3
+	bne	dly_tsk_entry_Le4
+	mov	(0x5038002c), a1
+	mov	sp, (0, a1)
+	mov	(0x50380c9c), a1
+	mov	a1, sp
+dly_tsk_entry_Le4:
+	movhu	(0x50380cec), d3
+	add	1, d3
+	movhu	d3, (0x50380cec)
+	movhu	(0x34000200), d3
+	mov	0x34000100, a2
+	movhu	(d3, a2), d2
+	lsr	1, d2
+	bcs	dly_tsk_entry_L115
+	add	1, d3
+	lsr	1, d2
+	bcs	dly_tsk_entry_L115
+	add	1, d3
+	lsr	1, d2
+	bcs	dly_tsk_entry_L115
+	add	1, d3
+dly_tsk_entry_L115:
+	mov	0x50380a6c, a2
+	add	d3, d3
+	movhu	(d3, a2), d3
+	mov	0x50380b64, a2
+	add	d3, d3
+	mov	(d3, a2), a2
+	add	-4, sp
+	calls	(a2)
+	add	4, sp
+	and	0xf7ff, psw
+	movhu	(0x50380cec), d3
+	add	-1, d3
+	movhu	d3, (0x50380cec)
+	movhu	(0x50380cec), d3
+	add	0, d3
+	bne	dly_tsk_entry_L159
+	mov	(0x5038002c), a2
+	mov	(0, a2), sp
+	mov	0, d2
+	movhu	d2, (0xe, a2)
+dly_tsk_entry_L159:
+	mov	(0, sp), d2
+	and	0x08, d2
+	mov	psw, d3
+	or	d2, d3
+	mov	d3, psw
+	mov	(4, sp), d3
+	mov	(8, sp), d2
+	udf21	d3, d2
+	mov	(0xc, sp), d3
+	udf20	d3, d3
+	add	0xc, sp
+	.byte	0xce, 0xf8	# movm (sp), [d2,d3,a2,a3,other3]
+	rti
+	rets
 
 func_5018DFD0:
 	mov	(0x5038002c), a2
@@ -744506,8 +752601,13 @@ func_5018DFD0:
 	add	0xc, sp
 	.byte	0xce, 0xf8	# movm (sp), [d2,d3,a2,a3,other3]
 	rti
-.incbin_range "baserom/kn2400_program.rom", 0x3965b8, 0x3965bb
 .mnbase 0x48400000
-.incbin_range "baserom/kn2400_program.rom", 0x3965bb, 0x3965d3
+RamCodeTrailer:
+	.byte	0xde, 0x00, 0x00, 0x02, 0x00, 0xfa, 0xdf	# "......."
+	.long	0x487285be
+	.long	LibF64Pow
+	.long	0x00038003
+	.long	RamCodeTrailer
+	.long	0x5018fff0
 
 .org 0x3965d3

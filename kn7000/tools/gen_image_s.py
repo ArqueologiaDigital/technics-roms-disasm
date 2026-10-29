@@ -49,6 +49,10 @@
 #   * everything outside the code ranges is .incbin_range from the reference image,
 #     except the typed data ranges (--long-table, --text, --reflection-tables); a
 #     --sym name at the start of one labels it.
+#   * --decode-gaps: the code-range bytes no traced path reaches (after an entry's
+#     reached code, up to the next entry) are decoded linearly too, run by run;
+#     a run is kept when it ends in a return or jump or runs into the next entry,
+#     0xFF between runs is fill, and only what still does not decode stays binary.
 #   * --data-include LO:HI:PATH replaces the file range [LO, HI) by `.include PATH`:
 #     a data region typed by tools/gen_data_s.py (--profile <model>), whose
 #     labels.sym (--data-labels) also names the code's 8-digit immediates that are
@@ -278,6 +282,8 @@ def main():
                          "range are entries (repeatable)")
     ap.add_argument("--text", action="append", default=[], metavar="LO:HI",
                     help="data range to emit as .byte rows with the text beside them")
+    ap.add_argument("--decode-gaps", action="store_true",
+                    help="decode the unreached bytes after each entry's code (see the header)")
     ap.add_argument("--data-include", action="append", default=[], metavar="LO:HI:PATH",
                     help="emit `.include PATH` for the file range [LO, HI) (a typed data region)")
     ap.add_argument("--data-labels", help="labels.sym of the typed data region "
@@ -419,6 +425,42 @@ def main():
             pad += 1
         blocks[e] = (end, pre, x, pad)
 
+    # --decode-gaps: the bytes of an entry's stretch after its reached code (and
+    # nop padding), up to the next entry, decoded linearly.  No traced path
+    # enters them (code reached only through a computed jump or a pointer the
+    # walk does not follow, or dead code), so each run of instructions is kept
+    # only when it ends in a return / jump, or runs exactly into the next entry;
+    # 0xFF runs between such runs are fill.  What does not decode stays binary.
+    tails = {e: [] for e in order}
+    if a.decode_gaps:
+        for i, e in enumerate(order):
+            end, _pre, _x, pad = blocks[e]
+            nxt_entry = i + 1 < len(order) and order[i + 1] == end
+            cur2, items = pad, []
+            while cur2 < end:
+                ins = img.decode(cur2, end)
+                if ins:
+                    stop = ins[-1][0] + len(ins[-1][1])
+                    last = ins[-1][2]
+                    if last in STOPS or last in ("jmp", "bra") or (stop == end and nxt_entry):
+                        items += [("i",) + t for t in ins]
+                        cur2 = stop
+                        continue
+                    break
+                f = cur2
+                while f < end and d[f] == 0xFF:
+                    f += 1
+                if f == cur2:
+                    break
+                items.append(("fill", cur2, f))
+                cur2 = f
+            while items and items[-1][0] == "fill" and items[-1][2] != end and cur2 != end:
+                cur2 = items.pop()[1]
+            tails[e] = items
+
+    def all_insns(e):
+        return blocks[e][1] + [t[1:] for t in tails[e] if t[0] == "i"]
+
     # register-save entries
     for p, e in zip(order, order[1:]):
         if not names[cpu_of(e)].startswith("func_"):
@@ -434,7 +476,7 @@ def main():
     # labels at every control-transfer target that is an emitted instruction start
     emitted = {}
     for e in order:
-        for o, *_r in blocks[e][1]:
+        for o, *_r in all_insns(e):
             emitted[o] = e
     taken = set(names.values()) | inc_names
     labels = {e: names[cpu_of(e)] for e in order}
@@ -442,7 +484,7 @@ def main():
         if o in emitted:
             labels[o] = nm
     for e in order:
-        for o, b, mnem, ops in blocks[e][1]:
+        for o, b, mnem, ops in all_insns(e):
             t = target_of(mnem, ops)
             t = img.off(t) if t is not None else None
             if t is not None and t in emitted and t not in labels:
@@ -491,7 +533,7 @@ def main():
          ""]
     body = []
     cur, mnbase = 0, base
-    n_insn = n_byte = conv_bytes = pad_bytes = 0
+    n_insn = n_byte = conv_bytes = pad_bytes = gap_bytes = fill_bytes = 0
     defined = set()
 
     # typed data ranges: (lo, hi, kind)
@@ -634,6 +676,26 @@ def main():
             body.extend(["\tnop"] * (pad - x))
             pad_bytes += pad - x
         cur = pad
+        if tails[e]:
+            body.append(f"# {labels[e]} + 0x{pad - e:x}: no traced path reaches what follows (--decode-gaps)")
+            for t in tails[e]:
+                if t[0] == "fill":
+                    body.append(f"\t.space\t{t[2] - t[1]}, 0xff")
+                    fill_bytes += t[2] - t[1]
+                    cur = t[2]
+                    continue
+                _k, o, b, mnem, ops = t
+                if o in labels:
+                    body.append(f"{labels[o]}:")
+                    defined.add(labels[o])
+                line = spell(o, b, mnem, ops)
+                if line.startswith("\t.byte"):
+                    n_byte += 1
+                else:
+                    n_insn += 1
+                body.append(line)
+                gap_bytes += len(b)
+                cur = o + len(b)
         fill(end)
     fill(len(d))
     body += ["", f".org 0x{len(d):06x}"]
@@ -677,7 +739,9 @@ def main():
              f"{100.0 * conv_bytes / code_total:.2f}% of code ranges)",
              f"instructions                {n_insn} (+{n_byte} .byte escapes)",
              f"nop padding bytes           {pad_bytes}",
-             f"code-range bytes left binary {code_total - conv_bytes - pad_bytes} "
+             *([f"unreached code decoded       {gap_bytes} (--decode-gaps; +{fill_bytes} bytes of 0xFF fill)"]
+               if a.decode_gaps else []),
+             f"code-range bytes left binary {code_total - conv_bytes - pad_bytes - gap_bytes - fill_bytes} "
              f"(in {pieces} .incbin_range pieces)",
              f"local labels                {len(labels) - len(order)}",
              f"movm pointer targets rejected (paths do not end) {n_ptr_rejected}",

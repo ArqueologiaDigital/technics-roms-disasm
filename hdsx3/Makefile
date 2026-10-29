@@ -36,7 +36,7 @@ CODE     := --code 0x80:0x3ded6
 SYMRANGE := --code-range 0x80:0x3ded6
 # The XAPR header: the signature, then the entry vectors; and the second XAPR
 # signature, at the end of the image, which header word +0x04 points at.
-TYPED    := --text 0x0:0x4 --long-table 0x4:0x80 --text 0xb655c:0xb6560 --reflection-tables
+TYPED    := --decode-gaps --text 0x0:0x4 --long-table 0x4:0x80 --text 0xb655c:0xb6560 --reflection-tables
 
 .PHONY: all baserom build verify ported-names symbols program-src clean distclean
 .DELETE_ON_ERROR:

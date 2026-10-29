@@ -76,7 +76,8 @@ func_97800082_L32:
 	nop
 	nop
 	nop
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0000b9, 0x0000bc
+# func_97800082 + 0x37: no traced path reaches what follows (--decode-gaps)
+	ret	0, 0
 
 func_978000BC:
 	mov	d0, (8, sp)
@@ -86,7 +87,8 @@ func_978000BC:
 	ret	0, 0
 	nop
 	nop
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0000ca, 0x0000cd
+# func_978000BC + 0xe: no traced path reaches what follows (--decode-gaps)
+	ret	0, 0
 
 func_978000CD:
 	mov	d0, (8, sp)
@@ -108,7 +110,9 @@ func_978000CD:
 	nop
 	nop
 	nop
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0000e7, 0x0000ed
+# func_978000CD + 0x1a: no traced path reaches what follows (--decode-gaps)
+	ret	0, 0
+	add	-4, sp
 
 func_978000ED:
 	mov	d0, (0xc, sp)
@@ -130,7 +134,9 @@ func_978000ED:
 	nop
 	nop
 	nop
-.incbin_range "baserom/hdsx3_extapr.rom", 0x000107, 0x00010d
+# func_978000ED + 0x1a: no traced path reaches what follows (--decode-gaps)
+	ret	0, 0
+	add	-4, sp
 
 func_9780010D:
 	mov	d0, (0xc, sp)
@@ -1008,7 +1014,89 @@ func_978003E3_entry_L58d:
 func_978003E3_entry_L595:
 	mov	(0x28, sp), d0
 	ret	0, 0x48
-.incbin_range "baserom/hdsx3_extapr.rom", 0x000980, 0x000a99
+# func_978003E3_entry + 0x59a: no traced path reaches what follows (--decode-gaps)
+	mov	-1, d0
+	ret	0, 0
+	add	-0xc, sp
+	mov	(0x979126b4), a0
+	mov	(0x100c, a0), a0
+	mov	(0x88, a0), a0
+	clr	d0
+	calls	(a0)
+	mov	(0x979126b4), a0
+	mov	(0x100c, a0), a0
+	mov	(0x104, a0), a0
+	calls	(a0)
+	mov	(0x979126b4), a0
+	mov	(0x100c, a0), a0
+	mov	(0x88, a0), a0
+	mov	1, d0
+	calls	(a0)
+	mov	(0x979126b4), a0
+	mov	(0x100c, a0), a0
+	mov	(0x84, a0), a0
+	calls	(a0)
+	ret	0, 0xc
+	movhu	d1, (0xc, sp)
+	movhu	d0, (8, sp)
+	movhu	(8, sp), d1
+	asl	6, d1
+	add	0x97941e7c, d1
+	movhu	(0xc, sp), d0
+	asl2	d0
+	mov	d1, a0
+	mov	(d0, a0), d0
+	ret	0, 0
+	add	-0xc, sp
+	mov	0x14, d0
+	call	func_9780378F, 0, 0
+	mov	0x14, d0
+	call	func_9780378F, 0, 0
+	mov	0x14, d0
+	call	func_9780378F, 0, 0
+	mov	0x14, d0
+	call	func_9780378F, 0, 0
+	mov	0x14, d0
+	call	func_9780378F, 0, 0
+	mov	0x14, d0
+	call	func_9780378F, 0, 0
+	mov	0x14, d0
+	call	func_9780378F, 0, 0
+	mov	0x14, d0
+	call	func_9780378F, 0, 0
+	mov	0x14, d0
+	call	func_9780378F, 0, 0
+	mov	0x14, d0
+	call	func_9780378F, 0, 0
+	mov	0x14, d0
+	call	func_9780378F, 0, 0
+	mov	0x14, d0
+	call	func_9780378F, 0, 0
+	mov	0x14, d0
+	call	func_9780378F, 0, 0
+	mov	0x14, d0
+	call	func_9780378F, 0, 0
+	mov	0x14, d0
+	call	func_9780378F, 0, 0
+	mov	0x14, d0
+	call	func_9780378F, 0, 0
+	mov	0x14, d0
+	call	func_9780378F, 0, 0
+	mov	0x14, d0
+	call	func_9780378F, 0, 0
+	mov	0x14, d0
+	call	func_9780378F, 0, 0
+	mov	0x14, d0
+	call	func_9780378F, 0, 0
+	mov	0x14, d0
+	call	func_9780378F, 0, 0
+	mov	0x14, d0
+	call	func_9780378F, 0, 0
+	mov	0x14, d0
+	call	func_9780378F, 0, 0
+	mov	0x14, d0
+	call	func_9780378F, 0, 0
+	ret	0, 0xc
 
 func_97800A99:
 	movm	[d2], (sp)
@@ -2082,7 +2170,27 @@ func_97800FCD_entry_L490:
 	clr	d0
 func_97800FCD_entry_L499:
 	ret	[d2,d3], 0x14
-.incbin_range "baserom/hdsx3_extapr.rom", 0x00146e, 0x001498
+# func_97800FCD_entry + 0x49c: no traced path reaches what follows (--decode-gaps)
+	movbu	d0, (8, sp)
+	movbu	(8, sp), d0
+	cmp	3, d0
+	bge	func_97800FCD_entry_L4a8
+	bra	func_97800FCD_entry_L4ac
+func_97800FCD_entry_L4a8:
+	mov	-1, d0
+	bra	func_97800FCD_entry_L4c0
+func_97800FCD_entry_L4ac:
+	movbu	(8, sp), d0
+	mov	0x68, d1
+	nop
+	nop
+	mulu	d1, d0
+	add	0x979127f4, d0
+	mov	d0, a0
+	mov	(0x5c, a0), d0
+func_97800FCD_entry_L4c0:
+	ret	0, 0
+	add	-0x18, sp
 
 func_97801498:
 	mov	a0, (0x20, sp)
@@ -3563,7 +3671,18 @@ func_978021E9_L6d:
 	bra	func_978021E9_L8
 func_978021E9_L77:
 	ret	0, 0x80
-.incbin_range "baserom/hdsx3_extapr.rom", 0x002263, 0x00229b
+# func_978021E9 + 0x7a: no traced path reaches what follows (--decode-gaps)
+	mov	1, d0
+	movbu	d0, (0x97946e98)
+	movbu	d0, (0x97946e99)
+	movbu	d0, (0x97946ea0)
+	movbu	d0, (0x97946ea1)
+	movbu	d0, (0x97946ea2)
+	movbu	d0, (0x97946ea3)
+	movbu	d0, (0x97946ea4)
+	movbu	d0, (0x97946ea5)
+	ret	0, 0
+	add	-0x48, sp
 
 func_9780229B:
 	mov	a0, (0x54, sp)
@@ -5269,13 +5388,18 @@ func_97802F1C:
 	movhu	d0, (8, sp)
 	movhu	d0, (0x9791393e)
 	ret	0, 0
-.incbin_range "baserom/hdsx3_extapr.rom", 0x002f28, 0x002f34
+# func_97802F1C + 0xc: no traced path reaches what follows (--decode-gaps)
+	movhu	d0, (8, sp)
+	movhu	d0, (0x97913940)
+	ret	0, 0
 
 func_97802F34:
 	movhu	d0, (8, sp)
 	movhu	d0, (0x97913942)
 	ret	0, 0
-.incbin_range "baserom/hdsx3_extapr.rom", 0x002f40, 0x002f49
+# func_97802F34 + 0xc: no traced path reaches what follows (--decode-gaps)
+	movhu	(0x9791393a), d0
+	ret	0, 0
 
 func_97802F49:
 	movhu	(0x9791393c), d0
@@ -5284,7 +5408,9 @@ func_97802F49:
 func_97802F52:
 	movhu	(0x9791393e), d0
 	ret	0, 0
-.incbin_range "baserom/hdsx3_extapr.rom", 0x002f5b, 0x002f64
+# func_97802F52 + 0x9: no traced path reaches what follows (--decode-gaps)
+	movhu	(0x97913940), d0
+	ret	0, 0
 
 func_97802F64:
 	movhu	(0x97913942), d0
@@ -10510,7 +10636,14 @@ func_97805F89_entry_L1a:
 	mov	d1, d0
 func_97805F89_entry_L28:
 	ret	0, 0x10
-.incbin_range "baserom/hdsx3_extapr.rom", 0x005fb7, 0x005fd0
+# func_97805F89_entry + 0x2b: no traced path reaches what follows (--decode-gaps)
+	mov	1, d0
+	mov	d0, (0x97910004)
+	ret	0, 0
+	mov	1, d0
+	mov	d0, (0x97910008)
+	ret	0, 0
+	add	-0x24, sp
 
 func_97805FD0:
 	mov	a0, (0x38, sp)
@@ -12500,7 +12633,18 @@ func_9780716D_Lb9:
 	clr	d0
 func_9780716D_Lba:
 	ret	[d2], 0x18
-.incbin_range "baserom/hdsx3_extapr.rom", 0x00722a, 0x007243
+# func_9780716D + 0xbd: no traced path reaches what follows (--decode-gaps)
+	mov	-3, d0
+	ret	0, 0
+	clr	d0
+	ret	0, 0
+	ret	0, 0
+	mov	-1, d0
+	ret	0, 0
+	clr	d0
+	ret	0, 0
+	clr	d0
+	ret	0, 0
 
 func_97807243:
 	movm	[d2], (sp)
@@ -20130,7 +20274,9 @@ func_9780AAB7_L23:
 	bra	func_9780AAB7_Lf
 func_9780AAB7_L31:
 	ret	0, 4
-.incbin_range "baserom/hdsx3_extapr.rom", 0x00aaeb, 0x00aaf4
+# func_9780AAB7 + 0x34: no traced path reaches what follows (--decode-gaps)
+	movbu	(0x97910c71), d0
+	ret	0, 0
 
 Debug_Wind_RW:
 	add	-0x1c4, sp
@@ -46497,7 +46643,61 @@ func_9781BF69_entry_L9b:
 	movhu	(0x12, sp), d0
 func_9781BF69_entry_L9e:
 	ret	0, 0x1c
-.incbin_range "baserom/hdsx3_extapr.rom", 0x01c00d, 0x01c099
+# func_9781BF69_entry + 0xa1: no traced path reaches what follows (--decode-gaps)
+	clr	d0
+	ret	0, 0
+	add	-0x1c, sp
+	mov	d1, (0x28, sp)
+	mov	d1, d0
+	cmp	0x1800005, d0
+	bne	func_9781BF69_entry_Lb5
+	bra	func_9781BF69_entry_Lcf
+func_9781BF69_entry_Lb5:
+	mov	(0x28, sp), d0
+	cmp	0x1a80009, d0
+	bne	func_9781BF69_entry_Lc1
+	bra	func_9781BF69_entry_Lf5
+func_9781BF69_entry_Lc1:
+	mov	(0x28, sp), d0
+	cmp	0x1a8000b, d0
+	bne	func_9781BF69_entry_Lcd
+	bra	func_9781BF69_entry_L117
+func_9781BF69_entry_Lcd:
+	bra	func_9781BF69_entry_L129
+func_9781BF69_entry_Lcf:
+	mov	(0x979126b4), a0
+	mov	(0x100c, a0), a0
+	mov	(0x108, a0), a0
+	mov	(0x2c, sp), d0
+	mov	d0, (0x10, sp)
+	mov	0x01c00024, d0
+	mov	0x01a00029, d1
+	calls	(a0)
+	mov	d0, (0x18, sp)
+	mov	d0, (0x14, sp)
+	bra	func_9781BF69_entry_L129
+func_9781BF69_entry_Lf5:
+	movhu	(0x2c, sp), d1
+	exthu	d1
+	movhu	(0x97910c50), d0
+	exthu	d0
+	add	d0, d1
+	movhu	d1, (0x97910c52)
+	movhu	(0x97910c52), d0
+	call	func_9781C9E0_L3, 0, 0x2c
+	exth	d0
+	mov	d0, (0x18, sp)
+	bra	func_9781BF69_entry_L129
+func_9781BF69_entry_L117:
+	movhu	(0x2c, sp), d1
+	exthu	d1
+	movhu	(0x97910c50), d0
+	exthu	d0
+	add	d0, d1
+	movhu	d1, (0x97910c52)
+func_9781BF69_entry_L129:
+	clr	d0
+	ret	0, 0x1c
 
 AttenCpToHDSwCatch:
 	add	-0x14, sp
@@ -47412,6 +47612,7 @@ SetupToolsP2SwCatch_L5c3:
 
 func_9781C9E0:
 	add	-0x2c, sp
+func_9781C9E0_L3:
 	movhu	d0, (0x34, sp)
 	movhu	(0x34, sp), d0
 	mov	sp, a0
@@ -50433,7 +50634,11 @@ KssCatch_DirSelectScreen_L181:
 	calls	(a0)
 KssCatch_DirSelectScreen_L199:
 	ret	0, 0x14
-.incbin_range "baserom/hdsx3_extapr.rom", 0x01ea35, 0x01ea47
+# KssCatch_DirSelectScreen + 0x19c: no traced path reaches what follows (--decode-gaps)
+	mov	(0x97910cd4), d0
+	ret	0, 0
+	mov	(0x97910cd8), d0
+	ret	0, 0
 
 func_9781EA47:
 	mov	d0, (8, sp)
@@ -74555,7 +74760,9 @@ func_9782E27A_entry_L7a:
 	mov	(0x18, sp), d0
 func_9782E27A_entry_L7c:
 	ret	0, 0x2c
-.incbin_range "baserom/hdsx3_extapr.rom", 0x02e2fc, 0x02e300
+# func_9782E27A_entry + 0x7f: no traced path reaches what follows (--decode-gaps)
+	clr	d0
+	ret	0, 0
 
 KSSSelectListProc:
 	movm	[d2,d3,a2,a3], (sp)
@@ -80798,7 +81005,48 @@ func_978322F4_entry_L2b0:
 	sub	d1, d0
 func_978322F4_entry_L2bb:
 	ret	[d2], 0x24
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0325b7, 0x03261b
+# func_978322F4_entry + 0x2be: no traced path reaches what follows (--decode-gaps)
+	movhu	d0, (8, sp)
+	movhu	(8, sp), d0
+	mov	0x9798adac, a0
+	movbu	(d0, a0), d0
+	movhu	(8, sp), d1
+	inc	d1
+	movbu	(d1, a0), d1
+	asl	8, d0
+	or	d1, d0
+	ret	0, 0
+	add	-8, sp
+	movhu	d0, (0x10, sp)
+	movhu	(0x10, sp), d0
+	mov	0x9798adac, a0
+	movbu	(d0, a0), d1
+	mov	d1, (0, sp)
+	clr	d0
+	movhu	d0, (4, sp)
+	bra	func_978322F4_entry_L311
+func_978322F4_entry_L2f3:
+	movhu	(0x10, sp), d1
+	movhu	(4, sp), d0
+	add	d0, d1
+	mov	0x9798adac, a0
+	movbu	(d1, a0), d1
+	mov	(0, sp), d0
+	asl	8, d0
+	add	d0, d1
+	mov	d1, (0, sp)
+	movhu	(4, sp), d0
+	inc	d0
+	movhu	d0, (4, sp)
+func_978322F4_entry_L311:
+	movhu	(4, sp), d0
+	cmp	3, d0
+	bge	func_978322F4_entry_L31a
+	bra	func_978322F4_entry_L2f3
+func_978322F4_entry_L31a:
+	mov	(0, sp), d0
+	ret	0, 8
+	add	-8, sp
 
 func_9783261B:
 	movhu	d0, (0x10, sp)
@@ -83885,7 +84133,159 @@ func_978341C0_entry_La2:
 	clr	d0
 func_978341C0_entry_La3:
 	ret	0, 0x1c
-.incbin_range "baserom/hdsx3_extapr.rom", 0x034269, 0x0343ac
+# func_978341C0_entry + 0xa6: no traced path reaches what follows (--decode-gaps)
+	clr	d0
+	ret	0, 0
+	clr	d0
+	ret	0, 0
+	clr	d0
+	ret	0, 0
+	clr	d0
+	ret	0, 0
+	clr	d0
+	ret	0, 0
+	clr	d0
+	ret	0, 0
+	clr	d0
+	ret	0, 0
+	clr	d0
+	ret	0, 0
+	add	-0x1c, sp
+	mov	a1, (0x28, sp)
+	mov	a0, (0x24, sp)
+	mov	(0x4c, a0), d1
+	cmp	0, d1
+	bne	func_978341C0_entry_Ld7
+	jmp	func_978341C0_entry_L189
+func_978341C0_entry_Ld7:
+	mov	(0x28, sp), a0
+	mov	(0x964, a0), a0
+	mov	sp, a1
+	add	4, a1
+	mov	-6, d1
+func_978341C0_entry_Le2:
+	mov	(a0), d0
+	mov	d0, (a1)
+	inc4	a0
+	inc4	a1
+	inc	d1
+	beq	func_978341C0_entry_Leb
+	bra	func_978341C0_entry_Le2
+func_978341C0_entry_Leb:
+	mov	(0x28, sp), a0
+	mov	(0xe84, a0), a0
+	mov	(0x2ee0, a0), d0
+	cmp	1, d0
+	beq	func_978341C0_entry_Lfb
+	bra	func_978341C0_entry_L10a
+func_978341C0_entry_Lfb:
+	mov	(0x28, sp), a0
+	mov	(0xe84, a0), a0
+	mov	(4, a0), d0
+	cmp	0, d0
+	bne	func_978341C0_entry_L10a
+	bra	func_978341C0_entry_L122
+func_978341C0_entry_L10a:
+	mov	(0x28, sp), a0
+	mov	(0xe84, a0), a1
+	mov	(0xe84, a0), a0
+	mov	(0x0001482c, a0), d0
+	add	2, d0
+	mov	d0, (0x0001482c, a1)
+func_978341C0_entry_L122:
+	mov	(0x28, sp), a0
+	mov	(0x960, a0), d1
+	inc	d1
+	mov	d1, (0x960, a0)
+	mov	(0x28, sp), a0
+	mov	(0x964, a0), d1
+	add	0x18, d1
+	mov	d1, (0x964, a0)
+	mov	(0x24, sp), a0
+	movbu	(1, a0), d0
+	extb	d0
+	mov	0x30, d1
+	sub	d1, d0
+	mov	d0, (0, sp)
+	cmp	4, d0
+	bhi	func_978341C0_entry_L14b
+	bra	func_978341C0_entry_L159
+func_978341C0_entry_L14b:
+	mov	(0, sp), d0
+	cmp	6, d0
+	bls	func_978341C0_entry_L153
+	bra	func_978341C0_entry_L159
+func_978341C0_entry_L153:
+	mov	5, d0
+	mov	d0, (4, sp)
+	bra	func_978341C0_entry_L173
+func_978341C0_entry_L159:
+	mov	(0, sp), d0
+	cmp	2, d0
+	bhi	func_978341C0_entry_L161
+	bra	func_978341C0_entry_L16f
+func_978341C0_entry_L161:
+	mov	(0, sp), d0
+	cmp	4, d0
+	bls	func_978341C0_entry_L169
+	bra	func_978341C0_entry_L16f
+func_978341C0_entry_L169:
+	mov	9, d0
+	mov	d0, (4, sp)
+	bra	func_978341C0_entry_L173
+func_978341C0_entry_L16f:
+	mov	0xa, d0
+	mov	d0, (4, sp)
+func_978341C0_entry_L173:
+	mov	(0x28, sp), a0
+	mov	(0x964, a0), a0
+	mov	sp, a1
+	add	4, a1
+	mov	-6, d1
+func_978341C0_entry_L17e:
+	mov	(a1), d0
+	mov	d0, (a0)
+	inc4	a1
+	inc4	a0
+	inc	d1
+	beq	func_978341C0_entry_L187
+	bra	func_978341C0_entry_L17e
+func_978341C0_entry_L187:
+	bra	func_978341C0_entry_L1bc
+func_978341C0_entry_L189:
+	mov	(0x28, sp), a0
+	mov	(0xe84, a0), a1
+	mov	(0xe84, a0), a0
+	mov	(0x0001482c, a0), d0
+	inc	d0
+	mov	d0, (0x0001482c, a1)
+	mov	(0x28, sp), a0
+	mov	(0x960, a0), d1
+	mov	1, d0
+	sub	d0, d1
+	mov	d1, (0x960, a0)
+	mov	(0x28, sp), a0
+	mov	(0x964, a0), d1
+	mov	0x18, d0
+	sub	d0, d1
+	mov	d1, (0x964, a0)
+func_978341C0_entry_L1bc:
+	ret	0, 0x1c
+	mov	a1, (0xc, sp)
+	mov	a1, a0
+	mov	(0xe84, a0), a1
+	mov	(0xe84, a0), a0
+	mov	(0x0001482c, a0), d0
+	inc	d0
+	mov	d0, (0x0001482c, a1)
+	clr	d0
+	ret	0, 0
+	add	-4, sp
+	mov	a0, (0xc, sp)
+	mov	(0x4c, a0), d0
+	mov	d0, (0, sp)
+	clr	d0
+	ret	0, 4
 
 func_978343AC:
 	movm	[d2,d3], (sp)
@@ -91016,7 +91416,26 @@ func_97838E82_L12b:
 	mov	(0x979a4a48), d0
 func_97838E82_L136:
 	ret	0, 0x20
-.incbin_range "baserom/hdsx3_extapr.rom", 0x038fbb, 0x038fe1
+# func_97838E82 + 0x139: no traced path reaches what follows (--decode-gaps)
+	mov	d0, (8, sp)
+	mov	d1, (0xc, sp)
+	mov	d1, d0
+	cmp	0, d0
+	beq	func_97838E82_L144
+	bra	func_97838E82_L14e
+func_97838E82_L144:
+	mov	(8, sp), d0
+	mov	d0, (0x97912650)
+	bra	func_97838E82_L152
+func_97838E82_L14e:
+	mov	-1, d0
+	bra	func_97838E82_L153
+func_97838E82_L152:
+	clr	d0
+func_97838E82_L153:
+	ret	0, 0
+	mov	(0x97912658), d0
+	ret	0, 0
 
 func_97838FE1:
 	movm	[d3], (sp)
@@ -91371,7 +91790,10 @@ func_978392A2:
 	mov	(0x10, sp), d0
 	mov	d0, (0x9791189c)
 	ret	0, 0
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0392c0, 0x0392cc
+# func_978392A2 + 0x1e: no traced path reaches what follows (--decode-gaps)
+	movhu	(0x97911898), d0
+	ret	0, 0
+	add	-8, sp
 
 func_978392CC:
 	mov	d0, (0x14, sp)
@@ -95717,7 +96139,10 @@ func_9783BAF5:
 	movbu	d0, (8, sp)
 	movbu	d0, (0x979118d1)
 	ret	0, 0
-.incbin_range "baserom/hdsx3_extapr.rom", 0x03bb01, 0x03bb0d
+# func_9783BAF5 + 0xc: no traced path reaches what follows (--decode-gaps)
+	movhu	d0, (8, sp)
+	movhu	d0, (0x979118cc)
+	ret	0, 0
 
 func_9783BB0D:
 	movbu	(0x979118da), d0
@@ -95755,7 +96180,10 @@ func_9783BB3E_entry_L13:
 func_9783BB3E_entry_L1a:
 	movhu	(0, sp), d0
 	ret	0, 4
-.incbin_range "baserom/hdsx3_extapr.rom", 0x03bb61, 0x03bb6d
+# func_9783BB3E_entry + 0x20: no traced path reaches what follows (--decode-gaps)
+	movhu	d0, (8, sp)
+	movhu	d0, (0x979118cc)
+	ret	0, 0
 
 func_9783BB6D:
 	add	-0x28, sp
@@ -96133,7 +96561,10 @@ func_9783BE85_entry_L67:
 	mov	(0x30, sp), d0
 func_9783BE85_entry_L69:
 	ret	0, 0x24
-.incbin_range "baserom/hdsx3_extapr.rom", 0x03bef4, 0x03befc
+# func_9783BE85_entry + 0x6c: no traced path reaches what follows (--decode-gaps)
+	mov	1, d0
+	ret	0, 0
+	add	-0x10, sp
 
 func_9783BEFC:
 	mov	a0, (0x1c, sp)
@@ -97190,7 +97621,9 @@ func_9783C3D4_entry_L4e1:
 	mov	-0xbb8, d0
 func_9783C3D4_entry_L4e4:
 	ret	0, 0x1c
-.incbin_range "baserom/hdsx3_extapr.rom", 0x03c8be, 0x03c8c3
+# func_9783C3D4_entry + 0x4e7: no traced path reaches what follows (--decode-gaps)
+	mov	1, d0
+	ret	0, 0
 
 func_9783C8C3:
 	movm	[a2], (sp)
@@ -98860,7 +99293,9 @@ func_9783D86D_entry_L4a:
 	movhu	(0x10, sp), d0
 func_9783D86D_entry_L6c:
 	ret	0, 0x14
-.incbin_range "baserom/hdsx3_extapr.rom", 0x03d8df, 0x03d8e3
+# func_9783D86D_entry + 0x6f: no traced path reaches what follows (--decode-gaps)
+	clr	d0
+	ret	0, 0
 
 func_9783D8E3:
 	movm	[d2], (sp)
