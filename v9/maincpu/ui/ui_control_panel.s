@@ -2920,7 +2920,7 @@ UI_ChangeTitleByIndex:
 
 ; Shows title TITLE_PS + A on top of the current one (an interrupt title: a message, error or
 ; progress screen): removes any queued EVT_INTERRUPT_TITLE (DeleteEvent) and posts a new one with
-; that title to the current target (ApPostEvent).  Was UI_InterruptTitleByIndex.
+; that title to the current target (ApPostEvent).  Was SoundCtrl_SendCommand.
 ;   In:  A = title offset from TITLE_PS (a TT_* constant).
 UI_InterruptTitleByIndex:
 	dec 2, xsp
