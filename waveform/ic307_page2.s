@@ -3,7 +3,7 @@
 
 ; ---- directory: {parameter record, wave start / 16}; entry 0's record follows the table ----
 IC307_Page2:
-	WaveDirEntry	IC307_Page2, P2_Rec0000, P2_W0000	; 0, selector 0x6000
+	WaveDirEntry	IC307_Page2, P2_Rec0000, P2_W0000_Sine	; 0, selector 0x6000
 	WaveDirEntry	IC307_Page2, P2_Rec0001, P2_W0001	; 1, selector 0x6001
 	WaveDirEntry	IC307_Page2, P2_Rec0002, P2_W0002	; 2, selector 0x6002
 	WaveDirEntry	IC307_Page2, P2_Rec0003, P2_W0003	; 3, selector 0x6003
@@ -1078,7 +1078,7 @@ IC307_Page2:
 
 ; ---- parameter records: head word, then [flags:8][value:8] words (macros in waveform_macros.inc) ----
 ; entry 0, selector 0x6000: no SET zone record or drawbar zone record selects it
-P2_Rec0000:	WaveRecHead	IC307_Page2, P2_W0000
+P2_Rec0000:	WaveRecHead	IC307_Page2, P2_W0000_Sine
 ; entry 1, selector 0x6001: source "Concert Str.L", "Violin Ens."; tones Chamber Orch, Concert Strings, Piano & Strings, Unison Strings, Violin Ensemble; SET 277, 279
 P2_Rec0001:	WaveRecHead	IC307_Page2, P2_W0001
 	WaveSeq	-112, 0, 0, end=1
@@ -4948,10 +4948,10 @@ P2_Rec1071:	WaveRecHead	IC307_Page2, P2_W1033_Drawbar
 	.balign	16, 0
 
 ; ---- PCM: signed 16-bit little-endian samples, one item per distinct wave start ----
-; A wave's length here is the distance to the next wave start (or to the 0xFF tail); where a
-; sequence record runs on past that point, the entry plays on into the next item (see the notes).
+; A wave's length here is the distance to the next wave start (or to the 0xFF tail).  An entry may
+; play on into the next items: see the notes on sequence records ([INFERENCE]).
 ; wave 0: 256 samples (512 B); entry 0
-P2_W0000:	.incbin	"kn5000_waveform_rom.ic307", 0x2026a0, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
+P2_W0000_Sine:	.incbin	"kn5000_waveform_rom.ic307", 0x2026a0, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
 ; wave 1: 25,360 samples (50,720 B); entry 1
 ;   source "Concert Str.L", "Violin Ens."
 ;   tones Chamber Orch, Concert Strings, Piano & Strings, Unison Strings, Violin Ensemble

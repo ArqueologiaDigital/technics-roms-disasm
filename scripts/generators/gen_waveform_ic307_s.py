@@ -153,6 +153,8 @@ def main():
                 nm = "_" + ident(next(iter(src)))
             elif not src and db:
                 nm = "_Drawbar"
+            elif widx[o] == 0 and _s == 512:
+                nm = "_Sine"          # the 256-sample test sine of pages 0 and 2 (ic307_layout.py measures it)
             wlab[o] = "P%d_W%04d%s" % (p, widx[o], nm)
         L = []
         L.append("; IC307 page %d: file offset 0x%06x, %d directory entries = recording selectors 0x%x000-0x%x%03x"
@@ -176,8 +178,8 @@ def main():
         L.append("\t.balign\t16, 0")
         L.append("")
         L.append("; ---- PCM: signed 16-bit little-endian samples, one item per distinct wave start ----")
-        L.append("; A wave's length here is the distance to the next wave start (or to the 0xFF tail); where a")
-        L.append("; sequence record runs on past that point, the entry plays on into the next item (see the notes).")
+        L.append("; A wave's length here is the distance to the next wave start (or to the 0xFF tail).  An entry may")
+        L.append("; play on into the next items: see the notes on sequence records ([INFERENCE]).")
         for o, sz in waves:
             ents = wentries[o]
             srcs, tones, percs = set(), set(), set()

@@ -3106,8 +3106,8 @@ P1_Rec0167:	WaveRecHead	IC307_Page1, P1_W0150_BasicSBass2
 	.balign	16, 0
 
 ; ---- PCM: signed 16-bit little-endian samples, one item per distinct wave start ----
-; A wave's length here is the distance to the next wave start (or to the 0xFF tail); where a
-; sequence record runs on past that point, the entry plays on into the next item (see the notes).
+; A wave's length here is the distance to the next wave start (or to the 0xFF tail).  An entry may
+; play on into the next items: see the notes on sequence records ([INFERENCE]).
 ; wave 0: 3,128 samples (6,256 B); entry 0
 ;   source "Piccolo"
 ;   tones Piccolo

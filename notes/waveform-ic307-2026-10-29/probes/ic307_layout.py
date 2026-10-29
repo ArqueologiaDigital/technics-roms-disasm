@@ -103,6 +103,17 @@ def main():
         tot["waves"] += len(pg["waves"])
     print("chip: %d directory entries, %d distinct waves" % (tot["entries"], tot["waves"]))
 
+    # each page's first wave: is it a 256-sample sine?
+    import math
+    for p, pg in enumerate(pages):
+        o, sz = pg["waves"][0]
+        if sz == 512:
+            smp = struct.unpack_from("<256h", data, p * PAGE + o)
+            pk = max(abs(x) for x in smp)
+            err = sum(abs(x - pk * math.sin(2 * math.pi * k / 256)) for k, x in enumerate(smp)) / 256
+            print("page %d wave 0: 256 samples, peak %d, mean |sample - sine| %.2f LSB" % (p, pk, err))
+        else:
+            print("page %d wave 0: %d samples (not a 256-sample test wave)" % (p, sz // 2))
     # word shapes
     words = [(p, i, w) for p, pg in enumerate(pages) for i, r in enumerate(pg["records"]) for w in [r[2]]]
     allw = [x for _, _, w in words for x in w]

@@ -3,7 +3,7 @@
 
 ; ---- directory: {parameter record, wave start / 16}; entry 0's record follows the table ----
 IC307_Page0:
-	WaveDirEntry	IC307_Page0, P0_Rec0000, P0_W0000	; 0, selector 0x4000
+	WaveDirEntry	IC307_Page0, P0_Rec0000, P0_W0000_Sine	; 0, selector 0x4000
 	WaveDirEntry	IC307_Page0, P0_Rec0001, P0_W0001_PercOrgan	; 1, selector 0x4001
 	WaveDirEntry	IC307_Page0, P0_Rec0002, P0_W0002_PercOrgan	; 2, selector 0x4002
 	WaveDirEntry	IC307_Page0, P0_Rec0003, P0_W0003_PercOrgan	; 3, selector 0x4003
@@ -204,7 +204,7 @@ IC307_Page0:
 
 ; ---- parameter records: head word, then [flags:8][value:8] words (macros in waveform_macros.inc) ----
 ; entry 0, selector 0x4000: no SET zone record or drawbar zone record selects it
-P0_Rec0000:	WaveRecHead	IC307_Page0, P0_W0000
+P0_Rec0000:	WaveRecHead	IC307_Page0, P0_W0000_Sine
 ; entry 1, selector 0x4001: source "Perc Organ"; tones Perc Organ; SET 246
 P0_Rec0001:	WaveRecHead	IC307_Page0, P0_W0001_PercOrgan
 	WaveSplit	64
@@ -3360,10 +3360,10 @@ P0_Rec0197:	WaveRecHead	IC307_Page0, P0_W0185_HouseBass
 	.balign	16, 0
 
 ; ---- PCM: signed 16-bit little-endian samples, one item per distinct wave start ----
-; A wave's length here is the distance to the next wave start (or to the 0xFF tail); where a
-; sequence record runs on past that point, the entry plays on into the next item (see the notes).
+; A wave's length here is the distance to the next wave start (or to the 0xFF tail).  An entry may
+; play on into the next items: see the notes on sequence records ([INFERENCE]).
 ; wave 0: 256 samples (512 B); entry 0
-P0_W0000:	.incbin	"kn5000_waveform_rom.ic307", 0x001a30, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
+P0_W0000_Sine:	.incbin	"kn5000_waveform_rom.ic307", 0x001a30, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
 ; wave 1: 1,408 samples (2,816 B); entry 1
 ;   source "Perc Organ"
 ;   tones Perc Organ

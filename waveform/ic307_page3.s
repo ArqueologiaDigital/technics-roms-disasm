@@ -291,8 +291,8 @@ P3_Rec0056:	WaveRecHead	IC307_Page3, P3_W0041_DanceBass
 	.balign	16, 0
 
 ; ---- PCM: signed 16-bit little-endian samples, one item per distinct wave start ----
-; A wave's length here is the distance to the next wave start (or to the 0xFF tail); where a
-; sequence record runs on past that point, the entry plays on into the next item (see the notes).
+; A wave's length here is the distance to the next wave start (or to the 0xFF tail).  An entry may
+; play on into the next items: see the notes on sequence records ([INFERENCE]).
 ; wave 0: 26,128 samples (52,256 B); entry 0
 ;   source "BrightPiano L", "Piano (Mono)", "Piano L"
 ;   tones Analog Bass 2, Bell Piano, Bright Piano, Bright S.Brass, Clavi Lead, Fusion Lead 1, Fusion Lead 2, Glimmer +24 more
