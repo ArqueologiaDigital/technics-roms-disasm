@@ -115,13 +115,58 @@ def ident(s):
 
 
 # --------------------------------------------------------------------- model
+# Property values by the firmware's own names (the same reading as the main-CPU GUI lane's
+# scripts/generators/gen_naka_gui_headers.py): a field's propdata letter L selects entry
+# L - 'A' of the main CPU's SupportClass_PropTypeRecords (registry slot 0x260, one entry per
+# letter): {property-type proc, number of named values, value size, -> {name, value} pairs}.
+# Fonts, bitmaps and icons are indices into a name table, spelled as the type's
+# EVT_MAKE_DUMP writes them (its DumpPrefix + the table's string: idCHARA1, idICON_...).
+ENUM_LETTERS = "^_]defghluvwZ"
+INDEX_TYPES = (("c", "FontIDProc_FontNameTable", "FontIDProc_EntryCount", "FontIDProc_DumpPrefix"),
+               ("i", "BitmapIDProc_PtrTable", "BitmapIDProc_EntryCount", "BitmapIDProc_DumpPrefix"),
+               ("b", "IconIDProc_NameTable", "IconIDProc_EntryCount", "IconIDProc_DumpPrefix"))
+
+
 class HostClasses:
-    """The main CPU's class definitions (v10 ELF + ROM), for the 0x016S classes S < 0xA."""
+    """The main CPU's class definitions (v10 ELF + ROM), for the 0x016S classes S < 0xA,
+    and its named property values."""
     def __init__(self):
         self.m = nakamap.Map("v10")
+        self.values = self.prop_types()
 
     def get(self, cid):
         return self.m.klass(cid)
+
+    def prop_types(self):
+        """letter -> {value: name} (first name of each value), and the source of each letter"""
+        m = self.m
+        t = m.sym["SupportClass_PropTypeRecords"]
+        out = {}
+        for k in range(0x37):
+            a = t + 12 * k
+            ch = chr(0x41 + k)
+            if ch not in ENUM_LETTERS:
+                continue
+            cnt, vt = m.u16(a + 4), m.u32(a + 8)
+            d = {}
+            for i in range(cnt):
+                name, v = m.string_at(m.u32(vt + 8 * i)), m.u32(vt + 8 * i + 4)
+                if re.match(r"^[A-Za-z_]\w*$", name):
+                    d.setdefault(v, name)
+            out[ch] = d
+        for ch, tab, cnt, pre in INDEX_TYPES:
+            a = m.sym[tab]
+            if not m.inrom(a):
+                a = a - 0x3D524 + 0xEED8C8   # a RAM table: its work-RAM image (Boot_InitWorkRAM)
+            n = m.u16(m.sym[cnt])
+            prefix = m.string_at(m.sym[pre])
+            d = {}
+            for i in range(n):
+                name = prefix + m.string_at(m.u32(a + 4 * i))
+                if re.match(r"^[A-Za-z_]\w*$", name):
+                    d.setdefault(i, name)
+            out[ch] = d
+        return out
 
 
 class Version:
@@ -339,6 +384,7 @@ class Version:
             o, fn = refs[0]
             self.varname[a] = "HdaeUiVar_%s_%s" % (o["name"], fn)
         self.tail_labels = {}
+        self.used_values = {}
         for o in self.objs:
             self.decode_obj(o)
 
@@ -397,13 +443,30 @@ class Version:
             return "0x%08x" % val
         if ch in T_RAMVAR:
             return self.varname[self.ram2rom(val)]
-        if ch == "e" and val in EDITSW:
-            return EDITSW[val]
+        names = self.host.values.get(ch, {})
+        if ch == "]":
+            return self.flag_name(val)
+        if val in names:
+            self.used_values[names[val]] = val
+            return names[val]
         if ch in "^_e]":
             return "0x%02x" % val if val < 0x100 else "0x%04x" % val
         if val in (0xFFFF, 0xFFFFFFFF):
             return "0x%x" % val
         return "%d" % val
+
+    def flag_name(self, val):
+        """Viewable.flag (letter ']'): the OR of the named view-flag bits (VF_*)."""
+        names = self.host.values.get("]", {})
+        if val in names:
+            self.used_values[names[val]] = val
+            return names[val]
+        bits = sorted((v, n) for v, n in names.items() if v and v & (v - 1) == 0 and val & v)
+        if sum(v for v, _ in bits) != val:
+            return "0x%04x" % val
+        for v, n in bits:
+            self.used_values[n] = v
+        return "|".join(n for _, n in bits)
 
     def decode_obj(self, o):
         a, end = o["a"], o["end"]
@@ -411,7 +474,7 @@ class Version:
         args += [("x", "%d" % self.u16(a + 14)), ("y", "%d" % self.u16(a + 16)),
                  ("w", "%d" % (self.u16(a + 18) - self.u16(a + 14) + 1)),
                  ("h", "%d" % (self.u16(a + 20) - self.u16(a + 16) + 1)),
-                 ("flag", "0x%04x" % self.u16(a + 12))]
+                 ("flag", self.flag_name(self.u16(a + 12)))]
         strs = []
         for off, fn, ch in o["fields"]:
             if off < 22:
@@ -468,14 +531,6 @@ class Version:
             return None
         fail("string pointer 0x%06x has no label" % val)
 
-
-# LCD edit switches (propdata type 'e'): the main CPU's numbering (GetEditSwPoint,
-# SeTitle_DecodeSwitch); notes/data-gui-hdae5000-2026-10-29/probes/editsw_geometry.py shows
-# every HD-AE5000 object that carries one sitting next to that switch
-EDITSW = {0xFF: "EDITSW_NONE"}
-EDITSW.update({k: "EDITSW_COL%d" % (k + 1) for k in range(8)})
-EDITSW.update({8 + k: "EDITSW_RIGHT%d" % (k + 1) for k in range(5)})
-EDITSW.update({0x88 + k: "EDITSW_LEFT%d" % (k + 1) for k in range(5)})
 
 # the constants shared/event_codes.s defines (the tree file defines the HD-AE5000's other
 # function ids itself)
@@ -537,7 +592,7 @@ def class_comment(v_any, name, c):
     return lines
 
 
-def macro_text(classes, hd_cids):
+def macro_text(classes, hd_cids, used_values):
     L = []
     w = L.append
     w("; =============================================================================")
@@ -575,13 +630,17 @@ def macro_text(classes, hd_cids):
     w("")
     w("\t.equ\tNAKA_NONE, 0xffff\t\t; no object (a Viewable link)")
     w("\t.equ\tNAKA_NO_OBJECT, 0xffffffff\t; no object (a 32-bit object id field)")
-    w("; LCD edit switches, the values of every `editsw` field (main CPU numbering: GetEditSwPoint /")
-    w("; SeTitle_DecodeSwitch, technics-docs ui-framework.md): COL1-8 the eight buttons under the")
-    w("; display, RIGHT1-5 / LEFT1-5 the side rows top to bottom (LEFT = RIGHT | 0x80).  Every")
-    w("; HD-AE5000 object with one sits next to it (notes/data-gui-hdae5000-2026-10-29/probes/")
-    w("; editsw_geometry.py).")
-    for k, n in sorted(EDITSW.items()):
-        w("\t.equ\t%s, 0x%02x" % (n, k))
+    w("; Property values by the firmware's own names: the main CPU's SupportClass_PropTypeRecords")
+    w("; (one entry per propdata letter: {proc, count, size, -> {name, value}}), and for fonts /")
+    w("; bitmaps / icons the index tables FontIDProc_FontNameTable / BitmapIDProc_PtrTable /")
+    w("; IconIDProc_NameTable spelled as EVT_MAKE_DUMP writes them.  Only the ones the HD-AE5000's")
+    w("; records use.  ES_* (edit switches): Bottom1-8 the buttons under the LCD, Left1-5 / Right1-5")
+    w("; the side rows; every HD-AE5000 object with one sits next to it")
+    w("; (notes/data-gui-hdae5000-2026-10-29/probes/editsw_geometry.py).")
+    for n, val in sorted(used_values.items(), key=lambda kv: (kv[0].split("_")[0], kv[1])):
+        w("\t.ifndef\t%s" % n)
+        w("\t.equ\t%s, 0x%02x" % (n, val))
+        w("\t.endif")
     w("")
     w("; class ids: shared/event_codes.s names the main CPU's most used ones; the rest, and the")
     w("; HD-AE5000's own 13 (class table 0x16A, HDAE5000_RECORD_TABLE), are defined here")
@@ -602,7 +661,7 @@ def macro_text(classes, hd_cids):
                 params += [fn, fn + "_at"]
             else:
                 params.append(fn + ("=" + d[fn] if fn in d else ""))
-        w("\t.macro\t%s %s" % (name, ", ".join(params)))
+        w("\t.macro\t%s %s\t; census: data -- one %s record" % (name, ", ".join(params), name))
         w("\t_ui_head\t\\obj, %s, \\flag, \\x, \\y, \\w, \\h" % name)
         for off, fn, ch in c["fields"]:
             sz = SIG_SIZE[ch]
@@ -648,7 +707,7 @@ HdaeUi_\obj:
 
 ; ui_ram_object OBJ, CLASS -- the next object of the tree is OBJ, whose record lives in
 ; the .data image (copied to RAM): written there between ui_ram_records / _end
-	.macro	ui_ram_object obj, cls
+	.macro	ui_ram_object obj, cls	; census: data -- emits nothing: the bytes after it are the next record
 	_ui_new	\obj, \cls
 	.endm
 
@@ -699,7 +758,7 @@ HdaeUi_\obj:
 	.endm
 
 ; ui_sub -- the objects up to the matching ui_endsub are children of the object just written
-	.macro	ui_sub
+	.macro	ui_sub	; census: data -- emits nothing: the bytes after it are the next record
 	.altmacro
 	_ui_sub2	%_ui_d, %(_ui_d + 1)
 	.noaltmacro
@@ -719,7 +778,7 @@ HdaeUi_\obj:
 	.set	_ui_sub_\_p, _ui_n
 	.endm
 
-	.macro	ui_endsub
+	.macro	ui_endsub	; census: data -- emits nothing: the bytes after it are the next record
 	.altmacro
 	_ui_endsub2	%_ui_d
 	.noaltmacro
@@ -734,7 +793,7 @@ HdaeUi_\obj:
 	.endm
 
 ; ui_tree_end -- after the last object: closes the tree, defines HDAE5000_UI_OBJECT_COUNT
-	.macro	ui_tree_end
+	.macro	ui_tree_end	; census: data -- emits nothing: the bytes after it are the next record
 	.if	_ui_d <> 0
 	.error	"ui_sub / ui_endsub do not balance"
 	.endif
@@ -756,11 +815,11 @@ HdaeUi_\obj:
 	.endm
 
 ; ------------------------------------------------- records in the .data image
-	.macro	ui_ram_records
+	.macro	ui_ram_records	; census: data -- emits nothing: the bytes after it are the next record
 	.set	_ui_ram, 1
 	.endm
 
-	.macro	ui_ram_records_end
+	.macro	ui_ram_records_end	; census: data -- emits nothing: the bytes after it are the next record
 	.set	_ui_ram, 0
 	.endm
 
@@ -804,7 +863,7 @@ HdaeUi_\obj\()_\fld:
 
 ; --------------------------------------------- object table, name table, names
 ; HDAE5000_UiObject_PtrTable: one pointer per object, in tree order, then NULL
-	.macro	ui_object_table
+	.macro	ui_object_table	; census: data -- a pointer table
 	.set	_ui_k, 0
 	.rept	HDAE5000_UI_OBJECT_COUNT
 	.altmacro
@@ -816,7 +875,7 @@ HdaeUi_\obj\()_\fld:
 	.endm
 
 ; HDAE5000_UiObjectName_PtrTable: one name pointer per object, in tree order
-	.macro	ui_name_table
+	.macro	ui_name_table	; census: data -- a pointer table
 	.set	_ui_k, 0
 	.rept	HDAE5000_UI_OBJECT_COUNT
 	.altmacro
@@ -831,13 +890,13 @@ HdaeUi_\obj\()_\fld:
 	.endm
 
 ; the name string of OBJ (its resource name is its symbol), and the empty name
-	.macro	ui_name obj
+	.macro	ui_name obj	; census: data -- a name string
 HdaeUiName_\obj:
 	.asciz	"\obj"
 	.balign	2, 0
 	.endm
 
-	.macro	ui_noname obj
+	.macro	ui_noname obj	; census: data -- a name string
 HdaeUiName_\obj:
 	.zero	2
 	.endm
@@ -851,6 +910,9 @@ CODE_FILES = ("hd-ae5000_*.s", "hdae5000_hd_driver.s", "hdae5000_filesystem.s",
               "hdae5000_ui_display.s", "hdae5000_utilities.s")
 
 
+LOCAL = re.compile(rb"_(Skip|Loop)\d+$")   # branch targets the porting tool named: not routines
+
+
 def code_refs(v):
     """{object name: [routine]} for every HDAE5000_OBJ_<name> spelled in the tree's code."""
     import glob
@@ -862,7 +924,7 @@ def code_refs(v):
             cur = None
             for ln in open(f, "rb").read().split(b"\n"):
                 m = lab.match(ln)
-                if m and not m.group(1).startswith(b"."):
+                if m and not m.group(1).startswith(b".") and not LOCAL.search(m.group(1)):
                     cur = m.group(1).decode()
                 code = ln.split(b";", 1)[0]
                 if code.lstrip().startswith(b".equ"):
@@ -932,7 +994,8 @@ def tree_text(v, classes):
     w(";  * Viewable +4 super, +6 sub, +8 next, +10 prev are object indices; the table is the")
     w(";    preorder walk of the forest they describe, with no exception in either version")
     w(";    (analysis/wave7-probes/verify_hdae5000_ui_pool.py; probes in the notes);")
-    w(";  * +14 rect is x1, y1, x2, y2: all records fit 0,0-319,239 at +14 and at no other offset.")
+    w(";  * +14 rect is x1, y1, x2, y2: the 769 v2.06i pool records all satisfy x1 <= x2 <= 321,")
+    w(";    y1 <= y2 <= 239 at +14 and at no other offset (same probe); record 0 is 0,0-319,239.")
     w(rule)
     w("")
     w("\t.include\t\"shared/naka_ui_macros.s\"")
@@ -1016,29 +1079,16 @@ def tree_text(v, classes):
 
 
 def model_check(v, classes):
-    """Re-encode every record, the tables and the name pool from the decoded model, the way
-    the macros do, and compare with the ROM."""
+    """The layout the macros rely on, checked against the ROM: each inline caption where the
+    macro puts it (after the record, in the class's arena order, word-aligned) and pointed at
+    by its field; the tail strings; the name pool's order and padding.  The field VALUES are
+    checked by assembling (make gate)."""
     errs = 0
     for o in v.objs:
         c = classes[o["cname"]]
         a = dict(o["args"])
-        b = bytearray()
-        b += o["cid"].to_bytes(4, "little")
-        b += b"".join(x.to_bytes(2, "little") for x in (o["super"], o["sub"], o["next"], o["prev"]))
         got = bytes(v.rom[o["a"] - BASE:o["end"] - BASE])
-        x, y, wd, h = (int(a[k]) for k in "xywh")
-        b += int(a["flag"], 0).to_bytes(2, "little")
-        b += b"".join(t.to_bytes(2, "little") for t in (x, y, x + wd - 1, y + h - 1))
         caps = {}
-        for off, fn, ch in c["fields"]:
-            sz = SIG_SIZE[ch]
-            if len(b) != off:
-                fail("%s: field %s at %d, model at %d" % (o["name"], fn, off, len(b)))
-            raw = got[off:off + sz]
-            # the spelled value must name the raw value: resolved through the model's own maps
-            b += raw
-        if bytes(b) != got[:o["allsize"]]:
-            errs += 1
         pos = o["allsize"]
         for fn in c["arena"]:
             if fn in a:
@@ -1126,10 +1176,12 @@ def state_text(v, classes):
     w("; The initial values of the RAM variables the UI records point at: every field of type")
     w("; m / n / r / s (a RAM address) of every object, ROM pool and .data-image records alike,")
     w("; points into this block, and no two fields share a variable.  Each variable is labelled")
-    w("; HdaeUiVar_<object>_<field> after the field that points at it (the field's class and")
-    w("; name say what it holds: Screen.window the open window, AcScreenMenu.selected the")
-    w("; selection, SelectList.str_adr / sel_num the list's text pointer and count, ...); its")
-    w("; size is the distance to the next one.  Generated by scripts/converters/hdae5000_ui_tree.py.")
+    w("; HdaeUiVar_<object>_<field> after the field that points at it; its size is the distance")
+    w("; to the next one.  [INFERENCE] what a variable holds is known only from that field's")
+    w("; firmware name (Screen.window, AcScreenMenu.selected, SelectList.str_adr / sel_num ...);")
+    w("; no code of this ROM spells one of these RAM addresses (so, [INFERENCE], the main CPU's class procedures")
+    w("; reach them through the record).  Generated by")
+    w("; scripts/converters/hdae5000_ui_tree.py.")
     w("; [INFERENCE] the 0x0070xxxx words in some 8-byte variables (str_adr) look like run-time")
     w("; handles; no code in this ROM reads them through a named address.")
     w("; ----------------------------------------------------------------------------")
@@ -1247,7 +1299,10 @@ def main():
               "layout model holds" % (v.ver, v.nobj, sum(o["ram"] for o in v.objs),
                                       len({o["cname"] for o in v.objs}), len(v.varname), len(v.need_funcs)))
     if "--macros" in args:
-        open(MACROS, "w").write(macro_text(classes, hd_cids))
+        used = {}
+        for v in vs.values():
+            used.update(v.used_values)
+        open(MACROS, "w").write(macro_text(classes, hd_cids, used))
         print("wrote", os.path.relpath(MACROS, ROOT))
     for ver in [a for a in args if a in VERSIONS]:
         v = vs[ver]

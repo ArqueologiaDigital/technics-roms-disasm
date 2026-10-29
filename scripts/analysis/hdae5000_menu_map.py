@@ -82,7 +82,7 @@ def load_classes():
         if m and cur is not None:
             cur["types"][m.group(2)] = m.group(3)
             continue
-        m = re.match(r"^\t\.macro\t(\w+) (.*)$", ln)
+        m = re.match(r"^\t\.macro\t(\w+) ([^;]*)", ln)
         if m and m.group(1) in classes:
             ps = []
             for p in split_args(m.group(2)):
@@ -164,7 +164,7 @@ def code_refs(tree):
             cur = None
             for ln in open(f, "rb").read().decode("latin-1").split("\n"):
                 m = lab.match(ln)
-                if m:
+                if m and not re.search(r"_(Skip|Loop)\d+$", m.group(1)):
                     cur = m.group(1)
                 code = strip_comment(ln)
                 if code.lstrip().startswith(".equ"):
@@ -233,8 +233,8 @@ def describe(o, classes, by, with_caption=True):
             parts.append("EXIT -> `%s`" % v)
         elif ch == "b" and k == "icon" and v != "0":
             parts.append("icon %s" % v)
-        elif ch == "e" and v.startswith("EDITSW_") and v != "EDITSW_NONE":
-            parts.append("switch %s" % v[7:])
+        elif ch == "e" and v.startswith("ES_") and v != "ES_None":
+            parts.append("switch %s" % v[3:])
         elif k == "index" and o["cls"].startswith("AcLanguageText"):
             parts.append("text #%s" % v)
     return "; ".join(parts)
@@ -265,8 +265,8 @@ def render(ver, tree, tag, classes):
     w("CAPITALS (and a few mixed-case ones) are the firmware's own resource names; the others were")
     w("made up from the parent and the caption or class. `text #n` is entry n of the language text")
     w("the object draws (AcLanguageText1, via `NAKA_APFUNC_LanguageTextReturn`); the texts are not in")
-    w("this ROM. `switch` is the LCD button the object answers to: COL1-8 under the display,")
-    w("LEFT1-5 / RIGHT1-5 the side rows, top to bottom (`EDITSW_*` in the macro file).")
+    w("this ROM. `switch` is the LCD button the object answers to (its `editsw`, by the firmware's")
+    w("`ES_*` names): Bottom1-8 under the display, Left1-5 / Right1-5 the side rows, top to bottom.")
     w("")
     w("## Index")
     w("")

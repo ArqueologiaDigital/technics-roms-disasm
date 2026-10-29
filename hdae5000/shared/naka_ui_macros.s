@@ -33,30 +33,256 @@
 
 	.equ	NAKA_NONE, 0xffff		; no object (a Viewable link)
 	.equ	NAKA_NO_OBJECT, 0xffffffff	; no object (a 32-bit object id field)
-; LCD edit switches, the values of every `editsw` field (main CPU numbering: GetEditSwPoint /
-; SeTitle_DecodeSwitch, technics-docs ui-framework.md): COL1-8 the eight buttons under the
-; display, RIGHT1-5 / LEFT1-5 the side rows top to bottom (LEFT = RIGHT | 0x80).  Every
-; HD-AE5000 object with one sits next to it (notes/data-gui-hdae5000-2026-10-29/probes/
-; editsw_geometry.py).
-	.equ	EDITSW_COL1, 0x00
-	.equ	EDITSW_COL2, 0x01
-	.equ	EDITSW_COL3, 0x02
-	.equ	EDITSW_COL4, 0x03
-	.equ	EDITSW_COL5, 0x04
-	.equ	EDITSW_COL6, 0x05
-	.equ	EDITSW_COL7, 0x06
-	.equ	EDITSW_COL8, 0x07
-	.equ	EDITSW_RIGHT1, 0x08
-	.equ	EDITSW_RIGHT2, 0x09
-	.equ	EDITSW_RIGHT3, 0x0a
-	.equ	EDITSW_RIGHT4, 0x0b
-	.equ	EDITSW_RIGHT5, 0x0c
-	.equ	EDITSW_LEFT1, 0x88
-	.equ	EDITSW_LEFT2, 0x89
-	.equ	EDITSW_LEFT3, 0x8a
-	.equ	EDITSW_LEFT4, 0x8b
-	.equ	EDITSW_LEFT5, 0x8c
-	.equ	EDITSW_NONE, 0xff
+; Property values by the firmware's own names: the main CPU's SupportClass_PropTypeRecords
+; (one entry per propdata letter: {proc, count, size, -> {name, value}}), and for fonts /
+; bitmaps / icons the index tables FontIDProc_FontNameTable / BitmapIDProc_PtrTable /
+; IconIDProc_NameTable spelled as EVT_MAKE_DUMP writes them.  Only the ones the HD-AE5000's
+; records use.  ES_* (edit switches): Bottom1-8 the buttons under the LCD, Left1-5 / Right1-5
+; the side rows; every HD-AE5000 object with one sits next to it
+; (notes/data-gui-hdae5000-2026-10-29/probes/editsw_geometry.py).
+	.ifndef	AL_Center
+	.equ	AL_Center, 0x00
+	.endif
+	.ifndef	AL_LeftJustify
+	.equ	AL_LeftJustify, 0x01
+	.endif
+	.ifndef	AL_RightJustify
+	.equ	AL_RightJustify, 0x02
+	.endif
+	.ifndef	BD_None
+	.equ	BD_None, 0x00
+	.endif
+	.ifndef	BD_Shadow2
+	.equ	BD_Shadow2, 0x05
+	.endif
+	.ifndef	BD_Round5
+	.equ	BD_Round5, 0x09
+	.endif
+	.ifndef	BD_3D_UP1
+	.equ	BD_3D_UP1, 0xc0
+	.endif
+	.ifndef	BD_3D_UP2
+	.equ	BD_3D_UP2, 0xc1
+	.endif
+	.ifndef	BD_3D_DOWN1
+	.equ	BD_3D_DOWN1, 0xc2
+	.endif
+	.ifndef	BD_EditSwitch
+	.equ	BD_EditSwitch, 0xc9
+	.endif
+	.ifndef	BD_EditSwDown
+	.equ	BD_EditSwDown, 0xca
+	.endif
+	.ifndef	CL_Black
+	.equ	CL_Black, 0x00
+	.endif
+	.ifndef	CL_Green
+	.equ	CL_Green, 0x02
+	.endif
+	.ifndef	CL_Silver
+	.equ	CL_Silver, 0x07
+	.endif
+	.ifndef	CL_DarkGray
+	.equ	CL_DarkGray, 0x08
+	.endif
+	.ifndef	CL_Orange
+	.equ	CL_Orange, 0x09
+	.endif
+	.ifndef	CL_FireRed
+	.equ	CL_FireRed, 0x0a
+	.endif
+	.ifndef	CL_LightGreen
+	.equ	CL_LightGreen, 0x0d
+	.endif
+	.ifndef	CL_IconBack
+	.equ	CL_IconBack, 0xf0
+	.endif
+	.ifndef	CL_Text
+	.equ	CL_Text, 0xf1
+	.endif
+	.ifndef	CL_Selected
+	.equ	CL_Selected, 0xf2
+	.endif
+	.ifndef	CL_PageBack
+	.equ	CL_PageBack, 0xf3
+	.endif
+	.ifndef	CL_EditSw
+	.equ	CL_EditSw, 0xf4
+	.endif
+	.ifndef	CL_WallPattern
+	.equ	CL_WallPattern, 0xf5
+	.endif
+	.ifndef	CL_Transparent
+	.equ	CL_Transparent, 0xf7
+	.endif
+	.ifndef	CL_Red
+	.equ	CL_Red, 0xf9
+	.endif
+	.ifndef	CL_Yellow
+	.equ	CL_Yellow, 0xfb
+	.endif
+	.ifndef	CL_Blue
+	.equ	CL_Blue, 0xfc
+	.endif
+	.ifndef	CL_White
+	.equ	CL_White, 0xff
+	.endif
+	.ifndef	ES_Bottom1
+	.equ	ES_Bottom1, 0x00
+	.endif
+	.ifndef	ES_Bottom2
+	.equ	ES_Bottom2, 0x01
+	.endif
+	.ifndef	ES_Bottom3
+	.equ	ES_Bottom3, 0x02
+	.endif
+	.ifndef	ES_Bottom4
+	.equ	ES_Bottom4, 0x03
+	.endif
+	.ifndef	ES_Bottom5
+	.equ	ES_Bottom5, 0x04
+	.endif
+	.ifndef	ES_Bottom6
+	.equ	ES_Bottom6, 0x05
+	.endif
+	.ifndef	ES_Bottom7
+	.equ	ES_Bottom7, 0x06
+	.endif
+	.ifndef	ES_Bottom8
+	.equ	ES_Bottom8, 0x07
+	.endif
+	.ifndef	ES_Right1
+	.equ	ES_Right1, 0x08
+	.endif
+	.ifndef	ES_Right2
+	.equ	ES_Right2, 0x09
+	.endif
+	.ifndef	ES_Right3
+	.equ	ES_Right3, 0x0a
+	.endif
+	.ifndef	ES_Right4
+	.equ	ES_Right4, 0x0b
+	.endif
+	.ifndef	ES_Right5
+	.equ	ES_Right5, 0x0c
+	.endif
+	.ifndef	ES_Left1
+	.equ	ES_Left1, 0x88
+	.endif
+	.ifndef	ES_Left2
+	.equ	ES_Left2, 0x89
+	.endif
+	.ifndef	ES_Left3
+	.equ	ES_Left3, 0x8a
+	.endif
+	.ifndef	ES_Left4
+	.equ	ES_Left4, 0x8b
+	.endif
+	.ifndef	ES_Left5
+	.equ	ES_Left5, 0x8c
+	.endif
+	.ifndef	ES_None
+	.equ	ES_None, 0xff
+	.endif
+	.ifndef	LM_RightDown
+	.equ	LM_RightDown, 0x01
+	.endif
+	.ifndef	SS_Special
+	.equ	SS_Special, 0x00
+	.endif
+	.ifndef	SS_UpDown
+	.equ	SS_UpDown, 0x03
+	.endif
+	.ifndef	SS_OK
+	.equ	SS_OK, 0x06
+	.endif
+	.ifndef	SS_Left
+	.equ	SS_Left, 0x07
+	.endif
+	.ifndef	SS_Right
+	.equ	SS_Right, 0x08
+	.endif
+	.ifndef	SS_UpDown2
+	.equ	SS_UpDown2, 0x0e
+	.endif
+	.ifndef	SS_Left2
+	.equ	SS_Left2, 0x0f
+	.endif
+	.ifndef	SS_Right2
+	.equ	SS_Right2, 0x10
+	.endif
+	.ifndef	VF_None
+	.equ	VF_None, 0x00
+	.endif
+	.ifndef	VF_Fixed
+	.equ	VF_Fixed, 0x02
+	.endif
+	.ifndef	VF_Const
+	.equ	VF_Const, 0x08
+	.endif
+	.ifndef	VF_InvisibleBox
+	.equ	VF_InvisibleBox, 0x10
+	.endif
+	.ifndef	idCHARA1
+	.equ	idCHARA1, 0x00
+	.endif
+	.ifndef	idCHARA1P
+	.equ	idCHARA1P, 0x05
+	.endif
+	.ifndef	idCHARA1W
+	.equ	idCHARA1W, 0x07
+	.endif
+	.ifndef	idCHARA2
+	.equ	idCHARA2, 0x01
+	.endif
+	.ifndef	idCHARA3
+	.equ	idCHARA3, 0x02
+	.endif
+	.ifndef	idCHARA4
+	.equ	idCHARA4, 0x03
+	.endif
+	.ifndef	idCHARA5
+	.equ	idCHARA5, 0x04
+	.endif
+	.ifndef	idCHARA5W
+	.equ	idCHARA5W, 0x09
+	.endif
+	.ifndef	idICON_None
+	.equ	idICON_None, 0x00
+	.endif
+	.ifndef	idICON_Default
+	.equ	idICON_Default, 0x01
+	.endif
+	.ifndef	idICON_i6
+	.equ	idICON_i6, 0x08
+	.endif
+	.ifndef	idICON_i31
+	.equ	idICON_i31, 0x21
+	.endif
+	.ifndef	idICON_i37
+	.equ	idICON_i37, 0x27
+	.endif
+	.ifndef	idICON_i58
+	.equ	idICON_i58, 0x3c
+	.endif
+	.ifndef	idICON_i113
+	.equ	idICON_i113, 0x73
+	.endif
+	.ifndef	idICON_i129
+	.equ	idICON_i129, 0x83
+	.endif
+	.ifndef	idICON_i160
+	.equ	idICON_i160, 0xa2
+	.endif
+	.ifndef	idICON_i171
+	.equ	idICON_i171, 0xad
+	.endif
+	.ifndef	idICON_i172
+	.equ	idICON_i172, 0xae
+	.endif
+	.ifndef	idICON_i173
+	.equ	idICON_i173, 0xaf
+	.endif
 
 ; class ids: shared/event_codes.s names the main CPU's most used ones; the rest, and the
 ; HD-AE5000's own 13 (class table 0x16A, HDAE5000_RECORD_TABLE), are defined here
@@ -216,7 +442,7 @@ HdaeUi_\obj:
 
 ; ui_ram_object OBJ, CLASS -- the next object of the tree is OBJ, whose record lives in
 ; the .data image (copied to RAM): written there between ui_ram_records / _end
-	.macro	ui_ram_object obj, cls
+	.macro	ui_ram_object obj, cls	; census: data -- emits nothing: the bytes after it are the next record
 	_ui_new	\obj, \cls
 	.endm
 
@@ -267,7 +493,7 @@ HdaeUi_\obj:
 	.endm
 
 ; ui_sub -- the objects up to the matching ui_endsub are children of the object just written
-	.macro	ui_sub
+	.macro	ui_sub	; census: data -- emits nothing: the bytes after it are the next record
 	.altmacro
 	_ui_sub2	%_ui_d, %(_ui_d + 1)
 	.noaltmacro
@@ -287,7 +513,7 @@ HdaeUi_\obj:
 	.set	_ui_sub_\_p, _ui_n
 	.endm
 
-	.macro	ui_endsub
+	.macro	ui_endsub	; census: data -- emits nothing: the bytes after it are the next record
 	.altmacro
 	_ui_endsub2	%_ui_d
 	.noaltmacro
@@ -302,7 +528,7 @@ HdaeUi_\obj:
 	.endm
 
 ; ui_tree_end -- after the last object: closes the tree, defines HDAE5000_UI_OBJECT_COUNT
-	.macro	ui_tree_end
+	.macro	ui_tree_end	; census: data -- emits nothing: the bytes after it are the next record
 	.if	_ui_d <> 0
 	.error	"ui_sub / ui_endsub do not balance"
 	.endif
@@ -324,11 +550,11 @@ HdaeUi_\obj:
 	.endm
 
 ; ------------------------------------------------- records in the .data image
-	.macro	ui_ram_records
+	.macro	ui_ram_records	; census: data -- emits nothing: the bytes after it are the next record
 	.set	_ui_ram, 1
 	.endm
 
-	.macro	ui_ram_records_end
+	.macro	ui_ram_records_end	; census: data -- emits nothing: the bytes after it are the next record
 	.set	_ui_ram, 0
 	.endm
 
@@ -372,7 +598,7 @@ HdaeUi_\obj\()_\fld:
 
 ; --------------------------------------------- object table, name table, names
 ; HDAE5000_UiObject_PtrTable: one pointer per object, in tree order, then NULL
-	.macro	ui_object_table
+	.macro	ui_object_table	; census: data -- a pointer table
 	.set	_ui_k, 0
 	.rept	HDAE5000_UI_OBJECT_COUNT
 	.altmacro
@@ -384,7 +610,7 @@ HdaeUi_\obj\()_\fld:
 	.endm
 
 ; HDAE5000_UiObjectName_PtrTable: one name pointer per object, in tree order
-	.macro	ui_name_table
+	.macro	ui_name_table	; census: data -- a pointer table
 	.set	_ui_k, 0
 	.rept	HDAE5000_UI_OBJECT_COUNT
 	.altmacro
@@ -399,13 +625,13 @@ HdaeUi_\obj\()_\fld:
 	.endm
 
 ; the name string of OBJ (its resource name is its symbol), and the empty name
-	.macro	ui_name obj
+	.macro	ui_name obj	; census: data -- a name string
 HdaeUiName_\obj:
 	.asciz	"\obj"
 	.balign	2, 0
 	.endm
 
-	.macro	ui_noname obj
+	.macro	ui_noname obj	; census: data -- a name string
 HdaeUiName_\obj:
 	.zero	2
 	.endm
@@ -417,7 +643,7 @@ HdaeUiName_\obj:
 ;   chain: Viewable
 ;   fields after Viewable's class / super / sub / next / prev / flag / rect (+0..+21):
 ;     (none)
-	.macro	Viewable obj, x, y, w, h, flag
+	.macro	Viewable obj, x, y, w, h, flag	; census: data -- one Viewable record
 	_ui_head	\obj, Viewable, \flag, \x, \y, \w, \h
 	.endm
 
@@ -431,7 +657,7 @@ HdaeUiName_\obj:
 ;     +28  font         font id (c)
 ;     +32  fontcolor    colour (^)
 ;     +34  align        alignment (d)
-	.macro	PsParaBox obj, x, y, w, h, flag=0x0008, color=0xf7, border=0x00, index=0xffff, font=3, fontcolor=0xff, align=0
+	.macro	PsParaBox obj, x, y, w, h, flag=VF_Const, color=CL_Transparent, border=BD_None, index=0xffff, font=idCHARA4, fontcolor=CL_White, align=AL_Center	; census: data -- one PsParaBox record
 	_ui_head	\obj, PsParaBox, \flag, \x, \y, \w, \h
 	.short	\color
 	.short	\border
@@ -458,7 +684,7 @@ HdaeUiName_\obj:
 ;     +46  selected     RAM variable (m)
 ;     +50  func         ApFunction id (j)
 ;     +54  data         RAM variable (r)
-	.macro	AcRamEditBox obj, x, y, w, h, flag=0x0008, color=0xf5, border=0x00, index, caption, caption_at, font=0, fontcolor=0xff, align=1, length=5, editsw=EDITSW_NONE, dial=0, selected, func, data
+	.macro	AcRamEditBox obj, x, y, w, h, flag=VF_Const, color=CL_WallPattern, border=BD_None, index, caption, caption_at, font=idCHARA1, fontcolor=CL_White, align=AL_LeftJustify, length=5, editsw=ES_None, dial=0, selected, func, data	; census: data -- one AcRamEditBox record
 	_ui_head	\obj, AcRamEditBox, \flag, \x, \y, \w, \h
 	.short	\color
 	.short	\border
@@ -488,7 +714,7 @@ HdaeUiName_\obj:
 ;     +34  align        alignment (d)
 ;     +36  editsw       edit-switch number (e)
 ;     +38  selected     RAM variable (m)
-	.macro	PsMenuBox obj, x, y, w, h, flag, color, border, index, font, fontcolor, align, editsw, selected
+	.macro	PsMenuBox obj, x, y, w, h, flag, color, border, index, font, fontcolor, align, editsw, selected	; census: data -- one PsMenuBox record
 	_ui_head	\obj, PsMenuBox, \flag, \x, \y, \w, \h
 	.short	\color
 	.short	\border
@@ -512,7 +738,7 @@ HdaeUiName_\obj:
 ;     +34  align        alignment (d)
 ;     +36  editsw       edit-switch number (e)
 ;     +38  style        style (f)
-	.macro	AcIndexEditSw obj, x, y, w, h, flag=0x0008, color=0x07, border=0xc9, index, font=0, fontcolor=0x00, align=0, editsw, style
+	.macro	AcIndexEditSw obj, x, y, w, h, flag=VF_Const, color=CL_Silver, border=BD_EditSwitch, index, font=idCHARA1, fontcolor=CL_Black, align=AL_Center, editsw, style	; census: data -- one AcIndexEditSw record
 	_ui_head	\obj, AcIndexEditSw, \flag, \x, \y, \w, \h
 	.short	\color
 	.short	\border
@@ -537,7 +763,7 @@ HdaeUiName_\obj:
 ;     +36  editsw       edit-switch number (e)
 ;     +38  style        style (f)
 ;     +40  func         ApFunction id (j)
-	.macro	AcFuncEditSw obj, x, y, w, h, flag=0x0008, color, border=0xc1, index=0xffff, font=0, fontcolor=0x00, align=0, editsw, style, func
+	.macro	AcFuncEditSw obj, x, y, w, h, flag=VF_Const, color, border=BD_3D_UP2, index=0xffff, font=idCHARA1, fontcolor=CL_Black, align=AL_Center, editsw, style, func	; census: data -- one AcFuncEditSw record
 	_ui_head	\obj, AcFuncEditSw, \flag, \x, \y, \w, \h
 	.short	\color
 	.short	\border
@@ -563,7 +789,7 @@ HdaeUiName_\obj:
 ;     +36  editsw       edit-switch number (e)
 ;     +38  editsw2      edit-switch number (e)
 ;     +40  style        style (f)
-	.macro	AcIndexWideES obj, x, y, w, h, flag=0x0008, color=0x07, border=0xc9, index, font=0, fontcolor=0x00, align=0, editsw=EDITSW_COL3, editsw2=EDITSW_COL5, style=3
+	.macro	AcIndexWideES obj, x, y, w, h, flag=VF_Const, color=CL_Silver, border=BD_EditSwitch, index, font=idCHARA1, fontcolor=CL_Black, align=AL_Center, editsw=ES_Bottom3, editsw2=ES_Bottom5, style=SS_UpDown	; census: data -- one AcIndexWideES record
 	_ui_head	\obj, AcIndexWideES, \flag, \x, \y, \w, \h
 	.short	\color
 	.short	\border
@@ -585,7 +811,7 @@ HdaeUiName_\obj:
 ;     +30  stroff       string (X)
 ;     +34  onoff        RAM variable (m)
 ;     +38  editsw       edit-switch number (e)
-	.macro	PsToggleBox obj, x, y, w, h, flag=0x0008, font=0, stron, stron_at, stroff, stroff_at, onoff, editsw
+	.macro	PsToggleBox obj, x, y, w, h, flag=VF_Const, font=idCHARA1, stron, stron_at, stroff, stroff_at, onoff, editsw	; census: data -- one PsToggleBox record
 	_ui_head	\obj, PsToggleBox, \flag, \x, \y, \w, \h
 	.long	\font
 	_ui_strp	\obj, stron, \stron_at
@@ -602,7 +828,7 @@ HdaeUiName_\obj:
 ;   fields after Viewable's class / super / sub / next / prev / flag / rect (+0..+21):
 ;     +22  page         number (A)
 ;     +24  window       window object id (t)
-	.macro	IvPageControl obj, x, y, w, h, flag=0x0018, page, window
+	.macro	IvPageControl obj, x, y, w, h, flag=VF_Const|VF_InvisibleBox, page, window	; census: data -- one IvPageControl record
 	_ui_head	\obj, IvPageControl, \flag, \x, \y, \w, \h
 	.short	\page
 	.long	\window
@@ -613,7 +839,7 @@ HdaeUiName_\obj:
 ;   chain: IvMainEditSw < PsInvisibleBox < Viewable
 ;   fields after Viewable's class / super / sub / next / prev / flag / rect (+0..+21):
 ;     +22  func         MainFunction id (k)
-	.macro	IvMainEditSw obj, x, y, w, h, flag=0x0018, func
+	.macro	IvMainEditSw obj, x, y, w, h, flag=VF_Const|VF_InvisibleBox, func	; census: data -- one IvMainEditSw record
 	_ui_head	\obj, IvMainEditSw, \flag, \x, \y, \w, \h
 	.long	\func
 	.endm
@@ -625,7 +851,7 @@ HdaeUiName_\obj:
 ;     +22  str          string (X)
 ;     +26  font         font id (c)
 ;     +30  fontcolor    colour (^)
-	.macro	Label obj, x, y, w, h, flag=0x0008, str, str_at, font, fontcolor
+	.macro	Label obj, x, y, w, h, flag=VF_Const, str, str_at, font, fontcolor	; census: data -- one Label record
 	_ui_head	\obj, Label, \flag, \x, \y, \w, \h
 	_ui_strp	\obj, str, \str_at
 	.long	\font
@@ -638,7 +864,7 @@ HdaeUiName_\obj:
 ;   chain: Icon < Viewable
 ;   fields after Viewable's class / super / sub / next / prev / flag / rect (+0..+21):
 ;     +22  icon         icon id (b)
-	.macro	Icon obj, x, y, w, h, flag=0x0008, icon=173
+	.macro	Icon obj, x, y, w, h, flag=VF_Const, icon=idICON_i171	; census: data -- one Icon record
 	_ui_head	\obj, Icon, \flag, \x, \y, \w, \h
 	.long	\icon
 	.endm
@@ -649,7 +875,7 @@ HdaeUiName_\obj:
 ;   fields after Viewable's class / super / sub / next / prev / flag / rect (+0..+21):
 ;     +22  color        colour (^)
 ;     +24  linemode     line mode (g)
-	.macro	Line obj, x, y, w, h, flag=0x0008, color=0xff, linemode=1
+	.macro	Line obj, x, y, w, h, flag=VF_Const, color=CL_White, linemode=LM_RightDown	; census: data -- one Line record
 	_ui_head	\obj, Line, \flag, \x, \y, \w, \h
 	.short	\color
 	.short	\linemode
@@ -665,7 +891,7 @@ HdaeUiName_\obj:
 ;     +32  editsw       edit-switch number (e)
 ;     +34  func         ApFunction id (j)
 ;     +38  index        number (A)
-	.macro	EditSw obj, x, y, w, h, flag=0x0008, str, str_at, font=0, fontcolor=0xf4, editsw=EDITSW_RIGHT2, func=NAKA_APFUNC_DefaultFunction, index
+	.macro	EditSw obj, x, y, w, h, flag=VF_Const, str, str_at, font=idCHARA1, fontcolor=CL_EditSw, editsw=ES_Right2, func=NAKA_APFUNC_DefaultFunction, index	; census: data -- one EditSw record
 	_ui_head	\obj, EditSw, \flag, \x, \y, \w, \h
 	_ui_strp	\obj, str, \str_at
 	.long	\font
@@ -684,7 +910,7 @@ HdaeUiName_\obj:
 ;     +24  border       border (_)
 ;     +26  exit         title id (a)
 ;     +30  window       RAM variable (r)
-	.macro	Screen obj, x, y, w, h, flag, color, border, exit, window
+	.macro	Screen obj, x, y, w, h, flag, color, border, exit, window	; census: data -- one Screen record
 	_ui_head	\obj, Screen, \flag, \x, \y, \w, \h
 	.short	\color
 	.short	\border
@@ -701,7 +927,7 @@ HdaeUiName_\obj:
 ;     +26  modal        boolean (G)
 ;     +28  parent       RAM variable (r)
 ;     +32  child        RAM variable (r)
-	.macro	Window obj, x, y, w, h, flag=0x0008, color=0x07, border, modal=0, parent, child
+	.macro	Window obj, x, y, w, h, flag=VF_Const, color=CL_Silver, border, modal=0, parent, child	; census: data -- one Window record
 	_ui_head	\obj, Window, \flag, \x, \y, \w, \h
 	.short	\color
 	.short	\border
@@ -721,7 +947,7 @@ HdaeUiName_\obj:
 ;     +34  fontcolor    colour (^)
 ;     +36  alignment    alignment (d)
 ;     +38  lines        number (B)
-	.macro	TextBox obj, x, y, w, h, flag=0x0008, color, border, text, text_at, font, fontcolor=0x00, alignment=0, lines
+	.macro	TextBox obj, x, y, w, h, flag=VF_Const, color, border, text, text_at, font, fontcolor=CL_Black, alignment=AL_Center, lines	; census: data -- one TextBox record
 	_ui_head	\obj, TextBox, \flag, \x, \y, \w, \h
 	.short	\color
 	.short	\border
@@ -743,7 +969,7 @@ HdaeUiName_\obj:
 ;     +30  font         font id (c)
 ;     +34  fontcolor    colour (^)
 ;     +36  alignment    alignment (d)
-	.macro	StringBox obj, x, y, w, h, flag=0x0008, color=0x07, border=0xc0, str, str_at, font=0, fontcolor=0x00, alignment=0
+	.macro	StringBox obj, x, y, w, h, flag=VF_Const, color=CL_Silver, border=BD_3D_UP1, str, str_at, font=idCHARA1, fontcolor=CL_Black, alignment=AL_Center	; census: data -- one StringBox record
 	_ui_head	\obj, StringBox, \flag, \x, \y, \w, \h
 	.short	\color
 	.short	\border
@@ -768,7 +994,7 @@ HdaeUiName_\obj:
 ;     +38  selected     RAM variable (m)
 ;     +42  str          string (X)
 ;     +46  icon         icon id (b)
-	.macro	VwMenuBox obj, x, y, w, h, flag=0x0008, color=0xf7, border=0x00, index=0xffff, font=0, fontcolor=0xff, align=0, editsw, selected, str, str_at, icon=131
+	.macro	VwMenuBox obj, x, y, w, h, flag=VF_Const, color=CL_Transparent, border=BD_None, index=0xffff, font=idCHARA1, fontcolor=CL_White, align=AL_Center, editsw, selected, str, str_at, icon=idICON_i129	; census: data -- one VwMenuBox record
 	_ui_head	\obj, VwMenuBox, \flag, \x, \y, \w, \h
 	.short	\color
 	.short	\border
@@ -796,7 +1022,7 @@ HdaeUiName_\obj:
 ;     +36  editsw       edit-switch number (e)
 ;     +38  style        style (f)
 ;     +40  str          string (X)
-	.macro	VwEditSwBox obj, x, y, w, h, flag=0x0008, color=0x08, border=0xc0, index=0xffff, font=3, fontcolor=0xff, align=0, editsw=EDITSW_COL8, style=0, str, str_at
+	.macro	VwEditSwBox obj, x, y, w, h, flag=VF_Const, color=CL_DarkGray, border=BD_3D_UP1, index=0xffff, font=idCHARA4, fontcolor=CL_White, align=AL_Center, editsw=ES_Bottom8, style=SS_Special, str, str_at	; census: data -- one VwEditSwBox record
 	_ui_head	\obj, VwEditSwBox, \flag, \x, \y, \w, \h
 	.short	\color
 	.short	\border
@@ -824,7 +1050,7 @@ HdaeUiName_\obj:
 ;     +38  editsw2      edit-switch number (e)
 ;     +40  style        style (f)
 ;     +42  str          string (X)
-	.macro	VwWideESBox obj, x, y, w, h, flag=0x0008, color=0x07, border=0xc9, index=0xffff, font=0, fontcolor=0x00, align=0, editsw, editsw2, style=0, str, str_at
+	.macro	VwWideESBox obj, x, y, w, h, flag=VF_Const, color=CL_Silver, border=BD_EditSwitch, index=0xffff, font=idCHARA1, fontcolor=CL_Black, align=AL_Center, editsw, editsw2, style=SS_Special, str, str_at	; census: data -- one VwWideESBox record
 	_ui_head	\obj, VwWideESBox, \flag, \x, \y, \w, \h
 	.short	\color
 	.short	\border
@@ -854,7 +1080,7 @@ HdaeUiName_\obj:
 ;     +42  str          string (X)
 ;     +46  screen       screen object id (N)
 ;     +50  icon         icon id (b)
-	.macro	AcScreenMenu obj, x, y, w, h, flag=0x0008, color=0xf7, border=0x00, index=0xffff, font=0, fontcolor=0xff, align=0, editsw, selected, str, str_at, screen, icon
+	.macro	AcScreenMenu obj, x, y, w, h, flag=VF_Const, color=CL_Transparent, border=BD_None, index=0xffff, font=idCHARA1, fontcolor=CL_White, align=AL_Center, editsw, selected, str, str_at, screen, icon	; census: data -- one AcScreenMenu record
 	_ui_head	\obj, AcScreenMenu, \flag, \x, \y, \w, \h
 	.short	\color
 	.short	\border
@@ -875,7 +1101,7 @@ HdaeUiName_\obj:
 ;   chain: DbMemo < Viewable
 ;   fields after Viewable's class / super / sub / next / prev / flag / rect (+0..+21):
 ;     (none)
-	.macro	DbMemo obj, x, y, w, h, flag=0x0008
+	.macro	DbMemo obj, x, y, w, h, flag=VF_Const	; census: data -- one DbMemo record
 	_ui_head	\obj, DbMemo, \flag, \x, \y, \w, \h
 	.endm
 
@@ -884,7 +1110,7 @@ HdaeUiName_\obj:
 ;   chain: IvExitScreen < IvExit < PsInvisibleBox < Viewable
 ;   fields after Viewable's class / super / sub / next / prev / flag / rect (+0..+21):
 ;     +22  screen       screen object id (N)
-	.macro	IvExitScreen obj, x, y, w, h, flag=0x0018, screen
+	.macro	IvExitScreen obj, x, y, w, h, flag=VF_Const|VF_InvisibleBox, screen	; census: data -- one IvExitScreen record
 	_ui_head	\obj, IvExitScreen, \flag, \x, \y, \w, \h
 	.long	\screen
 	.endm
@@ -898,7 +1124,7 @@ HdaeUiName_\obj:
 ;     +26  modal        boolean (G)
 ;     +28  parent       RAM variable (r)
 ;     +32  child        RAM variable (r)
-	.macro	AcNamingWindow obj, x, y, w, h, flag=0x0008, color=0x07, border=0xc1, modal=0, parent, child
+	.macro	AcNamingWindow obj, x, y, w, h, flag=VF_Const, color=CL_Silver, border=BD_3D_UP2, modal=0, parent, child	; census: data -- one AcNamingWindow record
 	_ui_head	\obj, AcNamingWindow, \flag, \x, \y, \w, \h
 	.short	\color
 	.short	\border
@@ -918,7 +1144,7 @@ HdaeUiName_\obj:
 ;     +32  fontcolor    colour (^)
 ;     +34  align        alignment (d)
 ;     +36  cursor       RAM variable (n)
-	.macro	PsCursorBox obj, x, y, w, h, flag, color, border, index, font, fontcolor, align, cursor
+	.macro	PsCursorBox obj, x, y, w, h, flag, color, border, index, font, fontcolor, align, cursor	; census: data -- one PsCursorBox record
 	_ui_head	\obj, PsCursorBox, \flag, \x, \y, \w, \h
 	.short	\color
 	.short	\border
@@ -934,7 +1160,7 @@ HdaeUiName_\obj:
 ;   chain: IvNaming < PsInvisibleBox < Viewable
 ;   fields after Viewable's class / super / sub / next / prev / flag / rect (+0..+21):
 ;     +22  func         ApFunction id (j)
-	.macro	IvNaming obj, x, y, w, h, flag=0x0018, func
+	.macro	IvNaming obj, x, y, w, h, flag=VF_Const|VF_InvisibleBox, func	; census: data -- one IvNaming record
 	_ui_head	\obj, IvNaming, \flag, \x, \y, \w, \h
 	.long	\func
 	.endm
@@ -950,7 +1176,7 @@ HdaeUiName_\obj:
 ;     +38  editsw       edit-switch number (e)
 ;     +40  index        number (A)
 ;     +42  tag          number (A)
-	.macro	AcIndexToggle obj, x, y, w, h, flag=0x0000, font=0, stron, stron_at, stroff, stroff_at, onoff, editsw, index=0, tag
+	.macro	AcIndexToggle obj, x, y, w, h, flag=VF_None, font=idCHARA1, stron, stron_at, stroff, stroff_at, onoff, editsw, index=0, tag	; census: data -- one AcIndexToggle record
 	_ui_head	\obj, AcIndexToggle, \flag, \x, \y, \w, \h
 	.long	\font
 	_ui_strp	\obj, stron, \stron_at
@@ -968,7 +1194,7 @@ HdaeUiName_\obj:
 ;   chain: IvCatchEvent < PsInvisibleBox < Viewable
 ;   fields after Viewable's class / super / sub / next / prev / flag / rect (+0..+21):
 ;     +22  func         ApFunction id (j)
-	.macro	IvCatchEvent obj, x, y, w, h, flag=0x0018, func
+	.macro	IvCatchEvent obj, x, y, w, h, flag=VF_Const|VF_InvisibleBox, func	; census: data -- one IvCatchEvent record
 	_ui_head	\obj, IvCatchEvent, \flag, \x, \y, \w, \h
 	.long	\func
 	.endm
@@ -978,7 +1204,7 @@ HdaeUiName_\obj:
 ;   chain: VwUserBitmap < Viewable
 ;   fields after Viewable's class / super / sub / next / prev / flag / rect (+0..+21):
 ;     +22  func         ApFunction id (j)
-	.macro	VwUserBitmap obj, x, y, w, h, flag=0x0008, func=NAKA_APFUNC_BitmapHdd_icon
+	.macro	VwUserBitmap obj, x, y, w, h, flag=VF_Const, func=NAKA_APFUNC_BitmapHdd_icon	; census: data -- one VwUserBitmap record
 	_ui_head	\obj, VwUserBitmap, \flag, \x, \y, \w, \h
 	.long	\func
 	.endm
@@ -1001,7 +1227,7 @@ HdaeUiName_\obj:
 ;     +52  auto_inc     boolean (G)
 ;     +54  en_paradraw  RAM variable (m)
 ;     +58  sel_type     number (A)
-	.macro	SelectList obj, x, y, w, h, flag=0x0008, color, border=0xc0, index, font=3, fontcolor=0xff, main_func=NAKA_MAINFUNC_DefMainFunction, str_adr, column=1, row, sel_num, dial=0, auto_inc=0, en_paradraw, sel_type=0
+	.macro	SelectList obj, x, y, w, h, flag=VF_Const, color, border=BD_3D_UP1, index, font=idCHARA4, fontcolor=CL_White, main_func=NAKA_MAINFUNC_DefMainFunction, str_adr, column=1, row, sel_num, dial=0, auto_inc=0, en_paradraw, sel_type=0	; census: data -- one SelectList record
 	_ui_head	\obj, SelectList, \flag, \x, \y, \w, \h
 	.short	\color
 	.short	\border
@@ -1025,7 +1251,7 @@ HdaeUiName_\obj:
 ;   fields after Viewable's class / super / sub / next / prev / flag / rect (+0..+21):
 ;     +22  color        colour (^)
 ;     +24  fontcolor    colour (^)
-	.macro	DbMemoCl obj, x, y, w, h, flag, color, fontcolor
+	.macro	DbMemoCl obj, x, y, w, h, flag, color, fontcolor	; census: data -- one DbMemoCl record
 	_ui_head	\obj, DbMemoCl, \flag, \x, \y, \w, \h
 	.short	\color
 	.short	\fontcolor
@@ -1041,7 +1267,7 @@ HdaeUiName_\obj:
 ;     +30  window       RAM variable (r)
 ;     +34  title        string (X)
 ;     +38  icon         icon id (b)
-	.macro	TtlScreenR obj, x, y, w, h, flag=0x000a, color=0xff, border=0x00, exit=TITLE_PS, window, title, title_at, icon
+	.macro	TtlScreenR obj, x, y, w, h, flag=VF_Fixed|VF_Const, color=CL_White, border=BD_None, exit=TITLE_PS, window, title, title_at, icon	; census: data -- one TtlScreenR record
 	_ui_head	\obj, TtlScreenR, \flag, \x, \y, \w, \h
 	.short	\color
 	.short	\border
@@ -1061,7 +1287,7 @@ HdaeUiName_\obj:
 ;     +26  modal        boolean (G)
 ;     +28  parent       RAM variable (r)
 ;     +32  child        RAM variable (r)
-	.macro	AcHddNamingWindow obj, x, y, w, h, flag, color, border, modal, parent, child
+	.macro	AcHddNamingWindow obj, x, y, w, h, flag, color, border, modal, parent, child	; census: data -- one AcHddNamingWindow record
 	_ui_head	\obj, AcHddNamingWindow, \flag, \x, \y, \w, \h
 	.short	\color
 	.short	\border
@@ -1075,7 +1301,7 @@ HdaeUiName_\obj:
 ;   chain: IvHddNaming < PsInvisibleBox < Viewable
 ;   fields after Viewable's class / super / sub / next / prev / flag / rect (+0..+21):
 ;     +22  func         ApFunction id (j)
-	.macro	IvHddNaming obj, x, y, w, h, flag, func
+	.macro	IvHddNaming obj, x, y, w, h, flag, func	; census: data -- one IvHddNaming record
 	_ui_head	\obj, IvHddNaming, \flag, \x, \y, \w, \h
 	.long	\func
 	.endm
@@ -1090,7 +1316,7 @@ HdaeUiName_\obj:
 ;     +30  window       RAM variable (r)
 ;     +34  title        string (X)
 ;     +38  icon         icon id (b)
-	.macro	TtlScreenR2 obj, x, y, w, h, flag=0x000a, color=0xff, border=0x00, exit=TITLE_PS, window, title, title_at, icon
+	.macro	TtlScreenR2 obj, x, y, w, h, flag=VF_Fixed|VF_Const, color=CL_White, border=BD_None, exit=TITLE_PS, window, title, title_at, icon	; census: data -- one TtlScreenR2 record
 	_ui_head	\obj, TtlScreenR2, \flag, \x, \y, \w, \h
 	.short	\color
 	.short	\border
@@ -1111,7 +1337,7 @@ HdaeUiName_\obj:
 ;     +30  window       RAM variable (r)
 ;     +34  title        string (X)
 ;     +38  icon         icon id (b)
-	.macro	TtlScreenR3 obj, x, y, w, h, flag, color, border, exit, window, title, title_at, icon
+	.macro	TtlScreenR3 obj, x, y, w, h, flag, color, border, exit, window, title, title_at, icon	; census: data -- one TtlScreenR3 record
 	_ui_head	\obj, TtlScreenR3, \flag, \x, \y, \w, \h
 	.short	\color
 	.short	\border
@@ -1132,7 +1358,7 @@ HdaeUiName_\obj:
 ;     +28  page         RAM variable (n)
 ;     +32  pagemin      number (A)
 ;     +34  pagemax      number (A)
-	.macro	AcWindowPage1 obj, x, y, w, h, flag=0x0008, color=0xf3, border=0xc1, index=0xffff, page, pagemin=1, pagemax=2
+	.macro	AcWindowPage1 obj, x, y, w, h, flag=VF_Const, color=CL_PageBack, border=BD_3D_UP2, index=0xffff, page, pagemin=1, pagemax=2	; census: data -- one AcWindowPage1 record
 	_ui_head	\obj, AcWindowPage1, \flag, \x, \y, \w, \h
 	.short	\color
 	.short	\border
@@ -1150,7 +1376,7 @@ HdaeUiName_\obj:
 ;     +24  border       border (_)
 ;     +26  exit         title id (a)
 ;     +30  window       RAM variable (r)
-	.macro	IvScreenR2 obj, x, y, w, h, flag=0x000a, color=0xff, border=0x00, exit=TITLE_PS, window
+	.macro	IvScreenR2 obj, x, y, w, h, flag=VF_Fixed|VF_Const, color=CL_White, border=BD_None, exit=TITLE_PS, window	; census: data -- one IvScreenR2 record
 	_ui_head	\obj, IvScreenR2, \flag, \x, \y, \w, \h
 	.short	\color
 	.short	\border
@@ -1170,7 +1396,7 @@ HdaeUiName_\obj:
 ;     +34  alignment    alignment (d)
 ;     +36  lines        number (B)
 ;     +38  func         ApFunction id (j)
-	.macro	AcLanguageText1 obj, x, y, w, h, flag=0x0008, color=0xf7, border=0x00, index, font, fontcolor, alignment=0, lines, func=NAKA_APFUNC_LanguageTextReturn
+	.macro	AcLanguageText1 obj, x, y, w, h, flag=VF_Const, color=CL_Transparent, border=BD_None, index, font, fontcolor, alignment=AL_Center, lines, func=NAKA_APFUNC_LanguageTextReturn	; census: data -- one AcLanguageText1 record
 	_ui_head	\obj, AcLanguageText1, \flag, \x, \y, \w, \h
 	.short	\color
 	.short	\border
@@ -1195,7 +1421,7 @@ HdaeUiName_\obj:
 ;     +38  reversecolor colour (^)
 ;     +40  infofont     font id (c)
 ;     +44  infocolor    colour (^)
-	.macro	LyricBox obj, x, y, w, h, flag, color, border, index, pEnable, font, fontcolor, reversecolor, infofont, infocolor
+	.macro	LyricBox obj, x, y, w, h, flag, color, border, index, pEnable, font, fontcolor, reversecolor, infofont, infocolor	; census: data -- one LyricBox record
 	_ui_head	\obj, LyricBox, \flag, \x, \y, \w, \h
 	.short	\color
 	.short	\border
@@ -1215,7 +1441,7 @@ HdaeUiName_\obj:
 ;     +22  dial         boolean (G)
 ;     +24  sel_num      RAM variable (n)
 ;     +28  sel_pos      RAM variable (n)
-	.macro	FDFileSelect obj, x, y, w, h, flag, dial, sel_num, sel_pos
+	.macro	FDFileSelect obj, x, y, w, h, flag, dial, sel_num, sel_pos	; census: data -- one FDFileSelect record
 	_ui_head	\obj, FDFileSelect, \flag, \x, \y, \w, \h
 	.short	\dial
 	_ui_var	\sel_num

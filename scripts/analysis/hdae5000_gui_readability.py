@@ -20,7 +20,7 @@ the UI state block -- :
                     under no variable label
   style_numeric     (new form only; informative) font, colour, border, icon, style, alignment
                     and line-mode values: named fields whose VALUES are still plain numbers
-                    (ids into the main CPU's resource tables, not named in this tree yet),
+                    (ids into the main CPU's resource tables that no firmware name was found for),
                     defaults included
 
 It reads either form of the source: the typed records of before 2026-10-29 (pool in
@@ -142,7 +142,7 @@ def macro_defaults():
     t = read(None, "hdae5000/shared/naka_ui_macros.s") or ""
     out = {}
     for l in t.split("\n"):
-        mm = re.match(r"^\t\.macro\t(\w+) (.*)$", l)
+        mm = re.match(r"^\t\.macro\t(\w+) ([^;]*)", l)
         if mm:
             out[mm.group(1)] = dict(p.strip().split("=", 1) for p in mm.group(2).split(",") if "=" in p)
     return out

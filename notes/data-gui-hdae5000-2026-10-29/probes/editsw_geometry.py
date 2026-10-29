@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 """Does an HD-AE5000 object's `editsw` value name the LCD switch next to it?
 
+(The firmware's own names for these values, read from the main CPU's
+SupportClass_PropTypeRecords letter 'e', are ES_Bottom1-8 = 0-7, ES_Right1-5 = 8-12,
+ES_Left1-5 = 0x88-0x8C, ES_Exit = 0x0F, ES_None = 0xFF; the source spells them so.
+This probe is the geometric cross-check that the numbering is the one described below.)
+
 QUESTION: the main CPU numbers the LCD switches 0-7 for the eight buttons under the
 display (x = 20, 60 ... 300), 8-12 for the five side rows on the RIGHT and 0x88-0x8C for
 the same rows on the LEFT (ui-framework.md, "GetEditSwPoint"; SeTitle_DecodeSwitch).
