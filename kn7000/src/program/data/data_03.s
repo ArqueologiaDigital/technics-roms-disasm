@@ -6108,7 +6108,7 @@
 	.byte	62, 107, 18, 0, 47, 144, 74, 120, 18, 0, 74, 144, 60, 100, 17, 0
 	.byte	76, 144, 72, 101, 14, 0, 129, 0, 176, 6, 91, 85, 3, 144
 	.endzlib
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after zlib_4879BEA8
 zlib_4879EEE4:	# DemoSong03: its event memory, 12544 bytes, stored as a zlib stream of 6797 bytes (inflated by func_48533758); kn7asm compresses it at level 6 (Python's zlib reproduces the firmware's stream byte-exactly)
 	.zlib	6
 
@@ -9326,7 +9326,7 @@ zlib_4879EEE4:	# DemoSong03: its event memory, 12544 bytes, stored as a zlib str
 	.byte	48, 144, 58, 70, 66, 2, 48, 144, 51, 73, 63, 2, 60, 176, 16, 64
 	.byte	0, 129, 21, 176, 16, 64, 127, 48, 144, 65
 	.endzlib
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after zlib_4879EEE4
 zlib_487A0974:	# DemoSong04: its event memory, 12032 bytes, stored as a zlib stream of 7000 bytes (inflated by func_48533758); kn7asm compresses it at level 6 (Python's zlib reproduces the firmware's stream byte-exactly)
 	.zlib	6
 
@@ -16325,7 +16325,7 @@ zlib_487A24CC:	# DemoSong05: its event memory, 16384 bytes, stored as a zlib str
 	.byte	176, 5, 1, 67, 54, 208, 31, 54, 176, 5, 1, 71, 58, 208, 32, 58
 	.byte	176, 5, 1, 74, 62, 176, 5, 1, 79
 	.endzlib
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after zlib_487A24CC
 zlib_487A4A14:	# DemoSong06: its event memory, 11264 bytes, stored as a zlib stream of 5302 bytes (inflated by func_48533758); kn7asm compresses it at level 6 (Python's zlib reproduces the firmware's stream byte-exactly)
 	.zlib	6
 
@@ -19384,7 +19384,7 @@ zlib_487A4A14:	# DemoSong06: its event memory, 11264 bytes, stored as a zlib str
 	.byte	41, 224, 0, 62, 44, 224, 64, 62, 47, 224, 64, 63, 49, 224, 0, 64
 	.byte	129, 129
 	.endzlib
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after zlib_487A4A14
 zlib_487A5ECC:	# DemoSong07: its event memory, 12544 bytes, stored as a zlib stream of 6873 bytes (inflated by func_48533758); kn7asm compresses it at level 6 (Python's zlib reproduces the firmware's stream byte-exactly)
 	.zlib	6
 
@@ -22674,7 +22674,7 @@ zlib_487A5ECC:	# DemoSong07: its event memory, 12544 bytes, stored as a zlib str
 	.byte	80, 45, 0, 95, 144, 72, 80, 47, 0, 95, 176, 7, 11, 77, 129, 38
 	.byte	144, 75, 80, 56, 0, 40, 144, 70, 80, 55, 0, 90, 144
 	.endzlib
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after zlib_487A5ECC
 zlib_487A79A8:	# DemoSong08: its event memory, 29184 bytes, stored as a zlib stream of 12756 bytes (inflated by func_48533758); kn7asm compresses it at level 6 (Python's zlib reproduces the firmware's stream byte-exactly)
 	.zlib	6
 
@@ -32344,7 +32344,7 @@ zlib_487AAB7C:	# DemoSong09: its event memory, 10240 bytes, stored as a zlib str
 	.byte	0, 129, 0, 144, 42, 81, 20, 0, 3, 144, 39, 104, 53, 0, 48, 144
 	.byte	42, 53, 12, 0, 79, 144, 39, 97, 12, 0, 129, 0
 	.endzlib
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after zlib_487AAB7C
 zlib_487AC1E8:	# DemoSong10: its event memory, 22272 bytes, stored as a zlib stream of 8191 bytes (inflated by func_48533758); kn7asm compresses it at level 6 (Python's zlib reproduces the firmware's stream byte-exactly)
 	.zlib	6
 
@@ -38110,7 +38110,7 @@ zlib_487AC1E8:	# DemoSong10: its event memory, 22272 bytes, stored as a zlib str
 	.byte	103, 17, 0, 47, 144, 65, 105, 14, 0, 129, 46, 144, 65, 109, 14, 0
 	.byte	46, 144, 72, 109, 17, 0, 129, 43, 144, 60, 105
 	.endzlib
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after zlib_487AC1E8
 zlib_487AE1E8:	# DemoSong01: its panel-memory bank, 14976 bytes, stored as a zlib stream of 1062 bytes (inflated by func_48533758); kn7asm compresses it at level 6 (Python's zlib reproduces the firmware's stream byte-exactly)
 	.zlib	6
 # the bank's name, then its 8 PANEL MEMORY records (tag / length lists ended by FF FF)
@@ -38492,7 +38492,7 @@ zlib_487AE1E8:	# DemoSong01: its panel-memory bank, 14976 bytes, stored as a zli
 	PMR_48_30	63, 16, 182, 0, 64, 150, 136, 144, 145, 179, 0, 0, 0, 0, 0, 0, 130, 1, 0, 129, 0, 71, 74, 0, 0, 0, 0, 0, 63, 35
 	.byte	71, 14
 	.endzlib
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after zlib_487AE1E8
 zlib_487AE610:	# DemoSong02: its panel-memory bank, 14976 bytes, stored as a zlib stream of 1062 bytes (inflated by func_48533758); kn7asm compresses it at level 6 (Python's zlib reproduces the firmware's stream byte-exactly)
 	.zlib	6
 # the bank's name, then its 8 PANEL MEMORY records (tag / length lists ended by FF FF)
@@ -38874,7 +38874,7 @@ zlib_487AE610:	# DemoSong02: its panel-memory bank, 14976 bytes, stored as a zli
 	PMR_48_30	63, 16, 182, 0, 64, 150, 136, 144, 145, 179, 0, 0, 0, 0, 0, 0, 130, 1, 0, 129, 0, 71, 74, 0, 0, 0, 0, 0, 63, 35
 	.byte	71, 14
 	.endzlib
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after zlib_487AE610
 zlib_487AEA38:	# DemoSong03: its panel-memory bank, 14976 bytes, stored as a zlib stream of 1062 bytes (inflated by func_48533758); kn7asm compresses it at level 6 (Python's zlib reproduces the firmware's stream byte-exactly)
 	.zlib	6
 # the bank's name, then its 8 PANEL MEMORY records (tag / length lists ended by FF FF)
@@ -39256,7 +39256,7 @@ zlib_487AEA38:	# DemoSong03: its panel-memory bank, 14976 bytes, stored as a zli
 	PMR_48_30	63, 16, 182, 0, 64, 150, 136, 144, 145, 179, 0, 0, 0, 0, 0, 0, 130, 1, 0, 129, 0, 71, 74, 0, 0, 0, 0, 0, 63, 35
 	.byte	71, 14
 	.endzlib
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after zlib_487AEA38
 zlib_487AEE60:	# DemoSong04: its panel-memory bank, 14976 bytes, stored as a zlib stream of 1062 bytes (inflated by func_48533758); kn7asm compresses it at level 6 (Python's zlib reproduces the firmware's stream byte-exactly)
 	.zlib	6
 # the bank's name, then its 8 PANEL MEMORY records (tag / length lists ended by FF FF)
@@ -39638,7 +39638,7 @@ zlib_487AEE60:	# DemoSong04: its panel-memory bank, 14976 bytes, stored as a zli
 	PMR_48_30	63, 16, 182, 0, 64, 150, 136, 144, 145, 179, 0, 0, 0, 0, 0, 0, 130, 1, 0, 129, 0, 71, 74, 0, 0, 0, 0, 0, 63, 35
 	.byte	71, 14
 	.endzlib
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after zlib_487AEE60
 zlib_487AF288:	# DemoSong05: its panel-memory bank, 14976 bytes, stored as a zlib stream of 1062 bytes (inflated by func_48533758); kn7asm compresses it at level 6 (Python's zlib reproduces the firmware's stream byte-exactly)
 	.zlib	6
 # the bank's name, then its 8 PANEL MEMORY records (tag / length lists ended by FF FF)
@@ -40020,7 +40020,7 @@ zlib_487AF288:	# DemoSong05: its panel-memory bank, 14976 bytes, stored as a zli
 	PMR_48_30	63, 16, 182, 0, 64, 150, 136, 144, 145, 179, 0, 0, 0, 0, 0, 0, 130, 1, 0, 129, 0, 71, 74, 0, 0, 0, 0, 0, 63, 35
 	.byte	71, 14
 	.endzlib
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after zlib_487AF288
 zlib_487AF6B0:	# DemoSong06: its panel-memory bank, 14976 bytes, stored as a zlib stream of 1062 bytes (inflated by func_48533758); kn7asm compresses it at level 6 (Python's zlib reproduces the firmware's stream byte-exactly)
 	.zlib	6
 # the bank's name, then its 8 PANEL MEMORY records (tag / length lists ended by FF FF)
@@ -40402,7 +40402,7 @@ zlib_487AF6B0:	# DemoSong06: its panel-memory bank, 14976 bytes, stored as a zli
 	PMR_48_30	63, 16, 182, 0, 64, 150, 136, 144, 145, 179, 0, 0, 0, 0, 0, 0, 130, 1, 0, 129, 0, 71, 74, 0, 0, 0, 0, 0, 63, 35
 	.byte	71, 14
 	.endzlib
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after zlib_487AF6B0
 zlib_487AFAD8:	# DemoSong07: its panel-memory bank, 14976 bytes, stored as a zlib stream of 1062 bytes (inflated by func_48533758); kn7asm compresses it at level 6 (Python's zlib reproduces the firmware's stream byte-exactly)
 	.zlib	6
 # the bank's name, then its 8 PANEL MEMORY records (tag / length lists ended by FF FF)
@@ -40784,7 +40784,7 @@ zlib_487AFAD8:	# DemoSong07: its panel-memory bank, 14976 bytes, stored as a zli
 	PMR_48_30	63, 16, 182, 0, 64, 150, 136, 144, 145, 179, 0, 0, 0, 0, 0, 0, 130, 1, 0, 129, 0, 71, 74, 0, 0, 0, 0, 0, 63, 35
 	.byte	71, 14
 	.endzlib
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after zlib_487AFAD8
 zlib_487AFF00:	# DemoSong08: its panel-memory bank, 14976 bytes, stored as a zlib stream of 1062 bytes (inflated by func_48533758); kn7asm compresses it at level 6 (Python's zlib reproduces the firmware's stream byte-exactly)
 	.zlib	6
 # the bank's name, then its 8 PANEL MEMORY records (tag / length lists ended by FF FF)
@@ -41166,7 +41166,7 @@ zlib_487AFF00:	# DemoSong08: its panel-memory bank, 14976 bytes, stored as a zli
 	PMR_48_30	63, 16, 182, 0, 64, 150, 136, 144, 145, 179, 0, 0, 0, 0, 0, 0, 130, 1, 0, 129, 0, 71, 74, 0, 0, 0, 0, 0, 63, 35
 	.byte	71, 14
 	.endzlib
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after zlib_487AFF00
 zlib_487B0328:	# DemoSong09: its panel-memory bank, 14976 bytes, stored as a zlib stream of 1062 bytes (inflated by func_48533758); kn7asm compresses it at level 6 (Python's zlib reproduces the firmware's stream byte-exactly)
 	.zlib	6
 # the bank's name, then its 8 PANEL MEMORY records (tag / length lists ended by FF FF)
@@ -41548,7 +41548,7 @@ zlib_487B0328:	# DemoSong09: its panel-memory bank, 14976 bytes, stored as a zli
 	PMR_48_30	63, 16, 182, 0, 64, 150, 136, 144, 145, 179, 0, 0, 0, 0, 0, 0, 130, 1, 0, 129, 0, 71, 74, 0, 0, 0, 0, 0, 63, 35
 	.byte	71, 14
 	.endzlib
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after zlib_487B0328
 zlib_487B0750:	# DemoSong10: its panel-memory bank, 14976 bytes, stored as a zlib stream of 1062 bytes (inflated by func_48533758); kn7asm compresses it at level 6 (Python's zlib reproduces the firmware's stream byte-exactly)
 	.zlib	6
 # the bank's name, then its 8 PANEL MEMORY records (tag / length lists ended by FF FF)
@@ -41930,4 +41930,4 @@ zlib_487B0750:	# DemoSong10: its panel-memory bank, 14976 bytes, stored as a zli
 	PMR_48_30	63, 16, 182, 0, 64, 150, 136, 144, 145, 179, 0, 0, 0, 0, 0, 0, 130, 1, 0, 129, 0, 71, 74, 0, 0, 0, 0, 0, 63, 35
 	.byte	71, 14
 	.endzlib
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after zlib_487B0750

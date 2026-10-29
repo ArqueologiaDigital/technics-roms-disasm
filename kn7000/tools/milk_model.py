@@ -221,8 +221,16 @@ class Model:
         # the converted code names data addresses by the typed data region's
         # labels (and every label by a build's labels file): read them too
         names = dict(self.sym_by_name)
+        ddir = os.path.join(os.path.dirname(src_glob), "data")
+        # the ids the code spells by name (tools/gen_program_s.py): `.equ NAME, 0x...`
+        for inc in ("gui_event_ids.inc", "gui_code_ids.inc"):
+            if os.path.exists(os.path.join(ddir, inc)):
+                for line in open(os.path.join(ddir, inc)):
+                    m = re.match(r"\.equ\s+(\w+),\s*(0x[0-9A-Fa-f]+)", line)
+                    if m:
+                        names.setdefault(m.group(1), int(m.group(2), 16))
         for lp in label_paths if label_paths is not None else [
-                os.path.join(os.path.dirname(src_glob), "data", "labels.sym")]:
+                os.path.join(ddir, "labels.sym")]:
             if os.path.exists(lp):
                 for line in open(lp):
                     f = line.split()
