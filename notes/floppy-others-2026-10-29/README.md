@@ -87,7 +87,7 @@ The first byte of the magic names the model: `I` is the KN6000, `J` the KN7000. 
 | KN6/7  | .HMP           | the 0x18C-byte home-page record and a 160x100 BMP cut out as a `.bmp` (media)                                       |
 | KN6000 | .TXT .ACT .PRE | `.ascii` lines                                                                                                      |
 | KN6/7  | .VER           | a Cakewalk .WRK, chunk by chunk                                                                                     |
-| WSA1R  | .TM            | 4 banks: tag, 8 lines, 64 tone records, kit, 128 drum instruments (`wsa1/include/tm/`)                              |
+| WSA1R  | .TM            | 4 banks: tag, 8 lines, 64 NORMAL SOUND records, the DRUM SOUND kit and its 128 NOTE DATA blocks, every byte named |
 | WSA1R  | .CMB           | 16 bank names, 128 combinations as 23 records each, named from the Reference Guide (`cmb_*`)                        |
 | WSA1R  | .SEQ           | song-store blocks, events one per line                                                                              |
 | WSA1R  | .SQF           | ten song records: the fields the disk notes establish, the rest with offsets (`sqf_*`)                              |
@@ -181,14 +181,31 @@ No byte is generic any more, but many fields have only a neutral name: an offset
   writer back into the panel parameter tables would name them in the shared include.
 - **SOUND EDIT and voice records** (KN6000 .TM). The mod units and elements have no names.
   `TgPartAuxHdr45Get` and the other `TgPartAux*` accessors name the offsets they read, but not their meaning.
-- **WSA1R tone, element, wave-select and drum records** (.TM). These have the record classes of prom_d's tone
-  database, which itself has no field named (`wsa1/notes/FINDINGS-prom-d-tone-database.md`).
 - **The .SQT song record's head** (+0x07..+0xCF, +0x100..+0x13F). The KN5000 lane's slot map
   (`notes/floppy-kn5000-2026-10-29/specs/sqt_slot_header.json`) names the KN5000's 0x800-byte record, but the
   KN6000/KN7000 record is longer and the offsets were not checked against a KN6000/KN7000 reader.
 - **The WSA1R .SQF song record** past the fields the disk notes give, and the WSA1R panel blocks after the
   combination.
 - **TCMP variation records**: bytes +0x01/+0x02, +0x0C..+0x0F, +0x12..+0x14 and +0x18..+0x1F.
+
+## Naming round (2026-10-29, third pass)
+
+- **Named: the WSA1R .TM records, every byte.** Technics' Reference Guide publishes the NORMAL SOUND layout
+  (713 bytes: GENERAL DATA 217, TONE DATA 4 x 81, MODELING DATA 4 x 43) and the DRUM SOUND layout (KIT DATA
+  0x98, SOUND SELECT 0x100, 128 NOTE DATA of 150). Both are transcribed in
+  `wsa1/notes/sysex-probes/sound_layout.json` and checked to tile by `sysex_sound_layout.py`. These are the
+  strides `SoundRam_ClearFourBanks` writes. `floppy/wsa1/gen_sound_macros.py` makes them into the named
+  macros of `floppy/wsa1/include/wsa1_sound.inc`: 532 parameters, none of them `rsv_`.
+- **Not named this round, and why:**
+  - the KN6000/KN7000 panel-memory record's fields: the recall routine is not located. The library routines
+    that index the record (0x3A90 / 0x750 strides, `func_4C01ED89`, `func_4C01F5FC`, the 0x4A part stride
+    around `func_4C01F657`) are template copies and per-part sound fix-ups, not the field-by-field recall;
+  - the KN6000 SOUND_MOD / VOICE_ELEM fields: the `TgPartAux*` accessors name offsets, not parameters, and the
+    sound-edit screens' parameter tables were not traced;
+  - the .SQT event reader and record head: no sequencer-player routine is named in `kn7000_manual.sym`, so the
+    event lengths stay measured;
+  - kn7asm quote stripping: changing it alters every kn7000 source that passes `.ascii \name` (CUSTOM records,
+    styles), which belongs to those trees' lanes.
 
 ## Open questions
 

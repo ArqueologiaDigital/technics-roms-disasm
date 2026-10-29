@@ -6,8 +6,10 @@
 ; checks the tag (DiskLoad_CheckSoundRamTag) and streams 0x40000 bytes to 0xE80000; prom_c's
 ; SoundRam_ClearFourBanks (0xFC386C) writes the layout typed here: per bank the tag, 64 tone records
 ; from +0x90 (stride 0x2C9), the kit record at +0xB2D0 (0x198 bytes; its key map at +0x98, 128 x 2),
-; then [INFERENCE] 128 drum-instrument records of 150 and a zero tail.  Records: include/tm/.
+; then 128 DRUM SOUND NOTE DATA blocks of 150 and a zero tail: the Reference Guide's DRUM SOUND
+; (wsa1_sound.inc).  Records: include/tm/.
 
+	.include	"wsa1_sound.inc"
 F_01LIVE___TM:
 
 F_01LIVE___TM_Bank0:
@@ -86,18 +88,9 @@ F_01LIVE___TM_Bank0:
 	.include	"tm/tone_43db303d3f6d.s"	; tone 63: The EgerLands 2
 	.include	"tm/tone_2cf4b1606ed3.s"	; tone 64: Dammed Recorder
 F_01LIVE___TM_Bank0_Kit:
-	.ascii	"   Power Kit    "	; kit name
-; kit head +0x10..+0x97 (ToneDB_ResolveToneRecord(64) template, copied whole by the clear)
-	.byte	128, 85, 129, 64, 85, 0, 64, 85, 0, 64, 85, 157, 64, 85, 128, 64
-	.byte	1, 2, 85, 44, 64, 85, 0, 64, 85, 0, 64, 85, 0, 64, 85, 157
-	.byte	64, 85, 156, 64, 85, 129, 8, 85, 158, 64, 85, 131, 64, 85, 174, 64
-	.byte	85, 172, 64, 85, 171, 40, 85, 167, 64, 85, 169, 127, 85, 169, 127, 85
-	.byte	177, 127, 17, 0, 1, 99, 30, 6, 0, 84, 0, 0, 0, 0, 0, 0
-	.byte	0, 0, 0, 0, 0, 216, 2, 88, 4, 0, 2, 35, 99, 30, 89, 0
-	.byte	5, 70, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	.byte	60, 1, 20, 35, 11, 20, 50, 70, 0, 0, 0, 0, 0, 0, 0, 0
-	.byte	0, 0, 0, 222, 2, 88, 4, 0
-; key map, +0x98: 128 keys x (program, bank) [INFERENCE: the drum-instrument selector pair]; the clear writes 0, 64 to each
+	.ascii	"   Power Kit    "	; NAME
+	kit_general	128, 85, 129, 64, 85, 0, 64, 85, 0, 64, 85, 157, 64, 85, 128, 64, 1, 2, 85, 44, 64, 85, 0, 64, 85, 0, 64, 85, 0, 64, 85, 157, 64, 85, 156, 64, 85, 129, 8, 85, 158, 64, 85, 131, 64, 85, 174, 64, 85, 172, 64, 85, 171, 40, 85, 167, 64, 85, 169, 127, 85, 169, 127, 85, 177, 127, 17, 0, 1, 99, 30, 6, 0, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 216, 2, 88, 4, 0, 2, 35, 99, 30, 89, 0, 5, 70, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 60, 1, 20, 35, 11, 20, 50, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 222, 2, 88, 4, 0
+; SOUND SELECT, NOTE:00 to NOTE:7F: two bytes per key (the clear writes 0, 64 to each)
 	.byte	0, 16, 0, 16, 0, 16, 3, 16, 4, 16, 5, 16, 6, 16, 7, 16	; keys 0-7
 	.byte	8, 16, 9, 16, 10, 16, 11, 16, 12, 16, 13, 16, 14, 20, 15, 20	; keys 8-15
 	.byte	16, 20, 17, 20, 45, 21, 47, 21, 48, 21, 21, 20, 22, 20, 38, 21	; keys 16-23
@@ -320,18 +313,9 @@ F_01LIVE___TM_Bank1:
 	.include	"tm/tone_0f502eb170e8.s"	; tone 63: Slitter
 	.include	"tm/tone_ac1a14de2cad.s"	; tone 64: Car Speed
 F_01LIVE___TM_Bank1_Kit:
-	.ascii	"MJ Cool Drums 2 "	; kit name
-; kit head +0x10..+0x97 (ToneDB_ResolveToneRecord(64) template, copied whole by the clear)
-	.byte	128, 85, 129, 64, 85, 43, 64, 95, 28, 127, 85, 157, 64, 95, 131, 81
-	.byte	1, 2, 85, 3, 64, 85, 0, 64, 85, 0, 64, 85, 0, 64, 95, 171
-	.byte	88, 95, 131, 127, 81, 167, 127, 85, 161, 92, 85, 131, 64, 85, 174, 64
-	.byte	85, 172, 64, 85, 171, 40, 85, 167, 64, 85, 169, 127, 85, 169, 127, 85
-	.byte	177, 127, 17, 0, 1, 99, 30, 6, 0, 84, 0, 0, 0, 0, 0, 0
-	.byte	0, 0, 0, 0, 0, 216, 2, 88, 4, 0, 2, 35, 99, 30, 89, 0
-	.byte	5, 70, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	.byte	60, 1, 23, 45, 90, 18, 60, 66, 0, 0, 0, 0, 0, 0, 0, 0
-	.byte	0, 0, 0, 162, 2, 224, 5, 0
-; key map, +0x98: 128 keys x (program, bank) [INFERENCE: the drum-instrument selector pair]; the clear writes 0, 64 to each
+	.ascii	"MJ Cool Drums 2 "	; NAME
+	kit_general	128, 85, 129, 64, 85, 43, 64, 95, 28, 127, 85, 157, 64, 95, 131, 81, 1, 2, 85, 3, 64, 85, 0, 64, 85, 0, 64, 85, 0, 64, 95, 171, 88, 95, 131, 127, 81, 167, 127, 85, 161, 92, 85, 131, 64, 85, 174, 64, 85, 172, 64, 85, 171, 40, 85, 167, 64, 85, 169, 127, 85, 169, 127, 85, 177, 127, 17, 0, 1, 99, 30, 6, 0, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 216, 2, 88, 4, 0, 2, 35, 99, 30, 89, 0, 5, 70, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 60, 1, 23, 45, 90, 18, 60, 66, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 162, 2, 224, 5, 0
+; SOUND SELECT, NOTE:00 to NOTE:7F: two bytes per key (the clear writes 0, 64 to each)
 	.byte	0, 16, 0, 16, 0, 16, 3, 16, 4, 16, 5, 16, 6, 16, 7, 16	; keys 0-7
 	.byte	8, 16, 9, 16, 10, 16, 11, 16, 12, 16, 13, 16, 42, 23, 46, 23	; keys 8-15
 	.byte	16, 23, 17, 23, 45, 22, 47, 22, 48, 22, 21, 16, 22, 23, 38, 24	; keys 16-23
@@ -554,18 +538,9 @@ F_01LIVE___TM_Bank2:
 	.include	"tm/tone_6e732434909b.s"	; tone 63: Mega HPF Synth 1
 	.include	"tm/tone_f27ae0859e46.s"	; tone 64: Mega HPF Synth 2
 F_01LIVE___TM_Bank2_Kit:
-	.ascii	"   Power Kit    "	; kit name
-; kit head +0x10..+0x97 (ToneDB_ResolveToneRecord(64) template, copied whole by the clear)
-	.byte	128, 85, 129, 64, 85, 0, 64, 85, 0, 64, 85, 157, 64, 85, 128, 64
-	.byte	1, 2, 85, 44, 64, 85, 0, 64, 85, 0, 64, 85, 0, 64, 85, 157
-	.byte	64, 85, 156, 64, 85, 129, 8, 85, 158, 64, 85, 131, 64, 85, 174, 64
-	.byte	85, 172, 64, 85, 171, 40, 85, 167, 64, 85, 169, 127, 85, 169, 127, 85
-	.byte	177, 127, 17, 0, 1, 99, 30, 6, 0, 84, 0, 0, 0, 0, 0, 0
-	.byte	0, 0, 0, 0, 0, 216, 2, 88, 4, 0, 2, 35, 99, 30, 89, 0
-	.byte	5, 70, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	.byte	60, 1, 20, 35, 11, 20, 50, 70, 0, 0, 0, 0, 0, 0, 0, 0
-	.byte	0, 0, 0, 222, 2, 88, 4, 0
-; key map, +0x98: 128 keys x (program, bank) [INFERENCE: the drum-instrument selector pair]; the clear writes 0, 64 to each
+	.ascii	"   Power Kit    "	; NAME
+	kit_general	128, 85, 129, 64, 85, 0, 64, 85, 0, 64, 85, 157, 64, 85, 128, 64, 1, 2, 85, 44, 64, 85, 0, 64, 85, 0, 64, 85, 0, 64, 85, 157, 64, 85, 156, 64, 85, 129, 8, 85, 158, 64, 85, 131, 64, 85, 174, 64, 85, 172, 64, 85, 171, 40, 85, 167, 64, 85, 169, 127, 85, 169, 127, 85, 177, 127, 17, 0, 1, 99, 30, 6, 0, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 216, 2, 88, 4, 0, 2, 35, 99, 30, 89, 0, 5, 70, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 60, 1, 20, 35, 11, 20, 50, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 222, 2, 88, 4, 0
+; SOUND SELECT, NOTE:00 to NOTE:7F: two bytes per key (the clear writes 0, 64 to each)
 	.byte	0, 16, 0, 16, 0, 16, 3, 16, 4, 16, 5, 16, 6, 16, 7, 16	; keys 0-7
 	.byte	8, 16, 9, 16, 10, 16, 11, 16, 12, 16, 13, 16, 14, 20, 15, 20	; keys 8-15
 	.byte	16, 20, 17, 20, 45, 21, 47, 21, 48, 21, 21, 20, 22, 20, 38, 21	; keys 16-23
@@ -788,18 +763,9 @@ F_01LIVE___TM_Bank3:
 	.include	"tm/tone_e725364b1007.s"	; tone 63: SyntheticPress
 	.include	"tm/tone_19cc9d207a30.s"	; tone 64: UeblerVogel
 F_01LIVE___TM_Bank3_Kit:
-	.ascii	" Modeling Kit 2 "	; kit name
-; kit head +0x10..+0x97 (ToneDB_ResolveToneRecord(64) template, copied whole by the clear)
-	.byte	128, 85, 129, 64, 85, 43, 20, 85, 49, 90, 85, 131, 64, 95, 174, 64
-	.byte	1, 32, 85, 0, 64, 85, 0, 64, 85, 0, 64, 85, 0, 64, 85, 157
-	.byte	64, 85, 156, 64, 85, 129, 8, 85, 158, 64, 85, 131, 64, 85, 174, 64
-	.byte	85, 172, 64, 85, 171, 64, 85, 167, 64, 85, 168, 64, 85, 177, 64, 85
-	.byte	169, 64, 17, 0, 71, 228, 90, 100, 92, 50, 30, 6, 30, 84, 0, 0
-	.byte	0, 0, 0, 0, 0, 216, 0, 88, 4, 0, 8, 70, 99, 2, 0, 99
-	.byte	20, 44, 1, 44, 1, 216, 216, 99, 0, 0, 0, 0, 0, 0, 0, 0
-	.byte	90, 4, 17, 25, 12, 20, 50, 90, 0, 0, 0, 0, 0, 0, 0, 0
-	.byte	0, 0, 0, 222, 0, 88, 4, 0
-; key map, +0x98: 128 keys x (program, bank) [INFERENCE: the drum-instrument selector pair]; the clear writes 0, 64 to each
+	.ascii	" Modeling Kit 2 "	; NAME
+	kit_general	128, 85, 129, 64, 85, 43, 20, 85, 49, 90, 85, 131, 64, 95, 174, 64, 1, 32, 85, 0, 64, 85, 0, 64, 85, 0, 64, 85, 0, 64, 85, 157, 64, 85, 156, 64, 85, 129, 8, 85, 158, 64, 85, 131, 64, 85, 174, 64, 85, 172, 64, 85, 171, 64, 85, 167, 64, 85, 168, 64, 85, 177, 64, 85, 169, 64, 17, 0, 71, 228, 90, 100, 92, 50, 30, 6, 30, 84, 0, 0, 0, 0, 0, 0, 0, 216, 0, 88, 4, 0, 8, 70, 99, 2, 0, 99, 20, 44, 1, 44, 1, 216, 216, 99, 0, 0, 0, 0, 0, 0, 0, 0, 90, 4, 17, 25, 12, 20, 50, 90, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 222, 0, 88, 4, 0
+; SOUND SELECT, NOTE:00 to NOTE:7F: two bytes per key (the clear writes 0, 64 to each)
 	.byte	0, 16, 0, 16, 0, 16, 3, 16, 4, 16, 5, 16, 6, 16, 7, 16	; keys 0-7
 	.byte	8, 16, 9, 16, 10, 16, 11, 16, 12, 16, 13, 16, 14, 31, 15, 31	; keys 8-15
 	.byte	16, 31, 17, 16, 45, 21, 47, 21, 48, 21, 21, 16, 22, 31, 23, 31	; keys 16-23
