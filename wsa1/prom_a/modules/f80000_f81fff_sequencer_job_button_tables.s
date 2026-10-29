@@ -488,7 +488,7 @@ Paint_S0ngC0py:
 	ld a, (0x0e34:16)                                   ; F802B5  c1 34 0e 21
 	ld (DisplayListB_Stage+17:16), a                                   ; F802B9  f1 07 13 41
 	ld XIY,Paint_S0ngC0py_DL                                     ; F802BD  45 30 c5 f3 00
-	ld XIX,Data_F3C53F                                   ; F802C2  44 3f c5 f3 00
+	ld XIX,DLText_ChordApcControlRhythm                                   ; F802C2  44 3f c5 f3 00
 	call T_DisplayListB_Run                              ; F802C7  1d f4 17 f4
 	jr .LF802DB                                          ; F802CB  68 0e
 .LF802CD:
@@ -766,7 +766,7 @@ Paint_N0teChange:
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F804D2  f1 40 25 00 00
 	calr ButtonTable_SequencerMedley_Nop                                          ; F804D7  1e fe dd
 	ld XIY,DL_F3AFE7                                     ; F804DA  45 e7 af f3 00
-	ld XIX,Data_F3B065                                   ; F804DF  44 65 b0 f3 00
+	ld XIX,DLBoxes_F3B065                                   ; F804DF  44 65 b0 f3 00
 	call T_DisplayListB_Run                              ; F804E4  1d f4 17 f4
 	calr PromB_LCD_ScreenRedraw_End                                          ; F804E8  1e fc dd
 	ret                                                  ; F804EB  0e
@@ -1186,7 +1186,7 @@ Paint_MeasureC0py:
 .LF807F1:
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F807F1  f1 40 25 00 00
 	ld XIY,DL_F3BD07                                     ; F807F6  45 07 bd f3 00
-	ld XIX,Data_F3BD58                                   ; F807FB  44 58 bd f3 00
+	ld XIX,DLBoxes_F3BD58                                   ; F807FB  44 58 bd f3 00
 	call T_DisplayListB_Run                              ; F80800  1d f4 17 f4
 	calr PromB_LCD_ScreenRedraw_End                                          ; F80804  1e e0 da
 	ret                                                  ; F80807  0e
@@ -1655,7 +1655,7 @@ Paint_MeasureInsert:
 .LF80B4E:
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F80B4E  f1 40 25 00 00
 	ld XIY,DL_F3BEF7                                     ; F80B53  45 f7 be f3 00
-	ld XIX,Data_F3BF48                                   ; F80B58  44 48 bf f3 00
+	ld XIX,DLBoxes_F3BF48                                   ; F80B58  44 48 bf f3 00
 	call T_DisplayListB_Run                              ; F80B5D  1d f4 17 f4
 	calr PromB_LCD_ScreenRedraw_End                                          ; F80B61  1e 83 d7
 	ret                                                  ; F80B64  0e

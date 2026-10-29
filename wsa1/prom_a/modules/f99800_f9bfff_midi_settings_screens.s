@@ -3607,7 +3607,7 @@ Paint_MidiOutProgramChange:
 	calr MidiOutProgramChange_PaintBankLsb                                          ; F9B026  1e 99 02
 	calr MidiOutProgramChange_PaintBankSelect                                          ; F9B029  1e b6 02
 	ld (LCD_CurrentLayer:16), 0x01                                 ; F9B02C  f1 40 25 00 01
-	lda xbc, (Data_F0D061:24)                            ; F9B031  f2 61 d0 f0 31
+	lda xbc, (DLBoxes_F0D061:24)                            ; F9B031  f2 61 d0 f0 31
 	push XBC                                             ; F9B036  39
 	lda xwa, (DL_F0D04B:24)                              ; F9B037  f2 4b d0 f0 30
 	push XWA                                             ; F9B03C  38
