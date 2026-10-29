@@ -43,6 +43,12 @@ TREES = {
     "kn7000-b935": "src/b935/program.s",
     "kn7000-b893": "src/b893/program.s",
 }
+# The MN10300 siblings, typed by tools/gen_data_s.py --profile <model>: their tree
+# (relative to kn7000/), top file and profile (whose data region and RAM image count).
+SIBLINGS = {
+    "kn6000": ("../kn6000", "src/program.s", "kn6000"),
+    "kn6500": ("../kn6500", "src/program.s", "kn6500"),
+}
 ID_RE = re.compile(r"=\s*(0x[0-9A-Fa-f]+)\b")      # a record field given as hex ...
 ADDR_RE = re.compile(r"\b0x(?:48|4[Cc]|50)[0-9A-Fa-f]{6}\b")
 LINK_RE = re.compile(r"\b(super|sub|next|prev)=(0x[0-9A-Fa-f]+|\d+)\b")
@@ -75,7 +81,7 @@ def files_of(kn7, top):
     return seen
 
 
-def census(kn7, top, objects_total, data_lo, data_hi):
+def census(kn7, top, objects_total, data_lo, data_hi, ram=(0x50000010, 0x50007F44)):
     macros, params = set(), []
     fs = files_of(kn7, top)
     for f in fs:
@@ -108,7 +114,7 @@ def census(kn7, top, objects_total, data_lo, data_hi):
             elif not op.startswith("."):
                 for m in ADDR_RE.finditer(s):
                     v = int(m.group(0), 16)
-                    if data_lo <= v < data_hi or 0x50000010 <= v < 0x50007F44:
+                    if data_lo <= v < data_hi or ram[0] <= v < ram[1]:
                         r["code_data_nums"] += 1
     r["in_blobs"] = objects_total - r["typed"] if objects_total is not None else None
     return r
@@ -135,6 +141,27 @@ def main():
             continue
         # build 941's data region; the other builds' regions are the same size within a few KB
         r = census(kn7, top, total if t == "kn7000-program" else None, 0x48586000, 0x487B8FD1)
+        rows.append([t, str(r["typed"]), "-" if r["in_blobs"] is None else str(r["in_blobs"]),
+                     str(r["raw_ids"]), str(r["numeric_links"]), str(r["numeric_addr"]),
+                     str(r["code_data_nums"]), str(r["unnamed_fields"])])
+    for t, (root, top, prof) in SIBLINGS.items():
+        tree = os.path.normpath(os.path.join(kn7, root))
+        if not os.path.exists(os.path.join(tree, top)):
+            continue
+        tot, lo, hi, ram = None, 0, 0, (0, 0)
+        try:
+            import gen_data_s as G
+            import milk_model
+            G.configure(prof)
+            lo, hi = G.BASE + G.R1_END, G.BASE + G.DATA_END
+            ram = (G.RAMINIT_RAM, G.RAMINIT_RAM + G.RAMINIT_LEN)
+            tot = sum(len(b["objects"]) for b in milk_model.Model(
+                rom_path=os.path.join(tree, G.P["rom"]), src_glob=G.code_glob(),
+                sym_paths=[os.path.join(tree, f) for f in G.P["syms"]],
+                label_paths=[os.path.join(tree, G.OUTDIR, "labels.sym")]).blocks.values())
+        except (Exception, SystemExit) as e:   # noqa: BLE001 -- the reference image may be absent
+            print(f"(no object total for {t}: {e})", file=sys.stderr)
+        r = census(tree, top, tot, lo, hi, ram)
         rows.append([t, str(r["typed"]), "-" if r["in_blobs"] is None else str(r["in_blobs"]),
                      str(r["raw_ids"]), str(r["numeric_links"]), str(r["numeric_addr"]),
                      str(r["code_data_nums"]), str(r["unnamed_fields"])])
