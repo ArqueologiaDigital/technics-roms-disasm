@@ -871,7 +871,7 @@ Demo_SelectEntry_DrawSecondary:
 
 	ld	a, (xbc+wa)
 
-	call	UI_PostModeChangeEvent
+	call	UI_ChangeTitleByIndex
 
 	ret
 
@@ -8531,8 +8531,8 @@ SeqPhase_FormatNameLoop:
 	cp	iz, 8
 	jr	lt, SeqPhase_FormatNameLoop
 	ld	(GLOBAL_ERROR_CODE:16), 37
-	ldw	wa, 238
-	call	SoundCtrl_SendCommand
+	ldw	wa, TT_MESAGE
+	call	UI_InterruptTitleByIndex
 	call	FileIO_ParseDirectoryEntry
 	ld	iz, hl
 	call	SwbtWr_ReinitOutputBank
@@ -8545,8 +8545,8 @@ SeqPhase_FormatNameLoop:
 SeqPhase_LoadSuccess:
 	ld	(GLOBAL_ERROR_CODE:16), 35
 SeqPhase_SendSoundCmd:
-	ldw wa, 0xee
-	call SoundCtrl_SendCommand
+	ldw wa, TT_MESAGE
+	call UI_InterruptTitleByIndex
 
 SeqPhase_PopIzRet:
 	popw iz
@@ -8610,21 +8610,21 @@ DiskEvt_UseAltChannel:
 
 DiskEvt_TypeIsUSB:
 	ld	(GLOBAL_ERROR_CODE:16), 0
-	ldw	wa, 238
+	ldw	wa, TT_MESAGE
 	jr	DiskEvt_SendSoundCmd
 DiskEvt_TypeIsNone:
-	ldw wa, 0x7d
+	ldw wa, TT_DKUTFRMT
 
 DiskEvt_PostModeEvent:
-	call UI_PostModeChangeEvent
+	call UI_ChangeTitleByIndex
 	jr DiskEvt_Return
 
 DiskEvt_TypeIsCard:
 	calr	ResetProgressIndication
 	ld	(GLOBAL_ERROR_CODE:16), 2
-	ldw	wa, 238
+	ldw	wa, TT_MESAGE
 DiskEvt_SendSoundCmd:
-	call SoundCtrl_SendCommand
+	call UI_InterruptTitleByIndex
 
 DiskEvt_Return:
 	inc 4, xsp
@@ -8648,34 +8648,34 @@ DetectType_CheckMediaType:
 	jr	z, DetectType_TypeIsFloppy
 	cp	wa, 3:i3
 	ret	nz
-	ldw	wa, 108
+	ldw	wa, TT_DKDPSMF
 	jr	UI_PostEventCommon
 DetectType_TypeIsFloppy:
 	call DetectFileType
 	cp hl, 0:i3
 	jr ge, DetectType_IsDocFormat
-	ldw wa, 0x6c
+	ldw wa, TT_DKDPSMF
 	jr UI_PostEventCommon
 
 DetectType_IsDocFormat:
-	ldw wa, 0x6d
+	ldw wa, TT_DKDPDOC
 	jr UI_PostEventCommon
 
 DetectType_IsPdFormat:
-	ldw wa, 0x6e
+	ldw wa, TT_DKDPPD
 	jr UI_PostEventCommon
 
 DetectType_IsNone:
-	ldw wa, 0x7d
+	ldw wa, TT_DKUTFRMT
 
 UI_PostEventCommon:
-	jp UI_PostModeChangeEvent
+	jp UI_ChangeTitleByIndex
 
 DetectType_IsCardReset:
 	calr	ResetProgressIndication
 	ld	(GLOBAL_ERROR_CODE:16), 2
-	ldw	wa, 238
-	call	SoundCtrl_SendCommand
+	ldw	wa, TT_MESAGE
+	call	UI_InterruptTitleByIndex
 	ret
 FileIO_GetDiskCapacity:
 	dec 2,XSP
@@ -8698,18 +8698,18 @@ DiskCap_CheckMediaType:
 	cp	wa, 5:i3
 	jr	nz, DiskCap_Return
 	ld	(GLOBAL_ERROR_CODE:16), 0
-	ldw	wa, 238
+	ldw	wa, TT_MESAGE
 	jr	DiskCap_SendSoundCmd
 DiskCap_TypeIsNone:
-	ldw wa, 0x7d
+	ldw wa, TT_DKUTFRMT
 	jr DiskCap_PostModeEvent
 
 DiskCap_TypeIsCardReset:
 	calr	ResetProgressIndication
 	ld	(GLOBAL_ERROR_CODE:16), 2
-	ldw	wa, 238
+	ldw	wa, TT_MESAGE
 DiskCap_SendSoundCmd:
-	call SoundCtrl_SendCommand
+	call UI_InterruptTitleByIndex
 	jr DiskCap_Return
 
 DiskCap_TypeIsFloppyOrHD:
@@ -8717,7 +8717,7 @@ DiskCap_TypeIsFloppyOrHD:
 	extz wa
 
 DiskCap_PostModeEvent:
-	call UI_PostModeChangeEvent
+	call UI_ChangeTitleByIndex
 
 DiskCap_Return:
 	inc 2, xsp
@@ -8782,7 +8782,7 @@ FileIO_ErrorCodeByteBlock_Join4:
 	jr	z, FileIO_ErrorCodeByteBlock_Loop
 	cp	c, 126
 	jr	z, FileIO_ErrorCodeByteBlock_Loop
-	ldw	wa, 96
+	ldw	wa, TT_DKMENU
 	jr	FileIO_ErrorCodeByteBlock_Join
 FileIO_ErrorCodeByteBlock_Skip:
 	cp	c, 188
@@ -8792,19 +8792,19 @@ FileIO_ErrorCodeByteBlock_Skip:
 	cp	c, 100
 	jr	nz, FileIO_ErrorCodeByteBlock_Skip3
 FileIO_ErrorCodeByteBlock_Skip2:
-	ldw	wa, 96
+	ldw	wa, TT_DKMENU
 	jr	FileIO_ErrorCodeByteBlock_Join
 FileIO_ErrorCodeByteBlock_Skip3:
 	cp	c, 98
 	jr	nz, FileIO_ErrorCodeByteBlock_Skip4
-	ldw	wa, 176
+	ldw	wa, TT_CMMENU
 	jr	FileIO_ErrorCodeByteBlock_Join
 FileIO_ErrorCodeByteBlock_Skip4:
 	cp	c, 99
 	jr	nz, FileIO_ErrorCodeByteBlock_Loop
-	ldw	wa, 72
+	ldw	wa, TT_CTWALLSET
 FileIO_ErrorCodeByteBlock_Join:
-	call	UI_PostModeChangeEvent
+	call	UI_ChangeTitleByIndex
 FileIO_ErrorCodeByteBlock_Loop:
 	calr	ResetProgressIndication
 	ret
@@ -8821,8 +8821,8 @@ FileIO_ErrorCodeByteBlock_Skip5:
 	ret	z
 	cp	c, 5:i3
 	ret	nc
-	ld	wa, 6:i3
-	call	UI_PostPartChangeEvent
+	ld	wa, MD_DISK:i3
+	call	UI_ChangeModeByIndex
 	ld	a, (213234:24)
 	extz	wa
 	lda	xbc, (FileIO_ErrorCodeByteBlock_Entry_Data:24)
@@ -8833,8 +8833,8 @@ FileIO_ErrorCodeByteBlock_Skip5:
 	jr	z, FileIO_ErrorCodeByteBlock_Loop2
 	cp	a, 97
 	ret	nz
-	ldw	wa, 97
-	ldw	bc, 100
+	ldw	wa, TT_DKLD
+	ldw	bc, TT_DKLDSMF
 	jr	FileIO_ErrorCodeByteBlock_Join2
 FileIO_ErrorCodeByteBlock_Loop2:
 	jrl	FileIO_DetectFileTypeAndPost
@@ -8862,14 +8862,14 @@ FileIO_ErrorCodeByteBlock_Skip8:
 	jr	z, FileIO_ErrorCodeByteBlock_Loop2
 	cp	a, 97
 	ret	nz
-	ldw	wa, 97
-	ldw	bc, 100
+	ldw	wa, TT_DKLD
+	ldw	bc, TT_DKLDSMF
 FileIO_ErrorCodeByteBlock_Join2:
 	jrl	FileIO_DiskEventDispatch
 FileIO_ErrorCodeByteBlock_Skip9:
 	extz	wa
 FileIO_ErrorCodeByteBlock_Join3:
-	jp	UI_PostModeChangeEvent
+	jp	UI_ChangeTitleByIndex
 FileIO_ErrorCodeByteBlock_Skip10:
 	call	FDemo_MultiGuardCheck
 	cp	hl, 0:i3

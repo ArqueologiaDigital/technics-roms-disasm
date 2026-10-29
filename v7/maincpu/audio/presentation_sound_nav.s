@@ -1434,21 +1434,21 @@ DirmdEmu_DefaultCase:
 	jr z, .Lc_f9ab49
 	ld a, (0xe316:16)
 	extz WA
-	call UI_PostPartChangeEvent
+	call UI_ChangeModeByIndex
 DirmdEmu_CheckModeChange:
 .Lc_f9ab49:
 	bit 7, (0xe318:16)
 	jr z, .Lc_f9ab59
 	ld a, (0xe316:16)
 	extz WA
-	call UI_PostModeChangeEvent
+	call UI_ChangeTitleByIndex
 DirmdEmu_CheckSoundCtrl:
 .Lc_f9ab59:
 	bit 6, (0xe318:16)
 	jr z, .Lc_f9ab69
 	ld a, (0xe316:16)
 	extz WA
-	call SoundCtrl_SendCommand
+	call UI_InterruptTitleByIndex
 DirmdEmu_CheckBit4:
 .Lc_f9ab69:
 	bit 4, (0xe318:16)

@@ -112,7 +112,7 @@ const ctrl_menu_header_t ctrl_menu_header_data
     /* ==== SCREEN TITLE_CTMENU -- "TT_CTMENU", title id 0x40, function NAKA_APFUNC_DefaultFunction ====
      * What: the CONTROL menu. It is the home title of mode 4, MD_CONTROL. Control sub-pages request
      *       it to navigate back.
-     * Path: mode MD_CONTROL
+     * Path: MENU CONTROL button (mode MD_CONTROL)
      * Menu: "INITIAL" -> TITLE_CTINIT
      * Menu: "OVERALL TOUCH SENSITIVITY" -> TITLE_CTTOUCH
      * Menu: "?" -> TITLE_CTFSWAS

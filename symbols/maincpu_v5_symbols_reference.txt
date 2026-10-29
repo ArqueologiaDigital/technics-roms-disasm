@@ -41601,9 +41601,9 @@ CtrlPanel_CheckBit1 00F98C37
 CtrlPanel_SelectionReturnZero 00F98C45
 GetPartSelect 00F98C48
 GetCurrentPartSelect 00F98C4F
-UI_PostPartChangeEvent 00F98C54
-UI_PostModeChangeEvent 00F98C81
-SoundCtrl_SendCommand 00F98CAE
+UI_ChangeModeByIndex 00F98C54
+UI_ChangeTitleByIndex 00F98C81
+UI_InterruptTitleByIndex 00F98CAE
 UI_PostRefreshEvent 00F98CDB
 UI_PostTimerResetEvent 00F98CEB
 SeqState_HasModeChanged 00F98D0B

@@ -3549,9 +3549,9 @@ const naka_effects_seq_t naka_effects_seq_data
     .Kubo_FunctionNameTable_408_EndName = "\x00\xFF",
 
     /* ==== SCREEN TITLE_SDREVSET "REVERB" -- "TT_SDREVSET", title id 0xA, function NAKA_MAINFUNC_SdRevsetTitleFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: MENU SOUND button (mode MD_SOUND) > "REVERB"
      * EXIT -> TITLE_SDMENU
-     * Opened from: an untitled view ("REVERB") */
+     * Opened from: TITLE_SDMENU ("REVERB") */
     .Reverb_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -3739,9 +3739,9 @@ const naka_effects_seq_t naka_effects_seq_data
     },
 
     /* ==== SCREEN TITLE_SDDSPEFF "DSP EFFECT" -- "TT_SDDSPEFF", title id 0xB, function NAKA_MAINFUNC_SdDspeffTitleFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: MENU SOUND button (mode MD_SOUND) > "DSP EFFECT"
      * EXIT -> TITLE_SDMENU
-     * Opened from: an untitled view ("DSP EFFECT") */
+     * Opened from: TITLE_SDMENU ("DSP EFFECT") */
     .DspEffect_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -3929,9 +3929,9 @@ const naka_effects_seq_t naka_effects_seq_data
     },
 
     /* ==== SCREEN TITLE_SDEQUALIZER "EQUALIZER" -- "TT_SDEQUALIZER", title id 0xC, function NAKA_APFUNC_DefaultFunction ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: MENU SOUND button (mode MD_SOUND) > "EQUALIZER"
      * EXIT -> TITLE_SDMENU
-     * Opened from: an untitled view ("EQUALIZER") */
+     * Opened from: TITLE_SDMENU ("EQUALIZER") */
     .Equalizer_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -4500,9 +4500,9 @@ const naka_effects_seq_t naka_effects_seq_data
     .EqOnOff_stron = "EQ:ON",
 
     /* ==== SCREEN TITLE_SDACCILL "ACOUSTIC ILLUSION" -- "TT_SDACCILL", title id 0xE, function NAKA_MAINFUNC_SdAccillTitleFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: MENU SOUND button (mode MD_SOUND) > "ACOUSTIC ILLUSION"
      * EXIT -> TITLE_SDMENU
-     * Opened from: an untitled view ("ACOUSTIC ILLUSION") */
+     * Opened from: TITLE_SDMENU ("ACOUSTIC ILLUSION") */
     .AcousticIllusion_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -4681,7 +4681,7 @@ const naka_effects_seq_t naka_effects_seq_data
 
     /* ==== SCREEN TITLE_SQMENU "SEQUENCER MENU" -- "TT_SQMENU", title id 0x80, function NAKA_APFUNC_DefaultFunction ====
      * What: the SEQUENCER menu. It is the home title of mode 8, MD_SEQ.
-     * Path: mode MD_SEQ
+     * Path: SEQUENCER MENU button (mode MD_SEQ)
      * Menu: "CREATE" -> TITLE_SQCMENU
      * Menu: "PANEL WRITE" -> TITLE_SQPNLWRM
      * EXIT -> TITLE_NORMAL */
@@ -5345,7 +5345,7 @@ const naka_effects_seq_t naka_effects_seq_data
     },
 
     /* ==== SCREEN TITLE_SQCYCPLY "CYCLE PLAY" -- "TT_SQCYCPLY", title id 0x82, function NAKA_APFUNC_DefaultFunction ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: none found (no data entry, and no traced code, opens it)
      * EXIT -> TITLE_SQPLAY */
     .CyclePlay_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -5500,7 +5500,7 @@ const naka_effects_seq_t naka_effects_seq_data
 
     /* ==== SCREEN TITLE_SQEASYREC "EASY RECORD" -- "TT_SQEASYREC", title id 0x83, function NAKA_APFUNC_DefaultFunction ====
      * What: the sequencer easy-record page. It is the home title of mode 9, MD_SEQ_EREC.
-     * Path: mode MD_SEQ_EREC
+     * Path: SEQUENCER EASY REC button (mode MD_SEQ_EREC)
      * Menu: "NAMING" -> TITLE_SQEASYNAME
      * EXIT -> TITLE_PS */
     .EasyRecord_TtlScreen = {
@@ -5762,7 +5762,7 @@ const naka_effects_seq_t naka_effects_seq_data
     /* ==== SCREEN TITLE_SQCMENU "CREATE" -- "TT_SQCMENU", title id 0x84, function NAKA_APFUNC_DefaultFunction ====
      * What: a sequencer sub-menu. The record, punch, track-select, panel-write and song-copy pages
      *       return to it.
-     * Path: mode MD_SEQ > "CREATE"
+     * Path: SEQUENCER MENU button (mode MD_SEQ) > "CREATE"
      * Menu: "TRACK ASSIGN" -> TITLE_SQTRAS
      * Menu: "PANEL WRITE" -> TITLE_SQPNLWR
      * Menu: "SONG SELECT /NAMING" -> TITLE_SQSNGSEL
@@ -6363,7 +6363,7 @@ const naka_effects_seq_t naka_effects_seq_data
     .Clear_text = "CLEAR",
 
     /* ==== SCREEN TITLE_SQCYCREC "REALTIME RECORD" -- "TT_SQCYCREC", title id 0x86, function NAKA_APFUNC_DefaultFunction ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: none found (no data entry, and no traced code, opens it)
      * EXIT -> TITLE_SQREALREC */
     .RealtimeRecord_TtlScreen_2 = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -6572,7 +6572,7 @@ const naka_effects_seq_t naka_effects_seq_data
 
     /* ==== SCREEN TITLE_SQPUNCH "PUNCH RECORD" -- "TT_SQPUNCH", title id 0x87, function NAKA_MAINFUNC_SqPunchTitleFunc ====
      * What: the sequencer punch-in record page.
-     * Path: mode MD_SEQ > "CREATE" > "PUNCH RECORD"
+     * Path: SEQUENCER MENU button (mode MD_SEQ) > "CREATE" > "PUNCH RECORD"
      * EXIT -> TITLE_SQCMENU
      * Opened from: TITLE_SQCMENU ("PUNCH RECORD") */
     .PunchRecord_TtlScreen = {
@@ -6956,7 +6956,7 @@ const naka_effects_seq_t naka_effects_seq_data
 
     /* ==== SCREEN TITLE_SQPUNCHM "AUTO PUNCH RECORD" -- "TT_SQPUNCHM", title id 0x88, function NAKA_MAINFUNC_SqPunchmTitleFunc ====
      * What: the auto-punch variant of the punch-in page.
-     * Path: no menu entry opens it (opened by code)
+     * Path: none found (no data entry, and no traced code, opens it)
      * EXIT -> TITLE_SQPUNCH */
     .AutoPunchRecord_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -7177,13 +7177,13 @@ const naka_effects_seq_t naka_effects_seq_data
 
     /* ==== SCREEN TITLE_SQPNLWR "PANEL WRITE" -- "TT_SQPNLWR", title id 0x8D, function NAKA_APFUNC_DefaultFunction ====
      * What: the sequencer panel-write page. Its exit returns to TT_SQCMENU.
-     * Path: mode MD_SEQ > "CREATE" > "PANEL WRITE"
+     * Path: SEQUENCER MENU button (mode MD_SEQ) > "CREATE" > "PANEL WRITE"
      * EXIT -> TITLE_SQCMENU
      * Opened from: TITLE_SQCMENU ("PANEL WRITE")
     /* ==== SCREEN TITLE_SQPNLWRM "PANEL WRITE" -- "TT_SQPNLWRM", title id 0xAA, function NAKA_APFUNC_DefaultFunction ====
      * What: the panel-write page reached from TT_SQMENU. It reuses TT_SQPNLWR's view 0x008D0000,
      *       and its exit returns to TT_SQMENU.
-     * Path: mode MD_SEQ > "PANEL WRITE"
+     * Path: SEQUENCER MENU button (mode MD_SEQ) > "PANEL WRITE"
      * EXIT -> TITLE_SQCMENU
      * Opened from: TITLE_SQMENU ("PANEL WRITE") */
     .PanelWrite_TtlScreen = {
@@ -7253,7 +7253,7 @@ const naka_effects_seq_t naka_effects_seq_data
 
     /* ==== SCREEN TITLE_SQSNGCLR "SONG CLEAR" -- "TT_SQSNGCLR", title id 0x90, function NAKA_MAINFUNC_SqSoclTitleFunc ====
      * What: the sequencer song-clear page.
-     * Path: mode MD_SEQ > "CREATE" > "SONG CLEAR"
+     * Path: SEQUENCER MENU button (mode MD_SEQ) > "CREATE" > "SONG CLEAR"
      * EXIT -> TITLE_SQCMENU
      * Opened from: TITLE_SQCMENU ("SONG CLEAR") */
     .SongClear_TtlScreen = {
@@ -7531,13 +7531,13 @@ const naka_effects_seq_t naka_effects_seq_data
     /* ==== SCREEN TITLE_SQSNGCP "SONG/TRACK COPY" -- "TT_SQSNGCP", title id 0x91, function NAKA_MAINFUNC_SqSngcpTitleFunc ====
      * What: the sequencer song-copy page, as entered from the edit menu. Its exit returns to
      *       TT_SQEMENU.
-     * Path: no menu entry opens it (opened by code)
+     * Path: mode MD_SEQ_EDIT > "SONG/TRACK COPY"
      * EXIT -> TITLE_SQCMENU
-     * Opened from: an untitled view ("SONG/TRACK COPY")
+     * Opened from: TITLE_SQEMENU ("SONG/TRACK COPY")
     /* ==== SCREEN TITLE_SQSNGCPC "SONG/TRACK COPY" -- "TT_SQSNGCPC", title id 0xA8, function NAKA_MAINFUNC_SqSngcpTitleFunc ====
      * What: the song-copy page reached from TT_SQCMENU. It reuses TT_SQSNGCP's view 0x00910000, and
      *       its exit returns to TT_SQCMENU.
-     * Path: mode MD_SEQ > "CREATE" > "SONG/TRACK COPY"
+     * Path: SEQUENCER MENU button (mode MD_SEQ) > "CREATE" > "SONG/TRACK COPY"
      * EXIT -> TITLE_SQCMENU
      * Opened from: TITLE_SQCMENU ("SONG/TRACK COPY") */
     .SongTrackCopy_TtlScreen = {
@@ -7836,6 +7836,20 @@ const naka_effects_seq_t naka_effects_seq_data
     /* ==== SCREEN TITLE_SQEMENU "EDIT" -- "TT_SQEMENU", title id 0x93, function NAKA_APFUNC_DefaultFunction ====
      * What: the sequencer EDIT menu. It is the home title of mode 0xC, MD_SEQ_EDIT.
      * Path: mode MD_SEQ_EDIT
+     * Menu: "NOTE EDIT" -> TITLE_SQNOTESEL
+     * Menu: "DRUM EDIT" -> TITLE_SQDRMSEL
+     * Menu: "SONG/TRACK COPY" -> TITLE_SQSNGCP
+     * Menu: "TRACK CLEAR" -> TITLE_SQTRKCLR
+     * Menu: "TRACK MERGE" -> TITLE_SQTRKMRG
+     * Menu: "QUANTIZE" -> TITLE_SQQTZ
+     * Menu: "TRANSPOSE" -> TITLE_SQTRNS
+     * Menu: "VELOCITY CHANGE" -> TITLE_SQVELOCNG
+     * Menu: "NOTE CHANGE" -> TITLE_SQNOTECNG
+     * Menu: "ADVANCE/DELAY" -> TITLE_SQADVDLY
+     * Menu: "COPY" -> TITLE_SQMCP
+     * Menu: "ERASE" -> TITLE_SQMERS
+     * Menu: "DELETE" -> TITLE_SQMDEL
+     * Menu: "INSERT" -> TITLE_SQMINS
      * EXIT -> TITLE_SQMENU */
     .Edit_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -8325,9 +8339,9 @@ const naka_effects_seq_t naka_effects_seq_data
     },
 
     /* ==== SCREEN TITLE_SQNOTESEL "NOTE EDIT  " -- "TT_SQNOTESEL", title id 0x94, function NAKA_MAINFUNC_SqNoteSelTitleFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: mode MD_SEQ_EDIT > "NOTE EDIT"
      * EXIT -> TITLE_SQEMENU
-     * Opened from: an untitled view ("NOTE EDIT") */
+     * Opened from: TITLE_SQEMENU ("NOTE EDIT") */
     .NoteEdit_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -8392,7 +8406,7 @@ const naka_effects_seq_t naka_effects_seq_data
     /* ==== SCREEN TITLE_SQNOTEEDT "NOTE EDIT" -- "TT_SQNOTEEDT", title id 0x95, function NAKA_MAINFUNC_SqNoteEdtTitleFunc ====
      * What: the sequencer note-edit page. Grid and box code shared with another edit title picks
      *       its layout coordinates by whether ...
-     * Path: no menu entry opens it (opened by code)
+     * Path: none found (no data entry, and no traced code, opens it)
      * EXIT -> TITLE_SQNOTESEL */
     .NoteEdit_TtlScreen_2 = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -8828,7 +8842,7 @@ const naka_effects_seq_t naka_effects_seq_data
     },
 
     /* ==== SCREEN TITLE_SQNOTECYCP "CYCLE PLAY" -- "TT_SQNOTECYCP", title id 0x96, function NAKA_MAINFUNC_SqNoteCycpTitleFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: none found (no data entry, and no traced code, opens it)
      * EXIT -> TITLE_SQNOTEEDT */
     .CyclePlay_TtlScreen_2 = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -8982,9 +8996,9 @@ const naka_effects_seq_t naka_effects_seq_data
     .v96_e7_caption = "CYCLE END MEASURE   :",
 
     /* ==== SCREEN TITLE_SQDRMSEL "DRUM EDIT  " -- "TT_SQDRMSEL", title id 0x97, function NAKA_MAINFUNC_SqDrmSelTitleFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: mode MD_SEQ_EDIT > "DRUM EDIT"
      * EXIT -> TITLE_SQEMENU
-     * Opened from: an untitled view ("DRUM EDIT") */
+     * Opened from: TITLE_SQEMENU ("DRUM EDIT") */
     .DrumEdit_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -9047,7 +9061,7 @@ const naka_effects_seq_t naka_effects_seq_data
     },
 
     /* ==== SCREEN TITLE_SQDRMEDT "DRUM EDIT" -- "TT_SQDRMEDT", title id 0x98, function NAKA_MAINFUNC_SqDrmEdtTitleFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: none found (no data entry, and no traced code, opens it)
      * EXIT -> TITLE_SQDRMSEL */
     .DrumEdit_TtlScreen_2 = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -9465,7 +9479,7 @@ const naka_effects_seq_t naka_effects_seq_data
     },
 
     /* ==== SCREEN TITLE_SQDRMCYCP "CYCLE PLAY" -- "TT_SQDRMCYCP", title id 0x99, function NAKA_MAINFUNC_SqDrmCycpTitleFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: none found (no data entry, and no traced code, opens it)
      * EXIT -> TITLE_SQDRMEDT */
     .CyclePlay_TtlScreen_3 = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -9621,9 +9635,9 @@ const naka_effects_seq_t naka_effects_seq_data
     /* ==== SCREEN TITLE_SQTRKCLR "TRACK CLEAR" -- "TT_SQTRKCLR", title id 0x9A, function NAKA_MAINFUNC_SqTrclTitleFunc ====
      * What: the sequencer track-clear page. It is also the first of the 15 titles 0x9A..0xA8 that
      *       SureJudge_ShowSureDisp indexes by ...
-     * Path: no menu entry opens it (opened by code)
+     * Path: mode MD_SEQ_EDIT > "TRACK CLEAR"
      * EXIT -> TITLE_SQEMENU
-     * Opened from: an untitled view ("TRACK CLEAR") */
+     * Opened from: TITLE_SQEMENU ("TRACK CLEAR") */
     .TrackClear_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -9855,9 +9869,9 @@ const naka_effects_seq_t naka_effects_seq_data
     },
 
     /* ==== SCREEN TITLE_SQTRKMRG "TRACK MERGE" -- "TT_SQTRKMRG", title id 0x9B, function NAKA_MAINFUNC_SqTrmgTitleFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: mode MD_SEQ_EDIT > "TRACK MERGE"
      * EXIT -> TITLE_SQEMENU
-     * Opened from: an untitled view ("TRACK MERGE") */
+     * Opened from: TITLE_SQEMENU ("TRACK MERGE") */
     .TrackMerge_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -10208,9 +10222,9 @@ const naka_effects_seq_t naka_effects_seq_data
     },
 
     /* ==== SCREEN TITLE_SQQTZ "QUANTIZE" -- "TT_SQQTZ", title id 0x9C, function NAKA_MAINFUNC_SqQtzTitleFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: mode MD_SEQ_EDIT > "QUANTIZE"
      * EXIT -> TITLE_SQEMENU
-     * Opened from: an untitled view ("QUANTIZE") */
+     * Opened from: TITLE_SQEMENU ("QUANTIZE") */
     .Quantize_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -10588,9 +10602,9 @@ const naka_effects_seq_t naka_effects_seq_data
     },
 
     /* ==== SCREEN TITLE_SQTRNS "TRANSPOSE" -- "TT_SQTRNS", title id 0x9D, function NAKA_MAINFUNC_SqTrnsTitleFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: mode MD_SEQ_EDIT > "TRANSPOSE"
      * EXIT -> TITLE_SQEMENU
-     * Opened from: an untitled view ("TRANSPOSE") */
+     * Opened from: TITLE_SQEMENU ("TRANSPOSE") */
     .Transpose_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -10880,9 +10894,9 @@ const naka_effects_seq_t naka_effects_seq_data
     },
 
     /* ==== SCREEN TITLE_SQVELOCNG "VELOCITY CHANGE" -- "TT_SQVELOCNG", title id 0x9E, function NAKA_MAINFUNC_SqVcngTitleFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: mode MD_SEQ_EDIT > "VELOCITY CHANGE"
      * EXIT -> TITLE_SQEMENU
-     * Opened from: an untitled view ("VELOCITY CHANGE") */
+     * Opened from: TITLE_SQEMENU ("VELOCITY CHANGE") */
     .VelocityChange_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -11172,9 +11186,9 @@ const naka_effects_seq_t naka_effects_seq_data
     },
 
     /* ==== SCREEN TITLE_SQNOTECNG "NOTE CHANGE" -- "TT_SQNOTECNG", title id 0x9F, function NAKA_MAINFUNC_SqNcngTitleFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: mode MD_SEQ_EDIT > "NOTE CHANGE"
      * EXIT -> TITLE_SQEMENU
-     * Opened from: an untitled view ("NOTE CHANGE") */
+     * Opened from: TITLE_SQEMENU ("NOTE CHANGE") */
     .NoteChange_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -11589,9 +11603,9 @@ const naka_effects_seq_t naka_effects_seq_data
     },
 
     /* ==== SCREEN TITLE_SQADVDLY "ADVANCE/DELAY" -- "TT_SQADVDLY", title id 0xA0, function NAKA_MAINFUNC_SqAdlyTitleFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: mode MD_SEQ_EDIT > "ADVANCE/DELAY"
      * EXIT -> TITLE_SQEMENU
-     * Opened from: an untitled view ("ADVANCE/DELAY") */
+     * Opened from: TITLE_SQEMENU ("ADVANCE/DELAY") */
     .AdvanceDelay_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -11881,9 +11895,9 @@ const naka_effects_seq_t naka_effects_seq_data
     },
 
     /* ==== SCREEN TITLE_SQMERS "MEASURE ERASE" -- "TT_SQMERS", title id 0xA1, function NAKA_MAINFUNC_SqMersTitleFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: mode MD_SEQ_EDIT > "ERASE"
      * EXIT -> TITLE_SQEMENU
-     * Opened from: an untitled view ("ERASE") */
+     * Opened from: TITLE_SQEMENU ("ERASE") */
     .MeasureErase_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -12173,9 +12187,9 @@ const naka_effects_seq_t naka_effects_seq_data
     },
 
     /* ==== SCREEN TITLE_SQMCP "MEASURE COPY" -- "TT_SQMCP", title id 0xA2, function NAKA_MAINFUNC_SqMcpyTitleFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: mode MD_SEQ_EDIT > "COPY"
      * EXIT -> TITLE_SQEMENU
-     * Opened from: an untitled view ("COPY") */
+     * Opened from: TITLE_SQEMENU ("COPY") */
     .MeasureCopy_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -12450,9 +12464,9 @@ const naka_effects_seq_t naka_effects_seq_data
     .NO_str_11 = ALIGNED_STRING("NO"),
 
     /* ==== SCREEN TITLE_SQMDEL "MEASURE DELETE" -- "TT_SQMDEL", title id 0xA3, function NAKA_MAINFUNC_SqMdelTitleFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: mode MD_SEQ_EDIT > "DELETE"
      * EXIT -> TITLE_SQEMENU
-     * Opened from: an untitled view ("DELETE") */
+     * Opened from: TITLE_SQEMENU ("DELETE") */
     .MeasureDelete_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -12719,9 +12733,9 @@ const naka_effects_seq_t naka_effects_seq_data
     },
 
     /* ==== SCREEN TITLE_SQMINS "MEASURE INSERT" -- "TT_SQMINS", title id 0xA4, function NAKA_MAINFUNC_SqMinsTitleFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: mode MD_SEQ_EDIT > "INSERT"
      * EXIT -> TITLE_SQEMENU
-     * Opened from: an untitled view ("INSERT") */
+     * Opened from: TITLE_SQEMENU ("INSERT") */
     .MeasureInsert_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -12996,7 +13010,7 @@ const naka_effects_seq_t naka_effects_seq_data
     .NO_str_13 = ALIGNED_STRING("NO"),
 
     /* ==== SCREEN TITLE_SQMETBAL "METRONOME BALANCE" -- "TT_SQMETBAL", title id 0xAB, function NAKA_APFUNC_DefaultFunction ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: none found (no data entry, and no traced code, opens it)
      * EXIT -> TITLE_PS */
     .MetronomeBalance_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -13033,7 +13047,7 @@ const naka_effects_seq_t naka_effects_seq_data
 
     /* ==== SCREEN TITLE_ETMENU "ENTERTAINER" -- "TT_ETMENU", title id 0xD6, function NAKA_MAINFUNC_EtmenuTitleFunc ====
      * What: the Entertainer menu. It is the home title of mode 7, MD_ENTERTAINER (0x01800007).
-     * Path: mode MD_ENTERTAINER
+     * Path: ENTERTAINER button (mode MD_ENTERTAINER)
      * Menu: "VOCALIST WORKSTATION" -> TITLE_ETVOCAL
      * Menu: "FADE IN/OUT SETTING" -> TITLE_ETFADEIN
      * Menu: "MIXER" -> TITLE_SDMIXER
@@ -13247,7 +13261,7 @@ const naka_effects_seq_t naka_effects_seq_data
 
     /* ==== SCREEN TITLE_SWHELP "HELP FUNCTION" -- "TT_SWHELP", title id 0xE7, function NAKA_MAINFUNC_HelpTitleFunc ====
      * What: the help screen. It is the home title of mode 0x14, MD_HELP.
-     * Path: mode MD_HELP
+     * Path: HELP button (mode MD_HELP)
      * EXIT -> TITLE_PS */
     .HelpFunction_TtlScreen = {
         .class_ = NAKA_CLASS(TtlScreen),

@@ -8,45 +8,54 @@ A **title** (`TITLE_*`, id `0x01A0xxxx`) is a screen the firmware can show: `Reg
 binds it to a view object, the root widget of the screen.  A **mode** (`MD_*`) has a home
 title.  A menu entry is an `AcTitleMenu` widget whose `title` field names the title it opens;
 a screen's `exit` field is where EXIT goes.  The path of a title is the shortest chain of
-menu entries from a mode's home title.  Titles that no menu entry names are opened by code
-(their own or another title's procedure) and are listed without a path.
+menu entries from a mode's home title; a step "(by Func)" is code that opens the title: a
+title's procedure, or the function of a menu box, passing the title's `TT_*` index to
+`UI_ChangeTitleByIndex` / `UI_InterruptTitleByIndex` (`scripts/converters/name_title_index_operands.py`)
+or posting `EVT_CHANGE_TITLE` itself.
 
-211 titles, 21 modes, 3206 widget records in 15 C files, 99 menu entries and 267 EXIT links.
+211 titles (130 with a path), 21 modes, 3206 widget records in 15 C files, 99 menu entries, 93 code transitions and 267 EXIT links.
 
 ## Modes
 
-| mode             | home title        | screen title         |
-|------------------|-------------------|----------------------|
-| `MD_PS`          | `TITLE_PS`        | -                    |
-| `MD_NORMAL`      | `TITLE_NORMAL`    | NORMAL               |
-| `MD_SOUND`       | `TITLE_SDMENU`    | SOUND MENU           |
-| `MD_SOUNDEDIT`   | `TITLE_SEMENU`    | -                    |
-| `MD_CONTROL`     | `TITLE_CTMENU`    | -                    |
-| `MD_MIDI`        | `TITLE_MDMENU`    | MIDI MENU            |
-| `MD_DISK`        | `TITLE_DKMENU`    | DISK MENU            |
-| `MD_ENTERTAINER` | `TITLE_ETMENU`    | ENTERTAINER          |
-| `MD_SEQ`         | `TITLE_SQMENU`    | SEQUENCER MENU       |
-| `MD_SEQ_EREC`    | `TITLE_SQEASYREC` | EASY RECORD          |
-| `MD_SEQ_PLAY`    | `TITLE_SQPLAY`    | SEQUENCER PLAY       |
-| `MD_SEQ_REAL`    | `TITLE_SQREALREC` | REALTIME RECORD      |
-| `MD_SEQ_EDIT`    | `TITLE_SQEMENU`   | EDIT                 |
-| `MD_SEQ_STEP`    | `TITLE_SQTRSEL`   | STEP RECORD          |
-| `MD_CMP`         | `TITLE_CMMENU`    | COMPOSER MENU        |
-| `MD_MSP`         | `TITLE_MSPMENU`   | MSP MENU             |
-| `MD_MSP_REC`     | `TITLE_MSPREC`    | MSP PHRASE RECORDING |
-| `MD_SND_ARG`     | `TITLE_SNDARG`    | SOUND ARRANGER       |
-| `MD_OTP`         | `TITLE_ONETCH`    | -                    |
-| `MD_DEMO`        | `TITLE_DEMOMENU`  | DEMONSTRATION        |
-| `MD_HELP`        | `TITLE_SWHELP`    | HELP FUNCTION        |
+| mode             | panel button       | home title        | screen title         | also entered by code in                                                                 |
+|------------------|--------------------|-------------------|----------------------|-----------------------------------------------------------------------------------------|
+| `MD_PS`          | -                  | `TITLE_PS`        | -                    | -                                                                                       |
+| `MD_NORMAL`      | -                  | `TITLE_NORMAL`    | NORMAL               | `AccPlay_MainUpdateLoop`, `AccStyle_InlinedBlock_Helper`, `BmDrEdit_InitMelodicMode` +8 |
+| `MD_SOUND`       | MENU SOUND         | `TITLE_SDMENU`    | SOUND MENU           | -                                                                                       |
+| `MD_SOUNDEDIT`   | -                  | `TITLE_SEMENU`    | -                    | -                                                                                       |
+| `MD_CONTROL`     | MENU CONTROL       | `TITLE_CTMENU`    | -                    | -                                                                                       |
+| `MD_MIDI`        | MENU MIDI          | `TITLE_MDMENU`    | MIDI MENU            | -                                                                                       |
+| `MD_DISK`        | MENU DISK          | `TITLE_DKMENU`    | DISK MENU            | `FileIO_ValidateSignedValue`                                                            |
+| `MD_ENTERTAINER` | ENTERTAINER        | `TITLE_ETMENU`    | ENTERTAINER          | -                                                                                       |
+| `MD_SEQ`         | SEQUENCER MENU     | `TITLE_SQMENU`    | SEQUENCER MENU       | -                                                                                       |
+| `MD_SEQ_EREC`    | SEQUENCER EASY REC | `TITLE_SQEASYREC` | EASY RECORD          | -                                                                                       |
+| `MD_SEQ_PLAY`    | -                  | `TITLE_SQPLAY`    | SEQUENCER PLAY       | `FmmFileNameFunc`, `FmmSmfFileNameFunc`, `RenderFilterDisplay` +2                       |
+| `MD_SEQ_REAL`    | -                  | `TITLE_SQREALREC` | REALTIME RECORD      | `MainExe_SequencerStop`                                                                 |
+| `MD_SEQ_EDIT`    | -                  | `TITLE_SQEMENU`   | EDIT                 | -                                                                                       |
+| `MD_SEQ_STEP`    | -                  | `TITLE_SQTRSEL`   | STEP RECORD          | -                                                                                       |
+| `MD_CMP`         | COMPOSER MENU      | `TITLE_CMMENU`    | COMPOSER MENU        | -                                                                                       |
+| `MD_MSP`         | MSP MENU           | `TITLE_MSPMENU`   | MSP MENU             | -                                                                                       |
+| `MD_MSP_REC`     | -                  | `TITLE_MSPREC`    | MSP PHRASE RECORDING | `AccPlay_InitializeStart`                                                               |
+| `MD_SND_ARG`     | SOUND ARRANGER SET | `TITLE_SNDARG`    | SOUND ARRANGER       | -                                                                                       |
+| `MD_OTP`         | -                  | `TITLE_ONETCH`    | -                    | `EffectMode_CopyVoiceParams`                                                            |
+| `MD_DEMO`        | DEMO               | `TITLE_DEMOMENU`  | DEMONSTRATION        | -                                                                                       |
+| `MD_HELP`        | HELP               | `TITLE_SWHELP`    | HELP FUNCTION        | -                                                                                       |
+
+The panel buttons come from the mode-key maps `PanelButton_ModeKeyCodes*` of
+`ui_widgets/naka_extension_device.c`: `PanelButton_ModeKey` (`audio/audio_control_engine.s`) replaces
+the button bits with map[lowest set bit] and posts the mode as `EVT_SW_IN_MODE`
+(`boot/main_title_ctrl_panel.s`: `NAKA_MODE_MD_PS + payload`).  Button names are the MAME driver's
+CPL_SEGn / CPR_SEGn port names.  Modes without a button are entered by code (`UI_ChangeModeByIndex`).
 
 ## Titles by menu path
 
 ### `TITLE_CMMENU` -- "COMPOSER MENU"
 
-- Path: mode `MD_CMP`
+- Path: COMPOSER MENU button (mode MD_CMP)
 - Registered: `"TT_CMMENU"`, title id 0xB0, function `NAKA_MAINFUNC_CmpMenuTtlFunc`, v10/maincpu/storage/flash_floppy_handlers.s
 - View: `OBJ_CmpMenuScreen` (TtlScreen) in `naka_composer_style.c`
 - Menu entries: "BEND RANGE SET" -> `TITLE_CMBEND`, "EASY COMPOSER" -> `TITLE_CMEASY`, "PATTERN COPY" -> `TITLE_CMPNCP`, "CUSTOM COPY" -> `TITLE_CMCSTMCP`, "SEQ TO COMPOSER COPY" -> `TITLE_CMSEQCP`, "LOAD SINGLE COMPOSER" -> `TITLE_CMPLDSNGL`
+- Its procedure `CmpMenuTtl_MainHandler` opens: `TITLE_CMBKSL`
 - EXIT -> `TITLE_NORMAL`
 - Widgets:
 
@@ -73,7 +82,7 @@ menu entries from a mode's home title.  Titles that no menu entry names are open
 
 the CONTROL menu. It is the home title of mode 4, MD_CONTROL. Control sub-pages request it to navigate back.
 
-- Path: mode `MD_CONTROL`
+- Path: MENU CONTROL button (mode MD_CONTROL)
 - Registered: `"TT_CTMENU"`, title id 0x40, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/extensions/extension_init.s
 - View: `OBJ_ControlMenu` (TtlScreen) in `control_menu_header.c`
 - Menu entries: "INITIAL" -> `TITLE_CTINIT`, "OVERALL TOUCH SENSITIVITY" -> `TITLE_CTTOUCH`, "?" -> `TITLE_CTFSWAS`, "?" -> `TITLE_CTSYSTEM`, "PANEL MEMORY MODE" -> `TITLE_CTPMMD`, "MUSIC STYLE ARRANGER MODE" -> `TITLE_MSAMODE`, "WALLPAPER SETTING" -> `TITLE_CTWALLSET`
@@ -94,7 +103,7 @@ the CONTROL menu. It is the home title of mode 4, MD_CONTROL. Control sub-pages 
 
 the demo menu. It is the home title of mode 0x13, MD_DEMO.
 
-- Path: mode `MD_DEMO`
+- Path: DEMO button (mode MD_DEMO)
 - Registered: `"TT_DEMOMENU"`, title id 0xE0, function `NAKA_MAINFUNC_DemoMenuTtlFunc`, v10/maincpu/sequencer/sequencer_ui.s
 - View: `OBJ_DemoMenu` (TtlScreen) in `naka_direct_play.c`
 - Menu entries: "PERFORMANCES" -> `TITLE_DEMOSTYLE`, "FEATURE PRESENTATION" -> `TITLE_DEMOFEATURE`
@@ -108,11 +117,11 @@ the demo menu. It is the home title of mode 0x13, MD_DEMO.
 
 ### `TITLE_DKMENU` -- "DISK MENU"
 
-- Path: mode `MD_DISK`
+- Path: MENU DISK button (mode MD_DISK)
 - Registered: `"TT_DKMENU"`, title id 0x60, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/file_io/medley.s
 - View: `OBJ_DiskMenu` (TtlScreen) in `naka_disk_menu_file_io.c`
 - Menu entries: "STYLE CONVERT" -> `TITLE_STYLCNVWAIT`, "PREFERENCES" -> `TITLE_DKSETUP`, "SAVE" -> `TITLE_DKSVMENU`, "HARD DISK MAIN MENU" -> `TITLE_HDDEXT`
-- Entries that open a title by code: "DISK TOOLS" -> `NAKA_MAINFUNC_UtilityTtlJgFunc`, "LOAD" -> `NAKA_MAINFUNC_LoadTtlJgFunc`, "DIRECT PLAY" -> `NAKA_MAINFUNC_DirectPlayTtlJgFunc`, "SONG MEDLEY" -> `NAKA_MAINFUNC_SongMedleyTtlJgFunc`
+- Entries that open a title by code: "DISK TOOLS" -> `NAKA_MAINFUNC_UtilityTtlJgFunc` (`TITLE_DKUT`, `TITLE_DKUTFRMT`, `TITLE_DKUTSMF`, `TITLE_MESAGE`), "LOAD" -> `NAKA_MAINFUNC_LoadTtlJgFunc` (`TITLE_DKLD`, `TITLE_DKLDSMF`, `TITLE_DKUTFRMT`, `TITLE_MESAGE`), "DIRECT PLAY" -> `NAKA_MAINFUNC_DirectPlayTtlJgFunc` (`TITLE_DKDPDOC`, `TITLE_DKDPPD`, `TITLE_DKDPSMF`, `TITLE_DKUTFRMT`, `TITLE_MESAGE`), "SONG MEDLEY" -> `NAKA_MAINFUNC_SongMedleyTtlJgFunc` (`TITLE_DKMDLY`, `TITLE_DKUTFRMT`, `TITLE_MESAGE`)
 - EXIT -> `TITLE_PS`
 - Widgets:
 
@@ -131,7 +140,7 @@ the demo menu. It is the home title of mode 0x13, MD_DEMO.
 
 the Entertainer menu. It is the home title of mode 7, MD_ENTERTAINER (0x01800007).
 
-- Path: mode `MD_ENTERTAINER`
+- Path: ENTERTAINER button (mode MD_ENTERTAINER)
 - Registered: `"TT_ETMENU"`, title id 0xD6, function `NAKA_MAINFUNC_EtmenuTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
 - View: `OBJ_EnterTainerScr` (TtlScreen) in `naka_effects_seq.c`
 - Menu entries: "VOCALIST WORKSTATION" -> `TITLE_ETVOCAL`, "FADE IN/OUT SETTING" -> `TITLE_ETFADEIN`, "MIXER" -> `TITLE_SDMIXER`, "DISK LOAD" -> `TITLE_DKLD`
@@ -158,7 +167,7 @@ the Entertainer menu. It is the home title of mode 7, MD_ENTERTAINER (0x01800007
 
 the help screen. It is the home title of mode 0x14, MD_HELP.
 
-- Path: mode `MD_HELP`
+- Path: HELP button (mode MD_HELP)
 - Registered: `"TT_SWHELP"`, title id 0xE7, function `NAKA_MAINFUNC_HelpTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
 - View: `OBJ_HelpFunction_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
 - EXIT -> `TITLE_PS`
@@ -172,9 +181,10 @@ the help screen. It is the home title of mode 0x14, MD_HELP.
 
 ### `TITLE_MDMENU` -- "MIDI MENU"
 
-- Path: mode `MD_MIDI`
+- Path: MENU MIDI button (mode MD_MIDI)
 - Registered: `"TT_MDMENU"`, title id 0x50, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/seq_event_playback.s
 - View: `OBJ_MidiMenu` (TtlScreen) in `naka_midi_reverb.c`
+- Menu entries: "PART SETTING" -> `TITLE_MDPART`, "CONTROL MESSAGES" -> `TITLE_MDCTRL`, "REALTIME MESSAGES" -> `TITLE_MDREAL`, "COMMON SETTING" -> `TITLE_MDCOM`, "INPUT/OUTPUT SETTING" -> `TITLE_MDINOUT`, "MIDI PRESETS" -> `TITLE_MDPRESET`, "SYSEX BULK DUMP" -> `TITLE_MDEXC`, "GENERAL MIDI" -> `TITLE_MDGMMODE`, "PROG.CHANGE MIDI OUT" -> `TITLE_MDTXPCG`, "P.MEM OUTPUT" -> `TITLE_MDPMLCTL`, "COMPUTER CONNECTION" -> `TITLE_MDCOMP`, "MIDI SETTINGS LOAD OPTION" -> `TITLE_MDSETUP`
 - EXIT -> `TITLE_NORMAL`
 - Widgets:
 
@@ -187,7 +197,7 @@ the help screen. It is the home title of mode 0x14, MD_HELP.
 
 ### `TITLE_MSPMENU` -- "MSP MENU"
 
-- Path: mode `MD_MSP`
+- Path: MSP MENU button (mode MD_MSP)
 - Registered: `"TT_MSPMENU"`, title id 0xCA, function `NAKA_MAINFUNC_MspMenuTtlFunc`, v10/maincpu/storage/flash_floppy_handlers.s
 - View: `OBJ_MspMenuScreen` (TtlScreen) in `naka_msp_recording.c`
 - Menu entries: "COMPILE SET" -> `TITLE_MSPGROUP`, "Naming for User&COMPILE Banks" -> `TITLE_MSPNAME`
@@ -203,7 +213,7 @@ the help screen. It is the home title of mode 0x14, MD_HELP.
 
 ### `TITLE_MSPREC` -- "MSP PHRASE RECORDING"
 
-- Path: mode `MD_MSP_REC`
+- Path: mode MD_MSP_REC
 - Registered: `"TT_MSPREC"`, title id 0xC9, function `NAKA_MAINFUNC_MspRecTtlFunc`, v10/maincpu/storage/flash_floppy_handlers.s
 - View: `OBJ_MspRecScreen` (TtlScreen) in `naka_msp_recording.c`
 - EXIT -> `TITLE_NORMAL`
@@ -230,7 +240,7 @@ the help screen. It is the home title of mode 0x14, MD_HELP.
 
 the normal play screen. It is the home title of mode 1, MD_NORMAL (0x01800001).
 
-- Path: mode `MD_NORMAL`
+- Path: mode MD_NORMAL
 - Registered: `"TT_NORMAL"`, title id 0x1, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/extensions/extension_init.s
 - View: `OBJ_normal` (NormScreen) in `naka_normal_mode.c`
 - EXIT -> `TITLE_PS`
@@ -262,7 +272,7 @@ the normal play screen. It is the home title of mode 1, MD_NORMAL (0x01800001).
 
 ### `TITLE_ONETCH`
 
-- Path: mode `MD_OTP`
+- Path: mode MD_OTP
 - Registered: `"TT_ONETCH"`, title id 0xC0, function `NAKA_MAINFUNC_OneTchFUNC`, v10/maincpu/extensions/extension_init.s
 - View: `OBJ_ONETCH` (TtlScreen) in `naka_ctrl_menu_body.c`
 - EXIT -> `TITLE_NORMAL`
@@ -277,7 +287,7 @@ the normal play screen. It is the home title of mode 1, MD_NORMAL (0x01800001).
 
 Not an event. This is title id 0, entry 0 of object table 0x1A0. InitializeObjectTable registers that table as class 0x01600007 with proc TitleProc ...
 
-- Path: mode `MD_PS`
+- Path: mode MD_PS
 - Registered: `"TT_PS"`, title id 0x0, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/display/graphics_text_vga.s
 - View: element 0 of Viewable slot 0x0 (record outside the C sources)
 - Menu entries: "CHECK TITLE" -> `TITLE_CHECK`
@@ -287,7 +297,7 @@ Not an event. This is title id 0, entry 0 of object table 0x1A0. InitializeObjec
 
 the SEQUENCER menu. It is the home title of mode 8, MD_SEQ.
 
-- Path: mode `MD_SEQ`
+- Path: SEQUENCER MENU button (mode MD_SEQ)
 - Registered: `"TT_SQMENU"`, title id 0x80, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/sequencer_ui.s
 - View: `OBJ_SequencerMenu_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
 - Menu entries: "CREATE" -> `TITLE_SQCMENU`, "PANEL WRITE" -> `TITLE_SQPNLWRM`
@@ -311,9 +321,10 @@ the SEQUENCER menu. It is the home title of mode 8, MD_SEQ.
 
 the sequencer EDIT menu. It is the home title of mode 0xC, MD_SEQ_EDIT.
 
-- Path: mode `MD_SEQ_EDIT`
+- Path: mode MD_SEQ_EDIT
 - Registered: `"TT_SQEMENU"`, title id 0x93, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/sequencer_ui.s
 - View: `OBJ_Edit_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
+- Menu entries: "NOTE EDIT" -> `TITLE_SQNOTESEL`, "DRUM EDIT" -> `TITLE_SQDRMSEL`, "SONG/TRACK COPY" -> `TITLE_SQSNGCP`, "TRACK CLEAR" -> `TITLE_SQTRKCLR`, "TRACK MERGE" -> `TITLE_SQTRKMRG`, "QUANTIZE" -> `TITLE_SQQTZ`, "TRANSPOSE" -> `TITLE_SQTRNS`, "VELOCITY CHANGE" -> `TITLE_SQVELOCNG`, "NOTE CHANGE" -> `TITLE_SQNOTECNG`, "ADVANCE/DELAY" -> `TITLE_SQADVDLY`, "COPY" -> `TITLE_SQMCP`, "ERASE" -> `TITLE_SQMERS`, "DELETE" -> `TITLE_SQMDEL`, "INSERT" -> `TITLE_SQMINS`
 - EXIT -> `TITLE_SQMENU`
 - Widgets:
 
@@ -328,7 +339,7 @@ the sequencer EDIT menu. It is the home title of mode 0xC, MD_SEQ_EDIT.
 
 the sequencer easy-record page. It is the home title of mode 9, MD_SEQ_EREC.
 
-- Path: mode `MD_SEQ_EREC`
+- Path: SEQUENCER EASY REC button (mode MD_SEQ_EREC)
 - Registered: `"TT_SQEASYREC"`, title id 0x83, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/sequencer_ui.s
 - View: `OBJ_EasyRecord_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
 - Menu entries: "NAMING" -> `TITLE_SQEASYNAME`
@@ -356,7 +367,7 @@ the sequencer easy-record page. It is the home title of mode 9, MD_SEQ_EREC.
 
 the sequencer play page. It is the home title of mode 0xA, MD_SEQ_PLAY.
 
-- Path: mode `MD_SEQ_PLAY`
+- Path: mode MD_SEQ_PLAY
 - Registered: `"TT_SQPLAY"`, title id 0x81, function `NAKA_MAINFUNC_SqPlayTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
 - View: `OBJ_SequencerPlay_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
 - EXIT -> `TITLE_NORMAL`
@@ -383,7 +394,7 @@ the sequencer play page. It is the home title of mode 0xA, MD_SEQ_PLAY.
 
 ### `TITLE_SQREALREC` -- "REALTIME RECORD"
 
-- Path: mode `MD_SEQ_REAL`
+- Path: mode MD_SEQ_REAL
 - Registered: `"TT_SQREALREC"`, title id 0x85, function `NAKA_MAINFUNC_SqRealRecTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
 - View: `OBJ_RealtimeRecord_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
 - EXIT -> `TITLE_SQCMENU`
@@ -414,7 +425,7 @@ the sequencer play page. It is the home title of mode 0xA, MD_SEQ_PLAY.
 
 ### `TITLE_SQTRSEL` -- "STEP RECORD       "
 
-- Path: mode `MD_SEQ_STEP`
+- Path: mode MD_SEQ_STEP
 - Registered: `"TT_SQTRSEL"`, title id 0x89, function `NAKA_MAINFUNC_SqTrSelTtlFunc`, v10/maincpu/sequencer/sequencer_ui.s
 - View: `OBJ_SqTrSel` (TtlScreen) in `naka_direct_play.c`
 - EXIT -> `TITLE_SQCMENU`
@@ -430,7 +441,7 @@ the sequencer play page. It is the home title of mode 0xA, MD_SEQ_PLAY.
 
 the Sound Arranger page. It is the home title of mode 0x11, MD_SND_ARG.
 
-- Path: mode `MD_SND_ARG`
+- Path: SOUND ARRANGER SET button (mode MD_SND_ARG)
 - Registered: `"TT_SNDARG"`, title id 0xDC, function `NAKA_MAINFUNC_SndArgTtlFunc`, v10/maincpu/storage/flash_floppy_handlers.s
 - View: `OBJ_SndArgrScreen` (TtlScreen) in `naka_msp_recording.c`
 - EXIT -> `TITLE_NORMAL`
@@ -449,9 +460,10 @@ the Sound Arranger page. It is the home title of mode 0x11, MD_SND_ARG.
 
 the SOUND menu. It is the home title of mode 2, MD_SOUND (0x01800002).
 
-- Path: mode `MD_SOUND`
+- Path: MENU SOUND button (mode MD_SOUND)
 - Registered: `"TT_SDMENU"`, title id 0x2, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/ui/drawbar_panel_ui.s
 - View: `OBJ_Sdmenu` (TtlScreen) in `naka_sound_menu_drawbar.c`
+- Menu entries: "PART SETTING" -> `TITLE_SDPART`, "MIXER" -> `TITLE_SDMIXER`, "MASTER TUNING" -> `TITLE_SDMTUNE`, "KEY SCALING" -> `TITLE_SDSCLTYP`, "REVERB & EQ PRESETS" -> `TITLE_REVEQMENU`, "REVERB" -> `TITLE_SDREVSET`, "EQUALIZER" -> `TITLE_SDEQUALIZER`, "DSP EFFECT" -> `TITLE_SDDSPEFF`, "ACOUSTIC ILLUSION" -> `TITLE_SDACCILL`, "LEFT HOLD" -> `TITLE_SDLFTHLD`, "TECHNI-CHORD" -> `TITLE_SDTECD`
 - EXIT -> `TITLE_PS`
 - Widgets:
 
@@ -464,14 +476,36 @@ the SOUND menu. It is the home title of mode 2, MD_SOUND (0x01800002).
 
 ### `TITLE_SEMENU`
 
-- Path: mode `MD_SOUNDEDIT`
+- Path: mode MD_SOUNDEDIT
 - Registered: `"TT_SEMENU"`, title id 0x20, function `NAKA_MAINFUNC_SeMenuTitleFunc`, v10/maincpu/display/scoop_display.s
 - View: element 0 of Viewable slot 0x20 (record outside the C sources)
 - EXIT -> `TITLE_PS`
 
+### `TITLE_CMBKSL` -- "RECORD MEMORY"
+
+- Path: COMPOSER MENU button (mode MD_CMP) > (by CmpMenuTtl_MainHandler)
+- Registered: `"TT_CMBKSL"`, title id 0xB1, function `NAKA_MAINFUNC_CmpBkslTtlFunc`, v10/maincpu/storage/flash_floppy_handlers.s
+- View: `OBJ_CmpBkslScreen` (TtlScreen) in `naka_composer_style.c`
+- Its procedure `CmpOffset_Dispatch` opens: `TITLE_CMBKSL_S`
+- EXIT -> `TITLE_CMMENU`
+- Widgets:
+
+  - `OBJ_CmpBkslScreen` TtlScreen "RECORD MEMORY" [0,0 320x240]
+    - `OBJ_CmpBkslScreen_IvMainEditSw` IvMainEditSw [0,0 32x32]
+    - `OBJ_Variation_VwMenuBox` VwMenuBox "VARIATION 1" [8,30 149x26]
+    - `OBJ_Variation_VwMenuBox_2` VwMenuBox "VARIATION 3" [8,72 149x26]
+    - `OBJ_Intro_VwMenuBox` VwMenuBox "INTRO 1" [8,114 149x26]
+    - `OBJ_FillIn_VwMenuBox` VwMenuBox "FILL IN 1" [8,156 149x26]
+    - `OBJ_Ending_VwMenuBox` VwMenuBox "ENDING 1" [8,198 149x26]
+    - `OBJ_Variation_VwMenuBox_3` VwMenuBox "      VARIATION 2" [163,30 149x26]
+    - `OBJ_Variation_VwMenuBox_4` VwMenuBox "      VARIATION 4" [163,72 149x26]
+    - `OBJ_Intro_VwMenuBox_2` VwMenuBox "INTRO 2" [242,114 149x26]
+    - `OBJ_FillIn_VwMenuBox_2` VwMenuBox "FILL IN 2" [226,156 149x26]
+    - `OBJ_Ending_VwMenuBox_2` VwMenuBox "ENDING 2" [234,198 149x26]
+
 ### `TITLE_CMBEND` -- "COMPOSER PITCH BEND RANGE SETTING"
 
-- Path: mode `MD_CMP` > "BEND RANGE SET"
+- Path: COMPOSER MENU button (mode MD_CMP) > "BEND RANGE SET"
 - Registered: `"TT_CMBEND"`, title id 0xBB, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/storage/flash_floppy_handlers.s
 - View: `OBJ_CmpBendScreen` (TtlScreen) in `naka_composer_style.c`
 - EXIT -> `TITLE_CMMENU`
@@ -485,9 +519,10 @@ the SOUND menu. It is the home title of mode 2, MD_SOUND (0x01800002).
 
 ### `TITLE_CMCSTMCP` -- "CUSTOM COPY"
 
-- Path: mode `MD_CMP` > "CUSTOM COPY"
+- Path: COMPOSER MENU button (mode MD_CMP) > "CUSTOM COPY"
 - Registered: `"TT_CMCSTMCP"`, title id 0xBE, function `NAKA_MAINFUNC_CstmCpTtlFunc`, v10/maincpu/storage/flash_floppy_handlers.s
 - View: `OBJ_CmpCstmCpScreen` (TtlScreen) in `naka_composer_style.c`
+- Its procedure `CstmCpTtl_RecDispatch` opens: `TITLE_MESAGE`
 - EXIT -> `TITLE_CMMENU`
 - Opened from: `TITLE_CMMENU` ("CUSTOM COPY")
 - Widgets:
@@ -512,9 +547,10 @@ the SOUND menu. It is the home title of mode 2, MD_SOUND (0x01800002).
 
 ### `TITLE_CMEASY` -- "EASY COMPOSER"
 
-- Path: mode `MD_CMP` > "EASY COMPOSER"
+- Path: COMPOSER MENU button (mode MD_CMP) > "EASY COMPOSER"
 - Registered: `"TT_CMEASY"`, title id 0xBA, function `NAKA_MAINFUNC_CmEsyTtlFunc`, v10/maincpu/storage/flash_floppy_handlers.s
 - View: `OBJ_CmpEasyScreen` (TtlScreen) in `naka_composer_style.c`
+- Its procedure `CmpEsyTtl_MainHandler` opens: `TITLE_CMREAL`
 - EXIT -> `TITLE_CMMENU`
 - Opened from: `TITLE_CMMENU` ("EASY COMPOSER")
 - Widgets:
@@ -536,9 +572,10 @@ the SOUND menu. It is the home title of mode 2, MD_SOUND (0x01800002).
 
 ### `TITLE_CMPLDSNGL` -- "LOAD SINGLE COMPOSER"
 
-- Path: mode `MD_CMP` > "LOAD SINGLE COMPOSER"
+- Path: COMPOSER MENU button (mode MD_CMP) > "LOAD SINGLE COMPOSER"
 - Registered: `"TT_CMPLDSNGL"`, title id 0x62, function `NAKA_MAINFUNC_FmmCmpSingleLoadFunc`, v10/maincpu/file_io/medley.s
 - View: `OBJ_CmpSingleLoad` (TtlScreen) in `naka_disk_menu_file_io.c`
+- Its procedure `FmmCmpSingleLoadFunc` opens: `TITLE_CMMENU`, `TITLE_DKUTFRMT`, `TITLE_MESAGE`
 - EXIT -> `TITLE_CMMENU`
 - Opened from: `TITLE_CMMENU` ("LOAD SINGLE COMPOSER")
 - Widgets:
@@ -571,7 +608,7 @@ the SOUND menu. It is the home title of mode 2, MD_SOUND (0x01800002).
 
 a Composer copy page. Three box procs fill different notify data while on it.
 
-- Path: mode `MD_CMP` > "PATTERN COPY"
+- Path: COMPOSER MENU button (mode MD_CMP) > "PATTERN COPY"
 - Registered: `"TT_CMPNCP"`, title id 0xB8, function `NAKA_MAINFUNC_CmpNcpTtlFunc`, v10/maincpu/storage/flash_floppy_handlers.s
 - View: `OBJ_CmpNcpScreen` (TtlScreen) in `naka_composer_style.c`
 - EXIT -> `TITLE_CMMENU`
@@ -614,7 +651,7 @@ a Composer copy page. Three box procs fill different notify data while on it.
 
 ### `TITLE_CMSEQCP` -- "SEQ TO COMPOSER COPY"
 
-- Path: mode `MD_CMP` > "SEQ TO COMPOSER COPY"
+- Path: COMPOSER MENU button (mode MD_CMP) > "SEQ TO COMPOSER COPY"
 - Registered: `"TT_CMSEQCP"`, title id 0xB9, function `NAKA_MAINFUNC_S2cTtlFunc`, v10/maincpu/storage/flash_floppy_handlers.s
 - View: `OBJ_S2CScreen` (TtlScreen) in `naka_composer_style.c`
 - EXIT -> `TITLE_CMMENU`
@@ -661,7 +698,7 @@ a Composer copy page. Three box procs fill different notify data while on it.
 
 ### `TITLE_CTFSWAS` -- "FOOT CONTROLLERS"
 
-- Path: mode `MD_CONTROL` > (unlabelled entry)
+- Path: MENU CONTROL button (mode MD_CONTROL) > (unlabelled entry)
 - Registered: `"TT_CTFSWAS"`, title id 0x42, function `NAKA_MAINFUNC_FswAsIniFunc`, v10/maincpu/extensions/extension_init.s
 - View: `OBJ_ControlFsw` (TtlScreen) in `naka_ctrl_menu_body.c`
 - EXIT -> `TITLE_CTMENU`
@@ -677,7 +714,7 @@ a Composer copy page. Three box procs fill different notify data while on it.
 
 ### `TITLE_CTSYSTEM` -- "DISPLAY TIME OUT"
 
-- Path: mode `MD_CONTROL` > (unlabelled entry)
+- Path: MENU CONTROL button (mode MD_CONTROL) > (unlabelled entry)
 - Registered: `"TT_CTSYSTEM"`, title id 0x47, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/extensions/extension_init.s
 - View: `OBJ_ControlSys` (TtlScreen) in `naka_ctrl_menu_body.c`
 - EXIT -> `TITLE_CTMENU`
@@ -696,7 +733,7 @@ a Composer copy page. Three box procs fill different notify data while on it.
 
 the CONTROL > initialize page. The 'No' answer of the initialize confirmation returns to it.
 
-- Path: mode `MD_CONTROL` > "INITIAL"
+- Path: MENU CONTROL button (mode MD_CONTROL) > "INITIAL"
 - Registered: `"TT_CTINIT"`, title id 0x41, function `NAKA_MAINFUNC_CntIniFunc`, v10/maincpu/extensions/extension_init.s
 - View: `OBJ_ControlIni` (TtlScreen) in `naka_ctrl_menu_body.c`
 - EXIT -> `TITLE_CTMENU`
@@ -712,7 +749,7 @@ the CONTROL > initialize page. The 'No' answer of the initialize confirmation re
 
 ### `TITLE_MSAMODE`
 
-- Path: mode `MD_CONTROL` > "MUSIC STYLE ARRANGER MODE"
+- Path: MENU CONTROL button (mode MD_CONTROL) > "MUSIC STYLE ARRANGER MODE"
 - Registered: `"TT_MSAMODE"`, title id 0x44, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/extensions/extension_init.s
 - View: `OBJ_NakaWidget_ToshiView044_0_MsaModeScreen` (MsaModeScreen) in `naka_ctrl_menu_body.c`
 - EXIT -> `TITLE_PS`
@@ -732,7 +769,7 @@ the CONTROL > initialize page. The 'No' answer of the initialize confirmation re
 
 ### `TITLE_CTTOUCH` -- "OVERALL TOUCH SENSITIVITY"
 
-- Path: mode `MD_CONTROL` > "OVERALL TOUCH SENSITIVITY"
+- Path: MENU CONTROL button (mode MD_CONTROL) > "OVERALL TOUCH SENSITIVITY"
 - Registered: `"TT_CTTOUCH"`, title id 0x43, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/extensions/extension_init.s
 - View: `OBJ_ControlSns` (TtlScreen) in `naka_ctrl_menu_body.c`
 - EXIT -> `TITLE_CTMENU`
@@ -750,7 +787,7 @@ the CONTROL > initialize page. The 'No' answer of the initialize confirmation re
 
 ### `TITLE_CTPMMD` -- "PANEL MEMORY MODE       "
 
-- Path: mode `MD_CONTROL` > "PANEL MEMORY MODE"
+- Path: MENU CONTROL button (mode MD_CONTROL) > "PANEL MEMORY MODE"
 - Registered: `"TT_CTPMMD"`, title id 0x45, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/extensions/extension_init.s
 - View: `OBJ_PanelMemoryMode_TtlScreen` (TtlScreen) in `naka_ctrl_menu_body.c`
 - EXIT -> `TITLE_PS`
@@ -767,7 +804,7 @@ the CONTROL > initialize page. The 'No' answer of the initialize confirmation re
 
 the CONTROL > wallpaper-setting page.
 
-- Path: mode `MD_CONTROL` > "WALLPAPER SETTING"
+- Path: MENU CONTROL button (mode MD_CONTROL) > "WALLPAPER SETTING"
 - Registered: `"TT_CTWALLSET"`, title id 0x48, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/extensions/extension_init.s
 - View: `OBJ_ControlWallSet` (TtlScreen) in `naka_ctrl_menu_body.c`
 - Menu entries: "LOAD" -> `TITLE_DKWPLD`
@@ -791,7 +828,7 @@ the CONTROL > wallpaper-setting page.
 
 ### `TITLE_DEMOFEATURE`
 
-- Path: mode `MD_DEMO` > "FEATURE PRESENTATION"
+- Path: DEMO button (mode MD_DEMO) > "FEATURE PRESENTATION"
 - Registered: `"TT_DEMOFEATURE"`, title id 0xE4, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/ui/drawbar_panel_ui.s
 - View: element 0 of Viewable slot 0xE4 (record outside the C sources)
 - EXIT -> `TITLE_DEMOMENU`
@@ -799,9 +836,10 @@ the CONTROL > wallpaper-setting page.
 
 ### `TITLE_DEMOSTYLE` -- "PERFORMANCES"
 
-- Path: mode `MD_DEMO` > "PERFORMANCES"
+- Path: DEMO button (mode MD_DEMO) > "PERFORMANCES"
 - Registered: `"TT_DEMOSTYLE"`, title id 0xE1, function `NAKA_MAINFUNC_DemoStyleTtlFunc`, v10/maincpu/sequencer/sequencer_ui.s
 - View: `OBJ_DemoStyle` (TtlScreen) in `naka_direct_play.c`
+- Its procedure `DemoStyleTtlFunc` opens: `TITLE_DEMORHY`, `TITLE_DEMOSOUND`
 - EXIT -> `TITLE_DEMOMENU`
 - Opened from: `TITLE_DEMOMENU` ("PERFORMANCES")
 - Widgets:
@@ -819,11 +857,282 @@ the CONTROL > wallpaper-setting page.
     - `OBJ_DemoStyle_IvMainEditSw` IvMainEditSw [0,0 32x32]
     - `OBJ_DemoMed1` AcDemoMedleyDispBox [100,40 114x19]
 
+### `TITLE_DKDPSMF` -- "SMF DIRECT PLAY"
+
+- Path: MENU DISK button (mode MD_DISK) > "DIRECT PLAY" (by DirectPlayTtlJgFunc)
+- Registered: `"TT_DKDPSMF"`, title id 0x6C, function `NAKA_MAINFUNC_FmmSmfMedleyFunc`, v10/maincpu/file_io/medley.s
+- View: `OBJ_DiskSmfDirectPlay` (TtlScreen) in `naka_disk_menu_file_io.c`
+- Its procedure `FmmSmfMedleyFunc` opens: `TITLE_DPMDLYSMF`, `TITLE_DPSMF`, `TITLE_MESAGE`
+- EXIT -> `TITLE_DKMENU`
+- Widgets:
+
+  - `OBJ_DiskSmfDirectPlay` TtlScreen "SMF DIRECT PLAY" [0,0 320x240]
+    - `OBJ_DiskSmfDirectPlay_PsFileNameBox` PsFileNameBox [77,66 166x148]
+      - `OBJ_DiskSmfDirectPlay_PsFileNameBox_2` PsFileNameBox [212,71 29x141]
+    - `OBJ_DiskSmfDirectPlay_AcIndexWideES` AcIndexWideES [124,216 72x23]
+    - `OBJ_DiskSmfDirectPlay_AcIndexEditSw` AcIndexEditSw [84,216 32x23]
+      - `OBJ_Prev_Label_4` Label "PREV" [85,222 28x11]
+    - `OBJ_DiskSmfDirectPlay_AcIndexEditSw_2` AcIndexEditSw [204,216 32x23]
+      - `OBJ_Next_Label_4` Label "NEXT" [205,222 28x11]
+    - `OBJ_Info_Label_2` Label "INFO" [8,61 36x19]
+    - `OBJ_DiskSmfDirectPlay_PsWindowToggle` PsWindowToggle "SONG" [8,76 39x18]
+    - `OBJ_DiskSmfDirectPlay_AcIndexEditSw_3` AcIndexEditSw [281,76 31x18]
+    - `OBJ_DiskSmfDirectPlay_AcIndexEditSw_4` AcIndexEditSw [281,118 31x18]
+    - `OBJ_DiskSmfDirectPlay_AcMonoIndexToggle` AcMonoIndexToggle "ON" [281,160 31x18]
+    - `OBJ_DiskSmfDirectPlay_AcMonoIndexToggle_2` AcMonoIndexToggle "GM" [273,202 39x18]
+    - `OBJ_PlayAs_Label` Label "PLAY AS" [260,187 60x19]
+    - `OBJ_DiskSmfDirectPlay_Line` Line [262,85 16x1]
+    - `OBJ_DiskSmfDirectPlay_Line_2` Line [261,85 1x32]
+    - `OBJ_DiskSmfDirectPlay_Line_3` Line [261,138 1x32]
+    - `OBJ_DiskSmfDirectPlay_Line_4` Line [262,169 16x1]
+    - `OBJ_Loop_Label_2` Label "LOOP" [282,150 28x11]
+    - `OBJ_Medley_Label` Label "MEDLEY" [241,123 40x11]
+    - `OBJ_DiskSmfDirectPlay_IvOneShotTimer` IvOneShotTimer [40,0 32x32]
+    - `OBJ_All_Label_2` Label "ALL" [282,77 28x19]
+    - `OBJ_Add_Label_2` Label "ADD" [282,119 28x19]
+    - `OBJ_SmfMidiOut` AcMonoIndexToggle "ON" [8,202 31x18]
+    - `OBJ_MidiOut_Label` Label "MIDI OUT" [0,187 68x19]
+    - `OBJ_DiskSmfDirectPlay_IvIndexSwDelay` IvIndexSwDelay [288,0 32x32]
+    - `OBJ_DiskSmfDirectPlay_AcIndexEditSw_5` AcIndexEditSw [281,34 31x18]
+
+### `TITLE_DKDPDOC` -- "DOC DIRECT PLAY"
+
+- Path: MENU DISK button (mode MD_DISK) > "DIRECT PLAY" (by DirectPlayTtlJgFunc)
+- Registered: `"TT_DKDPDOC"`, title id 0x6D, function `NAKA_MAINFUNC_FmmDocMedleyFunc`, v10/maincpu/file_io/medley.s
+- View: `OBJ_DiskDocDirectPlay` (TtlScreen) in `naka_disk_menu_file_io.c`
+- Its procedure `FmmDocMedleyFunc` opens: `TITLE_DPDOC`, `TITLE_DPMDLYDOC`, `TITLE_MESAGE`
+- EXIT -> `TITLE_DKMENU`
+- Widgets:
+
+  - `OBJ_DiskDocDirectPlay` TtlScreen "DOC DIRECT PLAY" [0,0 320x240]
+    - `OBJ_DiskDocDirectPlay_PsFileNameBox` PsFileNameBox [77,66 166x148]
+      - `OBJ_DiskDocDirectPlay_PsFileNameBox_2` PsFileNameBox [212,71 29x141]
+    - `OBJ_DiskDocDirectPlay_AcIndexEditSw` AcIndexEditSw [84,216 32x23]
+      - `OBJ_Prev_Label_5` Label "PREV" [85,222 28x11]
+    - `OBJ_DiskDocDirectPlay_AcIndexWideES` AcIndexWideES [124,216 72x23]
+    - `OBJ_DiskDocDirectPlay_AcIndexEditSw_2` AcIndexEditSw [204,216 32x23]
+      - `OBJ_Next_Label_5` Label "NEXT" [205,222 28x11]
+    - `OBJ_Medley_Label_2` Label "MEDLEY" [241,123 40x11]
+    - `OBJ_DiskDocDirectPlay_IvOneShotTimer` IvOneShotTimer [40,0 32x32]
+    - `OBJ_DiskDocDirectPlay_Line` Line [262,85 16x1]
+    - `OBJ_DiskDocDirectPlay_Line_2` Line [261,85 1x32]
+    - `OBJ_DiskDocDirectPlay_Line_3` Line [261,138 1x32]
+    - `OBJ_DiskDocDirectPlay_Line_4` Line [262,169 16x1]
+    - `OBJ_DiskDocDirectPlay_AcIndexEditSw_3` AcIndexEditSw [281,76 31x18]
+    - `OBJ_DiskDocDirectPlay_AcIndexEditSw_4` AcIndexEditSw [281,118 31x18]
+    - `OBJ_Loop_Label_3` Label "LOOP" [282,150 28x11]
+    - `OBJ_DiskDocDirectPlay_AcMonoIndexToggle` AcMonoIndexToggle "ON" [281,160 31x18]
+    - `OBJ_DiskDocDirectPlay_AcParaStrBox` AcParaStrBox [8,31 250x25]
+    - `OBJ_DiskDocDirectPlay_AcIndexEditSw_5` AcIndexEditSw [259,31 53x25]
+      - `OBJ_Start_Label_4` Label "START" [264,36 44x19]
+    - `OBJ_All_Label_3` Label "ALL" [282,77 28x19]
+    - `OBJ_Add_Label_3` Label "ADD" [282,119 28x19]
+
+### `TITLE_DKDPPD` -- "PIANO DISC DIRECT PLAY"
+
+- Path: MENU DISK button (mode MD_DISK) > "DIRECT PLAY" (by DirectPlayTtlJgFunc)
+- Registered: `"TT_DKDPPD"`, title id 0x6E, function `NAKA_MAINFUNC_FmmPdMedleyFunc`, v10/maincpu/file_io/medley.s
+- View: `OBJ_DiskPdDirectPlay` (TtlScreen) in `naka_disk_menu_file_io.c`
+- EXIT -> `TITLE_DKMENU`
+- Widgets:
+
+  - `OBJ_DiskPdDirectPlay` TtlScreen "PIANO DISC DIRECT PLAY" [0,0 320x240]
+    - `OBJ_DiskPdDirectPlay_PsFileNameBox` PsFileNameBox [3,36 232x177]
+      - `OBJ_DiskPdDirectPlay_PsFileNameBox_2` PsFileNameBox [204,40 29x171]
+    - `OBJ_DiskPdDirectPlay_AcIndexWideES` AcIndexWideES [44,216 152x23]
+    - `OBJ_DiskPdDirectPlay_AcIndexEditSw` AcIndexEditSw [4,216 32x23]
+      - `OBJ_Prev_Label_6` Label "PREV" [5,222 28x11]
+    - `OBJ_DiskPdDirectPlay_AcIndexEditSw_2` AcIndexEditSw [204,216 32x23]
+      - `OBJ_Next_Label_6` Label "NEXT" [205,222 28x11]
+    - `OBJ_DiskPdDirectPlay_AcIndexEditSw_3` AcIndexEditSw [281,76 31x18]
+    - `OBJ_DiskPdDirectPlay_IvOneShotTimer` IvOneShotTimer [0,0 32x32]
+    - `OBJ_DiskPdDirectPlay_AcIndexEditSw_4` AcIndexEditSw [281,118 31x18]
+    - `OBJ_DiskPdDirectPlay_AcMonoIndexToggle` AcMonoIndexToggle "ON" [281,160 31x18]
+    - `OBJ_Loop_Label_4` Label "LOOP" [282,150 28x11]
+    - `OBJ_DiskPdDirectPlay_AcIndexEditSw_5` AcIndexEditSw [259,31 53x25]
+      - `OBJ_Start_Label_5` Label "START" [264,36 44x19]
+    - `OBJ_Medley_Label_3` Label "MEDLEY" [241,123 40x11]
+    - `OBJ_DiskPdDirectPlay_Line` Line [262,85 16x1]
+    - `OBJ_DiskPdDirectPlay_Line_2` Line [261,85 1x32]
+    - `OBJ_DiskPdDirectPlay_Line_3` Line [261,138 1x32]
+    - `OBJ_DiskPdDirectPlay_Line_4` Line [262,169 16x1]
+    - `OBJ_All_Label_4` Label "ALL" [282,77 28x19]
+    - `OBJ_Add_Label_4` Label "ADD" [282,119 28x19]
+
+### `TITLE_DKUT` -- "DISK TOOLS"
+
+- Path: MENU DISK button (mode MD_DISK) > "DISK TOOLS" (by UtilityTtlJgFunc)
+- Registered: `"TT_DKUT"`, title id 0x7B, function `NAKA_MAINFUNC_FmmUtilityTitleFunc`, v10/maincpu/file_io/medley.s
+- View: `OBJ_DiskUtility` (TtlScreen) in `naka_disk_menu_file_io.c`
+- Menu entries: "SMF" -> `TITLE_DKUTSMF`, "?" -> `TITLE_DKUTFRMT`
+- Its procedure `FmmUtilityTitleFunc` opens: `TITLE_DKUTFRMT`, `TITLE_DKUTSMF`, `TITLE_MESAGE`
+- EXIT -> `TITLE_DKMENU`, `TITLE_DKUT`
+- Opened from: `TITLE_DKUTSMF` ("TECH")
+- Widgets:
+
+  - `OBJ_DiskUtility` TtlScreen "DISK TOOLS" [0,0 320x240]
+    - `OBJ_DiskUtility_AcIndexWideES` AcIndexWideES [124,216 72x23]
+    - `OBJ_DiskUtility_AcIndexEditSw` AcIndexEditSw [84,216 32x23]
+    - `OBJ_DiskUtility_AcIndexEditSw_2` AcIndexEditSw [204,216 32x23]
+    - `OBJ_Smf_AcTitleMenu_2` AcTitleMenu "SMF" [275,197 37x28] -> `TITLE_DKUTSMF`
+    - `OBJ_DiskName_Label_7` Label "DISK NAME:" [78,38 64x11]
+    - `OBJ_DiskUtility_AcIndexEditSw_3` AcIndexEditSw [8,202 31x18]
+    - `OBJ_DiskUtility_AcIndexEditSw_4` AcIndexEditSw [8,118 31x18]
+      - `OBJ_Del_Label` Label "DEL" [9,119 28x19]
+    - `OBJ_Move_Label` Label "MOVE" [4,182 36x19]
+    - `OBJ_DiskUtility_AcTitleMenu` AcTitleMenu [263,112 49x32] -> `TITLE_DKUTFRMT`
+      - `OBJ_Format_Label` Label "FORMAT" [260,119 52x19]
+    - `OBJ_DiskUtility_AcScreenMenu` AcScreenMenu [263,70 49x32]
+      - `OBJ_RENAME_Label` Label "RENAME" [260,77 52x19]
+    - `OBJ_DiskUtility_AcIndexEditSw_5` AcIndexEditSw [8,160 31x18]
+    - `OBJ_COPY_AcScreenMenu` AcScreenMenu "COPY" [8,72 41x26]
+    - `OBJ_DiskUtility_AcParaStrBox` AcParaStrBox [138,32 98x16]
+    - `OBJ_DiskUtility_AcParaStrBox_2` AcParaStrBox [60,50 198x14]
+    - `OBJ_DiskUtility_PsFileNameBox` PsFileNameBox [60,66 198x148]
+    - `OBJ_WaitWinCtl` IvWaitWinCtl [0,0 32x32]
+
+### `TITLE_DKUTSMF` -- "SMF DISK TOOLS"
+
+- Path: MENU DISK button (mode MD_DISK) > "DISK TOOLS" (by UtilityTtlJgFunc)
+- Registered: `"TT_DKUTSMF"`, title id 0x7C, function `NAKA_MAINFUNC_FmmSmfUtilityTitleFunc`, v10/maincpu/file_io/medley.s
+- View: `OBJ_DiskUtilitySMF` (TtlScreen) in `naka_disk_menu_file_io.c`
+- Menu entries: "TECH" -> `TITLE_DKUT`, "?" -> `TITLE_DKUTFRMT`
+- Its procedure `FmmSmfUtilityTitleFunc` opens: `TITLE_DKUT`, `TITLE_DKUTFRMT`, `TITLE_MESAGE`
+- EXIT -> `TITLE_DKMENU`, `TITLE_DKUTSMF`
+- Opened from: `TITLE_DKUT` ("SMF")
+- Widgets:
+
+  - `OBJ_DiskUtilitySMF` TtlScreen "SMF DISK TOOLS" [0,0 320x240]
+    - `OBJ_Tech_AcTitleMenu_2` AcTitleMenu "TECH" [271,200 41x24] -> `TITLE_DKUT`
+    - `OBJ_DiskUtilitySMF_AcIndexEditSw` AcIndexEditSw [84,216 32x23]
+      - `OBJ_Prev_Label_7` Label "PREV" [85,222 28x11]
+    - `OBJ_DiskUtilitySMF_AcIndexWideES` AcIndexWideES [124,216 72x23]
+    - `OBJ_DiskUtilitySMF_AcIndexEditSw_2` AcIndexEditSw [204,216 32x23]
+      - `OBJ_Next_Label_7` Label "NEXT" [205,222 28x11]
+    - `OBJ_Info_Label_3` Label "INFO" [8,61 36x19]
+    - `OBJ_DiskUtilitySMF_PsFileNameBox` PsFileNameBox [85,66 150x148]
+    - `OBJ_DiskUtilitySMF_PsWindowToggle` PsWindowToggle "SONG" [8,76 39x18]
+    - `OBJ_DiskUtilitySMF_AcTitleMenu` AcTitleMenu [263,112 49x32] -> `TITLE_DKUTFRMT`
+      - `OBJ_Format_Label_2` Label "FORMAT" [260,119 52x19]
+    - `OBJ_DiskUtilitySMF_AcIndexEditSw_3` AcIndexEditSw [8,118 31x18]
+    - `OBJ_Del_Label_2` Label "DEL" [9,119 28x19]
+    - `OBJ_DiskUtilitySMF_AcScreenMenu` AcScreenMenu [263,70 49x32]
+      - `OBJ_RENAME_Label_2` Label "RENAME" [260,77 52x19]
+    - `OBJ_DiskUtilitySMF_IvIndexSwDelay` IvIndexSwDelay [32,0 32x32]
+    - `OBJ_WaitWinCtlSmf` IvWaitWinCtl [0,0 32x32]
+
+### `TITLE_DKUTFRMT` -- "FLOPPY DISK FORMAT"
+
+- Path: MENU DISK button (mode MD_DISK) > "DISK TOOLS" (by UtilityTtlJgFunc)
+- Registered: `"TT_DKUTFRMT"`, title id 0x7D, function `NAKA_MAINFUNC_FmmFormatFunc`, v10/maincpu/file_io/medley.s
+- View: `OBJ_DiskFormat` (TtlScreen) in `naka_disk_menu_file_io.c`
+- Its procedure `FmmFormatFunc` opens: `TITLE_MESAGE`
+- EXIT -> `TITLE_DKMENU`
+- Opened from: `TITLE_DKUT`, `TITLE_DKUTSMF`
+- Widgets:
+
+  - `OBJ_DiskFormat` TtlScreen "FLOPPY DISK FORMAT" [0,0 320x240]
+
+### `TITLE_MESAGE`
+
+Title id 0xEE, "TT_MESAGE" (the firmware's own spelling): the message / confirmation-box title. About 30 call sites show it with title request ...
+
+- Path: MENU DISK button (mode MD_DISK) > "DISK TOOLS" (by UtilityTtlJgFunc)
+- Registered: `"TT_MESAGE"`, title id 0xEE, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/ui/drawbar_panel_ui.s
+- View: `OBJ_Mesage` (IvScreen) in `naka_technichord_part.c`
+- EXIT -> `TITLE_PS`
+- Widgets:
+
+  - `OBJ_Mesage` IvScreen [0,0 320x240]
+    - `OBJ_Mesage_IvMesage` IvMesage [0,0 32x32]
+
+### `TITLE_DKLD`
+
+- Path: MENU DISK button (mode MD_DISK) > "LOAD" (by LoadTtlJgFunc)
+- Registered: `"TT_DKLD"`, title id 0x61, function `NAKA_MAINFUNC_FmmLoadTitleFunc`, v10/maincpu/file_io/medley.s
+- View: `OBJ_DiskLoad` (TtlScreen) in `naka_disk_menu_file_io.c`
+- Menu entries: "SMF" -> `TITLE_DKLDSMF`
+- Its procedure `FmmLoadTitleFunc` opens: `TITLE_DKLDSMF`, `TITLE_DKMENU`, `TITLE_DKUTFRMT`, `TITLE_ETMENU`, `TITLE_MESAGE`
+- EXIT -> `TITLE_DKMENU`
+- Opened from: `TITLE_DKLDSMF` ("TECH"), `TITLE_ETMENU` ("DISK LOAD")
+- Widgets:
+
+  - `OBJ_DiskLoad` TtlScreen [0,0 320x240]
+    - `OBJ_DiskLoadPage` AcWindowPage [245,6 71x18]
+    - `OBJ_DiskLoad_IvPageControl` IvPageControl [0,0 32x32]
+    - `OBJ_DiskLoad_IvPageControl_2` IvPageControl [32,0 32x32]
+    - `OBJ_DiskLoad_IvPageControl_3` IvPageControl [64,0 32x32]
+    - `NakaWidget_DiskLoad_5_IvExit` IvExit, record outside the C sources
+    - `NakaWidget_DiskLoad_6_IvMainEditSw` IvMainEditSw, record outside the C sources
+
+### `TITLE_DKLDSMF` -- "SMF LOAD"
+
+- Path: MENU DISK button (mode MD_DISK) > "LOAD" (by LoadTtlJgFunc)
+- Registered: `"TT_DKLDSMF"`, title id 0x64, function `NAKA_MAINFUNC_FmmSmfLoadTitleFunc`, v10/maincpu/file_io/medley.s
+- View: `OBJ_DiskLoadSMF` (TtlScreen) in `naka_disk_menu_file_io.c`
+- Menu entries: "TECH" -> `TITLE_DKLD`
+- Its procedure `FmmSmfLoadTitleFunc` opens: `TITLE_DKLD`, `TITLE_DKMENU`, `TITLE_DKUTFRMT`, `TITLE_ETMENU`, `TITLE_MESAGE`
+- EXIT -> `TITLE_DKMENU`
+- Opened from: `TITLE_DKLD` ("SMF")
+- Widgets:
+
+  - `OBJ_DiskLoadSMF` TtlScreen "SMF LOAD" [0,0 320x240]
+    - `OBJ_Tech_AcTitleMenu` AcTitleMenu "TECH" [271,200 41x24] -> `TITLE_DKLD`
+    - `OBJ_DiskLoadSMF_AcIndexWideES` AcIndexWideES [84,216 72x23]
+    - `OBJ_DiskLoadSMF_AcIndexEditSw` AcIndexEditSw [44,216 32x23]
+      - `OBJ_Prev_Label_2` Label "PREV" [45,222 28x11]
+    - `OBJ_DiskLoadSMF_AcIndexEditSw_2` AcIndexEditSw [164,216 32x23]
+      - `OBJ_Next_Label_2` Label "NEXT" [165,222 28x11]
+    - `OBJ_DiskLoadSMF_PsFileNameBox` PsFileNameBox [52,66 138x148]
+    - `OBJ_Info_Label` Label "INFO" [8,61 36x19]
+    - `OBJ_DiskLoadSMF_PsWindowToggle` PsWindowToggle "SONG" [8,76 39x18]
+    - `OBJ_LoadAs_Label` Label "LOAD AS" [230,145 60x19]
+    - `OBJ_DiskLoadSMF_AcIndexEditSw_3` AcIndexEditSw [208,77 104x18]
+      - `OBJ_DiskLoadSMF_PsFileNameBox_2` PsFileNameBox [208,77 104x18]
+    - `OBJ_DiskLoadSMF_PsFileNameBox_3` PsFileNameBox [208,97 104x18]
+    - `OBJ_DiskLoadSMF_AcIndexEditSw_4` AcIndexEditSw [208,160 104x18]
+      - `OBJ_DiskLoadSMF_PsFileNameBox_4` PsFileNameBox [208,160 104x18]
+    - `OBJ_DiskLoadSMF_IvMainEditSw` IvMainEditSw [0,0 32x32]
+    - `NakaWidget_DiskLoad_92_IvExit` IvExit, record outside the C sources
+    - `NakaWidget_DiskLoad_93_IvIndexSwDelay` IvIndexSwDelay, record outside the C sources
+    - `OBJ_NakaWidget_DiskLoad_94_AcIndexEditSw` AcIndexEditSw [281,34 31x18]
+
+### `TITLE_DKMDLY` -- "SONG MEDLEY"
+
+- Path: MENU DISK button (mode MD_DISK) > "SONG MEDLEY" (by SongMedleyTtlJgFunc)
+- Registered: `"TT_DKMDLY"`, title id 0x77, function `NAKA_MAINFUNC_FmmDiskMedleySelectFunc`, v10/maincpu/file_io/medley.s
+- View: `OBJ_DiskSongMedley` (TtlScreen) in `naka_disk_menu_file_io.c`
+- Its procedure `FmmDiskMedleySelectFunc` opens: `TITLE_DKMDLYPLY`, `TITLE_DKMENU`, `TITLE_MESAGE`
+- EXIT -> `TITLE_DKMENU`
+- Widgets:
+
+  - `OBJ_DiskSongMedley` TtlScreen "SONG MEDLEY" [0,0 320x240]
+    - `OBJ_DiskSongMedley_AcIndexEditSw` AcIndexEditSw [44,216 32x23]
+    - `OBJ_DiskSongMedley_AcIndexWideES` AcIndexWideES [84,216 112x23]
+    - `OBJ_DiskSongMedley_AcIndexEditSw_2` AcIndexEditSw [204,216 32x23]
+    - `OBJ_DiskSongMedley_PsFileNameBox` PsFileNameBox [26,66 230x148]
+      - `OBJ_DiskSongMedley_PsFileNameBox_2` PsFileNameBox [230,71 24x141]
+      - `OBJ_DiskSongMedley_PsFileNameBox_3` PsFileNameBox [115,71 24x141]
+    - `OBJ_DiskName_Label_6` Label "DISK NAME:" [78,38 64x11]
+    - `OBJ_SongMedleyDiskName` AcParaStrBox [138,32 98x16]
+    - `OBJ_SongMedleyDiskInfo` AcParaStrBox [60,50 198x14]
+    - `OBJ_DiskSongMedley_AcIndexEditSw_3` AcIndexEditSw [262,31 50x24]
+      - `OBJ_Start_Label_6` Label "START" [265,35 44x19]
+    - `OBJ_DiskSongMedley_AcIndexEditSw_4` AcIndexEditSw [281,76 31x18]
+      - `OBJ_All_Label_5` Label "ALL" [282,77 28x19]
+    - `OBJ_DiskSongMedley_AcIndexEditSw_5` AcIndexEditSw [281,118 31x18]
+      - `OBJ_Add_Label_5` Label "ADD" [282,119 28x19]
+    - `OBJ_DiskSongMedley_AcMonoIndexToggle` AcMonoIndexToggle "ON" [281,160 31x18]
+    - `OBJ_DiskSongMedley_AcMonoIndexToggle_2` AcMonoIndexToggle "10SNGS" [258,202 54x18]
+    - `OBJ_Mode_Label_2` Label "MODE" [267,187 36x19]
+    - `OBJ_DiskSongMedley_IvShowHide` IvShowHide [0,0 32x32]
+    - `OBJ_Loop_Label_5` Label "LOOP" [278,145 36x19]
+
 ### `TITLE_HDDEXT`
 
 the hard-disk / extension title. The main CPU registers it in InitializeHama, and the HD-AE5000 re-registers it with its ...
 
-- Path: mode `MD_DISK` > "HARD DISK MAIN MENU"
+- Path: MENU DISK button (mode MD_DISK) > "HARD DISK MAIN MENU"
 - Registered: `"TT_HDDEXT"`, title id 0x7F, function `NAKA_MAINFUNC_TestTitleFunc`, v10/maincpu/factory_test/test_init.s
 - View: element 0 of Viewable slot 0xFC (record outside the C sources)
 - EXIT -> `TITLE_DKMENU`
@@ -831,7 +1140,7 @@ the hard-disk / extension title. The main CPU registers it in InitializeHama, an
 
 ### `TITLE_DKSETUP` -- "PREFERENCES"
 
-- Path: mode `MD_DISK` > "PREFERENCES"
+- Path: MENU DISK button (mode MD_DISK) > "PREFERENCES"
 - Registered: `"TT_DKSETUP"`, title id 0x7E, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/file_io/medley.s
 - View: `OBJ_DiskSetup` (TtlScreen) in `naka_disk_menu_file_io.c`
 - EXIT -> `TITLE_DKMENU`
@@ -849,10 +1158,10 @@ the hard-disk / extension title. The main CPU registers it in InitializeHama, an
 
 ### `TITLE_DKSVMENU` -- "SAVE"
 
-- Path: mode `MD_DISK` > "SAVE"
+- Path: MENU DISK button (mode MD_DISK) > "SAVE"
 - Registered: `"TT_DKSVMENU"`, title id 0x65, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/file_io/medley.s
 - View: `OBJ_DiskSaveMenu` (TtlScreen) in `naka_disk_menu_file_io.c`
-- Entries that open a title by code: "TECHNICS FORMAT" -> `NAKA_MAINFUNC_SaveTtlJgFunc`, "SMF FORMAT 0" -> `NAKA_MAINFUNC_SaveSmfTtlJgFunc`
+- Entries that open a title by code: "TECHNICS FORMAT" -> `NAKA_MAINFUNC_SaveTtlJgFunc` (`TITLE_DKSV`, `TITLE_DKUTFRMT`, `TITLE_MESAGE`), "SMF FORMAT 0" -> `NAKA_MAINFUNC_SaveSmfTtlJgFunc` (`TITLE_DKSVSMF`, `TITLE_DKUTFRMT`, `TITLE_MESAGE`)
 - EXIT -> `TITLE_DKMENU`
 - Opened from: `TITLE_DKMENU` ("SAVE")
 - Widgets:
@@ -863,9 +1172,10 @@ the hard-disk / extension title. The main CPU registers it in InitializeHama, an
 
 ### `TITLE_STYLCNVWAIT` -- "STYLE CONVERT"
 
-- Path: mode `MD_DISK` > "STYLE CONVERT"
+- Path: MENU DISK button (mode MD_DISK) > "STYLE CONVERT"
 - Registered: `"TT_STYLCNVWAIT"`, title id 0x10, function `NAKA_MAINFUNC_StylCnvWaitTtlFunc`, v10/maincpu/storage/flash_floppy_handlers.s
 - View: `OBJ_StylCnvWaitScreen` (TtlScreen) in `naka_composer_style.c`
+- Its procedure `StylCnvWaitTtlFunc` opens: `TITLE_MESAGE`, `TITLE_STYLCNVMODL`
 - EXIT -> `TITLE_DKMENU`
 - Opened from: `TITLE_DKMENU` ("STYLE CONVERT")
 - Widgets:
@@ -874,26 +1184,9 @@ the hard-disk / extension title. The main CPU registers it in InitializeHama, an
     - `OBJ_StylCnvWaitScreen_VwBox` VwBox [44,88 230x70]
       - `OBJ_StylCnvWaitScreen_AcLanguageText` AcLanguageText [47,92 222x62]
 
-### `TITLE_DKLD`
-
-- Path: mode `MD_ENTERTAINER` > "DISK LOAD"
-- Registered: `"TT_DKLD"`, title id 0x61, function `NAKA_MAINFUNC_FmmLoadTitleFunc`, v10/maincpu/file_io/medley.s
-- View: `OBJ_DiskLoad` (TtlScreen) in `naka_disk_menu_file_io.c`
-- EXIT -> `TITLE_DKMENU`
-- Opened from: `TITLE_DKLDSMF` ("TECH"), `TITLE_ETMENU` ("DISK LOAD")
-- Widgets:
-
-  - `OBJ_DiskLoad` TtlScreen [0,0 320x240]
-    - `OBJ_DiskLoadPage` AcWindowPage [245,6 71x18]
-    - `OBJ_DiskLoad_IvPageControl` IvPageControl [0,0 32x32]
-    - `OBJ_DiskLoad_IvPageControl_2` IvPageControl [32,0 32x32]
-    - `OBJ_DiskLoad_IvPageControl_3` IvPageControl [64,0 32x32]
-    - `NakaWidget_DiskLoad_5_IvExit` IvExit, record outside the C sources
-    - `NakaWidget_DiskLoad_6_IvMainEditSw` IvMainEditSw, record outside the C sources
-
 ### `TITLE_ETFADEIN` -- "FADE IN/OUT SETTING"
 
-- Path: mode `MD_ENTERTAINER` > "FADE IN/OUT SETTING"
+- Path: ENTERTAINER button (mode MD_ENTERTAINER) > "FADE IN/OUT SETTING"
 - Registered: `"TT_ETFADEIN"`, title id 0xD8, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/seq_event_playback.s
 - View: `OBJ_EntertainerFade` (TtlScreen) in `naka_midi_reverb.c`
 - EXIT -> `TITLE_ETMENU`
@@ -909,23 +1202,9 @@ the hard-disk / extension title. The main CPU registers it in InitializeHama, an
     - `OBJ_EntertainerFade_IvIntEasySet` IvIntEasySet [0,0 32x32]
     - `OBJ_EntertainerFade_IvShowHide` IvShowHide [32,0 32x32]
 
-### `TITLE_SDMIXER` -- "MIXER"
-
-- Path: mode `MD_ENTERTAINER` > "MIXER"
-- Registered: `"TT_SDMIXER"`, title id 0x8, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/ui/drawbar_panel_ui.s
-- View: `OBJ_Sdmixer` (TtlScreen) in `naka_technichord_part.c`
-- EXIT -> `TITLE_SDMENU`
-- Opened from: `TITLE_ETMENU` ("MIXER"), `an untitled view` ("MIXER")
-- Widgets:
-
-  - `OBJ_Sdmixer` TtlScreen "MIXER" [0,0 320x240]
-    - `OBJ_Sdmixer_AcResetPage` AcResetPage [245,6 71x18]
-    - `OBJ_Sdmixer_AcPartMixer` AcPartMixer [108,31 204x13]
-    - `NakaWidget_Sdmixer_3_IvExit` IvExit, record outside the C sources
-
 ### `TITLE_ETVOCAL` -- "VOCALIST WORKSTATION"
 
-- Path: mode `MD_ENTERTAINER` > "VOCALIST WORKSTATION"
+- Path: ENTERTAINER button (mode MD_ENTERTAINER) > "VOCALIST WORKSTATION"
 - Registered: `"TT_ETVOCAL"`, title id 0xD7, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/seq_event_playback.s
 - View: `OBJ_EntertainerVocal` (TtlScreen) in `naka_midi_reverb.c`
 - EXIT -> `TITLE_ETMENU`
@@ -938,9 +1217,215 @@ the hard-disk / extension title. The main CPU registers it in InitializeHama, an
     - `OBJ_VocalistPage` AcWindowPage [245,6 71x18]
     - `OBJ_EntertainerVocal_IvShowHide` IvShowHide [0,32 32x32]
 
+### `TITLE_MDCOM` -- "COMMON SETTING"
+
+- Path: MENU MIDI button (mode MD_MIDI) > "COMMON SETTING"
+- Registered: `"TT_MDCOM"`, title id 0x54, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/seq_event_playback.s
+- View: `OBJ_MidiCommonSetting` (TtlScreen) in `naka_midi_reverb.c`
+- EXIT -> `TITLE_MDMENU`
+- Opened from: `TITLE_MDMENU` ("COMMON SETTING")
+- Widgets:
+
+  - `OBJ_MidiCommonSetting` TtlScreen "COMMON SETTING" [0,0 320x240]
+    - `OBJ_ComSetGridBox` AcGridBox [20,30 274x209]
+    - `OBJ_MidiCommonSetting_AcIndexWideES` AcIndexWideES [44,216 72x23]
+    - `OBJ_MidiCommonSetting_AcIndexWideES_2` AcIndexWideES [204,216 72x23]
+    - `OBJ_MidiCommonSetting_IvShowHide` IvShowHide [0,0 32x32]
+
+### `TITLE_MDCOMP` -- "COMPUTER CONNECTION"
+
+- Path: MENU MIDI button (mode MD_MIDI) > "COMPUTER CONNECTION"
+- Registered: `"TT_MDCOMP"`, title id 0x5A, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/seq_event_playback.s
+- View: `OBJ_MidiComputerConnection` (TtlScreen) in `naka_midi_reverb.c`
+- EXIT -> `TITLE_MDMENU`
+- Opened from: `TITLE_MDMENU` ("COMPUTER CONNECTION")
+- Widgets:
+
+  - `OBJ_MidiComputerConnection` TtlScreen "COMPUTER CONNECTION" [0,0 320x240]
+    - `OBJ_MidiComputerConnection_AcLswEditBox` AcLswEditBox "MODE :" [4,35 308x32]
+    - `OBJ_MidiComputerConnection_AcIndexWideES` AcIndexWideES [244,216 72x23]
+    - `OBJ_MidiComputerConnection_VwBox` VwBox [4,76 308x120]
+    - `OBJ_Value_Label_8` Label "VALUE" [258,198 44x19]
+    - `OBJ_MidiComputerConnection_IvShowHide` IvShowHide [0,0 32x32]
+
+### `TITLE_MDCTRL` -- "CONTROL MESSAGES"
+
+- Path: MENU MIDI button (mode MD_MIDI) > "CONTROL MESSAGES"
+- Registered: `"TT_MDCTRL"`, title id 0x52, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/seq_event_playback.s
+- View: `OBJ_MidiControlMessage` (TtlScreen) in `naka_midi_reverb.c`
+- EXIT -> `TITLE_MDMENU`
+- Opened from: `TITLE_MDMENU` ("CONTROL MESSAGES")
+- Widgets:
+
+  - `OBJ_MidiControlMessage` TtlScreen "CONTROL MESSAGES" [0,0 320x240]
+    - `OBJ_MidiControlMessage_PsPageBox` PsPageBox [245,6 70x18]
+    - `OBJ_CtlMsgGridBox` AcCtlMsgGridBox [40,30 241x209]
+      - `OBJ_CtlMsgGridBox_AcIndexWideES` AcIndexWideES [204,216 72x23]
+      - `OBJ_Message_Label` Label "MESSAGE" [78,36 60x19]
+      - `OBJ_OnOff_Label` Label "ON/OFF" [210,36 52x19]
+    - `OBJ_MidiControlMessage_AcIndexWideES` AcIndexWideES [84,216 72x23]
+    - `OBJ_MidiControlMessage_IvShowHide` IvShowHide [0,0 32x32]
+
+### `TITLE_MDGMMODE` -- "GENERAL MIDI"
+
+- Path: MENU MIDI button (mode MD_MIDI) > "GENERAL MIDI"
+- Registered: `"TT_MDGMMODE"`, title id 0x58, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/seq_event_playback.s
+- View: `OBJ_MidiGmMode` (TtlScreen) in `naka_midi_reverb.c`
+- EXIT -> `TITLE_MDMENU`
+- Opened from: `TITLE_MDMENU` ("GENERAL MIDI")
+- Widgets:
+
+  - `OBJ_MidiGmMode` TtlScreen "GENERAL MIDI" [0,0 320x240]
+    - `OBJ_GMOnOffBox` AcGMOnOffBox "GENERAL MIDI   :" [24,95 248x64]
+    - `OBJ_MidiGmMode_AcIndexWideES` AcIndexWideES [244,216 72x23]
+    - `OBJ_MidiGmMode_AcFuncEditSw` AcFuncEditSw [281,160 31x18]
+    - `OBJ_MidiGmMode_IvShowHide` IvShowHide [0,0 32x32]
+
+### `TITLE_MDINOUT` -- "INPUT/OUTPUT SETTING"
+
+- Path: MENU MIDI button (mode MD_MIDI) > "INPUT/OUTPUT SETTING"
+- Registered: `"TT_MDINOUT"`, title id 0x55, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/seq_event_playback.s
+- View: `OBJ_MidiInOutSetting` (TtlScreen) in `naka_midi_reverb.c`
+- EXIT -> `TITLE_MDMENU`
+- Opened from: `TITLE_MDMENU` ("INPUT/OUTPUT SETTING")
+- Widgets:
+
+  - `OBJ_MidiInOutSetting` TtlScreen "INPUT/OUTPUT SETTING" [0,0 320x240]
+    - `OBJ_InOutGridBox` AcInOutGridBox [8,30 304x209]
+      - `OBJ_InOutGridBox_AcIndexWideES` AcIndexWideES [44,216 72x23]
+      - `OBJ_InOutGridBox_AcIndexWideES_2` AcIndexWideES [204,216 72x23]
+    - `OBJ_MidiInOutSetting_IvShowHide` IvShowHide [0,0 32x32]
+
+### `TITLE_MDPRESET` -- "MIDI PRESETS"
+
+- Path: MENU MIDI button (mode MD_MIDI) > "MIDI PRESETS"
+- Registered: `"TT_MDPRESET"`, title id 0x56, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/seq_event_playback.s
+- View: `OBJ_MidiPresets` (TtlScreen) in `naka_midi_reverb.c`
+- EXIT -> `TITLE_MDMENU`
+- Opened from: `TITLE_MDMENU` ("MIDI PRESETS")
+- Widgets:
+
+  - `OBJ_MidiPresets` TtlScreen "MIDI PRESETS" [0,0 320x240]
+    - `OBJ_MdPresetPageBox` AcWindowPage [245,6 71x18]
+    - `OBJ_MidiPresets_IvPageControl` IvPageControl [64,0 32x32]
+    - `OBJ_MidiPresets_IvPageControl_2` IvPageControl [96,0 32x32]
+    - `OBJ_MpstPageCtl1` IvMpstPageControl [0,0 32x32]
+    - `OBJ_MpstPageCtl2` IvMpstPageControl [32,0 32x32]
+    - `OBJ_MidiPresets_IvShowHide` IvShowHide [0,32 32x32]
+
+### `TITLE_MDSETUP` -- "MIDI SETTINGS LOAD OPTION"
+
+- Path: MENU MIDI button (mode MD_MIDI) > "MIDI SETTINGS LOAD OPTION"
+- Registered: `"TT_MDSETUP"`, title id 0x5C, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/seq_event_playback.s
+- View: `OBJ_MidiSetup` (TtlScreen) in `naka_midi_reverb.c`
+- EXIT -> `TITLE_MDMENU`
+- Opened from: `TITLE_MDMENU` ("MIDI SETTINGS LOAD OPTION")
+- Widgets:
+
+  - `OBJ_MidiSetup` TtlScreen "MIDI SETTINGS LOAD OPTION" [0,0 320x240]
+    - `OBJ_MdSetOptGridBox` AcParaLoadOptGridBox [4,30 313x168]
+      - `OBJ_LoadMidiParameters_Label` Label "Load MIDI parameters?" [74,38 172x19]
+      - `OBJ_UseTheseSettingsWhen_Label` Label "Use these settings when:" [60,122 196x19]
+    - `OBJ_MidiSetup_AcIndexWideES` AcIndexWideES [44,216 72x23]
+    - `OBJ_MidiSetup_AcIndexWideES_2` AcIndexWideES [204,216 72x23]
+    - `OBJ_MidiSetup_AcFuncEditSw` AcFuncEditSw [281,202 31x18]
+    - `OBJ_MidiSetup_IvShowHide` IvShowHide [0,0 32x32]
+
+### `TITLE_MDPMLCTL` -- "PANEL MEMORY OUTPUT"
+
+- Path: MENU MIDI button (mode MD_MIDI) > "P.MEM OUTPUT"
+- Registered: `"TT_MDPMLCTL"`, title id 0x5B, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/seq_event_playback.s
+- View: `OBJ_MidiPanelMemoryOutput` (TtlScreen) in `naka_midi_reverb.c`
+- EXIT -> `TITLE_MDMENU`
+- Opened from: `TITLE_MDMENU` ("P.MEM OUTPUT")
+- Widgets:
+
+  - `OBJ_MidiPanelMemoryOutput` TtlScreen "PANEL MEMORY OUTPUT" [0,0 320x240]
+    - `OBJ_PMem_Label` Label "P.MEM" [0,198 44x19]
+    - `OBJ_OnOff_Label_2` Label "ON/OFF" [46,198 52x19]
+    - `OBJ_Part_Label` Label "PART" [122,198 36x19]
+    - `OBJ_PCng_Label` Label "P.CNG" [190,197 44x19]
+    - `OBJ_Bank_Label` Label "BANK" [242,198 36x19]
+    - `OBJ_Vol_Label` Label "VOL" [286,198 28x19]
+    - `OBJ_MidiPanelMemoryOutput_Label` Label "~95" [148,150 20x19]
+    - `OBJ_PmemOutLeft` AcPmemOutLGridBox [0,40 150x140]
+    - `OBJ_PmemOutRight` AcPmemOutRGridBox [170,60 150x120]
+    - `OBJ_MidiPanelMemoryOutput_AcIndexEditSw` AcIndexEditSw [4,216 32x23]
+    - `OBJ_MidiPanelMemoryOutput_AcIndexEditSw_2` AcIndexEditSw [44,216 32x23]
+    - `OBJ_MidiPanelMemoryOutput_AcIndexEditSw_3` AcIndexEditSw [124,216 32x23]
+    - `OBJ_MidiPanelMemoryOutput_AcIndexEditSw_4` AcIndexEditSw [204,216 32x23]
+    - `OBJ_MidiPanelMemoryOutput_AcIndexEditSw_5` AcIndexEditSw [244,216 32x23]
+    - `OBJ_MidiPanelMemoryOutput_AcIndexEditSw_6` AcIndexEditSw [284,216 32x23]
+    - `OBJ_MidiPanelMemoryOutput_IvShowHide` IvShowHide [0,0 32x32]
+
+### `TITLE_MDPART` -- "PART SETTING"
+
+- Path: MENU MIDI button (mode MD_MIDI) > "PART SETTING"
+- Registered: `"TT_MDPART"`, title id 0x51, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/seq_event_playback.s
+- View: `OBJ_MidiPartSetting` (TtlScreen) in `naka_midi_reverb.c`
+- EXIT -> `TITLE_MDMENU`
+- Opened from: `TITLE_MDMENU` ("PART SETTING")
+- Widgets:
+
+  - `OBJ_MidiPartSetting` TtlScreen "PART SETTING" [0,0 320x240]
+    - `OBJ_MdPartSetGridBox` AcMidiPartGridBox [1,30 319x209]
+      - `OBJ_MdPartSetGridBox_AcIndexWideES` AcIndexWideES [5,216 72x23]
+      - `OBJ_MdPartSetGridBox_AcIndexWideES_2` AcIndexWideES [245,216 72x23]
+      - `OBJ_MdPartSetGridBox_AcIndexWideES_3` AcIndexWideES [167,216 72x23]
+      - `OBJ_MdPartSetGridBox_AcIndexWideES_4` AcIndexWideES [85,216 72x23]
+    - `OBJ_MidiPartSetting_IvShowHide` IvShowHide [0,0 32x32]
+
+### `TITLE_MDTXPCG` -- "PROGRAM CHANGE MIDI OUT"
+
+- Path: MENU MIDI button (mode MD_MIDI) > "PROG.CHANGE MIDI OUT"
+- Registered: `"TT_MDTXPCG"`, title id 0x59, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/seq_event_playback.s
+- View: `OBJ_MidiPcgOutput` (TtlScreen) in `naka_midi_reverb.c`
+- EXIT -> `TITLE_MDMENU`
+- Opened from: `TITLE_MDMENU` ("PROG.CHANGE MIDI OUT")
+- Widgets:
+
+  - `OBJ_MidiPcgOutput` TtlScreen "PROGRAM CHANGE MIDI OUT" [0,0 320x240]
+    - `OBJ_PcgOutGridBox` AcPcgOutGridBox [20,30 241x181]
+    - `OBJ_MidiPcgOutput_AcIndexWideES` AcIndexWideES [44,216 72x23]
+    - `OBJ_MidiPcgOutput_AcIndexWideES_2` AcIndexWideES [164,216 72x23]
+    - `East_SendSwitchView` AcSendEditSw "SEND", record outside the C sources
+    - `OBJ_MidiPcgOutput_IvShowHide` IvShowHide [0,0 32x32]
+
+### `TITLE_MDREAL` -- "REALTIME MESSAGES"
+
+- Path: MENU MIDI button (mode MD_MIDI) > "REALTIME MESSAGES"
+- Registered: `"TT_MDREAL"`, title id 0x53, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/seq_event_playback.s
+- View: `OBJ_MidiRealtimeMessage` (TtlScreen) in `naka_midi_reverb.c`
+- EXIT -> `TITLE_MDMENU`
+- Opened from: `TITLE_MDMENU` ("REALTIME MESSAGES")
+- Widgets:
+
+  - `OBJ_MidiRealtimeMessage` TtlScreen "REALTIME MESSAGES" [0,0 320x240]
+    - `OBJ_MidiRealtimeMessage_AcIndexWideES` AcIndexWideES [244,216 72x23]
+    - `OBJ_RealtimeCommandBox` AcLswFuncEditBox "REALTIME COMMANDS :" [8,72 250x32]
+    - `OBJ_ClockBox` AcLswFuncEditBox "    CLOCK            :" [8,156 250x32]
+    - `OBJ_Value_Label` Label "VALUE" [254,198 44x19]
+    - `OBJ_MidiRealtimeMessage_IvShowHide` IvShowHide [0,0 32x32]
+
+### `TITLE_MDEXC` -- "SYSEX BULK DUMP"
+
+- Path: MENU MIDI button (mode MD_MIDI) > "SYSEX BULK DUMP"
+- Registered: `"TT_MDEXC"`, title id 0x57, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/seq_event_playback.s
+- View: `OBJ_MidiExclusive` (TtlScreen) in `naka_midi_reverb.c`
+- EXIT -> `TITLE_MDMENU`
+- Opened from: `TITLE_MDMENU` ("SYSEX BULK DUMP")
+- Widgets:
+
+  - `OBJ_MidiExclusive` TtlScreen "SYSEX BULK DUMP" [0,0 320x240]
+    - `OBJ_MidiExclusive_AcFuncEditSw` AcFuncEditSw [273,160 39x18]
+      - `OBJ_Send_Label` Label "SEND" [274,161 36x19]
+    - `OBJ_ExcListBox` AcListBox [4,30 260x181]
+    - `OBJ_MidiExclusive_AcIndexWideES` AcIndexWideES [84,216 72x23]
+    - `OBJ_MidiExclusive_IvShowHide` IvShowHide [0,0 32x32]
+
 ### `TITLE_MSPGROUP` -- "MSP COMPILE SETTING"
 
-- Path: mode `MD_MSP` > "COMPILE SET"
+- Path: MSP MENU button (mode MD_MSP) > "COMPILE SET"
 - Registered: `"TT_MSPGROUP"`, title id 0xCC, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/storage/flash_floppy_handlers.s
 - View: `OBJ_MspReGrpScreen` (TtlScreen) in `naka_msp_recording.c`
 - EXIT -> `TITLE_MSPMENU`
@@ -959,7 +1444,7 @@ the hard-disk / extension title. The main CPU registers it in InitializeHama, an
 
 ### `TITLE_MSPNAME` -- "NAMING"
 
-- Path: mode `MD_MSP` > "Naming for User&COMPILE Banks"
+- Path: MSP MENU button (mode MD_MSP) > "Naming for User&COMPILE Banks"
 - Registered: `"TT_MSPNAME"`, title id 0xCB, function `NAKA_MAINFUNC_MspNameTtlFunc`, v10/maincpu/storage/flash_floppy_handlers.s
 - View: `OBJ_MspNamingScreen` (TtlScreen) in `naka_msp_recording.c`
 - EXIT -> `TITLE_MSPMENU`
@@ -973,10 +1458,10 @@ the hard-disk / extension title. The main CPU registers it in InitializeHama, an
 
 ### `TITLE_CHECK` -- "CHECK TITLE"
 
-- Path: mode `MD_PS` > "CHECK TITLE"
+- Path: mode MD_PS > "CHECK TITLE"
 - Registered: `"TT_CHECK"`, title id 0xFF, function `NAKA_MAINFUNC_CheckTitleFunc`, v10/maincpu/display/graphics_text_vga.s
 - View: `OBJ_CheckTitle` (TtlScreen) in `naka_debug_naming.c`
-- EXIT -> `TITLE_PS`
+- EXIT -> `TITLE_PS`, `TITLE_CHECK`
 - Opened from: `TITLE_PS` ("CHECK TITLE")
 - Widgets:
 
@@ -989,7 +1474,7 @@ the hard-disk / extension title. The main CPU registers it in InitializeHama, an
 
 a sequencer sub-menu. The record, punch, track-select, panel-write and song-copy pages return to it.
 
-- Path: mode `MD_SEQ` > "CREATE"
+- Path: SEQUENCER MENU button (mode MD_SEQ) > "CREATE"
 - Registered: `"TT_SQCMENU"`, title id 0x84, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/sequencer_ui.s
 - View: `OBJ_Create_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
 - Menu entries: "TRACK ASSIGN" -> `TITLE_SQTRAS`, "PANEL WRITE" -> `TITLE_SQPNLWR`, "SONG SELECT /NAMING" -> `TITLE_SQSNGSEL`, "SONG CLEAR" -> `TITLE_SQSNGCLR`, "SONG/TRACK COPY" -> `TITLE_SQSNGCPC`, "AFTER TOUCH SET" -> `TITLE_SQAFTSET`, "PUNCH RECORD" -> `TITLE_SQPUNCH`
@@ -1012,7 +1497,7 @@ a sequencer sub-menu. The record, punch, track-select, panel-write and song-copy
 
 the panel-write page reached from TT_SQMENU. It reuses TT_SQPNLWR's view 0x008D0000, and its exit returns to TT_SQMENU.
 
-- Path: mode `MD_SEQ` > "PANEL WRITE"
+- Path: SEQUENCER MENU button (mode MD_SEQ) > "PANEL WRITE"
 - Registered: `"TT_SQPNLWRM"`, title id 0xAA, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/sequencer_ui.s
 - View: `OBJ_PanelWrite_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
 - EXIT -> `TITLE_SQCMENU`
@@ -1024,160 +1509,192 @@ the panel-write page reached from TT_SQMENU. It reuses TT_SQPNLWR's view 0x008D0
     - `OBJ_PanelWrite_AcLanguageText` AcLanguageText [10,40 260x180]
     - `OBJ_PanelWrite_IvPnlWrExit` IvPnlWrExit [0,0 32x32]
 
-### `TITLE_SQEASYNAME` -- "NAMING"
+### `TITLE_SQADVDLY` -- "ADVANCE/DELAY"
 
-the song-name page reached from easy record. It reuses TT_SQSNGNAME's view 0x008F0000, and its exit returns to ...
-
-- Path: mode `MD_SEQ_EREC` > "NAMING"
-- Registered: `"TT_SQEASYNAME"`, title id 0xA7, function `NAKA_MAINFUNC_SqSngNameTtlFunc`, v10/maincpu/sequencer/sequencer_ui.s
-- View: `OBJ_SqNameing` (TtlScreen) in `naka_direct_play.c`
-- EXIT -> `TITLE_SQSNGSEL`
-- Opened from: `TITLE_SQEASYREC` ("NAMING")
+- Path: mode MD_SEQ_EDIT > "ADVANCE/DELAY"
+- Registered: `"TT_SQADVDLY"`, title id 0xA0, function `NAKA_MAINFUNC_SqAdlyTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
+- View: `OBJ_AdvanceDelay_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
+- EXIT -> `TITLE_SQEMENU`
+- Opened from: `TITLE_SQEMENU` ("ADVANCE/DELAY")
 - Widgets:
 
-  - `OBJ_SqNameing` TtlScreen "NAMING" [0,0 320x240]
-    - `OBJ_SqNameing_AcCurrentSongBox` AcCurrentSongBox [138,50 58x19]
-      - `OBJ_Sequencer_Label` Label "SEQUENCER       :" [60,52 140x19]
-    - `OBJ_SqNameing_IvNaming` IvNaming [0,0 32x32]
-    - `OBJ_SqNameing_AcFuncEditSw` AcFuncEditSw [281,160 31x18]
-    - `OBJ_SqNameing_IvNamingExit` IvNamingExit [32,0 32x32]
+  - `OBJ_AdvanceDelay_TtlScreen` TtlScreen "ADVANCE/DELAY" [0,0 320x240]
+    - `OBJ_AdvanceDelay_AcIndexWideES` AcIndexWideES [244,216 72x23]
+    - `OBJ_Value_Label_12` Label "VALUE" [256,202 44x19]
+    - `OBJ_AdvanceDelay_SqedtVal` SqedtVal [60,84 200x48]
+      - `OBJ_AdvanceDelay_PsEditBox` PsEditBox "FIRST MEASURE:" [8,72 165x26]
+      - `OBJ_AdvanceDelay_PsEditBox_2` PsEditBox "LAST MEASURE :" [8,114 165x26]
+    - `OBJ_AdvanceDelay_PsEditBox_3` PsEditBox "TRACK        :" [8,30 165x26]
+    - `OBJ_AdvanceDelay_PsEditBox_4` PsEditBox "ADVANCE/DELAY:" [8,156 165x26]
+    - `OBJ_AdvanceDelay_MsgToTtl` MsgToTtl [60,84 200x48]
+    - `OBJ_AdvanceDelay_AcFuncEditSw` AcFuncEditSw [281,160 31x18]
 
-### `TITLE_DKWPLD` -- "WALLPAPER LOAD"
+### `TITLE_SQMCP` -- "MEASURE COPY"
 
-- Path: mode `MD_CONTROL` > "WALLPAPER SETTING" > "LOAD"
-- Registered: `"TT_DKWPLD"`, title id 0x63, function `NAKA_MAINFUNC_FmmWallpaperLoadFunc`, v10/maincpu/file_io/medley.s
-- View: `OBJ_WallpaperLoad` (TtlScreen) in `naka_disk_menu_file_io.c`
-- EXIT -> `TITLE_CTWALLSET`
-- Opened from: `TITLE_CTWALLSET` ("LOAD"), `an untitled view` ("LOAD")
+- Path: mode MD_SEQ_EDIT > "COPY"
+- Registered: `"TT_SQMCP"`, title id 0xA2, function `NAKA_MAINFUNC_SqMcpyTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
+- View: `OBJ_MeasureCopy_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
+- EXIT -> `TITLE_SQEMENU`
+- Opened from: `TITLE_SQEMENU` ("COPY")
 - Widgets:
 
-  - `OBJ_WallpaperLoad` TtlScreen "WALLPAPER LOAD" [0,0 320x240]
-    - `OBJ_WallpaperLoad_AcIndexEditSw` AcIndexEditSw [84,216 32x23]
-      - `OBJ_Prev_Label` Label "PREV" [85,222 28x11]
-    - `OBJ_WallpaperLoad_AcIndexWideES` AcIndexWideES [124,216 72x23]
-    - `OBJ_WallpaperLoad_AcIndexEditSw_2` AcIndexEditSw [204,216 32x23]
-      - `OBJ_Next_Label` Label "NEXT" [205,222 28x11]
-    - `OBJ_DiskName_Label_2` Label "DISK NAME:" [78,38 64x11]
-    - `OBJ_WallpaperLoad_AcParaStrBox` AcParaStrBox [138,32 98x16]
-    - `OBJ_WallpaperLoad_AcParaStrBox_2` AcParaStrBox [60,50 198x14]
-    - `OBJ_WallpaperLoad_AcIndexEditSw_3` AcIndexEditSw [272,31 40x24]
-      - `OBJ_Load_Label_2` Label "LOAD" [274,35 36x19]
-    - `OBJ_WallpaperLoad_PsFileNameBox` PsFileNameBox [85,66 150x148]
+  - `OBJ_MeasureCopy_TtlScreen` TtlScreen "MEASURE COPY" [0,0 320x240]
+    - `OBJ_MeasureCopy_AcIndexWideES` AcIndexWideES [4,216 72x23]
+    - `OBJ_MeasureCopy_AcIndexWideES_2` AcIndexWideES [84,216 72x23]
+    - `OBJ_MeasureCopy_AcIndexWideES_3` AcIndexWideES [164,216 72x23]
+    - `OBJ_MeasureCopy_AcIndexWideES_4` AcIndexWideES [244,216 72x23]
+    - `OBJ_MeasureCopy_SqedtVal2` SqedtVal2 [60,84 200x48]
+    - `OBJ_MeasureCopy_SqedtFix` SqedtFix [60,84 200x48]
+    - `OBJ_MeasureCopy_MsgToTtl` MsgToTtl [60,84 200x48]
+    - `OBJ_MeasureCopy_AcFuncEditSw` AcFuncEditSw [281,160 31x18]
 
-### `TITLE_SQAFTSET` -- "AFTER TOUCH SETTING"
+### `TITLE_SQMDEL` -- "MEASURE DELETE"
 
-- Path: mode `MD_SEQ` > "CREATE" > "AFTER TOUCH SET"
-- Registered: `"TT_SQAFTSET"`, title id 0x92, function `NAKA_MAINFUNC_SqAftSetTtlFunc`, v10/maincpu/sequencer/sequencer_ui.s
-- View: `OBJ_AfterTouchSet` (TtlScreen) in `naka_direct_play.c`
-- EXIT -> `TITLE_SQCMENU`
-- Opened from: `TITLE_SQCMENU` ("AFTER TOUCH SET")
+- Path: mode MD_SEQ_EDIT > "DELETE"
+- Registered: `"TT_SQMDEL"`, title id 0xA3, function `NAKA_MAINFUNC_SqMdelTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
+- View: `OBJ_MeasureDelete_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
+- EXIT -> `TITLE_SQEMENU`
+- Opened from: `TITLE_SQEMENU` ("DELETE")
 - Widgets:
 
-  - `OBJ_AfterTouchSet` TtlScreen "AFTER TOUCH SETTING" [0,0 320x240]
-    - `OBJ_AfterTouchSet_AcIndexWideES` AcIndexWideES [244,216 72x23]
-    - `OBJ_AfterTouchSet_AcBitEditBox` AcBitEditBox "  AFTER TOUCH RECORD  :" [25,150 270x40]
-    - `OBJ_AfterTouchSet_AcLanguageText` AcLanguageText [20,80 280x60]
+  - `OBJ_MeasureDelete_TtlScreen` TtlScreen "MEASURE DELETE" [0,0 320x240]
+    - `OBJ_Value_Label_14` Label "VALUE" [256,202 44x19]
+    - `OBJ_MeasureDelete_AcIndexWideES` AcIndexWideES [244,216 72x23]
+    - `OBJ_MeasureDelete_SqedtVal` SqedtVal [60,84 200x48]
+      - `OBJ_MeasureDelete_PsEditBox` PsEditBox "FIRST MEASURE:" [8,72 165x26]
+      - `OBJ_MeasureDelete_PsEditBox_2` PsEditBox "LAST MEASURE :" [8,114 165x26]
+    - `OBJ_MeasureDelete_PsEditBox_3` PsEditBox "TRACK      :" [8,30 165x26]
+    - `OBJ_MeasureDelete_MsgToTtl` MsgToTtl [60,84 200x48]
+    - `OBJ_MeasureDelete_AcFuncEditSw` AcFuncEditSw [281,160 31x18]
 
-### `TITLE_SQPNLWR` -- "PANEL WRITE"
+### `TITLE_SQDRMSEL` -- "DRUM EDIT  "
 
-the sequencer panel-write page. Its exit returns to TT_SQCMENU.
-
-- Path: mode `MD_SEQ` > "CREATE" > "PANEL WRITE"
-- Registered: `"TT_SQPNLWR"`, title id 0x8D, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/sequencer_ui.s
-- View: `OBJ_PanelWrite_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
-- EXIT -> `TITLE_SQCMENU`
-- Opened from: `TITLE_SQCMENU` ("PANEL WRITE")
+- Path: mode MD_SEQ_EDIT > "DRUM EDIT"
+- Registered: `"TT_SQDRMSEL"`, title id 0x97, function `NAKA_MAINFUNC_SqDrmSelTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
+- View: `OBJ_DrumEdit_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
+- EXIT -> `TITLE_SQEMENU`
+- Opened from: `TITLE_SQEMENU` ("DRUM EDIT")
 - Widgets:
 
-  - `OBJ_PanelWrite_TtlScreen` TtlScreen "PANEL WRITE" [0,0 320x240]
-    - `OBJ_PanelWrite_AcFuncEditSw` AcFuncEditSw [281,160 31x18]
-    - `OBJ_PanelWrite_AcLanguageText` AcLanguageText [10,40 260x180]
-    - `OBJ_PanelWrite_IvPnlWrExit` IvPnlWrExit [0,0 32x32]
+  - `OBJ_DrumEdit_TtlScreen` TtlScreen "DRUM EDIT  " [0,0 320x240]
+    - `OBJ_PartSelect_Label_2` Label ":PART SELECT" [210,10 100x19]
+    - `OBJ_DrumEdit_IvTrackSwitch` IvTrackSwitch [0,0 32x32]
+    - `OBJ_DrumEdit_AcLanguageText` AcLanguageText [30,76 260x65]
 
-### `TITLE_SQPUNCH` -- "PUNCH RECORD"
+### `TITLE_SQMERS` -- "MEASURE ERASE"
 
-the sequencer punch-in record page.
-
-- Path: mode `MD_SEQ` > "CREATE" > "PUNCH RECORD"
-- Registered: `"TT_SQPUNCH"`, title id 0x87, function `NAKA_MAINFUNC_SqPunchTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
-- View: `OBJ_PunchRecord_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
-- EXIT -> `TITLE_SQCMENU`
-- Opened from: `TITLE_SQCMENU` ("PUNCH RECORD")
+- Path: mode MD_SEQ_EDIT > "ERASE"
+- Registered: `"TT_SQMERS"`, title id 0xA1, function `NAKA_MAINFUNC_SqMersTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
+- View: `OBJ_MeasureErase_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
+- EXIT -> `TITLE_SQEMENU`
+- Opened from: `TITLE_SQEMENU` ("ERASE")
 - Widgets:
 
-  - `OBJ_PunchRecord_TtlScreen` TtlScreen "PUNCH RECORD" [0,0 320x240]
-    - `OBJ_PunchRecord_IvTrackSwitch` IvTrackSwitch [0,0 32x32]
-    - `OBJ_PunchRecord_Box` Box [60,31 200x22]
-    - `OBJ_SqPunchGamen` SqplyVal [60,84 200x48]
-    - `OBJ_PunchRecord_Box_2` Box [90,55 140x95]
-    - `OBJ_Measure_Label_3` Label "MEASURE  =" [103,58 84x19]
-    - `OBJ_TimeSig_Label_3` Label "TIME SIG. =" [95,73 92x19]
-    - `OBJ_Memory_Label_2` Label "MEMORY   =" [103,88 84x19]
-    - `OBJ_PunchRecord_AcTempoBox` AcTempoBox [95,101 80x20]
-    - `OBJ_PunchRecord_TrTransposeBox` TrTransposeBox [175,101 50x20]
-    - `OBJ_PunchRecord_TrChordBox` TrChordBox [95,124 130x20]
-    - `OBJ_PunchRecord_Label` Label "%" [215,88 12x19]
-    - `OBJ_PunchRecord_SngSel` SngSel [62,33 200x48]
-    - `OBJ_MetPunchSw` AcFuncToggle [271,34 41x18]
-    - `OBJ_PunchInOutSw` AcFuncToggle "PUNCH OUT" [234,118 78x18]
-    - `OBJ_Meas_Label_2` Label "MEAS" [6,56 36x19]
-    - `OBJ_PunchRecord_AcIndexEditSw` AcIndexEditSw [8,34 31x18]
-    - `OBJ_PunchRecord_AcIndexEditSw_2` AcIndexEditSw [8,76 31x18]
-    - `OBJ_PunchRecord_AcFuncEditSw` AcFuncEditSw [8,118 31x18]
-    - `OBJ_Mixer_Label_3` Label "MIXER" [10,119 44x19]
-    - `OBJ_PunchRecord_IvPunchExit` IvPunchExit [32,0 32x32]
-    - `OBJ_PunchRecord_AcFuncEditSw_2` AcFuncEditSw [281,76 31x18]
-    - `OBJ_Auto_Label` Label "AUTO" [250,71 36x19]
-    - `OBJ_Punch_Label` Label "PUNCH" [250,84 44x19]
+  - `OBJ_MeasureErase_TtlScreen` TtlScreen "MEASURE ERASE" [0,0 320x240]
+    - `OBJ_MeasureErase_AcIndexWideES` AcIndexWideES [244,216 72x23]
+    - `OBJ_Value_Label_13` Label "VALUE" [256,202 44x19]
+    - `OBJ_MeasureErase_SqedtVal` SqedtVal [60,84 200x48]
+    - `OBJ_MeasureErase_PsEditBox` PsEditBox "TRACK        :" [8,30 165x26]
+    - `OBJ_MeasureErase_PsEditBox_2` PsEditBox "FIRST MEASURE:" [8,72 165x26]
+    - `OBJ_MeasureErase_PsEditBox_3` PsEditBox "LAST MEASURE :" [8,114 165x26]
+    - `OBJ_MeasureErase_PsEditBox_4` PsEditBox "ERASE DATA   :" [8,156 201x26]
+    - `OBJ_MeasureErase_MsgToTtl` MsgToTtl [60,84 200x48]
+    - `OBJ_MeasureErase_AcFuncEditSw` AcFuncEditSw [281,160 31x18]
 
-### `TITLE_SQSNGCLR` -- "SONG CLEAR"
+### `TITLE_SQMINS` -- "MEASURE INSERT"
 
-the sequencer song-clear page.
-
-- Path: mode `MD_SEQ` > "CREATE" > "SONG CLEAR"
-- Registered: `"TT_SQSNGCLR"`, title id 0x90, function `NAKA_MAINFUNC_SqSoclTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
-- View: `OBJ_SongClear_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
-- EXIT -> `TITLE_SQCMENU`
-- Opened from: `TITLE_SQCMENU` ("SONG CLEAR")
+- Path: mode MD_SEQ_EDIT > "INSERT"
+- Registered: `"TT_SQMINS"`, title id 0xA4, function `NAKA_MAINFUNC_SqMinsTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
+- View: `OBJ_MeasureInsert_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
+- EXIT -> `TITLE_SQEMENU`
+- Opened from: `TITLE_SQEMENU` ("INSERT")
 - Widgets:
 
-  - `OBJ_SongClear_TtlScreen` TtlScreen "SONG CLEAR" [0,0 320x240]
-    - `OBJ_SongClear_AcIndexWideES` AcIndexWideES [244,216 72x23]
-    - `OBJ_SongNoAll_Label` Label "SONG NO/ALL" [225,200 92x19]
-    - `OBJ_SongClear_SqedtVal3` SqedtVal3 [60,84 200x48]
-      - `OBJ_SongClear_Box` Box [35,70 250x46]
-        - `OBJ_SongClear_Label` Label ":" [218,95 15x19]
-        - `OBJ_SongClear_Label_2` Label "%" [268,95 15x19]
-    - `OBJ_SongClear_MsgToTtl` MsgToTtl [60,84 200x48]
-    - `OBJ_SongClear_AcFuncEditSw` AcFuncEditSw [281,160 31x18]
+  - `OBJ_MeasureInsert_TtlScreen` TtlScreen "MEASURE INSERT" [0,0 320x240]
+    - `OBJ_MeasureInsert_AcIndexWideES` AcIndexWideES [4,216 72x23]
+    - `OBJ_MeasureInsert_AcIndexWideES_2` AcIndexWideES [84,216 72x23]
+    - `OBJ_MeasureInsert_AcIndexWideES_3` AcIndexWideES [164,216 72x23]
+    - `OBJ_MeasureInsert_AcIndexWideES_4` AcIndexWideES [244,216 72x23]
+    - `OBJ_MeasureInsert_SqedtVal2` SqedtVal2 [60,84 200x48]
+    - `OBJ_MeasureInsert_SqedtFix` SqedtFix [60,84 200x48]
+    - `OBJ_MeasureInsert_MsgToTtl` MsgToTtl [60,84 200x48]
+    - `OBJ_MeasureInsert_AcFuncEditSw` AcFuncEditSw [281,160 31x18]
 
-### `TITLE_SQSNGSEL` -- "SONG SELECT/NAMING"
+### `TITLE_SQNOTECNG` -- "NOTE CHANGE"
 
-the sequencer song-select page.
-
-- Path: mode `MD_SEQ` > "CREATE" > "SONG SELECT /NAMING"
-- Registered: `"TT_SQSNGSEL"`, title id 0x8E, function `NAKA_MAINFUNC_SqSngSelTtlFunc`, v10/maincpu/sequencer/sequencer_ui.s
-- View: `OBJ_SqSngSel` (TtlScreen) in `naka_direct_play.c`
-- Menu entries: "NAMING" -> `TITLE_SQSNGNAME`
-- EXIT -> `TITLE_SQCMENU`
-- Opened from: `TITLE_SQCMENU` ("SONG SELECT /NAMING")
+- Path: mode MD_SEQ_EDIT > "NOTE CHANGE"
+- Registered: `"TT_SQNOTECNG"`, title id 0x9F, function `NAKA_MAINFUNC_SqNcngTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
+- View: `OBJ_NoteChange_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
+- EXIT -> `TITLE_SQEMENU`
+- Opened from: `TITLE_SQEMENU` ("NOTE CHANGE")
 - Widgets:
 
-  - `OBJ_SqSngSel` TtlScreen "SONG SELECT/NAMING" [0,0 320x240]
-    - `OBJ_Naming_AcTitleMenu` AcTitleMenu "NAMING" [256,30 58x26] -> `TITLE_SQSNGNAME`
-    - `OBJ_SqSngSel_PsSongSelBox` PsSongSelBox [56,37 200x177]
-      - `OBJ_SqSngSel_PsSongSelBox_2` PsSongSelBox [210,39 40x171]
-    - `OBJ_SqSngSel_AcIndexWideES` AcIndexWideES [82,216 152x23]
+  - `OBJ_NoteChange_TtlScreen` TtlScreen "NOTE CHANGE" [0,0 320x240]
+    - `OBJ_NoteChange_SqedtVal` SqedtVal [60,84 200x48]
+      - `OBJ_NoteChange_PsEditBox` PsEditBox [217,75 95x38]
+        - `OBJ_ChangeTo_Label` Label "CHANGE TO" [222,78 76x19]
+    - `OBJ_NoteChange_AcIndexWideES` AcIndexWideES [244,216 72x23]
+    - `OBJ_Value_Label_11` Label "VALUE" [256,202 44x19]
+    - `OBJ_NoteChange_PsEditBox_2` PsEditBox "TRACK        :" [8,30 165x26]
+    - `OBJ_NoteChange_PsEditBox_3` PsEditBox [217,33 95x38]
+      - `OBJ_TargetNote_Label` Label "TARGET NOTE" [218,36 92x19]
+    - `OBJ_NoteChange_Line` Line [200,44 1x42]
+    - `OBJ_NoteChange_Line_2` Line [200,44 15x1]
+    - `OBJ_NoteChange_Line_3` Line [200,86 15x1]
+    - `OBJ_NoteChange_Line_4` Line [210,82 5x5]
+    - `OBJ_NoteChange_Line_5` Line [210,86 5x5]
+    - `OBJ_NoteChange_PsEditBox_4` PsEditBox "FIRST MEASURE:" [8,72 165x26]
+    - `OBJ_NoteChange_PsEditBox_5` PsEditBox "LAST MEASURE :" [8,114 165x26]
+    - `OBJ_NoteChange_MsgToTtl` MsgToTtl [60,84 200x48]
+    - `OBJ_NoteChange_AcFuncEditSw` AcFuncEditSw [281,160 31x18]
 
-### `TITLE_SQSNGCPC` -- "SONG/TRACK COPY"
+### `TITLE_SQNOTESEL` -- "NOTE EDIT  "
 
-the song-copy page reached from TT_SQCMENU. It reuses TT_SQSNGCP's view 0x00910000, and its exit returns to TT_SQCMENU.
+- Path: mode MD_SEQ_EDIT > "NOTE EDIT"
+- Registered: `"TT_SQNOTESEL"`, title id 0x94, function `NAKA_MAINFUNC_SqNoteSelTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
+- View: `OBJ_NoteEdit_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
+- EXIT -> `TITLE_SQEMENU`
+- Opened from: `TITLE_SQEMENU` ("NOTE EDIT")
+- Widgets:
 
-- Path: mode `MD_SEQ` > "CREATE" > "SONG/TRACK COPY"
-- Registered: `"TT_SQSNGCPC"`, title id 0xA8, function `NAKA_MAINFUNC_SqSngcpTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
+  - `OBJ_NoteEdit_TtlScreen` TtlScreen "NOTE EDIT  " [0,0 320x240]
+    - `OBJ_PartSelect_Label` Label ":PART SELECT" [215,10 100x19]
+    - `OBJ_NoteEdit_IvTrackSwitch` IvTrackSwitch [0,0 32x32]
+    - `OBJ_NoteEdit_AcLanguageText` AcLanguageText [30,76 260x65]
+
+### `TITLE_SQQTZ` -- "QUANTIZE"
+
+- Path: mode MD_SEQ_EDIT > "QUANTIZE"
+- Registered: `"TT_SQQTZ"`, title id 0x9C, function `NAKA_MAINFUNC_SqQtzTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
+- View: `OBJ_Quantize_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
+- EXIT -> `TITLE_SQEMENU`
+- Opened from: `TITLE_SQEMENU` ("QUANTIZE")
+- Widgets:
+
+  - `OBJ_Quantize_TtlScreen` TtlScreen "QUANTIZE" [0,0 320x240]
+    - `OBJ_Value_Label_8` Label "VALUE" [256,202 44x19]
+    - `OBJ_Quantize_AcIndexWideES` AcIndexWideES [244,216 72x23]
+    - `OBJ_Quantize_SqedtVal` SqedtVal [60,84 200x48]
+      - `OBJ_Quantize_PsEditBox` PsEditBox "LAST MEASURE :" [8,114 165x26]
+      - `OBJ_Quantize_PsEditBox_2` PsEditBox "WINDOW  :" [175,72 137x26]
+        - `OBJ_Quantize_Label` Label "%" [298,78 12x19]
+    - `OBJ_Quantize_PsEditBox_3` PsEditBox "TRACK        :" [8,30 165x26]
+    - `OBJ_Quantize_PsEditBox_4` PsEditBox "FIRST MEASURE:" [8,72 165x26]
+    - `OBJ_Quantize_PsEditBox_5` PsEditBox "VALUE        :" [8,156 165x26]
+    - `OBJ_Quantize_PsEditBox_6` PsEditBox "STRENGTH:" [175,30 137x26]
+      - `OBJ_Quantize_Label_2` Label "%" [298,36 12x19]
+    - `OBJ_Quantize_MsgToTtl` MsgToTtl [60,84 200x48]
+    - `OBJ_Quantize_AcFuncEditSw` AcFuncEditSw [281,160 31x18]
+
+### `TITLE_SQSNGCP` -- "SONG/TRACK COPY"
+
+the sequencer song-copy page, as entered from the edit menu. Its exit returns to TT_SQEMENU.
+
+- Path: mode MD_SEQ_EDIT > "SONG/TRACK COPY"
+- Registered: `"TT_SQSNGCP"`, title id 0x91, function `NAKA_MAINFUNC_SqSngcpTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
 - View: `OBJ_SongTrackCopy_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
 - EXIT -> `TITLE_SQCMENU`
-- Opened from: `TITLE_SQCMENU` ("SONG/TRACK COPY")
+- Opened from: `TITLE_SQEMENU` ("SONG/TRACK COPY")
 - Widgets:
 
   - `OBJ_SongTrackCopy_TtlScreen` TtlScreen "SONG/TRACK COPY" [0,0 320x240]
@@ -1192,39 +1709,98 @@ the song-copy page reached from TT_SQCMENU. It reuses TT_SQSNGCP's view 0x009100
     - `OBJ_SongTrackCopy_MsgToTtl` MsgToTtl [60,84 200x48]
     - `OBJ_SongTrackCopy_AcFuncEditSw` AcFuncEditSw [281,160 31x18]
 
-### `TITLE_SQTRAS` -- "TRACK ASSIGN   "
+### `TITLE_SQTRKCLR` -- "TRACK CLEAR"
 
-- Path: mode `MD_SEQ` > "CREATE" > "TRACK ASSIGN"
-- Registered: `"TT_SQTRAS"`, title id 0x8B, function `NAKA_MAINFUNC_SqTrAsTtlFunc`, v10/maincpu/sequencer/sequencer_ui.s
-- View: `OBJ_SqTrAs` (TtlScreen) in `naka_direct_play.c`
-- Menu entries: "PRESET" -> `TITLE_SQTRASPS`
-- EXIT -> `TITLE_SQCMENU`
-- Opened from: `TITLE_SQCMENU` ("TRACK ASSIGN")
+the sequencer track-clear page. It is also the first of the 15 titles 0x9A..0xA8 that SureJudge_ShowSureDisp indexes by ...
+
+- Path: mode MD_SEQ_EDIT > "TRACK CLEAR"
+- Registered: `"TT_SQTRKCLR"`, title id 0x9A, function `NAKA_MAINFUNC_SqTrclTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
+- View: `OBJ_TrackClear_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
+- EXIT -> `TITLE_SQEMENU`
+- Opened from: `TITLE_SQEMENU` ("TRACK CLEAR")
 - Widgets:
 
-  - `OBJ_SqTrAs` TtlScreen "TRACK ASSIGN   " [0,0 320x240]
-    - `OBJ_Preset_AcTitleMenu` AcTitleMenu "PRESET" [254,30 58x26] -> `TITLE_SQTRASPS`
-    - `OBJ_SqTrAs_AcCurrentSongBox` AcCurrentSongBox [256,10 52x19]
-    - `TrAs_OkSwitchView` VwEditSwBox, record outside the C sources
-    - `OBJ_TrAsGrid` AcTrAsGridBox [2,34 240x206]
-      - `OBJ_TrAsGrid_TextBox` TextBox "TRACK~0DASSIGN" [83,38 76x20]
-      - `OBJ_TrAsGrid_TextBox_2` TextBox "LOCAL~0DCONT." [161,38 38x20]
-      - `OBJ_TrAsGrid_TextBox_3` TextBox "MIDI~0DOUT" [200,38 40x20]
-      - `OBJ_TrAsGrid_AcIndexWideES` AcIndexWideES [7,216 72x23]
-      - `TrAs_PartSelectSwitchView` AcIndexWideES, record outside the C sources
-      - `OBJ_TrAsGrid_AcIndexEditSw` AcIndexEditSw [164,216 32x23]
-      - `OBJ_TrAsGrid_AcIndexEditSw_2` AcIndexEditSw [204,216 32x23]
-    - `OBJ_SqTrAs_IvMainEditSw` IvMainEditSw [0,0 32x32]
+  - `OBJ_TrackClear_TtlScreen` TtlScreen "TRACK CLEAR" [0,0 320x240]
+    - `OBJ_TrackClear_IvTrackSwitch` IvTrackSwitch [0,0 32x32]
+    - `OBJ_TrackClear_MsgToTtl` MsgToTtl [60,84 200x48]
+    - `OBJ_TrackClear_AcLanguageText` AcLanguageText [10,40 265x80]
+    - `OBJ_TrackClear_AcLanguageText_2` AcLanguageText [10,115 265x40]
+    - `OBJ_TrackClear_AcFuncEditSw` AcFuncEditSw [281,118 31x18]
 
-### `TITLE_SQSNGNAME` -- "NAMING"
+### `TITLE_SQTRKMRG` -- "TRACK MERGE"
 
-the sequencer song-name page.
+- Path: mode MD_SEQ_EDIT > "TRACK MERGE"
+- Registered: `"TT_SQTRKMRG"`, title id 0x9B, function `NAKA_MAINFUNC_SqTrmgTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
+- View: `OBJ_TrackMerge_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
+- EXIT -> `TITLE_SQEMENU`
+- Opened from: `TITLE_SQEMENU` ("TRACK MERGE")
+- Widgets:
 
-- Path: mode `MD_SEQ` > "CREATE" > "SONG SELECT /NAMING" > "NAMING"
-- Registered: `"TT_SQSNGNAME"`, title id 0x8F, function `NAKA_MAINFUNC_SqSngNameTtlFunc`, v10/maincpu/sequencer/sequencer_ui.s
+  - `OBJ_TrackMerge_TtlScreen` TtlScreen "TRACK MERGE" [0,0 320x240]
+    - `OBJ_TrackMerge_Line` Line [160,44 1x86]
+    - `OBJ_TrackMerge_Line_2` Line [130,44 30x1]
+    - `OBJ_TrackMerge_Line_3` Line [130,129 30x1]
+    - `OBJ_TrackMerge_Line_4` Line [160,84 30x1]
+    - `OBJ_TrackMerge_Line_5` Line [180,75 10x10]
+    - `OBJ_TrackMerge_Line_6` Line [180,84 10x10]
+    - `OBJ_TrackMerge_AcIndexWideES` AcIndexWideES [244,216 72x23]
+    - `OBJ_Value_Label_7` Label "VALUE" [256,202 44x19]
+    - `OBJ_TrackMerge_SqedtVal` SqedtVal [60,84 200x48]
+      - `OBJ_TrackMerge_PsEditBox` PsEditBox "TRACK :" [8,114 116x26]
+    - `OBJ_TrackMerge_PsEditBox_2` PsEditBox "TRACK :" [8,30 116x26]
+    - `OBJ_TrackMerge_PsEditBox_3` PsEditBox "TRACK :" [196,72 116x26]
+    - `OBJ_TrackMerge_MsgToTtl` MsgToTtl [60,84 200x48]
+    - `OBJ_TrackMerge_AcFuncEditSw` AcFuncEditSw [281,160 31x18]
+
+### `TITLE_SQTRNS` -- "TRANSPOSE"
+
+- Path: mode MD_SEQ_EDIT > "TRANSPOSE"
+- Registered: `"TT_SQTRNS"`, title id 0x9D, function `NAKA_MAINFUNC_SqTrnsTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
+- View: `OBJ_Transpose_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
+- EXIT -> `TITLE_SQEMENU`
+- Opened from: `TITLE_SQEMENU` ("TRANSPOSE")
+- Widgets:
+
+  - `OBJ_Transpose_TtlScreen` TtlScreen "TRANSPOSE" [0,0 320x240]
+    - `OBJ_Value_Label_9` Label "VALUE" [256,202 44x19]
+    - `OBJ_Transpose_AcIndexWideES` AcIndexWideES [244,216 72x23]
+    - `OBJ_Transpose_SqedtVal` SqedtVal [60,84 200x48]
+      - `OBJ_Transpose_PsEditBox` PsEditBox "LAST MEASURE :" [8,114 165x26]
+    - `OBJ_Transpose_PsEditBox_2` PsEditBox "TRACK        :" [8,30 165x26]
+    - `OBJ_Transpose_PsEditBox_3` PsEditBox "FIRST MEASURE:" [8,72 165x26]
+    - `OBJ_Transpose_PsEditBox_4` PsEditBox "TRANSPOSE   :" [8,156 176x26]
+    - `OBJ_Transpose_MsgToTtl` MsgToTtl [60,84 200x48]
+    - `OBJ_Transpose_AcFuncEditSw` AcFuncEditSw [281,160 31x18]
+
+### `TITLE_SQVELOCNG` -- "VELOCITY CHANGE"
+
+- Path: mode MD_SEQ_EDIT > "VELOCITY CHANGE"
+- Registered: `"TT_SQVELOCNG"`, title id 0x9E, function `NAKA_MAINFUNC_SqVcngTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
+- View: `OBJ_VelocityChange_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
+- EXIT -> `TITLE_SQEMENU`
+- Opened from: `TITLE_SQEMENU` ("VELOCITY CHANGE")
+- Widgets:
+
+  - `OBJ_VelocityChange_TtlScreen` TtlScreen "VELOCITY CHANGE" [0,0 320x240]
+    - `OBJ_Value_Label_10` Label "VALUE" [256,202 44x19]
+    - `OBJ_VelocityChange_AcIndexWideES` AcIndexWideES [244,216 72x23]
+    - `OBJ_VelocityChange_SqedtVal` SqedtVal [60,84 200x48]
+      - `OBJ_VelocityChange_PsEditBox` PsEditBox "LAST MEASURE :" [8,114 165x26]
+    - `OBJ_VelocityChange_PsEditBox_2` PsEditBox "TRACK        :" [8,30 165x26]
+    - `OBJ_VelocityChange_PsEditBox_3` PsEditBox "FIRST MEASURE:" [8,72 165x26]
+    - `OBJ_VelocityChange_PsEditBox_4` PsEditBox "VELOCITY    :" [8,156 176x26]
+    - `OBJ_VelocityChange_MsgToTtl` MsgToTtl [60,84 200x48]
+    - `OBJ_VelocityChange_AcFuncEditSw` AcFuncEditSw [281,160 31x18]
+
+### `TITLE_SQEASYNAME` -- "NAMING"
+
+the song-name page reached from easy record. It reuses TT_SQSNGNAME's view 0x008F0000, and its exit returns to ...
+
+- Path: SEQUENCER EASY REC button (mode MD_SEQ_EREC) > "NAMING"
+- Registered: `"TT_SQEASYNAME"`, title id 0xA7, function `NAKA_MAINFUNC_SqSngNameTtlFunc`, v10/maincpu/sequencer/sequencer_ui.s
 - View: `OBJ_SqNameing` (TtlScreen) in `naka_direct_play.c`
 - EXIT -> `TITLE_SQSNGSEL`
-- Opened from: `TITLE_SQSNGSEL` ("NAMING")
+- Opened from: `TITLE_SQEASYREC` ("NAMING")
 - Widgets:
 
   - `OBJ_SqNameing` TtlScreen "NAMING" [0,0 320x240]
@@ -1234,151 +1810,35 @@ the sequencer song-name page.
     - `OBJ_SqNameing_AcFuncEditSw` AcFuncEditSw [281,160 31x18]
     - `OBJ_SqNameing_IvNamingExit` IvNamingExit [32,0 32x32]
 
-### `TITLE_SQTRASPS` -- "TRACK ASSIGN PRESET"
+### `TITLE_SDACCILL` -- "ACOUSTIC ILLUSION"
 
-- Path: mode `MD_SEQ` > "CREATE" > "TRACK ASSIGN" > "PRESET"
-- Registered: `"TT_SQTRASPS"`, title id 0x8C, function `NAKA_MAINFUNC_SqTrAsPsTtlFunc`, v10/maincpu/sequencer/sequencer_ui.s
-- View: `OBJ_SqTrAsPs` (TtlScreen) in `naka_direct_play.c`
-- EXIT -> `TITLE_SQTRAS`
-- Opened from: `TITLE_SQTRAS` ("PRESET")
-- Widgets:
-
-  - `OBJ_SqTrAsPs` TtlScreen "TRACK ASSIGN PRESET" [0,0 320x240]
-    - `OBJ_Song_Label` Label "SONG" [260,200 36x19]
-    - `OBJ_SqTrAsPs_AcIndexWideES` AcIndexWideES [244,216 72x23]
-    - `OBJ_SqTrAsPs_AcRamEditBox` AcRamEditBox "SONG   : " [40,204 180x32]
-    - `OBJ_TrAsPsIniSel` AcModeSelBox "INITIAL" [8,30 206x26]
-    - `OBJ_TrAsPsTechSel` AcModeSelBox "TECHNICS MULTI RECORDING" [8,72 206x26]
-    - `OBJ_TrAsPsGmSel` AcModeSelBox "GM MULTI RECORDING" [8,114 206x26]
-    - `OBJ_SqTrAsPs_IvMainEditSw` IvMainEditSw [0,0 32x32]
-    - `OBJ_SqTrAsPs_VwEditSwBox` VwEditSwBox [281,160 31x18]
-    - `OBJ_SqTrAsPs_AcLanguageText` AcLanguageText [7,150 264x48]
-
-### `TITLE_SDPART` -- "SOUND PART SETTING"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SDPART"`, title id 0x3, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/ui/drawbar_panel_ui.s
-- View: `OBJ_Sdpart` (TtlScreen) in `naka_technichord_part.c`
-- EXIT -> `TITLE_PS`
-- Opened from: `an untitled view` ("PART SETTING")
-- Widgets:
-
-  - `OBJ_Sdpart` TtlScreen "SOUND PART SETTING" [0,0 320x240]
-    - `OBJ_Sdpart_AcIndexEditSw` AcIndexEditSw [8,34 31x18]
-    - `OBJ_Sdpart_AcIndexEditSw_2` AcIndexEditSw [8,76 31x18]
-    - `OBJ_Sdpart_Line` Line [64,52 200x1]
-    - `OBJ_Sdpart_Line_2` Line [64,54 200x1]
-    - `OBJ_Sdpart_Line_3` Line [48,44 1x41]
-    - `OBJ_Sdpart_Line_4` Line [40,44 8x1]
-    - `OBJ_Sdpart_Line_5` Line [40,84 8x1]
-    - `OBJ_Sdpart_Line_6` Line [48,72 8x1]
-    - `OBJ_PartSelect_Label` Label "PART SELECT :" [58,64 108x19]
-    - `OBJ_SdpartSound` PsParaBox [64,30 200x22]
-    - `OBJ_SdpartPart` PsParaBox [168,60 120x22]
-    - `OBJ_VOL_AcStrRadioBox` AcStrRadioBox "VOL" [4,199 33x16]
-    - `OBJ_PAN_AcStrRadioBox` AcStrRadioBox "PAN" [44,199 33x16]
-    - `OBJ_Sdpart_AcStrRadioBox` AcStrRadioBox "EFF" [84,199 33x16]
-    - `OBJ_SUS_AcStrRadioBox` AcStrRadioBox "SUS" [124,199 33x16]
-    - `OBJ_KEY_AcStrRadioBox` AcStrRadioBox "KEY" [164,199 33x16]
-    - `OBJ_TUN_AcStrRadioBox` AcStrRadioBox "TUN" [204,199 33x16]
-    - `OBJ_BND_AcStrRadioBox` AcStrRadioBox "BND" [244,199 33x16]
-    - `OBJ_OTH_AcStrRadioBox` AcStrRadioBox "OTH" [284,199 33x16]
-    - `OBJ_Sdpart_VwEditSwBox` VwEditSwBox [284,216 32x23]
-    - `OBJ_Sdpart_VwEditSwBox_2` VwEditSwBox [244,216 32x23]
-    - `OBJ_Sdpart_VwEditSwBox_3` VwEditSwBox [204,216 32x23]
-    - `OBJ_Sdpart_VwEditSwBox_4` VwEditSwBox [164,216 32x23]
-    - `OBJ_Sdpart_VwEditSwBox_5` VwEditSwBox [124,216 32x23]
-    - `OBJ_Sdpart_VwEditSwBox_6` VwEditSwBox [84,216 32x23]
-    - `OBJ_Sdpart_VwEditSwBox_7` VwEditSwBox [44,216 32x23]
-    - `OBJ_Sdpart_VwEditSwBox_8` VwEditSwBox [4,216 32x23]
-    - `OBJ_Sdpart_IvSdpart` IvSdpart [0,0 32x32]
-
-### `TITLE_SDMTUNE` -- "MASTER TUNING"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SDMTUNE"`, title id 0x4, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/ui/drawbar_panel_ui.s
-- View: `OBJ_Sdmtune` (TtlScreen) in `naka_technichord_part.c`
+- Path: MENU SOUND button (mode MD_SOUND) > "ACOUSTIC ILLUSION"
+- Registered: `"TT_SDACCILL"`, title id 0xE, function `NAKA_MAINFUNC_SdAccillTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
+- View: `OBJ_AcousticIllusion_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
 - EXIT -> `TITLE_SDMENU`
-- Opened from: `an untitled view` ("MASTER TUNING")
+- Opened from: `TITLE_SDMENU` ("ACOUSTIC ILLUSION")
 - Widgets:
 
-  - `OBJ_Sdmtune` TtlScreen "MASTER TUNING" [0,0 320x240]
-    - `OBJ_Sdmtune_AcLswEditBox` AcLswEditBox "MASTER TUNING  :" [36,91 245x48]
-      - `OBJ_Hz_Label` Label "Hz" [254,107 20x19]
-    - `OBJ_Sdmtune_AcIndexWideES` AcIndexWideES [244,216 72x23]
-
-### `TITLE_SDSCLTYP` -- "KEY SCALING"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SDSCLTYP"`, title id 0x5, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/ui/drawbar_panel_ui.s
-- View: `OBJ_Sdscltyp` (TtlScreen) in `naka_technichord_part.c`
-- EXIT -> `TITLE_SDMENU`
-- Opened from: `an untitled view` ("KEY SCALING")
-- Widgets:
-
-  - `OBJ_Sdscltyp` TtlScreen "KEY SCALING" [0,0 320x240]
-    - `OBJ_SdscltypPage` AcWindowPage [245,6 71x18]
-    - `OBJ_Sdscltyp_IvPageControl` IvPageControl [0,0 32x32]
-    - `OBJ_Sdscltyp_IvPageControl_2` IvPageControl [32,0 32x32]
-    - `OBJ_Sdscltyp_IvShowHide` IvShowHide [64,0 32x32]
-
-### `TITLE_SDLFTHLD` -- "LEFT HOLD SETTING"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SDLFTHLD"`, title id 0x7, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/ui/drawbar_panel_ui.s
-- View: `OBJ_Sdlfthld` (TtlScreen) in `naka_technichord_part.c`
-- EXIT -> `TITLE_SDMENU`
-- Opened from: `an untitled view` ("LEFT HOLD")
-- Widgets:
-
-  - `OBJ_Sdlfthld` TtlScreen "LEFT HOLD SETTING" [0,0 320x240]
-    - `OBJ_Sdlfthld_AcIndexWideES` AcIndexWideES [244,216 72x23]
-    - `OBJ_Sdlfthld_AcLswEditBox` AcLswEditBox "LEFT HOLD      :" [36,91 245x48]
-
-### `TITLE_REVEQMENU` -- "REVERB & EQUALIZER PRESETS"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_REVEQMENU"`, title id 0x9, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/seq_event_playback.s
-- View: `OBJ_ReverbEqualizerMenu` (TtlScreen) in `naka_midi_reverb.c`
-- Menu entries: "REVERB PRESETS" -> `TITLE_REVPRESET`, "EQUALIZER PRESETS" -> `TITLE_EQPRESET`, "REVERB + EQUALIZER PRESETS" -> `TITLE_REVEQPRESET`
-- EXIT -> `TITLE_SDMENU`
-- Opened from: `an untitled view` ("REVERB & EQ PRESETS")
-- Widgets:
-
-  - `OBJ_ReverbEqualizerMenu` TtlScreen "REVERB & EQUALIZER PRESETS" [0,0 320x240]
-    - `OBJ_ReverbPresets_AcTitleMenu` AcTitleMenu "REVERB PRESETS" [8,72 149x26] -> `TITLE_REVPRESET`
-    - `OBJ_EqualizerPresets_AcTitleMenu` AcTitleMenu "EQUALIZER PRESETS" [163,72 149x26] -> `TITLE_EQPRESET`
-    - `OBJ_ReverbEqualizerPresets_AcTitleMenu` AcTitleMenu "REVERB + EQUALIZER PRESETS" [8,156 240x26] -> `TITLE_REVEQPRESET`
-
-### `TITLE_SDREVSET` -- "REVERB"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SDREVSET"`, title id 0xA, function `NAKA_MAINFUNC_SdRevsetTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
-- View: `OBJ_Reverb_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
-- EXIT -> `TITLE_SDMENU`
-- Opened from: `an untitled view` ("REVERB")
-- Widgets:
-
-  - `OBJ_Reverb_TtlScreen` TtlScreen "REVERB" [0,0 320x240]
-    - `OBJ_Reverb_AcIndexWideES` AcIndexWideES [4,216 72x23]
-    - `OBJ_Reverb_AcIndexWideES_2` AcIndexWideES [124,216 72x23]
-    - `OBJ_Reverb_AcIndexWideES_3` AcIndexWideES [244,216 72x23]
-    - `OBJ_Type_Label` Label "TYPE" [20,202 36x19]
-    - `OBJ_Parameter_Label` Label "PARAMETER" [120,202 76x19]
-    - `OBJ_Value_Label` Label "VALUE" [256,202 44x19]
-    - `OBJ_Reverb_EffectBox` EffectBox [40,64 249x137]
-    - `OBJ_Reverb_Box` Box [40,34 248x28]
-    - `OBJ_Type_Label_2` Label "TYPE:" [52,40 44x19]
-    - `OBJ_Reverb_IvIntEasySet` IvIntEasySet [0,0 32x32]
-    - `OBJ_Reverb_IvSdrev` IvSdrev [0,32 32x32]
+  - `OBJ_AcousticIllusion_TtlScreen` TtlScreen "ACOUSTIC ILLUSION" [0,0 320x240]
+    - `OBJ_AcousticIllusion_AcIndexWideES` AcIndexWideES [44,216 72x23]
+    - `OBJ_AcousticIllusion_AcIndexWideES_2` AcIndexWideES [204,216 72x23]
+    - `OBJ_Type_Label_5` Label "TYPE" [62,200 36x19]
+    - `OBJ_Level_Label` Label "LEVEL" [218,200 44x19]
+    - `OBJ_AcousticIllusion_AccIll` AccIll [60,84 200x48]
+    - `OBJ_AcousticIllusion_Box` Box [30,80 260x48]
+    - `OBJ_AcousticIllusion_Box_2` Box [30,135 260x30]
+      - `OBJ_IllusionLevel_Label` Label "ILLUSION LEVEL:" [40,144 124x19]
+    - `OBJ_Type_Label_6` Label "TYPE:" [40,96 59x19]
+    - `OBJ_AcousticIllusion_IvSdacc` IvSdacc [0,0 32x32]
+    - `OBJ_AcousticIllusion_IvIntEasySet` IvIntEasySet [0,32 32x32]
 
 ### `TITLE_SDDSPEFF` -- "DSP EFFECT"
 
-- Path: none in the data (opened by code)
+- Path: MENU SOUND button (mode MD_SOUND) > "DSP EFFECT"
 - Registered: `"TT_SDDSPEFF"`, title id 0xB, function `NAKA_MAINFUNC_SdDspeffTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
 - View: `OBJ_DspEffect_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
 - EXIT -> `TITLE_SDMENU`
-- Opened from: `an untitled view` ("DSP EFFECT")
+- Opened from: `TITLE_SDMENU` ("DSP EFFECT")
 - Widgets:
 
   - `OBJ_DspEffect_TtlScreen` TtlScreen "DSP EFFECT" [0,0 320x240]
@@ -1396,11 +1856,11 @@ the sequencer song-name page.
 
 ### `TITLE_SDEQUALIZER` -- "EQUALIZER"
 
-- Path: none in the data (opened by code)
+- Path: MENU SOUND button (mode MD_SOUND) > "EQUALIZER"
 - Registered: `"TT_SDEQUALIZER"`, title id 0xC, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/sequencer_ui.s
 - View: `OBJ_Equalizer_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
 - EXIT -> `TITLE_SDMENU`
-- Opened from: `an untitled view` ("EQUALIZER")
+- Opened from: `TITLE_SDMENU` ("EQUALIZER")
 - Widgets:
 
   - `OBJ_Equalizer_TtlScreen` TtlScreen "EQUALIZER" [0,0 320x240]
@@ -1441,1723 +1901,152 @@ the sequencer song-name page.
     - `OBJ_Freq_Label_5` Label "FREQ" [122,124 28x11]
     - `OBJ_EqOnOff` EqOnOffFuncToggle "EQ:ON" [256,34 56x18]
 
+### `TITLE_SDSCLTYP` -- "KEY SCALING"
+
+- Path: MENU SOUND button (mode MD_SOUND) > "KEY SCALING"
+- Registered: `"TT_SDSCLTYP"`, title id 0x5, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/ui/drawbar_panel_ui.s
+- View: `OBJ_Sdscltyp` (TtlScreen) in `naka_technichord_part.c`
+- EXIT -> `TITLE_SDMENU`
+- Opened from: `TITLE_SDMENU` ("KEY SCALING")
+- Widgets:
+
+  - `OBJ_Sdscltyp` TtlScreen "KEY SCALING" [0,0 320x240]
+    - `OBJ_SdscltypPage` AcWindowPage [245,6 71x18]
+    - `OBJ_Sdscltyp_IvPageControl` IvPageControl [0,0 32x32]
+    - `OBJ_Sdscltyp_IvPageControl_2` IvPageControl [32,0 32x32]
+    - `OBJ_Sdscltyp_IvShowHide` IvShowHide [64,0 32x32]
+
+### `TITLE_SDLFTHLD` -- "LEFT HOLD SETTING"
+
+- Path: MENU SOUND button (mode MD_SOUND) > "LEFT HOLD"
+- Registered: `"TT_SDLFTHLD"`, title id 0x7, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/ui/drawbar_panel_ui.s
+- View: `OBJ_Sdlfthld` (TtlScreen) in `naka_technichord_part.c`
+- EXIT -> `TITLE_SDMENU`
+- Opened from: `TITLE_SDMENU` ("LEFT HOLD")
+- Widgets:
+
+  - `OBJ_Sdlfthld` TtlScreen "LEFT HOLD SETTING" [0,0 320x240]
+    - `OBJ_Sdlfthld_AcIndexWideES` AcIndexWideES [244,216 72x23]
+    - `OBJ_Sdlfthld_AcLswEditBox` AcLswEditBox "LEFT HOLD      :" [36,91 245x48]
+
+### `TITLE_SDMTUNE` -- "MASTER TUNING"
+
+- Path: MENU SOUND button (mode MD_SOUND) > "MASTER TUNING"
+- Registered: `"TT_SDMTUNE"`, title id 0x4, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/ui/drawbar_panel_ui.s
+- View: `OBJ_Sdmtune` (TtlScreen) in `naka_technichord_part.c`
+- EXIT -> `TITLE_SDMENU`
+- Opened from: `TITLE_SDMENU` ("MASTER TUNING")
+- Widgets:
+
+  - `OBJ_Sdmtune` TtlScreen "MASTER TUNING" [0,0 320x240]
+    - `OBJ_Sdmtune_AcLswEditBox` AcLswEditBox "MASTER TUNING  :" [36,91 245x48]
+      - `OBJ_Hz_Label` Label "Hz" [254,107 20x19]
+    - `OBJ_Sdmtune_AcIndexWideES` AcIndexWideES [244,216 72x23]
+
+### `TITLE_SDMIXER` -- "MIXER"
+
+- Path: MENU SOUND button (mode MD_SOUND) > "MIXER"
+- Registered: `"TT_SDMIXER"`, title id 0x8, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/ui/drawbar_panel_ui.s
+- View: `OBJ_Sdmixer` (TtlScreen) in `naka_technichord_part.c`
+- EXIT -> `TITLE_SDMENU`
+- Opened from: `TITLE_ETMENU` ("MIXER"), `TITLE_SDMENU` ("MIXER")
+- Widgets:
+
+  - `OBJ_Sdmixer` TtlScreen "MIXER" [0,0 320x240]
+    - `OBJ_Sdmixer_AcResetPage` AcResetPage [245,6 71x18]
+    - `OBJ_Sdmixer_AcPartMixer` AcPartMixer [108,31 204x13]
+    - `NakaWidget_Sdmixer_3_IvExit` IvExit, record outside the C sources
+
+### `TITLE_SDPART` -- "SOUND PART SETTING"
+
+- Path: MENU SOUND button (mode MD_SOUND) > "PART SETTING"
+- Registered: `"TT_SDPART"`, title id 0x3, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/ui/drawbar_panel_ui.s
+- View: `OBJ_Sdpart` (TtlScreen) in `naka_technichord_part.c`
+- EXIT -> `TITLE_PS`
+- Opened from: `TITLE_SDMENU` ("PART SETTING")
+- Widgets:
+
+  - `OBJ_Sdpart` TtlScreen "SOUND PART SETTING" [0,0 320x240]
+    - `OBJ_Sdpart_AcIndexEditSw` AcIndexEditSw [8,34 31x18]
+    - `OBJ_Sdpart_AcIndexEditSw_2` AcIndexEditSw [8,76 31x18]
+    - `OBJ_Sdpart_Line` Line [64,52 200x1]
+    - `OBJ_Sdpart_Line_2` Line [64,54 200x1]
+    - `OBJ_Sdpart_Line_3` Line [48,44 1x41]
+    - `OBJ_Sdpart_Line_4` Line [40,44 8x1]
+    - `OBJ_Sdpart_Line_5` Line [40,84 8x1]
+    - `OBJ_Sdpart_Line_6` Line [48,72 8x1]
+    - `OBJ_PartSelect_Label` Label "PART SELECT :" [58,64 108x19]
+    - `OBJ_SdpartSound` PsParaBox [64,30 200x22]
+    - `OBJ_SdpartPart` PsParaBox [168,60 120x22]
+    - `OBJ_VOL_AcStrRadioBox` AcStrRadioBox "VOL" [4,199 33x16]
+    - `OBJ_PAN_AcStrRadioBox` AcStrRadioBox "PAN" [44,199 33x16]
+    - `OBJ_Sdpart_AcStrRadioBox` AcStrRadioBox "EFF" [84,199 33x16]
+    - `OBJ_SUS_AcStrRadioBox` AcStrRadioBox "SUS" [124,199 33x16]
+    - `OBJ_KEY_AcStrRadioBox` AcStrRadioBox "KEY" [164,199 33x16]
+    - `OBJ_TUN_AcStrRadioBox` AcStrRadioBox "TUN" [204,199 33x16]
+    - `OBJ_BND_AcStrRadioBox` AcStrRadioBox "BND" [244,199 33x16]
+    - `OBJ_OTH_AcStrRadioBox` AcStrRadioBox "OTH" [284,199 33x16]
+    - `OBJ_Sdpart_VwEditSwBox` VwEditSwBox [284,216 32x23]
+    - `OBJ_Sdpart_VwEditSwBox_2` VwEditSwBox [244,216 32x23]
+    - `OBJ_Sdpart_VwEditSwBox_3` VwEditSwBox [204,216 32x23]
+    - `OBJ_Sdpart_VwEditSwBox_4` VwEditSwBox [164,216 32x23]
+    - `OBJ_Sdpart_VwEditSwBox_5` VwEditSwBox [124,216 32x23]
+    - `OBJ_Sdpart_VwEditSwBox_6` VwEditSwBox [84,216 32x23]
+    - `OBJ_Sdpart_VwEditSwBox_7` VwEditSwBox [44,216 32x23]
+    - `OBJ_Sdpart_VwEditSwBox_8` VwEditSwBox [4,216 32x23]
+    - `OBJ_Sdpart_IvSdpart` IvSdpart [0,0 32x32]
+
+### `TITLE_REVEQMENU` -- "REVERB & EQUALIZER PRESETS"
+
+- Path: MENU SOUND button (mode MD_SOUND) > "REVERB & EQ PRESETS"
+- Registered: `"TT_REVEQMENU"`, title id 0x9, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/seq_event_playback.s
+- View: `OBJ_ReverbEqualizerMenu` (TtlScreen) in `naka_midi_reverb.c`
+- Menu entries: "REVERB PRESETS" -> `TITLE_REVPRESET`, "EQUALIZER PRESETS" -> `TITLE_EQPRESET`, "REVERB + EQUALIZER PRESETS" -> `TITLE_REVEQPRESET`
+- EXIT -> `TITLE_SDMENU`
+- Opened from: `TITLE_SDMENU` ("REVERB & EQ PRESETS")
+- Widgets:
+
+  - `OBJ_ReverbEqualizerMenu` TtlScreen "REVERB & EQUALIZER PRESETS" [0,0 320x240]
+    - `OBJ_ReverbPresets_AcTitleMenu` AcTitleMenu "REVERB PRESETS" [8,72 149x26] -> `TITLE_REVPRESET`
+    - `OBJ_EqualizerPresets_AcTitleMenu` AcTitleMenu "EQUALIZER PRESETS" [163,72 149x26] -> `TITLE_EQPRESET`
+    - `OBJ_ReverbEqualizerPresets_AcTitleMenu` AcTitleMenu "REVERB + EQUALIZER PRESETS" [8,156 240x26] -> `TITLE_REVEQPRESET`
+
+### `TITLE_SDREVSET` -- "REVERB"
+
+- Path: MENU SOUND button (mode MD_SOUND) > "REVERB"
+- Registered: `"TT_SDREVSET"`, title id 0xA, function `NAKA_MAINFUNC_SdRevsetTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
+- View: `OBJ_Reverb_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
+- EXIT -> `TITLE_SDMENU`
+- Opened from: `TITLE_SDMENU` ("REVERB")
+- Widgets:
+
+  - `OBJ_Reverb_TtlScreen` TtlScreen "REVERB" [0,0 320x240]
+    - `OBJ_Reverb_AcIndexWideES` AcIndexWideES [4,216 72x23]
+    - `OBJ_Reverb_AcIndexWideES_2` AcIndexWideES [124,216 72x23]
+    - `OBJ_Reverb_AcIndexWideES_3` AcIndexWideES [244,216 72x23]
+    - `OBJ_Type_Label` Label "TYPE" [20,202 36x19]
+    - `OBJ_Parameter_Label` Label "PARAMETER" [120,202 76x19]
+    - `OBJ_Value_Label` Label "VALUE" [256,202 44x19]
+    - `OBJ_Reverb_EffectBox` EffectBox [40,64 249x137]
+    - `OBJ_Reverb_Box` Box [40,34 248x28]
+    - `OBJ_Type_Label_2` Label "TYPE:" [52,40 44x19]
+    - `OBJ_Reverb_IvIntEasySet` IvIntEasySet [0,0 32x32]
+    - `OBJ_Reverb_IvSdrev` IvSdrev [0,32 32x32]
+
 ### `TITLE_SDTECD`
 
-- Path: none in the data (opened by code)
+- Path: MENU SOUND button (mode MD_SOUND) > "TECHNI-CHORD"
 - Registered: `"TT_SDTECD"`, title id 0xD, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/ui/drawbar_panel_ui.s
 - View: element 0 of Viewable slot 0xD (record outside the C sources)
 - EXIT -> `TITLE_SDMENU`
-- Opened from: `an untitled view` ("TECHNI-CHORD")
-
-### `TITLE_SDACCILL` -- "ACOUSTIC ILLUSION"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SDACCILL"`, title id 0xE, function `NAKA_MAINFUNC_SdAccillTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
-- View: `OBJ_AcousticIllusion_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
-- EXIT -> `TITLE_SDMENU`
-- Opened from: `an untitled view` ("ACOUSTIC ILLUSION")
-- Widgets:
-
-  - `OBJ_AcousticIllusion_TtlScreen` TtlScreen "ACOUSTIC ILLUSION" [0,0 320x240]
-    - `OBJ_AcousticIllusion_AcIndexWideES` AcIndexWideES [44,216 72x23]
-    - `OBJ_AcousticIllusion_AcIndexWideES_2` AcIndexWideES [204,216 72x23]
-    - `OBJ_Type_Label_5` Label "TYPE" [62,200 36x19]
-    - `OBJ_Level_Label` Label "LEVEL" [218,200 44x19]
-    - `OBJ_AcousticIllusion_AccIll` AccIll [60,84 200x48]
-    - `OBJ_AcousticIllusion_Box` Box [30,80 260x48]
-    - `OBJ_AcousticIllusion_Box_2` Box [30,135 260x30]
-      - `OBJ_IllusionLevel_Label` Label "ILLUSION LEVEL:" [40,144 124x19]
-    - `OBJ_Type_Label_6` Label "TYPE:" [40,96 59x19]
-    - `OBJ_AcousticIllusion_IvSdacc` IvSdacc [0,0 32x32]
-    - `OBJ_AcousticIllusion_IvIntEasySet` IvIntEasySet [0,32 32x32]
-
-### `TITLE_SDOCT` -- "RIGHT1/RIGHT2 OCTAVE"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SDOCT"`, title id 0xF, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/seq_event_playback.s
-- View: `OBJ_R12OctaveSetting` (TtlScreen) in `naka_midi_reverb.c`
-- EXIT -> `TITLE_PS`
-- Widgets:
-
-  - `OBJ_R12OctaveSetting` TtlScreen "RIGHT1/RIGHT2 OCTAVE" [0,0 320x240]
-    - `OBJ_R12OctaveSetting_AcLswEditBox` AcLswEditBox "OCTAVE   :" [16,87 285x72]
-    - `OBJ_R12OctaveSetting_AcIndexWideES` AcIndexWideES [244,216 72x23]
-
-### `TITLE_STYLCNVMODL` -- "STYLE TYPE SELECT"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_STYLCNVMODL"`, title id 0x11, function `NAKA_MAINFUNC_StylCnvModlTtlFunc`, v10/maincpu/storage/flash_floppy_handlers.s
-- View: `OBJ_StylCnvModlScreen` (TtlScreen) in `naka_composer_style.c`
-- EXIT -> `TITLE_DKMENU`
-- Widgets:
-
-  - `OBJ_StylCnvModlScreen` TtlScreen "STYLE TYPE SELECT" [0,0 320x240]
-    - `OBJ_StylCnvModlScreen_IvMainEditSw` IvMainEditSw [0,0 32x32]
-    - `OBJ_StylCnvModlBox` PsParaListBox [8,44 260x160]
-    - `OBJ_PREV_VwEditSwBox` VwEditSwBox "PREV" [44,216 32x23]
-    - `OBJ_StylCnvModlScreen_VwWideESBox` VwWideESBox [84,216 72x23]
-    - `OBJ_NEXT_VwEditSwBox` VwEditSwBox "NEXT" [164,216 32x23]
-    - `OBJ_StylCnvModlScreen_VwEditSwBox` VwEditSwBox [281,160 31x18]
-    - `OBJ_StylCnvVer` PsStylCnvVer [269,44 50x18]
-
-### `TITLE_STYLCNVCNVT` -- "STYLE CONVERT"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_STYLCNVCNVT"`, title id 0x12, function `NAKA_MAINFUNC_StylCnvCnvtTtlFunc`, v10/maincpu/storage/flash_floppy_handlers.s
-- View: `OBJ_StylCnvCnvtScreen` (TtlScreen) in `naka_composer_style.c`
-- EXIT -> `TITLE_STYLCNVWAIT`
-- Widgets:
-
-  - `OBJ_StylCnvCnvtScreen` TtlScreen "STYLE CONVERT" [0,0 320x240]
-    - `OBJ_StylCnvCnvtScreen_IvMainEditSw` IvMainEditSw [0,0 32x32]
-    - `OBJ_StylCnvCnvtBox` PsParaListBox [8,44 260x160]
-    - `OBJ_PREV_VwEditSwBox_2` VwEditSwBox "PREV" [44,216 32x23]
-    - `OBJ_StylCnvCnvtScreen_VwWideESBox` VwWideESBox [84,216 72x23]
-    - `OBJ_NEXT_VwEditSwBox_2` VwEditSwBox "NEXT" [164,216 32x23]
-    - `OBJ_StylCnvCnvtScreen_VwEditSwBox` VwEditSwBox [281,160 31x18]
-
-### `TITLE_STYLCNVSTOR` -- "STORAGE DATA"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_STYLCNVSTOR"`, title id 0x13, function `NAKA_MAINFUNC_StylCnvStorTtlFunc`, v10/maincpu/storage/flash_floppy_handlers.s
-- View: `OBJ_StylCnvStorScreen` (TtlScreen) in `naka_composer_style.c`
-- EXIT -> `TITLE_STYLCNVWAIT`
-- Widgets:
-
-  - `OBJ_StylCnvStorScreen` TtlScreen "STORAGE DATA" [0,0 320x240]
-    - `OBJ_StylCnvStorScreen_AcRamEditBox` AcRamEditBox "  Data Storage to :" [16,90 270x50]
-    - `OBJ_StylCnvStorScreen_AcIndexWideES` AcIndexWideES [244,216 72x23]
-    - `OBJ_StylCnvStorScreen_AcFuncEditSw` AcFuncEditSw [281,160 31x18]
-
-### `TITLE_STYLCNVTXT` -- "STYLE CONVERT"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_STYLCNVTXT"`, title id 0x14, function `NAKA_MAINFUNC_StylCnvTxtTtlFunc`, v10/maincpu/storage/flash_floppy_handlers.s
-- View: `OBJ_StylCnvTxtScreen` (TtlScreen) in `naka_composer_style.c`
-- EXIT -> `TITLE_STYLCNVWAIT`
-- Widgets:
-
-  - `OBJ_StylCnvTxtScreen` TtlScreen "STYLE CONVERT" [0,0 320x240]
-    - `OBJ_StylCnvTxtScreen_VwBox` VwBox [8,44 284x160]
-      - `OBJ_StylCnvTxtScreen_PSSCTxtBox2` PSSCTxtBox2 [10,68 280x60]
-    - `OBJ_StylCnvTxtScreen_IvMainEditSw` IvMainEditSw [0,0 32x32]
-
-### `TITLE_STYLCNVSEL` -- "STYLE CONVERT"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_STYLCNVSEL"`, title id 0x15, function `NAKA_MAINFUNC_StylCnvSelTtlFunc`, v10/maincpu/storage/flash_floppy_handlers.s
-- View: `OBJ_StylCnvSelScreen` (TtlScreen) in `naka_composer_style.c`
-- EXIT -> `TITLE_STYLCNVWAIT`
-- Widgets:
-
-  - `OBJ_StylCnvSelScreen` TtlScreen "STYLE CONVERT" [0,0 320x240]
-    - `OBJ_StylCnvSelScreen_IvMainEditSw` IvMainEditSw [0,0 32x32]
-    - `OBJ_StylCnvSelBox` PsParaListBox [8,50 260x160]
-    - `OBJ_PREV_VwEditSwBox_3` VwEditSwBox "PREV" [44,216 32x23]
-    - `OBJ_StylCnvSelScreen_VwWideESBox` VwWideESBox [84,216 72x23]
-    - `OBJ_NEXT_VwEditSwBox_3` VwEditSwBox "NEXT" [164,216 32x23]
-    - `OBJ_StylCnvSelScreen_VwEditSwBox` VwEditSwBox [281,160 31x18]
-    - `OBJ_StylCnvSelScreen_PsSCTxtBox` PsSCTxtBox [8,28 260x18]
-
-### `TITLE_STYLCNVCONT` -- "STYLE CONVERT"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_STYLCNVCONT"`, title id 0x16, function `NAKA_MAINFUNC_StylCnvContTtlFunc`, v10/maincpu/storage/flash_floppy_handlers.s
-- View: `OBJ_StylCnvContScreen` (TtlScreen) in `naka_composer_style.c`
-- EXIT -> `TITLE_STYLCNVWAIT`
-- Widgets:
-
-  - `OBJ_StylCnvContScreen` TtlScreen "STYLE CONVERT" [0,0 320x240]
-    - `OBJ_StylCnvContScreen_IvMainEditSw` IvMainEditSw [0,0 32x32]
-    - `OBJ_StylCnvContScreen_VwBox` VwBox [40,88 200x110]
-      - `OBJ_Continue_Label` Label "Continue" [66,118 132x19]
-      - `OBJ_Next_Label` Label "Next ?" [90,150 100x19]
-    - `OBJ_StylCnvContScreen_VwEditSwBox` VwEditSwBox [281,118 31x18]
-    - `OBJ_StylCnvContScreen_VwEditSwBox_2` VwEditSwBox [281,160 31x18]
-
-### `TITLE_REVPRESET` -- "REVERB PRESETS"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_REVPRESET"`, title id 0x18, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/seq_event_playback.s
-- View: `OBJ_ReverbPreset` (TtlScreen) in `naka_midi_reverb.c`
-- EXIT -> `TITLE_REVEQMENU`
-- Opened from: `TITLE_REVEQMENU` ("REVERB PRESETS")
-- Widgets:
-
-  - `OBJ_ReverbPreset` TtlScreen "REVERB PRESETS" [0,0 320x240]
-    - `OBJ_HugeRoom_AcStrRadioBox` AcStrRadioBox "Huge Room" [8,30 149x26]
-    - `OBJ_BoxRoom_AcStrRadioBox` AcStrRadioBox "Box Room" [8,72 149x26]
-    - `OBJ_ReverbPreset_IvCatchEvent` IvCatchEvent [0,0 32x32]
-    - `OBJ_SmallPlate_AcStrRadioBox` AcStrRadioBox "Small Plate" [8,114 149x26]
-    - `OBJ_SportsHall_AcStrRadioBox` AcStrRadioBox "Sports Hall" [8,156 149x26]
-    - `OBJ_BrightHall_AcStrRadioBox` AcStrRadioBox "Bright Hall" [8,198 149x26]
-    - `OBJ_DarkConfines_AcStrRadioBox` AcStrRadioBox "Dark Confines" [163,30 149x26]
-    - `OBJ_Reflection_AcStrRadioBox` AcStrRadioBox "Reflection" [163,72 149x26]
-    - `OBJ_HighOpen_AcStrRadioBox` AcStrRadioBox "High & Open" [163,114 149x26]
-    - `OBJ_LeftToRight_AcStrRadioBox` AcStrRadioBox "Left To Right" [163,156 149x26]
-    - `OBJ_Cavernous_AcStrRadioBox` AcStrRadioBox "Cavernous" [163,198 149x26]
-
-### `TITLE_EQPRESET` -- "EQUALIZER PRESETS"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_EQPRESET"`, title id 0x19, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/seq_event_playback.s
-- View: `OBJ_EqualizerPreset` (TtlScreen) in `naka_midi_reverb.c`
-- EXIT -> `TITLE_REVEQMENU`
-- Opened from: `TITLE_REVEQMENU` ("EQUALIZER PRESETS")
-- Widgets:
-
-  - `OBJ_EqualizerPreset` TtlScreen "EQUALIZER PRESETS" [0,0 320x240]
-    - `OBJ_MakeUp_AcStrRadioBox` AcStrRadioBox "Make Up" [8,30 149x26]
-    - `OBJ_MiddleCut_AcStrRadioBox` AcStrRadioBox "Middle Cut" [8,72 149x26]
-    - `OBJ_TransistorRadio_AcStrRadioBox` AcStrRadioBox "Transistor Radio" [8,114 149x26]
-    - `OBJ_TrebleBoost_AcStrRadioBox` AcStrRadioBox "Treble Boost" [8,156 149x26]
-    - `OBJ_TrebleCut_AcStrRadioBox` AcStrRadioBox "Treble Cut" [8,198 149x26]
-    - `OBJ_NoHiHat_AcStrRadioBox` AcStrRadioBox "No Hi Hat" [163,30 149x26]
-    - `OBJ_TubbyBass_AcStrRadioBox` AcStrRadioBox "Tubby Bass" [163,72 149x26]
-    - `OBJ_BassCut_AcStrRadioBox` AcStrRadioBox "Bass Cut" [163,114 149x26]
-    - `OBJ_TooBright_AcStrRadioBox` AcStrRadioBox "Too Bright" [163,156 149x26]
-    - `OBJ_EqualizerPreset_IvCatchEvent` IvCatchEvent [0,0 32x32]
-    - `OBJ_EqOnOffBox` AcFuncToggle "EQ : ON" [241,202 71x18]
-
-### `TITLE_REVEQPRESET` -- "REVERB + EQUALIZER PRESETS"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_REVEQPRESET"`, title id 0x1A, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/seq_event_playback.s
-- View: `OBJ_ReverbEqualizerPreset` (TtlScreen) in `naka_midi_reverb.c`
-- EXIT -> `TITLE_REVEQMENU`
-- Opened from: `TITLE_REVEQMENU` ("REVERB + EQUALIZER PRESETS")
-- Widgets:
-
-  - `OBJ_ReverbEqualizerPreset` TtlScreen "REVERB + EQUALIZER PRESETS" [0,0 320x240]
-    - `OBJ_WarmWide_AcStrRadioBox` AcStrRadioBox "Warm & Wide" [8,30 149x26]
-    - `OBJ_InYourFace_AcStrRadioBox` AcStrRadioBox "In Your Face" [8,72 149x26]
-    - `OBJ_OilTank_AcStrRadioBox` AcStrRadioBox "Oil Tank" [8,114 149x26]
-    - `OBJ_WarmPlate_AcStrRadioBox` AcStrRadioBox "Warm Plate" [8,156 149x26]
-    - `OBJ_LightShade_AcStrRadioBox` AcStrRadioBox "Light & Shade" [8,198 149x26]
-    - `OBJ_WarmFuzzy_AcStrRadioBox` AcStrRadioBox "Warm & Fuzzy" [163,30 149x26]
-    - `OBJ_IceBox_AcStrRadioBox` AcStrRadioBox "Ice Box" [163,72 149x26]
-    - `OBJ_Stadium_AcStrRadioBox` AcStrRadioBox "Stadium" [163,114 149x26]
-    - `OBJ_LiveRoom_AcStrRadioBox` AcStrRadioBox "Live Room" [163,156 149x26]
-    - `OBJ_RevEqOnOffBox` AcFuncToggle "EQ : ON" [241,202 71x18]
-    - `OBJ_ReverbEqualizerPreset_IvCatchEvent` IvCatchEvent [0,0 32x32]
-
-### `TITLE_SEEASY`
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SEEASY"`, title id 0x21, function `NAKA_MAINFUNC_SeEasyTitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x21 (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SETONTON1`
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SETONTON1"`, title id 0x22, function `NAKA_MAINFUNC_SeTonTon1TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x22 (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SETONTON2`
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SETONTON2"`, title id 0x23, function `NAKA_MAINFUNC_SeTonTon2TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x23 (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SETONRAN1`
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SETONRAN1"`, title id 0x24, function `NAKA_MAINFUNC_SeTonRan1TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x24 (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SETONRAN2`
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SETONRAN2"`, title id 0x25, function `NAKA_MAINFUNC_SeTonRan2TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x25 (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SETONHYB1`
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SETONHYB1"`, title id 0x26, function `NAKA_MAINFUNC_SeTonHyb1TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x26 (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SEPITPIT1`
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SEPITPIT1"`, title id 0x27, function `NAKA_MAINFUNC_SePitPit1TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x27 (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SEPITENV1`
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SEPITENV1"`, title id 0x28, function `NAKA_MAINFUNC_SePitEnv1TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x28 (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SEPITENV2`
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SEPITENV2"`, title id 0x29, function `NAKA_MAINFUNC_SePitEnv2TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x29 (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SEPITLFO1`
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SEPITLFO1"`, title id 0x2A, function `NAKA_MAINFUNC_SePitLfo1TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x2A (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SEAMPAMP1`
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SEAMPAMP1"`, title id 0x2B, function `NAKA_MAINFUNC_SeAmpAmp1TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x2B (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SEAMPAMP2`
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SEAMPAMP2"`, title id 0x2C, function `NAKA_MAINFUNC_SeAmpAmp2TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x2C (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SEAMPENV1`
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SEAMPENV1"`, title id 0x2D, function `NAKA_MAINFUNC_SeAmpEnv1TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x2D (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SEAMPENV2`
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SEAMPENV2"`, title id 0x2E, function `NAKA_MAINFUNC_SeAmpEnv2TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x2E (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SEAMPLFO1`
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SEAMPLFO1"`, title id 0x2F, function `NAKA_MAINFUNC_SeAmpLfo1TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x2F (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SEFILLPQ1`
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SEFILLPQ1"`, title id 0x30, function `NAKA_MAINFUNC_SeFilLpq1TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x30 (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SEFILHPQ1`
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SEFILHPQ1"`, title id 0x31, function `NAKA_MAINFUNC_SeFilHpq1TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x31 (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SEFILL241`
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SEFILL241"`, title id 0x32, function `NAKA_MAINFUNC_SeFilL241TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x32 (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SEFILH241`
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SEFILH241"`, title id 0x33, function `NAKA_MAINFUNC_SeFilH241TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x33 (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SEFILBPF1`
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SEFILBPF1"`, title id 0x34, function `NAKA_MAINFUNC_SeFilBpf1TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x34 (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SEFILBCF1`
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SEFILBCF1"`, title id 0x35, function `NAKA_MAINFUNC_SeFilBcf1TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x35 (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SEFILFIL2`
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SEFILFIL2"`, title id 0x36, function `NAKA_MAINFUNC_SeFilFil2TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x36 (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SEFILENV1`
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SEFILENV1"`, title id 0x37, function `NAKA_MAINFUNC_SeFilEnv1TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x37 (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SEFILENV2`
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SEFILENV2"`, title id 0x38, function `NAKA_MAINFUNC_SeFilEnv2TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x38 (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SEFILLFO1`
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SEFILLFO1"`, title id 0x39, function `NAKA_MAINFUNC_SeFilLfo1TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x39 (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SEDIGEFF`
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SEDIGEFF"`, title id 0x3A, function `NAKA_MAINFUNC_SeDigEffTitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x3A (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SECTR2`
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SECTR2"`, title id 0x3B, function `NAKA_MAINFUNC_SeCtr2TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x3B (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SECTR3`
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SECTR3"`, title id 0x3C, function `NAKA_MAINFUNC_SeCtr3TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x3C (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SECOPY`
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SECOPY"`, title id 0x3D, function `NAKA_MAINFUNC_SeCopyTitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x3D (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SEWRTMEM`
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SEWRTMEM"`, title id 0x3E, function `NAKA_MAINFUNC_SeWrtMemTitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x3E (record outside the C sources)
-- EXIT -> `TITLE_PS`
-- Opened from: `an untitled view` ("WRITE")
-
-### `TITLE_SEWRTSND`
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SEWRTSND"`, title id 0x3F, function `NAKA_MAINFUNC_SeWrtSndTitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x3F (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_CTPMPARA` -- "INITIAL"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_CTPMPARA"`, title id 0x46, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/extensions/extension_init.s
-- View: `OBJ_ControlIni` (TtlScreen) in `naka_ctrl_menu_body.c`
-- EXIT -> `TITLE_CTMENU`
-- Widgets:
-
-  - `OBJ_ControlIni` TtlScreen "INITIAL" [0,0 320x240]
-    - `OBJ_ControlIni_AcIndexWideES` AcIndexWideES [244,216 72x23]
-    - `OBJ_SYSINI` AcListBox [68,79 156x160]
-    - `OBJ_ControlIni_AcFuncEditSw` AcFuncEditSw [281,160 31x18]
-    - `OBJ_ControlIni_IvShowHide` IvShowHide [0,0 32x32]
-    - `OBJ_ControlIni_AcLanguageText` AcLanguageText [16,28 292x56]
-
-### `TITLE_MDPART` -- "PART SETTING"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_MDPART"`, title id 0x51, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/seq_event_playback.s
-- View: `OBJ_MidiPartSetting` (TtlScreen) in `naka_midi_reverb.c`
-- EXIT -> `TITLE_MDMENU`
-- Opened from: `an untitled view` ("PART SETTING")
-- Widgets:
-
-  - `OBJ_MidiPartSetting` TtlScreen "PART SETTING" [0,0 320x240]
-    - `OBJ_MdPartSetGridBox` AcMidiPartGridBox [1,30 319x209]
-      - `OBJ_MdPartSetGridBox_AcIndexWideES` AcIndexWideES [5,216 72x23]
-      - `OBJ_MdPartSetGridBox_AcIndexWideES_2` AcIndexWideES [245,216 72x23]
-      - `OBJ_MdPartSetGridBox_AcIndexWideES_3` AcIndexWideES [167,216 72x23]
-      - `OBJ_MdPartSetGridBox_AcIndexWideES_4` AcIndexWideES [85,216 72x23]
-    - `OBJ_MidiPartSetting_IvShowHide` IvShowHide [0,0 32x32]
-
-### `TITLE_MDCTRL` -- "CONTROL MESSAGES"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_MDCTRL"`, title id 0x52, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/seq_event_playback.s
-- View: `OBJ_MidiControlMessage` (TtlScreen) in `naka_midi_reverb.c`
-- EXIT -> `TITLE_MDMENU`
-- Opened from: `an untitled view` ("CONTROL MESSAGES")
-- Widgets:
-
-  - `OBJ_MidiControlMessage` TtlScreen "CONTROL MESSAGES" [0,0 320x240]
-    - `OBJ_MidiControlMessage_PsPageBox` PsPageBox [245,6 70x18]
-    - `OBJ_CtlMsgGridBox` AcCtlMsgGridBox [40,30 241x209]
-      - `OBJ_CtlMsgGridBox_AcIndexWideES` AcIndexWideES [204,216 72x23]
-      - `OBJ_Message_Label` Label "MESSAGE" [78,36 60x19]
-      - `OBJ_OnOff_Label` Label "ON/OFF" [210,36 52x19]
-    - `OBJ_MidiControlMessage_AcIndexWideES` AcIndexWideES [84,216 72x23]
-    - `OBJ_MidiControlMessage_IvShowHide` IvShowHide [0,0 32x32]
-
-### `TITLE_MDREAL` -- "REALTIME MESSAGES"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_MDREAL"`, title id 0x53, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/seq_event_playback.s
-- View: `OBJ_MidiRealtimeMessage` (TtlScreen) in `naka_midi_reverb.c`
-- EXIT -> `TITLE_MDMENU`
-- Opened from: `an untitled view` ("REALTIME MESSAGES")
-- Widgets:
-
-  - `OBJ_MidiRealtimeMessage` TtlScreen "REALTIME MESSAGES" [0,0 320x240]
-    - `OBJ_MidiRealtimeMessage_AcIndexWideES` AcIndexWideES [244,216 72x23]
-    - `OBJ_RealtimeCommandBox` AcLswFuncEditBox "REALTIME COMMANDS :" [8,72 250x32]
-    - `OBJ_ClockBox` AcLswFuncEditBox "    CLOCK            :" [8,156 250x32]
-    - `OBJ_Value_Label` Label "VALUE" [254,198 44x19]
-    - `OBJ_MidiRealtimeMessage_IvShowHide` IvShowHide [0,0 32x32]
-
-### `TITLE_MDCOM` -- "COMMON SETTING"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_MDCOM"`, title id 0x54, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/seq_event_playback.s
-- View: `OBJ_MidiCommonSetting` (TtlScreen) in `naka_midi_reverb.c`
-- EXIT -> `TITLE_MDMENU`
-- Opened from: `an untitled view` ("COMMON SETTING")
-- Widgets:
-
-  - `OBJ_MidiCommonSetting` TtlScreen "COMMON SETTING" [0,0 320x240]
-    - `OBJ_ComSetGridBox` AcGridBox [20,30 274x209]
-    - `OBJ_MidiCommonSetting_AcIndexWideES` AcIndexWideES [44,216 72x23]
-    - `OBJ_MidiCommonSetting_AcIndexWideES_2` AcIndexWideES [204,216 72x23]
-    - `OBJ_MidiCommonSetting_IvShowHide` IvShowHide [0,0 32x32]
-
-### `TITLE_MDINOUT` -- "INPUT/OUTPUT SETTING"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_MDINOUT"`, title id 0x55, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/seq_event_playback.s
-- View: `OBJ_MidiInOutSetting` (TtlScreen) in `naka_midi_reverb.c`
-- EXIT -> `TITLE_MDMENU`
-- Opened from: `an untitled view` ("INPUT/OUTPUT SETTING")
-- Widgets:
-
-  - `OBJ_MidiInOutSetting` TtlScreen "INPUT/OUTPUT SETTING" [0,0 320x240]
-    - `OBJ_InOutGridBox` AcInOutGridBox [8,30 304x209]
-      - `OBJ_InOutGridBox_AcIndexWideES` AcIndexWideES [44,216 72x23]
-      - `OBJ_InOutGridBox_AcIndexWideES_2` AcIndexWideES [204,216 72x23]
-    - `OBJ_MidiInOutSetting_IvShowHide` IvShowHide [0,0 32x32]
-
-### `TITLE_MDPRESET` -- "MIDI PRESETS"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_MDPRESET"`, title id 0x56, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/seq_event_playback.s
-- View: `OBJ_MidiPresets` (TtlScreen) in `naka_midi_reverb.c`
-- EXIT -> `TITLE_MDMENU`
-- Opened from: `an untitled view` ("MIDI PRESETS")
-- Widgets:
-
-  - `OBJ_MidiPresets` TtlScreen "MIDI PRESETS" [0,0 320x240]
-    - `OBJ_MdPresetPageBox` AcWindowPage [245,6 71x18]
-    - `OBJ_MidiPresets_IvPageControl` IvPageControl [64,0 32x32]
-    - `OBJ_MidiPresets_IvPageControl_2` IvPageControl [96,0 32x32]
-    - `OBJ_MpstPageCtl1` IvMpstPageControl [0,0 32x32]
-    - `OBJ_MpstPageCtl2` IvMpstPageControl [32,0 32x32]
-    - `OBJ_MidiPresets_IvShowHide` IvShowHide [0,32 32x32]
-
-### `TITLE_MDEXC` -- "SYSEX BULK DUMP"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_MDEXC"`, title id 0x57, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/seq_event_playback.s
-- View: `OBJ_MidiExclusive` (TtlScreen) in `naka_midi_reverb.c`
-- EXIT -> `TITLE_MDMENU`
-- Opened from: `an untitled view` ("SYSEX BULK DUMP")
-- Widgets:
-
-  - `OBJ_MidiExclusive` TtlScreen "SYSEX BULK DUMP" [0,0 320x240]
-    - `OBJ_MidiExclusive_AcFuncEditSw` AcFuncEditSw [273,160 39x18]
-      - `OBJ_Send_Label` Label "SEND" [274,161 36x19]
-    - `OBJ_ExcListBox` AcListBox [4,30 260x181]
-    - `OBJ_MidiExclusive_AcIndexWideES` AcIndexWideES [84,216 72x23]
-    - `OBJ_MidiExclusive_IvShowHide` IvShowHide [0,0 32x32]
-
-### `TITLE_MDGMMODE` -- "GENERAL MIDI"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_MDGMMODE"`, title id 0x58, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/seq_event_playback.s
-- View: `OBJ_MidiGmMode` (TtlScreen) in `naka_midi_reverb.c`
-- EXIT -> `TITLE_MDMENU`
-- Opened from: `an untitled view` ("GENERAL MIDI")
-- Widgets:
-
-  - `OBJ_MidiGmMode` TtlScreen "GENERAL MIDI" [0,0 320x240]
-    - `OBJ_GMOnOffBox` AcGMOnOffBox "GENERAL MIDI   :" [24,95 248x64]
-    - `OBJ_MidiGmMode_AcIndexWideES` AcIndexWideES [244,216 72x23]
-    - `OBJ_MidiGmMode_AcFuncEditSw` AcFuncEditSw [281,160 31x18]
-    - `OBJ_MidiGmMode_IvShowHide` IvShowHide [0,0 32x32]
-
-### `TITLE_MDTXPCG` -- "PROGRAM CHANGE MIDI OUT"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_MDTXPCG"`, title id 0x59, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/seq_event_playback.s
-- View: `OBJ_MidiPcgOutput` (TtlScreen) in `naka_midi_reverb.c`
-- EXIT -> `TITLE_MDMENU`
-- Opened from: `an untitled view` ("PROG.CHANGE MIDI OUT")
-- Widgets:
-
-  - `OBJ_MidiPcgOutput` TtlScreen "PROGRAM CHANGE MIDI OUT" [0,0 320x240]
-    - `OBJ_PcgOutGridBox` AcPcgOutGridBox [20,30 241x181]
-    - `OBJ_MidiPcgOutput_AcIndexWideES` AcIndexWideES [44,216 72x23]
-    - `OBJ_MidiPcgOutput_AcIndexWideES_2` AcIndexWideES [164,216 72x23]
-    - `East_SendSwitchView` AcSendEditSw "SEND", record outside the C sources
-    - `OBJ_MidiPcgOutput_IvShowHide` IvShowHide [0,0 32x32]
-
-### `TITLE_MDCOMP` -- "COMPUTER CONNECTION"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_MDCOMP"`, title id 0x5A, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/seq_event_playback.s
-- View: `OBJ_MidiComputerConnection` (TtlScreen) in `naka_midi_reverb.c`
-- EXIT -> `TITLE_MDMENU`
-- Opened from: `an untitled view` ("COMPUTER CONNECTION")
-- Widgets:
-
-  - `OBJ_MidiComputerConnection` TtlScreen "COMPUTER CONNECTION" [0,0 320x240]
-    - `OBJ_MidiComputerConnection_AcLswEditBox` AcLswEditBox "MODE :" [4,35 308x32]
-    - `OBJ_MidiComputerConnection_AcIndexWideES` AcIndexWideES [244,216 72x23]
-    - `OBJ_MidiComputerConnection_VwBox` VwBox [4,76 308x120]
-    - `OBJ_Value_Label_8` Label "VALUE" [258,198 44x19]
-    - `OBJ_MidiComputerConnection_IvShowHide` IvShowHide [0,0 32x32]
-
-### `TITLE_MDPMLCTL` -- "PANEL MEMORY OUTPUT"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_MDPMLCTL"`, title id 0x5B, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/seq_event_playback.s
-- View: `OBJ_MidiPanelMemoryOutput` (TtlScreen) in `naka_midi_reverb.c`
-- EXIT -> `TITLE_MDMENU`
-- Opened from: `an untitled view` ("P.MEM OUTPUT")
-- Widgets:
-
-  - `OBJ_MidiPanelMemoryOutput` TtlScreen "PANEL MEMORY OUTPUT" [0,0 320x240]
-    - `OBJ_PMem_Label` Label "P.MEM" [0,198 44x19]
-    - `OBJ_OnOff_Label_2` Label "ON/OFF" [46,198 52x19]
-    - `OBJ_Part_Label` Label "PART" [122,198 36x19]
-    - `OBJ_PCng_Label` Label "P.CNG" [190,197 44x19]
-    - `OBJ_Bank_Label` Label "BANK" [242,198 36x19]
-    - `OBJ_Vol_Label` Label "VOL" [286,198 28x19]
-    - `OBJ_MidiPanelMemoryOutput_Label` Label "~95" [148,150 20x19]
-    - `OBJ_PmemOutLeft` AcPmemOutLGridBox [0,40 150x140]
-    - `OBJ_PmemOutRight` AcPmemOutRGridBox [170,60 150x120]
-    - `OBJ_MidiPanelMemoryOutput_AcIndexEditSw` AcIndexEditSw [4,216 32x23]
-    - `OBJ_MidiPanelMemoryOutput_AcIndexEditSw_2` AcIndexEditSw [44,216 32x23]
-    - `OBJ_MidiPanelMemoryOutput_AcIndexEditSw_3` AcIndexEditSw [124,216 32x23]
-    - `OBJ_MidiPanelMemoryOutput_AcIndexEditSw_4` AcIndexEditSw [204,216 32x23]
-    - `OBJ_MidiPanelMemoryOutput_AcIndexEditSw_5` AcIndexEditSw [244,216 32x23]
-    - `OBJ_MidiPanelMemoryOutput_AcIndexEditSw_6` AcIndexEditSw [284,216 32x23]
-    - `OBJ_MidiPanelMemoryOutput_IvShowHide` IvShowHide [0,0 32x32]
-
-### `TITLE_MDSETUP` -- "MIDI SETTINGS LOAD OPTION"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_MDSETUP"`, title id 0x5C, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/seq_event_playback.s
-- View: `OBJ_MidiSetup` (TtlScreen) in `naka_midi_reverb.c`
-- EXIT -> `TITLE_MDMENU`
-- Opened from: `an untitled view` ("MIDI SETTINGS LOAD OPTION")
-- Widgets:
-
-  - `OBJ_MidiSetup` TtlScreen "MIDI SETTINGS LOAD OPTION" [0,0 320x240]
-    - `OBJ_MdSetOptGridBox` AcParaLoadOptGridBox [4,30 313x168]
-      - `OBJ_LoadMidiParameters_Label` Label "Load MIDI parameters?" [74,38 172x19]
-      - `OBJ_UseTheseSettingsWhen_Label` Label "Use these settings when:" [60,122 196x19]
-    - `OBJ_MidiSetup_AcIndexWideES` AcIndexWideES [44,216 72x23]
-    - `OBJ_MidiSetup_AcIndexWideES_2` AcIndexWideES [204,216 72x23]
-    - `OBJ_MidiSetup_AcFuncEditSw` AcFuncEditSw [281,202 31x18]
-    - `OBJ_MidiSetup_IvShowHide` IvShowHide [0,0 32x32]
-
-### `TITLE_DKLDSMF` -- "SMF LOAD"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_DKLDSMF"`, title id 0x64, function `NAKA_MAINFUNC_FmmSmfLoadTitleFunc`, v10/maincpu/file_io/medley.s
-- View: `OBJ_DiskLoadSMF` (TtlScreen) in `naka_disk_menu_file_io.c`
-- Menu entries: "TECH" -> `TITLE_DKLD`
-- EXIT -> `TITLE_DKMENU`
-- Opened from: `an untitled view` ("SMF")
-- Widgets:
-
-  - `OBJ_DiskLoadSMF` TtlScreen "SMF LOAD" [0,0 320x240]
-    - `OBJ_Tech_AcTitleMenu` AcTitleMenu "TECH" [271,200 41x24] -> `TITLE_DKLD`
-    - `OBJ_DiskLoadSMF_AcIndexWideES` AcIndexWideES [84,216 72x23]
-    - `OBJ_DiskLoadSMF_AcIndexEditSw` AcIndexEditSw [44,216 32x23]
-      - `OBJ_Prev_Label_2` Label "PREV" [45,222 28x11]
-    - `OBJ_DiskLoadSMF_AcIndexEditSw_2` AcIndexEditSw [164,216 32x23]
-      - `OBJ_Next_Label_2` Label "NEXT" [165,222 28x11]
-    - `OBJ_DiskLoadSMF_PsFileNameBox` PsFileNameBox [52,66 138x148]
-    - `OBJ_Info_Label` Label "INFO" [8,61 36x19]
-    - `OBJ_DiskLoadSMF_PsWindowToggle` PsWindowToggle "SONG" [8,76 39x18]
-    - `OBJ_LoadAs_Label` Label "LOAD AS" [230,145 60x19]
-    - `OBJ_DiskLoadSMF_AcIndexEditSw_3` AcIndexEditSw [208,77 104x18]
-      - `OBJ_DiskLoadSMF_PsFileNameBox_2` PsFileNameBox [208,77 104x18]
-    - `OBJ_DiskLoadSMF_PsFileNameBox_3` PsFileNameBox [208,97 104x18]
-    - `OBJ_DiskLoadSMF_AcIndexEditSw_4` AcIndexEditSw [208,160 104x18]
-      - `OBJ_DiskLoadSMF_PsFileNameBox_4` PsFileNameBox [208,160 104x18]
-    - `OBJ_DiskLoadSMF_IvMainEditSw` IvMainEditSw [0,0 32x32]
-    - `NakaWidget_DiskLoad_92_IvExit` IvExit, record outside the C sources
-    - `NakaWidget_DiskLoad_93_IvIndexSwDelay` IvIndexSwDelay, record outside the C sources
-    - `OBJ_NakaWidget_DiskLoad_94_AcIndexEditSw` AcIndexEditSw [281,34 31x18]
-
-### `TITLE_DKSVNAME` -- "SAVE FILE NAMING"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_DKSVNAME"`, title id 0x66, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/file_io/medley.s
-- View: `OBJ_DiskSaveName` (TtlScreen) in `naka_disk_menu_file_io.c`
-- EXIT -> `TITLE_DKSV`
-- Opened from: `an untitled view` ("NAME")
-- Widgets:
-
-  - `OBJ_DiskSaveName` TtlScreen "SAVE FILE NAMING" [0,0 320x240]
-    - `OBJ_DiskSaveName_AcFuncEditSw` AcFuncEditSw [281,160 31x18]
-    - `OBJ_DiskSaveName_IvNaming` IvNaming [0,0 32x32]
-
-### `TITLE_DKSV`
-
-the disk SAVE page. The file-naming window returns to it.
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_DKSV"`, title id 0x67, function `NAKA_MAINFUNC_FmmSaveTitleFunc`, v10/maincpu/file_io/medley.s
-- View: `OBJ_DiskSave` (TtlScreen) in `naka_disk_menu_file_io.c`
-- EXIT -> `TITLE_DKMENU`
-- Widgets:
-
-  - `OBJ_DiskSave` TtlScreen [0,0 320x240]
-    - `OBJ_DiskSavePage` AcWindowPage [245,6 71x18]
-    - `OBJ_DiskSave_IvPageControl` IvPageControl [0,0 32x32]
-    - `OBJ_DiskSave_IvPageControl_2` IvPageControl [32,0 32x32]
-    - `OBJ_DiskSave_IvPageControl_3` IvPageControl [64,0 32x32]
-    - `NakaWidget_DiskSave_5_IvExit` IvExit, record outside the C sources
-    - `NakaWidget_DiskSave_6_IvMainEditSw` IvMainEditSw, record outside the C sources
-
-### `TITLE_DKSVNAMESMF` -- "SAVE FILE NAMING"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_DKSVNAMESMF"`, title id 0x6A, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/file_io/medley.s
-- View: `OBJ_DiskSaveNameSMF` (TtlScreen) in `naka_disk_menu_file_io.c`
-- EXIT -> `TITLE_DKSVSMF`
-- Opened from: `TITLE_DKSVSMF` ("NAME")
-- Widgets:
-
-  - `OBJ_DiskSaveNameSMF` TtlScreen "SAVE FILE NAMING" [0,0 320x240]
-    - `OBJ_DiskSaveNameSMF_AcFuncEditSw` AcFuncEditSw [281,160 31x18]
-    - `OBJ_DiskSaveNameSMF_IvNaming` IvNaming [0,0 32x32]
-
-### `TITLE_DKSVSMF` -- "SMF SAVE"
-
-the disk save-as-SMF page.
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_DKSVSMF"`, title id 0x6B, function `NAKA_MAINFUNC_FmmSmfSaveTitleFunc`, v10/maincpu/file_io/medley.s
-- View: `OBJ_DiskSmfSave` (TtlScreen) in `naka_disk_menu_file_io.c`
-- Menu entries: "NAME" -> `TITLE_DKSVNAMESMF`
-- EXIT -> `TITLE_DKMENU`
-- Widgets:
-
-  - `OBJ_DiskSmfSave` TtlScreen "SMF SAVE" [0,0 320x240]
-    - `OBJ_DiskSmfSave_PsFileNameBox` PsFileNameBox [44,66 150x148]
-    - `OBJ_DiskSmfSave_AcIndexWideES` AcIndexWideES [84,216 72x23]
-    - `OBJ_DiskSmfSave_AcIndexEditSw` AcIndexEditSw [44,216 32x23]
-      - `OBJ_Prev_Label_3` Label "PREV" [45,222 28x11]
-    - `OBJ_DiskSmfSave_AcIndexEditSw_2` AcIndexEditSw [164,216 32x23]
-      - `OBJ_Next_Label_3` Label "NEXT" [165,222 28x11]
-    - `OBJ_DiskSmfSave_AcMonoIndexToggle` AcMonoIndexToggle "ON" [281,202 31x18]
-    - `OBJ_DiskSmfSave_AcMonoIndexToggle_2` AcMonoIndexToggle "ON" [281,160 31x18]
-    - `OBJ_PanelHeader_Label` Label "PANEL HEADER" [220,144 100x19]
-    - `OBJ_Name_AcTitleMenu_2` AcTitleMenu "NAME" [8,27 49x32] -> `TITLE_DKSVNAMESMF`
-    - `OBJ_DiskSmfSave_AcParaStrBox` AcParaStrBox [60,52 198x14]
-    - `OBJ_DiskSmfSave_AcIndexEditSw_3` AcIndexEditSw [272,31 40x24]
-      - `OBJ_Save_Label_5` Label "SAVE" [273,35 36x19]
-    - `OBJ_MeasureSpace_Label` Label "1 MEASURE SPACE" [196,186 124x19]
-    - `OBJ_DiskSmfSave_PsFileNameBox_2` PsFileNameBox [208,97 104x18]
-    - `OBJ_DiskSmfSave_AcIndexEditSw_4` AcIndexEditSw [208,77 104x18]
-      - `OBJ_DiskSmfSave_PsFileNameBox_3` PsFileNameBox [208,77 104x18]
-    - `OBJ_DiskSmfSave_PsFileNameBox_4` PsFileNameBox [60,31 200x22]
-      - `OBJ_Save_Label_6` Label "SAVE" [62,33 28x11]
-      - `OBJ_As_Label_2` Label " AS:" [62,42 28x11]
-
-### `TITLE_DKDPSMF` -- "SMF DIRECT PLAY"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_DKDPSMF"`, title id 0x6C, function `NAKA_MAINFUNC_FmmSmfMedleyFunc`, v10/maincpu/file_io/medley.s
-- View: `OBJ_DiskSmfDirectPlay` (TtlScreen) in `naka_disk_menu_file_io.c`
-- EXIT -> `TITLE_DKMENU`
-- Widgets:
-
-  - `OBJ_DiskSmfDirectPlay` TtlScreen "SMF DIRECT PLAY" [0,0 320x240]
-    - `OBJ_DiskSmfDirectPlay_PsFileNameBox` PsFileNameBox [77,66 166x148]
-      - `OBJ_DiskSmfDirectPlay_PsFileNameBox_2` PsFileNameBox [212,71 29x141]
-    - `OBJ_DiskSmfDirectPlay_AcIndexWideES` AcIndexWideES [124,216 72x23]
-    - `OBJ_DiskSmfDirectPlay_AcIndexEditSw` AcIndexEditSw [84,216 32x23]
-      - `OBJ_Prev_Label_4` Label "PREV" [85,222 28x11]
-    - `OBJ_DiskSmfDirectPlay_AcIndexEditSw_2` AcIndexEditSw [204,216 32x23]
-      - `OBJ_Next_Label_4` Label "NEXT" [205,222 28x11]
-    - `OBJ_Info_Label_2` Label "INFO" [8,61 36x19]
-    - `OBJ_DiskSmfDirectPlay_PsWindowToggle` PsWindowToggle "SONG" [8,76 39x18]
-    - `OBJ_DiskSmfDirectPlay_AcIndexEditSw_3` AcIndexEditSw [281,76 31x18]
-    - `OBJ_DiskSmfDirectPlay_AcIndexEditSw_4` AcIndexEditSw [281,118 31x18]
-    - `OBJ_DiskSmfDirectPlay_AcMonoIndexToggle` AcMonoIndexToggle "ON" [281,160 31x18]
-    - `OBJ_DiskSmfDirectPlay_AcMonoIndexToggle_2` AcMonoIndexToggle "GM" [273,202 39x18]
-    - `OBJ_PlayAs_Label` Label "PLAY AS" [260,187 60x19]
-    - `OBJ_DiskSmfDirectPlay_Line` Line [262,85 16x1]
-    - `OBJ_DiskSmfDirectPlay_Line_2` Line [261,85 1x32]
-    - `OBJ_DiskSmfDirectPlay_Line_3` Line [261,138 1x32]
-    - `OBJ_DiskSmfDirectPlay_Line_4` Line [262,169 16x1]
-    - `OBJ_Loop_Label_2` Label "LOOP" [282,150 28x11]
-    - `OBJ_Medley_Label` Label "MEDLEY" [241,123 40x11]
-    - `OBJ_DiskSmfDirectPlay_IvOneShotTimer` IvOneShotTimer [40,0 32x32]
-    - `OBJ_All_Label_2` Label "ALL" [282,77 28x19]
-    - `OBJ_Add_Label_2` Label "ADD" [282,119 28x19]
-    - `OBJ_SmfMidiOut` AcMonoIndexToggle "ON" [8,202 31x18]
-    - `OBJ_MidiOut_Label` Label "MIDI OUT" [0,187 68x19]
-    - `OBJ_DiskSmfDirectPlay_IvIndexSwDelay` IvIndexSwDelay [288,0 32x32]
-    - `OBJ_DiskSmfDirectPlay_AcIndexEditSw_5` AcIndexEditSw [281,34 31x18]
-
-### `TITLE_DKDPDOC` -- "DOC DIRECT PLAY"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_DKDPDOC"`, title id 0x6D, function `NAKA_MAINFUNC_FmmDocMedleyFunc`, v10/maincpu/file_io/medley.s
-- View: `OBJ_DiskDocDirectPlay` (TtlScreen) in `naka_disk_menu_file_io.c`
-- EXIT -> `TITLE_DKMENU`
-- Widgets:
-
-  - `OBJ_DiskDocDirectPlay` TtlScreen "DOC DIRECT PLAY" [0,0 320x240]
-    - `OBJ_DiskDocDirectPlay_PsFileNameBox` PsFileNameBox [77,66 166x148]
-      - `OBJ_DiskDocDirectPlay_PsFileNameBox_2` PsFileNameBox [212,71 29x141]
-    - `OBJ_DiskDocDirectPlay_AcIndexEditSw` AcIndexEditSw [84,216 32x23]
-      - `OBJ_Prev_Label_5` Label "PREV" [85,222 28x11]
-    - `OBJ_DiskDocDirectPlay_AcIndexWideES` AcIndexWideES [124,216 72x23]
-    - `OBJ_DiskDocDirectPlay_AcIndexEditSw_2` AcIndexEditSw [204,216 32x23]
-      - `OBJ_Next_Label_5` Label "NEXT" [205,222 28x11]
-    - `OBJ_Medley_Label_2` Label "MEDLEY" [241,123 40x11]
-    - `OBJ_DiskDocDirectPlay_IvOneShotTimer` IvOneShotTimer [40,0 32x32]
-    - `OBJ_DiskDocDirectPlay_Line` Line [262,85 16x1]
-    - `OBJ_DiskDocDirectPlay_Line_2` Line [261,85 1x32]
-    - `OBJ_DiskDocDirectPlay_Line_3` Line [261,138 1x32]
-    - `OBJ_DiskDocDirectPlay_Line_4` Line [262,169 16x1]
-    - `OBJ_DiskDocDirectPlay_AcIndexEditSw_3` AcIndexEditSw [281,76 31x18]
-    - `OBJ_DiskDocDirectPlay_AcIndexEditSw_4` AcIndexEditSw [281,118 31x18]
-    - `OBJ_Loop_Label_3` Label "LOOP" [282,150 28x11]
-    - `OBJ_DiskDocDirectPlay_AcMonoIndexToggle` AcMonoIndexToggle "ON" [281,160 31x18]
-    - `OBJ_DiskDocDirectPlay_AcParaStrBox` AcParaStrBox [8,31 250x25]
-    - `OBJ_DiskDocDirectPlay_AcIndexEditSw_5` AcIndexEditSw [259,31 53x25]
-      - `OBJ_Start_Label_4` Label "START" [264,36 44x19]
-    - `OBJ_All_Label_3` Label "ALL" [282,77 28x19]
-    - `OBJ_Add_Label_3` Label "ADD" [282,119 28x19]
-
-### `TITLE_DKDPPD` -- "PIANO DISC DIRECT PLAY"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_DKDPPD"`, title id 0x6E, function `NAKA_MAINFUNC_FmmPdMedleyFunc`, v10/maincpu/file_io/medley.s
-- View: `OBJ_DiskPdDirectPlay` (TtlScreen) in `naka_disk_menu_file_io.c`
-- EXIT -> `TITLE_DKMENU`
-- Widgets:
-
-  - `OBJ_DiskPdDirectPlay` TtlScreen "PIANO DISC DIRECT PLAY" [0,0 320x240]
-    - `OBJ_DiskPdDirectPlay_PsFileNameBox` PsFileNameBox [3,36 232x177]
-      - `OBJ_DiskPdDirectPlay_PsFileNameBox_2` PsFileNameBox [204,40 29x171]
-    - `OBJ_DiskPdDirectPlay_AcIndexWideES` AcIndexWideES [44,216 152x23]
-    - `OBJ_DiskPdDirectPlay_AcIndexEditSw` AcIndexEditSw [4,216 32x23]
-      - `OBJ_Prev_Label_6` Label "PREV" [5,222 28x11]
-    - `OBJ_DiskPdDirectPlay_AcIndexEditSw_2` AcIndexEditSw [204,216 32x23]
-      - `OBJ_Next_Label_6` Label "NEXT" [205,222 28x11]
-    - `OBJ_DiskPdDirectPlay_AcIndexEditSw_3` AcIndexEditSw [281,76 31x18]
-    - `OBJ_DiskPdDirectPlay_IvOneShotTimer` IvOneShotTimer [0,0 32x32]
-    - `OBJ_DiskPdDirectPlay_AcIndexEditSw_4` AcIndexEditSw [281,118 31x18]
-    - `OBJ_DiskPdDirectPlay_AcMonoIndexToggle` AcMonoIndexToggle "ON" [281,160 31x18]
-    - `OBJ_Loop_Label_4` Label "LOOP" [282,150 28x11]
-    - `OBJ_DiskPdDirectPlay_AcIndexEditSw_5` AcIndexEditSw [259,31 53x25]
-      - `OBJ_Start_Label_5` Label "START" [264,36 44x19]
-    - `OBJ_Medley_Label_3` Label "MEDLEY" [241,123 40x11]
-    - `OBJ_DiskPdDirectPlay_Line` Line [262,85 16x1]
-    - `OBJ_DiskPdDirectPlay_Line_2` Line [261,85 1x32]
-    - `OBJ_DiskPdDirectPlay_Line_3` Line [261,138 1x32]
-    - `OBJ_DiskPdDirectPlay_Line_4` Line [262,169 16x1]
-    - `OBJ_All_Label_4` Label "ALL" [282,77 28x19]
-    - `OBJ_Add_Label_4` Label "ADD" [282,119 28x19]
-
-### `TITLE_DPSMF` -- "SMF DIRECT PLAY  "
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_DPSMF"`, title id 0x6F, function `NAKA_MAINFUNC_DpSmfTtlFunc`, v10/maincpu/sequencer/sequencer_ui.s
-- View: `OBJ_DpSmf` (TtlScreen) in `naka_direct_play.c`
-- Menu entries: "LYRICS" -> `TITLE_DPSMFLYR`
-- EXIT -> `TITLE_DKDPSMF`
-- Widgets:
-
-  - `OBJ_DpSmf` TtlScreen "SMF DIRECT PLAY  " [0,0 320x240]
-    - `OBJ_DpSmf_AcTempoBox` AcTempoBox [248,4 70x24]
-    - `OBJ_Lyrics_AcTitleMenu` AcTitleMenu "LYRICS" [8,156 60x26] -> `TITLE_DPSMFLYR`
-    - `OBJ_DpSmf_Box` Box [68,40 240x64]
-      - `OBJ_DpSmf_AcSmfFileNameBox` AcSmfFileNameBox [76,44 140x20]
-      - `OBJ_DpSmf_AcSmfSongNameBox` AcSmfSongNameBox [76,66 226x34]
-    - `OBJ_DpSmf_AcIndexEditSw` AcIndexEditSw [284,216 32x23]
-    - `OBJ_DpSmf_AcRamEditBox` AcRamEditBox " " [240,161 76x32]
-    - `OBJ_DpSmf_IvMainEditSw` IvMainEditSw [0,0 32x32]
-    - `OBJ_DpSmf_IvFixWin` IvFixWin [0,32 32x32]
-    - `OBJ_SMFMuteSw` AcMuteToggleBox "ON" [244,216 32x23]
-    - `OBJ_MIXER_VwMenuBox` VwMenuBox "MIXER" [8,114 50x26]
-    - `OBJ_MIC_VwMenuBox` VwMenuBox "MIC" [8,72 34x26]
-    - `OBJ_MuteCh_Label` Label "-MUTE CH-" [240,200 76x19]
-
-### `TITLE_DPDOC` -- "DOC DIRECT PLAY  "
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_DPDOC"`, title id 0x70, function `NAKA_MAINFUNC_DpDocTtlFunc`, v10/maincpu/sequencer/sequencer_ui.s
-- View: `OBJ_DpDoc` (TtlScreen) in `naka_direct_play.c`
-- EXIT -> `TITLE_DKDPDOC`
-- Widgets:
-
-  - `OBJ_DpDoc` TtlScreen "DOC DIRECT PLAY  " [0,0 320x240]
-    - `OBJ_DpDoc_AcTempoBox` AcTempoBox [248,4 70x24]
-    - `OBJ_DpDoc_Box` Box [68,40 240x64]
-      - `OBJ_DpDoc_AcDocSongNameBox` AcDocSongNameBox [76,66 226x34]
-      - `OBJ_DpDoc_AcDocFileNoBox` AcDocFileNoBox [76,44 36x20]
-    - `OBJ_DpDoc_IvMainEditSw` IvMainEditSw [0,0 32x32]
-    - `OBJ_DpDoc_IvFixWin` IvFixWin [0,32 32x32]
-    - `OBJ_DOCR1Sw` AcMuteToggleBox "RT1" [270,118 42x18]
-    - `OBJ_DOCR2Sw` AcMuteToggleBox "RT2" [270,160 42x18]
-    - `OBJ_DOCOrchSw` AcMuteToggleBox "ORCH" [270,202 42x18]
-    - `OBJ_MIXER_VwMenuBox_2` VwMenuBox "MIXER" [8,114 50x26]
-    - `OBJ_MIC_VwMenuBox_2` VwMenuBox "MIC" [8,72 34x26]
-
-### `TITLE_DPPD` -- "PIANO DISC DIRECT PLAY    "
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_DPPD"`, title id 0x71, function `NAKA_MAINFUNC_DpPdTtlFunc`, v10/maincpu/sequencer/sequencer_ui.s
-- View: `OBJ_DpPd` (TtlScreen) in `naka_direct_play.c`
-- EXIT -> `TITLE_DKDPPD`
-- Widgets:
-
-  - `OBJ_DpPd` TtlScreen "PIANO DISC DIRECT PLAY    " [0,0 320x240]
-    - `OBJ_DpPd_AcTempoBox` AcTempoBox [248,4 70x24]
-    - `OBJ_DpPd_Box` Box [68,40 240x64]
-      - `OBJ_DpPd_AcPDSongNameBox` AcPDSongNameBox [76,66 226x34]
-      - `OBJ_DpPd_AcPDFileNoBox` AcPDFileNoBox [76,44 36x20]
-    - `OBJ_DpPd_IvMainEditSw` IvMainEditSw [0,0 32x32]
-    - `OBJ_DpPd_IvFixWin` IvFixWin [0,32 32x32]
-    - `OBJ_PDR1Sw` AcMuteToggleBox "RT1" [270,118 42x18]
-    - `OBJ_PDOrchSw` AcMuteToggleBox "ORCH" [270,160 42x18]
-    - `OBJ_MIXER_VwMenuBox_3` VwMenuBox "MIXER" [8,114 50x26]
-    - `OBJ_MIC_VwMenuBox_3` VwMenuBox "MIC" [8,72 34x26]
-
-### `TITLE_DPSMFLYR` -- "SMF DIRECT PLAY  "
-
-the disk direct-play SMF page with lyrics.
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_DPSMFLYR"`, title id 0x72, function `NAKA_MAINFUNC_DpSmfLyrTtlFunc`, v10/maincpu/sequencer/sequencer_ui.s
-- View: `OBJ_DpSmfLyr` (TtlScreen) in `naka_direct_play.c`
-- EXIT -> `TITLE_DPSMF`
-- Opened from: `TITLE_DPSMF` ("LYRICS")
-- Widgets:
-
-  - `OBJ_DpSmfLyr` TtlScreen "SMF DIRECT PLAY  " [0,0 320x240]
-    - `OBJ_DpSmfLyr_AcTempoBox` AcTempoBox [248,4 70x24]
-    - `OBJ_DpSmfLyr_IvMainEditSw` IvMainEditSw [0,0 32x32]
-    - `OBJ_DpSmfLyr_IvFixWin` IvFixWin [0,32 32x32]
-      - `OBJ_MIC_VwMenuBox_4` VwMenuBox "MIC" [8,30 34x26]
-    - `OBJ_DpSmfLyr_IvFixWin_2` IvFixWin [0,64 32x32]
-    - `OBJ_LyricsFunc` LyeicsBoxFunc [0,96 32x32]
-
-### `TITLE_DPMDLYSMF` -- "SMF MEDLEY"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_DPMDLYSMF"`, title id 0x73, function `NAKA_MAINFUNC_DpMdlySmfTtlFunc`, v10/maincpu/sequencer/sequencer_ui.s
-- View: `OBJ_DpMdlySmf` (TtlScreen) in `naka_direct_play.c`
-- Menu entries: "LYRICS" -> `TITLE_DPMDLYSMFLYR`
-- EXIT -> `TITLE_DKDPSMF`
-- Widgets:
-
-  - `OBJ_DpMdlySmf` TtlScreen "SMF MEDLEY" [0,0 320x240]
-    - `OBJ_Lyrics_AcTitleMenu_3` AcTitleMenu "LYRICS" [8,156 60x26] -> `TITLE_DPMDLYSMFLYR`
-    - `OBJ_DpMdlySmf_AcTempoBox` AcTempoBox [248,4 70x24]
-    - `OBJ_DpMdlySmf_AcIndexEditSw` AcIndexEditSw [284,216 32x23]
-    - `OBJ_DpMdlySmf_Box` Box [68,40 240x64]
-      - `OBJ_DpMdlySmf_AcSmfSongNameBox` AcSmfSongNameBox [76,66 226x34]
-      - `OBJ_DpMdlySmf_AcSmfFileNameBox` AcSmfFileNameBox [76,44 140x20]
-    - `OBJ_DpMdlySmf_VwEditSwBox` VwEditSwBox [8,202 42x18]
-      - `OBJ_Skip_Label_2` Label "SKIP" [10,203 36x19]
-    - `OBJ_DpMdlySmf_AcRamEditBox` AcRamEditBox " " [240,161 76x32]
-    - `OBJ_DpMdlySmf_IvMainEditSw` IvMainEditSw [0,0 32x32]
-    - `NakaWidget_SmfMdlyOffOnSel` IvExit, record outside the C sources
-    - `NakaWidget_SMFMedMuteSw` AcMuteToggleBox "ON", record outside the C sources
-    - `OBJ_MIXER_VwMenuBox_4` VwMenuBox "MIXER" [8,114 50x26]
-    - `OBJ_MIC_VwMenuBox_5` VwMenuBox "MIC" [8,72 34x26]
-    - `OBJ_MuteCh_Label_2` Label "-MUTE CH-" [240,200 76x19]
-
-### `TITLE_DPMDLYDOC` -- "DOC MEDLEY"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_DPMDLYDOC"`, title id 0x74, function `NAKA_MAINFUNC_DpMdlyDocTtlFunc`, v10/maincpu/sequencer/sequencer_ui.s
-- View: `OBJ_DpMdlyDoc` (TtlScreen) in `naka_direct_play.c`
-- EXIT -> `TITLE_DKDPDOC`
-- Widgets:
-
-  - `OBJ_DpMdlyDoc` TtlScreen "DOC MEDLEY" [0,0 320x240]
-    - `OBJ_DpMdlyDoc_Box` Box [68,40 240x64]
-      - `OBJ_DpMdlyDoc_AcDocSongNameBox` AcDocSongNameBox [76,66 226x34]
-      - `OBJ_DpMdlyDoc_AcDocFileNoBox` AcDocFileNoBox [76,44 36x20]
-    - `OBJ_DpMdlyDoc_AcTempoBox` AcTempoBox [248,4 70x24]
-    - `OBJ_DpMdlyDoc_VwEditSwBox` VwEditSwBox [8,202 42x18]
-      - `OBJ_Skip_Label_3` Label "SKIP" [10,203 36x19]
-    - `OBJ_DpMdlyDoc_IvMainEditSw` IvMainEditSw [0,0 32x32]
-    - `NakaWidget_DocMdlyOffOnSel` IvExit, record outside the C sources
-    - `NakaWidget_DOCMedR1Sw` AcMuteToggleBox "RT1", record outside the C sources
-    - `OBJ_DOCMedR2Sw` AcMuteToggleBox "RT2" [270,160 42x18]
-    - `OBJ_DOCMedOrchSw` AcMuteToggleBox "ORCH" [270,202 42x18]
-    - `OBJ_MIXER_VwMenuBox_5` VwMenuBox "MIXER" [8,114 50x26]
-    - `OBJ_MIC_VwMenuBox_6` VwMenuBox "MIC" [8,72 34x26]
-
-### `TITLE_DPMDLYPD` -- "PIANO DISC MEDLEY    "
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_DPMDLYPD"`, title id 0x75, function `NAKA_MAINFUNC_DpMdlyPdTtlFunc`, v10/maincpu/sequencer/sequencer_ui.s
-- View: `OBJ_DpMdlyPd` (TtlScreen) in `naka_direct_play.c`
-- EXIT -> `TITLE_DKDPPD`
-- Widgets:
-
-  - `OBJ_DpMdlyPd` TtlScreen "PIANO DISC MEDLEY    " [0,0 320x240]
-    - `OBJ_DpMdlyPd_AcTempoBox` AcTempoBox [248,4 70x24]
-    - `OBJ_DpMdlyPd_Box` Box [68,40 240x64]
-      - `OBJ_DpMdlyPd_AcPDSongNameBox` AcPDSongNameBox [76,66 226x34]
-      - `OBJ_DpMdlyPd_AcPDFileNoBox` AcPDFileNoBox [76,44 36x20]
-    - `OBJ_DpMdlyPd_VwEditSwBox` VwEditSwBox [8,202 42x18]
-      - `OBJ_Skip_Label_4` Label "SKIP" [10,203 36x19]
-    - `OBJ_DpMdlyPd_IvMainEditSw` IvMainEditSw [0,0 32x32]
-    - `NakaWidget_PdMdlyOffOnSel` IvExit, record outside the C sources
-    - `NakaWidget_PDMedR1Sw` AcMuteToggleBox "RT1", record outside the C sources
-    - `OBJ_PDMedOrchSw` AcMuteToggleBox "ORCH" [270,160 42x18]
-    - `OBJ_MIXER_VwMenuBox_6` VwMenuBox "MIXER" [8,114 50x26]
-    - `OBJ_MIC_VwMenuBox_7` VwMenuBox "MIC" [8,72 34x26]
-
-### `TITLE_DPMDLYSMFLYR` -- "SMF MEDLEY"
-
-the direct-play medley SMF page with lyrics.
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_DPMDLYSMFLYR"`, title id 0x76, function `NAKA_MAINFUNC_DpMdlySmfLyrTtlFunc`, v10/maincpu/sequencer/sequencer_ui.s
-- View: `OBJ_DpMdlySmfLyr` (TtlScreen) in `naka_direct_play.c`
-- EXIT -> `TITLE_DPMDLYSMF`
-- Opened from: `TITLE_DPMDLYSMF` ("LYRICS")
-- Widgets:
-
-  - `OBJ_DpMdlySmfLyr` TtlScreen "SMF MEDLEY" [0,0 320x240]
-    - `OBJ_DpMdlySmfLyr_AcTempoBox` AcTempoBox [248,4 70x24]
-    - `OBJ_DpMdlySmfLyr_VwEditSwBox` VwEditSwBox [8,202 42x18]
-      - `OBJ_Skip_Label_5` Label "SKIP" [10,203 36x19]
-    - `OBJ_DpMdlySmfLyr_IvMainEditSw` IvMainEditSw [0,0 32x32]
-    - `NakaWidget_SmfMdly2OffOnSel` IvExit, record outside the C sources
-      - `NakaWidget_SmfMdly2MicWidget` VwMenuBox "MIC", record outside the C sources
-    - `OBJ_NakaWidget_SmfMdly2OrchSel` IvFixWin [0,64 32x32]
-
-### `TITLE_DKMDLY` -- "SONG MEDLEY"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_DKMDLY"`, title id 0x77, function `NAKA_MAINFUNC_FmmDiskMedleySelectFunc`, v10/maincpu/file_io/medley.s
-- View: `OBJ_DiskSongMedley` (TtlScreen) in `naka_disk_menu_file_io.c`
-- EXIT -> `TITLE_DKMENU`
-- Widgets:
-
-  - `OBJ_DiskSongMedley` TtlScreen "SONG MEDLEY" [0,0 320x240]
-    - `OBJ_DiskSongMedley_AcIndexEditSw` AcIndexEditSw [44,216 32x23]
-    - `OBJ_DiskSongMedley_AcIndexWideES` AcIndexWideES [84,216 112x23]
-    - `OBJ_DiskSongMedley_AcIndexEditSw_2` AcIndexEditSw [204,216 32x23]
-    - `OBJ_DiskSongMedley_PsFileNameBox` PsFileNameBox [26,66 230x148]
-      - `OBJ_DiskSongMedley_PsFileNameBox_2` PsFileNameBox [230,71 24x141]
-      - `OBJ_DiskSongMedley_PsFileNameBox_3` PsFileNameBox [115,71 24x141]
-    - `OBJ_DiskName_Label_6` Label "DISK NAME:" [78,38 64x11]
-    - `OBJ_SongMedleyDiskName` AcParaStrBox [138,32 98x16]
-    - `OBJ_SongMedleyDiskInfo` AcParaStrBox [60,50 198x14]
-    - `OBJ_DiskSongMedley_AcIndexEditSw_3` AcIndexEditSw [262,31 50x24]
-      - `OBJ_Start_Label_6` Label "START" [265,35 44x19]
-    - `OBJ_DiskSongMedley_AcIndexEditSw_4` AcIndexEditSw [281,76 31x18]
-      - `OBJ_All_Label_5` Label "ALL" [282,77 28x19]
-    - `OBJ_DiskSongMedley_AcIndexEditSw_5` AcIndexEditSw [281,118 31x18]
-      - `OBJ_Add_Label_5` Label "ADD" [282,119 28x19]
-    - `OBJ_DiskSongMedley_AcMonoIndexToggle` AcMonoIndexToggle "ON" [281,160 31x18]
-    - `OBJ_DiskSongMedley_AcMonoIndexToggle_2` AcMonoIndexToggle "10SNGS" [258,202 54x18]
-    - `OBJ_Mode_Label_2` Label "MODE" [267,187 36x19]
-    - `OBJ_DiskSongMedley_IvShowHide` IvShowHide [0,0 32x32]
-    - `OBJ_Loop_Label_5` Label "LOOP" [278,145 36x19]
-
-### `TITLE_DKMDLYPLY` -- "SONG MEDLEY       "
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_DKMDLYPLY"`, title id 0x78, function `NAKA_MAINFUNC_DkMdlyPlyTtlFunc`, v10/maincpu/sequencer/sequencer_ui.s
-- View: `OBJ_DkMdlyPly` (TtlScreen) in `naka_direct_play.c`
-- EXIT -> `TITLE_DKMDLY`
-- Widgets:
-
-  - `OBJ_DkMdlyPly` TtlScreen "SONG MEDLEY       " [0,0 320x240]
-    - `OBJ_DkMdlyPly_Box` Box [80,70 160x78]
-      - `OBJ_DkMdlyPly_AcTempoBox` AcTempoBox [96,110 80x24]
-      - `OBJ_DkMdlyPly_TrTransposeBox` TrTransposeBox [180,110 50x24]
-      - `OBJ_DkMdlyPly_MeasureBox` MeasureBox [108,86 108x19]
-    - `OBJ_DkMdlyPly_VwEditSwBox` VwEditSwBox [270,118 42x18]
-    - `OBJ_DkMdlyPly_IvMainEditSw` IvMainEditSw [0,0 32x32]
-    - `OBJ_DkMdlyPly_AcCurSongNameBox` AcCurSongNameBox [35,40 250x26]
-    - `OBJ_DkMdlyPly_IvTrackSwitch` IvTrackSwitch [0,32 32x32]
-    - `OBJ_DkMdlyPly_AcDiskFileNameBox` AcDiskFileNameBox [210,8 108x19]
-    - `OBJ_Skip_Label_6` Label "SKIP" [272,119 36x19]
-    - `NakaWidget_SongMdlyOffOnSel` IvExit, record outside the C sources
-    - `NakaWidget_SongMdlyMixer` VwMenuBox "MIXER", record outside the C sources
-
-### `TITLE_SQMDLY` -- "INTERNAL SONG MEDLEY"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SQMDLY"`, title id 0x79, function `NAKA_MAINFUNC_FmmIntMedleyFunc`, v10/maincpu/file_io/medley.s
-- View: `OBJ_IntSongMedley` (TtlScreen) in `naka_disk_menu_file_io.c`
-- EXIT -> `TITLE_SQPLAY`
-- Opened from: `an untitled view` ("MEDLEY")
-- Widgets:
-
-  - `OBJ_IntSongMedley` TtlScreen "INTERNAL SONG MEDLEY" [0,0 320x240]
-    - `OBJ_IntSongMedley_AcIndexWideES` AcIndexWideES [84,216 152x23]
-    - `OBJ_IntSongMedley_AcIndexEditSw` AcIndexEditSw [281,76 31x18]
-    - `OBJ_IntSongMedley_AcIndexEditSw_2` AcIndexEditSw [281,118 31x18]
-    - `OBJ_IntSongMedley_PsFileNameBox` PsFileNameBox [62,37 196x177]
-      - `OBJ_IntSongMedley_PsFileNameBox_2` PsFileNameBox [227,39 28x172]
-      - `OBJ_IntSongMedley_Line` Line [224,40 1x170]
-    - `OBJ_IntSongMedley_AcMonoIndexToggle` AcMonoIndexToggle "ON" [281,160 31x18]
-    - `OBJ_IntSongMedley_AcIndexEditSw_3` AcIndexEditSw [262,30 50x25]
-      - `OBJ_Start_Label` Label "START" [265,35 44x19]
-    - `OBJ_IntSongMedley_IvOneShotTimer` IvOneShotTimer [0,0 32x32]
-    - `OBJ_All_Label` Label "ALL" [282,77 28x19]
-    - `OBJ_Add_Label` Label "ADD" [282,119 28x19]
-    - `OBJ_Loop_Label` Label "LOOP" [278,145 36x19]
-
-### `TITLE_SQMDLYPLY` -- "SONG MEDLEY"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SQMDLYPLY"`, title id 0x7A, function `NAKA_MAINFUNC_SqMdlyPlyTtlFunc`, v10/maincpu/sequencer/sequencer_ui.s
-- View: `OBJ_SqMdlyPly` (TtlScreen) in `naka_direct_play.c`
-- EXIT -> `TITLE_SQMDLY`
-- Widgets:
-
-  - `OBJ_SqMdlyPly` TtlScreen "SONG MEDLEY" [0,0 320x240]
-    - `OBJ_SqMdlyPly_Box` Box [80,70 160x78]
-      - `OBJ_SqMdlyPly_AcTempoBox` AcTempoBox [96,110 80x24]
-      - `OBJ_SqMdlyPly_MeasureBox` MeasureBox [108,86 108x19]
-      - `OBJ_SqMdlyPly_TrTransposeBox` TrTransposeBox [180,110 50x24]
-    - `OBJ_SqMdlyPly_VwEditSwBox` VwEditSwBox [270,118 42x18]
-      - `OBJ_Skip_Label_7` Label "SKIP" [272,119 36x19]
-    - `OBJ_SqMdlyPly_IvMainEditSw` IvMainEditSw [0,0 32x32]
-    - `OBJ_SqMdlyPly_AcCurSongNameBox` AcCurSongNameBox [35,40 250x26]
-    - `OBJ_SqMdlyPly_IvTrackSwitch` IvTrackSwitch [0,32 32x32]
-    - `NakaWidget_SongMdly2OffOnSel` IvExit, record outside the C sources
-    - `NakaWidget_SongMdly2Mixer` VwMenuBox "MIXER", record outside the C sources
-
-### `TITLE_DKUT` -- "DISK TOOLS"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_DKUT"`, title id 0x7B, function `NAKA_MAINFUNC_FmmUtilityTitleFunc`, v10/maincpu/file_io/medley.s
-- View: `OBJ_DiskUtility` (TtlScreen) in `naka_disk_menu_file_io.c`
-- Menu entries: "SMF" -> `TITLE_DKUTSMF`, "?" -> `TITLE_DKUTFRMT`
-- EXIT -> `TITLE_DKMENU`
-- Opened from: `TITLE_DKUTSMF` ("TECH")
-- Widgets:
-
-  - `OBJ_DiskUtility` TtlScreen "DISK TOOLS" [0,0 320x240]
-    - `OBJ_DiskUtility_AcIndexWideES` AcIndexWideES [124,216 72x23]
-    - `OBJ_DiskUtility_AcIndexEditSw` AcIndexEditSw [84,216 32x23]
-    - `OBJ_DiskUtility_AcIndexEditSw_2` AcIndexEditSw [204,216 32x23]
-    - `OBJ_Smf_AcTitleMenu_2` AcTitleMenu "SMF" [275,197 37x28] -> `TITLE_DKUTSMF`
-    - `OBJ_DiskName_Label_7` Label "DISK NAME:" [78,38 64x11]
-    - `OBJ_DiskUtility_AcIndexEditSw_3` AcIndexEditSw [8,202 31x18]
-    - `OBJ_DiskUtility_AcIndexEditSw_4` AcIndexEditSw [8,118 31x18]
-      - `OBJ_Del_Label` Label "DEL" [9,119 28x19]
-    - `OBJ_Move_Label` Label "MOVE" [4,182 36x19]
-    - `OBJ_DiskUtility_AcTitleMenu` AcTitleMenu [263,112 49x32] -> `TITLE_DKUTFRMT`
-      - `OBJ_Format_Label` Label "FORMAT" [260,119 52x19]
-    - `OBJ_DiskUtility_AcScreenMenu` AcScreenMenu [263,70 49x32]
-      - `OBJ_RENAME_Label` Label "RENAME" [260,77 52x19]
-    - `OBJ_DiskUtility_AcIndexEditSw_5` AcIndexEditSw [8,160 31x18]
-    - `OBJ_COPY_AcScreenMenu` AcScreenMenu "COPY" [8,72 41x26]
-    - `OBJ_DiskUtility_AcParaStrBox` AcParaStrBox [138,32 98x16]
-    - `OBJ_DiskUtility_AcParaStrBox_2` AcParaStrBox [60,50 198x14]
-    - `OBJ_DiskUtility_PsFileNameBox` PsFileNameBox [60,66 198x148]
-    - `OBJ_WaitWinCtl` IvWaitWinCtl [0,0 32x32]
-
-### `TITLE_DKUTSMF` -- "SMF DISK TOOLS"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_DKUTSMF"`, title id 0x7C, function `NAKA_MAINFUNC_FmmSmfUtilityTitleFunc`, v10/maincpu/file_io/medley.s
-- View: `OBJ_DiskUtilitySMF` (TtlScreen) in `naka_disk_menu_file_io.c`
-- Menu entries: "TECH" -> `TITLE_DKUT`, "?" -> `TITLE_DKUTFRMT`
-- EXIT -> `TITLE_DKMENU`
-- Opened from: `TITLE_DKUT` ("SMF")
-- Widgets:
-
-  - `OBJ_DiskUtilitySMF` TtlScreen "SMF DISK TOOLS" [0,0 320x240]
-    - `OBJ_Tech_AcTitleMenu_2` AcTitleMenu "TECH" [271,200 41x24] -> `TITLE_DKUT`
-    - `OBJ_DiskUtilitySMF_AcIndexEditSw` AcIndexEditSw [84,216 32x23]
-      - `OBJ_Prev_Label_7` Label "PREV" [85,222 28x11]
-    - `OBJ_DiskUtilitySMF_AcIndexWideES` AcIndexWideES [124,216 72x23]
-    - `OBJ_DiskUtilitySMF_AcIndexEditSw_2` AcIndexEditSw [204,216 32x23]
-      - `OBJ_Next_Label_7` Label "NEXT" [205,222 28x11]
-    - `OBJ_Info_Label_3` Label "INFO" [8,61 36x19]
-    - `OBJ_DiskUtilitySMF_PsFileNameBox` PsFileNameBox [85,66 150x148]
-    - `OBJ_DiskUtilitySMF_PsWindowToggle` PsWindowToggle "SONG" [8,76 39x18]
-    - `OBJ_DiskUtilitySMF_AcTitleMenu` AcTitleMenu [263,112 49x32] -> `TITLE_DKUTFRMT`
-      - `OBJ_Format_Label_2` Label "FORMAT" [260,119 52x19]
-    - `OBJ_DiskUtilitySMF_AcIndexEditSw_3` AcIndexEditSw [8,118 31x18]
-    - `OBJ_Del_Label_2` Label "DEL" [9,119 28x19]
-    - `OBJ_DiskUtilitySMF_AcScreenMenu` AcScreenMenu [263,70 49x32]
-      - `OBJ_RENAME_Label_2` Label "RENAME" [260,77 52x19]
-    - `OBJ_DiskUtilitySMF_IvIndexSwDelay` IvIndexSwDelay [32,0 32x32]
-    - `OBJ_WaitWinCtlSmf` IvWaitWinCtl [0,0 32x32]
-
-### `TITLE_DKUTFRMT` -- "FLOPPY DISK FORMAT"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_DKUTFRMT"`, title id 0x7D, function `NAKA_MAINFUNC_FmmFormatFunc`, v10/maincpu/file_io/medley.s
-- View: `OBJ_DiskFormat` (TtlScreen) in `naka_disk_menu_file_io.c`
-- EXIT -> `TITLE_DKMENU`
-- Opened from: `TITLE_DKUT`, `TITLE_DKUTSMF`
-- Widgets:
-
-  - `OBJ_DiskFormat` TtlScreen "FLOPPY DISK FORMAT" [0,0 320x240]
-
-### `TITLE_SQCYCPLY` -- "CYCLE PLAY"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SQCYCPLY"`, title id 0x82, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/sequencer_ui.s
-- View: `OBJ_CyclePlay_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
-- EXIT -> `TITLE_SQPLAY`
-- Widgets:
-
-  - `OBJ_CyclePlay_TtlScreen` TtlScreen "CYCLE PLAY" [0,0 320x240]
-    - `OBJ_CyclePlay_SqplyVal` SqplyVal [60,84 200x48]
-      - `OBJ_CyclePlay_PsEditBox` PsEditBox "CYCLE START MEASURE :" [8,114 228x26]
-    - `OBJ_CurrentMeasure_Label` Label "CURRENT MEASURE :" [42,42 140x19]
-    - `OBJ_CyclePlay_PsEditBox_2` PsEditBox "CYCLE :" [8,72 123x26]
-    - `OBJ_CyclePlay_PsEditBox_3` PsEditBox "CYCLE END MEASURE   :" [8,156 228x26]
-    - `OBJ_CyclePlay_AcIndexWideES` AcIndexWideES [244,216 72x23]
-    - `OBJ_Value_Label_3` Label "VALUE" [258,200 44x19]
-
-### `TITLE_SQCYCREC` -- "REALTIME RECORD"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SQCYCREC"`, title id 0x86, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/sequencer_ui.s
-- View: `OBJ_RealtimeRecord_TtlScreen_2` (TtlScreen) in `naka_effects_seq.c`
-- EXIT -> `TITLE_SQREALREC`
-- Widgets:
-
-  - `OBJ_RealtimeRecord_TtlScreen_2` TtlScreen "REALTIME RECORD" [0,0 320x240]
-    - `OBJ_RealtimeRecord_SqplyVal` SqplyVal [60,84 200x48]
-      - `OBJ_RealtimeRecord_PsEditBox` PsEditBox "CYCLE START MEASURE :" [8,114 228x26]
-    - `OBJ_CurrentMeasure_Label_2` Label "CURRENT MEASURE :" [42,42 140x19]
-    - `OBJ_RealtimeRecord_PsEditBox_2` PsEditBox "CYCLE END MEASURE   :" [8,156 228x26]
-    - `OBJ_RealtimeRecord_AcIndexWideES` AcIndexWideES [244,216 72x23]
-    - `OBJ_Value_Label_4` Label "VALUE" [258,200 44x19]
-    - `OBJ_MetCycRecSw` AcFuncToggle "~a4ON" [271,34 41x18]
-    - `OBJ_RealtimeRecord_AcFuncEditSw_3` AcFuncEditSw [8,202 50x18]
-      - `OBJ_Clear_Label_2` Label "CLEAR" [10,203 44x19]
-    - `OBJ_RealtimeRecord_PsEditBox_3` PsEditBox "CYCLE :" [8,72 123x26]
-
-### `TITLE_SQPUNCHM` -- "AUTO PUNCH RECORD"
-
-the auto-punch variant of the punch-in page.
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SQPUNCHM"`, title id 0x88, function `NAKA_MAINFUNC_SqPunchmTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
-- View: `OBJ_AutoPunchRecord_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
-- EXIT -> `TITLE_SQPUNCH`
-- Widgets:
-
-  - `OBJ_AutoPunchRecord_TtlScreen` TtlScreen "AUTO PUNCH RECORD" [0,0 320x240]
-    - `OBJ_AutoPunchRecord_AcIndexWideES` AcIndexWideES [244,216 72x23]
-    - `OBJ_Meas_Label_3` Label "MEAS" [262,200 36x19]
-    - `OBJ_CurrentMeasure_Label_3` Label "CURRENT MEASURE :" [26,42 140x19]
-    - `OBJ_MetPunchmSw` AcFuncToggle "~a4ON" [271,34 41x18]
-    - `OBJ_AutoPunchRecord_SqplyVal` SqplyVal [60,84 200x48]
-    - `OBJ_AutoPunchRecord_PsEditBox` PsEditBox "PUNCH IN MEASURE  :" [8,72 215x26]
-    - `OBJ_AutoPunchRecord_PsEditBox_2` PsEditBox "PUNCH OUT MEASURE :" [8,114 215x26]
-    - `OBJ_AutoPunchRecord_PsEditBox_3` PsEditBox "MEASURE COUNT IN  :" [8,156 215x26]
-    - `OBJ_AutoPunchRecord_AcLanguageText` AcLanguageText [2,186 240x36]
-    - `OBJ_AutoPunchRecord_IvAutoPunchExit` IvAutoPunchExit [0,0 32x32]
-
-### `TITLE_SQSTEP`
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SQSTEP"`, title id 0x8A, function `NAKA_MAINFUNC_SqStepTtlFunc`, v10/maincpu/sequencer/sequencer_ui.s
-- View: `OBJ_NakaWidget_StepRecSubPanel` (IvDirmdScreen) in `naka_direct_play.c`
-- EXIT -> `TITLE_PS`
-- Widgets:
-
-  - `OBJ_NakaWidget_StepRecSubPanel` IvDirmdScreen [0,0 320x240]
-
-### `TITLE_SQSNGCP` -- "SONG/TRACK COPY"
-
-the sequencer song-copy page, as entered from the edit menu. Its exit returns to TT_SQEMENU.
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SQSNGCP"`, title id 0x91, function `NAKA_MAINFUNC_SqSngcpTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
-- View: `OBJ_SongTrackCopy_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
-- EXIT -> `TITLE_SQCMENU`
-- Opened from: `an untitled view` ("SONG/TRACK COPY")
-- Widgets:
-
-  - `OBJ_SongTrackCopy_TtlScreen` TtlScreen "SONG/TRACK COPY" [0,0 320x240]
-    - `OBJ_SongTrackCopy_SqedtVal2` SqedtVal2 [60,84 200x48]
-    - `OBJ_SongTrackCopy_SqedtFix` SqedtFix [60,84 200x48]
-    - `OBJ_SongTrackCopy_AcIndexWideES` AcIndexWideES [4,216 72x23]
-    - `OBJ_SongTrackCopy_AcIndexWideES_2` AcIndexWideES [84,216 72x23]
-    - `OBJ_SongTrackCopy_AcIndexWideES_3` AcIndexWideES [164,216 72x23]
-    - `OBJ_SongTrackCopy_AcIndexWideES_4` AcIndexWideES [244,216 72x23]
-    - `OBJ_SongTrackCopy_IvSongCopyExit` IvSongCopyExit [0,0 32x32]
-    - `OBJ_SongTrackCopy_IvSongCopyExit_2` IvSongCopyExit [0,0 32x32]
-    - `OBJ_SongTrackCopy_MsgToTtl` MsgToTtl [60,84 200x48]
-    - `OBJ_SongTrackCopy_AcFuncEditSw` AcFuncEditSw [281,160 31x18]
-
-### `TITLE_SQNOTESEL` -- "NOTE EDIT  "
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SQNOTESEL"`, title id 0x94, function `NAKA_MAINFUNC_SqNoteSelTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
-- View: `OBJ_NoteEdit_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
-- EXIT -> `TITLE_SQEMENU`
-- Opened from: `an untitled view` ("NOTE EDIT")
-- Widgets:
-
-  - `OBJ_NoteEdit_TtlScreen` TtlScreen "NOTE EDIT  " [0,0 320x240]
-    - `OBJ_PartSelect_Label` Label ":PART SELECT" [215,10 100x19]
-    - `OBJ_NoteEdit_IvTrackSwitch` IvTrackSwitch [0,0 32x32]
-    - `OBJ_NoteEdit_AcLanguageText` AcLanguageText [30,76 260x65]
-
-### `TITLE_SQNOTEEDT` -- "NOTE EDIT"
-
-the sequencer note-edit page. Grid and box code shared with another edit title picks its layout coordinates by whether ...
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SQNOTEEDT"`, title id 0x95, function `NAKA_MAINFUNC_SqNoteEdtTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
-- View: `OBJ_NoteEdit_TtlScreen_2` (TtlScreen) in `naka_effects_seq.c`
-- EXIT -> `TITLE_SQNOTESEL`
-- Widgets:
-
-  - `OBJ_NoteEdit_TtlScreen_2` TtlScreen "NOTE EDIT" [0,0 320x240]
-    - `OBJ_NoteEdit_AcIndexEditSw` AcIndexEditSw [4,216 32x23]
-    - `OBJ_NoteEdit_AcIndexEditSw_2` AcIndexEditSw [44,216 32x23]
-    - `OBJ_NoteEdit_AcIndexEditSw_3` AcIndexEditSw [84,216 32x23]
-    - `OBJ_NoteEdit_AcIndexEditSw_4` AcIndexEditSw [124,216 32x23]
-    - `OBJ_NoteEdit_AcIndexEditSw_5` AcIndexEditSw [164,216 32x23]
-    - `OBJ_NoteEdit_AcIndexEditSw_6` AcIndexEditSw [204,216 32x23]
-    - `OBJ_Meas_Label_4` Label "MEAS" [2,202 36x19]
-    - `OBJ_Pos_Label` Label "POS" [46,202 28x19]
-    - `OBJ_Note_Label` Label "NOTE" [82,202 36x19]
-    - `OBJ_Vel_Label` Label "VEL" [126,202 28x19]
-    - `OBJ_Len_Label` Label "LEN" [165,202 28x19]
-    - `OBJ_Inc_Label` Label "INC" [205,202 28x19]
-    - `OBJ_Cursor_Label` Label "CURSOR" [254,202 52x19]
-    - `OBJ_NoteEdit_AcIndexEditSw_7` AcIndexEditSw [281,76 31x18]
-    - `OBJ_NoteEdit_AcIndexEditSw_8` AcIndexEditSw [281,118 31x18]
-    - `OBJ_Graph_Label` Label "GRAPH" [274,98 44x19]
-    - `OBJ_NoteEdit_NoteEditBox` NoteEditBox [4,30 265x150]
-    - `OBJ_NoteEdit_Box` Box [4,182 240x22]
-    - `OBJ_NoteEdit_VwUserBitmap` VwUserBitmap [6,51 16x127]
-    - `OBJ_NTBitmap` VwUserBitmap [22,51 240x127]
-    - `OBJ_NoteEdit_AcIndexEditSw_9` AcIndexEditSw [281,160 31x18]
-    - `OBJ_Ers_Label` Label "ERS" [282,161 28x19]
-    - `OBJ_NoteEdit_AcIndexEditSw_10` AcIndexEditSw [281,34 31x18]
-    - `OBJ_Play_Label` Label "PLAY" [276,35 36x19]
-    - `OBJ_NoteEdit_AcIndexEditSw_11` AcIndexEditSw [244,216 32x23]
-    - `OBJ_NoteEdit_AcIndexEditSw_12` AcIndexEditSw [284,216 32x23]
-
-### `TITLE_SQNOTECYCP` -- "CYCLE PLAY"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SQNOTECYCP"`, title id 0x96, function `NAKA_MAINFUNC_SqNoteCycpTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
-- View: `OBJ_CyclePlay_TtlScreen_2` (TtlScreen) in `naka_effects_seq.c`
-- EXIT -> `TITLE_SQNOTEEDT`
-- Widgets:
-
-  - `OBJ_CyclePlay_TtlScreen_2` TtlScreen "CYCLE PLAY" [0,0 320x240]
-    - `OBJ_CurrentMeasure_Label_4` Label "CURRENT MEASURE :" [42,42 140x19]
-    - `OBJ_CyclePlay_AcIndexWideES_2` AcIndexWideES [244,216 72x23]
-    - `OBJ_Value_Label_5` Label "VALUE" [258,200 44x19]
-    - `OBJ_CyclePlay_SqplyVal_2` SqplyVal [60,84 200x48]
-    - `OBJ_CyclePlay_PsEditBox_4` PsEditBox "SOLO :" [8,72 120x26]
-    - `OBJ_CyclePlay_PsEditBox_5` PsEditBox "CYCLE START MEASURE :" [8,114 230x26]
-    - `OBJ_CyclePlay_PsEditBox_6` PsEditBox "CYCLE END MEASURE   :" [8,156 230x26]
-
-### `TITLE_SQDRMSEL` -- "DRUM EDIT  "
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SQDRMSEL"`, title id 0x97, function `NAKA_MAINFUNC_SqDrmSelTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
-- View: `OBJ_DrumEdit_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
-- EXIT -> `TITLE_SQEMENU`
-- Opened from: `an untitled view` ("DRUM EDIT")
-- Widgets:
-
-  - `OBJ_DrumEdit_TtlScreen` TtlScreen "DRUM EDIT  " [0,0 320x240]
-    - `OBJ_PartSelect_Label_2` Label ":PART SELECT" [210,10 100x19]
-    - `OBJ_DrumEdit_IvTrackSwitch` IvTrackSwitch [0,0 32x32]
-    - `OBJ_DrumEdit_AcLanguageText` AcLanguageText [30,76 260x65]
-
-### `TITLE_SQDRMEDT` -- "DRUM EDIT"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SQDRMEDT"`, title id 0x98, function `NAKA_MAINFUNC_SqDrmEdtTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
-- View: `OBJ_DrumEdit_TtlScreen_2` (TtlScreen) in `naka_effects_seq.c`
-- EXIT -> `TITLE_SQDRMSEL`
-- Widgets:
-
-  - `OBJ_DrumEdit_TtlScreen_2` TtlScreen "DRUM EDIT" [0,0 320x240]
-    - `OBJ_DrumEdit_AcIndexEditSw` AcIndexEditSw [4,216 32x23]
-    - `OBJ_DrumEdit_AcIndexEditSw_2` AcIndexEditSw [44,216 32x23]
-    - `OBJ_DrumEdit_AcIndexEditSw_3` AcIndexEditSw [84,216 32x23]
-    - `OBJ_DrumEdit_AcIndexEditSw_4` AcIndexEditSw [124,216 32x23]
-    - `OBJ_DrumEdit_AcIndexEditSw_5` AcIndexEditSw [164,216 32x23]
-    - `OBJ_DrumEdit_AcIndexEditSw_6` AcIndexEditSw [284,216 32x23]
-    - `OBJ_Meas_Label_5` Label "MEAS" [2,202 36x19]
-    - `OBJ_Pos_Label_2` Label "POS" [46,202 28x19]
-    - `OBJ_Snd_Label` Label "SND" [85,202 28x19]
-    - `OBJ_Vel_Label_2` Label "VEL" [125,202 28x19]
-    - `OBJ_Inc_Label_2` Label "INC" [164,202 28x19]
-    - `OBJ_Cursor_Label_2` Label "CURSOR" [214,202 52x19]
-    - `OBJ_Sound_Label` Label "SOUND" [276,202 44x19]
-    - `OBJ_DrumEdit_Box` Box [3,182 200x22]
-    - `OBJ_DrumEdit_NoteEditBox` NoteEditBox [1,36 265x142]
-    - `OBJ_DrumEdit_VwUserBitmap` VwUserBitmap [3,57 88x119]
-    - `OBJ_DRBitmap` VwUserBitmap [91,57 168x119]
-    - `OBJ_DrumEdit_AcIndexEditSw_7` AcIndexEditSw [267,118 45x18]
-      - `OBJ_Enter_Label` Label "ENTER" [267,119 44x19]
-    - `OBJ_DrumEdit_AcIndexEditSw_8` AcIndexEditSw [281,160 31x18]
-    - `OBJ_Ers_Label_2` Label "ERS" [282,161 28x19]
-    - `OBJ_DrumEdit_AcIndexEditSw_9` AcIndexEditSw [281,34 31x18]
-    - `OBJ_Play_Label_2` Label "PLAY" [276,35 36x19]
-    - `OBJ_DrumEdit_AcIndexEditSw_10` AcIndexEditSw [204,216 32x23]
-    - `OBJ_DrumEdit_AcIndexEditSw_11` AcIndexEditSw [244,216 32x23]
-
-### `TITLE_SQDRMCYCP` -- "CYCLE PLAY"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SQDRMCYCP"`, title id 0x99, function `NAKA_MAINFUNC_SqDrmCycpTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
-- View: `OBJ_CyclePlay_TtlScreen_3` (TtlScreen) in `naka_effects_seq.c`
-- EXIT -> `TITLE_SQDRMEDT`
-- Widgets:
-
-  - `OBJ_CyclePlay_TtlScreen_3` TtlScreen "CYCLE PLAY" [0,0 320x240]
-    - `OBJ_CurrentMeasure_Label_5` Label "CURRENT MEASURE :" [42,42 140x19]
-    - `OBJ_CyclePlay_AcIndexWideES_3` AcIndexWideES [244,216 72x23]
-    - `OBJ_Value_Label_6` Label "VALUE" [258,200 44x19]
-    - `OBJ_CyclePlay_SqplyVal_3` SqplyVal [60,84 200x48]
-    - `OBJ_CyclePlay_PsEditBox_7` PsEditBox "SOLO :" [8,72 120x26]
-    - `OBJ_CyclePlay_PsEditBox_8` PsEditBox "CYCLE START MEASURE :" [8,114 230x26]
-    - `OBJ_CyclePlay_PsEditBox_9` PsEditBox "CYCLE END MEASURE   :" [8,156 230x26]
-
-### `TITLE_SQTRKCLR` -- "TRACK CLEAR"
-
-the sequencer track-clear page. It is also the first of the 15 titles 0x9A..0xA8 that SureJudge_ShowSureDisp indexes by ...
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SQTRKCLR"`, title id 0x9A, function `NAKA_MAINFUNC_SqTrclTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
-- View: `OBJ_TrackClear_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
-- EXIT -> `TITLE_SQEMENU`
-- Opened from: `an untitled view` ("TRACK CLEAR")
-- Widgets:
-
-  - `OBJ_TrackClear_TtlScreen` TtlScreen "TRACK CLEAR" [0,0 320x240]
-    - `OBJ_TrackClear_IvTrackSwitch` IvTrackSwitch [0,0 32x32]
-    - `OBJ_TrackClear_MsgToTtl` MsgToTtl [60,84 200x48]
-    - `OBJ_TrackClear_AcLanguageText` AcLanguageText [10,40 265x80]
-    - `OBJ_TrackClear_AcLanguageText_2` AcLanguageText [10,115 265x40]
-    - `OBJ_TrackClear_AcFuncEditSw` AcFuncEditSw [281,118 31x18]
-
-### `TITLE_SQTRKMRG` -- "TRACK MERGE"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SQTRKMRG"`, title id 0x9B, function `NAKA_MAINFUNC_SqTrmgTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
-- View: `OBJ_TrackMerge_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
-- EXIT -> `TITLE_SQEMENU`
-- Opened from: `an untitled view` ("TRACK MERGE")
-- Widgets:
-
-  - `OBJ_TrackMerge_TtlScreen` TtlScreen "TRACK MERGE" [0,0 320x240]
-    - `OBJ_TrackMerge_Line` Line [160,44 1x86]
-    - `OBJ_TrackMerge_Line_2` Line [130,44 30x1]
-    - `OBJ_TrackMerge_Line_3` Line [130,129 30x1]
-    - `OBJ_TrackMerge_Line_4` Line [160,84 30x1]
-    - `OBJ_TrackMerge_Line_5` Line [180,75 10x10]
-    - `OBJ_TrackMerge_Line_6` Line [180,84 10x10]
-    - `OBJ_TrackMerge_AcIndexWideES` AcIndexWideES [244,216 72x23]
-    - `OBJ_Value_Label_7` Label "VALUE" [256,202 44x19]
-    - `OBJ_TrackMerge_SqedtVal` SqedtVal [60,84 200x48]
-      - `OBJ_TrackMerge_PsEditBox` PsEditBox "TRACK :" [8,114 116x26]
-    - `OBJ_TrackMerge_PsEditBox_2` PsEditBox "TRACK :" [8,30 116x26]
-    - `OBJ_TrackMerge_PsEditBox_3` PsEditBox "TRACK :" [196,72 116x26]
-    - `OBJ_TrackMerge_MsgToTtl` MsgToTtl [60,84 200x48]
-    - `OBJ_TrackMerge_AcFuncEditSw` AcFuncEditSw [281,160 31x18]
-
-### `TITLE_SQQTZ` -- "QUANTIZE"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SQQTZ"`, title id 0x9C, function `NAKA_MAINFUNC_SqQtzTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
-- View: `OBJ_Quantize_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
-- EXIT -> `TITLE_SQEMENU`
-- Opened from: `an untitled view` ("QUANTIZE")
-- Widgets:
-
-  - `OBJ_Quantize_TtlScreen` TtlScreen "QUANTIZE" [0,0 320x240]
-    - `OBJ_Value_Label_8` Label "VALUE" [256,202 44x19]
-    - `OBJ_Quantize_AcIndexWideES` AcIndexWideES [244,216 72x23]
-    - `OBJ_Quantize_SqedtVal` SqedtVal [60,84 200x48]
-      - `OBJ_Quantize_PsEditBox` PsEditBox "LAST MEASURE :" [8,114 165x26]
-      - `OBJ_Quantize_PsEditBox_2` PsEditBox "WINDOW  :" [175,72 137x26]
-        - `OBJ_Quantize_Label` Label "%" [298,78 12x19]
-    - `OBJ_Quantize_PsEditBox_3` PsEditBox "TRACK        :" [8,30 165x26]
-    - `OBJ_Quantize_PsEditBox_4` PsEditBox "FIRST MEASURE:" [8,72 165x26]
-    - `OBJ_Quantize_PsEditBox_5` PsEditBox "VALUE        :" [8,156 165x26]
-    - `OBJ_Quantize_PsEditBox_6` PsEditBox "STRENGTH:" [175,30 137x26]
-      - `OBJ_Quantize_Label_2` Label "%" [298,36 12x19]
-    - `OBJ_Quantize_MsgToTtl` MsgToTtl [60,84 200x48]
-    - `OBJ_Quantize_AcFuncEditSw` AcFuncEditSw [281,160 31x18]
-
-### `TITLE_SQTRNS` -- "TRANSPOSE"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SQTRNS"`, title id 0x9D, function `NAKA_MAINFUNC_SqTrnsTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
-- View: `OBJ_Transpose_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
-- EXIT -> `TITLE_SQEMENU`
-- Opened from: `an untitled view` ("TRANSPOSE")
-- Widgets:
-
-  - `OBJ_Transpose_TtlScreen` TtlScreen "TRANSPOSE" [0,0 320x240]
-    - `OBJ_Value_Label_9` Label "VALUE" [256,202 44x19]
-    - `OBJ_Transpose_AcIndexWideES` AcIndexWideES [244,216 72x23]
-    - `OBJ_Transpose_SqedtVal` SqedtVal [60,84 200x48]
-      - `OBJ_Transpose_PsEditBox` PsEditBox "LAST MEASURE :" [8,114 165x26]
-    - `OBJ_Transpose_PsEditBox_2` PsEditBox "TRACK        :" [8,30 165x26]
-    - `OBJ_Transpose_PsEditBox_3` PsEditBox "FIRST MEASURE:" [8,72 165x26]
-    - `OBJ_Transpose_PsEditBox_4` PsEditBox "TRANSPOSE   :" [8,156 176x26]
-    - `OBJ_Transpose_MsgToTtl` MsgToTtl [60,84 200x48]
-    - `OBJ_Transpose_AcFuncEditSw` AcFuncEditSw [281,160 31x18]
-
-### `TITLE_SQVELOCNG` -- "VELOCITY CHANGE"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SQVELOCNG"`, title id 0x9E, function `NAKA_MAINFUNC_SqVcngTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
-- View: `OBJ_VelocityChange_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
-- EXIT -> `TITLE_SQEMENU`
-- Opened from: `an untitled view` ("VELOCITY CHANGE")
-- Widgets:
-
-  - `OBJ_VelocityChange_TtlScreen` TtlScreen "VELOCITY CHANGE" [0,0 320x240]
-    - `OBJ_Value_Label_10` Label "VALUE" [256,202 44x19]
-    - `OBJ_VelocityChange_AcIndexWideES` AcIndexWideES [244,216 72x23]
-    - `OBJ_VelocityChange_SqedtVal` SqedtVal [60,84 200x48]
-      - `OBJ_VelocityChange_PsEditBox` PsEditBox "LAST MEASURE :" [8,114 165x26]
-    - `OBJ_VelocityChange_PsEditBox_2` PsEditBox "TRACK        :" [8,30 165x26]
-    - `OBJ_VelocityChange_PsEditBox_3` PsEditBox "FIRST MEASURE:" [8,72 165x26]
-    - `OBJ_VelocityChange_PsEditBox_4` PsEditBox "VELOCITY    :" [8,156 176x26]
-    - `OBJ_VelocityChange_MsgToTtl` MsgToTtl [60,84 200x48]
-    - `OBJ_VelocityChange_AcFuncEditSw` AcFuncEditSw [281,160 31x18]
-
-### `TITLE_SQNOTECNG` -- "NOTE CHANGE"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SQNOTECNG"`, title id 0x9F, function `NAKA_MAINFUNC_SqNcngTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
-- View: `OBJ_NoteChange_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
-- EXIT -> `TITLE_SQEMENU`
-- Opened from: `an untitled view` ("NOTE CHANGE")
-- Widgets:
-
-  - `OBJ_NoteChange_TtlScreen` TtlScreen "NOTE CHANGE" [0,0 320x240]
-    - `OBJ_NoteChange_SqedtVal` SqedtVal [60,84 200x48]
-      - `OBJ_NoteChange_PsEditBox` PsEditBox [217,75 95x38]
-        - `OBJ_ChangeTo_Label` Label "CHANGE TO" [222,78 76x19]
-    - `OBJ_NoteChange_AcIndexWideES` AcIndexWideES [244,216 72x23]
-    - `OBJ_Value_Label_11` Label "VALUE" [256,202 44x19]
-    - `OBJ_NoteChange_PsEditBox_2` PsEditBox "TRACK        :" [8,30 165x26]
-    - `OBJ_NoteChange_PsEditBox_3` PsEditBox [217,33 95x38]
-      - `OBJ_TargetNote_Label` Label "TARGET NOTE" [218,36 92x19]
-    - `OBJ_NoteChange_Line` Line [200,44 1x42]
-    - `OBJ_NoteChange_Line_2` Line [200,44 15x1]
-    - `OBJ_NoteChange_Line_3` Line [200,86 15x1]
-    - `OBJ_NoteChange_Line_4` Line [210,82 5x5]
-    - `OBJ_NoteChange_Line_5` Line [210,86 5x5]
-    - `OBJ_NoteChange_PsEditBox_4` PsEditBox "FIRST MEASURE:" [8,72 165x26]
-    - `OBJ_NoteChange_PsEditBox_5` PsEditBox "LAST MEASURE :" [8,114 165x26]
-    - `OBJ_NoteChange_MsgToTtl` MsgToTtl [60,84 200x48]
-    - `OBJ_NoteChange_AcFuncEditSw` AcFuncEditSw [281,160 31x18]
-
-### `TITLE_SQADVDLY` -- "ADVANCE/DELAY"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SQADVDLY"`, title id 0xA0, function `NAKA_MAINFUNC_SqAdlyTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
-- View: `OBJ_AdvanceDelay_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
-- EXIT -> `TITLE_SQEMENU`
-- Opened from: `an untitled view` ("ADVANCE/DELAY")
-- Widgets:
-
-  - `OBJ_AdvanceDelay_TtlScreen` TtlScreen "ADVANCE/DELAY" [0,0 320x240]
-    - `OBJ_AdvanceDelay_AcIndexWideES` AcIndexWideES [244,216 72x23]
-    - `OBJ_Value_Label_12` Label "VALUE" [256,202 44x19]
-    - `OBJ_AdvanceDelay_SqedtVal` SqedtVal [60,84 200x48]
-      - `OBJ_AdvanceDelay_PsEditBox` PsEditBox "FIRST MEASURE:" [8,72 165x26]
-      - `OBJ_AdvanceDelay_PsEditBox_2` PsEditBox "LAST MEASURE :" [8,114 165x26]
-    - `OBJ_AdvanceDelay_PsEditBox_3` PsEditBox "TRACK        :" [8,30 165x26]
-    - `OBJ_AdvanceDelay_PsEditBox_4` PsEditBox "ADVANCE/DELAY:" [8,156 165x26]
-    - `OBJ_AdvanceDelay_MsgToTtl` MsgToTtl [60,84 200x48]
-    - `OBJ_AdvanceDelay_AcFuncEditSw` AcFuncEditSw [281,160 31x18]
-
-### `TITLE_SQMERS` -- "MEASURE ERASE"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SQMERS"`, title id 0xA1, function `NAKA_MAINFUNC_SqMersTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
-- View: `OBJ_MeasureErase_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
-- EXIT -> `TITLE_SQEMENU`
-- Opened from: `an untitled view` ("ERASE")
-- Widgets:
-
-  - `OBJ_MeasureErase_TtlScreen` TtlScreen "MEASURE ERASE" [0,0 320x240]
-    - `OBJ_MeasureErase_AcIndexWideES` AcIndexWideES [244,216 72x23]
-    - `OBJ_Value_Label_13` Label "VALUE" [256,202 44x19]
-    - `OBJ_MeasureErase_SqedtVal` SqedtVal [60,84 200x48]
-    - `OBJ_MeasureErase_PsEditBox` PsEditBox "TRACK        :" [8,30 165x26]
-    - `OBJ_MeasureErase_PsEditBox_2` PsEditBox "FIRST MEASURE:" [8,72 165x26]
-    - `OBJ_MeasureErase_PsEditBox_3` PsEditBox "LAST MEASURE :" [8,114 165x26]
-    - `OBJ_MeasureErase_PsEditBox_4` PsEditBox "ERASE DATA   :" [8,156 201x26]
-    - `OBJ_MeasureErase_MsgToTtl` MsgToTtl [60,84 200x48]
-    - `OBJ_MeasureErase_AcFuncEditSw` AcFuncEditSw [281,160 31x18]
-
-### `TITLE_SQMCP` -- "MEASURE COPY"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SQMCP"`, title id 0xA2, function `NAKA_MAINFUNC_SqMcpyTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
-- View: `OBJ_MeasureCopy_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
-- EXIT -> `TITLE_SQEMENU`
-- Opened from: `an untitled view` ("COPY")
-- Widgets:
-
-  - `OBJ_MeasureCopy_TtlScreen` TtlScreen "MEASURE COPY" [0,0 320x240]
-    - `OBJ_MeasureCopy_AcIndexWideES` AcIndexWideES [4,216 72x23]
-    - `OBJ_MeasureCopy_AcIndexWideES_2` AcIndexWideES [84,216 72x23]
-    - `OBJ_MeasureCopy_AcIndexWideES_3` AcIndexWideES [164,216 72x23]
-    - `OBJ_MeasureCopy_AcIndexWideES_4` AcIndexWideES [244,216 72x23]
-    - `OBJ_MeasureCopy_SqedtVal2` SqedtVal2 [60,84 200x48]
-    - `OBJ_MeasureCopy_SqedtFix` SqedtFix [60,84 200x48]
-    - `OBJ_MeasureCopy_MsgToTtl` MsgToTtl [60,84 200x48]
-    - `OBJ_MeasureCopy_AcFuncEditSw` AcFuncEditSw [281,160 31x18]
-
-### `TITLE_SQMDEL` -- "MEASURE DELETE"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SQMDEL"`, title id 0xA3, function `NAKA_MAINFUNC_SqMdelTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
-- View: `OBJ_MeasureDelete_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
-- EXIT -> `TITLE_SQEMENU`
-- Opened from: `an untitled view` ("DELETE")
-- Widgets:
-
-  - `OBJ_MeasureDelete_TtlScreen` TtlScreen "MEASURE DELETE" [0,0 320x240]
-    - `OBJ_Value_Label_14` Label "VALUE" [256,202 44x19]
-    - `OBJ_MeasureDelete_AcIndexWideES` AcIndexWideES [244,216 72x23]
-    - `OBJ_MeasureDelete_SqedtVal` SqedtVal [60,84 200x48]
-      - `OBJ_MeasureDelete_PsEditBox` PsEditBox "FIRST MEASURE:" [8,72 165x26]
-      - `OBJ_MeasureDelete_PsEditBox_2` PsEditBox "LAST MEASURE :" [8,114 165x26]
-    - `OBJ_MeasureDelete_PsEditBox_3` PsEditBox "TRACK      :" [8,30 165x26]
-    - `OBJ_MeasureDelete_MsgToTtl` MsgToTtl [60,84 200x48]
-    - `OBJ_MeasureDelete_AcFuncEditSw` AcFuncEditSw [281,160 31x18]
-
-### `TITLE_SQMINS` -- "MEASURE INSERT"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SQMINS"`, title id 0xA4, function `NAKA_MAINFUNC_SqMinsTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
-- View: `OBJ_MeasureInsert_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
-- EXIT -> `TITLE_SQEMENU`
-- Opened from: `an untitled view` ("INSERT")
-- Widgets:
-
-  - `OBJ_MeasureInsert_TtlScreen` TtlScreen "MEASURE INSERT" [0,0 320x240]
-    - `OBJ_MeasureInsert_AcIndexWideES` AcIndexWideES [4,216 72x23]
-    - `OBJ_MeasureInsert_AcIndexWideES_2` AcIndexWideES [84,216 72x23]
-    - `OBJ_MeasureInsert_AcIndexWideES_3` AcIndexWideES [164,216 72x23]
-    - `OBJ_MeasureInsert_AcIndexWideES_4` AcIndexWideES [244,216 72x23]
-    - `OBJ_MeasureInsert_SqedtVal2` SqedtVal2 [60,84 200x48]
-    - `OBJ_MeasureInsert_SqedtFix` SqedtFix [60,84 200x48]
-    - `OBJ_MeasureInsert_MsgToTtl` MsgToTtl [60,84 200x48]
-    - `OBJ_MeasureInsert_AcFuncEditSw` AcFuncEditSw [281,160 31x18]
-
-### `TITLE_SQMIXER` -- "TRACK MIXER"
-
-the sequencer track-mixer page.
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SQMIXER"`, title id 0xA5, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/ui/drawbar_panel_ui.s
-- View: `OBJ_Sqmixer` (TtlScreen) in `naka_technichord_part.c`
-- EXIT -> `TITLE_PS`
-- Opened from: `an untitled view` ("LYRICS"), `an untitled view` ("MIC"), `an untitled view` ("MIXER")
-- Widgets:
-
-  - `OBJ_Sqmixer` TtlScreen "TRACK MIXER" [0,0 320x240]
-    - `OBJ_Sqmixer_AcResetPage` AcResetPage [245,6 71x18]
-    - `OBJ_Sqmixer_AcTrackMixer` AcTrackMixer [108,31 204x13]
-    - `NakaWidget_Sqmixer_3_IvExit` IvExit, record outside the C sources
-
-### `TITLE_SQSTEPBAL` -- "PART BALANCE"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SQSTEPBAL"`, title id 0xA9, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/sequencer_ui.s
-- View: `OBJ_StepPartBal` (TtlScreen) in `naka_direct_play.c`
-- EXIT -> `TITLE_SQSTEP`
-- Widgets:
-
-  - `OBJ_StepPartBal` TtlScreen "PART BALANCE" [0,0 320x240]
-    - `OBJ_StepPartBal_AcMixerVol` AcMixerVol [4,128 39x108]
-    - `OBJ_StepPartBal_AcMixerVol_2` AcMixerVol [43,128 39x108]
-    - `OBJ_StepPartBal_AcMixerVol_3` AcMixerVol [82,128 39x108]
-    - `OBJ_StepPartBal_AcMixerVol_4` AcMixerVol [121,128 39x108]
-    - `OBJ_StepPartBal_AcMixerVol_5` AcMixerVol [160,128 39x108]
-
-### `TITLE_SQMETBAL` -- "METRONOME BALANCE"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_SQMETBAL"`, title id 0xAB, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/sequencer_ui.s
-- View: `OBJ_MetronomeBalance_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
-- EXIT -> `TITLE_PS`
-- Widgets:
-
-  - `OBJ_MetronomeBalance_TtlScreen` TtlScreen "METRONOME BALANCE" [0,0 320x240]
-    - `OBJ_MetronomeBalance_AcMixerVol` AcMixerVol [121,128 39x108]
-
-### `TITLE_CMBKSL` -- "RECORD MEMORY"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_CMBKSL"`, title id 0xB1, function `NAKA_MAINFUNC_CmpBkslTtlFunc`, v10/maincpu/storage/flash_floppy_handlers.s
-- View: `OBJ_CmpBkslScreen` (TtlScreen) in `naka_composer_style.c`
-- EXIT -> `TITLE_CMMENU`
-- Widgets:
-
-  - `OBJ_CmpBkslScreen` TtlScreen "RECORD MEMORY" [0,0 320x240]
-    - `OBJ_CmpBkslScreen_IvMainEditSw` IvMainEditSw [0,0 32x32]
-    - `OBJ_Variation_VwMenuBox` VwMenuBox "VARIATION 1" [8,30 149x26]
-    - `OBJ_Variation_VwMenuBox_2` VwMenuBox "VARIATION 3" [8,72 149x26]
-    - `OBJ_Intro_VwMenuBox` VwMenuBox "INTRO 1" [8,114 149x26]
-    - `OBJ_FillIn_VwMenuBox` VwMenuBox "FILL IN 1" [8,156 149x26]
-    - `OBJ_Ending_VwMenuBox` VwMenuBox "ENDING 1" [8,198 149x26]
-    - `OBJ_Variation_VwMenuBox_3` VwMenuBox "      VARIATION 2" [163,30 149x26]
-    - `OBJ_Variation_VwMenuBox_4` VwMenuBox "      VARIATION 4" [163,72 149x26]
-    - `OBJ_Intro_VwMenuBox_2` VwMenuBox "INTRO 2" [242,114 149x26]
-    - `OBJ_FillIn_VwMenuBox_2` VwMenuBox "FILL IN 2" [226,156 149x26]
-    - `OBJ_Ending_VwMenuBox_2` VwMenuBox "ENDING 2" [234,198 149x26]
+- Opened from: `TITLE_SDMENU` ("TECHNI-CHORD")
 
 ### `TITLE_CMBKSL_S` -- "RECORDING"
 
-- Path: none in the data (opened by code)
+- Path: COMPOSER MENU button (mode MD_CMP) > (by CmpMenuTtl_MainHandler) > (by CmpOffset_Dispatch)
 - Registered: `"TT_CMBKSL_S"`, title id 0xB2, function `NAKA_MAINFUNC_CmpBksl_STtlFunc`, v10/maincpu/storage/flash_floppy_handlers.s
 - View: `OBJ_CmpBkslSScreen` (TtlScreen) in `naka_composer_style.c`
+- Its procedure `CmpBksl_STtlFunc` opens: `TITLE_CMNAME`, `TITLE_CMREAL`, `TITLE_CMSET`, `TITLE_MESAGE`
 - EXIT -> `TITLE_CMBKSL`
 - Widgets:
 
@@ -3180,40 +2069,11 @@ the sequencer track-mixer page.
     - `OBJ_CmpNameMenu` CmpNameMenuBox "VARIATION NAMING" [8,72 170x26]
     - `OBJ_ClearTheEntirePattern_VwMenuBox` VwMenuBox "CLEAR THE ENTIRE PATTERN" [8,30 208x26]
 
-### `TITLE_CMNAME` -- "VARIATION NAMING"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_CMNAME"`, title id 0xB3, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/storage/flash_floppy_handlers.s
-- View: `OBJ_CmpNamingScreen` (TtlScreen) in `naka_composer_style.c`
-- EXIT -> `TITLE_CMBKSL_S`
-- Widgets:
-
-  - `OBJ_CmpNamingScreen` TtlScreen "VARIATION NAMING" [0,0 320x240]
-    - `OBJ_CmpNamingScreen_IvNaming` IvNaming [0,0 32x32]
-    - `OBJ_CmpNamingScreen_AcFuncEditSw` AcFuncEditSw [281,160 31x18]
-    - `OBJ_NameMemLabel` Label "MEMORY :" [56,50 68x19]
-    - `OBJ_NamingMem` AcMemNoBox [128,49 60x18]
-
-### `TITLE_CMSET` -- "RECORD SETTING"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_CMSET"`, title id 0xB4, function `NAKA_MAINFUNC_CmpSetTtlFunc`, v10/maincpu/storage/flash_floppy_handlers.s
-- View: `OBJ_CmpSetScreen` (TtlScreen) in `naka_composer_style.c`
-- EXIT -> `TITLE_CMBKSL_S`
-- Widgets:
-
-  - `OBJ_CmpSetScreen` TtlScreen "RECORD SETTING" [0,0 320x240]
-    - `OBJ_CmpSetScreen_IvMainEditSw` IvMainEditSw [0,0 32x32]
-    - `OBJ_CmSetPage` AcWindowPage [245,6 71x18]
-    - `OBJ_CmSetP1Ctl` IvPageControl [0,0 32x32]
-    - `OBJ_CmSetP2Ctl` IvPageControl [0,0 32x32]
-    - `OBJ_CmpSetScreen_IvShowHide` IvShowHide [0,0 32x32]
-
 ### `TITLE_CMREAL` -- "REALTIME RECORDING"
 
 the Composer (mode 0xE, MD_CMP) real-time page.
 
-- Path: none in the data (opened by code)
+- Path: COMPOSER MENU button (mode MD_CMP) > "EASY COMPOSER" > (by CmpEsyTtl_MainHandler)
 - Registered: `"TT_CMREAL"`, title id 0xB5, function `NAKA_MAINFUNC_CmpRealTtlFunc`, v10/maincpu/storage/flash_floppy_handlers.s
 - View: `OBJ_CmpRealScreen` (TtlScreen) in `naka_composer_style.c`
 - Menu entries: "BAL" -> `TITLE_CMBAL`, "STEP" -> `TITLE_CMSTEP`
@@ -3252,20 +2112,515 @@ the Composer (mode 0xE, MD_CMP) real-time page.
     - `OBJ_CmpQtz` PsCmpQtzBox [143,108 35x16]
     - `OBJ_CmpMeas` PsCmpMeasBox [140,134 24x18]
 
-### `TITLE_CMSTEP`
+### `TITLE_DKWPLD` -- "WALLPAPER LOAD"
 
-- Path: none in the data (opened by code)
-- Registered: `"TT_CMSTEP"`, title id 0xB6, function `NAKA_MAINFUNC_CmpStepTitleFunc`, v10/maincpu/storage/flash_floppy_handlers.s
-- View: `OBJ_NakaWidget_SunaView0B6_0_IvDirmdScreen` (IvDirmdScreen) in `naka_composer_style.c`
-- EXIT -> `TITLE_CMREAL`
-- Opened from: `TITLE_CMREAL` ("STEP")
+- Path: MENU CONTROL button (mode MD_CONTROL) > "WALLPAPER SETTING" > "LOAD"
+- Registered: `"TT_DKWPLD"`, title id 0x63, function `NAKA_MAINFUNC_FmmWallpaperLoadFunc`, v10/maincpu/file_io/medley.s
+- View: `OBJ_WallpaperLoad` (TtlScreen) in `naka_disk_menu_file_io.c`
+- Its procedure `FmmWallpaperLoadFunc` opens: `TITLE_CTWALLSET`, `TITLE_DKUTFRMT`, `TITLE_MESAGE`
+- EXIT -> `TITLE_CTWALLSET`
+- Opened from: `TITLE_CTWALLSET` ("LOAD"), `an untitled view` ("LOAD")
 - Widgets:
 
-  - `OBJ_NakaWidget_SunaView0B6_0_IvDirmdScreen` IvDirmdScreen [0,0 320x240]
+  - `OBJ_WallpaperLoad` TtlScreen "WALLPAPER LOAD" [0,0 320x240]
+    - `OBJ_WallpaperLoad_AcIndexEditSw` AcIndexEditSw [84,216 32x23]
+      - `OBJ_Prev_Label` Label "PREV" [85,222 28x11]
+    - `OBJ_WallpaperLoad_AcIndexWideES` AcIndexWideES [124,216 72x23]
+    - `OBJ_WallpaperLoad_AcIndexEditSw_2` AcIndexEditSw [204,216 32x23]
+      - `OBJ_Next_Label` Label "NEXT" [205,222 28x11]
+    - `OBJ_DiskName_Label_2` Label "DISK NAME:" [78,38 64x11]
+    - `OBJ_WallpaperLoad_AcParaStrBox` AcParaStrBox [138,32 98x16]
+    - `OBJ_WallpaperLoad_AcParaStrBox_2` AcParaStrBox [60,50 198x14]
+    - `OBJ_WallpaperLoad_AcIndexEditSw_3` AcIndexEditSw [272,31 40x24]
+      - `OBJ_Load_Label_2` Label "LOAD" [274,35 36x19]
+    - `OBJ_WallpaperLoad_PsFileNameBox` PsFileNameBox [85,66 150x148]
+
+### `TITLE_DEMOSOUND` -- "PERFORMANCES"
+
+- Path: DEMO button (mode MD_DEMO) > "PERFORMANCES" > (by DemoStyleTtlFunc)
+- Registered: `"TT_DEMOSOUND"`, title id 0xE2, function `NAKA_MAINFUNC_DemoSoundTtlFunc`, v10/maincpu/sequencer/sequencer_ui.s
+- View: `OBJ_DemoSound` (TtlScreen) in `naka_direct_play.c`
+- Its procedure `DemoSoundTtlFunc` opens: `TITLE_DEMORHY`, `TITLE_DEMOSTYLE`
+- EXIT -> `TITLE_DEMOMENU`
+- Widgets:
+
+  - `OBJ_DemoSound` TtlScreen "PERFORMANCES" [0,0 320x240]
+    - `OBJ_DemoSong6` AcDemoSongBox "Strings" [8,72 149x26]
+    - `OBJ_DemoSong7` AcDemoSongBox "Gamelan" [8,114 149x26]
+    - `OBJ_DemoSong8` AcDemoSongBox "Guitar" [8,156 149x26]
+    - `OBJ_DemoSong9` AcDemoSongBox "Piano" [163,72 149x26]
+    - `OBJ_DemoSong10` AcDemoSongBox "Sax&Brass" [163,114 149x26]
+    - `OBJ_DemoSong11` AcDemoSongBox "Organ" [163,156 149x26]
+    - `OBJ_DemoSound_PsWideToggle` PsWideToggle "STYLE" [4,216 72x23]
+    - `OBJ_DemoSound_PsWideToggle_2` PsWideToggle "SOUND" [124,216 72x23]
+    - `OBJ_DemoSound_PsWideToggle_3` PsWideToggle "RHYTHM" [244,216 72x23]
+    - `OBJ_DemoSound_IvMainEditSw` IvMainEditSw [0,0 32x32]
+    - `OBJ_DemoMed2` AcDemoMedleyDispBox [100,40 114x19]
+
+### `TITLE_DEMORHY` -- "PERFORMANCES"
+
+- Path: DEMO button (mode MD_DEMO) > "PERFORMANCES" > (by DemoStyleTtlFunc)
+- Registered: `"TT_DEMORHY"`, title id 0xE3, function `NAKA_MAINFUNC_DemoRhyTtlFunc`, v10/maincpu/sequencer/sequencer_ui.s
+- View: `OBJ_DemoRhy` (TtlScreen) in `naka_direct_play.c`
+- Its procedure `DemoRhyTtlFunc` opens: `TITLE_DEMOSOUND`, `TITLE_DEMOSTYLE`
+- EXIT -> `TITLE_DEMOMENU`
+- Widgets:
+
+  - `OBJ_DemoRhy` TtlScreen "PERFORMANCES" [0,0 320x240]
+    - `OBJ_DemoSong12` AcDemoSongBox "Hokie Dance" [8,72 149x26]
+    - `OBJ_DemoSong13` AcDemoSongBox "Gospel Revival" [8,114 149x26]
+    - `OBJ_DemoSong14` AcDemoSongBox "Organ Combo" [8,156 149x26]
+    - `OBJ_DemoSong15` AcDemoSongBox "Big Band Mid" [163,72 149x26]
+    - `OBJ_DemoSong16` AcDemoSongBox "Bavarian Polka" [163,114 149x26]
+    - `OBJ_DemoSong17` AcDemoSongBox "Modern Bluegrass" [163,156 149x26]
+    - `OBJ_DemoRhy_PsWideToggle` PsWideToggle "STYLE" [4,216 72x23]
+    - `OBJ_DemoRhy_PsWideToggle_2` PsWideToggle "SOUND" [124,216 72x23]
+    - `NakaWidget_Perf3RhythmSel` PsWideToggle "RHYTHM", record outside the C sources
+    - `NakaHdr_Perf2MeasureBoxData` IvMainEditSw, record outside the C sources
+    - `NakaHdr_Perf2FileListData` AcDemoMedleyDispBox, record outside the C sources
+
+### `TITLE_DPSMF` -- "SMF DIRECT PLAY  "
+
+- Path: MENU DISK button (mode MD_DISK) > "DIRECT PLAY" (by DirectPlayTtlJgFunc) > (by FmmSmfMedleyFunc)
+- Registered: `"TT_DPSMF"`, title id 0x6F, function `NAKA_MAINFUNC_DpSmfTtlFunc`, v10/maincpu/sequencer/sequencer_ui.s
+- View: `OBJ_DpSmf` (TtlScreen) in `naka_direct_play.c`
+- Menu entries: "LYRICS" -> `TITLE_DPSMFLYR`
+- Its procedure `DpSmfTtlFunc` opens: `TITLE_ETMENU`, `TITLE_SQMIXER`
+- EXIT -> `TITLE_DKDPSMF`
+- Widgets:
+
+  - `OBJ_DpSmf` TtlScreen "SMF DIRECT PLAY  " [0,0 320x240]
+    - `OBJ_DpSmf_AcTempoBox` AcTempoBox [248,4 70x24]
+    - `OBJ_Lyrics_AcTitleMenu` AcTitleMenu "LYRICS" [8,156 60x26] -> `TITLE_DPSMFLYR`
+    - `OBJ_DpSmf_Box` Box [68,40 240x64]
+      - `OBJ_DpSmf_AcSmfFileNameBox` AcSmfFileNameBox [76,44 140x20]
+      - `OBJ_DpSmf_AcSmfSongNameBox` AcSmfSongNameBox [76,66 226x34]
+    - `OBJ_DpSmf_AcIndexEditSw` AcIndexEditSw [284,216 32x23]
+    - `OBJ_DpSmf_AcRamEditBox` AcRamEditBox " " [240,161 76x32]
+    - `OBJ_DpSmf_IvMainEditSw` IvMainEditSw [0,0 32x32]
+    - `OBJ_DpSmf_IvFixWin` IvFixWin [0,32 32x32]
+    - `OBJ_SMFMuteSw` AcMuteToggleBox "ON" [244,216 32x23]
+    - `OBJ_MIXER_VwMenuBox` VwMenuBox "MIXER" [8,114 50x26]
+    - `OBJ_MIC_VwMenuBox` VwMenuBox "MIC" [8,72 34x26]
+    - `OBJ_MuteCh_Label` Label "-MUTE CH-" [240,200 76x19]
+
+### `TITLE_DPMDLYSMF` -- "SMF MEDLEY"
+
+- Path: MENU DISK button (mode MD_DISK) > "DIRECT PLAY" (by DirectPlayTtlJgFunc) > (by FmmSmfMedleyFunc)
+- Registered: `"TT_DPMDLYSMF"`, title id 0x73, function `NAKA_MAINFUNC_DpMdlySmfTtlFunc`, v10/maincpu/sequencer/sequencer_ui.s
+- View: `OBJ_DpMdlySmf` (TtlScreen) in `naka_direct_play.c`
+- Menu entries: "LYRICS" -> `TITLE_DPMDLYSMFLYR`
+- Its procedure `DpMdlySmfTtlFunc` opens: `TITLE_ETMENU`, `TITLE_SQMIXER`
+- EXIT -> `TITLE_DKDPSMF`
+- Widgets:
+
+  - `OBJ_DpMdlySmf` TtlScreen "SMF MEDLEY" [0,0 320x240]
+    - `OBJ_Lyrics_AcTitleMenu_3` AcTitleMenu "LYRICS" [8,156 60x26] -> `TITLE_DPMDLYSMFLYR`
+    - `OBJ_DpMdlySmf_AcTempoBox` AcTempoBox [248,4 70x24]
+    - `OBJ_DpMdlySmf_AcIndexEditSw` AcIndexEditSw [284,216 32x23]
+    - `OBJ_DpMdlySmf_Box` Box [68,40 240x64]
+      - `OBJ_DpMdlySmf_AcSmfSongNameBox` AcSmfSongNameBox [76,66 226x34]
+      - `OBJ_DpMdlySmf_AcSmfFileNameBox` AcSmfFileNameBox [76,44 140x20]
+    - `OBJ_DpMdlySmf_VwEditSwBox` VwEditSwBox [8,202 42x18]
+      - `OBJ_Skip_Label_2` Label "SKIP" [10,203 36x19]
+    - `OBJ_DpMdlySmf_AcRamEditBox` AcRamEditBox " " [240,161 76x32]
+    - `OBJ_DpMdlySmf_IvMainEditSw` IvMainEditSw [0,0 32x32]
+    - `NakaWidget_SmfMdlyOffOnSel` IvExit, record outside the C sources
+    - `NakaWidget_SMFMedMuteSw` AcMuteToggleBox "ON", record outside the C sources
+    - `OBJ_MIXER_VwMenuBox_4` VwMenuBox "MIXER" [8,114 50x26]
+    - `OBJ_MIC_VwMenuBox_5` VwMenuBox "MIC" [8,72 34x26]
+    - `OBJ_MuteCh_Label_2` Label "-MUTE CH-" [240,200 76x19]
+
+### `TITLE_DPDOC` -- "DOC DIRECT PLAY  "
+
+- Path: MENU DISK button (mode MD_DISK) > "DIRECT PLAY" (by DirectPlayTtlJgFunc) > (by FmmDocMedleyFunc)
+- Registered: `"TT_DPDOC"`, title id 0x70, function `NAKA_MAINFUNC_DpDocTtlFunc`, v10/maincpu/sequencer/sequencer_ui.s
+- View: `OBJ_DpDoc` (TtlScreen) in `naka_direct_play.c`
+- Its procedure `DpDocTtlFunc` opens: `TITLE_ETMENU`, `TITLE_SQMIXER`
+- EXIT -> `TITLE_DKDPDOC`
+- Widgets:
+
+  - `OBJ_DpDoc` TtlScreen "DOC DIRECT PLAY  " [0,0 320x240]
+    - `OBJ_DpDoc_AcTempoBox` AcTempoBox [248,4 70x24]
+    - `OBJ_DpDoc_Box` Box [68,40 240x64]
+      - `OBJ_DpDoc_AcDocSongNameBox` AcDocSongNameBox [76,66 226x34]
+      - `OBJ_DpDoc_AcDocFileNoBox` AcDocFileNoBox [76,44 36x20]
+    - `OBJ_DpDoc_IvMainEditSw` IvMainEditSw [0,0 32x32]
+    - `OBJ_DpDoc_IvFixWin` IvFixWin [0,32 32x32]
+    - `OBJ_DOCR1Sw` AcMuteToggleBox "RT1" [270,118 42x18]
+    - `OBJ_DOCR2Sw` AcMuteToggleBox "RT2" [270,160 42x18]
+    - `OBJ_DOCOrchSw` AcMuteToggleBox "ORCH" [270,202 42x18]
+    - `OBJ_MIXER_VwMenuBox_2` VwMenuBox "MIXER" [8,114 50x26]
+    - `OBJ_MIC_VwMenuBox_2` VwMenuBox "MIC" [8,72 34x26]
+
+### `TITLE_DPMDLYDOC` -- "DOC MEDLEY"
+
+- Path: MENU DISK button (mode MD_DISK) > "DIRECT PLAY" (by DirectPlayTtlJgFunc) > (by FmmDocMedleyFunc)
+- Registered: `"TT_DPMDLYDOC"`, title id 0x74, function `NAKA_MAINFUNC_DpMdlyDocTtlFunc`, v10/maincpu/sequencer/sequencer_ui.s
+- View: `OBJ_DpMdlyDoc` (TtlScreen) in `naka_direct_play.c`
+- Its procedure `DpMdlyDocTtlFunc` opens: `TITLE_ETMENU`, `TITLE_SQMIXER`
+- EXIT -> `TITLE_DKDPDOC`
+- Widgets:
+
+  - `OBJ_DpMdlyDoc` TtlScreen "DOC MEDLEY" [0,0 320x240]
+    - `OBJ_DpMdlyDoc_Box` Box [68,40 240x64]
+      - `OBJ_DpMdlyDoc_AcDocSongNameBox` AcDocSongNameBox [76,66 226x34]
+      - `OBJ_DpMdlyDoc_AcDocFileNoBox` AcDocFileNoBox [76,44 36x20]
+    - `OBJ_DpMdlyDoc_AcTempoBox` AcTempoBox [248,4 70x24]
+    - `OBJ_DpMdlyDoc_VwEditSwBox` VwEditSwBox [8,202 42x18]
+      - `OBJ_Skip_Label_3` Label "SKIP" [10,203 36x19]
+    - `OBJ_DpMdlyDoc_IvMainEditSw` IvMainEditSw [0,0 32x32]
+    - `NakaWidget_DocMdlyOffOnSel` IvExit, record outside the C sources
+    - `NakaWidget_DOCMedR1Sw` AcMuteToggleBox "RT1", record outside the C sources
+    - `OBJ_DOCMedR2Sw` AcMuteToggleBox "RT2" [270,160 42x18]
+    - `OBJ_DOCMedOrchSw` AcMuteToggleBox "ORCH" [270,202 42x18]
+    - `OBJ_MIXER_VwMenuBox_5` VwMenuBox "MIXER" [8,114 50x26]
+    - `OBJ_MIC_VwMenuBox_6` VwMenuBox "MIC" [8,72 34x26]
+
+### `TITLE_DKMDLYPLY` -- "SONG MEDLEY       "
+
+- Path: MENU DISK button (mode MD_DISK) > "SONG MEDLEY" (by SongMedleyTtlJgFunc) > (by FmmDiskMedleySelectFunc)
+- Registered: `"TT_DKMDLYPLY"`, title id 0x78, function `NAKA_MAINFUNC_DkMdlyPlyTtlFunc`, v10/maincpu/sequencer/sequencer_ui.s
+- View: `OBJ_DkMdlyPly` (TtlScreen) in `naka_direct_play.c`
+- Its procedure `DkMdlyPlyTtlFunc` opens: `TITLE_SQMIXER`
+- EXIT -> `TITLE_DKMDLY`
+- Widgets:
+
+  - `OBJ_DkMdlyPly` TtlScreen "SONG MEDLEY       " [0,0 320x240]
+    - `OBJ_DkMdlyPly_Box` Box [80,70 160x78]
+      - `OBJ_DkMdlyPly_AcTempoBox` AcTempoBox [96,110 80x24]
+      - `OBJ_DkMdlyPly_TrTransposeBox` TrTransposeBox [180,110 50x24]
+      - `OBJ_DkMdlyPly_MeasureBox` MeasureBox [108,86 108x19]
+    - `OBJ_DkMdlyPly_VwEditSwBox` VwEditSwBox [270,118 42x18]
+    - `OBJ_DkMdlyPly_IvMainEditSw` IvMainEditSw [0,0 32x32]
+    - `OBJ_DkMdlyPly_AcCurSongNameBox` AcCurSongNameBox [35,40 250x26]
+    - `OBJ_DkMdlyPly_IvTrackSwitch` IvTrackSwitch [0,32 32x32]
+    - `OBJ_DkMdlyPly_AcDiskFileNameBox` AcDiskFileNameBox [210,8 108x19]
+    - `OBJ_Skip_Label_6` Label "SKIP" [272,119 36x19]
+    - `NakaWidget_SongMdlyOffOnSel` IvExit, record outside the C sources
+    - `NakaWidget_SongMdlyMixer` VwMenuBox "MIXER", record outside the C sources
+
+### `TITLE_DKSVSMF` -- "SMF SAVE"
+
+the disk save-as-SMF page.
+
+- Path: MENU DISK button (mode MD_DISK) > "SAVE" > "SMF FORMAT 0" (by SaveSmfTtlJgFunc)
+- Registered: `"TT_DKSVSMF"`, title id 0x6B, function `NAKA_MAINFUNC_FmmSmfSaveTitleFunc`, v10/maincpu/file_io/medley.s
+- View: `OBJ_DiskSmfSave` (TtlScreen) in `naka_disk_menu_file_io.c`
+- Menu entries: "NAME" -> `TITLE_DKSVNAMESMF`
+- EXIT -> `TITLE_DKMENU`
+- Widgets:
+
+  - `OBJ_DiskSmfSave` TtlScreen "SMF SAVE" [0,0 320x240]
+    - `OBJ_DiskSmfSave_PsFileNameBox` PsFileNameBox [44,66 150x148]
+    - `OBJ_DiskSmfSave_AcIndexWideES` AcIndexWideES [84,216 72x23]
+    - `OBJ_DiskSmfSave_AcIndexEditSw` AcIndexEditSw [44,216 32x23]
+      - `OBJ_Prev_Label_3` Label "PREV" [45,222 28x11]
+    - `OBJ_DiskSmfSave_AcIndexEditSw_2` AcIndexEditSw [164,216 32x23]
+      - `OBJ_Next_Label_3` Label "NEXT" [165,222 28x11]
+    - `OBJ_DiskSmfSave_AcMonoIndexToggle` AcMonoIndexToggle "ON" [281,202 31x18]
+    - `OBJ_DiskSmfSave_AcMonoIndexToggle_2` AcMonoIndexToggle "ON" [281,160 31x18]
+    - `OBJ_PanelHeader_Label` Label "PANEL HEADER" [220,144 100x19]
+    - `OBJ_Name_AcTitleMenu_2` AcTitleMenu "NAME" [8,27 49x32] -> `TITLE_DKSVNAMESMF`
+    - `OBJ_DiskSmfSave_AcParaStrBox` AcParaStrBox [60,52 198x14]
+    - `OBJ_DiskSmfSave_AcIndexEditSw_3` AcIndexEditSw [272,31 40x24]
+      - `OBJ_Save_Label_5` Label "SAVE" [273,35 36x19]
+    - `OBJ_MeasureSpace_Label` Label "1 MEASURE SPACE" [196,186 124x19]
+    - `OBJ_DiskSmfSave_PsFileNameBox_2` PsFileNameBox [208,97 104x18]
+    - `OBJ_DiskSmfSave_AcIndexEditSw_4` AcIndexEditSw [208,77 104x18]
+      - `OBJ_DiskSmfSave_PsFileNameBox_3` PsFileNameBox [208,77 104x18]
+    - `OBJ_DiskSmfSave_PsFileNameBox_4` PsFileNameBox [60,31 200x22]
+      - `OBJ_Save_Label_6` Label "SAVE" [62,33 28x11]
+      - `OBJ_As_Label_2` Label " AS:" [62,42 28x11]
+
+### `TITLE_DKSV`
+
+the disk SAVE page. The file-naming window returns to it.
+
+- Path: MENU DISK button (mode MD_DISK) > "SAVE" > "TECHNICS FORMAT" (by SaveTtlJgFunc)
+- Registered: `"TT_DKSV"`, title id 0x67, function `NAKA_MAINFUNC_FmmSaveTitleFunc`, v10/maincpu/file_io/medley.s
+- View: `OBJ_DiskSave` (TtlScreen) in `naka_disk_menu_file_io.c`
+- Menu entries: "NAME" -> `TITLE_DKSVNAME`
+- Its procedure `FmmSaveTitleFunc` opens: `TITLE_DKMENU`
+- EXIT -> `TITLE_DKMENU`
+- Widgets:
+
+  - `OBJ_DiskSave` TtlScreen [0,0 320x240]
+    - `OBJ_DiskSavePage` AcWindowPage [245,6 71x18]
+    - `OBJ_DiskSave_IvPageControl` IvPageControl [0,0 32x32]
+    - `OBJ_DiskSave_IvPageControl_2` IvPageControl [32,0 32x32]
+    - `OBJ_DiskSave_IvPageControl_3` IvPageControl [64,0 32x32]
+    - `NakaWidget_DiskSave_5_IvExit` IvExit, record outside the C sources
+    - `NakaWidget_DiskSave_6_IvMainEditSw` IvMainEditSw, record outside the C sources
+
+### `TITLE_STYLCNVMODL` -- "STYLE TYPE SELECT"
+
+- Path: MENU DISK button (mode MD_DISK) > "STYLE CONVERT" > (by StylCnvWaitTtlFunc)
+- Registered: `"TT_STYLCNVMODL"`, title id 0x11, function `NAKA_MAINFUNC_StylCnvModlTtlFunc`, v10/maincpu/storage/flash_floppy_handlers.s
+- View: `OBJ_StylCnvModlScreen` (TtlScreen) in `naka_composer_style.c`
+- Its procedure `StylCnvModlTtlFunc` opens: `TITLE_STYLCNVWAIT`
+- EXIT -> `TITLE_DKMENU`
+- Widgets:
+
+  - `OBJ_StylCnvModlScreen` TtlScreen "STYLE TYPE SELECT" [0,0 320x240]
+    - `OBJ_StylCnvModlScreen_IvMainEditSw` IvMainEditSw [0,0 32x32]
+    - `OBJ_StylCnvModlBox` PsParaListBox [8,44 260x160]
+    - `OBJ_PREV_VwEditSwBox` VwEditSwBox "PREV" [44,216 32x23]
+    - `OBJ_StylCnvModlScreen_VwWideESBox` VwWideESBox [84,216 72x23]
+    - `OBJ_NEXT_VwEditSwBox` VwEditSwBox "NEXT" [164,216 32x23]
+    - `OBJ_StylCnvModlScreen_VwEditSwBox` VwEditSwBox [281,160 31x18]
+    - `OBJ_StylCnvVer` PsStylCnvVer [269,44 50x18]
+
+### `TITLE_SQAFTSET` -- "AFTER TOUCH SETTING"
+
+- Path: SEQUENCER MENU button (mode MD_SEQ) > "CREATE" > "AFTER TOUCH SET"
+- Registered: `"TT_SQAFTSET"`, title id 0x92, function `NAKA_MAINFUNC_SqAftSetTtlFunc`, v10/maincpu/sequencer/sequencer_ui.s
+- View: `OBJ_AfterTouchSet` (TtlScreen) in `naka_direct_play.c`
+- EXIT -> `TITLE_SQCMENU`
+- Opened from: `TITLE_SQCMENU` ("AFTER TOUCH SET")
+- Widgets:
+
+  - `OBJ_AfterTouchSet` TtlScreen "AFTER TOUCH SETTING" [0,0 320x240]
+    - `OBJ_AfterTouchSet_AcIndexWideES` AcIndexWideES [244,216 72x23]
+    - `OBJ_AfterTouchSet_AcBitEditBox` AcBitEditBox "  AFTER TOUCH RECORD  :" [25,150 270x40]
+    - `OBJ_AfterTouchSet_AcLanguageText` AcLanguageText [20,80 280x60]
+
+### `TITLE_SQPNLWR` -- "PANEL WRITE"
+
+the sequencer panel-write page. Its exit returns to TT_SQCMENU.
+
+- Path: SEQUENCER MENU button (mode MD_SEQ) > "CREATE" > "PANEL WRITE"
+- Registered: `"TT_SQPNLWR"`, title id 0x8D, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/sequencer_ui.s
+- View: `OBJ_PanelWrite_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
+- EXIT -> `TITLE_SQCMENU`
+- Opened from: `TITLE_SQCMENU` ("PANEL WRITE")
+- Widgets:
+
+  - `OBJ_PanelWrite_TtlScreen` TtlScreen "PANEL WRITE" [0,0 320x240]
+    - `OBJ_PanelWrite_AcFuncEditSw` AcFuncEditSw [281,160 31x18]
+    - `OBJ_PanelWrite_AcLanguageText` AcLanguageText [10,40 260x180]
+    - `OBJ_PanelWrite_IvPnlWrExit` IvPnlWrExit [0,0 32x32]
+
+### `TITLE_SQPUNCH` -- "PUNCH RECORD"
+
+the sequencer punch-in record page.
+
+- Path: SEQUENCER MENU button (mode MD_SEQ) > "CREATE" > "PUNCH RECORD"
+- Registered: `"TT_SQPUNCH"`, title id 0x87, function `NAKA_MAINFUNC_SqPunchTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
+- View: `OBJ_PunchRecord_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
+- EXIT -> `TITLE_SQCMENU`
+- Opened from: `TITLE_SQCMENU` ("PUNCH RECORD")
+- Widgets:
+
+  - `OBJ_PunchRecord_TtlScreen` TtlScreen "PUNCH RECORD" [0,0 320x240]
+    - `OBJ_PunchRecord_IvTrackSwitch` IvTrackSwitch [0,0 32x32]
+    - `OBJ_PunchRecord_Box` Box [60,31 200x22]
+    - `OBJ_SqPunchGamen` SqplyVal [60,84 200x48]
+    - `OBJ_PunchRecord_Box_2` Box [90,55 140x95]
+    - `OBJ_Measure_Label_3` Label "MEASURE  =" [103,58 84x19]
+    - `OBJ_TimeSig_Label_3` Label "TIME SIG. =" [95,73 92x19]
+    - `OBJ_Memory_Label_2` Label "MEMORY   =" [103,88 84x19]
+    - `OBJ_PunchRecord_AcTempoBox` AcTempoBox [95,101 80x20]
+    - `OBJ_PunchRecord_TrTransposeBox` TrTransposeBox [175,101 50x20]
+    - `OBJ_PunchRecord_TrChordBox` TrChordBox [95,124 130x20]
+    - `OBJ_PunchRecord_Label` Label "%" [215,88 12x19]
+    - `OBJ_PunchRecord_SngSel` SngSel [62,33 200x48]
+    - `OBJ_MetPunchSw` AcFuncToggle [271,34 41x18]
+    - `OBJ_PunchInOutSw` AcFuncToggle "PUNCH OUT" [234,118 78x18]
+    - `OBJ_Meas_Label_2` Label "MEAS" [6,56 36x19]
+    - `OBJ_PunchRecord_AcIndexEditSw` AcIndexEditSw [8,34 31x18]
+    - `OBJ_PunchRecord_AcIndexEditSw_2` AcIndexEditSw [8,76 31x18]
+    - `OBJ_PunchRecord_AcFuncEditSw` AcFuncEditSw [8,118 31x18]
+    - `OBJ_Mixer_Label_3` Label "MIXER" [10,119 44x19]
+    - `OBJ_PunchRecord_IvPunchExit` IvPunchExit [32,0 32x32]
+    - `OBJ_PunchRecord_AcFuncEditSw_2` AcFuncEditSw [281,76 31x18]
+    - `OBJ_Auto_Label` Label "AUTO" [250,71 36x19]
+    - `OBJ_Punch_Label` Label "PUNCH" [250,84 44x19]
+
+### `TITLE_SQSNGCLR` -- "SONG CLEAR"
+
+the sequencer song-clear page.
+
+- Path: SEQUENCER MENU button (mode MD_SEQ) > "CREATE" > "SONG CLEAR"
+- Registered: `"TT_SQSNGCLR"`, title id 0x90, function `NAKA_MAINFUNC_SqSoclTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
+- View: `OBJ_SongClear_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
+- EXIT -> `TITLE_SQCMENU`
+- Opened from: `TITLE_SQCMENU` ("SONG CLEAR")
+- Widgets:
+
+  - `OBJ_SongClear_TtlScreen` TtlScreen "SONG CLEAR" [0,0 320x240]
+    - `OBJ_SongClear_AcIndexWideES` AcIndexWideES [244,216 72x23]
+    - `OBJ_SongNoAll_Label` Label "SONG NO/ALL" [225,200 92x19]
+    - `OBJ_SongClear_SqedtVal3` SqedtVal3 [60,84 200x48]
+      - `OBJ_SongClear_Box` Box [35,70 250x46]
+        - `OBJ_SongClear_Label` Label ":" [218,95 15x19]
+        - `OBJ_SongClear_Label_2` Label "%" [268,95 15x19]
+    - `OBJ_SongClear_MsgToTtl` MsgToTtl [60,84 200x48]
+    - `OBJ_SongClear_AcFuncEditSw` AcFuncEditSw [281,160 31x18]
+
+### `TITLE_SQSNGSEL` -- "SONG SELECT/NAMING"
+
+the sequencer song-select page.
+
+- Path: SEQUENCER MENU button (mode MD_SEQ) > "CREATE" > "SONG SELECT /NAMING"
+- Registered: `"TT_SQSNGSEL"`, title id 0x8E, function `NAKA_MAINFUNC_SqSngSelTtlFunc`, v10/maincpu/sequencer/sequencer_ui.s
+- View: `OBJ_SqSngSel` (TtlScreen) in `naka_direct_play.c`
+- Menu entries: "NAMING" -> `TITLE_SQSNGNAME`
+- EXIT -> `TITLE_SQCMENU`
+- Opened from: `TITLE_SQCMENU` ("SONG SELECT /NAMING")
+- Widgets:
+
+  - `OBJ_SqSngSel` TtlScreen "SONG SELECT/NAMING" [0,0 320x240]
+    - `OBJ_Naming_AcTitleMenu` AcTitleMenu "NAMING" [256,30 58x26] -> `TITLE_SQSNGNAME`
+    - `OBJ_SqSngSel_PsSongSelBox` PsSongSelBox [56,37 200x177]
+      - `OBJ_SqSngSel_PsSongSelBox_2` PsSongSelBox [210,39 40x171]
+    - `OBJ_SqSngSel_AcIndexWideES` AcIndexWideES [82,216 152x23]
+
+### `TITLE_SQSNGCPC` -- "SONG/TRACK COPY"
+
+the song-copy page reached from TT_SQCMENU. It reuses TT_SQSNGCP's view 0x00910000, and its exit returns to TT_SQCMENU.
+
+- Path: SEQUENCER MENU button (mode MD_SEQ) > "CREATE" > "SONG/TRACK COPY"
+- Registered: `"TT_SQSNGCPC"`, title id 0xA8, function `NAKA_MAINFUNC_SqSngcpTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
+- View: `OBJ_SongTrackCopy_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
+- EXIT -> `TITLE_SQCMENU`
+- Opened from: `TITLE_SQCMENU` ("SONG/TRACK COPY")
+- Widgets:
+
+  - `OBJ_SongTrackCopy_TtlScreen` TtlScreen "SONG/TRACK COPY" [0,0 320x240]
+    - `OBJ_SongTrackCopy_SqedtVal2` SqedtVal2 [60,84 200x48]
+    - `OBJ_SongTrackCopy_SqedtFix` SqedtFix [60,84 200x48]
+    - `OBJ_SongTrackCopy_AcIndexWideES` AcIndexWideES [4,216 72x23]
+    - `OBJ_SongTrackCopy_AcIndexWideES_2` AcIndexWideES [84,216 72x23]
+    - `OBJ_SongTrackCopy_AcIndexWideES_3` AcIndexWideES [164,216 72x23]
+    - `OBJ_SongTrackCopy_AcIndexWideES_4` AcIndexWideES [244,216 72x23]
+    - `OBJ_SongTrackCopy_IvSongCopyExit` IvSongCopyExit [0,0 32x32]
+    - `OBJ_SongTrackCopy_IvSongCopyExit_2` IvSongCopyExit [0,0 32x32]
+    - `OBJ_SongTrackCopy_MsgToTtl` MsgToTtl [60,84 200x48]
+    - `OBJ_SongTrackCopy_AcFuncEditSw` AcFuncEditSw [281,160 31x18]
+
+### `TITLE_SQTRAS` -- "TRACK ASSIGN   "
+
+- Path: SEQUENCER MENU button (mode MD_SEQ) > "CREATE" > "TRACK ASSIGN"
+- Registered: `"TT_SQTRAS"`, title id 0x8B, function `NAKA_MAINFUNC_SqTrAsTtlFunc`, v10/maincpu/sequencer/sequencer_ui.s
+- View: `OBJ_SqTrAs` (TtlScreen) in `naka_direct_play.c`
+- Menu entries: "PRESET" -> `TITLE_SQTRASPS`
+- EXIT -> `TITLE_SQCMENU`
+- Opened from: `TITLE_SQCMENU` ("TRACK ASSIGN")
+- Widgets:
+
+  - `OBJ_SqTrAs` TtlScreen "TRACK ASSIGN   " [0,0 320x240]
+    - `OBJ_Preset_AcTitleMenu` AcTitleMenu "PRESET" [254,30 58x26] -> `TITLE_SQTRASPS`
+    - `OBJ_SqTrAs_AcCurrentSongBox` AcCurrentSongBox [256,10 52x19]
+    - `TrAs_OkSwitchView` VwEditSwBox, record outside the C sources
+    - `OBJ_TrAsGrid` AcTrAsGridBox [2,34 240x206]
+      - `OBJ_TrAsGrid_TextBox` TextBox "TRACK~0DASSIGN" [83,38 76x20]
+      - `OBJ_TrAsGrid_TextBox_2` TextBox "LOCAL~0DCONT." [161,38 38x20]
+      - `OBJ_TrAsGrid_TextBox_3` TextBox "MIDI~0DOUT" [200,38 40x20]
+      - `OBJ_TrAsGrid_AcIndexWideES` AcIndexWideES [7,216 72x23]
+      - `TrAs_PartSelectSwitchView` AcIndexWideES, record outside the C sources
+      - `OBJ_TrAsGrid_AcIndexEditSw` AcIndexEditSw [164,216 32x23]
+      - `OBJ_TrAsGrid_AcIndexEditSw_2` AcIndexEditSw [204,216 32x23]
+    - `OBJ_SqTrAs_IvMainEditSw` IvMainEditSw [0,0 32x32]
+
+### `TITLE_EQPRESET` -- "EQUALIZER PRESETS"
+
+- Path: MENU SOUND button (mode MD_SOUND) > "REVERB & EQ PRESETS" > "EQUALIZER PRESETS"
+- Registered: `"TT_EQPRESET"`, title id 0x19, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/seq_event_playback.s
+- View: `OBJ_EqualizerPreset` (TtlScreen) in `naka_midi_reverb.c`
+- EXIT -> `TITLE_REVEQMENU`
+- Opened from: `TITLE_REVEQMENU` ("EQUALIZER PRESETS")
+- Widgets:
+
+  - `OBJ_EqualizerPreset` TtlScreen "EQUALIZER PRESETS" [0,0 320x240]
+    - `OBJ_MakeUp_AcStrRadioBox` AcStrRadioBox "Make Up" [8,30 149x26]
+    - `OBJ_MiddleCut_AcStrRadioBox` AcStrRadioBox "Middle Cut" [8,72 149x26]
+    - `OBJ_TransistorRadio_AcStrRadioBox` AcStrRadioBox "Transistor Radio" [8,114 149x26]
+    - `OBJ_TrebleBoost_AcStrRadioBox` AcStrRadioBox "Treble Boost" [8,156 149x26]
+    - `OBJ_TrebleCut_AcStrRadioBox` AcStrRadioBox "Treble Cut" [8,198 149x26]
+    - `OBJ_NoHiHat_AcStrRadioBox` AcStrRadioBox "No Hi Hat" [163,30 149x26]
+    - `OBJ_TubbyBass_AcStrRadioBox` AcStrRadioBox "Tubby Bass" [163,72 149x26]
+    - `OBJ_BassCut_AcStrRadioBox` AcStrRadioBox "Bass Cut" [163,114 149x26]
+    - `OBJ_TooBright_AcStrRadioBox` AcStrRadioBox "Too Bright" [163,156 149x26]
+    - `OBJ_EqualizerPreset_IvCatchEvent` IvCatchEvent [0,0 32x32]
+    - `OBJ_EqOnOffBox` AcFuncToggle "EQ : ON" [241,202 71x18]
+
+### `TITLE_REVEQPRESET` -- "REVERB + EQUALIZER PRESETS"
+
+- Path: MENU SOUND button (mode MD_SOUND) > "REVERB & EQ PRESETS" > "REVERB + EQUALIZER PRESETS"
+- Registered: `"TT_REVEQPRESET"`, title id 0x1A, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/seq_event_playback.s
+- View: `OBJ_ReverbEqualizerPreset` (TtlScreen) in `naka_midi_reverb.c`
+- EXIT -> `TITLE_REVEQMENU`
+- Opened from: `TITLE_REVEQMENU` ("REVERB + EQUALIZER PRESETS")
+- Widgets:
+
+  - `OBJ_ReverbEqualizerPreset` TtlScreen "REVERB + EQUALIZER PRESETS" [0,0 320x240]
+    - `OBJ_WarmWide_AcStrRadioBox` AcStrRadioBox "Warm & Wide" [8,30 149x26]
+    - `OBJ_InYourFace_AcStrRadioBox` AcStrRadioBox "In Your Face" [8,72 149x26]
+    - `OBJ_OilTank_AcStrRadioBox` AcStrRadioBox "Oil Tank" [8,114 149x26]
+    - `OBJ_WarmPlate_AcStrRadioBox` AcStrRadioBox "Warm Plate" [8,156 149x26]
+    - `OBJ_LightShade_AcStrRadioBox` AcStrRadioBox "Light & Shade" [8,198 149x26]
+    - `OBJ_WarmFuzzy_AcStrRadioBox` AcStrRadioBox "Warm & Fuzzy" [163,30 149x26]
+    - `OBJ_IceBox_AcStrRadioBox` AcStrRadioBox "Ice Box" [163,72 149x26]
+    - `OBJ_Stadium_AcStrRadioBox` AcStrRadioBox "Stadium" [163,114 149x26]
+    - `OBJ_LiveRoom_AcStrRadioBox` AcStrRadioBox "Live Room" [163,156 149x26]
+    - `OBJ_RevEqOnOffBox` AcFuncToggle "EQ : ON" [241,202 71x18]
+    - `OBJ_ReverbEqualizerPreset_IvCatchEvent` IvCatchEvent [0,0 32x32]
+
+### `TITLE_REVPRESET` -- "REVERB PRESETS"
+
+- Path: MENU SOUND button (mode MD_SOUND) > "REVERB & EQ PRESETS" > "REVERB PRESETS"
+- Registered: `"TT_REVPRESET"`, title id 0x18, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/seq_event_playback.s
+- View: `OBJ_ReverbPreset` (TtlScreen) in `naka_midi_reverb.c`
+- EXIT -> `TITLE_REVEQMENU`
+- Opened from: `TITLE_REVEQMENU` ("REVERB PRESETS")
+- Widgets:
+
+  - `OBJ_ReverbPreset` TtlScreen "REVERB PRESETS" [0,0 320x240]
+    - `OBJ_HugeRoom_AcStrRadioBox` AcStrRadioBox "Huge Room" [8,30 149x26]
+    - `OBJ_BoxRoom_AcStrRadioBox` AcStrRadioBox "Box Room" [8,72 149x26]
+    - `OBJ_ReverbPreset_IvCatchEvent` IvCatchEvent [0,0 32x32]
+    - `OBJ_SmallPlate_AcStrRadioBox` AcStrRadioBox "Small Plate" [8,114 149x26]
+    - `OBJ_SportsHall_AcStrRadioBox` AcStrRadioBox "Sports Hall" [8,156 149x26]
+    - `OBJ_BrightHall_AcStrRadioBox` AcStrRadioBox "Bright Hall" [8,198 149x26]
+    - `OBJ_DarkConfines_AcStrRadioBox` AcStrRadioBox "Dark Confines" [163,30 149x26]
+    - `OBJ_Reflection_AcStrRadioBox` AcStrRadioBox "Reflection" [163,72 149x26]
+    - `OBJ_HighOpen_AcStrRadioBox` AcStrRadioBox "High & Open" [163,114 149x26]
+    - `OBJ_LeftToRight_AcStrRadioBox` AcStrRadioBox "Left To Right" [163,156 149x26]
+    - `OBJ_Cavernous_AcStrRadioBox` AcStrRadioBox "Cavernous" [163,198 149x26]
+
+### `TITLE_CMNAME` -- "VARIATION NAMING"
+
+- Path: COMPOSER MENU button (mode MD_CMP) > (by CmpMenuTtl_MainHandler) > (by CmpOffset_Dispatch) > (by CmpBksl_STtlFunc)
+- Registered: `"TT_CMNAME"`, title id 0xB3, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/storage/flash_floppy_handlers.s
+- View: `OBJ_CmpNamingScreen` (TtlScreen) in `naka_composer_style.c`
+- EXIT -> `TITLE_CMBKSL_S`
+- Widgets:
+
+  - `OBJ_CmpNamingScreen` TtlScreen "VARIATION NAMING" [0,0 320x240]
+    - `OBJ_CmpNamingScreen_IvNaming` IvNaming [0,0 32x32]
+    - `OBJ_CmpNamingScreen_AcFuncEditSw` AcFuncEditSw [281,160 31x18]
+    - `OBJ_NameMemLabel` Label "MEMORY :" [56,50 68x19]
+    - `OBJ_NamingMem` AcMemNoBox [128,49 60x18]
+
+### `TITLE_CMSET` -- "RECORD SETTING"
+
+- Path: COMPOSER MENU button (mode MD_CMP) > (by CmpMenuTtl_MainHandler) > (by CmpOffset_Dispatch) > (by CmpBksl_STtlFunc)
+- Registered: `"TT_CMSET"`, title id 0xB4, function `NAKA_MAINFUNC_CmpSetTtlFunc`, v10/maincpu/storage/flash_floppy_handlers.s
+- View: `OBJ_CmpSetScreen` (TtlScreen) in `naka_composer_style.c`
+- EXIT -> `TITLE_CMBKSL_S`
+- Widgets:
+
+  - `OBJ_CmpSetScreen` TtlScreen "RECORD SETTING" [0,0 320x240]
+    - `OBJ_CmpSetScreen_IvMainEditSw` IvMainEditSw [0,0 32x32]
+    - `OBJ_CmSetPage` AcWindowPage [245,6 71x18]
+    - `OBJ_CmSetP1Ctl` IvPageControl [0,0 32x32]
+    - `OBJ_CmSetP2Ctl` IvPageControl [0,0 32x32]
+    - `OBJ_CmpSetScreen_IvShowHide` IvShowHide [0,0 32x32]
 
 ### `TITLE_CMBAL` -- "PART BALANCE"
 
-- Path: none in the data (opened by code)
+- Path: COMPOSER MENU button (mode MD_CMP) > "EASY COMPOSER" > (by CmpEsyTtl_MainHandler) > "BAL"
 - Registered: `"TT_CMBAL"`, title id 0xB7, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/storage/flash_floppy_handlers.s
 - View: `OBJ_CmpBalScreen` (TtlScreen) in `naka_composer_style.c`
 - EXIT -> `TITLE_CMREAL`
@@ -3279,11 +2634,758 @@ the Composer (mode 0xE, MD_CMP) real-time page.
     - `OBJ_CmpAc1Vol` AcMixerVol [121,128 39x108]
     - `OBJ_CmpBasVol` AcMixerVol [160,128 39x108]
 
+### `TITLE_CMSTEP`
+
+- Path: COMPOSER MENU button (mode MD_CMP) > "EASY COMPOSER" > (by CmpEsyTtl_MainHandler) > "STEP"
+- Registered: `"TT_CMSTEP"`, title id 0xB6, function `NAKA_MAINFUNC_CmpStepTitleFunc`, v10/maincpu/storage/flash_floppy_handlers.s
+- View: `OBJ_NakaWidget_SunaView0B6_0_IvDirmdScreen` (IvDirmdScreen) in `naka_composer_style.c`
+- EXIT -> `TITLE_CMREAL`
+- Opened from: `TITLE_CMREAL` ("STEP")
+- Widgets:
+
+  - `OBJ_NakaWidget_SunaView0B6_0_IvDirmdScreen` IvDirmdScreen [0,0 320x240]
+
+### `TITLE_DPSMFLYR` -- "SMF DIRECT PLAY  "
+
+the disk direct-play SMF page with lyrics.
+
+- Path: MENU DISK button (mode MD_DISK) > "DIRECT PLAY" (by DirectPlayTtlJgFunc) > (by FmmSmfMedleyFunc) > "LYRICS"
+- Registered: `"TT_DPSMFLYR"`, title id 0x72, function `NAKA_MAINFUNC_DpSmfLyrTtlFunc`, v10/maincpu/sequencer/sequencer_ui.s
+- View: `OBJ_DpSmfLyr` (TtlScreen) in `naka_direct_play.c`
+- Its procedure `DpSmfLyrTtlFunc` opens: `TITLE_ETMENU`
+- EXIT -> `TITLE_DPSMF`
+- Opened from: `TITLE_DPSMF` ("LYRICS")
+- Widgets:
+
+  - `OBJ_DpSmfLyr` TtlScreen "SMF DIRECT PLAY  " [0,0 320x240]
+    - `OBJ_DpSmfLyr_AcTempoBox` AcTempoBox [248,4 70x24]
+    - `OBJ_DpSmfLyr_IvMainEditSw` IvMainEditSw [0,0 32x32]
+    - `OBJ_DpSmfLyr_IvFixWin` IvFixWin [0,32 32x32]
+      - `OBJ_MIC_VwMenuBox_4` VwMenuBox "MIC" [8,30 34x26]
+    - `OBJ_DpSmfLyr_IvFixWin_2` IvFixWin [0,64 32x32]
+    - `OBJ_LyricsFunc` LyeicsBoxFunc [0,96 32x32]
+
+### `TITLE_DPMDLYSMFLYR` -- "SMF MEDLEY"
+
+the direct-play medley SMF page with lyrics.
+
+- Path: MENU DISK button (mode MD_DISK) > "DIRECT PLAY" (by DirectPlayTtlJgFunc) > (by FmmSmfMedleyFunc) > "LYRICS"
+- Registered: `"TT_DPMDLYSMFLYR"`, title id 0x76, function `NAKA_MAINFUNC_DpMdlySmfLyrTtlFunc`, v10/maincpu/sequencer/sequencer_ui.s
+- View: `OBJ_DpMdlySmfLyr` (TtlScreen) in `naka_direct_play.c`
+- Its procedure `DpMdlySmfLyrTtlFunc` opens: `TITLE_ETMENU`
+- EXIT -> `TITLE_DPMDLYSMF`
+- Opened from: `TITLE_DPMDLYSMF` ("LYRICS")
+- Widgets:
+
+  - `OBJ_DpMdlySmfLyr` TtlScreen "SMF MEDLEY" [0,0 320x240]
+    - `OBJ_DpMdlySmfLyr_AcTempoBox` AcTempoBox [248,4 70x24]
+    - `OBJ_DpMdlySmfLyr_VwEditSwBox` VwEditSwBox [8,202 42x18]
+      - `OBJ_Skip_Label_5` Label "SKIP" [10,203 36x19]
+    - `OBJ_DpMdlySmfLyr_IvMainEditSw` IvMainEditSw [0,0 32x32]
+    - `NakaWidget_SmfMdly2OffOnSel` IvExit, record outside the C sources
+      - `NakaWidget_SmfMdly2MicWidget` VwMenuBox "MIC", record outside the C sources
+    - `OBJ_NakaWidget_SmfMdly2OrchSel` IvFixWin [0,64 32x32]
+
+### `TITLE_SQMIXER` -- "TRACK MIXER"
+
+the sequencer track-mixer page.
+
+- Path: MENU DISK button (mode MD_DISK) > "DIRECT PLAY" (by DirectPlayTtlJgFunc) > (by FmmDocMedleyFunc) > (by DpDocTtlFunc)
+- Registered: `"TT_SQMIXER"`, title id 0xA5, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/ui/drawbar_panel_ui.s
+- View: `OBJ_Sqmixer` (TtlScreen) in `naka_technichord_part.c`
+- EXIT -> `TITLE_PS`
+- Opened from: `an untitled view` ("LYRICS"), `an untitled view` ("MIC"), `an untitled view` ("MIXER")
+- Widgets:
+
+  - `OBJ_Sqmixer` TtlScreen "TRACK MIXER" [0,0 320x240]
+    - `OBJ_Sqmixer_AcResetPage` AcResetPage [245,6 71x18]
+    - `OBJ_Sqmixer_AcTrackMixer` AcTrackMixer [108,31 204x13]
+    - `NakaWidget_Sqmixer_3_IvExit` IvExit, record outside the C sources
+
+### `TITLE_DKSVNAMESMF` -- "SAVE FILE NAMING"
+
+- Path: MENU DISK button (mode MD_DISK) > "SAVE" > "SMF FORMAT 0" (by SaveSmfTtlJgFunc) > "NAME"
+- Registered: `"TT_DKSVNAMESMF"`, title id 0x6A, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/file_io/medley.s
+- View: `OBJ_DiskSaveNameSMF` (TtlScreen) in `naka_disk_menu_file_io.c`
+- EXIT -> `TITLE_DKSVSMF`
+- Opened from: `TITLE_DKSVSMF` ("NAME")
+- Widgets:
+
+  - `OBJ_DiskSaveNameSMF` TtlScreen "SAVE FILE NAMING" [0,0 320x240]
+    - `OBJ_DiskSaveNameSMF_AcFuncEditSw` AcFuncEditSw [281,160 31x18]
+    - `OBJ_DiskSaveNameSMF_IvNaming` IvNaming [0,0 32x32]
+
+### `TITLE_DKSVNAME` -- "SAVE FILE NAMING"
+
+- Path: MENU DISK button (mode MD_DISK) > "SAVE" > "TECHNICS FORMAT" (by SaveTtlJgFunc) > "NAME"
+- Registered: `"TT_DKSVNAME"`, title id 0x66, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/file_io/medley.s
+- View: `OBJ_DiskSaveName` (TtlScreen) in `naka_disk_menu_file_io.c`
+- EXIT -> `TITLE_DKSV`
+- Opened from: `TITLE_DKSV` ("NAME")
+- Widgets:
+
+  - `OBJ_DiskSaveName` TtlScreen "SAVE FILE NAMING" [0,0 320x240]
+    - `OBJ_DiskSaveName_AcFuncEditSw` AcFuncEditSw [281,160 31x18]
+    - `OBJ_DiskSaveName_IvNaming` IvNaming [0,0 32x32]
+
+### `TITLE_SQSNGNAME` -- "NAMING"
+
+the sequencer song-name page.
+
+- Path: SEQUENCER MENU button (mode MD_SEQ) > "CREATE" > "SONG SELECT /NAMING" > "NAMING"
+- Registered: `"TT_SQSNGNAME"`, title id 0x8F, function `NAKA_MAINFUNC_SqSngNameTtlFunc`, v10/maincpu/sequencer/sequencer_ui.s
+- View: `OBJ_SqNameing` (TtlScreen) in `naka_direct_play.c`
+- EXIT -> `TITLE_SQSNGSEL`
+- Opened from: `TITLE_SQSNGSEL` ("NAMING")
+- Widgets:
+
+  - `OBJ_SqNameing` TtlScreen "NAMING" [0,0 320x240]
+    - `OBJ_SqNameing_AcCurrentSongBox` AcCurrentSongBox [138,50 58x19]
+      - `OBJ_Sequencer_Label` Label "SEQUENCER       :" [60,52 140x19]
+    - `OBJ_SqNameing_IvNaming` IvNaming [0,0 32x32]
+    - `OBJ_SqNameing_AcFuncEditSw` AcFuncEditSw [281,160 31x18]
+    - `OBJ_SqNameing_IvNamingExit` IvNamingExit [32,0 32x32]
+
+### `TITLE_SQTRASPS` -- "TRACK ASSIGN PRESET"
+
+- Path: SEQUENCER MENU button (mode MD_SEQ) > "CREATE" > "TRACK ASSIGN" > "PRESET"
+- Registered: `"TT_SQTRASPS"`, title id 0x8C, function `NAKA_MAINFUNC_SqTrAsPsTtlFunc`, v10/maincpu/sequencer/sequencer_ui.s
+- View: `OBJ_SqTrAsPs` (TtlScreen) in `naka_direct_play.c`
+- EXIT -> `TITLE_SQTRAS`
+- Opened from: `TITLE_SQTRAS` ("PRESET")
+- Widgets:
+
+  - `OBJ_SqTrAsPs` TtlScreen "TRACK ASSIGN PRESET" [0,0 320x240]
+    - `OBJ_Song_Label` Label "SONG" [260,200 36x19]
+    - `OBJ_SqTrAsPs_AcIndexWideES` AcIndexWideES [244,216 72x23]
+    - `OBJ_SqTrAsPs_AcRamEditBox` AcRamEditBox "SONG   : " [40,204 180x32]
+    - `OBJ_TrAsPsIniSel` AcModeSelBox "INITIAL" [8,30 206x26]
+    - `OBJ_TrAsPsTechSel` AcModeSelBox "TECHNICS MULTI RECORDING" [8,72 206x26]
+    - `OBJ_TrAsPsGmSel` AcModeSelBox "GM MULTI RECORDING" [8,114 206x26]
+    - `OBJ_SqTrAsPs_IvMainEditSw` IvMainEditSw [0,0 32x32]
+    - `OBJ_SqTrAsPs_VwEditSwBox` VwEditSwBox [281,160 31x18]
+    - `OBJ_SqTrAsPs_AcLanguageText` AcLanguageText [7,150 264x48]
+
+### `TITLE_SDOCT` -- "RIGHT1/RIGHT2 OCTAVE"
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_SDOCT"`, title id 0xF, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/seq_event_playback.s
+- View: `OBJ_R12OctaveSetting` (TtlScreen) in `naka_midi_reverb.c`
+- EXIT -> `TITLE_PS`
+- Widgets:
+
+  - `OBJ_R12OctaveSetting` TtlScreen "RIGHT1/RIGHT2 OCTAVE" [0,0 320x240]
+    - `OBJ_R12OctaveSetting_AcLswEditBox` AcLswEditBox "OCTAVE   :" [16,87 285x72]
+    - `OBJ_R12OctaveSetting_AcIndexWideES` AcIndexWideES [244,216 72x23]
+
+### `TITLE_STYLCNVCNVT` -- "STYLE CONVERT"
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_STYLCNVCNVT"`, title id 0x12, function `NAKA_MAINFUNC_StylCnvCnvtTtlFunc`, v10/maincpu/storage/flash_floppy_handlers.s
+- View: `OBJ_StylCnvCnvtScreen` (TtlScreen) in `naka_composer_style.c`
+- EXIT -> `TITLE_STYLCNVWAIT`
+- Widgets:
+
+  - `OBJ_StylCnvCnvtScreen` TtlScreen "STYLE CONVERT" [0,0 320x240]
+    - `OBJ_StylCnvCnvtScreen_IvMainEditSw` IvMainEditSw [0,0 32x32]
+    - `OBJ_StylCnvCnvtBox` PsParaListBox [8,44 260x160]
+    - `OBJ_PREV_VwEditSwBox_2` VwEditSwBox "PREV" [44,216 32x23]
+    - `OBJ_StylCnvCnvtScreen_VwWideESBox` VwWideESBox [84,216 72x23]
+    - `OBJ_NEXT_VwEditSwBox_2` VwEditSwBox "NEXT" [164,216 32x23]
+    - `OBJ_StylCnvCnvtScreen_VwEditSwBox` VwEditSwBox [281,160 31x18]
+
+### `TITLE_STYLCNVSTOR` -- "STORAGE DATA"
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_STYLCNVSTOR"`, title id 0x13, function `NAKA_MAINFUNC_StylCnvStorTtlFunc`, v10/maincpu/storage/flash_floppy_handlers.s
+- View: `OBJ_StylCnvStorScreen` (TtlScreen) in `naka_composer_style.c`
+- EXIT -> `TITLE_STYLCNVWAIT`
+- Widgets:
+
+  - `OBJ_StylCnvStorScreen` TtlScreen "STORAGE DATA" [0,0 320x240]
+    - `OBJ_StylCnvStorScreen_AcRamEditBox` AcRamEditBox "  Data Storage to :" [16,90 270x50]
+    - `OBJ_StylCnvStorScreen_AcIndexWideES` AcIndexWideES [244,216 72x23]
+    - `OBJ_StylCnvStorScreen_AcFuncEditSw` AcFuncEditSw [281,160 31x18]
+
+### `TITLE_STYLCNVTXT` -- "STYLE CONVERT"
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_STYLCNVTXT"`, title id 0x14, function `NAKA_MAINFUNC_StylCnvTxtTtlFunc`, v10/maincpu/storage/flash_floppy_handlers.s
+- View: `OBJ_StylCnvTxtScreen` (TtlScreen) in `naka_composer_style.c`
+- EXIT -> `TITLE_STYLCNVWAIT`
+- Widgets:
+
+  - `OBJ_StylCnvTxtScreen` TtlScreen "STYLE CONVERT" [0,0 320x240]
+    - `OBJ_StylCnvTxtScreen_VwBox` VwBox [8,44 284x160]
+      - `OBJ_StylCnvTxtScreen_PSSCTxtBox2` PSSCTxtBox2 [10,68 280x60]
+    - `OBJ_StylCnvTxtScreen_IvMainEditSw` IvMainEditSw [0,0 32x32]
+
+### `TITLE_STYLCNVSEL` -- "STYLE CONVERT"
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_STYLCNVSEL"`, title id 0x15, function `NAKA_MAINFUNC_StylCnvSelTtlFunc`, v10/maincpu/storage/flash_floppy_handlers.s
+- View: `OBJ_StylCnvSelScreen` (TtlScreen) in `naka_composer_style.c`
+- EXIT -> `TITLE_STYLCNVWAIT`
+- Widgets:
+
+  - `OBJ_StylCnvSelScreen` TtlScreen "STYLE CONVERT" [0,0 320x240]
+    - `OBJ_StylCnvSelScreen_IvMainEditSw` IvMainEditSw [0,0 32x32]
+    - `OBJ_StylCnvSelBox` PsParaListBox [8,50 260x160]
+    - `OBJ_PREV_VwEditSwBox_3` VwEditSwBox "PREV" [44,216 32x23]
+    - `OBJ_StylCnvSelScreen_VwWideESBox` VwWideESBox [84,216 72x23]
+    - `OBJ_NEXT_VwEditSwBox_3` VwEditSwBox "NEXT" [164,216 32x23]
+    - `OBJ_StylCnvSelScreen_VwEditSwBox` VwEditSwBox [281,160 31x18]
+    - `OBJ_StylCnvSelScreen_PsSCTxtBox` PsSCTxtBox [8,28 260x18]
+
+### `TITLE_STYLCNVCONT` -- "STYLE CONVERT"
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_STYLCNVCONT"`, title id 0x16, function `NAKA_MAINFUNC_StylCnvContTtlFunc`, v10/maincpu/storage/flash_floppy_handlers.s
+- View: `OBJ_StylCnvContScreen` (TtlScreen) in `naka_composer_style.c`
+- Its procedure `StylCnvSel_End` opens: `TITLE_MESAGE`
+- EXIT -> `TITLE_STYLCNVWAIT`
+- Widgets:
+
+  - `OBJ_StylCnvContScreen` TtlScreen "STYLE CONVERT" [0,0 320x240]
+    - `OBJ_StylCnvContScreen_IvMainEditSw` IvMainEditSw [0,0 32x32]
+    - `OBJ_StylCnvContScreen_VwBox` VwBox [40,88 200x110]
+      - `OBJ_Continue_Label` Label "Continue" [66,118 132x19]
+      - `OBJ_Next_Label` Label "Next ?" [90,150 100x19]
+    - `OBJ_StylCnvContScreen_VwEditSwBox` VwEditSwBox [281,118 31x18]
+    - `OBJ_StylCnvContScreen_VwEditSwBox_2` VwEditSwBox [281,160 31x18]
+
+### `TITLE_SEEASY`
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_SEEASY"`, title id 0x21, function `NAKA_MAINFUNC_SeEasyTitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x21 (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SETONTON1`
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_SETONTON1"`, title id 0x22, function `NAKA_MAINFUNC_SeTonTon1TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x22 (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SETONTON2`
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_SETONTON2"`, title id 0x23, function `NAKA_MAINFUNC_SeTonTon2TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x23 (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SETONRAN1`
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_SETONRAN1"`, title id 0x24, function `NAKA_MAINFUNC_SeTonRan1TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x24 (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SETONRAN2`
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_SETONRAN2"`, title id 0x25, function `NAKA_MAINFUNC_SeTonRan2TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x25 (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SETONHYB1`
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_SETONHYB1"`, title id 0x26, function `NAKA_MAINFUNC_SeTonHyb1TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x26 (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SEPITPIT1`
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_SEPITPIT1"`, title id 0x27, function `NAKA_MAINFUNC_SePitPit1TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x27 (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SEPITENV1`
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_SEPITENV1"`, title id 0x28, function `NAKA_MAINFUNC_SePitEnv1TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x28 (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SEPITENV2`
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_SEPITENV2"`, title id 0x29, function `NAKA_MAINFUNC_SePitEnv2TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x29 (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SEPITLFO1`
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_SEPITLFO1"`, title id 0x2A, function `NAKA_MAINFUNC_SePitLfo1TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x2A (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SEAMPAMP1`
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_SEAMPAMP1"`, title id 0x2B, function `NAKA_MAINFUNC_SeAmpAmp1TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x2B (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SEAMPAMP2`
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_SEAMPAMP2"`, title id 0x2C, function `NAKA_MAINFUNC_SeAmpAmp2TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x2C (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SEAMPENV1`
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_SEAMPENV1"`, title id 0x2D, function `NAKA_MAINFUNC_SeAmpEnv1TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x2D (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SEAMPENV2`
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_SEAMPENV2"`, title id 0x2E, function `NAKA_MAINFUNC_SeAmpEnv2TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x2E (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SEAMPLFO1`
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_SEAMPLFO1"`, title id 0x2F, function `NAKA_MAINFUNC_SeAmpLfo1TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x2F (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SEFILLPQ1`
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_SEFILLPQ1"`, title id 0x30, function `NAKA_MAINFUNC_SeFilLpq1TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x30 (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SEFILHPQ1`
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_SEFILHPQ1"`, title id 0x31, function `NAKA_MAINFUNC_SeFilHpq1TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x31 (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SEFILL241`
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_SEFILL241"`, title id 0x32, function `NAKA_MAINFUNC_SeFilL241TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x32 (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SEFILH241`
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_SEFILH241"`, title id 0x33, function `NAKA_MAINFUNC_SeFilH241TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x33 (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SEFILBPF1`
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_SEFILBPF1"`, title id 0x34, function `NAKA_MAINFUNC_SeFilBpf1TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x34 (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SEFILBCF1`
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_SEFILBCF1"`, title id 0x35, function `NAKA_MAINFUNC_SeFilBcf1TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x35 (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SEFILFIL2`
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_SEFILFIL2"`, title id 0x36, function `NAKA_MAINFUNC_SeFilFil2TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x36 (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SEFILENV1`
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_SEFILENV1"`, title id 0x37, function `NAKA_MAINFUNC_SeFilEnv1TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x37 (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SEFILENV2`
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_SEFILENV2"`, title id 0x38, function `NAKA_MAINFUNC_SeFilEnv2TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x38 (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SEFILLFO1`
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_SEFILLFO1"`, title id 0x39, function `NAKA_MAINFUNC_SeFilLfo1TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x39 (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SEDIGEFF`
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_SEDIGEFF"`, title id 0x3A, function `NAKA_MAINFUNC_SeDigEffTitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x3A (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SECTR2`
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_SECTR2"`, title id 0x3B, function `NAKA_MAINFUNC_SeCtr2TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x3B (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SECTR3`
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_SECTR3"`, title id 0x3C, function `NAKA_MAINFUNC_SeCtr3TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x3C (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SECOPY`
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_SECOPY"`, title id 0x3D, function `NAKA_MAINFUNC_SeCopyTitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x3D (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SEWRTMEM`
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_SEWRTMEM"`, title id 0x3E, function `NAKA_MAINFUNC_SeWrtMemTitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x3E (record outside the C sources)
+- EXIT -> `TITLE_PS`
+- Opened from: `an untitled view` ("WRITE")
+
+### `TITLE_SEWRTSND`
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_SEWRTSND"`, title id 0x3F, function `NAKA_MAINFUNC_SeWrtSndTitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x3F (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_CTPMPARA` -- "INITIAL"
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_CTPMPARA"`, title id 0x46, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/extensions/extension_init.s
+- View: `OBJ_ControlIni` (TtlScreen) in `naka_ctrl_menu_body.c`
+- EXIT -> `TITLE_CTMENU`
+- Widgets:
+
+  - `OBJ_ControlIni` TtlScreen "INITIAL" [0,0 320x240]
+    - `OBJ_ControlIni_AcIndexWideES` AcIndexWideES [244,216 72x23]
+    - `OBJ_SYSINI` AcListBox [68,79 156x160]
+    - `OBJ_ControlIni_AcFuncEditSw` AcFuncEditSw [281,160 31x18]
+    - `OBJ_ControlIni_IvShowHide` IvShowHide [0,0 32x32]
+    - `OBJ_ControlIni_AcLanguageText` AcLanguageText [16,28 292x56]
+
+### `TITLE_DPPD` -- "PIANO DISC DIRECT PLAY    "
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_DPPD"`, title id 0x71, function `NAKA_MAINFUNC_DpPdTtlFunc`, v10/maincpu/sequencer/sequencer_ui.s
+- View: `OBJ_DpPd` (TtlScreen) in `naka_direct_play.c`
+- Its procedure `DpPdTtlFunc` opens: `TITLE_ETMENU`, `TITLE_SQMIXER`
+- EXIT -> `TITLE_DKDPPD`
+- Widgets:
+
+  - `OBJ_DpPd` TtlScreen "PIANO DISC DIRECT PLAY    " [0,0 320x240]
+    - `OBJ_DpPd_AcTempoBox` AcTempoBox [248,4 70x24]
+    - `OBJ_DpPd_Box` Box [68,40 240x64]
+      - `OBJ_DpPd_AcPDSongNameBox` AcPDSongNameBox [76,66 226x34]
+      - `OBJ_DpPd_AcPDFileNoBox` AcPDFileNoBox [76,44 36x20]
+    - `OBJ_DpPd_IvMainEditSw` IvMainEditSw [0,0 32x32]
+    - `OBJ_DpPd_IvFixWin` IvFixWin [0,32 32x32]
+    - `OBJ_PDR1Sw` AcMuteToggleBox "RT1" [270,118 42x18]
+    - `OBJ_PDOrchSw` AcMuteToggleBox "ORCH" [270,160 42x18]
+    - `OBJ_MIXER_VwMenuBox_3` VwMenuBox "MIXER" [8,114 50x26]
+    - `OBJ_MIC_VwMenuBox_3` VwMenuBox "MIC" [8,72 34x26]
+
+### `TITLE_DPMDLYPD` -- "PIANO DISC MEDLEY    "
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_DPMDLYPD"`, title id 0x75, function `NAKA_MAINFUNC_DpMdlyPdTtlFunc`, v10/maincpu/sequencer/sequencer_ui.s
+- View: `OBJ_DpMdlyPd` (TtlScreen) in `naka_direct_play.c`
+- Its procedure `DpMdlyPdTtlFunc` opens: `TITLE_ETMENU`, `TITLE_SQMIXER`
+- EXIT -> `TITLE_DKDPPD`
+- Widgets:
+
+  - `OBJ_DpMdlyPd` TtlScreen "PIANO DISC MEDLEY    " [0,0 320x240]
+    - `OBJ_DpMdlyPd_AcTempoBox` AcTempoBox [248,4 70x24]
+    - `OBJ_DpMdlyPd_Box` Box [68,40 240x64]
+      - `OBJ_DpMdlyPd_AcPDSongNameBox` AcPDSongNameBox [76,66 226x34]
+      - `OBJ_DpMdlyPd_AcPDFileNoBox` AcPDFileNoBox [76,44 36x20]
+    - `OBJ_DpMdlyPd_VwEditSwBox` VwEditSwBox [8,202 42x18]
+      - `OBJ_Skip_Label_4` Label "SKIP" [10,203 36x19]
+    - `OBJ_DpMdlyPd_IvMainEditSw` IvMainEditSw [0,0 32x32]
+    - `NakaWidget_PdMdlyOffOnSel` IvExit, record outside the C sources
+    - `NakaWidget_PDMedR1Sw` AcMuteToggleBox "RT1", record outside the C sources
+    - `OBJ_PDMedOrchSw` AcMuteToggleBox "ORCH" [270,160 42x18]
+    - `OBJ_MIXER_VwMenuBox_6` VwMenuBox "MIXER" [8,114 50x26]
+    - `OBJ_MIC_VwMenuBox_7` VwMenuBox "MIC" [8,72 34x26]
+
+### `TITLE_SQMDLY` -- "INTERNAL SONG MEDLEY"
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_SQMDLY"`, title id 0x79, function `NAKA_MAINFUNC_FmmIntMedleyFunc`, v10/maincpu/file_io/medley.s
+- View: `OBJ_IntSongMedley` (TtlScreen) in `naka_disk_menu_file_io.c`
+- Its procedure `FmmIntMedleyFunc` opens: `TITLE_MESAGE`, `TITLE_SQMDLYPLY`
+- EXIT -> `TITLE_SQPLAY`
+- Opened from: `an untitled view` ("MEDLEY")
+- Widgets:
+
+  - `OBJ_IntSongMedley` TtlScreen "INTERNAL SONG MEDLEY" [0,0 320x240]
+    - `OBJ_IntSongMedley_AcIndexWideES` AcIndexWideES [84,216 152x23]
+    - `OBJ_IntSongMedley_AcIndexEditSw` AcIndexEditSw [281,76 31x18]
+    - `OBJ_IntSongMedley_AcIndexEditSw_2` AcIndexEditSw [281,118 31x18]
+    - `OBJ_IntSongMedley_PsFileNameBox` PsFileNameBox [62,37 196x177]
+      - `OBJ_IntSongMedley_PsFileNameBox_2` PsFileNameBox [227,39 28x172]
+      - `OBJ_IntSongMedley_Line` Line [224,40 1x170]
+    - `OBJ_IntSongMedley_AcMonoIndexToggle` AcMonoIndexToggle "ON" [281,160 31x18]
+    - `OBJ_IntSongMedley_AcIndexEditSw_3` AcIndexEditSw [262,30 50x25]
+      - `OBJ_Start_Label` Label "START" [265,35 44x19]
+    - `OBJ_IntSongMedley_IvOneShotTimer` IvOneShotTimer [0,0 32x32]
+    - `OBJ_All_Label` Label "ALL" [282,77 28x19]
+    - `OBJ_Add_Label` Label "ADD" [282,119 28x19]
+    - `OBJ_Loop_Label` Label "LOOP" [278,145 36x19]
+
+### `TITLE_SQMDLYPLY` -- "SONG MEDLEY"
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_SQMDLYPLY"`, title id 0x7A, function `NAKA_MAINFUNC_SqMdlyPlyTtlFunc`, v10/maincpu/sequencer/sequencer_ui.s
+- View: `OBJ_SqMdlyPly` (TtlScreen) in `naka_direct_play.c`
+- Its procedure `SqMdlyPlyTtlFunc` opens: `TITLE_SQMIXER`
+- EXIT -> `TITLE_SQMDLY`
+- Widgets:
+
+  - `OBJ_SqMdlyPly` TtlScreen "SONG MEDLEY" [0,0 320x240]
+    - `OBJ_SqMdlyPly_Box` Box [80,70 160x78]
+      - `OBJ_SqMdlyPly_AcTempoBox` AcTempoBox [96,110 80x24]
+      - `OBJ_SqMdlyPly_MeasureBox` MeasureBox [108,86 108x19]
+      - `OBJ_SqMdlyPly_TrTransposeBox` TrTransposeBox [180,110 50x24]
+    - `OBJ_SqMdlyPly_VwEditSwBox` VwEditSwBox [270,118 42x18]
+      - `OBJ_Skip_Label_7` Label "SKIP" [272,119 36x19]
+    - `OBJ_SqMdlyPly_IvMainEditSw` IvMainEditSw [0,0 32x32]
+    - `OBJ_SqMdlyPly_AcCurSongNameBox` AcCurSongNameBox [35,40 250x26]
+    - `OBJ_SqMdlyPly_IvTrackSwitch` IvTrackSwitch [0,32 32x32]
+    - `NakaWidget_SongMdly2OffOnSel` IvExit, record outside the C sources
+    - `NakaWidget_SongMdly2Mixer` VwMenuBox "MIXER", record outside the C sources
+
+### `TITLE_SQCYCPLY` -- "CYCLE PLAY"
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_SQCYCPLY"`, title id 0x82, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/sequencer_ui.s
+- View: `OBJ_CyclePlay_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
+- EXIT -> `TITLE_SQPLAY`
+- Widgets:
+
+  - `OBJ_CyclePlay_TtlScreen` TtlScreen "CYCLE PLAY" [0,0 320x240]
+    - `OBJ_CyclePlay_SqplyVal` SqplyVal [60,84 200x48]
+      - `OBJ_CyclePlay_PsEditBox` PsEditBox "CYCLE START MEASURE :" [8,114 228x26]
+    - `OBJ_CurrentMeasure_Label` Label "CURRENT MEASURE :" [42,42 140x19]
+    - `OBJ_CyclePlay_PsEditBox_2` PsEditBox "CYCLE :" [8,72 123x26]
+    - `OBJ_CyclePlay_PsEditBox_3` PsEditBox "CYCLE END MEASURE   :" [8,156 228x26]
+    - `OBJ_CyclePlay_AcIndexWideES` AcIndexWideES [244,216 72x23]
+    - `OBJ_Value_Label_3` Label "VALUE" [258,200 44x19]
+
+### `TITLE_SQCYCREC` -- "REALTIME RECORD"
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_SQCYCREC"`, title id 0x86, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/sequencer_ui.s
+- View: `OBJ_RealtimeRecord_TtlScreen_2` (TtlScreen) in `naka_effects_seq.c`
+- EXIT -> `TITLE_SQREALREC`
+- Widgets:
+
+  - `OBJ_RealtimeRecord_TtlScreen_2` TtlScreen "REALTIME RECORD" [0,0 320x240]
+    - `OBJ_RealtimeRecord_SqplyVal` SqplyVal [60,84 200x48]
+      - `OBJ_RealtimeRecord_PsEditBox` PsEditBox "CYCLE START MEASURE :" [8,114 228x26]
+    - `OBJ_CurrentMeasure_Label_2` Label "CURRENT MEASURE :" [42,42 140x19]
+    - `OBJ_RealtimeRecord_PsEditBox_2` PsEditBox "CYCLE END MEASURE   :" [8,156 228x26]
+    - `OBJ_RealtimeRecord_AcIndexWideES` AcIndexWideES [244,216 72x23]
+    - `OBJ_Value_Label_4` Label "VALUE" [258,200 44x19]
+    - `OBJ_MetCycRecSw` AcFuncToggle "~a4ON" [271,34 41x18]
+    - `OBJ_RealtimeRecord_AcFuncEditSw_3` AcFuncEditSw [8,202 50x18]
+      - `OBJ_Clear_Label_2` Label "CLEAR" [10,203 44x19]
+    - `OBJ_RealtimeRecord_PsEditBox_3` PsEditBox "CYCLE :" [8,72 123x26]
+
+### `TITLE_SQPUNCHM` -- "AUTO PUNCH RECORD"
+
+the auto-punch variant of the punch-in page.
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_SQPUNCHM"`, title id 0x88, function `NAKA_MAINFUNC_SqPunchmTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
+- View: `OBJ_AutoPunchRecord_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
+- EXIT -> `TITLE_SQPUNCH`
+- Widgets:
+
+  - `OBJ_AutoPunchRecord_TtlScreen` TtlScreen "AUTO PUNCH RECORD" [0,0 320x240]
+    - `OBJ_AutoPunchRecord_AcIndexWideES` AcIndexWideES [244,216 72x23]
+    - `OBJ_Meas_Label_3` Label "MEAS" [262,200 36x19]
+    - `OBJ_CurrentMeasure_Label_3` Label "CURRENT MEASURE :" [26,42 140x19]
+    - `OBJ_MetPunchmSw` AcFuncToggle "~a4ON" [271,34 41x18]
+    - `OBJ_AutoPunchRecord_SqplyVal` SqplyVal [60,84 200x48]
+    - `OBJ_AutoPunchRecord_PsEditBox` PsEditBox "PUNCH IN MEASURE  :" [8,72 215x26]
+    - `OBJ_AutoPunchRecord_PsEditBox_2` PsEditBox "PUNCH OUT MEASURE :" [8,114 215x26]
+    - `OBJ_AutoPunchRecord_PsEditBox_3` PsEditBox "MEASURE COUNT IN  :" [8,156 215x26]
+    - `OBJ_AutoPunchRecord_AcLanguageText` AcLanguageText [2,186 240x36]
+    - `OBJ_AutoPunchRecord_IvAutoPunchExit` IvAutoPunchExit [0,0 32x32]
+
+### `TITLE_SQSTEP`
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_SQSTEP"`, title id 0x8A, function `NAKA_MAINFUNC_SqStepTtlFunc`, v10/maincpu/sequencer/sequencer_ui.s
+- View: `OBJ_NakaWidget_StepRecSubPanel` (IvDirmdScreen) in `naka_direct_play.c`
+- EXIT -> `TITLE_PS`
+- Widgets:
+
+  - `OBJ_NakaWidget_StepRecSubPanel` IvDirmdScreen [0,0 320x240]
+
+### `TITLE_SQNOTEEDT` -- "NOTE EDIT"
+
+the sequencer note-edit page. Grid and box code shared with another edit title picks its layout coordinates by whether ...
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_SQNOTEEDT"`, title id 0x95, function `NAKA_MAINFUNC_SqNoteEdtTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
+- View: `OBJ_NoteEdit_TtlScreen_2` (TtlScreen) in `naka_effects_seq.c`
+- EXIT -> `TITLE_SQNOTESEL`
+- Widgets:
+
+  - `OBJ_NoteEdit_TtlScreen_2` TtlScreen "NOTE EDIT" [0,0 320x240]
+    - `OBJ_NoteEdit_AcIndexEditSw` AcIndexEditSw [4,216 32x23]
+    - `OBJ_NoteEdit_AcIndexEditSw_2` AcIndexEditSw [44,216 32x23]
+    - `OBJ_NoteEdit_AcIndexEditSw_3` AcIndexEditSw [84,216 32x23]
+    - `OBJ_NoteEdit_AcIndexEditSw_4` AcIndexEditSw [124,216 32x23]
+    - `OBJ_NoteEdit_AcIndexEditSw_5` AcIndexEditSw [164,216 32x23]
+    - `OBJ_NoteEdit_AcIndexEditSw_6` AcIndexEditSw [204,216 32x23]
+    - `OBJ_Meas_Label_4` Label "MEAS" [2,202 36x19]
+    - `OBJ_Pos_Label` Label "POS" [46,202 28x19]
+    - `OBJ_Note_Label` Label "NOTE" [82,202 36x19]
+    - `OBJ_Vel_Label` Label "VEL" [126,202 28x19]
+    - `OBJ_Len_Label` Label "LEN" [165,202 28x19]
+    - `OBJ_Inc_Label` Label "INC" [205,202 28x19]
+    - `OBJ_Cursor_Label` Label "CURSOR" [254,202 52x19]
+    - `OBJ_NoteEdit_AcIndexEditSw_7` AcIndexEditSw [281,76 31x18]
+    - `OBJ_NoteEdit_AcIndexEditSw_8` AcIndexEditSw [281,118 31x18]
+    - `OBJ_Graph_Label` Label "GRAPH" [274,98 44x19]
+    - `OBJ_NoteEdit_NoteEditBox` NoteEditBox [4,30 265x150]
+    - `OBJ_NoteEdit_Box` Box [4,182 240x22]
+    - `OBJ_NoteEdit_VwUserBitmap` VwUserBitmap [6,51 16x127]
+    - `OBJ_NTBitmap` VwUserBitmap [22,51 240x127]
+    - `OBJ_NoteEdit_AcIndexEditSw_9` AcIndexEditSw [281,160 31x18]
+    - `OBJ_Ers_Label` Label "ERS" [282,161 28x19]
+    - `OBJ_NoteEdit_AcIndexEditSw_10` AcIndexEditSw [281,34 31x18]
+    - `OBJ_Play_Label` Label "PLAY" [276,35 36x19]
+    - `OBJ_NoteEdit_AcIndexEditSw_11` AcIndexEditSw [244,216 32x23]
+    - `OBJ_NoteEdit_AcIndexEditSw_12` AcIndexEditSw [284,216 32x23]
+
+### `TITLE_SQNOTECYCP` -- "CYCLE PLAY"
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_SQNOTECYCP"`, title id 0x96, function `NAKA_MAINFUNC_SqNoteCycpTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
+- View: `OBJ_CyclePlay_TtlScreen_2` (TtlScreen) in `naka_effects_seq.c`
+- EXIT -> `TITLE_SQNOTEEDT`
+- Widgets:
+
+  - `OBJ_CyclePlay_TtlScreen_2` TtlScreen "CYCLE PLAY" [0,0 320x240]
+    - `OBJ_CurrentMeasure_Label_4` Label "CURRENT MEASURE :" [42,42 140x19]
+    - `OBJ_CyclePlay_AcIndexWideES_2` AcIndexWideES [244,216 72x23]
+    - `OBJ_Value_Label_5` Label "VALUE" [258,200 44x19]
+    - `OBJ_CyclePlay_SqplyVal_2` SqplyVal [60,84 200x48]
+    - `OBJ_CyclePlay_PsEditBox_4` PsEditBox "SOLO :" [8,72 120x26]
+    - `OBJ_CyclePlay_PsEditBox_5` PsEditBox "CYCLE START MEASURE :" [8,114 230x26]
+    - `OBJ_CyclePlay_PsEditBox_6` PsEditBox "CYCLE END MEASURE   :" [8,156 230x26]
+
+### `TITLE_SQDRMEDT` -- "DRUM EDIT"
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_SQDRMEDT"`, title id 0x98, function `NAKA_MAINFUNC_SqDrmEdtTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
+- View: `OBJ_DrumEdit_TtlScreen_2` (TtlScreen) in `naka_effects_seq.c`
+- EXIT -> `TITLE_SQDRMSEL`
+- Widgets:
+
+  - `OBJ_DrumEdit_TtlScreen_2` TtlScreen "DRUM EDIT" [0,0 320x240]
+    - `OBJ_DrumEdit_AcIndexEditSw` AcIndexEditSw [4,216 32x23]
+    - `OBJ_DrumEdit_AcIndexEditSw_2` AcIndexEditSw [44,216 32x23]
+    - `OBJ_DrumEdit_AcIndexEditSw_3` AcIndexEditSw [84,216 32x23]
+    - `OBJ_DrumEdit_AcIndexEditSw_4` AcIndexEditSw [124,216 32x23]
+    - `OBJ_DrumEdit_AcIndexEditSw_5` AcIndexEditSw [164,216 32x23]
+    - `OBJ_DrumEdit_AcIndexEditSw_6` AcIndexEditSw [284,216 32x23]
+    - `OBJ_Meas_Label_5` Label "MEAS" [2,202 36x19]
+    - `OBJ_Pos_Label_2` Label "POS" [46,202 28x19]
+    - `OBJ_Snd_Label` Label "SND" [85,202 28x19]
+    - `OBJ_Vel_Label_2` Label "VEL" [125,202 28x19]
+    - `OBJ_Inc_Label_2` Label "INC" [164,202 28x19]
+    - `OBJ_Cursor_Label_2` Label "CURSOR" [214,202 52x19]
+    - `OBJ_Sound_Label` Label "SOUND" [276,202 44x19]
+    - `OBJ_DrumEdit_Box` Box [3,182 200x22]
+    - `OBJ_DrumEdit_NoteEditBox` NoteEditBox [1,36 265x142]
+    - `OBJ_DrumEdit_VwUserBitmap` VwUserBitmap [3,57 88x119]
+    - `OBJ_DRBitmap` VwUserBitmap [91,57 168x119]
+    - `OBJ_DrumEdit_AcIndexEditSw_7` AcIndexEditSw [267,118 45x18]
+      - `OBJ_Enter_Label` Label "ENTER" [267,119 44x19]
+    - `OBJ_DrumEdit_AcIndexEditSw_8` AcIndexEditSw [281,160 31x18]
+    - `OBJ_Ers_Label_2` Label "ERS" [282,161 28x19]
+    - `OBJ_DrumEdit_AcIndexEditSw_9` AcIndexEditSw [281,34 31x18]
+    - `OBJ_Play_Label_2` Label "PLAY" [276,35 36x19]
+    - `OBJ_DrumEdit_AcIndexEditSw_10` AcIndexEditSw [204,216 32x23]
+    - `OBJ_DrumEdit_AcIndexEditSw_11` AcIndexEditSw [244,216 32x23]
+
+### `TITLE_SQDRMCYCP` -- "CYCLE PLAY"
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_SQDRMCYCP"`, title id 0x99, function `NAKA_MAINFUNC_SqDrmCycpTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
+- View: `OBJ_CyclePlay_TtlScreen_3` (TtlScreen) in `naka_effects_seq.c`
+- EXIT -> `TITLE_SQDRMEDT`
+- Widgets:
+
+  - `OBJ_CyclePlay_TtlScreen_3` TtlScreen "CYCLE PLAY" [0,0 320x240]
+    - `OBJ_CurrentMeasure_Label_5` Label "CURRENT MEASURE :" [42,42 140x19]
+    - `OBJ_CyclePlay_AcIndexWideES_3` AcIndexWideES [244,216 72x23]
+    - `OBJ_Value_Label_6` Label "VALUE" [258,200 44x19]
+    - `OBJ_CyclePlay_SqplyVal_3` SqplyVal [60,84 200x48]
+    - `OBJ_CyclePlay_PsEditBox_7` PsEditBox "SOLO :" [8,72 120x26]
+    - `OBJ_CyclePlay_PsEditBox_8` PsEditBox "CYCLE START MEASURE :" [8,114 230x26]
+    - `OBJ_CyclePlay_PsEditBox_9` PsEditBox "CYCLE END MEASURE   :" [8,156 230x26]
+
+### `TITLE_SQSTEPBAL` -- "PART BALANCE"
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_SQSTEPBAL"`, title id 0xA9, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/sequencer_ui.s
+- View: `OBJ_StepPartBal` (TtlScreen) in `naka_direct_play.c`
+- EXIT -> `TITLE_SQSTEP`
+- Widgets:
+
+  - `OBJ_StepPartBal` TtlScreen "PART BALANCE" [0,0 320x240]
+    - `OBJ_StepPartBal_AcMixerVol` AcMixerVol [4,128 39x108]
+    - `OBJ_StepPartBal_AcMixerVol_2` AcMixerVol [43,128 39x108]
+    - `OBJ_StepPartBal_AcMixerVol_3` AcMixerVol [82,128 39x108]
+    - `OBJ_StepPartBal_AcMixerVol_4` AcMixerVol [121,128 39x108]
+    - `OBJ_StepPartBal_AcMixerVol_5` AcMixerVol [160,128 39x108]
+
+### `TITLE_SQMETBAL` -- "METRONOME BALANCE"
+
+- Path: none found (no data entry, and no traced code, opens it)
+- Registered: `"TT_SQMETBAL"`, title id 0xAB, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/sequencer_ui.s
+- View: `OBJ_MetronomeBalance_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
+- EXIT -> `TITLE_PS`
+- Widgets:
+
+  - `OBJ_MetronomeBalance_TtlScreen` TtlScreen "METRONOME BALANCE" [0,0 320x240]
+    - `OBJ_MetronomeBalance_AcMixerVol` AcMixerVol [121,128 39x108]
+
 ### `TITLE_CMPLD` -- "COMPOSER LOAD"
 
-- Path: none in the data (opened by code)
+- Path: none found (no data entry, and no traced code, opens it)
 - Registered: `"TT_CMPLD"`, title id 0xBC, function `NAKA_MAINFUNC_FmmComposerLoadFunc`, v10/maincpu/file_io/medley.s
 - View: `OBJ_ComposerLoad` (TtlScreen) in `naka_disk_menu_file_io.c`
+- Its procedure `FmmComposerLoadFunc` opens: `TITLE_DKUTFRMT`, `TITLE_MESAGE`
 - EXIT -> `TITLE_DKMENU`
 - Widgets:
 
@@ -3301,7 +3403,7 @@ the Composer (mode 0xE, MD_CMP) real-time page.
 
 ### `TITLE_CMMODE` -- "MODE SELECT"
 
-- Path: none in the data (opened by code)
+- Path: none found (no data entry, and no traced code, opens it)
 - Registered: `"TT_CMMODE"`, title id 0xBD, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/storage/flash_floppy_handlers.s
 - View: `OBJ_CmpModeScreen` (TtlScreen) in `naka_composer_style.c`
 - EXIT -> `TITLE_CMMENU`
@@ -3323,7 +3425,7 @@ the Composer (mode 0xE, MD_CMP) real-time page.
 
 the music-style page in the One-Touch-Play (MD_OTP) title group.
 
-- Path: none in the data (opened by code)
+- Path: none found (no data entry, and no traced code, opens it)
 - Registered: `"TT_MUSICSTYL"`, title id 0xC1, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/extensions/extension_init.s
 - View: `OBJ_MUSICSTYL` (TtlScreen) in `naka_ctrl_menu_body.c`
 - Menu entries: "STYLE EXPLORER" -> `TITLE_MSCTSEL`, "STYLE ALPHABETICAL" -> `TITLE_MSALPSEL`
@@ -3337,7 +3439,7 @@ the music-style page in the One-Touch-Play (MD_OTP) title group.
 
 ### `TITLE_MSCTSEL` -- "STYLE EXPLORER"
 
-- Path: none in the data (opened by code)
+- Path: none found (no data entry, and no traced code, opens it)
 - Registered: `"TT_MSCTSEL"`, title id 0xC2, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/extensions/extension_init.s
 - View: `OBJ_MSCTSEL` (TtlScreen) in `naka_ctrl_menu_body.c`
 - EXIT -> `TITLE_PS`
@@ -3351,7 +3453,7 @@ the music-style page in the One-Touch-Play (MD_OTP) title group.
 
 ### `TITLE_MSSCTSEL` -- "SUGGESTED SONG LIST"
 
-- Path: none in the data (opened by code)
+- Path: none found (no data entry, and no traced code, opens it)
 - Registered: `"TT_MSSCTSEL"`, title id 0xC3, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/extensions/extension_init.s
 - View: `OBJ_MSSCTSEL` (TtlScreen) in `naka_ctrl_menu_body.c`
 - EXIT -> `TITLE_PS`
@@ -3364,7 +3466,7 @@ the music-style page in the One-Touch-Play (MD_OTP) title group.
 
 ### `TITLE_MSSONGLIST` -- "SUGGESTED SONG LIST"
 
-- Path: none in the data (opened by code)
+- Path: none found (no data entry, and no traced code, opens it)
 - Registered: `"TT_MSSONGLIST"`, title id 0xC4, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/extensions/extension_init.s
 - View: `OBJ_MSSONGLIST` (TtlScreen) in `naka_ctrl_menu_body.c`
 - EXIT -> `TITLE_MUSICSTYL`
@@ -3381,7 +3483,7 @@ the music-style page in the One-Touch-Play (MD_OTP) title group.
 
 ### `TITLE_MSALPSEL` -- "STYLE ALPHABETICAL"
 
-- Path: none in the data (opened by code)
+- Path: none found (no data entry, and no traced code, opens it)
 - Registered: `"TT_MSALPSEL"`, title id 0xC5, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/extensions/extension_init.s
 - View: `OBJ_MSSTLSEL` (TtlScreen) in `naka_ctrl_menu_body.c`
 - EXIT -> `TITLE_MUSICSTYL`
@@ -3398,7 +3500,7 @@ the music-style page in the One-Touch-Play (MD_OTP) title group.
 
 ### `TITLE_MSPBKSL` -- "MSP BANK SELECT"
 
-- Path: none in the data (opened by code)
+- Path: none found (no data entry, and no traced code, opens it)
 - Registered: `"TT_MSPBKSL"`, title id 0xC8, function `NAKA_MAINFUNC_MspBkslTtlFunc`, v10/maincpu/storage/flash_floppy_handlers.s
 - View: `OBJ_MspBkslScreen` (TtlScreen) in `naka_composer_style.c`
 - EXIT -> `TITLE_NORMAL`
@@ -3415,7 +3517,7 @@ the music-style page in the One-Touch-Play (MD_OTP) title group.
 
 the panel-memory bank-select page.
 
-- Path: none in the data (opened by code)
+- Path: none found (no data entry, and no traced code, opens it)
 - Registered: `"TT_PMBKSEL"`, title id 0xD0, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/extensions/extension_init.s
 - View: `OBJ_PMBANK` (PmBankScreen) in `naka_ctrl_menu_body.c`
 - EXIT -> `TITLE_NORMAL`
@@ -3432,7 +3534,7 @@ the panel-memory bank-select page.
 
 the panel-memory view page. The panel-memory naming and save/delete flows return to it.
 
-- Path: none in the data (opened by code)
+- Path: none found (no data entry, and no traced code, opens it)
 - Registered: `"TT_PMVIEW"`, title id 0xD1, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/extensions/extension_init.s
 - View: `OBJ_PMVIEW` (TtlScreen) in `naka_ctrl_menu_body.c`
 - EXIT -> `TITLE_NORMAL`
@@ -3456,7 +3558,7 @@ the panel-memory view page. The panel-memory naming and save/delete flows return
 
 the panel-memory name page.
 
-- Path: none in the data (opened by code)
+- Path: none found (no data entry, and no traced code, opens it)
 - Registered: `"TT_PMNAME"`, title id 0xD2, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/extensions/extension_init.s
 - View: `OBJ_PMNAME` (TtlScreen) in `naka_ctrl_menu_body.c`
 - EXIT -> `TITLE_PS`
@@ -3474,58 +3576,16 @@ the panel-memory name page.
 
 the panel-memory bank-name page.
 
-- Path: none in the data (opened by code)
+- Path: none found (no data entry, and no traced code, opens it)
 - Registered: `"TT_PMBKNAME"`, title id 0xD3, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/extensions/extension_init.s
 - View: element 0 of Viewable slot 0xD3 (record outside the C sources)
 - EXIT -> `TITLE_PS`
-
-### `TITLE_DEMOSOUND` -- "PERFORMANCES"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_DEMOSOUND"`, title id 0xE2, function `NAKA_MAINFUNC_DemoSoundTtlFunc`, v10/maincpu/sequencer/sequencer_ui.s
-- View: `OBJ_DemoSound` (TtlScreen) in `naka_direct_play.c`
-- EXIT -> `TITLE_DEMOMENU`
-- Widgets:
-
-  - `OBJ_DemoSound` TtlScreen "PERFORMANCES" [0,0 320x240]
-    - `OBJ_DemoSong6` AcDemoSongBox "Strings" [8,72 149x26]
-    - `OBJ_DemoSong7` AcDemoSongBox "Gamelan" [8,114 149x26]
-    - `OBJ_DemoSong8` AcDemoSongBox "Guitar" [8,156 149x26]
-    - `OBJ_DemoSong9` AcDemoSongBox "Piano" [163,72 149x26]
-    - `OBJ_DemoSong10` AcDemoSongBox "Sax&Brass" [163,114 149x26]
-    - `OBJ_DemoSong11` AcDemoSongBox "Organ" [163,156 149x26]
-    - `OBJ_DemoSound_PsWideToggle` PsWideToggle "STYLE" [4,216 72x23]
-    - `OBJ_DemoSound_PsWideToggle_2` PsWideToggle "SOUND" [124,216 72x23]
-    - `OBJ_DemoSound_PsWideToggle_3` PsWideToggle "RHYTHM" [244,216 72x23]
-    - `OBJ_DemoSound_IvMainEditSw` IvMainEditSw [0,0 32x32]
-    - `OBJ_DemoMed2` AcDemoMedleyDispBox [100,40 114x19]
-
-### `TITLE_DEMORHY` -- "PERFORMANCES"
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_DEMORHY"`, title id 0xE3, function `NAKA_MAINFUNC_DemoRhyTtlFunc`, v10/maincpu/sequencer/sequencer_ui.s
-- View: `OBJ_DemoRhy` (TtlScreen) in `naka_direct_play.c`
-- EXIT -> `TITLE_DEMOMENU`
-- Widgets:
-
-  - `OBJ_DemoRhy` TtlScreen "PERFORMANCES" [0,0 320x240]
-    - `OBJ_DemoSong12` AcDemoSongBox "Hokie Dance" [8,72 149x26]
-    - `OBJ_DemoSong13` AcDemoSongBox "Gospel Revival" [8,114 149x26]
-    - `OBJ_DemoSong14` AcDemoSongBox "Organ Combo" [8,156 149x26]
-    - `OBJ_DemoSong15` AcDemoSongBox "Big Band Mid" [163,72 149x26]
-    - `OBJ_DemoSong16` AcDemoSongBox "Bavarian Polka" [163,114 149x26]
-    - `OBJ_DemoSong17` AcDemoSongBox "Modern Bluegrass" [163,156 149x26]
-    - `OBJ_DemoRhy_PsWideToggle` PsWideToggle "STYLE" [4,216 72x23]
-    - `OBJ_DemoRhy_PsWideToggle_2` PsWideToggle "SOUND" [124,216 72x23]
-    - `NakaWidget_Perf3RhythmSel` PsWideToggle "RHYTHM", record outside the C sources
-    - `NakaHdr_Perf2MeasureBoxData` IvMainEditSw, record outside the C sources
-    - `NakaHdr_Perf2FileListData` AcDemoMedleyDispBox, record outside the C sources
 
 ### `TITLE_SVARI`
 
 Title id 0xE8, "TT_SVARI". It is opened from a panel handler when the sound category byte (0xC07E) is neither 12 (drawbar) nor 13 (accordion). What ...
 
-- Path: none in the data (opened by code)
+- Path: none found (no data entry, and no traced code, opens it)
 - Registered: `"TT_SVARI"`, title id 0xE8, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/extensions/extension_init.s
 - View: element 0 of Viewable slot 0xE8 (record outside the C sources)
 - EXIT -> `TITLE_PS`
@@ -3534,7 +3594,7 @@ Title id 0xE8, "TT_SVARI". It is opened from a panel handler when the sound cate
 
 Title id 0xE9, "TT_RVARI". It is the companion of TT_SVARI. What the screen shows is not established beyond the firmware name.
 
-- Path: none in the data (opened by code)
+- Path: none found (no data entry, and no traced code, opens it)
 - Registered: `"TT_RVARI"`, title id 0xE9, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/extensions/extension_init.s
 - View: `OBJ_RVARI` (RVariScreen) in `naka_ctrl_menu_body.c`
 - EXIT -> `TITLE_PS`
@@ -3548,7 +3608,7 @@ Title id 0xE9, "TT_RVARI". It is the companion of TT_SVARI. What the screen show
 
 the drawbar-organ screen. It is opened when the sound category byte (0xC07E) is 12.
 
-- Path: none in the data (opened by code)
+- Path: none found (no data entry, and no traced code, opens it)
 - Registered: `"TT_DRAWBAR"`, title id 0xEA, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/ui/drawbar_panel_ui.s
 - View: `OBJ_Drawbar` (TtlScreen) in `naka_technichord_part.c`
 - EXIT -> `TITLE_PS`
@@ -3572,7 +3632,7 @@ the drawbar-organ screen. It is opened when the sound category byte (0xC07E) is 
 
 the accordion screen. It is opened when the sound category byte (0xC07E) is 13.
 
-- Path: none in the data (opened by code)
+- Path: none found (no data entry, and no traced code, opens it)
 - Registered: `"TT_ACCORDION"`, title id 0xEB, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/ui/drawbar_panel_ui.s
 - View: `OBJ_Accordion` (Screen) in `naka_technichord_part.c`
 - EXIT -> `TITLE_PS`
@@ -3590,7 +3650,7 @@ the accordion screen. It is opened when the sound category byte (0xC07E) is 13.
 
 ### `TITLE_SPLITSEL` -- "SPLIT POINT"
 
-- Path: none in the data (opened by code)
+- Path: none found (no data entry, and no traced code, opens it)
 - Registered: `"TT_SPLITSEL"`, title id 0xEC, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/seq_event_playback.s
 - View: `OBJ_SplitSetting` (TtlScreen) in `naka_midi_reverb.c`
 - EXIT -> `TITLE_PS`
@@ -3605,7 +3665,7 @@ the accordion screen. It is opened when the sound category byte (0xC07E) is 13.
 
 ### `TITLE_APCSEL` -- "AUTO PLAY CHORD"
 
-- Path: none in the data (opened by code)
+- Path: none found (no data entry, and no traced code, opens it)
 - Registered: `"TT_APCSEL"`, title id 0xED, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/storage/flash_floppy_handlers.s
 - View: `OBJ_ApcSelScreen` (TtlScreen) in `naka_msp_recording.c`
 - EXIT -> `TITLE_PS`
@@ -3618,24 +3678,11 @@ the accordion screen. It is opened when the sound category byte (0xC07E) is 13.
     - `OBJ_ApcMem` AcApcToggle " MEMORY : ON" [196,76 116x18]
     - `OBJ_ApcOnBass` AcApcToggle "ON BASS : ON" [196,118 116x18]
 
-### `TITLE_MESAGE`
-
-Title id 0xEE, "TT_MESAGE" (the firmware's own spelling): the message / confirmation-box title. About 30 call sites show it with title request ...
-
-- Path: none in the data (opened by code)
-- Registered: `"TT_MESAGE"`, title id 0xEE, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/ui/drawbar_panel_ui.s
-- View: `OBJ_Mesage` (IvScreen) in `naka_technichord_part.c`
-- EXIT -> `TITLE_PS`
-- Widgets:
-
-  - `OBJ_Mesage` IvScreen [0,0 320x240]
-    - `OBJ_Mesage_IvMesage` IvMesage [0,0 32x32]
-
 ### `TITLE_WELCOM`
 
 the welcome (boot) screen. It is requested once at boot.
 
-- Path: none in the data (opened by code)
+- Path: none found (no data entry, and no traced code, opens it)
 - Registered: `"TT_WELCOM"`, title id 0xEF, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/ui/drawbar_panel_ui.s
 - View: `OBJ_Welcom` (AcWelcomScreen) in `naka_technichord_part.c`
 - EXIT -> `TITLE_PS`
@@ -3650,7 +3697,7 @@ the welcome (boot) screen. It is requested once at boot.
 
 the software-version screen, requested by a control-panel switch chord.
 
-- Path: none in the data (opened by code)
+- Path: none found (no data entry, and no traced code, opens it)
 - Registered: `"TT_SOFTVER"`, title id 0xF0, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/ui/drawbar_panel_ui.s
 - View: `OBJ_Softver` (TtlScreen) in `naka_technichord_part.c`
 - EXIT -> `TITLE_PS`
@@ -3667,7 +3714,7 @@ the software-version screen, requested by a control-panel switch chord.
 
 the first self-test screen. It is shown when the SRAM test or the panel-detection check reports a problem, and an entry of ...
 
-- Path: none in the data (opened by code)
+- Path: none found (no data entry, and no traced code, opens it)
 - Registered: `"TT_TEST1"`, title id 0xF4, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/extensions/extension_init.s
 - View: `OBJ_vF4_e0` (TtlScreen) in `naka_ctrl_menu_body.c`
 - EXIT -> `TITLE_PS`
@@ -3677,7 +3724,7 @@ the first self-test screen. It is shown when the SRAM test or the panel-detectio
 
 ### `TITLE_TEST2`
 
-- Path: none in the data (opened by code)
+- Path: none found (no data entry, and no traced code, opens it)
 - Registered: `"TT_TEST2"`, title id 0xF5, function `NAKA_MAINFUNC_TEST2FUNC`, v10/maincpu/extensions/extension_init.s
 - View: `OBJ_TEST2` (TtlScreen) in `naka_extension_device.c`
 - EXIT -> `TITLE_PS`
@@ -3699,7 +3746,7 @@ the first self-test screen. It is shown when the SRAM test or the panel-detectio
 
 a self-test screen. While it is up, some panel handlers stand down and one is active only there.
 
-- Path: none in the data (opened by code)
+- Path: none found (no data entry, and no traced code, opens it)
 - Registered: `"TT_TEST3"`, title id 0xF6, function `NAKA_MAINFUNC_TEST3FUNC`, v10/maincpu/extensions/extension_init.s
 - View: `OBJ_TEST3` (SineWaveScreen) in `naka_extension_device.c`
 - EXIT -> `TITLE_PS`
@@ -3709,7 +3756,7 @@ a self-test screen. While it is up, some panel handlers stand down and one is ac
 
 ### `TITLE_TEST4`
 
-- Path: none in the data (opened by code)
+- Path: none found (no data entry, and no traced code, opens it)
 - Registered: `"TT_TEST4"`, title id 0xF7, function `NAKA_MAINFUNC_TEST4FUNC`, v10/maincpu/extensions/extension_init.s
 - View: `OBJ_TEST4` (TtlScreen) in `naka_extension_device.c`
 - EXIT -> `TITLE_PS`
@@ -3721,7 +3768,7 @@ a self-test screen. While it is up, some panel handlers stand down and one is ac
 
 ### `TITLE_TEST5`
 
-- Path: none in the data (opened by code)
+- Path: none found (no data entry, and no traced code, opens it)
 - Registered: `"TT_TEST5"`, title id 0xF8, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/extensions/extension_init.s
 - View: `OBJ_TEST5` (TtlScreen) in `naka_extension_device.c`
 - EXIT -> `TITLE_PS`
@@ -3736,7 +3783,7 @@ a self-test screen. While it is up, some panel handlers stand down and one is ac
 
 ### `TITLE_TEST6`
 
-- Path: none in the data (opened by code)
+- Path: none found (no data entry, and no traced code, opens it)
 - Registered: `"TT_TEST6"`, title id 0xF9, function `NAKA_MAINFUNC_TEST6FUNC`, v10/maincpu/extensions/extension_init.s
 - View: `OBJ_TEST6` (TtlScreen) in `naka_extension_device.c`
 - EXIT -> `TITLE_PS`
@@ -3750,7 +3797,7 @@ a self-test screen. While it is up, some panel handlers stand down and one is ac
 
 ### `TITLE_EXT`
 
-- Path: none in the data (opened by code)
+- Path: none found (no data entry, and no traced code, opens it)
 - Registered: `"TT_EXT"`, title id 0xFB, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/extensions/extension_init.s
 - View: `OBJ_EXT` (IvScreen) in `naka_extension_device.c`
 - EXIT -> `TITLE_PS`
@@ -3760,14 +3807,14 @@ a self-test screen. While it is up, some panel handlers stand down and one is ac
 
 ### `0x01A000FC`
 
-- Path: none in the data (opened by code)
+- Path: none found (no data entry, and no traced code, opens it)
 - Registered: `"TT_EXTAPR"`, title id 0xFC, function `NAKA_MAINFUNC_TestTitleFunc`, v10/maincpu/factory_test/test_init.s
 - View: element 0 of Viewable slot 0xFC (record outside the C sources)
 - EXIT -> `TITLE_DKMENU`
 
 ### `TITLE_FDMSP`
 
-- Path: none in the data (opened by code)
+- Path: none found (no data entry, and no traced code, opens it)
 - Registered: `"TT_FDMSP"`, title id 0xFD, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/storage/flash_floppy_handlers.s
 - View: `OBJ_ftdemo01` (TtlScreen) in `naka_perf_style.c`
 - EXIT -> `TITLE_PS`

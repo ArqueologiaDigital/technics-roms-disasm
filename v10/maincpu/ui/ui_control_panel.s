@@ -2898,10 +2898,9 @@ GetCurrentPartSelect:
 	ret
 
 ; Requests a change to mode NAKA_MODE_MD_PS + A: removes any queued EVT_CHANGE_MODE
-; (DeleteEvent) and posts a new one to the current target (ApPostEvent).  Despite the name the
-; event is a mode change.
-;   In:  A = mode offset from NAKA_MODE_MD_PS.
-UI_PostPartChangeEvent:
+; (DeleteEvent) and posts a new one to the current target (ApPostEvent).
+;   In:  A = mode offset from NAKA_MODE_MD_PS (an MD_* constant).  Was UI_PostPartChangeEvent.
+UI_ChangeModeByIndex:
 	dec 2, xsp
 	ld (xsp), a
 	ld xwa, 0xffffffff
@@ -2918,8 +2917,8 @@ UI_PostPartChangeEvent:
 
 ; Requests a change to title TITLE_PS + A: removes any queued EVT_CHANGE_TITLE (DeleteEvent) and
 ; posts a new one with that title to the current target (ApPostEvent).
-;   In:  A = title offset from TITLE_PS.
-UI_PostModeChangeEvent:
+;   In:  A = title offset from TITLE_PS (a TT_* constant).  Was UI_ChangeTitleByIndex.
+UI_ChangeTitleByIndex:
 	dec 2, xsp
 	ld (xsp), a
 	ld xwa, 0xffffffff
@@ -2934,16 +2933,11 @@ UI_PostModeChangeEvent:
 	inc 2, xsp
 	ret
 
-; ============================================================================
-; SoundCtrl_SendCommand - Send a command to the sound controller
-; ============================================================================
-; Input:  A = command parameter (sound control value)
-; Output: None
-; Sends a message (event 0x1c00016) to the sound controller subsystem.
-; Packs the parameter into address 0x1a00000+param and dispatches via the
-; system event handler at 0xfa9d58.
-; ============================================================================
-SoundCtrl_SendCommand:
+; Shows title TITLE_PS + A on top of the current one (an interrupt title: a message, error or
+; progress screen): removes any queued EVT_INTERRUPT_TITLE (DeleteEvent) and posts a new one with
+; that title to the current target (ApPostEvent).  Was UI_InterruptTitleByIndex.
+;   In:  A = title offset from TITLE_PS (a TT_* constant).
+UI_InterruptTitleByIndex:
 	dec 2, xsp
 	ld (xsp), a
 	ld xwa, 0xffffffff

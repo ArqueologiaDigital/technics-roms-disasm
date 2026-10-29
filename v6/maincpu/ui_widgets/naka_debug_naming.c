@@ -1843,7 +1843,7 @@ const naka_debug_naming_t naka_debug_naming_data
 
     /* ==== SCREEN TITLE_CHECK "CHECK TITLE" -- "TT_CHECK", title id 0xFF, function NAKA_MAINFUNC_CheckTitleFunc ====
      * Path: mode MD_PS > "CHECK TITLE"
-     * EXIT -> TITLE_PS
+     * EXIT -> TITLE_PS, TITLE_CHECK
      * Opened from: TITLE_PS ("CHECK TITLE") */
     .CheckTitle = {
         .class_ = NAKA_CLASS(TtlScreen),

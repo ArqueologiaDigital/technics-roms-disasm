@@ -11860,8 +11860,8 @@ AccStyle_InlinedBlock_Skip3:
 	cp	(0x339f:16), 1
 	jr	nz, AccStyle_InlinedBlock_Skip
 	xor	wa, wa
-	ld	a, 1:opc
-	call	UI_PostPartChangeEvent
+	ld	a, MD_NORMAL:opc
+	call	UI_ChangeModeByIndex
 	jr	AccStyle_InlinedBlock_Return
 AccStyle_InlinedBlock_Skip:
 	ld	a, (SNDARG_PART_SELECT:16)
@@ -27699,7 +27699,7 @@ DrumVoice_Handler7_Code_Skip4:
 DrumVoice_Handler7_Code_Return7:
 	ret
 
-; Sends sound-controller command 0xee with argument 0 (SoundCtrl_SendCommand), preserving all
+; Sends sound-controller command 0xee with argument 0 (UI_InterruptTitleByIndex), preserving all
 ; registers.
 DrumVoice_NotifyEE:
 	push xwa
@@ -27710,8 +27710,8 @@ DrumVoice_NotifyEE:
 	push xiy
 	push xiz
 	xor wa, wa
-	ld a, 0xee:opc
-	call SoundCtrl_SendCommand
+	ld a, TT_MESAGE:opc
+	call UI_InterruptTitleByIndex
 	pop xiz
 	pop xiy
 	pop xix
@@ -29002,8 +29002,8 @@ Tempo_EditBPMClamp:
 Tempo_EditBPMApply:
 	cp	a, 0:i3
 	ret	nz
-	ldw	wa, 176
-	call	UI_PostModeChangeEvent
+	ldw	wa, TT_CMMENU
+	call	UI_ChangeTitleByIndex
 	ret
 Tempo_EditParam92:
 	dec	2, xsp
@@ -29123,8 +29123,8 @@ Tempo_DisplayParamCommon:
 ; Stores A in GLOBAL_ERROR_CODE and sends sound-controller command 0xee.
 Tempo_DisplayParamSkipClear:
 	ld (GLOBAL_ERROR_CODE:16), a
-	ldw wa, 0xee
-	jp SoundCtrl_SendCommand
+	ldw wa, TT_MESAGE
+	jp UI_InterruptTitleByIndex
 Tempo_DisplayParamFormat:
 	ld	(0xe3de:16), 0x80
 	ld	(0xe3dc:16), a
@@ -32289,7 +32289,7 @@ CmpMenuTtl_SpecialKeys:
 	cp xde, 0x88
 	jr nz, CmpMenuTtl_ReturnZero
 	and (0x34cd:16), 207
-	ldw wa, 0xb1
+	ldw wa, TT_CMBKSL
 	jr CmpMenuTtl_PostModeEvent
 
 ; CmpMenuTtl set mode bit 5
@@ -32297,7 +32297,7 @@ CmpMenuTtl_SetBit5:
 	and a, 0xcf
 	set 5, a
 	ld (0x34cd:16), a
-	ldw wa, 0xb1
+	ldw wa, TT_CMBKSL
 	jr CmpMenuTtl_PostModeEvent
 
 ; CmpMenuTtl set mode bit 4
@@ -32305,11 +32305,11 @@ CmpMenuTtl_SetBit4:
 	and a, 0xcf
 	set 4, a
 	ld (0x34cd:16), a
-	ldw wa, 0xb1
+	ldw wa, TT_CMBKSL
 
 ; CmpMenuTtl post mode change event
 CmpMenuTtl_PostModeEvent:
-	call UI_PostModeChangeEvent
+	call UI_ChangeTitleByIndex
 
 CmpMenuTtl_ReturnZero:
 	ld xhl, 0:i3
@@ -32877,7 +32877,7 @@ CmpBkslTtl_Mode1:
 	pop xix
 	pop xhl
 	pop xde
-	ldw wa, 0xb2
+	ldw wa, TT_CMBKSL_S
 	jrl CmpBksl_ApplyAndReturnZero
 
 DrumSlot_Dispatch_Slot0:
@@ -32891,7 +32891,7 @@ DrumSlot_Dispatch_Slot0:
 	pop xix
 	pop xhl
 	pop xde
-	ldw wa, 0xb2
+	ldw wa, TT_CMBKSL_S
 	jrl CmpBksl_ApplyAndReturnZero
 
 DrumSlot_Dispatch_Slot3_WithMode:
@@ -32901,8 +32901,8 @@ DrumSlot_Dispatch_Slot3_WithMode:
 	push xiz
 	ld hl, 3:i3
 	call DrumSlot_DispatchWrapper
-	ldw wa, 0xb2
-	call UI_PostModeChangeEvent
+	ldw wa, TT_CMBKSL_S
+	call UI_ChangeTitleByIndex
 	pop xiz
 	pop xix
 	pop xhl
@@ -32920,7 +32920,7 @@ DrumSlot_Dispatch_Slot2:
 	pop xix
 	pop xhl
 	pop xde
-	ldw wa, 0xb2
+	ldw wa, TT_CMBKSL_S
 	jr CmpBksl_ApplyAndReturnZero
 
 DrumSlot_Dispatch_Slot5:
@@ -32934,7 +32934,7 @@ DrumSlot_Dispatch_Slot5:
 	pop xix
 	pop xhl
 	pop xde
-	ldw wa, 0xb2
+	ldw wa, TT_CMBKSL_S
 	jr CmpBksl_ApplyAndReturnZero
 
 DrumSlot_Dispatch_Slot4:
@@ -32948,7 +32948,7 @@ DrumSlot_Dispatch_Slot4:
 	pop xix
 	pop xhl
 	pop xde
-	ldw wa, 0xb2
+	ldw wa, TT_CMBKSL_S
 	jr CmpBksl_ApplyAndReturnZero
 
 DrumSlot_Dispatch_Slot7:
@@ -32962,7 +32962,7 @@ DrumSlot_Dispatch_Slot7:
 	pop xix
 	pop xhl
 	pop xde
-	ldw wa, 0xb2
+	ldw wa, TT_CMBKSL_S
 	jr CmpBksl_ApplyAndReturnZero
 
 DrumSlot_Dispatch_Slot6:
@@ -32976,7 +32976,7 @@ DrumSlot_Dispatch_Slot6:
 	pop xix
 	pop xhl
 	pop xde
-	ldw wa, 0xb2
+	ldw wa, TT_CMBKSL_S
 	jr CmpBksl_ApplyAndReturnZero
 
 ; CmpBkslTtl mode select
@@ -32991,7 +32991,7 @@ CmpBkslTtl_ModeSelect:
 	pop xix
 	pop xhl
 	pop xde
-	ldw wa, 0xb2
+	ldw wa, TT_CMBKSL_S
 	jr CmpBksl_ApplyAndReturnZero
 
 ; CmpBkslTtl mode default
@@ -33006,10 +33006,10 @@ CmpBkslTtl_ModeDefault:
 	pop xix
 	pop xhl
 	pop xde
-	ldw wa, 0xb2
+	ldw wa, TT_CMBKSL_S
 
 CmpBksl_ApplyAndReturnZero:
-	call UI_PostModeChangeEvent
+	call UI_ChangeTitleByIndex
 
 CmpBksl_ReturnZero:
 	ld xhl, 0:i3
@@ -33097,7 +33097,7 @@ CmpBkslSTtl_FillIn4:
 	pop xix
 	pop xhl
 	pop xde
-	ldw wa, 0xb5
+	ldw wa, TT_CMREAL
 	jrl CmpBk_PostModeChange
 
 ; CmpBkslSTtl fill-in level 5
@@ -33114,7 +33114,7 @@ CmpBkslSTtl_FillIn5:
 	pop xix
 	pop xhl
 	pop xde
-	ldw wa, 0xb5
+	ldw wa, TT_CMREAL
 	jrl CmpBk_PostModeChange
 
 ; CmpBkslSTtl fill-in level 6
@@ -33131,7 +33131,7 @@ CmpBkslSTtl_FillIn6:
 	pop xix
 	pop xhl
 	pop xde
-	ldw wa, 0xb5
+	ldw wa, TT_CMREAL
 	jrl CmpBk_PostModeChange
 
 ; CmpBkslSTtl fill-in level 7
@@ -33148,7 +33148,7 @@ CmpBkslSTtl_FillIn7:
 	pop xix
 	pop xhl
 	pop xde
-	ldw wa, 0xb5
+	ldw wa, TT_CMREAL
 	jr CmpBk_PostModeChange
 
 ; CmpBkslSTtl fill-in level 8
@@ -33165,7 +33165,7 @@ CmpBkslSTtl_FillIn8:
 	pop xix
 	pop xhl
 	pop xde
-	ldw wa, 0xb5
+	ldw wa, TT_CMREAL
 	jr CmpBk_PostModeChange
 ; CmpBkslSTtl_DirectMode_OnClearPattern: Switch 0x88 CLEAR THE ENTIRE PATTERN: with byte 0x340EA = 0 requests the
 ;   clear at once (bit 2 of 0x34CD, message 35), else opens the CmpClrSure confirm window (0x350C = 1).
@@ -33176,8 +33176,8 @@ CmpBkslSTtl_DirectMode_OnClearPattern:
 	jr nz, CmpBkslSTtl_EventPost
 	set 2, (0x34cd:16)
 	ld (GLOBAL_ERROR_CODE:16), 35
-	ldw wa, 0xee
-	call SoundCtrl_SendCommand
+	ldw wa, TT_MESAGE
+	call UI_InterruptTitleByIndex
 	jr DisplayFunc_ReturnZero
 
 ; CmpBkslSTtl post accompaniment event
@@ -33193,15 +33193,15 @@ CmpBkslSTtl_DirectMode_OnVariationNaming:
 	jr nz, DisplayFunc_ReturnZero
 	cp (STYLE_SECTION:16), 12
 	jr nc, DisplayFunc_ReturnZero
-	ldw wa, 0xb3
+	ldw wa, TT_CMNAME
 	jr CmpBk_PostModeChange
 CmpBkslSTtl_DirectMode_OnRecordSetting:
 	cp (0x350c:16), 0
 	jr nz, DisplayFunc_ReturnZero
-	ldw wa, 0xb4
+	ldw wa, TT_CMSET
 
 CmpBk_PostModeChange:
-	call UI_PostModeChangeEvent
+	call UI_ChangeTitleByIndex
 
 DisplayFunc_ReturnZero:
 	ld xhl, 0:i3
@@ -33855,8 +33855,8 @@ CmpEsyTtl_Mode2_OnEdit:
 	pop xix
 	pop xhl
 	pop xde
-	ldw wa, 0x00b5
-	call UI_PostModeChangeEvent
+	ldw wa, TT_CMREAL
+	call UI_ChangeTitleByIndex
 	jrl t, S2cTtl_ReturnZero
 CmpEsyTtl_Mode2_OnMemoryNumberInc:
 	ld	wa, 1:i3
@@ -34527,7 +34527,7 @@ CstmCpTtl_RecMode2_OnWindowExecute_Skip10:
 	ld	xde, 0:i3
 	call	ApPostEvent
 	ld	(GLOBAL_ERROR_CODE:16), 35
-	ldw	wa, 238
+	ldw	wa, TT_MESAGE
 	jrl	CstmCpTtlFunc_Join3
 ; CstmCpTtl_RecMode2_OnCopyOrWindowAbort: Switch 11: on the main page copies rhythm slot FROM (0x39b6) to TO (0x39b7)
 ;   with Flash_InitBytecodeBlock (result 2 opens CstmMemFulWin / CstmFuncSelWin); with a window open it is that
@@ -34543,8 +34543,8 @@ CstmCpTtl_RecMode2_OnCopyOrWindowAbort:
 	cp	(CSTMCP_FROM_SLOT:16), 3
 	jr	nc, CstmCpTtl_RecMode2_OnCopyOrWindowAbort_Skip11
 	ld	(GLOBAL_ERROR_CODE:16), 37
-	ldw	wa, 238
-	call	SoundCtrl_SendCommand
+	ldw	wa, TT_MESAGE
+	call	UI_InterruptTitleByIndex
 CstmCpTtl_RecMode2_OnCopyOrWindowAbort_Skip11:
 	ld	a, (CSTMCP_FROM_SLOT:16)
 	extz	wa
@@ -34558,11 +34558,11 @@ CstmCpTtl_RecMode2_OnCopyOrWindowAbort_Skip11:
 	cp	l, 0:i3
 	jr	nz, CstmCp_ReturnZero2
 	ld	(GLOBAL_ERROR_CODE:16), 35
-	ldw	wa, 238
+	ldw	wa, TT_MESAGE
 	jr	CstmCpTtlFunc_Join3
 CstmCpTtl_RecMode2_OnCopyOrWindowAbort_Skip12:
 	ld	(GLOBAL_ERROR_CODE:16), 15
-	ldw	wa, 238
+	ldw	wa, TT_MESAGE
 	jr	CstmCpTtlFunc_Join3
 CstmCpTtl_RecMode2_OnCopyOrWindowAbort_Skip13:
 	ld	xwa, 0xffffffff
@@ -34594,9 +34594,9 @@ CstmCpTtl_RecMode2_OnCopyOrWindowAbort_Skip15:
 	ld	xde, 0:i3
 	call	ApPostEvent
 	ld	(GLOBAL_ERROR_CODE:16), 35
-	ldw	wa, 238
+	ldw	wa, TT_MESAGE
 CstmCpTtlFunc_Join3:
-	call	SoundCtrl_SendCommand
+	call	UI_InterruptTitleByIndex
 
 CstmCp_ReturnZero2:
 	ld xhl, 0:i3
@@ -34617,8 +34617,8 @@ CstmCp_StyleDataBlock:
 	cp	l, 0:i3
 	jr	nz, CstmCp_StyleDataBlock_Skip16
 	ld	(GLOBAL_ERROR_CODE:16), 35
-	ldw	wa, 238
-	call	SoundCtrl_SendCommand
+	ldw	wa, TT_MESAGE
+	call	UI_InterruptTitleByIndex
 CstmCp_StyleDataBlock_Skip16:
 	ld	xhl, 0:i3
 	ret
@@ -34786,7 +34786,7 @@ MiddleNameFunc:
 	pop xix
 	pop xhl
 	pop xde
-	ldw wa, 0xb2
+	ldw wa, TT_CMBKSL_S
 	jr MiddleName_PostModeChange
 
 MiddleNameFunc_OnMspNameSet:
@@ -34817,10 +34817,10 @@ MiddleName_CopyAndPost:
 	push xwa
 	call Strncpy
 	lda xsp, (xsp + 10)
-	ldw wa, 0xca
+	ldw wa, TT_MSPMENU
 
 MiddleName_PostModeChange:
-	call UI_PostModeChangeEvent
+	call UI_ChangeTitleByIndex
 
 MiddleName_ReturnZero:
 	ld xhl, 0:i3
@@ -34838,8 +34838,8 @@ MiddleCmpClrFunc:
 	ld xde, 0:i3
 	call ApPostEvent
 	ld (GLOBAL_ERROR_CODE:16), 35
-	ldw wa, 0xee
-	call SoundCtrl_SendCommand
+	ldw wa, TT_MESAGE
+	call UI_InterruptTitleByIndex
 	jr MiddleCmpClr_ReturnZero
 
 MiddleCmpClrFunc_OnCmpClrNo:
@@ -35339,16 +35339,16 @@ AccGuard_CheckMode09:
 	ret z
 	cp a, 0xcc
 	ret z
-	ldw wa, 0x00c8
-	call SoundCtrl_SendCommand
+	ldw wa, TT_MSPBKSL
+	call UI_InterruptTitleByIndex
 	ret
 AccGuard_SendProgramChange:
 	ld xwa, 0x00028080
 	call SndParam_LookupReadOnly
 	cp	hl, 0:i3
 	ret z
-	ldw wa, 0x00ed
-	call SoundCtrl_SendCommand
+	ldw wa, TT_APCSEL
+	call UI_InterruptTitleByIndex
 	ret
 
 
@@ -38473,8 +38473,8 @@ AccBankData_NotifyAndUpdateTempo:
 	call SeqTimer_UpdateTempoReg
 
 AccBankData_PostModeChange:
-	ldw wa, 0x16
-	call UI_PostModeChangeEvent
+	ldw wa, TT_STYLCNVCONT
+	call UI_ChangeTitleByIndex
 	popw_erp 0xfa
 	inc 2, xsp
 	ret
@@ -38701,8 +38701,8 @@ StylCnvWaitTtlFunc:
 	call FileIO_CheckMediaIsWritable
 	cp hl, 0:i3
 	jr nz, StylCnvWait_SetStatus
-	ldw wa, 0x11
-	call UI_PostModeChangeEvent
+	ldw wa, TT_STYLCNVMODL
+	call UI_ChangeTitleByIndex
 
 StylCnvWait_SetStatus:
 	ld (0x48da:16), 0
@@ -38712,8 +38712,8 @@ StylCnvWait_CheckPending:
 	cp (0x48da:16), 0
 	jr z, AccChord_ReturnZero
 	ld (GLOBAL_ERROR_CODE:16), 74
-	ldw wa, 0xee
-	call SoundCtrl_SendCommand
+	ldw wa, TT_MESAGE
+	call UI_InterruptTitleByIndex
 	ld (0x48da:16), 0
 	jr AccChord_ReturnZero
 
@@ -38803,7 +38803,7 @@ StylCnvModl_ScanMatchingModels:
 StylCnvModl_ScanDone:
 	cpw (0x3a82:16), 0
 	jr nz, StylCnvModl_PadModelNames
-	ldw wa, 0x10
+	ldw wa, TT_STYLCNVWAIT
 	jrl StylCnvModl_OK_Select_ShowError
 
 StylCnvModl_PadModelNames:
@@ -39080,7 +39080,7 @@ StylCnvModl_OK_SelectItem:
 	call FileIO_OpenWithBuiltPath
 	cp hl, 0:i3
 	jr ge, StylCnvModl_OK_Select_ClearMem
-	ldw wa, 0x10
+	ldw wa, TT_STYLCNVWAIT
 	jr StylCnvModl_OK_Select_ShowError
 
 StylCnvModl_OK_Select_ClearMem:
@@ -39103,10 +39103,10 @@ StylCnvModl_OK_Select_FillLoop:
 	cp xhl, 0x0
 	jr ge, StylCnvModl_OK_Select_LoadOK
 	call FileIO_CloseHandle
-	ldw wa, 0x10
+	ldw wa, TT_STYLCNVWAIT
 
 StylCnvModl_OK_Select_ShowError:
-	call UI_PostModeChangeEvent
+	call UI_ChangeTitleByIndex
 	jrl StylCnvModl_Return
 
 StylCnvModl_OK_Select_LoadOK:
@@ -39665,16 +39665,16 @@ StylCnvContTtlFunc:
 	cp (0x48d6:16), 0
 	jr z, StylCnvCont_CheckPending
 	ld (GLOBAL_ERROR_CODE:16), 15
-	ldw wa, 0xee
-	call SoundCtrl_SendCommand
+	ldw wa, TT_MESAGE
+	call UI_InterruptTitleByIndex
 	ld (0x48d6:16), 0
 
 StylCnvCont_CheckPending:
 	cp (0x48da:16), 0
 	jr z, AccRhythm_ReturnZero
 	ld (GLOBAL_ERROR_CODE:16), 74
-	ldw wa, 0xee
-	call SoundCtrl_SendCommand
+	ldw wa, TT_MESAGE
+	call UI_InterruptTitleByIndex
 	ld (0x48da:16), 0
 	jr AccRhythm_ReturnZero
 
@@ -39705,8 +39705,8 @@ StylCnvCont_HandleOK:
 	jr AccRhythm_ReturnZero
 
 StylCnvCont_NotifyPart:
-	ld wa, 1:i3
-	call UI_PostPartChangeEvent
+	ld wa, MD_NORMAL:i3
+	call UI_ChangeModeByIndex
 
 AccRhythm_ReturnZero:
 	ld xhl, 0:i3
@@ -39735,11 +39735,11 @@ MainStylCnvFunc:
 	ld xhl, 0:i3
 	ret
 
-; 0x48da = 0xff, then UI_PostModeChangeEvent with WA = 0x10 (tail jump).
+; 0x48da = 0xff, then UI_ChangeTitleByIndex with WA = 0x10 (tail jump).
 StylCnv_ReportErrorAndReturn:
 	ld (0x48da:16), 255
-	ldw wa, 0x10
-	jp UI_PostModeChangeEvent
+	ldw wa, TT_STYLCNVWAIT
+	jp UI_ChangeTitleByIndex
 
 FloppyState_Dispatch:
 	lda xsp, (xsp - 114)
@@ -39752,19 +39752,19 @@ StyleConv_DispatchSoundMemState:
 	cpw (0x48ac:16), 1
 	jr nz, StylCnvDisp_PostMode13
 	calr AccBankData_InitAllSlots
-	ld wa, 1:i3
-	call UI_PostPartChangeEvent
+	ld wa, MD_NORMAL:i3
+	call UI_ChangeModeByIndex
 	jrl StylCnv_Epilogue114
 
 StylCnvDisp_PostMode13:
-	ldw wa, 0x13
+	ldw wa, TT_STYLCNVSTOR
 	jrl StylCnv_PostModeChange
 
 StylCnvDisp_CheckFE:
 	cp a, 0xfe
 	jr nz, StylCnvDisp_CheckType
 	ld (0x48da:16), 255
-	ldw wa, 0x16
+	ldw wa, TT_STYLCNVCONT
 	jrl StylCnv_PostModeChange
 
 StylCnvDisp_CheckType:
@@ -39785,7 +39785,7 @@ StylCnvDisp_CheckType:
 	call Strcpy
 	inc 8, xsp
 	ld (0x3d06:16), 5
-	ldw wa, 0x14
+	ldw wa, TT_STYLCNVTXT
 	jrl StylCnv_PostModeChange
 
 StylCnvDisp_Type1_CopyPath:
@@ -40082,13 +40082,13 @@ StylCnv_DispatchByType:
 	jrl nz, StyleConv_DispatchSoundMemState
 	cp (CURRENT_TITLE:16), 22
 	jrl nz, StylCnv_Epilogue114
-	ldw wa, 0x12
+	ldw wa, TT_STYLCNVCNVT
 	jrl StylCnv_PostModeChange
 
 StylCnv_Type2_CheckSoundMem:
 	cp (CURRENT_TITLE:16), 22
 	jrl nz, StylCnv_Epilogue114
-	ldw wa, 0x12
+	ldw wa, TT_STYLCNVCNVT
 	jrl StylCnv_PostModeChange
 
 StylCnv_Type3_ProcessFiles:
@@ -40940,10 +40940,10 @@ LoopCounter_Increment:
 	jrl c, StylCnv_Multi_ParseLoop
 
 StylCnv_Multi_Finalize:
-	ldw wa, 0x15
+	ldw wa, TT_STYLCNVSEL
 
 StylCnv_PostModeChange:
-	call UI_PostModeChangeEvent
+	call UI_ChangeTitleByIndex
 
 StylCnv_Epilogue114:
 	pop xiz
@@ -40968,7 +40968,7 @@ AccStyle_TableDataEntry:
 	jr	z, AccStyle_TableDataEntry_Skip
 	cp	c, 17
 	ret	nz
-	ldw	wa, 16
+	ldw	wa, TT_STYLCNVWAIT
 	jr	AccStyle_TableDataEntry_Join
 AccStyle_TableDataEntry_Skip:
 	ld	a, (0x3d06:16)
@@ -40981,7 +40981,7 @@ AccStyle_TableDataEntry_Skip:
 	call	FileIO_CheckMediaIsWritable
 	cp	hl, 0:i3
 	ret	nz
-	ldw	wa, 17
+	ldw	wa, TT_STYLCNVMODL
 	jr	AccStyle_TableDataEntry_Join
 AccStyle_TableDataEntry_Skip2:
 	cp	a, 2:i3
@@ -40994,13 +40994,13 @@ AccStyle_TableDataEntry_Skip3:
 	call	FileIO_CheckMediaIsWritable
 	cp	hl, 0:i3
 	ret	nz
-	ldw	wa, 18
+	ldw	wa, TT_STYLCNVCNVT
 	jr	AccStyle_TableDataEntry_Join
 AccStyle_TableDataEntry_Skip4:
 	call	FileIO_CheckMediaIsWritable
 	cp	hl, 0:i3
 	ret	nz
-	ldw	wa, 18
+	ldw	wa, TT_STYLCNVCNVT
 	jr	AccStyle_TableDataEntry_Join
 AccStyle_TableDataEntry_Skip5:
 	cp	a, 2:i3
@@ -41013,9 +41013,9 @@ AccStyle_TableDataEntry_Skip6:
 	ret	nz
 	ld	xwa, 0x3d08
 	call	ControlState_ProcessCommand
-	ldw	wa, 18
+	ldw	wa, TT_STYLCNVCNVT
 AccStyle_TableDataEntry_Join:
-	call	UI_PostModeChangeEvent
+	call	UI_ChangeTitleByIndex
 	ret
 ; SingleLoad_CopyComposerPatternFromFile: Composer single-load body: reads the open .CMP file's style image into the
 ;   work buffer 0x69800, accepts the headers 'H',0,'K' / 'G',0,'K' / 'L','K','E' (rewriting an older one to 'H',0,'K'

@@ -92,6 +92,12 @@ def widget_lines(g, key, depth, seen, out):
         widget_lines(g, c, depth + 1, seen, out)
 
 
+def opened_list(g, fn):
+    lab = G.func_label(g.m, g.ids.get(fn))
+    po = sorted(n for n in g.routine_opens.get(lab, ()) if n.startswith('TT_'))
+    return (' (%s)' % ', '.join('`TITLE_%s`' % n[3:] for n in po)) if po else ''
+
+
 def build(g):
     paths = g.menu_paths()
     into = collections.defaultdict(list)
@@ -113,17 +119,34 @@ def build(g):
          'binds it to a view object, the root widget of the screen.  A **mode** (`MD_*`) has a home',
          'title.  A menu entry is an `AcTitleMenu` widget whose `title` field names the title it opens;',
          'a screen\'s `exit` field is where EXIT goes.  The path of a title is the shortest chain of',
-         'menu entries from a mode\'s home title.  Titles that no menu entry names are opened by code',
-         '(their own or another title\'s procedure) and are listed without a path.', '',
-         '%d titles, %d modes, %d widget records in %d C files, %d menu entries and %d EXIT links.'
-         % (len(g.titles), len(g.modes), len(g.rec), len(g.files),
-            sum(1 for e in g.edges if e[3] == 'menu'), sum(1 for e in g.edges if e[3] == 'exit')), '',
+         'menu entries from a mode\'s home title; a step "(by Func)" is code that opens the title: a',
+         'title\'s procedure, or the function of a menu box, passing the title\'s `TT_*` index to',
+         '`UI_ChangeTitleByIndex` / `UI_InterruptTitleByIndex` (`scripts/converters/name_title_index_operands.py`)',
+         'or posting `EVT_CHANGE_TITLE` itself.', '',
+         '%d titles (%d with a path), %d modes, %d widget records in %d C files, %d menu entries, %d code'
+         ' transitions and %d EXIT links.'
+         % (len(g.titles), len(paths), len(g.modes), len(g.rec), len(g.files),
+            sum(1 for e in g.edges if e[3] == 'menu'), len(g.code_edges),
+            sum(1 for e in g.edges if e[3] == 'exit')), '',
          '## Modes', '']
+    import name_title_index_operands as N
+    mode_by = {}
+    for rout, ms in N.opens_by_routine('v10', 'mode').items():
+        for x in ms:
+            if rout:
+                mode_by.setdefault(x, set()).add(rout)
     rows = []
     for mid, md_ in sorted(g.modes.items()):
-        rows.append(('`%s`' % md_['name'], '`%s`' % g.title_name(md_['home']),
-                     md(screen_text(g, md_['home'])) or '-'))
-    L += table(rows, ('mode', 'home title', 'screen title')) + ['']
+        by = sorted(mode_by.get(md_['name'], ()))
+        rows.append(('`%s`' % md_['name'], ' / '.join(g.mode_button.get(md_['name'], [])) or '-',
+                     '`%s`' % g.title_name(md_['home']), md(screen_text(g, md_['home'])) or '-',
+                     (', '.join('`%s`' % x for x in by[:3]) + (' +%d' % (len(by) - 3) if len(by) > 3 else '')) or '-'))
+    L += table(rows, ('mode', 'panel button', 'home title', 'screen title', 'also entered by code in')) + ['']
+    L += ['The panel buttons come from the mode-key maps `PanelButton_ModeKeyCodes*` of',
+          '`ui_widgets/naka_extension_device.c`: `PanelButton_ModeKey` (`audio/audio_control_engine.s`) replaces',
+          'the button bits with map[lowest set bit] and posts the mode as `EVT_SW_IN_MODE`',
+          '(`boot/main_title_ctrl_panel.s`: `NAKA_MODE_MD_PS + payload`).  Button names are the MAME driver\'s',
+          'CPL_SEGn / CPR_SEGn port names.  Modes without a button are entered by code (`UI_ChangeModeByIndex`).', '']
     L += ['## Titles by menu path', '']
     order = sorted(g.titles, key=lambda t: (t not in paths, len(paths.get(t, [])),
                                             [str(x) for x in paths.get(t, [])], t))
@@ -137,16 +160,8 @@ def build(g):
         if d:
             L.append(md(d))
             L.append('')
-        if tid in paths:
-            parts = []
-            for x, lab in paths[tid]:
-                if x == 'mode':
-                    parts.append('mode `%s`' % lab)
-                else:
-                    parts.append('"%s"' % md(lab) if lab else '(unlabelled entry)')
-            L.append('- Path: ' + ' > '.join(parts))
-        else:
-            L.append('- Path: none in the data (opened by code)')
+        pth = G.title_path(g, tid, paths)
+        L.append('- Path: ' + (md(pth) if pth else 'none found (no data entry, and no traced code, opens it)'))
         L.append('- Registered: `"%s"`, title id 0x%X, function `%s`, %s'
                  % (t['name'], t['index'], g.name_by_value.get(t['func'], '0x%08X' % (t['func'] or 0)),
                     t['file']))
@@ -163,8 +178,12 @@ def build(g):
                                                     for lab, to in ent))
         fe = [(lab, fn) for frm, key, fn, lab in g.func_entries if frm == tid]
         if fe:
-            L.append('- Entries that open a title by code: ' + ', '.join('"%s" -> `%s`' % (md(lab) or '?', fn)
-                                                                     for lab, fn in fe))
+            L.append('- Entries that open a title by code: ' + ', '.join(
+                '"%s" -> `%s`%s' % (md(lab) or '?', fn, opened_list(g, fn)) for lab, fn in fe))
+        proc = G.func_label(g.m, t['func'])
+        po = sorted(n for n in g.routine_opens.get(proc, ()) if n.startswith('TT_'))
+        if po:
+            L.append('- Its procedure `%s` opens: %s' % (proc, ', '.join('`TITLE_%s`' % n[3:] for n in po)))
         ex = out_exit.get(tid)
         if ex:
             L.append('- EXIT -> ' + ', '.join('`%s`' % g.title_name(x) for x in sorted(ex)))
@@ -183,6 +202,7 @@ def build(g):
 
 def main():
     g = G.Graph('v10')
+    G.add_code_edges(g)
     text = build(g)
     if '--check' in sys.argv:
         cur = open(OUT, encoding='utf-8').read() if os.path.exists(OUT) else None

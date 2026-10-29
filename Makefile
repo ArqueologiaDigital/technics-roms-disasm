@@ -175,6 +175,7 @@ menu-map: rebuilt_ROMs/kn5000_v10_program.llvm.elf
 	python3 scripts/generators/gen_naka_menu_map.py
 gui-check: rebuilt_ROMs/kn5000_v10_program.llvm.elf
 	python3 scripts/generators/gen_naka_gui_headers.py --check
+	python3 scripts/generators/gen_title_mode_index_equs.py --check
 	python3 scripts/analysis/naka_gui_model.py --check
 	python3 scripts/converters/naka_gui_symbolize.py --check --tree v10
 	python3 scripts/converters/naka_gui_symbolize.py --check --tree v9

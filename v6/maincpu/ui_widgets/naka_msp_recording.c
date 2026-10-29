@@ -728,7 +728,7 @@ const naka_msp_recording_t naka_msp_recording_data
     },
 
     /* ==== SCREEN TITLE_MSPMENU "MSP MENU" -- "TT_MSPMENU", title id 0xCA, function NAKA_MAINFUNC_MspMenuTtlFunc ====
-     * Path: mode MD_MSP
+     * Path: MSP MENU button (mode MD_MSP)
      * Menu: "COMPILE SET" -> TITLE_MSPGROUP
      * Menu: "Naming for User&COMPILE Banks" -> TITLE_MSPNAME
      * EXIT -> TITLE_NORMAL */
@@ -852,7 +852,7 @@ const naka_msp_recording_t naka_msp_recording_data
     },
 
     /* ==== SCREEN TITLE_MSPNAME "NAMING" -- "TT_MSPNAME", title id 0xCB, function NAKA_MAINFUNC_MspNameTtlFunc ====
-     * Path: mode MD_MSP > "Naming for User&COMPILE Banks"
+     * Path: MSP MENU button (mode MD_MSP) > "Naming for User&COMPILE Banks"
      * EXIT -> TITLE_MSPMENU
      * Opened from: TITLE_MSPMENU ("Naming for User&COMPILE Banks") */
     .MspNamingScreen = {
@@ -920,7 +920,7 @@ const naka_msp_recording_t naka_msp_recording_data
     },
 
     /* ==== SCREEN TITLE_MSPGROUP "MSP COMPILE SETTING" -- "TT_MSPGROUP", title id 0xCC, function NAKA_APFUNC_DefaultFunction ====
-     * Path: mode MD_MSP > "COMPILE SET"
+     * Path: MSP MENU button (mode MD_MSP) > "COMPILE SET"
      * EXIT -> TITLE_MSPMENU
      * Opened from: TITLE_MSPMENU ("COMPILE SET") */
     .MspReGrpScreen = {
@@ -1094,7 +1094,7 @@ const naka_msp_recording_t naka_msp_recording_data
 
     /* ==== SCREEN TITLE_SNDARG "SOUND ARRANGER" -- "TT_SNDARG", title id 0xDC, function NAKA_MAINFUNC_SndArgTtlFunc ====
      * What: the Sound Arranger page. It is the home title of mode 0x11, MD_SND_ARG.
-     * Path: mode MD_SND_ARG
+     * Path: SOUND ARRANGER SET button (mode MD_SND_ARG)
      * EXIT -> TITLE_NORMAL */
     .SndArgrScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -1239,7 +1239,7 @@ const naka_msp_recording_t naka_msp_recording_data
     },
 
     /* ==== SCREEN TITLE_APCSEL "AUTO PLAY CHORD" -- "TT_APCSEL", title id 0xED, function NAKA_APFUNC_DefaultFunction ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: none found (no data entry, and no traced code, opens it)
      * EXIT -> TITLE_PS */
     .ApcSelScreen = {
         .class_ = NAKA_CLASS(TtlScreen),

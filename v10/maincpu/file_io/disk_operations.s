@@ -178,13 +178,13 @@ FCopy_CopyConfirm_Execute:
 	ld xbc, EVT_SET_NOT_DRAW_FLAG
 	ld xde, 1:i3
 	call ApPostEvent
-	ldw wa, 0x7b
-	call UI_PostModeChangeEvent
+	ldw wa, TT_DKUT
+	call UI_ChangeTitleByIndex
 	ld xwa, 0xffffffff
 	ld xbc, EVT_SET_NOT_DRAW_FLAG
 	ld xde, 0:i3
 	call ApPostEvent
-	ldw wa, 0xee
+	ldw wa, TT_MESAGE
 	jr FCopy_NotifyComplete
 
 FCopy_CopyExecute:
@@ -215,16 +215,16 @@ FCopy_CopyExecute:
 	ld xbc, EVT_SET_NOT_DRAW_FLAG
 	ld xde, 1:i3
 	call ApPostEvent
-	ldw wa, 0x7b
-	call UI_PostModeChangeEvent
+	ldw wa, TT_DKUT
+	call UI_ChangeTitleByIndex
 	ld xwa, 0xffffffff
 	ld xbc, EVT_SET_NOT_DRAW_FLAG
 	ld xde, 0:i3
 	call ApPostEvent
-	ldw wa, 0xee
+	ldw wa, TT_MESAGE
 
 FCopy_NotifyComplete:
-	call SoundCtrl_SendCommand
+	call UI_InterruptTitleByIndex
 
 FCopy_Return:
 	ld xhl, 0:i3
@@ -325,8 +325,8 @@ FRename_HandleApply:
 	ld xbc, EVT_HIDE
 	ld xde, 0:i3
 	call ApPostEvent
-	ldw wa, 0xee
-	call SoundCtrl_SendCommand
+	ldw wa, TT_MESAGE
+	call UI_InterruptTitleByIndex
 
 FRename_Return:
 	ld xhl, 0:i3
@@ -428,8 +428,8 @@ FRenameSmf_HandleApply:
 	ld xbc, EVT_HIDE
 	ld xde, 0:i3
 	call ApPostEvent
-	ldw wa, 0xee
-	call SoundCtrl_SendCommand
+	ldw wa, TT_MESAGE
+	call UI_InterruptTitleByIndex
 
 FRenameSmf_Return:
 	ld xhl, 0:i3
@@ -529,7 +529,7 @@ FmmFmt_HandleProgress:
 	call ApPostEvent
 	ld a, (0x7f6a:16)
 	extz wa
-	call UI_PostModeChangeEvent
+	call UI_ChangeTitleByIndex
 	ld (0x7f6c:16), 0
 	ld xwa, 0xffffffff
 	ld xbc, EVT_SET_NOT_DRAW_FLAG
@@ -539,8 +539,8 @@ FmmFmt_HandleProgress:
 	ldw bc, 0x8
 	calr FileIO_ValidateSignedValue
 	ld (GLOBAL_ERROR_CODE:16), l
-	ldw wa, 0xee
-	call SoundCtrl_SendCommand
+	ldw wa, TT_MESAGE
+	call UI_InterruptTitleByIndex
 	jrl FmmFmt_NotifyComplete
 
 FmmFmt_FormatSuccess:
@@ -572,7 +572,7 @@ FmmFmt_HandleAbort:
 	ld e, c
 	cp c, 0:i3
 	jr nz, FmmFmt_AbortPhase2
-	call UI_PostModeChangeEvent
+	call UI_ChangeTitleByIndex
 	ld (0x7f6c:16), 0
 	jr FmmFmt_Return
 
@@ -593,7 +593,7 @@ FmmFmt_DispatchAndNotify:
 	jr FmmFmt_NotifyComplete
 
 FmmFmt_HandleAbortFinal:
-	call UI_PostModeChangeEvent
+	call UI_ChangeTitleByIndex
 	ld (0x7f6c:16), 0
 
 FmmFmt_NotifyComplete:
@@ -607,8 +607,8 @@ FmmFmt_Return:
 UtilityTtlJgFunc:
 	cp xbc, EVT_SW_IN
 	jr nz, UtilTtlJg_Return
-	ldw wa, 0x7b
-	ldw bc, 0x7c
+	ldw wa, TT_DKUT
+	ldw bc, TT_DKUTSMF
 	calr FileIO_DiskEventDispatch
 
 UtilTtlJg_Return:
@@ -677,7 +677,7 @@ FmmLoadTtl_CheckSmfHandle:
 	ld xbc, EVT_HIDE
 	ld xde, 0:i3
 	call ApPostEvent
-	ldw wa, 0x64
+	ldw wa, TT_DKLDSMF
 	jrl FmmLoadTtl_PlaySound
 
 FmmLoadTtl_StateCancelLoad:
@@ -691,13 +691,13 @@ FmmLoadTtl_StateCancelLoad:
 	call ApPostEvent
 	ld a, (0x7f6e:16)
 	extz wa
-	call UI_PostModeChangeEvent
+	call UI_ChangeTitleByIndex
 	ld xwa, 0xffffffff
 	ld xbc, EVT_SET_NOT_DRAW_FLAG
 	ld xde, 0:i3
 	call ApPostEvent
 	ld (GLOBAL_ERROR_CODE:16), 0
-	ldw wa, 0xee
+	ldw wa, TT_MESAGE
 	jr FmmLoadTtl_NotifyComplete
 
 FmmLoadTtl_StateIdle:
@@ -705,7 +705,7 @@ FmmLoadTtl_StateIdle:
 	ld xbc, EVT_HIDE
 	ld xde, 0:i3
 	call ApPostEvent
-	ldw wa, 0x7d
+	ldw wa, TT_DKUTFRMT
 	jrl FmmLoadTtl_PlaySound
 
 FmmLoadTtl_StateSuccess:
@@ -720,16 +720,16 @@ FmmLoadTtl_StateSuccess:
 	call ApPostEvent
 	ld a, (0x7f6e:16)
 	extz wa
-	call UI_PostModeChangeEvent
+	call UI_ChangeTitleByIndex
 	ld xwa, 0xffffffff
 	ld xbc, EVT_SET_NOT_DRAW_FLAG
 	ld xde, 0:i3
 	call ApPostEvent
 	ld (GLOBAL_ERROR_CODE:16), 2
-	ldw wa, 0xee
+	ldw wa, TT_MESAGE
 
 FmmLoadTtl_NotifyComplete:
-	call SoundCtrl_SendCommand
+	call UI_InterruptTitleByIndex
 	jrl FmmLoadTtl_Return
 
 FmmLoadTtl_LoadSlots:
@@ -787,14 +787,14 @@ FmmLoadTtl_HandleOk:
 	jr nz, FmmLoadTtl_Return
 	cp (CURRENT_MODE:16), 7
 	jr nz, FmmLoadTtl_Ok_DefaultSound
-	ldw wa, 0xd6
+	ldw wa, TT_ETMENU
 	jr FmmLoadTtl_PlaySound
 
 FmmLoadTtl_Ok_DefaultSound:
-	ldw wa, 0x60
+	ldw wa, TT_DKMENU
 
 FmmLoadTtl_PlaySound:
-	call UI_PostModeChangeEvent
+	call UI_ChangeTitleByIndex
 
 FmmLoadTtl_Return:
 	ld xhl, 0:i3
@@ -870,8 +870,8 @@ FmmSaveTtl_DispatchAndReturn:
 FmmSaveTtl_HandleOk:
 	cp xde, 0xf
 	jr nz, FmmSaveTtl_Return
-	ldw wa, 0x60
-	call UI_PostModeChangeEvent
+	ldw wa, TT_DKMENU
+	call UI_ChangeTitleByIndex
 
 FmmSaveTtl_Return:
 	ld xhl, 0:i3
@@ -963,8 +963,8 @@ DiskName_HandleApply:
 	call FileIO_CheckPathAndVolumeLabel
 	calr SignalProgressUpdate
 	calr ResetProgressIndication
-	ldw wa, 0x60
-	call UI_PostModeChangeEvent
+	ldw wa, TT_DKMENU
+	call UI_ChangeTitleByIndex
 
 DiskName_Return:
 	ld xhl, 0:i3

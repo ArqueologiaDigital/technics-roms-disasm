@@ -1588,8 +1588,8 @@ Boot_HandleComboDisplay_Check3:
 	cp a, 3:i3
 	ret nz
 	; --- Combo 3: Software version screen ---
-	ldw wa, 0xf0
-	call SoundCtrl_SendCommand		; Display SOFT VERSION screen
+	ldw wa, TT_SOFTVER
+	call UI_InterruptTitleByIndex		; Display SOFT VERSION screen
 	ret
 
 Boot_ParseTableDataTimestamp:

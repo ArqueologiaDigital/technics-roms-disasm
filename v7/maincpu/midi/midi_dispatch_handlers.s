@@ -10290,13 +10290,13 @@ MidiPkt_XferShowResult_Join:
 	call	SeqStep_PlaybackNop
 	ret
 ; MidiPkt_XferShowCompleted: End of a successful MIDI bulk transfer (status 0): sets GLOBAL_ERROR_CODE 35 and opens
-;   the TT_MESAGE box (SoundCtrl_SendCommand 0xEE), whose catalog entry 0x23 reads 'COMPLETED!'. Basis: callers + body
+;   the TT_MESAGE box (UI_InterruptTitleByIndex 0xEE), whose catalog entry 0x23 reads 'COMPLETED!'. Basis: callers + body
 ;   -- MidiPkt_XferShowResult calls it when the transfer status (field 4) is 0; the other statuses go to
 ;   MidiPkt_XferShowErrorMessage (error message) or, for 34, MidiPkt_XferShowNothing (nothing).
 MidiPkt_XferShowCompleted:
 	ld	(GLOBAL_ERROR_CODE:16), 35
-	ldw	wa, 238
-	jp	SoundCtrl_SendCommand
+	ldw	wa, TT_MESAGE
+	jp	UI_InterruptTitleByIndex
 ; MidiPkt_XferShowNothing: Empty routine (`ret`): the transfer-status 34 arm of MidiPkt_XferShowResult, which shows no
 ;   message box. Basis: callers + body -- MidiPkt_XferShowResult calls it when field 4 of the active MIDI message is
 ;   34 (its header: 'status 34 shows nothing'); the name says literally what it does, as SysEx_SendNothing does for
@@ -10305,7 +10305,7 @@ MidiPkt_XferShowNothing:
 	ret
 ; MidiPkt_XferShowErrorMessage: End of a failed MIDI bulk transfer: maps the transfer status (field 4 of the active
 ;   MIDI message) to a message through MidiRx_PartLookup_ByteMap (0x20 SysEx transmission error, 0x21 reception error,
-;   0x22 ID mismatch, 0x0F memory full) into GLOBAL_ERROR_CODE and opens the TT_MESAGE box (SoundCtrl_SendCommand
+;   0x22 ID mismatch, 0x0F memory full) into GLOBAL_ERROR_CODE and opens the TT_MESAGE box (UI_InterruptTitleByIndex
 ;   0xEE). Basis: callers + body -- MidiPkt_XferShowResult calls it for every status other than 0 and 34.
 MidiPkt_XferShowErrorMessage:
 	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
@@ -10314,8 +10314,8 @@ MidiPkt_XferShowErrorMessage:
 	extz	hl
 	lda	xbc, (MidiRx_PartLookup_ByteMap:24)
 	ld	(GLOBAL_ERROR_CODE), (xbc+hl)
-	ldw	wa, 238
-	jp	SoundCtrl_SendCommand
+	ldw	wa, TT_MESAGE
+	jp	UI_InterruptTitleByIndex
 MidiSeq_ApplyPendingParams:
 	bit	6, (0xbc80:16)
 	ret z
@@ -10347,13 +10347,13 @@ MidiSeq_ClearSyncFlag:
 	res	6, (0xbc80:16)
 	ret
 ; MidiTable_PreDispatchNullRet: Bare `ret` called before each received packet is dispatched; the two instructions
-;   after it (`ldw wa, 238` / `jp SoundCtrl_SendCommand`, a TT_MESAGE box) are unreachable. Basis: callers + body --
+;   after it (`ldw wa, 238` / `jp UI_InterruptTitleByIndex`, a TT_MESAGE box) are unreachable. Basis: callers + body --
 ;   MidiTable_DispatchHelper and ArpQueue_ProcessAndSort_Data call it after the status check; cf. MidiTable_NullRet,
 ;   called last.
 MidiTable_PreDispatchNullRet:
 	ret
-	ldw	wa, 238
-	jp	SoundCtrl_SendCommand
+	ldw	wa, TT_MESAGE
+	jp	UI_InterruptTitleByIndex
 ; SysEx_SendAllData: Case 0 (ALL) of SysEx_InitiateSend: with bit 3 of 0xBC7C set, points the send-side total
 ;   descriptor 0xBC20 at the size of everything (MidiPkt_SetXferTotal_All: panel + 0x1E0000 area + accompaniment
 ;   block area + style image + sequencer, the gated groups only when present) and sends every group in turn

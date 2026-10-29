@@ -2775,8 +2775,8 @@ SeqPlay_ProcessVoice_Cleanup:
 	jr	nz, SeqPlay_ProcessVoice_PartChange
 	cp	(CURRENT_MODE:16), 10
 	jr	z, SeqPlay_ProcessVoice_ClearBit
-	ldw	wa, 10
-	call	UI_PostPartChangeEvent
+	ldw	wa, MD_SEQ_PLAY
+	call	UI_ChangeModeByIndex
 	jr	SeqPlay_ProcessVoice_ClearBit
 SeqPlay_ProcessVoice_PartChange:
 	call UI_PostRefreshEvent
@@ -23506,7 +23506,7 @@ SeqAccomp_ActivateAndAssign:
 	set 1, (SEQ_CYCLE_FLAGS:16)
 	ld wa, (9504:16)
 	ld (SEQ_START_MEASURE:16), wa
-	ldw wa, 0x86
+	ldw wa, TT_SQCYCREC
 	jr SeqAccomp_PostModeAndInit
 
 SeqAccomp_HandleOtherState:
@@ -23536,10 +23536,10 @@ SeqAccomp_SendVoiceAndReturn:
 
 SeqAccomp_OtherSetBit:
 	set 0, (SEQ_CYCLE_FLAGS:16)
-	ldw wa, 0x82
+	ldw wa, TT_SQCYCPLY
 
 SeqAccomp_PostModeAndInit:
-	call UI_PostModeChangeEvent
+	call UI_ChangeTitleByIndex
 	jr SeqAccomp_InitAndReturn
 
 ; NoteEditSy mode scroll dispatch
@@ -23605,8 +23605,8 @@ NoteEdit_ScrollActivate:
 	ld	(0x28b2:16), c
 	cp	(ACTIVE_TITLE:16), 133
 	jr	nz, SeqAccomp_InitAndReturn
-	ldw	wa, 171
-	call	SoundCtrl_SendCommand
+	ldw	wa, TT_SQMETBAL
+	call	UI_InterruptTitleByIndex
 SeqAccomp_InitAndReturn:
 	call SeqPlay_InitStartState
 	jr AppEvent_ReturnZero
@@ -23957,11 +23957,11 @@ NoteEditSy_UpScrollTable:
 
 SoundCtrl_SaveAndSendCmd_EE:
 	ld	(GLOBAL_ERROR_CODE:16), a
-	ldw	wa, 238
-	jp	SoundCtrl_SendCommand
+	ldw	wa, TT_MESAGE
+	jp	UI_InterruptTitleByIndex
 SoundCtrl_SendCmd_EE:
-	ldw wa, 0xee
-	jp SoundCtrl_SendCommand
+	ldw wa, TT_MESAGE
+	jp UI_InterruptTitleByIndex
 
 NoteEditSyori:
 	cp xbc, EVT_INDEXSW_DOWN
@@ -25098,7 +25098,7 @@ MainExe_SongMemoryLoop:
 MainExeCall_OnTitleSqtrkclr:
 	cpw (SQEDT_TRKCLR_MASK:16), 0
 	jr nz, MainExe_SongMemStart
-	ldw wa, 0x9a
+	ldw wa, TT_SQTRKCLR
 	jrl MainExe_CallModeSwitch
 
 MainExe_SongMemStart:
@@ -25206,7 +25206,7 @@ MainExe_SetPartMaskFFE0:
 	ld	a, (GLOBAL_ERROR_CODE:16)
 	cp	a, 255
 	jr	nz, MainExe_CheckResultCode
-	ldw	wa, 155
+	ldw	wa, TT_SQTRKMRG
 	jrl	MainExe_CallModeSwitch
 MainExe_CheckResultCode:
 	cp a, 0x23
@@ -25271,7 +25271,7 @@ MainExe_PatternLoad:
 	call	SeqPart_VelocityEditSetup
 	cp	(GLOBAL_ERROR_CODE:16), 255
 	jrl	nz, MainExe_SongMemoryLoop
-	ldw	wa, 156
+	ldw	wa, TT_SQQTZ
 	jrl	MainExe_CallModeSwitch
 ; MainExeCall_OnTitleSqtrns: EXECUTE on TT_SQTRNS: track 9756 from measure 9758 to 9760, then SeqPart_PartSelect.
 MainExeCall_OnTitleSqtrns:
@@ -25285,7 +25285,7 @@ MainExeCall_OnTitleSqtrns:
 	call	SeqPart_PartSelect
 	cp	(GLOBAL_ERROR_CODE:16), 255
 	jrl	nz, MainExe_SongMemoryLoop
-	ldw	wa, 157
+	ldw	wa, TT_SQTRNS
 	jrl	MainExe_CallModeSwitch
 ; MainExeCall_OnTitleSqvelocng: EXECUTE on TT_SQVELOCNG: track 0xf228 from measure 0xf229, velocity amount 0xf22e into
 ;   9812, then SeqPart_TransposeSetup (name does not fit).
@@ -25310,7 +25310,7 @@ MainExe_RhythmLoad:
 	call	SeqPart_TransposeSetup
 	cp	(GLOBAL_ERROR_CODE:16), 255
 	jrl	nz, MainExe_SongMemoryLoop
-	ldw	wa, 158
+	ldw	wa, TT_SQVELOCNG
 	jrl	MainExe_CallModeSwitch
 ; MainExeCall_OnTitleSqnotecng: EXECUTE on TT_SQNOTECNG: track 9742 from measure 9744 to 9746, then
 ;   SeqPart_PartVoiceCheck.
@@ -25325,7 +25325,7 @@ MainExeCall_OnTitleSqnotecng:
 	call	SeqPart_PartVoiceCheck
 	cp	(GLOBAL_ERROR_CODE:16), 255
 	jrl	nz, MainExe_SongMemoryLoop
-	ldw	wa, 159
+	ldw	wa, TT_SQNOTECNG
 	jrl	MainExe_CallModeSwitch
 ; MainExeCall_OnTitleSqadvdly: EXECUTE on TT_SQADVDLY: track 9732 from measure 9734 to 9736, then
 ;   SeqPart_VoiceCheckModeB.
@@ -25340,7 +25340,7 @@ MainExeCall_OnTitleSqadvdly:
 	call	SeqPart_VoiceCheckModeB
 	cp	(GLOBAL_ERROR_CODE:16), 255
 	jrl	nz, MainExe_SongMemoryLoop
-	ldw	wa, 160
+	ldw	wa, TT_SQADVDLY
 	jrl	MainExe_CallModeSwitch
 ; MainExeCall_OnTitleSqmers: EXECUTE on TT_SQMERS: track 0xf1db from measure 0xf1dc, MERS choice 0xf1e0 into 9808,
 ;   then SeqPart_SinglePartLoad.
@@ -25365,7 +25365,7 @@ MainExe_AccompLoad:
 	call	SeqPart_SinglePartLoad
 	cp	(GLOBAL_ERROR_CODE:16), 255
 	jrl	nz, MainExe_SongMemoryLoop
-	ldw	wa, 161
+	ldw	wa, TT_SQMERS
 	jrl	MainExe_CallModeSwitch
 ; MainExeCall_OnTitleSqmcp: EXECUTE on TT_SQMCP: source track 0xf1e9 from measure 0xf1ea, destination track 0xf1ee at
 ;   measure 0xf1ef, then SeqPart_DualPartLoad (SeqPart_LoadAndValidateData after error 0x23).
@@ -25393,7 +25393,7 @@ MainExe_SongLoad:
 	ld	a, (GLOBAL_ERROR_CODE:16)
 	cp	a, 255
 	jr	nz, MainExe_SongLoadCheckRedirect
-	ldw	wa, 162
+	ldw	wa, TT_SQMCP
 	jrl	MainExe_CallModeSwitch
 MainExe_SongLoadCheckRedirect:
 	cp	a, 35
@@ -25401,7 +25401,7 @@ MainExe_SongLoadCheckRedirect:
 	call	SeqPart_LoadAndValidateData
 	cp	(GLOBAL_ERROR_CODE:16), 255
 	jr	nz, MainExe_SongLoadFinish
-	ldw	wa, 162
+	ldw	wa, TT_SQMCP
 	jrl	MainExe_CallModeSwitch
 MainExe_SongLoadFinish:
 	calr	SoundCtrl_SendCmd_EE
@@ -25443,7 +25443,7 @@ MainExe_InlineByteData_Join:
 	call	SeqPart_ByteBlockA207
 	cp	(GLOBAL_ERROR_CODE:16), 255
 	jrl	nz, MainExe_SongMemoryLoop
-	ldw	wa, 163
+	ldw	wa, TT_SQMDEL
 	jr	MainExe_CallModeSwitch
 ; MainExeCall_OnTitleSqmins: EXECUTE on TT_SQMINS: track 0xf1e1 from measure 0xf1e2, second track 0xf1e6 at measure
 ;   0xf1e7, then SeqPart_ByteBlockA95A (SeqPart_LoadDualPartData after error 0x23).
@@ -25470,7 +25470,7 @@ MainExeCall_OnTitleSqmins_Join2:
 	ld	a, (GLOBAL_ERROR_CODE:16)
 	cp	a, 255
 	jr	nz, MainExeCall_OnTitleSqmins_Skip3
-	ldw	wa, 164
+	ldw	wa, TT_SQMINS
 	jr	MainExe_CallModeSwitch
 MainExeCall_OnTitleSqmins_Skip3:
 	cp	a, 35
@@ -25478,9 +25478,9 @@ MainExeCall_OnTitleSqmins_Skip3:
 	call	SeqPart_LoadDualPartData
 	cp	(GLOBAL_ERROR_CODE:16), 255
 	jr	nz, EtmenuTitleFunc_Skip4
-	ldw	wa, 164
+	ldw	wa, TT_SQMINS
 MainExe_CallModeSwitch:
-	call UI_PostModeChangeEvent
+	call UI_ChangeTitleByIndex
 	jrl t, MainExe_ReturnZero
 EtmenuTitleFunc_Skip4:
 	calr SoundCtrl_SendCmd_EE
@@ -25524,8 +25524,8 @@ MainExe_SeqStopFinish:
 	ldw	(SEQ_TRACK_MASK_COPY:24), 0
 	ld	(9980:16), 1
 	call	Part_DetectSingleVoiceType
-	ldw	wa, 11
-	jp	UI_PostPartChangeEvent
+	ldw	wa, MD_SEQ_REAL
+	jp	UI_ChangeModeByIndex
 MainPanic:
 	cp	xbc, EVT_PANIC
 	jr	nz, MainPanic_ReturnZero

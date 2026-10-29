@@ -1606,9 +1606,9 @@ const naka_technichord_part_t naka_technichord_part_data
     .TechniChord_str = ALIGNED_STRING("TECHNI-CHORD"),
 
     /* ==== SCREEN TITLE_SDPART "SOUND PART SETTING" -- "TT_SDPART", title id 0x3, function NAKA_APFUNC_DefaultFunction ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: MENU SOUND button (mode MD_SOUND) > "PART SETTING"
      * EXIT -> TITLE_PS
-     * Opened from: an untitled view ("PART SETTING") */
+     * Opened from: TITLE_SDMENU ("PART SETTING") */
     .Sdpart = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -3258,9 +3258,9 @@ const naka_technichord_part_t naka_technichord_part_data
     .v3_e83_caption = "PART EXP PDL:",
 
     /* ==== SCREEN TITLE_SDMTUNE "MASTER TUNING" -- "TT_SDMTUNE", title id 0x4, function NAKA_APFUNC_DefaultFunction ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: MENU SOUND button (mode MD_SOUND) > "MASTER TUNING"
      * EXIT -> TITLE_SDMENU
-     * Opened from: an untitled view ("MASTER TUNING") */
+     * Opened from: TITLE_SDMENU ("MASTER TUNING") */
     .Sdmtune = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -3339,9 +3339,9 @@ const naka_technichord_part_t naka_technichord_part_data
     },
 
     /* ==== SCREEN TITLE_SDSCLTYP "KEY SCALING" -- "TT_SDSCLTYP", title id 0x5, function NAKA_APFUNC_DefaultFunction ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: MENU SOUND button (mode MD_SOUND) > "KEY SCALING"
      * EXIT -> TITLE_SDMENU
-     * Opened from: an untitled view ("KEY SCALING") */
+     * Opened from: TITLE_SDMENU ("KEY SCALING") */
     .Sdscltyp = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -4251,9 +4251,9 @@ const naka_technichord_part_t naka_technichord_part_data
     },
 
     /* ==== SCREEN TITLE_SDLFTHLD "LEFT HOLD SETTING" -- "TT_SDLFTHLD", title id 0x7, function NAKA_APFUNC_DefaultFunction ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: MENU SOUND button (mode MD_SOUND) > "LEFT HOLD"
      * EXIT -> TITLE_SDMENU
-     * Opened from: an untitled view ("LEFT HOLD") */
+     * Opened from: TITLE_SDMENU ("LEFT HOLD") */
     .Sdlfthld = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -4317,9 +4317,9 @@ const naka_technichord_part_t naka_technichord_part_data
     .v7_e2_caption = ALIGNED_STRING("LEFT HOLD      :"),
 
     /* ==== SCREEN TITLE_SDMIXER "MIXER" -- "TT_SDMIXER", title id 0x8, function NAKA_APFUNC_DefaultFunction ====
-     * Path: mode MD_ENTERTAINER > "MIXER"
+     * Path: MENU SOUND button (mode MD_SOUND) > "MIXER"
      * EXIT -> TITLE_SDMENU
-     * Opened from: TITLE_ETMENU ("MIXER"), an untitled view ("MIXER") */
+     * Opened from: TITLE_ETMENU ("MIXER"), TITLE_SDMENU ("MIXER") */
     .Sdmixer = {
         .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
@@ -4931,7 +4931,8 @@ const naka_technichord_part_t naka_technichord_part_data
 
     /* ==== SCREEN TITLE_SQMIXER "TRACK MIXER" -- "TT_SQMIXER", title id 0xA5, function NAKA_APFUNC_DefaultFunction ====
      * What: the sequencer track-mixer page.
-     * Path: no menu entry opens it (opened by code)
+     * Path: MENU DISK button (mode MD_DISK) > "DIRECT PLAY" (by DirectPlayTtlJgFunc) > (by
+     *       FmmDocMedleyFunc) > (by DpDocTtlFunc)
      * EXIT -> TITLE_PS
      * Opened from: an untitled view ("LYRICS"), an untitled view ("MIC"), an untitled view
      *       ("MIXER") */
@@ -5258,7 +5259,7 @@ const naka_technichord_part_t naka_technichord_part_data
 
     /* ==== SCREEN TITLE_DRAWBAR -- "TT_DRAWBAR", title id 0xEA, function NAKA_APFUNC_DefaultFunction ====
      * What: the drawbar-organ screen. It is opened when the sound category byte (0xC07E) is 12.
-     * Path: no menu entry opens it (opened by code)
+     * Path: none found (no data entry, and no traced code, opens it)
      * EXIT -> TITLE_PS */
     .Drawbar = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -5969,7 +5970,7 @@ const naka_technichord_part_t naka_technichord_part_data
 
     /* ==== SCREEN TITLE_ACCORDION -- "TT_ACCORDION", title id 0xEB, function NAKA_APFUNC_DefaultFunction ====
      * What: the accordion screen. It is opened when the sound category byte (0xC07E) is 13.
-     * Path: no menu entry opens it (opened by code)
+     * Path: none found (no data entry, and no traced code, opens it)
      * EXIT -> TITLE_PS */
     .Accordion = {
         .class_ = NAKA_CLASS(Screen),
@@ -6724,7 +6725,7 @@ const naka_technichord_part_t naka_technichord_part_data
     /* ==== SCREEN TITLE_MESAGE -- "TT_MESAGE", title id 0xEE, function NAKA_APFUNC_DefaultFunction ====
      * What: Title id 0xEE, "TT_MESAGE" (the firmware's own spelling): the message /
      *       confirmation-box title. About 30 call sites show it with title request ...
-     * Path: no menu entry opens it (opened by code)
+     * Path: MENU DISK button (mode MD_DISK) > "DISK TOOLS" (by UtilityTtlJgFunc)
      * EXIT -> TITLE_PS */
     .Mesage = {
         .class_ = NAKA_CLASS(IvScreen),
@@ -7128,7 +7129,7 @@ const naka_technichord_part_t naka_technichord_part_data
 
     /* ==== SCREEN TITLE_WELCOM -- "TT_WELCOM", title id 0xEF, function NAKA_APFUNC_DefaultFunction ====
      * What: the welcome (boot) screen. It is requested once at boot.
-     * Path: no menu entry opens it (opened by code)
+     * Path: none found (no data entry, and no traced code, opens it)
      * EXIT -> TITLE_PS */
     .Welcom = {
         .class_ = NAKA_CLASS(AcWelcomScreen),
@@ -7274,7 +7275,7 @@ const naka_technichord_part_t naka_technichord_part_data
 
     /* ==== SCREEN TITLE_SOFTVER "SOFT VERSION" -- "TT_SOFTVER", title id 0xF0, function NAKA_APFUNC_DefaultFunction ====
      * What: the software-version screen, requested by a control-panel switch chord.
-     * Path: no menu entry opens it (opened by code)
+     * Path: none found (no data entry, and no traced code, opens it)
      * EXIT -> TITLE_PS */
     .Softver = {
         .class_ = NAKA_CLASS(TtlScreen),

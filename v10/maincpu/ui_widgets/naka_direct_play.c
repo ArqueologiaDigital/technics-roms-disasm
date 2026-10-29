@@ -1390,8 +1390,10 @@ const naka_direct_play_t naka_direct_play_data
     .PsSongSelBoxProc_name = ALIGNED_STRING("PsSongSelBoxProc"),
 
     /* ==== SCREEN TITLE_DPSMF "SMF DIRECT PLAY  " -- "TT_DPSMF", title id 0x6F, function NAKA_MAINFUNC_DpSmfTtlFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: MENU DISK button (mode MD_DISK) > "DIRECT PLAY" (by DirectPlayTtlJgFunc) > (by
+     *       FmmSmfMedleyFunc)
      * Menu: "LYRICS" -> TITLE_DPSMFLYR
+     * Procedure: DpSmfTtlFunc opens TITLE_ETMENU, TITLE_SQMIXER
      * EXIT -> TITLE_DKDPSMF */
     .DpSmf = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -2131,7 +2133,9 @@ const naka_direct_play_t naka_direct_play_data
     },
 
     /* ==== SCREEN TITLE_DPDOC "DOC DIRECT PLAY  " -- "TT_DPDOC", title id 0x70, function NAKA_MAINFUNC_DpDocTtlFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: MENU DISK button (mode MD_DISK) > "DIRECT PLAY" (by DirectPlayTtlJgFunc) > (by
+     *       FmmDocMedleyFunc)
+     * Procedure: DpDocTtlFunc opens TITLE_ETMENU, TITLE_SQMIXER
      * EXIT -> TITLE_DKDPDOC */
     .DpDoc = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -2338,7 +2342,8 @@ const naka_direct_play_t naka_direct_play_data
     .MIC_str_2 = "MIC",
 
     /* ==== SCREEN TITLE_DPPD "PIANO DISC DIRECT PLAY    " -- "TT_DPPD", title id 0x71, function NAKA_MAINFUNC_DpPdTtlFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: none found (no data entry, and no traced code, opens it)
+     * Procedure: DpPdTtlFunc opens TITLE_ETMENU, TITLE_SQMIXER
      * EXIT -> TITLE_DKDPPD */
     .DpPd = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -2526,7 +2531,9 @@ const naka_direct_play_t naka_direct_play_data
 
     /* ==== SCREEN TITLE_DPSMFLYR "SMF DIRECT PLAY  " -- "TT_DPSMFLYR", title id 0x72, function NAKA_MAINFUNC_DpSmfLyrTtlFunc ====
      * What: the disk direct-play SMF page with lyrics.
-     * Path: no menu entry opens it (opened by code)
+     * Path: MENU DISK button (mode MD_DISK) > "DIRECT PLAY" (by DirectPlayTtlJgFunc) > (by
+     *       FmmSmfMedleyFunc) > "LYRICS"
+     * Procedure: DpSmfLyrTtlFunc opens TITLE_ETMENU
      * EXIT -> TITLE_DPSMF
      * Opened from: TITLE_DPSMF ("LYRICS") */
     .DpSmfLyr = {
@@ -2629,8 +2636,10 @@ const naka_direct_play_t naka_direct_play_data
     },
 
     /* ==== SCREEN TITLE_DPMDLYSMF "SMF MEDLEY" -- "TT_DPMDLYSMF", title id 0x73, function NAKA_MAINFUNC_DpMdlySmfTtlFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: MENU DISK button (mode MD_DISK) > "DIRECT PLAY" (by DirectPlayTtlJgFunc) > (by
+     *       FmmSmfMedleyFunc)
      * Menu: "LYRICS" -> TITLE_DPMDLYSMFLYR
+     * Procedure: DpMdlySmfTtlFunc opens TITLE_ETMENU, TITLE_SQMIXER
      * EXIT -> TITLE_DKDPSMF */
     .DpMdlySmf = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -2909,7 +2918,9 @@ const naka_direct_play_t naka_direct_play_data
     .SmfMedley_text_3 = ALIGNED_STRING("SMF MEDLEY"),
 
     /* ==== SCREEN TITLE_DPMDLYDOC "DOC MEDLEY" -- "TT_DPMDLYDOC", title id 0x74, function NAKA_MAINFUNC_DpMdlyDocTtlFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: MENU DISK button (mode MD_DISK) > "DIRECT PLAY" (by DirectPlayTtlJgFunc) > (by
+     *       FmmDocMedleyFunc)
+     * Procedure: DpMdlyDocTtlFunc opens TITLE_ETMENU, TITLE_SQMIXER
      * EXIT -> TITLE_DKDPDOC */
     .DpMdlyDoc = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -3129,7 +3140,8 @@ const naka_direct_play_t naka_direct_play_data
     .MIC_str_6 = "MIC",
 
     /* ==== SCREEN TITLE_DPMDLYPD "PIANO DISC MEDLEY    " -- "TT_DPMDLYPD", title id 0x75, function NAKA_MAINFUNC_DpMdlyPdTtlFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: none found (no data entry, and no traced code, opens it)
+     * Procedure: DpMdlyPdTtlFunc opens TITLE_ETMENU, TITLE_SQMIXER
      * EXIT -> TITLE_DKDPPD */
     .DpMdlyPd = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -3330,7 +3342,9 @@ const naka_direct_play_t naka_direct_play_data
 
     /* ==== SCREEN TITLE_DPMDLYSMFLYR "SMF MEDLEY" -- "TT_DPMDLYSMFLYR", title id 0x76, function NAKA_MAINFUNC_DpMdlySmfLyrTtlFunc ====
      * What: the direct-play medley SMF page with lyrics.
-     * Path: no menu entry opens it (opened by code)
+     * Path: MENU DISK button (mode MD_DISK) > "DIRECT PLAY" (by DirectPlayTtlJgFunc) > (by
+     *       FmmSmfMedleyFunc) > "LYRICS"
+     * Procedure: DpMdlySmfLyrTtlFunc opens TITLE_ETMENU
      * EXIT -> TITLE_DPMDLYSMF
      * Opened from: TITLE_DPMDLYSMF ("LYRICS") */
     .DpMdlySmfLyr = {
@@ -3432,7 +3446,9 @@ const naka_direct_play_t naka_direct_play_data
     },
 
     /* ==== SCREEN TITLE_DKMDLYPLY "SONG MEDLEY       " -- "TT_DKMDLYPLY", title id 0x78, function NAKA_MAINFUNC_DkMdlyPlyTtlFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: MENU DISK button (mode MD_DISK) > "SONG MEDLEY" (by SongMedleyTtlJgFunc) > (by
+     *       FmmDiskMedleySelectFunc)
+     * Procedure: DkMdlyPlyTtlFunc opens TITLE_SQMIXER
      * EXIT -> TITLE_DKMDLY */
     .DkMdlyPly = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -3846,7 +3862,8 @@ const naka_direct_play_t naka_direct_play_data
     },
 
     /* ==== SCREEN TITLE_SQMDLYPLY "SONG MEDLEY" -- "TT_SQMDLYPLY", title id 0x7A, function NAKA_MAINFUNC_SqMdlyPlyTtlFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: none found (no data entry, and no traced code, opens it)
+     * Procedure: SqMdlyPlyTtlFunc opens TITLE_SQMIXER
      * EXIT -> TITLE_SQMDLY */
     .SqMdlyPly = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -4077,7 +4094,7 @@ const naka_direct_play_t naka_direct_play_data
     },
 
     /* ==== SCREEN TITLE_SQSTEP -- "TT_SQSTEP", title id 0x8A, function NAKA_MAINFUNC_SqStepTtlFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: none found (no data entry, and no traced code, opens it)
      * EXIT -> TITLE_PS */
     .NakaWidget_StepRecSubPanel = {
         .class_ = NAKA_CLASS(IvDirmdScreen),
@@ -4094,7 +4111,7 @@ const naka_direct_play_t naka_direct_play_data
     },
 
     /* ==== SCREEN TITLE_SQTRAS "TRACK ASSIGN   " -- "TT_SQTRAS", title id 0x8B, function NAKA_MAINFUNC_SqTrAsTtlFunc ====
-     * Path: mode MD_SEQ > "CREATE" > "TRACK ASSIGN"
+     * Path: SEQUENCER MENU button (mode MD_SEQ) > "CREATE" > "TRACK ASSIGN"
      * Menu: "PRESET" -> TITLE_SQTRASPS
      * EXIT -> TITLE_SQCMENU
      * Opened from: TITLE_SQCMENU ("TRACK ASSIGN") */
@@ -4464,7 +4481,7 @@ const naka_direct_play_t naka_direct_play_data
     },
 
     /* ==== SCREEN TITLE_SQTRASPS "TRACK ASSIGN PRESET" -- "TT_SQTRASPS", title id 0x8C, function NAKA_MAINFUNC_SqTrAsPsTtlFunc ====
-     * Path: mode MD_SEQ > "CREATE" > "TRACK ASSIGN" > "PRESET"
+     * Path: SEQUENCER MENU button (mode MD_SEQ) > "CREATE" > "TRACK ASSIGN" > "PRESET"
      * EXIT -> TITLE_SQTRAS
      * Opened from: TITLE_SQTRAS ("PRESET") */
     .SqTrAsPs = {
@@ -4971,7 +4988,7 @@ const naka_direct_play_t naka_direct_play_data
 
     /* ==== SCREEN TITLE_SQSNGSEL "SONG SELECT/NAMING" -- "TT_SQSNGSEL", title id 0x8E, function NAKA_MAINFUNC_SqSngSelTtlFunc ====
      * What: the sequencer song-select page.
-     * Path: mode MD_SEQ > "CREATE" > "SONG SELECT /NAMING"
+     * Path: SEQUENCER MENU button (mode MD_SEQ) > "CREATE" > "SONG SELECT /NAMING"
      * Menu: "NAMING" -> TITLE_SQSNGNAME
      * EXIT -> TITLE_SQCMENU
      * Opened from: TITLE_SQCMENU ("SONG SELECT /NAMING") */
@@ -5079,13 +5096,13 @@ const naka_direct_play_t naka_direct_play_data
 
     /* ==== SCREEN TITLE_SQSNGNAME "NAMING" -- "TT_SQSNGNAME", title id 0x8F, function NAKA_MAINFUNC_SqSngNameTtlFunc ====
      * What: the sequencer song-name page.
-     * Path: mode MD_SEQ > "CREATE" > "SONG SELECT /NAMING" > "NAMING"
+     * Path: SEQUENCER MENU button (mode MD_SEQ) > "CREATE" > "SONG SELECT /NAMING" > "NAMING"
      * EXIT -> TITLE_SQSNGSEL
      * Opened from: TITLE_SQSNGSEL ("NAMING")
     /* ==== SCREEN TITLE_SQEASYNAME "NAMING" -- "TT_SQEASYNAME", title id 0xA7, function NAKA_MAINFUNC_SqSngNameTtlFunc ====
      * What: the song-name page reached from easy record. It reuses TT_SQSNGNAME's view 0x008F0000,
      *       and its exit returns to ...
-     * Path: mode MD_SEQ_EREC > "NAMING"
+     * Path: SEQUENCER EASY REC button (mode MD_SEQ_EREC) > "NAMING"
      * EXIT -> TITLE_SQSNGSEL
      * Opened from: TITLE_SQEASYREC ("NAMING") */
     .SqNameing = {
@@ -5178,7 +5195,7 @@ const naka_direct_play_t naka_direct_play_data
     },
 
     /* ==== SCREEN TITLE_SQAFTSET "AFTER TOUCH SETTING" -- "TT_SQAFTSET", title id 0x92, function NAKA_MAINFUNC_SqAftSetTtlFunc ====
-     * Path: mode MD_SEQ > "CREATE" > "AFTER TOUCH SET"
+     * Path: SEQUENCER MENU button (mode MD_SEQ) > "CREATE" > "AFTER TOUCH SET"
      * EXIT -> TITLE_SQCMENU
      * Opened from: TITLE_SQCMENU ("AFTER TOUCH SET") */
     .AfterTouchSet = {
@@ -5262,7 +5279,7 @@ const naka_direct_play_t naka_direct_play_data
     },
 
     /* ==== SCREEN TITLE_SQSTEPBAL "PART BALANCE" -- "TT_SQSTEPBAL", title id 0xA9, function NAKA_APFUNC_DefaultFunction ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: none found (no data entry, and no traced code, opens it)
      * EXIT -> TITLE_SQSTEP */
     .StepPartBal = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -5359,7 +5376,7 @@ const naka_direct_play_t naka_direct_play_data
 
     /* ==== SCREEN TITLE_DEMOMENU "DEMONSTRATION" -- "TT_DEMOMENU", title id 0xE0, function NAKA_MAINFUNC_DemoMenuTtlFunc ====
      * What: the demo menu. It is the home title of mode 0x13, MD_DEMO.
-     * Path: mode MD_DEMO
+     * Path: DEMO button (mode MD_DEMO)
      * Menu: "PERFORMANCES" -> TITLE_DEMOSTYLE
      * Menu: "FEATURE PRESENTATION" -> TITLE_DEMOFEATURE
      * EXIT -> TITLE_NORMAL */
@@ -5439,7 +5456,8 @@ const naka_direct_play_t naka_direct_play_data
     },
 
     /* ==== SCREEN TITLE_DEMOSTYLE "PERFORMANCES" -- "TT_DEMOSTYLE", title id 0xE1, function NAKA_MAINFUNC_DemoStyleTtlFunc ====
-     * Path: mode MD_DEMO > "PERFORMANCES"
+     * Path: DEMO button (mode MD_DEMO) > "PERFORMANCES"
+     * Procedure: DemoStyleTtlFunc opens TITLE_DEMORHY, TITLE_DEMOSOUND
      * EXIT -> TITLE_DEMOMENU
      * Opened from: TITLE_DEMOMENU ("PERFORMANCES") */
     .DemoStyle = {
@@ -5692,7 +5710,8 @@ const naka_direct_play_t naka_direct_play_data
     },
 
     /* ==== SCREEN TITLE_DEMOSOUND "PERFORMANCES" -- "TT_DEMOSOUND", title id 0xE2, function NAKA_MAINFUNC_DemoSoundTtlFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: DEMO button (mode MD_DEMO) > "PERFORMANCES" > (by DemoStyleTtlFunc)
+     * Procedure: DemoSoundTtlFunc opens TITLE_DEMORHY, TITLE_DEMOSTYLE
      * EXIT -> TITLE_DEMOMENU */
     .DemoSound = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -5944,7 +5963,8 @@ const naka_direct_play_t naka_direct_play_data
     },
 
     /* ==== SCREEN TITLE_DEMORHY "PERFORMANCES" -- "TT_DEMORHY", title id 0xE3, function NAKA_MAINFUNC_DemoRhyTtlFunc ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: DEMO button (mode MD_DEMO) > "PERFORMANCES" > (by DemoStyleTtlFunc)
+     * Procedure: DemoRhyTtlFunc opens TITLE_DEMOSOUND, TITLE_DEMOSTYLE
      * EXIT -> TITLE_DEMOMENU */
     .DemoRhy = {
         .class_ = NAKA_CLASS(TtlScreen),

@@ -2455,7 +2455,7 @@ const naka_perf_style_t naka_perf_style_data
     __attribute__((section(".text"), used)) = {
 
     /* ==== SCREEN TITLE_FDMSP -- "TT_FDMSP", title id 0xFD, function NAKA_APFUNC_DefaultFunction ====
-     * Path: no menu entry opens it (opened by code)
+     * Path: none found (no data entry, and no traced code, opens it)
      * EXIT -> TITLE_PS */
     .ftdemo01 = {
         .class_ = NAKA_CLASS(TtlScreen),
