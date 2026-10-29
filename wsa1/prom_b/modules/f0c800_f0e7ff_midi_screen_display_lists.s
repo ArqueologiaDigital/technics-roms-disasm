@@ -685,7 +685,8 @@ DL_F0D019:
 	dlb_number	var=0x2740, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=176, y=106, digits=3
 
 ; ------------------------------------------------------------------
-; 0xF0D023-0xF0D02C -- 1 records, 10 bytes -- interpreter A or B: NO SITE NAMES THIS LIST and both implied lengths fit
+; 0xF0D023-0xF0D02C -- 1 records, 10 bytes -- interpreter B
+;   CORRECTED 2026-10-29 (lane gui-wsa1): this said 'interpreter A' (or B: NO SITE NAMES THIS LIST and both implied lengths fit).  B: its interpreter-A reading puts x0 = 10048, off the 320 x 240 panel; its B reading does not (rule 'geometry').
 ; ------------------------------------------------------------------
 MidiOutProgramChange_PaintBankLsb_DL:
 ; ; drawn (start operand) by MidiOutProgramChange_PaintBankLsb -- derivative name (notes/wsa1_display_list_drawer_names.py)
@@ -762,7 +763,8 @@ DLBoxes_F0D061:
 
 
 ; ------------------------------------------------------------------
-; 0xF0D081-0xF0D4D1 -- 129 display-list records, 1105 bytes -- interpreter A
+; 0xF0D081-0xF0D4D1 -- 129 display-list records, 1105 bytes -- interpreter A (127 records) and B (2)
+;   CORRECTED 2026-10-29 (lane gui-wsa1): this said 'interpreter A'.  The last two are B: one A reading is impossible (B op-02 length 15), one lies off the panel (rules 'length', 'geometry').
 ; RECOVERED FROM A 2-BYTE OBJECT-BOUNDARY ERROR: DLBoxes_F0D061 (above)
 ; used to include these 2 bytes (op 0x23, len 5) as array padding; the
 ; walk from here lands with ZERO DRIFT on 129 consecutive record
@@ -898,7 +900,7 @@ DL_F0D081:
 	dl_box	x0=274, y0=147, x1=309, y1=166
 	dl_box	x0=276, y0=149, x1=307, y1=164
 	dlb_rect_entry_op08	var=0x2721, mask=0xff, shift=0, svc=LCDSVC_EraseRect, table=DLTable_F0D4D2
-	dlb_rect_entry	var=UI_ScreenItem, mask=0xff, shift=0, svc=LCDSVC_FillRect, table=DLTable_F0D4D2	; operand bytes the handler does not read
+	dlb_rect_entry	var=UI_ScreenItem, mask=0xff, shift=0, svc=LCDSVC_FillRect, table=DLTable_F0D4D2
 
 	
 
@@ -1351,14 +1353,15 @@ DL_F0DA73:
 ; --- 0xF0DA93-0xF0DAA1: not converted ---
 
 ; ------------------------------------------------------------------
-; 0xF0DA93-0xF0DAA1 -- 1 display-list records, 15 bytes -- interpreter A
+; 0xF0DA93-0xF0DAA1 -- 1 display-list records, 15 bytes -- interpreter B
+;   CORRECTED 2026-10-29 (lane gui-wsa1): this said 'interpreter A'.  B: prom_a runs it through T_DLB_Handler_StringTable, B's op-02 handler, at 0xF99D70, 0xF99E0E and 0xF99E46.
 ; SELF-FRAMING: no call site found for this span, but DL.walk()'s
 ; op/len walk from 0xF0DA93 lands with ZERO DRIFT exactly on 0xF0DAA2,
-; and every opcode resolves to a documented interpreter-A handler.
+; and every opcode resolves to a documented interpreter-A handler -- but see the CORRECTED line above.
 ; notes/gen_prom_b_selfframing_incbin_module.py
 ; ------------------------------------------------------------------
 DL_F0DA93:
-	dlb_string	var=UI_ScreenItem, mask=0x04, shift=130, svc=LCDSVC_DrawText8x16, table=DLTable_OffOnOff, width=3, x=208, y=112	; operand bytes the handler does not read
+	dlb_string	var=UI_ScreenItem, mask=0x04, shift=130, svc=LCDSVC_DrawText8x16, table=DLTable_OffOnOff, width=3, x=208, y=112
 
 ; ------------------------------------------------------------------
 ; 0xF0DAA2-0xF0DB17 -- 13 display-list records, 118 bytes -- interpreter A
@@ -1438,17 +1441,18 @@ PTR_F0DB18_TextStarts:
 	.long DL_F0E12D_TEXT	; [19] txt_starts[ITALIAN]
 
 ; ------------------------------------------------------------------
-; 0xF0DB68-0xF0DBCC -- ENGLISH: 7 display-list records, 101 bytes -- interpreter A
+; 0xF0DB68-0xF0DBCC -- ENGLISH: 7 display-list records, 101 bytes -- interpreter A (3 records) and B (4)
+;   CORRECTED 2026-10-29 (lane gui-wsa1): this said 'interpreter A'.  PTR_F0DB18_ButtonStarts2 names the B part; Paint_GeneralMidiMode runs it through T_DisplayListB_Run.
 ; ------------------------------------------------------------------
 DL_F0DB68:
 	dl_text16x16	x=48, y=56, text="ATTENTION!"
 	dl_box	x0=45, y0=72, x1=210, y1=73
 	dl_text16x16	x=24, y=175, text="Are You Sure?"
 DL_F0DB91:
-	dlb_string	var=UI_ScreenItem, mask=0x04, shift=130, svc=LCDSVC_DrawText8x16, table=DL_F0DBCD_TEXT, width=29, x=24, y=90	; operand bytes the handler does not read
-	dlb_string	var=UI_ScreenItem, mask=0x04, shift=130, svc=LCDSVC_DrawText8x16, table=DL_F0DBCD_TEXT+0x3a, width=29, x=24, y=110	; operand bytes the handler does not read
-	dlb_string	var=UI_ScreenItem, mask=0x04, shift=130, svc=LCDSVC_DrawText8x16, table=DL_F0DBCD_TEXT+0x74, width=26, x=24, y=130	; operand bytes the handler does not read
-	dlb_string	var=UI_ScreenItem, mask=0x04, shift=130, svc=LCDSVC_DrawText8x16, table=DL_F0DBCD_TEXT+0xa8, width=17, x=24, y=150	; operand bytes the handler does not read
+	dlb_string	var=UI_ScreenItem, mask=0x04, shift=130, svc=LCDSVC_DrawText8x16, table=DL_F0DBCD_TEXT, width=29, x=24, y=90
+	dlb_string	var=UI_ScreenItem, mask=0x04, shift=130, svc=LCDSVC_DrawText8x16, table=DL_F0DBCD_TEXT+0x3a, width=29, x=24, y=110
+	dlb_string	var=UI_ScreenItem, mask=0x04, shift=130, svc=LCDSVC_DrawText8x16, table=DL_F0DBCD_TEXT+0x74, width=26, x=24, y=130
+	dlb_string	var=UI_ScreenItem, mask=0x04, shift=130, svc=LCDSVC_DrawText8x16, table=DL_F0DBCD_TEXT+0xa8, width=17, x=24, y=150
 
 ; 0xF0DBCD-0xF0DC96 -- ENGLISH: literal message text, 202 bytes (no compression;
 ; see the module docstring for why the Italian copy looks doubled)
@@ -1456,17 +1460,18 @@ DL_F0DBCD_TEXT:
 	.ascii "Turning off GENERAL MIDI MODETurning on GENERAL MIDI MODE will replace the GENERAL MIDIwill replace your current    settings with the originalsettings with GENERAL MIDIfactory settings!settings!        "
 
 ; ------------------------------------------------------------------
-; 0xF0DC97-0xF0DCFC -- GERMAN: 7 display-list records, 102 bytes -- interpreter A
+; 0xF0DC97-0xF0DCFC -- GERMAN: 7 display-list records, 102 bytes -- interpreter A (3 records) and B (4)
+;   CORRECTED 2026-10-29 (lane gui-wsa1): this said 'interpreter A'.  PTR_F0DB18_ButtonStarts2 names the B part; Paint_GeneralMidiMode runs it through T_DisplayListB_Run.
 ; ------------------------------------------------------------------
 DL_F0DC97:
 	dl_text16x16	x=64, y=56, text="ACHTUNG!"
 	dl_box	x0=61, y0=72, x1=194, y1=73
 	dl_text16x16	x=8, y=175, text="SIND SIE SICHER?"
 DL_F0DCC1:
-	dlb_string	var=UI_ScreenItem, mask=0x04, shift=130, svc=LCDSVC_DrawText8x16, table=DL_F0DCFD_TEXT, width=30, x=16, y=90	; operand bytes the handler does not read
-	dlb_string	var=UI_ScreenItem, mask=0x04, shift=130, svc=LCDSVC_DrawText8x16, table=DL_F0DCFD_TEXT+0x3c, width=29, x=16, y=110	; operand bytes the handler does not read
-	dlb_string	var=UI_ScreenItem, mask=0x04, shift=130, svc=LCDSVC_DrawText8x16, table=DL_F0DCFD_TEXT+0x76, width=27, x=16, y=130	; operand bytes the handler does not read
-	dlb_string	var=UI_ScreenItem, mask=0x04, shift=130, svc=LCDSVC_DrawText8x16, table=DL_F0DCFD_TEXT+0xac, width=25, x=16, y=150	; operand bytes the handler does not read
+	dlb_string	var=UI_ScreenItem, mask=0x04, shift=130, svc=LCDSVC_DrawText8x16, table=DL_F0DCFD_TEXT, width=30, x=16, y=90
+	dlb_string	var=UI_ScreenItem, mask=0x04, shift=130, svc=LCDSVC_DrawText8x16, table=DL_F0DCFD_TEXT+0x3c, width=29, x=16, y=110
+	dlb_string	var=UI_ScreenItem, mask=0x04, shift=130, svc=LCDSVC_DrawText8x16, table=DL_F0DCFD_TEXT+0x76, width=27, x=16, y=130
+	dlb_string	var=UI_ScreenItem, mask=0x04, shift=130, svc=LCDSVC_DrawText8x16, table=DL_F0DCFD_TEXT+0xac, width=25, x=16, y=150
 
 ; 0xF0DCFD-0xF0DDDA -- GERMAN: literal message text, 222 bytes (no compression;
 ; see the module docstring for why the Italian copy looks doubled)
@@ -1476,7 +1481,8 @@ DL_F0DCFD_TEXT:
 	.ascii "ndert   verlassen,werden die GENERAL Ihre Einstellungen in GENERALMIDI - Einstellungen wiederMIDI - Einstellungen.      zu Werks - Einstellungen.                         "
 
 ; ------------------------------------------------------------------
-; 0xF0DDDB-0xF0DE9D -- FRENCH: 10 display-list records, 195 bytes -- interpreter A
+; 0xF0DDDB-0xF0DE9D -- FRENCH: 10 display-list records, 195 bytes -- interpreter A (6 records) and B (4)
+;   CORRECTED 2026-10-29 (lane gui-wsa1): this said 'interpreter A'.  PTR_F0DB18_ButtonStarts2 names the B part; Paint_GeneralMidiMode runs it through T_DisplayListB_Run.
 ; ------------------------------------------------------------------
 DL_F0DDDB:
 	dl_text16x16	x=48, y=50, text="ATTENTION!"
@@ -1486,10 +1492,10 @@ DL_F0DDDB:
 	dl_text8x16	x=48, y=170, text="VEUILLEZ CONFIRMER,"
 	dl_text8x16	x=56, y=194, text="S'IL VOUS PLAIT!"
 DL_F0DE62:
-	dlb_string	var=UI_ScreenItem, mask=0x04, shift=130, svc=LCDSVC_DrawText8x14, table=DL_F0DE9E_TEXT, width=29, x=8, y=74	; operand bytes the handler does not read
-	dlb_string	var=UI_ScreenItem, mask=0x04, shift=130, svc=LCDSVC_DrawText8x14, table=DL_F0DE9E_TEXT+0x3a, width=29, x=8, y=122	; operand bytes the handler does not read
-	dlb_string	var=UI_ScreenItem, mask=0x04, shift=130, svc=LCDSVC_DrawText8x14, table=DL_F0DE9E_TEXT+0x74, width=28, x=8, y=138	; operand bytes the handler does not read
-	dlb_string	var=UI_ScreenItem, mask=0x04, shift=130, svc=LCDSVC_DrawText8x14, table=DL_F0DE9E_TEXT+0xac, width=5, x=8, y=154	; operand bytes the handler does not read
+	dlb_string	var=UI_ScreenItem, mask=0x04, shift=130, svc=LCDSVC_DrawText8x14, table=DL_F0DE9E_TEXT, width=29, x=8, y=74
+	dlb_string	var=UI_ScreenItem, mask=0x04, shift=130, svc=LCDSVC_DrawText8x14, table=DL_F0DE9E_TEXT+0x3a, width=29, x=8, y=122
+	dlb_string	var=UI_ScreenItem, mask=0x04, shift=130, svc=LCDSVC_DrawText8x14, table=DL_F0DE9E_TEXT+0x74, width=28, x=8, y=138
+	dlb_string	var=UI_ScreenItem, mask=0x04, shift=130, svc=LCDSVC_DrawText8x14, table=DL_F0DE9E_TEXT+0xac, width=5, x=8, y=154
 
 ; 0xF0DE9E-0xF0DF53 -- FRENCH: literal message text, 182 bytes (no compression;
 ; see the module docstring for why the Italian copy looks doubled)
@@ -1507,18 +1513,19 @@ DL_F0DE9E_TEXT:
 	.ascii " ced'usine!                    mode.     "
 
 ; ------------------------------------------------------------------
-; 0xF0DF54-0xF0DFC7 -- SPANISH: 8 display-list records, 116 bytes -- interpreter A
+; 0xF0DF54-0xF0DFC7 -- SPANISH: 8 display-list records, 116 bytes -- interpreter A (3 records) and B (5)
+;   CORRECTED 2026-10-29 (lane gui-wsa1): this said 'interpreter A'.  PTR_F0DB18_ButtonStarts2 names the B part; Paint_GeneralMidiMode runs it through T_DisplayListB_Run.
 ; ------------------------------------------------------------------
 DL_F0DF54:
 	dl_text16x16	x=64, y=56, text="ATTENCION!"
 	dl_box	x0=61, y0=72, x1=226, y1=73
 	dl_text16x16	x=8, y=184, text="\273Est\264 seguro?"
 DL_F0DF7D:
-	dlb_string	var=UI_ScreenItem, mask=0x04, shift=130, svc=LCDSVC_DrawText8x16, table=DL_F0DFC8_TEXT, width=30, x=16, y=86	; operand bytes the handler does not read
-	dlb_string	var=UI_ScreenItem, mask=0x04, shift=130, svc=LCDSVC_DrawText8x16, table=DL_F0DFC8_TEXT+0x3c, width=30, x=16, y=104	; operand bytes the handler does not read
-	dlb_string	var=UI_ScreenItem, mask=0x04, shift=130, svc=LCDSVC_DrawText8x16, table=DL_F0DFC8_TEXT+0x78, width=28, x=16, y=122	; operand bytes the handler does not read
-	dlb_string	var=UI_ScreenItem, mask=0x04, shift=130, svc=LCDSVC_DrawText8x16, table=DL_F0DFC8_TEXT+0xb0, width=25, x=16, y=140	; operand bytes the handler does not read
-	dlb_string	var=UI_ScreenItem, mask=0x04, shift=130, svc=LCDSVC_DrawText8x16, table=DL_F0DFC8_TEXT+0xe2, width=8, x=16, y=158	; operand bytes the handler does not read
+	dlb_string	var=UI_ScreenItem, mask=0x04, shift=130, svc=LCDSVC_DrawText8x16, table=DL_F0DFC8_TEXT, width=30, x=16, y=86
+	dlb_string	var=UI_ScreenItem, mask=0x04, shift=130, svc=LCDSVC_DrawText8x16, table=DL_F0DFC8_TEXT+0x3c, width=30, x=16, y=104
+	dlb_string	var=UI_ScreenItem, mask=0x04, shift=130, svc=LCDSVC_DrawText8x16, table=DL_F0DFC8_TEXT+0x78, width=28, x=16, y=122
+	dlb_string	var=UI_ScreenItem, mask=0x04, shift=130, svc=LCDSVC_DrawText8x16, table=DL_F0DFC8_TEXT+0xb0, width=25, x=16, y=140
+	dlb_string	var=UI_ScreenItem, mask=0x04, shift=130, svc=LCDSVC_DrawText8x16, table=DL_F0DFC8_TEXT+0xe2, width=8, x=16, y=158
 
 ; 0xF0DFC8-0xF0E0B9 -- SPANISH: literal message text, 242 bytes (no compression;
 ; see the module docstring for why the Italian copy looks doubled)
@@ -1536,18 +1543,19 @@ DL_F0DFC8_TEXT:
 	.ascii "brica!        "
 
 ; ------------------------------------------------------------------
-; 0xF0E0BA-0xF0E12C -- ITALIAN: 8 display-list records, 115 bytes -- interpreter A
+; 0xF0E0BA-0xF0E12C -- ITALIAN: 8 display-list records, 115 bytes -- interpreter A (3 records) and B (5)
+;   CORRECTED 2026-10-29 (lane gui-wsa1): this said 'interpreter A'.  PTR_F0DB18_ButtonStarts2 names the B part; Paint_GeneralMidiMode runs it through T_DisplayListB_Run.
 ; ------------------------------------------------------------------
 DL_F0E0BA:
 	dl_text16x16	x=56, y=56, text="ATTENZIONE!"
 	dl_box	x0=53, y0=72, x1=234, y1=73
 	dl_text16x16	x=16, y=184, text="Sei sicuro?"
 DL_F0E0E2:
-	dlb_string	var=UI_ScreenItem, mask=0x04, shift=130, svc=LCDSVC_DrawText8x16, table=DL_F0E12D_TEXT, width=28, x=16, y=86	; operand bytes the handler does not read
-	dlb_string	var=UI_ScreenItem, mask=0x04, shift=130, svc=LCDSVC_DrawText8x16, table=DL_F0E12D_TEXT+0x38, width=26, x=16, y=104	; operand bytes the handler does not read
-	dlb_string	var=UI_ScreenItem, mask=0x04, shift=130, svc=LCDSVC_DrawText8x16, table=DL_F0E12D_TEXT+0x6c, width=29, x=16, y=122	; operand bytes the handler does not read
-	dlb_string	var=UI_ScreenItem, mask=0x04, shift=130, svc=LCDSVC_DrawText8x16, table=DL_F0E12D_TEXT+0xa6, width=25, x=16, y=140	; operand bytes the handler does not read
-	dlb_string	var=UI_ScreenItem, mask=0x04, shift=130, svc=LCDSVC_DrawText8x16, table=DL_F0E12D_TEXT+0xd8, width=15, x=16, y=158	; operand bytes the handler does not read
+	dlb_string	var=UI_ScreenItem, mask=0x04, shift=130, svc=LCDSVC_DrawText8x16, table=DL_F0E12D_TEXT, width=28, x=16, y=86
+	dlb_string	var=UI_ScreenItem, mask=0x04, shift=130, svc=LCDSVC_DrawText8x16, table=DL_F0E12D_TEXT+0x38, width=26, x=16, y=104
+	dlb_string	var=UI_ScreenItem, mask=0x04, shift=130, svc=LCDSVC_DrawText8x16, table=DL_F0E12D_TEXT+0x6c, width=29, x=16, y=122
+	dlb_string	var=UI_ScreenItem, mask=0x04, shift=130, svc=LCDSVC_DrawText8x16, table=DL_F0E12D_TEXT+0xa6, width=25, x=16, y=140
+	dlb_string	var=UI_ScreenItem, mask=0x04, shift=130, svc=LCDSVC_DrawText8x16, table=DL_F0E12D_TEXT+0xd8, width=15, x=16, y=158
 
 ; 0xF0E12D-0xF0E2AB -- ITALIAN: literal message text, 383 bytes (no compression;
 ; see the module docstring for why the Italian copy looks doubled)

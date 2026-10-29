@@ -1,12 +1,13 @@
 
 ; ------------------------------------------------------------------
-; 0xF34000-0xF341B5 -- 27 display-list records, 438 bytes -- interpreter A
+; 0xF34000-0xF341B5 -- 27 display-list records, 438 bytes -- interpreter A (1 records) and B (26)
+;   CORRECTED 2026-10-29 (lane gui-wsa1): this said 'interpreter A'.  The first 26 are B: the op-03 record's A reading is impossible (length 11) and its neighbours read as B (rules 'length', 'adjacent').
 ; the fill run above stops dead here; DL.walk() lands with ZERO
 ; DRIFT on 0xF341B6, the ALREADY CALL-VERIFIED start of DL_F341B6
 ; (see its own header below: "entered at: 0xF341B6").
 ; ------------------------------------------------------------------
 DL_F34000:
-	dlb_rect_entry	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_FillRect, table=DLTable_F34D18	; operand bytes the handler does not read
+	dlb_rect_entry	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_FillRect, table=DLTable_F34D18
 	dlb_rect_entry_op08	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_EraseRect, table=DLTable_F34D18
 	dlb_string_xy	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, table=DLText_P1ToP32, width=3, x=5, y=53
 	dlb_string_xy	var=DisplayListB_Stage+1, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, table=DLText_P1ToP32, width=3, x=35, y=53

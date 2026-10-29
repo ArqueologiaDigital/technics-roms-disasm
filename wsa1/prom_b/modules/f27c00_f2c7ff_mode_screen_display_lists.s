@@ -656,17 +656,18 @@ DLTable_F286F3:
 
 
 ; ------------------------------------------------------------------
-; 0xF286F9-0xF28724 -- 4 display-list records, 44 bytes -- interpreter A
+; 0xF286F9-0xF28724 -- 4 display-list records, 44 bytes -- interpreter B
+;   CORRECTED 2026-10-29 (lane gui-wsa1): this said 'interpreter A'.  B: notes/prom_b_dl_length_audit.py's walk from the call sites attributes all 4 records to B (rule 'audit').
 ; the one remaining shape-1 site notes/prom_b_dl_call_shapes.py found
 ; still `.incbin` (site 0xF90FBB in prom_a).  Regenerate:
 ; python3 notes/gen_prom_b_dl_shape1_gap_f286f9.py --splice
 ; ------------------------------------------------------------------
 ModeScreen_PaintDirtyFields2_DL1:
 ; drawn (start operand) by ModeScreen_PaintDirtyFields2 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_rect_entry	var=UI_DrawScratch, mask=0x01, shift=0, svc=LCDSVC_EraseRect, table=DLTable_F28725	; operand bytes the handler does not read
-	dlb_rect_entry	var=UI_DrawScratch, mask=0x01, shift=0, svc=LCDSVC_EraseRect, table=DLTable_F28735	; operand bytes the handler does not read
-	dlb_rect_entry	var=UI_DrawScratch, mask=0x01, shift=0, svc=LCDSVC_FillRect, table=DLTable_F28745	; operand bytes the handler does not read
-	dlb_rect_entry	var=UI_DrawScratch, mask=0x01, shift=0, svc=LCDSVC_FillRect, table=DLTable_F28755	; operand bytes the handler does not read
+	dlb_rect_entry	var=UI_DrawScratch, mask=0x01, shift=0, svc=LCDSVC_EraseRect, table=DLTable_F28725
+	dlb_rect_entry	var=UI_DrawScratch, mask=0x01, shift=0, svc=LCDSVC_EraseRect, table=DLTable_F28735
+	dlb_rect_entry	var=UI_DrawScratch, mask=0x01, shift=0, svc=LCDSVC_FillRect, table=DLTable_F28745
+	dlb_rect_entry	var=UI_DrawScratch, mask=0x01, shift=0, svc=LCDSVC_FillRect, table=DLTable_F28755
 
 
 ; ------------------------------------------------------------------
@@ -3060,7 +3061,7 @@ DL_CombinationGroupMenuReMap1:
 ; 0xF2AF81-0xF2B12F -- 50 display-list records, 431 bytes -- interpreter A
 ; SELF-FRAMING: no call site found for this span, but DL.walk()'s
 ; op/len walk from 0xF2AF81 lands with ZERO DRIFT exactly on 0xF2B130,
-; and every opcode resolves to a documented interpreter-A handler.
+; and every opcode resolves to a documented interpreter-A handler -- but see the CORRECTED line above.
 ; notes/gen_prom_b_selfframing_incbin_module.py
 ; ------------------------------------------------------------------
 Draw_SoundGroupMenuReMap1ReMap2_DL:

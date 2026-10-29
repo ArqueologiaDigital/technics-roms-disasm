@@ -1286,21 +1286,22 @@ SoundEditModelingDriverWaveform_PaintRows_DL2:
 
 
 ; ------------------------------------------------------------------
-; 0xF3391E-0xF339B3 -- 12 display-list records, 150 bytes -- interpreter A
+; 0xF3391E-0xF339B3 -- 12 display-list records, 150 bytes -- interpreter B
+;   CORRECTED 2026-10-29 (lane gui-wsa1): this said 'interpreter A'.  B: 6 records' A readings are impossible (B op-02 length 15) and 6 lie off the panel (rules 'length', 'geometry').
 ; Formerly Data_F3391E -- that was the LEADING BYTES of this list, not a
 ; separate object.  Zero-drift walk, notes/gen_prom_b_oversized_round2_module.py
 ; ------------------------------------------------------------------
 DL_F3391E:
-	dlb_string	var=ModelingPage_Fields+9, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, table=DLTable_F0574D, width=2, x=64, y=135	; operand bytes the handler does not read
-	dlb_string	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_DrawText8x10, table=0x00002300, width=13, x=80, y=135	; operand bytes the handler does not read
+	dlb_string	var=ModelingPage_Fields+9, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, table=DLTable_F0574D, width=2, x=64, y=135
+	dlb_string	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_DrawText8x10, table=0x00002300, width=13, x=80, y=135
 	dlb_number	var=ModelingPage_Fields+4, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=192, y=135, digits=3
 	dlb_number	var=ModelingPage_Fields+2, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=224, y=135, digits=3
-	dlb_string	var=ModelingPage_Fields+10, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, table=DLTable_F0574D, width=2, x=64, y=151	; operand bytes the handler does not read
-	dlb_string	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_DrawText8x10, table=0x00002310, width=13, x=80, y=151	; operand bytes the handler does not read
+	dlb_string	var=ModelingPage_Fields+10, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, table=DLTable_F0574D, width=2, x=64, y=151
+	dlb_string	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_DrawText8x10, table=0x00002310, width=13, x=80, y=151
 	dlb_number	var=ModelingPage_Fields+5, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=192, y=151, digits=3
 	dlb_number	var=ModelingPage_Fields+3, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=224, y=151, digits=3
-	dlb_string	var=ModelingPage_Fields+11, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, table=DLTable_F0574D, width=2, x=64, y=167	; operand bytes the handler does not read
-	dlb_string	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_DrawText8x10, table=0x00002320, width=13, x=80, y=167	; operand bytes the handler does not read
+	dlb_string	var=ModelingPage_Fields+11, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x10, table=DLTable_F0574D, width=2, x=64, y=167
+	dlb_string	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_DrawText8x10, table=0x00002320, width=13, x=80, y=167
 	dlb_number	var=ModelingPage_Fields+6, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=192, y=167, digits=3
 	dlb_number	var=ModelingPage_Fields+7, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, x=224, y=167, digits=3
 

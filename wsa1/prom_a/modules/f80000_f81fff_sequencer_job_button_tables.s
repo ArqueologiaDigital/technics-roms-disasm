@@ -3540,7 +3540,7 @@ Paint_StepRecord:
 	jr z, .LF81B70                                       ; F81B5B  66 13
 	ld a, (0x0e5c:16)                                   ; F81B5D  c1 5c 0e 21
 	ld (DisplayListB_Stage+7:16), a                                   ; F81B61  f1 fd 12 41
-	ld XIY,0x00f3d380                                    ; F81B65  45 80 d3 f3 00
+	ld XIY,DL_F3D380                                     ; F81B65  45 80 d3 f3 00
 	push XHL                                             ; F81B6A  3b
 	call T_DLB_Handler_Decimal                                        ; F81B6B  1d 00 18 f4
 	pop XHL                                              ; F81B6F  5b
@@ -3607,7 +3607,7 @@ Paint_StepRecordTrackClrMeas:
 	call T_DisplayList_Run                               ; F81BEA  1d f0 17 f4
 	ld a, (0x0e5c:16)                                   ; F81BEE  c1 5c 0e 21
 	ld (DisplayListB_Stage+7:16), a                                   ; F81BF2  f1 fd 12 41
-	ld XIY,0x00f3d380                                    ; F81BF6  45 80 d3 f3 00
+	ld XIY,DL_F3D380                                     ; F81BF6  45 80 d3 f3 00
 	call T_DLB_Handler_Decimal                                        ; F81BFB  1d 00 18 f4
 	ld a, (0x0e63:16)                                   ; F81BFF  c1 63 0e 21
 	ld (DisplayListB_Stage+6:16), a                                   ; F81C03  f1 fc 12 41
@@ -3620,7 +3620,7 @@ sub_F81C15:
 	jr nz, .LF81C2E                                      ; F81C1A  6e 12
 	or	(0xc6:8), 0x01                               ; F81C1C  c0 c6 3e 01
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F81C20  f1 40 25 00 00
-	ld XIY,0x00f3d38a                                    ; F81C25  45 8a d3 f3 00
+	ld XIY,DL_F3D38A                                     ; F81C25  45 8a d3 f3 00
 	call T_DLB_Handler_StringTable                       ; F81C2A  1d f8 17 f4
 .LF81C2E:
 	and	(0xc6:8), 0xfe                               ; F81C2E  c0 c6 3c fe
@@ -3634,22 +3634,22 @@ sub_F81C33:
 	jr nz, .LF81C5A                                      ; F81C49  6e 0f
 	ld a, (0x106c:16)                                   ; F81C4B  c1 6c 10 21
 	ld (DisplayListB_Stage+11:16), a                                   ; F81C4F  f1 01 13 41
-	ld XIY,0x00f3d3cb                                    ; F81C53  45 cb d3 f3 00
+	ld XIY,DL_F3D3CB                                     ; F81C53  45 cb d3 f3 00
 	jr .LF81C6B                                          ; F81C58  68 11
 .LF81C5A:
 	ld a, (0x106c:16)                                   ; F81C5A  c1 6c 10 21
 	ld (DisplayListB_Stage+10:16), a                                   ; F81C5E  f1 00 13 41
 	ld (DisplayListB_Stage+11:16), a                                   ; F81C62  f1 01 13 41
-	ld XIY,0x00f3d3ad                                    ; F81C66  45 ad d3 f3 00
+	ld XIY,DL_F3D3AD                                     ; F81C66  45 ad d3 f3 00
 .LF81C6B:
 	cpw	(0x0f62:16), 0x0000                          ; F81C6B  d1 62 0f 3f 00 00
 	jr nz, .LF81C7A                                      ; F81C71  6e 07
-	ld XIX,0x00f3d3e9                                    ; F81C73  44 e9 d3 f3 00
+	ld XIX,DL_F3D3E9                                     ; F81C73  44 e9 d3 f3 00
 	jr .LF81C87                                          ; F81C78  68 0d
 .LF81C7A:
 	ld a, (0x106c:16)                                   ; F81C7A  c1 6c 10 21
 	ld (DisplayListB_Stage+12:16), a                                   ; F81C7E  f1 02 13 41
-	ld XIX,0x00f3d407                                    ; F81C82  44 07 d4 f3 00
+	ld XIX,DL_F3D407                                     ; F81C82  44 07 d4 f3 00
 .LF81C87:
 	call T_DisplayListB_Run                              ; F81C87  1d f4 17 f4
 	and	(0xc6:8), 0xfe                               ; F81C8B  c0 c6 3c fe
@@ -3668,13 +3668,13 @@ sub_F81C90:
 	calr sub_F81F1A                                      ; F81CB1  1e 66 02
 	cpw	(0x0f5e:16), 0x03e8                          ; F81CB4  d1 5e 0f 3f e8 03
 	jr c, .LF81CC7                                       ; F81CBA  67 0b
-	ld XIY,0x00f3d371                                    ; F81CBC  45 71 d3 f3 00
+	ld XIY,DL_F3D371                                     ; F81CBC  45 71 d3 f3 00
 	call T_DLHandler_IX_Text                             ; F81CC1  1d 2c 18 f4
 	jr .LF81CD8                                          ; F81CC5  68 11
 .LF81CC7:
 	ld wa, (0x0f5e:16)                                 ; F81CC7  d1 5e 0f 20
 	ld (DisplayListB_Stage:16), wa                                  ; F81CCB  f1 f6 12 50
-	ld XIY,0x00f3d353                                    ; F81CCF  45 53 d3 f3 00
+	ld XIY,DL_F3D353                                     ; F81CCF  45 53 d3 f3 00
 	call T_DLB_Handler_Decimal_2                                        ; F81CD4  1d 04 18 f4
 .LF81CD8:
 	cpw	(0x0f60:16), 0x0000                          ; F81CD8  d1 60 0f 3f 00 00
@@ -3683,13 +3683,13 @@ sub_F81C90:
 	calr sub_F81F1A                                      ; F81CE3  1e 34 02
 	cpw	(0x0f60:16), 0x03e8                          ; F81CE6  d1 60 0f 3f e8 03
 	jr c, .LF81CF9                                       ; F81CEC  67 0b
-	ld XIY,0x00f3d376                                    ; F81CEE  45 76 d3 f3 00
+	ld XIY,DL_F3D376                                     ; F81CEE  45 76 d3 f3 00
 	call T_DLHandler_IX_Text                             ; F81CF3  1d 2c 18 f4
 	jr .LF81D0A                                          ; F81CF7  68 11
 .LF81CF9:
 	ld wa, (0x0f60:16)                                 ; F81CF9  d1 60 0f 20
 	ld (DisplayListB_Stage+2:16), wa                                  ; F81CFD  f1 f8 12 50
-	ld XIY,0x00f3d35d                                    ; F81D01  45 5d d3 f3 00
+	ld XIY,DL_F3D35D                                     ; F81D01  45 5d d3 f3 00
 	call T_DLB_Handler_Decimal_2                                        ; F81D06  1d 04 18 f4
 .LF81D0A:
 	cpw	(0x0f62:16), 0x0000                          ; F81D0A  d1 62 0f 3f 00 00
@@ -3698,13 +3698,13 @@ sub_F81C90:
 	calr sub_F81F1A                                      ; F81D15  1e 02 02
 	cpw	(0x0f62:16), 0x03e8                          ; F81D18  d1 62 0f 3f e8 03
 	jr c, .LF81D2B                                       ; F81D1E  67 0b
-	ld XIY,0x00f3d37b                                    ; F81D20  45 7b d3 f3 00
+	ld XIY,DL_F3D37B                                     ; F81D20  45 7b d3 f3 00
 	call T_DLHandler_IX_Text                             ; F81D25  1d 2c 18 f4
 	jr .LF81D3C                                          ; F81D29  68 11
 .LF81D2B:
 	ld wa, (0x0f62:16)                                 ; F81D2B  d1 62 0f 20
 	ld (DisplayListB_Stage+4:16), wa                                  ; F81D2F  f1 fa 12 50
-	ld XIY,0x00f3d367                                    ; F81D33  45 67 d3 f3 00
+	ld XIY,DL_F3D367                                     ; F81D33  45 67 d3 f3 00
 	call T_DLB_Handler_Decimal_2                                        ; F81D38  1d 04 18 f4
 .LF81D3C:
 	and	(0xc6:8), 0xfe                               ; F81D3C  c0 c6 3c fe
@@ -3919,7 +3919,7 @@ sub_F81EF3:
 	call T_DisplayList_Run                               ; F81F15  1d f0 17 f4
 	ret                                                  ; F81F19  0e
 sub_F81F1A:
-	ld XIY,0x00f3d245                                    ; F81F1A  45 45 d2 f3 00
+	ld XIY,DL_F3D245                                     ; F81F1A  45 45 d2 f3 00
 	cp bc, 0x01:i3                                         ; F81F1F  d9 d9
 	jr ge, .LF81F2D                                      ; F81F21  69 0a
 	ld a, (0x0f64:16)                                   ; F81F23  c1 64 0f 21
