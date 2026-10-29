@@ -691,9 +691,13 @@ baserom/customdata/%.ic21: baserom/customdata/%.ast tools/ast_file.py
 	echo "$(CD_SHA1_$*)  $@.tmp" | sha1sum --quiet -c
 	mv $@.tmp $@
 
-build/customdata/%.ic21: src/customdata/%.s src/customdata/customdata.inc tools/kn7asm.py baserom/customdata/%.ic21
+define CD_BUILD_RULE
+build/customdata/$(1).ic21: src/customdata/$(1).s $(wildcard src/customdata/$(1)/*.inc) src/customdata/customdata.inc \
+		tools/kn7asm.py baserom/customdata/$(1).ic21
 	@mkdir -p build/customdata
-	$(ASM) $< -I . -o $@
+	$$(ASM) $$< -I . -o $$@
+endef
+$(foreach n,$(CUSTOMDATA),$(eval $(call CD_BUILD_RULE,$(n))))
 
 verify-customdata: $(CD_TARGETS) $(CD_REFS)
 	@ok=1; \

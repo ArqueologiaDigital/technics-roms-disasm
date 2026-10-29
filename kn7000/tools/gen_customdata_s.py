@@ -28,6 +28,7 @@ Usage:
                       --include PATH_OF_customdata.inc --title TEXT [--title TEXT ...]
 """
 import argparse
+import os
 import struct
 import sys
 
@@ -48,6 +49,57 @@ def u24(b, o):
 
 def be24(v):
     return bytes([(v >> 16) & 0xFF, (v >> 8) & 0xFF, v & 0xFF])
+
+
+def ev_len(d, o):
+    """RhyEventLenByStatus / RhySysexLen (program 941 0x484403D5 / 0x484403CD)."""
+    c = d[o]
+    if c == 0xF0:
+        return d[o + 1] + 2
+    return {0x90: 6, 0xB0: 3, 0xC0: 4, 0xD0: 2, 0xE0: 3}.get(c & 0xF0, 1)
+
+
+def event_lines(d, s, e, what):
+    """One ev_* line per event of the stream d[s:e]; checked to parse to its end."""
+    out = []
+    p = s
+    while p < e:
+        c = d[p]
+        n = ev_len(d, p)
+        a = d[p + 1:p + n]
+        if any(x >= 0x80 for x in a) and c != 0xF0:
+            raise SystemExit(f"{what}: data byte >= 0x80 at {p:#x}")
+        k = c & 0xF0
+        if c == 0xF4:
+            out.append("\tev_beat")
+        elif c == 0xF5:
+            out.append("\tev_end")
+        elif c < 0x80:
+            out.append(f"\tev_at\t{c}")
+        elif k == 0x90:
+            out.append(f"\tev_note\t{c & 15}, {a[0]}, {a[1]}, {a[2]}, {a[3]}, {a[4]}")
+        elif k == 0xB0:
+            out.append(f"\tev_cc\t{c & 15}, {a[0]}, {a[1]}")
+        elif k == 0xC0:
+            out.append(f"\tev_pc\t{c & 15}, {a[0]:#04x}, {a[1]:#04x}, {a[2]:#04x}")
+        elif k == 0xD0:
+            out.append(f"\tev_press\t{c & 15}, {a[0]}")
+        elif k == 0xE0:
+            out.append(f"\tev_bend\t{c & 15}, {a[0]}, {a[1]}")
+        elif c == 0xF0 and n == 6:
+            out.append("\tev_sysex4\t" + ", ".join(f"{x:#04x}" for x in a[1:]))
+        else:
+            raise SystemExit(f"{what}: event {c:#x} (length {n}) at {p:#x} has no macro")
+        p += n
+    if p != e:
+        raise SystemExit(f"{what}: events overrun the stream end")
+    if d[e - 1] != 0xF5 or d[s] != 0xF4:
+        raise SystemExit(f"{what}: stream does not run F4 .. F5")
+    return out
+
+
+def part_setup(b):
+    return "PART_SETUP " + ", ".join(str(x) if i not in (0, 2, 3, 4) else f"{x:#04x}" for i, x in enumerate(b))
 
 
 def qstr(b):
@@ -90,6 +142,11 @@ class Out:
             line += f"\t# {comment}"
         self.lines.append(line)
         self.pos += len(model)
+
+    def raw(self, lines, n):
+        """Lines already checked to produce the next n bytes."""
+        self.lines += lines
+        self.pos += n
 
     def incbin(self, label, n, comment, census=None):
         a, b = self.pos, self.pos + n
@@ -187,6 +244,7 @@ def gen_record(o, d, base, lab, model, place, slot_of, title):
     rec = d[base:base + size]
     o.w()
     o.w(f"# ---- {title}")
+    o.w(f".org {base:#x}")
     o.emit(lab, f"CSTREC_SIZE {lab}_End - {lab}", rec[0:4])
     names = [rec[4 + 16 * i:20 + 16 * i] for i in range(5)]
     o.emit(None, f"CSTREC_NAME {qstr(names[0])}", names[0], "style name")
@@ -205,22 +263,32 @@ def gen_record(o, d, base, lab, model, place, slot_of, title):
     for k, (off, cnt) in enumerate(deps):
         if not cnt:
             continue
-        o.incbin(f"{lab}_{DEP_NAME[k]}", cnt * DEP_STRIDE[k],
-                 f"{cnt} x {DEP_STRIDE[k]:#x}-byte " + ("custom-sound block: 0x27 header, 128 x 3-byte "
-                                                        "{program, bank LSB, bank MSB}, 128 x 0x8E voice records "
-                                                        "(CustomVoiceRecFetch 0x4844A42F)" if k == 6 else "records"))
+        if k == 6 and cnt == 1:
+            vb = rec[off:off + 0x48A7]
+            o.w(f"# the custom-sound block (CustomVoiceRecFetch 0x4844A42F): a 0x27-byte header, 128")
+            o.w(f"# voice references, 128 voice records of 0x8E bytes")
+            o.w(f"{lab}_{DEP_NAME[k]}:")
+            o.bytes_run(vb[0:0x27], "header (not traced)")
+            for i in range(128):
+                t = vb[0x27 + 3 * i:0x2A + 3 * i]
+                o.emit(None, f"VOICE_REF {t[0]:#04x}, {t[1]:#04x}, {t[2]:#04x}", t, f"voice {i}" if i % 16 == 0 else None)
+            for i in range(128):
+                o.incbin(f"{lab}_Voice{i:03d}", 0x8E, "voice record (layout not decoded)")
+            continue
+        o.incbin(f"{lab}_{DEP_NAME[k]}", cnt * DEP_STRIDE[k], f"{cnt} x {DEP_STRIDE[k]:#x}-byte records")
     # one touch settings
     ots = OTS_SIZE[model]
     o.w(f"{lab}_Ots:")
     for i in range(4):
         r = rec[secs[0][0] + i * ots:secs[0][0] + (i + 1) * ots]
         if model == "kn7000":
-            o.incbin(f"{lab}_Ots{i + 1}", 0x70, f"one touch setting {i + 1}: panel memory")
+            o.incbin(f"{lab}_Ots{i + 1}", 0x70, f"one touch setting {i + 1}: panel memory (library format, "
+                     "written by func_4C02A0C4, sized by func_4C02AD02; fields not traced)")
             o.emit(None, f".byte {r[0x70]}", r[0x70:0x71],
                    "+0x70 its style's CUSTOM slot")
             o.incbin(None, ots - 0x71, "panel memory +0x71..")
         else:
-            o.incbin(f"{lab}_Ots{i + 1}", ots, f"one touch setting {i + 1}: panel memory")
+            o.incbin(f"{lab}_Ots{i + 1}", ots, f"one touch setting {i + 1}: panel memory (fields not traced)")
     o.w(f"{lab}_Ots_End:")
     # TCMP
     t0, tsz = secs[1]
@@ -245,13 +313,15 @@ def gen_record(o, d, base, lab, model, place, slot_of, title):
                [str(r[0x10]), str(r[0x11]), f"{T}_Stream{v:02d} - {T}", f"{r[0x18]:#04x}", f"{r[0x19]:#04x}"]
         bars = (r[0x10] + 1) * ((r[0x11] & 7) + 1)
         o.emit(f"{T}_Var{v:02d}", "TCMP_VAR " + ", ".join(args), model_v, f"variation {v}: {bars} bars")
-        o.incbin(None, 0xC0, "part blocks 0..7 (0x18 each)")
+        for k in range(8):
+            o.emit(None, part_setup(r[0x20 + 0x18 * k:0x38 + 0x18 * k]), r[0x20 + 0x18 * k:0x38 + 0x18 * k],
+                   f"part {k}")
     for v in range(20):
         so = u24(t, 0xF0 + v * 0xE0 + 0x15)
         n = u24(t, so + 1)
         nxt = f"{T}_Stream{v + 1:02d}" if v < 19 else f"{T}_End"
         o.emit(f"{T}_Stream{v:02d}", f"STREAM_HEADER {v}, {nxt} - {T}_Stream{v:02d} - 4", t[so:so + 4])
-        o.incbin(None, n, f"variation {v} events")
+        o.raw(event_lines(t, so + 4, so + 4 + n, f"{T} variation {v}"), n)
     o.w(f"{T}_End:")
     # TPAD
     p0, psz = secs[2]
@@ -272,14 +342,16 @@ def gen_record(o, d, base, lab, model, place, slot_of, title):
             raise SystemExit(f"pad record at {o.pos:#x} does not fit TPAD_PAD")
         args = [qstr(r[0:16])] + [f"{x:#04x}" for x in r[0x10:0x1D]] + [f"{P}_Stream{i} - {P}"]
         o.emit(f"{P}_Pad{i}", "TPAD_PAD " + ", ".join(args), model_p, f"pad {i + 1}")
-        o.incbin(None, 0x30, "part blocks 0..1 (0x18 each)")
+        for k in range(2):
+            o.emit(None, part_setup(r[0x28 + 0x18 * k:0x40 + 0x18 * k]), r[0x28 + 0x18 * k:0x40 + 0x18 * k],
+                   f"part {k}")
         o.emit(None, ".space 8", bytes(8))
     for i in range(6):
         so = u24(p, 0xA0 + i * 0x60 + 0x1D)
         n = u24(p, so + 1)
         nxt = f"{P}_Stream{i + 1}" if i < 5 else f"{P}_End"
         o.emit(f"{P}_Stream{i}", f"STREAM_HEADER {i}, {nxt} - {P}_Stream{i} - 4", p[so:so + 4])
-        o.incbin(None, n, f"pad {i + 1} events")
+        o.raw(event_lines(p, so + 4, so + 4 + n, f"{P} pad {i}"), n)
     o.w(f"{P}_End:")
     o.w(f"{lab}_End:")
     return size
@@ -292,7 +364,8 @@ def residue(o, d, end, what):
         e -= 1
     if e > o.pos:
         o.incbin(None, e - o.pos, what,
-                 census=f"opaque -- unknown-dump: {what}; no accessor reads it (probe slack_origin.py)")
+                 census=f"opaque -- unknown-dump: {what}, a fragment of an earlier record whose start is gone, so no "
+                        f"field can be anchored; no accessor reads it (probe slack_origin.py)")
     o.fill_ff(end - o.pos)
 
 
@@ -304,11 +377,30 @@ def main():
     ap.add_argument("--model", choices=sorted(OTS_SIZE), required=True)
     ap.add_argument("--include", required=True)
     ap.add_argument("--title", action="append", default=[])
+    ap.add_argument("--inc-dir", help="directory of the per-record include files, as the source names it"
+                                      " and relative to the current directory (default: --out without .s)")
     a = ap.parse_args()
     d = open(a.rom, "rb").read()
     if len(d) != NBLOCKS * BLOCK:
         sys.exit(f"{a.rom}: {len(d):#x} bytes, expected {NBLOCKS * BLOCK:#x}")
     o = Out(a.ref, d)
+    inc_dir = a.inc_dir or a.out[:-2]
+    os.makedirs(inc_dir, exist_ok=True)
+    written = set()
+
+    def record(lab, *args):
+        """gen_record into its own include file, which the image source includes."""
+        main_lines = o.lines
+        o.lines = []
+        gen_record(o, d, *args[:1], lab, *args[1:])
+        body, o.lines = o.lines, main_lines
+        path = os.path.join(inc_dir, f"{lab}.inc")
+        with open(path, "w") as f:
+            f.write(f"# {lab}: one record of {os.path.basename(a.out)}; GENERATED by "
+                    f"kn7000/tools/gen_customdata_s.py\n" + "\n".join(body) + "\n")
+        written.add(f"{lab}.inc")
+        o.w()
+        o.w(f'.include "{path}"')
     o.w("# (c) 2026 Felipe Correa da Silva Sanches <juca@members.fsf.org>")
     o.w("# Licensed under the terms of the GNU General Public License v3 or later")
     o.w("#")
@@ -332,7 +424,7 @@ def main():
     for s in range(NSLOTS):
         st, n = d[2 + 2 * s], d[3 + 2 * s]
         if st:
-            txt = f"CUSTDIR_SLOT (Slot{s:02d} - CustDir) / CUSTOM_BLOCK, {n}"
+            txt = f"CUSTDIR_SLOT {st}, {n}"
             name = printable(d[st * BLOCK + 4:st * BLOCK + 20])
             o.emit(None, txt, bytes([st, n]), f"slot {s}: {name}")
         else:
@@ -347,7 +439,7 @@ def main():
         if b in slots:
             s, n = slots[b]
             name = printable(d[start + 4:start + 20])
-            gen_record(o, d, start, f"Slot{s:02d}", a.model, f"(Slot{s:02d} - CustDir) / CUSTOM_BLOCK, {n}", s,
+            record(f"Slot{s:02d}", start, a.model, f"{b}, {n}", s,
                        f"slot {s}: \"{name}\", " + (f"block {b}" if n == 1 else f"blocks {b}..{b + n - 1}"))
             residue(o, d, start + n * BLOCK, "residue past the record's end")
             b += n
@@ -372,13 +464,16 @@ def main():
             continue
         name = printable(d[start + 4:start + 20])
         rec = d[start:start + 0x100]
-        gen_record(o, d, start, f"Stale{b:02d}", a.model, f"{rec[0xA4]}, {rec[0xA5]}", None,
+        record(f"Stale{b:02d}", start, a.model, f"{rec[0xA4]}, {rec[0xA5]}", None,
                    f"blocks {b}..{b + n - 1}: free, holding a complete older record \"{name}\" that no slot points at")
         residue(o, d, start + n * BLOCK, "residue past the stale record's end")
         b += n
     if o.pos != len(d):
         sys.exit(f"emitted {o.pos:#x} bytes, image is {len(d):#x}")
     open(a.out, "w").write("\n".join(o.lines) + "\n")
+    for f in sorted(os.listdir(inc_dir)):
+        if f.endswith(".inc") and f not in written:
+            os.remove(os.path.join(inc_dir, f))
     print(f"wrote {a.out}: {len(o.lines)} lines")
 
 

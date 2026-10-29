@@ -137,7 +137,7 @@ baserom/01ctmini.ic18: baserom/01ctmini.ast $(TOOLS)/ast_file.py
 	echo "$(CD_SHA1)  $@.tmp" | sha1sum --quiet -c
 	mv $@.tmp $@
 
-build/01ctmini.ic18: src/customdata/01ctmini.s ../kn7000/src/customdata/customdata.inc $(TOOLS)/kn7asm.py baserom/01ctmini.ic18
+build/01ctmini.ic18: src/customdata/01ctmini.s $(wildcard src/customdata/01ctmini/*.inc) ../kn7000/src/customdata/customdata.inc $(TOOLS)/kn7asm.py baserom/01ctmini.ic18
 	@mkdir -p build
 	$(ASM) $< -I . -o $@
 
@@ -145,6 +145,13 @@ verify-customdata: build/01ctmini.ic18 baserom/01ctmini.ic18
 	@if cmp -s build/01ctmini.ic18 baserom/01ctmini.ic18; then \
 	    echo "OK    src/customdata/01ctmini.s rebuilds 01ctmini.ic18 byte-for-byte (SHA-1 $(CD_SHA1))"; \
 	 else echo "FAIL  build/01ctmini.ic18 differs:"; cmp build/01ctmini.ic18 baserom/01ctmini.ic18; exit 1; fi
+
+# Rebuild 01CTMINI.AST from the image with the programs' zlib 1.0.4 (../kn7000/tools/zlib10_deflate.py)
+# and compare it with the floppy's file. Not part of the gate.
+.PHONY: verify-customdata-ast
+verify-customdata-ast: baserom/01ctmini.ic18 $(TOOLS)/ast_file.py $(TOOLS)/zlib10_deflate.py
+	@mkdir -p build
+	$(PYTHON) $(TOOLS)/ast_file.py deflate baserom/01ctmini.ic18 build/01ctmini.ast --like baserom/01ctmini.ast
 
 customdata-src: $(TOOLS)/gen_customdata_s.py baserom/01ctmini.ic18
 	$(PYTHON) $(TOOLS)/gen_customdata_s.py --rom baserom/01ctmini.ic18 --ref baserom/01ctmini.ic18 \
