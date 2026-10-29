@@ -641,3 +641,70 @@ clean:
 
 distclean: clean
 	rm -f baserom/*.rom disasm/program.asm
+
+# ---- the four wave ROMs (IC203/IC204 MAIN TG, IC207/IC208 SUB TG) ------------
+# Each tone generator's Y and X chips are one stream of 16-bit words, word i of Y
+# then word i of X. src/wave/main.s and src/wave/sub.s describe the two streams:
+# per 2 MiB page a directory, its parameter records (typed .word fields) and the
+# recordings, one labelled .incbin_range each of the reference stream.  The build
+# assembles a stream and tools/wave_pair.py splits it into the two chips, which
+# must have the SHA-1 of the instrument's (a read of Felipe's own KN7000, pass 3
+# of the ROM dumper). The reference streams (git-ignored) are joined from the
+# chip images in the private romset, checked first. See notes/wave-roms-2026-10-29.md.
+WAVE_ROMSET ?= $(HOME)/compartilhado/technics_romsets/kn7000
+WAVE_IC203  := c3cbqd000002.ic203
+WAVE_IC204  := c3cbqd000001.ic204
+WAVE_IC207  := c3cbqd000004.ic207
+WAVE_IC208  := c3cbqd000003.ic208
+WAVE_IC203_SHA1 := f2d01ffd020c39a3f5b9d6c3275b1855c5a3d1a6
+WAVE_IC204_SHA1 := f6da330c14cd3bdfc7c19092bd20d188e3ef0600
+WAVE_IC207_SHA1 := 729bb2dd6aebd2932de6960363a554b89ffc171a
+WAVE_IC208_SHA1 := fb48cbc5334f5221ea882d63a58a22f9466e78c7
+WAVE_MAIN_SHA1  := 6c8adb2d329bb12436602cbcb6e71dfb5ae2c569
+WAVE_SUB_SHA1   := e9ee2b1c4e2bdf8d11036f37f2e7d26619c9bac9
+# per stream: its Y and X chips
+WAVE_main_Y := $(WAVE_IC203)
+WAVE_main_X := $(WAVE_IC204)
+WAVE_sub_Y  := $(WAVE_IC207)
+WAVE_sub_X  := $(WAVE_IC208)
+WAVE_main_Y_SHA1 := $(WAVE_IC203_SHA1)
+WAVE_main_X_SHA1 := $(WAVE_IC204_SHA1)
+WAVE_sub_Y_SHA1  := $(WAVE_IC207_SHA1)
+WAVE_sub_X_SHA1  := $(WAVE_IC208_SHA1)
+WAVE_main_SHA1   := $(WAVE_MAIN_SHA1)
+WAVE_sub_SHA1    := $(WAVE_SUB_SHA1)
+
+.PHONY: verify-wave wave-src
+baserom/kn7000_wave_main.bin baserom/kn7000_wave_sub.bin: baserom/kn7000_wave_%.bin: tools/wave_pair.py
+	@mkdir -p baserom
+	echo "$(WAVE_$*_Y_SHA1)  $(WAVE_ROMSET)/$(WAVE_$*_Y)" | sha1sum --quiet -c
+	echo "$(WAVE_$*_X_SHA1)  $(WAVE_ROMSET)/$(WAVE_$*_X)" | sha1sum --quiet -c
+	$(PYTHON) tools/wave_pair.py join "$(WAVE_ROMSET)/$(WAVE_$*_Y)" "$(WAVE_ROMSET)/$(WAVE_$*_X)" $@.tmp
+	echo "$(WAVE_$*_SHA1)  $@.tmp" | sha1sum --quiet -c
+	mv $@.tmp $@
+
+build/kn7000_wave_%.bin: src/wave/%.s src/wave/wave_format.inc tools/kn7asm.py baserom/kn7000_wave_%.bin
+	@mkdir -p build
+	$(ASM) $< -I . -o $@
+
+build/wave/main.done build/wave/sub.done: build/wave/%.done: build/kn7000_wave_%.bin tools/wave_pair.py
+	@mkdir -p build/wave
+	$(PYTHON) tools/wave_pair.py split $< build/wave/$(WAVE_$*_Y) build/wave/$(WAVE_$*_X)
+	@touch $@
+
+verify-wave: build/wave/main.done build/wave/sub.done
+	@ok=1; \
+	for c in "IC203 $(WAVE_IC203) $(WAVE_IC203_SHA1)" "IC204 $(WAVE_IC204) $(WAVE_IC204_SHA1)" \
+	         "IC207 $(WAVE_IC207) $(WAVE_IC207_SHA1)" "IC208 $(WAVE_IC208) $(WAVE_IC208_SHA1)"; do \
+	  set -- $$c; \
+	  if [ "$$(sha1sum < build/wave/$$2 | cut -d' ' -f1)" = "$$3" ]; then \
+	    echo "OK    build/wave/$$2 ($$1) is 100% byte-identical to the instrument's wave ROM (SHA-1 $$3)"; \
+	  else echo "FAIL  build/wave/$$2 ($$1): SHA-1 is not $$3"; ok=0; fi; \
+	done; \
+	[ $$ok -eq 1 ] || { echo; echo "wave ROM byte-match FAILED"; exit 1; }
+
+# Regenerate src/wave/main.s and src/wave/sub.s from the reference streams. The
+# committed files are the result; the build does not need this.
+wave-src: tools/gen_wave_s.py baserom/kn7000_wave_main.bin baserom/kn7000_wave_sub.bin
+	$(PYTHON) tools/gen_wave_s.py main baserom/kn7000_wave_main.bin src/wave/main.s
+	$(PYTHON) tools/gen_wave_s.py sub  baserom/kn7000_wave_sub.bin  src/wave/sub.s
