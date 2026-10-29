@@ -150,6 +150,12 @@ extensions and fonts beside their strings, and RAM-image variables.
 - `gen_data_s.py`'s per-field macro parameters change KN7000 941's `AcOtpRamBox` macro (its
   second `font` field) when 941 is regenerated; the bytes are the same.
 
+- `hdsx3/hdsx3.sym` is not what `make -C hdsx3 symbols` writes with today's `gen_symbols.py` (the
+  same logic as at e12c2c693): regenerating it moves the Kss*Proc names (TestSevKSSBoxProc ...) and
+  breaks the build. `make` regenerates it whenever `gen_symbols.py` is newer than it, so a
+  worktree may need `touch hdsx3/hdsx3.sym hdsx3/src/symbols.inc` before `make gate-hdsx3`.
+  Which pairing is right has not been checked against the plug-in's registrations.
+
 ## Website page draft
 
 (For a `kn2400-kn2600` / `kn6000-expansion` section in technics-docs, to be added by the website sync.)
