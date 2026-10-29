@@ -342,8 +342,12 @@ class Model:
                 os.path.join(os.path.dirname(src_glob), "data", "labels.sym")]:
             if os.path.exists(lp):
                 for line in open(lp):
+                    mo = re.match(r"\.equ\s+(\w+),\s*(0x[0-9A-Fa-f]+)", line)
+                    if mo:          # (an .equ include: gen_data_s.py's gui_code_ids.inc)
+                        names.setdefault(mo.group(1), int(mo.group(2), 16))
+                        continue
                     f = line.split()
-                    if len(f) >= 2 and not line.startswith(";"):
+                    if len(f) >= 2 and not line.startswith(("#", ";")):
                         a, n = (f[0], f[1]) if f[0].startswith("0x") else (f[1], f[0])
                         names.setdefault(n, int(a, 16))
         self.calls = parse_calls(src_glob, names, mem=self._mem)

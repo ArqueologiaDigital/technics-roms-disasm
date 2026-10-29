@@ -29,6 +29,12 @@ FORMATS (evidence: annotations/gfx_draw.ann, the blitter docs of program 941)
              pixels per byte, leftmost in bits 7-6; pixel p -> palette first + p.  PNG
              bit depth 2, same packing.  W is the row length in pixels (a multiple of
              4); the drawn width comes from the caller's box.
+  pk D W H   (SX-KN6000 / KN6500 bitmap resources, the procedures that answer
+             MT_GetBitmapData / Width / Height / Palette / GetBitCount; see
+             gen_data_s.py bitmaps()) D bits a pixel (1, 2, 4 or 8), MSB / high nibble
+             leftmost, each row padded to an even byte count.  The PNG is as wide as a
+             padded row (so its pad pixels keep whatever the bytes hold); W, the drawn
+             width, is only recorded.  The palette is the bitmap's own when it has one.
   font C H N [columns=...]
              DrawString_Impl 0x48425467: a glyph is 1 bpp, column-major, C 8-pixel
              columns of H bytes, MSB leftmost; N glyphs from character 0x20.  The PNG
@@ -169,6 +175,12 @@ def parse_fmt(fmt):
     return kind, nums, kw
 
 
+def pk_stride(depth, w):
+    """Bytes a row of a `pk` bitmap: W pixels at `depth` bits, padded to an even count."""
+    st = (w * depth + 7) // 8
+    return st + (st & 1)
+
+
 def to_png(fmt, raw, palette=None):
     """raw item bytes -> PNG file bytes, for the format string `fmt`."""
     kind, n, kw = parse_fmt(fmt)
@@ -191,6 +203,13 @@ def to_png(fmt, raw, palette=None):
         assert w * depth % 8 == 0 and len(raw) == st * h, f"{fmt}: {len(raw)} bytes"
         pal = palette or (PAL1_TCD if kind == "b1" else PAL2)
         return png_bytes(w, h, depth, pal, [raw[r * st:(r + 1) * st] for r in range(h)], fmt)
+    if kind == "pk":
+        depth, w, h = n
+        st = pk_stride(depth, w)
+        assert len(raw) == st * h, f"{fmt}: {len(raw)} bytes, not {st * h}"
+        pal = palette or ([(0, 0, 0), (255, 255, 255)] if depth == 1 else
+                          [(v * 255 // ((1 << depth) - 1),) * 3 for v in range(1 << depth)] if depth < 8 else PAL8)
+        return png_bytes(st * 8 // depth, h, depth, pal, [raw[r * st:(r + 1) * st] for r in range(h)], fmt)
     if kind == "font":
         cols, h, count = n
         widths = [int(c) for c in kw["columns"].split(",")] if "columns" in kw else [cols] * count
@@ -218,6 +237,10 @@ def from_png(path):
         sys.exit(f"{path}: no '{KEY}' tEXt chunk: cannot tell how to pack it")
     fmt = text[KEY]
     kind, n, kw = parse_fmt(fmt)
+    if kind == "pk":
+        depth, fw, fh = n
+        assert (w, h) == (pk_stride(depth, fw) * 8 // depth, fh), f"{path}: {w}x{h}, but its format says {fmt}"
+        return b"".join(pack(r, depth) for r in rows)
     if kind != "font":
         assert (w, h) == tuple(n[:2]), f"{path}: {w}x{h}, but its format says {fmt}"
     if kind == "p8":
@@ -260,9 +283,13 @@ def main(argv):
         args = argv[1:]
         assert args[0] == "--out-dir"
         out_dir, pngs = args[1], args[2:]
+        src_root = None
+        if pngs and pngs[0] == "--src-root":        # <src-root>/<rel>.png -> <out-dir>/<rel>.bin
+            src_root, pngs = pngs[1], pngs[2:]
         for p in pngs:
             parts = os.path.normpath(p).split(os.sep)
-            rel = os.path.join(*parts[parts.index("table") + 1:])       # <subdir>/<name>.png
+            rel = (os.path.relpath(p, src_root) if src_root else
+                   os.path.join(*parts[parts.index("table") + 1:]))       # <subdir>/<name>.png
             dst = os.path.join(out_dir, os.path.splitext(rel)[0] + ".bin")
             os.makedirs(os.path.dirname(dst), exist_ok=True)
             raw = from_png(p)

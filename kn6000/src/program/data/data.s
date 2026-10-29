@@ -7,6 +7,10 @@
 # tools/milk_model.py for what each structure is and the firmware code that reads it.
 
 .include "src/constants.inc"
+.include "../kn7000/src/include/kn_song.inc"
+.include "../kn7000/src/include/panel_memory.inc"
+.include "../kn7000/src/include/kn_panel_extra.inc"
+.include "src/program/data/rhythm_macros.inc"
 .include "src/program/data/gui_ids.inc"
 .include "src/program/data/gui_classes.inc"
 
@@ -14,4 +18,6 @@
 .include "src/program/data/data_00.s"
 .include "src/program/data/data_01.s"
 .include "src/program/data/data_02.s"
+.include "src/program/data/data_03.s"
+.include "src/program/data/data_04.s"
 .org 0x3F47EC
