@@ -85,129 +85,211 @@
 	.equ LCDSVC_DrawText16x24,		0x21
 	.equ LCDSVC_DrawBoxShadow1,		0x22
 
-; ---- helpers ------------------------------------------------------------------
-
-; a display-RAM byte offset from a pixel position (see GEOMETRY above)
-.macro _dl_at x, y
-	.if ((\x) % 8) <> 0
-	.error "display-list position: x must be a multiple of 8 (one display byte = 8 pixels)"
-	.endif
-	.short (\y) * 40 + (\x) / 8
-.endm
-
-; the record header: the opcode and the length byte, measured to the macro's end label
-.macro _dl_head op, start, end
-\start:
-	.byte \op, \end - \start
-.endm
+; ---- how the macros below are written ------------------------------------------
+; Each macro body is ONLY data directives -- no helper-macro calls -- so that the
+; repository's source censuses (scripts/analysis/data_range_census.py, which judges
+; a macro by its body) see every record as data.  Two idioms repeat:
+;   * the length byte of a variable-length record is measured from a local label at
+;     the record's start to one at its end:  .byte <op>, .Ldl_e\@ - .Ldl_s\@
+;   * a display-RAM position (see GEOMETRY above) is emitted as y * 40 + x / 8, after
+;     an .if that refuses an x that is not a multiple of 8.
 
 ; ==============================================================================
 ; INTERPRETER A -- DisplayList_Run (prom_b 0xF31A09), DisplayList_HandlerTable
 ; ==============================================================================
 
-; ---- four corners -> DLHandler_4Words -> SWI7 service <op>.  10 bytes.
-.macro _dl_rect op, x0, y0, x1, y1
-	.byte \op, 10
+; ---- four corners -> DLHandler_4Words copies them to LCD_X0 / LCD_Y0 / LCD_X1 /
+;      LCD_Y1 -> SWI7 service <opcode>.  10 bytes.
+.macro dl_line x0, y0, x1, y1		; LCD_Svc_00_DrawLine
+	.byte 0x00, 10
 	.short \x0, \y0, \x1, \y1
 .endm
-.macro dl_line x0, y0, x1, y1
-	_dl_rect 0x00, \x0, \y0, \x1, \y1
+.macro dl_hline x0, y0, x1, y1		; LCD_Svc_01_DrawHLine
+	.byte 0x01, 10
+	.short \x0, \y0, \x1, \y1
 .endm
-.macro dl_hline x0, y0, x1, y1
-	_dl_rect 0x01, \x0, \y0, \x1, \y1
+.macro dl_vline x0, y0, x1, y1		; LCD_Svc_02_DrawVLine
+	.byte 0x02, 10
+	.short \x0, \y0, \x1, \y1
 .endm
-.macro dl_vline x0, y0, x1, y1
-	_dl_rect 0x02, \x0, \y0, \x1, \y1
+.macro dl_fill_rect x0, y0, x1, y1		; LCD_Svc_05_FillRect
+	.byte 0x05, 10
+	.short \x0, \y0, \x1, \y1
 .endm
-.macro dl_fill_rect x0, y0, x1, y1
-	_dl_rect 0x05, \x0, \y0, \x1, \y1
+.macro dl_box x0, y0, x1, y1		; LCD_Svc_09_DrawBox
+	.byte 0x09, 10
+	.short \x0, \y0, \x1, \y1
 .endm
-.macro dl_box x0, y0, x1, y1
-	_dl_rect 0x09, \x0, \y0, \x1, \y1
+.macro dl_box_shadow2 x0, y0, x1, y1		; LCD_Svc_0A_DrawBoxShadow2
+	.byte 0x0a, 10
+	.short \x0, \y0, \x1, \y1
 .endm
-.macro dl_box_shadow2 x0, y0, x1, y1
-	_dl_rect 0x0a, \x0, \y0, \x1, \y1
+.macro dl_hline_dither x0, y0, x1, y1		; LCD_Svc_11_DrawHLineDither
+	.byte 0x11, 10
+	.short \x0, \y0, \x1, \y1
 .endm
-.macro dl_hline_dither x0, y0, x1, y1
-	_dl_rect 0x11, \x0, \y0, \x1, \y1
+.macro dl_vline_dashed x0, y0, x1, y1		; LCD_Svc_12_DrawVLineDashed
+	.byte 0x12, 10
+	.short \x0, \y0, \x1, \y1
 .endm
-.macro dl_vline_dashed x0, y0, x1, y1
-	_dl_rect 0x12, \x0, \y0, \x1, \y1
+.macro dl_box_patterned x0, y0, x1, y1		; LCD_Svc_13_DrawBoxPatterned
+	.byte 0x13, 10
+	.short \x0, \y0, \x1, \y1
 .endm
-.macro dl_box_patterned x0, y0, x1, y1
-	_dl_rect 0x13, \x0, \y0, \x1, \y1
+.macro dl_line_dashed x0, y0, x1, y1		; LCD_Svc_15_DrawLineDashed
+	.byte 0x15, 10
+	.short \x0, \y0, \x1, \y1
 .endm
-.macro dl_line_dashed x0, y0, x1, y1
-	_dl_rect 0x15, \x0, \y0, \x1, \y1
+.macro dl_erase_rect x0, y0, x1, y1		; LCD_Svc_1B_EraseRect
+	.byte 0x1b, 10
+	.short \x0, \y0, \x1, \y1
 .endm
-.macro dl_erase_rect x0, y0, x1, y1
-	_dl_rect 0x1b, \x0, \y0, \x1, \y1
-.endm
-.macro dl_box_shadow1 x0, y0, x1, y1
-	_dl_rect 0x22, \x0, \y0, \x1, \y1
+.macro dl_box_shadow1 x0, y0, x1, y1		; LCD_Svc_22_DrawBoxShadow1
+	.byte 0x22, 10
+	.short \x0, \y0, \x1, \y1
 .endm
 
 ; ---- text at a display-RAM position -> DLHandler_IX_Text: IX = position,
-;      BC = length - 4 characters from +4, service <op>.  Characters below 0x20
-;      and above 0x7E are the font's own glyphs (FINDINGS-fonts.md) and are
+;      BC = length - 4 characters from +4, service <opcode>.  Characters below
+;      0x20 and above 0x7E are the font's own glyphs (FINDINGS-fonts.md) and are
 ;      written as octal escapes.
-.macro _dl_text op, x, y, text
-	_dl_head \op, .Ldl_s\@, .Ldl_e\@
-	_dl_at \x, \y
+.macro dl_text8x14 x, y, text		; LCD_Svc_06_DrawText8x14
+.Ldl_s\@:
+	.byte 0x06, .Ldl_e\@ - .Ldl_s\@
+	.if ((\x) % 8) <> 0
+	.error "display-list position: x must be a multiple of 8 (one display byte = 8 pixels)"
+	.endif
+	.short (\y) * 40 + (\x) / 8
 	.ascii "\text"
 .Ldl_e\@:
 .endm
-.macro dl_text8x14 x, y, text
-	_dl_text 0x06, \x, \y, "\text"
+.macro dl_text8x16 x, y, text		; LCD_Svc_07_DrawText8x16
+.Ldl_s\@:
+	.byte 0x07, .Ldl_e\@ - .Ldl_s\@
+	.if ((\x) % 8) <> 0
+	.error "display-list position: x must be a multiple of 8 (one display byte = 8 pixels)"
+	.endif
+	.short (\y) * 40 + (\x) / 8
+	.ascii "\text"
+.Ldl_e\@:
 .endm
-.macro dl_text8x16 x, y, text
-	_dl_text 0x07, \x, \y, "\text"
+.macro dl_text16x16 x, y, text		; LCD_Svc_08_DrawText16x16
+.Ldl_s\@:
+	.byte 0x08, .Ldl_e\@ - .Ldl_s\@
+	.if ((\x) % 8) <> 0
+	.error "display-list position: x must be a multiple of 8 (one display byte = 8 pixels)"
+	.endif
+	.short (\y) * 40 + (\x) / 8
+	.ascii "\text"
+.Ldl_e\@:
 .endm
-.macro dl_text16x16 x, y, text
-	_dl_text 0x08, \x, \y, "\text"
+.macro dl_kana_halfwidth x, y, text		; LCD_Svc_16_DrawKatakanaHalfWidth
+.Ldl_s\@:
+	.byte 0x16, .Ldl_e\@ - .Ldl_s\@
+	.if ((\x) % 8) <> 0
+	.error "display-list position: x must be a multiple of 8 (one display byte = 8 pixels)"
+	.endif
+	.short (\y) * 40 + (\x) / 8
+	.ascii "\text"
+.Ldl_e\@:
 .endm
-.macro dl_kana_halfwidth x, y, text
-	_dl_text 0x16, \x, \y, "\text"
+.macro dl_svc18_unimplemented x, y, text		; LCD_Svc_Unimplemented
+.Ldl_s\@:
+	.byte 0x18, .Ldl_e\@ - .Ldl_s\@
+	.if ((\x) % 8) <> 0
+	.error "display-list position: x must be a multiple of 8 (one display byte = 8 pixels)"
+	.endif
+	.short (\y) * 40 + (\x) / 8
+	.ascii "\text"
+.Ldl_e\@:
 .endm
-.macro dl_svc18_unimplemented x, y, text
-	_dl_text 0x18, \x, \y, "\text"
+.macro dl_katakana16 x, y, text		; LCD_Svc_19_DrawKatakana16x16
+.Ldl_s\@:
+	.byte 0x19, .Ldl_e\@ - .Ldl_s\@
+	.if ((\x) % 8) <> 0
+	.error "display-list position: x must be a multiple of 8 (one display byte = 8 pixels)"
+	.endif
+	.short (\y) * 40 + (\x) / 8
+	.ascii "\text"
+.Ldl_e\@:
 .endm
-.macro dl_katakana16 x, y, text
-	_dl_text 0x19, \x, \y, "\text"
+.macro dl_kanji_a16 x, y, text		; LCD_Svc_1A_DrawKanjiSetA16x16
+.Ldl_s\@:
+	.byte 0x1a, .Ldl_e\@ - .Ldl_s\@
+	.if ((\x) % 8) <> 0
+	.error "display-list position: x must be a multiple of 8 (one display byte = 8 pixels)"
+	.endif
+	.short (\y) * 40 + (\x) / 8
+	.ascii "\text"
+.Ldl_e\@:
 .endm
-.macro dl_kanji_a16 x, y, text
-	_dl_text 0x1a, \x, \y, "\text"
+.macro dl_hiragana16 x, y, text		; LCD_Svc_1D_DrawHiragana16x16
+.Ldl_s\@:
+	.byte 0x1d, .Ldl_e\@ - .Ldl_s\@
+	.if ((\x) % 8) <> 0
+	.error "display-list position: x must be a multiple of 8 (one display byte = 8 pixels)"
+	.endif
+	.short (\y) * 40 + (\x) / 8
+	.ascii "\text"
+.Ldl_e\@:
 .endm
-.macro dl_hiragana16 x, y, text
-	_dl_text 0x1d, \x, \y, "\text"
+.macro dl_scroll_layer x, y, text		; LCD_Svc_1E_ScrollCurrentLayer
+.Ldl_s\@:
+	.byte 0x1e, .Ldl_e\@ - .Ldl_s\@
+	.if ((\x) % 8) <> 0
+	.error "display-list position: x must be a multiple of 8 (one display byte = 8 pixels)"
+	.endif
+	.short (\y) * 40 + (\x) / 8
+	.ascii "\text"
+.Ldl_e\@:
 .endm
-.macro dl_scroll_layer x, y, text
-	_dl_text 0x1e, \x, \y, "\text"
+.macro dl_kanji_b16 x, y, text		; LCD_Svc_1F_DrawKanjiSetB16x16
+.Ldl_s\@:
+	.byte 0x1f, .Ldl_e\@ - .Ldl_s\@
+	.if ((\x) % 8) <> 0
+	.error "display-list position: x must be a multiple of 8 (one display byte = 8 pixels)"
+	.endif
+	.short (\y) * 40 + (\x) / 8
+	.ascii "\text"
+.Ldl_e\@:
 .endm
-.macro dl_kanji_b16 x, y, text
-	_dl_text 0x1f, \x, \y, "\text"
+.macro dl_text8x10 x, y, text		; LCD_Svc_20_DrawText8x10
+.Ldl_s\@:
+	.byte 0x20, .Ldl_e\@ - .Ldl_s\@
+	.if ((\x) % 8) <> 0
+	.error "display-list position: x must be a multiple of 8 (one display byte = 8 pixels)"
+	.endif
+	.short (\y) * 40 + (\x) / 8
+	.ascii "\text"
+.Ldl_e\@:
 .endm
-.macro dl_text8x10 x, y, text
-	_dl_text 0x20, \x, \y, "\text"
-.endm
-.macro dl_text16x24 x, y, text
-	_dl_text 0x21, \x, \y, "\text"
+.macro dl_text16x24 x, y, text		; LCD_Svc_21_DrawText16x24
+.Ldl_s\@:
+	.byte 0x21, .Ldl_e\@ - .Ldl_s\@
+	.if ((\x) % 8) <> 0
+	.error "display-list position: x must be a multiple of 8 (one display byte = 8 pixels)"
+	.endif
+	.short (\y) * 40 + (\x) / 8
+	.ascii "\text"
+.Ldl_e\@:
 .endm
 
 ; ---- text at any pixel -> DLHandler_2Words_Text: LCD_X0 = x, LCD_Y0 = y,
-;      BC = length - 6 characters from +6.  Services 0x17 (8x8 face) and 0x1C
-;      (16x16 face, 11 pixels apart): LCD_Svc_17_DrawText8x8Packed, LCD_Svc_1C_...
-.macro _dl_ptext op, x, y, text
-	_dl_head \op, .Ldl_s\@, .Ldl_e\@
+;      BC = length - 6 characters from +6.  Service 0x17 is the 8x8 face, 0x1C the
+;      16x16 face set 11 pixels apart (LCD_Svc_1C_DrawText16x16Packed).
+.macro dl_text8x8_packed x, y, text		; LCD_Svc_17_DrawText8x8Packed
+.Ldl_s\@:
+	.byte 0x17, .Ldl_e\@ - .Ldl_s\@
 	.short \x, \y
 	.ascii "\text"
 .Ldl_e\@:
 .endm
-.macro dl_text8x8_packed x, y, text
-	_dl_ptext 0x17, \x, \y, "\text"
-.endm
-.macro dl_text16x16_packed x, y, text
-	_dl_ptext 0x1c, \x, \y, "\text"
+.macro dl_text16x16_packed x, y, text		; LCD_Svc_1C_DrawText16x16Packed
+.Ldl_s\@:
+	.byte 0x1c, .Ldl_e\@ - .Ldl_s\@
+	.short \x, \y
+	.ascii "\text"
+.Ldl_e\@:
 .endm
 
 ; ---- one pixel -> DLHandler_2Words -> LCD_Svc_0B_PlotPoint.  6 bytes.
@@ -220,25 +302,34 @@
 ;      (IY = position, BC = byte columns, HL = rows).  8 bytes.
 .macro dl_clear_area x, y, w, h
 	.byte 0x0e, 8
-	_dl_at \x, \y
+	.if ((\x) % 8) <> 0
+	.error "display-list position: x must be a multiple of 8 (one display byte = 8 pixels)"
+	.endif
+	.short (\y) * 40 + (\x) / 8
 	.short (\w) / 8, \h
 .endm
 
 ; ---- a bitmap that lives outside the list -> DLHandler_FarPtr: XIY = bitmap,
 ;      IX = position, BC = byte columns, HL = rows -> LCD_Svc_03_BlitColumns
-;      (dl_bitmap) or LCD_Svc_04_ReadColumns (dl_read_area, the display copied
-;      INTO the buffer).  12 bytes.  The bitmap is column-major, w/8 columns of h
+;      (dl_bitmap) or LCD_Svc_04_ReadColumns (dl_read_area: the display copied
+;      INTO the buffer).  12 bytes.  A bitmap is column-major, w / 8 columns of h
 ;      bytes (FINDINGS-image-files.md).
 .macro dl_bitmap bitmap, x, y, w, h
 	.byte 0x03, 12
 	.long \bitmap
-	_dl_at \x, \y
+	.if ((\x) % 8) <> 0
+	.error "display-list position: x must be a multiple of 8 (one display byte = 8 pixels)"
+	.endif
+	.short (\y) * 40 + (\x) / 8
 	.short (\w) / 8, \h
 .endm
 .macro dl_read_area buffer, x, y, w, h
 	.byte 0x04, 12
 	.long \buffer
-	_dl_at \x, \y
+	.if ((\x) % 8) <> 0
+	.error "display-list position: x must be a multiple of 8 (one display byte = 8 pixels)"
+	.endif
+	.short (\y) * 40 + (\x) / 8
 	.short (\w) / 8, \h
 .endm
 
@@ -246,65 +337,78 @@
 ;      array DLGlyph_000_F78028 (prom_b), blitted 3 bytes x 24 rows at x, y.  5 bytes.
 .macro dl_value_glyph glyph, x, y
 	.byte 0x23, 5, \glyph
-	_dl_at \x, \y
+	.if ((\x) % 8) <> 0
+	.error "display-list position: x must be a multiple of 8 (one display byte = 8 pixels)"
+	.endif
+	.short (\y) * 40 + (\x) / 8
 .endm
 
 ; ==============================================================================
 ; INTERPRETER B -- DisplayListB_Run (prom_b 0xF31AF0), DisplayListB_HandlerTable
 ;
 ; Common to every record: var = the 16-bit address the value is read from,
-; mask / shift = the bit-field ((var) & mask) >> (shift & 7), and svc = the SWI7
-; service that draws it (LCDSVC_* above).  Each opcode has ONE length in the
-; whole image, the one its handler implies (FINDINGS-ui-display-list-interpreter-b.md).
+; mask / shift = the bit-field ((var) & mask) >> (shift & 7)
+; (DisplayListB_ExtractField), and svc = the SWI7 service that draws it
+; (LCDSVC_* above).  Each opcode has ONE length in the whole image, the one its
+; handler implies (FINDINGS-ui-display-list-interpreter-b.md).
 ; ==============================================================================
 
-.macro _dlb_field op, len, var, mask, shift
-	.byte \op, \len
-	.short \var
-	.byte \mask, \shift
-.endm
-
 ; ---- the value as decimal digits at a display-RAM position -> DLB_Handler_Decimal
-;      (T_Value_ToAsciiDigits3_RightJustified; digits 3 / 2 / else 1 picks the
+;      (T_Value_ToAsciiDigits3_RightJustified; digits = 3 / 2 / else 1 picks the
 ;      first of the three digits drawn).  10 bytes.  dlb_number16 reads the
 ;      variable as a 16-bit word instead of through the bit-field (`cp A,6`).
 .macro dlb_number var, mask, shift, svc, x, y, digits
-	_dlb_field 0x00, 10, \var, \mask, \shift
-	.byte \svc
-	_dl_at \x, \y
+	.byte 0x00, 10
+	.short \var
+	.byte \mask, \shift, \svc
+	.if ((\x) % 8) <> 0
+	.error "display-list position: x must be a multiple of 8 (one display byte = 8 pixels)"
+	.endif
+	.short (\y) * 40 + (\x) / 8
 	.byte \digits
 .endm
 .macro dlb_number16 var, mask, shift, svc, x, y, digits
-	_dlb_field 0x06, 10, \var, \mask, \shift
-	.byte \svc
-	_dl_at \x, \y
+	.byte 0x06, 10
+	.short \var
+	.byte \mask, \shift, \svc
+	.if ((\x) % 8) <> 0
+	.error "display-list position: x must be a multiple of 8 (one display byte = 8 pixels)"
+	.endif
+	.short (\y) * 40 + (\x) / 8
 	.byte \digits
 .endm
 ; ---- signed: one more character, the sign, unless bit 7 of signflag is set
 ;      (DisplayListB_ExtractFieldSigned).  11 bytes.
 .macro dlb_number_signed var, mask, shift, svc, x, y, digits, signflag
-	_dlb_field 0x05, 11, \var, \mask, \shift
-	.byte \svc
-	_dl_at \x, \y
+	.byte 0x05, 11
+	.short \var
+	.byte \mask, \shift, \svc
+	.if ((\x) % 8) <> 0
+	.error "display-list position: x must be a multiple of 8 (one display byte = 8 pixels)"
+	.endif
+	.short (\y) * 40 + (\x) / 8
 	.byte \digits, \signflag
 .endm
-; ---- the same at a pixel position (LCD_X0 / LCD_Y0) -> DLB_Handler_Decimal2Words,
-;      DLB_Handler_DecimalSigned2Words.  12 / 12 / 13 bytes.
+; ---- the same at a pixel position (LCD_X0 / LCD_Y0) -> DLB_Handler_Decimal2Words
+;      (opcode 0x0A: the 16-bit read) and DLB_Handler_DecimalSigned2Words.
 .macro dlb_number_xy var, mask, shift, svc, x, y, digits
-	_dlb_field 0x09, 12, \var, \mask, \shift
-	.byte \svc
+	.byte 0x09, 12
+	.short \var
+	.byte \mask, \shift, \svc
 	.short \x, \y
 	.byte \digits
 .endm
 .macro dlb_number16_xy var, mask, shift, svc, x, y, digits
-	_dlb_field 0x0a, 12, \var, \mask, \shift
-	.byte \svc
+	.byte 0x0a, 12
+	.short \var
+	.byte \mask, \shift, \svc
 	.short \x, \y
 	.byte \digits
 .endm
 .macro dlb_number_signed_xy var, mask, shift, svc, x, y, digits, signflag
-	_dlb_field 0x0b, 13, \var, \mask, \shift
-	.byte \svc
+	.byte 0x0b, 13
+	.short \var
+	.byte \mask, \shift, \svc
 	.short \x, \y
 	.byte \digits, \signflag
 .endm
@@ -312,45 +416,55 @@
 ; ---- entry [value] of a string table of <width>-character entries, at a
 ;      display-RAM position -> DLB_Handler_StringTable.  15 bytes.
 .macro dlb_string var, mask, shift, svc, table, width, x, y
-	_dlb_field 0x02, 15, \var, \mask, \shift
-	.byte \svc
+	.byte 0x02, 15
+	.short \var
+	.byte \mask, \shift, \svc
 	.long \table
 	.short \width
-	_dl_at \x, \y
+	.if ((\x) % 8) <> 0
+	.error "display-list position: x must be a multiple of 8 (one display byte = 8 pixels)"
+	.endif
+	.short (\y) * 40 + (\x) / 8
 .endm
 ; ---- the same at a pixel position -> DLB_Handler_StringTable2.  17 bytes.
 .macro dlb_string_xy var, mask, shift, svc, table, width, x, y
-	_dlb_field 0x07, 17, \var, \mask, \shift
-	.byte \svc
+	.byte 0x07, 17
+	.short \var
+	.byte \mask, \shift, \svc
 	.long \table
 	.short \width, \x, \y
 .endm
 
 ; ---- entry [value] of a table of 8-byte (x0, y0, x1, y1) rectangles, drawn by
 ;      service svc -> DLB_Handler_Array8.  11 bytes.  Opcodes 0x03 and 0x08 share
-;      the handler; TODO: what tells them apart -- nothing in DLB_Handler_Array8
+;      the handler.  TODO: what tells them apart -- nothing in DLB_Handler_Array8
 ;      reads the opcode.
 .macro dlb_rect_entry var, mask, shift, svc, table
-	_dlb_field 0x03, 11, \var, \mask, \shift
-	.byte \svc
+	.byte 0x03, 11
+	.short \var
+	.byte \mask, \shift, \svc
 	.long \table
 .endm
 .macro dlb_rect_entry_op08 var, mask, shift, svc, table
-	_dlb_field 0x08, 11, \var, \mask, \shift
-	.byte \svc
+	.byte 0x08, 11
+	.short \var
+	.byte \mask, \shift, \svc
 	.long \table
 .endm
 ; ---- entry [value] of a table of 6-byte (position, columns, rows) areas -> IY / BC
 ;      / HL -> DLB_Handler_Array6.  11 bytes.
 .macro dlb_area_entry var, mask, shift, svc, table
-	_dlb_field 0x04, 11, \var, \mask, \shift
-	.byte \svc
+	.byte 0x04, 11
+	.short \var
+	.byte \mask, \shift, \svc
 	.long \table
 .endm
 ; ---- a box whose top edge rises by value / 2 above y1 -> DLB_Handler_CentredSpan
 ;      (service 0x0A hard-coded).  12 bytes.
 .macro dlb_centred_span var, mask, shift, x0, x1, y1
-	_dlb_field 0x01, 12, \var, \mask, \shift
+	.byte 0x01, 12
+	.short \var
+	.byte \mask, \shift
 	.short \x0, \x1, \y1
 .endm
 
