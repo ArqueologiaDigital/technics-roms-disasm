@@ -3,10 +3,11 @@
 Each script reads the reference images in `original_ROMs/` (and, where it says so, the built ELF
 for one label address). Run them from the repo root after `make`.
 
-| script               | question it answers                                                                                                      | command                                                                |
-|----------------------|--------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------|
-| `tree_preorder.py`   | Is the object table the preorder walk of the tree its super / sub / next / prev links describe (so nesting is lossless)? | `python3 notes/data-gui-hdae5000-2026-10-29/probes/tree_preorder.py`   |
-| `editsw_geometry.py` | Does every `editsw` value name the LCD switch next to the object (COL1-8, LEFT/RIGHT rows 1-5)?                          | `python3 notes/data-gui-hdae5000-2026-10-29/probes/editsw_geometry.py` |
+| script                      | question it answers                                                                                                      | command                                                                       |
+|-----------------------------|--------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------|
+| `tree_preorder.py`          | Is the object table the preorder walk of the tree its super / sub / next / prev links describe (so nesting is lossless)? | `python3 notes/data-gui-hdae5000-2026-10-29/probes/tree_preorder.py`          |
+| `editsw_geometry.py`        | Does every `editsw` value name the LCD switch next to the object (COL1-8, LEFT/RIGHT rows 1-5)?                          | `python3 notes/data-gui-hdae5000-2026-10-29/probes/editsw_geometry.py`        |
+| `str_adr_initial_values.py` | What are the 0x0070xxxx words of the UI state block (SelectList.str_adr initial values), and are they ever drawn?        | `python3 notes/data-gui-hdae5000-2026-10-29/probes/str_adr_initial_values.py` |
 
 Signals read: the object table and name table (located from `HDAE5000_Handler_Registration`'s
 `RegisterObjectTable` operands for tables 0x7F / 0x37F), each record's words at +4 / +6 / +8 / +10
