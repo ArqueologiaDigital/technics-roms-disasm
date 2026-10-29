@@ -21,11 +21,15 @@ HERE=$(cd "$(dirname "$0")" && pwd)
 LAB=src/program/data/labels.sym
 TMP=$(mktemp -d "${TMPDIR:-/tmp}/regen_sibling.XXXXXX")
 for round in 1 2 3 4 5 6; do
-    # labels.sym, and code_refs.txt (the code addresses the data names loc_<ADDR>)
-    cat "$LAB" "${LAB%labels.sym}code_refs.txt" > "$TMP/before" 2>/dev/null || :
-    python3 "$HERE/gen_data_s.py" --profile "$MODEL" | head -1
-    n=$(cat "$LAB" "${LAB%labels.sym}code_refs.txt" 2>/dev/null | diff "$TMP/before" - | grep -c '^[<>]' || true)
-    echo "round $round $MODEL: $n labels changed"
+    # what the code generator reads from the data: its labels, the code addresses its
+    # tables name, the ids and the function names
+    cat $LAB src/program/data/code_refs.txt src/program/data/gui_code_ids.inc \
+        src/program/data/functions.sym > "$TMP/before" 2>/dev/null || true
+    python3 "$HERE/gen_data_s.py" --profile "$MODEL" | grep -v "^  " | tail -1
+    cat $LAB src/program/data/code_refs.txt src/program/data/gui_code_ids.inc \
+        src/program/data/functions.sym > "$TMP/after" 2>/dev/null || true
+    n=$(diff "$TMP/before" "$TMP/after" | grep -c '^[<>]' || true)
+    echo "round $round $MODEL: $n lines of labels / code refs / ids / function names changed"
     if [ "$n" = 0 ] && [ "$round" -gt 1 ]; then echo "fixpoint after $round rounds"; rm -r -- "${TMP:?}"; exit 0; fi
     $PROGRAM_SRC | tail -1
 done

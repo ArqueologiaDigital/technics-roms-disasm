@@ -9,6 +9,8 @@
 .include "src/constants.inc"
 .include "../kn7000/src/include/kn_song.inc"
 .include "../kn7000/src/include/panel_memory.inc"
+.include "../kn7000/src/include/voice_record.inc"
+.include "src/program/data/tone_macros.inc"
 .include "../kn7000/src/include/kn_panel_extra.inc"
 .include "src/program/data/rhythm_macros.inc"
 .include "src/program/data/gui_ids.inc"

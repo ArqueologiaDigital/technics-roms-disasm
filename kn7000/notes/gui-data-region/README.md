@@ -173,6 +173,36 @@ is included before the code; gen_program_s.py writes them by name in `mov IMM, d
 `cmp IMM, dN`.  The IDNAME tables compute the same values from their positions, and the code's
 bytes check them (an id that disagreed would change an instruction).
 
+### Third pass: reader tables, panel memories, ids in the code
+
+- **Reader tables.**  A labelled gap that the code reads through `mov LABEL, aN` and a load of one
+  width (`movbu` / `movhu` / `mov`; signed when an `extb` / `exth` of the loaded register follows)
+  is a table of that width, up to the next address anything names.  It is named after its first
+  reader (`TgElemNoteOnStd_Table` is the curve 0x486D1F54, 128 x u16, 0..8191) and its header
+  gives count, kind, range and the reading instruction (`tab_u8` ... `tab_u32`,
+  `src/include/data_tables.inc`).  A table that mostly holds the all-ones value is written as a
+  sparse map, entry by entry with its index (`map8` / `map16`, `map_none8` / `map_none16`).
+  [INFERENCE] the element width is the reader's load width; a table read at two widths takes the
+  commoner one.
+- **Panel memories.**  The 0x486C..0x4870 region holds 103 (941) built-in PANEL MEMORY records:
+  tag / length lists that start with the name record, hold 43 records and fill exactly 0x750
+  bytes (the record lib func_4C021F33 copies to 0x84000020), several behind a 16-character bank
+  name.  PMR_* macros, as for the demo songs.
+- **Small gaps.**  A NULL word that ends a pointer table belongs to it; texts of 1..3 characters
+  are `.asciz`; 1..3 bytes of alignment fill are `.align 4` with the item they pad.
+- **Ids in the code.**  `<data dir>/gui_code_ids.inc` gives the title / mode / OT-block, class,
+  function and object ids numerically, before the code; gen_program_s.py names them in
+  `mov IMM, dN` / `cmp IMM, dN` (941: 902 `FN_`, 333 `CLASS_`, 176 `TT_`, 64 `MD_` and the object
+  ids, e.g. `DiskWaitWin_id`).  Index-0 ids are left out: `slot << 16` is a round number the code
+  also uses as a plain constant.
+
+What is left in 941 (`notes/gui-data-region-probes/gap_kinds.py`): 793,436 bytes in 6,294 pieces,
+of which 627,482 B "other" (binary tables no reader of the `mov LABEL, aN` / load shape reaches:
+pointer arithmetic, struct arrays read field by field, the style-record tables near 0x4873BEF0),
+75,819 B text-like but not NUL-terminated runs (fixed-width name tables), 62,275 B pointer-like
+(tables whose words point at unlabelled data), 25,800 B of 7-bit values, 2,060 B in 484 short
+tails after typed items.  By size: 148,108 B in pieces of 4 KB or more.
+
 ## Readability census (`tools/gui_readability.py`)
 
 Before: the baseline checkout at b58b8f696 (`--root` of the main checkout); after: this branch at
@@ -198,16 +228,16 @@ immediates in 941).
 ## Binary-include census (`scripts/analysis/data_incbin_census.py`)
 
 Generic entries / bytes; the baseline is the plan's (b58b8f696); "first pass" is 52c94b7e5 (the
-GUI, strings, media, the zlib streams declared opaque), "now" is 994e02684 (the demo songs typed
-inside .zlib blocks, the rhythm resource, the jump tables).  The data region is 2,306,001 bytes
+GUI, strings, media, the zlib streams declared opaque), "now" is 7643e9385 (also the demo songs, the
+rhythm resource, the jump tables, reader tables and panel memories).  The data region is 2,306,001 bytes
 in build 941.
 
 | tree           | before n | before bytes | first pass        | now n | now bytes | media (n / B)   | opaque |
 |----------------|----------|--------------|-------------------|-------|-----------|-----------------|--------|
-| kn7000-program | 3        | 2,563,794    | 7,269 / 1,075,427 | 7019  | 1,036,711 | 10 / 58,992     | 0      |
-| kn7000-b935    | 3        | 2,602,613    | 7,271 / 1,074,648 | 7021  | 1,035,932 | 10 / 58,992     | 0      |
-| kn7000-b893    | 3        | 2,607,409    | 7,285 / 1,075,489 | 7036  | 1,036,941 | 10 / 58,992     | 0      |
-| kn7000-sp7001  | 704      | 5,176,151    | 8,052 / 3,649,160 | 7104  | 1,080,563 | 169 / 1,375,301 | 0      |
+| kn7000-program | 3        | 2,563,794    | 7,269 / 1,075,427 | 6294  | 793,436   | 10 / 58,992     | 0      |
+| kn7000-b935    | 3        | 2,602,613    | 7,271 / 1,074,648 | 6304  | 794,127   | 10 / 58,992     | 0      |
+| kn7000-b893    | 3        | 2,607,409    | 7,285 / 1,075,489 | 6315  | 793,764   | 10 / 58,992     | 0      |
+| kn7000-sp7001  | 704      | 5,176,151    | 8,052 / 3,649,160 | 6382  | 837,130   | 169 / 1,375,301 | 0      |
 
 (kn7000-sp7001 also holds table build 83, which the kn7000-table lane typed meanwhile.)  The
 count of generic entries rose because one blob became thousands of labelled pieces between typed

@@ -113737,7 +113737,7 @@ func_4C03D431_entry:
 	inc	d1
 	lne
 	mov	0x840007d2, a0
-	mov	Str_Soloist_Sounds_Spanish_Trumpets, a1
+	mov	0x4c32be24, a1
 	mov	0x0002d8d0, d0
 	call	memcpy_entry, [a2,a3], 8
 	call	func_4C03EC70_entry, [d2,d3,a2], 0x1c
@@ -221613,7 +221613,7 @@ func_4C07C26A_entry_L2c:
 	bra	func_4C07C26A_entry_L99
 func_4C07C26A_entry_L52:
 	movhu	(0x24, sp), d0
-	mov	ptrs_4C3E5FD4, a0
+	mov	0x4c3e5fd4, a0
 	asl2	d0
 	mov	(d0, a0), a0
 	bra	func_4C07C26A_entry_L99
@@ -221718,7 +221718,7 @@ func_4C07C353_entry_Le:
 func_4C07C353_entry_L36:
 	exthu	d3
 	asl2	d3
-	mov	ptrs_4C3E5FD4, a0
+	mov	0x4c3e5fd4, a0
 	mov	(d3, a0), a0
 	bra	func_4C07C353_entry_L79
 func_4C07C353_entry_L42:
@@ -221791,7 +221791,7 @@ func_4C07C3D4_entry_L29:
 	bra	func_4C07C3D4_entry_L96
 func_4C07C3D4_entry_L4f:
 	movhu	(0x24, sp), d0
-	mov	ptrs_4C3E7104, a0
+	mov	0x4c3e7104, a0
 	asl2	d0
 	mov	(d0, a0), a0
 	bra	func_4C07C3D4_entry_L96

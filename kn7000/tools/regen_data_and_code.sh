@@ -14,7 +14,7 @@
 # unidasm) for gen_program_s.py and a built tree (build/*.labels).
 #
 # RUN (from kn7000/):  UNIDASM=/path/to/unidasm tools/regen_data_and_code.sh [builds...]
-set -e
+set -e -o pipefail
 cd "$(dirname "$0")/.."
 BUILDS=${*:-941 b935 b893 sp7001}
 TMP=$(mktemp -d "${TMPDIR:-/tmp}/regen_data_and_code.XXXXXX")
@@ -22,14 +22,18 @@ dir() { if [ "$1" = 941 ]; then echo src/program/data; else echo "src/$1/program
 for round in 1 2 3 4 5 6; do
     changed=0
     for b in $BUILDS; do
-        [ -f "$(dir $b)/labels.sym" ] && cp "$(dir $b)/labels.sym" "$TMP/$b.before" || : > "$TMP/$b.before"
-        python3 tools/gen_data_s.py --profile "$b" | head -1
-        n=$(diff "$TMP/$b.before" "$(dir $b)/labels.sym" | grep -c '^[<>]' || true)
-        echo "round $round $b: $n labels changed"
+        # what the code generation reads from the data generation: the labels, the code
+        # addresses the data names, the ids
+        snap() { cat "$(dir $b)/labels.sym" "$(dir $b)/code_refs.txt" "$(dir $b)/gui_event_ids.inc" \
+                     "$(dir $b)/gui_code_ids.inc" 2>/dev/null; }
+        snap > "$TMP/$b.before"
+        python3 tools/gen_data_s.py --profile "$b" | sed -n 1p
+        n=$(snap | diff "$TMP/$b.before" - | grep -c '^[<>]' || true)
+        echo "round $round $b: $n lines of labels / code refs / ids changed"
         [ "$n" -gt 0 ] && changed=1
     done
     if [ $changed = 0 ]; then echo "fixpoint after $round rounds"; rm -r -- "${TMP:?}"; exit 0; fi
-    for b in $BUILDS; do python3 tools/gen_program_s.py --profile "$b" | head -1; done
+    for b in $BUILDS; do python3 tools/gen_program_s.py --profile "$b" | sed -n 1p; done
 done
 rm -r -- "${TMP:?}"
 echo "regen_data_and_code: no fixpoint after 6 rounds" >&2
