@@ -9,6 +9,10 @@
 0x4C0537BC  HelpLang2Check
 0x4C053959  HelpLang3Check
 0x4C053AEC  HelpLang4Check
+0x4C078874  CheckLanguage
+0x4C078908  CheckMessage
+0x4C07A280  FavSetFunc
+0x4C07A2CC  FavBankNamingFunc
 0x4C09FE7D  BitmapKn6000
 0x4C09FEC8  BitmapNx
 0x4C09FF03  BitmapGm2

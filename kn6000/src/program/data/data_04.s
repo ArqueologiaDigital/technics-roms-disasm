@@ -890,8 +890,92 @@ V_demo1_1_ResNames:
 	.long	RN_empty_4508	# fdemo_kd_Label_Jazz_Flute_Soloist
 	.long	RN_empty_4509	# fdemo_kd_Label_Jazz_Vibes
 .incbin_range "baserom/kn6000_program.rom", 0x3DCF04, 0x3DCF08
-data_4C3DCF08:
-.incbin_range "baserom/kn6000_program.rom", 0x3DCF08, 0x3DD6D8
+
+func_4C16B39F_entry_L43_Table:	# 1000 x u16, 0..999; read by func_4C16B39F_entry_L43 : `movhu	(d0, a1), d1`; func_4C16B4DC_entry_Lcb : `movhu	(d2, a0), d0`
+	tab_u16	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11	# [0]
+	tab_u16	12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23	# [12]
+	tab_u16	24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35	# [24]
+	tab_u16	36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47	# [36]
+	tab_u16	48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59	# [48]
+	tab_u16	60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71	# [60]
+	tab_u16	72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83	# [72]
+	tab_u16	84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95	# [84]
+	tab_u16	96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107	# [96]
+	tab_u16	108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119	# [108]
+	tab_u16	120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131	# [120]
+	tab_u16	132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143	# [132]
+	tab_u16	144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155	# [144]
+	tab_u16	156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167	# [156]
+	tab_u16	168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179	# [168]
+	tab_u16	180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191	# [180]
+	tab_u16	192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203	# [192]
+	tab_u16	204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215	# [204]
+	tab_u16	216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227	# [216]
+	tab_u16	228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239	# [228]
+	tab_u16	240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251	# [240]
+	tab_u16	252, 253, 254, 255, 256, 257, 258, 259, 260, 261, 262, 263	# [252]
+	tab_u16	264, 265, 266, 267, 268, 269, 270, 271, 272, 273, 274, 275	# [264]
+	tab_u16	276, 277, 278, 279, 280, 281, 282, 283, 284, 285, 286, 287	# [276]
+	tab_u16	288, 289, 290, 291, 292, 293, 294, 295, 296, 297, 298, 299	# [288]
+	tab_u16	300, 301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311	# [300]
+	tab_u16	312, 313, 314, 315, 316, 317, 318, 319, 320, 321, 322, 323	# [312]
+	tab_u16	324, 325, 326, 327, 328, 329, 330, 331, 332, 333, 334, 335	# [324]
+	tab_u16	336, 337, 338, 339, 340, 341, 342, 343, 344, 345, 346, 347	# [336]
+	tab_u16	348, 349, 350, 351, 352, 353, 354, 355, 356, 357, 358, 359	# [348]
+	tab_u16	360, 361, 362, 363, 364, 365, 366, 367, 368, 369, 370, 371	# [360]
+	tab_u16	372, 373, 374, 375, 376, 377, 378, 379, 380, 381, 382, 383	# [372]
+	tab_u16	384, 385, 386, 387, 388, 389, 390, 391, 392, 393, 394, 395	# [384]
+	tab_u16	396, 397, 398, 399, 400, 401, 402, 403, 404, 405, 406, 407	# [396]
+	tab_u16	408, 409, 410, 411, 412, 413, 414, 415, 416, 417, 418, 419	# [408]
+	tab_u16	420, 421, 422, 423, 424, 425, 426, 427, 428, 429, 430, 431	# [420]
+	tab_u16	432, 433, 434, 435, 436, 437, 438, 439, 440, 441, 442, 443	# [432]
+	tab_u16	444, 445, 446, 447, 448, 449, 450, 451, 452, 453, 454, 455	# [444]
+	tab_u16	456, 457, 458, 459, 460, 461, 462, 463, 464, 465, 466, 467	# [456]
+	tab_u16	468, 469, 470, 471, 472, 473, 474, 475, 476, 477, 478, 479	# [468]
+	tab_u16	480, 481, 482, 483, 484, 485, 486, 487, 488, 489, 490, 491	# [480]
+	tab_u16	492, 493, 494, 495, 496, 497, 498, 499, 500, 501, 502, 503	# [492]
+	tab_u16	504, 505, 506, 507, 508, 509, 510, 511, 512, 513, 514, 515	# [504]
+	tab_u16	516, 517, 518, 519, 520, 521, 522, 523, 524, 525, 526, 527	# [516]
+	tab_u16	528, 529, 530, 531, 532, 533, 534, 535, 536, 537, 538, 539	# [528]
+	tab_u16	540, 541, 542, 543, 544, 545, 546, 547, 548, 549, 550, 551	# [540]
+	tab_u16	552, 553, 554, 555, 556, 557, 558, 559, 560, 561, 562, 563	# [552]
+	tab_u16	564, 565, 566, 567, 568, 569, 570, 571, 572, 573, 574, 575	# [564]
+	tab_u16	576, 577, 578, 579, 580, 581, 582, 583, 584, 585, 586, 587	# [576]
+	tab_u16	588, 589, 590, 591, 592, 593, 594, 595, 596, 597, 598, 599	# [588]
+	tab_u16	600, 601, 602, 603, 604, 605, 606, 607, 608, 609, 610, 611	# [600]
+	tab_u16	612, 613, 614, 615, 616, 617, 618, 619, 620, 621, 622, 623	# [612]
+	tab_u16	624, 625, 626, 627, 628, 629, 630, 631, 632, 633, 634, 635	# [624]
+	tab_u16	636, 637, 638, 639, 640, 641, 642, 643, 644, 645, 646, 647	# [636]
+	tab_u16	648, 649, 650, 651, 652, 653, 654, 655, 656, 657, 658, 659	# [648]
+	tab_u16	660, 661, 662, 663, 664, 665, 666, 667, 668, 669, 670, 671	# [660]
+	tab_u16	672, 673, 674, 675, 676, 677, 678, 679, 680, 681, 682, 683	# [672]
+	tab_u16	684, 685, 686, 687, 688, 689, 690, 691, 692, 693, 694, 695	# [684]
+	tab_u16	696, 697, 698, 699, 700, 701, 702, 703, 704, 705, 706, 707	# [696]
+	tab_u16	708, 709, 710, 711, 712, 713, 714, 715, 716, 717, 718, 719	# [708]
+	tab_u16	720, 721, 722, 723, 724, 725, 726, 727, 728, 729, 730, 731	# [720]
+	tab_u16	732, 733, 734, 735, 736, 737, 738, 739, 740, 741, 742, 743	# [732]
+	tab_u16	744, 745, 746, 747, 748, 749, 750, 751, 752, 753, 754, 755	# [744]
+	tab_u16	756, 757, 758, 759, 760, 761, 762, 763, 764, 765, 766, 767	# [756]
+	tab_u16	768, 769, 770, 771, 772, 773, 774, 775, 776, 777, 778, 779	# [768]
+	tab_u16	780, 781, 782, 783, 784, 785, 786, 787, 788, 789, 790, 791	# [780]
+	tab_u16	792, 793, 794, 795, 796, 797, 798, 799, 800, 801, 802, 803	# [792]
+	tab_u16	804, 805, 806, 807, 808, 809, 810, 811, 812, 813, 814, 815	# [804]
+	tab_u16	816, 817, 818, 819, 820, 821, 822, 823, 824, 825, 826, 827	# [816]
+	tab_u16	828, 829, 830, 831, 832, 833, 834, 835, 836, 837, 838, 839	# [828]
+	tab_u16	840, 841, 842, 843, 844, 845, 846, 847, 848, 849, 850, 851	# [840]
+	tab_u16	852, 853, 854, 855, 856, 857, 858, 859, 860, 861, 862, 863	# [852]
+	tab_u16	864, 865, 866, 867, 868, 869, 870, 871, 872, 873, 874, 875	# [864]
+	tab_u16	876, 877, 878, 879, 880, 881, 882, 883, 884, 885, 886, 887	# [876]
+	tab_u16	888, 889, 890, 891, 892, 893, 894, 895, 896, 897, 898, 899	# [888]
+	tab_u16	900, 901, 902, 903, 904, 905, 906, 907, 908, 909, 910, 911	# [900]
+	tab_u16	912, 913, 914, 915, 916, 917, 918, 919, 920, 921, 922, 923	# [912]
+	tab_u16	924, 925, 926, 927, 928, 929, 930, 931, 932, 933, 934, 935	# [924]
+	tab_u16	936, 937, 938, 939, 940, 941, 942, 943, 944, 945, 946, 947	# [936]
+	tab_u16	948, 949, 950, 951, 952, 953, 954, 955, 956, 957, 958, 959	# [948]
+	tab_u16	960, 961, 962, 963, 964, 965, 966, 967, 968, 969, 970, 971	# [960]
+	tab_u16	972, 973, 974, 975, 976, 977, 978, 979, 980, 981, 982, 983	# [972]
+	tab_u16	984, 985, 986, 987, 988, 989, 990, 991, 992, 993, 994, 995	# [984]
+	tab_u16	996, 997, 998, 999	# [996]
 data_4C3DD6D8:
 .incbin_range "baserom/kn6000_program.rom", 0x3DD6D8, 0x3DD6E2
 data_4C3DD6E2:
@@ -1499,7 +1583,8 @@ ptrs_4C3DE09C:
 	.long	data_4C3DD8CC
 	.long	Str_Let_s_Twist
 	.long	data_4C3DD8D6
-	.space	8, 0x00
+	.long	0
+	.space	4, 0x00
 ptrs_4C3DE244:
 	.long	Str_Grand_Prix
 	.long	data_4C3DD8E0
@@ -1557,7 +1642,8 @@ ptrs_4C3DE244:
 	.long	data_4C3DD9E4
 	.long	Str_Slow_Dance
 	.long	data_4C3DD9EE
-	.space	8, 0x00
+	.long	0
+	.space	4, 0x00
 ptrs_4C3DE32C:
 	.long	Str_Ballermann
 	.long	Str_4_19
@@ -1589,7 +1675,8 @@ ptrs_4C3DE32C:
 	.long	data_4C3DDA7A
 	.long	Str_Polonaise_Time
 	.long	data_4C3DDA84
-	.space	8, 0x00
+	.long	0
+	.space	4, 0x00
 ptrs_4C3DE3AC:
 	.long	Str_90_s_Boy_Groups
 	.long	Str_empty_269
@@ -1633,7 +1720,8 @@ ptrs_4C3DE3AC:
 	.long	data_4C3DDB4C
 	.long	Str_Caribbean_Sun
 	.long	data_4C3DDB56
-	.space	8, 0x00
+	.long	0
+	.space	4, 0x00
 ptrs_4C3DE45C:
 	.long	Str_Slowest_Ballads
 	.long	Str_p
@@ -1679,7 +1767,8 @@ ptrs_4C3DE45C:
 	.long	data_4C3DDC28
 	.long	Str_Gospel_Band
 	.long	data_4C3DDC32
-	.space	8, 0x00
+	.long	0
+	.space	4, 0x00
 ptrs_4C3DE514:
 	.long	Str_Tower_Of_Jazz
 	.long	data_4C3DDC3C
@@ -1749,7 +1838,8 @@ ptrs_4C3DE514:
 	.long	data_4C3DDD7C
 	.long	Str_Quintet_Band
 	.long	data_4C3DDD86
-	.space	8, 0x00
+	.long	0
+	.space	4, 0x00
 ptrs_4C3DE62C:
 	.long	Str_Island_Romance
 	.long	data_4C3DDD90
@@ -1787,7 +1877,8 @@ ptrs_4C3DE62C:
 	.long	data_4C3DDE30
 	.long	Str_Northern_Polka
 	.long	data_4C3DDE3A
-	.space	8, 0x00
+	.long	0
+	.space	4, 0x00
 ptrs_4C3DE6C4:
 	.long	Str_Bluegrass_Dance
 	.long	data_4C3DDE44
@@ -1813,7 +1904,8 @@ ptrs_4C3DE6C4:
 	.long	data_4C3DDEA8
 	.long	Str_SlowCountryDance
 	.long	data_4C3DDEB2
-	.space	8, 0x00
+	.long	0
+	.space	4, 0x00
 ptrs_4C3DE72C:
 	.long	Str_Ballroom_Waltz
 	.long	data_4C3DDEBC
@@ -1851,7 +1943,8 @@ ptrs_4C3DE72C:
 	.long	data_4C3DDF5C
 	.long	Str_English_Waltz
 	.long	data_4C3DDF66
-	.space	8, 0x00
+	.long	0
+	.space	4, 0x00
 ptrs_4C3DE7C4:
 	.long	Str_Uptown_Cha_Cha
 	.long	data_4C3DDF70
@@ -1913,7 +2006,8 @@ ptrs_4C3DE7C4:
 	.long	data_4C3DE088
 	.long	Str_Nights_In_Italy
 	.long	data_4C3DE092
-	.space	8, 0x00
+	.long	0
+	.space	4, 0x00
 ptrs_4C3DE8BC:
 	.long	Str_Rock_Pop
 	.long	ptrs_4C3DE09C
@@ -1935,7 +2029,8 @@ ptrs_4C3DE8BC:
 	.long	ptrs_4C3DE72C
 	.long	Str_Latin_World
 	.long	ptrs_4C3DE7C4
-	.space	8, 0x00
+	.long	0
+	.space	4, 0x00
 data_4C3DE914:
 .incbin_range "baserom/kn6000_program.rom", 0x3DE914, 0x3DE922
 data_4C3DE922:
@@ -2071,13 +2166,16 @@ ptrs_4C3DF128:
 	.long	data_4C3DF116
 	.long	Str_Z
 	.long	data_4C3DF122
-.incbin_range "baserom/kn6000_program.rom", 0x3DF230, 0x3DF8EC
+	.long	0
+.incbin_range "baserom/kn6000_program.rom", 0x3DF234, 0x3DF8EC
 ptrs_4C3DF8EC:
 	.long	data_4C28028C
 	.long	Str_Mellow_Italiano_119
-.incbin_range "baserom/kn6000_program.rom", 0x3DF8F4, 0x3E56AC
-data_4C3E56AC:
-.incbin_range "baserom/kn6000_program.rom", 0x3E56AC, 0x3E56B0
+	.long	0
+.incbin_range "baserom/kn6000_program.rom", 0x3DF8F8, 0x3E56AC
+
+func_4C165A19_entry_L83_Table:	# 1 x u32, 1277865436..1277865436; read by func_4C165A19_entry_L83 : `mov	(d0, a0), a1`
+	tab_u32	1277865436
 data_4C3E56B0:
 .incbin_range "baserom/kn6000_program.rom", 0x3E56B0, 0x3E5724
 
@@ -2572,8 +2670,9 @@ V_HDDTEST_ResNames:
 	.long	RN_USBTEST_SW	# USBTEST_SW
 	.long	RN_HDDTEST_SW	# HDDTEST_SW
 .incbin_range "baserom/kn6000_program.rom", 0x3E5E6C, 0x3E5E70
-data_4C3E5E70:
-	.space	1, 0x54
+
+func_4C172BCC_entry_L27_Table:	# 1 x u8, 84..84; read by func_4C172BCC_entry_L27 : `movbu	(a2), d0`
+	tab_u8	84
 
 Str_his_is_Test_Data_for_PPORT:	.asciz "his is Test Data for PPORT"
 
@@ -5194,7 +5293,8 @@ ptrs_4C3E8684:
 	.long	data_4C31959C
 	.long	data_4C317940
 	.long	data_4C311E28
-.incbin_range "baserom/kn6000_program.rom", 0x3E8888, 0x3E9850
+	.long	0
+.incbin_range "baserom/kn6000_program.rom", 0x3E888C, 0x3E9850
 data_4C3E9850:
 .incbin_range "baserom/kn6000_program.rom", 0x3E9850, 0x3E9852
 data_4C3E9852:
@@ -5266,7 +5366,8 @@ ptrs_4C3E9854:
 	.long	data_4C322E20
 	.long	data_4C322E38
 	.long	data_4C322E50
-.incbin_range "baserom/kn6000_program.rom", 0x3E995C, 0x3E99EC
+	.long	0
+.incbin_range "baserom/kn6000_program.rom", 0x3E9960, 0x3E99EC
 	.space	112, 0x00
 .incbin_range "baserom/kn6000_program.rom", 0x3E9A5C, 0x3E9BE8
 	.space	64, 0x00
@@ -5281,8 +5382,16 @@ ptrs_4C3E9854:
 .incbin_range "baserom/kn6000_program.rom", 0x3EA65C, 0x3EB620
 data_4C3EB620:
 .incbin_range "baserom/kn6000_program.rom", 0x3EB620, 0x3EBE20
-data_4C3EBE20:
-.incbin_range "baserom/kn6000_program.rom", 0x3EBE20, 0x3EBEA0
+
+func_4C09B520_entry_Lcd_Table:	# 128 x u8, 0..128; read by func_4C09B520_entry_Lcd : `movbu	(d3, a0), d0`; func_4C09B616_entry_Lf6 : `movbu	(d3, a0), d0`
+	tab_u8	30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 24, 2, 20, 32, 40	# [0]
+	tab_u8	30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 24, 2, 20, 32, 40	# [16]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [32]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [48]
+	tab_u8	14, 25, 12, 23, 18, 29, 25, 26, 34, 33, 34, 12, 30, 52, 14, 26	# [64]
+	tab_u8	22, 37, 15, 29, 24, 15, 42, 75, 21, 16, 49, 24, 2, 128, 128, 9	# [80]
+	tab_u8	14, 23, 12, 23, 18, 24, 25, 26, 34, 33, 25, 12, 30, 52, 14, 26	# [96]
+	tab_u8	22, 37, 15, 29, 24, 14, 42, 73, 21, 16, 48, 24, 2, 128, 128, 9	# [112]
 data_4C3EBEA0:
 .incbin_range "baserom/kn6000_program.rom", 0x3EBEA0, 0x3EBECC
 	.space	84, 0x60
@@ -5314,6 +5423,7 @@ data_4C3EC6A0:
 .incbin_range "baserom/kn6000_program.rom", 0x3EC6A0, 0x3EC6A2
 data_4C3EC6A2:
 .incbin_range "baserom/kn6000_program.rom", 0x3EC6A2, 0x3EC6A4
+
 ptrs_4C3EC6A4:
 	.long	data_4C324BCC
 	.long	data_4C324BD8
@@ -5699,15 +5809,47 @@ ptrs_4C3EC6A4:
 	.long	data_4C323A44
 	.long	data_4C323A50
 	.long	data_4C323A5C
-.incbin_range "baserom/kn6000_program.rom", 0x3ECCA4, 0x3ED870
+	.long	0
+.incbin_range "baserom/kn6000_program.rom", 0x3ECCA8, 0x3ED870
 
 .mnbase 0x4FC127A0   # the initialised-RAM image: labels are the RAM addresses ResetEntry copies it to
 
 data_50000010:
 .incbin_range "baserom/kn6000_program.rom", 0x3ED870, 0x3ED874
-data_50000014:
-.incbin_range "baserom/kn6000_program.rom", 0x3ED874, 0x3ED878
-	.space	1020, 0x00
+
+MainMmmControl_entry_Le5_Table:	# 256 x u32, 0..4278190080; read by MainMmmControl_entry_L10a : `mov	(a1), d0`; MainMmmControl_entry_Le5 : `mov	(a1), d0`
+	tab_u32	4278190080, 0, 0, 0, 0, 0, 0, 0	# [0]
+	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [8]
+	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [16]
+	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [24]
+	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [32]
+	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [40]
+	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [48]
+	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [56]
+	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [64]
+	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [72]
+	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [80]
+	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [88]
+	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [96]
+	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [104]
+	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [112]
+	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [120]
+	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [128]
+	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [136]
+	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [144]
+	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [152]
+	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [160]
+	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [168]
+	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [176]
+	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [184]
+	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [192]
+	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [200]
+	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [208]
+	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [216]
+	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [224]
+	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [232]
+	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [240]
+	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [248]
 data_50000414:
 .incbin_range "baserom/kn6000_program.rom", 0x3EDC74, 0x3EDC78
 data_50000418:
@@ -5736,7 +5878,7 @@ data_50000444:
 .incbin_range "baserom/kn6000_program.rom", 0x3EDCA4, 0x3EDCA8
 
 Str_We_are_Taian_BOYS:	.asciz "We are Taian BOYS!"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_We_are_Taian_BOYS
 
 ptrs_5000045C:
 	.long	Str_PART1_5
@@ -5900,16 +6042,17 @@ data_500006BC:
 .incbin_range "baserom/kn6000_program.rom", 0x3EDF1C, 0x3EDF20
 data_500006C0:
 .incbin_range "baserom/kn6000_program.rom", 0x3EDF20, 0x3EDF24
-data_500006C4:
-.incbin_range "baserom/kn6000_program.rom", 0x3EDF24, 0x3EDF34
-data_500006D4:
-.incbin_range "baserom/kn6000_program.rom", 0x3EDF34, 0x3EDF44
-data_500006E4:
-.incbin_range "baserom/kn6000_program.rom", 0x3EDF44, 0x3EDF54
-data_500006F4:
-.incbin_range "baserom/kn6000_program.rom", 0x3EDF54, 0x3EDF64
-data_50000704:
-	.space	8, 0x00
+
+ModeProc_L73_Table:	# 4 x u32, 31457280..31457280; read by ApTitleControl_L4c : `mov	(d0, a1), d1`; GetModeNow_entry : `mov	(d0, a0), d0` ...
+	tab_u32	31457280, 31457280, 31457280, 31457280
+ModeProc_L73_Table_2:	# 4 x u32, 31457280..31457280; read by ApTitleControl_Lcf : `mov	(d0, a0), d1`; GetModeOld_entry : `mov	(d0, a0), d0` ...
+	tab_u32	31457280, 31457280, 31457280, 31457280
+ModeProc_L73_Table_3:	# 4 x u32, 32505856..32505856; read by ApTitleControl_L6d : `mov	(d0, a1), a0`; ApTitleControl_L8e : `mov	(d0, a1), d1` ...
+	tab_u32	32505856, 32505856, 32505856, 32505856
+TitleProc_L75_Table:	# 4 x u32, 32505856..32505856; read by GetTitleOld_entry : `mov	(d0, a0), d0`; TitleProc_L75 : `mov	(d0, a0), d0` ...
+	tab_u32	32505856, 32505856, 32505856, 32505856
+ApTitleControl_Lfd_Table:	# 4 x u16, 0..0; read by ApTitleControl_Lfd : `movhu	(d0, a1), d0`; CheckNotDrawFlag_entry : `movhu	(d0, a0), d1` ...
+	tab_u16	0, 0, 0, 0
 data_5000070C:
 .incbin_range "baserom/kn6000_program.rom", 0x3EDF6C, 0x3EDF70
 data_50000710:
@@ -8041,7 +8184,7 @@ V_TtMessage_CheckMessage_RamEditBox1_selected:
 	.space	4, 0x00
 
 V_TtMessage_CheckMessage_RamEditBox1_data:	.asciz "["
-	.align	4, 0x00
+	.align	4, 0x00	# pad after V_TtMessage_CheckMessage_RamEditBox1_data
 V_TtMessage_CheckMessage_RamEditBox_Language_selected:
 	.space	4, 0x00
 V_TtMessage_CheckMessage_RamEditBox_Language_data:
@@ -9074,8 +9217,10 @@ data_5000193C:
 .incbin_range "baserom/kn6000_program.rom", 0x3EF19C, 0x3EF1A0
 data_50001940:
 .incbin_range "baserom/kn6000_program.rom", 0x3EF1A0, 0x3EF1A4
-data_50001944:
-.incbin_range "baserom/kn6000_program.rom", 0x3EF1A4, 0x3EF1C4
+
+AcTrackVolProc_L6b_Table:	# 16 x u16, 0..15; read by AcTrackVolProc_L17c : `movhu	(d0, a1), d1`; AcTrackVolProc_L6b : `movhu	(d0, a1), d0`
+	tab_u16	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11	# [0]
+	tab_u16	12, 13, 14, 15	# [12]
 data_50001964:
 .incbin_range "baserom/kn6000_program.rom", 0x3EF1C4, 0x3EF1C8
 data_50001968:
@@ -9088,6 +9233,7 @@ data_500019D0:
 .incbin_range "baserom/kn6000_program.rom", 0x3EF230, 0x3EF234
 data_500019D4:
 .incbin_range "baserom/kn6000_program.rom", 0x3EF234, 0x3EF238
+
 ptrs_500019D8:
 	.long	Str_PART_1
 	.long	Str_PART_2_2
@@ -9204,19 +9350,37 @@ data_50001B84:
 	.space	1, 0x00
 data_50001B85:
 .incbin_range "baserom/kn6000_program.rom", 0x3EF3E5, 0x3EF3E8
-data_50001B88:
-.incbin_range "baserom/kn6000_program.rom", 0x3EF3E8, 0x3EF404
-	.space	100, 0x00
-data_50001C08:
-.incbin_range "baserom/kn6000_program.rom", 0x3EF468, 0x3EF4CE
+
+func_4C07EA76_entry_L56_Table:	# 128 x u8, 0..39; read by func_4C07EA76_entry_L56 : `movbu	(d0, a0), d2`; func_4C07EA76_entry_L56 : `movbu	(d1, a0), d2` ...
+	tab_u8	0, 1, 0, 3, 16, 16, 16, 22, 24, 26, 28, 30, 32, 34, 36, 38	# [0]
+	tab_u8	17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 0, 0, 0, 0	# [16]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [32]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [48]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [64]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [80]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [96]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [112]
+func_4C07EA76_entry_L2c4_Table:	# 51 x u16, 0..2068; read by func_4C07EA76_entry_L2c4 : `movhu	(d0, a0), d1`
+	tab_u16	0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2	# [0]
+	tab_u16	3, 3, 4, 5, 6, 7, 8, 10, 12, 14, 16, 20	# [12]
+	tab_u16	24, 28, 32, 39, 48, 55, 65, 78, 96, 110, 129, 156	# [24]
+	tab_u16	192, 220, 258, 313, 384, 440, 517, 626, 767, 881, 1034, 1251	# [36]
+	tab_u16	1534, 1761, 2068	# [48]
 data_50001C6E:
 .incbin_range "baserom/kn6000_program.rom", 0x3EF4CE, 0x3EF4D4
-data_50001C74:
-.incbin_range "baserom/kn6000_program.rom", 0x3EF4D4, 0x3EF4DC
-data_50001C7C:
-.incbin_range "baserom/kn6000_program.rom", 0x3EF4DC, 0x3EF4EC
-data_50001C8C:
-.incbin_range "baserom/kn6000_program.rom", 0x3EF4EC, 0x3EF56C
+func_4C07EA76_entry_L74f_Table:	# 8 x u8, 0..255; read by func_4C07EA76_entry_L74f : `movbu	(d0, a2), d0`; func_4C07EA76_entry_L78a : `movbu	(d0, a1), d0` ...
+	tab_u8	0, 16, 32, 48, 64, 80, 255, 255
+TgcBufWrite_entry_L14_Table:	# 8 x s16, -1..3; read by TgcBufWrite_entry_L14 : `movhu	(d0, a0), d1`
+	tab_s16	3, 3, 3, 3, 3, 3, 3, -1
+func_4C083D3B_entry_L3e_Table:	# 128 x u8, 0..127; read by func_4C083D3B_entry_L3e : `movbu	(d0, a0), d2`
+	tab_u8	127, 126, 126, 125, 125, 124, 123, 123, 122, 122, 121, 121, 120, 119, 119, 118	# [0]
+	tab_u8	118, 117, 116, 116, 115, 115, 114, 113, 113, 112, 112, 111, 111, 110, 109, 109	# [16]
+	tab_u8	108, 108, 107, 106, 106, 105, 105, 104, 104, 103, 102, 102, 101, 101, 100, 99	# [32]
+	tab_u8	99, 98, 98, 97, 96, 96, 95, 95, 94, 94, 93, 92, 92, 91, 91, 90	# [48]
+	tab_u8	89, 89, 88, 88, 87, 86, 86, 85, 85, 84, 84, 83, 82, 82, 81, 81	# [64]
+	tab_u8	80, 78, 77, 75, 73, 71, 70, 68, 66, 65, 63, 61, 60, 58, 56, 54	# [80]
+	tab_u8	53, 51, 49, 48, 46, 44, 43, 41, 39, 37, 36, 34, 32, 31, 29, 27	# [96]
+	tab_u8	26, 24, 22, 20, 19, 17, 15, 14, 12, 10, 9, 7, 5, 3, 2, 0	# [112]
 
 Str_empty_262:	.asciz "{\xBA"
 .incbin_range "baserom/kn6000_program.rom", 0x3EF56F, 0x3EF76C
@@ -9270,8 +9434,9 @@ data_50001F27:
 	.align	4, 0x00
 data_50001F28:
 .incbin_range "baserom/kn6000_program.rom", 0x3EF788, 0x3EF78C
-data_50001F2C:
-	.space	2, 0x00
+
+func_4C09E427_entry_L21a_Table:	# 1 x u16, 0..0; read by func_4C09E427_entry_L21a : `movhu	(a1), d0`
+	tab_u16	0
 data_50001F2E:
 	.space	11, 0x00
 data_50001F39:
@@ -9282,8 +9447,8 @@ data_50001F48:
 .incbin_range "baserom/kn6000_program.rom", 0x3EF7A8, 0x3EF7AC
 data_50001F4C:
 .incbin_range "baserom/kn6000_program.rom", 0x3EF7AC, 0x3EF7B0
-data_50001F50:
-	.space	2, 0x00
+func_4C09E889_entry_L3e3_Table:	# 1 x u16, 0..0; read by func_4C09E889_entry_L3e3 : `movhu	(a1), d0`
+	tab_u16	0
 data_50001F52:
 	.space	38, 0x00
 data_50001F78:
@@ -9748,6 +9913,7 @@ SeqRealRecMetTgl_onoff:
 	.space	4, 0x00
 SeqCycleRecTgl_onoff:
 	.space	4, 0x00
+
 SeqRealRecScreen_SeqCapaBox_VwStrBox_selected:	.asciz "\""
 SeqRealRecScreen_SeqMeasBox_VwStrBox_selected:
 .incbin_range "baserom/kn6000_program.rom", 0x3EFBA6, 0x3EFBA8
@@ -9897,7 +10063,7 @@ SeqPunchRecScreen_SeqMeasBox_VwStrBox_selected:
 SeqPunchRecScreen_IntTitleMenu_MIXER_selected:
 	.space	4, 0x00
 SeqPunchRecScreen_SeqCapaBox_VwStrBox_selected:	.asciz "K"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after SeqPunchRecScreen_SeqCapaBox_VwStrBox_selected
 SeqTrackSwitchWin2_parent:
 	.space	4, 0xFF
 SeqTrackSwitchWin2_child:
@@ -11767,20 +11933,21 @@ data_500032D4:
 .incbin_range "baserom/kn6000_program.rom", 0x3F0B34, 0x3F0B38
 data_500032D8:
 .incbin_range "baserom/kn6000_program.rom", 0x3F0B38, 0x3F0B3C
-data_500032DC:
-.incbin_range "baserom/kn6000_program.rom", 0x3F0B3C, 0x3F0B40
+
+FE_CmpCstmCpy_L20a_Table:	# 4 x u8, 0..255; read by FE_CmpCstmCpy_L20a : `movbu	(d1, a0), d0`
+	tab_u8	0, 3, 255, 255
 data_500032E0:
 .incbin_range "baserom/kn6000_program.rom", 0x3F0B40, 0x3F0B44
-data_500032E4:
-.incbin_range "baserom/kn6000_program.rom", 0x3F0B44, 0x3F0B48
+func_4C0C3341_Table:	# 1 x u32, 9502723..9502723; read by func_4C0C3341_entry : `mov	(a2), d0`
+	tab_u32	9502723
 data_500032E8:
 .incbin_range "baserom/kn6000_program.rom", 0x3F0B48, 0x3F0B4C
 data_500032EC:
 .incbin_range "baserom/kn6000_program.rom", 0x3F0B4C, 0x3F0B50
 data_500032F0:
 .incbin_range "baserom/kn6000_program.rom", 0x3F0B50, 0x3F0B54
-data_500032F4:
-.incbin_range "baserom/kn6000_program.rom", 0x3F0B54, 0x3F0B58
+func_4C0C35ED_Table:	# 1 x u32, 8388630..8388630; read by func_4C0C35ED_entry : `mov	(a2), d0`
+	tab_u32	8388630
 data_500032F8:
 .incbin_range "baserom/kn6000_program.rom", 0x3F0B58, 0x3F0B5C
 data_500032FC:
@@ -11795,8 +11962,8 @@ data_5000330C:
 .incbin_range "baserom/kn6000_program.rom", 0x3F0B6C, 0x3F0B70
 data_50003310:
 .incbin_range "baserom/kn6000_program.rom", 0x3F0B70, 0x3F0B74
-data_50003314:
-.incbin_range "baserom/kn6000_program.rom", 0x3F0B74, 0x3F0B78
+func_4C0C3B5C_Table:	# 1 x u32, 10354691..10354691; read by func_4C0C3B5C_entry : `mov	(a2), d0`
+	tab_u32	10354691
 data_50003318:
 .incbin_range "baserom/kn6000_program.rom", 0x3F0B78, 0x3F0B7C
 data_5000331C:
@@ -11811,8 +11978,8 @@ data_5000332C:
 .incbin_range "baserom/kn6000_program.rom", 0x3F0B8C, 0x3F0B90
 data_50003330:
 .incbin_range "baserom/kn6000_program.rom", 0x3F0B90, 0x3F0B94
-data_50003334:
-.incbin_range "baserom/kn6000_program.rom", 0x3F0B94, 0x3F0B98
+func_4C0C4087_Table:	# 1 x u32, 10485763..10485763; read by func_4C0C4087_entry : `mov	(a2), d0`
+	tab_u32	10485763
 data_50003338:
 .incbin_range "baserom/kn6000_program.rom", 0x3F0B98, 0x3F0B9C
 data_5000333C:
@@ -11827,8 +11994,8 @@ data_5000334C:
 .incbin_range "baserom/kn6000_program.rom", 0x3F0BAC, 0x3F0BB0
 data_50003350:
 .incbin_range "baserom/kn6000_program.rom", 0x3F0BB0, 0x3F0BB4
-data_50003354:
-.incbin_range "baserom/kn6000_program.rom", 0x3F0BB4, 0x3F0BB8
+func_4C0C45B2_Table:	# 1 x u32, 10289155..10289155; read by func_4C0C45B2_entry : `mov	(a2), d0`
+	tab_u32	10289155
 data_50003358:
 .incbin_range "baserom/kn6000_program.rom", 0x3F0BB8, 0x3F0BBC
 data_5000335C:
@@ -11843,8 +12010,8 @@ data_5000336C:
 .incbin_range "baserom/kn6000_program.rom", 0x3F0BCC, 0x3F0BD0
 data_50003370:
 .incbin_range "baserom/kn6000_program.rom", 0x3F0BD0, 0x3F0BD4
-data_50003374:
-.incbin_range "baserom/kn6000_program.rom", 0x3F0BD4, 0x3F0BD8
+func_4C0C4ADD_Table:	# 1 x u32, 10223638..10223638; read by func_4C0C4ADD_entry : `mov	(a2), d0`
+	tab_u32	10223638
 data_50003378:
 .incbin_range "baserom/kn6000_program.rom", 0x3F0BD8, 0x3F0BDC
 data_5000337C:
@@ -11865,11 +12032,12 @@ data_50003398:
 .incbin_range "baserom/kn6000_program.rom", 0x3F0BF8, 0x3F0BFC
 
 Str_d_3:	.asciz "d"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_d_3
 Str_d_2:	.asciz "d"
-	.align	4, 0xFF
-data_500033A4:
-.incbin_range "baserom/kn6000_program.rom", 0x3F0C04, 0x3F0C08
+	.align	4, 0xFF	# pad after Str_d_2
+
+func_4C0C52AC_Table:	# 1 x u32, 10420227..10420227; read by func_4C0C52AC_entry : `mov	(a2), d0`
+	tab_u32	10420227
 data_500033A8:
 .incbin_range "baserom/kn6000_program.rom", 0x3F0C08, 0x3F0C0C
 data_500033AC:
@@ -11888,8 +12056,8 @@ data_500033C4:
 .incbin_range "baserom/kn6000_program.rom", 0x3F0C24, 0x3F0C28
 data_500033C8:
 .incbin_range "baserom/kn6000_program.rom", 0x3F0C28, 0x3F0C2C
-data_500033CC:
-.incbin_range "baserom/kn6000_program.rom", 0x3F0C2C, 0x3F0C30
+func_4C0C58D9_Table:	# 1 x u32, 10682371..10682371; read by func_4C0C58D9_entry : `mov	(a2), d0`
+	tab_u32	10682371
 data_500033D0:
 .incbin_range "baserom/kn6000_program.rom", 0x3F0C30, 0x3F0C34
 data_500033D4:
@@ -11900,8 +12068,8 @@ data_500033DC:
 .incbin_range "baserom/kn6000_program.rom", 0x3F0C3C, 0x3F0C40
 data_500033E0:
 .incbin_range "baserom/kn6000_program.rom", 0x3F0C40, 0x3F0C44
-data_500033E4:
-.incbin_range "baserom/kn6000_program.rom", 0x3F0C44, 0x3F0C48
+func_4C0C5CE4_Table:	# 1 x u32, 10551299..10551299; read by func_4C0C5CE4_entry : `mov	(a2), d0`
+	tab_u32	10551299
 data_500033E8:
 .incbin_range "baserom/kn6000_program.rom", 0x3F0C48, 0x3F0C4C
 data_500033EC:
@@ -11916,8 +12084,8 @@ data_500033FC:
 .incbin_range "baserom/kn6000_program.rom", 0x3F0C5C, 0x3F0C60
 data_50003400:
 .incbin_range "baserom/kn6000_program.rom", 0x3F0C60, 0x3F0C64
-data_50003404:
-.incbin_range "baserom/kn6000_program.rom", 0x3F0C64, 0x3F0C68
+func_4C0C6221_Table:	# 1 x u32, 10616835..10616835; read by func_4C0C6221_entry : `mov	(a2), d0`
+	tab_u32	10616835
 data_50003408:
 .incbin_range "baserom/kn6000_program.rom", 0x3F0C68, 0x3F0C6C
 data_5000340C:
@@ -11940,8 +12108,8 @@ data_5000342C:
 .incbin_range "baserom/kn6000_program.rom", 0x3F0C8C, 0x3F0C90
 data_50003430:
 .incbin_range "baserom/kn6000_program.rom", 0x3F0C90, 0x3F0C94
-data_50003434:
-.incbin_range "baserom/kn6000_program.rom", 0x3F0C94, 0x3F0C98
+func_4C0C69E3_Table:	# 1 x u32, 10747907..10747907; read by func_4C0C69E3_entry : `mov	(a2), d0`
+	tab_u32	10747907
 data_50003438:
 .incbin_range "baserom/kn6000_program.rom", 0x3F0C98, 0x3F0C9C
 data_5000343C:
@@ -11964,24 +12132,26 @@ data_5000345C:
 .incbin_range "baserom/kn6000_program.rom", 0x3F0CBC, 0x3F0CC0
 data_50003460:
 .incbin_range "baserom/kn6000_program.rom", 0x3F0CC0, 0x3F0CC4
-data_50003464:
-.incbin_range "baserom/kn6000_program.rom", 0x3F0CC4, 0x3F0CC8
+func_4C0C71A5_Table:	# 1 x u32, 10158098..10158098; read by func_4C0C71A5_entry : `mov	(a2), d0`
+	tab_u32	10158098
 data_50003468:
 .incbin_range "baserom/kn6000_program.rom", 0x3F0CC8, 0x3F0CCC
 data_5000346C:
 .incbin_range "baserom/kn6000_program.rom", 0x3F0CCC, 0x3F0CD0
-data_50003470:
-.incbin_range "baserom/kn6000_program.rom", 0x3F0CD0, 0x3F0CD4
+FE_SeqTrkMrgTrack_L91_Table:	# 4 x u8, 1..255; read by FE_SeqTrkMrgTrack_L91 : `movbu	(d1, a0), d0`; FE_SeqTrkMrgTrack_L91 : `movbu	(d1, a0), d1`
+	tab_u8	1, 2, 3, 255
+
 Str_1_0_2_0_3_0_4_0_5_0_6_0_7_0_8_0_9_0_10_0:	.asciz " 1:________________:  0%\n 2:________________:  0%\n 3:________________:  0%\n 4:________________:  0%\n 5:________________:  0%\n 6:________________:  0%\n 7:________________:  0%\n 8:________________:  0%\n 9:________________:  0%\n10:________________:  0%\n    "
-	.align	4, 0x00
+	.align	4, 0x00	# pad after Str_1_0_2_0_3_0_4_0_5_0_6_0_7_0_8_0_9_0_10_0
 data_50003574:
 	.space	1, 0xFF
 data_50003575:
 .incbin_range "baserom/kn6000_program.rom", 0x3F0DD5, 0x3F0DD8
 data_50003578:
 .incbin_range "baserom/kn6000_program.rom", 0x3F0DD8, 0x3F0DDC
-data_5000357C:
-.incbin_range "baserom/kn6000_program.rom", 0x3F0DDC, 0x3F0DE0
+
+func_4C0C859E_Table:	# 1 x u32, 11665416..11665416; read by func_4C0C859E_entry : `mov	(a2), d0`
+	tab_u32	11665416
 data_50003580:
 .incbin_range "baserom/kn6000_program.rom", 0x3F0DE0, 0x3F0DE4
 data_50003584:
@@ -12000,6 +12170,7 @@ data_5000359C:
 .incbin_range "baserom/kn6000_program.rom", 0x3F0DFC, 0x3F0E00
 data_500035A0:
 .incbin_range "baserom/kn6000_program.rom", 0x3F0E00, 0x3F0E04
+
 Str_empty_261:	.asciz "("
 .incbin_range "baserom/kn6000_program.rom", 0x3F0E06, 0x3F0E08
 Str_empty_260:	.asciz ")"
@@ -12054,8 +12225,9 @@ data_5000360C:
 	.space	2, 0x00
 data_5000360E:
 .incbin_range "baserom/kn6000_program.rom", 0x3F0E6E, 0x3F0E70
-data_50003610:
-	.space	16, 0x00
+
+ApcToSMFConvGrid_L52_Table_2:	# 16 x u8, 0..0; read by ApcToSMFConvGrid_L52 : `movbu	(a1), d1`
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 data_50003620:
 .incbin_range "baserom/kn6000_program.rom", 0x3F0E80, 0x3F0E84
 data_50003624:
@@ -12072,8 +12244,9 @@ data_50003634:
 .incbin_range "baserom/kn6000_program.rom", 0x3F0E94, 0x3F0E98
 data_50003638:
 	.space	1, 0x00
+
 Str_empty_256:	.asciz " \xB7*"
-	.align	4, 0x00
+	.align	4, 0x00	# pad after Str_empty_256
 data_50003640:
 	.space	8, 0x00
 data_50003648:
@@ -12787,19 +12960,19 @@ TtSeLfoView_GridBoxScrlSe1_crow:
 		AcIndexEditSw	swVal7, super=Effect2, next=Effect2_FuncBoxSe2, prev=swVal6, X=604, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=17, font=4, fontcolor=CL_Black, editsw=ES_Bottom16, style=3
 
 Str_Sound_Naming_Edt_4:	.asciz "Sound Naming Edt"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Sound_Naming_Edt_4
 Str_Sound_Naming_Edt_3:	.asciz "Sound Naming Edt"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Sound_Naming_Edt_3
 Str_DrumSoundName:	.asciz "DrumSoundName"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_DrumSoundName
 Str_Sound_Naming_Edt_2:	.asciz "Sound Naming Edt"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Sound_Naming_Edt_2
 Str_Sound_Naming_Edt:	.asciz "Sound Naming Edt"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Sound_Naming_Edt
 Str_Sound_Naming_2:	.asciz "Sound Naming "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Sound_Naming_2
 Str_Sound_Naming:	.asciz "Sound Naming "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Sound_Naming
 Aloc_window:
 	.space	4, 0xFF
 AlocGridBox_selrow:
@@ -14370,22 +14543,30 @@ data_50004BA0:
 	.space	40, 0x00
 data_50004BC8:
 	.space	38, 0x00
-data_50004BEE:
-	.align	4, 0x00
+
+func_4C13409D_entry_L25_Table:	# 2 x u8, 0..0; read by func_4C13409D_entry_L13f : `movbu	(a1), d0`; func_4C13409D_entry_L1a0 : `movbu	(a0), d0` ...
+	tab_u8	0, 0
 data_50004BF0:
 	.space	4, 0x00
 data_50004BF4:
 .incbin_range "baserom/kn6000_program.rom", 0x3F2454, 0x3F24CC
-data_50004C6C:
-.incbin_range "baserom/kn6000_program.rom", 0x3F24CC, 0x3F2540
-data_50004CE0:
-.incbin_range "baserom/kn6000_program.rom", 0x3F2540, 0x3F25B5
-	.space	67, 0x00
-.incbin_range "baserom/kn6000_program.rom", 0x3F25F8, 0x3F2604
+compress_block_entry_L155_Table:	# 29 x u32, 0..5; read by compress_block_entry_L155 : `mov	(d0, a0), a3`
+	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [0]
+	tab_u32	1, 1, 1, 1, 2, 2, 2, 2	# [8]
+	tab_u32	3, 3, 3, 3, 4, 4, 4, 4	# [16]
+	tab_u32	5, 5, 5, 5, 0	# [24]
+_tr_tally_entry_L77_Table:	# 49 x u32, 0..13; read by _tr_tally_entry_L77 : `mov	(d1, a0), d0`; compress_block_entry_L25c : `mov	(d0, a0), a3`
+	tab_u32	0, 0, 0, 0, 1, 1, 2, 2	# [0]
+	tab_u32	3, 3, 4, 4, 5, 5, 6, 6	# [8]
+	tab_u32	7, 7, 8, 8, 9, 9, 10, 10	# [16]
+	tab_u32	11, 11, 12, 12, 13, 13, 0, 0	# [24]
+	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [32]
+	tab_u32	0, 0, 0, 0, 0, 0, 2, 3	# [40]
+	tab_u32	7	# [48]
 data_50004DA4:
 .incbin_range "baserom/kn6000_program.rom", 0x3F2604, 0x3F2616
-data_50004DB6:
-.incbin_range "baserom/kn6000_program.rom", 0x3F2616, 0x3F2618
+build_bl_tree_Table:	# 2 x u8, 15..255; read by build_bl_tree_entry : `movbu	(a1), d0`
+	tab_u8	15, 255
 data_50004DB8:
 .incbin_range "baserom/kn6000_program.rom", 0x3F2618, 0x3F262C
 data_50004DCC:
@@ -14394,8 +14575,10 @@ data_50004DE0:
 .incbin_range "baserom/kn6000_program.rom", 0x3F2640, 0x3F2654
 data_50004DF4:
 	.space	4, 0x00
-data_50004DF8:
-.incbin_range "baserom/kn6000_program.rom", 0x3F2658, 0x3F26A4
+inflate_blocks_entry_L61f_Table:	# 19 x u32, 0..18; read by inflate_blocks_entry_L61f : `mov	(d0, a1), d1`; inflate_blocks_entry_L659 : `mov	(d0, a1), d0`
+	tab_u32	16, 17, 18, 0, 8, 7, 9, 6	# [0]
+	tab_u32	10, 5, 11, 4, 12, 3, 13, 2	# [8]
+	tab_u32	14, 1, 15	# [16]
 data_50004E44:
 .incbin_range "baserom/kn6000_program.rom", 0x3F26A4, 0x3F2720
 data_50004EC0:
@@ -14889,16 +15072,17 @@ data_50005450:
 	.space	4, 0x00
 data_50005454:
 .incbin_range "baserom/kn6000_program.rom", 0x3F2CB4, 0x3F2CB8
-data_50005458:
-.incbin_range "baserom/kn6000_program.rom", 0x3F2CB8, 0x3F2CC0
+
+StylCnvModlTtlFunc_L37e_Table:	# 8 x u8, 67..84; read by StylCnvModlTtlFunc_L37e : `movbu	(d0, a1), d1`
+	tab_u8	84, 69, 67, 72, 78, 73, 67, 83
 
 Str_V1_0_2:	.asciz " V1.0   "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_V1_0_2
 Str_Insert_Style_Disk_of_Technics_KN_1000_75:	.asciz "Insert Style Disk of    Technics KN 1000/750"
 Str_V1_0:	.asciz "V1.0"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_V1_0
 Str_KN3000_SOUND_RAM:	.asciz "KN3000 SOUND RAM\xFF\xFF\xFF\xFF"
-	.align	4, 0x00
+	.align	4, 0x00	# pad after Str_KN3000_SOUND_RAM
 MusicStylistMenu_window:
 	.space	4, 0xFF
 MusicStylistMenu_TitleMenu_MUSICAL_CATEGORY_selected:
@@ -15217,8 +15401,18 @@ data_50005714:
 .incbin_range "baserom/kn6000_program.rom", 0x3F2F74, 0x3F2F78
 data_50005718:
 .incbin_range "baserom/kn6000_program.rom", 0x3F2F78, 0x3F2F7C
-data_5000571C:
-.incbin_range "baserom/kn6000_program.rom", 0x3F2F7C, 0x3F305C
+
+func_4C01B35A_Table:	# 112 x s16, -1..30684; read by func_4C01B35A_entry : `movhu	(d0, a0), d2`; func_4C01B515_entry : `movhu	(d0, a0), d2` ...
+	tab_s16	0, 0, 1, 0, 0, 0, -1, -1, -1, -1, -1, -1	# [0]
+	tab_s16	0, 384, 0, 0, -1, -1, 0, 384, 0, 0, 9132, 20481	# [12]
+	tab_s16	-1, 1, 24516, 20481, 0, 0, 256, 0, 0, 0, -1, -1	# [24]
+	tab_s16	-1, -1, -1, -1, 0, 384, 0, 0, -1, -1, 0, 384	# [36]
+	tab_s16	0, 0, 9144, 20481, -1, 128, 24540, 20481, 0, 0, 1024, 0	# [48]
+	tab_s16	0, 0, -1, -1, -1, -1, -1, -1, 0, 384, 0, 0	# [60]
+	tab_s16	-1, -1, 0, 384, 0, 0, 12216, 20481, -1, 128, 27612, 20481	# [72]
+	tab_s16	0, 0, 1, 0, 0, 0, -1, -1, -1, -1, -1, -1	# [84]
+	tab_s16	0, 384, 0, 0, -1, -1, 0, 384, 0, 0, 24504, 20481	# [96]
+	tab_s16	-1, 1, 30684, 20481	# [108]
 
 ptrs_500057FC:
 	.long	Str_CHARA1
@@ -15234,7 +15428,8 @@ ptrs_500057FC:
 	.long	Str_CHARA7W
 	.long	Str_CHARA7
 	.long	data_4C18D405
-	.space	76, 0x00
+	.long	0
+	.space	72, 0x00
 .incbin_range "baserom/kn6000_program.rom", 0x3F30DC, 0x3F3110
 	.space	76, 0x00
 data_500058FC:
@@ -15266,10 +15461,11 @@ data_50005948:
 .incbin_range "baserom/kn6000_program.rom", 0x3F31A8, 0x3F3278
 data_50005A18:
 	.space	40, 0x00
-data_50005A40:
-	.space	2, 0x00
+
+func_4C09EE17_entry_Lcb_Table:	# 1 x u16, 0..0; read by func_4C09EE17_entry_Lcb : `movhu	(a1), d0`
+	tab_u16	0
 data_50005A42:
-	.align	4, 0x00
+	.align	4, 0x00	# pad after func_4C09EE17_entry_Lcb_Table
 data_50005A44:
 	.space	1, 0x00
 data_50005A45:
@@ -15284,28 +15480,31 @@ data_50005A6C:
 .incbin_range "baserom/kn6000_program.rom", 0x3F32CC, 0x3F32D4
 data_50005A74:
 	.space	4, 0x00
-data_50005A78:
-.incbin_range "baserom/kn6000_program.rom", 0x3F32D8, 0x3F32DE
-data_50005A7E:
-.incbin_range "baserom/kn6000_program.rom", 0x3F32DE, 0x3F32E4
-data_50005A84:
-	.space	6, 0x00
-data_50005A8A:
-.incbin_range "baserom/kn6000_program.rom", 0x3F32EA, 0x3F32EC
-data_50005A8C:
-.incbin_range "baserom/kn6000_program.rom", 0x3F32EC, 0x3F32EE
-data_50005A8E:
-	.align	4, 0x00
+CmpRecPtChdGrid_L16e_Table:	# 6 x s8, -1..2; read by CmpRecPtChdGrid_L16e : `movbu	(d0, a0), d1`; CmpRecPtChdGrid_L2c7 : `movbu	(d0, a1), d0` ...
+	tab_s8	-1, 0, 1, 2, 0, 1
+CmpRecPtChdGrid_L327_Table:	# 6 x s8, 0..5; read by CmpRecPtChdGrid_L327 : `movbu	(d0, a0), d0`
+	tab_s8	5, 0, 0, 0, 1, 1
+CmpRecPtChdGrid_L3b3_Table:	# 6 x s8, 0..0; read by CmpPtChdOK_L17 : `movbu	(a2), d0`; CmpRecPtChdGrid_L3b3 : `movbu	(d0, a0), d0`
+	tab_s8	0, 0, 0, 0, 0, 0
+PadRecPtChdGrid_L16e_Table:	# 2 x s8, -1..2; read by PadPtChdOK_L17 : `movbu	(a3), d1`; PadRecPtChdGrid_L16e : `movbu	(d0, a0), d1` ...
+	tab_s8	-1, 2
+PadRecPtChdGrid_L323_Table:	# 2 x s8, 0..5; read by PadPtChdOK_L17 : `movbu	(a2), d0`; PadRecPtChdGrid_L323 : `movbu	(d0, a0), d0` ...
+	tab_s8	5, 0
+PadRecPtChdGrid_L394_Table:	# 2 x s8, 0..0; read by PadRecPtChdGrid_L394 : `movbu	(d0, a0), d0`
+	tab_s8	0, 0
 data_50005A90:
 	.space	1, 0x00
 data_50005A91:
 	.space	1, 0x00
-data_50005A92:
-	.space	32, 0x00
-data_50005AB2:
-	.space	32, 0x00
-data_50005AD2:
-.incbin_range "baserom/kn6000_program.rom", 0x3F3332, 0x3F3352
+MainSEQ_TrackClear_SE_Table:	# 16 x u16, 0..0; read by AcSeqPlayRecBoxProc_L46 : `movhu	(d0, a0), d0`; AcSeqPlayRecBoxProc_L83 : `movhu	(d0, a1), d0` ...
+	tab_u16	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
+	tab_u16	0, 0, 0, 0	# [12]
+func_4C0AFC1C_entry_L59_Table:	# 16 x u16, 0..0; read by AcSeqTrackNumBoxProc_L46 : `movhu	(d0, a1), d0`; AcSeqTrackNumBoxProc_L88 : `movhu	(d0, a1), d0` ...
+	tab_u16	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
+	tab_u16	0, 0, 0, 0	# [12]
+MainSEQ_TrasUpdate_L15_Table:	# 16 x u16, 7..66; read by AcSeqTrackPartBoxProc_L46 : `movhu	(d0, a0), d0`; AcSeqTrackPartBoxProc_L83 : `movhu	(d0, a1), d0` ...
+	tab_u16	16, 17, 18, 64, 65, 66, 27, 7, 8, 9, 10, 11	# [0]
+	tab_u16	12, 13, 14, 15	# [12]
 data_50005AF2:
 .incbin_range "baserom/kn6000_program.rom", 0x3F3352, 0x3F3354
 
@@ -15362,7 +15561,7 @@ data_50005C5A:
 ptrs_50005C74:
 	.long	Str_A_3
 	.long	data_50005B80
-	.space	4, 0x00
+	.long	0
 data_50005C80:
 .incbin_range "baserom/kn6000_program.rom", 0x3F34E0, 0x3F34E4
 data_50005C84:
@@ -15381,11 +15580,14 @@ data_50005CA4:
 .incbin_range "baserom/kn6000_program.rom", 0x3F3504, 0x3F3518
 
 Str_deflate_1_0_4_Copyright_1995_1996_Jean_l:	.asciz " deflate 1.0.4 Copyright 1995-1996 Jean-loup Gailly "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_deflate_1_0_4_Copyright_1995_1996_Jean_l
 Str_inflate_1_0_4_Copyright_1995_1996_Mark_A:	.asciz " inflate 1.0.4 Copyright 1995-1996 Mark Adler "
-	.align	4, 0xFF
-data_50005D20:
-.incbin_range "baserom/kn6000_program.rom", 0x3F3580, 0x3F35D4
+	.align	4, 0xFF	# pad after Str_inflate_1_0_4_Copyright_1995_1996_Mark_A
+
+inflate_blocks_entry_L767_Table:	# 21 x u32, 0..1277527708; read by inflate_blocks_entry_L767 : `mov	(d1, a1), d0`; inflate_blocks_entry_L829 : `mov	(d0, a0), d0` ...
+	tab_u32	0, 1, 3, 7, 15, 31, 63, 127	# [0]
+	tab_u32	255, 511, 1023, 2047, 4095, 8191, 16383, 32767	# [8]
+	tab_u32	65535, 1277527680, 1277527696, 1277527707, 1277527708	# [16]
 
 ptrs_50005D74:
 	.long	Str_stream_error
@@ -15398,12 +15600,14 @@ ptrs_50005D80:
 	.long	data_4C2586F5
 data_50005D8C:
 	.space	4, 0x00
-data_50005D90:
-.incbin_range "baserom/kn6000_program.rom", 0x3F35F0, 0x3F35F8
+
+func_4C156795_entry_L8d_Table:	# 4 x u16, 49193..65535; read by func_4C156795_entry_L8d : `movhu	(d0, a0), d1`; func_4C156795_entry_Le7 : `movhu	(d0, a0), d1`
+	tab_u16	49197, 49195, 49193, 65535
 data_50005D98:
 	.space	1, 0xFF
 data_50005D99:
 .incbin_range "baserom/kn6000_program.rom", 0x3F35F9, 0x3F35FC
+
 ptrs_50005D9C:
 	.long	data_4C388D49
 	.long	data_4C388D85
@@ -15431,25 +15635,64 @@ ptrs_50005D9C:
 	.long	data_4C3933A5
 	.long	data_4C3937A3
 	.long	data_4C3937A3
-.incbin_range "baserom/kn6000_program.rom", 0x3F3664, 0x3F379C
+	.long	0
+.incbin_range "baserom/kn6000_program.rom", 0x3F3668, 0x3F379C
 	.space	64, 0x00
 .incbin_range "baserom/kn6000_program.rom", 0x3F37DC, 0x3F3844
 	.space	184, 0x00
 .incbin_range "baserom/kn6000_program.rom", 0x3F38FC, 0x3F393C
-data_500060DC:
-.incbin_range "baserom/kn6000_program.rom", 0x3F393C, 0x3F3ADC
-	.space	64, 0x00
-.incbin_range "baserom/kn6000_program.rom", 0x3F3B1C, 0x3F3B84
-	.space	184, 0x00
-.incbin_range "baserom/kn6000_program.rom", 0x3F3C3C, 0x3F3C7C
+
+func_4C155072_Table:	# 208 x u32, 0..1278846773; read by func_4C155072_entry : `mov	(d0, a0), d1`
+	tab_u32	0, 1278839851, 1278839908, 1278839993, 1278840078, 1278840177, 1278840276, 1278839908	# [0]
+	tab_u32	1278840398, 1278840469, 1278840554, 1278840078, 1278840709, 1278840177, 1278840276, 1278840794	# [8]
+	tab_u32	1278844349, 1278844349, 1278844349, 1278844349, 1278844349, 1278844349, 1278844349, 1278844349	# [16]
+	tab_u32	1278844349, 1278844349, 1278844349, 1278844349, 1278844349, 1278844349, 1278844349, 1278844349	# [24]
+	tab_u32	1278840921, 1278841020, 1278841119, 1278841218, 1278841289, 1278841360, 0, 1278841417	# [32]
+	tab_u32	1278841614, 1278841671, 0, 0, 1278839851, 1278839908, 0, 0	# [40]
+	tab_u32	1278841742, 0, 1278841813, 1278841941, 1278841884, 1278842012, 1278842139, 0	# [48]
+	tab_u32	1278842196, 1278842295, 0, 0, 0, 0, 0, 0	# [56]
+	tab_u32	1278845829, 0, 1278845970, 1278846153, 1278846294, 0, 1278846477, 0	# [64]
+	tab_u32	0, 0, 0, 0, 0, 0, 0, 1278842310	# [72]
+	tab_u32	1278846604, 1278846773, 1278844103, 1278844280, 0, 0, 0, 0	# [80]
+	tab_u32	1278845035, 1278845129, 1278845171, 1278845265, 0, 0, 0, 0	# [88]
+	tab_u32	0, 0, 0, 0, 1278845359, 1278845416, 1278845473, 1278845530	# [96]
+	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [104]
+	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [112]
+	tab_u32	1278844992, 1278845728, 1278845743, 1278845786, 1278845587, 0, 0, 0	# [120]
+	tab_u32	1278842493, 1278842620, 1278842747, 1278842846, 1278842945, 1278843044, 1278843143, 1278843270	# [128]
+	tab_u32	1278843397, 1278843524, 1278843651, 0, 1278843778, 0, 0, 0	# [136]
+	tab_u32	1278843905, 1278843976, 0, 0, 0, 0, 0, 0	# [144]
+	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [152]
+	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [160]
+	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [168]
+	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [176]
+	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [184]
+	tab_u32	1278844349, 0, 0, 0, 0, 0, 0, 0	# [192]
+	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [200]
 data_5000641C:
 .incbin_range "baserom/kn6000_program.rom", 0x3F3C7C, 0x3F3D54
 data_500064F4:
 .incbin_range "baserom/kn6000_program.rom", 0x3F3D54, 0x3F3E54
-data_500065F4:
-.incbin_range "baserom/kn6000_program.rom", 0x3F3E54, 0x3F4064
-data_50006804:
-.incbin_range "baserom/kn6000_program.rom", 0x3F4064, 0x3F4066
+func_4C157DE2_entry_L2ad7_Table:	# 132 x u32, 1635..1580427; read by func_4C157DE2_entry_L2ad7 : `mov	(d0, a0), d1`
+	tab_u32	1635, 1635, 1635, 1635, 1635, 1635, 1635, 1635	# [0]
+	tab_u32	1635, 1635, 1635, 1635, 1635, 1732, 1835, 1945	# [8]
+	tab_u32	2060, 2183, 2312, 2450, 2596, 2750, 2914, 3087	# [16]
+	tab_u32	3270, 3465, 3671, 3889, 4120, 4365, 4625, 4900	# [24]
+	tab_u32	5191, 5500, 5827, 6174, 6541, 6930, 7342, 7778	# [32]
+	tab_u32	8241, 8731, 9250, 9800, 10383, 11000, 11654, 12347	# [40]
+	tab_u32	13081, 13859, 14683, 15556, 16481, 17461, 18500, 19600	# [48]
+	tab_u32	20765, 22000, 23308, 24694, 26163, 27718, 29366, 31113	# [56]
+	tab_u32	32963, 34923, 36999, 39200, 41530, 44000, 46616, 49388	# [64]
+	tab_u32	52325, 55437, 58733, 62225, 65926, 69846, 73999, 78399	# [72]
+	tab_u32	83061, 88000, 93233, 98777, 104650, 110873, 117466, 124451	# [80]
+	tab_u32	131851, 139691, 147998, 156798, 166122, 176000, 186466, 197553	# [88]
+	tab_u32	209300, 221746, 234932, 248902, 263702, 279383, 295996, 313596	# [96]
+	tab_u32	332244, 352000, 372931, 395107, 418601, 443492, 469864, 497803	# [104]
+	tab_u32	527404, 558765, 591991, 627193, 664488, 704000, 745862, 790213	# [112]
+	tab_u32	837202, 886984, 939727, 995606, 1054808, 1117530, 1183982, 1254385	# [120]
+	tab_u32	1328975, 1408000, 1491724, 1580427	# [128]
+func_4C15C991_entry_L99_Table:	# 2 x u8, 0..16; read by func_4C15C991_entry_L99 : `movbu	(a2), d3`
+	tab_u8	16, 0
 
 Str_Chorus_3:	.asciz "     Chorus     "
 .incbin_range "baserom/kn6000_program.rom", 0x3F4077, 0x3F4079
@@ -15460,54 +15703,60 @@ Str_Modulated_Chorus_3:	.asciz "Modulated Chorus"
 Str_Celeste_3:	.asciz "    Celeste     "
 .incbin_range "baserom/kn6000_program.rom", 0x3F40B0, 0x3F40B2
 Str_ModulatedCeleste:	.asciz "ModulatedCeleste"
-.incbin_range "baserom/kn6000_program.rom", 0x3F40C3, 0x3F40C5
+Str_text_2:	.asciz " "
 Str_Phaser_3:	.asciz "     Phaser     "
-.incbin_range "baserom/kn6000_program.rom", 0x3F40D6, 0x3F40D8
+Str_text_3:	.asciz "#"
 Str_Flanger_4:	.asciz "    Flanger     "
-.incbin_range "baserom/kn6000_program.rom", 0x3F40E9, 0x3F40EB
+Str_text_4:	.asciz "\""
 Str_Standard_Rotary:	.asciz "Standard Rotary "
 .incbin_range "baserom/kn6000_program.rom", 0x3F40FC, 0x3F4111
 Str_Auto_Pan_3:	.asciz "    Auto Pan    "
 .incbin_range "baserom/kn6000_program.rom", 0x3F4122, 0x3F4148
 Str_5_Enhancer:	.asciz "5     Enhancer    "
-.incbin_range "baserom/kn6000_program.rom", 0x3F415B, 0x3F415D
+Str_7_20:	.asciz "7"
 Str_Exciter_3:	.asciz "     Exciter    "
 Str_8_Auto_Wah:	.asciz "8     Auto Wah    "
-.incbin_range "baserom/kn6000_program.rom", 0x3F4181, 0x3F4183
+Str_text_5:	.asciz "@"
 Str_Distortion_3:	.asciz "   Distortion   "
 Str_Overdrive_3:	.asciz "@    Overdrive    "
 Str_A_Distorted_Amp:	.asciz "A(  Distorted Amp "
-.incbin_range "baserom/kn6000_program.rom", 0x3F41BA, 0x3F41BC
+Str_H_13:	.asciz "H"
 Str_Dual_Delay_3:	.asciz "   Dual Delay   "
-.incbin_range "baserom/kn6000_program.rom", 0x3F41CD, 0x3F41CF
+Str_L_10:	.asciz "L"
 Str_Cross_Delay_3:	.asciz "  Cross Delay   "
-data_50006980:
-.incbin_range "baserom/kn6000_program.rom", 0x3F41E0, 0x3F41E2
+
+func_4C15C991_entry_L5a_Table:	# 2 x u8, 0..16; read by func_4C15C991_entry_L5a : `movbu	(a2), d3`
+	tab_u8	16, 0
+
 Str_Chorus_4:	.asciz "     Chorus     "
 .incbin_range "baserom/kn6000_program.rom", 0x3F41F3, 0x3F41F5
 Str_Ensemble_4:	.asciz "    Ensemble    "
 .incbin_range "baserom/kn6000_program.rom", 0x3F4206, 0x3F4208
 Str_Modulated_Chorus_4:	.asciz "Modulated Chorus"
-.incbin_range "baserom/kn6000_program.rom", 0x3F4219, 0x3F421B
+Str_text_6:	.asciz " "
 Str_Phaser_4:	.asciz "     Phaser     "
-.incbin_range "baserom/kn6000_program.rom", 0x3F422C, 0x3F422E
+Str_text_7:	.asciz "#"
 Str_Flanger_5:	.asciz "     Flanger    "
-.incbin_range "baserom/kn6000_program.rom", 0x3F423F, 0x3F4241
+Str_text_8:	.asciz "\""
 Str_Standard_Rotary_2:	.asciz "Standard Rotary "
 .incbin_range "baserom/kn6000_program.rom", 0x3F4252, 0x3F4265
 Str_8_Auto_Wah_2:	.asciz "8     Auto Wah    "
-.incbin_range "baserom/kn6000_program.rom", 0x3F4278, 0x3F427A
+Str_H_14:	.asciz "H"
 Str_Dual_Delay_4:	.asciz "   Dual Delay   "
-.incbin_range "baserom/kn6000_program.rom", 0x3F428B, 0x3F428D
+Str_L_11:	.asciz "L"
 Str_Cross_Delay_4:	.asciz "  Cross Delay   "
-data_50006A3E:
-.incbin_range "baserom/kn6000_program.rom", 0x3F429E, 0x3F42A0
+
+func_4C15C991_entry_L1b_Table:	# 2 x u8, 0..22; read by func_4C15C991_entry_L1b : `movbu	(a2), d3`
+	tab_u8	22, 0
+
 Str_Chorus1_2:	.asciz "    Chorus1     "
 .incbin_range "baserom/kn6000_program.rom", 0x3F42B1, 0x3F435C
-data_50006AFC:
-	.space	2, 0x00
+
+func_4C15C991_Table:	# 2 x u8, 0..0; read by func_4C15C991_entry : `movbu	(a2), d3`
+	tab_u8	0, 0
+
 Str_Room1_2:	.asciz "     Room1      "
-	.align	4, 0x00
+	.align	4, 0x00	# pad after Str_Room1_2
 Str_Room2_2:	.asciz "      Room2      "
 .incbin_range "baserom/kn6000_program.rom", 0x3F4382, 0x3F4384
 Str_Plate1_2:	.asciz "     Plate1     "
@@ -15522,8 +15771,10 @@ data_50006BBA:
 	.align	4, 0xFF
 data_50006BBC:
 .incbin_range "baserom/kn6000_program.rom", 0x3F441C, 0x3F4460
-data_50006C00:
-.incbin_range "baserom/kn6000_program.rom", 0x3F4460, 0x3F4494
+
+func_4C15FDC1_entry_L29_Table:	# 13 x u32, 41744..41756; read by func_4C15FDC1_entry_L29 : `mov	(d2, a0), d0`
+	tab_u32	41744, 41745, 41746, 41747, 41748, 41749, 41750, 41751	# [0]
+	tab_u32	41752, 41753, 41754, 41755, 41756	# [8]
 data_50006C34:
 	.space	32, 0x00
 data_50006C54:
@@ -15574,18 +15825,26 @@ data_50006E8C:
 .incbin_range "baserom/kn6000_program.rom", 0x3F46EC, 0x3F471E
 data_50006EBE:
 .incbin_range "baserom/kn6000_program.rom", 0x3F471E, 0x3F4750
+
 Str_empty_252:	.asciz "\x10'"
-	.align	4, 0x00
-data_50006EF4:
-.incbin_range "baserom/kn6000_program.rom", 0x3F4754, 0x3F4766
-data_50006F06:
-.incbin_range "baserom/kn6000_program.rom", 0x3F4766, 0x3F4786
-data_50006F26:
-.incbin_range "baserom/kn6000_program.rom", 0x3F4786, 0x3F478A
-data_50006F2A:
-.incbin_range "baserom/kn6000_program.rom", 0x3F478A, 0x3F47AD
-data_50006F4D:
-.incbin_range "baserom/kn6000_program.rom", 0x3F47AD, 0x3F47CC
-data_50006F6C:
-.incbin_range "baserom/kn6000_program.rom", 0x3F47CC, 0x3F47EC
+	.align	4, 0x00	# pad after Str_empty_252
+
+func_4C1751A1_entry_L372_Table:	# 18 x u8, 0..134; read by func_4C1751A1_entry_L372 : `movbu	(d0, a0), d0`
+	tab_u8	18, 1, 0, 1, 0, 0, 0, 8, 134, 128, 80, 80, 0, 1, 1, 2	# [0]
+	tab_u8	3, 1	# [16]
+func_4C1751A1_entry_L3f1_Table:	# 32 x u8, 0..129; read by func_4C1751A1_entry_L3f1 : `movbu	(d1, a0), d0`
+	tab_u8	9, 2, 32, 0, 1, 2, 0, 64, 37, 9, 4, 0, 0, 1, 0, 0	# [0]
+	tab_u8	0, 0, 7, 5, 129, 3, 100, 0, 8, 7, 5, 129, 3, 100, 0, 8	# [16]
+func_4C1751A1_entry_L47c_Table:	# 4 x u8, 3..9; read by func_4C1751A1_entry_L47c : `movbu	(d1, a0), d0`
+	tab_u8	4, 3, 9, 4
+func_4C1751A1_entry_L4eb_Table:	# 35 x u8, 0..89; read by func_4C1751A1_entry_L4eb : `movbu	(d0, a0), d1`
+	tab_u8	35, 3, 75, 0, 69, 0, 89, 0, 32, 0, 83, 0, 79, 0, 70, 0	# [0]
+	tab_u8	84, 0, 32, 0, 83, 0, 69, 0, 82, 0, 86, 0, 73, 0, 67, 0	# [16]
+	tab_u8	69, 0, 0	# [32]
+func_4C1751A1_entry_L55c_Table:	# 31 x u8, 0..118; read by func_4C1751A1_entry_L55c : `movbu	(d0, a0), d0`
+	tab_u8	31, 3, 83, 0, 88, 0, 54, 0, 32, 0, 85, 0, 83, 0, 66, 0	# [0]
+	tab_u8	32, 0, 68, 0, 101, 0, 118, 0, 105, 0, 99, 0, 101, 0, 0	# [16]
+func_4C1751A1_entry_L5cb_Table:	# 32 x u8, 0..255; read by func_4C1751A1_entry_L5cb : `movbu	(d0, a0), d0`
+	tab_u8	31, 3, 83, 0, 88, 0, 54, 0, 45, 0, 49, 0, 50, 0, 51, 0	# [0]
+	tab_u8	52, 0, 45, 0, 53, 0, 54, 0, 55, 0, 56, 0, 57, 0, 0, 255	# [16]
 .mnbase 0x4C000000

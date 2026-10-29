@@ -63,9 +63,9 @@ FnName_HarmPartEditCheck:	.asciz "HarmPartEditCheck"
 FnName_BitmapSleq:	.asciz "BitmapSleq"
 .incbin_range "baserom/kn6000_program.rom", 0x2241DE, 0x2241E0
 Field_AcEffPage_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_AcEffPage_end
 Field_AcEffExpGroup_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_AcEffExpGroup_end
 Field_AcEffVari_param2:	.asciz "param2"
 Field_AcEffVari_end:	.asciz ""
 Field_AcEffEditGridBox_fixedcol:	.asciz "fixedcol"
@@ -74,23 +74,23 @@ Field_AcEffEditGridBox_func:	.asciz "func"
 Field_AcEffEditGridBox_end:	.asciz ""
 Field_AcEffOnOffBox_onoff:	.asciz "onoff"
 Field_AcEffOnOffBox_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_AcEffOnOffBox_end
 Field_AcEffExpUsr_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_AcEffExpUsr_end
 Field_AcEffName_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_AcEffName_end
 Field_AcChordFinderBox_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_AcChordFinderBox_end
 Field_AcRamEditRoopBox_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_AcRamEditRoopBox_end
 Field_AcRamEditInvBox_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_AcRamEditInvBox_end
 Field_AcKenbanBitmap_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_AcKenbanBitmap_end
 Field_PsCFInvisibleBox_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_PsCFInvisibleBox_end
 Field_AcVisibleLabel_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_AcVisibleLabel_end
 Field_FilterTtlScreen_snd_title:	.asciz "snd_title"
 Field_FilterTtlScreen_snd_exit:	.asciz "snd_exit"
 Field_FilterTtlScreen_end:	.asciz ""
@@ -101,21 +101,21 @@ Field_AcEffDispGridBox_end:	.asciz ""
 Field_AcEQEditBox_tate_index:	.asciz "tate_index"
 Field_AcEQEditBox_end:	.asciz ""
 Field_AcGainBox_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_AcGainBox_end
 Field_AcUnitName_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_AcUnitName_end
 Field_EffTtlScreen_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_EffTtlScreen_end
 Field_AcEffTitleMenu_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_AcEffTitleMenu_end
 Field_EffEditScreen_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_EffEditScreen_end
 Field_EffNameScreen_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_EffNameScreen_end
 Field_AcMicFuncEditSw_select:	.asciz "select"
 Field_AcMicFuncEditSw_end:	.asciz ""
 Field_AcAPCRadioBox_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_AcAPCRadioBox_end
 ClassName_AcEffPage:	.asciz "AcEffPage"
 ClassSig_AcEffPage:	.asciz ""
 ClassName_AcEffExpGroup:	.asciz "AcEffExpGroup"
@@ -172,7 +172,7 @@ Str_EV_KENBAN_DRAW:	.asciz "EV_KENBAN_DRAW"
 Str_EV_EQSEL:	.asciz "EV_EQSEL"
 Str_EV_ALLPAINTEFFEXP:	.asciz "EV_ALLPAINTEFFEXP"
 Str_EV_MICSELWAIT:	.asciz "EV_MICSELWAIT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_EV_MICSELWAIT
 
 Str_MT_DrawKey:	.asciz "MT_DrawKey"
 Str_MT_GetEff:	.asciz "MT_GetEff"
@@ -206,7 +206,7 @@ FnName_AcEffTitleMenuProc:	.asciz "AcEffTitleMenuProc"
 FnName_EffEditScreenProc:	.asciz "EffEditScreenProc"
 FnName_EffNameScreenProc:	.asciz "EffNameScreenProc"
 FnName_AcMicFuncEditSwProc:	.asciz "AcMicFuncEditSwProc"
-	.align	4, 0x00
+	.align	4, 0x00	# pad after FnName_AcMicFuncEditSwProc
 FnName_FreeSplitFunc:	.asciz "FreeSplitFunc"
 FnName_ApcTitleFunc:	.asciz "ApcTitleFunc"
 FnName_SDOctTitleFunc:	.asciz "SDOctTitleFunc"
@@ -226,13 +226,13 @@ FnName_TEffAloc:	.asciz "TEffAloc"
 FnName_MicPresetStore:	.asciz "MicPresetStore"
 .incbin_range "baserom/kn6000_program.rom", 0x224769, 0x22476C
 Str_ALLOCATION:	.asciz "ALLOCATION"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ALLOCATION
 
 	TtlScreen	Aloc, sub=AlocGridBox, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_FXMENU, window=Aloc_window, title=Str_ALLOCATION, icon=210	# title "ALLOCATION"
 
 Str_empty_56:	.asciz "  | "
 Str_SOUND_DSP_4_SOUND_DSP_5:	.asciz "SOUND DSP 4 :   |SOUND DSP 5 :   "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SOUND_DSP_4_SOUND_DSP_5
 
 		AcGridBox	AlocGridBox, super=Aloc, next=Aloc_IndexWideES1, flag=VF_Const, X=112, Y=114, W=389, H=89, color=CL_WallPattern, border=BD_3D_UP2, index=5, font=4, fontcolor=CL_White, row=2, col=2, selrow=AlocGridBox_selrow, selcol=AlocGridBox_selcol, pcol=AlocGridBox_pcol, prow=AlocGridBox_prow, crow=AlocGridBox_crow, fixedcol=Str_empty_56, fixedrow=Str_SOUND_DSP_4_SOUND_DSP_5, func=FN_EffAlocGrid	# fixedcol "  | "; fixedrow "SOUND DSP 4 :   |SOUND DSP 5 :   "
 		AcIndexWideES	Aloc_IndexWideES1, super=Aloc, next=AlocModeBox, prev=AlocGridBox, flag=VF_Const, X=364, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=6, font=4, fontcolor=CL_Black, editsw=ES_Bottom10, editsw2=ES_Bottom12, style=3
@@ -251,14 +251,14 @@ Str_SOUND_LOAD_OPTION_4:	.asciz "SOUND LOAD OPTION"
 
 Str_empty_57:	.asciz "   | "
 Str_SOUND_DSP_LOAD_SOLO_LOAD_PORTAMENTO_LOAD:	.asciz "SOUND DSP LOAD    :|SOLO LOAD         :|PORTAMENTO LOAD   :|CHORUS LOAD       :|CONTROLLERS RESET :"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SOUND_DSP_LOAD_SOLO_LOAD_PORTAMENTO_LOAD
 
 		AcGridBox	FilterGridBox, super=LoadFilter, next=LoadFilter_IndexWideES1, flag=VF_Const, X=120, Y=54, W=465, H=153, color=CL_WallPattern, border=BD_3D_UP2, index=1, font=4, fontcolor=CL_White, row=5, col=2, selrow=FilterGridBox_selrow, selcol=FilterGridBox_selcol, pcol=FilterGridBox_pcol, prow=FilterGridBox_prow, crow=FilterGridBox_crow, fixedcol=Str_empty_57, fixedrow=Str_SOUND_DSP_LOAD_SOLO_LOAD_PORTAMENTO_LOAD, func=FN_EffFilterGrid	# fixedcol "   | "; fixedrow "SOUND DSP LOAD    :|SOLO LOAD         :|"
 		AcIndexWideES	LoadFilter_IndexWideES1, super=LoadFilter, next=LoadFilter_IndexWideES2, prev=FilterGridBox, flag=VF_Const, X=164, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, editsw2=ES_Bottom7, style=14
 		AcIndexWideES	LoadFilter_IndexWideES2, super=LoadFilter, prev=LoadFilter_IndexWideES1, flag=VF_Const, X=444, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom12, editsw2=ES_Bottom14, style=3
 
 Str_EFFECT_MIXING:	.asciz "EFFECT MIXING"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_EFFECT_MIXING
 
 	TtlScreen	Mixing, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_FXMENU, window=Mixing_window, title=Str_EFFECT_MIXING, icon=1	# title "EFFECT MIXING"
 
@@ -275,12 +275,12 @@ Str_empty_58:	.asciz " |-|"
 		AcEffEditGridBox	EffEditGridBox, super=EffectEdit, next=EffectEdit_EffTitleMenu_NAMING, prev=EffectEdit_CatchEvent1, flag=VF_Const, X=291, Y=38, W=345, H=173, color=CL_WallPattern, border=BD_3D_UP2, font=1, fontcolor=CL_White, align=1, row=10, col=2, vertline=1, selrow=EffEditGridBox_selrow, selcol=EffEditGridBox_selcol, pcol=EffEditGridBox_pcol, prow=EffEditGridBox_prow, crow=EffEditGridBox_crow, fixedcol=Str_PARAMETER_VALUE, fixedrow=Str_empty_58, func=FN_EffEditGrid	# fixedcol "       PARAMETER |      VALUE "; fixedrow " |-|"
 
 Str_NAMING:	.asciz "NAMING"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NAMING
 
 		AcEffTitleMenu	EffectEdit_EffTitleMenu_NAMING, super=EffectEdit, sub=EffectEdit_Label_EFFECT_MEMORY_LIST, next=EffectEdit_EffName1, prev=EffEditGridBox, flag=VF_Const, X=8, Y=71, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=1, fontcolor=CL_White, editsw=ES_Left2, selected=EffectEdit_EffTitleMenu_NAMING_selected, str=Str_NAMING, title=TT_FXNAME, icon=153	# str "NAMING"
 
 Str_EFFECT_MEMORY_LIST:	.asciz "EFFECT MEMORY LIST"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_EFFECT_MEMORY_LIST
 
 			VwLabel	EffectEdit_Label_EFFECT_MEMORY_LIST, super=EffectEdit_EffTitleMenu_NAMING, flag=VF_Const, X=114, Y=94, W=148, H=19, str=Str_EFFECT_MEMORY_LIST, font=1, fontcolor=CL_White	# str "EFFECT MEMORY LIST"
 		AcEffName	EffectEdit_EffName1, super=EffectEdit, next=EffectEdit_FuncEditSw1, prev=EffectEdit_EffTitleMenu_NAMING, flag=VF_Const, X=8, Y=38, W=252, H=32, color=CL_SilverB, border=BD_Double1, index=0xFFFF, font=1, fontcolor=CL_Black, align=1
@@ -291,7 +291,7 @@ Str_EFFECT_MEMORY_LIST:	.asciz "EFFECT MEMORY LIST"
 		AcIndexEditSw	EffectEdit_IndexEditSw2, super=EffectEdit, next=EffectEdit_StrBox_WRITE, prev=EffectEdit_IndexEditSw1, flag=VF_Const, X=8, Y=165, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=5, font=4, fontcolor=CL_Black, editsw=ES_Left4, style=13
 
 Str_WRITE_7:	.asciz "WRITE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_WRITE_7
 
 		VwStrBox	EffectEdit_StrBox_WRITE, super=EffectEdit, next=EffectEdit_UnitName1, prev=EffectEdit_IndexEditSw2, flag=VF_Const, X=8, Y=210, W=60, H=20, color=CL_Red, border=BD_Double1, index=0xFFFF, font=1, fontcolor=CL_White, str=Str_WRITE_7	# str "WRITE"
 		AcUnitName	EffectEdit_UnitName1, super=EffectEdit, prev=EffectEdit_StrBox_WRITE, flag=VF_Const, X=180, Y=4, W=240, H=24, color=CL_TitleBar, index=0xFFFF, font=4, fontcolor=CL_White
@@ -356,7 +356,7 @@ Str_8d_8b_2:	.asciz "~8d ~8b"
 		AcIndexEditSw	V_EffName_IndexEditSw6, super=V_EffName_NamingWindow1, next=V_EffName_Label_POSITION, prev=V_EffName_IndexEditSw5, flag=VF_Const, X=604, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=103, font=4, fontcolor=CL_Black, editsw=ES_Bottom16, style=16
 
 Str_POSITION_2:	.asciz "POSITION"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_POSITION_2
 
 		VwLabel	V_EffName_Label_POSITION, super=V_EffName_NamingWindow1, next=V_EffName_IndexToggle_ABC, prev=V_EffName_IndexEditSw6, flag=VF_Const, X=564, Y=198, W=68, H=19, str=Str_POSITION_2, fontcolor=CL_White	# str "POSITION"
 
@@ -365,7 +365,7 @@ Str_ABC_4:	.asciz "ABC"
 Str_123_3:	.asciz "123"
 Str_123_4:	.asciz "123"
 Str_SHIFT_3:	.asciz "SHIFT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SHIFT_3
 
 		VwLabel	V_EffName_Label_SHIFT, super=V_EffName_NamingWindow1, next=V_EffName_IndexPushSw1, prev=V_EffName_IndexToggle_123, flag=VF_Const, X=0, Y=198, W=44, H=19, str=Str_SHIFT_3, fontcolor=CL_White	# str "SHIFT"
 		AcIndexPushSw	V_EffName_IndexPushSw1, super=V_EffName_NamingWindow1, prev=V_EffName_Label_SHIFT, flag=VF_Const, X=4, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=109, font=4, fontcolor=CL_Black, editsw=ES_Bottom1, sw=V_EffName_IndexPushSw1_sw
@@ -422,7 +422,7 @@ Str_8d_8b_3:	.asciz "~8d ~8b"
 		AcIndexEditSw	V_EffName_IndexEditSw12, super=V_EffName_NamingWindow2, next=V_EffName_Label_POSITION2, prev=V_EffName_IndexEditSw11, flag=VF_Const, X=604, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=103, font=4, fontcolor=CL_Black, editsw=ES_Bottom16, style=16
 
 Str_POSITION_3:	.asciz "POSITION"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_POSITION_3
 
 		VwLabel	V_EffName_Label_POSITION2, super=V_EffName_NamingWindow2, next=V_EffName_IndexToggle_ABC2, prev=V_EffName_IndexEditSw12, flag=VF_Const, X=564, Y=198, W=68, H=19, str=Str_POSITION_3, fontcolor=CL_White	# str "POSITION"
 
@@ -431,7 +431,7 @@ Str_ABC_6:	.asciz "ABC"
 Str_123_5:	.asciz "123"
 Str_123_6:	.asciz "123"
 Str_SHIFT_4:	.asciz "SHIFT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SHIFT_4
 
 		VwLabel	V_EffName_Label_SHIFT2, super=V_EffName_NamingWindow2, next=V_EffName_IndexPushSw2, prev=V_EffName_IndexToggle_1232, flag=VF_Const, X=0, Y=198, W=44, H=19, str=Str_SHIFT_4, fontcolor=CL_White	# str "SHIFT"
 		AcIndexPushSw	V_EffName_IndexPushSw2, super=V_EffName_NamingWindow2, prev=V_EffName_Label_SHIFT2, flag=VF_Const, X=4, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=109, font=4, fontcolor=CL_Black, editsw=ES_Bottom1, sw=V_EffName_IndexPushSw2_sw
@@ -439,25 +439,25 @@ Str_SHIFT_4:	.asciz "SHIFT"
 	AcNamingWindow	V_EffName_NamingWindow3, flag=VF_Const, X=160, Y=90, W=320, H=60, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, parent=V_EffName_NamingWindow3_parent, child=V_EffName_NamingWindow3_child
 
 Str_EFFECT_DEBUG:	.asciz "EFFECT DEBUG"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_EFFECT_DEBUG
 
 	TtlScreen	EffectDebug, sub=EffApcModeBox, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_FXMENU, window=EffectDebug_window, title=Str_EFFECT_DEBUG, icon=1	# title "EFFECT DEBUG"
 
 Str_TOTAL_MODE:	.asciz "TOTAL MODE"
 Str_SOUND_MODE:	.asciz "SOUND MODE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SOUND_MODE
 
 		AcFuncToggle	EffApcModeBox, super=EffectDebug, next=EffSysModeBox, flag=VF_Const, X=497, Y=122, W=135, H=22, font=4, stron=Str_TOTAL_MODE, stroff=Str_SOUND_MODE, onoff=EffApcModeBox_onoff, editsw=ES_Right3, func=FN_EffApcSw	# stron "TOTAL MODE"; stroff "SOUND MODE"
 
 Str_SEQ_MODE:	.asciz "SEQ MODE"
 Str_APC_MODE:	.asciz "APC MODE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_APC_MODE
 
 		AcFuncToggle	EffSysModeBox, super=EffectDebug, next=EffectDebug_EffDispGridBox1, prev=EffApcModeBox, flag=VF_Const, X=497, Y=79, W=135, H=22, font=4, stron=Str_SEQ_MODE, stroff=Str_APC_MODE, onoff=EffSysModeBox_onoff, editsw=ES_Right2, func=FN_EffSysSw	# stron "SEQ MODE"; stroff "APC MODE"
 
 Str_UNIT_PART_OFF_ON_NUM_SUF_VARI:	.asciz "UNIT| PART |OFF/ON| NUM | SUF |VARI"
 Str_EFF1_EFF2_EFF3_EFF4_EFF5_REV_CHO_MLT_EQ:	.asciz "|-|EFF1|EFF2|EFF3|EFF4|EFF5|REV |CHO |MLT |EQ  |VREV"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_EFF1_EFF2_EFF3_EFF4_EFF5_REV_CHO_MLT_EQ
 
 		AcEffDispGridBox	EffectDebug_EffDispGridBox1, super=EffectDebug, next=EffectDebug_IndexWideES1, prev=EffSysModeBox, flag=VF_Const, X=4, Y=30, W=478, H=181, color=CL_WallPattern, border=BD_3D_UP2, index=1, fontcolor=CL_White, row=12, col=6, vertline=1, selrow=EffectDebug_EffDispGridBox1_selrow, selcol=EffectDebug_EffDispGridBox1_selcol, pcol=EffectDebug_EffDispGridBox1_pcol, prow=EffectDebug_EffDispGridBox1_prow, crow=EffectDebug_EffDispGridBox1_crow, fixedcol=Str_UNIT_PART_OFF_ON_NUM_SUF_VARI, fixedrow=Str_EFF1_EFF2_EFF3_EFF4_EFF5_REV_CHO_MLT_EQ, func=FN_EffDispGrid	# fixedcol "UNIT| PART |OFF/ON| NUM | SUF |VARI"; fixedrow "|-|EFF1|EFF2|EFF3|EFF4|EFF5|REV |CHO |ML"
 		AcIndexWideES	EffectDebug_IndexWideES1, super=EffectDebug, next=EffectDebug_IndexWideES2, prev=EffectDebug_EffDispGridBox1, flag=VF_Const, X=4, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom1, editsw2=ES_Bottom2, style=14
@@ -472,17 +472,17 @@ Str_REVERB_EFFECT_2:	.asciz "REVERB & EFFECT"
 	TtlScreen	EffectMenu, sub=EffectMenu_TitleMenu_MULTI, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, border=BD_Single2, index=0xFFFF, exit=TT_PROGRAM, window=EffectMenu_window, title=Str_REVERB_EFFECT_2, icon=206	# title "REVERB & EFFECT"
 
 Str_MULTI_3:	.asciz "MULTI"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MULTI_3
 
 		AcTitleMenu	EffectMenu_TitleMenu_MULTI, super=EffectMenu, next=EffectMenu_TitleMenu_CHORUS, flag=VF_Const, X=327, Y=71, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right2, selected=EffectMenu_TitleMenu_MULTI_selected, str=Str_MULTI_3, title=TT_FXMULTISEL, icon=66	# str "MULTI"
 
 Str_CHORUS_6:	.asciz "CHORUS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CHORUS_6
 
 		AcTitleMenu	EffectMenu_TitleMenu_CHORUS, super=EffectMenu, next=EffectMenu_TitleMenu_REVERB, prev=EffectMenu_TitleMenu_MULTI, flag=VF_Const, X=327, Y=114, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right3, selected=EffectMenu_TitleMenu_CHORUS_selected, str=Str_CHORUS_6, title=TT_FXCHOSEL, icon=207	# str "CHORUS"
 
 Str_REVERB_4:	.asciz "REVERB"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_REVERB_4
 
 		AcTitleMenu	EffectMenu_TitleMenu_REVERB, super=EffectMenu, next=EffectMenu_TitleMenu_MIC_REVERB_EFFECT, prev=EffectMenu_TitleMenu_CHORUS, flag=VF_Const, X=327, Y=157, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right4, selected=EffectMenu_TitleMenu_REVERB_selected, str=Str_REVERB_4, title=TT_FXREVSEL, icon=23	# str "REVERB"
 
@@ -491,34 +491,34 @@ Str_MIC_REVERB_EFFECT:	.asciz "MIC REVERB & EFFECT"
 		AcTitleMenu	EffectMenu_TitleMenu_MIC_REVERB_EFFECT, super=EffectMenu, next=EffectMenu_TitleMenu_SOUND_LOAD_OPTION, prev=EffectMenu_TitleMenu_REVERB, flag=VF_Const, X=8, Y=28, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left1, selected=EffectMenu_TitleMenu_MIC_REVERB_EFFECT_selected, str=Str_MIC_REVERB_EFFECT, title=TT_FXMIC, icon=155	# str "MIC REVERB & EFFECT"
 
 Str_SOUND_LOAD_OPTION_5:	.asciz "SOUND LOAD OPTION"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SOUND_LOAD_OPTION_5
 
 		AcTitleMenu	EffectMenu_TitleMenu_SOUND_LOAD_OPTION, super=EffectMenu, next=EffectMenu_TitleMenu_ALLOCATION, prev=EffectMenu_TitleMenu_MIC_REVERB_EFFECT, flag=VF_Const, X=8, Y=114, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left3, selected=EffectMenu_TitleMenu_SOUND_LOAD_OPTION_selected, str=Str_SOUND_LOAD_OPTION_5, title=TT_FXLOADFILT, icon=209	# str "SOUND LOAD OPTION"
 
 Str_ALLOCATION_2:	.asciz "ALLOCATION"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ALLOCATION_2
 
 		AcTitleMenu	EffectMenu_TitleMenu_ALLOCATION, super=EffectMenu, next=EffectMenu_TitleMenu_MIXER, prev=EffectMenu_TitleMenu_SOUND_LOAD_OPTION, flag=VF_Const, X=8, Y=157, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left4, selected=EffectMenu_TitleMenu_ALLOCATION_selected, str=Str_ALLOCATION_2, title=TT_FXALOC, icon=210	# str "ALLOCATION"
 
 Str_MIXER_3:	.asciz "MIXER"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MIXER_3
 
 		AcTitleMenu	EffectMenu_TitleMenu_MIXER, super=EffectMenu, next=EffectMenu_ExitMode1, prev=EffectMenu_TitleMenu_ALLOCATION, flag=VF_Const, X=8, Y=200, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left5, selected=EffectMenu_TitleMenu_MIXER_selected, str=Str_MIXER_3, title=TT_SDMIXER, icon=7	# str "MIXER"
 		IvExitMode	EffectMenu_ExitMode1, super=EffectMenu, next=EffectMenu_TitleMenu_EQUALIZER, prev=EffectMenu_TitleMenu_MIXER, flag=VF_Const|VF_InvisibleBox, X=156, Y=0, W=32, H=32, mode=MD_PROGRAM
 
 Str_EQUALIZER_2:	.asciz "EQUALIZER"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_EQUALIZER_2
 
 		AcTitleMenu	EffectMenu_TitleMenu_EQUALIZER, super=EffectMenu, next=EffectMenu_TitleMenu_SOUND_DSP, prev=EffectMenu_ExitMode1, flag=VF_Const, X=327, Y=200, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right5, selected=EffectMenu_TitleMenu_EQUALIZER_selected, str=Str_EQUALIZER_2, title=TT_FXEQSEL, icon=13	# str "EQUALIZER"
 
 Str_SOUND_DSP_9:	.asciz "SOUND DSP"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SOUND_DSP_9
 
 		AcTitleMenu	EffectMenu_TitleMenu_SOUND_DSP, super=EffectMenu, next=EffectMenu_CatchEvent1, prev=EffectMenu_TitleMenu_EQUALIZER, flag=VF_Const, X=327, Y=28, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right1, selected=EffectMenu_TitleMenu_SOUND_DSP_selected, str=Str_SOUND_DSP_9, title=TT_FXDSPSEL, icon=208	# str "SOUND DSP"
 		IvCatchEvent	EffectMenu_CatchEvent1, super=EffectMenu, prev=EffectMenu_TitleMenu_SOUND_DSP, flag=VF_Const|VF_InvisibleBox, X=188, Y=0, W=32, H=32, func=FN_EffDebugCatch
 
 Str_MULTI_EFFECT:	.asciz "MULTI EFFECT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MULTI_EFFECT
 
 	EffTtlScreen	MultiSel, sub=MultiSel_EffPage1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_FXMENU, window=MultiSel_window, title=Str_MULTI_EFFECT, icon=66	# title "MULTI EFFECT"
 		AcEffPage	MultiSel_EffPage1, super=MultiSel, next=MultiSel_EffExpGroup1, flag=VF_Const, X=564, Y=5, W=71, H=18, color=CL_PageBack, border=BD_3D_DOWN1, index=0xFFFF, page=MultiSel_EffPage1_page
@@ -544,38 +544,38 @@ Str_MIC_REVERB_EFFECT_2:	.asciz "MIC REVERB & EFFECT"
 
 Str_MUTE_ON:	.asciz "MUTE:ON "
 Str_MUTE_OFF:	.asciz "MUTE:OFF"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MUTE_OFF
 
 		AcFuncToggle	MicEffMuteToggle, super=MicSel, next=MicSel_IndexWideES1, flag=VF_Const, X=458, Y=215, W=80, H=23, font=1, stron=Str_MUTE_ON, stroff=Str_MUTE_OFF, onoff=MicEffMuteToggle_onoff, editsw=ES_Bottom13, func=FN_MicEffMuteToggleFunc	# stron "MUTE:ON "; stroff "MUTE:OFF"
 		AcIndexWideES	MicSel_IndexWideES1, super=MicSel, next=MicSel_IndexWideES2, prev=MicEffMuteToggle, flag=VF_Const, X=204, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, font=4, fontcolor=CL_Black, editsw=ES_Bottom6, editsw2=ES_Bottom8, style=14
 		AcIndexWideES	MicSel_IndexWideES2, super=MicSel, next=MicSel_Label_HARMONIZER_PART, prev=MicSel_IndexWideES1, flag=VF_Const, X=364, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom10, editsw2=ES_Bottom11, style=3
 
 Str_HARMONIZER_PART:	.asciz "HARMONIZER PART:"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HARMONIZER_PART
 
 		VwLabel	MicSel_Label_HARMONIZER_PART, super=MicSel, next=MicRevToggle, prev=MicSel_IndexWideES2, flag=VF_Const, X=454, Y=170, W=132, H=19, str=Str_HARMONIZER_PART, font=1, fontcolor=CL_White	# str "HARMONIZER PART:"
 
 Str_MIC_REVERB_ON:	.asciz "MIC REVERB   : ON "
 Str_MIC_REVERB_OFF:	.asciz "MIC REVERB   : OFF"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MIC_REVERB_OFF
 
 		AcFuncToggle	MicRevToggle, super=MicSel, next=MicEffToggle, prev=MicSel_Label_HARMONIZER_PART, flag=VF_Const, X=453, Y=77, W=179, H=26, font=1, stron=Str_MIC_REVERB_ON, stroff=Str_MIC_REVERB_OFF, onoff=MicRevToggle_onoff, editsw=ES_Right2, func=FN_MicRevToggleFunc	# stron "MIC REVERB   : ON "; stroff "MIC REVERB   : OFF"
 
 Str_MULTI_EFFECT_ON:	.asciz "MULTI EFFECT : ON "
 Str_MULTI_EFFECT_OFF:	.asciz "MULTI EFFECT : OFF"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MULTI_EFFECT_OFF
 
 		AcFuncToggle	MicEffToggle, super=MicSel, next=HarmPartEdit, prev=MicRevToggle, flag=VF_Const, X=453, Y=34, W=179, H=26, font=1, stron=Str_MULTI_EFFECT_ON, stroff=Str_MULTI_EFFECT_OFF, onoff=MicEffToggle_onoff, editsw=ES_Right1, func=FN_MicEffToggleFunc	# stron "MULTI EFFECT : ON "; stroff "MULTI EFFECT : OFF"
 
 Str_empty_73:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_73
 
 		AcMmmEditBox	HarmPartEdit, super=MicSel, next=MicSel_IndexWideES3, prev=MicEffToggle, flag=VF_Const, X=455, Y=186, W=181, H=26, color=CL_Silver, border=BD_3D_UP2, index=2, caption=Str_empty_73, font=1, fontcolor=CL_Black, length=16, editsw=ES_None, dial=1, selected=HarmPartEdit_selected, func=FN_HarmPartEditCheck, data=HarmPartEdit_data	# caption ""
 		AcIndexWideES	MicSel_IndexWideES3, super=MicSel, next=MicSel_CatchEvent1, prev=HarmPartEdit, flag=VF_Const, X=564, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom15, editsw2=ES_Bottom16, style=3
 		IvCatchEvent	MicSel_CatchEvent1, super=MicSel, next=MicSel_StrBox_MIC_REVERB_SETTING, prev=MicSel_IndexWideES3, flag=VF_Const|VF_InvisibleBox, X=254, Y=0, W=32, H=32, func=FN_MicSelFunc
 
 Str_MIC_REVERB_SETTING:	.asciz "MIC REVERB SETTING"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MIC_REVERB_SETTING
 
 		VwStrBox	MicSel_StrBox_MIC_REVERB_SETTING, super=MicSel, next=EffEditGridBox2, prev=MicSel_CatchEvent1, flag=VF_Const, X=200, Y=64, W=166, H=24, color=CL_WallPattern, index=0xFFFF, font=1, fontcolor=CL_White, align=1, str=Str_MIC_REVERB_SETTING	# str "MIC REVERB SETTING"
 
@@ -586,18 +586,18 @@ Str_empty_74:	.asciz "  |-|"
 		AcMicFuncEditSw	MicSel_MicFuncEditSw1, super=MicSel, sub=MicSel_StrBox_Trumpet_1_Octave, next=MicSel_MicFuncEditSw2, prev=EffEditGridBox2, flag=VF_Const, X=8, Y=32, W=175, H=36, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Left1, func=FN_MicPresetSelFunc, select=MicSel_MicFuncEditSw1_select
 
 Str_Trumpet_1_Octave:	.asciz "Trumpet (+ 1 Octave)"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Trumpet_1_Octave
 
 			VwStrBox	MicSel_StrBox_Trumpet_1_Octave, super=MicSel_MicFuncEditSw1, next=MicSel_StrBox_BRASS_SIMULATOR_1, flag=VF_Const, X=30, Y=52, W=140, H=12, color=CL_WallPattern, index=0xFFFF, font=3, fontcolor=CL_Yellow, align=1, str=Str_Trumpet_1_Octave	# str "Trumpet (+ 1 Octave)"
 
 Str_BRASS_SIMULATOR_1:	.asciz " BRASS SIMULATOR 1"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_BRASS_SIMULATOR_1
 
 			VwStrBox	MicSel_StrBox_BRASS_SIMULATOR_1, super=MicSel_MicFuncEditSw1, prev=MicSel_StrBox_Trumpet_1_Octave, flag=VF_Const, X=12, Y=36, W=156, H=18, color=CL_WallPattern, index=0xFFFF, font=1, fontcolor=CL_White, align=1, str=Str_BRASS_SIMULATOR_1	# str " BRASS SIMULATOR 1"
 		AcMicFuncEditSw	MicSel_MicFuncEditSw2, super=MicSel, sub=MicSel_StrBox_BRASS_SIMULATOR_2, next=MicSel_MicFuncEditSw3, prev=MicSel_MicFuncEditSw1, flag=VF_Const, X=8, Y=75, W=175, H=36, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Left2, func=FN_MicPresetSelFunc, select=MicSel_MicFuncEditSw2_select
 
 Str_BRASS_SIMULATOR_2:	.asciz " BRASS SIMULATOR 2"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_BRASS_SIMULATOR_2
 
 			VwStrBox	MicSel_StrBox_BRASS_SIMULATOR_2, super=MicSel_MicFuncEditSw2, next=MicSel_StrBox_Trumpet, flag=VF_Const, X=14, Y=80, W=152, H=16, color=CL_WallPattern, index=0xFFFF, font=1, fontcolor=CL_White, align=1, str=Str_BRASS_SIMULATOR_2	# str " BRASS SIMULATOR 2"
 
@@ -607,33 +607,33 @@ Str_Trumpet:	.asciz "Trumpet"
 		AcMicFuncEditSw	MicSel_MicFuncEditSw3, super=MicSel, sub=MicSel_StrBox_HARMONIZER_1, next=MicSel_MicFuncEditSw4, prev=MicSel_MicFuncEditSw2, flag=VF_Const, X=8, Y=118, W=175, H=34, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Left3, func=FN_MicPresetSelFunc, select=MicSel_MicFuncEditSw3_select
 
 Str_HARMONIZER_1:	.asciz " HARMONIZER 1"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HARMONIZER_1
 
 			VwStrBox	MicSel_StrBox_HARMONIZER_1, super=MicSel_MicFuncEditSw3, next=MicSel_StrBox_SMF_Harmony_Track, flag=VF_Const, X=14, Y=122, W=136, H=16, color=CL_WallPattern, index=0xFFFF, font=1, fontcolor=CL_White, align=1, str=Str_HARMONIZER_1	# str " HARMONIZER 1"
 
 Str_SMF_Harmony_Track:	.asciz "SMF Harmony Track ->"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SMF_Harmony_Track
 
 			VwStrBox	MicSel_StrBox_SMF_Harmony_Track, super=MicSel_MicFuncEditSw3, prev=MicSel_StrBox_HARMONIZER_1, flag=VF_Const, X=28, Y=138, W=136, H=10, color=CL_WallPattern, index=0xFFFF, font=3, fontcolor=CL_Yellow, align=1, str=Str_SMF_Harmony_Track	# str "SMF Harmony Track ->"
 		AcMicFuncEditSw	MicSel_MicFuncEditSw4, super=MicSel, sub=MicSel_StrBox_HARMONIZER_2, next=MicSel_EffTitleMenu_MULTI_EFFECT_SET, prev=MicSel_MicFuncEditSw3, flag=VF_Const, X=8, Y=161, W=175, H=32, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Left4, func=FN_MicPresetSelFunc, select=MicSel_MicFuncEditSw4_select
 
 Str_HARMONIZER_2:	.asciz " HARMONIZER 2"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HARMONIZER_2
 
 			VwStrBox	MicSel_StrBox_HARMONIZER_2, super=MicSel_MicFuncEditSw4, next=MicSel_StrBox_Auto_Play_Chord, flag=VF_Const, X=14, Y=164, W=130, H=16, color=CL_WallPattern, index=0xFFFF, font=1, fontcolor=CL_White, align=1, str=Str_HARMONIZER_2	# str " HARMONIZER 2"
 
 Str_Auto_Play_Chord:	.asciz "Auto Play Chord ->"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Auto_Play_Chord
 
 			VwStrBox	MicSel_StrBox_Auto_Play_Chord, super=MicSel_MicFuncEditSw4, prev=MicSel_StrBox_HARMONIZER_2, flag=VF_Const, X=26, Y=178, W=130, H=10, color=CL_WallPattern, index=0xFFFF, font=3, fontcolor=CL_Yellow, align=1, str=Str_Auto_Play_Chord	# str "Auto Play Chord ->"
 
 Str_MULTI_EFFECT_SET:	.asciz "MULTI EFFECT SET"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MULTI_EFFECT_SET
 
 		AcEffTitleMenu	MicSel_EffTitleMenu_MULTI_EFFECT_SET, super=MicSel, prev=MicSel_MicFuncEditSw4, flag=VF_Const, X=8, Y=202, W=305, H=38, color=CL_Transparent, font=1, fontcolor=CL_White, editsw=ES_Left5, selected=MicSel_EffTitleMenu_MULTI_EFFECT_SET_selected, str=Str_MULTI_EFFECT_SET, title=TT_FXMULTISEL, icon=66	# str "MULTI EFFECT SET"
 
 Str_REVERB_5:	.asciz "REVERB"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_REVERB_5
 
 	EffTtlScreen	RevSel, sub=RevSel_IndexWideES1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_FXMENU, window=RevSel_window, title=Str_REVERB_5, icon=23	# title "REVERB"
 		AcIndexWideES	RevSel_IndexWideES1, super=RevSel, next=RevSel_EffExpGroup1, flag=VF_Const, X=244, Y=216, W=152, H=23, color=CL_Silver, border=BD_EditSwitch, font=4, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom10, style=3
@@ -655,12 +655,12 @@ Str_DETAIL_EDIT_3:	.asciz "DETAIL EDIT"
 		AcIndexEditSw	RevSel_IndexEditSw2, super=RevSel, next=RevSel_MmmEditBox_TOTAL_DEPTH, prev=RevSel_IndexEditSw1, flag=VF_Const, X=564, Y=216, W=32, H=23, color=CL_WallPattern, index=15, font=4, fontcolor=CL_Black, editsw=ES_Bottom15, style=3
 
 Str_TOTAL_DEPTH:	.asciz "TOTAL DEPTH:"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TOTAL_DEPTH
 
 		AcMmmEditBox	RevSel_MmmEditBox_TOTAL_DEPTH, super=RevSel, prev=RevSel_IndexEditSw2, flag=VF_Const, X=452, Y=206, W=144, H=34, color=CL_Silver, border=BD_Double1, index=15, caption=Str_TOTAL_DEPTH, font=1, fontcolor=CL_Black, align=1, length=4, editsw=ES_None, dial=1, selected=RevSel_MmmEditBox_TOTAL_DEPTH_selected, func=FN_RevDepEditFunc, data=RevSel_MmmEditBox_TOTAL_DEPTH_data	# caption "TOTAL DEPTH:"
 
 Str_REVERB_6:	.asciz "REVERB"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_REVERB_6
 
 	TtlScreen	V_RevSel_TtlScreen_REVERB, sub=V_RevSel_IndexWideES1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_FXMENU, window=V_RevSel_TtlScreen_REVERB_window, title=Str_REVERB_6, icon=1	# title "REVERB"
 		AcIndexWideES	V_RevSel_IndexWideES1, super=V_RevSel_TtlScreen_REVERB, sub=V_RevSel_EffTitleMenu_DETAIL_EDIT, next=V_RevSel_WindowPage1, flag=VF_Const, X=244, Y=216, W=152, H=23, color=CL_Silver, border=BD_EditSwitch, font=4, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom10, style=3
@@ -680,7 +680,7 @@ Str_DETAIL_EDIT_4:	.asciz "DETAIL EDIT"
 		AcEffVari	V_RevSel_EffVari8, super=V_RevSel_TtlScreen_REVERB, prev=V_RevSel_EffVari7, flag=VF_Const, X=431, Y=160, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, editsw=ES_Right4, font=4, fontcolor=CL_Black, caption=V_RevSel_EffVari8_caption, visible=V_RevSel_EffVari8_visible, selected=V_RevSel_EffVari8_selected, param2=V_RevSel_EffVari8_param2
 
 Str_CHORUS_7:	.asciz "CHORUS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CHORUS_7
 
 	EffTtlScreen	ChoSel, sub=ChoSel_EffVari1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_FXMENU, window=ChoSel_window, title=Str_CHORUS_7, icon=207	# title "CHORUS"
 		AcEffVari	ChoSel_EffVari1, super=ChoSel, next=ChoSel_EffPage1, flag=VF_Const, X=8, Y=31, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, editsw=ES_Left1, font=4, fontcolor=CL_Black, caption=ChoSel_EffVari1_caption, visible=ChoSel_EffVari1_visible, selected=ChoSel_EffVari1_selected, param2=ChoSel_EffVari1_param2
@@ -700,7 +700,7 @@ Str_DETAIL_EDIT_5:	.asciz "DETAIL EDIT"
 		AcEffTitleMenu	ChoSel_EffTitleMenu_DETAIL_EDIT, super=ChoSel, prev=ChoSel_EffVari8, flag=VF_Const, X=8, Y=200, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left5, selected=ChoSel_EffTitleMenu_DETAIL_EDIT_selected, str=Str_DETAIL_EDIT_5, title=TT_FXEDIT, icon=211	# str "DETAIL EDIT"
 
 Str_SOUND_DSP_10:	.asciz "SOUND DSP"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SOUND_DSP_10
 
 	EffTtlScreen	DSPSel, sub=DSPSel_EffPage1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_FXMENU, window=DSPSel_window, title=Str_SOUND_DSP_10, icon=208	# title "SOUND DSP"
 		AcEffPage	DSPSel_EffPage1, super=DSPSel, next=DSPSel_EffExpGroup1, flag=VF_Const, X=564, Y=5, W=71, H=18, color=CL_PageBack, border=BD_3D_DOWN1, index=0xFFFF, page=DSPSel_EffPage1_page
@@ -723,56 +723,56 @@ Str_DEPTH_20:	.asciz "DEPTH: "
 		AcMmmEditBox	DSPSel_MmmEditBox_DEPTH, super=DSPSel, next=DSPSel_EffTitleMenu_EDIT, prev=DSPSel_IndexEditSw2, flag=VF_Const, X=471, Y=206, W=129, H=34, color=CL_Silver, border=BD_Double1, index=15, caption=Str_DEPTH_20, font=1, fontcolor=CL_Black, align=1, length=4, editsw=ES_None, dial=1, selected=DSPSel_MmmEditBox_DEPTH_selected, func=FN_DspDepEditFunc, data=DSPSel_MmmEditBox_DEPTH_data	# caption "DEPTH: "
 
 Str_EDIT:	.asciz "EDIT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_EDIT
 
 		AcEffTitleMenu	DSPSel_EffTitleMenu_EDIT, super=DSPSel, sub=DSPSel_FuncEditSw1, next=DSPSel_FuncEditSw2, prev=DSPSel_MmmEditBox_DEPTH, flag=VF_Const, X=8, Y=204, W=93, H=34, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left5, selected=DSPSel_EffTitleMenu_EDIT_selected, str=Str_EDIT, title=TT_FXEDIT, icon=211	# str "EDIT"
 			AcFuncEditSw	DSPSel_FuncEditSw1, super=DSPSel_EffTitleMenu_EDIT, flag=VF_Const, X=204, Y=217, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom6, style=3, func=FN_DspUnitNumSel
 		AcFuncEditSw	DSPSel_FuncEditSw2, super=DSPSel, next=DSPSel_StrBox_PART, prev=DSPSel_EffTitleMenu_EDIT, flag=VF_Const, X=164, Y=216, W=32, H=23, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, style=3, func=FN_DspUnitNumSel
 
 Str_PART_3:	.asciz "PART"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PART_3
 
 		VwStrBox	DSPSel_StrBox_PART, super=DSPSel, prev=DSPSel_FuncEditSw2, flag=VF_Const, X=108, Y=208, W=92, H=32, color=CL_Silver, border=BD_Double1, index=0xFFFF, font=1, fontcolor=CL_Black, str=Str_PART_3	# str "PART"
 
 Str_EQUALIZER_3:	.asciz "EQUALIZER"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_EQUALIZER_3
 
 	TtlScreen	EqSel, sub=EqSel_FuncEditSw1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=2, exit=TT_FXMENU, window=EqSel_window, title=Str_EQUALIZER_3, icon=13	# title "EQUALIZER"
 		AcFuncEditSw	EqSel_FuncEditSw1, super=EqSel, next=EQGain, flag=VF_Const, X=244, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom7, style=14, func=FN_EqFuncSel
 		PsRadioBox	EQGain, super=EqSel, sub=EQGain_StrBox_GAIN, next=EQFC, prev=EqSel_FuncEditSw1, flag=VF_Const, X=235, Y=60, W=291, H=96, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_None, selected=EQGain_selected, tag=0xFFFF
 
 Str_GAIN_3:	.asciz "GAIN"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_GAIN_3
 
 			VwStrBox	EQGain_StrBox_GAIN, super=EQGain, next=EQGain_EQEditBox1, flag=VF_Const, X=242, Y=100, W=46, H=18, color=CL_Silver, index=0xFFFF, fontcolor=CL_Black, str=Str_GAIN_3	# str "GAIN"
 
 Str_empty_75:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_75
 
 			AcEQEditBox	EQGain_EQEditBox1, super=EQGain, next=EQGain_EQEditBox2, prev=EQGain_StrBox_GAIN, flag=VF_Const, X=320, Y=134, W=36, H=18, color=CL_Silver, index=10, caption=Str_empty_75, font=3, fontcolor=CL_Black, length=5, editsw=ES_None, dial=1, selected=EQGain_EQEditBox1_selected, func=FN_EQGainEditCheck, data=EQGain_EQEditBox1_data	# caption ""
 
 Str_empty_76:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_76
 
 			AcEQEditBox	EQGain_EQEditBox2, super=EQGain, next=EQGain_EQEditBox3, prev=EQGain_EQEditBox1, flag=VF_Const, X=360, Y=134, W=36, H=18, color=CL_Silver, index=11, caption=Str_empty_76, font=3, fontcolor=CL_Black, length=5, editsw=ES_None, dial=1, selected=EQGain_EQEditBox2_selected, func=FN_EQGainEditCheck, data=EQGain_EQEditBox2_data	# caption ""
 
 Str_empty_77:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_77
 
 			AcEQEditBox	EQGain_EQEditBox3, super=EQGain, next=EQGain_EQEditBox4, prev=EQGain_EQEditBox2, flag=VF_Const, X=400, Y=134, W=36, H=18, color=CL_Silver, index=12, caption=Str_empty_77, font=3, fontcolor=CL_Black, length=5, editsw=ES_None, dial=1, selected=EQGain_EQEditBox3_selected, func=FN_EQGainEditCheck, data=EQGain_EQEditBox3_data	# caption ""
 
 Str_empty_78:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_78
 
 			AcEQEditBox	EQGain_EQEditBox4, super=EQGain, next=EQGain_EQEditBox5, prev=EQGain_EQEditBox3, flag=VF_Const, X=440, Y=134, W=36, H=18, color=CL_Silver, index=13, caption=Str_empty_78, font=3, fontcolor=CL_Black, length=5, editsw=ES_None, dial=1, selected=EQGain_EQEditBox4_selected, func=FN_EQGainEditCheck, data=EQGain_EQEditBox4_data	# caption ""
 
 Str_empty_79:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_79
 
 			AcEQEditBox	EQGain_EQEditBox5, super=EQGain, next=EQGain_StrBox_dB, prev=EQGain_EQEditBox4, flag=VF_Const, X=480, Y=134, W=36, H=18, color=CL_Silver, index=14, caption=Str_empty_79, font=3, fontcolor=CL_Black, length=5, editsw=ES_None, dial=1, selected=EQGain_EQEditBox5_selected, func=FN_EQGainEditCheck, data=EQGain_EQEditBox5_data	# caption ""
 
 Str_dB:	.asciz " (dB)"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_dB
 
 			VwStrBox	EQGain_StrBox_dB, super=EQGain, next=EQGain_GainBox1, prev=EQGain_EQEditBox5, flag=VF_Const, X=246, Y=116, W=54, H=18, color=CL_Silver, index=0xFFFF, font=3, fontcolor=CL_Black, str=Str_dB	# str " (dB)"
 			AcGainBox	EQGain_GainBox1, super=EQGain, next=EQGain_GainBox2, prev=EQGain_StrBox_dB, flag=VF_Const, X=316, Y=74, W=40, H=60, color=CL_Silver, border=BD_3D_UP2, index=10, font=4, fontcolor=CL_Black, func=FN_EQGainEditCheck, data=EQGain_GainBox1_data
@@ -783,69 +783,69 @@ Str_dB:	.asciz " (dB)"
 		PsRadioBox	EQFC, super=EqSel, sub=EQFC_StrBox_FC, next=EQQ, prev=EQGain, flag=VF_Const, X=235, Y=156, W=291, H=28, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_None, selected=EQFC_selected, tag=0xFFFF
 
 Str_FC_3:	.asciz "FC"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_FC_3
 
 			VwStrBox	EQFC_StrBox_FC, super=EQFC, next=EQFC_EQEditBox1, flag=VF_Const, X=244, Y=162, W=30, H=18, color=CL_Silver, index=0xFFFF, fontcolor=CL_Black, align=1, str=Str_FC_3	# str "FC"
 
 Str_empty_80:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_80
 
 			AcEQEditBox	EQFC_EQEditBox1, super=EQFC, next=EQFC_EQEditBox2, prev=EQFC_StrBox_FC, flag=VF_Const, X=320, Y=162, W=36, H=18, color=CL_Silver, index=10, caption=Str_empty_80, font=3, fontcolor=CL_Black, length=5, editsw=ES_None, dial=1, selected=EQFC_EQEditBox1_selected, func=FN_EQFcEditCheck, data=EQFC_EQEditBox1_data, tate_index=1	# caption ""
 
 Str_empty_81:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_81
 
 			AcEQEditBox	EQFC_EQEditBox2, super=EQFC, next=EQFC_EQEditBox3, prev=EQFC_EQEditBox1, flag=VF_Const, X=360, Y=162, W=36, H=18, color=CL_Silver, index=11, caption=Str_empty_81, font=3, fontcolor=CL_Black, length=5, editsw=ES_None, dial=1, selected=EQFC_EQEditBox2_selected, func=FN_EQFcEditCheck, data=EQFC_EQEditBox2_data, tate_index=1	# caption ""
 
 Str_empty_82:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_82
 
 			AcEQEditBox	EQFC_EQEditBox3, super=EQFC, next=EQFC_EQEditBox4, prev=EQFC_EQEditBox2, flag=VF_Const, X=400, Y=162, W=36, H=18, color=CL_Silver, index=12, caption=Str_empty_82, font=3, fontcolor=CL_Black, length=5, editsw=ES_None, dial=1, selected=EQFC_EQEditBox3_selected, func=FN_EQFcEditCheck, data=EQFC_EQEditBox3_data, tate_index=1	# caption ""
 
 Str_empty_83:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_83
 
 			AcEQEditBox	EQFC_EQEditBox4, super=EQFC, next=EQFC_EQEditBox5, prev=EQFC_EQEditBox3, flag=VF_Const, X=440, Y=162, W=36, H=18, color=CL_Silver, index=13, caption=Str_empty_83, font=3, fontcolor=CL_Black, length=5, editsw=ES_None, dial=1, selected=EQFC_EQEditBox4_selected, func=FN_EQFcEditCheck, data=EQFC_EQEditBox4_data, tate_index=1	# caption ""
 
 Str_empty_84:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_84
 
 			AcEQEditBox	EQFC_EQEditBox5, super=EQFC, next=EQFC_StrBox_Hz, prev=EQFC_EQEditBox4, flag=VF_Const, X=480, Y=162, W=36, H=18, color=CL_Silver, index=14, caption=Str_empty_84, font=3, fontcolor=CL_Black, length=5, editsw=ES_None, dial=1, selected=EQFC_EQEditBox5_selected, func=FN_EQFcEditCheck, data=EQFC_EQEditBox5_data, tate_index=1	# caption ""
 
 Str_Hz_2:	.asciz " (Hz)"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Hz_2
 
 			VwStrBox	EQFC_StrBox_Hz, super=EQFC, prev=EQFC_EQEditBox5, flag=VF_Const, X=266, Y=164, W=42, H=14, color=CL_Silver, index=0xFFFF, font=3, fontcolor=CL_Black, align=1, str=Str_Hz_2	# str " (Hz)"
 		PsRadioBox	EQQ, super=EqSel, sub=EQQ_StrBox_Q, next=EQOnOff, prev=EQFC, flag=VF_Const, X=235, Y=184, W=291, H=28, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_None, selected=EQQ_selected, tag=0xFFFF
 
 Str_Q:	.asciz "Q"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Q
 
 			VwStrBox	EQQ_StrBox_Q, super=EQQ, next=EQQ_EQEditBox1, flag=VF_Const, X=244, Y=190, W=26, H=18, color=CL_Silver, index=0xFFFF, fontcolor=CL_Black, align=1, str=Str_Q	# str "Q"
 
 Str_empty_85:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_85
 
 			AcEQEditBox	EQQ_EQEditBox1, super=EQQ, next=EQQ_EQEditBox2, prev=EQQ_StrBox_Q, flag=VF_Const, X=360, Y=190, W=36, H=18, color=CL_Silver, index=11, caption=Str_empty_85, font=3, fontcolor=CL_Black, length=5, editsw=ES_None, dial=1, selected=EQQ_EQEditBox1_selected, func=FN_EQQEditCheck, data=EQQ_EQEditBox1_data, tate_index=2	# caption ""
 
 Str_empty_86:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_86
 
 			AcEQEditBox	EQQ_EQEditBox2, super=EQQ, next=EQQ_EQEditBox3, prev=EQQ_EQEditBox1, flag=VF_Const, X=400, Y=190, W=36, H=18, color=CL_Silver, index=12, caption=Str_empty_86, font=3, fontcolor=CL_Black, length=5, editsw=ES_None, dial=1, selected=EQQ_EQEditBox2_selected, func=FN_EQQEditCheck, data=EQQ_EQEditBox2_data, tate_index=2	# caption ""
 
 Str_empty_87:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_87
 
 			AcEQEditBox	EQQ_EQEditBox3, super=EQQ, next=EQQ_StrBox_Hz, prev=EQQ_EQEditBox2, flag=VF_Const, X=440, Y=190, W=36, H=18, color=CL_Silver, index=13, caption=Str_empty_87, font=3, fontcolor=CL_Black, length=5, editsw=ES_None, dial=1, selected=EQQ_EQEditBox3_selected, func=FN_EQQEditCheck, data=EQQ_EQEditBox3_data, tate_index=2	# caption ""
 
 Str_Hz_3:	.asciz " (Hz)"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Hz_3
 
 			VwStrBox	EQQ_StrBox_Hz, super=EQQ, prev=EQQ_EQEditBox3, flag=VF_Const, X=266, Y=192, W=42, H=14, color=CL_Silver, index=0xFFFF, font=3, fontcolor=CL_Black, align=1, str=Str_Hz_3	# str " (Hz)"
 
 Str_EQ_ON:	.asciz "EQ : ON "
 Str_EQ_OFF:	.asciz "EQ : OFF"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_EQ_OFF
 
 		AcFuncToggle	EQOnOff, super=EqSel, next=EqSel_IndexEditSw1, prev=EQQ, flag=VF_Const, X=553, Y=208, W=79, H=26, font=1, stron=Str_EQ_ON, stroff=Str_EQ_OFF, onoff=EQOnOff_onoff, editsw=ES_Right5, func=FN_EQToggleFunc	# stron "EQ : ON "; stroff "EQ : OFF"
 		AcIndexEditSw	EqSel_IndexEditSw1, super=EqSel, next=EqSel_IndexEditSw2, prev=EQOnOff, flag=VF_Const, X=324, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=10, font=4, fontcolor=CL_Black, editsw=ES_Bottom9, style=3
@@ -856,12 +856,12 @@ Str_EQ_OFF:	.asciz "EQ : OFF"
 		IvCatchEvent	EqSel_CatchEvent1, super=EqSel, next=EQOrigSw, prev=EqSel_IndexEditSw5, flag=VF_Const|VF_InvisibleBox, X=576, Y=0, W=32, H=32, func=FN_EQFunc
 
 Str_ORIGINAL_3:	.asciz "ORIGINAL"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ORIGINAL_3
 
 		AcMicFuncEditSw	EqSel_MicFuncEditSw1, super=EqSel, sub=EqSel_StrBox_Flat, next=EqSel_MicFuncEditSw2, prev=EQOrig, flag=VF_Const, X=8, Y=32, W=191, H=34, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Left1, func=FN_EQSelFunc, select=EqSel_MicFuncEditSw1_select
 
 Str_Flat:	.asciz "Flat"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Flat
 
 			VwStrBox	EqSel_StrBox_Flat, super=EqSel_MicFuncEditSw1, flag=VF_Const, X=16, Y=38, W=176, H=24, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_White, str=Str_Flat	# str "Flat"
 		AcMicFuncEditSw	EqSel_MicFuncEditSw2, super=EqSel, sub=EqSel_StrBox_Make_Up, next=EqSel_MicFuncEditSw3, prev=EqSel_MicFuncEditSw1, flag=VF_Const, X=8, Y=75, W=191, H=32, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Left2, func=FN_EQSelFunc, select=EqSel_MicFuncEditSw2_select
@@ -872,24 +872,24 @@ Str_Make_Up:	.asciz "Make Up"
 		AcMicFuncEditSw	EqSel_MicFuncEditSw3, super=EqSel, sub=EqSel_StrBox_Radio, next=EqSel_MicFuncEditSw4, prev=EqSel_MicFuncEditSw2, flag=VF_Const, X=8, Y=118, W=191, H=32, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Left3, func=FN_EQSelFunc, select=EqSel_MicFuncEditSw3_select
 
 Str_Radio:	.asciz "Radio"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Radio
 
 			VwStrBox	EqSel_StrBox_Radio, super=EqSel_MicFuncEditSw3, flag=VF_Const, X=16, Y=124, W=176, H=20, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_White, str=Str_Radio	# str "Radio"
 		AcMicFuncEditSw	EqSel_MicFuncEditSw4, super=EqSel, sub=EqSel_StrBox_Treble_Boost, next=EqSel_MicFuncEditSw5, prev=EqSel_MicFuncEditSw3, flag=VF_Const, X=8, Y=161, W=193, H=32, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Left4, func=FN_EQSelFunc, select=EqSel_MicFuncEditSw4_select
 
 Str_Treble_Boost:	.asciz "Treble Boost"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Treble_Boost
 
 			VwStrBox	EqSel_StrBox_Treble_Boost, super=EqSel_MicFuncEditSw4, flag=VF_Const, X=14, Y=168, W=180, H=18, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_White, str=Str_Treble_Boost	# str "Treble Boost"
 		AcMicFuncEditSw	EqSel_MicFuncEditSw5, super=EqSel, sub=EqSel_StrBox_No_Hi_Hat, prev=EqSel_MicFuncEditSw4, flag=VF_Const, X=8, Y=204, W=191, H=30, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Left5, func=FN_EQSelFunc, select=EqSel_MicFuncEditSw5_select
 
 Str_No_Hi_Hat:	.asciz "No Hi Hat"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_No_Hi_Hat
 
 			VwStrBox	EqSel_StrBox_No_Hi_Hat, super=EqSel_MicFuncEditSw5, flag=VF_Const, X=14, Y=210, W=180, H=18, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_White, str=Str_No_Hi_Hat	# str "No Hi Hat"
 
 Str_SPLIT_POINT_SELECT:	.asciz "SPLIT POINT SELECT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SPLIT_POINT_SELECT
 
 	TtlScreen	SplitSel, sub=SplitSel_MmmBox1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=SplitSel_window, title=Str_SPLIT_POINT_SELECT, icon=158	# title "SPLIT POINT SELECT"
 		AcMmmBox	SplitSel_MmmBox1, super=SplitSel, next=SplitSel_ShowHide1, flag=VF_Const, X=276, Y=94, W=76, H=40, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_White, func=FN_SplitPoint, data=SplitSel_MmmBox1_data
@@ -898,36 +898,36 @@ Str_SPLIT_POINT_SELECT:	.asciz "SPLIT POINT SELECT"
 		AcLanguageText	SplitSel_LanguageText1, super=SplitSel, prev=SplitSel_Box1, flag=VF_Const, X=128, Y=46, W=388, H=56, color=CL_WallPattern, index=0xFFFF, font=8, fontcolor=CL_Yellow, lines=3, func=FN_StsSplitCheck
 
 Str_APC_SELECT:	.asciz "APC SELECT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_APC_SELECT
 
 	TtlScreen	ApcSel, sub=ApcOnbass, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=ApcSel_window, title=Str_APC_SELECT, icon=113	# title "APC SELECT"
 
 Str_ON_BASS_ON:	.asciz "ON BASS    : ON "
 Str_ON_BASS_OFF:	.asciz "ON BASS    : OFF"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ON_BASS_OFF
 
 		AcFuncToggle	ApcOnbass, super=ApcSel, next=ApcMemory, flag=VF_Const, X=401, Y=79, W=231, H=26, font=4, stron=Str_ON_BASS_ON, stroff=Str_ON_BASS_OFF, onoff=ApcOnbass_onoff, editsw=ES_Right2, func=FN_OnbassToggleFunc	# stron "ON BASS    : ON "; stroff "ON BASS    : OFF"
 
 Str_MEMORY_ON:	.asciz "MEMORY     : ON "
 Str_MEMORY_OFF:	.asciz "MEMORY     : OFF"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MEMORY_OFF
 
 		AcFuncToggle	ApcMemory, super=ApcSel, next=ApcSel_ShowHide1, prev=ApcOnbass, flag=VF_Const, X=401, Y=36, W=231, H=26, font=4, stron=Str_MEMORY_ON, stroff=Str_MEMORY_OFF, onoff=ApcMemory_onoff, editsw=ES_Right1, func=FN_MemoryToggleFunc	# stron "MEMORY     : ON "; stroff "MEMORY     : OFF"
 		IvShowHide	ApcSel_ShowHide1, super=ApcSel, next=ApcLefthold, prev=ApcMemory, flag=VF_Const|VF_InvisibleBox, X=608, Y=0, W=32, H=32, func=FN_TApcSel
 
 Str_LEFT_HOLD_ON:	.asciz "LEFT HOLD  : ON "
 Str_LEFT_HOLD_OFF:	.asciz "LEFT HOLD  : OFF"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LEFT_HOLD_OFF
 
 		AcFuncToggle	ApcLefthold, super=ApcSel, next=ApcSel_APCRadioBox_ONE_FINGER, prev=ApcSel_ShowHide1, flag=VF_Const, X=401, Y=122, W=231, H=26, font=4, stron=Str_LEFT_HOLD_ON, stroff=Str_LEFT_HOLD_OFF, onoff=ApcLefthold_onoff, editsw=ES_Right3, func=FN_LeftholdToggleFunc	# stron "LEFT HOLD  : ON "; stroff "LEFT HOLD  : OFF"
 
 Str_ONE_FINGER:	.asciz "ONE FINGER"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ONE_FINGER
 
 		AcAPCRadioBox	ApcSel_APCRadioBox_ONE_FINGER, super=ApcSel, next=ApcSel_APCRadioBox_FINGERED, prev=ApcLefthold, flag=VF_Const, X=8, Y=30, W=305, H=34, color=CL_WallPattern, index=1, font=4, fontcolor=CL_White, editsw=ES_Left1, selected=ApcSel_APCRadioBox_ONE_FINGER_selected, str=Str_ONE_FINGER	# str "ONE FINGER"
 
 Str_FINGERED:	.asciz "FINGERED"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_FINGERED
 
 		AcAPCRadioBox	ApcSel_APCRadioBox_FINGERED, super=ApcSel, next=ApcSel_APCRadioBox_PIANIST, prev=ApcSel_APCRadioBox_ONE_FINGER, flag=VF_Const, X=8, Y=73, W=305, H=34, color=CL_WallPattern, index=1, font=4, fontcolor=CL_White, editsw=ES_Left2, selected=ApcSel_APCRadioBox_FINGERED_selected, tag=1, str=Str_FINGERED	# str "FINGERED"
 
@@ -938,18 +938,18 @@ Str_PIANIST:	.asciz "PIANIST"
 
 Str_COUNT_INTRO_VOICE:	.asciz "COUNT INTRO : VOICE "
 Str_COUNT_INTRO_CLICK:	.asciz "COUNT INTRO : CLICK "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_COUNT_INTRO_CLICK
 
 		AcFuncToggle	CountIntro, super=ApcSel, next=ApcSel_FuncEditSw1, prev=ApcSel_CatchEvent1, flag=VF_Const, X=8, Y=208, W=275, H=26, font=4, stron=Str_COUNT_INTRO_VOICE, stroff=Str_COUNT_INTRO_CLICK, onoff=CountIntro_onoff, editsw=ES_Left5, func=FN_IntroToggleFunc	# stron "COUNT INTRO : VOICE "; stroff "COUNT INTRO : CLICK "
 		AcFuncEditSw	ApcSel_FuncEditSw1, super=ApcSel, next=ApcSel_TitleMenu_CHORD_FINDER, prev=CountIntro, flag=VF_Const, X=593, Y=208, W=39, H=22, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right5, func=FN_ChordFinderStartFunc
 
 Str_CHORD_FINDER:	.asciz "CHORD FINDER"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CHORD_FINDER
 
 		AcTitleMenu	ApcSel_TitleMenu_CHORD_FINDER, super=ApcSel, prev=ApcSel_FuncEditSw1, flag=VF_Const, X=327, Y=200, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_None, selected=ApcSel_TitleMenu_CHORD_FINDER_selected, str=Str_CHORD_FINDER, title=TT_PS, icon=176	# str "CHORD FINDER"
 
 Str_CHORD_FINDER_2:	.asciz "CHORD FINDER"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CHORD_FINDER_2
 
 	TtlScreen	ChdFdr, sub=ChdFdr_CFInvisibleBox1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_APCSEL, window=ChdFdr_window, title=Str_CHORD_FINDER_2, icon=176	# title "CHORD FINDER"
 		PsCFInvisibleBox	ChdFdr_CFInvisibleBox1, super=ChdFdr, next=ChdFdr_ShowHide1, flag=VF_Const|VF_InvisibleBox, X=340, Y=0, W=32, H=32
@@ -957,28 +957,28 @@ Str_CHORD_FINDER_2:	.asciz "CHORD FINDER"
 		VwBox	ChdFdr_Box1, super=ChdFdr, sub=RootBox, next=InversionBox, prev=ChdFdr_ShowHide1, flag=VF_Const, X=12, Y=34, W=176, H=64, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
 
 Str_ROOT:	.asciz "ROOT:"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ROOT
 
 			AcRamEditRoopBox	RootBox, super=ChdFdr_Box1, next=TypeBox, flag=VF_Const, X=28, Y=42, W=135, H=22, color=CL_WallPattern, index=4, caption=Str_ROOT, font=1, fontcolor=CL_White, align=1, length=3, editsw=ES_None, dial=1, selected=RootBox_selected, func=FN_ChordFinderROOT, data=RootBox_data	# caption "ROOT:"
 
 Str_TYPE_16:	.asciz "TYPE:"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TYPE_16
 
 			AcRamEditBox	TypeBox, super=ChdFdr_Box1, prev=RootBox, flag=VF_Const, X=28, Y=70, W=135, H=20, color=CL_WallPattern, index=8, caption=Str_TYPE_16, font=1, fontcolor=CL_White, align=1, length=5, editsw=ES_None, dial=1, selected=TypeBox_selected, func=FN_ChordFinderTYPE, data=TypeBox_data	# caption "TYPE:"
 
 Str_INVERSION:	.asciz "INVERSION:"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_INVERSION
 
 		AcChordFinderBox	TypeListBox, super=ChdFdr, next=ApcModeEditSw, prev=InversionBox, flag=VF_Const, X=12, Y=106, W=324, H=84, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF
 		AcIndexEditSw	ApcModeEditSw, super=ChdFdr, next=ApcModeBox, prev=TypeListBox, flag=VF_Const, X=593, Y=36, W=39, H=22, color=CL_WallPattern, index=6, font=4, fontcolor=CL_Black, editsw=ES_Right1
 
 Str_empty_237:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_237
 
 		AcRamEditRoopBox	ApcModeBox, super=ChdFdr, next=ApcModeLabel, prev=ApcModeEditSw, flag=VF_Const, X=451, Y=34, W=181, H=30, color=CL_Silver, border=BD_3D_UP2, index=6, caption=Str_empty_237, font=1, fontcolor=CL_Black, length=11, editsw=ES_None, selected=ApcModeBox_selected, func=FN_APCselect, data=ApcModeBox_data	# caption ""
 
 Str_APC_MODE_2:	.asciz "APC MODE:"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_APC_MODE_2
 
 		AcVisibleLabel	ApcModeLabel, super=ChdFdr, next=ROOTsw, prev=ApcModeBox, flag=VF_Const, X=370, Y=42, W=76, H=19, str=Str_APC_MODE_2, font=1, fontcolor=CL_White	# str "APC MODE:"
 		AcIndexWideES	ROOTsw, super=ChdFdr, next=TYPELeftsw, prev=ApcModeLabel, flag=VF_Const, X=84, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=4, font=4, fontcolor=CL_Black, editsw=ES_Bottom3, editsw2=ES_Bottom4, style=14
@@ -987,17 +987,17 @@ Str_APC_MODE_2:	.asciz "APC MODE:"
 		AcIndexWideES	TYPERightsw, super=ChdFdr, next=ChdFdr_Label_ROOT, prev=InversionEditSw, flag=VF_Const, X=324, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=3, font=4, fontcolor=CL_Black, editsw=ES_Bottom9, editsw2=ES_Bottom10, style=16
 
 Str_ROOT_2:	.asciz "ROOT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ROOT_2
 
 		VwLabel	ChdFdr_Label_ROOT, super=ChdFdr, next=ChdFdr_Label_TYPE, prev=TYPERightsw, flag=VF_Const, X=104, Y=198, W=36, H=19, str=Str_ROOT_2, font=1, fontcolor=CL_White	# str "ROOT"
 
 Str_TYPE_17:	.asciz "TYPE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TYPE_17
 
 		VwLabel	ChdFdr_Label_TYPE, super=ChdFdr, next=InversionLabel, prev=ChdFdr_Label_ROOT, flag=VF_Const, X=260, Y=198, W=36, H=19, str=Str_TYPE_17, font=1, fontcolor=CL_White	# str "TYPE"
 
 Str_INVERSION_2:	.asciz "INVERSION"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_INVERSION_2
 
 		AcKenbanBitmap	ChdFdr_KenbanBitmap1, super=ChdFdr, next=ChdFdr_Box2, prev=InversionLabel, flag=VF_Const, X=420, Y=116, W=171, H=54, func=FN_BitmapKenban
 		VwBox	ChdFdr_Box2, super=ChdFdr, next=ChdFdr_FuncEditSw1, prev=ChdFdr_KenbanBitmap1, flag=VF_Const, X=396, Y=102, W=216, H=84, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF
@@ -1013,12 +1013,12 @@ Str_81_3:	.asciz "~81"
 		VwIcon	ChdFdr_Icon1, super=ChdFdr, prev=ChdFdr_Line4, flag=VF_Const, X=567, Y=197, W=28, H=28, icon=182
 
 Str_R1_R2_OCTAVE:	.asciz "R1/R2 OCTAVE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_R1_R2_OCTAVE
 
 	TtlScreen	SdOct, sub=SdOct_MmmEditBox_OCTAVE, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=SdOct_window, title=Str_R1_R2_OCTAVE, icon=157	# title "R1/R2 OCTAVE"
 
 Str_OCTAVE:	.asciz "OCTAVE :"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OCTAVE
 
 		AcMmmEditBox	SdOct_MmmEditBox_OCTAVE, super=SdOct, next=SdOct_IndexWideES1, flag=VF_Const, X=40, Y=70, W=545, H=106, color=CL_WallPattern, border=BD_3D_UP2, caption=Str_OCTAVE, font=4, fontcolor=CL_WhiteB, length=5, editsw=ES_None, dial=1, selected=SdOct_MmmEditBox_OCTAVE_selected, func=FN_R12OctaveFunc, data=SdOct_MmmEditBox_OCTAVE_data	# caption "OCTAVE :"
 		AcIndexWideES	SdOct_IndexWideES1, super=SdOct, next=SdOct_ShowHide1, prev=SdOct_MmmEditBox_OCTAVE, flag=VF_Const, X=404, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, font=4, fontcolor=CL_Black, editsw=ES_Bottom11, editsw2=ES_Bottom13, style=3
@@ -1035,9 +1035,9 @@ RN_LoadFilter:	.asciz "LoadFilter"
 RN_FilterGridBox:	.asciz "FilterGridBox"
 RN_empty_2131:	.asciz ""
 RN_empty_2132:	.asciz ""
-	.align	4, 0x00
+	.align	4, 0x00	# pad after RN_empty_2132
 RN_Mixing:	.asciz "Mixing"
-	.align	4, 0x00
+	.align	4, 0x00	# pad after RN_Mixing
 RN_EffectEdit:	.asciz "EffectEdit"
 RN_empty_2133:	.asciz ""
 RN_empty_2134:	.asciz ""
@@ -1053,7 +1053,7 @@ RN_empty_2142:	.asciz ""
 RN_empty_2143:	.asciz ""
 RN_empty_2144:	.asciz ""
 RN_empty_2145:	.asciz ""
-	.align	4, 0x00
+	.align	4, 0x00	# pad after RN_empty_2145
 RN_EffName:	.asciz "EffName"
 RN_empty_2146:	.asciz ""
 RN_empty_2147:	.asciz ""
@@ -1146,7 +1146,7 @@ RN_empty_2233:	.asciz ""
 RN_empty_2234:	.asciz ""
 RN_empty_2235:	.asciz ""
 RN_empty_2236:	.asciz ""
-	.align	4, 0x00
+	.align	4, 0x00	# pad after RN_empty_2236
 RN_EffectDebug:	.asciz "EffectDebug"
 RN_EffApcModeBox:	.asciz "EffApcModeBox"
 RN_EffSysModeBox:	.asciz "EffSysModeBox"
@@ -1157,7 +1157,7 @@ RN_empty_2240:	.asciz ""
 RN_empty_2241:	.asciz ""
 RN_empty_2242:	.asciz ""
 RN_empty_2243:	.asciz ""
-	.align	4, 0x00
+	.align	4, 0x00	# pad after RN_empty_2243
 RN_EffectMenu:	.asciz "EffectMenu"
 RN_empty_2455:	.asciz ""
 RN_empty_2456:	.asciz ""
@@ -1239,7 +1239,7 @@ RN_empty_2522:	.asciz ""
 RN_empty_2523:	.asciz ""
 RN_empty_2524:	.asciz ""
 RN_empty_2525:	.asciz ""
-	.align	4, 0x00
+	.align	4, 0x00	# pad after RN_empty_2525
 RN_ChoSel:	.asciz "ChoSel"
 RN_empty_2526:	.asciz ""
 RN_empty_2527:	.asciz ""
@@ -1378,36 +1378,36 @@ RN_empty_5035:	.asciz ""
 RN_empty_5036:	.asciz ""
 .incbin_range "baserom/kn6000_program.rom", 0x229239, 0x22923C
 Str_MD_EFFECT:	.asciz "MD_EFFECT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MD_EFFECT
 Str_TT_FXALOC:	.asciz "TT_FXALOC"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_FXALOC
 Str_TT_FXLOADFILT:	.asciz "TT_FXLOADFILT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_FXLOADFILT
 Str_TT_FXMIXING:	.asciz "TT_FXMIXING"
 Str_TT_FXEDIT:	.asciz "TT_FXEDIT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_FXEDIT
 Str_TT_FXNAME:	.asciz "TT_FXNAME"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_FXNAME
 Str_TT_FXDEBUG:	.asciz "TT_FXDEBUG"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_FXDEBUG
 Str_TT_FXMENU:	.asciz "TT_FXMENU"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_FXMENU
 Str_TT_FXREVSEL:	.asciz "TT_FXREVSEL"
 Str_TT_FXCHOSEL:	.asciz "TT_FXCHOSEL"
 Str_TT_FXMULTISEL:	.asciz "TT_FXMULTISEL"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_FXMULTISEL
 Str_TT_FXDSPSEL:	.asciz "TT_FXDSPSEL"
 Str_TT_FXEQSEL:	.asciz "TT_FXEQSEL"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_FXEQSEL
 Str_TT_FXMIC:	.asciz "TT_FXMIC"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_FXMIC
 Str_TT_SPLITSEL:	.asciz "TT_SPLITSEL"
 Str_TT_APCSEL:	.asciz "TT_APCSEL"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_APCSEL
 Str_TT_CHDFDR:	.asciz "TT_CHDFDR"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_CHDFDR
 Str_TT_SDOCT:	.asciz "TT_SDOCT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_SDOCT
 data_4C22931C:
 .incbin_range "baserom/kn6000_program.rom", 0x22931C, 0x229EE4
 data_4C229EE4:
@@ -1469,7 +1469,7 @@ Str_CHORD_6:	.asciz "CHORD    "
 Str_ROOT_BASS_2:	.asciz "ROOT BASS"
 Str_PAD1:	.asciz "PAD1     "
 Str_PAD2:	.asciz "PAD2     "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PAD2
 
 ptrs_4C2351C4:
 	.long	Str_PART1_6
@@ -1505,28 +1505,28 @@ ptrs_4C2351C4:
 	.long	Str_PAD2
 
 Str_APC_TOTAL:	.asciz "APC TOTAL"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_APC_TOTAL
 Str_2_22:	.asciz " - 2 "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_2_22
 Str_1_20:	.asciz " - 1 "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_1_20
 Str_0_13:	.asciz "   0 "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_0_13
 Str_1_19:	.asciz " + 1 "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_1_19
 Str_2_21:	.asciz " + 2 "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_2_21
 Str_0_12:	.asciz "   0 "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_0_12
 Str_CcEv_5:	.asciz "CcEv"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CcEv_5
 Str_Press_a_key_to_select_the_split_point_3:	.asciz "Press a key to select the split point."
 Str_Dr_cken_Sie_eine_Taste_um_den_Split_Punk:	.asciz "Dr\xFCcken Sie eine Taste um den Split-Punkt zu bestimmen."
 Str_Enfoncez_un_touche_pour_d_finir_le_point:	.asciz "Enfoncez un touche pour d\xE9finir le point de partage du clavier."
 Str_Presione_una_tecla_para_seleccionar_el_p:	.asciz "Presione una tecla para seleccionar el punto de divisi\xF3n."
 Str_Press_a_key_to_select_the_split_point_2:	.asciz "Press a key to select the split point."
 Str_Press_a_key_to_select_the_split_point:	.asciz "Press a key to select the split point."
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Press_a_key_to_select_the_split_point
 
 ptrs_4C2353AC:
 	.long	Str_Press_a_key_to_select_the_split_point_3
@@ -1548,7 +1548,7 @@ Str_A_a0_4:	.asciz "A~a0"
 Str_A_20:	.asciz "A "
 Str_B_a0_4:	.asciz "B~a0"
 Str_B_7:	.asciz "B "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_B_7
 
 ptrs_4C2353F4:
 	.long	Str_C_9
@@ -1577,11 +1577,12 @@ ptrs_4C235424:
 	.long	data_4C2308EC
 	.long	data_4C2314B4
 	.long	data_4C23207C
-data_4C235458:
-.incbin_range "baserom/kn6000_program.rom", 0x235458, 0x23545C
+
+SplitPoint_Table:	# 2 x u16, 156..185; read by SplitPoint : `movhu	(a0), d0`
+	tab_u16	185, 156
 
 Str_s_2d_2:	.asciz "%s%2d"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_2d_2
 data_4C235464:
 .incbin_range "baserom/kn6000_program.rom", 0x235464, 0x2354E0
 
@@ -2098,8 +2099,9 @@ ptrs_4C236C70:
 	.long	Str_a013
 	.long	Str_a09_a013
 	.long	Str_9e9_a013
-data_4C236D0C:
-	.space	16, 0x00
+
+TtChordFinder_Table:	# 16 x u8, 0..0; read by TtChordFinder : `movbu	(a1), d0`
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 
 Str_C_8:	.asciz "C "
 Str_D_a0_3:	.asciz "D~a0"
@@ -2113,7 +2115,7 @@ Str_A_a0_3:	.asciz "A~a0"
 Str_A_19:	.asciz "A "
 Str_B_a0_3:	.asciz "B~a0"
 Str_B_6:	.asciz "B "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_B_6
 
 ptrs_4C236D4C:
 	.long	Str_C_8
@@ -2135,10 +2137,11 @@ Str_PIANIST_2:	.asciz "  PIANIST  "
 ptrs_4C236D94:
 	.long	Str_FINGERED_2
 	.long	Str_PIANIST_2
-data_4C236D9C:
-.incbin_range "baserom/kn6000_program.rom", 0x236D9C, 0x236DA4
-data_4C236DA4:
-.incbin_range "baserom/kn6000_program.rom", 0x236DA4, 0x236DAC
+
+func_4C0FF1C3_Table:	# 4 x u16, 0..639; read by func_4C0FF1C3_entry : `movhu	(a1), d0`
+	tab_u16	0, 0, 639, 239
+func_4C0FF30B_Table:	# 4 x u16, 0..639; read by func_4C0FF30B_entry : `movhu	(a1), d0`
+	tab_u16	0, 0, 639, 239
 
 Str_95_2:	.asciz "~95"
 Str_TYPICAL:	.asciz "TYPICAL"
@@ -2155,16 +2158,17 @@ ptrs_4C236DE0:
 	.long	Str_2nd_10
 	.long	Str_3rd_8
 	.long	Str_4th_8
-data_4C236DF8:
-	.space	16, 0x00
-data_4C236E08:
-.incbin_range "baserom/kn6000_program.rom", 0x236E08, 0x236E20
-data_4C236E20:
-.incbin_range "baserom/kn6000_program.rom", 0x236E20, 0x236E24
-data_4C236E24:
-	.space	16, 0x00
-data_4C236E34:
-	.space	16, 0x00
+
+INVERSION_Table:	# 16 x u8, 0..0; read by INVERSION : `movbu	(a1), d0`
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+AcChordFinderBoxProc_Table:	# 6 x u32, 0..1344831756; read by AcChordFinderBoxProc : `mov	(a1), d0`
+	tab_u32	1344831756, 2, 0, 0, 0, 0
+AcChordFinderBoxProc_L298_Table:	# 2 x u16, 21..38; read by AcChordFinderBoxProc_L298 : `movhu	(d0, a0), d0`; AcChordFinderBoxProc_L2e0 : `movhu	(d0, a0), d0`
+	tab_u16	21, 38
+AcRamEditInvBoxProc_Table:	# 16 x u8, 0..0; read by AcRamEditInvBoxProc : `movbu	(a1), d0`
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+PsCFInvisibleBoxProc_Table:	# 16 x u8, 0..0; read by PsCFInvisibleBoxProc : `movbu	(a1), d0`
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 
 Str_empty_357:	.asciz "@"
 .incbin_range "baserom/kn6000_program.rom", 0x236E46, 0x236EC4
@@ -2179,40 +2183,46 @@ BitmapSleq_Pixels:	# 32 x 14, 8 bit(s) a pixel, rows padded to even bytes: the b
 Str_3d_21:	.asciz "%3d"
 Str_3d_20:	.asciz "%3d"
 Str_s_49:	.asciz "%s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_49
 Str_empty_355:	.asciz " |-|"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_355
 Str_TYPE_18:	.asciz " TYPE              |"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TYPE_18
 Str_97:	.asciz "~97 "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_97
 Str_96_2:	.asciz "~96 "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_96_2
 Str_empty_354:	.asciz "  "
-	.align	4, 0xFF
-data_4C2371C4:
-.incbin_range "baserom/kn6000_program.rom", 0x2371C4, 0x2371E8
-data_4C2371E8:
-	.space	8, 0x00
-data_4C2371F0:
-.incbin_range "baserom/kn6000_program.rom", 0x2371F0, 0x237214
-data_4C237214:
-	.space	8, 0x00
+	.align	4, 0xFF	# pad after Str_empty_354
+
+EffEditGrid_Table:	# 36 x u8, 0..255; read by EffEditGrid : `movbu	(a1), d0`
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
+	tab_u8	0, 255, 255, 255	# [32]
+EffEditGrid_Table_2:	# 2 x u32, 0..0; read by EffEditGrid : `mov	(a0), d1`
+	tab_u32	0, 0
+EffEditGrid2_Table:	# 36 x u8, 0..255; read by EffEditGrid2 : `movbu	(a1), d0`
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
+	tab_u8	0, 255, 255, 255	# [32]
+EffEditGrid2_Table_2:	# 2 x u32, 0..0; read by EffEditGrid2 : `mov	(a0), d0`
+	tab_u32	0, 0
+
 Str_8s:	.asciz "%8s"
 Str_REVERB_8:	.asciz "REVERB"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_REVERB_8
 Str_MULTI_4:	.asciz "MULTI"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MULTI_4
 Str_SOUND_DSP_13:	.asciz "SOUND DSP"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SOUND_DSP_13
 Str_VOCAL_REVERB:	.asciz "VOCAL REVERB"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_VOCAL_REVERB
 Str_EQ:	.asciz "EQ"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_EQ
 Str_CHORUS_9:	.asciz "CHORUS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CHORUS_9
 Str_2d:	.asciz "%2d:"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_2d
 Str_OFF_38:	.asciz "OFF"
 Str_ON_29:	.asciz "ON "
 
@@ -2221,115 +2231,128 @@ ptrs_4C237268:
 	.long	Str_ON_29
 
 Str_NAME_5:	.asciz "NAME: "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NAME_5
 Str_P_7:	.asciz " P"
 .incbin_range "baserom/kn6000_program.rom", 0x23727B, 0x23728C
 Str_P_6:	.asciz " P"
 .incbin_range "baserom/kn6000_program.rom", 0x23728F, 0x2372A0
-data_4C2372A0:
-.incbin_range "baserom/kn6000_program.rom", 0x2372A0, 0x2372AC
-data_4C2372AC:
-	.space	8, 0x00
+
+EffFilterGrid_Table:	# 12 x u8, 0..255; read by EffFilterGrid : `movbu	(a1), d0`
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255
+EffFilterGrid_Table_2:	# 2 x u32, 0..0; read by EffFilterGrid : `mov	(a0), d0`
+	tab_u32	0, 0
+
 Str_ON_28:	.asciz " ON  "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ON_28
 Str_OFF_37:	.asciz " OFF "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OFF_37
 Str_ON_27:	.asciz " ON  "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ON_27
 Str_OFF_36:	.asciz " OFF "
-	.align	4, 0xFF
-data_4C2372D4:
-.incbin_range "baserom/kn6000_program.rom", 0x2372D4, 0x2372E0
-data_4C2372E0:
-	.space	8, 0x00
+	.align	4, 0xFF	# pad after Str_OFF_36
+
+EffAlocGrid_Table:	# 12 x u8, 0..255; read by EffAlocGrid : `movbu	(a1), d0`
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255
+EffAlocGrid_Table_2:	# 2 x u32, 0..0; read by EffAlocGrid : `mov	(a0), d0`
+	tab_u32	0, 0
+
 Str_empty_353:	.asciz "  ----   "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_353
 Str_empty_352:	.asciz "  ----   "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_352
 Str_empty_351:	.asciz "  ----   "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_351
 Str_empty_350:	.asciz "  ----   "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_350
 Str_empty_349:	.asciz "  ----   "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_349
 Str_empty_348:	.asciz "  ----   "
-	.align	4, 0xFF
-data_4C237330:
-.incbin_range "baserom/kn6000_program.rom", 0x237330, 0x23733C
-data_4C23733C:
-.incbin_range "baserom/kn6000_program.rom", 0x23733C, 0x237348
-data_4C237348:
-	.space	8, 0x00
+	.align	4, 0xFF	# pad after Str_empty_348
+
+TEffAloc_L17_Table:	# 3 x u32, 45056..45136; read by TEffAloc_L17 : `mov	(a2), d0`
+	tab_u32	45056, 45120, 45136
+EffDispGrid_Table:	# 12 x u8, 0..255; read by EffDispGrid : `movbu	(a1), d0`
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255
+EffDispGrid_Table_2:	# 2 x u32, 0..0; read by EffDispGrid : `mov	(a0), d0`
+	tab_u32	0, 0
+
 Str_TOTAL_6:	.asciz " TOTAL "
 Str_s_48:	.asciz " %s "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_48
 Str_s_47:	.asciz " %s "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_47
 Str_TOTAL_5:	.asciz " TOTAL "
 Str_s_46:	.asciz " %s "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_46
 Str_OFF_35:	.asciz " OFF "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OFF_35
 Str_ON_26:	.asciz " ON  "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ON_26
 Str_0x_02x_8:	.asciz "0x%02x"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_0x_02x_8
 Str_0x_02x_7:	.asciz "0x%02x"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_0x_02x_7
 Str_1d:	.asciz " %1d "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_1d
 Str_0x_02x_6:	.asciz "0x%02x"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_0x_02x_6
 Str_0x_02x_5:	.asciz "0x%02x"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_0x_02x_5
 Str_OFF_34:	.asciz " OFF "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OFF_34
 Str_ON_25:	.asciz " ON  "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ON_25
 Str_OFF_33:	.asciz " OFF "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OFF_33
 Str_ON_24:	.asciz " ON  "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ON_24
 Str_TOTAL_4:	.asciz " TOTAL "
 Str_s_45:	.asciz " %s "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_45
 Str_empty_347:	.asciz "  -----  "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_347
 Str_empty_346:	.asciz "  ---    "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_346
 Str_OFF_32:	.asciz " OFF "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OFF_32
 Str_ON_23:	.asciz " ON  "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ON_23
 Str_OFF_31:	.asciz " OFF "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OFF_31
 Str_ON_22:	.asciz " ON  "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ON_22
 Str_OFF_30:	.asciz " OFF "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OFF_30
 Str_ON_21:	.asciz " ON  "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ON_21
 Str_empty_345:	.asciz "  ---    "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_345
 Str_0x_02x_4:	.asciz "0x%02x"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_0x_02x_4
 Str_0x_02x_3:	.asciz "0x%02x"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_0x_02x_3
 Str_0x_02x_2:	.asciz "0x%02x"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_0x_02x_2
 Str_0x_02x:	.asciz "0x%02x"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_0x_02x
 Str_d_11:	.asciz " %d "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_d_11
 Str_empty_344:	.asciz " - "
-data_4C237460:
-.incbin_range "baserom/kn6000_program.rom", 0x237460, 0x237474
+
+EffAlocCatch_L25_Table:	# 5 x u32, 45056..45136; read by EffAlocCatch_L25 : `mov	(a2), d0`
+	tab_u32	45056, 45057, 45120, 45136, 45128
+
 Str_CcEv_4:	.asciz "CcEv"
-	.align	4, 0xFF
-data_4C23747C:
-.incbin_range "baserom/kn6000_program.rom", 0x23747C, 0x2374E4
+	.align	4, 0xFF	# pad after Str_CcEv_4
+
+EffDispCatch_L26_Table:	# 26 x u32, 32800..2097247; read by EffDispCatch_L26 : `mov	(a2), d0`
+	tab_u32	45056, 45057, 45072, 45088, 45104, 45120, 45136, 45076	# [0]
+	tab_u32	45092, 45108, 45124, 45140, 45077, 45093, 45109, 45125	# [8]
+	tab_u32	45141, 2097247, 40960, 41216, 41472, 41728, 41984, 32800	# [16]
+	tab_u32	32802, 45128	# [24]
+
 Str_CcEv_3:	.asciz "CcEv"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CcEv_3
 Str_ON_20:	.asciz "ON "
 Str_OFF_29:	.asciz "OFF"
 Str_ON_19:	.asciz "ON "
@@ -2547,7 +2570,7 @@ FnName_HelpShowHideFunc:	.asciz "HelpShowHideFunc"
 FnName_LEDHideOffFunc:	.asciz "LEDHideOffFunc"
 FnName_InitShowHideFunc:	.asciz "InitShowHideFunc"
 FnName_BoardRomTestRunFunc:	.asciz "BoardRomTestRunFunc"
-	.align	4, 0x00
+	.align	4, 0x00	# pad after FnName_BoardRomTestRunFunc
 Field_AcFSWAssGridBox_fixedcol:	.asciz "fixedcol"
 Field_AcFSWAssGridBox_fixedrow:	.asciz "fixedrow"
 Field_AcFSWAssGridBox_func:	.asciz "func"
@@ -2558,7 +2581,7 @@ Field_SineWaveWindow_fontcolor:	.asciz "fontcolor"
 Field_SineWaveWindow_nowswno:	.asciz "nowswno"
 Field_SineWaveWindow_oldswno:	.asciz "oldswno"
 Field_SineWaveWindow_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_SineWaveWindow_end
 Field_PmemModeBox_func:	.asciz "func"
 Field_PmemModeBox_font:	.asciz "font"
 Field_PmemModeBox_fontcolo:	.asciz "fontcolo"
@@ -2571,7 +2594,7 @@ Field_MSAModeBox_fontcolo:	.asciz "fontcolo"
 Field_MSAModeBox_newmsamode:	.asciz "newmsamode"
 Field_MSAModeBox_oldmsamode:	.asciz "oldmsamode"
 Field_MSAModeBox_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_MSAModeBox_end
 Field_AcPmExpFilterGridBox_fixedcol:	.asciz "fixedcol"
 Field_AcPmExpFilterGridBox_fixedrow:	.asciz "fixedrow"
 Field_AcPmExpFilterGridBox_func:	.asciz "func"
@@ -2589,7 +2612,7 @@ Field_AcParaLoadOptGridBox_fixedrow:	.asciz "fixedrow"
 Field_AcParaLoadOptGridBox_func:	.asciz "func"
 Field_AcParaLoadOptGridBox_end:	.asciz ""
 Field_AcItimatuWindow_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_AcItimatuWindow_end
 Field_AcTchSensGridBox_fixedcol:	.asciz "fixedcol"
 Field_AcTchSensGridBox_fixedrow:	.asciz "fixedrow"
 Field_AcTchSensGridBox_func:	.asciz "func"
@@ -2597,14 +2620,14 @@ Field_AcTchSensGridBox_end:	.asciz ""
 Field_AcTestMenuPage_pagemin:	.asciz "pagemin"
 Field_AcTestMenuPage_pagemax:	.asciz "pagemax"
 Field_AcTestMenuPage_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_AcTestMenuPage_end
 Field_InOutTestWindow_func:	.asciz "func"
 Field_InOutTestWindow_font:	.asciz "font"
 Field_InOutTestWindow_fontcolor:	.asciz "fontcolor"
 Field_InOutTestWindow_nowswno:	.asciz "nowswno"
 Field_InOutTestWindow_oldswno:	.asciz "oldswno"
 Field_InOutTestWindow_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_InOutTestWindow_end
 Field_AcIndexWideToggle_index:	.asciz "index"
 Field_AcIndexWideToggle_tag:	.asciz "tag"
 Field_AcIndexWideToggle_func:	.asciz "func"
@@ -2615,7 +2638,7 @@ Field_CusMemModeBox_fontcolo:	.asciz "fontcolo"
 Field_CusMemModeBox_end:	.asciz ""
 Field_PsHelpTblBox_func:	.asciz "func"
 Field_PsHelpTblBox_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_PsHelpTblBox_end
 Field_TestMode8Box_func:	.asciz "func"
 Field_TestMode8Box_font:	.asciz "font"
 Field_TestMode8Box_fontcolo:	.asciz "fontcolo"
@@ -2623,12 +2646,12 @@ Field_TestMode8Box_end:	.asciz ""
 Field_AcWindowPageInit_pagemin:	.asciz "pagemin"
 Field_AcWindowPageInit_pagemax:	.asciz "pagemax"
 Field_AcWindowPageInit_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_AcWindowPageInit_end
 Field_BoardTestWindow_func:	.asciz "func"
 Field_BoardTestWindow_font:	.asciz "font"
 Field_BoardTestWindow_fontcolor:	.asciz "fontcolor"
 Field_BoardTestWindow_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_BoardTestWindow_end
 ClassName_AcFSWAssGridBox:	.asciz "AcFSWAssGridBox"
 ClassSig_AcFSWAssGridBox:	.asciz "XXj"
 ClassName_SineWaveWindow:	.asciz "SineWaveWindow"
@@ -2665,7 +2688,7 @@ ClassName_AcWindowPageInit:	.asciz "AcWindowPageInit"
 ClassSig_AcWindowPageInit:	.asciz "AA"
 ClassName_BoardTestWindow:	.asciz "BoardTestWindow"
 ClassSig_BoardTestWindow:	.asciz "kc^"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after ClassSig_BoardTestWindow
 
 Str_EV_TESTDISK:	.asciz "EV_TESTDISK"
 Str_EV_LSWDATA:	.asciz "EV_LSWDATA"
@@ -2705,7 +2728,7 @@ Str_MT_SetLang:	.asciz "MT_SetLang"
 Str_MT_ChkLang:	.asciz "MT_ChkLang"
 Str_MT_ChkToggleEditSw:	.asciz "MT_ChkToggleEditSw"
 Str_MT_HELPSET:	.asciz "MT_HELPSET"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MT_HELPSET
 
 FnName_AcFSWAssGridBoxProc:	.asciz "AcFSWAssGridBoxProc"
 FnName_SineWaveWindowProc:	.asciz "SineWaveWindowProc"
@@ -2762,9 +2785,9 @@ FnName_TestMode8Func:	.asciz "TestMode8Func"
 FnName_HelpMenuFunc:	.asciz "HelpMenuFunc"
 FnName_MainNoteOff:	.asciz "MainNoteOff"
 FnName_BoardTestFunc:	.asciz "BoardTestFunc"
-	.align	4, 0x00
+	.align	4, 0x00	# pad after FnName_BoardTestFunc
 Str_CONTROL_MENU:	.asciz "CONTROL MENU"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CONTROL_MENU
 
 	TtlScreen	controlmenu, sub=controlmenu_TitleMenu_INITIAL, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, border=BD_Single2, index=0xFFFF, exit=TT_PROGRAM, window=controlmenu_window, title=Str_CONTROL_MENU, icon=147	# title "CONTROL MENU"
 
@@ -2773,22 +2796,22 @@ Str_INITIAL:	.asciz "INITIAL"
 		AcTitleMenu	controlmenu_TitleMenu_INITIAL, super=controlmenu, next=controlmenu_TitleMenu_FOOT_CONTROLLERS, flag=VF_Const, X=8, Y=71, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left2, selected=controlmenu_TitleMenu_INITIAL_selected, str=Str_INITIAL, title=TT_CTINIT, icon=14	# str "INITIAL"
 
 Str_FOOT_CONTROLLERS:	.asciz "FOOT CONTROLLERS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_FOOT_CONTROLLERS
 
 		AcTitleMenu	controlmenu_TitleMenu_FOOT_CONTROLLERS, super=controlmenu, next=controlmenu_TitleMenu_OVERALL_TOUCH_SENSIT, prev=controlmenu_TitleMenu_INITIAL, flag=VF_Const, X=8, Y=157, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left4, selected=controlmenu_TitleMenu_FOOT_CONTROLLERS_selected, str=Str_FOOT_CONTROLLERS, title=TT_CTFSWAS, icon=129	# str "FOOT CONTROLLERS"
 
 Str_OVERALL_TOUCH_SENSITIVITY:	.asciz "OVERALL TOUCH SENSITIVITY"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OVERALL_TOUCH_SENSITIVITY
 
 		AcTitleMenu	controlmenu_TitleMenu_OVERALL_TOUCH_SENSIT, super=controlmenu, next=controlmenu_TitleMenu_MUSIC_STYLE_ARRANGER, prev=controlmenu_TitleMenu_FOOT_CONTROLLERS, flag=VF_Const, X=8, Y=114, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left3, selected=controlmenu_TitleMenu_OVERALL_TOUCH_SENSIT_selected, str=Str_OVERALL_TOUCH_SENSITIVITY, title=TT_CTTOUCH, icon=10	# str "OVERALL TOUCH SENSITIVITY"
 
 Str_MUSIC_STYLE_ARRANGER_MODE:	.asciz "MUSIC STYLE ARRANGER MODE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MUSIC_STYLE_ARRANGER_MODE
 
 		AcTitleMenu	controlmenu_TitleMenu_MUSIC_STYLE_ARRANGER, super=controlmenu, next=controlmenu_TitleMenu_PANEL_MEMORY_MODE, prev=controlmenu_TitleMenu_OVERALL_TOUCH_SENSIT, flag=VF_Const, X=327, Y=71, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right2, selected=controlmenu_TitleMenu_MUSIC_STYLE_ARRANGER_selected, str=Str_MUSIC_STYLE_ARRANGER_MODE, title=TT_MSAMODE, icon=50	# str "MUSIC STYLE ARRANGER MODE"
 
 Str_PANEL_MEMORY_MODE:	.asciz "PANEL MEMORY MODE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PANEL_MEMORY_MODE
 
 		AcTitleMenu	controlmenu_TitleMenu_PANEL_MEMORY_MODE, super=controlmenu, next=controlmenu_TitleMenu_FADE_IN_OUT_SETTING, prev=controlmenu_TitleMenu_MUSIC_STYLE_ARRANGER, flag=VF_Const, X=327, Y=114, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right3, selected=controlmenu_TitleMenu_PANEL_MEMORY_MODE_selected, str=Str_PANEL_MEMORY_MODE, title=TT_CTPMMD, icon=49	# str "PANEL MEMORY MODE"
 
@@ -2824,7 +2847,7 @@ Str_INITIAL_3:	.asciz "INITIAL"
 		IvShowHide	SYSINISURE_ShowHide1, super=SYSINISURE, prev=SYSINISURE_FuncEditSw2, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_InitShowHideFunc
 
 Str_FOOT_CONTROLLERS_2:	.asciz "FOOT CONTROLLERS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_FOOT_CONTROLLERS_2
 
 	TtlScreen	fswcon, sub=fswcon_IndexWideES1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CTMENU, window=fswcon_window, title=Str_FOOT_CONTROLLERS_2, icon=129	# title "FOOT CONTROLLERS"
 		AcIndexWideES	fswcon_IndexWideES1, super=fswcon, next=fswcon_IndexWideES2, flag=VF_Const, X=124, Y=216, W=152, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom4, editsw2=ES_Bottom7, style=14
@@ -2832,25 +2855,25 @@ Str_FOOT_CONTROLLERS_2:	.asciz "FOOT CONTROLLERS"
 
 Str_CONTROLLER_FUNCTION:	.asciz "CONTROLLER|FUNCTION"
 Str_FOOT_SWITCH_1_FOOT_SWITCH_2_FOOT_CONT_SW:	.asciz "|-|FOOT SWITCH 1|FOOT SWITCH 2|FOOT CONT. SW 1|FOOT CONT. SW 2|FOOT CONT. SW 3|FOOT CONT. SW 4|EXPRESS. PEDAL|"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_FOOT_SWITCH_1_FOOT_SWITCH_2_FOOT_CONT_SW
 
 		AcFSWAssGridBox	fswcon_FSWAssGridBox1, super=fswcon, next=fswcon_ShowHide1, prev=fswcon_IndexWideES2, flag=VF_Const, X=76, Y=30, W=481, H=176, color=CL_WallPattern, border=BD_3D_UP2, index=1, font=4, fontcolor=CL_White, row=9, col=2, vertline=1, selrow=fswcon_FSWAssGridBox1_selrow, selcol=fswcon_FSWAssGridBox1_selcol, pcol=fswcon_FSWAssGridBox1_pcol, prow=fswcon_FSWAssGridBox1_prow, crow=fswcon_FSWAssGridBox1_crow, fixedcol=Str_CONTROLLER_FUNCTION, fixedrow=Str_FOOT_SWITCH_1_FOOT_SWITCH_2_FOOT_CONT_SW, func=FN_FSWAssGridCheck	# fixedcol "CONTROLLER|FUNCTION"; fixedrow "|-|FOOT SWITCH 1|FOOT SWITCH 2|FOOT CONT"
 		IvShowHide	fswcon_ShowHide1, super=fswcon, prev=fswcon_FSWAssGridBox1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_FSWAssGridFilter
 
 Str_OVERALL_TOUCH_SENSITIVITY_2:	.asciz "OVERALL TOUCH SENSITIVITY"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OVERALL_TOUCH_SENSITIVITY_2
 
 	TtlScreen	tssen, sub=tssen_ShowHide1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CTMENU, window=tssen_window, title=Str_OVERALL_TOUCH_SENSITIVITY_2, icon=10	# title "OVERALL TOUCH SENSITIVITY"
 		IvShowHide	tssen_ShowHide1, super=tssen, next=tssen_TchSensGridBox1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_TouchFilter
 
 Str_empty_50:	.asciz "      |    "
 Str_VELOCITY_SENSE_ON_OFF_CURVE_THRESHOLD:	.asciz "|-|VELOCITY SENSE|-||-|ON/OFF|CURVE|THRESHOLD|"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_VELOCITY_SENSE_ON_OFF_CURVE_THRESHOLD
 
 		AcTchSensGridBox	tssen_TchSensGridBox1, super=tssen, sub=tssen_Label_INITIAL_TOUCH, next=tssen_IndexWideES1, prev=tssen_ShowHide1, flag=VF_Const, X=112, Y=34, W=430, H=170, color=CL_WallPattern, border=BD_3D_UP2, index=1, font=4, fontcolor=CL_White, row=9, col=2, selrow=tssen_TchSensGridBox1_selrow, selcol=tssen_TchSensGridBox1_selcol, pcol=tssen_TchSensGridBox1_pcol, prow=tssen_TchSensGridBox1_prow, crow=tssen_TchSensGridBox1_crow, fixedcol=Str_empty_50, fixedrow=Str_VELOCITY_SENSE_ON_OFF_CURVE_THRESHOLD, func=FN_TchSensGridCheck	# fixedcol "      |    "; fixedrow "|-|VELOCITY SENSE|-||-|ON/OFF|CURVE|THRE"
 
 Str_INITIAL_TOUCH:	.asciz "INITIAL TOUCH"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_INITIAL_TOUCH
 
 			VwLabel	tssen_Label_INITIAL_TOUCH, super=tssen_TchSensGridBox1, next=tssen_Label_AFTER_TOUCH, flag=VF_Const, X=250, Y=42, W=147, H=19, str=Str_INITIAL_TOUCH, font=4, fontcolor=CL_Yellow	# str "INITIAL TOUCH"
 
@@ -2861,22 +2884,22 @@ Str_AFTER_TOUCH_3:	.asciz "AFTER TOUCH"
 		AcIndexWideES	tssen_IndexWideES2, super=tssen, prev=tssen_IndexWideES1, flag=VF_Const, X=404, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom11, editsw2=ES_Bottom13, style=3
 
 Str_MUSIC_STYLE_ARRANGER_MODE_2:	.asciz "MUSIC STYLE ARRANGER MODE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MUSIC_STYLE_ARRANGER_MODE_2
 
 	TtlScreen	msamode, sub=msamode_MenuBox_RHYTHM, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CTMENU, window=msamode_window, title=Str_MUSIC_STYLE_ARRANGER_MODE_2, icon=50	# title "MUSIC STYLE ARRANGER MODE"
 
 Str_RHYTHM_7:	.asciz "       RHYTHM"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_RHYTHM_7
 
 		VwMenuBox	msamode_MenuBox_RHYTHM, super=msamode, next=msamode_MenuBox_SOUND_RHYTHM, flag=VF_Const, X=8, Y=71, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left2, selected=msamode_MenuBox_RHYTHM_selected, str=Str_RHYTHM_7	# str "       RHYTHM"
 
 Str_SOUND_RHYTHM:	.asciz "    SOUND & RHYTHM"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SOUND_RHYTHM
 
 		VwMenuBox	msamode_MenuBox_SOUND_RHYTHM, super=msamode, next=msamode_MenuBox_PANEL_MEMORY, prev=msamode_MenuBox_RHYTHM, flag=VF_Const, X=8, Y=114, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left3, selected=msamode_MenuBox_SOUND_RHYTHM_selected, str=Str_SOUND_RHYTHM	# str "    SOUND & RHYTHM"
 
 Str_PANEL_MEMORY:	.asciz "     PANEL MEMORY"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PANEL_MEMORY
 
 		VwMenuBox	msamode_MenuBox_PANEL_MEMORY, super=msamode, next=msamode_MSAModeBox1, prev=msamode_MenuBox_SOUND_RHYTHM, flag=VF_Const, X=8, Y=157, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left4, selected=msamode_MenuBox_PANEL_MEMORY_selected, str=Str_PANEL_MEMORY	# str "     PANEL MEMORY"
 		MSAModeBox	msamode_MSAModeBox1, super=msamode, next=msamode_ShowHide1, prev=msamode_MenuBox_PANEL_MEMORY, flag=VF_Const, X=632, Y=233, W=7, H=7, color=CL_WallPattern, index=0xFFFF, func=FN_DefaultFunction, fontcolo=32888, newmsamode=msamode_MSAModeBox1_newmsamode, oldmsamode=msamode_MSAModeBox1_oldmsamode
@@ -2885,23 +2908,23 @@ Str_PANEL_MEMORY:	.asciz "     PANEL MEMORY"
 	Window	MSAsanple, sub=MSAsanple_EditBox_RHYTHM, flag=VF_Const, X=0, Y=28, W=640, H=212, color=CL_WallPattern, index=0xFFFF, parent=MSAsanple_parent, child=MSAsanple_child
 
 Str_RHYTHM_8:	.asciz "  RHYTHM"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_RHYTHM_8
 
 		PsEditBox	MSAsanple_EditBox_RHYTHM, super=MSAsanple, sub=MSAsanple_Frame1, next=MSAsanple_EditBox_SOUND_RHYTHM, flag=VF_Const, X=8, Y=76, W=305, H=34, color=CL_WallPattern, index=0xFFFF, caption=Str_RHYTHM_8, font=4, fontcolor=CL_White, align=1, length=4, editsw=ES_Left2, dial=1, selected=MSAsanple_EditBox_RHYTHM_selected	# caption "  RHYTHM"
 			VwFrame	MSAsanple_Frame1, super=MSAsanple_EditBox_RHYTHM, flag=VF_Const, X=16, Y=78, W=220, H=30, frame=1, width=2, color=CL_Selected
 
 Str_SOUND_RHYTHM_2:	.asciz "  SOUND & RHYTHM"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SOUND_RHYTHM_2
 
 		PsEditBox	MSAsanple_EditBox_SOUND_RHYTHM, super=MSAsanple, next=MSAsanple_EditBox_PANEL_MEMORY, prev=MSAsanple_EditBox_RHYTHM, flag=VF_Const, X=8, Y=118, W=305, H=34, color=CL_WallPattern, index=0xFFFF, caption=Str_SOUND_RHYTHM_2, font=4, fontcolor=CL_White, align=1, length=4, editsw=ES_Left3, dial=1, selected=MSAsanple_EditBox_SOUND_RHYTHM_selected	# caption "  SOUND & RHYTHM"
 
 Str_PANEL_MEMORY_2:	.asciz "  PANEL MEMORY"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PANEL_MEMORY_2
 
 		PsEditBox	MSAsanple_EditBox_PANEL_MEMORY, super=MSAsanple, prev=MSAsanple_EditBox_SOUND_RHYTHM, flag=VF_Const, X=8, Y=160, W=305, H=34, color=CL_WallPattern, index=0xFFFF, caption=Str_PANEL_MEMORY_2, font=4, fontcolor=CL_White, align=1, length=4, editsw=ES_Left4, dial=1, selected=MSAsanple_EditBox_PANEL_MEMORY_selected	# caption "  PANEL MEMORY"
 
 Str_PANEL_MEMORY_MODE_2:	.asciz "PANEL MEMORY MODE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PANEL_MEMORY_MODE_2
 
 	TtlScreen	V29_TtlScreen_PANEL_MEMORY_MODE, sub=V29_PageControl1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CTMENU, window=V29_TtlScreen_PANEL_MEMORY_MODE_window, title=Str_PANEL_MEMORY_MODE_2, icon=49	# title "PANEL MEMORY MODE"
 		IvPageControl	V29_PageControl1, super=V29_TtlScreen_PANEL_MEMORY_MODE, sub=V29_PageControl2, next=V29_WindowPage1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, page=1, window=PMEM_page1_id
@@ -2914,12 +2937,12 @@ Str_PANEL_MEMORY_MODE_2:	.asciz "PANEL MEMORY MODE"
 		PmemModeBox	PMEM_page1_PmemModeBox1, super=PMEM_page1, next=PMEM_page1_MenuBox_NORMAL, prev=PMEM_page1_LanguageText2, flag=VF_Const, X=632, Y=232, W=7, H=7, color=CL_WallPattern, index=0xFFFF, func=FN_DefaultFunction, fontcolo=32888, newpmemmode=PMEM_page1_PmemModeBox1_newpmemmode, oldpmemmode=PMEM_page1_PmemModeBox1_oldpmemmode
 
 Str_NORMAL:	.asciz "  NORMAL"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NORMAL
 
 		VwMenuBox	PMEM_page1_MenuBox_NORMAL, super=PMEM_page1, next=PMEM_page1_MenuBox_EXPAND, prev=PMEM_page1_PmemModeBox1, flag=VF_Const, X=8, Y=28, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left1, selected=PMEM_page1_MenuBox_NORMAL_selected, str=Str_NORMAL	# str "  NORMAL"
 
 Str_EXPAND:	.asciz "  EXPAND"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_EXPAND
 
 		VwMenuBox	PMEM_page1_MenuBox_EXPAND, super=PMEM_page1, next=PMEM_page1_ShowHide1, prev=PMEM_page1_MenuBox_NORMAL, flag=VF_Const, X=8, Y=114, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left3, selected=PMEM_page1_MenuBox_EXPAND_selected, str=Str_EXPAND	# str "  EXPAND"
 		IvShowHide	PMEM_page1_ShowHide1, super=PMEM_page1, prev=PMEM_page1_MenuBox_EXPAND, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_PmemModeFilter
@@ -2928,7 +2951,7 @@ Str_EXPAND:	.asciz "  EXPAND"
 
 Str_FILTER_TYPE_ON_OFF:	.asciz "   FILTER TYPE   |  ON/OFF "
 Str_RHYTHM_SELECTION_TEMPO_APC_MEMORY_SPLIT:	.asciz "|-|RHYTHM SELECTION|TEMPO|APC & MEMORY|SPLIT POINT|TRANSPOSE|FOOT CONT. SETTING|SOUND CONTROLLERS|FADE IN/OUT SETTING|R1/R2 OCTAVE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_RHYTHM_SELECTION_TEMPO_APC_MEMORY_SPLIT
 
 		AcGridBox	PMEM_page2_GridBox1, super=PMEM_page2, sub=PMEM_page2_IndexWideES1, next=PMEM_page2_GridBox2, flag=VF_Const, X=12, Y=32, W=278, H=208, color=CL_WallPattern, border=BD_3D_UP2, index=1, font=1, fontcolor=CL_White, row=12, col=2, vertline=1, selrow=PMEM_page2_GridBox1_selrow, selcol=PMEM_page2_GridBox1_selcol, pcol=PMEM_page2_GridBox1_pcol, prow=PMEM_page2_GridBox1_prow, crow=PMEM_page2_GridBox1_crow, fixedcol=Str_FILTER_TYPE_ON_OFF, fixedrow=Str_RHYTHM_SELECTION_TEMPO_APC_MEMORY_SPLIT, func=FN_PmExpFilter1GridCheck	# fixedcol "   FILTER TYPE   |  ON/OFF "; fixedrow "|-|RHYTHM SELECTION|TEMPO|APC & MEMORY|S"
 			AcIndexWideES	PMEM_page2_IndexWideES1, super=PMEM_page2_GridBox1, next=PMEM_page2_IndexWideES2, flag=VF_Const, X=44, Y=217, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom2, editsw2=ES_Bottom4, style=3
@@ -2936,7 +2959,7 @@ Str_RHYTHM_SELECTION_TEMPO_APC_MEMORY_SPLIT:	.asciz "|-|RHYTHM SELECTION|TEMPO|A
 			VwBox	PMEM_page2_Box1, super=PMEM_page2_GridBox1, sub=PMEM_page2_Label_EXPAND_MODE_FILTER, prev=PMEM_page2_IndexWideES2, flag=VF_Const, X=32, Y=4, W=200, H=24, color=CL_Olive, index=0xFFFF
 
 Str_EXPAND_MODE_FILTER:	.asciz "EXPAND MODE FILTER"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_EXPAND_MODE_FILTER
 
 				VwLabel	PMEM_page2_Label_EXPAND_MODE_FILTER, super=PMEM_page2_Box1, flag=VF_Const, X=32, Y=6, W=202, H=19, str=Str_EXPAND_MODE_FILTER, font=4, fontcolor=CL_White	# str "EXPAND MODE FILTER"
 
@@ -2954,7 +2977,7 @@ Str_FADE_IN_OUT_SETTING_2:	.asciz "FADE IN/OUT SETTING"
 
 Str_empty_51:	.asciz "   |  "
 Str_Time_Time_Auto_reset_Rhythm_Auto_stop_SE:	.asciz " |    Time                 :||    Time                 :|    Auto reset           :|    Rhythm Auto stop     :|    SEQ Auto stop        :"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Time_Time_Auto_reset_Rhythm_Auto_stop_SE
 
 		AcFadeSetGridBox	fadeinout_FadeSetGridBox1, super=fadeinout, sub=fadeinout_Label_FADE_IN, next=fadeinout_IndexWideES1, flag=VF_Const, X=80, Y=34, W=481, H=181, color=CL_WallPattern, border=BD_3D_UP2, index=1, font=4, fontcolor=CL_White, row=7, col=2, selrow=fadeinout_FadeSetGridBox1_selrow, selcol=fadeinout_FadeSetGridBox1_selcol, pcol=fadeinout_FadeSetGridBox1_pcol, prow=fadeinout_FadeSetGridBox1_prow, crow=fadeinout_FadeSetGridBox1_crow, fixedcol=Str_empty_51, fixedrow=Str_Time_Time_Auto_reset_Rhythm_Auto_stop_SE, func=FN_FadeSetGridCheck	# fixedcol "   |  "; fixedrow " |    Time                 :||    Time  "
 
@@ -2963,7 +2986,7 @@ Str_FADE_IN:	.asciz "FADE IN"
 			VwLabel	fadeinout_Label_FADE_IN, super=fadeinout_FadeSetGridBox1, next=fadeinout_Label_FADE_OUT, flag=VF_Const, X=94, Y=42, W=81, H=19, str=Str_FADE_IN, font=4, fontcolor=CL_Yellow	# str "FADE IN"
 
 Str_FADE_OUT:	.asciz "FADE OUT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_FADE_OUT
 
 			VwLabel	fadeinout_Label_FADE_OUT, super=fadeinout_FadeSetGridBox1, prev=fadeinout_Label_FADE_IN, flag=VF_Const, X=94, Y=94, W=92, H=19, str=Str_FADE_OUT, font=4, fontcolor=CL_Yellow	# str "FADE OUT"
 		AcIndexWideES	fadeinout_IndexWideES1, super=fadeinout, next=fadeinout_IndexWideES2, prev=fadeinout_FadeSetGridBox1, flag=VF_Const, X=164, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, editsw2=ES_Bottom7, style=14
@@ -2976,7 +2999,7 @@ Str_DATA_PROTECTION:	.asciz "DATA PROTECTION"
 
 Str_ITEM_ON_OFF:	.asciz "    ITEM    |ON/OFF"
 Str_FOOT_CONTROLLERS_SETTING_TOTAL_EQUALIZER:	.asciz "|-|FOOT CONTROLLERS SETTING|TOTAL EQUALIZER|INITIAL TOUCH SENSITIVITY|AFTER TOUCH SENSITIVITY|MIC SETTING|SOUND CONTROLLER MODE|PANEL MEMORY EXP. FILTER"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_FOOT_CONTROLLERS_SETTING_TOTAL_EQUALIZER
 
 		AcGridBox	writeprt_GridBox1, super=writeprt, next=writeprt_IndexWideES1, flag=VF_Const, X=80, Y=30, W=481, H=181, color=CL_WallPattern, border=BD_3D_UP2, index=1, font=4, fontcolor=CL_White, row=9, col=2, vertline=1, selrow=writeprt_GridBox1_selrow, selcol=writeprt_GridBox1_selcol, pcol=writeprt_GridBox1_pcol, prow=writeprt_GridBox1_prow, crow=writeprt_GridBox1_crow, fixedcol=Str_ITEM_ON_OFF, fixedrow=Str_FOOT_CONTROLLERS_SETTING_TOTAL_EQUALIZER, func=FN_DataProtectGridCheck	# fixedcol "    ITEM    |ON/OFF"; fixedrow "|-|FOOT CONTROLLERS SETTING|TOTAL EQUALI"
 		AcIndexWideES	writeprt_IndexWideES1, super=writeprt, next=writeprt_IndexWideES2, prev=writeprt_GridBox1, flag=VF_Const, X=164, Y=216, W=152, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, editsw2=ES_Bottom8, style=3
@@ -2985,42 +3008,42 @@ Str_FOOT_CONTROLLERS_SETTING_TOTAL_EQUALIZER:	.asciz "|-|FOOT CONTROLLERS SETTIN
 		IvShowHide	writeprt_ShowHide1, super=writeprt, prev=writeprt_FuncEditSw1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_DataPrtHideFunc
 
 Str_CUSTOMIZE_MENU:	.asciz "CUSTOMIZE MENU"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CUSTOMIZE_MENU
 
 	TtlScreen	cusmenu, sub=cusmenu_TitleMenu_HOME_PAGE_SETTING, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, border=BD_Single2, index=0xFFFF, exit=TT_PROGRAM, window=cusmenu_window, title=Str_CUSTOMIZE_MENU, icon=187	# title "CUSTOMIZE MENU"
 
 Str_HOME_PAGE_SETTING_2:	.asciz "HOME PAGE SETTING"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HOME_PAGE_SETTING_2
 
 		AcTitleMenu	cusmenu_TitleMenu_HOME_PAGE_SETTING, super=cusmenu, next=cusmenu_TitleMenu_FAVORITES_SETTING, flag=VF_Const, X=8, Y=28, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left1, selected=cusmenu_TitleMenu_HOME_PAGE_SETTING_selected, str=Str_HOME_PAGE_SETTING_2, title=TT_CTHOMEPAGE, icon=188	# str "HOME PAGE SETTING"
 
 Str_FAVORITES_SETTING_2:	.asciz "FAVORITES SETTING"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_FAVORITES_SETTING_2
 
 		AcTitleMenu	cusmenu_TitleMenu_FAVORITES_SETTING, super=cusmenu, next=cusmenu_TitleMenu_DISPLAY_TIME_OUT, prev=cusmenu_TitleMenu_HOME_PAGE_SETTING, flag=VF_Const, X=8, Y=71, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left2, selected=cusmenu_TitleMenu_FAVORITES_SETTING_selected, str=Str_FAVORITES_SETTING_2, title=TT_CTFAVORITE, icon=189	# str "FAVORITES SETTING"
 
 Str_DISPLAY_TIME_OUT:	.asciz "DISPLAY TIME OUT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_DISPLAY_TIME_OUT
 
 		AcTitleMenu	cusmenu_TitleMenu_DISPLAY_TIME_OUT, super=cusmenu, next=cusmenu_TitleMenu_WALLPAPER_SETTING, prev=cusmenu_TitleMenu_FAVORITES_SETTING, flag=VF_Const, X=8, Y=114, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left3, selected=cusmenu_TitleMenu_DISPLAY_TIME_OUT_selected, str=Str_DISPLAY_TIME_OUT, title=TT_CSDISTIM, icon=148	# str "DISPLAY TIME OUT"
 
 Str_WALLPAPER_SETTING:	.asciz "WALLPAPER SETTING"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_WALLPAPER_SETTING
 
 		AcTitleMenu	cusmenu_TitleMenu_WALLPAPER_SETTING, super=cusmenu, next=cusmenu_TitleMenu_MIDI_SETTING_LOAD_OP, prev=cusmenu_TitleMenu_DISPLAY_TIME_OUT, flag=VF_Const, X=8, Y=157, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left4, selected=cusmenu_TitleMenu_WALLPAPER_SETTING_selected, str=Str_WALLPAPER_SETTING, title=TT_CSWPAPER, icon=133	# str "WALLPAPER SETTING"
 
 Str_MIDI_SETTING_LOAD_OPTION:	.asciz "MIDI SETTING LOAD OPTION"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MIDI_SETTING_LOAD_OPTION
 
 		AcTitleMenu	cusmenu_TitleMenu_MIDI_SETTING_LOAD_OP, super=cusmenu, next=cusmenu_TitleMenu_LANGUAGE_SETTING, prev=cusmenu_TitleMenu_WALLPAPER_SETTING, flag=VF_Const, X=327, Y=28, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right1, selected=cusmenu_TitleMenu_MIDI_SETTING_LOAD_OP_selected, str=Str_MIDI_SETTING_LOAD_OPTION, title=TT_CSMIDISET, icon=136	# str "MIDI SETTING LOAD OPTION"
 
 Str_LANGUAGE_SETTING:	.asciz "LANGUAGE SETTING"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LANGUAGE_SETTING
 
 		AcTitleMenu	cusmenu_TitleMenu_LANGUAGE_SETTING, super=cusmenu, next=cusmenu_TitleMenu_DISK_PREFERENCES, prev=cusmenu_TitleMenu_MIDI_SETTING_LOAD_OP, flag=VF_Const, X=327, Y=114, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right3, selected=cusmenu_TitleMenu_LANGUAGE_SETTING_selected, str=Str_LANGUAGE_SETTING, title=TT_CSLANSET, icon=191	# str "LANGUAGE SETTING"
 
 Str_DISK_PREFERENCES:	.asciz "DISK PREFERENCES"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_DISK_PREFERENCES
 
 		AcTitleMenu	cusmenu_TitleMenu_DISK_PREFERENCES, super=cusmenu, next=cusmenu_TitleMenu_DATA_PROTECTION, prev=cusmenu_TitleMenu_LANGUAGE_SETTING, flag=VF_Const, X=327, Y=157, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right4, selected=cusmenu_TitleMenu_DISK_PREFERENCES_selected, str=Str_DISK_PREFERENCES, title=TT_DKSETUP, icon=151	# str "DISK PREFERENCES"
 
@@ -3030,18 +3053,18 @@ Str_DATA_PROTECTION_2:	.asciz "DATA PROTECTION"
 		IvExitMode	cusmenu_ExitMode1, super=cusmenu, next=cusmenu_TitleMenu_CUSTOM_PANEL_MODE, prev=cusmenu_TitleMenu_DATA_PROTECTION, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, mode=MD_PROGRAM
 
 Str_CUSTOM_PANEL_MODE:	.asciz "CUSTOM PANEL MODE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CUSTOM_PANEL_MODE
 
 		AcTitleMenu	cusmenu_TitleMenu_CUSTOM_PANEL_MODE, super=cusmenu, prev=cusmenu_ExitMode1, flag=VF_Const, X=8, Y=200, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left5, selected=cusmenu_TitleMenu_CUSTOM_PANEL_MODE_selected, str=Str_CUSTOM_PANEL_MODE, title=TT_CSCUSMEM, icon=192	# str "CUSTOM PANEL MODE"
 
 Str_CUSTOM_PANEL_MODE_2:	.asciz "CUSTOM PANEL MODE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CUSTOM_PANEL_MODE_2
 
 	TtlScreen	custommem, sub=custommem_CusMemModeBox1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CUSMENU, window=custommem_window, title=Str_CUSTOM_PANEL_MODE_2, icon=192	# title "CUSTOM PANEL MODE"
 		CusMemModeBox	custommem_CusMemModeBox1, super=custommem, next=custommem_MenuBox_PANEL_MEMORY, flag=VF_Const, X=633, Y=233, W=7, H=7, color=CL_WallPattern, index=0xFFFF, func=FN_DefaultFunction, fontcolo=44
 
 Str_PANEL_MEMORY_3:	.asciz "  PANEL MEMORY"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PANEL_MEMORY_3
 
 		VwMenuBox	custommem_MenuBox_PANEL_MEMORY, super=custommem, next=custommem_MenuBox_ALL_PANEL, prev=custommem_CusMemModeBox1, flag=VF_Const, X=8, Y=71, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left2, selected=custommem_MenuBox_PANEL_MEMORY_selected, str=Str_PANEL_MEMORY_3	# str "  PANEL MEMORY"
 
@@ -3052,23 +3075,23 @@ Str_ALL_PANEL:	.asciz "  ALL PANEL"
 		IvShowHide	custommem_ShowHide1, super=custommem, prev=custommem_FuncEditSw1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_CusPanModeHideFunc
 
 Str_DISPLAY_TIME_OUT_2:	.asciz "DISPLAY TIME OUT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_DISPLAY_TIME_OUT_2
 
 	TtlScreen	distim, sub=distim_DispTimeSetGridBox1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CUSMENU, window=distim_window, title=Str_DISPLAY_TIME_OUT_2, icon=148	# title "DISPLAY TIME OUT"
 
 Str_empty_53:	.asciz "  | "
 Str_SAVE_REMINDER_COMPLETED_MESSAGE_ARE_YOU:	.asciz "|-|SAVE REMINDER|'COMPLETED' MESSAGE|ARE YOU SURE?|ERROR MESSAGE|SOUND/RHYTHM SELECT|EASY SETTING"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SAVE_REMINDER_COMPLETED_MESSAGE_ARE_YOU
 
 		AcDispTimeSetGridBox	distim_DispTimeSetGridBox1, super=distim, sub=distim_Label_DISPLAY_TYPE, next=distim_IndexWideES1, flag=VF_Const, X=80, Y=30, W=481, H=181, color=CL_WallPattern, border=BD_3D_UP2, index=1, font=4, fontcolor=CL_White, row=8, col=2, vertline=1, selrow=distim_DispTimeSetGridBox1_selrow, selcol=distim_DispTimeSetGridBox1_selcol, pcol=distim_DispTimeSetGridBox1_pcol, prow=distim_DispTimeSetGridBox1_prow, crow=distim_DispTimeSetGridBox1_crow, fixedcol=Str_empty_53, fixedrow=Str_SAVE_REMINDER_COMPLETED_MESSAGE_ARE_YOU, func=FN_DispTimeSetGridCheck	# fixedcol "  | "; fixedrow "|-|SAVE REMINDER|'COMPLETED' MESSAGE|ARE"
 
 Str_DISPLAY_TYPE:	.asciz "DISPLAY TYPE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_DISPLAY_TYPE
 
 			VwLabel	distim_Label_DISPLAY_TYPE, super=distim_DispTimeSetGridBox1, next=distim_Label_TIME, flag=VF_Const, X=170, Y=38, W=136, H=19, str=Str_DISPLAY_TYPE, font=4, fontcolor=CL_Yellow	# str "DISPLAY TYPE"
 
 Str_TIME_7:	.asciz "TIME"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TIME_7
 
 			VwLabel	distim_Label_TIME, super=distim_DispTimeSetGridBox1, prev=distim_Label_DISPLAY_TYPE, flag=VF_Const, X=450, Y=38, W=48, H=19, str=Str_TIME_7, font=4, fontcolor=CL_Yellow	# str "TIME"
 		AcIndexWideES	distim_IndexWideES1, super=distim, next=distim_IndexWideES2, prev=distim_DispTimeSetGridBox1, flag=VF_Const, X=164, Y=216, W=152, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, editsw2=ES_Bottom8, style=14
@@ -3076,7 +3099,7 @@ Str_TIME_7:	.asciz "TIME"
 		AcFuncEditSw	distim_FuncEditSw1, super=distim, prev=distim_IndexWideES2, flag=VF_Const, X=593, Y=166, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_DispTimeSetOKFunc
 
 Str_WALLPAPER_SETTING_2:	.asciz "WALLPAPER SETTING"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_WALLPAPER_SETTING_2
 
 	TtlScreen	wallpaper, sub=wallpaper_RamEditBox_PRESET, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CUSMENU, window=wallpaper_window, title=Str_WALLPAPER_SETTING_2, icon=133	# title "WALLPAPER SETTING"
 
@@ -3089,12 +3112,12 @@ Str_PRESET:	.asciz " PRESET"
 		AcFuncEditSw	wallpaper_FuncEditSw1, super=wallpaper, next=wallpaper_Label_PRESET, prev=wallpaper_IndexEditSw2, flag=VF_Const, X=593, Y=165, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_WallSetOKFunc
 
 Str_PRESET_2:	.asciz "PRESET"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PRESET_2
 
 		VwLabel	wallpaper_Label_PRESET, super=wallpaper, next=wallpaper_Label_VALUE, prev=wallpaper_FuncEditSw1, flag=VF_Const, X=586, Y=106, W=52, H=19, str=Str_PRESET_2, fontcolor=CL_White	# str "PRESET"
 
 Str_VALUE:	.asciz "VALUE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_VALUE
 
 		VwLabel	wallpaper_Label_VALUE, super=wallpaper, next=wallpaper_RamEditBox1, prev=wallpaper_Label_PRESET, flag=VF_Const, X=198, Y=202, W=44, H=19, str=Str_VALUE, font=1, fontcolor=CL_White	# str "VALUE"
 
@@ -3107,7 +3130,7 @@ Str_SOUND_RHYTHM_SELECT:	.asciz "SOUND&RHYTHM SELECT"
 			VwLabel	wallpaper_Label_SOUND_RHYTHM_SELECT, super=wallpaper_RamEditBox1, next=wallpaper_Label_HOME_PAGE, flag=VF_Const, X=9, Y=86, W=156, H=19, str=Str_SOUND_RHYTHM_SELECT, fontcolor=CL_White	# str "SOUND&RHYTHM SELECT"
 
 Str_HOME_PAGE:	.asciz "HOME PAGE/"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HOME_PAGE
 
 			VwLabel	wallpaper_Label_HOME_PAGE, super=wallpaper_RamEditBox1, prev=wallpaper_Label_SOUND_RHYTHM_SELECT, flag=VF_Const, X=9, Y=74, W=84, H=19, str=Str_HOME_PAGE, fontcolor=CL_White	# str "HOME PAGE/"
 
@@ -3122,7 +3145,7 @@ Str_OTHER:	.asciz "OTHER         :"
 		IvShowHide	wallpaper_ShowHide1, super=wallpaper, prev=wallpaper_WallPreview1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_WallSetHideFunc
 
 Str_MIDI_SETTING_LOAD_OPTION_2:	.asciz "MIDI SETTING LOAD OPTION"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MIDI_SETTING_LOAD_OPTION_2
 
 	TtlScreen	MIDIset, sub=MIDIset_ParaLoadOptGridBox1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CUSMENU, window=MIDIset_window, title=Str_MIDI_SETTING_LOAD_OPTION_2, icon=136	# title "MIDI SETTING LOAD OPTION"
 
@@ -3132,7 +3155,7 @@ Str_From_Registration_file_From_Sequencer_so:	.asciz " |-|   From Registration f
 		AcParaLoadOptGridBox	MIDIset_ParaLoadOptGridBox1, super=MIDIset, sub=MIDIset_Label_Load_MIDI_Parameters, next=MIDIset_IndexWideES1, flag=VF_Const, X=92, Y=34, W=480, H=181, color=CL_WallPattern, border=BD_3D_UP2, index=1, font=4, fontcolor=CL_White, row=9, col=2, selrow=MIDIset_ParaLoadOptGridBox1_selrow, selcol=MIDIset_ParaLoadOptGridBox1_selcol, pcol=MIDIset_ParaLoadOptGridBox1_pcol, prow=MIDIset_ParaLoadOptGridBox1_prow, crow=MIDIset_ParaLoadOptGridBox1_crow, fixedcol=Str_empty_55, fixedrow=Str_From_Registration_file_From_Sequencer_so, func=FN_ParaLoadOptGridCheck	# fixedcol "   | "; fixedrow " |-|   From Registration file    :|   Fr"
 
 Str_Load_MIDI_Parameters:	.asciz "Load MIDI Parameters?"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Load_MIDI_Parameters
 
 			VwLabel	MIDIset_Label_Load_MIDI_Parameters, super=MIDIset_ParaLoadOptGridBox1, next=MIDIset_Label_Use_these_setting_wh, flag=VF_Const, X=186, Y=42, W=235, H=19, str=Str_Load_MIDI_Parameters, font=4, fontcolor=CL_Yellow	# str "Load MIDI Parameters?"
 
@@ -3144,7 +3167,7 @@ Str_Use_these_setting_when:	.asciz "Use these setting when:"
 		AcFuncEditSw	MIDIset_FuncEditSw1, super=MIDIset, prev=MIDIset_IndexWideES2, flag=VF_Const, X=593, Y=165, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_ParaLoadOptOKFunc
 
 Str_LANGUAGE_SETTING_2:	.asciz "LANGUAGE SETTING"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LANGUAGE_SETTING_2
 
 	TtlScreen	langset, sub=LangMenu, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CUSMENU, window=langset_window, title=Str_LANGUAGE_SETTING_2, icon=191	# title "LANGUAGE SETTING"
 		AcLanguageText	LangMenu, super=langset, next=langset_FuncEditSw1, flag=VF_Const, X=76, Y=82, W=500, H=60, color=CL_WallPattern, index=0xFFFF, font=9, fontcolor=CL_Yellow, alignment=1, lines=3, func=FN_LangSetMenuCheck
@@ -3157,13 +3180,13 @@ Str_ENGLISH_2:	.asciz "ENGLISH"
 
 Str_GERMAN:	.asciz "GERMAN"
 Str_GERMAN_2:	.asciz "GERMAN"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_GERMAN_2
 
 		AcIndexWideToggle	langset_IndexWideToggle_GERMAN, super=langset, next=langset_IndexWideToggle_FRENCH, prev=langset_IndexWideToggle_ENGLISH, flag=VF_Const, X=164, Y=216, W=152, H=23, font=4, stron=Str_GERMAN, stroff=Str_GERMAN_2, onoff=langset_IndexWideToggle_GERMAN_onoff, editsw=ES_Bottom5, editsw2=ES_Bottom8, tag=1, func=FN_AcIndexWideToggleFunc	# stron "GERMAN"; stroff "GERMAN"
 
 Str_FRENCH:	.asciz "FRENCH"
 Str_FRENCH_2:	.asciz "FRENCH"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_FRENCH_2
 
 		AcIndexWideToggle	langset_IndexWideToggle_FRENCH, super=langset, next=langset_IndexWideToggle_SPANISH, prev=langset_IndexWideToggle_GERMAN, flag=VF_Const, X=324, Y=216, W=152, H=23, font=4, stron=Str_FRENCH, stroff=Str_FRENCH_2, onoff=langset_IndexWideToggle_FRENCH_onoff, editsw=ES_Bottom9, editsw2=ES_Bottom12, tag=2, func=FN_AcIndexWideToggleFunc	# stron "FRENCH"; stroff "FRENCH"
 
@@ -3182,13 +3205,13 @@ Str_ENGLISH_4:	.asciz "ENGLISH"
 
 Str_GERMAN_3:	.asciz "GERMAN"
 Str_GERMAN_4:	.asciz "GERMAN"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_GERMAN_4
 
 		AcIndexWideToggle	LangSetWin_IndexWideToggle_GERMAN, super=LangSetWin, next=LangSetWin_IndexWideToggle_FRENCH, prev=LangSetWin_IndexWideToggle_ENGLISH, flag=VF_Const, X=164, Y=216, W=152, H=23, font=4, stron=Str_GERMAN_3, stroff=Str_GERMAN_4, onoff=LangSetWin_IndexWideToggle_GERMAN_onoff, editsw=ES_Bottom5, editsw2=ES_Bottom8, tag=1, func=FN_AcIndexWideToggleFunc	# stron "GERMAN"; stroff "GERMAN"
 
 Str_FRENCH_3:	.asciz "FRENCH"
 Str_FRENCH_4:	.asciz "FRENCH"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_FRENCH_4
 
 		AcIndexWideToggle	LangSetWin_IndexWideToggle_FRENCH, super=LangSetWin, next=LangSetWin_IndexWideToggle_SPANISH, prev=LangSetWin_IndexWideToggle_GERMAN, flag=VF_Const, X=324, Y=216, W=152, H=23, font=4, stron=Str_FRENCH_3, stroff=Str_FRENCH_4, onoff=LangSetWin_IndexWideToggle_FRENCH_onoff, editsw=ES_Bottom9, editsw2=ES_Bottom12, tag=2, func=FN_AcIndexWideToggleFunc	# stron "FRENCH"; stroff "FRENCH"
 
@@ -3204,13 +3227,13 @@ Str_DISK_PREFERENCE:	.asciz "DISK PREFERENCE"
 	IvScreen	VF1_Screen1, sub=VF1_Label_HELP_FUNCTION, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=VF1_Screen1_window
 
 Str_HELP_FUNCTION:	.asciz "HELP FUNCTION"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HELP_FUNCTION
 
 		VwLabel	VF1_Label_HELP_FUNCTION, super=VF1_Screen1, next=VF1_Icon1, flag=VF_Const, X=213, Y=6, W=212, H=31, str=Str_HELP_FUNCTION, font=11, fontcolor=CL_White	# str "HELP FUNCTION"
 		VwIcon	VF1_Icon1, super=VF1_Screen1, prev=VF1_Label_HELP_FUNCTION, flag=VF_Const, X=180, Y=8, W=28, H=28, icon=91
 
 Str_HELP_FUNCTION_2:	.asciz "HELP FUNCTION"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HELP_FUNCTION_2
 
 	TtlScreen	HelpFunction, sub=HelpFunction_ExitMode1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_NORMAL, window=HelpFunction_window, title=Str_HELP_FUNCTION_2, icon=91	# title "HELP FUNCTION"
 		IvExitMode	HelpFunction_ExitMode1, super=HelpFunction, sub=HelpFunction_ShowHide1, next=HelpMenu, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, mode=MD_NORMAL
@@ -3224,13 +3247,13 @@ Str_ENGLISH_6:	.asciz "ENGLISH"
 
 Str_GERMAN_5:	.asciz "GERMAN"
 Str_GERMAN_6:	.asciz "GERMAN"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_GERMAN_6
 
 		AcIndexWideToggle	HelpFunction_IndexWideToggle_GERMAN, super=HelpFunction, next=HelpFunction_IndexWideToggle_FRENCH, prev=HelpFunction_IndexWideToggle_ENGLISH, flag=VF_Const, X=164, Y=216, W=152, H=23, font=4, stron=Str_GERMAN_5, stroff=Str_GERMAN_6, onoff=HelpFunction_IndexWideToggle_GERMAN_onoff, editsw=ES_Bottom5, editsw2=ES_Bottom8, tag=1, func=FN_AcIndexWideToggleFunc	# stron "GERMAN"; stroff "GERMAN"
 
 Str_FRENCH_5:	.asciz "FRENCH"
 Str_FRENCH_6:	.asciz "FRENCH"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_FRENCH_6
 
 		AcIndexWideToggle	HelpFunction_IndexWideToggle_FRENCH, super=HelpFunction, next=HelpFunction_IndexWideToggle_SPANISH, prev=HelpFunction_IndexWideToggle_GERMAN, flag=VF_Const, X=324, Y=216, W=152, H=23, font=4, stron=Str_FRENCH_5, stroff=Str_FRENCH_6, onoff=HelpFunction_IndexWideToggle_FRENCH_onoff, editsw=ES_Bottom9, editsw2=ES_Bottom12, tag=2, func=FN_AcIndexWideToggleFunc	# stron "FRENCH"; stroff "FRENCH"
 
@@ -3260,14 +3283,14 @@ Str_SPANISH_6:	.asciz "SPANISH"
 		IvPageControl	HelpPageWin4_PageControl4, super=HelpPageWin4, prev=HelpPageWin4_PageControl3, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, page=4, window=HelpLang4P4_id
 
 Str_HELP:	.asciz "HELP :"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HELP
 
 	TtlScreen	helpmenu, sub=helpmenu_HelpTblBox1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_HELP, window=helpmenu_window, title=Str_HELP, icon=91	# title "HELP :"
 		PsHelpTblBox	helpmenu_HelpTblBox1, super=helpmenu, next=helpmenu_ShowHide1, flag=VF_Const, X=109, Y=1, W=330, H=26, color=CL_Olive, index=0xFFFF, font=4, fontcolor=CL_Yellow, func=FN_HelpLangMenuCheck
 		IvShowHide	helpmenu_ShowHide1, super=helpmenu, prev=helpmenu_HelpTblBox1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_LangSetHideFunc
 
 Str_HELP_2:	.asciz "HELP :"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HELP_2
 
 	TtlScreen	helpmenu2, sub=helpmenu2_HelpTblBox1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_HELP, window=helpmenu2_window, title=Str_HELP_2, icon=91	# title "HELP :"
 		PsHelpTblBox	helpmenu2_HelpTblBox1, super=helpmenu2, next=helpmenu2_WindowPageInit1, flag=VF_Const, X=114, Y=1, W=320, H=26, color=CL_Olive, index=0xFFFF, font=4, fontcolor=CL_Yellow, func=FN_HelpLangMenuCheck
@@ -3277,7 +3300,7 @@ Str_HELP_2:	.asciz "HELP :"
 			IvShowHide	helpmenu2_ShowHide1, super=helpmenu2_PageControl2, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_LangSetHideFunc
 
 Str_HELP_3:	.asciz "HELP :"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HELP_3
 
 	TtlScreen	helpmenu3, sub=helpmenu3_PageControl1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_HELP, window=helpmenu3_window, title=Str_HELP_3, icon=91	# title "HELP :"
 		IvPageControl	helpmenu3_PageControl1, super=helpmenu3, next=helpmenu3_PageControl2, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, page=1, window=HelpLang4P1_id
@@ -3288,17 +3311,17 @@ Str_HELP_3:	.asciz "HELP :"
 		IvShowHide	helpmenu3_ShowHide1, super=helpmenu3, prev=helpmenu3_WindowPageInit1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_LangSetHideFunc
 
 Str_HELP_4:	.asciz "HELP :"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HELP_4
 
 	TtlScreen	helpPM, sub=helpPM_ScreenMenu_SOUND, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_HELP, window=helpPM_window, title=Str_HELP_4, icon=91	# title "HELP :"
 
 Str_SOUND_7:	.asciz "SOUND"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SOUND_7
 
 		AcScreenMenu	helpPM_ScreenMenu_SOUND, super=helpPM, next=helpPM_ScreenMenu_EFFECT, flag=VF_Const, X=8, Y=28, W=100, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left1, selected=helpPM_ScreenMenu_SOUND_selected, str=Str_SOUND_7, screen=0xFFFFFFFF	# str "SOUND"
 
 Str_EFFECT_7:	.asciz "EFFECT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_EFFECT_7
 
 		AcScreenMenu	helpPM_ScreenMenu_EFFECT, super=helpPM, next=helpPM_ScreenMenu_CONTROL, prev=helpPM_ScreenMenu_SOUND, flag=VF_Const, X=8, Y=71, W=100, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left2, selected=helpPM_ScreenMenu_EFFECT_selected, str=Str_EFFECT_7, screen=0xFFFFFFFF	# str "EFFECT"
 
@@ -3307,63 +3330,63 @@ Str_CONTROL_2:	.asciz "CONTROL"
 		AcScreenMenu	helpPM_ScreenMenu_CONTROL, super=helpPM, next=helpPM_ScreenMenu_MIDI, prev=helpPM_ScreenMenu_EFFECT, flag=VF_Const, X=8, Y=114, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left3, selected=helpPM_ScreenMenu_CONTROL_selected, str=Str_CONTROL_2, screen=0xFFFFFFFF	# str "CONTROL"
 
 Str_MIDI_6:	.asciz "MIDI"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MIDI_6
 
 		AcScreenMenu	helpPM_ScreenMenu_MIDI, super=helpPM, next=helpPM_ScreenMenu_CUSTOMIZE, prev=helpPM_ScreenMenu_CONTROL, flag=VF_Const, X=8, Y=157, W=100, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left4, selected=helpPM_ScreenMenu_MIDI_selected, str=Str_MIDI_6, screen=0xFFFFFFFF	# str "MIDI"
 
 Str_CUSTOMIZE_3:	.asciz "CUSTOMIZE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CUSTOMIZE_3
 
 		AcScreenMenu	helpPM_ScreenMenu_CUSTOMIZE, super=helpPM, next=helpPM_ScreenMenu_SOUND_EDIT, prev=helpPM_ScreenMenu_MIDI, flag=VF_Const, X=8, Y=200, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left5, selected=helpPM_ScreenMenu_CUSTOMIZE_selected, str=Str_CUSTOMIZE_3, screen=0xFFFFFFFF	# str "CUSTOMIZE"
 
 Str_SOUND_EDIT_2:	.asciz "SOUND EDIT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SOUND_EDIT_2
 
 		AcScreenMenu	helpPM_ScreenMenu_SOUND_EDIT, super=helpPM, next=helpPM_ScreenMenu_SEQUENCER, prev=helpPM_ScreenMenu_CUSTOMIZE, flag=VF_Const, X=327, Y=28, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, align=2, editsw=ES_Right1, selected=helpPM_ScreenMenu_SOUND_EDIT_selected, str=Str_SOUND_EDIT_2, screen=0xFFFFFFFF	# str "SOUND EDIT"
 
 Str_SEQUENCER_7:	.asciz "SEQUENCER"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SEQUENCER_7
 
 		AcScreenMenu	helpPM_ScreenMenu_SEQUENCER, super=helpPM, next=helpPM_ScreenMenu_COMPOSER, prev=helpPM_ScreenMenu_SOUND_EDIT, flag=VF_Const, X=327, Y=71, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, align=2, editsw=ES_Right2, selected=helpPM_ScreenMenu_SEQUENCER_selected, str=Str_SEQUENCER_7, screen=0xFFFFFFFF	# str "SEQUENCER"
 
 Str_COMPOSER_5:	.asciz "COMPOSER"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_COMPOSER_5
 
 		AcScreenMenu	helpPM_ScreenMenu_COMPOSER, super=helpPM, next=helpPM_ScreenMenu_PERFORMANCE_PADS, prev=helpPM_ScreenMenu_SEQUENCER, flag=VF_Const, X=327, Y=114, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, align=2, editsw=ES_Right3, selected=helpPM_ScreenMenu_COMPOSER_selected, str=Str_COMPOSER_5, screen=0xFFFFFFFF	# str "COMPOSER"
 
 Str_PERFORMANCE_PADS_4:	.asciz "PERFORMANCE PADS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PERFORMANCE_PADS_4
 
 		AcScreenMenu	helpPM_ScreenMenu_PERFORMANCE_PADS, super=helpPM, next=helpPM_Label_PROGRAM_MENU, prev=helpPM_ScreenMenu_COMPOSER, flag=VF_Const, X=327, Y=157, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, align=2, editsw=ES_Right4, selected=helpPM_ScreenMenu_PERFORMANCE_PADS_selected, str=Str_PERFORMANCE_PADS_4, screen=0xFFFFFFFF	# str "PERFORMANCE PADS"
 
 Str_PROGRAM_MENU:	.asciz "PROGRAM MENU"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PROGRAM_MENU
 
 		VwLabel	helpPM_Label_PROGRAM_MENU, super=helpPM, next=helpPM_ShowHide1, prev=helpPM_ScreenMenu_PERFORMANCE_PADS, flag=VF_Const, X=113, Y=6, W=136, H=19, str=Str_PROGRAM_MENU, font=4, fontcolor=CL_Yellow	# str "PROGRAM MENU"
 		IvShowHide	helpPM_ShowHide1, super=helpPM, prev=helpPM_Label_PROGRAM_MENU, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_PrgMenuSelect
 
 Str_HELP_5:	.asciz "HELP :"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HELP_5
 
 	TtlScreen	helpAPCMD, sub=helpAPCMD_ScreenMenu_AUTO_PLAY_CHORD_MODE, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_HELP, window=helpAPCMD_window, title=Str_HELP_5, icon=91	# title "HELP :"
 
 Str_AUTO_PLAY_CHORD_MODE:	.asciz "AUTO PLAY CHORD MODE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_AUTO_PLAY_CHORD_MODE
 
 		AcScreenMenu	helpAPCMD_ScreenMenu_AUTO_PLAY_CHORD_MODE, super=helpAPCMD, next=helpAPCMD_ScreenMenu_LEFT_HOLD, flag=VF_Const, X=8, Y=71, W=330, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left2, selected=helpAPCMD_ScreenMenu_AUTO_PLAY_CHORD_MODE_selected, str=Str_AUTO_PLAY_CHORD_MODE, screen=0xFFFFFFFF	# str "AUTO PLAY CHORD MODE"
 
 Str_LEFT_HOLD:	.asciz "LEFT HOLD"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LEFT_HOLD
 
 		AcScreenMenu	helpAPCMD_ScreenMenu_LEFT_HOLD, super=helpAPCMD, next=helpAPCMD_ScreenMenu_CHORD_FINDER, prev=helpAPCMD_ScreenMenu_AUTO_PLAY_CHORD_MODE, flag=VF_Const, X=327, Y=71, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right2, selected=helpAPCMD_ScreenMenu_LEFT_HOLD_selected, str=Str_LEFT_HOLD, screen=0xFFFFFFFF	# str "LEFT HOLD"
 
 Str_CHORD_FINDER_3:	.asciz "CHORD FINDER"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CHORD_FINDER_3
 
 		AcScreenMenu	helpAPCMD_ScreenMenu_CHORD_FINDER, super=helpAPCMD, next=helpAPCMD_Label_APC_CHORD_FINDER, prev=helpAPCMD_ScreenMenu_LEFT_HOLD, flag=VF_Const, X=327, Y=157, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, align=2, editsw=ES_Right4, selected=helpAPCMD_ScreenMenu_CHORD_FINDER_selected, str=Str_CHORD_FINDER_3, screen=0xFFFFFFFF	# str "CHORD FINDER"
 
 Str_APC_CHORD_FINDER:	.asciz "APC/CHORD FINDER"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_APC_CHORD_FINDER
 
 		VwLabel	helpAPCMD_Label_APC_CHORD_FINDER, super=helpAPCMD, next=helpAPCMD_ShowHide1, prev=helpAPCMD_ScreenMenu_CHORD_FINDER, flag=VF_Const, X=113, Y=6, W=180, H=19, str=Str_APC_CHORD_FINDER, font=4, fontcolor=CL_Yellow	# str "APC/CHORD FINDER"
 		IvShowHide	helpAPCMD_ShowHide1, super=helpAPCMD, next=helpAPCMD_ScreenMenu_COUNT_INTRO, prev=helpAPCMD_Label_APC_CHORD_FINDER, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_APCModeSelect
@@ -3373,7 +3396,7 @@ Str_COUNT_INTRO:	.asciz "COUNT INTRO"
 		AcScreenMenu	helpAPCMD_ScreenMenu_COUNT_INTRO, super=helpAPCMD, prev=helpAPCMD_ShowHide1, flag=VF_Const, X=8, Y=157, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left4, selected=helpAPCMD_ScreenMenu_COUNT_INTRO_selected, str=Str_COUNT_INTRO, screen=0xFFFFFFFF	# str "COUNT INTRO"
 
 Str_HELP_6:	.asciz "HELP :"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HELP_6
 
 	TtlScreen	HelpMenuPRG, sub=HelpMenuPRG_ExitScreen1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_HELPMENU, window=HelpMenuPRG_window, title=Str_HELP_6, icon=91	# title "HELP :"
 		IvExitScreen	HelpMenuPRG_ExitScreen1, super=HelpMenuPRG, next=HelpMenuPRG_HelpTblBox1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, screen=helpPM_id
@@ -3381,7 +3404,7 @@ Str_HELP_6:	.asciz "HELP :"
 		IvShowHide	HelpMenuPRG_ShowHide1, super=HelpMenuPRG, prev=HelpMenuPRG_HelpTblBox1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_LangSetHideFunc
 
 Str_HELP_7:	.asciz "HELP :"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HELP_7
 
 	TtlScreen	HelpMenuPRG2, sub=HelpMenuPRG2_PageControl1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_HELP, window=HelpMenuPRG2_window, title=Str_HELP_7, icon=91	# title "HELP :"
 		IvPageControl	HelpMenuPRG2_PageControl1, super=HelpMenuPRG2, sub=HelpMenuPRG2_PageControl2, next=HelpMenuPRG2_ExitScreen1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, page=1, window=HelpLang4P1_id
@@ -3392,7 +3415,7 @@ Str_HELP_7:	.asciz "HELP :"
 		IvShowHide	HelpMenuPRG2_ShowHide1, super=HelpMenuPRG2, prev=HelpMenuPRG2_WindowPageInit1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_LangSetHideFunc
 
 Str_HELP_8:	.asciz "HELP :"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HELP_8
 
 	TtlScreen	HelpMenuPRG3, sub=HelpMenuPRG3_PageControl1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_HELP, window=HelpMenuPRG3_window, title=Str_HELP_8, icon=91	# title "HELP :"
 		IvPageControl	HelpMenuPRG3_PageControl1, super=HelpMenuPRG3, next=HelpMenuPRG3_PageControl2, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, page=1, window=HelpLang4P1_id
@@ -3404,14 +3427,14 @@ Str_HELP_8:	.asciz "HELP :"
 		IvShowHide	HelpMenuPRG3_ShowHide1, super=HelpMenuPRG3, prev=HelpMenuPRG3_WindowPageInit1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_LangSetHideFunc
 
 Str_HELP_9:	.asciz "HELP :"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HELP_9
 
 	TtlScreen	HelpMenuAPC, sub=HelpMenuAPC_ExitScreen1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_HELPMENU, window=HelpMenuAPC_window, title=Str_HELP_9, icon=91	# title "HELP :"
 		IvExitScreen	HelpMenuAPC_ExitScreen1, super=HelpMenuAPC, next=HelpMenuAPC_HelpTblBox1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, screen=helpAPCMD_id
 		PsHelpTblBox	HelpMenuAPC_HelpTblBox1, super=HelpMenuAPC, prev=HelpMenuAPC_ExitScreen1, flag=VF_Const, X=109, Y=1, W=330, H=26, color=CL_Olive, index=0xFFFF, font=4, fontcolor=CL_Yellow, func=FN_HelpLangMenuCheck
 
 Str_HELP_10:	.asciz "HELP :"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HELP_10
 
 	TtlScreen	HelpMenuAPC2, sub=HelpMenuAPC2_ExitScreen1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_HELPMENU, window=HelpMenuAPC2_window, title=Str_HELP_10, icon=91	# title "HELP :"
 		IvExitScreen	HelpMenuAPC2_ExitScreen1, super=HelpMenuAPC2, next=HelpMenuAPC2_PageControl1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, screen=helpAPCMD_id
@@ -3421,7 +3444,7 @@ Str_HELP_10:	.asciz "HELP :"
 		AcWindowPageInit	HelpMenuAPC2_WindowPageInit1, super=HelpMenuAPC2, prev=HelpMenuAPC2_HelpTblBox1, flag=VF_Const, X=564, Y=5, W=71, H=18, color=CL_PageBack, border=BD_3D_DOWN1, index=0xFFFF, page=HelpMenuAPC2_WindowPageInit1_page, pagemin=1, pagemax=2
 
 Str_HELP_11:	.asciz "HELP :"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HELP_11
 
 	TtlScreen	HelpMenuAPC3, sub=HelpMenuAPC3_ExitScreen1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_HELPMENU, window=HelpMenuAPC3_window, title=Str_HELP_11, icon=91	# title "HELP :"
 		IvExitScreen	HelpMenuAPC3_ExitScreen1, super=HelpMenuAPC3, next=HelpMenuAPC3_PageControl1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, screen=helpAPCMD_id
@@ -3432,7 +3455,7 @@ Str_HELP_11:	.asciz "HELP :"
 		AcWindowPageInit	HelpMenuAPC3_WindowPageInit1, super=HelpMenuAPC3, prev=HelpMenuAPC3_HelpTblBox1, flag=VF_Const, X=564, Y=5, W=71, H=18, color=CL_PageBack, border=BD_3D_DOWN1, index=0xFFFF, page=HelpMenuAPC3_WindowPageInit1_page, pagemin=1, pagemax=3
 
 Str_HELP_12:	.asciz "HELP :"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HELP_12
 
 	TtlScreen	helpmenu4, sub=helpmenu4_PageControl1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_HELP, window=helpmenu4_window, title=Str_HELP_12, icon=91	# title "HELP :"
 		IvPageControl	helpmenu4_PageControl1, super=helpmenu4, next=helpmenu4_PageControl2, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, page=1, window=HelpLang4P1_id
@@ -3445,7 +3468,7 @@ Str_HELP_12:	.asciz "HELP :"
 			IvShowHide	helpmenu4_ShowHide2, super=helpmenu4_PageControl4, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_LangSetHideFunc
 
 Str_HELP_13:	.asciz "HELP :"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HELP_13
 
 	TtlScreen	HelpMenuPRG4, sub=HelpMenuPRG4_PageControl1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_HELP, window=HelpMenuPRG4_window, title=Str_HELP_13, icon=91	# title "HELP :"
 		IvPageControl	HelpMenuPRG4_PageControl1, super=HelpMenuPRG4, sub=HelpMenuPRG4_PageControl2, next=HelpMenuPRG4_HelpTblBox1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, page=1, window=HelpLang4P1_id
@@ -3462,41 +3485,41 @@ Str_HELP_13:	.asciz "HELP :"
 	Window	test1_ram, sub=test1_ram_Label_BACKUP_MEMORY_SRAM_m, flag=VF_Const, X=56, Y=34, W=548, H=50, color=CL_WallPattern, index=0xFFFF, parent=test1_ram_parent, child=test1_ram_child
 
 Str_BACKUP_MEMORY_SRAM_may_be_broken:	.asciz "BACKUP MEMORY (SRAM) may be broken"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_BACKUP_MEMORY_SRAM_may_be_broken
 
 		VwLabel	test1_ram_Label_BACKUP_MEMORY_SRAM_m, super=test1_ram, flag=VF_Const, X=56, Y=46, W=548, H=31, str=Str_BACKUP_MEMORY_SRAM_may_be_broken, font=11, fontcolor=CL_Red	# str "BACKUP MEMORY (SRAM) may be broken"
 
 	Window	test1_rhyrom, sub=test1_rhyrom_Label_RHYTHM_PATTERN_ROM_m, flag=VF_Const, X=54, Y=86, W=540, H=50, color=CL_WallPattern, index=0xFFFF, parent=test1_rhyrom_parent, child=test1_rhyrom_child
 
 Str_RHYTHM_PATTERN_ROM_may_be_broken:	.asciz "RHYTHM PATTERN ROM  may be broken"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_RHYTHM_PATTERN_ROM_may_be_broken
 
 		VwLabel	test1_rhyrom_Label_RHYTHM_PATTERN_ROM_m, super=test1_rhyrom, flag=VF_Const, X=55, Y=98, W=532, H=31, str=Str_RHYTHM_PATTERN_ROM_may_be_broken, font=11, fontcolor=CL_Red	# str "RHYTHM PATTERN ROM  may be broken"
 
 	Window	test1_cpu, sub=test1_cpu_Label_ERROR_in_CPU_data_tr, flag=VF_Const, X=48, Y=136, W=570, H=60, color=CL_WallPattern, index=0xFFFF, parent=test1_cpu_parent, child=test1_cpu_child
 
 Str_ERROR_in_CPU_data_transmission:	.asciz "ERROR in CPU data transmission"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ERROR_in_CPU_data_transmission
 
 		VwLabel	test1_cpu_Label_ERROR_in_CPU_data_tr, super=test1_cpu, flag=VF_Const, X=55, Y=151, W=484, H=31, str=Str_ERROR_in_CPU_data_transmission, font=11, fontcolor=CL_Red	# str "ERROR in CPU data transmission"
 
 Str_PANEL_CPU_CHECKING:	.asciz "PANEL CPU CHECKING"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PANEL_CPU_CHECKING
 
 	TtlScreen	stest2, sub=stest2_TextBox_Please_check_by_the, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=stest2_window, title=Str_PANEL_CPU_CHECKING, icon=2	# title "PANEL CPU CHECKING"
 
 Str_Please_check_by_the_LED_of_test_port_PAN:	.asciz "Please check by the LED of test port (PANEL CPU : OK=Lit SHORT, NO=Lit LONG)"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Please_check_by_the_LED_of_test_port_PAN
 
 		VwTextBox	stest2_TextBox_Please_check_by_the, super=stest2, next=stest2_Label_RESULT_CPU_of_CPR, flag=VF_Const, X=80, Y=40, W=480, H=60, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_Yellow, alignment=1, lines=3, text=Str_Please_check_by_the_LED_of_test_port_PAN	# text "Please check by the LED of test port (PA"
 
 Str_RESULT_CPU_of_CPR:	.asciz "RESULT : CPU of CPR ="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_RESULT_CPU_of_CPR
 
 		VwLabel	stest2_Label_RESULT_CPU_of_CPR, super=stest2, next=stest2_Label_CPU_of_CPL, prev=stest2_TextBox_Please_check_by_the, flag=VF_Const, X=134, Y=102, W=235, H=19, str=Str_RESULT_CPU_of_CPR, font=4, fontcolor=CL_White	# str "RESULT : CPU of CPR ="
 
 Str_CPU_of_CPL:	.asciz "CPU of CPL ="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CPU_of_CPL
 
 		VwLabel	stest2_Label_CPU_of_CPL, super=stest2, next=stest2_Label_it_is_better_to_chec, prev=stest2_Label_RESULT_CPU_of_CPR, flag=VF_Const, X=234, Y=138, W=136, H=19, str=Str_CPU_of_CPL, font=4, fontcolor=CL_White	# str "CPU of CPL ="
 
@@ -3515,58 +3538,58 @@ Str_If_both_CPU_are_NO:	.asciz "If both CPU are NO,"
 	Window	TEST2OKOK, sub=TEST2OKOK_Label_OK, flag=VF_Const, X=376, Y=92, W=40, H=70, color=CL_WallPattern, index=0xFFFF, parent=TEST2OKOK_parent, child=TEST2OKOK_child
 
 Str_OK_17:	.asciz "OK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OK_17
 
 		VwLabel	TEST2OKOK_Label_OK, super=TEST2OKOK, next=TEST2OKOK_Label_OK2, flag=VF_Const, X=382, Y=102, W=26, H=19, str=Str_OK_17, font=4, fontcolor=CL_LightGreen	# str "OK"
 
 Str_OK_18:	.asciz "OK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OK_18
 
 		VwLabel	TEST2OKOK_Label_OK2, super=TEST2OKOK, prev=TEST2OKOK_Label_OK, flag=VF_Const, X=382, Y=138, W=26, H=19, str=Str_OK_18, font=4, fontcolor=CL_LightGreen	# str "OK"
 
 	Window	TEST2NGNG, sub=TEST2NGNG_Label_NG, flag=VF_Const, X=376, Y=92, W=40, H=70, color=CL_WallPattern, index=0xFFFF, parent=TEST2NGNG_parent, child=TEST2NGNG_child
 
 Str_NG:	.asciz "NG"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NG
 
 		VwLabel	TEST2NGNG_Label_NG, super=TEST2NGNG, next=TEST2NGNG_Label_NG2, flag=VF_Const, X=382, Y=102, W=26, H=19, str=Str_NG, font=4, fontcolor=CL_LightGreen	# str "NG"
 
 Str_NG_2:	.asciz "NG"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NG_2
 
 		VwLabel	TEST2NGNG_Label_NG2, super=TEST2NGNG, prev=TEST2NGNG_Label_NG, flag=VF_Const, X=382, Y=138, W=26, H=19, str=Str_NG_2, font=4, fontcolor=CL_LightGreen	# str "NG"
 
 	Window	TEST2OKNG, sub=TEST2OKNG_Label_OK, flag=VF_Const, X=376, Y=92, W=40, H=70, color=CL_WallPattern, index=0xFFFF, parent=TEST2OKNG_parent, child=TEST2OKNG_child
 
 Str_OK_19:	.asciz "OK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OK_19
 
 		VwLabel	TEST2OKNG_Label_OK, super=TEST2OKNG, next=TEST2OKNG_Label_NG, flag=VF_Const, X=382, Y=102, W=26, H=19, str=Str_OK_19, font=4, fontcolor=CL_LightGreen	# str "OK"
 
 Str_NG_3:	.asciz "NG"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NG_3
 
 		VwLabel	TEST2OKNG_Label_NG, super=TEST2OKNG, prev=TEST2OKNG_Label_OK, flag=VF_Const, X=382, Y=138, W=26, H=19, str=Str_NG_3, font=4, fontcolor=CL_LightGreen	# str "NG"
 
 	Window	TEST2NGOK, sub=TEST2NGOK_Label_NG, flag=VF_Const, X=376, Y=92, W=40, H=70, color=CL_WallPattern, index=0xFFFF, parent=TEST2NGOK_parent, child=TEST2NGOK_child
 
 Str_NG_4:	.asciz "NG"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NG_4
 
 		VwLabel	TEST2NGOK_Label_NG, super=TEST2NGOK, next=TEST2NGOK_Label_OK, flag=VF_Const, X=382, Y=102, W=26, H=19, str=Str_NG_4, font=4, fontcolor=CL_LightGreen	# str "NG"
 
 Str_OK_20:	.asciz "OK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OK_20
 
 		VwLabel	TEST2NGOK_Label_OK, super=TEST2NGOK, prev=TEST2NGOK_Label_NG, flag=VF_Const, X=382, Y=138, W=26, H=19, str=Str_OK_20, font=4, fontcolor=CL_LightGreen	# str "OK"
 
 Str_CHECK_by_SINE_WAVE:	.asciz "CHECK by SINE WAVE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CHECK_by_SINE_WAVE
 
 	TtlScreen	VF6_TtlScreen_CHECK_by_SINE_WAVE, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=VF6_TtlScreen_CHECK_by_SINE_WAVE_window, title=Str_CHECK_by_SINE_WAVE, icon=1	# title "CHECK by SINE WAVE"
 
 Str_CHECK_by_SINE_WAVE_2:	.asciz "CHECK by SINE WAVE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CHECK_by_SINE_WAVE_2
 
 	TtlScreen	stest3, sub=stest3_ShowHide1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=stest3_window, title=Str_CHECK_by_SINE_WAVE_2, icon=1	# title "CHECK by SINE WAVE"
 		IvShowHide	stest3_ShowHide1, super=stest3, next=stest3_FixWin1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_SineWaveFilter
@@ -3575,22 +3598,22 @@ Str_CHECK_by_SINE_WAVE_2:	.asciz "CHECK by SINE WAVE"
 	SineWaveWindow	sinewavetest, flag=VF_Const, X=0, Y=28, W=640, H=212, color=CL_WallPattern, index=0xFFFF, parent=sinewavetest_parent, child=sinewavetest_child, func=FN_DefaultFunction, fontcolor=62320, nowswno=sinewavetest_nowswno, oldswno=sinewavetest_oldswno
 
 Str_PANEL_SW_LED_CHECK:	.asciz "PANEL SW&LED CHECK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PANEL_SW_LED_CHECK
 
 	TtlScreen	stest4, sub=stest4_TextBox_After_all_LEDs_ON_an, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=stest4_window, title=Str_PANEL_SW_LED_CHECK, icon=1	# title "PANEL SW&LED CHECK"
 
 Str_After_all_LEDs_ON_and_OFF_Please_push_an:	.asciz "After all LEDs ON and OFF, Please push any button.  If LED near the button turn ON/OFF, it is working OK."
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_After_all_LEDs_ON_and_OFF_Please_push_an
 
 		VwTextBox	stest4_TextBox_After_all_LEDs_ON_an, super=stest4, next=stest4_TextBox_If_you_push_the_HELP, flag=VF_Const, X=32, Y=54, W=592, H=52, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_Yellow, alignment=1, lines=2, text=Str_After_all_LEDs_ON_and_OFF_Please_push_an	# text "After all LEDs ON and OFF, Please push a"
 
 Str_If_you_push_the_HELP_button_LEDs_on_the:	.asciz "If you push the HELP button, LEDs on the upper side panel (around LCD) is to be turned ON/OFF."
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_If_you_push_the_HELP_button_LEDs_on_the
 
 		VwTextBox	stest4_TextBox_If_you_push_the_HELP, super=stest4, next=stest4_TextBox_And_if_you_push_the, prev=stest4_TextBox_After_all_LEDs_ON_an, flag=VF_Const, X=32, Y=106, W=592, H=52, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_Yellow, alignment=1, lines=2, text=Str_If_you_push_the_HELP_button_LEDs_on_the	# text "If you push the HELP button, LEDs on the"
 
 Str_And_if_you_push_the_DEMO_button_LEDs_on:	.asciz "And if you push the DEMO button, LEDs on the lower side panel is to be turned."
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_And_if_you_push_the_DEMO_button_LEDs_on
 
 		VwTextBox	stest4_TextBox_And_if_you_push_the, super=stest4, prev=stest4_TextBox_If_you_push_the_HELP, flag=VF_Const, X=32, Y=162, W=592, H=52, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_Yellow, alignment=1, lines=2, text=Str_And_if_you_push_the_DEMO_button_LEDs_on	# text "And if you push the DEMO button, LEDs on"
 
@@ -3606,35 +3629,35 @@ Str_And_if_you_push_the_DEMO_button_LEDs_on:	.asciz "And if you push the DEMO bu
 	Window	TEST5_Red, sub=TEST5_Red_Label_LCD_PANEL_TEST, flag=VF_Const, X=0, Y=0, W=640, H=240, color=CL_Red, index=0xFFFF, parent=TEST5_Red_parent, child=TEST5_Red_child
 
 Str_LCD_PANEL_TEST:	.asciz "LCD PANEL TEST"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LCD_PANEL_TEST
 
 		VwLabel	TEST5_Red_Label_LCD_PANEL_TEST, super=TEST5_Red, flag=VF_Const, X=205, Y=105, W=228, H=31, str=Str_LCD_PANEL_TEST, font=11, fontcolor=CL_White	# str "LCD PANEL TEST"
 
 	Window	TEST5_Blue, sub=TEST5_Blue_Label_LCD_PANEL_TEST, flag=VF_Const, X=0, Y=0, W=640, H=240, color=CL_Blue, index=0xFFFF, parent=TEST5_Blue_parent, child=TEST5_Blue_child
 
 Str_LCD_PANEL_TEST_2:	.asciz "LCD PANEL TEST"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LCD_PANEL_TEST_2
 
 		VwLabel	TEST5_Blue_Label_LCD_PANEL_TEST, super=TEST5_Blue, flag=VF_Const, X=205, Y=105, W=228, H=31, str=Str_LCD_PANEL_TEST_2, font=11, fontcolor=CL_White	# str "LCD PANEL TEST"
 
 	Window	TEST5_Green, sub=TEST5_Green_Label_LCD_PANEL_TEST, flag=VF_Const, X=0, Y=0, W=640, H=240, color=CL_Lime, index=0xFFFF, parent=TEST5_Green_parent, child=TEST5_Green_child
 
 Str_LCD_PANEL_TEST_3:	.asciz "LCD PANEL TEST"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LCD_PANEL_TEST_3
 
 		VwLabel	TEST5_Green_Label_LCD_PANEL_TEST, super=TEST5_Green, flag=VF_Const, X=205, Y=105, W=228, H=31, str=Str_LCD_PANEL_TEST_3, font=11, fontcolor=CL_White	# str "LCD PANEL TEST"
 
 	Window	TEST5_White, sub=TEST5_White_Label_LCD_PANEL_TEST, flag=VF_Const, X=0, Y=0, W=640, H=240, color=CL_White, index=0xFFFF, parent=TEST5_White_parent, child=TEST5_White_child
 
 Str_LCD_PANEL_TEST_4:	.asciz "LCD PANEL TEST"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LCD_PANEL_TEST_4
 
 		VwLabel	TEST5_White_Label_LCD_PANEL_TEST, super=TEST5_White, flag=VF_Const, X=205, Y=105, W=228, H=31, str=Str_LCD_PANEL_TEST_4, font=11, fontcolor=CL_Black	# str "LCD PANEL TEST"
 
 	Window	TEST5_Black, sub=TEST5_Black_Label_LCD_PANEL_TEST, flag=VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, parent=TEST5_Black_parent, child=TEST5_Black_child
 
 Str_LCD_PANEL_TEST_5:	.asciz "LCD PANEL TEST"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LCD_PANEL_TEST_5
 
 		VwLabel	TEST5_Black_Label_LCD_PANEL_TEST, super=TEST5_Black, flag=VF_Const, X=205, Y=105, W=228, H=31, str=Str_LCD_PANEL_TEST_5, font=11, fontcolor=CL_White	# str "LCD PANEL TEST"
 
@@ -3642,209 +3665,209 @@ Str_LCD_PANEL_TEST_5:	.asciz "LCD PANEL TEST"
 		VwFrame	TEST5_TP_Frame1, super=TEST5_TP, sub=TEST5_TP_Label_H_H, next=TEST5_TP_Frame2, flag=VF_Const, X=0, Y=0, W=81, H=81, frame=1, width=2, color=CL_White
 
 Str_H_H:	.asciz "H    H"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_H_H
 
 			VwLabel	TEST5_TP_Label_H_H, super=TEST5_TP_Frame1, next=TEST5_TP_Label_HHHHHH, flag=VF_Const, X=13, Y=10, W=52, H=19, str=Str_H_H, fontcolor=CL_White	# str "H    H"
 
 Str_HHHHHH:	.asciz "HHHHHH"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HHHHHH
 
 			VwLabel	TEST5_TP_Label_HHHHHH, super=TEST5_TP_Frame1, next=TEST5_TP_Label_H_H2, prev=TEST5_TP_Label_H_H, flag=VF_Const, X=13, Y=34, W=52, H=19, str=Str_HHHHHH, fontcolor=CL_White	# str "HHHHHH"
 
 Str_H_H_2:	.asciz "H    H"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_H_H_2
 
 			VwLabel	TEST5_TP_Label_H_H2, super=TEST5_TP_Frame1, next=TEST5_TP_Label_H_H3, prev=TEST5_TP_Label_HHHHHH, flag=VF_Const, X=13, Y=22, W=52, H=19, str=Str_H_H_2, fontcolor=CL_White	# str "H    H"
 
 Str_H_H_3:	.asciz "H    H"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_H_H_3
 
 			VwLabel	TEST5_TP_Label_H_H3, super=TEST5_TP_Frame1, sub=TEST5_TP_Label_H_H4, prev=TEST5_TP_Label_H_H2, flag=VF_Const, X=13, Y=46, W=52, H=19, str=Str_H_H_3, fontcolor=CL_White	# str "H    H"
 
 Str_H_H_4:	.asciz "H    H"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_H_H_4
 
 				VwLabel	TEST5_TP_Label_H_H4, super=TEST5_TP_Label_H_H3, flag=VF_Const, X=13, Y=58, W=52, H=19, str=Str_H_H_4, fontcolor=CL_White	# str "H    H"
 		VwFrame	TEST5_TP_Frame2, super=TEST5_TP, sub=TEST5_TP_Label_H_H5, next=TEST5_TP_Frame3, prev=TEST5_TP_Frame1, flag=VF_Const, X=0, Y=159, W=81, H=81, frame=1, width=2, color=CL_White
 
 Str_H_H_5:	.asciz "H    H"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_H_H_5
 
 			VwLabel	TEST5_TP_Label_H_H5, super=TEST5_TP_Frame2, next=TEST5_TP_Label_HHHHHH2, flag=VF_Const, X=13, Y=169, W=52, H=19, str=Str_H_H_5, fontcolor=CL_White	# str "H    H"
 
 Str_HHHHHH_2:	.asciz "HHHHHH"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HHHHHH_2
 
 			VwLabel	TEST5_TP_Label_HHHHHH2, super=TEST5_TP_Frame2, next=TEST5_TP_Label_H_H6, prev=TEST5_TP_Label_H_H5, flag=VF_Const, X=13, Y=193, W=52, H=19, str=Str_HHHHHH_2, fontcolor=CL_White	# str "HHHHHH"
 
 Str_H_H_6:	.asciz "H    H"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_H_H_6
 
 			VwLabel	TEST5_TP_Label_H_H6, super=TEST5_TP_Frame2, next=TEST5_TP_Label_H_H7, prev=TEST5_TP_Label_HHHHHH2, flag=VF_Const, X=13, Y=181, W=52, H=19, str=Str_H_H_6, fontcolor=CL_White	# str "H    H"
 
 Str_H_H_7:	.asciz "H    H"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_H_H_7
 
 			VwLabel	TEST5_TP_Label_H_H7, super=TEST5_TP_Frame2, next=TEST5_TP_Label_H_H8, prev=TEST5_TP_Label_H_H6, flag=VF_Const, X=13, Y=205, W=52, H=19, str=Str_H_H_7, fontcolor=CL_White	# str "H    H"
 
 Str_H_H_8:	.asciz "H    H"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_H_H_8
 
 			VwLabel	TEST5_TP_Label_H_H8, super=TEST5_TP_Frame2, prev=TEST5_TP_Label_H_H7, flag=VF_Const, X=13, Y=217, W=52, H=19, str=Str_H_H_8, fontcolor=CL_White	# str "H    H"
 		VwFrame	TEST5_TP_Frame3, super=TEST5_TP, sub=TEST5_TP_Label_H_H9, next=TEST5_TP_Frame4, prev=TEST5_TP_Frame2, flag=VF_Const, X=139, Y=79, W=82, H=82, frame=1, width=2, color=CL_White
 
 Str_H_H_9:	.asciz "H    H"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_H_H_9
 
 			VwLabel	TEST5_TP_Label_H_H9, super=TEST5_TP_Frame3, next=TEST5_TP_Label_HHHHHH3, flag=VF_Const, X=152, Y=90, W=52, H=19, str=Str_H_H_9, fontcolor=CL_White	# str "H    H"
 
 Str_HHHHHH_3:	.asciz "HHHHHH"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HHHHHH_3
 
 			VwLabel	TEST5_TP_Label_HHHHHH3, super=TEST5_TP_Frame3, next=TEST5_TP_Label_H_H10, prev=TEST5_TP_Label_H_H9, flag=VF_Const, X=152, Y=114, W=52, H=19, str=Str_HHHHHH_3, fontcolor=CL_White	# str "HHHHHH"
 
 Str_H_H_10:	.asciz "H    H"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_H_H_10
 
 			VwLabel	TEST5_TP_Label_H_H10, super=TEST5_TP_Frame3, next=TEST5_TP_Label_H_H11, prev=TEST5_TP_Label_HHHHHH3, flag=VF_Const, X=152, Y=102, W=52, H=19, str=Str_H_H_10, fontcolor=CL_White	# str "H    H"
 
 Str_H_H_11:	.asciz "H    H"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_H_H_11
 
 			VwLabel	TEST5_TP_Label_H_H11, super=TEST5_TP_Frame3, next=TEST5_TP_Label_H_H12, prev=TEST5_TP_Label_H_H10, flag=VF_Const, X=152, Y=126, W=52, H=19, str=Str_H_H_11, fontcolor=CL_White	# str "H    H"
 
 Str_H_H_12:	.asciz "H    H"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_H_H_12
 
 			VwLabel	TEST5_TP_Label_H_H12, super=TEST5_TP_Frame3, prev=TEST5_TP_Label_H_H11, flag=VF_Const, X=152, Y=138, W=52, H=19, str=Str_H_H_12, fontcolor=CL_White	# str "H    H"
 		VwFrame	TEST5_TP_Frame4, super=TEST5_TP, sub=TEST5_TP_Label_H_H13, next=TEST5_TP_Frame5, prev=TEST5_TP_Frame3, flag=VF_Const, X=279, Y=0, W=81, H=81, frame=1, width=2, color=CL_White
 
 Str_H_H_13:	.asciz "H    H"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_H_H_13
 
 			VwLabel	TEST5_TP_Label_H_H13, super=TEST5_TP_Frame4, next=TEST5_TP_Label_HHHHHH4, flag=VF_Const, X=292, Y=10, W=52, H=19, str=Str_H_H_13, fontcolor=CL_White	# str "H    H"
 
 Str_HHHHHH_4:	.asciz "HHHHHH"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HHHHHH_4
 
 			VwLabel	TEST5_TP_Label_HHHHHH4, super=TEST5_TP_Frame4, next=TEST5_TP_Label_H_H14, prev=TEST5_TP_Label_H_H13, flag=VF_Const, X=292, Y=34, W=52, H=19, str=Str_HHHHHH_4, fontcolor=CL_White	# str "HHHHHH"
 
 Str_H_H_14:	.asciz "H    H"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_H_H_14
 
 			VwLabel	TEST5_TP_Label_H_H14, super=TEST5_TP_Frame4, next=TEST5_TP_Label_H_H15, prev=TEST5_TP_Label_HHHHHH4, flag=VF_Const, X=292, Y=22, W=52, H=19, str=Str_H_H_14, fontcolor=CL_White	# str "H    H"
 
 Str_H_H_15:	.asciz "H    H"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_H_H_15
 
 			VwLabel	TEST5_TP_Label_H_H15, super=TEST5_TP_Frame4, sub=TEST5_TP_Label_H_H16, prev=TEST5_TP_Label_H_H14, flag=VF_Const, X=292, Y=46, W=52, H=19, str=Str_H_H_15, fontcolor=CL_White	# str "H    H"
 
 Str_H_H_16:	.asciz "H    H"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_H_H_16
 
 				VwLabel	TEST5_TP_Label_H_H16, super=TEST5_TP_Label_H_H15, flag=VF_Const, X=292, Y=58, W=52, H=19, str=Str_H_H_16, fontcolor=CL_White	# str "H    H"
 		VwFrame	TEST5_TP_Frame5, super=TEST5_TP, sub=TEST5_TP_Label_H_H17, next=TEST5_TP_Frame6, prev=TEST5_TP_Frame4, flag=VF_Const, X=279, Y=159, W=81, H=81, frame=1, width=2, color=CL_White
 
 Str_H_H_17:	.asciz "H    H"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_H_H_17
 
 			VwLabel	TEST5_TP_Label_H_H17, super=TEST5_TP_Frame5, next=TEST5_TP_Label_HHHHHH5, flag=VF_Const, X=292, Y=169, W=52, H=19, str=Str_H_H_17, fontcolor=CL_White	# str "H    H"
 
 Str_HHHHHH_5:	.asciz "HHHHHH"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HHHHHH_5
 
 			VwLabel	TEST5_TP_Label_HHHHHH5, super=TEST5_TP_Frame5, next=TEST5_TP_Label_H_H18, prev=TEST5_TP_Label_H_H17, flag=VF_Const, X=292, Y=193, W=52, H=19, str=Str_HHHHHH_5, fontcolor=CL_White	# str "HHHHHH"
 
 Str_H_H_18:	.asciz "H    H"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_H_H_18
 
 			VwLabel	TEST5_TP_Label_H_H18, super=TEST5_TP_Frame5, next=TEST5_TP_Label_H_H19, prev=TEST5_TP_Label_HHHHHH5, flag=VF_Const, X=292, Y=181, W=52, H=19, str=Str_H_H_18, fontcolor=CL_White	# str "H    H"
 
 Str_H_H_19:	.asciz "H    H"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_H_H_19
 
 			VwLabel	TEST5_TP_Label_H_H19, super=TEST5_TP_Frame5, next=TEST5_TP_Label_H_H20, prev=TEST5_TP_Label_H_H18, flag=VF_Const, X=292, Y=205, W=52, H=19, str=Str_H_H_19, fontcolor=CL_White	# str "H    H"
 
 Str_H_H_20:	.asciz "H    H"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_H_H_20
 
 			VwLabel	TEST5_TP_Label_H_H20, super=TEST5_TP_Frame5, prev=TEST5_TP_Label_H_H19, flag=VF_Const, X=292, Y=217, W=52, H=19, str=Str_H_H_20, fontcolor=CL_White	# str "H    H"
 		VwFrame	TEST5_TP_Frame6, super=TEST5_TP, sub=TEST5_TP_Label_H_H21, next=TEST5_TP_Frame7, prev=TEST5_TP_Frame5, flag=VF_Const, X=427, Y=79, W=82, H=82, frame=1, width=2, color=CL_White
 
 Str_H_H_21:	.asciz "H    H"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_H_H_21
 
 			VwLabel	TEST5_TP_Label_H_H21, super=TEST5_TP_Frame6, next=TEST5_TP_Label_HHHHHH6, flag=VF_Const, X=440, Y=90, W=52, H=19, str=Str_H_H_21, fontcolor=CL_White	# str "H    H"
 
 Str_HHHHHH_6:	.asciz "HHHHHH"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HHHHHH_6
 
 			VwLabel	TEST5_TP_Label_HHHHHH6, super=TEST5_TP_Frame6, next=TEST5_TP_Label_H_H22, prev=TEST5_TP_Label_H_H21, flag=VF_Const, X=440, Y=114, W=52, H=19, str=Str_HHHHHH_6, fontcolor=CL_White	# str "HHHHHH"
 
 Str_H_H_22:	.asciz "H    H"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_H_H_22
 
 			VwLabel	TEST5_TP_Label_H_H22, super=TEST5_TP_Frame6, next=TEST5_TP_Label_H_H23, prev=TEST5_TP_Label_HHHHHH6, flag=VF_Const, X=440, Y=102, W=52, H=19, str=Str_H_H_22, fontcolor=CL_White	# str "H    H"
 
 Str_H_H_23:	.asciz "H    H"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_H_H_23
 
 			VwLabel	TEST5_TP_Label_H_H23, super=TEST5_TP_Frame6, next=TEST5_TP_Label_H_H24, prev=TEST5_TP_Label_H_H22, flag=VF_Const, X=440, Y=126, W=52, H=19, str=Str_H_H_23, fontcolor=CL_White	# str "H    H"
 
 Str_H_H_24:	.asciz "H    H"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_H_H_24
 
 			VwLabel	TEST5_TP_Label_H_H24, super=TEST5_TP_Frame6, prev=TEST5_TP_Label_H_H23, flag=VF_Const, X=440, Y=138, W=52, H=19, str=Str_H_H_24, fontcolor=CL_White	# str "H    H"
 		VwFrame	TEST5_TP_Frame7, super=TEST5_TP, sub=TEST5_TP_Label_H_H25, next=TEST5_TP_Frame8, prev=TEST5_TP_Frame6, flag=VF_Const, X=559, Y=0, W=81, H=81, frame=1, width=2, color=CL_White
 
 Str_H_H_25:	.asciz "H    H"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_H_H_25
 
 			VwLabel	TEST5_TP_Label_H_H25, super=TEST5_TP_Frame7, next=TEST5_TP_Label_HHHHHH7, flag=VF_Const, X=572, Y=10, W=52, H=19, str=Str_H_H_25, fontcolor=CL_White	# str "H    H"
 
 Str_HHHHHH_7:	.asciz "HHHHHH"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HHHHHH_7
 
 			VwLabel	TEST5_TP_Label_HHHHHH7, super=TEST5_TP_Frame7, next=TEST5_TP_Label_H_H26, prev=TEST5_TP_Label_H_H25, flag=VF_Const, X=572, Y=34, W=52, H=19, str=Str_HHHHHH_7, fontcolor=CL_White	# str "HHHHHH"
 
 Str_H_H_26:	.asciz "H    H"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_H_H_26
 
 			VwLabel	TEST5_TP_Label_H_H26, super=TEST5_TP_Frame7, next=TEST5_TP_Label_H_H27, prev=TEST5_TP_Label_HHHHHH7, flag=VF_Const, X=572, Y=22, W=52, H=19, str=Str_H_H_26, fontcolor=CL_White	# str "H    H"
 
 Str_H_H_27:	.asciz "H    H"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_H_H_27
 
 			VwLabel	TEST5_TP_Label_H_H27, super=TEST5_TP_Frame7, next=TEST5_TP_Label_H_H28, prev=TEST5_TP_Label_H_H26, flag=VF_Const, X=572, Y=46, W=52, H=19, str=Str_H_H_27, fontcolor=CL_White	# str "H    H"
 
 Str_H_H_28:	.asciz "H    H"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_H_H_28
 
 			VwLabel	TEST5_TP_Label_H_H28, super=TEST5_TP_Frame7, prev=TEST5_TP_Label_H_H27, flag=VF_Const, X=572, Y=58, W=52, H=19, str=Str_H_H_28, fontcolor=CL_White	# str "H    H"
 		VwFrame	TEST5_TP_Frame8, super=TEST5_TP, sub=TEST5_TP_Label_H_H29, prev=TEST5_TP_Frame7, flag=VF_Const, X=559, Y=159, W=81, H=81, frame=1, width=2, color=CL_White
 
 Str_H_H_29:	.asciz "H    H"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_H_H_29
 
 			VwLabel	TEST5_TP_Label_H_H29, super=TEST5_TP_Frame8, next=TEST5_TP_Label_HHHHHH8, flag=VF_Const, X=572, Y=169, W=52, H=19, str=Str_H_H_29, fontcolor=CL_White	# str "H    H"
 
 Str_HHHHHH_8:	.asciz "HHHHHH"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HHHHHH_8
 
 			VwLabel	TEST5_TP_Label_HHHHHH8, super=TEST5_TP_Frame8, next=TEST5_TP_Label_H_H30, prev=TEST5_TP_Label_H_H29, flag=VF_Const, X=572, Y=193, W=52, H=19, str=Str_HHHHHH_8, fontcolor=CL_White	# str "HHHHHH"
 
 Str_H_H_30:	.asciz "H    H"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_H_H_30
 
 			VwLabel	TEST5_TP_Label_H_H30, super=TEST5_TP_Frame8, next=TEST5_TP_Label_H_H31, prev=TEST5_TP_Label_HHHHHH8, flag=VF_Const, X=572, Y=181, W=52, H=19, str=Str_H_H_30, fontcolor=CL_White	# str "H    H"
 
 Str_H_H_31:	.asciz "H    H"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_H_H_31
 
 			VwLabel	TEST5_TP_Label_H_H31, super=TEST5_TP_Frame8, next=TEST5_TP_Label_H_H32, prev=TEST5_TP_Label_H_H30, flag=VF_Const, X=572, Y=205, W=52, H=19, str=Str_H_H_31, fontcolor=CL_White	# str "H    H"
 
 Str_H_H_32:	.asciz "H    H"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_H_H_32
 
 			VwLabel	TEST5_TP_Label_H_H32, super=TEST5_TP_Frame8, prev=TEST5_TP_Label_H_H31, flag=VF_Const, X=572, Y=217, W=52, H=19, str=Str_H_H_32, fontcolor=CL_White	# str "H    H"
 
@@ -3855,12 +3878,12 @@ Str_PERIPHERAL_DEVICE_CHECK:	.asciz "PERIPHERAL DEVICE CHECK"
 	TtlScreen	stest6, sub=stest6_Label_1_FLOPPY_DISK_CONTRO, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=stest6_window, title=Str_PERIPHERAL_DEVICE_CHECK, icon=1	# title "PERIPHERAL DEVICE CHECK"
 
 Str_1_FLOPPY_DISK_CONTROLLER_FDC:	.asciz "1.FLOPPY DISK CONTROLLER (FDC)   ="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_1_FLOPPY_DISK_CONTROLLER_FDC
 
 		VwLabel	stest6_Label_1_FLOPPY_DISK_CONTRO, super=stest6, next=stest6_Label_2_DIGITAL_SIGNAL_PRO, flag=VF_Const, X=54, Y=90, W=378, H=19, str=Str_1_FLOPPY_DISK_CONTROLLER_FDC, font=4, fontcolor=CL_White	# str "1.FLOPPY DISK CONTROLLER (FDC)   ="
 
 Str_2_DIGITAL_SIGNAL_PROCESSER_DSP:	.asciz "2.DIGITAL SIGNAL PROCESSER (DSP) ="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_2_DIGITAL_SIGNAL_PROCESSER_DSP
 
 		VwLabel	stest6_Label_2_DIGITAL_SIGNAL_PRO, super=stest6, next=stest6_PageControl1, prev=stest6_Label_1_FLOPPY_DISK_CONTRO, flag=VF_Const, X=54, Y=162, W=378, H=19, str=Str_2_DIGITAL_SIGNAL_PROCESSER_DSP, font=4, fontcolor=CL_White	# str "2.DIGITAL SIGNAL PROCESSER (DSP) ="
 		IvPageControl	stest6_PageControl1, super=stest6, sub=stest6_PageControl2, next=stest6_PageControl3, prev=stest6_Label_2_DIGITAL_SIGNAL_PRO, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, page=1, window=TEST6_OK_id
@@ -3871,64 +3894,64 @@ Str_2_DIGITAL_SIGNAL_PROCESSER_DSP:	.asciz "2.DIGITAL SIGNAL PROCESSER (DSP) ="
 	Window	TEST6_OK, sub=TEST6_OK_Label_may_be_OK, flag=VF_Const, X=432, Y=82, W=130, H=30, color=CL_WallPattern, index=0xFFFF, parent=TEST6_OK_parent, child=TEST6_OK_child
 
 Str_may_be_OK:	.asciz "may be OK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_may_be_OK
 
 		VwLabel	TEST6_OK_Label_may_be_OK, super=TEST6_OK, flag=VF_Const, X=445, Y=90, W=103, H=19, str=Str_may_be_OK, font=4, fontcolor=CL_LightGreen	# str "may be OK"
 
 	Window	TEST6_NO, sub=TEST6_NO_Label_NO, flag=VF_Const, X=432, Y=82, W=50, H=30, color=CL_WallPattern, index=0xFFFF, parent=TEST6_NO_parent, child=TEST6_NO_child
 
 Str_NO_37:	.asciz "NO"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NO_37
 
 		VwLabel	TEST6_NO_Label_NO, super=TEST6_NO, flag=VF_Const, X=445, Y=90, W=26, H=19, str=Str_NO_37, font=4, fontcolor=CL_LightGreen	# str "NO"
 
 	Window	TEST6DSP_OK, sub=TEST6DSP_OK_Label_may_be_OK, flag=VF_Const, X=432, Y=154, W=130, H=30, color=CL_WallPattern, index=0xFFFF, parent=TEST6DSP_OK_parent, child=TEST6DSP_OK_child
 
 Str_may_be_OK_2:	.asciz "may be OK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_may_be_OK_2
 
 		VwLabel	TEST6DSP_OK_Label_may_be_OK, super=TEST6DSP_OK, flag=VF_Const, X=445, Y=162, W=103, H=19, str=Str_may_be_OK_2, font=4, fontcolor=CL_LightGreen	# str "may be OK"
 
 	Window	TEST6DSP_NO, sub=TEST6DSP_NO_Label_NO, flag=VF_Const, X=432, Y=154, W=50, H=30, color=CL_WallPattern, index=0xFFFF, parent=TEST6DSP_NO_parent, child=TEST6DSP_NO_child
 
 Str_NO_38:	.asciz "NO"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NO_38
 
 		VwLabel	TEST6DSP_NO_Label_NO, super=TEST6DSP_NO, flag=VF_Const, X=445, Y=162, W=26, H=19, str=Str_NO_38, font=4, fontcolor=CL_LightGreen	# str "NO"
 
 Str_FD_SAVE_LOAD_TEST:	.asciz "FD SAVE/LOAD TEST"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_FD_SAVE_LOAD_TEST
 
 	TtlScreen	stest7, sub=stest7_Label_RUNNING_TEST, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=stest7_window, title=Str_FD_SAVE_LOAD_TEST, icon=1	# title "FD SAVE/LOAD TEST"
 
 Str_RUNNING_TEST:	.asciz "RUNNING TEST"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_RUNNING_TEST
 
 		VwLabel	stest7_Label_RUNNING_TEST, super=stest7, next=stest7_WideESBox1, flag=VF_Const, X=246, Y=194, W=136, H=19, str=Str_RUNNING_TEST, font=4, fontcolor=CL_White	# str "RUNNING TEST"
 
 Str_empty_238:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_238
 
 		VwWideESBox	stest7_WideESBox1, super=stest7, sub=stest7_UserBitmap1, next=stest7_WideESBox2, prev=stest7_Label_RUNNING_TEST, flag=VF_Const, X=244, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom8, str=Str_empty_238	# str ""
 			VwUserBitmap	stest7_UserBitmap1, super=stest7_WideESBox1, flag=VF_Const, X=273, Y=221, W=12, H=12, func=FN_FDCstopBitmapCheck
 
 Str_empty_239:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_239
 
 		VwWideESBox	stest7_WideESBox2, super=stest7, next=T7_TOTAL, prev=stest7_WideESBox1, flag=VF_Const, X=324, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom9, editsw2=ES_Bottom10, style=16, str=Str_empty_239	# str ""
 
 Str_TOTAL_2:	.asciz "   TOTAL :"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TOTAL_2
 
 		PsNumEditBox	T7_TOTAL, super=stest7, next=T7_OK, prev=stest7_WideESBox2, flag=VF_Const, X=164, Y=58, W=305, H=34, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF, caption=Str_TOTAL_2, font=4, fontcolor=CL_White, align=1, length=4, editsw=ES_None, dial=1, selected=T7_TOTAL_selected, figures=3	# caption "   TOTAL :"
 
 Str_OK_21:	.asciz "    OK   :"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OK_21
 
 		PsNumEditBox	T7_OK, super=stest7, next=T7_NG, prev=T7_TOTAL, flag=VF_Const, X=164, Y=102, W=305, H=34, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF, caption=Str_OK_21, font=4, fontcolor=CL_LightGreen, align=1, length=4, editsw=ES_None, dial=1, selected=T7_OK_selected, figures=3	# caption "    OK   :"
 
 Str_NG_5:	.asciz "    NG   :"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NG_5
 
 		PsNumEditBox	T7_NG, super=stest7, prev=T7_OK, flag=VF_Const, X=164, Y=146, W=305, H=34, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF, caption=Str_NG_5, font=4, fontcolor=CL_Red, align=1, length=4, editsw=ES_None, dial=1, selected=T7_NG_selected, figures=3	# caption "    NG   :"
 
@@ -3940,12 +3963,12 @@ Str_NG_5:	.asciz "    NG   :"
 		IvPageControl	test_ext_PageControl5, super=test_ext, prev=test_ext_PageControl4, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, page=5, window=TEST5_Black_id
 
 Str_empty_240:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_240
 
 	TtlScreen	VFC_TtlScreen1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=VFC_TtlScreen1_window, title=Str_empty_240	# title ""
 
 Str_empty_241:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_241
 
 	TtlScreen	TestMenu, sub=TestMenu_PageControl1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=TestMenu_window, title=Str_empty_241, icon=1	# title ""
 		IvPageControl	TestMenu_PageControl1, super=TestMenu, next=TestMenu_PageControl2, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, page=1, window=Testmenu1_id
@@ -3963,7 +3986,7 @@ Str_empty_241:	.asciz ""
 	InOutTestWindow	Testmenu7, sub=Testmenu7_Label_7_In_Out_interface_t, flag=VF_Const, X=0, Y=28, W=640, H=212, color=CL_WallPattern, index=0xFFFF, parent=Testmenu7_parent, child=Testmenu7_child, func=FN_DefaultFunction, fontcolor=62320, nowswno=Testmenu7_nowswno, oldswno=Testmenu7_oldswno
 
 Str_7_In_Out_interface_test:	.asciz "7:In & Out interface test"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_7_In_Out_interface_test
 
 		VwLabel	Testmenu7_Label_7_In_Out_interface_t, super=Testmenu7, next=Testmenu7_IndexWideES1, flag=VF_Const, X=34, Y=7, W=279, H=19, str=Str_7_In_Out_interface_test, font=4, fontcolor=CL_White	# str "7:In & Out interface test"
 		AcIndexWideES	Testmenu7_IndexWideES1, super=Testmenu7, next=Testmenu7_Label_page_select, prev=Testmenu7_Label_7_In_Out_interface_t, flag=VF_Const, X=4, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom1, editsw2=ES_Bottom3, style=3
@@ -3976,7 +3999,7 @@ Str_page_select:	.asciz "page select"
 	Window	Testmenu1, sub=Testmenu1_Label_1_ROM_device_test, flag=VF_Const, X=0, Y=28, W=640, H=212, color=CL_WallPattern, index=1, parent=Testmenu1_parent, child=Testmenu1_child
 
 Str_1_ROM_device_test:	.asciz "1:ROM device test"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_1_ROM_device_test
 
 		VwLabel	Testmenu1_Label_1_ROM_device_test, super=Testmenu1, next=Testmenu1_IndexWideES1, flag=VF_Const, X=34, Y=7, W=191, H=19, str=Str_1_ROM_device_test, font=4, fontcolor=CL_White	# str "1:ROM device test"
 		AcIndexWideES	Testmenu1_IndexWideES1, super=Testmenu1, next=Testmenu1_Label_page_select, prev=Testmenu1_Label_1_ROM_device_test, flag=VF_Const, X=4, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom1, editsw2=ES_Bottom3, style=3
@@ -3986,12 +4009,12 @@ Str_page_select_2:	.asciz "page select"
 		VwLabel	Testmenu1_Label_page_select, super=Testmenu1, next=Testmenu1_Label_PROGRAM_ROM_IC11, prev=Testmenu1_IndexWideES1, flag=VF_Const, X=12, Y=198, W=92, H=19, str=Str_page_select_2, font=1, fontcolor=CL_Lime	# str "page select"
 
 Str_PROGRAM_ROM_IC11:	.asciz "PROGRAM ROM:      IC11 ="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PROGRAM_ROM_IC11
 
 		VwLabel	Testmenu1_Label_PROGRAM_ROM_IC11, super=Testmenu1, next=Testmenu1_Label_TABLE_ROM_IC13, prev=Testmenu1_Label_page_select, flag=VF_Const, X=110, Y=50, W=268, H=19, str=Str_PROGRAM_ROM_IC11, font=4, fontcolor=CL_White	# str "PROGRAM ROM:      IC11 ="
 
 Str_TABLE_ROM_IC13:	.asciz "TABLE ROM:        IC13 ="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TABLE_ROM_IC13
 
 		VwLabel	Testmenu1_Label_TABLE_ROM_IC13, super=Testmenu1, next=Testmenu1_Label_RHYTHM_ROM_IC15_IC16, prev=Testmenu1_Label_PROGRAM_ROM_IC11, flag=VF_Const, X=110, Y=80, W=268, H=19, str=Str_TABLE_ROM_IC13, font=4, fontcolor=CL_White	# str "TABLE ROM:        IC13 ="
 
@@ -4000,17 +4023,17 @@ Str_RHYTHM_ROM_IC15_IC16:	.asciz "RHYTHM ROM:       IC15 (IC16) ="
 		VwLabel	Testmenu1_Label_RHYTHM_ROM_IC15_IC16, super=Testmenu1, next=Testmenu1_Label_CUSTOM_FLASH_IC18, prev=Testmenu1_Label_TABLE_ROM_IC13, flag=VF_Const, X=110, Y=110, W=345, H=19, str=Str_RHYTHM_ROM_IC15_IC16, font=4, fontcolor=CL_White	# str "RHYTHM ROM:       IC15 (IC16) ="
 
 Str_CUSTOM_FLASH_IC18:	.asciz "CUSTOM FLASH:     IC18 ="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CUSTOM_FLASH_IC18
 
 		VwLabel	Testmenu1_Label_CUSTOM_FLASH_IC18, super=Testmenu1, next=Testmenu1_Label_IC12, prev=Testmenu1_Label_RHYTHM_ROM_IC15_IC16, flag=VF_Const, X=110, Y=140, W=268, H=19, str=Str_CUSTOM_FLASH_IC18, font=4, fontcolor=CL_White	# str "CUSTOM FLASH:     IC18 ="
 
 Str_IC12:	.asciz ",  IC12 ="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_IC12
 
 		VwLabel	Testmenu1_Label_IC12, super=Testmenu1, next=Testmenu1_Label_IC14, prev=Testmenu1_Label_CUSTOM_FLASH_IC18, flag=VF_Const, X=442, Y=50, W=103, H=19, str=Str_IC12, font=4, fontcolor=CL_White	# str ",  IC12 ="
 
 Str_IC14:	.asciz ",  IC14 ="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_IC14
 
 		VwLabel	Testmenu1_Label_IC14, super=Testmenu1, next=Testmenu1_FuncWideES1, prev=Testmenu1_Label_IC12, flag=VF_Const, X=442, Y=80, W=103, H=19, str=Str_IC14, font=4, fontcolor=CL_White	# str ",  IC14 ="
 		AcFuncWideES	Testmenu1_FuncWideES1, super=Testmenu1, sub=Testmenu1_Label_EXECUTE, next=Testmenu1_PageControl1, prev=Testmenu1_Label_IC14, flag=VF_Const, X=564, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom15, editsw2=ES_Bottom16, func=FN_RomTestRunFunc
@@ -4037,7 +4060,7 @@ Str_EXECUTE_2:	.asciz "EXECUTE"
 	Window	Testmenu2, sub=Testmenu2_Label_2_RAM_device_test, flag=VF_Const, X=0, Y=28, W=640, H=212, color=CL_WallPattern, index=0xFFFF, parent=Testmenu2_parent, child=Testmenu2_child
 
 Str_2_RAM_device_test:	.asciz "2:RAM device test"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_2_RAM_device_test
 
 		VwLabel	Testmenu2_Label_2_RAM_device_test, super=Testmenu2, next=Testmenu2_IndexWideES1, flag=VF_Const, X=34, Y=7, W=191, H=19, str=Str_2_RAM_device_test, font=4, fontcolor=CL_White	# str "2:RAM device test"
 		AcIndexWideES	Testmenu2_IndexWideES1, super=Testmenu2, next=Testmenu2_Label_page_select, prev=Testmenu2_Label_2_RAM_device_test, flag=VF_Const, X=4, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom1, editsw2=ES_Bottom3, style=3
@@ -4047,22 +4070,22 @@ Str_page_select_3:	.asciz "page select"
 		VwLabel	Testmenu2_Label_page_select, super=Testmenu2, next=Testmenu2_Label_WORK_RAM_IC9, prev=Testmenu2_IndexWideES1, flag=VF_Const, X=12, Y=198, W=92, H=19, str=Str_page_select_3, font=1, fontcolor=CL_Lime	# str "page select"
 
 Str_WORK_RAM_IC9:	.asciz "WORK RAM:         IC9  ="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_WORK_RAM_IC9
 
 		VwLabel	Testmenu2_Label_WORK_RAM_IC9, super=Testmenu2, next=Testmenu2_Label_STATIC_RAM_IC20, prev=Testmenu2_Label_page_select, flag=VF_Const, X=110, Y=50, W=268, H=19, str=Str_WORK_RAM_IC9, font=4, fontcolor=CL_White	# str "WORK RAM:         IC9  ="
 
 Str_STATIC_RAM_IC20:	.asciz "STATIC RAM:       IC20 ="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_STATIC_RAM_IC20
 
 		VwLabel	Testmenu2_Label_STATIC_RAM_IC20, super=Testmenu2, next=Testmenu2_Label_LCD_V_RAM_IC110, prev=Testmenu2_Label_WORK_RAM_IC9, flag=VF_Const, X=110, Y=80, W=268, H=19, str=Str_STATIC_RAM_IC20, font=4, fontcolor=CL_White	# str "STATIC RAM:       IC20 ="
 
 Str_LCD_V_RAM_IC110:	.asciz "LCD V-RAM:        IC110="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LCD_V_RAM_IC110
 
 		VwLabel	Testmenu2_Label_LCD_V_RAM_IC110, super=Testmenu2, next=Testmenu2_Label_IC10, prev=Testmenu2_Label_STATIC_RAM_IC20, flag=VF_Const, X=110, Y=110, W=268, H=19, str=Str_LCD_V_RAM_IC110, font=4, fontcolor=CL_White	# str "LCD V-RAM:        IC110="
 
 Str_IC10:	.asciz ",  IC10 ="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_IC10
 
 		VwLabel	Testmenu2_Label_IC10, super=Testmenu2, next=Testmenu2_FuncWideES1, prev=Testmenu2_Label_LCD_V_RAM_IC110, flag=VF_Const, X=442, Y=50, W=103, H=19, str=Str_IC10, font=4, fontcolor=CL_White	# str ",  IC10 ="
 		AcFuncWideES	Testmenu2_FuncWideES1, super=Testmenu2, sub=Testmenu2_Label_EXECUTE, next=Testmenu2_PageControl1, prev=Testmenu2_Label_IC10, flag=VF_Const, X=564, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom15, editsw2=ES_Bottom16, func=FN_RamTestRunFunc
@@ -4094,32 +4117,32 @@ Str_page_select_4:	.asciz "page select"
 		VwLabel	Testmenu3_Label_page_select, super=Testmenu3, next=Testmenu3_Label_Panel_CPU_IC1_CPL, prev=Testmenu3_IndexWideES1, flag=VF_Const, X=12, Y=198, W=92, H=19, str=Str_page_select_4, font=1, fontcolor=CL_Lime	# str "page select"
 
 Str_Panel_CPU_IC1_CPL:	.asciz "Panel CPU (IC1):  CPL  ="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Panel_CPU_IC1_CPL
 
 		VwLabel	Testmenu3_Label_Panel_CPU_IC1_CPL, super=Testmenu3, next=Testmenu3_Label_DSP_IC304, prev=Testmenu3_Label_page_select, flag=VF_Const, X=110, Y=50, W=268, H=19, str=Str_Panel_CPU_IC1_CPL, font=4, fontcolor=CL_White	# str "Panel CPU (IC1):  CPL  ="
 
 Str_DSP_IC304:	.asciz "DSP:              IC304="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_DSP_IC304
 
 		VwLabel	Testmenu3_Label_DSP_IC304, super=Testmenu3, next=Testmenu3_Label_DSP_RAM_IC305, prev=Testmenu3_Label_Panel_CPU_IC1_CPL, flag=VF_Const, X=110, Y=80, W=268, H=19, str=Str_DSP_IC304, font=4, fontcolor=CL_White	# str "DSP:              IC304="
 
 Str_DSP_RAM_IC305:	.asciz "DSP RAM:          IC305="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_DSP_RAM_IC305
 
 		VwLabel	Testmenu3_Label_DSP_RAM_IC305, super=Testmenu3, next=Testmenu3_Label_Floppy_Disk_Controll, prev=Testmenu3_Label_DSP_IC304, flag=VF_Const, X=110, Y=110, W=268, H=19, str=Str_DSP_RAM_IC305, font=4, fontcolor=CL_White	# str "DSP RAM:          IC305="
 
 Str_Floppy_Disk_Controller_IC101:	.asciz "Floppy Disk Controller:         IC101="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Floppy_Disk_Controller_IC101
 
 		VwLabel	Testmenu3_Label_Floppy_Disk_Controll, super=Testmenu3, next=Testmenu3_Label_CPR, prev=Testmenu3_Label_DSP_RAM_IC305, flag=VF_Const, X=110, Y=140, W=422, H=19, str=Str_Floppy_Disk_Controller_IC101, font=4, fontcolor=CL_White	# str "Floppy Disk Controller:         IC101="
 
 Str_CPR:	.asciz ",  CPR  ="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CPR
 
 		VwLabel	Testmenu3_Label_CPR, super=Testmenu3, next=Testmenu3_Label_IC306, prev=Testmenu3_Label_Floppy_Disk_Controll, flag=VF_Const, X=430, Y=50, W=103, H=19, str=Str_CPR, font=4, fontcolor=CL_White	# str ",  CPR  ="
 
 Str_IC306:	.asciz ",  IC306="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_IC306
 
 		VwLabel	Testmenu3_Label_IC306, super=Testmenu3, next=Testmenu3_FuncWideES1, prev=Testmenu3_Label_CPR, flag=VF_Const, X=430, Y=110, W=103, H=19, str=Str_IC306, font=4, fontcolor=CL_White	# str ",  IC306="
 		AcFuncWideES	Testmenu3_FuncWideES1, super=Testmenu3, sub=Testmenu3_Label_EXECUTE, next=Testmenu3_PageControl1, prev=Testmenu3_Label_IC306, flag=VF_Const, X=564, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom15, editsw2=ES_Bottom16, func=FN_DeviceTestRunFunc
@@ -4132,7 +4155,7 @@ Str_EXECUTE_4:	.asciz "EXECUTE"
 	Window	Testmenu5, sub=Testmenu5_Label_5_Panel_SW_LED_test, flag=VF_Const, X=0, Y=28, W=640, H=212, color=CL_WallPattern, index=0xFFFF, parent=Testmenu5_parent, child=Testmenu5_child
 
 Str_5_Panel_SW_LED_test:	.asciz "5:Panel SW & LED test"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_5_Panel_SW_LED_test
 
 		VwLabel	Testmenu5_Label_5_Panel_SW_LED_test, super=Testmenu5, next=Testmenu5_IndexWideES1, flag=VF_Const, X=34, Y=7, W=235, H=19, str=Str_5_Panel_SW_LED_test, font=4, fontcolor=CL_White	# str "5:Panel SW & LED test"
 		AcIndexWideES	Testmenu5_IndexWideES1, super=Testmenu5, next=Testmenu5_Label_page_select, prev=Testmenu5_Label_5_Panel_SW_LED_test, flag=VF_Const, X=4, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom1, editsw2=ES_Bottom3, style=3
@@ -4150,7 +4173,7 @@ Str_If_all_buttons_are_checked_all_PANEL_MEM:	.asciz "If all buttons are checked
 		VwLabel	Testmenu5_Label_If_all_buttons_are_c, super=Testmenu5, next=Testmenu5_Label_LEDs_will_ON_DEMO_bu, prev=Testmenu5_Label_Push_each_button_and, flag=VF_Const, X=60, Y=94, W=477, H=19, str=Str_If_all_buttons_are_checked_all_PANEL_MEM, font=4, fontcolor=CL_Yellow	# str "If all buttons are checked all PANEL MEM"
 
 Str_LEDs_will_ON_DEMO_button_for_all_LEDs_to:	.asciz "LEDs will ON. DEMO button for all LEDs to light."
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LEDs_will_ON_DEMO_button_for_all_LEDs_to
 
 		VwLabel	Testmenu5_Label_LEDs_will_ON_DEMO_bu, super=Testmenu5, next=Testmenu5_ShowHide1, prev=Testmenu5_Label_If_all_buttons_are_c, flag=VF_Const, X=60, Y=138, W=532, H=19, str=Str_LEDs_will_ON_DEMO_button_for_all_LEDs_to, font=4, fontcolor=CL_Yellow	# str "LEDs will ON. DEMO button for all LEDs t"
 		IvShowHide	Testmenu5_ShowHide1, super=Testmenu5, prev=Testmenu5_Label_LEDs_will_ON_DEMO_bu, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_LEDHideOffFunc
@@ -4158,7 +4181,7 @@ Str_LEDs_will_ON_DEMO_button_for_all_LEDs_to:	.asciz "LEDs will ON. DEMO button 
 	Window	Testmenu6, sub=Testmenu6_Label_6_LCD_module_test, flag=VF_Const, X=0, Y=28, W=640, H=212, color=CL_WallPattern, index=0xFFFF, parent=Testmenu6_parent, child=Testmenu6_child
 
 Str_6_LCD_module_test:	.asciz "6:LCD module test"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_6_LCD_module_test
 
 		VwLabel	Testmenu6_Label_6_LCD_module_test, super=Testmenu6, next=Testmenu6_IndexWideES1, flag=VF_Const, X=34, Y=7, W=191, H=19, str=Str_6_LCD_module_test, font=4, fontcolor=CL_White	# str "6:LCD module test"
 		AcIndexWideES	Testmenu6_IndexWideES1, super=Testmenu6, next=Testmenu6_Label_page_select, prev=Testmenu6_Label_6_LCD_module_test, flag=VF_Const, X=4, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom1, editsw2=ES_Bottom3, style=3
@@ -4169,32 +4192,32 @@ Str_page_select_6:	.asciz "page select"
 		AcFuncEditSw	Testmenu6_FuncEditSw1, super=Testmenu6, sub=Testmenu6_Label_RGBWB, next=Testmenu6_FuncEditSw2, prev=Testmenu6_Label_page_select, flag=VF_Const, X=589, Y=36, W=39, H=22, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right1, func=FN_TestRgbwbRunFunc
 
 Str_RGBWB:	.asciz "RGBWB"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_RGBWB
 
 			VwLabel	Testmenu6_Label_RGBWB, super=Testmenu6_FuncEditSw1, flag=VF_Const, X=562, Y=39, W=59, H=19, str=Str_RGBWB, font=4, fontcolor=CL_White	# str "RGBWB"
 		AcFuncEditSw	Testmenu6_FuncEditSw2, super=Testmenu6, sub=Testmenu6_Label_CROSSTALK, next=Testmenu6_FuncEditSw3, prev=Testmenu6_FuncEditSw1, flag=VF_Const, X=593, Y=79, W=39, H=22, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right2, func=FN_TestCrosstarlRunFunc
 
 Str_CROSSTALK:	.asciz "CROSSTALK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CROSSTALK
 
 			VwLabel	Testmenu6_Label_CROSSTALK, super=Testmenu6_FuncEditSw2, flag=VF_Const, X=518, Y=82, W=103, H=19, str=Str_CROSSTALK, font=4, fontcolor=CL_White	# str "CROSSTALK"
 		AcFuncEditSw	Testmenu6_FuncEditSw3, super=Testmenu6, sub=Testmenu6_Label_SAMPLE, next=Testmenu6_FuncEditSw4, prev=Testmenu6_FuncEditSw2, flag=VF_Const, X=593, Y=122, W=39, H=22, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right3, func=FN_TestSampleRunFunc
 
 Str_SAMPLE:	.asciz "SAMPLE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SAMPLE
 
 			VwLabel	Testmenu6_Label_SAMPLE, super=Testmenu6_FuncEditSw3, flag=VF_Const, X=551, Y=125, W=70, H=19, str=Str_SAMPLE, font=4, fontcolor=CL_White	# str "SAMPLE"
 		AcFuncEditSw	Testmenu6_FuncEditSw4, super=Testmenu6, next=Testmenu6_Label_CONTRAST, prev=Testmenu6_FuncEditSw3, flag=VF_Const, X=593, Y=165, W=39, H=22, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, func=FN_TestContrastRunFunc
 
 Str_CONTRAST:	.asciz "CONTRAST"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CONTRAST
 
 		VwLabel	Testmenu6_Label_CONTRAST, super=Testmenu6, prev=Testmenu6_FuncEditSw4, flag=VF_Const, X=531, Y=168, W=92, H=19, str=Str_CONTRAST, font=4, fontcolor=CL_White	# str "CONTRAST"
 
 	Window	Testmenu8, sub=Testmenu8_Label_8_MIDI_IN_OUT_test, flag=VF_Const, X=0, Y=28, W=640, H=212, color=CL_WallPattern, index=0xFFFF, parent=Testmenu8_parent, child=Testmenu8_child
 
 Str_8_MIDI_IN_OUT_test:	.asciz "8:MIDI IN/OUT test"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_8_MIDI_IN_OUT_test
 
 		VwLabel	Testmenu8_Label_8_MIDI_IN_OUT_test, super=Testmenu8, next=Testmenu8_IndexWideES1, flag=VF_Const, X=34, Y=7, W=202, H=19, str=Str_8_MIDI_IN_OUT_test, font=4, fontcolor=CL_White	# str "8:MIDI IN/OUT test"
 		AcIndexWideES	Testmenu8_IndexWideES1, super=Testmenu8, next=Testmenu8_Label_page_select, prev=Testmenu8_Label_8_MIDI_IN_OUT_test, flag=VF_Const, X=4, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom1, editsw2=ES_Bottom3, style=3
@@ -4204,22 +4227,22 @@ Str_page_select_7:	.asciz "page select"
 		VwLabel	Testmenu8_Label_page_select, super=Testmenu8, next=Testmenu8_Label_Set_to_MIDI_position, prev=Testmenu8_IndexWideES1, flag=VF_Const, X=12, Y=198, W=92, H=19, str=Str_page_select_7, font=1, fontcolor=CL_Lime	# str "page select"
 
 Str_Set_to_MIDI_position_of_COMPUTER_switch:	.asciz "Set to 'MIDI' position of COMPUTER switch if you test MIDI terminal."
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Set_to_MIDI_position_of_COMPUTER_switch
 
 		VwLabel	Testmenu8_Label_Set_to_MIDI_position, super=Testmenu8, next=Testmenu8_Label_MIDI_IN_OUT_terminal, prev=Testmenu8_Label_page_select, flag=VF_Const, X=82, Y=58, W=548, H=19, str=Str_Set_to_MIDI_position_of_COMPUTER_switch, font=1, fontcolor=CL_Yellow	# str "Set to 'MIDI' position of COMPUTER switc"
 
 Str_MIDI_IN_OUT_terminal:	.asciz "MIDI IN & OUT terminal ="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MIDI_IN_OUT_terminal
 
 		VwLabel	Testmenu8_Label_MIDI_IN_OUT_terminal, super=Testmenu8, next=Testmenu8_Label_cable, prev=Testmenu8_Label_Set_to_MIDI_position, flag=VF_Const, X=170, Y=176, W=268, H=19, str=Str_MIDI_IN_OUT_terminal, font=4, fontcolor=CL_White	# str "MIDI IN & OUT terminal ="
 
 Str_cable:	.asciz "cable."
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_cable
 
 		VwLabel	Testmenu8_Label_cable, super=Testmenu8, next=Testmenu8_Label_Connect_MIDI_IN_and, prev=Testmenu8_Label_MIDI_IN_OUT_terminal, flag=VF_Const, X=82, Y=104, W=52, H=19, str=Str_cable, font=1, fontcolor=CL_Yellow	# str "cable."
 
 Str_Connect_MIDI_IN_and_OUT_directly_by_MIDI:	.asciz "Connect MIDI IN and OUT directly by MIDI cable and hit a keyboard."
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Connect_MIDI_IN_and_OUT_directly_by_MIDI
 
 		VwLabel	Testmenu8_Label_Connect_MIDI_IN_and, super=Testmenu8, next=Testmenu8_Label_MAC, prev=Testmenu8_Label_cable, flag=VF_Const, X=82, Y=128, W=532, H=19, str=Str_Connect_MIDI_IN_and_OUT_directly_by_MIDI, font=1, fontcolor=CL_Yellow	# str "Connect MIDI IN and OUT directly by MIDI"
 
@@ -4236,12 +4259,12 @@ Str_PC2:	.asciz "PC2"
 		VwLabel	Testmenu8_Label_PC2, super=Testmenu8, next=Testmenu8_Label_MIDI, prev=Testmenu8_Label_PC1, flag=VF_Const, X=25, Y=104, W=37, H=19, str=Str_PC2, font=4, fontcolor=CL_White	# str "PC2"
 
 Str_MIDI_7:	.asciz "MIDI"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MIDI_7
 
 		VwLabel	Testmenu8_Label_MIDI, super=Testmenu8, next=Testmenu8_Label_Or_test_COMPUTER_ter, prev=Testmenu8_Label_PC2, flag=VF_Const, X=25, Y=128, W=48, H=19, str=Str_MIDI_7, font=4, fontcolor=CL_White	# str "MIDI"
 
 Str_Or_test_COMPUTER_terminal_with_your_comp:	.asciz "Or,test COMPUTER terminal with your computer connected by suitable"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Or_test_COMPUTER_terminal_with_your_comp
 
 		VwLabel	Testmenu8_Label_Or_test_COMPUTER_ter, super=Testmenu8, next=Testmenu8_TestMode8Box1, prev=Testmenu8_Label_MIDI, flag=VF_Const, X=82, Y=81, W=532, H=19, str=Str_Or_test_COMPUTER_terminal_with_your_comp, font=1, fontcolor=CL_Yellow	# str "Or,test COMPUTER terminal with your comp"
 		TestMode8Box	Testmenu8_TestMode8Box1, super=Testmenu8, prev=Testmenu8_Label_Or_test_COMPUTER_ter, flag=VF_Const, X=633, Y=233, W=7, H=7, color=CL_WallPattern, index=0xFFFF, func=FN_DefaultFunction, fontcolo=44
@@ -4266,12 +4289,12 @@ Str_BANK_8_15_ROM_IC207:	.asciz "BANK 8-15 ROM:   IC207="
 		VwLabel	Testmenu9_Label_BANK_8_15_ROM_IC207, super=Testmenu9, next=Testmenu9_Label_IC206, prev=Testmenu9_Label_BANK_0_7_ROM_IC205, flag=VF_Const, X=110, Y=140, W=257, H=19, str=Str_BANK_8_15_ROM_IC207, font=4, fontcolor=CL_White	# str "BANK 8-15 ROM:   IC207="
 
 Str_IC206:	.asciz ",  IC206="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_IC206
 
 		VwLabel	Testmenu9_Label_IC206, super=Testmenu9, next=Testmenu9_Label_IC208, prev=Testmenu9_Label_BANK_8_15_ROM_IC207, flag=VF_Const, X=434, Y=80, W=103, H=19, str=Str_IC206, font=4, fontcolor=CL_White	# str ",  IC206="
 
 Str_IC208:	.asciz ",  IC208="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_IC208
 
 		VwLabel	Testmenu9_Label_IC208, super=Testmenu9, next=Testmenu9_FuncWideES1, prev=Testmenu9_Label_IC206, flag=VF_Const, X=434, Y=140, W=103, H=19, str=Str_IC208, font=4, fontcolor=CL_White	# str ",  IC208="
 		AcFuncWideES	Testmenu9_FuncWideES1, super=Testmenu9, sub=Testmenu9_Label_EXECUTE, next=Testmenu9_PageControl1, prev=Testmenu9_Label_IC208, flag=VF_Const, X=564, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom15, editsw2=ES_Bottom16, func=FN_WaveRomTestRunFunc
@@ -4298,7 +4321,7 @@ Str_page_select_9:	.asciz "page select"
 		VwLabel	Testmenu10_Label_page_select, super=Testmenu10, next=Testmenu10_Label_10_SOUND_SYSTEM_test, prev=Testmenu10_IndexWideES1, flag=VF_Const, X=12, Y=198, W=92, H=19, str=Str_page_select_9, font=1, fontcolor=CL_Lime	# str "page select"
 
 Str_10_SOUND_SYSTEM_test:	.asciz "10:SOUND SYSTEM test"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_10_SOUND_SYSTEM_test
 
 		VwLabel	Testmenu10_Label_10_SOUND_SYSTEM_test, super=Testmenu10, next=Testmenu10_ShowHide2, prev=Testmenu10_Label_page_select, flag=VF_Const, X=34, Y=7, W=224, H=19, str=Str_10_SOUND_SYSTEM_test, font=4, fontcolor=CL_White	# str "10:SOUND SYSTEM test"
 		IvShowHide	Testmenu10_ShowHide2, super=Testmenu10, prev=Testmenu10_Label_10_SOUND_SYSTEM_test, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_LEDHideOffFunc
@@ -4306,140 +4329,140 @@ Str_10_SOUND_SYSTEM_test:	.asciz "10:SOUND SYSTEM test"
 	Window	M1_IC11_OK, sub=M1_IC11_OK_Label_OK, flag=VF_Const, X=380, Y=46, W=40, H=25, color=CL_WallPattern, index=0xFFFF, parent=M1_IC11_OK_parent, child=M1_IC11_OK_child
 
 Str_OK_22:	.asciz "OK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OK_22
 
 		VwLabel	M1_IC11_OK_Label_OK, super=M1_IC11_OK, flag=VF_Const, X=386, Y=50, W=26, H=19, str=Str_OK_22, font=4, fontcolor=CL_Lime	# str "OK"
 
 	Window	M1_IC11_NG, sub=M1_IC11_NG_Label_NG, flag=VF_Const, X=380, Y=46, W=40, H=25, color=CL_WallPattern, index=0xFFFF, parent=M1_IC11_NG_parent, child=M1_IC11_NG_child
 
 Str_NG_6:	.asciz "NG"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NG_6
 
 		VwLabel	M1_IC11_NG_Label_NG, super=M1_IC11_NG, flag=VF_Const, X=386, Y=50, W=26, H=19, str=Str_NG_6, font=4, fontcolor=CL_Lime	# str "NG"
 
 	Window	M1_IC12_OK, sub=M1_IC12_OK_Label_OK, flag=VF_Const, X=548, Y=46, W=40, H=25, color=CL_WallPattern, index=0xFFFF, parent=M1_IC12_OK_parent, child=M1_IC12_OK_child
 
 Str_OK_23:	.asciz "OK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OK_23
 
 		VwLabel	M1_IC12_OK_Label_OK, super=M1_IC12_OK, flag=VF_Const, X=554, Y=50, W=26, H=19, str=Str_OK_23, font=4, fontcolor=CL_Lime	# str "OK"
 
 	Window	M1_IC12_NG, sub=M1_IC12_NG_Label_NG, flag=VF_Const, X=548, Y=46, W=40, H=25, color=CL_WallPattern, index=0xFFFF, parent=M1_IC12_NG_parent, child=M1_IC12_NG_child
 
 Str_NG_7:	.asciz "NG"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NG_7
 
 		VwLabel	M1_IC12_NG_Label_NG, super=M1_IC12_NG, flag=VF_Const, X=554, Y=50, W=26, H=19, str=Str_NG_7, font=4, fontcolor=CL_Lime	# str "NG"
 
 	Window	M1_IC13_OK, sub=M1_IC13_OK_Label_OK, flag=VF_Const, X=380, Y=74, W=40, H=25, color=CL_WallPattern, index=0xFFFF, parent=M1_IC13_OK_parent, child=M1_IC13_OK_child
 
 Str_OK_24:	.asciz "OK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OK_24
 
 		VwLabel	M1_IC13_OK_Label_OK, super=M1_IC13_OK, flag=VF_Const, X=386, Y=80, W=26, H=19, str=Str_OK_24, font=4, fontcolor=CL_Lime	# str "OK"
 
 	Window	M1_IC13_NG, sub=M1_IC13_NG_Label_NG, flag=VF_Const, X=380, Y=74, W=40, H=25, color=CL_WallPattern, index=0xFFFF, parent=M1_IC13_NG_parent, child=M1_IC13_NG_child
 
 Str_NG_8:	.asciz "NG"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NG_8
 
 		VwLabel	M1_IC13_NG_Label_NG, super=M1_IC13_NG, flag=VF_Const, X=386, Y=80, W=26, H=19, str=Str_NG_8, font=4, fontcolor=CL_Lime	# str "NG"
 
 	Window	M1_IC14_OK, sub=M1_IC14_OK_Label_OK, flag=VF_Const, X=548, Y=74, W=40, H=25, color=CL_WallPattern, index=0xFFFF, parent=M1_IC14_OK_parent, child=M1_IC14_OK_child
 
 Str_OK_25:	.asciz "OK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OK_25
 
 		VwLabel	M1_IC14_OK_Label_OK, super=M1_IC14_OK, flag=VF_Const, X=554, Y=80, W=26, H=19, str=Str_OK_25, font=4, fontcolor=CL_Lime	# str "OK"
 
 	Window	M1_IC14_NG, sub=M1_IC14_NG_Label_NG, flag=VF_Const, X=548, Y=74, W=40, H=25, color=CL_WallPattern, index=0xFFFF, parent=M1_IC14_NG_parent, child=M1_IC14_NG_child
 
 Str_NG_9:	.asciz "NG"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NG_9
 
 		VwLabel	M1_IC14_NG_Label_NG, super=M1_IC14_NG, flag=VF_Const, X=554, Y=80, W=26, H=19, str=Str_NG_9, font=4, fontcolor=CL_Lime	# str "NG"
 
 	Window	M1_IC15_OK, sub=M1_IC15_OK_Label_OK, flag=VF_Const, X=468, Y=106, W=40, H=25, color=CL_WallPattern, index=0xFFFF, parent=M1_IC15_OK_parent, child=M1_IC15_OK_child
 
 Str_OK_26:	.asciz "OK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OK_26
 
 		VwLabel	M1_IC15_OK_Label_OK, super=M1_IC15_OK, flag=VF_Const, X=474, Y=110, W=26, H=19, str=Str_OK_26, font=4, fontcolor=CL_Lime	# str "OK"
 
 	Window	M1_IC15_NG, sub=M1_IC15_NG_Label_NG, flag=VF_Const, X=468, Y=106, W=40, H=25, color=CL_WallPattern, index=0xFFFF, parent=M1_IC15_NG_parent, child=M1_IC15_NG_child
 
 Str_NG_10:	.asciz "NG"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NG_10
 
 		VwLabel	M1_IC15_NG_Label_NG, super=M1_IC15_NG, flag=VF_Const, X=474, Y=110, W=26, H=19, str=Str_NG_10, font=4, fontcolor=CL_Lime	# str "NG"
 
 	Window	M1_IC17_OK, sub=M1_IC17_OK_Label_OK, flag=VF_Const, X=380, Y=134, W=40, H=25, color=CL_WallPattern, index=0xFFFF, parent=M1_IC17_OK_parent, child=M1_IC17_OK_child
 
 Str_OK_27:	.asciz "OK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OK_27
 
 		VwLabel	M1_IC17_OK_Label_OK, super=M1_IC17_OK, flag=VF_Const, X=386, Y=140, W=26, H=19, str=Str_OK_27, font=4, fontcolor=CL_Lime	# str "OK"
 
 	Window	M1_IC17_NG, sub=M1_IC17_NG_Label_NG, flag=VF_Const, X=380, Y=134, W=40, H=25, color=CL_WallPattern, index=0xFFFF, parent=M1_IC17_NG_parent, child=M1_IC17_NG_child
 
 Str_NG_11:	.asciz "NG"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NG_11
 
 		VwLabel	M1_IC17_NG_Label_NG, super=M1_IC17_NG, flag=VF_Const, X=386, Y=140, W=26, H=19, str=Str_NG_11, font=4, fontcolor=CL_Lime	# str "NG"
 
 	Window	M1_IC18_OK, sub=M1_IC18_OK_Label_OK, flag=VF_Const, X=380, Y=166, W=40, H=25, color=CL_WallPattern, index=0xFFFF, parent=M1_IC18_OK_parent, child=M1_IC18_OK_child
 
 Str_OK_28:	.asciz "OK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OK_28
 
 		VwLabel	M1_IC18_OK_Label_OK, super=M1_IC18_OK, flag=VF_Const, X=386, Y=170, W=26, H=19, str=Str_OK_28, font=4, fontcolor=CL_Lime	# str "OK"
 
 	Window	M1_IC18_NG, sub=M1_IC18_NG_Label_NG, flag=VF_Const, X=380, Y=166, W=40, H=25, color=CL_WallPattern, index=0xFFFF, parent=M1_IC18_NG_parent, child=M1_IC18_NG_child
 
 Str_NG_12:	.asciz "NG"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NG_12
 
 		VwLabel	M1_IC18_NG_Label_NG, super=M1_IC18_NG, flag=VF_Const, X=386, Y=170, W=26, H=19, str=Str_NG_12, font=4, fontcolor=CL_Lime	# str "NG"
 
 	Window	M1_IC16_OK, sub=M1_IC16_OK_Label_OK, flag=VF_Const, X=548, Y=106, W=40, H=25, color=CL_WallPattern, index=0xFFFF, parent=M1_IC16_OK_parent, child=M1_IC16_OK_child
 
 Str_OK_29:	.asciz "OK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OK_29
 
 		VwLabel	M1_IC16_OK_Label_OK, super=M1_IC16_OK, flag=VF_Const, X=554, Y=110, W=26, H=19, str=Str_OK_29, font=4, fontcolor=CL_Lime	# str "OK"
 
 	Window	M1_IC16_NG, sub=M1_IC16_NG_Label_NG, flag=VF_Const, X=548, Y=106, W=40, H=25, color=CL_WallPattern, index=0xFFFF, parent=M1_IC16_NG_parent, child=M1_IC16_NG_child
 
 Str_NG_13:	.asciz "NG"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NG_13
 
 		VwLabel	M1_IC16_NG_Label_NG, super=M1_IC16_NG, flag=VF_Const, X=554, Y=110, W=26, H=19, str=Str_NG_13, font=4, fontcolor=CL_Lime	# str "NG"
 
 	Window	M1_FDC_OK, sub=M1_FDC_OK_Label_OK, flag=VF_Const, X=548, Y=138, W=40, H=25, color=CL_WallPattern, index=0xFFFF, parent=M1_FDC_OK_parent, child=M1_FDC_OK_child
 
 Str_OK_30:	.asciz "OK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OK_30
 
 		VwLabel	M1_FDC_OK_Label_OK, super=M1_FDC_OK, flag=VF_Const, X=554, Y=140, W=26, H=19, str=Str_OK_30, font=4, fontcolor=CL_Lime	# str "OK"
 
 	Window	M1_FDC_NG, sub=M1_FDC_NG_Label_NG, flag=VF_Const, X=548, Y=138, W=40, H=25, color=CL_WallPattern, index=0xFFFF, parent=M1_FDC_NG_parent, child=M1_FDC_NG_child
 
 Str_NG_14:	.asciz "NG"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NG_14
 
 		VwLabel	M1_FDC_NG_Label_NG, super=M1_FDC_NG, flag=VF_Const, X=554, Y=140, W=26, H=19, str=Str_NG_14, font=4, fontcolor=CL_Lime	# str "NG"
 
 	Window	MIDI_IO_OK, sub=MIDI_IO_OK_Label_OK, flag=VF_Const, X=440, Y=174, W=40, H=25, color=CL_WallPattern, index=0xFFFF, parent=MIDI_IO_OK_parent, child=MIDI_IO_OK_child
 
 Str_OK_31:	.asciz "OK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OK_31
 
 		VwLabel	MIDI_IO_OK_Label_OK, super=MIDI_IO_OK, flag=VF_Const, X=444, Y=177, W=26, H=19, str=Str_OK_31, font=4, fontcolor=CL_Lime	# str "OK"
 
 	Window	MIDI_IO_NG, sub=MIDI_IO_NG_Label_NG, flag=VF_Const, X=440, Y=174, W=40, H=25, color=CL_WallPattern, index=0xFFFF, parent=MIDI_IO_NG_parent, child=MIDI_IO_NG_child
 
 Str_NG_15:	.asciz "NG"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NG_15
 
 		VwLabel	MIDI_IO_NG_Label_NG, super=MIDI_IO_NG, flag=VF_Const, X=444, Y=177, W=26, H=19, str=Str_NG_15, font=4, fontcolor=CL_Lime	# str "NG"
 
@@ -4452,13 +4475,13 @@ Str_page_select_10:	.asciz "page select"
 		AcFuncWideES	Testmenu4_FuncWideES1, super=Testmenu4, sub=Testmenu4_Label_STOP, next=Testmenu4_FuncWideES2, prev=Testmenu4_Label_page_select, flag=VF_Const, X=244, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom8, func=FN_TestMode4StopFunc
 
 Str_STOP_3:	.asciz "STOP"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_STOP_3
 
 			VwLabel	Testmenu4_Label_STOP, super=Testmenu4_FuncWideES1, flag=VF_Const, X=255, Y=220, W=48, H=19, str=Str_STOP_3, font=4, fontcolor=CL_Black	# str "STOP"
 		AcFuncWideES	Testmenu4_FuncWideES2, super=Testmenu4, next=TM_FD_TOTAL, prev=Testmenu4_FuncWideES1, flag=VF_Const, X=324, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom9, editsw2=ES_Bottom10, func=FN_TestMode4RunFunc
 
 Str_TOTAL_3:	.asciz "TOTAL:"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TOTAL_3
 
 		PsNumEditBox	TM_FD_TOTAL, super=Testmenu4, next=TM_FD_OK, prev=Testmenu4_FuncWideES2, flag=VF_Const, X=68, Y=114, W=250, H=34, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF, caption=Str_TOTAL_3, font=4, fontcolor=CL_White, align=1, length=3, editsw=ES_None, dial=1, selected=TM_FD_TOTAL_selected, figures=3	# caption "TOTAL:"
 
@@ -4471,17 +4494,17 @@ Str_NG_16:	.asciz "NG:"
 		PsNumEditBox	TM_FD_NG, super=Testmenu4, next=Testmenu4_Label_START, prev=TM_FD_OK, flag=VF_Const, X=443, Y=114, W=125, H=34, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF, caption=Str_NG_16, font=4, fontcolor=CL_Red, align=1, length=3, editsw=ES_None, dial=1, selected=TM_FD_NG_selected, figures=4	# caption "NG:"
 
 Str_START_12:	.asciz "START"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_START_12
 
 		VwLabel	Testmenu4_Label_START, super=Testmenu4, next=Testmenu4_Label_Insert_2HD_2DD_disk, prev=TM_FD_NG, flag=VF_Const, X=330, Y=220, W=59, H=19, str=Str_START_12, font=4, fontcolor=CL_Black	# str "START"
 
 Str_Insert_2HD_2DD_disk_before_START:	.asciz "Insert (2HD/2DD) disk before START"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Insert_2HD_2DD_disk_before_START
 
 		VwLabel	Testmenu4_Label_Insert_2HD_2DD_disk, super=Testmenu4, next=Testmenu4_Label_4_Floppy_Disk_SAVE_L, prev=Testmenu4_Label_START, flag=VF_Const, X=126, Y=66, W=378, H=19, str=Str_Insert_2HD_2DD_disk_before_START, font=4, fontcolor=CL_Yellow	# str "Insert (2HD/2DD) disk before START"
 
 Str_4_Floppy_Disk_SAVE_LOAD_test:	.asciz "4:Floppy Disk SAVE&LOAD test"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_4_Floppy_Disk_SAVE_LOAD_test
 
 		VwLabel	Testmenu4_Label_4_Floppy_Disk_SAVE_L, super=Testmenu4, prev=Testmenu4_Label_Insert_2HD_2DD_disk, flag=VF_Const, X=34, Y=7, W=312, H=19, str=Str_4_Floppy_Disk_SAVE_LOAD_test, font=4, fontcolor=CL_White	# str "4:Floppy Disk SAVE&LOAD test"
 
@@ -4490,7 +4513,7 @@ Str_4_Floppy_Disk_SAVE_LOAD_test:	.asciz "4:Floppy Disk SAVE&LOAD test"
 		VwBitmap	VFC_Bitmap1, super=VFC_Screen1, next=VFC_Label_Panel_Simulator_for, prev=VFC_ExitMode1, flag=VF_Const, X=56, Y=56, W=307, H=45, bmp=2
 
 Str_Panel_Simulator_for_IK_2:	.asciz "Panel Simulator for IK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Panel_Simulator_for_IK_2
 
 		VwLabel	VFC_Label_Panel_Simulator_for, super=VFC_Screen1, next=VFC_TitleMenu_DEBUG_TOOLS, prev=VFC_Bitmap1, flag=VF_Const, X=118, Y=114, W=171, H=19, str=Str_Panel_Simulator_for_IK_2, font=5, fontcolor=CL_White	# str "Panel Simulator for IK"
 
@@ -4501,42 +4524,42 @@ Str_DEBUG_TOOLS_2:	.asciz "DEBUG TOOLS"
 	Window	TM_MIDI_WAIT, sub=TM_MIDI_WAIT_Label_Please_wait_for_30_s, flag=VF_Const, X=160, Y=166, W=320, H=60, color=CL_Red, border=BD_EditSwitch, index=0xFFFF, parent=TM_MIDI_WAIT_parent, child=TM_MIDI_WAIT_child
 
 Str_Please_wait_for_30_seconds:	.asciz "Please wait for 30 seconds"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Please_wait_for_30_seconds
 
 		VwLabel	TM_MIDI_WAIT_Label_Please_wait_for_30_s, super=TM_MIDI_WAIT, flag=VF_Const, X=178, Y=190, W=290, H=19, str=Str_Please_wait_for_30_seconds, font=4, fontcolor=CL_White	# str "Please wait for 30 seconds"
 
 	Window	TM_ROM_WAIT, sub=TM_ROM_WAIT_Label_Please_wait_for_20_s, flag=VF_Const, X=160, Y=166, W=320, H=60, color=CL_Red, border=BD_EditSwitch, index=0xFFFF, parent=TM_ROM_WAIT_parent, child=TM_ROM_WAIT_child
 
 Str_Please_wait_for_20_seconds:	.asciz "Please wait for 20 seconds"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Please_wait_for_20_seconds
 
 		VwLabel	TM_ROM_WAIT_Label_Please_wait_for_20_s, super=TM_ROM_WAIT, flag=VF_Const, X=174, Y=188, W=290, H=19, str=Str_Please_wait_for_20_seconds, font=4, fontcolor=CL_White	# str "Please wait for 20 seconds"
 
 	Window	TM_RAM_WAIT, sub=TM_RAM_WAIT_Label_Please_wait_for_seco, flag=VF_Const, X=160, Y=166, W=320, H=60, color=CL_Red, border=BD_EditSwitch, index=0xFFFF, parent=TM_RAM_WAIT_parent, child=TM_RAM_WAIT_child
 
 Str_Please_wait_for_second:	.asciz "Please wait for second"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Please_wait_for_second
 
 		VwLabel	TM_RAM_WAIT_Label_Please_wait_for_seco, super=TM_RAM_WAIT, flag=VF_Const, X=198, Y=188, W=246, H=19, str=Str_Please_wait_for_second, font=4, fontcolor=CL_White	# str "Please wait for second"
 
 	Window	TM_DEVICE_WAIT, sub=TM_DEVICE_WAIT_Label_Please_wait_for_seco, flag=VF_Const, X=160, Y=166, W=320, H=60, color=CL_Red, border=BD_EditSwitch, index=0xFFFF, parent=TM_DEVICE_WAIT_parent, child=TM_DEVICE_WAIT_child
 
 Str_Please_wait_for_second_2:	.asciz "Please wait for second"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Please_wait_for_second_2
 
 		VwLabel	TM_DEVICE_WAIT_Label_Please_wait_for_seco, super=TM_DEVICE_WAIT, flag=VF_Const, X=194, Y=190, W=246, H=19, str=Str_Please_wait_for_second_2, font=4, fontcolor=CL_White	# str "Please wait for second"
 
 	Window	LCDB_OK, sub=LCDB_OK_Label_LCD_BLOCK_ALL_SW_OK, flag=VF_Const, X=380, Y=186, W=230, H=30, color=CL_WallPattern, index=0xFFFF, parent=LCDB_OK_parent, child=LCDB_OK_child
 
 Str_LCD_BLOCK_ALL_SW_OK:	.asciz "LCD BLOCK:   ALL SW OK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LCD_BLOCK_ALL_SW_OK
 
 		VwLabel	LCDB_OK_Label_LCD_BLOCK_ALL_SW_OK, super=LCDB_OK, flag=VF_Const, X=384, Y=194, W=246, H=19, str=Str_LCD_BLOCK_ALL_SW_OK, font=4, fontcolor=CL_Lime	# str "LCD BLOCK:   ALL SW OK"
 
 	Window	LOWB_OK, sub=LOWB_OK_Label_LOWER_BLOCK_ALL_SW_O, flag=VF_Const, X=380, Y=216, W=250, H=20, color=CL_WallPattern, index=0xFFFF, parent=LOWB_OK_parent, child=LOWB_OK_child
 
 Str_LOWER_BLOCK_ALL_SW_OK:	.asciz "LOWER BLOCK: ALL SW OK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LOWER_BLOCK_ALL_SW_OK
 
 		VwLabel	LOWB_OK_Label_LOWER_BLOCK_ALL_SW_O, super=LOWB_OK, flag=VF_Const, X=384, Y=215, W=246, H=19, str=Str_LOWER_BLOCK_ALL_SW_OK, font=4, fontcolor=CL_Lime	# str "LOWER BLOCK: ALL SW OK"
 
@@ -4545,26 +4568,26 @@ Str_LOWER_BLOCK_ALL_SW_OK:	.asciz "LOWER BLOCK: ALL SW OK"
 	Window	M1_IC110_OK, sub=M1_IC110_OK_Label_OK, flag=VF_Const, X=380, Y=106, W=40, H=25, color=CL_WallPattern, index=0xFFFF, parent=M1_IC110_OK_parent, child=M1_IC110_OK_child
 
 Str_OK_33:	.asciz "OK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OK_33
 
 		VwLabel	M1_IC110_OK_Label_OK, super=M1_IC110_OK, flag=VF_Const, X=386, Y=110, W=26, H=19, str=Str_OK_33, font=4, fontcolor=CL_Lime	# str "OK"
 
 	Window	M1_IC110_NG, sub=M1_IC110_NG_Label_NG, flag=VF_Const, X=380, Y=106, W=40, H=25, color=CL_WallPattern, index=0xFFFF, parent=M1_IC110_NG_parent, child=M1_IC110_NG_child
 
 Str_NG_17:	.asciz "NG"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NG_17
 
 		VwLabel	M1_IC110_NG_Label_NG, super=M1_IC110_NG, flag=VF_Const, X=386, Y=110, W=26, H=19, str=Str_NG_17, font=4, fontcolor=CL_Lime	# str "NG"
 
 	Window	M1_ALLSW_OK, sub=M1_ALLSW_OK_Label_ALL_SW_OK, flag=VF_Const, X=472, Y=182, W=120, H=34, color=CL_WallPattern, index=0xFFFF, parent=M1_ALLSW_OK_parent, child=M1_ALLSW_OK_child
 
 Str_ALL_SW_OK:	.asciz "ALL SW OK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ALL_SW_OK
 
 		VwLabel	M1_ALLSW_OK_Label_ALL_SW_OK, super=M1_ALLSW_OK, flag=VF_Const, X=476, Y=190, W=103, H=19, str=Str_ALL_SW_OK, font=4, fontcolor=CL_Lime	# str "ALL SW OK"
 
 Str_empty_242:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_242
 
 	TtlScreen	TestMenu2, sub=TestMenu2_TestMenuPage1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=TestMenu2_window, title=Str_empty_242, icon=1	# title ""
 		AcTestMenuPage	TestMenu2_TestMenuPage1, super=TestMenu2, next=TestMenu2_PageControl1, flag=VF_Const, X=564, Y=5, W=71, H=18, color=CL_PageBack, border=BD_3D_DOWN1, index=0xFFFF, page=TestMenu2_TestMenuPage1_page, pagemin=1, pagemax=11
@@ -4583,7 +4606,7 @@ Str_empty_242:	.asciz ""
 	BoardTestWindow	Testmenu11, sub=Testmenu11_Label_11_Wave_Expansion_Bo, flag=VF_Const, X=0, Y=28, W=640, H=212, color=CL_WallPattern, index=0xFFFF, parent=Testmenu11_parent, child=Testmenu11_child, func=FN_DefaultFunction, fontcolor=51261
 
 Str_11_Wave_Expansion_Board_test:	.asciz "11:Wave Expansion Board test"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_11_Wave_Expansion_Board_test
 
 		VwLabel	Testmenu11_Label_11_Wave_Expansion_Bo, super=Testmenu11, next=Testmenu11_IndexWideES1, flag=VF_Const, X=34, Y=7, W=312, H=19, str=Str_11_Wave_Expansion_Board_test, font=4, fontcolor=CL_White	# str "11:Wave Expansion Board test"
 		AcIndexWideES	Testmenu11_IndexWideES1, super=Testmenu11, next=Testmenu11_Label_page_select, prev=Testmenu11_Label_11_Wave_Expansion_Bo, flag=VF_Const, X=4, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom1, editsw2=ES_Bottom3, style=3
@@ -4600,147 +4623,147 @@ Str_EXECUTE_6:	.asciz "EXECUTE"
 	Window	TM_EXP_WAIT, sub=TM_EXP_WAIT_Label_Please_wait_for_seco, flag=VF_Const, X=166, Y=206, W=320, H=32, color=CL_Red, border=BD_EditSwitch, index=0xFFFF, parent=TM_EXP_WAIT_parent, child=TM_EXP_WAIT_child
 
 Str_Please_wait_for_seconds:	.asciz " Please wait for seconds"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Please_wait_for_seconds
 
 		VwLabel	TM_EXP_WAIT_Label_Please_wait_for_seco, super=TM_EXP_WAIT, flag=VF_Const, X=186, Y=214, W=268, H=19, str=Str_Please_wait_for_seconds, font=4, fontcolor=CL_White	# str " Please wait for seconds"
 
 	Window	TM_EXP1_OK, sub=TM_EXP1_OK_Label_OK, flag=VF_Const, X=392, Y=36, W=40, H=25, color=CL_WallPattern, index=0xFFFF, parent=TM_EXP1_OK_parent, child=TM_EXP1_OK_child
 
 Str_OK_34:	.asciz "OK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OK_34
 
 		VwLabel	TM_EXP1_OK_Label_OK, super=TM_EXP1_OK, flag=VF_Const, X=398, Y=40, W=26, H=19, str=Str_OK_34, font=4, fontcolor=CL_Lime	# str "OK"
 
 	Window	TM_EXP2_OK, sub=TM_EXP2_OK_Label_OK, flag=VF_Const, X=392, Y=120, W=40, H=25, color=CL_WallPattern, index=0xFFFF, parent=TM_EXP2_OK_parent, child=TM_EXP2_OK_child
 
 Str_OK_35:	.asciz "OK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OK_35
 
 		VwLabel	TM_EXP2_OK_Label_OK, super=TM_EXP2_OK, flag=VF_Const, X=398, Y=124, W=26, H=19, str=Str_OK_35, font=4, fontcolor=CL_Lime	# str "OK"
 
 	Window	TM_EXP1_NG, sub=TM_EXP1_NG_Label_NG, flag=VF_Const, X=392, Y=36, W=40, H=25, color=CL_WallPattern, index=0xFFFF, parent=TM_EXP1_NG_parent, child=TM_EXP1_NG_child
 
 Str_NG_18:	.asciz "NG"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NG_18
 
 		VwLabel	TM_EXP1_NG_Label_NG, super=TM_EXP1_NG, flag=VF_Const, X=398, Y=40, W=26, H=19, str=Str_NG_18, font=4, fontcolor=CL_Red	# str "NG"
 
 	Window	TM_EXP2_NG, sub=TM_EXP2_NG_Label_NG, flag=VF_Const, X=392, Y=120, W=40, H=25, color=CL_WallPattern, index=0xFFFF, parent=TM_EXP2_NG_parent, child=TM_EXP2_NG_child
 
 Str_NG_19:	.asciz "NG"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NG_19
 
 		VwLabel	TM_EXP2_NG_Label_NG, super=TM_EXP2_NG, flag=VF_Const, X=398, Y=124, W=26, H=19, str=Str_NG_19, font=4, fontcolor=CL_Red	# str "NG"
 
 	Window	TM_EXP1_IC1_OK, sub=TM_EXP1_IC1_OK_Label_OK, flag=VF_Const, X=392, Y=64, W=40, H=25, color=CL_WallPattern, index=0xFFFF, parent=TM_EXP1_IC1_OK_parent, child=TM_EXP1_IC1_OK_child
 
 Str_OK_36:	.asciz "OK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OK_36
 
 		VwLabel	TM_EXP1_IC1_OK_Label_OK, super=TM_EXP1_IC1_OK, flag=VF_Const, X=398, Y=68, W=26, H=19, str=Str_OK_36, font=4, fontcolor=CL_Lime	# str "OK"
 
 	Window	TM_EXP1_IC1_NG, sub=TM_EXP1_IC1_NG_Label_NG, flag=VF_Const, X=392, Y=64, W=40, H=25, color=CL_WallPattern, index=0xFFFF, parent=TM_EXP1_IC1_NG_parent, child=TM_EXP1_IC1_NG_child
 
 Str_NG_20:	.asciz "NG"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NG_20
 
 		VwLabel	TM_EXP1_IC1_NG_Label_NG, super=TM_EXP1_IC1_NG, flag=VF_Const, X=398, Y=68, W=26, H=19, str=Str_NG_20, font=4, fontcolor=CL_Red	# str "NG"
 
 	Window	TM_EXP1_IC2_OK, sub=TM_EXP1_IC2_OK_Label_OK, flag=VF_Const, X=564, Y=64, W=40, H=25, color=CL_WallPattern, index=0xFFFF, parent=TM_EXP1_IC2_OK_parent, child=TM_EXP1_IC2_OK_child
 
 Str_OK_37:	.asciz "OK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OK_37
 
 		VwLabel	TM_EXP1_IC2_OK_Label_OK, super=TM_EXP1_IC2_OK, flag=VF_Const, X=570, Y=68, W=26, H=19, str=Str_OK_37, font=4, fontcolor=CL_Lime	# str "OK"
 
 	Window	TM_EXP1_IC2_NG, sub=TM_EXP1_IC2_NG_Label_NG, flag=VF_Const, X=564, Y=64, W=40, H=25, color=CL_WallPattern, index=0xFFFF, parent=TM_EXP1_IC2_NG_parent, child=TM_EXP1_IC2_NG_child
 
 Str_NG_21:	.asciz "NG"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NG_21
 
 		VwLabel	TM_EXP1_IC2_NG_Label_NG, super=TM_EXP1_IC2_NG, flag=VF_Const, X=570, Y=68, W=26, H=19, str=Str_NG_21, font=4, fontcolor=CL_Red	# str "NG"
 
 	Window	TM_EXP1_IC3_OK, sub=TM_EXP1_IC3_OK_Label_OK, flag=VF_Const, X=392, Y=90, W=40, H=25, color=CL_WallPattern, index=0xFFFF, parent=TM_EXP1_IC3_OK_parent, child=TM_EXP1_IC3_OK_child
 
 Str_OK_38:	.asciz "OK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OK_38
 
 		VwLabel	TM_EXP1_IC3_OK_Label_OK, super=TM_EXP1_IC3_OK, flag=VF_Const, X=398, Y=94, W=26, H=19, str=Str_OK_38, font=4, fontcolor=CL_Lime	# str "OK"
 
 	Window	TM_EXP1_IC3_NG, sub=TM_EXP1_IC3_NG_Label_NG, flag=VF_Const, X=392, Y=90, W=40, H=25, color=CL_WallPattern, index=0xFFFF, parent=TM_EXP1_IC3_NG_parent, child=TM_EXP1_IC3_NG_child
 
 Str_NG_22:	.asciz "NG"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NG_22
 
 		VwLabel	TM_EXP1_IC3_NG_Label_NG, super=TM_EXP1_IC3_NG, flag=VF_Const, X=398, Y=94, W=26, H=19, str=Str_NG_22, font=4, fontcolor=CL_Red	# str "NG"
 
 	Window	TM_EXP1_IC4_OK, sub=TM_EXP1_IC4_OK_Label_OK, flag=VF_Const, X=564, Y=90, W=40, H=25, color=CL_WallPattern, index=0xFFFF, parent=TM_EXP1_IC4_OK_parent, child=TM_EXP1_IC4_OK_child
 
 Str_OK_39:	.asciz "OK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OK_39
 
 		VwLabel	TM_EXP1_IC4_OK_Label_OK, super=TM_EXP1_IC4_OK, flag=VF_Const, X=570, Y=94, W=26, H=19, str=Str_OK_39, font=4, fontcolor=CL_Lime	# str "OK"
 
 	Window	TM_EXP1_IC4_NG, sub=TM_EXP1_IC4_NG_Label_NG, flag=VF_Const, X=564, Y=90, W=40, H=25, color=CL_WallPattern, index=0xFFFF, parent=TM_EXP1_IC4_NG_parent, child=TM_EXP1_IC4_NG_child
 
 Str_NG_23:	.asciz "NG"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NG_23
 
 		VwLabel	TM_EXP1_IC4_NG_Label_NG, super=TM_EXP1_IC4_NG, flag=VF_Const, X=570, Y=94, W=26, H=19, str=Str_NG_23, font=4, fontcolor=CL_Red	# str "NG"
 
 	Window	TM_EXP2_IC1_OK, sub=TM_EXP2_IC1_OK_Label_OK, flag=VF_Const, X=392, Y=146, W=40, H=25, color=CL_WallPattern, index=0xFFFF, parent=TM_EXP2_IC1_OK_parent, child=TM_EXP2_IC1_OK_child
 
 Str_OK_40:	.asciz "OK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OK_40
 
 		VwLabel	TM_EXP2_IC1_OK_Label_OK, super=TM_EXP2_IC1_OK, flag=VF_Const, X=398, Y=150, W=26, H=19, str=Str_OK_40, font=4, fontcolor=CL_Lime	# str "OK"
 
 	Window	TM_EXP2_IC1_NG, sub=TM_EXP2_IC1_NG_Label_NG, flag=VF_Const, X=392, Y=146, W=40, H=25, color=CL_WallPattern, index=0xFFFF, parent=TM_EXP2_IC1_NG_parent, child=TM_EXP2_IC1_NG_child
 
 Str_NG_24:	.asciz "NG"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NG_24
 
 		VwLabel	TM_EXP2_IC1_NG_Label_NG, super=TM_EXP2_IC1_NG, flag=VF_Const, X=398, Y=150, W=26, H=19, str=Str_NG_24, font=4, fontcolor=CL_Red	# str "NG"
 
 	Window	TM_EXP2_IC2_OK, sub=TM_EXP2_IC2_OK_Label_OK, flag=VF_Const, X=564, Y=146, W=40, H=25, color=CL_WallPattern, index=0xFFFF, parent=TM_EXP2_IC2_OK_parent, child=TM_EXP2_IC2_OK_child
 
 Str_OK_41:	.asciz "OK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OK_41
 
 		VwLabel	TM_EXP2_IC2_OK_Label_OK, super=TM_EXP2_IC2_OK, flag=VF_Const, X=570, Y=150, W=26, H=19, str=Str_OK_41, font=4, fontcolor=CL_Lime	# str "OK"
 
 	Window	TM_EXP2_IC2_NG, sub=TM_EXP2_IC2_NG_Label_NG, flag=VF_Const, X=564, Y=146, W=40, H=25, color=CL_WallPattern, index=0xFFFF, parent=TM_EXP2_IC2_NG_parent, child=TM_EXP2_IC2_NG_child
 
 Str_NG_25:	.asciz "NG"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NG_25
 
 		VwLabel	TM_EXP2_IC2_NG_Label_NG, super=TM_EXP2_IC2_NG, flag=VF_Const, X=570, Y=150, W=26, H=19, str=Str_NG_25, font=4, fontcolor=CL_Red	# str "NG"
 
 	Window	TM_EXP2_IC3_OK, sub=TM_EXP2_IC3_OK_Label_OK, flag=VF_Const, X=392, Y=172, W=40, H=25, color=CL_WallPattern, index=0xFFFF, parent=TM_EXP2_IC3_OK_parent, child=TM_EXP2_IC3_OK_child
 
 Str_OK_42:	.asciz "OK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OK_42
 
 		VwLabel	TM_EXP2_IC3_OK_Label_OK, super=TM_EXP2_IC3_OK, flag=VF_Const, X=398, Y=176, W=26, H=19, str=Str_OK_42, font=4, fontcolor=CL_Lime	# str "OK"
 
 	Window	TM_EXP2_IC3_NG, sub=TM_EXP2_IC3_NG_Label_NG, flag=VF_Const, X=392, Y=172, W=40, H=25, color=CL_WallPattern, index=0xFFFF, parent=TM_EXP2_IC3_NG_parent, child=TM_EXP2_IC3_NG_child
 
 Str_NG_26:	.asciz "NG"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NG_26
 
 		VwLabel	TM_EXP2_IC3_NG_Label_NG, super=TM_EXP2_IC3_NG, flag=VF_Const, X=398, Y=176, W=26, H=19, str=Str_NG_26, font=4, fontcolor=CL_Red	# str "NG"
 
 	Window	TM_EXP2_IC4_OK, sub=TM_EXP2_IC4_OK_Label_OK, flag=VF_Const, X=564, Y=172, W=40, H=25, color=CL_WallPattern, index=0xFFFF, parent=TM_EXP2_IC4_OK_parent, child=TM_EXP2_IC4_OK_child
 
 Str_OK_43:	.asciz "OK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OK_43
 
 		VwLabel	TM_EXP2_IC4_OK_Label_OK, super=TM_EXP2_IC4_OK, flag=VF_Const, X=570, Y=176, W=26, H=19, str=Str_OK_43, font=4, fontcolor=CL_Lime	# str "OK"
 
 	Window	TM_EXP2_IC4_NG, sub=TM_EXP2_IC4_NG_Label_NG, flag=VF_Const, X=564, Y=172, W=40, H=25, color=CL_WallPattern, index=0xFFFF, parent=TM_EXP2_IC4_NG_parent, child=TM_EXP2_IC4_NG_child
 
 Str_NG_27:	.asciz "NG"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NG_27
 
 		VwLabel	TM_EXP2_IC4_NG_Label_NG, super=TM_EXP2_IC4_NG, flag=VF_Const, X=570, Y=176, W=26, H=19, str=Str_NG_27, font=4, fontcolor=CL_Red	# str "NG"
 
@@ -4752,7 +4775,7 @@ RN_empty_1938:	.asciz ""
 RN_empty_1939:	.asciz ""
 RN_empty_1940:	.asciz ""
 RN_empty_1941:	.asciz ""
-	.align	4, 0x00
+	.align	4, 0x00	# pad after RN_empty_1941
 RN_initial:	.asciz "initial"
 RN_empty_1942:	.asciz ""
 RN_empty_1943:	.asciz ""
@@ -4775,7 +4798,7 @@ RN_empty_1955:	.asciz ""
 RN_empty_1956:	.asciz ""
 RN_empty_1957:	.asciz ""
 RN_empty_1958:	.asciz ""
-	.align	4, 0x00
+	.align	4, 0x00	# pad after RN_empty_1958
 RN_tssen:	.asciz "tssen"
 RN_empty_1959:	.asciz ""
 RN_empty_1960:	.asciz ""
@@ -4795,7 +4818,7 @@ RN_empty_1970:	.asciz ""
 RN_empty_1971:	.asciz ""
 RN_empty_1972:	.asciz ""
 RN_empty_1973:	.asciz ""
-	.align	4, 0x00
+	.align	4, 0x00	# pad after RN_empty_1973
 RN_empty_1974:	.asciz ""
 RN_empty_1975:	.asciz ""
 RN_empty_1976:	.asciz ""
@@ -4851,7 +4874,7 @@ RN_empty_2088:	.asciz ""
 RN_empty_2089:	.asciz ""
 RN_empty_2090:	.asciz ""
 RN_empty_2091:	.asciz ""
-	.align	4, 0x00
+	.align	4, 0x00	# pad after RN_empty_2091
 RN_distim:	.asciz "distim"
 RN_empty_2092:	.asciz ""
 RN_empty_2093:	.asciz ""
@@ -5023,7 +5046,7 @@ RN_test1_rhyrom:	.asciz "test1_rhyrom"
 RN_empty_5135:	.asciz ""
 RN_test1_cpu:	.asciz "test1_cpu"
 RN_empty_5136:	.asciz ""
-	.align	4, 0x00
+	.align	4, 0x00	# pad after RN_empty_5136
 RN_stest2:	.asciz "stest2"
 RN_empty_5137:	.asciz ""
 RN_empty_5138:	.asciz ""
@@ -5052,7 +5075,7 @@ RN_stest3:	.asciz "stest3"
 RN_empty_5155:	.asciz ""
 RN_empty_5156:	.asciz ""
 RN_sinewavetest:	.asciz "sinewavetest"
-	.align	4, 0x00
+	.align	4, 0x00	# pad after RN_sinewavetest
 RN_stest4:	.asciz "stest4"
 RN_empty_5157:	.asciz ""
 RN_empty_5158:	.asciz ""
@@ -5126,7 +5149,7 @@ RN_empty_5217:	.asciz ""
 RN_empty_5218:	.asciz ""
 RN_empty_5219:	.asciz ""
 RN_TEST5_Itimatu:	.asciz "TEST5_Itimatu"
-	.align	4, 0x00
+	.align	4, 0x00	# pad after RN_TEST5_Itimatu
 RN_stest6:	.asciz "stest6"
 RN_empty_5220:	.asciz ""
 RN_empty_5221:	.asciz ""
@@ -5142,7 +5165,7 @@ RN_TEST6DSP_OK:	.asciz "TEST6DSP_OK"
 RN_empty_5228:	.asciz ""
 RN_TEST6DSP_NO:	.asciz "TEST6DSP_NO"
 RN_empty_5229:	.asciz ""
-	.align	4, 0x00
+	.align	4, 0x00	# pad after RN_empty_5229
 RN_stest7:	.asciz "stest7"
 RN_empty_5230:	.asciz ""
 RN_empty_5231:	.asciz ""
@@ -5436,98 +5459,100 @@ RN_TM_EXP2_IC4_NG:	.asciz "TM_EXP2_IC4_NG"
 RN_empty_5446:	.asciz ""
 .incbin_range "baserom/kn6000_program.rom", 0x24104C, 0x241054
 Str_MD_CONTROL:	.asciz "MD_CONTROL"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MD_CONTROL
 Str_MD_CUSTOMIZE:	.asciz "MD_CUSTOMIZE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MD_CUSTOMIZE
 Str_MD_HELP:	.asciz "MD_HELP"
 Str_TT_CTMENU:	.asciz "TT_CTMENU"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_CTMENU
 Str_TT_CTINIT:	.asciz "TT_CTINIT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_CTINIT
 Str_TT_CTFSWAS:	.asciz "TT_CTFSWAS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_CTFSWAS
 Str_TT_CTTOUCH:	.asciz "TT_CTTOUCH"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_CTTOUCH
 Str_TT_MSAMODE:	.asciz "TT_MSAMODE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_MSAMODE
 Str_TT_CTPMMD:	.asciz "TT_CTPMMD"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_CTPMMD
 Str_TT_FADEINOUT:	.asciz "TT_FADEINOUT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_FADEINOUT
 Str_TT_WRITEPRT:	.asciz "TT_WRITEPRT"
 Str_TT_CUSMENU:	.asciz "TT_CUSMENU"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_CUSMENU
 Str_TT_CSCUSMEM:	.asciz "TT_CSCUSMEM"
 Str_TT_CSDISTIM:	.asciz "TT_CSDISTIM"
 Str_TT_CSWPAPER:	.asciz "TT_CSWPAPER"
 Str_TT_CSMIDISET:	.asciz "TT_CSMIDISET"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_CSMIDISET
 Str_TT_CSLANSET:	.asciz "TT_CSLANSET"
 Str_TT_CSDISKPRE:	.asciz "TT_CSDISKPRE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_CSDISKPRE
 Str_TT_HELP:	.asciz "TT_HELP"
 Str_TT_HELPMENU:	.asciz "TT_HELPMENU"
 Str_TT_TEST1:	.asciz "TT_TEST1"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_TEST1
 Str_TT_TEST2:	.asciz "TT_TEST2"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_TEST2
 Str_TT_TEST3:	.asciz "TT_TEST3"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_TEST3
 Str_TT_TEST4:	.asciz "TT_TEST4"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_TEST4
 Str_TT_TEST5:	.asciz "TT_TEST5"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_TEST5
 Str_TT_TEST6:	.asciz "TT_TEST6"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_TEST6
 Str_TT_TEST7:	.asciz "TT_TEST7"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_TEST7
 Str_TT_EXT:	.asciz "TT_EXT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_EXT
 Str_TT_TESTMENU_3:	.asciz "TT_TESTMENU"
 Str_TT_GUEST:	.asciz "TT_GUEST"
-	.align	4, 0xFF
-data_4C2411C0:
-	.space	8, 0x00
+	.align	4, 0xFF	# pad after Str_TT_GUEST
+
+TchSensGridCheck_Table:	# 2 x u32, 0..0; read by DataProtectGridCheck : `mov	(a0), d0`; DispTimeSetGridCheck : `mov	(a0), d0` ...
+	tab_u32	0, 0
 data_4C2411C8:
 .incbin_range "baserom/kn6000_program.rom", 0x2411C8, 0x2411D4
 data_4C2411D4:
 .incbin_range "baserom/kn6000_program.rom", 0x2411D4, 0x241210
-data_4C241210:
-.incbin_range "baserom/kn6000_program.rom", 0x241210, 0x241214
-data_4C241214:
-.incbin_range "baserom/kn6000_program.rom", 0x241214, 0x241218
-data_4C241218:
-.incbin_range "baserom/kn6000_program.rom", 0x241218, 0x24121C
-data_4C24121C:
-.incbin_range "baserom/kn6000_program.rom", 0x24121C, 0x241220
-data_4C241220:
-.incbin_range "baserom/kn6000_program.rom", 0x241220, 0x241224
-data_4C241224:
-.incbin_range "baserom/kn6000_program.rom", 0x241224, 0x241228
-data_4C241228:
-.incbin_range "baserom/kn6000_program.rom", 0x241228, 0x24122C
-data_4C24122C:
-.incbin_range "baserom/kn6000_program.rom", 0x24122C, 0x241230
+InOutTestWindowProc_L11c_Table:	# 2 x u16, 40..250; read by InOutTestWindowProc_L11c : `movhu	(a1), d0`
+	tab_u16	250, 40
+InOutTestWindowProc_L2ed_Table:	# 2 x u16, 64..250; read by InOutTestWindowProc_L2ed : `movhu	(a1), d0`
+	tab_u16	250, 64
+InOutTestWindowProc_L45e_Table:	# 2 x u16, 88..250; read by InOutTestWindowProc_L45e : `movhu	(a1), d0`
+	tab_u16	250, 88
+InOutTestWindowProc_L561_Table:	# 2 x u16, 112..250; read by InOutTestWindowProc_L561 : `movhu	(a0), d0`
+	tab_u16	250, 112
+InOutTestWindowProc_L666_Table:	# 2 x u16, 136..250; read by InOutTestWindowProc_L666 : `movhu	(a1), d0`
+	tab_u16	250, 136
+InOutTestWindowProc_L76d_Table:	# 2 x u16, 160..250; read by InOutTestWindowProc_L76d : `movhu	(a1), d0`
+	tab_u16	250, 160
+InOutTestWindowProc_L76d_Table_2:	# 2 x u16, 184..250; read by InOutTestWindowProc_L76d : `movhu	(a0), d0`
+	tab_u16	250, 184
+InOutTestWindowProc_L2ed_Table_2:	# 2 x u16, 220..555; read by InOutTestWindowProc_L2ed : `movhu	(a1), d0`
+	tab_u16	555, 220
 data_4C241230:
 .incbin_range "baserom/kn6000_program.rom", 0x241230, 0x241248
-data_4C241248:
-.incbin_range "baserom/kn6000_program.rom", 0x241248, 0x24124C
-data_4C24124C:
-.incbin_range "baserom/kn6000_program.rom", 0x24124C, 0x241250
-data_4C241250:
-.incbin_range "baserom/kn6000_program.rom", 0x241250, 0x241254
-data_4C241254:
-.incbin_range "baserom/kn6000_program.rom", 0x241254, 0x241258
-data_4C241258:
-.incbin_range "baserom/kn6000_program.rom", 0x241258, 0x24125C
-data_4C24125C:
-.incbin_range "baserom/kn6000_program.rom", 0x24125C, 0x241264
-data_4C241264:
-.incbin_range "baserom/kn6000_program.rom", 0x241264, 0x241268
+InOutTestWindowProc_Lad8_Table:	# 2 x u16, 184..575; read by InOutTestWindowProc_Lad8 : `movhu	(a0), d0`; TestMICFunc_L7b : `movhu	(a0), d0` ...
+	tab_u16	575, 184
+InOutTestWindowProc_L286_Table:	# 2 x u16, 40..300; read by InOutTestWindowProc_L286 : `movhu	(a0), d0`
+	tab_u16	300, 40
+InOutTestWindowProc_L3f7_Table:	# 2 x u16, 64..300; read by InOutTestWindowProc_L3f7 : `movhu	(a1), d0`
+	tab_u16	300, 64
+InOutTestWindowProc_L4fa_Table:	# 2 x u16, 88..300; read by InOutTestWindowProc_L4fa : `movhu	(a1), d0`
+	tab_u16	300, 88
+InOutTestWindowProc_L5fd_Table:	# 2 x u16, 112..300; read by InOutTestWindowProc_L5fd : `movhu	(a0), d0`
+	tab_u16	300, 112
+InOutTestWindowProc_L704_Table:	# 4 x u16, 136..300; read by InOutTestWindowProc_L704 : `movhu	(a0), d0`
+	tab_u16	300, 136, 300, 160
+InOutTestWindowProc_L87a_Table:	# 2 x u16, 184..300; read by InOutTestWindowProc_L87a : `movhu	(a1), d0`
+	tab_u16	300, 184
 data_4C241268:
 .incbin_range "baserom/kn6000_program.rom", 0x241268, 0x241278
 data_4C241278:
 .incbin_range "baserom/kn6000_program.rom", 0x241278, 0x2412A8
+
 Str_EXP_1:	.asciz " EXP 1 :"
 Str_EXP_2:	.asciz " EXP 2 :"
 Str_PARAMETOR_ROM_IC5_2:	.asciz "PARAMETOR ROM  IC5 ="
@@ -5567,8 +5592,11 @@ Str_Z_3:	.asciz "Z"
 .incbin_range "baserom/kn6000_program.rom", 0x2413AE, 0x2413B4
 Str_Z_2:	.asciz "Z"
 .incbin_range "baserom/kn6000_program.rom", 0x2413B6, 0x2413BC
-data_4C2413BC:
-.incbin_range "baserom/kn6000_program.rom", 0x2413BC, 0x2413EC
+
+func_4C10F650_Table:	# 24 x u16, 25..635; read by func_4C10F650_entry : `movhu	(a1), d0`
+	tab_u16	25, 62, 590, 93, 25, 95, 620, 120, 25, 120, 605, 139	# [0]
+	tab_u16	25, 140, 590, 159, 25, 160, 395, 179, 25, 180, 635, 199	# [12]
+
 Str_Resets_the_PERFORMANCE_or_individual_sec_4:	.asciz "Resets the PERFORMANCE or individual sections to the original factory settings."
 Str_Setzt_die_PERFORMANCE_Daten_d_h_die_von:	.asciz "Setzt die PERFORMANCE Daten, d.h. die von Ihnen erstellten Daten und Einstellungen, auf die Werkseinstellung zur\xFCck."
 Str_Resets_the_PERFORMANCE_or_individual_sec_3:	.asciz "Resets the PERFORMANCE or individual sections to the original factory settings."
@@ -5650,8 +5678,10 @@ Str_7_6:	.asciz " 7 "
 Str_8_7:	.asciz " 8 "
 Str_9_6:	.asciz " 9 "
 Str_ERR_2:	.asciz "ERR"
-data_4C241970:
-.incbin_range "baserom/kn6000_program.rom", 0x241970, 0x24197C
+
+TchSensGridCheck_Table_2:	# 12 x u8, 0..255; read by TchSensGridCheck : `movbu	(a1), d0`
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255
+
 Str_3d_19:	.asciz "%3d"
 Str_ON_18:	.asciz "ON "
 Str_OFF_27:	.asciz "OFF"
@@ -5664,8 +5694,25 @@ Str_3d_15:	.asciz "%3d"
 Str_3d_14:	.asciz "%3d"
 Str_empty_343:	.asciz " "
 .incbin_range "baserom/kn6000_program.rom", 0x2419A6, 0x2419C8
-data_4C2419C8:
-	.space	256, 0x00
+
+FSWAssGridCheck_Table:	# 256 x u8, 0..0; read by FSWAssGridCheck : `movbu	(a1), d0`
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [32]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [48]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [64]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [80]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [96]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [112]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [128]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [144]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [160]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [176]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [192]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [208]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [224]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [240]
+
 Str_OFF_25:	.asciz "      OFF       "
 Str_SOFT_PEDAL:	.asciz "   SOFT PEDAL   "
 Str_SOSTENUTO_PEDAL:	.asciz "SOSTENUTO PEDAL "
@@ -5708,7 +5755,7 @@ Str_PAD_6_2:	.asciz "     PAD 6      "
 Str_TAP_TEMPO:	.asciz "   TAP TEMPO    "
 Str_TOTAL_EXPRESSION:	.asciz "TOTAL EXPRESSION"
 Str_PART_EXPRESSION:	.asciz "PART EXPRESSION "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PART_EXPRESSION
 
 ptrs_4C241D94:
 	.long	Str_OFF_25
@@ -5755,43 +5802,60 @@ ptrs_4C241D94:
 	.long	Str_PART_EXPRESSION
 
 Str_s_44:	.asciz "%s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_44
 Str_s_43:	.asciz "%s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_43
 Str_s_42:	.asciz "%s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_42
 Str_s_41:	.asciz "%s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_41
 Str_s_40:	.asciz "%s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_40
 Str_s_39:	.asciz "%s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_39
 Str_s_38:	.asciz "%s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_38
 Str_s_37:	.asciz "%s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_37
 Str_s_36:	.asciz "%s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_36
 Str_s_35:	.asciz "%s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_35
 Str_s_34:	.asciz "%s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_34
 Str_s_33:	.asciz "%s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_33
 Str_s_32:	.asciz "%s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_32
 Str_s_31:	.asciz "%s"
-	.align	4, 0xFF
-data_4C241E74:
-.incbin_range "baserom/kn6000_program.rom", 0x241E74, 0x241E90
-data_4C241E90:
-	.space	8, 0x00
-data_4C241E98:
-	.space	4, 0x00
-data_4C241E9C:
-	.space	256, 0x00
-data_4C241F9C:
-.incbin_range "baserom/kn6000_program.rom", 0x241F9C, 0x241FAC
+	.align	4, 0xFF	# pad after Str_s_31
+
+FSWAssGridFilter_L21_Table:	# 7 x u32, 16384..16391; read by FSWAssGridFilter_L21 : `mov	(d0, a0), d0`
+	tab_u32	16386, 16387, 16388, 16389, 16390, 16391, 16384
+MSAModeBoxProc_Table:	# 4 x u16, 0..0; read by MSAModeBoxProc : `movhu	(a1), d0`
+	tab_u16	0, 0, 0, 0
+MSAModeBoxProc_Table_2:	# 2 x u16, 0..0; read by MSAModeBoxProc : `movhu	(a1), d0`
+	tab_u16	0, 0
+MSAModeBoxProc_Table_3:	# 256 x u8, 0..0; read by MSAModeBoxProc : `movbu	(a1), d0`
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [32]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [48]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [64]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [80]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [96]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [112]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [128]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [144]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [160]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [176]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [192]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [208]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [224]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [240]
+MSAFilter_L21_Table:	# 4 x u32, 1..161; read by MSAFilter_L21 : `mov	(d0, a0), d0`
+	tab_u32	161, 1, 2, 3
+
 Str_C_7:	.asciz "C "
 Str_D_a0_2:	.asciz "D~a0"
 Str_D_4:	.asciz "D "
@@ -5804,7 +5868,7 @@ Str_A_a0_2:	.asciz "A~a0"
 Str_A_18:	.asciz "A "
 Str_B_a0_2:	.asciz "B~a0"
 Str_B_5:	.asciz "B "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_B_5
 
 ptrs_4C241FDC:
 	.long	Str_C_7
@@ -5819,44 +5883,64 @@ ptrs_4C241FDC:
 	.long	Str_A_18
 	.long	Str_B_a0_2
 	.long	Str_B_5
-data_4C24200C:
-	.space	8, 0x00
-data_4C242014:
-	.space	4, 0x00
-data_4C242018:
-	.space	256, 0x00
+
+SineWaveWindowProc_Table:	# 4 x u16, 0..0; read by SineWaveWindowProc : `movhu	(a1), d0`
+	tab_u16	0, 0, 0, 0
+SineWaveWindowProc_Table_2:	# 2 x u16, 0..0; read by SineWaveWindowProc : `movhu	(a1), d0`
+	tab_u16	0, 0
+SineWaveWindowProc_Table_3:	# 256 x u8, 0..0; read by SineWaveWindowProc : `movbu	(a1), d0`
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [32]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [48]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [64]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [80]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [96]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [112]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [128]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [144]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [160]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [176]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [192]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [208]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [224]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [240]
 
 Str_s_2d_3d:	.asciz "%s%2d, %3d,"
 Str_3d_13:	.asciz " %3d"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_3d_13
 Str_Select_the_mode_by_sound_button_of_highe:	.asciz "Select the mode by sound button of highest line."
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Select_the_mode_by_sound_button_of_highe
 Str_CHECK_MODE:	.asciz "CHECK MODE:"
 Str_KEY_DOWN_INFORMATION:	.asciz "KEY DOWN INFORMATION = (               )"
-	.align	4, 0xFF
-data_4C242198:
-	.space	8, 0x00
-data_4C2421A0:
-	.space	4, 0x00
+	.align	4, 0xFF	# pad after Str_KEY_DOWN_INFORMATION
+
+func_4C1099A3_Table:	# 4 x u16, 0..0; read by func_4C1099A3_entry : `movhu	(a1), d0`
+	tab_u16	0, 0, 0, 0
+func_4C1099A3_Table_2:	# 2 x u16, 0..0; read by func_4C1099A3_entry : `movhu	(a1), d0`
+	tab_u16	0, 0
+
 Str_1_SINE_WAVE_at_Full_level_w_o_Touch_and:	.asciz "(1)SINE WAVE at Full level (w/o Touch and Key note)"
 Str_C_key_IC205_206_C_7eB_key_IC207_208:	.asciz "C-key=IC205&206,C#~7eB-key=IC207&208"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_C_key_IC205_206_C_7eB_key_IC207_208
 Str_2_GENERATOR_LSI_PAN_check_w_o_Touch_and:	.asciz "(2)GENERATOR LSI PAN check (w/o Touch and Key note)"
 Str_C_key_LEFT_C_7eB_key_RIGHT:	.asciz "C-key=LEFT,C#~7eB-key=RIGHT"
 Str_3_HIGH_SOUND_check_2octave_w_o_Touch_and:	.asciz "(3)HIGH SOUND check(+2octave w/o Touch and Key note)"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_3_HIGH_SOUND_check_2octave_w_o_Touch_and
 Str_4_LOW_SOUND_check_2octave_w_o_Touch_and:	.asciz "(4)LOW SOUND check(-2octave w/o Touch and Key note)"
 Str_5_NORMAL_SOUND_check_with_TOUCH:	.asciz "(5)NORMAL SOUND check with TOUCH"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_5_NORMAL_SOUND_check_with_TOUCH
 Str_6_SINE_WAVE_at_16dB_DOWN_level_w_o_Touch:	.asciz "(6)SINE WAVE at 16dB DOWN level(w/o Touch and Key note)"
-data_4C242318:
-.incbin_range "baserom/kn6000_program.rom", 0x242318, 0x242324
-data_4C242324:
-	.space	8, 0x00
-data_4C24232C:
-	.space	4, 0x00
-data_4C242330:
-.incbin_range "baserom/kn6000_program.rom", 0x242330, 0x242338
+
+SineWaveFilter_L21_Table:	# 3 x u32, 7340032..12582912; read by SineWaveFilter_L21 : `mov	(d0, a0), d0`
+	tab_u32	7344145, 12582912, 7340032
+AcItimatuWindowProc_Table:	# 4 x u16, 0..0; read by AcItimatuWindowProc : `movhu	(a1), d0`
+	tab_u16	0, 0, 0, 0
+AcItimatuWindowProc_Table_2:	# 2 x u16, 0..0; read by AcItimatuWindowProc : `movhu	(a0), d0`
+	tab_u16	0, 0
+AcItimatuWindowProc_L79_Table:	# 8 x u8, 0..255; read by AcItimatuWindowProc_L79 : `movbu	(d0, a0), d0`
+	tab_u8	0, 255, 249, 250, 252, 255, 255, 255
+
 Str_Stores_sound_balance_settings_only_5:	.asciz "Stores sound & balance settings only."
 Str_Speichert_nur_Klang_und_Lautst_rkeeinste:	.asciz "Speichert nur Klang- und Lautst\xE4rkeeinstellungen."
 Str_Stores_sound_balance_settings_only_4:	.asciz "Stores sound & balance settings only."
@@ -5892,39 +5976,107 @@ ptrs_4C242634:
 	.long	Str_Stores_to_total_setting_including_Rhythm_2
 	.long	Str_Stores_to_total_setting_including_Rhythm
 	.long	data_4C2425EF
-data_4C242650:
-	.space	256, 0x00
-data_4C242750:
-	.space	8, 0x00
-data_4C242758:
-	.space	4, 0x00
-data_4C24275C:
-	.space	256, 0x00
-data_4C24285C:
-	.space	256, 0x00
-data_4C24295C:
-.incbin_range "baserom/kn6000_program.rom", 0x24295C, 0x242980
+
+AcPmExpFilterGridBoxProc_Table:	# 256 x u8, 0..0; read by AcPmExpFilterGridBoxProc : `movbu	(a1), d0`
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [32]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [48]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [64]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [80]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [96]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [112]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [128]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [144]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [160]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [176]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [192]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [208]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [224]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [240]
+PmemModeBoxProc_Table:	# 4 x u16, 0..0; read by PmemModeBoxProc : `movhu	(a1), d0`
+	tab_u16	0, 0, 0, 0
+PmemModeBoxProc_Table_2:	# 2 x u16, 0..0; read by PmemModeBoxProc : `movhu	(a1), d0`
+	tab_u16	0, 0
+PmemModeBoxProc_Table_3:	# 256 x u8, 0..0; read by PmemModeBoxProc : `movbu	(a1), d0`
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [32]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [48]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [64]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [80]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [96]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [112]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [128]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [144]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [160]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [176]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [192]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [208]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [224]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [240]
+PmExpFilter1GridCheck_Table:	# 256 x u8, 0..0; read by PmExpFilter1GridCheck : `movbu	(a1), d0`
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [32]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [48]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [64]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [80]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [96]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [112]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [128]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [144]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [160]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [176]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [192]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [208]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [224]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [240]
+PmExpFilter1GridCheck_L16c_Table:	# 9 x u32, 20480..20499; read by PmExpFilter1GridCheck_L16c : `mov	(d0, a0), d0`
+	tab_u32	20480, 20481, 20484, 20482, 20483, 20490, 20499, 20492	# [0]
+	tab_u32	20493	# [8]
 
 Str_ON_16:	.asciz "ON "
 Str_OFF_24:	.asciz "OFF"
 Str_OFF_23:	.asciz "OFF"
 Str_ON_15:	.asciz "ON "
-data_4C242990:
-	.space	256, 0x00
+
+PmExpFilter2GridCheck_Table:	# 256 x u8, 0..0; read by PmExpFilter2GridCheck : `movbu	(a1), d0`
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [32]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [48]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [64]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [80]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [96]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [112]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [128]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [144]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [160]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [176]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [192]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [208]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [224]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [240]
+
 Str_P_5:	.asciz "\x0EP"
 .incbin_range "baserom/kn6000_program.rom", 0x242A93, 0x242AB4
 Str_ON_14:	.asciz "ON "
 Str_OFF_22:	.asciz "OFF"
 Str_OFF_21:	.asciz "OFF"
 Str_ON_13:	.asciz "ON "
-data_4C242AC4:
-.incbin_range "baserom/kn6000_program.rom", 0x242AC4, 0x242AD0
-data_4C242AD0:
-.incbin_range "baserom/kn6000_program.rom", 0x242AD0, 0x242B18
-data_4C242B18:
-.incbin_range "baserom/kn6000_program.rom", 0x242B18, 0x242B24
-data_4C242B24:
-	.space	24, 0x00
+
+PmemModeFilter_L21_Table:	# 3 x u32, 0..130; read by PmemModeFilter_L21 : `mov	(d0, a0), d0`
+	tab_u32	130, 0, 1
+PmExpFilter_L21_Table:	# 18 x u32, 20480..20500; read by PmExpFilter_L21 : `mov	(d0, a0), d0`
+	tab_u32	20480, 20481, 20484, 20482, 20483, 20490, 20499, 20492	# [0]
+	tab_u32	20493, 20494, 20485, 20487, 20500, 20491, 20496, 20489	# [8]
+	tab_u32	20486, 20497	# [16]
+DispTimeSetGridCheck_Table:	# 12 x u8, 0..255; read by DispTimeSetGridCheck : `movbu	(a1), d0`
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255
+DispTimeSetGridCheck_Table_2:	# 6 x u32, 0..0; read by DispTimeSetGridCheck : `mov	(a1), d0`
+	tab_u32	0, 0, 0, 0, 0, 0
+
 Str_OFF_20:	.asciz "  OFF  "
 Str_DEFAULT_4:	.asciz "DEFAULT"
 Str_HOLD:	.asciz " HOLD  "
@@ -5955,51 +6107,55 @@ ptrs_4C242BA4:
 	.long	Str_10_sec
 
 Str_s_30:	.asciz "%s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_30
 Str_s_29:	.asciz "%s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_29
 Str_s_28:	.asciz "%s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_28
 Str_s_27:	.asciz "%s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_27
 Str_s_26:	.asciz "%s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_26
 Str_s_25:	.asciz "%s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_25
 Str_s_24:	.asciz "%s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_24
 Str_s_23:	.asciz "%s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_23
 Str_s_22:	.asciz "%s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_22
 Str_s_21:	.asciz "%s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_21
 Str_s_20:	.asciz "%s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_20
 Str_s_19:	.asciz "%s"
-	.align	4, 0xFF
-data_4C242C08:
-.incbin_range "baserom/kn6000_program.rom", 0x242C08, 0x242C16
-data_4C242C16:
-.incbin_range "baserom/kn6000_program.rom", 0x242C16, 0x242C24
-data_4C242C24:
-.incbin_range "baserom/kn6000_program.rom", 0x242C24, 0x242C40
-data_4C242C40:
-	.space	16, 0x00
+	.align	4, 0xFF	# pad after Str_s_19
+
+AcFadeSetGridBoxProc_L109_Table:	# 7 x s16, 1..2; read by AcFadeSetGridBoxProc_L109 : `movhu	(d1, a0), d1`
+	tab_s16	1, 1, 1, 2, 1, 1, 1
+AcFadeSetGridBoxProc_L197_Table:	# 7 x s16, 1..2; read by AcFadeSetGridBoxProc_L197 : `movhu	(d1, a1), d1`
+	tab_s16	1, 2, 1, 1, 1, 1, 1
+FadeSetGridCheck_L75_Table:	# 7 x u32, 24576..4294967295; read by FadeSetGridCheck_L12b : `mov	(d0, a0), d1`; FadeSetGridCheck_L212 : `mov	(d0, a1), d0` ...
+	tab_u32	4294967295, 24576, 4294967295, 24577, 24582, 24580, 24581
+FadeSetGridCheck_Table:	# 16 x u8, 0..0; read by FadeSetGridCheck : `movbu	(a1), d0`
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+
 Str_2d_measure_2:	.asciz " %2d measure "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_2d_measure_2
 Str_ON_12:	.asciz " ON  "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ON_12
 Str_OFF_19:	.asciz " OFF "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OFF_19
 Str_2d_measure:	.asciz " %2d measure "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_2d_measure
 Str_ON_11:	.asciz " ON  "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ON_11
 Str_OFF_18:	.asciz " OFF "
-	.align	4, 0xFF
-data_4C242C90:
-.incbin_range "baserom/kn6000_program.rom", 0x242C90, 0x242CA4
+	.align	4, 0xFF	# pad after Str_OFF_18
+
+FadeIOFilter_L21_Table:	# 5 x u32, 24576..24582; read by FadeIOFilter_L21 : `mov	(d0, a0), d0`
+	tab_u32	24576, 24577, 24582, 24580, 24581
+
 Str_DEFAULT_3:	.asciz "DEFAULT"
 Str_PRESET_6:	.asciz "PRESET "
 Str_ERROR_3:	.asciz " ERROR "
@@ -6010,34 +6166,35 @@ Str_DEFAULT:	.asciz "DEFAULT"
 Str_PRESET_4:	.asciz "PRESET "
 Str_ERROR:	.asciz " ERROR "
 Str_1_Dark_Blue:	.asciz "1:Dark Blue "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_1_Dark_Blue
 Str_2_Dark_Red:	.asciz "2:Dark Red  "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_2_Dark_Red
 Str_3_Dark_Green:	.asciz "3:Dark Green"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_3_Dark_Green
 Str_4_Wood_1:	.asciz "4:Wood 1    "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_4_Wood_1
 Str_5_Wood_2:	.asciz "5:Wood 2    "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_5_Wood_2
 Str_6_Cloth:	.asciz "6:Cloth     "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_6_Cloth
 Str_7_Check:	.asciz "7:Check     "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_7_Check
 Str_8_Water:	.asciz "8:Water     "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_8_Water
 Str_9_Metal:	.asciz "9:Metal     "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_9_Metal
 Str_X_ERROR:	.asciz "X:ERROR--"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_X_ERROR
 
 Bitmap_WallSetBitmapCheck_Pixels:	# 24 x 24, 8 bit(s) a pixel, rows padded to even bytes: the bitmap WallSetBitmapCheck answers MT_GetBitmapData with (src/program/data/media/Bitmap_WallSetBitmapCheck_Pixels.png)
 	.incbin	"build/bitmaps/Bitmap_WallSetBitmapCheck_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 8 24 24) from src/program/data/media/Bitmap_WallSetBitmapCheck_Pixels.png
-data_4C242FC8:
-.incbin_range "baserom/kn6000_program.rom", 0x242FC8, 0x242FDA
-data_4C242FDA:
-.incbin_range "baserom/kn6000_program.rom", 0x242FDA, 0x242FEC
-data_4C242FEC:
-.incbin_range "baserom/kn6000_program.rom", 0x242FEC, 0x243004
+
+AcParaLoadOptGridBoxProc_L12f_Table:	# 9 x s16, 1..4; read by AcParaLoadOptGridBoxProc_L12f : `movhu	(d1, a1), d1`
+	tab_s16	1, 1, 1, 1, 1, 1, 1, 4, 1
+AcParaLoadOptGridBoxProc_L1fc_Table:	# 9 x s16, 1..4; read by AcParaLoadOptGridBoxProc_L1fc : `movhu	(d1, a0), d0`
+	tab_s16	1, 1, 1, 4, 1, 1, 1, 1, 1
+ParaLoadOptGridCheck_Lbf_Table:	# 6 x u32, 0..255; read by ParaLoadOptGridCheck_L117 : `mov	(a1), d0`; ParaLoadOptGridCheck_L143 : `mov	(a1), d0` ...
+	tab_u32	0, 1, 255, 0, 1, 0
 
 Str_NO_43:	.asciz " NO  "
 Str_YES_8:	.asciz " YES "
@@ -6051,7 +6208,7 @@ Str_PRESET1:	.asciz " PRESET1 "
 Str_PRESET2:	.asciz " PRESET2 "
 Str_PRESET3:	.asciz " PRESET3 "
 Str_KEEP:	.asciz "  KEEP   "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_KEEP
 
 ptrs_4C24304C:
 	.long	Str_INITIAL_5
@@ -6059,15 +6216,17 @@ ptrs_4C24304C:
 	.long	Str_PRESET2
 	.long	Str_PRESET3
 	.long	Str_KEEP
-data_4C243060:
-	.space	16, 0x00
+
+ParaLoadOptGridCheck_Table:	# 16 x u8, 0..0; read by ParaLoadOptGridCheck : `movbu	(a1), d0`
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 
 Bitmap_FDCstopBitmapCheck_Pixels:	# 12 x 12, 8 bit(s) a pixel, rows padded to even bytes: the bitmap FDCstopBitmapCheck answers MT_GetBitmapData with (src/program/data/media/Bitmap_FDCstopBitmapCheck_Pixels.png)
 	.incbin	"build/bitmaps/Bitmap_FDCstopBitmapCheck_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 8 12 12) from src/program/data/media/Bitmap_FDCstopBitmapCheck_Pixels.png
-data_4C243100:
-.incbin_range "baserom/kn6000_program.rom", 0x243100, 0x24310C
-data_4C24310C:
-.incbin_range "baserom/kn6000_program.rom", 0x24310C, 0x243124
+
+DataProtectGridCheck_Table:	# 12 x u8, 0..255; read by DataProtectGridCheck : `movbu	(a1), d0`
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255
+DataProtectGridCheck_Table_2:	# 6 x u32, 0..1344602912; read by DataProtectGridCheck : `mov	(a1), d0`
+	tab_u32	1344602912, 2, 127, 0, 0, 0
 
 Str_OFF_17:	.asciz "OFF"
 Str_ON_10:	.asciz "ON "
@@ -6077,33 +6236,33 @@ ptrs_4C24312C:
 	.long	Str_ON_10
 
 Str_s_18:	.asciz "%s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_18
 Str_s_17:	.asciz "%s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_17
 Str_s_16:	.asciz "%s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_16
 Str_s_15:	.asciz "%s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_15
 Str_s_14:	.asciz "%s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_14
 Str_s_13:	.asciz "%s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_13
 Str_s_12:	.asciz "%s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_12
 Str_s_11:	.asciz "%s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_11
 Str_s_10:	.asciz "%s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_10
 Str_s_9:	.asciz "%s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_9
 Str_s_8:	.asciz "%s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_8
 Str_s_7:	.asciz "%s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_7
 Str_s_6:	.asciz "%s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_6
 Str_s_5:	.asciz "%s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_5
 Str_KARI0:	.asciz "KARI0"
 Str_KARI1:	.asciz "KARI1"
 Str_KARI2:	.asciz "KARI2"
@@ -6122,7 +6281,7 @@ Str_Use_the_buttons_at_the_bottom_of_this_sc:	.asciz "Use the buttons at the bot
 Str_Verwenden_Sie_die_Tasten_unter_dem_Displ:	.asciz "Verwenden Sie die Tasten unter dem Display um die gew\xFCnschte Sprache auszuw\xE4hlen und best\xE4tigen Sie mit OK.~0d"
 Str_A_l_aide_des_boutons_situ_s_en_bas_de_l:	.asciz "A l'aide des boutons situ\xE9s en bas de l'affichage, vous pouvez s\xE9lectionner l'une des langues disponibles. Pour valider votre choix pressez OK.~0d"
 Str_Utilice_los_botones_en_la_parte_inferior:	.asciz "Utilice los botones en la parte inferior de esta pantalla para cambiar el idioma del Help (Ayuda) y oprima OK.~0d"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Utilice_los_botones_en_la_parte_inferior
 
 ptrs_4C243394:
 	.long	Str_Use_the_buttons_at_the_bottom_of_this_sc
@@ -6130,23 +6289,56 @@ ptrs_4C243394:
 	.long	Str_A_l_aide_des_boutons_situ_s_en_bas_de_l
 	.long	Str_Utilice_los_botones_en_la_parte_inferior
 	.long	Str_Use_the_buttons_at_the_bottom_of_this_sc
-data_4C2433A8:
-	.space	8, 0x00
-data_4C2433B0:
-	.space	4, 0x00
-data_4C2433B4:
-.incbin_range "baserom/kn6000_program.rom", 0x2433B4, 0x2433CC
-data_4C2433CC:
-	.space	256, 0x00
+
+CusMemModeBoxProc_Table:	# 4 x u16, 0..0; read by CusMemModeBoxProc : `movhu	(a1), d0`
+	tab_u16	0, 0, 0, 0
+CusMemModeBoxProc_Table_2:	# 2 x u16, 0..0; read by CusMemModeBoxProc : `movhu	(a0), d0`
+	tab_u16	0, 0
+CusMemModeBoxProc_Table_3:	# 6 x u32, 0..1344602914; read by CusMemModeBoxProc : `mov	(a1), d0`
+	tab_u32	1344602914, 2, 1, 0, 0, 0
+CusMemModeBoxProc_Table_4:	# 256 x u8, 0..0; read by CusMemModeBoxProc : `movbu	(a1), d0`
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [32]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [48]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [64]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [80]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [96]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [112]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [128]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [144]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [160]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [176]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [192]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [208]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [224]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [240]
 
 Str_TT_TESTMENU_2:	.asciz "TT_TESTMENU"
 Str_TT_TESTMENU:	.asciz "TT_TESTMENU"
-data_4C2434E4:
-	.space	8, 0x00
-data_4C2434EC:
-	.space	4, 0x00
-data_4C2434F0:
-	.space	256, 0x00
+
+InOutTestWindowProc_Table:	# 4 x u16, 0..0; read by InOutTestWindowProc : `movhu	(a1), d0`
+	tab_u16	0, 0, 0, 0
+InOutTestWindowProc_Table_2:	# 2 x u16, 0..0; read by InOutTestWindowProc : `movhu	(a0), d0`
+	tab_u16	0, 0
+InOutTestWindowProc_Table_3:	# 256 x u8, 0..0; read by InOutTestWindowProc : `movbu	(a1), d0`
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [32]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [48]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [64]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [80]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [96]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [112]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [128]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [144]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [160]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [176]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [192]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [208]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [224]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [240]
+
 Str_C_6:	.asciz "C "
 Str_D_a0:	.asciz "D~a0"
 Str_D_3:	.asciz "D "
@@ -6159,7 +6351,7 @@ Str_A_a0:	.asciz "A~a0"
 Str_A_17:	.asciz "A "
 Str_B_a0:	.asciz "B~a0"
 Str_B_4:	.asciz "B "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_B_4
 
 ptrs_4C243620:
 	.long	Str_C_6
@@ -6190,7 +6382,7 @@ Str_Foot_Controller_3_state:	.asciz "Foot Controller 3:   state="
 Str_Foot_Controller_4_state:	.asciz "Foot Controller 4:   state="
 Str_MIC_Terminal_state:	.asciz "MIC Terminal:        state="
 Str_Keyboad_note_velocity_after_touch:	.asciz "Keyboad: note =      ,velocity =      ,after touch ="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Keyboad_note_velocity_after_touch
 
 ptrs_4C243810:
 	.long	Str_APC_SEQ_Volume_value
@@ -6211,78 +6403,146 @@ data_4C243848:
 .incbin_range "baserom/kn6000_program.rom", 0x243848, 0x24384C
 
 Str_s_2d:	.asciz "%s%2d"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_2d
 Str_3d_12:	.asciz "%3d"
 Str_3d_11:	.asciz "%3d"
 Str_OK_53:	.asciz "OK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OK_53
 Str_3d_10:	.asciz "%3d"
 Str_3d_9:	.asciz "%3d"
 Str_OK_52:	.asciz "OK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OK_52
 Str_3d_8:	.asciz "%3d"
 Str_OK_51:	.asciz "OK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OK_51
 Str_3d_7:	.asciz "%3d"
 Str_OK_50:	.asciz "OK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OK_50
 Str_3d_6:	.asciz "%3d"
 Str_OK_49:	.asciz "OK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OK_49
 Str_3d_5:	.asciz "%3d"
 Str_3d_4:	.asciz "%3d"
 Str_OK_48:	.asciz "OK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OK_48
 Str_ON_OK_2:	.asciz "ON   OK"
 Str_OFF_16:	.asciz "OFF"
 Str_s_4:	.asciz "%s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_4
 Str_s_3:	.asciz "%s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s_3
 Str_OFF_15:	.asciz "OFF"
 Str_OFF_14:	.asciz "OFF"
-data_4C2438AC:
-	.space	8, 0x00
-data_4C2438B4:
-	.space	4, 0x00
+
+func_4C10F650_Table_2:	# 4 x u16, 0..0; read by func_4C10F650_entry : `movhu	(a1), d0`
+	tab_u16	0, 0, 0, 0
+func_4C10F650_Table_3:	# 2 x u16, 0..0; read by func_4C10F650_entry : `movhu	(a0), d0`
+	tab_u16	0, 0
+
 Str_OK_47:	.asciz "OK"
-	.align	4, 0xFF
-data_4C2438BC:
-.incbin_range "baserom/kn6000_program.rom", 0x2438BC, 0x2438C4
-data_4C2438C4:
-	.space	8, 0x00
-data_4C2438CC:
-	.space	4, 0x00
-data_4C2438D0:
-	.space	256, 0x00
+	.align	4, 0xFF	# pad after Str_OK_47
+
+InOutTestFilter_L21_Table:	# 2 x u32, 7340032..7344145; read by InOutTestFilter_L21 : `mov	(d0, a0), d0`
+	tab_u32	7344145, 7340032
+TestMICFunc_Table:	# 4 x u16, 0..0; read by TestMICFunc : `movhu	(a1), d0`
+	tab_u16	0, 0, 0, 0
+TestMICFunc_Table_2:	# 2 x u16, 0..0; read by TestMICFunc : `movhu	(a1), d0`
+	tab_u16	0, 0
+TestMICFunc_Table_3:	# 256 x u8, 0..0; read by TestMICFunc : `movbu	(a1), d0`
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [32]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [48]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [64]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [80]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [96]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [112]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [128]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [144]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [160]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [176]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [192]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [208]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [224]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [240]
+
 Str_ON_OK:	.asciz "ON   OK"
 Str_OFF_13:	.asciz "OFF"
-data_4C2439DC:
-	.space	8, 0x00
-data_4C2439E4:
-	.space	4, 0x00
-data_4C2439E8:
-	.space	256, 0x00
-data_4C243AE8:
-	.space	8, 0x00
-data_4C243AF0:
-	.space	4, 0x00
-data_4C243AF4:
-	.space	8, 0x00
-data_4C243AFC:
-	.space	4, 0x00
-data_4C243B00:
-	.space	256, 0x00
+
+TestMode8BoxProc_Table:	# 4 x u16, 0..0; read by TestMode8BoxProc : `movhu	(a1), d0`
+	tab_u16	0, 0, 0, 0
+TestMode8BoxProc_Table_2:	# 2 x u16, 0..0; read by TestMode8BoxProc : `movhu	(a1), d0`
+	tab_u16	0, 0
+TestMode8BoxProc_Table_3:	# 256 x u8, 0..0; read by TestMode8BoxProc : `movbu	(a1), d0`
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [32]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [48]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [64]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [80]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [96]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [112]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [128]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [144]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [160]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [176]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [192]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [208]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [224]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [240]
+TestMode8Func_Table:	# 4 x u16, 0..0; read by TestMode8Func : `movhu	(a1), d0`
+	tab_u16	0, 0, 0, 0
+TestMode8Func_Table_2:	# 2 x u16, 0..0; read by TestMode8Func : `movhu	(a1), d0`
+	tab_u16	0, 0
+BoardTestWindowProc_Table:	# 4 x u16, 0..0; read by BoardTestWindowProc : `movhu	(a1), d0`
+	tab_u16	0, 0, 0, 0
+BoardTestWindowProc_Table_2:	# 2 x u16, 0..0; read by BoardTestWindowProc : `movhu	(a0), d0`
+	tab_u16	0, 0
+BoardTestWindowProc_Table_3:	# 256 x u8, 0..0; read by BoardTestWindowProc : `movbu	(a1), d0`
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [32]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [48]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [64]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [80]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [96]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [112]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [128]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [144]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [160]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [176]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [192]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [208]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [224]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [240]
+
 Str_s_2:	.asciz "%s"
-	.align	4, 0xFF
-data_4C243C04:
-	.space	8, 0x00
-data_4C243C0C:
-	.space	4, 0x00
-data_4C243C10:
-	.space	256, 0x00
+	.align	4, 0xFF	# pad after Str_s_2
+
+func_4C10FEDC_Table:	# 4 x u16, 0..0; read by func_4C10FEDC_entry : `movhu	(a1), d0`
+	tab_u16	0, 0, 0, 0
+func_4C10FEDC_Table_2:	# 2 x u16, 0..0; read by func_4C10FEDC_entry : `movhu	(a0), d0`
+	tab_u16	0, 0
+func_4C10FEDC_Table_3:	# 256 x u8, 0..0; read by func_4C10FEDC_entry : `movbu	(a1), d0`
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [32]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [48]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [64]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [80]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [96]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [112]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [128]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [144]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [160]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [176]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [192]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [208]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [224]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [240]
+
 Str_s:	.asciz "%s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_s
 
 ptrs_4C243D14:
 	.long	loc_4C107AD1
@@ -6332,8 +6592,9 @@ data_4C244088:
 .incbin_range "baserom/kn6000_program.rom", 0x244088, 0x244108
 data_4C244108:
 .incbin_range "baserom/kn6000_program.rom", 0x244108, 0x244208
-data_4C244208:
-	.space	8, 0x5A
+
+func_4C1103F7_Table:	# 8 x u8, 90..90; read by func_4C1103F7_entry : `movbu	(a1), d0`
+	tab_u8	90, 90, 90, 90, 90, 90, 90, 90
 
 Str_empty_342:	.asciz "`"
 .incbin_range "baserom/kn6000_program.rom", 0x244212, 0x244290
@@ -6381,20 +6642,63 @@ ptrs_4C244290:
 	.long	loc_4C1141C7
 	.long	loc_4C1141C7
 	.long	loc_4C1141C7
-data_4C244338:
-.incbin_range "baserom/kn6000_program.rom", 0x244338, 0x244348
-data_4C244348:
-.incbin_range "baserom/kn6000_program.rom", 0x244348, 0x244358
-data_4C244358:
-.incbin_range "baserom/kn6000_program.rom", 0x244358, 0x244368
+
+func_4C114F4E_entry_La_Table:	# 16 x u8, 3..66; read by func_4C114F4E_entry_La : `movbu	(d0, a0), d0`
+	tab_u8	16, 17, 18, 3, 27, 65, 66, 9, 4, 5, 6, 7, 8, 10, 11, 12
+func_4C114F7B_entry_La_Table:	# 16 x u8, 3..18; read by func_4C114F7B_entry_La : `movbu	(d0, a0), d0`
+	tab_u8	16, 17, 18, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
+func_4C114FA8_entry_La_Table:	# 16 x u8, 0..15; read by func_4C114FA8_entry_L25 : `movbu	(d0, a0), d1`; func_4C114FA8_entry_La : `movbu	(d0, a0), d0`
+	tab_u8	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
 data_4C244368:
 .incbin_range "baserom/kn6000_program.rom", 0x244368, 0x2443E8
 
 Str_p_3:	.asciz "  p"
 .incbin_range "baserom/kn6000_program.rom", 0x2443EC, 0x244468
-data_4C244468:
-	.space	128, 0xFF
-.incbin_range "baserom/kn6000_program.rom", 0x2444E8, 0x244568
+
+func_4C11B33A_Table:	# 256 x s8, a sparse map by index: 33 entries set, the rest 0xFF (none); read by func_4C11B33A : `movbu	(d0, a0), d0`
+	map_none8	128	# [0..127]
+	map8	128, 3
+	map8	129, 1
+	map8	130, 1
+	map_none8	1	# [131..131]
+	map8	132, 1
+	map8	133, 1
+	map8	134, 1
+	map_none8	9	# [135..143]
+	map8	144, 5
+	map8	145, 5
+	map8	146, 5
+	map8	147, 5
+	map8	148, 5
+	map8	149, 5
+	map8	150, 5
+	map8	151, 5
+	map8	152, 5
+	map8	153, 5
+	map8	154, 5
+	map8	155, 5
+	map8	156, 5
+	map8	157, 5
+	map8	158, 5
+	map8	159, 5
+	map_none8	1	# [160..160]
+	map8	161, 7
+	map8	162, 8
+	map8	163, 9
+	map_none8	12	# [164..175]
+	map8	176, 4
+	map_none8	15	# [177..191]
+	map8	192, 4
+	map_none8	15	# [193..207]
+	map8	208, 2
+	map_none8	15	# [209..223]
+	map8	224, 3
+	map_none8	16	# [225..240]
+	map8	241, 6
+	map8	242, 7
+	map8	243, 8
+	map8	244, 9
+	map_none8	11	# [245..255]
 data_4C244568:
 .incbin_range "baserom/kn6000_program.rom", 0x244568, 0x244664
 data_4C244664:
@@ -6405,8 +6709,9 @@ data_4C244744:
 .incbin_range "baserom/kn6000_program.rom", 0x244744, 0x2447C4
 data_4C2447C4:
 .incbin_range "baserom/kn6000_program.rom", 0x2447C4, 0x2447E8
-data_4C2447E8:
-.incbin_range "baserom/kn6000_program.rom", 0x2447E8, 0x2447FC
+func_4C11B347_Table:	# 20 x u8, 0..255; read by func_4C11B347_entry : `movbu	(d0, a0), d0`
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0	# [0]
+	tab_u8	0, 0, 0, 255	# [16]
 
 ptrs_4C2447FC:
 	.long	loc_4C11CE79
@@ -6416,10 +6721,12 @@ ptrs_4C2447FC:
 	.long	func_4C11D138
 	.long	func_4C11D1FC
 	.long	func_4C11D1FC
-data_4C244818:
-.incbin_range "baserom/kn6000_program.rom", 0x244818, 0x24482C
-data_4C24482C:
-.incbin_range "baserom/kn6000_program.rom", 0x24482C, 0x244834
+
+func_4C11D4E3_Table:	# 20 x u8, 3..66; read by func_4C11D4E3_entry : `movbu	(d0, a0), d1`; func_4C11D4E3_entry_L191 : `movbu	(d0, a0), d0` ...
+	tab_u8	16, 18, 17, 7, 8, 15, 10, 11, 4, 5, 6, 3, 9, 27, 64, 65	# [0]
+	tab_u8	66, 12, 13, 14	# [16]
+func_4C11D4E3_entry_L222_Table:	# 8 x u8, 0..255; read by func_4C11D4E3_entry_L222 : `movbu	(d0, a0), d1`
+	tab_u8	1, 0, 2, 3, 4, 5, 255, 255
 data_4C244834:
 .incbin_range "baserom/kn6000_program.rom", 0x244834, 0x2448B4
 data_4C2448B4:
@@ -6454,11 +6761,13 @@ ptrs_4C244B54:
 	.long	data_4C2448B4
 
 Str_MThd_4:	.asciz "MThd"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MThd_4
 Str_MTrk_4:	.asciz "MTrk"
-	.align	4, 0xFF
-data_4C244B80:
-.incbin_range "baserom/kn6000_program.rom", 0x244B80, 0x244B88
+	.align	4, 0xFF	# pad after Str_MTrk_4
+
+func_4C121BEF_Table:	# 8 x u8, 31..255; read by func_4C121BEF_entry : `movbu	(a1), d0`
+	tab_u8	240, 80, 44, 32, 48, 31, 255, 255
+
 Str_MThd_3:	.asciz "MThd"
 .incbin_range "baserom/kn6000_program.rom", 0x244B8D, 0x244B98
 Str_MTrk_3:	.asciz "MTrk"
@@ -6469,8 +6778,10 @@ data_4C244BAC:
 .incbin_range "baserom/kn6000_program.rom", 0x244BAC, 0x244BB3
 data_4C244BB3:
 .incbin_range "baserom/kn6000_program.rom", 0x244BB3, 0x244BBC
-data_4C244BBC:
-.incbin_range "baserom/kn6000_program.rom", 0x244BBC, 0x244BC8
+
+func_4C12270C_Table:	# 12 x u8, 0..247; read by func_4C12270C_entry : `movbu	(a1), d0`
+	tab_u8	240, 10, 80, 44, 32, 48, 31, 0, 0, 0, 0, 247
+
 Str_empty_341:	.asciz "`"
 .incbin_range "baserom/kn6000_program.rom", 0x244BCA, 0x244C48
 
@@ -6593,9 +6904,10 @@ ptrs_4C244D68:
 	.long	loc_4C12610C
 
 Str_empty_340:	.asciz "                  "
-	.align	4, 0xFF
-data_4C244E24:
-.incbin_range "baserom/kn6000_program.rom", 0x244E24, 0x244E34
+	.align	4, 0xFF	# pad after Str_empty_340
+
+func_4C129916_Table:	# 4 x u32, 11534346..11567106; read by func_4C129916_entry : `mov	(d0, a0), d0`; func_4C129E43 : `mov	(d0, a0), d0` ...
+	tab_u32	11534346, 11567106, 11567105, 11567104
 data_4C244E34:
 .incbin_range "baserom/kn6000_program.rom", 0x244E34, 0x244E50
 
@@ -6646,16 +6958,20 @@ ptrs_4C244EDC:
 	.long	func_4C12A5D7
 	.long	loc_4C12A5CC
 	.long	loc_4C12B4EC
-data_4C244EF4:
-.incbin_range "baserom/kn6000_program.rom", 0x244EF4, 0x244F10
+
+func_4C12BB12_entry_Le_Table:	# 14 x u16, 0..1536; read by func_4C12BB12_entry_Le : `movhu	(d1, a0), d3`
+	tab_u16	0, 8, 12, 16, 24, 32, 48, 64, 96, 192, 384, 768	# [0]
+	tab_u16	1152, 1536	# [12]
+
 ptrs_4C244F10:
 	.long	loc_4C12CD7D
 	.long	loc_4C12CDA0
 	.long	loc_4C12CDB2
 	.long	loc_4C12CDCE
 	.long	loc_4C12CDF1
-data_4C244F24:
-.incbin_range "baserom/kn6000_program.rom", 0x244F24, 0x244F34
+
+func_4C12E789_entry_L85_Table:	# 16 x u8, 0..12; read by func_4C12E789_entry_L85 : `movbu	(d0, a0), d0`
+	tab_u8	0, 0, 5, 6, 7, 11, 3, 4, 0, 0, 12, 0, 0, 0, 0, 0
 data_4C244F34:
 .incbin_range "baserom/kn6000_program.rom", 0x244F34, 0x245034
 data_4C245034:
@@ -6666,6 +6982,7 @@ data_4C245234:
 .incbin_range "baserom/kn6000_program.rom", 0x245234, 0x245334
 data_4C245334:
 .incbin_range "baserom/kn6000_program.rom", 0x245334, 0x245434
+
 ptrs_4C245434:
 	.long	loc_4C12D93B
 	.long	loc_4C12D91D
@@ -6682,26 +6999,26 @@ ptrs_4C245434:
 	.long	loc_4C12D8CC
 
 Str_A_3:	.asciz "A"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_A_3
 Str_w:	.asciz "w~"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_w
 Str_d_10:	.asciz "d"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_d_10
 Str_wb_18:	.asciz "wb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_wb_18
 Str_r_3:	.asciz "r"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_r_3
 Str_d_9:	.asciz "d"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_d_9
 Str_r_2:	.asciz "r"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_r_2
 Str_a:	.asciz "a"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_a
 Str_d_8:	.asciz "d"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_d_8
 Str_empty_339:	.asciz ".          "
 Str_r:	.asciz "r"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_r
 data_4C24549C:
 .incbin_range "baserom/kn6000_program.rom", 0x24549C, 0x2454BC
 data_4C2454BC:
@@ -6714,26 +7031,26 @@ data_4C245548:
 .incbin_range "baserom/kn6000_program.rom", 0x245548, 0x245564
 Str_A_16:	.asciz "A:\\"
 Str_d_7:	.asciz "d"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_d_7
 Str_A_15:	.asciz "A:\\"
 Str_d_6:	.asciz "d"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_d_6
 Str_A_14:	.asciz "A:\\"
 Str_wb_17:	.asciz "+wb"
 Str_empty_338:	.asciz "\\"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_338
 Str_A_13:	.asciz "A:\\"
 Str_d_5:	.asciz "d"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_d_5
 Str_A_IMMUNITY_TST:	.asciz "A:IMMUNITY.TST"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_A_IMMUNITY_TST
 Str_wb_16:	.asciz "wb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_wb_16
 Str_rb_41:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb_41
 Str_empty_337:	.asciz "*.*"
 Str_rb_40:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb_40
 Str_A_TESTDATA_SMF:	.asciz "A:\\TESTDATA.SMF"
 Str_1_PianoDisc:	.asciz "1 PianoDisc"
 data_4C2455C4:
@@ -6762,8 +7079,9 @@ data_4C2473F8:
 	.space	1, 0xF6
 data_4C2473F9:
 .incbin_range "baserom/kn6000_program.rom", 0x2473F9, 0x2473FC
-data_4C2473FC:
-.incbin_range "baserom/kn6000_program.rom", 0x2473FC, 0x247404
+
+func_4C1342AF_Table:	# 8 x u8, 0..4; read by func_4C1342AF_entry : `movbu	(a1), d0`
+	tab_u8	2, 0, 2, 4, 1, 0, 0, 0
 
 ptrs_4C247404:
 	.long	loc_4C13448F
@@ -6835,17 +7153,17 @@ Str_Chord_ADGC:	.asciz "Chord ADGC "
 Str_8_Beat:	.asciz "     8 Beat     "
 .incbin_range "baserom/kn6000_program.rom", 0x258109, 0x2583C8
 Str_1_0_4_9:	.asciz "1.0.4"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_1_0_4_9
 Str_1_0_4_8:	.asciz "1.0.4"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_1_0_4_8
 Str_unknown_compression_method:	.asciz "unknown compression method"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_unknown_compression_method
 Str_invalid_window_size:	.asciz "invalid window size"
 Str_incorrect_header_check:	.asciz "incorrect header check"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_incorrect_header_check
 Str_need_dictionary:	.asciz "need dictionary"
 Str_incorrect_data_check:	.asciz "incorrect data check"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_incorrect_data_check
 
 ptrs_4C258448:
 	.long	loc_4C137DE4
@@ -6864,12 +7182,12 @@ ptrs_4C258448:
 	.long	loc_4C1380DB
 
 Str_invalid_block_type:	.asciz "invalid block type"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_invalid_block_type
 Str_invalid_stored_block_lengths:	.asciz "invalid stored block lengths"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_invalid_stored_block_lengths
 Str_too_many_length_or_distance_symbols:	.asciz "too many length or distance symbols"
 Str_invalid_bit_length_repeat:	.asciz "invalid bit length repeat"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_invalid_bit_length_repeat
 
 ptrs_4C2584F4:
 	.long	loc_4C1383D6
@@ -6886,16 +7204,16 @@ ptrs_4C2584F4:
 Str_oversubscribed_dynamic_bit_lengths_tree:	.asciz "oversubscribed dynamic bit lengths tree"
 Str_incomplete_dynamic_bit_lengths_tree:	.asciz "incomplete dynamic bit lengths tree"
 Str_oversubscribed_literal_length_tree_2:	.asciz "oversubscribed literal/length tree"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_oversubscribed_literal_length_tree_2
 Str_incomplete_literal_length_tree_2:	.asciz "incomplete literal/length tree"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_incomplete_literal_length_tree_2
 Str_oversubscribed_literal_length_tree:	.asciz "oversubscribed literal/length tree"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_oversubscribed_literal_length_tree
 Str_incomplete_literal_length_tree:	.asciz "incomplete literal/length tree"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_incomplete_literal_length_tree
 Str_invalid_literal_length_code_2:	.asciz "invalid literal/length code"
 Str_invalid_distance_code_2:	.asciz "invalid distance code"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_invalid_distance_code_2
 
 ptrs_4C258624:
 	.long	loc_4C139641
@@ -6910,11 +7228,11 @@ ptrs_4C258624:
 	.long	loc_4C139C93
 
 Str_invalid_distance_code:	.asciz "invalid distance code"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_invalid_distance_code
 Str_invalid_literal_length_code:	.asciz "invalid literal/length code"
 Str_need_dictionary_2:	.asciz "need dictionary"
 Str_stream_end:	.asciz "stream end"
-	.align	4, 0x00
+	.align	4, 0x00	# pad after Str_stream_end
 Str_file_error:	.asciz "file error"
 Str_stream_error:	.asciz "stream error"
 Str_data_error:	.asciz "data error"
@@ -6924,9 +7242,11 @@ Str_incompatible_version:	.asciz "incompatible version"
 data_4C2586F5:
 .incbin_range "baserom/kn6000_program.rom", 0x2586F5, 0x2586F8
 Str_1_0_4_10:	.asciz "1.0.4"
-	.align	4, 0xFF
-data_4C258700:
-.incbin_range "baserom/kn6000_program.rom", 0x258700, 0x258705
+	.align	4, 0xFF	# pad after Str_1_0_4_10
+
+func_4C13A6D0_entry_L43_Table:	# 5 x u8, 96..113; read by func_4C13A6D0_entry_L43 : `movbu	(d0, a0), d0`
+	tab_u8	96, 96, 97, 110, 113
+
 Str_empty_959:	.asciz "---"
 Str_empty_958:	.asciz "---"
 Str_2DD_2:	.asciz "2DD"
@@ -6935,7 +7255,7 @@ Str_2DD:	.asciz "2DD"
 Str_PD:	.asciz "PD "
 Str_DOC_3:	.asciz "DOC"
 Str_DOC_2:	.asciz "DOC"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_DOC_2
 
 ptrs_4C258728:
 	.long	Str_empty_959
@@ -6953,7 +7273,7 @@ Str_COMPOSER_7:	.asciz "  COMPOSER  "
 Str_SOUND_MEMORY_4:	.asciz "SOUND MEMORY"
 Str_USER_EFFECT:	.asciz "USER  EFFECT"
 Str_empty_957:	.asciz "            "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_957
 
 ptrs_4C258798:
 	.long	Str_PANEL_MEMORY_8
@@ -6969,7 +7289,7 @@ Str_BANK_14:	.asciz "BANK"
 Str_BANK_13:	.asciz "BANK"
 Str_BANK_12:	.asciz "BANK"
 Str_empty_955:	.asciz "----"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_955
 
 ptrs_4C2587D0:
 	.long	Str_BANK_15
@@ -6982,7 +7302,7 @@ ptrs_4C2587D0:
 Str_MEMORY_19:	.asciz " MEMORY "
 Str_SONG_19:	.asciz "  SONG  "
 Str_PATTERN_7:	.asciz "PATTERN"
-	.align	4, 0x00
+	.align	4, 0x00	# pad after Str_PATTERN_7
 Str_MEMORY_18:	.asciz " MEMORY "
 Str_EFFECT_9:	.asciz " EFFECT "
 .incbin_range "baserom/kn6000_program.rom", 0x258816, 0x258820
@@ -6999,77 +7319,78 @@ data_4C258848:
 .incbin_range "baserom/kn6000_program.rom", 0x258848, 0x25884C
 data_4C25884C:
 .incbin_range "baserom/kn6000_program.rom", 0x25884C, 0x258850
-data_4C258850:
-.incbin_range "baserom/kn6000_program.rom", 0x258850, 0x258854
+
+func_4C13A18F_Table:	# 4 x u8, 0..255; read by FmmSaveTitleFunc_La9 : `movbu	(a0), d0`; func_4C13A18F_entry : `movbu	(a0), d0`
+	tab_u8	0, 0, 255, 255
 data_4C258854:
 .incbin_range "baserom/kn6000_program.rom", 0x258854, 0x25888C
 
 Str_empty_331:	.asciz "______"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_331
 Str_empty_330:	.asciz "________"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_330
 Str_MID_5:	.asciz ".MID"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MID_5
 Str_empty_329:	.asciz "________"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_329
 Str_CST_6:	.asciz ".CST"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CST_6
 Str_empty_328:	.asciz " : "
 Str_KB_free:	.asciz "KB free ("
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_KB_free
 Str_used:	.asciz "% used)"
 data_4C2588D4:
 .incbin_range "baserom/kn6000_program.rom", 0x2588D4, 0x2588D8
 Str_empty_327:	.asciz "-----"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_327
 Str_YES_7:	.asciz " YES "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_YES_7
 Str_NO_42:	.asciz " NO "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NO_42
 Str_empty_326:	.asciz "-----"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_326
 Str_YES_6:	.asciz " YES "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_YES_6
 Str_NO_41:	.asciz " NO "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NO_41
 Str_YES_5:	.asciz " YES "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_YES_5
 Str_NO_40:	.asciz " NO "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NO_40
 Str_empty_325:	.asciz "-----"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_325
 Str_3BANK:	.asciz "3BANK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_3BANK
 Str_ALL_14:	.asciz " ALL "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ALL_14
 Str_YES_4:	.asciz " YES "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_YES_4
 Str_NO_39:	.asciz " NO  "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NO_39
 Str_NO_FILE:	.asciz "*** NO  FILE ***"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NO_FILE
 Str_FILE_3:	.asciz "FILE "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_FILE_3
 Str_FILE_2:	.asciz "FILE "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_FILE_2
 Str_NEW:	.asciz " * NEW *"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NEW
 data_4C258970:
 .incbin_range "baserom/kn6000_program.rom", 0x258970, 0x258974
 Str_CUSTOM_21:	.asciz "CUSTOM :"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CUSTOM_21
 Str_CST_5:	.asciz "________.CST"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CST_5
 Str_CST_4:	.asciz ".CST"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CST_4
 Str_MID_4:	.asciz ".MID"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MID_4
 Str_CST_3:	.asciz ".CST"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CST_3
 Str_TO_SONG:	.asciz "TO SONG : "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TO_SONG
 Str_FROM_SONG:	.asciz "FROM SONG:"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_FROM_SONG
 Str_GM_GM2_8dGM2:	.asciz "GM/GM2~8dGM2 "
 Str_NX_8d_NX:	.asciz "  NX ~8d NX  "
 Str_GM_GM2_8d_NX:	.asciz "GM/GM2 ~8d NX"
@@ -7085,7 +7406,7 @@ Str_NX_2:	.asciz " NX "
 Str_GM2_2:	.asciz "GM2"
 	.space	1, 0x00
 Str_GM:	.asciz " GM "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_GM
 
 ptrs_4C258A18:
 	.long	Str_NX_2
@@ -7106,21 +7427,24 @@ ptrs_4C258A48:
 	.long	Str_empty_954
 
 Str_MID_3:	.asciz "________.MID"
-	.align	4, 0xFF
-data_4C258A68:
-.incbin_range "baserom/kn6000_program.rom", 0x258A68, 0x258A6D
-data_4C258A6D:
-.incbin_range "baserom/kn6000_program.rom", 0x258A6D, 0x258A72
-data_4C258A72:
-.incbin_range "baserom/kn6000_program.rom", 0x258A72, 0x258A86
-data_4C258A86:
-.incbin_range "baserom/kn6000_program.rom", 0x258A86, 0x258A8C
+	.align	4, 0xFF	# pad after Str_MID_3
+
+func_4C1416F0_Table:	# 5 x u8, 0..45; read by func_4C1416F0_entry : `movbu	(d0, a0), d1`; func_4C143A7F_entry : `movbu	(d0, a0), d1` ...
+	tab_u8	0, 10, 15, 35, 45
+func_4C143D15_L587_Table:	# 5 x u8, 5..20; read by func_4C143D15_L587 : `movbu	(d0, a0), d1`
+	tab_u8	10, 5, 20, 10, 10
+func_4C1416A4_Table:	# 20 x u8, 0..19; read by func_4C1416A4 : `movbu	(d0, a0), d0`; func_4C142A80_L471 : `movbu	(d0, a0), d1`
+	tab_u8	0, 3, 6, 9, 12, 13, 16, 17, 14, 15, 18, 19, 1, 2, 4, 5	# [0]
+	tab_u8	7, 8, 10, 11	# [16]
+SingleLoadSrcDstFunc_L11e_Table:	# 6 x u8, 1..255; read by CmpSingleLoadFileFunc_L150 : `movbu	(d0, a0), d1`; CmpSingleLoadSrcDstFunc_entry_L7f : `movbu	(d0, a0), d1` ...
+	tab_u8	1, 2, 3, 4, 6, 255
 data_4C258A8C:
 .incbin_range "baserom/kn6000_program.rom", 0x258A8C, 0x258A90
 data_4C258A90:
 .incbin_range "baserom/kn6000_program.rom", 0x258A90, 0x258A94
 data_4C258A94:
 .incbin_range "baserom/kn6000_program.rom", 0x258A94, 0x258A98
+
 Str_Vari_1:	.asciz "     Vari 1     "
 Str_Vari1_FILL_IN1:	.asciz " Vari1 FILL IN1 "
 Str_Vari1_FILL_IN2:	.asciz " Vari1 FILL IN2 "
@@ -7169,7 +7493,7 @@ Str_EQUALIZER_4:	.asciz "   EQUALIZER    "
 Str_SOUND_DSP_11:	.asciz "   SOUND DSP    "
 Str_MULTI_EFFECT_2:	.asciz "  MULTI EFFECT  "
 Str_CHORUS_8:	.asciz "     CHORUS     "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CHORUS_8
 
 ptrs_4C258C94:
 	.long	Str_REVERB_7
@@ -7182,7 +7506,7 @@ data_4C258CA8:
 
 Str_MEMORY_17:	.asciz "     MEMORY     "
 Str_USER_KIT:	.asciz "    USER KIT    "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_USER_KIT
 
 ptrs_4C258CD0:
 	.long	Str_MEMORY_17
@@ -7197,27 +7521,27 @@ data_4C258CE4:
 .incbin_range "baserom/kn6000_program.rom", 0x258CE4, 0x258CE8
 
 Str_empty_323:	.asciz ": "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_323
 Str_MEMORY_16:	.asciz "MEMORY: "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MEMORY_16
 Str_ALL_13:	.asciz "      ALL       "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ALL_13
 Str_empty_322:	.asciz ": "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_322
 Str_MEMORY_15:	.asciz "MEMORY: "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MEMORY_15
 Str_ALL_12:	.asciz "      ALL       "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ALL_12
 Str_SONG_18:	.asciz "SONG: "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SONG_18
 data_4C258D38:
 .incbin_range "baserom/kn6000_program.rom", 0x258D38, 0x258D3C
 Str_SONG_17:	.asciz "SONG: "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SONG_17
 Str_MEMORY_A_3:	.asciz "MEMORY-A"
 Str_MEMORY_B_3:	.asciz "MEMORY-B"
 Str_MEMORY_C_3:	.asciz "MEMORY-C"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MEMORY_C_3
 
 ptrs_4C258D60:
 	.long	Str_MEMORY_A_3
@@ -7225,15 +7549,15 @@ ptrs_4C258D60:
 	.long	Str_MEMORY_C_3
 
 Str_empty_321:	.asciz ": "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_321
 Str_empty_320:	.asciz ": "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_320
 Str_ALL_11:	.asciz "      ALL       "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ALL_11
 Str_MEMORY_A_2:	.asciz "MEMORY-A"
 Str_MEMORY_B_2:	.asciz "MEMORY-B"
 Str_MEMORY_C_2:	.asciz "MEMORY-C"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MEMORY_C_2
 
 ptrs_4C258DA4:
 	.long	Str_MEMORY_A_2
@@ -7241,27 +7565,27 @@ ptrs_4C258DA4:
 	.long	Str_MEMORY_C_2
 
 Str_empty_319:	.asciz ": "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_319
 Str_empty_318:	.asciz ": "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_318
 Str_ALL_10:	.asciz "      ALL       "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ALL_10
 Str_empty_317:	.asciz ": "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_317
 Str_MEMORY_14:	.asciz "MEMORY: "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MEMORY_14
 Str_ALL_9:	.asciz "      ALL       "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ALL_9
 Str_empty_316:	.asciz ": "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_316
 Str_MEMORY_13:	.asciz "MEMORY: "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MEMORY_13
 Str_ALL_8:	.asciz "      ALL       "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ALL_8
 Str_MEMORY_12:	.asciz "MEMORY: "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MEMORY_12
 Str_MEMORY_11:	.asciz "MEMORY: "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MEMORY_11
 data_4C258E2C:
 	.space	1, 0x28
 data_4C258E2D:
@@ -7269,15 +7593,15 @@ data_4C258E2D:
 data_4C258E30:
 .incbin_range "baserom/kn6000_program.rom", 0x258E30, 0x258E34
 Str_USER_MEMORY_2:	.asciz "USER MEMORY: "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_USER_MEMORY_2
 Str_ALL_7:	.asciz "      ALL       "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ALL_7
 data_4C258E58:
 .incbin_range "baserom/kn6000_program.rom", 0x258E58, 0x258E5C
 Str_USER_MEMORY:	.asciz "USER MEMORY: "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_USER_MEMORY
 Str_ALL_6:	.asciz "      ALL       "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ALL_6
 Str_OFF_12:	.asciz "    OFF    "
 Str_PART_18:	.asciz "    PART   "
 Str_TYPE_PART_2:	.asciz "TYPE & PART"
@@ -7309,8 +7633,10 @@ ptrs_4C258F08:
 	.long	Str_TYPE_PART
 data_4C258F14:
 .incbin_range "baserom/kn6000_program.rom", 0x258F14, 0x258F18
-data_4C258F18:
-.incbin_range "baserom/kn6000_program.rom", 0x258F18, 0x258F20
+
+CmpSingleLoadSrcDstFunc_entry_L2c7_Table:	# 8 x u8, 0..255; read by CmpSingleLoadSrcDstFunc_entry_L2c7 : `movbu	(d0, a0), d0`
+	tab_u8	1, 3, 5, 7, 0, 255, 255, 255
+
 ptrs_4C258F20:
 	.long	func_4C14203D
 	.long	func_4C142587
@@ -7336,8 +7662,9 @@ ptrs_4C258F40:
 	.long	loc_4C1416E8
 data_4C258F6C:
 .incbin_range "baserom/kn6000_program.rom", 0x258F6C, 0x258FEC
-data_4C258FEC:
-.incbin_range "baserom/kn6000_program.rom", 0x258FEC, 0x258FFC
+
+func_4C14B8DF_entry_L13_Table:	# 16 x u8, 0..255; read by func_4C14B8DF_entry_L13 : `movbu	(d2, a3), d0`; func_4C14BF95_entry_L10 : `movbu	(d2, a2), d0` ...
+	tab_u8	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 255, 255, 255
 data_4C258FFC:
 .incbin_range "baserom/kn6000_program.rom", 0x258FFC, 0x259018
 
@@ -7362,8 +7689,9 @@ data_4C2590E4:
 	.space	2, 0x00
 data_4C2590E6:
 .incbin_range "baserom/kn6000_program.rom", 0x2590E6, 0x259128
-data_4C259128:
-.incbin_range "baserom/kn6000_program.rom", 0x259128, 0x25912A
+
+func_4C1493D2_entry_L54_Table:	# 1 x u16, 24..24; read by func_4C1493D2_entry_L54 : `movhu	(d3, a0), d0`
+	tab_u16	24
 data_4C25912A:
 .incbin_range "baserom/kn6000_program.rom", 0x25912A, 0x259138
 data_4C259138:
@@ -7382,85 +7710,100 @@ data_4C259150:
 .incbin_range "baserom/kn6000_program.rom", 0x259150, 0x259158
 data_4C259158:
 .incbin_range "baserom/kn6000_program.rom", 0x259158, 0x259160
+
 Str_rb_39:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb_39
 Str_rb_38:	.asciz "rb"
 .incbin_range "baserom/kn6000_program.rom", 0x259167, 0x25916C
 data_4C25916C:
 .incbin_range "baserom/kn6000_program.rom", 0x25916C, 0x259170
 Str_rb_37:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb_37
 Str_rb_36:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb_36
 Str_I_K_4:	.asciz "I K"
 Str_rb_35:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb_35
 Str_rb_34:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb_34
 Str_rb_33:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb_33
 Str_rb_32:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb_32
 Str_rb_31:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb_31
 Str_rb_30:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb_30
 Str_rb_29:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb_29
 Str_rb_28:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb_28
 Str_rb_27:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb_27
 Str_rb_26:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb_26
 Str_rb_25:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb_25
 Str_rb_24:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb_24
 Str_rb_23:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb_23
 Str_rb_22:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb_22
 Str_rb_21:	.asciz "rb"
-	.align	4, 0xFF
-data_4C2591B8:
-.incbin_range "baserom/kn6000_program.rom", 0x2591B8, 0x259210
+	.align	4, 0xFF	# pad after Str_rb_21
+
+DiskLoadDispatch_entry_L11_Table:	# 88 x u8, 0..242; read by DiskLoadDispatch_entry_L11 : `movbu	(d0, a2), d0`
+	tab_u8	6, 0, 0, 0, 202, 164, 20, 76, 4, 0, 0, 0, 138, 163, 20, 76	# [0]
+	tab_u8	0, 0, 0, 0, 208, 153, 20, 76, 1, 0, 0, 0, 0, 155, 20, 76	# [16]
+	tab_u8	5, 0, 0, 0, 190, 162, 20, 76, 3, 0, 0, 0, 242, 161, 20, 76	# [32]
+	tab_u8	2, 0, 0, 0, 224, 156, 20, 76, 7, 0, 0, 0, 124, 156, 20, 76	# [48]
+	tab_u8	8, 0, 0, 0, 142, 165, 20, 76, 9, 0, 0, 0, 242, 165, 20, 76	# [64]
+	tab_u8	10, 0, 0, 0, 86, 166, 20, 76	# [80]
+
 Str_I_K_3:	.asciz "I K"
 Str_I_K_2:	.asciz "I K"
 Str_wb_15:	.asciz "wb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_wb_15
 Str_wb_14:	.asciz "wb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_wb_14
 Str_wb_13:	.asciz "wb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_wb_13
 Str_wb_12:	.asciz "wb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_wb_12
 Str_wb_11:	.asciz "wb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_wb_11
 Str_wb_10:	.asciz "wb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_wb_10
 Str_wb_9:	.asciz "wb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_wb_9
 Str_wb_8:	.asciz "wb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_wb_8
 Str_wb_7:	.asciz "wb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_wb_7
 Str_wb_6:	.asciz "wb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_wb_6
 Str_wb_5:	.asciz "wb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_wb_5
 Str_wb_4:	.asciz "wb"
-	.align	4, 0xFF
-data_4C259248:
-.incbin_range "baserom/kn6000_program.rom", 0x259248, 0x2592A0
+	.align	4, 0xFF	# pad after Str_wb_4
+
+func_4C14B6F4_entry_L11_Table:	# 88 x u8, 0..231; read by func_4C14B6F4_entry_L11 : `movbu	(d0, a2), d0`
+	tab_u8	0, 0, 0, 0, 132, 171, 20, 76, 1, 0, 0, 0, 231, 172, 20, 76	# [0]
+	tab_u8	5, 0, 0, 0, 74, 178, 20, 76, 3, 0, 0, 0, 137, 177, 20, 76	# [16]
+	tab_u8	4, 0, 0, 0, 11, 179, 20, 76, 2, 0, 0, 0, 68, 176, 20, 76	# [32]
+	tab_u8	6, 0, 0, 0, 131, 175, 20, 76, 7, 0, 0, 0, 21, 174, 20, 76	# [48]
+	tab_u8	8, 0, 0, 0, 143, 174, 20, 76, 9, 0, 0, 0, 9, 175, 20, 76	# [64]
+	tab_u8	10, 0, 0, 0, 145, 181, 20, 76	# [80]
+
 Str_rb_20:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb_20
 Str_wb_3:	.asciz "wb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_wb_3
 Str_rb_19:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb_19
 Str_wb_2:	.asciz "wb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_wb_2
 Str_LSW:	.asciz "LSW"
 Str_PMT:	.asciz "PMT"
 Str_SQT:	.asciz "SQT"
@@ -7489,8 +7832,9 @@ ptrs_4C2592E4:
 	.long	Str_AST
 	.long	Str_SQF
 	.long	Str_SEQ_3
-data_4C259318:
-	.space	4, 0xFF
+
+func_4C14CCED_Table:	# 1 x u32, 4294967295..4294967295; read by func_4C14CCED_entry : `mov	(a1), d0`
+	tab_u32	4294967295
 data_4C25931C:
 	.space	4, 0x00
 data_4C259320:
@@ -7509,55 +7853,61 @@ data_4C2593CA:
 	.space	17, 0x00
 data_4C2593DB:
 	.space	13, 0x00
-data_4C2593E8:
-	.space	3, 0x00
+func_4C14C96A_entry_L1_Table:	# 3 x u8, 0..0; read by func_4C14C96A_entry_L1 : `movbu	(a1), d0`
+	tab_u8	0, 0, 0
 data_4C2593EB:
-	.align	4, 0x00
+	.align	4, 0x00	# pad after func_4C14C96A_entry_L1_Table
 
 Str_empty_315:	.asciz "______"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_315
 Str_MID_2:	.asciz "________.MID"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MID_2
 Str_CST_2:	.asciz "________.CST"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CST_2
 Str_empty_314:	.asciz "."
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_314
 Str_empty_313:	.asciz "___________"
-data_4C259424:
-	.space	16, 0x00
-data_4C259434:
-	.space	16, 0x00
+
+func_4C14CFA2_Table:	# 16 x u8, 0..0; read by func_4C14CFA2_entry : `movbu	(a1), d0`
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+func_4C14CFA2_Table_2:	# 16 x u8, 0..0; read by func_4C14CFA2_entry : `movbu	(a1), d0`
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+
 Str_empty_312:	.asciz "*.*"
 Str_empty_311:	.asciz ".*"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_311
 Str_MID:	.asciz "*.MID"
-	.align	4, 0xFF
-data_4C259454:
-	.space	16, 0x00
+	.align	4, 0xFF	# pad after Str_MID
+
+func_4C14D5DA_Table:	# 16 x u8, 0..0; read by func_4C14D5DA : `movbu	(a1), d0`
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+
 Str_MThd_2:	.asciz "MThd"
 Str_MTrk_2:	.asciz "MTrk"
 Str_empty_310:	.asciz "     "
 Str_rb_18:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb_18
 Str_CST:	.asciz "*.CST"
-	.align	4, 0xFF
-data_4C259480:
-	.space	16, 0x00
+	.align	4, 0xFF	# pad after Str_CST
+
+func_4C14DDFB_Table:	# 16 x u8, 0..0; read by func_4C14DDFB : `movbu	(a1), d0`
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+
 Str_I_K:	.asciz "I K"
 Str_empty_309:	.asciz "     "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_309
 Str_rb_17:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb_17
 Str_empty_308:	.asciz "*"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_308
 Str_MUSIC_DIR_2:	.asciz "MUSIC.DIR"
 Str_rb_16:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb_16
 Str_PIANODIR_FIL_3:	.asciz "PIANODIR.FIL"
 Str_rb_15:	.asciz "rb"
 Str_MUSIC_DIR:	.asciz "MUSIC.DIR"
 Str_rb_14:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb_14
 Str_PIANODIR_FIL_2:	.asciz "PIANODIR.FIL"
 Str_rb_13:	.asciz "rb"
 Str_NAME_MDA:	.asciz "NAME.MDA"
@@ -7568,7 +7918,7 @@ Str_empty_307:	.asciz "***"
 Str_empty_306:	.asciz "***"
 Str_A_12:	.asciz "A:\\"
 Str_BMP:	.asciz "*.BMP"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_BMP
 Str_A_11:	.asciz "A:\\"
 	.space	124, 0x00
 Str_A_10:	.asciz "A:\\"
@@ -7582,19 +7932,19 @@ Str_A_7:	.asciz "A:\\"
 Str_A_6:	.asciz "A:\\"
 	.space	12, 0x00
 Str_wb:	.asciz "wb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_wb
 Str_rb_10:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb_10
 Str_1_0_4_7:	.asciz "1.0.4"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_1_0_4_7
 Str_1_0_4_6:	.asciz "1.0.4"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_1_0_4_6
 Str_1_0_4_5:	.asciz "1.0.4"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_1_0_4_5
 Str_1_0_4_4:	.asciz "1.0.4"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_1_0_4_4
 Str_1_0_4_3:	.asciz "1.0.4"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_1_0_4_3
 FnName_InsertOptionText:	.asciz "InsertOptionText"
 FnName_TypePriorityText:	.asciz "TypePriorityText"
 FnName_JumpInsertFunc:	.asciz "JumpInsertFunc"
@@ -7638,7 +7988,7 @@ Field_PsFileNameBox_auto_inc:	.asciz "auto_inc"
 Field_PsFileNameBox_paintok:	.asciz "paintok"
 Field_PsFileNameBox_aicok:	.asciz "aicok"
 Field_PsFileNameBox_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_PsFileNameBox_end
 Field_PsFileNmTwoBox_font:	.asciz "font"
 Field_PsFileNmTwoBox_fontcolor:	.asciz "fontcolor"
 Field_PsFileNmTwoBox_boxborder:	.asciz "boxborder"
@@ -7651,7 +8001,7 @@ Field_PsFileNmTwoBox_auto_inc:	.asciz "auto_inc"
 Field_PsFileNmTwoBox_paintok:	.asciz "paintok"
 Field_PsFileNmTwoBox_aicok:	.asciz "aicok"
 Field_PsFileNmTwoBox_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_PsFileNmTwoBox_end
 Field_PsOptionTwoBox_font:	.asciz "font"
 Field_PsOptionTwoBox_fontcolor:	.asciz "fontcolor"
 Field_PsOptionTwoBox_boxborder:	.asciz "boxborder"
@@ -7683,42 +8033,42 @@ Field_PsWindowToggle_main_func:	.asciz "main_func"
 Field_PsWindowToggle_end:	.asciz ""
 Field_AcTtlJgBox_main_func:	.asciz "main_func"
 Field_AcTtlJgBox_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_AcTtlJgBox_end
 Field_AcParaStrBox_main_func:	.asciz "main_func"
 Field_AcParaStrBox_paintok:	.asciz "paintok"
 Field_AcParaStrBox_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_AcParaStrBox_end
 Field_PsIndexParaStrBox_main_func:	.asciz "main_func"
 Field_PsIndexParaStrBox_paintok:	.asciz "paintok"
 Field_PsIndexParaStrBox_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_PsIndexParaStrBox_end
 Field_AcFileSfxBox_font:	.asciz "font"
 Field_AcFileSfxBox_main_func:	.asciz "main_func"
 Field_AcFileSfxBox_paintok:	.asciz "paintok"
 Field_AcFileSfxBox_end:	.asciz ""
 Field_AcMonoIndexToggle_index:	.asciz "index"
 Field_AcMonoIndexToggle_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_AcMonoIndexToggle_end
 Field_IvOneShotTimer_main_func:	.asciz "main_func"
 Field_IvOneShotTimer_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_IvOneShotTimer_end
 Field_VwScreenTitle_title:	.asciz "title"
 Field_VwScreenTitle_icon:	.asciz "icon"
 Field_VwScreenTitle_page:	.asciz "page"
 Field_VwScreenTitle_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_VwScreenTitle_end
 Field_VwOwScreenTitle_title:	.asciz "title"
 Field_VwOwScreenTitle_icon:	.asciz "icon"
 Field_VwOwScreenTitle_page:	.asciz "page"
 Field_VwOwScreenTitle_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_VwOwScreenTitle_end
 Field_Arrow_color:	.asciz "color"
 Field_Arrow_frame_only:	.asciz "frame_only"
 Field_Arrow_dir:	.asciz "dir"
 Field_Arrow_tail_x_rate:	.asciz "tail_x_rate"
 Field_Arrow_tail_y_rate:	.asciz "tail_y_rate"
 Field_Arrow_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_Arrow_end
 Field_IvIndexSwCtrl_index_min:	.asciz "index_min"
 Field_IvIndexSwCtrl_index_max:	.asciz "index_max"
 Field_IvIndexSwCtrl_dial:	.asciz "dial"
@@ -7730,19 +8080,19 @@ Field_AcRotStrBox_interval:	.asciz "interval"
 Field_AcRotStrBox_length:	.asciz "length"
 Field_AcRotStrBox_paintok:	.asciz "paintok"
 Field_AcRotStrBox_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_AcRotStrBox_end
 Field_IvIndexSwDelay_index_min:	.asciz "index_min"
 Field_IvIndexSwDelay_index_max:	.asciz "index_max"
 Field_IvIndexSwDelay_interval:	.asciz "interval"
 Field_IvIndexSwDelay_send_index:	.asciz "send_index"
 Field_IvIndexSwDelay_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_IvIndexSwDelay_end
 Field_IvWaitWinCtl_win:	.asciz "win"
 Field_IvWaitWinCtl_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_IvWaitWinCtl_end
 Field_IvMainEditIndex_main_func:	.asciz "main_func"
 Field_IvMainEditIndex_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_IvMainEditIndex_end
 ClassName_PsFileNameBox:	.asciz "PsFileNameBox"
 ClassSig_PsFileNameBox:	.asciz "c^kAAnGGmm"
 ClassName_PsFileNmTwoBox:	.asciz "PsFileNmTwoBox"
@@ -7781,7 +8131,7 @@ ClassName_IvWaitWinCtl:	.asciz "IvWaitWinCtl"
 ClassSig_IvWaitWinCtl:	.asciz "t"
 ClassName_IvMainEditIndex:	.asciz "IvMainEditIndex"
 ClassSig_IvMainEditIndex:	.asciz "k"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after ClassSig_IvMainEditIndex
 
 Str_EV_NOTPARADRAW:	.asciz "EV_NOTPARADRAW"
 Str_EV_NOTPOSTAIC:	.asciz "EV_NOTPOSTAIC"
@@ -7841,7 +8191,7 @@ FnName_IvIndexSwDelayProc:	.asciz "IvIndexSwDelayProc"
 FnName_IvWaitWinCtlProc:	.asciz "IvWaitWinCtlProc"
 FnName_PsIndexParaStrBoxProc:	.asciz "PsIndexParaStrBoxProc"
 FnName_IvMainEditIndexProc:	.asciz "IvMainEditIndexProc"
-	.align	4, 0x00
+	.align	4, 0x00	# pad after FnName_IvMainEditIndexProc
 FnName_FmmFileNameFunc:	.asciz "FmmFileNameFunc"
 FnName_LoadTtlJgFunc:	.asciz "LoadTtlJgFunc"
 FnName_CustomTtlJgFunc:	.asciz "CustomTtlJgFunc"
@@ -7907,17 +8257,17 @@ FnName_SmfToDocCngFunc:	.asciz "SmfToDocCngFunc"
 FnName_DocToSmfCngFunc:	.asciz "DocToSmfCngFunc"
 .incbin_range "baserom/kn6000_program.rom", 0x25A445, 0x25A448
 Str_DISK_MENU:	.asciz "DISK MENU"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_DISK_MENU
 
 	TtlScreen	DiskMenu, sub=TT_DKMENU1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, border=BD_Single2, index=0xFFFF, exit=TT_PS, window=DiskMenu_window, title=Str_DISK_MENU, icon=149	# title "DISK MENU"
 
 Str_DISK_TOOLS:	.asciz "DISK TOOLS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_DISK_TOOLS
 
 		AcTtlJgBox	TT_DKMENU1, super=DiskMenu, next=TT_DKMENU2, flag=VF_Const, X=8, Y=28, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left1, selected=TT_DKMENU1_selected, str=Str_DISK_TOOLS, icon=150, main_func=FN_UtilityTtlJgFunc	# str "DISK TOOLS"
 
 Str_LOAD:	.asciz "LOAD"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LOAD
 
 		AcTtlJgBox	TT_DKMENU2, super=DiskMenu, next=TT_DKMENU3, prev=TT_DKMENU1, flag=VF_Const, X=327, Y=28, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right1, selected=TT_DKMENU2_selected, str=Str_LOAD, icon=44, main_func=FN_LoadTtlJgFunc	# str "LOAD"
 
@@ -7926,7 +8276,7 @@ Str_DIRECT_PLAY:	.asciz "DIRECT PLAY"
 		AcTtlJgBox	TT_DKMENU3, super=DiskMenu, next=TT_DKMENU4, prev=TT_DKMENU2, flag=VF_Const, X=327, Y=114, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right3, selected=TT_DKMENU3_selected, str=Str_DIRECT_PLAY, icon=46, main_func=FN_DirectPlayTtlJgFunc	# str "DIRECT PLAY"
 
 Str_SAVE:	.asciz "SAVE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SAVE
 
 		AcTitleMenu	TT_DKMENU4, super=DiskMenu, next=TT_DKMENU5, prev=TT_DKMENU3, flag=VF_Const, X=327, Y=71, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right2, selected=TT_DKMENU4_selected, str=Str_SAVE, title=TT_DKSVMENU, icon=45	# str "SAVE"
 
@@ -7939,12 +8289,12 @@ Str_SONG_MEDLEY:	.asciz "SONG MEDLEY"
 		AcTtlJgBox	TT_DKMENU6, super=DiskMenu, next=TT_convert, prev=TT_DKMENU5, flag=VF_Const, X=327, Y=157, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right4, selected=TT_DKMENU6_selected, str=Str_SONG_MEDLEY, icon=58, main_func=FN_SongMedleyTtlJgFunc	# str "SONG MEDLEY"
 
 Str_STYLE_CONVERT_6:	.asciz "STYLE CONVERT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_STYLE_CONVERT_6
 
 		AcTitleMenu	TT_convert, super=DiskMenu, next=DKMENUcusldsv, prev=TT_DKMENU6, flag=VF_Const, X=8, Y=114, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left3, selected=TT_convert_selected, str=Str_STYLE_CONVERT_6, title=TT_STYLCNVWAIT, icon=152	# str "STYLE CONVERT"
 
 Str_CUSTOM_STYLE_LOAD_SAVE:	.asciz "CUSTOM STYLE LOAD/SAVE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CUSTOM_STYLE_LOAD_SAVE
 
 		AcTtlJgBox	DKMENUcusldsv, super=DiskMenu, next=DKMNexitMode, prev=TT_convert, flag=VF_Const, X=8, Y=157, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left4, selected=DKMENUcusldsv_selected, str=Str_CUSTOM_STYLE_LOAD_SAVE, icon=193, main_func=FN_CustomTtlJgFunc	# str "CUSTOM STYLE LOAD/SAVE"
 		IvExitMode	DKMNexitMode, super=DiskMenu, next=HardDiskMenu, prev=DKMENUcusldsv, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, mode=MD_NORMAL
@@ -7985,7 +8335,7 @@ Str_HARD_DISK_MAIN_MENU:	.asciz "HARD DISK MAIN MENU"
 		AcLanguageText	PWClanguage2, super=CheckPasswordWin, prev=PWCno, flag=VF_Const, X=140, Y=51, W=360, H=18, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_Yellow, lines=1, func=FN_PasswordText
 
 Str_empty_69:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_69
 
 	TtlScreen	DiskLoad, sub=DiskLoadPage, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_DKMENU, window=DiskLoad_window, title=Str_empty_69	# title ""
 		AcWindowPage	DiskLoadPage, super=DiskLoad, next=TT_DKLD8, flag=VF_Const, X=564, Y=5, W=71, H=18, color=CL_PageBack, border=BD_3D_DOWN1, index=0xFFFF, page=DiskLoadPage_page, pagemin=1, pagemax=3
@@ -7998,7 +8348,7 @@ Str_empty_69:	.asciz ""
 	Window	DiskLoadP1, sub=TT_DKLD13, flag=VF_Const, X=0, Y=30, W=640, H=210, color=CL_WallPattern, index=0xFFFF, parent=DiskLoadP1_parent, child=DiskLoadP1_child
 
 Str_DISK_NAME:	.asciz "DISK NAME:"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_DISK_NAME
 
 		VwLabel	TT_DKLD13, super=DiskLoadP1, sub=TT_DKLD20, next=TT_DKLD14, flag=VF_Const, X=214, Y=50, W=84, H=19, str=Str_DISK_NAME, fontcolor=CL_White	# str "DISK NAME:"
 
@@ -8011,7 +8361,7 @@ Str_SMF:	.asciz "SMF"
 		AcIndexEditSw	TT_DKLD18, super=DiskLoadP1, sub=TT_DKLD19, next=TT_DKLD25, prev=TT_DKLD17, flag=VF_Const, X=571, Y=34, W=61, H=26, color=CL_Silver, border=BD_3D_UP2, index=3, font=4, fontcolor=CL_Black, editsw=ES_Right1
 
 Str_LOAD_2:	.asciz "LOAD"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LOAD_2
 
 			VwLabel	TT_DKLD19, super=TT_DKLD18, flag=VF_Const, X=577, Y=39, W=48, H=19, str=Str_LOAD_2, font=4, fontcolor=CL_Black	# str "LOAD"
 		AcIndexWideES	TT_DKLD25, super=DiskLoadP1, next=TT_DKLD23, prev=TT_DKLD18, flag=VF_Const, X=244, Y=216, W=152, H=23, color=CL_Silver, border=BD_EditSwitch, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom10, style=14
@@ -8020,7 +8370,7 @@ Str_LOAD_2:	.asciz "LOAD"
 		AcParaStrBox	LDdiskinf, super=DiskLoadP1, next=LDtitlebar1, prev=TT_DKLD24, flag=VF_Const, X=160, Y=74, W=320, H=24, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_White, main_func=FN_DiskInfoFunc, paintok=LDdiskinf_paintok
 
 Str_LOAD_3:	.asciz "LOAD        "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LOAD_3
 
 		VwOwScreenTitle	LDtitlebar1, super=DiskLoadP1, prev=LDdiskinf, flag=VF_Const, X=4, Y=208, W=30, H=32, color=CL_Transparent, index=0xFFFF, title=Str_LOAD_3, icon=44, page=1	# title "LOAD        "
 
@@ -8028,23 +8378,23 @@ Str_LOAD_3:	.asciz "LOAD        "
 		AcParaStrBox	TT_DKLD27, super=DiskLoadP2, sub=TT_DKLD55, next=TT_DKLD37, flag=VF_Const, X=120, Y=40, W=400, H=34, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_White, main_func=FN_CurFileNameFunc, paintok=TT_DKLD27_paintok
 
 Str_FILE_NAME:	.asciz "FILE NAME:"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_FILE_NAME
 
 			VwLabel	TT_DKLD55, super=TT_DKLD27, flag=VF_Const, X=122, Y=54, W=84, H=19, str=Str_FILE_NAME, fontcolor=CL_White	# str "FILE NAME:"
 		AcIndexEditSw	TT_DKLD37, super=DiskLoadP2, sub=TT_DKLD38, next=PanelS, prev=TT_DKLD27, flag=VF_Const, X=571, Y=34, W=61, H=26, color=CL_Silver, border=BD_3D_UP2, index=14, fontcolor=CL_Black, editsw=ES_Right1
 
 Str_LOAD_4:	.asciz "LOAD"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LOAD_4
 
 			VwLabel	TT_DKLD38, super=TT_DKLD37, flag=VF_Const, X=577, Y=39, W=48, H=19, str=Str_LOAD_4, font=4, fontcolor=CL_Black	# str "LOAD"
 
 Str_PANEL:	.asciz "PANEL"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PANEL
 
 		VwLabel	PanelS, super=DiskLoadP2, next=PmemS, prev=TT_DKLD37, flag=VF_Const, X=81, Y=202, W=34, H=11, str=Str_PANEL, font=3, fontcolor=CL_White	# str "PANEL"
 
 Str_P_MEM:	.asciz "P.MEM"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_P_MEM
 
 		VwLabel	PmemS, super=DiskLoadP2, next=SeqS, prev=PanelS, flag=VF_Const, X=121, Y=202, W=34, H=11, str=Str_P_MEM, font=3, fontcolor=CL_White	# str "P.MEM"
 
@@ -8053,27 +8403,27 @@ Str_SEQ:	.asciz "SEQ"
 		VwLabel	SeqS, super=DiskLoadP2, next=Comps, prev=PmemS, flag=VF_Const, X=169, Y=202, W=22, H=11, str=Str_SEQ, font=3, fontcolor=CL_White	# str "SEQ"
 
 Str_COMP:	.asciz "COMP"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_COMP
 
 		VwLabel	Comps, super=DiskLoadP2, next=SoundS, prev=SeqS, flag=VF_Const, X=205, Y=202, W=28, H=11, str=Str_COMP, font=3, fontcolor=CL_White	# str "COMP"
 
 Str_SOUND_4:	.asciz "SOUND"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SOUND_4
 
 		VwLabel	SoundS, super=DiskLoadP2, next=MspS, prev=Comps, flag=VF_Const, X=241, Y=202, W=34, H=11, str=Str_SOUND_4, font=3, fontcolor=CL_White	# str "SOUND"
 
 Str_PADS_4:	.asciz "PADS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PADS_4
 
 		VwLabel	MspS, super=DiskLoadP2, next=CustomS, prev=SoundS, flag=VF_Const, X=285, Y=202, W=28, H=11, str=Str_PADS_4, font=3, fontcolor=CL_White	# str "PADS"
 
 Str_CUSTOM:	.asciz "CUSTOM"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CUSTOM
 
 		VwLabel	CustomS, super=DiskLoadP2, next=MidiS, prev=MspS, flag=VF_Const, X=520, Y=202, W=40, H=11, str=Str_CUSTOM, font=3, fontcolor=CL_White	# str "CUSTOM"
 
 Str_MIDI_2:	.asciz "MIDI"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MIDI_2
 
 		VwLabel	MidiS, super=DiskLoadP2, next=TT_DKLD39, prev=CustomS, flag=VF_Const, X=405, Y=202, W=28, H=11, str=Str_MIDI_2, font=3, fontcolor=CL_White	# str "MIDI"
 		AcIndexEditSw	TT_DKLD39, super=DiskLoadP2, next=TT_DKLD40, prev=MidiS, flag=VF_Const, X=84, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, fontcolor=CL_Black, editsw=ES_Bottom3, style=3
@@ -8087,57 +8437,57 @@ Str_MIDI_2:	.asciz "MIDI"
 		PsOptionTwoBox	TT_DKLD26, super=DiskLoadP2, sub=UserMIDI, next=FavS, prev=TT_DKLD46, flag=VF_Const, X=99, Y=84, W=441, H=107, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, boxborder=BD_3D_UP2, main_func=FN_FmmLoadFilterFunc, row=6, spacewidth=40, stroffset=154, paintok=TT_DKLD26_paintok, aicok=TT_DKLD26_aicok
 
 Str_USER_MIDI_SETTINGS:	.asciz "USER MIDI SETTINGS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_USER_MIDI_SETTINGS
 
 			VwLabel	UserMIDI, super=TT_DKLD26, next=Currentpanel, flag=VF_Const, X=342, Y=104, W=148, H=19, str=Str_USER_MIDI_SETTINGS, fontcolor=CL_White	# str "USER MIDI SETTINGS"
 
 Str_CURRENT_PANEL:	.asciz "CURRENT PANEL"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CURRENT_PANEL
 
 			VwLabel	Currentpanel, super=TT_DKLD26, next=Sequencer, prev=UserMIDI, flag=VF_Const, X=102, Y=87, W=108, H=19, str=Str_CURRENT_PANEL, fontcolor=CL_White	# str "CURRENT PANEL"
 
 Str_SEQUENCER_3:	.asciz "SEQUENCER"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SEQUENCER_3
 
 			VwLabel	Sequencer, super=TT_DKLD26, next=COMPOSER, prev=Currentpanel, flag=VF_Const, X=102, Y=121, W=76, H=19, str=Str_SEQUENCER_3, fontcolor=CL_White	# str "SEQUENCER"
 
 Str_COMPOSER_2:	.asciz "COMPOSER"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_COMPOSER_2
 
 			VwLabel	COMPOSER, super=TT_DKLD26, next=SoundMemory, prev=Sequencer, flag=VF_Const, X=102, Y=138, W=68, H=19, str=Str_COMPOSER_2, fontcolor=CL_White	# str "COMPOSER"
 
 Str_SOUND_MEMORY:	.asciz "SOUND MEMORY"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SOUND_MEMORY
 
 			VwLabel	SoundMemory, super=TT_DKLD26, next=Panelmemory, prev=COMPOSER, flag=VF_Const, X=102, Y=155, W=100, H=19, str=Str_SOUND_MEMORY, fontcolor=CL_White	# str "SOUND MEMORY"
 
 Str_PANEL_MEMORY_5:	.asciz "PANEL MEMORY"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PANEL_MEMORY_5
 
 			VwLabel	Panelmemory, super=TT_DKLD26, next=Msp, prev=SoundMemory, flag=VF_Const, X=102, Y=104, W=100, H=19, str=Str_PANEL_MEMORY_5, fontcolor=CL_White	# str "PANEL MEMORY"
 
 Str_PERFORMANCE_PADS_2:	.asciz "PERFORMANCE PADS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PERFORMANCE_PADS_2
 
 			VwLabel	Msp, super=TT_DKLD26, next=Favorite, prev=Panelmemory, flag=VF_Const, X=102, Y=172, W=132, H=19, str=Str_PERFORMANCE_PADS_2, fontcolor=CL_White	# str "PERFORMANCE PADS"
 
 Str_FAVORITES_3:	.asciz "FAVORITES"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_FAVORITES_3
 
 			VwLabel	Favorite, super=TT_DKLD26, next=Rhythmcustom, prev=Msp, flag=VF_Const, X=342, Y=121, W=76, H=19, str=Str_FAVORITES_3, fontcolor=CL_White	# str "FAVORITES"
 
 Str_ALL_CUSTOM_STYLE:	.asciz "ALL CUSTOM STYLE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ALL_CUSTOM_STYLE
 
 			VwLabel	Rhythmcustom, super=TT_DKLD26, next=Effectlb, prev=Favorite, flag=VF_Const, X=342, Y=155, W=132, H=19, str=Str_ALL_CUSTOM_STYLE, fontcolor=CL_White	# str "ALL CUSTOM STYLE"
 
 Str_EFFECT_MEMORY:	.asciz "EFFECT MEMORY"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_EFFECT_MEMORY
 
 			VwLabel	Effectlb, super=TT_DKLD26, next=homepage, prev=Rhythmcustom, flag=VF_Const, X=342, Y=87, W=108, H=19, str=Str_EFFECT_MEMORY, fontcolor=CL_White	# str "EFFECT MEMORY"
 
 Str_HOME_PAGE_2:	.asciz "HOME PAGE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HOME_PAGE_2
 
 			VwLabel	homepage, super=TT_DKLD26, prev=Effectlb, flag=VF_Const, X=342, Y=138, W=76, H=19, str=Str_HOME_PAGE_2, fontcolor=CL_White	# str "HOME PAGE"
 
@@ -8148,7 +8498,7 @@ Str_FAV:	.asciz "FAV"
 		AcIndexEditSw	DKOPbottom10, super=DiskLoadP2, next=DKOPefclb, prev=OPbottom9, flag=VF_Const, X=524, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=10, font=4, fontcolor=CL_Black, editsw=ES_Bottom14, style=3
 
 Str_EFFECT_5:	.asciz "EFFECT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_EFFECT_5
 
 		VwLabel	DKOPefclb, super=DiskLoadP2, next=LDtitlebar2, prev=DKOPbottom10, flag=VF_Const, X=359, Y=202, W=40, H=11, str=Str_EFFECT_5, font=3, fontcolor=CL_White	# str "EFFECT"
 
@@ -8158,7 +8508,7 @@ Str_LOAD_OPTION:	.asciz "LOAD OPTION"
 		AcIndexEditSw	DKOPhmpsw, super=DiskLoadP2, next=homepagelb, prev=LDtitlebar2, flag=VF_Const, X=284, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=5, fontcolor=CL_Black, editsw=ES_Bottom8, style=3
 
 Str_H_PAGE:	.asciz "H.PAGE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_H_PAGE
 
 		VwLabel	homepagelb, super=DiskLoadP2, prev=DKOPhmpsw, flag=VF_Const, X=478, Y=202, W=40, H=11, str=Str_H_PAGE, font=3, fontcolor=CL_White	# str "H.PAGE"
 
@@ -8166,19 +8516,19 @@ Str_H_PAGE:	.asciz "H.PAGE"
 		AcIndexEditSw	TT_DKLD61, super=DiskLoadP3, sub=TT_DKLD62, next=TT_DKLD63, flag=VF_Const, X=571, Y=34, W=61, H=26, color=CL_Silver, border=BD_3D_UP2, index=10, fontcolor=CL_Black, editsw=ES_Right1
 
 Str_LOAD_5:	.asciz "LOAD"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LOAD_5
 
 			VwLabel	TT_DKLD62, super=TT_DKLD61, flag=VF_Const, X=577, Y=39, W=48, H=19, str=Str_LOAD_5, font=4, fontcolor=CL_Black	# str "LOAD"
 		AcIndexEditSw	TT_DKLD63, super=DiskLoadP3, sub=TT_DKLD64, next=SingleLoadFile, prev=TT_DKLD61, flag=VF_Const, X=8, Y=34, W=61, H=26, color=CL_Silver, border=BD_3D_UP2, index=4, fontcolor=CL_Black, editsw=ES_Left1
 
 Str_MODE_6:	.asciz "MODE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MODE_6
 
 			VwLabel	TT_DKLD64, super=TT_DKLD63, flag=VF_Const, X=14, Y=39, W=48, H=19, str=Str_MODE_6, font=4, fontcolor=CL_Black	# str "MODE"
 		AcParaStrBox	SingleLoadFile, super=DiskLoadP3, next=SingleTo, prev=TT_DKLD63, flag=VF_Const, X=168, Y=74, W=120, H=19, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_White, main_func=FN_CurFileNameFunc, paintok=SingleLoadFile_paintok
 
 Str_TO_2:	.asciz "TO"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TO_2
 
 		VwLabel	SingleTo, super=DiskLoadP3, next=SGLDarrow, prev=SingleLoadFile, flag=VF_Const, X=362, Y=74, W=26, H=19, str=Str_TO_2, font=4, fontcolor=CL_White	# str "TO"
 		Arrow	SGLDarrow, super=DiskLoadP3, next=SGLDbottom0, prev=SingleTo, flag=VF_Const, X=308, Y=120, W=30, H=48, color=CL_White, dir=1, tail_x_rate=50, tail_y_rate=50
@@ -8189,7 +8539,7 @@ Str_TO_2:	.asciz "TO"
 		PsFileNmTwoBox	SGLDnmbx, super=DiskLoadP3, next=DiskLoadP3_Label_FROM, prev=SGLDbottom3, flag=VF_Const, X=120, Y=98, W=400, H=90, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, boxborder=BD_3D_UP2, main_func=FN_SingleLoadSrcDstFunc, row=4, spacewidth=80, topdown=2, bottomup=4, auto_inc=1, paintok=SGLDnmbx_paintok, aicok=SGLDnmbx_aicok
 
 Str_FROM_2:	.asciz "FROM"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_FROM_2
 
 		VwLabel	DiskLoadP3_Label_FROM, super=DiskLoadP3, next=SrcBankBox, prev=SGLDnmbx, flag=VF_Const, X=118, Y=74, W=48, H=19, str=Str_FROM_2, font=4, fontcolor=CL_White	# str "FROM"
 		PsParaBox	SrcBankBox, super=DiskLoadP3, next=SrcMemBox, prev=DiskLoadP3_Label_FROM, flag=VF_Const, X=124, Y=194, W=70, H=20, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_White
@@ -8217,18 +8567,18 @@ Str_COPY_OPTION:	.asciz "COPY OPTION"
 		IvMainEditIndex	SGLDsendind, super=CmpOptionWin, next=SGLD_CMP_OPT_LBFIX, prev=SGLD_CMP_OPT_BOX, flag=VF_Const|VF_InvisibleBox, X=84, Y=208, W=32, H=32, main_func=FN_SendIndexSingleLoadFunc
 
 Str_ACCOMP_DSP:	.asciz "ACCOMP DSP"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ACCOMP_DSP
 
 		VwLabel	SGLD_CMP_OPT_LBFIX, super=CmpOptionWin, prev=SGLDsendind, flag=VF_Const, X=546, Y=138, W=64, H=11, str=Str_ACCOMP_DSP, font=3, fontcolor=CL_White	# str "ACCOMP DSP"
 
 Str_LOAD_SINGLE_COMPOSER:	.asciz "LOAD SINGLE COMPOSER"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LOAD_SINGLE_COMPOSER
 
 	TtlScreen	CmpSingleLoad, sub=CLDSflnmbx, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CMMENU, window=CmpSingleLoad_window, title=Str_LOAD_SINGLE_COMPOSER, icon=84	# title "LOAD SINGLE COMPOSER"
 		PsFileNameBox	CLDSflnmbx, super=CmpSingleLoad, sub=CLDSflnmlb, next=CLDSarrow, flag=VF_Const, X=120, Y=36, W=400, H=30, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_White, main_func=FN_CmpSingleLoadFileFunc, column=1, row=1, sel_num=CLDSflnmbx_sel_num, paintok=CLDSflnmbx_paintok, aicok=CLDSflnmbx_aicok
 
 Str_FILE_NAME_2:	.asciz "FILE NAME:"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_FILE_NAME_2
 
 			VwLabel	CLDSflnmlb, super=CLDSflnmbx, flag=VF_Const, X=122, Y=47, W=84, H=19, str=Str_FILE_NAME_2, fontcolor=CL_White	# str "FILE NAME:"
 		Arrow	CLDSarrow, super=CmpSingleLoad, next=CLDSleft1, prev=CLDSflnmbx, flag=VF_Const, X=308, Y=120, W=30, H=48, color=CL_White, dir=1, tail_x_rate=50, tail_y_rate=50
@@ -8237,12 +8587,12 @@ Str_FILE_NAME_2:	.asciz "FILE NAME:"
 		AcIndexEditSw	CLDSright1, super=CmpSingleLoad, sub=CLDSloadlb, next=CmpSingleLoad_Label_FILE, prev=CLDSleft2, flag=VF_Const, X=571, Y=34, W=61, H=26, color=CL_Silver, border=BD_3D_UP2, index=10, font=4, fontcolor=CL_Black, editsw=ES_Right1
 
 Str_LOAD_6:	.asciz "LOAD"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LOAD_6
 
 			VwLabel	CLDSloadlb, super=CLDSright1, flag=VF_Const, X=577, Y=39, W=48, H=19, str=Str_LOAD_6, font=4, fontcolor=CL_Black	# str "LOAD"
 
 Str_FILE:	.asciz "FILE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_FILE
 
 		VwLabel	CmpSingleLoad_Label_FILE, super=CmpSingleLoad, next=CLDSright2, prev=CLDSright1, flag=VF_Const, X=8, Y=60, W=36, H=19, str=Str_FILE, fontcolor=CL_White	# str "FILE"
 
@@ -8252,12 +8602,12 @@ Str_SINGLE_2:	.asciz "SINGLE"
 		AcMonoIndexToggle	CLDSright2, super=CmpSingleLoad, next=CLDSfromlb, prev=CmpSingleLoad_Label_FILE, flag=VF_Const, X=571, Y=79, W=61, H=22, stron=Str_BANK_4, stroff=Str_SINGLE_2, onoff=CLDSright2_onoff, editsw=ES_Right2, index=3	# stron "BANK"; stroff "SINGLE"
 
 Str_FROM_3:	.asciz "FROM"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_FROM_3
 
 		VwLabel	CLDSfromlb, super=CmpSingleLoad, next=CLDStolb, prev=CLDSright2, flag=VF_Const, X=118, Y=74, W=48, H=19, str=Str_FROM_3, font=4, fontcolor=CL_White	# str "FROM"
 
 Str_TO_3:	.asciz "TO"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TO_3
 
 		VwLabel	CLDStolb, super=CmpSingleLoad, next=CLDSbottom0, prev=CLDSfromlb, flag=VF_Const, X=362, Y=74, W=26, H=19, str=Str_TO_3, font=4, fontcolor=CL_White	# str "TO"
 		AcIndexWideES	CLDSbottom0, super=CmpSingleLoad, next=CLDSselbox, prev=CLDStolb, flag=VF_Const, X=124, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=5, font=4, fontcolor=CL_Black, editsw=ES_Bottom4, editsw2=ES_Bottom5, style=3
@@ -8278,12 +8628,12 @@ Str_COPY_OPTION_2:	.asciz "COPY OPTION"
 		PsParaBox	CLDS_B_DST_BOX, super=CmpSingleLoad, next=CLDS_OPT_LBFIX, prev=CLDS_B_SRC_BOX, flag=VF_Const, X=364, Y=194, W=70, H=20, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_White
 
 Str_ACCOMP_DSP_2:	.asciz "ACCOMP DSP"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ACCOMP_DSP_2
 
 		VwLabel	CLDS_OPT_LBFIX, super=CmpSingleLoad, prev=CLDS_B_DST_BOX, flag=VF_Const, X=546, Y=138, W=64, H=11, str=Str_ACCOMP_DSP_2, font=3, fontcolor=CL_White	# str "ACCOMP DSP"
 
 Str_PICTURE_LOAD_2:	.asciz "PICTURE LOAD"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PICTURE_LOAD_2
 
 	TtlScreen	WallpaperLoad, sub=WPLDflnmbx, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CTHOMEPAGE, window=WallpaperLoad_window, title=Str_PICTURE_LOAD_2, icon=44	# title "PICTURE LOAD"
 		PsFileNameBox	WPLDflnmbx, super=WallpaperLoad, next=WPLDbtm0, flag=VF_Const, X=160, Y=108, W=320, H=94, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF, fontcolor=CL_White, main_func=FN_FmmWallpaperLoadFunc, column=2, row=5, sel_num=WPLDflnmbx_sel_num, paintok=WPLDflnmbx_paintok, aicok=WPLDflnmbx_aicok
@@ -8293,36 +8643,36 @@ Str_PICTURE_LOAD_2:	.asciz "PICTURE LOAD"
 		AcIndexWideES	WPLDbtm6, super=WallpaperLoad, sub=WPLDprevlb, next=WPLDbtm7, prev=WPLDbtm2, flag=VF_Const, X=124, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=6, font=4, fontcolor=CL_Black, editsw=ES_Bottom4, editsw2=ES_Bottom5
 
 Str_PREV_4:	.asciz "PREV"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PREV_4
 
 			VwLabel	WPLDprevlb, super=WPLDbtm6, flag=VF_Const, X=142, Y=219, W=36, H=19, str=Str_PREV_4, fontcolor=CL_Black	# str "PREV"
 		AcIndexWideES	WPLDbtm7, super=WallpaperLoad, sub=WPLDnextlb, next=WPLDloadsw, prev=WPLDbtm6, flag=VF_Const, X=444, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=7, font=4, fontcolor=CL_Black, editsw=ES_Bottom12, editsw2=ES_Bottom13
 
 Str_NEXT_4:	.asciz "NEXT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NEXT_4
 
 			VwLabel	WPLDnextlb, super=WPLDbtm7, flag=VF_Const, X=462, Y=219, W=36, H=19, str=Str_NEXT_4, fontcolor=CL_Black	# str "NEXT"
 		AcIndexEditSw	WPLDloadsw, super=WallpaperLoad, sub=WPLDloadlb, next=WPLDdknmbx, prev=WPLDbtm7, flag=VF_Const, X=571, Y=34, W=61, H=26, color=CL_Silver, border=BD_3D_UP2, index=3, font=4, fontcolor=CL_Black, editsw=ES_Right1
 
 Str_LOAD_7:	.asciz "LOAD"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LOAD_7
 
 			VwLabel	WPLDloadlb, super=WPLDloadsw, flag=VF_Const, X=577, Y=39, W=48, H=19, str=Str_LOAD_7, font=4, fontcolor=CL_Black	# str "LOAD"
 		AcParaStrBox	WPLDdknmbx, super=WallpaperLoad, next=WPLDinfobx, prev=WPLDloadsw, flag=VF_Const, X=302, Y=42, W=150, H=24, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_White, align=1, main_func=FN_DiskNameFunc, paintok=WPLDdknmbx_paintok
 		AcParaStrBox	WPLDinfobx, super=WallpaperLoad, next=WPLDdknmlb, prev=WPLDdknmbx, flag=VF_Const, X=160, Y=74, W=320, H=24, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_White, main_func=FN_DiskInfoFunc, paintok=WPLDinfobx_paintok
 
 Str_DISK_NAME_2:	.asciz "DISK NAME:"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_DISK_NAME_2
 
 		VwLabel	WPLDdknmlb, super=WallpaperLoad, prev=WPLDinfobx, flag=VF_Const, X=214, Y=50, W=84, H=19, str=Str_DISK_NAME_2, fontcolor=CL_White	# str "DISK NAME:"
 
 Str_SMF_LOAD:	.asciz "SMF LOAD"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SMF_LOAD
 
 	TtlScreen	DiskLoadSMF, sub=SMFLtech, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_DKMENU, window=DiskLoadSMF_window, title=Str_SMF_LOAD, icon=44	# title "SMF LOAD"
 
 Str_TECH:	.asciz "TECH"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TECH
 
 		AcTitleMenu	SMFLtech, super=DiskLoadSMF, next=SMFLoadFilesBox, flag=VF_Const, X=8, Y=28, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left1, selected=SMFLtech_selected, str=Str_TECH, title=TT_DKLD	# str "TECH"
 		PsFileNameBox	SMFLoadFilesBox, super=DiskLoadSMF, next=SMFLbtm0, prev=SMFLtech, flag=VF_Const, X=160, Y=108, W=320, H=94, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF, fontcolor=CL_White, main_func=FN_FmmSmfFileNameFunc, column=2, row=5, sel_num=SMFLoadFilesBox_sel_num, dial=1, auto_inc=1, paintok=SMFLoadFilesBox_paintok, aicok=SMFLoadFilesBox_aicok
@@ -8330,25 +8680,25 @@ Str_TECH:	.asciz "TECH"
 		AcIndexWideES	SMFLbtm1, super=DiskLoadSMF, sub=SMFLprevlb, next=SMFLbtm2, prev=SMFLbtm0, flag=VF_Const, X=124, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=3, font=4, fontcolor=CL_Black, editsw=ES_Bottom4, editsw2=ES_Bottom5
 
 Str_PREV_5:	.asciz "PREV"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PREV_5
 
 			VwLabel	SMFLprevlb, super=SMFLbtm1, flag=VF_Const, X=142, Y=219, W=36, H=19, str=Str_PREV_5, fontcolor=CL_Black	# str "PREV"
 		AcIndexWideES	SMFLbtm2, super=DiskLoadSMF, sub=SMFLnextlb, next=SMFLldsw, prev=SMFLbtm1, flag=VF_Const, X=444, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=4, font=4, fontcolor=CL_Black, editsw=ES_Bottom12, editsw2=ES_Bottom13
 
 Str_NEXT_5:	.asciz "NEXT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NEXT_5
 
 			VwLabel	SMFLnextlb, super=SMFLbtm2, flag=VF_Const, X=462, Y=219, W=36, H=19, str=Str_NEXT_5, fontcolor=CL_Black	# str "NEXT"
 		AcIndexEditSw	SMFLldsw, super=DiskLoadSMF, sub=SMFLldlb, next=SMFLwintgl, prev=SMFLbtm2, flag=VF_Const, X=571, Y=34, W=61, H=26, color=CL_Silver, border=BD_3D_UP2, index=6, font=4, fontcolor=CL_Black, editsw=ES_Right1
 
 Str_LOAD_8:	.asciz "LOAD"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LOAD_8
 
 			VwLabel	SMFLldlb, super=SMFLldsw, flag=VF_Const, X=577, Y=39, W=48, H=19, str=Str_LOAD_8, font=4, fontcolor=CL_Black	# str "LOAD"
 
 Str_SONG:	.asciz "SONG"
 Str_DISK:	.asciz "DISK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_DISK
 
 		PsWindowToggle	SMFLwintgl, super=DiskLoadSMF, sub=SMFLinflb, next=SMFLldasind, prev=SMFLldsw, flag=VF_Const, X=8, Y=122, W=61, H=22, font=4, stron=Str_SONG, stroff=Str_DISK, onoff=SMFLwintgl_onoff, editsw=ES_Left3, onwin=SongNameSmfLdWin_id, offwin=DiskInfoSmfLdWin_id, main_func=FN_FmmSmfFileNameFunc	# stron "SONG"; stroff "DISK"
 
@@ -8375,7 +8725,7 @@ Str_LOAD_AS:	.asciz "LOAD AS"
 		AcParaStrBox	SMFLdisknm, super=DiskInfoSmfLdWin, next=DiskInfoSmfLdWin_Label_DISK_NAME, prev=SMFLdiskinf, flag=VF_Const, X=302, Y=42, W=150, H=24, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_White, align=1, main_func=FN_DiskNameFunc, paintok=SMFLdisknm_paintok
 
 Str_DISK_NAME_3:	.asciz "DISK NAME:"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_DISK_NAME_3
 
 		VwLabel	DiskInfoSmfLdWin_Label_DISK_NAME, super=DiskInfoSmfLdWin, prev=SMFLdisknm, flag=VF_Const, X=214, Y=50, W=84, H=19, str=Str_DISK_NAME_3, fontcolor=CL_White	# str "DISK NAME:"
 
@@ -8383,7 +8733,7 @@ Str_DISK_NAME_3:	.asciz "DISK NAME:"
 		AcParaStrBox	SMFLsngnm, super=SongNameSmfLdWin, flag=VF_Const, X=120, Y=50, W=400, H=34, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_White, main_func=FN_SongNameFunc, paintok=SMFLsngnm_paintok
 
 Str_SAVE_2:	.asciz "SAVE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SAVE_2
 
 	TtlScreen	DiskSaveMenu, sub=TT_DKSVMENU1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_DKMENU, window=DiskSaveMenu_window, title=Str_SAVE_2, icon=45	# title "SAVE"
 
@@ -8392,19 +8742,19 @@ Str_TECHNICS_FORMAT:	.asciz "TECHNICS FORMAT"
 		AcTtlJgBox	TT_DKSVMENU1, super=DiskSaveMenu, next=TT_DKSVMENU2, flag=VF_Const, X=327, Y=71, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, align=1, editsw=ES_Right2, selected=TT_DKSVMENU1_selected, str=Str_TECHNICS_FORMAT, main_func=FN_SaveTtlJgFunc	# str "TECHNICS FORMAT"
 
 Str_SMF_FORMAT_0:	.asciz "SMF FORMAT 0"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SMF_FORMAT_0
 
 		AcTtlJgBox	TT_DKSVMENU2, super=DiskSaveMenu, prev=TT_DKSVMENU1, flag=VF_Const, X=327, Y=157, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right4, selected=TT_DKSVMENU2_selected, str=Str_SMF_FORMAT_0, main_func=FN_SaveSmfTtlJgFunc	# str "SMF FORMAT 0"
 
 Str_SAVE_FILE_NAMING:	.asciz "SAVE FILE NAMING"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SAVE_FILE_NAMING
 
 	TtlScreen	DiskSaveName, sub=SVNnameok, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_DKSV, window=DiskSaveName_window, title=Str_SAVE_FILE_NAMING, icon=153	# title "SAVE FILE NAMING"
 		AcFuncEditSw	SVNnameok, super=DiskSaveName, next=DKSVivnam, flag=VF_Const, X=593, Y=166, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_TechnicsFileNaming
 		IvNaming	DKSVivnam, super=DiskSaveName, prev=SVNnameok, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_TechnicsFileNaming
 
 Str_empty_70:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_70
 
 	TtlScreen	DiskSave, sub=DiskSavePage, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_DKMENU, window=DiskSave_window, title=Str_empty_70	# title ""
 		AcWindowPage	DiskSavePage, super=DiskSave, next=TT_DKSV8, flag=VF_Const, X=564, Y=5, W=71, H=18, color=CL_PageBack, border=BD_3D_DOWN1, index=0xFFFF, page=DiskSavePage_page, pagemin=1, pagemax=3
@@ -8420,7 +8770,7 @@ Str_empty_70:	.asciz ""
 		AcIndexEditSw	SVsvsw1, super=DiskSaveP1, sub=SVsvlb1, next=SVbottom0, prev=SVfiles, flag=VF_Const, X=571, Y=34, W=61, H=26, color=CL_Silver, border=BD_3D_UP2, index=4, fontcolor=CL_Black, editsw=ES_Right1
 
 Str_SAVE_3:	.asciz "SAVE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SAVE_3
 
 			VwLabel	SVsvlb1, super=SVsvsw1, flag=VF_Const, X=577, Y=39, W=48, H=19, str=Str_SAVE_3, font=4, fontcolor=CL_Black	# str "SAVE"
 		AcIndexWideES	SVbottom0, super=DiskSaveP1, next=SVbottom1, prev=SVsvsw1, flag=VF_Const, X=244, Y=216, W=152, H=23, color=CL_Silver, border=BD_EditSwitch, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom10, style=14
@@ -8429,19 +8779,19 @@ Str_SAVE_3:	.asciz "SAVE"
 		AcParaStrBox	SVnmbx, super=DiskSaveP1, sub=SVdknm, next=SVdkinfobx, prev=SVbottom2, flag=VF_Const, X=119, Y=40, W=400, H=34, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_White, main_func=FN_SaveFileNameFunc, paintok=SVnmbx_paintok
 
 Str_SAVE_AS:	.asciz "SAVE AS:"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SAVE_AS
 
 			VwLabel	SVdknm, super=SVnmbx, sub=SVnametitle, flag=VF_Const, X=122, Y=54, W=68, H=19, str=Str_SAVE_AS, fontcolor=CL_White	# str "SAVE AS:"
 
 Str_NAME_2:	.asciz "NAME"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NAME_2
 
 				AcTitleMenu	SVnametitle, super=SVdknm, flag=VF_Const, X=8, Y=28, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left1, selected=SVnametitle_selected, str=Str_NAME_2, title=TT_DKSVNAME	# str "NAME"
 		AcParaStrBox	SVdkinfobx, super=DiskSaveP1, next=SVivcatchev1, prev=SVnmbx, flag=VF_Const, X=160, Y=78, W=320, H=24, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_White, main_func=FN_DiskInfoFunc, paintok=SVdkinfobx_paintok
 		IvCatchEvent	SVivcatchev1, super=DiskSaveP1, next=SVtitlebar1, prev=SVdkinfobx, flag=VF_Const|VF_InvisibleBox, X=0, Y=208, W=32, H=32, func=FN_WakeUpPassword
 
 Str_SAVE_4:	.asciz "SAVE                      "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SAVE_4
 
 		VwOwScreenTitle	SVtitlebar1, super=DiskSaveP1, prev=SVivcatchev1, flag=VF_Const, X=300, Y=0, W=-238, H=32, color=CL_Transparent, index=0xFFFF, title=Str_SAVE_4, icon=45, page=1	# title "SAVE                      "
 
@@ -8449,7 +8799,7 @@ Str_SAVE_4:	.asciz "SAVE                      "
 		AcIndexEditSw	SVsvsw2, super=DiskSaveP2, sub=SOsvlb, next=SObottom0, flag=VF_Const, X=571, Y=34, W=61, H=26, color=CL_Silver, border=BD_3D_UP2, index=14, fontcolor=CL_Black, editsw=ES_Right1
 
 Str_SAVE_5:	.asciz "SAVE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SAVE_5
 
 			VwLabel	SOsvlb, super=SVsvsw2, flag=VF_Const, X=577, Y=39, W=48, H=19, str=Str_SAVE_5, font=4, fontcolor=CL_Black	# str "SAVE"
 		AcIndexEditSw	SObottom0, super=DiskSaveP2, next=SObottom1, prev=SVsvsw2, flag=VF_Const, X=84, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, fontcolor=CL_Black, editsw=ES_Bottom3, style=3
@@ -8463,12 +8813,12 @@ Str_SAVE_5:	.asciz "SAVE"
 		AcIndexEditSw	SObottom8, super=DiskSaveP2, next=SOpanel, prev=SObottom7, flag=VF_Const, X=484, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=9, fontcolor=CL_Black, editsw=ES_Bottom13, style=3
 
 Str_PANEL_2:	.asciz "PANEL"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PANEL_2
 
 		VwLabel	SOpanel, super=DiskSaveP2, next=SOpmem, prev=SObottom8, flag=VF_Const, X=82, Y=202, W=34, H=11, str=Str_PANEL_2, font=3, fontcolor=CL_White	# str "PANEL"
 
 Str_P_MEM_2:	.asciz "P.MEM"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_P_MEM_2
 
 		VwLabel	SOpmem, super=DiskSaveP2, next=SOseq, prev=SOpanel, flag=VF_Const, X=122, Y=202, W=34, H=11, str=Str_P_MEM_2, font=3, fontcolor=CL_White	# str "P.MEM"
 
@@ -8477,17 +8827,17 @@ Str_SEQ_2:	.asciz "SEQ"
 		VwLabel	SOseq, super=DiskSaveP2, next=SOcomp, prev=SOpmem, flag=VF_Const, X=168, Y=202, W=22, H=11, str=Str_SEQ_2, font=3, fontcolor=CL_White	# str "SEQ"
 
 Str_COMP_2:	.asciz "COMP"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_COMP_2
 
 		VwLabel	SOcomp, super=DiskSaveP2, next=SOsound, prev=SOseq, flag=VF_Const, X=205, Y=202, W=28, H=11, str=Str_COMP_2, font=3, fontcolor=CL_White	# str "COMP"
 
 Str_SOUND_5:	.asciz "SOUND"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SOUND_5
 
 		VwLabel	SOsound, super=DiskSaveP2, next=SOmsp, prev=SOcomp, flag=VF_Const, X=242, Y=202, W=34, H=11, str=Str_SOUND_5, font=3, fontcolor=CL_White	# str "SOUND"
 
 Str_PADS_5:	.asciz "PADS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PADS_5
 
 		VwLabel	SOmsp, super=DiskSaveP2, next=SOfav, prev=SOsound, flag=VF_Const, X=285, Y=202, W=28, H=11, str=Str_PADS_5, font=3, fontcolor=CL_White	# str "PADS"
 
@@ -8496,12 +8846,12 @@ Str_FAV_2:	.asciz "FAV"
 		VwLabel	SOfav, super=DiskSaveP2, next=SOcustom, prev=SOmsp, flag=VF_Const, X=448, Y=202, W=22, H=11, str=Str_FAV_2, font=3, fontcolor=CL_White	# str "FAV"
 
 Str_CUSTOM_2:	.asciz "CUSTOM"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CUSTOM_2
 
 		VwLabel	SOcustom, super=DiskSaveP2, next=SOmidi, prev=SOfav, flag=VF_Const, X=520, Y=202, W=40, H=11, str=Str_CUSTOM_2, font=3, fontcolor=CL_White	# str "CUSTOM"
 
 Str_MIDI_3:	.asciz "MIDI"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MIDI_3
 
 		VwLabel	SOmidi, super=DiskSaveP2, next=SOsvpm, prev=SOcustom, flag=VF_Const, X=406, Y=202, W=28, H=11, str=Str_MIDI_3, font=3, fontcolor=CL_White	# str "MIDI"
 		AcIndexEditSw	SOsvpm, super=DiskSaveP2, sub=SOlbpm, next=SOswbk, prev=SOmidi, flag=VF_Const, X=571, Y=123, W=61, H=20, color=CL_Silver, border=BD_3D_UP2, index=13, fontcolor=CL_Black, editsw=ES_Right3
@@ -8522,70 +8872,70 @@ Str_ALL_OFF:	.asciz "ALL OFF"
 		AcParaStrBox	SOflnm, super=DiskSaveP2, sub=Ssaveas, next=SObottom9, prev=SOswof, flag=VF_Const, X=120, Y=40, W=400, H=34, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_White, main_func=FN_SaveFileNameNumFunc, paintok=SOflnm_paintok
 
 Str_SAVE_AS_2:	.asciz "SAVE AS:"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SAVE_AS_2
 
 			VwLabel	Ssaveas, super=SOflnm, flag=VF_Const, X=122, Y=54, W=68, H=19, str=Str_SAVE_AS_2, fontcolor=CL_White	# str "SAVE AS:"
 		AcIndexEditSw	SObottom9, super=DiskSaveP2, next=SOeffect, prev=SOflnm, flag=VF_Const, X=524, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=10, font=4, fontcolor=CL_Black, editsw=ES_Bottom14, style=3
 
 Str_EFFECT_6:	.asciz "EFFECT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_EFFECT_6
 
 		VwLabel	SOeffect, super=DiskSaveP2, next=SVivcatchev2, prev=SObottom9, flag=VF_Const, X=360, Y=202, W=40, H=11, str=Str_EFFECT_6, font=3, fontcolor=CL_White	# str "EFFECT"
 		IvCatchEvent	SVivcatchev2, super=DiskSaveP2, next=SOopbx, prev=SOeffect, flag=VF_Const|VF_InvisibleBox, X=0, Y=208, W=32, H=32, func=FN_WakeUpPassword
 		PsOptionTwoBox	SOopbx, super=DiskSaveP2, sub=Smsp, next=SVtitlebar2, prev=SVivcatchev2, flag=VF_Const, X=99, Y=84, W=443, H=107, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, boxborder=BD_3D_UP2, main_func=FN_FmmSaveFilterFunc, row=6, spacewidth=40, stroffset=154, paintok=SOopbx_paintok, aicok=SOopbx_aicok
 
 Str_PERFORMANCE_PADS_3:	.asciz "PERFORMANCE PADS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PERFORMANCE_PADS_3
 
 			VwLabel	Smsp, super=SOopbx, next=Susermidi, flag=VF_Const, X=102, Y=172, W=132, H=19, str=Str_PERFORMANCE_PADS_3, fontcolor=CL_White	# str "PERFORMANCE PADS"
 
 Str_USER_MIDI_SETTINGS_2:	.asciz "USER MIDI SETTINGS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_USER_MIDI_SETTINGS_2
 
 			VwLabel	Susermidi, super=SOopbx, next=Srhythmctm, prev=Smsp, flag=VF_Const, X=343, Y=104, W=148, H=19, str=Str_USER_MIDI_SETTINGS_2, fontcolor=CL_White	# str "USER MIDI SETTINGS"
 
 Str_ALL_CUSTOM_STYLE_2:	.asciz "ALL CUSTOM STYLE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ALL_CUSTOM_STYLE_2
 
 			VwLabel	Srhythmctm, super=SOopbx, next=Scomposer, prev=Susermidi, flag=VF_Const, X=343, Y=155, W=132, H=19, str=Str_ALL_CUSTOM_STYLE_2, fontcolor=CL_White	# str "ALL CUSTOM STYLE"
 
 Str_COMPOSER_3:	.asciz "COMPOSER"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_COMPOSER_3
 
 			VwLabel	Scomposer, super=SOopbx, next=Sfavorite, prev=Srhythmctm, flag=VF_Const, X=102, Y=138, W=68, H=19, str=Str_COMPOSER_3, fontcolor=CL_White	# str "COMPOSER"
 
 Str_FAVORITES_4:	.asciz "FAVORITES"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_FAVORITES_4
 
 			VwLabel	Sfavorite, super=SOopbx, next=SVeffectlb, prev=Scomposer, flag=VF_Const, X=343, Y=121, W=76, H=19, str=Str_FAVORITES_4, fontcolor=CL_White	# str "FAVORITES"
 
 Str_EFFECT_MEMORY_2:	.asciz "EFFECT MEMORY"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_EFFECT_MEMORY_2
 
 			VwLabel	SVeffectlb, super=SOopbx, next=Spanelmem, prev=Sfavorite, flag=VF_Const, X=343, Y=87, W=108, H=19, str=Str_EFFECT_MEMORY_2, fontcolor=CL_White	# str "EFFECT MEMORY"
 
 Str_PANEL_MEMORY_6:	.asciz "PANEL MEMORY"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PANEL_MEMORY_6
 
 			VwLabel	Spanelmem, super=SOopbx, next=Ssequencer, prev=SVeffectlb, flag=VF_Const, X=102, Y=104, W=100, H=19, str=Str_PANEL_MEMORY_6, fontcolor=CL_White	# str "PANEL MEMORY"
 
 Str_SEQUENCER_4:	.asciz "SEQUENCER"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SEQUENCER_4
 
 			VwLabel	Ssequencer, super=SOopbx, next=Ssoundmem, prev=Spanelmem, flag=VF_Const, X=102, Y=121, W=76, H=19, str=Str_SEQUENCER_4, fontcolor=CL_White	# str "SEQUENCER"
 
 Str_SOUND_MEMORY_2:	.asciz "SOUND MEMORY"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SOUND_MEMORY_2
 
 			VwLabel	Ssoundmem, super=SOopbx, next=Scurrentpanel, prev=Ssequencer, flag=VF_Const, X=102, Y=155, W=100, H=19, str=Str_SOUND_MEMORY_2, fontcolor=CL_White	# str "SOUND MEMORY"
 
 Str_CURRENT_PANEL_2:	.asciz "CURRENT PANEL"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CURRENT_PANEL_2
 
 			VwLabel	Scurrentpanel, super=SOopbx, next=Shomepage, prev=Ssoundmem, flag=VF_Const, X=102, Y=87, W=108, H=19, str=Str_CURRENT_PANEL_2, fontcolor=CL_White	# str "CURRENT PANEL"
 
 Str_HOME_PAGE_3:	.asciz "HOME PAGE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HOME_PAGE_3
 
 			VwLabel	Shomepage, super=SOopbx, prev=Scurrentpanel, flag=VF_Const, X=343, Y=138, W=76, H=19, str=Str_HOME_PAGE_3, fontcolor=CL_White	# str "HOME PAGE"
 
@@ -8595,7 +8945,7 @@ Str_SAVE_OPTION:	.asciz "SAVE OPTION                    "
 		AcIndexEditSw	SObottom10, super=DiskSaveP2, next=DiskSaveP2_Label_H_PAGE, prev=SVtitlebar2, flag=VF_Const, X=284, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=5, fontcolor=CL_Black, editsw=ES_Bottom8, style=3
 
 Str_H_PAGE_2:	.asciz "H.PAGE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_H_PAGE_2
 
 		VwLabel	DiskSaveP2_Label_H_PAGE, super=DiskSaveP2, prev=SObottom10, flag=VF_Const, X=477, Y=202, W=40, H=11, str=Str_H_PAGE_2, font=3, fontcolor=CL_White	# str "H.PAGE"
 
@@ -8604,7 +8954,7 @@ Str_H_PAGE_2:	.asciz "H.PAGE"
 		AcIndexEditSw	SSsvsw, super=DiskSaveP3, sub=SSsvlb, next=SSbottom0, prev=SSflnmbox, flag=VF_Const, X=571, Y=34, W=61, H=26, color=CL_Silver, border=BD_3D_UP2, index=4, fontcolor=CL_Black, editsw=ES_Right1
 
 Str_SAVE_6:	.asciz "SAVE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SAVE_6
 
 			VwLabel	SSsvlb, super=SSsvsw, flag=VF_Const, X=577, Y=39, W=48, H=19, str=Str_SAVE_6, font=4, fontcolor=CL_Black	# str "SAVE"
 		AcIndexWideES	SSbottom0, super=DiskSaveP3, next=SSbottom1, prev=SSsvsw, flag=VF_Const, X=244, Y=216, W=152, H=23, color=CL_Silver, border=BD_EditSwitch, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom10, style=14
@@ -8613,7 +8963,7 @@ Str_SAVE_6:	.asciz "SAVE"
 		AcParaStrBox	SSsvflnmbx, super=DiskSaveP3, sub=SSsaveas, next=SVivcatchev3, prev=SSbottom2, flag=VF_Const, X=120, Y=40, W=400, H=34, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_White, main_func=FN_SaveFileNameNumFunc, paintok=SSsvflnmbx_paintok
 
 Str_SAVE_AS_3:	.asciz "SAVE AS:"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SAVE_AS_3
 
 			VwLabel	SSsaveas, super=SSsvflnmbx, flag=VF_Const, X=122, Y=54, W=68, H=19, str=Str_SAVE_AS_3, fontcolor=CL_White	# str "SAVE AS:"
 		IvCatchEvent	SVivcatchev3, super=DiskSaveP3, next=SVtitlebar3, prev=SSsvflnmbx, flag=VF_Const|VF_InvisibleBox, X=0, Y=208, W=32, H=32, func=FN_WakeUpPassword
@@ -8623,62 +8973,62 @@ Str_SEQUENCER_SONG_SAVE:	.asciz "SEQUENCER SONG SAVE"
 		VwOwScreenTitle	SVtitlebar3, super=DiskSaveP3, prev=SVivcatchev3, flag=VF_Const, X=300, Y=0, W=-217, H=32, color=CL_Transparent, index=0xFFFF, title=Str_SEQUENCER_SONG_SAVE, icon=45	# title "SEQUENCER SONG SAVE"
 
 Str_SAVE_FILE_NAMING_2:	.asciz "SAVE FILE NAMING"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SAVE_FILE_NAMING_2
 
 	TtlScreen	DiskSaveNameSMF, sub=DiskSaveNameSMF_Naming1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_DKSVSMF, window=DiskSaveNameSMF_window, title=Str_SAVE_FILE_NAMING_2, icon=153	# title "SAVE FILE NAMING"
 		IvNaming	DiskSaveNameSMF_Naming1, super=DiskSaveNameSMF, next=DKSVnameok, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_SmfFileNaming
 		AcFuncEditSw	DKSVnameok, super=DiskSaveNameSMF, prev=DiskSaveNameSMF_Naming1, flag=VF_Const, X=593, Y=166, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_SmfFileNaming
 
 Str_SMF_SAVE:	.asciz "SMF SAVE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SMF_SAVE
 
 	TtlScreen	DiskSaveSMF, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_DKMENU, window=DiskSaveSMF_window, title=Str_SMF_SAVE, icon=45	# title "SMF SAVE"
 
 Str_SMF_SAVE_2:	.asciz "SMF SAVE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SMF_SAVE_2
 
 	TtlScreen	DiskSmfSave, sub=SMFflnmbox, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_DKMENU, window=DiskSmfSave_window, title=Str_SMF_SAVE_2, icon=45	# title "SMF SAVE"
 		PsFileNameBox	SMFflnmbox, super=DiskSmfSave, next=SMFsvsw, flag=VF_Const, X=160, Y=108, W=320, H=94, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF, fontcolor=CL_White, main_func=FN_FmmSmfFileNameFunc, column=2, row=5, sel_num=SMFflnmbox_sel_num, dial=1, auto_inc=1, paintok=SMFflnmbox_paintok, aicok=SMFflnmbox_aicok
 		AcIndexEditSw	SMFsvsw, super=DiskSmfSave, sub=SMFsvlb, next=SMFnm, prev=SMFflnmbox, flag=VF_Const, X=571, Y=34, W=61, H=26, color=CL_Silver, border=BD_3D_UP2, index=7, fontcolor=CL_Black, editsw=ES_Right1
 
 Str_SAVE_7:	.asciz "SAVE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SAVE_7
 
 			VwLabel	SMFsvlb, super=SMFsvsw, flag=VF_Const, X=577, Y=39, W=48, H=19, str=Str_SAVE_7, font=4, fontcolor=CL_Black	# str "SAVE"
 
 Str_NAME_3:	.asciz "NAME"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NAME_3
 
 		AcTitleMenu	SMFnm, super=DiskSmfSave, next=SMFSbottom0, prev=SMFsvsw, flag=VF_Const, X=8, Y=28, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left1, selected=SMFnm_selected, str=Str_NAME_3, title=TT_DKSVNAMESMF	# str "NAME"
 		AcIndexWideES	SMFSbottom0, super=DiskSmfSave, next=SMFSbottom1, prev=SMFnm, flag=VF_Const, X=284, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, fontcolor=CL_Black, editsw=ES_Bottom8, editsw2=ES_Bottom9, style=14
 		AcIndexWideES	SMFSbottom1, super=DiskSmfSave, sub=SMFprev, next=SMFSbottom2, prev=SMFSbottom0, flag=VF_Const, X=124, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=3, fontcolor=CL_Black, editsw=ES_Bottom4, editsw2=ES_Bottom5
 
 Str_PREV_6:	.asciz "PREV"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PREV_6
 
 			VwLabel	SMFprev, super=SMFSbottom1, flag=VF_Const, X=142, Y=219, W=36, H=19, str=Str_PREV_6, fontcolor=CL_Black	# str "PREV"
 		AcIndexWideES	SMFSbottom2, super=DiskSmfSave, sub=SMFnext, next=SMFsngsw, prev=SMFSbottom1, flag=VF_Const, X=444, Y=217, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=4, fontcolor=CL_Black, editsw=ES_Bottom12, editsw2=ES_Bottom13
 
 Str_NEXT_6:	.asciz "NEXT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NEXT_6
 
 			VwLabel	SMFnext, super=SMFSbottom2, flag=VF_Const, X=462, Y=220, W=36, H=19, str=Str_NEXT_6, fontcolor=CL_Black	# str "NEXT"
 		AcIndexEditSw	SMFsngsw, super=DiskSmfSave, next=SMFtoggle1, prev=SMFSbottom2, flag=VF_Const, X=8, Y=126, W=31, H=18, color=CL_WallPattern, index=31, fontcolor=CL_Black, editsw=ES_Left3
 
 Str_ON:	.asciz "ON"
 Str_OFF:	.asciz "OFF"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OFF
 
 		AcMonoIndexToggle	SMFtoggle1, super=DiskSmfSave, next=SMFtoggle2, prev=SMFsngsw, flag=VF_Const, X=593, Y=122, W=39, H=22, font=4, stron=Str_ON, stroff=Str_OFF, onoff=SMFtoggle1_onoff, editsw=ES_Right3, index=22	# stron "ON"; stroff "OFF"
 
 Str_ON_2:	.asciz "ON"
 Str_OFF_2:	.asciz "OFF"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OFF_2
 
 		AcMonoIndexToggle	SMFtoggle2, super=DiskSmfSave, next=SMFpanelhd, prev=SMFtoggle1, flag=VF_Const, X=593, Y=165, W=39, H=22, font=4, stron=Str_ON_2, stroff=Str_OFF_2, onoff=SMFtoggle2_onoff, editsw=ES_Right4, index=23	# stron "ON"; stroff "OFF"
 
 Str_PANEL_HEADER:	.asciz "PANEL HEADER"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PANEL_HEADER
 
 		VwLabel	SMFpanelhd, super=DiskSmfSave, next=DiskSmfSave_Label_1_MEASURE_SPACE, prev=SMFtoggle2, flag=VF_Const, X=533, Y=107, W=100, H=19, str=Str_PANEL_HEADER, fontcolor=CL_White	# str "PANEL HEADER"
 
@@ -8692,7 +9042,7 @@ Str_1_MEASURE_SPACE:	.asciz "1 MEASURE SPACE"
 		AcParaStrBox	SMFSaveFileNameBox, super=DiskSmfSave, sub=SMFSaveAsLb, next=SMFSeqFromSongNumBox, prev=SMFSaveSongNameBox, flag=VF_Const, X=120, Y=40, W=400, H=34, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_White, main_func=FN_SaveFileNameSmfFunc, paintok=SMFSaveFileNameBox_paintok
 
 Str_SAVE_AS_4:	.asciz "SAVE AS:"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SAVE_AS_4
 
 			VwLabel	SMFSaveAsLb, super=SMFSaveFileNameBox, flag=VF_Const, X=122, Y=54, W=68, H=19, str=Str_SAVE_AS_4, fontcolor=CL_White	# str "SAVE AS:"
 		AcParaStrBox	SMFSeqFromSongNumBox, super=DiskSmfSave, next=SMFsvassw, prev=SMFSaveFileNameBox, flag=VF_Const, X=8, Y=122, W=140, H=24, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, fontcolor=CL_Black, main_func=FN_SmfSeqFromSongNumFunc, paintok=SMFSeqFromSongNumBox_paintok
@@ -8704,13 +9054,13 @@ Str_SAVE_AS_5:	.asciz "SAVE AS"
 				VwLabel	SMFSaveAsOptLb, super=SMFSaveAsBox, flag=VF_Const, X=570, Y=193, W=60, H=19, str=Str_SAVE_AS_5, fontcolor=CL_White	# str "SAVE AS"
 
 Str_DISK_TOOLS_2:	.asciz "DISK TOOLS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_DISK_TOOLS_2
 
 	TtlScreen	DiskUtility, sub=DKTfnbx, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_DKMENU, window=DiskUtility_window, title=Str_DISK_TOOLS_2, icon=150	# title "DISK TOOLS"
 		PsFileNameBox	DKTfnbx, super=DiskUtility, next=DKTdknmlb, flag=VF_Const, X=120, Y=108, W=400, H=94, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF, fontcolor=CL_White, main_func=FN_FmmFileNameFunc, column=4, row=5, sel_num=DKTfnbx_sel_num, dial=1, auto_inc=1, paintok=DKTfnbx_paintok, aicok=DKTfnbx_aicok
 
 Str_DISK_NAME_4:	.asciz "DISK NAME:"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_DISK_NAME_4
 
 		VwLabel	DKTdknmlb, super=DiskUtility, next=DKTdknmstr, prev=DKTfnbx, flag=VF_Const, X=214, Y=50, W=84, H=19, str=Str_DISK_NAME_4, fontcolor=CL_White	# str "DISK NAME:"
 		AcParaStrBox	DKTdknmstr, super=DiskUtility, next=DKTdkinf, prev=DKTdknmlb, flag=VF_Const, X=302, Y=42, W=150, H=24, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_White, align=1, main_func=FN_DiskNameFunc, paintok=DKTdknmstr_paintok
@@ -8720,7 +9070,7 @@ Str_DISK_NAME_4:	.asciz "DISK NAME:"
 		AcIndexWideES	DKTbottom2, super=DiskUtility, next=DKTcopy, prev=DKTbottom1, flag=VF_Const, X=404, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom11, editsw2=ES_Bottom12, style=16
 
 Str_COPY:	.asciz "COPY"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_COPY
 
 		AcScreenMenu	DKTcopy, super=DiskUtility, next=DKTdel, prev=DKTbottom2, flag=VF_Const, X=8, Y=71, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left2, selected=DKTcopy_selected, str=Str_COPY, screen=FileCopy_id	# str "COPY"
 		AcIndexEditSw	DKTdel, super=DiskUtility, sub=DKTdellb, next=DKTmove1, prev=DKTcopy, flag=VF_Const, X=8, Y=122, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=5, font=4, fontcolor=CL_Black, editsw=ES_Left3
@@ -8732,23 +9082,23 @@ Str_DEL_4:	.asciz "DEL"
 		AcIndexEditSw	DKTmove2, super=DiskUtility, next=DKTrename, prev=DKTmove1, flag=VF_Const, X=8, Y=208, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=6, font=4, fontcolor=CL_Black, editsw=ES_Left5, style=2
 
 Str_RENAME:	.asciz "RENAME"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_RENAME
 
 		AcScreenMenu	DKTrename, super=DiskUtility, next=DKTformat, prev=DKTmove2, flag=VF_Const, X=327, Y=71, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, align=2, editsw=ES_Right2, selected=DKTrename_selected, str=Str_RENAME, screen=FileRename_id	# str "RENAME"
 
 Str_FORMAT:	.asciz "FORMAT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_FORMAT
 
 		AcTitleMenu	DKTformat, super=DiskUtility, next=DKTmovelb, prev=DKTrename, flag=VF_Const, X=327, Y=114, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right3, selected=DKTformat_selected, str=Str_FORMAT, title=TT_DKUTFRMT	# str "FORMAT"
 
 Str_MOVE:	.asciz "MOVE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MOVE
 
 		VwLabel	DKTmovelb, super=DiskUtility, next=WaitWinCtl, prev=DKTformat, flag=VF_Const, X=8, Y=189, W=48, H=19, str=Str_MOVE, font=4, fontcolor=CL_White	# str "MOVE"
 		IvWaitWinCtl	WaitWinCtl, super=DiskUtility, next=DKUTmtocus, prev=DKTmovelb, flag=VF_Const|VF_InvisibleBox, X=4, Y=28, W=32, H=32, win=DiskWaitWin_id
 
 Str_CUSTOM_STYLE:	.asciz "CUSTOM STYLE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CUSTOM_STYLE
 
 		AcTitleMenu	DKUTmtocus, super=DiskUtility, next=DKUTmtosmf, prev=WaitWinCtl, flag=VF_Const, X=573, Y=157, W=67, H=38, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, align=2, editsw=ES_Right4, selected=DKUTmtocus_selected, str=Str_CUSTOM_STYLE, title=TT_CUSDKUT	# str "CUSTOM STYLE"
 
@@ -8759,19 +9109,19 @@ Str_SMF_2:	.asciz "SMF"
 	Screen	FileCopy, sub=DKfilecopy, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_DKUT, window=FileCopy_window
 
 Str_FILE_COPY:	.asciz "FILE COPY"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_FILE_COPY
 
 		VwScreenTitle	DKfilecopy, super=FileCopy, next=DKfcpsrcbx, flag=VF_Const, X=0, Y=0, W=640, H=32, color=CL_WallPattern, index=0xFFFF, title=Str_FILE_COPY, icon=150	# title "FILE COPY"
 		AcParaStrBox	DKfcpsrcbx, super=FileCopy, next=DKfcpdstbx, prev=DKfilecopy, flag=VF_Const, X=80, Y=110, W=200, H=130, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_White, main_func=FN_CurFileNameFunc, paintok=DKfcpsrcbx_paintok
 		PsFileNameBox	DKfcpdstbx, super=FileCopy, next=DKcpfromlb, prev=DKfcpsrcbx, flag=VF_Const, X=360, Y=110, W=200, H=130, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_White, main_func=FN_FileCopyFunc, column=1, row=1, sel_num=DKfcpdstbx_sel_num, dial=1, auto_inc=1, paintok=DKfcpdstbx_paintok, aicok=DKfcpdstbx_aicok
 
 Str_FROM_4:	.asciz "FROM"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_FROM_4
 
 		VwLabel	DKcpfromlb, super=FileCopy, next=DKcptolb, prev=DKfcpdstbx, flag=VF_Const, X=78, Y=86, W=48, H=19, str=Str_FROM_4, font=4, fontcolor=CL_White	# str "FROM"
 
 Str_TO_4:	.asciz "TO"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TO_4
 
 		VwLabel	DKcptolb, super=FileCopy, next=DKcpok, prev=DKcpfromlb, flag=VF_Const, X=358, Y=86, W=26, H=19, str=Str_TO_4, font=4, fontcolor=CL_White	# str "TO"
 		AcIndexEditSw	DKcpok, super=FileCopy, next=DKcpbottom, prev=DKcptolb, flag=VF_Const, X=593, Y=122, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=8, font=4, fontcolor=CL_Black, editsw=ES_Right3, style=6
@@ -8787,7 +9137,7 @@ Str_FILE_RENAME:	.asciz "FILE RENAME"
 		AcFuncEditSw	DKUTflrnmok, super=FileRename, prev=DKUTflrnm, flag=VF_Const, X=593, Y=166, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_TechnicsFileRename
 
 Str_SMF_DISK_TOOLS:	.asciz "SMF DISK TOOLS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SMF_DISK_TOOLS
 
 	TtlScreen	DiskUtilitySMF, sub=DKSMFflnmbx, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_DKMENU, window=DiskUtilitySMF_window, title=Str_SMF_DISK_TOOLS, icon=150	# title "SMF DISK TOOLS"
 		PsFileNameBox	DKSMFflnmbx, super=DiskUtilitySMF, next=DUSMFbottom0, flag=VF_Const, X=160, Y=108, W=320, H=94, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF, fontcolor=CL_White, main_func=FN_FmmSmfFileNameFunc, column=2, row=5, sel_num=DKSMFflnmbx_sel_num, dial=1, auto_inc=1, paintok=DKSMFflnmbx_paintok, aicok=DKSMFflnmbx_aicok
@@ -8797,17 +9147,17 @@ Str_SMF_DISK_TOOLS:	.asciz "SMF DISK TOOLS"
 		AcIndexWideES	DUSMFbottom6, super=DiskUtilitySMF, sub=DUSMFprevlb, next=DKTSrename, prev=DUSMFbottom2, flag=VF_Const, X=124, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=3, font=4, fontcolor=CL_Black, editsw=ES_Bottom4, editsw2=ES_Bottom5
 
 Str_PREV_7:	.asciz "PREV"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PREV_7
 
 			VwLabel	DUSMFprevlb, super=DUSMFbottom6, flag=VF_Const, X=142, Y=220, W=36, H=19, str=Str_PREV_7, fontcolor=CL_Black	# str "PREV"
 
 Str_RENAME_2:	.asciz "RENAME"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_RENAME_2
 
 		AcScreenMenu	DKTSrename, super=DiskUtilitySMF, next=DKTSformat, prev=DUSMFbottom6, flag=VF_Const, X=327, Y=71, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right2, selected=DKTSrename_selected, str=Str_RENAME_2, screen=FileRenameSmf_id	# str "RENAME"
 
 Str_FORMAT_2:	.asciz "FORMAT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_FORMAT_2
 
 		AcTitleMenu	DKTSformat, super=DiskUtilitySMF, next=DKTSdelsw, prev=DKTSrename, flag=VF_Const, X=327, Y=114, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right3, selected=DKTSformat_selected, str=Str_FORMAT_2, title=TT_DKUTFRMT	# str "FORMAT"
 		AcIndexEditSw	DKTSdelsw, super=DiskUtilitySMF, sub=DKTSdellb, next=DKTSwintgl, prev=DKTSformat, flag=VF_Const, X=8, Y=122, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=5, font=4, fontcolor=CL_Black, editsw=ES_Left3
@@ -8818,7 +9168,7 @@ Str_DEL_5:	.asciz "DEL"
 
 Str_SONG_2:	.asciz "SONG"
 Str_DISK_2:	.asciz "DISK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_DISK_2
 
 		PsWindowToggle	DKTSwintgl, super=DiskUtilitySMF, next=DKTSinformlb, prev=DKTSdelsw, flag=VF_Const, X=8, Y=79, W=62, H=22, font=4, stron=Str_SONG_2, stroff=Str_DISK_2, onoff=DKTSwintgl_onoff, editsw=ES_Left2, onwin=SongNameWin_id, offwin=DiskInfoWin_id, main_func=FN_FmmSmfFileNameFunc	# stron "SONG"; stroff "DISK"
 
@@ -8830,24 +9180,24 @@ Str_INFORMATION_2:	.asciz "INFORMATION"
 		AcIndexWideES	DUSMFbottom7, super=DiskUtilitySMF, sub=DUSMFnextlb, next=DKUTSmtocus, prev=DKTSivswdelay, flag=VF_Const, X=444, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=4, font=4, fontcolor=CL_Black, editsw=ES_Bottom12, editsw2=ES_Bottom13
 
 Str_NEXT_7:	.asciz "NEXT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NEXT_7
 
 			VwLabel	DUSMFnextlb, super=DUSMFbottom7, flag=VF_Const, X=462, Y=220, W=36, H=19, str=Str_NEXT_7, fontcolor=CL_Black	# str "NEXT"
 
 Str_CUSTOM_STYLE_2:	.asciz "CUSTOM STYLE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CUSTOM_STYLE_2
 
 		AcTitleMenu	DKUTSmtocus, super=DiskUtilitySMF, next=DKUTSmtotech, prev=DUSMFbottom7, flag=VF_Const, X=573, Y=157, W=67, H=38, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Right4, selected=DKUTSmtocus_selected, str=Str_CUSTOM_STYLE_2, title=TT_CUSDKUT	# str "CUSTOM STYLE"
 
 Str_TECH_2:	.asciz "TECH"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TECH_2
 
 		AcTitleMenu	DKUTSmtotech, super=DiskUtilitySMF, prev=DKUTSmtocus, flag=VF_Const, X=527, Y=200, W=105, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right5, selected=DKUTSmtotech_selected, str=Str_TECH_2, title=TT_DKUT	# str "TECH"
 
 	Window	DiskInfoWin, sub=DKTSdknmlb, flag=VF_Const, X=92, Y=34, W=460, H=70, color=CL_WallPattern, index=0xFFFF, parent=DiskInfoWin_parent, child=DiskInfoWin_child
 
 Str_DISK_NAME_5:	.asciz "DISK NAME:"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_DISK_NAME_5
 
 		VwLabel	DKTSdknmlb, super=DiskInfoWin, next=DKTSdknmstr, flag=VF_Const, X=214, Y=50, W=84, H=19, str=Str_DISK_NAME_5, fontcolor=CL_White	# str "DISK NAME:"
 		AcParaStrBox	DKTSdknmstr, super=DiskInfoWin, next=DKTSdkinfo, prev=DKTSdknmlb, flag=VF_Const, X=302, Y=42, W=150, H=24, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_White, align=1, main_func=FN_DiskNameFunc, paintok=DKTSdknmstr_paintok
@@ -8865,7 +9215,7 @@ Str_FILE_RENAME_2:	.asciz "FILE RENAME"
 		AcFuncEditSw	DKUTSMFflrnmok, super=FileRenameSmf, prev=DKUTSMFflrnm, flag=VF_Const, X=593, Y=166, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_SmfFileRename
 
 Str_FLOPPY_DISK_FORMAT:	.asciz "FLOPPY DISK FORMAT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_FLOPPY_DISK_FORMAT
 
 	TtlScreen	DiskFormat, sub=DiskFormatPage, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_DKMENU, window=DiskFormat_window, title=Str_FLOPPY_DISK_FORMAT, icon=150	# title "FLOPPY DISK FORMAT"
 		AcWindowPage	DiskFormatPage, super=DiskFormat, flag=VF_Const, X=564, Y=5, W=71, H=18, color=CL_PageBack, border=BD_3D_DOWN1, index=0xFFFF, page=DiskFormatPage_page, pagemin=1, pagemax=2
@@ -8877,12 +9227,12 @@ Str_FLOPPY_DISK_FORMAT:	.asciz "FLOPPY DISK FORMAT"
 			AcLanguageText	DKFTattent, super=DKFTvwbx, prev=DKFTfttxt, flag=VF_Const, X=154, Y=185, W=340, H=30, color=CL_Transparent, index=0xFFFF, font=9, fontcolor=CL_White, lines=1, func=FN_DiskSure
 
 Str_empty_71:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_71
 
 		VwEditSwBox	DKFTok, super=DiskFormatSureWin, next=DKFTno, prev=DKFTvwbx, flag=VF_Const, X=593, Y=122, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right3, style=9, str=Str_empty_71	# str ""
 
 Str_empty_72:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_72
 
 		VwEditSwBox	DKFTno, super=DiskFormatSureWin, next=FRMT_MainEdit1, prev=DKFTok, flag=VF_Const, X=593, Y=165, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=10, str=Str_empty_72	# str ""
 		IvMainEditSw	FRMT_MainEdit1, super=DiskFormatSureWin, prev=DKFTno, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_FmmFormatFunc
@@ -8890,7 +9240,7 @@ Str_empty_72:	.asciz ""
 	Window	DiskFormatSelectWin, sub=DKFTselectlb, flag=VF_Const, X=0, Y=40, W=640, H=200, color=CL_WallPattern, index=0xFFFF, modal=1, parent=DiskFormatSelectWin_parent, child=DiskFormatSelectWin_child
 
 Str_Select_the_FORMAT_type_for_your_disk:	.asciz "Select the FORMAT type for your disk"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Select_the_FORMAT_type_for_your_disk
 
 		VwLabel	DKFTselectlb, super=DiskFormatSelectWin, next=DKFT2hd, flag=VF_Const, X=118, Y=70, W=400, H=19, str=Str_Select_the_FORMAT_type_for_your_disk, font=4, fontcolor=CL_Yellow	# str "Select the FORMAT type for your disk"
 
@@ -8915,7 +9265,7 @@ Str_DISK_NAMING:	.asciz "DISK NAMING"
 	Window	DiskFormatNamingWin2, sub=FRMT_namewin2, flag=VF_Const, X=0, Y=0, W=640, H=240, color=CL_WallPattern, index=0xFFFF, parent=DiskFormatNamingWin2_parent, child=DiskFormatNamingWin2_child
 
 Str_FLOPPY_DISK_FORMAT_2:	.asciz "FLOPPY DISK FORMAT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_FLOPPY_DISK_FORMAT_2
 
 		VwScreenTitle	FRMT_namewin2, super=DiskFormatNamingWin2, flag=VF_Const, X=0, Y=0, W=640, H=32, color=CL_WallPattern, index=0xFFFF, title=Str_FLOPPY_DISK_FORMAT_2, icon=150	# title "FLOPPY DISK FORMAT"
 
@@ -8946,13 +9296,13 @@ Str_SMF_DIRECT_PLAY:	.asciz "SMF DIRECT PLAY"
 		AcIndexWideES	DPLbottom6, super=DiskSmfDirectPlay, sub=DPLprevlb, next=DPLbottom7, prev=DPLbottom2, flag=VF_Const, X=124, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=3, font=4, fontcolor=CL_Black, editsw=ES_Bottom4, editsw2=ES_Bottom5
 
 Str_PREV_8:	.asciz "PREV"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PREV_8
 
 			VwLabel	DPLprevlb, super=DPLbottom6, flag=VF_Const, X=142, Y=219, W=36, H=19, str=Str_PREV_8, fontcolor=CL_Black	# str "PREV"
 		AcIndexWideES	DPLbottom7, super=DiskSmfDirectPlay, sub=DPLnextlb, next=DPLright2, prev=DPLbottom6, flag=VF_Const, X=444, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=4, font=4, fontcolor=CL_Black, editsw=ES_Bottom12, editsw2=ES_Bottom13
 
 Str_NEXT_8:	.asciz "NEXT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NEXT_8
 
 			VwLabel	DPLnextlb, super=DPLbottom7, flag=VF_Const, X=462, Y=219, W=36, H=19, str=Str_NEXT_8, fontcolor=CL_Black	# str "NEXT"
 		AcIndexEditSw	DPLright2, super=DiskSmfDirectPlay, sub=DPLalllb, next=DPLright3, prev=DPLbottom7, flag=VF_Const, X=593, Y=79, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=10, font=4, fontcolor=CL_Black, editsw=ES_Right2
@@ -8968,18 +9318,18 @@ Str_ADD:	.asciz "ADD"
 
 Str_ON_3:	.asciz "ON"
 Str_OFF_3:	.asciz "OFF"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OFF_3
 
 		AcMonoIndexToggle	DPLright4, super=DiskSmfDirectPlay, sub=DPLlooplb, next=SmfMidiOut, prev=DPLright3, flag=VF_Const, X=593, Y=165, W=39, H=22, font=4, stron=Str_ON_3, stroff=Str_OFF_3, onoff=DPLright4_onoff, editsw=ES_Right4, index=12	# stron "ON"; stroff "OFF"
 
 Str_LOOP:	.asciz "LOOP"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LOOP
 
 			VwLabel	DPLlooplb, super=DPLright4, flag=VF_Const, X=594, Y=151, W=36, H=19, str=Str_LOOP, fontcolor=CL_White	# str "LOOP"
 
 Str_ON_4:	.asciz "ON"
 Str_OFF_4:	.asciz "OFF"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OFF_4
 
 		AcMonoIndexToggle	SmfMidiOut, super=DiskSmfDirectPlay, next=DPLplayaslb, prev=DPLright4, flag=VF_Const, X=8, Y=208, W=39, H=22, font=4, stron=Str_ON_4, stroff=Str_OFF_4, onoff=SmfMidiOut_onoff, editsw=ES_Left5, index=24	# stron "ON"; stroff "OFF"
 
@@ -8988,19 +9338,19 @@ Str_PLAY_AS:	.asciz "PLAY AS"
 		VwLabel	DPLplayaslb, super=DiskSmfDirectPlay, next=DiskSmfDirectPlay_Label_MIDI_OUT, prev=SmfMidiOut, flag=VF_Const, X=570, Y=193, W=60, H=19, str=Str_PLAY_AS, fontcolor=CL_White	# str "PLAY AS"
 
 Str_MIDI_OUT:	.asciz "MIDI OUT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MIDI_OUT
 
 		VwLabel	DiskSmfDirectPlay_Label_MIDI_OUT, super=DiskSmfDirectPlay, next=DPLleft2, prev=DPLplayaslb, flag=VF_Const, X=5, Y=192, W=68, H=19, str=Str_MIDI_OUT, fontcolor=CL_White	# str "MIDI OUT"
 
 Str_SONG_3:	.asciz "SONG"
 Str_DISK_3:	.asciz "DISK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_DISK_3
 
 		PsWindowToggle	DPLleft2, super=DiskSmfDirectPlay, next=DPLright1, prev=DiskSmfDirectPlay_Label_MIDI_OUT, flag=VF_Const, X=8, Y=79, W=61, H=22, font=4, stron=Str_SONG_3, stroff=Str_DISK_3, onoff=DPLleft2_onoff, editsw=ES_Left2, onwin=SongNameDPSmfWin_id, offwin=DiskInfoDPSmfWin_id, main_func=FN_FmmSmfMedleyFunc	# stron "SONG"; stroff "DISK"
 		AcIndexEditSw	DPLright1, super=DiskSmfDirectPlay, sub=DPLstartlb, next=DPLinfolb, prev=DPLleft2, flag=VF_Const, X=571, Y=34, W=61, H=26, color=CL_Silver, border=BD_3D_UP2, index=13, font=4, fontcolor=CL_Black, editsw=ES_Right1
 
 Str_START_3:	.asciz "START"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_START_3
 
 			VwLabel	DPLstartlb, super=DPLright1, flag=VF_Const, X=572, Y=39, W=59, H=19, str=Str_START_3, font=4, fontcolor=CL_Black	# str "START"
 
@@ -9013,7 +9363,7 @@ Str_INFORMATION_3:	.asciz "INFORMATION"
 		VwLine	DPLline4, super=DiskSmfDirectPlay, next=DPLmedlb, prev=DPLline3, flag=VF_Const, X=555, Y=146, W=1, H=30, color=CL_White, linemode=1
 
 Str_MEDLEY:	.asciz "MEDLEY"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MEDLEY
 
 		VwLabel	DPLmedlb, super=DiskSmfDirectPlay, next=DPLoneshottimer, prev=DPLline4, flag=VF_Const, X=530, Y=124, W=52, H=19, str=Str_MEDLEY, fontcolor=CL_White	# str "MEDLEY"
 		IvOneShotTimer	DPLoneshottimer, super=DiskSmfDirectPlay, next=DPLindswdel, prev=DPLmedlb, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, main_func=FN_FmmSmfMedleyFunc
@@ -9031,7 +9381,7 @@ Str_DOC:	.asciz "DOC"
 	Window	DiskInfoDPSmfWin, sub=DPLdisknmlb, flag=VF_Const, X=100, Y=34, W=440, H=66, color=CL_WallPattern, index=0xFFFF, parent=DiskInfoDPSmfWin_parent, child=DiskInfoDPSmfWin_child
 
 Str_DISK_NAME_6:	.asciz "DISK NAME:"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_DISK_NAME_6
 
 		VwLabel	DPLdisknmlb, super=DiskInfoDPSmfWin, next=DPLdknmpara, flag=VF_Const, X=214, Y=50, W=84, H=19, str=Str_DISK_NAME_6, fontcolor=CL_White	# str "DISK NAME:"
 		AcParaStrBox	DPLdknmpara, super=DiskInfoDPSmfWin, next=DPLdkinfopr, prev=DPLdisknmlb, flag=VF_Const, X=302, Y=42, W=150, H=24, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_White, align=1, main_func=FN_DiskNameFunc, paintok=DPLdknmpara_paintok
@@ -9047,13 +9397,13 @@ Str_DOC_DIRECT_PLAY:	.asciz "DOC DIRECT PLAY"
 		AcIndexWideES	DDPbottom6, super=DiskDocDirectPlay, sub=DDPprevlb, next=DDPbottom7, prev=DDPbottom2, flag=VF_Const, X=124, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=6, font=4, fontcolor=CL_Black, editsw=ES_Bottom4, editsw2=ES_Bottom5
 
 Str_PREV_9:	.asciz "PREV"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PREV_9
 
 			VwLabel	DDPprevlb, super=DDPbottom6, flag=VF_Const, X=142, Y=219, W=36, H=19, str=Str_PREV_9, fontcolor=CL_Black	# str "PREV"
 		AcIndexWideES	DDPbottom7, super=DiskDocDirectPlay, sub=DDPnextlb, next=DDPright2, prev=DDPbottom6, flag=VF_Const, X=444, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=7, font=4, fontcolor=CL_Black, editsw=ES_Bottom12, editsw2=ES_Bottom13
 
 Str_NEXT_9:	.asciz "NEXT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NEXT_9
 
 			VwLabel	DDPnextlb, super=DDPbottom7, flag=VF_Const, X=462, Y=219, W=36, H=19, str=Str_NEXT_9, fontcolor=CL_Black	# str "NEXT"
 		AcIndexEditSw	DDPright2, super=DiskDocDirectPlay, sub=DDPalllb, next=DDPright3, prev=DDPbottom7, flag=VF_Const, X=593, Y=79, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=10, font=4, fontcolor=CL_Black, editsw=ES_Right2
@@ -9070,23 +9420,23 @@ Str_ADD_2:	.asciz "ADD"
 
 Str_ON_5:	.asciz "ON"
 Str_OFF_5:	.asciz "OFF"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OFF_5
 
 		AcMonoIndexToggle	DDPright4, super=DiskDocDirectPlay, sub=DDPlooplb, next=DDPright1, prev=DDPdknmbx, flag=VF_Const, X=593, Y=165, W=39, H=22, font=4, stron=Str_ON_5, stroff=Str_OFF_5, onoff=DDPright4_onoff, editsw=ES_Right4, index=12	# stron "ON"; stroff "OFF"
 
 Str_LOOP_2:	.asciz "LOOP"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LOOP_2
 
 			VwLabel	DDPlooplb, super=DDPright4, flag=VF_Const, X=594, Y=151, W=36, H=19, str=Str_LOOP_2, fontcolor=CL_White	# str "LOOP"
 		AcIndexEditSw	DDPright1, super=DiskDocDirectPlay, sub=DDPstartlb, next=DDPmedlb, prev=DDPright4, flag=VF_Const, X=571, Y=34, W=61, H=26, color=CL_Silver, border=BD_3D_UP2, index=13, font=4, fontcolor=CL_Black, editsw=ES_Right1
 
 Str_START_4:	.asciz "START"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_START_4
 
 			VwLabel	DDPstartlb, super=DDPright1, flag=VF_Const, X=572, Y=39, W=59, H=19, str=Str_START_4, font=4, fontcolor=CL_Black	# str "START"
 
 Str_MEDLEY_2:	.asciz "MEDLEY"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MEDLEY_2
 
 		VwLabel	DDPmedlb, super=DiskDocDirectPlay, next=DDPline1, prev=DDPright1, flag=VF_Const, X=530, Y=124, W=52, H=19, str=Str_MEDLEY_2, fontcolor=CL_White	# str "MEDLEY"
 		VwLine	DDPline1, super=DiskDocDirectPlay, next=DDPline2, prev=DDPmedlb, flag=VF_Const, X=555, Y=88, W=35, H=1, color=CL_White, linemode=1
@@ -9100,7 +9450,7 @@ Str_SMF_3:	.asciz "SMF"
 		AcTtlJgBox	DDPtoSMF, super=DiskDocDirectPlay, prev=DDPiv1shot, flag=VF_Const, X=8, Y=114, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left3, selected=DDPtoSMF_selected, str=Str_SMF_3, main_func=FN_DocToSmfCngFunc	# str "SMF"
 
 Str_PIANO_DISC_DIRECT_PLAY:	.asciz "PIANO DISC DIRECT PLAY"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PIANO_DISC_DIRECT_PLAY
 
 	TtlScreen	DiskPdDirectPlay, sub=PDPflnmbx, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_DKMENU, window=DiskPdDirectPlay_window, title=Str_PIANO_DISC_DIRECT_PLAY, icon=46	# title "PIANO DISC DIRECT PLAY"
 		PsPlayFileNameBox	PDPflnmbx, super=DiskPdDirectPlay, next=PDPbottom0, flag=VF_Const, X=47, Y=82, W=465, H=94, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF, font2=3, fontcolor=CL_White, fontcolor2=CL_Yellow, main_func=FN_FmmPdFileNameFunc, sel_num=PDPflnmbx_sel_num, row=5, column=2, stroffset=200, dial=1, auto_inc=1, paintok=PDPflnmbx_paintok, aicok=PDPflnmbx_aicok
@@ -9110,13 +9460,13 @@ Str_PIANO_DISC_DIRECT_PLAY:	.asciz "PIANO DISC DIRECT PLAY"
 		AcIndexWideES	PDPbottom6, super=DiskPdDirectPlay, sub=PDPprevlb, next=PDPbottom7, prev=PDPbottom2, flag=VF_Const, X=84, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=6, font=4, fontcolor=CL_Black, editsw=ES_Bottom3, editsw2=ES_Bottom4
 
 Str_PREV_10:	.asciz "PREV"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PREV_10
 
 			VwLabel	PDPprevlb, super=PDPbottom6, flag=VF_Const, X=102, Y=219, W=36, H=19, str=Str_PREV_10, fontcolor=CL_Black	# str "PREV"
 		AcIndexWideES	PDPbottom7, super=DiskPdDirectPlay, sub=PDPnextlb, next=PDPright2, prev=PDPbottom6, flag=VF_Const, X=404, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=7, font=4, fontcolor=CL_Black, editsw=ES_Bottom11, editsw2=ES_Bottom12
 
 Str_NEXT_10:	.asciz "NEXT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NEXT_10
 
 			VwLabel	PDPnextlb, super=PDPbottom7, flag=VF_Const, X=422, Y=219, W=36, H=19, str=Str_NEXT_10, fontcolor=CL_Black	# str "NEXT"
 		AcIndexEditSw	PDPright2, super=DiskPdDirectPlay, sub=PDPalllb, next=PDPright3, prev=PDPbottom7, flag=VF_Const, X=593, Y=79, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=10, font=4, fontcolor=CL_Black, editsw=ES_Right2
@@ -9132,13 +9482,13 @@ Str_ADD_3:	.asciz "ADD"
 
 Str_ON_6:	.asciz "ON"
 Str_OFF_6:	.asciz "OFF"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OFF_6
 
 		AcMonoIndexToggle	PDPright4tgl, super=DiskPdDirectPlay, next=PDPright1, prev=PDPright3, flag=VF_Const, X=593, Y=165, W=39, H=22, font=4, stron=Str_ON_6, stroff=Str_OFF_6, onoff=PDPright4tgl_onoff, editsw=ES_Right4, index=12	# stron "ON"; stroff "OFF"
 		AcIndexEditSw	PDPright1, super=DiskPdDirectPlay, sub=PDPstartlb, next=PDPline1, prev=PDPright4tgl, flag=VF_Const, X=571, Y=34, W=61, H=26, color=CL_Silver, border=BD_3D_UP2, index=13, font=4, fontcolor=CL_Black, editsw=ES_Right1
 
 Str_START_5:	.asciz "START"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_START_5
 
 			VwLabel	PDPstartlb, super=PDPright1, flag=VF_Const, X=572, Y=39, W=59, H=19, str=Str_START_5, font=4, fontcolor=CL_Black	# str "START"
 		VwLine	PDPline1, super=DiskPdDirectPlay, next=PDPline2, prev=PDPright1, flag=VF_Const, X=555, Y=88, W=35, H=1, color=CL_White, linemode=1
@@ -9147,12 +9497,12 @@ Str_START_5:	.asciz "START"
 		VwLine	PDPline4, super=DiskPdDirectPlay, next=PDPmedleylb, prev=PDPline3, flag=VF_Const, X=555, Y=176, W=35, H=1, color=CL_White, linemode=1
 
 Str_MEDLEY_3:	.asciz "MEDLEY"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MEDLEY_3
 
 		VwLabel	PDPmedleylb, super=DiskPdDirectPlay, next=PDPlooplb, prev=PDPline4, flag=VF_Const, X=530, Y=124, W=52, H=19, str=Str_MEDLEY_3, fontcolor=CL_White	# str "MEDLEY"
 
 Str_LOOP_3:	.asciz "LOOP"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LOOP_3
 
 		VwLabel	PDPlooplb, super=DiskPdDirectPlay, next=PDPiv1shot, prev=PDPmedleylb, flag=VF_Const, X=594, Y=151, W=36, H=19, str=Str_LOOP_3, fontcolor=CL_White	# str "LOOP"
 		IvOneShotTimer	PDPiv1shot, super=DiskPdDirectPlay, prev=PDPlooplb, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, main_func=FN_FmmPdFileNameFunc
@@ -9167,7 +9517,7 @@ Str_SONG_MEDLEY_2:	.asciz "SONG MEDLEY"
 		AcIndexEditSw	SMDright1, super=DiskSongMedley, sub=SMDstartlb, next=SMDright2, prev=SMDbottom2, flag=VF_Const, X=571, Y=34, W=61, H=26, color=CL_Silver, border=BD_3D_UP2, index=13, font=4, fontcolor=CL_Black, editsw=ES_Right1
 
 Str_START_6:	.asciz "START"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_START_6
 
 			VwLabel	SMDstartlb, super=SMDright1, flag=VF_Const, X=572, Y=39, W=59, H=19, str=Str_START_6, font=4, fontcolor=CL_Black	# str "START"
 		AcIndexEditSw	SMDright2, super=DiskSongMedley, sub=SMDalllb, next=SMDright3, prev=SMDright1, flag=VF_Const, X=593, Y=79, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=10, font=4, fontcolor=CL_Black, editsw=ES_Right2
@@ -9183,36 +9533,36 @@ Str_ADD_4:	.asciz "ADD"
 
 Str_ON_7:	.asciz "ON"
 Str_OFF_7:	.asciz "OFF"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OFF_7
 
 		AcMonoIndexToggle	SMDright4, super=DiskSongMedley, next=SMDright5, prev=SMDright3, flag=VF_Const, X=593, Y=165, W=39, H=22, font=4, stron=Str_ON_7, stroff=Str_OFF_7, onoff=SMDright4_onoff, editsw=ES_Right4, index=12	# stron "ON"; stroff "OFF"
 
 Str_10SNGS:	.asciz "10SNGS"
 Str_1SONG:	.asciz "1SONG"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_1SONG
 
 		AcMonoIndexToggle	SMDright5, super=DiskSongMedley, next=SMDdknmlb, prev=SMDright4, flag=VF_Const, X=571, Y=208, W=61, H=22, stron=Str_10SNGS, stroff=Str_1SONG, onoff=SMDright5_onoff, editsw=ES_Right5, index=14	# stron "10SNGS"; stroff "1SONG"
 
 Str_DISK_NAME_7:	.asciz "DISK NAME:"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_DISK_NAME_7
 
 		VwLabel	SMDdknmlb, super=DiskSongMedley, next=SongMedleyDiskName, prev=SMDright5, flag=VF_Const, X=214, Y=50, W=84, H=19, str=Str_DISK_NAME_7, fontcolor=CL_White	# str "DISK NAME:"
 		AcParaStrBox	SongMedleyDiskName, super=DiskSongMedley, next=SMDshowhide, prev=SMDdknmlb, flag=VF_Const, X=302, Y=42, W=150, H=24, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_White, align=1, main_func=FN_DiskNameFunc, paintok=SongMedleyDiskName_paintok
 		IvShowHide	SMDshowhide, super=DiskSongMedley, next=SMAmodelb, prev=SongMedleyDiskName, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_DiskMedleyShowHideFunc
 
 Str_MODE_7:	.asciz "MODE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MODE_7
 
 		VwLabel	SMAmodelb, super=DiskSongMedley, next=SMDlooplb, prev=SMDshowhide, flag=VF_Const, X=594, Y=193, W=36, H=19, str=Str_MODE_7, fontcolor=CL_White	# str "MODE"
 
 Str_LOOP_4:	.asciz "LOOP"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LOOP_4
 
 		VwLabel	SMDlooplb, super=DiskSongMedley, next=SongMedleyDiskInfo, prev=SMAmodelb, flag=VF_Const, X=594, Y=151, W=36, H=19, str=Str_LOOP_4, fontcolor=CL_White	# str "LOOP"
 		AcParaStrBox	SongMedleyDiskInfo, super=DiskSongMedley, prev=SMDlooplb, flag=VF_Const, X=160, Y=70, W=320, H=24, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_White, main_func=FN_DiskInfoFunc, paintok=SongMedleyDiskInfo_paintok
 
 Str_INTERNAL_SONG_MEDLEY:	.asciz "INTERNAL SONG MEDLEY"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_INTERNAL_SONG_MEDLEY
 
 	TtlScreen	IntSongMedley, sub=IMDLflnmbx, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_SQPLAY, window=IntSongMedley_window, title=Str_INTERNAL_SONG_MEDLEY, icon=137	# title "INTERNAL SONG MEDLEY"
 		PsPlayFileNameBox	IMDLflnmbx, super=IntSongMedley, next=IMDLbottom0, flag=VF_Const, X=125, Y=85, W=390, H=94, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF, font2=3, fontcolor=CL_White, fontcolor2=CL_Yellow, main_func=FN_FmmIntMedleyFunc, sel_num=IMDLflnmbx_sel_num, row=5, column=2, stroffset=150, dial=1, auto_inc=1, paintok=IMDLflnmbx_paintok, aicok=IMDLflnmbx_aicok
@@ -9222,7 +9572,7 @@ Str_INTERNAL_SONG_MEDLEY:	.asciz "INTERNAL SONG MEDLEY"
 		AcIndexEditSw	IMDLright1, super=IntSongMedley, sub=IMDstartlb, next=IMDLright2, prev=IMDLbottom2, flag=VF_Const, X=571, Y=34, W=61, H=26, color=CL_Silver, border=BD_3D_UP2, index=13, font=4, fontcolor=CL_Black, editsw=ES_Right1
 
 Str_START_7:	.asciz "START"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_START_7
 
 			VwLabel	IMDstartlb, super=IMDLright1, flag=VF_Const, X=572, Y=39, W=59, H=19, str=Str_START_7, font=4, fontcolor=CL_Black	# str "START"
 		AcIndexEditSw	IMDLright2, super=IntSongMedley, sub=IMDalllb, next=IMDLright3, prev=IMDLright1, flag=VF_Const, X=593, Y=79, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=10, font=4, fontcolor=CL_Black, editsw=ES_Right2
@@ -9238,18 +9588,18 @@ Str_ADD_5:	.asciz "ADD"
 
 Str_ON_8:	.asciz "ON"
 Str_OFF_8:	.asciz "OFF"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OFF_8
 
 		AcMonoIndexToggle	IMDLright4, super=IntSongMedley, next=IMDonshot, prev=IMDLright3, flag=VF_Const, X=593, Y=165, W=39, H=22, font=4, stron=Str_ON_8, stroff=Str_OFF_8, onoff=IMDLright4_onoff, editsw=ES_Right4, index=12	# stron "ON"; stroff "OFF"
 		IvOneShotTimer	IMDonshot, super=IntSongMedley, next=IMDlooplb, prev=IMDLright4, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, main_func=FN_FmmIntMedleyFunc
 
 Str_LOOP_5:	.asciz "LOOP"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LOOP_5
 
 		VwLabel	IMDlooplb, super=IntSongMedley, prev=IMDonshot, flag=VF_Const, X=594, Y=151, W=36, H=19, str=Str_LOOP_5, fontcolor=CL_White	# str "LOOP"
 
 Str_COMPOSER_LOAD:	.asciz "COMPOSER LOAD"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_COMPOSER_LOAD
 
 	TtlScreen	LoadComposer, sub=CMPLDflnmbx, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_NORMAL, window=LoadComposer_window, title=Str_COMPOSER_LOAD, icon=44	# title "COMPOSER LOAD"
 		PsFileNameBox	CMPLDflnmbx, super=LoadComposer, next=CMPLDbottom0, flag=VF_Const, X=120, Y=108, W=400, H=94, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF, fontcolor=CL_White, main_func=FN_FmmComposerLoadFunc, column=4, row=5, sel_num=CMPLDflnmbx_sel_num, dial=1, auto_inc=1, paintok=CMPLDflnmbx_paintok, aicok=CMPLDflnmbx_aicok
@@ -9258,7 +9608,7 @@ Str_COMPOSER_LOAD:	.asciz "COMPOSER LOAD"
 		AcIndexWideES	CMPLDbottom2, super=LoadComposer, next=CMPLDdknmlb, prev=CMPLDbottom1, flag=VF_Const, X=404, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom11, editsw2=ES_Bottom12, style=16
 
 Str_DISK_NAME_8:	.asciz "DISK NAME:"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_DISK_NAME_8
 
 		VwLabel	CMPLDdknmlb, super=LoadComposer, next=CMPLDdknmbx, prev=CMPLDbottom2, flag=VF_Const, X=214, Y=50, W=84, H=19, str=Str_DISK_NAME_8, fontcolor=CL_White	# str "DISK NAME:"
 		AcParaStrBox	CMPLDdknmbx, super=LoadComposer, next=CMPLDdkinfbx, prev=CMPLDdknmlb, flag=VF_Const, X=302, Y=42, W=150, H=24, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_White, align=1, main_func=FN_DiskNameFunc, paintok=CMPLDdknmbx_paintok
@@ -9266,36 +9616,36 @@ Str_DISK_NAME_8:	.asciz "DISK NAME:"
 		AcIndexEditSw	CMPLDloadsw, super=LoadComposer, sub=CMPLDloadlb, next=CMPLDivmnsw, prev=CMPLDdkinfbx, flag=VF_Const, X=571, Y=34, W=61, H=26, color=CL_Silver, border=BD_3D_UP2, index=3, font=4, fontcolor=CL_Black, editsw=ES_Right1
 
 Str_LOAD_9:	.asciz "LOAD"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LOAD_9
 
 			VwLabel	CMPLDloadlb, super=CMPLDloadsw, flag=VF_Const, X=577, Y=39, W=48, H=19, str=Str_LOAD_9, font=4, fontcolor=CL_Black	# str "LOAD"
 		IvMainEditSw	CMPLDivmnsw, super=LoadComposer, prev=CMPLDloadsw, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_FmmComposerLoadFunc
 
 Str_SAVE_FILE_NAMING_3:	.asciz "SAVE FILE NAMING"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SAVE_FILE_NAMING_3
 
 	TtlScreen	DiskSaveNameCUS, sub=CUSNMoksw, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CUSSAVE, window=DiskSaveNameCUS_window, title=Str_SAVE_FILE_NAMING_3, icon=153	# title "SAVE FILE NAMING"
 		AcFuncEditSw	CUSNMoksw, super=DiskSaveNameCUS, next=TCUSNMivname, flag=VF_Const, X=593, Y=165, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_TechFileNamingCustom
 		IvNaming	TCUSNMivname, super=DiskSaveNameCUS, prev=CUSNMoksw, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_TechFileNamingCustom
 
 Str_CUSTOM_STYLE_LOAD_SAVE_2:	.asciz "CUSTOM STYLE LOAD/SAVE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CUSTOM_STYLE_LOAD_SAVE_2
 
 	TtlScreen	CustomStyleLoadSave, sub=TCUSSVsavesw, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_DKMENU, window=CustomStyleLoadSave_window, title=Str_CUSTOM_STYLE_LOAD_SAVE_2, icon=193	# title "CUSTOM STYLE LOAD/SAVE"
 		AcIndexEditSw	TCUSSVsavesw, super=CustomStyleLoadSave, sub=TCUSSVloadlb2, next=TCUSSVfromlb, flag=VF_Const, X=571, Y=34, W=61, H=26, color=CL_Silver, border=BD_3D_UP2, index=5, font=4, fontcolor=CL_Black, editsw=ES_Right1
 
 Str_LOAD_10:	.asciz "LOAD"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LOAD_10
 
 			VwLabel	TCUSSVloadlb2, super=TCUSSVsavesw, flag=VF_Const, X=577, Y=39, W=48, H=19, str=Str_LOAD_10, font=4, fontcolor=CL_Black	# str "LOAD"
 
 Str_TO_5:	.asciz "TO"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TO_5
 
 		VwLabel	TCUSSVfromlb, super=CustomStyleLoadSave, next=TCUSSVtolb, prev=TCUSSVsavesw, flag=VF_Const, X=466, Y=82, W=26, H=19, str=Str_TO_5, font=4, fontcolor=CL_White	# str "TO"
 
 Str_FROM_5:	.asciz "FROM"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_FROM_5
 
 		VwLabel	TCUSSVtolb, super=CustomStyleLoadSave, next=TCUSSVmainbox, prev=TCUSSVfromlb, flag=VF_Const, X=134, Y=82, W=48, H=19, str=Str_FROM_5, font=4, fontcolor=CL_White	# str "FROM"
 		PsFileNmTwoBox	TCUSSVmainbox, super=CustomStyleLoadSave, sub=TCUSSVarrow, next=TCUSSVindswctl, prev=TCUSSVtolb, flag=VF_Const, X=80, Y=105, W=480, H=135, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, boxborder=BD_3D_UP2, main_func=FN_CusLoadSaveSrcDstFunc, row=2, spacewidth=160, topdown=40, bottomup=40, paintok=TCUSSVmainbox_paintok, aicok=TCUSSVmainbox_aicok
@@ -9304,7 +9654,7 @@ Str_FROM_5:	.asciz "FROM"
 			AcIndexWideES	TCUSSVbottom2, super=TCUSSVmainbox, sub=TCUSSVdirlb, next=TCUSSVbottom0, prev=TCUSSVbottom1, flag=VF_Const, X=282, Y=216, W=76, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom8, editsw2=ES_Bottom9
 
 Str_DIRECTION:	.asciz "DIRECTION"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_DIRECTION
 
 				VwLabel	TCUSSVdirlb, super=TCUSSVbottom2, flag=VF_Const, X=283, Y=219, W=73, H=19, str=Str_DIRECTION, font=5, fontcolor=CL_Black	# str "DIRECTION"
 			AcIndexWideES	TCUSSVbottom0, super=TCUSSVmainbox, next=CUS_FROM_SIDE, prev=TCUSSVbottom2, flag=VF_Const, X=84, Y=216, W=152, H=23, color=CL_Silver, border=BD_EditSwitch, font=4, fontcolor=CL_Black, editsw=ES_Bottom3, editsw2=ES_Bottom6, style=3
@@ -9316,19 +9666,19 @@ Str_DIRECTION:	.asciz "DIRECTION"
 	Window	CusSaveFixWin, sub=CusSaveFixWin_TitleMenu_NAME, flag=VF_Const, X=0, Y=30, W=640, H=48, color=CL_WallPattern, index=0xFFFF, parent=CusSaveFixWin_parent, child=CusSaveFixWin_child
 
 Str_NAME_4:	.asciz "NAME"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NAME_4
 
 		AcTitleMenu	CusSaveFixWin_TitleMenu_NAME, super=CusSaveFixWin, next=CusSaveFixsavesw, flag=VF_Const, X=8, Y=28, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left1, selected=CusSaveFixWin_TitleMenu_NAME_selected, str=Str_NAME_4, title=TT_DKSVNAMECUS	# str "NAME"
 		AcIndexEditSw	CusSaveFixsavesw, super=CusSaveFixWin, next=CusSaveFixsavelb, prev=CusSaveFixWin_TitleMenu_NAME, flag=VF_Const, X=571, Y=34, W=61, H=26, color=CL_Silver, border=BD_3D_UP2, index=5, font=4, fontcolor=CL_Black, editsw=ES_Right1
 
 Str_SAVE_8:	.asciz "SAVE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SAVE_8
 
 		VwLabel	CusSaveFixsavelb, super=CusSaveFixWin, next=CusSaveAsFileNameBox, prev=CusSaveFixsavesw, flag=VF_Const, X=577, Y=39, W=48, H=19, str=Str_SAVE_8, font=4, fontcolor=CL_Black	# str "SAVE"
 		AcParaStrBox	CusSaveAsFileNameBox, super=CusSaveFixWin, sub=CusSaveAsLabel, next=CUS_SendIndex, prev=CusSaveFixsavelb, flag=VF_Const, X=120, Y=40, W=400, H=32, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_White, main_func=FN_SaveFileNameCstFunc, paintok=CusSaveAsFileNameBox_paintok
 
 Str_SAVE_AS_6:	.asciz "SAVE AS:"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SAVE_AS_6
 
 			VwLabel	CusSaveAsLabel, super=CusSaveAsFileNameBox, flag=VF_Const, X=122, Y=54, W=68, H=19, str=Str_SAVE_AS_6, fontcolor=CL_White	# str "SAVE AS:"
 		IvMainEditIndex	CUS_SendIndex, super=CusSaveFixWin, prev=CusSaveAsFileNameBox, flag=VF_Const|VF_InvisibleBox, X=0, Y=176, W=32, H=32, main_func=FN_SendIndexCustomSaveFunc
@@ -9341,24 +9691,24 @@ Str_CUSTOM_STYLE_DISK_TOOLS:	.asciz "CUSTOM STYLE DISK TOOLS"
 		AcIndexWideES	DKTCbottom6, super=CustomStyleDiskTools, sub=DKTCprevlb, next=DKTCdknmlb, prev=DKTCbottom1, flag=VF_Const, X=124, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=6, font=4, fontcolor=CL_Black, editsw=ES_Bottom4, editsw2=ES_Bottom5
 
 Str_PREV_11:	.asciz "PREV"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PREV_11
 
 			VwLabel	DKTCprevlb, super=DKTCbottom6, flag=VF_Const, X=142, Y=219, W=36, H=19, str=Str_PREV_11, fontcolor=CL_Black	# str "PREV"
 
 Str_DISK_NAME_9:	.asciz "DISK NAME:"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_DISK_NAME_9
 
 		VwLabel	DKTCdknmlb, super=CustomStyleDiskTools, next=DKTCdknm, prev=DKTCbottom6, flag=VF_Const, X=214, Y=50, W=84, H=19, str=Str_DISK_NAME_9, fontcolor=CL_White	# str "DISK NAME:"
 		AcParaStrBox	DKTCdknm, super=CustomStyleDiskTools, next=DKTCdkinfo, prev=DKTCdknmlb, flag=VF_Const, X=302, Y=42, W=150, H=24, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_White, align=1, main_func=FN_DiskNameFunc, paintok=DKTCdknm_paintok
 		AcParaStrBox	DKTCdkinfo, super=CustomStyleDiskTools, next=DKTCformat, prev=DKTCdknm, flag=VF_Const, X=160, Y=74, W=320, H=24, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_White, main_func=FN_DiskInfoFunc, paintok=DKTCdkinfo_paintok
 
 Str_FORMAT_3:	.asciz "FORMAT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_FORMAT_3
 
 		AcTitleMenu	DKTCformat, super=CustomStyleDiskTools, next=DKTCrename, prev=DKTCdkinfo, flag=VF_Const, X=327, Y=114, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right3, selected=DKTCformat_selected, str=Str_FORMAT_3, title=TT_DKUTFRMT	# str "FORMAT"
 
 Str_RENAME_3:	.asciz "RENAME"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_RENAME_3
 
 		AcScreenMenu	DKTCrename, super=CustomStyleDiskTools, next=DKTCwaitwin, prev=DKTCformat, flag=VF_Const, X=327, Y=71, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right2, selected=DKTCrename_selected, str=Str_RENAME_3, screen=FileRenameCst_id	# str "RENAME"
 		IvWaitWinCtl	DKTCwaitwin, super=CustomStyleDiskTools, next=DKTCleft3, prev=DKTCrename, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, win=DiskWaitWin_id
@@ -9371,13 +9721,13 @@ Str_DEL_6:	.asciz "DEL"
 		AcIndexWideES	DKTCbottom7, super=CustomStyleDiskTools, sub=DKTCnextlb, next=DKTCbottom2, prev=DKTCflnmbx, flag=VF_Const, X=444, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=7, font=4, fontcolor=CL_Black, editsw=ES_Bottom12, editsw2=ES_Bottom13
 
 Str_NEXT_11:	.asciz "NEXT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NEXT_11
 
 			VwLabel	DKTCnextlb, super=DKTCbottom7, flag=VF_Const, X=462, Y=219, W=36, H=19, str=Str_NEXT_11, fontcolor=CL_Black	# str "NEXT"
 		AcIndexWideES	DKTCbottom2, super=CustomStyleDiskTools, next=DKUTCmtotech, prev=DKTCbottom7, flag=VF_Const, X=364, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom10, editsw2=ES_Bottom11, style=16
 
 Str_TECH_3:	.asciz "TECH"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TECH_3
 
 		AcTitleMenu	DKUTCmtotech, super=CustomStyleDiskTools, next=DKUTCmtosmf, prev=DKTCbottom2, flag=VF_Const, X=327, Y=157, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right4, selected=DKUTCmtotech_selected, str=Str_TECH_3, title=TT_DKUT	# str "TECH"
 
@@ -9548,7 +9898,7 @@ RN_CLDS_DST_BOX:	.asciz "CLDS_DST_BOX"
 RN_CLDS_B_SRC_BOX:	.asciz "CLDS_B_SRC_BOX"
 RN_CLDS_B_DST_BOX:	.asciz "CLDS_B_DST_BOX"
 RN_CLDS_OPT_LBFIX:	.asciz "CLDS_OPT_LBFIX"
-	.align	4, 0x00
+	.align	4, 0x00	# pad after RN_CLDS_OPT_LBFIX
 RN_WallpaperLoad:	.asciz "WallpaperLoad"
 RN_WPLDflnmbx:	.asciz "WPLDflnmbx"
 RN_WPLDbtm0:	.asciz "WPLDbtm0"
@@ -9563,7 +9913,7 @@ RN_WPLDloadlb:	.asciz "WPLDloadlb"
 RN_WPLDdknmbx:	.asciz "WPLDdknmbx"
 RN_WPLDinfobx:	.asciz "WPLDinfobx"
 RN_WPLDdknmlb:	.asciz "WPLDdknmlb"
-	.align	4, 0x00
+	.align	4, 0x00	# pad after RN_WPLDdknmlb
 RN_DiskLoadSMF:	.asciz "DiskLoadSMF"
 RN_SMFLtech:	.asciz "SMFLtech"
 RN_SMFLoadFilesBox:	.asciz "SMFLoadFilesBox"
@@ -9597,7 +9947,7 @@ RN_SMFLsngnm:	.asciz "SMFLsngnm"
 RN_DiskSaveMenu:	.asciz "DiskSaveMenu"
 RN_TT_DKSVMENU1:	.asciz "TT_DKSVMENU1"
 RN_TT_DKSVMENU2:	.asciz "TT_DKSVMENU2"
-	.align	4, 0x00
+	.align	4, 0x00	# pad after RN_TT_DKSVMENU2
 RN_DiskSaveName:	.asciz "DiskSaveName"
 RN_SVNnameok:	.asciz "SVNnameok"
 RN_DKSVivnam:	.asciz "DKSVivnam"
@@ -9745,7 +10095,7 @@ RN_FileRename:	.asciz "FileRename"
 RN_DKUTflrnm:	.asciz "DKUTflrnm"
 RN_DKUTflrnmiv:	.asciz "DKUTflrnmiv"
 RN_DKUTflrnmok:	.asciz "DKUTflrnmok"
-	.align	4, 0x00
+	.align	4, 0x00	# pad after RN_DKUTflrnmok
 RN_DiskUtilitySMF:	.asciz "DiskUtilitySMF"
 RN_DKSMFflnmbx:	.asciz "DKSMFflnmbx"
 RN_DUSMFbottom0:	.asciz "DUSMFbottom0"
@@ -9846,7 +10196,7 @@ RN_DiskInfoDPSmfWin:	.asciz "DiskInfoDPSmfWin"
 RN_DPLdisknmlb:	.asciz "DPLdisknmlb"
 RN_DPLdknmpara:	.asciz "DPLdknmpara"
 RN_DPLdkinfopr:	.asciz "DPLdkinfopr"
-	.align	4, 0x00
+	.align	4, 0x00	# pad after RN_DPLdkinfopr
 RN_DiskDocDirectPlay:	.asciz "DiskDocDirectPlay"
 RN_DDPflnmbx:	.asciz "DDPflnmbx"
 RN_DDPbottom0:	.asciz "DDPbottom0"
@@ -9896,7 +10246,7 @@ RN_PDPline4:	.asciz "PDPline4"
 RN_PDPmedleylb:	.asciz "PDPmedleylb"
 RN_PDPlooplb:	.asciz "PDPlooplb"
 RN_PDPiv1shot:	.asciz "PDPiv1shot"
-	.align	4, 0x00
+	.align	4, 0x00	# pad after RN_PDPiv1shot
 RN_DiskSongMedley:	.asciz "DiskSongMedley"
 RN_SMDfnbx:	.asciz "SMDfnbx"
 RN_SMDbottom0:	.asciz "SMDbottom0"
@@ -9916,7 +10266,7 @@ RN_SMDshowhide:	.asciz "SMDshowhide"
 RN_SMAmodelb:	.asciz "SMAmodelb"
 RN_SMDlooplb:	.asciz "SMDlooplb"
 RN_SongMedleyDiskInfo:	.asciz "SongMedleyDiskInfo"
-	.align	4, 0x00
+	.align	4, 0x00	# pad after RN_SongMedleyDiskInfo
 RN_IntSongMedley:	.asciz "IntSongMedley"
 RN_IMDLflnmbx:	.asciz "IMDLflnmbx"
 RN_IMDLbottom0:	.asciz "IMDLbottom0"
@@ -9947,7 +10297,7 @@ RN_CMPLDivmnsw:	.asciz "CMPLDivmnsw"
 RN_DiskSaveNameCUS:	.asciz "DiskSaveNameCUS"
 RN_CUSNMoksw:	.asciz "CUSNMoksw"
 RN_TCUSNMivname:	.asciz "TCUSNMivname"
-	.align	4, 0x00
+	.align	4, 0x00	# pad after RN_TCUSNMivname
 RN_CustomStyleLoadSave:	.asciz "CustomStyleLoadSave"
 RN_TCUSSVsavesw:	.asciz "TCUSSVsavesw"
 RN_TCUSSVloadlb2:	.asciz "TCUSSVloadlb2"
@@ -9994,55 +10344,55 @@ RN_FileRenameCst:	.asciz "FileRenameCst"
 RN_renameCstTtlbar:	.asciz "renameCstTtlbar"
 RN_namingCstIv:	.asciz "namingCstIv"
 RN_renameCstOksw:	.asciz "renameCstOksw"
-	.align	4, 0x00
+	.align	4, 0x00	# pad after RN_renameCstOksw
 Str_MD_DISK:	.asciz "MD_DISK"
 Str_TT_DKMENU:	.asciz "TT_DKMENU"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_DKMENU
 Str_TT_DKLD:	.asciz "TT_DKLD"
 Str_TT_CMPLDSNGL:	.asciz "TT_CMPLDSNGL"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_CMPLDSNGL
 Str_TT_DKWPLD:	.asciz "TT_DKWPLD"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_DKWPLD
 Str_TT_DKLDSMF:	.asciz "TT_DKLDSMF"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_DKLDSMF
 Str_TT_DKSVMENU:	.asciz "TT_DKSVMENU"
 Str_TT_DKSVNAME:	.asciz "TT_DKSVNAME"
 Str_TT_DKSV:	.asciz "TT_DKSV"
 Str_TT_DKSVNAMESMF:	.asciz "TT_DKSVNAMESMF"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_DKSVNAMESMF
 Str_TT_DKSVSMF:	.asciz "TT_DKSVSMF"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_DKSVSMF
 Str_TT_DKUT:	.asciz "TT_DKUT"
 Str_TT_DKUTSMF:	.asciz "TT_DKUTSMF"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_DKUTSMF
 Str_TT_DKUTFRMT:	.asciz "TT_DKUTFRMT"
 Str_TT_DKSETUP:	.asciz "TT_DKSETUP"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_DKSETUP
 Str_TT_DKDPSMF:	.asciz "TT_DKDPSMF"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_DKDPSMF
 Str_TT_DKDPDOC:	.asciz "TT_DKDPDOC"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_DKDPDOC
 Str_TT_DKDPPD:	.asciz "TT_DKDPPD"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_DKDPPD
 Str_TT_DKMDLY:	.asciz "TT_DKMDLY"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_DKMDLY
 Str_TT_SQMDLY:	.asciz "TT_SQMDLY"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_SQMDLY
 Str_TT_CMPLD:	.asciz "TT_CMPLD"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_CMPLD
 Str_TT_DKSVNAMECUS:	.asciz "TT_DKSVNAMECUS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_DKSVNAMECUS
 Str_TT_CUSSAVE:	.asciz "TT_CUSSAVE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_CUSSAVE
 Str_TT_CUSDKUT:	.asciz "TT_CUSDKUT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_CUSDKUT
 Str_Please_enter_the_password_4:	.asciz "Please enter the password."
 Str_Bitte_geben_Sie_das_Password_ein:	.asciz "Bitte geben Sie das Password ein."
 Str_Veuillez_entrer_votre_mot_de_passe:	.asciz "Veuillez entrer votre mot de passe."
 Str_Please_enter_the_password_3:	.asciz "Please enter the password."
 Str_Please_enter_the_password_2:	.asciz "Please enter the password."
 Str_Please_enter_the_password:	.asciz "Please enter the password."
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Please_enter_the_password
 
 ptrs_4C262D58:
 	.long	Str_Please_enter_the_password_4
@@ -10058,7 +10408,7 @@ Str_Ces_donn_es_sont_prot_g_es_contre_la_cop:	.asciz "Ces donn\xE9es sont prot\x
 Str_The_data_is_already_copy_protected_3:	.asciz "The data is already copy protected."
 Str_The_data_is_already_copy_protected_2:	.asciz "The data is already copy protected."
 Str_The_data_is_already_copy_protected:	.asciz "The data is already copy protected."
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_The_data_is_already_copy_protected
 
 ptrs_4C262E58:
 	.long	Str_The_data_is_already_copy_protected_4
@@ -10099,18 +10449,18 @@ ptrs_4C2630DC:
 	.long	Str_The_patterns_in_the_Composer_are_copy_pr
 
 Str_CcEv_2:	.asciz "CcEv"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CcEv_2
 Str_empty_305:	.asciz "??"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_305
 Str_empty_304:	.asciz "??"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_304
 Str_ATTENTION_3:	.asciz "ATTENTION!"
 Str_ACHTUNG:	.asciz "ACHTUNG !"
 Str_ATTENTION_2:	.asciz "ATTENTION!"
 Str_ATENCI_N:	.asciz "\xA1ATENCI\xD3N!"
 Str_ATTENTION:	.asciz "ATTENTION!"
 Str_Perhatian:	.asciz "Perhatian !"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Perhatian
 
 ptrs_4C263148:
 	.long	Str_ATTENTION_3
@@ -10126,7 +10476,7 @@ Str_Etes_vous_s_r:	.asciz "Etes vous s\xFBr?"
 Str_Est_seguro:	.asciz "\xBFEst\xE1 seguro?"
 Str_Are_You_Sure:	.asciz "Are You Sure?"
 Str_Apakah_yakin_akan_dihapus:	.asciz "Apakah yakin akan dihapus ?"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Apakah_yakin_akan_dihapus
 
 ptrs_4C2631C8:
 	.long	Str_Are_You_Sure_2
@@ -10142,7 +10492,7 @@ Str_L_utilisation_deDISK_FORMAT_effacera_tou:	.asciz "L'utilisation deDISK FORMA
 Str_Al_formatear_el_disco_se_borran_los_dato:	.asciz "Al formatear el disco  se borran los datos del disco."
 Str_Using_DISK_FORMAT_will_erase_any_current:	.asciz "Using DISK FORMAT will erase any current data on the disk."
 Str_Gunakan_Disk_Format_untuk_menghapus_suat:	.asciz "Gunakan Disk Format untuk menghapus suatu data yang ada sekarang didalam disk."
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Gunakan_Disk_Format_untuk_menghapus_suat
 
 ptrs_4C26335C:
 	.long	Str_Using_DISK_FORMAT_will_erase_any_current_2
@@ -10188,7 +10538,7 @@ Str_Lorsqu_une_disquette_est_ins_r_e_ouvrez:	.asciz "Lorsqu'une disquette est in
 Str_Cuando_inserte_un_disquete_abra_esta_p_g:	.asciz "Cuando inserte un disquete, abra esta p\xE1gina."
 Str_When_a_disk_is_inserted_open_this_page_2:	.asciz "When a disk is inserted open this page."
 Str_When_a_disk_is_inserted_open_this_page:	.asciz "When a disk is inserted open this page."
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_When_a_disk_is_inserted_open_this_page
 
 ptrs_4C263A54:
 	.long	Str_When_a_disk_is_inserted_open_this_page_3
@@ -10204,7 +10554,7 @@ Str_When_a_disk_contains_Technics_SMF_Custom_3:	.asciz "When a disk contains Tec
 Str_Cuando_un_disquete_contiene_archivos_de:	.asciz "Cuando un disquete contiene archivos de Technics, SMF y Custom Style."
 Str_When_a_disk_contains_Technics_SMF_Custom_2:	.asciz "When a disk contains Technics, SMF & Custom Style files."
 Str_When_a_disk_contains_Technics_SMF_Custom:	.asciz "When a disk contains Technics, SMF & Custom Style files."
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_When_a_disk_contains_Technics_SMF_Custom
 
 ptrs_4C263BE8:
 	.long	Str_When_a_disk_contains_Technics_SMF_Custom_4
@@ -10219,7 +10569,7 @@ Str_DISK_MENU_2:	.asciz "  DISK MENU  "
 Str_LOAD_13:	.asciz "    LOAD     "
 Str_DIRECT_PLAY_2:	.asciz " DIRECT PLAY "
 Str_SONG_MEDLEY_7:	.asciz " SONG MEDLEY "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SONG_MEDLEY_7
 
 ptrs_4C263C48:
 	.long	Str_OFF_10
@@ -10231,7 +10581,7 @@ ptrs_4C263C48:
 Str_TECHNICS_5:	.asciz "   TECHNICS   "
 Str_SMF_5:	.asciz "      SMF     "
 Str_CUSTOM_STYLE_3:	.asciz " CUSTOM STYLE "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CUSTOM_STYLE_3
 
 ptrs_4C263C8C:
 	.long	Str_TECHNICS_5
@@ -10285,7 +10635,7 @@ Str_empty_952:	.asciz "   ---------    "
 Str_This_is:	.asciz "    This is     "
 Str_temporary:	.asciz "   temporary    "
 Str_message:	.asciz "    message.    "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_message
 
 ptrs_4C263EC0:
 	.long	Str_NEXT_PAGE
@@ -10295,7 +10645,7 @@ ptrs_4C263EC0:
 	.long	Str_message
 
 Str_1shot:	.asciz "1shot"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_1shot
 Str_ISC:	.asciz "ISC"
 Str_ISD:	.asciz "ISD"
 Str_WWC:	.asciz "WWC"
@@ -10442,62 +10792,200 @@ data_4C264560:
 	.space	8, 0x00
 data_4C264568:
 	.space	8, 0x00
-data_4C264570:
-.incbin_range "baserom/kn6000_program.rom", 0x264570, 0x264584
-data_4C264584:
-.incbin_range "baserom/kn6000_program.rom", 0x264584, 0x2647DC
+
+func_4C156C2D_Table:	# 20 x u8, 128..160; read by func_4C156C2D_entry : `movbu	(a1), d0`
+	tab_u8	128, 128, 131, 128, 134, 128, 137, 128, 140, 128, 143, 128, 147, 128, 151, 128	# [0]
+	tab_u8	157, 128, 160, 128	# [16]
+func_4C15760F_L40_Table:	# 600 x u8, 0..255; read by func_4C15760F_L40 : `movbu	(a1), d0`
+	tab_u8	0, 0, 0, 0, 0, 255, 255, 255, 0, 0, 0, 0, 0, 0, 240, 63	# [0]
+	tab_u8	39, 122, 75, 255, 179, 242, 240, 63, 34, 85, 243, 160, 201, 243, 241, 63	# [16]
+	tab_u8	218, 99, 84, 223, 26, 4, 243, 63, 70, 112, 142, 0, 143, 36, 244, 63	# [32]
+	tab_u8	213, 2, 65, 161, 26, 86, 245, 63, 74, 87, 184, 254, 192, 153, 246, 63	# [48]
+	tab_u8	67, 248, 64, 192, 148, 240, 247, 63, 102, 7, 232, 0, 185, 91, 249, 63	# [64]
+	tab_u8	51, 21, 3, 160, 97, 220, 250, 63, 46, 204, 0, 31, 213, 115, 252, 63	# [80]
+	tab_u8	158, 110, 201, 63, 109, 35, 254, 63, 202, 123, 73, 33, 152, 236, 255, 63	# [96]
+	tab_u8	81, 155, 221, 255, 108, 232, 0, 64, 156, 182, 177, 159, 230, 232, 1, 64	# [112]
+	tab_u8	235, 196, 138, 191, 146, 248, 2, 64, 116, 191, 59, 224, 87, 24, 4, 64	# [128]
+	tab_u8	139, 93, 112, 64, 42, 73, 5, 64, 202, 159, 53, 96, 12, 140, 6, 64	# [144]
+	tab_u8	117, 253, 105, 64, 16, 226, 7, 64, 247, 245, 50, 64, 88, 76, 9, 64	# [160]
+	tab_u8	12, 156, 133, 160, 23, 204, 10, 64, 2, 165, 252, 255, 147, 98, 12, 64	# [176]
+	tab_u8	28, 230, 145, 96, 38, 17, 14, 64, 172, 216, 235, 31, 60, 217, 15, 64	# [192]
+	tab_u8	149, 243, 131, 194, 185, 9, 224, 63, 193, 116, 214, 126, 157, 129, 224, 63	# [208]
+	tab_u8	53, 43, 120, 93, 1, 253, 224, 63, 125, 201, 8, 160, 255, 123, 225, 63	# [224]
+	tab_u8	170, 64, 177, 62, 179, 254, 225, 63, 221, 248, 102, 221, 55, 133, 226, 63	# [240]
+	tab_u8	127, 182, 155, 1, 170, 15, 227, 63, 105, 197, 88, 34, 39, 158, 227, 63	# [256]
+	tab_u8	216, 62, 170, 130, 205, 48, 228, 63, 243, 135, 77, 1, 188, 199, 228, 63	# [272]
+	tab_u8	32, 101, 31, 191, 18, 99, 229, 63, 13, 247, 120, 190, 242, 2, 230, 63	# [288]
+	tab_u8	245, 86, 209, 221, 125, 167, 230, 63, 176, 80, 82, 253, 214, 80, 231, 63	# [304]
+	tab_u8	0, 185, 14, 31, 34, 255, 231, 63, 57, 93, 55, 33, 132, 178, 232, 63	# [320]
+	tab_u8	226, 175, 135, 254, 34, 107, 233, 63, 135, 160, 205, 30, 38, 41, 234, 63	# [336]
+	tab_u8	229, 6, 42, 128, 181, 236, 234, 63, 140, 15, 88, 222, 250, 181, 235, 63	# [352]
+	tab_u8	31, 94, 223, 160, 32, 133, 236, 63, 249, 121, 91, 2, 83, 90, 237, 63	# [368]
+	tab_u8	188, 70, 228, 30, 191, 53, 238, 63, 14, 37, 164, 127, 147, 23, 239, 63	# [384]
+	tab_u8	0, 0, 0, 0, 0, 0, 240, 63, 70, 103, 244, 254, 154, 119, 240, 63	# [400]
+	tab_u8	39, 122, 75, 255, 179, 242, 240, 63, 85, 185, 245, 63, 101, 113, 241, 63	# [416]
+	tab_u8	34, 85, 243, 160, 201, 243, 241, 63, 162, 251, 164, 160, 252, 121, 242, 63	# [432]
+	tab_u8	218, 99, 84, 223, 26, 4, 243, 63, 74, 38, 10, 161, 65, 146, 243, 63	# [448]
+	tab_u8	70, 112, 142, 0, 143, 36, 244, 63, 36, 47, 132, 255, 33, 187, 244, 63	# [464]
+	tab_u8	213, 2, 65, 161, 26, 86, 245, 63, 201, 201, 163, 159, 153, 245, 245, 63	# [480]
+	tab_u8	74, 87, 184, 254, 192, 153, 246, 63, 99, 252, 234, 96, 179, 66, 247, 63	# [496]
+	tab_u8	67, 248, 64, 192, 148, 240, 247, 63, 245, 123, 73, 0, 138, 163, 248, 63	# [512]
+	tab_u8	102, 7, 232, 0, 185, 91, 249, 63, 147, 241, 57, 193, 72, 25, 250, 63	# [528]
+	tab_u8	51, 21, 3, 160, 97, 220, 250, 63, 31, 219, 50, 224, 44, 165, 251, 63	# [544]
+	tab_u8	46, 204, 0, 31, 213, 115, 252, 63, 50, 52, 34, 65, 134, 72, 253, 63	# [560]
+	tab_u8	158, 110, 201, 63, 109, 35, 254, 63, 96, 120, 194, 158, 184, 4, 255, 63	# [576]
+	tab_u8	202, 123, 73, 33, 152, 236, 255, 63	# [592]
 data_4C2647DC:
 .incbin_range "baserom/kn6000_program.rom", 0x2647DC, 0x264964
 
 Str_IK:	.asciz "IK"
-	.align	4, 0xFF
-data_4C264968:
-.incbin_range "baserom/kn6000_program.rom", 0x264968, 0x2649B0
-data_4C2649B0:
-.incbin_range "baserom/kn6000_program.rom", 0x2649B0, 0x2649F8
-data_4C2649F8:
-.incbin_range "baserom/kn6000_program.rom", 0x2649F8, 0x264A40
+	.align	4, 0xFF	# pad after Str_IK
+
+func_4C15CB8B_Table:	# 72 x u8, 0..255; read by func_4C15CB8B_entry : `movbu	(a1), d1`
+	tab_u8	2, 0, 0, 0, 0, 0, 76, 0, 16, 0, 0, 0, 16, 0, 0, 0	# [0]
+	tab_u8	0, 0, 16, 0, 0, 0, 0, 0, 16, 0, 0, 0, 0, 0, 32, 0	# [16]
+	tab_u8	0, 0, 0, 0, 32, 0, 0, 0, 0, 0, 91, 0, 0, 0, 0, 0	# [32]
+	tab_u8	255, 255, 255, 255, 0, 0, 22, 0, 0, 0, 0, 0, 255, 255, 255, 255	# [48]
+	tab_u8	0, 0, 255, 255, 255, 255, 0, 0	# [64]
+func_4C15CBEC_Table:	# 72 x u8, 0..255; read by func_4C15CBEC_entry : `movbu	(a1), d1`
+	tab_u8	2, 0, 0, 0, 0, 0, 111, 0, 32, 0, 0, 0, 111, 0, 32, 0	# [0]
+	tab_u8	0, 0, 111, 0, 32, 0, 0, 0, 111, 0, 32, 0, 0, 0, 111, 0	# [16]
+	tab_u8	32, 0, 0, 0, 111, 0, 32, 0, 0, 0, 91, 0, 0, 0, 0, 0	# [32]
+	tab_u8	255, 255, 255, 255, 0, 0, 22, 0, 0, 0, 0, 0, 255, 255, 255, 255	# [48]
+	tab_u8	0, 0, 255, 255, 255, 255, 0, 0	# [64]
+func_4C15CC4D_Table:	# 72 x u8, 0..255; read by func_4C15CC4D_entry : `movbu	(a1), d1`
+	tab_u8	2, 0, 0, 0, 0, 0, 76, 0, 16, 0, 0, 0, 16, 0, 0, 0	# [0]
+	tab_u8	0, 0, 16, 0, 0, 0, 0, 0, 16, 0, 0, 0, 0, 0, 32, 0	# [16]
+	tab_u8	0, 0, 0, 0, 32, 0, 0, 0, 0, 0, 91, 0, 0, 0, 0, 0	# [32]
+	tab_u8	255, 255, 255, 255, 0, 0, 22, 0, 32, 0, 0, 0, 255, 255, 255, 255	# [48]
+	tab_u8	0, 0, 255, 255, 255, 255, 0, 0	# [64]
+
 Str_empty_301:	.asciz "        "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_301
 Str_3d_3:	.asciz "  %3d"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_3d_3
 Str_empty_300:	.asciz "                    "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_300
 Str_empty_299:	.asciz "       "
 Str_empty_298:	.asciz "        "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_298
 Str_3d_2:	.asciz "  %3d   "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_3d_2
 data_4C264A8C:
 .incbin_range "baserom/kn6000_program.rom", 0x264A8C, 0x264B8C
-data_4C264B8C:
-.incbin_range "baserom/kn6000_program.rom", 0x264B8C, 0x264B9C
-data_4C264B9C:
-.incbin_range "baserom/kn6000_program.rom", 0x264B9C, 0x264BAC
-data_4C264BAC:
-.incbin_range "baserom/kn6000_program.rom", 0x264BAC, 0x264C2C
-data_4C264C2C:
-.incbin_range "baserom/kn6000_program.rom", 0x264C2C, 0x264CAC
-data_4C264CAC:
-.incbin_range "baserom/kn6000_program.rom", 0x264CAC, 0x264D2C
-data_4C264D2C:
-.incbin_range "baserom/kn6000_program.rom", 0x264D2C, 0x264DAC
-data_4C264DAC:
-.incbin_range "baserom/kn6000_program.rom", 0x264DAC, 0x264E2C
-data_4C264E2C:
-.incbin_range "baserom/kn6000_program.rom", 0x264E2C, 0x264EAC
-data_4C264EAC:
-.incbin_range "baserom/kn6000_program.rom", 0x264EAC, 0x264F2C
-data_4C264F2C:
-.incbin_range "baserom/kn6000_program.rom", 0x264F2C, 0x264FAC
-data_4C264FAC:
-.incbin_range "baserom/kn6000_program.rom", 0x264FAC, 0x26502C
-data_4C26502C:
-.incbin_range "baserom/kn6000_program.rom", 0x26502C, 0x2650AC
-data_4C2650AC:
-.incbin_range "baserom/kn6000_program.rom", 0x2650AC, 0x26512C
-data_4C26512C:
-.incbin_range "baserom/kn6000_program.rom", 0x26512C, 0x2651AC
+
+func_4C1600F2_L1c_Table:	# 16 x u8, 0..35; read by func_4C1600F2_L1c : `movbu	(d0, a0), d1`
+	tab_u8	0, 1, 32, 33, 35, 9, 10, 4, 5, 0, 0, 0, 0, 0, 0, 0
+func_4C1600F2_Lb_Table:	# 16 x u8, 0..21; read by func_4C1600F2_Lb : `movbu	(d0, a0), d1`
+	tab_u8	17, 17, 20, 21, 21, 21, 10, 10, 10, 10, 0, 0, 0, 0, 0, 0
+func_4C16030A_L8_Table:	# 128 x u8, 0..99; read by func_4C16030A_L8 : `movbu	(d0, a0), d0`
+	tab_u8	0, 1, 2, 2, 3, 4, 5, 5, 6, 7, 8, 8, 9, 10, 11, 11	# [0]
+	tab_u8	12, 13, 14, 14, 15, 16, 17, 17, 18, 19, 20, 20, 21, 22, 23, 23	# [16]
+	tab_u8	24, 25, 26, 26, 27, 28, 29, 29, 30, 31, 32, 32, 33, 34, 35, 35	# [32]
+	tab_u8	36, 37, 38, 38, 39, 40, 41, 42, 43, 44, 45, 45, 46, 47, 48, 49	# [48]
+	tab_u8	50, 51, 52, 52, 53, 54, 55, 55, 56, 57, 58, 58, 59, 60, 61, 61	# [64]
+	tab_u8	62, 63, 64, 64, 65, 66, 67, 68, 69, 70, 71, 71, 72, 73, 74, 74	# [80]
+	tab_u8	75, 76, 77, 77, 78, 79, 80, 80, 81, 82, 83, 83, 84, 85, 86, 86	# [96]
+	tab_u8	87, 88, 89, 89, 90, 91, 92, 92, 93, 94, 95, 95, 96, 97, 98, 99	# [112]
+func_4C16031E_L8_Table:	# 128 x u8, 0..99; read by func_4C16031E_L8 : `movbu	(d0, a0), d0`
+	tab_u8	0, 1, 2, 2, 3, 4, 5, 5, 6, 7, 8, 8, 9, 10, 11, 11	# [0]
+	tab_u8	12, 13, 14, 14, 15, 16, 17, 17, 18, 19, 20, 20, 21, 22, 23, 23	# [16]
+	tab_u8	24, 25, 26, 26, 27, 28, 29, 29, 30, 31, 32, 32, 33, 34, 35, 35	# [32]
+	tab_u8	36, 37, 38, 38, 39, 40, 41, 42, 43, 44, 45, 45, 46, 47, 48, 49	# [48]
+	tab_u8	50, 51, 52, 52, 53, 54, 55, 55, 56, 57, 58, 58, 59, 60, 61, 61	# [64]
+	tab_u8	62, 63, 64, 64, 65, 66, 67, 68, 69, 70, 71, 71, 72, 73, 74, 74	# [80]
+	tab_u8	75, 76, 77, 77, 78, 79, 80, 80, 81, 82, 83, 83, 84, 85, 86, 86	# [96]
+	tab_u8	87, 88, 89, 89, 90, 91, 92, 92, 93, 94, 95, 95, 96, 97, 98, 99	# [112]
+func_4C160332_L8_Table:	# 128 x u8, 0..99; read by func_4C160332_L8 : `movbu	(d0, a0), d0`
+	tab_u8	0, 1, 2, 2, 3, 4, 5, 5, 6, 7, 8, 8, 9, 10, 11, 11	# [0]
+	tab_u8	12, 13, 14, 14, 15, 16, 17, 17, 18, 19, 20, 20, 21, 22, 23, 23	# [16]
+	tab_u8	24, 25, 26, 26, 27, 28, 29, 29, 30, 31, 32, 32, 33, 34, 35, 35	# [32]
+	tab_u8	36, 37, 38, 38, 39, 40, 41, 42, 43, 44, 45, 45, 46, 47, 48, 49	# [48]
+	tab_u8	50, 51, 52, 52, 53, 54, 55, 55, 56, 57, 58, 58, 59, 60, 61, 61	# [64]
+	tab_u8	62, 63, 64, 64, 65, 66, 67, 68, 69, 70, 71, 71, 72, 73, 74, 74	# [80]
+	tab_u8	75, 76, 77, 77, 78, 79, 80, 80, 81, 82, 83, 83, 84, 85, 86, 86	# [96]
+	tab_u8	87, 88, 89, 89, 90, 91, 92, 92, 93, 94, 95, 95, 96, 97, 98, 99	# [112]
+func_4C160346_L8_Table:	# 128 x u8, 0..99; read by func_4C160346_L8 : `movbu	(d0, a0), d0`
+	tab_u8	0, 1, 1, 2, 2, 3, 4, 4, 5, 6, 6, 7, 7, 8, 9, 9	# [0]
+	tab_u8	9, 10, 10, 11, 11, 12, 13, 13, 14, 15, 15, 16, 16, 17, 18, 18	# [16]
+	tab_u8	19, 20, 20, 21, 21, 22, 23, 23, 24, 25, 27, 29, 31, 33, 35, 36	# [32]
+	tab_u8	38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 59, 61, 63, 65, 66	# [48]
+	tab_u8	68, 69, 71, 73, 74, 76, 77, 78, 79, 80, 81, 83, 85, 86, 87, 89	# [64]
+	tab_u8	90, 90, 90, 90, 90, 90, 90, 90, 91, 91, 91, 91, 92, 92, 92, 92	# [80]
+	tab_u8	93, 93, 93, 93, 93, 93, 93, 93, 94, 94, 94, 94, 94, 95, 95, 95	# [96]
+	tab_u8	96, 96, 96, 96, 97, 97, 97, 97, 98, 98, 98, 98, 99, 99, 99, 99	# [112]
+func_4C16035A_L8_Table:	# 128 x u8, 0..99; read by func_4C16035A_L8 : `movbu	(d0, a0), d0`
+	tab_u8	0, 1, 1, 2, 2, 3, 4, 4, 5, 6, 6, 7, 7, 8, 9, 9	# [0]
+	tab_u8	9, 10, 10, 11, 11, 12, 13, 13, 14, 15, 15, 16, 16, 17, 18, 18	# [16]
+	tab_u8	19, 20, 20, 21, 21, 22, 23, 23, 24, 25, 27, 29, 31, 33, 35, 36	# [32]
+	tab_u8	38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 59, 61, 63, 65, 66	# [48]
+	tab_u8	68, 69, 71, 73, 74, 76, 77, 78, 79, 80, 81, 83, 85, 86, 87, 89	# [64]
+	tab_u8	90, 90, 90, 90, 90, 90, 90, 90, 91, 91, 91, 91, 92, 92, 92, 92	# [80]
+	tab_u8	93, 93, 93, 93, 93, 93, 93, 93, 94, 94, 94, 94, 94, 95, 95, 95	# [96]
+	tab_u8	96, 96, 96, 96, 97, 97, 97, 97, 98, 98, 98, 98, 99, 99, 99, 99	# [112]
+func_4C16036E_L8_Table:	# 128 x u8, 0..99; read by func_4C16036E_L8 : `movbu	(d0, a0), d0`
+	tab_u8	0, 1, 2, 2, 3, 4, 5, 5, 6, 7, 8, 8, 9, 10, 11, 11	# [0]
+	tab_u8	12, 13, 14, 14, 15, 16, 17, 17, 18, 19, 20, 20, 21, 22, 23, 23	# [16]
+	tab_u8	24, 25, 26, 26, 27, 28, 29, 29, 30, 31, 32, 32, 33, 34, 35, 35	# [32]
+	tab_u8	36, 37, 38, 38, 39, 40, 41, 42, 43, 44, 45, 45, 46, 47, 48, 49	# [48]
+	tab_u8	50, 51, 52, 52, 53, 54, 55, 55, 56, 57, 58, 58, 59, 60, 61, 61	# [64]
+	tab_u8	62, 63, 64, 64, 65, 66, 67, 68, 69, 70, 71, 71, 72, 73, 74, 74	# [80]
+	tab_u8	75, 76, 77, 77, 78, 79, 80, 80, 81, 82, 83, 83, 84, 85, 86, 86	# [96]
+	tab_u8	87, 88, 89, 89, 90, 91, 92, 92, 93, 94, 95, 95, 96, 97, 98, 99	# [112]
+func_4C160382_L8_Table:	# 128 x u8, 0..99; read by func_4C160382_L8 : `movbu	(d0, a0), d0`
+	tab_u8	0, 1, 2, 2, 3, 4, 5, 5, 6, 7, 8, 8, 9, 10, 11, 11	# [0]
+	tab_u8	12, 13, 14, 14, 15, 16, 17, 17, 18, 19, 20, 20, 21, 22, 23, 23	# [16]
+	tab_u8	24, 25, 26, 26, 27, 28, 29, 29, 30, 31, 32, 32, 33, 34, 35, 35	# [32]
+	tab_u8	36, 37, 38, 38, 39, 40, 41, 42, 43, 44, 45, 45, 46, 47, 48, 49	# [48]
+	tab_u8	50, 51, 52, 52, 53, 54, 55, 55, 56, 57, 58, 58, 59, 60, 61, 61	# [64]
+	tab_u8	62, 63, 64, 64, 65, 66, 67, 68, 69, 70, 71, 71, 72, 73, 74, 74	# [80]
+	tab_u8	75, 76, 77, 77, 78, 79, 80, 80, 81, 82, 83, 83, 84, 85, 86, 86	# [96]
+	tab_u8	87, 88, 89, 89, 90, 91, 92, 92, 93, 94, 95, 95, 96, 97, 98, 99	# [112]
+func_4C160396_L8_Table:	# 128 x u8, 0..99; read by func_4C160396_L8 : `movbu	(d0, a0), d0`
+	tab_u8	0, 1, 2, 2, 3, 4, 5, 5, 6, 7, 8, 8, 9, 10, 11, 11	# [0]
+	tab_u8	12, 13, 14, 14, 15, 16, 17, 17, 18, 19, 20, 20, 21, 22, 23, 23	# [16]
+	tab_u8	24, 25, 26, 26, 27, 28, 29, 29, 30, 31, 32, 32, 33, 34, 35, 35	# [32]
+	tab_u8	36, 37, 38, 38, 39, 40, 41, 42, 43, 44, 45, 45, 46, 47, 48, 49	# [48]
+	tab_u8	50, 51, 52, 52, 53, 54, 55, 55, 56, 57, 58, 58, 59, 60, 61, 61	# [64]
+	tab_u8	62, 63, 64, 64, 65, 66, 67, 68, 69, 70, 71, 71, 72, 73, 74, 74	# [80]
+	tab_u8	75, 76, 77, 77, 78, 79, 80, 80, 81, 82, 83, 83, 84, 85, 86, 86	# [96]
+	tab_u8	87, 88, 89, 89, 90, 91, 92, 92, 93, 94, 95, 95, 96, 97, 98, 99	# [112]
+func_4C1603AA_L8_Table:	# 128 x u8, 0..127; read by func_4C1603AA_L8 : `movbu	(d0, a0), d0`
+	tab_u8	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# [0]
+	tab_u8	16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31	# [16]
+	tab_u8	32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47	# [32]
+	tab_u8	48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63	# [48]
+	tab_u8	64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79	# [64]
+	tab_u8	80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95	# [80]
+	tab_u8	96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111	# [96]
+	tab_u8	112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127	# [112]
+func_4C1603AA_L1c_Table:	# 128 x u8, 0..127; read by func_4C1603AA_L1c : `movbu	(d0, a0), d0`
+	tab_u8	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# [0]
+	tab_u8	16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31	# [16]
+	tab_u8	32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47	# [32]
+	tab_u8	48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63	# [48]
+	tab_u8	64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79	# [64]
+	tab_u8	80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95	# [80]
+	tab_u8	96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111	# [96]
+	tab_u8	112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127	# [112]
+func_4C1603D2_L8_Table:	# 128 x u8, 0..99; read by func_4C1603D2_L8 : `movbu	(d0, a0), d0`
+	tab_u8	0, 1, 1, 2, 3, 3, 4, 4, 5, 6, 6, 7, 8, 8, 9, 9	# [0]
+	tab_u8	10, 11, 11, 12, 13, 13, 14, 14, 15, 16, 16, 17, 17, 18, 19, 19	# [16]
+	tab_u8	20, 21, 21, 22, 22, 23, 24, 24, 25, 26, 26, 26, 27, 27, 27, 27	# [32]
+	tab_u8	28, 28, 29, 29, 30, 30, 31, 31, 32, 32, 33, 33, 33, 34, 34, 34	# [48]
+	tab_u8	35, 35, 35, 36, 36, 37, 38, 38, 39, 39, 40, 40, 40, 41, 41, 41	# [64]
+	tab_u8	42, 42, 42, 43, 43, 43, 44, 44, 45, 45, 45, 46, 46, 47, 47, 47	# [80]
+	tab_u8	48, 48, 49, 49, 50, 52, 54, 56, 57, 59, 61, 64, 66, 67, 68, 69	# [96]
+	tab_u8	70, 71, 72, 73, 74, 76, 78, 80, 82, 84, 86, 88, 90, 92, 95, 99	# [112]
+func_4C1603E6_L8_Table:	# 128 x u8, 0..99; read by func_4C1603E6_L8 : `movbu	(d0, a0), d0`
+	tab_u8	0, 1, 1, 2, 3, 3, 4, 4, 5, 6, 6, 7, 8, 8, 9, 9	# [0]
+	tab_u8	10, 11, 11, 12, 13, 13, 14, 14, 15, 16, 16, 17, 17, 18, 19, 19	# [16]
+	tab_u8	20, 21, 21, 22, 22, 23, 24, 24, 25, 26, 26, 26, 27, 27, 27, 27	# [32]
+	tab_u8	28, 28, 29, 29, 30, 30, 31, 31, 32, 32, 33, 33, 33, 34, 34, 34	# [48]
+	tab_u8	35, 35, 35, 36, 36, 37, 38, 38, 39, 39, 40, 40, 40, 41, 41, 41	# [64]
+	tab_u8	42, 42, 42, 43, 43, 43, 44, 44, 45, 45, 45, 46, 46, 47, 47, 47	# [80]
+	tab_u8	48, 48, 49, 49, 50, 52, 54, 56, 57, 59, 61, 64, 66, 67, 68, 69	# [96]
+	tab_u8	70, 71, 72, 73, 74, 76, 78, 80, 82, 84, 86, 88, 90, 92, 95, 99	# [112]
 
 ptrs_4C2651AC:
 	.long	loc_4C15CBB7
@@ -13709,20 +14197,20 @@ data_4C27406C:
 .incbin_range "baserom/kn6000_program.rom", 0x27406C, 0x27406E
 Str_VER:	.asciz "*.VER,***"
 Str_rb_9:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb_9
 Str_empty_297:	.asciz "***"
 Str_rb_8:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb_8
 Str_rb_7:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb_7
 Str_rb_6:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb_6
 Str_rb_5:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb_5
 Str_rb_4:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb_4
 Str_rb_3:	.asciz "rb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_rb_3
 data_4C274098:
 .incbin_range "baserom/kn6000_program.rom", 0x274098, 0x274118
 data_4C274118:
@@ -13739,65 +14227,65 @@ FnName_PsStylCnvVerProc:	.asciz "PsStylCnvVerProc"
 FnName_MusicStylistJpgData:	.asciz "MusicStylistJpgData"
 FnName_AcOtpRamBoxProc:	.asciz "AcOtpRamBoxProc"
 FnName_MssNameFunc:	.asciz "MssNameFunc"
-	.align	4, 0x00
+	.align	4, 0x00	# pad after FnName_MssNameFunc
 Field_PsParaListBox_font:	.asciz "font"
 Field_PsParaListBox_fontcolor:	.asciz "fontcolor"
 Field_PsParaListBox_column:	.asciz "column"
 Field_PsParaListBox_row:	.asciz "row"
 Field_PsParaListBox_sel_num:	.asciz "sel_num"
 Field_PsParaListBox_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_PsParaListBox_end
 Field_PsSCTxtBox_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_PsSCTxtBox_end
 Field_PSSCTxtBox2_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_PSSCTxtBox2_end
 Field_PsStylCnvVer_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_PsStylCnvVer_end
 Field_AcOtpRamBox_font:	.asciz "font"
 Field_AcOtpRamBox_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_AcOtpRamBox_end
 Field_AcStyleName_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_AcStyleName_end
 Field_AcCategoryListBox_list:	.asciz "list"
 Field_AcCategoryListBox_dial:	.asciz "dial"
 Field_AcCategoryListBox_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_AcCategoryListBox_end
 Field_AcSubCategoryListBox_list:	.asciz "list"
 Field_AcSubCategoryListBox_dial:	.asciz "dial"
 Field_AcSubCategoryListBox_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_AcSubCategoryListBox_end
 Field_AcCtgStyleListBox_list:	.asciz "list"
 Field_AcCtgStyleListBox_dial:	.asciz "dial"
 Field_AcCtgStyleListBox_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_AcCtgStyleListBox_end
 Field_AcAlphabetListBox_list:	.asciz "list"
 Field_AcAlphabetListBox_dial:	.asciz "dial"
 Field_AcAlphabetListBox_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_AcAlphabetListBox_end
 Field_IvEditSwForEraPage_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_IvEditSwForEraPage_end
 Field_AcAlpStyleListBox_list:	.asciz "list"
 Field_AcAlpStyleListBox_dial:	.asciz "dial"
 Field_AcAlpStyleListBox_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_AcAlpStyleListBox_end
 Field_AcEraListBox_list:	.asciz "list"
 Field_AcEraListBox_dial:	.asciz "dial"
 Field_AcEraListBox_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_AcEraListBox_end
 Field_AcEraStyleListBox_list:	.asciz "list"
 Field_AcEraStyleListBox_dial:	.asciz "dial"
 Field_AcEraStyleListBox_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_AcEraStyleListBox_end
 Field_AcCustomListBox_list:	.asciz "list"
 Field_AcCustomListBox_dial:	.asciz "dial"
 Field_AcCustomListBox_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_AcCustomListBox_end
 Field_AcCustomStyleListBox_list:	.asciz "list"
 Field_AcCustomStyleListBox_dial:	.asciz "dial"
 Field_AcCustomStyleListBox_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_AcCustomStyleListBox_end
 Field_AcEraTitleMenu_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_AcEraTitleMenu_end
 ClassName_PsParaListBox:	.asciz "PsParaListBox"
 ClassSig_PsParaListBox:	.asciz "c^AAn"
 ClassName_PsSCTxtBox:	.asciz "PsSCTxtBox"
@@ -13832,18 +14320,18 @@ ClassName_AcCustomStyleListBox:	.asciz "AcCustomStyleListBox"
 ClassSig_AcCustomStyleListBox:	.asciz "XG"
 ClassName_AcEraTitleMenu:	.asciz "AcEraTitleMenu"
 ClassSig_AcEraTitleMenu:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after ClassSig_AcEraTitleMenu
 
 Str_EV_CHANGESTYLE:	.asciz "EV_CHANGESTYLE"
 Str_EV_STYLEOUT:	.asciz "EV_STYLEOUT"
 Str_EV_CUSTOMOUT:	.asciz "EV_CUSTOMOUT"
 Str_EV_DIALUP:	.asciz "EV_DIALUP"
 Str_EV_DIALDOWN:	.asciz "EV_DIALDOWN"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_EV_DIALDOWN
 
 Str_MT_StylCnvStor:	.asciz "MT_StylCnvStor"
 Str_MT_SetSelectedLine:	.asciz "MT_SetSelectedLine"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MT_SetSelectedLine
 
 FnName_AcStyleNameProc:	.asciz "AcStyleNameProc"
 FnName_AcCategoryListBoxProc:	.asciz "AcCategoryListBoxProc"
@@ -13857,7 +14345,7 @@ FnName_AcCustomListBoxProc:	.asciz "AcCustomListBoxProc"
 FnName_AcCustomStyleListBoxProc:	.asciz "AcCustomStyleListBoxProc"
 FnName_AcEraTitleMenuProc:	.asciz "AcEraTitleMenuProc"
 FnName_IvEditSwForEraPageProc:	.asciz "IvEditSwForEraPageProc"
-	.align	4, 0x00
+	.align	4, 0x00	# pad after FnName_IvEditSwForEraPageProc
 FnName_StylCnvWaitTtlFunc:	.asciz "StylCnvWaitTtlFunc"
 FnName_StylCnvTxtTtlFunc:	.asciz "StylCnvTxtTtlFunc"
 FnName_StylCnvModlTtlFunc:	.asciz "StylCnvModlTtlFunc"
@@ -13871,24 +14359,24 @@ FnName_MiddleFuncCall:	.asciz "MiddleFuncCall"
 FnName_DialUpDownOp:	.asciz "DialUpDownOp"
 .incbin_range "baserom/kn6000_program.rom", 0x2746C6, 0x2746C8
 Str_ONE_TOUCH_PLAY:	.asciz "ONE TOUCH PLAY"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ONE_TOUCH_PLAY
 
 	TtlScreen	OneTouchPlay, sub=OneTouchPlay_OtpRamBox1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_NORMAL, window=Str_KN3000_SOUND_RAM+16, title=Str_ONE_TOUCH_PLAY, icon=179	# title "ONE TOUCH PLAY"
 		AcOtpRamBox	OneTouchPlay_OtpRamBox1, super=OneTouchPlay, next=OneTouchPlay_ExitMode1, flag=VF_Const, X=160, Y=62, W=320, H=120, color=CL_Transparent, border=BD_3D_UP2, index=0xFFFF, font=2, fontcolor=CL_White, func=FN_MssNameFunc, data=Str_KN3000_SOUND_RAM+20, font_AcOtpRamBox=2
 		IvExitMode	OneTouchPlay_ExitMode1, super=OneTouchPlay, prev=OneTouchPlay_OtpRamBox1, flag=VF_Const|VF_InvisibleBox, X=4, Y=32, W=32, H=32, mode=MD_NORMAL
 
 Str_MUSIC_STYLIST:	.asciz "MUSIC STYLIST"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MUSIC_STYLIST
 
 	TtlScreen	MusicStylistMenu, sub=MusicStylistMenu_TitleMenu_MUSICAL_CATEGORY, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_NORMAL, window=MusicStylistMenu_window, title=Str_MUSIC_STYLIST, icon=162	# title "MUSIC STYLIST"
 
 Str_MUSICAL_CATEGORY:	.asciz "MUSICAL CATEGORY"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MUSICAL_CATEGORY
 
 		AcTitleMenu	MusicStylistMenu_TitleMenu_MUSICAL_CATEGORY, super=MusicStylistMenu, next=MusicStylistMenu_TitleMenu_ALPHABETICAL_LIST, flag=VF_Const, X=8, Y=28, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left1, selected=MusicStylistMenu_TitleMenu_MUSICAL_CATEGORY_selected, str=Str_MUSICAL_CATEGORY, title=TT_MSCTG, icon=163	# str "MUSICAL CATEGORY"
 
 Str_ALPHABETICAL_LIST:	.asciz "ALPHABETICAL LIST"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ALPHABETICAL_LIST
 
 		AcTitleMenu	MusicStylistMenu_TitleMenu_ALPHABETICAL_LIST, super=MusicStylistMenu, next=MusicStylistMenu_TitleMenu_MUSICAL_ERA, prev=MusicStylistMenu_TitleMenu_MUSICAL_CATEGORY, flag=VF_Const, X=8, Y=114, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left3, selected=MusicStylistMenu_TitleMenu_ALPHABETICAL_LIST_selected, str=Str_ALPHABETICAL_LIST, title=TT_MSALP, icon=164	# str "ALPHABETICAL LIST"
 
@@ -13897,59 +14385,59 @@ Str_MUSICAL_ERA:	.asciz "MUSICAL ERA"
 		AcTitleMenu	MusicStylistMenu_TitleMenu_MUSICAL_ERA, super=MusicStylistMenu, next=MusicStylistMenu_TitleMenu_CUSTOM_STYLIST, prev=MusicStylistMenu_TitleMenu_ALPHABETICAL_LIST, flag=VF_Const, X=8, Y=71, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left2, selected=MusicStylistMenu_TitleMenu_MUSICAL_ERA_selected, str=Str_MUSICAL_ERA, title=TT_MSERA, icon=184	# str "MUSICAL ERA"
 
 Str_CUSTOM_STYLIST:	.asciz "CUSTOM STYLIST"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CUSTOM_STYLIST
 
 		AcTitleMenu	MusicStylistMenu_TitleMenu_CUSTOM_STYLIST, super=MusicStylistMenu, next=MusicStylistMenu_ExitMode1, prev=MusicStylistMenu_TitleMenu_MUSICAL_ERA, flag=VF_Const, X=8, Y=157, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left4, selected=MusicStylistMenu_TitleMenu_CUSTOM_STYLIST_selected, str=Str_CUSTOM_STYLIST, title=TT_MSCTM, icon=185	# str "CUSTOM STYLIST"
 		IvExitMode	MusicStylistMenu_ExitMode1, super=MusicStylistMenu, next=MusicStylistMenu_JpegFile1, prev=MusicStylistMenu_TitleMenu_CUSTOM_STYLIST, flag=VF_Const|VF_InvisibleBox, X=8, Y=200, W=32, H=32, mode=MD_NORMAL
 		VwJpegFile	MusicStylistMenu_JpegFile1, super=MusicStylistMenu, prev=MusicStylistMenu_ExitMode1, flag=VF_Const, X=288, Y=36, W=300, H=190, func=FN_MusicStylistJpgData
 
 Str_MUSICAL_CATEGORY_2:	.asciz "MUSICAL CATEGORY"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MUSICAL_CATEGORY_2
 
 	TtlScreen	MusicStylistCategory, sub=MusicStylistCategory_TitleMenu_ALPHABET, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_MSMENU, window=MusicStylistCategory_window, title=Str_MUSICAL_CATEGORY_2, icon=163	# title "MUSICAL CATEGORY"
 
 Str_ALPHABET:	.asciz "ALPHABET"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ALPHABET
 
 		AcTitleMenu	MusicStylistCategory_TitleMenu_ALPHABET, super=MusicStylistCategory, next=MusicStylistCategory_IndexWideES1, flag=VF_Const, X=327, Y=28, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=6, fontcolor=CL_White, editsw=ES_Right1, selected=MusicStylistCategory_TitleMenu_ALPHABET_selected, str=Str_ALPHABET, title=TT_MSALP	# str "ALPHABET"
 		AcIndexWideES	MusicStylistCategory_IndexWideES1, super=MusicStylistCategory, sub=MusicStylistCategory_Label_CATEGORY, next=MusicStylistCategory_IndexWideES2, prev=MusicStylistCategory_TitleMenu_ALPHABET, flag=VF_Const, X=84, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom3, editsw2=ES_Bottom4, style=14
 
 Str_CATEGORY_2:	.asciz "CATEGORY"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CATEGORY_2
 
 			VwLabel	MusicStylistCategory_Label_CATEGORY, super=MusicStylistCategory_IndexWideES1, flag=VF_Const, X=12, Y=222, W=68, H=13, str=Str_CATEGORY_2, font=6, fontcolor=CL_White	# str "CATEGORY"
 		AcIndexWideES	MusicStylistCategory_IndexWideES2, super=MusicStylistCategory, sub=MusicStylistCategory_Label_SKIP, next=MusicStylistCategory_IndexWideES3, prev=MusicStylistCategory_IndexWideES1, flag=VF_Const, X=244, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom8, style=3
 
 Str_SKIP:	.asciz "SKIP"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SKIP
 
 			VwLabel	MusicStylistCategory_Label_SKIP, super=MusicStylistCategory_IndexWideES2, flag=VF_Const, X=320, Y=222, W=36, H=13, str=Str_SKIP, font=6, fontcolor=CL_Yellow	# str "SKIP"
 		AcIndexWideES	MusicStylistCategory_IndexWideES3, super=MusicStylistCategory, sub=MusicStylistCategory_Label_STYLE, next=MusicStylistCategory_StyleName1, prev=MusicStylistCategory_IndexWideES2, flag=VF_Const, X=404, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=3, font=4, fontcolor=CL_Black, editsw=ES_Bottom11, editsw2=ES_Bottom12, style=14
 
 Str_STYLE:	.asciz "STYLE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_STYLE
 
 			VwLabel	MusicStylistCategory_Label_STYLE, super=MusicStylistCategory_IndexWideES3, flag=VF_Const, X=480, Y=222, W=44, H=13, str=Str_STYLE, font=6, fontcolor=CL_White	# str "STYLE"
 		AcStyleName	MusicStylistCategory_StyleName1, super=MusicStylistCategory, sub=MusicStylistCategory_Label_STYLE2, next=CategoryBox, prev=MusicStylistCategory_IndexWideES3, flag=VF_Const, X=350, Y=6, W=180, H=19, color=CL_TitleBar, index=0xFFFF, font=4, fontcolor=CL_White, align=1
 
 Str_STYLE_2:	.asciz "STYLE:"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_STYLE_2
 
 			VwLabel	MusicStylistCategory_Label_STYLE2, super=MusicStylistCategory_StyleName1, flag=VF_Const, X=284, Y=10, W=52, H=13, str=Str_STYLE_2, font=6, fontcolor=CL_White	# str "STYLE:"
 
 Str_aaaaaaaaaaaaaaaa_bbbbbbbbbbbbbbbb_cccccc:	.asciz "aaaaaaaaaaaaaaaa|bbbbbbbbbbbbbbbb|cccccccccccccccc|dddddddddddddddd|eeeeeeeeeeeeeeee|ffffffffffffffff|gggggggggggggggg|hhhhhhhhhhhhhhhh|iiiiiiiiiiiiiiii|jjjjjjjjjjjjjjjj"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_aaaaaaaaaaaaaaaa_bbbbbbbbbbbbbbbb_cccccc
 
 		AcCategoryListBox	CategoryBox, super=MusicStylistCategory, next=MusicStylistCategory_Box1, prev=MusicStylistCategory_StyleName1, flag=VF_Const, X=30, Y=30, W=170, H=181, color=CL_WallPattern, border=BD_3D_UP2, index=1, font=6, fontcolor=CL_White, row=10, selected=CategoryBox_selected, list=Str_aaaaaaaaaaaaaaaa_bbbbbbbbbbbbbbbb_cccccc	# list "aaaaaaaaaaaaaaaa|bbbbbbbbbbbbbbbb|cccccc"
 		VwBox	MusicStylistCategory_Box1, super=MusicStylistCategory, sub=SubCategoryBox, next=MusicStylistCategory_EraTitleMenu_ERA, prev=CategoryBox, flag=VF_Const, X=206, Y=30, W=342, H=181, color=CL_Transparent, border=BD_3D_UP2, index=0xFFFF
 
 Str_German_Schlager_TEMPO_Easy_Play_8_Beat_T:	.asciz "German Schlager:               TEMPO|||||Easy Play 8 Beat:              TEMPO|||||"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_German_Schlager_TEMPO_Easy_Play_8_Beat_T
 
 			AcSubCategoryListBox	SubCategoryBox, super=MusicStylistCategory_Box1, sub=CategoryStyleBox, flag=VF_Const, X=226, Y=33, W=300, H=175, color=CL_Transparent, index=2, font=6, fontcolor=CL_Yellow, align=1, row=10, selected=SubCategoryBox_selected, list=Str_German_Schlager_TEMPO_Easy_Play_8_Beat_T	# list "German Schlager:               TEMPO||||"
 
 Str_Acoustic_Beat_108_Flugel_Pop_108_Orchest:	.asciz "|Acoustic Beat          108|Flugel Pop             108|Orchestral Eight       108|New Unison Eight       108||88 Note 8 Beat          90|Easy EP!                90|Reson-Eight             90|AAAAAAAAAAAAAAAA       154"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Acoustic_Beat_108_Flugel_Pop_108_Orchest
 
 				AcCtgStyleListBox	CategoryStyleBox, super=SubCategoryBox, flag=VF_Const, X=270, Y=33, W=270, H=175, color=CL_Transparent, index=3, font=6, fontcolor=CL_White, row=10, selected=CategoryStyleBox_selected, list=Str_Acoustic_Beat_108_Flugel_Pop_108_Orchest, dial=1	# list "|Acoustic Beat          108|Flugel Pop  "
 
@@ -13958,36 +14446,36 @@ Str_ERA:	.asciz "ERA"
 		AcEraTitleMenu	MusicStylistCategory_EraTitleMenu_ERA, super=MusicStylistCategory, prev=MusicStylistCategory_Box1, flag=VF_Const, X=560, Y=71, W=72, H=38, color=CL_Transparent, index=0xFFFF, font=6, fontcolor=CL_White, editsw=ES_Right2, selected=MusicStylistCategory_EraTitleMenu_ERA_selected, str=Str_ERA, title=TT_MSERA	# str "ERA"
 
 Str_ALPHABETICAL_LIST_2:	.asciz "ALPHABETICAL LIST"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ALPHABETICAL_LIST_2
 
 	TtlScreen	MusicStylistAlphabetical, sub=MusicStylistAlphabetical_TitleMenu_CATEGORY, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_MSMENU, window=MusicStylistAlphabetical_window, title=Str_ALPHABETICAL_LIST_2, icon=164	# title "ALPHABETICAL LIST"
 
 Str_CATEGORY_3:	.asciz "CATEGORY"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CATEGORY_3
 
 		AcTitleMenu	MusicStylistAlphabetical_TitleMenu_CATEGORY, super=MusicStylistAlphabetical, next=MusicStylistAlphabetical_IndexWideES1, flag=VF_Const, X=327, Y=28, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=6, fontcolor=CL_White, editsw=ES_Right1, selected=MusicStylistAlphabetical_TitleMenu_CATEGORY_selected, str=Str_CATEGORY_3, title=TT_MSCTG	# str "CATEGORY"
 		AcIndexWideES	MusicStylistAlphabetical_IndexWideES1, super=MusicStylistAlphabetical, sub=MusicStylistAlphabetical_Label_SKIP, next=MusicStylistAlphabetical_IndexWideES2, prev=MusicStylistAlphabetical_TitleMenu_CATEGORY, flag=VF_Const, X=164, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, editsw2=ES_Bottom6, style=3
 
 Str_SKIP_2:	.asciz "SKIP"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SKIP_2
 
 			VwLabel	MusicStylistAlphabetical_Label_SKIP, super=MusicStylistAlphabetical_IndexWideES1, flag=VF_Const, X=240, Y=222, W=36, H=13, str=Str_SKIP_2, font=6, fontcolor=CL_Yellow	# str "SKIP"
 		AcIndexWideES	MusicStylistAlphabetical_IndexWideES2, super=MusicStylistAlphabetical, sub=MusicStylistAlphabetical_Label_STYLE, next=MusicStylistAlphabetical_StyleName1, prev=MusicStylistAlphabetical_IndexWideES1, flag=VF_Const, X=324, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom9, editsw2=ES_Bottom10, style=14
 
 Str_STYLE_3:	.asciz "STYLE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_STYLE_3
 
 			VwLabel	MusicStylistAlphabetical_Label_STYLE, super=MusicStylistAlphabetical_IndexWideES2, flag=VF_Const, X=400, Y=222, W=44, H=13, str=Str_STYLE_3, font=6, fontcolor=CL_White	# str "STYLE"
 		AcStyleName	MusicStylistAlphabetical_StyleName1, super=MusicStylistAlphabetical, sub=MusicStylistAlphabetical_Label_STYLE2, next=MusicStylistAlphabetical_Box1, prev=MusicStylistAlphabetical_IndexWideES2, flag=VF_Const, X=350, Y=6, W=180, H=19, color=CL_TitleBar, index=0xFFFF, font=4, fontcolor=CL_White, align=1
 
 Str_STYLE_4:	.asciz "STYLE:"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_STYLE_4
 
 			VwLabel	MusicStylistAlphabetical_Label_STYLE2, super=MusicStylistAlphabetical_StyleName1, flag=VF_Const, X=284, Y=10, W=52, H=13, str=Str_STYLE_4, font=6, fontcolor=CL_White	# str "STYLE:"
 		VwBox	MusicStylistAlphabetical_Box1, super=MusicStylistAlphabetical, sub=AlphabetBox, next=MusicStylistAlphabetical_EraTitleMenu_ERA, prev=MusicStylistAlphabetical_StyleName1, flag=VF_Const, X=126, Y=30, W=342, H=181, color=CL_Transparent, border=BD_3D_UP2, index=0xFFFF
 
 Str_A_1_1_TEMPO:	.asciz "A: 1/1                         TEMPO"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_A_1_1_TEMPO
 
 			AcAlphabetListBox	AlphabetBox, super=MusicStylistAlphabetical_Box1, sub=AlphabetStyle, flag=VF_Const, X=146, Y=33, W=300, H=175, color=CL_Transparent, index=1, font=6, fontcolor=CL_Yellow, align=1, row=10, selected=AlphabetBox_selected, list=Str_A_1_1_TEMPO	# list "A: 1/1                         TEMPO"
 
@@ -14004,103 +14492,103 @@ Str_MUSICAL_ERA_2:	.asciz "MUSICAL ERA"
 	TtlScreen	MusicStylistEra, sub=MusicStylistEra_TitleMenu_CATEGORY, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_MSMENU, window=MusicStylistEra_window, title=Str_MUSICAL_ERA_2, icon=184	# title "MUSICAL ERA"
 
 Str_CATEGORY_4:	.asciz "CATEGORY"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CATEGORY_4
 
 		AcTitleMenu	MusicStylistEra_TitleMenu_CATEGORY, super=MusicStylistEra, next=MusicStylistEra_TitleMenu_ALPHABET, flag=VF_Const, X=327, Y=28, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=6, fontcolor=CL_White, editsw=ES_Right1, selected=MusicStylistEra_TitleMenu_CATEGORY_selected, str=Str_CATEGORY_4, title=TT_MSCTG	# str "CATEGORY"
 
 Str_ALPHABET_2:	.asciz "ALPHABET"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ALPHABET_2
 
 		AcTitleMenu	MusicStylistEra_TitleMenu_ALPHABET, super=MusicStylistEra, next=MusicStylistEra_IndexWideES1, prev=MusicStylistEra_TitleMenu_CATEGORY, flag=VF_Const, X=327, Y=71, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=6, fontcolor=CL_White, editsw=ES_Right2, selected=MusicStylistEra_TitleMenu_ALPHABET_selected, str=Str_ALPHABET_2, title=TT_MSALP	# str "ALPHABET"
 		AcIndexWideES	MusicStylistEra_IndexWideES1, super=MusicStylistEra, sub=MusicStylistEra_Label_SKIP, next=MusicStylistEra_IndexWideES2, prev=MusicStylistEra_TitleMenu_ALPHABET, flag=VF_Const, X=164, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, editsw2=ES_Bottom6, style=3
 
 Str_SKIP_3:	.asciz "SKIP"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SKIP_3
 
 			VwLabel	MusicStylistEra_Label_SKIP, super=MusicStylistEra_IndexWideES1, flag=VF_Const, X=240, Y=222, W=36, H=13, str=Str_SKIP_3, font=6, fontcolor=CL_Yellow	# str "SKIP"
 		AcIndexWideES	MusicStylistEra_IndexWideES2, super=MusicStylistEra, sub=MusicStylistEra_Label_STYLE, next=MusicStylistEra_StyleName1, prev=MusicStylistEra_IndexWideES1, flag=VF_Const, X=324, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom9, editsw2=ES_Bottom10, style=14
 
 Str_STYLE_5:	.asciz "STYLE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_STYLE_5
 
 			VwLabel	MusicStylistEra_Label_STYLE, super=MusicStylistEra_IndexWideES2, flag=VF_Const, X=400, Y=222, W=44, H=13, str=Str_STYLE_5, font=6, fontcolor=CL_White	# str "STYLE"
 		AcStyleName	MusicStylistEra_StyleName1, super=MusicStylistEra, sub=MusicStylistEra_Label_STYLE2, next=MusicStylistEra_Box1, prev=MusicStylistEra_IndexWideES2, flag=VF_Const, X=350, Y=6, W=180, H=19, color=CL_TitleBar, index=0xFFFF, font=4, fontcolor=CL_White, align=1
 
 Str_STYLE_6:	.asciz "STYLE:"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_STYLE_6
 
 			VwLabel	MusicStylistEra_Label_STYLE2, super=MusicStylistEra_StyleName1, flag=VF_Const, X=284, Y=10, W=52, H=13, str=Str_STYLE_6, font=6, fontcolor=CL_White	# str "STYLE:"
 		VwBox	MusicStylistEra_Box1, super=MusicStylistEra, sub=EraBox, next=MusicStylistEra_EditSwForEraPage1, prev=MusicStylistEra_StyleName1, flag=VF_Const, X=126, Y=30, W=342, H=181, color=CL_Transparent, border=BD_3D_UP2, index=0xFFFF
 
 Str_70_s_Music_TEMPO:	.asciz "70's Music:                    TEMPO||||||||||"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_70_s_Music_TEMPO
 
 			AcEraListBox	EraBox, super=MusicStylistEra_Box1, sub=EraStyleBox, flag=VF_Const, X=146, Y=33, W=300, H=175, color=CL_Transparent, index=1, font=6, fontcolor=CL_Yellow, align=1, row=10, selected=EraBox_selected, list=Str_70_s_Music_TEMPO	# list "70's Music:                    TEMPO||||"
 
 Str_Acoustic_Beat_108_70_s_Glamour_90_Synth:	.asciz "|Acoustic Beat          108|70's Glamour            90|Synth Rock              90"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Acoustic_Beat_108_70_s_Glamour_90_Synth
 
 				AcEraStyleListBox	EraStyleBox, super=EraBox, flag=VF_Const, X=190, Y=33, W=270, H=175, color=CL_Transparent, index=2, font=6, fontcolor=CL_White, row=10, selected=EraStyleBox_selected, list=Str_Acoustic_Beat_108_70_s_Glamour_90_Synth, dial=1	# list "|Acoustic Beat          108|70's Glamour"
 		IvEditSwForEraPage	MusicStylistEra_EditSwForEraPage1, super=MusicStylistEra, prev=MusicStylistEra_Box1, flag=VF_Const|VF_InvisibleBox, X=12, Y=196, W=32, H=32
 
 Str_CUSTOM_STYLIST_2:	.asciz "CUSTOM STYLIST"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CUSTOM_STYLIST_2
 
 	TtlScreen	MusicStylistCustom, sub=MusicStylistCustom_IndexWideES1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_MSMENU, window=MusicStylistCustom_window, title=Str_CUSTOM_STYLIST_2, icon=185	# title "CUSTOM STYLIST"
 		AcIndexWideES	MusicStylistCustom_IndexWideES1, super=MusicStylistCustom, sub=MusicStylistCustom_Label_SKIP, next=MusicStylistCustom_IndexWideES2, flag=VF_Const, X=164, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, editsw2=ES_Bottom6, style=3
 
 Str_SKIP_4:	.asciz "SKIP"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SKIP_4
 
 			VwLabel	MusicStylistCustom_Label_SKIP, super=MusicStylistCustom_IndexWideES1, flag=VF_Const, X=240, Y=222, W=36, H=13, str=Str_SKIP_4, font=6, fontcolor=CL_Yellow	# str "SKIP"
 		AcIndexWideES	MusicStylistCustom_IndexWideES2, super=MusicStylistCustom, sub=MusicStylistCustom_Label_STYLE, next=MusicStylistCustom_StyleName1, prev=MusicStylistCustom_IndexWideES1, flag=VF_Const, X=324, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom9, editsw2=ES_Bottom10, style=14
 
 Str_STYLE_7:	.asciz "STYLE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_STYLE_7
 
 			VwLabel	MusicStylistCustom_Label_STYLE, super=MusicStylistCustom_IndexWideES2, flag=VF_Const, X=400, Y=222, W=44, H=13, str=Str_STYLE_7, font=6, fontcolor=CL_White	# str "STYLE"
 		AcStyleName	MusicStylistCustom_StyleName1, super=MusicStylistCustom, sub=MusicStylistCustom_Label_STYLE2, next=MusicStylistCustom_Box1, prev=MusicStylistCustom_IndexWideES2, flag=VF_Const, X=350, Y=6, W=180, H=19, color=CL_TitleBar, index=0xFFFF, font=4, fontcolor=CL_White, align=1
 
 Str_STYLE_8:	.asciz "STYLE:"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_STYLE_8
 
 			VwLabel	MusicStylistCustom_Label_STYLE2, super=MusicStylistCustom_StyleName1, flag=VF_Const, X=284, Y=10, W=52, H=13, str=Str_STYLE_8, font=6, fontcolor=CL_White	# str "STYLE:"
 		VwBox	MusicStylistCustom_Box1, super=MusicStylistCustom, sub=CustomBox, prev=MusicStylistCustom_StyleName1, flag=VF_Const, X=126, Y=30, W=342, H=181, color=CL_Transparent, border=BD_3D_UP2, index=0xFFFF
 
 Str_CUSTOM_1xxxxxxxx_TEMPO_CUSTOM_2xxxxxxxx:	.asciz "CUSTOM 1xxxxxxxx:              TEMPO|||||CUSTOM 2xxxxxxxx:              TEMPO|||||"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CUSTOM_1xxxxxxxx_TEMPO_CUSTOM_2xxxxxxxx
 
 			AcCustomListBox	CustomBox, super=MusicStylistCustom_Box1, sub=CustomStyleBox, flag=VF_Const, X=146, Y=33, W=300, H=175, color=CL_Transparent, index=1, font=6, fontcolor=CL_Yellow, align=1, row=10, selected=CustomBox_selected, list=Str_CUSTOM_1xxxxxxxx_TEMPO_CUSTOM_2xxxxxxxx	# list "CUSTOM 1xxxxxxxx:              TEMPO||||"
 
 Str_My_style1_80_My_style2_80_My_style3_80_M:	.asciz "|My style1               80|My style2               80|My style3               80|My style4               80||Cristmas style1        120|Cristmas style2        100|Cristmas style3         80|Cristmas style4        100"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_My_style1_80_My_style2_80_My_style3_80_M
 
 				AcCustomStyleListBox	CustomStyleBox, super=CustomBox, flag=VF_Const, X=190, Y=33, W=270, H=175, color=CL_Transparent, index=2, font=6, fontcolor=CL_White, row=10, selected=CustomStyleBox_selected, list=Str_My_style1_80_My_style2_80_My_style3_80_M, dial=1	# list "|My style1               80|My style2   "
 
 Str_STYLE_CONVERT:	.asciz "STYLE CONVERT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_STYLE_CONVERT
 
 	TtlScreen	STYLCNVWAIT, sub=STYLCNVWAIT_LanguageText1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_DKMENU, window=STYLCNVWAIT_window, title=Str_STYLE_CONVERT, icon=152	# title "STYLE CONVERT"
 		AcLanguageText	STYLCNVWAIT_LanguageText1, super=STYLCNVWAIT, next=STYLCNVWAIT_Box1, flag=VF_Const, X=186, Y=70, W=274, H=120, color=CL_Transparent, index=0xFFFF, font=9, fontcolor=CL_Text, alignment=1, lines=3, func=FN_StylCnvLangCheck
 		VwBox	STYLCNVWAIT_Box1, super=STYLCNVWAIT, prev=STYLCNVWAIT_LanguageText1, flag=VF_Const, X=160, Y=60, W=320, H=140, color=CL_Transparent, border=BD_3D_UP2, index=0xFFFF
 
 Str_STYLE_TYPE_SELECT:	.asciz "STYLE TYPE SELECT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_STYLE_TYPE_SELECT
 
 	TtlScreen	STYLCNVMODL, sub=STYLCNVMODL_WideESBox_PREV, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_DKMENU, window=STYLCNVMODL_window, title=Str_STYLE_TYPE_SELECT, icon=152	# title "STYLE TYPE SELECT"
 
 Str_PREV:	.asciz "PREV"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PREV
 
 		VwWideESBox	STYLCNVMODL_WideESBox_PREV, super=STYLCNVMODL, next=STYLCNVMODL_WideESBox_NEXT, flag=VF_Const, X=164, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, editsw2=ES_Bottom6, str=Str_PREV	# str "PREV"
 
 Str_NEXT:	.asciz "NEXT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NEXT
 
 		VwWideESBox	STYLCNVMODL_WideESBox_NEXT, super=STYLCNVMODL, next=STYLCNVMODL_EditSwBox1, prev=STYLCNVMODL_WideESBox_PREV, flag=VF_Const, X=404, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom11, editsw2=ES_Bottom12, str=Str_NEXT	# str "NEXT"
 
 Str_empty_59:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_59
 
 		VwEditSwBox	STYLCNVMODL_EditSwBox1, super=STYLCNVMODL, next=STYLCNVMODL_MainEditSw1, prev=STYLCNVMODL_WideESBox_NEXT, flag=VF_Const, X=593, Y=165, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, str=Str_empty_59	# str ""
 		IvMainEditSw	STYLCNVMODL_MainEditSw1, super=STYLCNVMODL, next=StylCnvModlBox, prev=STYLCNVMODL_EditSwBox1, flag=VF_Const|VF_InvisibleBox, X=0, Y=32, W=32, H=32, func=FN_StylCnvModlTtlFunc
@@ -14109,22 +14597,22 @@ Str_empty_59:	.asciz ""
 		AcIndexWideES	STYLCNVMODL_IndexWideES1, super=STYLCNVMODL, prev=StylCnvVer, flag=VF_Const, X=244, Y=216, W=152, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom10, style=14
 
 Str_STYLE_CONVERT_2:	.asciz "STYLE CONVERT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_STYLE_CONVERT_2
 
 	TtlScreen	STYLCNVCNVT, sub=STYLCNVCNVT_WideESBox_PREV, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_STYLCNVWAIT, window=STYLCNVCNVT_window, title=Str_STYLE_CONVERT_2, icon=152	# title "STYLE CONVERT"
 
 Str_PREV_2:	.asciz "PREV"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PREV_2
 
 		VwWideESBox	STYLCNVCNVT_WideESBox_PREV, super=STYLCNVCNVT, next=STYLCNVCNVT_WideESBox_NEXT, flag=VF_Const, X=164, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, editsw2=ES_Bottom6, str=Str_PREV_2	# str "PREV"
 
 Str_NEXT_2:	.asciz "NEXT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NEXT_2
 
 		VwWideESBox	STYLCNVCNVT_WideESBox_NEXT, super=STYLCNVCNVT, next=STYLCNVCNVT_EditSwBox1, prev=STYLCNVCNVT_WideESBox_PREV, flag=VF_Const, X=404, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom11, editsw2=ES_Bottom12, str=Str_NEXT_2	# str "NEXT"
 
 Str_empty_60:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_60
 
 		VwEditSwBox	STYLCNVCNVT_EditSwBox1, super=STYLCNVCNVT, next=STYLCNVCNVT_MainEditSw1, prev=STYLCNVCNVT_WideESBox_NEXT, flag=VF_Const, X=593, Y=165, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, str=Str_empty_60	# str ""
 		IvMainEditSw	STYLCNVCNVT_MainEditSw1, super=STYLCNVCNVT, next=StylCnvCnvtBox, prev=STYLCNVCNVT_EditSwBox1, flag=VF_Const|VF_InvisibleBox, X=0, Y=32, W=32, H=32, func=FN_StylCnvCnvtTtlFunc
@@ -14132,7 +14620,7 @@ Str_empty_60:	.asciz ""
 		AcIndexWideES	STYLCNVCNVT_IndexWideES1, super=STYLCNVCNVT, prev=StylCnvCnvtBox, flag=VF_Const, X=244, Y=216, W=152, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom10, style=14
 
 Str_STORAGE_DATA:	.asciz "STORAGE DATA"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_STORAGE_DATA
 
 	TtlScreen	STYLCNVSTOR, sub=STYLCNVSTOR_RamEditBox_Data_Storage_to, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_STYLCNVWAIT, window=STYLCNVSTOR_window, title=Str_STORAGE_DATA, icon=152	# title "STORAGE DATA"
 
@@ -14143,7 +14631,7 @@ Str_Data_Storage_to:	.asciz "  Data Storage to :"
 		AcIndexWideES	STYLCNVSTOR_IndexWideES1, super=STYLCNVSTOR, prev=STYLCNVSTOR_FuncEditSw1, flag=VF_Const, X=364, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom10, editsw2=ES_Bottom12, style=3
 
 Str_STYLE_CONVERT_3:	.asciz "STYLE CONVERT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_STYLE_CONVERT_3
 
 	TtlScreen	STYLCNVTXT, sub=STYLCNVTXT_Box1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_STYLCNVWAIT, window=STYLCNVTXT_window, title=Str_STYLE_CONVERT_3, icon=152	# title "STYLE CONVERT"
 		VwBox	STYLCNVTXT_Box1, super=STYLCNVTXT, sub=STYLCNVTXT_PSSCTxtBox21, next=STYLCNVTXT_MainEditSw1, flag=VF_Const, X=160, Y=56, W=320, H=160, color=CL_Transparent, border=BD_3D_UP2, index=0xFFFF
@@ -14151,22 +14639,22 @@ Str_STYLE_CONVERT_3:	.asciz "STYLE CONVERT"
 		IvMainEditSw	STYLCNVTXT_MainEditSw1, super=STYLCNVTXT, prev=STYLCNVTXT_Box1, flag=VF_Const|VF_InvisibleBox, X=0, Y=32, W=32, H=32, func=FN_StylCnvTxtTtlFunc
 
 Str_STYLE_CONVERT_4:	.asciz "STYLE CONVERT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_STYLE_CONVERT_4
 
 	TtlScreen	STYLCNVSEL, sub=STYLCNVSEL_WideESBox_PREV, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_STYLCNVWAIT, window=STYLCNVSEL_window, title=Str_STYLE_CONVERT_4, icon=152	# title "STYLE CONVERT"
 
 Str_PREV_3:	.asciz "PREV"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PREV_3
 
 		VwWideESBox	STYLCNVSEL_WideESBox_PREV, super=STYLCNVSEL, next=STYLCNVSEL_WideESBox_NEXT, flag=VF_Const, X=164, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, editsw2=ES_Bottom6, str=Str_PREV_3	# str "PREV"
 
 Str_NEXT_3:	.asciz "NEXT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NEXT_3
 
 		VwWideESBox	STYLCNVSEL_WideESBox_NEXT, super=STYLCNVSEL, next=STYLCNVSEL_EditSwBox1, prev=STYLCNVSEL_WideESBox_PREV, flag=VF_Const, X=404, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom11, editsw2=ES_Bottom12, str=Str_NEXT_3	# str "NEXT"
 
 Str_empty_61:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_61
 
 		VwEditSwBox	STYLCNVSEL_EditSwBox1, super=STYLCNVSEL, next=STYLCNVSEL_MainEditSw1, prev=STYLCNVSEL_WideESBox_NEXT, flag=VF_Const, X=593, Y=165, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, str=Str_empty_61	# str ""
 		IvMainEditSw	STYLCNVSEL_MainEditSw1, super=STYLCNVSEL, next=StylCnvSelBox, prev=STYLCNVSEL_EditSwBox1, flag=VF_Const|VF_InvisibleBox, X=0, Y=32, W=32, H=32, func=FN_StylCnvSelTtlFunc
@@ -14175,23 +14663,23 @@ Str_empty_61:	.asciz ""
 		AcIndexWideES	STYLCNVSEL_IndexWideES1, super=STYLCNVSEL, prev=STYLCNVSEL_SCTxtBox1, flag=VF_Const, X=244, Y=216, W=152, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom10, style=14
 
 Str_STYLE_CONVERT_5:	.asciz "STYLE CONVERT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_STYLE_CONVERT_5
 
 	TtlScreen	STYLCNVCONT, sub=STYLCNVCONT_EditSwBox1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_STYLCNVWAIT, window=STYLCNVCONT_window, title=Str_STYLE_CONVERT_5, icon=152	# title "STYLE CONVERT"
 
 Str_empty_62:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_62
 
 		VwEditSwBox	STYLCNVCONT_EditSwBox1, super=STYLCNVCONT, next=STYLCNVCONT_EditSwBox2, flag=VF_Const, X=593, Y=122, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right3, style=9, str=Str_empty_62	# str ""
 
 Str_empty_63:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_63
 
 		VwEditSwBox	STYLCNVCONT_EditSwBox2, super=STYLCNVCONT, next=STYLCNVCONT_Box1, prev=STYLCNVCONT_EditSwBox1, flag=VF_Const, X=593, Y=165, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=10, str=Str_empty_63	# str ""
 		VwBox	STYLCNVCONT_Box1, super=STYLCNVCONT, sub=STYLCNVCONT_Label_Continue_Next, next=STYLCNVCONT_MainEditSw1, prev=STYLCNVCONT_EditSwBox2, flag=VF_Const, X=160, Y=76, W=320, H=100, color=CL_Transparent, border=BD_3D_UP2, index=0xFFFF
 
 Str_Continue_Next:	.asciz "Continue Next?"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Continue_Next
 
 			VwLabel	STYLCNVCONT_Label_Continue_Next, super=STYLCNVCONT_Box1, flag=VF_Const, X=234, Y=114, W=158, H=19, str=Str_Continue_Next, font=4, fontcolor=CL_WhiteB	# str "Continue Next?"
 		IvMainEditSw	STYLCNVCONT_MainEditSw1, super=STYLCNVCONT, prev=STYLCNVCONT_Box1, flag=VF_Const|VF_InvisibleBox, X=0, Y=32, W=32, H=32, func=FN_StylCnvContTtlFunc
@@ -14199,7 +14687,7 @@ Str_Continue_Next:	.asciz "Continue Next?"
 RN_OneTouchPlay:	.asciz "OneTouchPlay"
 RN_empty_2244:	.asciz ""
 RN_empty_2245:	.asciz ""
-	.align	4, 0x00
+	.align	4, 0x00	# pad after RN_empty_2245
 RN_MusicStylistMenu:	.asciz "MusicStylistMenu"
 RN_empty_2246:	.asciz ""
 RN_empty_2247:	.asciz ""
@@ -14207,7 +14695,7 @@ RN_empty_2248:	.asciz ""
 RN_empty_2249:	.asciz ""
 RN_empty_2250:	.asciz ""
 RN_empty_2251:	.asciz ""
-	.align	4, 0x00
+	.align	4, 0x00	# pad after RN_empty_2251
 RN_MusicStylistCategory:	.asciz "MusicStylistCategory"
 RN_empty_2252:	.asciz ""
 RN_empty_2253:	.asciz ""
@@ -14261,7 +14749,7 @@ RN_empty_2287:	.asciz ""
 RN_empty_2288:	.asciz ""
 RN_CustomBox:	.asciz "CustomBox"
 RN_CustomStyleBox:	.asciz "CustomStyleBox"
-	.align	4, 0x00
+	.align	4, 0x00	# pad after RN_CustomStyleBox
 RN_STYLCNVWAIT:	.asciz "STYLCNVWAIT"
 RN_empty_2289:	.asciz ""
 RN_empty_2290:	.asciz ""
@@ -14274,7 +14762,7 @@ RN_empty_2294:	.asciz ""
 RN_StylCnvModlBox:	.asciz "StylCnvModlBox"
 RN_StylCnvVer:	.asciz "StylCnvVer"
 RN_empty_2295:	.asciz ""
-	.align	4, 0x00
+	.align	4, 0x00	# pad after RN_empty_2295
 RN_STYLCNVCNVT:	.asciz "STYLCNVCNVT"
 RN_empty_2296:	.asciz ""
 RN_empty_2297:	.asciz ""
@@ -14287,7 +14775,7 @@ RN_STYLCNVSTOR:	.asciz "STYLCNVSTOR"
 RN_empty_2301:	.asciz ""
 RN_empty_2302:	.asciz ""
 RN_empty_2303:	.asciz ""
-	.align	4, 0x00
+	.align	4, 0x00	# pad after RN_empty_2303
 RN_STYLCNVTXT:	.asciz "STYLCNVTXT"
 RN_empty_2304:	.asciz ""
 RN_empty_2305:	.asciz ""
@@ -14301,7 +14789,7 @@ RN_empty_2310:	.asciz ""
 RN_StylCnvSelBox:	.asciz "StylCnvSelBox"
 RN_empty_2311:	.asciz ""
 RN_empty_2312:	.asciz ""
-	.align	4, 0x00
+	.align	4, 0x00	# pad after RN_empty_2312
 RN_STYLCNVCONT:	.asciz "STYLCNVCONT"
 RN_empty_2313:	.asciz ""
 RN_empty_2314:	.asciz ""
@@ -14310,35 +14798,35 @@ RN_empty_2316:	.asciz ""
 RN_empty_2317:	.asciz ""
 .incbin_range "baserom/kn6000_program.rom", 0x27610D, 0x276110
 Str_MD_OTP:	.asciz "MD_OTP"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MD_OTP
 Str_MD_MS:	.asciz "MD_MS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MD_MS
 Str_TT_ONETCH:	.asciz "TT_ONETCH"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_ONETCH
 Str_TT_MSMENU:	.asciz "TT_MSMENU"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_MSMENU
 Str_TT_MSCTG:	.asciz "TT_MSCTG"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_MSCTG
 Str_TT_MSALP:	.asciz "TT_MSALP"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_MSALP
 Str_TT_MSERA:	.asciz "TT_MSERA"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_MSERA
 Str_TT_MSCTM:	.asciz "TT_MSCTM"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_MSCTM
 Str_TT_STYLCNVWAIT:	.asciz "TT_STYLCNVWAIT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_STYLCNVWAIT
 Str_TT_STYLCNVMODL:	.asciz "TT_STYLCNVMODL"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_STYLCNVMODL
 Str_TT_STYLCNVCNVT:	.asciz "TT_STYLCNVCNVT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_STYLCNVCNVT
 Str_TT_STYLCNVSTOR:	.asciz "TT_STYLCNVSTOR"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_STYLCNVSTOR
 Str_TT_STYLCNVTXT:	.asciz "TT_STYLCNVTXT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_STYLCNVTXT
 Str_TT_STYLCNVSEL:	.asciz "TT_STYLCNVSEL"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_STYLCNVSEL
 Str_TT_STYLCNVCONT:	.asciz "TT_STYLCNVCONT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_STYLCNVCONT
 Str_Please_Insert_the_Style_Convert_Disk_2:	.asciz "Please Insert the Style Convert Disk!"
 Str_Bitte_legen_Sie_die_Style_Convert_Disket:	.asciz "Bitte legen Sie die Style Convert Diskette in das Laufwerk ein."
 Str_Veuillez_ins_rer_la_disquette_de_convers:	.asciz "Veuillez ins\xE9rer la disquette de conversion \" Style Convert Disk \""
@@ -14407,26 +14895,26 @@ ptrs_4C276454:
 	.long	Str_CUSTOM_20
 
 Str_Please_select_any_preset_rhythm:	.asciz "Please select any preset rhythm!"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Please_select_any_preset_rhythm
 Str_empty_296:	.asciz "  "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_296
 Str_empty_295:	.asciz "  "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_295
 Str_TEMPO_3:	.asciz ":              TEMPO"
 Str_empty_294:	.asciz "||||"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_294
 Str_TEMPO_2:	.asciz ":                             TEMPO"
 Str_empty_293:	.asciz "|||||||||"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_293
 Str_d_d_2:	.asciz "%d/%d"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_d_d_2
 Str_TEMPO:	.asciz "TEMPO"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TEMPO
 Str_d_d:	.asciz ": %d/%d"
 Str_empty_292:	.asciz "          "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_292
 Str_3d:	.asciz "       %3d"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_3d
 data_4C276558:
 .incbin_range "baserom/kn6000_program.rom", 0x276558, 0x2765D8
 data_4C2765D8:
@@ -14445,64 +14933,75 @@ data_4C2768D8:
 .incbin_range "baserom/kn6000_program.rom", 0x2768D8, 0x276958
 data_4C276958:
 .incbin_range "baserom/kn6000_program.rom", 0x276958, 0x276BB0
-data_4C276BB0:
-.incbin_range "baserom/kn6000_program.rom", 0x276BB0, 0x276BB8
+
+func_4C1674C2_Table:	# 4 x u16, 0..8777; read by func_4C1674C2_entry : `movhu	(d1, a1), d1`
+	tab_u16	4, 8777, 35, 0
+
 Str_Xi_L_MBM29LV160B:	.asciz "Xi'L MBM29LV160B    "
 .incbin_range "baserom/kn6000_program.rom", 0x276BCD, 0x276BD8
 Str_pj_L_AT49BV16X4:	.asciz "pj'L AT49BV16X4     "
-	.align	4, 0x00
-data_4C276BF0:
-.incbin_range "baserom/kn6000_program.rom", 0x276BF0, 0x276BF8
-data_4C276BF8:
-.incbin_range "baserom/kn6000_program.rom", 0x276BF8, 0x276C00
+	.align	4, 0x00	# pad after Str_pj_L_AT49BV16X4
+
+func_4C1678C1_Table:	# 8 x u8, 1..255; read by func_4C1678C1_entry : `movbu	(a1), d0`
+	tab_u8	240, 126, 127, 9, 1, 247, 255, 255
+func_4C1678C1_Table_2:	# 8 x u8, 3..255; read by func_4C1678C1_entry : `movbu	(a1), d0`
+	tab_u8	240, 126, 127, 9, 3, 247, 255, 255
+
 Str_P_3:	.asciz "\xF0P, ~\x1F"
 .incbin_range "baserom/kn6000_program.rom", 0x276C07, 0x276C0C
 Str_MThd:	.asciz "MThd"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MThd
 Str_MTrk:	.asciz "MTrk"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_MTrk
 Str_COM_ESEQ:	.asciz "COM-ESEQ"
-	.align	4, 0xFF
-data_4C276C28:
-.incbin_range "baserom/kn6000_program.rom", 0x276C28, 0x276C34
-data_4C276C34:
-.incbin_range "baserom/kn6000_program.rom", 0x276C34, 0x276C40
-data_4C276C40:
-.incbin_range "baserom/kn6000_program.rom", 0x276C40, 0x276C48
-data_4C276C48:
-.incbin_range "baserom/kn6000_program.rom", 0x276C48, 0x276C54
-data_4C276C54:
-.incbin_range "baserom/kn6000_program.rom", 0x276C54, 0x276C60
-data_4C276C60:
-.incbin_range "baserom/kn6000_program.rom", 0x276C60, 0x276C80
-data_4C276C80:
-.incbin_range "baserom/kn6000_program.rom", 0x276C80, 0x276CA0
-data_4C276CA0:
-.incbin_range "baserom/kn6000_program.rom", 0x276CA0, 0x276CB0
-data_4C276CB0:
-.incbin_range "baserom/kn6000_program.rom", 0x276CB0, 0x276CC0
-data_4C276CC0:
-.incbin_range "baserom/kn6000_program.rom", 0x276CC0, 0x276CD0
-data_4C276CD0:
-.incbin_range "baserom/kn6000_program.rom", 0x276CD0, 0x276CE0
-data_4C276CE0:
-.incbin_range "baserom/kn6000_program.rom", 0x276CE0, 0x276CF0
-data_4C276CF0:
-.incbin_range "baserom/kn6000_program.rom", 0x276CF0, 0x276D00
+	.align	4, 0xFF	# pad after Str_COM_ESEQ
+
+func_4C168301_Table:	# 12 x u8, 0..255; read by func_4C168301_entry : `movbu	(a1), d0`
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255
+func_4C16838A_Table:	# 12 x u8, 0..255; read by func_4C16838A_entry : `movbu	(a1), d0`
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255
+func_4C1685D4_Table:	# 8 x u8, 0..255; read by func_4C1685D4_entry : `movbu	(a1), d0`
+	tab_u8	0, 0, 0, 0, 0, 255, 255, 255
+func_4C168885_Table:	# 12 x u8, 0..255; read by func_4C168885_entry : `movbu	(a1), d0`
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255
+func_4C168C0D_Table:	# 12 x u8, 0..255; read by func_4C168C0D_entry : `movbu	(a1), d0`
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255
+func_4C168D51_Table:	# 32 x u8, 0..128; read by func_4C168D51_entry : `movbu	(a1), d0`
+	tab_u8	1, 0, 2, 0, 4, 0, 8, 0, 16, 0, 32, 0, 64, 0, 128, 0	# [0]
+	tab_u8	0, 1, 0, 2, 0, 4, 0, 8, 0, 16, 0, 32, 0, 64, 0, 128	# [16]
+func_4C168E95_Table:	# 32 x u8, 0..128; read by func_4C168E95 : `movbu	(a1), d0`
+	tab_u8	1, 0, 2, 0, 4, 0, 8, 0, 16, 0, 32, 0, 64, 0, 128, 0	# [0]
+	tab_u8	0, 1, 0, 2, 0, 4, 0, 8, 0, 16, 0, 32, 0, 64, 0, 128	# [16]
+func_4C1694E0_Table:	# 16 x u8, 0..15; read by func_4C1694E0_entry : `movbu	(a1), d0`
+	tab_u8	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
+func_4C1694E0_Table_2:	# 16 x u8, 0..15; read by func_4C1694E0_entry : `movbu	(a1), d0`
+	tab_u8	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
+func_4C1694E0_Table_3:	# 16 x u8, 0..15; read by func_4C1694E0_entry : `movbu	(a1), d0`
+	tab_u8	0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15, 9
+func_4C1694E0_Table_4:	# 16 x u8, 0..15; read by func_4C1694E0_entry : `movbu	(a1), d0`
+	tab_u8	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
+func_4C1694E0_Table_5:	# 16 x u8, 0..15; read by func_4C1694E0_entry : `movbu	(a1), d0`
+	tab_u8	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 14
+func_4C1694E0_Table_6:	# 16 x u8, 0..15; read by func_4C1694E0_entry : `movbu	(a1), d0`
+	tab_u8	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
+
 Str_A_5:	.asciz "A:\\"
 	.space	28, 0x00
 Str_rb_2:	.asciz "rb"
-	.align	4, 0xFF
-data_4C276D24:
-.incbin_range "baserom/kn6000_program.rom", 0x276D24, 0x276D2C
-data_4C276D2C:
-.incbin_range "baserom/kn6000_program.rom", 0x276D2C, 0x276D38
-data_4C276D38:
-.incbin_range "baserom/kn6000_program.rom", 0x276D38, 0x276D44
-data_4C276D44:
-.incbin_range "baserom/kn6000_program.rom", 0x276D44, 0x276D64
-data_4C276D64:
-.incbin_range "baserom/kn6000_program.rom", 0x276D64, 0x276D84
+	.align	4, 0xFF	# pad after Str_rb_2
+
+func_4C169899_Table:	# 8 x u8, 0..255; read by func_4C169899_entry : `movbu	(a1), d0`
+	tab_u8	4, 176, 0, 141, 0, 255, 255, 255
+func_4C169D32_Table:	# 12 x u8, 0..255; read by func_4C169D32_entry : `movbu	(a1), d1`
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255
+func_4C169ECC_Table:	# 12 x u8, 0..255; read by func_4C169ECC : `movbu	(a1), d0`
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255
+func_4C169ECC_Table_2:	# 32 x u8, 0..128; read by func_4C169ECC : `movbu	(a1), d0`
+	tab_u8	1, 0, 2, 0, 4, 0, 8, 0, 16, 0, 32, 0, 64, 0, 128, 0	# [0]
+	tab_u8	0, 1, 0, 2, 0, 4, 0, 8, 0, 16, 0, 32, 0, 64, 0, 128	# [16]
+func_4C169ECC_Ldc_Table:	# 32 x u8, 0..128; read by func_4C169ECC_Ldc : `movbu	(a1), d0`
+	tab_u8	1, 0, 2, 0, 4, 0, 8, 0, 16, 0, 32, 0, 64, 0, 128, 0	# [0]
+	tab_u8	0, 1, 0, 2, 0, 4, 0, 8, 0, 16, 0, 32, 0, 64, 0, 128	# [16]
 
 ptrs_4C276D84:
 	.long	func_4C16838A_entry_L3f
@@ -14529,25 +15028,29 @@ data_4C276DE0:
 	.space	8, 0x00
 
 Str_empty_291:	.asciz "\xFF/"
-	.align	4, 0xFF
-data_4C276DEC:
-.incbin_range "baserom/kn6000_program.rom", 0x276DEC, 0x276DF4
+	.align	4, 0xFF	# pad after Str_empty_291
+
+func_4C16AB6D_Table:	# 8 x u8, 0..255; read by func_4C16AB6D_entry : `movbu	(a1), d0`
+	tab_u8	0, 0, 0, 0, 0, 255, 255, 255
+
 Str_rb:	.asciz "rb"
-	.align	4, 0xFF
-data_4C276DF8:
-.incbin_range "baserom/kn6000_program.rom", 0x276DF8, 0x276DFE
-data_4C276DFE:
-.incbin_range "baserom/kn6000_program.rom", 0x276DFE, 0x276E04
-data_4C276E04:
-.incbin_range "baserom/kn6000_program.rom", 0x276E04, 0x276E1C
-data_4C276E1C:
-	.space	24, 0x00
-data_4C276E34:
-.incbin_range "baserom/kn6000_program.rom", 0x276E34, 0x276E4C
-data_4C276E4C:
-.incbin_range "baserom/kn6000_program.rom", 0x276E4C, 0x276E58
-data_4C276E58:
-.incbin_range "baserom/kn6000_program.rom", 0x276E58, 0x276E68
+	.align	4, 0xFF	# pad after Str_rb
+
+func_4C16B743_La1_Table:	# 6 x s8, -24..24; read by func_4C16B743_La1 : `movbu	(d0, a0), d0`
+	tab_s8	0, 0, 24, -24, 0, 0
+func_4C16B743_L29_Table:	# 6 x u8, 0..127; read by func_4C16B743_L29 : `movbu	(d0, a0), d0`; func_4C16B743_L3a : `movbu	(d0, a0), d1` ...
+	tab_u8	127, 127, 127, 127, 0, 116
+func_4C16B743_La1_Table_2:	# 12 x u16, 0..8; read by func_4C16B743_La1 : `movhu	(d0, a0), d0`; func_4C16B8A3_Lbd : `movhu	(d0, a0), d0`
+	tab_u16	0, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8
+func_4C16B743_La1_Table_3:	# 12 x u16, 0..0; read by func_4C16B743_La1 : `movhu	(d0, a0), d0`; func_4C16B8A3_Lbd : `movhu	(d0, a0), d2`
+	tab_u16	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+func_4C16B8A3_Lbd_Table:	# 12 x u16, 0..127; read by func_4C16B8A3_Lbd : `movhu	(d1, a0), d1`
+	tab_u16	0, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127
+func_4C16BBD1_Table:	# 12 x u8, 0..1; read by func_4C16BBD1_entry : `movbu	(d0, a0), d0`; func_4C16BC14_entry_L171 : `movbu	(d0, a0), d0` ...
+	tab_u8	0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1
+func_4C16BC14_entry_L12e_Table:	# 4 x u32, 1088358566..1092983395; read by func_4C16BC14_entry_L12e : `mov	(d0, a0), d0`; func_4C16BC14_entry_L27b : `mov	(d0, a0), d0`
+	tab_u32	1088549686, 1088358566, 1092983395, 1092445574
+
 FnName_FtLangText01:	.asciz "FtLangText01"
 FnName_FtLangText01s:	.asciz "FtLangText01s"
 FnName_FtLangText02:	.asciz "FtLangText02"
@@ -14677,7 +15180,7 @@ FnName_DemoJpgDataL8:	.asciz "DemoJpgDataL8"
 	Screen	demo1_1, sub=demo1_1_Label_Dummy, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=demo1_1_window
 
 Str_Dummy:	.asciz "Dummy"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Dummy
 
 		VwLabel	demo1_1_Label_Dummy, super=demo1_1, flag=VF_Const, X=278, Y=102, W=59, H=19, str=Str_Dummy, font=4, fontcolor=CL_White	# str "Dummy"
 
@@ -14944,7 +15447,7 @@ Str_Dummy:	.asciz "Dummy"
 	Screen	fdemo_k1, sub=fdemo_k1_Label_TenorSax_Soloist, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=fdemo_k1_window
 
 Str_TenorSax_Soloist:	.asciz "TenorSax Soloist"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TenorSax_Soloist
 
 		VwLabel	fdemo_k1_Label_TenorSax_Soloist, super=fdemo_k1, next=fdemo_k1_JpegFile1, flag=VF_Const, X=86, Y=206, W=180, H=19, str=Str_TenorSax_Soloist, font=4, fontcolor=CL_Red	# str "TenorSax Soloist"
 		VwJpegFile	fdemo_k1_JpegFile1, super=fdemo_k1, prev=fdemo_k1_Label_TenorSax_Soloist, flag=VF_Const, X=20, Y=20, W=600, H=170, func=FN_DemoJpgDataK1
@@ -14953,7 +15456,7 @@ Str_TenorSax_Soloist:	.asciz "TenorSax Soloist"
 		VwJpegFile	fdemo_k5_JpegFile1, super=fdemo_k5, next=fdemo_k5_Label_Soft_AltoSoloist, flag=VF_Const, X=20, Y=20, W=600, H=170, func=FN_DemoJpgDataK1
 
 Str_Soft_AltoSoloist:	.asciz "Soft AltoSoloist"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Soft_AltoSoloist
 
 		VwLabel	fdemo_k5_Label_Soft_AltoSoloist, super=fdemo_k5, prev=fdemo_k5_JpegFile1, flag=VF_Const, X=226, Y=206, W=180, H=19, str=Str_Soft_AltoSoloist, font=4, fontcolor=CL_Aqua	# str "Soft AltoSoloist"
 
@@ -14961,7 +15464,7 @@ Str_Soft_AltoSoloist:	.asciz "Soft AltoSoloist"
 		VwJpegFile	fdemo_k2_JpegFile1, super=fdemo_k2, next=fdemo_k2_Label_Alto_Sax_Soloist, flag=VF_Const, X=20, Y=20, W=600, H=170, func=FN_DemoJpgDataK1
 
 Str_Alto_Sax_Soloist:	.asciz "Alto Sax Soloist"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Alto_Sax_Soloist
 
 		VwLabel	fdemo_k2_Label_Alto_Sax_Soloist, super=fdemo_k2, prev=fdemo_k2_JpegFile1, flag=VF_Const, X=374, Y=206, W=180, H=19, str=Str_Alto_Sax_Soloist, font=4, fontcolor=CL_Yellow	# str "Alto Sax Soloist"
 
@@ -14979,7 +15482,7 @@ Str_Bongo_Conga_Kit:	.asciz "Bongo&Conga Kit"
 	Screen	fdemo_k3, sub=fdemo_k3_Label_RomanticClarinet, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=fdemo_k3_window
 
 Str_RomanticClarinet:	.asciz "RomanticClarinet"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_RomanticClarinet
 
 		VwLabel	fdemo_k3_Label_RomanticClarinet, super=fdemo_k3, next=fdemo_k3_JpegFile1, flag=VF_Const, X=86, Y=206, W=180, H=19, str=Str_RomanticClarinet, font=4, fontcolor=CL_Orange	# str "RomanticClarinet"
 		VwJpegFile	fdemo_k3_JpegFile1, super=fdemo_k3, prev=fdemo_k3_Label_RomanticClarinet, flag=VF_Const, X=20, Y=20, W=600, H=170, func=FN_DemoJpgDataK1
@@ -14988,7 +15491,7 @@ Str_RomanticClarinet:	.asciz "RomanticClarinet"
 		VwJpegFile	fdemo_k7_JpegFile1, super=fdemo_k7, next=fdemo_k7_Label_Cornet_Soloist, flag=VF_Const, X=20, Y=20, W=600, H=170, func=FN_DemoJpgDataK1
 
 Str_Cornet_Soloist:	.asciz "Cornet Soloist"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Cornet_Soloist
 
 		VwLabel	fdemo_k7_Label_Cornet_Soloist, super=fdemo_k7, prev=fdemo_k7_JpegFile1, flag=VF_Const, X=242, Y=206, W=158, H=19, str=Str_Cornet_Soloist, font=4, fontcolor=CL_Yellow	# str "Cornet Soloist"
 
@@ -14996,7 +15499,7 @@ Str_Cornet_Soloist:	.asciz "Cornet Soloist"
 		VwJpegFile	fdemo_k4_JpegFile1, super=fdemo_k4, next=fdemo_k4_Label_Flute_Soloist, flag=VF_Const, X=20, Y=20, W=600, H=170, func=FN_DemoJpgDataK1
 
 Str_Flute_Soloist:	.asciz "Flute Soloist"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Flute_Soloist
 
 		VwLabel	fdemo_k4_Label_Flute_Soloist, super=fdemo_k4, prev=fdemo_k4_JpegFile1, flag=VF_Const, X=398, Y=206, W=147, H=19, str=Str_Flute_Soloist, font=4, fontcolor=CL_White	# str "Flute Soloist"
 
@@ -15007,17 +15510,17 @@ Str_Flute_Soloist:	.asciz "Flute Soloist"
 		VwJpegFile	fdemo_l2_JpegFile1, super=fdemo_l2, next=fdemo_l2_Label_Voice_Kit, flag=VF_Const, X=20, Y=20, W=600, H=170, func=FN_DemoJpgDataL1
 
 Str_Voice_Kit:	.asciz "Voice Kit"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Voice_Kit
 
 		VwLabel	fdemo_l2_Label_Voice_Kit, super=fdemo_l2, next=fdemo_l2_Label_Dance_Kit, prev=fdemo_l2_JpegFile1, flag=VF_Const, X=270, Y=206, W=103, H=19, str=Str_Voice_Kit, font=4, fontcolor=CL_Yellow	# str "Voice Kit"
 
 Str_Dance_Kit:	.asciz "Dance Kit"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Dance_Kit
 
 		VwLabel	fdemo_l2_Label_Dance_Kit, super=fdemo_l2, next=fdemo_l2_Label_Bob_s_Scat, prev=fdemo_l2_Label_Voice_Kit, flag=VF_Const, X=46, Y=206, W=103, H=19, str=Str_Dance_Kit, font=4, fontcolor=CL_Lime	# str "Dance Kit"
 
 Str_Bob_s_Scat:	.asciz "Bob's Scat"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Bob_s_Scat
 
 		VwLabel	fdemo_l2_Label_Bob_s_Scat, super=fdemo_l2, prev=fdemo_l2_Label_Dance_Kit, flag=VF_Const, X=486, Y=206, W=114, H=19, str=Str_Bob_s_Scat, font=4, fontcolor=CL_Fuchsia	# str "Bob's Scat"
 
@@ -15025,17 +15528,17 @@ Str_Bob_s_Scat:	.asciz "Bob's Scat"
 		VwJpegFile	fdemo_l3_JpegFile1, super=fdemo_l3, next=fdemo_l3_Label_Dance_Kit, flag=VF_Const, X=20, Y=20, W=600, H=170, func=FN_DemoJpgDataL1
 
 Str_Dance_Kit_2:	.asciz "Dance Kit"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Dance_Kit_2
 
 		VwLabel	fdemo_l3_Label_Dance_Kit, super=fdemo_l3, next=fdemo_l3_Label_Voice_Kit, prev=fdemo_l3_JpegFile1, flag=VF_Const, X=46, Y=206, W=103, H=19, str=Str_Dance_Kit_2, font=4, fontcolor=CL_Red	# str "Dance Kit"
 
 Str_Voice_Kit_2:	.asciz "Voice Kit"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Voice_Kit_2
 
 		VwLabel	fdemo_l3_Label_Voice_Kit, super=fdemo_l3, next=fdemo_l3_Label_Bob_s_Scat, prev=fdemo_l3_Label_Dance_Kit, flag=VF_Const, X=270, Y=206, W=103, H=19, str=Str_Voice_Kit_2, font=4, fontcolor=CL_Lime	# str "Voice Kit"
 
 Str_Bob_s_Scat_2:	.asciz "Bob's Scat"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Bob_s_Scat_2
 
 		VwLabel	fdemo_l3_Label_Bob_s_Scat, super=fdemo_l3, prev=fdemo_l3_Label_Voice_Kit, flag=VF_Const, X=486, Y=206, W=114, H=19, str=Str_Bob_s_Scat_2, font=4, fontcolor=CL_Aqua	# str "Bob's Scat"
 
@@ -15043,17 +15546,17 @@ Str_Bob_s_Scat_2:	.asciz "Bob's Scat"
 		VwJpegFile	fdemo_l4_JpegFile1, super=fdemo_l4, next=fdemo_l4_Label_Bob_s_Scat, flag=VF_Const, X=20, Y=20, W=600, H=170, func=FN_DemoJpgDataL1
 
 Str_Bob_s_Scat_3:	.asciz "Bob's Scat"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Bob_s_Scat_3
 
 		VwLabel	fdemo_l4_Label_Bob_s_Scat, super=fdemo_l4, next=fdemo_l4_Label_Voice_Kit, prev=fdemo_l4_JpegFile1, flag=VF_Const, X=486, Y=206, W=114, H=19, str=Str_Bob_s_Scat_3, font=4, fontcolor=CL_Orange	# str "Bob's Scat"
 
 Str_Voice_Kit_3:	.asciz "Voice Kit"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Voice_Kit_3
 
 		VwLabel	fdemo_l4_Label_Voice_Kit, super=fdemo_l4, next=fdemo_l4_Label_Dance_Kit, prev=fdemo_l4_Label_Bob_s_Scat, flag=VF_Const, X=270, Y=206, W=103, H=19, str=Str_Voice_Kit_3, font=4, fontcolor=CL_Fuchsia	# str "Voice Kit"
 
 Str_Dance_Kit_3:	.asciz "Dance Kit"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Dance_Kit_3
 
 		VwLabel	fdemo_l4_Label_Dance_Kit, super=fdemo_l4, prev=fdemo_l4_Label_Voice_Kit, flag=VF_Const, X=46, Y=206, W=103, H=19, str=Str_Dance_Kit_3, font=4, fontcolor=CL_Yellow	# str "Dance Kit"
 
@@ -15061,12 +15564,12 @@ Str_Dance_Kit_3:	.asciz "Dance Kit"
 		VwJpegFile	fdemo_l5_JpegFile1, super=fdemo_l5, next=fdemo_l5_Label_Voice_Kit, flag=VF_Const, X=20, Y=20, W=600, H=170, func=FN_DemoJpgDataL1
 
 Str_Voice_Kit_4:	.asciz "Voice Kit"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Voice_Kit_4
 
 		VwLabel	fdemo_l5_Label_Voice_Kit, super=fdemo_l5, next=fdemo_l5_Label_Voice_Kit2, prev=fdemo_l5_JpegFile1, flag=VF_Const, X=162, Y=206, W=103, H=19, str=Str_Voice_Kit_4, font=4, fontcolor=CL_White	# str "Voice Kit"
 
 Str_Voice_Kit_5:	.asciz "Voice Kit"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Voice_Kit_5
 
 		VwLabel	fdemo_l5_Label_Voice_Kit2, super=fdemo_l5, prev=fdemo_l5_Label_Voice_Kit, flag=VF_Const, X=378, Y=206, W=103, H=19, str=Str_Voice_Kit_5, font=4, fontcolor=CL_White	# str "Voice Kit"
 
@@ -15078,22 +15581,22 @@ Str_Rubber_Bass:	.asciz "Rubber Bass"
 		VwLabel	fdemo_l6_Label_Rubber_Bass, super=fdemo_l6, next=fdemo_l6_Label_Suitcase_E_P, prev=fdemo_l6_JpegFile1, flag=VF_Const, X=126, Y=214, W=125, H=19, str=Str_Rubber_Bass, font=4, fontcolor=CL_Fuchsia	# str "Rubber Bass"
 
 Str_Suitcase_E_P:	.asciz "Suitcase E.P."
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Suitcase_E_P
 
 		VwLabel	fdemo_l6_Label_Suitcase_E_P, super=fdemo_l6, next=fdemo_l6_Label_Bob_s_Scat, prev=fdemo_l6_Label_Rubber_Bass, flag=VF_Const, X=270, Y=206, W=147, H=19, str=Str_Suitcase_E_P, font=4, fontcolor=CL_Aqua	# str "Suitcase E.P."
 
 Str_Bob_s_Scat_4:	.asciz "Bob's Scat"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Bob_s_Scat_4
 
 		VwLabel	fdemo_l6_Label_Bob_s_Scat, super=fdemo_l6, next=fdemo_l6_Label_DaDa_Octaves, prev=fdemo_l6_Label_Suitcase_E_P, flag=VF_Const, X=26, Y=194, W=114, H=19, str=Str_Bob_s_Scat_4, font=4, fontcolor=CL_Orange	# str "Bob's Scat"
 
 Str_DaDa_Octaves:	.asciz "DaDa Octaves"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_DaDa_Octaves
 
 		VwLabel	fdemo_l6_Label_DaDa_Octaves, super=fdemo_l6, next=fdemo_l6_Label_Boy_Bass, prev=fdemo_l6_Label_Bob_s_Scat, flag=VF_Const, X=430, Y=193, W=136, H=19, str=Str_DaDa_Octaves, font=4, fontcolor=CL_Yellow	# str "DaDa Octaves"
 
 Str_Boy_Bass:	.asciz "Boy Bass"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Boy_Bass
 
 		VwLabel	fdemo_l6_Label_Boy_Bass, super=fdemo_l6, prev=fdemo_l6_Label_DaDa_Octaves, flag=VF_Const, X=494, Y=213, W=92, H=19, str=Str_Boy_Bass, font=4, fontcolor=CL_Lime	# str "Boy Bass"
 
@@ -15101,27 +15604,27 @@ Str_Boy_Bass:	.asciz "Boy Bass"
 		VwJpegFile	fdemo_l7_JpegFile1, super=fdemo_l7, next=fdemo_l7_Label_Boy_Bass, flag=VF_Const, X=20, Y=20, W=600, H=170, func=FN_DemoJpgDataL1
 
 Str_Boy_Bass_2:	.asciz "Boy Bass"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Boy_Bass_2
 
 		VwLabel	fdemo_l7_Label_Boy_Bass, super=fdemo_l7, next=fdemo_l7_Label_Bob_s_Scat, prev=fdemo_l7_JpegFile1, flag=VF_Const, X=106, Y=193, W=92, H=19, str=Str_Boy_Bass_2, font=4, fontcolor=CL_Lime	# str "Boy Bass"
 
 Str_Bob_s_Scat_5:	.asciz "Bob's Scat"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Bob_s_Scat_5
 
 		VwLabel	fdemo_l7_Label_Bob_s_Scat, super=fdemo_l7, next=fdemo_l7_Label_DaDa_Octaves, prev=fdemo_l7_Label_Boy_Bass, flag=VF_Const, X=338, Y=213, W=114, H=19, str=Str_Bob_s_Scat_5, font=4, fontcolor=CL_Orange	# str "Bob's Scat"
 
 Str_DaDa_Octaves_2:	.asciz "DaDa Octaves"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_DaDa_Octaves_2
 
 		VwLabel	fdemo_l7_Label_DaDa_Octaves, super=fdemo_l7, next=fdemo_l7_Label_Jazz_Singers, prev=fdemo_l7_Label_Bob_s_Scat, flag=VF_Const, X=8, Y=213, W=136, H=19, str=Str_DaDa_Octaves_2, font=4, fontcolor=CL_Fuchsia	# str "DaDa Octaves"
 
 Str_Jazz_Singers:	.asciz "Jazz Singers"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Jazz_Singers
 
 		VwLabel	fdemo_l7_Label_Jazz_Singers, super=fdemo_l7, next=fdemo_l7_Label_Fusion_Solid_Gtr, prev=fdemo_l7_Label_DaDa_Octaves, flag=VF_Const, X=262, Y=193, W=136, H=19, str=Str_Jazz_Singers, font=4, fontcolor=CL_Yellow	# str "Jazz Singers"
 
 Str_Fusion_Solid_Gtr:	.asciz "Fusion Solid Gtr"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Fusion_Solid_Gtr
 
 		VwLabel	fdemo_l7_Label_Fusion_Solid_Gtr, super=fdemo_l7, prev=fdemo_l7_Label_Jazz_Singers, flag=VF_Const, X=432, Y=193, W=180, H=19, str=Str_Fusion_Solid_Gtr, font=4, fontcolor=CL_Silver	# str "Fusion Solid Gtr"
 
@@ -15129,27 +15632,27 @@ Str_Fusion_Solid_Gtr:	.asciz "Fusion Solid Gtr"
 		VwJpegFile	fdemo_l8_JpegFile1, super=fdemo_l8, next=fdemo_l8_Label_Bob_s_Scat, flag=VF_Const, X=20, Y=20, W=600, H=170, func=FN_DemoJpgDataL1
 
 Str_Bob_s_Scat_6:	.asciz "Bob's Scat"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Bob_s_Scat_6
 
 		VwLabel	fdemo_l8_Label_Bob_s_Scat, super=fdemo_l8, next=fdemo_l8_Label_Boy_Bass, prev=fdemo_l8_JpegFile1, flag=VF_Const, X=82, Y=201, W=114, H=19, str=Str_Bob_s_Scat_6, font=4, fontcolor=CL_Orange	# str "Bob's Scat"
 
 Str_Boy_Bass_3:	.asciz "Boy Bass"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Boy_Bass_3
 
 		VwLabel	fdemo_l8_Label_Boy_Bass, super=fdemo_l8, next=fdemo_l8_Label_Dance_Kit, prev=fdemo_l8_Label_Bob_s_Scat, flag=VF_Const, X=206, Y=217, W=92, H=19, str=Str_Boy_Bass_3, font=4, fontcolor=CL_FireRed	# str "Boy Bass"
 
 Str_Dance_Kit_4:	.asciz "Dance Kit"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Dance_Kit_4
 
 		VwLabel	fdemo_l8_Label_Dance_Kit, super=fdemo_l8, next=fdemo_l8_Label_DaDa_Octaves, prev=fdemo_l8_Label_Boy_Bass, flag=VF_Const, X=516, Y=217, W=103, H=19, str=Str_Dance_Kit_4, font=4, fontcolor=CL_Fuchsia	# str "Dance Kit"
 
 Str_DaDa_Octaves_3:	.asciz "DaDa Octaves"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_DaDa_Octaves_3
 
 		VwLabel	fdemo_l8_Label_DaDa_Octaves, super=fdemo_l8, next=fdemo_l8_Label_Live_Rock_Kit, prev=fdemo_l8_Label_Dance_Kit, flag=VF_Const, X=416, Y=193, W=136, H=19, str=Str_DaDa_Octaves_3, font=4, fontcolor=CL_Aqua	# str "DaDa Octaves"
 
 Str_Live_Rock_Kit:	.asciz "Live Rock Kit"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Live_Rock_Kit
 
 		VwLabel	fdemo_l8_Label_Live_Rock_Kit, super=fdemo_l8, prev=fdemo_l8_Label_DaDa_Octaves, flag=VF_Const, X=238, Y=193, W=147, H=19, str=Str_Live_Rock_Kit, font=4, fontcolor=CL_Yellow	# str "Live Rock Kit"
 
@@ -15157,27 +15660,27 @@ Str_Live_Rock_Kit:	.asciz "Live Rock Kit"
 		VwJpegFile	fdemo_l9_JpegFile1, super=fdemo_l9, next=fdemo_l9_Label_Jazz_Singers, flag=VF_Const, X=20, Y=20, W=600, H=170, func=FN_DemoJpgDataL1
 
 Str_Jazz_Singers_2:	.asciz "Jazz Singers"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Jazz_Singers_2
 
 		VwLabel	fdemo_l9_Label_Jazz_Singers, super=fdemo_l9, next=fdemo_l9_Label_Voice_Kit, prev=fdemo_l9_JpegFile1, flag=VF_Const, X=2, Y=205, W=136, H=19, str=Str_Jazz_Singers_2, font=4, fontcolor=CL_Red	# str "Jazz Singers"
 
 Str_Voice_Kit_6:	.asciz "Voice Kit"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Voice_Kit_6
 
 		VwLabel	fdemo_l9_Label_Voice_Kit, super=fdemo_l9, next=fdemo_l9_Label_Suitcase_E_P, prev=fdemo_l9_Label_Jazz_Singers, flag=VF_Const, X=354, Y=193, W=103, H=19, str=Str_Voice_Kit_6, font=4, fontcolor=CL_Fuchsia	# str "Voice Kit"
 
 Str_Suitcase_E_P_2:	.asciz "Suitcase E.P."
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Suitcase_E_P_2
 
 		VwLabel	fdemo_l9_Label_Suitcase_E_P, super=fdemo_l9, next=fdemo_l9_Label_Live_Rock_Kit, prev=fdemo_l9_Label_Voice_Kit, flag=VF_Const, X=476, Y=209, W=147, H=19, str=Str_Suitcase_E_P_2, font=4, fontcolor=CL_Lime	# str "Suitcase E.P."
 
 Str_Live_Rock_Kit_2:	.asciz "Live Rock Kit"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Live_Rock_Kit_2
 
 		VwLabel	fdemo_l9_Label_Live_Rock_Kit, super=fdemo_l9, next=fdemo_l9_Label_Dance_Kit, prev=fdemo_l9_Label_Suitcase_E_P, flag=VF_Const, X=246, Y=217, W=147, H=19, str=Str_Live_Rock_Kit_2, font=4, fontcolor=CL_Yellow	# str "Live Rock Kit"
 
 Str_Dance_Kit_5:	.asciz "Dance Kit"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Dance_Kit_5
 
 		VwLabel	fdemo_l9_Label_Dance_Kit, super=fdemo_l9, prev=fdemo_l9_Label_Live_Rock_Kit, flag=VF_Const, X=148, Y=197, W=103, H=19, str=Str_Dance_Kit_5, font=4, fontcolor=CL_Aqua	# str "Dance Kit"
 
@@ -15185,32 +15688,32 @@ Str_Dance_Kit_5:	.asciz "Dance Kit"
 		VwJpegFile	fdemo_la_JpegFile1, super=fdemo_la, next=fdemo_la_Label_Jazz_Singers, flag=VF_Const, X=20, Y=20, W=600, H=170, func=FN_DemoJpgDataL1
 
 Str_Jazz_Singers_3:	.asciz "Jazz Singers"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Jazz_Singers_3
 
 		VwLabel	fdemo_la_Label_Jazz_Singers, super=fdemo_la, next=fdemo_la_Label_Voice_Kit, prev=fdemo_la_JpegFile1, flag=VF_Const, X=30, Y=217, W=136, H=19, str=Str_Jazz_Singers_3, font=4, fontcolor=CL_Green	# str "Jazz Singers"
 
 Str_Voice_Kit_7:	.asciz "Voice Kit"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Voice_Kit_7
 
 		VwLabel	fdemo_la_Label_Voice_Kit, super=fdemo_la, next=fdemo_la_Label_Suitcase_E_P, prev=fdemo_la_Label_Jazz_Singers, flag=VF_Const, X=110, Y=193, W=103, H=19, str=Str_Voice_Kit_7, font=4, fontcolor=CL_Navy	# str "Voice Kit"
 
 Str_Suitcase_E_P_3:	.asciz "Suitcase E.P."
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Suitcase_E_P_3
 
 		VwLabel	fdemo_la_Label_Suitcase_E_P, super=fdemo_la, next=fdemo_la_Label_Live_Rock_Kit, prev=fdemo_la_Label_Voice_Kit, flag=VF_Const, X=484, Y=217, W=147, H=19, str=Str_Suitcase_E_P_3, font=4, fontcolor=CL_Maroon	# str "Suitcase E.P."
 
 Str_Live_Rock_Kit_3:	.asciz "Live Rock Kit"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Live_Rock_Kit_3
 
 		VwLabel	fdemo_la_Label_Live_Rock_Kit, super=fdemo_la, next=fdemo_la_Label_Dance_Kit, prev=fdemo_la_Label_Suitcase_E_P, flag=VF_Const, X=254, Y=217, W=147, H=19, str=Str_Live_Rock_Kit_3, font=4, fontcolor=CL_Teal	# str "Live Rock Kit"
 
 Str_Dance_Kit_6:	.asciz "Dance Kit"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Dance_Kit_6
 
 		VwLabel	fdemo_la_Label_Dance_Kit, super=fdemo_la, next=fdemo_la_Label_Voice_Kit2, prev=fdemo_la_Label_Live_Rock_Kit, flag=VF_Const, X=8, Y=197, W=103, H=19, str=Str_Dance_Kit_6, font=4, fontcolor=CL_Gray	# str "Dance Kit"
 
 Str_Voice_Kit_8:	.asciz ">>> Voice Kit <<<"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Voice_Kit_8
 
 		VwLabel	fdemo_la_Label_Voice_Kit2, super=fdemo_la, next=fdemo_la_Label_Rubber_Bass, prev=fdemo_la_Label_Dance_Kit, flag=VF_Const, X=220, Y=197, W=191, H=19, str=Str_Voice_Kit_8, font=4, fontcolor=CL_White	# str ">>> Voice Kit <<<"
 
@@ -15219,17 +15722,17 @@ Str_Rubber_Bass_2:	.asciz "Rubber Bass"
 		VwLabel	fdemo_la_Label_Rubber_Bass, super=fdemo_la, next=fdemo_la_Label_Bob_s_Scat, prev=fdemo_la_Label_Voice_Kit2, flag=VF_Const, X=418, Y=201, W=125, H=19, str=Str_Rubber_Bass_2, font=4, fontcolor=CL_Olive	# str "Rubber Bass"
 
 Str_Bob_s_Scat_7:	.asciz "Bob's Scat"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Bob_s_Scat_7
 
 		VwLabel	fdemo_la_Label_Bob_s_Scat, super=fdemo_la, sub=fdemo_la_Label_Dance_Kit2, next=fdemo_la_Label_Dance_Kit3, prev=fdemo_la_Label_Rubber_Bass, flag=VF_Const, X=510, Y=193, W=114, H=19, str=Str_Bob_s_Scat_7, font=4, fontcolor=CL_Purple	# str "Bob's Scat"
 
 Str_Dance_Kit_7:	.asciz "Dance Kit"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Dance_Kit_7
 
 			VwLabel	fdemo_la_Label_Dance_Kit2, super=fdemo_la_Label_Bob_s_Scat, flag=VF_Const, X=537, Y=205, W=103, H=19, str=Str_Dance_Kit_7, font=4, fontcolor=CL_Navy	# str "Dance Kit"
 
 Str_Dance_Kit_8:	.asciz "Dance Kit"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Dance_Kit_8
 
 		VwLabel	fdemo_la_Label_Dance_Kit3, super=fdemo_la, next=fdemo_la_Label_DaDa_Octave, prev=fdemo_la_Label_Bob_s_Scat, flag=VF_Const, X=8, Y=197, W=103, H=19, str=Str_Dance_Kit_8, font=4, fontcolor=CL_Gray	# str "Dance Kit"
 
@@ -15238,17 +15741,17 @@ Str_DaDa_Octave:	.asciz "DaDa Octave"
 		VwLabel	fdemo_la_Label_DaDa_Octave, super=fdemo_la, next=fdemo_la_Label_Jazz_Songers, prev=fdemo_la_Label_Dance_Kit3, flag=VF_Const, X=380, Y=217, W=125, H=19, str=Str_DaDa_Octave, font=4, fontcolor=CL_Green	# str "DaDa Octave"
 
 Str_Jazz_Songers:	.asciz "Jazz Songers"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Jazz_Songers
 
 		VwLabel	fdemo_la_Label_Jazz_Songers, super=fdemo_la, next=fdemo_la_Label_Fusion_Solid_Gtr, prev=fdemo_la_Label_DaDa_Octave, flag=VF_Const, X=432, Y=193, W=136, H=19, str=Str_Jazz_Songers, font=4, fontcolor=CL_Gray	# str "Jazz Songers"
 
 Str_Fusion_Solid_Gtr_2:	.asciz "Fusion Solid Gtr"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Fusion_Solid_Gtr_2
 
 		VwLabel	fdemo_la_Label_Fusion_Solid_Gtr, super=fdemo_la, next=fdemo_la_Label_Bob_s_Scat2, prev=fdemo_la_Label_Jazz_Songers, flag=VF_Const, X=36, Y=205, W=180, H=19, str=Str_Fusion_Solid_Gtr_2, font=4, fontcolor=CL_Purple	# str "Fusion Solid Gtr"
 
 Str_Bob_s_Scat_8:	.asciz "Bob's Scat"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Bob_s_Scat_8
 
 		VwLabel	fdemo_la_Label_Bob_s_Scat2, super=fdemo_la, prev=fdemo_la_Label_Fusion_Solid_Gtr, flag=VF_Const, X=178, Y=221, W=114, H=19, str=Str_Bob_s_Scat_8, font=4, fontcolor=CL_Maroon	# str "Bob's Scat"
 
@@ -15256,7 +15759,7 @@ Str_Bob_s_Scat_8:	.asciz "Bob's Scat"
 		VwJpegFile	fdemo_k8_JpegFile1, super=fdemo_k8, next=fdemo_k8_Label_Jazz_Flute_Soloist, flag=VF_Const, X=20, Y=20, W=600, H=170, func=FN_DemoJpgDataK1
 
 Str_Jazz_Flute_Soloist:	.asciz "Jazz Flute Soloist"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Jazz_Flute_Soloist
 
 		VwLabel	fdemo_k8_Label_Jazz_Flute_Soloist, super=fdemo_k8, prev=fdemo_k8_JpegFile1, flag=VF_Const, X=362, Y=206, W=202, H=19, str=Str_Jazz_Flute_Soloist, font=4, fontcolor=CL_White	# str "Jazz Flute Soloist"
 
@@ -15264,7 +15767,7 @@ Str_Jazz_Flute_Soloist:	.asciz "Jazz Flute Soloist"
 		VwJpegFile	fdemo_k9_JpegFile1, super=fdemo_k9, next=fdemo_k9_Label_Jazz_Vibes, flag=VF_Const, X=20, Y=20, W=600, H=170, func=FN_DemoJpgDataK1
 
 Str_Jazz_Vibes:	.asciz "Jazz Vibes"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Jazz_Vibes
 
 		VwLabel	fdemo_k9_Label_Jazz_Vibes, super=fdemo_k9, prev=fdemo_k9_JpegFile1, flag=VF_Const, X=102, Y=206, W=114, H=19, str=Str_Jazz_Vibes, font=4, fontcolor=CL_Aqua	# str "Jazz Vibes"
 
@@ -15272,30 +15775,30 @@ Str_Jazz_Vibes:	.asciz "Jazz Vibes"
 		VwJpegFile	fdemo_ka_JpegFile1, super=fdemo_ka, next=fdemo_ka_Label_PanFlute_Soloist, flag=VF_Const, X=20, Y=20, W=600, H=170, func=FN_DemoJpgDataK1
 
 Str_PanFlute_Soloist:	.asciz "PanFlute Soloist"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PanFlute_Soloist
 
 		VwLabel	fdemo_ka_Label_PanFlute_Soloist, super=fdemo_ka, next=fdemo_ka_Label_Stereo_Ac_Gtr, prev=fdemo_ka_JpegFile1, flag=VF_Const, X=422, Y=206, W=180, H=19, str=Str_PanFlute_Soloist, font=4, fontcolor=CL_White	# str "PanFlute Soloist"
 
 Str_Stereo_Ac_Gtr:	.asciz "Stereo Ac.Gtr"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Stereo_Ac_Gtr
 
 		VwLabel	fdemo_ka_Label_Stereo_Ac_Gtr, super=fdemo_ka, next=fdemo_ka_Label_Sound_Effect_Kit, prev=fdemo_ka_Label_PanFlute_Soloist, flag=VF_Const, X=246, Y=206, W=147, H=19, str=Str_Stereo_Ac_Gtr, font=4, fontcolor=CL_Orange	# str "Stereo Ac.Gtr"
 
 Str_Sound_Effect_Kit:	.asciz "Sound Effect Kit"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Sound_Effect_Kit
 
 		VwLabel	fdemo_ka_Label_Sound_Effect_Kit, super=fdemo_ka, prev=fdemo_ka_Label_Stereo_Ac_Gtr, flag=VF_Const, X=30, Y=206, W=180, H=19, str=Str_Sound_Effect_Kit, font=4, fontcolor=CL_LightGreen	# str "Sound Effect Kit"
 
 	Screen	fdemo_kb, sub=fdemo_kb_Label_TenorSax_Soloist, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=fdemo_kb_window
 
 Str_TenorSax_Soloist_2:	.asciz "TenorSax Soloist"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TenorSax_Soloist_2
 
 		VwLabel	fdemo_kb_Label_TenorSax_Soloist, super=fdemo_kb, next=fdemo_kb_JpegFile1, flag=VF_Const, X=86, Y=206, W=180, H=19, str=Str_TenorSax_Soloist_2, font=4, fontcolor=CL_Red	# str "TenorSax Soloist"
 		VwJpegFile	fdemo_kb_JpegFile1, super=fdemo_kb, next=fdemo_kb_Label_Alto_Sax_Soloist, prev=fdemo_kb_Label_TenorSax_Soloist, flag=VF_Const, X=20, Y=20, W=600, H=170, func=FN_DemoJpgDataK1
 
 Str_Alto_Sax_Soloist_2:	.asciz "Alto Sax Soloist"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Alto_Sax_Soloist_2
 
 		VwLabel	fdemo_kb_Label_Alto_Sax_Soloist, super=fdemo_kb, prev=fdemo_kb_JpegFile1, flag=VF_Const, X=374, Y=206, W=180, H=19, str=Str_Alto_Sax_Soloist_2, font=4, fontcolor=CL_Yellow	# str "Alto Sax Soloist"
 
@@ -15310,12 +15813,12 @@ Str_Bongo_Conga_Kit_2:	.asciz "Bongo&Conga Kit"
 		VwJpegFile	fdemo_kd_JpegFile1, super=fdemo_kd, next=fdemo_kd_Label_Jazz_Flute_Soloist, flag=VF_Const, X=20, Y=20, W=600, H=170, func=FN_DemoJpgDataK1
 
 Str_Jazz_Flute_Soloist_2:	.asciz "Jazz Flute Soloist"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Jazz_Flute_Soloist_2
 
 		VwLabel	fdemo_kd_Label_Jazz_Flute_Soloist, super=fdemo_kd, next=fdemo_kd_Label_Jazz_Vibes, prev=fdemo_kd_JpegFile1, flag=VF_Const, X=362, Y=206, W=202, H=19, str=Str_Jazz_Flute_Soloist_2, font=4, fontcolor=CL_White	# str "Jazz Flute Soloist"
 
 Str_Jazz_Vibes_2:	.asciz "Jazz Vibes"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Jazz_Vibes_2
 
 		VwLabel	fdemo_kd_Label_Jazz_Vibes, super=fdemo_kd, prev=fdemo_kd_Label_Jazz_Flute_Soloist, flag=VF_Const, X=102, Y=206, W=114, H=19, str=Str_Jazz_Vibes_2, font=4, fontcolor=CL_Aqua	# str "Jazz Vibes"
 
@@ -15624,7 +16127,7 @@ RN_empty_4508:	.asciz ""
 RN_empty_4509:	.asciz ""
 .incbin_range "baserom/kn6000_program.rom", 0x27AB0A, 0x27AB0C
 Str_TT_DEMORUN:	.asciz "TT_DEMORUN"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_DEMORUN
 Str_New_Sound_Generator_With_Multi_DSP_0dCre:	.asciz "New Sound Generator With Multi DSP~0dCreates Dynamic Realism"
 Str_Neuer_Klanggenerator_mit_Multi_DSP_Effek:	.asciz "Neuer Klanggenerator mit Multi DSP-Effekt~0df\xFCr dynamische, naturgetreue Kl\xE4nge"
 Str_empty_951:	.asciz " "
@@ -15632,7 +16135,7 @@ Str_El_nuevo_generador_de_sonido_con_procesa:	.asciz "El nuevo generador de soni
 Str_empty_950:	.asciz "="
 Str_empty_949:	.asciz "="
 Str_empty_948:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_948
 
 ptrs_4C27AC18:
 	.long	Str_New_Sound_Generator_With_Multi_DSP_0dCre
@@ -15650,7 +16153,7 @@ Str_empty_945:	.asciz " "
 Str_empty_944:	.asciz "="
 Str_empty_943:	.asciz "="
 Str_empty_942:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_942
 
 Str_4_L6_L8_L_L_L_L_LHigh_Power_Speaker_Syst:
 	.long	Str_empty_947
@@ -15685,7 +16188,7 @@ Str_Sonido_NX_con_mayor_compatibilidad_de_so:	.asciz "Sonido NX con mayor compat
 Str_empty_934:	.asciz "="
 Str_empty_930:	.asciz "="
 Str_empty_914:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_914
 
 Str_4_L_L_L_L_L_L_LNew_Accompaniment_System:
 	.long	Str_NX_Sound_For_Great_Software_Compatibilit
@@ -15703,7 +16206,7 @@ Str_Nuevo_sistema_de_acompa_amiento_que_gene:	.asciz "Nuevo sistema de acompa\xF
 Str_empty_912:	.asciz "="
 Str_empty_911:	.asciz "="
 Str_empty_910:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_910
 
 ptrs_4C27B00C:
 	.long	Str_New_Accompaniment_System_Provides_Smooth
@@ -15721,7 +16224,7 @@ Str_1000_estilos_musicales_0d_adaptables_a_t:	.asciz "1000 estilos musicales,~0d
 Str_empty_909:	.asciz "="
 Str_empty_908:	.asciz "="
 Str_empty_907:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_907
 
 ptrs_4C27B110:
 	.long	Str_1000_Music_Styles_To_Fit_Any_Kind_Of_Per
@@ -15739,7 +16242,7 @@ Str_Carga_casi_cualquier_software_de_teclado:	.asciz "Carga casi cualquier softw
 Str_empty_906:	.asciz "="
 Str_empty_905:	.asciz "="
 Str_empty_904:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_904
 
 ptrs_4C27B260:
 	.long	Str_Load_Almost_Any_Technics_SMF_0dAnd_Other
@@ -15757,7 +16260,7 @@ Str_La_amplia_pantalla_LCD_color_es_la_clave:	.asciz "La amplia pantalla LCD col
 Str_empty_903:	.asciz "="
 Str_empty_902:	.asciz "="
 Str_empty_901:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_901
 
 Str_L_L_L_Li_Lk_Lm_LIntuitive_Functions_Help:
 	.long	Str_Wide_Screen_Color_LCD_Is_The_Key_To_Ease
@@ -15775,7 +16278,7 @@ Str_Las_funciones_intuitivas_ayudan_a_crear:	.asciz "Las funciones intuitivas ay
 Str_empty_900:	.asciz "="
 Str_empty_899:	.asciz "="
 Str_empty_898:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_898
 
 ptrs_4C27B4E0:
 	.long	Str_Intuitive_Functions_Help_Create_Music_0d
@@ -15793,7 +16296,7 @@ Str_Personalice_el_procesador_KN6000_seg_n_s:	.asciz "Personalice el procesador 
 Str_empty_897:	.asciz "="
 Str_empty_896:	.asciz "="
 Str_empty_895:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_895
 
 ptrs_4C27B5D0:
 	.long	Str_Customize_The_KN6000_To_Your_Needs
@@ -15811,7 +16314,7 @@ Str_Aprenda_con_la_funci_n_de_ayuda:	.asciz "Aprenda con la funci\xF3n de ayuda"
 Str_empty_894:	.asciz "="
 Str_empty_893:	.asciz "="
 Str_empty_892:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_892
 
 Str_L_LG_L_L_L_L_LSpecial_Woofer_Bass_Port_0:
 	.long	Str_Learn_From_The_Help_Function
@@ -15829,7 +16332,7 @@ Str_Puerto_especial_para_altavoces_de_graves:	.asciz "\xA1Puerto especial para a
 Str_empty_891:	.asciz "="
 Str_empty_890:	.asciz "="
 Str_empty_889:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_889
 
 ptrs_4C27B840:
 	.long	Str_Special_Woofer_Bass_Port_0dBring_Hi_Fi_Q
@@ -15847,7 +16350,7 @@ Str_Cree_los_mejores_sonidos_con_la_versatil:	.asciz "\xA1Cree los mejores sonid
 Str_empty_888:	.asciz "="
 Str_empty_887:	.asciz "="
 Str_empty_886:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_886
 
 Str_L_L_L_Ly_L_L_LHear_The_Difference_DSP_Ef:
 	.long	Str_Create_The_Best_Sounds_Using_Versatile_M
@@ -15865,7 +16368,7 @@ Str_Oiga_la_diferencia_que_s_lo_los_efectos:	.asciz "Oiga la diferencia que s\xF
 Str_empty_885:	.asciz "="
 Str_empty_884:	.asciz "="
 Str_empty_883:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_883
 
 Str_L_L_L_Lt_Lv_Lx_LHere_s_An_Electric_Guita:
 	.long	Str_Hear_The_Difference_DSP_Effects_Can_Make
@@ -15883,7 +16386,7 @@ Str_ste_es_un_sonido_de_guitarra_el_ctrica_s:	.asciz "\xC9ste es un sonido de gu
 Str_empty_882:	.asciz "="
 Str_empty_881:	.asciz "="
 Str_empty_880:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_880
 
 ptrs_4C27BB6C:
 	.long	Str_Here_s_An_Electric_Guitar_Sound_0dWithou
@@ -15901,7 +16404,7 @@ Str_S_que_suena_bien:	.asciz "\xA1S\xED que suena bien!"
 Str_empty_879:	.asciz "="
 Str_empty_878:	.asciz "="
 Str_empty_877:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_877
 
 Str_L_L_L_L_L_L_LNow_Hear_The_Same_Sound_0dW:
 	.long	Str_Sounds_Great
@@ -15919,7 +16422,7 @@ Str_Oiga_ahora_el_mismo_sonido_con_wah_wah_D:	.asciz "Oiga ahora el mismo sonido
 Str_empty_876:	.asciz "="
 Str_empty_875:	.asciz "="
 Str_empty_845:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_845
 
 Str_L_LU_L_L_L_L_LGreat_Brass_Sounds_0dCut_T:
 	.long	Str_Now_Hear_The_Same_Sound_0dWith_DSP_Wah_W
@@ -15937,7 +16440,7 @@ Str_Los_excelentes_sonidos_de_bronces_del_me:	.asciz "\xA1Los excelentes sonidos
 Str_empty_839:	.asciz "="
 Str_empty_830:	.asciz "="
 Str_empty_829:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_829
 
 ptrs_4C27BE70:
 	.long	Str_Great_Brass_Sounds_0dCut_Through_The_Mix
@@ -15955,7 +16458,7 @@ Str_Cree_el_cl_sico_sonido_de_un_rgano_de_re:	.asciz "Cree el cl\xE1sico sonido 
 Str_empty_828:	.asciz "="
 Str_empty_827:	.asciz "="
 Str_empty_826:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_826
 
 ptrs_4C27C024:
 	.long	Str_Create_The_Classic_Drawbar_Organ_Sound_B
@@ -15973,7 +16476,7 @@ Str_Elija_entre_600_efectos_preprogramados_o:	.asciz "\xA1Elija entre 600 efecto
 Str_empty_825:	.asciz "="
 Str_empty_824:	.asciz "="
 Str_empty_823:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_823
 
 ptrs_4C27C15C:
 	.long	Str_Choose_From_600_Preset_Effects_Or_Set_Yo
@@ -15991,7 +16494,7 @@ Str_Libere_su_imaginaci_n:	.asciz "\xA1Libere su imaginaci\xF3n!"
 Str_empty_822:	.asciz "="
 Str_empty_821:	.asciz "="
 Str_empty_820:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_820
 
 ptrs_4C27C204:
 	.long	Str_Set_Your_Imagination_Free
@@ -16009,7 +16512,7 @@ Str_Para_bailar_la_palabra_es:	.asciz "Para bailar, la palabra es"
 Str_empty_818:	.asciz "="
 Str_empty_817:	.asciz "="
 Str_empty_816:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_816
 
 ptrs_4C27C280:
 	.long	Str_For_Dance_The_Word_Is
@@ -16027,7 +16530,7 @@ Str_TECHNICS_2:	.asciz "TECHNICS"
 Str_empty_814:	.asciz "="
 Str_empty_813:	.asciz "="
 Str_empty_812:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_812
 
 ptrs_4C27C2C0:
 	.long	Str_TECHNICS_4
@@ -16045,7 +16548,7 @@ Str_empty_809:	.asciz " "
 Str_empty_808:	.asciz "="
 Str_empty_807:	.asciz "="
 Str_empty_806:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_806
 
 ptrs_4C27C2FC:
 	.long	Str_empty_811
@@ -16063,7 +16566,7 @@ Str_empty_802:	.asciz " "
 Str_empty_800:	.asciz "="
 Str_empty_799:	.asciz "="
 Str_empty_798:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_798
 
 ptrs_4C27C330:
 	.long	Str_empty_805
@@ -16081,7 +16584,7 @@ Str_Listo_para_remezclar:	.asciz "\xBFListo para remezclar?"
 Str_empty_797:	.asciz "="
 Str_empty_766:	.asciz "="
 Str_empty_756:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_756
 
 ptrs_4C27C3B4:
 	.long	Str_Ready_To_Remix
@@ -16099,7 +16602,7 @@ Str_Usted_tiene_el_control:	.asciz "\xA1Usted tiene el control!"
 Str_empty_755:	.asciz "="
 Str_empty_754:	.asciz "="
 Str_empty_753:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_753
 
 Str_L_L_L0_LI_LK_LM_LCreate_The_Exact_Sound:
 	.long	Str_You_re_In_Control
@@ -16117,7 +16620,7 @@ Str_Cree_la_imagen_sonora_exacta_que_usted_d:	.asciz "Cree la imagen sonora exac
 Str_empty_752:	.asciz "="
 Str_empty_751:	.asciz "="
 Str_empty_750:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_750
 
 ptrs_4C27C710:
 	.long	Str_Create_The_Exact_Sound_Image_You_Want_Us
@@ -16135,7 +16638,7 @@ Str_Afine_con_precisi_n_su_imagen_sonora_con:	.asciz "Afine con precisi\xF3n su 
 Str_empty_749:	.asciz "="
 Str_empty_748:	.asciz "="
 Str_empty_747:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_747
 
 ptrs_4C27C918:
 	.long	Str_Fine_Tune_Your_Sound_Image_With_Part_And
@@ -16153,7 +16656,7 @@ Str_Reverb_Chorus:	.asciz "Reverb!  Chorus!"
 Str_empty_746:	.asciz "="
 Str_empty_745:	.asciz "="
 Str_empty_744:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_744
 
 ptrs_4C27C980:
 	.long	Str_Reverb_Chorus_4
@@ -16171,7 +16674,7 @@ Str_Digital_Effect_DSP:	.asciz "Digital Effect!  DSP!"
 Str_empty_743:	.asciz "="
 Str_empty_742:	.asciz "="
 Str_empty_741:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_741
 
 Str_L_L_L_L_L_L_LThe_KN6000_Makes_You_A_Grea:
 	.long	Str_Digital_Effect_DSP_4
@@ -16189,7 +16692,7 @@ Str_El_KN6000_lo_convierte_en_un_gran_produc:	.asciz "\xA1El KN6000 lo convierte
 Str_empty_740:	.asciz "="
 Str_empty_739:	.asciz "="
 Str_empty_738:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_738
 
 ptrs_4C27CAE8:
 	.long	Str_The_KN6000_Makes_You_A_Great_Producer
@@ -16224,7 +16727,7 @@ Str_Hasta_8_partes_brindan_un_exuberante_aco:	.asciz "Hasta 8 partes brindan un 
 Str_empty_734:	.asciz "="
 Str_empty_733:	.asciz "="
 Str_empty_732:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_732
 
 ptrs_4C27CCF8:
 	.long	Str_Up_To_8_Parts_Provide_A_Rich_Accompanime
@@ -16242,7 +16745,7 @@ Str_La_biblioteca_de_frases_musicales_incorp:	.asciz "La biblioteca de frases mu
 Str_empty_731:	.asciz "="
 Str_empty_730:	.asciz "="
 Str_empty_729:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_729
 
 ptrs_4C27CF0C:
 	.long	Str_The_KN6000_s_Built_In_Pattern_Library_0d
@@ -16260,7 +16763,7 @@ Str_incluidos_los_notables_efectos_DSP_para:	.asciz "incluidos los notables efec
 Str_empty_728:	.asciz "="
 Str_empty_727:	.asciz "="
 Str_empty_726:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_726
 
 Str_L_L_L_L_L_L_LThink_Of_A_Song_And_Choose:
 	.long	Str_And_Mixed_Using_The_KN6000_s_Vast_Range
@@ -16295,7 +16798,7 @@ Str_S_lo_enci_ndalo_y_toque_El_estilista_mus:	.asciz "\xA1S\xF3lo enci\xE9ndalo 
 Str_empty_722:	.asciz "="
 Str_empty_721:	.asciz "="
 Str_empty_720:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_720
 
 ptrs_4C27D434:
 	.long	Str_Just_Switch_On_And_Play_The_Music_Stylis
@@ -16313,7 +16816,7 @@ Str_Elija_entre_1000_estilos_musicales_tales:	.asciz "Elija entre 1000 estilos m
 Str_empty_719:	.asciz "="
 Str_empty_718:	.asciz "="
 Str_empty_717:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_717
 
 Str_P_L_LU_L_L_L_L_LPlay_In_Any_Style_From_A:
 	.long	Str_Choose_From_1000_Music_Styles_0dIncludin
@@ -16365,7 +16868,7 @@ Str_Agregue_un_solo_a_su_canci_n_con_las_tec:	.asciz "Agregue un solo a su canci
 Str_empty_710:	.asciz "="
 Str_empty_709:	.asciz "="
 Str_empty_708:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_708
 
 Str_L0_Lo_L_L_L_L_LWith_Auto_Setting_0dThe_P:
 	.long	Str_Add_A_Solo_To_Your_Song_Using_The_Perfor
@@ -16383,7 +16886,7 @@ Str_Con_la_configuraci_n_autom_tica_0d_las_t:	.asciz "Con la configuraci\xF3n au
 Str_empty_707:	.asciz "="
 Str_empty_706:	.asciz "="
 Str_empty_705:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_705
 
 ptrs_4C27DB70:
 	.long	Str_With_Auto_Setting_0dThe_Pads_Are_Matched
@@ -16401,7 +16904,7 @@ Str_El_estilista_musical_agrega_el_acorde_t:	.asciz "El estilista musical agrega
 Str_empty_704:	.asciz "="
 Str_empty_703:	.asciz "="
 Str_empty_702:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_702
 
 Str_L_LO_L_LG_LI_LK_LNX_Sound_Expands_Your_M:
 	.long	Str_Music_Stylist_Will_Even_Add_The_Most_Sui
@@ -16419,7 +16922,7 @@ Str_El_sonido_NX_expande_sus_horizontes_musi:	.asciz "\xA1El sonido NX expande s
 Str_empty_701:	.asciz "="
 Str_empty_700:	.asciz "="
 Str_empty_699:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_699
 
 ptrs_4C27DE3C:
 	.long	Str_NX_Sound_Expands_Your_Musical_Horizons
@@ -16437,7 +16940,7 @@ Str_Cargue_datos_de_otros_instrumentos_Techn:	.asciz "Cargue datos de otros inst
 Str_empty_698:	.asciz "="
 Str_empty_697:	.asciz "="
 Str_empty_696:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_696
 
 Str_X_L_L_L9_L_L_L_LNX_Sound_Is_Also_Compati:
 	.long	Str_Load_Data_From_Other_Technics_Instrument
@@ -16506,7 +17009,7 @@ Str_Personalice_su_procesador_KN6000:	.asciz "\xA1Personalice su procesador KN60
 Str_empty_686:	.asciz "="
 Str_empty_685:	.asciz "="
 Str_empty_684:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_684
 
 Str_0_LG_La_L_L_L_L_LCreate_Your_Own_Main_Pa:
 	.long	Str_Customize_Your_KN6000
@@ -16541,7 +17044,7 @@ Str_Guarde_sus_grabaciones_favoritas_en_la_m:	.asciz "Guarde sus grabaciones fav
 Str_empty_680:	.asciz "="
 Str_empty_679:	.asciz "="
 Str_empty_678:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_678
 
 Str_h_L_L_LX_L_L_L_LThey_ll_Stay_There_Even:
 	.long	Str_Store_Your_Favorite_Registrations_0dIn_T
@@ -16593,7 +17096,7 @@ Str_Usted_puede_personalizar_verdaderamente:	.asciz "Usted puede personalizar ve
 Str_empty_671:	.asciz "="
 Str_empty_670:	.asciz "="
 Str_empty_669:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_669
 
 ptrs_4C27ECCC:
 	.long	Str_You_Can_Truly_Personalize_Your_KN6000_0d
@@ -16611,7 +17114,7 @@ Str_Listo_para_crear_la_m_sica:	.asciz "\xBFListo para crear la m\xFAsica?"
 Str_empty_668:	.asciz "="
 Str_empty_667:	.asciz "="
 Str_empty_666:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_666
 
 ptrs_4C27ED54:
 	.long	Str_Ready_To_Create_Music
@@ -16629,7 +17132,7 @@ Str_Sea_su_propio_arreglador_musical_El_secu:	.asciz "Sea su propio arreglador m
 Str_empty_665:	.asciz "="
 Str_empty_664:	.asciz "="
 Str_empty_663:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_663
 
 ptrs_4C27F010:
 	.long	Str_Be_An_Arranger_Using_The_KN6000_s_16_Tra
@@ -16664,7 +17167,7 @@ Str_Use_la_ejecuci_n_autom_tica_de_acordes_p:	.asciz "\xA1Use la ejecuci\xF3n au
 Str_empty_659:	.asciz "="
 Str_empty_658:	.asciz "="
 Str_empty_657:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_657
 
 Str_L_Lv_L_Lo_Lq_Ls_LSing_Along_To_A_Huge_Ra:
 	.long	Str_Use_Auto_Play_Chord_To_Create_Your_Song
@@ -16682,7 +17185,7 @@ Str_Cante_una_amplia_gama_de_canciones_en_so:	.asciz "\xA1Cante una amplia gama 
 Str_empty_655:	.asciz "="
 Str_empty_654:	.asciz "="
 Str_empty_653:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_653
 
 ptrs_4C27F484:
 	.long	Str_Sing_Along_To_A_Huge_Range_Of_Song_Softw
@@ -16700,7 +17203,7 @@ Str_empty_650:	.asciz " "
 Str_empty_649:	.asciz "="
 Str_empty_648:	.asciz "="
 Str_empty_647:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_647
 
 Str_L_L_LW_LY_L_L_LDetailed_Editing_Function:
 	.long	Str_empty_652
@@ -16735,7 +17238,7 @@ Str_empty_640:	.asciz " "
 Str_empty_639:	.asciz "="
 Str_empty_638:	.asciz "="
 Str_empty_637:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_637
 
 ptrs_4C27F71C:
 	.long	Str_empty_642
@@ -16753,7 +17256,7 @@ Str_Es_f_cil_usar_el_KN6000:	.asciz "\xBFEs f\xE1cil usar el KN6000?"
 Str_empty_636:	.asciz "="
 Str_empty_635:	.asciz "="
 Str_empty_634:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_634
 
 ptrs_4C27F7D0:
 	.long	Str_How_Easy_Is_The_KN6000_To_Use
@@ -16771,7 +17274,7 @@ Str_Encuentre_toda_la_informaci_n_en_la_ampl:	.asciz "\xA1Encuentre toda la info
 Str_empty_631:	.asciz "="
 Str_empty_630:	.asciz "="
 Str_empty_629:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_629
 
 ptrs_4C27F8DC:
 	.long	Str_Find_Any_Information_In_Wide_Screen_Colo
@@ -16789,7 +17292,7 @@ Str_Toque_al_instante_Simplemente_use_la_eje:	.asciz "\xA1Toque al instante! Sim
 Str_empty_628:	.asciz "="
 Str_empty_627:	.asciz "="
 Str_empty_626:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_626
 
 ptrs_4C27FA80:
 	.long	Str_Play_Straight_Away_0dJust_Use_One_Touch
@@ -16807,7 +17310,7 @@ Str_Busca_un_acorde_0d_Deje_que_el_buscador:	.asciz "\xBFBusca un acorde?~0d\xA1
 Str_empty_622:	.asciz "="
 Str_empty_592:	.asciz "="
 Str_empty_567:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_567
 
 Str_L_L_Lu_L_L_L_LEasy_Setting_Makes_It_Simp:
 	.long	Str_Looking_For_The_Lost_Chord_Let_The_Chord
@@ -16842,7 +17345,7 @@ Str_Deje_que_la_funci_n_de_ayuda_le_explique:	.asciz "\xA1Deje que la funci\xF3n
 Str_empty_563:	.asciz "="
 Str_empty_562:	.asciz "="
 Str_empty_561:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_561
 
 ptrs_4C27FED0:
 	.long	Str_Let_The_Help_Function_0dTeach_You_About
@@ -16860,7 +17363,7 @@ Str_Con_el_KN6000_0d_usted_puede_pasar_m_s_t:	.asciz "Con el KN6000,~0d\xA1usted
 Str_empty_560:	.asciz "="
 Str_empty_529:	.asciz "="
 Str_empty_336:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_336
 
 ptrs_4C280004:
 	.long	Str_With_The_KN6000_You_Can_Spend_More_Time
@@ -16878,7 +17381,7 @@ Str_empty_332:	.asciz "="
 Str_empty_324:	.asciz "="
 Str_empty_303:	.asciz "="
 Str_empty_302:	.asciz "="
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_302
 
 ptrs_4C280030:
 	.long	Str_empty_335
@@ -17015,7 +17518,7 @@ Str_German_Party:	.asciz "German Party    "
 Str_Deutschland_Pop:	.asciz "Deutschland Pop "
 Str_Volks_Pop:	.asciz "Volks Pop       "
 Str_Polonaise_Time:	.asciz "Polonaise Time! "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Polonaise_Time
 Str_90_s_Boy_Groups:	.asciz "90's Boy Groups "
 Str_Girly_Pop:	.asciz "Girly Pop       "
 Str_Steamy_Funk:	.asciz "Steamy Funk     "
@@ -17037,7 +17540,7 @@ Str_The_Big_Hit:	.asciz "The Big Hit     "
 Str_Club_Reggae:	.asciz "Club Reggae     "
 Str_Disco_Craze:	.asciz "Disco Craze     "
 Str_Caribbean_Sun:	.asciz "Caribbean Sun   "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Caribbean_Sun
 Str_Slowest_Ballads:	.asciz "Slowest Ballads "
 Str_80_s_Glam_Soul:	.asciz "80's Glam Soul  "
 Str_Cool_Groovy:	.asciz "Cool & Groovy   "
@@ -17060,7 +17563,7 @@ Str_Smooth_Jazz_6000:	.asciz "Smooth Jazz 6000"
 Str_Melodic_Soul:	.asciz "Melodic Soul    "
 Str_Funky_Soul:	.asciz "Funky Soul      "
 Str_Gospel_Band:	.asciz "Gospel Band     "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Gospel_Band
 Str_Tower_Of_Jazz:	.asciz "Tower Of Jazz   "
 Str_West_Coast_Jazz:	.asciz "West Coast Jazz "
 Str_Old_Time_Jazz:	.asciz "Old Time Jazz   "
@@ -17095,7 +17598,7 @@ Str_Starry_Eyed:	.asciz "Starry Eyed     "
 Str_Slow_Show_Band:	.asciz "Slow Show Band  "
 Str_Boogie_Band:	.asciz "Boogie Band     "
 Str_Quintet_Band:	.asciz "Quintet Band    "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Quintet_Band
 Str_Island_Romance:	.asciz "Island Romance  "
 Str_Waikiki_Dance:	.asciz "Waikiki Dance   "
 Str_French_American:	.asciz "French American "
@@ -17114,7 +17617,7 @@ Str_Italian_Nights:	.asciz "Italian Nights  "
 Str_Greek_Dance:	.asciz "Greek Dance     "
 Str_Folk_Players:	.asciz "Folk Players    "
 Str_Northern_Polka:	.asciz "Northern Polka  "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Northern_Polka
 Str_Bluegrass_Dance:	.asciz "Bluegrass Dance "
 Str_Bluegrass_City:	.asciz "Bluegrass City  "
 Str_Barn_Dance:	.asciz "Barn Dance      "
@@ -17145,7 +17648,7 @@ Str_Vienna_Ballroom:	.asciz "Vienna Ballroom "
 Str_German_Foxtrot:	.asciz "German Foxtrot  "
 Str_European_Foxtrot:	.asciz "European Foxtrot"
 Str_English_Waltz:	.asciz "English Waltz   "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_English_Waltz
 Str_Uptown_Cha_Cha:	.asciz "Uptown Cha Cha  "
 Str_Mambo_Dancing:	.asciz "Mambo Dancing   "
 Str_Easy_Latin:	.asciz "Easy Latin      "
@@ -17176,7 +17679,7 @@ Str_Popular_Latin:	.asciz "Popular Latin   "
 Str_Modern_Cha_Cha:	.asciz "Modern Cha Cha  "
 Str_Modern_Latin_Pop:	.asciz "Modern Latin Pop"
 Str_Nights_In_Italy:	.asciz "Nights In Italy "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Nights_In_Italy
 Str_Rock_Pop:	.asciz "Rock & Pop      "
 Str_Easy_Listening:	.asciz "Easy Listening  "
 Str_Party_Music:	.asciz "Party Music     "
@@ -17187,7 +17690,7 @@ Str_Trad_Folk:	.asciz "Trad & Folk     "
 Str_Country:	.asciz "Country         "
 Str_Show_Ballroom:	.asciz "Show & Ballroom "
 Str_Latin_World:	.asciz "Latin & World   "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Latin_World
 Str_1_17:	.asciz "1"
 Str_2_19:	.asciz "2"
 Str_4_18:	.asciz "4"
@@ -17221,7 +17724,7 @@ Str_V:	.asciz "V"
 Str_W:	.asciz "W"
 Str_Y:	.asciz "Y"
 Str_Z:	.asciz "Z"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Z
 Str_Mellow_Italiano_119:	.asciz "Mellow Italiano        119"
 Str_Pop_Serenade_119:	.asciz "Pop Serenade           119"
 Str_Napoli_Nights_119:	.asciz "Napoli Nights          119"
@@ -18224,10 +18727,12 @@ Str_Kirmes_Accordion_117:	.asciz "Kirmes Accordion       117"
 Str_Party_Brass_117:	.asciz "Party Brass            117"
 Str_Pre_1920_s:	.asciz "Pre 1920's      "
 .incbin_range "baserom/kn6000_program.rom", 0x2AADED, 0x2AAE78
-data_4C2AAE78:
-.incbin_range "baserom/kn6000_program.rom", 0x2AAE78, 0x2AAE80
-data_4C2AAE80:
-.incbin_range "baserom/kn6000_program.rom", 0x2AAE80, 0x2AAE98
+
+func_4C16F2CF_entry_L95b_Table:	# 8 x u8, 0..5; read by func_4C16F2CF_entry_L95b : `movbu	(d1, a2), d0`; func_4C16F2CF_entry_L9b6 : `movbu	(d1, a2), d0`
+	tab_u8	0, 0, 1, 2, 4, 4, 5, 3
+func_4C16FEEB_L8_Table:	# 24 x u8, 3..255; read by func_4C16FEEB_L8 : `movbu	(d0, a0), d0`
+	tab_u8	16, 17, 18, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# [0]
+	tab_u8	19, 20, 21, 24, 25, 27, 28, 255	# [16]
 
 ptrs_4C2AAE98:
 	.long	loc_4C16F34A
@@ -18244,10 +18749,13 @@ ptrs_4C2AAE98:
 	.long	loc_4C16F606
 data_4C2AAEC8:
 .incbin_range "baserom/kn6000_program.rom", 0x2AAEC8, 0x2AB0C8
-data_4C2AB0C8:
-.incbin_range "baserom/kn6000_program.rom", 0x2AB0C8, 0x2AB0D0
-data_4C2AB0D0:
-.incbin_range "baserom/kn6000_program.rom", 0x2AB0D0, 0x2AB0E8
+
+func_4C16FEFE_entry_L8b4_Table:	# 8 x u8, 0..5; read by func_4C16FEFE_entry_L8b4 : `movbu	(d1, a2), d0`; func_4C16FEFE_entry_L910 : `movbu	(d1, a2), d0`
+	tab_u8	0, 0, 1, 2, 4, 4, 5, 3
+func_4C170A8F_L8_Table:	# 24 x u8, 3..255; read by func_4C170A8F_L8 : `movbu	(d0, a0), d0`
+	tab_u8	16, 17, 18, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# [0]
+	tab_u8	19, 20, 21, 24, 25, 27, 28, 255	# [16]
+
 ptrs_4C2AB0E8:
 	.long	loc_4C16FF7A
 	.long	loc_4C170218
@@ -18263,10 +18771,13 @@ ptrs_4C2AB0E8:
 	.long	loc_4C170190
 data_4C2AB118:
 .incbin_range "baserom/kn6000_program.rom", 0x2AB118, 0x2AB318
-data_4C2AB318:
-.incbin_range "baserom/kn6000_program.rom", 0x2AB318, 0x2AB320
-data_4C2AB320:
-.incbin_range "baserom/kn6000_program.rom", 0x2AB320, 0x2AB338
+
+func_4C170AA2_entry_L87f_Table:	# 8 x u8, 0..5; read by func_4C170AA2_entry_L87f : `movbu	(d1, a2), d0`; func_4C170AA2_entry_L8db : `movbu	(d0, a2), d0`
+	tab_u8	0, 0, 1, 2, 4, 4, 5, 3
+func_4C171561_L8_Table:	# 24 x u8, 3..255; read by func_4C171561_L8 : `movbu	(d0, a0), d0`
+	tab_u8	16, 17, 18, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# [0]
+	tab_u8	19, 20, 21, 24, 25, 27, 28, 255	# [16]
+
 ptrs_4C2AB338:
 	.long	loc_4C170B1A
 	.long	loc_4C170D8E
@@ -18282,10 +18793,13 @@ ptrs_4C2AB338:
 	.long	loc_4C170D04
 data_4C2AB368:
 .incbin_range "baserom/kn6000_program.rom", 0x2AB368, 0x2AB568
-data_4C2AB568:
-.incbin_range "baserom/kn6000_program.rom", 0x2AB568, 0x2AB570
-data_4C2AB570:
-.incbin_range "baserom/kn6000_program.rom", 0x2AB570, 0x2AB588
+
+func_4C171574_entry_L442_Table:	# 8 x u8, 0..5; read by func_4C171574_entry_L442 : `movbu	(d0, a3), d0`; func_4C171574_entry_L49d : `movbu	(d0, a3), d0`
+	tab_u8	0, 0, 1, 2, 4, 4, 5, 3
+func_4C171BF3_L8_Table:	# 24 x u8, 3..255; read by func_4C171BF3_L8 : `movbu	(d0, a0), d0`
+	tab_u8	16, 17, 18, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# [0]
+	tab_u8	19, 20, 21, 24, 25, 27, 28, 255	# [16]
+
 ptrs_4C2AB588:
 	.long	loc_4C1715AA
 	.long	loc_4C1715AA
@@ -18355,16 +18869,16 @@ ptrs_4C2AB588:
 FnName_hamadeb:	.asciz "hamadeb"
 FnName_HDD_COMM_TEST:	.asciz "HDD_COMM_TEST"
 FnName_DConsoleProc:	.asciz "DConsoleProc"
-	.align	4, 0x00
+	.align	4, 0x00	# pad after FnName_DConsoleProc
 Field_DConsole_font:	.asciz "font"
 Field_DConsole_end:	.asciz ""
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Field_DConsole_end
 ClassName_DConsole:	.asciz "DConsole"
 ClassSig_DConsole:	.asciz "c"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after ClassSig_DConsole
 
 Str_EV_INDEX_PUTS:	.asciz "EV_INDEX_PUTS"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_EV_INDEX_PUTS
 
 Str_MT_CONTINUE:	.asciz "MT_CONTINUE"
 
@@ -18559,24 +19073,24 @@ FnName_MrxFifoWrite:	.asciz "MrxFifoWrite"
 FnName_ErxFifoWrite:	.asciz "ErxFifoWrite"
 .incbin_range "baserom/kn6000_program.rom", 0x2ABFA5, 0x2ABFAC
 Str_HD_SX3_MAIN_MENU:	.asciz "HD-SX3 MAIN MENU"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HD_SX3_MAIN_MENU
 
 	TtlScreen	HD_MENU, sub=HDD_DBMEMO, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=HD_MENU_window, title=Str_HD_SX3_MAIN_MENU, icon=131	# title "HD-SX3 MAIN MENU"
 		DbMemo	HDD_DBMEMO, super=HD_MENU, next=HD_MENU_CatchEvent1, flag=VF_Const, X=369, Y=0, W=271, H=219
 		IvCatchEvent	HD_MENU_CatchEvent1, super=HD_MENU, next=HD_MENU_Label_Flash, prev=HDD_DBMEMO, flag=VF_Const|VF_InvisibleBox, X=4, Y=36, W=32, H=32, func=FN_HDDTestProc
 
 Str_Flash:	.asciz "Flash"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Flash
 
 		VwLabel	HD_MENU_Label_Flash, super=HD_MENU, next=HD_MENU_Label_PPORT, prev=HD_MENU_CatchEvent1, flag=VF_Const, X=8, Y=221, W=59, H=19, str=Str_Flash, font=4, fontcolor=CL_White	# str "Flash"
 
 Str_PPORT:	.asciz "PPORT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PPORT
 
 		VwLabel	HD_MENU_Label_PPORT, super=HD_MENU, next=HD_MENU_Label_SRAM, prev=HD_MENU_Label_Flash, flag=VF_Const, X=172, Y=221, W=59, H=19, str=Str_PPORT, font=4, fontcolor=CL_White	# str "PPORT"
 
 Str_SRAM:	.asciz "SRAM"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SRAM
 
 		VwLabel	HD_MENU_Label_SRAM, super=HD_MENU, next=HD_MENU_Label_USB, prev=HD_MENU_Label_PPORT, flag=VF_Const, X=92, Y=221, W=48, H=19, str=Str_SRAM, font=4, fontcolor=CL_White	# str "SRAM"
 
@@ -18589,22 +19103,22 @@ Str_HDD:	.asciz "HDD"
 		VwLabel	HD_MENU_Label_HDD, super=HD_MENU, next=HD_MENU_ScreenMenu_DEBUG, prev=HD_MENU_Label_USB, flag=VF_Const, X=336, Y=221, W=37, H=19, str=Str_HDD, font=4, fontcolor=CL_White	# str "HDD"
 
 Str_DEBUG:	.asciz "DEBUG"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_DEBUG
 
 		AcScreenMenu	HD_MENU_ScreenMenu_DEBUG, super=HD_MENU, next=HD_MENU_TitleMenu_HDD_COMMUNICATION_TE, prev=HD_MENU_Label_HDD, flag=VF_Const, X=8, Y=28, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left1, selected=HD_MENU_ScreenMenu_DEBUG_selected, str=Str_DEBUG, screen=HDD_DEBUG_id, icon=131	# str "DEBUG"
 
 Str_HDD_COMMUNICATION_TEST:	.asciz "HDD & COMMUNICATION TEST"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HDD_COMMUNICATION_TEST
 
 		AcTitleMenu	HD_MENU_TitleMenu_HDD_COMMUNICATION_TE, super=HD_MENU, next=HD_MENU_Label_ALL_TEST, prev=HD_MENU_ScreenMenu_DEBUG, flag=VF_Const, X=8, Y=71, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left2, selected=HD_MENU_TitleMenu_HDD_COMMUNICATION_TE_selected, str=Str_HDD_COMMUNICATION_TEST, title=TT_EXTAPR, icon=131	# str "HDD & COMMUNICATION TEST"
 
 Str_ALL_TEST:	.asciz "ALL TEST"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ALL_TEST
 
 		VwLabel	HD_MENU_Label_ALL_TEST, super=HD_MENU, prev=HD_MENU_TitleMenu_HDD_COMMUNICATION_TE, flag=VF_Const, X=540, Y=221, W=92, H=19, str=Str_ALL_TEST, font=4, fontcolor=CL_White	# str "ALL TEST"
 
 Str_HDD_DEBUG_MONITER:	.asciz "HDD DEBUG MONITER"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HDD_DEBUG_MONITER
 
 	TtlScreen	HDD_DEBUG, sub=HamaDeb, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=HDD_DEBUG_window, title=Str_HDD_DEBUG_MONITER, icon=1	# title "HDD DEBUG MONITER"
 		DbMemo	HamaDeb, super=HDD_DEBUG, next=HDD_DEBUG_CatchEvent1, flag=VF_Const, X=36, Y=25, W=564, H=199
@@ -18616,24 +19130,24 @@ Str_F1_F2_F3_F4_F5_F6_F7_F8_F9_F10_F11_F12_F:	.asciz "F1    F2     F3     F4    
 		VwLabel	HDD_DEBUG_Label_F1_F2_F3_F4_F5_F6_F7, super=HDD_DEBUG, next=HDD_DEBUG_Label_LOAD, prev=HDD_DEBUG_ExitScreen1, flag=VF_Const, X=10, Y=229, W=622, H=11, str=Str_F1_F2_F3_F4_F5_F6_F7_F8_F9_F10_F11_F12_F, font=3, fontcolor=CL_White	# str "F1    F2     F3     F4     F5    F6     "
 
 Str_LOAD_11:	.asciz "LOAD"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LOAD_11
 
 		VwLabel	HDD_DEBUG_Label_LOAD, super=HDD_DEBUG, next=HDD_DEBUG_Label_INIT, prev=HDD_DEBUG_Label_F1_F2_F3_F4_F5_F6_F7, flag=VF_Const, X=0, Y=126, W=36, H=19, str=Str_LOAD_11, font=1, fontcolor=CL_White	# str "LOAD"
 
 Str_INIT:	.asciz "INIT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_INIT
 
 		VwLabel	HDD_DEBUG_Label_INIT, super=HDD_DEBUG, prev=HDD_DEBUG_Label_LOAD, flag=VF_Const, X=0, Y=170, W=36, H=19, str=Str_INIT, font=1, fontcolor=CL_White	# str "INIT"
 
 Str_HDD_COMMUNICATION_TEST_2:	.asciz "HDD & COMMUNICATION TEST"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HDD_COMMUNICATION_TEST_2
 
 	TtlScreen	HDDTEST, sub=HDDTEST_CatchEvent1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_HDDEXT, window=HDDTEST_window, title=Str_HDD_COMMUNICATION_TEST_2, icon=131	# title "HDD & COMMUNICATION TEST"
 		IvCatchEvent	HDDTEST_CatchEvent1, super=HDDTEST, next=TEST_START, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_HDD_COMM_TEST
 
 Str_ALL_STOP:	.asciz "ALL STOP"
 Str_ALL_TEST_2:	.asciz "ALL TEST"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ALL_TEST_2
 
 		PsWideToggle	TEST_START, super=HDDTEST, next=TestConsole, prev=HDDTEST_CatchEvent1, flag=VF_Const, X=324, Y=216, W=152, H=23, font=4, stron=Str_ALL_STOP, stroff=Str_ALL_TEST_2, onoff=TEST_START_onoff, editsw=ES_Bottom9, editsw2=ES_Bottom12	# stron "ALL STOP"; stroff "ALL TEST"
 		DConsole	TestConsole, super=HDDTEST, next=START_PPORT, prev=TEST_START, flag=VF_Const, X=0, Y=32, W=311, H=208, font=3
@@ -18645,7 +19159,7 @@ Str_PPORT_3:	.asciz "PPORT"
 
 Str_FD:	.asciz "FD"
 Str_FD_2:	.asciz "FD"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_FD_2
 
 		PsToggleBox	FDTEST_SW, super=HDDTEST, next=USBTEST_SW, prev=START_PPORT, flag=VF_Const, X=593, Y=36, W=39, H=22, font=4, stron=Str_FD, stroff=Str_FD_2, onoff=FDTEST_SW_onoff, editsw=ES_Right1	# stron "FD"; stroff "FD"
 
@@ -18677,7 +19191,7 @@ RN_empty_2451:	.asciz ""
 RN_empty_2452:	.asciz ""
 RN_empty_2453:	.asciz ""
 RN_empty_2454:	.asciz ""
-	.align	4, 0x00
+	.align	4, 0x00	# pad after RN_empty_2454
 RN_HDDTEST:	.asciz "HDDTEST"
 RN_empty_4298:	.asciz ""
 RN_TEST_START:	.asciz "TEST_START"
@@ -18688,176 +19202,180 @@ RN_USBTEST_SW:	.asciz "USBTEST_SW"
 RN_HDDTEST_SW:	.asciz "HDDTEST_SW"
 .incbin_range "baserom/kn6000_program.rom", 0x2AC558, 0x2AC55C
 Str_TT_HDDEXT:	.asciz "TT_HDDEXT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_HDDEXT
 Str_TT_EXTAPR:	.asciz "TT_EXTAPR"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TT_EXTAPR
 Str_EXPANSION_SLOT_1_Check:	.asciz "**** EXPANSION SLOT 1 Check ****"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_EXPANSION_SLOT_1_Check
 Str_EX11:	.asciz "EX11"
 Str_EX12:	.asciz "EX12"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_EX12
 Str_SLOT1_WAVE_OK:	.asciz "                SLOT1 WAVE  OK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SLOT1_WAVE_OK
 Str_SLOT1_WAVE_NG_NG_NG:	.asciz "                SLOT1 WAVE  NG NG NG"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SLOT1_WAVE_NG_NG_NG
 Str_SLOT1_TABLE:	.asciz "  SLOT1 TABLE"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SLOT1_TABLE
 Str_EXPANSION_SLOT_2_Check:	.asciz "**** EXPANSION SLOT 2 Check ****"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_EXPANSION_SLOT_2_Check
 Str_EX21:	.asciz "EX21"
 Str_EX22:	.asciz "EX22"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_EX22
 Str_SLOT2_WAVE_OK:	.asciz "                SLOT2 WAVE   OK"
 Str_SLOT2_WAVE_NG_NG_NG:	.asciz "                SLOT2 WAVE  NG NG NG"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_SLOT2_WAVE_NG_NG_NG
 Str_SLOT2_TABLE:	.asciz "  SLOT2 TABLE"
 .incbin_range "baserom/kn6000_program.rom", 0x2AC682, 0x2AC8DC
-data_4C2AC8DC:
-.incbin_range "baserom/kn6000_program.rom", 0x2AC8DC, 0x2AC8E4
+
+func_4C172252_Table:	# 4 x u16, 0..8777; read by func_4C172252_entry : `movhu	(d0, a0), d0`
+	tab_u16	4, 8777, 35, 0
+
 Str_L_MBM29LV160B:	.asciz "\x84\xC6*L MBM29LV160B    "
 .incbin_range "baserom/kn6000_program.rom", 0x2AC8F9, 0x2AC904
 Str_L_AT49BV16X4:	.asciz "\x9C\xC7*L AT49BV16X4     "
-	.align	4, 0x00
+	.align	4, 0x00	# pad after Str_L_AT49BV16X4
 Str_Device_s_OK:	.asciz "      Device: %s   OK!"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Device_s_OK
 Str_Not_Good:	.asciz "  !!!! Not Good !!!"
 data_4C2AC948:
 .incbin_range "baserom/kn6000_program.rom", 0x2AC948, 0x2AC968
 Str_OK_46:	.asciz "                           OK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OK_46
 Str_NG_NG_NG_Err_d:	.asciz "                           NG NG NG  Err = %d"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_NG_NG_NG_Err_d
 Str_PPORT_CHIP_NG_NG_NG_2:	.asciz "              PPORT CHIP NG NG NG"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PPORT_CHIP_NG_NG_NG_2
 Str_PPORT_CHIP_NG_NG_NG:	.asciz "              PPORT CHIP NG NG NG"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PPORT_CHIP_NG_NG_NG
 Str_PPORT_CHIP_OK:	.asciz "              PPORT CHIP OK"
 Str_USB_Chip_NG_NG_NG_2:	.asciz "  USB Chip NG NG NG"
 Str_USB_Chip_NG_NG_NG:	.asciz "                  USB Chip NG NG NG"
 Str_USB_Chip_OK:	.asciz "                  USB Chip OK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_USB_Chip_OK
 Str_Hard_Disk_Drive_ID_information_2:	.asciz "==== Hard Disk Drive ID information===="
 Str_Model_number_40_40s_2:	.asciz "   Model  number: %40.40s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Model_number_40_40s_2
 Str_CYLINDER_d:	.asciz "   CYLINDER: %d"
 Str_HEADS_d:	.asciz "   HEADS   : %d"
 Str_SECTORS_d:	.asciz "   SECTORS : %d"
 Str_CAPACITY_ldKB:	.asciz "   CAPACITY: %ldKB"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CAPACITY_ldKB
 Str_Cannot_Reset_NG_NG_NG:	.asciz "                 Cannot Reset     NG NG NG"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Cannot_Reset_NG_NG_NG
 Str_Cannot_Read_ID_NG_NG_NG:	.asciz "                 Cannot Read ID   NG NG NG"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Cannot_Read_ID_NG_NG_NG
 Str_HDD_ACCESS_OK:	.asciz "                    HDD ACCESS    OK"
-	.align	4, 0xFF
-data_4C2ACB7C:
-.incbin_range "baserom/kn6000_program.rom", 0x2ACB7C, 0x2ACB84
-data_4C2ACB84:
-.incbin_range "baserom/kn6000_program.rom", 0x2ACB84, 0x2ACB90
+	.align	4, 0xFF	# pad after Str_HDD_ACCESS_OK
+
+func_4C172714_Table:	# 8 x u8, 1..255; read by func_4C172714_entry : `movbu	(a1), d0`
+	tab_u8	4, 176, 24, 135, 1, 255, 255, 255
+func_4C172714_Table_2:	# 12 x u8, 2..255; read by func_4C172714_entry : `movbu	(a1), d0`
+	tab_u8	8, 176, 25, 135, 2, 176, 26, 135, 2, 255, 255, 255
+
 Str_Test:	.asciz "Test"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Test
 Str_ALL_CHECK_START:	.asciz "=========== ALL CHECK START ========"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ALL_CHECK_START
 Str_PPORT_LSI_Check:	.asciz "**** PPORT LSI     Check ****"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PPORT_LSI_Check
 Str_USB_LSI_Check:	.asciz "**** USB LSI       Check ****"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_USB_LSI_Check
 Str_HDD_Flash_ROM_Check_2:	.asciz "**** HDD Flash-ROM Check ****"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HDD_Flash_ROM_Check_2
 Str_HDD_SRAM_Check_2:	.asciz "****    HDD SRAM Check   ****"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HDD_SRAM_Check_2
 Str_HDD_Drive_check_2:	.asciz "****   HDD Drive check   ****"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HDD_Drive_check_2
 Str_HDD_Flash_ROM_Check:	.asciz "**** HDD Flash-ROM Check ****"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HDD_Flash_ROM_Check
 Str_EXP1_Flash_ROM_Check:	.asciz "**** EXP1 Flash-ROM Check ****"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_EXP1_Flash_ROM_Check
 Str_EXP2_Flash_ROM_Check:	.asciz "**** EXP2 Flash-ROM Check ****"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_EXP2_Flash_ROM_Check
 data_4C2ACCC0:
 .incbin_range "baserom/kn6000_program.rom", 0x2ACCC0, 0x2ACCC4
 Str_HDD_SRAM_Check:	.asciz "****    HDD SRAM Check   ****"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HDD_SRAM_Check
 data_4C2ACCE4:
 .incbin_range "baserom/kn6000_program.rom", 0x2ACCE4, 0x2ACCE8
 Str_HDD_PPort_Check:	.asciz "****   HDD PPort Check   ****"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HDD_PPort_Check
 data_4C2ACD08:
 .incbin_range "baserom/kn6000_program.rom", 0x2ACD08, 0x2ACD0C
 Str_HDD_USB_Check:	.asciz "****    HDD USB Check    ****"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HDD_USB_Check
 data_4C2ACD2C:
 .incbin_range "baserom/kn6000_program.rom", 0x2ACD2C, 0x2ACD30
 Str_HDD_Drive_check:	.asciz "****   HDD Drive check   ****"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HDD_Drive_check
 data_4C2ACD50:
 .incbin_range "baserom/kn6000_program.rom", 0x2ACD50, 0x2ACD54
 Str_HDeb:	.asciz "HDeb"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HDeb
 Str_LOAD_12:	.asciz "LOAD"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LOAD_12
 Str_LOAD_END:	.asciz "LOAD END"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_LOAD_END
 Str_Finishd:	.asciz "Finishd"
 Str_XAPR_2:	.asciz "XAPR"
 Str_XAPR:	.asciz "XAPR"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_XAPR
 Str_Hard_Disk_Drive_ID_information:	.asciz "==== Hard Disk Drive ID information===="
 Str_Cannot_Reset:	.asciz "Cannot Reset"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Cannot_Reset
 Str_Cannot_Read_ID:	.asciz "Cannot Read ID"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Cannot_Read_ID
 Str_Model_number_40_40s:	.asciz "Model  number: %40.40s"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Model_number_40_40s
 Str_CAPACITY_ldMB:	.asciz "   CAPACITY: %ldMB"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CAPACITY_ldMB
 Str_CcEv:	.asciz "CcEv"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CcEv
 Str_Floppy_Disk_TEST_START:	.asciz "Floppy Disk TEST START"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Floppy_Disk_TEST_START
 Str_HARD_DRIVE_TEST_START:	.asciz "HARD DRIVE TEST START"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HARD_DRIVE_TEST_START
 Str_PPORT_TEST_START:	.asciz "PPORT TEST START"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PPORT_TEST_START
 Str_USB_TEST_START:	.asciz "USB TEST START"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_USB_TEST_START
 Str_TEST_START:	.asciz "TEST START"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TEST_START
 Str_CheckFD:	.asciz " CheckFD"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_CheckFD
 Str_OK_45:	.asciz " OK"
 Str_ERR:	.asciz " ERR"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_ERR
 Str_PPORT_4:	.asciz " PPORT"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_PPORT_4
 Str_WAIT_d_2:	.asciz "WAIT %d "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_WAIT_d_2
 Str_OK_d_4:	.asciz "OK %d "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OK_d_4
 Str_USB_4:	.asciz " USB"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_USB_4
 Str_OK_44:	.asciz "OK"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OK_44
 Str_WAIT_d:	.asciz "WAIT %d "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_WAIT_d
 Str_OK_d_3:	.asciz "OK %d "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OK_d_3
 Str_RETRY_d:	.asciz "RETRY %d "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_RETRY_d
 Str_OK_d_2:	.asciz "OK %d "
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OK_d_2
 Str_Count_d:	.asciz "Count %d"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Count_d
 Str_OK_d:	.asciz "OK %d"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_OK_d
 Str_TEST_STOP:	.asciz "TEST STOP"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_TEST_STOP
 data_4C2ACEE8:
 .incbin_range "baserom/kn6000_program.rom", 0x2ACEE8, 0x2ACEEC
 Str_1_0_4_2:	.asciz "1.0.4"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_1_0_4_2
 Str_1_0_4:	.asciz "1.0.4"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_1_0_4
 
 ptrs_4C2ACEFC:
 	.long	loc_4C172860
@@ -18897,29 +19415,29 @@ ptrs_4C2ACF3C:
 Str_Texchnics:	.asciz "Texchnics"
 	.space	502, 0x00
 Str_HDCS_8_8lX_4_4X_2_2X_2:	.asciz "HDCS: %8.8lX + %4.4X <= %2.2X"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HDCS_8_8lX_4_4X_2_2X_2
 Str_HDCS_8_8lX_4_4X_4_4X_2:	.asciz "HDCS: %8.8lX + %4.4X <= %4.4X"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HDCS_8_8lX_4_4X_4_4X_2
 Str_HDCS_8_8lX_4_4X_2_2X:	.asciz "HDCS: %8.8lX + %4.4X => %2.2X"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HDCS_8_8lX_4_4X_2_2X
 Str_HDCS_8_8lX_4_4X_4_4X:	.asciz "HDCS: %8.8lX + %4.4X => %4.4X"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_HDCS_8_8lX_4_4X_4_4X
 Str_li_02x_02x_02x_02x_02x_02x_02x_02x_02x_0:	.asciz "%li   %02x:%02x:%02x:%02x  %02x:%02x:%02x:%02x  %02x:%02x:%02x:%02x  %02x:%02x:%02x:%02x"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_li_02x_02x_02x_02x_02x_02x_02x_02x_02x_0
 Str_RESET_USB:	.asciz "RESET USB"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_RESET_USB
 Str_RESUME_USB:	.asciz "RESUME USB"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_RESUME_USB
 Str_Rx_EP0_Int:	.asciz "Rx EP0 Int"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Rx_EP0_Int
 Str_Tx_EP0_Int:	.asciz "Tx EP0 Int"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Tx_EP0_Int
 Str_Rx_EP1_Int:	.asciz "Rx EP1 Int"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Rx_EP1_Int
 Str_Tx_EP1_Int:	.asciz "Tx EP1 Int"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Tx_EP1_Int
 Str_Rx_SOF_Int:	.asciz "Rx SOF Int"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_Rx_SOF_Int
 
 Tone_Piano_Mono:	# tone record, 1 unit(s)
 	.ascii	"   Piano Mono   "
@@ -35675,7 +36193,7 @@ data_4C320390:
 .incbin_range "baserom/kn6000_program.rom", 0x320390, 0x3203A0
 
 Str_EW_0g:	.asciz "EW 0g"
-	.align	4, 0x00
+	.align	4, 0x00	# pad after Str_EW_0g
 data_4C3203A8:
 .incbin_range "baserom/kn6000_program.rom", 0x3203A8, 0x3203C0
 data_4C3203C0:
@@ -35683,7 +36201,7 @@ data_4C3203C0:
 data_4C3203F0:
 .incbin_range "baserom/kn6000_program.rom", 0x3203F0, 0x320418
 Str_HW_a:	.asciz "HW  a"
-	.align	4, 0x00
+	.align	4, 0x00	# pad after Str_HW_a
 data_4C320420:
 .incbin_range "baserom/kn6000_program.rom", 0x320420, 0x320450
 data_4C320450:
@@ -36558,28 +37076,94 @@ ptrs_4C326F14:
 	.long	Str_empty_290
 	.long	data_4C17628C
 	.long	data_4C17628D
-	.space	12, 0x00
+	.long	0
+	.space	8, 0x00
 data_4C326F30:
 	.space	4, 0x00
 data_4C326F34:
 .incbin_range "baserom/kn6000_program.rom", 0x326F34, 0x326F44
-data_4C326F44:
-.incbin_range "baserom/kn6000_program.rom", 0x326F44, 0x326F4C
-data_4C326F4C:
-.incbin_range "baserom/kn6000_program.rom", 0x326F4C, 0x326F54
-data_4C326F54:
-.incbin_range "baserom/kn6000_program.rom", 0x326F54, 0x326F5C
-data_4C326F5C:
-.incbin_range "baserom/kn6000_program.rom", 0x326F5C, 0x326FD4
-data_4C326FD4:
-.incbin_range "baserom/kn6000_program.rom", 0x326FD4, 0x3272FF
 
+PfDoubleToDecimal_entry_L3a3_Table:	# 2 x u32, 0..1075052544; read by PfDoubleToDecimal_entry_L3a3 : `mov	(a0), d0`
+	tab_u32	0, 1075052544
+PfDoubleToDecimal_entry_L1e1_Table:	# 2 x u32, 1070810131..1352628735; read by PfDoubleToDecimal_entry_L1e1 : `mov	(a0), d0`; PfDoubleToDecimal_entry_L1e1 : `mov	(a0), d2` ...
+	tab_u32	1352628735, 1070810131
+func_4C002A49_entry_L3d_Table:	# 2 x u32, 0..1072693248; read by PfDoubleToDecimal_entry : `mov	(a2), d0`; func_4C002A49_entry_L3d : `mov	(a3), d0`
+	tab_u32	0, 1072693248
+PfDoubleToDecimal_Table_2:	# 30 x u32, 0..3892314112; read by PfDoubleToDecimal_entry : `mov	(a0), d0`
+	tab_u32	0, 1076101120, 0, 1079574528, 0, 1083129856, 0, 1086556160	# [0]
+	tab_u32	0, 1090021888, 0, 1093567616, 0, 1097011920, 0, 1100470148	# [8]
+	tab_u32	0, 1104006501, 536870912, 1107468383, 3892314112, 1110919286, 2717908992, 1114446484	# [16]
+	tab_u32	3846176768, 1117925532, 512753664, 1121369284, 640942080, 1124887541	# [24]
+func_4C002A49_entry_L127_Table:	# 202 x u32, 105764246..4209432352; read by func_4C002A49_entry_L127 : `mov	(a0), d1`
+	tab_u32	937459712, 1128383353, 2245566464, 1131820119, 1733216256, 1135329645, 1620131072, 1138841828	# [0]
+	tab_u32	2025163840, 1142271773, 3605196624, 1145772772, 105764246, 1149300943, 3353430778, 1152724226	# [8]
+	tab_u32	2044304820, 1156216899, 740819600, 1159760682, 3073508148, 1163177460, 3841885184, 1166662001	# [16]
+	tab_u32	790565504, 1170221031, 4209432352, 1173631456, 966823144, 1177108057, 2282270756, 1180667375	# [24]
+	tab_u32	3037031962, 1184086197, 575064476, 1187555043, 3940056070, 1191104667, 1925664134, 1194541665	# [32]
+	tab_u32	3480821990, 1198002937, 1129802014, 1201543096, 706126256, 1204997843, 4103883292, 1208451719	# [40]
+	tab_u32	4056112292, 1211982633, 924457450, 1215454714, 3303055456, 1218901368, 4128819320, 1222423254	# [48]
+	tab_u32	1506770254, 1225912262, 4030946466, 1229351863, 3964941258, 1232864933, 3014959198, 1236370471	# [56]
+	tab_u32	2694957174, 1239803185, 147470994, 1243307646, 3313394840, 1246829326, 1994259904, 1250255314	# [64]
+	tab_u32	345341232, 1253751367, 1826451010, 1257288812, 2283063756, 1260708231, 1780087872, 1264196073	# [72]
+	tab_u32	3796909480, 1267748913, 1524911382, 1271161918, 4053622874, 1274641741, 1845803116, 1278205089	# [80]
+	tab_u32	3837981508, 1281616356, 502509588, 1285088350, 2775620638, 1288641909, 2271633808, 1292071529	# [88]
+	tab_u32	3913284084, 1295535875, 3817863286, 1299079876, 238680906, 1302527419, 3519576600, 1305984297	# [96]
+	tab_u32	1178245282, 1309518964, 2883886950, 1312984008, 3604858684, 1316433594, 2358589710, 1319959145	# [104]
+	tab_u32	4158473130, 1323441281, 1976865936, 1326883746, 323598772, 1330400395, 3960345616, 1333899222	# [112]
+	tab_u32	2802948372, 1337334732, 3503685470, 1340842687, 3800416152, 1344357815, 3676778370, 1347786533	# [120]
+	tab_u32	1374747490, 1351285999, 2469829918, 1354817045, 4161029222, 1358239130, 3053802878, 1361730305	# [128]
+	tab_u32	298014060, 1365276897, 1446259402, 1368692505, 2881566072, 1372175583, 3411591532, 1375737355	# [136]
+	tab_u32	3190747594, 1379146638, 1840950840, 1382621810, 153704906, 1386179343, 1706678300, 1389601513	# [144]
+	tab_u32	3207089702, 1393068963, 2935120300, 1396616844, 3981933838, 1400057111, 3903675474, 1403517021	# [152]
+	tab_u32	1658368870, 1407055477, 1573351452, 1410513417, 3040431140, 1413965963, 2726797106, 1417495214	# [160]
+	tab_u32	630506364, 1420970413, 1861874780, 1424415768, 2327343478, 1427936030, 380847850, 1431428083	# [168]
+	tab_u32	3697285280, 1434866415, 3547864782, 1438377899, 1680544578, 1441886411, 1026938898, 1445317886	# [176]
+	tab_u32	3431157264, 1448820797, 2681344206, 1452345382, 1204196604, 1455770160, 1505245756, 1459264700	# [184]
+	tab_u32	3088262250, 1462804981, 639102338, 1466223219, 4020103394, 1469709583, 4123177358, 1473265193	# [192]
+	tab_u32	1932746226, 1476677044	# [200]
+
+Str_n5:	.asciz "n5"
 Str_a9X_B:	.asciz "\x90!a9X\xC4B"
 .incbin_range "baserom/kn6000_program.rom", 0x327307, 0x3278FC
-data_4C3278FC:
-.incbin_range "baserom/kn6000_program.rom", 0x3278FC, 0x32793C
-data_4C32793C:
-.incbin_range "baserom/kn6000_program.rom", 0x32793C, 0x327D3C
+
+func_4C004EA1_Table:	# 64 x u8, 0..63; read by func_4C004EA1_entry : `movbu	(a1), d0`; func_4C00534E_entry_L23 : `movbu	(a2), d0`
+	tab_u8	0, 1, 8, 16, 9, 2, 3, 10, 17, 24, 32, 25, 18, 11, 4, 5	# [0]
+	tab_u8	12, 19, 26, 33, 40, 48, 41, 34, 27, 20, 13, 6, 7, 14, 21, 28	# [16]
+	tab_u8	35, 42, 49, 56, 57, 50, 43, 36, 29, 22, 15, 23, 30, 37, 44, 51	# [32]
+	tab_u8	58, 59, 52, 45, 38, 31, 39, 46, 53, 60, 61, 54, 47, 55, 62, 63	# [48]
+InitPaletteRGB_Table:	# 256 x u32, 0..16777215; read by InitPaletteRGB_entry : `mov	(a2), d1`
+	tab_u32	0, 128, 32768, 32896, 8388608, 8388736, 8421376, 12632256	# [0]
+	tab_u32	4210752, 33023, 18687, 16512, 3735400, 0, 16777215, 12632256	# [8]
+	tab_u32	18687, 18687, 8454016, 8454016, 8454016, 6356991, 16777104, 32896	# [16]
+	tab_u32	12632256, 65535, 18687, 65535, 18687, 8454016, 8454016, 8454016	# [24]
+	tab_u32	8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016	# [32]
+	tab_u32	8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016	# [40]
+	tab_u32	8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016	# [48]
+	tab_u32	8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016	# [56]
+	tab_u32	8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016	# [64]
+	tab_u32	8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016	# [72]
+	tab_u32	8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016	# [80]
+	tab_u32	8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016	# [88]
+	tab_u32	8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016	# [96]
+	tab_u32	8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016	# [104]
+	tab_u32	8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016	# [112]
+	tab_u32	8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016	# [120]
+	tab_u32	8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016	# [128]
+	tab_u32	8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016	# [136]
+	tab_u32	8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016	# [144]
+	tab_u32	8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016	# [152]
+	tab_u32	8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016	# [160]
+	tab_u32	8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016	# [168]
+	tab_u32	8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016	# [176]
+	tab_u32	8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016	# [184]
+	tab_u32	8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016	# [192]
+	tab_u32	8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016	# [200]
+	tab_u32	8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016	# [208]
+	tab_u32	8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016	# [216]
+	tab_u32	8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016	# [224]
+	tab_u32	8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016, 8454016	# [232]
+	tab_u32	8454016, 8454016, 8454016, 8454016, 8421504, 0, 12648384, 4227136	# [240]
+	tab_u32	8421504, 255, 65280, 65535, 16711680, 16711935, 16776960, 16777215	# [248]
 
 # 18 ApFunction procedures; a function id is (0x120 << 16) | its index (the names are the parallel table at slot 0x320)
 User00_ApFunctions:
@@ -37183,7 +37767,7 @@ User00_Classes:
 	.space	24, 0x00
 
 Str_o:	.asciz "o"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_o
 
 # 62 ResEvent names; an resevent id is (0x180 << 16) | its index
 User00_ResEvents:
@@ -37252,7 +37836,7 @@ User00_ResEvents:
 	.space	4, 0x00
 
 Str_empty_289:	.asciz ">"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_289
 
 # 237 ResMethod names; an resmethod id is (0x1a0 << 16) | its index
 User00_ResMethods:
@@ -38382,7 +38966,7 @@ data_4C329FDC:
 .incbin_range "baserom/kn6000_program.rom", 0x329FDC, 0x32A27C
 
 Str_empty_288:	.asciz "/"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_empty_288
 
 ptrs_4C32A280:
 	.long	Str_OnIcon
@@ -38433,14 +39017,15 @@ ptrs_4C32A280:
 	.long	Str_SlideBaseR
 	.long	Str_SlideMoveR
 	.long	data_4C18D181
-	.space	832, 0x00
+	.long	0
+	.space	828, 0x00
 .incbin_range "baserom/kn6000_program.rom", 0x32A680, 0x32A740
 	.space	832, 0x00
 data_4C32AA80:
 .incbin_range "baserom/kn6000_program.rom", 0x32AA80, 0x32AA84
 
 Str_I_2:	.asciz "I"
-	.align	4, 0xFF
+	.align	4, 0xFF	# pad after Str_I_2
 
 ptrs_4C32AA88:
 	.long	Str_Round1a
@@ -38517,7 +39102,8 @@ ptrs_4C32AA88:
 	.long	Str_EditDD
 	.long	Str_MixerTab
 	.long	data_4C18D6F3
-	.space	728, 0x00
+	.long	0
+	.space	724, 0x00
 .incbin_range "baserom/kn6000_program.rom", 0x32AE88, 0x32AFB0
 	.space	728, 0x00
 data_4C32B288:
@@ -38736,7 +39322,8 @@ ptrs_4C32B28C:
 	.long	Str_i208
 	.long	Str_i209
 	.long	data_4C18DE25
-	.space	172, 0x00
+	.long	0
+	.space	168, 0x00
 .incbin_range "baserom/kn6000_program.rom", 0x32B68C, 0x32B9E0
 	.space	172, 0x00
 

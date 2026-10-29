@@ -121,8 +121,8 @@ code-range bytes binary in each image (was 19,825 in 300 pieces / 16,115 in 303)
 
 | tree   | before n | before bytes | after n | after bytes | generated (n / B) | media (n / B) |
 |--------|----------|--------------|---------|-------------|-------------------|---------------|
-| kn6000 | 323      | 2,630,724    | 6666    | 850,090     | 14 / 45,226       | 3 / 28,660    |
-| kn6500 | 327      | 2,140,036    | 6021    | 951,983     | 14 / 45,226       | 3 / 28,660    |
+| kn6000 | 323      | 2,630,724    | 6072    | 797,489     | 14 / 45,226       | 3 / 28,660    |
+| kn6500 | 327      | 2,140,036    | 5427    | 901,823     | 14 / 45,226       | 3 / 28,660    |
 
 `../kn7000/tools/gui_readability.py` (before: the main checkout at 6d3fa7fda, `--root`):
 
@@ -149,7 +149,9 @@ items; the bytes are what fell.  The largest remaining regions of the KN6000 (fi
 | `0x249ECC..0x2583C8`  | ~50,000 | blocks of about 5,630 B after the chord names ("Basic Chord 100%", "Chord CDEG"): [INFERENCE] chord tables |
 | `0x17E47C..0x181E98`  | 14,876  | runs of `00BBGGRR` colours: [INFERENCE] palettes / gradients                      |
 
-`notes/data-region-probes/generic_regions.py kn6000` prints the whole list (912 regions).
+`notes/data-region-probes/generic_regions.py kn6000` prints the whole list (896 regions).  Since the
+merge of main (lane gui-kn7000's third pass) its reader-typed tables (`tab_u8` .. `tab_u32`, sparse
+maps, `src/include/data_tables.inc`) apply to these images too.
 
 The KN6500's are the same structures at other addresses, without the tone records and panel
 banks (its program flash has neither).
