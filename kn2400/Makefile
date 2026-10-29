@@ -118,7 +118,7 @@ verify-kn2600: baserom/$(ROM) | baserom/.dir
 # would name the text "EV_DISPPADRUN") and a menu table pointing into data.
 symbols kn2400.sym src/symbols.inc: $(TOOLS)/gen_symbols.py baserom/$(ROM)
 	$(PYTHON) $(TOOLS)/gen_symbols.py baserom/$(ROM) --program-base 0x48400000 \
-	    --code-range 0x1e427c:0x3285be --no-manual \
+	    --code-range 0x1e427c:0x3285be --no-manual --start-aligned \
 	    --title "KN2400/KN2600 program-image symbols recovered from the MILK toolkit" \
 	    --inc-title "KN2400/KN2600 symbols" --sym kn2400.sym --inc src/symbols.inc
 

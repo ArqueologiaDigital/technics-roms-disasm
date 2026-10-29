@@ -187,6 +187,9 @@ def _ident_offsets(data):
         rb"[A-Za-z_][A-Za-z0-9_]{2,31}\x00", data)}
 
 
+START_ALIGNED = False
+
+
 def find_tables(data, ident_offsets):
     """Yield (code_array_off, name_array_off, n) for every MILK reflection table.
 
@@ -226,10 +229,12 @@ def find_tables(data, ident_offsets):
         # entries further on.  (KN2400 SDFM MainFunctions, names 0x485CFC18: 111
         # entries, an identifier run of 90; registered by InitializeBlock33 with
         # count 111 and the code array 0x485CFA58.)
+        # (--start-aligned; opt-in, as it renames procedures in trees not checked against
+        # their registrations, e.g. kn7000_sp7001_table.sym)
         k = name_off - 8
-        while k >= 0 and _is_code(read_u32(data, k)):
+        while START_ALIGNED and k >= 0 and _is_code(read_u32(data, k)):
             k -= 4
-        if (name_off - 8 - k) // 4 > n_names:
+        if START_ALIGNED and (name_off - 8 - k) // 4 > n_names:
             code_off = k + 4
         if code_off < 0:
             continue
@@ -266,7 +271,7 @@ def recover_symbols(data):
 
 
 def main():
-    global PROGRAM_BASE, _is_code, CODE_LO, CODE_HI
+    global PROGRAM_BASE, _is_code, CODE_LO, CODE_HI, START_ALIGNED
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("program_rom", nargs="?",
                         default="baserom/kn7000_program.rom")
@@ -276,6 +281,9 @@ def main():
                         help="link base of the image being scanned. The KN7000 program flash is "
                              "0x48400000 (default); the self-loaded library/kernel image and the "
                              "KN6000/KN6500 program images are linked at 0x4C000000.")
+    parser.add_argument("--start-aligned", action="store_true",
+                        help="pair a reflection table from the start of its code array when a "
+                             "non-identifier name cuts the name run short (find_tables)")
     parser.add_argument("--code-range", action="append", metavar="LO:HI",
                         help="file-offset range holding code (repeatable). Default: the build-941 "
                              "program image's two code regions. Needed for other builds (e.g. "
@@ -288,6 +296,7 @@ def main():
     parser.add_argument("--inc-title", default="KN7000 symbols",
                         help="what the first line of the include's header calls the file")
     args = parser.parse_args()
+    START_ALIGNED = args.start_aligned
     PROGRAM_BASE = args.program_base
     if args.code_range:
         rngs = [tuple(int(x, 0) for x in r.split(":")) for r in args.code_range]
