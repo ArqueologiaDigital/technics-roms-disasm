@@ -519,5 +519,9 @@ FDTest_String_TestTitleFunc_PtrTable:
 	.long Xapr_InitPhase1_NullRet
 	.long Xapr_InitPhase2_NullRet
 	.long Xapr_InitPhase3_NullRet
-LoadExtROM_JumpEntry_Data:		.incbin "includes/romslices/v7_data_fdtest_string_testtitlefunc_tail.bin", 0x0, 0x6
-ResInfo_GetResourceListPtr_Str_TEST:	.incbin "includes/romslices/v7_data_fdtest_string_testtitlefunc_tail.bin", 0x6, 0x6
+; Xapr_DetectAndCallBootInit compares 4 bytes of this with an extension ROM's 0x280000 (String_Compare).
+LoadExtROM_JumpEntry_Data:		.asciz	"XAPR"
+					.byte	0xff	; pads to an even address
+; ResInfo_GetResourceListPtr stores this pointer as the first word of its result.
+ResInfo_GetResourceListPtr_Str_TEST:	.asciz	"TEST"
+					.byte	0xff	; pads to an even address
