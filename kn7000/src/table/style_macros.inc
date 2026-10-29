@@ -156,23 +156,10 @@
 	.byte	\b4, \b5
 	.word	\tune
 .endm
-# A tone record's head (0x54 bytes; the part tone block's descriptor, 0x500CE404 + part *
-# 0x130 +0; TgPartProgramApply 0x4C03893D stores it). After the 16-byte name:
-#   class   +0x10: & 0xC0 picks the note-on path (TgNoteOn 0x4C036832): 0x00/0xC0 melodic,
-#           0x40 table (TgPartToneIsTableClass), 0x80 kit; & 0xCF = 0x81..0x83 kit layers
-#   b11     +0x11: no reader traced
-#   mod_src +0x12: 2-bit mod source fields (TgPartToneModSetupMelodic 0x4C03A3CD)
-#   type    +0x44: low nibble the tone TYPE / LFO group (TgPartEditLfoGroupLoad 0x4C00CF8B,
-#           TgVoiceEgSegParamGet 0x4C03A20F)
-#   b45     +0x45: the flag TgVoiceEgSegParamGet tests for types 0xA/0xB
-# tone_head covers +0x10..+0x12 and tone_type +0x44..+0x45; the bytes between and after,
-# whose readers are not traced, follow as .byte rows with their offsets.
-.macro tone_head class, b11, mod_src
-	.byte	\class, \b11, \mod_src
-.endm
-.macro tone_type type, b45
-	.byte	\type, \b45
-.endm
+# A tone record's head (0x54 bytes) and its 0x7A-byte units are SOUND_HEAD / SOUND_MOD of
+# src/include/voice_record.inc (the same record as a SOUND EDIT record's first 0x23C bytes;
+# TgPartAuxRecBuild 0x4C00C6E9), its voice records VOICE_HEAD_TAIL / VOICE_SUB and its elements
+# VOICE_ELEM: the archive includes that file.
 # A TABLE tone (class 0x40): the head is 0x27 bytes, then one 3-byte entry per note that
 # TgNoteOnTableTone (0x4C03600D) reads at +0x27 + note x 3: it enables up to two synth
 # layers (0x4C035EAA builds them).

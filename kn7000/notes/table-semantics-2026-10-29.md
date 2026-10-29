@@ -208,10 +208,13 @@ whose fields are not traced: the tone heads beyond +0x10/+0x12/+0x44/+0x45, the 
 voice sub-records, the element rows, the 0x2C8 records and the smaller tables. The census reads 0
 generic for this tree, but **those fields still need naming**.
 
-Field readings for the 0x7A units are left as candidates, not applied. The `Tg*` routines read a
-"desc2" at librec+0x3C with offsets up to +0x47 (EG rates and levels, key scaling, filter). That
-does not fit the 0x1C-byte voice sub-record the staging stores there. Which record those offsets
-really address needs the staging traced once more.
+**Answered (lane kn67-field-names, 2026-10-29).** The `Tg*` routines' "desc2" at librec+0x3C, with
+offsets up to +0x4C (EG rates and levels, key scaling, filter), is the 0x7A unit on the melodic path:
+`TgElemStageFresh` (lib 0x4C034927) stores `*(tone block +0x60 + unit*0x34)` there, the same unit
+pointer `TgPartAuxRecBuild` copies. Only the table-tone staging (0x4C035EAA) stores a 0x1C
+sub-record at +0x3C. The archive's tone heads, units, voice sub-records, elements and its 0x2C8
+records are now spelled with the shared macros of `src/include/voice_record.inc` (`SOUND_HEAD`,
+`SOUND_MOD`, `VOICE_HEAD_TAIL`, `VOICE_SUB`, `VOICE_ELEM`), whose header gives each named field's reader.
 
 ## The SP7001 plug-in's GUI data: preparation (not typed yet)
 

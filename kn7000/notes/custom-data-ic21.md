@@ -138,9 +138,16 @@ last table). `panel_memory_map.py` prints the tables. The record, KN7000 offsets
 | `+0x8F..+0x9A`          | `PM_PART_TAIL` | KN7000 only: part `+0x23` (mask 0x07), `+0x38`, `+0x39`, x4       |                                                                                                                                                                            |
 | `+0x9B..+0x9F`          |                | 0xFF (KN6000: `+0x8E..+0x8F`)                                     |                                                                                                                                                                            |
 
-Parameter names are the source offsets (`p<hex>` in a part record, and per section), so the floppy
-lanes' `.PMT` describers can share them; the field meanings of the panel-memory record itself are
-theirs to trace. Two observations fix what wrote the factory files:
+Parameter names (since lane kn67-field-names, 2026-10-29) are the panel-memory parameters the
+source bytes belong to, the same names as the `PMR_*` macros: a panel-memory record is the image of
+the live panel state (library `func_4C021F33` recalls one with `memcpy(0x84000020, memory, 0x750)`
+and `func_4C01F98B`), and each live parameter is reached by id through `ResourceIdTrie` (block = the
+record's tag, offset, mask). So `PM_PART` holds the part's sound, volume, effect depths, portamento,
+CC80-83, pan, tuning and drawbars; `PM_ENTRIES` the eight accompaniment volumes; `PM_STYLE` the
+rhythm, TECHNI-CHORD on (`[INFERENCE]`), the variation (parameter 0x00C004, VARIATION 1-4: setting i
+selects variation i) and the tempo; `PM_SET88` tremolo, TECHNI-CHORD part and type; `PM_SET8C` the
+pad bank. The fourth part (`+0x56`) is tag 0x03, PART 4, on both models. Evidence and the unnamed
+remainder: `notes/data-semantics-2026-10-29/kn67-field-names.md`. Two observations fix what wrote the factory files:
 
 - No stored byte breaks a mask, except that **all 80 KN6000 settings have part 3 all 0xFF**
   (880 bytes outside their masks): the v7.1 writer copies part 3, so these were written by an
@@ -315,12 +322,13 @@ above (third round; it was 183 / 2,592,308 before).
 
 ## Open questions
 
-- The meaning of most panel-memory fields: the map gives each one's source offset in the 0x750-byte
-  panel-memory record, not what that offset holds.
+- The panel-memory fields named only by their parameter id (`m<id>`), and the bytes no parameter
+  record covers: `notes/data-semantics-2026-10-29/kn67-field-names.md`.
 - The 0x42-byte dependency records (five kinds) and the 0x2C8 SOUND EDIT records: none in the
   factory sets, so only their strides are known.
-- The voice record's single fields (0x1C sub-records, 0x23 element records) and the custom-sound
-  block's 0x27-byte header.
+- The voice record's single fields beyond those `voice_record.inc` now names (the sub-record's element
+  reference, the element's velocity splits and layers, the tone head and the 0x7A unit's EG / level
+  fields), and the custom-sound block's 0x27-byte header.
 - TCMP variation bytes `+0x01`, `+0x02`, `+0x18`, `+0x19`; the style record's two u16BE at
   `+0x70`; the pad record's 13 setting bytes beyond those named.
 - A reader of the 24-field part set-up: the field mapping is the table's order, unconfirmed.

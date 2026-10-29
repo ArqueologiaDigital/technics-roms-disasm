@@ -11,15 +11,20 @@ QUESTION IT ANSWERS
   256-byte cells, +0 flags, +1 u16le previous cell, +3 u16le next cell (one-based; 0 / 0xFFFF = none),
   +5..+0xFF events.  A track's events are its chain's payloads, joined.
 
-  THE EVENT GRAMMAR IS MEASURED, NOT TRACED (no KN6000/KN7000 song reader is named yet).
-  [INFERENCE] from the byte statistics of every chain on the 27 disks (probes/README.md, sqt_grammar):
-    tick status data...   a byte < 0x80 (the tick in the beat) precedes every channel event:
-                          0x9n note +4, 0xAn +6, 0xBn controller +3, 0xCn program +3, 0xDn +1, 0xEn bend +2,
-                          0x8n +2, and the system events 0xF1 +5, 0xF2 +6, 0xF3 +7, 0x85 +0, 0x86 +0
-    0x81                  beat marker (no tick)
-    0x82                  end of track (no tick)
-  A chain that parses to 0x82 under these lengths is typed event by event (sq_* macros, kn_song.inc);
-  one that does not is left as the reference bytes of its cells, and the unit says where parsing stopped.
+  THE EVENT LENGTHS ARE THE FIRMWARE'S (KN7000 program 941; traced 2026-10-18 in
+  kn7000/notes/presentation-control-probes/song-records.md, section 2): the per-status length table
+  0x485B9328 (256 signed bytes, -1 = not an event), read by func_4845BC5B; the player tick 0x484595F0 steps
+  each track with 0x4845979E, which reads an event at 0x48459C98; classifier 0x48458705, encoder 0x484582D5.
+  The lengths (status byte included): 0x80 3 (tempo b1 + (b2 << 7)), 0x81 1 (next beat), 0x82 1 (end of
+  track), 0x84 1 (bar), 0x85 1 / 0x86 1 (rhythm start / stop), 0x8A 3 (PIC), 0x90-0x9F 5 (note, velocity,
+  u16 duration; 0x98 = recorded from MIDI IN), 0xA1-0xA3 7-9 (part parameter: part, flags, id(3), value(n)),
+  0xB0 4 (part, cc, value), 0xC0 4 (prog, bank LSB, bank MSB), 0xD0 2, 0xE0 3, 0xF1-0xF4 6-9 (global
+  parameter: flags, id(3), value(n)).  A byte below 0x80 is the position in the beat (96 PPQN) before an
+  event.  LENGTHS below is that table (minus the status byte).  The tick-before-every-ticked-event shape is
+  still the disks' (every one of the 422 tracks on the 27 disks parses to 0x82 with it): the reader also
+  accepts an event without a tick, which no disk holds.
+  A chain that parses to 0x82 is typed event by event (sq_* macros, kn_song.inc); one that does not is left
+  as the reference bytes of its cells, and the unit says where parsing stopped.
 """
 import collections
 import os
@@ -27,8 +32,11 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-TICKED = {0x80: 2, 0x90: 4, 0xA0: 6, 0xB0: 3, 0xC0: 3, 0xD0: 1, 0xE0: 2}
-SYSTEM = {0xF1: 5, 0xF2: 6, 0xF3: 7, 0x85: 0, 0x86: 0}
+# data bytes after the status, from the length table 0x485B9328 (func_4845BC5B)
+LENGTHS = {0x80: 2, 0x81: 0, 0x82: 0, 0x84: 0, 0x85: 0, 0x86: 0, 0x8A: 2, **{0x90 + n: 4 for n in range(16)},
+           0xA1: 6, 0xA2: 7, 0xA3: 8, 0xB0: 3, 0xC0: 3, 0xD0: 1, 0xE0: 2, 0xF1: 5, 0xF2: 6, 0xF3: 7, 0xF4: 8}
+UNTICKED = (0x81, 0x82)     # written without a tick on the disks
+SYSTEM = (0x84, 0x85, 0x86, 0xF1, 0xF2, 0xF3, 0xF4)
 MAC = {0x80: 'sq_8n', 0x90: 'sq_note', 0xA0: 'sq_a', 0xB0: 'sq_cc', 0xC0: 'sq_pc', 0xD0: 'sq_press', 0xE0: 'sq_bend'}
 
 
@@ -51,8 +59,8 @@ def tokens(s):
             if i + 1 >= len(s):
                 return out, 'a tick at the end of the chain'
             st = s[i + 1]
-            if st & 0xF0 in TICKED and st < 0xF0 and st not in (0x81, 0x82, 0x85, 0x86):
-                n = TICKED[st & 0xF0]
+            if st in LENGTHS and st not in UNTICKED and st not in SYSTEM:
+                n = LENGTHS[st]
                 d = s[i + 2:i + 2 + n]
                 # a note's last byte and a bend's second byte can have bit 7 set (5 events on the disks, each the
                 # track's last before 0x82; what that bit means is not traced); no other data byte ever does
@@ -62,14 +70,14 @@ def tokens(s):
                 out.append((i, 2 + n, '\t%s\t%d, %d%s' % (MAC[st & 0xF0], x, st & 15, ''.join(', %d' % b for b in d))))
                 i += 2 + n
             elif st in SYSTEM:
-                n = SYSTEM[st]
+                n = LENGTHS[st]
                 d = s[i + 2:i + 2 + n]
                 if len(d) < n or any(b & 0x80 for b in d):
                     return out, 'status 0x%02x at +%d: a data byte >= 0x80' % (st, i + 1)
                 out.append((i, 2 + n, '\tsq_sys\t%d, 0x%02x%s' % (x, st, ''.join(', %d' % b for b in d))))
                 i += 2 + n
             else:
-                return out, 'status 0x%02x after a tick at +%d has no measured length' % (st, i + 1)
+                return out, 'status 0x%02x after a tick at +%d is not a song event (table 0x485B9328)' % (st, i + 1)
         else:
             return out, 'status 0x%02x at +%d without a tick' % (x, i)
     return out, 'the chain ends before 0x82'
@@ -82,9 +90,12 @@ def rows(b, w=16):
 def typer1(ctx, part, p, ref, lab):
     """Part 1: the song records.  +0x00 "ZZZZ", +0x04 the 10-song flag, +0x05 the model signature,
     +0x09 the file stem (as the KN5000 slot's +0x09, floppy/kn5000 sqt_slot_header.json), +0xD0 the track
-    directory, +0x140 the song's panel memory (a full PANEL MEMORY record, 42 / 43 records; measured: all 605
-    records of the 27 disks), then 0x30 (KN6000) / 0x50 (KN7000) bytes.  The other bytes are not traced and
-    are spelled as bytes with their offsets."""
+    directory, +0x120.. the song's settings bank (the M3 "Sqf" bank: an image of backup SRAM 0x84000000..; lib
+    func_4C01F153 mode bit 0 adds block - 0x84000000 to Rec8E0Field120Ptr(0)), whose +0x140 is the song's panel
+    memory (the image of the live record 0x84000020; 42 / 43 records; measured: all 605 records of the 27 disks)
+    and whose tail is block 0x52 (KN6000: 46 bytes, the record's end; KN7000: 40, then the images of blocks
+    0x50, 0x51 and the start of 0x60, without their tag bytes).  The other bytes are not traced and are spelled
+    as bytes with their offsets."""
     import kn_panel
     rl = {b'\x01\x0a': 0x870, b'\x01\x0d': 0x8E0}.get(p[5:7])
     if part != 1 or p[:4] != b'ZZZZ' or not rl or len(p) % rl:
@@ -102,9 +113,24 @@ def typer1(ctx, part, p, ref, lab):
         for t in range(16):
             e3 = 0xD0 + 3 * t
             L.append('\tsq_track\t0x%02x, %d\t; track %d' % (r[e3], u16(r, e3 + 1), t + 1))
-        L += ['; +0x100..+0x13F, not traced'] + rows(r[0x100:0x140])
-        L += kn_panel.block_lines(r, recs, 'the song\'s panel memory (+0x140)')
-        L += ['; +0x%X..+0x%X, not traced' % (e, rl - 1)] + rows(r[e:])
+        L += ['; +0x100..+0x11F, not traced'] + rows(r[0x100:0x120])
+        L += ['; +0x120..+0x8DF / +0x86F: the song\'s settings bank, an image of backup SRAM 0x84000000 + (offset - 0x120):',
+              '; GetM3Sqf / PutM3Sqf (kind 1) address a parameter at Rec8E0Field120Ptr(0) + (block - 0x84000000)',
+              '; (lib func_4C01F153 / func_4C01F200, mode bit 0; KN7000).  +0x120..+0x13F mirror 0x84000000..0x8400001F,',
+              '; which no parameter record covers'] + rows(r[0x120:0x140])
+        L += kn_panel.block_lines(r, recs, 'the song\'s panel memory (+0x140, the image of the live record 0x84000020)')
+        tail = r[e:]
+        if len(tail) >= 2 and tail[0] == 0x52 and (0x52, tail[1]) in kn_panel.OTHER and len(tail) >= 2 + tail[1]:
+            n52 = 2 + tail[1]
+            L += ['; +0x%X: the image of 0x%08X, block 0x52 (as a panel record)' % (e, 0x84000000 + e - 0x120),
+                  '\tPMR_52_%d\t%s' % (tail[1], ', '.join(str(x) for x in tail[2:n52]))]
+            if len(tail) > n52:
+                L += ['; +0x%X..+0x%X: the image of 0x%08X.. (blocks 0x50 at +0x%X, 0x51 at +0x%X, 0x60 at +0x%X on the KN7000;'
+                      % (e + n52, rl - 1, 0x84000000 + e + n52 - 0x120, 0x79C + 0x120, 0x7A6 + 0x120, 0x7B6 + 0x120),
+                      '; payload offsets, from the block table 0x4858D44C), whose tag / length bytes the song copy does',
+                      '; not keep (measured)'] + rows(tail[n52:])
+        else:
+            L += ['; +0x%X..+0x%X, not traced' % (e, rl - 1)] + rows(tail)
     return L
 
 
