@@ -73,6 +73,20 @@ def hexrow(bs):
     return ", ".join(f"0x{b:02x}" for b in bs)
 
 
+def vals(bs):
+    """Macro arguments: the bytes in hex."""
+    return ", ".join(f"0x{x:02x}" for x in bs)
+
+
+def sound_head(c, o):
+    """The tone head after its name, +0x10..+0x53 (SOUND_HEAD, src/include/voice_record.inc)."""
+    return f"    SOUND_HEAD\t{vals(c[o + 0x10:o + 0x54])}"
+
+
+def sound_mod(c, q, k):
+    return f"    SOUND_MOD\t{vals(c[q:q + 0x7A])}\t# unit {k} (VoiceModRecFetch 0x4844982A)"
+
+
 def ident(name, used, prefix):
     base = re.sub(r"[^A-Za-z0-9]", "", name.replace("&", "And").replace("+", "Plus")) or "Unnamed"
     lab, n = f"{prefix}{base}", 2
@@ -201,10 +215,10 @@ def internal_voice_archive(d, s, e, label, ref):
         if (size - 0x10) % 0x1C or size > 0x10 + 0x1C * 4:
             raise SystemExit(f"{label}: voice record 0x{o:x} size {size}")
         vl = [f"{labels[o]}:", f"    .ascii\t{asc(c[o:o + 13])}",
-              f"    .byte\t{hexrow(c[o + 13:o + 16])}\t# +0x0D: VoiceSubRecFetch's selector byte"]
+              f"    VOICE_HEAD_TAIL\t{vals(c[o + 13:o + 16])}\t# +0x0D: VoiceSubRecFetch's selector byte"]
         for k in range((size - 0x10) // 0x1C):
             r = o + 0x10 + 0x1C * k
-            vl.append(f"    .byte\t{hexrow(c[r:r + 0x1C])}\t# sub-record {k}")
+            vl.append(f"    VOICE_SUB\t{vals(c[r:r + 0x1C])}\t# sub-record {k}")
         put(o, size, vl)
     tone_sorted = sorted(tone)
     tone_next = {o: tone_sorted[i + 1] for i, o in enumerate(tone_sorted[:-1])}
@@ -278,18 +292,11 @@ def internal_voice_archive(d, s, e, label, ref):
                 q = o + 0x27 + 3 * k
                 tl.append(f"    tone_note\t0x{c[q]:02x}, 0x{c[q + 1]:02x}, 0x{c[q + 2]:02x}\t# note {k}")
         elif size >= 0x54 and ((size - 0x54) % 0x7A == 0 or size < 0x54 + 0x7A):
-            h = c[o:o + 0x54]
-            tl.append(f"    tone_head\t0x{h[0x10]:02x}, 0x{h[0x11]:02x}, 0x{h[0x12]:02x}")
-            tl.append(f"    .byte\t{hexrow(h[0x13:0x23])}\t# +0x13")
-            tl.append(f"    .byte\t{hexrow(h[0x23:0x33])}\t# +0x23")
-            tl.append(f"    .byte\t{hexrow(h[0x33:0x44])}\t# +0x33")
-            tl.append(f"    tone_type\t0x{h[0x44]:02x}, 0x{h[0x45]:02x}")
-            tl.append(f"    .byte\t{hexrow(h[0x46:0x54])}\t# +0x46")
+            tl.append(sound_head(c, o))
             for k in range((size - 0x54) // 0x7A):
                 q = o + 0x54 + 0x7A * k
-                tl.append(f"{labels[o]}_Unit{k}:\t\t# +0x54 + {k} x 0x7A (VoiceModRecFetch 0x4844982A)")
-                for j in range(0, 0x7A, 16):
-                    tl.append(f"    .byte\t{hexrow(c[q + j:q + min(j + 16, 0x7A)])}\t# +0x{j:02x}")
+                tl.append(f"{labels[o]}_Unit{k}:")
+                tl.append(sound_mod(c, q, k))
             if (size - 0x54) % 0x7A:
                 q = o + 0x54
                 tl.append(f"    .byte\t{hexrow(c[q:o + size])}\t# after the head: no unit (reader not traced)")
@@ -320,25 +327,20 @@ def internal_voice_archive(d, s, e, label, ref):
     t = lambda k: u32(c, T + k)                                        # noqa: E731
     # T + 0x00: a tone record outside the directory, "Initial" (0x54 + 4 x 0x7A)
     o = t(0x00)
-    tl = [f"    .ascii\t{asc(c[o:o + 16])}", f"    tone_head\t0x{c[o + 0x10]:02x}, 0x{c[o + 0x11]:02x}, 0x{c[o + 0x12]:02x}"]
-    for a_, b_ in ((0x13, 0x23), (0x23, 0x33), (0x33, 0x44)):
-        tl.append(f"    .byte\t{hexrow(c[o + a_:o + b_])}\t# +0x{a_:02x}")
-    tl.append(f"    tone_type\t0x{c[o + 0x44]:02x}, 0x{c[o + 0x45]:02x}")
-    tl.append(f"    .byte\t{hexrow(c[o + 0x46:o + 0x54])}\t# +0x46")
+    tl = [f"    .ascii\t{asc(c[o:o + 16])}", sound_head(c, o)]
     nu = (t(0x04) - o - 0x54) // 0x7A
     for k in range(nu):
         q = o + 0x54 + 0x7A * k
         tl.append(f"JkInitialTone_Unit{k}:")
-        for j in range(0, 0x7A, 16):
-            tl.append(f"    .byte\t{hexrow(c[q + j:q + min(j + 16, 0x7A)])}\t# +0x{j:02x}")
+        tl.append(sound_mod(c, q, k))
     labels[o] = "JkInitialTone"
     put(o, 0x54 + 0x7A * nu, ["JkInitialTone:\t\t# bank block +0x00: a tone record outside the directory"] + tl)
     # T + 0x04: the default voice record (VoiceRecDefaultPtr), 0x10 + one 0x1C sub-record
     o = t(0x04)
     labels[o] = "JkDefaultVoice"
     put(o, 0x2C, ["JkDefaultVoice:\t\t# bank block +0x04 (VoiceRecDefaultPtr 0x484497E0)",
-                  f"    .ascii\t{asc(c[o:o + 13])}", f"    .byte\t{hexrow(c[o + 13:o + 16])}",
-                  f"    .byte\t{hexrow(c[o + 16:o + 0x2C])}\t# sub-record 0"])
+                  f"    .ascii\t{asc(c[o:o + 13])}", f"    VOICE_HEAD_TAIL\t{vals(c[o + 13:o + 16])}",
+                  f"    VOICE_SUB\t{vals(c[o + 16:o + 0x2C])}\t# sub-record 0"])
     # the sound directory's +0x10 / +0x14: 128 sixteen-character names and a 128-byte table
     o = u32(c, D + 0x10)
     labels[o] = "JkGroupNames"
@@ -359,8 +361,13 @@ def internal_voice_archive(d, s, e, label, ref):
     rows(o, t(0x24) - o, 0x10, "JkDesc38Table", "descriptor +0x38: reader not traced")
     o = t(0x24)
     labels[o] = "JkElementTable"
-    rows(o, t(0x50) - o, 0x23, "JkElementTable", "descriptor +0x18: elements of 0x23 bytes (VoiceElemRecFetch 0x4844987C); "
-         "TgVoiceZoneVeloResolve reads 5-byte entries from +5 by velocity layer")
+    n_el = (t(0x50) - o) // 0x23
+    el = ["JkElementTable:\t\t# descriptor +0x18: elements of 0x23 bytes (VoiceElemRecFetch 0x4844987C); "
+          "TgVoiceZoneVeloResolve reads 5-byte entries from +5 by velocity layer"]
+    el += [f"    VOICE_ELEM\t{vals(c[o + 0x23 * k:o + 0x23 * (k + 1)])}\t# element {k}" for k in range(n_el)]
+    if (t(0x50) - o) % 0x23:
+        el.append(f"    .byte\t{hexrow(c[o + 0x23 * n_el:t(0x50)])}\t# after the last row")
+    put(o, t(0x50) - o, el)
     o = t(0x50)
     labels[o] = "JkTuningTable"
     rows(o, t(0x4C) - o, 0x1C, "JkTuningTable", "descriptor +0x44: [INFERENCE] scale tunings, a 16-byte name and 12 "
@@ -375,8 +382,17 @@ def internal_voice_archive(d, s, e, label, ref):
     # descriptor +0x3C (T + 0x48): 40 named records of 0x2C8 bytes
     o = t(0x48)
     labels[o] = "JkDesc3CRecords"
-    rows(o, t(0x00) - o, 0x2C8, "JkDesc3CRecords", "descriptor +0x3C: 40 named records of 0x2C8 bytes (the size of a "
-         "SOUND EDIT record, 0x500C0784 + n x 0x2C8)", name_len=16)
+    n_se = (t(0x00) - o) // 0x2C8
+    sl = ["JkDesc3CRecords:\t\t# descriptor +0x3C: named SOUND EDIT records of 0x2C8 bytes (0x500C0784 + n x 0x2C8): "
+          "a tone head, four units and four elements (src/include/voice_record.inc)"]
+    for k in range(n_se):
+        q = o + 0x2C8 * k
+        sl += [f"    .ascii\t{asc(c[q:q + 16])}\t# record {k}", sound_head(c, q)]
+        sl += [sound_mod(c, q + 0x54 + 0x7A * u, u) for u in range(4)]
+        sl += [f"    VOICE_ELEM\t{vals(c[q + 0x23C + 0x23 * e:q + 0x23C + 0x23 * (e + 1)])}\t# element {e}" for e in range(4)]
+    if (t(0x00) - o) % 0x2C8:
+        sl.append(f"    .byte\t{hexrow(c[o + 0x2C8 * n_se:t(0x00)])}\t# after the last row")
+    put(o, t(0x00) - o, sl)
     # the zones the tone-key table's entries point at (entry +14), 8 bytes each
 
     # an array of 8-byte zones after the multisample data (labels only where an aligned offset to it exists)
@@ -407,7 +423,7 @@ def internal_voice_archive(d, s, e, label, ref):
         put(0x20, 4, ["    .space\t4, 0x00\t# before the first hash chain"])
 
     # ---- assemble, passthroughs for the gaps ----
-    out = []
+    out = ['.include "src/include/voice_record.inc"   # VOICE_* / SOUND_* (shared with src/customdata/ and the KN6000 .TM files)']
     pos = 0
     for o in sorted(items):
         size, lines = items[o]
