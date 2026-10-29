@@ -792,7 +792,7 @@ baserom/customdata/%.ic21: baserom/customdata/%.ast tools/ast_file.py
 	mv $@.tmp $@
 
 define CD_BUILD_RULE
-build/customdata/$(1).ic21: src/customdata/$(1).s $(wildcard src/customdata/$(1)/*.inc) src/customdata/customdata.inc \
+build/customdata/$(1).ic21: src/customdata/$(1).s $(wildcard src/customdata/$(1)/*.inc) src/customdata/customdata.inc src/include/panel_memory.inc src/include/voice_record.inc \
 		tools/kn7asm.py baserom/customdata/$(1).ic21
 	@mkdir -p build/customdata
 	$$(ASM) $$< -I . -o $$@

@@ -137,7 +137,7 @@ baserom/01ctmini.ic18: baserom/01ctmini.ast $(TOOLS)/ast_file.py
 	echo "$(CD_SHA1)  $@.tmp" | sha1sum --quiet -c
 	mv $@.tmp $@
 
-build/01ctmini.ic18: src/customdata/01ctmini.s $(wildcard src/customdata/01ctmini/*.inc) ../kn7000/src/customdata/customdata.inc $(TOOLS)/kn7asm.py baserom/01ctmini.ic18
+build/01ctmini.ic18: src/customdata/01ctmini.s $(wildcard src/customdata/01ctmini/*.inc) ../kn7000/src/customdata/customdata.inc ../kn7000/src/include/panel_memory.inc ../kn7000/src/include/voice_record.inc $(TOOLS)/kn7asm.py baserom/01ctmini.ic18
 	@mkdir -p build
 	$(ASM) $< -I . -o $@
 
