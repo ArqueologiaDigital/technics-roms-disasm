@@ -190,10 +190,11 @@ def _segments():
         "The boot opening screen's animation: OpeningFrameDraw draws frame n from u32",
         "offset n of this segment; 0 = no frame (it then stores -2 in the u16 at",
         "0x5006B5A8)."])
-    s[6] = ("InternalVoiceArchive", "raw", None, [
+    s[6] = ("InternalVoiceArchive", "voices", None, [
         "'JK': the INTERNAL (class 0) voice archive. VoiceArchiveScanBoot puts it in slot 0",
         "of the bank-source arrays, and the Voice*LookupInternal routines hash into it",
-        "(kn7000_manual.sym, the five bank sources)."])
+        "(kn7000_manual.sym, the five bank sources). Typed as far as traced in",
+        "src/table/voices/ (tools/gen_table_voices.py)."])
     s[7] = ("TableVersion", "marker", None, [
         "The table build number, ASCII digits and a line feed. The boot code parses the",
         "digits into the u16 at 0x50007DC8, which AcTableVerBoxProc shows as TABLE on the",

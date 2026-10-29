@@ -92,7 +92,7 @@ TABLE_JPGS := $(wildcard src/table/*.jpg src/table/*/*.jpg src/table/*/*.bmp)
 # into the bytes the table sources .incbin from build/table_png/ (one stamp for all).
 TABLE_PNGS := $(sort $(wildcard src/table/*/*.png))
 # The style data's include files (tools/gen_table_styles.py) and their macros.
-TABLE_INCS := $(wildcard src/table/*.inc src/table/styles/*.s src/table/styles/*/*.s src/table/pads/*.s)
+TABLE_INCS := $(wildcard src/table/*.inc src/table/styles/*.s src/table/styles/*/*.s src/table/pads/*.s src/table/voices/*.s)
 build/table_png/.stamp: $(TABLE_PNGS) tools/table_png.py
 	@mkdir -p build/table_png
 	$(PYTHON) tools/table_png.py build --out-dir build/table_png $(TABLE_PNGS)

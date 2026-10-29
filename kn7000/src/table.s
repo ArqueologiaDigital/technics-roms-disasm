@@ -16276,9 +16276,10 @@ OpeningFrame05:
 # dir[6], 0xcb450 bytes.
 # 'JK': the INTERNAL (class 0) voice archive. VoiceArchiveScanBoot puts it in slot 0
 # of the bank-source arrays, and the Voice*LookupInternal routines hash into it
-# (kn7000_manual.sym, the five bank sources).
+# (kn7000_manual.sym, the five bank sources). Typed as far as traced in
+# src/table/voices/ (tools/gen_table_voices.py).
 InternalVoiceArchive:
-    .incbin_range	"baserom/kn7000_table.rom", 0x06ea98, 0x139ee8
+    .include	"src/table/voices/internal_archive.s"
 
 # dir[7], 0x4 bytes.
 # The table build number, ASCII digits and a line feed. The boot code parses the
