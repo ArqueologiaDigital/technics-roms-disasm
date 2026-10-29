@@ -70,6 +70,7 @@ IMAGES = [
     ("custom_data",  "custom_data/kn5000_custom_data.s"),
     # the waveform ROM's PCM is .incbin'd from the reference copy in original_ROMs/
     ("waveform",     "waveform/kn5000_waveform_ic307.s", (), ("-I", "original_ROMs")),
+    ("rhythm_data",  "rhythm_data/kn5000_rhythm_data.s"),
 ]
 
 
