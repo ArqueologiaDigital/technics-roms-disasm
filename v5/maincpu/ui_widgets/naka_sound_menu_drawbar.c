@@ -57,26 +57,6 @@ extern const char ClassProps_IvMPver;
 
 #define BASE  0x00E80FE2u
 
-/* NAKA class TtlScreen -- class id 0x01600034 (Class table slot 0x160, entry 52),
- * parent Screen; allsize 42.  Field names and type characters are the
- * class chain's own propname / propdata (see THE CLASS SYSTEM in
- * scripts/analysis/nakarest_objtab_map.py). */
-typedef struct __attribute__((packed)) {
-    uint32_t class_;            /* +0 M */
-    uint16_t super;             /* +4 [ */
-    uint16_t sub;               /* +6 [ */
-    uint16_t next;              /* +8 [ */
-    uint16_t prev;              /* +10 [ */
-    uint16_t flag;              /* +12 ] */
-    int16_t rect[4];          /* +14 P */
-    uint16_t color;             /* +22 ^ */
-    uint16_t border;            /* +24 _ */
-    uint32_t exit;              /* +26 a */
-    uint32_t window;            /* +30 r */
-    uint32_t title;             /* +34 X */
-    uint32_t icon;              /* +38 b */
-} naka_cls_TtlScreen_t;
-
 /* A NAKA class definition (24 bytes).  Its field names are the firmware's
  * own: the root class "Class" (class id 0x01600004) names them in its
  * propname block -- proc, parent, allsize, selfsize, name, propdata,
@@ -280,6 +260,37 @@ typedef struct __attribute__((packed)) {
 
 _Static_assert(sizeof(naka_sound_menu_drawbar_t) == 2314,
     "naka_sound_menu_drawbar must be exactly 2314 bytes");
+
+/* ── Object tables: the element names the records link by ─────────── */
+
+/* Viewable table Murai_ViewableTable_002, registry slot 0x2, 20 elements.
+ * InitializeMurai registers it: `RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 20, Murai_ViewableTable_002, 0x2`.
+ * One constant per element, in index order, indented by depth in the object tree:
+ * the records below link to each other (super = parent, sub = first child, next /
+ * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(Murai_ViewableTable_002, OBJ_x). */
+#define Murai_ViewableTable_002_SLOT 0x002u
+enum Murai_ViewableTable_002_objects {
+    OBJ_Sdmenu,                            /*  0 TtlScreen "Sdmenu" */
+      OBJ_NakaWidget_SdmenuPage,           /*  1 AcWindowPage, record outside the C sources (NakaWidget_SdmenuPage) */
+      OBJ_NakaWidget_SoundMenu_ScrollBar1, /*  2 IvPageControl, record outside the C sources (NakaWidget_SoundMenu_ScrollBar1) */
+      OBJ_NakaWidget_SoundMenu_ScrollBar2, /*  3 IvPageControl, record outside the C sources (NakaWidget_SoundMenu_ScrollBar2) */
+      OBJ_NakaWidget_SoundMenu_ListBox,    /*  4 IvExitMode, record outside the C sources (NakaWidget_SoundMenu_ListBox) */
+      OBJ_NakaWidget_SoundMenu_ValueEdit,  /*  5 IvShowHide, record outside the C sources (NakaWidget_SoundMenu_ValueEdit) */
+    OBJ_NakaWidget_Sdmenu1,                /*  6 Window, record outside the C sources (NakaWidget_Sdmenu1) */
+      OBJ_NakaMenuItem_PartSetting,        /*  7 AcTitleMenu, record outside the C sources (NakaMenuItem_PartSetting) */
+      OBJ_NakaMenuItem_Mixer,              /*  8 AcTitleMenu, record outside the C sources (NakaMenuItem_Mixer) */
+      OBJ_NakaMenuItem_MasterTuning,       /*  9 AcTitleMenu, record outside the C sources (NakaMenuItem_MasterTuning) */
+      OBJ_NakaMenuItem_KeyScaling,         /* 10 AcTitleMenu, record outside the C sources (NakaMenuItem_KeyScaling) */
+      OBJ_NakaMenuItem_ReverbEqPresets,    /* 11 AcTitleMenu, record outside the C sources (NakaMenuItem_ReverbEqPresets) */
+      OBJ_NakaMenuItem_Reverb,             /* 12 AcTitleMenu, record outside the C sources (NakaMenuItem_Reverb) */
+      OBJ_NakaMenuItem_Equalizer,          /* 13 AcTitleMenu, record outside the C sources (NakaMenuItem_Equalizer) */
+      OBJ_NakaMenuItem_DspEffect,          /* 14 AcTitleMenu, record outside the C sources (NakaMenuItem_DspEffect) */
+      OBJ_NakaMenuItem_AcousticIllusion,   /* 15 AcTitleMenu, record outside the C sources (NakaMenuItem_AcousticIllusion) */
+      OBJ_NakaWidget_SoundEdit,            /* 16 AcSndEMenu, record outside the C sources (NakaWidget_SoundEdit) */
+    OBJ_NakaWidget_Sdmenu2,                /* 17 Window, record outside the C sources (NakaWidget_Sdmenu2) */
+      OBJ_NakaMenuItem_LeftHold,           /* 18 AcTitleMenu, record outside the C sources (NakaMenuItem_LeftHold) */
+      OBJ_NakaMenuItem_TechniChord,        /* 19 AcTitleMenu, record outside the C sources (NakaMenuItem_TechniChord) */
+};
 
 const naka_sound_menu_drawbar_t naka_sound_menu_drawbar_data
     __attribute__((section(".text"), used)) = {
@@ -712,19 +723,19 @@ const naka_sound_menu_drawbar_t naka_sound_menu_drawbar_data
     .IvSdpartProc_str = ALIGNED_STRING("IvSdpartProc"),
 
     .Sdmenu = {
-        .class_ = 0x01600034,
+        .class_ = NAKA_CLASS(TtlScreen),
         .super = NAKA_NONE,
-        .sub = 1,
+        .sub = OBJ_NakaWidget_SdmenuPage,
         .next = NAKA_NONE,
         .prev = NAKA_NONE,
-        .flag = 0x000A,
-        .rect = { 0, 0, 319, 239 },
-        .color = 0x00F8,
-        .border = 0x0002,
-        .exit = 0x01A00000,
+        .flag = VF_Fixed | VF_Const,
+        .rect = NAKA_XYWH(0, 0, 320, 240),
+        .color = CL_Gray,
+        .border = BD_Single2,
+        .exit = TITLE_PS,
         .window = 0x0003E660,
         .title = SELF(SoundMenu_text),
-        .icon = 0x00000015,
+        .icon = idICON_i19,
     },
 
     .SoundMenu_text = ALIGNED_STRING("SOUND MENU"),

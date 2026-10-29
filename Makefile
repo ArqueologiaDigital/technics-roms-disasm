@@ -216,7 +216,7 @@ SE_LINK_LD = v10/maincpu/audio/sound_editor_screens/se_screens_link.ld
 ACCOMP_LINK_LD = v10/maincpu/sequencer/accomp_screens/accomp_screens_link.ld
 
 NAKA_LINK_LD = v10/maincpu/ui_widgets/naka_ctrl_menu_link.ld
-NAKA_TYPES_H = v10/maincpu/ui_widgets/naka_types.h
+NAKA_TYPES_H = v10/maincpu/ui_widgets/naka_types.h v10/maincpu/ui_widgets/naka_classes.h v10/maincpu/ui_widgets/naka_ids.h
 NAKA_BINS = v10/maincpu/includes/generated/naka_control_menu_header.bin v10/maincpu/includes/generated/naka_ctrl_menu_body.bin v10/maincpu/includes/generated/naka_perf_style.bin v10/maincpu/includes/generated/naka_msp_recording.bin v10/maincpu/includes/generated/naka_effects_seq.bin v10/maincpu/includes/generated/naka_midi_reverb.bin v10/maincpu/includes/generated/naka_composer_style.bin v10/maincpu/includes/generated/naka_direct_play.bin v10/maincpu/includes/generated/naka_technichord_part.bin v10/maincpu/includes/generated/naka_disk_menu_file_io.bin v10/maincpu/includes/generated/naka_debug_naming.bin v10/maincpu/includes/generated/naka_disk_warning.bin v10/maincpu/includes/generated/naka_extension_device.bin v10/maincpu/includes/generated/naka_normal_mode.bin v10/maincpu/includes/generated/naka_widget_tables_1.bin v10/maincpu/includes/generated/naka_master_style.bin v10/maincpu/includes/generated/naka_sound_menu_drawbar.bin v10/maincpu/includes/generated/naka_sequencer_exit.bin v10/maincpu/includes/generated/naka_sequencer_channels.bin v10/maincpu/includes/generated/naka_block_007.bin v10/maincpu/includes/generated/naka_block_012.bin v10/maincpu/includes/generated/naka_widget_names_charmap.bin v10/maincpu/includes/generated/naka_technichord_strings.bin v10/maincpu/includes/generated/naka_widget_tables_2.bin v10/maincpu/includes/generated/naka_style_bitmaps.bin v10/maincpu/includes/generated/naka_widget_descriptors.bin v10/maincpu/includes/generated/naka_accomp7_widgets.bin
 
 VOICE_BINS = v10/maincpu/includes/generated/voice_factory_presets.bin
@@ -243,7 +243,7 @@ V9_SE_BINS = $(patsubst %,v9/maincpu/includes/generated/%.bin,$(SE_NAMES))
 V9_SE_LINK_LD = v9/maincpu/audio/sound_editor_screens/se_screens_link.ld
 V9_ACCOMP_LINK_LD = v9/maincpu/sequencer/accomp_screens/accomp_screens_link.ld
 V9_NAKA_LINK_LD = v9/maincpu/ui_widgets/naka_ctrl_menu_link.ld
-V9_NAKA_TYPES_H = v9/maincpu/ui_widgets/naka_types.h
+V9_NAKA_TYPES_H = v9/maincpu/ui_widgets/naka_types.h v9/maincpu/ui_widgets/naka_classes.h v9/maincpu/ui_widgets/naka_ids.h
 V9_NAKA_BINS = $(patsubst v10/%,v9/%,$(NAKA_BINS))
 V9_VOICE_BINS = v9/maincpu/includes/generated/voice_factory_presets.bin
 V9_AUDIO_BINS = v9/maincpu/includes/generated/tonegen_param_table.bin
@@ -263,7 +263,7 @@ V7_SE_BINS = $(patsubst %,v7/maincpu/includes/generated/%.bin,$(SE_NAMES))
 V7_SE_LINK_LD = v7/maincpu/audio/sound_editor_screens/se_screens_link.ld
 V7_ACCOMP_LINK_LD = v7/maincpu/sequencer/accomp_screens/accomp_screens_link.ld
 V7_NAKA_LINK_LD = v7/maincpu/ui_widgets/naka_ctrl_menu_link.ld
-V7_NAKA_TYPES_H = v7/maincpu/ui_widgets/naka_types.h
+V7_NAKA_TYPES_H = v7/maincpu/ui_widgets/naka_types.h v7/maincpu/ui_widgets/naka_classes.h v7/maincpu/ui_widgets/naka_ids.h
 V7_NAKA_BINS = $(patsubst v10/%,v7/%,$(NAKA_BINS))
 V7_VOICE_BINS = v7/maincpu/includes/generated/voice_factory_presets.bin
 V7_AUDIO_BINS = v7/maincpu/includes/generated/tonegen_param_table.bin
@@ -936,14 +936,14 @@ $$($(2)_GEN)/accomp_%.bin: $(1)/maincpu/sequencer/accomp_screens/accomp_%.c $(1)
 	$$(LLVM_OBJCOPY) -O binary -j .text $$@.elf $$@
 	@rm -f $$@.o $$@.elf
 
-$$($(2)_GEN)/naka_%.bin: $(1)/maincpu/ui_widgets/naka_%.c $(1)/maincpu/ui_widgets/naka_types.h $(1)/maincpu/ui_widgets/naka_%_link.ld
+$$($(2)_GEN)/naka_%.bin: $(1)/maincpu/ui_widgets/naka_%.c $(1)/maincpu/ui_widgets/naka_types.h $(1)/maincpu/ui_widgets/naka_classes.h $(1)/maincpu/ui_widgets/naka_ids.h $(1)/maincpu/ui_widgets/naka_%_link.ld
 	@mkdir -p $$($(2)_GEN)
 	$$(CLANG) -target tlcs900 -ffreestanding -c -O2 -I $(1)/maincpu/ui_widgets -o $$@.o $$<
 	$$(LLVM_LLD) -T $(1)/maincpu/ui_widgets/naka_$$*_link.ld -o $$@.elf $$@.o
 	$$(LLVM_OBJCOPY) -O binary -j .text $$@.elf $$@
 	@rm -f $$@.o $$@.elf
 
-$$($(2)_GEN)/naka_control_menu_header.bin: $(1)/maincpu/ui_widgets/control_menu_header.c $(1)/maincpu/ui_widgets/naka_types.h $(1)/maincpu/ui_widgets/naka_ctrl_menu_link.ld
+$$($(2)_GEN)/naka_control_menu_header.bin: $(1)/maincpu/ui_widgets/control_menu_header.c $(1)/maincpu/ui_widgets/naka_types.h $(1)/maincpu/ui_widgets/naka_classes.h $(1)/maincpu/ui_widgets/naka_ids.h $(1)/maincpu/ui_widgets/naka_ctrl_menu_link.ld
 	@mkdir -p $$($(2)_GEN)
 	$$(CLANG) -target tlcs900 -ffreestanding -c -O2 -I $(1)/maincpu/ui_widgets -o $$@.o $$<
 	$$(LLVM_LLD) -T $(1)/maincpu/ui_widgets/naka_ctrl_menu_link.ld -o $$@.elf $$@.o
