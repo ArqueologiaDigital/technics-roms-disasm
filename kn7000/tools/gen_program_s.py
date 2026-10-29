@@ -65,10 +65,10 @@ TITLE = [                  # header comment lines after the licence
     '# (tools/gen_data_s.py). make verify guarantees byte-identity.',
 ]
 DOC_XLATE = None           # optional fn(str)->str applied to FUNC_DOC lines
-# The data region as typed source (tools/gen_data_s.py, make data-src): included
-# in place of the .incbin_range of file R1_END..LIB_FILE_BASE. Build 941 only for
-# now; the other profiles keep the .incbin_range.
-DATA_SRC = "src/program/data/data.s"
+# The data region as typed source (tools/gen_data_s.py --profile <build>): included
+# in place of the .incbin_range of file R1_END..LIB_FILE_BASE, from <OUT's
+# directory>/program/data/data.s ("auto", resolved in main once OUT is known).
+DATA_SRC = "auto"
 # Symbol files whose names were recovered AFTER the function split was made (e.g.
 # the SP7001 plug-in export table). Their names become boundaries and labels, but
 # a boundary of this kind INHERITS the converted state of the function it splits
@@ -3233,8 +3233,12 @@ class EmitCtx:
     """What every converted block's emission shares: the name of each address,
     the labels the converted code defines, and the tallies the header reports."""
 
-    def __init__(self, names, label_of, A, data_names):
+    def __init__(self, names, label_of, A, data_names, data_labels=None):
         self.names, self.label_of, self.A, self.data_names = names, label_of, A, data_names
+        # the typed data region's labels (<data dir>/labels.sym, tools/gen_data_s.py):
+        # {addr: name}, and the sorted (start, end, name) of its typed items
+        self.data_labels, self.data_items = data_labels or ({}, [])
+        self.data_starts = [s for s, _e, _n in self.data_items]
         self.used = set()          # addresses of `names` referenced (an .equ unless labelled)
         self.data_used = set()     # addresses of annotation data names referenced
         self.ext = {}              # branch target outside the converted code -> loc_ name
@@ -3254,6 +3258,12 @@ class EmitCtx:
         if a in self.data_names:
             self.data_used.add(a)
             return self.data_names[a]
+        if a in self.data_labels:
+            return self.data_labels[a]
+        if self.data_items:
+            i = bisect.bisect_right(self.data_starts, a) - 1
+            if i >= 0 and self.data_items[i][0] < a < self.data_items[i][1]:
+                return f"{self.data_items[i][2]}+{a - self.data_items[i][0]}"
         if a in self.names:
             self.used.add(a)
             return self.names[a]
@@ -3434,7 +3444,6 @@ def select_profile(name):
     global FUNC_END, LIB_CONVERT, CONVERT, INHERIT_SYMS, ANN_PORT, DATA_ISLANDS
     if name == "941":
         return
-    DATA_SRC = None
     if name in PORTED_BUILDS:
         return select_ported_build(name)
     if name != "sp7001":
@@ -3877,7 +3886,31 @@ def lib_split(sym_by_addr, manual):
     return out
 
 
+def read_data_labels():
+    """({addr: name}, [(start, end, name)]) from the typed data region's
+    labels.sym, beside DATA_SRC; empty when there is none."""
+    if not DATA_SRC:
+        return {}, []
+    path = os.path.join(os.path.dirname(DATA_SRC), "labels.sym")
+    if not os.path.exists(path):
+        return {}, []
+    labels, items = {}, []
+    for line in open(path):
+        if line.startswith(";"):
+            continue
+        a, n, size = line.split()
+        a, size = int(a, 16), int(size)
+        labels[a] = n
+        if size:
+            items.append((a, a + size, n))
+    items.sort()
+    return labels, items
+
+
 def main():
+    global DATA_SRC
+    if DATA_SRC == "auto":
+        DATA_SRC = os.path.join(os.path.dirname(OUT) or ".", "program", "data", "data.s")
     d = open(ROM, "rb").read()
     syms = load_syms(d)
     manual = load_manual_syms()
@@ -4132,7 +4165,7 @@ def main():
              for cpu, nm in label_of.items() if nm in inc and inc[nm] != cpu]
     if clash:
         sys.exit("gen_program_s: labels that disagree with symbols.inc:\n  " + "\n  ".join(clash))
-    ctx = EmitCtx(names, label_of, A, data_names)
+    ctx = EmitCtx(names, label_of, A, data_names, read_data_labels())
     ctx.pro_starts = {p for p, _ins in pro.values()}
     ctx.func_labels = sorted((a, nm) for a, nm in label_of.items() if a in code_starts
                              and not nm.startswith("loc_") and not nm.endswith("_entry"))

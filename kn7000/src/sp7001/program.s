@@ -29,30 +29,9 @@
 .mnbase 0x48400000   # CPU address of output offset 0 (for PC-relative ops)
 .include "src/sp7001/symbols.inc"
 
-# 20 names converted code references outside itself (not in symbols.inc)
+# 2 names converted code references outside itself (not in symbols.inc)
 .equ TableRomDirectory, 0x48000000
-.equ ExpansionBoardSigStrings, 0x485B8A0C
-.equ XaprMagicHead, 0x486BDECC
-.equ XaprMagicTail, 0x486BDED1
-.equ DspWhitelistUnit0, 0x486CF781
-.equ DspWhitelistUnit1_6, 0x486CF851
-.equ DspWhitelistUnit7, 0x486CF921
-.equ DspWhitelistUnit9, 0x486CF9F1
-.equ TechnicsRhythmsResource, 0x4872A9AC
-.equ StyleGenreTable, 0x4873BCE4
-.equ StyleRecordTable, 0x4873CF0C
-.equ Sp7001ExportCodeArray, 0x487B1BB8
-.equ Sp7001ExportNameArray, 0x487B1F5C
-.equ func_487BA5E8, 0x487BA5E8
-.equ func_487BA74F, 0x487BA74F
-.equ func_487BA752, 0x487BA752
-.equ func_487BA755, 0x487BA755
 .equ LibRomImageBase, 0x487BA785
-.equ CUR_STYLE_IDX, 0x50001278
-.equ PlugInPresent, 0x500066D0
-
-# 1 branch targets outside the converted code
-.equ loc_487BA758, 0x487BA758
 
 # 11 data addresses named by annotations/*.ann
 .equ DrawIcons_PixelPairTable, 0x485A27AC   # 256 x u16: icon byte -> {left, right} palette index (nibble n -> n, or 0xF0+n if n >= 8)

@@ -141,7 +141,7 @@ data_48586600:
 .incbin_range "baserom/kn7000_program.rom", 0x186600, 0x186603
 data_48586603:
 .incbin_range "baserom/kn7000_program.rom", 0x186603, 0x186606
-Str_empty_1494:	.asciz "@"
+Str_empty_1484:	.asciz "@"
 data_48586608:
 	.space	1, 0x00
 data_48586609:
@@ -164,7 +164,7 @@ Str_Dx:	.asciz "Dx"
 .incbin_range "baserom/kn7000_program.rom", 0x18683F, 0x186860
 data_48586860:
 .incbin_range "baserom/kn7000_program.rom", 0x186860, 0x186C60
-Str_empty_1493:	.asciz "@"
+Str_empty_1483:	.asciz "@"
 .incbin_range "baserom/kn7000_program.rom", 0x186C62, 0x186E60
 data_48586E60:
 .incbin_range "baserom/kn7000_program.rom", 0x186E60, 0x186E84
@@ -223,9 +223,9 @@ data_4858717C:
 .incbin_range "baserom/kn7000_program.rom", 0x18717C, 0x187195
 data_48587195:
 	.space	1, 0xFF
-Str_empty_1492:	.asciz " "
+Str_empty_1482:	.asciz " "
 .incbin_range "baserom/kn7000_program.rom", 0x187198, 0x187398
-Str_empty_1491:	.asciz "@"
+Str_empty_1481:	.asciz "@"
 .incbin_range "baserom/kn7000_program.rom", 0x18739A, 0x18759C
 data_4858759C:
 .incbin_range "baserom/kn7000_program.rom", 0x18759C, 0x18766C
@@ -245,9 +245,9 @@ data_48587700:
 	.space	2, 0x00
 data_48587702:
 .incbin_range "baserom/kn7000_program.rom", 0x187702, 0x187774
-Str_empty_1490:	.asciz " "
+Str_empty_1480:	.asciz " "
 .incbin_range "baserom/kn7000_program.rom", 0x187776, 0x1877B4
-Str_empty_1489:	.asciz " "
+Str_empty_1479:	.asciz " "
 .incbin_range "baserom/kn7000_program.rom", 0x1877B6, 0x1877F4
 data_485877F4:
 .incbin_range "baserom/kn7000_program.rom", 0x1877F4, 0x1877FC
@@ -259,9 +259,9 @@ data_48587828:
 .incbin_range "baserom/kn7000_program.rom", 0x187828, 0x18782C
 data_4858782C:
 .incbin_range "baserom/kn7000_program.rom", 0x18782C, 0x187830
-Str_empty_1488:	.asciz ">"
+Str_empty_1478:	.asciz ">"
 .incbin_range "baserom/kn7000_program.rom", 0x187832, 0x1878B0
-Str_empty_1487:	.asciz ">"
+Str_empty_1477:	.asciz ">"
 .incbin_range "baserom/kn7000_program.rom", 0x1878B2, 0x187930
 data_48587930:
 .incbin_range "baserom/kn7000_program.rom", 0x187930, 0x187960
@@ -271,10 +271,8 @@ data_48587990:
 .incbin_range "baserom/kn7000_program.rom", 0x187990, 0x1879B4
 data_485879B4:
 .incbin_range "baserom/kn7000_program.rom", 0x1879B4, 0x1879D8
-Str_D8mH:	.asciz "D8mH"
-.incbin_range "baserom/kn7000_program.rom", 0x1879DD, 0x187AEC
-Str_XzXH:	.asciz "XzXH\x81"
-.incbin_range "baserom/kn7000_program.rom", 0x187AF2, 0x187B18
+Str_D8mH:
+.incbin_range "baserom/kn7000_program.rom", 0x1879D8, 0x187B18
 data_48587B18:
 .incbin_range "baserom/kn7000_program.rom", 0x187B18, 0x187B88
 data_48587B88:
@@ -311,7 +309,7 @@ Str_empty_1454:	.asciz "@ "
 .incbin_range "baserom/kn7000_program.rom", 0x187CAB, 0x187CB8
 Str_C_38:	.asciz "C "
 .incbin_range "baserom/kn7000_program.rom", 0x187CBB, 0x187CC8
-Str_A_41:	.asciz "A "
+Str_A_42:	.asciz "A "
 .incbin_range "baserom/kn7000_program.rom", 0x187CCB, 0x187DB8
 Str_empty_1455:	.asciz "\x8F "
 .incbin_range "baserom/kn7000_program.rom", 0x187DBB, 0x188078
@@ -387,27 +385,25 @@ Str_1_41:	.asciz "1\x80"
 .incbin_range "baserom/kn7000_program.rom", 0x18842F, 0x188440
 Str_2_44:	.asciz "2\x80"
 .incbin_range "baserom/kn7000_program.rom", 0x188443, 0x188474
-Str_empty_1486:	.asciz "@\x80"
+Str_empty_1476:	.asciz "@\x80"
 .incbin_range "baserom/kn7000_program.rom", 0x188477, 0x1884AC
-Str_empty_1469:	.asciz "`\x80"
+Str_empty_1485:	.asciz "`\x80"
 .incbin_range "baserom/kn7000_program.rom", 0x1884AF, 0x1884CC
 data_485884CC:
-.incbin_range "baserom/kn7000_program.rom", 0x1884CC, 0x1885B8
-Str_XHe:	.asciz "@\x85XHe"
-.incbin_range "baserom/kn7000_program.rom", 0x1885BE, 0x188778
+.incbin_range "baserom/kn7000_program.rom", 0x1884CC, 0x188778
 data_48588778:
 .incbin_range "baserom/kn7000_program.rom", 0x188778, 0x188788
 data_48588788:
 .incbin_range "baserom/kn7000_program.rom", 0x188788, 0x1887AC
-Str_empty_1485:	.asciz "$\xB0"
+Str_empty_1475:	.asciz "$\xB0"
 .incbin_range "baserom/kn7000_program.rom", 0x1887AF, 0x1887BC
-Str_empty_1484:	.asciz "%\xB0"
+Str_empty_1474:	.asciz "%\xB0"
 .incbin_range "baserom/kn7000_program.rom", 0x1887BF, 0x1887E0
 Str_4_40:	.asciz "4\xB0"
 .incbin_range "baserom/kn7000_program.rom", 0x1887E3, 0x1887F0
 Str_5_34:	.asciz "5\xB0"
 .incbin_range "baserom/kn7000_program.rom", 0x1887F3, 0x188804
-Str_empty_1483:	.asciz "@\xB0"
+Str_empty_1473:	.asciz "@\xB0"
 .incbin_range "baserom/kn7000_program.rom", 0x188807, 0x188814
 Str_D_22:	.asciz "D\xB0"
 .incbin_range "baserom/kn7000_program.rom", 0x188817, 0x188824
@@ -449,7 +445,7 @@ Str_8_21:	.asciz "8\xE0"
 .incbin_range "baserom/kn7000_program.rom", 0x188A8F, 0x188A9C
 Str_9_18:	.asciz "9\xE0"
 .incbin_range "baserom/kn7000_program.rom", 0x188A9F, 0x188AAC
-Str_empty_1468:	.asciz ":\xE0"
+Str_empty_1469:	.asciz ":\xE0"
 .incbin_range "baserom/kn7000_program.rom", 0x188AAF, 0x188ABC
 Str_empty_1467:	.asciz ";\xE0"
 .incbin_range "baserom/kn7000_program.rom", 0x188ABF, 0x188ACC
@@ -465,68 +461,28 @@ data_48588B48:
 .incbin_range "baserom/kn7000_program.rom", 0x188B48, 0x188B58
 data_48588B58:
 .incbin_range "baserom/kn7000_program.rom", 0x188B58, 0x18901C
-Str_empty_1479:	.asciz "\x80@ "
+Str_empty_1494:	.asciz "\x80@ "
 .incbin_range "baserom/kn7000_program.rom", 0x189020, 0x18902C
-Str_empty_1477:	.asciz "\x81@ "
+Str_empty_1493:	.asciz "\x81@ "
 .incbin_range "baserom/kn7000_program.rom", 0x189030, 0x18903C
-Str_empty_1472:	.asciz "\x82@ "
+Str_empty_1488:	.asciz "\x82@ "
 .incbin_range "baserom/kn7000_program.rom", 0x189040, 0x18904C
-Str_empty_1470:	.asciz "\x83@ "
+Str_empty_1486:	.asciz "\x83@ "
 .incbin_range "baserom/kn7000_program.rom", 0x189050, 0x18905C
-Str_empty_1476:	.asciz "\x84@ "
+Str_empty_1492:	.asciz "\x84@ "
 .incbin_range "baserom/kn7000_program.rom", 0x189060, 0x18906C
-Str_empty_1473:	.asciz "\x85@ "
+Str_empty_1489:	.asciz "\x85@ "
 .incbin_range "baserom/kn7000_program.rom", 0x189070, 0x18907C
-Str_empty_1471:	.asciz "\x86@ "
-.incbin_range "baserom/kn7000_program.rom", 0x189080, 0x1891F8
-Str_t_XH_p:	.asciz "t\x84XH\x09 p"
-.incbin_range "baserom/kn7000_program.rom", 0x189200, 0x189234
+Str_empty_1487:	.asciz "\x86@ "
+.incbin_range "baserom/kn7000_program.rom", 0x189080, 0x189234
 Str_p_63:	.asciz "\x14 p"
 .incbin_range "baserom/kn7000_program.rom", 0x189238, 0x189240
 Str_p_62:	.asciz "\x15 p"
-.incbin_range "baserom/kn7000_program.rom", 0x189244, 0x189268
-Str_XH_p:	.asciz "\xEC\x88XH\" p"
-.incbin_range "baserom/kn7000_program.rom", 0x189270, 0x189274
-Str_XH_XH_p:	.asciz "\xFC\x88XH \x89XH# p"
-.incbin_range "baserom/kn7000_program.rom", 0x189280, 0x189294
-Str_L_XH1_p:	.asciz "L\x89XH1 p"
-.incbin_range "baserom/kn7000_program.rom", 0x18929C, 0x1892A0
-Str_t_XH2_p:	.asciz "t\x89XH2 p"
-.incbin_range "baserom/kn7000_program.rom", 0x1892A8, 0x1892C4
-Str_p_XHa_p:	.asciz "p\x83XHa p"
-.incbin_range "baserom/kn7000_program.rom", 0x1892CC, 0x1892D0
-Str_h_XHb_p:	.asciz "h\x8BXHb p"
-.incbin_range "baserom/kn7000_program.rom", 0x1892D8, 0x1892DC
-Str_x_XHc_p:	.asciz "x\x8BXHc p"
-.incbin_range "baserom/kn7000_program.rom", 0x1892E4, 0x1892E8
-Str_XHh_p:	.asciz "\xD0\x83XHh p"
-.incbin_range "baserom/kn7000_program.rom", 0x1892F0, 0x1892F4
-Str_XHi_p:	.asciz "\x8C\x95XHi p"
-.incbin_range "baserom/kn7000_program.rom", 0x1892FC, 0x189300
-Str_XHj_p:	.asciz "\xF4\x96XHj p"
-.incbin_range "baserom/kn7000_program.rom", 0x189308, 0x18930C
-Str_XHk_p:	.asciz "\xAC\x95XHk p"
-.incbin_range "baserom/kn7000_program.rom", 0x189314, 0x18931C
+.incbin_range "baserom/kn7000_program.rom", 0x189244, 0x18931C
 Str_l_p_2:	.asciz "l p"
 .incbin_range "baserom/kn7000_program.rom", 0x189320, 0x189328
 Str_m_p_2:	.asciz "m p"
-.incbin_range "baserom/kn7000_program.rom", 0x18932C, 0x189330
-Str_XHn_p:	.asciz ",\x84XHn p"
-.incbin_range "baserom/kn7000_program.rom", 0x189338, 0x18933C
-Str_XH_p_2:	.asciz "@\x84XH\x80 p"
-.incbin_range "baserom/kn7000_program.rom", 0x189344, 0x189368
-Str_d_XH_p:	.asciz "d\x84XH\x84 p"
-.incbin_range "baserom/kn7000_program.rom", 0x189370, 0x189374
-Str_T_XH_p:	.asciz "T\x84XH\x85 p"
-.incbin_range "baserom/kn7000_program.rom", 0x18937C, 0x18938C
-Str_4_XH_p:	.asciz "4\x97XH\xA0 p"
-.incbin_range "baserom/kn7000_program.rom", 0x189394, 0x1893B4
-Str_XH_p_3:	.asciz "\xBC{XH\xA4 p"
-.incbin_range "baserom/kn7000_program.rom", 0x1893BC, 0x1893FC
-Str_x_XH_p:	.asciz "x\x87XH\xAC p"
-.incbin_range "baserom/kn7000_program.rom", 0x189404, 0x189424
-Str_XH_p_4:	.asciz "@\x84XH\xB0 p"
-.incbin_range "baserom/kn7000_program.rom", 0x18942C, 0x189498
+.incbin_range "baserom/kn7000_program.rom", 0x18932C, 0x189498
 data_48589498:
 .incbin_range "baserom/kn7000_program.rom", 0x189498, 0x1894E4
 data_485894E4:
@@ -541,9 +497,9 @@ data_4858953C:
 .incbin_range "baserom/kn7000_program.rom", 0x18953C, 0x189550
 data_48589550:
 .incbin_range "baserom/kn7000_program.rom", 0x189550, 0x18958C
-Str_empty_1478:	.asciz "@"
+Str_empty_1468:	.asciz "@"
 .incbin_range "baserom/kn7000_program.rom", 0x18958E, 0x18959C
-Str_A_42:	.asciz "A"
+Str_A_41:	.asciz "A"
 .incbin_range "baserom/kn7000_program.rom", 0x18959E, 0x1895AC
 Str_B_22:	.asciz "B"
 .incbin_range "baserom/kn7000_program.rom", 0x1895AE, 0x1895C0
@@ -557,74 +513,22 @@ Str_I_9:	.asciz "I"
 .incbin_range "baserom/kn7000_program.rom", 0x1895F6, 0x189604
 Str_J_8:	.asciz "J"
 .incbin_range "baserom/kn7000_program.rom", 0x189606, 0x1896C4
-Str_empty_1482:	.asciz "["
+Str_empty_1472:	.asciz "["
 .incbin_range "baserom/kn7000_program.rom", 0x1896C6, 0x1896E4
-Str_empty_1481:	.asciz "]"
+Str_empty_1471:	.asciz "]"
 .incbin_range "baserom/kn7000_program.rom", 0x1896E6, 0x1896F4
-Str_empty_1475:	.asciz "^"
+Str_empty_1491:	.asciz "^"
 .incbin_range "baserom/kn7000_program.rom", 0x1896F6, 0x189704
-Str_empty_1480:	.asciz "_"
+Str_empty_1470:	.asciz "_"
 .incbin_range "baserom/kn7000_program.rom", 0x189706, 0x189734
-Str_empty_1474:	.asciz "~"
+Str_empty_1490:	.asciz "~"
 .incbin_range "baserom/kn7000_program.rom", 0x189736, 0x189794
 data_48589794:
 .incbin_range "baserom/kn7000_program.rom", 0x189794, 0x1897A8
 data_485897A8:
-.incbin_range "baserom/kn7000_program.rom", 0x1897A8, 0x1897BC
-Str_zXH:	.asciz "\xDCzXH"
-	.align	4, 0x00
-Str_zXH_2:	.asciz "\xF4zXH"
-.incbin_range "baserom/kn7000_program.rom", 0x1897C9, 0x18982C
-Str_H_XH_2:	.asciz "H{XH"
-	.space	27, 0x00
-Str_X_XH_5:	.asciz "X{XH"
-	.space	27, 0x00
-Str_h_XH_3:	.asciz "h{XH"
-	.align	4, 0x00
-Str_x_XH_4:	.asciz "x{XH"
-.incbin_range "baserom/kn7000_program.rom", 0x189879, 0x1898F4
-Str_H_XH_3:	.asciz "H|XH"
-	.align	4, 0x00
-Str_X_XH_6:	.asciz "X|XH"
-	.align	4, 0x00
-Str_h_XH_4:	.asciz "h|XH"
-	.align	4, 0x00
-Str_x_XH_5:	.asciz "x|XH"
-.incbin_range "baserom/kn7000_program.rom", 0x189911, 0x18997C
-Str_H_XH_4:	.asciz "H}XH"
-	.align	4, 0x00
-Str_X_XH_7:	.asciz "X}XH"
-	.space	19, 0x00
-Str_h_XH_5:	.asciz "h}XH"
-	.align	4, 0x00
-Str_x_XH_6:	.asciz "x}XH"
-.incbin_range "baserom/kn7000_program.rom", 0x1899A9, 0x189A2C
-Str_H_XH_5:	.asciz "H~XH"
-	.align	4, 0x00
-Str_X_XH_8:	.asciz "X~XH"
-	.align	4, 0x00
-Str_h_XH_6:	.asciz "h~XH"
-	.align	4, 0x00
-Str_x_XH_7:	.asciz "x~XH"
-.incbin_range "baserom/kn7000_program.rom", 0x189A49, 0x189A58
+.incbin_range "baserom/kn7000_program.rom", 0x1897A8, 0x189A58
 	.space	268, 0x00
-.incbin_range "baserom/kn7000_program.rom", 0x189B64, 0x189C44
-Str_H_XH_6:	.asciz "H\x80XH"
-	.align	4, 0x00
-Str_X_XH_9:	.asciz "X\x80XH"
-	.align	4, 0x00
-Str_h_XH_7:	.asciz "h\x80XH"
-	.space	19, 0x00
-Str_x_XH_8:	.asciz "x\x80XH"
-.incbin_range "baserom/kn7000_program.rom", 0x189C71, 0x189CD4
-Str_H_XH_7:	.asciz "H\x81XH"
-	.align	4, 0x00
-Str_X_XH_10:	.asciz "X\x81XH"
-	.align	4, 0x00
-Str_h_XH_8:	.asciz "h\x81XH"
-	.align	4, 0x00
-Str_x_XH_9:	.asciz "x\x81XH"
-.incbin_range "baserom/kn7000_program.rom", 0x189CF1, 0x189D3C
+.incbin_range "baserom/kn7000_program.rom", 0x189B64, 0x189D3C
 
 names_48589D3C:
 	.long	Str_Ap, 0
@@ -632,158 +536,11 @@ names_48589D3C:
 	.long	Str_Cp, 0
 	.long	Str_Dp, 0
 	.long	Str_Ep, 0
-.incbin_range "baserom/kn7000_program.rom", 0x189D64, 0x189DDC
-
-Str_L_XH:	.asciz "L\x83XH"
-	.align	4, 0x00
-Str_XH_9:	.asciz "`\x83XH"
-	.space	27, 0x00
-Str_p_XH:	.asciz "p\x83XH"
-.incbin_range "baserom/kn7000_program.rom", 0x189E09, 0x189E8C
-Str_T_XH:	.asciz "T\x84XH"
-	.space	35, 0x00
-Str_d_XH:	.asciz "d\x84XH"
-	.align	4, 0x00
-Str_t_XH:	.asciz "t\x84XH"
-.incbin_range "baserom/kn7000_program.rom", 0x189EC1, 0x189F74
-Str_H_XH_8:	.asciz "H\x86XH"
-	.align	4, 0x00
-Str_X_XH_11:	.asciz "X\x86XH"
-	.align	4, 0x00
-Str_h_XH_9:	.asciz "h\x86XH"
-	.align	4, 0x00
-Str_x_XH_10:	.asciz "x\x86XH"
-.incbin_range "baserom/kn7000_program.rom", 0x189F91, 0x18A01C
-Str_H_XH_9:	.asciz "H\x87XH"
-	.align	4, 0x00
-Str_X_XH_12:	.asciz "X\x87XH"
-	.align	4, 0x00
-Str_h_XH_10:	.asciz "h\x87XH"
-	.space	27, 0x00
-Str_x_XH_11:	.asciz "x\x87XH"
-.incbin_range "baserom/kn7000_program.rom", 0x18A051, 0x18A104
-Str_H_XH_10:	.asciz "H\x88XH"
-	.space	27, 0x00
-Str_X_XH_13:	.asciz "X\x88XH"
-	.align	4, 0x00
-Str_h_XH_11:	.asciz "h\x88XH"
-.incbin_range "baserom/kn7000_program.rom", 0x18A131, 0x18A1E4
-Str_L_XH_2:	.asciz "L\x89XH"
-	.align	4, 0x00
-Str_T_XH_2:	.asciz "T\x89XH"
-	.align	4, 0x00
-Str_d_XH_2:	.asciz "d\x89XH"
-	.space	11, 0x00
-Str_t_XH_2:	.asciz "t\x89XH"
-.incbin_range "baserom/kn7000_program.rom", 0x18A209, 0x18A294
-Str_L_XH_3:	.asciz "L\x8AXH"
-	.align	4, 0x00
-Str_XH_10:	.asciz "\\\x8AXH"
-	.align	4, 0x00
-Str_l_XH:	.asciz "l\x8AXH"
-.incbin_range "baserom/kn7000_program.rom", 0x18A2A9, 0x18A744
-Str_H_XH_11:	.asciz "H\x8BXH"
-	.space	11, 0x00
-Str_X_XH_14:	.asciz "X\x8BXH"
-	.space	115, 0x00
-Str_h_XH_12:	.asciz "h\x8BXH"
-	.align	4, 0x00
-Str_x_XH_12:	.asciz "x\x8BXH"
-.incbin_range "baserom/kn7000_program.rom", 0x18A7D9, 0x18A86C
-Str_D_XH:	.asciz "D\x8CXH"
-	.align	4, 0x00
-Str_T_XH_3:	.asciz "T\x8CXH"
-	.align	4, 0x00
-Str_d_XH_3:	.asciz "d\x8CXH"
-	.align	4, 0x00
-Str_t_XH_3:	.asciz "t\x8CXH"
-.incbin_range "baserom/kn7000_program.rom", 0x18A889, 0x18A8FC
-Str_L_XH_4:	.asciz "L\x8DXH"
-	.align	4, 0x00
-Str_XH_11:	.asciz "\\\x8DXH"
-	.align	4, 0x00
-Str_l_XH_2:	.asciz "l\x8DXH"
-.incbin_range "baserom/kn7000_program.rom", 0x18A911, 0x18A97C
-Str_L_XH_5:	.asciz "L\x8EXH"
-	.align	4, 0x00
-Str_XH_12:	.asciz "\\\x8EXH"
-	.align	4, 0x00
-Str_l_XH_3:	.asciz "l\x8EXH"
-.incbin_range "baserom/kn7000_program.rom", 0x18A991, 0x18AA2C
-Str_L_XH_6:	.asciz "L\x8FXH"
-	.space	11, 0x00
-Str_XH_13:	.asciz "\\\x8FXH"
-	.align	4, 0x00
-Str_l_XH_4:	.asciz "l\x8FXH"
-.incbin_range "baserom/kn7000_program.rom", 0x18AA49, 0x18AAC4
-Str_L_XH_7:	.asciz "L\x90XH"
-	.align	4, 0x00
-Str_XH_14:	.asciz "\\\x90XH"
-	.align	4, 0x00
-Str_l_XH_5:	.asciz "l\x90XH"
-.incbin_range "baserom/kn7000_program.rom", 0x18AAD9, 0x18AD4C
-Str_H_XH_12:	.asciz "H\x91XH"
-	.align	4, 0x00
-Str_P_XH:	.asciz "P\x91XH"
-	.align	4, 0x00
-Str_XH_15:	.asciz "\\\x91XH"
-	.space	19, 0x00
-Str_h_XH_13:	.asciz "h\x91XH"
-	.align	4, 0x00
-Str_t_XH_4:	.asciz "t\x91XH"
-.incbin_range "baserom/kn7000_program.rom", 0x18AD81, 0x18AE44
-Str_L_XH_8:	.asciz "L\x92XH"
-	.align	4, 0x00
-Str_X_XH_15:	.asciz "X\x92XH"
-	.align	4, 0x00
-Str_XH_16:	.asciz "`\x92XH"
-	.align	4, 0x00
-Str_l_XH_6:	.asciz "l\x92XH"
-.incbin_range "baserom/kn7000_program.rom", 0x18AE61, 0x18AF14
-Str_H_XH_13:	.asciz "H\x93XH"
-	.align	4, 0x00
-Str_T_XH_4:	.asciz "T\x93XH"
-	.align	4, 0x00
-Str_XH_17:	.asciz "`\x93XH"
-	.align	4, 0x00
-Str_l_XH_7:	.asciz "l\x93XH"
-	.align	4, 0x00
-Str_x_XH_13:	.asciz "x\x93XH"
-.incbin_range "baserom/kn7000_program.rom", 0x18AF39, 0x18AFF4
-Str_D_XH_2:	.asciz "D\x94XH"
-	.align	4, 0x00
-Str_L_XH_9:	.asciz "L\x94XH"
-	.align	4, 0x00
-Str_T_XH_5:	.asciz "T\x94XH"
-	.align	4, 0x00
-Str_XH_18:	.asciz "\\\x94XH"
-	.align	4, 0x00
-Str_d_XH_4:	.asciz "d\x94XH"
-	.align	4, 0x00
-Str_l_XH_8:	.asciz "l\x94XH"
-	.space	11, 0x00
-Str_t_XH_5:	.asciz "t\x94XH"
-.incbin_range "baserom/kn7000_program.rom", 0x18B031, 0x18B1C4
-Str_P_XH_2:	.asciz "P\x95XH"
-	.align	4, 0x00
-Str_d_XH_5:	.asciz "d\x95XH"
-	.align	4, 0x00
-Str_x_XH_14:	.asciz "x\x95XH"
-.incbin_range "baserom/kn7000_program.rom", 0x18B1D9, 0x18B24C
-Str_D_XH_3:	.asciz "D\x96XH"
-	.align	4, 0x00
-Str_t_XH_6:	.asciz "t\x96XH"
-.incbin_range "baserom/kn7000_program.rom", 0x18B259, 0x18B2D0
+.incbin_range "baserom/kn7000_program.rom", 0x189D64, 0x18A758
+	.space	116, 0x00
+.incbin_range "baserom/kn7000_program.rom", 0x18A7CC, 0x18B2D0
 	.space	68, 0x00
-.incbin_range "baserom/kn7000_program.rom", 0x18B314, 0x18B34C
-Str_D_XH_4:	.asciz "D\x97XH"
-	.align	4, 0x00
-Str_T_XH_6:	.asciz "T\x97XH"
-	.align	4, 0x00
-Str_d_XH_6:	.asciz "d\x97XH"
-	.space	19, 0x00
-Str_t_XH_7:	.asciz "t\x97XH"
-.incbin_range "baserom/kn7000_program.rom", 0x18B379, 0x18B424
+.incbin_range "baserom/kn7000_program.rom", 0x18B314, 0x18B424
 ResourceIdTrie:
 .incbin_range "baserom/kn7000_program.rom", 0x18B424, 0x18B4A4
 data_4858B4A4:
@@ -794,58 +551,26 @@ ptrs_4858B4AC:
 	.long	data_48588B48
 	.space	4, 0x00
 ptrs_4858B4B8:
-	.long	Str_empty_1479
-	.long	Str_empty_1478
-	.long	Str_empty_1477
-	.long	Str_empty_1476
-	.long	Str_empty_1475
-	.long	Str_empty_1474
+	.long	Str_empty_1494
+	.long	Str_empty_1468
+	.long	Str_empty_1493
+	.long	Str_empty_1492
+	.long	Str_empty_1491
+	.long	Str_empty_1490
 	.space	4, 0x00
 ptrs_4858B4D4:
-	.long	Str_empty_1473
+	.long	Str_empty_1489
 	.long	data_48588B58
-	.long	Str_empty_1472
-	.long	Str_empty_1471
-	.long	Str_empty_1470
+	.long	Str_empty_1488
+	.long	Str_empty_1487
+	.long	Str_empty_1486
 	.space	4, 0x00
 data_4858B4EC:
-.incbin_range "baserom/kn7000_program.rom", 0x18B4EC, 0x18B568
-
-Str_D_XH_5:	.asciz "D\x96XH"
-	.align	4, 0x00
-Str_t_XH_8:	.asciz "t\x96XH"
-.incbin_range "baserom/kn7000_program.rom", 0x18B575, 0x18B598
-Str_d_XH_7:	.asciz "d\x97XH"
-	.align	4, 0x00
-Str_T_XH_7:	.asciz "T\x97XH"
-	.align	4, 0x00
-Str_D_XH_6:	.asciz "D\x97XH"
-	.align	4, 0x00
-Str_t_XH_9:	.asciz "t\x97XH"
-.incbin_range "baserom/kn7000_program.rom", 0x18B5B5, 0x18B5EC
-Str_4_XHD_XH:	.asciz "4\x8CXHD\x8CXH"
-	.align	4, 0x00
-Str_T_XHd_XH:	.asciz "T\x8CXHd\x8CXH"
-.incbin_range "baserom/kn7000_program.rom", 0x18B601, 0x18B658
-Str_L_XH_10:	.asciz "L\x8EXH"
-	.align	4, 0x00
-Str_XH_19:	.asciz "\\\x8EXH"
-	.align	4, 0x00
-Str_l_XH_9:	.asciz "l\x8EXH"
-.incbin_range "baserom/kn7000_program.rom", 0x18B66D, 0x18B6DC
-Str_XH_XH:	.asciz ",\x8FXH<\x8FXH"
-	.align	4, 0x00
-Str_XHl_XH:	.asciz "\\\x8FXHl\x8FXH"
-.incbin_range "baserom/kn7000_program.rom", 0x18B6F1, 0x18B730
+.incbin_range "baserom/kn7000_program.rom", 0x18B4EC, 0x18B730
 data_4858B730:
-.incbin_range "baserom/kn7000_program.rom", 0x18B730, 0x18B738
-Str_t_XH_10:	.asciz "t\x84XH"
-.incbin_range "baserom/kn7000_program.rom", 0x18B73D, 0x18B74C
-Str_d_XH_8:	.asciz "d\x84XH"
-	.align	4, 0x00
-Str_XH_8:	.asciz "|\x88XH"
-	.align	4, 0x00
-
+.incbin_range "baserom/kn7000_program.rom", 0x18B730, 0x18B754
+data_4858B754:
+.incbin_range "baserom/kn7000_program.rom", 0x18B754, 0x18B75C
 ptrs_4858B75C:
 	.long	data_4858889C
 	.long	data_485888BC
@@ -860,12 +585,10 @@ data_4858B77C:
 .incbin_range "baserom/kn7000_program.rom", 0x18B77C, 0x18B784
 data_4858B784:
 .incbin_range "baserom/kn7000_program.rom", 0x18B784, 0x18B78C
-
-Str_XH_7:	.asciz "\x18{XH"
-.incbin_range "baserom/kn7000_program.rom", 0x18B791, 0x18B79C
-
+data_4858B78C:
+.incbin_range "baserom/kn7000_program.rom", 0x18B78C, 0x18B79C
 ptrs_4858B79C:
-	.long	Str_empty_1469
+	.long	Str_empty_1485
 	.long	Str_0_30
 	.space	4, 0x00
 data_4858B7A8:
@@ -876,12 +599,10 @@ data_4858B7B8:
 .incbin_range "baserom/kn7000_program.rom", 0x18B7B8, 0x18B7C0
 data_4858B7C0:
 .incbin_range "baserom/kn7000_program.rom", 0x18B7C0, 0x18B7C8
-
-Str_X_XH_4:	.asciz "X\x80XH"
-	.align	4, 0x00
-Str_h_XH_2:	.asciz "h\x80XH"
-	.align	4, 0x00
-
+data_4858B7C8:
+.incbin_range "baserom/kn7000_program.rom", 0x18B7C8, 0x18B7D0
+data_4858B7D0:
+.incbin_range "baserom/kn7000_program.rom", 0x18B7D0, 0x18B7D8
 ptrs_4858B7D8:
 	.long	data_48588078
 	.long	data_48588088
@@ -907,7 +628,7 @@ ptrs_4858B80C:
 	.space	4, 0x00
 ptrs_4858B818:
 	.long	Str_2_43
-	.long	Str_empty_1468
+	.long	Str_empty_1469
 	.space	4, 0x00
 ptrs_4858B824:
 	.long	Str_3_35
@@ -928,11 +649,7 @@ ptrs_4858B848:
 ptrs_4858B854:
 	.long	Str_7_21
 	.long	Str_empty_1463
-	.space	4, 0x00
-
-Str_8_XHH_XH:	.asciz "8\x80XHH\x80XH"
-	.align	4, 0x00
-
+.incbin_range "baserom/kn7000_program.rom", 0x18B85C, 0x18B86C
 ptrs_4858B86C:
 	.long	data_48588954
 	.long	data_48588964
@@ -954,7 +671,7 @@ ptrs_4858B8A0:
 	.space	4, 0x00
 ptrs_4858B8AC:
 	.long	Str_C_38
-	.long	Str_A_41
+	.long	Str_A_42
 	.long	Str_empty_1453
 	.space	4, 0x00
 ptrs_4858B8BC:
@@ -967,18 +684,8 @@ data_4858B94C:
 	.space	4, 0x00
 data_4858B950:
 	.space	4, 0x00
-
-Str_8_XH_4:	.asciz "8~XH"
-	.align	4, 0x00
-Str_H_XH_14:	.asciz "H~XH"
-	.align	4, 0x00
-Str_X_XH_16:	.asciz "X~XH"
-	.align	4, 0x00
-Str_h_XH_14:	.asciz "h~XH"
-	.align	4, 0x00
-Str_x_XH_15:	.asciz "x~XH"
-.incbin_range "baserom/kn7000_program.rom", 0x18B979, 0x18B99C
-
+data_4858B954:
+.incbin_range "baserom/kn7000_program.rom", 0x18B954, 0x18B99C
 ptrs_4858B99C:
 	.long	Str_empty_1450
 	.long	Str_empty_1449
@@ -990,10 +697,8 @@ ptrs_4858B9B4:
 	.long	Str_empty_1447
 	.long	Str_empty_1446
 	.space	4, 0x00
-
-Str_XH_6:	.asciz "(\x87XH"
-	.align	4, 0x00
-
+data_4858B9C0:
+.incbin_range "baserom/kn7000_program.rom", 0x18B9C0, 0x18B9C8
 ptrs_4858B9C8:
 	.long	Str_p_61
 	.long	Str_p_60
@@ -1016,55 +721,52 @@ data_4858BA08:
 .incbin_range "baserom/kn7000_program.rom", 0x18BA08, 0x18BA10
 data_4858BA10:
 .incbin_range "baserom/kn7000_program.rom", 0x18BA10, 0x18BA18
-
-Str_XH_5:	.asciz "(\x81XH"
-	.align	4, 0x00
-Str_X_XH_3:	.asciz "X\x81XH"
-	.align	4, 0x00
-
+data_4858BA18:
+.incbin_range "baserom/kn7000_program.rom", 0x18BA18, 0x18BA20
+data_4858BA20:
+.incbin_range "baserom/kn7000_program.rom", 0x18BA20, 0x18BA28
 ptrs_4858BA28:
 	.long	Str_empty_1445
 	.long	Str_empty_1444
 	.long	Str_empty_1443
 	.long	Str_empty_1442
 	.space	4, 0x00
-
-Str_XH_4:	.asciz "`\x83XH"
-	.align	4, 0x00
+data_4858BA3C:
+.incbin_range "baserom/kn7000_program.rom", 0x18BA3C, 0x18BA44
 data_4858BA44:
 .incbin_range "baserom/kn7000_program.rom", 0x18BA44, 0x18BA4C
 data_4858BA4C:
 .incbin_range "baserom/kn7000_program.rom", 0x18BA4C, 0x18BA54
 data_4858BA54:
 .incbin_range "baserom/kn7000_program.rom", 0x18BA54, 0x18BA5C
-Str_XH_3:	.asciz " \x86XH"
-	.align	4, 0x00
+data_4858BA5C:
+.incbin_range "baserom/kn7000_program.rom", 0x18BA5C, 0x18BA64
 data_4858BA64:
 .incbin_range "baserom/kn7000_program.rom", 0x18BA64, 0x18BA6C
-Str_8_XH_3:	.asciz "8\x87XH"
-	.align	4, 0x00
-Str_x_XH_3:	.asciz "x\x87XH"
-	.align	4, 0x00
+data_4858BA6C:
+.incbin_range "baserom/kn7000_program.rom", 0x18BA6C, 0x18BA74
+data_4858BA74:
+.incbin_range "baserom/kn7000_program.rom", 0x18BA74, 0x18BA7C
 data_4858BA7C:
 .incbin_range "baserom/kn7000_program.rom", 0x18BA7C, 0x18BA84
 data_4858BA84:
 .incbin_range "baserom/kn7000_program.rom", 0x18BA84, 0x18BA8C
 data_4858BA8C:
 .incbin_range "baserom/kn7000_program.rom", 0x18BA8C, 0x18BA94
-Str_X_XH_2:	.asciz "X\x88XH"
-	.align	4, 0x00
+data_4858BA94:
+.incbin_range "baserom/kn7000_program.rom", 0x18BA94, 0x18BA9C
 data_4858BA9C:
 	.space	4, 0x00
-Str_8_XH_2:	.asciz "8\x86XH"
-	.align	4, 0x00
-Str_H_XH:	.asciz "H\x86XH"
-	.align	4, 0x00
-Str_X_XH:	.asciz "X\x86XH"
-	.align	4, 0x00
-Str_h_XH:	.asciz "h\x86XH"
-	.align	4, 0x00
-Str_x_XH_2:	.asciz "x\x86XH"
-	.align	4, 0x00
+data_4858BAA0:
+.incbin_range "baserom/kn7000_program.rom", 0x18BAA0, 0x18BAA8
+data_4858BAA8:
+.incbin_range "baserom/kn7000_program.rom", 0x18BAA8, 0x18BAB0
+data_4858BAB0:
+.incbin_range "baserom/kn7000_program.rom", 0x18BAB0, 0x18BAB8
+data_4858BAB8:
+.incbin_range "baserom/kn7000_program.rom", 0x18BAB8, 0x18BAC0
+data_4858BAC0:
+.incbin_range "baserom/kn7000_program.rom", 0x18BAC0, 0x18BAC8
 data_4858BAC8:
 .incbin_range "baserom/kn7000_program.rom", 0x18BAC8, 0x18BAD0
 data_4858BAD0:
@@ -1080,26 +782,19 @@ data_4858BAF0:
 data_4858BAF8:
 .incbin_range "baserom/kn7000_program.rom", 0x18BAF8, 0x18BB00
 data_4858BB00:
-.incbin_range "baserom/kn7000_program.rom", 0x18BB00, 0x18BB08
-Str_zXH_3:	.asciz "\xDCzXH"
-.incbin_range "baserom/kn7000_program.rom", 0x18BB0D, 0x18BB18
-Str_8_XH:	.asciz "8{XH"
-	.align	4, 0x00
+.incbin_range "baserom/kn7000_program.rom", 0x18BB00, 0x18BB18
+data_4858BB18:
+.incbin_range "baserom/kn7000_program.rom", 0x18BB18, 0x18BB20
 data_4858BB20:
 	.space	4, 0x00
-Str_x_XH:	.asciz "x{XH"
-	.space	7, 0x00
-Str_H_XH_15:	.asciz "H{XH"
-	.align	4, 0x00
-Str_X_XHh_XH:	.asciz "X{XHh{XH"
-	.align	4, 0x00
-Str_XH_2:	.asciz "\xAC{XH"
-	.align	4, 0x00
-Str_XH:	.asciz "\x88{XH"
-	.align	4, 0x00
+data_4858BB24:
+.incbin_range "baserom/kn7000_program.rom", 0x18BB24, 0x18BB44
+data_4858BB44:
+.incbin_range "baserom/kn7000_program.rom", 0x18BB44, 0x18BB4C
+data_4858BB4C:
+.incbin_range "baserom/kn7000_program.rom", 0x18BB4C, 0x18BB54
 data_4858BB54:
 	.space	4, 0x00
-
 ptrs_4858BB58:
 	.long	data_48587BBC
 	.long	data_48587BCC
@@ -1107,16 +802,7 @@ ptrs_4858BB58:
 ptrs_4858BB64:
 	.long	data_48588318
 	.long	data_48588328
-.incbin_range "baserom/kn7000_program.rom", 0x18BB6C, 0x18BBE8
-
-Str_T_XH_XHt_XH:	.asciz "T\x84XH<\x89XHt\x89XH"
-.incbin_range "baserom/kn7000_program.rom", 0x18BBF5, 0x18BC00
-Str_H_XHX_XH:	.asciz "H\x87XHX\x87XH"
-	.align	4, 0x00
-Str_h_XH_15:	.asciz "h\x87XH"
-.incbin_range "baserom/kn7000_program.rom", 0x18BC11, 0x18BC2C
-Str_H_XH_16:	.asciz "H\x88XH"
-.incbin_range "baserom/kn7000_program.rom", 0x18BC31, 0x18BC50
+.incbin_range "baserom/kn7000_program.rom", 0x18BB6C, 0x18BC50
 
 names_4858BC50:
 	.long	Str_Ep, 0
@@ -1150,21 +836,19 @@ ptrs_4858BD88:
 	.long	data_4858B730
 	.long	data_4858B730
 	.long	data_4858B730
-
-Str_8_XH_5:	.asciz "8\xB7XH"
-.incbin_range "baserom/kn7000_program.rom", 0x18BDCD, 0x18BDDC
-
+Str_8_XH_5:
+.incbin_range "baserom/kn7000_program.rom", 0x18BDC8, 0x18BDDC
 ptrs_4858BDDC:
-	.long	Str_XH_8
-	.long	Str_XH_8
-	.long	Str_XH_8
+	.long	data_4858B754
+	.long	data_4858B754
+	.long	data_4858B754
 	.long	ptrs_4858B75C
 	.long	ptrs_4858B768
 	.long	data_4858B774
 	.long	data_4858B77C
 	.long	data_4858B784
-	.long	Str_XH_7
-	.long	Str_XH_7
+	.long	data_4858B78C
+	.long	data_4858B78C
 data_4858BE04:
 .incbin_range "baserom/kn7000_program.rom", 0x18BE04, 0x18BE08
 ptrs_4858BE08:
@@ -1173,8 +857,8 @@ ptrs_4858BE08:
 	.long	data_4858B7B0
 	.long	data_4858B7B8
 	.long	data_4858B7C0
-	.long	Str_X_XH_4
-	.long	Str_h_XH_2
+	.long	data_4858B7C8
+	.long	data_4858B7D0
 	.long	ptrs_4858B7D8
 	.long	ptrs_4858B7E8
 	.long	data_4858B7F4
@@ -1202,13 +886,13 @@ ptrs_4858BE64:
 ptrs_4858BE9C:
 	.long	data_4858B94C
 	.long	data_4858B950
-	.long	Str_8_XH_4
+	.long	data_4858B954
 .incbin_range "baserom/kn7000_program.rom", 0x18BEA8, 0x18BF14
 ptrs_4858BF14:
 	.long	ptrs_4858B99C
 	.long	data_4858B9AC
 	.long	ptrs_4858B9B4
-	.long	Str_XH_6
+	.long	data_4858B9C0
 ptrs_4858BF24:
 	.long	ptrs_4858B9C8
 	.long	data_4858B9EC
@@ -1216,41 +900,41 @@ ptrs_4858BF24:
 	.long	ptrs_4858B9FC
 	.long	data_4858BA08
 	.long	data_4858BA10
-	.long	Str_XH_5
-	.long	Str_X_XH_3
+	.long	data_4858BA18
+	.long	data_4858BA20
 ptrs_4858BF44:
 	.long	ptrs_4858BA28
-	.long	Str_XH_4
+	.long	data_4858BA3C
 	.long	data_4858BA44
 	.long	data_4858BA44
 	.long	data_4858BA4C
 	.long	data_4858BA4C
 	.long	data_4858BA54
 	.long	data_4858BA54
-	.long	Str_XH_3
-	.long	Str_XH_3
+	.long	data_4858BA5C
+	.long	data_4858BA5C
 	.long	data_4858BA64
 	.long	data_4858BA64
-	.long	Str_8_XH_3
-	.long	Str_8_XH_3
-	.long	Str_x_XH_3
-	.long	Str_x_XH_3
+	.long	data_4858BA6C
+	.long	data_4858BA6C
+	.long	data_4858BA74
+	.long	data_4858BA74
 	.long	data_4858BA7C
 	.long	data_4858BA7C
 	.long	data_4858BA84
 	.long	data_4858BA84
 	.long	data_4858BA8C
 	.long	data_4858BA8C
-	.long	Str_X_XH_2
-	.long	Str_X_XH_2
+	.long	data_4858BA94
+	.long	data_4858BA94
 	.long	data_4858BA9C
 	.long	data_4858BA9C
 ptrs_4858BFAC:
-	.long	Str_8_XH_2
-	.long	Str_H_XH
-	.long	Str_X_XH
-	.long	Str_h_XH
-	.long	Str_x_XH_2
+	.long	data_4858BAA0
+	.long	data_4858BAA8
+	.long	data_4858BAB0
+	.long	data_4858BAB8
+	.long	data_4858BAC0
 	.long	data_4858BAC8
 	.long	data_4858BAD0
 	.long	data_4858BAD8
@@ -1262,13 +946,13 @@ ptrs_4858BFAC:
 data_4858BFE0:
 .incbin_range "baserom/kn7000_program.rom", 0x18BFE0, 0x18BFF0
 ptrs_4858BFF0:
-	.long	Str_8_XH
+	.long	data_4858BB18
 	.long	data_4858BB20
-	.long	Str_x_XH
+	.long	data_4858BB24
 .incbin_range "baserom/kn7000_program.rom", 0x18BFFC, 0x18C00C
 ptrs_4858C00C:
-	.long	Str_XH_2
-	.long	Str_XH
+	.long	data_4858BB44
+	.long	data_4858BB4C
 	.long	data_4858BB54
 	.long	ptrs_4858BB58
 	.long	ptrs_4858BB64
@@ -1356,7 +1040,7 @@ data_4858CB2C:
 
 Str_ZZ:	.asciz "ZZ"
 .incbin_range "baserom/kn7000_program.rom", 0x18CBAF, 0x18CBCC
-Str_empty_1441:	.asciz "@\x12                "
+Str_empty_1431:	.asciz "@\x12                "
 	.align	4, 0x00
 Str_H_11:	.asciz "\x10H"
 .incbin_range "baserom/kn7000_program.rom", 0x18CBE3, 0x18CCBE
@@ -1366,7 +1050,7 @@ data_4858CCEE:
 .incbin_range "baserom/kn7000_program.rom", 0x18CCEE, 0x18CCF0
 data_4858CCF0:
 .incbin_range "baserom/kn7000_program.rom", 0x18CCF0, 0x18CD3A
-Str_empty_1440:	.asciz "!"
+Str_empty_1430:	.asciz "!"
 .incbin_range "baserom/kn7000_program.rom", 0x18CD3C, 0x18CDCC
 data_4858CDCC:
 .incbin_range "baserom/kn7000_program.rom", 0x18CDCC, 0x18CDCE
@@ -1452,7 +1136,7 @@ data_4858D794:
 .incbin_range "baserom/kn7000_program.rom", 0x18D794, 0x18D7F0
 data_4858D7F0:
 .incbin_range "baserom/kn7000_program.rom", 0x18D7F0, 0x18D84C
-Str_empty_1439:	.asciz "@"
+Str_empty_1429:	.asciz "@"
 .incbin_range "baserom/kn7000_program.rom", 0x18D84E, 0x18DA4C
 data_4858DA4C:
 .incbin_range "baserom/kn7000_program.rom", 0x18DA4C, 0x18DA9C
@@ -1492,14 +1176,12 @@ data_4858E235:
 .incbin_range "baserom/kn7000_program.rom", 0x18E235, 0x18E241
 data_4858E241:
 .incbin_range "baserom/kn7000_program.rom", 0x18E241, 0x18E24A
-Str_empty_1438:	.asciz "#"
+Str_empty_1428:	.asciz "#"
 .incbin_range "baserom/kn7000_program.rom", 0x18E24C, 0x18E774
 data_4858E774:
 .incbin_range "baserom/kn7000_program.rom", 0x18E774, 0x18E984
 data_4858E984:
-.incbin_range "baserom/kn7000_program.rom", 0x18E984, 0x18E988
-Str_8_XHR:	.asciz "8\xE6XHR("
-.incbin_range "baserom/kn7000_program.rom", 0x18E98F, 0x18E9E4
+.incbin_range "baserom/kn7000_program.rom", 0x18E984, 0x18E9E4
 data_4858E9E4:
 .incbin_range "baserom/kn7000_program.rom", 0x18E9E4, 0x18EA0C
 data_4858EA0C:
@@ -1512,14 +1194,14 @@ data_4858EA5C:
 .incbin_range "baserom/kn7000_program.rom", 0x18EA5C, 0x18EAA4
 data_4858EAA4:
 .incbin_range "baserom/kn7000_program.rom", 0x18EAA4, 0x18EAEC
-Str_empty_1437:	.asciz "        "
+Str_empty_1427:	.asciz "        "
 	.align	4, 0xFF
 Str_3d_228:	.asciz "  %3d"
 	.align	4, 0xFF
-Str_empty_1436:	.asciz "                    "
+Str_empty_1426:	.asciz "                    "
 	.align	4, 0xFF
-Str_empty_1435:	.asciz "       "
-Str_empty_1434:	.asciz "        "
+Str_empty_1425:	.asciz "       "
+Str_empty_1424:	.asciz "        "
 	.align	4, 0xFF
 Str_3d_227:	.asciz "  %3d   "
 	.align	4, 0xFF
@@ -1597,13 +1279,12 @@ data_4858F6E0:
 .incbin_range "baserom/kn7000_program.rom", 0x18F6E0, 0x18F710
 data_4858F710:
 .incbin_range "baserom/kn7000_program.rom", 0x18F710, 0x18F744
-Str_u_AHu_AHu_AH_AHu_AHu_AHu_AH_AHu_AH_AHu_A:	.asciz "u%AHu%AHu%AH\x95%AHu%AHu%AHu%AH\x95%AHu%AH\x95%AHu%AHu%AHu%AH\xBA%AH\xBA%AH\xBA%AH\xDB%AH\xBA%AH\xBA%AH\xBA%AH\xDB%AH\xBA%AH\xDB%AH\xBA%AH\xBA%AH\xBA%AH"
-.incbin_range "baserom/kn7000_program.rom", 0x18F7AD, 0x18F7B5
-Str_AH_AH:	.asciz "&AH!&AH"
-.incbin_range "baserom/kn7000_program.rom", 0x18F7BD, 0x18F7C5
-Str_AH_AH_2:	.asciz "&AH!&AH"
-Str_AH_AH_3:	.asciz "&AH!&AH"
-.incbin_range "baserom/kn7000_program.rom", 0x18F7D5, 0x18F7E0
+Str_u_AHu_AHu_AH_AHu_AHu_AHu_AH_AHu_AH_AHu_A:
+.incbin_range "baserom/kn7000_program.rom", 0x18F744, 0x18F778
+data_4858F778:
+.incbin_range "baserom/kn7000_program.rom", 0x18F778, 0x18F7AC
+data_4858F7AC:
+.incbin_range "baserom/kn7000_program.rom", 0x18F7AC, 0x18F7E0
 data_4858F7E0:
 .incbin_range "baserom/kn7000_program.rom", 0x18F7E0, 0x18F814
 data_4858F814:
@@ -1638,8 +1319,8 @@ data_4858FAC0:
 .incbin_range "baserom/kn7000_program.rom", 0x18FAC0, 0x18FAF4
 data_4858FAF4:
 .incbin_range "baserom/kn7000_program.rom", 0x18FAF4, 0x18FB64
-Str_PAAHXAAH_AAHhAAHpAAHxAAH_AAH_AAH_AAH_AAH:	.asciz "PAAHXAAH`AAHhAAHpAAHxAAH\x80AAH\x93AAH\x90AAH\x88AAH\x13"
-.incbin_range "baserom/kn7000_program.rom", 0x18FB8E, 0x18FB98
+Str_PAAHXAAH_AAHhAAHpAAHxAAH_AAH_AAH_AAH_AAH:
+.incbin_range "baserom/kn7000_program.rom", 0x18FB64, 0x18FB98
 Str_Room1:	.asciz "     Room1      "
 .incbin_range "baserom/kn7000_program.rom", 0x18FBA9, 0x18FBC4
 Str_Room2:	.asciz "     Room2      "
@@ -1673,13 +1354,9 @@ Str_Live_Stage:	.asciz "   Live Stage   "
 Str_Stadium:	.asciz "    Stadium     "
 .incbin_range "baserom/kn7000_program.rom", 0x18FE3D, 0x18FE58
 Str_Medium_Gate:	.asciz "  Medium Gate   "
-.incbin_range "baserom/kn7000_program.rom", 0x18FE69, 0x18FE70
-Str_L_XH_11:	.asciz "L\xFEXH\x09 "
-.incbin_range "baserom/kn7000_program.rom", 0x18FE77, 0x18FE84
+.incbin_range "baserom/kn7000_program.rom", 0x18FE69, 0x18FE84
 Str_Short_Gate:	.asciz "   Short Gate   "
-.incbin_range "baserom/kn7000_program.rom", 0x18FE95, 0x18FE9C
-Str_x_XH_16:	.asciz "x\xFEXH\x09!"
-.incbin_range "baserom/kn7000_program.rom", 0x18FEA3, 0x18FEB0
+.incbin_range "baserom/kn7000_program.rom", 0x18FE95, 0x18FEB0
 Str_Long_Gate:	.asciz "   Long Gate    "
 .incbin_range "baserom/kn7000_program.rom", 0x18FEC1, 0x18FEDC
 Str_Deep1_3:	.asciz "     Deep1      "
@@ -2105,9 +1782,7 @@ Str_Deep7_4:	.asciz "     Deep7      "
 Str_Normal1_5:	.asciz "    Normal1     "
 .incbin_range "baserom/kn7000_program.rom", 0x192549, 0x19256C
 Str_Normal2_5:	.asciz "    Normal2     "
-.incbin_range "baserom/kn7000_program.rom", 0x19257D, 0x192584
-Str_X_YH:	.asciz "X%YH \x09"
-.incbin_range "baserom/kn7000_program.rom", 0x19258B, 0x1925A0
+.incbin_range "baserom/kn7000_program.rom", 0x19257D, 0x1925A0
 Str_Normal3_5:	.asciz "    Normal3     "
 .incbin_range "baserom/kn7000_program.rom", 0x1925B1, 0x1925D4
 Str_Normal4_5:	.asciz "    Normal4     "
@@ -2137,9 +1812,7 @@ Str_Deep8_4:	.asciz "     Deep8      "
 Str_Deep9_4:	.asciz "     Deep9      "
 .incbin_range "baserom/kn7000_program.rom", 0x192855, 0x192878
 Str_Deep10_4:	.asciz "     Deep10     "
-.incbin_range "baserom/kn7000_program.rom", 0x192889, 0x192890
-Str_d_YH:	.asciz "d(YH \""
-.incbin_range "baserom/kn7000_program.rom", 0x192897, 0x1928AC
+.incbin_range "baserom/kn7000_program.rom", 0x192889, 0x1928AC
 Str_Deep11_4:	.asciz "     Deep11     "
 .incbin_range "baserom/kn7000_program.rom", 0x1928BD, 0x1928E0
 Str_Deep12_4:	.asciz "     Deep12     "
@@ -2149,9 +1822,7 @@ Str_Deep13_4:	.asciz "     Deep13     "
 Str_Normal8_4:	.asciz "    Normal8     "
 .incbin_range "baserom/kn7000_program.rom", 0x192959, 0x19297C
 Str_Normal9_4:	.asciz "    Normal9     "
-.incbin_range "baserom/kn7000_program.rom", 0x19298D, 0x192994
-Str_h_YH:	.asciz "h)YH )"
-.incbin_range "baserom/kn7000_program.rom", 0x19299B, 0x1929B0
+.incbin_range "baserom/kn7000_program.rom", 0x19298D, 0x1929B0
 Str_Normal10_4:	.asciz "    Normal10    "
 .incbin_range "baserom/kn7000_program.rom", 0x1929C1, 0x1929E4
 Str_Normal11_4:	.asciz "    Normal11    "
@@ -2161,9 +1832,7 @@ Str_Normal12_4:	.asciz "    Normal12    "
 Str_Normal13_4:	.asciz "    Normal13    "
 .incbin_range "baserom/kn7000_program.rom", 0x192A5D, 0x192A80
 Str_Shallow8_4:	.asciz "    Shallow8    "
-.incbin_range "baserom/kn7000_program.rom", 0x192A91, 0x192A98
-Str_l_YH_0:	.asciz "l*YH 0"
-.incbin_range "baserom/kn7000_program.rom", 0x192A9F, 0x192AB4
+.incbin_range "baserom/kn7000_program.rom", 0x192A91, 0x192AB4
 Str_Shallow9_4:	.asciz "    Shallow9    "
 .incbin_range "baserom/kn7000_program.rom", 0x192AC5, 0x192AE8
 Str_Shallow10_4:	.asciz "   Shallow10    "
@@ -2173,9 +1842,7 @@ Str_Shallow11_4:	.asciz "   Shallow11    "
 Str_Shallow12_4:	.asciz "   Shallow12    "
 .incbin_range "baserom/kn7000_program.rom", 0x192B61, 0x192B84
 Str_Shallow13_4:	.asciz "   Shallow13    "
-.incbin_range "baserom/kn7000_program.rom", 0x192B95, 0x192B9C
-Str_p_YH_5:	.asciz "p+YH 5"
-.incbin_range "baserom/kn7000_program.rom", 0x192BA3, 0x192BC0
+.incbin_range "baserom/kn7000_program.rom", 0x192B95, 0x192BC0
 Str_Standard:	.asciz "   Standard     "
 .incbin_range "baserom/kn7000_program.rom", 0x192BD1, 0x192BFC
 Str_Single_Rotor_2:	.asciz " Single Rotor   "
@@ -2191,9 +1858,7 @@ Str_Mellow_Twin_2:	.asciz "  Mellow Twin   "
 Str_Brilliant_Twin_2:	.asciz " Brilliant Twin "
 .incbin_range "baserom/kn7000_program.rom", 0x192D39, 0x192D64
 Str_Standard_2:	.asciz "    Standard    "
-.incbin_range "baserom/kn7000_program.rom", 0x192D75, 0x192D7C
-Str_H_YH:	.asciz "H-YH\" "
-.incbin_range "baserom/kn7000_program.rom", 0x192D83, 0x192DA0
+.incbin_range "baserom/kn7000_program.rom", 0x192D75, 0x192DA0
 Str_Single_Rotor:	.asciz " Single Rotor   "
 .incbin_range "baserom/kn7000_program.rom", 0x192DB1, 0x192DDC
 Str_Distorted:	.asciz "   Distorted    "
@@ -2203,9 +1868,7 @@ Str_Bright_Twin:	.asciz "  Bright Twin   "
 Str_Mellow_Twin:	.asciz "  Mellow Twin   "
 .incbin_range "baserom/kn7000_program.rom", 0x192E65, 0x192E90
 Str_Brilliant_Twin:	.asciz " Brilliant Twin "
-.incbin_range "baserom/kn7000_program.rom", 0x192EA1, 0x192EA8
-Str_t_YH:	.asciz "t.YH\"%"
-.incbin_range "baserom/kn7000_program.rom", 0x192EAF, 0x192EC4
+.incbin_range "baserom/kn7000_program.rom", 0x192EA1, 0x192EC4
 Str_Deep1_4:	.asciz "     Deep1      "
 .incbin_range "baserom/kn7000_program.rom", 0x192ED5, 0x192EF8
 Str_Deep2_3:	.asciz "     Deep2      "
@@ -2223,9 +1886,7 @@ Str_Deep7_3:	.asciz "     Deep7      "
 Str_Normal1_4:	.asciz "    Normal1     "
 .incbin_range "baserom/kn7000_program.rom", 0x193041, 0x193064
 Str_Normal2_4:	.asciz "    Normal2     "
-.incbin_range "baserom/kn7000_program.rom", 0x193075, 0x19307C
-Str_P0YH:	.asciz "P0YH#\x09"
-.incbin_range "baserom/kn7000_program.rom", 0x193083, 0x193098
+.incbin_range "baserom/kn7000_program.rom", 0x193075, 0x193098
 Str_Normal3_4:	.asciz "    Normal3     "
 .incbin_range "baserom/kn7000_program.rom", 0x1930A9, 0x1930CC
 Str_Normal4_4:	.asciz "    Normal4     "
@@ -2255,9 +1916,7 @@ Str_Deep8_3:	.asciz "     Deep8      "
 Str_Deep9_3:	.asciz "     Deep9      "
 .incbin_range "baserom/kn7000_program.rom", 0x19334D, 0x193370
 Str_Deep10_3:	.asciz "     Deep10     "
-.incbin_range "baserom/kn7000_program.rom", 0x193381, 0x193388
-Str_3YH:	.asciz "\\3YH#\""
-.incbin_range "baserom/kn7000_program.rom", 0x19338F, 0x1933A4
+.incbin_range "baserom/kn7000_program.rom", 0x193381, 0x1933A4
 Str_Deep11_3:	.asciz "     Deep11     "
 .incbin_range "baserom/kn7000_program.rom", 0x1933B5, 0x1933D8
 Str_Deep12_3:	.asciz "     Deep12     "
@@ -2267,9 +1926,7 @@ Str_Deep13_3:	.asciz "     Deep13     "
 Str_Normal8_3:	.asciz "    Normal8     "
 .incbin_range "baserom/kn7000_program.rom", 0x193451, 0x193474
 Str_Normal9_3:	.asciz "    Normal9     "
-.incbin_range "baserom/kn7000_program.rom", 0x193485, 0x19348C
-Str_4YH:	.asciz "`4YH#)"
-.incbin_range "baserom/kn7000_program.rom", 0x193493, 0x1934A8
+.incbin_range "baserom/kn7000_program.rom", 0x193485, 0x1934A8
 Str_Normal10_3:	.asciz "    Normal10    "
 .incbin_range "baserom/kn7000_program.rom", 0x1934B9, 0x1934DC
 Str_Normal11_3:	.asciz "    Normal11    "
@@ -2279,9 +1936,7 @@ Str_Normal12_3:	.asciz "    Normal12    "
 Str_Normal13_3:	.asciz "    Normal13    "
 .incbin_range "baserom/kn7000_program.rom", 0x193555, 0x193578
 Str_Shallow8_3:	.asciz "    Shallow8    "
-.incbin_range "baserom/kn7000_program.rom", 0x193589, 0x193590
-Str_d5YH_0:	.asciz "d5YH#0"
-.incbin_range "baserom/kn7000_program.rom", 0x193597, 0x1935AC
+.incbin_range "baserom/kn7000_program.rom", 0x193589, 0x1935AC
 Str_Shallow9_3:	.asciz "    Shallow9    "
 .incbin_range "baserom/kn7000_program.rom", 0x1935BD, 0x1935E0
 Str_Shallow10_3:	.asciz "   Shallow10    "
@@ -2291,9 +1946,7 @@ Str_Shallow11_3:	.asciz "   Shallow11    "
 Str_Shallow12_3:	.asciz "   Shallow12    "
 .incbin_range "baserom/kn7000_program.rom", 0x193659, 0x19367C
 Str_Shallow13_3:	.asciz "   Shallow13    "
-.incbin_range "baserom/kn7000_program.rom", 0x19368D, 0x193694
-Str_h6YH_5:	.asciz "h6YH#5"
-.incbin_range "baserom/kn7000_program.rom", 0x19369B, 0x1936A8
+.incbin_range "baserom/kn7000_program.rom", 0x19368D, 0x1936A8
 Str_Tremolo1:	.asciz "    Tremolo1    "
 .incbin_range "baserom/kn7000_program.rom", 0x1936B9, 0x1936D4
 Str_Tremolo2:	.asciz "    Tremolo2    "
@@ -2315,9 +1968,7 @@ Str_Auto_Pan1:	.asciz "   Auto Pan1    "
 Str_Auto_Pan2:	.asciz "   Auto Pan2    "
 .incbin_range "baserom/kn7000_program.rom", 0x19384D, 0x19386C
 Str_Auto_Pan3:	.asciz "   Auto Pan3    "
-.incbin_range "baserom/kn7000_program.rom", 0x19387D, 0x193884
-Str_8YH:	.asciz "\\8YH%\""
-.incbin_range "baserom/kn7000_program.rom", 0x19388B, 0x19389C
+.incbin_range "baserom/kn7000_program.rom", 0x19387D, 0x19389C
 Str_Auto_Pan4:	.asciz "   Auto Pan4    "
 .incbin_range "baserom/kn7000_program.rom", 0x1938AD, 0x1938CC
 Str_Auto_Pan5:	.asciz "   Auto Pan5    "
@@ -2327,9 +1978,7 @@ Str_Auto_Pan6:	.asciz "   Auto Pan6    "
 Str_Auto_Pan7:	.asciz "   Auto Pan7    "
 .incbin_range "baserom/kn7000_program.rom", 0x19393D, 0x19395C
 Str_Vibrato1:	.asciz "    Vibrato1    "
-.incbin_range "baserom/kn7000_program.rom", 0x19396D, 0x193974
-Str_L9YH:	.asciz "L9YH'"
-.incbin_range "baserom/kn7000_program.rom", 0x19397A, 0x19398C
+.incbin_range "baserom/kn7000_program.rom", 0x19396D, 0x19398C
 Str_Vibrato2:	.asciz "    Vibrato2    "
 .incbin_range "baserom/kn7000_program.rom", 0x19399D, 0x1939BC
 Str_Vibrato3:	.asciz "    Vibrato3    "
@@ -2361,9 +2010,7 @@ Str_Mixup3:	.asciz "     Mixup3     "
 Str_Mixup4:	.asciz "     Mixup4     "
 .incbin_range "baserom/kn7000_program.rom", 0x193C3D, 0x193C60
 Str_Dry_Wet_1_2:	.asciz "   Dry/Wet 1    "
-.incbin_range "baserom/kn7000_program.rom", 0x193C71, 0x193C78
-Str_L_YH:	.asciz "L<YH*"
-.incbin_range "baserom/kn7000_program.rom", 0x193C7E, 0x193C94
+.incbin_range "baserom/kn7000_program.rom", 0x193C71, 0x193C94
 Str_Dry_Wet_2_2:	.asciz "   Dry/Wet 2    "
 .incbin_range "baserom/kn7000_program.rom", 0x193CA5, 0x193CC8
 Str_Dry_Wet_3_2:	.asciz "   Dry/Wet 3    "
@@ -2383,9 +2030,7 @@ Str_Dry_Wet_9_2:	.asciz "   Dry/Wet 9    "
 Str_Dry_Wet_10_2:	.asciz "   Dry/Wet 10   "
 .incbin_range "baserom/kn7000_program.rom", 0x193E45, 0x193E68
 Str_Dry_Wet_11_2:	.asciz "   Dry/Wet 11   "
-.incbin_range "baserom/kn7000_program.rom", 0x193E79, 0x193E80
-Str_T_YH:	.asciz "T>YH*#"
-.incbin_range "baserom/kn7000_program.rom", 0x193E87, 0x193E9C
+.incbin_range "baserom/kn7000_program.rom", 0x193E79, 0x193E9C
 Str_Dry_Wet_12_2:	.asciz "   Dry/Wet 12   "
 .incbin_range "baserom/kn7000_program.rom", 0x193EAD, 0x193ED0
 Str_Dry_Wet_13_2:	.asciz "   Dry/Wet 13   "
@@ -2405,9 +2050,7 @@ Str_Dry_Wet_6:	.asciz "   Dry/Wet 6    "
 Str_Dry_Wet_7:	.asciz "   Dry/Wet 7    "
 .incbin_range "baserom/kn7000_program.rom", 0x19404D, 0x194070
 Str_Dry_Wet_8:	.asciz "   Dry/Wet 8    "
-.incbin_range "baserom/kn7000_program.rom", 0x194081, 0x194088
-Str_YH:	.asciz "\\@YH+ "
-.incbin_range "baserom/kn7000_program.rom", 0x19408F, 0x1940A4
+.incbin_range "baserom/kn7000_program.rom", 0x194081, 0x1940A4
 Str_Dry_Wet_9:	.asciz "   Dry/Wet 9    "
 .incbin_range "baserom/kn7000_program.rom", 0x1940B5, 0x1940D8
 Str_Dry_Wet_10:	.asciz "   Dry/Wet 10   "
@@ -2415,17 +2058,11 @@ Str_Dry_Wet_10:	.asciz "   Dry/Wet 10   "
 Str_Dry_Wet_11:	.asciz "   Dry/Wet 11   "
 .incbin_range "baserom/kn7000_program.rom", 0x19411D, 0x194140
 Str_Dry_Wet_12:	.asciz "   Dry/Wet 12   "
-.incbin_range "baserom/kn7000_program.rom", 0x194151, 0x194158
-Str_AYH:	.asciz ",AYH+$"
-.incbin_range "baserom/kn7000_program.rom", 0x19415F, 0x194174
+.incbin_range "baserom/kn7000_program.rom", 0x194151, 0x194174
 Str_Dry_Wet_13:	.asciz "   Dry/Wet 13   "
-.incbin_range "baserom/kn7000_program.rom", 0x194185, 0x19418C
-Str_AYH_2:	.asciz "`AYH+%"
-.incbin_range "baserom/kn7000_program.rom", 0x194193, 0x1941BC
+.incbin_range "baserom/kn7000_program.rom", 0x194185, 0x1941BC
 Str_Make_Up_2:	.asciz "    Make Up     "
-.incbin_range "baserom/kn7000_program.rom", 0x1941CD, 0x1941D4
-Str_AYH0:	.asciz "\x94AYH0"
-.incbin_range "baserom/kn7000_program.rom", 0x1941DA, 0x194204
+.incbin_range "baserom/kn7000_program.rom", 0x1941CD, 0x194204
 Str_Middle_Cut:	.asciz "   Middle Cut   "
 .incbin_range "baserom/kn7000_program.rom", 0x194215, 0x19424C
 Str_Radio_2:	.asciz "     Radio      "
@@ -2441,9 +2078,7 @@ Str_Bass_Cut:	.asciz "    Bass Cut    "
 Str_Too_Bright:	.asciz "   Too Bright   "
 .incbin_range "baserom/kn7000_program.rom", 0x1943C5, 0x1943F0
 Str_5_Band:	.asciz "     5 Band     "
-.incbin_range "baserom/kn7000_program.rom", 0x194401, 0x194408
-Str_CYH1:	.asciz "\xD4CYH1"
-.incbin_range "baserom/kn7000_program.rom", 0x19440E, 0x194428
+.incbin_range "baserom/kn7000_program.rom", 0x194401, 0x194428
 Str_For_2Beat_1_2:	.asciz "  For 2Beat 1   "
 .incbin_range "baserom/kn7000_program.rom", 0x194439, 0x194460
 Str_For_2Beat_2_2:	.asciz "  For 2Beat 2   "
@@ -2453,41 +2088,23 @@ Str_For_3Beat_1_2:	.asciz "  For 3Beat 1   "
 Str_For_3Beat_2_2:	.asciz "  For 3Beat 2   "
 .incbin_range "baserom/kn7000_program.rom", 0x1944E1, 0x194508
 Str_For_4Beat_1_2:	.asciz "  For 4Beat 1   "
-.incbin_range "baserom/kn7000_program.rom", 0x194519, 0x194520
-Str_DYH3:	.asciz "\xF0DYH3 "
-.incbin_range "baserom/kn7000_program.rom", 0x194527, 0x194540
+.incbin_range "baserom/kn7000_program.rom", 0x194519, 0x194540
 Str_For_4Beat_2_2:	.asciz "  For 4Beat 2   "
-.incbin_range "baserom/kn7000_program.rom", 0x194551, 0x194558
-Str_EYH3:	.asciz "(EYH3!"
-.incbin_range "baserom/kn7000_program.rom", 0x19455F, 0x194570
+.incbin_range "baserom/kn7000_program.rom", 0x194551, 0x194570
 Str_Enhancer1:	.asciz "   Enhancer1    "
-.incbin_range "baserom/kn7000_program.rom", 0x194581, 0x194588
-Str_EYH5:	.asciz "`EYH5 "
-.incbin_range "baserom/kn7000_program.rom", 0x19458F, 0x1945A0
+.incbin_range "baserom/kn7000_program.rom", 0x194581, 0x1945A0
 Str_Enhancer2:	.asciz "   Enhancer2    "
-.incbin_range "baserom/kn7000_program.rom", 0x1945B1, 0x1945B8
-Str_EYH5_2:	.asciz "\x90EYH5!"
-.incbin_range "baserom/kn7000_program.rom", 0x1945BF, 0x1945D0
+.incbin_range "baserom/kn7000_program.rom", 0x1945B1, 0x1945D0
 Str_Enhancer3:	.asciz "   Enhancer3    "
-.incbin_range "baserom/kn7000_program.rom", 0x1945E1, 0x1945E8
-Str_EYH5_3:	.asciz "\xC0EYH5\""
-.incbin_range "baserom/kn7000_program.rom", 0x1945EF, 0x194600
+.incbin_range "baserom/kn7000_program.rom", 0x1945E1, 0x194600
 Str_Enhancer4:	.asciz "   Enhancer4    "
-.incbin_range "baserom/kn7000_program.rom", 0x194611, 0x194618
-Str_EYH5_4:	.asciz "\xF0EYH5#"
-.incbin_range "baserom/kn7000_program.rom", 0x19461F, 0x194630
+.incbin_range "baserom/kn7000_program.rom", 0x194611, 0x194630
 Str_Enhancer5:	.asciz "   Enhancer5    "
-.incbin_range "baserom/kn7000_program.rom", 0x194641, 0x194648
-Str_FYH5:	.asciz " FYH5$"
-.incbin_range "baserom/kn7000_program.rom", 0x19464F, 0x194660
+.incbin_range "baserom/kn7000_program.rom", 0x194641, 0x194660
 Str_Enhancer6:	.asciz "   Enhancer6    "
-.incbin_range "baserom/kn7000_program.rom", 0x194671, 0x194678
-Str_PFYH5:	.asciz "PFYH5%"
-.incbin_range "baserom/kn7000_program.rom", 0x19467F, 0x194690
+.incbin_range "baserom/kn7000_program.rom", 0x194671, 0x194690
 Str_Exciter1:	.asciz "    Exciter1    "
-.incbin_range "baserom/kn7000_program.rom", 0x1946A1, 0x1946A8
-Str_FYH7:	.asciz "\x80FYH7"
-.incbin_range "baserom/kn7000_program.rom", 0x1946AE, 0x1946C0
+.incbin_range "baserom/kn7000_program.rom", 0x1946A1, 0x1946C0
 Str_Exciter2:	.asciz "    Exciter2    "
 .incbin_range "baserom/kn7000_program.rom", 0x1946D1, 0x1946F0
 Str_Exciter3:	.asciz "    Exciter3    "
@@ -2495,35 +2112,21 @@ Str_Exciter3:	.asciz "    Exciter3    "
 Str_Wah1_3:	.asciz "      Wah1      "
 .incbin_range "baserom/kn7000_program.rom", 0x19472D, 0x194748
 Str_Wah2_3:	.asciz "      Wah2      "
-.incbin_range "baserom/kn7000_program.rom", 0x194759, 0x194760
-Str_GYH8:	.asciz "<GYH8!"
-.incbin_range "baserom/kn7000_program.rom", 0x194767, 0x194774
+.incbin_range "baserom/kn7000_program.rom", 0x194759, 0x194774
 Str_Wah3_3:	.asciz "      Wah3      "
-.incbin_range "baserom/kn7000_program.rom", 0x194785, 0x19478C
-Str_hGYH8:	.asciz "hGYH8\""
-.incbin_range "baserom/kn7000_program.rom", 0x194793, 0x1947A0
+.incbin_range "baserom/kn7000_program.rom", 0x194785, 0x1947A0
 Str_Wah4_2:	.asciz "      Wah4      "
-.incbin_range "baserom/kn7000_program.rom", 0x1947B1, 0x1947B8
-Str_GYH8_2:	.asciz "\x94GYH8#"
-.incbin_range "baserom/kn7000_program.rom", 0x1947BF, 0x1947CC
+.incbin_range "baserom/kn7000_program.rom", 0x1947B1, 0x1947CC
 Str_Wah5_2:	.asciz "      Wah5      "
-.incbin_range "baserom/kn7000_program.rom", 0x1947DD, 0x1947E4
-Str_GYH8_3:	.asciz "\xC0GYH8$"
-.incbin_range "baserom/kn7000_program.rom", 0x1947EB, 0x1947FC
+.incbin_range "baserom/kn7000_program.rom", 0x1947DD, 0x1947FC
 Str_Wah1_2:	.asciz "      Wah1      "
-.incbin_range "baserom/kn7000_program.rom", 0x19480D, 0x194814
-Str_GYH8_4:	.asciz "\xECGYH8%"
-.incbin_range "baserom/kn7000_program.rom", 0x19481B, 0x19482C
+.incbin_range "baserom/kn7000_program.rom", 0x19480D, 0x19482C
 Str_Wah2_2:	.asciz "      Wah2      "
 .incbin_range "baserom/kn7000_program.rom", 0x19483D, 0x19485C
 Str_Wah3_2:	.asciz "      Wah3      "
-.incbin_range "baserom/kn7000_program.rom", 0x19486D, 0x194874
-Str_LHYH8:	.asciz "LHYH8'"
-.incbin_range "baserom/kn7000_program.rom", 0x19487B, 0x194894
+.incbin_range "baserom/kn7000_program.rom", 0x19486D, 0x194894
 Str_For_2Beat_1:	.asciz "  For 2Beat 1   "
-.incbin_range "baserom/kn7000_program.rom", 0x1948A5, 0x1948AC
-Str_HYH9:	.asciz "|HYH9"
-.incbin_range "baserom/kn7000_program.rom", 0x1948B2, 0x1948CC
+.incbin_range "baserom/kn7000_program.rom", 0x1948A5, 0x1948CC
 Str_For_2Beat_2:	.asciz "  For 2Beat 2   "
 .incbin_range "baserom/kn7000_program.rom", 0x1948DD, 0x194904
 Str_For_3Beat_1:	.asciz "  For 3Beat 1   "
@@ -2531,17 +2134,11 @@ Str_For_3Beat_1:	.asciz "  For 3Beat 1   "
 Str_For_3Beat_2:	.asciz "  For 3Beat 2   "
 .incbin_range "baserom/kn7000_program.rom", 0x19494D, 0x194974
 Str_For_4Beat_1:	.asciz "  For 4Beat 1   "
-.incbin_range "baserom/kn7000_program.rom", 0x194985, 0x19498C
-Str_IYH9:	.asciz "\\IYH9 "
-.incbin_range "baserom/kn7000_program.rom", 0x194993, 0x1949AC
+.incbin_range "baserom/kn7000_program.rom", 0x194985, 0x1949AC
 Str_For_4Beat_2:	.asciz "  For 4Beat 2   "
-.incbin_range "baserom/kn7000_program.rom", 0x1949BD, 0x1949C4
-Str_IYH9_2:	.asciz "\x94IYH9!"
-.incbin_range "baserom/kn7000_program.rom", 0x1949CB, 0x1949DC
+.incbin_range "baserom/kn7000_program.rom", 0x1949BD, 0x1949DC
 Str_Wah1:	.asciz "      Wah1      "
-.incbin_range "baserom/kn7000_program.rom", 0x1949ED, 0x1949F4
-Str_IYH:	.asciz "\xCCIYH:"
-.incbin_range "baserom/kn7000_program.rom", 0x1949FA, 0x194A0C
+.incbin_range "baserom/kn7000_program.rom", 0x1949ED, 0x194A0C
 Str_Wah2:	.asciz "      Wah2      "
 .incbin_range "baserom/kn7000_program.rom", 0x194A1D, 0x194A3C
 Str_Wah3:	.asciz "      Wah3      "
@@ -2557,9 +2154,7 @@ Str_Wah7:	.asciz "      Wah7      "
 Str_Wah8:	.asciz "      Wah8      "
 .incbin_range "baserom/kn7000_program.rom", 0x194B3D, 0x194B60
 Str_Normal_2:	.asciz "     Normal     "
-.incbin_range "baserom/kn7000_program.rom", 0x194B71, 0x194B78
-Str_LKYH:	.asciz "LKYH@"
-.incbin_range "baserom/kn7000_program.rom", 0x194B7E, 0x194B94
+.incbin_range "baserom/kn7000_program.rom", 0x194B71, 0x194B94
 Str_Mild_2:	.asciz "      Mild      "
 .incbin_range "baserom/kn7000_program.rom", 0x194BA5, 0x194BC8
 Str_Hard_2:	.asciz "      Hard      "
@@ -2571,85 +2166,49 @@ Str_Fat_2:	.asciz "      Fat       "
 Str_Hard_Compress_3:	.asciz " Hard Compress  "
 .incbin_range "baserom/kn7000_program.rom", 0x194C75, 0x194C98
 Str_Normal_3:	.asciz "     Normal     "
-.incbin_range "baserom/kn7000_program.rom", 0x194CA9, 0x194CB0
-Str_LYH:	.asciz "\x84LYH@ "
-.incbin_range "baserom/kn7000_program.rom", 0x194CB7, 0x194CCC
+.incbin_range "baserom/kn7000_program.rom", 0x194CA9, 0x194CCC
 Str_Mild:	.asciz "      Mild      "
-.incbin_range "baserom/kn7000_program.rom", 0x194CDD, 0x194CE4
-Str_LYH_2:	.asciz "\xB8LYH@!"
-.incbin_range "baserom/kn7000_program.rom", 0x194CEB, 0x194D00
+.incbin_range "baserom/kn7000_program.rom", 0x194CDD, 0x194D00
 Str_Hard:	.asciz "      Hard      "
-.incbin_range "baserom/kn7000_program.rom", 0x194D11, 0x194D18
-Str_LYH_3:	.asciz "\xECLYH@\""
-.incbin_range "baserom/kn7000_program.rom", 0x194D1F, 0x194D34
+.incbin_range "baserom/kn7000_program.rom", 0x194D11, 0x194D34
 Str_Bright:	.asciz "     Bright     "
-.incbin_range "baserom/kn7000_program.rom", 0x194D45, 0x194D4C
-Str_MYH:	.asciz " MYH@#"
-.incbin_range "baserom/kn7000_program.rom", 0x194D53, 0x194D68
+.incbin_range "baserom/kn7000_program.rom", 0x194D45, 0x194D68
 Str_Fat:	.asciz "      Fat       "
-.incbin_range "baserom/kn7000_program.rom", 0x194D79, 0x194D80
-Str_TMYH:	.asciz "TMYH@$"
-.incbin_range "baserom/kn7000_program.rom", 0x194D87, 0x194D9C
+.incbin_range "baserom/kn7000_program.rom", 0x194D79, 0x194D9C
 Str_Hard_Compress_2:	.asciz " Hard Compress  "
-.incbin_range "baserom/kn7000_program.rom", 0x194DAD, 0x194DB4
-Str_MYH_2:	.asciz "\x88MYH@%"
-.incbin_range "baserom/kn7000_program.rom", 0x194DBB, 0x194DD0
+.incbin_range "baserom/kn7000_program.rom", 0x194DAD, 0x194DD0
 Str_Normal:	.asciz "     Normal     "
-.incbin_range "baserom/kn7000_program.rom", 0x194DE1, 0x194DE8
-Str_MYHA:	.asciz "\xBCMYHA"
-.incbin_range "baserom/kn7000_program.rom", 0x194DEE, 0x194E04
+.incbin_range "baserom/kn7000_program.rom", 0x194DE1, 0x194E04
 Str_Hard_Compress:	.asciz " Hard Compress  "
 .incbin_range "baserom/kn7000_program.rom", 0x194E15, 0x194E30
 Str_Loud1:	.asciz "     Loud1      "
-.incbin_range "baserom/kn7000_program.rom", 0x194E41, 0x194E48
-Str_NYHA:	.asciz "$NYHA "
-.incbin_range "baserom/kn7000_program.rom", 0x194E4F, 0x194E5C
+.incbin_range "baserom/kn7000_program.rom", 0x194E41, 0x194E5C
 Str_Loud2:	.asciz "     Loud2      "
-.incbin_range "baserom/kn7000_program.rom", 0x194E6D, 0x194E74
-Str_PNYHA:	.asciz "PNYHA!"
-.incbin_range "baserom/kn7000_program.rom", 0x194E7B, 0x194E88
+.incbin_range "baserom/kn7000_program.rom", 0x194E6D, 0x194E88
 Str_Loud3:	.asciz "     Loud3      "
-.incbin_range "baserom/kn7000_program.rom", 0x194E99, 0x194EA0
-Str_NYHA_2:	.asciz "|NYHA\""
-.incbin_range "baserom/kn7000_program.rom", 0x194EA7, 0x194EB4
+.incbin_range "baserom/kn7000_program.rom", 0x194E99, 0x194EB4
 Str_Loud4:	.asciz "     Loud4      "
-.incbin_range "baserom/kn7000_program.rom", 0x194EC5, 0x194ECC
-Str_NYHA_3:	.asciz "\xA8NYHA#"
-.incbin_range "baserom/kn7000_program.rom", 0x194ED3, 0x194EE0
+.incbin_range "baserom/kn7000_program.rom", 0x194EC5, 0x194EE0
 Str_Normal1_3:	.asciz "    Normal1     "
-.incbin_range "baserom/kn7000_program.rom", 0x194EF1, 0x194EF8
-Str_NYHA_4:	.asciz "\xD4NYHA("
-.incbin_range "baserom/kn7000_program.rom", 0x194EFF, 0x194F0C
+.incbin_range "baserom/kn7000_program.rom", 0x194EF1, 0x194F0C
 Str_Normal2_3:	.asciz "    Normal2     "
 .incbin_range "baserom/kn7000_program.rom", 0x194F1D, 0x194F25
 Str_OYHA:	.asciz "OYHA)"
 .incbin_range "baserom/kn7000_program.rom", 0x194F2B, 0x194F38
 Str_Normal3_3:	.asciz "    Normal3     "
-.incbin_range "baserom/kn7000_program.rom", 0x194F49, 0x194F50
-Str_OYHA_2:	.asciz ",OYHA*"
-.incbin_range "baserom/kn7000_program.rom", 0x194F57, 0x194F64
+.incbin_range "baserom/kn7000_program.rom", 0x194F49, 0x194F64
 Str_Normal4_3:	.asciz "    Normal4     "
-.incbin_range "baserom/kn7000_program.rom", 0x194F75, 0x194F7C
-Str_XOYHA:	.asciz "XOYHA+"
-.incbin_range "baserom/kn7000_program.rom", 0x194F83, 0x194F90
+.incbin_range "baserom/kn7000_program.rom", 0x194F75, 0x194F90
 Str_Soft1:	.asciz "     Soft1      "
-.incbin_range "baserom/kn7000_program.rom", 0x194FA1, 0x194FA8
-Str_OYHA0:	.asciz "\x84OYHA0"
-.incbin_range "baserom/kn7000_program.rom", 0x194FAF, 0x194FBC
+.incbin_range "baserom/kn7000_program.rom", 0x194FA1, 0x194FBC
 Str_Soft2:	.asciz "     Soft2      "
-.incbin_range "baserom/kn7000_program.rom", 0x194FCD, 0x194FD4
-Str_OYHA1:	.asciz "\xB0OYHA1"
-.incbin_range "baserom/kn7000_program.rom", 0x194FDB, 0x194FE8
+.incbin_range "baserom/kn7000_program.rom", 0x194FCD, 0x194FE8
 Str_Soft3:	.asciz "     Soft3      "
-.incbin_range "baserom/kn7000_program.rom", 0x194FF9, 0x195000
-Str_OYHA2:	.asciz "\xDCOYHA2"
-.incbin_range "baserom/kn7000_program.rom", 0x195007, 0x195014
+.incbin_range "baserom/kn7000_program.rom", 0x194FF9, 0x195014
 Str_Soft4:	.asciz "     Soft4      "
 .incbin_range "baserom/kn7000_program.rom", 0x195025, 0x195044
 Str_Limiter1:	.asciz "    Limiter1    "
-.incbin_range "baserom/kn7000_program.rom", 0x195055, 0x19505C
-Str_4PYHD:	.asciz "4PYHD"
-.incbin_range "baserom/kn7000_program.rom", 0x195062, 0x195074
+.incbin_range "baserom/kn7000_program.rom", 0x195055, 0x195074
 Str_Limiter2:	.asciz "    Limiter2    "
 .incbin_range "baserom/kn7000_program.rom", 0x195085, 0x1950A4
 Str_Limiter3:	.asciz "    Limiter3    "
@@ -2657,9 +2216,7 @@ Str_Limiter3:	.asciz "    Limiter3    "
 Str_Limiter4:	.asciz "    Limiter4    "
 .incbin_range "baserom/kn7000_program.rom", 0x1950E5, 0x195104
 Str_Comp_1:	.asciz "     Comp.1     "
-.incbin_range "baserom/kn7000_program.rom", 0x195115, 0x19511C
-Str_PYHE:	.asciz "\xF4PYHE"
-.incbin_range "baserom/kn7000_program.rom", 0x195122, 0x195134
+.incbin_range "baserom/kn7000_program.rom", 0x195115, 0x195134
 Str_Comp_2:	.asciz "     Comp.2     "
 .incbin_range "baserom/kn7000_program.rom", 0x195145, 0x195164
 Str_Comp_3:	.asciz "     Comp.3     "
@@ -2667,9 +2224,7 @@ Str_Comp_3:	.asciz "     Comp.3     "
 Str_Comp_4:	.asciz "     Comp.4     "
 .incbin_range "baserom/kn7000_program.rom", 0x1951A5, 0x1951C0
 Str_Slow_Attacker1:	.asciz " Slow Attacker1 "
-.incbin_range "baserom/kn7000_program.rom", 0x1951D1, 0x1951D8
-Str_QYHF:	.asciz "\xB4QYHF"
-.incbin_range "baserom/kn7000_program.rom", 0x1951DE, 0x1951EC
+.incbin_range "baserom/kn7000_program.rom", 0x1951D1, 0x1951EC
 Str_Slow_Attacker2:	.asciz " Slow Attacker2 "
 .incbin_range "baserom/kn7000_program.rom", 0x1951FD, 0x195218
 Str_Slow_Attacker3:	.asciz " Slow Attacker3 "
@@ -2677,9 +2232,7 @@ Str_Slow_Attacker3:	.asciz " Slow Attacker3 "
 Str_Slow_Attacker4:	.asciz " Slow Attacker4 "
 .incbin_range "baserom/kn7000_program.rom", 0x195255, 0x19527C
 Str_Deep1_2:	.asciz "     Deep1      "
-.incbin_range "baserom/kn7000_program.rom", 0x19528D, 0x195294
-Str_dRYHH:	.asciz "dRYHH"
-.incbin_range "baserom/kn7000_program.rom", 0x19529A, 0x1952B4
+.incbin_range "baserom/kn7000_program.rom", 0x19528D, 0x1952B4
 Str_Deep2_2:	.asciz "     Deep2      "
 .incbin_range "baserom/kn7000_program.rom", 0x1952C5, 0x1952EC
 Str_Deep3_2:	.asciz "     Deep3      "
@@ -2697,21 +2250,15 @@ Str_Deep8_2:	.asciz "     Deep8      "
 Str_Normal1_2:	.asciz "    Normal1     "
 .incbin_range "baserom/kn7000_program.rom", 0x19544D, 0x195474
 Str_Normal2_2:	.asciz "    Normal2     "
-.incbin_range "baserom/kn7000_program.rom", 0x195485, 0x19548C
-Str_TYHH:	.asciz "\\TYHH\x09"
-.incbin_range "baserom/kn7000_program.rom", 0x195493, 0x1954AC
+.incbin_range "baserom/kn7000_program.rom", 0x195485, 0x1954AC
 Str_Normal3_2:	.asciz "    Normal3     "
-.incbin_range "baserom/kn7000_program.rom", 0x1954BD, 0x1954C4
-Str_TYHH_2:	.asciz "\x94TYHH\n"
-.incbin_range "baserom/kn7000_program.rom", 0x1954CB, 0x1954E4
+.incbin_range "baserom/kn7000_program.rom", 0x1954BD, 0x1954E4
 Str_Normal4_2:	.asciz "    Normal4     "
 .incbin_range "baserom/kn7000_program.rom", 0x1954F5, 0x19551C
 Str_Normal5_2:	.asciz "    Normal5     "
 .incbin_range "baserom/kn7000_program.rom", 0x19552D, 0x195554
 Str_Normal6_2:	.asciz "    Normal6     "
-.incbin_range "baserom/kn7000_program.rom", 0x195565, 0x19556C
-Str_UYHH:	.asciz "<UYHH\x0D"
-.incbin_range "baserom/kn7000_program.rom", 0x195573, 0x19558C
+.incbin_range "baserom/kn7000_program.rom", 0x195565, 0x19558C
 Str_Normal7_2:	.asciz "    Normal7     "
 .incbin_range "baserom/kn7000_program.rom", 0x19559D, 0x1955C4
 Str_Normal8_2:	.asciz "    Normal8     "
@@ -2733,99 +2280,55 @@ Str_Shallow7_2:	.asciz "    Shallow7    "
 Str_Shallow8_2:	.asciz "    Shallow8    "
 .incbin_range "baserom/kn7000_program.rom", 0x195795, 0x1957BC
 Str_Deep9_2:	.asciz "     Deep9      "
-.incbin_range "baserom/kn7000_program.rom", 0x1957CD, 0x1957D4
-Str_WYHH:	.asciz "\xA4WYHH "
-.incbin_range "baserom/kn7000_program.rom", 0x1957DB, 0x1957F4
+.incbin_range "baserom/kn7000_program.rom", 0x1957CD, 0x1957F4
 Str_Deep10_2:	.asciz "     Deep10     "
-.incbin_range "baserom/kn7000_program.rom", 0x195805, 0x19580C
-Str_WYHH_2:	.asciz "\xDCWYHH!"
-.incbin_range "baserom/kn7000_program.rom", 0x195813, 0x19582C
+.incbin_range "baserom/kn7000_program.rom", 0x195805, 0x19582C
 Str_Deep11_2:	.asciz "     Deep11     "
 .incbin_range "baserom/kn7000_program.rom", 0x19583D, 0x195864
 Str_Deep12_2:	.asciz "     Deep12     "
-.incbin_range "baserom/kn7000_program.rom", 0x195875, 0x19587C
-Str_LXYHH:	.asciz "LXYHH#"
-.incbin_range "baserom/kn7000_program.rom", 0x195883, 0x19589C
+.incbin_range "baserom/kn7000_program.rom", 0x195875, 0x19589C
 Str_Deep13_2:	.asciz "     Deep13     "
-.incbin_range "baserom/kn7000_program.rom", 0x1958AD, 0x1958B4
-Str_XYHH:	.asciz "\x84XYHH$"
-.incbin_range "baserom/kn7000_program.rom", 0x1958BB, 0x1958D4
+.incbin_range "baserom/kn7000_program.rom", 0x1958AD, 0x1958D4
 Str_Deep14_2:	.asciz "     Deep14     "
-.incbin_range "baserom/kn7000_program.rom", 0x1958E5, 0x1958EC
-Str_XYHH_2:	.asciz "\xBCXYHH%"
-.incbin_range "baserom/kn7000_program.rom", 0x1958F3, 0x19590C
+.incbin_range "baserom/kn7000_program.rom", 0x1958E5, 0x19590C
 Str_Deep15_2:	.asciz "     Deep15     "
-.incbin_range "baserom/kn7000_program.rom", 0x19591D, 0x195924
-Str_XYHH_3:	.asciz "\xF4XYHH&"
-.incbin_range "baserom/kn7000_program.rom", 0x19592B, 0x195944
+.incbin_range "baserom/kn7000_program.rom", 0x19591D, 0x195944
 Str_Deep16_2:	.asciz "     Deep16     "
-.incbin_range "baserom/kn7000_program.rom", 0x195955, 0x19595C
-Str_YYHH:	.asciz ",YYHH'"
-.incbin_range "baserom/kn7000_program.rom", 0x195963, 0x19597C
+.incbin_range "baserom/kn7000_program.rom", 0x195955, 0x19597C
 Str_Normal9_2:	.asciz "    Normal9     "
-.incbin_range "baserom/kn7000_program.rom", 0x19598D, 0x195994
-Str_dYYHH:	.asciz "dYYHH("
-.incbin_range "baserom/kn7000_program.rom", 0x19599B, 0x1959B4
+.incbin_range "baserom/kn7000_program.rom", 0x19598D, 0x1959B4
 Str_Normal10_2:	.asciz "    Normal10    "
-.incbin_range "baserom/kn7000_program.rom", 0x1959C5, 0x1959CC
-Str_YYHH_2:	.asciz "\x9CYYHH)"
-.incbin_range "baserom/kn7000_program.rom", 0x1959D3, 0x1959EC
+.incbin_range "baserom/kn7000_program.rom", 0x1959C5, 0x1959EC
 Str_Normal11_2:	.asciz "    Normal11    "
-.incbin_range "baserom/kn7000_program.rom", 0x1959FD, 0x195A04
-Str_YYHH_3:	.asciz "\xD4YYHH*"
-.incbin_range "baserom/kn7000_program.rom", 0x195A0B, 0x195A24
+.incbin_range "baserom/kn7000_program.rom", 0x1959FD, 0x195A24
 Str_Normal12_2:	.asciz "    Normal12    "
 .incbin_range "baserom/kn7000_program.rom", 0x195A35, 0x195A5C
 Str_Normal13_2:	.asciz "    Normal13    "
-.incbin_range "baserom/kn7000_program.rom", 0x195A6D, 0x195A74
-Str_DZYHH:	.asciz "DZYHH,"
-.incbin_range "baserom/kn7000_program.rom", 0x195A7B, 0x195A94
+.incbin_range "baserom/kn7000_program.rom", 0x195A6D, 0x195A94
 Str_Normal14_2:	.asciz "    Normal14    "
-.incbin_range "baserom/kn7000_program.rom", 0x195AA5, 0x195AAC
-Str_ZYHH:	.asciz "|ZYHH-"
-.incbin_range "baserom/kn7000_program.rom", 0x195AB3, 0x195ACC
+.incbin_range "baserom/kn7000_program.rom", 0x195AA5, 0x195ACC
 Str_Normal15_2:	.asciz "    Normal15    "
-.incbin_range "baserom/kn7000_program.rom", 0x195ADD, 0x195AE4
-Str_ZYHH_2:	.asciz "\xB4ZYHH."
-.incbin_range "baserom/kn7000_program.rom", 0x195AEB, 0x195B04
+.incbin_range "baserom/kn7000_program.rom", 0x195ADD, 0x195B04
 Str_Normal16_2:	.asciz "    Normal16    "
-.incbin_range "baserom/kn7000_program.rom", 0x195B15, 0x195B1C
-Str_ZYHH_3:	.asciz "\xECZYHH/"
-.incbin_range "baserom/kn7000_program.rom", 0x195B23, 0x195B3C
+.incbin_range "baserom/kn7000_program.rom", 0x195B15, 0x195B3C
 Str_Shallow9_2:	.asciz "    Shallow9    "
-.incbin_range "baserom/kn7000_program.rom", 0x195B4D, 0x195B54
-Str_YHH0:	.asciz "$[YHH0"
-.incbin_range "baserom/kn7000_program.rom", 0x195B5B, 0x195B74
+.incbin_range "baserom/kn7000_program.rom", 0x195B4D, 0x195B74
 Str_Shallow10_2:	.asciz "   Shallow10    "
-.incbin_range "baserom/kn7000_program.rom", 0x195B85, 0x195B8C
-Str_YHH1:	.asciz "\\[YHH1"
-.incbin_range "baserom/kn7000_program.rom", 0x195B93, 0x195BAC
+.incbin_range "baserom/kn7000_program.rom", 0x195B85, 0x195BAC
 Str_Shallow11_2:	.asciz "   Shallow11    "
-.incbin_range "baserom/kn7000_program.rom", 0x195BBD, 0x195BC4
-Str_YHH2:	.asciz "\x94[YHH2"
-.incbin_range "baserom/kn7000_program.rom", 0x195BCB, 0x195BE4
+.incbin_range "baserom/kn7000_program.rom", 0x195BBD, 0x195BE4
 Str_Shallow12_2:	.asciz "   Shallow12    "
-.incbin_range "baserom/kn7000_program.rom", 0x195BF5, 0x195BFC
-Str_YHH3:	.asciz "\xCC[YHH3"
-.incbin_range "baserom/kn7000_program.rom", 0x195C03, 0x195C1C
+.incbin_range "baserom/kn7000_program.rom", 0x195BF5, 0x195C1C
 Str_Shallow13_2:	.asciz "   Shallow13    "
 .incbin_range "baserom/kn7000_program.rom", 0x195C2D, 0x195C54
 Str_Shallow14_2:	.asciz "   Shallow14    "
-.incbin_range "baserom/kn7000_program.rom", 0x195C65, 0x195C6C
-Str_YHH5:	.asciz "<\\YHH5"
-.incbin_range "baserom/kn7000_program.rom", 0x195C73, 0x195C8C
+.incbin_range "baserom/kn7000_program.rom", 0x195C65, 0x195C8C
 Str_Shallow15_2:	.asciz "   Shallow15    "
-.incbin_range "baserom/kn7000_program.rom", 0x195C9D, 0x195CA4
-Str_t_YHH6:	.asciz "t\\YHH6"
-.incbin_range "baserom/kn7000_program.rom", 0x195CAB, 0x195CC4
+.incbin_range "baserom/kn7000_program.rom", 0x195C9D, 0x195CC4
 Str_Shallow16_2:	.asciz "   Shallow16    "
-.incbin_range "baserom/kn7000_program.rom", 0x195CD5, 0x195CDC
-Str_YHH7:	.asciz "\xAC\\YHH7"
-.incbin_range "baserom/kn7000_program.rom", 0x195CE3, 0x195CFC
+.incbin_range "baserom/kn7000_program.rom", 0x195CD5, 0x195CFC
 Str_Deep17_2:	.asciz "     Deep17     "
-.incbin_range "baserom/kn7000_program.rom", 0x195D0D, 0x195D14
-Str_YHI:	.asciz "\xE4\\YHI"
-.incbin_range "baserom/kn7000_program.rom", 0x195D1A, 0x195D34
+.incbin_range "baserom/kn7000_program.rom", 0x195D0D, 0x195D34
 Str_Deep18_2:	.asciz "     Deep18     "
 .incbin_range "baserom/kn7000_program.rom", 0x195D45, 0x195D6C
 Str_Deep19_2:	.asciz "     Deep19     "
@@ -2835,13 +2338,9 @@ Str_Deep20_2:	.asciz "     Deep20     "
 Str_Normal17_2:	.asciz "    Normal17    "
 .incbin_range "baserom/kn7000_program.rom", 0x195DED, 0x195E14
 Str_Normal18_2:	.asciz "    Normal18    "
-.incbin_range "baserom/kn7000_program.rom", 0x195E25, 0x195E2C
-Str_YHI_2:	.asciz "\xFC]YHI\x09"
-.incbin_range "baserom/kn7000_program.rom", 0x195E33, 0x195E4C
+.incbin_range "baserom/kn7000_program.rom", 0x195E25, 0x195E4C
 Str_Normal19_2:	.asciz "    Normal19    "
-.incbin_range "baserom/kn7000_program.rom", 0x195E5D, 0x195E64
-Str_4_YHI:	.asciz "4^YHI\n"
-.incbin_range "baserom/kn7000_program.rom", 0x195E6B, 0x195E84
+.incbin_range "baserom/kn7000_program.rom", 0x195E5D, 0x195E84
 Str_Normal20_2:	.asciz "    Normal20    "
 .incbin_range "baserom/kn7000_program.rom", 0x195E95, 0x195EBC
 Str_Shallow17_2:	.asciz "   Shallow17    "
@@ -2853,9 +2352,7 @@ Str_Shallow19_2:	.asciz "   Shallow19    "
 Str_Shallow20_2:	.asciz "   Shallow20    "
 .incbin_range "baserom/kn7000_program.rom", 0x195F75, 0x195F9C
 Str_Deep1:	.asciz "     Deep1      "
-.incbin_range "baserom/kn7000_program.rom", 0x195FAD, 0x195FB4
-Str_YHL:	.asciz "\x84_YHL"
-.incbin_range "baserom/kn7000_program.rom", 0x195FBA, 0x195FD4
+.incbin_range "baserom/kn7000_program.rom", 0x195FAD, 0x195FD4
 Str_Deep2:	.asciz "     Deep2      "
 .incbin_range "baserom/kn7000_program.rom", 0x195FE5, 0x19600C
 Str_Deep3:	.asciz "     Deep3      "
@@ -2873,21 +2370,15 @@ Str_Deep8:	.asciz "     Deep8      "
 Str_Normal1:	.asciz "    Normal1     "
 .incbin_range "baserom/kn7000_program.rom", 0x19616D, 0x196194
 Str_Normal2:	.asciz "    Normal2     "
-.incbin_range "baserom/kn7000_program.rom", 0x1961A5, 0x1961AC
-Str_aYHL:	.asciz "|aYHL\x09"
-.incbin_range "baserom/kn7000_program.rom", 0x1961B3, 0x1961CC
+.incbin_range "baserom/kn7000_program.rom", 0x1961A5, 0x1961CC
 Str_Normal3:	.asciz "    Normal3     "
-.incbin_range "baserom/kn7000_program.rom", 0x1961DD, 0x1961E4
-Str_aYHL_2:	.asciz "\xB4aYHL\n"
-.incbin_range "baserom/kn7000_program.rom", 0x1961EB, 0x196204
+.incbin_range "baserom/kn7000_program.rom", 0x1961DD, 0x196204
 Str_Normal4:	.asciz "    Normal4     "
 .incbin_range "baserom/kn7000_program.rom", 0x196215, 0x19623C
 Str_Normal5:	.asciz "    Normal5     "
 .incbin_range "baserom/kn7000_program.rom", 0x19624D, 0x196274
 Str_Normal6:	.asciz "    Normal6     "
-.incbin_range "baserom/kn7000_program.rom", 0x196285, 0x19628C
-Str_bYHL:	.asciz "\\bYHL\x0D"
-.incbin_range "baserom/kn7000_program.rom", 0x196293, 0x1962AC
+.incbin_range "baserom/kn7000_program.rom", 0x196285, 0x1962AC
 Str_Normal7:	.asciz "    Normal7     "
 .incbin_range "baserom/kn7000_program.rom", 0x1962BD, 0x1962E4
 Str_Normal8:	.asciz "    Normal8     "
@@ -2909,97 +2400,53 @@ Str_Shallow7:	.asciz "    Shallow7    "
 Str_Shallow8:	.asciz "    Shallow8    "
 .incbin_range "baserom/kn7000_program.rom", 0x1964B5, 0x1964DC
 Str_Deep9:	.asciz "     Deep9      "
-.incbin_range "baserom/kn7000_program.rom", 0x1964ED, 0x1964F4
-Str_dYHL:	.asciz "\xC4dYHL "
-.incbin_range "baserom/kn7000_program.rom", 0x1964FB, 0x196514
+.incbin_range "baserom/kn7000_program.rom", 0x1964ED, 0x196514
 Str_Deep10:	.asciz "     Deep10     "
-.incbin_range "baserom/kn7000_program.rom", 0x196525, 0x19652C
-Str_dYHL_2:	.asciz "\xFCdYHL!"
-.incbin_range "baserom/kn7000_program.rom", 0x196533, 0x19654C
+.incbin_range "baserom/kn7000_program.rom", 0x196525, 0x19654C
 Str_Deep11:	.asciz "     Deep11     "
-.incbin_range "baserom/kn7000_program.rom", 0x19655D, 0x196564
-Str_4eYHL:	.asciz "4eYHL\""
-.incbin_range "baserom/kn7000_program.rom", 0x19656B, 0x196584
+.incbin_range "baserom/kn7000_program.rom", 0x19655D, 0x196584
 Str_Deep12:	.asciz "     Deep12     "
-.incbin_range "baserom/kn7000_program.rom", 0x196595, 0x19659C
-Str_leYHL:	.asciz "leYHL#"
-.incbin_range "baserom/kn7000_program.rom", 0x1965A3, 0x1965BC
+.incbin_range "baserom/kn7000_program.rom", 0x196595, 0x1965BC
 Str_Deep13:	.asciz "     Deep13     "
-.incbin_range "baserom/kn7000_program.rom", 0x1965CD, 0x1965D4
-Str_eYHL:	.asciz "\xA4eYHL$"
-.incbin_range "baserom/kn7000_program.rom", 0x1965DB, 0x1965F4
+.incbin_range "baserom/kn7000_program.rom", 0x1965CD, 0x1965F4
 Str_Deep14:	.asciz "     Deep14     "
-.incbin_range "baserom/kn7000_program.rom", 0x196605, 0x19660C
-Str_eYHL_2:	.asciz "\xDCeYHL%"
-.incbin_range "baserom/kn7000_program.rom", 0x196613, 0x19662C
+.incbin_range "baserom/kn7000_program.rom", 0x196605, 0x19662C
 Str_Deep15:	.asciz "     Deep15     "
 .incbin_range "baserom/kn7000_program.rom", 0x19663D, 0x196664
 Str_Deep16:	.asciz "     Deep16     "
-.incbin_range "baserom/kn7000_program.rom", 0x196675, 0x19667C
-Str_LfYHL:	.asciz "LfYHL'"
-.incbin_range "baserom/kn7000_program.rom", 0x196683, 0x19669C
+.incbin_range "baserom/kn7000_program.rom", 0x196675, 0x19669C
 Str_Normal9:	.asciz "    Normal9     "
-.incbin_range "baserom/kn7000_program.rom", 0x1966AD, 0x1966B4
-Str_fYHL:	.asciz "\x84fYHL("
-.incbin_range "baserom/kn7000_program.rom", 0x1966BB, 0x1966D4
+.incbin_range "baserom/kn7000_program.rom", 0x1966AD, 0x1966D4
 Str_Normal10:	.asciz "    Normal10    "
-.incbin_range "baserom/kn7000_program.rom", 0x1966E5, 0x1966EC
-Str_fYHL_2:	.asciz "\xBCfYHL)"
-.incbin_range "baserom/kn7000_program.rom", 0x1966F3, 0x19670C
+.incbin_range "baserom/kn7000_program.rom", 0x1966E5, 0x19670C
 Str_Normal11:	.asciz "    Normal11    "
-.incbin_range "baserom/kn7000_program.rom", 0x19671D, 0x196724
-Str_fYHL_3:	.asciz "\xF4fYHL*"
-.incbin_range "baserom/kn7000_program.rom", 0x19672B, 0x196744
+.incbin_range "baserom/kn7000_program.rom", 0x19671D, 0x196744
 Str_Normal12:	.asciz "    Normal12    "
-.incbin_range "baserom/kn7000_program.rom", 0x196755, 0x19675C
-Str_gYHL:	.asciz ",gYHL+"
-.incbin_range "baserom/kn7000_program.rom", 0x196763, 0x19677C
+.incbin_range "baserom/kn7000_program.rom", 0x196755, 0x19677C
 Str_Normal13:	.asciz "    Normal13    "
-.incbin_range "baserom/kn7000_program.rom", 0x19678D, 0x196794
-Str_dgYHL:	.asciz "dgYHL,"
-.incbin_range "baserom/kn7000_program.rom", 0x19679B, 0x1967B4
+.incbin_range "baserom/kn7000_program.rom", 0x19678D, 0x1967B4
 Str_Normal14:	.asciz "    Normal14    "
-.incbin_range "baserom/kn7000_program.rom", 0x1967C5, 0x1967CC
-Str_gYHL_2:	.asciz "\x9CgYHL-"
-.incbin_range "baserom/kn7000_program.rom", 0x1967D3, 0x1967EC
+.incbin_range "baserom/kn7000_program.rom", 0x1967C5, 0x1967EC
 Str_Normal15:	.asciz "    Normal15    "
-.incbin_range "baserom/kn7000_program.rom", 0x1967FD, 0x196804
-Str_gYHL_3:	.asciz "\xD4gYHL."
-.incbin_range "baserom/kn7000_program.rom", 0x19680B, 0x196824
+.incbin_range "baserom/kn7000_program.rom", 0x1967FD, 0x196824
 Str_Normal16:	.asciz "    Normal16    "
 .incbin_range "baserom/kn7000_program.rom", 0x196835, 0x19685C
 Str_Shallow9:	.asciz "    Shallow9    "
-.incbin_range "baserom/kn7000_program.rom", 0x19686D, 0x196874
-Str_DhYHL0:	.asciz "DhYHL0"
-.incbin_range "baserom/kn7000_program.rom", 0x19687B, 0x196894
+.incbin_range "baserom/kn7000_program.rom", 0x19686D, 0x196894
 Str_Shallow10:	.asciz "   Shallow10    "
-.incbin_range "baserom/kn7000_program.rom", 0x1968A5, 0x1968AC
-Str_hYHL1:	.asciz "|hYHL1"
-.incbin_range "baserom/kn7000_program.rom", 0x1968B3, 0x1968CC
+.incbin_range "baserom/kn7000_program.rom", 0x1968A5, 0x1968CC
 Str_Shallow11:	.asciz "   Shallow11    "
-.incbin_range "baserom/kn7000_program.rom", 0x1968DD, 0x1968E4
-Str_hYHL2:	.asciz "\xB4hYHL2"
-.incbin_range "baserom/kn7000_program.rom", 0x1968EB, 0x196904
+.incbin_range "baserom/kn7000_program.rom", 0x1968DD, 0x196904
 Str_Shallow12:	.asciz "   Shallow12    "
-.incbin_range "baserom/kn7000_program.rom", 0x196915, 0x19691C
-Str_hYHL3:	.asciz "\xEChYHL3"
-.incbin_range "baserom/kn7000_program.rom", 0x196923, 0x19693C
+.incbin_range "baserom/kn7000_program.rom", 0x196915, 0x19693C
 Str_Shallow13:	.asciz "   Shallow13    "
-.incbin_range "baserom/kn7000_program.rom", 0x19694D, 0x196954
-Str_iYHL4:	.asciz "$iYHL4"
-.incbin_range "baserom/kn7000_program.rom", 0x19695B, 0x196974
+.incbin_range "baserom/kn7000_program.rom", 0x19694D, 0x196974
 Str_Shallow14:	.asciz "   Shallow14    "
-.incbin_range "baserom/kn7000_program.rom", 0x196985, 0x19698C
-Str_iYHL5:	.asciz "\\iYHL5"
-.incbin_range "baserom/kn7000_program.rom", 0x196993, 0x1969AC
+.incbin_range "baserom/kn7000_program.rom", 0x196985, 0x1969AC
 Str_Shallow15:	.asciz "   Shallow15    "
-.incbin_range "baserom/kn7000_program.rom", 0x1969BD, 0x1969C4
-Str_iYHL6:	.asciz "\x94iYHL6"
-.incbin_range "baserom/kn7000_program.rom", 0x1969CB, 0x1969E4
+.incbin_range "baserom/kn7000_program.rom", 0x1969BD, 0x1969E4
 Str_Shallow16:	.asciz "   Shallow16    "
-.incbin_range "baserom/kn7000_program.rom", 0x1969F5, 0x1969FC
-Str_iYHL7:	.asciz "\xCCiYHL7"
-.incbin_range "baserom/kn7000_program.rom", 0x196A03, 0x196A1C
+.incbin_range "baserom/kn7000_program.rom", 0x1969F5, 0x196A1C
 Str_Deep17:	.asciz "     Deep17     "
 .incbin_range "baserom/kn7000_program.rom", 0x196A2D, 0x196A54
 Str_Deep18:	.asciz "     Deep18     "
@@ -3013,9 +2460,7 @@ Str_Normal17:	.asciz "    Normal17    "
 Str_Normal18:	.asciz "    Normal18    "
 .incbin_range "baserom/kn7000_program.rom", 0x196B45, 0x196B6C
 Str_Normal19:	.asciz "    Normal19    "
-.incbin_range "baserom/kn7000_program.rom", 0x196B7D, 0x196B84
-Str_TkYHM:	.asciz "TkYHM\n"
-.incbin_range "baserom/kn7000_program.rom", 0x196B8B, 0x196BA4
+.incbin_range "baserom/kn7000_program.rom", 0x196B7D, 0x196BA4
 Str_Normal20:	.asciz "    Normal20    "
 .incbin_range "baserom/kn7000_program.rom", 0x196BB5, 0x196BDC
 Str_Shallow17:	.asciz "   Shallow17    "
@@ -3027,9 +2472,7 @@ Str_Shallow19:	.asciz "   Shallow19    "
 Str_Shallow20:	.asciz "   Shallow20    "
 .incbin_range "baserom/kn7000_program.rom", 0x196C95, 0x196CC0
 Str_Multi1:	.asciz "     Multi1     "
-.incbin_range "baserom/kn7000_program.rom", 0x196CD1, 0x196CD8
-Str_lYHQ:	.asciz "\xA4lYHQ"
-.incbin_range "baserom/kn7000_program.rom", 0x196CDE, 0x196CFC
+.incbin_range "baserom/kn7000_program.rom", 0x196CD1, 0x196CFC
 Str_Multi2:	.asciz "     Multi2     "
 .incbin_range "baserom/kn7000_program.rom", 0x196D0D, 0x196D38
 Str_Multi3:	.asciz "     Multi3     "
@@ -3045,55 +2488,35 @@ Str_Multi7:	.asciz "     Multi7     "
 Str_Multi8:	.asciz "     Multi8     "
 .incbin_range "baserom/kn7000_program.rom", 0x196E75, 0x196EA0
 Str_Delay_Chorus:	.asciz "  Delay+Chorus  "
-.incbin_range "baserom/kn7000_program.rom", 0x196EB1, 0x196EB8
-Str_nYHR:	.asciz "\x84nYHR"
-.incbin_range "baserom/kn7000_program.rom", 0x196EBE, 0x196EE0
+.incbin_range "baserom/kn7000_program.rom", 0x196EB1, 0x196EE0
 Str_Delay_Flanger:	.asciz " Delay+Flanger  "
-.incbin_range "baserom/kn7000_program.rom", 0x196EF1, 0x196EF8
-Str_nYHR_2:	.asciz "\xC0nYHR "
-.incbin_range "baserom/kn7000_program.rom", 0x196EFF, 0x196F1C
+.incbin_range "baserom/kn7000_program.rom", 0x196EF1, 0x196F1C
 Str_Delay_Vibrato:	.asciz " Delay+Vibrato  "
 .incbin_range "baserom/kn7000_program.rom", 0x196F2D, 0x196F35
 Str_oYHS:	.asciz "oYHS"
 .incbin_range "baserom/kn7000_program.rom", 0x196F3A, 0x196F5C
 Str_Delay_Phaser:	.asciz "  Delay+Phaser  "
-.incbin_range "baserom/kn7000_program.rom", 0x196F6D, 0x196F74
-Str_oYHS_2:	.asciz "<oYHS "
-.incbin_range "baserom/kn7000_program.rom", 0x196F7B, 0x196F94
+.incbin_range "baserom/kn7000_program.rom", 0x196F6D, 0x196F94
 Str_Autowah_Delay:	.asciz " Autowah+Delay  "
-.incbin_range "baserom/kn7000_program.rom", 0x196FA5, 0x196FAC
-Str_oYHT:	.asciz "|oYHT"
-.incbin_range "baserom/kn7000_program.rom", 0x196FB2, 0x196FD4
+.incbin_range "baserom/kn7000_program.rom", 0x196FA5, 0x196FD4
 Str_Comp_Dst_Delay:	.asciz " Comp+Dst+Delay "
-.incbin_range "baserom/kn7000_program.rom", 0x196FE5, 0x196FEC
-Str_oYHU:	.asciz "\xB4oYHU"
-.incbin_range "baserom/kn7000_program.rom", 0x196FF2, 0x197014
+.incbin_range "baserom/kn7000_program.rom", 0x196FE5, 0x197014
 Str_Comp_Ovd_Delay:	.asciz " Comp+Ovd+Delay "
-.incbin_range "baserom/kn7000_program.rom", 0x197025, 0x19702C
-Str_oYHU_2:	.asciz "\xF4oYHU "
-.incbin_range "baserom/kn7000_program.rom", 0x197033, 0x19704C
+.incbin_range "baserom/kn7000_program.rom", 0x197025, 0x19704C
 Str_Vocal_Harmonizer:	.asciz "Vocal Harmonizer"
-.incbin_range "baserom/kn7000_program.rom", 0x19705D, 0x197064
-Str_4pYHZ:	.asciz "4pYHZ"
-.incbin_range "baserom/kn7000_program.rom", 0x19706A, 0x197074
+.incbin_range "baserom/kn7000_program.rom", 0x19705D, 0x197074
 Str_Voice_Changer1:	.asciz " Voice Changer1 "
 .incbin_range "baserom/kn7000_program.rom", 0x197085, 0x19709C
 Str_Voice_Changer2:	.asciz " Voice Changer2 "
 .incbin_range "baserom/kn7000_program.rom", 0x1970AD, 0x1970C0
 Str_Brass_simulator1:	.asciz "Brass simulator1"
-.incbin_range "baserom/kn7000_program.rom", 0x1970D1, 0x1970D8
-Str_pYHZ:	.asciz "\xBCpYHZ!"
-.incbin_range "baserom/kn7000_program.rom", 0x1970DF, 0x1970E8
+.incbin_range "baserom/kn7000_program.rom", 0x1970D1, 0x1970E8
 Str_Brass_simulator2:	.asciz "Brass simulator2"
-.incbin_range "baserom/kn7000_program.rom", 0x1970F9, 0x197100
-Str_pYHZ_2:	.asciz "\xE0pYHZ\""
-.incbin_range "baserom/kn7000_program.rom", 0x197107, 0x197110
+.incbin_range "baserom/kn7000_program.rom", 0x1970F9, 0x197110
 Str_Brass_simulator3:	.asciz "Brass simulator3"
 .incbin_range "baserom/kn7000_program.rom", 0x197121, 0x197134
 Str_Room:	.asciz "      Room      "
-.incbin_range "baserom/kn7000_program.rom", 0x197145, 0x19714C
-Str_0qYH:	.asciz "0qYH["
-.incbin_range "baserom/kn7000_program.rom", 0x197152, 0x197158
+.incbin_range "baserom/kn7000_program.rom", 0x197145, 0x197158
 Str_Karaoke:	.asciz "    Karaoke     "
 .incbin_range "baserom/kn7000_program.rom", 0x197169, 0x19717C
 Str_Stage:	.asciz "     Stage      "
@@ -3103,9 +2526,7 @@ Str_Cave:	.asciz "      Cave      "
 Str_Spreader:	.asciz "    Spreader    "
 .incbin_range "baserom/kn7000_program.rom", 0x1971D5, 0x1971E8
 Str_Non_Effect:	.asciz "   Non Effect   "
-	.space	7, 0x00
-Str_qYHo:	.asciz "\xE4qYHo "
-	.align	4, 0x00
+.incbin_range "baserom/kn7000_program.rom", 0x1971F9, 0x197208
 Str_ETC:	.asciz "ETC "
 .incbin_range "baserom/kn7000_program.rom", 0x19720D, 0x19722C
 data_4859722C:
@@ -3115,15 +2536,11 @@ Str_DEPTH_28:	.asciz "DEPTH"
 Str_DEPTH_V:	.asciz "DEPTH (V)"
 .incbin_range "baserom/kn7000_program.rom", 0x19726A, 0x197284
 Str_LFO_SPEED:	.asciz "LFO SPEED"
-.incbin_range "baserom/kn7000_program.rom", 0x19728E, 0x1972C8
-Str_rHVOLUME:	.asciz "\xAC+rHVOLUME"
-.incbin_range "baserom/kn7000_program.rom", 0x1972D3, 0x1972F0
+.incbin_range "baserom/kn7000_program.rom", 0x19728E, 0x1972F0
 Str_REVERB_SEND:	.asciz "REVERB SEND"
 .incbin_range "baserom/kn7000_program.rom", 0x1972FC, 0x197314
 data_48597314:
-.incbin_range "baserom/kn7000_program.rom", 0x197314, 0x197318
-Str_rYH:	.asciz "<rYH"
-.incbin_range "baserom/kn7000_program.rom", 0x19731D, 0x197324
+.incbin_range "baserom/kn7000_program.rom", 0x197314, 0x197324
 Str_DEPTH_29:	.asciz "DEPTH"
 .incbin_range "baserom/kn7000_program.rom", 0x19732A, 0x197348
 Str_SLOW_LFO_SPEED:	.asciz "SLOW LFO SPEED"
@@ -3131,29 +2548,19 @@ Str_SLOW_LFO_SPEED:	.asciz "SLOW LFO SPEED"
 Str_FAST_LFO_BALANCE_V:	.asciz "FAST LFO BALANCE(V)"
 .incbin_range "baserom/kn7000_program.rom", 0x1973C8, 0x1973D8
 Str_LFO_WAVEFORM:	.asciz "LFO WAVEFORM"
-.incbin_range "baserom/kn7000_program.rom", 0x1973E5, 0x1973F8
-Str_rHVOLUME_2:	.asciz "\xAC+rHVOLUME"
-.incbin_range "baserom/kn7000_program.rom", 0x197403, 0x197420
+.incbin_range "baserom/kn7000_program.rom", 0x1973E5, 0x197420
 Str_REVERB_SEND_2:	.asciz "REVERB SEND"
 .incbin_range "baserom/kn7000_program.rom", 0x19742C, 0x197444
 data_48597444:
-.incbin_range "baserom/kn7000_program.rom", 0x197444, 0x197448
-Str_sYH:	.asciz "$sYH"
-.incbin_range "baserom/kn7000_program.rom", 0x19744D, 0x197454
+.incbin_range "baserom/kn7000_program.rom", 0x197444, 0x197454
 Str_MANUAL:	.asciz "MANUAL"
 .incbin_range "baserom/kn7000_program.rom", 0x19745B, 0x197478
 Str_MANUAL_V:	.asciz "MANUAL (V)"
 .incbin_range "baserom/kn7000_program.rom", 0x197483, 0x19749C
 Str_LOW_MIX:	.asciz "LOW MIX"
-.incbin_range "baserom/kn7000_program.rom", 0x1974A4, 0x1974C0
-Str_HIGH_MIX:	.asciz "HIGH MIX"
-.incbin_range "baserom/kn7000_program.rom", 0x1974C9, 0x1974E4
+.incbin_range "baserom/kn7000_program.rom", 0x1974A4, 0x1974E4
 Str_L_DELAY:	.asciz "L DELAY"
-.incbin_range "baserom/kn7000_program.rom", 0x1974EC, 0x197504
-Str_3rHR_DELAY:	.asciz "\xF83rHR DELAY"
-.incbin_range "baserom/kn7000_program.rom", 0x197510, 0x197528
-Str_3rHVOLUME:	.asciz "\xF83rHVOLUME"
-.incbin_range "baserom/kn7000_program.rom", 0x197533, 0x197550
+.incbin_range "baserom/kn7000_program.rom", 0x1974EC, 0x197550
 Str_REVERB_SEND_3:	.asciz "REVERB SEND"
 .incbin_range "baserom/kn7000_program.rom", 0x19755C, 0x197574
 data_48597574:
@@ -3169,15 +2576,11 @@ Str_MANUAL_2:	.asciz "MANUAL"
 Str_PHASE_8:	.asciz "PHASE"
 .incbin_range "baserom/kn7000_program.rom", 0x197662, 0x197680
 Str_LFO_WAVEFORM_2:	.asciz "LFO WAVEFORM"
-.incbin_range "baserom/kn7000_program.rom", 0x19768D, 0x1976A0
-Str_rHVOLUME_3:	.asciz "\xAC+rHVOLUME"
-.incbin_range "baserom/kn7000_program.rom", 0x1976AB, 0x1976C8
+.incbin_range "baserom/kn7000_program.rom", 0x19768D, 0x1976C8
 Str_REVERB_SEND_4:	.asciz "REVERB SEND"
 .incbin_range "baserom/kn7000_program.rom", 0x1976D4, 0x1976EC
 data_485976EC:
-.incbin_range "baserom/kn7000_program.rom", 0x1976EC, 0x1976F0
-Str_uYH:	.asciz "\x84uYH"
-.incbin_range "baserom/kn7000_program.rom", 0x1976F5, 0x1976FC
+.incbin_range "baserom/kn7000_program.rom", 0x1976EC, 0x1976FC
 Str_DEPTH_31:	.asciz "DEPTH"
 .incbin_range "baserom/kn7000_program.rom", 0x197702, 0x197720
 Str_LFO_SPEED_3:	.asciz "LFO SPEED"
@@ -3189,29 +2592,21 @@ Str_MANUAL_3:	.asciz "MANUAL"
 Str_PHASE_9:	.asciz "PHASE"
 .incbin_range "baserom/kn7000_program.rom", 0x1977DA, 0x1977F8
 Str_LFO_WAVEFORM_3:	.asciz "LFO WAVEFORM"
-.incbin_range "baserom/kn7000_program.rom", 0x197805, 0x197818
-Str_rHVOLUME_4:	.asciz "\xAC+rHVOLUME"
-.incbin_range "baserom/kn7000_program.rom", 0x197823, 0x197840
+.incbin_range "baserom/kn7000_program.rom", 0x197805, 0x197840
 Str_REVERB_SEND_5:	.asciz "REVERB SEND"
 .incbin_range "baserom/kn7000_program.rom", 0x19784C, 0x197864
 data_48597864:
-.incbin_range "baserom/kn7000_program.rom", 0x197864, 0x197868
-Str_vYH:	.asciz "\xFCvYH"
-.incbin_range "baserom/kn7000_program.rom", 0x19786D, 0x197874
+.incbin_range "baserom/kn7000_program.rom", 0x197864, 0x197874
 Str_DEPTH_32:	.asciz "DEPTH"
 .incbin_range "baserom/kn7000_program.rom", 0x19787A, 0x197898
 Str_DEPTH_V_2:	.asciz "DEPTH (V)"
 .incbin_range "baserom/kn7000_program.rom", 0x1978A2, 0x1978BC
 Str_LFO_SPEED_4:	.asciz "LFO SPEED"
-.incbin_range "baserom/kn7000_program.rom", 0x1978C6, 0x197924
-Str_rHVOLUME_5:	.asciz "\xAC+rHVOLUME"
-.incbin_range "baserom/kn7000_program.rom", 0x19792F, 0x19794C
+.incbin_range "baserom/kn7000_program.rom", 0x1978C6, 0x19794C
 Str_REVERB_SEND_6:	.asciz "REVERB SEND"
 .incbin_range "baserom/kn7000_program.rom", 0x197958, 0x197970
 data_48597970:
-.incbin_range "baserom/kn7000_program.rom", 0x197970, 0x197974
-Str_txYH:	.asciz "txYH"
-.incbin_range "baserom/kn7000_program.rom", 0x197979, 0x197980
+.incbin_range "baserom/kn7000_program.rom", 0x197970, 0x197980
 Str_DEPTH_33:	.asciz "DEPTH"
 .incbin_range "baserom/kn7000_program.rom", 0x197986, 0x1979A4
 Str_SLOW_LFO_SPEED_2:	.asciz "SLOW LFO SPEED"
@@ -3219,35 +2614,25 @@ Str_SLOW_LFO_SPEED_2:	.asciz "SLOW LFO SPEED"
 Str_FAST_LFO_BALANCE_V_2:	.asciz "FAST LFO BALANCE(V)"
 .incbin_range "baserom/kn7000_program.rom", 0x197A24, 0x197A34
 Str_LFO_WAVEFORM_4:	.asciz "LFO WAVEFORM"
-.incbin_range "baserom/kn7000_program.rom", 0x197A41, 0x197A54
-Str_rHVOLUME_6:	.asciz "\xAC+rHVOLUME"
-.incbin_range "baserom/kn7000_program.rom", 0x197A5F, 0x197A7C
+.incbin_range "baserom/kn7000_program.rom", 0x197A41, 0x197A7C
 Str_REVERB_SEND_7:	.asciz "REVERB SEND"
 .incbin_range "baserom/kn7000_program.rom", 0x197A88, 0x197AA0
 data_48597AA0:
 .incbin_range "baserom/kn7000_program.rom", 0x197AA0, 0x197AB0
 Str_GATE_TIME:	.asciz "GATE TIME"
-.incbin_range "baserom/kn7000_program.rom", 0x197ABA, 0x197AD0
-Str_rHHIGH_DAMP_GAIN:	.asciz "((rHHIGH DAMP GAIN"
-.incbin_range "baserom/kn7000_program.rom", 0x197AE3, 0x197B1C
+.incbin_range "baserom/kn7000_program.rom", 0x197ABA, 0x197B1C
 Str_THRESHOLD_V:	.asciz "THRESHOLD (V)"
 .incbin_range "baserom/kn7000_program.rom", 0x197B2A, 0x197B40
 Str_MASK_TIME:	.asciz "MASK TIME"
-.incbin_range "baserom/kn7000_program.rom", 0x197B4A, 0x197B60
-Str_rHVOLUME_7:	.asciz "((rHVOLUME"
-.incbin_range "baserom/kn7000_program.rom", 0x197B6B, 0x197B88
+.incbin_range "baserom/kn7000_program.rom", 0x197B4A, 0x197B88
 Str_REVERB_SEND_8:	.asciz "REVERB SEND"
 .incbin_range "baserom/kn7000_program.rom", 0x197B94, 0x197BAC
 data_48597BAC:
-.incbin_range "baserom/kn7000_program.rom", 0x197BAC, 0x197BB0
-Str_zYH:	.asciz "\xB0zYH"
-.incbin_range "baserom/kn7000_program.rom", 0x197BB5, 0x197BBC
+.incbin_range "baserom/kn7000_program.rom", 0x197BAC, 0x197BBC
 Str_DELAY_L:	.asciz "DELAY L"
 .incbin_range "baserom/kn7000_program.rom", 0x197BC4, 0x197BDC
 Str_3rHDELAY_L_V:	.asciz "\xF83rHDELAY L (V)"
-.incbin_range "baserom/kn7000_program.rom", 0x197BEC, 0x197C00
-Str_3rHDELAY_R:	.asciz "\xF83rHDELAY R"
-.incbin_range "baserom/kn7000_program.rom", 0x197C0C, 0x197C24
+.incbin_range "baserom/kn7000_program.rom", 0x197BEC, 0x197C24
 Str_3rHDELAY_R_V:	.asciz "\xF83rHDELAY R (V)"
 .incbin_range "baserom/kn7000_program.rom", 0x197C34, 0x197C48
 Str_3rHFEEDBACK_L:	.asciz "\xF83rHFEEDBACK L"
@@ -3257,9 +2642,7 @@ Str_FEEDBACK_L_V:	.asciz "FEEDBACK L (V)"
 Str_FEEDBACK_R:	.asciz "FEEDBACK R"
 .incbin_range "baserom/kn7000_program.rom", 0x197C9F, 0x197CB8
 Str_FEEDBACK_R_V:	.asciz "FEEDBACK R (V)"
-.incbin_range "baserom/kn7000_program.rom", 0x197CC7, 0x197CDC
-Str_HIGH_DAMP_G:	.asciz "HIGH DAMP G"
-.incbin_range "baserom/kn7000_program.rom", 0x197CE8, 0x197D00
+.incbin_range "baserom/kn7000_program.rom", 0x197CC7, 0x197D00
 Str_VOLUME_8:	.asciz "VOLUME"
 .incbin_range "baserom/kn7000_program.rom", 0x197D07, 0x197D24
 Str_REVERB_SEND_9:	.asciz "REVERB SEND"
@@ -3267,15 +2650,7 @@ Str_REVERB_SEND_9:	.asciz "REVERB SEND"
 data_48597D48:
 .incbin_range "baserom/kn7000_program.rom", 0x197D48, 0x197D58
 Str_DELAY_1:	.asciz "DELAY 1"
-.incbin_range "baserom/kn7000_program.rom", 0x197D60, 0x197D78
-Str_3rHDELAY_2:	.asciz "\xF83rHDELAY 2"
-.incbin_range "baserom/kn7000_program.rom", 0x197D84, 0x197D9C
-Str_3rHDELAY_3:	.asciz "\xF83rHDELAY 3"
-.incbin_range "baserom/kn7000_program.rom", 0x197DA8, 0x197DC0
-Str_3rHDELAY_4:	.asciz "\xF83rHDELAY 4"
-.incbin_range "baserom/kn7000_program.rom", 0x197DCC, 0x197DE4
-Str_3rHPAN_1:	.asciz "\xF83rHPAN 1"
-.incbin_range "baserom/kn7000_program.rom", 0x197DEE, 0x197E0C
+.incbin_range "baserom/kn7000_program.rom", 0x197D60, 0x197E0C
 Str_PAN_2_2:	.asciz "PAN 2"
 .incbin_range "baserom/kn7000_program.rom", 0x197E12, 0x197E30
 Str_PAN_3_2:	.asciz "PAN 3"
@@ -3285,17 +2660,13 @@ Str_PAN_4_2:	.asciz "PAN 4"
 Str_FEEDBACK:	.asciz "FEEDBACK"
 .incbin_range "baserom/kn7000_program.rom", 0x197E81, 0x197E9C
 Str_FEEDBACK_V:	.asciz "FEEDBACK (V)"
-.incbin_range "baserom/kn7000_program.rom", 0x197EA9, 0x197EC0
-Str_HIGH_DAMP_G_2:	.asciz "HIGH DAMP G"
-.incbin_range "baserom/kn7000_program.rom", 0x197ECC, 0x197EE4
+.incbin_range "baserom/kn7000_program.rom", 0x197EA9, 0x197EE4
 Str_VOLUME_9:	.asciz "VOLUME"
 .incbin_range "baserom/kn7000_program.rom", 0x197EEB, 0x197F08
 Str_REVERB_SEND_10:	.asciz "REVERB SEND"
 .incbin_range "baserom/kn7000_program.rom", 0x197F14, 0x197F2C
 data_48597F2C:
-.incbin_range "baserom/kn7000_program.rom", 0x197F2C, 0x197F30
-Str_X_YH_2:	.asciz "X}YH"
-.incbin_range "baserom/kn7000_program.rom", 0x197F35, 0x197F3C
+.incbin_range "baserom/kn7000_program.rom", 0x197F2C, 0x197F3C
 Str_DEPTH_34:	.asciz "DEPTH"
 .incbin_range "baserom/kn7000_program.rom", 0x197F42, 0x197F60
 Str_LFO_SPEED_5:	.asciz "LFO SPEED"
@@ -3307,9 +2678,7 @@ Str_MANUAL_4:	.asciz "MANUAL"
 Str_PHASE_10:	.asciz "PHASE"
 .incbin_range "baserom/kn7000_program.rom", 0x19801A, 0x198038
 Str_LFO_WAVEFORM_5:	.asciz "LFO WAVEFORM"
-.incbin_range "baserom/kn7000_program.rom", 0x198045, 0x198058
-Str_rHVOLUME_8:	.asciz "\xAC+rHVOLUME"
-.incbin_range "baserom/kn7000_program.rom", 0x198063, 0x198080
+.incbin_range "baserom/kn7000_program.rom", 0x198045, 0x198080
 Str_REVERB_SEND_11:	.asciz "REVERB SEND"
 .incbin_range "baserom/kn7000_program.rom", 0x19808C, 0x1980A4
 data_485980A4:
@@ -3317,9 +2686,7 @@ data_485980A4:
 Str_DELAY_L_2:	.asciz "DELAY L"
 .incbin_range "baserom/kn7000_program.rom", 0x1980BC, 0x1980D4
 Str_3rHDELAY_L_V_2:	.asciz "\xF83rHDELAY L (V)"
-.incbin_range "baserom/kn7000_program.rom", 0x1980E4, 0x1980F8
-Str_3rHDELAY_R_2:	.asciz "\xF83rHDELAY R"
-.incbin_range "baserom/kn7000_program.rom", 0x198104, 0x19811C
+.incbin_range "baserom/kn7000_program.rom", 0x1980E4, 0x19811C
 Str_3rHDELAY_R_V_2:	.asciz "\xF83rHDELAY R (V)"
 .incbin_range "baserom/kn7000_program.rom", 0x19812C, 0x198140
 Str_3rHFEEDBACK_L_2:	.asciz "\xF83rHFEEDBACK L"
@@ -3329,9 +2696,7 @@ Str_FEEDBACK_L_V_2:	.asciz "FEEDBACK L (V)"
 Str_FEEDBACK_R_2:	.asciz "FEEDBACK R"
 .incbin_range "baserom/kn7000_program.rom", 0x198197, 0x1981B0
 Str_FEEDBACK_R_V_2:	.asciz "FEEDBACK R (V)"
-.incbin_range "baserom/kn7000_program.rom", 0x1981BF, 0x1981D4
-Str_HIGH_DAMP_G_3:	.asciz "HIGH DAMP G"
-.incbin_range "baserom/kn7000_program.rom", 0x1981E0, 0x1981F8
+.incbin_range "baserom/kn7000_program.rom", 0x1981BF, 0x1981F8
 Str_VOLUME_10:	.asciz "VOLUME"
 .incbin_range "baserom/kn7000_program.rom", 0x1981FF, 0x19821C
 Str_REVERB_SEND_12:	.asciz "REVERB SEND"
@@ -3349,9 +2714,7 @@ Str_MANUAL_5:	.asciz "MANUAL"
 Str_PHASE_11:	.asciz "PHASE"
 .incbin_range "baserom/kn7000_program.rom", 0x19832E, 0x19834C
 Str_LFO_WAVEFORM_6:	.asciz "LFO WAVEFORM"
-.incbin_range "baserom/kn7000_program.rom", 0x198359, 0x19836C
-Str_rHVOLUME_9:	.asciz "\xAC+rHVOLUME"
-.incbin_range "baserom/kn7000_program.rom", 0x198377, 0x198394
+.incbin_range "baserom/kn7000_program.rom", 0x198359, 0x198394
 Str_REVERB_SEND_13:	.asciz "REVERB SEND"
 .incbin_range "baserom/kn7000_program.rom", 0x1983A0, 0x1983B8
 data_485983B8:
@@ -3361,9 +2724,7 @@ Str_DEPTH_36:	.asciz "DEPTH"
 Str_DEPTH_V_3:	.asciz "DEPTH (V)"
 .incbin_range "baserom/kn7000_program.rom", 0x1983F6, 0x198410
 Str_LFO_SPEED_7:	.asciz "LFO SPEED"
-.incbin_range "baserom/kn7000_program.rom", 0x19841A, 0x198478
-Str_rHVOLUME_10:	.asciz "\xAC+rHVOLUME"
-.incbin_range "baserom/kn7000_program.rom", 0x198483, 0x1984A0
+.incbin_range "baserom/kn7000_program.rom", 0x19841A, 0x1984A0
 Str_REVERB_SEND_14:	.asciz "REVERB SEND"
 .incbin_range "baserom/kn7000_program.rom", 0x1984AC, 0x1984C4
 data_485984C4:
@@ -3385,9 +2746,7 @@ data_485986CC:
 Str_REVERB_TIME:	.asciz "REVERB TIME"
 .incbin_range "baserom/kn7000_program.rom", 0x1986E8, 0x198700
 Str_PRE_DELAY:	.asciz "PRE DELAY"
-.incbin_range "baserom/kn7000_program.rom", 0x19870A, 0x198720
-Str_3rHHIGH_DAMP:	.asciz "\xF83rHHIGH DAMP"
-.incbin_range "baserom/kn7000_program.rom", 0x19872E, 0x198748
+.incbin_range "baserom/kn7000_program.rom", 0x19870A, 0x198748
 Str_ER_LEVEL:	.asciz "ER LEVEL"
 .incbin_range "baserom/kn7000_program.rom", 0x198751, 0x19876C
 Str_VOLUME_11:	.asciz "VOLUME"
@@ -3399,9 +2758,7 @@ data_485987B4:
 Str_REVERB_TIME_2:	.asciz "REVERB TIME"
 .incbin_range "baserom/kn7000_program.rom", 0x1987D0, 0x1987E8
 Str_PRE_DELAY_2:	.asciz "PRE DELAY"
-.incbin_range "baserom/kn7000_program.rom", 0x1987F2, 0x198808
-Str_3rHHIGH_DAMP_2:	.asciz "\xF83rHHIGH DAMP"
-.incbin_range "baserom/kn7000_program.rom", 0x198816, 0x198854
+.incbin_range "baserom/kn7000_program.rom", 0x1987F2, 0x198854
 Str_VOLUME_12:	.asciz "VOLUME"
 .incbin_range "baserom/kn7000_program.rom", 0x19885B, 0x198878
 Str_VOLUME_V_2:	.asciz "VOLUME (V)"
@@ -3411,9 +2768,7 @@ data_4859889C:
 Str_REVERB_TIME_3:	.asciz "REVERB TIME"
 .incbin_range "baserom/kn7000_program.rom", 0x1988B8, 0x1988D0
 Str_PRE_DELAY_3:	.asciz "PRE DELAY"
-.incbin_range "baserom/kn7000_program.rom", 0x1988DA, 0x1988F0
-Str_3rHHIGH_DAMP_3:	.asciz "\xF83rHHIGH DAMP"
-.incbin_range "baserom/kn7000_program.rom", 0x1988FE, 0x198918
+.incbin_range "baserom/kn7000_program.rom", 0x1988DA, 0x198918
 Str_ER_LEVEL_2:	.asciz "ER LEVEL"
 .incbin_range "baserom/kn7000_program.rom", 0x198921, 0x19893C
 Str_VOLUME_13:	.asciz "VOLUME"
@@ -3425,9 +2780,7 @@ data_48598984:
 Str_REVERB_TIME_4:	.asciz "REVERB TIME"
 .incbin_range "baserom/kn7000_program.rom", 0x1989A0, 0x1989B8
 Str_PRE_DELAY_4:	.asciz "PRE DELAY"
-.incbin_range "baserom/kn7000_program.rom", 0x1989C2, 0x1989D8
-Str_3rHHIGH_DAMP_4:	.asciz "\xF83rHHIGH DAMP"
-.incbin_range "baserom/kn7000_program.rom", 0x1989E6, 0x198A00
+.incbin_range "baserom/kn7000_program.rom", 0x1989C2, 0x198A00
 Str_ER_LEVEL_3:	.asciz "ER LEVEL"
 .incbin_range "baserom/kn7000_program.rom", 0x198A09, 0x198A24
 Str_VOLUME_14:	.asciz "VOLUME"
@@ -3439,9 +2792,7 @@ data_48598A6C:
 Str_REVERB_TIME_5:	.asciz "REVERB TIME"
 .incbin_range "baserom/kn7000_program.rom", 0x198A88, 0x198AA0
 Str_PRE_DELAY_5:	.asciz "PRE DELAY"
-.incbin_range "baserom/kn7000_program.rom", 0x198AAA, 0x198AC0
-Str_3rHHIGH_DAMP_5:	.asciz "\xF83rHHIGH DAMP"
-.incbin_range "baserom/kn7000_program.rom", 0x198ACE, 0x198AE8
+.incbin_range "baserom/kn7000_program.rom", 0x198AAA, 0x198AE8
 Str_ER_LEVEL_4:	.asciz "ER LEVEL"
 .incbin_range "baserom/kn7000_program.rom", 0x198AF1, 0x198B0C
 Str_VOLUME_15:	.asciz "VOLUME"
@@ -3453,9 +2804,7 @@ data_48598B54:
 Str_REVERB_TIME_6:	.asciz "REVERB TIME"
 .incbin_range "baserom/kn7000_program.rom", 0x198B70, 0x198B88
 Str_PRE_DELAY_6:	.asciz "PRE DELAY"
-.incbin_range "baserom/kn7000_program.rom", 0x198B92, 0x198BA8
-Str_3rHHIGH_DAMP_6:	.asciz "\xF83rHHIGH DAMP"
-.incbin_range "baserom/kn7000_program.rom", 0x198BB6, 0x198BD0
+.incbin_range "baserom/kn7000_program.rom", 0x198B92, 0x198BD0
 Str_ER_LEVEL_5:	.asciz "ER LEVEL"
 .incbin_range "baserom/kn7000_program.rom", 0x198BD9, 0x198BF4
 Str_VOLUME_16:	.asciz "VOLUME"
@@ -3463,15 +2812,11 @@ Str_VOLUME_16:	.asciz "VOLUME"
 Str_VOLUME_V_6:	.asciz "VOLUME (V)"
 .incbin_range "baserom/kn7000_program.rom", 0x198C23, 0x198C3C
 data_48598C3C:
-.incbin_range "baserom/kn7000_program.rom", 0x198C3C, 0x198C40
-Str_d_YH_2:	.asciz "d\x8BYH"
-.incbin_range "baserom/kn7000_program.rom", 0x198C45, 0x198C4C
+.incbin_range "baserom/kn7000_program.rom", 0x198C3C, 0x198C4C
 Str_REVERB_TIME_7:	.asciz "REVERB TIME"
 .incbin_range "baserom/kn7000_program.rom", 0x198C58, 0x198C70
 Str_PRE_DELAY_7:	.asciz "PRE DELAY"
-.incbin_range "baserom/kn7000_program.rom", 0x198C7A, 0x198C90
-Str_3rHHIGH_DAMP_7:	.asciz "\xF83rHHIGH DAMP"
-.incbin_range "baserom/kn7000_program.rom", 0x198C9E, 0x198CB8
+.incbin_range "baserom/kn7000_program.rom", 0x198C7A, 0x198CB8
 Str_ER_LEVEL_6:	.asciz "ER LEVEL"
 .incbin_range "baserom/kn7000_program.rom", 0x198CC1, 0x198CDC
 Str_VOLUME_17:	.asciz "VOLUME"
@@ -3479,15 +2824,11 @@ Str_VOLUME_17:	.asciz "VOLUME"
 Str_VOLUME_V_7:	.asciz "VOLUME (V)"
 .incbin_range "baserom/kn7000_program.rom", 0x198D0B, 0x198D24
 data_48598D24:
-.incbin_range "baserom/kn7000_program.rom", 0x198D24, 0x198D28
-Str_L_YH_2:	.asciz "L\x8CYH"
-.incbin_range "baserom/kn7000_program.rom", 0x198D2D, 0x198D34
+.incbin_range "baserom/kn7000_program.rom", 0x198D24, 0x198D34
 Str_REVERB_TIME_8:	.asciz "REVERB TIME"
 .incbin_range "baserom/kn7000_program.rom", 0x198D40, 0x198D58
 Str_PRE_DELAY_8:	.asciz "PRE DELAY"
-.incbin_range "baserom/kn7000_program.rom", 0x198D62, 0x198D78
-Str_3rHHIGH_DAMP_8:	.asciz "\xF83rHHIGH DAMP"
-.incbin_range "baserom/kn7000_program.rom", 0x198D86, 0x198DA0
+.incbin_range "baserom/kn7000_program.rom", 0x198D62, 0x198DA0
 Str_ER_LEVEL_7:	.asciz "ER LEVEL"
 .incbin_range "baserom/kn7000_program.rom", 0x198DA9, 0x198DC4
 Str_VOLUME_18:	.asciz "VOLUME"
@@ -3499,9 +2840,7 @@ data_48598E0C:
 Str_REVERB_TIME_9:	.asciz "REVERB TIME"
 .incbin_range "baserom/kn7000_program.rom", 0x198E28, 0x198E40
 Str_PRE_DELAY_9:	.asciz "PRE DELAY"
-.incbin_range "baserom/kn7000_program.rom", 0x198E4A, 0x198E60
-Str_3rHHIGH_DAMP_9:	.asciz "\xF83rHHIGH DAMP"
-.incbin_range "baserom/kn7000_program.rom", 0x198E6E, 0x198E88
+.incbin_range "baserom/kn7000_program.rom", 0x198E4A, 0x198E88
 Str_ER_LEVEL_8:	.asciz "ER LEVEL"
 .incbin_range "baserom/kn7000_program.rom", 0x198E91, 0x198EAC
 Str_VOLUME_19:	.asciz "VOLUME"
@@ -3513,9 +2852,7 @@ data_48598EF4:
 Str_REVERB_TIME_10:	.asciz "REVERB TIME"
 .incbin_range "baserom/kn7000_program.rom", 0x198F10, 0x198F28
 Str_PRE_DELAY_10:	.asciz "PRE DELAY"
-.incbin_range "baserom/kn7000_program.rom", 0x198F32, 0x198F48
-Str_3rHHIGH_DAMP_10:	.asciz "\xF83rHHIGH DAMP"
-.incbin_range "baserom/kn7000_program.rom", 0x198F56, 0x198F70
+.incbin_range "baserom/kn7000_program.rom", 0x198F32, 0x198F70
 Str_ER_LEVEL_9:	.asciz "ER LEVEL"
 .incbin_range "baserom/kn7000_program.rom", 0x198F79, 0x198F94
 Str_VOLUME_20:	.asciz "VOLUME"
@@ -3527,9 +2864,7 @@ data_48598FDC:
 Str_REVERB_TIME_11:	.asciz "REVERB TIME"
 .incbin_range "baserom/kn7000_program.rom", 0x198FF8, 0x199010
 Str_PRE_DELAY_11:	.asciz "PRE DELAY"
-.incbin_range "baserom/kn7000_program.rom", 0x19901A, 0x199030
-Str_3rHHIGH_DAMP_11:	.asciz "\xF83rHHIGH DAMP"
-.incbin_range "baserom/kn7000_program.rom", 0x19903E, 0x199058
+.incbin_range "baserom/kn7000_program.rom", 0x19901A, 0x199058
 Str_ER_LEVEL_10:	.asciz "ER LEVEL"
 .incbin_range "baserom/kn7000_program.rom", 0x199061, 0x19907C
 Str_VOLUME_21:	.asciz "VOLUME"
@@ -3541,9 +2876,7 @@ data_485990C4:
 Str_REVERB_TIME_12:	.asciz "REVERB TIME"
 .incbin_range "baserom/kn7000_program.rom", 0x1990E0, 0x1990F8
 Str_PRE_DELAY_12:	.asciz "PRE DELAY"
-.incbin_range "baserom/kn7000_program.rom", 0x199102, 0x199118
-Str_3rHHIGH_DAMP_12:	.asciz "\xF83rHHIGH DAMP"
-.incbin_range "baserom/kn7000_program.rom", 0x199126, 0x199140
+.incbin_range "baserom/kn7000_program.rom", 0x199102, 0x199140
 Str_ER_LEVEL_11:	.asciz "ER LEVEL"
 .incbin_range "baserom/kn7000_program.rom", 0x199149, 0x199164
 Str_VOLUME_22:	.asciz "VOLUME"
@@ -3555,9 +2888,7 @@ data_485991AC:
 Str_REVERB_TIME_13:	.asciz "REVERB TIME"
 .incbin_range "baserom/kn7000_program.rom", 0x1991C8, 0x1991E0
 Str_PRE_DELAY_13:	.asciz "PRE DELAY"
-.incbin_range "baserom/kn7000_program.rom", 0x1991EA, 0x199200
-Str_3rHHIGH_DAMP_13:	.asciz "\xF83rHHIGH DAMP"
-.incbin_range "baserom/kn7000_program.rom", 0x19920E, 0x199228
+.incbin_range "baserom/kn7000_program.rom", 0x1991EA, 0x199228
 Str_ER_LEVEL_12:	.asciz "ER LEVEL"
 .incbin_range "baserom/kn7000_program.rom", 0x199231, 0x19924C
 Str_VOLUME_23:	.asciz "VOLUME"
@@ -3569,9 +2900,7 @@ data_48599294:
 Str_REVERB_TIME_14:	.asciz "REVERB TIME"
 .incbin_range "baserom/kn7000_program.rom", 0x1992B0, 0x1992C8
 Str_PRE_DELAY_14:	.asciz "PRE DELAY"
-.incbin_range "baserom/kn7000_program.rom", 0x1992D2, 0x1992E8
-Str_3rHHIGH_DAMP_14:	.asciz "\xF83rHHIGH DAMP"
-.incbin_range "baserom/kn7000_program.rom", 0x1992F6, 0x199310
+.incbin_range "baserom/kn7000_program.rom", 0x1992D2, 0x199310
 Str_ER_LEVEL_13:	.asciz "ER LEVEL"
 .incbin_range "baserom/kn7000_program.rom", 0x199319, 0x199334
 Str_VOLUME_24:	.asciz "VOLUME"
@@ -3583,9 +2912,7 @@ data_4859937C:
 Str_REVERB_TIME_15:	.asciz "REVERB TIME"
 .incbin_range "baserom/kn7000_program.rom", 0x199398, 0x1993B0
 Str_PRE_DELAY_15:	.asciz "PRE DELAY"
-.incbin_range "baserom/kn7000_program.rom", 0x1993BA, 0x1993D0
-Str_3rHHIGH_DAMP_15:	.asciz "\xF83rHHIGH DAMP"
-.incbin_range "baserom/kn7000_program.rom", 0x1993DE, 0x1993F8
+.incbin_range "baserom/kn7000_program.rom", 0x1993BA, 0x1993F8
 Str_ER_LEVEL_14:	.asciz "ER LEVEL"
 .incbin_range "baserom/kn7000_program.rom", 0x199401, 0x19941C
 Str_VOLUME_25:	.asciz "VOLUME"
@@ -3597,9 +2924,7 @@ data_48599464:
 Str_REVERB_TIME_16:	.asciz "REVERB TIME"
 .incbin_range "baserom/kn7000_program.rom", 0x199480, 0x199498
 Str_PRE_DELAY_16:	.asciz "PRE DELAY"
-.incbin_range "baserom/kn7000_program.rom", 0x1994A2, 0x1994B8
-Str_3rHHIGH_DAMP_16:	.asciz "\xF83rHHIGH DAMP"
-.incbin_range "baserom/kn7000_program.rom", 0x1994C6, 0x1994E0
+.incbin_range "baserom/kn7000_program.rom", 0x1994A2, 0x1994E0
 Str_ER_LEVEL_15:	.asciz "ER LEVEL"
 .incbin_range "baserom/kn7000_program.rom", 0x1994E9, 0x199504
 Str_VOLUME_26:	.asciz "VOLUME"
@@ -3607,9 +2932,7 @@ Str_VOLUME_26:	.asciz "VOLUME"
 Str_VOLUME_V_16:	.asciz "VOLUME (V)"
 .incbin_range "baserom/kn7000_program.rom", 0x199533, 0x19954C
 data_4859954C:
-.incbin_range "baserom/kn7000_program.rom", 0x19954C, 0x199550
-Str_t_YH_2:	.asciz "t\x94YH"
-.incbin_range "baserom/kn7000_program.rom", 0x199555, 0x19955C
+.incbin_range "baserom/kn7000_program.rom", 0x19954C, 0x19955C
 Str_THRESHOLD:	.asciz "THRESHOLD"
 .incbin_range "baserom/kn7000_program.rom", 0x199566, 0x199580
 Str_RATIO:	.asciz "RATIO"
@@ -3617,9 +2940,7 @@ Str_RATIO:	.asciz "RATIO"
 Str_ATTACK_SENSE:	.asciz "ATTACK SENSE"
 .incbin_range "baserom/kn7000_program.rom", 0x1995B1, 0x1995C4
 Str_rHRELEASE_SENSE:	.asciz " !rHRELEASE SENSE"
-.incbin_range "baserom/kn7000_program.rom", 0x1995D6, 0x1995E8
-Str_rHDRIVE:	.asciz " !rHDRIVE"
-.incbin_range "baserom/kn7000_program.rom", 0x1995F2, 0x199610
+.incbin_range "baserom/kn7000_program.rom", 0x1995D6, 0x199610
 Str_DRIVE_V:	.asciz "DRIVE (V)"
 .incbin_range "baserom/kn7000_program.rom", 0x19961A, 0x199634
 Str_ADJUST_6:	.asciz "ADJUST"
@@ -3639,9 +2960,7 @@ Str_RATIO_2:	.asciz "RATIO"
 Str_ATTACK_SENSE_2:	.asciz "ATTACK SENSE"
 .incbin_range "baserom/kn7000_program.rom", 0x199729, 0x19973C
 Str_rHRELEASE_SENSE_2:	.asciz " !rHRELEASE SENSE"
-.incbin_range "baserom/kn7000_program.rom", 0x19974E, 0x199760
-Str_rHDRIVE_2:	.asciz " !rHDRIVE"
-.incbin_range "baserom/kn7000_program.rom", 0x19976A, 0x199788
+.incbin_range "baserom/kn7000_program.rom", 0x19974E, 0x199788
 Str_DRIVE_V_2:	.asciz "DRIVE (V)"
 .incbin_range "baserom/kn7000_program.rom", 0x199792, 0x1997AC
 Str_ADJUST_7:	.asciz "ADJUST"
@@ -3661,9 +2980,7 @@ Str_RATIO_3:	.asciz "RATIO"
 Str_ATTACK_SENSE_3:	.asciz "ATTACK SENSE"
 .incbin_range "baserom/kn7000_program.rom", 0x1998A1, 0x1998B4
 Str_rHRELEASE_SENSE_3:	.asciz " !rHRELEASE SENSE"
-.incbin_range "baserom/kn7000_program.rom", 0x1998C6, 0x1998D8
-Str_rHDRIVE_3:	.asciz " !rHDRIVE"
-.incbin_range "baserom/kn7000_program.rom", 0x1998E2, 0x199900
+.incbin_range "baserom/kn7000_program.rom", 0x1998C6, 0x199900
 Str_DRIVE_V_3:	.asciz "DRIVE (V)"
 .incbin_range "baserom/kn7000_program.rom", 0x19990A, 0x199924
 Str_ADJUST_8:	.asciz "ADJUST"
@@ -3679,13 +2996,7 @@ data_485999B4:
 Str_DRIVE_2:	.asciz "DRIVE"
 .incbin_range "baserom/kn7000_program.rom", 0x1999CA, 0x1999E8
 Str_ADJUST_9:	.asciz "ADJUST   "
-.incbin_range "baserom/kn7000_program.rom", 0x1999F2, 0x199A0C
-Str_EMPHASYS_FC:	.asciz "EMPHASYS FC"
-.incbin_range "baserom/kn7000_program.rom", 0x199A18, 0x199A2C
-Str_rHEMPHASYS_FC_V:	.asciz "\xC7+rHEMPHASYS FC (V)"
-.incbin_range "baserom/kn7000_program.rom", 0x199A40, 0x199A50
-Str_rHEMPHASYS_GAIN:	.asciz "\xC7+rHEMPHASYS GAIN"
-.incbin_range "baserom/kn7000_program.rom", 0x199A62, 0x199A78
+.incbin_range "baserom/kn7000_program.rom", 0x1999F2, 0x199A78
 Str_VOLUME_30:	.asciz "VOLUME"
 .incbin_range "baserom/kn7000_program.rom", 0x199A7F, 0x199A9C
 Str_REVERB_SEND_19:	.asciz "REVERB SEND"
@@ -3701,9 +3012,7 @@ Str_ATTACK_SENSE_4:	.asciz "ATTACK SENSE"
 Str_rHATTACK_SENSE_V:	.asciz " !rHATTACK SENSE (V)"
 .incbin_range "baserom/kn7000_program.rom", 0x199B4D, 0x199B5C
 Str_rHRELEASE_SENSE_4:	.asciz " !rHRELEASE SENSE"
-.incbin_range "baserom/kn7000_program.rom", 0x199B6E, 0x199B80
-Str_rHVOLUME_11:	.asciz " !rHVOLUME"
-.incbin_range "baserom/kn7000_program.rom", 0x199B8B, 0x199BA8
+.incbin_range "baserom/kn7000_program.rom", 0x199B6E, 0x199BA8
 Str_REVERB_SEND_20:	.asciz "REVERB SEND"
 .incbin_range "baserom/kn7000_program.rom", 0x199BB4, 0x199BCC
 data_48599BCC:
@@ -3715,51 +3024,23 @@ Str_THRESHOLD_V_2:	.asciz "THRESHOLD (V)"
 Str_ATACK_RATE:	.asciz "ATACK RATE"
 .incbin_range "baserom/kn7000_program.rom", 0x199C2F, 0x199C44
 Str_rHRELEASE_RATE:	.asciz " !rHRELEASE RATE"
-.incbin_range "baserom/kn7000_program.rom", 0x199C55, 0x199C68
-Str_rHVOLUME_12:	.asciz " !rHVOLUME"
-.incbin_range "baserom/kn7000_program.rom", 0x199C73, 0x199C90
+.incbin_range "baserom/kn7000_program.rom", 0x199C55, 0x199C90
 Str_REVERB_SEND_21:	.asciz "REVERB SEND"
 .incbin_range "baserom/kn7000_program.rom", 0x199C9C, 0x199CB4
 data_48599CB4:
 .incbin_range "baserom/kn7000_program.rom", 0x199CB4, 0x199CC4
 Str_EQ1_FC:	.asciz "EQ1 FC"
-.incbin_range "baserom/kn7000_program.rom", 0x199CCB, 0x199CE4
-Str_rH_G:	.asciz "\xC7+rH    G"
-.incbin_range "baserom/kn7000_program.rom", 0x199CEE, 0x199D08
+.incbin_range "baserom/kn7000_program.rom", 0x199CCB, 0x199D08
 Str_rH_G_V:	.asciz "\xDA-rH    G (V)"
-.incbin_range "baserom/kn7000_program.rom", 0x199D16, 0x199D2C
-Str_rHEQ2_FC:	.asciz "\xDA-rHEQ2 FC"
-.incbin_range "baserom/kn7000_program.rom", 0x199D37, 0x199D50
-Str_rH_Q:	.asciz "\xC7+rH    Q"
-.incbin_range "baserom/kn7000_program.rom", 0x199D5A, 0x199D74
-Str_rH_G_2:	.asciz "\xBA,rH    G"
-.incbin_range "baserom/kn7000_program.rom", 0x199D7E, 0x199D98
+.incbin_range "baserom/kn7000_program.rom", 0x199D16, 0x199D98
 Str_rH_G_V_2:	.asciz "\xDA-rH    G (V)"
-.incbin_range "baserom/kn7000_program.rom", 0x199DA6, 0x199DBC
-Str_rHEQ3_FC:	.asciz "\xDA-rHEQ3 FC"
-.incbin_range "baserom/kn7000_program.rom", 0x199DC7, 0x199DE0
-Str_rH_Q_2:	.asciz "\xC7+rH    Q"
-.incbin_range "baserom/kn7000_program.rom", 0x199DEA, 0x199E04
-Str_rH_G_3:	.asciz "\xBA,rH    G"
-.incbin_range "baserom/kn7000_program.rom", 0x199E0E, 0x199E28
+.incbin_range "baserom/kn7000_program.rom", 0x199DA6, 0x199E28
 Str_rH_G_V_3:	.asciz "\xDA-rH    G (V)"
-.incbin_range "baserom/kn7000_program.rom", 0x199E36, 0x199E4C
-Str_rHEQ4_FC:	.asciz "\xDA-rHEQ4 FC"
-.incbin_range "baserom/kn7000_program.rom", 0x199E57, 0x199E70
-Str_rH_Q_3:	.asciz "\xC7+rH    Q"
-.incbin_range "baserom/kn7000_program.rom", 0x199E7A, 0x199E94
-Str_rH_G_4:	.asciz "\xBA,rH    G"
-.incbin_range "baserom/kn7000_program.rom", 0x199E9E, 0x199EB8
+.incbin_range "baserom/kn7000_program.rom", 0x199E36, 0x199EB8
 Str_rH_G_V_4:	.asciz "\xDA-rH    G (V)"
-.incbin_range "baserom/kn7000_program.rom", 0x199EC6, 0x199EDC
-Str_rHEQ5_FC:	.asciz "\xDA-rHEQ5 FC"
-.incbin_range "baserom/kn7000_program.rom", 0x199EE7, 0x199F00
-Str_rH_G_5:	.asciz "\xC7+rH    G"
-.incbin_range "baserom/kn7000_program.rom", 0x199F0A, 0x199F24
+.incbin_range "baserom/kn7000_program.rom", 0x199EC6, 0x199F24
 Str_rH_G_V_5:	.asciz "\xDA-rH    G (V)"
-.incbin_range "baserom/kn7000_program.rom", 0x199F32, 0x199F48
-Str_rHVOLUME_13:	.asciz "\xDA-rHVOLUME"
-.incbin_range "baserom/kn7000_program.rom", 0x199F53, 0x199F70
+.incbin_range "baserom/kn7000_program.rom", 0x199F32, 0x199F70
 Str_REVERB_SEND_22:	.asciz "REVERB SEND"
 .incbin_range "baserom/kn7000_program.rom", 0x199F7C, 0x199F94
 data_48599F94:
@@ -3769,9 +3050,7 @@ Str_DEPTH_37:	.asciz "DEPTH"
 Str_LFO_SPEED_8:	.asciz "LFO SPEED"
 .incbin_range "baserom/kn7000_program.rom", 0x199FD2, 0x19A00C
 Str_rHLFO_WAVEFORM_V:	.asciz "\xAC+rHLFO WAVEFORM (V)"
-.incbin_range "baserom/kn7000_program.rom", 0x19A021, 0x19A030
-Str_rHVOLUME_14:	.asciz "\xAC+rHVOLUME"
-.incbin_range "baserom/kn7000_program.rom", 0x19A03B, 0x19A058
+.incbin_range "baserom/kn7000_program.rom", 0x19A021, 0x19A058
 Str_REVERB_SEND_23:	.asciz "REVERB SEND"
 .incbin_range "baserom/kn7000_program.rom", 0x19A064, 0x19A07C
 data_4859A07C:
@@ -3785,9 +3064,7 @@ Str_ATTACK_SENSE_5:	.asciz "ATTACK SENSE"
 Str_rHATTACK_SENSE_V_2:	.asciz " !rHATTACK SENSE (V)"
 .incbin_range "baserom/kn7000_program.rom", 0x19A109, 0x19A118
 Str_rHRELEASE_SENSE_5:	.asciz " !rHRELEASE SENSE"
-.incbin_range "baserom/kn7000_program.rom", 0x19A12A, 0x19A13C
-Str_rHVOLUME_15:	.asciz " !rHVOLUME"
-.incbin_range "baserom/kn7000_program.rom", 0x19A147, 0x19A164
+.incbin_range "baserom/kn7000_program.rom", 0x19A12A, 0x19A164
 Str_REVERB_SEND_24:	.asciz "REVERB SEND"
 .incbin_range "baserom/kn7000_program.rom", 0x19A170, 0x19A188
 data_4859A188:
@@ -3797,9 +3074,7 @@ Str_DEPTH_38:	.asciz "DEPTH"
 Str_DEPTH_V_4:	.asciz "DEPTH (V)"
 .incbin_range "baserom/kn7000_program.rom", 0x19A1C6, 0x19A1E0
 Str_LFO_SPEED_9:	.asciz "LFO SPEED"
-.incbin_range "baserom/kn7000_program.rom", 0x19A1EA, 0x19A224
-Str_rHVOLUME_16:	.asciz "\xAC+rHVOLUME"
-.incbin_range "baserom/kn7000_program.rom", 0x19A22F, 0x19A24C
+.incbin_range "baserom/kn7000_program.rom", 0x19A1EA, 0x19A24C
 Str_REVERB_SEND_25:	.asciz "REVERB SEND"
 .incbin_range "baserom/kn7000_program.rom", 0x19A258, 0x19A270
 data_4859A270:
@@ -3811,9 +3086,7 @@ Str_DEPTH_V_5:	.asciz "DEPTH (V)"
 Str_SLOW_LFO_SPEED_3:	.asciz "SLOW LFO SPEED"
 .incbin_range "baserom/kn7000_program.rom", 0x19A2D7, 0x19A334
 Str_LFO_WAVEFORM_7:	.asciz "LFO WAVEFORM"
-.incbin_range "baserom/kn7000_program.rom", 0x19A341, 0x19A354
-Str_rHVOLUME_17:	.asciz "\xAC+rHVOLUME"
-.incbin_range "baserom/kn7000_program.rom", 0x19A35F, 0x19A37C
+.incbin_range "baserom/kn7000_program.rom", 0x19A341, 0x19A37C
 Str_REVERB_SEND_26:	.asciz "REVERB SEND"
 .incbin_range "baserom/kn7000_program.rom", 0x19A388, 0x19A3A0
 data_4859A3A0:
@@ -3825,9 +3098,7 @@ Str_LFO_SPEED_10:	.asciz "LFO SPEED"
 Str_PHASE_V:	.asciz "PHASE (V)"
 .incbin_range "baserom/kn7000_program.rom", 0x19A426, 0x19A440
 Str_LFO_WAVEFORM_8:	.asciz "LFO WAVEFORM"
-.incbin_range "baserom/kn7000_program.rom", 0x19A44D, 0x19A460
-Str_rHVOLUME_18:	.asciz "\xAC+rHVOLUME"
-.incbin_range "baserom/kn7000_program.rom", 0x19A46B, 0x19A488
+.incbin_range "baserom/kn7000_program.rom", 0x19A44D, 0x19A488
 Str_REVERB_SEND_27:	.asciz "REVERB SEND"
 .incbin_range "baserom/kn7000_program.rom", 0x19A494, 0x19A4AC
 data_4859A4AC:
@@ -3839,9 +3110,7 @@ Str_LFO_SPEED_11:	.asciz "LFO SPEED"
 Str_FHASE_V:	.asciz "FHASE (V)"
 .incbin_range "baserom/kn7000_program.rom", 0x19A532, 0x19A54C
 Str_LFO_WAVEFORM_9:	.asciz "LFO WAVEFORM"
-.incbin_range "baserom/kn7000_program.rom", 0x19A559, 0x19A56C
-Str_rHVOLUME_19:	.asciz "\xAC+rHVOLUME"
-.incbin_range "baserom/kn7000_program.rom", 0x19A577, 0x19A594
+.incbin_range "baserom/kn7000_program.rom", 0x19A559, 0x19A594
 Str_REVERB_SEND_28:	.asciz "REVERB SEND"
 .incbin_range "baserom/kn7000_program.rom", 0x19A5A0, 0x19A5B8
 data_4859A5B8:
@@ -3895,9 +3164,7 @@ Str_OSC_SPEED:	.asciz "OSC SPEED"
 Str_LFO_WAVEFORM_10:	.asciz "LFO WAVEFORM"
 .incbin_range "baserom/kn7000_program.rom", 0x19AA19, 0x19AA2C
 Str_rHLFO_WAVEFORM_V_2:	.asciz "\xAC+rHLFO WAVEFORM (V)"
-.incbin_range "baserom/kn7000_program.rom", 0x19AA41, 0x19AA50
-Str_rHVOLUME_20:	.asciz "\xAC+rHVOLUME"
-.incbin_range "baserom/kn7000_program.rom", 0x19AA5B, 0x19AA78
+.incbin_range "baserom/kn7000_program.rom", 0x19AA41, 0x19AA78
 Str_REVERB_SEND_32:	.asciz "REVERB SEND"
 .incbin_range "baserom/kn7000_program.rom", 0x19AA84, 0x19AA9C
 data_4859AA9C:
@@ -3909,9 +3176,7 @@ Str_SLOW_LFO_SPEED_4:	.asciz "SLOW LFO SPEED"
 Str_LFO_WAVEFORM_11:	.asciz "LFO WAVEFORM"
 .incbin_range "baserom/kn7000_program.rom", 0x19AB6D, 0x19AB80
 Str_rHLFO_WAVEFORM_V_3:	.asciz "\xAC+rHLFO WAVEFORM (V)"
-.incbin_range "baserom/kn7000_program.rom", 0x19AB95, 0x19ABA4
-Str_rHVOLUME_21:	.asciz "\xAC+rHVOLUME"
-.incbin_range "baserom/kn7000_program.rom", 0x19ABAF, 0x19ABCC
+.incbin_range "baserom/kn7000_program.rom", 0x19AB95, 0x19ABCC
 Str_REVERB_SEND_33:	.asciz "REVERB SEND"
 .incbin_range "baserom/kn7000_program.rom", 0x19ABD8, 0x19ABF0
 data_4859ABF0:
@@ -3927,9 +3192,7 @@ data_4859AC6C:
 Str_DELAY_DRY_WET:	.asciz "DELAY DRY/WET"
 .incbin_range "baserom/kn7000_program.rom", 0x19AC8A, 0x19ACA0
 Str_DELAY_L_3:	.asciz "DELAY L"
-.incbin_range "baserom/kn7000_program.rom", 0x19ACA8, 0x19ACC0
-Str_3rHDELAY_R_3:	.asciz "\xF83rHDELAY R"
-.incbin_range "baserom/kn7000_program.rom", 0x19ACCC, 0x19ACE4
+.incbin_range "baserom/kn7000_program.rom", 0x19ACA8, 0x19ACE4
 Str_3rHFEEDBACK_L_3:	.asciz "\xF83rHFEEDBACK L"
 .incbin_range "baserom/kn7000_program.rom", 0x19ACF3, 0x19AD0C
 Str_FEEDBACK_L_V_3:	.asciz "FEEDBACK L (V)"
@@ -3943,9 +3206,7 @@ Str_CHORUS_DRY_WET:	.asciz "CHORUS DRY/WET"
 Str_DEPTH_43:	.asciz "DEPTH"
 .incbin_range "baserom/kn7000_program.rom", 0x19ADA2, 0x19ADC0
 Str_LFO_SPEED_12:	.asciz "LFO SPEED"
-.incbin_range "baserom/kn7000_program.rom", 0x19ADCA, 0x19AE04
-Str_rHVOLUME_22:	.asciz "\xAC+rHVOLUME"
-.incbin_range "baserom/kn7000_program.rom", 0x19AE0F, 0x19AE2C
+.incbin_range "baserom/kn7000_program.rom", 0x19ADCA, 0x19AE2C
 Str_REVERB_SEND_35:	.asciz "REVERB SEND"
 .incbin_range "baserom/kn7000_program.rom", 0x19AE38, 0x19AE50
 data_4859AE50:
@@ -3953,9 +3214,7 @@ data_4859AE50:
 Str_DELAY_DRY_WET_2:	.asciz "DELAY DRY/WET"
 .incbin_range "baserom/kn7000_program.rom", 0x19AE6E, 0x19AE84
 Str_DELAY_L_4:	.asciz "DELAY L"
-.incbin_range "baserom/kn7000_program.rom", 0x19AE8C, 0x19AEA4
-Str_3rHDELAY_R_4:	.asciz "\xF83rHDELAY R"
-.incbin_range "baserom/kn7000_program.rom", 0x19AEB0, 0x19AEC8
+.incbin_range "baserom/kn7000_program.rom", 0x19AE8C, 0x19AEC8
 Str_3rHFEEDBACK_L_4:	.asciz "\xF83rHFEEDBACK L"
 .incbin_range "baserom/kn7000_program.rom", 0x19AED7, 0x19AEF0
 Str_FEEDBACK_L_V_4:	.asciz "FEEDBACK L (V)"
@@ -3975,9 +3234,7 @@ Str_MANUAL_8:	.asciz "MANUAL"
 Str_PHASE_12:	.asciz "PHASE"
 .incbin_range "baserom/kn7000_program.rom", 0x19B016, 0x19B034
 Str_LFO_WAVEFORM_12:	.asciz "LFO WAVEFORM"
-.incbin_range "baserom/kn7000_program.rom", 0x19B041, 0x19B054
-Str_rHVOLUME_23:	.asciz "\xAC+rHVOLUME"
-.incbin_range "baserom/kn7000_program.rom", 0x19B05F, 0x19B07C
+.incbin_range "baserom/kn7000_program.rom", 0x19B041, 0x19B07C
 Str_REVERB_SEND_36:	.asciz "REVERB SEND"
 .incbin_range "baserom/kn7000_program.rom", 0x19B088, 0x19B0A0
 data_4859B0A0:
@@ -3985,9 +3242,7 @@ data_4859B0A0:
 Str_DELAY_DRY_WET_3:	.asciz "DELAY DRY/WET"
 .incbin_range "baserom/kn7000_program.rom", 0x19B0BE, 0x19B0D4
 Str_DELAY_L_5:	.asciz "DELAY L"
-.incbin_range "baserom/kn7000_program.rom", 0x19B0DC, 0x19B0F4
-Str_3rHDELAY_R_5:	.asciz "\xF83rHDELAY R"
-.incbin_range "baserom/kn7000_program.rom", 0x19B100, 0x19B118
+.incbin_range "baserom/kn7000_program.rom", 0x19B0DC, 0x19B118
 Str_3rHFEEDBACK_L_5:	.asciz "\xF83rHFEEDBACK L"
 .incbin_range "baserom/kn7000_program.rom", 0x19B127, 0x19B140
 Str_FEEDBACK_L_V_5:	.asciz "FEEDBACK L (V)"
@@ -4001,9 +3256,7 @@ Str_DEPTH_45:	.asciz "DEPTH"
 Str_LFO_SPEED_14:	.asciz "LFO SPEED"
 .incbin_range "baserom/kn7000_program.rom", 0x19B1DA, 0x19B218
 Str_LFO_WAVEFORM_13:	.asciz "LFO WAVEFORM"
-.incbin_range "baserom/kn7000_program.rom", 0x19B225, 0x19B238
-Str_rHVOLUME_24:	.asciz "\xAC+rHVOLUME"
-.incbin_range "baserom/kn7000_program.rom", 0x19B243, 0x19B260
+.incbin_range "baserom/kn7000_program.rom", 0x19B225, 0x19B260
 Str_REVERB_SEND_37:	.asciz "REVERB SEND"
 .incbin_range "baserom/kn7000_program.rom", 0x19B26C, 0x19B284
 data_4859B284:
@@ -4011,9 +3264,7 @@ data_4859B284:
 Str_DELAY_DRY_WET_4:	.asciz "DELAY DRY/WET"
 .incbin_range "baserom/kn7000_program.rom", 0x19B2A2, 0x19B2B8
 Str_DELAY_L_6:	.asciz "DELAY L"
-.incbin_range "baserom/kn7000_program.rom", 0x19B2C0, 0x19B2D8
-Str_3rHDELAY_R_6:	.asciz "\xF83rHDELAY R"
-.incbin_range "baserom/kn7000_program.rom", 0x19B2E4, 0x19B2FC
+.incbin_range "baserom/kn7000_program.rom", 0x19B2C0, 0x19B2FC
 Str_3rHFEEDBACK_L_6:	.asciz "\xF83rHFEEDBACK L"
 .incbin_range "baserom/kn7000_program.rom", 0x19B30B, 0x19B324
 Str_FEEDBACK_L_V_6:	.asciz "FEEDBACK L (V)"
@@ -4033,9 +3284,7 @@ Str_MANUAL_9:	.asciz "MANUAL"
 Str_PHASE_13:	.asciz "PHASE"
 .incbin_range "baserom/kn7000_program.rom", 0x19B44A, 0x19B468
 Str_LFO_WAVEFORM_14:	.asciz "LFO WAVEFORM"
-.incbin_range "baserom/kn7000_program.rom", 0x19B475, 0x19B488
-Str_rHVOLUME_25:	.asciz "\xAC+rHVOLUME"
-.incbin_range "baserom/kn7000_program.rom", 0x19B493, 0x19B4B0
+.incbin_range "baserom/kn7000_program.rom", 0x19B475, 0x19B4B0
 Str_REVERB_SEND_38:	.asciz "REVERB SEND"
 .incbin_range "baserom/kn7000_program.rom", 0x19B4BC, 0x19B4D4
 data_4859B4D4:
@@ -4049,9 +3298,7 @@ Str_SWEEP_RANGE_3:	.asciz "SWEEP RANGE"
 Str_DELAY_DRY_WET_5:	.asciz "DELAY DRY/WET"
 .incbin_range "baserom/kn7000_program.rom", 0x19B55E, 0x19B574
 Str_DELAY_L_7:	.asciz "DELAY L"
-.incbin_range "baserom/kn7000_program.rom", 0x19B57C, 0x19B594
-Str_3rHDELAY_R_7:	.asciz "\xF83rHDELAY R"
-.incbin_range "baserom/kn7000_program.rom", 0x19B5A0, 0x19B5B8
+.incbin_range "baserom/kn7000_program.rom", 0x19B57C, 0x19B5B8
 Str_3rHFEEDBACK_L_7:	.asciz "\xF83rHFEEDBACK L"
 .incbin_range "baserom/kn7000_program.rom", 0x19B5C7, 0x19B5E0
 Str_FEEDBACK_L_V_7:	.asciz "FEEDBACK L (V)"
@@ -4067,31 +3314,7 @@ Str_REVERB_SEND_39:	.asciz "REVERB SEND"
 data_4859B694:
 .incbin_range "baserom/kn7000_program.rom", 0x19B694, 0x19B6A4
 Str_EQ1_FC_2:	.asciz "EQ1 FC"
-.incbin_range "baserom/kn7000_program.rom", 0x19B6AB, 0x19B6C4
-Str_rH_G_6:	.asciz "\xC7+rH    G"
-.incbin_range "baserom/kn7000_program.rom", 0x19B6CE, 0x19B6E8
-Str_rHEQ2_FC_2:	.asciz "\xDA-rHEQ2 FC"
-.incbin_range "baserom/kn7000_program.rom", 0x19B6F3, 0x19B70C
-Str_rH_Q_4:	.asciz "\xC7+rH    Q"
-.incbin_range "baserom/kn7000_program.rom", 0x19B716, 0x19B730
-Str_rH_G_7:	.asciz "\xBA,rH    G"
-.incbin_range "baserom/kn7000_program.rom", 0x19B73A, 0x19B754
-Str_rHEQ3_FC_2:	.asciz "\xDA-rHEQ3 FC"
-.incbin_range "baserom/kn7000_program.rom", 0x19B75F, 0x19B778
-Str_rH_Q_5:	.asciz "\xC7+rH    Q"
-.incbin_range "baserom/kn7000_program.rom", 0x19B782, 0x19B79C
-Str_rH_G_8:	.asciz "\xBA,rH    G"
-.incbin_range "baserom/kn7000_program.rom", 0x19B7A6, 0x19B7C0
-Str_rHEQ4_FC_2:	.asciz "\xDA-rHEQ4 FC"
-.incbin_range "baserom/kn7000_program.rom", 0x19B7CB, 0x19B7E4
-Str_rH_Q_6:	.asciz "\xC7+rH    Q"
-.incbin_range "baserom/kn7000_program.rom", 0x19B7EE, 0x19B808
-Str_rH_G_9:	.asciz "\xBA,rH    G"
-.incbin_range "baserom/kn7000_program.rom", 0x19B812, 0x19B82C
-Str_rHEQ5_FC_2:	.asciz "\xDA-rHEQ5 FC"
-.incbin_range "baserom/kn7000_program.rom", 0x19B837, 0x19B850
-Str_rH_G_10:	.asciz "\xC7+rH    G"
-.incbin_range "baserom/kn7000_program.rom", 0x19B85A, 0x19B878
+.incbin_range "baserom/kn7000_program.rom", 0x19B6AB, 0x19B878
 data_4859B878:
 .incbin_range "baserom/kn7000_program.rom", 0x19B878, 0x19B888
 Str_THRESHOLD_7:	.asciz "THRESHOLD"
@@ -4109,9 +3332,7 @@ Str_ADJUST_11:	.asciz "ADJUST"
 Str_DELAY_DRY_WET_6:	.asciz "DELAY DRY/WET"
 .incbin_range "baserom/kn7000_program.rom", 0x19B96E, 0x19B984
 Str_DELAY_L_8:	.asciz "DELAY L"
-.incbin_range "baserom/kn7000_program.rom", 0x19B98C, 0x19B9A4
-Str_3rHDELAY_R_8:	.asciz "\xF83rHDELAY R"
-.incbin_range "baserom/kn7000_program.rom", 0x19B9B0, 0x19B9C8
+.incbin_range "baserom/kn7000_program.rom", 0x19B98C, 0x19B9C8
 Str_3rHFEEDBACK_L_8:	.asciz "\xF83rHFEEDBACK L"
 .incbin_range "baserom/kn7000_program.rom", 0x19B9D7, 0x19B9F0
 Str_FEEDBACK_L_V_8:	.asciz "FEEDBACK L (V)"
@@ -4141,9 +3362,7 @@ Str_ADJUST_12:	.asciz "ADJUST"
 Str_DELAY_DRY_WET_7:	.asciz "DELAY DRY/WET"
 .incbin_range "baserom/kn7000_program.rom", 0x19BB9A, 0x19BBB0
 Str_DELAY_L_9:	.asciz "DELAY L"
-.incbin_range "baserom/kn7000_program.rom", 0x19BBB8, 0x19BBD0
-Str_3rHDELAY_R_9:	.asciz "\xF83rHDELAY R"
-.incbin_range "baserom/kn7000_program.rom", 0x19BBDC, 0x19BBF4
+.incbin_range "baserom/kn7000_program.rom", 0x19BBB8, 0x19BBF4
 Str_3rHFEEDBACK_L_9:	.asciz "\xF83rHFEEDBACK L"
 .incbin_range "baserom/kn7000_program.rom", 0x19BC03, 0x19BC1C
 Str_FEEDBACK_L_V_9:	.asciz "FEEDBACK L (V)"
@@ -4161,13 +3380,9 @@ data_4859BCD0:
 Str_DEPTH_47:	.asciz "DEPTH"
 .incbin_range "baserom/kn7000_program.rom", 0x19BCE6, 0x19BD04
 Str_LFO_SPEED_16:	.asciz "LFO SPEED"
-.incbin_range "baserom/kn7000_program.rom", 0x19BD0E, 0x19BD48
-Str_rH_G_11:	.asciz "\xC7+rH   G"
-.incbin_range "baserom/kn7000_program.rom", 0x19BD51, 0x19BD70
+.incbin_range "baserom/kn7000_program.rom", 0x19BD0E, 0x19BD70
 Str_HE_FC:	.asciz "HE FC"
-.incbin_range "baserom/kn7000_program.rom", 0x19BD76, 0x19BD90
-Str_rH_G_12:	.asciz "\xC7+rH   G"
-.incbin_range "baserom/kn7000_program.rom", 0x19BD99, 0x19BDB8
+.incbin_range "baserom/kn7000_program.rom", 0x19BD76, 0x19BDB8
 Str_VOLUME_37:	.asciz "VOLUME"
 .incbin_range "baserom/kn7000_program.rom", 0x19BDBF, 0x19BDDC
 Str_REVERB_SEND_42:	.asciz "REVERB SEND"
@@ -4185,9 +3400,7 @@ Str_REVERB_SEND_43:	.asciz "REVERB SEND"
 data_4859BEC4:
 .incbin_range "baserom/kn7000_program.rom", 0x19BEC4, 0x19BED4
 Str_LFO_SPEED_18:	.asciz "LFO SPEED"
-.incbin_range "baserom/kn7000_program.rom", 0x19BEDE, 0x19BF18
-Str_rHVOLUME_26:	.asciz "\xAC+rHVOLUME"
-.incbin_range "baserom/kn7000_program.rom", 0x19BF23, 0x19BF40
+.incbin_range "baserom/kn7000_program.rom", 0x19BEDE, 0x19BF40
 Str_REVERB_SEND_44:	.asciz "REVERB SEND"
 .incbin_range "baserom/kn7000_program.rom", 0x19BF4C, 0x19BF64
 data_4859BF64:
@@ -4197,9 +3410,7 @@ Str_REVERB_TIME_17:	.asciz "REVERB TIME"
 Str_VOLUME_38:	.asciz "VOLUME"
 .incbin_range "baserom/kn7000_program.rom", 0x19BF9F, 0x19BFBC
 data_4859BFBC:
-.incbin_range "baserom/kn7000_program.rom", 0x19BFBC, 0x19BFC0
-Str_t_YH_3:	.asciz "t\xBFYH"
-.incbin_range "baserom/kn7000_program.rom", 0x19BFC5, 0x19BFCC
+.incbin_range "baserom/kn7000_program.rom", 0x19BFBC, 0x19BFCC
 Str_REVERB_TIME_18:	.asciz "REVERB TIME"
 .incbin_range "baserom/kn7000_program.rom", 0x19BFD8, 0x19BFF0
 Str_VOLUME_39:	.asciz "VOLUME"
@@ -4225,9 +3436,7 @@ Str_ADJUST_13:	.asciz "ADJUST"
 Str_EQ1_FC_3:	.asciz "EQ1 FC"
 .incbin_range "baserom/kn7000_program.rom", 0x19C123, 0x19C13C
 Str_rHEQ1_FC_V:	.asciz "\xC7+rHEQ1 FC (V)"
-.incbin_range "baserom/kn7000_program.rom", 0x19C14B, 0x19C160
-Str_rHVOLUME_27:	.asciz "\xC7+rHVOLUME"
-.incbin_range "baserom/kn7000_program.rom", 0x19C16B, 0x19C188
+.incbin_range "baserom/kn7000_program.rom", 0x19C14B, 0x19C188
 Str_REVERB_SEND_45:	.asciz "REVERB SEND"
 .incbin_range "baserom/kn7000_program.rom", 0x19C194, 0x19C1AC
 data_4859C1AC:
@@ -4239,9 +3448,7 @@ Str_ADJUST_14:	.asciz "ADJUST"
 Str_EQ1_FC_4:	.asciz "EQ1 FC"
 .incbin_range "baserom/kn7000_program.rom", 0x19C20B, 0x19C224
 Str_rHEQ1_FC_V_2:	.asciz "\xC7+rHEQ1 FC (V)"
-.incbin_range "baserom/kn7000_program.rom", 0x19C233, 0x19C248
-Str_rHVOLUME_28:	.asciz "\xC7+rHVOLUME"
-.incbin_range "baserom/kn7000_program.rom", 0x19C253, 0x19C270
+.incbin_range "baserom/kn7000_program.rom", 0x19C233, 0x19C270
 Str_REVERB_SEND_46:	.asciz "REVERB SEND"
 .incbin_range "baserom/kn7000_program.rom", 0x19C27C, 0x19C294
 data_4859C294:
@@ -4253,9 +3460,7 @@ Str_ADJUST_15:	.asciz "ADJUST"
 Str_EQ1_FC_5:	.asciz "EQ1 FC"
 .incbin_range "baserom/kn7000_program.rom", 0x19C2F3, 0x19C30C
 Str_rHEQ1_FC_V_3:	.asciz "\xC7+rHEQ1 FC (V)"
-.incbin_range "baserom/kn7000_program.rom", 0x19C31B, 0x19C330
-Str_rHVOLUME_29:	.asciz "\xC7+rHVOLUME"
-.incbin_range "baserom/kn7000_program.rom", 0x19C33B, 0x19C358
+.incbin_range "baserom/kn7000_program.rom", 0x19C31B, 0x19C358
 Str_REVERB_SEND_47:	.asciz "REVERB SEND"
 .incbin_range "baserom/kn7000_program.rom", 0x19C364, 0x19C37C
 data_4859C37C:
@@ -4267,9 +3472,7 @@ Str_ADJUST_16:	.asciz "ADJUST"
 Str_EQ1_FC_6:	.asciz "EQ1 FC"
 .incbin_range "baserom/kn7000_program.rom", 0x19C3DB, 0x19C3F4
 Str_rHEQ1_FC_V_4:	.asciz "\xC7+rHEQ1 FC (V)"
-.incbin_range "baserom/kn7000_program.rom", 0x19C403, 0x19C418
-Str_rHVOLUME_30:	.asciz "\xC7+rHVOLUME"
-.incbin_range "baserom/kn7000_program.rom", 0x19C423, 0x19C440
+.incbin_range "baserom/kn7000_program.rom", 0x19C403, 0x19C440
 Str_REVERB_SEND_48:	.asciz "REVERB SEND"
 .incbin_range "baserom/kn7000_program.rom", 0x19C44C, 0x19C464
 data_4859C464:
@@ -4291,9 +3494,7 @@ Str_REVERB_SEND_50:	.asciz "REVERB SEND"
 data_4859C55C:
 .incbin_range "baserom/kn7000_program.rom", 0x19C55C, 0x19C56C
 Str_Emphasis_Fc:	.asciz "Emphasis Fc"
-.incbin_range "baserom/kn7000_program.rom", 0x19C578, 0x19C58C
-Str_rH_G_13:	.asciz "\xC7+rH    G"
-.incbin_range "baserom/kn7000_program.rom", 0x19C596, 0x19C5B4
+.incbin_range "baserom/kn7000_program.rom", 0x19C578, 0x19C5B4
 Str_VOLUME_44:	.asciz "VOLUME"
 .incbin_range "baserom/kn7000_program.rom", 0x19C5BB, 0x19C5D8
 Str_REVERB_SEND_51:	.asciz "REVERB SEND"
@@ -4301,9 +3502,7 @@ Str_REVERB_SEND_51:	.asciz "REVERB SEND"
 data_4859C5FC:
 .incbin_range "baserom/kn7000_program.rom", 0x19C5FC, 0x19C60C
 Str_Emphasis_Fc_2:	.asciz "Emphasis Fc"
-.incbin_range "baserom/kn7000_program.rom", 0x19C618, 0x19C62C
-Str_rH_G_14:	.asciz "\xC7+rH    G"
-.incbin_range "baserom/kn7000_program.rom", 0x19C636, 0x19C654
+.incbin_range "baserom/kn7000_program.rom", 0x19C618, 0x19C654
 Str_VOLUME_45:	.asciz "VOLUME"
 .incbin_range "baserom/kn7000_program.rom", 0x19C65B, 0x19C678
 Str_REVERB_SEND_52:	.asciz "REVERB SEND"
@@ -4311,25 +3510,7 @@ Str_REVERB_SEND_52:	.asciz "REVERB SEND"
 data_4859C69C:
 .incbin_range "baserom/kn7000_program.rom", 0x19C69C, 0x19C6AC
 Str_Note_1:	.asciz "Note 1"
-.incbin_range "baserom/kn7000_program.rom", 0x19C6B3, 0x19C6CC
-Str_2WrHBend_1:	.asciz "2WrHBend 1"
-.incbin_range "baserom/kn7000_program.rom", 0x19C6D7, 0x19C6F0
-Str_2WrHVelo_1:	.asciz "2WrHVelo 1"
-.incbin_range "baserom/kn7000_program.rom", 0x19C6FB, 0x19C714
-Str_2WrHNote_2:	.asciz "2WrHNote 2"
-.incbin_range "baserom/kn7000_program.rom", 0x19C71F, 0x19C738
-Str_2WrHBend_2:	.asciz "2WrHBend 2"
-.incbin_range "baserom/kn7000_program.rom", 0x19C743, 0x19C75C
-Str_2WrHVelo_2:	.asciz "2WrHVelo 2"
-.incbin_range "baserom/kn7000_program.rom", 0x19C767, 0x19C780
-Str_2WrHNote_3:	.asciz "2WrHNote 3"
-.incbin_range "baserom/kn7000_program.rom", 0x19C78B, 0x19C7A4
-Str_2WrHBend_3:	.asciz "2WrHBend 3"
-.incbin_range "baserom/kn7000_program.rom", 0x19C7AF, 0x19C7C8
-Str_2WrHVelo_3:	.asciz "2WrHVelo 3"
-.incbin_range "baserom/kn7000_program.rom", 0x19C7D3, 0x19C7EC
-Str_2WrHVOLUME:	.asciz "2WrHVOLUME"
-.incbin_range "baserom/kn7000_program.rom", 0x19C7F7, 0x19C814
+.incbin_range "baserom/kn7000_program.rom", 0x19C6B3, 0x19C814
 Str_REVERB_SEND_53:	.asciz "REVERB SEND"
 .incbin_range "baserom/kn7000_program.rom", 0x19C820, 0x19C838
 data_4859C838:
@@ -4369,9 +3550,7 @@ Str_RATIO_8:	.asciz "RATIO"
 Str_ATTACK_SENSE_8:	.asciz "ATTACK SENSE"
 .incbin_range "baserom/kn7000_program.rom", 0x19CCAD, 0x19CCC0
 Str_rHRELEASE_SENSE_6:	.asciz " !rHRELEASE SENSE"
-.incbin_range "baserom/kn7000_program.rom", 0x19CCD2, 0x19CCE4
-Str_rHDRIVE_4:	.asciz " !rHDRIVE"
-.incbin_range "baserom/kn7000_program.rom", 0x19CCEE, 0x19CD0C
+.incbin_range "baserom/kn7000_program.rom", 0x19CCD2, 0x19CD0C
 Str_DRIVE_V_4:	.asciz "DRIVE (V)"
 .incbin_range "baserom/kn7000_program.rom", 0x19CD16, 0x19CD30
 Str_ADJUST_19:	.asciz "ADJUST"
@@ -4391,9 +3570,7 @@ Str_RATIO_9:	.asciz "RATIO"
 Str_ATTACK_SENSE_9:	.asciz "ATTACK SENSE"
 .incbin_range "baserom/kn7000_program.rom", 0x19CE25, 0x19CE38
 Str_rHRELEASE_SENSE_7:	.asciz " !rHRELEASE SENSE"
-.incbin_range "baserom/kn7000_program.rom", 0x19CE4A, 0x19CE5C
-Str_rHDRIVE_5:	.asciz " !rHDRIVE"
-.incbin_range "baserom/kn7000_program.rom", 0x19CE66, 0x19CE84
+.incbin_range "baserom/kn7000_program.rom", 0x19CE4A, 0x19CE84
 Str_DRIVE_V_5:	.asciz "DRIVE (V)"
 .incbin_range "baserom/kn7000_program.rom", 0x19CE8E, 0x19CEA8
 Str_ADJUST_20:	.asciz "ADJUST"
@@ -4413,9 +3590,7 @@ Str_RATIO_10:	.asciz "RATIO"
 Str_ATTACK_SENSE_10:	.asciz "ATTACK SENSE"
 .incbin_range "baserom/kn7000_program.rom", 0x19CF9D, 0x19CFB0
 Str_rHRELEASE_SENSE_8:	.asciz " !rHRELEASE SENSE"
-.incbin_range "baserom/kn7000_program.rom", 0x19CFC2, 0x19CFD4
-Str_rHDRIVE_6:	.asciz " !rHDRIVE"
-.incbin_range "baserom/kn7000_program.rom", 0x19CFDE, 0x19CFFC
+.incbin_range "baserom/kn7000_program.rom", 0x19CFC2, 0x19CFFC
 Str_DRIVE_V_6:	.asciz "DRIVE (V)"
 .incbin_range "baserom/kn7000_program.rom", 0x19D006, 0x19D020
 Str_ADJUST_21:	.asciz "ADJUST"
@@ -4435,9 +3610,7 @@ Str_RATIO_11:	.asciz "RATIO"
 Str_ATTACK_SENSE_11:	.asciz "ATTACK SENSE"
 .incbin_range "baserom/kn7000_program.rom", 0x19D115, 0x19D128
 Str_rHRELEASE_SENSE_9:	.asciz " !rHRELEASE SENSE"
-.incbin_range "baserom/kn7000_program.rom", 0x19D13A, 0x19D14C
-Str_rHDRIVE_7:	.asciz " !rHDRIVE"
-.incbin_range "baserom/kn7000_program.rom", 0x19D156, 0x19D174
+.incbin_range "baserom/kn7000_program.rom", 0x19D13A, 0x19D174
 Str_DRIVE_V_7:	.asciz "DRIVE (V)"
 .incbin_range "baserom/kn7000_program.rom", 0x19D17E, 0x19D198
 Str_ADJUST_22:	.asciz "ADJUST"
@@ -4525,9 +3698,7 @@ Str_TEMPO_6:	.asciz "TEMPO"
 Str_2WrHBEAT_NUMBER:	.asciz "2WrHBEAT NUMBER"
 .incbin_range "baserom/kn7000_program.rom", 0x19DC90, 0x19DCA4
 Str_2WrHLFO_WAVE_NUMBER:	.asciz "2WrHLFO WAVE NUMBER"
-.incbin_range "baserom/kn7000_program.rom", 0x19DCB8, 0x19DCC8
-Str_2WrHPHASE:	.asciz "2WrHPHASE"
-.incbin_range "baserom/kn7000_program.rom", 0x19DCD2, 0x19DCF0
+.incbin_range "baserom/kn7000_program.rom", 0x19DCB8, 0x19DCF0
 Str_RESONANCE_5:	.asciz "RESONANCE"
 .incbin_range "baserom/kn7000_program.rom", 0x19DCFA, 0x19DD14
 Str_RESONANCE_V_5:	.asciz "RESONANCE (V)"
@@ -4537,9 +3708,7 @@ Str_MANUAL_11:	.asciz "MANUAL"
 Str_SWEEP_RANGE_4:	.asciz "SWEEP RANGE"
 .incbin_range "baserom/kn7000_program.rom", 0x19DD68, 0x19DD80
 Str_LFO_WAVEFORM_15:	.asciz "LFO WAVEFORM"
-.incbin_range "baserom/kn7000_program.rom", 0x19DD8D, 0x19DDA0
-Str_rHVOLUME_31:	.asciz "\xAC+rHVOLUME"
-.incbin_range "baserom/kn7000_program.rom", 0x19DDAB, 0x19DDC8
+.incbin_range "baserom/kn7000_program.rom", 0x19DD8D, 0x19DDC8
 Str_REVERB_SEND_65:	.asciz "REVERB SEND"
 .incbin_range "baserom/kn7000_program.rom", 0x19DDD4, 0x19DDEC
 data_4859DDEC:
@@ -4565,9 +3734,7 @@ Str_TEMPO_7:	.asciz "TEMPO"
 Str_2WrHBEAT_NUMBER_2:	.asciz "2WrHBEAT NUMBER"
 .incbin_range "baserom/kn7000_program.rom", 0x19DF38, 0x19DF4C
 Str_2WrHLFO_WAVE_NUMBER_2:	.asciz "2WrHLFO WAVE NUMBER"
-.incbin_range "baserom/kn7000_program.rom", 0x19DF60, 0x19DF70
-Str_2WrHPHASE_2:	.asciz "2WrHPHASE"
-.incbin_range "baserom/kn7000_program.rom", 0x19DF7A, 0x19DF98
+.incbin_range "baserom/kn7000_program.rom", 0x19DF60, 0x19DF98
 Str_RESONANCE_7:	.asciz "RESONANCE"
 .incbin_range "baserom/kn7000_program.rom", 0x19DFA2, 0x19DFBC
 Str_RESONANCE_V_6:	.asciz "RESONANCE (V)"
@@ -4577,9 +3744,7 @@ Str_MANUAL_13:	.asciz "MANUAL"
 Str_SWEEP_RANGE_6:	.asciz "SWEEP RANGE"
 .incbin_range "baserom/kn7000_program.rom", 0x19E010, 0x19E028
 Str_LFO_WAVEFORM_16:	.asciz "LFO WAVEFORM"
-.incbin_range "baserom/kn7000_program.rom", 0x19E035, 0x19E048
-Str_rHVOLUME_32:	.asciz "\xAC+rHVOLUME"
-.incbin_range "baserom/kn7000_program.rom", 0x19E053, 0x19E070
+.incbin_range "baserom/kn7000_program.rom", 0x19E035, 0x19E070
 Str_REVERB_SEND_67:	.asciz "REVERB SEND"
 .incbin_range "baserom/kn7000_program.rom", 0x19E07C, 0x19E094
 data_4859E094:
@@ -4674,7 +3839,7 @@ Str_RIGHT1_RIGHT2_LEFT_PART4_PART5_PART6_PAR:	.asciz "|-|RIGHT1|RIGHT2|LEFT|PART
 	.align	4, 0xFF
 Str_d_d_3:	.asciz "%d-%d"
 	.align	4, 0xFF
-Str_empty_1433:	.asciz "%"
+Str_empty_1423:	.asciz "%"
 	.align	4, 0xFF
 Str_d_34:	.asciz "%d"
 	.align	4, 0xFF
@@ -4694,7 +3859,7 @@ ptrs_4859F194:
 	.long	Str_OFF_181
 	.long	Str_ON_138
 
-Str_empty_1432:	.asciz "%"
+Str_empty_1422:	.asciz "%"
 	.align	4, 0xFF
 Str_d_32:	.asciz "%d"
 	.align	4, 0xFF
@@ -4721,9 +3886,9 @@ Str_ON_136:	.asciz "ON"
 Str_OFF_179:	.asciz "OFF"
 Str_OK_30:	.asciz "OK"
 	.align	4, 0xFF
-Str_empty_1431:	.asciz "<"
+Str_empty_1421:	.asciz "<"
 	.align	4, 0xFF
-Str_empty_1430:	.asciz ">"
+Str_empty_1420:	.asciz ">"
 	.align	4, 0xFF
 Str_7f_3:	.asciz "~7f"
 Str_80_4:	.asciz "~80"
@@ -4764,7 +3929,7 @@ Str_Show:	.asciz "Show"
 	.align	4, 0xFF
 data_4859F28C:
 .incbin_range "baserom/kn7000_program.rom", 0x19F28C, 0x19F29C
-Str_empty_1429:	.asciz " -"
+Str_empty_1441:	.asciz " -"
 Str_A_40:	.asciz " A"
 Str_B_21:	.asciz " B"
 Str_C_37:	.asciz " C"
@@ -4781,7 +3946,7 @@ Str_10_9:	.asciz "10"
 	.align	4, 0xFF
 
 ptrs_4859F2C8:
-	.long	Str_empty_1429
+	.long	Str_empty_1441
 	.long	Str_A_40
 	.long	Str_B_21
 	.long	Str_C_37
@@ -4994,11 +4159,11 @@ Str_ACCOMP5_2:	.asciz "ACCOMP5"
 Str_BASS_3:	.asciz "BASS"
 Str_DRUM1:	.asciz "DRUM1"
 Str_DRUM2:	.asciz "DRUM2"
-Str_CHORD_5:	.asciz "CHORD"
+Str_CHORD_6:	.asciz "CHORD"
 Str_ROOT_BASS:	.asciz "ROOT BASS"
+Str_PADS_14:	.asciz "PADS"
 Str_PADS_13:	.asciz "PADS"
-Str_PADS_12:	.asciz "PADS"
-Str_CONTROL_3:	.asciz "CONTROL"
+Str_CONTROL_5:	.asciz "CONTROL"
 Str_METRONOME:	.asciz "METRONOME"
 Str_CHORD_FINDER_4:	.asciz "CHORD FINDER"
 Str_MIC_15:	.asciz "MIC"
@@ -5056,8 +4221,8 @@ Str_REC_9:	.asciz "REC"
 Str_PLAY_7:	.asciz "PLAY"
 Str_MUTE_5:	.asciz "MUTE"
 Str_CLR_7:	.asciz "CLR"
-Str_PUNCH_2:	.asciz "PUNCH"
-	.align	4, 0xFF
+data_485A0BB3:
+.incbin_range "baserom/kn7000_program.rom", 0x1A0BB3, 0x1A0BBC
 
 ptrs_485A0BBC:
 	.long	data_485A0BA0
@@ -5065,7 +4230,7 @@ ptrs_485A0BBC:
 	.long	Str_PLAY_7
 	.long	Str_MUTE_5
 	.long	Str_CLR_7
-	.long	Str_PUNCH_2
+	.long	data_485A0BB3
 data_485A0BD4:
 .incbin_range "baserom/kn7000_program.rom", 0x1A0BD4, 0x1A0BE0
 data_485A0BE0:
@@ -5097,11 +4262,11 @@ ptrs_485A0C74:
 	.long	Str_Indonesian_4
 	.long	data_485A0C4D
 
-Str_empty_1428:	.asciz "-----"
+Str_empty_1418:	.asciz "-----"
 	.align	4, 0xFF
-Str_empty_1427:	.asciz "-----"
+Str_empty_1417:	.asciz "-----"
 	.align	4, 0xFF
-Str_empty_1426:	.asciz "-----"
+Str_empty_1416:	.asciz "-----"
 	.align	4, 0xFF
 Str_2d_64:	.asciz "%2d"
 Str_3d_223:	.asciz "%3d"
@@ -5529,7 +4694,7 @@ Str_TRANSPOSE_A_80_2:	.asciz "TRANSPOSE:A ~80"
 Str_TRANSPOSE_B_a0_80_2:	.asciz "TRANSPOSE:B~a0~80"
 Str_TRANSPOSE_B_80_2:	.asciz "TRANSPOSE:B ~80"
 Str_TRANSPOSE_C_80_2:	.asciz "TRANSPOSE:C ~80"
-Str_empty_1425:	.asciz "             "
+Str_empty_1440:	.asciz "             "
 
 ptrs_485A144C:
 	.long	Str_TRANSPOSE_7fC_2
@@ -5557,246 +4722,50 @@ ptrs_485A144C:
 	.long	Str_TRANSPOSE_B_a0_80_2
 	.long	Str_TRANSPOSE_B_80_2
 	.long	Str_TRANSPOSE_C_80_2
-	.long	Str_empty_1425
+	.long	Str_empty_1440
 data_485A14B4:
-.incbin_range "baserom/kn7000_program.rom", 0x1A14B4, 0x1A14D8
-
-Str_hkAH:	.asciz "hkAH\xC4"
-.incbin_range "baserom/kn7000_program.rom", 0x1A14DE, 0x1A14E8
-Str_mkAH:	.asciz "mkAH\xC6"
-.incbin_range "baserom/kn7000_program.rom", 0x1A14EE, 0x1A1518
-Str_ckAH:	.asciz "ckAH\xCB"
-.incbin_range "baserom/kn7000_program.rom", 0x1A151E, 0x1A1548
-Str_hkAH_2:	.asciz "hkAH\x84"
-.incbin_range "baserom/kn7000_program.rom", 0x1A154E, 0x1A15F8
-Str_lAH:	.asciz "=lAH\xA9"
-	.align	4, 0x00
-Str_lAH_2:	.asciz "\\lAH\xA3"
-	.align	4, 0x00
-Str_mAH:	.asciz "-mAH\x86"
-	.align	4, 0x00
-Str_KmAH:	.asciz "KmAH\x87"
-	.align	4, 0x00
-Str_hmAH:	.asciz "hmAH\xA6"
-.incbin_range "baserom/kn7000_program.rom", 0x1A161E, 0x1A1630
-Str_mAH_2:	.asciz "\xC1mAH"
-	.align	4, 0x00
-Str_mAH_3:	.asciz "\xC2mAH"
-	.align	4, 0x00
-Str_mAH_4:	.asciz "\xC2mAH"
-	.align	4, 0x00
-Str_mAH_5:	.asciz "\xC2mAH"
-	.align	4, 0x00
-Str_mAH_6:	.asciz "\xC2mAH"
-	.align	4, 0x00
-Str_mAH_7:	.asciz "\xC2mAH"
-	.align	4, 0x00
-Str_mAH_8:	.asciz "\xC2mAH"
-	.align	4, 0x00
-Str_mAH_9:	.asciz "\xC2mAH"
-	.align	4, 0x00
-Str_mAH_10:	.asciz "\xC2mAH"
-	.align	4, 0x00
-Str_mAH_11:	.asciz "\xC2mAH"
-	.align	4, 0x00
-Str_mAH_12:	.asciz "\xC2mAH"
-	.align	4, 0x00
-Str_mAH_13:	.asciz "\xC2mAH"
-	.align	4, 0x00
-Str_mAH_14:	.asciz "\xC2mAH"
-	.align	4, 0x00
-Str_mAH_15:	.asciz "\xC2mAH"
-	.align	4, 0x00
-Str_mAH_16:	.asciz "\xC2mAH"
-	.align	4, 0x00
-Str_mAH_17:	.asciz "\xC2mAH"
-.incbin_range "baserom/kn7000_program.rom", 0x1A16AD, 0x1A16B4
+.incbin_range "baserom/kn7000_program.rom", 0x1A14B4, 0x1A16B4
 data_485A16B4:
 .incbin_range "baserom/kn7000_program.rom", 0x1A16B4, 0x1A16D8
 data_485A16D8:
 .incbin_range "baserom/kn7000_program.rom", 0x1A16D8, 0x1A16FC
 data_485A16FC:
-.incbin_range "baserom/kn7000_program.rom", 0x1A16FC, 0x1A1710
-Str_oAH:	.asciz "\xD6oAH"
-	.align	4, 0x00
-Str_uAH:	.asciz "\xEFuAH"
-.incbin_range "baserom/kn7000_program.rom", 0x1A171D, 0x1A1748
-Str_doAH:	.asciz "doAH\x8A"
-.incbin_range "baserom/kn7000_program.rom", 0x1A174E, 0x1A1750
-Str_doAH_2:	.asciz "doAH\x8B"
-.incbin_range "baserom/kn7000_program.rom", 0x1A1756, 0x1A1760
-Str_oAH_2:	.asciz "#oAH\x0D"
-.incbin_range "baserom/kn7000_program.rom", 0x1A1766, 0x1A1770
-Str_oAH_3:	.asciz "?oAH\x8C"
-.incbin_range "baserom/kn7000_program.rom", 0x1A1776, 0x1A1778
-Str_doAH_3:	.asciz "doAH\x8F"
-.incbin_range "baserom/kn7000_program.rom", 0x1A177E, 0x1A1780
-Str_doAH_4:	.asciz "doAH"
-	.align	4, 0x00
-Str_uAH_2:	.asciz "\xEFuAH"
-	.align	4, 0x00
-Str_uAH_3:	.asciz "\xEFuAH"
-	.align	4, 0x00
-Str_uAH_4:	.asciz "\xEFuAH"
-	.align	4, 0x00
-Str_uAH_5:	.asciz "\xEFuAH"
-.incbin_range "baserom/kn7000_program.rom", 0x1A17A5, 0x1A17B0
-Str_doAH_5:	.asciz "doAH\x97"
-.incbin_range "baserom/kn7000_program.rom", 0x1A17B6, 0x1A17C0
-Str_pAH:	.asciz ",pAH"
-	.align	4, 0x00
-Str_uAH_6:	.asciz "\xEFuAH"
-.incbin_range "baserom/kn7000_program.rom", 0x1A17CD, 0x1A17D8
-Str_doAH_6:	.asciz "doAH"
-.incbin_range "baserom/kn7000_program.rom", 0x1A17DD, 0x1A17F8
-Str_rAH:	.asciz "\xF4rAH "
-	.align	4, 0x00
-Str_MoAH:	.asciz "MoAH\x9F"
-.incbin_range "baserom/kn7000_program.rom", 0x1A1806, 0x1A1808
-Str_RuAH:	.asciz "RuAH\xA0"
-.incbin_range "baserom/kn7000_program.rom", 0x1A180E, 0x1A1810
-Str_RuAH_2:	.asciz "RuAH\x9E"
-.incbin_range "baserom/kn7000_program.rom", 0x1A1816, 0x1A1818
-Str_RuAH_3:	.asciz "RuAH\xA4"
-.incbin_range "baserom/kn7000_program.rom", 0x1A181E, 0x1A1820
-Str_doAH_7:	.asciz "doAH\xA1"
-.incbin_range "baserom/kn7000_program.rom", 0x1A1826, 0x1A1828
-Str_VuAH:	.asciz "VuAH\xA5"
-.incbin_range "baserom/kn7000_program.rom", 0x1A182E, 0x1A1830
-Str_uAH_7:	.asciz "\x82uAH"
-.incbin_range "baserom/kn7000_program.rom", 0x1A1835, 0x1A1840
-Str_doAH_8:	.asciz "doAH("
-	.align	4, 0x00
-Str_tAH:	.asciz ".tAH"
-	.align	4, 0x00
-Str_uAH_8:	.asciz "\xEFuAH"
-	.align	4, 0x00
-Str_uAH_9:	.asciz "\xEFuAH"
-	.align	4, 0x00
-Str_uAH_10:	.asciz "\xEFuAH"
-	.align	4, 0x00
-Str_uAHn:	.asciz "\xEFuAHn"
-.incbin_range "baserom/kn7000_program.rom", 0x1A186E, 0x1A1870
-Str_doAHo:	.asciz "doAHo"
-.incbin_range "baserom/kn7000_program.rom", 0x1A1876, 0x1A1878
-Str_doAH_9:	.asciz "doAH."
-	.align	4, 0x00
-Str_uAH_11:	.asciz "\xD4uAH"
-	.align	4, 0x00
-Str_uAH_12:	.asciz "\xEFuAH"
-	.align	4, 0x00
-Str_uAH_13:	.asciz "\xEFuAH"
-	.align	4, 0x00
-Str_uAH_14:	.asciz "\xEFuAH"
-	.align	4, 0x00
-Str_uAH_15:	.asciz "\xEFuAH"
-	.align	4, 0x00
-Str_uAH_16:	.asciz "\xEFuAH"
-	.align	4, 0x00
-Str_uAH_17:	.asciz "\xEFuAH"
-	.align	4, 0x00
-Str_uAH_18:	.asciz "\xEFuAH"
-	.align	4, 0x00
-Str_uAH_19:	.asciz "\xEFuAH"
-	.align	4, 0x00
-Str_uAH_20:	.asciz "\xEFuAH"
-	.align	4, 0x00
-Str_uAH_21:	.asciz "\xEFuAH{"
-.incbin_range "baserom/kn7000_program.rom", 0x1A18D6, 0x1A18D8
-Str_GuAH:	.asciz "GuAH|"
-.incbin_range "baserom/kn7000_program.rom", 0x1A18DE, 0x1A18E0
-Str_uAH_22:	.asciz "?uAH"
-	.align	4, 0x00
-Str_uAH_23:	.asciz "\xEFuAH"
-	.align	4, 0x00
-Str_uAH_24:	.asciz "\xEFuAH"
-	.align	4, 0x00
-Str_uAH_25:	.asciz "\xEFuAH"
-.incbin_range "baserom/kn7000_program.rom", 0x1A18FD, 0x1A1918
-Str_yAH:	.asciz "\xDFyAH"
-.incbin_range "baserom/kn7000_program.rom", 0x1A191D, 0x1A1928
-Str_yAHF:	.asciz "\xEAyAHF"
-.incbin_range "baserom/kn7000_program.rom", 0x1A192E, 0x1A1930
-Str_zAHE:	.asciz "\x86zAHE"
-.incbin_range "baserom/kn7000_program.rom", 0x1A1936, 0x1A1938
-Str_zAH8:	.asciz "\xA6zAH8"
-	.align	4, 0x00
-Str_yAHH:	.asciz "\xBCyAHH"
-.incbin_range "baserom/kn7000_program.rom", 0x1A1946, 0x1A1948
-Str_zAHG:	.asciz "\x98zAHG"
-.incbin_range "baserom/kn7000_program.rom", 0x1A194E, 0x1A1950
-Str_zAH:	.asciz "\xA9zAH"
-	.align	4, 0x00
-Str_zAH_2:	.asciz "\xADzAH"
-	.align	4, 0x00
-Str_zAH_3:	.asciz "\xADzAH"
-	.align	4, 0x00
-Str_zAH_4:	.asciz "\xADzAH"
-	.align	4, 0x00
-Str_zAH_5:	.asciz "\xADzAH"
-.incbin_range "baserom/kn7000_program.rom", 0x1A1975, 0x1A197C
+.incbin_range "baserom/kn7000_program.rom", 0x1A16FC, 0x1A18FC
+data_485A18FC:
+.incbin_range "baserom/kn7000_program.rom", 0x1A18FC, 0x1A197C
 data_485A197C:
 .incbin_range "baserom/kn7000_program.rom", 0x1A197C, 0x1A19B0
-Str_empty_1424:	.asciz " "
-.incbin_range "baserom/kn7000_program.rom", 0x1A19B2, 0x1A19DC
-Str_t_AHF:	.asciz "t\x82AHF"
-.incbin_range "baserom/kn7000_program.rom", 0x1A19E2, 0x1A1AB0
+
+Str_empty_1414:	.asciz " "
+.incbin_range "baserom/kn7000_program.rom", 0x1A19B2, 0x1A1AB0
 data_485A1AB0:
-.incbin_range "baserom/kn7000_program.rom", 0x1A1AB0, 0x1A1AB4
-Str_N_AH:	.asciz "N\x95AH "
-.incbin_range "baserom/kn7000_program.rom", 0x1A1ABA, 0x1A1AD4
-Str_g_AH:	.asciz "g\x97AH"
-	.align	4, 0x00
-Str_s_AHF:	.asciz "s\x98AHF"
-.incbin_range "baserom/kn7000_program.rom", 0x1A1AE2, 0x1A1AF4
-Str_s_AH:	.asciz "s\x98AH"
-.incbin_range "baserom/kn7000_program.rom", 0x1A1AF9, 0x1A1B14
-Str_s_AHM:	.asciz "s\x98AHM"
-.incbin_range "baserom/kn7000_program.rom", 0x1A1B1A, 0x1A1B30
+.incbin_range "baserom/kn7000_program.rom", 0x1A1AB0, 0x1A1B30
 data_485A1B30:
 .incbin_range "baserom/kn7000_program.rom", 0x1A1B30, 0x1A1BB0
 data_485A1BB0:
-.incbin_range "baserom/kn7000_program.rom", 0x1A1BB0, 0x1A1BE4
-Str_b_AH:	.asciz "b\xADAH$"
-.incbin_range "baserom/kn7000_program.rom", 0x1A1BEA, 0x1A1CB0
+.incbin_range "baserom/kn7000_program.rom", 0x1A1BB0, 0x1A1CB0
 data_485A1CB0:
 .incbin_range "baserom/kn7000_program.rom", 0x1A1CB0, 0x1A1D30
 data_485A1D30:
-.incbin_range "baserom/kn7000_program.rom", 0x1A1D30, 0x1A1E14
-Str_k_AH:	.asciz "k\xB8AH"
-.incbin_range "baserom/kn7000_program.rom", 0x1A1E19, 0x1A1E30
+.incbin_range "baserom/kn7000_program.rom", 0x1A1D30, 0x1A1E30
 data_485A1E30:
 .incbin_range "baserom/kn7000_program.rom", 0x1A1E30, 0x1A1EB0
 data_485A1EB0:
 .incbin_range "baserom/kn7000_program.rom", 0x1A1EB0, 0x1A1F30
 data_485A1F30:
-.incbin_range "baserom/kn7000_program.rom", 0x1A1F30, 0x1A1F44
-Str_z_AH3:	.asciz "z\xC4AH3"
-.incbin_range "baserom/kn7000_program.rom", 0x1A1F4A, 0x1A1FB0
+.incbin_range "baserom/kn7000_program.rom", 0x1A1F30, 0x1A1FB0
 data_485A1FB0:
-.incbin_range "baserom/kn7000_program.rom", 0x1A1FB0, 0x1A1FF4
-Str_Z_AHy:	.asciz "Z\xD3AHy"
-.incbin_range "baserom/kn7000_program.rom", 0x1A1FFA, 0x1A2004
-Str_G_AH:	.asciz "G\xD4AH{"
-.incbin_range "baserom/kn7000_program.rom", 0x1A200A, 0x1A2030
+.incbin_range "baserom/kn7000_program.rom", 0x1A1FB0, 0x1A2030
 data_485A2030:
 .incbin_range "baserom/kn7000_program.rom", 0x1A2030, 0x1A2074
 data_485A2074:
 .incbin_range "baserom/kn7000_program.rom", 0x1A2074, 0x1A20B8
 data_485A20B8:
-.incbin_range "baserom/kn7000_program.rom", 0x1A20B8, 0x1A20F4
-Str_c_AHx:	.asciz "c\xE4AHx"
-.incbin_range "baserom/kn7000_program.rom", 0x1A20FA, 0x1A210C
-Str_l_AH:	.asciz "l\xE2AH("
-.incbin_range "baserom/kn7000_program.rom", 0x1A2112, 0x1A2138
+.incbin_range "baserom/kn7000_program.rom", 0x1A20B8, 0x1A2138
 data_485A2138:
-.incbin_range "baserom/kn7000_program.rom", 0x1A2138, 0x1A214C
-Str_g_AHQ:	.asciz "g\xF6AHQ"
-.incbin_range "baserom/kn7000_program.rom", 0x1A2152, 0x1A2174
-Str_J_AH:	.asciz "J\xFDAH("
-.incbin_range "baserom/kn7000_program.rom", 0x1A217A, 0x1A21B4
-Str_H_AH:	.asciz "H\xFBAH"
-.incbin_range "baserom/kn7000_program.rom", 0x1A21B9, 0x1A2238
+.incbin_range "baserom/kn7000_program.rom", 0x1A2138, 0x1A21B8
+data_485A21B8:
+.incbin_range "baserom/kn7000_program.rom", 0x1A21B8, 0x1A2238
 data_485A2238:
 .incbin_range "baserom/kn7000_program.rom", 0x1A2238, 0x1A22B8
 DrawIcons_PixelPairTable:
@@ -5881,7 +4850,7 @@ Str_0_27:	.asciz "0\x10;"
 .incbin_range "baserom/kn7000_program.rom", 0x1A5780, 0x1A57BC
 data_485A57BC:
 .incbin_range "baserom/kn7000_program.rom", 0x1A57BC, 0x1A58DC
-Str_empty_1423:	.asciz "("
+Str_empty_1413:	.asciz "("
 .incbin_range "baserom/kn7000_program.rom", 0x1A58DE, 0x1A591C
 data_485A591C:
 	.space	512, 0x00
@@ -5964,82 +4933,12 @@ data_485AC89C:
 	.space	785, 0x00
 .incbin_range "baserom/kn7000_program.rom", 0x1AD230, 0x1AD88C
 	.space	720, 0x00
-Str_ZH:	.asciz "<)ZH "
-.incbin_range "baserom/kn7000_program.rom", 0x1ADB62, 0x1ADB8C
-Str_UZH:	.asciz "|UZH "
-.incbin_range "baserom/kn7000_program.rom", 0x1ADB92, 0x1ADB9C
-Str_zZH:	.asciz "\xDCzZH@"
-.incbin_range "baserom/kn7000_program.rom", 0x1ADBA2, 0x1ADBDC
-Str_ZH_2:	.asciz "\\[ZH\xA0"
-.incbin_range "baserom/kn7000_program.rom", 0x1ADBE2, 0x1ADC2C
+Str_ZH:
+.incbin_range "baserom/kn7000_program.rom", 0x1ADB5C, 0x1ADC2C
 data_485ADC2C:
-.incbin_range "baserom/kn7000_program.rom", 0x1ADC2C, 0x1ADC58
-Str_gBH:	.asciz "\xF9gBH~"
-	.align	4, 0x00
-Str_hhBH:	.asciz "hhBH\x9E"
-.incbin_range "baserom/kn7000_program.rom", 0x1ADC66, 0x1ADCA8
-Str_hBH:	.asciz "\xF8hBH"
-	.align	4, 0x00
-Str_gBH_2:	.asciz "\xCEgBH"
-	.align	4, 0x00
-Str_gBH_3:	.asciz "\xCEgBH"
-	.align	4, 0x00
-Str_gBH_4:	.asciz "\xCEgBH"
-	.align	4, 0x00
-Str_gBH_5:	.asciz "\xCEgBH"
-	.align	4, 0x00
-Str_gBH_6:	.asciz "\xCEgBH"
-	.align	4, 0x00
-Str_gBH_7:	.asciz "\xCEgBH"
-	.align	4, 0x00
-Str_gBH_8:	.asciz "\xCEgBH"
-	.align	4, 0x00
-Str_gBH_9:	.asciz "\xCEgBH"
-	.align	4, 0x00
-Str_gBH_10:	.asciz "\xCEgBH"
-	.align	4, 0x00
-Str_gBH_11:	.asciz "\xCEgBH"
-	.align	4, 0x00
-Str_gBH_12:	.asciz "\xCEgBH{"
-.incbin_range "baserom/kn7000_program.rom", 0x1ADD06, 0x1ADD18
-Str_hBH_2:	.asciz "$hBH\x9C"
-	.align	4, 0x00
-Str_5hBH:	.asciz "5hBH}"
-	.align	4, 0x00
-Str_FhBH:	.asciz "FhBH"
-.incbin_range "baserom/kn7000_program.rom", 0x1ADD2D, 0x1ADE98
-Str_XnBH:	.asciz "XnBH\xCB"
-	.align	4, 0x00
-Str_XnBH_2:	.asciz "XnBH\xCC"
-.incbin_range "baserom/kn7000_program.rom", 0x1ADEA6, 0x1ADEB8
-Str_vBH:	.asciz "\x90vBH"
-	.align	4, 0x00
-Str_rbBH:	.asciz "rbBH"
-	.align	4, 0x00
-Str_rbBH_2:	.asciz "rbBH"
-	.align	4, 0x00
-Str_rbBH_3:	.asciz "rbBH"
-	.align	4, 0x00
-Str_rbBH_4:	.asciz "rbBH"
-	.align	4, 0x00
-Str_rbBH_5:	.asciz "rbBH"
-	.align	4, 0x00
-Str_rbBH_6:	.asciz "rbBH"
-	.align	4, 0x00
-Str_rbBH_7:	.asciz "rbBH"
-	.align	4, 0x00
-Str_rbBH_8:	.asciz "rbBH"
-	.align	4, 0x00
-Str_rbBH_9:	.asciz "rbBH"
-	.align	4, 0x00
-Str_rbBH_10:	.asciz "rbBH"
-	.align	4, 0x00
-Str_rbBH_11:	.asciz "rbBH"
-	.align	4, 0x00
-Str_rbBH_12:	.asciz "rbBH"
-	.align	4, 0x00
-Str_rbBH_13:	.asciz "rbBH"
-.incbin_range "baserom/kn7000_program.rom", 0x1ADF25, 0x1ADF2C
+.incbin_range "baserom/kn7000_program.rom", 0x1ADC2C, 0x1ADD2C
+data_485ADD2C:
+.incbin_range "baserom/kn7000_program.rom", 0x1ADD2C, 0x1ADF2C
 Str_YZ:	.asciz "YZ"
 	.align	4, 0xFF
 Str_name_2:	.asciz "name"
@@ -6066,71 +4965,11 @@ data_485ADFE0:
 data_485AE038:
 .incbin_range "baserom/kn7000_program.rom", 0x1AE038, 0x1AE0B8
 data_485AE0B8:
-.incbin_range "baserom/kn7000_program.rom", 0x1AE0B8, 0x1AE124
-Str_I_BH:	.asciz "I\xB9BH"
-.incbin_range "baserom/kn7000_program.rom", 0x1AE129, 0x1AE138
+.incbin_range "baserom/kn7000_program.rom", 0x1AE0B8, 0x1AE138
 data_485AE138:
-.incbin_range "baserom/kn7000_program.rom", 0x1AE138, 0x1AE1D4
-Str_BH:	.asciz "`\xC9BH"
-	.align	4, 0x00
-Str_s_BH:	.asciz "s\xC9BH"
-.incbin_range "baserom/kn7000_program.rom", 0x1AE1E1, 0x1AE1F4
-Str_s_BH_2:	.asciz "s\xC9BH"
-	.align	4, 0x00
-Str_s_BH_3:	.asciz "s\xC9BH"
-.incbin_range "baserom/kn7000_program.rom", 0x1AE201, 0x1AE214
-Str_s_BH_4:	.asciz "s\xC9BH"
-	.align	4, 0x00
-Str_s_BH_5:	.asciz "s\xC9BH"
-.incbin_range "baserom/kn7000_program.rom", 0x1AE221, 0x1AE22C
-Str_BH_2:	.asciz "`\xC9BH"
-	.align	4, 0x00
-Str_s_BH_6:	.asciz "s\xC9BH"
-	.align	4, 0x00
-Str_s_BH_7:	.asciz "s\xC9BH"
-	.align	4, 0x00
-Str_s_BHb:	.asciz "s\xC9BHb"
-.incbin_range "baserom/kn7000_program.rom", 0x1AE24A, 0x1AE24C
-Str_BHc:	.asciz ")\xC6BHc"
-.incbin_range "baserom/kn7000_program.rom", 0x1AE252, 0x1AE254
-Str_m_BHd:	.asciz "m\xC6BHd"
-.incbin_range "baserom/kn7000_program.rom", 0x1AE25A, 0x1AE2A4
-Str_s_BH_8:	.asciz "s\xC9BH"
-	.align	4, 0x00
-Str_s_BH_9:	.asciz "s\xC9BH"
-	.align	4, 0x00
-Str_s_BH_10:	.asciz "s\xC9BH"
-	.align	4, 0x00
-Str_s_BH_11:	.asciz "s\xC9BH"
-	.align	4, 0x00
-Str_s_BH_12:	.asciz "s\xC9BH"
-	.align	4, 0x00
-Str_s_BH_13:	.asciz "s\xC9BH"
-	.align	4, 0x00
-Str_s_BH_14:	.asciz "s\xC9BH"
-	.align	4, 0x00
-Str_s_BH_15:	.asciz "s\xC9BH"
-.incbin_range "baserom/kn7000_program.rom", 0x1AE2E1, 0x1AE2F4
-Str_s_BH_16:	.asciz "s\xC9BH"
-	.align	4, 0x00
-Str_s_BH_17:	.asciz "s\xC9BH"
-	.align	4, 0x00
-Str_s_BH_18:	.asciz "s\xC9BH"
-	.align	4, 0x00
-Str_s_BH_19:	.asciz "s\xC9BH"
-	.align	4, 0x00
-Str_s_BH_20:	.asciz "s\xC9BH"
-	.align	4, 0x00
-Str_s_BH_21:	.asciz "s\xC9BH"
-.incbin_range "baserom/kn7000_program.rom", 0x1AE321, 0x1AE334
-Str_BH_3:	.asciz "`\xC7BH"
-.incbin_range "baserom/kn7000_program.rom", 0x1AE339, 0x1AE384
-Str_q_BH:	.asciz "q\xCCBH"
-.incbin_range "baserom/kn7000_program.rom", 0x1AE389, 0x1AE3C4
-Str_3_BHO:	.asciz "3\xD0BHO"
-.incbin_range "baserom/kn7000_program.rom", 0x1AE3CA, 0x1AE404
-Str_BH9:	.asciz "^\xCEBH9"
-.incbin_range "baserom/kn7000_program.rom", 0x1AE40A, 0x1AE438
+.incbin_range "baserom/kn7000_program.rom", 0x1AE138, 0x1AE338
+data_485AE338:
+.incbin_range "baserom/kn7000_program.rom", 0x1AE338, 0x1AE438
 data_485AE438:
 .incbin_range "baserom/kn7000_program.rom", 0x1AE438, 0x1AE450
 data_485AE450:
@@ -6180,27 +5019,27 @@ Str_s_d_3:	.asciz "&%s%d"
 	.align	4, 0xFF
 Str_left:	.asciz ".left"
 	.align	4, 0xFF
-Str_empty_1422:	.asciz "{"
+Str_empty_1412:	.asciz "{"
 	.align	4, 0xFF
 Str_top:	.asciz ".top"
 	.align	4, 0xFF
 Str_width:	.asciz ".width"
 	.align	4, 0xFF
 Str_height:	.asciz ".height"
-Str_empty_1421:	.asciz "}"
+Str_empty_1411:	.asciz "}"
 	.align	4, 0xFF
 Str_x_8:	.asciz ".x"
 	.align	4, 0xFF
-Str_empty_1420:	.asciz "{"
+Str_empty_1410:	.asciz "{"
 	.align	4, 0xFF
 Str_y_5:	.asciz ".y"
 	.align	4, 0xFF
-Str_empty_1419:	.asciz "}"
+Str_empty_1409:	.asciz "}"
 	.align	4, 0xFF
 Str_idc:	.asciz "idc"
-Str_empty_1418:	.asciz "\""
+Str_empty_1408:	.asciz "\""
 	.align	4, 0xFF
-Str_empty_1417:	.asciz "\""
+Str_empty_1407:	.asciz "\""
 	.align	4, 0xFF
 Str_id_2:	.asciz "id"
 	.align	4, 0xFF
@@ -6410,7 +5249,8 @@ Str_MD_CUSTOMIZE_2:	.asciz "_MD_CUSTOMIZE"
 Str_MD_SOUNDEDIT_7:	.asciz "_MD_SOUNDEDIT"
 Str_MD_OTP_2:	.asciz "_MD_OTP"
 Str_MD_MS_2:	.asciz "_MD_MS"
-Str_MD_HELP_2:	.asciz "_MD_HELP"
+data_485AED97:
+.incbin_range "baserom/kn7000_program.rom", 0x1AED97, 0x1AEDA0
 Str_MD_DEMO_2:	.asciz "_MD_DEMO"
 Str_MD_TEST:	.asciz "_MD_TEST"
 Str_MD_EFFECT_2:	.asciz "_MD_EFFECT"
@@ -6446,7 +5286,7 @@ ptrs_485AEE14:
 	.long	Str_MD_SOUNDEDIT_7
 	.long	Str_MD_OTP_2
 	.long	Str_MD_MS_2
-	.long	Str_MD_HELP_2
+	.long	data_485AED97
 	.long	Str_MD_DEMO_2
 	.long	Str_MD_TEST
 	.long	Str_MD_EFFECT_2
@@ -6484,7 +5324,8 @@ Str_TT_SEMENU_2:	.asciz "_TT_SEMENU"
 Str_TT_SETONE_2:	.asciz "_TT_SETONE"
 Str_TT_SETONELAYER:	.asciz "_TT_SETONELAYER"
 Str_TT_SEAMP_2:	.asciz "_TT_SEAMP"
-Str_TT_SEPITCH_2:	.asciz "_TT_SEPITCH"
+data_485AEF91:
+.incbin_range "baserom/kn7000_program.rom", 0x1AEF91, 0x1AEF9D
 Str_TT_SEFILTER_2:	.asciz "_TT_SEFILTER"
 Str_TT_SEEASY_2:	.asciz "_TT_SEEASY"
 Str_TT_SELFO_2:	.asciz "_TT_SELFO"
@@ -6706,7 +5547,8 @@ Str_TT_SDOCT_2:	.asciz "_TT_SDOCT"
 Str_TT_SOFTVER_2:	.asciz "_TT_SOFTVER"
 Str_TT_HELP_2:	.asciz "_TT_HELP"
 Str_TT_MEMDUMP_2:	.asciz "_TT_MEMDUMP"
-Str_TT_HELPMENU:	.asciz "_TT_HELPMENU"
+data_485AFA57:
+.incbin_range "baserom/kn7000_program.rom", 0x1AFA57, 0x1AFA64
 Str_TT_TEST1_2:	.asciz "_TT_TEST1"
 Str_TT_TEST2_2:	.asciz "_TT_TEST2"
 Str_TT_TEST3_2:	.asciz "_TT_TEST3"
@@ -6808,7 +5650,7 @@ ptrs_485AFD94:
 	.long	Str_TT_SETONE_2
 	.long	Str_TT_SETONELAYER
 	.long	Str_TT_SEAMP_2
-	.long	Str_TT_SEPITCH_2
+	.long	data_485AEF91
 	.long	Str_TT_SEFILTER_2
 	.long	Str_TT_SEEASY_2
 	.long	Str_TT_SELFO_2
@@ -7030,7 +5872,7 @@ ptrs_485AFD94:
 	.long	Str_TT_SOFTVER_2
 	.long	Str_TT_HELP_2
 	.long	Str_TT_MEMDUMP_2
-	.long	Str_TT_HELPMENU
+	.long	data_485AFA57
 	.long	Str_TT_TEST1_2
 	.long	Str_TT_TEST2_2
 	.long	Str_TT_TEST3_2
@@ -10473,101 +9315,21 @@ data_485B6C54:
 data_485B6C71:
 .incbin_range "baserom/kn7000_program.rom", 0x1B6C71, 0x1B6C74
 data_485B6C74:
-.incbin_range "baserom/kn7000_program.rom", 0x1B6C74, 0x1B6C90
-Str_sLCH1:	.asciz "sLCH1"
-	.align	4, 0x00
-Str_LCHB:	.asciz "\xA2LCHB"
-	.align	4, 0x00
-Str_LCHC:	.asciz "\xE1LCHC"
-.incbin_range "baserom/kn7000_program.rom", 0x1B6CA6, 0x1B6CB0
-Str_MCHE:	.asciz "$MCHE"
-	.align	4, 0x00
-Str_FMCHF:	.asciz "FMCHF"
-	.align	4, 0x00
-Str_hMCHG:	.asciz "hMCHG"
-	.align	4, 0x00
-Str_MCHH:	.asciz "\x88MCHH"
-	.align	4, 0x00
-Str_MCH:	.asciz "\x9BMCH"
-	.align	4, 0x00
-Str_MCH_2:	.asciz "\xB9MCH"
-	.align	4, 0x00
-Str_MCH_3:	.asciz "\xB9MCH"
-	.align	4, 0x00
-Str_MCH_4:	.asciz "\xB9MCH"
-.incbin_range "baserom/kn7000_program.rom", 0x1B6CED, 0x1B6CF4
+.incbin_range "baserom/kn7000_program.rom", 0x1B6C74, 0x1B6CF4
 data_485B6CF4:
 .incbin_range "baserom/kn7000_program.rom", 0x1B6CF4, 0x1B6D11
 Str_NCHQ:	.asciz "NCHQ"
-	.align	4, 0x00
-Str_OCHR:	.asciz "+OCHR"
-	.align	4, 0x00
-Str_OCHS:	.asciz "+OCHS"
-	.align	4, 0x00
-Str_OCHT:	.asciz "+OCHT"
-	.align	4, 0x00
-Str_OCHU:	.asciz "+OCHU"
-	.align	4, 0x00
-Str_OCHV:	.asciz "+OCHV"
-	.align	4, 0x00
-Str_OCHW:	.asciz "+OCHW"
-	.align	4, 0x00
-Str_OCH:	.asciz "+OCH"
-	.align	4, 0x00
-Str_OCH_2:	.asciz "?OCH"
-	.align	4, 0x00
-Str_OCH_3:	.asciz "?OCH"
-	.align	4, 0x00
-Str_OCH_4:	.asciz "?OCH"
-	.align	4, 0x00
-Str_OCH_5:	.asciz "?OCH"
-	.align	4, 0x00
-Str_OCH_6:	.asciz "?OCH"
-.incbin_range "baserom/kn7000_program.rom", 0x1B6D75, 0x1B6D88
+.incbin_range "baserom/kn7000_program.rom", 0x1B6D16, 0x1B6D74
+data_485B6D74:
+.incbin_range "baserom/kn7000_program.rom", 0x1B6D74, 0x1B6D88
 data_485B6D88:
 .incbin_range "baserom/kn7000_program.rom", 0x1B6D88, 0x1B6DA8
 data_485B6DA8:
 .incbin_range "baserom/kn7000_program.rom", 0x1B6DA8, 0x1B6DC8
 data_485B6DC8:
-.incbin_range "baserom/kn7000_program.rom", 0x1B6DC8, 0x1B6DCC
-Str_CHa:	.asciz "\xD8`CHa\xBF"
-	.align	4, 0x00
-Str_CHb:	.asciz "`_CHb\xCF"
-	.align	4, 0x00
-Str_CHc:	.asciz "\xC8_CHc\xCF"
-.incbin_range "baserom/kn7000_program.rom", 0x1B6DE3, 0x1B6DEC
-Str_CHe:	.asciz "\xE6_CHe\xBF"
-	.align	4, 0x00
-Str_CHd:	.asciz "\xB9_CHd\xCF"
-.incbin_range "baserom/kn7000_program.rom", 0x1B6DFB, 0x1B6E14
-Str_CHa_2:	.asciz "&`CHa\xAF"
-	.align	4, 0x00
-Str_CHk:	.asciz "?`CHk\xCF"
-	.align	4, 0x00
-Str_5_CH:	.asciz "5`CH\xA6\xAF"
-	.align	4, 0x00
-Str_T_CH:	.asciz "T`CH"
-	.align	4, 0x00
-Str_CH:	.asciz "\xE9`CH"
-	.align	4, 0x00
-Str_CH_2:	.asciz "\xE9`CH"
-	.align	4, 0x00
-Str_CH_3:	.asciz "\xE9`CH"
-.incbin_range "baserom/kn7000_program.rom", 0x1B6E49, 0x1B6E54
-Str_5_CH_2:	.asciz "5`CH"
-	.align	4, 0x00
-Str_CH_4:	.asciz "\xE9`CH"
-	.align	4, 0x00
-Str_CH_5:	.asciz "\xE9`CH"
-	.align	4, 0x00
-Str_CH_6:	.asciz "\xE9`CH"
-.incbin_range "baserom/kn7000_program.rom", 0x1B6E71, 0x1B6E7C
-Str_CH_7:	.asciz "\x99`CH"
-	.align	4, 0x00
-Str_CH_8:	.asciz "\xE9`CH"
-.incbin_range "baserom/kn7000_program.rom", 0x1B6E89, 0x1B6EC4
-Str_CH_9:	.asciz "\xD8`CH"
-.incbin_range "baserom/kn7000_program.rom", 0x1B6EC9, 0x1B6EF4
+.incbin_range "baserom/kn7000_program.rom", 0x1B6DC8, 0x1B6EC8
+data_485B6EC8:
+.incbin_range "baserom/kn7000_program.rom", 0x1B6EC8, 0x1B6EF4
 
 ptrs_485B6EF4:
 	.long	func_4843BD4C
@@ -10583,9 +9345,7 @@ data_485B6F1C:
 Str_SEQ_6:	.asciz "      SEQ       "
 	.align	4, 0xFF
 data_485B6F34:
-.incbin_range "baserom/kn7000_program.rom", 0x1B6F34, 0x1B6F68
-Str_T_CH_2:	.asciz "T\x81CH"
-.incbin_range "baserom/kn7000_program.rom", 0x1B6F6D, 0x1B6FB4
+.incbin_range "baserom/kn7000_program.rom", 0x1B6F34, 0x1B6FB4
 
 ptrs_485B6FB4:
 	.long	func_48432400
@@ -10620,9 +9380,9 @@ data_485B7396:
 data_485B73A0:
 .incbin_range "baserom/kn7000_program.rom", 0x1B73A0, 0x1B75D0
 data_485B75D0:
-.incbin_range "baserom/kn7000_program.rom", 0x1B75D0, 0x1B75EC
-Str_t_H_u_H:	.asciz "\xCEt[H\xBCu[H"
-.incbin_range "baserom/kn7000_program.rom", 0x1B75F5, 0x1B7654
+.incbin_range "baserom/kn7000_program.rom", 0x1B75D0, 0x1B75F4
+data_485B75F4:
+.incbin_range "baserom/kn7000_program.rom", 0x1B75F4, 0x1B7654
 data_485B7654:
 .incbin_range "baserom/kn7000_program.rom", 0x1B7654, 0x1B77D4
 data_485B77D4:
@@ -10654,25 +9414,9 @@ data_485B7984:
 data_485B7A04:
 .incbin_range "baserom/kn7000_program.rom", 0x1B7A04, 0x1B7A0C
 data_485B7A0C:
-.incbin_range "baserom/kn7000_program.rom", 0x1B7A0C, 0x1B7A38
-Str_P_DH:	.asciz "P~DH\x86"
-.incbin_range "baserom/kn7000_program.rom", 0x1B7A3E, 0x1B7A48
-Str_P_DH_2:	.asciz "P~DH"
-	.align	4, 0x00
-Str_DH:	.asciz "`~DH"
-	.align	4, 0x00
-Str_DH_2:	.asciz "`~DH"
-	.align	4, 0x00
-Str_DH_3:	.asciz "`~DH"
-	.align	4, 0x00
-Str_DH_4:	.asciz "`~DH"
-	.align	4, 0x00
-Str_DH_5:	.asciz "`~DH"
-	.align	4, 0x00
-Str_DH_6:	.asciz "`~DH"
-.incbin_range "baserom/kn7000_program.rom", 0x1B7A7D, 0x1B7A88
-Str_P_DH_3:	.asciz "P~DH"
-.incbin_range "baserom/kn7000_program.rom", 0x1B7A8D, 0x1B7AA0
+.incbin_range "baserom/kn7000_program.rom", 0x1B7A0C, 0x1B7A8C
+data_485B7A8C:
+.incbin_range "baserom/kn7000_program.rom", 0x1B7A8C, 0x1B7AA0
 data_485B7AA0:
 .incbin_range "baserom/kn7000_program.rom", 0x1B7AA0, 0x1B7AAC
 data_485B7AAC:
@@ -10683,100 +9427,20 @@ data_485B7B14:
 .incbin_range "baserom/kn7000_program.rom", 0x1B7B14, 0x1B7B94
 data_485B7B94:
 .incbin_range "baserom/kn7000_program.rom", 0x1B7B94, 0x1B7C14
-Str_empty_1416:	.asciz " "
+Str_empty_1406:	.asciz " "
 .incbin_range "baserom/kn7000_program.rom", 0x1B7C16, 0x1B7D14
-Str_empty_1415:	.asciz " "
-.incbin_range "baserom/kn7000_program.rom", 0x1B7D16, 0x1B7D30
-Str_H_DH:	.asciz "H\x8FDH?"
-	.align	4, 0x00
-Str_H_DH_2:	.asciz "H\x8FDH@"
-	.align	4, 0x00
-Str_H_DH_3:	.asciz "H\x8FDH\""
-	.align	4, 0x00
-Str_H_DH_4:	.asciz "H\x8FDH"
-.incbin_range "baserom/kn7000_program.rom", 0x1B7D4D, 0x1B7D68
-Str_H_DHi:	.asciz "H\x8FDHi"
-	.align	4, 0x00
-Str_H_DH_5:	.asciz "H\x8FDH"
-.incbin_range "baserom/kn7000_program.rom", 0x1B7D75, 0x1B7DA8
-Str_H_DH_6:	.asciz "H\x8FDH"
-.incbin_range "baserom/kn7000_program.rom", 0x1B7DAD, 0x1B7DD8
-Str_H_DH_7:	.asciz "H\x8FDH"
-.incbin_range "baserom/kn7000_program.rom", 0x1B7DDD, 0x1B7DF0
-Str_H_DH_8:	.asciz "H\x8FDH\\"
-	.align	4, 0x00
-Str_H_DH_9:	.asciz "H\x8FDH"
-.incbin_range "baserom/kn7000_program.rom", 0x1B7DFD, 0x1B7E14
-Str_empty_1414:	.asciz " "
+Str_empty_1405:	.asciz " "
+.incbin_range "baserom/kn7000_program.rom", 0x1B7D16, 0x1B7E14
+Str_empty_1404:	.asciz " "
 .incbin_range "baserom/kn7000_program.rom", 0x1B7E16, 0x1B7F14
-Str_empty_1413:	.asciz " "
+Str_empty_1403:	.asciz " "
 .incbin_range "baserom/kn7000_program.rom", 0x1B7F16, 0x1B8014
-Str_empty_1412:	.asciz " "
-.incbin_range "baserom/kn7000_program.rom", 0x1B8016, 0x1B8020
-Str_m_DH:	.asciz "m\x90DH!"
-.incbin_range "baserom/kn7000_program.rom", 0x1B8026, 0x1B8050
-Str_m_DH_2:	.asciz "m\x90DH"
-.incbin_range "baserom/kn7000_program.rom", 0x1B8055, 0x1B8068
-Str_DHi:	.asciz "|\x90DHi"
-.incbin_range "baserom/kn7000_program.rom", 0x1B806E, 0x1B8078
-Str_m_DH_3:	.asciz "m\x90DH"
-	.align	4, 0x00
-Str_m_DH_4:	.asciz "m\x90DH"
-	.align	4, 0x00
-Str_m_DH_5:	.asciz "m\x90DH"
-	.align	4, 0x00
-Str_m_DH_6:	.asciz "m\x90DH"
-	.align	4, 0x00
-Str_m_DH_7:	.asciz "m\x90DH"
-	.align	4, 0x00
-Str_m_DHR:	.asciz "m\x90DHR"
-.incbin_range "baserom/kn7000_program.rom", 0x1B80A6, 0x1B80B0
-Str_m_DH_8:	.asciz "m\x90DH"
-	.align	4, 0x00
-Str_m_DH_9:	.asciz "m\x90DH"
-	.align	4, 0x00
-Str_m_DH_10:	.asciz "m\x90DH"
-.incbin_range "baserom/kn7000_program.rom", 0x1B80C5, 0x1B80E0
-Str_m_DH_11:	.asciz "m\x90DH"
-	.align	4, 0x00
-Str_m_DH_12:	.asciz "m\x90DH["
-	.align	4, 0x00
-Str_DH_7:	.asciz "|\x90DH\\"
-.incbin_range "baserom/kn7000_program.rom", 0x1B80F6, 0x1B8100
-Str_m_DH_13:	.asciz "m\x90DH>"
-.incbin_range "baserom/kn7000_program.rom", 0x1B8106, 0x1B8114
-Str_empty_1411:	.asciz " "
+Str_empty_1402:	.asciz " "
+.incbin_range "baserom/kn7000_program.rom", 0x1B8016, 0x1B8114
+Str_empty_1401:	.asciz " "
 .incbin_range "baserom/kn7000_program.rom", 0x1B8116, 0x1B8214
-Str_empty_1410:	.asciz " "
-.incbin_range "baserom/kn7000_program.rom", 0x1B8216, 0x1B8220
-Str_w_DH:	.asciz "w\x91DH!"
-.incbin_range "baserom/kn7000_program.rom", 0x1B8226, 0x1B8250
-Str_w_DH_2:	.asciz "w\x91DH"
-.incbin_range "baserom/kn7000_program.rom", 0x1B8255, 0x1B8278
-Str_w_DH_3:	.asciz "w\x91DH"
-	.align	4, 0x00
-Str_w_DH_4:	.asciz "w\x91DH"
-	.align	4, 0x00
-Str_w_DH_5:	.asciz "w\x91DH"
-	.align	4, 0x00
-Str_w_DH_6:	.asciz "w\x91DH"
-	.align	4, 0x00
-Str_w_DH_7:	.asciz "w\x91DH"
-	.align	4, 0x00
-Str_w_DHR:	.asciz "w\x91DHR"
-.incbin_range "baserom/kn7000_program.rom", 0x1B82A6, 0x1B82B0
-Str_w_DH_8:	.asciz "w\x91DH"
-	.align	4, 0x00
-Str_w_DH_9:	.asciz "w\x91DH"
-	.align	4, 0x00
-Str_w_DH_10:	.asciz "w\x91DH"
-.incbin_range "baserom/kn7000_program.rom", 0x1B82C5, 0x1B82E0
-Str_w_DH_11:	.asciz "w\x91DH"
-	.align	4, 0x00
-Str_w_DH_12:	.asciz "w\x91DH["
-.incbin_range "baserom/kn7000_program.rom", 0x1B82EE, 0x1B8300
-Str_w_DH_13:	.asciz "w\x91DH>"
-.incbin_range "baserom/kn7000_program.rom", 0x1B8306, 0x1B8314
+Str_empty_1400:	.asciz " "
+.incbin_range "baserom/kn7000_program.rom", 0x1B8216, 0x1B8314
 data_485B8314:
 .incbin_range "baserom/kn7000_program.rom", 0x1B8314, 0x1B8514
 data_485B8514:
@@ -10805,7 +9469,7 @@ Str_d_dPd:	.asciz "d<dPd(\n"
 .incbin_range "baserom/kn7000_program.rom", 0x1B8686, 0x1B86A7
 	.space	243, 0x00
 .incbin_range "baserom/kn7000_program.rom", 0x1B879A, 0x1B879C
-Str_empty_1409:	.asciz ">"
+Str_empty_1399:	.asciz ">"
 .incbin_range "baserom/kn7000_program.rom", 0x1B879E, 0x1B881C
 data_485B881C:
 .incbin_range "baserom/kn7000_program.rom", 0x1B881C, 0x1B8848
@@ -10823,7 +9487,7 @@ data_485B8874:
 .incbin_range "baserom/kn7000_program.rom", 0x1B8874, 0x1B887C
 data_485B887C:
 .incbin_range "baserom/kn7000_program.rom", 0x1B887C, 0x1B8888
-Str_empty_1408:	.asciz "$%&'()*+,!\"#"
+Str_empty_1398:	.asciz "$%&'()*+,!\"#"
 .incbin_range "baserom/kn7000_program.rom", 0x1B8895, 0x1B889C
 data_485B889C:
 .incbin_range "baserom/kn7000_program.rom", 0x1B889C, 0x1B899C
@@ -10851,56 +9515,8 @@ data_485B8FC8:
 .incbin_range "baserom/kn7000_program.rom", 0x1B8FC8, 0x1B9048
 data_485B9048:
 .incbin_range "baserom/kn7000_program.rom", 0x1B9048, 0x1B9050
-Str_empty_1407:	.asciz "`"
-.incbin_range "baserom/kn7000_program.rom", 0x1B9052, 0x1B906C
-Str_MEHa:	.asciz "\xC0MEHa"
-.incbin_range "baserom/kn7000_program.rom", 0x1B9072, 0x1B907C
-Str_MEHB:	.asciz "\xC0MEHB"
-.incbin_range "baserom/kn7000_program.rom", 0x1B9082, 0x1B908C
-Str_MEHA:	.asciz "\xC0MEHA"
-.incbin_range "baserom/kn7000_program.rom", 0x1B9092, 0x1B909C
-Str_MEH:	.asciz "\xC0MEH"
-	.align	4, 0x00
-Str_MEH_2:	.asciz "\xC4MEH"
-	.align	4, 0x00
-Str_MEH_3:	.asciz "\xC4MEH"
-	.align	4, 0x00
-Str_MEH_4:	.asciz "\xC4MEH"
-	.align	4, 0x00
-Str_MEH_5:	.asciz "\xC4MEH"
-	.align	4, 0x00
-Str_MEH_6:	.asciz "\xC4MEH"
-	.align	4, 0x00
-Str_MEH_7:	.asciz "\xC4MEH"
-	.align	4, 0x00
-Str_MEH_8:	.asciz "\xC4MEH"
-	.align	4, 0x00
-Str_MEH_9:	.asciz "\xC4MEH"
-	.align	4, 0x00
-Str_MEH_10:	.asciz "\xC4MEH"
-	.align	4, 0x00
-Str_MEH_11:	.asciz "\xC4MEH"
-	.align	4, 0x00
-Str_MEH_12:	.asciz "\xC4MEH"
-.incbin_range "baserom/kn7000_program.rom", 0x1B90F9, 0x1B9104
-Str_MEH_13:	.asciz "\xC0MEH"
-	.align	4, 0x00
-Str_MEH_14:	.asciz "\xC4MEH"
-	.align	4, 0x00
-Str_MEH_15:	.asciz "\xC4MEH"
-	.align	4, 0x00
-Str_MEHZ:	.asciz "\xC4MEHZ"
-	.align	4, 0x00
-Str_MEH_16:	.asciz "\xC0MEH["
-	.align	4, 0x00
-Str_MEH_17:	.asciz "\xC0MEH\\"
-	.align	4, 0x00
-Str_MEH_18:	.asciz "\xC0MEH]"
-	.align	4, 0x00
-Str_MEH_19:	.asciz "\xC0MEH^"
-	.align	4, 0x00
-Str_MEH_20:	.asciz "\xC0MEH_"
-.incbin_range "baserom/kn7000_program.rom", 0x1B914A, 0x1B9150
+Str_empty_1397:	.asciz "`"
+.incbin_range "baserom/kn7000_program.rom", 0x1B9052, 0x1B9150
 data_485B9150:
 .incbin_range "baserom/kn7000_program.rom", 0x1B9150, 0x1B91F8
 data_485B91F8:
@@ -10961,7 +9577,7 @@ ptrs_485B9A1C:
 	.long	data_485B97DC
 	.long	data_485B977C
 
-Str_empty_1406:	.asciz "`"
+Str_empty_1396:	.asciz "`"
 .incbin_range "baserom/kn7000_program.rom", 0x1B9A3A, 0x1B9B38
 data_485B9B38:
 .incbin_range "baserom/kn7000_program.rom", 0x1B9B38, 0x1B9BC8
@@ -10969,7 +9585,7 @@ data_485B9BC8:
 .incbin_range "baserom/kn7000_program.rom", 0x1B9BC8, 0x1B9C58
 data_485B9C58:
 .incbin_range "baserom/kn7000_program.rom", 0x1B9C58, 0x1B9D00
-Str_empty_1405:	.asciz "                  "
+Str_empty_1395:	.asciz "                  "
 	.align	4, 0xFF
 data_485B9D14:
 .incbin_range "baserom/kn7000_program.rom", 0x1B9D14, 0x1B9D24
@@ -11012,178 +9628,18 @@ ptrs_485B9E00:
 data_485B9E14:
 .incbin_range "baserom/kn7000_program.rom", 0x1B9E14, 0x1B9E24
 data_485B9E24:
-.incbin_range "baserom/kn7000_program.rom", 0x1B9E24, 0x1B9E48
-
-Str_nFHD:	.asciz "~nFHD"
-.incbin_range "baserom/kn7000_program.rom", 0x1B9E4E, 0x1B9E50
-Str_nFHE:	.asciz "\xD8nFHE"
-.incbin_range "baserom/kn7000_program.rom", 0x1B9E56, 0x1B9E60
-Str_nFHG:	.asciz "\x88nFHG"
-.incbin_range "baserom/kn7000_program.rom", 0x1B9E66, 0x1B9E68
-Str_nFHF:	.asciz "\x92nFHF"
-.incbin_range "baserom/kn7000_program.rom", 0x1B9E6E, 0x1B9E88
-Str_oFH:	.asciz " oFH"
-	.align	4, 0x00
-Str_oFH_2:	.asciz ")oFH"
-	.align	4, 0x00
-Str_oFH_3:	.asciz ")oFH"
-	.align	4, 0x00
-Str_oFH_4:	.asciz ")oFH"
-	.align	4, 0x00
-Str_oFH_5:	.asciz ")oFH"
-	.align	4, 0x00
-Str_oFH_6:	.asciz ")oFH"
-	.align	4, 0x00
-Str_oFH_7:	.asciz ")oFH"
-	.align	4, 0x00
-Str_oFH_8:	.asciz ")oFH"
-	.align	4, 0x00
-Str_oFH_9:	.asciz ")oFH"
-	.align	4, 0x00
-Str_oFH_10:	.asciz ")oFH"
-	.align	4, 0x00
-Str_oFH_11:	.asciz ")oFH"
-	.align	4, 0x00
-Str_oFHX:	.asciz ")oFHX"
-.incbin_range "baserom/kn7000_program.rom", 0x1B9EE6, 0x1B9EE8
-Str_nFH:	.asciz "\xFCnFH"
-	.align	4, 0x00
-Str_oFHZ:	.asciz ")oFHZ"
-.incbin_range "baserom/kn7000_program.rom", 0x1B9EF6, 0x1B9EF8
-Str_nFH_2:	.asciz "\xF3nFH"
-	.align	4, 0x00
-Str_oFH_12:	.asciz ")oFH"
-.incbin_range "baserom/kn7000_program.rom", 0x1B9F05, 0x1B9F24
+.incbin_range "baserom/kn7000_program.rom", 0x1B9E24, 0x1B9F24
 data_485B9F24:
-.incbin_range "baserom/kn7000_program.rom", 0x1B9F24, 0x1B9F48
-Str_soFHD:	.asciz "soFHD"
-.incbin_range "baserom/kn7000_program.rom", 0x1B9F4E, 0x1B9F50
-Str_soFHE:	.asciz "soFHE"
-.incbin_range "baserom/kn7000_program.rom", 0x1B9F56, 0x1B9F60
-Str_soFHG:	.asciz "soFHG"
-.incbin_range "baserom/kn7000_program.rom", 0x1B9F66, 0x1B9F68
-Str_soFHF:	.asciz "soFHF"
-.incbin_range "baserom/kn7000_program.rom", 0x1B9F6E, 0x1B9F88
-Str_oFH_13:	.asciz "\x96oFH"
-	.align	4, 0x00
-Str_oFH_14:	.asciz "\x9DoFH"
-	.align	4, 0x00
-Str_oFH_15:	.asciz "\x9DoFH"
-	.align	4, 0x00
-Str_oFH_16:	.asciz "\x9DoFH"
-	.align	4, 0x00
-Str_oFH_17:	.asciz "\x9DoFH"
-	.align	4, 0x00
-Str_oFH_18:	.asciz "\x9DoFH"
-	.align	4, 0x00
-Str_oFH_19:	.asciz "\x9DoFH"
-	.align	4, 0x00
-Str_oFH_20:	.asciz "\x9DoFH"
-	.align	4, 0x00
-Str_oFH_21:	.asciz "\x9DoFH"
-	.align	4, 0x00
-Str_oFH_22:	.asciz "\x9DoFH"
-	.align	4, 0x00
-Str_oFH_23:	.asciz "\x9DoFH"
-	.align	4, 0x00
-Str_oFHX_2:	.asciz "\x9DoFHX"
-.incbin_range "baserom/kn7000_program.rom", 0x1B9FE6, 0x1B9FE8
-Str_soFH:	.asciz "soFH"
-	.align	4, 0x00
-Str_oFHZ_2:	.asciz "\x9DoFHZ"
-.incbin_range "baserom/kn7000_program.rom", 0x1B9FF6, 0x1B9FF8
-Str_soFH_2:	.asciz "soFH"
-	.align	4, 0x00
-Str_oFH_24:	.asciz "\x9DoFH"
-.incbin_range "baserom/kn7000_program.rom", 0x1BA005, 0x1BA024
+.incbin_range "baserom/kn7000_program.rom", 0x1B9F24, 0x1BA024
 data_485BA024:
-.incbin_range "baserom/kn7000_program.rom", 0x1BA024, 0x1BA048
-Str_oFHD:	.asciz "\xF6oFHD"
-.incbin_range "baserom/kn7000_program.rom", 0x1BA04E, 0x1BA050
-Str_oFHE:	.asciz "\xF6oFHE"
-.incbin_range "baserom/kn7000_program.rom", 0x1BA056, 0x1BA060
-Str_oFHG:	.asciz "\xF6oFHG"
-.incbin_range "baserom/kn7000_program.rom", 0x1BA066, 0x1BA068
-Str_oFHF:	.asciz "\xF6oFHF"
-.incbin_range "baserom/kn7000_program.rom", 0x1BA06E, 0x1BA0E8
-Str_oFH_25:	.asciz "\xF6oFH"
-.incbin_range "baserom/kn7000_program.rom", 0x1BA0ED, 0x1BA0F8
-Str_oFH_26:	.asciz "\xF6oFH"
-.incbin_range "baserom/kn7000_program.rom", 0x1BA0FD, 0x1BA124
+.incbin_range "baserom/kn7000_program.rom", 0x1BA024, 0x1BA124
 data_485BA124:
-.incbin_range "baserom/kn7000_program.rom", 0x1BA124, 0x1BA148
-Str_kpFHD:	.asciz "kpFHD"
-.incbin_range "baserom/kn7000_program.rom", 0x1BA14E, 0x1BA150
-Str_kpFHE:	.asciz "kpFHE"
-.incbin_range "baserom/kn7000_program.rom", 0x1BA156, 0x1BA160
-Str_kpFHG:	.asciz "kpFHG"
-.incbin_range "baserom/kn7000_program.rom", 0x1BA166, 0x1BA168
-Str_kpFHF:	.asciz "kpFHF"
-.incbin_range "baserom/kn7000_program.rom", 0x1BA16E, 0x1BA180
-Str_kpFH:	.asciz "kpFH"
-	.align	4, 0x00
-Str_npFH:	.asciz "npFH"
-	.align	4, 0x00
-Str_npFH_2:	.asciz "npFH"
-	.align	4, 0x00
-Str_npFH_3:	.asciz "npFH"
-	.align	4, 0x00
-Str_npFH_4:	.asciz "npFH"
-	.align	4, 0x00
-Str_npFH_5:	.asciz "npFH"
-	.align	4, 0x00
-Str_npFH_6:	.asciz "npFH"
-	.align	4, 0x00
-Str_npFH_7:	.asciz "npFH"
-	.align	4, 0x00
-Str_npFH_8:	.asciz "npFH"
-	.align	4, 0x00
-Str_npFH_9:	.asciz "npFH"
-	.align	4, 0x00
-Str_npFH_10:	.asciz "npFH"
-	.align	4, 0x00
-Str_npFH_11:	.asciz "npFH"
-	.align	4, 0x00
-Str_npFHX:	.asciz "npFHX"
-.incbin_range "baserom/kn7000_program.rom", 0x1BA1E6, 0x1BA1E8
-Str_kpFH_2:	.asciz "kpFH"
-	.align	4, 0x00
-Str_npFHZ:	.asciz "npFHZ"
-.incbin_range "baserom/kn7000_program.rom", 0x1BA1F6, 0x1BA1F8
-Str_kpFH_3:	.asciz "kpFH"
-	.align	4, 0x00
-Str_npFH_12:	.asciz "npFH"
-.incbin_range "baserom/kn7000_program.rom", 0x1BA205, 0x1BA224
+.incbin_range "baserom/kn7000_program.rom", 0x1BA124, 0x1BA224
 data_485BA224:
-.incbin_range "baserom/kn7000_program.rom", 0x1BA224, 0x1BA290
-Str_A_FH:	.asciz "A\x82FH"
-	.align	4, 0x00
-Str_A_FH_2:	.asciz "A\x82FH"
-	.align	4, 0x00
-Str_A_FH_3:	.asciz "A\x82FH"
-	.align	4, 0x00
-Str_A_FH_4:	.asciz "A\x82FH"
-	.align	4, 0x00
-Str_A_FH_5:	.asciz "A\x82FH"
-	.align	4, 0x00
-Str_A_FH_6:	.asciz "A\x82FH"
-	.align	4, 0x00
-Str_A_FH_7:	.asciz "A\x82FH"
-	.align	4, 0x00
-Str_A_FH_8:	.asciz "A\x82FH"
-	.align	4, 0x00
-Str_A_FH_9:	.asciz "A\x82FH"
-	.align	4, 0x00
-Str_A_FH_10:	.asciz "A\x82FH"
-	.align	4, 0x00
-Str_A_FHX:	.asciz "A\x82FHX"
-.incbin_range "baserom/kn7000_program.rom", 0x1BA2E6, 0x1BA2F0
-Str_A_FHZ:	.asciz "A\x82FHZ"
-.incbin_range "baserom/kn7000_program.rom", 0x1BA2F6, 0x1BA300
-Str_A_FH_11:	.asciz "A\x82FH"
-.incbin_range "baserom/kn7000_program.rom", 0x1BA305, 0x1BA324
+.incbin_range "baserom/kn7000_program.rom", 0x1BA224, 0x1BA324
 data_485BA324:
 .incbin_range "baserom/kn7000_program.rom", 0x1BA324, 0x1BA358
+
 Str_A_3:	.asciz "A"
 .incbin_range "baserom/kn7000_program.rom", 0x1BA35A, 0x1BA35C
 Str_w_4:	.asciz "w~"
@@ -11204,7 +9660,7 @@ Str_d_27:	.asciz "d"
 	.align	4, 0xFF
 Str_FAT16:	.asciz "FAT16"
 	.align	4, 0xFF
-Str_empty_1404:	.asciz ".          "
+Str_empty_1394:	.asciz ".          "
 Str_r_5:	.asciz "r"
 	.align	4, 0xFF
 data_485BA394:
@@ -11217,17 +9673,17 @@ data_485BA408:
 .incbin_range "baserom/kn7000_program.rom", 0x1BA408, 0x1BA424
 data_485BA424:
 .incbin_range "baserom/kn7000_program.rom", 0x1BA424, 0x1BA440
-Str_A_38:	.asciz "A:\\"
+Str_A_37:	.asciz "A:\\"
 Str_d_26:	.asciz "d"
 	.align	4, 0xFF
-Str_A_37:	.asciz "A:\\"
+Str_A_36:	.asciz "A:\\"
 Str_d_25:	.asciz "d"
 	.align	4, 0xFF
-Str_A_36:	.asciz "A:\\"
-Str_wb_31:	.asciz "+wb"
-Str_empty_1403:	.asciz "\\"
-	.align	4, 0xFF
 Str_A_35:	.asciz "A:\\"
+Str_wb_31:	.asciz "+wb"
+Str_empty_1393:	.asciz "\\"
+	.align	4, 0xFF
+Str_A_34:	.asciz "A:\\"
 Str_d_24:	.asciz "d"
 	.align	4, 0xFF
 Str_A_IMMUNITY_TST:	.asciz "A:IMMUNITY.TST"
@@ -11236,7 +9692,7 @@ Str_wb_30:	.asciz "wb"
 	.align	4, 0xFF
 Str_rb_66:	.asciz "rb"
 	.align	4, 0xFF
-Str_empty_1402:	.asciz "*.*"
+Str_empty_1392:	.asciz "*.*"
 Str_C_35:	.asciz "C:\\"
 Str_d_23:	.asciz "d"
 	.align	4, 0xFF
@@ -11344,9 +9800,7 @@ Str_Chord_CEGB:	.asciz "Chord CEGB "
 	.space	289, 0x00
 .incbin_range "baserom/kn7000_program.rom", 0x1C3489, 0x1C3758
 Str_Chord_CDEG:	.asciz "Chord CDEG   "
-	.align	4, 0xFF
-Str_X7_H:	.asciz "X7\\H"
-.incbin_range "baserom/kn7000_program.rom", 0x1C376D, 0x1C4A8C
+.incbin_range "baserom/kn7000_program.rom", 0x1C3766, 0x1C4A8C
 	.space	289, 0x00
 .incbin_range "baserom/kn7000_program.rom", 0x1C4BAD, 0x1C4E7C
 Str_Chord_DEGB:	.asciz "Chord DEGB "
@@ -11354,8 +9808,7 @@ Str_Chord_DEGB:	.asciz "Chord DEGB "
 	.space	289, 0x00
 .incbin_range "baserom/kn7000_program.rom", 0x1C62CD, 0x1C659C
 Str_Chord_CEGA:	.asciz "Chord CEGA "
-Str_e_H:	.asciz "\x9Ce\\H"
-.incbin_range "baserom/kn7000_program.rom", 0x1C65AD, 0x1C78CC
+.incbin_range "baserom/kn7000_program.rom", 0x1C65A8, 0x1C78CC
 	.space	289, 0x00
 .incbin_range "baserom/kn7000_program.rom", 0x1C79ED, 0x1C7CBC
 Str_Chord_ADGC:	.asciz "Chord ADGC "
@@ -11404,8 +9857,8 @@ Str_incomplete_literal_length_tree:	.asciz "incomplete literal/length tree"
 Str_invalid_literal_length_code_2:	.asciz "invalid literal/length code"
 Str_invalid_distance_code_2:	.asciz "invalid distance code"
 	.align	4, 0xFF
-Str_M_GH:	.asciz "M\x81GH"
-.incbin_range "baserom/kn7000_program.rom", 0x1CD45D, 0x1CD480
+Str_M_GH:
+.incbin_range "baserom/kn7000_program.rom", 0x1CD458, 0x1CD480
 Str_invalid_distance_code:	.asciz "invalid distance code"
 	.align	4, 0xFF
 Str_invalid_literal_length_code:	.asciz "invalid literal/length code"
@@ -11430,7 +9883,7 @@ data_485CD540:
 Str_VER:	.asciz "*.VER,***"
 Str_rb_63:	.asciz "rb"
 	.align	4, 0xFF
-Str_empty_1401:	.asciz "***"
+Str_empty_1391:	.asciz "***"
 Str_rb_62:	.asciz "rb"
 	.align	4, 0xFF
 Str_rb_61:	.asciz "rb"
@@ -11444,25 +9897,11 @@ Str_rb_58:	.asciz "rb"
 Str_rb_57:	.asciz "rb"
 	.align	4, 0xFF
 data_485CD56C:
-.incbin_range "baserom/kn7000_program.rom", 0x1CD56C, 0x1CD598
-Str_W_GH:	.asciz "W\x91GH"
-.incbin_range "baserom/kn7000_program.rom", 0x1CD59D, 0x1CD5C8
-Str_W_GH_2:	.asciz "W\x91GH"
-	.align	4, 0x00
-Str_W_GH_3:	.asciz "W\x91GH"
-	.align	4, 0x00
-Str_W_GH_4:	.asciz "W\x91GH"
-	.align	4, 0x00
-Str_W_GH_5:	.asciz "W\x91GH"
-.incbin_range "baserom/kn7000_program.rom", 0x1CD5E5, 0x1CD5EC
+.incbin_range "baserom/kn7000_program.rom", 0x1CD56C, 0x1CD5EC
 data_485CD5EC:
-.incbin_range "baserom/kn7000_program.rom", 0x1CD5EC, 0x1CD640
-Str_S_GH:	.asciz "S\x93GH"
-.incbin_range "baserom/kn7000_program.rom", 0x1CD645, 0x1CD66C
+.incbin_range "baserom/kn7000_program.rom", 0x1CD5EC, 0x1CD66C
 data_485CD66C:
-.incbin_range "baserom/kn7000_program.rom", 0x1CD66C, 0x1CD6C0
-Str_A_GH:	.asciz "A\x95GH"
-.incbin_range "baserom/kn7000_program.rom", 0x1CD6C5, 0x1CD6EC
+.incbin_range "baserom/kn7000_program.rom", 0x1CD66C, 0x1CD6EC
 Field_AcOtpRamBox_font:	.asciz "font"
 Field_AcOtpRamBox_end:	.asciz ""
 	.align	4, 0xFF
@@ -12037,22 +10476,22 @@ Str_TT_MSORG:	.asciz "TT_MSORG"
 	.align	4, 0xFF
 Str_Please_select_any_preset_rhythm:	.asciz "Please select any preset rhythm!"
 	.align	4, 0xFF
-Str_empty_1400:	.asciz "  "
+Str_empty_1390:	.asciz "  "
 	.align	4, 0xFF
 Str_3d_222:	.asciz "       %3d"
 	.align	4, 0xFF
 Str_TEMPO_5:	.asciz ":              TEMPO"
-Str_empty_1399:	.asciz "||||"
+Str_empty_1389:	.asciz "||||"
 	.align	4, 0xFF
 Str_TEMPO_4:	.asciz ":                             TEMPO"
-Str_empty_1398:	.asciz "|||||||||"
+Str_empty_1388:	.asciz "|||||||||"
 	.align	4, 0xFF
 Str_d_d_2:	.asciz "%d/%d"
 	.align	4, 0xFF
 Str_TEMPO_3:	.asciz "TEMPO"
 	.align	4, 0xFF
 Str_d_d:	.asciz ": %d/%d"
-Str_empty_1397:	.asciz "          "
+Str_empty_1387:	.asciz "          "
 	.align	4, 0xFF
 Str_3d_221:	.asciz "       %3d"
 	.align	4, 0xFF
@@ -12061,39 +10500,17 @@ data_485CF388:
 StyleListBoxMsgTable:
 .incbin_range "baserom/kn7000_program.rom", 0x1CF408, 0x1CF488
 data_485CF488:
-.incbin_range "baserom/kn7000_program.rom", 0x1CF488, 0x1CF4CC
-Str_a_GH:	.asciz "a\xC9GH"
-	.align	4, 0x00
-Str_d_GH:	.asciz "d\xC9GH:"
-.incbin_range "baserom/kn7000_program.rom", 0x1CF4DA, 0x1CF4DC
-Str_W_GH_6:	.asciz "W\xC9GH"
-	.align	4, 0x00
-Str_d_GH_2:	.asciz "d\xC9GH"
-	.align	4, 0x00
-Str_d_GH_3:	.asciz "d\xC9GH"
-	.align	4, 0x00
-Str_d_GH_4:	.asciz "d\xC9GH"
-.incbin_range "baserom/kn7000_program.rom", 0x1CF4F9, 0x1CF508
+.incbin_range "baserom/kn7000_program.rom", 0x1CF488, 0x1CF508
 data_485CF508:
-.incbin_range "baserom/kn7000_program.rom", 0x1CF508, 0x1CF564
-Str_i_GH:	.asciz "i\xD0GH"
-	.align	4, 0x00
-Str_s_GH:	.asciz "s\xD0GH"
-	.align	4, 0x00
-Str_s_GH_2:	.asciz "s\xD0GH"
-.incbin_range "baserom/kn7000_program.rom", 0x1CF579, 0x1CF588
+.incbin_range "baserom/kn7000_program.rom", 0x1CF508, 0x1CF588
 data_485CF588:
 .incbin_range "baserom/kn7000_program.rom", 0x1CF588, 0x1CF608
 data_485CF608:
-.incbin_range "baserom/kn7000_program.rom", 0x1CF608, 0x1CF664
-Str_u_GH:	.asciz "u\xDFGH"
-.incbin_range "baserom/kn7000_program.rom", 0x1CF669, 0x1CF688
+.incbin_range "baserom/kn7000_program.rom", 0x1CF608, 0x1CF688
 data_485CF688:
 .incbin_range "baserom/kn7000_program.rom", 0x1CF688, 0x1CF708
 data_485CF708:
-.incbin_range "baserom/kn7000_program.rom", 0x1CF708, 0x1CF75C
-Str_q_GH:	.asciz "q\xECGH"
-.incbin_range "baserom/kn7000_program.rom", 0x1CF761, 0x1CF788
+.incbin_range "baserom/kn7000_program.rom", 0x1CF708, 0x1CF788
 FlashSectorMap:
 .incbin_range "baserom/kn7000_program.rom", 0x1CF788, 0x1CF9E0
 FlashChipIdTable:
@@ -12136,9 +10553,9 @@ data_485CFB00:
 .incbin_range "baserom/kn7000_program.rom", 0x1CFB00, 0x1CFB10
 data_485CFB10:
 .incbin_range "baserom/kn7000_program.rom", 0x1CFB10, 0x1CFB20
-Str_A_34:	.asciz "A:\\"
+Str_A_33:	.asciz "A:\\"
 Str_C_31:	.asciz "C:\\"
-Str_empty_1396:	.asciz "\\"
+Str_empty_1386:	.asciz "\\"
 	.align	4, 0xFF
 Str_rb_56:	.asciz "rb"
 	.align	4, 0xFF
@@ -12156,7 +10573,7 @@ data_485CFBB8:
 	.space	8, 0x00
 data_485CFBC0:
 	.space	8, 0x00
-Str_empty_1395:	.asciz "\xFF/"
+Str_empty_1385:	.asciz "\xFF/"
 	.align	4, 0xFF
 Str_MThd_5:	.asciz "MThd"
 	.align	4, 0xFF
@@ -13933,13 +12350,13 @@ Str_04X_04X:	.asciz "%04X%04X  "
 	.align	4, 0xFF
 Str_02X:	.asciz "%02X"
 	.align	4, 0xFF
-Str_empty_1394:	.asciz "-"
+Str_empty_1384:	.asciz "-"
 	.align	4, 0xFF
-Str_empty_1393:	.asciz " "
+Str_empty_1383:	.asciz " "
 	.align	4, 0xFF
-Str_empty_1392:	.asciz " "
+Str_empty_1382:	.asciz " "
 	.align	4, 0xFF
-Str_empty_1391:	.asciz "-"
+Str_empty_1381:	.asciz "-"
 	.align	4, 0xFF
 Str_Aqua:	.asciz "Aqua"
 Str_Yellow:	.asciz "Yellow"
@@ -13987,11 +12404,7 @@ Str_PICTURE_4d:	.asciz "PICTURE : %4d"
 Str_03X_16s:	.asciz "%03X : %-16s"
 	.align	4, 0xFF
 data_485D6830:
-.incbin_range "baserom/kn7000_program.rom", 0x1D6830, 0x1D6854
-Str_zHH:	.asciz "(zHH\xB4"
-.incbin_range "baserom/kn7000_program.rom", 0x1D685A, 0x1D685C
-Str_XzHH:	.asciz "XzHH!"
-.incbin_range "baserom/kn7000_program.rom", 0x1D6862, 0x1D68B0
+.incbin_range "baserom/kn7000_program.rom", 0x1D6830, 0x1D68B0
 Field_AcNamingWindow_end:	.asciz ""
 	.align	4, 0xFF
 
@@ -14159,8 +12572,8 @@ Str_inaming:	.asciz "inaming"
 	.align	4, 0xFF
 Str_TT_NAMING:	.asciz "TT_NAMING"
 	.align	4, 0xFF
-Str_empty_1390:	.asciz " "
-Str_empty_1389:	.asciz "_"
+Str_empty_1439:	.asciz " "
+Str_empty_1438:	.asciz "_"
 Str_0_26:	.asciz "0"
 Str_1_38:	.asciz "1"
 Str_2_41:	.asciz "2"
@@ -14171,7 +12584,7 @@ Str_6_29:	.asciz "6"
 Str_7_19:	.asciz "7"
 Str_8_19:	.asciz "8"
 Str_9_16:	.asciz "9"
-Str_A_33:	.asciz "A"
+Str_A_38:	.asciz "A"
 Str_B_19:	.asciz "B"
 Str_C_30:	.asciz "C"
 Str_D_20:	.asciz "D"
@@ -14223,18 +12636,18 @@ Str_w_3:	.asciz "w"
 Str_x_7:	.asciz "x"
 Str_y_4:	.asciz "y"
 Str_z_2:	.asciz "z"
-Str_empty_1388:	.asciz "!"
-Str_empty_1387:	.asciz "#"
-Str_empty_1386:	.asciz "$"
-Str_empty_1385:	.asciz "%"
-Str_empty_1384:	.asciz "&"
-Str_empty_1383:	.asciz "?"
+Str_empty_1437:	.asciz "!"
+Str_empty_1436:	.asciz "#"
+Str_empty_1435:	.asciz "$"
+Str_empty_1434:	.asciz "%"
+Str_empty_1433:	.asciz "&"
+Str_empty_1432:	.asciz "?"
 Str_40_4:	.asciz "~40"
 Str_5c_2:	.asciz "~5c"
-Str_empty_1382:	.asciz "^"
+Str_empty_1419:	.asciz "^"
 Str_22_2:	.asciz "~22"
 Str_27_2:	.asciz "~27"
-Str_empty_1381:	.asciz "`"
+Str_empty_1415:	.asciz "`"
 Str_empty_1380:	.asciz ","
 Str_empty_1379:	.asciz "."
 Str_empty_1378:	.asciz ":"
@@ -14257,8 +12670,8 @@ Str_empty_1364:	.asciz "}"
 Str_empty_1363:	.asciz "|"
 
 ptrs_485D7350:
-	.long	Str_empty_1390
-	.long	Str_empty_1389
+	.long	Str_empty_1439
+	.long	Str_empty_1438
 	.long	Str_0_26
 	.long	Str_1_38
 	.long	Str_2_41
@@ -14269,7 +12682,7 @@ ptrs_485D7350:
 	.long	Str_7_19
 	.long	Str_8_19
 	.long	Str_9_16
-	.long	Str_A_33
+	.long	Str_A_38
 	.long	Str_B_19
 	.long	Str_C_30
 	.long	Str_D_20
@@ -14321,18 +12734,18 @@ ptrs_485D7350:
 	.long	Str_x_7
 	.long	Str_y_4
 	.long	Str_z_2
-	.long	Str_empty_1388
-	.long	Str_empty_1387
-	.long	Str_empty_1386
-	.long	Str_empty_1385
-	.long	Str_empty_1384
-	.long	Str_empty_1383
+	.long	Str_empty_1437
+	.long	Str_empty_1436
+	.long	Str_empty_1435
+	.long	Str_empty_1434
+	.long	Str_empty_1433
+	.long	Str_empty_1432
 	.long	Str_40_4
 	.long	Str_5c_2
-	.long	Str_empty_1382
+	.long	Str_empty_1419
 	.long	Str_22_2
 	.long	Str_27_2
-	.long	Str_empty_1381
+	.long	Str_empty_1415
 	.long	Str_empty_1380
 	.long	Str_empty_1379
 	.long	Str_empty_1378
@@ -14445,11 +12858,11 @@ ptrs_485D75C4:
 	.long	Str_empty_1360
 
 Str_7f:	.asciz "~7f"
-Str_empty_1359:	.asciz " "
+Str_empty_1349:	.asciz " "
 	.align	4, 0xFF
-Str_empty_1358:	.asciz " "
+Str_empty_1348:	.asciz " "
 	.align	4, 0xFF
-Str_empty_1357:	.asciz " "
+Str_empty_1347:	.asciz " "
 	.align	4, 0xFF
 Str_80_2:	.asciz "~80"
 Str_a_4:	.asciz "a"
@@ -14687,22 +13100,22 @@ ptrs_485D77DC:
 	.long	Str_9_13
 	.long	data_485D77D8
 
-Str_empty_1356:	.asciz "!"
-Str_empty_1355:	.asciz "#"
-Str_empty_1354:	.asciz "$"
-Str_empty_1353:	.asciz "%"
-Str_empty_1352:	.asciz "&"
-Str_empty_1351:	.asciz "?"
+Str_empty_1359:	.asciz "!"
+Str_empty_1358:	.asciz "#"
+Str_empty_1357:	.asciz "$"
+Str_empty_1356:	.asciz "%"
+Str_empty_1355:	.asciz "&"
+Str_empty_1354:	.asciz "?"
 Str_40_3:	.asciz "~40"
 Str_5c:	.asciz "~5c"
-Str_empty_1350:	.asciz "^"
+Str_empty_1353:	.asciz "^"
 Str_22:	.asciz "~22"
 Str_27:	.asciz "~27"
-Str_empty_1349:	.asciz "`"
+Str_empty_1352:	.asciz "`"
 data_485D7864:
 	.space	1, 0x00
-Str_empty_1348:	.asciz " "
-Str_empty_1347:	.asciz "_"
+Str_empty_1351:	.asciz " "
+Str_empty_1350:	.asciz "_"
 Str_0_24:	.asciz "0"
 Str_1_36:	.asciz "1"
 Str_2_39:	.asciz "2"
@@ -14719,21 +13132,21 @@ data_485D787E:
 .incbin_range "baserom/kn7000_program.rom", 0x1D787E, 0x1D7880
 
 ptrs_485D7880:
+	.long	Str_empty_1359
+	.long	Str_empty_1358
+	.long	Str_empty_1357
 	.long	Str_empty_1356
 	.long	Str_empty_1355
 	.long	Str_empty_1354
-	.long	Str_empty_1353
-	.long	Str_empty_1352
-	.long	Str_empty_1351
 	.long	Str_40_3
 	.long	Str_5c
-	.long	Str_empty_1350
+	.long	Str_empty_1353
 	.long	Str_22
 	.long	Str_27
-	.long	Str_empty_1349
+	.long	Str_empty_1352
 	.long	data_485D7864
-	.long	Str_empty_1348
-	.long	Str_empty_1347
+	.long	Str_empty_1351
+	.long	Str_empty_1350
 	.long	Str_0_24
 	.long	Str_1_36
 	.long	Str_2_39
@@ -14818,19 +13231,7 @@ ptrs_485D7988:
 Str_Name:	.asciz "Name"
 	.align	4, 0xFF
 data_485D79A8:
-.incbin_range "baserom/kn7000_program.rom", 0x1D79A8, 0x1D7A54
-Str_G_HH6:	.asciz "G\x97HH6"
-	.align	4, 0x00
-Str_G_HHq:	.asciz "G\x97HHq"
-.incbin_range "baserom/kn7000_program.rom", 0x1D7A62, 0x1D7A64
-Str_h_HHu:	.asciz "h\x98HHu"
-.incbin_range "baserom/kn7000_program.rom", 0x1D7A6A, 0x1D7A6C
-Str_t_HHv:	.asciz "t\x98HHv"
-.incbin_range "baserom/kn7000_program.rom", 0x1D7A72, 0x1D7A84
-Str_U_HHw:	.asciz "U\x98HHw"
-.incbin_range "baserom/kn7000_program.rom", 0x1D7A8A, 0x1D7A8C
-Str_c_HH:	.asciz "c\x99HH"
-.incbin_range "baserom/kn7000_program.rom", 0x1D7A91, 0x1D7AA8
+.incbin_range "baserom/kn7000_program.rom", 0x1D79A8, 0x1D7AA8
 Field_IvMessage_end:	.asciz ""
 	.align	4, 0xFF
 
@@ -14970,8 +13371,7 @@ Str_ATTENTION_15:	.asciz "ATTENTION!"
 Str_ATTENTION_16:	.asciz "ATTENTION!"
 Str_ATTENTION_17:	.asciz "ATTENTION!"
 Str_ATTENTION_18:	.asciz "ATTENTION!"
-.incbin_range "baserom/kn7000_program.rom", 0x1D827A, 0x1D8284
-Str_8_HC_HN_HY_Hd_Ho_Hz_HREMINDER:	.asciz "8\x82]HC\x82]HN\x82]HY\x82]Hd\x82]Ho\x82]Hz\x82]HREMINDER!"
+.incbin_range "baserom/kn7000_program.rom", 0x1D827A, 0x1D82AA
 Str_HINWEIS:	.asciz "HINWEIS !"
 Str_RAPPEL:	.asciz "RAPPEL!"
 Str_RECUERDE:	.asciz "\xA1RECUERDE!"
@@ -14982,8 +13382,7 @@ Str_Vorgang_beendet:	.asciz "Vorgang beendet!"
 Str_TERMINE:	.asciz "TERMINE!"
 Str_FINALIZADO:	.asciz "\xA1FINALIZADO!"
 Str_COMPLETED:	.asciz "COMPLETED!"
-Str_LENGKAPILAH:	.asciz "LENGKAPILAH!"
-.incbin_range "baserom/kn7000_program.rom", 0x1D834E, 0x1D838D
+.incbin_range "baserom/kn7000_program.rom", 0x1D8341, 0x1D838D
 Str_BITTE_WARTEN_3:	.asciz "BITTE WARTEN!"
 Str_VEUILLEZ_PATIENTER_3:	.asciz "VEUILLEZ PATIENTER!"
 Str_POR_FAVOR_ESPERE_3:	.asciz "\xA1POR FAVOR, ESPERE!"
@@ -15022,8 +13421,7 @@ Str_Veuillez_s_lectionner_un_rythme_pr_s_lec:	.asciz "Veuillez s\xE9lectionner u
 Str_Seleccione_un_patr_n_de_ritmo_Rhythm_pre:	.asciz "Seleccione un patr\xF3n de ritmo (Rhythm) predeterminado."
 Str_REMINDER_7:	.asciz "REMINDER"
 Str_Silahkan_pilih_satu_contoh_preset_Preset:	.asciz "Silahkan pilih satu contoh preset (Preset Pattern)."
-.incbin_range "baserom/kn7000_program.rom", 0x1D8F68, 0x1D8F90
-Str_x_H_H_H_H_H4_Hh_HRCM_Trans_Load_Error:	.asciz "x\x8E]H\x9F\x8E]H\xC4\x8E]H\xF4\x8E]H+\x8F]H4\x8F]Hh\x8F]HRCM Trans Load Error!"
+.incbin_range "baserom/kn7000_program.rom", 0x1D8F68, 0x1D8FC2
 Str_RCM_Trans_Load_Error:	.asciz "RCM Trans Load Error!"
 Str_RCM_Trans_Load_Error_2:	.asciz "RCM Trans Load Error!"
 Str_RCM_Trans_Load_Error_3:	.asciz "RCM Trans Load Error!"
@@ -15160,8 +13558,7 @@ Str_Je_ne_peux_pas_charger_le_SEQUENCER_que:	.asciz "Je ne peux pas charger le S
 Str_Se_ha_producido_un_problema_con_sus_dato:	.asciz "Se ha producido un problema con sus datos SEQUENCER. Esto puede deberse a que el disco est\xE1 estropeado."
 Str_ERROR_20:	.asciz "ERROR 20"
 Str_Satu_masalah_terjadi_terhadap_data_Seque:	.asciz "Satu masalah  terjadi terhadap data Sequencer anda. Ini mungkin berhubungan dengan dikset salah atau rusak."
-.incbin_range "baserom/kn7000_program.rom", 0x1DB3B7, 0x1DB40C
-Str_H_HH_H_HB_HK_H_H_Memory_full:	.asciz "|\xB1]H\xDC\xB1]HH\xB2]H\xDA\xB2]HB\xB3]HK\xB3]H\xB7\xB3]H             Memory full"
+.incbin_range "baserom/kn7000_program.rom", 0x1DB3B7, 0x1DB441
 Str_Speicher_voll:	.asciz "           Speicher voll !"
 Str_M_moire_satur_e:	.asciz "          M\xE9moire satur\xE9e!"
 Str_Memoria_llena:	.asciz "            Memoria llena"
@@ -15528,8 +13925,7 @@ Str_Une_erreur_s_est_produite_pendant_la_pro_4:	.asciz "Une erreur s'est produit
 Str_Se_ha_producido_un_error_mientras_se_car_2:	.asciz "Se ha producido un error mientras se cargaba el SD. Pruebe otra vez."
 Str_ERROR_01_2:	.asciz "ERROR 01"
 Str_Kesalahan_sudah_terjadi_ketika_SD_sedang:	.asciz "Kesalahan sudah terjadi ketika SD sedang dipanggil. Harap dicoba lagi."
-.incbin_range "baserom/kn7000_program.rom", 0x1E3DE0, 0x1E3E34
-Str_l_H_H_HK_H_H_H_HThere_is_no_SD_in_the_SD:	.asciz "l<^H\xAE<^H\xFD<^HK=^H\x90=^H\x99=^H\xE0=^HThere is no SD in the SD drive."
+.incbin_range "baserom/kn7000_program.rom", 0x1E3DE0, 0x1E3E70
 Str_Keine_SD_im_Laufwerk:	.asciz "Keine SD im Laufwerk!"
 Str_Il_n_y_a_pas_de_SD_dans_le_lecteur:	.asciz "Il n'y a pas de SD dans le lecteur."
 Str_No_hay_SD_en_SD_Drive:	.asciz "No hay SD en SD Drive."
@@ -15608,9 +14004,7 @@ Str_SD_access_is_canceled_Please_try_again_a:	.asciz "SD access is canceled. Ple
 Str_SD_access_is_canceled_Please_try_again_a_2:	.asciz "SD access is canceled. Please try again after closing the SD lid."
 .incbin_range "baserom/kn7000_program.rom", 0x1E5DE1, 0x1E5E38
 data_485E5E38:
-.incbin_range "baserom/kn7000_program.rom", 0x1E5E38, 0x1E60D0
-Str_T_Hd_H:	.asciz "T\x81]Hd\x83]H"
-.incbin_range "baserom/kn7000_program.rom", 0x1E60D9, 0x1E6548
+.incbin_range "baserom/kn7000_program.rom", 0x1E5E38, 0x1E6548
 data_485E6548:
 .incbin_range "baserom/kn7000_program.rom", 0x1E6548, 0x1E6564
 Str_Msg:	.asciz "Msg"
@@ -17350,8 +15744,9 @@ Str_PART_13_8:	.asciz "  PART 13 "
 Str_PART_14_8:	.asciz "  PART 14 "
 Str_PART_15_8:	.asciz "  PART 15 "
 Str_PART_16_8:	.asciz "  PART 16 "
-Str_RIGHT_1_7:	.asciz " RIGHT 1  "
-Str_RIGHT_2_7:	.asciz " RIGHT 2  "
+Str_RIGHT_1_5:	.asciz " RIGHT 1  "
+data_485EB3C3:
+.incbin_range "baserom/kn7000_program.rom", 0x1EB3C3, 0x1EB3CE
 Str_LEFT_16:	.asciz "   LEFT   "
 Str_ACCOMP_1_3:	.asciz " ACCOMP 1 "
 Str_ACCOMP_2_3:	.asciz " ACCOMP 2 "
@@ -17360,7 +15755,7 @@ Str_ACCOMP_4_3:	.asciz " ACCOMP 4 "
 Str_ACCOMP_5_3:	.asciz " ACCOMP 5 "
 Str_BASS_13:	.asciz "   BASS   "
 Str_DRUM_1_3:	.asciz "  DRUM 1  "
-Str_DRUM_2_3:	.asciz "  DRUM 2  "
+Str_DRUM_2_4:	.asciz "  DRUM 2  "
 Str_CHORD_13:	.asciz "  CHORD   "
 Str_R_BASS_4:	.asciz "  R.BASS  "
 Str_PADS_1:	.asciz "  PADS 1  "
@@ -17387,8 +15782,8 @@ ptrs_485EB480:
 	.long	Str_PART_14_8
 	.long	Str_PART_15_8
 	.long	Str_PART_16_8
-	.long	Str_RIGHT_1_7
-	.long	Str_RIGHT_2_7
+	.long	Str_RIGHT_1_5
+	.long	data_485EB3C3
 	.long	Str_LEFT_16
 	.long	Str_ACCOMP_1_3
 	.long	Str_ACCOMP_2_3
@@ -17397,7 +15792,7 @@ ptrs_485EB480:
 	.long	Str_ACCOMP_5_3
 	.long	Str_BASS_13
 	.long	Str_DRUM_1_3
-	.long	Str_DRUM_2_3
+	.long	Str_DRUM_2_4
 	.long	Str_CHORD_13
 	.long	Str_R_BASS_4
 	.long	Str_PADS_1
@@ -17430,84 +15825,56 @@ data_485EB78E:
 
 Str_MONO_4:	.asciz "MONO"
 .incbin_range "baserom/kn7000_program.rom", 0x1EBA0E, 0x1EBA18
-Str_S_HH:	.asciz "S\xB1HH"
-.incbin_range "baserom/kn7000_program.rom", 0x1EBA1D, 0x1EBA38
+Str_S_HH:
+.incbin_range "baserom/kn7000_program.rom", 0x1EBA18, 0x1EBA38
 
 ptrs_485EBA38:
 	.long	ptrs_500017C0
 	.long	data_485EB65C
 	.long	data_485EB508
-.incbin_range "baserom/kn7000_program.rom", 0x1EBA44, 0x1EBB37
+.incbin_range "baserom/kn7000_program.rom", 0x1EBA44, 0x1EC188
 
-Str_PZ_HZ_H:	.asciz "PZ\xB8^HZ\xB8^H\x83@ "
-.incbin_range "baserom/kn7000_program.rom", 0x1EBB44, 0x1EBB6F
-Str_P_H_H:	.asciz "P|\xB8^H|\xB8^H\x84@ "
-.incbin_range "baserom/kn7000_program.rom", 0x1EBB7C, 0x1EBD9F
-Str_PH_HH_HG:	.asciz "PH\xB9^HH\xB9^HG"
-.incbin_range "baserom/kn7000_program.rom", 0x1EBDAA, 0x1EBDBB
-Str_Pj_Hj_HJ:	.asciz "Pj\xB9^Hj\xB9^HJ"
-.incbin_range "baserom/kn7000_program.rom", 0x1EBDC6, 0x1EC070
-Str_S_HH_2:	.asciz "S\xB1HH"
-.incbin_range "baserom/kn7000_program.rom", 0x1EC075, 0x1EC08C
-Str_S_HH_3:	.asciz "S\xB1HH"
-.incbin_range "baserom/kn7000_program.rom", 0x1EC091, 0x1EC0A8
-Str_S_HH_4:	.asciz "S\xB1HH"
-.incbin_range "baserom/kn7000_program.rom", 0x1EC0AD, 0x1EC0C4
-Str_S_HH_5:	.asciz "S\xB1HH"
-.incbin_range "baserom/kn7000_program.rom", 0x1EC0C9, 0x1EC0E0
-Str_S_HH_6:	.asciz "S\xB1HH"
-.incbin_range "baserom/kn7000_program.rom", 0x1EC0E5, 0x1EC0FC
-Str_S_HH_7:	.asciz "S\xB1HH"
-.incbin_range "baserom/kn7000_program.rom", 0x1EC101, 0x1EC118
-Str_S_HH_8:	.asciz "S\xB1HH"
-.incbin_range "baserom/kn7000_program.rom", 0x1EC11D, 0x1EC134
-Str_S_HH_9:	.asciz "S\xB1HH"
-.incbin_range "baserom/kn7000_program.rom", 0x1EC139, 0x1EC150
-Str_S_HH_10:	.asciz "S\xB1HH"
-.incbin_range "baserom/kn7000_program.rom", 0x1EC155, 0x1EC16C
-Str_S_HH_11:	.asciz "S\xB1HH"
-.incbin_range "baserom/kn7000_program.rom", 0x1EC171, 0x1EC188
 Str_3d_220:	.asciz "%3d"
-Str_empty_1327:	.asciz " --"
+Str_empty_1317:	.asciz " --"
 Str_4d_17:	.asciz "%4d"
-Str_empty_1326:	.asciz "  --"
+Str_empty_1316:	.asciz "  --"
 	.align	4, 0xFF
 Str_3d_219:	.asciz "%+3d"
 	.align	4, 0xFF
 Str_0_22:	.asciz "  0"
-Str_empty_1325:	.asciz " --"
+Str_empty_1315:	.asciz " --"
 Str_4d_16:	.asciz "%+4d"
 	.align	4, 0xFF
 Str_0_21:	.asciz "   0"
 	.align	4, 0xFF
-Str_empty_1324:	.asciz "  --"
+Str_empty_1314:	.asciz "  --"
 	.align	4, 0xFF
 Str_OFF_177:	.asciz "OFF"
 Str_ON_134:	.asciz "ON "
-Str_empty_1323:	.asciz " --"
+Str_empty_1313:	.asciz " --"
 Str_3d_218:	.asciz "%3d"
-Str_empty_1322:	.asciz " --"
+Str_empty_1312:	.asciz " --"
 Str_MUTE_4:	.asciz "MUTE"
 	.align	4, 0xFF
 Str_4d_15:	.asciz "%4d"
-Str_empty_1321:	.asciz "  --"
+Str_empty_1311:	.asciz "  --"
 	.align	4, 0xFF
 Str_CTR_2:	.asciz "CTR"
 Str_L_2d_4:	.asciz "L%2d"
 	.align	4, 0xFF
 Str_R_2d_4:	.asciz "R%2d"
 	.align	4, 0xFF
-Str_empty_1320:	.asciz " --"
+Str_empty_1310:	.asciz " --"
 data_485EC204:
 .incbin_range "baserom/kn7000_program.rom", 0x1EC204, 0x1EC218
 data_485EC218:
 .incbin_range "baserom/kn7000_program.rom", 0x1EC218, 0x1EC22C
 data_485EC22C:
 .incbin_range "baserom/kn7000_program.rom", 0x1EC22C, 0x1EC238
-Str_empty_1319:	.asciz " - "
-Str_empty_1318:	.asciz "                                "
+Str_empty_1309:	.asciz " - "
+Str_empty_1308:	.asciz "                                "
 	.align	4, 0xFF
-Str_empty_1317:	.asciz "      ----                         "
+Str_empty_1307:	.asciz "      ----                         "
 Str_20:	.asciz "   20"
 Str_25:	.asciz "   25"
 Str_31_5:	.asciz " 31.5"
@@ -17539,7 +15906,7 @@ Str_10k:	.asciz "  10k"
 Str_12_5k:	.asciz "12.5k"
 Str_16k:	.asciz "  16k"
 Str_20k:	.asciz "  20k"
-Str_empty_1316:	.asciz "     "
+Str_empty_1327:	.asciz "     "
 
 ptrs_485EC344:
 	.long	Str_20
@@ -17573,9 +15940,9 @@ ptrs_485EC344:
 	.long	Str_12_5k
 	.long	Str_16k
 	.long	Str_20k
-	.long	Str_empty_1316
+	.long	Str_empty_1327
 
-Str_empty_1315:	.asciz "  -- "
+Str_empty_1305:	.asciz "  -- "
 	.align	4, 0xFF
 Str_2d_63:	.asciz "+%2d."
 	.align	4, 0xFF
@@ -17591,15 +15958,15 @@ Str_0_19:	.asciz "0"
 	.align	4, 0xFF
 Str_0_0:	.asciz "  0.0"
 	.align	4, 0xFF
-Str_empty_1314:	.asciz "  -- "
+Str_empty_1304:	.asciz "  -- "
 	.align	4, 0xFF
 Str_OFF_176:	.asciz " OFF"
 	.align	4, 0xFF
 Str_CH_2d_2:	.asciz "CH%2d"
 	.align	4, 0xFF
-Str_empty_1313:	.asciz "  --"
+Str_empty_1303:	.asciz "  --"
 	.align	4, 0xFF
-Str_empty_1312:	.asciz "     ------     "
+Str_empty_1302:	.asciz "     ------     "
 	.align	4, 0xFF
 Str_427_5:	.asciz "427.5"
 Str_427_7:	.asciz "427.7"
@@ -17919,8 +16286,8 @@ Str_PART_13_7:	.asciz " PART 13 "
 Str_PART_14_7:	.asciz " PART 14 "
 Str_PART_15_7:	.asciz " PART 15 "
 Str_PART_16_7:	.asciz " PART 16 "
-Str_RIGHT_1_6:	.asciz " RIGHT 1 "
-Str_RIGHT_2_6:	.asciz " RIGHT 2 "
+Str_RIGHT_1_4:	.asciz " RIGHT 1 "
+Str_RIGHT_2_3:	.asciz " RIGHT 2 "
 Str_LEFT_15:	.asciz " LEFT    "
 Str_CONDUCTOR_3:	.asciz "CONDUCTOR"
 
@@ -17941,8 +16308,8 @@ ptrs_485ECAD4:
 	.long	Str_PART_14_7
 	.long	Str_PART_15_7
 	.long	Str_PART_16_7
-	.long	Str_RIGHT_1_6
-	.long	Str_RIGHT_2_6
+	.long	Str_RIGHT_1_4
+	.long	Str_RIGHT_2_3
 	.long	Str_LEFT_15
 	.long	Str_CONDUCTOR_3
 
@@ -17956,7 +16323,7 @@ data_485ECC54:
 .incbin_range "baserom/kn7000_program.rom", 0x1ECC54, 0x1ECC70
 Str_SdPT:	.asciz "SdPT"
 	.align	4, 0xFF
-Str_empty_1311:	.asciz "     ------     "
+Str_empty_1301:	.asciz "     ------     "
 	.align	4, 0xFF
 
 ptrs_485ECC8C:
@@ -17994,15 +16361,7 @@ Str_MIDI_CHANNEL:	.asciz "MIDI CHANNEL"
 Str_LOCAL_CONTROL:	.asciz "LOCAL CONTROL"
 .incbin_range "baserom/kn7000_program.rom", 0x1ECD9D, 0x1ECDA0
 data_485ECDA0:
-.incbin_range "baserom/kn7000_program.rom", 0x1ECDA0, 0x1ECECC
-Str_H_13:	.asciz "^\xCD^H"
-.incbin_range "baserom/kn7000_program.rom", 0x1ECED1, 0x1ECEDC
-Str_v_H:	.asciz "v\xCD^H"
-.incbin_range "baserom/kn7000_program.rom", 0x1ECEE1, 0x1ECEFC
-Str_x_H5:	.asciz "x\xCD^H5"
-.incbin_range "baserom/kn7000_program.rom", 0x1ECF02, 0x1ECF2C
-Str_HSOUND:	.asciz "\x9D\xCD^HSOUND"
-.incbin_range "baserom/kn7000_program.rom", 0x1ECF36, 0x1ECF3B
+.incbin_range "baserom/kn7000_program.rom", 0x1ECDA0, 0x1ECF3B
 Str_VOLUME_53:	.asciz "VOLUME"
 	.space	1, 0x00
 Str_REVERB_11:	.asciz "REVERB"
@@ -18025,37 +16384,33 @@ Str_MIDI_CHANNEL_2:	.asciz "MIDI CHANNEL"
 Str_LOCAL_CONTROL_2:	.asciz "LOCAL CONTROL"
 .incbin_range "baserom/kn7000_program.rom", 0x1ED019, 0x1ED01C
 data_485ED01C:
-.incbin_range "baserom/kn7000_program.rom", 0x1ED01C, 0x1ED0A8
-Str_H_14:	.asciz "`\xCF^H"
-.incbin_range "baserom/kn7000_program.rom", 0x1ED0AD, 0x1ED1B9
+.incbin_range "baserom/kn7000_program.rom", 0x1ED01C, 0x1ED1B9
 Str_VIBRATO_DEPTH_3:	.asciz "VIBRATO DEPTH"
 Str_VIBRATO_DELAY_3:	.asciz "VIBRATO DELAY"
 Str_FILTER_RESONANCE_3:	.asciz "FILTER RESONANCE"
-	.space	1, 0x00
-Str_BRIGHTNESS_4:	.asciz "BRIGHTNESS"
+.incbin_range "baserom/kn7000_program.rom", 0x1ED1E6, 0x1ED1F2
 Str_ATTACK_TIME_4:	.asciz "ATTACK TIME"
 Str_DECAY_TIME_2:	.asciz "DECAY TIME"
 Str_RELEASE_TIME_5:	.asciz "RELEASE TIME"
 .incbin_range "baserom/kn7000_program.rom", 0x1ED216, 0x1ED218
-Str_empty_1310:	.asciz "%"
+Str_empty_1326:	.asciz "%"
 .incbin_range "baserom/kn7000_program.rom", 0x1ED21A, 0x1ED2C5
 Str_VIBRATO_DEPTH_4:	.asciz "VIBRATO DEPTH"
 Str_VIBRATO_DELAY_4:	.asciz "VIBRATO DELAY"
 Str_FILTER_RESONANCE_4:	.asciz "FILTER RESONANCE"
-	.space	1, 0x00
-Str_BRIGHTNESS_5:	.asciz "BRIGHTNESS"
+.incbin_range "baserom/kn7000_program.rom", 0x1ED2F2, 0x1ED2FE
 Str_ATTACK_TIME_5:	.asciz "ATTACK TIME"
 Str_DECAY_TIME_3:	.asciz "DECAY TIME"
 Str_RELEASE_TIME_6:	.asciz "RELEASE TIME"
 .incbin_range "baserom/kn7000_program.rom", 0x1ED322, 0x1ED324
-Str_empty_1309:	.asciz "%"
+Str_empty_1325:	.asciz "%"
 .incbin_range "baserom/kn7000_program.rom", 0x1ED326, 0x1ED3C4
 
 ptrs_485ED3C4:
 	.long	data_485ECDA0
-	.long	Str_empty_1310
+	.long	Str_empty_1326
 	.long	data_485ED01C
-	.long	Str_empty_1309
+	.long	Str_empty_1325
 data_485ED3D4:
 .incbin_range "baserom/kn7000_program.rom", 0x1ED3D4, 0x1ED454
 ptrs_485ED454:
@@ -18080,8 +16435,10 @@ Str_PART_13:	.asciz "PART 13"
 Str_PART_14:	.asciz "PART 14"
 Str_PART_15:	.asciz "PART 15"
 Str_PART_16:	.asciz "PART 16"
-Str_RIGHT_1:	.asciz "RIGHT 1"
-Str_RIGHT_2:	.asciz "RIGHT 2"
+data_485ED4E4:
+.incbin_range "baserom/kn7000_program.rom", 0x1ED4E4, 0x1ED4EC
+data_485ED4EC:
+.incbin_range "baserom/kn7000_program.rom", 0x1ED4EC, 0x1ED4F4
 Str_LEFT_6:	.asciz "LEFT   "
 Str_ACCOMP1:	.asciz "ACCOMP1"
 Str_ACCOMP2:	.asciz "ACCOMP2"
@@ -18090,11 +16447,11 @@ Str_ACCOMP4:	.asciz "ACCOMP4"
 Str_ACCOMP5:	.asciz "ACCOMP5"
 Str_BASS_2:	.asciz "BASS   "
 Str_DRUM_1:	.asciz "DRUM  1"
-Str_DRUM_2:	.asciz "DRUM  2"
+Str_DRUM_2_2:	.asciz "DRUM  2"
 Str_CHORD_4:	.asciz "CHORD  "
 Str_R_BASS:	.asciz "R.BASS "
+Str_PADS_12:	.asciz "PADS   "
 Str_PADS_11:	.asciz "PADS   "
-Str_PADS_10:	.asciz "PADS   "
 Str_B_PEDAL:	.asciz "B.PEDAL"
 Str_empty_285:	.asciz "       "
 Str_empty_284:	.asciz "       "
@@ -18183,7 +16540,7 @@ data_485ED750:
 .incbin_range "baserom/kn7000_program.rom", 0x1ED750, 0x1ED758
 Str_MxPG:	.asciz "MxPG"
 	.align	4, 0xFF
-Str_empty_1308:	.asciz "     ------     "
+Str_empty_1298:	.asciz "     ------     "
 	.align	4, 0xFF
 Str_s_s_6:	.asciz "%s : %s"
 Str_MxOP:	.asciz "MxOP"
@@ -18204,8 +16561,8 @@ data_485ED826:
 data_485ED842:
 .incbin_range "baserom/kn7000_program.rom", 0x1ED842, 0x1ED87C
 Str_ALL_37:	.asciz "   ALL   "
-Str_RIGHT_1_5:	.asciz " RIGHT 1 "
-Str_RIGHT_2_5:	.asciz " RIGHT 2 "
+Str_RIGHT_1_3:	.asciz " RIGHT 1 "
+Str_RIGHT_2_2:	.asciz " RIGHT 2 "
 Str_LEFT_14:	.asciz "  LEFT   "
 Str_PART_1_6:	.asciz " PART 1  "
 Str_PART_2_7:	.asciz " PART 2  "
@@ -18236,8 +16593,8 @@ Str_BASS_12:	.asciz "  BASS   "
 
 ptrs_485ED9A0:
 	.long	Str_ALL_37
-	.long	Str_RIGHT_1_5
-	.long	Str_RIGHT_2_5
+	.long	Str_RIGHT_1_3
+	.long	Str_RIGHT_2_2
 	.long	Str_LEFT_14
 	.long	Str_PART_1_6
 	.long	Str_PART_2_7
@@ -18417,8 +16774,9 @@ Str_PART_13_5:	.asciz "  PART 13 "
 Str_PART_14_5:	.asciz "  PART 14 "
 Str_PART_15_5:	.asciz "  PART 15 "
 Str_PART_16_5:	.asciz "  PART 16 "
-Str_RIGHT_1_4:	.asciz " RIGHT 1  "
-Str_RIGHT_2_4:	.asciz " RIGHT 2  "
+Str_RIGHT_1_2:	.asciz " RIGHT 1  "
+data_485F0173:
+.incbin_range "baserom/kn7000_program.rom", 0x1F0173, 0x1F017E
 Str_LEFT_13:	.asciz "   LEFT   "
 Str_ACCOMP_1_5_5:	.asciz "ACCOMP 1-5"
 Str_ACCOMP_1_5_4:	.asciz "ACCOMP 1-5"
@@ -18428,13 +16786,13 @@ Str_ACCOMP_1_5:	.asciz "ACCOMP 1-5"
 Str_BASS_10:	.asciz "   BASS   "
 Str_DRUM_1_2_3:	.asciz " DRUM 1&2 "
 Str_DRUM_1_2_2:	.asciz " DRUM 1&2 "
-Str_empty_1307:	.asciz "          "
-Str_empty_1306:	.asciz "          "
+Str_empty_1324:	.asciz "          "
+Str_empty_1323:	.asciz "          "
 Str_PADS_18:	.asciz "   PADS   "
 Str_PADS_17:	.asciz "   PADS   "
 Str_BASS_PEDAL_3:	.asciz "BASS PEDAL"
 Str_METRONOME_2:	.asciz "METRONOME "
-Str_empty_1305:	.asciz "          "
+Str_empty_1322:	.asciz "          "
 	.align	4, 0xFF
 
 ptrs_485F0230:
@@ -18454,8 +16812,8 @@ ptrs_485F0230:
 	.long	Str_PART_14_5
 	.long	Str_PART_15_5
 	.long	Str_PART_16_5
-	.long	Str_RIGHT_1_4
-	.long	Str_RIGHT_2_4
+	.long	Str_RIGHT_1_2
+	.long	data_485F0173
 	.long	Str_LEFT_13
 	.long	Str_ACCOMP_1_5_5
 	.long	Str_ACCOMP_1_5_4
@@ -18465,13 +16823,13 @@ ptrs_485F0230:
 	.long	Str_BASS_10
 	.long	Str_DRUM_1_2_3
 	.long	Str_DRUM_1_2_2
-	.long	Str_empty_1307
-	.long	Str_empty_1306
+	.long	Str_empty_1324
+	.long	Str_empty_1323
 	.long	Str_PADS_18
 	.long	Str_PADS_17
 	.long	Str_BASS_PEDAL_3
 	.long	Str_METRONOME_2
-	.long	Str_empty_1305
+	.long	Str_empty_1322
 
 Str_PRESET_IN_RHYTHM:	.asciz "PRESET IN RHYTHM"
 	.align	4, 0xFF
@@ -18504,15 +16862,7 @@ Str_ON_125:	.asciz "ON "
 Str_OFF_166:	.asciz "OFF"
 Str_ON_124:	.asciz "ON "
 data_485F0360:
-.incbin_range "baserom/kn7000_program.rom", 0x1F0360, 0x1F039C
-Str_HHR:	.asciz "+\xB0HHR"
-.incbin_range "baserom/kn7000_program.rom", 0x1F03A2, 0x1F03A4
-Str_HHS:	.asciz "=\xB0HHS"
-.incbin_range "baserom/kn7000_program.rom", 0x1F03AA, 0x1F03B4
-Str_Y_HH:	.asciz "Y\xB0HH:"
-.incbin_range "baserom/kn7000_program.rom", 0x1F03BA, 0x1F03BC
-Str_z_HH:	.asciz "z\xB0HH"
-.incbin_range "baserom/kn7000_program.rom", 0x1F03C1, 0x1F03E0
+.incbin_range "baserom/kn7000_program.rom", 0x1F0360, 0x1F03E0
 data_485F03E0:
 .incbin_range "baserom/kn7000_program.rom", 0x1F03E0, 0x1F0460
 data_485F0460:
@@ -18520,73 +16870,23 @@ data_485F0460:
 data_485F0490:
 .incbin_range "baserom/kn7000_program.rom", 0x1F0490, 0x1F04C0
 data_485F04C0:
-.incbin_range "baserom/kn7000_program.rom", 0x1F04C0, 0x1F04DC
-Str_X_HHm:	.asciz "X\xC5HHm"
-	.align	4, 0x00
-Str_HH:	.asciz "`\xC5HH"
-	.align	4, 0x00
-Str_c_HH_2:	.asciz "c\xC5HH"
-	.align	4, 0x00
-Str_c_HH_3:	.asciz "c\xC5HH"
-	.align	4, 0x00
-Str_c_HH_4:	.asciz "c\xC5HH"
-	.align	4, 0x00
-Str_c_HH_5:	.asciz "c\xC5HH"
-	.align	4, 0x00
-Str_c_HH_6:	.asciz "c\xC5HH"
-	.align	4, 0x00
-Str_c_HH_7:	.asciz "c\xC5HH"
-	.align	4, 0x00
-Str_c_HHl:	.asciz "c\xC5HHl"
-	.align	4, 0x00
-Str_HH_2:	.asciz "\\\xC5HH}"
-.incbin_range "baserom/kn7000_program.rom", 0x1F052A, 0x1F0540
+.incbin_range "baserom/kn7000_program.rom", 0x1F04C0, 0x1F0540
 data_485F0540:
 .incbin_range "baserom/kn7000_program.rom", 0x1F0540, 0x1F05C0
 data_485F05C0:
-.incbin_range "baserom/kn7000_program.rom", 0x1F05C0, 0x1F060C
-Str_E_HH:	.asciz "E\xCEHH:"
-.incbin_range "baserom/kn7000_program.rom", 0x1F0612, 0x1F0640
+.incbin_range "baserom/kn7000_program.rom", 0x1F05C0, 0x1F0640
 data_485F0640:
-.incbin_range "baserom/kn7000_program.rom", 0x1F0640, 0x1F064C
-Str_0_HHb:	.asciz "0\xD3HHb"
-.incbin_range "baserom/kn7000_program.rom", 0x1F0652, 0x1F066C
-Str_W_HH:	.asciz "W\xD9HH"
-	.align	4, 0x00
-Str_W_HH_2:	.asciz "W\xD9HH"
-	.align	4, 0x00
-Str_W_HH_3:	.asciz "W\xD9HH"
-.incbin_range "baserom/kn7000_program.rom", 0x1F0681, 0x1F069C
-Str_W_HH_4:	.asciz "W\xD9HH"
-	.align	4, 0x00
-Str_W_HH_5:	.asciz "W\xD9HH"
-	.align	4, 0x00
-Str_W_HHN:	.asciz "W\xD9HHN"
-.incbin_range "baserom/kn7000_program.rom", 0x1F06B2, 0x1F06F5
+.incbin_range "baserom/kn7000_program.rom", 0x1F0640, 0x1F06F5
 Str_HHT:	.asciz "\xD6HHT"
-.incbin_range "baserom/kn7000_program.rom", 0x1F06FA, 0x1F070C
-Str_W_HH_6:	.asciz "W\xD9HH:"
-.incbin_range "baserom/kn7000_program.rom", 0x1F0712, 0x1F071C
-Str_H_HH:	.asciz "H\xD4HH<"
-.incbin_range "baserom/kn7000_program.rom", 0x1F0722, 0x1F0734
-Str_W_HH_7:	.asciz "W\xD9HH"
-	.align	4, 0x00
-Str_W_HH_8:	.asciz "W\xD9HH"
-.incbin_range "baserom/kn7000_program.rom", 0x1F0741, 0x1F07C0
+.incbin_range "baserom/kn7000_program.rom", 0x1F06FA, 0x1F0740
+data_485F0740:
+.incbin_range "baserom/kn7000_program.rom", 0x1F0740, 0x1F07C0
 data_485F07C0:
-.incbin_range "baserom/kn7000_program.rom", 0x1F07C0, 0x1F07FC
-Str_c_HH_8:	.asciz "c\xE3HH"
-.incbin_range "baserom/kn7000_program.rom", 0x1F0801, 0x1F0840
+.incbin_range "baserom/kn7000_program.rom", 0x1F07C0, 0x1F0840
 data_485F0840:
-.incbin_range "baserom/kn7000_program.rom", 0x1F0840, 0x1F086C
-Str_j_HH:	.asciz "j\xE7HH"
-.incbin_range "baserom/kn7000_program.rom", 0x1F0871, 0x1F089C
-Str_d_HH:	.asciz "d\xE9HH"
-.incbin_range "baserom/kn7000_program.rom", 0x1F08A1, 0x1F08C0
+.incbin_range "baserom/kn7000_program.rom", 0x1F0840, 0x1F08C0
 data_485F08C0:
-.incbin_range "baserom/kn7000_program.rom", 0x1F08C0, 0x1F0914
-Str_S_IH:	.asciz "S\x0DIH"
-.incbin_range "baserom/kn7000_program.rom", 0x1F0919, 0x1F0940
+.incbin_range "baserom/kn7000_program.rom", 0x1F08C0, 0x1F0940
 data_485F0940:
 .incbin_range "baserom/kn7000_program.rom", 0x1F0940, 0x1F09C0
 data_485F09C0:
@@ -18604,37 +16904,9 @@ data_485F0C40:
 data_485F0CC0:
 .incbin_range "baserom/kn7000_program.rom", 0x1F0CC0, 0x1F0D40
 data_485F0D40:
-.incbin_range "baserom/kn7000_program.rom", 0x1F0D40, 0x1F0D84
-Str_V0IH:	.asciz "V0IH"
-	.align	4, 0x00
-Str_Y0IH:	.asciz "Y0IH"
-	.align	4, 0x00
-Str_Y0IH_2:	.asciz "Y0IH"
-	.align	4, 0x00
-Str_Y0IH_3:	.asciz "Y0IH"
-	.align	4, 0x00
-Str_Y0IH_4:	.asciz "Y0IH"
-	.align	4, 0x00
-Str_Y0IH_5:	.asciz "Y0IH"
-	.align	4, 0x00
-Str_Y0IH_6:	.asciz "Y0IH"
-.incbin_range "baserom/kn7000_program.rom", 0x1F0DB9, 0x1F0DC0
+.incbin_range "baserom/kn7000_program.rom", 0x1F0D40, 0x1F0DC0
 data_485F0DC0:
-.incbin_range "baserom/kn7000_program.rom", 0x1F0DC0, 0x1F0E04
-Str_t2IH:	.asciz "t2IH"
-	.align	4, 0x00
-Str_w2IH:	.asciz "w2IH"
-	.align	4, 0x00
-Str_w2IH_2:	.asciz "w2IH"
-	.align	4, 0x00
-Str_w2IH_3:	.asciz "w2IH"
-	.align	4, 0x00
-Str_w2IH_4:	.asciz "w2IH"
-	.align	4, 0x00
-Str_w2IH_5:	.asciz "w2IH"
-	.align	4, 0x00
-Str_w2IH_6:	.asciz "w2IH"
-.incbin_range "baserom/kn7000_program.rom", 0x1F0E39, 0x1F0E40
+.incbin_range "baserom/kn7000_program.rom", 0x1F0DC0, 0x1F0E40
 Field_IvPageControlOW_page:	.asciz "page"
 Field_IvPageControlOW_window:	.asciz "window"
 Field_IvPageControlOW_end:	.asciz ""
@@ -21115,28 +19387,28 @@ ptrs_485F984C:
 
 Str_SPLIT_s_d:	.asciz "SPLIT:%s%d"
 	.align	4, 0xFF
-Str_empty_1304:	.asciz "           "
-Str_empty_1303:	.asciz "        "
+Str_empty_1294:	.asciz "           "
+Str_empty_1321:	.asciz "        "
 Str_FADE_IN_4:	.asciz "FADE IN "
 Str_FADE_OUT_4:	.asciz "FADE OUT"
 	.align	4, 0xFF
 
 ptrs_485F98B0:
-	.long	Str_empty_1303
+	.long	Str_empty_1321
 	.long	Str_FADE_IN_4
 	.long	Str_FADE_OUT_4
 
-Str_PADS_16:	.asciz "PADS:"
+Str_PADS_10:	.asciz "PADS:"
 	.align	4, 0xFF
 Str_Loop:	.asciz " [Loop"
 	.align	4, 0xFF
-Str_empty_1302:	.asciz ","
+Str_empty_1292:	.asciz ","
 	.align	4, 0xFF
-Str_empty_1301:	.asciz " ["
+Str_empty_1291:	.asciz " ["
 	.align	4, 0xFF
 Str_Solo:	.asciz "Solo]"
 	.align	4, 0xFF
-Str_empty_1300:	.asciz "]"
+Str_empty_1290:	.asciz "]"
 	.align	4, 0xFF
 Str_2d_d:	.asciz " %2d/%d"
 Str_Control_Preset_2:	.asciz "Control Preset"
@@ -21169,7 +19441,7 @@ Str_R1_R2_OCT_2_2:	.asciz "R1/R2 OCT:-2"
 	.align	4, 0xFF
 Str_R1_R2_OCT_1_2:	.asciz "R1/R2 OCT:-1"
 	.align	4, 0xFF
-Str_empty_1299:	.asciz "            "
+Str_empty_1289:	.asciz "            "
 	.align	4, 0xFF
 Str_R1_R2_OCT_1:	.asciz "R1/R2 OCT:+1"
 	.align	4, 0xFF
@@ -21199,7 +19471,7 @@ Str_ATTACK_TIME_3:	.asciz "   ATTACK TIME   "
 	.align	4, 0xFF
 Str_RELEASE_TIME_4:	.asciz "   RELEASE TIME  "
 	.align	4, 0xFF
-Str_empty_1298:	.asciz "-----------------"
+Str_empty_1288:	.asciz "-----------------"
 	.align	4, 0xFF
 Str_X_s:	.asciz "X : %s"
 	.align	4, 0xFF
@@ -21280,9 +19552,7 @@ Str_TOTAL_EXPRESSION_2:	.asciz "TOTAL EXPRESSION"
 Str_PART_EXPRESSION_2:	.asciz "PART EXPRESSION "
 .incbin_range "baserom/kn7000_program.rom", 0x1F9E4E, 0x1F9E60
 data_485F9E60:
-.incbin_range "baserom/kn7000_program.rom", 0x1F9E60, 0x1F9FB4
-Str_N_H1:	.asciz "N\x9E_H1 "
-.incbin_range "baserom/kn7000_program.rom", 0x1F9FBB, 0x1F9FD0
+.incbin_range "baserom/kn7000_program.rom", 0x1F9E60, 0x1F9FD0
 data_485F9FD0:
 .incbin_range "baserom/kn7000_program.rom", 0x1F9FD0, 0x1FA008
 Str_s_s_4:	.asciz "%s: %s"
@@ -21307,15 +19577,7 @@ Str_CHORUS_LOAD:	.asciz "CHORUS LOAD      "
 Str_CONTROLLERS_RESET:	.asciz "CONTROLLERS RESET"
 	.align	4, 0xFF
 Str_P_21:	.asciz " P"
-	.align	4, 0x00
-Str_P_H_P:	.asciz "P\xA0_H!P"
-	.align	4, 0x00
-Str_b_H_P:	.asciz "b\xA0_H\"P"
-	.align	4, 0x00
-Str_t_H_P:	.asciz "t\xA0_H#P"
-	.align	4, 0x00
-Str_H_P:	.asciz "\x86\xA0_H$P"
-.incbin_range "baserom/kn7000_program.rom", 0x1FA0CF, 0x1FA0D4
+.incbin_range "baserom/kn7000_program.rom", 0x1FA0AF, 0x1FA0D4
 Str_s_s_3:	.asciz "%s: %s"
 	.align	4, 0xFF
 Str_APC_8:	.asciz "   APC   "
@@ -21339,13 +19601,13 @@ Str_d_18:	.asciz "  %d  "
 	.align	4, 0xFF
 Str_TRACK_23:	.asciz "TRACK"
 	.align	4, 0xFF
-Str_APC_7:	.asciz "APC"
+Str_APC_6:	.asciz "APC"
 Str_CTRL:	.asciz "CTRL"
 	.align	4, 0xFF
 Str_RHY_2:	.asciz "RHY"
-Str_empty_1297:	.asciz "           "
+Str_empty_1287:	.asciz "           "
 Str_MONITOR_OFF:	.asciz "MONITOR OFF"
-Str_empty_1296:	.asciz "             "
+Str_empty_1286:	.asciz "             "
 	.align	4, 0xFF
 Str_REMOTE_VOL_2d:	.asciz "REMOTE VOL=%2d"
 	.align	4, 0xFF
@@ -21360,86 +19622,20 @@ Str_1_31:	.asciz "1"
 	.space	6, 0xFF
 data_485FA224:
 .incbin_range "baserom/kn7000_program.rom", 0x1FA224, 0x1FA234
-Str_empty_1295:	.asciz "```"
+Str_empty_1285:	.asciz "```"
 .incbin_range "baserom/kn7000_program.rom", 0x1FA238, 0x1FA244
-Str_empty_1294:	.asciz "\xA0``"
+Str_empty_1284:	.asciz "\xA0``"
 .incbin_range "baserom/kn7000_program.rom", 0x1FA248, 0x1FA254
 data_485FA254:
-.incbin_range "baserom/kn7000_program.rom", 0x1FA254, 0x1FA268
-Str_7IHR:	.asciz "\xA97IHR"
-.incbin_range "baserom/kn7000_program.rom", 0x1FA26E, 0x1FA270
-Str_8IHT:	.asciz "\xAF8IHT"
-.incbin_range "baserom/kn7000_program.rom", 0x1FA276, 0x1FA280
-Str_7IHu:	.asciz "\xF27IHu"
-.incbin_range "baserom/kn7000_program.rom", 0x1FA286, 0x1FA288
-Str_8IHS:	.asciz "\x9D8IHS"
-.incbin_range "baserom/kn7000_program.rom", 0x1FA28E, 0x1FA2A8
-Str_k8IH:	.asciz "k8IH:"
-.incbin_range "baserom/kn7000_program.rom", 0x1FA2AE, 0x1FA2D4
+.incbin_range "baserom/kn7000_program.rom", 0x1FA254, 0x1FA2D4
 data_485FA2D4:
-.incbin_range "baserom/kn7000_program.rom", 0x1FA2D4, 0x1FA300
-Str_r_IH:	.asciz "r>IH"
-.incbin_range "baserom/kn7000_program.rom", 0x1FA305, 0x1FA354
-Str_empty_1293:	.asciz "@"
-	.align	4, 0x00
-Str_LIHA:	.asciz "\xE4LIHA"
-	.align	4, 0x00
-Str_LIHR:	.asciz "\xCCLIHR"
-.incbin_range "baserom/kn7000_program.rom", 0x1FA366, 0x1FA378
-Str_LIHT:	.asciz "\xB4LIHT"
-	.align	4, 0x00
-Str_LIHV:	.asciz "\xC4LIHV"
-.incbin_range "baserom/kn7000_program.rom", 0x1FA386, 0x1FA398
-Str_LIH:	.asciz "\xA4LIH"
-	.align	4, 0x00
-Str_LIH_2:	.asciz "\xF4LIH"
-	.align	4, 0x00
-Str_LIH_3:	.asciz "\xF4LIH"
-	.align	4, 0x00
-Str_LIH_4:	.asciz "\xF4LIH"
-	.align	4, 0x00
-Str_LIH_5:	.asciz "\xF4LIH"
-	.align	4, 0x00
-Str_LIH_6:	.asciz "\xF4LIH>"
-	.align	4, 0x00
-Str_LIH_7:	.asciz "\xD4LIH?"
-	.align	4, 0x00
-Str_LIH_8:	.asciz "\xECLIH"
-.incbin_range "baserom/kn7000_program.rom", 0x1FA3D5, 0x1FA3E0
-Str_IH2:	.asciz "\x94]IH2"
-.incbin_range "baserom/kn7000_program.rom", 0x1FA3E6, 0x1FA3F0
-Str_IH:	.asciz "(]IH"
-	.align	4, 0x00
-Str_IH5:	.asciz "\xBE^IH5"
-.incbin_range "baserom/kn7000_program.rom", 0x1FA3FE, 0x1FA400
-Str_k_IH6:	.asciz "k]IH6"
-.incbin_range "baserom/kn7000_program.rom", 0x1FA406, 0x1FA428
-Str_IH7:	.asciz "\xB7]IH7"
-.incbin_range "baserom/kn7000_program.rom", 0x1FA42E, 0x1FA430
-Str_IH_2:	.asciz "\xBA^IH"
-	.align	4, 0x00
-Str_IH_3:	.asciz "\xBE^IH"
-	.align	4, 0x00
-Str_IH_4:	.asciz "\xBE^IH"
-	.align	4, 0x00
-Str_IH_5:	.asciz "\xBE^IH"
-	.align	4, 0x00
-Str_IH_6:	.asciz "\xBE^IH"
-.incbin_range "baserom/kn7000_program.rom", 0x1FA455, 0x1FA460
-Str_IH_7:	.asciz "%_IH"
-	.align	4, 0x00
-Str_bIH:	.asciz "&bIH"
-	.align	4, 0x00
-Str_bIH_2:	.asciz "&bIH"
-	.align	4, 0x00
-Str_bIH_3:	.asciz "&bIH"
-	.align	4, 0x00
-Str_bIH_4:	.asciz "&bIH"
-.incbin_range "baserom/kn7000_program.rom", 0x1FA485, 0x1FA4B0
-Str_s_IH:	.asciz "s_IH\xAC"
-.incbin_range "baserom/kn7000_program.rom", 0x1FA4B6, 0x1FA4C8
-Str_aIH:	.asciz "\xC7aIH"
-.incbin_range "baserom/kn7000_program.rom", 0x1FA4CD, 0x1FA4D4
+.incbin_range "baserom/kn7000_program.rom", 0x1FA2D4, 0x1FA354
+Str_empty_1283:	.asciz "@"
+.incbin_range "baserom/kn7000_program.rom", 0x1FA356, 0x1FA3D4
+data_485FA3D4:
+.incbin_range "baserom/kn7000_program.rom", 0x1FA3D4, 0x1FA454
+data_485FA454:
+.incbin_range "baserom/kn7000_program.rom", 0x1FA454, 0x1FA4D4
 Field_AcRvariScreen_normal:	.asciz "normal"
 Field_AcRvariScreen_custom:	.asciz "custom"
 Field_AcRvariScreen_memory:	.asciz "memory"
@@ -22637,7 +20833,7 @@ Str_TT_SEORGAN:	.asciz "TT_SEORGAN"
 Str_P_20:	.asciz "P\xB0"
 .incbin_range "baserom/kn7000_program.rom", 0x1FDCCF, 0x1FDCE4
 Str_d_17:	.asciz "%d:"
-Str_empty_1292:	.asciz "             "
+Str_empty_1282:	.asciz "             "
 	.align	4, 0xFF
 data_485FDCF8:
 .incbin_range "baserom/kn7000_program.rom", 0x1FDCF8, 0x1FDD08
@@ -22667,8 +20863,8 @@ Str_PART_13_4:	.asciz "PART 13"
 Str_PART_14_4:	.asciz "PART 14"
 Str_PART_15_4:	.asciz "PART 15"
 Str_PART_16_4:	.asciz "PART 16"
-Str_RIGHT_1_3:	.asciz "RIGHT 1"
-Str_RIGHT_2_3:	.asciz "RIGHT 2"
+Str_RIGHT_1:	.asciz "RIGHT 1"
+Str_RIGHT_2:	.asciz "RIGHT 2"
 Str_LEFT_12:	.asciz "LEFT"
 Str_ACCOMP_1:	.asciz "ACCOMP 1"
 Str_ACCOMP_2:	.asciz "ACCOMP 2"
@@ -22677,15 +20873,15 @@ Str_ACCOMP_4:	.asciz "ACCOMP 4"
 Str_ACCOMP_5:	.asciz "ACCOMP 5"
 Str_BASS_9:	.asciz "BASS"
 Str_DRUM_1_2:	.asciz "DRUM 1"
-Str_DRUM_2_2:	.asciz "DRUM 2"
+Str_DRUM_2_3:	.asciz "DRUM 2"
 Str_CHORD_11:	.asciz "CHORD"
 Str_R_BASS_2:	.asciz "R.BASS"
+Str_PADS_16:	.asciz "PADS"
 Str_PADS_15:	.asciz "PADS"
-Str_PADS_14:	.asciz "PADS"
 Str_BASS_PEDAL_2:	.asciz "BASS PEDAL"
 Str_CHORDFINDER:	.asciz "CHORDFINDER"
 Str_MICROPHONE:	.asciz "MICROPHONE"
-Str_APC_6:	.asciz "APC"
+Str_APC_7:	.asciz "APC"
 Str_CONTROL_9:	.asciz "CONTROL"
 	.align	4, 0xFF
 
@@ -22706,8 +20902,8 @@ ptrs_485FDE70:
 	.long	Str_PART_14_4
 	.long	Str_PART_15_4
 	.long	Str_PART_16_4
-	.long	Str_RIGHT_1_3
-	.long	Str_RIGHT_2_3
+	.long	Str_RIGHT_1
+	.long	Str_RIGHT_2
 	.long	Str_LEFT_12
 	.long	Str_ACCOMP_1
 	.long	Str_ACCOMP_2
@@ -22716,32 +20912,32 @@ ptrs_485FDE70:
 	.long	Str_ACCOMP_5
 	.long	Str_BASS_9
 	.long	Str_DRUM_1_2
-	.long	Str_DRUM_2_2
+	.long	Str_DRUM_2_3
 	.long	Str_CHORD_11
 	.long	Str_R_BASS_2
+	.long	Str_PADS_16
 	.long	Str_PADS_15
-	.long	Str_PADS_14
 	.long	Str_BASS_PEDAL_2
 	.long	Str_CHORDFINDER
 	.long	Str_MICROPHONE
-	.long	Str_APC_6
+	.long	Str_APC_7
 	.long	Str_CONTROL_9
 
-Str_empty_1291:	.asciz "     "
+Str_empty_1320:	.asciz "     "
 .incbin_range "baserom/kn7000_program.rom", 0x1FDF06, 0x1FDF12
-Str_empty_1290:	.asciz "  \x95  "
+Str_empty_1319:	.asciz "  \x95  "
 .incbin_range "baserom/kn7000_program.rom", 0x1FDF18, 0x1FDF24
-Str_empty_1289:	.asciz "  \x95  "
+Str_empty_1318:	.asciz "  \x95  "
 .incbin_range "baserom/kn7000_program.rom", 0x1FDF2A, 0x1FDF36
-Str_empty_1288:	.asciz "  \x95  "
+Str_empty_1306:	.asciz "  \x95  "
 .incbin_range "baserom/kn7000_program.rom", 0x1FDF3C, 0x1FDF48
-Str_empty_1287:	.asciz "  \x95  "
+Str_empty_1300:	.asciz "  \x95  "
 .incbin_range "baserom/kn7000_program.rom", 0x1FDF4E, 0x1FDF5A
-Str_empty_1286:	.asciz "     "
+Str_empty_1299:	.asciz "     "
 .incbin_range "baserom/kn7000_program.rom", 0x1FDF60, 0x1FDF6C
-Str_empty_1285:	.asciz "  \x95  "
+Str_empty_1297:	.asciz "  \x95  "
 .incbin_range "baserom/kn7000_program.rom", 0x1FDF72, 0x1FDF7E
-Str_empty_1284:	.asciz "     "
+Str_empty_1296:	.asciz "     "
 .incbin_range "baserom/kn7000_program.rom", 0x1FDF84, 0x1FDF90
 data_485FDF90:
 .incbin_range "baserom/kn7000_program.rom", 0x1FDF90, 0x1FDF96
@@ -22751,9 +20947,9 @@ data_485FDFA2:
 .incbin_range "baserom/kn7000_program.rom", 0x1FDFA2, 0x1FDFA8
 Str_BASS2:	.asciz "BASS2"
 .incbin_range "baserom/kn7000_program.rom", 0x1FDFAE, 0x1FDFB4
-Str_empty_1283:	.asciz "     "
+Str_empty_1295:	.asciz "     "
 .incbin_range "baserom/kn7000_program.rom", 0x1FDFBA, 0x1FDFC6
-Str_empty_1282:	.asciz "     "
+Str_empty_1293:	.asciz "     "
 .incbin_range "baserom/kn7000_program.rom", 0x1FDFCC, 0x1FDFD8
 Str_empty_1281:	.asciz "  \x95  "
 .incbin_range "baserom/kn7000_program.rom", 0x1FDFDE, 0x1FDFEA
@@ -22821,18 +21017,18 @@ Str_empty_1258:	.asciz "     "
 .incbin_range "baserom/kn7000_program.rom", 0x1FE1C4, 0x1FE1D0
 
 ptrs_485FE1D0:
-	.long	Str_empty_1291
-	.long	Str_empty_1290
-	.long	Str_empty_1289
-	.long	Str_empty_1288
-	.long	Str_empty_1287
-	.long	Str_empty_1286
-	.long	Str_empty_1285
-	.long	Str_empty_1284
+	.long	Str_empty_1320
+	.long	Str_empty_1319
+	.long	Str_empty_1318
+	.long	Str_empty_1306
+	.long	Str_empty_1300
+	.long	Str_empty_1299
+	.long	Str_empty_1297
+	.long	Str_empty_1296
 	.long	data_485FDF90
 	.long	data_485FDFA2
-	.long	Str_empty_1283
-	.long	Str_empty_1282
+	.long	Str_empty_1295
+	.long	Str_empty_1293
 	.long	Str_empty_1281
 	.long	Str_empty_1280
 	.long	Str_empty_1279
@@ -22960,39 +21156,7 @@ data_48601D1C:
 Str_00_1:	.asciz "()*+,--//00.1\xFF\xFF\xB0"
 .incbin_range "baserom/kn7000_program.rom", 0x201D3A, 0x201DB8
 data_48601DB8:
-.incbin_range "baserom/kn7000_program.rom", 0x201DB8, 0x201DD4
-Str_R_IH:	.asciz "R\xA8IH"
-	.align	4, 0x00
-Str_R_IH_2:	.asciz "R\xA8IH"
-	.align	4, 0x00
-Str_R_IH_3:	.asciz "R\xA8IH"
-	.align	4, 0x00
-Str_R_IH_4:	.asciz "R\xA8IH"
-	.align	4, 0x00
-Str_R_IH_5:	.asciz "R\xA8IH"
-.incbin_range "baserom/kn7000_program.rom", 0x201DF9, 0x201E0C
-Str_R_IH_6:	.asciz "R\xA8IH"
-	.align	4, 0x00
-Str_R_IH_7:	.asciz "R\xA8IH"
-	.align	4, 0x00
-Str_R_IH_8:	.asciz "R\xA8IH"
-	.align	4, 0x00
-Str_R_IH_9:	.asciz "R\xA8IH"
-.incbin_range "baserom/kn7000_program.rom", 0x201E29, 0x201E3C
-Str_q_IH1:	.asciz "q\xA6IH1"
-.incbin_range "baserom/kn7000_program.rom", 0x201E42, 0x201E74
-Str_R_IH_10:	.asciz "R\xA8IH"
-	.align	4, 0x00
-Str_R_IH_11:	.asciz "R\xA8IH"
-	.align	4, 0x00
-Str_R_IH_12:	.asciz "R\xA8IH:"
-.incbin_range "baserom/kn7000_program.rom", 0x201E8A, 0x201E8C
-Str_I_IH:	.asciz "I\xA6IH;"
-.incbin_range "baserom/kn7000_program.rom", 0x201E92, 0x201E9C
-Str_F_IH:	.asciz "F\xA8IH="
-.incbin_range "baserom/kn7000_program.rom", 0x201EA2, 0x201EAC
-Str_J_IH:	.asciz "J\xA8IH?"
-.incbin_range "baserom/kn7000_program.rom", 0x201EB2, 0x201EB8
+.incbin_range "baserom/kn7000_program.rom", 0x201DB8, 0x201EB8
 Field_AcFavorite_end:	.asciz ""
 	.align	4, 0xFF
 
@@ -23451,113 +21615,17 @@ Str_VIDEO_OUT_SETTNG:	.asciz "VIDEO OUT SETTNG"
 Str_ORGAN_STYLIST_3:	.asciz "ORGAN STYLIST"
 .incbin_range "baserom/kn7000_program.rom", 0x203756, 0x203758
 data_48603758:
-.incbin_range "baserom/kn7000_program.rom", 0x203758, 0x203848
-Str_B1_H:	.asciz "B1`H\xCF"
-.incbin_range "baserom/kn7000_program.rom", 0x20384E, 0x203878
-Str_P1_H:	.asciz "P1`H\x0D"
-.incbin_range "baserom/kn7000_program.rom", 0x20387E, 0x203890
-Str_Z1_H:	.asciz "Z1`H\x9B"
-.incbin_range "baserom/kn7000_program.rom", 0x203896, 0x2038A8
-Str_n1_H:	.asciz "n1`H\xD2"
-.incbin_range "baserom/kn7000_program.rom", 0x2038AE, 0x2039F8
-Str_W2_Hh:	.asciz "W2`Hh"
-.incbin_range "baserom/kn7000_program.rom", 0x2039FE, 0x203A28
-Str_y2_H:	.asciz "y2`H\xBA"
-.incbin_range "baserom/kn7000_program.rom", 0x203A2E, 0x203A58
-Str_2_Hi:	.asciz "\x9E2`Hi"
-.incbin_range "baserom/kn7000_program.rom", 0x203A5E, 0x203B30
-Str_E3_H:	.asciz "E3`H\xBF"
-.incbin_range "baserom/kn7000_program.rom", 0x203B36, 0x203B48
-Str_V3_H:	.asciz "V3`H\xE8"
-.incbin_range "baserom/kn7000_program.rom", 0x203B4E, 0x203B60
-Str_f3_H:	.asciz "f3`H\x95"
-.incbin_range "baserom/kn7000_program.rom", 0x203B66, 0x203B78
-Str_p3_H:	.asciz "p3`H,"
-.incbin_range "baserom/kn7000_program.rom", 0x203B7E, 0x203B90
-Str_u3_H:	.asciz "u3`H-"
-.incbin_range "baserom/kn7000_program.rom", 0x203B96, 0x203CC8
-Str_D4_H:	.asciz "D4`H\xC5"
-.incbin_range "baserom/kn7000_program.rom", 0x203CCE, 0x203CE0
-Str_N4_H:	.asciz "N4`H\xA7"
-.incbin_range "baserom/kn7000_program.rom", 0x203CE6, 0x203CF8
-Str_Z4_H:	.asciz "Z4`H\xC6"
-.incbin_range "baserom/kn7000_program.rom", 0x203CFE, 0x203D10
-Str_f4_H:	.asciz "f4`H\xB2"
-.incbin_range "baserom/kn7000_program.rom", 0x203D16, 0x203D28
-Str_v4_HM:	.asciz "v4`HM"
-.incbin_range "baserom/kn7000_program.rom", 0x203D2E, 0x203D40
-Str_4_HQ:	.asciz "\x844`HQ"
-.incbin_range "baserom/kn7000_program.rom", 0x203D46, 0x203D58
-Str_4_HR:	.asciz "\x924`HR"
-.incbin_range "baserom/kn7000_program.rom", 0x203D5E, 0x203D88
-Str_4_HS:	.asciz "\xB14`HS"
-.incbin_range "baserom/kn7000_program.rom", 0x203D8E, 0x203DA0
-Str_4_HT:	.asciz "\xC64`HT"
-.incbin_range "baserom/kn7000_program.rom", 0x203DA6, 0x203E78
-Str_E5_H6:	.asciz "E5`H6"
-.incbin_range "baserom/kn7000_program.rom", 0x203E7E, 0x203E90
-Str_Q5_H9:	.asciz "Q5`H9"
-.incbin_range "baserom/kn7000_program.rom", 0x203E96, 0x203EA8
-Str_5_H:	.asciz "^5`H="
-.incbin_range "baserom/kn7000_program.rom", 0x203EAE, 0x203EC0
-Str_g5_H7:	.asciz "g5`H7"
-.incbin_range "baserom/kn7000_program.rom", 0x203EC6, 0x203ED8
-Str_s5_H:	.asciz "s5`H?"
-.incbin_range "baserom/kn7000_program.rom", 0x203EDE, 0x203F38
-Str_5_Hn:	.asciz "\x9E5`Hn"
-.incbin_range "baserom/kn7000_program.rom", 0x203F3E, 0x203F68
-Str_5_HC:	.asciz "\xBD5`HC"
-.incbin_range "baserom/kn7000_program.rom", 0x203F6E, 0x203F80
-Str_5_HE:	.asciz "\xC75`HE"
-.incbin_range "baserom/kn7000_program.rom", 0x203F86, 0x203F98
-Str_5_HG:	.asciz "\xD35`HG"
-.incbin_range "baserom/kn7000_program.rom", 0x203F9E, 0x203FB0
-Str_5_HH:	.asciz "\xE05`HH"
-.incbin_range "baserom/kn7000_program.rom", 0x203FB6, 0x203FC8
-Str_5_HI:	.asciz "\xEE5`HI"
-.incbin_range "baserom/kn7000_program.rom", 0x203FCE, 0x203FE0
-Str_5_HJ:	.asciz "\xFD5`HJ"
-.incbin_range "baserom/kn7000_program.rom", 0x203FE6, 0x204058
-Str_E6_HB:	.asciz "E6`HB"
-.incbin_range "baserom/kn7000_program.rom", 0x20405E, 0x204070
-Str_S6_H:	.asciz "S6`H\xD7"
-.incbin_range "baserom/kn7000_program.rom", 0x204076, 0x204088
-Str_h6_H:	.asciz "h6`H\xD6"
-.incbin_range "baserom/kn7000_program.rom", 0x20408E, 0x2040A0
-Str_x6_H:	.asciz "x6`H\xE6"
-.incbin_range "baserom/kn7000_program.rom", 0x2040A6, 0x2041D8
-Str_H7_H:	.asciz "H7`H\xD5"
-.incbin_range "baserom/kn7000_program.rom", 0x2041DE, 0x204208
+.incbin_range "baserom/kn7000_program.rom", 0x203758, 0x204208
 Str_CURRENT_SOUND_2:	.asciz "CURRENT SOUND"
 .incbin_range "baserom/kn7000_program.rom", 0x204216, 0x204220
 data_48604220:
 .incbin_range "baserom/kn7000_program.rom", 0x204220, 0x204298
 data_48604298:
-.incbin_range "baserom/kn7000_program.rom", 0x204298, 0x2042A0
-Str_B_H:	.asciz "\x80B`H"
-	.space	7, 0x00
-Str_B_H_2:	.asciz "\x8FB`H"
-	.space	7, 0x00
-Str_B_H_3:	.asciz "\x90B`H"
-	.space	7, 0x00
-Str_B_H_4:	.asciz "\x91B`H"
-	.space	7, 0x00
-Str_B_H_5:	.asciz "\x92B`H"
-	.space	7, 0x00
-Str_B_H_6:	.asciz "\x93B`H"
-	.space	7, 0x00
-Str_B_H_7:	.asciz "\x94B`H"
-	.space	7, 0x00
+.incbin_range "baserom/kn7000_program.rom", 0x204298, 0x2042F4
 Str_B_HCURRENT_STYLE:	.asciz "\x95B`HCURRENT STYLE"
 .incbin_range "baserom/kn7000_program.rom", 0x204306, 0x204310
 data_48604310:
-.incbin_range "baserom/kn7000_program.rom", 0x204310, 0x204318
-Str_B_H_8:	.asciz "\xF8B`H"
-.incbin_range "baserom/kn7000_program.rom", 0x20431D, 0x204348
-Str_C_H:	.asciz "\x09C`H"
-	.space	7, 0x00
-Str_C_H_2:	.asciz "\nC`H"
-.incbin_range "baserom/kn7000_program.rom", 0x204359, 0x204385
+.incbin_range "baserom/kn7000_program.rom", 0x204310, 0x204385
 Str_SOUND_PART_SETTING_2:	.asciz "SOUND PART SETTING  "
 Str_MIXER_18:	.asciz "MIXER               "
 Str_TECHNI_CHORD_6:	.asciz "TECHNI-CHORD        "
@@ -23569,9 +21637,7 @@ Str_MONITOR_SETTING_4:	.asciz "MONITOR SETTING     "
 Str_APC_REVERB_SETTING_4:	.asciz "APC REVERB SETTING  "
 .incbin_range "baserom/kn7000_program.rom", 0x204442, 0x204444
 data_48604444:
-.incbin_range "baserom/kn7000_program.rom", 0x204444, 0x2044B8
-Str_D_H:	.asciz "-D`H"
-	.space	7, 0x00
+.incbin_range "baserom/kn7000_program.rom", 0x204444, 0x2044C4
 Str_BD_HREVERB_EFFECT_MENU:	.asciz "BD`HREVERB & EFFECT MENU"
 Str_SOUND_DSP_19:	.asciz "SOUND DSP           "
 Str_MULTI_DSP_2:	.asciz "MULTI DSP           "
@@ -23583,9 +21649,7 @@ Str_SOUND_LOAD_OPTION_8:	.asciz "SOUND LOAD OPTION   "
 Str_ALLOCATION_4:	.asciz "ALLOCATION          "
 .incbin_range "baserom/kn7000_program.rom", 0x204585, 0x204588
 data_48604588:
-.incbin_range "baserom/kn7000_program.rom", 0x204588, 0x2045F0
-Str_pE_H:	.asciz "pE`H"
-	.space	7, 0x00
+.incbin_range "baserom/kn7000_program.rom", 0x204588, 0x2045FC
 Str_E_HSOUND_EDIT_MENU:	.asciz "\x85E`HSOUND EDIT MENU     "
 	.space	7, 0x00
 data_4860461C:
@@ -23620,23 +21684,7 @@ Str_TRANSPOSE_8:	.asciz "TRANSPOSE           "
 Str_ADVANCE_DELAY_4:	.asciz "ADVANCE/DELAY       "
 .incbin_range "baserom/kn7000_program.rom", 0x2048DD, 0x2048E8
 data_486048E8:
-.incbin_range "baserom/kn7000_program.rom", 0x2048E8, 0x204A40
-Str_H_H_33:	.asciz "\xC8H`H"
-	.space	7, 0x00
-Str_H_H_34:	.asciz "\xDDH`H"
-	.space	7, 0x00
-Str_H_H_35:	.asciz "\xDEH`H"
-	.space	7, 0x00
-Str_H_H_36:	.asciz "\xDFH`H"
-	.space	7, 0x00
-Str_H_H_37:	.asciz "\xE0H`H"
-	.space	7, 0x00
-Str_H_H_38:	.asciz "\xE1H`H"
-	.space	7, 0x00
-Str_H_H_39:	.asciz "\xE2H`H"
-	.space	7, 0x00
-Str_H_H_40:	.asciz "\xE3H`H"
-	.space	7, 0x00
+.incbin_range "baserom/kn7000_program.rom", 0x2048E8, 0x204AA0
 Str_H_HCOMPOSER_MENU:	.asciz "\xE4H`HCOMPOSER MENU       "
 Str_EASY_COMPOSER_4:	.asciz "EASY COMPOSER       "
 Str_PATTERN_COPY_4:	.asciz "PATTERN COPY        "
@@ -23645,26 +21693,14 @@ Str_SEQ_TO_COMPOSER_COPY_4:	.asciz "SEQ TO COMPOSER COPY"
 Str_LOAD_SINGLE_COMPOSER_4:	.asciz "LOAD SINGLE COMPOSER"
 	.align	4, 0x00
 data_48604B24:
-.incbin_range "baserom/kn7000_program.rom", 0x204B24, 0x204B68
-Str_K_H:	.asciz "\x0DK`H"
-	.space	7, 0x00
-Str_K_H_2:	.asciz "\"K`H"
-	.space	7, 0x00
+.incbin_range "baserom/kn7000_program.rom", 0x204B24, 0x204B80
 Str_K_HPADS_MENU:	.asciz "#K`HPADS MENU           "
 Str_COMPILE_SET_3:	.asciz "COMPILE SET         "
 Str_PHRASE_COPY_4:	.asciz "PHRASE COPY         "
 Str_SEQ_TO_PAD_COPY_4:	.asciz "SEQ TO PAD COPY     "
 	.space	4, 0x00
 data_48604BDC:
-.incbin_range "baserom/kn7000_program.rom", 0x204BDC, 0x204C08
-Str_K_H_3:	.asciz "\xC3K`H"
-	.space	7, 0x00
-Str_K_H_4:	.asciz "\xD8K`H"
-	.space	7, 0x00
-Str_K_H_5:	.asciz "\xD9K`H"
-	.space	7, 0x00
-Str_K_H_6:	.asciz "\xDAK`H"
-	.space	7, 0x00
+.incbin_range "baserom/kn7000_program.rom", 0x204BDC, 0x204C38
 Str_K_HDISK_MENU:	.asciz "\xDBK`HDISK MENU           "
 Str_LOAD_25:	.asciz "LOAD                "
 Str_SAVE_TECHNICS_FORMAT_2:	.asciz "SAVE TECHNICS FORMAT"
@@ -23676,9 +21712,7 @@ Str_DISK_PREFERENCES_3:	.asciz "DISK PREFERENCES    "
 Str_CUSTOM_STYLE_LD_SV:	.asciz "CUSTOM STYLE LD/SV  "
 .incbin_range "baserom/kn7000_program.rom", 0x204CF9, 0x204CFC
 data_48604CFC:
-.incbin_range "baserom/kn7000_program.rom", 0x204CFC, 0x204D64
-Str_L_H:	.asciz "\xE4L`H"
-	.space	7, 0x00
+.incbin_range "baserom/kn7000_program.rom", 0x204CFC, 0x204D70
 Str_L_HSD_MENU:	.asciz "\xF9L`HSD MENU             "
 Str_SD_LOAD_3:	.asciz "SD LOAD             "
 Str_SD_SAVE_TECHNICS_FMT:	.asciz "SD SAVE TECHNICS FMT"
@@ -23692,9 +21726,7 @@ Str_SD_FAVORITE_SONGS_2:	.asciz "SD FAVORITE SONGS   "
 Str_SD_CUSTOMSTYLE_LD_SV:	.asciz "SD CUSTOMSTYLE LD/SV"
 	.align	4, 0x00
 data_48604E5C:
-.incbin_range "baserom/kn7000_program.rom", 0x204E5C, 0x204EDC
-Str_FN_H:	.asciz "FN`H"
-	.space	7, 0x00
+.incbin_range "baserom/kn7000_program.rom", 0x204E5C, 0x204EE8
 Str_N_HCONTROL_MENU:	.asciz "[N`HCONTROL MENU        "
 Str_INITIAL_7:	.asciz "INITIAL             "
 Str_OVERALL_TOUCH_SENS:	.asciz "OVERALL TOUCH SENS  "
@@ -23704,9 +21736,7 @@ Str_PANEL_MEMORY_MODE_4:	.asciz "PANEL MEMORY MODE   "
 Str_FADE_IN_OUT_SETTING_4:	.asciz "FADE IN/OUT SETTING "
 	.align	4, 0x00
 data_48604F80:
-.incbin_range "baserom/kn7000_program.rom", 0x204F80, 0x204FD0
-Str_jO_H:	.asciz "jO`H"
-.incbin_range "baserom/kn7000_program.rom", 0x204FD5, 0x204FF5
+.incbin_range "baserom/kn7000_program.rom", 0x204F80, 0x204FF5
 Str_MIDI_PART_SETTING_2:	.asciz "MIDI PART SETTING   "
 Str_CONTROL_MESSAGES_4:	.asciz "CONTROL MESSAGES    "
 Str_REALTIME_MESSAGES_4:	.asciz "REALTIME MESSAGES   "
@@ -23719,9 +21749,7 @@ Str_PANEL_MEMORY_OUTPUT_4:	.asciz "PANEL MEMORY OUTPUT "
 Str_COMPUTER_CONNECTION_4:	.asciz "COMPUTER CONNECTION "
 	.align	4, 0x00
 data_486050C8:
-.incbin_range "baserom/kn7000_program.rom", 0x2050C8, 0x205148
-Str_P_H:	.asciz "\xB2P`H"
-	.space	7, 0x00
+.incbin_range "baserom/kn7000_program.rom", 0x2050C8, 0x205154
 Str_P_HCUSTOMIZE_MENU:	.asciz "\xC7P`HCUSTOMIZE MENU      "
 Str_HOME_PAGE_SETTING_5:	.asciz "HOME PAGE SETTING   "
 Str_DISPLAY_TIME_OUT_5:	.asciz "DISPLAY TIME OUT    "
@@ -23743,51 +21771,17 @@ Str_ALPHABETICAL_LIST_4:	.asciz "ALPHABETICAL LIST   "
 Str_CUSTOM_STYLIST_4:	.asciz "CUSTOM STYLIST      "
 .incbin_range "baserom/kn7000_program.rom", 0x20532E, 0x205334
 data_48605334:
-.incbin_range "baserom/kn7000_program.rom", 0x205334, 0x205384
-Str_S_H:	.asciz ".S`H"
-	.space	7, 0x00
-Str_S_H_2:	.asciz "/S`H"
-	.space	7, 0x00
+.incbin_range "baserom/kn7000_program.rom", 0x205334, 0x20539C
 Str_0S_HVOCALIST_WORKSTATION:	.asciz "0S`HVOCALIST WORKSTATION"
 Str_CHORD_FINDER_6:	.asciz "CHORD FINDER        "
 .incbin_range "baserom/kn7000_program.rom", 0x2053CA, 0x2053D4
 data_486053D4:
-.incbin_range "baserom/kn7000_program.rom", 0x2053D4, 0x2053E8
-Str_S_H_3:	.asciz "\xB5S`H"
-	.space	7, 0x00
-Str_S_H_4:	.asciz "\xCAS`H"
-	.space	7, 0x00
-Str_S_H_5:	.asciz "\xCBS`H"
-	.space	7, 0x00
-Str_S_H_6:	.asciz "\xCCS`H"
-	.space	7, 0x00
-Str_S_H_7:	.asciz "\xCDS`H"
-	.space	7, 0x00
-Str_S_H_8:	.asciz "\xCES`H"
-	.space	7, 0x00
-Str_S_H_9:	.asciz "\xCFS`H"
-	.space	7, 0x00
-Str_S_H_10:	.asciz "\xD0S`H"
-	.space	7, 0x00
+.incbin_range "baserom/kn7000_program.rom", 0x2053D4, 0x205448
 Str_S_HNX_SOUND_ON:	.asciz "\xD1S`HNX SOUND ON         "
 Str_GM_LEVEL2_ON_2:	.asciz "GM LEVEL2 ON        "
 	.space	6, 0x00
 data_4860547C:
-.incbin_range "baserom/kn7000_program.rom", 0x20547C, 0x205484
-Str_LT_H:	.asciz "LT`H\x09"
-.incbin_range "baserom/kn7000_program.rom", 0x20548A, 0x205490
-Str_aT_H:	.asciz "aT`H"
-	.space	7, 0x00
-Str_vT_H:	.asciz "vT`H"
-	.space	7, 0x00
-Str_wT_H:	.asciz "wT`H"
-	.space	7, 0x00
-Str_xT_H:	.asciz "xT`H"
-	.space	7, 0x00
-Str_yT_H:	.asciz "yT`H"
-	.space	7, 0x00
-Str_zT_H:	.asciz "zT`H"
-	.space	7, 0x00
+.incbin_range "baserom/kn7000_program.rom", 0x20547C, 0x2054D8
 Str_T_HNO_OPERATION:	.asciz "{T`HNO OPERATION        "
 Str_PANIC_2:	.asciz "PANIC               "
 Str_MUTE_KEYS:	.asciz "MUTE KEYS           "
@@ -23903,11 +21897,11 @@ ptrs_486059D4:
 data_486059EC:
 .incbin_range "baserom/kn7000_program.rom", 0x2059EC, 0x2059F0
 
-Str_empty_1253:	.asciz "|"
+Str_empty_1243:	.asciz "|"
 	.align	4, 0xFF
 data_486059F4:
 .incbin_range "baserom/kn7000_program.rom", 0x2059F4, 0x2059F8
-Str_empty_1252:	.asciz "|"
+Str_empty_1242:	.asciz "|"
 	.align	4, 0xFF
 Str_Press_and_hold_SET_and_then_press_one_of_8:	.asciz "Press and hold SET, and then press one of the buttons to the left or right of the screen in which you want to set your selection. The current item will be replaced by the item you have selected."
 Str_Dr_cken_und_halten_Sie_SET_dann_bet_tige:	.asciz "Dr\xFCcken und halten Sie SET, dann bet\xE4tigen Sie eine Taste links oder rechts am Display, der Sie Ihre Auswahl zuordnen m\xF6chten. Die bislang zugeordnete Funktion wird durch Ihre Auswahl ersetzt."
@@ -23927,72 +21921,28 @@ ptrs_48605E5C:
 	.long	Str_Italian_6
 	.long	Str_Keep_holding_the_set_button_and_push_a_l
 
-Str_empty_1251:	.asciz "@"
-.incbin_range "baserom/kn7000_program.rom", 0x205E7A, 0x205EB4
-Str_u_IHB:	.asciz "u\xCFIHB"
-.incbin_range "baserom/kn7000_program.rom", 0x205EBA, 0x205EE4
-Str_Q_IH:	.asciz "Q\xD0IH"
-.incbin_range "baserom/kn7000_program.rom", 0x205EE9, 0x205EF8
+Str_empty_1241:	.asciz "@"
+.incbin_range "baserom/kn7000_program.rom", 0x205E7A, 0x205EF8
 data_48605EF8:
-.incbin_range "baserom/kn7000_program.rom", 0x205EF8, 0x205F5C
-Str_V_IH:	.asciz "V\xD4IH"
-.incbin_range "baserom/kn7000_program.rom", 0x205F61, 0x205F78
+.incbin_range "baserom/kn7000_program.rom", 0x205EF8, 0x205F78
 data_48605F78:
-.incbin_range "baserom/kn7000_program.rom", 0x205F78, 0x205FA4
-Str_b_IH6:	.asciz "b\xD5IH6"
-.incbin_range "baserom/kn7000_program.rom", 0x205FAA, 0x205FB4
-Str_m_IH:	.asciz "m\xD5IH"
-	.align	4, 0x00
-Str_q_IH:	.asciz "q\xD5IH"
-.incbin_range "baserom/kn7000_program.rom", 0x205FC1, 0x205FDC
-Str_i_IH:	.asciz "i\xD5IH"
-.incbin_range "baserom/kn7000_program.rom", 0x205FE1, 0x205FF8
+.incbin_range "baserom/kn7000_program.rom", 0x205F78, 0x205FF8
 data_48605FF8:
-.incbin_range "baserom/kn7000_program.rom", 0x205FF8, 0x206074
-Str_a_IH:	.asciz "a\xD6IH"
-.incbin_range "baserom/kn7000_program.rom", 0x206079, 0x20613C
-Str_M_IH:	.asciz "M\xD9IH"
-.incbin_range "baserom/kn7000_program.rom", 0x206141, 0x20614C
-Str_Q_IH_2:	.asciz "Q\xD9IH"
-.incbin_range "baserom/kn7000_program.rom", 0x206151, 0x206178
+.incbin_range "baserom/kn7000_program.rom", 0x205FF8, 0x206078
+data_48606078:
+.incbin_range "baserom/kn7000_program.rom", 0x206078, 0x206178
 data_48606178:
-.incbin_range "baserom/kn7000_program.rom", 0x206178, 0x2061A4
-Str_D_IH:	.asciz "D\xDBIH"
-.incbin_range "baserom/kn7000_program.rom", 0x2061A9, 0x20623C
-Str_S_IH_2:	.asciz "S\xDCIH"
-.incbin_range "baserom/kn7000_program.rom", 0x206241, 0x20624C
-Str_W_IH:	.asciz "W\xDCIH"
-.incbin_range "baserom/kn7000_program.rom", 0x206251, 0x206278
+.incbin_range "baserom/kn7000_program.rom", 0x206178, 0x206278
 data_48606278:
-.incbin_range "baserom/kn7000_program.rom", 0x206278, 0x2062B4
-Str_Z_IH:	.asciz "Z\xDEIH"
-	.align	4, 0x00
-Str_IH_8:	.asciz "^\xDEIH"
-.incbin_range "baserom/kn7000_program.rom", 0x2062C1, 0x2062DC
-Str_P_IH:	.asciz "P\xDEIH"
-.incbin_range "baserom/kn7000_program.rom", 0x2062E1, 0x2062F8
-Str_empty_1250:	.asciz "@"
-.incbin_range "baserom/kn7000_program.rom", 0x2062FA, 0x206334
-Str_IHB:	.asciz ">\xDFIHB"
-	.align	4, 0x00
-Str_IHC:	.asciz ">\xDFIHC"
-.incbin_range "baserom/kn7000_program.rom", 0x206342, 0x20636C
-Str_V_IH_2:	.asciz "V\xDFIH"
-.incbin_range "baserom/kn7000_program.rom", 0x206371, 0x206378
+.incbin_range "baserom/kn7000_program.rom", 0x206278, 0x2062F8
+Str_empty_1240:	.asciz "@"
+.incbin_range "baserom/kn7000_program.rom", 0x2062FA, 0x206378
 data_48606378:
-.incbin_range "baserom/kn7000_program.rom", 0x206378, 0x20639C
-Str_D_IH_2:	.asciz "D\xE0IH"
-.incbin_range "baserom/kn7000_program.rom", 0x2063A1, 0x2063F8
+.incbin_range "baserom/kn7000_program.rom", 0x206378, 0x2063F8
 data_486063F8:
-.incbin_range "baserom/kn7000_program.rom", 0x2063F8, 0x20641C
-Str_k_IH:	.asciz "k\xE1IH"
-.incbin_range "baserom/kn7000_program.rom", 0x206421, 0x206474
-Str_K_IH:	.asciz "K\xE1IH"
-.incbin_range "baserom/kn7000_program.rom", 0x206479, 0x2064F4
-Str_l_IH:	.asciz "l\xE2IH"
-.incbin_range "baserom/kn7000_program.rom", 0x2064F9, 0x206524
-Str_IH_9:	.asciz "\\\xE2IH"
-.incbin_range "baserom/kn7000_program.rom", 0x206529, 0x206578
+.incbin_range "baserom/kn7000_program.rom", 0x2063F8, 0x206478
+data_48606478:
+.incbin_range "baserom/kn7000_program.rom", 0x206478, 0x206578
 data_48606578:
 .incbin_range "baserom/kn7000_program.rom", 0x206578, 0x2065F8
 Field_PsParaListBox_font:	.asciz "font"
@@ -26051,7 +24001,7 @@ Str_OUT_3:	.asciz "OUT"
 Str_IN:	.asciz "IN "
 data_4860C9C4:
 .incbin_range "baserom/kn7000_program.rom", 0x20C9C4, 0x20C9D4
-Str_empty_1249:	.asciz " "
+Str_empty_1239:	.asciz " "
 .incbin_range "baserom/kn7000_program.rom", 0x20C9D6, 0x20C9DC
 data_4860C9DC:
 .incbin_range "baserom/kn7000_program.rom", 0x20C9DC, 0x20C9F4
@@ -26128,14 +24078,14 @@ Str_MODULATION_WHEEL_VALUE:	.asciz "MODULATION WHEEL:    VALUE = "
 Str_EXPRESSION_PEDAL_VALUE:	.asciz "EXPRESSION PEDAL:    VALUE = "
 Str_ROTARY_ENCODER_VALUE:	.asciz "ROTARY ENCODER:      VALUE = "
 Str_MIC_TERMINAL_STATE:	.asciz "MIC TERMINAL:        STATE = "
-Str_empty_1248:	.asciz "                             "
+Str_empty_1253:	.asciz "                             "
 Str_FOOT_SWITCH_1_STATE:	.asciz "FOOT SWITCH 1:       STATE = "
 Str_FOOT_SWITCH_2_STATE:	.asciz "FOOT SWITCH 2:       STATE = "
 Str_FOOT_CONTROLLER_1_STATE:	.asciz "FOOT CONTROLLER 1:   STATE = "
 Str_FOOT_CONTROLLER_2_STATE:	.asciz "FOOT CONTROLLER 2:   STATE = "
 Str_FOOT_CONTROLLER_3_STATE:	.asciz "FOOT CONTROLLER 3:   STATE = "
 Str_FOOT_CONTROLLER_4_STATE:	.asciz "FOOT CONTROLLER 4:   STATE = "
-Str_empty_1247:	.asciz "                             "
+Str_empty_1252:	.asciz "                             "
 Str_KEYBOAD_NOTE_VELOCITY_AFTER_TOUCH:	.asciz "KEYBOAD: NOTE =      VELOCITY =      AFTER TOUCH ="
 	.align	4, 0xFF
 
@@ -26146,14 +24096,14 @@ ptrs_4860CFBC:
 	.long	Str_EXPRESSION_PEDAL_VALUE
 	.long	Str_ROTARY_ENCODER_VALUE
 	.long	Str_MIC_TERMINAL_STATE
-	.long	Str_empty_1248
+	.long	Str_empty_1253
 	.long	Str_FOOT_SWITCH_1_STATE
 	.long	Str_FOOT_SWITCH_2_STATE
 	.long	Str_FOOT_CONTROLLER_1_STATE
 	.long	Str_FOOT_CONTROLLER_2_STATE
 	.long	Str_FOOT_CONTROLLER_3_STATE
 	.long	Str_FOOT_CONTROLLER_4_STATE
-	.long	Str_empty_1247
+	.long	Str_empty_1252
 data_4860CFF4:
 .incbin_range "baserom/kn7000_program.rom", 0x20CFF4, 0x20CFF8
 data_4860CFF8:
@@ -26332,11 +24282,7 @@ Str_WAVE_ROM_IC1_4:	.asciz "WAVE ROM      IC1 ="
 Str_WAVE_ROM_IC3_4:	.asciz "WAVE ROM      IC3 ="
 .incbin_range "baserom/kn7000_program.rom", 0x20D73C, 0x20D744
 data_4860D744:
-.incbin_range "baserom/kn7000_program.rom", 0x20D744, 0x20D794
-Str_N_H:	.asciz "N\xD6`H,"
-.incbin_range "baserom/kn7000_program.rom", 0x20D79A, 0x20D7A0
-Str_T_H:	.asciz "T\xD6`H,"
-.incbin_range "baserom/kn7000_program.rom", 0x20D7A6, 0x20D864
+.incbin_range "baserom/kn7000_program.rom", 0x20D744, 0x20D864
 data_4860D864:
 	.space	8, 0x00
 data_4860D86C:
@@ -26360,31 +24306,13 @@ data_4860D8E4:
 data_4860D974:
 .incbin_range "baserom/kn7000_program.rom", 0x20D974, 0x20D9EC
 data_4860D9EC:
-.incbin_range "baserom/kn7000_program.rom", 0x20D9EC, 0x20DAB8
-Str_e_JH:	.asciz "e$JH\xB3"
-.incbin_range "baserom/kn7000_program.rom", 0x20DABE, 0x20DAEC
+.incbin_range "baserom/kn7000_program.rom", 0x20D9EC, 0x20DAEC
 data_4860DAEC:
 .incbin_range "baserom/kn7000_program.rom", 0x20DAEC, 0x20DB6C
 data_4860DB6C:
-.incbin_range "baserom/kn7000_program.rom", 0x20DB6C, 0x20DBA0
-Str_k4JH:	.asciz "k4JH"
-.incbin_range "baserom/kn7000_program.rom", 0x20DBA5, 0x20DBEC
+.incbin_range "baserom/kn7000_program.rom", 0x20DB6C, 0x20DBEC
 data_4860DBEC:
-.incbin_range "baserom/kn7000_program.rom", 0x20DBEC, 0x20DC08
-Str_MJH:	.asciz "\xE7MJH!"
-.incbin_range "baserom/kn7000_program.rom", 0x20DC0E, 0x20DC30
-Str_MJH_2:	.asciz "\xE7MJH"
-.incbin_range "baserom/kn7000_program.rom", 0x20DC35, 0x20DC40
-Str_MJH_3:	.asciz "\xE7MJH"
-	.align	4, 0x00
-Str_MJH_4:	.asciz "\xECMJH"
-	.align	4, 0x00
-Str_MJH_5:	.asciz "\xECMJH"
-	.align	4, 0x00
-Str_MJH_6:	.asciz "\xECMJH"
-	.align	4, 0x00
-Str_MJH_7:	.asciz "\xECMJH"
-.incbin_range "baserom/kn7000_program.rom", 0x20DC65, 0x20DC6C
+.incbin_range "baserom/kn7000_program.rom", 0x20DBEC, 0x20DC6C
 data_4860DC6C:
 .incbin_range "baserom/kn7000_program.rom", 0x20DC6C, 0x20DC90
 Field_AcDispTimeSetGridBox_fixedcol:	.asciz "fixedcol"
@@ -27050,36 +24978,12 @@ data_4860FDFC:
 data_4860FE14:
 	.space	256, 0x00
 data_4860FF14:
-.incbin_range "baserom/kn7000_program.rom", 0x20FF14, 0x20FF50
-
-Str_dJH:	.asciz "}dJH\x81"
-.incbin_range "baserom/kn7000_program.rom", 0x20FF56, 0x20FF58
-Str_dJH_2:	.asciz "\x97dJH"
-	.align	4, 0x00
-Str_dJH_3:	.asciz "\xB1dJH"
-	.align	4, 0x00
-Str_dJH_4:	.asciz "\xB1dJH"
-	.align	4, 0x00
-Str_dJH_5:	.asciz "\xB1dJH"
-	.align	4, 0x00
-Str_dJH_6:	.asciz "\xB1dJH"
-	.align	4, 0x00
-Str_dJH_7:	.asciz "\xB1dJH~"
-.incbin_range "baserom/kn7000_program.rom", 0x20FF86, 0x20FF94
+.incbin_range "baserom/kn7000_program.rom", 0x20FF14, 0x20FF94
 data_4860FF94:
 .incbin_range "baserom/kn7000_program.rom", 0x20FF94, 0x20FFB8
 data_4860FFB8:
-.incbin_range "baserom/kn7000_program.rom", 0x20FFB8, 0x210004
-Str_uJH:	.asciz "/uJH"
-	.align	4, 0x00
-Str_uJH_2:	.asciz "/uJH"
-	.align	4, 0x00
-Str_uJH_3:	.asciz "/uJH"
-	.align	4, 0x00
-Str_uJH_4:	.asciz "/uJH"
-	.align	4, 0x00
-Str_uJH_5:	.asciz "/uJH~"
-.incbin_range "baserom/kn7000_program.rom", 0x21002A, 0x210038
+.incbin_range "baserom/kn7000_program.rom", 0x20FFB8, 0x210038
+
 Field_AcFSWAssGridBox_fixedcol:	.asciz "fixedcol"
 Field_AcFSWAssGridBox_fixedrow:	.asciz "fixedrow"
 Field_AcFSWAssGridBox_func:	.asciz "func"
@@ -27604,7 +25508,7 @@ Str_OFF_158:	.asciz "OFF"
 Str_ON_120:	.asciz "ON "
 Str_3d_199:	.asciz "%3d"
 Str_3d_198:	.asciz "%3d"
-Str_empty_1246:	.asciz " "
+Str_empty_1236:	.asciz " "
 .incbin_range "baserom/kn7000_program.rom", 0x211E36, 0x211E58
 data_48611E58:
 	.space	256, 0x00
@@ -27831,19 +25735,7 @@ data_48612D8C:
 data_48612E0C:
 .incbin_range "baserom/kn7000_program.rom", 0x212E0C, 0x212E8C
 data_48612E8C:
-.incbin_range "baserom/kn7000_program.rom", 0x212E8C, 0x212ED0
-Str_F_JH:	.asciz "F\xB7JH"
-	.align	4, 0x00
-Str_F_JH_2:	.asciz "F\xB7JH"
-	.align	4, 0x00
-Str_F_JH_3:	.asciz "F\xB7JH"
-	.align	4, 0x00
-Str_F_JH_4:	.asciz "F\xB7JH"
-	.align	4, 0x00
-Str_F_JH_5:	.asciz "F\xB7JH"
-	.align	4, 0x00
-Str_F_JH_6:	.asciz "F\xB7JH~"
-.incbin_range "baserom/kn7000_program.rom", 0x212EFE, 0x212F0C
+.incbin_range "baserom/kn7000_program.rom", 0x212E8C, 0x212F0C
 data_48612F0C:
 .incbin_range "baserom/kn7000_program.rom", 0x212F0C, 0x212F74
 data_48612F74:
@@ -28213,97 +26105,19 @@ Str_0_p:	.asciz "0 p"
 data_48614BC4:
 .incbin_range "baserom/kn7000_program.rom", 0x214BC4, 0x214BF8
 data_48614BF8:
-.incbin_range "baserom/kn7000_program.rom", 0x214BF8, 0x214C6C
-Str_x_JH:	.asciz "x\xE1JH"
-	.align	4, 0x00
-Str_x_JH_2:	.asciz "x\xE1JH"
-	.align	4, 0x00
-Str_x_JHQ:	.asciz "x\xE1JHQ"
-.incbin_range "baserom/kn7000_program.rom", 0x214C82, 0x214C8C
-Str_JHS:	.asciz "%\xE0JHS"
-	.align	4, 0x00
-Str_JHT:	.asciz ".\xE0JHT"
-	.align	4, 0x00
-Str_7_JHU:	.asciz "7\xE0JHU"
-	.align	4, 0x00
-Str_JHV:	.asciz "@\xE0JHV"
-	.align	4, 0x00
-Str_I_JHW:	.asciz "I\xE0JHW"
-	.align	4, 0x00
-Str_R_JHX:	.asciz "R\xE0JHX"
-	.align	4, 0x00
-Str_JH:	.asciz "[\xE0JH"
-	.align	4, 0x00
-Str_x_JHZ:	.asciz "x\xE1JHZ"
-	.align	4, 0x00
-Str_m_JH:	.asciz "m\xE0JH"
-	.align	4, 0x00
-Str_x_JH_3:	.asciz "x\xE1JH"
-	.align	4, 0x00
-Str_x_JH_4:	.asciz "x\xE1JH"
-	.align	4, 0x00
-Str_x_JH_5:	.asciz "x\xE1JH"
-	.align	4, 0x00
-Str_x_JH_6:	.asciz "x\xE1JH"
-	.align	4, 0x00
-Str_x_JH_7:	.asciz "x\xE1JH"
-	.align	4, 0x00
-Str_x_JHa:	.asciz "x\xE1JHa"
-	.align	4, 0x00
-Str_H_JHb:	.asciz "H\xE1JHb"
-	.align	4, 0x00
-Str_P_JHc:	.asciz "P\xE1JHc"
-	.align	4, 0x00
-Str_X_JHd:	.asciz "X\xE1JHd"
-	.align	4, 0x00
-Str_JHe:	.asciz "`\xE1JHe"
-	.align	4, 0x00
-Str_h_JHf:	.asciz "h\xE1JHf"
-	.align	4, 0x00
-Str_p_JH:	.asciz "p\xE1JH"
-	.align	4, 0x00
-Str_x_JH_8:	.asciz "x\xE1JH"
-	.align	4, 0x00
-Str_x_JH_9:	.asciz "x\xE1JH"
-	.align	4, 0x00
-Str_x_JH_10:	.asciz "x\xE1JH"
-	.align	4, 0x00
-Str_x_JH_11:	.asciz "x\xE1JH"
-	.align	4, 0x00
-Str_x_JH_12:	.asciz "x\xE1JH"
-	.align	4, 0x00
-Str_x_JH_13:	.asciz "x\xE1JH"
-	.align	4, 0x00
-Str_x_JHn:	.asciz "x\xE1JHn"
-.incbin_range "baserom/kn7000_program.rom", 0x214D6A, 0x214D74
-Str_x_JH_14:	.asciz "x\xE1JH"
-	.align	4, 0x00
-Str_x_JHq:	.asciz "x\xE1JHq"
-.incbin_range "baserom/kn7000_program.rom", 0x214D82, 0x214DAC
-Str_v_JH:	.asciz "v\xE0JH"
-	.align	4, 0x00
-Str_x_JH_15:	.asciz "x\xE1JH"
-	.align	4, 0x00
-Str_x_JHy:	.asciz "x\xE1JHy"
-.incbin_range "baserom/kn7000_program.rom", 0x214DC2, 0x214DD4
-Str_x_JH_16:	.asciz "x\xE1JH|"
-.incbin_range "baserom/kn7000_program.rom", 0x214DDA, 0x214DF8
+.incbin_range "baserom/kn7000_program.rom", 0x214BF8, 0x214DF8
 data_48614DF8:
 .incbin_range "baserom/kn7000_program.rom", 0x214DF8, 0x214E38
 data_48614E38:
 .incbin_range "baserom/kn7000_program.rom", 0x214E38, 0x214E78
 data_48614E78:
-.incbin_range "baserom/kn7000_program.rom", 0x214E78, 0x214EB4
-Str_q_JH:	.asciz "q\xF3JH"
-.incbin_range "baserom/kn7000_program.rom", 0x214EB9, 0x214EE8
+.incbin_range "baserom/kn7000_program.rom", 0x214E78, 0x214EE8
 data_48614EE8:
 .incbin_range "baserom/kn7000_program.rom", 0x214EE8, 0x214F30
 data_48614F30:
 .incbin_range "baserom/kn7000_program.rom", 0x214F30, 0x214F80
 data_48614F80:
-.incbin_range "baserom/kn7000_program.rom", 0x214F80, 0x214F94
-Str_w_KH:	.asciz "w\nKH"
-	.space	7, 0x00
+.incbin_range "baserom/kn7000_program.rom", 0x214F80, 0x214FA0
 data_48614FA0:
 .incbin_range "baserom/kn7000_program.rom", 0x214FA0, 0x214FB0
 data_48614FB0:
@@ -28320,7 +26134,7 @@ data_48615084:
 .incbin_range "baserom/kn7000_program.rom", 0x215084, 0x2150CC
 data_486150CC:
 .incbin_range "baserom/kn7000_program.rom", 0x2150CC, 0x21510C
-Str_empty_1245:	.asciz "["
+Str_empty_1235:	.asciz "["
 .incbin_range "baserom/kn7000_program.rom", 0x21510E, 0x21518C
 data_4861518C:
 .incbin_range "baserom/kn7000_program.rom", 0x21518C, 0x2151D8
@@ -28338,7 +26152,7 @@ data_48615277:
 .incbin_range "baserom/kn7000_program.rom", 0x215277, 0x21527C
 data_4861527C:
 .incbin_range "baserom/kn7000_program.rom", 0x21527C, 0x21528C
-Str_empty_1244:	.asciz "\xB0{"
+Str_empty_1234:	.asciz "\xB0{"
 	.align	4, 0xFF
 Str_x_5:	.asciz "\xB0x"
 	.align	4, 0xFF
@@ -28416,7 +26230,7 @@ Str_P_1_6:	.asciz "\xF0P, 1\x1F"
 .incbin_range "baserom/kn7000_program.rom", 0x215597, 0x21559C
 data_4861559C:
 .incbin_range "baserom/kn7000_program.rom", 0x21559C, 0x2155BC
-Str_empty_1243:	.asciz " \x80"
+Str_empty_1233:	.asciz " \x80"
 .incbin_range "baserom/kn7000_program.rom", 0x2155BF, 0x2155DC
 data_486155DC:
 .incbin_range "baserom/kn7000_program.rom", 0x2155DC, 0x2155FC
@@ -28432,7 +26246,7 @@ data_4861567C:
 .incbin_range "baserom/kn7000_program.rom", 0x21567C, 0x21569C
 data_4861569C:
 .incbin_range "baserom/kn7000_program.rom", 0x21569C, 0x2156BC
-Str_empty_1242:	.asciz "_"
+Str_empty_1232:	.asciz "_"
 .incbin_range "baserom/kn7000_program.rom", 0x2156BE, 0x2156DC
 data_486156DC:
 .incbin_range "baserom/kn7000_program.rom", 0x2156DC, 0x2156FC
@@ -28440,15 +26254,15 @@ data_486156FC:
 .incbin_range "baserom/kn7000_program.rom", 0x2156FC, 0x21571C
 data_4861571C:
 .incbin_range "baserom/kn7000_program.rom", 0x21571C, 0x21573C
-Str_empty_1241:	.asciz "_"
+Str_empty_1231:	.asciz "_"
 .incbin_range "baserom/kn7000_program.rom", 0x21573E, 0x21575C
-Str_empty_1240:	.asciz "$\xB0"
+Str_empty_1230:	.asciz "$\xB0"
 .incbin_range "baserom/kn7000_program.rom", 0x21575F, 0x21577C
-Str_empty_1239:	.asciz "$\xB0"
+Str_empty_1229:	.asciz "$\xB0"
 .incbin_range "baserom/kn7000_program.rom", 0x21577F, 0x21579C
-Str_empty_1238:	.asciz "%\xB0"
+Str_empty_1228:	.asciz "%\xB0"
 .incbin_range "baserom/kn7000_program.rom", 0x21579F, 0x2157BC
-Str_empty_1237:	.asciz "_"
+Str_empty_1227:	.asciz "_"
 .incbin_range "baserom/kn7000_program.rom", 0x2157BE, 0x2157DC
 Str_4_28:	.asciz "4\xB0"
 .incbin_range "baserom/kn7000_program.rom", 0x2157DF, 0x2157FC
@@ -28456,7 +26270,7 @@ Str_4_27:	.asciz "4\xB0"
 .incbin_range "baserom/kn7000_program.rom", 0x2157FF, 0x21581C
 Str_5_20:	.asciz "5\xB0"
 .incbin_range "baserom/kn7000_program.rom", 0x21581F, 0x21583C
-Str_empty_1236:	.asciz "_"
+Str_empty_1226:	.asciz "_"
 .incbin_range "baserom/kn7000_program.rom", 0x21583E, 0x21585C
 Str_D_13:	.asciz "D\xB0"
 .incbin_range "baserom/kn7000_program.rom", 0x21585F, 0x21587C
@@ -28464,7 +26278,7 @@ Str_D_12:	.asciz "D\xB0"
 .incbin_range "baserom/kn7000_program.rom", 0x21587F, 0x21589C
 Str_E_8:	.asciz "E\xB0"
 .incbin_range "baserom/kn7000_program.rom", 0x21589F, 0x2158BC
-Str_empty_1235:	.asciz "_"
+Str_empty_1225:	.asciz "_"
 .incbin_range "baserom/kn7000_program.rom", 0x2158BE, 0x2158DC
 Str_T_7:	.asciz "T\xB0"
 .incbin_range "baserom/kn7000_program.rom", 0x2158DF, 0x2158FC
@@ -28612,17 +26426,17 @@ data_48616080:
 .incbin_range "baserom/kn7000_program.rom", 0x216080, 0x2160A0
 data_486160A0:
 .incbin_range "baserom/kn7000_program.rom", 0x2160A0, 0x2160C0
-Str_empty_1234:	.asciz "@\xB0"
+Str_empty_1224:	.asciz "@\xB0"
 .incbin_range "baserom/kn7000_program.rom", 0x2160C3, 0x2160E0
 Str_P_14:	.asciz "P\xB0"
 .incbin_range "baserom/kn7000_program.rom", 0x2160E3, 0x216100
 data_48616100:
 .incbin_range "baserom/kn7000_program.rom", 0x216100, 0x216120
-Str_empty_1233:	.asciz "@\xB0"
+Str_empty_1223:	.asciz "@\xB0"
 .incbin_range "baserom/kn7000_program.rom", 0x216123, 0x216140
 Str_P_13:	.asciz "P\xB0"
 .incbin_range "baserom/kn7000_program.rom", 0x216143, 0x216160
-Str_empty_1232:	.asciz "_"
+Str_empty_1222:	.asciz "_"
 .incbin_range "baserom/kn7000_program.rom", 0x216162, 0x216180
 Str_D_11:	.asciz "D\xB0"
 .incbin_range "baserom/kn7000_program.rom", 0x216183, 0x2161A0
@@ -28630,7 +26444,7 @@ Str_D_10:	.asciz "D\xB0"
 .incbin_range "baserom/kn7000_program.rom", 0x2161A3, 0x2161C0
 data_486161C0:
 .incbin_range "baserom/kn7000_program.rom", 0x2161C0, 0x2161E0
-Str_empty_1231:	.asciz "_"
+Str_empty_1221:	.asciz "_"
 .incbin_range "baserom/kn7000_program.rom", 0x2161E2, 0x216200
 Str_T_5:	.asciz "T\xB0"
 .incbin_range "baserom/kn7000_program.rom", 0x216203, 0x216220
@@ -28641,53 +26455,31 @@ data_48616240:
 data_4861625C:
 .incbin_range "baserom/kn7000_program.rom", 0x21625C, 0x21627C
 data_4861627C:
-.incbin_range "baserom/kn7000_program.rom", 0x21627C, 0x216284
-Str_pbaH:	.asciz "pbaH"
-.incbin_range "baserom/kn7000_program.rom", 0x216289, 0x216298
+.incbin_range "baserom/kn7000_program.rom", 0x21627C, 0x216298
 data_48616298:
-.incbin_range "baserom/kn7000_program.rom", 0x216298, 0x2162A0
-Str_baH:	.asciz "\x8CbaH"
-.incbin_range "baserom/kn7000_program.rom", 0x2162A5, 0x2162B4
+.incbin_range "baserom/kn7000_program.rom", 0x216298, 0x2162B4
 data_486162B4:
-.incbin_range "baserom/kn7000_program.rom", 0x2162B4, 0x2162BC
-Str_baH_2:	.asciz "\xA8baH"
-.incbin_range "baserom/kn7000_program.rom", 0x2162C1, 0x2162D0
+.incbin_range "baserom/kn7000_program.rom", 0x2162B4, 0x2162D0
 data_486162D0:
-.incbin_range "baserom/kn7000_program.rom", 0x2162D0, 0x2162D8
-Str_baH_3:	.asciz "\xC4baH"
-.incbin_range "baserom/kn7000_program.rom", 0x2162DD, 0x2162EC
+.incbin_range "baserom/kn7000_program.rom", 0x2162D0, 0x2162EC
 data_486162EC:
-.incbin_range "baserom/kn7000_program.rom", 0x2162EC, 0x2162F4
-Str_baH_4:	.asciz "\xE0baH"
-.incbin_range "baserom/kn7000_program.rom", 0x2162F9, 0x216308
+.incbin_range "baserom/kn7000_program.rom", 0x2162EC, 0x216308
 data_48616308:
-.incbin_range "baserom/kn7000_program.rom", 0x216308, 0x216310
-Str_baH_5:	.asciz "\xFCbaH"
-.incbin_range "baserom/kn7000_program.rom", 0x216315, 0x216328
+.incbin_range "baserom/kn7000_program.rom", 0x216308, 0x216328
 data_48616328:
 .incbin_range "baserom/kn7000_program.rom", 0x216328, 0x216348
 data_48616348:
 .incbin_range "baserom/kn7000_program.rom", 0x216348, 0x216364
 data_48616364:
-.incbin_range "baserom/kn7000_program.rom", 0x216364, 0x21636C
-Str_XcaH:	.asciz "XcaH"
-.incbin_range "baserom/kn7000_program.rom", 0x216371, 0x216388
+.incbin_range "baserom/kn7000_program.rom", 0x216364, 0x216388
 data_48616388:
-.incbin_range "baserom/kn7000_program.rom", 0x216388, 0x216390
-Str_tcaH:	.asciz "tcaH"
-.incbin_range "baserom/kn7000_program.rom", 0x216395, 0x2163A4
+.incbin_range "baserom/kn7000_program.rom", 0x216388, 0x2163A4
 data_486163A4:
-.incbin_range "baserom/kn7000_program.rom", 0x2163A4, 0x2163AC
-Str_caH:	.asciz "\x98caH"
-.incbin_range "baserom/kn7000_program.rom", 0x2163B1, 0x2163C0
+.incbin_range "baserom/kn7000_program.rom", 0x2163A4, 0x2163C0
 data_486163C0:
-.incbin_range "baserom/kn7000_program.rom", 0x2163C0, 0x2163C8
-Str_caH_2:	.asciz "\xB4caH"
-.incbin_range "baserom/kn7000_program.rom", 0x2163CD, 0x2163DC
+.incbin_range "baserom/kn7000_program.rom", 0x2163C0, 0x2163DC
 data_486163DC:
-.incbin_range "baserom/kn7000_program.rom", 0x2163DC, 0x2163E4
-Str_caH_3:	.asciz "\xD0caH"
-.incbin_range "baserom/kn7000_program.rom", 0x2163E9, 0x2163F4
+.incbin_range "baserom/kn7000_program.rom", 0x2163DC, 0x2163F4
 data_486163F4:
 .incbin_range "baserom/kn7000_program.rom", 0x2163F4, 0x21641C
 data_4861641C:
@@ -28741,9 +26533,7 @@ data_486167B4:
 data_486167DC:
 .incbin_range "baserom/kn7000_program.rom", 0x2167DC, 0x216804
 data_48616804:
-.incbin_range "baserom/kn7000_program.rom", 0x216804, 0x21680C
-Str_gaH:	.asciz "\xECgaH"
-.incbin_range "baserom/kn7000_program.rom", 0x216811, 0x21682C
+.incbin_range "baserom/kn7000_program.rom", 0x216804, 0x21682C
 data_4861682C:
 .incbin_range "baserom/kn7000_program.rom", 0x21682C, 0x216854
 data_48616854:
@@ -29103,73 +26893,15 @@ data_48618934:
 data_4861894C:
 .incbin_range "baserom/kn7000_program.rom", 0x21894C, 0x21897C
 data_4861897C:
-.incbin_range "baserom/kn7000_program.rom", 0x21897C, 0x218A30
-Str_C_LHF:	.asciz "C\xC8LHF"
-.incbin_range "baserom/kn7000_program.rom", 0x218A36, 0x218A48
-Str_C_LHI:	.asciz "C\xC8LHI"
-.incbin_range "baserom/kn7000_program.rom", 0x218A4E, 0x218A60
-Str_d_LH:	.asciz "d\xCELH"
-	.align	4, 0x00
-Str_p_LH:	.asciz "p\xD0LH"
-	.align	4, 0x00
-Str_p_LH_2:	.asciz "p\xD0LH"
-	.align	4, 0x00
-Str_p_LH_3:	.asciz "p\xD0LH"
-	.align	4, 0x00
-Str_p_LHa:	.asciz "p\xD0LHa"
-.incbin_range "baserom/kn7000_program.rom", 0x218A86, 0x218A90
-Str_p_LH_4:	.asciz "p\xD0LH"
-	.align	4, 0x00
-Str_p_LH_5:	.asciz "p\xD0LH"
-	.align	4, 0x00
-Str_p_LH_6:	.asciz "p\xD0LH"
-	.align	4, 0x00
-Str_p_LH_7:	.asciz "p\xD0LH"
-	.align	4, 0x00
-Str_p_LH_8:	.asciz "p\xD0LH"
-	.align	4, 0x00
-Str_p_LH_9:	.asciz "p\xD0LH"
-	.align	4, 0x00
-Str_p_LH_10:	.asciz "p\xD0LH"
-	.align	4, 0x00
-Str_p_LH_11:	.asciz "p\xD0LH"
-	.align	4, 0x00
-Str_p_LH_12:	.asciz "p\xD0LH"
-	.align	4, 0x00
-Str_p_LH_13:	.asciz "p\xD0LH"
-	.align	4, 0x00
-Str_p_LH_14:	.asciz "p\xD0LH"
-.incbin_range "baserom/kn7000_program.rom", 0x218AE5, 0x218AF8
-Str_s_LH:	.asciz "s\xCFLH"
-	.align	4, 0x00
-Str_p_LHq:	.asciz "p\xD0LHq"
-.incbin_range "baserom/kn7000_program.rom", 0x218B06, 0x218B38
-Str_Q_LH:	.asciz "Q\xD0LH"
-	.align	4, 0x00
-Str_p_LH_15:	.asciz "p\xD0LH"
-	.align	4, 0x00
-Str_p_LH_16:	.asciz "p\xD0LH"
-	.align	4, 0x00
-Str_p_LH_17:	.asciz "p\xD0LH"
-	.align	4, 0x00
-Str_p_LH_18:	.asciz "p\xD0LH"
-	.align	4, 0x00
-Str_p_LH_19:	.asciz "p\xD0LH"
-	.align	4, 0x00
-Str_p_LH_20:	.asciz "p\xD0LH"
-	.align	4, 0x00
-Str_p_LH_21:	.asciz "p\xD0LH"
-	.align	4, 0x00
-Str_p_LH_22:	.asciz "p\xD0LH"
-.incbin_range "baserom/kn7000_program.rom", 0x218B7D, 0x218B84
+.incbin_range "baserom/kn7000_program.rom", 0x21897C, 0x218B7C
+data_48618B7C:
+.incbin_range "baserom/kn7000_program.rom", 0x218B7C, 0x218B84
 data_48618B84:
 .incbin_range "baserom/kn7000_program.rom", 0x218B84, 0x218B9C
 data_48618B9C:
 .incbin_range "baserom/kn7000_program.rom", 0x218B9C, 0x218BCC
 data_48618BCC:
-.incbin_range "baserom/kn7000_program.rom", 0x218BCC, 0x218D60
-Str_1_LHs:	.asciz "1\xDBLHs"
-.incbin_range "baserom/kn7000_program.rom", 0x218D66, 0x218DCC
+.incbin_range "baserom/kn7000_program.rom", 0x218BCC, 0x218DCC
 data_48618DCC:
 .incbin_range "baserom/kn7000_program.rom", 0x218DCC, 0x218DD4
 data_48618DD4:
@@ -29177,13 +26909,7 @@ data_48618DD4:
 data_48618DEC:
 .incbin_range "baserom/kn7000_program.rom", 0x218DEC, 0x218E1C
 data_48618E1C:
-.incbin_range "baserom/kn7000_program.rom", 0x218E1C, 0x218ED0
-Str_LHF:	.asciz ">\xDFLHF"
-.incbin_range "baserom/kn7000_program.rom", 0x218ED6, 0x218EE8
-Str_LHI:	.asciz ">\xDFLHI"
-.incbin_range "baserom/kn7000_program.rom", 0x218EEE, 0x218F00
-Str_LH:	.asciz "\\\xE5LH"
-.incbin_range "baserom/kn7000_program.rom", 0x218F05, 0x21901C
+.incbin_range "baserom/kn7000_program.rom", 0x218E1C, 0x21901C
 data_4861901C:
 .incbin_range "baserom/kn7000_program.rom", 0x21901C, 0x219024
 data_48619024:
@@ -30232,15 +27958,15 @@ Str_OFF_146:	.asciz " OFF "
 	.align	4, 0xFF
 Str_2d_58:	.asciz " %2d  "
 	.align	4, 0xFF
-Str_empty_1230:	.asciz " --- "
+Str_empty_1220:	.asciz " --- "
 	.align	4, 0xFF
-Str_empty_1229:	.asciz " --- "
+Str_empty_1219:	.asciz " --- "
 	.align	4, 0xFF
 Str_OFF_145:	.asciz " OFF "
 	.align	4, 0xFF
 Str_ON_112:	.asciz " ON  "
 	.align	4, 0xFF
-Str_empty_1228:	.asciz "\x80 "
+Str_empty_1218:	.asciz "\x80 "
 .incbin_range "baserom/kn7000_program.rom", 0x226E3F, 0x226E80
 data_48626E80:
 .incbin_range "baserom/kn7000_program.rom", 0x226E80, 0x226E83
@@ -30263,7 +27989,7 @@ Str_ON_110:	.asciz " ON  "
 	.align	4, 0xFF
 Str_OFF_143:	.asciz " OFF "
 	.align	4, 0xFF
-Str_A_25:	.asciz "A "
+Str_A_24:	.asciz "A "
 .incbin_range "baserom/kn7000_program.rom", 0x2270C7, 0x2270CC
 Str_ON_109:	.asciz " ON  "
 	.align	4, 0xFF
@@ -30273,9 +27999,9 @@ Str_INTERNAL_2:	.asciz " INTERNAL "
 	.align	4, 0xFF
 Str_MIDI_9:	.asciz "   MIDI   "
 	.align	4, 0xFF
-Str_empty_1227:	.asciz "# "
+Str_empty_1217:	.asciz "# "
 .incbin_range "baserom/kn7000_program.rom", 0x2270F7, 0x227118
-Str_empty_1226:	.asciz "# "
+Str_empty_1216:	.asciz "# "
 .incbin_range "baserom/kn7000_program.rom", 0x22711B, 0x22713C
 data_4862713C:
 	.space	16, 0x00
@@ -30358,19 +28084,19 @@ data_486275F4:
 
 Str_3d_197:	.asciz " %3d "
 	.align	4, 0xFF
-Str_empty_1225:	.asciz "     "
+Str_empty_1215:	.asciz "     "
 	.align	4, 0xFF
 Str_3d_196:	.asciz " %3d "
 	.align	4, 0xFF
-Str_empty_1224:	.asciz "     "
+Str_empty_1214:	.asciz "     "
 	.align	4, 0xFF
-Str_empty_1223:	.asciz "     "
+Str_empty_1213:	.asciz "     "
 	.align	4, 0xFF
 Str_3d_195:	.asciz " %3d "
 	.align	4, 0xFF
 Str_3d_194:	.asciz " %3d "
 	.align	4, 0xFF
-Str_empty_1222:	.asciz "     "
+Str_empty_1212:	.asciz "     "
 	.align	4, 0xFF
 Str_3d_193:	.asciz " %3d "
 	.align	4, 0xFF
@@ -30378,13 +28104,13 @@ Str_3d_192:	.asciz " %3d "
 	.align	4, 0xFF
 Str_PAGE:	.asciz "PAGE"
 	.align	4, 0xFF
-Str_empty_1221:	.asciz " "
+Str_empty_1251:	.asciz " "
 Str_NX_SOUND:	.asciz "NX SOUND "
 Str_GM_LEVEL2_2:	.asciz "GM LEVEL2"
 Str_GM_LEVEL2:	.asciz "GM LEVEL2"
 
 ptrs_48627674:
-	.long	Str_empty_1221
+	.long	Str_empty_1251
 	.long	Str_NX_SOUND
 	.long	Str_GM_LEVEL2_2
 	.long	Str_GM_LEVEL2
@@ -30522,7 +28248,7 @@ Str_3d_02xHEX_10:	.asciz " %3d (%02xHEX) "
 Str_3d_02xHEX_9:	.asciz " %3d (%02xHEX) "
 Str_5d_2:	.asciz " %5d )"
 	.align	4, 0xFF
-Str_A_24:	.asciz " A"
+Str_A_25:	.asciz " A"
 Str_B_11:	.asciz " B"
 Str_C_22:	.asciz " C"
 Str_1_24:	.asciz " 1"
@@ -30538,7 +28264,7 @@ Str_10_6:	.asciz "10"
 	.align	4, 0xFF
 
 ptrs_48627DF8:
-	.long	Str_A_24
+	.long	Str_A_25
 	.long	Str_B_11
 	.long	Str_C_22
 	.long	Str_1_24
@@ -30551,14 +28277,16 @@ ptrs_48627DF8:
 	.long	Str_8_11
 	.long	Str_9_9
 	.long	Str_10_6
+data_48627E2C:
+.incbin_range "baserom/kn7000_program.rom", 0x227E2C, 0x227E34
+data_48627E34:
+.incbin_range "baserom/kn7000_program.rom", 0x227E34, 0x227E3C
 
-Str_RIGHT_1_2:	.asciz "RIGHT 1"
-Str_RIGHT_2_2:	.asciz "RIGHT 2"
 Str_LEFT_11:	.asciz " LEFT  "
 
 ptrs_48627E44:
-	.long	Str_RIGHT_1_2
-	.long	Str_RIGHT_2_2
+	.long	data_48627E2C
+	.long	data_48627E34
 	.long	Str_LEFT_11
 data_48627E50:
 .incbin_range "baserom/kn7000_program.rom", 0x227E50, 0x227E68
@@ -30627,7 +28355,7 @@ Str_3d_180:	.asciz " %3d "
 	.align	4, 0xFF
 Str_OFF_124:	.asciz " OFF "
 	.align	4, 0xFF
-Str_empty_1220:	.asciz " `"
+Str_empty_1210:	.asciz " `"
 	.align	4, 0x00
 data_48627FF4:
 .incbin_range "baserom/kn7000_program.rom", 0x227FF4, 0x227FF8
@@ -30656,20 +28384,12 @@ Str_INTERFACE_3:	.asciz "       INTERFACE        "
 Str_KN:	.asciz "KN"
 	.align	4, 0xFF
 data_486280A4:
-.incbin_range "baserom/kn7000_program.rom", 0x2280A4, 0x2280F8
-Str_J_LH:	.asciz "J\xFCLH"
-	.align	4, 0x00
-Str_J_LH_2:	.asciz "J\xFCLH"
-	.align	4, 0x00
-Str_J_LH_3:	.asciz "J\xFCLH"
-	.align	4, 0x00
-Str_J_LH_4:	.asciz "J\xFCLH~"
-.incbin_range "baserom/kn7000_program.rom", 0x228116, 0x228124
+.incbin_range "baserom/kn7000_program.rom", 0x2280A4, 0x228124
 data_48628124:
 .incbin_range "baserom/kn7000_program.rom", 0x228124, 0x2281A4
-Str_empty_1219:	.asciz " "
+Str_empty_1209:	.asciz " "
 .incbin_range "baserom/kn7000_program.rom", 0x2281A6, 0x228224
-Str_empty_1218:	.asciz " "
+Str_empty_1208:	.asciz " "
 .incbin_range "baserom/kn7000_program.rom", 0x228226, 0x2282A4
 data_486282A4:
 .incbin_range "baserom/kn7000_program.rom", 0x2282A4, 0x228324
@@ -30682,45 +28402,15 @@ data_486283CC:
 data_486283F4:
 .incbin_range "baserom/kn7000_program.rom", 0x2283F4, 0x22841C
 data_4862841C:
-.incbin_range "baserom/kn7000_program.rom", 0x22841C, 0x228478
-Str_c_MH:	.asciz "c$MH\x09"
-	.align	4, 0x00
-Str_c_MH_2:	.asciz "c$MH\x86"
-	.align	4, 0x00
-Str_c_MH_3:	.asciz "c$MH\x87"
-	.align	4, 0x00
-Str_c_MH_4:	.asciz "c$MH\x88"
-	.align	4, 0x00
-Str_c_MH_5:	.asciz "c$MH\x89"
-	.align	4, 0x00
-Str_c_MH_6:	.asciz "c$MH"
-.incbin_range "baserom/kn7000_program.rom", 0x2284A5, 0x22851C
+.incbin_range "baserom/kn7000_program.rom", 0x22841C, 0x22851C
 data_4862851C:
 .incbin_range "baserom/kn7000_program.rom", 0x22851C, 0x22861C
 data_4862861C:
 .incbin_range "baserom/kn7000_program.rom", 0x22861C, 0x22869C
 data_4862869C:
-.incbin_range "baserom/kn7000_program.rom", 0x22869C, 0x2286C8
-Str_i_MH:	.asciz "i=MH\x81"
-.incbin_range "baserom/kn7000_program.rom", 0x2286CE, 0x22871C
+.incbin_range "baserom/kn7000_program.rom", 0x22869C, 0x22871C
 data_4862871C:
-.incbin_range "baserom/kn7000_program.rom", 0x22871C, 0x228750
-Str_AMH:	.asciz "\xC4AMH"
-	.align	4, 0x00
-Str_AMH_2:	.asciz "\xDEAMH"
-	.align	4, 0x00
-Str_AMH_3:	.asciz "\xDEAMH"
-	.align	4, 0x00
-Str_AMH_4:	.asciz "\xDEAMH"
-	.align	4, 0x00
-Str_AMH_5:	.asciz "\xDEAMH"
-	.align	4, 0x00
-Str_AMH_6:	.asciz "\xDEAMH"
-	.align	4, 0x00
-Str_AMH_7:	.asciz "\xDEAMH"
-	.align	4, 0x00
-Str_AMH_8:	.asciz "\xDEAMH~"
-.incbin_range "baserom/kn7000_program.rom", 0x22878E, 0x22879C
+.incbin_range "baserom/kn7000_program.rom", 0x22871C, 0x22879C
 Field_AcPmemBankSel_end:	.asciz ""
 	.align	4, 0xFF
 
@@ -31217,9 +28907,7 @@ data_48629DFC:
 data_48629E04:
 .incbin_range "baserom/kn7000_program.rom", 0x229E04, 0x229E0C
 data_48629E0C:
-.incbin_range "baserom/kn7000_program.rom", 0x229E0C, 0x229E48
-Str_cMH:	.asciz "\xF5cMH"
-.incbin_range "baserom/kn7000_program.rom", 0x229E4D, 0x229E8C
+.incbin_range "baserom/kn7000_program.rom", 0x229E0C, 0x229E8C
 data_48629E8C:
 .incbin_range "baserom/kn7000_program.rom", 0x229E8C, 0x229F2C
 data_48629F2C:
@@ -36246,10 +33934,10 @@ Str_POLY_2:	.asciz "POLY"
 	.align	4, 0xFF
 Str_MONO_3:	.asciz "MONO"
 	.align	4, 0xFF
-Str_empty_1217:	.asciz "---"
+Str_empty_1207:	.asciz "---"
 Str_OFF_115:	.asciz "OFF"
 Str_ON_100:	.asciz " ON"
-Str_empty_1216:	.asciz "---"
+Str_empty_1206:	.asciz "---"
 Str_3d_171:	.asciz "%3d"
 Str_OFF_114:	.asciz "OFF"
 Str_ON_99:	.asciz " ON"
@@ -36347,8 +34035,8 @@ Str_CLEAR_3:	.asciz "  CLEAR  "
 Str_3d_166:	.asciz "%3d"
 Str_OFF_107:	.asciz "OFF"
 Str_ON_92:	.asciz " ON"
-Str_empty_1215:	.asciz "   "
-Str_empty_1214:	.asciz "   "
+Str_empty_1205:	.asciz "   "
+Str_empty_1204:	.asciz "   "
 Str_DEPTH_27:	.asciz "DEPTH         :"
 Str_DEPTH1_4:	.asciz "DEPTH1        :"
 Str_DEPTH_26:	.asciz "DEPTH         :"
@@ -36356,11 +34044,11 @@ Str_DEPTH1_3:	.asciz "DEPTH1        :"
 Str_DELAY_16:	.asciz "DELAY         :"
 Str_SPEED_13:	.asciz "SPEED         :"
 Str_DISTORTION:	.asciz "DISTORTION    :"
-Str_empty_1213:	.asciz "               "
+Str_empty_1203:	.asciz "               "
 Str_3d_165:	.asciz "%3d"
 Str_3d_164:	.asciz "%3d"
 Str_3d_163:	.asciz "%3d"
-Str_empty_1212:	.asciz "   "
+Str_empty_1202:	.asciz "   "
 Str_SPEED_12:	.asciz "SPEED         :"
 Str_SPEED1_4:	.asciz "SPEED1        :"
 Str_SPEED_11:	.asciz "SPEED         :"
@@ -36368,18 +34056,18 @@ Str_SPEED1_3:	.asciz "SPEED1        :"
 Str_DETUNE_10:	.asciz "DETUNE        :"
 Str_DECAY_3:	.asciz "DECAY         :"
 Str_TOUCH_DEPTH:	.asciz "TOUCH DEPTH   :"
-Str_empty_1211:	.asciz "               "
+Str_empty_1201:	.asciz "               "
 Str_3d_162:	.asciz "%3d"
 Str_3d_161:	.asciz "%3d"
 Str_SIN_5:	.asciz "SIN"
 Str_TRI_5:	.asciz "TRI"
 Str_SQR:	.asciz "SQR"
 Str_SAW_5:	.asciz "SAW"
-Str_empty_1210:	.asciz "   "
+Str_empty_1200:	.asciz "   "
 Str_3d_160:	.asciz "%3d"
 Str_3d_159:	.asciz "%3d"
 Str_3d_158:	.asciz "%3d"
-Str_empty_1209:	.asciz "   "
+Str_empty_1199:	.asciz "   "
 Str_DETUNE_9:	.asciz "DETUNE        :"
 Str_DEPTH2_4:	.asciz "DEPTH2        :"
 Str_WAVE_6:	.asciz "WAVE          :"
@@ -36387,47 +34075,47 @@ Str_DEPTH2_3:	.asciz "DEPTH2        :"
 Str_KEY_SHIFT_4:	.asciz "KEY SHIFT     :"
 Str_SUSTAIN_6:	.asciz "SUSTAIN       :"
 Str_DEPTH_25:	.asciz "DEPTH         :"
-Str_empty_1208:	.asciz "               "
+Str_empty_1198:	.asciz "               "
 Str_3d_157:	.asciz "%3d"
-Str_empty_1207:	.asciz "   "
-Str_empty_1206:	.asciz "   "
+Str_empty_1197:	.asciz "   "
+Str_empty_1196:	.asciz "   "
 Str_DELAY_15:	.asciz "DELAY         :"
 Str_SPEED2_4:	.asciz "SPEED2        :"
 Str_BALANCE_3:	.asciz "BALANCE       :"
 Str_SPEED2_3:	.asciz "SPEED2        :"
 Str_BALANCE_2:	.asciz "BALANCE       :"
 Str_RELEASE_3:	.asciz "RELEASE       :"
-Str_empty_1205:	.asciz "               "
-Str_empty_1204:	.asciz "               "
-Str_3d_156:	.asciz "%3d"
-Str_3d_155:	.asciz "%3d"
-Str_empty_1203:	.asciz "   "
-Str_empty_1202:	.asciz "   "
-Str_BALANCE:	.asciz "BALANCE       :"
-Str_DETUNE_8:	.asciz "DETUNE        :"
-Str_empty_1201:	.asciz "               "
-Str_empty_1200:	.asciz "               "
-Str_empty_1199:	.asciz "   "
-Str_3d_154:	.asciz "%3d"
-Str_empty_1198:	.asciz "   "
-Str_empty_1197:	.asciz "   "
-Str_empty_1196:	.asciz "               "
-Str_DELAY_14:	.asciz "DELAY         :"
 Str_empty_1195:	.asciz "               "
 Str_empty_1194:	.asciz "               "
-Str_3d_153:	.asciz "%3d"
+Str_3d_156:	.asciz "%3d"
+Str_3d_155:	.asciz "%3d"
 Str_empty_1193:	.asciz "   "
-Str_3d_152:	.asciz "%3d"
 Str_empty_1192:	.asciz "   "
-Str_INTENSITY_2:	.asciz "INTENSITY     :"
+Str_BALANCE:	.asciz "BALANCE       :"
+Str_DETUNE_8:	.asciz "DETUNE        :"
 Str_empty_1191:	.asciz "               "
-Str_INTENSITY:	.asciz "INTENSITY     :"
 Str_empty_1190:	.asciz "               "
+Str_empty_1189:	.asciz "   "
+Str_3d_154:	.asciz "%3d"
+Str_empty_1188:	.asciz "   "
+Str_empty_1187:	.asciz "   "
+Str_empty_1186:	.asciz "               "
+Str_DELAY_14:	.asciz "DELAY         :"
+Str_empty_1185:	.asciz "               "
+Str_empty_1184:	.asciz "               "
+Str_3d_153:	.asciz "%3d"
+Str_empty_1183:	.asciz "   "
+Str_3d_152:	.asciz "%3d"
+Str_empty_1182:	.asciz "   "
+Str_INTENSITY_2:	.asciz "INTENSITY     :"
+Str_empty_1181:	.asciz "               "
+Str_INTENSITY:	.asciz "INTENSITY     :"
+Str_empty_1180:	.asciz "               "
 Str_4d_12:	.asciz "%4d"
-Str_empty_1189:	.asciz "    "
+Str_empty_1179:	.asciz "    "
 	.align	4, 0xFF
 Str_REVERB_ADJUST_4:	.asciz "REVERB ADJUST :"
-Str_empty_1188:	.asciz "               "
+Str_empty_1178:	.asciz "               "
 Str_s_11:	.asciz "%s :"
 	.align	4, 0xFF
 Str_DEPTH_24:	.asciz "DEPTH "
@@ -36444,7 +34132,7 @@ Str_SPEED_10:	.asciz "SPEED "
 	.align	4, 0xFF
 Str_DIST:	.asciz " DIST."
 	.align	4, 0xFF
-Str_empty_1187:	.asciz "      "
+Str_empty_1177:	.asciz "      "
 	.align	4, 0xFF
 Str_SPEED_9:	.asciz "SPEED "
 	.align	4, 0xFF
@@ -36460,7 +34148,7 @@ Str_DECAY_2:	.asciz "DECAY "
 	.align	4, 0xFF
 Str_TOUCH_11:	.asciz " TOUCH"
 	.align	4, 0xFF
-Str_empty_1186:	.asciz "      "
+Str_empty_1176:	.asciz "      "
 	.align	4, 0xFF
 Str_DETUNE_6:	.asciz "DETUNE"
 	.align	4, 0xFF
@@ -36476,7 +34164,7 @@ Str_SUST:	.asciz " SUST "
 	.align	4, 0xFF
 Str_DEPTH_22:	.asciz " DEPTH"
 	.align	4, 0xFF
-Str_empty_1185:	.asciz "      "
+Str_empty_1175:	.asciz "      "
 	.align	4, 0xFF
 Str_DELAY_12:	.asciz " DELAY"
 	.align	4, 0xFF
@@ -36490,35 +34178,35 @@ Str_BAL_9:	.asciz "  BAL "
 	.align	4, 0xFF
 Str_RLS_8:	.asciz "  RLS "
 	.align	4, 0xFF
-Str_empty_1184:	.asciz "      "
+Str_empty_1174:	.asciz "      "
 	.align	4, 0xFF
-Str_empty_1183:	.asciz "      "
+Str_empty_1173:	.asciz "      "
 	.align	4, 0xFF
 Str_BAL_8:	.asciz "  BAL "
 	.align	4, 0xFF
 Str_DETUNE_5:	.asciz "DETUNE"
 	.align	4, 0xFF
-Str_empty_1182:	.asciz "       "
-Str_empty_1181:	.asciz "       "
-Str_empty_1180:	.asciz "     "
+Str_empty_1172:	.asciz "       "
+Str_empty_1171:	.asciz "       "
+Str_empty_1170:	.asciz "     "
 	.align	4, 0xFF
 Str_DELAY_11:	.asciz "DELAY"
 	.align	4, 0xFF
-Str_empty_1179:	.asciz "     "
+Str_empty_1169:	.asciz "     "
 	.align	4, 0xFF
-Str_empty_1178:	.asciz "     "
+Str_empty_1168:	.asciz "     "
 	.align	4, 0xFF
 Str_INTENS_2:	.asciz "INTENS"
 	.align	4, 0xFF
-Str_empty_1177:	.asciz "      "
+Str_empty_1167:	.asciz "      "
 	.align	4, 0xFF
 Str_INTENS:	.asciz "INTENS"
 	.align	4, 0xFF
-Str_empty_1176:	.asciz "      "
+Str_empty_1166:	.asciz "      "
 	.align	4, 0xFF
 Str_REVERB_9:	.asciz "REVERB"
 	.align	4, 0xFF
-Str_empty_1175:	.asciz "      "
+Str_empty_1165:	.asciz "      "
 	.align	4, 0xFF
 Str_ATTACK_KEY_FOLLOW_2:	.asciz "ATTACK KEY FOLLOW "
 	.align	4, 0xFF
@@ -36544,15 +34232,15 @@ Str_HIGH_PASS_FILTER_24dB_2:	.asciz "HIGH PASS FILTER (-24dB)"
 	.align	4, 0xFF
 Str_BAND_PASS_FILTER_2:	.asciz "    BAND PASS FILTER    "
 	.align	4, 0xFF
-Str_empty_1174:	.asciz "                        "
+Str_empty_1164:	.asciz "                        "
 	.align	4, 0xFF
 Str_EQUALIZER_6:	.asciz "EQUALIZER"
 	.align	4, 0xFF
-Str_empty_1173:	.asciz "         "
+Str_empty_1163:	.asciz "         "
 	.align	4, 0xFF
 Str_FREQ_2:	.asciz "FREQ"
 	.align	4, 0xFF
-Str_empty_1172:	.asciz "    "
+Str_empty_1162:	.asciz "    "
 	.align	4, 0xFF
 Str_THRU_3:	.asciz "          THRU          "
 	.align	4, 0xFF
@@ -36570,63 +34258,63 @@ Str_HIGH_PASS_FILTER_24dB:	.asciz "HIGH PASS FILTER (-24dB)"
 	.align	4, 0xFF
 Str_BAND_PASS_FILTER:	.asciz "    BAND PASS FILTER    "
 	.align	4, 0xFF
-Str_empty_1171:	.asciz "                        "
+Str_empty_1161:	.asciz "                        "
 	.align	4, 0xFF
 Str_EQUALIZER_5:	.asciz "EQUALIZER"
 	.align	4, 0xFF
-Str_empty_1170:	.asciz "         "
+Str_empty_1160:	.asciz "         "
 	.align	4, 0xFF
 Str_FREQ:	.asciz "FREQ"
 	.align	4, 0xFF
-Str_empty_1169:	.asciz "    "
+Str_empty_1159:	.asciz "    "
 	.align	4, 0xFF
-Str_empty_1168:	.asciz "      "
+Str_empty_1158:	.asciz "      "
 	.align	4, 0xFF
 Str_KEYOFF_5:	.asciz "KEYOFF"
 	.align	4, 0xFF
-Str_empty_1167:	.asciz "   |   |   |           |   |   |   |    |      |   |     |      "
+Str_empty_1157:	.asciz "   |   |   |           |   |   |   |    |      |   |     |      "
 	.align	4, 0xFF
 Str_1st_2nd_3rd_4th_22:	.asciz "|-|1st|2nd|3rd|4th"
 	.align	4, 0xFF
-Str_empty_1166:	.asciz " "
+Str_empty_1156:	.asciz " "
 	.align	4, 0xFF
-Str_empty_1165:	.asciz "*"
+Str_empty_1155:	.asciz "*"
 	.align	4, 0xFF
 Str_3d_151:	.asciz "%3d"
 Str_3d_150:	.asciz "%3d"
 Str_4d_11:	.asciz "%4d"
-Str_empty_1164:	.asciz "---"
+Str_empty_1154:	.asciz "---"
 Str_4dms:	.asciz "%4dms"
 	.align	4, 0xFF
-Str_empty_1163:	.asciz "   |   |     |     |     |       |     |      |    |   "
+Str_empty_1153:	.asciz "   |   |     |     |     |       |     |      |    |   "
 Str_1st_2nd_3rd_4th_21:	.asciz "|-|1st|2nd|3rd|4th"
 	.align	4, 0xFF
 Str_NORM_5:	.asciz "NORM"
 	.align	4, 0xFF
-Str_DRUM_4:	.asciz "DRUM"
+Str_DRUM_3:	.asciz "DRUM"
 	.align	4, 0xFF
 Str_ATK_11:	.asciz "ATK "
 	.align	4, 0xFF
 Str_2x_4:	.asciz "%2x"
 Str_2x_3:	.asciz "%2x"
 Str_3d_149:	.asciz "%3d"
-Str_empty_1162:	.asciz "   |   |    |    |    |    "
+Str_empty_1152:	.asciz "   |   |    |    |    |    "
 Str_1st_2nd_3rd_4th_20:	.asciz "|-|1st|2nd|3rd|4th"
 	.align	4, 0xFF
-Str_empty_1161:	.asciz "   |   |    |    |    |    "
+Str_empty_1151:	.asciz "   |   |    |    |    |    "
 Str_1st_2nd_3rd_4th_19:	.asciz "|-|1st|2nd|3rd|4th"
 	.align	4, 0xFF
 Str_3d_148:	.asciz "%3d"
 Str_3d_147:	.asciz "%3d"
 Str_3d_146:	.asciz "%3d"
 Str_3d_145:	.asciz "%3d"
-Str_empty_1160:	.asciz "   |   |      |      |       "
+Str_empty_1150:	.asciz "   |   |      |      |       "
 	.align	4, 0xFF
 Str_1st_2nd_3rd_4th_18:	.asciz "|-|1st|2nd|3rd|4th"
 	.align	4, 0xFF
 Str_3d_144:	.asciz "%3d"
 Str_4d_10:	.asciz "%4d"
-Str_empty_1159:	.asciz "   |   |   |   |   |   |   |   |   |   |   |   "
+Str_empty_1149:	.asciz "   |   |   |   |   |   |   |   |   |   |   |   "
 Str_1st_2nd_3rd_4th_17:	.asciz "|-|1st|2nd|3rd|4th"
 	.align	4, 0xFF
 Str_3d_143:	.asciz "%3d"
@@ -36639,7 +34327,7 @@ Str_3d_137:	.asciz "%3d"
 Str_3d_136:	.asciz "%3d"
 Str_3d_135:	.asciz "%3d"
 Str_3d_134:	.asciz "%3d"
-Str_empty_1158:	.asciz "   |   |    |    |    |    |    |    "
+Str_empty_1148:	.asciz "   |   |    |    |    |    |    |    "
 	.align	4, 0xFF
 Str_1st_2nd_3rd_4th_16:	.asciz "|-|1st|2nd|3rd|4th"
 	.align	4, 0xFF
@@ -36648,18 +34336,18 @@ Str_3d_132:	.asciz "%3d"
 Str_3d_131:	.asciz "%3d"
 Str_3d_130:	.asciz "%3d"
 Str_3d_129:	.asciz "%3d"
-Str_empty_1157:	.asciz "   |   |    |    |    |    |    |    |    "
+Str_empty_1147:	.asciz "   |   |    |    |    |    |    |    |    "
 	.align	4, 0xFF
 Str_1st_2nd_3rd_4th_15:	.asciz "|-|1st|2nd|3rd|4th"
 	.align	4, 0xFF
 Str_3d_128:	.asciz "%3d"
-Str_empty_1156:	.asciz "---"
+Str_empty_1146:	.asciz "---"
 Str_3d_126:	.asciz "%3d"
 Str_GM_4:	.asciz "GM"
 	.align	4, 0xFF
 Str_2d_51:	.asciz "%2d"
 Str_3d_125:	.asciz "%3d"
-Str_empty_1155:	.asciz "   |   |    |    |    |    |    |    |    |    "
+Str_empty_1145:	.asciz "   |   |    |    |    |    |    |    |    |    "
 Str_1st_2nd_3rd_4th_14:	.asciz "|-|1st|2nd|3rd|4th"
 	.align	4, 0xFF
 Str_3d_124:	.asciz "%3d"
@@ -36673,7 +34361,7 @@ Str_LONG:	.asciz "LONG"
 	.align	4, 0xFF
 Str_HOLD:	.asciz "HOLD"
 	.align	4, 0xFF
-Str_empty_1154:	.asciz "   |   |    |    |    |    |    |    |    |    "
+Str_empty_1144:	.asciz "   |   |    |    |    |    |    |    |    |    "
 Str_1st_2nd_3rd_4th_13:	.asciz "|-|1st|2nd|3rd|4th"
 	.align	4, 0xFF
 Str_3d_117:	.asciz "%3d"
@@ -36681,7 +34369,7 @@ Str_3d_116:	.asciz "%3d"
 Str_3d_115:	.asciz "%3d"
 Str_3d_114:	.asciz "%3d"
 Str_3d_113:	.asciz "%3d"
-Str_empty_1153:	.asciz "   |   |       |     |      |     |       |      "
+Str_empty_1143:	.asciz "   |   |       |     |      |     |       |      "
 	.align	4, 0xFF
 Str_1st_2nd_3rd_4th_12:	.asciz "|-|1st|2nd|3rd|4th"
 	.align	4, 0xFF
@@ -36693,21 +34381,21 @@ Str_HPF_EQ_2:	.asciz "HPF+EQ "
 Str_HPF6_EQ_2:	.asciz "HPF6+EQ"
 Str_HPF24_2:	.asciz " HPF24 "
 Str_BPF_2:	.asciz "  BPF  "
-Str_empty_1152:	.asciz "-----"
+Str_empty_1142:	.asciz "-----"
 	.align	4, 0xFF
-Str_empty_1151:	.asciz "------"
+Str_empty_1141:	.asciz "------"
 	.align	4, 0xFF
 Str_LOW_4:	.asciz "LOW "
 	.align	4, 0xFF
-Str_HIGH_4:	.asciz "HIGH"
+Str_HIGH_4:
+.incbin_range "baserom/kn7000_program.rom", 0x239BF8, 0x239C00
+Str_empty_1140:	.asciz "----"
 	.align	4, 0xFF
-Str_empty_1150:	.asciz "----"
+Str_empty_1139:	.asciz "-----"
 	.align	4, 0xFF
-Str_empty_1149:	.asciz "-----"
+Str_empty_1138:	.asciz "------"
 	.align	4, 0xFF
-Str_empty_1148:	.asciz "------"
-	.align	4, 0xFF
-Str_empty_1147:	.asciz "   |   |    |    |    |    |    |    |    "
+Str_empty_1137:	.asciz "   |   |    |    |    |    |    |    |    "
 	.align	4, 0xFF
 Str_1st_2nd_3rd_4th_11:	.asciz "|-|1st|2nd|3rd|4th"
 	.align	4, 0xFF
@@ -36715,7 +34403,7 @@ Str_3d_112:	.asciz "%3d"
 Str_2d_50:	.asciz "%2d"
 Str_3d_111:	.asciz "%3d"
 Str_3d_110:	.asciz "%3d"
-Str_empty_1146:	.asciz "   |   |   |   |   |   |   |   |   |   |   |   "
+Str_empty_1136:	.asciz "   |   |   |   |   |   |   |   |   |   |   |   "
 Str_1st_2nd_3rd_4th_10:	.asciz "|-|1st|2nd|3rd|4th"
 	.align	4, 0xFF
 Str_3d_109:	.asciz "%3d"
@@ -36728,7 +34416,7 @@ Str_3d_103:	.asciz "%3d"
 Str_3d_102:	.asciz "%3d"
 Str_3d_101:	.asciz "%3d"
 Str_3d_100:	.asciz "%3d"
-Str_empty_1145:	.asciz "   |   |    |    |    |    |    |    "
+Str_empty_1135:	.asciz "   |   |    |    |    |    |    |    "
 	.align	4, 0xFF
 Str_1st_2nd_3rd_4th_9:	.asciz "|-|1st|2nd|3rd|4th"
 	.align	4, 0xFF
@@ -36737,7 +34425,7 @@ Str_3d_98:	.asciz "%3d"
 Str_3d_97:	.asciz "%3d"
 Str_3d_96:	.asciz "%3d"
 Str_3d_95:	.asciz "%3d"
-Str_empty_1144:	.asciz "   |   |      |    |     |      |         |   |    |   |    |   "
+Str_empty_1134:	.asciz "   |   |      |    |     |      |         |   |    |   |    |   "
 	.align	4, 0xFF
 Str_1st_2nd_3rd_4th_8:	.asciz "|-|1st|2nd|3rd|4th"
 	.align	4, 0xFF
@@ -36746,15 +34434,15 @@ Str_LFO_2d_4:	.asciz "LFO%2d"
 Str_3d_94:	.asciz "%3d"
 Str_OFF_106:	.asciz "OFF"
 Str_ON_91:	.asciz "ON "
-Str_empty_1143:	.asciz "---"
+Str_empty_1133:	.asciz "---"
 Str_3d_93:	.asciz "%3d"
-Str_empty_1142:	.asciz "        "
+Str_empty_1132:	.asciz "        "
 	.align	4, 0xFF
-Str_empty_1141:	.asciz "------->"
+Str_empty_1131:	.asciz "------->"
 	.align	4, 0xFF
-Str_empty_1140:	.asciz "+"
+Str_empty_1130:	.asciz "+"
 	.align	4, 0xFF
-Str_empty_1139:	.asciz "-"
+Str_empty_1129:	.asciz "-"
 	.align	4, 0xFF
 Str_SIN_4:	.asciz "SIN"
 Str_TRI_4:	.asciz "TRI"
@@ -36764,7 +34452,7 @@ Str_RND_4:	.asciz "RND"
 Str_2d_49:	.asciz "%2d"
 Str_3d_92:	.asciz "%3d"
 Str_2d_48:	.asciz "%2d"
-Str_empty_1138:	.asciz "   |   |      |    |     |      |         |   |    |   |    |   "
+Str_empty_1128:	.asciz "   |   |      |    |     |      |         |   |    |   |    |   "
 	.align	4, 0xFF
 Str_1st_2nd_3rd_4th_7:	.asciz "|-|1st|2nd|3rd|4th"
 	.align	4, 0xFF
@@ -36773,15 +34461,15 @@ Str_LFO_2d_3:	.asciz "LFO%2d"
 Str_3d_91:	.asciz "%3d"
 Str_OFF_105:	.asciz "OFF"
 Str_ON_90:	.asciz "ON "
-Str_empty_1137:	.asciz "---"
+Str_empty_1127:	.asciz "---"
 Str_3d_90:	.asciz "%3d"
-Str_empty_1136:	.asciz "        "
+Str_empty_1126:	.asciz "        "
 	.align	4, 0xFF
-Str_empty_1135:	.asciz "------->"
+Str_empty_1125:	.asciz "------->"
 	.align	4, 0xFF
-Str_empty_1134:	.asciz "+"
+Str_empty_1124:	.asciz "+"
 	.align	4, 0xFF
-Str_empty_1133:	.asciz "-"
+Str_empty_1123:	.asciz "-"
 	.align	4, 0xFF
 Str_SIN_3:	.asciz "SIN"
 Str_TRI_3:	.asciz "TRI"
@@ -36791,7 +34479,7 @@ Str_RND_3:	.asciz "RND"
 Str_2d_47:	.asciz "%2d"
 Str_3d_89:	.asciz "%3d"
 Str_2d_46:	.asciz "%2d"
-Str_empty_1132:	.asciz "   |   |      |    |     |      |         |   |    |   |    |   "
+Str_empty_1122:	.asciz "   |   |      |    |     |      |         |   |    |   |    |   "
 	.align	4, 0xFF
 Str_1st_2nd_3rd_4th_6:	.asciz "|-|1st|2nd|3rd|4th"
 	.align	4, 0xFF
@@ -36800,15 +34488,15 @@ Str_LFO_2d_2:	.asciz "LFO%2d"
 Str_3d_88:	.asciz "%3d"
 Str_OFF_104:	.asciz "OFF"
 Str_ON_89:	.asciz "ON "
-Str_empty_1131:	.asciz "---"
+Str_empty_1121:	.asciz "---"
 Str_3d_87:	.asciz "%3d"
-Str_empty_1130:	.asciz "        "
+Str_empty_1120:	.asciz "        "
 	.align	4, 0xFF
-Str_empty_1129:	.asciz "------->"
+Str_empty_1119:	.asciz "------->"
 	.align	4, 0xFF
-Str_empty_1128:	.asciz "+"
+Str_empty_1118:	.asciz "+"
 	.align	4, 0xFF
-Str_empty_1127:	.asciz "-"
+Str_empty_1117:	.asciz "-"
 	.align	4, 0xFF
 Str_SIN_2:	.asciz "SIN"
 Str_TRI_2:	.asciz "TRI"
@@ -36818,7 +34506,7 @@ Str_RND_2:	.asciz "RND"
 Str_2d_45:	.asciz "%2d"
 Str_3d_86:	.asciz "%3d"
 Str_2d_44:	.asciz "%2d"
-Str_empty_1126:	.asciz "   |   |      |    |     |      |         |   |    |   |    |   "
+Str_empty_1116:	.asciz "   |   |      |    |     |      |         |   |    |   |    |   "
 	.align	4, 0xFF
 Str_1st_2nd_3rd_4th_5:	.asciz "|-|1st|2nd|3rd|4th"
 	.align	4, 0xFF
@@ -36827,15 +34515,15 @@ Str_LFO_2d:	.asciz "LFO%2d"
 Str_3d_85:	.asciz "%3d"
 Str_OFF_103:	.asciz "OFF"
 Str_ON_88:	.asciz "ON "
-Str_empty_1125:	.asciz "---"
+Str_empty_1115:	.asciz "---"
 Str_3d_84:	.asciz "%3d"
-Str_empty_1124:	.asciz "        "
+Str_empty_1114:	.asciz "        "
 	.align	4, 0xFF
-Str_empty_1123:	.asciz "------->"
+Str_empty_1113:	.asciz "------->"
 	.align	4, 0xFF
-Str_empty_1122:	.asciz "+"
+Str_empty_1112:	.asciz "+"
 	.align	4, 0xFF
-Str_empty_1121:	.asciz "-"
+Str_empty_1111:	.asciz "-"
 	.align	4, 0xFF
 Str_SIN:	.asciz "SIN"
 Str_TRI:	.asciz "TRI"
@@ -36847,7 +34535,7 @@ Str_3d_83:	.asciz "%3d"
 Str_2d_42:	.asciz "%2d"
 Str_NORM_4:	.asciz "NORM"
 	.align	4, 0xFF
-Str_DRUM_3:	.asciz "DRUM"
+Str_DRUM_2:	.asciz "DRUM"
 	.align	4, 0xFF
 Str_ATK_10:	.asciz "ATK "
 	.align	4, 0xFF
@@ -36856,11 +34544,11 @@ Str_2x:	.asciz "%2x"
 Str_4d_9:	.asciz "%4d"
 Str_4d_8:	.asciz "%4d"
 Str_0_3d_3:	.asciz "  0-%3d"
-Str_empty_1120:	.asciz "       "
+Str_empty_1110:	.asciz "       "
 Str_3d_3d_3:	.asciz "%3d-%3d"
-Str_empty_1119:	.asciz "       "
+Str_empty_1109:	.asciz "       "
 Str_3d_127_3:	.asciz "%3d-127"
-Str_empty_1118:	.asciz "           |               |    |    |    |    |    "
+Str_empty_1108:	.asciz "           |               |    |    |    |    |    "
 	.align	4, 0xFF
 Str_MOD_WHEEL_AFTER_TOUCH_2:	.asciz "|-|MOD WHEEL| |AFTER TOUCH| "
 	.align	4, 0xFF
@@ -36868,23 +34556,23 @@ Str_3d_82:	.asciz "%3d"
 Str_3d_81:	.asciz "%3d"
 Str_3d_80:	.asciz "%3d"
 Str_3d_79:	.asciz "%3d"
-Str_empty_1117:	.asciz "---"
-Str_empty_1116:	.asciz "---"
-Str_empty_1115:	.asciz "---"
-Str_empty_1114:	.asciz "---"
-Str_empty_1113:	.asciz "---"
-Str_empty_1112:	.asciz "---"
-Str_empty_1111:	.asciz "---"
-Str_empty_1110:	.asciz "---"
-Str_empty_1109:	.asciz "---"
-Str_empty_1108:	.asciz "---"
 Str_empty_1107:	.asciz "---"
 Str_empty_1106:	.asciz "---"
 Str_empty_1105:	.asciz "---"
 Str_empty_1104:	.asciz "---"
 Str_empty_1103:	.asciz "---"
 Str_empty_1102:	.asciz "---"
-Str_empty_1101:	.asciz "             |               |    |    |    "
+Str_empty_1101:	.asciz "---"
+Str_empty_1100:	.asciz "---"
+Str_empty_1099:	.asciz "---"
+Str_empty_1098:	.asciz "---"
+Str_empty_1097:	.asciz "---"
+Str_empty_1096:	.asciz "---"
+Str_empty_1095:	.asciz "---"
+Str_empty_1094:	.asciz "---"
+Str_empty_1093:	.asciz "---"
+Str_empty_1092:	.asciz "---"
+Str_empty_1091:	.asciz "             |               |    |    |    "
 	.align	4, 0xFF
 Str_MOD_WHEEL_AFTER_TOUCH:	.asciz "|-|MOD WHEEL| |AFTER TOUCH| "
 	.align	4, 0xFF
@@ -36893,47 +34581,27 @@ Str_3d_77:	.asciz "%3d"
 Str_4d_7:	.asciz "%4d"
 Str_4d_6:	.asciz "%4d"
 Str_0_3d_2:	.asciz "  0-%3d"
-Str_empty_1100:	.asciz "       "
+Str_empty_1090:	.asciz "       "
 Str_3d_3d_2:	.asciz "%3d-%3d"
-Str_empty_1099:	.asciz "       "
+Str_empty_1089:	.asciz "       "
 Str_3d_127_2:	.asciz "%3d-127"
 Str_4d_5:	.asciz "%4d"
 Str_4d_4:	.asciz "%4d"
 Str_0_3d:	.asciz "  0-%3d"
-Str_empty_1098:	.asciz "       "
+Str_empty_1088:	.asciz "       "
 Str_3d_3d:	.asciz "%3d-%3d"
-Str_empty_1097:	.asciz "       "
+Str_empty_1087:	.asciz "       "
 Str_3d_127:	.asciz "%3d-127"
 Str_LFO_2d_LFO_2d_LFO_2d_LFO_2d_LFO_2d_LFO_2:	.asciz "|-|LFO%2d|LFO%2d|LFO%2d|LFO%2d|LFO%2d|LFO%2d"
 	.align	4, 0xFF
 Str_3d_76:	.asciz "%3d"
 Str_OFF_102:	.asciz "OFF"
 Str_ON_87:	.asciz "ON "
-Str_empty_1096:	.asciz "---"
+Str_empty_1086:	.asciz "---"
 Str_3d_75:	.asciz "%3d"
-Str_empty_1095:	.asciz "     "
+Str_empty_1085:	.asciz "     "
 	.align	4, 0xFF
-Str_empty_1094:	.asciz "---->"
-	.align	4, 0xFF
-Str_empty_1093:	.asciz " "
-	.align	4, 0xFF
-Str_empty_1092:	.asciz "*"
-	.align	4, 0xFF
-Str_empty_1091:	.asciz " "
-	.align	4, 0xFF
-Str_empty_1090:	.asciz "*"
-	.align	4, 0xFF
-Str_empty_1089:	.asciz " "
-	.align	4, 0xFF
-Str_empty_1088:	.asciz "*"
-	.align	4, 0xFF
-Str_empty_1087:	.asciz " "
-	.align	4, 0xFF
-Str_empty_1086:	.asciz "*"
-	.align	4, 0xFF
-Str_empty_1085:	.asciz " "
-	.align	4, 0xFF
-Str_empty_1084:	.asciz "*"
+Str_empty_1084:	.asciz "---->"
 	.align	4, 0xFF
 Str_empty_1083:	.asciz " "
 	.align	4, 0xFF
@@ -36979,23 +34647,43 @@ Str_empty_1063:	.asciz " "
 	.align	4, 0xFF
 Str_empty_1062:	.asciz "*"
 	.align	4, 0xFF
-Str_empty_1061:	.asciz "   |   |   |           |   |   |   |   |   |    |   "
+Str_empty_1061:	.asciz " "
+	.align	4, 0xFF
+Str_empty_1060:	.asciz "*"
+	.align	4, 0xFF
+Str_empty_1059:	.asciz " "
+	.align	4, 0xFF
+Str_empty_1058:	.asciz "*"
+	.align	4, 0xFF
+Str_empty_1057:	.asciz " "
+	.align	4, 0xFF
+Str_empty_1056:	.asciz "*"
+	.align	4, 0xFF
+Str_empty_1055:	.asciz " "
+	.align	4, 0xFF
+Str_empty_1054:	.asciz "*"
+	.align	4, 0xFF
+Str_empty_1053:	.asciz " "
+	.align	4, 0xFF
+Str_empty_1052:	.asciz "*"
+	.align	4, 0xFF
+Str_empty_1051:	.asciz "   |   |   |           |   |   |   |   |   |    |   "
 	.align	4, 0xFF
 Str_1st_2nd_3rd_4th_4:	.asciz "|-|1st|2nd|3rd|4th"
 	.align	4, 0xFF
-Str_empty_1060:	.asciz " "
+Str_empty_1050:	.asciz " "
 	.align	4, 0xFF
-Str_empty_1059:	.asciz "*"
+Str_empty_1049:	.asciz "*"
 	.align	4, 0xFF
 Str_3d_74:	.asciz "%3d"
-Str_empty_1058:	.asciz "---"
+Str_empty_1048:	.asciz "---"
 Str_3d_73:	.asciz "%3d"
 Str_GM_3:	.asciz "GM"
 	.align	4, 0xFF
 Str_2d_41:	.asciz "%2d"
 Str_3d_72:	.asciz "%3d"
 Str_4d_3:	.asciz "%4d"
-Str_empty_1057:	.asciz "   |   |       |     |      |     |       |      |    |    |    "
+Str_empty_1047:	.asciz "   |   |       |     |      |     |       |      |    |    |    "
 	.align	4, 0xFF
 Str_1st_2nd_3rd_4th_3:	.asciz "|-|1st|2nd|3rd|4th"
 	.align	4, 0xFF
@@ -37007,24 +34695,24 @@ Str_HPF_EQ:	.asciz "HPF+EQ "
 Str_HPF6_EQ:	.asciz "HPF6+EQ"
 Str_HPF24:	.asciz " HPF24 "
 Str_BPF:	.asciz "  BPF  "
-Str_empty_1056:	.asciz "-----"
+Str_empty_1046:	.asciz "-----"
 	.align	4, 0xFF
-Str_empty_1055:	.asciz "------"
+Str_empty_1045:	.asciz "------"
 	.align	4, 0xFF
 Str_LOW_3:	.asciz "LOW "
 	.align	4, 0xFF
-Str_HIGH_3:	.asciz "HIGH"
+Str_HIGH_3:
+.incbin_range "baserom/kn7000_program.rom", 0x23A398, 0x23A3A0
+Str_empty_1044:	.asciz "----"
 	.align	4, 0xFF
-Str_empty_1054:	.asciz "----"
+Str_empty_1043:	.asciz "-----"
 	.align	4, 0xFF
-Str_empty_1053:	.asciz "-----"
-	.align	4, 0xFF
-Str_empty_1052:	.asciz "------"
+Str_empty_1042:	.asciz "------"
 	.align	4, 0xFF
 Str_3d_71:	.asciz "%3d"
 Str_2d_40:	.asciz "%2d"
 Str_3d_70:	.asciz "%3d"
-Str_empty_1051:	.asciz "   |   |    |    |    |    |    |    |    "
+Str_empty_1041:	.asciz "   |   |    |    |    |    |    |    |    "
 	.align	4, 0xFF
 Str_1st_2nd_3rd_4th_2:	.asciz "|-|1st|2nd|3rd|4th"
 	.align	4, 0xFF
@@ -37032,24 +34720,24 @@ Str_3d_69:	.asciz "%3d"
 Str_3d_68:	.asciz "%3d"
 Str_3d_67:	.asciz "%3d"
 Str_3d_66:	.asciz "%3d"
-Str_empty_1050:	.asciz "---"
+Str_empty_1040:	.asciz "---"
 Str_3d_65:	.asciz "%3d"
-Str_empty_1049:	.asciz "---"
+Str_empty_1039:	.asciz "---"
 Str_3d_64:	.asciz "%3d"
 Str_3d_63:	.asciz "%3d"
-Str_empty_1048:	.asciz "   |   |     |     |     |     |     "
+Str_empty_1038:	.asciz "   |   |     |     |     |     |     "
 	.align	4, 0xFF
 Str_1st_2nd_3rd_4th:	.asciz "|-|1st|2nd|3rd|4th"
 	.align	4, 0xFF
 Str_3d_62:	.asciz "%3d"
-Str_empty_1047:	.asciz "+"
+Str_empty_1037:	.asciz "+"
 	.align	4, 0xFF
-Str_empty_1046:	.asciz "-"
+Str_empty_1036:	.asciz "-"
 	.align	4, 0xFF
 Str_3d_61:	.asciz "%3d"
-Str_empty_1045:	.asciz "+"
+Str_empty_1035:	.asciz "+"
 	.align	4, 0xFF
-Str_empty_1044:	.asciz "-"
+Str_empty_1034:	.asciz "-"
 	.align	4, 0xFF
 Str_3d_60:	.asciz "%3d"
 Str_OFF_101:	.asciz "OFF"
@@ -37352,7 +35040,7 @@ Str_CUT:	.asciz " CUT "
 	.align	4, 0xFF
 Str_3ddB:	.asciz "%3ddB"
 	.align	4, 0xFF
-Str_empty_1043:	.asciz "----------------"
+Str_empty_1033:	.asciz "----------------"
 	.align	4, 0xFF
 Str_DETUNE_4:	.asciz "     DETUNE     "
 	.align	4, 0xFF
@@ -37424,7 +35112,7 @@ Str_PAN_LFO_DEPTH:	.asciz " PAN LFO DEPTH  "
 	.align	4, 0xFF
 Str_TOTAL_LFO_DEPTH:	.asciz "TOTAL LFO DEPTH "
 	.align	4, 0xFF
-Str_empty_1042:	.asciz "----------------"
+Str_empty_1032:	.asciz "----------------"
 	.align	4, 0xFF
 Str_OFF_99:	.asciz "OFF"
 Str_ON_84:	.asciz "ON "
@@ -37435,7 +35123,7 @@ Str_KEY_OFF:	.asciz "KEY OFF"
 Str_LEGATO:	.asciz "LEGATO "
 Str_NON_LEG:	.asciz "NON LEG"
 Str_PEDAL_2:	.asciz "PEDAL  "
-Str_CHORD_10:	.asciz "CHORD  "
+Str_CHORD_8:	.asciz "CHORD  "
 Str_1d_03d:	.asciz "%1d.%03d"
 	.align	4, 0xFF
 Str_NORMAL_6:	.asciz " NORMAL "
@@ -37468,9 +35156,7 @@ Str_1_64:	.asciz "1/64"
 Str_FIX:	.asciz " FIX"
 	.align	4, 0xFF
 data_4863ADC4:
-.incbin_range "baserom/kn7000_program.rom", 0x23ADC4, 0x23AE20
-Str_MH:	.asciz "]\x8AMH"
-.incbin_range "baserom/kn7000_program.rom", 0x23AE25, 0x23AE44
+.incbin_range "baserom/kn7000_program.rom", 0x23ADC4, 0x23AE44
 data_4863AE44:
 .incbin_range "baserom/kn7000_program.rom", 0x23AE44, 0x23AE78
 data_4863AE78:
@@ -37590,29 +35276,17 @@ data_4863BB94:
 data_4863BBC0:
 .incbin_range "baserom/kn7000_program.rom", 0x23BBC0, 0x23BC40
 data_4863BC40:
-.incbin_range "baserom/kn7000_program.rom", 0x23BC40, 0x23BC74
-Str_J_NH:	.asciz "J!NH\x82"
-.incbin_range "baserom/kn7000_program.rom", 0x23BC7A, 0x23BCC0
+.incbin_range "baserom/kn7000_program.rom", 0x23BC40, 0x23BCC0
 data_4863BCC0:
-.incbin_range "baserom/kn7000_program.rom", 0x23BCC0, 0x23BD04
-Str_F_NH:	.asciz "F)NH"
-	.align	4, 0x00
-Str_I_NH:	.asciz "I)NH"
-	.align	4, 0x00
-Str_I_NH_2:	.asciz "I)NH"
-	.align	4, 0x00
-Str_I_NH_3:	.asciz "I)NH"
-	.align	4, 0x00
-Str_I_NH_4:	.asciz "I)NH"
-	.align	4, 0x00
-Str_I_NH_5:	.asciz "I)NH"
-.incbin_range "baserom/kn7000_program.rom", 0x23BD31, 0x23BD40
+.incbin_range "baserom/kn7000_program.rom", 0x23BCC0, 0x23BD40
 data_4863BD40:
 .incbin_range "baserom/kn7000_program.rom", 0x23BD40, 0x23BD64
 data_4863BD64:
 .incbin_range "baserom/kn7000_program.rom", 0x23BD64, 0x23BD88
-Str_NH_NH_NH7_NH_NH_NH_NH_NH_NH:	.asciz "\xDE)NH\xEC)NH\x10*NH7*NH_*NH\x83*NH\xA9*NH\xCF*NH\xF1*NH\x10"
-.incbin_range "baserom/kn7000_program.rom", 0x23BDAE, 0x23BE2C
+Str_NH_NH_NH7_NH_NH_NH_NH_NH_NH:
+.incbin_range "baserom/kn7000_program.rom", 0x23BD88, 0x23BDAC
+data_4863BDAC:
+.incbin_range "baserom/kn7000_program.rom", 0x23BDAC, 0x23BE2C
 data_4863BE2C:
 .incbin_range "baserom/kn7000_program.rom", 0x23BE2C, 0x23BE50
 data_4863BE50:
@@ -37620,113 +35294,37 @@ data_4863BE50:
 data_4863BE74:
 .incbin_range "baserom/kn7000_program.rom", 0x23BE74, 0x23BE98
 data_4863BE98:
-.incbin_range "baserom/kn7000_program.rom", 0x23BE98, 0x23BEB4
-Str_A1NH:	.asciz "A1NH\x80"
-.incbin_range "baserom/kn7000_program.rom", 0x23BEBA, 0x23BEDC
-Str_C5NH:	.asciz "C5NH"
-	.align	4, 0x00
-Str_F5NH:	.asciz "F5NH"
-	.align	4, 0x00
-Str_F5NH_2:	.asciz "F5NH"
-	.align	4, 0x00
-Str_F5NH_3:	.asciz "F5NH"
-	.align	4, 0x00
-Str_F5NH_4:	.asciz "F5NH"
-	.align	4, 0x00
-Str_F5NH_5:	.asciz "F5NH"
-.incbin_range "baserom/kn7000_program.rom", 0x23BF09, 0x23BF18
+.incbin_range "baserom/kn7000_program.rom", 0x23BE98, 0x23BF18
 data_4863BF18:
 .incbin_range "baserom/kn7000_program.rom", 0x23BF18, 0x23BF98
 data_4863BF98:
-.incbin_range "baserom/kn7000_program.rom", 0x23BF98, 0x23BFB4
-Str_9BNH:	.asciz "9BNH\x80"
-.incbin_range "baserom/kn7000_program.rom", 0x23BFBA, 0x23BFDC
-Str_ENH:	.asciz "\xE2ENH"
-	.align	4, 0x00
-Str_ENH_2:	.asciz "\xE5ENH"
-	.align	4, 0x00
-Str_ENH_3:	.asciz "\xE5ENH"
-	.align	4, 0x00
-Str_ENH_4:	.asciz "\xE5ENH"
-	.align	4, 0x00
-Str_ENH_5:	.asciz "\xE5ENH"
-	.align	4, 0x00
-Str_ENH_6:	.asciz "\xE5ENH"
-.incbin_range "baserom/kn7000_program.rom", 0x23C009, 0x23C018
+.incbin_range "baserom/kn7000_program.rom", 0x23BF98, 0x23C018
 data_4863C018:
 .incbin_range "baserom/kn7000_program.rom", 0x23C018, 0x23C044
 data_4863C044:
 .incbin_range "baserom/kn7000_program.rom", 0x23C044, 0x23C070
-Str_zFNH_FNH_FNH_FNH_FNH_GNHJGNHmGNH_GNH_GNH:	.asciz "zFNH\x88FNH\xAEFNH\xD2FNH\xFCFNH GNHJGNHmGNH\x95GNH\xB7GNH\xDFGNH\x10"
-.incbin_range "baserom/kn7000_program.rom", 0x23C09E, 0x23C0D0
-Str_JNH:	.asciz "!JNH\x82"
-.incbin_range "baserom/kn7000_program.rom", 0x23C0D6, 0x23C0E0
-Str_LNH:	.asciz "\xB6LNH"
-	.align	4, 0x00
-Str_LNH_2:	.asciz "\xB9LNH"
-	.align	4, 0x00
-Str_LNH_3:	.asciz "\xB9LNH"
-	.align	4, 0x00
-Str_LNH_4:	.asciz "\xB9LNH"
-	.align	4, 0x00
-Str_LNH_5:	.asciz "\xB9LNH"
-	.align	4, 0x00
-Str_LNH_6:	.asciz "\xB9LNH"
-.incbin_range "baserom/kn7000_program.rom", 0x23C10D, 0x23C11C
+Str_zFNH_FNH_FNH_FNH_FNH_GNHJGNHmGNH_GNH_GNH:
+.incbin_range "baserom/kn7000_program.rom", 0x23C070, 0x23C09C
+data_4863C09C:
+.incbin_range "baserom/kn7000_program.rom", 0x23C09C, 0x23C11C
 data_4863C11C:
-.incbin_range "baserom/kn7000_program.rom", 0x23C11C, 0x23C160
-Str_QNH:	.asciz "\xBDQNH"
-	.align	4, 0x00
-Str_QNH_2:	.asciz "\xC0QNH"
-	.align	4, 0x00
-Str_QNH_3:	.asciz "\xC0QNH"
-	.align	4, 0x00
-Str_QNH_4:	.asciz "\xC0QNH"
-	.align	4, 0x00
-Str_QNH_5:	.asciz "\xC0QNH"
-	.align	4, 0x00
-Str_QNH_6:	.asciz "\xC0QNH"
-.incbin_range "baserom/kn7000_program.rom", 0x23C18D, 0x23C19C
+.incbin_range "baserom/kn7000_program.rom", 0x23C11C, 0x23C19C
 data_4863C19C:
 .incbin_range "baserom/kn7000_program.rom", 0x23C19C, 0x23C1C8
 data_4863C1C8:
 .incbin_range "baserom/kn7000_program.rom", 0x23C1C8, 0x23C1F4
-Str_ZRNHhRNH_RNH_SNH_SNH_TNH_TNH_TNH_TNH_UNH:	.asciz "ZRNHhRNH\x8CRNH'SNH\xC4SNH\x8BTNH\xB0TNH\xD2TNH\xF5TNH\x1BUNH>UNH\x10"
-.incbin_range "baserom/kn7000_program.rom", 0x23C222, 0x23C23C
-Str_xUNH:	.asciz "xUNH\x80"
-.incbin_range "baserom/kn7000_program.rom", 0x23C242, 0x23C264
-Str_NH:	.asciz "\xA8\\NH"
-	.align	4, 0x00
-Str_NH_2:	.asciz "\xAB\\NH"
-	.align	4, 0x00
-Str_NH_3:	.asciz "\xAB\\NH"
-	.align	4, 0x00
-Str_NH_4:	.asciz "\xAB\\NH"
-	.align	4, 0x00
-Str_NH_5:	.asciz "\xAB\\NH"
-	.align	4, 0x00
-Str_NH_6:	.asciz "\xAB\\NH"
-.incbin_range "baserom/kn7000_program.rom", 0x23C291, 0x23C2A0
+Str_ZRNHhRNH_RNH_SNH_SNH_TNH_TNH_TNH_TNH_UNH:
+.incbin_range "baserom/kn7000_program.rom", 0x23C1F4, 0x23C220
+data_4863C220:
+.incbin_range "baserom/kn7000_program.rom", 0x23C220, 0x23C2A0
 data_4863C2A0:
 .incbin_range "baserom/kn7000_program.rom", 0x23C2A0, 0x23C2CC
 data_4863C2CC:
 .incbin_range "baserom/kn7000_program.rom", 0x23C2CC, 0x23C2F8
-Str_E_NHS_NHw_NH_NH_NHz_NH_NH_NH_NH_NH_NH:	.asciz "E]NHS]NHw]NH\x13^NH\xB1^NHz_NH\x9F_NH\xC1_NH\xE4_NH\n`NH-`NH\x10"
-.incbin_range "baserom/kn7000_program.rom", 0x23C326, 0x23C340
-Str_g_NH:	.asciz "g`NH\x80"
-.incbin_range "baserom/kn7000_program.rom", 0x23C346, 0x23C368
-Str_gNH:	.asciz "\x9FgNH"
-	.align	4, 0x00
-Str_gNH_2:	.asciz "\xA2gNH"
-	.align	4, 0x00
-Str_gNH_3:	.asciz "\xA2gNH"
-	.align	4, 0x00
-Str_gNH_4:	.asciz "\xA2gNH"
-	.align	4, 0x00
-Str_gNH_5:	.asciz "\xA2gNH"
-	.align	4, 0x00
-Str_gNH_6:	.asciz "\xA2gNH"
-.incbin_range "baserom/kn7000_program.rom", 0x23C395, 0x23C3A4
+Str_E_NHS_NHw_NH_NH_NHz_NH_NH_NH_NH_NH_NH:
+.incbin_range "baserom/kn7000_program.rom", 0x23C2F8, 0x23C324
+data_4863C324:
+.incbin_range "baserom/kn7000_program.rom", 0x23C324, 0x23C3A4
 data_4863C3A4:
 .incbin_range "baserom/kn7000_program.rom", 0x23C3A4, 0x23C3D0
 data_4863C3D0:
@@ -37734,21 +35332,7 @@ data_4863C3D0:
 data_4863C3FC:
 .incbin_range "baserom/kn7000_program.rom", 0x23C3FC, 0x23C428
 data_4863C428:
-.incbin_range "baserom/kn7000_program.rom", 0x23C428, 0x23C444
-Str_kNH:	.asciz "^kNH\x80"
-.incbin_range "baserom/kn7000_program.rom", 0x23C44A, 0x23C46C
-Str_rNH:	.asciz "\x96rNH"
-	.align	4, 0x00
-Str_rNH_2:	.asciz "\x99rNH"
-	.align	4, 0x00
-Str_rNH_3:	.asciz "\x99rNH"
-	.align	4, 0x00
-Str_rNH_4:	.asciz "\x99rNH"
-	.align	4, 0x00
-Str_rNH_5:	.asciz "\x99rNH"
-	.align	4, 0x00
-Str_rNH_6:	.asciz "\x99rNH"
-.incbin_range "baserom/kn7000_program.rom", 0x23C499, 0x23C4A8
+.incbin_range "baserom/kn7000_program.rom", 0x23C428, 0x23C4A8
 data_4863C4A8:
 .incbin_range "baserom/kn7000_program.rom", 0x23C4A8, 0x23C4D4
 data_4863C4D4:
@@ -37756,133 +35340,51 @@ data_4863C4D4:
 data_4863C500:
 .incbin_range "baserom/kn7000_program.rom", 0x23C500, 0x23C52C
 data_4863C52C:
-.incbin_range "baserom/kn7000_program.rom", 0x23C52C, 0x23C548
-Str_UvNH:	.asciz "UvNH\x80"
-.incbin_range "baserom/kn7000_program.rom", 0x23C54E, 0x23C5A8
-Str_yNH:	.asciz "\xB9yNH"
-.incbin_range "baserom/kn7000_program.rom", 0x23C5AD, 0x23C62C
+.incbin_range "baserom/kn7000_program.rom", 0x23C52C, 0x23C5AC
+data_4863C5AC:
+.incbin_range "baserom/kn7000_program.rom", 0x23C5AC, 0x23C62C
 data_4863C62C:
 .incbin_range "baserom/kn7000_program.rom", 0x23C62C, 0x23C6AC
 data_4863C6AC:
-.incbin_range "baserom/kn7000_program.rom", 0x23C6AC, 0x23C700
-Str_Y_NH:	.asciz "Y\x8ENH"
-	.align	4, 0x00
-Str_s_NH:	.asciz "s\x8ENH"
-	.align	4, 0x00
-Str_s_NH_2:	.asciz "s\x8ENH"
-	.align	4, 0x00
-Str_s_NH_3:	.asciz "s\x8ENH~"
-.incbin_range "baserom/kn7000_program.rom", 0x23C71E, 0x23C72C
+.incbin_range "baserom/kn7000_program.rom", 0x23C6AC, 0x23C72C
 data_4863C72C:
-.incbin_range "baserom/kn7000_program.rom", 0x23C72C, 0x23C770
-Str_p_NH:	.asciz "p\xA3NH"
-	.align	4, 0x00
-Str_s_NH_4:	.asciz "s\xA3NH"
-	.align	4, 0x00
-Str_s_NH_5:	.asciz "s\xA3NH"
-	.align	4, 0x00
-Str_s_NH_6:	.asciz "s\xA3NH"
-	.align	4, 0x00
-Str_s_NH_7:	.asciz "s\xA3NH"
-	.align	4, 0x00
-Str_s_NH_8:	.asciz "s\xA3NH"
-.incbin_range "baserom/kn7000_program.rom", 0x23C79D, 0x23C7AC
+.incbin_range "baserom/kn7000_program.rom", 0x23C72C, 0x23C7AC
 data_4863C7AC:
 .incbin_range "baserom/kn7000_program.rom", 0x23C7AC, 0x23C82C
 data_4863C82C:
-.incbin_range "baserom/kn7000_program.rom", 0x23C82C, 0x23C870
-Str_y_NH:	.asciz "y\xACNH"
-.incbin_range "baserom/kn7000_program.rom", 0x23C875, 0x23C8AC
+.incbin_range "baserom/kn7000_program.rom", 0x23C82C, 0x23C8AC
 data_4863C8AC:
 .incbin_range "baserom/kn7000_program.rom", 0x23C8AC, 0x23C92C
 data_4863C92C:
-.incbin_range "baserom/kn7000_program.rom", 0x23C92C, 0x23C978
-Str_Z_NH:	.asciz "Z\xCDNH"
-	.align	4, 0x00
-Str_Z_NH_2:	.asciz "Z\xCDNH"
-	.align	4, 0x00
-Str_Z_NH_3:	.asciz "Z\xCDNH"
-	.align	4, 0x00
-Str_Z_NH_4:	.asciz "Z\xCDNH"
-	.align	4, 0x00
-Str_Z_NH_5:	.asciz "Z\xCDNH~"
-.incbin_range "baserom/kn7000_program.rom", 0x23C99E, 0x23C9AC
+.incbin_range "baserom/kn7000_program.rom", 0x23C92C, 0x23C9AC
 data_4863C9AC:
 .incbin_range "baserom/kn7000_program.rom", 0x23C9AC, 0x23C9FC
 data_4863C9FC:
 .incbin_range "baserom/kn7000_program.rom", 0x23C9FC, 0x23CA7C
 data_4863CA7C:
-.incbin_range "baserom/kn7000_program.rom", 0x23CA7C, 0x23CAE0
-Str_FOH:	.asciz "\xA8FOH"
-	.align	4, 0x00
-Str_FOH_2:	.asciz "\xC2FOH~"
-.incbin_range "baserom/kn7000_program.rom", 0x23CAEE, 0x23CAFC
+.incbin_range "baserom/kn7000_program.rom", 0x23CA7C, 0x23CAFC
 data_4863CAFC:
 .incbin_range "baserom/kn7000_program.rom", 0x23CAFC, 0x23CB24
 data_4863CB24:
 .incbin_range "baserom/kn7000_program.rom", 0x23CB24, 0x23CB4C
-Str_uGOH_GOH_HOHbKOH_IOH_JOH_JOH_JOH_JOH_KOH:	.asciz "uGOH\x80GOH\xB4HOHbKOH\xECIOH$JOH_JOH\xB9JOH\xF3JOH/KOH\x10"
-.incbin_range "baserom/kn7000_program.rom", 0x23CB76, 0x23CB90
-Str_KOH:	.asciz "~KOH\x80"
-.incbin_range "baserom/kn7000_program.rom", 0x23CB96, 0x23CBF4
+Str_uGOH_GOH_HOHbKOH_IOH_JOH_JOH_JOH_JOH_KOH:
+.incbin_range "baserom/kn7000_program.rom", 0x23CB4C, 0x23CB74
+data_4863CB74:
+.incbin_range "baserom/kn7000_program.rom", 0x23CB74, 0x23CBF4
 data_4863CBF4:
 .incbin_range "baserom/kn7000_program.rom", 0x23CBF4, 0x23CC1C
 data_4863CC1C:
 .incbin_range "baserom/kn7000_program.rom", 0x23CC1C, 0x23CC44
-Str_UOH_UOH_VOH_VOHfWOH_WOHuXOH_YOHkYOH_YOH:	.asciz "\xA7UOH\xCBUOH\x10VOH\xD2VOHfWOH\xD0WOHuXOH\x1AYOHkYOH\xBAYOH\x10"
-.incbin_range "baserom/kn7000_program.rom", 0x23CC6E, 0x23CCB0
-Str_qdOH:	.asciz "qdOH"
-	.align	4, 0x00
-Str_tdOH:	.asciz "tdOH"
-	.align	4, 0x00
-Str_tdOH_2:	.asciz "tdOH"
-	.align	4, 0x00
-Str_tdOH_3:	.asciz "tdOH"
-	.align	4, 0x00
-Str_tdOH_4:	.asciz "tdOH"
-	.align	4, 0x00
-Str_tdOH_5:	.asciz "tdOH"
-.incbin_range "baserom/kn7000_program.rom", 0x23CCDD, 0x23CCEC
+Str_UOH_UOH_VOH_VOHfWOH_WOHuXOH_YOHkYOH_YOH:
+.incbin_range "baserom/kn7000_program.rom", 0x23CC44, 0x23CC6C
+data_4863CC6C:
+.incbin_range "baserom/kn7000_program.rom", 0x23CC6C, 0x23CCEC
 data_4863CCEC:
-.incbin_range "baserom/kn7000_program.rom", 0x23CCEC, 0x23CD48
-Str_DhOH:	.asciz "DhOH\x81"
-.incbin_range "baserom/kn7000_program.rom", 0x23CD4E, 0x23CD50
-Str_ihOH:	.asciz "ihOH"
-	.align	4, 0x00
-Str_hOH:	.asciz "\x83hOH~"
-.incbin_range "baserom/kn7000_program.rom", 0x23CD5E, 0x23CD6C
+.incbin_range "baserom/kn7000_program.rom", 0x23CCEC, 0x23CD6C
 data_4863CD6C:
-.incbin_range "baserom/kn7000_program.rom", 0x23CD6C, 0x23CD88
-Str_kOH:	.asciz ".kOH\x80"
-.incbin_range "baserom/kn7000_program.rom", 0x23CD8E, 0x23CDB0
-Str_ipOH:	.asciz "ipOH"
-	.align	4, 0x00
-Str_lpOH:	.asciz "lpOH"
-	.align	4, 0x00
-Str_lpOH_2:	.asciz "lpOH"
-	.align	4, 0x00
-Str_lpOH_3:	.asciz "lpOH"
-	.align	4, 0x00
-Str_lpOH_4:	.asciz "lpOH"
-	.align	4, 0x00
-Str_lpOH_5:	.asciz "lpOH"
-.incbin_range "baserom/kn7000_program.rom", 0x23CDDD, 0x23CDEC
+.incbin_range "baserom/kn7000_program.rom", 0x23CD6C, 0x23CDEC
 data_4863CDEC:
-.incbin_range "baserom/kn7000_program.rom", 0x23CDEC, 0x23CE08
-Str_DrOH:	.asciz "DrOH\x80"
-.incbin_range "baserom/kn7000_program.rom", 0x23CE0E, 0x23CE30
-Str_uOH:	.asciz "\xBAuOH"
-	.align	4, 0x00
-Str_uOH_2:	.asciz "\xBDuOH"
-	.align	4, 0x00
-Str_uOH_3:	.asciz "\xBDuOH"
-	.align	4, 0x00
-Str_uOH_4:	.asciz "\xBDuOH"
-	.align	4, 0x00
-Str_uOH_5:	.asciz "\xBDuOH"
-	.align	4, 0x00
-Str_uOH_6:	.asciz "\xBDuOH"
-.incbin_range "baserom/kn7000_program.rom", 0x23CE5D, 0x23CE6C
+.incbin_range "baserom/kn7000_program.rom", 0x23CDEC, 0x23CE6C
 data_4863CE6C:
 .incbin_range "baserom/kn7000_program.rom", 0x23CE6C, 0x23CF24
 data_4863CF24:
@@ -38768,31 +36270,31 @@ data_4863F804:
 .incbin_range "baserom/kn7000_program.rom", 0x23F804, 0x23F828
 Str_Lyrc_2:	.asciz "Lyrc"
 	.align	4, 0xFF
-Str_empty_1041:	.asciz "                         "
+Str_empty_1031:	.asciz "                         "
 	.align	4, 0xFF
-Str_empty_1040:	.asciz "                         "
+Str_empty_1030:	.asciz "                         "
 	.align	4, 0xFF
-Str_empty_1039:	.asciz "                      "
+Str_empty_1029:	.asciz "                      "
 	.align	4, 0xFF
-Str_empty_1038:	.asciz "                         "
+Str_empty_1028:	.asciz "                         "
 	.align	4, 0xFF
-Str_empty_1037:	.asciz "      "
+Str_empty_1027:	.asciz "      "
 	.align	4, 0xFF
 Str_PLAY_6:	.asciz " PLAY "
 	.align	4, 0xFF
 Str_PAUSE_4:	.asciz "PAUSE"
 	.align	4, 0xFF
-Str_empty_1036:	.asciz "     "
+Str_empty_1026:	.asciz "     "
 	.align	4, 0xFF
 Str_PAUSE_3:	.asciz "PAUSE"
 	.align	4, 0xFF
-Str_empty_1035:	.asciz "                         "
+Str_empty_1025:	.asciz "                         "
 	.align	4, 0xFF
-Str_empty_1034:	.asciz "                         "
+Str_empty_1024:	.asciz "                         "
 	.align	4, 0xFF
-Str_empty_1033:	.asciz "                         "
+Str_empty_1023:	.asciz "                         "
 	.align	4, 0xFF
-Str_empty_1032:	.asciz "                         "
+Str_empty_1022:	.asciz "                         "
 	.align	4, 0xFF
 Str_2d_s_2:	.asciz "%2d : %s"
 	.align	4, 0xFF
@@ -38804,7 +36306,7 @@ Str_02d:	.asciz "%02d"
 	.align	4, 0xFF
 Str_LATIN_3:	.asciz "LATIN"
 	.align	4, 0xFF
-Str_empty_1031:	.asciz "="
+Str_empty_1021:	.asciz "="
 	.align	4, 0xFF
 Str_TITLE_4:	.asciz "TITLE"
 	.align	4, 0xFF
@@ -39675,6 +37177,8 @@ Str_PD2:	.asciz "PD2"
 Str_BPD:	.asciz "BPD"
 Str_MET:	.asciz "MET"
 Str_CDF:	.asciz "CDF"
+Str_empty_318:	.asciz "   "
+Str_empty_317:	.asciz "   "
 Str_empty_316:	.asciz "   "
 Str_empty_315:	.asciz "   "
 Str_empty_314:	.asciz "   "
@@ -39683,8 +37187,6 @@ Str_empty_312:	.asciz "   "
 Str_empty_311:	.asciz "   "
 Str_empty_310:	.asciz "   "
 Str_empty_309:	.asciz "   "
-Str_empty_308:	.asciz "   "
-Str_empty_307:	.asciz "   "
 Str_empty_306:	.asciz "   "
 Str_empty_305:	.asciz "   "
 Str_empty_304:	.asciz "   "
@@ -39722,16 +37224,16 @@ Str_MEMORY_1c_2:	.asciz "MEMORY: %1c-              "
 Str_MEMORY_1c:	.asciz "MEMORY: %1c"
 Str_USER_BANK_1c_PAD_1d_s:	.asciz "USER BANK: %1c-PAD%1d%s"
 Str_SOLO_50:	.asciz "-SOLO"
-Str_empty_1030:	.asciz "     "
+Str_empty_1020:	.asciz "     "
 Str_USER_BANK_1c:	.asciz "USER BANK: %1c"
 	.align	4, 0xFF
-Str_empty_1029:	.asciz "    "
+Str_empty_1250:	.asciz "    "
 Str_MUTE_2:	.asciz "MUTE"
 Str_REC_8:	.asciz "REC"
 	.align	4, 0xFF
 
 ptrs_486420F8:
-	.long	Str_empty_1029
+	.long	Str_empty_1250
 	.long	Str_MUTE_2
 	.long	Str_REC_8
 
@@ -39756,7 +37258,7 @@ Str_INTRO2_maj_4:	.asciz "INTRO2(maj)   "
 Str_INTRO2_min_4:	.asciz "INTRO2(min)   "
 Str_ENDING2_maj_4:	.asciz "ENDING2(maj)  "
 Str_ENDING2_min_4:	.asciz "ENDING2(min)  "
-Str_empty_1028:	.asciz "              "
+Str_empty_1249:	.asciz "              "
 	.align	4, 0xFF
 
 ptrs_48642244:
@@ -39780,7 +37282,7 @@ ptrs_48642244:
 	.long	Str_INTRO2_min_4
 	.long	Str_ENDING2_maj_4
 	.long	Str_ENDING2_min_4
-	.long	Str_empty_1028
+	.long	Str_empty_1249
 
 Str_SONG_32:	.asciz "SONG   :                 "
 	.align	4, 0xFF
@@ -39838,14 +37340,14 @@ ptrs_486423C4:
 
 Str_20_20_20:	.asciz "~20~20~20"
 	.align	4, 0xFF
-Str_empty_1027:	.asciz "---    "
+Str_empty_1017:	.asciz "---    "
 Str_Special_5:	.asciz "Special"
-Str_empty_1026:	.asciz "       "
-Str_empty_1025:	.asciz "----        "
+Str_empty_1016:	.asciz "       "
+Str_empty_1015:	.asciz "----        "
 	.align	4, 0xFF
 Str_Other_No_3d_5:	.asciz "Other No.%3d"
 	.align	4, 0xFF
-Str_empty_1024:	.asciz "            "
+Str_empty_1014:	.asciz "            "
 	.align	4, 0xFF
 Str_CUTT_2:	.asciz "CUTT"
 Str_STAC_2:	.asciz "STAC"
@@ -39858,7 +37360,7 @@ ptrs_4864244C:
 	.long	Str_NORM_2
 	.long	Str_TENU_2
 
-Str_empty_1023:	.asciz "    "
+Str_empty_1013:	.asciz "    "
 	.align	4, 0xFF
 Str_CcEv_6:	.asciz "CcEv"
 	.align	4, 0xFF
@@ -39899,12 +37401,12 @@ Str_PART_s:	.asciz "PART: %s"
 	.align	4, 0xFF
 Str_PART_PART_d:	.asciz "PART: PART%d"
 	.align	4, 0xFF
-Str_empty_1022:	.asciz "---"
+Str_empty_1012:	.asciz "---"
 Str_3s_2d_2d_s_v_3d_5d_s:	.asciz "     %3s. %2d. %2d.   %s v%3d %5d    %s"
 Str_3s_2d_2d_5d_s:	.asciz "     %3s. %2d. %2d.            %5d    %s"
 	.align	4, 0xFF
 Str_3d_58:	.asciz "%3d"
-Str_empty_1021:	.asciz "---"
+Str_empty_1011:	.asciz "---"
 Str_43_2d_32:	.asciz "~43~2d~32"
 Str_44_a0_bc:	.asciz "~44~a0~bc"
 Str_44_2d_32:	.asciz "~44~2d~32"
@@ -40033,3 +37535,2472 @@ Str_45_38_20:	.asciz "~45~38~20"
 Str_46_38_20:	.asciz "~46~38~20"
 Str_46_9e_38:	.asciz "~46~9e~38"
 Str_47_38_20:	.asciz "~47~38~20"
+
+ptrs_48642A90:
+	.long	Str_43_2d_32
+	.long	Str_44_a0_bc
+	.long	Str_44_2d_32
+	.long	Str_45_a0_bc
+	.long	Str_45_2d_32
+	.long	Str_46_2d_32
+	.long	Str_46_9e_bc
+	.long	Str_47_2d_32
+	.long	Str_41_a0_bc
+	.long	Str_41_2d_32
+	.long	Str_42_a0_bc
+	.long	Str_42_2d_32
+	.long	Str_43_2d_31
+	.long	Str_44_a0_bb
+	.long	Str_44_2d_31
+	.long	Str_45_a0_bb
+	.long	Str_45_2d_31
+	.long	Str_46_2d_31
+	.long	Str_46_9e_bb
+	.long	Str_47_2d_31
+	.long	Str_41_a0_bb
+	.long	Str_41_2d_31
+	.long	Str_42_a0_bb
+	.long	Str_42_2d_31
+	.long	Str_43_30_20
+	.long	Str_44_a0_30
+	.long	Str_44_30_20
+	.long	Str_45_a0_30
+	.long	Str_45_30_20
+	.long	Str_46_30_20
+	.long	Str_46_9e_30
+	.long	Str_47_30_20
+	.long	Str_41_a0_30
+	.long	Str_41_30_20
+	.long	Str_42_a0_30
+	.long	Str_42_30_20
+	.long	Str_43_31_20
+	.long	Str_44_a0_31
+	.long	Str_44_31_20
+	.long	Str_45_a0_31
+	.long	Str_45_31_20
+	.long	Str_46_31_20
+	.long	Str_46_9e_31
+	.long	Str_47_31_20
+	.long	Str_41_a0_31
+	.long	Str_41_31_20
+	.long	Str_42_a0_31
+	.long	Str_42_31_20
+	.long	Str_43_32_20
+	.long	Str_44_a0_32
+	.long	Str_44_32_20
+	.long	Str_45_a0_32
+	.long	Str_45_32_20
+	.long	Str_46_32_20
+	.long	Str_46_9e_32
+	.long	Str_47_32_20
+	.long	Str_41_a0_32
+	.long	Str_41_32_20
+	.long	Str_42_a0_32
+	.long	Str_42_32_20
+	.long	Str_43_33_20
+	.long	Str_44_a0_33
+	.long	Str_44_33_20
+	.long	Str_45_a0_33
+	.long	Str_45_33_20
+	.long	Str_46_33_20
+	.long	Str_46_9e_33
+	.long	Str_47_33_20
+	.long	Str_41_a0_33
+	.long	Str_41_33_20
+	.long	Str_42_a0_33
+	.long	Str_42_33_20
+	.long	Str_43_34_20
+	.long	Str_44_a0_34
+	.long	Str_44_34_20
+	.long	Str_45_a0_34
+	.long	Str_45_34_20
+	.long	Str_46_34_20
+	.long	Str_46_9e_34
+	.long	Str_47_34_20
+	.long	Str_41_a0_34
+	.long	Str_41_34_20
+	.long	Str_42_a0_34
+	.long	Str_42_34_20
+	.long	Str_43_35_20
+	.long	Str_44_a0_35
+	.long	Str_44_35_20
+	.long	Str_45_a0_35
+	.long	Str_45_35_20
+	.long	Str_46_35_20
+	.long	Str_46_9e_35
+	.long	Str_47_35_20
+	.long	Str_41_a0_35
+	.long	Str_41_35_20
+	.long	Str_42_a0_35
+	.long	Str_42_35_20
+	.long	Str_43_36_20
+	.long	Str_44_a0_36
+	.long	Str_44_36_20
+	.long	Str_45_a0_36
+	.long	Str_45_36_20
+	.long	Str_46_36_20
+	.long	Str_46_9e_36
+	.long	Str_47_36_20
+	.long	Str_41_a0_36
+	.long	Str_41_36_20
+	.long	Str_42_a0_36
+	.long	Str_42_36_20
+	.long	Str_43_37_20
+	.long	Str_44_a0_37
+	.long	Str_44_37_20
+	.long	Str_45_a0_37
+	.long	Str_45_37_20
+	.long	Str_46_37_20
+	.long	Str_46_9e_37
+	.long	Str_47_37_20
+	.long	Str_41_a0_37
+	.long	Str_41_37_20
+	.long	Str_42_a0_37
+	.long	Str_42_37_20
+	.long	Str_43_38_20
+	.long	Str_44_a0_38
+	.long	Str_44_38_20
+	.long	Str_45_a0_38
+	.long	Str_45_38_20
+	.long	Str_46_38_20
+	.long	Str_46_9e_38
+	.long	Str_47_38_20
+data_48642C90:
+.incbin_range "baserom/kn7000_program.rom", 0x242C90, 0x242C94
+
+Str_empty_1010:	.asciz "\xAD "
+	.align	4, 0xFF
+data_48642C98:
+.incbin_range "baserom/kn7000_program.rom", 0x242C98, 0x242C9C
+Str_empty_1009:	.asciz "\xAC "
+	.align	4, 0xFF
+data_48642CA0:
+.incbin_range "baserom/kn7000_program.rom", 0x242CA0, 0x242CA4
+Str_empty_1008:	.asciz "\xAB "
+	.align	4, 0xFF
+Str_empty_1007:	.asciz "\xAA "
+	.align	4, 0xFF
+Str_2d_37:	.asciz "%2d"
+Str_3s_2d_2d_3d_v_3d_s:	.asciz "     %3s. %2d. %2d.   %3d  v%3d    %s"
+	.align	4, 0xFF
+Str_3s_2d_2d_v_3d_s:	.asciz "     %3s. %2d. %2d.        v%3d    %s"
+	.align	4, 0xFF
+Str_3s_s_V_3d_5d:	.asciz " %3s          %s V%3d %5d"
+	.align	4, 0xFF
+Str_3s_12:	.asciz " %3s                          "
+	.align	4, 0xFF
+Str_empty_1248:	.asciz "   "
+data_48642D40:
+.incbin_range "baserom/kn7000_program.rom", 0x242D40, 0x242D44
+Str_empty_1247:	.asciz " \xAD "
+data_48642D48:
+.incbin_range "baserom/kn7000_program.rom", 0x242D48, 0x242D4C
+Str_empty_1246:	.asciz " \xAC "
+data_48642D50:
+.incbin_range "baserom/kn7000_program.rom", 0x242D50, 0x242D54
+Str_empty_1245:	.asciz " \xAB "
+data_48642D58:
+.incbin_range "baserom/kn7000_program.rom", 0x242D58, 0x242D5C
+Str_empty_1244:	.asciz " \xAA "
+Str_empty_1238:	.asciz " \xA6 "
+Str_empty_1237:	.asciz " \xA1 "
+Str_x2:	.asciz "\xA1x2"
+Str_x3:	.asciz "\xA1x3"
+Str_x4:	.asciz "\xA1x4"
+
+ptrs_48642D74:
+	.long	Str_empty_1248
+	.long	data_48642D40
+	.long	Str_empty_1247
+	.long	data_48642D48
+	.long	Str_empty_1246
+	.long	data_48642D50
+	.long	Str_empty_1245
+	.long	data_48642D58
+	.long	Str_empty_1244
+	.long	Str_empty_1238
+	.long	Str_empty_1237
+	.long	Str_x2
+	.long	Str_x3
+	.long	Str_x4
+
+Str_TENU:	.asciz "TENU"
+Str_NORM:	.asciz "NORM"
+Str_STAC:	.asciz "STAC"
+Str_CUTT:	.asciz "CUTT"
+
+ptrs_48642DC0:
+	.long	Str_TENU
+	.long	Str_NORM
+	.long	Str_STAC
+	.long	Str_CUTT
+
+Str_3s_1c_3s_4s:	.asciz "%3s%1c%3s  %4s"
+	.align	4, 0xFF
+Str_3s_s_5:	.asciz " %3s %s"
+Str_3s_11:	.asciz " %3s                                        "
+	.align	4, 0xFF
+Str_3s_END_2:	.asciz " %3s END                                    "
+	.align	4, 0xFF
+Str_3s_REPEAT_2:	.asciz " %3s REPEAT                                 "
+	.align	4, 0xFF
+Str_s_SOUND_s:	.asciz " %s    SOUND       %s   "
+	.align	4, 0xFF
+Str_s_VOLUME_3d:	.asciz " %s    VOLUME          =         %3d  "
+	.align	4, 0xFF
+Str_s_VOLUME_MUTE_s:	.asciz " %s    VOLUME          =     MUTE %s "
+Str_ON_83:	.asciz "ON "
+Str_OFF_97:	.asciz "OFF"
+	.align	4, 0xFF
+Str_s_EXPRESSION_3d:	.asciz " %s    EXPRESSION      =         %3d  "
+	.align	4, 0xFF
+Str_s_MULTI_EFFECT_DPT_3d:	.asciz " %s    MULTI EFFECT DPT=         %3d  "
+	.align	4, 0xFF
+Str_s_MULTI_EFFECT_s:	.asciz " %s    MULTI EFFECT    =         %s  "
+Str_ON_82:	.asciz "ON "
+Str_OFF_96:	.asciz "OFF"
+	.align	4, 0xFF
+Str_s_REVERB_3d:	.asciz " %s    REVERB          =         %3d  "
+	.align	4, 0xFF
+Str_s_SOLO_s:	.asciz " %s    SOLO            =         %s  "
+Str_ON_81:	.asciz "ON "
+Str_OFF_95:	.asciz "OFF"
+	.align	4, 0xFF
+Str_DSP1:	.asciz "DSP1 "
+	.align	4, 0xFF
+Str_empty_999:	.asciz "-"
+	.align	4, 0xFF
+Str_empty_998:	.asciz "                                "
+	.align	4, 0xFF
+Str_DSP2:	.asciz "DSP2 "
+	.align	4, 0xFF
+Str_empty_997:	.asciz "-"
+	.align	4, 0xFF
+Str_empty_996:	.asciz "                                "
+	.align	4, 0xFF
+Str_DSP3:	.asciz "DSP3 "
+	.align	4, 0xFF
+Str_empty_995:	.asciz "-"
+	.align	4, 0xFF
+Str_empty_994:	.asciz "                                "
+	.align	4, 0xFF
+Str_DSP4:	.asciz "DSP4 "
+	.align	4, 0xFF
+Str_empty_993:	.asciz "-"
+	.align	4, 0xFF
+Str_empty_992:	.asciz "                                "
+	.align	4, 0xFF
+Str_DSP5:	.asciz "DSP5 "
+	.align	4, 0xFF
+Str_empty_991:	.asciz "-"
+	.align	4, 0xFF
+Str_empty_990:	.asciz "                                "
+	.align	4, 0xFF
+Str_s_SOUND_DSP_DEPTH_3d:	.asciz " %s    SOUND DSP DEPTH =         %3d  "
+	.align	4, 0xFF
+Str_s_SOUND_DSP_s:	.asciz " %s    SOUND DSP       =         %s  "
+Str_ON_80:	.asciz "ON "
+Str_OFF_94:	.asciz "OFF"
+	.align	4, 0xFF
+Str_s_CHORUS_DEPTH_3d:	.asciz " %s    CHORUS DEPTH    =         %3d  "
+	.align	4, 0xFF
+Str_s_CHORUS_s:	.asciz " %s    CHORUS          =         %s  "
+Str_ON_79:	.asciz "ON "
+Str_OFF_93:	.asciz "OFF"
+	.align	4, 0xFF
+Str_s_PORTAMENTO_TIME_3d:	.asciz " %s    PORTAMENTO TIME =         %3d  "
+	.align	4, 0xFF
+Str_s_PORTAMENTO_s:	.asciz " %s    PORTAMENTO      =         %s  "
+Str_ON_78:	.asciz "ON "
+Str_OFF_92:	.asciz "OFF"
+	.align	4, 0xFF
+Str_s_EQ_HIGH_FC_s_Hz:	.asciz " %s    EQ HIGH FC      =      %s Hz"
+Str_s_EQ_HIGH_GAIN_5_1f_dB:	.asciz " %s    EQ HIGH GAIN    =      %+5.1f dB"
+Str_s_EQ_LOW_FC_s_Hz:	.asciz " %s    EQ LOW FC       =      %s Hz"
+Str_s_EQ_LOW_GAIN_5_1f_dB:	.asciz " %s    EQ LOW GAIN     =      %+5.1f dB"
+Str_s_DRAWBAR_TYPE_s:	.asciz " %s    DRAWBAR TYPE    =        %s  "
+Str_ROCK:	.asciz "ROCK"
+Str_JAZZ:	.asciz "JAZZ"
+	.align	4, 0xFF
+Str_s_DRAWBAR_EFF_TYPE_4d:	.asciz " %s    DRAWBAR EFF.TYPE=        %4d  "
+	.align	4, 0xFF
+Str_s_DRAWBAR_PERC_DECAY_4d:	.asciz " %s    DRAWBAR PERC.DECAY=      %+4d  "
+	.align	4, 0xFF
+Str_s_DRAWBAR_PERC_LEVEL_4d:	.asciz " %s    DRAWBAR PERC.LEVEL=      %+4d  "
+	.align	4, 0xFF
+Str_s_DRAWBAR_RELEASE_4d:	.asciz " %s    DRAWBAR RELEASE  =      %+4d  "
+	.align	4, 0xFF
+Str_s_DRAWBAR_ATTACK_4d:	.asciz " %s    DRAWBAR ATTACK   =      %+4d  "
+	.align	4, 0xFF
+Str_s_DRAWBAR_FLUTE16_4d:	.asciz " %s    DRAWBAR FLUTE16'    =   %4d  "
+	.align	4, 0xFF
+Str_s_DRAWBAR_FLUTE8_4d:	.asciz " %s    DRAWBAR FLUTE8'     =   %4d  "
+	.align	4, 0xFF
+Str_s_DRAWBAR_FLUTE5_1_3_4d:	.asciz " %s    DRAWBAR FLUTE5 1/3' =   %4d  "
+	.align	4, 0xFF
+Str_s_DRAWBAR_FLUTE4_4d:	.asciz " %s    DRAWBAR FLUTE4'     =   %4d  "
+	.align	4, 0xFF
+Str_s_DRAWBAR_FLUTE2_2_3_4d:	.asciz " %s    DRAWBAR FLUTE2 2/3' =   %4d  "
+	.align	4, 0xFF
+Str_s_DRAWBAR_FLUTE2_4d:	.asciz " %s    DRAWBAR FLUTE2'     =   %4d  "
+	.align	4, 0xFF
+Str_s_DRAWBAR_FLUTE1_3_5_4d:	.asciz " %s    DRAWBAR FLUTE1 3/5' =   %4d  "
+	.align	4, 0xFF
+Str_s_DRAWBAR_FLUTE1_1_3_4d:	.asciz " %s    DRAWBAR FLUTE1 1/3' =   %4d  "
+	.align	4, 0xFF
+Str_s_DRAWBAR_FLUTE1_4d:	.asciz " %s    DRAWBAR FLUTE1'     =   %4d  "
+	.align	4, 0xFF
+Str_s_DRAWBAR_PERC_4_s:	.asciz " %s    DRAWBAR PERC. 4'    =         %s  "
+Str_ON_77:	.asciz "ON "
+Str_OFF_91:	.asciz "OFF"
+	.align	4, 0xFF
+Str_s_DRAWBAR_PERC_2_2_3_s:	.asciz " %s    DRAWBAR PERC. 2 2/3'=         %s  "
+Str_ON_76:	.asciz "ON "
+Str_OFF_90:	.asciz "OFF"
+	.align	4, 0xFF
+Str_s_RESET_ALL_CONT_3d:	.asciz " %s    RESET ALL CONT. =         %3d  "
+	.align	4, 0xFF
+Str_s_ALL_SOUND_OFF_3d:	.asciz " %s    ALL SOUND OFF   =         %3d  "
+	.align	4, 0xFF
+Str_s_DIGITAL_EFFECT_s:	.asciz " %s    DIGITAL EFFECT  =         %s  "
+Str_ON_75:	.asciz "ON "
+Str_OFF_89:	.asciz "OFF"
+	.align	4, 0xFF
+Str_s_SUSTAIN_s_2:	.asciz " %s    SUSTAIN         =         %s  "
+Str_ON_74:	.asciz "ON "
+Str_OFF_88:	.asciz "OFF"
+	.align	4, 0xFF
+Str_s_SUSTAIN_LENGTH_3d:	.asciz " %s    SUSTAIN LENGTH  =         %3d  "
+	.align	4, 0xFF
+Str_s_SUSTAIN_s:	.asciz " %s    SUSTAIN         =         %s  "
+Str_EN:	.asciz "EN "
+Str_DIS:	.asciz "DIS"
+	.align	4, 0xFF
+Str_s_PAN_CENTER:	.asciz " %s    PAN             =       CENTER "
+	.align	4, 0xFF
+Str_s_PAN_L_2d:	.asciz " %s    PAN             =        L %2d  "
+Str_s_PAN_R_2d:	.asciz " %s    PAN             =        R %2d  "
+Str_s_BEND_SENS_3d:	.asciz " %s    BEND SENS       =         %3d  "
+	.align	4, 0xFF
+Str_s_TUNING_4d:	.asciz " %s    TUNING          =        %4d  "
+	.align	4, 0xFF
+Str_s_KEY_SHIFT_4d:	.asciz " %s    KEY SHIFT       =        %4d  "
+	.align	4, 0xFF
+Str_s_MODULATION_SENS_3d:	.asciz " %s    MODULATION SENS =         %3d  "
+	.align	4, 0xFF
+Str_s_AFTER_TOUCH_3d:	.asciz " %s    AFTER TOUCH     =         %3d  "
+	.align	4, 0xFF
+Str_s_PITCH_BEND_6d:	.asciz " %s    PITCH BEND      =      %6d  "
+Str_s_MODULATION_3d:	.asciz " %s    MODULATION      =         %3d  "
+	.align	4, 0xFF
+Str_APC_TYPE_10s:	.asciz "   APC TYPE             =  %10s  "
+	.align	4, 0xFF
+Str_APC_MEMORY_s:	.asciz "   APC MEMORY           =         %s  "
+Str_ON_73:	.asciz "ON "
+Str_OFF_87:	.asciz "OFF"
+	.align	4, 0xFF
+Str_APC_ON_BASS_s:	.asciz "   APC ON BASS          =         %s  "
+Str_ON_72:	.asciz "ON "
+Str_OFF_86:	.asciz "OFF"
+	.align	4, 0xFF
+Str_APC_HOLD_s:	.asciz "   APC HOLD             =         %s  "
+Str_ON_71:	.asciz "ON "
+Str_OFF_85:	.asciz "OFF"
+	.align	4, 0xFF
+Str_APC_VOLUME_3d:	.asciz "   APC VOLUME           =         %3d  "
+Str_SEQ_VOLUME_3d:	.asciz "   SEQ VOLUME           =         %3d  "
+Str_RHYTHM_FILLIN_OFF:	.asciz "   RHYTHM FILLIN OFF                   "
+Str_RHYTHM_FILLIN1:	.asciz "   RHYTHM FILLIN1                      "
+Str_RHYTHM_FILLIN2:	.asciz "   RHYTHM FILLIN2                      "
+Str_RHYTHM_INTRO_OFF:	.asciz "   RHYTHM INTRO OFF                    "
+Str_RHYTHM_COUNT_INTRO:	.asciz "   RHYTHM COUNT INTRO                  "
+Str_RHYTHM_INTRO1:	.asciz "   RHYTHM INTRO1                       "
+Str_RHYTHM_INTRO2:	.asciz "   RHYTHM INTRO2                       "
+Str_RHYTHM_ENDING_OFF:	.asciz "   RHYTHM ENDING OFF                   "
+Str_RHYTHM_ENDING1:	.asciz "   RHYTHM ENDING1                      "
+Str_RHYTHM_ENDING2:	.asciz "   RHYTHM ENDING2                      "
+Str_RHYTHM_SYNCHRO_s:	.asciz "   RHYTHM SYNCHRO       =         %s  "
+Str_ON_70:	.asciz "ON "
+Str_OFF_84:	.asciz "OFF"
+	.align	4, 0xFF
+Str_RHYTHM_STOP:	.asciz "   RHYTHM STOP                         "
+Str_RHYTHM_START:	.asciz "   RHYTHM START                        "
+Str_RHYTHM_s:	.asciz "   RHYTHM  %s                "
+	.align	4, 0xFF
+Str_RHYTHM_VARI_1c:	.asciz "   RHYTHM  VARI%1c                       "
+	.align	4, 0xFF
+Str_PAD_STOP:	.asciz "   PAD STOP                            "
+Str_PAD_16s:	.asciz "   PAD %16s                "
+Str_TEMPO_3d_2:	.asciz "   TEMPO              \xA8 = %3d          "
+Str_TEMPO_3d:	.asciz "   TEMPO              \xAA = %3d          "
+Str_TECHNI_CHORD_s:	.asciz "   TECHNI-CHORD         =         %s  "
+Str_ON_69:	.asciz "ON "
+Str_OFF_83:	.asciz "OFF"
+	.align	4, 0xFF
+Str_CONDUCTOR_R1:	.asciz "   CONDUCTOR R1                        "
+Str_CONDUCTOR_R2:	.asciz "   CONDUCTOR R2                        "
+Str_CONDUCTOR_R12:	.asciz "   CONDUCTOR R12                       "
+Str_CONDUCTOR_R12L:	.asciz "   CONDUCTOR R12L                      "
+Str_CONDUCTOR_R1L:	.asciz "   CONDUCTOR R1L                       "
+Str_CONDUCTOR_R2L:	.asciz "   CONDUCTOR R2L                       "
+Str_TOTAL_REVERB_s:	.asciz "   TOTAL REVERB         =         %s  "
+Str_ON_68:	.asciz "ON "
+Str_OFF_82:	.asciz "OFF"
+	.align	4, 0xFF
+Str_SPLIT_POINT_FREE:	.asciz "   SPLIT POINT      =            FREE  "
+Str_SPLIT_POINT_G2:	.asciz "   SPLIT POINT      =              G2  "
+Str_SPLIT_POINT_C3:	.asciz "   SPLIT POINT      =              C3  "
+Str_SPLIT_POINT_G3:	.asciz "   SPLIT POINT      =              G3  "
+Str_13s_2:	.asciz "   %13s                       "
+	.align	4, 0xFF
+Str_FADE_OFF:	.asciz "   FADE OFF                            "
+Str_FADE_IN_2:	.asciz "   FADE IN                             "
+Str_FADE_OUT_2:	.asciz "   FADE OUT                            "
+Str_PANEL_MEMORY_OFF:	.asciz "   PANEL MEMORY OFF                    "
+Str_PANEL_MEMORY_1c_1d:	.asciz "   PANEL MEMORY  %1c-%1d                   "
+Str_PANEL_MEMORY_2d_1d:	.asciz "   PANEL MEMORY %2d-%1d                   "
+	.align	4, 0xFF
+Str_GLIDE_s:	.asciz "   GLIDE                =         %s  "
+Str_ON_67:	.asciz "ON "
+Str_OFF_81:	.asciz "OFF"
+	.align	4, 0xFF
+Str_MSA_s:	.asciz "   MSA                  =         %s  "
+Str_ON_66:	.asciz "ON "
+Str_OFF_80:	.asciz "OFF"
+	.align	4, 0xFF
+Str_TOTAL_EXPRESSION_3d:	.asciz "   TOTAL EXPRESSION     =         %3d  "
+Str_PAD_VOLUME_3d:	.asciz "   PAD VOLUME           =         %3d  "
+Str_PAD_VOLUME_MUTE_s:	.asciz "   PAD VOLUME           =     MUTE %s "
+Str_ON_65:	.asciz "ON "
+Str_OFF_79:	.asciz "OFF"
+	.align	4, 0xFF
+Str_MASTER_TUNE_5_1f_Hz:	.asciz "   MASTER TUNE          =      %5.1f Hz"
+Str_s_SOSTENUTO_3d:	.asciz " %s    SOSTENUTO       =         %3d  "
+	.align	4, 0xFF
+Str_s_SOFT_PEDAL_3d:	.asciz " %s    SOFT PEDAL      =         %3d  "
+	.align	4, 0xFF
+Str_s_FILTER_RESONANCE_3d:	.asciz " %s    FILTER RESONANCE=         %+3d  "
+Str_s_RELEASE_TIME_3d:	.asciz " %s    RELEASE TIME    =         %+3d  "
+Str_s_ATTACK_TIME_3d:	.asciz " %s    ATTACK TIME     =         %+3d  "
+Str_s_BRIGHTNESS_3d:	.asciz " %s    BRIGHTNESS      =         %+3d  "
+Str_s_DECAY_TIME_3d:	.asciz " %s    DECAY TIME      =         %3d  "
+	.align	4, 0xFF
+Str_s_VIBRATO_RATE_3d:	.asciz " %s    VIBRATO RATE    =         %3d  "
+	.align	4, 0xFF
+Str_s_VIBRATO_DEPTH_3d:	.asciz " %s    VIBRATO DEPTH   =         %3d  "
+	.align	4, 0xFF
+Str_s_VIBRATO_DELAY_3d:	.asciz " %s    VIBRATO DELAY   =         %3d  "
+	.align	4, 0xFF
+Str_s_9:	.asciz "     %s"
+Str_empty_989:	.asciz "                                       "
+Str_PIC_USER_NO_DATA_3d:	.asciz "           PIC(USER)   = <NO DATA>%3d  "
+Str_PIC_USER_3d:	.asciz "           PIC(USER)   =          %3d  "
+Str_PIC_PRESET_3d:	.asciz "           PIC(PRESET) =          %3d  "
+Str_s_TREMULANT_TIBIA_ON:	.asciz " %s  TREMULANT TIBIA=ON                   "
+	.align	4, 0xFF
+Str_s_TREMULANT_VOX_ON:	.asciz " %s  TREMULANT VOX=ON                     "
+	.align	4, 0xFF
+Str_s_TREMULANT_TIBIA_ON_VOX_ON:	.asciz " %s  TREMULANT TIBIA=ON VOX=ON            "
+	.align	4, 0xFF
+Str_s_TREMULANT_MAIN_ON:	.asciz " %s  TREMULANT MAIN=ON                    "
+	.align	4, 0xFF
+Str_s_TREMULANT_TIBIA_ON_MAIN_ON:	.asciz " %s  TREMULANT TIBIA=ON MAIN=ON           "
+	.align	4, 0xFF
+Str_s_TREMULANT_VOX_ON_MAIN_ON:	.asciz " %s  TREMULANT VOX=ON MAIN=ON             "
+	.align	4, 0xFF
+Str_s_TREMULANT_TIBIA_ON_VOX_ON_MAIN_ON:	.asciz " %s  TREMULANT TIBIA=ON VOX=ON MAIN=ON    "
+	.align	4, 0xFF
+Str_s_TREMULANT_OFF:	.asciz " %s  TREMULANT OFF                        "
+	.align	4, 0xFF
+Str_s_TAB_FLUTE_16_s:	.asciz " %s    TAB FLUTE 16'       =         %s  "
+Str_ON_64:	.asciz "ON "
+Str_OFF_78:	.asciz "OFF"
+	.align	4, 0xFF
+Str_s_TAB_FLUTE_8_s:	.asciz " %s    TAB FLUTE 8'        =         %s  "
+Str_ON_63:	.asciz "ON "
+Str_OFF_77:	.asciz "OFF"
+	.align	4, 0xFF
+Str_s_TAB_FLUTE_4_s:	.asciz " %s    TAB FLUTE 4'        =         %s  "
+Str_ON_62:	.asciz "ON "
+Str_OFF_76:	.asciz "OFF"
+	.align	4, 0xFF
+Str_s_TAB_FLUTE_2_2_3_s:	.asciz " %s    TAB FLUTE 2 2/3'    =         %s  "
+Str_ON_61:	.asciz "ON "
+Str_OFF_75:	.asciz "OFF"
+	.align	4, 0xFF
+Str_s_TAB_FLUTE_2_s:	.asciz " %s    TAB FLUTE 2'        =         %s  "
+Str_ON_60:	.asciz "ON "
+Str_OFF_74:	.asciz "OFF"
+	.align	4, 0xFF
+Str_s_TAB_FLUTE_1_3_5_s:	.asciz " %s    TAB FLUTE 1 3/5'    =         %s  "
+Str_ON_59:	.asciz "ON "
+Str_OFF_73:	.asciz "OFF"
+	.align	4, 0xFF
+Str_s_TAB_FLUTE_1_s:	.asciz " %s    TAB FLUTE 1'        =         %s  "
+Str_ON_58:	.asciz "ON "
+Str_OFF_72:	.asciz "OFF"
+	.align	4, 0xFF
+Str_s_TAB_TROMBONE_16_s:	.asciz " %s    TAB TROMBONE 16'    =         %s  "
+Str_ON_57:	.asciz "ON "
+Str_OFF_71:	.asciz "OFF"
+	.align	4, 0xFF
+Str_s_TAB_TRUMPET_8_s:	.asciz " %s    TAB TRUMPET 8'      =         %s  "
+Str_ON_56:	.asciz "ON "
+Str_OFF_70:	.asciz "OFF"
+	.align	4, 0xFF
+Str_s_TAB_KINURA_8_s:	.asciz " %s    TAB KINURA 8'       =         %s  "
+Str_ON_55:	.asciz "ON "
+Str_OFF_69:	.asciz "OFF"
+	.align	4, 0xFF
+Str_s_TAB_CLARINET_8_s:	.asciz " %s    TAB CLARINET 8'     =         %s  "
+Str_ON_54:	.asciz "ON "
+Str_OFF_68:	.asciz "OFF"
+	.align	4, 0xFF
+Str_s_TAB_VOX_HUMANA_8_s:	.asciz " %s    TAB VOX HUMANA 8'   =         %s  "
+Str_ON_53:	.asciz "ON "
+Str_OFF_67:	.asciz "OFF"
+	.align	4, 0xFF
+Str_s_TAB_VIOLIN_8_s:	.asciz " %s    TAB VIOLIN 8'       =         %s  "
+Str_ON_52:	.asciz "ON "
+Str_OFF_66:	.asciz "OFF"
+	.align	4, 0xFF
+Str_s_TAB_PERC_4_s:	.asciz " %s    TAB PERC. 4'        =         %s  "
+Str_ON_51:	.asciz "ON "
+Str_OFF_65:	.asciz "OFF"
+	.align	4, 0xFF
+Str_s_TAB_PERC_2_2_3_s:	.asciz " %s    TAB PERC. 2 2/3'    =         %s  "
+Str_ON_50:	.asciz "ON "
+Str_OFF_64:	.asciz "OFF"
+	.align	4, 0xFF
+Str_s_TAB_VIBRATO_s:	.asciz " %s    TAB VIBRATO         =         %s  "
+Str_ON_49:	.asciz "ON "
+Str_OFF_63:	.asciz "OFF"
+	.align	4, 0xFF
+Str_empty_988:	.asciz "                                       "
+Str_08x_08x_2:	.asciz "   %08x, %08x                  "
+.incbin_range "baserom/kn7000_program.rom", 0x2446D4, 0x24478E
+data_4864478E:
+.incbin_range "baserom/kn7000_program.rom", 0x24478E, 0x24480C
+Str_ERROR_8:	.asciz "ERROR"
+	.align	4, 0xFF
+Str_OFF_62:	.asciz "OFF       "
+	.align	4, 0xFF
+Str_ONE_FINGER:	.asciz "ONE FINGER"
+	.align	4, 0xFF
+Str_FINGERD:	.asciz "FINGERD   "
+	.align	4, 0xFF
+Str_PIANIST_3:	.asciz "PIANIST   "
+	.align	4, 0xFF
+Str_TRANSPOSE_7fC:	.asciz "TRANSPOSE:~7fC "
+Str_TRANSPOSE_7fD_a0:	.asciz "TRANSPOSE:~7fD~a0"
+Str_TRANSPOSE_7fD:	.asciz "TRANSPOSE:~7fD "
+Str_TRANSPOSE_7fE_a0:	.asciz "TRANSPOSE:~7fE~a0"
+Str_TRANSPOSE_7fE:	.asciz "TRANSPOSE:~7fE "
+Str_TRANSPOSE_7fF:	.asciz "TRANSPOSE:~7fF "
+Str_TRANSPOSE_7fF_9e:	.asciz "TRANSPOSE:~7fF~9e"
+Str_TRANSPOSE_7fG:	.asciz "TRANSPOSE:~7fG "
+Str_TRANSPOSE_7fA_a0:	.asciz "TRANSPOSE:~7fA~a0"
+Str_TRANSPOSE_7fA:	.asciz "TRANSPOSE:~7fA "
+Str_TRANSPOSE_7fB_a0:	.asciz "TRANSPOSE:~7fB~a0"
+Str_TRANSPOSE_7fB:	.asciz "TRANSPOSE:~7fB "
+Str_TRANSPOSE_C:	.asciz "TRANSPOSE:C  "
+Str_TRANSPOSE_D_a0_80:	.asciz "TRANSPOSE:D~a0~80"
+Str_TRANSPOSE_D_80:	.asciz "TRANSPOSE:D ~80"
+Str_TRANSPOSE_E_a0_80:	.asciz "TRANSPOSE:E~a0~80"
+Str_TRANSPOSE_E_80:	.asciz "TRANSPOSE:E ~80"
+Str_TRANSPOSE_F_80:	.asciz "TRANSPOSE:F ~80"
+Str_TRANSPOSE_F_9e_80:	.asciz "TRANSPOSE:F~9e~80"
+Str_TRANSPOSE_G_80:	.asciz "TRANSPOSE:G ~80"
+Str_TRANSPOSE_A_a0_80:	.asciz "TRANSPOSE:A~a0~80"
+Str_TRANSPOSE_A_80:	.asciz "TRANSPOSE:A ~80"
+Str_TRANSPOSE_B_a0_80:	.asciz "TRANSPOSE:B~a0~80"
+Str_TRANSPOSE_B_80:	.asciz "TRANSPOSE:B ~80"
+Str_TRANSPOSE_C_80:	.asciz "TRANSPOSE:C ~80"
+Str_empty_1211:	.asciz "             "
+
+ptrs_486449F4:
+	.long	Str_TRANSPOSE_7fC
+	.long	Str_TRANSPOSE_7fD_a0
+	.long	Str_TRANSPOSE_7fD
+	.long	Str_TRANSPOSE_7fE_a0
+	.long	Str_TRANSPOSE_7fE
+	.long	Str_TRANSPOSE_7fF
+	.long	Str_TRANSPOSE_7fF_9e
+	.long	Str_TRANSPOSE_7fG
+	.long	Str_TRANSPOSE_7fA_a0
+	.long	Str_TRANSPOSE_7fA
+	.long	Str_TRANSPOSE_7fB_a0
+	.long	Str_TRANSPOSE_7fB
+	.long	Str_TRANSPOSE_C
+	.long	Str_TRANSPOSE_D_a0_80
+	.long	Str_TRANSPOSE_D_80
+	.long	Str_TRANSPOSE_E_a0_80
+	.long	Str_TRANSPOSE_E_80
+	.long	Str_TRANSPOSE_F_80
+	.long	Str_TRANSPOSE_F_9e_80
+	.long	Str_TRANSPOSE_G_80
+	.long	Str_TRANSPOSE_A_a0_80
+	.long	Str_TRANSPOSE_A_80
+	.long	Str_TRANSPOSE_B_a0_80
+	.long	Str_TRANSPOSE_B_80
+	.long	Str_TRANSPOSE_C_80
+	.long	Str_empty_1211
+
+Str_3s_s_s:	.asciz " %3s %s %s            "
+	.align	4, 0xFF
+Str_3s_10:	.asciz " %3s                                        "
+	.align	4, 0xFF
+Str_3s_s_4:	.asciz " %3s %s"
+Str_3s_s_3:	.asciz " %3s %s"
+Str_3s_9:	.asciz " %3s                                        "
+	.align	4, 0xFF
+Str_3s_END:	.asciz " %3s END                                    "
+	.align	4, 0xFF
+Str_3s_REPEAT:	.asciz " %3s REPEAT                                 "
+	.align	4, 0xFF
+Str_empty_986:	.asciz "\xAB "
+	.align	4, 0xFF
+Str_empty_985:	.asciz "\xAA "
+	.align	4, 0xFF
+Str_empty_984:	.asciz "\xA8 "
+	.align	4, 0xFF
+Str_empty_983:	.asciz "\xA6 "
+	.align	4, 0xFF
+Str_empty_982:	.asciz "\xA6."
+	.align	4, 0xFF
+Str_empty_981:	.asciz "\xA1 "
+	.align	4, 0xFF
+Str_empty_980:	.asciz "  "
+	.align	4, 0xFF
+Str_x_d:	.asciz "\xB2 x %d"
+	.align	4, 0xFF
+Str_empty_979:	.asciz " + \xB3"
+	.align	4, 0xFF
+data_48644B70:
+.incbin_range "baserom/kn7000_program.rom", 0x244B70, 0x244B74
+Str_s_8:	.asciz "     %s"
+Str_empty_978:	.asciz "                                       "
+Str_3s_s_VOLUME_3d_2:	.asciz " %3s  %s    VOLUME          =         %3d "
+	.align	4, 0xFF
+Str_3s_s_VOLUME_3d:	.asciz " %3s  %s    VOLUME          =         %3d "
+	.align	4, 0xFF
+Str_3s_8:	.asciz " %3s                                       "
+Str_3s_s_2:	.asciz " %3s %s"
+Str_3s_7:	.asciz " %3s                                        "
+	.align	4, 0xFF
+Str_3s_s:	.asciz " %3s %s"
+Str_3s_6:	.asciz " %3s                                        "
+	.align	4, 0xFF
+data_48644C98:
+.incbin_range "baserom/kn7000_program.rom", 0x244C98, 0x244D98
+data_48644D98:
+.incbin_range "baserom/kn7000_program.rom", 0x244D98, 0x244E18
+data_48644E18:
+.incbin_range "baserom/kn7000_program.rom", 0x244E18, 0x244E98
+data_48644E98:
+.incbin_range "baserom/kn7000_program.rom", 0x244E98, 0x244EDC
+data_48644EDC:
+.incbin_range "baserom/kn7000_program.rom", 0x244EDC, 0x244F5C
+data_48644F5C:
+.incbin_range "baserom/kn7000_program.rom", 0x244F5C, 0x24535C
+Str_SONG_2d_16s:	.asciz "SONG%2d : %16s"
+	.align	4, 0xFF
+Str_ALL_SONGS_2:	.asciz "        ALL SONGS        "
+	.align	4, 0xFF
+Str_TT_CMSTEP_2:	.asciz "TT_CMSTEP"
+	.align	4, 0xFF
+Str_TT_MSPSTEP_2:	.asciz "TT_MSPSTEP"
+	.align	4, 0xFF
+Str_d_12:	.asciz "%d"
+	.align	4, 0xFF
+Str_2d_36:	.asciz "%2d"
+Str_6d_2:	.asciz "%6d"
+Str_3d_57:	.asciz "%3d"
+Str_3d_56:	.asciz "%3d"
+Str_6d:	.asciz "%6d"
+Str_5d:	.asciz "%5d"
+Str_x_4:	.asciz "%x"
+	.align	4, 0xFF
+Str_empty_977:	.asciz "+"
+	.align	4, 0xFF
+Str_empty_976:	.asciz " "
+	.align	4, 0xFF
+Str_NOTE_6:	.asciz "NOTE"
+	.align	4, 0xFF
+Str_SOUND_14:	.asciz "SOUND"
+	.align	4, 0xFF
+Str_empty_975:	.asciz "@"
+.incbin_range "baserom/kn7000_program.rom", 0x2453DA, 0x245458
+data_48645458:
+.incbin_range "baserom/kn7000_program.rom", 0x245458, 0x2454D8
+data_486454D8:
+.incbin_range "baserom/kn7000_program.rom", 0x2454D8, 0x2455A4
+data_486455A4:
+.incbin_range "baserom/kn7000_program.rom", 0x2455A4, 0x24562C
+data_4864562C:
+.incbin_range "baserom/kn7000_program.rom", 0x24562C, 0x245708
+
+ptrs_48645708:
+	.long	func_4843C1A0
+	.long	func_4843C475
+	.long	func_48436E98
+	.long	func_48436FE9
+	.long	func_484370F2
+	.long	func_484371F5
+	.long	func_4843717F
+	.long	func_48437243
+	.long	func_48436BA1
+	.long	func_48436F7F
+.incbin_range "baserom/kn7000_program.rom", 0x245730, 0x245768
+data_48645768:
+.incbin_range "baserom/kn7000_program.rom", 0x245768, 0x245778
+data_48645778:
+.incbin_range "baserom/kn7000_program.rom", 0x245778, 0x245780
+data_48645780:
+.incbin_range "baserom/kn7000_program.rom", 0x245780, 0x245798
+data_48645798:
+.incbin_range "baserom/kn7000_program.rom", 0x245798, 0x2457A0
+data_486457A0:
+.incbin_range "baserom/kn7000_program.rom", 0x2457A0, 0x2457E2
+
+Str_empty_1019:	.asciz "|               |               |               |               |"
+
+ptrs_48645824:
+	.long	data_486457A0
+	.long	Str_empty_1019
+data_4864582C:
+.incbin_range "baserom/kn7000_program.rom", 0x24582C, 0x24583C
+data_4864583C:
+.incbin_range "baserom/kn7000_program.rom", 0x24583C, 0x24584C
+data_4864584C:
+.incbin_range "baserom/kn7000_program.rom", 0x24584C, 0x245850
+data_48645850:
+.incbin_range "baserom/kn7000_program.rom", 0x245850, 0x245854
+data_48645854:
+.incbin_range "baserom/kn7000_program.rom", 0x245854, 0x245858
+
+Str_empty_973:	.asciz "                                                                 "
+	.align	4, 0xFF
+data_4864589C:
+.incbin_range "baserom/kn7000_program.rom", 0x24589C, 0x2458AC
+data_486458AC:
+.incbin_range "baserom/kn7000_program.rom", 0x2458AC, 0x2458B0
+data_486458B0:
+.incbin_range "baserom/kn7000_program.rom", 0x2458B0, 0x2458B4
+Str_NOTE_5:	.asciz "NOTE"
+	.align	4, 0xFF
+Str_VELOCITY_6:	.asciz "VELOCITY"
+	.align	4, 0xFF
+Str_LENGTH_3:	.asciz "LENGTH"
+	.align	4, 0xFF
+Str_ARRANGE:	.asciz "ARRANGE"
+Str_MODULATION_2:	.asciz "MODULATION"
+	.align	4, 0xFF
+Str_PAN_7:	.asciz "PAN"
+Str_CENTER_9:	.asciz "CENTER"
+	.align	4, 0xFF
+Str_L_2d_3:	.asciz "  L %2d"
+Str_R_2d_3:	.asciz "  R %2d"
+Str_EXPRESSION_2:	.asciz "EXPRESSION"
+	.align	4, 0xFF
+Str_SUSTAIN_5:	.asciz "SUSTAIN"
+Str_ON_48:	.asciz "ON "
+Str_OFF_61:	.asciz "OFF"
+Str_D_EFFECT_2:	.asciz "D.EFFECT"
+	.align	4, 0xFF
+Str_ON_47:	.asciz "ON "
+Str_OFF_60:	.asciz "OFF"
+Str_EFF_DYNAMIC_CTRL_2:	.asciz "EFF.DYNAMIC CTRL"
+	.align	4, 0xFF
+Str_TRACKBALL_X_2:	.asciz "TRACKBALL X"
+Str_TRACKBALL_Y_2:	.asciz "TRACKBALL Y"
+Str_CTL_ERR_2:	.asciz "CTL ERR"
+data_48645964:
+.incbin_range "baserom/kn7000_program.rom", 0x245964, 0x245968
+Str_SOUND_13:	.asciz "SOUND"
+	.align	4, 0xFF
+Str_AFTER_TOUCH_5:	.asciz "AFTER TOUCH"
+Str_PITCH_BEND_2:	.asciz "PITCH BEND"
+	.align	4, 0xFF
+Str_CTL_ERR:	.asciz "CTL ERR"
+data_48645990:
+.incbin_range "baserom/kn7000_program.rom", 0x245990, 0x245994
+Str_EVENT_ERR:	.asciz "EVENT ERR"
+	.align	4, 0xFF
+data_486459A0:
+.incbin_range "baserom/kn7000_program.rom", 0x2459A0, 0x2459A4
+Str_ON_46:	.asciz "ON "
+Str_OFF_59:	.asciz "OFF"
+Str_ON_45:	.asciz "ON "
+Str_OFF_58:	.asciz "OFF"
+Str_CENTER_8:	.asciz "CENTER"
+	.align	4, 0xFF
+Str_L_2d_2:	.asciz "  L %2d"
+Str_R_2d_2:	.asciz "  R %2d"
+data_486459CC:
+.incbin_range "baserom/kn7000_program.rom", 0x2459CC, 0x2459D0
+data_486459D0:
+.incbin_range "baserom/kn7000_program.rom", 0x2459D0, 0x2459D4
+Str_empty_972:	.asciz "   "
+	.space	14, 0x00
+Str_ad_b8_4:	.asciz " ~ad~b8"
+.incbin_range "baserom/kn7000_program.rom", 0x2459EE, 0x245A0A
+Str_ac_b8_4:	.asciz " ~ac~b8"
+.incbin_range "baserom/kn7000_program.rom", 0x245A12, 0x245A1C
+Str_ac_4:	.asciz " ~ac "
+.incbin_range "baserom/kn7000_program.rom", 0x245A22, 0x245A2E
+Str_ab_b8_4:	.asciz " ~ab~b8"
+.incbin_range "baserom/kn7000_program.rom", 0x245A36, 0x245A52
+Str_aa_b8:	.asciz " ~aa~b8"
+.incbin_range "baserom/kn7000_program.rom", 0x245A5A, 0x245AD0
+Str_MODULATION:	.asciz "MODULATION"
+	.align	4, 0xFF
+Str_PAN_6:	.asciz "PAN"
+Str_CENTER_7:	.asciz "CENTER"
+	.align	4, 0xFF
+Str_L_2d:	.asciz "  L %2d"
+Str_R_2d:	.asciz "  R %2d"
+Str_EXPRESSION:	.asciz "EXPRESSION"
+	.align	4, 0xFF
+Str_SUSTAIN_4:	.asciz "SUSTAIN"
+Str_ON_44:	.asciz "ON "
+Str_OFF_57:	.asciz "OFF"
+Str_D_EFFECT:	.asciz "D.EFFECT"
+	.align	4, 0xFF
+Str_ON_43:	.asciz "ON "
+Str_OFF_56:	.asciz "OFF"
+Str_EFF_DYNAMIC_CTRL:	.asciz "EFF.DYNAMIC CTRL"
+	.align	4, 0xFF
+Str_TRACKBALL_X:	.asciz "TRACKBALL X"
+Str_TRACKBALL_Y:	.asciz "TRACKBALL Y"
+data_48645B54:
+.incbin_range "baserom/kn7000_program.rom", 0x245B54, 0x245B58
+data_48645B58:
+.incbin_range "baserom/kn7000_program.rom", 0x245B58, 0x245B5C
+Str_SOUND_12:	.asciz "SOUND"
+	.align	4, 0xFF
+Str_AFTER_TOUCH_4:	.asciz "AFTER TOUCH"
+Str_PITCH_BEND:	.asciz "PITCH BEND"
+	.align	4, 0xFF
+data_48645B7C:
+.incbin_range "baserom/kn7000_program.rom", 0x245B7C, 0x245B80
+data_48645B80:
+.incbin_range "baserom/kn7000_program.rom", 0x245B80, 0x245B84
+data_48645B84:
+.incbin_range "baserom/kn7000_program.rom", 0x245B84, 0x245C04
+data_48645C04:
+.incbin_range "baserom/kn7000_program.rom", 0x245C04, 0x245D04
+data_48645D04:
+.incbin_range "baserom/kn7000_program.rom", 0x245D04, 0x245D08
+
+ptrs_48645D08:
+	.long	func_484325CE
+	.long	func_484326F9
+	.long	func_48432FFA
+	.long	func_484330C4
+	.long	func_484331C0
+.incbin_range "baserom/kn7000_program.rom", 0x245D1C, 0x245D2C
+
+Str_Unknown:	.asciz "Unknown!"
+	.align	4, 0xFF
+Str_Error:	.asciz "Error!"
+	.align	4, 0xFF
+data_48645D40:
+.incbin_range "baserom/kn7000_program.rom", 0x245D40, 0x245DC0
+Field_AcSndArgGridBox_end:	.asciz ""
+	.align	4, 0xFF
+
+ClassFields_AcSndArgGridBox:
+	.long	Field_AcSndArgGridBox_end
+
+ClassSig_AcSndArgGridBox:	.asciz ""
+ClassName_AcSndArgGridBox:	.asciz "AcSndArgGridBox"
+	.align	4, 0xFF
+FnName_AcSndArgGridBoxProc:	.asciz "AcSndArgGridBoxProc"
+.incbin_range "baserom/kn7000_program.rom", 0x245DF0, 0x245DF4
+FnName_SndArgGridCheck:	.asciz "SndArgGridCheck"
+.incbin_range "baserom/kn7000_program.rom", 0x245E04, 0x245E08
+FnName_MainSNDARG_PtselPut:	.asciz "MainSNDARG_PtselPut"
+FnName_MainSNDARG_SetSndaParaCur:	.asciz "MainSNDARG_SetSndaParaCur"
+FnName_MdSndArg:	.asciz "MdSndArg"
+FnName_TtSndArg:	.asciz "TtSndArg"
+.incbin_range "baserom/kn7000_program.rom", 0x245E48, 0x245E4C
+Str_SOUND_ARRANGER:	.asciz "SOUND ARRANGER"
+	.align	4, 0xFF
+
+	TtlScreen	SndArgrScreen, sub=SndArgrScreen_StrBox_PATTERN, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=SndArgrScreen_window, title=Str_SOUND_ARRANGER, icon=88	# title "SOUND ARRANGER"
+
+Str_PATTERN_6:	.asciz " PATTERN :"
+	.align	4, 0xFF
+
+		VwStrBox	SndArgrScreen_StrBox_PATTERN, super=SndArgrScreen, next=SndArgrScreen_RhythmName1, flag=VF_Const, X=244, Y=0, W=324, H=30, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, align=1, str=Str_PATTERN_6	# str " PATTERN :"
+		AcRhythmName	SndArgrScreen_RhythmName1, super=SndArgrScreen, next=SndArgrScreen_IndexWideES1, prev=SndArgrScreen_StrBox_PATTERN, flag=VF_Const, X=372, Y=2, W=180, H=25, color=CL_TitleBar, index=0xFFFF, font=4, fontcolor=CL_White
+		AcIndexWideES	SndArgrScreen_IndexWideES1, super=SndArgrScreen, next=SndArgrScreen_ExitMode1, prev=SndArgrScreen_RhythmName1, flag=VF_Const, X=4, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, fontcolor=CL_Black, editsw=ES_Bottom1, editsw2=ES_Bottom2, style=14
+		IvExitMode	SndArgrScreen_ExitMode1, super=SndArgrScreen, next=SndArgrScreen_SndArgGridBox1, prev=SndArgrScreen_IndexWideES1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, mode=MD_NORMAL
+
+Str_PART_SOUND_DIGITAL_EFF:	.asciz "   PART   |       SOUND       |DIGITAL EFF"
+Str_DRUMS1_DRUMS2_BASS_ACCOMP1_ACCOMP2_ACCOM:	.asciz "|-|DRUMS1|DRUMS2|BASS|ACCOMP1|ACCOMP2|ACCOMP3|ACCOMP4|ACCOMP5"
+	.align	4, 0xFF
+
+		AcSndArgGridBox	SndArgrScreen_SndArgGridBox1, super=SndArgrScreen, prev=SndArgrScreen_ExitMode1, flag=VF_Const, X=102, Y=38, W=480, H=194, color=CL_WallPattern, border=BD_3D_UP2, font=4, fontcolor=CL_White, row=10, col=3, vertline=1, selrow=SndArgrScreen_SndArgGridBox1_selrow, selcol=SndArgrScreen_SndArgGridBox1_selcol, pcol=SndArgrScreen_SndArgGridBox1_pcol, prow=SndArgrScreen_SndArgGridBox1_prow, crow=SndArgrScreen_SndArgGridBox1_crow, fixedcol=Str_PART_SOUND_DIGITAL_EFF, fixedrow=Str_DRUMS1_DRUMS2_BASS_ACCOMP1_ACCOMP2_ACCOM, func=FN_SndArgGridCheck	# fixedcol "   PART   |       SOUND       |DIGITAL E"; fixedrow "|-|DRUMS1|DRUMS2|BASS|ACCOMP1|ACCOMP2|AC"
+
+RN_SndArgrScreen:	.asciz "SndArgrScreen"
+RN_empty_2036:	.asciz ""
+RN_empty_2037:	.asciz ""
+RN_empty_2038:	.asciz ""
+RN_empty_2039:	.asciz ""
+RN_empty_2040:	.asciz ""
+	.align	4, 0x00
+Str_OTB_SND_ARG:	.asciz "OTB_SND_ARG"
+Str_iapsdarg:	.asciz "iapsdarg"
+	.align	4, 0xFF
+Str_MD_SND_ARG:	.asciz "MD_SND_ARG"
+	.align	4, 0xFF
+Str_TT_SNDARG:	.asciz "TT_SNDARG"
+	.align	4, 0xFF
+data_4864603C:
+.incbin_range "baserom/kn7000_program.rom", 0x24603C, 0x246044
+Str_OFF_55:	.asciz "OFF"
+Str_ON_42:	.asciz "ON "
+Str_empty_971:	.asciz "---"
+data_48646050:
+.incbin_range "baserom/kn7000_program.rom", 0x246050, 0x2460D0
+Field_AcMultiIndexList_end:	.asciz ""
+	.align	4, 0xFF
+
+ClassFields_AcMultiIndexList:
+	.long	Field_AcMultiIndexList_end
+
+Field_AcCmpCapaBox_end:	.asciz ""
+	.align	4, 0xFF
+
+ClassFields_AcCmpCapaBox:
+	.long	Field_AcCmpCapaBox_end
+
+ClassSig_AcMultiIndexList:	.asciz ""
+ClassSig_AcCmpCapaBox:	.asciz ""
+ClassName_AcMultiIndexList:	.asciz "AcMultiIndexList"
+ClassName_AcCmpCapaBox:	.asciz "AcCmpCapaBox"
+Str_EV_EASYCOMPTITLE:	.asciz "EV_EASYCOMPTITLE"
+	.align	4, 0xFF
+Str_MT_SetSelectedValue:	.asciz "MT_SetSelectedValue"
+Str_MT_GetInternalData:	.asciz "MT_GetInternalData"
+	.align	4, 0xFF
+FnName_AcMultiIndexListProc:	.asciz "AcMultiIndexListProc"
+FnName_AcCmpCapaBoxProc:	.asciz "AcCmpCapaBoxProc"
+.incbin_range "baserom/kn7000_program.rom", 0x246162, 0x246164
+FnName_CmpRecMemSelFunc:	.asciz "CmpRecMemSelFunc"
+FnName_CmpMemClrYes:	.asciz "CmpMemClrYes"
+FnName_CmBkslShowHideFunc:	.asciz "CmBkslShowHideFunc"
+FnName_CmpPatSelOK:	.asciz "CmpPatSelOK"
+FnName_FE_CmpRecMeas:	.asciz "FE_CmpRecMeas"
+FnName_FE_CmpRecTS:	.asciz "FE_CmpRecTS"
+FnName_CmpMeasTSOK:	.asciz "CmpMeasTSOK"
+FnName_CmpMeasTSYes:	.asciz "CmpMeasTSYes"
+FnName_CmpPartSel:	.asciz "CmpPartSel"
+FnName_CmpPtnClrYes:	.asciz "CmpPtnClrYes"
+FnName_CmpBkslSShowHideFunc:	.asciz "CmpBkslSShowHideFunc"
+FnName_CmpMemNmChk:	.asciz "CmpMemNmChk"
+FnName_CmpMemNmOk:	.asciz "CmpMemNmOk"
+FnName_CmpVari1NmOk:	.asciz "CmpVari1NmOk"
+FnName_CmpVari1NmChk:	.asciz "CmpVari1NmChk"
+FnName_CmpVari2NmChk:	.asciz "CmpVari2NmChk"
+FnName_CmpVari3NmChk:	.asciz "CmpVari3NmChk"
+FnName_CmpVari4NmChk:	.asciz "CmpVari4NmChk"
+FnName_FE_CmpRecSetKey:	.asciz "FE_CmpRecSetKey"
+FnName_FE_CmpRecSetChord:	.asciz "FE_CmpRecSetChord"
+FnName_CmpRecSoloFunc:	.asciz "CmpRecSoloFunc"
+FnName_FE_CmpRecQtz:	.asciz "FE_CmpRecQtz"
+FnName_CmpPartClrOk:	.asciz "CmpPartClrOk"
+FnName_CmpInstClrOnOff:	.asciz "CmpInstClrOnOff"
+FnName_CmpAllEraseOnOff:	.asciz "CmpAllEraseOnOff"
+FnName_CmPnCpOK:	.asciz "CmPnCpOK"
+FnName_CmpPnCpEditFunc:	.asciz "CmpPnCpEditFunc"
+FnName_FuncEdit_rhyDstName:	.asciz "FuncEdit_rhyDstName"
+FnName_FuncEdit_rhyDstPattern:	.asciz "FuncEdit_rhyDstPattern"
+FnName_FuncEdit_rhyYN:	.asciz "FuncEdit_rhyYN"
+FnName_FuncEdit_rhyName:	.asciz "FuncEdit_rhyName"
+FnName_FuncEdit_rhyPattern:	.asciz "FuncEdit_rhyPattern"
+FnName_FuncEdit_rhyGroup:	.asciz "FuncEdit_rhyGroup"
+FnName_CmpPartCopyGrid:	.asciz "CmpPartCopyGrid"
+FnName_CmpPrtCpyStsGrid:	.asciz "CmpPrtCpyStsGrid"
+FnName_CmpPrtCpyEditFunc:	.asciz "CmpPrtCpyEditFunc"
+FnName_FE_CompPartCopyMem:	.asciz "FE_CompPartCopyMem"
+FnName_CmpPrtCpyPart:	.asciz "CmpPrtCpyPart"
+FnName_CmpPartCopyOk:	.asciz "CmpPartCopyOk"
+FnName_CmPnCpYes:	.asciz "CmPnCpYes"
+FnName_AttCompPtnCpy1:	.asciz "AttCompPtnCpy1"
+FnName_AttCompPtnCpy2:	.asciz "AttCompPtnCpy2"
+FnName_AttSeqToCompCopy:	.asciz "AttSeqToCompCopy"
+FnName_SeqToCmpCopyGrid:	.asciz "SeqToCmpCopyGrid"
+FnName_FE_SeqToCmpFstMeas:	.asciz "FE_SeqToCmpFstMeas"
+FnName_FE_SeqToCmpLstMeas:	.asciz "FE_SeqToCmpLstMeas"
+FnName_FE_SeqToCmpTrans:	.asciz "FE_SeqToCmpTrans"
+FnName_FE_SeqToCmpMemory:	.asciz "FE_SeqToCmpMemory"
+FnName_FE_SeqToCmpPattern:	.asciz "FE_SeqToCmpPattern"
+FnName_SeqToCmpOK:	.asciz "SeqToCmpOK"
+FnName_Seq2CmpCpEditFunc:	.asciz "Seq2CmpCpEditFunc"
+FnName_SeqToCmpYes:	.asciz "SeqToCmpYes"
+FnName_EasyCompGrid:	.asciz "EasyCompGrid"
+FnName_FE_EasyCompMem:	.asciz "FE_EasyCompMem"
+FnName_CmpEasyCompSet:	.asciz "CmpEasyCompSet"
+FnName_CmpEasyCompEditFunc:	.asciz "CmpEasyCompEditFunc"
+FnName_CmpRecPtChdGrid:	.asciz "CmpRecPtChdGrid"
+FnName_CmpPtChdOK:	.asciz "CmpPtChdOK"
+FnName_CmpDspSetGrid:	.asciz "CmpDspSetGrid"
+FnName_CmpDspSetTglFunc:	.asciz "CmpDspSetTglFunc"
+FnName_AttCompDspSet:	.asciz "AttCompDspSet"
+FnName_AttCompPartSet:	.asciz "AttCompPartSet"
+FnName_FE_CmpCstmCpy:	.asciz "FE_CmpCstmCpy"
+FnName_CmpCstmCpyOK:	.asciz "CmpCstmCpyOK"
+FnName_CmpCstmCpyDirec:	.asciz "CmpCstmCpyDirec"
+FnName_CustomCopySure1:	.asciz "CustomCopySure1"
+FnName_CustomCopySure2:	.asciz "CustomCopySure2"
+FnName_CustomCopySure3:	.asciz "CustomCopySure3"
+FnName_CmpCstmCpySure:	.asciz "CmpCstmCpySure"
+FnName_CmpCstmCpyExe:	.asciz "CmpCstmCpyExe"
+FnName_CmpPartSetGrid1:	.asciz "CmpPartSetGrid1"
+FnName_CmpPartSetGrid2:	.asciz "CmpPartSetGrid2"
+FnName_FE_CmpMCopySPart:	.asciz "FE_CmpMCopySPart"
+FnName_FE_CmpMCopyFstMeas:	.asciz "FE_CmpMCopyFstMeas"
+FnName_FE_CmpMCopyLstMeas:	.asciz "FE_CmpMCopyLstMeas"
+FnName_FE_CmpMCopyDPart:	.asciz "FE_CmpMCopyDPart"
+FnName_FE_CmpMCopySrtMeas:	.asciz "FE_CmpMCopySrtMeas"
+FnName_CmpMCopyOK:	.asciz "CmpMCopyOK"
+FnName_CmpMCopyYes:	.asciz "CmpMCopyYes"
+FnName_FE_CmpMDelFstMeas:	.asciz "FE_CmpMDelFstMeas"
+FnName_FE_CmpMDelLstMeas:	.asciz "FE_CmpMDelLstMeas"
+FnName_CmpMDelOK:	.asciz "CmpMDelOK"
+FnName_CmpMDelYes:	.asciz "CmpMDelYes"
+FnName_AttCompMeasDel:	.asciz "AttCompMeasDel"
+FnName_FE_CmpMErsSPart:	.asciz "FE_CmpMErsSPart"
+FnName_FE_CmpMErsFstMeas:	.asciz "FE_CmpMErsFstMeas"
+FnName_FE_CmpMErsLstMeas:	.asciz "FE_CmpMErsLstMeas"
+FnName_CmpMErsYes:	.asciz "CmpMErsYes"
+FnName_FE_CmpMInsFstMeas:	.asciz "FE_CmpMInsFstMeas"
+FnName_FE_CmpMInsMeasNum:	.asciz "FE_CmpMInsMeasNum"
+FnName_CmpMInsYes:	.asciz "CmpMInsYes"
+FnName_CmpMInsOK:	.asciz "CmpMInsOK"
+FnName_AttCompRec1:	.asciz "AttCompRec1"
+FnName_FE_CmpRecChdModGrp:	.asciz "FE_CmpRecChdModGrp"
+FnName_FE_CmpRecChdModTyp:	.asciz "FE_CmpRecChdModTyp"
+.incbin_range "baserom/kn7000_program.rom", 0x246716, 0x246718
+FnName_MdCmp:	.asciz "MdCmp"
+FnName_TtCmMenu:	.asciz "TtCmMenu"
+FnName_TtCmBksl:	.asciz "TtCmBksl"
+FnName_TtCmBksl_s:	.asciz "TtCmBksl_s"
+FnName_TtCmReal:	.asciz "TtCmReal"
+FnName_TtCmBal:	.asciz "TtCmBal"
+FnName_TtCmPnCp:	.asciz "TtCmPnCp"
+FnName_TtCmEasy:	.asciz "TtCmEasy"
+FnName_TtCmPtChd:	.asciz "TtCmPtChd"
+FnName_TtCmpDspSet:	.asciz "TtCmpDspSet"
+FnName_TtCmPartSet:	.asciz "TtCmPartSet"
+FnName_MainCMP_CmpPatternClear:	.asciz "MainCMP_CmpPatternClear"
+FnName_MainCMP_SetCmpMsrTmSigAftClr:	.asciz "MainCMP_SetCmpMsrTmSigAftClr"
+FnName_MainCMP_SetCmpMeasure:	.asciz "MainCMP_SetCmpMeasure"
+FnName_MainCMP_CmpSectionClear:	.asciz "MainCMP_CmpSectionClear"
+FnName_MainCMP_SetCmpPtnName:	.asciz "MainCMP_SetCmpPtnName"
+FnName_MainCMP_SetCmpVariName:	.asciz "MainCMP_SetCmpVariName"
+FnName_MainCMP_SetCmpRecordChord:	.asciz "MainCMP_SetCmpRecordChord"
+FnName_MainCMP_SetCmpRecSolo:	.asciz "MainCMP_SetCmpRecSolo"
+FnName_MainCMP_SetCmpRecordArrange:	.asciz "MainCMP_SetCmpRecordArrange"
+FnName_MainCMP_SetCmpRecQt:	.asciz "MainCMP_SetCmpRecQt"
+FnName_MainCMP_CmpPartClear:	.asciz "MainCMP_CmpPartClear"
+FnName_MainCMP_SetCmpNoteClear:	.asciz "MainCMP_SetCmpNoteClear"
+FnName_MainCMP_SetCmpAllErase:	.asciz "MainCMP_SetCmpAllErase"
+FnName_MainCOMP_CmpPatternCopy:	.asciz "MainCOMP_CmpPatternCopy"
+FnName_MainCOMP_PutM3Em:	.asciz "MainCOMP_PutM3Em"
+FnName_MainCMP_CmpCompileCopy:	.asciz "MainCMP_CmpCompileCopy"
+FnName_MainCOMP_CmpCopyFromSeq:	.asciz "MainCOMP_CmpCopyFromSeq"
+FnName_MainCMP_CmpEasyCopy:	.asciz "MainCMP_CmpEasyCopy"
+FnName_MainCMP_SetCmpRecArrAll:	.asciz "MainCMP_SetCmpRecArrAll"
+FnName_MainCMP_SetCmpEffectType:	.asciz "MainCMP_SetCmpEffectType"
+FnName_MainCMP_SetCmpEffect1Total:	.asciz "MainCMP_SetCmpEffect1Total"
+FnName_MainCMP_CstmCpyNameDraw:	.asciz "MainCMP_CstmCpyNameDraw"
+FnName_MainCMP_CstmCpyRhyNameDraw:	.asciz "MainCMP_CstmCpyRhyNameDraw"
+FnName_MainCMP_CustomCopy:	.asciz "MainCMP_CustomCopy"
+FnName_MainCMP_CustomToPerformance:	.asciz "MainCMP_CustomToPerformance"
+FnName_MainCMP_SetCmpPartSetting:	.asciz "MainCMP_SetCmpPartSetting"
+FnName_MainCMP_SetCmpEffectPart:	.asciz "MainCMP_SetCmpEffectPart"
+FnName_MainCMP_CmpMeasureCopy:	.asciz "MainCMP_CmpMeasureCopy"
+FnName_MainCMP_CmpMeasureDelete:	.asciz "MainCMP_CmpMeasureDelete"
+FnName_MainCMP_CmpMeasureErase:	.asciz "MainCMP_CmpMeasureErase"
+FnName_MainCMP_CmpMeasureInsert:	.asciz "MainCMP_CmpMeasureInsert"
+.incbin_range "baserom/kn7000_program.rom", 0x246A62, 0x246A64
+Str_COMPOSER_MENU:	.asciz "COMPOSER MENU"
+	.align	4, 0xFF
+
+	TtlScreen	CmpMenuScreen, sub=CmpMenuScreen_TitleMenu_EASY_COMPOSER, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, border=BD_Single2, index=0xFFFF, exit=TT_PS, window=CmpMenuScreen_window, title=Str_COMPOSER_MENU, icon=77	# title "COMPOSER MENU"
+
+Str_EASY_COMPOSER:	.asciz "EASY COMPOSER "
+	.align	4, 0xFF
+
+		AcTitleMenu	CmpMenuScreen_TitleMenu_EASY_COMPOSER, super=CmpMenuScreen, next=CmpMenuScreen_TitleMenu_PATTERN_COPY, flag=VF_Const, X=327, Y=28, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right1, selected=CmpMenuScreen_TitleMenu_EASY_COMPOSER_selected, str=Str_EASY_COMPOSER, title=TT_CMEASY, icon=81	# str "EASY COMPOSER "
+
+Str_PATTERN_COPY:	.asciz "PATTERN COPY "
+	.align	4, 0xFF
+
+		AcTitleMenu	CmpMenuScreen_TitleMenu_PATTERN_COPY, super=CmpMenuScreen, next=CmpMenuScreen_TitleMenu_SEQ_TO_COMPOSER_COPY, prev=CmpMenuScreen_TitleMenu_EASY_COMPOSER, flag=VF_Const, X=327, Y=71, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right2, selected=CmpMenuScreen_TitleMenu_PATTERN_COPY_selected, str=Str_PATTERN_COPY, title=TT_CMPNCP, icon=82	# str "PATTERN COPY "
+
+Str_SEQ_TO_COMPOSER_COPY:	.asciz "SEQ TO COMPOSER COPY "
+	.align	4, 0xFF
+
+		AcTitleMenu	CmpMenuScreen_TitleMenu_SEQ_TO_COMPOSER_COPY, super=CmpMenuScreen, next=CmpMenuScreen_TitleMenu_LOAD_SINGLE_COMPOSER, prev=CmpMenuScreen_TitleMenu_PATTERN_COPY, flag=VF_Const, X=327, Y=157, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right4, selected=CmpMenuScreen_TitleMenu_SEQ_TO_COMPOSER_COPY_selected, str=Str_SEQ_TO_COMPOSER_COPY, title=TT_CMSEQCP, icon=83	# str "SEQ TO COMPOSER COPY "
+
+Str_LOAD_SINGLE_COMPOSER:	.asciz "LOAD SINGLE COMPOSER "
+	.align	4, 0xFF
+
+		AcTitleMenu	CmpMenuScreen_TitleMenu_LOAD_SINGLE_COMPOSER, super=CmpMenuScreen, next=CmpMenuScreen_Line1, prev=CmpMenuScreen_TitleMenu_SEQ_TO_COMPOSER_COPY, flag=VF_Const, X=327, Y=200, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right5, selected=CmpMenuScreen_TitleMenu_LOAD_SINGLE_COMPOSER_selected, str=Str_LOAD_SINGLE_COMPOSER, title=TT_CMPLDSNGL, icon=84	# str "LOAD SINGLE COMPOSER "
+		VwLine	CmpMenuScreen_Line1, super=CmpMenuScreen, next=CmpMenuScreen_Line2, prev=CmpMenuScreen_TitleMenu_LOAD_SINGLE_COMPOSER, flag=VF_Const, X=70, Y=90, W=10, H=1, color=CL_White, linemode=1
+		VwLine	CmpMenuScreen_Line2, super=CmpMenuScreen, next=CmpMenuScreen_TitleMenu_CUSTOM_STYLE_COPY, prev=CmpMenuScreen_Line1, flag=VF_Const, X=70, Y=132, W=10, H=1, color=CL_White, linemode=1
+
+Str_CUSTOM_STYLE_COPY:	.asciz "CUSTOM STYLE COPY "
+	.align	4, 0xFF
+
+		AcTitleMenu	CmpMenuScreen_TitleMenu_CUSTOM_STYLE_COPY, super=CmpMenuScreen, next=CmpMenuScreen_Line3, prev=CmpMenuScreen_Line2, flag=VF_Const, X=327, Y=114, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right3, selected=CmpMenuScreen_TitleMenu_CUSTOM_STYLE_COPY_selected, str=Str_CUSTOM_STYLE_COPY, title=TT_CMCSTMCP, icon=161	# str "CUSTOM STYLE COPY "
+		VwLine	CmpMenuScreen_Line3, super=CmpMenuScreen, next=CmpMenuScreen_Line4, prev=CmpMenuScreen_TitleMenu_CUSTOM_STYLE_COPY, flag=VF_Const, X=80, Y=90, W=1, H=85, color=CL_White, linemode=1
+		VwLine	CmpMenuScreen_Line4, super=CmpMenuScreen, next=CmpMenuScreen_Label_RECORDING_MEMORY, prev=CmpMenuScreen_Line3, flag=VF_Const, X=70, Y=174, W=10, H=1, color=CL_White, linemode=1
+
+Str_RECORDING_MEMORY:	.asciz "RECORDING MEMORY"
+	.align	4, 0xFF
+
+		VwLabel	CmpMenuScreen_Label_RECORDING_MEMORY, super=CmpMenuScreen, next=CmpMenuScreen_ExitMode1, prev=CmpMenuScreen_Line4, flag=VF_Const, X=90, Y=124, W=180, H=19, str=Str_RECORDING_MEMORY, font=4, fontcolor=CL_White	# str "RECORDING MEMORY"
+		IvExitMode	CmpMenuScreen_ExitMode1, super=CmpMenuScreen, next=CmpMenuScreen_FuncMenu_A, prev=CmpMenuScreen_Label_RECORDING_MEMORY, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, mode=MD_PROGRAM
+
+Str_A:	.asciz " A"
+	.align	4, 0xFF
+
+		AcFuncMenu	CmpMenuScreen_FuncMenu_A, super=CmpMenuScreen, next=CmpMenuScreen_FuncMenu_B, prev=CmpMenuScreen_ExitMode1, flag=VF_Const, X=8, Y=71, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left2, selected=CmpMenuScreen_FuncMenu_A_selected, str=Str_A, func=FN_CmpRecMemSelFunc, icon=78	# str " A"
+
+Str_B:	.asciz " B"
+	.align	4, 0xFF
+
+		AcFuncMenu	CmpMenuScreen_FuncMenu_B, super=CmpMenuScreen, next=CmpMenuScreen_FuncMenu_C, prev=CmpMenuScreen_FuncMenu_A, flag=VF_Const, X=8, Y=114, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left3, selected=CmpMenuScreen_FuncMenu_B_selected, str=Str_B, func=FN_CmpRecMemSelFunc, icon=79, vari=1	# str " B"
+
+Str_C:	.asciz " C"
+	.align	4, 0xFF
+
+		AcFuncMenu	CmpMenuScreen_FuncMenu_C, super=CmpMenuScreen, prev=CmpMenuScreen_FuncMenu_B, flag=VF_Const, X=8, Y=157, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left4, selected=CmpMenuScreen_FuncMenu_C_selected, str=Str_C, func=FN_CmpRecMemSelFunc, icon=80, vari=2	# str " C"
+
+Str_RECORD_MEMORY:	.asciz "RECORD MEMORY"
+	.align	4, 0xFF
+
+	TtlScreen	CmpBkslScreen, sub=CmpBkslScreen_IntTitleMenu_DSP_SET, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CMMENU, window=CmpBkslScreen_window, title=Str_RECORD_MEMORY, icon=77	# title "RECORD MEMORY"
+
+Str_DSP_SET:	.asciz "DSP SET"
+
+		AcIntTitleMenu	CmpBkslScreen_IntTitleMenu_DSP_SET, super=CmpBkslScreen, next=CmpBkslScreen_TitleMenu_NAMING, flag=VF_Const, X=327, Y=114, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right3, selected=CmpBkslScreen_IntTitleMenu_DSP_SET_selected, str=Str_DSP_SET, title=TT_CMDSPSET, icon=194	# str "DSP SET"
+
+Str_NAMING:	.asciz "NAMING"
+	.align	4, 0xFF
+
+		AcTitleMenu	CmpBkslScreen_TitleMenu_NAMING, super=CmpBkslScreen, next=CmpBkslScreen_Box1, prev=CmpBkslScreen_IntTitleMenu_DSP_SET, flag=VF_Const, X=327, Y=71, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right2, selected=CmpBkslScreen_TitleMenu_NAMING_selected, str=Str_NAMING, title=TT_CMNAME, icon=153	# str "NAMING"
+		VwBox	CmpBkslScreen_Box1, super=CmpBkslScreen, sub=CmpBkslScreen_CmpMemNameBox1, next=CmpBkslScreen_Label_MEMORY_NAME, prev=CmpBkslScreen_TitleMenu_NAMING, flag=VF_Const, X=8, Y=34, W=472, H=36, color=CL_Transparent, border=BD_3D_UP2, index=0xFFFF
+			AcCmpMemNameBox	CmpBkslScreen_CmpMemNameBox1, super=CmpBkslScreen_Box1, flag=VF_Const, X=220, Y=44, W=200, H=19, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_White, align=1
+
+Str_MEMORY_NAME:	.asciz "MEMORY NAME :"
+	.align	4, 0xFF
+
+		VwLabel	CmpBkslScreen_Label_MEMORY_NAME, super=CmpBkslScreen, next=CmpBkslScreen_IndexWideES1, prev=CmpBkslScreen_Box1, flag=VF_Const, X=67, Y=45, W=147, H=19, str=Str_MEMORY_NAME, font=4, fontcolor=CL_White	# str "MEMORY NAME :"
+		AcIndexWideES	CmpBkslScreen_IndexWideES1, super=CmpBkslScreen, next=CmpBkslScreen_IndexWideES2, prev=CmpBkslScreen_Label_MEMORY_NAME, flag=VF_Const, X=4, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom1, editsw2=ES_Bottom2, style=14
+		AcIndexWideES	CmpBkslScreen_IndexWideES2, super=CmpBkslScreen, next=CmpBkslScreen_IndexWideES3, prev=CmpBkslScreen_IndexWideES1, flag=VF_Const, X=84, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom3, editsw2=ES_Bottom4, style=14
+		AcIndexWideES	CmpBkslScreen_IndexWideES3, super=CmpBkslScreen, next=CmpBkslScreen_IndexWideES4, prev=CmpBkslScreen_IndexWideES2, flag=VF_Const, X=164, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=3, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, editsw2=ES_Bottom6, style=14
+		AcIndexWideES	CmpBkslScreen_IndexWideES4, super=CmpBkslScreen, next=CmpBkslScreen_IndexWideES5, prev=CmpBkslScreen_IndexWideES3, flag=VF_Const, X=244, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=4, font=4, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom8, style=14
+		AcIndexWideES	CmpBkslScreen_IndexWideES5, super=CmpBkslScreen, next=CmpBkslScreen_IndexWideES6, prev=CmpBkslScreen_IndexWideES4, flag=VF_Const, X=324, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=5, font=4, fontcolor=CL_Black, editsw=ES_Bottom9, editsw2=ES_Bottom10, style=14
+		AcIndexWideES	CmpBkslScreen_IndexWideES6, super=CmpBkslScreen, next=CmpBkslScreen_Box2, prev=CmpBkslScreen_IndexWideES5, flag=VF_Const, X=404, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=6, font=4, fontcolor=CL_Black, editsw=ES_Bottom11, editsw2=ES_Bottom12, style=14
+		VwBox	CmpBkslScreen_Box2, super=CmpBkslScreen, sub=PatVari2, next=PatVari3, prev=CmpBkslScreen_IndexWideES6, flag=VF_Const, X=8, Y=74, W=472, H=140, color=CL_Transparent, border=BD_3D_UP2, index=0xFFFF
+
+Str_PATTERN_FILL_IN1_FILL_IN2:	.asciz "PATTERN|FILL IN1|FILL IN2|"
+	.align	4, 0xFF
+
+			AcMultiIndexList	PatVari2, super=CmpBkslScreen_Box2, next=PatVari1, flag=VF_Const, X=166, Y=107, W=72, H=74, color=CL_WallPattern, index=3, font=1, fontcolor=CL_White, row=3, selected=PatVari2_selected, list=Str_PATTERN_FILL_IN1_FILL_IN2	# list "PATTERN|FILL IN1|FILL IN2|"
+
+Str_PATTERN_FILL_IN1_FILL_IN2_2:	.asciz "PATTERN|FILL IN1|FILL IN2|"
+	.align	4, 0xFF
+
+			AcMultiIndexList	PatVari1, super=CmpBkslScreen_Box2, next=PatIntro, prev=PatVari2, flag=VF_Const, X=88, Y=107, W=72, H=74, color=CL_WallPattern, index=2, font=1, fontcolor=CL_White, row=3, selected=PatVari1_selected, list=Str_PATTERN_FILL_IN1_FILL_IN2_2	# list "PATTERN|FILL IN1|FILL IN2|"
+
+Str_1_Maj_1_Min_2_Maj_2_Min:	.asciz "1 Maj|1 Min|2 Maj|2 Min"
+
+			AcMultiIndexList	PatIntro, super=CmpBkslScreen_Box2, next=PatVari4, prev=PatVari1, flag=VF_Const, X=16, Y=107, W=72, H=100, color=CL_WallPattern, index=1, font=1, fontcolor=CL_White, row=4, selected=PatIntro_selected, list=Str_1_Maj_1_Min_2_Maj_2_Min	# list "1 Maj|1 Min|2 Maj|2 Min"
+
+Str_PATTERN_FILL_IN1_FILL_IN2_3:	.asciz "PATTERN|FILL IN1|FILL IN2|"
+	.align	4, 0xFF
+
+			AcMultiIndexList	PatVari4, super=CmpBkslScreen_Box2, next=PatEnding, prev=PatIntro, flag=VF_Const, X=322, Y=107, W=72, H=74, color=CL_WallPattern, index=5, font=1, fontcolor=CL_White, row=3, selected=PatVari4_selected, list=Str_PATTERN_FILL_IN1_FILL_IN2_3	# list "PATTERN|FILL IN1|FILL IN2|"
+
+Str_1_Maj_1_Min_2_Maj_2_Min_2:	.asciz "1 Maj|1 Min|2 Maj|2 Min"
+
+			AcMultiIndexList	PatEnding, super=CmpBkslScreen_Box2, next=CmpBkslScreen_Line1, prev=PatVari4, flag=VF_Const, X=396, Y=107, W=72, H=100, color=CL_WallPattern, index=6, font=1, fontcolor=CL_White, row=4, selected=PatEnding_selected, list=Str_1_Maj_1_Min_2_Maj_2_Min_2	# list "1 Maj|1 Min|2 Maj|2 Min"
+			VwLine	CmpBkslScreen_Line1, super=CmpBkslScreen_Box2, next=CmpBkslScreen_Label_INTRO_VARI1_VARI2_VA, prev=PatEnding, flag=VF_Const, X=10, Y=102, W=468, H=1, color=CL_White
+
+Str_INTRO_VARI1_VARI2_VARI3_VARI4_ENDING:	.asciz "INTRO    VARI1     VARI2    VARI3     VARI4    ENDING"
+	.align	4, 0xFF
+
+			VwLabel	CmpBkslScreen_Label_INTRO_VARI1_VARI2_VA, super=CmpBkslScreen_Box2, prev=CmpBkslScreen_Line1, flag=VF_Const, X=28, Y=82, W=428, H=19, str=Str_INTRO_VARI1_VARI2_VARI3_VARI4_ENDING, font=1, fontcolor=CL_Yellow	# str "INTRO    VARI1     VARI2    VARI3     VA"
+
+Str_PATTERN_FILL_IN1_FILL_IN2_4:	.asciz "PATTERN|FILL IN1|FILL IN2|"
+	.align	4, 0xFF
+
+		AcMultiIndexList	PatVari3, super=CmpBkslScreen, next=CmpBkslScreen_SureWindowMenu_MEMORY_CLR, prev=CmpBkslScreen_Box2, flag=VF_Const, X=244, Y=107, W=72, H=74, color=CL_WallPattern, index=4, font=1, fontcolor=CL_White, row=3, selected=PatVari3_selected, list=Str_PATTERN_FILL_IN1_FILL_IN2_4	# list "PATTERN|FILL IN1|FILL IN2|"
+
+Str_MEMORY_CLR:	.asciz "MEMORY CLR"
+	.align	4, 0xFF
+
+		AcSureWindowMenu	CmpBkslScreen_SureWindowMenu_MEMORY_CLR, super=CmpBkslScreen, next=CmpBkslScreen_ShowHide1, prev=PatVari3, flag=VF_Const, X=507, Y=33, W=125, H=28, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right1, selected=CmpBkslScreen_SureWindowMenu_MEMORY_CLR_selected, str=Str_MEMORY_CLR, window=CmpMemClrWin_id, func=FN_CmpMemClrYes	# str "MEMORY CLR"
+		IvShowHide	CmpBkslScreen_ShowHide1, super=CmpBkslScreen, next=CmpBkslScreen_CmpPatternBox1, prev=CmpBkslScreen_SureWindowMenu_MEMORY_CLR, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_CmBkslShowHideFunc
+		AcCmpPatternBox	CmpBkslScreen_CmpPatternBox1, super=CmpBkslScreen, next=CmpBkslScreen_FuncEditSw1, prev=CmpBkslScreen_ShowHide1, flag=VF_Const, X=256, Y=2, W=270, H=25, color=CL_TitleBar, index=0xFFFF, font=4, fontcolor=CL_White, align=1
+		AcFuncEditSw	CmpBkslScreen_FuncEditSw1, super=CmpBkslScreen, prev=CmpBkslScreen_CmpPatternBox1, flag=VF_Const, X=561, Y=208, W=71, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right5, style=6, func=FN_CmpPatSelOK
+
+Str_RECORDING:	.asciz "RECORDING"
+	.align	4, 0xFF
+
+	TtlScreen	CmpBkslSScreen, sub=CmpBkslSScreen_Label_START_RECORDING, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CMBKSL, window=CmpBkslSScreen_window, title=Str_RECORDING, icon=77	# title "RECORDING"
+
+Str_START_RECORDING:	.asciz "START RECORDING"
+
+		VwLabel	CmpBkslSScreen_Label_START_RECORDING, super=CmpBkslSScreen, next=CmpBkslSScreen_Line1, flag=VF_Const, X=98, Y=194, W=124, H=19, str=Str_START_RECORDING, fontcolor=CL_SelectedW	# str "START RECORDING"
+		VwLine	CmpBkslSScreen_Line1, super=CmpBkslSScreen, next=CmpBkslSScreen_Line2, prev=CmpBkslSScreen_Label_START_RECORDING, flag=VF_Const, X=5, Y=201, W=80, H=1, color=CL_White, linemode=1
+		VwLine	CmpBkslSScreen_Line2, super=CmpBkslSScreen, next=CmpBkslSScreen_Line3, prev=CmpBkslSScreen_Line1, flag=VF_Const, X=236, Y=201, W=80, H=1, color=CL_White, linemode=1
+		VwLine	CmpBkslSScreen_Line3, super=CmpBkslSScreen, next=CmpBkslSScreen_Line4, prev=CmpBkslSScreen_Line2, flag=VF_Const, X=5, Y=201, W=1, H=12, color=CL_White, linemode=1
+		VwLine	CmpBkslSScreen_Line4, super=CmpBkslSScreen, next=CmpBkslSScreen_IndexWideES1, prev=CmpBkslSScreen_Line3, flag=VF_Const, X=316, Y=201, W=1, H=12, color=CL_White, linemode=1
+		AcIndexWideES	CmpBkslSScreen_IndexWideES1, super=CmpBkslSScreen, next=CmpBkslSScreen_IndexWideES2, prev=CmpBkslSScreen_Line4, flag=VF_Const, X=404, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom11, editsw2=ES_Bottom12, style=3
+		AcIndexWideES	CmpBkslSScreen_IndexWideES2, super=CmpBkslSScreen, next=CmpBkslSScreen_Box1, prev=CmpBkslSScreen_IndexWideES1, flag=VF_Const, X=484, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom13, editsw2=ES_Bottom14, style=3
+		VwBox	CmpBkslSScreen_Box1, super=CmpBkslSScreen, next=CmpBkslSScreen_Line5, prev=CmpBkslSScreen_IndexWideES2, flag=VF_Const, X=400, Y=114, W=160, H=100, color=CL_Transparent, border=BD_3D_UP2, index=0xFFFF
+		VwLine	CmpBkslSScreen_Line5, super=CmpBkslSScreen, next=CmpBkslSScreen_Line6, prev=CmpBkslSScreen_Box1, flag=VF_Const, X=402, Y=160, W=156, H=1, color=CL_White, linemode=1
+		VwLine	CmpBkslSScreen_Line6, super=CmpBkslSScreen, next=CmpBkslSScreen_Label_MEASURE, prev=CmpBkslSScreen_Line5, flag=VF_Const, X=480, Y=116, W=1, H=96, color=CL_White, linemode=1
+
+Str_MEASURE:	.asciz "MEASURE"
+
+		VwLabel	CmpBkslSScreen_Label_MEASURE, super=CmpBkslSScreen, next=CmpBkslSScreen_Label_SIGNATURE, prev=CmpBkslSScreen_Line6, flag=VF_Const, X=410, Y=130, W=60, H=19, str=Str_MEASURE, font=1, fontcolor=CL_Yellow	# str "MEASURE"
+
+Str_SIGNATURE:	.asciz "SIGNATURE"
+	.align	4, 0xFF
+
+		VwLabel	CmpBkslSScreen_Label_SIGNATURE, super=CmpBkslSScreen, next=CmpBkslSScreen_Label_TIME, prev=CmpBkslSScreen_Label_MEASURE, flag=VF_Const, X=482, Y=138, W=76, H=19, str=Str_SIGNATURE, font=1, fontcolor=CL_Yellow	# str "SIGNATURE"
+
+Str_TIME:	.asciz "TIME"
+	.align	4, 0xFF
+
+		VwLabel	CmpBkslSScreen_Label_TIME, super=CmpBkslSScreen, next=CmpBkslSScreen_FuncEditBox1, prev=CmpBkslSScreen_Label_SIGNATURE, flag=VF_Const, X=498, Y=122, W=36, H=19, str=Str_TIME, font=1, fontcolor=CL_Yellow	# str "TIME"
+
+Str_empty_40:	.asciz ""
+	.align	4, 0xFF
+
+		AcFuncEditBox	CmpBkslSScreen_FuncEditBox1, super=CmpBkslSScreen, next=CmpBkslSScreen_FuncEditBox2, prev=CmpBkslSScreen_Label_TIME, flag=VF_Const, X=415, Y=180, W=57, H=19, color=CL_WallPattern, index=1, caption=Str_empty_40, font=4, fontcolor=CL_White, length=4, editsw=ES_None, dial=1, selected=CmpBkslSScreen_FuncEditBox1_selected, func=FN_FE_CmpRecMeas	# caption ""
+
+Str_empty_41:	.asciz ""
+	.align	4, 0xFF
+
+		AcFuncEditBox	CmpBkslSScreen_FuncEditBox2, super=CmpBkslSScreen, next=CmpRecTsDisable, prev=CmpBkslSScreen_FuncEditBox1, flag=VF_Const, X=491, Y=180, W=61, H=19, color=CL_WallPattern, index=2, caption=Str_empty_41, font=4, fontcolor=CL_White, length=4, editsw=ES_None, dial=1, selected=CmpBkslSScreen_FuncEditBox2_selected, func=FN_FE_CmpRecTS	# caption ""
+		PsParaDrawBox	CmpRecTsDisable, super=CmpBkslSScreen, next=CmpBkslSScreen_FuncEditSw1, prev=CmpBkslSScreen_FuncEditBox2, flag=VF_Const, X=482, Y=200, W=76, H=12, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_White
+		AcFuncEditSw	CmpBkslSScreen_FuncEditSw1, super=CmpBkslSScreen, next=CmpBkslSScreen_TitleMenu_KEY_SETTING, prev=CmpRecTsDisable, flag=VF_Const, X=561, Y=165, W=71, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_CmpMeasTSOK
+
+Str_KEY_SETTING:	.asciz "KEY SETTING"
+
+		AcTitleMenu	CmpBkslSScreen_TitleMenu_KEY_SETTING, super=CmpBkslSScreen, next=CmpBkslSScreen_TitleMenu_MEASURE_EDIT, prev=CmpBkslSScreen_FuncEditSw1, flag=VF_Const, X=8, Y=71, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left2, selected=CmpBkslSScreen_TitleMenu_KEY_SETTING_selected, str=Str_KEY_SETTING, title=TT_CMSET, icon=159	# str "KEY SETTING"
+
+Str_MEASURE_EDIT:	.asciz "MEASURE EDIT"
+	.align	4, 0xFF
+
+		AcTitleMenu	CmpBkslSScreen_TitleMenu_MEASURE_EDIT, super=CmpBkslSScreen, next=CmRecBas, prev=CmpBkslSScreen_TitleMenu_KEY_SETTING, flag=VF_Const, X=8, Y=157, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left4, selected=CmpBkslSScreen_TitleMenu_MEASURE_EDIT_selected, str=Str_MEASURE_EDIT, title=TT_CMMEASEDIT, icon=196	# str "MEASURE EDIT"
+		AcFuncEditSw	CmRecBas, super=CmpBkslSScreen, sub=CmRecBas_Label_BAS, next=CmRecDr2, prev=CmpBkslSScreen_TitleMenu_MEASURE_EDIT, flag=VF_Const, X=284, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom8, func=FN_CmpPartSel
+
+Str_BAS:	.asciz "BAS"
+
+			VwLabel	CmRecBas_Label_BAS, super=CmRecBas, flag=VF_Const, X=286, Y=219, W=28, H=19, str=Str_BAS, fontcolor=CL_BlackW	# str "BAS"
+		AcFuncEditSw	CmRecDr2, super=CmpBkslSScreen, sub=CmRecDr2_Label_DR2, next=CmRecAc1, prev=CmRecBas, flag=VF_Const, X=4, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom1, func=FN_CmpPartSel
+
+Str_DR2:	.asciz "DR2"
+
+			VwLabel	CmRecDr2_Label_DR2, super=CmRecDr2, flag=VF_Const, X=6, Y=219, W=28, H=19, str=Str_DR2, fontcolor=CL_BlackW	# str "DR2"
+		AcFuncEditSw	CmRecAc1, super=CmpBkslSScreen, sub=CmRecAc1_Label_AC1, next=CmRecAc2, prev=CmRecDr2, flag=VF_Const, X=244, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom7, func=FN_CmpPartSel
+
+Str_AC1:	.asciz "AC1"
+
+			VwLabel	CmRecAc1_Label_AC1, super=CmRecAc1, flag=VF_Const, X=246, Y=219, W=28, H=19, str=Str_AC1, fontcolor=CL_BlackW	# str "AC1"
+		AcFuncEditSw	CmRecAc2, super=CmpBkslSScreen, sub=CmRecAc2_Label_AC2, next=CmRecAc3, prev=CmRecAc1, flag=VF_Const, X=204, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom6, func=FN_CmpPartSel
+
+Str_AC2:	.asciz "AC2"
+
+			VwLabel	CmRecAc2_Label_AC2, super=CmRecAc2, flag=VF_Const, X=206, Y=219, W=28, H=19, str=Str_AC2, fontcolor=CL_BlackW	# str "AC2"
+		AcFuncEditSw	CmRecAc3, super=CmpBkslSScreen, sub=CmRecAc3_Label_AC3, next=CmRecAc4, prev=CmRecAc2, flag=VF_Const, X=164, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, func=FN_CmpPartSel
+
+Str_AC3:	.asciz "AC3"
+
+			VwLabel	CmRecAc3_Label_AC3, super=CmRecAc3, flag=VF_Const, X=166, Y=219, W=28, H=19, str=Str_AC3, fontcolor=CL_BlackW	# str "AC3"
+		AcFuncEditSw	CmRecAc4, super=CmpBkslSScreen, sub=CmRecAc4_Label_AC4, next=CmRecAc5, prev=CmRecAc3, flag=VF_Const, X=124, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom4, func=FN_CmpPartSel
+
+Str_AC4:	.asciz "AC4"
+
+			VwLabel	CmRecAc4_Label_AC4, super=CmRecAc4, flag=VF_Const, X=126, Y=219, W=28, H=19, str=Str_AC4, fontcolor=CL_BlackW	# str "AC4"
+		AcFuncEditSw	CmRecAc5, super=CmpBkslSScreen, sub=CmRecAc5_Label_AC5, next=CmRecDr1, prev=CmRecAc4, flag=VF_Const, X=84, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom3, func=FN_CmpPartSel
+
+Str_AC5:	.asciz "AC5"
+
+			VwLabel	CmRecAc5_Label_AC5, super=CmRecAc5, flag=VF_Const, X=86, Y=219, W=28, H=19, str=Str_AC5, fontcolor=CL_BlackW	# str "AC5"
+		AcFuncEditSw	CmRecDr1, super=CmpBkslSScreen, sub=CmRecDr1_Label_DR1, next=CmpBkslSScreen_CmpPatternBox1, prev=CmRecAc5, flag=VF_Const, X=44, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom2, func=FN_CmpPartSel
+
+Str_DR1:	.asciz "DR1"
+
+			VwLabel	CmRecDr1_Label_DR1, super=CmRecDr1, flag=VF_Const, X=46, Y=219, W=28, H=19, str=Str_DR1, fontcolor=CL_BlackW	# str "DR1"
+		AcCmpPatternBox	CmpBkslSScreen_CmpPatternBox1, super=CmpBkslSScreen, next=CmpChordModifyMenu, prev=CmRecDr1, flag=VF_Const, X=256, Y=2, W=270, H=25, color=CL_TitleBar, index=0xFFFF, font=4, fontcolor=CL_White, align=1, drawPattern=1
+
+Str_CHORD_MODIFY_CHANGE:	.asciz "CHORD MODIFY CHANGE"
+Str_CLEAR_THE_ENTIRE_PATTERN:	.asciz "CLEAR THE ENTIRE PATTERN"
+	.align	4, 0xFF
+
+		AcSureWindowMenu	CmpBkslSScreen_SureWindowMenu_CLEAR_THE_ENTIRE_PAT, super=CmpBkslSScreen, next=CmpBkslSScreen_SetDialFocus1, prev=CmpChordModifyMenu, flag=VF_Const, X=8, Y=32, W=280, H=30, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Left1, selected=CmpBkslSScreen_SureWindowMenu_CLEAR_THE_ENTIRE_PAT_selected, str=Str_CLEAR_THE_ENTIRE_PATTERN, window=CmpClrPtnWin_id, func=FN_CmpPtnClrYes	# str "CLEAR THE ENTIRE PATTERN"
+		IvSetDialFocus	CmpBkslSScreen_SetDialFocus1, super=CmpBkslSScreen, next=CmpBkslSScreen_ShowHide1, prev=CmpBkslSScreen_SureWindowMenu_CLEAR_THE_ENTIRE_PAT, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32
+		IvShowHide	CmpBkslSScreen_ShowHide1, super=CmpBkslSScreen, prev=CmpBkslSScreen_SetDialFocus1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_CmpBkslSShowHideFunc
+
+Str_NAMING_2:	.asciz "NAMING"
+	.align	4, 0xFF
+
+	TtlScreen	CmNameScreen, sub=CmNameScreen_Naming1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CMBKSL, window=CmNameScreen_window, title=Str_NAMING_2, icon=153	# title "NAMING"
+		IvNaming	CmNameScreen_Naming1, super=CmNameScreen, next=CmNameScreen_ScreenMenu_VARIATION, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_CmpMemNmChk
+
+Str_VARIATION:	.asciz "VARIATION"
+	.align	4, 0xFF
+
+		AcScreenMenu	CmNameScreen_ScreenMenu_VARIATION, super=CmNameScreen, next=CmNameScreen_FuncEditSw1, prev=CmNameScreen_Naming1, flag=VF_Const, X=547, Y=114, W=85, H=38, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Right3, selected=CmNameScreen_ScreenMenu_VARIATION_selected, str=Str_VARIATION, screen=CmVari1NameScreen_id	# str "VARIATION"
+		AcFuncEditSw	CmNameScreen_FuncEditSw1, super=CmNameScreen, next=CmNameScreen_CmpPatternBox1, prev=CmNameScreen_ScreenMenu_VARIATION, flag=VF_Const, X=593, Y=165, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_CmpMemNmOk
+		AcCmpPatternBox	CmNameScreen_CmpPatternBox1, super=CmNameScreen, prev=CmNameScreen_FuncEditSw1, flag=VF_Const, X=164, Y=50, W=270, H=19, color=CL_WallPattern, index=0xFFFF, font=1, fontcolor=CL_White, align=1
+
+Str_KEY_SETTING_2:	.asciz "KEY SETTING"
+
+	TtlScreen	CmpSetScreen, sub=CmpSetScreen_Box1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CMBKSL_S, window=CmpSetScreen_window, title=Str_KEY_SETTING_2, icon=159	# title "KEY SETTING"
+		VwBox	CmpSetScreen_Box1, super=CmpSetScreen, next=CmpSetScreen_Line1, flag=VF_Const, X=160, Y=114, W=320, H=100, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
+		VwLine	CmpSetScreen_Line1, super=CmpSetScreen, next=CmpSetScreen_Label_CHORD, prev=CmpSetScreen_Box1, flag=VF_Const, X=162, Y=152, W=316, H=1, color=CL_White, linemode=1
+
+Str_CHORD:	.asciz "CHORD"
+	.align	4, 0xFF
+
+		VwLabel	CmpSetScreen_Label_CHORD, super=CmpSetScreen, next=CmpSetScreen_Label_KEY, prev=CmpSetScreen_Line1, flag=VF_Const, X=370, Y=126, W=59, H=19, str=Str_CHORD, font=4, fontcolor=CL_Yellow	# str "CHORD"
+
+Str_KEY:	.asciz "KEY"
+
+		VwLabel	CmpSetScreen_Label_KEY, super=CmpSetScreen, next=CmpSetScreen_FuncEditBox1, prev=CmpSetScreen_Label_CHORD, flag=VF_Const, X=222, Y=126, W=37, H=19, str=Str_KEY, font=4, fontcolor=CL_Yellow	# str "KEY"
+
+Str_empty_42:	.asciz ""
+	.align	4, 0xFF
+
+		AcFuncEditBox	CmpSetScreen_FuncEditBox1, super=CmpSetScreen, next=CmpSetScreen_FuncEditBox2, prev=CmpSetScreen_Label_KEY, flag=VF_Const, X=216, Y=174, W=57, H=19, color=CL_WallPattern, index=1, caption=Str_empty_42, font=4, fontcolor=CL_White, length=4, editsw=ES_None, dial=1, selected=CmpSetScreen_FuncEditBox1_selected, func=FN_FE_CmpRecSetKey	# caption ""
+
+Str_empty_43:	.asciz ""
+	.align	4, 0xFF
+
+		AcFuncEditBox	CmpSetScreen_FuncEditBox2, super=CmpSetScreen, next=CmpSetScreen_Line2, prev=CmpSetScreen_FuncEditBox1, flag=VF_Const, X=376, Y=174, W=57, H=19, color=CL_WallPattern, index=2, caption=Str_empty_43, font=4, fontcolor=CL_White, length=4, editsw=ES_None, dial=1, selected=CmpSetScreen_FuncEditBox2_selected, func=FN_FE_CmpRecSetChord	# caption ""
+		VwLine	CmpSetScreen_Line2, super=CmpSetScreen, next=CmpSetScreen_IndexWideES1, prev=CmpSetScreen_FuncEditBox2, flag=VF_Const, X=320, Y=116, W=1, H=96, color=CL_White, linemode=1
+		AcIndexWideES	CmpSetScreen_IndexWideES1, super=CmpSetScreen, next=CmpSetScreen_IndexWideES2, prev=CmpSetScreen_Line2, flag=VF_Const, X=364, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom10, editsw2=ES_Bottom11, style=3
+		AcIndexWideES	CmpSetScreen_IndexWideES2, super=CmpSetScreen, next=CmpSetScreen_CmpPatternBox1, prev=CmpSetScreen_IndexWideES1, flag=VF_Const, X=204, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom6, editsw2=ES_Bottom7, style=3
+		AcCmpPatternBox	CmpSetScreen_CmpPatternBox1, super=CmpSetScreen, prev=CmpSetScreen_IndexWideES2, flag=VF_Const, X=256, Y=2, W=270, H=25, color=CL_TitleBar, index=0xFFFF, font=4, fontcolor=CL_White, align=1, drawPattern=1
+
+Str_REALTIME_RECORDING:	.asciz "REALTIME RECORDING"
+	.align	4, 0xFF
+
+	TtlScreen	CmpRealScreen, sub=CmpRealScreen_TitleMenu_PART_BALANCE, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CMBKSL_S, window=CmpRealScreen_window, title=Str_REALTIME_RECORDING, icon=160	# title "REALTIME RECORDING"
+
+Str_PART_BALANCE:	.asciz "PART BALANCE"
+	.align	4, 0xFF
+
+		AcTitleMenu	CmpRealScreen_TitleMenu_PART_BALANCE, super=CmpRealScreen, next=CmpRealScreen_TitleMenu_STEP_RECORD, flag=VF_Const, X=8, Y=28, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left1, selected=CmpRealScreen_TitleMenu_PART_BALANCE_selected, str=Str_PART_BALANCE, title=TT_CMBAL, icon=143	# str "PART BALANCE"
+
+Str_STEP_RECORD:	.asciz "STEP RECORD"
+
+		AcTitleMenu	CmpRealScreen_TitleMenu_STEP_RECORD, super=CmpRealScreen, next=CmpRealSoloToggle, prev=CmpRealScreen_TitleMenu_PART_BALANCE, flag=VF_Const, X=8, Y=114, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left3, selected=CmpRealScreen_TitleMenu_STEP_RECORD_selected, str=Str_STEP_RECORD, title=TT_CMSTEP, icon=54	# str "STEP RECORD"
+
+Str_SOLO:	.asciz "SOLO"
+Str_SOLO_2:	.asciz "SOLO"
+	.align	4, 0xFF
+
+		AcFuncToggle	CmpRealSoloToggle, super=CmpRealScreen, next=CmpRealScreen_Box1, prev=CmpRealScreen_TitleMenu_STEP_RECORD, flag=VF_Const, X=8, Y=162, W=60, H=28, font=4, stron=Str_SOLO, stroff=Str_SOLO_2, onoff=CmpRealSoloToggle_onoff, editsw=ES_Left4, func=FN_CmpRecSoloFunc	# stron "SOLO"; stroff "SOLO"
+		VwBox	CmpRealScreen_Box1, super=CmpRealScreen, next=CmpRealScreen_Label_MEASURE, prev=CmpRealSoloToggle, flag=VF_Const, X=188, Y=35, W=290, H=149, color=CL_Transparent, border=BD_3D_UP2, index=0xFFFF
+
+Str_MEASURE_2:	.asciz "MEASURE ="
+	.align	4, 0xFF
+
+		VwLabel	CmpRealScreen_Label_MEASURE, super=CmpRealScreen, next=CmpRealScreen_Label_MEMORY, prev=CmpRealScreen_Box1, flag=VF_Const, X=228, Y=46, W=103, H=19, str=Str_MEASURE_2, font=4, fontcolor=CL_White	# str "MEASURE ="
+
+Str_MEMORY:	.asciz "MEMORY  ="
+	.align	4, 0xFF
+
+		VwLabel	CmpRealScreen_Label_MEMORY, super=CmpRealScreen, next=CmpRealScreen_Label_KEY_IN_CHORD_MODIFY, prev=CmpRealScreen_Label_MEASURE, flag=VF_Const, X=228, Y=70, W=103, H=19, str=Str_MEMORY, font=4, fontcolor=CL_White	# str "MEMORY  ="
+
+Str_KEY_IN_CHORD_MODIFY:	.asciz "KEY IN CHORD MODIFY"
+
+		VwLabel	CmpRealScreen_Label_KEY_IN_CHORD_MODIFY, super=CmpRealScreen, next=CmpRealScreen_Label_GROUP, prev=CmpRealScreen_Label_MEMORY, flag=VF_Const, X=246, Y=120, W=156, H=19, str=Str_KEY_IN_CHORD_MODIFY, fontcolor=CL_Yellow	# str "KEY IN CHORD MODIFY"
+
+Str_GROUP:	.asciz "GROUP      ="
+	.align	4, 0xFF
+
+		VwLabel	CmpRealScreen_Label_GROUP, super=CmpRealScreen, next=CmpRealScreen_Label_TYPE, prev=CmpRealScreen_Label_KEY_IN_CHORD_MODIFY, flag=VF_Const, X=230, Y=138, W=100, H=19, str=Str_GROUP, font=1, fontcolor=CL_White	# str "GROUP      ="
+
+Str_TYPE_6:	.asciz "TYPE       ="
+	.align	4, 0xFF
+
+		VwLabel	CmpRealScreen_Label_TYPE, super=CmpRealScreen, next=CmpRealScreen_Label_QUANTIZE, prev=CmpRealScreen_Label_GROUP, flag=VF_Const, X=230, Y=160, W=100, H=19, str=Str_TYPE_6, font=1, fontcolor=CL_White	# str "TYPE       ="
+
+Str_QUANTIZE:	.asciz "QUANTIZE   ="
+	.align	4, 0xFF
+
+		VwLabel	CmpRealScreen_Label_QUANTIZE, super=CmpRealScreen, next=CmpRealScreen_CmpBarBox1, prev=CmpRealScreen_Label_TYPE, flag=VF_Const, X=230, Y=98, W=100, H=19, str=Str_QUANTIZE, font=1, fontcolor=CL_White	# str "QUANTIZE   ="
+		AcCmpBarBox	CmpRealScreen_CmpBarBox1, super=CmpRealScreen, next=CmpRealScreen_CmpCapaBox1, prev=CmpRealScreen_Label_QUANTIZE, flag=VF_Const, X=336, Y=46, W=68, H=19, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_White, align=1
+		AcCmpCapaBox	CmpRealScreen_CmpCapaBox1, super=CmpRealScreen, next=CmpRealScreen_FuncEditBox1, prev=CmpRealScreen_CmpBarBox1, flag=VF_Const, X=346, Y=70, W=60, H=19, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_White, align=1
+
+Str_empty_44:	.asciz ""
+	.align	4, 0xFF
+
+		AcFuncEditBox	CmpRealScreen_FuncEditBox1, super=CmpRealScreen, next=CmpRealChdModGrp, prev=CmpRealScreen_CmpCapaBox1, flag=VF_Const, X=346, Y=97, W=57, H=19, color=CL_WallPattern, index=1, caption=Str_empty_44, font=1, fontcolor=CL_White, align=1, length=4, editsw=ES_None, selected=CmpRealScreen_FuncEditBox1_selected, func=FN_FE_CmpRecQtz	# caption ""
+
+Str_empty_45:	.asciz ""
+	.align	4, 0xFF
+
+		AcFuncEditBox	CmpRealChdModGrp, super=CmpRealScreen, next=CmpRealChdModTyp, prev=CmpRealScreen_FuncEditBox1, flag=VF_Const, X=346, Y=136, W=68, H=19, color=CL_WallPattern, index=2, caption=Str_empty_45, font=1, fontcolor=CL_White, align=1, length=4, editsw=ES_None, selected=CmpRealChdModGrp_selected, func=FN_FE_CmpRecChdModGrp	# caption ""
+
+Str_empty_46:	.asciz ""
+	.align	4, 0xFF
+
+		AcFuncEditBox	CmpRealChdModTyp, super=CmpRealScreen, next=CmpRealScreen_IndexWideES1, prev=CmpRealChdModGrp, flag=VF_Const, X=346, Y=158, W=117, H=19, color=CL_WallPattern, index=3, caption=Str_empty_46, font=1, fontcolor=CL_White, align=1, length=4, editsw=ES_None, selected=CmpRealChdModTyp_selected, func=FN_FE_CmpRecChdModTyp	# caption ""
+		AcIndexWideES	CmpRealScreen_IndexWideES1, super=CmpRealScreen, next=CmpRealScreen_IndexWideES2, prev=CmpRealChdModTyp, flag=VF_Const, X=404, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, fontcolor=CL_Black, editsw=ES_Bottom11, editsw2=ES_Bottom12, style=3
+		AcIndexWideES	CmpRealScreen_IndexWideES2, super=CmpRealScreen, next=CmpRealScreen_IndexWideES3, prev=CmpRealScreen_IndexWideES1, flag=VF_Const, X=484, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, fontcolor=CL_Black, editsw=ES_Bottom13, editsw2=ES_Bottom14, style=3
+		AcIndexWideES	CmpRealScreen_IndexWideES3, super=CmpRealScreen, next=CmpRealScreen_Label_GROUP2, prev=CmpRealScreen_IndexWideES2, flag=VF_Const, X=564, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=3, fontcolor=CL_Black, editsw=ES_Bottom15, editsw2=ES_Bottom16, style=3
+
+Str_GROUP_2:	.asciz "GROUP"
+	.align	4, 0xFF
+
+		VwLabel	CmpRealScreen_Label_GROUP2, super=CmpRealScreen, next=CmpRealScreen_Label_TYPE2, prev=CmpRealScreen_IndexWideES3, flag=VF_Const, X=502, Y=202, W=34, H=11, str=Str_GROUP_2, font=3, fontcolor=CL_White	# str "GROUP"
+
+Str_TYPE_7:	.asciz "TYPE"
+	.align	4, 0xFF
+
+		VwLabel	CmpRealScreen_Label_TYPE2, super=CmpRealScreen, next=CmpRealScreen_Label_QUANTIZE2, prev=CmpRealScreen_Label_GROUP2, flag=VF_Const, X=586, Y=202, W=28, H=11, str=Str_TYPE_7, font=3, fontcolor=CL_White	# str "TYPE"
+
+Str_QUANTIZE_2:	.asciz "QUANTIZE"
+	.align	4, 0xFF
+
+		VwLabel	CmpRealScreen_Label_QUANTIZE2, super=CmpRealScreen, next=CmpRealScreen_TitleMenu_PART_SETTING, prev=CmpRealScreen_Label_TYPE2, flag=VF_Const, X=404, Y=194, W=68, H=19, str=Str_QUANTIZE_2, fontcolor=CL_White	# str "QUANTIZE"
+
+Str_PART_SETTING_3:	.asciz "PART SETTING"
+	.align	4, 0xFF
+
+		AcTitleMenu	CmpRealScreen_TitleMenu_PART_SETTING, super=CmpRealScreen, next=CmpRRecBas, prev=CmpRealScreen_Label_QUANTIZE2, flag=VF_Const, X=8, Y=71, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left2, selected=CmpRealScreen_TitleMenu_PART_SETTING_selected, str=Str_PART_SETTING_3, title=TT_CMPARTSET, icon=159	# str "PART SETTING"
+		AcFuncEditSw	CmpRRecBas, super=CmpRealScreen, sub=CmpRRecBas_Label_BAS, next=CmpRRecDr2, prev=CmpRealScreen_TitleMenu_PART_SETTING, flag=VF_Const, X=284, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom8, func=FN_CmpPartSel
+
+Str_BAS_2:	.asciz "BAS"
+
+			VwLabel	CmpRRecBas_Label_BAS, super=CmpRRecBas, flag=VF_Const, X=286, Y=219, W=28, H=19, str=Str_BAS_2, fontcolor=CL_BlackW	# str "BAS"
+		AcFuncEditSw	CmpRRecDr2, super=CmpRealScreen, sub=CmpRRecDr2_Label_DR2, next=CmpRRecAc1, prev=CmpRRecBas, flag=VF_Const, X=4, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom1, func=FN_CmpPartSel
+
+Str_DR2_2:	.asciz "DR2"
+
+			VwLabel	CmpRRecDr2_Label_DR2, super=CmpRRecDr2, flag=VF_Const, X=6, Y=219, W=28, H=19, str=Str_DR2_2, fontcolor=CL_BlackW	# str "DR2"
+		AcFuncEditSw	CmpRRecAc1, super=CmpRealScreen, sub=CmpRRecAc1_Label_AC1, next=CmpRRecAc2, prev=CmpRRecDr2, flag=VF_Const, X=244, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom7, func=FN_CmpPartSel
+
+Str_AC1_2:	.asciz "AC1"
+
+			VwLabel	CmpRRecAc1_Label_AC1, super=CmpRRecAc1, flag=VF_Const, X=246, Y=219, W=28, H=19, str=Str_AC1_2, fontcolor=CL_BlackW	# str "AC1"
+		AcFuncEditSw	CmpRRecAc2, super=CmpRealScreen, sub=CmpRRecAc2_Label_AC2, next=CmpRRecAc3, prev=CmpRRecAc1, flag=VF_Const, X=204, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom6, func=FN_CmpPartSel
+
+Str_AC2_2:	.asciz "AC2"
+
+			VwLabel	CmpRRecAc2_Label_AC2, super=CmpRRecAc2, flag=VF_Const, X=206, Y=219, W=28, H=19, str=Str_AC2_2, fontcolor=CL_BlackW	# str "AC2"
+		AcFuncEditSw	CmpRRecAc3, super=CmpRealScreen, sub=CmpRRecAc3_Label_AC3, next=CmpRRecAc4, prev=CmpRRecAc2, flag=VF_Const, X=164, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, func=FN_CmpPartSel
+
+Str_AC3_2:	.asciz "AC3"
+
+			VwLabel	CmpRRecAc3_Label_AC3, super=CmpRRecAc3, flag=VF_Const, X=166, Y=219, W=28, H=19, str=Str_AC3_2, fontcolor=CL_BlackW	# str "AC3"
+		AcFuncEditSw	CmpRRecAc4, super=CmpRealScreen, sub=CmpRRecAc4_Label_AC4, next=CmpRRecAc5, prev=CmpRRecAc3, flag=VF_Const, X=124, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom4, func=FN_CmpPartSel
+
+Str_AC4_2:	.asciz "AC4"
+
+			VwLabel	CmpRRecAc4_Label_AC4, super=CmpRRecAc4, flag=VF_Const, X=126, Y=219, W=28, H=19, str=Str_AC4_2, fontcolor=CL_BlackW	# str "AC4"
+		AcFuncEditSw	CmpRRecAc5, super=CmpRealScreen, sub=CmpRRecAc5_Label_AC5, next=CmpRRecDr1, prev=CmpRRecAc4, flag=VF_Const, X=84, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom3, func=FN_CmpPartSel
+
+Str_AC5_2:	.asciz "AC5"
+
+			VwLabel	CmpRRecAc5_Label_AC5, super=CmpRRecAc5, flag=VF_Const, X=86, Y=219, W=28, H=19, str=Str_AC5_2, fontcolor=CL_BlackW	# str "AC5"
+		AcFuncEditSw	CmpRRecDr1, super=CmpRealScreen, sub=CmpRRecDr1_Label_DR1, next=CmpRealScreen_CmpPatternBox1, prev=CmpRRecAc5, flag=VF_Const, X=44, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom2, func=FN_CmpPartSel
+
+Str_DR1_2:	.asciz "DR1"
+
+			VwLabel	CmpRRecDr1_Label_DR1, super=CmpRRecDr1, flag=VF_Const, X=46, Y=219, W=28, H=19, str=Str_DR1_2, fontcolor=CL_BlackW	# str "DR1"
+		AcCmpPatternBox	CmpRealScreen_CmpPatternBox1, super=CmpRealScreen, next=CmpRealScreen_CmpRecMuteBox_VwStrBox, prev=CmpRRecDr1, flag=VF_Const, X=256, Y=2, W=270, H=25, color=CL_TitleBar, index=0xFFFF, font=4, fontcolor=CL_White, align=1, drawPattern=1
+
+Str_VwStrBox:	.asciz "VwStrBox"
+	.align	4, 0xFF
+
+		AcCmpRecMuteBox	CmpRealScreen_CmpRecMuteBox_VwStrBox, super=CmpRealScreen, next=CmpRealScreen_CmpRecMuteBox_VwStrBox2, prev=CmpRealScreen_CmpPatternBox1, flag=VF_Const, X=43, Y=196, W=34, H=18, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_WhiteB, str=Str_VwStrBox, selected=CmpRealScreen_CmpRecMuteBox_VwStrBox_selected	# str "VwStrBox"
+
+Str_VwStrBox_2:	.asciz "VwStrBox"
+	.align	4, 0xFF
+
+		AcCmpRecMuteBox	CmpRealScreen_CmpRecMuteBox_VwStrBox2, super=CmpRealScreen, next=CmpRealScreen_CmpRecMuteBox_VwStrBox3, prev=CmpRealScreen_CmpRecMuteBox_VwStrBox, flag=VF_Const, X=3, Y=196, W=34, H=18, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_WhiteB, str=Str_VwStrBox_2, part=7, selected=CmpRealScreen_CmpRecMuteBox_VwStrBox2_selected	# str "VwStrBox"
+
+Str_VwStrBox_3:	.asciz "VwStrBox"
+	.align	4, 0xFF
+
+		AcCmpRecMuteBox	CmpRealScreen_CmpRecMuteBox_VwStrBox3, super=CmpRealScreen, next=CmpRealScreen_CmpRecMuteBox_VwStrBox4, prev=CmpRealScreen_CmpRecMuteBox_VwStrBox2, flag=VF_Const, X=83, Y=196, W=34, H=18, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_WhiteB, str=Str_VwStrBox_3, part=6, selected=CmpRealScreen_CmpRecMuteBox_VwStrBox3_selected	# str "VwStrBox"
+
+Str_VwStrBox_4:	.asciz "VwStrBox"
+	.align	4, 0xFF
+
+		AcCmpRecMuteBox	CmpRealScreen_CmpRecMuteBox_VwStrBox4, super=CmpRealScreen, next=CmpRealScreen_CmpRecMuteBox_VwStrBox5, prev=CmpRealScreen_CmpRecMuteBox_VwStrBox3, flag=VF_Const, X=123, Y=196, W=34, H=18, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_WhiteB, str=Str_VwStrBox_4, part=5, selected=CmpRealScreen_CmpRecMuteBox_VwStrBox4_selected	# str "VwStrBox"
+
+Str_VwStrBox_5:	.asciz "VwStrBox"
+	.align	4, 0xFF
+
+		AcCmpRecMuteBox	CmpRealScreen_CmpRecMuteBox_VwStrBox5, super=CmpRealScreen, next=CmpRealScreen_CmpRecMuteBox_VwStrBox6, prev=CmpRealScreen_CmpRecMuteBox_VwStrBox4, flag=VF_Const, X=163, Y=196, W=34, H=18, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_WhiteB, str=Str_VwStrBox_5, part=4, selected=CmpRealScreen_CmpRecMuteBox_VwStrBox5_selected	# str "VwStrBox"
+
+Str_VwStrBox_6:	.asciz "VwStrBox"
+	.align	4, 0xFF
+
+		AcCmpRecMuteBox	CmpRealScreen_CmpRecMuteBox_VwStrBox6, super=CmpRealScreen, next=CmpRealScreen_CmpRecMuteBox_VwStrBox7, prev=CmpRealScreen_CmpRecMuteBox_VwStrBox5, flag=VF_Const, X=203, Y=196, W=34, H=18, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_WhiteB, str=Str_VwStrBox_6, part=3, selected=CmpRealScreen_CmpRecMuteBox_VwStrBox6_selected	# str "VwStrBox"
+
+Str_VwStrBox_7:	.asciz "VwStrBox"
+	.align	4, 0xFF
+
+		AcCmpRecMuteBox	CmpRealScreen_CmpRecMuteBox_VwStrBox7, super=CmpRealScreen, next=CmpRealScreen_CmpRecMuteBox_VwStrBox8, prev=CmpRealScreen_CmpRecMuteBox_VwStrBox6, flag=VF_Const, X=243, Y=196, W=34, H=18, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_WhiteB, str=Str_VwStrBox_7, part=2, selected=CmpRealScreen_CmpRecMuteBox_VwStrBox7_selected	# str "VwStrBox"
+
+Str_VwStrBox_8:	.asciz "VwStrBox"
+	.align	4, 0xFF
+
+		AcCmpRecMuteBox	CmpRealScreen_CmpRecMuteBox_VwStrBox8, super=CmpRealScreen, next=CmpRealScreen_FuncEditSw1, prev=CmpRealScreen_CmpRecMuteBox_VwStrBox7, flag=VF_Const, X=283, Y=196, W=34, H=18, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_WhiteB, str=Str_VwStrBox_8, part=1, selected=CmpRealScreen_CmpRecMuteBox_VwStrBox8_selected	# str "VwStrBox"
+		AcFuncEditSw	CmpRealScreen_FuncEditSw1, super=CmpRealScreen, sub=CmpRealScreen_Label_PART_CLR, next=CmpRealScreen_FuncESOnOff1, prev=CmpRealScreen_CmpRecMuteBox_VwStrBox8, flag=VF_Const, X=526, Y=33, W=106, H=28, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right1, func=FN_CmpPartClrOk
+
+Str_PART_CLR:	.asciz "PART CLR"
+	.align	4, 0xFF
+
+			VwLabel	CmpRealScreen_Label_PART_CLR, super=CmpRealScreen_FuncEditSw1, flag=VF_Const, X=532, Y=39, W=92, H=19, str=Str_PART_CLR, font=4, fontcolor=CL_BlackW	# str "PART CLR"
+		AcFuncESOnOff	CmpRealScreen_FuncESOnOff1, super=CmpRealScreen, sub=CmpRealScreen_Label_NOTE_CLR, next=CmpRealScreen_FuncESOnOff2, prev=CmpRealScreen_FuncEditSw1, flag=VF_Const, X=525, Y=76, W=107, H=28, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right2, func=FN_CmpInstClrOnOff
+
+Str_NOTE_CLR:	.asciz "NOTE CLR"
+	.align	4, 0xFF
+
+			VwLabel	CmpRealScreen_Label_NOTE_CLR, super=CmpRealScreen_FuncESOnOff1, flag=VF_Const, X=532, Y=82, W=92, H=19, str=Str_NOTE_CLR, font=4, fontcolor=CL_BlackW	# str "NOTE CLR"
+		AcFuncESOnOff	CmpRealScreen_FuncESOnOff2, super=CmpRealScreen, sub=CmpRealScreen_Label_ALL_ERAS, next=CmpRealScreen_EditSwLabel_KEY_IN_CHORD_MODIFY, prev=CmpRealScreen_FuncESOnOff1, flag=VF_Const, X=525, Y=119, W=107, H=28, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right3, func=FN_CmpAllEraseOnOff
+
+Str_ALL_ERAS:	.asciz "ALL ERAS"
+	.align	4, 0xFF
+
+			VwLabel	CmpRealScreen_Label_ALL_ERAS, super=CmpRealScreen_FuncESOnOff2, flag=VF_Const, X=532, Y=125, W=92, H=19, str=Str_ALL_ERAS, font=4, fontcolor=CL_BlackW	# str "ALL ERAS"
+
+Str_KEY_IN_CHORD_MODIFY_2:	.asciz "KEY IN CHORD MODIFY"
+
+		VwEditSwLabel	CmpRealScreen_EditSwLabel_KEY_IN_CHORD_MODIFY, super=CmpRealScreen, next=CmpRealScreen_EditSwLine1, prev=CmpRealScreen_FuncESOnOff2, flag=VF_Const, X=500, Y=190, W=118, H=11, str=Str_KEY_IN_CHORD_MODIFY_2, font=3, fontcolor=CL_Yellow, editsw=ES_Bottom13	# str "KEY IN CHORD MODIFY"
+		VwEditSwLine	CmpRealScreen_EditSwLine1, super=CmpRealScreen, next=CmpRealScreen_EditSwLine2, prev=CmpRealScreen_EditSwLabel_KEY_IN_CHORD_MODIFY, flag=VF_Const, X=481, Y=194, W=12, H=1, color=CL_White, linemode=1, editsw=ES_Bottom13
+		VwEditSwLine	CmpRealScreen_EditSwLine2, super=CmpRealScreen, next=CmpRealScreen_EditSwLine3, prev=CmpRealScreen_EditSwLine1, flag=VF_Const, X=480, Y=194, W=1, H=13, color=CL_White, linemode=1, editsw=ES_Bottom13
+		VwEditSwLine	CmpRealScreen_EditSwLine3, super=CmpRealScreen, next=CmpRealScreen_EditSwLine4, prev=CmpRealScreen_EditSwLine2, flag=VF_Const, X=625, Y=194, W=12, H=1, color=CL_White, linemode=1, editsw=ES_Bottom16
+		VwEditSwLine	CmpRealScreen_EditSwLine4, super=CmpRealScreen, prev=CmpRealScreen_EditSwLine3, flag=VF_Const, X=637, Y=194, W=1, H=13, color=CL_White, linemode=1, editsw=ES_Bottom16
+
+Str_PART_BALANCE_2:	.asciz "PART BALANCE"
+	.align	4, 0xFF
+
+	TtlScreen	CmpBalScreen, sub=CmpBalScreen_MixerVol1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CMREAL, window=CmpBalScreen_window, title=Str_PART_BALANCE_2, icon=143	# title "PART BALANCE"
+		AcMixerVol	CmpBalScreen_MixerVol1, super=CmpBalScreen, next=CmpBalScreen_MixerVol2, flag=VF_Const, X=199, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=20, editsw=ES_Bottom6
+		AcMixerVol	CmpBalScreen_MixerVol2, super=CmpBalScreen, next=CmpBalScreen_MixerVol3, prev=CmpBalScreen_MixerVol1, flag=VF_Const, X=160, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=21, editsw=ES_Bottom5
+		AcMixerVol	CmpBalScreen_MixerVol3, super=CmpBalScreen, next=CmpBalScreen_MixerVol4, prev=CmpBalScreen_MixerVol2, flag=VF_Const, X=121, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=22, editsw=ES_Bottom4
+		AcMixerVol	CmpBalScreen_MixerVol4, super=CmpBalScreen, next=CmpBalScreen_MixerVol5, prev=CmpBalScreen_MixerVol3, flag=VF_Const, X=43, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=25, editsw=ES_Bottom2
+		AcMixerVol	CmpBalScreen_MixerVol5, super=CmpBalScreen, next=CmpBalScreen_MixerVol6, prev=CmpBalScreen_MixerVol4, flag=VF_Const, X=4, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=26, editsw=ES_Bottom1
+		AcMixerVol	CmpBalScreen_MixerVol6, super=CmpBalScreen, next=CmpBalScreen_MixerVol7, prev=CmpBalScreen_MixerVol5, flag=VF_Const, X=82, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=23, editsw=ES_Bottom3
+		AcMixerVol	CmpBalScreen_MixerVol7, super=CmpBalScreen, next=CmpBalScreen_MixerVol8, prev=CmpBalScreen_MixerVol6, flag=VF_Const, X=238, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=19, editsw=ES_Bottom7
+		AcMixerVol	CmpBalScreen_MixerVol8, super=CmpBalScreen, next=CmpBalScreen_MixerVol9, prev=CmpBalScreen_MixerVol7, flag=VF_Const, X=597, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=32, editsw=ES_Bottom16
+		AcMixerVol	CmpBalScreen_MixerVol9, super=CmpBalScreen, next=CmpBalScreen_CmpPatternBox1, prev=CmpBalScreen_MixerVol8, flag=VF_Const, X=277, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=24, editsw=ES_Bottom8
+		AcCmpPatternBox	CmpBalScreen_CmpPatternBox1, super=CmpBalScreen, next=CmpBalScreen_CmpBarBox1, prev=CmpBalScreen_MixerVol9, flag=VF_Const, X=216, Y=2, W=270, H=25, color=CL_TitleBar, index=0xFFFF, font=4, fontcolor=CL_White, align=1, drawPattern=1
+		AcCmpBarBox	CmpBalScreen_CmpBarBox1, super=CmpBalScreen, prev=CmpBalScreen_CmpPatternBox1, flag=VF_Const, X=512, Y=6, W=48, H=19, color=CL_TitleBar, index=0xFFFF, fontcolor=CL_White, align=1
+
+Str_PATTERN_COPY_2:	.asciz "PATTERN COPY"
+	.align	4, 0xFF
+
+	TtlScreen	CmpNcpScreen, sub=CmpNcpScreen_PageControl1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CMMENU, window=CmpNcpScreen_window, title=Str_PATTERN_COPY_2, icon=82	# title "PATTERN COPY"
+		IvPageControl	CmpNcpScreen_PageControl1, super=CmpNcpScreen, next=CmpNcpScreen_PageControl2, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, page=1, window=CmpPtnCpP1Win_id
+		IvPageControl	CmpNcpScreen_PageControl2, super=CmpNcpScreen, next=CmPnCpPage, prev=CmpNcpScreen_PageControl1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, page=2, window=CmpPtnCpP2Win_id
+		AcWindowPage	CmPnCpPage, super=CmpNcpScreen, next=CmpNcpScreen_StrBox_TIME_SIGNATURE, prev=CmpNcpScreen_PageControl2, flag=VF_Const, X=564, Y=5, W=71, H=18, color=CL_PageBack, border=BD_3D_DOWN1, index=0xFFFF, page=CmPnCpPage_page, pagemin=1, pagemax=2
+
+Str_TIME_SIGNATURE:	.asciz "TIME SIGNATURE:"
+
+		VwStrBox	CmpNcpScreen_StrBox_TIME_SIGNATURE, super=CmpNcpScreen, next=CmPnCp_TimeSig, prev=CmPnCpPage, flag=VF_Const, X=326, Y=0, W=156, H=30, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, align=1, str=Str_TIME_SIGNATURE	# str "TIME SIGNATURE:"
+		AcTimeSigBox	CmPnCp_TimeSig, super=CmpNcpScreen, prev=CmpNcpScreen_StrBox_TIME_SIGNATURE, flag=VF_Const, X=448, Y=2, W=40, H=25, color=CL_TitleBar, index=0xFFFF, fontcolor=CL_White
+
+Str_SEQ_TO_COMPOSER_COPY_2:	.asciz "SEQ TO COMPOSER COPY"
+	.align	4, 0xFF
+
+	TtlScreen	CmpSeqCpScreen, sub=CmpSeqCpScreen_Box1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CMMENU, window=CmpSeqCpScreen_window, title=Str_SEQ_TO_COMPOSER_COPY_2, icon=83	# title "SEQ TO COMPOSER COPY"
+		VwBox	CmpSeqCpScreen_Box1, super=CmpSeqCpScreen, next=CmpSeqCpScreen_IndexWideES1, flag=VF_Const, X=0, Y=216, W=640, H=24, color=CL_WallPattern, index=0xFFFF
+		AcIndexWideES	CmpSeqCpScreen_IndexWideES1, super=CmpSeqCpScreen, next=CmpSeqCpScreen_IndexWideES2, prev=CmpSeqCpScreen_Box1, flag=VF_Const, X=164, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=3, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, editsw2=ES_Bottom6, style=3
+		AcIndexWideES	CmpSeqCpScreen_IndexWideES2, super=CmpSeqCpScreen, next=CmpSeqCpScreen_IndexWideES3, prev=CmpSeqCpScreen_IndexWideES1, flag=VF_Const, X=84, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom3, editsw2=ES_Bottom4, style=3
+		AcIndexWideES	CmpSeqCpScreen_IndexWideES3, super=CmpSeqCpScreen, next=CmpSeqCpScreen_IndexWideES4, prev=CmpSeqCpScreen_IndexWideES2, flag=VF_Const, X=4, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, fontcolor=CL_Black, editsw=ES_Bottom1, editsw2=ES_Bottom2, style=3
+		AcIndexWideES	CmpSeqCpScreen_IndexWideES4, super=CmpSeqCpScreen, next=CmpSeqCpScreen_IndexWideES5, prev=CmpSeqCpScreen_IndexWideES3, flag=VF_Const, X=284, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=4, font=4, fontcolor=CL_Black, editsw=ES_Bottom8, editsw2=ES_Bottom9, style=3
+		AcIndexWideES	CmpSeqCpScreen_IndexWideES5, super=CmpSeqCpScreen, next=CmpSeqCpScreen_IndexWideES6, prev=CmpSeqCpScreen_IndexWideES4, flag=VF_Const, X=364, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=5, font=4, fontcolor=CL_Black, editsw=ES_Bottom10, editsw2=ES_Bottom11, style=3
+		AcIndexWideES	CmpSeqCpScreen_IndexWideES6, super=CmpSeqCpScreen, next=CmpSeqCpScreen_IndexWideES7, prev=CmpSeqCpScreen_IndexWideES5, flag=VF_Const, X=444, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=6, font=4, fontcolor=CL_Black, editsw=ES_Bottom12, editsw2=ES_Bottom13, style=14
+		AcIndexWideES	CmpSeqCpScreen_IndexWideES7, super=CmpSeqCpScreen, next=CmpSeqCpScreen_Yajirushi1, prev=CmpSeqCpScreen_IndexWideES6, flag=VF_Const, X=524, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=7, font=4, fontcolor=CL_Black, editsw=ES_Bottom14, editsw2=ES_Bottom15, style=3
+		Yajirushi	CmpSeqCpScreen_Yajirushi1, super=CmpSeqCpScreen, next=CmpSeqCpScreen_Label_SEQUENCER, prev=CmpSeqCpScreen_IndexWideES7, flag=VF_Const, X=164, Y=94, W=92, H=40, color=CL_White, dir=1, tail_x_rate=50, tail_y_rate=50
+
+Str_SEQUENCER_5:	.asciz "SEQUENCER"
+	.align	4, 0xFF
+
+		VwLabel	CmpSeqCpScreen_Label_SEQUENCER, super=CmpSeqCpScreen, next=CmpSeqCpScreen_Label1, prev=CmpSeqCpScreen_Yajirushi1, flag=VF_Const, X=32, Y=50, W=103, H=19, str=Str_SEQUENCER_5, font=4, fontcolor=CL_White	# str "SEQUENCER"
+
+Str_empty_47:	.asciz "("
+	.align	4, 0xFF
+
+		VwLabel	CmpSeqCpScreen_Label1, super=CmpSeqCpScreen, next=CmpSeqCpScreen_Label_MEMORY, prev=CmpSeqCpScreen_Label_SEQUENCER, flag=VF_Const, X=32, Y=68, W=15, H=19, str=Str_empty_47, font=4, fontcolor=CL_White	# str "("
+
+Str_MEMORY_2:	.asciz "MEMORY"
+	.align	4, 0xFF
+
+		VwLabel	CmpSeqCpScreen_Label_MEMORY, super=CmpSeqCpScreen, next=CmpSeqCpScreen_Label_PATTERN, prev=CmpSeqCpScreen_Label1, flag=VF_Const, X=294, Y=198, W=52, H=19, str=Str_MEMORY_2, font=1, fontcolor=CL_White	# str "MEMORY"
+
+Str_PATTERN:	.asciz "PATTERN"
+
+		VwLabel	CmpSeqCpScreen_Label_PATTERN, super=CmpSeqCpScreen, next=CmpSeqCpScreen_Label_COMPOSER, prev=CmpSeqCpScreen_Label_MEMORY, flag=VF_Const, X=370, Y=198, W=60, H=19, str=Str_PATTERN, font=1, fontcolor=CL_White	# str "PATTERN"
+
+Str_COMPOSER_4:	.asciz "COMPOSER"
+	.align	4, 0xFF
+
+		VwLabel	CmpSeqCpScreen_Label_COMPOSER, super=CmpSeqCpScreen, next=CmpSeqCpScreen_SeqSongNameBox1, prev=CmpSeqCpScreen_Label_PATTERN, flag=VF_Const, X=302, Y=60, W=92, H=19, str=Str_COMPOSER_4, font=4, fontcolor=CL_White	# str "COMPOSER"
+		AcSeqSongNameBox	CmpSeqCpScreen_SeqSongNameBox1, super=CmpSeqCpScreen, next=CmpSeqCpScreen_Label2, prev=CmpSeqCpScreen_Label_COMPOSER, flag=VF_Const, X=47, Y=67, W=72, H=19, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_White, align=1
+
+Str_empty_48:	.asciz ")"
+	.align	4, 0xFF
+
+		VwLabel	CmpSeqCpScreen_Label2, super=CmpSeqCpScreen, next=CmpSeqCpScreen_GridBoxDelux1, prev=CmpSeqCpScreen_SeqSongNameBox1, flag=VF_Const, X=120, Y=68, W=15, H=19, str=Str_empty_48, font=4, fontcolor=CL_White	# str ")"
+
+Str_PART_TRACK:	.asciz " PART |TRACK"
+Str_DRUM1_DRUM2_BASS_ACCOMP1_ACCOMP2_ACCOMP3:	.asciz "|-|DRUM1|DRUM2|BASS|ACCOMP1|ACCOMP2|ACCOMP3|ACCOMP4|ACCOMP5"
+	.align	4, 0xFF
+
+		AcGridBoxDelux	CmpSeqCpScreen_GridBoxDelux1, super=CmpSeqCpScreen, next=CmpSeqCpScreen_Box2, prev=CmpSeqCpScreen_Label2, flag=VF_Const, X=440, Y=41, W=145, H=173, color=CL_WallPattern, border=BD_3D_UP2, index=6, font=1, fontcolor=CL_White, row=10, col=2, vertline=1, selrow=CmpSeqCpScreen_GridBoxDelux1_selrow, selcol=CmpSeqCpScreen_GridBoxDelux1_selcol, pcol=CmpSeqCpScreen_GridBoxDelux1_pcol, prow=CmpSeqCpScreen_GridBoxDelux1_prow, crow=CmpSeqCpScreen_GridBoxDelux1_crow, fixedcol=Str_PART_TRACK, fixedrow=Str_DRUM1_DRUM2_BASS_ACCOMP1_ACCOMP2_ACCOMP3, func=FN_SeqToCmpCopyGrid	# fixedcol " PART |TRACK"; fixedrow "|-|DRUM1|DRUM2|BASS|ACCOMP1|ACCOMP2|ACCO"
+		VwBox	CmpSeqCpScreen_Box2, super=CmpSeqCpScreen, next=SeqToCmpFstMeas, prev=CmpSeqCpScreen_GridBoxDelux1, flag=VF_Const, X=0, Y=90, W=160, H=124, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
+
+Str_empty_49:	.asciz ""
+	.align	4, 0xFF
+
+		AcFuncEditBox	SeqToCmpFstMeas, super=CmpSeqCpScreen, next=SeqToCmpLstMeas, prev=CmpSeqCpScreen_Box2, flag=VF_Const, X=20, Y=170, W=49, H=19, color=CL_WallPattern, index=1, caption=Str_empty_49, font=4, fontcolor=CL_White, align=1, length=4, editsw=ES_None, dial=1, selected=SeqToCmpFstMeas_selected, func=FN_FE_SeqToCmpFstMeas	# caption ""
+
+Str_empty_50:	.asciz ""
+	.align	4, 0xFF
+
+		AcFuncEditBox	SeqToCmpLstMeas, super=CmpSeqCpScreen, next=CmpSeqCpScreen_Line1, prev=SeqToCmpFstMeas, flag=VF_Const, X=100, Y=170, W=49, H=19, color=CL_WallPattern, index=2, caption=Str_empty_50, font=4, fontcolor=CL_White, align=1, length=4, editsw=ES_None, dial=1, selected=SeqToCmpLstMeas_selected, func=FN_FE_SeqToCmpLstMeas	# caption ""
+		VwLine	CmpSeqCpScreen_Line1, super=CmpSeqCpScreen, next=CmpSeqCpScreen_Label_FIRST, prev=SeqToCmpLstMeas, flag=VF_Const, X=80, Y=92, W=1, H=120, color=CL_White, linemode=1
+
+Str_FIRST:	.asciz "FIRST"
+	.align	4, 0xFF
+
+		VwLabel	CmpSeqCpScreen_Label_FIRST, super=CmpSeqCpScreen, next=CmpSeqCpScreen_Label_MEASURE, prev=CmpSeqCpScreen_Line1, flag=VF_Const, X=10, Y=103, W=44, H=19, str=Str_FIRST, font=1, fontcolor=CL_Yellow	# str "FIRST"
+
+Str_MEASURE_3:	.asciz "MEASURE"
+
+		VwLabel	CmpSeqCpScreen_Label_MEASURE, super=CmpSeqCpScreen, next=CmpSeqCpScreen_Label_LAST, prev=CmpSeqCpScreen_Label_FIRST, flag=VF_Const, X=10, Y=121, W=60, H=19, str=Str_MEASURE_3, font=1, fontcolor=CL_Yellow	# str "MEASURE"
+
+Str_LAST:	.asciz "LAST"
+	.align	4, 0xFF
+
+		VwLabel	CmpSeqCpScreen_Label_LAST, super=CmpSeqCpScreen, next=CmpSeqCpScreen_Label_MEASURE2, prev=CmpSeqCpScreen_Label_MEASURE, flag=VF_Const, X=90, Y=103, W=36, H=19, str=Str_LAST, font=1, fontcolor=CL_Yellow	# str "LAST"
+
+Str_MEASURE_4:	.asciz "MEASURE"
+
+		VwLabel	CmpSeqCpScreen_Label_MEASURE2, super=CmpSeqCpScreen, next=CmpSeqCpScreen_Line2, prev=CmpSeqCpScreen_Label_LAST, flag=VF_Const, X=90, Y=121, W=60, H=19, str=Str_MEASURE_4, font=1, fontcolor=CL_Yellow	# str "MEASURE"
+		VwLine	CmpSeqCpScreen_Line2, super=CmpSeqCpScreen, next=CmpSeqCpScreen_Box3, prev=CmpSeqCpScreen_Label_MEASURE2, flag=VF_Const, X=2, Y=144, W=156, H=1, color=CL_White, linemode=1
+		VwBox	CmpSeqCpScreen_Box3, super=CmpSeqCpScreen, next=CmpSeqCpScreen_Label_TRANSPOSE, prev=CmpSeqCpScreen_Line2, flag=VF_Const, X=164, Y=142, W=92, H=72, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
+
+Str_TRANSPOSE:	.asciz "TRANSPOSE"
+	.align	4, 0xFF
+
+		VwLabel	CmpSeqCpScreen_Label_TRANSPOSE, super=CmpSeqCpScreen, next=SeqToCmpTrans, prev=CmpSeqCpScreen_Box3, flag=VF_Const, X=172, Y=150, W=76, H=19, str=Str_TRANSPOSE, font=1, fontcolor=CL_Yellow	# str "TRANSPOSE"
+
+Str_empty_51:	.asciz ""
+	.align	4, 0xFF
+
+		AcFuncEditBox	SeqToCmpTrans, super=CmpSeqCpScreen, next=CmpSeqCpScreen_Line3, prev=CmpSeqCpScreen_Label_TRANSPOSE, flag=VF_Const, X=188, Y=184, W=49, H=19, color=CL_WallPattern, index=3, caption=Str_empty_51, font=4, fontcolor=CL_White, align=1, length=4, editsw=ES_None, dial=1, selected=SeqToCmpTrans_selected, func=FN_FE_SeqToCmpTrans	# caption ""
+		VwLine	CmpSeqCpScreen_Line3, super=CmpSeqCpScreen, next=CmpSeqCpScreen_Box4, prev=SeqToCmpTrans, flag=VF_Const, X=166, Y=172, W=88, H=1, color=CL_White, linemode=1
+		VwBox	CmpSeqCpScreen_Box4, super=CmpSeqCpScreen, next=CmpSeqCpScreen_Label_MEMORY2, prev=CmpSeqCpScreen_Line3, flag=VF_Const, X=258, Y=90, W=182, H=104, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
+
+Str_MEMORY_3:	.asciz "MEMORY:"
+
+		VwLabel	CmpSeqCpScreen_Label_MEMORY2, super=CmpSeqCpScreen, next=SeqToCmpMemory, prev=CmpSeqCpScreen_Box4, flag=VF_Const, X=266, Y=114, W=60, H=19, str=Str_MEMORY_3, font=1, fontcolor=CL_Yellow	# str "MEMORY:"
+
+Str_empty_52:	.asciz ""
+	.align	4, 0xFF
+
+		AcFuncEditBox	SeqToCmpMemory, super=CmpSeqCpScreen, next=SeqToCmpPattern, prev=CmpSeqCpScreen_Label_MEMORY2, flag=VF_Const, X=340, Y=112, W=29, H=19, color=CL_WallPattern, index=4, caption=Str_empty_52, font=4, fontcolor=CL_White, align=1, length=4, editsw=ES_None, dial=1, selected=SeqToCmpMemory_selected, func=FN_FE_SeqToCmpMemory	# caption ""
+
+Str_empty_53:	.asciz ""
+	.align	4, 0xFF
+
+		AcFuncEditBox	SeqToCmpPattern, super=CmpSeqCpScreen, next=CmpSeqCpScreen_FuncEditSw1, prev=SeqToCmpMemory, flag=VF_Const, X=260, Y=152, W=178, H=19, color=CL_WallPattern, index=5, caption=Str_empty_53, font=4, fontcolor=CL_White, align=1, length=4, editsw=ES_None, dial=1, selected=SeqToCmpPattern_selected, func=FN_FE_SeqToCmpPattern	# caption ""
+		AcFuncEditSw	CmpSeqCpScreen_FuncEditSw1, super=CmpSeqCpScreen, next=CmpSeqCpScreen_FuncMenu_EDIT, prev=SeqToCmpPattern, flag=VF_Const, X=593, Y=165, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_SeqToCmpOK
+
+Str_EDIT:	.asciz "EDIT"
+	.align	4, 0xFF
+
+		AcFuncMenu	CmpSeqCpScreen_FuncMenu_EDIT, super=CmpSeqCpScreen, prev=CmpSeqCpScreen_FuncEditSw1, flag=VF_Const, X=587, Y=32, W=45, H=30, color=CL_Transparent, index=0xFFFF, font=1, fontcolor=CL_White, editsw=ES_Right1, selected=CmpSeqCpScreen_FuncMenu_EDIT_selected, str=Str_EDIT, func=FN_Seq2CmpCpEditFunc	# str "EDIT"
+
+Str_EASY_COMPOSER_2:	.asciz "EASY COMPOSER"
+	.align	4, 0xFF
+
+	TtlScreen	CmpEasyScreen, sub=CmpEasyScreen_GridBoxDelux1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CMMENU, window=CmpEasyScreen_window, title=Str_EASY_COMPOSER_2, icon=81	# title "EASY COMPOSER"
+
+Str_PART_STYLE_VARI:	.asciz "   PART    |     STYLE     |  VARI"
+Str_BsDrum_Snare_HiHat_Cymbal_Percussion_Bas:	.asciz "|-|BsDrum&Snare|HiHat&Cymbal|Percussion|Bass|Accomp 1|Accomp 2|Accomp 3|Accomp 4|Accomp 5"
+	.align	4, 0xFF
+
+		AcGridBoxDelux	CmpEasyScreen_GridBoxDelux1, super=CmpEasyScreen, next=CmpEasyScreen_IndexWideES1, flag=VF_Const, X=80, Y=34, W=480, H=181, color=CL_WallPattern, border=BD_3D_UP2, index=1, fontcolor=CL_White, row=11, col=3, vertline=1, selrow=CmpEasyScreen_GridBoxDelux1_selrow, selcol=CmpEasyScreen_GridBoxDelux1_selcol, pcol=CmpEasyScreen_GridBoxDelux1_pcol, prow=CmpEasyScreen_GridBoxDelux1_prow, crow=CmpEasyScreen_GridBoxDelux1_crow, fixedcol=Str_PART_STYLE_VARI, fixedrow=Str_BsDrum_Snare_HiHat_Cymbal_Percussion_Bas, func=FN_EasyCompGrid	# fixedcol "   PART    |     STYLE     |  VARI"; fixedrow "|-|BsDrum&Snare|HiHat&Cymbal|Percussion|"
+		AcIndexWideES	CmpEasyScreen_IndexWideES1, super=CmpEasyScreen, next=CmpEasyScreen_Label_MEM, prev=CmpEasyScreen_GridBoxDelux1, flag=VF_Const, X=84, Y=216, W=152, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom3, editsw2=ES_Bottom6, style=14
+
+Str_MEM:	.asciz "MEM"
+
+		VwLabel	CmpEasyScreen_Label_MEM, super=CmpEasyScreen, next=CmpEasyScreen_IndexWideES2, prev=CmpEasyScreen_IndexWideES1, flag=VF_Const, X=592, Y=61, W=28, H=19, str=Str_MEM, font=1, fontcolor=CL_White	# str "MEM"
+		AcIndexWideES	CmpEasyScreen_IndexWideES2, super=CmpEasyScreen, next=CmpEasyScreen_IndexWideES3, prev=CmpEasyScreen_Label_MEM, flag=VF_Const, X=284, Y=216, W=152, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom8, editsw2=ES_Bottom11, style=3
+		AcIndexWideES	CmpEasyScreen_IndexWideES3, super=CmpEasyScreen, next=CmpEasyScreen_FuncEditBox_MEMORY, prev=CmpEasyScreen_IndexWideES2, flag=VF_Const, X=484, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=3, font=4, fontcolor=CL_Black, editsw=ES_Bottom13, editsw2=ES_Bottom14, style=3
+
+Str_MEMORY_4:	.asciz "MEMORY:"
+
+		AcFuncEditBox	CmpEasyScreen_FuncEditBox_MEMORY, super=CmpEasyScreen, next=CmpEasyScreen_IndexEditSw1, prev=CmpEasyScreen_IndexWideES3, flag=VF_Const, X=256, Y=2, W=261, H=25, color=CL_TitleBar, index=10, caption=Str_MEMORY_4, font=4, fontcolor=CL_White, align=1, length=15, editsw=ES_None, selected=CmpEasyScreen_FuncEditBox_MEMORY_selected, func=FN_FE_EasyCompMem	# caption "MEMORY:"
+		AcIndexEditSw	CmpEasyScreen_IndexEditSw1, super=CmpEasyScreen, next=CmpEasyScreen_IndexEditSw2, prev=CmpEasyScreen_FuncEditBox_MEMORY, flag=VF_Const, X=585, Y=37, W=47, H=20, color=CL_Silver, border=BD_3D_UP2, index=10, font=4, fontcolor=CL_Black, editsw=ES_Right1, style=1
+		AcIndexEditSw	CmpEasyScreen_IndexEditSw2, super=CmpEasyScreen, next=CmpEasyScreen_FuncEditSw1, prev=CmpEasyScreen_IndexEditSw1, flag=VF_Const, X=585, Y=80, W=47, H=20, color=CL_Silver, border=BD_3D_UP2, index=10, font=4, fontcolor=CL_Black, editsw=ES_Right2, style=2
+		AcFuncEditSw	CmpEasyScreen_FuncEditSw1, super=CmpEasyScreen, sub=CmpEasyScreen_Label_SET, next=CmpEasyScreen_FuncMenu_EDIT, prev=CmpEasyScreen_IndexEditSw2, flag=VF_Const, X=585, Y=165, W=47, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, func=FN_CmpEasyCompSet
+
+Str_SET_5:	.asciz "SET"
+
+			VwLabel	CmpEasyScreen_Label_SET, super=CmpEasyScreen_FuncEditSw1, flag=VF_Const, X=590, Y=168, W=37, H=19, str=Str_SET_5, font=4, fontcolor=CL_BlackW	# str "SET"
+
+Str_EDIT_2:	.asciz "EDIT"
+	.align	4, 0xFF
+
+		AcFuncMenu	CmpEasyScreen_FuncMenu_EDIT, super=CmpEasyScreen, prev=CmpEasyScreen_FuncEditSw1, flag=VF_Const, X=8, Y=28, W=80, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left1, selected=CmpEasyScreen_FuncMenu_EDIT_selected, str=Str_EDIT_2, func=FN_CmpEasyCompEditFunc	# str "EDIT"
+
+Str_CHORD_MODIFY_CHANGE_2:	.asciz "CHORD MODIFY CHANGE"
+
+	TtlScreen	CmpPtPntChdMdfScreen, sub=CmpPtPntChdMdfScreen_FixWin1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CMBKSL_S, window=CmpPtPntChdMdfScreen_window, title=Str_CHORD_MODIFY_CHANGE_2, icon=195	# title "CHORD MODIFY CHANGE"
+		IvFixWin	CmpPtPntChdMdfScreen_FixWin1, super=CmpPtPntChdMdfScreen, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, window=CmSetPage2_id
+
+Str_MEASURE_EDIT_2:	.asciz "MEASURE EDIT"
+	.align	4, 0xFF
+
+	TtlScreen	CmpMeasEditScreen, sub=CmpMeasEditScreen_TitleMenu_MEASURE_COPY, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CMBKSL_S, window=CmpMeasEditScreen_window, title=Str_MEASURE_EDIT_2, icon=196	# title "MEASURE EDIT"
+
+Str_MEASURE_COPY:	.asciz "MEASURE COPY"
+	.align	4, 0xFF
+
+		AcTitleMenu	CmpMeasEditScreen_TitleMenu_MEASURE_COPY, super=CmpMeasEditScreen, next=CmpMeasEditScreen_TitleMenu_MEASURE_ERASE, flag=VF_Const, X=8, Y=28, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left1, selected=CmpMeasEditScreen_TitleMenu_MEASURE_COPY_selected, str=Str_MEASURE_COPY, title=TT_CMMEASCPY, icon=71	# str "MEASURE COPY"
+
+Str_MEASURE_ERASE:	.asciz "MEASURE ERASE"
+	.align	4, 0xFF
+
+		AcTitleMenu	CmpMeasEditScreen_TitleMenu_MEASURE_ERASE, super=CmpMeasEditScreen, next=CmpMeasEditScreen_TitleMenu_MEASURE_DELETE, prev=CmpMeasEditScreen_TitleMenu_MEASURE_COPY, flag=VF_Const, X=8, Y=71, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left2, selected=CmpMeasEditScreen_TitleMenu_MEASURE_ERASE_selected, str=Str_MEASURE_ERASE, title=TT_CMMEASERS, icon=72	# str "MEASURE ERASE"
+
+Str_MEASURE_DELETE:	.asciz "MEASURE DELETE"
+	.align	4, 0xFF
+
+		AcTitleMenu	CmpMeasEditScreen_TitleMenu_MEASURE_DELETE, super=CmpMeasEditScreen, next=CmpMeasEditScreen_TitleMenu_MEASURE_INSERT, prev=CmpMeasEditScreen_TitleMenu_MEASURE_ERASE, flag=VF_Const, X=8, Y=114, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left3, selected=CmpMeasEditScreen_TitleMenu_MEASURE_DELETE_selected, str=Str_MEASURE_DELETE, title=TT_CMMEASDEL, icon=73	# str "MEASURE DELETE"
+
+Str_MEASURE_INSERT:	.asciz "MEASURE INSERT"
+	.align	4, 0xFF
+
+		AcTitleMenu	CmpMeasEditScreen_TitleMenu_MEASURE_INSERT, super=CmpMeasEditScreen, prev=CmpMeasEditScreen_TitleMenu_MEASURE_DELETE, flag=VF_Const, X=8, Y=157, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left4, selected=CmpMeasEditScreen_TitleMenu_MEASURE_INSERT_selected, str=Str_MEASURE_INSERT, title=TT_CMMEASINS, icon=74	# str "MEASURE INSERT"
+
+Str_ACCOMP_DSP_SETTING:	.asciz "ACCOMP DSP SETTING"
+	.align	4, 0xFF
+
+	TtlScreen	CmpDspSetScreen, sub=CMP_CmpDspSetGrid, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=CmpDspSetScreen_window, title=Str_ACCOMP_DSP_SETTING, icon=194	# title "ACCOMP DSP SETTING"
+
+Str_DSP_GROUP_TYPE_VARI:	.asciz "  DSP   |     GROUP      |      TYPE      |VARI"
+Str_DSP1_DSP2:	.asciz "|-|DSP1|DSP2"
+	.align	4, 0xFF
+
+		AcGridBoxDelux	CMP_CmpDspSetGrid, super=CmpDspSetScreen, next=CmpDspSetTgl, flag=VF_Const, X=32, Y=86, W=493, H=125, color=CL_WallPattern, border=BD_3D_UP2, index=2, font=1, fontcolor=CL_White, row=4, col=4, vertline=1, selrow=CMP_CmpDspSetGrid_selrow, selcol=CMP_CmpDspSetGrid_selcol, pcol=CMP_CmpDspSetGrid_pcol, prow=CMP_CmpDspSetGrid_prow, crow=CMP_CmpDspSetGrid_crow, fixedcol=Str_DSP_GROUP_TYPE_VARI, fixedrow=Str_DSP1_DSP2, func=FN_CmpDspSetGrid	# fixedcol "  DSP   |     GROUP      |      TYPE    "; fixedrow "|-|DSP1|DSP2"
+
+Str_TOTAL_MODE:	.asciz "TOTAL MODE"
+Str_SOUND_MODE:	.asciz "SOUND MODE"
+	.align	4, 0xFF
+
+		AcFuncToggle	CmpDspSetTgl, super=CmpDspSetScreen, next=CmpDspSetScreen_IndexWideES1, prev=CMP_CmpDspSetGrid, flag=VF_Const, X=541, Y=165, W=91, H=22, font=1, stron=Str_TOTAL_MODE, stroff=Str_SOUND_MODE, onoff=CmpDspSetTgl_onoff, editsw=ES_Right4, func=FN_CmpDspSetTglFunc	# stron "TOTAL MODE"; stroff "SOUND MODE"
+		AcIndexWideES	CmpDspSetScreen_IndexWideES1, super=CmpDspSetScreen, next=CmpDspSetScreen_IndexWideES2, prev=CmpDspSetTgl, flag=VF_Const, X=44, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom2, editsw2=ES_Bottom3, style=14
+		AcIndexWideES	CmpDspSetScreen_IndexWideES2, super=CmpDspSetScreen, next=CmpDspSetScreen_IndexWideES3, prev=CmpDspSetScreen_IndexWideES1, flag=VF_Const, X=124, Y=216, W=152, H=23, color=CL_Silver, border=BD_EditSwitch, index=3, font=4, fontcolor=CL_Black, editsw=ES_Bottom4, editsw2=ES_Bottom7, style=3
+		AcIndexWideES	CmpDspSetScreen_IndexWideES3, super=CmpDspSetScreen, next=CmpDspSetScreen_IndexWideES4, prev=CmpDspSetScreen_IndexWideES2, flag=VF_Const, X=324, Y=216, W=152, H=23, color=CL_Silver, border=BD_EditSwitch, index=4, font=4, fontcolor=CL_Black, editsw=ES_Bottom9, editsw2=ES_Bottom12, style=3
+		AcIndexWideES	CmpDspSetScreen_IndexWideES4, super=CmpDspSetScreen, next=CmpDspSetScreen_Label_DSP1_MODE, prev=CmpDspSetScreen_IndexWideES3, flag=VF_Const, X=484, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=5, font=3, fontcolor=CL_Black, editsw=ES_Bottom13, editsw2=ES_Bottom13, style=11
+
+Str_DSP1_MODE:	.asciz "DSP1 MODE"
+	.align	4, 0xFF
+
+		VwLabel	CmpDspSetScreen_Label_DSP1_MODE, super=CmpDspSetScreen, next=CmpDspSetScreen_CmpPatternBox1, prev=CmpDspSetScreen_IndexWideES4, flag=VF_Const, X=547, Y=146, W=76, H=19, str=Str_DSP1_MODE, fontcolor=CL_White	# str "DSP1 MODE"
+		AcCmpPatternBox	CmpDspSetScreen_CmpPatternBox1, super=CmpDspSetScreen, next=CmpDspSetScreen_LanguageText1, prev=CmpDspSetScreen_Label_DSP1_MODE, flag=VF_Const, X=256, Y=2, W=118, H=25, color=CL_TitleBar, index=0xFFFF, font=4, fontcolor=CL_White, align=1
+		AcLanguageText	CmpDspSetScreen_LanguageText1, super=CmpDspSetScreen, prev=CmpDspSetScreen_CmpPatternBox1, flag=VF_Const, X=12, Y=46, W=536, H=36, color=CL_WallPattern, index=0xFFFF, font=5, fontcolor=CL_Yellow, alignment=1, lines=2, func=FN_AttCompDspSet
+
+Str_CUSTOM_STYLE_COPY_2:	.asciz "CUSTOM STYLE COPY"
+	.align	4, 0xFF
+
+	TtlScreen	CmpCstmCpyScreen, sub=CmpCstmCpyScreen_Yajirushi1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CMMENU, window=CmpCstmCpyScreen_window, title=Str_CUSTOM_STYLE_COPY_2, icon=161	# title "CUSTOM STYLE COPY"
+		Yajirushi	CmpCstmCpyScreen_Yajirushi1, super=CmpCstmCpyScreen, next=CmpCstmCpyScreen_Box1, flag=VF_Const, X=260, Y=108, W=80, H=58, color=CL_White, dir=1, tail_x_rate=60, tail_y_rate=50
+		VwBox	CmpCstmCpyScreen_Box1, super=CmpCstmCpyScreen, next=CmpCstmCpySrcNum, prev=CmpCstmCpyScreen_Yajirushi1, flag=VF_Const, X=40, Y=62, W=216, H=132, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
+
+Str_empty_54:	.asciz ""
+	.align	4, 0xFF
+
+		AcFuncEditBox	CmpCstmCpySrcNum, super=CmpCstmCpyScreen, next=CmpCstmCpySrcName, prev=CmpCstmCpyScreen_Box1, flag=VF_Const, X=56, Y=82, W=180, H=19, color=CL_WallPattern, index=1, caption=Str_empty_54, font=4, fontcolor=CL_White, align=1, length=4, editsw=ES_None, dial=1, selected=CmpCstmCpySrcNum_selected, func=FN_FE_CmpCstmCpy	# caption ""
+		PsParaDrawBox	CmpCstmCpySrcName, super=CmpCstmCpyScreen, next=CmpCstmCpyScreen_Label_RHYTHM, prev=CmpCstmCpySrcNum, flag=VF_Const, X=56, Y=120, W=184, H=19, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_White, align=1
+
+Str_RHYTHM_7:	.asciz "RHYTHM :"
+	.align	4, 0xFF
+
+		VwLabel	CmpCstmCpyScreen_Label_RHYTHM, super=CmpCstmCpyScreen, next=CmpCstmCpySrcRhyName, prev=CmpCstmCpySrcName, flag=VF_Const, X=58, Y=158, W=68, H=19, str=Str_RHYTHM_7, fontcolor=CL_White	# str "RHYTHM :"
+		PsParaDrawBox	CmpCstmCpySrcRhyName, super=CmpCstmCpyScreen, next=CmpCstmCpyScreen_Label_FROM, prev=CmpCstmCpyScreen_Label_RHYTHM, flag=VF_Const, X=128, Y=159, W=116, H=15, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_White, align=1
+
+Str_FROM:	.asciz "FROM"
+	.align	4, 0xFF
+
+		VwLabel	CmpCstmCpyScreen_Label_FROM, super=CmpCstmCpyScreen, next=CmpCstmCpyScreen_Label_TO, prev=CmpCstmCpySrcRhyName, flag=VF_Const, X=114, Y=34, W=68, H=31, str=Str_FROM, font=11, fontcolor=CL_White	# str "FROM"
+
+Str_TO:	.asciz "TO"
+	.align	4, 0xFF
+
+		VwLabel	CmpCstmCpyScreen_Label_TO, super=CmpCstmCpyScreen, next=CmpCstmCpyScreen_FuncEditSw1, prev=CmpCstmCpyScreen_Label_FROM, flag=VF_Const, X=434, Y=34, W=36, H=31, str=Str_TO, font=11, fontcolor=CL_White	# str "TO"
+		AcFuncEditSw	CmpCstmCpyScreen_FuncEditSw1, super=CmpCstmCpyScreen, next=CmpCstmCpyScreen_IndexWideES1, prev=CmpCstmCpyScreen_Label_TO, flag=VF_Const, X=562, Y=165, W=70, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_CmpCstmCpyOK
+		AcIndexWideES	CmpCstmCpyScreen_IndexWideES1, super=CmpCstmCpyScreen, next=CmpCstmCpyScreen_FuncWideES1, prev=CmpCstmCpyScreen_FuncEditSw1, flag=VF_Const, X=404, Y=216, W=152, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom11, editsw2=ES_Bottom14, style=3
+		AcFuncWideES	CmpCstmCpyScreen_FuncWideES1, super=CmpCstmCpyScreen, sub=CmpCstmCpyScreen_Label_DIRECTION, next=CmpCstmCpyScreen_Box2, prev=CmpCstmCpyScreen_IndexWideES1, flag=VF_Const, X=240, Y=216, W=120, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom9, func=FN_CmpCstmCpyDirec
+
+Str_DIRECTION:	.asciz "DIRECTION"
+	.align	4, 0xFF
+
+			VwLabel	CmpCstmCpyScreen_Label_DIRECTION, super=CmpCstmCpyScreen_FuncWideES1, flag=VF_Const, X=248, Y=219, W=103, H=19, str=Str_DIRECTION, font=4, fontcolor=CL_BlackW	# str "DIRECTION"
+		VwBox	CmpCstmCpyScreen_Box2, super=CmpCstmCpyScreen, next=CmpCstmCpyDstNum, prev=CmpCstmCpyScreen_FuncWideES1, flag=VF_Const, X=344, Y=62, W=216, H=132, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
+
+Str_empty_55:	.asciz ""
+	.align	4, 0xFF
+
+		AcFuncEditBox	CmpCstmCpyDstNum, super=CmpCstmCpyScreen, next=CmpCstmCpyDstName, prev=CmpCstmCpyScreen_Box2, flag=VF_Const, X=360, Y=82, W=180, H=19, color=CL_WallPattern, index=2, caption=Str_empty_55, font=4, fontcolor=CL_White, align=1, length=4, editsw=ES_None, dial=1, selected=CmpCstmCpyDstNum_selected, func=FN_FE_CmpCstmCpy	# caption ""
+		PsParaDrawBox	CmpCstmCpyDstName, super=CmpCstmCpyScreen, next=CmpCstmCpyScreen_Label_RHYTHM2, prev=CmpCstmCpyDstNum, flag=VF_Const, X=360, Y=120, W=184, H=19, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_White, align=1
+
+Str_RHYTHM_8:	.asciz "RHYTHM :"
+	.align	4, 0xFF
+
+		VwLabel	CmpCstmCpyScreen_Label_RHYTHM2, super=CmpCstmCpyScreen, next=CmpCstmCpyDstRhyName, prev=CmpCstmCpyDstName, flag=VF_Const, X=362, Y=158, W=68, H=19, str=Str_RHYTHM_8, fontcolor=CL_White	# str "RHYTHM :"
+		PsParaDrawBox	CmpCstmCpyDstRhyName, super=CmpCstmCpyScreen, next=CmpCstmCpySrcType, prev=CmpCstmCpyScreen_Label_RHYTHM2, flag=VF_Const, X=432, Y=159, W=116, H=15, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_White, align=1
+		PsParaDrawBox	CmpCstmCpySrcType, super=CmpCstmCpyScreen, next=CmpCstmCpyDstType, prev=CmpCstmCpyDstRhyName, flag=VF_Const, X=44, Y=197, W=152, H=19, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_White
+		PsParaDrawBox	CmpCstmCpyDstType, super=CmpCstmCpyScreen, next=CmpCstmCpyScreen_IndexWideES2, prev=CmpCstmCpySrcType, flag=VF_Const, X=404, Y=197, W=152, H=19, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_White
+		AcIndexWideES	CmpCstmCpyScreen_IndexWideES2, super=CmpCstmCpyScreen, prev=CmpCstmCpyDstType, flag=VF_Const, X=44, Y=216, W=152, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom2, editsw2=ES_Bottom5, style=3
+
+Str_PART_SETTING_4:	.asciz "PART SETTING"
+	.align	4, 0xFF
+
+	TtlScreen	CmpPartSetScreen, sub=CmpPartSetScreen_PageControl1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CMREAL, window=CmpPartSetScreen_window, title=Str_PART_SETTING_4, icon=159	# title "PART SETTING"
+		IvPageControl	CmpPartSetScreen_PageControl1, super=CmpPartSetScreen, next=CmpPartSetScreen_PageControl2, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, page=1, window=CmpPartSetP1Win_id
+		IvPageControl	CmpPartSetScreen_PageControl2, super=CmpPartSetScreen, next=CmpPartSetScreen_WindowPage1, prev=CmpPartSetScreen_PageControl1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, page=2, window=CmpPartSetP2Win_id
+		AcWindowPage	CmpPartSetScreen_WindowPage1, super=CmpPartSetScreen, next=CmpPartSetScreen_CmpPatternBox1, prev=CmpPartSetScreen_PageControl2, flag=VF_Const, X=564, Y=5, W=71, H=18, color=CL_PageBack, border=BD_3D_DOWN1, index=0xFFFF, page=CmpPartSetScreen_WindowPage1_page, pagemin=1, pagemax=2
+		AcCmpPatternBox	CmpPartSetScreen_CmpPatternBox1, super=CmpPartSetScreen, next=CmpPartSetScreen_CmpBarBox1, prev=CmpPartSetScreen_WindowPage1, flag=VF_Const, X=224, Y=2, W=202, H=25, color=CL_TitleBar, index=0xFFFF, font=1, fontcolor=CL_White, align=1, drawPattern=1
+		AcCmpBarBox	CmpPartSetScreen_CmpBarBox1, super=CmpPartSetScreen, prev=CmpPartSetScreen_CmpPatternBox1, flag=VF_Const, X=440, Y=6, W=48, H=19, color=CL_TitleBar, index=0xFFFF, fontcolor=CL_White, align=1
+
+Str_MEASURE_COPY_2:	.asciz "MEASURE COPY"
+	.align	4, 0xFF
+
+	TtlScreen	CmpMeasCpScreen, sub=CmpMeasCpScreen_Box1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CMMEASEDIT, window=CmpMeasCpScreen_window, title=Str_MEASURE_COPY_2, icon=71	# title "MEASURE COPY"
+		VwBox	CmpMeasCpScreen_Box1, super=CmpMeasCpScreen, sub=CmpMeasCpScreen_Line1, next=CmpMeasCpScreen_Label_PART, flag=VF_Const, X=60, Y=90, W=260, H=124, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
+			VwLine	CmpMeasCpScreen_Line1, super=CmpMeasCpScreen_Box1, next=CmpMeasCpScreen_Line2, flag=VF_Const, X=242, Y=92, W=1, H=120, color=CL_White, linemode=1
+			VwLine	CmpMeasCpScreen_Line2, super=CmpMeasCpScreen_Box1, next=CmpMCopySPart, prev=CmpMeasCpScreen_Line1, flag=VF_Const, X=164, Y=92, W=1, H=120, color=CL_White, linemode=1
+
+Str_empty_56:	.asciz ""
+	.align	4, 0xFF
+
+			AcFuncEditBox	CmpMCopySPart, super=CmpMeasCpScreen_Box1, next=CmpMCopyFstMeas, prev=CmpMeasCpScreen_Line2, flag=VF_Const, X=70, Y=170, W=89, H=19, color=CL_WallPattern, index=1, caption=Str_empty_56, font=4, fontcolor=CL_White, align=1, length=16, editsw=ES_None, dial=1, selected=CmpMCopySPart_selected, func=FN_FE_CmpMCopySPart	# caption ""
+
+Str_empty_57:	.asciz ""
+	.align	4, 0xFF
+
+			AcFuncEditBox	CmpMCopyFstMeas, super=CmpMeasCpScreen_Box1, next=CmpMCopyLstMeas, prev=CmpMCopySPart, flag=VF_Const, X=186, Y=170, W=37, H=19, color=CL_WallPattern, index=2, caption=Str_empty_57, font=4, fontcolor=CL_White, align=1, length=4, editsw=ES_None, dial=1, selected=CmpMCopyFstMeas_selected, func=FN_FE_CmpMCopyFstMeas	# caption ""
+
+Str_empty_58:	.asciz ""
+	.align	4, 0xFF
+
+			AcFuncEditBox	CmpMCopyLstMeas, super=CmpMeasCpScreen_Box1, next=CmpMeasCpScreen_Label_FIRST, prev=CmpMCopyFstMeas, flag=VF_Const, X=264, Y=170, W=41, H=19, color=CL_WallPattern, index=3, caption=Str_empty_58, font=4, fontcolor=CL_White, align=1, length=4, editsw=ES_None, dial=1, selected=CmpMCopyLstMeas_selected, func=FN_FE_CmpMCopyLstMeas	# caption ""
+
+Str_FIRST_2:	.asciz "FIRST"
+	.align	4, 0xFF
+
+			VwLabel	CmpMeasCpScreen_Label_FIRST, super=CmpMeasCpScreen_Box1, next=CmpMeasCpScreen_Label_MEASURE, prev=CmpMCopyLstMeas, flag=VF_Const, X=172, Y=99, W=44, H=19, str=Str_FIRST_2, font=1, fontcolor=CL_Yellow	# str "FIRST"
+
+Str_MEASURE_5:	.asciz "MEASURE"
+
+			VwLabel	CmpMeasCpScreen_Label_MEASURE, super=CmpMeasCpScreen_Box1, prev=CmpMeasCpScreen_Label_FIRST, flag=VF_Const, X=172, Y=121, W=60, H=19, str=Str_MEASURE_5, font=1, fontcolor=CL_Yellow	# str "MEASURE"
+
+Str_PART_2:	.asciz "PART"
+	.align	4, 0xFF
+
+		VwLabel	CmpMeasCpScreen_Label_PART, super=CmpMeasCpScreen, next=CmpMeasCpScreen_Label_LAST, prev=CmpMeasCpScreen_Box1, flag=VF_Const, X=94, Y=110, W=36, H=19, str=Str_PART_2, font=1, fontcolor=CL_Yellow	# str "PART"
+
+Str_LAST_2:	.asciz "LAST"
+	.align	4, 0xFF
+
+		VwLabel	CmpMeasCpScreen_Label_LAST, super=CmpMeasCpScreen, next=CmpMeasCpScreen_Label_MEASURE2, prev=CmpMeasCpScreen_Label_PART, flag=VF_Const, X=250, Y=99, W=36, H=19, str=Str_LAST_2, font=1, fontcolor=CL_Yellow	# str "LAST"
+
+Str_MEASURE_6:	.asciz "MEASURE"
+
+		VwLabel	CmpMeasCpScreen_Label_MEASURE2, super=CmpMeasCpScreen, next=CmpMeasCpScreen_Line3, prev=CmpMeasCpScreen_Label_LAST, flag=VF_Const, X=250, Y=121, W=60, H=19, str=Str_MEASURE_6, font=1, fontcolor=CL_Yellow	# str "MEASURE"
+		VwLine	CmpMeasCpScreen_Line3, super=CmpMeasCpScreen, next=CmpMeasCpScreen_Box2, prev=CmpMeasCpScreen_Label_MEASURE2, flag=VF_Const, X=62, Y=144, W=256, H=1, color=CL_White, linemode=1
+		VwBox	CmpMeasCpScreen_Box2, super=CmpMeasCpScreen, next=CmpMeasCpScreen_IndexWideES1, prev=CmpMeasCpScreen_Line3, flag=VF_Const, X=40, Y=216, W=480, H=24, color=CL_WallPattern, index=0xFFFF
+		AcIndexWideES	CmpMeasCpScreen_IndexWideES1, super=CmpMeasCpScreen, next=CmpMeasCpScreen_IndexWideES2, prev=CmpMeasCpScreen_Box2, flag=VF_Const, X=244, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=3, font=4, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom8, style=3
+		AcIndexWideES	CmpMeasCpScreen_IndexWideES2, super=CmpMeasCpScreen, next=CmpMeasCpScreen_IndexWideES3, prev=CmpMeasCpScreen_IndexWideES1, flag=VF_Const, X=164, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, editsw2=ES_Bottom6, style=3
+		AcIndexWideES	CmpMeasCpScreen_IndexWideES3, super=CmpMeasCpScreen, next=CmpMeasCpScreen_Box3, prev=CmpMeasCpScreen_IndexWideES2, flag=VF_Const, X=84, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom3, editsw2=ES_Bottom4, style=3
+		VwBox	CmpMeasCpScreen_Box3, super=CmpMeasCpScreen, sub=CmpMeasCpScreen_Line4, next=CmpMeasCpScreen_Line5, prev=CmpMeasCpScreen_IndexWideES3, flag=VF_Const, X=380, Y=90, W=180, H=124, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
+			VwLine	CmpMeasCpScreen_Line4, super=CmpMeasCpScreen_Box3, next=CmpMCopyDPart, flag=VF_Const, X=476, Y=92, W=1, H=120, color=CL_White, linemode=1
+
+Str_empty_59:	.asciz ""
+	.align	4, 0xFF
+
+			AcFuncEditBox	CmpMCopyDPart, super=CmpMeasCpScreen_Box3, next=CmpMeasCpScreen_Label_PART2, prev=CmpMeasCpScreen_Line4, flag=VF_Const, X=384, Y=170, W=89, H=19, color=CL_WallPattern, index=4, caption=Str_empty_59, font=4, fontcolor=CL_White, align=1, length=16, editsw=ES_None, dial=1, selected=CmpMCopyDPart_selected, func=FN_FE_CmpMCopyDPart	# caption ""
+
+Str_PART_3:	.asciz "PART"
+	.align	4, 0xFF
+
+			VwLabel	CmpMeasCpScreen_Label_PART2, super=CmpMeasCpScreen_Box3, next=CmpMeasCpScreen_Label_START, prev=CmpMCopyDPart, flag=VF_Const, X=412, Y=110, W=36, H=19, str=Str_PART_3, font=1, fontcolor=CL_Yellow	# str "PART"
+
+Str_START:	.asciz "START"
+	.align	4, 0xFF
+
+			VwLabel	CmpMeasCpScreen_Label_START, super=CmpMeasCpScreen_Box3, next=CmpMeasCpScreen_Label_MEASURE3, prev=CmpMeasCpScreen_Label_PART2, flag=VF_Const, X=488, Y=99, W=44, H=19, str=Str_START, font=1, fontcolor=CL_Yellow	# str "START"
+
+Str_MEASURE_7:	.asciz "MEASURE"
+
+			VwLabel	CmpMeasCpScreen_Label_MEASURE3, super=CmpMeasCpScreen_Box3, next=CmpMCopySrtMeas, prev=CmpMeasCpScreen_Label_START, flag=VF_Const, X=488, Y=121, W=60, H=19, str=Str_MEASURE_7, font=1, fontcolor=CL_Yellow	# str "MEASURE"
+
+Str_empty_60:	.asciz ""
+	.align	4, 0xFF
+
+			AcFuncEditBox	CmpMCopySrtMeas, super=CmpMeasCpScreen_Box3, prev=CmpMeasCpScreen_Label_MEASURE3, flag=VF_Const, X=502, Y=170, W=37, H=19, color=CL_WallPattern, index=5, caption=Str_empty_60, font=4, fontcolor=CL_White, align=1, length=4, editsw=ES_None, dial=1, selected=CmpMCopySrtMeas_selected, func=FN_FE_CmpMCopySrtMeas	# caption ""
+		VwLine	CmpMeasCpScreen_Line5, super=CmpMeasCpScreen, next=CmpMeasCpScreen_IndexWideES4, prev=CmpMeasCpScreen_Box3, flag=VF_Const, X=382, Y=144, W=176, H=1, color=CL_White, linemode=1
+		AcIndexWideES	CmpMeasCpScreen_IndexWideES4, super=CmpMeasCpScreen, next=CmpMeasCpScreen_IndexWideES5, prev=CmpMeasCpScreen_Line5, flag=VF_Const, X=404, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=4, font=4, fontcolor=CL_Black, editsw=ES_Bottom11, editsw2=ES_Bottom12, style=3
+		AcIndexWideES	CmpMeasCpScreen_IndexWideES5, super=CmpMeasCpScreen, next=CmpMeasCpScreen_CmpPatternBox1, prev=CmpMeasCpScreen_IndexWideES4, flag=VF_Const, X=484, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=5, font=4, fontcolor=CL_Black, editsw=ES_Bottom13, editsw2=ES_Bottom14, style=3
+		AcCmpPatternBox	CmpMeasCpScreen_CmpPatternBox1, super=CmpMeasCpScreen, next=CmpMeasCpScreen_Yajirushi1, prev=CmpMeasCpScreen_IndexWideES5, flag=VF_Const, X=256, Y=2, W=270, H=25, color=CL_TitleBar, index=0xFFFF, font=4, fontcolor=CL_White, align=1, drawPattern=1
+		Yajirushi	CmpMeasCpScreen_Yajirushi1, super=CmpMeasCpScreen, next=CmpMeasCpScreen_Label_FROM, prev=CmpMeasCpScreen_CmpPatternBox1, flag=VF_Const, X=324, Y=124, W=52, H=58, color=CL_White, dir=1, tail_x_rate=60, tail_y_rate=50
+
+Str_FROM_2:	.asciz "FROM"
+	.align	4, 0xFF
+
+		VwLabel	CmpMeasCpScreen_Label_FROM, super=CmpMeasCpScreen, next=CmpMeasCpScreen_Label_TO, prev=CmpMeasCpScreen_Yajirushi1, flag=VF_Const, X=146, Y=62, W=68, H=31, str=Str_FROM_2, font=11, fontcolor=CL_White	# str "FROM"
+
+Str_TO_2:	.asciz "TO"
+	.align	4, 0xFF
+
+		VwLabel	CmpMeasCpScreen_Label_TO, super=CmpMeasCpScreen, next=CmpMeasCpScreen_FuncEditSw1, prev=CmpMeasCpScreen_Label_FROM, flag=VF_Const, X=446, Y=62, W=36, H=31, str=Str_TO_2, font=11, fontcolor=CL_White	# str "TO"
+		AcFuncEditSw	CmpMeasCpScreen_FuncEditSw1, super=CmpMeasCpScreen, prev=CmpMeasCpScreen_Label_TO, flag=VF_Const, X=571, Y=165, W=61, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_CmpMCopyOK
+
+Str_MEASURE_DELETE_2:	.asciz "MEASURE DELETE"
+	.align	4, 0xFF
+
+	TtlScreen	CmpMeasDelScreen, sub=CmpMeasDelScreen_Box1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CMMEASEDIT, window=CmpMeasDelScreen_window, title=Str_MEASURE_DELETE_2, icon=73	# title "MEASURE DELETE"
+		VwBox	CmpMeasDelScreen_Box1, super=CmpMeasDelScreen, next=CmpMDelFstMeas, flag=VF_Const, X=200, Y=90, W=240, H=124, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
+
+Str_empty_61:	.asciz ""
+	.align	4, 0xFF
+
+		AcFuncEditBox	CmpMDelFstMeas, super=CmpMeasDelScreen, next=CmpMDelLstMeas, prev=CmpMeasDelScreen_Box1, flag=VF_Const, X=244, Y=170, W=49, H=19, color=CL_WallPattern, index=1, caption=Str_empty_61, font=4, fontcolor=CL_White, align=1, length=4, editsw=ES_None, dial=1, selected=CmpMDelFstMeas_selected, func=FN_FE_CmpMDelFstMeas	# caption ""
+
+Str_empty_62:	.asciz ""
+	.align	4, 0xFF
+
+		AcFuncEditBox	CmpMDelLstMeas, super=CmpMeasDelScreen, next=CmpMeasDelScreen_Line1, prev=CmpMDelFstMeas, flag=VF_Const, X=360, Y=170, W=49, H=19, color=CL_WallPattern, index=2, caption=Str_empty_62, font=4, fontcolor=CL_White, align=1, length=4, editsw=ES_None, dial=1, selected=CmpMDelLstMeas_selected, func=FN_FE_CmpMDelLstMeas	# caption ""
+		VwLine	CmpMeasDelScreen_Line1, super=CmpMeasDelScreen, next=CmpMeasDelScreen_Label_FIRST, prev=CmpMDelLstMeas, flag=VF_Const, X=320, Y=92, W=1, H=120, color=CL_White, linemode=1
+
+Str_FIRST_3:	.asciz "FIRST"
+	.align	4, 0xFF
+
+		VwLabel	CmpMeasDelScreen_Label_FIRST, super=CmpMeasDelScreen, next=CmpMeasDelScreen_Label_MEASURE, prev=CmpMeasDelScreen_Line1, flag=VF_Const, X=222, Y=99, W=59, H=19, str=Str_FIRST_3, font=4, fontcolor=CL_Yellow	# str "FIRST"
+
+Str_MEASURE_8:	.asciz "MEASURE"
+
+		VwLabel	CmpMeasDelScreen_Label_MEASURE, super=CmpMeasDelScreen, next=CmpMeasDelScreen_Label_LAST, prev=CmpMeasDelScreen_Label_FIRST, flag=VF_Const, X=222, Y=121, W=81, H=19, str=Str_MEASURE_8, font=4, fontcolor=CL_Yellow	# str "MEASURE"
+
+Str_LAST_3:	.asciz "LAST"
+	.align	4, 0xFF
+
+		VwLabel	CmpMeasDelScreen_Label_LAST, super=CmpMeasDelScreen, next=CmpMeasDelScreen_Label_MEASURE2, prev=CmpMeasDelScreen_Label_MEASURE, flag=VF_Const, X=338, Y=99, W=48, H=19, str=Str_LAST_3, font=4, fontcolor=CL_Yellow	# str "LAST"
+
+Str_MEASURE_9:	.asciz "MEASURE"
+
+		VwLabel	CmpMeasDelScreen_Label_MEASURE2, super=CmpMeasDelScreen, next=CmpMeasDelScreen_Line2, prev=CmpMeasDelScreen_Label_LAST, flag=VF_Const, X=338, Y=121, W=81, H=19, str=Str_MEASURE_9, font=4, fontcolor=CL_Yellow	# str "MEASURE"
+		VwLine	CmpMeasDelScreen_Line2, super=CmpMeasDelScreen, next=CmpMeasDelScreen_Box2, prev=CmpMeasDelScreen_Label_MEASURE2, flag=VF_Const, X=202, Y=144, W=236, H=1, color=CL_White, linemode=1
+		VwBox	CmpMeasDelScreen_Box2, super=CmpMeasDelScreen, next=CmpMeasDelScreen_IndexWideES1, prev=CmpMeasDelScreen_Line2, flag=VF_Const, X=40, Y=216, W=480, H=24, color=CL_WallPattern, index=0xFFFF
+		AcIndexWideES	CmpMeasDelScreen_IndexWideES1, super=CmpMeasDelScreen, next=CmpMeasDelScreen_IndexWideES2, prev=CmpMeasDelScreen_Box2, flag=VF_Const, X=324, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, fontcolor=CL_Black, editsw=ES_Bottom9, editsw2=ES_Bottom11, style=3
+		AcIndexWideES	CmpMeasDelScreen_IndexWideES2, super=CmpMeasDelScreen, next=CmpMeasDelScreen_CmpPatternBox1, prev=CmpMeasDelScreen_IndexWideES1, flag=VF_Const, X=204, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, fontcolor=CL_Black, editsw=ES_Bottom6, editsw2=ES_Bottom8, style=3
+		AcCmpPatternBox	CmpMeasDelScreen_CmpPatternBox1, super=CmpMeasDelScreen, next=CmpMeasDelScreen_FuncEditSw1, prev=CmpMeasDelScreen_IndexWideES2, flag=VF_Const, X=256, Y=2, W=270, H=25, color=CL_TitleBar, index=0xFFFF, font=4, fontcolor=CL_White, align=1, drawPattern=1
+		AcFuncEditSw	CmpMeasDelScreen_FuncEditSw1, super=CmpMeasDelScreen, prev=CmpMeasDelScreen_CmpPatternBox1, flag=VF_Const, X=571, Y=165, W=61, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_CmpMDelOK
+
+Str_MEASURE_ERASE_2:	.asciz "MEASURE ERASE"
+	.align	4, 0xFF
+
+	TtlScreen	CmpMeasErsScreen, sub=CmpMeasErsScreen_Box1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CMMEASEDIT, window=CmpMeasErsScreen_window, title=Str_MEASURE_ERASE_2, icon=72	# title "MEASURE ERASE"
+		VwBox	CmpMeasErsScreen_Box1, super=CmpMeasErsScreen, next=CmpMErsPart, flag=VF_Const, X=120, Y=90, W=360, H=124, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
+
+Str_empty_63:	.asciz ""
+	.align	4, 0xFF
+
+		AcFuncEditBox	CmpMErsPart, super=CmpMeasErsScreen, next=CmpMErsFstMeas, prev=CmpMeasErsScreen_Box1, flag=VF_Const, X=140, Y=170, W=93, H=19, color=CL_WallPattern, index=1, caption=Str_empty_63, font=4, fontcolor=CL_White, align=1, length=16, editsw=ES_None, dial=1, selected=CmpMErsPart_selected, func=FN_FE_CmpMErsSPart	# caption ""
+
+Str_empty_64:	.asciz ""
+	.align	4, 0xFF
+
+		AcFuncEditBox	CmpMErsFstMeas, super=CmpMeasErsScreen, next=CmpMErsLstMeas, prev=CmpMErsPart, flag=VF_Const, X=284, Y=170, W=49, H=19, color=CL_WallPattern, index=2, caption=Str_empty_64, font=4, fontcolor=CL_White, align=1, length=4, editsw=ES_None, dial=1, selected=CmpMErsFstMeas_selected, func=FN_FE_CmpMErsFstMeas	# caption ""
+
+Str_empty_65:	.asciz ""
+	.align	4, 0xFF
+
+		AcFuncEditBox	CmpMErsLstMeas, super=CmpMeasErsScreen, next=CmpMeasErsScreen_Line1, prev=CmpMErsFstMeas, flag=VF_Const, X=404, Y=170, W=49, H=19, color=CL_WallPattern, index=3, caption=Str_empty_65, font=4, fontcolor=CL_White, align=1, length=4, editsw=ES_None, dial=1, selected=CmpMErsLstMeas_selected, func=FN_FE_CmpMErsLstMeas	# caption ""
+		VwLine	CmpMeasErsScreen_Line1, super=CmpMeasErsScreen, next=CmpMeasErsScreen_Line2, prev=CmpMErsLstMeas, flag=VF_Const, X=240, Y=92, W=1, H=120, color=CL_White, linemode=1
+		VwLine	CmpMeasErsScreen_Line2, super=CmpMeasErsScreen, next=CmpMeasErsScreen_Label_PART, prev=CmpMeasErsScreen_Line1, flag=VF_Const, X=360, Y=92, W=1, H=120, color=CL_White, linemode=1
+
+Str_PART_4:	.asciz "PART"
+	.align	4, 0xFF
+
+		VwLabel	CmpMeasErsScreen_Label_PART, super=CmpMeasErsScreen, next=CmpMeasErsScreen_Label_FIRST, prev=CmpMeasErsScreen_Line2, flag=VF_Const, X=158, Y=110, W=48, H=19, str=Str_PART_4, font=4, fontcolor=CL_Yellow	# str "PART"
+
+Str_FIRST_4:	.asciz "FIRST"
+	.align	4, 0xFF
+
+		VwLabel	CmpMeasErsScreen_Label_FIRST, super=CmpMeasErsScreen, next=CmpMeasErsScreen_Label_MEASURE, prev=CmpMeasErsScreen_Label_PART, flag=VF_Const, X=262, Y=99, W=59, H=19, str=Str_FIRST_4, font=4, fontcolor=CL_Yellow	# str "FIRST"
+
+Str_MEASURE_10:	.asciz "MEASURE"
+
+		VwLabel	CmpMeasErsScreen_Label_MEASURE, super=CmpMeasErsScreen, next=CmpMeasErsScreen_Label_LAST, prev=CmpMeasErsScreen_Label_FIRST, flag=VF_Const, X=262, Y=121, W=81, H=19, str=Str_MEASURE_10, font=4, fontcolor=CL_Yellow	# str "MEASURE"
+
+Str_LAST_4:	.asciz "LAST"
+	.align	4, 0xFF
+
+		VwLabel	CmpMeasErsScreen_Label_LAST, super=CmpMeasErsScreen, next=CmpMeasErsScreen_Label_MEASURE2, prev=CmpMeasErsScreen_Label_MEASURE, flag=VF_Const, X=382, Y=99, W=48, H=19, str=Str_LAST_4, font=4, fontcolor=CL_Yellow	# str "LAST"
+
+Str_MEASURE_11:	.asciz "MEASURE"
+
+		VwLabel	CmpMeasErsScreen_Label_MEASURE2, super=CmpMeasErsScreen, next=CmpMeasErsScreen_Line3, prev=CmpMeasErsScreen_Label_LAST, flag=VF_Const, X=382, Y=121, W=81, H=19, str=Str_MEASURE_11, font=4, fontcolor=CL_Yellow	# str "MEASURE"
+		VwLine	CmpMeasErsScreen_Line3, super=CmpMeasErsScreen, next=CmpMeasErsScreen_Box2, prev=CmpMeasErsScreen_Label_MEASURE2, flag=VF_Const, X=122, Y=144, W=356, H=1, color=CL_White, linemode=1
+		VwBox	CmpMeasErsScreen_Box2, super=CmpMeasErsScreen, next=CmpMeasErsScreen_IndexWideES1, prev=CmpMeasErsScreen_Line3, flag=VF_Const, X=40, Y=216, W=480, H=24, color=CL_WallPattern, index=0xFFFF
+		AcIndexWideES	CmpMeasErsScreen_IndexWideES1, super=CmpMeasErsScreen, next=CmpMeasErsScreen_IndexWideES2, prev=CmpMeasErsScreen_Box2, flag=VF_Const, X=364, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=3, font=4, fontcolor=CL_Black, editsw=ES_Bottom10, editsw2=ES_Bottom12, style=3
+		AcIndexWideES	CmpMeasErsScreen_IndexWideES2, super=CmpMeasErsScreen, next=CmpMeasErsScreen_IndexWideES3, prev=CmpMeasErsScreen_IndexWideES1, flag=VF_Const, X=244, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom9, style=3
+		AcIndexWideES	CmpMeasErsScreen_IndexWideES3, super=CmpMeasErsScreen, next=CmpMeasErsScreen_CmpPatternBox1, prev=CmpMeasErsScreen_IndexWideES2, flag=VF_Const, X=124, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom4, editsw2=ES_Bottom6, style=3
+		AcCmpPatternBox	CmpMeasErsScreen_CmpPatternBox1, super=CmpMeasErsScreen, next=CmpMeasErsScreen_SureWindowMenu_OK, prev=CmpMeasErsScreen_IndexWideES3, flag=VF_Const, X=256, Y=2, W=270, H=25, color=CL_TitleBar, index=0xFFFF, font=4, fontcolor=CL_White, align=1, drawPattern=1
+
+Str_OK:	.asciz "OK "
+
+		AcSureWindowMenu	CmpMeasErsScreen_SureWindowMenu_OK, super=CmpMeasErsScreen, prev=CmpMeasErsScreen_CmpPatternBox1, flag=VF_Const, X=571, Y=165, W=61, H=22, color=CL_SilverB, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_BlackS, editsw=ES_Right4, selected=CmpMeasErsScreen_SureWindowMenu_OK_selected, str=Str_OK, window=CmpMEraseWin_id, func=FN_CmpMErsYes	# str "OK "
+
+Str_MEASURE_INSERT_2:	.asciz "MEASURE INSERT"
+	.align	4, 0xFF
+
+	TtlScreen	CmpMeasInsScreen, sub=CmpMeasInsScreen_CmpPatternBox1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CMMEASEDIT, window=CmpMeasInsScreen_window, title=Str_MEASURE_INSERT_2, icon=74	# title "MEASURE INSERT"
+		AcCmpPatternBox	CmpMeasInsScreen_CmpPatternBox1, super=CmpMeasInsScreen, next=CmpMeasInsScreen_Box1, flag=VF_Const, X=256, Y=2, W=270, H=25, color=CL_TitleBar, index=0xFFFF, font=4, fontcolor=CL_White, align=1, drawPattern=1
+		VwBox	CmpMeasInsScreen_Box1, super=CmpMeasInsScreen, next=CmpMInsFstMeas, prev=CmpMeasInsScreen_CmpPatternBox1, flag=VF_Const, X=200, Y=90, W=240, H=124, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
+
+Str_empty_66:	.asciz ""
+	.align	4, 0xFF
+
+		AcFuncEditBox	CmpMInsFstMeas, super=CmpMeasInsScreen, next=CmpMInsMeasNum, prev=CmpMeasInsScreen_Box1, flag=VF_Const, X=244, Y=170, W=49, H=19, color=CL_WallPattern, index=1, caption=Str_empty_66, font=4, fontcolor=CL_White, align=1, length=4, editsw=ES_None, dial=1, selected=CmpMInsFstMeas_selected, func=FN_FE_CmpMInsFstMeas	# caption ""
+
+Str_empty_67:	.asciz ""
+	.align	4, 0xFF
+
+		AcFuncEditBox	CmpMInsMeasNum, super=CmpMeasInsScreen, next=CmpMeasInsScreen_Line1, prev=CmpMInsFstMeas, flag=VF_Const, X=360, Y=170, W=49, H=19, color=CL_WallPattern, index=2, caption=Str_empty_67, font=4, fontcolor=CL_White, align=1, length=4, editsw=ES_None, dial=1, selected=CmpMInsMeasNum_selected, func=FN_FE_CmpMInsMeasNum	# caption ""
+		VwLine	CmpMeasInsScreen_Line1, super=CmpMeasInsScreen, next=CmpMeasInsScreen_Label_FIRST, prev=CmpMInsMeasNum, flag=VF_Const, X=320, Y=92, W=1, H=120, color=CL_White, linemode=1
+
+Str_FIRST_5:	.asciz "FIRST"
+	.align	4, 0xFF
+
+		VwLabel	CmpMeasInsScreen_Label_FIRST, super=CmpMeasInsScreen, next=CmpMeasInsScreen_Label_MEASURE, prev=CmpMeasInsScreen_Line1, flag=VF_Const, X=222, Y=99, W=59, H=19, str=Str_FIRST_5, font=4, fontcolor=CL_Yellow	# str "FIRST"
+
+Str_MEASURE_12:	.asciz "MEASURE"
+
+		VwLabel	CmpMeasInsScreen_Label_MEASURE, super=CmpMeasInsScreen, next=CmpMeasInsScreen_Label_NUMBER_OF, prev=CmpMeasInsScreen_Label_FIRST, flag=VF_Const, X=222, Y=121, W=81, H=19, str=Str_MEASURE_12, font=4, fontcolor=CL_Yellow	# str "MEASURE"
+
+Str_NUMBER_OF:	.asciz "NUMBER OF"
+	.align	4, 0xFF
+
+		VwLabel	CmpMeasInsScreen_Label_NUMBER_OF, super=CmpMeasInsScreen, next=CmpMeasInsScreen_Label_MEASURES, prev=CmpMeasInsScreen_Label_MEASURE, flag=VF_Const, X=330, Y=99, W=103, H=19, str=Str_NUMBER_OF, font=4, fontcolor=CL_Yellow	# str "NUMBER OF"
+
+Str_MEASURES:	.asciz "MEASURES"
+	.align	4, 0xFF
+
+		VwLabel	CmpMeasInsScreen_Label_MEASURES, super=CmpMeasInsScreen, next=CmpMeasInsScreen_Line2, prev=CmpMeasInsScreen_Label_NUMBER_OF, flag=VF_Const, X=330, Y=121, W=92, H=19, str=Str_MEASURES, font=4, fontcolor=CL_Yellow	# str "MEASURES"
+		VwLine	CmpMeasInsScreen_Line2, super=CmpMeasInsScreen, next=CmpMeasInsScreen_Box2, prev=CmpMeasInsScreen_Label_MEASURES, flag=VF_Const, X=202, Y=144, W=236, H=1, color=CL_White, linemode=1
+		VwBox	CmpMeasInsScreen_Box2, super=CmpMeasInsScreen, next=CmpMeasInsScreen_IndexWideES1, prev=CmpMeasInsScreen_Line2, flag=VF_Const, X=40, Y=216, W=480, H=24, color=CL_WallPattern, index=0xFFFF
+		AcIndexWideES	CmpMeasInsScreen_IndexWideES1, super=CmpMeasInsScreen, next=CmpMeasInsScreen_IndexWideES2, prev=CmpMeasInsScreen_Box2, flag=VF_Const, X=324, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom9, editsw2=ES_Bottom11, style=3
+		AcIndexWideES	CmpMeasInsScreen_IndexWideES2, super=CmpMeasInsScreen, next=CmpMeasInsScreen_FuncEditSw1, prev=CmpMeasInsScreen_IndexWideES1, flag=VF_Const, X=204, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom6, editsw2=ES_Bottom8, style=3
+		AcFuncEditSw	CmpMeasInsScreen_FuncEditSw1, super=CmpMeasInsScreen, prev=CmpMeasInsScreen_IndexWideES2, flag=VF_Const, X=571, Y=165, W=61, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_CmpMInsOK
+
+	Window	CmpMemClrWin, sub=CmpMemClrWin_Box1, flag=VF_Const, X=8, Y=102, W=472, H=112, color=CL_FireRedB, border=BD_3D_UP2, index=0xFFFF, modal=1, parent=CmpMemClrWin_parent, child=CmpMemClrWin_child
+		VwBox	CmpMemClrWin_Box1, super=CmpMemClrWin, sub=CmpMemClrWin_ScreenMenu_NO, next=CmpMemClrWin_FuncEditSw1, flag=VF_Const, X=480, Y=74, W=160, H=166, color=CL_WallPattern, index=0xFFFF
+
+Str_NO:	.asciz "NO  "
+	.align	4, 0xFF
+
+			AcScreenMenu	CmpMemClrWin_ScreenMenu_NO, super=CmpMemClrWin_Box1, flag=VF_Const, X=553, Y=166, W=79, H=22, color=CL_SilverB, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_BlackS, editsw=ES_Right4, selected=CmpMemClrWin_ScreenMenu_NO_selected, str=Str_NO, screen=CmpBkslScreen_id	# str "NO  "
+		AcFuncEditSw	CmpMemClrWin_FuncEditSw1, super=CmpMemClrWin, next=CmpMemClrWin_ExitScreen1, prev=CmpMemClrWin_Box1, flag=VF_Const, X=553, Y=124, W=79, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right3, style=9, func=FN_CmpMemClrYes
+		IvExitScreen	CmpMemClrWin_ExitScreen1, super=CmpMemClrWin, next=CmpMemClrWin_LanguageText1, prev=CmpMemClrWin_FuncEditSw1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, screen=CmpBkslScreen_id
+		AcLanguageText	CmpMemClrWin_LanguageText1, super=CmpMemClrWin, prev=CmpMemClrWin_ExitScreen1, flag=VF_Const, X=12, Y=146, W=464, H=24, color=CL_Transparent, index=0xFFFF, font=9, fontcolor=CL_White, lines=1, func=FN_AttAreYouSureCheck
+
+	Window	CmpClrPtnWin, sub=CmpClrPtnWin_FuncEditSw1, flag=VF_Const, X=300, Y=40, W=288, H=64, color=CL_FireRedB, border=BD_3D_UP2, index=0xFFFF, modal=1, parent=CmpClrPtnWin_parent, child=CmpClrPtnWin_child
+		AcFuncEditSw	CmpClrPtnWin_FuncEditSw1, super=CmpClrPtnWin, next=CmpClrPtnWin_ScreenMenu_NO, flag=VF_Const, X=593, Y=40, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right1, style=9, func=FN_CmpPtnClrYes
+
+Str_NO_2:	.asciz "NO"
+	.align	4, 0xFF
+
+		AcScreenMenu	CmpClrPtnWin_ScreenMenu_NO, super=CmpClrPtnWin, next=CmpClrPtnWin_ExitScreen1, prev=CmpClrPtnWin_FuncEditSw1, flag=VF_Const, X=593, Y=82, W=39, H=22, color=CL_SilverB, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_BlackS, editsw=ES_Right2, selected=CmpClrPtnWin_ScreenMenu_NO_selected, str=Str_NO_2, screen=CmpBkslSScreen_id	# str "NO"
+		IvExitScreen	CmpClrPtnWin_ExitScreen1, super=CmpClrPtnWin, next=CmpClrPtnWin_Box1, prev=CmpClrPtnWin_ScreenMenu_NO, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, screen=CmpBkslSScreen_id
+		VwBox	CmpClrPtnWin_Box1, super=CmpClrPtnWin, next=CmpClrPtnWin_LanguageText1, prev=CmpClrPtnWin_ExitScreen1, flag=VF_Const, X=560, Y=162, W=80, H=28, color=CL_WallPattern, index=0xFFFF
+		AcLanguageText	CmpClrPtnWin_LanguageText1, super=CmpClrPtnWin, prev=CmpClrPtnWin_Box1, flag=VF_Const, X=304, Y=62, W=280, H=20, color=CL_Transparent, index=0xFFFF, font=9, fontcolor=CL_White, lines=1, func=FN_AttAreYouSureCheck
+
+Str_VARIATION_NAMING:	.asciz "VARIATION NAMING"
+	.align	4, 0xFF
+
+	TtlScreen	CmVari1NameScreen, sub=CmVari1NameScreen_CmpPatternBox1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CMBKSL, window=CmVari1NameScreen_window, title=Str_VARIATION_NAMING, icon=153	# title "VARIATION NAMING"
+		AcCmpPatternBox	CmVari1NameScreen_CmpPatternBox1, super=CmVari1NameScreen, next=CmVari1NameScreen_Label_VARI1, flag=VF_Const, X=164, Y=50, W=270, H=19, color=CL_WallPattern, index=0xFFFF, font=1, fontcolor=CL_White, align=1
+
+Str_VARI1:	.asciz "- VARI1"
+
+		VwLabel	CmVari1NameScreen_Label_VARI1, super=CmVari1NameScreen, next=CmVari1NameScreen_Naming1, prev=CmVari1NameScreen_CmpPatternBox1, flag=VF_Const, X=246, Y=52, W=60, H=19, str=Str_VARI1, font=1, fontcolor=CL_White	# str "- VARI1"
+		IvNaming	CmVari1NameScreen_Naming1, super=CmVari1NameScreen, next=CmVari1NameScreen_ExitScreen1, prev=CmVari1NameScreen_Label_VARI1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_CmpVari1NmChk
+		IvExitScreen	CmVari1NameScreen_ExitScreen1, super=CmVari1NameScreen, next=CmVari1NameScreen_ScreenMenu_NEXT_VARI, prev=CmVari1NameScreen_Naming1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, screen=CmNameScreen_id
+
+Str_NEXT_VARI:	.asciz "NEXT VARI"
+	.align	4, 0xFF
+
+		AcScreenMenu	CmVari1NameScreen_ScreenMenu_NEXT_VARI, super=CmVari1NameScreen, next=CmVari1NameScreen_FuncEditSw1, prev=CmVari1NameScreen_ExitScreen1, flag=VF_Const, X=547, Y=114, W=85, H=38, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Right3, selected=CmVari1NameScreen_ScreenMenu_NEXT_VARI_selected, str=Str_NEXT_VARI, screen=CmVari2NameScreen_id	# str "NEXT VARI"
+		AcFuncEditSw	CmVari1NameScreen_FuncEditSw1, super=CmVari1NameScreen, prev=CmVari1NameScreen_ScreenMenu_NEXT_VARI, flag=VF_Const, X=593, Y=165, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_CmpVari1NmOk
+
+Str_VARIATION_NAMING_2:	.asciz "VARIATION NAMING"
+	.align	4, 0xFF
+
+	TtlScreen	CmVari2NameScreen, sub=CmVari2NameScreen_CmpPatternBox1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CMBKSL, window=CmVari2NameScreen_window, title=Str_VARIATION_NAMING_2, icon=153	# title "VARIATION NAMING"
+		AcCmpPatternBox	CmVari2NameScreen_CmpPatternBox1, super=CmVari2NameScreen, next=CmVari2NameScreen_Naming1, flag=VF_Const, X=164, Y=50, W=270, H=19, color=CL_WallPattern, index=0xFFFF, font=1, fontcolor=CL_White, align=1
+		IvNaming	CmVari2NameScreen_Naming1, super=CmVari2NameScreen, next=CmVari2NameScreen_ScreenMenu_NEXT_VARI, prev=CmVari2NameScreen_CmpPatternBox1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_CmpVari2NmChk
+
+Str_NEXT_VARI_2:	.asciz "NEXT VARI"
+	.align	4, 0xFF
+
+		AcScreenMenu	CmVari2NameScreen_ScreenMenu_NEXT_VARI, super=CmVari2NameScreen, next=CmVari2NameScreen_FuncEditSw1, prev=CmVari2NameScreen_Naming1, flag=VF_Const, X=547, Y=114, W=85, H=38, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Right3, selected=CmVari2NameScreen_ScreenMenu_NEXT_VARI_selected, str=Str_NEXT_VARI_2, screen=CmVari3NameScreen_id	# str "NEXT VARI"
+		AcFuncEditSw	CmVari2NameScreen_FuncEditSw1, super=CmVari2NameScreen, next=CmVari2NameScreen_Label_VARI2, prev=CmVari2NameScreen_ScreenMenu_NEXT_VARI, flag=VF_Const, X=593, Y=165, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=1, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_CmpVari1NmOk
+
+Str_VARI2:	.asciz "- VARI2"
+
+		VwLabel	CmVari2NameScreen_Label_VARI2, super=CmVari2NameScreen, next=CmVari2NameScreen_ExitScreen1, prev=CmVari2NameScreen_FuncEditSw1, flag=VF_Const, X=246, Y=52, W=60, H=19, str=Str_VARI2, font=1, fontcolor=CL_White	# str "- VARI2"
+		IvExitScreen	CmVari2NameScreen_ExitScreen1, super=CmVari2NameScreen, prev=CmVari2NameScreen_Label_VARI2, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, screen=CmNameScreen_id
+
+Str_VARIATION_NAMING_3:	.asciz "VARIATION NAMING"
+	.align	4, 0xFF
+
+	TtlScreen	CmVari3NameScreen, sub=CmVari3NameScreen_CmpPatternBox1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CMBKSL, window=CmVari3NameScreen_window, title=Str_VARIATION_NAMING_3, icon=153	# title "VARIATION NAMING"
+		AcCmpPatternBox	CmVari3NameScreen_CmpPatternBox1, super=CmVari3NameScreen, next=CmVari3NameScreen_Naming1, flag=VF_Const, X=164, Y=50, W=270, H=19, color=CL_WallPattern, index=0xFFFF, font=1, fontcolor=CL_White, align=1
+		IvNaming	CmVari3NameScreen_Naming1, super=CmVari3NameScreen, next=CmVari3NameScreen_ScreenMenu_NEXT_VARI, prev=CmVari3NameScreen_CmpPatternBox1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_CmpVari3NmChk
+
+Str_NEXT_VARI_3:	.asciz "NEXT VARI"
+	.align	4, 0xFF
+
+		AcScreenMenu	CmVari3NameScreen_ScreenMenu_NEXT_VARI, super=CmVari3NameScreen, next=CmVari3NameScreen_FuncEditSw1, prev=CmVari3NameScreen_Naming1, flag=VF_Const, X=547, Y=114, W=85, H=38, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Right3, selected=CmVari3NameScreen_ScreenMenu_NEXT_VARI_selected, str=Str_NEXT_VARI_3, screen=CmVari4NameScreen_id	# str "NEXT VARI"
+		AcFuncEditSw	CmVari3NameScreen_FuncEditSw1, super=CmVari3NameScreen, next=CmVari3NameScreen_Label_VARI3, prev=CmVari3NameScreen_ScreenMenu_NEXT_VARI, flag=VF_Const, X=593, Y=165, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=2, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_CmpVari1NmOk
+
+Str_VARI3:	.asciz "- VARI3"
+
+		VwLabel	CmVari3NameScreen_Label_VARI3, super=CmVari3NameScreen, next=CmVari3NameScreen_ExitScreen1, prev=CmVari3NameScreen_FuncEditSw1, flag=VF_Const, X=246, Y=52, W=60, H=19, str=Str_VARI3, font=1, fontcolor=CL_White	# str "- VARI3"
+		IvExitScreen	CmVari3NameScreen_ExitScreen1, super=CmVari3NameScreen, prev=CmVari3NameScreen_Label_VARI3, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, screen=CmNameScreen_id
+
+Str_VARIATION_NAMING_4:	.asciz "VARIATION NAMING"
+	.align	4, 0xFF
+
+	TtlScreen	CmVari4NameScreen, sub=CmVari4NameScreen_CmpPatternBox1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CMBKSL, window=CmVari4NameScreen_window, title=Str_VARIATION_NAMING_4, icon=153	# title "VARIATION NAMING"
+		AcCmpPatternBox	CmVari4NameScreen_CmpPatternBox1, super=CmVari4NameScreen, next=CmVari4NameScreen_Naming1, flag=VF_Const, X=164, Y=50, W=270, H=19, color=CL_WallPattern, index=0xFFFF, font=1, fontcolor=CL_White, align=1
+		IvNaming	CmVari4NameScreen_Naming1, super=CmVari4NameScreen, next=CmVari4NameScreen_FuncEditSw1, prev=CmVari4NameScreen_CmpPatternBox1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_CmpVari4NmChk
+		AcFuncEditSw	CmVari4NameScreen_FuncEditSw1, super=CmVari4NameScreen, next=CmVari4NameScreen_Label_VARI4, prev=CmVari4NameScreen_Naming1, flag=VF_Const, X=593, Y=165, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=3, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_CmpVari1NmOk
+
+Str_VARI4:	.asciz "- VARI4"
+
+		VwLabel	CmVari4NameScreen_Label_VARI4, super=CmVari4NameScreen, next=CmVari4NameScreen_ScreenMenu_NEXT_VARI, prev=CmVari4NameScreen_FuncEditSw1, flag=VF_Const, X=246, Y=52, W=60, H=19, str=Str_VARI4, font=1, fontcolor=CL_White	# str "- VARI4"
+
+Str_NEXT_VARI_4:	.asciz "NEXT VARI"
+	.align	4, 0xFF
+
+		AcScreenMenu	CmVari4NameScreen_ScreenMenu_NEXT_VARI, super=CmVari4NameScreen, next=CmVari4NameScreen_ExitScreen1, prev=CmVari4NameScreen_Label_VARI4, flag=VF_Const, X=547, Y=114, W=85, H=38, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Right3, selected=CmVari4NameScreen_ScreenMenu_NEXT_VARI_selected, str=Str_NEXT_VARI_4, screen=CmVari1NameScreen_id	# str "NEXT VARI"
+		IvExitScreen	CmVari4NameScreen_ExitScreen1, super=CmVari4NameScreen, prev=CmVari4NameScreen_ScreenMenu_NEXT_VARI, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, screen=CmNameScreen_id
+
+	Window	CmpPtnCpP1Win, sub=CmpPtnCpP1Win_IndexWideES1, flag=VF_Const, X=0, Y=28, W=640, H=212, color=CL_WallPattern, index=0xFFFF, parent=CmpPtnCpP1Win_parent, child=CmpPtnCpP1Win_child
+		AcIndexWideES	CmpPtnCpP1Win_IndexWideES1, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_IndexWideES2, flag=VF_Const, X=4, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom1, editsw2=ES_Bottom2, style=3
+		AcIndexWideES	CmpPtnCpP1Win_IndexWideES2, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_IndexWideES3, prev=CmpPtnCpP1Win_IndexWideES1, flag=VF_Const, X=84, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom3, editsw2=ES_Bottom4, style=3
+		AcIndexWideES	CmpPtnCpP1Win_IndexWideES3, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_IndexWideES4, prev=CmpPtnCpP1Win_IndexWideES2, flag=VF_Const, X=164, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=3, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, editsw2=ES_Bottom6, style=3
+		AcIndexWideES	CmpPtnCpP1Win_IndexWideES4, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_IndexWideES5, prev=CmpPtnCpP1Win_IndexWideES3, flag=VF_Const, X=404, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=4, font=4, fontcolor=CL_Black, editsw=ES_Bottom11, editsw2=ES_Bottom12, style=3
+		AcIndexWideES	CmpPtnCpP1Win_IndexWideES5, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_FuncEditSw1, prev=CmpPtnCpP1Win_IndexWideES4, flag=VF_Const, X=484, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=5, font=4, fontcolor=CL_Black, editsw=ES_Bottom13, editsw2=ES_Bottom14, style=3
+		AcFuncEditSw	CmpPtnCpP1Win_FuncEditSw1, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Label_MEMORY, prev=CmpPtnCpP1Win_IndexWideES5, flag=VF_Const, X=592, Y=165, W=40, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_CmPnCpOK
+
+Str_MEMORY_5:	.asciz "MEMORY"
+	.align	4, 0xFF
+
+		VwLabel	CmpPtnCpP1Win_Label_MEMORY, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Label_PATTERN, prev=CmpPtnCpP1Win_FuncEditSw1, flag=VF_Const, X=414, Y=198, W=52, H=19, str=Str_MEMORY_5, fontcolor=CL_White	# str "MEMORY"
+
+Str_PATTERN_2:	.asciz "PATTERN"
+
+		VwLabel	CmpPtnCpP1Win_Label_PATTERN, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Label_GROUP, prev=CmpPtnCpP1Win_Label_MEMORY, flag=VF_Const, X=490, Y=198, W=60, H=19, str=Str_PATTERN_2, fontcolor=CL_White	# str "PATTERN"
+
+Str_GROUP_3:	.asciz "GROUP"
+	.align	4, 0xFF
+
+		VwLabel	CmpPtnCpP1Win_Label_GROUP, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Label_RHYTHM, prev=CmpPtnCpP1Win_Label_PATTERN, flag=VF_Const, X=18, Y=198, W=44, H=19, str=Str_GROUP_3, fontcolor=CL_White	# str "GROUP"
+
+Str_RHYTHM_9:	.asciz "RHYTHM"
+	.align	4, 0xFF
+
+		VwLabel	CmpPtnCpP1Win_Label_RHYTHM, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Label_PATTERN2, prev=CmpPtnCpP1Win_Label_GROUP, flag=VF_Const, X=94, Y=198, W=52, H=19, str=Str_RHYTHM_9, fontcolor=CL_White	# str "RHYTHM"
+
+Str_PATTERN_3:	.asciz "PATTERN"
+
+		VwLabel	CmpPtnCpP1Win_Label_PATTERN2, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Label_TO, prev=CmpPtnCpP1Win_Label_RHYTHM, flag=VF_Const, X=170, Y=198, W=60, H=19, str=Str_PATTERN_3, fontcolor=CL_White	# str "PATTERN"
+
+Str_TO_3:	.asciz "TO"
+	.align	4, 0xFF
+
+		VwLabel	CmpPtnCpP1Win_Label_TO, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Label_FROM, prev=CmpPtnCpP1Win_Label_PATTERN2, flag=VF_Const, X=482, Y=50, W=36, H=31, str=Str_TO_3, font=11, fontcolor=CL_White	# str "TO"
+
+Str_FROM_3:	.asciz "FROM"
+	.align	4, 0xFF
+
+		VwLabel	CmpPtnCpP1Win_Label_FROM, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Yajirushi1, prev=CmpPtnCpP1Win_Label_TO, flag=VF_Const, X=94, Y=50, W=68, H=31, str=Str_FROM_3, font=11, fontcolor=CL_White	# str "FROM"
+		Yajirushi	CmpPtnCpP1Win_Yajirushi1, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_IndexWideES6, prev=CmpPtnCpP1Win_Label_FROM, flag=VF_Const, X=268, Y=88, W=132, H=58, color=CL_White, dir=1, tail_x_rate=60, tail_y_rate=50
+		AcIndexWideES	CmpPtnCpP1Win_IndexWideES6, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Label_ACCOMP_DSP, prev=CmpPtnCpP1Win_Yajirushi1, flag=VF_Const, X=284, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=6, fontcolor=CL_Black, editsw=ES_Bottom8, editsw2=ES_Bottom9, style=3
+
+Str_ACCOMP_DSP:	.asciz "ACCOMP DSP"
+	.align	4, 0xFF
+
+		VwLabel	CmpPtnCpP1Win_Label_ACCOMP_DSP, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_FuncMenu_EDIT, prev=CmpPtnCpP1Win_IndexWideES6, flag=VF_Const, X=278, Y=198, W=84, H=19, str=Str_ACCOMP_DSP, fontcolor=CL_White	# str "ACCOMP DSP"
+
+Str_EDIT_3:	.asciz "EDIT"
+	.align	4, 0xFF
+
+		AcFuncMenu	CmpPtnCpP1Win_FuncMenu_EDIT, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Box1, prev=CmpPtnCpP1Win_Label_ACCOMP_DSP, flag=VF_Const, X=8, Y=28, W=80, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left1, selected=CmpPtnCpP1Win_FuncMenu_EDIT_selected, str=Str_EDIT_3, func=FN_CmpPnCpEditFunc	# str "EDIT"
+		VwBox	CmpPtnCpP1Win_Box1, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Label_MEMORY2, prev=CmpPtnCpP1Win_FuncMenu_EDIT, flag=VF_Const, X=404, Y=78, W=186, H=120, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
+
+Str_MEMORY_6:	.asciz "MEMORY:"
+
+		VwLabel	CmpPtnCpP1Win_Label_MEMORY2, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Label_PATTERN3, prev=CmpPtnCpP1Win_Box1, flag=VF_Const, X=410, Y=90, W=60, H=19, str=Str_MEMORY_6, fontcolor=CL_Yellow	# str "MEMORY:"
+
+Str_PATTERN_4:	.asciz "PATTERN:"
+	.align	4, 0xFF
+
+		VwLabel	CmpPtnCpP1Win_Label_PATTERN3, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_FuncEditBox1, prev=CmpPtnCpP1Win_Label_MEMORY2, flag=VF_Const, X=410, Y=142, W=68, H=19, str=Str_PATTERN_4, fontcolor=CL_Yellow	# str "PATTERN:"
+
+Str_empty_68:	.asciz ""
+	.align	4, 0xFF
+
+		AcFuncEditBox	CmpPtnCpP1Win_FuncEditBox1, super=CmpPtnCpP1Win, next=PnCpDstPtn, prev=CmpPtnCpP1Win_Label_PATTERN3, flag=VF_Const, X=410, Y=106, W=177, H=34, color=CL_WallPattern, index=4, caption=Str_empty_68, font=4, fontcolor=CL_White, align=1, length=16, editsw=ES_None, dial=1, selected=CmpPtnCpP1Win_FuncEditBox1_selected, func=FN_FuncEdit_rhyDstName	# caption ""
+
+Str_empty_69:	.asciz ""
+	.align	4, 0xFF
+
+		AcFuncEditBox	PnCpDstPtn, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Box2, prev=CmpPtnCpP1Win_FuncEditBox1, flag=VF_Const, X=410, Y=160, W=178, H=34, color=CL_WallPattern, index=5, caption=Str_empty_69, font=4, fontcolor=CL_White, align=1, length=16, editsw=ES_None, dial=1, selected=PnCpDstPtn_selected, func=FN_FuncEdit_rhyDstPattern	# caption ""
+		VwBox	CmpPtnCpP1Win_Box2, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Label_ACCOMP_DSP2, prev=PnCpDstPtn, flag=VF_Const, X=268, Y=150, W=132, H=48, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
+
+Str_ACCOMP_DSP_2:	.asciz "ACCOMP DSP"
+	.align	4, 0xFF
+
+		VwLabel	CmpPtnCpP1Win_Label_ACCOMP_DSP2, super=CmpPtnCpP1Win, next=PnCpDspYN, prev=CmpPtnCpP1Win_Box2, flag=VF_Const, X=270, Y=154, W=64, H=11, str=Str_ACCOMP_DSP_2, font=3, fontcolor=CL_Yellow	# str "ACCOMP DSP"
+
+Str_empty_70:	.asciz ""
+	.align	4, 0xFF
+
+		AcFuncEditBox	PnCpDspYN, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Label_COPY_OPTION, prev=CmpPtnCpP1Win_Label_ACCOMP_DSP2, flag=VF_Const, X=273, Y=177, W=125, H=15, color=CL_WallPattern, index=6, caption=Str_empty_70, fontcolor=CL_White, align=1, length=16, editsw=ES_None, dial=1, selected=PnCpDspYN_selected, func=FN_FuncEdit_rhyYN	# caption ""
+
+Str_COPY_OPTION:	.asciz "COPY OPTION:"
+	.align	4, 0xFF
+
+		VwLabel	CmpPtnCpP1Win_Label_COPY_OPTION, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Box3, prev=PnCpDspYN, flag=VF_Const, X=276, Y=164, W=76, H=11, str=Str_COPY_OPTION, font=3, fontcolor=CL_Yellow	# str "COPY OPTION:"
+		VwBox	CmpPtnCpP1Win_Box3, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Label_RHYTHM2, prev=CmpPtnCpP1Win_Label_COPY_OPTION, flag=VF_Const, X=0, Y=78, W=264, H=120, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
+
+Str_RHYTHM_10:	.asciz "RHYTHM:"
+
+		VwLabel	CmpPtnCpP1Win_Label_RHYTHM2, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Label_GROUP2, prev=CmpPtnCpP1Win_Box3, flag=VF_Const, X=6, Y=130, W=60, H=19, str=Str_RHYTHM_10, fontcolor=CL_Yellow	# str "RHYTHM:"
+
+Str_GROUP_4:	.asciz "GROUP:"
+	.align	4, 0xFF
+
+		VwLabel	CmpPtnCpP1Win_Label_GROUP2, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Label_PATTERN4, prev=CmpPtnCpP1Win_Label_RHYTHM2, flag=VF_Const, X=6, Y=94, W=52, H=19, str=Str_GROUP_4, fontcolor=CL_Yellow	# str "GROUP:"
+
+Str_PATTERN_5:	.asciz "PATTERN:"
+	.align	4, 0xFF
+
+		VwLabel	CmpPtnCpP1Win_Label_PATTERN4, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_FuncEditBox2, prev=CmpPtnCpP1Win_Label_GROUP2, flag=VF_Const, X=6, Y=166, W=68, H=19, str=Str_PATTERN_5, fontcolor=CL_Yellow	# str "PATTERN:"
+
+Str_empty_71:	.asciz ""
+	.align	4, 0xFF
+
+		AcFuncEditBox	CmpPtnCpP1Win_FuncEditBox2, super=CmpPtnCpP1Win, next=PnCpSrcPtn, prev=CmpPtnCpP1Win_Label_PATTERN4, flag=VF_Const, X=72, Y=122, W=189, H=34, color=CL_WallPattern, index=2, caption=Str_empty_71, font=4, fontcolor=CL_White, align=1, length=16, editsw=ES_None, dial=1, selected=CmpPtnCpP1Win_FuncEditBox2_selected, func=FN_FuncEdit_rhyName	# caption ""
+
+Str_empty_72:	.asciz ""
+	.align	4, 0xFF
+
+		AcFuncEditBox	PnCpSrcPtn, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_FuncEditBox3, prev=CmpPtnCpP1Win_FuncEditBox2, flag=VF_Const, X=72, Y=158, W=189, H=34, color=CL_WallPattern, index=3, caption=Str_empty_72, font=4, fontcolor=CL_White, align=1, length=16, editsw=ES_None, dial=1, selected=PnCpSrcPtn_selected, func=FN_FuncEdit_rhyPattern	# caption ""
+
+Str_empty_73:	.asciz ""
+	.align	4, 0xFF
+
+		AcFuncEditBox	CmpPtnCpP1Win_FuncEditBox3, super=CmpPtnCpP1Win, prev=PnCpSrcPtn, flag=VF_Const, X=72, Y=86, W=189, H=34, color=CL_WallPattern, index=1, caption=Str_empty_73, font=4, fontcolor=CL_White, align=1, length=16, editsw=ES_None, dial=1, selected=CmpPtnCpP1Win_FuncEditBox3_selected, func=FN_FuncEdit_rhyGroup	# caption ""
+
+	Window	CmpPtnCpP2Win, sub=CmpPrtCpySrcGrid, flag=VF_Const, X=0, Y=28, W=640, H=212, color=CL_WallPattern, index=0xFFFF, parent=CmpPtnCpP2Win_parent, child=CmpPtnCpP2Win_child
+
+Str_GROUP_RHYTHM_PATTERN_PART:	.asciz "|    GROUP    |     RHYTHM     | PATTERN |  PART   "
+Str_empty_74:	.asciz "|-| | | | | | | | |"
+
+		AcGridBoxDelux	CmpPrtCpySrcGrid, super=CmpPtnCpP2Win, next=CmpPrtCpyDstGrid, flag=VF_Const, X=0, Y=70, W=400, H=145, color=CL_WallPattern, border=BD_3D_UP2, index=1, fontcolor=CL_White, row=10, col=5, vertline=1, selrow=CmpPrtCpySrcGrid_selrow, selcol=CmpPrtCpySrcGrid_selcol, pcol=CmpPrtCpySrcGrid_pcol, prow=CmpPrtCpySrcGrid_prow, crow=CmpPrtCpySrcGrid_crow, fixedcol=Str_GROUP_RHYTHM_PATTERN_PART, fixedrow=Str_empty_74, func=FN_CmpPartCopyGrid	# fixedcol "|    GROUP    |     RHYTHM     | PATTERN"; fixedrow "|-| | | | | | | | |"
+
+Str_PART_FUNC:	.asciz "  PART  |  FUNC  "
+Str_DRUM1_DRUM2_BASS_ACCOMP1_ACCOMP2_ACCOMP3_2:	.asciz "|-| DRUM1 | DRUM2 | BASS  |ACCOMP1|ACCOMP2|ACCOMP3|ACCOMP4|ACCOMP5"
+	.align	4, 0xFF
+
+		AcGridBoxDelux	CmpPrtCpyDstGrid, super=CmpPtnCpP2Win, next=CmpPtnCpP2Win_Yajirushi1, prev=CmpPrtCpySrcGrid, flag=VF_Const, X=444, Y=70, W=145, H=145, color=CL_WallPattern, border=BD_3D_UP2, index=6, fontcolor=CL_White, row=10, col=2, vertline=1, selrow=CmpPrtCpyDstGrid_selrow, selcol=CmpPrtCpyDstGrid_selcol, pcol=CmpPrtCpyDstGrid_pcol, prow=CmpPrtCpyDstGrid_prow, crow=CmpPrtCpyDstGrid_crow, fixedcol=Str_PART_FUNC, fixedrow=Str_DRUM1_DRUM2_BASS_ACCOMP1_ACCOMP2_ACCOMP3_2, func=FN_CmpPrtCpyStsGrid	# fixedcol "  PART  |  FUNC  "; fixedrow "|-| DRUM1 | DRUM2 | BASS  |ACCOMP1|ACCOM"
+		Yajirushi	CmpPtnCpP2Win_Yajirushi1, super=CmpPtnCpP2Win, next=CmpPtnCpP2Win_IndexWideES1, prev=CmpPrtCpyDstGrid, flag=VF_Const, X=404, Y=114, W=38, H=64, color=CL_White, dir=1, tail_x_rate=50, tail_y_rate=50
+		AcIndexWideES	CmpPtnCpP2Win_IndexWideES1, super=CmpPtnCpP2Win, next=CmpPtnCpP2Win_IndexWideES2, prev=CmpPtnCpP2Win_Yajirushi1, flag=VF_Const, X=4, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom1, editsw2=ES_Bottom3, style=3
+		AcIndexWideES	CmpPtnCpP2Win_IndexWideES2, super=CmpPtnCpP2Win, next=CmpPtnCpP2Win_IndexWideES3, prev=CmpPtnCpP2Win_IndexWideES1, flag=VF_Const, X=124, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=3, font=4, fontcolor=CL_Black, editsw=ES_Bottom4, editsw2=ES_Bottom6, style=3
+		AcIndexWideES	CmpPtnCpP2Win_IndexWideES3, super=CmpPtnCpP2Win, next=CmpPtnCpP2Win_IndexWideES4, prev=CmpPtnCpP2Win_IndexWideES2, flag=VF_Const, X=244, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=4, font=4, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom8, style=3
+		AcIndexWideES	CmpPtnCpP2Win_IndexWideES4, super=CmpPtnCpP2Win, next=CmpPtnCpP2Win_IndexWideES5, prev=CmpPtnCpP2Win_IndexWideES3, flag=VF_Const, X=324, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=5, font=4, fontcolor=CL_Black, editsw=ES_Bottom9, editsw2=ES_Bottom10, style=3
+		AcIndexWideES	CmpPtnCpP2Win_IndexWideES5, super=CmpPtnCpP2Win, next=CmpPtnCpP2Win_Label_FROM, prev=CmpPtnCpP2Win_IndexWideES4, flag=VF_Const, X=524, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=7, font=4, fontcolor=CL_Black, editsw=ES_Bottom14, editsw2=ES_Bottom15, style=3
+
+Str_FROM_4:	.asciz "FROM"
+	.align	4, 0xFF
+
+		VwLabel	CmpPtnCpP2Win_Label_FROM, super=CmpPtnCpP2Win, next=CmpPtnCpP2Win_Label_TO, prev=CmpPtnCpP2Win_IndexWideES5, flag=VF_Const, X=166, Y=40, W=68, H=31, str=Str_FROM_4, font=11, fontcolor=CL_White	# str "FROM"
+
+Str_TO_4:	.asciz "TO"
+	.align	4, 0xFF
+
+		VwLabel	CmpPtnCpP2Win_Label_TO, super=CmpPtnCpP2Win, next=CmpPtnCpP2Win_Label_MEM, prev=CmpPtnCpP2Win_Label_FROM, flag=VF_Const, X=502, Y=29, W=20, H=19, str=Str_TO_4, font=1, fontcolor=CL_White	# str "TO"
+
+Str_MEM_2:	.asciz "MEM"
+
+		VwLabel	CmpPtnCpP2Win_Label_MEM, super=CmpPtnCpP2Win, next=CmpPtnCpP2Win_Label_PART, prev=CmpPtnCpP2Win_Label_TO, flag=VF_Const, X=596, Y=61, W=28, H=19, str=Str_MEM_2, font=1, fontcolor=CL_White	# str "MEM"
+
+Str_PART_5:	.asciz "PART"
+	.align	4, 0xFF
+
+		VwLabel	CmpPtnCpP2Win_Label_PART, super=CmpPtnCpP2Win, next=CmpPtnCpP2Win_FuncMenu_EDIT, prev=CmpPtnCpP2Win_Label_MEM, flag=VF_Const, X=402, Y=200, W=36, H=19, str=Str_PART_5, fontcolor=CL_White	# str "PART"
+
+Str_EDIT_4:	.asciz "EDIT"
+	.align	4, 0xFF
+
+		AcFuncMenu	CmpPtnCpP2Win_FuncMenu_EDIT, super=CmpPtnCpP2Win, next=CmpPtnCpP2Win_FuncEditBox1, prev=CmpPtnCpP2Win_Label_PART, flag=VF_Const, X=8, Y=28, W=80, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left1, selected=CmpPtnCpP2Win_FuncMenu_EDIT_selected, str=Str_EDIT_4, func=FN_CmpPrtCpyEditFunc	# str "EDIT"
+
+Str_empty_75:	.asciz ""
+	.align	4, 0xFF
+
+		AcFuncEditBox	CmpPtnCpP2Win_FuncEditBox1, super=CmpPtnCpP2Win, next=CmpPtnCpP2Win_IndexEditSw1, prev=CmpPtnCpP2Win_FuncMenu_EDIT, flag=VF_Const, X=444, Y=44, W=145, H=26, color=CL_WallPattern, border=BD_3D_UP2, index=10, caption=Str_empty_75, font=1, fontcolor=CL_White, align=1, length=15, editsw=ES_None, selected=CmpPtnCpP2Win_FuncEditBox1_selected, func=FN_FE_CompPartCopyMem	# caption ""
+		AcIndexEditSw	CmpPtnCpP2Win_IndexEditSw1, super=CmpPtnCpP2Win, next=CmpPtnCpP2Win_IndexEditSw2, prev=CmpPtnCpP2Win_FuncEditBox1, flag=VF_Const, X=592, Y=37, W=40, H=20, color=CL_Silver, border=BD_3D_UP2, index=10, font=4, fontcolor=CL_Black, editsw=ES_Right1, style=1
+		AcIndexEditSw	CmpPtnCpP2Win_IndexEditSw2, super=CmpPtnCpP2Win, next=CmpPtnCpP2Win_FuncEditSw1, prev=CmpPtnCpP2Win_IndexEditSw1, flag=VF_Const, X=592, Y=80, W=40, H=20, color=CL_Silver, border=BD_3D_UP2, index=10, font=4, fontcolor=CL_Black, editsw=ES_Right2, style=2
+		AcFuncEditSw	CmpPtnCpP2Win_FuncEditSw1, super=CmpPtnCpP2Win, next=CmpPtnCpP2Win_FuncEditSw2, prev=CmpPtnCpP2Win_IndexEditSw2, flag=VF_Const, X=404, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom11, style=14, func=FN_CmpPrtCpyPart
+		AcFuncEditSw	CmpPtnCpP2Win_FuncEditSw2, super=CmpPtnCpP2Win, prev=CmpPtnCpP2Win_FuncEditSw1, flag=VF_Const, X=592, Y=165, W=40, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_CmpPartCopyOk
+
+	Window	CmPnCpSureWin1, sub=CmPnCpSureWin1_FuncEditSw1, flag=VF_Const, X=0, Y=30, W=590, H=80, color=CL_FireRed, border=BD_3D_UP2, index=0xFFFF, modal=1, parent=CmPnCpSureWin1_parent, child=CmPnCpSureWin1_child
+		AcFuncEditSw	CmPnCpSureWin1_FuncEditSw1, super=CmPnCpSureWin1, next=CmPnCpSureWin1_ScreenMenu_NO, flag=VF_Const, X=592, Y=122, W=40, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right3, style=9, func=FN_CmPnCpYes
+
+Str_NO_3:	.asciz "NO"
+	.align	4, 0xFF
+
+		AcScreenMenu	CmPnCpSureWin1_ScreenMenu_NO, super=CmPnCpSureWin1, next=CmPnCpSureWin1_ExitScreen1, prev=CmPnCpSureWin1_FuncEditSw1, flag=VF_Const, X=592, Y=165, W=40, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, selected=CmPnCpSureWin1_ScreenMenu_NO_selected, str=Str_NO_3, screen=CmpNcpScreen_id	# str "NO"
+		IvExitScreen	CmPnCpSureWin1_ExitScreen1, super=CmPnCpSureWin1, next=CmPnCpSureWin1_LanguageText1, prev=CmPnCpSureWin1_ScreenMenu_NO, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, screen=CmpNcpScreen_id
+		AcLanguageText	CmPnCpSureWin1_LanguageText1, super=CmPnCpSureWin1, next=CmPnCpSureWin1_LanguageText2, prev=CmPnCpSureWin1_ExitScreen1, flag=VF_Const, X=4, Y=94, W=584, H=16, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_White, lines=1, func=FN_AttAreYouSureCheck
+		AcLanguageText	CmPnCpSureWin1_LanguageText2, super=CmPnCpSureWin1, next=CmPnCpSureWin1_LanguageText3, prev=CmPnCpSureWin1_LanguageText1, flag=VF_Const, X=4, Y=36, W=584, H=16, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_White, lines=1, func=FN_AttAttentionCheck
+		AcLanguageText	CmPnCpSureWin1_LanguageText3, super=CmPnCpSureWin1, prev=CmPnCpSureWin1_LanguageText2, flag=VF_Const, X=4, Y=48, W=584, H=48, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_White, alignment=1, lines=3, func=FN_AttCompPtnCpy1
+
+	Window	CmPnCpSureWin2, sub=CmPnCpSureWin2_FuncEditSw1, flag=VF_Const, X=0, Y=30, W=590, H=80, color=CL_FireRed, border=BD_3D_UP2, index=0xFFFF, modal=1, parent=CmPnCpSureWin2_parent, child=CmPnCpSureWin2_child
+		AcFuncEditSw	CmPnCpSureWin2_FuncEditSw1, super=CmPnCpSureWin2, next=CmPnCpSureWin2_ScreenMenu_NO, flag=VF_Const, X=592, Y=122, W=40, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right3, style=9, func=FN_CmPnCpYes
+
+Str_NO_4:	.asciz "NO"
+	.align	4, 0xFF
+
+		AcScreenMenu	CmPnCpSureWin2_ScreenMenu_NO, super=CmPnCpSureWin2, next=CmPnCpSureWin2_ExitScreen1, prev=CmPnCpSureWin2_FuncEditSw1, flag=VF_Const, X=592, Y=165, W=40, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, selected=CmPnCpSureWin2_ScreenMenu_NO_selected, str=Str_NO_4, screen=CmpNcpScreen_id	# str "NO"
+		IvExitScreen	CmPnCpSureWin2_ExitScreen1, super=CmPnCpSureWin2, next=CmPnCpSureWin2_LanguageText1, prev=CmPnCpSureWin2_ScreenMenu_NO, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, screen=CmpNcpScreen_id
+		AcLanguageText	CmPnCpSureWin2_LanguageText1, super=CmPnCpSureWin2, next=CmPnCpSureWin2_LanguageText2, prev=CmPnCpSureWin2_ExitScreen1, flag=VF_Const, X=4, Y=94, W=584, H=16, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_White, lines=1, func=FN_AttAreYouSureCheck
+		AcLanguageText	CmPnCpSureWin2_LanguageText2, super=CmPnCpSureWin2, next=CmPnCpSureWin2_LanguageText3, prev=CmPnCpSureWin2_LanguageText1, flag=VF_Const, X=4, Y=36, W=584, H=16, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_White, lines=1, func=FN_AttAttentionCheck
+		AcLanguageText	CmPnCpSureWin2_LanguageText3, super=CmPnCpSureWin2, prev=CmPnCpSureWin2_LanguageText2, flag=VF_Const, X=4, Y=48, W=584, H=48, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_White, alignment=1, lines=3, func=FN_AttCompPtnCpy2
+
+	Window	CmPnCpSureWin3, sub=CmPnCpSureWin3_FuncEditSw1, flag=VF_Const, X=0, Y=30, W=590, H=80, color=CL_FireRed, border=BD_3D_UP2, index=0xFFFF, modal=1, parent=CmPnCpSureWin3_parent, child=CmPnCpSureWin3_child
+		AcFuncEditSw	CmPnCpSureWin3_FuncEditSw1, super=CmPnCpSureWin3, next=CmPnCpSureWin3_ScreenMenu_NO, flag=VF_Const, X=592, Y=122, W=40, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right3, style=9, func=FN_CmPnCpYes
+
+Str_NO_5:	.asciz "NO"
+	.align	4, 0xFF
+
+		AcScreenMenu	CmPnCpSureWin3_ScreenMenu_NO, super=CmPnCpSureWin3, next=CmPnCpSureWin3_ExitScreen1, prev=CmPnCpSureWin3_FuncEditSw1, flag=VF_Const, X=592, Y=165, W=40, H=20, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, selected=CmPnCpSureWin3_ScreenMenu_NO_selected, str=Str_NO_5, screen=CmpNcpScreen_id	# str "NO"
+		IvExitScreen	CmPnCpSureWin3_ExitScreen1, super=CmPnCpSureWin3, next=CmPnCpSureWin3_LanguageText1, prev=CmPnCpSureWin3_ScreenMenu_NO, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, screen=CmpNcpScreen_id
+		AcLanguageText	CmPnCpSureWin3_LanguageText1, super=CmPnCpSureWin3, next=CmPnCpSureWin3_LanguageText2, prev=CmPnCpSureWin3_ExitScreen1, flag=VF_Const, X=4, Y=94, W=584, H=16, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_White, lines=1, func=FN_AttAreYouSureCheck
+		AcLanguageText	CmPnCpSureWin3_LanguageText2, super=CmPnCpSureWin3, next=CmPnCpSureWin3_LanguageText3, prev=CmPnCpSureWin3_LanguageText1, flag=VF_Const, X=4, Y=36, W=584, H=16, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_White, lines=1, func=FN_AttAttentionCheck
+		AcLanguageText	CmPnCpSureWin3_LanguageText3, super=CmPnCpSureWin3, prev=CmPnCpSureWin3_LanguageText2, flag=VF_Const, X=4, Y=48, W=584, H=48, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_White, alignment=1, lines=3, func=FN_AttSeqToCompCopy
+
+	Window	SeqToCmpIEWin, sub=SeqToCmpIEWin_FuncEditSw1, flag=VF_Const, X=40, Y=94, W=550, H=117, color=CL_FireRed, border=BD_3D_UP2, index=0xFFFF, modal=1, parent=SeqToCmpIEWin_parent, child=SeqToCmpIEWin_child
+		AcFuncEditSw	SeqToCmpIEWin_FuncEditSw1, super=SeqToCmpIEWin, next=SeqToCmpIEWin_ScreenMenu_NO, flag=VF_Const, X=593, Y=122, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right3, style=9, func=FN_SeqToCmpYes
+
+Str_NO_6:	.asciz "NO"
+	.align	4, 0xFF
+
+		AcScreenMenu	SeqToCmpIEWin_ScreenMenu_NO, super=SeqToCmpIEWin, next=SeqToCmpIEWin_ExitScreen1, prev=SeqToCmpIEWin_FuncEditSw1, flag=VF_Const, X=593, Y=165, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, selected=SeqToCmpIEWin_ScreenMenu_NO_selected, str=Str_NO_6, screen=CmpSeqCpScreen_id	# str "NO"
+		IvExitScreen	SeqToCmpIEWin_ExitScreen1, super=SeqToCmpIEWin, next=SeqToCmpIEWin_LanguageText1, prev=SeqToCmpIEWin_ScreenMenu_NO, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, screen=CmpSeqCpScreen_id
+		AcLanguageText	SeqToCmpIEWin_LanguageText1, super=SeqToCmpIEWin, next=SeqToCmpIEWin_LanguageText2, prev=SeqToCmpIEWin_ExitScreen1, flag=VF_Const, X=44, Y=186, W=544, H=20, color=CL_Transparent, index=0xFFFF, font=9, fontcolor=CL_White, lines=1, func=FN_AttAreYouSureCheck
+		AcLanguageText	SeqToCmpIEWin_LanguageText2, super=SeqToCmpIEWin, next=SeqToCmpIEWin_LanguageText3, prev=SeqToCmpIEWin_LanguageText1, flag=VF_Const, X=44, Y=122, W=544, H=64, color=CL_Transparent, index=0xFFFF, font=9, fontcolor=CL_White, alignment=1, lines=3, func=FN_AttSeqToCompCopy
+		AcLanguageText	SeqToCmpIEWin_LanguageText3, super=SeqToCmpIEWin, prev=SeqToCmpIEWin_LanguageText2, flag=VF_Const, X=44, Y=102, W=544, H=20, color=CL_Transparent, index=0xFFFF, font=9, fontcolor=CL_White, lines=1, func=FN_AttAttentionCheck
+
+	Window	CmSetPage2, sub=CmpSetGrid, flag=VF_Const, X=0, Y=28, W=640, H=212, color=CL_WallPattern, index=0xFFFF, parent=CmSetPage2_parent, child=CmSetPage2_child
+
+Str_PART_GROUP_CHORD_MODIFY_TYPE_FUNCTION:	.asciz "   PART   |  GROUP   |CHORD MODIFY TYPE|FUNCTION"
+Str_BASS_ACCOMP1_ACCOMP2_ACCOMP3_ACCOMP4_ACC:	.asciz "|-|BASS|ACCOMP1|ACCOMP2|ACCOMP3|ACCOMP4|ACCOMP5|"
+	.align	4, 0xFF
+
+		AcGridBoxDelux	CmpSetGrid, super=CmSetPage2, next=CmSetPage2_CmpPatternBox1, flag=VF_Const, X=2, Y=40, W=536, H=174, color=CL_WallPattern, border=BD_3D_UP2, index=1, font=4, fontcolor=CL_White, row=8, col=4, vertline=1, selrow=CmpSetGrid_selrow, selcol=CmpSetGrid_selcol, pcol=CmpSetGrid_pcol, prow=CmpSetGrid_prow, crow=CmpSetGrid_crow, fixedcol=Str_PART_GROUP_CHORD_MODIFY_TYPE_FUNCTION, fixedrow=Str_BASS_ACCOMP1_ACCOMP2_ACCOMP3_ACCOMP4_ACC, func=FN_CmpRecPtChdGrid	# fixedcol "   PART   |  GROUP   |CHORD MODIFY TYPE|"; fixedrow "|-|BASS|ACCOMP1|ACCOMP2|ACCOMP3|ACCOMP4|"
+		AcCmpPatternBox	CmSetPage2_CmpPatternBox1, super=CmSetPage2, next=CmSetPage2_IndexWideES1, prev=CmpSetGrid, flag=VF_Const, X=280, Y=2, W=280, H=25, color=CL_TitleBar, index=0xFFFF, font=4, fontcolor=CL_White, align=1, drawPattern=1
+		AcIndexWideES	CmSetPage2_IndexWideES1, super=CmSetPage2, next=CmSetPage2_IndexWideES2, prev=CmSetPage2_CmpPatternBox1, flag=VF_Const, X=4, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, fontcolor=CL_Black, editsw=ES_Bottom1, editsw2=ES_Bottom3, style=14
+		AcIndexWideES	CmSetPage2_IndexWideES2, super=CmSetPage2, next=CmSetPage2_IndexWideES3, prev=CmSetPage2_IndexWideES1, flag=VF_Const, X=124, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, fontcolor=CL_Black, editsw=ES_Bottom4, editsw2=ES_Bottom6, style=3
+		AcIndexWideES	CmSetPage2_IndexWideES3, super=CmSetPage2, next=CmSetPage2_IndexWideES4, prev=CmSetPage2_IndexWideES2, flag=VF_Const, X=444, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=4, fontcolor=CL_Black, editsw=ES_Bottom12, editsw2=ES_Bottom13, style=3
+		AcIndexWideES	CmSetPage2_IndexWideES4, super=CmSetPage2, next=CmSetPage2_FuncEditSw1, prev=CmSetPage2_IndexWideES3, flag=VF_Const, X=284, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=3, fontcolor=CL_Black, editsw=ES_Bottom8, editsw2=ES_Bottom10, style=3
+		AcFuncEditSw	CmSetPage2_FuncEditSw1, super=CmSetPage2, prev=CmSetPage2_IndexWideES4, flag=VF_Const, X=561, Y=165, W=71, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_CmpPtChdOK
+
+	Window	CompDspSetAtt, sub=CompDspSetAtt_Box1, flag=VF_Const, X=80, Y=40, W=512, H=156, color=CL_FireRed, border=BD_3D_UP2, index=0xFFFF, modal=1, parent=CompDspSetAtt_parent, child=CompDspSetAtt_child
+		VwBox	CompDspSetAtt_Box1, super=CompDspSetAtt, next=CompDspSetAtt_LanguageText1, flag=VF_Const, X=592, Y=148, W=48, H=40, color=CL_WallPattern, index=0xFFFF
+		AcLanguageText	CompDspSetAtt_LanguageText1, super=CompDspSetAtt, next=CompDspSetAtt_ExitWindow1, prev=CompDspSetAtt_Box1, flag=VF_Const, X=84, Y=46, W=504, H=20, color=CL_Transparent, index=0xFFFF, font=9, fontcolor=CL_White, lines=1, func=FN_AttAttentionCheck
+		IvExitWindow	CompDspSetAtt_ExitWindow1, super=CompDspSetAtt, next=CompDspSetAtt_LanguageText2, prev=CompDspSetAtt_LanguageText1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32
+		AcLanguageText	CompDspSetAtt_LanguageText2, super=CompDspSetAtt, next=CompDspSetAtt_FuncEditSw1, prev=CompDspSetAtt_ExitWindow1, flag=VF_Const, X=84, Y=82, W=504, H=108, color=CL_Transparent, index=0xFFFF, font=9, fontcolor=CL_White, alignment=1, lines=4, func=FN_AttCompPartSet
+		AcFuncEditSw	CompDspSetAtt_FuncEditSw1, super=CompDspSetAtt, next=CompDspSetAtt_Box2, prev=CompDspSetAtt_LanguageText2, flag=VF_Const, X=593, Y=122, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right3, style=6, func=FN_ExitWindowAF
+		VwBox	CompDspSetAtt_Box2, super=CompDspSetAtt, next=CompDspSetAtt_Box3, prev=CompDspSetAtt_FuncEditSw1, flag=VF_Const, X=0, Y=214, W=640, H=26, color=CL_WallPattern, index=0xFFFF
+		VwBox	CompDspSetAtt_Box3, super=CompDspSetAtt, prev=CompDspSetAtt_Box2, flag=VF_Const, X=592, Y=36, W=48, H=24, color=CL_WallPattern, index=0xFFFF
+
+	Window	CmpPartSetP1Win, sub=CmpPartSetP1Win_IndexWideES1, flag=VF_Const, X=0, Y=28, W=640, H=212, color=CL_WallPattern, index=0xFFFF, parent=CmpPartSetP1Win_parent, child=CmpPartSetP1Win_child
+		AcIndexWideES	CmpPartSetP1Win_IndexWideES1, super=CmpPartSetP1Win, next=CmPartSetG1, flag=VF_Const, X=4, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom1, editsw2=ES_Bottom2, style=14
+
+Str_PART_PITCH_POINT_SOUND_DIGI_EFF_BALANCE:	.asciz "  PART   |PITCH POINT|     SOUND      | DIGI EFF | BALANCE |   PAN   |BEND RANGE"
+Str_DRUM1_DRUM2_BASS_ACCOMP1_ACCOMP2_ACCOMP3_3:	.asciz "|-|DRUM1|DRUM2|BASS|ACCOMP1|ACCOMP2|ACCOMP3|ACCOMP4|ACCOMP5"
+	.align	4, 0xFF
+
+		AcGridBoxDelux	CmPartSetG1, super=CmpPartSetP1Win, next=CmpPartSetP1Win_IndexWideES2, prev=CmpPartSetP1Win_IndexWideES1, flag=VF_Const, X=0, Y=32, W=640, H=182, color=CL_WallPattern, border=BD_3D_UP2, index=1, font=1, fontcolor=CL_White, row=10, col=7, vertline=1, selrow=CmPartSetG1_selrow, selcol=CmPartSetG1_selcol, pcol=CmPartSetG1_pcol, prow=CmPartSetG1_prow, crow=CmPartSetG1_crow, fixedcol=Str_PART_PITCH_POINT_SOUND_DIGI_EFF_BALANCE, fixedrow=Str_DRUM1_DRUM2_BASS_ACCOMP1_ACCOMP2_ACCOMP3_3, func=FN_CmpPartSetGrid1	# fixedcol "  PART   |PITCH POINT|     SOUND      | "; fixedrow "|-|DRUM1|DRUM2|BASS|ACCOMP1|ACCOMP2|ACCO"
+		AcIndexWideES	CmpPartSetP1Win_IndexWideES2, super=CmpPartSetP1Win, next=CmpPartSetP1Win_IndexWideES3, prev=CmPartSetG1, flag=VF_Const, X=324, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=4, font=4, fontcolor=CL_Black, editsw=ES_Bottom9, editsw2=ES_Bottom10, style=3
+		AcIndexWideES	CmpPartSetP1Win_IndexWideES3, super=CmpPartSetP1Win, next=CmpPartSetP1Win_IndexWideES4, prev=CmpPartSetP1Win_IndexWideES2, flag=VF_Const, X=404, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=5, font=4, fontcolor=CL_Black, editsw=ES_Bottom11, editsw2=ES_Bottom12, style=3
+		AcIndexWideES	CmpPartSetP1Win_IndexWideES4, super=CmpPartSetP1Win, next=CmpPartSetP1Win_IndexWideES5, prev=CmpPartSetP1Win_IndexWideES3, flag=VF_Const, X=484, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=6, font=4, fontcolor=CL_Black, editsw=ES_Bottom13, editsw2=ES_Bottom14, style=3
+		AcIndexWideES	CmpPartSetP1Win_IndexWideES5, super=CmpPartSetP1Win, next=CmpPartSetP1Win_IndexWideES6, prev=CmpPartSetP1Win_IndexWideES4, flag=VF_Const, X=564, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=7, font=4, fontcolor=CL_Black, editsw=ES_Bottom15, editsw2=ES_Bottom16, style=3
+		AcIndexWideES	CmpPartSetP1Win_IndexWideES6, super=CmpPartSetP1Win, prev=CmpPartSetP1Win_IndexWideES5, flag=VF_Const, X=84, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom3, editsw2=ES_Bottom4, style=3
+
+	Window	CmpPartSetP2Win, sub=CmpPartSetP2Win_IndexWideES1, flag=VF_Const, X=0, Y=28, W=640, H=212, color=CL_Transparent, index=0xFFFF, parent=CmpPartSetP2Win_parent, child=CmpPartSetP2Win_child
+		AcIndexWideES	CmpPartSetP2Win_IndexWideES1, super=CmpPartSetP2Win, next=CmPartSetG2, flag=VF_Const, X=4, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom1, editsw2=ES_Bottom2, style=14
+
+Str_PART_DSP1_DSP2_REV_CHO:	.asciz " PART  |      |     |      |     |DSP1 |DSP2 | REV  | CHO  "
+Str_DRUM1_DRUM2_BASS_ACCOMP1_ACCOMP2_ACCOMP3_4:	.asciz "|-|DRUM1|DRUM2|BASS|ACCOMP1|ACCOMP2|ACCOMP3|ACCOMP4|ACCOMP5"
+
+		AcGridBoxDelux	CmPartSetG2, super=CmpPartSetP2Win, next=CmpPartSetP2Win_Label_EQ_Hi, prev=CmpPartSetP2Win_IndexWideES1, flag=VF_Const, X=0, Y=32, W=568, H=182, color=CL_WallPattern, border=BD_3D_UP2, index=1, font=1, fontcolor=CL_White, row=10, col=9, vertline=1, selrow=CmPartSetG2_selrow, selcol=CmPartSetG2_selcol, pcol=CmPartSetG2_pcol, prow=CmPartSetG2_prow, crow=CmPartSetG2_crow, fixedcol=Str_PART_DSP1_DSP2_REV_CHO, fixedrow=Str_DRUM1_DRUM2_BASS_ACCOMP1_ACCOMP2_ACCOMP3_4, func=FN_CmpPartSetGrid2	# fixedcol " PART  |      |     |      |     |DSP1 |"; fixedrow "|-|DRUM1|DRUM2|BASS|ACCOMP1|ACCOMP2|ACCO"
+
+Str_EQ_Hi:	.asciz "EQ-Hi"
+	.align	4, 0xFF
+
+		VwLabel	CmpPartSetP2Win_Label_EQ_Hi, super=CmpPartSetP2Win, next=CmpPartSetP2Win_Label_EQ_Low, prev=CmPartSetG2, flag=VF_Const, X=90, Y=33, W=44, H=19, str=Str_EQ_Hi, fontcolor=CL_Yellow	# str "EQ-Hi"
+
+Str_EQ_Low:	.asciz "EQ-Low"
+	.align	4, 0xFF
+
+		VwLabel	CmpPartSetP2Win_Label_EQ_Low, super=CmpPartSetP2Win, next=CmpPartSetP2Win_Label_Fc, prev=CmpPartSetP2Win_Label_EQ_Hi, flag=VF_Const, X=206, Y=33, W=52, H=19, str=Str_EQ_Low, fontcolor=CL_Yellow	# str "EQ-Low"
+
+Str_Fc:	.asciz "Fc"
+	.align	4, 0xFF
+
+		VwLabel	CmpPartSetP2Win_Label_Fc, super=CmpPartSetP2Win, next=CmpPartSetP2Win_Label_Gain_dB, prev=CmpPartSetP2Win_Label_EQ_Low, flag=VF_Const, X=224, Y=47, W=16, H=11, str=Str_Fc, font=3, fontcolor=CL_Yellow	# str "Fc"
+
+Str_Gain_dB:	.asciz "Gain[dB]"
+	.align	4, 0xFF
+
+		VwLabel	CmpPartSetP2Win_Label_Gain_dB, super=CmpPartSetP2Win, next=CmpPartSetP2Win_Label_EQ_Low2, prev=CmpPartSetP2Win_Label_Fc, flag=VF_Const, X=148, Y=47, W=52, H=11, str=Str_Gain_dB, font=3, fontcolor=CL_Yellow	# str "Gain[dB]"
+
+Str_EQ_Low_2:	.asciz "EQ-Low"
+	.align	4, 0xFF

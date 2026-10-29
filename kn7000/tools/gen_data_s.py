@@ -154,10 +154,12 @@ class Gen:
         lab = os.path.join(KN7, P["labels"])
         if not os.path.exists(lab):
             sys.exit(f"gen_data_s: {P['labels']} missing: build this program first")
+        self.prev_data_label = {}       # name -> address of the previous build's data labels
         for line in open(lab):
             n, v = line.split()
             a = int(v, 16)
             if self.in_data(a):
+                self.prev_data_label[n] = a
                 continue          # this generator's own labels: made again below
             self.extern.setdefault(a, n)
             self.names.add(n)
@@ -171,6 +173,24 @@ class Gen:
         for a, n in m.sym_by_addr.items():
             if self.in_data(a):
                 self.fixed[a] = n
+        prev = os.path.join(KN7, P["src"], "data", "labels.sym")
+        if os.path.exists(prev):
+            for line in open(prev):
+                if not line.startswith(";"):
+                    a, n, _sz = line.split()
+                    self.prev_data_label[n] = int(a, 16)
+        # a name the converted code already uses for a data address keeps it (the
+        # code is generated from labels.sym: renaming would change the code)
+        import glob
+        nx = re.compile(r"\b([A-Za-z_]\w*)\b")
+        self.code_names = set()
+        for f in glob.glob(os.path.join(KN7, P["src"], "*.s")):
+            for line in open(f, encoding="latin-1"):
+                self.code_names.update(nx.findall(line.split("#", 1)[0]))
+        for n, a in self.prev_data_label.items():
+            if n in self.code_names and not n.startswith(("data_", "ram_")):
+                self.fixed.setdefault(a, n)
+                self.names.add(n)
         for line in open(os.path.join(KN7, P["prog"])):
             mo = re.match(r"\.equ\s+(\w+),\s*0x([0-9A-Fa-f]+)", line)
             if mo and self.in_data(int(mo.group(2), 16)):
@@ -188,8 +208,14 @@ class Gen:
 
     @staticmethod
     def in_data(a):
-        o = MM.Model.rom_addr(a) - BASE
-        return R1_END <= o < DATA_END and (a >= BASE or RAMINIT_RAM <= a < RAMINIT_RAM + RAMINIT_LEN)
+        """A data-region address as the code uses it.  The initialised-RAM
+        image is addressed by its RAM addresses; its ROM addresses (only the
+        copy loop and an odd pointer use them) are not, so they are never
+        spelled with the image's RAM labels."""
+        if RAMINIT_RAM <= a < RAMINIT_RAM + RAMINIT_LEN:
+            return True
+        o = a - BASE
+        return R1_END <= o < DATA_END and not RAMINIT_OFF <= o < RAMINIT_END
 
     def uniq(self, base):
         base = base if re.match(r"[A-Za-z_]", base) else "_" + base
@@ -734,12 +760,22 @@ class Gen:
         """Every data-region address the converted code names as an immediate."""
         import glob
         rx = re.compile(r"\b0x(4[89][0-9a-fA-F]{6}|500[0-7][0-9a-fA-F]{4})\b")
-        for f in glob.glob(os.path.join(KN7, "src", "program", "*.s")):
+        # the code names a data address it refers to by the label the previous
+        # generation gave it (gen_program_s.py reads labels.sym), or as a number
+        nx = re.compile(r"\b([A-Za-z_]\w*)(?:\+(\d+))?")
+        for f in glob.glob(os.path.join(KN7, P["src"], "*.s")):
             for line in open(f, encoding="latin-1"):
-                for mo in rx.finditer(line.split("#", 1)[0]):
+                code = line.split("#", 1)[0]
+                for mo in rx.finditer(code):
                     a = int(mo.group(1), 16)
                     if self.in_data(a):
                         self.refs.add(a)
+                for mo in nx.finditer(code):
+                    a = self.prev_data_label.get(mo.group(1))
+                    if a is not None:
+                        a += int(mo.group(2) or 0)
+                        if self.in_data(a):
+                            self.refs.add(a)
         for a in self.fixed:
             self.refs.add(a)
 
@@ -780,7 +816,8 @@ class Gen:
                     continue
             # a string
             e = self.rom.find(b"\0", o)
-            if 0 <= e - o < 512 and e > o and is_text(self.rom[o:e]) and self.free(a, e - o + 1):
+            if 0 <= e - o < 512 and e > o and is_text(self.rom[o:e]) and not self.pointerish(o, e) \
+                    and self.free(a, e - o + 1):
                 s = self.rom[o:e].decode("latin-1")
                 self.str_item(a, "Str_" + (sanitize(s, 40) or "empty"), "string")
 
@@ -922,6 +959,15 @@ class Gen:
                     return v
         return None
 
+    def pointerish(self, o, e):
+        """True when at least half the aligned words of file bytes o..e are
+        program addresses: pointers into 0x485B.... read as text ("t[H u[H"),
+        so such bytes are not taken for a string (a long text may still hold
+        one such word by chance: "...eH" ends a word)."""
+        words = range(o + (-o % 4), e - 3, 4)
+        hits = sum(1 for k in words if BASE <= int.from_bytes(self.rom[k:k + 4], "little") < BASE + len(self.rom))
+        return hits > 0 and 2 * hits >= len(words)
+
     def text_runs(self):
         """NUL-terminated printable strings (>= 4 characters) in the bytes no
         item holds: message text, help pages, file names the code reaches with
@@ -937,7 +983,7 @@ class Gen:
             if o > R1_END and rom[o - 1] not in (0x00, 0xFF) and not self.claimed[o - 1]:
                 continue
             a = self.addr_of(o)
-            if self.free(a, e - o):
+            if self.free(a, e - o) and not self.pointerish(o, e - 1):
                 self.str_item(a, "Str_" + (sanitize(bs.decode("latin-1"), 40) or "text"), "text")
 
     def doubles(self):
@@ -948,7 +994,8 @@ class Gen:
         o = R1_END + (-R1_END % 8)
         while o + 32 <= DATA_END:
             n = 0
-            while o + 8 * (n + 1) <= DATA_END and self.free(self.addr_of(o + 8 * n), 8):
+            while o + 8 * (n + 1) <= DATA_END and self.free(self.addr_of(o + 8 * n), 8) \
+                    and not RAMINIT_OFF <= o + 8 * n < RAMINIT_END:     # RAM variables are not tables
                 v = struct.unpack_from("<d", rom, o + 8 * n)[0]
                 if not (v == 0.0 and rom[o + 8 * n:o + 8 * n + 8] == bytes(8) or 1e-12 < abs(v) < 1e12):
                     break
@@ -968,7 +1015,13 @@ class Gen:
 
     def gaps(self):
         """Label every referenced address not inside a typed item; the bytes
-        between typed items stay .incbin_range, split at those labels."""
+        between typed items stay .incbin_range, split at those labels.  A name
+        given to an address that a typed item turned out to hold (not at its
+        start) is dropped: ref() spells it Item+N."""
+        for a in list(self.label_at):
+            it = self.item_containing(a)
+            if it is not None and it.start != a:
+                del self.label_at[a]
         for a in sorted(self.refs):
             if self.in_data(a) and self.item_containing(a) is None:
                 self.label_at.setdefault(a, self.fixed.get(a) or self.uniq(
@@ -1054,6 +1107,14 @@ class Gen:
             self.write(os.path.join(outdir, f"data_{n:02d}.s"),
                        hdr + [f"# data.s part {n:02d}: GENERATED by tools/gen_data_s.py -- do not edit by hand.", ""] + p)
         self.write(os.path.join(outdir, "gui_classes.inc"), hdr + self.classes_inc())
+        # every label the data region defines, for tools/gen_program_s.py: the
+        # converted code names a data address by it (`Label` or `Label+N`)
+        sym = ["; Data-region labels of program build " + PROFILE + ", GENERATED by tools/gen_data_s.py:",
+               "; cpu_addr  name  size (bytes of the typed item it starts; 0 = a label in raw bytes)"]
+        sizes = {it.start: it.size for it in self.items.values()}
+        for a, n in sorted(self.label_at.items()):
+            sym.append(f"0x{a:08X}  {n}  {sizes.get(a, 0)}")
+        self.write(os.path.join(outdir, "labels.sym"), sym)
         md = os.path.join(KN7, outdir, "media")
         os.makedirs(md, exist_ok=True)
         for fn, bs in sorted(self.media_files.items()):

@@ -14,7 +14,7 @@ IvMultiExitProc:
     jmp     loc_4850029E
 loc_485001EF:
     mov     (0x58, sp), a0
-    mov     0x4864246c, a1
+    mov     Str_ExTM, a1
     call    strcpy_entry, [a2], 4
     clr     d0
     ret     [d2,d3,a2,a3], 0x48
@@ -123,15 +123,15 @@ loc_485002E8:
     cmp     0xe0007, d0
     bne     loc_4850031E
     mov     (0x2c, sp), a1
-    mov     0x486424d4, d0
+    mov     Str_PART_s, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
     movbu   (0x5015233c), d0
-    mov     0x486424b4, a0
+    mov     Str_t_dH_dH_dH_dH_dH_dH_dH_dHPART_s, a0
     asl2    d0
     mov     (d0, a0), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_48500359
 loc_4850031E:
@@ -139,13 +139,13 @@ loc_4850031E:
     cmp     0xe0009, d0
     bne     loc_4850034C
     mov     (0x2c, sp), a1
-    mov     0x486424e0, d0
+    mov     Str_PART_PART_d, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
     movbu   (0x50152345), d0
     inc     d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_48500359
 loc_4850034C:
@@ -202,13 +202,13 @@ func_485003BB:
     bra     loc_485003DB
 loc_485003CA:
     mov     1, d0
-    movbu   d0, (0x50003b10)
+    movbu   d0, (data_50003B10)
     bra     loc_485003DB
 loc_485003D4:
     clr     d0
-    movbu   d0, (0x50003b10)
+    movbu   d0, (data_50003B10)
 loc_485003DB:
-    movbu   (0x50003b10), d0
+    movbu   (data_50003B10), d0
     retf    0, 0
 # AppTitleScreenShow  (CPU 0x485003e4)
 AppTitleScreenShow:
@@ -455,7 +455,7 @@ loc_4850067A:
     bra     loc_485006AA
 loc_4850069B:
     mov     (0x38, sp), a0
-    mov     0x486424f0, a1
+    mov     Str_empty_970, a1
     call    strcpy_entry, [a2], 4
 loc_485006AA:
     clr     d0
@@ -551,9 +551,9 @@ loc_48500749:
     call    func_4850086C_entry, [a2], 0x18
     mov     a0, (0x28, sp)
     mov     d2, (8, sp)
-    mov     0x486424f4, d0
+    mov     Str_3s_2d_2d_s_v_3d_5d_s, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_485007DC
 loc_485007A1:
     movhu   (a2), d0
@@ -574,9 +574,9 @@ loc_485007A1:
     call    func_4850086C_entry, [a2], 0x18
     mov     a0, (0x20, sp)
     mov     d2, (8, sp)
-    mov     0x4864251c, d0
+    mov     Str_3s_2d_2d_5d_s, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_485007DC:
     mov     d2, (0x10, sp)
     mov     0x000600b4, d1
@@ -600,15 +600,15 @@ func_485007FD_entry:
     bgt     loc_48500824
     mov     0x5006d11c, a2
     mov     a2, (8, sp)
-    mov     0x48642548, d1
+    mov     Str_3d_58, d1
     mov     d1, (0xc, sp)
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_48500838
 loc_48500824:
     mov     0x5006d11c, a2
     mov     a2, a0
-    mov     0x4864254c, a1
+    mov     Str_empty_969, a1
     call    strcpy_entry, [a2], 4
 loc_48500838:
     mov     a2, a0
@@ -619,7 +619,7 @@ func_4850083C:
 func_4850083C_entry:
     add     -0x200, sp
     mov     d0, d2
-    mov     0x48642a50, a1
+    mov     ptrs_48642A50, a1
     mov     sp, a0
     mov     -0x200, d1
     setlb
@@ -666,39 +666,39 @@ func_4850086C_entry:
     beq     loc_485008EB
     bra     loc_485008FA
 loc_48500891:
-    mov     0x48642c50, a1
+    mov     data_48642C50, a1
     call    strcpy_entry, [a2], 4
     bra     loc_4850090D
 loc_485008A0:
-    mov     0x48642c54, a1
+    mov     Str_empty_968, a1
     call    strcpy_entry, [a2], 4
     bra     loc_4850090D
 loc_485008AF:
-    mov     0x48642c58, a1
+    mov     data_48642C58, a1
     call    strcpy_entry, [a2], 4
     bra     loc_4850090D
 loc_485008BE:
-    mov     0x48642c5c, a1
+    mov     Str_empty_967, a1
     call    strcpy_entry, [a2], 4
     bra     loc_4850090D
 loc_485008CD:
-    mov     0x48642c60, a1
+    mov     data_48642C60, a1
     call    strcpy_entry, [a2], 4
     bra     loc_4850090D
 loc_485008DC:
-    mov     0x48642c64, a1
+    mov     Str_empty_966, a1
     call    strcpy_entry, [a2], 4
     bra     loc_4850090D
 loc_485008EB:
-    mov     0x48642c68, a1
+    mov     Str_empty_965, a1
     call    strcpy_entry, [a2], 4
     bra     loc_4850090D
 loc_485008FA:
     mov     a0, (8, sp)
-    mov     0x48642c6c, d1
+    mov     Str_2d_31, d1
     mov     d1, (0xc, sp)
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_4850090D:
     mov     a2, a0
     ret     [a2], 0x18
@@ -737,9 +737,9 @@ loc_48500923:
     call    func_4850086C_entry, [a2], 0x18
     mov     a0, (0x24, sp)
     mov     d2, (8, sp)
-    mov     0x48642c70, d0
+    mov     Str_3s_2d_2d_3d_v_3d_s, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_485009AB
 loc_48500970:
     movhu   (a2), d0
@@ -760,9 +760,9 @@ loc_48500970:
     call    func_4850086C_entry, [a2], 0x18
     mov     a0, (0x20, sp)
     mov     d2, (8, sp)
-    mov     0x48642c98, d0
+    mov     Str_3s_2d_2d_v_3d_s, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_485009AB:
     mov     d2, (0x10, sp)
     mov     0x000600b4, d1
@@ -788,7 +788,7 @@ AcSeqInfo1_SRProc:
     jmp     loc_48500A5D
 loc_485009E5:
     mov     (0x7c, sp), a2
-    mov     0x48642cc0, d0
+    mov     Str_3s_s_V_3d_5d, d0
     mov     d0, (0xc, sp)
     movhu   (a2), d0
     call    func_485007FD_entry, [a2], 0x18
@@ -804,7 +804,7 @@ loc_485009E5:
     movhu   (6, a2), d0
     mov     d0, (0x1c, sp)
     mov     a3, (8, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     a3, (0x10, sp)
     mov     d2, d0
     mov     0x000600b4, d1
@@ -812,7 +812,7 @@ loc_485009E5:
     clr     d0
     bra     loc_48500A68
 loc_48500A2C:
-    mov     0x48642cdc, d0
+    mov     Str_3s_11, d0
     mov     d0, (0xc, sp)
     mov     (0x7c, sp), d0
     mov     sp, a2
@@ -821,7 +821,7 @@ loc_48500A2C:
     call    func_485007FD_entry, [a2], 0x18
     mov     a0, (0x10, sp)
     mov     a2, (8, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     a2, (0x10, sp)
     mov     d2, d0
     mov     0x000600b4, d1
@@ -839,7 +839,7 @@ AcSeqInfo2_SRProc:
     movm    [d2,d3,a2,a3], (sp)
     add     -0xa8, sp
     mov     d0, d3
-    mov     0x48642d34, a1
+    mov     ptrs_48642D34, a1
     mov     sp, a0
     add     0x20, a0
     mov     -0x38, d2
@@ -850,7 +850,7 @@ AcSeqInfo2_SRProc:
     inc     a0
     inc     d2
     lne
-    mov     0x48642d80, a1
+    mov     Str_l_dHq_dHv_dH_dH_3s_1c_3s_4s, a1
     mov     sp, a0
     add     0x58, a0
     mov     -0x10, d2
@@ -875,7 +875,7 @@ loc_48500AB2:
     mov     sp, a3
     add     0x68, a3
     mov     a3, (8, sp)
-    mov     0x48642d90, d0
+    mov     Str_3s_1c_3s_4s, d0
     mov     d0, (0xc, sp)
     movhu   (a0), d0
     mov     sp, a1
@@ -894,7 +894,7 @@ loc_48500AB2:
     asl2    d0
     mov     (d0, a0), d0
     mov     d0, (0x1c, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     a3, (0x10, sp)
     mov     d3, d0
     mov     0x000600b4, d1
@@ -947,9 +947,9 @@ loc_48500B37:
     call    func_485007FD_entry, [a2], 0x18
     mov     a0, (0x10, sp)
     mov     a3, (8, sp)
-    mov     0x48642da0, d0
+    mov     Str_3s_s_5, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     a3, (0x10, sp)
     mov     (0xb0, sp), d0
     mov     0x000600b4, d1
@@ -957,7 +957,7 @@ loc_48500B37:
     clr     d0
     ret     [d2,d3,a2,a3], 0xa8
 loc_48500B8A:
-    mov     0x48642da8, d0
+    mov     Str_3s_10, d0
     mov     d0, (0xc, sp)
     mov     (0xb8, sp), d0
     mov     sp, a2
@@ -966,7 +966,7 @@ loc_48500B8A:
     call    func_485007FD_entry, [a2], 0x18
     mov     a0, (0x10, sp)
     mov     a2, (8, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     a2, (0x10, sp)
     mov     (0xb0, sp), d0
     mov     0x000600b4, d1
@@ -974,7 +974,7 @@ loc_48500B8A:
     clr     d0
     ret     [d2,d3,a2,a3], 0xa8
 loc_48500BBD:
-    mov     0x48642dd8, d0
+    mov     Str_3s_END_2, d0
     mov     d0, (0xc, sp)
     mov     (0xb8, sp), d0
     mov     sp, a2
@@ -983,7 +983,7 @@ loc_48500BBD:
     call    func_485007FD_entry, [a2], 0x18
     mov     a0, (0x10, sp)
     mov     a2, (8, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     a2, (0x10, sp)
     mov     (0xb0, sp), d0
     mov     0x000600b4, d1
@@ -991,7 +991,7 @@ loc_48500BBD:
     clr     d0
     bra     loc_48500C2C
 loc_48500BEF:
-    mov     0x48642e08, d0
+    mov     Str_3s_REPEAT_2, d0
     mov     d0, (0xc, sp)
     mov     (0xb8, sp), d0
     mov     sp, a2
@@ -1000,7 +1000,7 @@ loc_48500BEF:
     call    func_485007FD_entry, [a2], 0x18
     mov     a0, (0x10, sp)
     mov     a2, (8, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     a2, (0x10, sp)
     mov     (0xb0, sp), d0
     mov     0x000600b4, d1
@@ -1041,7 +1041,7 @@ loc_48500C5D:
     bls     loc_48500C63
     jmp     loc_485026F8
 loc_48500C63:
-    mov     0x48644f1c, a2
+    mov     data_48644F1C, a2
     inc     d1
     mov     d1, d0
     mov     d2, (0x2c, sp)
@@ -1059,7 +1059,7 @@ loc_48500C63:
     jmp     loc_485026F8
 loc_48500C85:
     add     8, a0
-    cmp     0x4864531c, a0
+    cmp     Str_SONG_2d_16s, a0
     bcs     loc_48500C90
     mov     a2, a0
 loc_48500C90:
@@ -1091,20 +1091,20 @@ loc_48500C93:
     extbu   d2
     mov     d0, (8, sp)
     asl2    d2
-    mov     0x48642e38, d0
+    mov     Str_s_SOUND_s, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     (d2, a0), d0
     mov     d0, (0x10, sp)
     mov     a2, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x48642e54, d0
+    mov     Str_s_VOLUME_3d, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), d0
@@ -1113,49 +1113,49 @@ loc_48500C93:
     and     0xff, d0
     extbu   d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
-    mov     0x48642ea2, a0
+    mov     Str_ON_80, a0
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     cmp     0, d0
     bne     loc_48500D2A
-    mov     0x48642ea6, a0
+    mov     Str_OFF_97, a0
 loc_48500D2A:
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
     asl2    d2
-    mov     0x48642e7c, d0
+    mov     Str_s_VOLUME_MUTE_s, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a1
+    mov     ptrs_48750FD8, a1
     mov     (d2, a1), d0
     mov     d0, (0x10, sp)
     mov     a0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
     asl2    d2
-    mov     0x48642eac, d0
+    mov     Str_s_EXPRESSION_3d, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     (d2, a0), d0
     mov     d0, (0x10, sp)
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x48642ed4, d0
+    mov     Str_s_MULTI_EFFECT_DPT_3d, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), d0
@@ -1164,34 +1164,34 @@ loc_48500D2A:
     and     0xff, d0
     extbu   d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
-    mov     0x48642f22, a0
+    mov     Str_ON_79, a0
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     cmp     1, d0
     beq     loc_48500DB9
-    mov     0x48642f26, a0
+    mov     Str_OFF_96, a0
 loc_48500DB9:
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
     asl2    d2
-    mov     0x48642efc, d0
+    mov     Str_s_MULTI_EFFECT_s, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a1
+    mov     ptrs_48750FD8, a1
     mov     (d2, a1), d0
     mov     d0, (0x10, sp)
     mov     a0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x48642f2c, d0
+    mov     Str_s_REVERB_3d, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), d0
@@ -1200,30 +1200,30 @@ loc_48500DB9:
     and     0xff, d0
     extbu   d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
-    mov     0x48642f7a, a0
+    mov     Str_ON_78, a0
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     cmp     1, d0
     beq     loc_48500E1E
-    mov     0x48642f7e, a0
+    mov     Str_OFF_95, a0
 loc_48500E1E:
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
     asl2    d2
-    mov     0x48642f54, d0
+    mov     Str_s_SOLO_s, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a1
+    mov     ptrs_48750FD8, a1
     mov     (d2, a1), d0
     mov     d0, (0x10, sp)
     mov     a0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     (0xc8, sp), a0
-    mov     0x48642f84, a1
+    mov     Str_DSP1, a1
     call    strcpy_entry, [a2], 4
     mov     2, d0
     mov     a3, d1
@@ -1232,7 +1232,7 @@ loc_48500E1E:
     mov     (0xc8, sp), a0
     call    strcat_entry, [a2], 4
     mov     (0xc8, sp), a0
-    mov     0x48642f8c, a1
+    mov     Str_empty_957, a1
     call    strcat_entry, [a2], 4
     mov     a3, d0
     call    SndRecTriFieldGet2_entry, [d2], 0x14
@@ -1242,7 +1242,7 @@ loc_48500E1E:
     mov     (0xc8, sp), a0
     call    LibStrlen, 0, 0
     mov     (0xc8, sp), a0
-    mov     0x48642f90, a1
+    mov     Str_empty_956, a1
     mov     0x27, d1
     sub     d0, d1
     mov     d1, d0
@@ -1260,7 +1260,7 @@ loc_48500EB8:
     movbu   d0, (0x26, a0)
     jmp     loc_48502711
     mov     (0xc8, sp), a0
-    mov     0x48642fb4, a1
+    mov     Str_DSP2, a1
     call    strcpy_entry, [a2], 4
     mov     3, d0
     mov     a3, d1
@@ -1269,7 +1269,7 @@ loc_48500EB8:
     mov     (0xc8, sp), a0
     call    strcat_entry, [a2], 4
     mov     (0xc8, sp), a0
-    mov     0x48642fbc, a1
+    mov     Str_empty_955, a1
     call    strcat_entry, [a2], 4
     mov     a3, d0
     call    SndRecTriFieldGet2_entry, [d2], 0x14
@@ -1279,7 +1279,7 @@ loc_48500EB8:
     mov     (0xc8, sp), a0
     call    LibStrlen, 0, 0
     mov     (0xc8, sp), a0
-    mov     0x48642fc0, a1
+    mov     Str_empty_954, a1
     mov     0x27, d1
     sub     d0, d1
     mov     d1, d0
@@ -1297,7 +1297,7 @@ loc_48500F38:
     movbu   d0, (0x26, a0)
     jmp     loc_48502711
     mov     (0xc8, sp), a0
-    mov     0x48642fe4, a1
+    mov     Str_DSP3, a1
     call    strcpy_entry, [a2], 4
     mov     4, d0
     mov     a3, d1
@@ -1306,7 +1306,7 @@ loc_48500F38:
     mov     (0xc8, sp), a0
     call    strcat_entry, [a2], 4
     mov     (0xc8, sp), a0
-    mov     0x48642fec, a1
+    mov     Str_empty_953, a1
     call    strcat_entry, [a2], 4
     mov     a3, d0
     call    SndRecTriFieldGet2_entry, [d2], 0x14
@@ -1316,7 +1316,7 @@ loc_48500F38:
     mov     (0xc8, sp), a0
     call    LibStrlen, 0, 0
     mov     (0xc8, sp), a0
-    mov     0x48642ff0, a1
+    mov     Str_empty_952, a1
     mov     0x27, d1
     sub     d0, d1
     mov     d1, d0
@@ -1334,7 +1334,7 @@ loc_48500FB8:
     movbu   d0, (0x26, a0)
     jmp     loc_48502711
     mov     (0xc8, sp), a0
-    mov     0x48643014, a1
+    mov     Str_DSP4, a1
     call    strcpy_entry, [a2], 4
     mov     5, d0
     mov     a3, d1
@@ -1343,7 +1343,7 @@ loc_48500FB8:
     mov     (0xc8, sp), a0
     call    strcat_entry, [a2], 4
     mov     (0xc8, sp), a0
-    mov     0x4864301c, a1
+    mov     Str_empty_951, a1
     call    strcat_entry, [a2], 4
     mov     a3, d0
     call    SndRecTriFieldGet2_entry, [d2], 0x14
@@ -1353,7 +1353,7 @@ loc_48500FB8:
     mov     (0xc8, sp), a0
     call    LibStrlen, 0, 0
     mov     (0xc8, sp), a0
-    mov     0x48643020, a1
+    mov     Str_empty_950, a1
     mov     0x27, d1
     sub     d0, d1
     mov     d1, d0
@@ -1371,7 +1371,7 @@ loc_48501038:
     movbu   d0, (0x26, a0)
     jmp     loc_48502711
     mov     (0xc8, sp), a0
-    mov     0x48643044, a1
+    mov     Str_DSP5, a1
     call    strcpy_entry, [a2], 4
     mov     6, d0
     mov     a3, d1
@@ -1380,7 +1380,7 @@ loc_48501038:
     mov     (0xc8, sp), a0
     call    strcat_entry, [a2], 4
     mov     (0xc8, sp), a0
-    mov     0x4864304c, a1
+    mov     Str_empty_949, a1
     call    strcat_entry, [a2], 4
     mov     a3, d0
     call    SndRecTriFieldGet2_entry, [d2], 0x14
@@ -1390,7 +1390,7 @@ loc_48501038:
     mov     (0xc8, sp), a0
     call    LibStrlen, 0, 0
     mov     (0xc8, sp), a0
-    mov     0x48643050, a1
+    mov     Str_empty_948, a1
     mov     0x27, d1
     sub     d0, d1
     mov     d1, d0
@@ -1410,9 +1410,9 @@ loc_485010B8:
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x48643074, d0
+    mov     Str_s_SOUND_DSP_DEPTH_3d, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), a0
@@ -1421,35 +1421,35 @@ loc_485010B8:
     and     0xff, d0
     extbu   d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
-    mov     0x486430c2, a0
+    mov     Str_ON_77, a0
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     cmp     0, d0
     bne     loc_48501103
-    mov     0x486430c6, a0
+    mov     Str_OFF_94, a0
 loc_48501103:
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x4864309c, d0
+    mov     Str_s_SOUND_DSP_s, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a1
+    mov     ptrs_48750FD8, a1
     mov     d2, d0
     asl2    d0
     mov     (d0, a1), d0
     mov     d0, (0x10, sp)
     mov     a0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x486430cc, d0
+    mov     Str_s_CHORUS_DEPTH_3d, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), a0
@@ -1458,35 +1458,35 @@ loc_48501103:
     and     0xff, d0
     extbu   d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
-    mov     0x4864311a, a0
+    mov     Str_ON_76, a0
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     cmp     0, d0
     bne     loc_48501169
-    mov     0x4864311e, a0
+    mov     Str_OFF_93, a0
 loc_48501169:
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x486430f4, d0
+    mov     Str_s_CHORUS_s, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a1
+    mov     ptrs_48750FD8, a1
     mov     d2, d0
     asl2    d0
     mov     (d0, a1), d0
     mov     d0, (0x10, sp)
     mov     a0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x48643124, d0
+    mov     Str_s_PORTAMENTO_TIME_3d, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), a0
@@ -1495,33 +1495,33 @@ loc_48501169:
     and     0xff, d0
     extbu   d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
-    mov     0x48643172, a0
+    mov     Str_ON_75, a0
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     cmp     0, d0
     bne     loc_485011CF
-    mov     0x48643176, a0
+    mov     Str_OFF_92, a0
 loc_485011CF:
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x4864314c, d0
+    mov     Str_s_PORTAMENTO_s, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a1
+    mov     ptrs_48750FD8, a1
     mov     d2, d0
     asl2    d0
     mov     (d0, a1), d0
     mov     d0, (0x10, sp)
     mov     a0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     extbu   d2
-    mov     0x4864317c, d0
+    mov     Str_s_EQ_HIGH_FC_s_Hz, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), a0
@@ -1532,13 +1532,13 @@ loc_485011CF:
     mov     a0, (0x14, sp)
     mov     (0xc8, sp), d0
     mov     d0, (8, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     extbu   d2
     asl2    d2
-    mov     0x486431a0, d0
+    mov     Str_s_EQ_HIGH_GAIN_5_1f_dB, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     (d2, a0), a0
     mov     a3, d0
     mov     a0, (0x10, sp)
@@ -1548,13 +1548,13 @@ loc_485011CF:
     mov     d1, (0x18, sp)
     mov     (0xc8, sp), d0
     mov     d0, (8, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     extbu   d2
     asl2    d2
-    mov     0x486431c8, d0
+    mov     Str_s_EQ_LOW_FC_s_Hz, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     (d2, a0), a0
     mov     a3, d0
     mov     a0, (0x10, sp)
@@ -1563,13 +1563,13 @@ loc_485011CF:
     mov     a0, (0x14, sp)
     mov     (0xc8, sp), d0
     mov     d0, (8, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     extbu   d2
     asl2    d2
-    mov     0x486431ec, d0
+    mov     Str_s_EQ_LOW_GAIN_5_1f_dB, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     (d2, a0), d0
     mov     d0, (0x10, sp)
     mov     a3, d0
@@ -1579,94 +1579,94 @@ loc_485011CF:
     mov     d1, (0x18, sp)
     mov     (0xc8, sp), d0
     mov     d0, (8, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
-    mov     0x48643239, a0
+    mov     Str_ROCK, a0
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     cmp     0, d0
     bne     loc_485012BF
-    mov     0x4864323e, a0
+    mov     Str_JAZZ, a0
 loc_485012BF:
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
     asl2    d2
-    mov     0x48643214, d0
+    mov     Str_s_DRAWBAR_TYPE_s, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a1
+    mov     ptrs_48750FD8, a1
     mov     (d2, a1), d0
     mov     d0, (0x10, sp)
     mov     a0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
     asl2    d2
-    mov     0x48643244, d0
+    mov     Str_s_DRAWBAR_EFF_TYPE_4d, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     (d2, a0), d0
     mov     d0, (0x10, sp)
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
     asl2    d2
-    mov     0x4864326c, d0
+    mov     Str_s_DRAWBAR_PERC_DECAY_4d, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     (d2, a0), d0
     mov     d0, (0x10, sp)
     mov     a3, d0
     and     0xff, d0
     extb    d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
     asl2    d2
-    mov     0x48643294, d0
+    mov     Str_s_DRAWBAR_PERC_LEVEL_4d, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     (d2, a0), a0
     mov     a3, d0
     mov     a0, (0x10, sp)
     and     0xff, d0
     extb    d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
     asl2    d2
-    mov     0x486432bc, d0
+    mov     Str_s_DRAWBAR_RELEASE_4d, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     (d2, a0), d0
     mov     d0, (0x10, sp)
     mov     a3, d0
     and     0xff, d0
     extb    d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x486432e4, d0
+    mov     Str_s_DRAWBAR_ATTACK_4d, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), d0
@@ -1675,14 +1675,14 @@ loc_485012BF:
     and     0xff, d0
     extb    d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x4864330c, d0
+    mov     Str_s_DRAWBAR_FLUTE16_4d, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), d0
@@ -1691,44 +1691,44 @@ loc_485012BF:
     and     0xff, d0
     extbu   d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
     asl2    d2
-    mov     0x48643334, d0
+    mov     Str_s_DRAWBAR_FLUTE8_4d, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     (d2, a0), d0
     mov     d0, (0x10, sp)
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
     asl2    d2
-    mov     0x4864335c, d0
+    mov     Str_s_DRAWBAR_FLUTE5_1_3_4d, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     (d2, a0), d0
     mov     d0, (0x10, sp)
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x48643384, d0
+    mov     Str_s_DRAWBAR_FLUTE4_4d, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), a0
@@ -1737,59 +1737,59 @@ loc_485012BF:
     and     0xff, d0
     extbu   d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
     asl2    d2
-    mov     0x486433ac, d0
+    mov     Str_s_DRAWBAR_FLUTE2_2_3_4d, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     (d2, a0), a0
     mov     a3, d0
     mov     a0, (0x10, sp)
     and     0xff, d0
     extbu   d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
     asl2    d2
-    mov     0x486433d4, d0
+    mov     Str_s_DRAWBAR_FLUTE2_4d, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     (d2, a0), a0
     mov     a3, d0
     mov     a0, (0x10, sp)
     and     0xff, d0
     extbu   d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
     asl2    d2
-    mov     0x486433fc, d0
+    mov     Str_s_DRAWBAR_FLUTE1_3_5_4d, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     (d2, a0), d0
     mov     d0, (0x10, sp)
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x48643424, d0
+    mov     Str_s_DRAWBAR_FLUTE1_1_3_4d, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), d0
@@ -1798,14 +1798,14 @@ loc_485012BF:
     and     0xff, d0
     extbu   d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x4864344c, d0
+    mov     Str_s_DRAWBAR_FLUTE1_4d, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), a0
@@ -1814,54 +1814,54 @@ loc_485012BF:
     and     0xff, d0
     extbu   d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
-    mov     0x4864349e, a0
+    mov     Str_ON_74, a0
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     cmp     0, d0
     bne     loc_4850154A
-    mov     0x486434a2, a0
+    mov     Str_OFF_79, a0
 loc_4850154A:
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
     asl2    d2
-    mov     0x48643474, d0
+    mov     Str_s_DRAWBAR_PERC_4_s, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a1
+    mov     ptrs_48750FD8, a1
     mov     (d2, a1), d0
     mov     d0, (0x10, sp)
     mov     a0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
-    mov     0x486434d2, a0
+    mov     Str_ON_73, a0
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     cmp     0, d0
     bne     loc_48501584
-    mov     0x486434d6, a0
+    mov     Str_OFF_90, a0
 loc_48501584:
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
     asl2    d2
-    mov     0x486434a8, d0
+    mov     Str_s_DRAWBAR_PERC_2_2_3_s, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a1
+    mov     ptrs_48750FD8, a1
     mov     (d2, a1), d0
     mov     d0, (0x10, sp)
     mov     a0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x486434dc, d0
+    mov     Str_s_RESET_ALL_CONT_3d, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), d0
@@ -1870,14 +1870,14 @@ loc_48501584:
     and     0xff, d0
     extbu   d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x48643504, d0
+    mov     Str_s_ALL_SOUND_OFF_3d, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), a0
@@ -1886,84 +1886,84 @@ loc_48501584:
     and     0xff, d0
     extbu   d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
-    mov     0x48643552, a0
+    mov     Str_ON_72, a0
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     cmp     0, d0
     bgt     loc_48501614
-    mov     0x48643556, a0
+    mov     Str_OFF_89, a0
 loc_48501614:
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
     asl2    d2
-    mov     0x4864352c, d0
+    mov     Str_s_DIGITAL_EFFECT_s, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a1
+    mov     ptrs_48750FD8, a1
     mov     (d2, a1), d0
     mov     d0, (0x10, sp)
     mov     a0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
-    mov     0x48643582, a0
+    mov     Str_ON_71, a0
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     cmp     0, d0
     bne     loc_4850164E
-    mov     0x48643586, a0
+    mov     Str_OFF_88, a0
 loc_4850164E:
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x4864355c, d0
+    mov     Str_s_SUSTAIN_s_2, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a1
+    mov     ptrs_48750FD8, a1
     mov     d2, d0
     asl2    d0
     mov     (d0, a1), d0
     mov     d0, (0x10, sp)
     mov     a0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
     asl2    d2
-    mov     0x4864358c, d0
+    mov     Str_s_SUSTAIN_LENGTH_3d, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     (d2, a0), d0
     mov     d0, (0x10, sp)
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
-    mov     0x486435da, a0
+    mov     Str_EN, a0
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     cmp     0, d0
     bne     loc_485016B3
-    mov     0x486435de, a0
+    mov     Str_DIS, a0
 loc_485016B3:
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x486435b4, d0
+    mov     Str_s_SUSTAIN_s, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a1
+    mov     ptrs_48750FD8, a1
     mov     d2, d0
     asl2    d0
     mov     (d0, a1), d0
     mov     d0, (0x10, sp)
     mov     a0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     a3, d1
     and     0xff, d1
@@ -1973,15 +1973,15 @@ loc_485016B3:
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x486435e4, d0
+    mov     Str_s_PAN_CENTER, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), a0
     mov     a0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
 loc_48501707:
     cmp     0x40, d1
@@ -1989,9 +1989,9 @@ loc_48501707:
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x4864360c, d0
+    mov     Str_s_PAN_L_2d, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), d0
@@ -1999,15 +1999,15 @@ loc_48501707:
     mov     0x40, d0
     sub     d1, d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
 loc_48501734:
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x48643634, d0
+    mov     Str_s_PAN_R_2d, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), a0
@@ -2015,14 +2015,14 @@ loc_48501734:
     mov     a0, (0x10, sp)
     sub     d0, d1
     mov     d1, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x4864365c, d0
+    mov     Str_s_BEND_SENS_3d, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), a0
@@ -2031,14 +2031,14 @@ loc_48501734:
     and     0xff, d0
     extbu   d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x48643684, d0
+    mov     Str_s_TUNING_4d, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), d0
@@ -2048,14 +2048,14 @@ loc_48501734:
     extbu   d0
     add     -0x80, d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x486436ac, d0
+    mov     Str_s_KEY_SHIFT_4d, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), d0
@@ -2065,14 +2065,14 @@ loc_48501734:
     extbu   d0
     add     -0x40, d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x486436d4, d0
+    mov     Str_s_MODULATION_SENS_3d, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), d0
@@ -2081,14 +2081,14 @@ loc_48501734:
     and     0xff, d0
     extbu   d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x486436fc, d0
+    mov     Str_s_AFTER_TOUCH_3d, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), d0
@@ -2097,15 +2097,15 @@ loc_48501734:
     and     0xff, d0
     extbu   d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
     asl2    d2
-    mov     0x48643724, d0
+    mov     Str_s_PITCH_BEND_6d, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     (d2, a0), d0
     mov     a3, d2
     mov     d0, (0x10, sp)
@@ -2122,14 +2122,14 @@ loc_48501734:
     or      d1, d2
     add     -0x2000, d2
     mov     d2, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x48643748, d0
+    mov     Str_s_MODULATION_3d, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), d0
@@ -2138,9 +2138,9 @@ loc_48501734:
     and     0xff, d0
     extbu   d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
-    mov     0x48643770, d0
+    mov     Str_APC_TYPE_10s, d0
     mov     d0, (0xc, sp)
     mov     a3, d0
     and     0xff, d0
@@ -2149,72 +2149,72 @@ loc_48501734:
     mov     a0, (0x10, sp)
     mov     (0xc8, sp), d0
     mov     d0, (8, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
-    mov     0x486437bb, a0
+    mov     Str_ON_70, a0
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     cmp     0, d0
     bne     loc_485018E0
-    mov     0x486437bf, a0
+    mov     Str_OFF_87, a0
 loc_485018E0:
     mov     (0xc8, sp), d0
     mov     d0, (8, sp)
-    mov     0x48643794, d0
+    mov     Str_APC_MEMORY_s, d0
     mov     d0, (0xc, sp)
     mov     a0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
-    mov     0x486437eb, a0
+    mov     Str_ON_69, a0
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     cmp     0, d0
     bne     loc_4850190E
-    mov     0x486437ef, a0
+    mov     Str_OFF_86, a0
 loc_4850190E:
     mov     (0xc8, sp), d0
     mov     d0, (8, sp)
-    mov     0x486437c4, d0
+    mov     Str_APC_ON_BASS_s, d0
     mov     d0, (0xc, sp)
     mov     a0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
-    mov     0x4864381b, a0
+    mov     Str_ON_68, a0
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     cmp     0, d0
     bne     loc_4850193C
-    mov     0x4864381f, a0
+    mov     Str_OFF_85, a0
 loc_4850193C:
     mov     (0xc8, sp), d0
     mov     d0, (8, sp)
-    mov     0x486437f4, d0
+    mov     Str_APC_HOLD_s, d0
     mov     d0, (0xc, sp)
     mov     a0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     (0xc8, sp), d0
     mov     d0, (8, sp)
-    mov     0x48643824, d0
+    mov     Str_APC_VOLUME_3d, d0
     mov     d0, (0xc, sp)
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     (0xc8, sp), d0
     mov     d0, (8, sp)
-    mov     0x4864384c, d0
+    mov     Str_SEQ_VOLUME_3d, d0
     mov     d0, (0xc, sp)
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     a3, d0
     and     0xff, d0
@@ -2228,17 +2228,17 @@ loc_4850193C:
     jmp     loc_48502711
 loc_485019A5:
     mov     (0xc8, sp), a0
-    mov     0x48643874, a1
+    mov     Str_RHYTHM_FILLIN_OFF, a1
     call    strcpy_entry, [a2], 4
     jmp     loc_48502711
 loc_485019B7:
     mov     (0xc8, sp), a0
-    mov     0x4864389c, a1
+    mov     Str_RHYTHM_FILLIN1, a1
     call    strcpy_entry, [a2], 4
     jmp     loc_48502711
 loc_485019C9:
     mov     (0xc8, sp), a0
-    mov     0x486438c4, a1
+    mov     Str_RHYTHM_FILLIN2, a1
     call    strcpy_entry, [a2], 4
     jmp     loc_48502711
     mov     a3, d0
@@ -2255,22 +2255,22 @@ loc_485019C9:
     jmp     loc_48502711
 loc_485019F4:
     mov     (0xc8, sp), a0
-    mov     0x486438ec, a1
+    mov     Str_RHYTHM_INTRO_OFF, a1
     call    strcpy_entry, [a2], 4
     jmp     loc_48502711
 loc_48501A06:
     mov     (0xc8, sp), a0
-    mov     0x48643914, a1
+    mov     Str_RHYTHM_COUNT_INTRO, a1
     call    strcpy_entry, [a2], 4
     jmp     loc_48502711
 loc_48501A18:
     mov     (0xc8, sp), a0
-    mov     0x4864393c, a1
+    mov     Str_RHYTHM_INTRO1, a1
     call    strcpy_entry, [a2], 4
     jmp     loc_48502711
 loc_48501A2A:
     mov     (0xc8, sp), a0
-    mov     0x48643964, a1
+    mov     Str_RHYTHM_INTRO2, a1
     call    strcpy_entry, [a2], 4
     jmp     loc_48502711
     mov     a3, d0
@@ -2285,33 +2285,33 @@ loc_48501A2A:
     jmp     loc_48502711
 loc_48501A51:
     mov     (0xc8, sp), a0
-    mov     0x4864398c, a1
+    mov     Str_RHYTHM_ENDING_OFF, a1
     call    strcpy_entry, [a2], 4
     jmp     loc_48502711
 loc_48501A63:
     mov     (0xc8, sp), a0
-    mov     0x486439b4, a1
+    mov     Str_RHYTHM_ENDING1, a1
     call    strcpy_entry, [a2], 4
     jmp     loc_48502711
 loc_48501A75:
     mov     (0xc8, sp), a0
-    mov     0x486439dc, a1
+    mov     Str_RHYTHM_ENDING2, a1
     call    strcpy_entry, [a2], 4
     jmp     loc_48502711
-    mov     0x48643a2b, a0
+    mov     Str_ON_67, a0
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     cmp     0, d0
     bne     loc_48501A9D
-    mov     0x48643a2f, a0
+    mov     Str_OFF_84, a0
 loc_48501A9D:
     mov     (0xc8, sp), d0
     mov     d0, (8, sp)
-    mov     0x48643a04, d0
+    mov     Str_RHYTHM_SYNCHRO_s, d0
     mov     d0, (0xc, sp)
     mov     a0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     a3, d0
     and     0xff, d0
@@ -2319,12 +2319,12 @@ loc_48501A9D:
     cmp     0, d0
     bne     loc_48501AD1
     mov     (0xc8, sp), a0
-    mov     0x48643a34, a1
+    mov     Str_RHYTHM_STOP, a1
     call    strcpy_entry, [a2], 4
     jmp     loc_48502711
 loc_48501AD1:
     mov     (0xc8, sp), a0
-    mov     0x48643a5c, a1
+    mov     Str_RHYTHM_START, a1
     call    strcpy_entry, [a2], 4
     jmp     loc_48502711
     mov     sp, a2
@@ -2335,28 +2335,28 @@ loc_48501AD1:
     call    func_48433BDC_entry, [d2,a2,a3], 0x20
     mov     (0xc8, sp), d0
     mov     d0, (8, sp)
-    mov     0x48643a84, d0
+    mov     Str_RHYTHM_s, d0
     mov     d0, (0xc, sp)
     mov     a2, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     (0xc8, sp), d0
     mov     d0, (8, sp)
-    mov     0x48643aa4, d0
+    mov     Str_RHYTHM_VARI_1c, d0
     mov     d0, (0xc, sp)
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     add     0x31, d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     a3, d0
     and     d3, d0
     cmp     0x7f7f7f, d0
     bne     loc_48501B48
     mov     (0xc8, sp), a0
-    mov     0x48643ad0, a1
+    mov     Str_PAD_STOP, a1
     call    strcpy_entry, [a2], 4
     jmp     loc_48502711
 loc_48501B48:
@@ -2366,10 +2366,10 @@ loc_48501B48:
     call    func_4843454F_entry, [d2,a2,a3], 0x20
     mov     (0xc8, sp), d0
     mov     d0, (8, sp)
-    mov     0x48643af8, d0
+    mov     Str_PAD_16s, d0
     mov     d0, (0xc, sp)
     mov     a2, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     sp, a0
     add     0x24, a0
@@ -2398,7 +2398,7 @@ loc_48501B96:
     mov     (0xc8, sp), d0
     mov     3, d1
     mov     d0, (8, sp)
-    mov     0x48643b14, d0
+    mov     Str_TEMPO_3d_2, d0
     mov     d0, (0xc, sp)
     clr     d2
     mov     a3, d0
@@ -2406,30 +2406,30 @@ loc_48501B96:
     mov     d2, mdr
     divu    d1, d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
 loc_48501BBC:
     mov     (0xc8, sp), d0
     mov     d0, (8, sp)
-    mov     0x48643b3c, d0
+    mov     Str_TEMPO_3d, d0
     mov     d0, (0xc, sp)
     mov     a3, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
-    mov     0x48643b8b, a0
+    mov     Str_ON_66, a0
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     cmp     0, d0
     bne     loc_48501BEA
-    mov     0x48643b8f, a0
+    mov     Str_OFF_83, a0
 loc_48501BEA:
     mov     (0xc8, sp), d0
     mov     d0, (8, sp)
-    mov     0x48643b64, d0
+    mov     Str_TECHNI_CHORD_s, d0
     mov     d0, (0xc, sp)
     mov     a0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     a3, d0
     and     0xff, d0
@@ -2449,48 +2449,48 @@ loc_48501BEA:
     jmp     loc_48502711
 loc_48501C23:
     mov     (0xc8, sp), a0
-    mov     0x48643b94, a1
+    mov     Str_CONDUCTOR_R1, a1
     call    strcpy_entry, [a2], 4
     jmp     loc_48502711
 loc_48501C35:
     mov     (0xc8, sp), a0
-    mov     0x48643bbc, a1
+    mov     Str_CONDUCTOR_R2, a1
     call    strcpy_entry, [a2], 4
     jmp     loc_48502711
 loc_48501C47:
     mov     (0xc8, sp), a0
-    mov     0x48643be4, a1
+    mov     Str_CONDUCTOR_R12, a1
     call    strcpy_entry, [a2], 4
     jmp     loc_48502711
 loc_48501C59:
     mov     (0xc8, sp), a0
-    mov     0x48643c0c, a1
+    mov     Str_CONDUCTOR_R12L, a1
     call    strcpy_entry, [a2], 4
     jmp     loc_48502711
 loc_48501C6B:
     mov     (0xc8, sp), a0
-    mov     0x48643c34, a1
+    mov     Str_CONDUCTOR_R1L, a1
     call    strcpy_entry, [a2], 4
     jmp     loc_48502711
 loc_48501C7D:
     mov     (0xc8, sp), a0
-    mov     0x48643c5c, a1
+    mov     Str_CONDUCTOR_R2L, a1
     call    strcpy_entry, [a2], 4
     jmp     loc_48502711
-    mov     0x48643cab, a0
+    mov     Str_ON_65, a0
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     cmp     0, d0
     bne     loc_48501CA5
-    mov     0x48643caf, a0
+    mov     Str_OFF_82, a0
 loc_48501CA5:
     mov     (0xc8, sp), d0
     mov     d0, (8, sp)
-    mov     0x48643c84, d0
+    mov     Str_TOTAL_REVERB_s, d0
     mov     d0, (0xc, sp)
     mov     a0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     a3, d0
     and     0xff, d0
@@ -2506,32 +2506,32 @@ loc_48501CA5:
     jmp     loc_48502711
 loc_48501CD6:
     mov     (0xc8, sp), a0
-    mov     0x48643cb4, a1
+    mov     Str_SPLIT_POINT_FREE, a1
     call    strcpy_entry, [a2], 4
     jmp     loc_48502711
 loc_48501CE8:
     mov     (0xc8, sp), a0
-    mov     0x48643cdc, a1
+    mov     Str_SPLIT_POINT_G2, a1
     call    strcpy_entry, [a2], 4
     jmp     loc_48502711
 loc_48501CFA:
     mov     (0xc8, sp), a0
-    mov     0x48643d04, a1
+    mov     Str_SPLIT_POINT_C3, a1
     call    strcpy_entry, [a2], 4
     jmp     loc_48502711
 loc_48501D0C:
     mov     (0xc8, sp), a0
-    mov     0x48643d2c, a1
+    mov     Str_SPLIT_POINT_G3, a1
     call    strcpy_entry, [a2], 4
     jmp     loc_48502711
-    mov     0x48643d54, d0
+    mov     Str_13s_2, d0
     mov     d0, (0xc, sp)
     mov     a3, d0
     call    func_48502810, 0, 0
     mov     a0, (0x10, sp)
     mov     (0xc8, sp), d0
     mov     d0, (8, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     a3, d0
     and     0xff, d0
@@ -2545,17 +2545,17 @@ loc_48501D0C:
     jmp     loc_48502711
 loc_48501D52:
     mov     (0xc8, sp), a0
-    mov     0x48643d74, a1
+    mov     Str_FADE_OFF, a1
     call    strcpy_entry, [a2], 4
     jmp     loc_48502711
 loc_48501D64:
     mov     (0xc8, sp), a0
-    mov     0x48643d9c, a1
+    mov     Str_FADE_IN_2, a1
     call    strcpy_entry, [a2], 4
     jmp     loc_48502711
 loc_48501D76:
     mov     (0xc8, sp), a0
-    mov     0x48643dc4, a1
+    mov     Str_FADE_OUT_2, a1
     call    strcpy_entry, [a2], 4
     jmp     loc_48502711
     mov     a3, d2
@@ -2565,7 +2565,7 @@ loc_48501D76:
     cmp     0, d0
     bne     loc_48501DA5
     mov     (0xc8, sp), a0
-    mov     0x48643dec, a1
+    mov     Str_PANEL_MEMORY_OFF, a1
     call    strcpy_entry, [a2], 4
     jmp     loc_48502711
 loc_48501DA5:
@@ -2594,9 +2594,9 @@ loc_48501DA5:
     mov     d0, (0x14, sp)
     mov     (0xc8, sp), d0
     mov     d0, (8, sp)
-    mov     0x48643e14, d0
+    mov     Str_PANEL_MEMORY_1c_1d, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
 loc_48501DEA:
     mov     d2, d0
@@ -2616,74 +2616,74 @@ loc_48501DEA:
     mov     d0, (0x14, sp)
     mov     (0xc8, sp), d0
     mov     d0, (8, sp)
-    mov     0x48643e40, d0
+    mov     Str_PANEL_MEMORY_2d_1d, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
-    mov     0x48643e93, a0
+    mov     Str_ON_64, a0
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     cmp     0, d0
     bne     loc_48501E33
-    mov     0x48643e97, a0
+    mov     Str_OFF_81, a0
 loc_48501E33:
     mov     (0xc8, sp), d0
     mov     d0, (8, sp)
-    mov     0x48643e6c, d0
+    mov     Str_GLIDE_s, d0
     mov     d0, (0xc, sp)
     mov     a0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
-    mov     0x48643ec3, a0
+    mov     Str_ON_63, a0
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     cmp     0, d0
     bne     loc_48501E61
-    mov     0x48643ec7, a0
+    mov     Str_OFF_72, a0
 loc_48501E61:
     mov     (0xc8, sp), d0
     mov     d0, (8, sp)
-    mov     0x48643e9c, d0
+    mov     Str_MSA_s, d0
     mov     d0, (0xc, sp)
     mov     a0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     (0xc8, sp), d0
     mov     d0, (8, sp)
-    mov     0x48643ecc, d0
+    mov     Str_TOTAL_EXPRESSION_3d, d0
     mov     d0, (0xc, sp)
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     (0xc8, sp), d0
     mov     d0, (8, sp)
-    mov     0x48643ef4, d0
+    mov     Str_PAD_VOLUME_3d, d0
     mov     d0, (0xc, sp)
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
-    mov     0x48643f43, a0
+    mov     Str_ON_60, a0
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     cmp     0, d0
     bne     loc_48501ECB
-    mov     0x48643f47, a0
+    mov     Str_OFF_71, a0
 loc_48501ECB:
     mov     (0xc8, sp), d0
     mov     d0, (8, sp)
-    mov     0x48643f1c, d0
+    mov     Str_PAD_VOLUME_MUTE_s, d0
     mov     d0, (0xc, sp)
     mov     a0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     a3, d0
     and     0xff, d0
@@ -2711,31 +2711,31 @@ loc_48501ECB:
     mov     d1, (0x14, sp)
     mov     (0xc8, sp), d0
     mov     d0, (8, sp)
-    mov     0x48643f4c, d0
+    mov     Str_MASTER_TUNE_5_1f_Hz, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
     asl2    d2
-    mov     0x48643f74, d0
+    mov     Str_s_SOSTENUTO_3d, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     (d2, a0), d0
     mov     d0, (0x10, sp)
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x48643f9c, d0
+    mov     Str_s_SOFT_PEDAL_3d, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), a0
@@ -2744,14 +2744,14 @@ loc_48501ECB:
     and     0xff, d0
     extbu   d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x48643fc4, d0
+    mov     Str_s_FILTER_RESONANCE_3d, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), a0
@@ -2761,14 +2761,14 @@ loc_48501ECB:
     extbu   d0
     add     -0x40, d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x48643fec, d0
+    mov     Str_s_RELEASE_TIME_3d, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), d0
@@ -2778,14 +2778,14 @@ loc_48501ECB:
     extbu   d0
     add     -0x40, d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x48644014, d0
+    mov     Str_s_ATTACK_TIME_3d, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), d0
@@ -2795,15 +2795,15 @@ loc_48501ECB:
     extbu   d0
     add     -0x40, d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
     asl2    d2
-    mov     0x4864403c, d0
+    mov     Str_s_BRIGHTNESS_3d, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     (d2, a0), d0
     mov     d0, (0x10, sp)
     mov     a3, d0
@@ -2811,14 +2811,14 @@ loc_48501ECB:
     extbu   d0
     add     -0x40, d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x48644064, d0
+    mov     Str_s_DECAY_TIME_3d, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), d0
@@ -2827,14 +2827,14 @@ loc_48501ECB:
     and     0xff, d0
     extbu   d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x4864408c, d0
+    mov     Str_s_VIBRATO_RATE_3d, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), d0
@@ -2843,14 +2843,14 @@ loc_48501ECB:
     and     0xff, d0
     extbu   d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x486440b4, d0
+    mov     Str_s_VIBRATO_DEPTH_3d, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), d0
@@ -2859,22 +2859,22 @@ loc_48501ECB:
     and     0xff, d0
     extbu   d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
     asl2    d2
-    mov     0x486440dc, d0
+    mov     Str_s_VIBRATO_DELAY_3d, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     (d2, a0), a0
     mov     a3, d0
     mov     a0, (0x10, sp)
     and     0xff, d0
     extbu   d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     sp, a2
     add     0x30, a2
@@ -2889,14 +2889,14 @@ loc_48501ECB:
     call    ConvertStrings_entry, [d2,d3,a2,a3], 0x20
     mov     (0xc8, sp), d0
     mov     d0, (8, sp)
-    mov     0x48644104, d0
+    mov     Str_s_8, d0
     mov     d0, (0xc, sp)
     mov     a3, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     (0xc8, sp), a0
     call    LibStrlen, 0, 0
     mov     (0xc8, sp), a0
-    mov     0x4864410c, a1
+    mov     Str_empty_947, a1
     mov     0x27, d1
     sub     d0, d1
     mov     d1, d0
@@ -2931,10 +2931,10 @@ loc_48501ECB:
     extbu   d0
     add     d0, d1
     inc     d1
-    mov     0x48644134, d0
+    mov     Str_PIC_USER_NO_DATA_3d, d0
     mov     d0, (0xc, sp)
     mov     d1, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
 loc_4850219F:
     mov     (0xc8, sp), d0
@@ -2949,10 +2949,10 @@ loc_4850219F:
     extbu   d0
     add     d0, d1
     inc     d1
-    mov     0x4864415c, d0
+    mov     Str_PIC_USER_3d, d0
     mov     d0, (0xc, sp)
     mov     d1, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
 loc_485021C9:
     mov     (0xc8, sp), d0
@@ -2967,10 +2967,10 @@ loc_485021C9:
     extbu   d0
     add     d0, d1
     inc     d1
-    mov     0x48644184, d0
+    mov     Str_PIC_PRESET_3d, d0
     mov     d0, (0xc, sp)
     mov     d1, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
     mov     a3, d0
     and     0xff, d0
@@ -3002,449 +3002,449 @@ loc_48502227:
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x486441ac, d0
+    mov     Str_s_TREMULANT_TIBIA_ON, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
 loc_4850224A:
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
     asl2    d2
-    mov     0x486441d8, d0
+    mov     Str_s_TREMULANT_VOX_ON, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     (d2, a0), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
 loc_4850226C:
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
     asl2    d2
-    mov     0x48644204, d0
+    mov     Str_s_TREMULANT_TIBIA_ON_VOX_ON, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     (d2, a0), a0
     mov     a0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
 loc_4850228E:
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x48644230, d0
+    mov     Str_s_TREMULANT_MAIN_ON, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), a0
     mov     a0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
 loc_485022B1:
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x4864425c, d0
+    mov     Str_s_TREMULANT_TIBIA_ON_MAIN_ON, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
 loc_485022D4:
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x48644288, d0
+    mov     Str_s_TREMULANT_VOX_ON_MAIN_ON, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), a0
     mov     a0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
 loc_485022F7:
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x486442b4, d0
+    mov     Str_s_TREMULANT_TIBIA_ON_VOX_ON_MAIN_ON, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
 loc_4850231A:
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x486442e0, d0
+    mov     Str_s_TREMULANT_OFF, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
-    mov     0x48644336, a0
+    mov     Str_ON_59, a0
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     cmp     0, d0
     bne     loc_48502353
-    mov     0x4864433a, a0
+    mov     Str_OFF_78, a0
 loc_48502353:
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x4864430c, d0
+    mov     Str_s_TAB_FLUTE_16_s, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a1
+    mov     ptrs_48750FD8, a1
     mov     d2, d0
     asl2    d0
     mov     (d0, a1), d0
     mov     d0, (0x10, sp)
     mov     a0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
-    mov     0x4864436a, a0
+    mov     Str_ON_53, a0
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     cmp     0, d0
     bne     loc_4850238E
-    mov     0x4864436e, a0
+    mov     Str_OFF_77, a0
 loc_4850238E:
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
     asl2    d2
-    mov     0x48644340, d0
+    mov     Str_s_TAB_FLUTE_8_s, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a1
+    mov     ptrs_48750FD8, a1
     mov     (d2, a1), d0
     mov     d0, (0x10, sp)
     mov     a0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
-    mov     0x4864439e, a0
+    mov     Str_ON_62, a0
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     cmp     0, d0
     bne     loc_485023C8
-    mov     0x486443a2, a0
+    mov     Str_OFF_76, a0
 loc_485023C8:
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x48644374, d0
+    mov     Str_s_TAB_FLUTE_4_s, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a1
+    mov     ptrs_48750FD8, a1
     mov     d2, d0
     asl2    d0
     mov     (d0, a1), d0
     mov     d0, (0x10, sp)
     mov     a0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
-    mov     0x486443d2, a0
+    mov     Str_ON_61, a0
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     cmp     0, d0
     bne     loc_48502403
-    mov     0x486443d6, a0
+    mov     Str_OFF_75, a0
 loc_48502403:
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x486443a8, d0
+    mov     Str_s_TAB_FLUTE_2_2_3_s, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a1
+    mov     ptrs_48750FD8, a1
     mov     d2, d0
     asl2    d0
     mov     (d0, a1), d0
     mov     d0, (0x10, sp)
     mov     a0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
-    mov     0x48644406, a0
+    mov     Str_ON_47, a0
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     cmp     0, d0
     bne     loc_4850243E
-    mov     0x4864440a, a0
+    mov     Str_OFF_74, a0
 loc_4850243E:
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x486443dc, d0
+    mov     Str_s_TAB_FLUTE_2_s, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a1
+    mov     ptrs_48750FD8, a1
     mov     d2, d0
     asl2    d0
     mov     (d0, a1), d0
     mov     d0, (0x10, sp)
     mov     a0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
-    mov     0x4864443a, a0
+    mov     Str_ON_38, a0
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     cmp     0, d0
     bne     loc_48502479
-    mov     0x4864443e, a0
+    mov     Str_OFF_73, a0
 loc_48502479:
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
     asl2    d2
-    mov     0x48644410, d0
+    mov     Str_s_TAB_FLUTE_1_3_5_s, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a1
+    mov     ptrs_48750FD8, a1
     mov     (d2, a1), d0
     mov     d0, (0x10, sp)
     mov     a0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
-    mov     0x4864446e, a0
+    mov     Str_ON_58, a0
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     cmp     0, d0
     bne     loc_485024B3
-    mov     0x48644472, a0
+    mov     Str_OFF_70, a0
 loc_485024B3:
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x48644444, d0
+    mov     Str_s_TAB_FLUTE_1_s, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a1
+    mov     ptrs_48750FD8, a1
     mov     d2, d0
     asl2    d0
     mov     (d0, a1), d0
     mov     d0, (0x10, sp)
     mov     a0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
-    mov     0x486444a2, a0
+    mov     Str_ON_57, a0
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     cmp     0, d0
     bne     loc_485024EE
-    mov     0x486444a6, a0
+    mov     Str_OFF_37, a0
 loc_485024EE:
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x48644478, d0
+    mov     Str_s_TAB_TROMBONE_16_s, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a1
+    mov     ptrs_48750FD8, a1
     mov     d2, d0
     asl2    d0
     mov     (d0, a1), d0
     mov     d0, (0x10, sp)
     mov     a0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
-    mov     0x486444d6, a0
+    mov     Str_ON_56, a0
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     cmp     0, d0
     bne     loc_48502529
-    mov     0x486444da, a0
+    mov     Str_OFF_36, a0
 loc_48502529:
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x486444ac, d0
+    mov     Str_s_TAB_TRUMPET_8_s, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a1
+    mov     ptrs_48750FD8, a1
     mov     d2, d0
     asl2    d0
     mov     (d0, a1), d0
     mov     d0, (0x10, sp)
     mov     a0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
-    mov     0x4864450a, a0
+    mov     Str_ON_55, a0
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     cmp     0, d0
     bne     loc_48502564
-    mov     0x4864450e, a0
+    mov     Str_OFF_69, a0
 loc_48502564:
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x486444e0, d0
+    mov     Str_s_TAB_KINURA_8_s, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a1
+    mov     ptrs_48750FD8, a1
     mov     d2, d0
     asl2    d0
     mov     (d0, a1), d0
     mov     d0, (0x10, sp)
     mov     a0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
-    mov     0x4864453e, a0
+    mov     Str_ON_54, a0
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     cmp     0, d0
     bne     loc_4850259F
-    mov     0x48644542, a0
+    mov     Str_OFF_68, a0
 loc_4850259F:
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x48644514, d0
+    mov     Str_s_TAB_CLARINET_8_s, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a1
+    mov     ptrs_48750FD8, a1
     mov     d2, d0
     asl2    d0
     mov     (d0, a1), d0
     mov     d0, (0x10, sp)
     mov     a0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
-    mov     0x48644572, a0
+    mov     Str_ON_37, a0
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     cmp     0, d0
     bne     loc_485025DA
-    mov     0x48644576, a0
+    mov     Str_OFF_67, a0
 loc_485025DA:
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x48644548, d0
+    mov     Str_s_TAB_VOX_HUMANA_8_s, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a1
+    mov     ptrs_48750FD8, a1
     mov     d2, d0
     asl2    d0
     mov     (d0, a1), d0
     mov     d0, (0x10, sp)
     mov     a0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
-    mov     0x486445a6, a0
+    mov     Str_ON_52, a0
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     cmp     0, d0
     bne     loc_48502615
-    mov     0x486445aa, a0
+    mov     Str_OFF_66, a0
 loc_48502615:
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x4864457c, d0
+    mov     Str_s_TAB_VIOLIN_8_s, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a1
+    mov     ptrs_48750FD8, a1
     mov     d2, d0
     asl2    d0
     mov     (d0, a1), d0
     mov     d0, (0x10, sp)
     mov     a0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
-    mov     0x486445da, a0
+    mov     Str_ON_51, a0
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     cmp     0, d0
     bne     loc_48502650
-    mov     0x486445de, a0
+    mov     Str_OFF_65, a0
 loc_48502650:
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
-    mov     0x486445b0, d0
+    mov     Str_s_TAB_PERC_4_s, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a1
+    mov     ptrs_48750FD8, a1
     mov     d2, d0
     asl2    d0
     mov     (d0, a1), d0
     mov     d0, (0x10, sp)
     mov     a0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502711
-    mov     0x4864460e, a0
+    mov     Str_ON_50, a0
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     cmp     0, d0
     bne     loc_4850268B
-    mov     0x48644612, a0
+    mov     Str_OFF_64, a0
 loc_4850268B:
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
     asl2    d2
-    mov     0x486445e4, d0
+    mov     Str_s_TAB_PERC_2_2_3_s, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a1
+    mov     ptrs_48750FD8, a1
     mov     (d2, a1), d0
     mov     d0, (0x10, sp)
     mov     a0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_48502711
-    mov     0x48644642, a0
+    mov     Str_ON_49, a0
     mov     a3, d0
     and     0xff, d0
     extbu   d0
     cmp     0, d0
     bne     loc_485026C4
-    mov     0x48644646, a0
+    mov     Str_OFF_63, a0
 loc_485026C4:
     mov     (0xc8, sp), d0
     extbu   d2
     mov     d0, (8, sp)
     asl2    d2
-    mov     0x48644618, d0
+    mov     Str_s_TAB_VIBRATO_s, d0
     mov     d0, (0xc, sp)
-    mov     0x48750fd8, a1
+    mov     ptrs_48750FD8, a1
     mov     (d2, a1), d0
     mov     d0, (0x10, sp)
     mov     a0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_48502711
     mov     (0xc8, sp), a0
-    mov     0x4864464c, a1
+    mov     Str_empty_946, a1
     call    strcpy_entry, [a2], 4
     bra     loc_48502711
 loc_485026F8:
     mov     (0xc8, sp), d0
     mov     d0, (8, sp)
-    mov     0x48644674, d0
+    mov     Str_08x_08x_2, d0
     mov     d0, (0xc, sp)
     mov     (0xcc, sp), d0
     mov     d0, (0x10, sp)
     mov     a3, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_48502711:
     mov     (0xc8, sp), a0
     ret     [d2,d3,a2,a3], 0xc0
@@ -3454,7 +3454,7 @@ func_48502716:
     add     -0x8c, sp
 func_48502716_entry:
     mov     d0, d2
-    mov     0x4864474e, a1
+    mov     data_4864474E, a1
     mov     sp, a0
     add     0x10, a0
     mov     -0x7c, d1
@@ -3468,7 +3468,7 @@ func_48502716_entry:
     extbu   d2
     cmp     0x78, d2
     ble     loc_4850273E
-    mov     0x486447cc, a0
+    mov     Str_ERROR_18, a0
     bra     loc_4850274E
 loc_4850273E:
     mov     4, d1
@@ -3545,16 +3545,16 @@ func_485027DF:
     cmp     3, d0
     beq     loc_48502807
 loc_485027EF:
-    mov     0x486447d4, a0
+    mov     Str_OFF_62, a0
     bra     loc_4850280D
 loc_485027F7:
-    mov     0x486447e0, a0
+    mov     Str_ONE_FINGER, a0
     bra     loc_4850280D
 loc_485027FF:
-    mov     0x486447ec, a0
+    mov     Str_FINGERD, a0
     bra     loc_4850280D
 loc_48502807:
-    mov     0x486447f8, a0
+    mov     Str_PIANIST_3, a0
 loc_4850280D:
     retf    0, 0
 
@@ -3562,7 +3562,7 @@ func_48502810:
     mov     0x34, d1
     sub     d1, d0
     asl2    d0
-    mov     0x486449b4, a0
+    mov     ptrs_486449B4, a0
     mov     (d0, a0), a0
     retf    0, 0
 # AcSeqInfo6_SRProc  (CPU 0x48502820)
@@ -3632,7 +3632,7 @@ loc_48502876:
     mov     a0, d0
     add     0x6c, d0
     mov     d0, (0x1c, sp)
-    mov     0x48644a1c, d0
+    mov     Str_3s_s_s, d0
     mov     d0, (0xc, sp)
     mov     (0x20, sp), a0
     movhu   (a0), d0
@@ -3646,7 +3646,7 @@ loc_48502876:
     mov     a0, (0x18, sp)
     mov     (0x1c, sp), d0
     mov     d0, (8, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502996
 loc_485028E4:
     mov     (0x20, sp), a0
@@ -3662,7 +3662,7 @@ loc_485028F6:
     mov     a0, d0
     add     0x6c, d0
     mov     d0, (0x1c, sp)
-    mov     0x48644a34, d0
+    mov     Str_3s_9, d0
     mov     d0, (0xc, sp)
     mov     (0x20, sp), a0
     movhu   (a0), d0
@@ -3670,7 +3670,7 @@ loc_485028F6:
     mov     a0, (0x10, sp)
     mov     (0x1c, sp), d0
     mov     d0, (8, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48502996
 loc_4850291E:
     mov     sp, a2
@@ -3682,7 +3682,7 @@ loc_4850291E:
     mov     a0, d0
     add     0x6c, d0
     mov     d0, (0x1c, sp)
-    mov     0x48644a64, d0
+    mov     Str_3s_s_4, d0
     mov     d0, (0xc, sp)
     mov     (0x20, sp), a0
     movhu   (a0), d0
@@ -3691,7 +3691,7 @@ loc_4850291E:
     mov     a2, (0x14, sp)
     mov     (0x1c, sp), d0
     mov     d0, (8, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_48502996
 loc_48502952:
     mov     sp, a0
@@ -3718,9 +3718,9 @@ loc_48502952:
     mov     a0, (0x10, sp)
     mov     (0x1c, sp), d0
     mov     d0, (8, sp)
-    mov     0x48644a6c, d0
+    mov     Str_3s_s_3, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_48502996:
     mov     (0x1c, sp), a0
     mov     0x000600b4, d1
@@ -3730,7 +3730,7 @@ loc_48502996:
     clr     d0
     ret     [d2,d3,a2,a3], 0xbc
 loc_485029AD:
-    mov     0x48644a74, d0
+    mov     Str_3s_12, d0
     mov     d0, (0xc, sp)
     mov     (0xcc, sp), d0
     mov     sp, a2
@@ -3739,7 +3739,7 @@ loc_485029AD:
     call    func_485007FD_entry, [a2], 0x18
     mov     a0, (0x10, sp)
     mov     a2, (8, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     a2, (0x10, sp)
     mov     (0xc4, sp), d0
     mov     0x000600b4, d1
@@ -3747,7 +3747,7 @@ loc_485029AD:
     clr     d0
     ret     [d2,d3,a2,a3], 0xbc
 loc_485029E0:
-    mov     0x48644aa4, d0
+    mov     Str_3s_END, d0
     mov     d0, (0xc, sp)
     mov     (0xcc, sp), d0
     mov     sp, a2
@@ -3756,7 +3756,7 @@ loc_485029E0:
     call    func_485007FD_entry, [a2], 0x18
     mov     a0, (0x10, sp)
     mov     a2, (8, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     a2, (0x10, sp)
     mov     (0xc4, sp), d0
     mov     0x000600b4, d1
@@ -3764,7 +3764,7 @@ loc_485029E0:
     clr     d0
     bra     loc_48502A4F
 loc_48502A12:
-    mov     0x48644ad4, d0
+    mov     Str_3s_REPEAT, d0
     mov     d0, (0xc, sp)
     mov     (0xcc, sp), d0
     mov     sp, a2
@@ -3773,7 +3773,7 @@ loc_48502A12:
     call    func_485007FD_entry, [a2], 0x18
     mov     a0, (0x10, sp)
     mov     a2, (8, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     a2, (0x10, sp)
     mov     (0xc4, sp), d0
     mov     0x000600b4, d1
@@ -3791,35 +3791,35 @@ func_48502A52:
     exthu   d0
     cmp     0x30, d0
     bgt     loc_48502A5F
-    mov     0x48644b04, a0
+    mov     Str_empty_944, a0
     bra     loc_48502AA9
 loc_48502A5F:
     cmp     0x60, d0
     bgt     loc_48502A6B
-    mov     0x48644b08, a0
+    mov     Str_empty_943, a0
     bra     loc_48502AA9
 loc_48502A6B:
     cmp     0x90, d0
     bgt     loc_48502A79
-    mov     0x48644b0c, a0
+    mov     Str_empty_942, a0
     bra     loc_48502AA9
 loc_48502A79:
     cmp     0xc0, d0
     bgt     loc_48502A87
-    mov     0x48644b10, a0
+    mov     Str_empty_941, a0
     bra     loc_48502AA9
 loc_48502A87:
     cmp     0x120, d0
     bgt     loc_48502A95
-    mov     0x48644b14, a0
+    mov     Str_empty_1138, a0
     bra     loc_48502AA9
 loc_48502A95:
     cmp     0x180, d0
     bgt     loc_48502AA3
-    mov     0x48644b18, a0
+    mov     Str_empty_940, a0
     bra     loc_48502AA9
 loc_48502AA3:
-    mov     0x48644b1c, a0
+    mov     Str_empty_939, a0
 loc_48502AA9:
     retf    0, 0
 
@@ -3840,34 +3840,34 @@ func_48502AAC_entry:
     call    LibDiv32, 0, 0
     mov     d0, (0x10, sp)
     mov     a2, (8, sp)
-    mov     0x48644b20, d0
+    mov     Str_x_d, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     ext     d2
     div     d3, d2
     mov     mdr, d2
     cmp     0, d2
     beq     loc_48502B04
     mov     a2, a0
-    mov     0x48644b28, a1
+    mov     Str_empty_938, a1
     call    strcat_entry, [a2], 4
     bra     loc_48502B04
 loc_48502AF3:
     mov     sp, a2
     add     0x14, a2
     mov     a2, a0
-    mov     0x48644b30, a1
+    mov     data_48644B30, a1
     call    strcpy_entry, [a2], 4
 loc_48502B04:
     mov     a3, (8, sp)
-    mov     0x48644b34, d0
+    mov     Str_s_7, d0
     mov     d0, (0xc, sp)
     mov     a2, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     a3, a0
     call    LibStrlen, 0, 0
     mov     a3, a0
-    mov     0x48644b3c, a1
+    mov     Str_empty_937, a1
     mov     0x27, d1
     sub     d0, d1
     mov     d1, d0
@@ -3888,29 +3888,29 @@ loc_48502B4F:
     jmp     loc_48502C22
 loc_48502B52:
     mov     (0x7c, sp), a0
-    movbu   (0x50007e10), d0
+    movbu   (data_50007E10), d0
     mov     a0, (0x1c, sp)
     add     d0, d0
     mov     d0, a0
-    mov     0x50007df0, a3
+    mov     data_50007DF0, a3
     add     a3, a0
     movhu   (-2, a0), d0
     cmp     0x43, d0
     bge     loc_48502BB0
-    mov     0x48644b64, d0
+    mov     Str_3s_s_VOLUME_3d_2, d0
     mov     d0, (0xc, sp)
     mov     (0x1c, sp), a0
     mov     sp, a2
     movhu   (a0), d0
     call    func_485007FD_entry, [a2], 0x18
     mov     a0, (0x10, sp)
-    movbu   (0x50007e10), d0
+    movbu   (data_50007E10), d0
     add     0x20, a2
     mov     d0, a0
     add     a0, a0
     add     a0, a3
     movhu   (-2, a3), d0
-    mov     0x48750fd8, a0
+    mov     ptrs_48750FD8, a0
     asl2    d0
     mov     (d0, a0), d0
     mov     d0, (0x14, sp)
@@ -3918,24 +3918,24 @@ loc_48502B52:
     movhu   (2, a0), d0
     mov     d0, (0x18, sp)
     mov     a2, (8, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_48502BDE
 loc_48502BB0:
-    mov     0x48644b90, d0
+    mov     Str_3s_s_VOLUME_3d, d0
     mov     d0, (0xc, sp)
     mov     (0x1c, sp), a0
     mov     sp, a2
     movhu   (a0), d0
     call    func_485007FD_entry, [a2], 0x18
     mov     a0, (0x10, sp)
-    mov     (0x48750fd8), a0
+    mov     (ptrs_48750FD8), a0
     add     0x20, a2
     mov     a0, (0x14, sp)
     mov     (0x1c, sp), a0
     movhu   (2, a0), d0
     mov     d0, (0x18, sp)
     mov     a2, (8, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_48502BDE:
     mov     a2, (0x10, sp)
     mov     0x000600b4, d1
@@ -3944,7 +3944,7 @@ loc_48502BDE:
     clr     d0
     bra     loc_48502C2D
 loc_48502BF1:
-    mov     0x48644bbc, d0
+    mov     Str_3s_8, d0
     mov     d0, (0xc, sp)
     mov     (0x7c, sp), d0
     mov     sp, a2
@@ -3953,7 +3953,7 @@ loc_48502BF1:
     call    func_485007FD_entry, [a2], 0x18
     mov     a0, (0x10, sp)
     mov     a2, (8, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     a2, (0x10, sp)
     mov     d2, d0
     mov     0x000600b4, d1
@@ -3978,10 +3978,10 @@ AcSeqInfo4_SRProc:
     jmp     loc_48502CE3
 loc_48502C4B:
     mov     (0xb8, sp), a2
-    movbu   (0x50007e10), d0
+    movbu   (data_50007E10), d0
     movhu   (2, a2), d1
     add     d0, d0
-    add     0x50007df0, d0
+    add     data_50007DF0, d0
     mov     d0, a0
     movhu   (4, a2), d0
     movhu   (-2, a0), d2
@@ -4003,9 +4003,9 @@ loc_48502C4B:
     call    func_485007FD_entry, [a2], 0x18
     mov     a0, (0x10, sp)
     mov     a3, (8, sp)
-    mov     0x48644be8, d0
+    mov     Str_3s_s_2, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     a3, (0x10, sp)
     mov     (0xb0, sp), d0
     mov     0x000600b4, d1
@@ -4013,7 +4013,7 @@ loc_48502C4B:
     clr     d0
     bra     loc_48502CEE
 loc_48502CB1:
-    mov     0x48644bf0, d0
+    mov     Str_3s_7, d0
     mov     d0, (0xc, sp)
     mov     (0xb8, sp), d0
     mov     sp, a2
@@ -4022,7 +4022,7 @@ loc_48502CB1:
     call    func_485007FD_entry, [a2], 0x18
     mov     a0, (0x10, sp)
     mov     a2, (8, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     a2, (0x10, sp)
     mov     (0xb0, sp), d0
     mov     0x000600b4, d1
@@ -4065,9 +4065,9 @@ loc_48502D0C:
     call    func_485007FD_entry, [a2], 0x18
     mov     a0, (0x10, sp)
     mov     a3, (8, sp)
-    mov     0x48644c20, d0
+    mov     Str_3s_s, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     a3, (0x10, sp)
     mov     (0xb0, sp), d0
     mov     0x000600b4, d1
@@ -4075,7 +4075,7 @@ loc_48502D0C:
     clr     d0
     bra     loc_48502D9A
 loc_48502D5D:
-    mov     0x48644c28, d0
+    mov     Str_3s_6, d0
     mov     d0, (0xc, sp)
     mov     (0xb8, sp), d0
     mov     sp, a2
@@ -4084,7 +4084,7 @@ loc_48502D5D:
     call    func_485007FD_entry, [a2], 0x18
     mov     a0, (0x10, sp)
     mov     a2, (8, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     a2, (0x10, sp)
     mov     (0xb0, sp), d0
     mov     0x000600b4, d1
@@ -4147,14 +4147,14 @@ loc_48502DEC:
     clr     d0
     movbu   d0, (0x28, sp)
     mov     a2, (8, sp)
-    mov     0x4864531c, d0
+    mov     Str_SONG_2d_16s, d0
     mov     d0, (0xc, sp)
     mov     d2, (0x10, sp)
     mov     a3, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_48502E33
 loc_48502E26:
-    mov     0x4864532c, a1
+    mov     Str_ALL_SONGS_2, a1
     call    strcpy_entry, [a2], 4
 loc_48502E33:
     mov     a2, (0x10, sp)
@@ -4354,7 +4354,7 @@ loc_48503049:
     mov     d0, (0x14, sp)
     mov     0xb6, d0
     mov     0x01730001, d1
-    mov     0x48645348, a0
+    mov     Str_TT_CMSTEP_2, a0
     call    RegisterTitle_entry, [d2,a2], 8
     jmp     loc_485031FA
 loc_48503071:
@@ -4423,7 +4423,7 @@ loc_4850311A:
     bls     loc_48503125
     jmp     loc_485031EF
 loc_48503125:
-    mov     0x48645398, a1
+    mov     Str_empty_934, a1
     add     0xff500000, d1
     mov     d1, d0
     and     0x0f, d0
@@ -4439,7 +4439,7 @@ loc_48503125:
     jmp     loc_485031EF
 loc_48503147:
     add     8, a0
-    cmp     0x48645418, a0
+    cmp     data_48645418, a0
     bcs     loc_48503152
     mov     a1, a0
 loc_48503152:
@@ -4453,7 +4453,7 @@ loc_48503155:
     inc4    a2
     mov     (a2), d0
     movbu   (0x5015233c), d1
-    mov     0x487510e4, a0
+    mov     data_487510E4, a0
     movbu   (d1, a0), d1
     and     0xff000000, d0
     lsr     24, d0
@@ -4553,7 +4553,7 @@ loc_4850322E:
     mov     d0, (0x14, sp)
     mov     0xe2, d0
     mov     0x01730003, d1
-    mov     0x48645354, a0
+    mov     Str_TT_MSPSTEP_2, a0
     call    RegisterTitle_entry, [d2,a2], 8
     jmp     loc_485034DA
 loc_48503256:
@@ -4709,7 +4709,7 @@ loc_485033E7:
     bls     loc_485033F2
     jmp     loc_485034D1
 loc_485033F2:
-    mov     0x48645418, a1
+    mov     data_48645418, a1
     add     0xff500000, d2
     mov     d2, d0
     and     0x0f, d0
@@ -4725,7 +4725,7 @@ loc_485033F2:
     jmp     loc_485034D1
 loc_48503415:
     add     8, a0
-    cmp     0x48645498, a0
+    cmp     data_48645498, a0
     bcs     loc_48503420
     mov     a1, a0
 loc_48503420:
@@ -4891,7 +4891,7 @@ loc_48503561:
     call    func_485034EE_entry, 0, 0xc
     movbu   d2, (0x5015233c)
     movbu   (0x5015233c), d0
-    mov     0x487510e4, a2
+    mov     data_487510E4, a2
     movbu   (d0, a2), d1
     mov     0x90008041, d0
     call    LibParamSet, [d2,d3,a2], 0x24
@@ -5079,9 +5079,9 @@ func_485037C8_entry:
     cmp     0, d2
     bne     loc_485037DA
     mov     (0x2c, sp), d0
-    movbu   d0, (0x50003b14)
+    movbu   d0, (data_50003B14)
 loc_485037DA:
-    movbu   (0x50003b14), d0
+    movbu   (data_50003B14), d0
     extb    d0
     cmp     0, d0
     beq     loc_485037EF
@@ -5110,7 +5110,7 @@ loc_4850380D:
     cmp     1, d2
     bne     loc_48503819
     mov     -1, d1
-    movbu   d1, (0x50003b14)
+    movbu   d1, (data_50003B14)
 loc_48503819:
     ret     [d2], 0x1c
 
@@ -5149,7 +5149,7 @@ func_4850386A:
 func_4850386A_entry:
     add     -0x114, sp
     mov     d0, d2
-    mov     0x48645360, a1
+    mov     Str_d_12, a1
     mov     0x457, a0
     cmp     a0, d2
     blt     loc_485038D0
@@ -5158,31 +5158,31 @@ func_4850386A_entry:
     mov     d2, d0
     sub     a0, d0
     asl2    d0
-    mov     0x48645498, a0
+    mov     data_48645498, a0
     mov     (d0, a0), a0
     jmp     (a0)
-    mov     0x48645364, a1
+    mov     Str_2d_20, a1
     bra     loc_485038D0
     movbu   (0x50152364), d0
-    mov     0x48645368, a1
+    mov     Str_6d_2, a1
     cmp     2, d0
     beq     loc_485038D0
-    mov     0x4864536c, a1
+    mov     Str_3d_57, a1
     bra     loc_485038D0
-    mov     0x48645370, a1
+    mov     Str_3d_40, a1
     bra     loc_485038D0
-    mov     0x48645374, a1
+    mov     Str_6d, a1
     bra     loc_485038D0
-    mov     0x48645378, a1
+    mov     Str_5d, a1
     bra     loc_485038D0
-    mov     0x4864537c, a1
+    mov     Str_x_4, a1
 loc_485038D0:
     mov     sp, a2
     add     0x14, a2
     mov     a2, (8, sp)
     mov     a1, (0xc, sp)
     mov     d1, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     a2, a0
     mov     d2, d0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
@@ -5226,7 +5226,7 @@ loc_4850393F:
     sub     d1, d2
     mov     d2, d0
     asl2    d0
-    mov     0x486455ec, a0
+    mov     data_486455EC, a0
     mov     (d0, a0), a0
     jmp     (a0)
     mov     0x01700026, a2
@@ -5267,14 +5267,14 @@ loc_4850393F:
     call    func_48502E5D, 0, 0
     cmp     0, d0
     bne     loc_48503A0A
-    mov     0x48645380, d0
+    mov     Str_empty_936, d0
     mov     d0, (0x10, sp)
     mov     0x0170000f, d0
     mov     0x000600b4, d1
     call    ApDeliveryEvent_entry, [d2,d3,a2], 0x20
     bra     loc_48503A25
 loc_48503A0A:
-    mov     0x48645384, d0
+    mov     Str_empty_935, d0
     mov     d0, (0x10, sp)
     mov     0x0170000f, d0
     mov     0x000600b4, d1
@@ -5318,7 +5318,7 @@ loc_48503A6B:
     cmp     1, d0
     beq     loc_48503AB1
     mov     (0x38, sp), a0
-    mov     0x48645388, a1
+    mov     Str_NOTE_6, a1
     call    strcmp, 0, 0
     cmp     0, d0
     bne     loc_48503AB5
@@ -5327,7 +5327,7 @@ loc_48503AB1:
     bra     loc_48503ADA
 loc_48503AB5:
     mov     (0x38, sp), a0
-    mov     0x48645390, a1
+    mov     Str_SOUND_13, a1
     call    strcmp, 0, 0
     cmp     0, d0
     bne     loc_48503AD2
@@ -5400,7 +5400,7 @@ loc_48503B84:
     sub     d1, d2
     mov     d2, d0
     asl2    d0
-    mov     0x48645564, a0
+    mov     data_48645564, a0
     mov     (d0, a0), a0
     jmp     (a0)
     mov     0x0170006c, a2
@@ -5573,7 +5573,7 @@ loc_48503D47:
     call    InterruptTitle_entry, [d2,d3,a2], 0x20
     jmp     loc_48503E62
 loc_48503D55:
-    movhu   (0x487349ca), d0
+    movhu   (data_487349CA), d0
     mov     d0, (0x50152340)
     clr     d0
     movbu   d0, (0x50152344)
@@ -5788,7 +5788,7 @@ loc_48503FBA:
     call    func_484328C7_entry, [d2,d3], 0x14
     clr     d0
     mov     d0, (0x10, sp)
-    mov     (0x50007e14), d0
+    mov     (data_50007E14), d0
     mov     0x000600b4, d1
     call    ApDeliveryEvent_entry, [d2,d3,a2], 0x20
     bra     loc_4850403E
@@ -5813,7 +5813,7 @@ loc_48503FF5:
     call    func_4843281D_entry, [d2,d3], 0x14
     clr     d0
     mov     d0, (0x10, sp)
-    mov     (0x50007e14), d0
+    mov     (data_50007E14), d0
     mov     0x000600b4, d1
     call    ApDeliveryEvent_entry, [d2,d3,a2], 0x20
     bra     loc_4850403E
@@ -5944,7 +5944,7 @@ func_48504173_entry:
 func_4850418C:
     add     -0x14, sp
 func_4850418C_entry:
-    mov     (0x50007dec), a0
+    mov     (data_50007DEC), a0
     cmp     0, a0
     beq     loc_485041A4
     mov     d0, (0x10, sp)
@@ -6247,7 +6247,7 @@ func_48504385_entry:
     mov     d2, (0x14, sp)
     extbu   d0
     asl2    d0
-    add     0x486457e4, d0
+    add     ptrs_486457E4, d0
     mov     d0, (0x1c, sp)
 loc_485043A4:
     exthu   d1
@@ -6288,7 +6288,7 @@ loc_485043BE:
     movbu   (4, a0), d2
     asl2    d0
     inc     d2
-    mov     0x486457ec, a0
+    mov     data_486457EC, a0
     mov     (d0, a0), d0
     clr     d1
     mov     d1, (0x10, sp)
@@ -6298,9 +6298,9 @@ loc_485043BE:
 loc_485043FA:
     mov     a2, d0
     asl2    d0
-    mov     0x486457ec, a0
+    mov     data_486457EC, a0
     mov     (d0, a0), d0
-    mov     0x4864580c, a0
+    mov     data_4864580C, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
 loc_48504410:
     mov     (0x1c, sp), a0
@@ -6377,7 +6377,7 @@ loc_48504487:
 loc_4850448C:
     mov     a2, d0
     asl2    d0
-    mov     0x486457fc, a0
+    mov     data_486457FC, a0
     mov     (d0, a0), d0
     mov     (0x14, sp), a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
@@ -6385,15 +6385,15 @@ loc_4850448C:
 loc_485044A0:
     mov     a2, d0
     asl2    d0
-    mov     0x486457ec, a0
+    mov     data_486457EC, a0
     mov     (d0, a0), d0
-    mov     0x48645810, a0
+    mov     data_48645810, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
     mov     a2, d0
     asl2    d0
-    mov     0x486457fc, a0
+    mov     data_486457FC, a0
     mov     (d0, a0), d0
-    mov     0x48645814, a0
+    mov     data_48645814, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
 loc_485044CC:
     mov     (0x18, sp), d1
@@ -6425,7 +6425,7 @@ func_485044DC_entry:
     inc     d1
     add     a2, d1
     mov     d1, (0x14, sp)
-    mov     0x4864585c, a3
+    mov     data_4864585C, a3
 loc_485044FD:
     mov     (0xc0, sp), d1
     mov     d0, d2
@@ -6456,7 +6456,7 @@ loc_485044FD:
     cmp     d0, d1
     bge     loc_4850454C
     mov     a2, a0
-    mov     0x48645818, a1
+    mov     Str_empty_932, a1
     call    strcpy_entry, [a2], 4
     mov     (0x14, sp), a0
     mov     0x23, d0
@@ -6485,7 +6485,7 @@ func_4850455F_entry:
     clr     d0
     clr     d3
     mov     0x5006d980, a2
-    mov     0x48645728, a3
+    mov     data_48645728, a3
 loc_48504572:
     mov     d0, d2
     exthu   d2
@@ -6508,13 +6508,13 @@ loc_48504572:
 loc_48504597:
     mov     d2, d0
     asl2    d0
-    mov     0x48645740, a0
+    mov     data_48645740, a0
     mov     (d0, a0), d0
-    mov     0x4864586c, a0
+    mov     data_4864586C, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
     asl2    d2
     mov     (d2, a3), d0
-    mov     0x48645870, a0
+    mov     data_48645870, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
 loc_485045BA:
     inc     d3
@@ -6560,7 +6560,7 @@ func_485045C4_entry:
     bgt     loc_48504606
     jmp     loc_48504A85
 loc_48504606:
-    mov     0x486456c8, a2
+    mov     ptrs_486456C8, a2
     movbu   (0x5006d148), d1
     mov     0x30, d2
     nop
@@ -6617,16 +6617,16 @@ loc_4850466E:
     cmp     5, d1
     llt
     mov     0x45a, d0
-    mov     0x48645874, a0
+    mov     Str_NOTE_5, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
     mov     0x45e, d0
-    mov     0x4864587c, a0
+    mov     Str_VELOCITY_6, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
     mov     0x462, d0
-    mov     0x48645888, a0
+    mov     Str_LENGTH_3, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
     mov     0x466, d0
-    mov     0x48645890, a0
+    mov     Str_ARRANGE, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
     movbu   (0x1d, sp), d0
     mov     sp, a0
@@ -6717,9 +6717,9 @@ loc_485047B0:
     jmp     loc_48504945
 loc_485047B3:
     mov     0x45a, d0
-    mov     0x48645898, a0
+    mov     Str_MODULATION_2, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
-    mov     (0x48645728), d0
+    mov     (data_48645728), d0
     mov     (0x5006d984), d1
     mov     1, d2
     mov     d2, (0x10, sp)
@@ -6727,7 +6727,7 @@ loc_485047B3:
     ret     [d2,d3,a2,a3], 0x6c
 loc_485047D9:
     mov     0x45a, d0
-    mov     0x486458a4, a0
+    mov     Str_PAN_7, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
     mov     (0x5006d984), d0
     cmp     0x40, d0
@@ -6735,7 +6735,7 @@ loc_485047D9:
     mov     sp, a2
     add     0x3c, a2
     mov     a2, a0
-    mov     0x486458a8, a1
+    mov     Str_CENTER_8, a1
     call    strcpy_entry, [a2], 4
     bra     loc_4850483C
 loc_48504804:
@@ -6744,32 +6744,32 @@ loc_48504804:
     mov     sp, a2
     add     0x3c, a2
     mov     a2, (8, sp)
-    mov     0x486458b0, d1
+    mov     Str_L_2d_2, d1
     mov     d1, (0xc, sp)
     mov     0x40, d1
     sub     d0, d1
     mov     d1, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_4850483C
 loc_48504824:
     mov     sp, a2
     add     0x3c, a2
     mov     a2, (8, sp)
-    mov     0x486458b8, d1
+    mov     Str_R_2d_3, d1
     mov     d1, (0xc, sp)
     add     -0x40, d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_4850483C:
-    mov     (0x48645728), d0
+    mov     (data_48645728), d0
     mov     a2, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
     ret     [d2,d3,a2,a3], 0x6c
 loc_4850484B:
     mov     0x45a, d0
-    mov     0x486458c0, a0
+    mov     Str_EXPRESSION_2, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
-    mov     (0x48645728), d0
+    mov     (data_48645728), d0
     mov     (0x5006d984), d1
     mov     1, d2
     mov     d2, (0x10, sp)
@@ -6777,55 +6777,55 @@ loc_4850484B:
     ret     [d2,d3,a2,a3], 0x6c
 loc_48504871:
     mov     0x45a, d0
-    mov     0x486458cc, a0
+    mov     Str_SUSTAIN_5, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
     mov     (0x5006d984), d0
-    mov     0x486458d4, a0
+    mov     Str_ON_48, a0
     cmp     d3, d0
     bne     loc_48504894
-    mov     0x486458d8, a0
+    mov     Str_OFF_61, a0
 loc_48504894:
-    mov     (0x48645728), d0
+    mov     (data_48645728), d0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
     ret     [d2,d3,a2,a3], 0x6c
 loc_485048A2:
     mov     0x45a, d0
-    mov     0x486458dc, a0
+    mov     Str_D_EFFECT_2, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
     mov     (0x5006d984), d0
-    mov     0x486458e8, a0
+    mov     Str_ON_113, a0
     cmp     d3, d0
     bne     loc_485048C5
-    mov     0x486458ec, a0
+    mov     Str_OFF_60, a0
 loc_485048C5:
-    mov     (0x48645728), d0
+    mov     (data_48645728), d0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
     ret     [d2,d3,a2,a3], 0x6c
 loc_485048D3:
     mov     0x45a, d0
-    mov     0x486458f0, a0
+    mov     Str_EFF_DYNAMIC_CTRL_2, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
-    mov     (0x48645728), d0
+    mov     (data_48645728), d0
     mov     (0x5006d984), d1
     mov     1, d2
     mov     d2, (0x10, sp)
     call    func_4850386A_entry, [d2,a2], 8
     ret     [d2,d3,a2,a3], 0x6c
 loc_485048F9:
-    mov     (0x48645728), d0
+    mov     (data_48645728), d0
     mov     (0x5006d984), d1
     mov     1, d2
     mov     d2, (0x10, sp)
     call    func_4850386A_entry, [d2,a2], 8
     mov     0x45a, d0
-    mov     0x48645904, a0
+    mov     Str_TRACKBALL_X_2, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
     ret     [d2,d3,a2,a3], 0x6c
 loc_4850491F:
     mov     0x45a, d0
-    mov     0x48645910, a0
+    mov     Str_TRACKBALL_Y_2, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
-    mov     (0x48645728), d0
+    mov     (data_48645728), d0
     mov     (0x5006d984), d1
     mov     1, d2
     mov     d2, (0x10, sp)
@@ -6833,17 +6833,17 @@ loc_4850491F:
     ret     [d2,d3,a2,a3], 0x6c
 loc_48504945:
     mov     0x45a, d0
-    mov     0x4864591c, a0
+    mov     Str_CTL_ERR_2, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
-    mov     (0x48645728), d0
-    mov     0x48645924, a0
+    mov     (data_48645728), d0
+    mov     data_48645924, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
     ret     [d2,d3,a2,a3], 0x6c
 loc_48504967:
     mov     1, d0
     movbu   d0, (0x5006d980)
     mov     0x45a, d0
-    mov     0x48645928, a0
+    mov     Str_SOUND_10, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
     movbu   (0x1d, sp), d1
     movbu   (0x1e, sp), d0
@@ -6864,20 +6864,20 @@ loc_48504967:
     mov     a2, a0
     clr     d0
     movbu   d0, (0x4c, sp)
-    mov     (0x48645728), d0
+    mov     (data_48645728), d0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
     ret     [d2,d3,a2,a3], 0x6c
 loc_485049BF:
     mov     1, d0
     movbu   d0, (0x5006d980)
     mov     0x45a, d0
-    mov     0x48645930, a0
+    mov     Str_AFTER_TOUCH_5, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
     movbu   (0x1d, sp), d0
     mov     1, d1
     mov     d0, a0
     mov     a0, (0x5006d984)
-    mov     (0x48645728), d0
+    mov     (data_48645728), d0
     mov     d1, (0x10, sp)
     mov     a0, d1
     call    func_4850386A_entry, [d2,a2], 8
@@ -6886,7 +6886,7 @@ loc_485049F4:
     mov     1, d0
     movbu   d0, (0x5006d980)
     mov     0x45a, d0
-    mov     0x4864593c, a0
+    mov     Str_PITCH_BEND_2, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
     movbu   (0x1e, sp), d0
     movbu   (0x1d, sp), d1
@@ -6897,7 +6897,7 @@ loc_485049F4:
     mov     d0, (0x5006d984)
     mov     0x3f01, d0
     mov     d0, (0x5006d98c)
-    mov     (0x48645728), d0
+    mov     (data_48645728), d0
     mov     (0x5006d984), a0
     mov     1, d1
     mov     d1, (0x10, sp)
@@ -6907,18 +6907,18 @@ loc_485049F4:
     bra     loc_48504A8B
 loc_48504A43:
     mov     0x45a, d0
-    mov     0x48645948, a0
+    mov     Str_CTL_ERR, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
-    mov     (0x48645728), d0
-    mov     0x48645950, a0
+    mov     (data_48645728), d0
+    mov     data_48645950, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
     bra     loc_48504A8B
 loc_48504A64:
     mov     0x45a, d0
-    mov     0x48645954, a0
+    mov     Str_EVENT_ERR, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
-    mov     (0x48645728), d0
-    mov     0x48645960, a0
+    mov     (data_48645728), d0
+    mov     data_48645960, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
     bra     loc_48504A8B
 loc_48504A85:
@@ -6953,7 +6953,7 @@ loc_48504A9C:
 loc_48504AC6:
     jmp     loc_48504BFD
 loc_48504AC9:
-    mov     (0x48645728), d0
+    mov     (data_48645728), d0
     mov     (0x5006d984), d1
     mov     1, d2
     mov     d2, (0x10, sp)
@@ -6979,7 +6979,7 @@ loc_48504AE1:
     beq     loc_48504B6A
     jmp     loc_48504BCD
 loc_48504B0A:
-    mov     (0x48645728), d0
+    mov     (data_48645728), d0
     mov     (0x5006d984), d1
     mov     1, d2
     mov     d2, (0x10, sp)
@@ -6987,22 +6987,22 @@ loc_48504B0A:
     ret     [d2,a2], 0x3c
 loc_48504B22:
     mov     (0x5006d984), d0
-    mov     0x48645964, a0
+    mov     Str_ON_46, a0
     cmp     0, d0
     bne     loc_48504B38
-    mov     0x48645968, a0
+    mov     Str_OFF_59, a0
 loc_48504B38:
-    mov     (0x48645728), d0
+    mov     (data_48645728), d0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
     ret     [d2,a2], 0x3c
 loc_48504B46:
     mov     (0x5006d984), d0
-    mov     0x4864596c, a0
+    mov     Str_ON_45, a0
     cmp     0, d0
     bne     loc_48504B5C
-    mov     0x48645970, a0
+    mov     Str_OFF_58, a0
 loc_48504B5C:
-    mov     (0x48645728), d0
+    mov     (data_48645728), d0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
     ret     [d2,a2], 0x3c
 loc_48504B6A:
@@ -7012,7 +7012,7 @@ loc_48504B6A:
     mov     sp, a2
     add     0x14, a2
     mov     a2, a0
-    mov     0x48645974, a1
+    mov     Str_CENTER_9, a1
     call    strcpy_entry, [a2], 4
     bra     loc_48504BBF
 loc_48504B87:
@@ -7021,34 +7021,34 @@ loc_48504B87:
     mov     sp, a2
     add     0x14, a2
     mov     a2, (8, sp)
-    mov     0x4864597c, d1
+    mov     Str_L_2d_4, d1
     mov     d1, (0xc, sp)
     mov     0x40, d1
     sub     d0, d1
     mov     d1, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_48504BBF
 loc_48504BA7:
     mov     sp, a2
     add     0x14, a2
     mov     a2, (8, sp)
-    mov     0x48645984, d1
+    mov     Str_R_2d_2, d1
     mov     d1, (0xc, sp)
     add     -0x40, d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_48504BBF:
-    mov     (0x48645728), d0
+    mov     (data_48645728), d0
     mov     a2, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
     bra     loc_48504C33
 loc_48504BCD:
-    mov     (0x48645728), d0
-    mov     0x4864598c, a0
+    mov     (data_48645728), d0
+    mov     data_4864598C, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
     bra     loc_48504C33
 loc_48504BE0:
-    mov     (0x48645728), d0
+    mov     (data_48645728), d0
     mov     (0x5006d984), a0
     mov     1, d1
     mov     d1, (0x10, sp)
@@ -7057,15 +7057,15 @@ loc_48504BE0:
     call    func_4850386A_entry, [d2,a2], 8
     bra     loc_48504C33
 loc_48504BFD:
-    mov     (0x48645728), d0
-    mov     0x48645990, a0
+    mov     (data_48645728), d0
+    mov     data_48645990, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
     bra     loc_48504C33
 loc_48504C10:
     extbu   d0
     mov     d0, d1
     asl2    d1
-    mov     0x48645728, a0
+    mov     data_48645728, a0
     mov     (d1, a0), d2
     asl     4, d0
     add     0x5006d980, d0
@@ -7198,7 +7198,7 @@ loc_48504CD7:
     call    func_484FF790, 0, 0
     add     -1, d0
     mov     d0, (0x5006d9cc)
-    mov     (0x48645738), d0
+    mov     (data_48645738), d0
     mov     (0x5006d9c4), d1
     mov     d2, (0x10, sp)
     call    func_4850386A_entry, [d2,a2], 8
@@ -7272,7 +7272,7 @@ loc_48504D89:
     nop
     mulu    d0, d1
     mov     d1, a0
-    add     0x486456c8, a0
+    add     ptrs_486456C8, a0
     mov     (0x10, a0), a1
     mov     a2, a0
     calls   (a1)
@@ -7289,7 +7289,7 @@ loc_48504E03:
     ble     loc_48504E0A
     jmp     loc_48504EF1
 loc_48504E0A:
-    mov     0x48645b44, a1
+    mov     data_48645B44, a1
     mov     0xf, d0
     and     d1, d0
     asl     3, d0
@@ -7304,7 +7304,7 @@ loc_48504E0A:
     jmp     loc_48504EF1
 loc_48504E27:
     add     8, a0
-    cmp     0x48645bc4, a0
+    cmp     data_48645BC4, a0
     bcs     loc_48504E32
     mov     a1, a0
 loc_48504E32:
@@ -7321,7 +7321,7 @@ loc_48504E35:
     nop
     nop
     mulu    d1, d0
-    add     0x486456c8, d0
+    add     ptrs_486456C8, d0
     mov     d0, a0
     mov     (0x10, a0), a1
     mov     a2, a0
@@ -7340,7 +7340,7 @@ loc_48504E60:
     nop
     mulu    d0, d1
     mov     d1, a0
-    add     0x486456c8, a0
+    add     ptrs_486456C8, a0
     mov     (0x10, a0), a1
     mov     a2, a0
     calls   (a1)
@@ -7354,7 +7354,7 @@ loc_48504E97:
     nop
     nop
     mulu    d1, d0
-    add     0x486456c8, d0
+    add     ptrs_486456C8, d0
     mov     d0, a0
     mov     (0x10, a0), a1
     mov     a2, a0
@@ -7372,7 +7372,7 @@ loc_48504EBF:
     nop
     nop
     mulu    d1, d0
-    add     0x486456c8, d0
+    add     ptrs_486456C8, d0
     mov     d0, a0
     mov     (0x10, a0), a1
     mov     a2, a0
@@ -7409,9 +7409,9 @@ loc_48504F10:
     call    func_4850386A_entry, [d2,a2], 8
     mov     4, d0
     movhu   d0, (0x5006d962)
-    mov     0x48645994, a2
+    mov     Str_empty_1136, a2
     mov     0x480, d0
-    mov     0x486459dc, a0
+    mov     Str_ac_4, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
     mov     a2, a0
     clr     d0
@@ -7419,7 +7419,7 @@ loc_48504F10:
     mov     0x487, d0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
     movbu   (0x5006d148), d0
-    mov     0x486456c8, a3
+    mov     ptrs_486456C8, a3
     mov     0x30, d1
     nop
     nop
@@ -7429,7 +7429,7 @@ loc_48504F10:
     movhu   (0x5006d960), d0
     mov     (0x2c, a0), a0
     add     d0, d0
-    mov     0x48645758, a1
+    mov     data_48645758, a1
     movhu   (d0, a1), d0
     calls   (a0)
     movhu   (0x5006d962), d0
@@ -7564,7 +7564,7 @@ loc_485050D2:
     nop
     mulu    d0, d1
     mov     d1, a0
-    add     0x486456c8, a0
+    add     ptrs_486456C8, a0
     mov     (0x20, a0), a0
     clr     d0
     calls   (a0)
@@ -7581,7 +7581,7 @@ loc_485050F9:
     jmp     loc_48506141
 loc_48505102:
     add     -0x67, d1
-    mov     0x48645bc4, a1
+    mov     data_48645BC4, a1
     mov     0x1f, d0
     and     d1, d0
     asl     3, d0
@@ -7596,7 +7596,7 @@ loc_48505102:
     jmp     loc_48506141
 loc_48505121:
     add     8, a0
-    cmp     0x48645cc4, a0
+    cmp     data_48645CC4, a0
     bcs     loc_4850512C
     mov     a1, a0
 loc_4850512C:
@@ -7624,7 +7624,7 @@ loc_4850512F:
     movhu   (0x5006d960), d1
     call    func_4850386A_entry, [d2,a2], 8
     movhu   (0x5006d962), d1
-    mov     0x48645994, a2
+    mov     Str_empty_1136, a2
     mov     0x480, d0
     mov     0x12, d2
     nop
@@ -7652,7 +7652,7 @@ loc_4850512F:
     movhu   (0x5006d94c), d1
     call    func_485041A7_entry, [d2,d3,a2,a3], 0x20
     movbu   (0x5006d148), d0
-    mov     0x486456c8, a2
+    mov     ptrs_486456C8, a2
     mov     0x30, d1
     nop
     nop
@@ -7757,7 +7757,7 @@ loc_485052C1:
     jmp     loc_48505424
 loc_485052C4:
     mov     0x484, d0
-    mov     0x48645a90, a0
+    mov     Str_MODULATION, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
@@ -7768,7 +7768,7 @@ loc_485052C4:
     jmp     loc_485054FB
 loc_485052E4:
     mov     0x484, d0
-    mov     0x48645a9c, a0
+    mov     Str_PAN_6, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
     lsr     16, d2
     cmp     0x40, d2
@@ -7776,7 +7776,7 @@ loc_485052E4:
     mov     sp, a2
     add     0x20, a2
     mov     a2, a0
-    mov     0x48645aa0, a1
+    mov     Str_CENTER_7, a1
     call    strcpy_entry, [a2], 4
     bra     loc_48505344
 loc_4850530C:
@@ -7785,22 +7785,22 @@ loc_4850530C:
     mov     sp, a2
     add     0x20, a2
     mov     a2, (8, sp)
-    mov     0x48645aa8, d0
+    mov     Str_L_2d, d0
     mov     d0, (0xc, sp)
     mov     0x40, d0
     sub     d2, d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_48505344
 loc_4850532C:
     mov     sp, a2
     add     0x20, a2
     mov     a2, (8, sp)
-    mov     0x48645ab0, d0
+    mov     Str_R_2d, d0
     mov     d0, (0xc, sp)
     add     -0x40, d2
     mov     d2, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_48505344:
     mov     0x489, d0
     mov     a2, a0
@@ -7808,7 +7808,7 @@ loc_48505344:
     jmp     loc_485054FB
 loc_48505350:
     mov     0x484, d0
-    mov     0x48645ab8, a0
+    mov     Str_EXPRESSION, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
@@ -7819,31 +7819,31 @@ loc_48505350:
     jmp     loc_485054FB
 loc_48505370:
     mov     0x484, d0
-    mov     0x48645ac4, a0
+    mov     Str_SUSTAIN_4, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
-    mov     0x48645acc, a0
+    mov     Str_ON_44, a0
     lsr     16, d2
     bne     loc_4850538F
-    mov     0x48645ad0, a0
+    mov     Str_OFF_57, a0
 loc_4850538F:
     mov     0x489, d0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
     jmp     loc_485054FB
 loc_4850539A:
     mov     0x484, d0
-    mov     0x48645ad4, a0
+    mov     Str_D_EFFECT, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
-    mov     0x48645ae0, a0
+    mov     Str_ON_43, a0
     lsr     16, d2
     bne     loc_485053B9
-    mov     0x48645ae4, a0
+    mov     Str_OFF_56, a0
 loc_485053B9:
     mov     0x489, d0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
     jmp     loc_485054FB
 loc_485053C4:
     mov     0x484, d0
-    mov     0x48645ae8, a0
+    mov     Str_EFF_DYNAMIC_CTRL, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
@@ -7854,7 +7854,7 @@ loc_485053C4:
     jmp     loc_485054FB
 loc_485053E4:
     mov     0x484, d0
-    mov     0x48645afc, a0
+    mov     Str_TRACKBALL_X, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
@@ -7865,7 +7865,7 @@ loc_485053E4:
     jmp     loc_485054FB
 loc_48505404:
     mov     0x484, d0
-    mov     0x48645b08, a0
+    mov     Str_TRACKBALL_Y, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
@@ -7876,15 +7876,15 @@ loc_48505404:
     jmp     loc_485054FB
 loc_48505424:
     mov     0x484, d0
-    mov     0x48645b14, a0
+    mov     data_48645B14, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
     mov     0x489, d0
-    mov     0x48645b18, a0
+    mov     data_48645B18, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
     jmp     loc_485054FB
 loc_48505443:
     mov     0x484, d0
-    mov     0x48645b1c, a0
+    mov     Str_SOUND_12, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
     mov     d2, d0
     lsr     8, d0
@@ -7911,7 +7911,7 @@ loc_48505443:
     jmp     loc_485054FB
 loc_48505486:
     mov     0x484, d0
-    mov     0x48645b24, a0
+    mov     Str_AFTER_TOUCH_4, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
@@ -7924,7 +7924,7 @@ loc_48505486:
     bra     loc_485054FB
 loc_485054A9:
     mov     0x484, d0
-    mov     0x48645b30, a0
+    mov     Str_PITCH_BEND, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
@@ -7946,10 +7946,10 @@ loc_485054A9:
     bra     loc_485054FB
 loc_485054DF:
     mov     0x484, d0
-    mov     0x48645b3c, a0
+    mov     data_48645B3C, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
     mov     0x489, d0
-    mov     0x48645b40, a0
+    mov     data_48645B40, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
 loc_485054FB:
     mov     1, d0
@@ -7960,7 +7960,7 @@ loc_485054FB:
     nop
     mulu    d1, d0
     mov     d0, a0
-    add     0x486456c8, a0
+    add     ptrs_486456C8, a0
     mov     (0x1c, a0), a0
     mov     (0x5015232c), d0
     mov     (0x50152330), d1
@@ -8046,7 +8046,7 @@ loc_485055A5:
     nop
     nop
     mulu    d3, d1
-    add     0x486456c8, d1
+    add     ptrs_486456C8, d1
     mov     d1, a0
     movhu   (0x5006d95a), d1
     mov     (0x24, a0), a0
@@ -8144,7 +8144,7 @@ loc_485056E5:
     nop
     mulu    d0, d1
     mov     d1, a0
-    add     0x486456c8, a0
+    add     ptrs_486456C8, a0
     mov     (0x24, a0), a1
     mov     d2, d0
     exthu   d0
@@ -8289,7 +8289,7 @@ loc_4850586F:
     mulu    d1, d0
     movhu   (d0, a3), d2
     movhu   (0x5006d958), d0
-    mov     0x486456c8, a2
+    mov     ptrs_486456C8, a2
     add     d0, d2
     movbu   (0x5006d148), d0
     mov     0x30, d1
@@ -8450,7 +8450,7 @@ loc_485059F8:
     nop
     nop
     mulu    d0, d1
-    add     0x486456c8, d1
+    add     ptrs_486456C8, d1
     mov     d1, a0
     movhu   (0x5006d95a), d1
     movhu   (0x5006d958), d0
@@ -8533,7 +8533,7 @@ loc_48505AD5:
     mulu    d0, d2
     movhu   (0x5006d958), d0
     mov     d2, a0
-    add     0x486456c8, a0
+    add     ptrs_486456C8, a0
     mov     (0x24, a0), a0
     add     d1, d0
     movhu   (0x5006d95a), d1
@@ -8564,7 +8564,7 @@ loc_48505AD5:
     nop
     mulu    d0, d1
     mov     d1, a0
-    add     0x486456c8, a0
+    add     ptrs_486456C8, a0
     mov     (0x18, a0), a0
     calls   (a0)
     clr     d0
@@ -8700,7 +8700,7 @@ loc_48505BC9:
     call    func_48504C36_entry, [d2,d3,a2,a3], 0x28
     mov     1, d0
     ret     [d2,d3,a2,a3], 0x70
-    mov     0x48645994, a1
+    mov     Str_empty_1136, a1
     movhu   (0x5006d962), d0
     mov     a1, a0
     mov     0x12, d1
@@ -8853,7 +8853,7 @@ loc_48505E27:
     mulu    d1, d2
     movhu   (0x5006d958), d1
     mov     d2, a0
-    add     0x486456c8, a0
+    add     ptrs_486456C8, a0
     mov     (0x24, a0), a0
     add     d0, d1
     exthu   d1
@@ -8912,10 +8912,10 @@ loc_48505EAA:
     mulu    d0, d1
     movhu   (0x5006d960), d0
     mov     d1, a0
-    add     0x486456c8, a0
+    add     ptrs_486456C8, a0
     mov     (0x2c, a0), a0
     add     d0, d0
-    mov     0x48645758, a1
+    mov     data_48645758, a1
     movhu   (d0, a1), d0
     calls   (a0)
 loc_48505EEF:
@@ -8945,14 +8945,14 @@ loc_48505F04:
     nop
     nop
     mulu    d1, d0
-    add     0x486456c8, d0
+    add     ptrs_486456C8, d0
     mov     d0, a0
     movhu   (0x5006d960), d0
     mov     (0x2c, a0), a1
     mov     d0, a0
     add     a0, a0
     mov     a0, d0
-    mov     0x48645758, a2
+    mov     data_48645758, a2
     movhu   (d0, a2), d0
     calls   (a1)
 loc_48505F4E:
@@ -8973,7 +8973,7 @@ loc_48505F64:
     beq     loc_48505FCD
     movhu   d1, (0x5006d962)
     movhu   (0x5006d962), d1
-    mov     0x48645994, d2
+    mov     Str_empty_1136, d2
     mov     0x480, d0
     mov     0x12, d3
     nop
@@ -9005,7 +9005,7 @@ loc_48505F64:
     nop
     mulu    d0, d1
     mov     d1, a0
-    add     0x486456c8, a0
+    add     ptrs_486456C8, a0
     mov     (0x28, a0), a0
     mov     d3, d0
     exthu   d0
@@ -9028,7 +9028,7 @@ loc_48505FE2:
     beq     loc_48506047
     movhu   d1, (0x5006d962)
     movhu   (0x5006d962), d1
-    mov     0x48645994, a2
+    mov     Str_empty_1136, a2
     mov     a2, a0
     mov     0x480, d0
     mov     0x12, d2
@@ -9058,7 +9058,7 @@ loc_48505FE2:
     nop
     mulu    d0, d1
     mov     d1, a0
-    add     0x486456c8, a0
+    add     ptrs_486456C8, a0
     mov     (0x28, a0), a1
     mov     d2, d0
     exthu   d0
@@ -9081,7 +9081,7 @@ loc_4850605C:
     beq     loc_485060C1
     movhu   d1, (0x5006d964)
     movhu   (0x5006d964), d1
-    mov     0x48645994, d3
+    mov     Str_empty_1136, d3
     mov     0x487, d0
     mov     0x12, d2
     nop
@@ -9112,7 +9112,7 @@ loc_4850605C:
     nop
     mulu    d0, d1
     mov     d1, a0
-    add     0x486456c8, a0
+    add     ptrs_486456C8, a0
     mov     (0x28, a0), a0
     mov     d2, d0
     exthu   d0
@@ -9135,7 +9135,7 @@ loc_485060D6:
     beq     loc_4850613D
     movhu   d1, (0x5006d964)
     movhu   (0x5006d964), d1
-    mov     0x48645994, a2
+    mov     Str_empty_1136, a2
     mov     0x487, d0
     mov     0x12, d2
     nop
@@ -9164,7 +9164,7 @@ loc_485060D6:
     nop
     nop
     mulu    d1, d0
-    add     0x486456c8, d0
+    add     ptrs_486456C8, d0
     mov     d0, a0
     mov     (0x28, a0), a1
     mov     d2, d0
@@ -9229,8 +9229,8 @@ func_48506194_entry:
     bgt     loc_485061A6
     ret     [d2,a2,a3], 0x7c
 loc_485061A6:
-    mov     0x48645cc8, a3
-    movbu   (0x48645cc4), d1
+    mov     Str_CH_CH_CH_0CH_1CH_2CH_2CHu_CH_0CHUnknown, a3
+    movbu   (data_48645CC4), d1
     mov     0x24, d2
     nop
     nop
@@ -9266,7 +9266,7 @@ loc_485061A6:
     mov     0x457, d0
     mov     a2, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
-    movbu   (0x48645cc4), d0
+    movbu   (data_48645CC4), d0
     nop
     nop
     mulu    d2, d0
@@ -9276,12 +9276,12 @@ loc_485061A6:
     bra     loc_48506244
 loc_48506226:
     mov     0x457, d0
-    mov     0x48645cec, a0
+    mov     Str_Unknown, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
     bra     loc_48506244
 loc_48506236:
     mov     0x457, d0
-    mov     0x48645cf8, a0
+    mov     Str_Error, a0
     call    func_485038EF_entry, [d2,d3,a2,a3], 0x2c
 loc_48506244:
     ret     [d2,a2,a3], 0x7c
@@ -9307,11 +9307,11 @@ func_48506247_entry:
     movbu   (0x5006e224), d0
     mov     0x24, d1
     movbu   d0, (0x5006d9e9)
-    movbu   (0x48645cc4), d0
+    movbu   (data_48645CC4), d0
     nop
     nop
     mulu    d1, d0
-    add     0x48645cc8, d0
+    add     Str_CH_CH_CH_0CH_1CH_2CH_2CHu_CH_0CHUnknown, d0
     mov     d0, a0
     mov     (0x10, a0), a1
     mov     0x5006d9e4, a0
@@ -9344,8 +9344,8 @@ loc_485062D7:
     movbu   d0, (0x5006e223)
     movbu   d0, (0x5006e222)
     movbu   d0, (0x5006e224)
-    movbu   (0x48645cc4), d0
-    mov     0x48645cc8, a2
+    movbu   (data_48645CC4), d0
+    mov     Str_CH_CH_CH_0CH_1CH_2CH_2CHu_CH_0CHUnknown, a2
     mov     0x24, d1
     nop
     nop
@@ -9355,7 +9355,7 @@ loc_485062D7:
     mov     (0x1c, a0), a1
     mov     1, d0
     calls   (a1)
-    movbu   (0x48645cc4), d0
+    movbu   (data_48645CC4), d0
     mov     0x24, d1
     nop
     nop
@@ -9364,7 +9364,7 @@ loc_485062D7:
     calls   (a0)
     extbu   d0
     movhu   d0, (0x5006e1f4)
-    movbu   (0x48645cc4), d0
+    movbu   (data_48645CC4), d0
     mov     0x24, d1
     nop
     nop
@@ -9465,13 +9465,13 @@ loc_48506439:
     mov     1, d0
     ret     [d2,d3,a2,a3], 0x50
 loc_4850644B:
-    movbu   (0x48645cc4), d0
+    movbu   (data_48645CC4), d0
     mov     0x24, d1
     nop
     nop
     mulu    d0, d1
     mov     d1, a0
-    add     0x48645cc8, a0
+    add     Str_CH_CH_CH_0CH_1CH_2CH_2CHu_CH_0CHUnknown, a0
     mov     (0x1c, a0), a0
     clr     d0
     calls   (a0)
@@ -9488,7 +9488,7 @@ loc_48506472:
     jmp     loc_48506B1C
 loc_4850647B:
     add     -0x67, d1
-    mov     0x48645d00, a1
+    mov     data_48645D00, a1
     mov     a1, a0
     mov     0xf, d0
     and     d1, d0
@@ -9503,7 +9503,7 @@ loc_4850647B:
     jmp     loc_48506B1C
 loc_48506499:
     add     8, a0
-    cmp     0x48645d80, a0
+    cmp     Field_AcSndArgGridBox_end, a0
     bcs     loc_485064A4
     mov     a1, a0
 loc_485064A4:
@@ -9534,8 +9534,8 @@ loc_485064A7:
     movhu   (0x5006e1f4), d0
     movhu   (0x5006e1f6), d1
     call    func_485041A7_entry, [d2,d3,a2,a3], 0x20
-    movbu   (0x48645cc4), d0
-    mov     0x48645cc8, a2
+    movbu   (data_48645CC4), d0
+    mov     Str_CH_CH_CH_0CH_1CH_2CH_2CHu_CH_0CHUnknown, a2
     mov     a2, a0
     mov     0x24, d1
     nop
@@ -9545,7 +9545,7 @@ loc_485064A7:
     mov     (8, a0), a1
     mov     0x5006d9f4, a0
     calls   (a1)
-    movbu   (0x48645cc4), d0
+    movbu   (data_48645CC4), d0
     mov     0x24, d1
     nop
     nop
@@ -9716,13 +9716,13 @@ loc_485066EA:
     nop
     mulu    d0, d3
     movhu   (d3, a2), d2
-    movbu   (0x48645cc4), d0
+    movbu   (data_48645CC4), d0
     add     d1, d2
     mov     0x24, d1
     nop
     nop
     mulu    d1, d0
-    add     0x48645cc8, d0
+    add     Str_CH_CH_CH_0CH_1CH_2CH_2CHu_CH_0CHUnknown, d0
     mov     d0, a0
     mov     (0x20, a0), a0
     mov     d2, d0
@@ -9862,12 +9862,12 @@ loc_4850685C:
     movhu   (0x5006e202), d2
     mov     0x24, d0
     add     d1, d2
-    movbu   (0x48645cc4), d1
+    movbu   (data_48645CC4), d1
     nop
     nop
     mulu    d1, d0
     mov     d0, a0
-    add     0x48645cc8, a0
+    add     Str_CH_CH_CH_0CH_1CH_2CH_2CHu_CH_0CHUnknown, a0
     mov     (0x20, a0), a0
     mov     d2, d0
     exthu   d0
@@ -9950,11 +9950,11 @@ loc_48506940:
     movhu   (0x5006e202), d0
     mov     0x24, d1
     add     d0, d2
-    movbu   (0x48645cc4), d0
+    movbu   (data_48645CC4), d0
     nop
     nop
     mulu    d1, d0
-    add     0x48645cc8, d0
+    add     Str_CH_CH_CH_0CH_1CH_2CH_2CHu_CH_0CHUnknown, d0
     mov     d0, a0
     mov     (0x20, a0), a0
     mov     d2, d0
@@ -10039,13 +10039,13 @@ loc_48506A30:
     mov     0x5006e20a, a0
     movhu   (d0, a0), d1
     movhu   (0x5006e202), d2
-    movbu   (0x48645cc4), d0
+    movbu   (data_48645CC4), d0
     add     d1, d2
     mov     0x24, d1
     nop
     nop
     mulu    d1, d0
-    add     0x48645cc8, d0
+    add     Str_CH_CH_CH_0CH_1CH_2CH_2CHu_CH_0CHUnknown, d0
     mov     d0, a0
     mov     (0x20, a0), a0
     mov     d2, d0
@@ -10081,12 +10081,12 @@ loc_48506AA1:
     call    func_485034DE_entry, 0, 0x14
     mov     1, d0
     ret     [d2,d3,a2,a3], 0x50
-    movbu   (0x48645cc4), d0
+    movbu   (data_48645CC4), d0
     mov     0x24, d1
     nop
     nop
     mulu    d1, d0
-    add     0x48645cc8, d0
+    add     Str_CH_CH_CH_0CH_1CH_2CH_2CHu_CH_0CHUnknown, d0
     mov     d0, a0
     mov     (0x18, a0), a0
     calls   (a0)
@@ -10138,7 +10138,7 @@ InitializeBlock11_entry:
     mov     d0, (0x20, sp)
     mov     1, d3
     movhu   d3, (0x24, sp)
-    mov     0x487510ec, d0
+    mov     SND_ARG_Classes, d0
     mov     d0, (0x28, sp)
     mov     0xb4, d0
     mov     a3, a0
@@ -10149,7 +10149,7 @@ InitializeBlock11_entry:
     mov     d0, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     0x4875111c, d0
+    mov     SND_ARG_Events, d0
     mov     d0, (0x28, sp)
     mov     0xb5, d0
     mov     a3, a0
@@ -10160,7 +10160,7 @@ InitializeBlock11_entry:
     mov     d0, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     0x48751120, d0
+    mov     SND_ARG_Methods, d0
     mov     d0, (0x28, sp)
     mov     0xb6, d0
     mov     a3, a0
@@ -10170,7 +10170,7 @@ InitializeBlock11_entry:
     mov     FunctionProc, a2
     mov     a2, (0x20, sp)
     movhu   d3, (0x24, sp)
-    mov     0x48751124, d0
+    mov     SND_ARG_Functions, d0
     mov     d0, (0x28, sp)
     mov     0xb1, d0
     mov     a3, a0
@@ -10178,7 +10178,7 @@ InitializeBlock11_entry:
     mov     d2, (0x1c, sp)
     mov     a2, (0x20, sp)
     movhu   d3, (0x24, sp)
-    mov     0x4875112c, d0
+    mov     SND_ARG_FunctionNames, d0
     mov     d0, (0x28, sp)
     mov     0xb9, d0
     mov     a3, a0
@@ -10188,7 +10188,7 @@ InitializeBlock11_entry:
     mov     ApFunctionProc, a2
     mov     a2, (0x20, sp)
     movhu   d3, (0x24, sp)
-    mov     0x48751134, d0
+    mov     SND_ARG_ApFunctions, d0
     mov     d0, (0x28, sp)
     mov     0xb2, d0
     mov     a3, a0
@@ -10196,7 +10196,7 @@ InitializeBlock11_entry:
     mov     d2, (0x1c, sp)
     mov     a2, (0x20, sp)
     movhu   d3, (0x24, sp)
-    mov     0x4875113c, d0
+    mov     SND_ARG_ApFunctionNames, d0
     mov     d0, (0x28, sp)
     mov     0xba, d0
     mov     a3, a0
@@ -10207,7 +10207,7 @@ InitializeBlock11_entry:
     mov     a2, (0x20, sp)
     mov     4, d2
     movhu   d2, (0x24, sp)
-    mov     0x48751144, d0
+    mov     SND_ARG_MainFunctions, d0
     mov     d0, (0x28, sp)
     mov     0xb3, d0
     mov     a3, a0
@@ -10215,7 +10215,7 @@ InitializeBlock11_entry:
     mov     d3, (0x1c, sp)
     mov     a2, (0x20, sp)
     movhu   d2, (0x24, sp)
-    mov     0x48751158, d0
+    mov     SND_ARG_MainFunctionNames, d0
     mov     d0, (0x28, sp)
     mov     0xbb, d0
     mov     a3, a0
@@ -10226,7 +10226,7 @@ InitializeBlock11_entry:
     mov     d0, (0x20, sp)
     mov     6, d2
     movhu   d2, (0x24, sp)
-    mov     0x4875116c, d0
+    mov     SND_ARG_Viewables, d0
     mov     d0, (0x28, sp)
     mov     0xb0, d0
     mov     a3, a0
@@ -10236,14 +10236,14 @@ InitializeBlock11_entry:
     mov     ResNameProc, d0
     mov     d0, (0x20, sp)
     movhu   d2, (0x24, sp)
-    mov     0x48751188, d0
+    mov     SND_ARG_ResNames, d0
     mov     d0, (0x28, sp)
     mov     0xb8, d0
     mov     a3, a0
     call    RegisterObjectTable, 0, 0
     mov     0xb, d0
-    mov     0x48645fcc, a0
-    mov     0x48645fd8, a1
+    mov     Str_OTB_SND_ARG, a0
+    mov     Str_iapsdarg, a1
     call    RegisterOTBlock_entry, [a2], 4
     mov     0x000f00c1, d0
     mov     d0, (0x10, sp)
@@ -10251,7 +10251,7 @@ InitializeBlock11_entry:
     mov     d0, (0x14, sp)
     mov     0xa, d0
     mov     0x00b30002, d1
-    mov     0x48645fe4, a0
+    mov     Str_MD_SND_ARG, a0
     call    RegisterMode_entry, [a2], 4
     mov     0x00b00000, d0
     mov     d0, (0x10, sp)
@@ -10259,7 +10259,7 @@ InitializeBlock11_entry:
     mov     d0, (0x14, sp)
     mov     0xc1, d0
     mov     0x00b30003, d1
-    mov     0x48645ff0, a0
+    mov     Str_TT_SNDARG, a0
     call    RegisterTitle_entry, [d2,a2], 8
     ret     [d2,d3,a2,a3], 0x3c
 
@@ -10329,7 +10329,7 @@ loc_48506DBD:
     jmp     loc_485070F9
 loc_48506DC8:
     add     0xfffb0001, d2
-    mov     0x48646010, a1
+    mov     data_48646010, a1
     mov     0xf, d0
     and     d2, d0
     asl     3, d0
@@ -10344,7 +10344,7 @@ loc_48506DC8:
     jmp     loc_485070F9
 loc_48506DEB:
     add     8, a0
-    cmp     0x48646090, a0
+    cmp     Field_AcMultiIndexList_end, a0
     bcs     loc_48506DF6
     mov     a1, a0
 loc_48506DF6:
@@ -10370,7 +10370,7 @@ loc_48506DF9:
     movhu   d0, (0x1e, sp)
     call    func_485070FD_entry, 0, 0x14
     movhu   (0x1e, sp), d1
-    mov     0x48645ffc, a2
+    mov     data_48645FFC, a2
     exth    d1
     add     -2, d1
     movbu   (d1, a2), d1
@@ -10429,7 +10429,7 @@ loc_48506EDF:
     and     0xff000000, d1
     lsr     24, d1
     extbu   d1
-    mov     0x48645ffc, a2
+    mov     data_48645FFC, a2
     setlb
     movbu   (a2), d0
     cmp     d0, d1
@@ -10484,7 +10484,7 @@ loc_48506F65:
     and     0xff000000, d1
     lsr     24, d1
     extbu   d1
-    mov     0x48645ffc, a2
+    mov     data_48645FFC, a2
     mov     a2, a0
     setlb
     movbu   (a0), d0
@@ -10550,7 +10550,7 @@ loc_48506FE9:
     jmp     loc_485070F3
 loc_48507015:
     movhu   (0x1e, sp), d0
-    mov     0x48645ffc, a0
+    mov     data_48645FFC, a0
     exth    d0
     add     -2, d0
     movbu   (d0, a0), d0
@@ -10590,7 +10590,7 @@ loc_4850707F:
     cmp     2, d0
     blt     loc_485070CC
     movhu   (0x1e, sp), d0
-    mov     0x48645ffc, a0
+    mov     data_48645FFC, a0
     exth    d0
     add     -2, d0
     movbu   (d0, a0), d0
@@ -10601,18 +10601,18 @@ loc_4850707F:
     mov     0x00b0005e, d0
     call    GetM3Em_entry, [d2,d3,a2], 0x24
     mov     (0x18, sp), d0
-    mov     0x48646004, a1
+    mov     Str_OFF_55, a1
     and     0xff, d0
     extbu   d0
     cmp     0, d0
     beq     loc_485070C2
-    mov     0x48646008, a1
+    mov     Str_ON_42, a1
 loc_485070C2:
     mov     a2, a0
     call    strcpy_entry, [a2], 4
     bra     loc_485070DA
 loc_485070CC:
-    mov     0x4864600c, a1
+    mov     Str_empty_1135, a1
     mov     a2, a0
     call    strcpy_entry, [a2], 4
 loc_485070DA:
@@ -10947,7 +10947,7 @@ InitializeBlock09_entry:
     mov     d0, (0x20, sp)
     mov     2, d3
     movhu   d3, (0x24, sp)
-    mov     0x487511a4, d0
+    mov     CMP_Classes, d0
     mov     d0, (0x28, sp)
     mov     0x94, d0
     mov     a3, a0
@@ -10958,7 +10958,7 @@ InitializeBlock09_entry:
     mov     d0, (0x20, sp)
     mov     1, d0
     movhu   d0, (0x24, sp)
-    mov     0x487511ec, d0
+    mov     CMP_Events, d0
     mov     d0, (0x28, sp)
     mov     0x95, d0
     mov     a3, a0
@@ -10968,7 +10968,7 @@ InitializeBlock09_entry:
     mov     MethodProc, d0
     mov     d0, (0x20, sp)
     movhu   d3, (0x24, sp)
-    mov     0x487511f4, d0
+    mov     CMP_Methods, d0
     mov     d0, (0x28, sp)
     mov     0x96, d0
     mov     a3, a0
@@ -10978,7 +10978,7 @@ InitializeBlock09_entry:
     mov     FunctionProc, a2
     mov     a2, (0x20, sp)
     movhu   d3, (0x24, sp)
-    mov     0x48751200, d0
+    mov     CMP_Functions, d0
     mov     d0, (0x28, sp)
     mov     0x91, d0
     mov     a3, a0
@@ -10986,7 +10986,7 @@ InitializeBlock09_entry:
     mov     d2, (0x1c, sp)
     mov     a2, (0x20, sp)
     movhu   d3, (0x24, sp)
-    mov     0x4875120c, d0
+    mov     CMP_FunctionNames, d0
     mov     d0, (0x28, sp)
     mov     0x99, d0
     mov     a3, a0
@@ -10997,7 +10997,7 @@ InitializeBlock09_entry:
     mov     a2, (0x20, sp)
     mov     0x5f, d2
     movhu   d2, (0x24, sp)
-    mov     0x48751218, d0
+    mov     CMP_ApFunctions, d0
     mov     d0, (0x28, sp)
     mov     0x92, d0
     mov     a3, a0
@@ -11005,7 +11005,7 @@ InitializeBlock09_entry:
     mov     d3, (0x1c, sp)
     mov     a2, (0x20, sp)
     movhu   d2, (0x24, sp)
-    mov     0x48751398, d0
+    mov     CMP_ApFunctionNames, d0
     mov     d0, (0x28, sp)
     mov     0x9a, d0
     mov     a3, a0
@@ -11016,7 +11016,7 @@ InitializeBlock09_entry:
     mov     a2, (0x20, sp)
     mov     0x2a, d2
     movhu   d2, (0x24, sp)
-    mov     0x48751518, d0
+    mov     CMP_MainFunctions, d0
     mov     d0, (0x28, sp)
     mov     0x93, d0
     mov     a3, a0
@@ -11024,7 +11024,7 @@ InitializeBlock09_entry:
     mov     d3, (0x1c, sp)
     mov     a2, (0x20, sp)
     movhu   d2, (0x24, sp)
-    mov     0x487515c4, d0
+    mov     CMP_MainFunctionNames, d0
     mov     d0, (0x28, sp)
     mov     0x9b, d0
     mov     a3, a0
@@ -11035,7 +11035,7 @@ InitializeBlock09_entry:
     mov     d0, (0x20, sp)
     mov     0x248, d2
     movhu   d2, (0x24, sp)
-    mov     0x48751670, d0
+    mov     CMP_Viewables, d0
     mov     d0, (0x28, sp)
     mov     0x90, d0
     mov     a3, a0
@@ -11045,14 +11045,14 @@ InitializeBlock09_entry:
     mov     ResNameProc, d0
     mov     d0, (0x20, sp)
     movhu   d2, (0x24, sp)
-    mov     0x48751f94, d0
+    mov     CMP_ResNames, d0
     mov     d0, (0x28, sp)
     mov     0x98, d0
     mov     a3, a0
     call    RegisterObjectTable, 0, 0
     mov     9, d0
-    mov     0x4864e4e0, a0
-    mov     0x4864e4e8, a1
+    mov     Str_OTB_CMP, a0
+    mov     Str_iapcmp, a1
     call    RegisterOTBlock_entry, [a2], 4
     mov     0x000f00b0, d0
     mov     d0, (0x10, sp)
@@ -11060,7 +11060,7 @@ InitializeBlock09_entry:
     mov     d0, (0x14, sp)
     mov     7, d0
     mov     0x00930000, d1
-    mov     0x4864e4f0, a0
+    mov     Str_MD_CMP, a0
     call    RegisterMode_entry, [a2], 4
     mov     0x00900000, d0
     mov     d0, (0x10, sp)
@@ -11068,7 +11068,7 @@ InitializeBlock09_entry:
     mov     d0, (0x14, sp)
     mov     0xb0, d0
     mov     0x00930001, d1
-    mov     0x4864e4f8, a0
+    mov     Str_TT_CMMENU, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x0090000f, d0
     mov     d0, (0x10, sp)
@@ -11076,7 +11076,7 @@ InitializeBlock09_entry:
     mov     d0, (0x14, sp)
     mov     0xb1, d0
     mov     0x00930002, d1
-    mov     0x4864e504, a0
+    mov     Str_TT_CMBKSL, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x00900028, d0
     mov     d0, (0x10, sp)
@@ -11084,7 +11084,7 @@ InitializeBlock09_entry:
     mov     d0, (0x14, sp)
     mov     0xb2, d0
     mov     0x00930003, d1
-    mov     0x4864e510, a0
+    mov     Str_TT_CMBKSL_S, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x00900051, d0
     mov     d0, (0x10, sp)
@@ -11092,7 +11092,7 @@ InitializeBlock09_entry:
     mov     d0, (0x14, sp)
     mov     0xb3, d0
     mov     0x00020000, d1
-    mov     0x4864e51c, a0
+    mov     Str_TT_CMNAME, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x00900056, d0
     mov     d0, (0x10, sp)
@@ -11100,7 +11100,7 @@ InitializeBlock09_entry:
     mov     d0, (0x14, sp)
     mov     0xb4, d0
     mov     0x00020000, d1
-    mov     0x4864e528, a0
+    mov     Str_TT_CMSET, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x00900061, d0
     mov     d0, (0x10, sp)
@@ -11108,7 +11108,7 @@ InitializeBlock09_entry:
     mov     d0, (0x14, sp)
     mov     0xb5, d0
     mov     0x00930004, d1
-    mov     0x4864e534, a0
+    mov     Str_TT_CMREAL, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x01700000, d0
     mov     d0, (0x10, sp)
@@ -11116,7 +11116,7 @@ InitializeBlock09_entry:
     mov     d0, (0x14, sp)
     mov     0xb6, d0
     mov     0x01730001, d1
-    mov     0x4864e540, a0
+    mov     Str_TT_CMSTEP, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x0090009c, d0
     mov     d0, (0x10, sp)
@@ -11124,7 +11124,7 @@ InitializeBlock09_entry:
     mov     d0, (0x14, sp)
     mov     0xb7, d0
     mov     0x00930005, d1
-    mov     0x4864e54c, a0
+    mov     Str_TT_CMBAL, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x009000a8, d0
     mov     d0, (0x10, sp)
@@ -11132,7 +11132,7 @@ InitializeBlock09_entry:
     mov     d0, (0x14, sp)
     mov     0xb8, d0
     mov     0x00930006, d1
-    mov     0x4864e558, a0
+    mov     Str_TT_CMPNCP, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x009000ae, d0
     mov     d0, (0x10, sp)
@@ -11140,7 +11140,7 @@ InitializeBlock09_entry:
     mov     d0, (0x14, sp)
     mov     0xb9, d0
     mov     0x00020000, d1
-    mov     0x4864e564, a0
+    mov     Str_TT_CMSEQCP, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x009000d3, d0
     mov     d0, (0x10, sp)
@@ -11148,7 +11148,7 @@ InitializeBlock09_entry:
     mov     d0, (0x14, sp)
     mov     0xba, d0
     mov     0x00930007, d1
-    mov     0x4864e570, a0
+    mov     Str_TT_CMEASY, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x009000df, d0
     mov     d0, (0x10, sp)
@@ -11156,7 +11156,7 @@ InitializeBlock09_entry:
     mov     d0, (0x14, sp)
     mov     0xbb, d0
     mov     0x00930008, d1
-    mov     0x4864e57c, a0
+    mov     Str_TT_CMPTCHD, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x009000e1, d0
     mov     d0, (0x10, sp)
@@ -11164,7 +11164,7 @@ InitializeBlock09_entry:
     mov     d0, (0x14, sp)
     mov     0xbc, d0
     mov     0x00020000, d1
-    mov     0x4864e588, a0
+    mov     Str_TT_CMMEASEDIT, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x009000e6, d0
     mov     d0, (0x10, sp)
@@ -11172,7 +11172,7 @@ InitializeBlock09_entry:
     mov     d0, (0x14, sp)
     mov     0xbd, d0
     mov     0x00930009, d1
-    mov     0x4864e598, a0
+    mov     Str_TT_CMDSPSET, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x009000f0, d0
     mov     d0, (0x10, sp)
@@ -11180,7 +11180,7 @@ InitializeBlock09_entry:
     mov     d0, (0x14, sp)
     mov     0xbe, d0
     mov     0x00020000, d1
-    mov     0x4864e5a4, a0
+    mov     Str_TT_CMCSTMCP, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x00900105, d0
     mov     d0, (0x10, sp)
@@ -11188,7 +11188,7 @@ InitializeBlock09_entry:
     mov     d0, (0x14, sp)
     mov     0xbf, d0
     mov     0x0093000a, d1
-    mov     0x4864e5b0, a0
+    mov     Str_TT_CMPARTSET, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x0090010b, d0
     mov     d0, (0x10, sp)
@@ -11196,7 +11196,7 @@ InitializeBlock09_entry:
     mov     d0, (0x14, sp)
     mov     0xc2, d0
     mov     0x00020000, d1
-    mov     0x4864e5c0, a0
+    mov     Str_TT_CMMEASCPY, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x0090012b, d0
     mov     d0, (0x10, sp)
@@ -11204,7 +11204,7 @@ InitializeBlock09_entry:
     mov     d0, (0x14, sp)
     mov     0xc3, d0
     mov     0x00020000, d1
-    mov     0x4864e5d0, a0
+    mov     Str_TT_CMMEASDEL, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x0090013a, d0
     mov     d0, (0x10, sp)
@@ -11212,7 +11212,7 @@ InitializeBlock09_entry:
     mov     d0, (0x14, sp)
     mov     0xc4, d0
     mov     0x00020000, d1
-    mov     0x4864e5e0, a0
+    mov     Str_TT_CMMEASERS, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x0090014d, d0
     mov     d0, (0x10, sp)
@@ -11220,7 +11220,7 @@ InitializeBlock09_entry:
     mov     d0, (0x14, sp)
     mov     0xc5, d0
     mov     0x00020000, d1
-    mov     0x4864e5f0, a0
+    mov     Str_TT_CMMEASINS, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x009000e6, d0
     mov     d0, (0x10, sp)
@@ -11228,7 +11228,7 @@ InitializeBlock09_entry:
     mov     d0, (0x14, sp)
     mov     0xc6, d0
     mov     0x00930009, d1
-    mov     0x4864e600, a0
+    mov     Str_TT_CM2DSPSET, a0
     call    RegisterTitle_entry, [d2,a2], 8
     ret     [d2,d3,a2,a3], 0x3c
 # CmpRecMemSelFunc  (CPU 0x48507927)
@@ -11249,7 +11249,7 @@ loc_4850793C:
     extbu   d1
     cmp     3, d1
     bcc     loc_48507978
-    movhu   (0x48736006), d0
+    movhu   (data_48736006), d0
     extbu   d1
     extbu   d0
     call    func_48435ABD_entry, [d2,d3], 8
@@ -11470,7 +11470,7 @@ loc_48507B84:
     mov     a0, (0x10, sp)
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     call    func_48436C01_entry, [d2], 0xc
-    movbu   (0x50003e74), d1
+    movbu   (data_50003E74), d1
     extbu   d0
     cmp     d0, d1
     beq     loc_48507BB1
@@ -11495,14 +11495,14 @@ loc_48507BB4:
     bra     loc_48507C04
 loc_48507BD3:
     mov     (0x28, sp), a1
-    mov     0x4864e6dc, d0
+    mov     Str_2d_19, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
     call    func_48436C01_entry, [d2], 0xc
-    movbu   d0, (0x50003e74)
+    movbu   d0, (data_50003E74)
     extbu   d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_48507C04
 loc_48507BF9:
@@ -11622,7 +11622,7 @@ loc_48507D4D:
     bgt     loc_48507DA5
     mov     d0, d1
     asl2    d1
-    mov     0x4865043c, a1
+    mov     data_4865043C, a1
     mov     (d1, a1), a1
     jmp     (a1)
     mov     d2, a3
@@ -11894,12 +11894,12 @@ loc_4850800A:
     bra     loc_48508036
 loc_4850800D:
     mov     (0x24, sp), a0
-    mov     0x4864e6e4, d0
+    mov     Str_2d_34, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
     movbu   (0x5006e234), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_48508036
 loc_4850802B:
@@ -11925,7 +11925,7 @@ loc_4850804B:
     ble     loc_48508056
     jmp     loc_485081E3
 loc_48508056:
-    mov     0x4865048c, a1
+    mov     data_4865048C, a1
     add     0xfffb0001, d2
     mov     a1, a0
     mov     0xf, d0
@@ -11941,7 +11941,7 @@ loc_48508056:
     jmp     loc_485081E3
 loc_48508078:
     add     8, a0
-    cmp     0x4865050c, a0
+    cmp     data_4865050C, a0
     bcs     loc_48508083
     mov     a1, a0
 loc_48508083:
@@ -11992,10 +11992,10 @@ loc_485080EF:
     clr     d0
     ret     [d2,d3], 0x1c
     movbu   (0x5006e239), d0
-    mov     0x4864e6e8, a0
+    mov     Str_ENABLE_2, a0
     cmp     0, d0
     bne     loc_48508109
-    mov     0x4864e6f2, a0
+    mov     Str_DISABLE_2, a0
 loc_48508109:
     mov     a0, (0x10, sp)
     mov     0x00900038, d0
@@ -12280,7 +12280,7 @@ loc_48508401:
     ble     loc_4850840C
     jmp     loc_48508486
 loc_4850840C:
-    mov     0x4865050c, a1
+    mov     data_4865050C, a1
     add     0xff6fffc5, d2
     mov     0x1f, d1
     and     d2, d1
@@ -12294,7 +12294,7 @@ loc_4850840C:
     cmp     0, d1
     beq     loc_48508486
     add     8, a0
-    cmp     0x4865060c, a0
+    cmp     data_4865060C, a0
     bcs     loc_48508437
     mov     a1, a0
 loc_48508437:
@@ -12737,7 +12737,7 @@ loc_48508829:
     mov     0xf, d1
     and     d2, d1
     asl2    d1
-    mov     0x4864e640, a0
+    mov     ptrs_4864E640, a0
     mov     (d1, a0), d1
     mov     d1, (0x10, sp)
     mov     0x000600b4, d1
@@ -12772,7 +12772,7 @@ loc_48508887:
     mov     0xf, d1
     and     d2, d1
     asl2    d1
-    mov     0x4864e640, a0
+    mov     ptrs_4864E640, a0
     mov     (d1, a0), d1
     mov     d1, (0x10, sp)
     mov     0x000600b4, d1
@@ -12786,7 +12786,7 @@ loc_485088E5:
     extbu   d0
     and     0x0f, d0
     asl2    d0
-    mov     0x4864e640, a1
+    mov     ptrs_4864E640, a1
     mov     (d0, a1), a1
     call    strcpy_entry, [a2], 4
     clr     d0
@@ -12842,11 +12842,11 @@ loc_4850895B:
     mov     0x00930011, d0
     mov     0x0006003b, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
-    mov     0x4864e6fc, a2
+    mov     Str_Min_6, a2
     extbu   d2
     btst    0x10, d2
     bne     loc_4850899F
-    mov     0x4864e700, a2
+    mov     Str_Maj_5, a2
 loc_4850899F:
     call    GetFocusObject_entry, 0, 0x10
     mov     a2, (0x10, sp)
@@ -12871,11 +12871,11 @@ loc_485089B9:
     mov     0x00930011, d0
     mov     0x0006003b, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
-    mov     0x4864e704, a2
+    mov     Str_Min_5, a2
     extbu   d2
     btst    0x10, d2
     bne     loc_48508A00
-    mov     0x4864e708, a2
+    mov     Str_Maj_4, a2
 loc_48508A00:
     call    GetFocusObject_entry, 0, 0x10
     mov     a2, (0x10, sp)
@@ -12889,18 +12889,18 @@ loc_48508A19:
     cmp     0xc, d0
     bge     loc_48508A47
     call    func_4843C107_entry, [d2], 0x10
-    mov     0x4864e70c, a1
+    mov     Str_Min_4, a1
     extbu   d0
     btst    0x10, d0
     bne     loc_48508A3C
-    mov     0x4864e710, a1
+    mov     Str_Maj_3, a1
 loc_48508A3C:
     mov     (0x2c, sp), a0
     call    strcpy_entry, [a2], 4
     bra     loc_48508A56
 loc_48508A47:
     mov     (0x2c, sp), a0
-    mov     0x4864e714, a1
+    mov     Str_empty_1130, a1
     call    strcpy_entry, [a2], 4
 loc_48508A56:
     clr     d0
@@ -12964,7 +12964,7 @@ loc_48508AC0:
     ble     loc_48508ACB
     jmp     loc_48508C0F
 loc_48508ACB:
-    mov     0x4865060c, a1
+    mov     data_4865060C, a1
     add     0xfffb0001, d2
     mov     0xf, d0
     and     d2, d0
@@ -12980,7 +12980,7 @@ loc_48508ACB:
     jmp     loc_48508C0F
 loc_48508AEE:
     add     8, a0
-    cmp     0x4865068c, a0
+    cmp     data_4865068C, a0
     bcs     loc_48508AF9
     mov     a1, a0
 loc_48508AF9:
@@ -13007,7 +13007,7 @@ loc_48508AFC:
     clr     d1
 loc_48508B2E:
     extbu   d1
-    mov     0x4864e6d4, a0
+    mov     data_4864E6D4, a0
     movbu   (d1, a0), d0
     clr     d1
     movbu   d0, (0x50152350)
@@ -13017,7 +13017,7 @@ loc_48508B2E:
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     call    GetFocusObject_entry, 0, 0x10
     movbu   (0x50152350), d1
-    mov     0x4864e6b4, a0
+    mov     ptrs_4864E6B4, a0
     asl2    d1
     mov     (d1, a0), d1
     mov     d1, (0x10, sp)
@@ -13035,7 +13035,7 @@ loc_48508B2E:
     mov     7, d1
 loc_48508B91:
     extbu   d1
-    mov     0x4864e6d4, a0
+    mov     data_4864E6D4, a0
     movbu   (d1, a0), d0
     clr     d1
     movbu   d0, (0x50152350)
@@ -13045,7 +13045,7 @@ loc_48508B91:
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     call    GetFocusObject_entry, 0, 0x10
     movbu   (0x50152350), d1
-    mov     0x4864e6b4, a0
+    mov     ptrs_4864E6B4, a0
     asl2    d1
     mov     (d1, a0), d1
     mov     d1, (0x10, sp)
@@ -13056,7 +13056,7 @@ loc_48508B91:
     movbu   (0x50152350), d0
     mov     (0x2c, sp), a0
     asl2    d0
-    mov     0x4864e6b4, a1
+    mov     ptrs_4864E6B4, a1
     mov     (d0, a1), a1
     call    strcpy_entry, [a2], 4
     clr     d0
@@ -13096,7 +13096,7 @@ loc_48508C35:
     nop
     mul     d1, d0
     mov     d0, a0
-    add     0x48750fa8, a0
+    add     ptrs_48750FA8, a0
     mov     (4, a0), a0
     movbu   (0x28, sp), d0
     extbu   d2
@@ -13121,10 +13121,10 @@ func_48508C65_entry:
     mov     a0, (0x30, sp)
     call    func_4843C72B_entry, [d2], 0x10
     movbu   d0, (0x10, sp)
-    mov     (0x48750fa8), d0
+    mov     (ptrs_48750FA8), d0
     mov     0, a3
     cmp     0, d0
-    mov     0x48750fa8, a1
+    mov     ptrs_48750FA8, a1
     beq     loc_48508CC9
     movbu   (0x10, sp), d0
     mov     a1, a2
@@ -13186,7 +13186,7 @@ func_48508CDB_entry:
     clr     d1
     extbu   d2
     setlb
-    mov     0x4864e6d4, a0
+    mov     data_4864E6D4, a0
     extbu   d0
     movbu   (d0, a0), d0
     cmp     d2, d0
@@ -13554,7 +13554,7 @@ loc_485090A4:
     bge     loc_485090E8
     inc     d1
     movbu   d1, (0x501523d0)
-    movhu   (0x48736006), d0
+    movhu   (data_48736006), d0
     movbu   (0x501523d0), d1
     extbu   d0
     call    func_48435ABD_entry, [d2,d3], 8
@@ -13573,7 +13573,7 @@ loc_485090EC:
     ble     loc_4850912F
     add     -1, d0
     movbu   d0, (0x501523d0)
-    movhu   (0x48736006), d0
+    movhu   (data_48736006), d0
     movbu   (0x501523d0), d1
     extbu   d0
     call    func_48435ABD_entry, [d2,d3], 8
@@ -13593,14 +13593,14 @@ loc_48509132:
     mov     (0x501523d4), d0
     call    func_48433BDC_entry, [d2,a2,a3], 0x20
     mov     (0x4c, sp), a1
-    mov     0x4864e718, d0
+    mov     Str_1c_13s_2, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
     movbu   (0x501523d0), d0
     add     0x41, d0
     mov     d0, (0x10, sp)
     mov     a2, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_48509168
     bra     loc_48509168
@@ -13640,30 +13640,30 @@ loc_485091AF:
 loc_485091BA:
     jmp     loc_485093BD
 loc_485091BD:
-    movbu   (0x50003e78), d0
+    movbu   (data_50003E78), d0
     movbu   (0x501523cf), d2
-    mov     0x4864e724, a0
+    mov     data_4864E724, a0
     movbu   (d0, a0), d0
     cmp     d0, d2
     beq     loc_48509232
     clr     d0
-    movbu   d0, (0x50003e78)
+    movbu   d0, (data_50003E78)
     clr     d1
     setlb
-    movbu   (0x50003e78), d0
+    movbu   (data_50003E78), d0
     movbu   (d0, a0), d0
     cmp     d0, d2
     beq     loc_485091F8
     inc     d1
-    movbu   d1, (0x50003e78)
-    movbu   (0x50003e78), d1
+    movbu   d1, (data_50003E78)
+    movbu   (data_50003E78), d1
     cmp     0x15, d1
     llt
 loc_485091F8:
     cmp     0x15, d1
     bne     loc_48509232
     mov     1, d0
-    movbu   d0, (0x50003e78)
+    movbu   d0, (data_50003E78)
     movbu   (1, a0), d0
     movbu   d0, (0x501523cf)
     movbu   (0x501523cf), d0
@@ -13682,15 +13682,15 @@ loc_48509232:
     clr     d0
     ret     [d2,a2], 0x3c
 loc_48509236:
-    movbu   (0x50003e78), d0
+    movbu   (data_50003E78), d0
     mov     d0, d1
     inc     d1
     cmp     0x15, d1
     bge     loc_4850925D
     inc     d0
-    movbu   d0, (0x50003e78)
-    movbu   (0x50003e78), d0
-    mov     0x4864e724, a0
+    movbu   d0, (data_50003E78)
+    movbu   (data_50003E78), d0
+    mov     data_4864E724, a0
     movbu   (d0, a0), d1
     movbu   d1, (0x501523cf)
 loc_4850925D:
@@ -13725,13 +13725,13 @@ loc_48509282:
     clr     d0
     ret     [d2,a2], 0x3c
 loc_485092C9:
-    movbu   (0x50003e78), d0
+    movbu   (data_50003E78), d0
     cmp     0, d0
     ble     loc_485092EF
     add     -1, d0
-    movbu   d0, (0x50003e78)
-    movbu   (0x50003e78), d0
-    mov     0x4864e724, a0
+    movbu   d0, (data_50003E78)
+    movbu   (data_50003E78), d0
+    mov     data_4864E724, a0
     movbu   (d0, a0), d1
     movbu   d1, (0x501523cf)
 loc_485092EF:
@@ -13766,20 +13766,20 @@ loc_48509314:
     clr     d0
     bra     loc_485093BE
 loc_4850935A:
-    movbu   (0x50003e78), d0
+    movbu   (data_50003E78), d0
     movbu   (0x501523cf), d1
-    mov     0x4864e724, a0
+    mov     data_4864E724, a0
     movbu   (d0, a0), d0
     cmp     d0, d1
     beq     loc_48509392
     clr     d0
-    movbu   d0, (0x50003e78)
+    movbu   d0, (data_50003E78)
     cmp     0x14, d1
     beq     loc_48509384
     mov     1, d0
-    movbu   d0, (0x50003e78)
+    movbu   d0, (data_50003E78)
 loc_48509384:
-    movbu   (0x50003e78), d0
+    movbu   (data_50003E78), d0
     movbu   (d0, a0), d1
     movbu   d1, (0x501523cf)
 loc_48509392:
@@ -13791,11 +13791,11 @@ loc_48509392:
     clr     d1
     call    func_48509CA1_entry, [d2], 0x14
     mov     (0x4c, sp), a0
-    mov     0x4864e73c, d0
+    mov     Str_15s_2, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
     mov     a2, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_485093BE
     bra     loc_485093BE
@@ -13865,7 +13865,7 @@ loc_4850946E:
     cmp     0x14, d0
     bne     loc_48509489
     mov     (0x28, sp), a0
-    mov     0x4864e744, a1
+    mov     Str_empty_924, a1
     call    strcpy_entry, [a2], 4
     bra     loc_485094CE
 loc_48509489:
@@ -13878,17 +13878,17 @@ loc_48509489:
     beq     loc_485094BF
     bra     loc_485094CE
 loc_4850949D:
-    mov     0x4864e754, a1
+    mov     Str_OFF_53, a1
     mov     (0x28, sp), a0
     call    strcpy_entry, [a2], 4
     bra     loc_485094CE
 loc_485094AE:
-    mov     0x4864e764, a1
+    mov     Str_PART_SETTING_9, a1
     mov     (0x28, sp), a0
     call    strcpy_entry, [a2], 4
     bra     loc_485094CE
 loc_485094BF:
-    mov     0x4864e774, a1
+    mov     Str_TYPE_PART_SET, a1
     mov     (0x28, sp), a0
     call    strcpy_entry, [a2], 4
 loc_485094CE:
@@ -14048,22 +14048,22 @@ loc_4850964F:
     cmp     0, d0
     beq     loc_485096C2
     mov     (0x64, sp), a1
-    mov     0x4864e784, d0
+    mov     Str_1c_13s, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
     movbu   (0x501523cd), d0
     add     0x41, d0
     mov     d0, (0x10, sp)
     mov     a2, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_485096D7
 loc_485096C2:
     mov     (0x64, sp), a0
-    mov     0x4864e790, d0
+    mov     Str_13s, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
     mov     a2, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_485096D7:
     mov     (0x501523c8), d0
     mov     d0, (0x5006e23c)
@@ -14106,30 +14106,30 @@ loc_48509730:
 loc_4850973B:
     jmp     loc_48509969
 loc_4850973E:
-    movbu   (0x50003e7c), d0
+    movbu   (data_50003E7C), d0
     movbu   (0x501523cc), d2
-    mov     0x4864e798, a0
+    mov     data_4864E798, a0
     movbu   (d0, a0), d0
     cmp     d0, d2
     beq     loc_485097B3
     clr     d0
-    movbu   d0, (0x50003e7c)
+    movbu   d0, (data_50003E7C)
     clr     d1
     setlb
-    movbu   (0x50003e7c), d0
+    movbu   (data_50003E7C), d0
     movbu   (d0, a0), d0
     cmp     d0, d2
     beq     loc_48509779
     inc     d1
-    movbu   d1, (0x50003e7c)
-    movbu   (0x50003e7c), d1
+    movbu   d1, (data_50003E7C)
+    movbu   (data_50003E7C), d1
     cmp     0x15, d1
     llt
 loc_48509779:
     cmp     0x15, d1
     bne     loc_485097B3
     mov     1, d0
-    movbu   d0, (0x50003e7c)
+    movbu   d0, (data_50003E7C)
     movbu   (1, a0), d0
     movbu   d0, (0x501523cc)
     movbu   (0x501523cc), d0
@@ -14148,15 +14148,15 @@ loc_485097B3:
     clr     d0
     ret     [d2,a2], 0x4c
 loc_485097B7:
-    movbu   (0x50003e7c), d0
+    movbu   (data_50003E7C), d0
     mov     d0, d1
     inc     d1
     cmp     0x15, d1
     bge     loc_485097DE
     inc     d0
-    movbu   d0, (0x50003e7c)
-    movbu   (0x50003e7c), d0
-    mov     0x4864e798, a0
+    movbu   d0, (data_50003E7C)
+    movbu   (data_50003E7C), d0
+    mov     data_4864E798, a0
     movbu   (d0, a0), d1
     movbu   d1, (0x501523cc)
 loc_485097DE:
@@ -14191,13 +14191,13 @@ loc_48509803:
     clr     d0
     ret     [d2,a2], 0x4c
 loc_4850984A:
-    movbu   (0x50003e7c), d0
+    movbu   (data_50003E7C), d0
     cmp     0, d0
     ble     loc_48509870
     add     -1, d0
-    movbu   d0, (0x50003e7c)
-    movbu   (0x50003e7c), d0
-    mov     0x4864e798, a0
+    movbu   d0, (data_50003E7C)
+    movbu   (data_50003E7C), d0
+    mov     data_4864E798, a0
     movbu   (d0, a0), d1
     movbu   d1, (0x501523cc)
 loc_48509870:
@@ -14243,20 +14243,20 @@ loc_485098DC:
     mov     0x009000ad, d0
     mov     0x0006003b, d1
     call    SendEvent_entry, [d2,d3], 0x24
-    movbu   (0x50003e7c), d0
+    movbu   (data_50003E7C), d0
     movbu   (0x501523cc), d1
-    mov     0x4864e798, a0
+    mov     data_4864E798, a0
     movbu   (d0, a0), d0
     cmp     d0, d1
     beq     loc_4850993E
     clr     d0
-    movbu   d0, (0x50003e7c)
+    movbu   d0, (data_50003E7C)
     cmp     0x14, d1
     beq     loc_48509930
     mov     1, d0
-    movbu   d0, (0x50003e7c)
+    movbu   d0, (data_50003E7C)
 loc_48509930:
-    movbu   (0x50003e7c), d0
+    movbu   (data_50003E7C), d0
     movbu   (d0, a0), d1
     movbu   d1, (0x501523cc)
 loc_4850993E:
@@ -14268,11 +14268,11 @@ loc_4850993E:
     clr     d1
     call    func_48509CA1_entry, [d2], 0x14
     mov     (0x5c, sp), a0
-    mov     0x4864e7b0, d0
+    mov     Str_15s, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
     mov     a2, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_4850996A
     bra     loc_4850996A
@@ -14343,7 +14343,7 @@ loc_485099DE:
     call    func_48509C2A_entry, [d2], 4
     cmp     0, d0
     beq     loc_48509A54
-    movhu   (0x48736006), d0
+    movhu   (data_48736006), d0
     clr     d1
     movbu   d0, (0x501523ce)
     clr     d0
@@ -14413,8 +14413,8 @@ loc_48509A7E:
     ret     [d2,d3,a2], 0x48
 loc_48509B1A:
     movbu   (0x501523cd), d0
-    movhu   (0x48736002), d2
-    movhu   (0x48736004), d1
+    movhu   (data_48736002), d2
+    movhu   (data_48736004), d1
     movbu   d0, (0x18, sp)
     movbu   (0x501523ce), d0
     add     d1, d2
@@ -14422,7 +14422,7 @@ loc_48509B1A:
     cmp     d2, d0
     movbu   (0x501523ce), d3
     bne     loc_48509B4C
-    movhu   (0x48736006), d3
+    movhu   (data_48736006), d3
     clr     d0
     movbu   d0, (0x18, sp)
     bra     loc_48509B63
@@ -14452,13 +14452,13 @@ loc_48509B63:
     ret     [d2,d3,a2], 0x48
 loc_48509B88:
     movbu   (0x501523ce), d1
-    movhu   (0x48736006), d0
+    movhu   (data_48736006), d0
     movbu   (0x501523ce), d2
     cmp     d0, d1
     movbu   (0x501523cd), d3
     bne     loc_48509BB5
-    movhu   (0x48736002), d2
-    movhu   (0x48736004), d0
+    movhu   (data_48736002), d2
+    movhu   (data_48736004), d0
     clr     d3
     add     d0, d2
     add     -1, d2
@@ -14495,11 +14495,11 @@ loc_48509BEF:
     movbu   (0x501523ce), d0
     call    GetGenreName_entry, [d2,d3,a2], 0x20
     mov     (0x58, sp), a1
-    mov     0x4864e7b8, d0
+    mov     Str_16s, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
     mov     a2, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     movbu   (0x501523ce), d0
     movbu   d0, (0x5006e240)
     clr     d0
@@ -14516,11 +14516,11 @@ func_48509C2A_entry:
     cmp     0, d0
     beq     loc_48509C51
     mov     (0x18, sp), a0
-    movhu   (0x48736002), d0
+    movhu   (data_48736002), d0
     cmp     a0, d0
     bgt     loc_48509C51
-    movhu   (0x48736002), d2
-    movhu   (0x48736004), d0
+    movhu   (data_48736002), d2
+    movhu   (data_48736004), d0
     add     d0, d2
     cmp     d2, a0
     bge     loc_48509C51
@@ -14530,11 +14530,11 @@ loc_48509C51:
     cmp     0, d1
     beq     loc_48509C76
     mov     (0x18, sp), a0
-    movhu   (0x48736006), d0
+    movhu   (data_48736006), d0
     cmp     a0, d0
     bgt     loc_48509C76
-    movhu   (0x48736006), d1
-    movhu   (0x48736008), d0
+    movhu   (data_48736006), d1
+    movhu   (data_48736008), d0
     add     d0, d1
     cmp     d1, a0
     bge     loc_48509C76
@@ -14545,11 +14545,11 @@ loc_48509C76:
     cmp     0, a0
     beq     loc_48509C9D
     mov     (0x18, sp), a0
-    movhu   (0x4873600a), d0
+    movhu   (data_4873600A), d0
     cmp     a0, d0
     bgt     loc_48509C9D
-    movhu   (0x4873600a), d1
-    movhu   (0x4873600c), d0
+    movhu   (data_4873600A), d1
+    movhu   (data_4873600C), d0
     add     d0, d1
     cmp     d1, a0
     bge     loc_48509C9D
@@ -14590,7 +14590,7 @@ loc_48509CC4:
     nop
     nop
     mulu    d1, d0
-    add     0x4864ebb0, d0
+    add     ptrs_4864EBB0, d0
     exthu   d2
     asl2    d2
     mov     d0, a1
@@ -14614,7 +14614,7 @@ loc_48509CF7:
     ble     loc_48509D02
     jmp     loc_4850A1F7
 loc_48509D02:
-    mov     0x4865068c, a1
+    mov     data_4865068C, a1
     add     0xfffb0001, d2
     mov     0xf, d0
     and     d2, d0
@@ -14630,7 +14630,7 @@ loc_48509D02:
     jmp     loc_4850A1F7
 loc_48509D25:
     add     8, a0
-    cmp     0x4865070c, a0
+    cmp     data_4865070C, a0
     bcs     loc_48509D30
     mov     a1, a0
 loc_48509D30:
@@ -14641,12 +14641,12 @@ loc_48509D33:
     mov     (4, a0), a0
     jmp     (a0)
     mov     (0x501523c8), d1
-    mov     (0x50003e80), d0
+    mov     (data_50003E80), d0
     cmp     d1, d0
     bne     loc_48509D4A
     jmp     loc_4850A1FB
 loc_48509D4A:
-    mov     d1, (0x50003e80)
+    mov     d1, (data_50003E80)
     movbu   (0x501523cc), d0
     clr     d1
     mov     d1, (0x28, sp)
@@ -14692,13 +14692,13 @@ loc_48509D96:
     mov     (0x24, sp), a0
     mov     d0, (a0)
     movbu   (a3), d0
-    mov     0x4864ecb4, a0
+    mov     data_4864ECB4, a0
     movbu   (d0, a0), d0
     mov     (0x20, sp), a0
     inc     a3
     movbu   d0, (a0)
     movbu   (a2), d0
-    mov     0x4864ecac, a0
+    mov     data_4864ECAC, a0
     movbu   (d0, a0), d0
     mov     (0x1c, sp), a0
     inc     a2
@@ -14783,13 +14783,13 @@ loc_48509E81:
     mov     d0, a0
     cmp     0, d3
     ble     loc_48509ECD
-    movhu   (0x48736002), d1
-    movhu   (0x48736004), d0
+    movhu   (data_48736002), d1
+    movhu   (data_48736004), d0
     add     d0, d1
     add     -1, d1
     cmp     d1, a0
     bne     loc_48509EB1
-    movhu   (0x48736006), d0
+    movhu   (data_48736006), d0
     movhu   d0, (a2)
     bra     loc_48509F06
 loc_48509EB1:
@@ -14809,11 +14809,11 @@ loc_48509EC6:
     movhu   d0, (a2)
     bra     loc_48509F06
 loc_48509ECD:
-    movhu   (0x48736006), d0
+    movhu   (data_48736006), d0
     cmp     d0, a0
     bne     loc_48509EEA
-    movhu   (0x48736002), d1
-    movhu   (0x48736004), d0
+    movhu   (data_48736002), d1
+    movhu   (data_48736004), d0
     add     d0, d1
     add     -1, d1
     movhu   d1, (a2)
@@ -15000,7 +15000,7 @@ loc_4850A0AF:
     extbu   d0
     call    GetGenreName_entry, [d2,d3,a2], 0x20
     mov     1, d0
-    mov     d0, (0x50003e84)
+    mov     d0, (data_50003E84)
     jmp     loc_4850A1C1
 loc_4850A0D2:
     mov     d3, a3
@@ -15019,7 +15019,7 @@ loc_4850A0D2:
     add     0x5015239c, a0
     mov     d0, (a0)
     movhu   (a2), d2
-    movhu   (0x48736006), d0
+    movhu   (data_48736006), d0
     cmp     d0, d2
     bne     loc_4850A12F
     mov     (a0), d0
@@ -15029,13 +15029,13 @@ loc_4850A0D2:
     call    func_48433BDC_entry, [d2,a2,a3], 0x20
     mov     (0x18, sp), d0
     mov     d0, (8, sp)
-    mov     0x4864ed18, d0
+    mov     Str_1c_s, d0
     mov     d0, (0xc, sp)
     movhu   (a3), d0
     add     0x41, d0
     mov     d0, (0x10, sp)
     mov     a2, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_4850A150
 loc_4850A12F:
     mov     (a0), d0
@@ -15045,10 +15045,10 @@ loc_4850A12F:
     call    func_48433BDC_entry, [d2,a2,a3], 0x20
     mov     (0x18, sp), d0
     mov     d0, (8, sp)
-    mov     0x4864ed20, d0
+    mov     Str_s_6, d0
     mov     d0, (0xc, sp)
     mov     a2, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_4850A150:
     cmp     0, d3
     bne     loc_4850A1C1
@@ -15057,7 +15057,7 @@ loc_4850A150:
 loc_4850A15B:
     mov     0x5006e264, a0
     movbu   (d3, a0), d0
-    mov     0x4864ecb4, a0
+    mov     data_4864ECB4, a0
     movbu   (d0, a0), d0
     mov     0x50152394, a0
     movbu   d0, (d3, a0)
@@ -15078,12 +15078,12 @@ loc_4850A193:
     mov     d3, a0
     add     0x5006e26c, a0
     movbu   (a0), d0
-    mov     0x4864ecac, a1
+    mov     data_4864ECAC, a1
     movbu   (d0, a1), d0
     mov     0x5015238c, a1
     movbu   d0, (d3, a1)
     movbu   (a0), d0
-    mov     0x4864ecf8, a0
+    mov     ptrs_4864ECF8, a0
     asl2    d0
     mov     (d0, a0), a1
     mov     (0x18, sp), a0
@@ -15095,11 +15095,11 @@ loc_4850A1C1:
     mov     a0, (0x10, sp)
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_4850A1FB
-    mov     (0x50003e84), d0
+    mov     (data_50003E84), d0
     cmp     0, d0
     beq     loc_4850A1F0
     clr     d0
-    mov     d0, (0x50003e84)
+    mov     d0, (data_50003E84)
     mov     3, d0
     bra     loc_4850A1FC
 loc_4850A1F0:
@@ -15238,22 +15238,22 @@ loc_4850A2EB:
     bra     loc_4850A357
 loc_4850A327:
     mov     a1, a0
-    mov     0x4864ed28, a1
+    mov     Str_COPY_3, a1
     call    strcpy_entry, [a2], 4
     bra     loc_4850A365
 loc_4850A337:
     mov     a1, a0
-    mov     0x4864ed30, a1
+    mov     Str_KEEP_3, a1
     call    strcpy_entry, [a2], 4
     bra     loc_4850A365
 loc_4850A347:
     mov     a1, a0
-    mov     0x4864ed38, a1
+    mov     Str_CLEAR_2, a1
     call    strcpy_entry, [a2], 4
     bra     loc_4850A365
 loc_4850A357:
     mov     a1, a0
-    mov     0x4864ed40, a1
+    mov     Str_ERROR_19, a1
     call    strcpy_entry, [a2], 4
 loc_4850A365:
     call    GetFocusObject_entry, 0, 0x10
@@ -15279,18 +15279,18 @@ CmpPrtCpyEditFunc:
     beq     loc_4850A3EA
     bra     loc_4850A3F1
 loc_4850A39E:
-    movhu   (0x48736006), d2
-    movbu   (0x50007e18), d0
+    movhu   (data_48736006), d2
+    movbu   (data_50007E18), d0
     extbu   d2
     add     d0, d0
-    mov     0x487528b8, a2
+    mov     data_487528B8, a2
     movbu   (d0, a2), d1
     mov     d2, d0
     call    func_48435ABD_entry, [d2,d3], 8
     mov     d0, (0x50152338)
     mov     7, d0
     movbu   d0, (0x5015233c)
-    movbu   (0x50007e18), d0
+    movbu   (data_50007E18), d0
     clr     d1
     add     d0, d0
     add     d0, a2
@@ -15323,7 +15323,7 @@ loc_4850A407:
     ble     loc_4850A412
     jmp     loc_4850A658
 loc_4850A412:
-    mov     0x4865070c, a1
+    mov     data_4865070C, a1
     add     0xfffb0001, d2
     mov     0xf, d0
     and     d2, d0
@@ -15339,7 +15339,7 @@ loc_4850A412:
     jmp     loc_4850A658
 loc_4850A435:
     add     8, a0
-    cmp     0x4865078c, a0
+    cmp     data_4865078C, a0
     bcs     loc_4850A440
     mov     a1, a0
 loc_4850A440:
@@ -15379,12 +15379,12 @@ loc_4850A443:
     mov     0x01730007, d0
     mov     3, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
-    movbu   (0x50007e18), d1
-    movhu   (0x48736006), d0
+    movbu   (data_50007E18), d1
+    movhu   (data_48736006), d0
     mov     d1, a0
     add     a0, a0
     mov     a0, d1
-    mov     0x487528b8, a1
+    mov     data_487528B8, a1
     movbu   (d1, a1), d2
     extbu   d0
     mov     d2, d1
@@ -15392,7 +15392,7 @@ loc_4850A443:
     mov     d0, d1
     mov     0x0000c000, d0
     call    MainPutM3Em_entry, [d2,d3,a2], 0x20
-    movbu   (0x50007e18), d1
+    movbu   (data_50007E18), d1
     mov     0x0000c004, d0
     ext     d1
     mov     4, d2
@@ -15404,24 +15404,24 @@ loc_4850A443:
     ret     [d2,d3,a2,a3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x24
-    movbu   (0x50007e18), d1
+    movbu   (data_50007E18), d1
     mov     d1, d0
     inc     d0
     cmp     0xc, d0
     bge     loc_4850A589
     inc     d1
-    movbu   d1, (0x50007e18)
+    movbu   d1, (data_50007E18)
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
     mov     0x000600b4, d1
     call    SendEvent_entry, [d2,d3], 0x24
-    movbu   (0x50007e18), d1
-    movhu   (0x48736006), d0
+    movbu   (data_50007E18), d1
+    movhu   (data_48736006), d0
     mov     d1, a0
     add     a0, a0
     mov     a0, d1
-    mov     0x487528b8, a1
+    mov     data_487528B8, a1
     movbu   (d1, a1), d2
     extbu   d0
     mov     d2, d1
@@ -15429,7 +15429,7 @@ loc_4850A443:
     mov     d0, d1
     mov     0x0000c000, d0
     call    MainPutM3Em_entry, [d2,d3,a2], 0x20
-    movbu   (0x50007e18), d1
+    movbu   (data_50007E18), d1
     mov     0x0000c004, d0
     ext     d1
     mov     4, d2
@@ -15439,30 +15439,30 @@ loc_4850A443:
 loc_4850A589:
     clr     d0
     ret     [d2,d3,a2,a3], 0x24
-    movbu   (0x50007e18), d0
+    movbu   (data_50007E18), d0
     mov     -1, d1
     add     d0, d1
     cmp     0, d1
     blt     loc_4850A600
     add     -1, d0
-    movbu   d0, (0x50007e18)
+    movbu   d0, (data_50007E18)
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
     mov     0x000600b4, d1
     call    SendEvent_entry, [d2,d3], 0x24
-    movhu   (0x48736006), d2
-    movbu   (0x50007e18), d0
+    movhu   (data_48736006), d2
+    movbu   (data_50007E18), d0
     extbu   d2
     add     d0, d0
-    mov     0x487528b8, a0
+    mov     data_487528B8, a0
     movbu   (d0, a0), d1
     mov     d2, d0
     call    func_48435ABD_entry, [d2,d3], 8
     mov     d0, d1
     mov     0x0000c000, d0
     call    MainPutM3Em_entry, [d2,d3,a2], 0x20
-    movbu   (0x50007e18), d2
+    movbu   (data_50007E18), d2
     mov     0x0000c004, d0
     ext     d2
     mov     4, d1
@@ -15473,11 +15473,11 @@ loc_4850A600:
     clr     d0
     bra     loc_4850A659
     mov     (0x34, sp), a3
-    mov     0x4864ed48, d0
+    mov     Str_1c_3, d0
     mov     a3, (8, sp)
     mov     d0, (0xc, sp)
-    movbu   (0x50007e18), d0
-    mov     0x487528b8, a2
+    movbu   (data_50007E18), d0
+    mov     data_487528B8, a2
     mov     d0, a1
     add     a1, a1
     mov     a1, d0
@@ -15485,8 +15485,8 @@ loc_4850A600:
     add     2, a3
     add     0x41, d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
-    movbu   (0x50007e18), d0
+    call    sprintf_entry, [a2], 0x20
+    movbu   (data_50007E18), d0
     mov     a3, a0
     add     d0, d0
     add     d0, a2
@@ -15496,7 +15496,7 @@ loc_4850A600:
     call    func_4850A85C_entry, [d2,a2], 0x2c
     clr     d0
     bra     loc_4850A659
-    movbu   (0x50007e18), d0
+    movbu   (data_50007E18), d0
     bra     loc_4850A659
     mov     d3, d0
     bra     loc_4850A659
@@ -15579,18 +15579,18 @@ CmpPartCopyOk:
 loc_4850A718:
     jmp     loc_4850A81E
 loc_4850A71B:
-    movbu   (0x50007e18), d1
-    movhu   (0x48736006), d0
+    movbu   (data_50007E18), d1
+    movhu   (data_48736006), d0
     mov     d1, a0
     add     a0, a0
     mov     a0, d1
-    mov     0x487528b8, a2
+    mov     data_487528B8, a2
     movbu   (d1, a2), d2
     extbu   d0
     mov     d2, d1
     call    func_48435ABD_entry, [d2,d3], 8
     mov     d0, (0x14, sp)
-    movbu   (0x50007e18), d0
+    movbu   (data_50007E18), d0
     add     d0, d0
     add     d0, a2
     movbu   (1, a2), d3
@@ -15606,7 +15606,7 @@ loc_4850A75B:
     mov     0x5015239c, d2
     mov     0x50152394, a3
     mov     0x5015238c, a1
-    mov     0x4864ed50, a0
+    mov     data_4864ED50, a0
     setlb
     movbu   (a2), d0
     cmp     0, d0
@@ -15714,16 +15714,16 @@ func_4850A85C_entry:
     call    func_4850A83F, 0, 0
     cmp     0, d0
     beq     loc_4850A8B6
-    movhu   (0x48736006), d2
-    movbu   (0x50007e18), d0
+    movhu   (data_48736006), d2
+    movbu   (data_50007E18), d0
     extbu   d2
     add     d0, d0
-    mov     0x487528b8, a2
+    mov     data_487528B8, a2
     movbu   (d0, a2), d1
     mov     d2, d0
     call    func_48435ABD_entry, [d2,d3], 8
     mov     d0, (0x14, sp)
-    movbu   (0x50007e18), d0
+    movbu   (data_50007E18), d0
     mov     sp, a0
     add     d0, d0
     add     d0, a2
@@ -15821,7 +15821,7 @@ AttCompPtnCpy1:
     beq     loc_4850A98A
     bra     loc_4850A98E
 loc_4850A982:
-    mov     0x4864ef60, d0
+    mov     ptrs_4864EF60, d0
     bra     loc_4850A98F
 loc_4850A98A:
     mov     1, d0
@@ -15838,7 +15838,7 @@ AttCompPtnCpy2:
     beq     loc_4850A9AC
     bra     loc_4850A9B0
 loc_4850A9A4:
-    mov     0x4864f1f0, d0
+    mov     ptrs_4864F1F0, d0
     bra     loc_4850A9B1
 loc_4850A9AC:
     mov     1, d0
@@ -15855,7 +15855,7 @@ AttSeqToCompCopy:
     beq     loc_4850A9CE
     bra     loc_4850A9D2
 loc_4850A9C6:
-    mov     0x4864f388, d0
+    mov     ptrs_4864F388, d0
     bra     loc_4850A9D3
 loc_4850A9CE:
     mov     1, d0
@@ -15935,7 +15935,7 @@ loc_4850AA6E:
     jmp     loc_4850AB45
 loc_4850AA79:
     mov     d1, a0
-    add     0x50003e88, a0
+    add     data_50003E88, a0
     movbu   (a0), d2
     extb    d3
     mov     d2, d0
@@ -15982,7 +15982,7 @@ loc_4850AABB:
     cmp     1, d0
     bne     loc_4850AB45
     mov     d1, a0
-    add     0x50003e88, a0
+    add     data_50003E88, a0
     movbu   (a0), d0
     cmp     1, d0
     blt     loc_4850AB11
@@ -15990,15 +15990,15 @@ loc_4850AABB:
     cmp     0x10, d0
     bgt     loc_4850AB11
     mov     a1, (8, sp)
-    mov     0x4864f3a4, d0
+    mov     Str_3d_39, d0
     mov     d0, (0xc, sp)
     movbu   (a0), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_4850AB1F
 loc_4850AB11:
     mov     a1, a0
-    mov     0x4864f3a8, a1
+    mov     Str_OFF_52, a1
     call    strcpy_entry, [a2], 4
 loc_4850AB1F:
     call    GetFocusObject_entry, 0, 0x10
@@ -16008,7 +16008,7 @@ loc_4850AB1F:
     bra     loc_4850AB45
     bra     loc_4850AB46
 loc_4850AB39:
-    mov     0x50003e88, d0
+    mov     data_50003E88, d0
     bra     loc_4850AB46
 loc_4850AB41:
     mov     -1, d0
@@ -16031,7 +16031,7 @@ loc_4850AB5B:
     ble     loc_4850AB66
     jmp     loc_4850AC18
 loc_4850AB66:
-    mov     0x4865078c, a1
+    mov     data_4865078C, a1
     add     0xfffb0001, d2
     mov     0xf, d0
     and     d2, d0
@@ -16047,7 +16047,7 @@ loc_4850AB66:
     jmp     loc_4850AC18
 loc_4850AB89:
     add     8, a0
-    cmp     0x4865080c, a0
+    cmp     data_4865080C, a0
     bcs     loc_4850AB94
     mov     a1, a0
 loc_4850AB94:
@@ -16059,34 +16059,34 @@ loc_4850AB97:
     jmp     (a0)
     clr     d0
     ret     [d2,d3], 0x1c
-    movhu   (0x50003e90), d1
+    movhu   (data_50003E90), d1
     mov     1, d0
     inc     d1
     call    func_4850ACEF_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     ret     [d2,d3], 0x1c
-    movhu   (0x50003e90), d1
+    movhu   (data_50003E90), d1
     mov     1, d0
     add     -1, d1
     call    func_4850ACEF_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     bra     loc_4850AC19
     mov     (0x2c, sp), a1
-    mov     0x4864f3ac, d0
+    mov     Str_3d_38, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    movhu   (0x50003e90), d0
+    movhu   (data_50003E90), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_4850AC19
-    movhu   (0x50003e90), d0
+    movhu   (data_50003E90), d0
     bra     loc_4850AC19
     mov     (0x2c, sp), d0
-    movhu   (0x50003e90), d1
+    movhu   (data_50003E90), d1
     cmp     d0, d1
     beq     loc_4850AC12
-    movhu   d0, (0x50003e90)
+    movhu   d0, (data_50003E90)
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -16115,7 +16115,7 @@ loc_4850AC2E:
     ble     loc_4850AC39
     jmp     loc_4850ACEB
 loc_4850AC39:
-    mov     0x4865080c, a1
+    mov     data_4865080C, a1
     add     0xfffb0001, d2
     mov     0xf, d0
     and     d2, d0
@@ -16131,7 +16131,7 @@ loc_4850AC39:
     jmp     loc_4850ACEB
 loc_4850AC5C:
     add     8, a0
-    cmp     0x4865088c, a0
+    cmp     data_4865088C, a0
     bcs     loc_4850AC67
     mov     a1, a0
 loc_4850AC67:
@@ -16143,34 +16143,34 @@ loc_4850AC6A:
     jmp     (a0)
     clr     d0
     ret     [d2,d3], 0x1c
-    movhu   (0x50003e94), d1
+    movhu   (data_50003E94), d1
     mov     2, d0
     inc     d1
     call    func_4850ACEF_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     ret     [d2,d3], 0x1c
-    movhu   (0x50003e94), d1
+    movhu   (data_50003E94), d1
     mov     2, d0
     add     -1, d1
     call    func_4850ACEF_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     bra     loc_4850ACEC
     mov     (0x2c, sp), a1
-    mov     0x4864f3b0, d0
+    mov     Str_3d_53, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    movhu   (0x50003e94), d0
+    movhu   (data_50003E94), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_4850ACEC
-    movhu   (0x50003e94), d0
+    movhu   (data_50003E94), d0
     bra     loc_4850ACEC
     mov     (0x2c, sp), d0
-    movhu   (0x50003e94), d1
+    movhu   (data_50003E94), d1
     cmp     d0, d1
     beq     loc_4850ACE5
-    movhu   d0, (0x50003e94)
+    movhu   d0, (data_50003E94)
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -16192,7 +16192,7 @@ func_4850ACEF:
 func_4850ACEF_entry:
     mov     d1, d3
     mov     d0, d2
-    mov     0x4864f3d0, a2
+    mov     data_4864F3D0, a2
     mov     sp, a3
     add     0x14, a3
 loc_4850ACFF:
@@ -16204,7 +16204,7 @@ loc_4850ACFF:
     movhu   d0, (a3)
     add     2, a3
     inc4    a2
-    cmp     0x4864f3e4, a2
+    cmp     Str_1c_2d_2, a2
     bcs     loc_4850ACFF
     cmp     1, d2
     beq     loc_4850AD4E
@@ -16246,7 +16246,7 @@ loc_4850AD5E:
     movhu   d2, (0x14, sp)
     mov     d2, d1
     exth    d1
-    mov     (0x4864f3d0), d0
+    mov     (data_4864F3D0), d0
     mov     d1, (0x10, sp)
     mov     0x0006003b, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -16255,7 +16255,7 @@ loc_4850AD5E:
     cmp     d0, d3
     ble     loc_4850AD99
     movhu   d3, (0x16, sp)
-    mov     (0x4864f3d4), d0
+    mov     (data_4864F3D4), d0
     exth    d2
     mov     d2, (0x10, sp)
     mov     0x0006003b, d1
@@ -16276,7 +16276,7 @@ loc_4850ADAB:
     add     0xf, d1
     movhu   d1, (0x16, sp)
     exth    d1
-    mov     (0x4864f3d4), d0
+    mov     (data_4864F3D4), d0
     mov     d1, (0x10, sp)
     mov     0x0006003b, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -16294,7 +16294,7 @@ loc_4850ADDD:
     movhu   d2, (0x16, sp)
     mov     d2, d1
     exth    d1
-    mov     (0x4864f3d4), d0
+    mov     (data_4864F3D4), d0
     mov     d1, (0x10, sp)
     mov     0x0006003b, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -16303,7 +16303,7 @@ loc_4850ADDD:
     cmp     d0, d3
     bge     loc_4850AE18
     movhu   d3, (0x14, sp)
-    mov     (0x4864f3d0), d0
+    mov     (data_4864F3D0), d0
     exth    d2
     mov     d2, (0x10, sp)
     mov     0x0006003b, d1
@@ -16326,7 +16326,7 @@ loc_4850AE2A:
     movhu   d0, (0x14, sp)
     exth    d0
     mov     d0, (0x10, sp)
-    mov     (0x4864f3d0), d0
+    mov     (data_4864F3D0), d0
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_4850AFD4
 loc_4850AE4C:
@@ -16339,7 +16339,7 @@ loc_4850AE53:
     jmp     loc_4850AFD4
 loc_4850AE5A:
     movhu   d3, (0x18, sp)
-    mov     (0x4864f3d8), d0
+    mov     (data_4864F3D8), d0
     mov     d3, d1
     exth    d1
     mov     d1, (0x10, sp)
@@ -16356,7 +16356,7 @@ loc_4850AE7E:
     jmp     loc_4850AFD4
 loc_4850AE85:
     movhu   d3, (0x1a, sp)
-    mov     (0x4864f3dc), d0
+    mov     (data_4864F3DC), d0
     mov     d3, d1
     exth    d1
     mov     d1, (0x10, sp)
@@ -16373,7 +16373,7 @@ loc_4850AEA9:
     jmp     loc_4850AFD4
 loc_4850AEB0:
     movhu   d3, (0x1c, sp)
-    mov     (0x4864f3e0), d0
+    mov     (data_4864F3E0), d0
     mov     d3, d1
     exth    d1
     mov     d1, (0x10, sp)
@@ -16382,7 +16382,7 @@ loc_4850AEB0:
     jmp     loc_4850AFD4
 loc_4850AECD:
     movhu   (0x1c, sp), d0
-    mov     0x4864f3b4, a0
+    mov     data_4864F3B4, a0
     exth    d0
     movbu   (d0, a0), d0
     cmp     0xc, d0
@@ -16421,7 +16421,7 @@ loc_4850AF0C:
     call    ApFuncCall_entry, [d2,d3,a2], 0x24
     mov     d0, a0
     add     8, d0
-    mov     0x4864f3c8, a1
+    mov     data_4864F3C8, a1
     setlb
     movbu   (a0), d2
     movbu   (a1), d1
@@ -16443,7 +16443,7 @@ loc_4850AF0C:
     movhu   (0x1c, sp), d0
     movhu   (0x1a, sp), d2
     exth    d0
-    mov     0x4864f3b4, a0
+    mov     data_4864F3B4, a0
     movbu   (d0, a0), d1
     exth    d2
     mov     a3, (0x10, sp)
@@ -16478,7 +16478,7 @@ loc_4850AFEA:
     ble     loc_4850AFF5
     jmp     loc_4850B0C4
 loc_4850AFF5:
-    mov     0x4865088c, a1
+    mov     data_4865088C, a1
     add     0xfffb0001, d2
     mov     0xf, d0
     and     d2, d0
@@ -16494,7 +16494,7 @@ loc_4850AFF5:
     jmp     loc_4850B0C4
 loc_4850B018:
     add     8, a0
-    cmp     0x4865090c, a0
+    cmp     data_4865090C, a0
     bcs     loc_4850B023
     mov     a1, a0
 loc_4850B023:
@@ -16506,21 +16506,21 @@ loc_4850B026:
     jmp     (a0)
     clr     d0
     ret     [d2,d3,a2], 0x24
-    movhu   (0x50003e98), d1
+    movhu   (data_50003E98), d1
     mov     3, d0
     exth    d1
     inc     d1
     call    func_4850ACEF_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     ret     [d2,d3,a2], 0x24
-    movhu   (0x50003e98), d1
+    movhu   (data_50003E98), d1
     mov     3, d0
     exth    d1
     add     -1, d1
     call    func_4850ACEF_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     ret     [d2,d3,a2], 0x24
-    movhu   (0x50003e98), d0
+    movhu   (data_50003E98), d0
     mov     0x2b, d1
     exth    d0
     cmp     0, d0
@@ -16531,24 +16531,24 @@ loc_4850B026:
     mov     0x20, d1
 loc_4850B06B:
     mov     (0x34, sp), a2
-    mov     0x4864f3e4, d2
+    mov     Str_1c_2d_2, d2
     mov     d2, (0xc, sp)
     mov     d1, (0x10, sp)
     call    abs, 0, 0
     mov     d0, (0x14, sp)
     mov     a2, (8, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_4850B0C5
-    movhu   (0x50003e98), d0
+    movhu   (data_50003E98), d0
     exth    d0
     bra     loc_4850B0C5
     mov     (0x34, sp), d0
-    movhu   (0x50003e98), d1
+    movhu   (data_50003E98), d1
     exth    d1
     cmp     d0, d1
     beq     loc_4850B0BE
-    movhu   d0, (0x50003e98)
+    movhu   d0, (data_50003E98)
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -16577,7 +16577,7 @@ loc_4850B0DA:
     ble     loc_4850B0E5
     jmp     loc_4850B1C2
 loc_4850B0E5:
-    mov     0x4865090c, a1
+    mov     data_4865090C, a1
     add     0xfffb0001, d2
     mov     0xf, d0
     and     d2, d0
@@ -16593,7 +16593,7 @@ loc_4850B0E5:
     jmp     loc_4850B1C2
 loc_4850B108:
     add     8, a0
-    cmp     0x4865098c, a0
+    cmp     data_4865098C, a0
     bcs     loc_4850B113
     mov     a1, a0
 loc_4850B113:
@@ -16605,28 +16605,28 @@ loc_4850B116:
     jmp     (a0)
     clr     d0
     ret     [d2,d3], 0x20
-    movhu   (0x50003e9c), d1
+    movhu   (data_50003E9C), d1
     mov     4, d0
     inc     d1
     call    func_4850ACEF_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     ret     [d2,d3], 0x20
-    movhu   (0x50003e9c), d1
+    movhu   (data_50003E9C), d1
     mov     4, d0
     add     -1, d1
     call    func_4850ACEF_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     ret     [d2,d3], 0x20
     mov     (0x30, sp), a1
-    mov     0x4864f3ec, d0
+    mov     Str_1c_4, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    movhu   (0x50003e9c), d0
+    movhu   (data_50003E9C), d0
     add     0x41, d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
-    movhu   (0x48736006), d0
-    movhu   (0x50003e9c), d1
+    call    sprintf_entry, [a2], 0x20
+    movhu   (data_48736006), d0
+    movhu   (data_50003E9C), d1
     extbu   d0
     movbu   d1, (0x14, sp)
     movbu   (0x14, sp), d1
@@ -16636,13 +16636,13 @@ loc_4850B116:
     call    MainPutM3Em_entry, [d2,d3,a2], 0x20
     clr     d0
     bra     loc_4850B1C3
-    movhu   (0x50003e9c), d0
+    movhu   (data_50003E9C), d0
     bra     loc_4850B1C3
     mov     (0x30, sp), d1
-    movhu   (0x50003e9c), d0
+    movhu   (data_50003E9C), d0
     cmp     d1, d0
     beq     loc_4850B1BC
-    movhu   d1, (0x50003e9c)
+    movhu   d1, (data_50003E9C)
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -16671,7 +16671,7 @@ loc_4850B1D8:
     ble     loc_4850B1E3
     jmp     loc_4850B2D1
 loc_4850B1E3:
-    mov     0x4865098c, a1
+    mov     data_4865098C, a1
     add     0xfffb0001, d2
     mov     a1, a0
     mov     0xf, d0
@@ -16687,7 +16687,7 @@ loc_4850B1E3:
     jmp     loc_4850B2D1
 loc_4850B205:
     add     8, a0
-    cmp     0x48650a0c, a0
+    cmp     data_48650A0C, a0
     bcs     loc_4850B210
     mov     a1, a0
 loc_4850B210:
@@ -16699,30 +16699,30 @@ loc_4850B213:
     jmp     (a0)
     clr     d0
     ret     [d2,d3,a2], 0x20
-    movhu   (0x50003ea0), d1
+    movhu   (data_50003EA0), d1
     mov     5, d0
     inc     d1
     call    func_4850ACEF_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     ret     [d2,d3,a2], 0x20
-    movhu   (0x50003ea0), d1
+    movhu   (data_50003EA0), d1
     mov     5, d0
     add     -1, d1
     call    func_4850ACEF_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     ret     [d2,d3,a2], 0x20
-    movhu   (0x50003ea0), d0
+    movhu   (data_50003EA0), d0
     cmp     0x13, d0
     bgt     loc_4850B298
-    movhu   (0x50003ea0), d0
-    mov     0x4864f3f0, a2
+    movhu   (data_50003EA0), d0
+    mov     data_4864F3F0, a2
     movbu   (d0, a2), d1
     mov     (0x30, sp), a0
     exthu   d1
     mov     d1, d0
     clr     d1
     call    func_48509CA1_entry, [d2], 0x14
-    movhu   (0x50003ea0), d1
+    movhu   (data_50003EA0), d1
     movbu   (d1, a2), d0
     cmp     0xc, d0
     blt     loc_4850B27F
@@ -16740,13 +16740,13 @@ loc_4850B27F:
 loc_4850B298:
     clr     d0
     bra     loc_4850B2D2
-    movhu   (0x50003ea0), d0
+    movhu   (data_50003EA0), d0
     bra     loc_4850B2D2
     mov     (0x30, sp), d1
-    movhu   (0x50003ea0), d0
+    movhu   (data_50003EA0), d0
     cmp     d1, d0
     beq     loc_4850B2CB
-    movhu   d1, (0x50003ea0)
+    movhu   d1, (data_50003EA0)
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -16794,7 +16794,7 @@ Seq2CmpCpEditFunc:
     beq     loc_4850B37E
     bra     loc_4850B385
 loc_4850B317:
-    movhu   (0x48736006), d2
+    movhu   (data_48736006), d2
     clr     d0
     mov     d0, (0x10, sp)
     extbu   d2
@@ -16813,7 +16813,7 @@ loc_4850B317:
     mov     0x009000d0, d0
     mov     0x00060062, d1
     call    SendEvent_entry, [d2,d3], 0x24
-    mov     0x4864f404, a0
+    mov     data_4864F404, a0
     movbu   (d0, a0), d1
     mov     0xb5, d0
     movbu   d1, (0x50152334)
@@ -16926,7 +16926,7 @@ loc_4850B468:
     jmp     loc_4850B64D
 loc_4850B46B:
     movhu   (0x1a, sp), d1
-    movhu   (0x487365a0), d3
+    movhu   (data_487365A0), d3
     exth    d1
     add     -2, d1
     add     -1, d3
@@ -16989,7 +16989,7 @@ loc_4850B4F1:
     beq     loc_4850B50E
     mov     -1, d3
 loc_4850B50E:
-    mov     (0x487365a4), d0
+    mov     (data_487365A4), d0
     exthu   d2
     mov     0x48, d1
     nop
@@ -17064,7 +17064,7 @@ loc_4850B5A8:
     exthu   d0
     add     d0, d0
     movhu   (d0, a0), d0
-    mov     (0x487365a4), a1
+    mov     (data_487365A4), a1
     exthu   d0
     mov     a2, a0
     mov     0x48, d1
@@ -17091,13 +17091,13 @@ loc_4850B5D1:
     movhu   (-0x16, a0), d0
     cmp     0xffff, d0
     bne     loc_4850B606
-    mov     0x4864f418, a1
+    mov     Str_OFF_51, a1
     mov     a2, a0
     call    strcpy_entry, [a2], 4
     bra     loc_4850B62F
 loc_4850B606:
     mov     a2, (8, sp)
-    mov     0x4864f41c, d0
+    mov     Str_3d_52, d0
     mov     d0, (0xc, sp)
     movhu   (0x18, sp), d1
     movhu   (0x1a, sp), d0
@@ -17113,7 +17113,7 @@ loc_4850B606:
     movhu   (-0x16, a0), d0
     inc     d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_4850B62F:
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
@@ -17152,13 +17152,13 @@ loc_4850B689:
 loc_4850B694:
     jmp     loc_4850B783
 loc_4850B697:
-    movbu   (0x50007e19), d0
+    movbu   (data_50007E19), d0
     mov     d0, d1
     inc     d1
     cmp     0xc, d1
     bge     loc_4850B6C1
     inc     d0
-    movbu   d0, (0x50007e19)
+    movbu   d0, (data_50007E19)
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -17168,13 +17168,13 @@ loc_4850B6C1:
     clr     d0
     ret     [d2,a2,a3], 0x20
 loc_4850B6C5:
-    movbu   (0x50007e19), d1
+    movbu   (data_50007E19), d1
     mov     -1, d0
     add     d1, d0
     cmp     0, d0
     blt     loc_4850B6F1
     add     -1, d1
-    movbu   d1, (0x50007e19)
+    movbu   d1, (data_50007E19)
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -17184,18 +17184,18 @@ loc_4850B6F1:
     clr     d0
     ret     [d2,a2,a3], 0x20
 loc_4850B6F5:
-    movhu   (0x48736006), d2
-    movbu   (0x50007e19), d0
+    movhu   (data_48736006), d2
+    movbu   (data_50007E19), d0
     extbu   d2
     add     d0, d0
-    mov     0x487528b8, a3
+    mov     data_487528B8, a3
     movbu   (d0, a3), d1
     mov     d2, d0
     call    func_48435ABD_entry, [d2,d3], 8
     mov     d0, d1
     mov     0x0000c000, d0
     call    MainPutM3Em_entry, [d2,d3,a2], 0x20
-    movbu   (0x50007e19), d2
+    movbu   (data_50007E19), d2
     mov     0x0000c004, d0
     ext     d2
     mov     4, d1
@@ -17203,16 +17203,16 @@ loc_4850B6F5:
     mov     mdr, d1
     call    MainPutM3Em_entry, [d2,d3,a2], 0x20
     mov     (0x30, sp), a2
-    mov     0x4864f420, d0
+    mov     Str_1c_2, d0
     mov     a2, (8, sp)
     mov     d0, (0xc, sp)
-    movbu   (0x50007e19), d0
+    movbu   (data_50007E19), d0
     add     d0, d0
     movbu   (d0, a3), d0
     add     0x41, d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
-    movbu   (0x50007e19), d0
+    call    sprintf_entry, [a2], 0x20
+    movbu   (data_50007E19), d0
     mov     2, d1
     add     d0, d0
     add     d0, a3
@@ -17224,7 +17224,7 @@ loc_4850B6F5:
     clr     d0
     bra     loc_4850B784
 loc_4850B779:
-    movbu   (0x50007e19), d0
+    movbu   (data_50007E19), d0
     bra     loc_4850B784
     bra     loc_4850B784
 loc_4850B783:
@@ -17276,18 +17276,18 @@ CmpEasyCompEditFunc:
     beq     loc_4850B84A
     bra     loc_4850B851
 loc_4850B7FE:
-    movhu   (0x48736006), d2
-    movbu   (0x50007e19), d0
+    movhu   (data_48736006), d2
+    movbu   (data_50007E19), d0
     extbu   d2
     add     d0, d0
-    mov     0x487528b8, a2
+    mov     data_487528B8, a2
     movbu   (d0, a2), d1
     mov     d2, d0
     call    func_48435ABD_entry, [d2,d3], 8
     mov     d0, (0x50152338)
     mov     7, d0
     movbu   d0, (0x5015233c)
-    movbu   (0x50007e19), d0
+    movbu   (data_50007E19), d0
     clr     d1
     add     d0, d0
     add     d0, a2
@@ -17383,7 +17383,7 @@ loc_4850B8FB:
     exth    d0
     add     -2, d0
     mov     d0, a0
-    add     0x50007e1a, a0
+    add     data_50007E1A, a0
     movbu   (a0), d0
     extb    d0
     add     d2, d0
@@ -17398,7 +17398,7 @@ loc_4850B915:
     nop
     nop
     mul     d1, d0
-    mov     0x48750fa8, a1
+    mov     ptrs_48750FA8, a1
     mov     (d0, a1), d0
     cmp     0, d0
     bne     loc_4850B92E
@@ -17410,7 +17410,7 @@ loc_4850B92E:
     add     d2, d0
     movbu   d0, (a0)
     movhu   (0x16, sp), d0
-    mov     0x50007e20, a0
+    mov     data_50007E20, a0
     exth    d0
     add     -2, d0
     movbu   d1, (d0, a0)
@@ -17418,7 +17418,7 @@ loc_4850B92E:
     mov     1, d1
     exth    d0
     add     -2, d0
-    mov     0x50007e26, a0
+    mov     data_50007E26, a0
     movbu   d1, (d0, a0)
     call    GetFocusObject_entry, 0, 0x10
     movhu   (0x16, sp), d1
@@ -17453,9 +17453,9 @@ loc_4850B9C3:
     exth    d0
     add     -2, d0
     mov     d0, a1
-    add     0x50007e20, a1
+    add     data_50007E20, a1
     movhu   (0x16, sp), d0
-    mov     0x50007e1a, a0
+    mov     data_50007E1A, a0
     exth    d0
     add     -2, d0
     movbu   (d0, a0), d1
@@ -17476,7 +17476,7 @@ loc_4850B9F3:
     nop
     mul     d1, d0
     mov     d0, a0
-    add     0x48750fa8, a0
+    add     ptrs_48750FA8, a0
     mov     (4, a0), d1
     movbu   (a1), d0
     extb    d0
@@ -17495,7 +17495,7 @@ loc_4850BA19:
     add     d2, d0
     movbu   d0, (a1)
     movhu   (0x16, sp), d0
-    mov     0x50007e26, a0
+    mov     data_50007E26, a0
     exth    d0
     add     -2, d0
     movbu   d1, (d0, a0)
@@ -17532,7 +17532,7 @@ loc_4850BA9F:
     exth    d1
     add     -2, d1
     mov     d1, a0
-    add     0x50007e26, a0
+    add     data_50007E26, a0
     movbu   (a0), d0
     extb    d0
     add     d2, d0
@@ -17587,14 +17587,14 @@ loc_4850BB1C:
     cmp     0xc, d0
     bge     loc_4850BB6B
     movhu   (0x16, sp), d0
-    mov     0x50007e1a, a1
+    mov     data_50007E1A, a1
     exth    d0
     add     -2, d0
     movbu   (d0, a1), d0
     extb    d0
     cmp     d2, d0
     bge     loc_4850BB49
-    mov     0x4864f428, a1
+    mov     Str_Special_4, a1
     mov     a2, a0
     call    strcpy_entry, [a2], 4
     jmp     loc_4850BC58
@@ -17604,7 +17604,7 @@ loc_4850BB49:
     exth    d0
     add     -2, d0
     movbu   (d0, a1), d0
-    mov     0x48750fa8, a0
+    mov     ptrs_48750FA8, a0
     extb    d0
     nop
     nop
@@ -17614,7 +17614,7 @@ loc_4850BB49:
     call    strcpy_entry, [a2], 4
     jmp     loc_4850BC58
 loc_4850BB6B:
-    mov     0x4864f430, a1
+    mov     Str_empty_1124, a1
     mov     a2, a0
     call    strcpy_entry, [a2], 4
     jmp     loc_4850BC58
@@ -17623,7 +17623,7 @@ loc_4850BB7C:
     cmp     0xc, d0
     bge     loc_4850BBF8
     movhu   (0x16, sp), d0
-    mov     0x50007e1a, a1
+    mov     data_50007E1A, a1
     exth    d0
     add     -2, d0
     movbu   (d0, a1), d0
@@ -17631,16 +17631,16 @@ loc_4850BB7C:
     cmp     d2, d0
     bge     loc_4850BBBD
     mov     a2, (8, sp)
-    mov     0x4864f438, d0
+    mov     Str_Other_No_3d_5, d0
     mov     d0, (0xc, sp)
     movhu   (0x16, sp), d0
-    mov     0x50007e20, a0
+    mov     data_50007E20, a0
     exth    d0
     add     -2, d0
     movbu   (d0, a0), d0
     extb    d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_4850BC58
 loc_4850BBBD:
     movhu   (0x16, sp), d0
@@ -17648,14 +17648,14 @@ loc_4850BBBD:
     exth    d0
     add     -2, d0
     movbu   (d0, a1), d0
-    mov     0x50007e20, a1
+    mov     data_50007E20, a1
     extb    d0
     nop
     nop
     mul     d0, d1
     movhu   (0x16, sp), d0
     mov     d1, a0
-    add     0x48750fa8, a0
+    add     ptrs_48750FA8, a0
     mov     (4, a0), a0
     exth    d0
     add     -2, d0
@@ -17668,7 +17668,7 @@ loc_4850BBBD:
     call    strcpy_entry, [a2], 4
     bra     loc_4850BC58
 loc_4850BBF8:
-    mov     0x4864f448, a1
+    mov     Str_empty_913, a1
     mov     a2, a0
     call    strcpy_entry, [a2], 4
     bra     loc_4850BC58
@@ -17677,26 +17677,26 @@ loc_4850BC08:
     cmp     0xc, d0
     bge     loc_4850BC3A
     movhu   (0x16, sp), d0
-    mov     0x50007e26, a0
+    mov     data_50007E26, a0
     exth    d0
     add     -2, d0
     movbu   (d0, a0), d0
-    mov     0x4864f458, a1
+    mov     Str_CHANGE_2, a1
     extb    d0
     cmp     d2, d0
     bne     loc_4850BC30
-    mov     0x4864f45f, a1
+    mov     Str_KEEP, a1
 loc_4850BC30:
     mov     a2, a0
     call    strcpy_entry, [a2], 4
     bra     loc_4850BC58
 loc_4850BC3A:
-    mov     0x4864f468, a1
+    mov     Str_empty_1123, a1
     mov     a2, a0
     call    strcpy_entry, [a2], 4
     bra     loc_4850BC58
 loc_4850BC4A:
-    mov     0x4864f470, a1
+    mov     Str_ERROR_34, a1
     mov     a2, a0
     call    strcpy_entry, [a2], 4
 loc_4850BC58:
@@ -17723,10 +17723,10 @@ CmpPtChdOK:
     beq     loc_4850BCF9
     bra     loc_4850BD00
 loc_4850BC91:
-    mov     0x50007e26, a2
+    mov     data_50007E26, a2
     mov     1, d2
-    mov     0x50007e1a, d3
-    mov     0x50007e20, a3
+    mov     data_50007E1A, d3
+    mov     data_50007E20, a3
 loc_4850BCA5:
     movbu   (a2), d0
     extb    d0
@@ -17753,7 +17753,7 @@ loc_4850BCD7:
     inc     d3
     inc     d2
     inc     a2
-    cmp     0x50007e2c, a2
+    cmp     data_50007E2C, a2
     bcs     loc_4850BCA5
     mov     0x23, d0
     mov     d0, (0x10, sp)
@@ -17776,7 +17776,7 @@ CmpDspSetGrid:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x48, sp
     mov     d0, (0x60, sp)
-    mov     0x4864f478, a1
+    mov     data_4864F478, a1
     movbu   (a1), d0
     mov     sp, a0
     add     0x1c, a0
@@ -17798,7 +17798,7 @@ loc_4850BD35:
     and     d2, d0
     asl     3, d0
     mov     d0, a0
-    mov     0x48650a0c, a1
+    mov     data_48650A0C, a1
     add     a1, a0
     mov     (a0), d0
     cmp     d2, d0
@@ -17809,7 +17809,7 @@ loc_4850BD35:
     jmp     loc_4850C219
 loc_4850BD58:
     add     8, a0
-    cmp     0x48650a8c, a0
+    cmp     data_48650A8C, a0
     bcs     loc_4850BD63
     mov     a1, a0
 loc_4850BD63:
@@ -18207,7 +18207,7 @@ loc_4850C180:
     movbu   d0, (a0)
     bra     loc_4850C1F9
 loc_4850C185:
-    mov     0x4864f47c, a1
+    mov     Str_ERROR_4, a1
     mov     a2, a0
     call    strcpy_entry, [a2], 4
     bra     loc_4850C1F9
@@ -18237,19 +18237,19 @@ loc_4850C1C2:
     movbu   d0, (a0)
     bra     loc_4850C1F9
 loc_4850C1C7:
-    mov     0x4864f490, a1
+    mov     Str_ERROR_3, a1
     mov     a2, a0
     call    strcpy_entry, [a2], 4
     bra     loc_4850C1F9
 loc_4850C1D7:
-    mov     0x4864f4a4, a1
+    mov     Str_ON_41, a1
     and     0x00ff0000, d1
     mov     d1, d0
     lsr     16, d0
     extbu   d0
     cmp     d3, d0
     bne     loc_4850C1F1
-    mov     0x4864f4a8, a1
+    mov     Str_OFF_50, a1
 loc_4850C1F1:
     mov     a2, a0
     call    strcpy_entry, [a2], 4
@@ -18308,7 +18308,7 @@ AttCompDspSet:
     beq     loc_4850C286
     bra     loc_4850C28A
 loc_4850C27E:
-    mov     0x4864f5d0, d0
+    mov     ptrs_4864F5D0, d0
     bra     loc_4850C28B
 loc_4850C286:
     mov     1, d0
@@ -18368,7 +18368,7 @@ AttCompPartSet:
     beq     loc_4850C301
     bra     loc_4850C305
 loc_4850C2F9:
-    mov     0x4864f7a0, d0
+    mov     ptrs_4864F7A0, d0
     bra     loc_4850C306
 loc_4850C301:
     mov     1, d0
@@ -18383,7 +18383,7 @@ FE_CmpCstmCpy:
     add     -0x28, sp
     mov     d0, (0x3c, sp)
     mov     d1, a2
-    mov     0x4864f7bc, a1
+    mov     data_4864F7BC, a1
     mov     sp, a0
     add     0x18, a0
     mov     -8, d1
@@ -18394,7 +18394,7 @@ FE_CmpCstmCpy:
     inc     a0
     inc     d1
     lne
-    mov     0x4864f7c4, a1
+    mov     data_4864F7C4, a1
     mov     sp, a0
     add     0x20, a0
     mov     -8, d1
@@ -18470,19 +18470,19 @@ loc_4850C3DD:
     jmp     loc_4850C51C
 loc_4850C3E0:
     extbu   d2
-    mov     0x4864f7cc, a1
+    mov     Str_MEMORY_BANK_5, a1
     cmp     d0, d2
     bne     loc_4850C3F0
-    mov     0x4864f7d9, a1
+    mov     Str_CUSTOM_STYLE_8, a1
 loc_4850C3F0:
     mov     a1, (0x10, sp)
     mov     0x00900102, d0
     mov     0x000600b4, d1
     call    PostEvent_entry, [d2,d3], 0x24
-    mov     0x4864f7e8, a0
+    mov     Str_CUSTOM_STYLE_9, a0
     cmp     0, d2
     bne     loc_4850C415
-    mov     0x4864f7f5, a0
+    mov     Str_MEMORY_BANK_4, a0
 loc_4850C415:
     mov     a0, (0x10, sp)
     mov     0x00900103, d0
@@ -18509,7 +18509,7 @@ loc_4850C441:
 loc_4850C445:
     extbu   d1
     mov     d1, a1
-    add     0x50003ea4, a1
+    add     data_50003EA4, a1
     movbu   (a1), d1
     movbu   (0x14, sp), d0
     extb    d2
@@ -18538,26 +18538,26 @@ loc_4850C47A:
     extbu   d1
     mov     a0, (8, sp)
     mov     d1, a2
-    add     0x50003ea4, a2
-    mov     0x4864f804, d0
+    add     data_50003EA4, a2
+    mov     Str_MEMORY_BANK_1c, d0
     mov     d0, (0xc, sp)
     movbu   (a2), d0
     add     0x41, d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_4850C4C6
 loc_4850C4A4:
     mov     (0x44, sp), a0
     extbu   d1
     mov     a0, (8, sp)
     mov     d1, a2
-    add     0x50003ea4, a2
-    mov     0x4864f818, d0
+    add     data_50003EA4, a2
+    mov     Str_CUSTOM_STYLE_2d, d0
     mov     d0, (0xc, sp)
     movbu   (a2), d0
     add     -2, d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_4850C4C6:
     call    SleepMainTask_entry, 0, 0x14
     clr     d0
@@ -18591,7 +18591,7 @@ loc_4850C4F0:
     bra     loc_4850C51C
 loc_4850C50F:
     extbu   d1
-    mov     0x50003ea4, a0
+    mov     data_50003EA4, a0
     movbu   (d1, a0), d0
     bra     loc_4850C51C
 loc_4850C51A:
@@ -18672,13 +18672,13 @@ loc_4850C5EE:
 loc_4850C5F9:
     jmp     loc_4850C69E
 loc_4850C5FC:
-    movbu   (0x50003ea8), d0
+    movbu   (data_50003EA8), d0
     clr     d1
     cmp     1, d0
     beq     loc_4850C609
     mov     1, d1
 loc_4850C609:
-    movbu   d1, (0x50003ea8)
+    movbu   d1, (data_50003EA8)
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x009000f3, d0
@@ -18689,21 +18689,21 @@ loc_4850C609:
     mov     0x009000fe, d0
     mov     0x000600b4, d1
     call    SendEvent_entry, [d2,d3], 0x24
-    movbu   (0x50003ea8), d0
-    mov     0x4864f82c, a0
+    movbu   (data_50003EA8), d0
+    mov     Str_MEMORY_BANK_3, a0
     cmp     0, d0
     bne     loc_4850C651
-    mov     0x4864f839, a0
+    mov     Str_CUSTOM_STYLE_7, a0
 loc_4850C651:
     mov     a0, (0x10, sp)
     mov     0x00900102, d0
     mov     0x000600b4, d1
     call    SendEvent_entry, [d2,d3], 0x24
-    movbu   (0x50003ea8), d0
-    mov     0x4864f848, a0
+    movbu   (data_50003EA8), d0
+    mov     Str_CUSTOM_STYLE_6, a0
     cmp     0, d0
     bne     loc_4850C67C
-    mov     0x4864f855, a0
+    mov     Str_MEMORY_BANK_2, a0
 loc_4850C67C:
     mov     a0, (0x10, sp)
     mov     0x00900103, d0
@@ -18712,7 +18712,7 @@ loc_4850C67C:
     clr     d0
     bra     loc_4850C69F
 loc_4850C694:
-    movbu   (0x50003ea8), d0
+    movbu   (data_50003EA8), d0
     bra     loc_4850C69F
     bra     loc_4850C69F
 loc_4850C69E:
@@ -18733,7 +18733,7 @@ loc_4850C6BF:
     mov     0x5006e274, d0
     mov     d0, (8, sp)
     movhu   (0x500c4d48), d0
-    mov     0x4864fa6c, a0
+    mov     ptrs_4864FA6C, a0
     asl2    d0
     mov     (d0, a0), d0
     mov     d0, (0xc, sp)
@@ -18741,8 +18741,8 @@ loc_4850C6BF:
     add     -2, d0
     mov     d0, (0x10, sp)
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
-    mov     0x4864fa88, d0
+    call    sprintf_entry, [a2], 0x20
+    mov     data_4864FA88, d0
     bra     loc_4850C703
 loc_4850C6F3:
     mov     1, d0
@@ -18783,13 +18783,13 @@ loc_4850C72D:
     add     0x14, a2
     mov     a2, (8, sp)
     movhu   (0x500c4d48), d0
-    mov     0x4864fd20, a0
+    mov     ptrs_4864FD20, a0
     asl2    d0
     mov     (d0, a0), a0
     mov     (a0), d0
     mov     d0, (0xc, sp)
     mov     d1, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     a3, a0
     mov     a2, a1
     call    strcat_entry, [a2], 4
@@ -18802,13 +18802,13 @@ loc_4850C76E:
     add     0x14, a2
     mov     a2, (8, sp)
     movhu   (0x500c4d48), d0
-    mov     0x4864fd20, a0
+    mov     ptrs_4864FD20, a0
     asl2    d0
     mov     (d0, a0), a0
     mov     (4, a0), a0
     mov     a0, (0xc, sp)
     mov     d1, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     a3, a0
     mov     a2, a1
     call    strcat_entry, [a2], 4
@@ -18821,13 +18821,13 @@ loc_4850C7A6:
     add     0x14, a2
     mov     a2, (8, sp)
     movhu   (0x500c4d48), d0
-    mov     0x4864fd20, a0
+    mov     ptrs_4864FD20, a0
     asl2    d0
     mov     (d0, a0), a0
     mov     (8, a0), a0
     mov     a0, (0xc, sp)
     mov     d1, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     a3, a0
     mov     a2, a1
     call    strcat_entry, [a2], 4
@@ -18840,13 +18840,13 @@ loc_4850C7DE:
     add     0x14, a2
     mov     a2, (8, sp)
     movhu   (0x500c4d48), d0
-    mov     0x4864fd20, a0
+    mov     ptrs_4864FD20, a0
     asl2    d0
     mov     (d0, a0), a0
     mov     (0xc, a0), d0
     mov     d0, (0xc, sp)
     mov     d1, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     a3, a0
     mov     a2, a1
     call    strcat_entry, [a2], 4
@@ -18859,13 +18859,13 @@ loc_4850C816:
     add     0x14, a2
     mov     a2, (8, sp)
     movhu   (0x500c4d48), d0
-    mov     0x4864fd20, a0
+    mov     ptrs_4864FD20, a0
     asl2    d0
     mov     (d0, a0), a0
     mov     (0x10, a0), d0
     mov     d0, (0xc, sp)
     mov     d1, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     a3, a0
     mov     a2, a1
     call    strcat_entry, [a2], 4
@@ -18878,13 +18878,13 @@ loc_4850C84E:
     add     0x14, a2
     mov     a2, (8, sp)
     movhu   (0x500c4d48), d0
-    mov     0x4864fd20, a0
+    mov     ptrs_4864FD20, a0
     asl2    d0
     mov     (d0, a0), a0
     mov     (0x14, a0), d0
     mov     d0, (0xc, sp)
     mov     d1, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     a3, a0
     mov     a2, a1
     call    strcat_entry, [a2], 4
@@ -18897,18 +18897,18 @@ loc_4850C886:
     add     0x14, a2
     mov     a2, (8, sp)
     movhu   (0x500c4d48), d0
-    mov     0x4864fd20, a0
+    mov     ptrs_4864FD20, a0
     asl2    d0
     mov     (d0, a0), a0
     mov     (0x18, a0), a0
     mov     a0, (0xc, sp)
     mov     d1, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     a2, a1
     mov     a3, a0
     call    strcat_entry, [a2], 4
 loc_4850C8BE:
-    mov     0x4864fd3c, d0
+    mov     data_4864FD3C, d0
     bra     loc_4850C8D8
 loc_4850C8C6:
     mov     1, d0
@@ -18931,7 +18931,7 @@ CustomCopySure3:
     beq     loc_4850C8F9
     bra     loc_4850C8FD
 loc_4850C8F1:
-    mov     0x4864feac, d0
+    mov     ptrs_4864FEAC, d0
     bra     loc_4850C8FE
 loc_4850C8F9:
     mov     1, d0
@@ -19067,7 +19067,7 @@ loc_4850CA51:
     clr     d1
     call    LibParamGet, 0, 0x10
     movhu   (0x1e, sp), d1
-    mov     0x4864fed0, a2
+    mov     data_4864FED0, a2
     exth    d1
     add     -2, d1
     movbu   (d1, a2), d1
@@ -19115,7 +19115,7 @@ loc_4850CADF:
     movhu   d0, (0x1e, sp)
     exth    d0
     add     -2, d0
-    mov     0x4864fed0, a2
+    mov     data_4864FED0, a2
     movbu   (d0, a2), d1
     mov     0x00008041, d0
     call    MainPutM3Em_entry, [d2,d3,a2], 0x20
@@ -19170,7 +19170,7 @@ loc_4850CB79:
     exth    d0
     asl2    d0
     mov     d0, a0
-    add     0x4864fee4, a0
+    add     data_4864FEE4, a0
     mov     (-4, a0), d0
     cmp     0, d0
     bne     loc_4850CB98
@@ -19203,9 +19203,9 @@ loc_4850CBBD:
     exth    d1
     add     -1, d1
     extb    d2
-    mov     0x4864fec8, a2
+    mov     data_4864FEC8, a2
     movbu   (d0, a2), d0
-    mov     0x4864fed8, a3
+    mov     data_4864FED8, a3
     movbu   (d1, a3), d1
     call    func_4843C7B0_entry, [d2,d3], 0x14
     mov     d0, d1
@@ -19216,7 +19216,7 @@ loc_4850CBBD:
     jmp     loc_4850D004
 loc_4850CBEB:
     movhu   (0x1c, sp), d0
-    mov     0x4864fede, a0
+    mov     data_4864FEDE, a0
     exth    d0
     add     -1, d0
     movbu   (d0, a0), d0
@@ -19251,7 +19251,7 @@ loc_4850CBFF:
     jmp     loc_4850D004
 loc_4850CC48:
     movhu   (0x1e, sp), d0
-    mov     0x4864fec8, a2
+    mov     data_4864FEC8, a2
     exth    d0
     add     -2, d0
     movbu   (d0, a2), d0
@@ -19280,9 +19280,9 @@ loc_4850CC8D:
     add     -2, d0
     exth    d1
     add     -1, d1
-    mov     0x4864fec8, a2
+    mov     data_4864FEC8, a2
     movbu   (d0, a2), d0
-    mov     0x4864fed8, a3
+    mov     data_4864FED8, a3
     movbu   (d1, a3), d1
     call    func_4843C7B0_entry, [d2,d3], 0x14
     extbu   d0
@@ -19383,18 +19383,18 @@ loc_4850CD69:
     movhu   (0x1c, sp), d0
     exth    d0
     asl2    d0
-    add     0x4864fee4, d0
+    add     data_4864FEE4, d0
     mov     d0, a0
     mov     (-4, a0), d1
     cmp     d2, d1
     bne     loc_4850CD95
-    mov     0x4864fefc, a1
+    mov     Str_empty_912, a1
     mov     a3, a0
     call    strcpy_entry, [a2], 4
     jmp     loc_4850CFE4
 loc_4850CD95:
     movhu   (0x1e, sp), d0
-    mov     0x4864fec8, a0
+    mov     data_4864FEC8, a0
     clr     d1
     exth    d0
     add     -2, d0
@@ -19402,7 +19402,7 @@ loc_4850CD95:
     call    func_4843C7B0_entry, [d2,d3], 0x14
     extbu   d0
     asl2    d0
-    mov     0x4864e640, a0
+    mov     ptrs_4864E640, a0
     mov     (d0, a0), a1
     mov     a3, a0
     call    strcpy_entry, [a2], 4
@@ -19416,17 +19416,17 @@ loc_4850CDC0:
     exth    d0
     asl2    d0
     mov     d0, a0
-    add     0x4864fee4, a0
+    add     data_4864FEE4, a0
     mov     (-4, a0), d0
     cmp     d2, d0
     bne     loc_4850CDEC
-    mov     0x4864ff00, a1
+    mov     Str_empty_911, a1
     mov     a3, a0
     call    strcpy_entry, [a2], 4
     jmp     loc_4850CFE4
 loc_4850CDEC:
     movhu   (0x1e, sp), d0
-    mov     0x4864fec8, a2
+    mov     data_4864FEC8, a2
     exth    d0
     add     -2, d0
     movbu   (d0, a2), d0
@@ -19465,18 +19465,18 @@ loc_4850CE3D:
     movhu   (0x1c, sp), d0
     exth    d0
     asl2    d0
-    add     0x4864fee4, d0
+    add     data_4864FEE4, d0
     mov     d0, a0
     mov     (-4, a0), d1
     cmp     d2, d1
     bne     loc_4850CE69
-    mov     0x4864ff14, a1
+    mov     Str_empty_909, a1
     mov     a3, a0
     call    strcpy_entry, [a2], 4
     jmp     loc_4850CFE4
 loc_4850CE69:
     movhu   (0x1e, sp), d0
-    mov     0x4864fec8, a0
+    mov     data_4864FEC8, a0
     exth    d0
     add     -2, d0
     movbu   (d0, a0), d0
@@ -19484,12 +19484,12 @@ loc_4850CE69:
     call    func_4843C7B0_entry, [d2,d3], 0x14
     extbu   d0
     cmp     d2, d0
-    mov     0x4864ff18, a1
+    mov     Str_OFF_49, a1
     beq     loc_4850CE9A
-    mov     0x4864ff20, a1
+    mov     Str_ON_40, a1
     cmp     0x7f, d0
     beq     loc_4850CE9A
-    mov     0x4864ff28, a1
+    mov     Str_SOUND_11, a1
 loc_4850CE9A:
     mov     a3, a0
     call    strcpy_entry, [a2], 4
@@ -19503,17 +19503,17 @@ loc_4850CEA5:
     exth    d0
     asl2    d0
     mov     d0, a0
-    add     0x4864fee4, a0
+    add     data_4864FEE4, a0
     mov     (-4, a0), d0
     cmp     d2, d0
     bne     loc_4850CED1
-    mov     0x4864ff30, a1
+    mov     Str_empty_907, a1
     mov     a3, a0
     call    strcpy_entry, [a2], 4
     jmp     loc_4850CFE4
 loc_4850CED1:
     movhu   (0x1e, sp), d0
-    mov     0x4864fec8, a0
+    mov     data_4864FEC8, a0
     exth    d0
     add     -2, d0
     movbu   (d0, a0), d0
@@ -19523,9 +19523,9 @@ loc_4850CED1:
     add     -0x7f, d0
     mov     d0, (0x10, sp)
     mov     a3, (8, sp)
-    mov     0x4864ff38, d0
+    mov     Str_4d_2, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_4850CFE4
 loc_4850CF01:
     movhu   (0x1e, sp), d0
@@ -19535,18 +19535,18 @@ loc_4850CF01:
     movhu   (0x1c, sp), d0
     exth    d0
     asl2    d0
-    add     0x4864fee4, d0
+    add     data_4864FEE4, d0
     mov     d0, a0
     mov     (-4, a0), d1
     cmp     d2, d1
     bne     loc_4850CF2D
-    mov     0x4864ff3c, a1
+    mov     Str_empty_906, a1
     mov     a3, a0
     call    strcpy_entry, [a2], 4
     jmp     loc_4850CFE4
 loc_4850CF2D:
     movhu   (0x1e, sp), d0
-    mov     0x4864fec8, a0
+    mov     data_4864FEC8, a0
     exth    d0
     add     -2, d0
     movbu   (d0, a0), d0
@@ -19555,7 +19555,7 @@ loc_4850CF2D:
     extbu   d0
     cmp     0x40, d0
     bne     loc_4850CF5A
-    mov     0x4864ff48, a1
+    mov     Str_CENTER_6, a1
     mov     a3, a0
     call    strcpy_entry, [a2], 4
     jmp     loc_4850CFE4
@@ -19563,20 +19563,20 @@ loc_4850CF5A:
     cmp     0x40, d0
     bge     loc_4850CF77
     mov     a3, (8, sp)
-    mov     0x4864ff54, d1
+    mov     Str_LEFT_2d_2, d1
     mov     d1, (0xc, sp)
     mov     0x40, d1
     sub     d0, d1
     mov     d1, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_4850CFE4
 loc_4850CF77:
     mov     a3, (8, sp)
-    mov     0x4864ff60, d1
+    mov     Str_RIGHT_2d_2, d1
     mov     d1, (0xc, sp)
     add     -0x40, d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_4850CFE4
 loc_4850CF8E:
     movhu   (0x1e, sp), d0
@@ -19586,18 +19586,18 @@ loc_4850CF8E:
     movhu   (0x1c, sp), d0
     exth    d0
     asl2    d0
-    add     0x4864fee4, d0
+    add     data_4864FEE4, d0
     mov     d0, a0
     mov     (-4, a0), d0
     cmp     d2, d0
     bne     loc_4850CFB9
-    mov     0x4864ff6c, a1
+    mov     Str_empty_905, a1
     mov     a3, a0
     call    strcpy_entry, [a2], 4
     bra     loc_4850CFE4
 loc_4850CFB9:
     movhu   (0x1e, sp), d0
-    mov     0x4864fec8, a0
+    mov     data_4864FEC8, a0
     exth    d0
     add     -2, d0
     movbu   (d0, a0), d0
@@ -19606,9 +19606,9 @@ loc_4850CFB9:
     extbu   d0
     mov     d0, (0x10, sp)
     mov     a3, (8, sp)
-    mov     0x4864ff70, d0
+    mov     Str_2d_33, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_4850CFE4:
     call    GetFocusObject_entry, 0, 0x10
     mov     (0x18, sp), a0
@@ -19640,7 +19640,7 @@ loc_4850D01E:
     ble     loc_4850D029
     jmp     loc_4850D992
 loc_4850D029:
-    mov     0x48650a8c, a1
+    mov     data_48650A8C, a1
     mov     0xf, d0
     mov     0xfffb0001, d1
     add     d2, d1
@@ -19657,7 +19657,7 @@ loc_4850D029:
     jmp     loc_4850D992
 loc_4850D04D:
     add     8, a0
-    cmp     0x48650b0c, a0
+    cmp     data_48650B0C, a0
     bcs     loc_4850D058
     mov     a1, a0
 loc_4850D058:
@@ -19681,7 +19681,7 @@ loc_4850D05B:
     clr     d1
     call    LibParamGet, 0, 0x10
     movhu   (0x1e, sp), d1
-    mov     0x4864ff7c, a2
+    mov     data_4864FF7C, a2
     exth    d1
     add     -2, d1
     movbu   (d1, a2), d1
@@ -19735,7 +19735,7 @@ loc_4850D0DE:
     movhu   d0, (0x1e, sp)
     exth    d0
     add     -2, d0
-    mov     0x4864ff7c, a2
+    mov     data_4864FF7C, a2
     movbu   (d0, a2), d1
     mov     0x00008041, d0
     call    MainPutM3Em_entry, [d2,d3,a2], 0x20
@@ -19788,7 +19788,7 @@ loc_4850D1A8:
     exth    d0
     asl2    d0
     mov     d0, a0
-    add     0x4864ff9c, a0
+    add     data_4864FF9C, a0
     mov     (-4, a0), d0
     cmp     0, d0
     bne     loc_4850D1C9
@@ -19827,9 +19827,9 @@ loc_4850D1F8:
     add     -2, d0
     exth    d1
     add     -1, d1
-    mov     0x4864ff74, a0
+    mov     data_4864FF74, a0
     movbu   (d0, a0), d0
-    mov     0x4864ff84, a3
+    mov     data_4864FF84, a3
     movbu   (d1, a3), d1
     call    func_4843C7B0_entry, [d2,d3], 0x14
     mov     d0, d1
@@ -19851,7 +19851,7 @@ loc_4850D22C:
     sub     d0, d1
 loc_4850D238:
     movhu   (0x1c, sp), d0
-    mov     0x4864ff8c, a2
+    mov     data_4864FF8C, a2
     exth    d0
     add     -1, d0
     movbu   (d0, a2), d0
@@ -19867,7 +19867,7 @@ loc_4850D238:
     bra     loc_4850D270
 loc_4850D256:
     movhu   (0x1c, sp), d0
-    mov     0x4864ff94, a1
+    mov     data_4864FF94, a1
     exth    d0
     add     -1, d0
     movbu   (d0, a1), d0
@@ -19893,7 +19893,7 @@ loc_4850D270:
     jmp     loc_4850D996
 loc_4850D283:
     movhu   (0x1c, sp), d0
-    mov     0x4864ff94, a0
+    mov     data_4864FF94, a0
     exth    d0
     add     -1, d0
     movbu   (d0, a0), d0
@@ -19902,7 +19902,7 @@ loc_4850D283:
     jmp     loc_4850D996
 loc_4850D297:
     movhu   (0x1e, sp), d0
-    mov     0x4864ff74, a0
+    mov     data_4864FF74, a0
     exth    d0
     add     -2, d0
     movbu   (d0, a0), d3
@@ -19955,7 +19955,7 @@ loc_4850D31F:
 loc_4850D32F:
     clr     d0
     call    func_4843C0AB_entry, [d2], 0x10
-    mov     0x4864ff74, a2
+    mov     data_4864FF74, a2
     extbu   d0
     mov     d0, a3
     movhu   (0x1e, sp), d0
@@ -20050,12 +20050,12 @@ loc_4850D41C:
     add     -2, d0
     exth    d1
     add     -1, d1
-    mov     0x4864ff74, a3
+    mov     data_4864FF74, a3
     movbu   (d0, a3), d0
-    mov     0x4864ff84, a2
+    mov     data_4864FF84, a2
     movbu   (d1, a2), d1
     call    func_4843C7B0_entry, [d2,d3], 0x14
-    mov     0x4864ff8c, a1
+    mov     data_4864FF8C, a1
     mov     d0, d1
     movhu   (0x1c, sp), d0
     mov     d1, d2
@@ -20066,7 +20066,7 @@ loc_4850D41C:
     cmp     d2, d0
     bgt     loc_4850D464
     movhu   (0x1c, sp), d0
-    mov     0x4864ff94, a0
+    mov     data_4864FF94, a0
     exth    d0
     add     -1, d0
     movbu   (d0, a0), d0
@@ -20078,7 +20078,7 @@ loc_4850D464:
     exth    d0
     asl2    d0
     mov     d0, a0
-    add     0x4864ffbc, a0
+    add     Str_l_5, a0
     mov     (-4, a0), d1
 loc_4850D475:
     movhu   (0x1c, sp), d0
@@ -20093,7 +20093,7 @@ loc_4850D475:
     jmp     loc_4850D996
 loc_4850D486:
     movhu   (0x1c, sp), d0
-    mov     0x4864ff94, a0
+    mov     data_4864FF94, a0
     exth    d0
     add     -1, d0
     movbu   (d0, a0), d0
@@ -20154,7 +20154,7 @@ loc_4850D51C:
 loc_4850D52D:
     mov     1, d0
     call    func_4843C0AB_entry, [d2], 0x10
-    mov     0x4864ff74, a2
+    mov     data_4864FF74, a2
     extbu   d0
     mov     d0, a3
     movhu   (0x1e, sp), d0
@@ -20248,12 +20248,12 @@ loc_4850D61A:
     add     -2, d0
     exth    d1
     add     -1, d1
-    mov     0x4864ff74, a2
+    mov     data_4864FF74, a2
     movbu   (d0, a2), d0
-    mov     0x4864ff84, a3
+    mov     data_4864FF84, a3
     movbu   (d1, a3), d1
     call    func_4843C7B0_entry, [d2,d3], 0x14
-    mov     0x4864ff8c, a1
+    mov     data_4864FF8C, a1
     mov     d0, d1
     movhu   (0x1c, sp), d0
     mov     d1, d2
@@ -20264,7 +20264,7 @@ loc_4850D61A:
     cmp     d2, d0
     bgt     loc_4850D662
     movhu   (0x1c, sp), d0
-    mov     0x4864ff94, a0
+    mov     data_4864FF94, a0
     exth    d0
     add     -1, d0
     movbu   (d0, a0), d0
@@ -20276,7 +20276,7 @@ loc_4850D662:
     exth    d0
     asl2    d0
     mov     d0, a0
-    add     0x4864ffbc, a0
+    add     Str_l_5, a0
     mov     (-4, a0), d1
 loc_4850D673:
     movhu   (0x1c, sp), d0
@@ -20291,7 +20291,7 @@ loc_4850D673:
     jmp     loc_4850D996
 loc_4850D684:
     movhu   (0x1c, sp), d0
-    mov     0x4864ff94, a0
+    mov     data_4864FF94, a0
     exth    d0
     add     -1, d0
     movbu   (d0, a0), d0
@@ -20375,11 +20375,11 @@ loc_4850D733:
     exth    d0
     asl2    d0
     mov     d0, a0
-    add     0x4864ff9c, a0
+    add     data_4864FF9C, a0
     mov     (-4, a0), d0
     cmp     0, d0
     bne     loc_4850D760
-    mov     0x4864ffdc, a1
+    mov     Str_empty_1122, a1
     mov     a2, a0
     call    strcpy_entry, [a2], 4
     jmp     loc_4850D977
@@ -20390,18 +20390,18 @@ loc_4850D760:
     add     -2, d0
     exth    d1
     add     -1, d1
-    mov     0x4864ff74, a0
+    mov     data_4864FF74, a0
     movbu   (d0, a0), d0
-    mov     0x4864ff84, a0
+    mov     data_4864FF84, a0
     movbu   (d1, a0), d1
     call    func_4843C7B0_entry, [d2,d3], 0x14
     extbu   d0
     call    func_4850D99A_entry, [d2], 0x90
     mov     a0, (0x10, sp)
     mov     a2, (8, sp)
-    mov     0x4864ffe0, d0
+    mov     Str_sHz_2, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_4850D977
 loc_4850D79F:
     movhu   (0x1e, sp), d0
@@ -20411,12 +20411,12 @@ loc_4850D79F:
     movhu   (0x1c, sp), d0
     exth    d0
     asl2    d0
-    add     0x4864ff9c, d0
+    add     data_4864FF9C, d0
     mov     d0, a0
     mov     (-4, a0), d1
     cmp     0, d1
     bne     loc_4850D7CC
-    mov     0x4864ffe8, a1
+    mov     Str_empty_901, a1
     mov     a2, a0
     call    strcpy_entry, [a2], 4
     jmp     loc_4850D977
@@ -20427,9 +20427,9 @@ loc_4850D7CC:
     add     -2, d0
     exth    d1
     add     -1, d1
-    mov     0x4864ff74, a0
+    mov     data_4864FF74, a0
     movbu   (d0, a0), d0
-    mov     0x4864ff84, a0
+    mov     data_4864FF84, a0
     movbu   (d1, a0), d1
     call    func_4843C7B0_entry, [d2,d3], 0x14
     extbu   d0
@@ -20437,9 +20437,9 @@ loc_4850D7CC:
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
     mov     a2, (8, sp)
-    mov     0x4864ffec, d0
+    mov     Str_5_1f_2, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_4850D977
 loc_4850D80D:
     movhu   (0x1e, sp), d0
@@ -20449,12 +20449,12 @@ loc_4850D80D:
     movhu   (0x1c, sp), d0
     exth    d0
     asl2    d0
-    add     0x4864ff9c, d0
+    add     data_4864FF9C, d0
     mov     d0, a0
     mov     (-4, a0), d1
     cmp     0, d1
     bne     loc_4850D83A
-    mov     0x4864fff4, a1
+    mov     Str_empty_900, a1
     mov     a2, a0
     call    strcpy_entry, [a2], 4
     jmp     loc_4850D977
@@ -20465,17 +20465,17 @@ loc_4850D83A:
     add     -2, d0
     exth    d1
     add     -1, d1
-    mov     0x4864ff74, a0
+    mov     data_4864FF74, a0
     movbu   (d0, a0), d0
-    mov     0x4864ff84, a0
+    mov     data_4864FF84, a0
     movbu   (d1, a0), d1
     call    func_4843C7B0_entry, [d2,d3], 0x14
     extbu   d0
     mov     d0, (0x10, sp)
     mov     a2, (8, sp)
-    mov     0x4864fff8, d0
+    mov     Str_3d_51, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_4850D977
 loc_4850D874:
     clr     d0
@@ -20486,19 +20486,19 @@ loc_4850D874:
     clr     d0
     call    func_4843C0AB_entry, [d2], 0x10
     movhu   (0x1e, sp), d1
-    mov     0x4864ff74, a0
+    mov     data_4864FF74, a0
     exth    d1
     add     -2, d1
     movbu   (d1, a0), d1
     extbu   d0
     cmp     d1, d0
     bne     loc_4850D8AC
-    mov     0x4864fffc, a1
+    mov     Str_ON_39, a1
     mov     a2, a0
     call    strcpy_entry, [a2], 4
     jmp     loc_4850D977
 loc_4850D8AC:
-    mov     0x48650000, a1
+    mov     Str_empty_898, a1
     mov     a2, a0
     call    strcpy_entry, [a2], 4
     jmp     loc_4850D977
@@ -20509,17 +20509,17 @@ loc_4850D8BD:
     add     -2, d0
     exth    d1
     add     -1, d1
-    mov     0x4864ff74, a0
+    mov     data_4864FF74, a0
     movbu   (d0, a0), d0
-    mov     0x4864ff84, a0
+    mov     data_4864FF84, a0
     movbu   (d1, a0), d1
     call    func_4843C7B0_entry, [d2,d3], 0x14
     extbu   d0
     mov     d0, (0x10, sp)
     mov     a2, (8, sp)
-    mov     0x48650004, d0
+    mov     Str_3d_50, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_4850D977
 loc_4850D8F7:
     mov     1, d0
@@ -20530,19 +20530,19 @@ loc_4850D8F7:
     mov     1, d0
     call    func_4843C0AB_entry, [d2], 0x10
     movhu   (0x1e, sp), d1
-    mov     0x4864ff74, a0
+    mov     data_4864FF74, a0
     exth    d1
     add     -2, d1
     movbu   (d1, a0), d1
     extbu   d0
     cmp     d1, d0
     bne     loc_4850D930
-    mov     0x48650008, a1
+    mov     Str_ON_28, a1
     mov     a2, a0
     call    strcpy_entry, [a2], 4
     bra     loc_4850D977
 loc_4850D930:
-    mov     0x4865000c, a1
+    mov     Str_empty_897, a1
     mov     a2, a0
     call    strcpy_entry, [a2], 4
     bra     loc_4850D977
@@ -20553,17 +20553,17 @@ loc_4850D940:
     add     -2, d0
     exth    d1
     add     -1, d1
-    mov     0x4864ff74, a0
+    mov     data_4864FF74, a0
     movbu   (d0, a0), d0
-    mov     0x4864ff84, a0
+    mov     data_4864FF84, a0
     movbu   (d1, a0), d1
     call    func_4843C7B0_entry, [d2,d3], 0x14
     extbu   d0
     mov     d0, (0x10, sp)
     mov     a2, (8, sp)
-    mov     0x48650010, d0
+    mov     Str_3d_49, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_4850D977:
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
@@ -20585,7 +20585,7 @@ func_4850D99A:
     add     -0x8c, sp
 func_4850D99A_entry:
     mov     d0, d2
-    mov     0x486500ce, a1
+    mov     data_486500CE, a1
     mov     sp, a0
     add     0x10, a0
     mov     -0x7c, d1
@@ -20599,7 +20599,7 @@ func_4850D99A_entry:
     extbu   d2
     cmp     0x78, d2
     ble     loc_4850D9C2
-    mov     0x4865014c, a0
+    mov     Str_ERROR_35, a0
     bra     loc_4850D9D2
 loc_4850D9C2:
     mov     4, d1
@@ -20679,7 +20679,7 @@ loc_4850DA75:
     ble     loc_4850DA80
     jmp     loc_4850DB33
 loc_4850DA80:
-    mov     0x48650b0c, a1
+    mov     data_48650B0C, a1
     add     0xfffb0001, d2
     mov     0xf, d0
     and     d2, d0
@@ -20695,7 +20695,7 @@ loc_4850DA80:
     jmp     loc_4850DB33
 loc_4850DAA3:
     add     8, a0
-    cmp     0x48650b8c, a0
+    cmp     data_48650B8C, a0
     bcs     loc_4850DAAE
     mov     a1, a0
 loc_4850DAAE:
@@ -20707,20 +20707,20 @@ loc_4850DAB1:
     jmp     (a0)
     clr     d0
     ret     [d2,d3,a2], 0x20
-    movbu   (0x50003eac), d1
+    movbu   (data_50003EAC), d1
     mov     1, d0
     inc     d1
     call    func_4850DEF2_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     ret     [d2,d3,a2], 0x20
-    movbu   (0x50003eac), d1
+    movbu   (data_50003EAC), d1
     mov     1, d0
     add     -1, d1
     call    func_4850DEF2_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     bra     loc_4850DB34
     mov     (0x30, sp), a2
-    movbu   (0x50003eac), d0
+    movbu   (data_50003EAC), d0
     call    func_4850E3B8, 0, 0
     extbu   d0
     call    func_4850E39D, 0, 0
@@ -20729,13 +20729,13 @@ loc_4850DAB1:
     call    strcpy_entry, [a2], 4
     clr     d0
     bra     loc_4850DB34
-    movbu   (0x50003eac), d0
+    movbu   (data_50003EAC), d0
     bra     loc_4850DB34
     mov     (0x30, sp), d0
-    movbu   (0x50003eac), d1
+    movbu   (data_50003EAC), d1
     cmp     d0, d1
     beq     loc_4850DB2D
-    movbu   d0, (0x50003eac)
+    movbu   d0, (data_50003EAC)
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -20764,7 +20764,7 @@ loc_4850DB49:
     ble     loc_4850DB54
     jmp     loc_4850DC0D
 loc_4850DB54:
-    mov     0x48650b8c, a1
+    mov     data_48650B8C, a1
     add     0xfffb0001, d2
     mov     0xf, d0
     and     d2, d0
@@ -20780,7 +20780,7 @@ loc_4850DB54:
     jmp     loc_4850DC0D
 loc_4850DB77:
     add     8, a0
-    cmp     0x48650c0c, a0
+    cmp     data_48650C0C, a0
     bcs     loc_4850DB82
     mov     a1, a0
 loc_4850DB82:
@@ -20795,34 +20795,34 @@ loc_4850DB85:
     call    func_4850DEF2_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     ret     [d2,d3], 0x1c
-    movhu   (0x50003eb0), d1
+    movhu   (data_50003EB0), d1
     mov     2, d0
     inc     d1
     call    func_4850DEF2_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     bra     loc_4850DC0E
-    movhu   (0x50003eb0), d1
+    movhu   (data_50003EB0), d1
     mov     2, d0
     add     -1, d1
     call    func_4850DEF2_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     bra     loc_4850DC0E
     mov     (0x2c, sp), a1
-    mov     0x48650154, d0
+    mov     Str_2d_32, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    movhu   (0x50003eb0), d0
+    movhu   (data_50003EB0), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_4850DC0E
-    movhu   (0x50003eb0), d0
+    movhu   (data_50003EB0), d0
     bra     loc_4850DC0E
     mov     (0x2c, sp), d1
-    movhu   (0x50003eb0), d0
+    movhu   (data_50003EB0), d0
     cmp     d1, d0
     beq     loc_4850DC07
-    movhu   d1, (0x50003eb0)
+    movhu   d1, (data_50003EB0)
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -20851,7 +20851,7 @@ loc_4850DC23:
     ble     loc_4850DC2E
     jmp     loc_4850DCE0
 loc_4850DC2E:
-    mov     0x48650c0c, a1
+    mov     data_48650C0C, a1
     add     0xfffb0001, d2
     mov     0xf, d0
     and     d2, d0
@@ -20867,7 +20867,7 @@ loc_4850DC2E:
     jmp     loc_4850DCE0
 loc_4850DC51:
     add     8, a0
-    cmp     0x48650c8c, a0
+    cmp     data_48650C8C, a0
     bcs     loc_4850DC5C
     mov     a1, a0
 loc_4850DC5C:
@@ -20879,34 +20879,34 @@ loc_4850DC5F:
     jmp     (a0)
     clr     d0
     ret     [d2,d3], 0x1c
-    movhu   (0x50003eb4), d1
+    movhu   (data_50003EB4), d1
     mov     3, d0
     inc     d1
     call    func_4850DEF2_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     ret     [d2,d3], 0x1c
-    movhu   (0x50003eb4), d1
+    movhu   (data_50003EB4), d1
     mov     3, d0
     add     -1, d1
     call    func_4850DEF2_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     bra     loc_4850DCE1
     mov     (0x2c, sp), a1
-    mov     0x48650158, d0
+    mov     Str_2d_17, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    movhu   (0x50003eb4), d0
+    movhu   (data_50003EB4), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_4850DCE1
-    movhu   (0x50003eb4), d0
+    movhu   (data_50003EB4), d0
     bra     loc_4850DCE1
     mov     (0x2c, sp), d0
-    movhu   (0x50003eb4), d1
+    movhu   (data_50003EB4), d1
     cmp     d0, d1
     beq     loc_4850DCDA
-    movhu   d0, (0x50003eb4)
+    movhu   d0, (data_50003EB4)
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -20935,7 +20935,7 @@ loc_4850DCF6:
     ble     loc_4850DD01
     jmp     loc_4850DDB4
 loc_4850DD01:
-    mov     0x48650c8c, a1
+    mov     data_48650C8C, a1
     add     0xfffb0001, d2
     mov     0xf, d0
     and     d2, d0
@@ -20951,7 +20951,7 @@ loc_4850DD01:
     jmp     loc_4850DDB4
 loc_4850DD24:
     add     8, a0
-    cmp     0x48650d0c, a0
+    cmp     data_48650D0C, a0
     bcs     loc_4850DD2F
     mov     a1, a0
 loc_4850DD2F:
@@ -20963,20 +20963,20 @@ loc_4850DD32:
     jmp     (a0)
     clr     d0
     ret     [d2,d3,a2], 0x20
-    movbu   (0x50003eb8), d1
+    movbu   (data_50003EB8), d1
     mov     4, d0
     inc     d1
     call    func_4850DEF2_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     ret     [d2,d3,a2], 0x20
-    movbu   (0x50003eb8), d1
+    movbu   (data_50003EB8), d1
     mov     4, d0
     add     -1, d1
     call    func_4850DEF2_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     bra     loc_4850DDB5
     mov     (0x30, sp), a2
-    movbu   (0x50003eb8), d0
+    movbu   (data_50003EB8), d0
     call    func_4850E3B8, 0, 0
     extbu   d0
     call    func_4850E39D, 0, 0
@@ -20985,13 +20985,13 @@ loc_4850DD32:
     call    strcpy_entry, [a2], 4
     clr     d0
     bra     loc_4850DDB5
-    movbu   (0x50003eb8), d0
+    movbu   (data_50003EB8), d0
     bra     loc_4850DDB5
     mov     (0x30, sp), d0
-    movbu   (0x50003eb8), d1
+    movbu   (data_50003EB8), d1
     cmp     d0, d1
     beq     loc_4850DDAE
-    movbu   d0, (0x50003eb8)
+    movbu   d0, (data_50003EB8)
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -21020,7 +21020,7 @@ loc_4850DDCA:
     ble     loc_4850DDD5
     jmp     loc_4850DE87
 loc_4850DDD5:
-    mov     0x48650d0c, a1
+    mov     data_48650D0C, a1
     add     0xfffb0001, d2
     mov     0xf, d0
     and     d2, d0
@@ -21036,7 +21036,7 @@ loc_4850DDD5:
     jmp     loc_4850DE87
 loc_4850DDF8:
     add     8, a0
-    cmp     0x48650d8c, a0
+    cmp     data_48650D8C, a0
     bcs     loc_4850DE03
     mov     a1, a0
 loc_4850DE03:
@@ -21048,34 +21048,34 @@ loc_4850DE06:
     jmp     (a0)
     clr     d0
     ret     [d2,d3], 0x1c
-    movhu   (0x50003ebc), d1
+    movhu   (data_50003EBC), d1
     mov     5, d0
     inc     d1
     call    func_4850DEF2_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     ret     [d2,d3], 0x1c
-    movhu   (0x50003ebc), d1
+    movhu   (data_50003EBC), d1
     mov     5, d0
     add     -1, d1
     call    func_4850DEF2_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     bra     loc_4850DE88
     mov     (0x2c, sp), a1
-    mov     0x4865015c, d0
+    mov     Str_2d_30, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    movhu   (0x50003ebc), d0
+    movhu   (data_50003EBC), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_4850DE88
-    movhu   (0x50003ebc), d0
+    movhu   (data_50003EBC), d0
     bra     loc_4850DE88
     mov     (0x2c, sp), d0
-    movhu   (0x50003ebc), d1
+    movhu   (data_50003EBC), d1
     cmp     d0, d1
     beq     loc_4850DE81
-    movhu   d0, (0x50003ebc)
+    movhu   d0, (data_50003EBC)
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -21148,7 +21148,7 @@ func_4850DEF2:
 func_4850DEF2_entry:
     mov     d1, d3
     mov     d0, d2
-    mov     0x50003ec0, a2
+    mov     data_50003EC0, a2
     mov     sp, a3
     add     0x18, a3
 loc_4850DF02:
@@ -21160,7 +21160,7 @@ loc_4850DF02:
     movbu   d0, (a3)
     inc     a3
     inc4    a2
-    cmp     0x50003ed4, a2
+    cmp     data_50003ED4, a2
     bcs     loc_4850DF02
     cmp     1, d2
     beq     loc_4850DF57
@@ -21206,7 +21206,7 @@ loc_4850DF65:
     movbu   (0x14, sp), d0
     movbu   d0, (0x18, sp)
     movbu   (0x14, sp), d1
-    mov     (0x50003ec0), d0
+    mov     (data_50003EC0), d0
     extb    d1
     mov     d1, (0x10, sp)
     mov     0x0006003b, d1
@@ -21231,7 +21231,7 @@ loc_4850DFAC:
     movbu   (0x14, sp), d0
     movbu   d0, (0x1b, sp)
     movbu   (0x14, sp), d1
-    mov     (0x50003ecc), d0
+    mov     (data_50003ECC), d0
     extb    d1
     mov     d1, (0x10, sp)
     mov     0x0006003b, d1
@@ -21249,7 +21249,7 @@ loc_4850DFCE:
     extb    d0
     mov     d0, (0x10, sp)
     mov     0x0006003b, d1
-    mov     (0x50003ec4), d0
+    mov     (data_50003EC4), d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4850DFFD:
     call    func_4843C15E_entry, 0, 0xc
@@ -21263,7 +21263,7 @@ loc_4850DFFD:
     extb    d0
     mov     d0, (0x10, sp)
     mov     0x0006003b, d1
-    mov     (0x50003ec8), d0
+    mov     (data_50003EC8), d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4850E02C:
     movbu   (0x19, sp), d1
@@ -21275,7 +21275,7 @@ loc_4850E02C:
     movbu   (0x1a, sp), d1
     movbu   d1, (0x19, sp)
     extb    d1
-    mov     (0x50003ec4), d0
+    mov     (data_50003EC4), d0
     mov     d1, (0x10, sp)
     mov     0x0006003b, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -21305,7 +21305,7 @@ loc_4850E071:
     movbu   d0, (0x1c, sp)
     extb    d0
     mov     d0, (0x10, sp)
-    mov     (0x50003ed0), d0
+    mov     (data_50003ED0), d0
     mov     0x0006003b, d1
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_4850E399
@@ -21324,7 +21324,7 @@ loc_4850E0B6:
     movbu   d2, (0x19, sp)
     mov     d2, d1
     extb    d1
-    mov     (0x50003ec4), d0
+    mov     (data_50003EC4), d0
     mov     d1, (0x10, sp)
     mov     0x0006003b, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -21333,7 +21333,7 @@ loc_4850E0B6:
     cmp     d0, d3
     ble     loc_4850E0F1
     movbu   d3, (0x1a, sp)
-    mov     (0x50003ec8), d0
+    mov     (data_50003EC8), d0
     extb    d2
     mov     d2, (0x10, sp)
     mov     0x0006003b, d1
@@ -21364,7 +21364,7 @@ loc_4850E10F:
     movbu   d0, (0x1c, sp)
     extb    d0
     mov     d0, (0x10, sp)
-    mov     (0x50003ed0), d0
+    mov     (data_50003ED0), d0
     mov     0x0006003b, d1
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_4850E399
@@ -21385,7 +21385,7 @@ loc_4850E154:
     ble     loc_4850E175
     mov     d3, d1
     movbu   d1, (0x19, sp)
-    mov     (0x50003ec4), d0
+    mov     (data_50003EC4), d0
     extb    d1
     mov     d1, (0x10, sp)
     mov     0x0006003b, d1
@@ -21394,7 +21394,7 @@ loc_4850E175:
     mov     d3, d1
     movbu   d1, (0x1a, sp)
     extb    d1
-    mov     (0x50003ec8), d0
+    mov     (data_50003EC8), d0
     mov     d1, (0x10, sp)
     mov     0x0006003b, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -21420,7 +21420,7 @@ loc_4850E1AB:
     movbu   d0, (0x1c, sp)
     extb    d0
     mov     d0, (0x10, sp)
-    mov     (0x50003ed0), d0
+    mov     (data_50003ED0), d0
     mov     0x0006003b, d1
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_4850E399
@@ -21437,7 +21437,7 @@ loc_4850E1E5:
     movbu   (0x14, sp), d0
     movbu   d0, (0x1b, sp)
     movbu   (0x14, sp), d1
-    mov     (0x50003ecc), d0
+    mov     (data_50003ECC), d0
     extb    d1
     mov     d1, (0x10, sp)
     mov     0x0006003b, d1
@@ -21462,7 +21462,7 @@ loc_4850E22C:
     movbu   (0x14, sp), d0
     movbu   d0, (0x18, sp)
     movbu   (0x14, sp), d1
-    mov     (0x50003ec0), d0
+    mov     (data_50003EC0), d0
     extb    d1
     mov     d1, (0x10, sp)
     mov     0x0006003b, d1
@@ -21486,7 +21486,7 @@ loc_4850E255:
     jmp     loc_4850E399
 loc_4850E26F:
     movbu   d3, (0x1c, sp)
-    mov     (0x50003ed0), d0
+    mov     (data_50003ED0), d0
     mov     d3, d1
     extb    d1
     mov     d1, (0x10, sp)
@@ -21610,11 +21610,11 @@ func_4850E39D:
     bgt     loc_4850E3AF
     extbu   d0
     asl2    d0
-    mov     0x486501a8, a0
+    mov     ptrs_486501A8, a0
     mov     (d0, a0), a0
     bra     loc_4850E3B5
 loc_4850E3AF:
-    mov     (0x486501c8), a0
+    mov     (data_486501C8), a0
 loc_4850E3B5:
     retf    0, 0
 
@@ -21624,7 +21624,7 @@ func_4850E3B8:
     cmp     8, d1
     bgt     loc_4850E3C9
     extbu   d0
-    mov     0x486501cc, a0
+    mov     data_486501CC, a0
     movbu   (d0, a0), d0
     bra     loc_4850E3CB
 loc_4850E3C9:
@@ -21675,7 +21675,7 @@ loc_4850E40F:
     ble     loc_4850E41A
     jmp     loc_4850E4D3
 loc_4850E41A:
-    mov     0x48650d8c, a1
+    mov     data_48650D8C, a1
     add     0xfffb0001, d2
     mov     0xf, d0
     and     d2, d0
@@ -21691,7 +21691,7 @@ loc_4850E41A:
     jmp     loc_4850E4D3
 loc_4850E43D:
     add     8, a0
-    cmp     0x48650e0c, a0
+    cmp     data_48650E0C, a0
     bcs     loc_4850E448
     mov     a1, a0
 loc_4850E448:
@@ -21706,34 +21706,34 @@ loc_4850E44B:
     call    func_4850E5D5_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     ret     [d2,d3], 0x1c
-    movhu   (0x50003ed4), d1
+    movhu   (data_50003ED4), d1
     mov     1, d0
     inc     d1
     call    func_4850E5D5_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     bra     loc_4850E4D4
-    movhu   (0x50003ed4), d1
+    movhu   (data_50003ED4), d1
     mov     1, d0
     add     -1, d1
     call    func_4850E5D5_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     bra     loc_4850E4D4
     mov     (0x2c, sp), a1
-    mov     0x486501d8, d0
+    mov     Str_2d_29, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    movhu   (0x50003ed4), d0
+    movhu   (data_50003ED4), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_4850E4D4
-    movhu   (0x50003ed4), d0
+    movhu   (data_50003ED4), d0
     bra     loc_4850E4D4
     mov     (0x2c, sp), d1
-    movhu   (0x50003ed4), d0
+    movhu   (data_50003ED4), d0
     cmp     d1, d0
     beq     loc_4850E4CD
-    movhu   d1, (0x50003ed4)
+    movhu   d1, (data_50003ED4)
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -21762,7 +21762,7 @@ loc_4850E4E9:
     ble     loc_4850E4F4
     jmp     loc_4850E5A6
 loc_4850E4F4:
-    mov     0x48650e0c, a1
+    mov     data_48650E0C, a1
     add     0xfffb0001, d2
     mov     0xf, d0
     and     d2, d0
@@ -21778,7 +21778,7 @@ loc_4850E4F4:
     jmp     loc_4850E5A6
 loc_4850E517:
     add     8, a0
-    cmp     0x48650e8c, a0
+    cmp     data_48650E8C, a0
     bcs     loc_4850E522
     mov     a1, a0
 loc_4850E522:
@@ -21790,34 +21790,34 @@ loc_4850E525:
     jmp     (a0)
     clr     d0
     ret     [d2,d3], 0x1c
-    movhu   (0x50003ed8), d1
+    movhu   (data_50003ED8), d1
     mov     2, d0
     inc     d1
     call    func_4850E5D5_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     ret     [d2,d3], 0x1c
-    movhu   (0x50003ed8), d1
+    movhu   (data_50003ED8), d1
     mov     2, d0
     add     -1, d1
     call    func_4850E5D5_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     bra     loc_4850E5A7
     mov     (0x2c, sp), a1
-    mov     0x486501dc, d0
+    mov     Str_2d_28, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    movhu   (0x50003ed8), d0
+    movhu   (data_50003ED8), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_4850E5A7
-    movhu   (0x50003ed8), d0
+    movhu   (data_50003ED8), d0
     bra     loc_4850E5A7
     mov     (0x2c, sp), d0
-    movhu   (0x50003ed8), d1
+    movhu   (data_50003ED8), d1
     cmp     d0, d1
     beq     loc_4850E5A0
-    movhu   d0, (0x50003ed8)
+    movhu   d0, (data_50003ED8)
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -21862,7 +21862,7 @@ func_4850E5D5:
 func_4850E5D5_entry:
     mov     d1, d3
     mov     d0, d2
-    mov     0x50003edc, a2
+    mov     data_50003EDC, a2
     mov     sp, a3
     add     0x14, a3
 loc_4850E5E5:
@@ -21874,7 +21874,7 @@ loc_4850E5E5:
     movbu   d0, (a3)
     inc     a3
     inc4    a2
-    cmp     0x50003ee4, a2
+    cmp     data_50003EE4, a2
     bcs     loc_4850E5E5
     cmp     4, d2
     beq     loc_4850E625
@@ -21906,7 +21906,7 @@ loc_4850E625:
     movbu   d0, (0x14, sp)
     extb    d0
     mov     d0, (0x10, sp)
-    mov     (0x50003edc), d0
+    mov     (data_50003EDC), d0
     mov     0x0006003b, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4850E654:
@@ -21921,7 +21921,7 @@ loc_4850E654:
     extb    d0
     mov     d0, (0x10, sp)
     mov     0x0006003b, d1
-    mov     (0x50003ee0), d0
+    mov     (data_50003EE0), d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4850E683:
     movbu   (0x14, sp), d1
@@ -21933,7 +21933,7 @@ loc_4850E683:
     movbu   (0x15, sp), d1
     movbu   d1, (0x14, sp)
     extb    d1
-    mov     (0x50003edc), d0
+    mov     (data_50003EDC), d0
     mov     d1, (0x10, sp)
     mov     0x0006003b, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -21967,7 +21967,7 @@ loc_4850E6D5:
     extb    d0
     mov     d0, (0x10, sp)
     mov     0x0006003b, d1
-    mov     (0x50003ee0), d0
+    mov     (data_50003EE0), d0
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_4850E930
 loc_4850E700:
@@ -21985,7 +21985,7 @@ loc_4850E715:
     movbu   d2, (0x14, sp)
     mov     d2, d1
     extb    d1
-    mov     (0x50003edc), d0
+    mov     (data_50003EDC), d0
     mov     d1, (0x10, sp)
     mov     0x0006003b, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -21994,7 +21994,7 @@ loc_4850E715:
     cmp     d0, d3
     ble     loc_4850E750
     movbu   d3, (0x15, sp)
-    mov     (0x50003ee0), d0
+    mov     (data_50003EE0), d0
     extb    d2
     mov     d2, (0x10, sp)
     mov     0x0006003b, d1
@@ -22022,7 +22022,7 @@ loc_4850E76C:
     movbu   d0, (0x15, sp)
     extb    d0
     mov     d0, (0x10, sp)
-    mov     (0x50003ee0), d0
+    mov     (data_50003EE0), d0
     mov     0x0006003b, d1
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_4850E930
@@ -22043,7 +22043,7 @@ loc_4850E7AC:
     ble     loc_4850E7CD
     mov     d3, d1
     movbu   d1, (0x14, sp)
-    mov     (0x50003edc), d0
+    mov     (data_50003EDC), d0
     extb    d1
     mov     d1, (0x10, sp)
     mov     0x0006003b, d1
@@ -22052,7 +22052,7 @@ loc_4850E7CD:
     mov     d3, d1
     movbu   d3, (0x15, sp)
     extb    d1
-    mov     (0x50003ee0), d0
+    mov     (data_50003EE0), d0
     mov     d1, (0x10, sp)
     mov     0x0006003b, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -22078,7 +22078,7 @@ loc_4850E804:
     add     2, d1
     movbu   d1, (0x14, sp)
     extb    d1
-    mov     (0x50003edc), d0
+    mov     (data_50003EDC), d0
     mov     d1, (0x10, sp)
     mov     0x0006003b, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -22159,13 +22159,13 @@ loc_4850E8AA:
     add     -1, d1
     movbu   d1, (0x14, sp)
     extb    d1
-    mov     (0x50003edc), d0
+    mov     (data_50003EDC), d0
     mov     d1, (0x10, sp)
     mov     0x0006003b, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4850E917:
     movbu   (0x14, sp), d1
-    mov     (0x50003ee0), d0
+    mov     (data_50003EE0), d0
     extb    d1
     mov     d1, (0x10, sp)
     mov     0x0006003b, d1
@@ -22209,7 +22209,7 @@ AttCompMeasDel:
     beq     loc_4850E98A
     bra     loc_4850E98E
 loc_4850E982:
-    mov     0x486502d0, d0
+    mov     ptrs_486502D0, d0
     bra     loc_4850E98F
 loc_4850E98A:
     mov     1, d0
@@ -22232,7 +22232,7 @@ loc_4850E9A4:
     ble     loc_4850E9AF
     jmp     loc_4850EA62
 loc_4850E9AF:
-    mov     0x48650e8c, a1
+    mov     data_48650E8C, a1
     add     0xfffb0001, d2
     mov     0xf, d0
     and     d2, d0
@@ -22248,7 +22248,7 @@ loc_4850E9AF:
     jmp     loc_4850EA62
 loc_4850E9D2:
     add     8, a0
-    cmp     0x48650f0c, a0
+    cmp     data_48650F0C, a0
     bcs     loc_4850E9DD
     mov     a1, a0
 loc_4850E9DD:
@@ -22260,20 +22260,20 @@ loc_4850E9E0:
     jmp     (a0)
     clr     d0
     ret     [d2,d3,a2], 0x20
-    movbu   (0x50003ee4), d1
+    movbu   (data_50003EE4), d1
     mov     1, d0
     inc     d1
     call    func_4850EC4F_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     ret     [d2,d3,a2], 0x20
-    movbu   (0x50003ee4), d1
+    movbu   (data_50003EE4), d1
     mov     1, d0
     add     -1, d1
     call    func_4850EC4F_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     bra     loc_4850EA63
     mov     (0x30, sp), a2
-    movbu   (0x50003ee4), d0
+    movbu   (data_50003EE4), d0
     call    func_4850E3B8, 0, 0
     extbu   d0
     call    func_4850E39D, 0, 0
@@ -22282,13 +22282,13 @@ loc_4850E9E0:
     call    strcpy_entry, [a2], 4
     clr     d0
     bra     loc_4850EA63
-    movbu   (0x50003ee4), d0
+    movbu   (data_50003EE4), d0
     bra     loc_4850EA63
     mov     (0x30, sp), d0
-    movbu   (0x50003ee4), d1
+    movbu   (data_50003EE4), d1
     cmp     d0, d1
     beq     loc_4850EA5C
-    movbu   d0, (0x50003ee4)
+    movbu   d0, (data_50003EE4)
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -22317,7 +22317,7 @@ loc_4850EA78:
     ble     loc_4850EA83
     jmp     loc_4850EB3C
 loc_4850EA83:
-    mov     0x48650f0c, a1
+    mov     data_48650F0C, a1
     add     0xfffb0001, d2
     mov     0xf, d0
     and     d2, d0
@@ -22333,7 +22333,7 @@ loc_4850EA83:
     jmp     loc_4850EB3C
 loc_4850EAA6:
     add     8, a0
-    cmp     0x48650f8c, a0
+    cmp     data_48650F8C, a0
     bcs     loc_4850EAB1
     mov     a1, a0
 loc_4850EAB1:
@@ -22348,34 +22348,34 @@ loc_4850EAB4:
     call    func_4850EC4F_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     ret     [d2,d3], 0x1c
-    movhu   (0x50003ee8), d1
+    movhu   (data_50003EE8), d1
     mov     2, d0
     inc     d1
     call    func_4850EC4F_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     bra     loc_4850EB3D
-    movhu   (0x50003ee8), d1
+    movhu   (data_50003EE8), d1
     mov     2, d0
     add     -1, d1
     call    func_4850EC4F_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     bra     loc_4850EB3D
     mov     (0x2c, sp), a1
-    mov     0x486502ec, d0
+    mov     Str_2d_27, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    movhu   (0x50003ee8), d0
+    movhu   (data_50003EE8), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_4850EB3D
-    movhu   (0x50003ee8), d0
+    movhu   (data_50003EE8), d0
     bra     loc_4850EB3D
     mov     (0x2c, sp), d1
-    movhu   (0x50003ee8), d0
+    movhu   (data_50003EE8), d0
     cmp     d1, d0
     beq     loc_4850EB36
-    movhu   d1, (0x50003ee8)
+    movhu   d1, (data_50003EE8)
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -22404,7 +22404,7 @@ loc_4850EB52:
     ble     loc_4850EB5D
     jmp     loc_4850EC0F
 loc_4850EB5D:
-    mov     0x48650f8c, a1
+    mov     data_48650F8C, a1
     add     0xfffb0001, d2
     mov     0xf, d0
     and     d2, d0
@@ -22420,7 +22420,7 @@ loc_4850EB5D:
     jmp     loc_4850EC0F
 loc_4850EB80:
     add     8, a0
-    cmp     0x4865100c, a0
+    cmp     data_4865100C, a0
     bcs     loc_4850EB8B
     mov     a1, a0
 loc_4850EB8B:
@@ -22432,34 +22432,34 @@ loc_4850EB8E:
     jmp     (a0)
     clr     d0
     ret     [d2,d3], 0x1c
-    movhu   (0x50003eec), d1
+    movhu   (data_50003EEC), d1
     mov     3, d0
     inc     d1
     call    func_4850EC4F_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     ret     [d2,d3], 0x1c
-    movhu   (0x50003eec), d1
+    movhu   (data_50003EEC), d1
     mov     3, d0
     add     -1, d1
     call    func_4850EC4F_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     bra     loc_4850EC10
     mov     (0x2c, sp), a1
-    mov     0x486502f0, d0
+    mov     Str_2d_26, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    movhu   (0x50003eec), d0
+    movhu   (data_50003EEC), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_4850EC10
-    movhu   (0x50003eec), d0
+    movhu   (data_50003EEC), d0
     bra     loc_4850EC10
     mov     (0x2c, sp), d0
-    movhu   (0x50003eec), d1
+    movhu   (data_50003EEC), d1
     cmp     d0, d1
     beq     loc_4850EC09
-    movhu   d0, (0x50003eec)
+    movhu   d0, (data_50003EEC)
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -22509,7 +22509,7 @@ func_4850EC4F:
 func_4850EC4F_entry:
     mov     d1, d3
     mov     d0, d2
-    mov     0x50003ef0, a2
+    mov     data_50003EF0, a2
     mov     sp, a3
     add     0x14, a3
 loc_4850EC5F:
@@ -22521,7 +22521,7 @@ loc_4850EC5F:
     movbu   d0, (a3)
     inc     a3
     inc4    a2
-    cmp     0x50003efc, a2
+    cmp     data_50003EFC, a2
     bcs     loc_4850EC5F
     cmp     1, d2
     beq     loc_4850EC9C
@@ -22550,7 +22550,7 @@ loc_4850ECA3:
     jmp     loc_4850EE4B
 loc_4850ECAA:
     movbu   d3, (0x14, sp)
-    mov     (0x50003ef0), d0
+    mov     (data_50003EF0), d0
     mov     d3, d1
     extb    d1
     mov     d1, (0x10, sp)
@@ -22568,7 +22568,7 @@ loc_4850ECC7:
     movbu   d0, (0x15, sp)
     extb    d0
     mov     d0, (0x10, sp)
-    mov     (0x50003ef4), d0
+    mov     (data_50003EF4), d0
     mov     0x0006003b, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4850ECF6:
@@ -22583,7 +22583,7 @@ loc_4850ECF6:
     extb    d0
     mov     d0, (0x10, sp)
     mov     0x0006003b, d1
-    mov     (0x50003ef8), d0
+    mov     (data_50003EF8), d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4850ED25:
     movbu   (0x15, sp), d1
@@ -22597,7 +22597,7 @@ loc_4850ED33:
     movbu   (0x16, sp), d1
     movbu   d1, (0x15, sp)
     extb    d1
-    mov     (0x50003ef4), d0
+    mov     (data_50003EF4), d0
     mov     d1, (0x10, sp)
     mov     0x0006003b, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -22617,7 +22617,7 @@ loc_4850ED67:
     movbu   d2, (0x15, sp)
     mov     d2, d1
     extb    d1
-    mov     (0x50003ef4), d0
+    mov     (data_50003EF4), d0
     mov     d1, (0x10, sp)
     mov     0x0006003b, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -22628,7 +22628,7 @@ loc_4850ED67:
     jmp     loc_4850EE4B
 loc_4850ED8C:
     movbu   d3, (0x16, sp)
-    mov     (0x50003ef8), d0
+    mov     (data_50003EF8), d0
     extb    d2
     mov     d2, (0x10, sp)
     mov     0x0006003b, d1
@@ -22651,14 +22651,14 @@ loc_4850EDBD:
     ble     loc_4850EDDE
     mov     d3, d1
     movbu   d1, (0x15, sp)
-    mov     (0x50003ef4), d0
+    mov     (data_50003EF4), d0
     extb    d1
     mov     d1, (0x10, sp)
     mov     0x0006003b, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4850EDDE:
     movbu   d3, (0x16, sp)
-    mov     (0x50003ef8), d0
+    mov     (data_50003EF8), d0
     mov     d3, d1
     extb    d1
     mov     d1, (0x10, sp)
@@ -22709,7 +22709,7 @@ loc_4850EE61:
     ble     loc_4850EE6C
     jmp     loc_4850EF25
 loc_4850EE6C:
-    mov     0x4865100c, a1
+    mov     data_4865100C, a1
     add     0xfffb0001, d2
     mov     0xf, d0
     and     d2, d0
@@ -22725,7 +22725,7 @@ loc_4850EE6C:
     jmp     loc_4850EF25
 loc_4850EE8F:
     add     8, a0
-    cmp     0x4865108c, a0
+    cmp     data_4865108C, a0
     bcs     loc_4850EE9A
     mov     a1, a0
 loc_4850EE9A:
@@ -22740,34 +22740,34 @@ loc_4850EE9D:
     call    func_4850F063_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     ret     [d2,d3], 0x1c
-    movhu   (0x50003efc), d1
+    movhu   (data_50003EFC), d1
     mov     1, d0
     inc     d1
     call    func_4850F063_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     bra     loc_4850EF26
-    movhu   (0x50003efc), d1
+    movhu   (data_50003EFC), d1
     mov     1, d0
     add     -1, d1
     call    func_4850F063_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     bra     loc_4850EF26
     mov     (0x2c, sp), a1
-    mov     0x486502f4, d0
+    mov     Str_2d_25, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    movhu   (0x50003efc), d0
+    movhu   (data_50003EFC), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_4850EF26
-    movhu   (0x50003efc), d0
+    movhu   (data_50003EFC), d0
     bra     loc_4850EF26
     mov     (0x2c, sp), d1
-    movhu   (0x50003efc), d0
+    movhu   (data_50003EFC), d0
     cmp     d1, d0
     beq     loc_4850EF1F
-    movhu   d1, (0x50003efc)
+    movhu   d1, (data_50003EFC)
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -22796,7 +22796,7 @@ loc_4850EF3B:
     ble     loc_4850EF46
     jmp     loc_4850EFF8
 loc_4850EF46:
-    mov     0x4865108c, a1
+    mov     data_4865108C, a1
     add     0xfffb0001, d2
     mov     0xf, d0
     and     d2, d0
@@ -22812,7 +22812,7 @@ loc_4850EF46:
     jmp     loc_4850EFF8
 loc_4850EF69:
     add     8, a0
-    cmp     0x4865110c, a0
+    cmp     data_4865110C, a0
     bcs     loc_4850EF74
     mov     a1, a0
 loc_4850EF74:
@@ -22824,34 +22824,34 @@ loc_4850EF77:
     jmp     (a0)
     clr     d0
     ret     [d2,d3], 0x1c
-    movhu   (0x50003f00), d1
+    movhu   (data_50003F00), d1
     mov     2, d0
     inc     d1
     call    func_4850F063_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     ret     [d2,d3], 0x1c
-    movhu   (0x50003f00), d1
+    movhu   (data_50003F00), d1
     mov     2, d0
     add     -1, d1
     call    func_4850F063_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     bra     loc_4850EFF9
     mov     (0x2c, sp), a1
-    mov     0x486502f8, d0
+    mov     Str_2d_24, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    movhu   (0x50003f00), d0
+    movhu   (data_50003F00), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_4850EFF9
-    movhu   (0x50003f00), d0
+    movhu   (data_50003F00), d0
     bra     loc_4850EFF9
     mov     (0x2c, sp), d0
-    movhu   (0x50003f00), d1
+    movhu   (data_50003F00), d1
     cmp     d0, d1
     beq     loc_4850EFF2
-    movhu   d0, (0x50003f00)
+    movhu   d0, (data_50003F00)
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -22924,7 +22924,7 @@ func_4850F063:
 func_4850F063_entry:
     mov     d1, d3
     mov     d0, d2
-    mov     0x50003f04, a2
+    mov     data_50003F04, a2
     mov     sp, a3
     add     0x14, a3
 loc_4850F073:
@@ -22936,7 +22936,7 @@ loc_4850F073:
     movbu   d0, (a3)
     inc     a3
     inc4    a2
-    cmp     0x50003f0c, a2
+    cmp     MspMenuScreen_window, a2
     bcs     loc_4850F073
     cmp     4, d2
     beq     loc_4850F0B3
@@ -22976,7 +22976,7 @@ loc_4850F0B3:
     movbu   d0, (0x14, sp)
 loc_4850F0D9:
     movbu   (0x14, sp), d1
-    mov     (0x50003f04), d0
+    mov     (data_50003F04), d0
     extb    d1
     mov     d1, (0x10, sp)
     mov     0x0006003b, d1
@@ -23004,7 +23004,7 @@ loc_4850F106:
     movbu   d0, (0x15, sp)
 loc_4850F120:
     movbu   (0x15, sp), d1
-    mov     (0x50003f08), d0
+    mov     (data_50003F08), d0
     extb    d1
     mov     d1, (0x10, sp)
     mov     0x0006003b, d1
@@ -23027,7 +23027,7 @@ loc_4850F152:
     jmp     loc_4850F26E
 loc_4850F159:
     movbu   d3, (0x14, sp)
-    mov     (0x50003f04), d0
+    mov     (data_50003F04), d0
     mov     d3, d1
     extb    d1
     mov     d1, (0x10, sp)
@@ -23048,7 +23048,7 @@ loc_4850F17D:
     jmp     loc_4850F26E
 loc_4850F18F:
     movbu   d3, (0x15, sp)
-    mov     (0x50003f08), d0
+    mov     (data_50003F08), d0
     mov     d3, d1
     extb    d1
     mov     d1, (0x10, sp)
@@ -23111,7 +23111,7 @@ loc_4850F21A:
     mov     0x00030003, d0
     mov     0x00060023, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
-    mov     (0x50003f08), d0
+    mov     (data_50003F08), d0
     mov     1, d1
     mov     d1, (0x10, sp)
     mov     0x0006003b, d1
@@ -23127,7 +23127,7 @@ AttCompRec1:
     beq     loc_4850F28C
     bra     loc_4850F290
 loc_4850F284:
-    mov     0x486503f0, d0
+    mov     ptrs_486503F0, d0
     bra     loc_4850F291
 loc_4850F28C:
     mov     1, d0
@@ -23150,7 +23150,7 @@ loc_4850F2A6:
     ble     loc_4850F2B1
     jmp     loc_4850F518
 loc_4850F2B1:
-    mov     0x4865110c, a1
+    mov     data_4865110C, a1
     add     0xfffb0001, d2
     mov     a1, a0
     mov     0xf, d0
@@ -23166,7 +23166,7 @@ loc_4850F2B1:
     jmp     loc_4850F518
 loc_4850F2D3:
     add     8, a0
-    cmp     0x4865118c, a0
+    cmp     data_4865118C, a0
     bcs     loc_4850F2DE
     mov     a1, a0
 loc_4850F2DE:
@@ -23222,7 +23222,7 @@ loc_4850F36B:
     jmp     loc_4850F404
 loc_4850F372:
     movbu   (0x5006e485), d0
-    mov     0x48750fa8, d2
+    mov     ptrs_48750FA8, d2
     extb    d0
     mov     0xc, d1
     nop
@@ -23296,7 +23296,7 @@ loc_4850F422:
     nop
     nop
     mul     d2, d1
-    mov     0x48750fa8, a0
+    mov     ptrs_48750FA8, a0
     mov     (d1, a0), d1
     mov     d1, (0x10, sp)
     mov     0x000600b4, d1
@@ -23337,17 +23337,17 @@ loc_4850F49E:
     nop
     nop
     mul     d1, d0
-    mov     0x48750fa8, a1
+    mov     ptrs_48750FA8, a1
     mov     (d0, a1), a1
     call    strcpy_entry, [a2], 4
     bra     loc_4850F4FE
 loc_4850F4DE:
     mov     (0x38, sp), a0
-    mov     0x4865040c, a1
+    mov     Str_Special_3, a1
     call    strcpy_entry, [a2], 4
     bra     loc_4850F4FE
 loc_4850F4EF:
-    mov     0x48650414, a1
+    mov     Str_empty_896, a1
     mov     (0x38, sp), a0
     call    strcpy_entry, [a2], 4
 loc_4850F4FE:
@@ -23381,7 +23381,7 @@ loc_4850F52E:
     ble     loc_4850F539
     jmp     loc_4850F7BB
 loc_4850F539:
-    mov     0x4865118c, a1
+    mov     data_4865118C, a1
     add     0xfffb0001, d2
     mov     0xf, d0
     and     d2, d0
@@ -23397,7 +23397,7 @@ loc_4850F539:
     jmp     loc_4850F7BB
 loc_4850F55C:
     add     8, a0
-    cmp     0x4865120c, a0
+    cmp     data_4865120C, a0
     bcs     loc_4850F567
     mov     a1, a0
 loc_4850F567:
@@ -23456,7 +23456,7 @@ loc_4850F600:
     nop
     nop
     mul     d1, d0
-    mov     0x48750fa8, a2
+    mov     ptrs_48750FA8, a2
     add     a2, d0
     mov     d0, a0
     mov     (4, a0), a0
@@ -23530,7 +23530,7 @@ loc_4850F6A6:
     nop
     nop
     mul     d2, d0
-    add     0x48750fa8, d0
+    add     ptrs_48750FA8, d0
     mov     d0, a0
     mov     (4, a0), a0
     movbu   (0x5006e484), d0
@@ -23568,7 +23568,7 @@ loc_4850F722:
     nop
     nop
     mul     d1, d0
-    add     0x48750fa8, d0
+    add     ptrs_48750FA8, d0
     mov     d0, a1
     mov     (4, a1), a1
     movbu   (0x5006e484), d0
@@ -23581,16 +23581,16 @@ loc_4850F722:
     bra     loc_4850F7A1
 loc_4850F774:
     mov     (0x30, sp), a1
-    mov     0x4865041c, d0
+    mov     Str_Other_No_3d_3, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
     movbu   (0x5006e484), d0
     extb    d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_4850F7A1
 loc_4850F792:
-    mov     0x4865042c, a1
+    mov     Str_empty_894, a1
     mov     (0x30, sp), a0
     call    strcpy_entry, [a2], 4
 loc_4850F7A1:
@@ -23681,7 +23681,7 @@ loc_4850F86C:
     mov     0x00702005, d0
     mov     0xf, d1
     call    RegisterEasySet_entry, [d2,a2], 8
-    movhu   (0x48736006), d0
+    movhu   (data_48736006), d0
     clr     d1
     extbu   d0
     call    func_48435ABD_entry, [d2,d3], 8
@@ -23891,13 +23891,13 @@ loc_4850FAFB:
     and     0xff000000, d1
     lsr     24, d1
     extbu   d1
-    mov     0x48651214, a0
+    mov     data_48651214, a0
     setlb
     movbu   (a0), d0
     cmp     d0, d1
     bne     loc_4850FB28
     mov     (a1), d1
-    mov     0x4865120c, a0
+    mov     data_4865120C, a0
     movbu   (d2, a0), d0
     and     d3, d1
     call    func_4843C88E_entry, [d2,d3], 0x14
@@ -23915,13 +23915,13 @@ loc_4850FB2F:
     and     0xff000000, d1
     lsr     24, d1
     extbu   d1
-    mov     0x48651216, a0
+    mov     data_48651216, a0
     setlb
     movbu   (a0), d0
     cmp     d0, d1
     bne     loc_4850FB63
     mov     (a1), d1
-    mov     0x4865120c, a0
+    mov     data_4865120C, a0
     movbu   (d2, a0), d0
     and     0xff, d1
     extbu   d1
@@ -24193,7 +24193,7 @@ loc_4850FDF1:
     movbu   d0, (0x501523d0)
     mov     0x14, d0
     movbu   d0, (0x501523cf)
-    movhu   (0x48736006), d0
+    movhu   (data_48736006), d0
     clr     d1
     extbu   d0
     call    func_48435ABD_entry, [d2,d3], 8
@@ -24237,7 +24237,7 @@ loc_4850FE51:
     call    func_48509C2A_entry, [d2], 4
     cmp     0, d0
     beq     loc_4850FEC9
-    movhu   (0x48736006), d0
+    movhu   (data_48736006), d0
     clr     d1
     movbu   d0, (0x501523ce)
     clr     d0
@@ -24273,7 +24273,7 @@ loc_4850FECD:
     call    func_48509C2A_entry, [d2], 4
     cmp     0, d0
     beq     loc_4850FF53
-    movhu   (0x48736006), d0
+    movhu   (data_48736006), d0
     clr     d1
     movbu   d0, (0x501523ce)
     clr     d0
@@ -24478,9 +24478,9 @@ loc_48510169:
     cmp     2, a0
     bne     loc_485101A5
     mov     1, d3
-    mov     0x50007e1a, a2
-    mov     0x50007e20, d2
-    mov     0x50007e26, a3
+    mov     data_50007E1A, a2
+    mov     data_50007E20, d2
+    mov     data_50007E26, a3
 loc_48510183:
     mov     d3, d0
     extbu   d0
@@ -24493,7 +24493,7 @@ loc_48510183:
     inc     d2
     inc     a2
     inc     d3
-    cmp     0x50007e20, a2
+    cmp     data_50007E20, a2
     bcs     loc_48510183
     bra     loc_485101A5
 loc_4851019E:
@@ -24958,7 +24958,7 @@ loc_485105EE:
     mov     d2, d0
     call    func_4844DA67, 0, 0
     movbu   (0x5015233c), d0
-    mov     0x487510e4, a2
+    mov     data_487510E4, a2
     movbu   (d0, a2), d1
     mov     0x90008041, d0
     call    LibParamSet, [d2,d3,a2], 0x24
@@ -25045,7 +25045,7 @@ MainCMP_CmpCompileCopy:
     mov     d1, (0x74, sp)
     mov     d0, (0x70, sp)
     mov     0x501523bc, a2
-    mov     0x4865121c, a1
+    mov     data_4865121C, a1
     mov     0x5015239c, d3
     mov     0x50152394, d2
     mov     0x5015238c, a3
@@ -25080,15 +25080,15 @@ MainCMP_CmpCompileCopy:
     inc     a2
     cmp     0x501523c4, a2
     lcs
-    movhu   (0x48736006), d2
-    movbu   (0x50007e18), d0
+    movhu   (data_48736006), d2
+    movbu   (data_50007E18), d0
     extbu   d2
     add     d0, d0
-    mov     0x487528b8, a2
+    mov     data_487528B8, a2
     movbu   (d0, a2), d1
     mov     d2, d0
     call    func_48435ABD_entry, [d2,d3], 8
-    movbu   (0x50007e18), d1
+    movbu   (data_50007E18), d1
     extbu   d0
     mov     d1, a0
     add     a0, a0
@@ -25182,17 +25182,17 @@ loc_4851086D:
 MainCMP_CmpEasyCopy:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x18, sp
-    movhu   (0x48736006), d2
-    mov     0x487528b8, a2
+    movhu   (data_48736006), d2
+    mov     data_487528B8, a2
     extbu   d2
     mov     d1, d3
     mov     d0, a3
-    movbu   (0x50007e19), d0
+    movbu   (data_50007E19), d0
     add     d0, d0
     movbu   (d0, a2), d1
     mov     d2, d0
     call    func_48435ABD_entry, [d2,d3], 8
-    movbu   (0x50007e19), d1
+    movbu   (data_50007E19), d1
     extbu   d0
     add     d1, d1
     add     d1, a2
@@ -25331,7 +25331,7 @@ MainCMP_CstmCpyRhyNameDraw_entry:
     mov     a0, a2
     cmp     3, d1
     bcc     loc_48510A03
-    movhu   (0x48736006), d0
+    movhu   (data_48736006), d0
     extbu   d1
     extbu   d0
     call    func_48435ABD_entry, [d2,d3], 8
@@ -25339,7 +25339,7 @@ MainCMP_CstmCpyRhyNameDraw_entry:
     call    func_48433BDC_entry, [d2,a2,a3], 0x20
     bra     loc_48510A1E
 loc_48510A03:
-    movhu   (0x4873600a), d0
+    movhu   (data_4873600A), d0
     mov     3, a0
     extbu   d0
     sub     a0, d1
@@ -25714,7 +25714,7 @@ InitializeBlock10_entry:
     mov     d0, (0x20, sp)
     mov     7, d3
     movhu   d3, (0x24, sp)
-    mov     0x487528d0, d0
+    mov     MSP_Classes, d0
     mov     d0, (0x28, sp)
     mov     0xa4, d0
     mov     a3, a0
@@ -25725,7 +25725,7 @@ InitializeBlock10_entry:
     mov     d0, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     0x48752990, d0
+    mov     MSP_Events, d0
     mov     d0, (0x28, sp)
     mov     0xa5, d0
     mov     a3, a0
@@ -25736,7 +25736,7 @@ InitializeBlock10_entry:
     mov     d0, (0x20, sp)
     mov     1, d0
     movhu   d0, (0x24, sp)
-    mov     0x48752994, d0
+    mov     MSP_Methods, d0
     mov     d0, (0x28, sp)
     mov     0xa6, d0
     mov     a3, a0
@@ -25746,7 +25746,7 @@ InitializeBlock10_entry:
     mov     FunctionProc, a2
     mov     a2, (0x20, sp)
     movhu   d3, (0x24, sp)
-    mov     0x4875299c, d0
+    mov     MSP_Functions, d0
     mov     d0, (0x28, sp)
     mov     0xa1, d0
     mov     a3, a0
@@ -25754,7 +25754,7 @@ InitializeBlock10_entry:
     mov     d2, (0x1c, sp)
     mov     a2, (0x20, sp)
     movhu   d3, (0x24, sp)
-    mov     0x487529bc, d0
+    mov     MSP_FunctionNames, d0
     mov     d0, (0x28, sp)
     mov     0xa9, d0
     mov     a3, a0
@@ -25765,7 +25765,7 @@ InitializeBlock10_entry:
     mov     a2, (0x20, sp)
     mov     0x32, d2
     movhu   d2, (0x24, sp)
-    mov     0x487529dc, d0
+    mov     MSP_ApFunctions, d0
     mov     d0, (0x28, sp)
     mov     0xa2, d0
     mov     a3, a0
@@ -25773,7 +25773,7 @@ InitializeBlock10_entry:
     mov     d3, (0x1c, sp)
     mov     a2, (0x20, sp)
     movhu   d2, (0x24, sp)
-    mov     0x48752aa8, d0
+    mov     MSP_ApFunctionNames, d0
     mov     d0, (0x28, sp)
     mov     0xaa, d0
     mov     a3, a0
@@ -25784,7 +25784,7 @@ InitializeBlock10_entry:
     mov     a2, (0x20, sp)
     mov     0x1e, d2
     movhu   d2, (0x24, sp)
-    mov     0x48752b74, d0
+    mov     MSP_MainFunctions, d0
     mov     d0, (0x28, sp)
     mov     0xa3, d0
     mov     a3, a0
@@ -25792,7 +25792,7 @@ InitializeBlock10_entry:
     mov     d3, (0x1c, sp)
     mov     a2, (0x20, sp)
     movhu   d2, (0x24, sp)
-    mov     0x48752bf0, d0
+    mov     MSP_MainFunctionNames, d0
     mov     d0, (0x28, sp)
     mov     0xab, d0
     mov     a3, a0
@@ -25803,7 +25803,7 @@ InitializeBlock10_entry:
     mov     d0, (0x20, sp)
     mov     0x18e, d2
     movhu   d2, (0x24, sp)
-    mov     0x48752c6c, d0
+    mov     MSP_Viewables, d0
     mov     d0, (0x28, sp)
     mov     0xa0, d0
     mov     a3, a0
@@ -25813,14 +25813,14 @@ InitializeBlock10_entry:
     mov     ResNameProc, d0
     mov     d0, (0x20, sp)
     movhu   d2, (0x24, sp)
-    mov     0x487532a8, d0
+    mov     MSP_ResNames, d0
     mov     d0, (0x28, sp)
     mov     0xa8, d0
     mov     a3, a0
     call    RegisterObjectTable, 0, 0
     mov     0xa, d0
-    mov     0x4865685c, a0
-    mov     0x48656864, a1
+    mov     Str_OTB_MSP, a0
+    mov     Str_iapmsp, a1
     call    RegisterOTBlock_entry, [a2], 4
     mov     0x000f00da, d0
     mov     d0, (0x10, sp)
@@ -25828,7 +25828,7 @@ InitializeBlock10_entry:
     mov     d0, (0x14, sp)
     mov     9, d0
     mov     0x01730000, d1
-    mov     0x4865686c, a0
+    mov     Str_MD_MSP, a0
     call    RegisterMode_entry, [a2], 4
     mov     0x00a0000d, d0
     mov     d0, (0x10, sp)
@@ -25836,7 +25836,7 @@ InitializeBlock10_entry:
     mov     d0, (0x14, sp)
     mov     0xd8, d0
     mov     0x00a30000, d1
-    mov     0x48656874, a0
+    mov     Str_TT_MSPBKSL, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x00a00019, d0
     mov     d0, (0x10, sp)
@@ -25844,7 +25844,7 @@ InitializeBlock10_entry:
     mov     d0, (0x14, sp)
     mov     0xd9, d0
     mov     0x00a30001, d1
-    mov     0x48656880, a0
+    mov     Str_TT_MSPREAL, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x00a00000, d0
     mov     d0, (0x10, sp)
@@ -25852,7 +25852,7 @@ InitializeBlock10_entry:
     mov     d0, (0x14, sp)
     mov     0xda, d0
     mov     0x01730002, d1
-    mov     0x4865688c, a0
+    mov     Str_TT_MSPMENU, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x00a0003b, d0
     mov     d0, (0x10, sp)
@@ -25860,7 +25860,7 @@ InitializeBlock10_entry:
     mov     d0, (0x14, sp)
     mov     0xdb, d0
     mov     0x00020000, d1
-    mov     0x48656898, a0
+    mov     Str_TT_MSPNAME, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x00a0003f, d0
     mov     d0, (0x10, sp)
@@ -25868,7 +25868,7 @@ InitializeBlock10_entry:
     mov     d0, (0x14, sp)
     mov     0xdc, d0
     mov     0x00020000, d1
-    mov     0x486568a4, a0
+    mov     Str_TT_MSPGROUP, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x00a00049, d0
     mov     d0, (0x10, sp)
@@ -25876,7 +25876,7 @@ InitializeBlock10_entry:
     mov     d0, (0x14, sp)
     mov     0xdd, d0
     mov     0x00020000, d1
-    mov     0x486568b0, a0
+    mov     Str_TT_MSPSET, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x00a00054, d0
     mov     d0, (0x10, sp)
@@ -25884,7 +25884,7 @@ InitializeBlock10_entry:
     mov     d0, (0x14, sp)
     mov     0xde, d0
     mov     0x00a30006, d1
-    mov     0x486568bc, a0
+    mov     Str_TT_MSPSEQCP, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x00a0007e, d0
     mov     d0, (0x10, sp)
@@ -25892,7 +25892,7 @@ InitializeBlock10_entry:
     mov     d0, (0x14, sp)
     mov     0xdf, d0
     mov     0x00020000, d1
-    mov     0x486568c8, a0
+    mov     Str_TT_MSPPADNAME, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x00a00082, d0
     mov     d0, (0x10, sp)
@@ -25900,7 +25900,7 @@ InitializeBlock10_entry:
     mov     d0, (0x14, sp)
     mov     0xe0, d0
     mov     0x00a30002, d1
-    mov     0x486568d8, a0
+    mov     Str_TT_MSPPADSEL, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x00a000b2, d0
     mov     d0, (0x10, sp)
@@ -25908,7 +25908,7 @@ InitializeBlock10_entry:
     mov     d0, (0x14, sp)
     mov     0xe1, d0
     mov     0x00a30005, d1
-    mov     0x486568e8, a0
+    mov     Str_TT_MSPPADSEL_S, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x01700000, d0
     mov     d0, (0x10, sp)
@@ -25916,7 +25916,7 @@ InitializeBlock10_entry:
     mov     d0, (0x14, sp)
     mov     0xe2, d0
     mov     0x01730003, d1
-    mov     0x486568f8, a0
+    mov     Str_TT_MSPSTEP, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x01700061, d0
     mov     d0, (0x10, sp)
@@ -25924,7 +25924,7 @@ InitializeBlock10_entry:
     mov     d0, (0x14, sp)
     mov     0xe3, d0
     mov     0x00a30007, d1
-    mov     0x48656904, a0
+    mov     Str_TT_MSPCHDSTEP_2, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x00a000c8, d0
     mov     d0, (0x10, sp)
@@ -25932,7 +25932,7 @@ InitializeBlock10_entry:
     mov     d0, (0x14, sp)
     mov     0xe4, d0
     mov     0x00a30003, d1
-    mov     0x48656914, a0
+    mov     Str_TT_MSPPNCP, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x00a000e0, d0
     mov     d0, (0x10, sp)
@@ -25940,7 +25940,7 @@ InitializeBlock10_entry:
     mov     d0, (0x14, sp)
     mov     0xe5, d0
     mov     0x00a30004, d1
-    mov     0x48656920, a0
+    mov     Str_TT_MSPPTCHD, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x00a000e8, d0
     mov     d0, (0x10, sp)
@@ -25948,7 +25948,7 @@ InitializeBlock10_entry:
     mov     d0, (0x14, sp)
     mov     0xe7, d0
     mov     0x01730004, d1
-    mov     0x4865692c, a0
+    mov     Str_TT_MSPPARTSET, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x00a000ee, d0
     mov     d0, (0x10, sp)
@@ -25956,7 +25956,7 @@ InitializeBlock10_entry:
     mov     d0, (0x14, sp)
     mov     0xe8, d0
     mov     0x00020000, d1
-    mov     0x4865693c, a0
+    mov     Str_TT_MSPPLAYSET, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x00a000f9, d0
     mov     d0, (0x10, sp)
@@ -25964,7 +25964,7 @@ InitializeBlock10_entry:
     mov     d0, (0x14, sp)
     mov     0xea, d0
     mov     0x00020000, d1
-    mov     0x4865694c, a0
+    mov     Str_TT_MSPGRPNAME, a0
     call    RegisterTitle_entry, [d2,a2], 8
     ret     [d2,d3,a2,a3], 0x3c
 # AcPadBankSelProc  (CPU 0x485111bd)
@@ -26173,30 +26173,30 @@ loc_485113AE:
     bra     loc_48511410
 loc_485113C6:
     mov     (0x38, sp), a2
-    mov     0x48656a28, d0
+    mov     Str_USER_1c, d0
     mov     a2, (8, sp)
     mov     d0, (0xc, sp)
     mov     (0x38, a0), d0
     add     0x41, d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_48511410
 loc_485113E2:
     mov     (0x38, sp), a2
-    mov     0x48656a34, d0
+    mov     Str_COMPILE_1d, d0
     mov     a2, (8, sp)
     mov     d0, (0xc, sp)
     mov     (0x38, a0), d0
     inc     d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_48511410
 loc_485113FD:
     mov     (0x38, sp), a1
-    mov     0x48656a44, d0
+    mov     Str_CONTROL_7, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_48511410:
     clr     d0
     bra     loc_4851141E
@@ -26278,7 +26278,7 @@ loc_485114DB:
     mov     (0x2c, sp), a0
     mov     a0, (0x10, sp)
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
-    movhu   (0x5000422c), d1
+    movhu   (data_5000422C), d1
     movhu   (0x50152348), d0
     exth    d1
     exth    d0
@@ -26305,7 +26305,7 @@ loc_4851150C:
     ret     [d2], 0x1c
 loc_4851152C:
     movhu   (0x50152348), d0
-    movhu   d0, (0x5000422c)
+    movhu   d0, (data_5000422C)
     movhu   (0x50152348), d0
     exth    d0
     cmp     0, d0
@@ -26313,37 +26313,37 @@ loc_4851152C:
     cmp     0, d0
     ble     loc_48511568
     mov     (0x2c, sp), a1
-    mov     0x48656a50, d1
+    mov     Str_2d_2d, d1
     mov     a1, (8, sp)
     mov     d1, (0xc, sp)
     mov     d0, (0x10, sp)
     call    func_4843258C_entry, 0, 0xc
     extbu   d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_485115A9
 loc_48511568:
     mov     (0x2c, sp), a0
     not     d0
     mov     a0, (8, sp)
     inc     d0
-    mov     0x48656a58, d1
+    mov     Str_1d_2d, d1
     mov     d1, (0xc, sp)
     mov     d0, (0x10, sp)
     call    func_4843258C_entry, 0, 0xc
     extbu   d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_485115A9
 loc_4851158C:
     mov     (0x2c, sp), a0
-    mov     0x48656a64, d0
+    mov     Str_2d_23, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
     call    func_4843258C_entry, 0, 0xc
     extbu   d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_485115A9:
     clr     d0
     bra     loc_485115B7
@@ -26370,7 +26370,7 @@ loc_485115DA:
     mov     a0, (0x10, sp)
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     call    func_4843916A_entry, [d2], 0xc
-    movbu   (0x50004230), d1
+    movbu   (data_50004230), d1
     extbu   d0
     cmp     d0, d1
     beq     loc_48511607
@@ -26395,14 +26395,14 @@ loc_4851160A:
     bra     loc_4851165A
 loc_48511629:
     mov     (0x28, sp), a1
-    mov     0x48656a6c, d0
+    mov     Str_2d_22, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
     call    func_4843916A_entry, [d2], 0xc
-    movbu   d0, (0x50004230)
+    movbu   d0, (data_50004230)
     extbu   d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_4851165A
 loc_4851164F:
@@ -26660,8 +26660,8 @@ loc_48511893:
     clr     d0
     bra     loc_4851191E
 loc_485118B2:
-    movhu   (0x487349d2), d1
-    movbu   (0x50004228), d0
+    movhu   (data_487349D2), d1
+    movbu   (data_50004228), d0
     mov     sp, a2
     add     0x18, a2
     add     d1, d0
@@ -26679,16 +26679,16 @@ loc_485118B2:
     bra     loc_4851191E
 loc_485118DF:
     mov     (0x54, sp), a1
-    mov     0x48656a74, d0
+    mov     Str_1d_16s_4, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    movbu   (0x50004228), d0
+    movbu   (data_50004228), d0
     inc     d0
     mov     d0, (0x10, sp)
     mov     a2, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
-    movhu   (0x487349d2), d1
-    movbu   (0x50004228), d0
+    call    sprintf_entry, [a2], 0x20
+    movhu   (data_487349D2), d1
+    movbu   (data_50004228), d0
     add     d0, d1
     mov     d1, d0
     call    func_48511981_entry, 0, 0x10
@@ -26717,7 +26717,7 @@ loc_48511936:
     extbu   d0
     cmp     3, d0
     bge     loc_4851196A
-    movhu   (0x487349ca), d1
+    movhu   (data_487349CA), d1
     add     d0, d1
     mov     d1, d0
     call    func_48511978, 0, 0
@@ -26780,23 +26780,23 @@ func_485119B3_entry:
     beq     loc_485119F0
     bra     loc_485119F9
 loc_485119CC:
-    movhu   (0x487349c6), d0
+    movhu   (data_487349C6), d0
     add     d2, d0
     bra     loc_485119FA
 loc_485119D5:
-    movhu   (0x487349ca), d0
+    movhu   (data_487349CA), d0
     add     d2, d0
     bra     loc_485119FA
 loc_485119DE:
-    movhu   (0x487349ce), d0
+    movhu   (data_487349CE), d0
     add     d2, d0
     bra     loc_485119FA
 loc_485119E7:
-    movhu   (0x487349d2), d0
+    movhu   (data_487349D2), d0
     add     d2, d0
     bra     loc_485119FA
 loc_485119F0:
-    movhu   (0x487349d6), d0
+    movhu   (data_487349D6), d0
     add     d2, d0
     bra     loc_485119FA
 loc_485119F9:
@@ -26912,11 +26912,11 @@ func_48511B16_entry:
     cmp     0, d0
     beq     loc_48511B3E
     mov     (0x20, sp), a0
-    movhu   (0x487349c6), d0
+    movhu   (data_487349C6), d0
     cmp     a0, d0
     bgt     loc_48511B3E
-    movhu   (0x487349c6), d2
-    movhu   (0x487349c8), d0
+    movhu   (data_487349C6), d2
+    movhu   (data_487349C8), d0
     add     d0, d2
     cmp     d2, a0
     bge     loc_48511B3E
@@ -26926,11 +26926,11 @@ loc_48511B3E:
     cmp     0, d1
     beq     loc_48511B64
     mov     (0x20, sp), a0
-    movhu   (0x487349ca), d0
+    movhu   (data_487349CA), d0
     cmp     a0, d0
     bgt     loc_48511B64
-    movhu   (0x487349ca), d1
-    movhu   (0x487349cc), d0
+    movhu   (data_487349CA), d1
+    movhu   (data_487349CC), d0
     add     d0, d1
     cmp     d1, a0
     bge     loc_48511B64
@@ -26941,11 +26941,11 @@ loc_48511B64:
     cmp     0, a0
     beq     loc_48511B8B
     mov     (0x20, sp), a0
-    movhu   (0x487349ce), d0
+    movhu   (data_487349CE), d0
     cmp     a0, d0
     bgt     loc_48511B8B
-    movhu   (0x487349ce), d1
-    movhu   (0x487349d0), d0
+    movhu   (data_487349CE), d1
+    movhu   (data_487349D0), d0
     add     d0, d1
     cmp     d1, a0
     bge     loc_48511B8B
@@ -26956,11 +26956,11 @@ loc_48511B8B:
     cmp     0, a0
     beq     loc_48511BB2
     mov     (0x20, sp), a0
-    movhu   (0x487349d2), d0
+    movhu   (data_487349D2), d0
     cmp     a0, d0
     bgt     loc_48511BB2
-    movhu   (0x487349d2), d1
-    movhu   (0x487349d4), d0
+    movhu   (data_487349D2), d1
+    movhu   (data_487349D4), d0
     add     d0, d1
     cmp     d1, a0
     bge     loc_48511BB2
@@ -26971,11 +26971,11 @@ loc_48511BB2:
     cmp     0, a0
     beq     loc_48511BD9
     mov     (0x20, sp), a0
-    movhu   (0x487349d6), d0
+    movhu   (data_487349D6), d0
     cmp     a0, d0
     bgt     loc_48511BD9
-    movhu   (0x487349d6), d1
-    movhu   (0x487349d8), d0
+    movhu   (data_487349D6), d1
+    movhu   (data_487349D8), d0
     add     d0, d1
     cmp     d1, a0
     bge     loc_48511BD9
@@ -27126,7 +27126,7 @@ loc_48511D13:
     ble     loc_48511D1E
     jmp     loc_48511E62
 loc_48511D1E:
-    mov     0x48656e30, a1
+    mov     data_48656E30, a1
     add     0xfffb0001, d2
     mov     0xf, d0
     and     d2, d0
@@ -27142,7 +27142,7 @@ loc_48511D1E:
     jmp     loc_48511E62
 loc_48511D41:
     add     8, a0
-    cmp     0x48656eb0, a0
+    cmp     data_48656EB0, a0
     bcs     loc_48511D4C
     mov     a1, a0
 loc_48511D4C:
@@ -27169,7 +27169,7 @@ loc_48511D4F:
     clr     d1
 loc_48511D81:
     extbu   d1
-    mov     0x4865695c, a0
+    mov     data_4865695C, a0
     movbu   (d1, a0), d0
     clr     d1
     movbu   d0, (0x50152350)
@@ -27179,7 +27179,7 @@ loc_48511D81:
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     call    GetFocusObject_entry, 0, 0x10
     movbu   (0x50152350), d1
-    mov     0x48656998, a0
+    mov     ptrs_48656998, a0
     asl2    d1
     mov     (d1, a0), d1
     mov     d1, (0x10, sp)
@@ -27197,7 +27197,7 @@ loc_48511D81:
     mov     7, d1
 loc_48511DE4:
     extbu   d1
-    mov     0x4865695c, a0
+    mov     data_4865695C, a0
     movbu   (d1, a0), d0
     clr     d1
     movbu   d0, (0x50152350)
@@ -27207,7 +27207,7 @@ loc_48511DE4:
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     call    GetFocusObject_entry, 0, 0x10
     movbu   (0x50152350), d1
-    mov     0x48656998, a0
+    mov     ptrs_48656998, a0
     asl2    d1
     mov     (d1, a0), d1
     mov     d1, (0x10, sp)
@@ -27218,7 +27218,7 @@ loc_48511DE4:
     movbu   (0x50152350), d0
     mov     (0x2c, sp), a0
     asl2    d0
-    mov     0x48656998, a1
+    mov     ptrs_48656998, a1
     mov     (d0, a1), a1
     call    strcpy_entry, [a2], 4
     clr     d0
@@ -27249,7 +27249,7 @@ loc_48511E78:
     ble     loc_48511E83
     jmp     loc_48512080
 loc_48511E83:
-    mov     0x48656eb0, a1
+    mov     data_48656EB0, a1
     add     0xfffb0001, d2
     mov     0xf, d0
     and     d2, d0
@@ -27265,7 +27265,7 @@ loc_48511E83:
     jmp     loc_48512080
 loc_48511EA6:
     add     8, a0
-    cmp     0x48656f30, a0
+    cmp     data_48656F30, a0
     bcs     loc_48511EB1
     mov     a1, a0
 loc_48511EB1:
@@ -27307,7 +27307,7 @@ loc_48511F14:
     clr     d0
     ret     [d2,d3,a2], 0x24
     movbu   (0x5006e4b0), d0
-    mov     0x48750fa8, a2
+    mov     ptrs_48750FA8, a2
     extb    d0
     mov     0xc, d1
     nop
@@ -27367,7 +27367,7 @@ loc_48511FB4:
     nop
     nop
     mul     d2, d1
-    mov     0x48750fa8, a0
+    mov     ptrs_48750FA8, a0
     mov     (d1, a0), d1
     mov     d1, (0x10, sp)
     mov     0x000600b4, d1
@@ -27400,13 +27400,13 @@ loc_48512030:
     nop
     nop
     mul     d1, d0
-    mov     0x48750fa8, a1
+    mov     ptrs_48750FA8, a1
     mov     (d0, a1), a1
     call    strcpy_entry, [a2], 4
     bra     loc_48512066
 loc_48512057:
     mov     (0x34, sp), a0
-    mov     0x48656a80, a1
+    mov     Str_Special_2, a1
     call    strcpy_entry, [a2], 4
 loc_48512066:
     clr     d0
@@ -27439,7 +27439,7 @@ loc_48512096:
     ble     loc_485120A1
     jmp     loc_485122BA
 loc_485120A1:
-    mov     0x48656f30, a1
+    mov     data_48656F30, a1
     add     0xfffb0001, d2
     mov     a1, a0
     mov     0xf, d0
@@ -27455,7 +27455,7 @@ loc_485120A1:
     jmp     loc_485122BA
 loc_485120C3:
     add     8, a0
-    cmp     0x48656fb0, a0
+    cmp     data_48656FB0, a0
     bcs     loc_485120CE
     mov     a1, a0
 loc_485120CE:
@@ -27501,7 +27501,7 @@ loc_48512146:
     nop
     mul     d0, d1
     mov     d1, a0
-    mov     0x48750fa8, a2
+    mov     ptrs_48750FA8, a2
     add     a2, a0
     mov     (4, a0), a0
     movbu   (0x5006e4b1), d0
@@ -27562,7 +27562,7 @@ loc_485121CE:
     nop
     nop
     mul     d2, d0
-    add     0x48750fa8, d0
+    add     ptrs_48750FA8, d0
     mov     d0, a0
     mov     (4, a0), a0
     movbu   (0x5006e4b1), d0
@@ -27592,7 +27592,7 @@ loc_4851224A:
     nop
     nop
     mul     d1, d0
-    add     0x48750fa8, d0
+    add     ptrs_48750FA8, d0
     mov     d0, a0
     mov     (4, a0), a0
     movbu   (0x5006e4b1), d0
@@ -27605,13 +27605,13 @@ loc_4851224A:
     bra     loc_485122A0
 loc_48512284:
     mov     (0x30, sp), a1
-    mov     0x48656a88, d0
+    mov     Str_Other_No_3d_2, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
     movbu   (0x5006e4b1), d0
     extb    d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_485122A0:
     clr     d0
     bra     loc_485122BB
@@ -27637,7 +27637,7 @@ func_485122BE_entry:
     clr     d1
     extbu   d2
     setlb
-    mov     0x4865695c, a0
+    mov     data_4865695C, a0
     extbu   d0
     movbu   (d0, a0), d0
     cmp     d2, d0
@@ -27663,10 +27663,10 @@ func_485122DF_entry:
     mov     a0, (0x30, sp)
     call    func_48432747_entry, [d2], 0x10
     movbu   d0, (0x10, sp)
-    mov     (0x48750fa8), d0
+    mov     (ptrs_48750FA8), d0
     mov     0, a3
     cmp     0, d0
-    mov     0x48750fa8, a1
+    mov     ptrs_48750FA8, a1
     beq     loc_48512343
     movbu   (0x10, sp), d0
     mov     a1, a2
@@ -27742,7 +27742,7 @@ loc_48512377:
     nop
     mul     d1, d0
     mov     d0, a0
-    add     0x48750fa8, a0
+    add     ptrs_48750FA8, a0
     mov     (4, a0), a0
     movbu   (0x28, sp), d0
     extbu   d2
@@ -28013,8 +28013,8 @@ loc_48512602:
     and     0xffff, d2
     movhu   d2, (0x24, sp)
     movhu   d1, (0x26, sp)
-    movhu   (0x487349d2), d2
-    movbu   (0x50004228), d0
+    movhu   (data_487349D2), d2
+    movbu   (data_50004228), d0
     exth    d1
     add     d2, d0
     extbu   d0
@@ -28036,13 +28036,13 @@ loc_48512602:
     jmp     loc_48512716
 loc_4851265E:
     movbu   (0x20, sp), d0
-    movhu   (0x487349c6), d2
-    movhu   (0x487349c8), d1
+    movhu   (data_487349C6), d2
+    movhu   (data_487349C8), d1
     inc     d0
     add     d1, d2
     cmp     d0, d2
     bne     loc_4851267D
-    movhu   (0x487349ca), d0
+    movhu   (data_487349CA), d0
     movbu   d0, (0x20, sp)
     bra     loc_48512699
 loc_4851267D:
@@ -28066,9 +28066,9 @@ loc_48512699:
     cmp     d3, d0
     beq     loc_48512716
     movhu   (0x26, sp), d3
-    movhu   (0x487349d2), d1
+    movhu   (data_487349D2), d1
     mov     d0, (0x10, sp)
-    movbu   (0x50004228), d2
+    movbu   (data_50004228), d2
     exth    d3
     add     d1, d2
     exthu   d2
@@ -28091,9 +28091,9 @@ loc_485126D5:
     movbu   (0x20, sp), d0
     call    func_484374EA_entry, [d2,d3], 0x14
     movhu   (0x26, sp), d2
-    movhu   (0x487349d2), d1
+    movhu   (data_487349D2), d1
     mov     d0, (0x10, sp)
-    movbu   (0x50004228), d0
+    movbu   (data_50004228), d0
     exth    d2
     add     d1, d0
     exthu   d0
@@ -28119,8 +28119,8 @@ loc_4851271A:
     movhu   d1, (0x24, sp)
     mov     d0, d1
     movhu   d1, (0x26, sp)
-    movhu   (0x487349d2), d3
-    movbu   (0x50004228), d2
+    movhu   (data_487349D2), d3
+    movbu   (data_50004228), d2
     exth    d1
     add     d3, d2
     extbu   d2
@@ -28145,11 +28145,11 @@ loc_48512777:
     jmp     loc_48512836
 loc_4851277A:
     movbu   (0x20, sp), d1
-    movhu   (0x487349ca), d0
+    movhu   (data_487349CA), d0
     cmp     d1, d0
     bne     loc_4851279A
-    movhu   (0x487349c6), d1
-    movhu   (0x487349c8), d0
+    movhu   (data_487349C6), d1
+    movhu   (data_487349C8), d0
     add     d0, d1
     add     -1, d1
     movbu   d1, (0x20, sp)
@@ -28176,9 +28176,9 @@ loc_485127B9:
     cmp     d2, d0
     beq     loc_48512836
     movhu   (0x26, sp), d2
-    movhu   (0x487349d2), d1
+    movhu   (data_487349D2), d1
     mov     d0, (0x10, sp)
-    movbu   (0x50004228), d0
+    movbu   (data_50004228), d0
     exth    d2
     add     d1, d0
     exthu   d0
@@ -28200,9 +28200,9 @@ loc_485127F4:
     movbu   (0x20, sp), d0
     call    func_484374EA_entry, [d2,d3], 0x14
     movhu   (0x26, sp), d2
-    movhu   (0x487349d2), d1
+    movhu   (data_487349D2), d1
     mov     d0, (0x10, sp)
-    movbu   (0x50004228), d0
+    movbu   (data_50004228), d0
     exth    d2
     add     d1, d0
     exthu   d0
@@ -28228,8 +28228,8 @@ loc_4851283A:
     add     0x2c, d3
     mov     d3, (0x28, sp)
     movhu   (0x26, sp), d1
-    movhu   (0x487349d2), d2
-    movbu   (0x50004228), d0
+    movhu   (data_487349D2), d2
+    movbu   (data_50004228), d0
     exth    d1
     add     d2, d0
     extbu   d0
@@ -28271,27 +28271,27 @@ loc_48512891:
     cmp     0, d0
     beq     loc_485128E1
     mov     d3, (8, sp)
-    mov     0x48656a98, d0
+    mov     Str_1c_16s_3, d0
     mov     d0, (0xc, sp)
     movbu   (0x20, sp), d0
-    movhu   (0x487349ca), d1
+    movhu   (data_487349CA), d1
     sub     d1, d0
     add     0x41, d0
     mov     d0, (0x10, sp)
     mov     a2, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_48512902
 loc_485128E1:
     mov     d3, (8, sp)
-    mov     0x48656aa4, d0
+    mov     Str_2d_16s_3, d0
     mov     d0, (0xc, sp)
     movbu   (0x20, sp), d0
-    movhu   (0x487349c6), d1
+    movhu   (data_487349C6), d1
     sub     d1, d0
     inc     d0
     mov     d0, (0x10, sp)
     mov     a2, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_48512902:
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
@@ -28308,13 +28308,13 @@ loc_48512923:
     mov     d2, d0
     call    func_4843454F_entry, [d2,a2,a3], 0x20
     mov     d3, (8, sp)
-    mov     0x48656ab0, d0
+    mov     Str_1d_16s_3, d0
     mov     d0, (0xc, sp)
     movbu   (0x21, sp), d0
     inc     d0
     mov     d0, (0x10, sp)
     mov     a2, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
     mov     0x00060080, d1
@@ -28341,13 +28341,13 @@ MspRGrpSetBnkFunc:
     beq     loc_485129F3
     bra     loc_485129F9
 loc_4851298F:
-    movbu   (0x50004228), d0
+    movbu   (data_50004228), d0
     mov     1, d1
-    movbu   d1, (0x50004228)
+    movbu   d1, (data_50004228)
     cmp     0, d0
     beq     loc_485129A8
     clr     d0
-    movbu   d0, (0x50004228)
+    movbu   d0, (data_50004228)
 loc_485129A8:
     clr     d0
     mov     d0, (0x10, sp)
@@ -28397,11 +28397,11 @@ MspRgpShowHideFunc:
     beq     loc_48512A23
     bra     loc_48512A29
 loc_48512A0F:
-    movbu   (0x50004228), d0
+    movbu   (data_50004228), d0
     cmp     1, d0
     ble     loc_48512A20
     clr     d0
-    movbu   d0, (0x50004228)
+    movbu   d0, (data_50004228)
 loc_48512A20:
     clr     d0
     bra     loc_48512A2A
@@ -28470,7 +28470,7 @@ loc_48512A7D:
     mov     0xf, d1
     and     d2, d1
     asl2    d1
-    mov     0x486569e8, a0
+    mov     ptrs_486569E8, a0
     mov     (d1, a0), d1
     mov     d1, (0x10, sp)
     mov     0x000600b4, d1
@@ -28505,7 +28505,7 @@ loc_48512ADB:
     mov     0xf, d1
     and     d2, d1
     asl2    d1
-    mov     0x486569e8, a0
+    mov     ptrs_486569E8, a0
     mov     (d1, a0), d1
     mov     d1, (0x10, sp)
     mov     0x000600b4, d1
@@ -28519,7 +28519,7 @@ loc_48512B39:
     extbu   d0
     and     0x0f, d0
     asl2    d0
-    mov     0x486569e8, a1
+    mov     ptrs_486569E8, a1
     mov     (d0, a1), a1
     call    strcpy_entry, [a2], 4
     clr     d0
@@ -28570,11 +28570,11 @@ loc_48512BAC:
     mov     0x00a30012, d0
     mov     0x0006003b, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
-    mov     0x48656abc, a2
+    mov     Str_Min_3, a2
     extbu   d2
     btst    0x10, d2
     bne     loc_48512BE6
-    mov     0x48656ac0, a2
+    mov     Str_Maj_7, a2
 loc_48512BE6:
     call    GetFocusObject_entry, 0, 0x10
     mov     a2, (0x10, sp)
@@ -28596,11 +28596,11 @@ loc_48512C00:
     mov     0x00a30012, d0
     mov     0x0006003b, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
-    mov     0x48656ac4, a2
+    mov     Str_Min_2, a2
     extbu   d2
     btst    0x10, d2
     bne     loc_48512C3D
-    mov     0x48656ac8, a2
+    mov     Str_Maj_6, a2
 loc_48512C3D:
     call    GetFocusObject_entry, 0, 0x10
     mov     a2, (0x10, sp)
@@ -28611,11 +28611,11 @@ loc_48512C53:
     bra     loc_48512C7E
 loc_48512C56:
     call    func_4843255D_entry, 0, 0xc
-    mov     0x48656acc, a1
+    mov     Str_Min, a1
     extbu   d0
     btst    0x10, d0
     bne     loc_48512C6F
-    mov     0x48656ad0, a1
+    mov     Str_Maj_2, a1
 loc_48512C6F:
     mov     (0x2c, sp), a0
     call    strcpy_entry, [a2], 4
@@ -28872,13 +28872,13 @@ loc_48512F13:
     ret     [d2,a2], 0x4c
 loc_48512F24:
     movbu   (0x501523dd), d0
-    movhu   (0x487349c6), d2
-    movhu   (0x487349c8), d1
+    movhu   (data_487349C6), d2
+    movhu   (data_487349C8), d1
     inc     d0
     add     d1, d2
     cmp     d2, d0
     bne     loc_48512F48
-    movhu   (0x487349ca), d0
+    movhu   (data_487349CA), d0
     call    func_48511981_entry, 0, 0x10
     bra     loc_48512F69
 loc_48512F48:
@@ -28900,11 +28900,11 @@ loc_48512F69:
     ret     [d2,a2], 0x4c
 loc_48512F6D:
     movbu   (0x501523dd), d1
-    movhu   (0x487349ca), d0
+    movhu   (data_487349CA), d0
     cmp     d0, d1
     bne     loc_48512F93
-    movhu   (0x487349c6), d1
-    movhu   (0x487349c8), d0
+    movhu   (data_487349C6), d1
+    movhu   (data_487349C8), d0
     add     d0, d1
     add     -1, d1
     mov     d1, d0
@@ -28948,16 +28948,16 @@ loc_48512FBD:
     cmp     0, d0
     beq     loc_48513011
     mov     (0x5c, sp), a1
-    mov     0x48656ad4, d0
+    mov     Str_2d_16s_2, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    movhu   (0x487349c6), d1
+    movhu   (data_487349C6), d1
     movbu   (0x501523dd), d0
     inc     d0
     sub     d1, d0
     mov     d0, (0x10, sp)
     mov     a2, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_48513053
 loc_48513011:
     clr     d0
@@ -28972,16 +28972,16 @@ loc_48513011:
     cmp     0, d0
     beq     loc_48513053
     mov     (0x5c, sp), a1
-    mov     0x48656ae0, d0
+    mov     Str_1c_16s_2, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    movhu   (0x487349ca), d1
+    movhu   (data_487349CA), d1
     movbu   (0x501523dd), d0
     add     0x41, d0
     sub     d1, d0
     mov     d0, (0x10, sp)
     mov     a2, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_48513053:
     clr     d0
     bra     loc_48513059
@@ -29102,7 +29102,7 @@ loc_485131B5:
     movbu   (0x501523de), d1
     cmp     0xff, d1
     bne     loc_485131D2
-    mov     0x48656aec, a1
+    mov     Str_ALL_28, a1
     mov     (0x4c, sp), a0
     call    strcpy_entry, [a2], 4
     bra     loc_48513208
@@ -29114,14 +29114,14 @@ loc_485131D2:
     mov     a2, a0
     call    func_4843454F_entry, [d2,a2,a3], 0x20
     mov     (0x4c, sp), a1
-    mov     0x48656b00, d0
+    mov     Str_1d_16s_2, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
     movbu   (0x501523de), d0
     inc     d0
     mov     d0, (0x10, sp)
     mov     a2, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_48513208:
     clr     d0
     bra     loc_4851320E
@@ -29153,8 +29153,8 @@ loc_4851324C:
     jmp     loc_48513323
 loc_4851324F:
     movbu   (0x501523df), d0
-    movhu   (0x487349ca), d1
-    movhu   (0x487349cc), d2
+    movhu   (data_487349CA), d1
+    movhu   (data_487349CC), d2
     add     d1, d2
     mov     d0, d1
     inc     d1
@@ -29177,7 +29177,7 @@ loc_4851329B:
     ret     [d2,a2], 0x40
 loc_4851329F:
     movbu   (0x501523df), d0
-    movhu   (0x487349ca), d1
+    movhu   (data_487349CA), d1
     cmp     d1, d0
     ble     loc_485132E3
     add     -1, d0
@@ -29202,16 +29202,16 @@ loc_485132E6:
     movbu   (0x501523df), d0
     call    func_48437375_entry, [d2,d3,a2,a3], 0x24
     mov     (0x50, sp), a0
-    mov     0x48656b0c, d0
+    mov     Str_1c_16s, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    movhu   (0x487349ca), d1
+    movhu   (data_487349CA), d1
     movbu   (0x501523df), d0
     add     0x41, d0
     sub     d1, d0
     mov     d0, (0x10, sp)
     mov     a2, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_48513324
     bra     loc_48513324
@@ -29331,7 +29331,7 @@ loc_48513480:
     movbu   (0x501523e0), d1
     cmp     0xff, d1
     bne     loc_4851349D
-    mov     0x48656b18, a1
+    mov     Str_ALL_27, a1
     mov     (0x4c, sp), a0
     call    strcpy_entry, [a2], 4
     bra     loc_485134D3
@@ -29343,14 +29343,14 @@ loc_4851349D:
     mov     a2, a0
     call    func_4843454F_entry, [d2,a2,a3], 0x20
     mov     (0x4c, sp), a1
-    mov     0x48656b2c, d0
+    mov     Str_1d_16s, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
     movbu   (0x501523e0), d0
     inc     d0
     mov     d0, (0x10, sp)
     mov     a2, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_485134D3:
     clr     d0
     bra     loc_485134D9
@@ -29581,7 +29581,7 @@ loc_48513730:
     exth    d0
     add     -2, d0
     mov     d0, a0
-    add     0x50007e2c, a0
+    add     data_50007E2C, a0
     movbu   (a0), d0
     extb    d0
     add     d2, d0
@@ -29596,7 +29596,7 @@ loc_4851374A:
     nop
     nop
     mul     d1, d0
-    mov     0x48750fa8, a1
+    mov     ptrs_48750FA8, a1
     mov     (d0, a1), d0
     cmp     0, d0
     bne     loc_48513763
@@ -29608,7 +29608,7 @@ loc_48513763:
     add     d2, d0
     movbu   d0, (a0)
     movhu   (0x16, sp), d0
-    mov     0x50007e2e, a0
+    mov     data_50007E2E, a0
     exth    d0
     add     -2, d0
     movbu   d1, (d0, a0)
@@ -29616,7 +29616,7 @@ loc_48513763:
     mov     1, d1
     exth    d0
     add     -2, d0
-    mov     0x50007e30, a0
+    mov     data_50007E30, a0
     movbu   d1, (d0, a0)
     call    GetFocusObject_entry, 0, 0x10
     movhu   (0x16, sp), d1
@@ -29646,9 +29646,9 @@ loc_485137EB:
     exth    d0
     add     -2, d0
     mov     d0, a1
-    add     0x50007e2e, a1
+    add     data_50007E2E, a1
     movhu   (0x16, sp), d0
-    mov     0x50007e2c, a0
+    mov     data_50007E2C, a0
     exth    d0
     add     -2, d0
     movbu   (d0, a0), d1
@@ -29668,7 +29668,7 @@ loc_4851381B:
     nop
     nop
     mul     d0, d1
-    add     0x48750fa8, d1
+    add     ptrs_48750FA8, d1
     mov     d1, a0
     mov     (4, a0), a0
     movbu   (a1), d0
@@ -29687,7 +29687,7 @@ loc_4851383F:
     add     d2, d0
     movbu   d0, (a1)
     movhu   (0x16, sp), d0
-    mov     0x50007e30, a0
+    mov     data_50007E30, a0
     exth    d0
     add     -2, d0
     movbu   d1, (d0, a0)
@@ -29719,7 +29719,7 @@ loc_485138B8:
     exth    d1
     add     -2, d1
     mov     d1, a0
-    add     0x50007e30, a0
+    add     data_50007E30, a0
     movbu   (a0), d0
     extb    d0
     add     d2, d0
@@ -29767,7 +29767,7 @@ loc_48513906:
     add     -2, d0
     cmp     1, d0
     blt     loc_48513945
-    mov     0x48656b38, a1
+    mov     Str_empty_889, a1
     mov     a2, a0
     call    strcpy_entry, [a2], 4
     jmp     loc_48513A47
@@ -29785,14 +29785,14 @@ loc_48513958:
     jmp     loc_48513A39
 loc_4851395B:
     movhu   (0x16, sp), d0
-    mov     0x50007e2c, a1
+    mov     data_50007E2C, a1
     exth    d0
     add     -2, d0
     movbu   (d0, a1), d0
     extb    d0
     cmp     d2, d0
     bge     loc_4851397E
-    mov     0x48656b40, a1
+    mov     Str_Special, a1
     mov     a2, a0
     call    strcpy_entry, [a2], 4
     jmp     loc_48513A47
@@ -29802,7 +29802,7 @@ loc_4851397E:
     exth    d0
     add     -2, d0
     movbu   (d0, a1), d0
-    mov     0x48750fa8, a0
+    mov     ptrs_48750FA8, a0
     extb    d0
     nop
     nop
@@ -29813,7 +29813,7 @@ loc_4851397E:
     jmp     loc_48513A47
 loc_485139A0:
     movhu   (0x16, sp), d0
-    mov     0x50007e2c, a1
+    mov     data_50007E2C, a1
     exth    d0
     add     -2, d0
     movbu   (d0, a1), d0
@@ -29821,16 +29821,16 @@ loc_485139A0:
     cmp     d2, d0
     bge     loc_485139D6
     mov     a2, (8, sp)
-    mov     0x48656b48, d0
+    mov     Str_Other_No_3d, d0
     mov     d0, (0xc, sp)
     movhu   (0x16, sp), d0
-    mov     0x50007e2e, a0
+    mov     data_50007E2E, a0
     exth    d0
     add     -2, d0
     movbu   (d0, a0), d0
     extb    d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_48513A47
 loc_485139D6:
     movhu   (0x16, sp), d0
@@ -29844,11 +29844,11 @@ loc_485139D6:
     mul     d0, d1
     movhu   (0x16, sp), d0
     mov     d1, a0
-    add     0x48750fa8, a0
+    add     ptrs_48750FA8, a0
     mov     (4, a0), a1
     exth    d0
     add     -2, d0
-    mov     0x50007e2e, a0
+    mov     data_50007E2E, a0
     movbu   (d0, a0), d1
     mov     a2, a0
     extb    d1
@@ -29859,21 +29859,21 @@ loc_485139D6:
     bra     loc_48513A47
 loc_48513A11:
     movhu   (0x16, sp), d0
-    mov     0x50007e30, a0
+    mov     data_50007E30, a0
     exth    d0
     add     -2, d0
     movbu   (d0, a0), d0
-    mov     0x48656b58, a1
+    mov     Str_CHANGE, a1
     extb    d0
     cmp     d2, d0
     bne     loc_48513A2F
-    mov     0x48656b5f, a1
+    mov     Str_KEEP_2, a1
 loc_48513A2F:
     mov     a2, a0
     call    strcpy_entry, [a2], 4
     bra     loc_48513A47
 loc_48513A39:
-    mov     0x48656b68, a1
+    mov     Str_ERROR_2, a1
     mov     a2, a0
     call    strcpy_entry, [a2], 4
 loc_48513A47:
@@ -29901,9 +29901,9 @@ PadPtChdOK:
     bra     loc_48513AE0
 loc_48513A80:
     clr     d2
-    mov     0x50007e30, d3
-    mov     0x50007e2c, a3
-    mov     0x50007e2e, a2
+    mov     data_50007E30, d3
+    mov     data_50007E2C, a3
+    mov     data_50007E2E, a2
 loc_48513A93:
     mov     d3, a0
     movbu   (a0), d0
@@ -29990,11 +29990,11 @@ loc_48513B35:
     bra     loc_48513B8D
 loc_48513B66:
     call    func_48432430_entry, 0, 0xc
-    mov     0x48656b70, a1
+    mov     Str_SYNCHRO, a1
     extbu   d0
     cmp     0, d0
     bne     loc_48513B7E
-    mov     0x48656b78, a1
+    mov     Str_INSTANT, a1
 loc_48513B7E:
     mov     (0x24, sp), a0
     call    strcpy_entry, [a2], 4
@@ -30050,11 +30050,11 @@ loc_48513BE1:
     bra     loc_48513C39
 loc_48513C12:
     call    func_4843248C_entry, 0, 0xc
-    mov     0x48656b80, a1
+    mov     Str_ON_106, a1
     extbu   d0
     cmp     0, d0
     bne     loc_48513C2A
-    mov     0x48656b84, a1
+    mov     Str_OFF_47, a1
 loc_48513C2A:
     mov     (0x24, sp), a0
     call    strcpy_entry, [a2], 4
@@ -30115,7 +30115,7 @@ loc_48513C9A:
     mov     0x00008041, d0
     clr     d1
     call    LibParamGet, 0, 0x10
-    mov     0x48656b8a, a2
+    mov     data_48656B8A, a2
     mov     0xff, d2
     and     d0, d2
     movhu   (0x1e, sp), d0
@@ -30166,7 +30166,7 @@ loc_48513D2B:
     movhu   d0, (0x1e, sp)
     exth    d0
     add     -2, d0
-    mov     0x48656b8a, a2
+    mov     data_48656B8A, a2
     movbu   (d0, a2), d1
     mov     0x00008041, d0
     call    MainPutM3Em_entry, [d2,d3,a2], 0x20
@@ -30226,7 +30226,7 @@ loc_48513DE3:
     exth    d0
     asl2    d0
     mov     d0, a0
-    add     0x48656b98, a0
+    add     data_48656B98, a0
     mov     (-4, a0), d0
     cmp     0, d0
     bne     loc_48513DFA
@@ -30259,9 +30259,9 @@ loc_48513E1F:
     exth    d1
     add     -1, d1
     extb    d3
-    mov     0x48656b88, a2
+    mov     data_48656B88, a2
     movbu   (d0, a2), d0
-    mov     0x48656b8c, a3
+    mov     data_48656B8C, a3
     movbu   (d1, a3), d1
     call    func_484327E7_entry, [d2,d3], 0x14
     extbu   d0
@@ -30272,7 +30272,7 @@ loc_48513E1F:
     jmp     loc_48514261
 loc_48513E4D:
     movhu   (0x1c, sp), d0
-    mov     0x48656b92, a0
+    mov     data_48656B92, a0
     exth    d0
     add     -1, d0
     movbu   (d0, a0), d0
@@ -30308,7 +30308,7 @@ loc_48513E61:
     jmp     loc_48514261
 loc_48513EAE:
     movhu   (0x1e, sp), d0
-    mov     0x48656b88, a2
+    mov     data_48656B88, a2
     exth    d0
     add     -2, d0
     movbu   (d0, a2), d0
@@ -30337,9 +30337,9 @@ loc_48513EF3:
     add     -2, d0
     exth    d1
     add     -1, d1
-    mov     0x48656b88, a3
+    mov     data_48656B88, a3
     movbu   (d0, a3), d0
-    mov     0x48656b8c, a2
+    mov     data_48656B8C, a2
     movbu   (d1, a2), d1
     call    func_484327E7_entry, [d2,d3], 0x14
     extbu   d0
@@ -30419,7 +30419,7 @@ loc_48513F88:
     add     -2, d0
     cmp     1, d0
     blt     loc_48513FCB
-    mov     0x48656bb0, a1
+    mov     Str_empty_1117, a1
     mov     a3, a0
     call    strcpy_entry, [a2], 4
     jmp     loc_48514241
@@ -30451,18 +30451,18 @@ loc_48513FF6:
     movhu   (0x1c, sp), d0
     exth    d0
     asl2    d0
-    add     0x48656b98, d0
+    add     data_48656B98, d0
     mov     d0, a0
     mov     (-4, a0), d1
     cmp     d2, d1
     bne     loc_4851401A
-    mov     0x48656bb4, a1
+    mov     Str_empty_888, a1
     mov     a3, a0
     call    strcpy_entry, [a2], 4
     jmp     loc_48514241
 loc_4851401A:
     movhu   (0x1e, sp), d0
-    mov     0x48656b88, a0
+    mov     data_48656B88, a0
     clr     d1
     exth    d0
     add     -2, d0
@@ -30470,7 +30470,7 @@ loc_4851401A:
     call    func_484327E7_entry, [d2,d3], 0x14
     extbu   d0
     asl2    d0
-    mov     0x486569e8, a0
+    mov     ptrs_486569E8, a0
     mov     (d0, a0), a1
     mov     a3, a0
     call    strcpy_entry, [a2], 4
@@ -30480,17 +30480,17 @@ loc_48514045:
     exth    d0
     asl2    d0
     mov     d0, a0
-    add     0x48656b98, a0
+    add     data_48656B98, a0
     mov     (-4, a0), d0
     cmp     d2, d0
     bne     loc_48514069
-    mov     0x48656bb8, a1
+    mov     Str_empty_887, a1
     mov     a3, a0
     call    strcpy_entry, [a2], 4
     jmp     loc_48514241
 loc_48514069:
     movhu   (0x1e, sp), d0
-    mov     0x48656b88, a2
+    mov     data_48656B88, a2
     exth    d0
     add     -2, d0
     movbu   (d0, a2), d0
@@ -30525,18 +30525,18 @@ loc_485140BA:
     movhu   (0x1c, sp), d0
     exth    d0
     asl2    d0
-    add     0x48656b98, d0
+    add     data_48656B98, d0
     mov     d0, a0
     mov     (-4, a0), d1
     cmp     d2, d1
     bne     loc_485140DE
-    mov     0x48656bcc, a1
+    mov     Str_empty_1116, a1
     mov     a3, a0
     call    strcpy_entry, [a2], 4
     jmp     loc_48514241
 loc_485140DE:
     movhu   (0x1e, sp), d0
-    mov     0x48656b88, a0
+    mov     data_48656B88, a0
     exth    d0
     add     -2, d0
     movbu   (d0, a0), d0
@@ -30544,12 +30544,12 @@ loc_485140DE:
     call    func_484327E7_entry, [d2,d3], 0x14
     extbu   d0
     cmp     d2, d0
-    mov     0x48656bd0, a1
+    mov     Str_OFF_46, a1
     beq     loc_4851410F
-    mov     0x48656bd8, a1
+    mov     Str_ON_36, a1
     cmp     0x7f, d0
     beq     loc_4851410F
-    mov     0x48656be0, a1
+    mov     Str_SOUND_14, a1
 loc_4851410F:
     mov     a3, a0
     call    strcpy_entry, [a2], 4
@@ -30558,18 +30558,18 @@ loc_4851411A:
     movhu   (0x1c, sp), d0
     exth    d0
     asl2    d0
-    add     0x48656b98, d0
+    add     data_48656B98, d0
     mov     d0, a0
     mov     (-4, a0), d0
     cmp     d2, d0
     bne     loc_4851413E
-    mov     0x48656be8, a1
+    mov     Str_empty_886, a1
     mov     a3, a0
     call    strcpy_entry, [a2], 4
     jmp     loc_48514241
 loc_4851413E:
     movhu   (0x1e, sp), d0
-    mov     0x48656b88, a0
+    mov     data_48656B88, a0
     exth    d0
     add     -2, d0
     movbu   (d0, a0), d0
@@ -30579,26 +30579,26 @@ loc_4851413E:
     add     -0x7f, d0
     mov     d0, (0x10, sp)
     mov     a3, (8, sp)
-    mov     0x48656bf0, d0
+    mov     Str_4d, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48514241
 loc_4851416E:
     movhu   (0x1c, sp), d0
     exth    d0
     asl2    d0
-    add     0x48656b98, d0
+    add     data_48656B98, d0
     mov     d0, a0
     mov     (-4, a0), d0
     cmp     d2, d0
     bne     loc_48514192
-    mov     0x48656bf4, a1
+    mov     Str_empty_885, a1
     mov     a3, a0
     call    strcpy_entry, [a2], 4
     jmp     loc_48514241
 loc_48514192:
     movhu   (0x1e, sp), d0
-    mov     0x48656b88, a0
+    mov     data_48656B88, a0
     exth    d0
     add     -2, d0
     movbu   (d0, a0), d0
@@ -30607,7 +30607,7 @@ loc_48514192:
     extbu   d0
     cmp     0x40, d0
     bne     loc_485141BF
-    mov     0x48656c00, a1
+    mov     Str_CENTER_5, a1
     mov     a3, a0
     call    strcpy_entry, [a2], 4
     jmp     loc_48514241
@@ -30615,37 +30615,37 @@ loc_485141BF:
     cmp     0x40, d0
     bge     loc_485141DC
     mov     a3, (8, sp)
-    mov     0x48656c0c, d1
+    mov     Str_LEFT_2d, d1
     mov     d1, (0xc, sp)
     mov     0x40, d1
     sub     d0, d1
     mov     d1, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_48514241
 loc_485141DC:
     mov     a3, (8, sp)
-    mov     0x48656c18, d1
+    mov     Str_RIGHT_2d, d1
     mov     d1, (0xc, sp)
     add     -0x40, d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_48514241
 loc_485141F3:
     movhu   (0x1c, sp), d0
     exth    d0
     asl2    d0
-    add     0x48656b98, d0
+    add     data_48656B98, d0
     mov     d0, a0
     mov     (-4, a0), d1
     cmp     d2, d1
     bne     loc_48514216
-    mov     0x48656c24, a1
+    mov     Str_empty_884, a1
     mov     a3, a0
     call    strcpy_entry, [a2], 4
     bra     loc_48514241
 loc_48514216:
     movhu   (0x1e, sp), d0
-    mov     0x48656b88, a0
+    mov     data_48656B88, a0
     exth    d0
     add     -2, d0
     movbu   (d0, a0), d0
@@ -30654,9 +30654,9 @@ loc_48514216:
     extbu   d0
     mov     d0, (0x10, sp)
     mov     a3, (8, sp)
-    mov     0x48656c28, d0
+    mov     Str_2d_21, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_48514241:
     call    GetFocusObject_entry, 0, 0x10
     mov     (0x18, sp), a0
@@ -30723,7 +30723,7 @@ loc_485142C3:
     clr     d1
     call    LibParamGet, 0, 0x10
     movhu   (0x1a, sp), d1
-    mov     0x48656c2e, a2
+    mov     data_48656C2E, a2
     exth    d1
     add     -2, d1
     movbu   (d1, a2), d1
@@ -30771,7 +30771,7 @@ loc_48514351:
     movhu   d0, (0x1a, sp)
     exth    d0
     add     -2, d0
-    mov     0x48656c2e, a2
+    mov     data_48656C2E, a2
     movbu   (d0, a2), d1
     mov     0x00008041, d0
     call    MainPutM3Em_entry, [d2,d3,a2], 0x20
@@ -30832,7 +30832,7 @@ loc_4851440A:
     exth    d0
     asl2    d0
     mov     d0, a0
-    add     0x48656c44, a0
+    add     data_48656C44, a0
     mov     (-4, a0), d0
     cmp     0, d0
     bne     loc_48514421
@@ -30863,9 +30863,9 @@ loc_48514442:
     add     -2, d0
     exth    d1
     add     -1, d1
-    mov     0x48656c2c, a3
+    mov     data_48656C2C, a3
     movbu   (d0, a3), d0
-    mov     0x48656c30, a0
+    mov     data_48656C30, a0
     movbu   (d1, a0), d1
     call    func_484327E7_entry, [d2,d3], 0x14
     mov     d0, d1
@@ -30887,7 +30887,7 @@ loc_48514476:
     sub     d0, d1
 loc_48514482:
     movhu   (0x18, sp), d0
-    mov     0x48656c36, a2
+    mov     data_48656C36, a2
     exth    d0
     add     -1, d0
     movbu   (d0, a2), d0
@@ -30903,7 +30903,7 @@ loc_48514482:
     bra     loc_485144BA
 loc_485144A0:
     movhu   (0x18, sp), d0
-    mov     0x48656c3c, a1
+    mov     data_48656C3C, a1
     exth    d0
     add     -1, d0
     movbu   (d0, a1), d0
@@ -30927,7 +30927,7 @@ loc_485144BA:
     jmp     loc_485146EB
 loc_485144CB:
     movhu   (0x18, sp), d0
-    mov     0x48656c3c, a0
+    mov     data_48656C3C, a0
     exth    d0
     add     -1, d0
     movbu   (d0, a0), d0
@@ -30936,7 +30936,7 @@ loc_485144CB:
     jmp     loc_485146EB
 loc_485144DF:
     movhu   (0x1a, sp), d0
-    mov     0x48656c30, a0
+    mov     data_48656C30, a0
     exth    d0
     add     -2, d0
     movbu   (d0, a3), d3
@@ -30983,7 +30983,7 @@ loc_48514532:
     add     -2, d0
     cmp     1, d0
     blt     loc_48514571
-    mov     0x48656c5c, a1
+    mov     Str_empty_883, a1
     mov     a2, a0
     call    strcpy_entry, [a2], 4
     jmp     loc_485146CD
@@ -31020,11 +31020,11 @@ loc_4851459C:
     exth    d0
     asl2    d0
     mov     d0, a0
-    add     0x48656c44, a0
+    add     data_48656C44, a0
     mov     (-4, a0), d0
     cmp     d2, d0
     bne     loc_485145C8
-    mov     0x48656c60, a1
+    mov     Str_empty_929, a1
     mov     a2, a0
     call    strcpy_entry, [a2], 4
     jmp     loc_485146CD
@@ -31035,18 +31035,18 @@ loc_485145C8:
     add     -2, d0
     exth    d1
     add     -1, d1
-    mov     0x48656c2c, a0
+    mov     data_48656C2C, a0
     movbu   (d0, a0), d0
-    mov     0x48656c30, a0
+    mov     data_48656C30, a0
     movbu   (d1, a0), d1
     call    func_484327E7_entry, [d2,d3], 0x14
     extbu   d0
     call    func_485146EF_entry, [d2], 0x90
     mov     a0, (0x10, sp)
     mov     a2, (8, sp)
-    mov     0x48656c64, d0
+    mov     Str_sHz, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_485146CD
 loc_48514607:
     movhu   (0x1a, sp), d0
@@ -31057,11 +31057,11 @@ loc_48514607:
     exth    d0
     asl2    d0
     mov     d0, a0
-    add     0x48656c44, a0
+    add     data_48656C44, a0
     mov     (-4, a0), d0
     cmp     d2, d0
     bne     loc_48514633
-    mov     0x48656c6c, a1
+    mov     Str_empty_928, a1
     mov     a2, a0
     call    strcpy_entry, [a2], 4
     jmp     loc_485146CD
@@ -31072,9 +31072,9 @@ loc_48514633:
     add     -2, d0
     exth    d1
     add     -1, d1
-    mov     0x48656c2c, a0
+    mov     data_48656C2C, a0
     movbu   (d0, a0), d0
-    mov     0x48656c30, a0
+    mov     data_48656C30, a0
     movbu   (d1, a0), d1
     call    func_484327E7_entry, [d2,d3], 0x14
     extbu   d0
@@ -31082,20 +31082,20 @@ loc_48514633:
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
     mov     a2, (8, sp)
-    mov     0x48656c70, d0
+    mov     Str_5_1f, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_485146CD
 loc_48514673:
     movhu   (0x18, sp), d0
     exth    d0
     asl2    d0
     mov     d0, a0
-    add     0x48656c44, a0
+    add     data_48656C44, a0
     mov     (-4, a0), d0
     cmp     d2, d0
     bne     loc_48514696
-    mov     0x48656c78, a1
+    mov     Str_empty_927, a1
     mov     a2, a0
     call    strcpy_entry, [a2], 4
     bra     loc_485146CD
@@ -31106,17 +31106,17 @@ loc_48514696:
     add     -2, d0
     exth    d1
     add     -1, d1
-    mov     0x48656c2c, a0
+    mov     data_48656C2C, a0
     movbu   (d0, a0), d0
-    mov     0x48656c30, a0
+    mov     data_48656C30, a0
     movbu   (d1, a0), d1
     call    func_484327E7_entry, [d2,d3], 0x14
     extbu   d0
     mov     d0, (0x10, sp)
     mov     a2, (8, sp)
-    mov     0x48656c7c, d0
+    mov     Str_3d_48, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_485146CD:
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
@@ -31137,7 +31137,7 @@ func_485146EF:
     add     -0x8c, sp
 func_485146EF_entry:
     mov     d0, d2
-    mov     0x48656d3a, a1
+    mov     data_48656D3A, a1
     mov     sp, a0
     add     0x10, a0
     mov     -0x7c, d1
@@ -31151,7 +31151,7 @@ func_485146EF_entry:
     extbu   d2
     cmp     0x78, d2
     ble     loc_48514717
-    mov     0x48656db8, a0
+    mov     Str_ERROR, a0
     bra     loc_48514727
 loc_48514717:
     mov     4, d1
@@ -31230,8 +31230,8 @@ MspGrpNmChk:
     beq     loc_485147F5
     bra     loc_485147F9
 loc_485147D8:
-    movhu   (0x487349d2), d1
-    movbu   (0x50004228), d0
+    movhu   (data_487349D2), d1
+    movbu   (data_50004228), d0
     mov     (0x24, sp), a0
     add     d1, d0
     extbu   d0
@@ -31265,9 +31265,9 @@ loc_48514814:
     mov     a2, (0x10, sp)
     mov     0x0006003a, d1
     call    SendEvent_entry, [d2,d3], 0x24
-    movhu   (0x487349d2), d0
+    movhu   (data_487349D2), d0
     mov     a2, (0x10, sp)
-    movbu   (0x50004228), d1
+    movbu   (data_50004228), d1
     add     d0, d1
     mov     0x00a30010, d0
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
@@ -31380,12 +31380,12 @@ loc_48514974:
     bra     loc_485149A0
 loc_48514977:
     mov     (0x24, sp), a0
-    mov     0x48656dc0, d0
+    mov     Str_2d_16, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
     movbu   (0x5006e4a8), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_485149A0
 loc_48514995:
@@ -31411,7 +31411,7 @@ loc_485149B5:
     ble     loc_485149C0
     jmp     loc_48514B04
 loc_485149C0:
-    mov     0x48656fb0, a1
+    mov     data_48656FB0, a1
     add     0xfffb0001, d2
     mov     0xf, d0
     and     d2, d0
@@ -31427,7 +31427,7 @@ loc_485149C0:
     jmp     loc_48514B04
 loc_485149E3:
     add     8, a0
-    cmp     0x48657030, a0
+    cmp     data_48657030, a0
     bcs     loc_485149EE
     mov     a1, a0
 loc_485149EE:
@@ -31444,10 +31444,10 @@ loc_485149F1:
     clr     d0
     ret     [d2,d3], 0x1c
     movbu   (0x5006e4ad), d0
-    mov     0x48656dc4, a0
+    mov     Str_ENABLE, a0
     cmp     0, d0
     bne     loc_48514A2A
-    mov     0x48656dce, a0
+    mov     Str_DISABLE, a0
 loc_48514A2A:
     mov     a0, (0x10, sp)
     mov     0x00a000b8, d0
@@ -31785,7 +31785,7 @@ loc_48514D86:
     jmp     loc_48515019
 loc_48514D91:
     mov     d1, a3
-    add     0x50004234, a3
+    add     data_50004234, a3
     movbu   (a3), d2
     extb    d3
     add     d2, d3
@@ -31821,7 +31821,7 @@ loc_48514DDF:
     mov     3, d1
     call    func_485155A8_entry, [d2,d3,a2,a3], 0x30
     mov     d0, d3
-    movhu   (0x487349ca), d2
+    movhu   (data_487349CA), d2
     mov     6, d0
     mov     4, d1
     call    func_485155A8_entry, [d2,d3,a2,a3], 0x30
@@ -31892,7 +31892,7 @@ loc_48514E81:
     beq     loc_48514EC7
     jmp     loc_48514FF1
 loc_48514E8C:
-    add     0x50004234, a2
+    add     data_50004234, a2
     movbu   (a2), d0
     cmp     1, d0
     blt     loc_48514EB6
@@ -31900,14 +31900,14 @@ loc_48514E8C:
     cmp     0x10, d0
     bgt     loc_48514EB6
     mov     a3, (8, sp)
-    mov     0x48656dd8, d0
+    mov     Str_3d_37, d0
     mov     d0, (0xc, sp)
     movbu   (a2), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_48514FF1
 loc_48514EB6:
-    mov     0x48656ddc, a1
+    mov     Str_OFF_45, a1
     mov     a3, a0
     call    strcpy_entry, [a2], 4
     jmp     loc_48514FF1
@@ -31916,7 +31916,7 @@ loc_48514EC7:
     mov     3, d1
     call    func_485155A8_entry, [d2,d3,a2,a3], 0x30
     mov     d0, d3
-    movhu   (0x487349ca), d2
+    movhu   (data_487349CA), d2
     mov     6, d0
     mov     4, d1
     call    func_485155A8_entry, [d2,d3,a2,a3], 0x30
@@ -31930,12 +31930,12 @@ loc_48514EC7:
     extbu   d0
     cmp     0, d0
     beq     loc_48514F08
-    mov     0x48656de0, a1
+    mov     Str_empty_882, a1
     mov     a3, a0
     call    strcpy_entry, [a2], 4
     bra     loc_48514F3F
 loc_48514F08:
-    add     0x50004234, a2
+    add     data_50004234, a2
     movbu   (a2), d0
     cmp     1, d0
     blt     loc_48514F31
@@ -31943,14 +31943,14 @@ loc_48514F08:
     cmp     0x10, d0
     bgt     loc_48514F31
     mov     a3, (8, sp)
-    mov     0x48656de4, d0
+    mov     Str_3d_36, d0
     mov     d0, (0xc, sp)
     movbu   (a2), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_48514F3F
 loc_48514F31:
-    mov     0x48656de8, a1
+    mov     Str_OFF_44, a1
     mov     a3, a0
     call    strcpy_entry, [a2], 4
 loc_48514F3F:
@@ -31958,7 +31958,7 @@ loc_48514F3F:
     mov     3, d1
     call    func_485155A8_entry, [d2,d3,a2,a3], 0x30
     mov     d0, d3
-    movhu   (0x487349ca), d2
+    movhu   (data_487349CA), d2
     mov     6, d0
     mov     4, d1
     call    func_485155A8_entry, [d2,d3,a2,a3], 0x30
@@ -31973,27 +31973,27 @@ loc_48514F3F:
     cmp     0, d0
     beq     loc_48514FD6
     movbu   (0x501523dc), d0
-    movbu   d0, (0x50004236)
+    movbu   d0, (data_50004236)
     movbu   (0x501523dc), d0
     cmp     1, d0
     blt     loc_48514FAE
-    movbu   (0x50004236), d0
+    movbu   (data_50004236), d0
     cmp     0x10, d0
     bgt     loc_48514FAE
     mov     sp, a2
     add     0x40, a2
     mov     a2, (8, sp)
-    mov     0x48656dec, d0
+    mov     Str_3d_35, d0
     mov     d0, (0xc, sp)
-    movbu   (0x50004236), d0
+    movbu   (data_50004236), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_48514FBF
 loc_48514FAE:
     mov     sp, a2
     add     0x40, a2
     mov     a2, a0
-    mov     0x48656df0, a1
+    mov     Str_OFF_43, a1
     call    strcpy_entry, [a2], 4
 loc_48514FBF:
     mov     a2, (0x10, sp)
@@ -32002,7 +32002,7 @@ loc_48514FBF:
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_48514FF1
 loc_48514FD6:
-    mov     0x48656df4, d0
+    mov     Str_empty_881, d0
     mov     d0, (0x10, sp)
     mov     0x00a0007a, d0
     mov     0x000600b4, d1
@@ -32016,7 +32016,7 @@ loc_48514FF1:
     bra     loc_48515019
     bra     loc_4851501A
 loc_4851500D:
-    mov     0x50004234, d0
+    mov     data_50004234, d0
     bra     loc_4851501A
 loc_48515015:
     mov     -1, d0
@@ -32039,7 +32039,7 @@ loc_4851502F:
     ble     loc_4851503A
     jmp     loc_485150EC
 loc_4851503A:
-    mov     0x48657030, a1
+    mov     data_48657030, a1
     add     0xfffb0001, d2
     mov     0xf, d0
     and     d2, d0
@@ -32055,7 +32055,7 @@ loc_4851503A:
     jmp     loc_485150EC
 loc_4851505D:
     add     8, a0
-    cmp     0x486570b0, a0
+    cmp     data_486570B0, a0
     bcs     loc_48515068
     mov     a1, a0
 loc_48515068:
@@ -32067,34 +32067,34 @@ loc_4851506B:
     jmp     (a0)
     clr     d0
     ret     [d2,d3], 0x1c
-    movhu   (0x50004238), d1
+    movhu   (data_50004238), d1
     mov     1, d0
     inc     d1
     call    func_485155A8_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     ret     [d2,d3], 0x1c
-    movhu   (0x50004238), d1
+    movhu   (data_50004238), d1
     mov     1, d0
     add     -1, d1
     call    func_485155A8_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     bra     loc_485150ED
     mov     (0x2c, sp), a1
-    mov     0x48656df8, d0
+    mov     Str_3d_189, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    movhu   (0x50004238), d0
+    movhu   (data_50004238), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_485150ED
-    movhu   (0x50004238), d0
+    movhu   (data_50004238), d0
     bra     loc_485150ED
     mov     (0x2c, sp), d0
-    movhu   (0x50004238), d1
+    movhu   (data_50004238), d1
     cmp     d0, d1
     beq     loc_485150E6
-    movhu   d0, (0x50004238)
+    movhu   d0, (data_50004238)
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -32123,7 +32123,7 @@ loc_48515102:
     ble     loc_4851510D
     jmp     loc_485151BF
 loc_4851510D:
-    mov     0x486570b0, a1
+    mov     data_486570B0, a1
     add     0xfffb0001, d2
     mov     0xf, d0
     and     d2, d0
@@ -32139,7 +32139,7 @@ loc_4851510D:
     jmp     loc_485151BF
 loc_48515130:
     add     8, a0
-    cmp     0x48657130, a0
+    cmp     data_48657130, a0
     bcs     loc_4851513B
     mov     a1, a0
 loc_4851513B:
@@ -32151,34 +32151,34 @@ loc_4851513E:
     jmp     (a0)
     clr     d0
     ret     [d2,d3], 0x1c
-    movhu   (0x5000423c), d1
+    movhu   (data_5000423C), d1
     mov     2, d0
     inc     d1
     call    func_485155A8_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     ret     [d2,d3], 0x1c
-    movhu   (0x5000423c), d1
+    movhu   (data_5000423C), d1
     mov     2, d0
     add     -1, d1
     call    func_485155A8_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     bra     loc_485151C0
     mov     (0x2c, sp), a1
-    mov     0x48656dfc, d0
+    mov     Str_3d_34, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    movhu   (0x5000423c), d0
+    movhu   (data_5000423C), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_485151C0
-    movhu   (0x5000423c), d0
+    movhu   (data_5000423C), d0
     bra     loc_485151C0
     mov     (0x2c, sp), d0
-    movhu   (0x5000423c), d1
+    movhu   (data_5000423C), d1
     cmp     d0, d1
     beq     loc_485151B9
-    movhu   d0, (0x5000423c)
+    movhu   d0, (data_5000423C)
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -32207,7 +32207,7 @@ loc_485151D5:
     ble     loc_485151E0
     jmp     loc_485152AF
 loc_485151E0:
-    mov     0x48657130, a1
+    mov     data_48657130, a1
     add     0xfffb0001, d2
     mov     0xf, d0
     and     d2, d0
@@ -32223,7 +32223,7 @@ loc_485151E0:
     jmp     loc_485152AF
 loc_48515203:
     add     8, a0
-    cmp     0x486571b0, a0
+    cmp     data_486571B0, a0
     bcs     loc_4851520E
     mov     a1, a0
 loc_4851520E:
@@ -32235,21 +32235,21 @@ loc_48515211:
     jmp     (a0)
     clr     d0
     ret     [d2,d3,a2], 0x24
-    movhu   (0x50004240), d1
+    movhu   (data_50004240), d1
     mov     3, d0
     exth    d1
     inc     d1
     call    func_485155A8_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     ret     [d2,d3,a2], 0x24
-    movhu   (0x50004240), d1
+    movhu   (data_50004240), d1
     mov     3, d0
     exth    d1
     add     -1, d1
     call    func_485155A8_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     ret     [d2,d3,a2], 0x24
-    movhu   (0x50004240), d0
+    movhu   (data_50004240), d0
     mov     0x2b, d1
     exth    d0
     cmp     0, d0
@@ -32260,24 +32260,24 @@ loc_48515211:
     mov     0x20, d1
 loc_48515256:
     mov     (0x34, sp), a2
-    mov     0x48656e00, d2
+    mov     Str_1c_2d, d2
     mov     d2, (0xc, sp)
     mov     d1, (0x10, sp)
     call    abs, 0, 0
     mov     d0, (0x14, sp)
     mov     a2, (8, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_485152B0
-    movhu   (0x50004240), d0
+    movhu   (data_50004240), d0
     exth    d0
     bra     loc_485152B0
     mov     (0x34, sp), d0
-    movhu   (0x50004240), d1
+    movhu   (data_50004240), d1
     exth    d1
     cmp     d0, d1
     beq     loc_485152A9
-    movhu   d0, (0x50004240)
+    movhu   d0, (data_50004240)
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -32306,7 +32306,7 @@ loc_485152C5:
     ble     loc_485152D0
     jmp     loc_485153AD
 loc_485152D0:
-    mov     0x486571b0, a1
+    mov     data_486571B0, a1
     add     0xfffb0001, d2
     mov     0xf, d0
     and     d2, d0
@@ -32322,7 +32322,7 @@ loc_485152D0:
     jmp     loc_485153AD
 loc_485152F3:
     add     8, a0
-    cmp     0x48657230, a0
+    cmp     data_48657230, a0
     bcs     loc_485152FE
     mov     a1, a0
 loc_485152FE:
@@ -32334,44 +32334,44 @@ loc_48515301:
     jmp     (a0)
     clr     d0
     ret     [d2,d3], 0x1c
-    movhu   (0x50004244), d1
+    movhu   (data_50004244), d1
     mov     4, d0
     inc     d1
     call    func_485155A8_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     ret     [d2,d3], 0x1c
-    movhu   (0x50004244), d1
+    movhu   (data_50004244), d1
     mov     4, d0
     add     -1, d1
     call    func_485155A8_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     ret     [d2,d3], 0x1c
     mov     (0x2c, sp), a1
-    mov     0x48656e08, d0
+    mov     Str_1c, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    movhu   (0x50004244), d0
+    movhu   (data_50004244), d0
     add     0x41, d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x000600b4, d1
     mov     0x00a00065, d0
     call    SendEvent_entry, [d2,d3], 0x24
-    movhu   (0x487349ca), d1
-    movhu   (0x50004244), d0
+    movhu   (data_487349CA), d1
+    movhu   (data_50004244), d0
     add     d1, d0
     call    func_48511981_entry, 0, 0x10
     clr     d0
     bra     loc_485153AE
-    movhu   (0x50004244), d0
+    movhu   (data_50004244), d0
     bra     loc_485153AE
     mov     (0x2c, sp), d1
-    movhu   (0x50004244), d0
+    movhu   (data_50004244), d0
     cmp     d1, d0
     beq     loc_485153A7
-    movhu   d1, (0x50004244)
+    movhu   d1, (data_50004244)
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -32400,7 +32400,7 @@ loc_485153C3:
     ble     loc_485153CE
     jmp     loc_485154F4
 loc_485153CE:
-    mov     0x48657230, a1
+    mov     data_48657230, a1
     add     0xfffb0001, d2
     mov     0xf, d0
     and     d2, d0
@@ -32416,7 +32416,7 @@ loc_485153CE:
     jmp     loc_485154F4
 loc_485153F1:
     add     8, a0
-    cmp     0x486572b0, a0
+    cmp     Str_Control_Preset, a0
     bcs     loc_485153FC
     mov     a1, a0
 loc_485153FC:
@@ -32428,19 +32428,19 @@ loc_485153FF:
     jmp     (a0)
     clr     d0
     ret     [d2,d3], 0x1c
-    movhu   (0x50004248), d1
+    movhu   (data_50004248), d1
     mov     5, d0
     inc     d1
     call    func_485155A8_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     ret     [d2,d3], 0x1c
-    movhu   (0x50004248), d1
+    movhu   (data_50004248), d1
     mov     5, d0
     add     -1, d1
     call    func_485155A8_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     ret     [d2,d3], 0x1c
-    movhu   (0x50004248), d0
+    movhu   (data_50004248), d0
     cmp     5, d0
     ble     loc_4851543A
     jmp     loc_485154BB
@@ -32449,7 +32449,7 @@ loc_4851543A:
     mov     3, d1
     call    func_485155A8_entry, [d2,d3,a2,a3], 0x30
     mov     d0, d3
-    movhu   (0x487349ca), d2
+    movhu   (data_487349CA), d2
     mov     6, d0
     mov     4, d1
     call    func_485155A8_entry, [d2,d3,a2,a3], 0x30
@@ -32464,23 +32464,23 @@ loc_4851543A:
     cmp     0, d0
     beq     loc_48515489
     mov     (0x2c, sp), a0
-    mov     0x48656e0c, d0
+    mov     Str_d_SOLO, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    movhu   (0x50004248), d0
+    movhu   (data_50004248), d0
     inc     d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_485154A5
 loc_48515489:
     mov     (0x2c, sp), a0
-    mov     0x48656e14, d0
+    mov     Str_d_11, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    movhu   (0x50004248), d0
+    movhu   (data_50004248), d0
     inc     d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_485154A5:
     clr     d0
     mov     d0, (0x10, sp)
@@ -32490,13 +32490,13 @@ loc_485154A5:
 loc_485154BB:
     clr     d0
     bra     loc_485154F5
-    movhu   (0x50004248), d0
+    movhu   (data_50004248), d0
     bra     loc_485154F5
     mov     (0x2c, sp), d1
-    movhu   (0x50004248), d0
+    movhu   (data_50004248), d0
     cmp     d1, d0
     beq     loc_485154EE
-    movhu   d1, (0x50004248)
+    movhu   d1, (data_50004248)
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -32554,7 +32554,7 @@ loc_48515549:
     mov     0x00060062, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d1
-    movhu   (0x487349ca), d0
+    movhu   (data_487349CA), d0
     add     d1, d0
     mov     d0, (0x50152340)
     clr     d0
@@ -32585,7 +32585,7 @@ func_485155A8:
 func_485155A8_entry:
     mov     d1, d3
     mov     d0, d2
-    mov     0x48656e1c, a2
+    mov     Str_g, a2
     mov     sp, a3
     add     0x14, a3
 loc_485155B8:
@@ -32597,7 +32597,7 @@ loc_485155B8:
     movhu   d0, (a3)
     add     2, a3
     inc4    a2
-    cmp     0x48656e30, a2
+    cmp     data_48656E30, a2
     bcs     loc_485155B8
     cmp     1, d2
     beq     loc_48515607
@@ -32639,7 +32639,7 @@ loc_48515617:
     movhu   d2, (0x14, sp)
     mov     d2, d1
     exth    d1
-    mov     (0x48656e1c), d0
+    mov     (Str_g), d0
     mov     d1, (0x10, sp)
     mov     0x0006003b, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -32648,7 +32648,7 @@ loc_48515617:
     cmp     d0, d3
     ble     loc_48515652
     movhu   d3, (0x16, sp)
-    mov     (0x48656e20), d0
+    mov     (Str_h_3), d0
     exth    d2
     mov     d2, (0x10, sp)
     mov     0x0006003b, d1
@@ -32671,7 +32671,7 @@ loc_48515664:
     movhu   d0, (0x16, sp)
     exth    d0
     mov     d0, (0x10, sp)
-    mov     (0x48656e20), d0
+    mov     (Str_h_3), d0
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_485158A6
 loc_48515686:
@@ -32687,7 +32687,7 @@ loc_48515696:
     movhu   d2, (0x16, sp)
     mov     d2, d1
     exth    d1
-    mov     (0x48656e20), d0
+    mov     (Str_h_3), d0
     mov     d1, (0x10, sp)
     mov     0x0006003b, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -32696,7 +32696,7 @@ loc_48515696:
     cmp     d0, d3
     bge     loc_485156D1
     movhu   d3, (0x14, sp)
-    mov     (0x48656e1c), d0
+    mov     (Str_g), d0
     exth    d2
     mov     d2, (0x10, sp)
     mov     0x0006003b, d1
@@ -32717,7 +32717,7 @@ loc_485156E3:
     add     -0xf, d1
     movhu   d1, (0x14, sp)
     exth    d1
-    mov     (0x48656e1c), d0
+    mov     (Str_g), d0
     mov     d1, (0x10, sp)
     mov     0x0006003b, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -32732,7 +32732,7 @@ loc_4851570C:
     jmp     loc_485158A6
 loc_48515713:
     movhu   d3, (0x18, sp)
-    mov     (0x48656e24), d0
+    mov     (Str_q), d0
     mov     d3, d1
     exth    d1
     mov     d1, (0x10, sp)
@@ -32749,7 +32749,7 @@ loc_48515737:
     jmp     loc_485158A6
 loc_4851573E:
     movhu   d3, (0x1a, sp)
-    mov     (0x48656e28), d0
+    mov     (Str_u), d0
     mov     d3, d1
     exth    d1
     mov     d1, (0x10, sp)
@@ -32766,7 +32766,7 @@ loc_48515762:
     jmp     loc_485158A6
 loc_48515769:
     movhu   d3, (0x1c, sp)
-    mov     (0x48656e2c), d0
+    mov     (Str_v), d0
     mov     d3, d1
     exth    d1
     mov     d1, (0x10, sp)
@@ -32791,7 +32791,7 @@ loc_48515786:
     movhu   (0x1a, sp), d1
     movhu   (0x1c, sp), d2
     mov     d0, a2
-    movhu   (0x487349ca), d0
+    movhu   (data_487349CA), d0
     exth    d1
     add     d0, d1
     extbu   d1
@@ -32834,7 +32834,7 @@ loc_4851580B:
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     movhu   (0x1a, sp), d2
     movhu   (0x1c, sp), d1
-    movhu   (0x487349ca), d0
+    movhu   (data_487349CA), d0
     exth    d2
     add     d0, d2
     mov     d2, d0
@@ -33097,7 +33097,7 @@ TtMspPnCp:
 loc_48515B1B:
     jmp     loc_48515BA6
 loc_48515B1E:
-    movhu   (0x487349ca), d0
+    movhu   (data_487349CA), d0
     movbu   d0, (0x501523df)
     clr     d0
     movbu   d0, (0x501523de)
@@ -33129,7 +33129,7 @@ loc_48515B4A:
     call    func_48511B16_entry, [d2], 4
     cmp     0, d0
     beq     loc_48515B9B
-    movhu   (0x487349ca), d0
+    movhu   (data_487349CA), d0
     movbu   d0, (0x501523dd)
     mov     0x9000e005, d0
     movbu   (0x501523dd), d1
@@ -33207,19 +33207,19 @@ MainPAD_GetPadBankName:
     mov     d1, d2
     call    Malloc_entry, [d2,a2,a3], 0x28
     mov     (0x30, sp), a1
-    movhu   (0x487349d6), d0
+    movhu   (data_487349D6), d0
     mov     a0, a2
     cmp     a1, d0
     bhi     loc_48515C5F
-    movhu   (0x487349d6), d0
-    movhu   (0x487349d8), d1
+    movhu   (data_487349D6), d0
+    movhu   (data_487349D8), d1
     add     d0, d1
     cmp     d1, a1
     bhi     loc_48515C5F
     mov     a2, (8, sp)
-    mov     0x486572b0, d0
+    mov     Str_Control_Preset, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_48515C7A
 loc_48515C5F:
     mov     a1, d0
@@ -33257,23 +33257,23 @@ MainPAD_GetPadName:
     mov     0x0000e005, d0
     clr     d1
     call    LibParamGet, 0, 0x10
-    movhu   (0x487349d6), d1
+    movhu   (data_487349D6), d1
     and     0xff, d0
     extbu   d0
     cmp     d0, d1
     bhi     loc_48515CF4
-    movhu   (0x487349d6), d2
-    movhu   (0x487349d8), d1
+    movhu   (data_487349D6), d2
+    movhu   (data_487349D8), d1
     add     d1, d2
     cmp     d2, d0
     bhi     loc_48515CF4
     mov     a2, (8, sp)
     mov     (0x30, sp), d0
-    mov     0x48657328, a0
+    mov     ptrs_48657328, a0
     asl2    d0
     mov     (d0, a0), d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_48515D17
 loc_48515CF4:
     mov     (0x30, sp), d1
@@ -33564,7 +33564,7 @@ loc_48515FE9:
     mov     (0x50152340), d0
     exth    d3
     extbu   d0
-    mov     0x48657340, a0
+    mov     Str_clear_3, a0
     call    func_48437452_entry, [d2,a2,a3], 0x30
     cmp     0, d3
     bge     loc_4851602B
@@ -33662,9 +33662,9 @@ loc_485160D9:
     cmp     2, a0
     bne     loc_48516110
     clr     d2
-    mov     0x50007e2c, d3
-    mov     0x50007e2e, a3
-    mov     0x50007e30, a2
+    mov     data_50007E2C, d3
+    mov     data_50007E2E, a3
+    mov     data_50007E30, a2
 loc_485160F2:
     mov     d2, d0
     extbu   d0
@@ -33978,7 +33978,7 @@ loc_4851635D:
     mov     d0, (0x14, sp)
     mov     0xe3, d0
     mov     0x00a30007, d1
-    mov     0x48657354, a0
+    mov     Str_TT_MSPCHDSTEP_3, a0
     call    RegisterTitle_entry, [d2,a2], 8
     jmp     loc_48516481
 loc_48516387:
@@ -34107,7 +34107,7 @@ InitializeBlock29_entry:
     mov     d0, (0x20, sp)
     mov     1, d3
     movhu   d3, (0x24, sp)
-    mov     0x487538e4, d0
+    mov     VDOUT_Classes, d0
     mov     d0, (0x28, sp)
     mov     0x1d4, d0
     mov     a3, a0
@@ -34118,7 +34118,7 @@ InitializeBlock29_entry:
     mov     d0, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     0x48753914, d0
+    mov     VDOUT_Events, d0
     mov     d0, (0x28, sp)
     mov     0x1d5, d0
     mov     a3, a0
@@ -34129,7 +34129,7 @@ InitializeBlock29_entry:
     mov     d0, (0x20, sp)
     mov     3, d0
     movhu   d0, (0x24, sp)
-    mov     0x48753918, d0
+    mov     VDOUT_Methods, d0
     mov     d0, (0x28, sp)
     mov     0x1d6, d0
     mov     a3, a0
@@ -34139,7 +34139,7 @@ InitializeBlock29_entry:
     mov     FunctionProc, a2
     mov     a2, (0x20, sp)
     movhu   d3, (0x24, sp)
-    mov     0x48753928, d0
+    mov     VDOUT_Functions, d0
     mov     d0, (0x28, sp)
     mov     0x1d1, d0
     mov     a3, a0
@@ -34147,7 +34147,7 @@ InitializeBlock29_entry:
     mov     d2, (0x1c, sp)
     mov     a2, (0x20, sp)
     movhu   d3, (0x24, sp)
-    mov     0x48753930, d0
+    mov     VDOUT_FunctionNames, d0
     mov     d0, (0x28, sp)
     mov     0x1d9, d0
     mov     a3, a0
@@ -34157,7 +34157,7 @@ InitializeBlock29_entry:
     mov     ApFunctionProc, a2
     mov     a2, (0x20, sp)
     movhu   d3, (0x24, sp)
-    mov     0x48753938, d0
+    mov     VDOUT_ApFunctions, d0
     mov     d0, (0x28, sp)
     mov     0x1d2, d0
     mov     a3, a0
@@ -34165,7 +34165,7 @@ InitializeBlock29_entry:
     mov     d2, (0x1c, sp)
     mov     a2, (0x20, sp)
     movhu   d3, (0x24, sp)
-    mov     0x48753940, d0
+    mov     VDOUT_ApFunctionNames, d0
     mov     d0, (0x28, sp)
     mov     0x1da, d0
     mov     a3, a0
@@ -34175,7 +34175,7 @@ InitializeBlock29_entry:
     mov     MainFunctionProc, a2
     mov     a2, (0x20, sp)
     movhu   d3, (0x24, sp)
-    mov     0x48753948, d0
+    mov     VDOUT_MainFunctions, d0
     mov     d0, (0x28, sp)
     mov     0x1d3, d0
     mov     a3, a0
@@ -34183,7 +34183,7 @@ InitializeBlock29_entry:
     mov     d2, (0x1c, sp)
     mov     a2, (0x20, sp)
     movhu   d3, (0x24, sp)
-    mov     0x48753950, d0
+    mov     VDOUT_MainFunctionNames, d0
     mov     d0, (0x28, sp)
     mov     0x1db, d0
     mov     a3, a0
@@ -34194,7 +34194,7 @@ InitializeBlock29_entry:
     mov     d0, (0x20, sp)
     mov     4, d2
     movhu   d2, (0x24, sp)
-    mov     0x48753958, d0
+    mov     VDOUT_Viewables, d0
     mov     d0, (0x28, sp)
     mov     0x1d0, d0
     mov     a3, a0
@@ -34204,14 +34204,14 @@ InitializeBlock29_entry:
     mov     ResNameProc, d0
     mov     d0, (0x20, sp)
     movhu   d2, (0x24, sp)
-    mov     0x4875396c, d0
+    mov     VDOUT_ResNames, d0
     mov     d0, (0x28, sp)
     mov     0x1d8, d0
     mov     a3, a0
     call    RegisterObjectTable, 0, 0
     mov     0x1d, d0
-    mov     0x48657508, a0
-    mov     0x48657512, a1
+    mov     Str_OTB_VDOUT, a0
+    mov     Str_iapvdout, a1
     call    RegisterOTBlock_entry, [a2], 4
     mov     0x01d00000, d0
     mov     d0, (0x10, sp)
@@ -34219,7 +34219,7 @@ InitializeBlock29_entry:
     mov     d0, (0x14, sp)
     mov     0x102, d0
     mov     0x01d30000, d1
-    mov     0x4865751c, a0
+    mov     Str_TT_VDOUT, a0
     call    RegisterTitle_entry, [d2,a2], 8
     ret     [d2,d3,a2,a3], 0x3c
 
@@ -34391,7 +34391,7 @@ InitializeBlock20_entry:
     mov     d0, (0x20, sp)
     mov     0x15, d3
     movhu   d3, (0x24, sp)
-    mov     0x48753980, d0
+    mov     FMA_Classes, d0
     mov     d0, (0x28, sp)
     mov     0x144, d0
     mov     a3, a0
@@ -34402,7 +34402,7 @@ InitializeBlock20_entry:
     mov     d0, (0x20, sp)
     mov     0x1c, d0
     movhu   d0, (0x24, sp)
-    mov     0x48753b90, d0
+    mov     FMA_Events, d0
     mov     d0, (0x28, sp)
     mov     0x145, d0
     mov     a3, a0
@@ -34413,7 +34413,7 @@ InitializeBlock20_entry:
     mov     d0, (0x20, sp)
     mov     0x14, d0
     movhu   d0, (0x24, sp)
-    mov     0x48753c04, d0
+    mov     FMA_Methods, d0
     mov     d0, (0x28, sp)
     mov     0x146, d0
     mov     a3, a0
@@ -34423,7 +34423,7 @@ InitializeBlock20_entry:
     mov     FunctionProc, a2
     mov     a2, (0x20, sp)
     movhu   d3, (0x24, sp)
-    mov     0x48753c58, d0
+    mov     FMA_Functions, d0
     mov     d0, (0x28, sp)
     mov     0x141, d0
     mov     a3, a0
@@ -34431,7 +34431,7 @@ InitializeBlock20_entry:
     mov     d2, (0x1c, sp)
     mov     a2, (0x20, sp)
     movhu   d3, (0x24, sp)
-    mov     0x48753cb0, d0
+    mov     FMA_FunctionNames, d0
     mov     d0, (0x28, sp)
     mov     0x149, d0
     mov     a3, a0
@@ -34442,7 +34442,7 @@ InitializeBlock20_entry:
     mov     a2, (0x20, sp)
     mov     0x2b, d2
     movhu   d2, (0x24, sp)
-    mov     0x48753d08, d0
+    mov     FMA_ApFunctions, d0
     mov     d0, (0x28, sp)
     mov     0x142, d0
     mov     a3, a0
@@ -34450,7 +34450,7 @@ InitializeBlock20_entry:
     mov     d3, (0x1c, sp)
     mov     a2, (0x20, sp)
     movhu   d2, (0x24, sp)
-    mov     0x48753db8, d0
+    mov     FMA_ApFunctionNames, d0
     mov     d0, (0x28, sp)
     mov     0x14a, d0
     mov     a3, a0
@@ -34461,7 +34461,7 @@ InitializeBlock20_entry:
     mov     a2, (0x20, sp)
     mov     0x44, d2
     movhu   d2, (0x24, sp)
-    mov     0x48753e68, d0
+    mov     FMA_MainFunctions, d0
     mov     d0, (0x28, sp)
     mov     0x143, d0
     mov     a3, a0
@@ -34469,7 +34469,7 @@ InitializeBlock20_entry:
     mov     d3, (0x1c, sp)
     mov     a2, (0x20, sp)
     movhu   d2, (0x24, sp)
-    mov     0x48753f7c, d0
+    mov     FMA_MainFunctionNames, d0
     mov     d0, (0x28, sp)
     mov     0x14b, d0
     mov     a3, a0
@@ -34480,7 +34480,7 @@ InitializeBlock20_entry:
     mov     d0, (0x20, sp)
     mov     0x278, d2
     movhu   d2, (0x24, sp)
-    mov     0x48754090, d0
+    mov     FMA_Viewables, d0
     mov     d0, (0x28, sp)
     mov     0x140, d0
     mov     a3, a0
@@ -34490,14 +34490,14 @@ InitializeBlock20_entry:
     mov     ResNameProc, d0
     mov     d0, (0x20, sp)
     movhu   d2, (0x24, sp)
-    mov     0x48754a74, d0
+    mov     FMA_ResNames, d0
     mov     d0, (0x28, sp)
     mov     0x148, d0
     mov     a3, a0
     call    RegisterObjectTable, 0, 0
     mov     0x14, d0
-    mov     0x48661894, a0
-    mov     0x4866189c, a1
+    mov     Str_OTB_FMA, a0
+    mov     Str_iapfdfm, a1
     call    RegisterOTBlock_entry, [a2], 4
     mov     0x000f0060, d0
     mov     d0, (0x10, sp)
@@ -34505,7 +34505,7 @@ InitializeBlock20_entry:
     mov     d0, (0x14, sp)
     mov     6, d0
     mov     0x0143003d, d1
-    mov     0x486618a4, a0
+    mov     Str_MD_DISK, a0
     call    RegisterMode_entry, [a2], 4
     mov     0x01400000, d0
     mov     d0, (0x10, sp)
@@ -34513,7 +34513,7 @@ InitializeBlock20_entry:
     mov     d0, (0x14, sp)
     mov     0x60, d0
     mov     0x00020000, d1
-    mov     0x486618ac, a0
+    mov     Str_TT_DKMENU, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x01400029, d0
     mov     d0, (0x10, sp)
@@ -34521,7 +34521,7 @@ InitializeBlock20_entry:
     mov     d0, (0x14, sp)
     mov     0x61, d0
     mov     0x01430005, d1
-    mov     0x486618b8, a0
+    mov     Str_TT_DKLD, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x01400083, d0
     mov     d0, (0x10, sp)
@@ -34529,7 +34529,7 @@ InitializeBlock20_entry:
     mov     d0, (0x14, sp)
     mov     0x62, d0
     mov     0x01430025, d1
-    mov     0x486618c0, a0
+    mov     Str_TT_CMPLDSNGL, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x0140009d, d0
     mov     d0, (0x10, sp)
@@ -34537,7 +34537,7 @@ InitializeBlock20_entry:
     mov     d0, (0x14, sp)
     mov     0x63, d0
     mov     0x01430032, d1
-    mov     0x486618d0, a0
+    mov     Str_TT_DKWPLD, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x014000ab, d0
     mov     d0, (0x10, sp)
@@ -34545,7 +34545,7 @@ InitializeBlock20_entry:
     mov     d0, (0x14, sp)
     mov     0x64, d0
     mov     0x01430019, d1
-    mov     0x486618dc, a0
+    mov     Str_TT_DKLDSMF, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x014000c8, d0
     mov     d0, (0x10, sp)
@@ -34553,7 +34553,7 @@ InitializeBlock20_entry:
     mov     d0, (0x14, sp)
     mov     0x65, d0
     mov     0x00020000, d1
-    mov     0x486618e8, a0
+    mov     Str_TT_DKSVMENU, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x014000cc, d0
     mov     d0, (0x10, sp)
@@ -34561,7 +34561,7 @@ InitializeBlock20_entry:
     mov     d0, (0x14, sp)
     mov     0x66, d0
     mov     0x00020000, d1
-    mov     0x486618f4, a0
+    mov     Str_TT_DKSVNAME, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x014000cf, d0
     mov     d0, (0x10, sp)
@@ -34569,7 +34569,7 @@ InitializeBlock20_entry:
     mov     d0, (0x14, sp)
     mov     0x67, d0
     mov     0x0143000b, d1
-    mov     0x48661900, a0
+    mov     Str_TT_DKSV, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x0140011e, d0
     mov     d0, (0x10, sp)
@@ -34577,7 +34577,7 @@ InitializeBlock20_entry:
     mov     d0, (0x14, sp)
     mov     0x68, d0
     mov     0x00020000, d1
-    mov     0x48661908, a0
+    mov     Str_TT_DKSVNAMESMF, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x01400122, d0
     mov     d0, (0x10, sp)
@@ -34585,7 +34585,7 @@ InitializeBlock20_entry:
     mov     d0, (0x14, sp)
     mov     0x69, d0
     mov     0x0143001a, d1
-    mov     0x48661918, a0
+    mov     Str_TT_DKSVSMF, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x0140013b, d0
     mov     d0, (0x10, sp)
@@ -34593,7 +34593,7 @@ InitializeBlock20_entry:
     mov     d0, (0x14, sp)
     mov     0x6a, d0
     mov     0x0143002a, d1
-    mov     0x48661924, a0
+    mov     Str_TT_DKUT, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x0140015b, d0
     mov     d0, (0x10, sp)
@@ -34601,7 +34601,7 @@ InitializeBlock20_entry:
     mov     d0, (0x14, sp)
     mov     0x6b, d0
     mov     0x0143002b, d1
-    mov     0x4866192c, a0
+    mov     Str_TT_DKUTSMF, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x01400178, d0
     mov     d0, (0x10, sp)
@@ -34609,7 +34609,7 @@ InitializeBlock20_entry:
     mov     d0, (0x14, sp)
     mov     0x6c, d0
     mov     0x01430024, d1
-    mov     0x48661938, a0
+    mov     Str_TT_DKUTFRMT, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x0140018e, d0
     mov     d0, (0x10, sp)
@@ -34617,7 +34617,7 @@ InitializeBlock20_entry:
     mov     d0, (0x14, sp)
     mov     0x6d, d0
     mov     0x0143002d, d1
-    mov     0x48661944, a0
+    mov     Str_TT_DKSETUP, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x01400196, d0
     mov     d0, (0x10, sp)
@@ -34625,7 +34625,7 @@ InitializeBlock20_entry:
     mov     d0, (0x14, sp)
     mov     0x6e, d0
     mov     0x01430022, d1
-    mov     0x48661950, a0
+    mov     Str_TT_DKDPSMF, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x014001bc, d0
     mov     d0, (0x10, sp)
@@ -34633,7 +34633,7 @@ InitializeBlock20_entry:
     mov     d0, (0x14, sp)
     mov     0x6f, d0
     mov     0x01430034, d1
-    mov     0x4866195c, a0
+    mov     Str_TT_DKDPDOC, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x014001d5, d0
     mov     d0, (0x10, sp)
@@ -34641,7 +34641,7 @@ InitializeBlock20_entry:
     mov     d0, (0x14, sp)
     mov     0x70, d0
     mov     0x01430036, d1
-    mov     0x48661968, a0
+    mov     Str_TT_DKDPPD, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x014001ec, d0
     mov     d0, (0x10, sp)
@@ -34649,7 +34649,7 @@ InitializeBlock20_entry:
     mov     d0, (0x14, sp)
     mov     0x71, d0
     mov     0x01430021, d1
-    mov     0x48661974, a0
+    mov     Str_TT_DKMDLY, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x014001ff, d0
     mov     d0, (0x10, sp)
@@ -34657,7 +34657,7 @@ InitializeBlock20_entry:
     mov     d0, (0x14, sp)
     mov     0x72, d0
     mov     0x01430028, d1
-    mov     0x48661980, a0
+    mov     Str_TT_SQMDLY, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x0140020d, d0
     mov     d0, (0x10, sp)
@@ -34665,7 +34665,7 @@ InitializeBlock20_entry:
     mov     d0, (0x14, sp)
     mov     0x73, d0
     mov     0x0143003e, d1
-    mov     0x4866198c, a0
+    mov     Str_TT_CMPLD, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x01400218, d0
     mov     d0, (0x10, sp)
@@ -34673,7 +34673,7 @@ InitializeBlock20_entry:
     mov     d0, (0x14, sp)
     mov     0x74, d0
     mov     0x00020000, d1
-    mov     0x48661998, a0
+    mov     Str_TT_DKSVNAMECUS, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x0140021b, d0
     mov     d0, (0x10, sp)
@@ -34681,7 +34681,7 @@ InitializeBlock20_entry:
     mov     d0, (0x14, sp)
     mov     0x75, d0
     mov     0x0143001b, d1
-    mov     0x486619a8, a0
+    mov     Str_TT_CUSSAVE, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x01400232, d0
     mov     d0, (0x10, sp)
@@ -34689,7 +34689,7 @@ InitializeBlock20_entry:
     mov     d0, (0x14, sp)
     mov     0x76, d0
     mov     0x0143002c, d1
-    mov     0x486619b4, a0
+    mov     Str_TT_CUSDKUT, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x01400249, d0
     mov     d0, (0x10, sp)
@@ -34697,14 +34697,14 @@ InitializeBlock20_entry:
     mov     d0, (0x14, sp)
     mov     0x12a, d0
     mov     0x01430033, d1
-    mov     0x486619c0, a0
+    mov     Str_TT_PICTLDDK, a0
     call    RegisterTitle_entry, [d2,a2], 8
     ret     [d2,d3,a2,a3], 0x3c
 # PasswordText  (CPU 0x48516d6d)
 PasswordText:
     cmp     0x60090, d1
     bne     loc_48516D7D
-    mov     0x48661a80, d0
+    mov     ptrs_48661A80, d0
     bra     loc_48516D7E
 loc_48516D7D:
     clr     d0
@@ -34721,13 +34721,13 @@ CheckPasswordText:
     beq     loc_48516DA1
     bra     loc_48516DA9
 loc_48516D99:
-    mov     0x48661cc0, d0
+    mov     ptrs_48661CC0, d0
     bra     loc_48516DB2
 loc_48516DA1:
-    mov     0x48661e04, d0
+    mov     ptrs_48661E04, d0
     bra     loc_48516DB2
 loc_48516DA9:
-    mov     0x48661b80, d0
+    mov     ptrs_48661B80, d0
     bra     loc_48516DB2
 loc_48516DB1:
     clr     d0
@@ -34758,7 +34758,7 @@ loc_48516DEE:
     mov     (0x2c, sp), a0
     mov     a0, (0x10, sp)
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
-    mov     0x48661e1c, d0
+    mov     Str_CcEv_5, d0
     mov     d0, (0x10, sp)
     mov     0x000600b4, d1
     mov     d2, d0
@@ -34847,7 +34847,7 @@ PasswordOk:
     beq     loc_48516F2A
     jmp     loc_48516F9E
 loc_48516F0F:
-    mov     0x48661e24, a1
+    mov     Str_empty_880, a1
     mov     (0x2c, sp), a0
     call    strcpy_entry, [a2], 4
     mov     d2, d0
@@ -34906,7 +34906,7 @@ CheckPasswordOk:
     jmp     loc_485170B8
 loc_48516FCB:
     mov     (0x28, sp), a0
-    mov     0x48661e28, a1
+    mov     Str_empty_878, a1
     call    strcpy_entry, [a2], 4
     mov     d2, d0
     ret     [d2], 0x18
@@ -35035,7 +35035,7 @@ func_48517154:
 DiskAttention:
     cmp     0x60090, d1
     bne     loc_4851716D
-    mov     0x48661e70, d0
+    mov     ptrs_48661E70, d0
     bra     loc_4851716E
 loc_4851716D:
     clr     d0
@@ -35045,7 +35045,7 @@ loc_4851716E:
 DiskSure:
     cmp     0x60090, d1
     bne     loc_48517181
-    mov     0x48661ef0, d0
+    mov     ptrs_48661EF0, d0
     bra     loc_48517182
 loc_48517181:
     clr     d0
@@ -35055,7 +35055,7 @@ loc_48517182:
 FormatText:
     cmp     0x60090, d1
     bne     loc_48517195
-    mov     0x48662084, d0
+    mov     ptrs_48662084, d0
     bra     loc_48517196
 loc_48517195:
     clr     d0
@@ -35065,7 +35065,7 @@ loc_48517196:
 DeleteText:
     cmp     0x60090, d1
     bne     loc_485171A9
-    mov     0x4866233c, d0
+    mov     ptrs_4866233C, d0
     bra     loc_485171AA
 loc_485171A9:
     clr     d0
@@ -35132,7 +35132,7 @@ loc_48517255:
 SaveText:
     cmp     0x60090, d1
     bne     loc_48517268
-    mov     0x4866264c, d0
+    mov     ptrs_4866264C, d0
     bra     loc_48517269
 loc_48517268:
     clr     d0
@@ -35142,7 +35142,7 @@ loc_48517269:
 SaveSameNameText:
     cmp     0x60090, d1
     bne     loc_4851727C
-    mov     0x4866292c, d0
+    mov     Str_d_fH_fHL_fH_fHG_fH_fHWhen_a_disk_is_inse, d0
     bra     loc_4851727D
 loc_4851727C:
     clr     d0
@@ -35266,7 +35266,7 @@ loc_485173D3:
 InsertOptionText:
     cmp     0x60090, d1
     bne     loc_485173E6
-    mov     0x48662a5c, d0
+    mov     ptrs_48662A5C, d0
     bra     loc_485173E7
 loc_485173E6:
     clr     d0
@@ -35276,7 +35276,7 @@ loc_485173E7:
 TypePriorityText:
     cmp     0x60090, d1
     bne     loc_485173FA
-    mov     0x48662be8, d0
+    mov     ptrs_48662BE8, d0
     bra     loc_485173FB
 loc_485173FA:
     clr     d0
@@ -35286,7 +35286,7 @@ loc_485173FB:
 PictureDeleteText:
     cmp     0x60090, d1
     bne     loc_4851740E
-    mov     0x48662df8, d0
+    mov     ptrs_48662DF8, d0
     bra     loc_4851740F
 loc_4851740E:
     clr     d0
@@ -35296,7 +35296,7 @@ loc_4851740F:
 PictureDeleteYesText:
     cmp     0x60090, d1
     bne     loc_48517422
-    mov     0x48662f40, d0
+    mov     ptrs_48662F40, d0
     bra     loc_48517423
 loc_48517422:
     clr     d0
@@ -35306,7 +35306,7 @@ loc_48517423:
 PictureDeleteNoText:
     cmp     0x60090, d1
     bne     loc_48517436
-    mov     0x48663018, d0
+    mov     Str_X_fHr_fH_fH_fH_fH_fHAbort, d0
     bra     loc_48517437
 loc_48517436:
     clr     d0
@@ -35316,7 +35316,7 @@ loc_48517437:
 PictureDeleteAbortText:
     cmp     0x60090, d1
     bne     loc_4851744A
-    mov     0x48663064, d0
+    mov     Str_00fH70fHB0fHN0fHV0fH_0fH_OFF, d0
     bra     loc_4851744B
 loc_4851744A:
     clr     d0
@@ -35434,7 +35434,7 @@ loc_48517598:
     mov     (0x28, sp), a0
     mov     (0x14, a0), a2
     mov     (0x10, a0), d0
-    mov     0x486630c4, a0
+    mov     Str_0fH_0fH_0fH_0fH_0fH_TECHNICS, a0
     asl2    d0
     mov     (d0, a0), a1
     mov     a2, a0
@@ -35487,7 +35487,7 @@ loc_48517613:
     mov     (0x28, sp), a0
     mov     (0x14, a0), a2
     mov     (0x10, a0), d0
-    mov     0x48663108, a0
+    mov     Str_0fH_0fH_0fHPLEASE_WAIT, a0
     asl2    d0
     mov     (d0, a0), a1
     mov     a2, a0
@@ -36057,7 +36057,7 @@ loc_48517C83:
     add     0x18, a3
     asl2    d0
     mov     a3, a0
-    mov     0x486631d0, a2
+    mov     ptrs_486631D0, a2
     mov     (d0, a2), a1
     call    strcpy_entry, [a2], 4
     movhu   (0x500c4d48), d0
@@ -36138,7 +36138,7 @@ loc_48517D5D:
     mov     (0x28, sp), a0
     mov     a0, (0x10, sp)
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
-    mov     0x486631e8, d0
+    mov     Str_DPCT, d0
     mov     d0, (0x10, sp)
     mov     0x000600b4, d1
     mov     d2, d0
@@ -36190,7 +36190,7 @@ loc_48517DE6:
     mov     (0x28, sp), a0
     mov     a0, (0x10, sp)
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
-    mov     0x486631f0, d0
+    mov     Str_WiCt, d0
     mov     d0, (0x10, sp)
     mov     0x000600b4, d1
     mov     d2, d0
@@ -36244,7 +36244,7 @@ loc_48517E7A:
     ble     loc_48517E85
     jmp     loc_4851842E
 loc_48517E85:
-    mov     0x48663378, a1
+    mov     data_48663378, a1
     mov     0xf, d0
     mov     0xfffb0000, d1
     add     d2, d1
@@ -36261,7 +36261,7 @@ loc_48517E85:
     jmp     loc_4851842E
 loc_48517EA9:
     add     8, a0
-    cmp     0x486633f8, a0
+    cmp     data_486633F8, a0
     bcs     loc_48517EB4
     mov     a1, a0
 loc_48517EB4:
@@ -36864,7 +36864,7 @@ loc_48518453:
     ble     loc_48518460
     jmp     loc_485188A3
 loc_48518460:
-    mov     0x486633f8, a1
+    mov     data_486633F8, a1
     mov     (0xf0, sp), d1
     add     0xfffb0000, d1
     mov     0xf, d0
@@ -36881,7 +36881,7 @@ loc_48518460:
     jmp     loc_485188A3
 loc_48518485:
     add     8, a0
-    cmp     0x48663478, a0
+    cmp     data_48663478, a0
     bcs     loc_48518490
     mov     a1, a0
 loc_48518490:
@@ -37340,7 +37340,7 @@ loc_485188C8:
     ble     loc_485188D5
     jmp     loc_48518CE4
 loc_485188D5:
-    mov     0x48663478, a1
+    mov     data_48663478, a1
     mov     (0xf4, sp), d1
     add     0xfffb0000, d1
     mov     a1, a0
@@ -37357,7 +37357,7 @@ loc_485188D5:
     jmp     loc_48518CE4
 loc_485188F9:
     add     8, a0
-    cmp     0x486634f8, a0
+    cmp     data_486634F8, a0
     bcs     loc_48518904
     mov     a1, a0
 loc_48518904:
@@ -37817,7 +37817,7 @@ loc_48518D09:
     ble     loc_48518D14
     jmp     loc_485192A7
 loc_48518D14:
-    mov     0x486634f8, a1
+    mov     data_486634F8, a1
     mov     0xf, d0
     mov     0xfffb0000, d1
     add     d2, d1
@@ -37834,7 +37834,7 @@ loc_48518D14:
     jmp     loc_485192A7
 loc_48518D38:
     add     8, a0
-    cmp     0x48663578, a0
+    cmp     data_48663578, a0
     bcs     loc_48518D43
     mov     a1, a0
 loc_48518D43:
@@ -38974,7 +38974,7 @@ loc_48519832:
     beq     loc_4851985C
     exthu   d1
     asl2    d1
-    mov     0x486632c4, a0
+    mov     ptrs_486632C4, a0
     mov     (d1, a0), a0
     mov     d3, a1
     mov     a0, (0x10, sp)
@@ -38986,7 +38986,7 @@ loc_48519832:
     call    DrawString_entry, [d2,d3,a2,a3], 0x30
     bra     loc_48519879
 loc_4851985C:
-    mov     (0x486632c4), a0
+    mov     (ptrs_486632C4), a0
     mov     d3, a1
     mov     a0, (0x10, sp)
     mov     (0x18, a3), d0
@@ -39058,7 +39058,7 @@ loc_485198F0:
     cmp     7, d2
     bne     loc_4851991B
 loc_485198F8:
-    mov     (0x486632c4), a0
+    mov     (ptrs_486632C4), a0
     mov     0xf5, d1
     mov     a0, (0x10, sp)
     mov     (0x24, sp), a0
@@ -39079,7 +39079,7 @@ loc_4851991B:
     mov     a3, d0
     exthu   d0
     asl2    d0
-    mov     0x4866334c, a0
+    mov     ptrs_4866334C, a0
     mov     (d0, a0), a0
     inc     d3
     mov     a0, (0x10, sp)
@@ -39100,7 +39100,7 @@ loc_48519951:
     exthu   d2
     mov     d2, d0
     asl2    d0
-    mov     0x486632c4, a0
+    mov     ptrs_486632C4, a0
     mov     (d0, a0), a0
     mov     0xf5, d1
     mov     a0, (0x10, sp)
@@ -39113,7 +39113,7 @@ loc_48519951:
     call    DrawString_entry, [d2,d3,a2,a3], 0x30
     bra     loc_4851999F
 loc_4851997F:
-    mov     (0x486632c4), a0
+    mov     (ptrs_486632C4), a0
     mov     0xf5, d1
     mov     a0, (0x10, sp)
     mov     (0x24, sp), a0
@@ -39451,7 +39451,7 @@ loc_48519CB8:
     bra     loc_48519D37
 loc_48519CD7:
     mov     (0x3c, sp), a0
-    mov     0x48663360, a1
+    mov     Str_1shot, a1
     call    strcpy_entry, [a2], 4
     clr     d0
     bra     loc_48519D37
@@ -40244,7 +40244,7 @@ loc_4851A381:
     ble     loc_4851A38C
     jmp     loc_4851A588
 loc_4851A38C:
-    mov     0x48663578, a1
+    mov     data_48663578, a1
     mov     0xf, d0
     mov     0xfffb0000, d1
     add     d3, d1
@@ -40261,7 +40261,7 @@ loc_4851A38C:
     jmp     loc_4851A588
 loc_4851A3B0:
     add     8, a0
-    cmp     0x486635f8, a0
+    cmp     data_486635F8, a0
     bcs     loc_4851A3BB
     mov     a1, a0
 loc_4851A3BB:
@@ -40296,7 +40296,7 @@ loc_4851A3BE:
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x24
-    mov     0x48663368, a1
+    mov     Str_ISC, a1
     mov     (0x34, sp), a0
     call    strcpy_entry, [a2], 4
     clr     d0
@@ -40692,7 +40692,7 @@ loc_4851A815:
     clr     d0
     ret     [d2,a2,a3], 0x28
 loc_4851A835:
-    mov     0x4866336c, a1
+    mov     Str_ISD, a1
     mov     (0x38, sp), a0
     call    strcpy_entry, [a2], 4
     clr     d0
@@ -40772,7 +40772,7 @@ loc_4851A8E7:
     clr     d0
     bra     loc_4851A968
 loc_4851A906:
-    mov     0x48663370, a1
+    mov     Str_WWC, a1
     mov     (0x2c, sp), a0
     call    strcpy_entry, [a2], 4
     clr     d0
@@ -40837,7 +40837,7 @@ loc_4851A993:
     clr     d0
     bra     loc_4851AA14
 loc_4851A9B2:
-    mov     0x48663374, a1
+    mov     Str_UPW, a1
     mov     (0x2c, sp), a0
     call    strcpy_entry, [a2], 4
     clr     d0
@@ -40901,7 +40901,7 @@ func_4851AA45_entry:
     movhu   d0, (0x5006ece4)
     movhu   d0, (0x5006ece6)
     call    func_4852FCC8_entry, [d2], 4
-    mov     0x4866374c, a0
+    mov     data_4866374C, a0
     movbu   (a0), d0
     mov     0x5006f1d6, a1
     movbu   d0, (a1)
@@ -41109,7 +41109,7 @@ func_4851ACB9_entry:
 loc_4851ACE8:
     mov     0x5006e578, a2
     mov     a2, a0
-    mov     0x48663750, a1
+    mov     data_48663750, a1
     call    func_4852F720, 0, 0
 loc_4851ACFC:
     mov     a2, a0
@@ -41553,13 +41553,13 @@ func_4851B117_entry:
     extbu   d0
     bra     loc_4851B17A
 loc_4851B132:
-    movhu   (0x48663754), d0
+    movhu   (data_48663754), d0
     clr     d2
     exth    d0
     cmp     d0, d1
-    mov     0x48663754, a0
+    mov     data_48663754, a0
     beq     loc_4851B160
-    movhu   (0x48663754), d0
+    movhu   (data_48663754), d0
     exth    d0
     cmp     d2, d0
     bge     loc_4851B160
@@ -41696,7 +41696,7 @@ loc_4851B22C:
     call    ChangeMode_entry, [d2,d3,a2], 0x20
 loc_4851B240:
     movhu   (0x500c4d56), d0
-    mov     0x486635f8, a0
+    mov     data_486635F8, a0
     movbu   (d0, a0), d0
     extbu   d0
     cmp     0x60, d0
@@ -42398,7 +42398,7 @@ loc_4851B7E3:
     mov     0x01460004, d1
     call    ApDeliveryEvent_entry, [d2,d3,a2], 0x20
     mov     0x12c, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     call    func_4851AB56_entry, 0, 8
     movbu   d0, (0x5006e59c)
     movhu   (0x5006ecd8), d0
@@ -42620,7 +42620,7 @@ loc_4851BAAF:
     mov     0x01460004, d1
     call    ApDeliveryEvent_entry, [d2,d3,a2], 0x20
     mov     0x12c, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     call    func_4851AB56_entry, 0, 8
     movbu   d0, (0x5006e5a0)
     movhu   (0x5006ecd8), d0
@@ -42842,7 +42842,7 @@ loc_4851BD7B:
     mov     0x01460004, d1
     call    ApDeliveryEvent_entry, [d2,d3,a2], 0x20
     mov     0x12c, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     call    func_4851AB56_entry, 0, 8
     movbu   d0, (0x5006e5a4)
     movhu   (0x5006ecd8), d0
@@ -43250,7 +43250,7 @@ loc_4851C26B:
     clr     d0
     call    func_4851AB67_entry, [d2], 0xc
     mov     0x12c, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     movhu   (0x5006e5aa), d0
     exthu   d0
     call    func_4852E9EE_entry, [d2,d3,a2,a3], 0x70
@@ -43300,7 +43300,7 @@ loc_4851C324:
     clr     d0
     call    func_4851AB67_entry, [d2], 0xc
     mov     0x12c, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     movhu   (0x5006e5aa), d0
     exthu   d0
     call    func_4852E9EE_entry, [d2,d3,a2,a3], 0x70
@@ -43371,7 +43371,7 @@ loc_4851C3F5:
     extb    d0
     cmp     d1, d0
     beq     loc_4851C442
-    mov     (0x486bce90), a0
+    mov     (data_486BCE90), a0
     inc     a0
     setlb
     movbu   (d1, a2), d0
@@ -43407,7 +43407,7 @@ loc_4851C450:
 loc_4851C459:
     mov     0x5006f04a, a2
     mov     a2, a0
-    mov     0x48663790, a1
+    mov     Str_empty_875, a1
     call    func_4852F720, 0, 0
 loc_4851C46D:
     mov     0x5006e5ac, a0
@@ -43447,7 +43447,7 @@ loc_4851C4BF:
     call    func_4851AB67_entry, [d2], 0xc
     call    func_4851ABC1_entry, 0, 8
     mov     0x12c, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     mov     a2, a0
     call    func_4852E7F2_entry, [d2,d3,a2,a3], 0x68
     exth    d0
@@ -43503,7 +43503,7 @@ loc_4851C557:
     extb    d0
     cmp     d1, d0
     beq     loc_4851C5A4
-    mov     (0x486bce90), a0
+    mov     (data_486BCE90), a0
     inc     a0
     setlb
     movbu   (d1, a3), d0
@@ -43539,7 +43539,7 @@ loc_4851C5B2:
 loc_4851C5BB:
     mov     0x5006f04a, a3
     mov     a3, a0
-    mov     0x48663798, a1
+    mov     Str_text, a1
     call    func_4852F720, 0, 0
 loc_4851C5CF:
     mov     0x5006e5cc, a0
@@ -43565,7 +43565,7 @@ loc_4851C5EB:
     ret     [d2,a2,a3], 0x20
 loc_4851C612:
     mov     a2, a0
-    mov     0x486637a4, a1
+    mov     Str_MID_14, a1
     call    func_4852F76C, 0, 0
     mov     5, d0
     mov     d0, (0x10, sp)
@@ -43576,7 +43576,7 @@ loc_4851C612:
     call    func_4851AB67_entry, [d2], 0xc
     call    func_4851ABC1_entry, 0, 8
     mov     0x12c, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     mov     a2, a0
     call    func_4852EB51_entry, [d2,a2], 8
     exth    d0
@@ -43631,7 +43631,7 @@ loc_4851C6B8:
     extb    d0
     cmp     d1, d0
     beq     loc_4851C705
-    mov     (0x486bce90), a0
+    mov     (data_486BCE90), a0
     inc     a0
     setlb
     movbu   (d1, a3), d0
@@ -43667,7 +43667,7 @@ loc_4851C713:
 loc_4851C71C:
     mov     0x5006f04a, a3
     mov     a3, a0
-    mov     0x486637ac, a1
+    mov     Str_text_2, a1
     call    func_4852F720, 0, 0
 loc_4851C730:
     mov     0x5006e5ec, a0
@@ -43693,7 +43693,7 @@ loc_4851C74C:
     ret     [d2,a2,a3], 0x20
 loc_4851C773:
     mov     a2, a0
-    mov     0x486637b8, a1
+    mov     Str_CST_12, a1
     call    func_4852F76C, 0, 0
     mov     5, d0
     mov     d0, (0x10, sp)
@@ -43704,7 +43704,7 @@ loc_4851C773:
     call    func_4851AB67_entry, [d2], 0xc
     call    func_4851ABC1_entry, 0, 8
     mov     0x12c, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     mov     a2, a0
     call    func_4852EBBC_entry, [d2,a2], 8
     exth    d0
@@ -44264,7 +44264,7 @@ loc_4851CE42:
     mov     0x00050001, d1
     call    ApPostEvent_entry, [d2], 0x1c
     mov     0x12c, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     call    func_4851AB56_entry, 0, 8
     movbu   d0, (0x5006e610)
     movhu   (0x5006ecd8), d0
@@ -44615,7 +44615,7 @@ loc_4851D270:
     mov     0x00050001, d1
     call    ApPostEvent_entry, [d2], 0x1c
     mov     0x12c, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     movhu   (0x5006ecda), d0
     exth    d0
     cmp     0, d0
@@ -44650,7 +44650,7 @@ loc_4851D308:
     blt     loc_4851D2F2
     mov     3, d0
     call    SetSavePMBankNUM, 0, 0
-    mov     0x4866374c, a0
+    mov     data_4866374C, a0
     movbu   (a0), d0
     mov     0x5006f1d6, a1
     movbu   d0, (a1)
@@ -44823,7 +44823,7 @@ loc_4851D4E1:
     extb    d0
     cmp     d1, d0
     beq     loc_4851D52C
-    mov     (0x486bce90), a0
+    mov     (data_486BCE90), a0
     inc     a0
     setlb
     mov     0x5006f04a, a1
@@ -44875,7 +44875,7 @@ loc_4851D556:
     extb    d0
     cmp     d1, d0
     beq     loc_4851D5A1
-    mov     (0x486bce90), a0
+    mov     (data_486BCE90), a0
     inc     a0
     setlb
     mov     0x5006f04a, a1
@@ -44985,7 +44985,7 @@ loc_4851D65E:
 loc_4851D677:
     mov     0x5006efa9, a2
     asl2    d0
-    mov     0x48663620, a0
+    mov     ptrs_48663620, a0
     mov     (d0, a0), a1
     mov     a2, a0
     call    func_4852F720, 0, 0
@@ -44996,7 +44996,7 @@ loc_4851D677:
     bra     loc_4851D6D3
 loc_4851D6A0:
     mov     0x5006efa9, a2
-    mov     (0x48663620), a1
+    mov     (ptrs_48663620), a1
     mov     a2, a0
     call    func_4852F720, 0, 0
     call    func_4851AA45_entry, 0, 8
@@ -45005,7 +45005,7 @@ loc_4851D6A0:
     bra     loc_4851D6D3
 loc_4851D6BD:
     mov     0x5006efa9, a2
-    mov     (0x48663620), a1
+    mov     (ptrs_48663620), a1
     mov     a2, a0
     call    func_4852F720, 0, 0
     clr     d1
@@ -45028,7 +45028,7 @@ loc_4851D6E8:
     call    LibDiv32, 0, 0
     mov     d0, d2
     mov     a2, a0
-    mov     0x486637c0, a1
+    mov     Str_empty_874, a1
     call    func_4852F76C, 0, 0
     mov     d2, d0
     exthu   d0
@@ -45038,7 +45038,7 @@ loc_4851D6E8:
     mov     a2, a0
     call    func_4852F76C, 0, 0
     mov     a2, a0
-    mov     0x486637c4, a1
+    mov     Str_KB_free_2, a1
     call    func_4852F76C, 0, 0
     mov     d3, d0
     exthu   d0
@@ -45048,7 +45048,7 @@ loc_4851D6E8:
     mov     a2, a0
     call    func_4852F76C, 0, 0
     mov     a2, a0
-    mov     0x486637d0, a1
+    mov     Str_used_2, a1
     call    func_4852F76C, 0, 0
     mov     a2, (0x10, sp)
     mov     (0x30, sp), d0
@@ -45191,7 +45191,7 @@ loc_4851D892:
     extb    d0
     cmp     d1, d0
     beq     loc_4851D8D1
-    mov     (0x486bce90), a0
+    mov     (data_486BCE90), a0
     inc     a0
     setlb
     movbu   (d1, a2), d0
@@ -45585,7 +45585,7 @@ loc_4851DC68:
 loc_4851DC77:
     mov     d2, d0
     asl2    d0
-    mov     0x48663880, a0
+    mov     ptrs_48663880, a0
     mov     (d0, a0), a1
     mov     d2, d0
     asl     5, d0
@@ -45610,7 +45610,7 @@ loc_4851DC77:
     add     d3, d0
     mov     d0, a0
     inc     a0
-    mov     0x486638bc, a1
+    mov     Str_empty_902, a1
     call    func_4852F76C, 0, 0
     bra     loc_4851DD15
 loc_4851DCC8:
@@ -45631,7 +45631,7 @@ loc_4851DCC8:
     add     d3, d0
     mov     d0, a0
     inc     a0
-    mov     0x486638c4, a1
+    mov     Str_empty_868, a1
     call    func_4852F76C, 0, 0
     bra     loc_4851DD15
 loc_4851DD00:
@@ -45640,7 +45640,7 @@ loc_4851DD00:
     add     d3, d0
     mov     d0, a0
     inc     a0
-    mov     0x486638cc, a1
+    mov     Str_empty_867, a1
     call    func_4852F720, 0, 0
 loc_4851DD15:
     mov     d2, d0
@@ -45877,7 +45877,7 @@ loc_4851DF51:
     clr     d0
     call    func_4851AB67_entry, [d2], 0xc
     mov     0x12c, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     call    DiskLoadDispatch_entry, [d2,d3,a2,a3], 0x3c
     exth    d0
     mov     1, d1
@@ -46032,7 +46032,7 @@ loc_4851E12A:
     clr     d0
     call    func_4851AB67_entry, [d2], 0xc
     mov     0x12c, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     call    func_4852DD3A_entry, [d2,d3,a2,a3], 0x48
     exth    d0
     mov     5, d1
@@ -46108,7 +46108,7 @@ loc_4851E235:
     clr     d0
     call    func_4851AB67_entry, [d2], 0xc
     mov     0x12c, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     movbu   (0x5006e616), d0
     cmp     0, d0
     beq     loc_4851E274
@@ -46163,7 +46163,7 @@ loc_4851E2FF:
     clr     d0
     call    func_4851AB67_entry, [d2], 0xc
     mov     0x12c, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     movbu   (0x5006e616), d0
     cmp     0, d0
     beq     loc_4851E33E
@@ -46239,7 +46239,7 @@ loc_4851E40E:
     clr     d0
     call    func_4851AB67_entry, [d2], 0xc
     mov     0x12c, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     call    func_4852E779_entry, [d2,d3,a2,a3], 0x48
     exth    d0
     mov     5, d1
@@ -46274,7 +46274,7 @@ loc_4851E491:
     clr     d0
     call    func_4851AB67_entry, [d2], 0xc
     mov     0x12c, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     call    func_4852E779_entry, [d2,d3,a2,a3], 0x48
     exth    d0
     mov     5, d1
@@ -46342,7 +46342,7 @@ loc_4851E569:
     clr     d0
     call    func_4851AB67_entry, [d2], 0xc
     mov     0x12c, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     movhu   (0x5006e614), d0
     exthu   d0
     call    func_4852E881_entry, [d2,d3,a2,a3], 0x78
@@ -46694,7 +46694,7 @@ loc_4851E940:
     mov     0x00050001, d1
     call    ApPostEvent_entry, [d2], 0x1c
     mov     0x12c, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     movhu   (0x5006ecd8), d0
     exth    d0
     cmp     0, d0
@@ -46844,7 +46844,7 @@ loc_4851EB48:
     exthu   d0
     mov     3, d1
     call    func_4852FC09_entry, [d2], 4
-    mov     0x486638d8, a1
+    mov     data_486638D8, a1
     extbu   d0
     cmp     0, d0
     beq     loc_4851EB6E
@@ -46969,7 +46969,7 @@ loc_4851EC67:
     clr     d0
     call    func_4851AB67_entry, [d2], 0xc
     mov     0x12c, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     call    DiskLoadDispatch_entry, [d2,d3,a2,a3], 0x3c
     exth    d0
     mov     1, d1
@@ -47094,7 +47094,7 @@ func_4851EDB2_entry:
     mov     a2, d2
     inc     d2
     mov     d2, a0
-    mov     0x486638dc, a1
+    mov     Str_empty_899, a1
     call    func_4852F720, 0, 0
     ret     [d2,d3,a2], 0x1c
 loc_4851EDE2:
@@ -47116,17 +47116,17 @@ loc_4851EDE2:
     extbu   d0
     cmp     0, d0
     beq     loc_4851EE20
-    mov     0x486638e4, a1
+    mov     Str_YES_10, a1
     mov     a2, a0
     call    func_4852F720, 0, 0
     ret     [d2,d3,a2], 0x1c
 loc_4851EE20:
-    mov     0x486638ec, a1
+    mov     Str_NO_46, a1
     mov     a2, a0
     call    func_4852F720, 0, 0
     ret     [d2,d3,a2], 0x1c
 loc_4851EE31:
-    mov     0x486638f4, a1
+    mov     Str_empty_866, a1
     mov     a2, a0
     call    func_4852F720, 0, 0
     ret     [d2,d3,a2], 0x1c
@@ -47143,12 +47143,12 @@ loc_4851EE42:
     extbu   d0
     cmp     0, d0
     beq     loc_4851EE70
-    mov     0x486638fc, a1
+    mov     Str_YES_9, a1
     mov     a2, a0
     call    func_4852F720, 0, 0
     ret     [d2,d3,a2], 0x1c
 loc_4851EE70:
-    mov     0x48663904, a1
+    mov     Str_NO_49, a1
     mov     a2, a0
     call    func_4852F720, 0, 0
     bra     loc_4851EEDB
@@ -47170,17 +47170,17 @@ loc_4851EE80:
     extbu   d0
     cmp     0, d0
     beq     loc_4851EEBD
-    mov     0x4866390c, a1
+    mov     Str_YES_8, a1
     mov     a2, a0
     call    func_4852F720, 0, 0
     bra     loc_4851EEDB
 loc_4851EEBD:
-    mov     0x48663914, a1
+    mov     Str_NO_45, a1
     mov     a2, a0
     call    func_4852F720, 0, 0
     bra     loc_4851EEDB
 loc_4851EECD:
-    mov     0x4866391c, a1
+    mov     Str_empty_930, a1
     mov     a2, a0
     call    func_4852F720, 0, 0
 loc_4851EEDB:
@@ -47317,7 +47317,7 @@ loc_4851F008:
     clr     d0
     call    func_4851AB67_entry, [d2], 0xc
     mov     0x12c, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     call    DiskLoadDispatch_entry, [d2,d3,a2,a3], 0x3c
     exth    d0
     mov     1, d1
@@ -47417,27 +47417,27 @@ func_4851F0F8_entry:
     beq     loc_4851F136
     bra     loc_4851F146
 loc_4851F126:
-    mov     0x48663924, a1
+    mov     Str_3BANK_2, a1
     mov     a2, a0
     call    func_4852F720, 0, 0
     bra     loc_4851F174
 loc_4851F136:
-    mov     0x4866392c, a1
+    mov     Str_ALL_34, a1
     mov     a2, a0
     call    func_4852F720, 0, 0
     bra     loc_4851F174
 loc_4851F146:
-    mov     0x48663934, a1
+    mov     Str_empty_926, a1
     mov     a2, a0
     call    func_4852F720, 0, 0
     bra     loc_4851F174
 loc_4851F156:
-    mov     0x4866393c, a1
+    mov     Str_YES_12, a1
     mov     a2, a0
     call    func_4852F720, 0, 0
     bra     loc_4851F174
 loc_4851F166:
-    mov     0x48663944, a1
+    mov     Str_NO_48, a1
     mov     a2, a0
     call    func_4852F720, 0, 0
 loc_4851F174:
@@ -47717,7 +47717,7 @@ loc_4851F423:
     clr     d0
     call    func_4851AB67_entry, [d2], 0xc
     mov     0x12c, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     call    func_4852DD3A_entry, [d2,d3,a2,a3], 0x48
     exth    d0
     mov     5, d1
@@ -47793,7 +47793,7 @@ loc_4851F52E:
     clr     d0
     call    func_4851AB67_entry, [d2], 0xc
     mov     0x12c, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     movbu   (0x5006e6cc), d0
     cmp     0, d0
     beq     loc_4851F56D
@@ -47848,7 +47848,7 @@ loc_4851F5F8:
     clr     d0
     call    func_4851AB67_entry, [d2], 0xc
     mov     0x12c, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     movbu   (0x5006e6cc), d0
     cmp     0, d0
     beq     loc_4851F637
@@ -47962,7 +47962,7 @@ loc_4851F734:
     mov     0x00050001, d1
     call    ApPostEvent_entry, [d2], 0x1c
     mov     0x12c, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     call    func_4851AB56_entry, 0, 8
     movbu   d0, (0x5006e780)
     movhu   (0x5006ecd8), d0
@@ -48187,12 +48187,12 @@ loc_4851F9F5:
     cmp     0, d1
     bne     loc_4851FA10
     inc     a0
-    mov     0x4866394c, a1
+    mov     Str_NO_FILE_2, a1
     call    func_4852F720, 0, 0
     bra     loc_4851FA5A
 loc_4851FA10:
     inc     a0
-    mov     0x48663960, a1
+    mov     Str_FILE_6, a1
     call    func_4852F720, 0, 0
     mov     d3, d0
     exthu   d0
@@ -48247,7 +48247,7 @@ loc_4851FA5A:
     jmp     loc_4851FBE3
 loc_4851FAA7:
     inc     a0
-    mov     0x48663968, a1
+    mov     Str_FILE_4, a1
     call    func_4852F720, 0, 0
     movhu   (0x5006ece6), d0
     mov     d3, d2
@@ -48262,7 +48262,7 @@ loc_4851FAC4:
     mov     1, d0
     mov     d0, (0x18, sp)
     mov     a2, a0
-    mov     0x48663970, a1
+    mov     Str_NEW_3, a1
     inc     d2
     mov     d2, d0
     exthu   d0
@@ -48294,7 +48294,7 @@ loc_4851FAC4:
     add     a0, d0
     mov     d0, a0
     inc     a0
-    mov     0x4866397c, a1
+    mov     data_4866397C, a1
     call    func_4852F720, 0, 0
     movbu   (0x5006e799), d1
     mov     0x15, d0
@@ -48416,7 +48416,7 @@ loc_4851FC61:
     mov     d0, a0
     movbu   d1, (a0)
     inc     a0
-    mov     0x48663980, a1
+    mov     Str_CUSTOM_6, a1
     call    func_4852F720, 0, 0
     movbu   (0x5006e79c), d0
     mov     0x15, d1
@@ -48559,24 +48559,24 @@ loc_4851FE07:
     movbu   (0x5006f1d3), d0
     cmp     0, d0
     bne     loc_4851FE49
-    mov     (0x48663744), d0
+    mov     (Str_47fH_7fH), d0
     mov     0x000600b4, d1
     mov     d0, (0x10, sp)
     mov     0x01400226, d0
     call    ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-    mov     (0x48663748), d0
+    mov     (Str_7fH), d0
     mov     0x000600b4, d1
     mov     d0, (0x10, sp)
     mov     0x01400227, d0
     call    ApDeliveryEvent_entry, [d2,d3,a2], 0x20
     bra     loc_4851FE7F
 loc_4851FE49:
-    mov     (0x48663748), d0
+    mov     (Str_7fH), d0
     mov     0x000600b4, d1
     mov     d0, (0x10, sp)
     mov     0x01400226, d0
     call    ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-    mov     (0x48663744), d0
+    mov     (Str_47fH_7fH), d0
     mov     0x000600b4, d1
     mov     d0, (0x10, sp)
     mov     0x01400227, d0
@@ -48811,12 +48811,12 @@ loc_485200FD:
     movhu   (0x5006e7a2), d0
     exthu   d0
     call    func_48530F0E_entry, [d2,d3], 0x18
-    mov     (0x48663744), d0
+    mov     (Str_47fH_7fH), d0
     mov     0x000600b4, d1
     mov     d0, (0x10, sp)
     mov     0x01400226, d0
     call    ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-    mov     (0x48663748), d0
+    mov     (Str_7fH), d0
     mov     0x000600b4, d1
     mov     d0, (0x10, sp)
     mov     0x01400227, d0
@@ -48856,12 +48856,12 @@ loc_485201AC:
 loc_485201BA:
     mov     -1, d0
     movbu   d0, (0x5006e7a4)
-    mov     (0x48663748), d0
+    mov     (Str_7fH), d0
     mov     0x000600b4, d1
     mov     d0, (0x10, sp)
     mov     0x01400226, d0
     call    ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-    mov     (0x48663744), d0
+    mov     (Str_47fH_7fH), d0
     mov     0x000600b4, d1
     mov     d0, (0x10, sp)
     mov     0x01400227, d0
@@ -48899,7 +48899,7 @@ loc_48520244:
     clr     d0
     call    func_4851AB67_entry, [d2], 0xc
     mov     0x12c, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     movhu   (0x5006f1d4), d0
     exth    d0
     call    LoadCst_entry, [d2,d3,a2,a3], 0x20
@@ -48969,7 +48969,7 @@ loc_48520350:
     clr     d0
     call    func_4851AB67_entry, [d2], 0xc
     mov     0x12c, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     movhu   (0x5006f1d4), d0
     exth    d0
     call    SaveCst_entry, [d2,d3,a2,a3], 0x2c
@@ -49019,7 +49019,7 @@ loc_485203F2:
     clr     d0
     call    func_4851AB67_entry, [d2], 0xc
     mov     0x12c, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     movhu   (0x5006f1d4), d0
     exth    d0
     call    SaveCst_entry, [d2,d3,a2,a3], 0x2c
@@ -49096,7 +49096,7 @@ loc_485204DD:
     ble     loc_48520520
     mov     0x5006f02a, a2
     mov     a2, a0
-    mov     0x4866398c, a1
+    mov     Str_CST_13, a1
     call    func_4852F720, 0, 0
     bra     loc_48520545
 loc_48520520:
@@ -49144,7 +49144,7 @@ loc_4852058B:
     mov     8, d0
     call    func_485209A4, 0, 0
     mov     a2, a0
-    mov     0x4866399c, a1
+    mov     Str_CST_11, a1
     call    func_4852F76C, 0, 0
     mov     a2, a0
     call    func_4852FA88_entry, [a2], 0x18

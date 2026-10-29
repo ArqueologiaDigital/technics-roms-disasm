@@ -32,25 +32,9 @@
 .mnbase 0x48400000   # CPU address of output offset 0 (for PC-relative ops)
 .include "src/b935/symbols.inc"
 
-# 15 names converted code references outside itself (not in symbols.inc)
+# 2 names converted code references outside itself (not in symbols.inc)
 .equ TableRomDirectory, 0x48000000
-.equ ExpansionBoardSigStrings, 0x485B84D8
-.equ DspWhitelistUnit0, 0x487015DD
-.equ DspWhitelistUnit1_6, 0x487016AD
-.equ DspWhitelistUnit7, 0x4870177D
-.equ DspWhitelistUnit9, 0x4870184D
-.equ TechnicsRhythmsResource, 0x48729924
-.equ StyleGenreTable, 0x4873AC5C
-.equ StyleRecordTable, 0x4873BE84
-.equ func_487B8DD0, 0x487B8DD0
-.equ func_487B8F37, 0x487B8F37
-.equ func_487B8F3A, 0x487B8F3A
-.equ func_487B8F3D, 0x487B8F3D
 .equ LibRomImageBase, 0x487B8F6D
-.equ CUR_STYLE_IDX, 0x50001270
-
-# 1 branch targets outside the converted code
-.equ loc_487B8F40, 0x487B8F40
 
 # 11 data addresses named by annotations/*.ann
 .equ DrawIcons_PixelPairTable, 0x485A2278   # 256 x u16: icon byte -> {left, right} palette index (nibble n -> n, or 0xF0+n if n >= 8)

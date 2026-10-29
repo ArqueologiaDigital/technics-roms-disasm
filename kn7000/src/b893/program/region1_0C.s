@@ -9,7 +9,7 @@ PictureImport_entry:
     movhu   d0, (0x4ac, sp)
     mov     d1, a3
     mov     a0, a2
-    mov     0x486ae180, a1
+    mov     Str_rb_3, a1
     call    fmmopen_entry, [a2,a3], 0x24
     mov     d0, d1
     exth    d1
@@ -271,31 +271,31 @@ loc_4858028C:
     bra     loc_485802FD
 loc_485802B5:
     mov     a2, (8, sp)
-    mov     0x486ae184, d0
+    mov     Str_0000BM_02d_s, d0
     mov     d0, (0xc, sp)
     mov     d2, d0
     inc     d0
     mov     d0, (0x10, sp)
     movhu   (0x2c, sp), d0
-    mov     0x50006448, a0
+    mov     ptrs_50006448, a0
     asl2    d0
     mov     (d0, a0), a0
     mov     a0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_485802FD
 loc_485802DA:
     mov     a2, (8, sp)
-    mov     0x486ae194, d0
+    mov     Str_0000JP_02d_s, d0
     mov     d0, (0xc, sp)
     mov     d2, d0
     inc     d0
     mov     d0, (0x10, sp)
     movhu   (0x2c, sp), d0
-    mov     0x50006448, a0
+    mov     ptrs_50006448, a0
     asl2    d0
     mov     (d0, a0), d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_485802FD:
     mov     (0x30, sp), a1
     mov     a2, a0
@@ -311,7 +311,7 @@ loc_4858030F:
 func_48580316:
     movm    [a2], (sp)
     add     -0x24, sp
-    mov     0x486ae1a4, a1
+    mov     Str_DORA_JPG, a1
     mov     sp, a0
     add     0x14, a0
     mov     -0x10, d1
@@ -325,24 +325,24 @@ func_48580316:
     mov     sp, a2
     add     0x14, a2
     mov     a2, a0
-    mov     0x486ae1b4, a1
+    mov     Str_rb_2, a1
     call    fmmopen_entry, [a2,a3], 0x24
     mov     a2, a0
     movhu   (0x5009e2ec), d0
-    movhu   (0x50006450), d1
+    movhu   (data_50006450), d1
     call    PictureImport_entry, [d2,d3,a2,a3], 0x10
     call    fmmclose_entry, 0, 0x14
     movhu   (0x5009e2ec), d0
     inc     d0
     movhu   d0, (0x5009e2ec)
-    movhu   (0x50006450), d0
+    movhu   (data_50006450), d0
     inc     d0
-    movhu   d0, (0x50006450)
-    movhu   (0x50006450), d0
+    movhu   d0, (data_50006450)
+    movhu   (data_50006450), d0
     cmp     3, d0
     ble     loc_48580385
     mov     1, d0
-    movhu   d0, (0x50006450)
+    movhu   d0, (data_50006450)
 loc_48580385:
     ret     [a2], 0x28
 # SswImageSizeCheck  (CPU 0x48580388)
@@ -513,11 +513,11 @@ loc_485804B7:
 loc_485804B9:
     add     0x460, sp
     ret     [d2,d3,a2,a3], 0x10
-    movhu   d0, (0x50007f3c)
+    movhu   d0, (data_50007F3C)
     retf    0, 0
 
 func_485804C9:
-    movhu   d0, (0x50007f3e)
+    movhu   d0, (data_50007F3E)
     retf    0, 0
 
 func_485804D2:
@@ -821,7 +821,7 @@ func_4858073B:
     and     0x0f, d0
     exthu   d0
     asl2    d0
-    mov     0x486ae208, a0
+    mov     ptrs_486AE208, a0
     mov     (d0, a0), d1
     movhu   (0x22, sp), d0
     mov     d1, (0x1c, sp)
@@ -905,7 +905,7 @@ func_48580806:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x28, sp
 func_48580806_entry:
-    movhu   (0x50007f3e), d0
+    movhu   (data_50007F3E), d0
     cmp     0, d0
     bne     loc_48580818
     ret     [d2,d3,a2,a3], 0x38
@@ -1361,7 +1361,7 @@ InitializeBlock15_entry:
     mov     d0, (0x20, sp)
     mov     4, d3
     movhu   d3, (0x24, sp)
-    mov     0x4878fdfc, d0
+    mov     HELP_Classes, d0
     mov     d0, (0x28, sp)
     mov     0xf4, d0
     mov     a3, a0
@@ -1372,7 +1372,7 @@ InitializeBlock15_entry:
     mov     d0, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     0x4878fe74, d0
+    mov     HELP_Events, d0
     mov     d0, (0x28, sp)
     mov     0xf5, d0
     mov     a3, a0
@@ -1383,7 +1383,7 @@ InitializeBlock15_entry:
     mov     d0, (0x20, sp)
     mov     7, d0
     movhu   d0, (0x24, sp)
-    mov     0x4878fe78, d0
+    mov     HELP_Methods, d0
     mov     d0, (0x28, sp)
     mov     0xf6, d0
     mov     a3, a0
@@ -1393,7 +1393,7 @@ InitializeBlock15_entry:
     mov     FunctionProc, a2
     mov     a2, (0x20, sp)
     movhu   d3, (0x24, sp)
-    mov     0x4878fe98, d0
+    mov     HELP_Functions, d0
     mov     d0, (0x28, sp)
     mov     0xf1, d0
     mov     a3, a0
@@ -1401,7 +1401,7 @@ InitializeBlock15_entry:
     mov     d2, (0x1c, sp)
     mov     a2, (0x20, sp)
     movhu   d3, (0x24, sp)
-    mov     0x4878feac, d0
+    mov     HELP_FunctionNames, d0
     mov     d0, (0x28, sp)
     mov     0xf9, d0
     mov     a3, a0
@@ -1412,7 +1412,7 @@ InitializeBlock15_entry:
     mov     a2, (0x20, sp)
     mov     0xd, d2
     movhu   d2, (0x24, sp)
-    mov     0x4878fec0, d0
+    mov     HELP_ApFunctions, d0
     mov     d0, (0x28, sp)
     mov     0xf2, d0
     mov     a3, a0
@@ -1420,7 +1420,7 @@ InitializeBlock15_entry:
     mov     d3, (0x1c, sp)
     mov     a2, (0x20, sp)
     movhu   d2, (0x24, sp)
-    mov     0x4878fef8, d0
+    mov     HELP_ApFunctionNames, d0
     mov     d0, (0x28, sp)
     mov     0xfa, d0
     mov     a3, a0
@@ -1431,7 +1431,7 @@ InitializeBlock15_entry:
     mov     a2, (0x20, sp)
     mov     7, d0
     movhu   d0, (0x24, sp)
-    mov     0x4878ff30, d0
+    mov     HELP_MainFunctions, d0
     mov     d0, (0x28, sp)
     mov     0xf3, d0
     mov     a3, a0
@@ -1440,7 +1440,7 @@ InitializeBlock15_entry:
     mov     a2, (0x20, sp)
     mov     7, d0
     movhu   d0, (0x24, sp)
-    mov     0x4878ff50, d0
+    mov     HELP_MainFunctionNames, d0
     mov     d0, (0x28, sp)
     mov     0xfb, d0
     mov     a3, a0
@@ -1451,7 +1451,7 @@ InitializeBlock15_entry:
     mov     d0, (0x20, sp)
     mov     0x23, d2
     movhu   d2, (0x24, sp)
-    mov     0x4878ff70, d0
+    mov     HELP_Viewables, d0
     mov     d0, (0x28, sp)
     mov     0xf0, d0
     mov     a3, a0
@@ -1461,14 +1461,14 @@ InitializeBlock15_entry:
     mov     ResNameProc, d0
     mov     d0, (0x20, sp)
     movhu   d2, (0x24, sp)
-    mov     0x48790000, d0
+    mov     HELP_ResNames, d0
     mov     d0, (0x28, sp)
     mov     0xf8, d0
     mov     a3, a0
     call    RegisterObjectTable, 0, 0
     mov     0xf, d0
-    mov     0x486aed18, a0
-    mov     0x486aed21, a1
+    mov     Str_OTB_HELP, a0
+    mov     Str_iaphelp, a1
     call    RegisterOTBlock_entry, [a2], 4
     mov     0x000f00f1, d0
     mov     d0, (0x10, sp)
@@ -1476,7 +1476,7 @@ InitializeBlock15_entry:
     mov     d0, (0x14, sp)
     mov     0x11, d0
     mov     0x00020000, d1
-    mov     0x486aed2c, a0
+    mov     Str_MD_HELP, a0
     call    RegisterMode_entry, [a2], 4
     mov     0x00f00000, d0
     mov     d0, (0x10, sp)
@@ -1484,7 +1484,7 @@ InitializeBlock15_entry:
     mov     d0, (0x14, sp)
     mov     0xf1, d0
     mov     0x00f30003, d1
-    mov     0x486aed34, a0
+    mov     Str_TT_HELP, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x00f0000e, d0
     mov     d0, (0x10, sp)
@@ -1492,7 +1492,7 @@ InitializeBlock15_entry:
     mov     d0, (0x14, sp)
     mov     0x12c, d0
     mov     0x00f30004, d1
-    mov     0x486aed3c, a0
+    mov     Str_TT_HELPAPCMENU, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x00f00015, d0
     mov     d0, (0x10, sp)
@@ -1500,7 +1500,7 @@ InitializeBlock15_entry:
     mov     d0, (0x14, sp)
     mov     0x12d, d0
     mov     0x00f30005, d1
-    mov     0x486aed4c, a0
+    mov     Str_TT_HELPPRGMENU, a0
     call    RegisterTitle_entry, [d2,a2], 8
     mov     0x00f00008, d0
     mov     d0, (0x10, sp)
@@ -1508,7 +1508,7 @@ InitializeBlock15_entry:
     mov     d0, (0x14, sp)
     mov     0x12e, d0
     mov     0x00f30006, d1
-    mov     0x486aed5c, a0
+    mov     Str_TT_HELPTEXT, a0
     call    RegisterTitle_entry, [d2,a2], 8
     ret     [d2,d3,a2,a3], 0x3c
 
@@ -1582,19 +1582,19 @@ func_48580EF0_entry:
     exth    d3
     cmp     0, d3
     bge     loc_48580F04
-    mov     0x486aed73, a0
+    mov     Str_Page_NG_1, a0
     ret     [d2,d3,a2], 0x1c
 loc_48580F04:
     cmp     0, d3
     bne     loc_48580F11
-    mov     0x486aed7e, a0
+    mov     Str_Page_NG_0, a0
     ret     [d2,d3,a2], 0x1c
 loc_48580F11:
     call    func_48580E7D, 0, 0
     exth    d0
     cmp     0x48, d0
     ble     loc_48580F24
-    mov     0x486aed68, a0
+    mov     Str_Help_No_NG, a0
     ret     [d2,d3,a2], 0x1c
 loc_48580F24:
     movhu   (0x500c4d24), d0
@@ -1604,7 +1604,7 @@ loc_48580F24:
     beq     loc_48580F40
     cmp     3, d0
     beq     loc_48580F40
-    mov     0x486aed88, a1
+    mov     Str_Langage_NG, a1
     cmp     0, d0
     bne     loc_48580F81
 loc_48580F40:
@@ -1632,7 +1632,7 @@ loc_48580F40:
     mov     d0, a1
     cmp     0, a1
     bne     loc_48580F81
-    mov     0x486aed93, a1
+    mov     Str_Table_NG, a1
 loc_48580F81:
     mov     0x5009e2fe, a2
     mov     a2, a0
@@ -2190,7 +2190,7 @@ StringCheck:
     beq     loc_4858152D
     bra     loc_48581533
 loc_48581525:
-    mov     0x486aed9c, d0
+    mov     Str_English_2, d0
     bra     loc_48581534
 loc_4858152D:
     mov     (0x10, sp), a0
@@ -2246,13 +2246,13 @@ HelpNoEditCheck:
     bra     loc_485815E9
 loc_485815AD:
     mov     (0x28, sp), a1
-    mov     0x486aeda4, d0
+    mov     Str_3d, d0
     mov     (0x14, a1), a0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
     mov     (0x10, a1), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     d2, d0
     bra     loc_485815EA
 loc_485815CB:
@@ -2334,7 +2334,7 @@ LangSetMenuCheck2:
     beq     loc_48581670
     bra     loc_48581674
 loc_48581668:
-    mov     0x486aef78, d0
+    mov     ptrs_486AEF78, d0
     bra     loc_48581675
 loc_48581670:
     mov     1, d0
@@ -2710,7 +2710,7 @@ HelpMenuCheck2:
     beq     loc_48581A33
     bra     loc_48581A37
 loc_48581A2B:
-    mov     0x486af4dc, d0
+    mov     ptrs_486AF4DC, d0
     bra     loc_48581A38
 loc_48581A33:
     mov     1, d0
@@ -2803,7 +2803,7 @@ loc_48581AEA:
     bls     loc_48581AF5
     jmp     loc_48581EE7
 loc_48581AF5:
-    mov     0x486af520, a1
+    mov     data_486AF520, a1
     add     0xff8fefe1, d3
     mov     d3, d0
     and     0x7f, d0
@@ -2819,7 +2819,7 @@ loc_48581AF5:
     jmp     loc_48581EE7
 loc_48581B17:
     add     8, a0
-    cmp     0x486af920, a0
+    cmp     data_486AF920, a0
     bcs     loc_48581B22
     mov     a1, a0
 loc_48581B22:
@@ -2873,7 +2873,7 @@ loc_48581B7F:
     jmp     loc_48581EEB
 loc_48581B86:
     asl2    d0
-    mov     0x486af4f0, a0
+    mov     data_486AF4F0, a0
     mov     (d0, a0), a0
     jmp     (a0)
     mov     1, d0
@@ -3205,7 +3205,7 @@ loc_48581F16:
     add     d2, d1
     add     d0, d1
     asl2    d1
-    mov     0x48790090, a0
+    mov     ptrs_48790090, a0
     mov     (d1, a0), a0
     retf    [d2], 4
 
@@ -3237,7 +3237,7 @@ func_48581F27_entry:
     bgt     loc_48581F64
     jmp     loc_48581FFA
 loc_48581F64:
-    mov     (0x486bb638), d0
+    mov     (data_486BB638), d0
     inc     d0
     mov     d0, (0x14, sp)
     setlb
@@ -3320,7 +3320,7 @@ loc_48581FFA:
     bgt     loc_48582009
     jmp     loc_4858209F
 loc_48582009:
-    mov     (0x486bb638), d0
+    mov     (data_486BB638), d0
     inc     d0
     mov     d0, (0x14, sp)
     setlb
@@ -3403,7 +3403,7 @@ loc_4858209F:
     bgt     loc_485820AE
     ret     [d2,d3,a2,a3], 0x38
 loc_485820AE:
-    mov     (0x486bb638), d0
+    mov     (data_486BB638), d0
     inc     d0
     mov     d0, (0x14, sp)
     setlb
@@ -3631,7 +3631,7 @@ func_4858220B_entry:
     mov     (0x5009e708), a0
     asl2    d1
     movbu   (d1, a0), d3
-    mov     (0x486bb638), a0
+    mov     (data_486BB638), a0
     mov     d3, d1
     extbu   d1
     inc     a0
@@ -3760,7 +3760,7 @@ InitializeBlock40_entry:
     mov     d0, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     0x48793a90, d0
+    mov     data_48793A90, d0
     mov     d0, (0x28, sp)
     mov     0x284, d0
     mov     a3, a0
@@ -3771,7 +3771,7 @@ InitializeBlock40_entry:
     mov     d0, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     0x48793aa8, d0
+    mov     PCCOM_Events, d0
     mov     d0, (0x28, sp)
     mov     0x285, d0
     mov     a3, a0
@@ -3782,7 +3782,7 @@ InitializeBlock40_entry:
     mov     d0, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     0x48793aac, d0
+    mov     PCCOM_Methods, d0
     mov     d0, (0x28, sp)
     mov     0x286, d0
     mov     a3, a0
@@ -3793,7 +3793,7 @@ InitializeBlock40_entry:
     mov     a2, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     0x48793ab0, d0
+    mov     PCCOM_Functions, d0
     mov     d0, (0x28, sp)
     mov     0x281, d0
     mov     a3, a0
@@ -3802,7 +3802,7 @@ InitializeBlock40_entry:
     mov     a2, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     0x48793ab4, d0
+    mov     data_48793AB4, d0
     mov     d0, (0x28, sp)
     mov     0x289, d0
     mov     a3, a0
@@ -3813,7 +3813,7 @@ InitializeBlock40_entry:
     mov     a2, (0x20, sp)
     mov     1, d2
     movhu   d2, (0x24, sp)
-    mov     0x48793ab8, d0
+    mov     PCCOM_ApFunctions, d0
     mov     d0, (0x28, sp)
     mov     0x282, d0
     mov     a3, a0
@@ -3821,7 +3821,7 @@ InitializeBlock40_entry:
     mov     d3, (0x1c, sp)
     mov     a2, (0x20, sp)
     movhu   d2, (0x24, sp)
-    mov     0x48793ac0, d0
+    mov     PCCOM_ApFunctionNames, d0
     mov     d0, (0x28, sp)
     mov     0x28a, d0
     mov     a3, a0
@@ -3832,7 +3832,7 @@ InitializeBlock40_entry:
     mov     a2, (0x20, sp)
     mov     2, d2
     movhu   d2, (0x24, sp)
-    mov     0x48793ac8, d0
+    mov     PCCOM_MainFunctions, d0
     mov     d0, (0x28, sp)
     mov     0x283, d0
     mov     a3, a0
@@ -3840,7 +3840,7 @@ InitializeBlock40_entry:
     mov     d3, (0x1c, sp)
     mov     a2, (0x20, sp)
     movhu   d2, (0x24, sp)
-    mov     0x48793ad4, d0
+    mov     PCCOM_MainFunctionNames, d0
     mov     d0, (0x28, sp)
     mov     0x28b, d0
     mov     a3, a0
@@ -3851,7 +3851,7 @@ InitializeBlock40_entry:
     mov     d0, (0x20, sp)
     mov     3, d2
     movhu   d2, (0x24, sp)
-    mov     0x48793ae0, d0
+    mov     PCCOM_Viewables, d0
     mov     d0, (0x28, sp)
     mov     0x280, d0
     mov     a3, a0
@@ -3861,14 +3861,14 @@ InitializeBlock40_entry:
     mov     ResNameProc, d0
     mov     d0, (0x20, sp)
     movhu   d2, (0x24, sp)
-    mov     0x48793af0, d0
+    mov     PCCOM_ResNames, d0
     mov     d0, (0x28, sp)
     mov     0x288, d0
     mov     a3, a0
     call    RegisterObjectTable, 0, 0
     mov     0x28, d0
-    mov     0x486afa24, a0
-    mov     0x486afa2e, a1
+    mov     Str_OTB_PCCOM, a0
+    mov     Str_iappccom, a1
     call    RegisterOTBlock_entry, [a2], 4
     mov     0x02800000, d0
     mov     d0, (0x10, sp)
@@ -3876,7 +3876,7 @@ InitializeBlock40_entry:
     mov     d0, (0x14, sp)
     mov     0x12f, d0
     mov     0x02830000, d1
-    mov     0x486afa38, a0
+    mov     Str_TT_PCCOM, a0
     call    RegisterTitle_entry, [d2,a2], 8
     ret     [d2,d3,a2,a3], 0x3c
 
@@ -3932,7 +3932,7 @@ loc_485825A7:
     beq     loc_485825D1
     bra     loc_485825D7
 loc_485825C5:
-    mov     0x486afce0, d0
+    mov     ptrs_486AFCE0, d0
     bra     loc_485825D8
 loc_485825CD:
     mov     1, d0
@@ -4058,7 +4058,7 @@ loc_48582689:
     mov     -1, d0
     jmp     loc_48582CCC
 loc_4858268E:
-    movbu   (0x50007dd0), d0
+    movbu   (data_50007DD0), d0
     cmp     d2, d0
     bne     loc_4858269A
     jmp     loc_48582785
@@ -4073,7 +4073,7 @@ loc_485826A7:
     clr     d0
     call    func_484C2E0F_entry, [d2,d3], 8
     clr     d0
-    movbu   d0, (0x500064e5)
+    movbu   d0, (data_500064E5)
     call    GetModeNow_entry, 0, 0x10
     and     0xffff, d0
     cmp     1, d0
@@ -4082,18 +4082,18 @@ loc_485826A7:
     clr     d1
     call    ChangeTitle_entry, [d2,d3,a2], 0x20
     mov     1, d0
-    movbu   d0, (0x500064e4)
+    movbu   d0, (data_500064E4)
     clr     d0
     jmp     loc_48582CCC
 loc_485826DC:
-    movbu   d2, (0x500064e4)
+    movbu   d2, (data_500064E4)
     mov     -2, d0
     jmp     loc_48582CCC
 loc_485826E7:
-    movbu   (0x500064e4), d0
+    movbu   (data_500064E4), d0
     cmp     d2, d0
     beq     loc_48582769
-    movbu   (0x500064e5), d0
+    movbu   (data_500064E5), d0
     cmp     d2, d0
     beq     loc_48582710
     call    GetSeqPlyPart_entry, 0, 0x10
@@ -4135,8 +4135,8 @@ loc_4858274E:
     call    InterruptTitle_entry, [d2,d3,a2], 0x20
 loc_48582759:
     clr     d0
-    movbu   d2, (0x500064e4)
-    movbu   d0, (0x500064e5)
+    movbu   d2, (data_500064E4)
+    movbu   d0, (data_500064E5)
     jmp     loc_48582CCC
 loc_48582769:
     mov     -2, d0
@@ -4190,7 +4190,7 @@ loc_485827CA:
 loc_485827D1:
     add     -1, d0
     asl2    d0
-    mov     0x486afd64, a0
+    mov     data_486AFD64, a0
     mov     (d0, a0), a0
     jmp     (a0)
     movbu   (0x50172f2a), d2
@@ -4205,7 +4205,7 @@ loc_485827D1:
     jmp     loc_48582CBD
     mov     0x50172f33, a2
     mov     a2, a0
-    mov     0x486afcfc, a1
+    mov     Str_rb, a1
     call    func_48582CD3_entry, [d2,a2,a3], 0x1c
     mov     d0, d2
     exth    d0
@@ -4329,7 +4329,7 @@ loc_4858294A:
     jmp     loc_48582CBD
 loc_48582951:
     asl2    d0
-    mov     0x486afd34, a0
+    mov     data_486AFD34, a0
     mov     (d0, a0), a0
     jmp     (a0)
     mov     1, d0
@@ -4472,7 +4472,7 @@ loc_48582B2A:
     jmp     loc_48582CBD
 loc_48582B31:
     asl2    d0
-    mov     0x486afd00, a0
+    mov     data_486AFD00, a0
     mov     (d0, a0), a0
     jmp     (a0)
     mov     a2, a0
@@ -4496,7 +4496,7 @@ loc_48582B31:
     jmp     loc_48582CBD
 loc_48582B71:
     mov     1, d0
-    movbu   d0, (0x500064e5)
+    movbu   d0, (data_500064E5)
     jmp     loc_48582CBD
     mov     a2, a0
     call    LoadSqfSeq_HD_entry, 0, 0xc
@@ -4507,7 +4507,7 @@ loc_48582B71:
     jmp     loc_48582CBD
 loc_48582B8D:
     mov     1, d0
-    movbu   d0, (0x500064e5)
+    movbu   d0, (data_500064E5)
     jmp     loc_48582CBD
     mov     a2, a0
     call    LoadCmp_HD_entry, 0, 0xc
@@ -5091,7 +5091,7 @@ InitializeBlock41_entry:
     mov     d0, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     0x48793b00, d0
+    mov     data_48793B00, d0
     mov     d0, (0x28, sp)
     mov     0x294, d0
     mov     a3, a0
@@ -5102,7 +5102,7 @@ InitializeBlock41_entry:
     mov     d0, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     0x48793b18, d0
+    mov     DEMORUN_Events, d0
     mov     d0, (0x28, sp)
     mov     0x295, d0
     mov     a3, a0
@@ -5113,7 +5113,7 @@ InitializeBlock41_entry:
     mov     d0, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     0x48793b1c, d0
+    mov     DEMORUN_Methods, d0
     mov     d0, (0x28, sp)
     mov     0x296, d0
     mov     a3, a0
@@ -5124,7 +5124,7 @@ InitializeBlock41_entry:
     mov     a2, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     0x48793b20, d0
+    mov     DEMORUN_Functions, d0
     mov     d0, (0x28, sp)
     mov     0x291, d0
     mov     a3, a0
@@ -5133,7 +5133,7 @@ InitializeBlock41_entry:
     mov     a2, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     0x48793b24, d0
+    mov     data_48793B24, d0
     mov     d0, (0x28, sp)
     mov     0x299, d0
     mov     a3, a0
@@ -5144,7 +5144,7 @@ InitializeBlock41_entry:
     mov     a2, (0x20, sp)
     mov     0x9b, d2
     movhu   d2, (0x24, sp)
-    mov     0x48793b28, d0
+    mov     DEMORUN_ApFunctions, d0
     mov     d0, (0x28, sp)
     mov     0x292, d0
     mov     a3, a0
@@ -5152,7 +5152,7 @@ InitializeBlock41_entry:
     mov     d3, (0x1c, sp)
     mov     a2, (0x20, sp)
     movhu   d2, (0x24, sp)
-    mov     0x48793d98, d0
+    mov     DEMORUN_ApFunctionNames, d0
     mov     d0, (0x28, sp)
     mov     0x29a, d0
     mov     a3, a0
@@ -5163,7 +5163,7 @@ InitializeBlock41_entry:
     mov     a2, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     0x48794008, d0
+    mov     DEMORUN_MainFunctions, d0
     mov     d0, (0x28, sp)
     mov     0x293, d0
     mov     a3, a0
@@ -5172,7 +5172,7 @@ InitializeBlock41_entry:
     mov     a2, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     0x4879400c, d0
+    mov     data_4879400C, d0
     mov     d0, (0x28, sp)
     mov     0x29b, d0
     mov     a3, a0
@@ -5183,7 +5183,7 @@ InitializeBlock41_entry:
     mov     d0, (0x20, sp)
     mov     0x183, d2
     movhu   d2, (0x24, sp)
-    mov     0x48794010, d0
+    mov     DEMORUN_Viewables, d0
     mov     d0, (0x28, sp)
     mov     0x290, d0
     mov     a3, a0
@@ -5193,14 +5193,14 @@ InitializeBlock41_entry:
     mov     ResNameProc, d0
     mov     d0, (0x20, sp)
     movhu   d2, (0x24, sp)
-    mov     0x48794620, d0
+    mov     DEMORUN_ResNames, d0
     mov     d0, (0x28, sp)
     mov     0x298, d0
     mov     a3, a0
     call    RegisterObjectTable, 0, 0
     mov     0x29, d0
-    mov     0x486b4a50, a0
-    mov     0x486b4a5c, a1
+    mov     Str_OTB_DEMORUN, a0
+    mov     Str_idemorun, a1
     call    RegisterOTBlock_entry, [a2], 4
     mov     0x02900001, d0
     mov     d0, (0x10, sp)
@@ -5208,7 +5208,7 @@ InitializeBlock41_entry:
     mov     d0, (0x14, sp)
     mov     0x130, d0
     mov     0x00020000, d1
-    mov     0x486b4a68, a0
+    mov     Str_TT_DEMORUN, a0
     call    RegisterTitle_entry, [d2,a2], 8
     ret     [d2,d3,a2,a3], 0x3c
     retf    0, 0
@@ -5220,7 +5220,7 @@ FtLangText01:
     beq     loc_485833DA
     bra     loc_485833DE
 loc_485833D2:
-    mov     0x486b4b8c, d0
+    mov     Str_tJkH_JkH_JkH_KkH_KkH_KkH_KkH, d0
     bra     loc_485833DF
 loc_485833DA:
     mov     1, d0
@@ -5237,7 +5237,7 @@ FtLangText01s:
     beq     loc_485833FC
     bra     loc_48583400
 loc_485833F4:
-    mov     0x486b4bb8, d0
+    mov     Str_KkH_KkH_KkH_KkH_KkH_KkH_KkHBeautiful_Des, d0
     bra     loc_48583401
 loc_485833FC:
     mov     1, d0
@@ -5254,7 +5254,7 @@ FtLangText02:
     beq     loc_4858341E
     bra     loc_48583422
 loc_48583416:
-    mov     0x486b4cb4, d0
+    mov     ptrs_486B4CB4, d0
     bra     loc_48583423
 loc_4858341E:
     mov     1, d0
@@ -5271,7 +5271,7 @@ FtLangText03:
     beq     loc_48583440
     bra     loc_48583444
 loc_48583438:
-    mov     0x486b4df0, d0
+    mov     ptrs_486B4DF0, d0
     bra     loc_48583445
 loc_48583440:
     mov     1, d0
@@ -5288,7 +5288,7 @@ FtLangText04:
     beq     loc_48583462
     bra     loc_48583466
 loc_4858345A:
-    mov     0x486b4f2c, d0
+    mov     ptrs_486B4F2C, d0
     bra     loc_48583467
 loc_48583462:
     mov     1, d0
@@ -5305,7 +5305,7 @@ FtLangText05:
     beq     loc_48583484
     bra     loc_48583488
 loc_4858347C:
-    mov     0x486b4ff4, d0
+    mov     Str_HOkHlOkH_OkH_OkH_OkH_OkH_OkHProfessional, d0
     bra     loc_48583489
 loc_48583484:
     mov     1, d0
@@ -5322,7 +5322,7 @@ FtLangText06:
     beq     loc_485834A6
     bra     loc_485834AA
 loc_4858349E:
-    mov     0x486b5114, d0
+    mov     ptrs_486B5114, d0
     bra     loc_485834AB
 loc_485834A6:
     mov     1, d0
@@ -5339,7 +5339,7 @@ FtLangText07:
     beq     loc_485834C8
     bra     loc_485834CC
 loc_485834C0:
-    mov     0x486b526c, d0
+    mov     ptrs_486B526C, d0
     bra     loc_485834CD
 loc_485834C8:
     mov     1, d0
@@ -5356,7 +5356,7 @@ FtLangText08:
     beq     loc_485834EA
     bra     loc_485834EE
 loc_485834E2:
-    mov     0x486b53a4, d0
+    mov     ptrs_486B53A4, d0
     bra     loc_485834EF
 loc_485834EA:
     mov     1, d0
@@ -5373,7 +5373,7 @@ FtLangText09:
     beq     loc_4858350C
     bra     loc_48583510
 loc_48583504:
-    mov     0x486b54dc, d0
+    mov     Str_SkH_SkHJTkH_TkH_TkH_TkH_TkHCreate_Any_Ki, d0
     bra     loc_48583511
 loc_4858350C:
     mov     1, d0
@@ -5390,7 +5390,7 @@ FtLangText10:
     beq     loc_4858352E
     bra     loc_48583532
 loc_48583526:
-    mov     0x486b5610, d0
+    mov     ptrs_486B5610, d0
     bra     loc_48583533
 loc_4858352E:
     mov     1, d0
@@ -5407,7 +5407,7 @@ FtLangText11:
     beq     loc_48583550
     bra     loc_48583554
 loc_48583548:
-    mov     0x486b576c, d0
+    mov     ptrs_486B576C, d0
     bra     loc_48583555
 loc_48583550:
     mov     1, d0
@@ -5424,7 +5424,7 @@ FtLangText12:
     beq     loc_48583572
     bra     loc_48583576
 loc_4858356A:
-    mov     0x486b58a8, d0
+    mov     ptrs_486B58A8, d0
     bra     loc_48583577
 loc_48583572:
     mov     1, d0
@@ -5441,7 +5441,7 @@ FtLangText13:
     beq     loc_48583594
     bra     loc_48583598
 loc_4858358C:
-    mov     0x486b59cc, d0
+    mov     Str_XkH_XkH_YkH_YkH_YkH_YkH_YkHLearn_From_Th, d0
     bra     loc_48583599
 loc_48583594:
     mov     1, d0
@@ -5458,7 +5458,7 @@ FtLangText14:
     beq     loc_485835B6
     bra     loc_485835BA
 loc_485835AE:
-    mov     0x486b5a6c, d0
+    mov     ptrs_486B5A6C, d0
     bra     loc_485835BB
 loc_485835B6:
     mov     1, d0
@@ -5475,7 +5475,7 @@ FtLangText15:
     beq     loc_485835D8
     bra     loc_485835DC
 loc_485835D0:
-    mov     0x486b5b38, d0
+    mov     ptrs_486B5B38, d0
     bra     loc_485835DD
 loc_485835D8:
     mov     1, d0
@@ -5492,7 +5492,7 @@ FtLangText16:
     beq     loc_485835FA
     bra     loc_485835FE
 loc_485835F2:
-    mov     0x486b5b6c, d0
+    mov     Str_T_kHX_kH_kH_kHd_kHf_kHh_kHSD_Is_The_Perf, d0
     bra     loc_485835FF
 loc_485835FA:
     mov     1, d0
@@ -5509,7 +5509,7 @@ FtLangText17:
     beq     loc_4858361C
     bra     loc_48583620
 loc_48583614:
-    mov     0x486b5c3c, d0
+    mov     Str_kH_kH_kH_kH6_kH8_kH_kHStore_Sort_Hundred, d0
     bra     loc_48583621
 loc_4858361C:
     mov     1, d0
@@ -5526,7 +5526,7 @@ FtLangText18:
     beq     loc_4858363E
     bra     loc_48583642
 loc_48583636:
-    mov     0x486b5dd0, d0
+    mov     ptrs_486B5DD0, d0
     bra     loc_48583643
 loc_4858363E:
     mov     1, d0
@@ -5543,7 +5543,7 @@ FtLangText19:
     beq     loc_48583660
     bra     loc_48583664
 loc_48583658:
-    mov     0x486b5ecc, d0
+    mov     ptrs_486B5ECC, d0
     bra     loc_48583665
 loc_48583660:
     mov     1, d0
@@ -5560,7 +5560,7 @@ FtLangText20:
     beq     loc_48583682
     bra     loc_48583686
 loc_4858367A:
-    mov     0x486b6084, d0
+    mov     ptrs_486B6084, d0
     bra     loc_48583687
 loc_48583682:
     mov     1, d0
@@ -5577,7 +5577,7 @@ FtLangText21:
     beq     loc_485836A4
     bra     loc_485836A8
 loc_4858369C:
-    mov     0x486b6144, d0
+    mov     ptrs_486B6144, d0
     bra     loc_485836A9
 loc_485836A4:
     mov     1, d0
@@ -5594,7 +5594,7 @@ FtLangText21s:
     beq     loc_485836C6
     bra     loc_485836CA
 loc_485836BE:
-    mov     0x486b6184, d0
+    mov     ptrs_486B6184, d0
     bra     loc_485836CB
 loc_485836C6:
     mov     1, d0
@@ -5611,7 +5611,7 @@ FtLangText21g:
     beq     loc_485836E8
     bra     loc_485836EC
 loc_485836E0:
-    mov     0x486b61c0, d0
+    mov     ptrs_486B61C0, d0
     bra     loc_485836ED
 loc_485836E8:
     mov     1, d0
@@ -5628,7 +5628,7 @@ FtLangText21sg:
     beq     loc_4858370A
     bra     loc_4858370E
 loc_48583702:
-    mov     0x486b61f4, d0
+    mov     Str_akH_akH_akH_akH_akH_akH_akHCreate_Slide, d0
     bra     loc_4858370F
 loc_4858370A:
     mov     1, d0
@@ -5645,7 +5645,7 @@ FtLangText22:
     beq     loc_4858372C
     bra     loc_48583730
 loc_48583724:
-    mov     0x486b6328, d0
+    mov     ptrs_486B6328, d0
     bra     loc_48583731
 loc_4858372C:
     mov     1, d0
@@ -5662,7 +5662,7 @@ FtLangText23:
     beq     loc_4858374E
     bra     loc_48583752
 loc_48583746:
-    mov     0x486b63d8, d0
+    mov     Str_DckHfckH_ckH_ckH_ckH_ckH_ckHVintage_Orga, d0
     bra     loc_48583753
 loc_4858374E:
     mov     1, d0
@@ -5679,7 +5679,7 @@ FtLangText24:
     beq     loc_48583770
     bra     loc_48583774
 loc_48583768:
-    mov     0x486b64c8, d0
+    mov     ptrs_486B64C8, d0
     bra     loc_48583775
 loc_48583770:
     mov     1, d0
@@ -5696,7 +5696,7 @@ FtLangText25:
     beq     loc_48583792
     bra     loc_48583796
 loc_4858378A:
-    mov     0x486b663c, d0
+    mov     ptrs_486B663C, d0
     bra     loc_48583797
 loc_48583792:
     mov     1, d0
@@ -5713,7 +5713,7 @@ FtLangText26:
     beq     loc_485837B4
     bra     loc_485837B8
 loc_485837AC:
-    mov     0x486b6798, d0
+    mov     ptrs_486B6798, d0
     bra     loc_485837B9
 loc_485837B4:
     mov     1, d0
@@ -5730,7 +5730,7 @@ FtLangText27:
     beq     loc_485837D6
     bra     loc_485837DA
 loc_485837CE:
-    mov     0x486b6810, d0
+    mov     ptrs_486B6810, d0
     bra     loc_485837DB
 loc_485837D6:
     mov     1, d0
@@ -5747,7 +5747,7 @@ FtLangText28:
     beq     loc_485837F8
     bra     loc_485837FC
 loc_485837F0:
-    mov     0x486b6904, d0
+    mov     ptrs_486B6904, d0
     bra     loc_485837FD
 loc_485837F8:
     mov     1, d0
@@ -5764,7 +5764,7 @@ FtLangText29:
     beq     loc_4858381A
     bra     loc_4858381E
 loc_48583812:
-    mov     0x486b69f4, d0
+    mov     Str_ikHJikH_ikH_ikH_ikH_ikH_ikHRe_discover_T, d0
     bra     loc_4858381F
 loc_4858381A:
     mov     1, d0
@@ -5781,7 +5781,7 @@ FtLangText30:
     beq     loc_4858383C
     bra     loc_48583840
 loc_48583834:
-    mov     0x486b6b4c, d0
+    mov     ptrs_486B6B4C, d0
     bra     loc_48583841
 loc_4858383C:
     mov     1, d0
@@ -5798,7 +5798,7 @@ FtLangText31:
     beq     loc_4858385E
     bra     loc_48583862
 loc_48583856:
-    mov     0x486b6c84, d0
+    mov     ptrs_486B6C84, d0
     bra     loc_48583863
 loc_4858385E:
     mov     1, d0
@@ -5815,7 +5815,7 @@ FtLangText32:
     beq     loc_48583880
     bra     loc_48583884
 loc_48583878:
-    mov     0x486b6e38, d0
+    mov     Str_lkH_lkHdmkH_mkH_nkH1nkH3nkHOr_The_Energy, d0
     bra     loc_48583885
 loc_48583880:
     mov     1, d0
@@ -5832,7 +5832,7 @@ FtLangText33:
     beq     loc_485838A2
     bra     loc_485838A6
 loc_4858389A:
-    mov     0x486b6f34, d0
+    mov     Str_TnkH_nkH_nkH_nkH_okH_okH1okHJust_Switch, d0
     bra     loc_485838A7
 loc_485838A2:
     mov     1, d0
@@ -5849,7 +5849,7 @@ FtLangText34:
     beq     loc_485838C4
     bra     loc_485838C8
 loc_485838BC:
-    mov     0x486b7084, d0
+    mov     ptrs_486B7084, d0
     bra     loc_485838C9
 loc_485838C4:
     mov     1, d0
@@ -5866,7 +5866,7 @@ FtLangText35:
     beq     loc_485838E6
     bra     loc_485838EA
 loc_485838DE:
-    mov     0x486b7118, d0
+    mov     ptrs_486B7118, d0
     bra     loc_485838EB
 loc_485838E6:
     mov     1, d0
@@ -5883,7 +5883,7 @@ FtLangText36:
     beq     loc_48583908
     bra     loc_4858390C
 loc_48583900:
-    mov     0x486b73bc, d0
+    mov     ptrs_486B73BC, d0
     bra     loc_4858390D
 loc_48583908:
     mov     1, d0
@@ -5900,7 +5900,7 @@ FtLangText37:
     beq     loc_4858392A
     bra     loc_4858392E
 loc_48583922:
-    mov     0x486b7530, d0
+    mov     ptrs_486B7530, d0
     bra     loc_4858392F
 loc_4858392A:
     mov     1, d0
@@ -5917,7 +5917,7 @@ FtLangText38:
     beq     loc_4858394C
     bra     loc_48583950
 loc_48583944:
-    mov     0x486b7654, d0
+    mov     ptrs_486B7654, d0
     bra     loc_48583951
 loc_4858394C:
     mov     1, d0
@@ -5934,7 +5934,7 @@ FtLangText39:
     beq     loc_4858396E
     bra     loc_48583972
 loc_48583966:
-    mov     0x486b7774, d0
+    mov     Str_pvkH_vkH_vkH_wkHnwkHpwkHrwkHYou_Can_Trul, d0
     bra     loc_48583973
 loc_4858396E:
     mov     1, d0
@@ -5951,7 +5951,7 @@ FtLangText40:
     beq     loc_48583990
     bra     loc_48583994
 loc_48583988:
-    mov     0x486b793c, d0
+    mov     Str_wkH_wkHMxkH_xkH4ykH6ykH8ykHAuto_Play_Cho, d0
     bra     loc_48583995
 loc_48583990:
     mov     1, d0
@@ -5968,7 +5968,7 @@ FtLangText41:
     beq     loc_485839B2
     bra     loc_485839B6
 loc_485839AA:
-    mov     0x486b7abc, d0
+    mov     Str_XykH_ykH_ykH_zkH_zkH_zkH_zkH220_Patterns, d0
     bra     loc_485839B7
 loc_485839B2:
     mov     1, d0
@@ -5985,7 +5985,7 @@ FtLangText42:
     beq     loc_485839D4
     bra     loc_485839D8
 loc_485839CC:
-    mov     0x486b7c4c, d0
+    mov     ptrs_486B7C4C, d0
     bra     loc_485839D9
 loc_485839D4:
     mov     1, d0
@@ -6002,7 +6002,7 @@ FtLangText43:
     beq     loc_485839F6
     bra     loc_485839FA
 loc_485839EE:
-    mov     0x486b7ed4, d0
+    mov     ptrs_486B7ED4, d0
     bra     loc_485839FB
 loc_485839F6:
     mov     1, d0
@@ -6019,7 +6019,7 @@ FtLangText44:
     beq     loc_48583A18
     bra     loc_48583A1C
 loc_48583A10:
-    mov     0x486b7f94, d0
+    mov     ptrs_486B7F94, d0
     bra     loc_48583A1D
 loc_48583A18:
     mov     1, d0
@@ -6036,7 +6036,7 @@ FtLangText45:
     beq     loc_48583A3A
     bra     loc_48583A3E
 loc_48583A32:
-    mov     0x486b8254, d0
+    mov     ptrs_486B8254, d0
     bra     loc_48583A3F
 loc_48583A3A:
     mov     1, d0
@@ -6053,7 +6053,7 @@ FtLangText46:
     beq     loc_48583A5C
     bra     loc_48583A60
 loc_48583A54:
-    mov     0x486b83c4, d0
+    mov     ptrs_486B83C4, d0
     bra     loc_48583A61
 loc_48583A5C:
     mov     1, d0
@@ -6070,7 +6070,7 @@ FtLangText47:
     beq     loc_48583A7E
     bra     loc_48583A82
 loc_48583A76:
-    mov     0x486b84b4, d0
+    mov     ptrs_486B84B4, d0
     bra     loc_48583A83
 loc_48583A7E:
     mov     1, d0
@@ -6087,7 +6087,7 @@ FtLangText48:
     beq     loc_48583AA0
     bra     loc_48583AA4
 loc_48583A98:
-    mov     0x486b86d8, d0
+    mov     Str_kHB_kH_kH_kH_kH_kH_kHUse_Any_Pictures_0d, d0
     bra     loc_48583AA5
 loc_48583AA0:
     mov     1, d0
@@ -6104,7 +6104,7 @@ FtLangText49:
     beq     loc_48583AC2
     bra     loc_48583AC6
 loc_48583ABA:
-    mov     0x486b880c, d0
+    mov     ptrs_486B880C, d0
     bra     loc_48583AC7
 loc_48583AC2:
     mov     1, d0
@@ -6121,7 +6121,7 @@ FtLangText50:
     beq     loc_48583AE4
     bra     loc_48583AE8
 loc_48583ADC:
-    mov     0x486b88f8, d0
+    mov     ptrs_486B88F8, d0
     bra     loc_48583AE9
 loc_48583AE4:
     mov     1, d0
@@ -6138,7 +6138,7 @@ FtLangText51:
     beq     loc_48583B06
     bra     loc_48583B0A
 loc_48583AFE:
-    mov     0x486b8a08, d0
+    mov     ptrs_486B8A08, d0
     bra     loc_48583B0B
 loc_48583B06:
     mov     1, d0
@@ -6155,7 +6155,7 @@ FtLangText52:
     beq     loc_48583B28
     bra     loc_48583B2C
 loc_48583B20:
-    mov     0x486b8bd4, d0
+    mov     Str_kH_kH_kHd_kH_kH_kH_kHThe_KN7000_Is_Truly, d0
     bra     loc_48583B2D
 loc_48583B28:
     mov     1, d0
@@ -6172,7 +6172,7 @@ FtLangText53:
     beq     loc_48583B4A
     bra     loc_48583B4E
 loc_48583B42:
-    mov     0x486b8cdc, d0
+    mov     Str_kH_kHb_kH_kH_kH_kH_kHThe_KN7000_Joins_Th, d0
     bra     loc_48583B4F
 loc_48583B4A:
     mov     1, d0
@@ -6189,7 +6189,7 @@ FtLangText54:
     beq     loc_48583B6C
     bra     loc_48583B70
 loc_48583B64:
-    mov     0x486b8dac, d0
+    mov     ptrs_486B8DAC, d0
     bra     loc_48583B71
 loc_48583B6C:
     mov     1, d0
@@ -6206,7 +6206,7 @@ FtLangText55:
     beq     loc_48583B8E
     bra     loc_48583B92
 loc_48583B86:
-    mov     0x486b8e34, d0
+    mov     ptrs_486B8E34, d0
     bra     loc_48583B93
 loc_48583B8E:
     mov     1, d0
@@ -6223,7 +6223,7 @@ FtLangText56:
     beq     loc_48583BB0
     bra     loc_48583BB4
 loc_48583BA8:
-    mov     0x486b8ee4, d0
+    mov     ptrs_486B8EE4, d0
     bra     loc_48583BB5
 loc_48583BB0:
     mov     1, d0
@@ -6240,7 +6240,7 @@ FtLangText56s:
     beq     loc_48583BD2
     bra     loc_48583BD6
 loc_48583BCA:
-    mov     0x486b8fc0, d0
+    mov     ptrs_486B8FC0, d0
     bra     loc_48583BD7
 loc_48583BD2:
     mov     1, d0
@@ -6257,7 +6257,7 @@ FtLangText57:
     beq     loc_48583BF4
     bra     loc_48583BF8
 loc_48583BEC:
-    mov     0x486b9194, d0
+    mov     ptrs_486B9194, d0
     bra     loc_48583BF9
 loc_48583BF4:
     mov     1, d0
@@ -6274,7 +6274,7 @@ FtLangText57s:
     beq     loc_48583C16
     bra     loc_48583C1A
 loc_48583C0E:
-    mov     0x486b9234, d0
+    mov     Str_kH_kH_kH_kH_kH_kH0_kHConnect_Directly_To, d0
     bra     loc_48583C1B
 loc_48583C16:
     mov     1, d0
@@ -6291,7 +6291,7 @@ FtLangText58:
     beq     loc_48583C38
     bra     loc_48583C3C
 loc_48583C30:
-    mov     0x486b9384, d0
+    mov     ptrs_486B9384, d0
     bra     loc_48583C3D
 loc_48583C38:
     mov     1, d0
@@ -6308,7 +6308,7 @@ FtLangText59:
     beq     loc_48583C5A
     bra     loc_48583C5E
 loc_48583C52:
-    mov     0x486b9540, d0
+    mov     Str_kH_kH_kH_kH8_kH_kH_kHMix_The_Line_In_Mic, d0
     bra     loc_48583C5F
 loc_48583C5A:
     mov     1, d0
@@ -6325,7 +6325,7 @@ FtLangText60:
     beq     loc_48583C7C
     bra     loc_48583C80
 loc_48583C74:
-    mov     0x486b9690, d0
+    mov     Str_kH_kH_kH_kH_kH_kH_kHYou_Can_Save_As_A_WA, d0
     bra     loc_48583C81
 loc_48583C7C:
     mov     1, d0
@@ -6342,7 +6342,7 @@ FtLangText61:
     beq     loc_48583C9E
     bra     loc_48583CA2
 loc_48583C96:
-    mov     0x486b98a0, d0
+    mov     ptrs_486B98A0, d0
     bra     loc_48583CA3
 loc_48583C9E:
     mov     1, d0
@@ -6359,7 +6359,7 @@ FtLangText62:
     beq     loc_48583CC0
     bra     loc_48583CC4
 loc_48583CB8:
-    mov     0x486b999c, d0
+    mov     Str_kH_kH_kH_kH_kH_kH_kHStudio_Quality_Recor, d0
     bra     loc_48583CC5
 loc_48583CC0:
     mov     1, d0
@@ -6376,7 +6376,7 @@ FtLangText63:
     beq     loc_48583CE2
     bra     loc_48583CE6
 loc_48583CDA:
-    mov     0x486b9a70, d0
+    mov     ptrs_486B9A70, d0
     bra     loc_48583CE7
 loc_48583CE2:
     mov     1, d0
@@ -6393,7 +6393,7 @@ FtLangText64:
     beq     loc_48583D04
     bra     loc_48583D08
 loc_48583CFC:
-    mov     0x486b9ba4, d0
+    mov     ptrs_486B9BA4, d0
     bra     loc_48583D09
 loc_48583D04:
     mov     1, d0
@@ -6410,7 +6410,7 @@ FtLangText65:
     beq     loc_48583D26
     bra     loc_48583D2A
 loc_48583D1E:
-    mov     0x486b9c2c, d0
+    mov     ptrs_486B9C2C, d0
     bra     loc_48583D2B
 loc_48583D26:
     mov     1, d0
@@ -6427,7 +6427,7 @@ FtLangText66:
     beq     loc_48583D48
     bra     loc_48583D4C
 loc_48583D40:
-    mov     0x486b9ee8, d0
+    mov     Str_H_kH_kHv_kH1_kH_kH_kH_kHOr_Record_Your_P, d0
     bra     loc_48583D4D
 loc_48583D48:
     mov     1, d0
@@ -6444,7 +6444,7 @@ FtLangText67:
     beq     loc_48583D6A
     bra     loc_48583D6E
 loc_48583D62:
-    mov     0x486ba04c, d0
+    mov     ptrs_486BA04C, d0
     bra     loc_48583D6F
 loc_48583D6A:
     mov     1, d0
@@ -6461,7 +6461,7 @@ FtLangText68:
     beq     loc_48583D8C
     bra     loc_48583D90
 loc_48583D84:
-    mov     0x486ba250, d0
+    mov     ptrs_486BA250, d0
     bra     loc_48583D91
 loc_48583D8C:
     mov     1, d0
@@ -6478,7 +6478,7 @@ FtLangText69:
     beq     loc_48583DAE
     bra     loc_48583DB2
 loc_48583DA6:
-    mov     0x486ba35c, d0
+    mov     ptrs_486BA35C, d0
     bra     loc_48583DB3
 loc_48583DAE:
     mov     1, d0
@@ -6495,7 +6495,7 @@ FtLangText69s:
     beq     loc_48583DD0
     bra     loc_48583DD4
 loc_48583DC8:
-    mov     0x486ba438, d0
+    mov     ptrs_486BA438, d0
     bra     loc_48583DD5
 loc_48583DD0:
     mov     1, d0
@@ -6512,7 +6512,7 @@ FtLangText70:
     beq     loc_48583DF2
     bra     loc_48583DF6
 loc_48583DEA:
-    mov     0x486ba554, d0
+    mov     ptrs_486BA554, d0
     bra     loc_48583DF7
 loc_48583DF2:
     mov     1, d0
@@ -6529,7 +6529,7 @@ FtLangText70s:
     beq     loc_48583E14
     bra     loc_48583E18
 loc_48583E0C:
-    mov     0x486ba5f4, d0
+    mov     Str_p_kHr_kHt_kH_kH_kH_kH_kHHow_Easy_Is_The, d0
     bra     loc_48583E19
 loc_48583E14:
     mov     1, d0
@@ -6546,7 +6546,7 @@ FtLangText71:
     beq     loc_48583E36
     bra     loc_48583E3A
 loc_48583E2E:
-    mov     0x486ba6a8, d0
+    mov     ptrs_486BA6A8, d0
     bra     loc_48583E3B
 loc_48583E36:
     mov     1, d0
@@ -6563,7 +6563,7 @@ FtLangText72:
     beq     loc_48583E58
     bra     loc_48583E5C
 loc_48583E50:
-    mov     0x486ba7b4, d0
+    mov     Str_kH_kH_kHl_kH_kH_kH_kHPlay_Straight_Away, d0
     bra     loc_48583E5D
 loc_48583E58:
     mov     1, d0
@@ -6580,7 +6580,7 @@ FtLangText73:
     beq     loc_48583E7A
     bra     loc_48583E7E
 loc_48583E72:
-    mov     0x486ba958, d0
+    mov     ptrs_486BA958, d0
     bra     loc_48583E7F
 loc_48583E7A:
     mov     1, d0
@@ -6597,7 +6597,7 @@ FtLangText74:
     beq     loc_48583E9C
     bra     loc_48583EA0
 loc_48583E94:
-    mov     0x486baa94, d0
+    mov     ptrs_486BAA94, d0
     bra     loc_48583EA1
 loc_48583E9C:
     mov     1, d0
@@ -6614,7 +6614,7 @@ FtLangText75:
     beq     loc_48583EBE
     bra     loc_48583EC2
 loc_48583EB6:
-    mov     0x486baca4, d0
+    mov     ptrs_486BACA4, d0
     bra     loc_48583EC3
 loc_48583EBE:
     mov     1, d0
@@ -6631,7 +6631,7 @@ FtLangText76:
     beq     loc_48583EE0
     bra     loc_48583EE4
 loc_48583ED8:
-    mov     0x486badb0, d0
+    mov     ptrs_486BADB0, d0
     bra     loc_48583EE5
 loc_48583EE0:
     mov     1, d0
@@ -6648,7 +6648,7 @@ FtLangText77:
     beq     loc_48583F02
     bra     loc_48583F06
 loc_48583EFA:
-    mov     0x486baeb4, d0
+    mov     Str_kH_kHB_kHv_kH_kH_kH_kHWith_The_KN7000_Yo, d0
     bra     loc_48583F07
 loc_48583F02:
     mov     1, d0
@@ -6665,7 +6665,7 @@ FtLangText78:
     beq     loc_48583F24
     bra     loc_48583F28
 loc_48583F1C:
-    mov     0x486bafe8, d0
+    mov     ptrs_486BAFE8, d0
     bra     loc_48583F29
 loc_48583F24:
     mov     1, d0
@@ -6682,7 +6682,7 @@ FtLangText79:
     beq     loc_48583F46
     bra     loc_48583F4A
 loc_48583F3E:
-    mov     0x486bb144, d0
+    mov     ptrs_486BB144, d0
     bra     loc_48583F4B
 loc_48583F46:
     mov     1, d0
@@ -6699,7 +6699,7 @@ FtLangText80:
     beq     loc_48583F68
     bra     loc_48583F6C
 loc_48583F60:
-    mov     0x486bb2b8, d0
+    mov     ptrs_486BB2B8, d0
     bra     loc_48583F6D
 loc_48583F68:
     mov     1, d0
@@ -6716,7 +6716,7 @@ FtLangText81:
     beq     loc_48583F8A
     bra     loc_48583F8E
 loc_48583F82:
-    mov     0x486bb3f4, d0
+    mov     ptrs_486BB3F4, d0
     bra     loc_48583F8F
 loc_48583F8A:
     mov     1, d0
@@ -6733,7 +6733,7 @@ FtLangText82:
     beq     loc_48583FAC
     bra     loc_48583FB0
 loc_48583FA4:
-    mov     0x486bb498, d0
+    mov     ptrs_486BB498, d0
     bra     loc_48583FB1
 loc_48583FAC:
     mov     1, d0
@@ -6750,7 +6750,7 @@ FtLangText83:
     beq     loc_48583FCE
     bra     loc_48583FD2
 loc_48583FC6:
-    mov     0x486bb5e4, d0
+    mov     ptrs_486BB5E4, d0
     bra     loc_48583FD3
 loc_48583FCE:
     mov     1, d0
@@ -6767,7 +6767,7 @@ FtLangText84:
     beq     loc_48583FF0
     bra     loc_48583FF4
 loc_48583FE8:
-    mov     0x486bb610, d0
+    mov     ptrs_486BB610, d0
     bra     loc_48583FF5
 loc_48583FF0:
     mov     1, d0
@@ -7534,77 +7534,8 @@ loc_4858469A:
     retf    0, 0
     .space  3, 0xFF                   # padding to the next routine
 
-# ---- data / resources region ----
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1846A0, 0x323E80
-
-# ---- display palette (256-entry 0x00BBGGRR CLUT + a themed sub-range) ----
-display_palette:
-    .long 0x00000000, 0x00000080, 0x00008000, 0x00008080, 0x00800000, 0x00800080, 0x00808000, 0x00808080   # idx   0
-    .long 0x00303030, 0x000080FF, 0x000048FF, 0x00004080, 0x0038FF68, 0x00000000, 0x00C8C8C8, 0x00808080   # idx   8
-    .long 0x000048FF, 0x000048FF, 0x00000000, 0x0060FFFF, 0x00FFFF90, 0x00FF90FF, 0x0060FF60, 0x00800000   # idx  16
-    .long 0x00808080, 0x0000FFFF, 0x000048FF, 0x0000FFFF, 0x000048FF, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx  24
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx  32
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx  40
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx  48
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx  56
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx  64
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx  72
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx  80
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx  88
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx  96
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx 104
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx 112
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx 120
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx 128
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx 136
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx 144
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx 152
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx 160
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx 168
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx 176
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx 184
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx 192
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx 200
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx 208
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx 216
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx 224
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80   # idx 232
-    .long 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x0080FF80, 0x00808080, 0x00000000, 0x00C0FFC0, 0x00408040   # idx 240
-    .long 0x00585858, 0x000000FF, 0x0000FF00, 0x0000FFFF, 0x00FF0000, 0x00FF00FF, 0x00FFFF00, 0x00C8C8C8   # idx 248
-    .long 0x00FF0000, 0x00FF6060, 0x00FF6060, 0x00FF6060, 0x00FFA0A0, 0x00FF6060, 0x00FF6060, 0x00FFA0A0   # idx 256
-    .long 0x00FF0000, 0x00FF6060, 0x00FF6060, 0x00FF6060, 0x00FF0000, 0x00FFFFFF, 0x00FF0000, 0x00FF0000   # idx 264
-    .long 0x00FFFFFF, 0x00FF0000, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FF0000   # idx 272
-    .long 0x00FFA0A0, 0x00FFFFFF, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 280
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 288
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 296
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 304
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 312
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 320
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 328
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 336
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 344
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 352
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 360
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 368
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 376
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 384
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 392
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 400
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 408
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 416
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 424
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 432
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 440
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 448
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 456
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 464
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 472
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 480
-    .long 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0, 0x00FFA0A0   # idx 488
-    .long 0x00FF6060, 0x00FF6060, 0x00FF6060, 0x00FF6060, 0x00FF6060, 0x00FF0000, 0x00FF0000, 0x00FF0000   # idx 496
-    .long 0x00FF6060, 0x00FF6060, 0x00FFA0A0, 0x00FFA0A0, 0x00FF6060, 0x00FF6060, 0x00FF6060, 0x00FFFFFF   # idx 504
-.org 0x324680
-.incbin_range "baserom/kn7000_program_b893.rom", 0x323E80 + 0x800, 0x3B66E0
+# ---- data / resources region: typed source, tools/gen_data_s.py ----
+.include "src/b893/program/data/data.s"
 
 # ---- code region 2 (MILK MN10300 kernel + zlib 1.0.4). The library
 #      image the boot self-loads to 0x4C000000 starts at file offset

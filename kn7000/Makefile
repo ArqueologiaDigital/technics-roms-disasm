@@ -88,9 +88,22 @@ program-src: tools/gen_program_s.py tools/mn10300_asm.py kn7000.sym kn7000_manua
 # strings, pointer tables (tools/gen_data_s.py, tools/milk_model.py; reads the
 # converted code and build/kn7000_program.labels, so build first). The committed
 # files are the result; the build does not need this.
-.PHONY: data-src
+# data-src-<build> does the same for builds 942 (sp7001), 935 and 893, into
+# src/<build>/program/data/, from that build's image, converted code and labels.
+# data-and-code-src runs data-src* and program-src* alternately for all four
+# builds until they agree (tools/regen_data_and_code.sh): the code names data
+# addresses with the labels the data generation gives them.
+.PHONY: data-src data-src-sp7001 data-src-935 data-src-893 data-and-code-src
+data-and-code-src:
+	UNIDASM=$(UNIDASM) tools/regen_data_and_code.sh
 data-src: tools/gen_data_s.py tools/milk_model.py baserom/kn7000_program.rom build/kn7000_program.rom
 	$(PYTHON) tools/gen_data_s.py
+data-src-sp7001: tools/gen_data_s.py tools/milk_model.py build/kn7000_program_sp7001.rom
+	$(PYTHON) tools/gen_data_s.py --profile sp7001
+data-src-935: tools/gen_data_s.py tools/milk_model.py build/kn7000_program_b935.rom
+	$(PYTHON) tools/gen_data_s.py --profile b935
+data-src-893: tools/gen_data_s.py tools/milk_model.py build/kn7000_program_b893.rom
+	$(PYTHON) tools/gen_data_s.py --profile b893
 
 # The GUI menu map (notes/gui-data-region/menu-map.md), generated from the typed
 # data region's source by tools/gui_menu_map.py; verify-gui-map fails when it is stale.
@@ -248,7 +261,9 @@ baserom/kn7000_table_sp7001.rom: tools/rom_from_eproms.py
 	    "$(ROMSET_DIR)/kn7000_table_even_sp7001_b83.ic17" \
 	    "$(ROMSET_DIR)/kn7000_table_odd_sp7001_b83.ic16" $@
 
-build/kn7000_program_sp7001.rom: src/sp7001/program.s $(wildcard src/sp7001/program/*.s) src/sp7001/symbols.inc tools/kn7asm.py baserom/kn7000_program_sp7001.rom
+build/kn7000_program_sp7001.rom: src/sp7001/program.s $(wildcard src/sp7001/program/*.s) \
+		$(wildcard src/sp7001/program/data/*) src/constants.inc src/sp7001/symbols.inc tools/kn7asm.py \
+		baserom/kn7000_program_sp7001.rom
 	@mkdir -p build
 	$(ASM) src/sp7001/program.s -I . -o $@ --labels build/kn7000_program_sp7001.labels
 
@@ -599,7 +614,8 @@ baserom/kn7000_program_b$(1).rom: tools/rom_from_eproms.py
 	echo "$$(B$(1)_SHA1)  $$@.tmp" | sha1sum --quiet -c
 	mv $$@.tmp $$@
 
-build/kn7000_program_b$(1).rom: src/b$(1)/program.s $$(wildcard src/b$(1)/program/*.s) src/b$(1)/symbols.inc \
+build/kn7000_program_b$(1).rom: src/b$(1)/program.s $$(wildcard src/b$(1)/program/*.s) \
+		$$(wildcard src/b$(1)/program/data/*) src/constants.inc src/b$(1)/symbols.inc \
 		tools/kn7asm.py tools/mn10300_asm.py baserom/kn7000_program_b$(1).rom
 	@mkdir -p build
 	$$(ASM) src/b$(1)/program.s -I . -o $$@ --labels build/kn7000_program_b$(1).labels
