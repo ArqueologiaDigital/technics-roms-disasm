@@ -535,210 +535,8 @@ typedef struct __attribute__((packed)) {
     char IT_Hold_str[8];
     char IT_Default_str[12];
     char IT_Off_str[8];
-    uint32_t swordProc_ptr;
-    uint8_t pad_68[2];  /* zero padding */
-    uint16_t field_04d8;
-    uint32_t NakaProp_FontEntry0_ptr;
-    uint32_t uwordProc_ptr;
-    uint8_t pad_69[2];  /* zero padding */
-    uint16_t field_04e4;
-    uint32_t ptr_04e6;
-    uint32_t ucharProc_ptr;
-    uint8_t pad_70[2];  /* zero padding */
-    uint16_t field_04f0;
-    uint32_t NakaProp_FontEntry1_ptr;
-    uint32_t scharProc_ptr;
-    uint8_t pad_71[2];  /* zero padding */
-    uint16_t field_04fc;
-    uint32_t ptr_04fe;
-    uint32_t slongProc_ptr;
-    uint8_t pad_72[2];  /* zero padding */
-    uint16_t field_0508;
-    uint32_t NakaProp_FontEntry2_ptr;
-    uint32_t ulongProc_ptr;
-    uint8_t pad_73[2];  /* zero padding */
-    uint16_t field_0514;
-    uint32_t ptr_0516;
-    uint32_t boolProc_ptr;
-    uint16_t field_051e;
-    uint16_t field_0520;
-    uint32_t NakaInst_False_ptr;
-    uint32_t ObjectIDProc_ptr;
-    uint8_t pad_74[2];  /* zero padding */
-    uint16_t field_052c;
-    uint32_t ptr_052e;
-    uint32_t pFuncProc_ptr;
-    uint8_t pad_75[2];  /* zero padding */
-    uint16_t field_0538;
-    uint32_t NakaProp_BoolEntry1_ptr;
-    uint32_t pProcProc_ptr;
-    uint8_t pad_76[2];  /* zero padding */
-    uint16_t field_0544;
-    uint32_t ptr_0546;
-    uint32_t pPropProc_ptr;
-    uint8_t pad_77[2];  /* zero padding */
-    uint16_t field_0550;
-    uint32_t NakaProp_BoolEntry2_ptr;
-    uint32_t pStringProc_ptr;
-    uint8_t pad_78[2];  /* zero padding */
-    uint16_t field_055c;
-    uint32_t ptr_055e;
-    uint32_t ClassIDProc_ptr;
-    uint8_t pad_79[2];  /* zero padding */
-    uint16_t field_0568;
-    uint32_t NakaProp_BoolEntry3_ptr;
-    uint32_t ScreenIDProc_ptr;
-    uint8_t pad_80[2];  /* zero padding */
-    uint16_t field_0574;
-    uint32_t ptr_0576;
-    uint32_t EventIDProc_ptr;
-    uint8_t pad_81[2];  /* zero padding */
-    uint16_t field_0580;
-    uint32_t NakaProp_BoolEntry4_ptr;
-    uint32_t RECTWProc_ptr;
-    uint8_t pad_82[2];  /* zero padding */
-    uint16_t field_058c;
-    uint32_t ptr_058e;
-    uint32_t RectX1Proc_ptr;
-    uint8_t pad_83[2];  /* zero padding */
-    uint16_t field_0598;
-    uint32_t NakaProp_BoolEntry5_ptr;
-    uint32_t RectY1Proc_ptr;
-    uint8_t pad_84[2];  /* zero padding */
-    uint16_t field_05a4;
-    uint32_t ptr_05a6;
-    uint32_t RectX2Proc_ptr;
-    uint8_t pad_85[2];  /* zero padding */
-    uint16_t field_05b0;
-    uint32_t NakaProp_BoolEntry6_ptr;
-    uint32_t RectY2Proc_ptr;
-    uint8_t pad_86[2];  /* zero padding */
-    uint16_t field_05bc;
-    uint32_t ptr_05be;
-    uint32_t POINTWProc_ptr;
-    uint8_t pad_87[2];  /* zero padding */
-    uint16_t field_05c8;
-    uint32_t NakaProp_BoolEntry7_ptr;
-    uint32_t PointXProc_ptr;
-    uint8_t pad_88[2];  /* zero padding */
-    uint16_t field_05d4;
-    uint32_t ptr_05d6;
-    uint32_t PointYProc_ptr;
-    uint8_t pad_89[2];  /* zero padding */
-    uint16_t field_05e0;
-    uint32_t NakaProp_BoolEntry8_ptr;
-    uint32_t StringProc_ptr;
-    uint8_t pad_90[2];  /* zero padding */
-    uint16_t field_05ec;
-    uint32_t ptr_05ee;
-    uint32_t NameProc_ptr;
-    uint8_t pad_91[2];  /* zero padding */
-    uint16_t field_05f8;
-    uint32_t NakaProp_CFlagEntry_ptr;
-    uint32_t ConstFlagProc_ptr;
-    uint16_t field_0602;
-    uint16_t field_0604;
-    uint32_t ptr_0606;
-    uint32_t ViewIDProc_ptr;
-    uint8_t pad_92[2];  /* zero padding */
-    uint16_t field_0610;
-    uint32_t NakaProp_VisFlag_Header_ptr;
-    uint32_t uwordProc_ptr_2;
-    uint8_t pad_93[2];  /* zero padding */
-    uint16_t field_061c;
-    uint32_t ptr_061e;
-    uint32_t ViewFlagProc_ptr;
-    uint16_t field_0626;
-    uint16_t field_0628;
-    uint32_t NakaProp_VisFlag_Chain_ptr;
-    uint32_t ColorIDProc_ptr;
-    uint16_t field_0632;
-    uint16_t field_0634;
-    uint32_t ptr_0636;
-    uint32_t BorderIDProc_ptr;
-    uint16_t field_063e;
-    uint16_t field_0640;
-    uint32_t NakaProp_BorderDefs_ptr;
-    uint32_t ModeIDProc_ptr;
-    uint8_t pad_94[2];  /* zero padding */
-    uint16_t field_064c;
-    uint32_t ptr_064e;
-    uint32_t TitleIDProc_ptr;
-    uint8_t pad_95[2];  /* zero padding */
-    uint16_t field_0658;
-    uint32_t NakaProp_Align_Header_ptr;
-    uint32_t IconIDProc_ptr;
-    uint8_t pad_96[2];  /* zero padding */
-    uint16_t field_0664;
-    uint32_t ptr_0666;
-    uint32_t FontIDProc_ptr;
-    uint8_t pad_97[2];  /* zero padding */
-    uint16_t field_0670;
-    uint32_t NakaProp_Align_PtrEntry_ptr;
-    uint32_t AlignmentIDProc_ptr;
-    uint16_t field_067a;
-    uint16_t field_067c;
-    uint32_t ptr_067e;
-    uint32_t EditSwIDProc_ptr;
-    uint16_t field_0686;
-    uint16_t field_0688;
-    uint32_t NakaProp_EditSwitch_Chain_ptr;
-    uint32_t EditSwStyleIDProc_ptr;
-    uint16_t field_0692;
-    uint16_t field_0694;
-    uint32_t ptr_0696;
-    uint32_t LineModeIDProc_ptr;
-    uint16_t field_069e;
-    uint16_t field_06a0;
-    uint32_t NakaInst_LM_RightDown_ptr;
-    uint32_t FrameIDProc_ptr;
-    uint16_t field_06aa;
-    uint16_t field_06ac;
-    uint32_t ptr_06ae;
-    uint32_t BitmapIDProc_ptr;
-    uint8_t pad_98[2];  /* zero padding */
-    uint16_t field_06b8;
-    uint32_t NakaProp_Frame_Header_ptr;
-    uint32_t ApFuncIDProc_ptr;
-    uint8_t pad_99[2];  /* zero padding */
-    uint16_t field_06c4;
-    uint32_t ptr_06c6;
-    uint32_t MainFuncIDProc_ptr;
-    uint8_t pad_100[2];  /* zero padding */
-    uint16_t field_06d0;
-    uint32_t NakaProp_Frame_Chain_ptr;
-    uint32_t UserIDProc_ptr;
-    uint16_t field_06da;
-    uint16_t field_06dc;
-    uint32_t ptr_06de;
-    uint32_t pBoolProc_ptr;
-    uint16_t field_06e6;
-    uint16_t field_06e8;
-    uint32_t True_str_ptr_ptr;
-    uint32_t pSwordProc_ptr;
-    uint8_t pad_101[2];  /* zero padding */
-    uint16_t field_06f4;
-    uint32_t ptr_06f6;
-    uint32_t pUwordProc_ptr;
-    uint8_t pad_102[2];  /* zero padding */
-    uint16_t field_0700;
-    uint32_t ptr_0702;
-    uint32_t pScharProc_ptr;
-    uint8_t pad_103[2];  /* zero padding */
-    uint16_t field_070c;
-    uint32_t ptr_070e;
-    uint32_t pUcharProc_ptr;
-    uint8_t pad_104[2];  /* zero padding */
-    uint16_t field_0718;
-    uint32_t ptr_071a;
-    uint32_t pSlongProc_ptr;
-    uint8_t pad_105[2];  /* zero padding */
-    uint16_t field_0724;
-    uint32_t ptr_0726;
-    uint32_t pUlongProc_ptr;
-    uint8_t pad_106[2];  /* zero padding */
-    uint16_t field_0730;
-    uint32_t ptr_0732;
+    /* SupportClass_PropTypeRecords: the property type of each propdata letter (retype_prop_type_records.py) */
+    naka_prop_type_t SupportClass_PropTypeRecords[51];
     uint32_t WindowIDProc_ptr;
     uint8_t pad_107[2];  /* zero padding */
     uint16_t field_073c;
@@ -3157,413 +2955,59 @@ const naka_style_bitmaps_t naka_style_bitmaps_data
 
     .IT_Off_str = ALIGNED_STRING("IT_Off"),
 
-    .swordProc_ptr = NAKA_ADDR(swordProc),
-
-    .pad_68 = { 0 },
-
-    .field_04d8 = 0x0002,
-
-    .NakaProp_FontEntry0_ptr = NAKA_ADDR(SupportClass_SwordValueNames),
-
-    .uwordProc_ptr = NAKA_ADDR(uwordProc),
-
-    .pad_69 = { 0 },
-
-    .field_04e4 = 0x0002,
-
-    .ptr_04e6 = NAKA_ADDR(SupportClass_UwordValueNames),
-
-    .ucharProc_ptr = NAKA_ADDR(ucharProc),
-
-    .pad_70 = { 0 },
-
-    .field_04f0 = 0x0001,
-
-    .NakaProp_FontEntry1_ptr = NAKA_ADDR(SupportClass_UcharValueNames),
-
-    .scharProc_ptr = NAKA_ADDR(scharProc),
-
-    .pad_71 = { 0 },
-
-    .field_04fc = 0x0001,
-
-    .ptr_04fe = NAKA_ADDR(SupportClass_ScharValueNames),
-
-    .slongProc_ptr = NAKA_ADDR(slongProc),
-
-    .pad_72 = { 0 },
-
-    .field_0508 = 0x0004,
-
-    .NakaProp_FontEntry2_ptr = NAKA_ADDR(NakaInst_slong_EnumTable),
-
-    .ulongProc_ptr = NAKA_ADDR(ulongProc),
-
-    .pad_73 = { 0 },
-
-    .field_0514 = 0x0004,
-
-    .ptr_0516 = NAKA_ADDR(NakaInst_ulong_EnumTable),
-
-    .boolProc_ptr = NAKA_ADDR(boolProc),
-
-    .field_051e = 0x0002,
-
-    .field_0520 = 0x0002,
-
-    .NakaInst_False_ptr = NAKA_ADDR(NakaInst_Bool_EnumTable),
-
-    .ObjectIDProc_ptr = NAKA_ADDR(ObjectIDProc),
-
-    .pad_74 = { 0 },
-
-    .field_052c = 0x0004,
-
-    .ptr_052e = NAKA_ADDR(NakaInst_ObjectID_EnumTable),
-
-    .pFuncProc_ptr = NAKA_ADDR(pFuncProc),
-
-    .pad_75 = { 0 },
-
-    .field_0538 = 0x0004,
-
-    .NakaProp_BoolEntry1_ptr = NAKA_ADDR(NakaInst_pFunc_EnumTable),
-
-    .pProcProc_ptr = NAKA_ADDR(pProcProc),
-
-    .pad_76 = { 0 },
-
-    .field_0544 = 0x0004,
-
-    .ptr_0546 = NAKA_ADDR(NakaInst_pProc_EnumTable),
-
-    .pPropProc_ptr = NAKA_ADDR(pPropProc),
-
-    .pad_77 = { 0 },
-
-    .field_0550 = 0x0004,
-
-    .NakaProp_BoolEntry2_ptr = NAKA_ADDR(SupportClass_PPropValueNames),
-
-    .pStringProc_ptr = NAKA_ADDR(pStringProc),
-
-    .pad_78 = { 0 },
-
-    .field_055c = 0x0004,
-
-    .ptr_055e = NAKA_ADDR(SupportClass_PStringValueNames),
-
-    .ClassIDProc_ptr = NAKA_ADDR(ClassIDProc),
-
-    .pad_79 = { 0 },
-
-    .field_0568 = 0x0004,
-
-    .NakaProp_BoolEntry3_ptr = NAKA_ADDR(SupportClass_ClassIDValueNames),
-
-    .ScreenIDProc_ptr = NAKA_ADDR(ScreenIDProc),
-
-    .pad_80 = { 0 },
-
-    .field_0574 = 0x0004,
-
-    .ptr_0576 = NAKA_ADDR(SupportClass_ScreenIDValueNames),
-
-    .EventIDProc_ptr = NAKA_ADDR(EventIDProc),
-
-    .pad_81 = { 0 },
-
-    .field_0580 = 0x0004,
-
-    .NakaProp_BoolEntry4_ptr = NAKA_ADDR(NakaInst_EventID_EnumTable),
-
-    .RECTWProc_ptr = NAKA_ADDR(RECTWProc),
-
-    .pad_82 = { 0 },
-
-    .field_058c = 0x0008,
-
-    .ptr_058e = NAKA_ADDR(NakaInst_RECTW_EnumTable),
-
-    .RectX1Proc_ptr = NAKA_ADDR(RectX1Proc),
-
-    .pad_83 = { 0 },
-
-    .field_0598 = 0x0002,
-
-    .NakaProp_BoolEntry5_ptr = NAKA_ADDR(NakaInst_RectX1_EnumTable),
-
-    .RectY1Proc_ptr = NAKA_ADDR(RectY1Proc),
-
-    .pad_84 = { 0 },
-
-    .field_05a4 = 0x0002,
-
-    .ptr_05a6 = NAKA_ADDR(NakaInst_RectY1_EnumTable),
-
-    .RectX2Proc_ptr = NAKA_ADDR(RectX2Proc),
-
-    .pad_85 = { 0 },
-
-    .field_05b0 = 0x0002,
-
-    .NakaProp_BoolEntry6_ptr = NAKA_ADDR(SupportClass_RectX2ValueNames),
-
-    .RectY2Proc_ptr = NAKA_ADDR(RectY2Proc),
-
-    .pad_86 = { 0 },
-
-    .field_05bc = 0x0002,
-
-    .ptr_05be = NAKA_ADDR(SupportClass_RectY2ValueNames),
-
-    .POINTWProc_ptr = NAKA_ADDR(POINTWProc),
-
-    .pad_87 = { 0 },
-
-    .field_05c8 = 0x0004,
-
-    .NakaProp_BoolEntry7_ptr = NAKA_ADDR(SupportClass_POINTWValueNames),
-
-    .PointXProc_ptr = NAKA_ADDR(PointXProc),
-
-    .pad_88 = { 0 },
-
-    .field_05d4 = 0x0002,
-
-    .ptr_05d6 = NAKA_ADDR(SupportClass_PointXValueNames),
-
-    .PointYProc_ptr = NAKA_ADDR(PointYProc),
-
-    .pad_89 = { 0 },
-
-    .field_05e0 = 0x0002,
-
-    .NakaProp_BoolEntry8_ptr = NAKA_ADDR(NakaInst_PointY_EnumTable),
-
-    .StringProc_ptr = NAKA_ADDR(StringProc),
-
-    .pad_90 = { 0 },
-
-    .field_05ec = 0x0004,
-
-    .ptr_05ee = NAKA_ADDR(NakaInst_String_EnumTable),
-
-    .NameProc_ptr = NAKA_ADDR(NameProc),
-
-    .pad_91 = { 0 },
-
-    .field_05f8 = 0x0004,
-
-    .NakaProp_CFlagEntry_ptr = NAKA_ADDR(SupportClass_NameValueNames),
-
-    .ConstFlagProc_ptr = NAKA_ADDR(ConstFlagProc),
-
-    .field_0602 = 0x0002,
-
-    .field_0604 = 0x0004,
-
-    .ptr_0606 = NAKA_ADDR(SupportClass_ConstFlagValueNames),
-
-    .ViewIDProc_ptr = NAKA_ADDR(ViewIDProc),
-
-    .pad_92 = { 0 },
-
-    .field_0610 = 0x0002,
-
-    .NakaProp_VisFlag_Header_ptr = NAKA_ADDR(SupportClass_ViewIDValueNames),
-
-    .uwordProc_ptr_2 = NAKA_ADDR(uwordProc),
-
-    .pad_93 = { 0 },
-
-    .field_061c = 0x0002,
-
-    .ptr_061e = NAKA_ADDR(SupportClass_UwordValueNames),
-
-    .ViewFlagProc_ptr = NAKA_ADDR(ViewFlagProc),
-
-    .field_0626 = 0x0006,
-
-    .field_0628 = 0x0002,
-
-    .NakaProp_VisFlag_Chain_ptr = NAKA_ADDR(NakaInst_ViewFlag_EnumTable),
-
-    .ColorIDProc_ptr = NAKA_ADDR(ColorIDProc),
-
-    .field_0632 = 0x001d,
-
-    .field_0634 = 0x0002,
-
-    .ptr_0636 = NAKA_ADDR(NakaInst_ColorID_EnumTable),
-
-    .BorderIDProc_ptr = NAKA_ADDR(BorderIDProc),
-
-    .field_063e = 0x0014,
-
-    .field_0640 = 0x0002,
-
-    .NakaProp_BorderDefs_ptr = NAKA_ADDR(NakaInst_BorderID_EnumTable),
-
-    .ModeIDProc_ptr = NAKA_ADDR(ModeIDProc),
-
-    .pad_94 = { 0 },
-
-    .field_064c = 0x0004,
-
-    .ptr_064e = NAKA_ADDR(NakaInst_ModeID_EnumTable),
-
-    .TitleIDProc_ptr = NAKA_ADDR(TitleIDProc),
-
-    .pad_95 = { 0 },
-
-    .field_0658 = 0x0004,
-
-    .NakaProp_Align_Header_ptr = NAKA_ADDR(NakaInst_TitleID_EnumTable),
-
-    .IconIDProc_ptr = NAKA_ADDR(IconIDProc),
-
-    .pad_96 = { 0 },
-
-    .field_0664 = 0x0004,
-
-    .ptr_0666 = NAKA_ADDR(NakaInst_IconID_EnumTable),
-
-    .FontIDProc_ptr = NAKA_ADDR(FontIDProc),
-
-    .pad_97 = { 0 },
-
-    .field_0670 = 0x0004,
-
-    .NakaProp_Align_PtrEntry_ptr = NAKA_ADDR(NakaInst_FontID_EnumTable),
-
-    .AlignmentIDProc_ptr = NAKA_ADDR(AlignmentIDProc),
-
-    .field_067a = 0x0003,
-
-    .field_067c = 0x0001,
-
-    .ptr_067e = NAKA_ADDR(NakaInst_AlignmentID_EnumTable),
-
-    .EditSwIDProc_ptr = NAKA_ADDR(EditSwIDProc),
-
-    .field_0686 = 0x0014,
-
-    .field_0688 = 0x0002,
-
-    .NakaProp_EditSwitch_Chain_ptr = NAKA_ADDR(NakaInst_EditSwID_EnumTable),
-
-    .EditSwStyleIDProc_ptr = NAKA_ADDR(EditSwStyleIDProc),
-
-    .field_0692 = 0x0011,
-
-    .field_0694 = 0x0001,
-
-    .ptr_0696 = NAKA_ADDR(NakaInst_EditSwStyleID_EnumTable),
-
-    .LineModeIDProc_ptr = NAKA_ADDR(LineModeIDProc),
-
-    .field_069e = 0x0002,
-
-    .field_06a0 = 0x0001,
-
-    .NakaInst_LM_RightDown_ptr = NAKA_ADDR(NakaInst_LineModeID_EnumTable),
-
-    .FrameIDProc_ptr = NAKA_ADDR(FrameIDProc),
-
-    .field_06aa = 0x0002,
-
-    .field_06ac = 0x0002,
-
-    .ptr_06ae = NAKA_ADDR(NakaInst_FrameID_EnumTable),
-
-    .BitmapIDProc_ptr = NAKA_ADDR(BitmapIDProc),
-
-    .pad_98 = { 0 },
-
-    .field_06b8 = 0x0004,
-
-    .NakaProp_Frame_Header_ptr = NAKA_ADDR(SupportClass_BitmapIDValueNames),
-
-    .ApFuncIDProc_ptr = NAKA_ADDR(ApFuncIDProc),
-
-    .pad_99 = { 0 },
-
-    .field_06c4 = 0x0004,
-
-    .ptr_06c6 = NAKA_ADDR(SupportClass_ApFuncIDValueNames),
-
-    .MainFuncIDProc_ptr = NAKA_ADDR(MainFuncIDProc),
-
-    .pad_100 = { 0 },
-
-    .field_06d0 = 0x0004,
-
-    .NakaProp_Frame_Chain_ptr = NAKA_ADDR(NakaInst_MainFuncID_EnumTable),
-
-    .UserIDProc_ptr = NAKA_ADDR(UserIDProc),
-
-    .field_06da = 0x000d,
-
-    .field_06dc = 0x0002,
-
-    .ptr_06de = NAKA_ADDR(NakaInst_UserID_EnumTable),
-
-    .pBoolProc_ptr = NAKA_ADDR(pBoolProc),
-
-    .field_06e6 = 0x0002,
-
-    .field_06e8 = 0x0004,
-
-    .True_str_ptr_ptr = SELF(NakaInst_pBool_EnumTable),
-
-    .pSwordProc_ptr = NAKA_ADDR(pSwordProc),
-
-    .pad_101 = { 0 },
-
-    .field_06f4 = 0x0004,
-
-    .ptr_06f6 = SELF(NakaInst_pSword_EnumTable),
-
-    .pUwordProc_ptr = NAKA_ADDR(pUwordProc),
-
-    .pad_102 = { 0 },
-
-    .field_0700 = 0x0004,
-
-    .ptr_0702 = NAKA_ADDR(NakaInst_pUword_EnumTable),
-
-    .pScharProc_ptr = NAKA_ADDR(pScharProc),
-
-    .pad_103 = { 0 },
-
-    .field_070c = 0x0004,
-
-    .ptr_070e = NAKA_ADDR(NakaInst_pSchar_EnumTable),
-
-    .pUcharProc_ptr = NAKA_ADDR(pUcharProc),
-
-    .pad_104 = { 0 },
-
-    .field_0718 = 0x0004,
-
-    .ptr_071a = NAKA_ADDR(SupportClass_PUcharValueNames),
-
-    .pSlongProc_ptr = NAKA_ADDR(pSlongProc),
-
-    .pad_105 = { 0 },
-
-    .field_0724 = 0x0004,
-
-    .ptr_0726 = NAKA_ADDR(SupportClass_PSlongValueNames),
-
-    .pUlongProc_ptr = NAKA_ADDR(pUlongProc),
-
-    .pad_106 = { 0 },
-
-    .field_0730 = 0x0004,
-
-    .ptr_0732 = NAKA_ADDR(NakaInst_pUlong_EnumTable),
+    .SupportClass_PropTypeRecords = {
+        /* A */ { NAKA_ADDR(swordProc), 0, 2, NAKA_ADDR(SupportClass_SwordValueNames) },
+        /* B */ { NAKA_ADDR(uwordProc), 0, 2, NAKA_ADDR(SupportClass_UwordValueNames) },
+        /* C */ { NAKA_ADDR(ucharProc), 0, 1, NAKA_ADDR(SupportClass_UcharValueNames) },
+        /* D */ { NAKA_ADDR(scharProc), 0, 1, NAKA_ADDR(SupportClass_ScharValueNames) },
+        /* E */ { NAKA_ADDR(slongProc), 0, 4, NAKA_ADDR(NakaInst_slong_EnumTable) },
+        /* F */ { NAKA_ADDR(ulongProc), 0, 4, NAKA_ADDR(NakaInst_ulong_EnumTable) },
+        /* G */ { NAKA_ADDR(boolProc), 2, 2, NAKA_ADDR(NakaInst_Bool_EnumTable) },
+        /* H */ { NAKA_ADDR(ObjectIDProc), 0, 4, NAKA_ADDR(NakaInst_ObjectID_EnumTable) },
+        /* I */ { NAKA_ADDR(pFuncProc), 0, 4, NAKA_ADDR(NakaInst_pFunc_EnumTable) },
+        /* J */ { NAKA_ADDR(pProcProc), 0, 4, NAKA_ADDR(NakaInst_pProc_EnumTable) },
+        /* K */ { NAKA_ADDR(pPropProc), 0, 4, NAKA_ADDR(SupportClass_PPropValueNames) },
+        /* L */ { NAKA_ADDR(pStringProc), 0, 4, NAKA_ADDR(SupportClass_PStringValueNames) },
+        /* M */ { NAKA_ADDR(ClassIDProc), 0, 4, NAKA_ADDR(SupportClass_ClassIDValueNames) },
+        /* N */ { NAKA_ADDR(ScreenIDProc), 0, 4, NAKA_ADDR(SupportClass_ScreenIDValueNames) },
+        /* O */ { NAKA_ADDR(EventIDProc), 0, 4, NAKA_ADDR(NakaInst_EventID_EnumTable) },
+        /* P */ { NAKA_ADDR(RECTWProc), 0, 8, NAKA_ADDR(NakaInst_RECTW_EnumTable) },
+        /* Q */ { NAKA_ADDR(RectX1Proc), 0, 2, NAKA_ADDR(NakaInst_RectX1_EnumTable) },
+        /* R */ { NAKA_ADDR(RectY1Proc), 0, 2, NAKA_ADDR(NakaInst_RectY1_EnumTable) },
+        /* S */ { NAKA_ADDR(RectX2Proc), 0, 2, NAKA_ADDR(SupportClass_RectX2ValueNames) },
+        /* T */ { NAKA_ADDR(RectY2Proc), 0, 2, NAKA_ADDR(SupportClass_RectY2ValueNames) },
+        /* U */ { NAKA_ADDR(POINTWProc), 0, 4, NAKA_ADDR(SupportClass_POINTWValueNames) },
+        /* V */ { NAKA_ADDR(PointXProc), 0, 2, NAKA_ADDR(SupportClass_PointXValueNames) },
+        /* W */ { NAKA_ADDR(PointYProc), 0, 2, NAKA_ADDR(NakaInst_PointY_EnumTable) },
+        /* X */ { NAKA_ADDR(StringProc), 0, 4, NAKA_ADDR(NakaInst_String_EnumTable) },
+        /* Y */ { NAKA_ADDR(NameProc), 0, 4, NAKA_ADDR(SupportClass_NameValueNames) },
+        /* Z */ { NAKA_ADDR(ConstFlagProc), 2, 4, NAKA_ADDR(SupportClass_ConstFlagValueNames) },
+        /* [ */ { NAKA_ADDR(ViewIDProc), 0, 2, NAKA_ADDR(SupportClass_ViewIDValueNames) },
+        /* \ */ { NAKA_ADDR(uwordProc), 0, 2, NAKA_ADDR(SupportClass_UwordValueNames) },
+        /* ] */ { NAKA_ADDR(ViewFlagProc), 6, 2, NAKA_ADDR(NakaInst_ViewFlag_EnumTable) },
+        /* ^ */ { NAKA_ADDR(ColorIDProc), 29, 2, NAKA_ADDR(NakaInst_ColorID_EnumTable) },
+        /* _ */ { NAKA_ADDR(BorderIDProc), 20, 2, NAKA_ADDR(NakaInst_BorderID_EnumTable) },
+        /* ` */ { NAKA_ADDR(ModeIDProc), 0, 4, NAKA_ADDR(NakaInst_ModeID_EnumTable) },
+        /* a */ { NAKA_ADDR(TitleIDProc), 0, 4, NAKA_ADDR(NakaInst_TitleID_EnumTable) },
+        /* b */ { NAKA_ADDR(IconIDProc), 0, 4, NAKA_ADDR(NakaInst_IconID_EnumTable) },
+        /* c */ { NAKA_ADDR(FontIDProc), 0, 4, NAKA_ADDR(NakaInst_FontID_EnumTable) },
+        /* d */ { NAKA_ADDR(AlignmentIDProc), 3, 1, NAKA_ADDR(NakaInst_AlignmentID_EnumTable) },
+        /* e */ { NAKA_ADDR(EditSwIDProc), 20, 2, NAKA_ADDR(NakaInst_EditSwID_EnumTable) },
+        /* f */ { NAKA_ADDR(EditSwStyleIDProc), 17, 1, NAKA_ADDR(NakaInst_EditSwStyleID_EnumTable) },
+        /* g */ { NAKA_ADDR(LineModeIDProc), 2, 1, NAKA_ADDR(NakaInst_LineModeID_EnumTable) },
+        /* h */ { NAKA_ADDR(FrameIDProc), 2, 2, NAKA_ADDR(NakaInst_FrameID_EnumTable) },
+        /* i */ { NAKA_ADDR(BitmapIDProc), 0, 4, NAKA_ADDR(SupportClass_BitmapIDValueNames) },
+        /* j */ { NAKA_ADDR(ApFuncIDProc), 0, 4, NAKA_ADDR(SupportClass_ApFuncIDValueNames) },
+        /* k */ { NAKA_ADDR(MainFuncIDProc), 0, 4, NAKA_ADDR(NakaInst_MainFuncID_EnumTable) },
+        /* l */ { NAKA_ADDR(UserIDProc), 13, 2, NAKA_ADDR(NakaInst_UserID_EnumTable) },
+        /* m */ { NAKA_ADDR(pBoolProc), 2, 4, SELF(NakaInst_pBool_EnumTable) },
+        /* n */ { NAKA_ADDR(pSwordProc), 0, 4, SELF(NakaInst_pSword_EnumTable) },
+        /* o */ { NAKA_ADDR(pUwordProc), 0, 4, NAKA_ADDR(NakaInst_pUword_EnumTable) },
+        /* p */ { NAKA_ADDR(pScharProc), 0, 4, NAKA_ADDR(NakaInst_pSchar_EnumTable) },
+        /* q */ { NAKA_ADDR(pUcharProc), 0, 4, NAKA_ADDR(SupportClass_PUcharValueNames) },
+        /* r */ { NAKA_ADDR(pSlongProc), 0, 4, NAKA_ADDR(SupportClass_PSlongValueNames) },
+        /* s */ { NAKA_ADDR(pUlongProc), 0, 4, NAKA_ADDR(NakaInst_pUlong_EnumTable) },
+    },
 
     .WindowIDProc_ptr = NAKA_ADDR(WindowIDProc),
 
